@@ -14,7 +14,6 @@ define library minimal-console-compiler
   use commands;
 
   use internal-release-info;
-  use licensing;
 
   use environment-protocols;
   use environment-commands;
