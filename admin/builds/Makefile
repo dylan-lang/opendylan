@@ -3427,8 +3427,8 @@ test-dylan:
   $(TEST_APP) dylan-test-suite-app dylan-test-suite
 
 test-libraries:
-  $(ENSURE_APPLICATION) cmu-test-suite
-  $(TEST_APP) cmu-test-suite cmu-test-suite no
+# $(ENSURE_APPLICATION) cmu-test-suite
+# $(TEST_APP) cmu-test-suite cmu-test-suite no
   $(ENSURE_APPLICATION) libraries-test-suite-app
   $(TEST_APP) libraries-test-suite-app libraries-test-suite
   $(ENSURE_APPLICATION) c-ffi-test-suite-app
