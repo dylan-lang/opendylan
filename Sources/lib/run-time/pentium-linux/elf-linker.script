@@ -44,7 +44,7 @@ libcmt
 -lpthread -ldl -lc
 
 libgc
--lgc
+-lmmdw
 
 guilflags
 

@@ -7,7 +7,7 @@ EXPIRATION = -1
 
 AS = as -L -o
 AR = ar -q
-CC = gcc -DGC_LINUX_THREADS=1 -D_REENTRANT=1 -O2 -g -DEXPIRATION=$(EXPIRATION)
+CFLAGS = -DGC_LINUX_THREADS=1 -D_REENTRANT=1 -O -g -DEXPIRATION=$(EXPIRATION) -I/home/housel/src/mps-kit/code
 
 OBJS	 = x86-linux-collector.o runtime.o x86-linux-threads-primitives.o linux-spy-interfaces.o linux-support.o
 
@@ -30,9 +30,9 @@ linux-support.o: linux-support.c
 runtime.o:	runtime.s
 	$(AS) runtime.o runtime.s
 
-$(LIBDEST)/libgc.a: gc.a
-	cp -fp gc.a $(LIBDEST)/libgc.a
-
+#$(LIBDEST)/libgc.a: gc.a
+#	cp -fp gc.a $(LIBDEST)/libgc.a
+#
 $(LIBDEST)/libmpsplan.a: mpsplan.a
 	cp -fp mpsplan.a $(LIBDEST)/libmpsplan.a
 
@@ -48,8 +48,7 @@ $(LIBDEST)/dylan-elf-dll.script: dylan-elf-dll.script
 $(LIBDEST)/dylan-elf-exe.script: dylan-elf-exe.script
 	cp -fp dylan-elf-exe.script $(LIBDEST)
 
-install-build: $(LIBDEST)/libgc.a $(LIBDEST)/libmpsplan.a $(LIBDEST)/libmmdw.a \
-               $(BINDEST)/elf-linker.script \
+install-build: $(LIBDEST)/libmmdw.a $(LIBDEST)/libmpsplan.a $(BINDEST)/elf-linker.script \
                $(LIBDEST)/dylan-elf-dll.script $(LIBDEST)/dylan-elf-exe.script \
                collector.c
 
