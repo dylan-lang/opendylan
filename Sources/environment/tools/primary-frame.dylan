@@ -406,11 +406,6 @@ define command-table *primary-frame-file-io-command-table* (*global-command-tabl
   include *exit-command-table*;
 end command-table *primary-frame-file-io-command-table*;
 
-define command-table *primary-frame-options-command-table* (*global-command-table*)
-  menu-item "Environment Options..." = frame-edit-options,
-    documentation: "Enables you to change application options.";
-end command-table *primary-frame-options-command-table*;
-
 define command-table *primary-frame-internal-command-table* (*global-command-table*)
   menu-item "Open Registry Project..." = frame-open-project-for-library,
     documentation: "Opens a project for a supplied library name.";
@@ -443,11 +438,13 @@ define command-table *primary-frame-tools-command-table* (*global-command-table*
   separator;
   menu-item "Command Line..." = find-command-line-window,
     documentation: "Open a command line interface window.";
+  separator;
+  menu-item "Environment Options..." = frame-edit-options,
+    documentation: "Enables you to change application options.";
 end command-table *primary-frame-tools-command-table*;
 
 define command-table *primary-frame-command-table* (*global-command-table*)
   menu-item "File"    = *primary-frame-file-io-command-table*;
-  menu-item "Options" = *primary-frame-options-command-table*;
   menu-item "Tools"   = *primary-frame-tools-command-table*;
   menu-item "Window"  = *single-window-command-table*;
   menu-item "Help"    = *environment-help-command-table*;
