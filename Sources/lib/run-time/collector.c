@@ -250,7 +250,7 @@ static mps_message_type_t finalization_type;
 
 static mps_gen_param_s gc_default_gen_param[genCOUNT] = {
   { 8 * 1024, 0.45 },
-  { MAXIMUM_HEAP_SIZE/1024 - 8 * 1024, 1.0 }
+  { MAXIMUM_HEAP_SIZE/1024 - 8 * 1024, 0.99 }
 };
 
 static MMAllocHandler main_handler = defaultHandler;
@@ -267,6 +267,7 @@ static MMAllocHandler misc_handler = defaultHandler;
 // On Linux, use the thread-local storage provided by the system to
 // hold the TEB pointer
 __thread void* teb;
+
 #endif
 
 typedef struct gc_teb_s {       /* GC Thread Environment block descriptor */
