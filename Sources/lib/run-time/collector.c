@@ -224,7 +224,7 @@ static void defaultHandler(MMError e, const char *opName, size_t size)
 
 mps_space_t space;
 static mps_fmt_t format;
-static mps_fmt_t dylan_fmt_weak;
+static mps_fmt_t dylan_fmt_weak_s;
 static mps_fmt_A_t fmt_A;
 static mps_fmt_A_t fmt_A_weak;
 static mps_pool_t main_pool, weak_table_pool, wrapper_pool, misc_pool, leaf_pool;
@@ -2565,7 +2565,7 @@ MMError dylan_init_memory_manager()
 
 #ifndef NO_WEAKNESS
   fmt_A_weak = dylan_fmt_A_weak();    
-  res = mps_fmt_create_A(&dylan_fmt_weak, space, fmt_A_weak);
+  res = mps_fmt_create_A(&dylan_fmt_weak_s, space, fmt_A_weak);
   if(res) { init_error("create weak format"); return(res); }
 #endif
 
@@ -2584,7 +2584,7 @@ MMError dylan_init_memory_manager()
   weak_table_pool = main_pool;
 #else
   /* Create the Automatic Weak Linked pool */
-  res = mps_pool_create(&weak_table_pool, space, mps_class_awl(), dylan_fmt_weak);
+  res = mps_pool_create(&weak_table_pool, space, mps_class_awl(), dylan_fmt_weak_s);
   if(res) { init_error("create weak pool"); return(res); }
 #endif
 
@@ -2656,7 +2656,7 @@ void dylan_shut_down_memory_manager()
 #endif
   mps_pool_destroy(main_pool);
 #ifndef NO_WEAKNESS
-  mps_fmt_destroy(dylan_fmt_weak);
+  mps_fmt_destroy(dylan_fmt_weak_s);
 #endif
   mps_fmt_destroy(format);
   mps_space_destroy(space);
