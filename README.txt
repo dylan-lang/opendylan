@@ -47,6 +47,9 @@ echo "001ce9c0: 00 00 00 00" | sudo xxd -r - /usr/local/lib/functional-developer
 cvs co fundev
 export SRCDIR=`pwd`/fundev        # must be absolute path!
 export BUILDDIR=<your build dir>
+
+Build the MPS and copy it into the fundev source tree (see below).
+
 cd $SRCDIR
 ./autogen.sh
 
@@ -64,18 +67,20 @@ If you encounter problems during the build, please refer to the log files
 that are written in the 'logs' directory under each bootstrap stage build
 directory.
 
+
+
 BUILDING THE MPS
 
 The FunDev garbage collector is the Memory Pool System (MPS), from Ravenbrook,
-Ltd.  Download the MPS from Ravenbrook at
+Ltd.  Download version 1.100.1 (or greater) of the MPS from Ravenbrook at
 http://www.ravenbrook.com/project/mps/ and extract it to some directory.  cd to
 the 'code' subdirectory in the MPS sources and build the mmdw.lib target.
 
   Windows:  nmake /k /f w3i3mv.nmk mmdw.lib
-            copy *.h w3i3mv/ti/mmdw.lib %FUNDEV%/Sources/lib/run-time/pentium-win32/
+            copy *.h w3i3mv/ci/mmdw.lib %FUNDEV%/Sources/lib/run-time/pentium-win32/
   Linux:    make -f lii4gc.gmk mmdw.a
-            cp *.h lii4gc/ti/mmdw.a $FUNDEV/Sources/lib/run-time/pentium-linux/
-            [if you don't have a lii4gc/ti directory, choose a different ?i directory.]
+            cp *.h lii4gc/ci/mmdw.a $FUNDEV/Sources/lib/run-time/pentium-linux/
+            [if you don't have a lii4gc/ci directory, choose a different ?i directory.]
 
 The actual makefile you use may differ depending on your platform.  The main
 point to notice here is that you don't just build the default target, as
