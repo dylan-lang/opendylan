@@ -75,12 +75,14 @@ define method accessor-read-into!
         let addr = pointer-cast(<LPSOCKADDR>, inaddr);
         with-stack-structure (size-pointer :: <C-int*>)
           pointer-value(size-pointer) := size-of(<SOCKADDR-IN>);
-          let nread = unix-recv-buffer-from(the-descriptor,
-                                             buffer-offset(the-buffer, offset),
-                                             count,
-                                             0,
-                                             addr,
-                                             size-pointer);
+          let nread = 
+            interruptible-system-call
+              (unix-recv-buffer-from(the-descriptor,
+                                     buffer-offset(the-buffer, offset),
+                                     count,
+                                     0,
+                                     addr,
+                                     size-pointer));
           if (nread == $SOCKET-ERROR) 
             unix-socket-error("unix-recv", host-address: stream.remote-host,
                                host-port: stream.remote-port);
@@ -126,12 +128,14 @@ define method accessor-write-from
         let addr = pointer-cast(<LPSOCKADDR>, inaddr);
         while (remaining > 0)
           let nwritten = 
-          unix-send-buffer-to(accessor.socket-descriptor,
-                               buffer-offset(buffer, offset + count - remaining),
-                               remaining,
-                               0,
+            interruptible-system-call
+              (unix-send-buffer-to(accessor.socket-descriptor,
+                                   buffer-offset(buffer, 
+                                                 offset + count - remaining),
+                                   remaining,
+                                   0,
                                addr,
-                               size-of(<SOCKADDR-IN>));
+                               size-of(<SOCKADDR-IN>)));
           if (nwritten == $SOCKET-ERROR)
             unix-socket-error("unix-send", host-address: stream.remote-host,
                                host-port: stream.remote-port)

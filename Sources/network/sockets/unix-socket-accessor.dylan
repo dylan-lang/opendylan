@@ -21,7 +21,7 @@ define macro with-cleared-stack-structure
 end macro;
 
 // TODO: Real errno accessor
-define method unix-errno () 99 end;
+// define method unix-errno () 99 end;
 
 define constant <LPLINGER> = <linger*>;
 define constant <LPHOSTENT> = <hostent*>;
@@ -32,6 +32,19 @@ define constant $SOCKET-ERROR = -1;
 define constant $INVALID-SOCKET = -1;
 
 // --
+
+define macro interruptible-system-call
+  { interruptible-system-call(?:expression) }
+    =>
+  { iterate loop()
+      let result = ?expression;
+      if(result == $SOCKET-ERROR & unix-errno() == $EINTR)
+        loop()
+      else
+        result
+      end if;
+    end iterate }
+end macro;
 
 define class <unix-socket-accessor> (<socket-accessor>)
   slot remote-host :: false-or(<ipv4-address>), init-value: #f;
@@ -70,7 +83,7 @@ end method;
 
 define function unix-socket-error
     (calling-function :: <string>, 
-     #key format-string = "socket error", format-arguments = #[],
+     #key format-string = "socket error %=", format-arguments = #[],
      high-level-error = #f, host-name = #f, host-address = #f, 
      host-port = #f, error-code: input-error-code = #f)
   if (instance?(host-name, <string>))
@@ -82,7 +95,8 @@ define function unix-socket-error
   let unix-condition-object =
     make(<unix-socket-error>, calling-function: calling-function,
 	 error-code: error-code, format-string: format-string,
-	 format-arguments: format-arguments);
+	 format-arguments: concatenate(vector(error-code),
+                                       format-arguments));
   if (high-level-error)
     high-level-error.socket-condition-details :=
       unix-condition-object;

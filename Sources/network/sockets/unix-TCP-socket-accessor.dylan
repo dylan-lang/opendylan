@@ -33,7 +33,9 @@ define method accessor-accept
     with-stack-structure (size-pointer :: <C-int*>)
       pointer-value(size-pointer) := size-of(<SOCKADDR-IN>);
       let connected-socket-descriptor = 
-        unix-accept(server-socket.socket-descriptor, addr, size-pointer);
+        interruptible-system-call(unix-accept
+                                    (server-socket.socket-descriptor, 
+                                     addr, size-pointer));
       if (connected-socket-descriptor = $INVALID-SOCKET)
 	unix-socket-error("unix-accept");
       end if;
@@ -216,7 +218,8 @@ define method accessor-read-into!
     error(make(<socket-closed>, socket: stream)) 
   else
     let nread = 
-      unix-recv(the-descriptor, the-buffer, offset, count);
+      interruptible-system-call
+        (unix-recv(the-descriptor, the-buffer, offset, count));
     if (nread == $SOCKET-ERROR) 
       unix-socket-error("unix-recv", host-address: stream.remote-host,
 			 host-port: stream.remote-port);
@@ -317,8 +320,9 @@ define method accessor-write-from
     let remaining = count;
     while (remaining > 0)
       let nwritten = 
-	unix-send(accessor.socket-descriptor, buffer, 
-		   offset + count - remaining, remaining);
+	interruptible-system-call
+          (unix-send(accessor.socket-descriptor, buffer, 
+                     offset + count - remaining, remaining));
       if (nwritten == $SOCKET-ERROR)
 	unix-socket-error("unix-send", host-address: stream.remote-host,
 			   host-port: stream.remote-port)

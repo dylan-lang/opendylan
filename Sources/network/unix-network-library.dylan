@@ -126,6 +126,29 @@ define module unix-sockets
     endservent, getservbyport, getservbyname, getservent, setservent;
   export
     gethostname;
+  export
+    errno,
+    $EPERM, $ENOENT, $ESRCH, $EINTR, $EIO, $ENXIO, $E2BIG, $ENOEXEC,
+    $EBADF, $ECHILD, $EAGAIN, $EWOULDBLOCK, $ENOMEM, $EACCES, $EFAULT,
+    $ENOTBLK, $EBUSY, $EEXIST, $EXDEV, $ENODEV, $ENOTDIR, $EISDIR,
+    $EINVAL, $ENFILE, $EMFILE, $ENOTTY, $ETXTBSY, $EFBIG, $ENOSPC,
+    $ESPIPE, $EROFS, $EMLINK, $EPIPE, $EDOM, $ERANGE, $EDEADLK,
+    $EDEADLOCK, $ENAMETOOLONG, $ENOLCK, $ENOSYS, $ENOTEMPTY, $ELOOP,
+    $ENOMSG, $EIDRM, $ECHRNG, $EL2NSYNC, $EL3HLT, $EL3RST, $ELNRNG,
+    $EUNATCH, $ENOCSI, $EL2HLT, $EBADE, $EBADR, $EXFULL, $ENOANO,
+    $EBADRQC, $EBADSLT, $EBFONT, $ENOSTR, $ENODATA, $ETIME, $ENOSR,
+    $ENONET, $ENOPKG, $EREMOTE, $ENOLINK, $EADV, $ESRMNT, $ECOMM,
+    $EPROTO, $EMULTIHOP, $EDOTDOT, $EBADMSG, $EOVERFLOW, $ENOTUNIQ,
+    $EBADFD, $EREMCHG, $ELIBACC, $ELIBBAD, $ELIBSCN, $ELIBMAX,
+    $ELIBEXEC, $EILSEQ, $ERESTART, $ESTRPIPE, $EUSERS, $ENOTSOCK,
+    $EDESTADDRREQ, $EMSGSIZE, $EPROTOTYPE, $ENOPROTOOPT, 
+    $EPROTONOSUPPORT, $ESOCKTNOSUPPORT, $EOPNOTSUPP, $ENOTSUP, 
+    $EPFNOSUPPORT, $EAFNOSUPPORT, $EADDRINUSE, $EADDRNOTAVAIL,
+    $ENETDOWN, $ENETUNREACH, $ENETRESET, $ECONNABORTED, $ECONNRESET,
+    $ENOBUFS, $EISCONN, $ENOTCONN, $ESHUTDOWN, $ETOOMANYREFS,
+    $ETIMEDOUT, $ECONNREFUSED, $EHOSTDOWN, $EHOSTUNREACH, $EALREADY,
+    $EINPROGRESS, $ESTALE, $EUCLEAN, $ENOTNAM, $ENAVAIL, $EISNAM,
+    $EREMOTEIO, $EDQUOT, $ENOMEDIUM, $EMEDIUMTYPE, $ECANCELED;
 end module unix-sockets;
 
 
@@ -148,7 +171,7 @@ define module sockets
     \with-socket-thread,
     invoke-with-socket-thread,
     register-socket-thread,
-    unregister-socket-thread;				      
+    unregister-socket-thread;				
   create
     <internet-address>,
       <ipv4-address>,
@@ -187,26 +210,27 @@ define module sockets-internals
   use byte-vector;
   use unix-sockets,
     rename: {socket => unix-socket,
-             connect => unix-connect, 
+             connect => unix-connect,
 	     bind => unix-bind,
              listen => unix-listen,
 	     accept => unix-accept,
 	     htonl => unix-htonl, ntohl => unix-ntohl,
 	     htons => unix-htons, ntohs => unix-ntohs,
-	     gethostbyname => unix-gethostbyname, 
-	     getservbyname => unix-getservbyname, 
+	     gethostbyname => unix-gethostbyname,
+	     getservbyname => unix-getservbyname,
 	     gethostbyaddr => unix-gethostbyaddr,
 	     getsockname => unix-getsockname,
 	     getpeername => unix-getpeername,
-	     gethostname => unix-gethostname, 
+	     gethostname => unix-gethostname,
 	     <c-socket> => <unix-socket-descriptor>,
-	     close => unix-closesocket},
+	     close => unix-closesocket,
+             errno => unix-errno},
     exclude: {<socket>, // use <accessor-socket-descriptor>
 	      send,  //  use unix-send-buffer instead
 	      recv};  //  use unix-recv-buffer instead
 
   use sockets, export: all;
-  create 
+  create
     <general-TCP-socket>, <byte-char-TCP-socket>, <byte-TCP-socket>;
 
   create
