@@ -51,6 +51,9 @@ cd $SRCDIR
 autoconf
 automake -a
 libtoolize -c
+
+sudo cp Sources/lib/run-time/pentium-linux/dylan-elf-*.script /usr/local/lib/functional-developer/lib
+
 cd $BUILDDIR
 $SRCDIR/configure
 make
