@@ -165,7 +165,7 @@ define method do-execute-command
 	   output:               command.%output,
 	   progress-callback:    curry(note-build-progress, context),
 	   warning-callback:     curry(note-compiler-warning, context),
-	   error-handler:        #f))
+	   error-handler:        curry(compiler-condition-handler, context)))
       if (command.%link?)
 	let project-context = context.context-project-context;
 	let linker = command.%linker | project-context.context-linker;
@@ -179,7 +179,7 @@ define method do-execute-command
 	   unify?:               command.%unify?,
 	   messages:             messages,
 	   progress-callback:    curry(note-build-progress, context),
-	   error-handler:        #f)
+	   error-handler:        curry(compiler-condition-handler, context))
       end;
       message(context, "Build of '%s' completed", project.project-name)
     else
@@ -218,6 +218,57 @@ define method note-compiler-warning
   new-line(stream)
 end method note-compiler-warning;
 
+define method compiler-condition-handler
+    (context :: <environment-context>,
+     handler-type == #"project-not-found", 
+     library :: <string>)
+ => (filename :: false-or(<file-locator>))
+  ignore(handler-type);
+  choose-missing-project(context, library: library)
+end method compiler-condition-handler;
+
+define method compiler-condition-handler
+    (context :: <environment-context>,
+     handler-type == #"project-file-not-found", 
+     filename :: <string>)
+ => (filename :: false-or(<file-locator>))
+  ignore(handler-type);
+  choose-missing-project(context, filename: as(<file-locator>, filename))
+end method compiler-condition-handler;
+
+define function choose-missing-project
+    (context :: <environment-context>,
+     #key filename :: false-or(<file-locator>),
+          library :: false-or(<string>))
+ => (filename :: false-or(<file-locator>))
+  let prompt
+    = format-to-string("Project file for missing '%s':", 
+		       filename | library | "unknown");
+  command-line-choose-file(context.context-server, prompt: prompt)
+end function choose-missing-project;
+
+define method compiler-condition-handler
+    (context :: <environment-context>,
+     handler-type == #"link-error", message :: <string>)
+ => (filename :: singleton(#f))
+  command-error("Link failed: %s", message)
+end method compiler-condition-handler;
+
+define method compiler-condition-handler
+    (context :: <environment-context>,
+     handler-type == #"fatal-error", message :: <string>)
+ => (filename :: singleton(#f))
+  command-error("Fatal error: %s", message)
+end method compiler-condition-handler;
+
+define method compiler-condition-handler
+    (context :: <environment-context>,
+     handler-type == #"yes-no", 
+     message :: <string>)
+ => (yes? :: <boolean>)
+  command-line-question(context.context-server, message)
+end method compiler-condition-handler;
+
 
 /// Link command
 
@@ -249,7 +300,7 @@ define method do-execute-command
 	       process-subprojects?: command.%subprojects?,
 	       unify?:               command.%unify?,
 	       progress-callback:    curry(note-build-progress, context),
-	       error-handler:        #f,
+	       error-handler:        curry(compiler-condition-handler, context),
 	       messages:             messages)
 end method do-execute-command;
 
@@ -278,7 +329,7 @@ define method do-execute-command
   remove-project-build-products
     (project,
      process-subprojects?: command.%subprojects?,
-     error-handler:        #f)
+     error-handler:        curry(compiler-condition-handler, context))
 end method do-execute-command;
 
 

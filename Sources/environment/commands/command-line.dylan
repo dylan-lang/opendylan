@@ -880,6 +880,71 @@ define macro command-line-constant-definer
 end macro command-line-constant-definer;
 
 
+/// Command line user interface
+
+define method command-line-question
+    (server :: <command-line-server>, prompt :: <string>)
+ => (ok? :: <boolean>)
+  let input-stream  = server.server-input-stream;
+  let output-stream = server.server-output-stream;
+
+  iterate loop ()
+    new-line(output-stream);
+    format(output-stream, "%s ", prompt);
+    force-output(output-stream);
+
+    let answer = read-line(input-stream, on-end-of-stream: #f);
+
+    if (~answer)
+      #f
+    elseif (empty?(answer))
+      loop()
+    else
+      select (as-lowercase(answer) by \=)
+        "yes", "y" => #t;
+        "no", "n" => #f;
+        otherwise => loop();
+      end
+    end
+  end
+end method command-line-question;
+
+define method command-line-choose-file
+    (server :: <command-line-server>,
+     #key prompt :: false-or(<string>),
+          directory :: false-or(<directory-locator>) = #f,
+          default :: false-or(<file-system-locator>) = directory,
+          direction :: one-of(#"input", #"output") = #"input",
+          filters :: false-or(<sequence>) = #f,
+          filter :: false-or(<symbol>))
+ => (filename :: false-or(<file-locator>),
+     filter :: false-or(<symbol>))
+  let input-stream  = server.server-input-stream;
+  let output-stream = server.server-output-stream;
+
+  iterate loop ()
+    new-line(output-stream);
+    format(output-stream, "%s ", prompt);
+    force-output(output-stream);
+
+    let filename = read-line(input-stream, on-end-of-stream: #f);
+
+    case
+      ~filename => values(#f, #f);
+        
+      empty?(filename) => values(#f, #f);
+        
+      file-exists?(filename) =>
+        values(as(<file-locator>, filename), #f);
+
+      otherwise =>
+        message(server.server-context, "File %s does not exist", filename);
+        loop();
+    end
+  end
+end method command-line-choose-file;
+
+
 /// Aliases
 
 define class <command-line-alias> (<command-line>)

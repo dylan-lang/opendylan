@@ -159,7 +159,9 @@ define sealed method do-execute-command
   case
     project =>
       open-project-compiler-database
-	(project, warning-callback: curry(note-compiler-warning, context));
+	(project,
+         warning-callback:     curry(note-compiler-warning, context),
+         error-handler:        curry(compiler-condition-handler, context));
       project.project-opened-by-user? := #t;
       context.context-project := project;
       let project-context

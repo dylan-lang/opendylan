@@ -85,6 +85,10 @@ define module command-lines
          execute-command-line,
          execute-server-command;
 
+  // Command line user interface
+  export command-line-choose-file,
+         command-line-question;
+
   // Parsing
   export <parse-error>,
          parameter-type-name,
