@@ -1,6 +1,7 @@
 Library:      deuce-test-suite
 Synopsis:     Test suite for the Deuce editor
 Author:       Hugh Greene, Scott McKay
+Target-Type:	dll
 Files:	library
 	test-defs
 	bp-tests

@@ -1,4 +1,5 @@
 library:     remote-access-path
+Target-Type:	dll
 files:       library
              module
              nub-ffi-defs

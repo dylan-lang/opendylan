@@ -1,4 +1,5 @@
 library: tool-parser-generator
+Target-Type:	dll
 files:   library
 	 module
 	 tool-parser-generator

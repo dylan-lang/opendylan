@@ -1,6 +1,7 @@
 Library:   functional-dylan-test-suite
 Synopsis:  Functional Objects extensions library test suite
 Author:	   James Kirsch, Shri Amit, Andy Armstrong
+Target-Type:	dll
 Files: library
        specification
        variables

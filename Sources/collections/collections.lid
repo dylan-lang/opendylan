@@ -1,6 +1,7 @@
 Library:      collections
 Synopsis:     Collection extensions library
 Author:       Andy Armstrong
+Target-Type:	dll
 Files:	      library
               bit-vector
               bit-set

@@ -1,4 +1,5 @@
 library:  simple-downloader
+Target-Type:	dll
 files:    library-no-dfmc
           interactive-memory
           interactive-transactions

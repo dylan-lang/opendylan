@@ -1,4 +1,5 @@
 library:  interactive-downloader
+Target-Type:	dll
 files:    library
           interactive-memory
           interactive-transactions

@@ -1,6 +1,7 @@
 Library:   basic-pentium-dw
 Synopsis:  Dylan batch compiler - Pentium Back End
 Author:    Roman Budzianowski
+Target-Type:	executable
 Files:  basic-pentium-library
         module
         pentium-back-end

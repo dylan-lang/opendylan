@@ -1,4 +1,5 @@
 library: disasm
+Target-Type:	dll
 files:	 library
 	 disasm-class
 	 disasm-decode

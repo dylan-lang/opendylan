@@ -1,6 +1,7 @@
 Library:   enhanced-win32-environment
 Synopsis:  Win32 environment
 Author:	   Andy Armstrong
+Target-Type:	executable
 Files:	enhanced-library
 	module
 	initialization

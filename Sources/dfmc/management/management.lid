@@ -1,4 +1,5 @@
 library: dfmc-management
+Target-Type:	dll
 files:   management-library
 	 progress-reports
 	 passes

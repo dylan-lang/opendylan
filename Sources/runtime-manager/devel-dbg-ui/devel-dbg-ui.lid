@@ -1,4 +1,5 @@
 library: devel-dbg-ui
+Target-Type:	executable
 files:          library
                 primread-ffi-defs
                 command-reader

@@ -1,6 +1,7 @@
 library:      dood
 Synopsis:     The Dylan object-oriented database
 Author:       Jonathan Bachrach
+Target-Type:	dll
 Files: dood-library
        native-macros
        macros

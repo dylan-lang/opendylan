@@ -1,4 +1,5 @@
 Library: dfmc-pentium-harp-cg
+Target-Type:	dll
 Files:   pentium-harp-cg-library
          pentium-back-end
          pentium-primitives

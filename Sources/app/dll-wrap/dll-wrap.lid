@@ -1,4 +1,5 @@
 library:	dll-wrap
+Target-Type:	executable
 files:	library
 	module
 	dll-wrap

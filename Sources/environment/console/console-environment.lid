@@ -1,6 +1,7 @@
 Library:   console-environment
 Synopsis:  The command line version of the environment
 Author:	   Andy Armstrong
+Target-Type:	executable
 Files: library
        module
        command-line

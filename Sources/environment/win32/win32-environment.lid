@@ -1,6 +1,7 @@
 Library:   win32-environment
 Synopsis:  Win32 environment
 Author:	   Andy Armstrong
+Target-Type:	executable
 Files:	library
 	module
 	initialization

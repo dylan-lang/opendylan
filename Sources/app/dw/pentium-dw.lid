@@ -1,5 +1,6 @@
 Library:   pentium-dw
 Synopsis:  Dylan batch compiler - Pentium Back End
+Target-Type:	executable
 Files:  pentium-library
         module
         pentium-back-end

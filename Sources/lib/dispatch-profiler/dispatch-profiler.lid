@@ -1,4 +1,5 @@
 library: dispatch-profiler
+Target-Type:	dll
 files:   dispatch-profiler-library
          walk-dispatch
          dispatch-profiler

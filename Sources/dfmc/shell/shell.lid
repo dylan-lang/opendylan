@@ -1,5 +1,6 @@
 Library: dfmc-shell
 Synopsis: Dylan Shell compiler driver
+Target-Type:	dll
 Files:  library
         module
         projects

@@ -1,4 +1,5 @@
 library: coff-debug
+Target-Type:	dll
 files:	 library
 	 module
 	 coff-reader

@@ -1,6 +1,7 @@
 Library:      duim-deuce
 Synopsis:     DUIM back-end for Deuce
 Author:       Scott McKay
+Target-Type:	dll
 Files:  library
 	module
 	pane

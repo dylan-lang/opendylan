@@ -1,6 +1,7 @@
 Library:   big-integers
 Major-Version: 2
 Minor-Version: 1
+Target-Type:	dll
 Files:     library
 	   double-integer
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.

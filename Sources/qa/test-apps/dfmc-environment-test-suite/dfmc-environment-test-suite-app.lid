@@ -1,6 +1,7 @@
 Library:   dfmc-environment-test-suite-app
 Author:    Andy Armstrong
 Synopsis:  An application library for dfmc-environment-test-suite
+Target-Type:	executable
 Files: library
        start
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.

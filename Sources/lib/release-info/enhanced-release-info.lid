@@ -1,6 +1,7 @@
 Library:   enhanced-release-info
 Synopsis:  Functional Developer Enhanced Edition release information
 Author:    Andy Armstrong
+Target-Type:	dll
 Files:  enhanced-library
 	enhanced-module
         enhanced-info

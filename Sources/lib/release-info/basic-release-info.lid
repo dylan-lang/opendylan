@@ -1,6 +1,7 @@
 Library:   basic-release-info
 Synopsis:  Functional Developer Basic Edition release information
 Author:    Andy Armstrong
+Target-Type:	dll
 Files:  basic-library
 	basic-module
         basic-info

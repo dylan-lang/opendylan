@@ -1,4 +1,5 @@
 Library: file-source-records
+Target-Type:	dll
 Files:  file-source-records-library
 	header-reader
 	reader

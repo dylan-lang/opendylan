@@ -1,6 +1,7 @@
 Library:   licensing
 Author:    Gary Palter
 Synopsis:  License validate for Functional Developer
+Target-Type:	dll
 Files:     library
            no-licensing
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.

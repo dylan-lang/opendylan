@@ -5,6 +5,7 @@ Library-Pack: ODBC
 RC-Files:     version.rc
 Major-Version: 2
 Minor-Version: 1
+Target-Type:	dll
 files:	library
 	odbc-nice-layer
 	dbms

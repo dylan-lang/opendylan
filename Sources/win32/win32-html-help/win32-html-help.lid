@@ -5,6 +5,7 @@ Library-Pack: Win32
 RC-Files:     version.rc
 Major-Version: 2
 Minor-Version: 1
+Target-Type:	dll
 Files:	library
 	html-help
 Linker-Options: HTMLHELP.LIB

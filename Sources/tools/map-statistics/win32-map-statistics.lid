@@ -1,6 +1,7 @@
 Library:   map-statistics
 Synopsis:  Library for handling Win32 map files
 Author:	   Andy Armstrong
+Target-Type:	executable
 Files:	library
 	module
         reports

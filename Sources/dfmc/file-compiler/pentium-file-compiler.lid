@@ -1,4 +1,5 @@
 Library: dfmc-pentium-file-compiler
+Target-Type:	dll
 Files:   pentium-file-compiler-library
 	 debug
          metering

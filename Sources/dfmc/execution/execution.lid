@@ -1,4 +1,5 @@
 library: dfmc-execution
+Target-Type:	dll
 files:   execution-library
          execution
          runtime-execution

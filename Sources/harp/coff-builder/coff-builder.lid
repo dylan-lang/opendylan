@@ -1,4 +1,5 @@
 library: coff-builder
+Target-Type:	dll
 files:	 library
 	 coff-builder
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.

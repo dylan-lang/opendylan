@@ -1,4 +1,5 @@
 library: parser-compiler
+Target-Type:	executable
 files:	library
 	main
 	run

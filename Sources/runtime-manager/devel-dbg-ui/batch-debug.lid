@@ -1,4 +1,5 @@
 library: batch-debug
+Target-Type:	executable
 files:       batch-library
              primread-ffi-defs
              command-reader

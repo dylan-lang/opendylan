@@ -1,6 +1,7 @@
 Library:   basic-console-compiler
 Synopsis:  The command line version of the environment
 Author:	   Andy Armstrong
+Target-Type:	executable
 Files: basic-compiler-library
        compiler-module
        command-line

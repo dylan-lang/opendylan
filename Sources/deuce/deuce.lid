@@ -1,6 +1,7 @@
 Library:      deuce
 Synopsis:     The Deuce ("Dylan Environment Universal Code Editor") editor
 Author:       Scott McKay
+Target-Type:	dll
 Files:  library
 	module
 	native-stubs

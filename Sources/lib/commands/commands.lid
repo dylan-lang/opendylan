@@ -1,6 +1,7 @@
 Library:      Commands
 Synopsis:     Commands
 Author:       Scott McKay, Hugh Greene
+Target-Type:	dll
 Files:  library
 	module
 	commands

@@ -5,6 +5,7 @@ Author:       Andy Armstrong
 Executable:   DxCMNDYL
 Base-Address: 0x66DC0000
 RC-Files:     version.rc
+Target-Type:	dll
 Files: library
        macros
        common-extensions

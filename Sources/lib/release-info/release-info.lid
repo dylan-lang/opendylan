@@ -1,6 +1,7 @@
 Library:   release-info
 Synopsis:  Functional Developer release information
 Author:    Andy Armstrong
+Target-Type:	dll
 Files:  library
 	module
 	xml

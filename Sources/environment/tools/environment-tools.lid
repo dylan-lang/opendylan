@@ -1,6 +1,7 @@
 Library:   environment-tools
 Synopsis:  Environment tools library
 Author:	   Andy Armstrong, Chris Page
+Target-Type:	dll
 Files:	library
 	module
         utilities

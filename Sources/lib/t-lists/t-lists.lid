@@ -1,4 +1,5 @@
 Library: t-lists
+Target-Type:	dll
 Files:   library
 	 t-lists
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.

@@ -1,4 +1,5 @@
 Library: user-projects
+Target-Type:	dll
 Files:   library
 	 disk-layout
 	 interactive-project

@@ -1,6 +1,7 @@
 Library:      testworks-specs
 Synopsis:     A library for building specification test suites
 Author:       Andy Armstrong
+Target-Type:	dll
 Files: library
        specs
        protocol-specs

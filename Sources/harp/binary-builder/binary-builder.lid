@@ -1,4 +1,5 @@
 library: binary-builder
+Target-Type:	dll
 files:	 library
 	 builder
 	 sections

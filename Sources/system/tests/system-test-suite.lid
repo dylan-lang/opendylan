@@ -1,6 +1,7 @@
 Library:      system-test-suite
 Synopsis:     System library test suite
 Author:	      Andy Armstrong
+Target-Type:	dll
 Files: library
        specification
        temp-files

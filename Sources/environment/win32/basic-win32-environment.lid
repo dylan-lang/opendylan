@@ -1,6 +1,7 @@
 Library:   basic-win32-environment
 Synopsis:  Win32 environment
 Author:	   Andy Armstrong
+Target-Type:	executable
 Files:	basic-library
 	module
 	initialization

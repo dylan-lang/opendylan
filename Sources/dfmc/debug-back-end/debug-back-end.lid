@@ -1,4 +1,5 @@
 library: dfmc-debug-back-end
+Target-Type:	dll
 files:   debug-back-end-library
          debug
 	 c-debug

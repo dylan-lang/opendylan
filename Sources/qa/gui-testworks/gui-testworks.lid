@@ -1,6 +1,7 @@
 Library:      gui-testworks
 Synopsis:     GUI-TestWorks - a simple GUI wrapper for TestWorks
 Author:	      Hugh Greene
+Target-Type:	dll
 Files:	gui-testworks-lib
 	progress-window
 Other-files:   Open-Source-License.txt

@@ -1,4 +1,5 @@
 library: binary-manager
+Target-Type:	dll
 files:	 library
          representation
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.

@@ -1,4 +1,5 @@
 library: coff-manager
+Target-Type:	dll
 files:	 library
 	 module
          coff-constants

@@ -1,6 +1,7 @@
 Library:      test-report
 Synopsis:     A tool to generate reports from test run logs
 Author:	      Shri Amit, Andy Armstrong
+Target-Type:	executable
 Files:	library
         initialize
         log-reader

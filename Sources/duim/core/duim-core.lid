@@ -1,6 +1,7 @@
 Library:      duim-core
 Synopsis:     DUIM core
 Author:       Scott McKay, Andy Armstrong
+Target-Type:	dll
 Files:  library
 	module
 Other-files:   Open-Source-License.txt

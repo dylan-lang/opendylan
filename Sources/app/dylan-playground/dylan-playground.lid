@@ -7,6 +7,7 @@ Minor-Version:	  1
 Compilation-Mode: loose
 Target-Type:	  executable
 Start-Function:   main
+Target-Type:	executable
 Files:	library
 	module
 	dylan-playground

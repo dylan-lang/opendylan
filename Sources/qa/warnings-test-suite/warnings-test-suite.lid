@@ -1,6 +1,7 @@
 Library:      warnings-test-suite
 Synopsis:     A test suite for compiler warnings
 Author:       Andy Armstrong
+Target-Type:	dll
 Files: library
        module
        syntax

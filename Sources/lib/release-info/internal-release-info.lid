@@ -1,6 +1,7 @@
 Library:   internal-release-info
 Synopsis:  Functional Developer Internal release information
 Author:    Andy Armstrong
+Target-Type:	dll
 Files:  internal-library
 	internal-module
         internal-info

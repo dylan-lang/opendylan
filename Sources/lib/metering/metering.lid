@@ -1,4 +1,5 @@
 Library: metering
+Target-Type:	dll
 Files:   metering-library
          metering
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.

@@ -1,6 +1,7 @@
 Library:   environment-deuce
 Synopsis:  Environment Deuce
 Author:    Scott McKay, Hugh Greene, Andy Armstrong, Chris Page
+Target-Type:	dll
 Files: library
        module
        editor

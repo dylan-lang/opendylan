@@ -1,5 +1,6 @@
 Library:   basic-environment-project-wizard
 Author:    Jason Trenouth, Hugh Greene
+Target-Type:	dll
 Files: 	basic-library
 	basic-module
 	dummy-motley

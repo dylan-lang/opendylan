@@ -1,6 +1,7 @@
 Library:   build-system
 Synopsis:  A build-system for Dylan PC Applications in Dylan
 Author:	   Nosa Omo, Peter S. Housel
+Target-Type:	dll
 Files:   library
          paths
 	 variables

@@ -7,6 +7,7 @@ Library-Pack: OLE
 RC-Files:     version.rc
 Major-Version: 2
 Minor-Version: 1
+Target-Type:	dll
 Files:	library
 	framework
 	ipsi

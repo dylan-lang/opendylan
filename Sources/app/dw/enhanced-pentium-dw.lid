@@ -1,6 +1,7 @@
 Library:   enhanced-pentium-dw
 Synopsis:  Dylan batch compiler - Pentium Back End
 Author:    Roman Budzianowski
+Target-Type:	executable
 Files:  enhanced-pentium-library
         module
         pentium-back-end

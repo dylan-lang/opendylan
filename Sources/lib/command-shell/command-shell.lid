@@ -1,5 +1,6 @@
 Library: command-shell
 Synopsis: generic command processing utility
+Target-Type:	dll
 Files:  library
 	command-args
 	shell

@@ -1,6 +1,7 @@
 Library:   DUIM
 Synopsis:  DUIM core + Win32 backend
 Author:	   Scott McKay, Andy Armstrong
+Target-Type:	dll
 Files:     duim-library
 Major-version: 2
 Minor-version: 1

@@ -1,4 +1,5 @@
 Library: c-lexer
+Target-Type:	dll
 Files:   library
 	 with-dfmc
 	 utilities/c-lexer-utilities

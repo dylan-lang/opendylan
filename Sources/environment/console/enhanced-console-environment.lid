@@ -1,6 +1,7 @@
 Library:   enhanced-console-environment
 Synopsis:  The command line version of the environment
 Author:	   Andy Armstrong
+Target-Type:	executable
 Files: enhanced-library
        module
        command-line

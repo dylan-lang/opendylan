@@ -1,6 +1,7 @@
 Library:   functional-dylan
 Major-Version: 2
 Minor-Version: 1
+Target-Type:	dll
 Files:     library
            macros
            functional-extensions

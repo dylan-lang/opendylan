@@ -1,4 +1,5 @@
 library: debugger-manager
+Target-Type:	dll
 files:   library
          registration
          debug-target

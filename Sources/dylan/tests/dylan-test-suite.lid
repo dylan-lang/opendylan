@@ -1,6 +1,7 @@
 Library:      dylan-test-suite
 Synopsis:     A Dylan test suite
 Author:       Andy Armstrong
+Target-Type:	dll
 Files:  library
 	module
 	specification

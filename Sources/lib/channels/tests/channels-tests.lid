@@ -1,6 +1,7 @@
 Module: channels-tests
 Author: Jason Trenouth
 Library: channels-tests
+Target-Type:	executable
 Files:	library
 	channels
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.

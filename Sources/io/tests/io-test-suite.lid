@@ -3,6 +3,7 @@ Synopsis:     IO library test suite
 Author:       Andy Armstrong, et al...
 Major-Version: 2
 Minor-Version: 1
+Target-Type:	dll
 Files:	library
 	specification
 	streams

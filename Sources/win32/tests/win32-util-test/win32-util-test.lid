@@ -1,5 +1,6 @@
 Library:   win32-util-test
 Synopsis:  Tests utility functions in the Win32-common library.
+Target-Type:	executable
 Files:	library
 	test
 	types

@@ -1,5 +1,6 @@
 Library:      collections-test-suite
 Synopsis:     Collections library test suite
+Target-Type:	dll
 Files:     library
            bit-vector-utilities
            bit-vector-elements

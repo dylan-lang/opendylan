@@ -1,6 +1,7 @@
 Library:   dylan
 Major-Version: 2
 Minor-Version: 1
+Target-Type:	dll
 Files:     dfmc-boot
            macros
            thread-macros

@@ -1,5 +1,6 @@
 Library:   environment-project-wizard
 Author:    Jason Trenouth, Hugh Greene
+Target-Type:	dll
 Files: 	library
 	module
 	utilities

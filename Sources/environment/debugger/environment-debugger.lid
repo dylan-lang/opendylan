@@ -1,6 +1,7 @@
 Library:   environment-debugger
 Synopsis:  Environment debugger
 Author:    Bill Chiles, Jason Trenouth, Andy Armstrong
+Target-Type:	dll
 Files:	library
 	module
     	utilities

@@ -1,6 +1,7 @@
 Library:      channels
 Synopsis:     broadcast-calling library
 Author:       Jason Trenouth
+Target-Type:	dll
 Files:	library
 	channels
 Other-Files:   Open-Source-License.txt

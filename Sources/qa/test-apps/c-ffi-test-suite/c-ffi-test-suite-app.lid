@@ -1,6 +1,7 @@
 Library:   c-ffi-test-suite-app
 Author:    Shri Amit
 Synopsis:  An application library for test-suite c-ffi-test-suite
+Target-Type:	executable
 Files: c-ffi-test-suite-app-lib
        c-ffi-test-suite-app
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.

@@ -1,6 +1,7 @@
 Library:      duim-sheets
 Synopsis:     DUIM sheets
 Author:       Scott McKay, Andy Armstrong
+Target-Type:	dll
 Files:  library
 	module
         macros

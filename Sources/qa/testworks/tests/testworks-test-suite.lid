@@ -1,6 +1,7 @@
 Library:      testworks-test-suite
 Synopsis:     testworks-test-suite library definition
 Author:	      Andy Armstrong, James Kirsch, Shri Amit
+Target-Type:	dll
 Files: testworks-test-suite-lib
        testworks-test-suite
 Other-files:   Open-Source-License.txt
