@@ -34,7 +34,7 @@ all:	@bootstrap_target@
 stage-1-bootstrap: \
 		Bootstrap.1 \
 		Bootstrap.1/lib/$(fd_build)-build.jam \
-		$(srcdir)/Sources/bootstrap1-registry \
+		$(srcdir)/sources/bootstrap1-registry \
 		Bootstrap.1/bin/minimal-console-compiler
 
 Bootstrap.1:
@@ -44,11 +44,11 @@ Bootstrap.1:
 	mkdir Bootstrap.1/bin
 	mkdir Bootstrap.1/lib
 
-Bootstrap.1/lib/$(fd_build)-build.jam: Bootstrap.1 $(srcdir)/Sources/lib/run-time/pentium-linux/$(fd_build)-build.jam
-	cp $(srcdir)/Sources/lib/run-time/pentium-linux/$(fd_build)-build.jam \
+Bootstrap.1/lib/$(fd_build)-build.jam: Bootstrap.1 $(srcdir)/sources/lib/run-time/pentium-linux/$(fd_build)-build.jam
+	cp $(srcdir)/sources/lib/run-time/pentium-linux/$(fd_build)-build.jam \
 	   Bootstrap.1/lib/$(fd_build)-build.jam
 
-BOOTSTRAP1_REGISTRY = $(srcdir)/Sources/bootstrap1-registry
+BOOTSTRAP1_REGISTRY = $(srcdir)/sources/bootstrap1-registry
 BOOTSTRAP1_LIBS = \
 		dylan functional-extensions machine-word byte-vector \
 		threads transcendentals functional-dylan \
@@ -71,8 +71,8 @@ BOOTSTRAP1_LIBS = \
 
 $(BOOTSTRAP1_REGISTRY):
 	mkdir $(BOOTSTRAP1_REGISTRY)
-	cp -r $(srcdir)/Sources/registry/generic $(BOOTSTRAP1_REGISTRY)
-	cp -r $(srcdir)/Sources/registry/$(fd_build) $(BOOTSTRAP1_REGISTRY)
+	cp -r $(srcdir)/sources/registry/generic $(BOOTSTRAP1_REGISTRY)
+	cp -r $(srcdir)/sources/registry/$(fd_build) $(BOOTSTRAP1_REGISTRY)
 	for lib in $(BOOTSTRAP1_LIBS); do \
 	  rm -f $(BOOTSTRAP1_REGISTRY)/generic/$$lib; \
 	  rm -f $(BOOTSTRAP1_REGISTRY)/$(fd_build)/$$lib; \
@@ -85,7 +85,7 @@ Bootstrap.1/bin/minimal-console-compiler:
 	  FUNCTIONAL_DEVELOPER_USER_ROOT=$(abs_builddir)/Bootstrap.1 \
 	  FUNCTIONAL_DEVELOPER_USER_INSTALL=$(abs_builddir)/Bootstrap.1 \
 	  FUNCTIONAL_DEVELOPER_USER_REGISTRIES=$(BOOTSTRAP1_REGISTRY) \
-	  FUNCTIONAL_DEVELOPER_USER_SOURCES=$(abs_srcdir)/Sources \
+	  FUNCTIONAL_DEVELOPER_USER_SOURCES=$(abs_srcdir)/sources \
 	  FUNCTIONAL_DEVELOPER_USER_BUILD=$(abs_builddir)/Bootstrap.1/build \
 	  $(fdmake) --compiler="$(FDCOMPILE)" minimal-console-compiler
 
@@ -102,15 +102,15 @@ Bootstrap.2:
 Bootstrap.2/bin/minimal-console-compiler: stage-1-bootstrap
 	@echo Building stage 2 bootstrap...
 	FUNCTIONAL_DEVELOPER_USER_INSTALL=$(abs_builddir)/Bootstrap.2 \
-	  $(MAKE) -C $(abs_srcdir)/Sources/lib/run-time/pentium-linux install
+	  $(MAKE) -C $(abs_srcdir)/sources/lib/run-time/pentium-linux install
 	@FUNCTIONAL_DEVELOPER_PLATFORM_NAME=$(fd_build) \
 	  FUNCTIONAL_DEVELOPER_RELEASE_ROOT=$(abs_builddir)/Bootstrap.2 \
 	  FUNCTIONAL_DEVELOPER_RELEASE_INSTALL=$(abs_builddir)/Bootstrap.2 \
 	  FUNCTIONAL_DEVELOPER_BUILD_LOGS=$(abs_builddir)/Bootstrap.2/logs \
 	  FUNCTIONAL_DEVELOPER_USER_ROOT=$(abs_builddir)/Bootstrap.2 \
 	  FUNCTIONAL_DEVELOPER_USER_INSTALL=$(abs_builddir)/Bootstrap.2 \
-	  FUNCTIONAL_DEVELOPER_USER_REGISTRIES=$(abs_srcdir)/Sources/registry \
-	  FUNCTIONAL_DEVELOPER_USER_SOURCES=$(abs_srcdir)/Sources \
+	  FUNCTIONAL_DEVELOPER_USER_REGISTRIES=$(abs_srcdir)/sources/registry \
+	  FUNCTIONAL_DEVELOPER_USER_SOURCES=$(abs_srcdir)/sources \
 	  FUNCTIONAL_DEVELOPER_USER_BUILD=$(abs_builddir)/Bootstrap.2/build \
 	  $(fdmake) --compiler="Bootstrap.1/bin/minimal-console-compiler -build -save" \
 		    minimal-console-compiler
@@ -128,14 +128,14 @@ Bootstrap.3:
 Bootstrap.3/bin/minimal-console-compiler: stage-2-bootstrap
 	@echo Building stage 3 bootstrap...
 	FUNCTIONAL_DEVELOPER_USER_INSTALL=$(abs_builddir)/Bootstrap.3 \
-	  $(MAKE) -C $(abs_srcdir)/Sources/lib/run-time/pentium-linux install
+	  $(MAKE) -C $(abs_srcdir)/sources/lib/run-time/pentium-linux install
 	@FUNCTIONAL_DEVELOPER_PLATFORM_NAME=$(fd_build) \
 	  FUNCTIONAL_DEVELOPER_RELEASE_ROOT=$(abs_builddir)/Bootstrap.2 \
 	  FUNCTIONAL_DEVELOPER_BUILD_LOGS=$(abs_builddir)/Bootstrap.3/logs \
 	  FUNCTIONAL_DEVELOPER_USER_ROOT=$(abs_builddir)/Bootstrap.3 \
 	  FUNCTIONAL_DEVELOPER_USER_INSTALL=$(abs_builddir)/Bootstrap.3 \
-	  FUNCTIONAL_DEVELOPER_USER_REGISTRIES=$(abs_srcdir)/Sources/registry \
-	  FUNCTIONAL_DEVELOPER_USER_SOURCES=$(abs_srcdir)/Sources \
+	  FUNCTIONAL_DEVELOPER_USER_REGISTRIES=$(abs_srcdir)/sources/registry \
+	  FUNCTIONAL_DEVELOPER_USER_SOURCES=$(abs_srcdir)/sources \
 	  FUNCTIONAL_DEVELOPER_USER_BUILD=$(abs_builddir)/Bootstrap.3/build \
 	  $(fdmake) --compiler="Bootstrap.2/bin/minimal-console-compiler -build -save" \
 		    minimal-console-compiler
@@ -153,8 +153,8 @@ FINAL_ENV = \
 	FUNCTIONAL_DEVELOPER_BUILD_LOGS=$(abs_builddir)/Bootstrap.final/logs \
 	FUNCTIONAL_DEVELOPER_USER_ROOT=$(abs_builddir)/Bootstrap.final \
 	FUNCTIONAL_DEVELOPER_USER_INSTALL=$(abs_builddir)/Bootstrap.final \
-	FUNCTIONAL_DEVELOPER_USER_REGISTRIES=$(abs_srcdir)/Sources/registry \
-	FUNCTIONAL_DEVELOPER_USER_SOURCES=$(abs_srcdir)/Sources \
+	FUNCTIONAL_DEVELOPER_USER_REGISTRIES=$(abs_srcdir)/sources/registry \
+	FUNCTIONAL_DEVELOPER_USER_SOURCES=$(abs_srcdir)/sources \
 	FUNCTIONAL_DEVELOPER_USER_BUILD=$(abs_builddir)/Bootstrap.final/build
 
 FINAL_LIBRARIES = \
@@ -164,7 +164,7 @@ FINAL_LIBRARIES = \
 final-bootstrap: Bootstrap.final
 	@echo Building final stage bootstrap...
 	FUNCTIONAL_DEVELOPER_USER_INSTALL=$(abs_builddir)/Bootstrap.final \
-	  $(MAKE) -C $(abs_srcdir)/Sources/lib/run-time/pentium-linux install
+	  $(MAKE) -C $(abs_srcdir)/sources/lib/run-time/pentium-linux install
 	@$(FINAL_ENV) $(fdmake) --compiler="$(FDCOMPILE)" \
 		$(FINAL_LIBRARIES) --library-packs="$(LIBRARY_PACKS)"
 
@@ -176,7 +176,7 @@ install-strip:
 
 clean:
 	rm -rf Bootstrap.1 Bootstrap.2 Bootstrap.3 Bootstrap.final
-	rm -rf $(srcdir)/Sources/bootstrap1-registry
+	rm -rf $(srcdir)/sources/bootstrap1-registry
 
 distclean:
 

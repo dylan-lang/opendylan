@@ -78,6 +78,6 @@ AC_MSG_RESULT($LIBRARY_PACKS)
 AC_SUBST(LIBRARY_PACKS)
 
 # for now, replace mps only in pentium-linux
-AC_CONFIG_FILES(Makefile Sources/lib/run-time/pentium-linux/Makefile)
+AC_CONFIG_FILES(Makefile sources/lib/run-time/pentium-linux/Makefile)
 
 AC_OUTPUT
