@@ -513,12 +513,15 @@ end method library-project;
 define variable *link-error-handler* = #f;
 
 define sealed method link-project-progress
-    (message :: <string>, #key error?, phases, phase) => ()
+    (message :: <string>, #key error?, warning?, phases, phase) => ()
   case
     error? =>
       //---*** Should do something better with linker errors
       *link-error-handler*
 	& *link-error-handler*(#"link-error", message);
+    warning? =>
+      *link-error-handler*
+	& *link-error-handler*(#"link-warning", message);
     phases =>
       *progress-section*  := message;
       *progress-message*  := "";

@@ -256,6 +256,13 @@ end method compiler-condition-handler;
 
 define method compiler-condition-handler
     (context :: <environment-context>,
+     handler-type == #"link-warning", warning-message :: <string>)
+ => (filename :: singleton(#f))
+  message(context, "%s", warning-message);
+end method compiler-condition-handler;
+
+define method compiler-condition-handler
+    (context :: <environment-context>,
      handler-type == #"fatal-error", message :: <string>)
  => (filename :: singleton(#f))
   command-error("Fatal error: %s", message)

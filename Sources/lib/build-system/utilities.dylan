@@ -255,6 +255,8 @@ define method echo(notifier, format-string :: <string>, #rest args) => ()
 	*build*.format-function(message, phase: *build*.build-phase);
       $error-notifier =>
 	*build*.format-function(message, error?: #t);
+      $warning-notifier =>
+	*build*.format-function(message, warning?: #t);
       otherwise =>
 	*build*.format-function(message)
     end select;
@@ -337,7 +339,7 @@ end method;
 define method build-warning(format-string :: <string>, #rest args) => ()
   if (*build* & *build*.format-function)
     apply(echo,
-	  $error-notifier,
+	  $warning-notifier,
 	  concatenate("Build Warning: ", format-string),
 	  args);
   else

@@ -178,6 +178,7 @@ end class;
 define constant $stage-notifier = make(<build-notifier>);
 define constant $phase-notifier = make(<build-notifier>);
 define constant $error-notifier = make(<build-notifier>);
+define constant $warning-notifier = make(<build-notifier>);
 
 // Wrap this around anything which constitutes a single "build
 // transaction".

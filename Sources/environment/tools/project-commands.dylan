@@ -626,6 +626,13 @@ end method compiler-condition-handler;
 
 define method compiler-condition-handler
     (frame :: <environment-frame>,
+     handler-type == #"link-warning", message :: <string>)
+ => (filename :: singleton(#f))
+  environment-warning-message(message, owner: frame)
+end method compiler-condition-handler;
+
+define method compiler-condition-handler
+    (frame :: <environment-frame>,
      handler-type == #"fatal-error", message :: <string>)
  => (filename :: singleton(#f))
   error(make(<project-error>,
