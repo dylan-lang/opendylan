@@ -792,19 +792,19 @@ define method stream-contents
   if (~readable?(stream))
     if (write-only?(stream))
       error("Cannot use stream-contents on an output only file stream: %=",
-	    stream.accessor.locator);
+	    stream.stream-locator);
     elseif (closed?(stream))
       error(make(<stream-closed-error>, stream: stream,
 		 format-string: 
 		   "Can't set call stream-contents on a closed stream")); 
     else
       error("Cannot call stream-contents. Stream isn't readable: %=",
-	    stream.accessor.locator);
+	    stream.stream-locator);
     end if;
   elseif (clear-contents?)
     error ("Cannot use clear-contents? keyword argument to streams-contents"
            " when the stream is a subclass of <file-stream>: %=",
-	   stream.accessor.locator);
+	   stream.stream-locator);
   else
     let original-position = stream-position(stream);
     force-output(stream);

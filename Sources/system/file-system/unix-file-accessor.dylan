@@ -15,8 +15,6 @@ define constant $preferred-buffer-size = 8192; // size for alphas
 define sealed class <unix-file-accessor> (<external-file-accessor>)
   slot file-descriptor :: false-or(<integer>) = #f;
   slot file-position :: <integer> = -1;
-  constant slot locator,
-    required-init-keyword: locator:;
   constant slot asynchronous? :: <boolean> = #f, 
     init-keyword: asynchronous?:;
 end class <unix-file-accessor>;
@@ -58,6 +56,7 @@ define constant $file_create_permissions = 420;
 define method accessor-open
     (accessor :: <unix-file-accessor>,
      #key direction = #"input", if-exists, if-does-not-exist,
+       locator,
        fd: initial-file-descriptor = #f,  // :: false-or(type-union(<integer>, <machine-word>))
        file-position: initial-file-position = #f, // :: false-or(<integer>)?
        file-size: initial-file-size = #f, // :: false-or(<integer>)?
@@ -78,13 +77,14 @@ define method accessor-open
     end if;
     // This is a hack which should be replaced by using the file-handle: and
     // file-position: and file-size: keywords
-    if (instance?(accessor.locator, <integer>))
-      accessor.file-descriptor := accessor.locator;
+    if (instance?(locator, <integer>))
+      accessor.file-descriptor := locator;
       accessor.file-size := 0;
       accessor.file-position := 0;
       return()
     end;
-    let pathstring = as(<string>, accessor.locator);
+    let locator = expand-pathname(locator);
+    let pathstring = as(<string>, locator);
     let exists = unix-file-exists?(pathstring);
     let (mode-code, if-exists, if-does-not-exist)
       = select (direction)
@@ -105,8 +105,7 @@ define method accessor-open
       = if (exists)
 	  select (if-exists)
 	    #"signal" =>
-	      return(signal(make(<file-exists-error>,
-				 locator: accessor.locator)));
+	      return(signal(make(<file-exists-error>, locator: locator)));
 	    #"new-version", #"replace" =>
 	      if (unix-delete-file(pathstring))
 		logior(mode-code, $o_creat);
@@ -114,7 +113,7 @@ define method accessor-open
 		let errno = unix-errno-value();
 		if (errno = $e_access)
 		  return(signal(make(<invalid-file-permissions-error>,
-				     locator: accessor.locator)));
+				     locator: locator)));
 		else
 		  unix-error("unlink", errno: errno);
 		end;
@@ -128,7 +127,7 @@ define method accessor-open
 	  select (if-does-not-exist)
 	    #"signal" =>
 	      return(signal(make(<file-does-not-exist-error>,
-				 locator: accessor.locator)));
+				 locator: locator)));
 	    #"create" =>
 	      logior(mode-code, $o_creat);
 	  end
@@ -138,7 +137,7 @@ define method accessor-open
       let errno = unix-errno-value();
       if (errno = $e_access)
 	return(signal(make(<invalid-file-permissions-error>,
-			   locator: accessor.locator)));
+			   locator: locator)));
       else
 	return(unix-error(concatenate("open(\"", pathstring, "\")"),
 			  errno: errno));
