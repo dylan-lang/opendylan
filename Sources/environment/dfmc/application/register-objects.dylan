@@ -81,6 +81,40 @@ define method register-contents
 end method;
 
 
+///// REGISTER-CONTENTS-ADDRESS (Environment Protocols)
+
+define method register-contents-address
+    (application :: <dfmc-application>, reg :: <register-object>,
+     thread :: <thread-object>,
+     #key stack-frame-context = #f)
+ => (obj :: false-or(<address-object>))
+  let target = application.application-target-app;
+  let obj = #f;
+  perform-debugger-transaction
+    (target,
+     method ()
+       let path = target.debug-target-access-path;
+       let reg-proxy = reg.application-object-proxy;
+       let remote-thread = thread.application-object-proxy;
+       let frame = stack-frame-context & 
+                   stack-frame-context.application-object-proxy;
+       let low-level-frame =
+         if (instance?(frame, <call-frame>))
+           call-frame-description(target, frame)
+         end if;
+       let context-sensitive-register = 
+         active-register(path, remote-thread, reg-proxy);
+       let value = 
+         read-value(path, context-sensitive-register,
+                    stack-frame: low-level-frame);
+       obj := make-environment-object(<address-object>,
+                                      project: application.server-project,
+                                      application-object-proxy: value);
+     end method);
+  obj
+end method;
+
+
 ///// LOOKUP-REGISTER-BY-NAME (Environment Protocols)
 
 define method lookup-register-by-name

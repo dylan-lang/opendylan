@@ -144,6 +144,7 @@ define module environment-protocols
          application-registers,
          do-application-registers,
          register-contents,
+         register-contents-address,
          lookup-register-by-name;
 
   // Component objects

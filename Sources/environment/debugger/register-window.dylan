@@ -16,11 +16,12 @@ define frame <register-window>
     make(<table-control-displayer>,
 	 element-label: "register",
 	 children-generator: curry(frame-thread-registers, frame),
-	 headings: #["Name", "Value"],
-	 widths: #[50, 800],
+	 headings: #["Name", "Raw", "Value"],
+	 widths: #[50, 80, 800],
 	 generators: vector(wrapper-register,
+                            wrapper-raw-value,
 			    wrapper-object),
-	 sort-orders: #[#"name", #"value"],
+	 sort-orders: #[#"name", #"raw", #"value"],
 	 sort-order:  #"name",
 	 sort-function: curry(frame-sort-thread-registers, frame),
 	 label-key: curry(register-window-label, frame),
@@ -111,6 +112,8 @@ end method generate-frame-title;
 /// Register handling
 
 define sealed class <register-wrapper> (<object-wrapper>)
+  constant sealed slot wrapper-raw-value :: false-or(<address-object>),
+    required-init-keyword: raw-value:;
   constant sealed slot wrapper-register :: <register-object>,
     required-init-keyword: register:;
 end class <register-wrapper>;
@@ -126,9 +129,11 @@ define method frame-thread-registers
   let project = debugger.ensure-frame-project;
   map(method (register :: <register-object>)
 	let object = frame-register-contents(frame, register);
+        let raw-value = frame-raw-register-contents(frame, register);
 	make(<register-wrapper>,
-	     object:   object,
-	     register: register)
+	     object:    object,
+             raw-value: raw-value,
+	     register:  register)
       end,
       project.application-registers)
 end method frame-thread-registers;
@@ -153,6 +158,17 @@ define method frame-register-contents
 		    stack-frame-context: stack-frame)
 end method frame-register-contents;
 
+define method frame-raw-register-contents
+    (frame :: <register-window>, register :: <register-object>)
+ => (contents :: false-or(<address-object>))
+  let debugger :: <debugger> = frame.frame-owner;
+  let project = debugger.ensure-frame-project;
+  let thread = debugger.debugger-thread;
+  let stack-frame = debugger.debugger-current-stack-frame;
+  register-contents-address(project, register, thread,
+                            stack-frame-context: stack-frame)
+end method frame-raw-register-contents;
+
 define method frame-sort-thread-registers
     (frame :: <register-window>, registers :: <sequence>,
      order :: <symbol>)
@@ -162,6 +178,7 @@ define method frame-sort-thread-registers
     (frame, registers,
      key: select (order)
 	    #"name"  => wrapper-register;
+	    #"raw"   => wrapper-raw-value;
 	    #"value" => wrapper-object;
 	  end)
 end method frame-sort-thread-registers;

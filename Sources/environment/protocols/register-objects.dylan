@@ -88,10 +88,47 @@ define method register-contents
 end method;
 
 
+///// REGISTER-CONTENTS-ADDRESS
+//    Synopsis: Within the appropriate context, retrieves the value stored
+//              in a register, and represents it as an address
+//    Inputs:
+//      server      - The dispatching context.
+//      reg         - The register to examine.
+//      thread      - The thread context in which to read the register.
+//                    (It is assumed that registers are a thread-local
+//                    resource on all platforms).
+//      stack-frame-context
+//                    On different platforms, varying numbers of registers
+//                    are saved per stack frame. If a <stack-frame-object>
+//                    is supplied via this keyword, and the corresponding
+//                    register is stack-frame local, then the appropriate
+//                    value will be retrieved. Where this is not possible,
+//                    the basic thread-local value will be used regardless of
+//                    the frame context.
+//    Results:
+//      obj         - The register's context, interpreted as an 
+//                    address <application-object>.
+
+define open generic register-contents-address
+    (server :: <server>, reg :: <register-object>, thread :: <thread-object>,
+     #key stack-frame-context)
+ => (obj :: false-or(<address-object>));
+
+define method register-contents-address
+    (project :: <project-object>, reg :: <register-object>,
+     thread :: <thread-object>,
+     #key stack-frame-context = #f)
+  => (obj :: false-or(<address-object>))
+  let server = choose-server(project, reg);
+  server & register-contents-address(server, reg, thread, 
+                                     stack-frame-context: stack-frame-context)
+end method;
+
+
 ///// LOOKUP-REGISTER-BY-NAME
 //    Synopsis: Tries to find a register object corresponding to a given
 //              name.
-//    Inputs:
+++ Sources/runtime-manager/debugger-manager/print-inspect.dylan	16 Apr 2004 20:15:00 -0000
 //      server      - The dispatching context.
 //      name        - The candidate register name.
 //    Outputs:

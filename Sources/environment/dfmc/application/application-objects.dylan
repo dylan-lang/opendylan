@@ -125,7 +125,7 @@ define method environment-class-for-runtime-proxy
 end method;
 
 
-///// CONSTRUCT-ENVIRONMENT-OBJECT-FROM-RUNTIME-VALUE
+///// MAKE-ENVIRONMENT-OBJECT-FOR-RUNTIME-VALUE
 //    Creates an environment object of the correct class to house the
 //    runtime value, and also interns the proxy.
 //    This is an internal function, and callers of it MUST ensure that a
@@ -221,6 +221,12 @@ end method do-environment-objects-for-runtime-values;
 ///// APPLICATION-OBJECT-CLASS (Environment Protocol Method)
 //    Returns #f for application objects that are not Dylan objects, as
 //    per the protocol.
+
+define method application-object-class
+    (application :: <dfmc-application>, obj :: <address-object>)
+       => (class-obj :: false-or(<class-object>))
+  #f
+end method;
 
 define method application-object-class
     (application :: <dfmc-application>, obj :: <foreign-object>)
