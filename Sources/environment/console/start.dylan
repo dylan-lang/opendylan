@@ -12,13 +12,6 @@ define constant $error-exit-code   = -1;
 
 define function main 
     (arguments :: <string>)
-  block()
-    validate-license(#t)
-  exception (c :: <license-validation-failure>)
-    format(*standard-error*, "%s\nPlease visit %s to obtain a valid license.\n",
-	   c, release-web-address());
-    exit-application($error-exit-code)
-  end block;
   let input-stream = *standard-input*;
   let output-stream = *standard-output*;
   let server
