@@ -82,13 +82,27 @@ the 'code' subdirectory in the MPS sources and build the mmdw.lib target.
             cp *.h lii4gc/ci/mmdw.a $FUNDEV/Sources/lib/run-time/pentium-linux/
             [if you don't have a lii4gc/ci directory, choose a different ?i directory.]
 
-The actual makefile you use may differ depending on your platform.  The main
-point to notice here is that you don't just build the default target, as
-described in the MPS documentation.  You must build mmdw.lib instead.
+The actual makefile you use may differ depending on your platform.
+The main point to notice here is that you don't just build the default
+target, as described in the MPS documentation.  You must build
+mmdw.lib or mmdw.a instead.
 
-Copy mmdw.lib [TODO: which version?] into the FunDev source tree in
-fundev/Sources/lib/run-time/pentium-win32/.  This will be picked up by the
-FunDev build scripts.
+Copy mmdw.lib or mmdw.a into the FunDev source tree in
+fundev/Sources/lib/run-time/pentium-win32/ or pentium-linux,
+respectively.  This will be picked up by the FunDev build scripts.
 
-  [TODO: verify that this is sufficient.]
+There are to caveats here.  Number one: the above instructions make
+you use the ci, "cool internal" variant of the MPS.  This one does
+quite a lot of sanity checks all over, which heavily impacts
+performance, up to a factor of three in total application runtime.  If
+you're looking for performance figures, use the hi, "hot internal", or
+even wi, "white-hot internal" releases.
+
+Caveat number two is that the Linux port is still a little weak.  In
+particular, there are problems with NPTL, the new generation POSIX
+thread support.  If you see any crashes when trying to use threads
+(try app/gctest to make sure), you can force a switch to the old
+threading model with
+
+  export LD_ASSUME_KERNEL=2.4.1
 
