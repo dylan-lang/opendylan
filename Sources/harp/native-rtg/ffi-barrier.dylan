@@ -687,7 +687,13 @@ define method op--initialize-thread-with-gc
     // after invocation of this, but before another call-in to Dylan. Normally
     // this will be performed very close to the stack bottom so it's OK. However
     // this is inappropriate for registering the stack lazily during a C call-in.
-    let stack-mask = #x1ffc; // Bottom of stack is at top of page
+
+    // The stack mask used to be 0x1ffc, but that would only be correct for 16k
+    // memory pages.  Most architectures use 4k pages, and in fact assuming
+    // bigger alignments leads to crashes on Linux/x86.  This probably wants to
+    // be platform dependent one day.
+
+    let stack-mask = #x3fc; // Bottom of stack is at top of page
     ins--or(be, stack-bot, stack, stack-mask);
     op--call-c(be, mm-dylan-register-thread, stack-bot);
     ins--beq(be, ok, c-result, 0);
