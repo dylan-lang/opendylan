@@ -129,8 +129,8 @@ rule DylanLibrary image : version {
   # targets depend on its build products.
   
   if ! $(PARENT) {
-    Depends dll : $(_dll) $(_lib) ;
-    Depends lib : $(_lib) ;
+    Depends dll : $(_dll) $(_lib) $(_mkf) ;
+    Depends lib : $(_lib) $(_mkf) ;
     Depends exe : $(_exe) ;
 
     Clean clean : $(_dll) $(_lib) $(_mkf) $(_exe) $(_obj) ;
@@ -141,16 +141,16 @@ rule DylanLibrary image : version {
 
   # Set the initial libraries
   if $(image[1]:L) != dylan {
-    LINKLIBS on $(_dll) $(_exe) ?= $(suplibs) ;
+    LINKLIBS on $(_dll) $(_lib) $(_exe) ?= $(suplibs) ;
   }
 
   # Mark the library version
 
-  VERSION on $(_dll) $(_exe) ?= $(version:J=.) ;
+  VERSION on $(_dll) $(_lib) $(_exe) ?= $(version:J=.) ;
 
   # Determine the entry points
   local _mangled = [ DFMCMangle $(image[1]:L) ] ;
-  ENTRY on $(_dll) ?= $(_mangled)Dll@12 ;
+  ENTRY on $(_dll) $(_lib) ?= $(_mangled)Dll@12 ;
   ENTRY on $(_exe) ?= $(_mangled)Exe ;
 }
 
@@ -185,10 +185,11 @@ rule DylanLibraryLinkerOptions image : options {
   # Add the given options to the link command line of the shared library
   # and executable images.
   local _dll = [ FDLLName $(image) ] ;
+  local _lib = [ FLIBName $(image) ] ;
   local _exe = [ FEXEName $(image) ] ;
 
-  LINKFLAGS on $(_dll) $(_exe) ?= $(LINKFLAGS) ;
-  LINKFLAGS on $(_dll) $(_exe) += $(options) ;
+  LINKFLAGS on $(_dll) $(_lib) $(_exe) ?= $(LINKFLAGS) ;
+  LINKFLAGS on $(_dll) $(_lib) $(_exe) += $(options) ;
 }
 
 rule DylanLibraryBaseAddress image : address {
@@ -198,7 +199,8 @@ rule DylanLibraryBaseAddress image : address {
   # Set the base address of the shared library.
   
   local _dll = [ FDLLName $(image) ] ;
-  BASE on $(_dll) ?= $(address) ;
+  local _lib = [ FLIBName $(image) ] ;
+  BASE on $(_dll) $(_lib) ?= $(address) ;
 }
 
 rule DylanLibraryCLibraries image : libraries {
@@ -208,10 +210,11 @@ rule DylanLibraryCLibraries image : libraries {
   # Link C (or other externally-derived) libraries into the shared library.
   
   local _dll = [ FDLLName $(image) ] ;
+  local _lib = [ FLIBName $(image) ] ;
   local _exe = [ FEXEName $(image) ] ;
 
   _clib_$(image[1]:L) += $(libraries) ;
-  LINKLIBS on $(_dll) $(_exe) += $(libraries) ;
+  LINKLIBS on $(_dll) $(_lib) $(_exe) += $(libraries) ;
 }
 
 rule DylanLibraryCObjects image : objects {
@@ -346,6 +349,7 @@ rule DylanLibraryUses image : library : dir {
 
 rule DylanLibraryClosure image : libraries {
   local _dll = [ FDLLName $(image) ] ;
+  local _lib = [ FLIBName $(image) ] ;
   local _exe = [ FEXEName $(image) ] ;
 
   local _i ;
@@ -354,8 +358,8 @@ rule DylanLibraryClosure image : libraries {
       _use_$(image[1]:L) += $(_i) ;
       Depends $(_dll) $(_exe) : $(_dll_$(_i)) ;
       Depends $(_dll) : $(_lib_$(_i)) ;
-      NEEDLIBS on $(_dll) $(_exe) += $(_lib_$(_i)) ;
-      LINKLIBS on $(_dll) $(_exe) += $(_clib_$(_i)) ;
+      NEEDLIBS on $(_dll) $(_lib) $(_exe) += $(_lib_$(_i)) ;
+      LINKLIBS on $(_dll) $(_lib) $(_exe) += $(_clib_$(_i)) ;
 
       DylanLibraryClosure $(image) : $(_use_$(_i)) ;
     }
