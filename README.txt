@@ -35,27 +35,25 @@ you read this.)  You will also need VC++ 6.0.
 
 HOW TO BUILD ON LINUX
 
-First build the garbage collector.  See the section on BUILDING THE MPS.
+--- 2004.03.18 ---
+These directions are likely to change soon, but here's how to build as
+of now:
 
-[These are preliminary comments based on several conversations I had today.
- This text should be updated as soon as we know more.  -cgay 2004.03.10]
+Install the FD Linux Alpha and disable its expiration date with this
+command:
 
-Building on (Pentium) Linux has only ever been done by building on Windows in
-the usual way, copying over the assembly (.s) files from the "build"
-directories, and then compiling those by hand.  That's how the Linux Alpha was
-built.
+echo "001ce9c0: 00 00 00 00" | sudo xxd -r - /usr/local/lib/functional-developer/lib/libdylan.so
 
-You might think it would be possible to build on Linux using the Linux alpha
-version of FunDev as the bootstrap compiler but unfortunately the Linux alpha
-expired on January 1, 2004.  Fortunately, there is a way to get around
-that: http://www.logix.cz/michal/devel/faketime/
-
-Once the initial bootstrap process is figured out, a set of makefiles should be
-created to make building follow the usual path of 
-
-  ./configure
-  make
-  make install
+cvs co fundev
+export SRCDIR=`pwd`/fundev        # must be absolute path!
+export BUILDDIR=<your build dir>
+cd $SRCDIR
+autoconf
+automake -a
+libtoolize -c
+cd $BUILDDIR
+$SRCDIR/configure
+make
 
 The goal was ultimately to make it possible to build FunDev in the FunDev IDE,
 but unfortunately we never quite made that happen.  Some work may need to be
