@@ -1215,7 +1215,7 @@ win32-environment: $(WIN32_ENVIRONMENT)
 gtk-environment: $(GTK_ENVIRONMENT)
 with-splash-screen: $(WITH_SPLASH_SCREEN)
 internal-environment: console-environment win32-environment with-splash-screen
-internal-libraries: enhanced-libraries midi gtk gtk-duim
+internal-libraries: enhanced-libraries midi
 internal-example-projects: enhanced-example-projects
 install-internal-examples: install-enhanced-examples install-midi-examples
 internal-only-tools: build testworks-libraries test-report debugger map-statistics parser-compiler hd2c interpreter
