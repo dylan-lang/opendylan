@@ -59,6 +59,9 @@ The goal was ultimately to make it possible to build FunDev in the FunDev IDE,
 but unfortunately we never quite made that happen.  Some work may need to be
 done on the "project manager" first, at a minimum.
 
+If you encounter problems during the build, please refer to the log files
+that are written in the 'logs' directory under each bootstrap stage build
+directory.
 
 BUILDING THE MPS
 
