@@ -2637,8 +2637,18 @@ MMError dylan_init_memory_manager()
 #ifndef BOEHM_GC
   {
     size_t gen_count = genCOUNT;
-    const char *spec = getenv("FUNCTIONAL_DEVELOPER_MPS_HEAP");
     mps_gen_param_s *params = NULL;
+
+#ifdef _WIN32
+    char specbuf[32768];
+    const char *spec = NULL;
+    if(GetEnvironmentVariableA("FUNCTIONAL_DEVELOPER_MPS_HEAP", specbuf,
+			       sizeof specbuf) != 0) {
+      spec = specbuf;
+    }
+#else
+    const char *spec = getenv("FUNCTIONAL_DEVELOPER_MPS_HEAP");
+#endif
 
     res = mps_arena_create(&arena, mps_arena_class_vm(), max_heap_size);
     if(res) { init_error("create arena"); return(res); }
