@@ -50,6 +50,8 @@ define function trampoline-function (thread :: <thread>) => (result :: <function
     internal-initialize-thread();
     let (#rest results) = thread.function();
     thread.function-results := as(<simple-object-vector>, results);
+    primitive-detach-thread
+      (thread);
   end method;
 end;
 

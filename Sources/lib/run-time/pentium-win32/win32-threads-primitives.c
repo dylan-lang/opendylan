@@ -1480,6 +1480,16 @@ primitive_initialize_special_thread(DTHREAD *thread)
   primitive_initialize_current_thread(thread, FALSE);
 }
 
+/* 36b */
+THREADS_RUN_TIME_API  void
+primitive_detach_thread(DTHREAD * thread)
+{
+  // do nothing for Win32
+}
+
+
+
+
 
 /* 37 */
 THREADS_RUN_TIME_API  ZINT

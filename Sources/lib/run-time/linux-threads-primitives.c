@@ -228,7 +228,7 @@ primitive_make_thread(DTHREAD *newthread, D_NAME name,
     return CREATE_ERROR;
   }
 
-  // Ignore the priority for now @@@@#!"£$
+  // Ignore the priority for now @@@@#!"Â£$
   return OK;
 }
 
@@ -285,7 +285,7 @@ primitive_thread_join_single(DTHREAD *thread)
 THREADS_RUN_TIME_API  Z
 primitive_thread_join_multiple(SOV *thread_vector)
 { 
-  // @@@@#!"£$ NOT PROPERLY IMPLEMENTED
+  // @@@@#!"Â£$ NOT PROPERLY IMPLEMENTED
   // Just join on the first thread
   DTHREAD ** threads = (DTHREAD **)(thread_vector->data);
   DTHREAD *thread1 = *threads;
@@ -1225,7 +1225,7 @@ primitive_initialize_current_thread(DTHREAD *thread, BOOL synchronize)
   // so do it here explicitly.
   thread->handle1 = (HANDLE)pthread_self();
 
-  /* @@@@#!"£$ no support for "synchronized" threads */
+  /* @@@@#!"Â£$ no support for "synchronized" threads */
 
   assert(thread != NULL);
   hThread = thread->handle1;
@@ -1274,6 +1274,18 @@ primitive_initialize_special_thread(DTHREAD *thread)
     initialize_threads_primitives();
 
   primitive_initialize_current_thread(thread, FALSE);
+}
+
+/* 36b */
+THREADS_RUN_TIME_API  void
+primitive_detach_thread(DTHREAD *thread)
+{
+  HANDLE      hThread;
+
+  assert(thread != NULL);
+  hThread = thread->handle1;
+
+  pthread_detach(hThread);
 }
 
 

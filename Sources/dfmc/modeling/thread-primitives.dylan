@@ -134,6 +134,9 @@ define side-effecting stateful dynamic-extent &primitive primitive-initialize-cu
 define side-effecting stateful dynamic-extent &primitive primitive-initialize-special-thread
     (thread :: <object>) => ();
 
+define side-effecting stateful dynamic-extent &primitive primitive-detach-thread
+    (thread :: <object>) => ();
+
 define side-effecting stateful dynamic-extent &primitive primitive-unlock-simple-lock
     (lock :: <object>) => (res :: <integer>);
 

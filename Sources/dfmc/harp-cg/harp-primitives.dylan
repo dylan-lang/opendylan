@@ -2266,6 +2266,7 @@ define &c-primitive-descriptor primitive-allocate-thread-variable;
 define &c-primitive-descriptor primitive-read-thread-variable, emitter: op--read-thread-variable;
 define &c-primitive-descriptor primitive-write-thread-variable, emitter: op--write-thread-variable;
 define &c-primitive-descriptor primitive-initialize-current-thread;
+define &c-primitive-descriptor primitive-detach-thread;
 define &c-primitive-descriptor primitive-initialize-special-thread;
 define &c-primitive-descriptor primitive-unlock-simple-lock;
 define &c-primitive-descriptor primitive-unlock-recursive-lock;

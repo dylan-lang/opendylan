@@ -485,6 +485,7 @@ define &module dylan-primitives
     primitive-write-thread-variable,
     primitive-initialize-current-thread,
     primitive-initialize-special-thread,
+    primitive-detach-thread,
     primitive-unlock-simple-lock,
     primitive-unlock-recursive-lock,
     primitive-sequence-point,

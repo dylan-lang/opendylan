@@ -243,6 +243,9 @@ primitive_initialize_current_thread(DTHREAD * thread, BOOL synchronize);
 THREADS_RUN_TIME_API  void
 primitive_initialize_special_thread(DTHREAD * thread);
 
+THREADS_RUN_TIME_API  void
+primitive_detach_thread(DTHREAD * thread);
+
 
 THREADS_RUN_TIME_API  ZINT
 primitive_unlock_simple_lock(CONTAINER *);
