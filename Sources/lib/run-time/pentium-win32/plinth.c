@@ -11,6 +11,7 @@
 #include "mpslib.h"
 #include <windows.h>
 #include <stdio.h>
+#include <time.h>
 
 /* First some simple stream buffer management */
 
@@ -184,9 +185,28 @@ int mps_lib_fputs_(const char *s, int end, mps_lib_FILE *stream)
   return 1;
 }
 
+void mps_lib_assert_fail(const char *message)
+{
+  mps_lib_FILE *err = mps_lib_get_stderr();
+  mps_lib_fputs("\nMPS ASSERTION FAILURE: ", err);
+  mps_lib_fputs(message, err);
+  mps_lib_fputs("\n", err);
+  mps_lib_abort();
+}
+
 mps_clock_t mps_clock(void)
 {
-  mps_lib_abort();
+  return (unsigned long)clock();
+}
+
+mps_clock_t mps_clocks_per_sec(void)
+{
+  return (unsigned long)CLOCKS_PER_SEC;
+}
+
+
+unsigned long mps_lib_telemetry_control(void)
+{
   return 0;
 }
 
