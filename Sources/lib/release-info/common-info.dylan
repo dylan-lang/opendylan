@@ -10,28 +10,36 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 /// Release constants
 
 define constant $release-full-copyright =
-"This software contains confidential and trade secret information belonging\n"
-"to Functional Objects, Inc.  It may not be copied for any reason other\n"
-"than for archival and back-up purposes, or as set forth in the applicable\n"
-"license agreement.\n"
-"\n"
-"This is commercial computer software.  Use, duplication or disclosure by\n"
-"the United States Government is subject to the restrictions set forth in\n"
-"FAR 52.227-14 Alt III or FAR 52.227-19, as applicable.  Use by agencies of\n"
-"the Department of Defense is subject to Functional Objects' commercial\n"
-"license agreement acccompanying the software, in accordance with DFAR\n"
-"227.7202-1(a).  For purposes of the FAR, the Software shall be deemed\n"
-"\"unpublished\" and licensed with disclosure prohibitions, rights reserved\n"
-"under the copyright laws of the United States.  Functional Objects, Inc.,\n"
-"86 Chandler St, Somerville, MA 02144.\n"
-"\n"
-// "Dylan is a trademark of Apple Computer Inc.\n" // bet you it's not!
+"Original Code is Copyright 1995-2004 Functional Objects, Inc.\n"
+"All rights reserved.\n"
+"Portions Copyright 2004 Gwydion Dylan Maintainers.\n"
 "Functional Developer is a trademark of Functional Objects, Inc.\n"
-"All marks are trademarks or registered trademarks of their respective\n"
-"owners.\n";
+"\n"
+"The software programs and libraries that make up Functional Developer\n"
+"are subject to the Functional Objects Library Public License Version\n"
+"1.0 (the \"License\"); you may not use this software except in\n"
+"compliance with the License. \n"
+"\n"
+"Software distributed under the License is distributed on an \"AS IS\"\n"
+"basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See\n"
+"the License for the specific language governing rights and limitations\n"
+"under the License.  You may obtain a copy of the License at\n"
+"http://www.functionalobjects.com/licenses/library-public-license-1.0.txt\n"
+"\n"
+"Alternatively, the software may be used under the terms of the GNU\n"
+"Lesser General Public License, in which case the provisions of GNU\n"
+"Lesser General Public License are applicable instead of those\n"
+"above. If you wish to allow use of your version of this library only\n"
+"under the terms of the GNU Lesser General Public License and not to\n"
+"allow others to use your version of this library under the License,\n"
+"indicate your decision by deleting the provisions above and replacing\n"
+"them with the notice and other provisions required by the GNU Lesser\n"
+"General Public License. If you do not delete the provisions\n"
+"above, a recipient may use your version of this library under either\n"
+"the License or the GNU Lesser General Public License.\n";
 
 define constant $release-support-address 
-  = "dylan-support@functionalobjects.com";
+  = "gd-bugs@gwydiondylan.org";
 
 define constant $release-web-address
   = "http://www.functionalobjects.com/products";
@@ -99,10 +107,9 @@ define function release-contains-edition?
   end
 end function release-contains-edition?;
 
-/// At this writing, the Basic Edition is once again a free product ...
 define function release-free-edition?
     () => (free? :: <boolean>)
-  release-edition-type() = #"basic"
+  #t
 end function release-free-edition?;
 
 
