@@ -200,7 +200,6 @@ define pane <environment-build-options-page> ()
          orientation: #"vertical",
          items: #[#["&Microsoft linker", #"microsoft"],
                   #["&GNU linker",       #"gnu"]],
-	 enabled?: release-contains-library-pack?(#"MSLinker"),
          value: pane.%linker,
          label-key: first,
          value-key: second,
