@@ -18,8 +18,8 @@ ccompile
 cl -c -W3 -DCRTAPI1=_cdecl -DCRTAPI2=_cdecl -nologo -D_X86_=1 -DWINVER=0x0400 -DWIN32  -D_WIN32 -D_MT -D_DLL -MD -Z7 -Od /c 
 
 rccompile
-rc /r -DWIN32 -D_WIN32 -DWINVER=0x0400 $(resource).rc
-res2coff -i $(resource).res -o $(resource)-resource.obj
+windres --use-temp-file -DWIN32 -D_WIN32 -DWINVER=0x0400 -O res $(resource).rc $(resource).res
+windres -O coff $(resource).res $(resource)-resource.obj
 
 libcmt
 -lcygwin
@@ -53,7 +53,7 @@ cmd /c "del $(destination).tmp"
 make-imports
 # Create a .import file from a .obj
 # header
-@echo RUNTIME> $(destination)
+cmd /c echo RUNTIME> $(destination)
 # undefineds
 !nm --undefined-only $(source) | find /v "@" >> $(destination)
 
