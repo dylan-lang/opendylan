@@ -92,6 +92,8 @@ define class <export-command> (<project-command>)
     required-init-keyword: report:;
   constant slot %file :: false-or(<file-locator>) = #f,
     init-keyword: file:;
+  constant slot %format :: false-or(<symbol>) = #f,
+    init-keyword: format:;
 end class <export-command>;
 
 define command-line export => <export-command>
@@ -99,6 +101,7 @@ define command-line export => <export-command>
      documentation: "Exports information from the specified project.")
   argument report :: <symbol> = "the report to generate";
   keyword  file :: <file-locator>  = "the filename for the report";
+  keyword  format :: <symbol> = "the format for the report";
 end command-line export;
 
 define sealed method do-execute-command
@@ -107,6 +110,7 @@ define sealed method do-execute-command
   let project  = context.context-project;
   let report   = command.%report;
   let filename = command.%file;
+  let format   = command.%format | #"text";
   let info     = find-report-info(report);
   case
     (report == #"documentation") =>
@@ -120,10 +124,14 @@ define sealed method do-execute-command
 	write-command-documentation(stream, context)
       end;
     info =>
+      if (~member?(format, info.report-info-formats))
+        command-error("The %s report does not support the '%s' format",
+                      report, format);
+      end;
       let report
 	= make(info.report-info-class,
 	       project: project,
-	       format:  #"text");
+	       format: format);
       if (filename)
 	with-open-file (stream = filename, direction: #"output")
 	  write-report(stream, report)
