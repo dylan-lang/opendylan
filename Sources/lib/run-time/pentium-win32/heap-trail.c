@@ -344,10 +344,11 @@ static void add_target_object_of_wrapper (mps_addr_t object,
   }
 }
 
+extern mps_arena_t arena;
 
 static void add_target_objects_from_wrapper (void *wrapper)
 {
-  mps_arena_formatted_objects_walk(space, &add_target_object_of_wrapper, wrapper, 0);
+  mps_arena_formatted_objects_walk(arena, &add_target_object_of_wrapper, wrapper, 0);
 }
 
 
@@ -419,7 +420,7 @@ static void look_for_reference(mps_addr_t object, mps_fmt_t format,
 /* traverse the heap looking for any objects which reference this generation */
 static void process_generation (void)
 {
-  mps_arena_formatted_objects_walk(space, &look_for_reference, NULL, 0);
+  mps_arena_formatted_objects_walk(arena, &look_for_reference, NULL, 0);
 }
 
 
@@ -543,7 +544,7 @@ static int recurse_to_clean_the_stack(int count, int dummy1, int dummy2, int dum
 static void find_all_roots()
 {
   recurse_to_clean_the_stack(200, 0, 0, 0);
-  mps_arena_roots_walk(space, &record_a_root, 0, 0);
+  mps_arena_roots_walk(arena, &record_a_root, 0, 0);
 }
 
 static void find_trails()

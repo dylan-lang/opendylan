@@ -509,8 +509,8 @@ void display_heap_stats_order_2 (void)
 {
   clear_order2_stats();
   create_seen_table();
-  mps_arena_formatted_objects_walk(space, &record_order_2_object, 0, 0);
-  mps_arena_roots_walk(space, &record_order_2_root, 0, 0);
+  mps_arena_formatted_objects_walk(arena, &record_order_2_object, 0, 0);
+  mps_arena_roots_walk(arena, &record_order_2_root, 0, 0);
   display_order2_stats();
   destroy_seen_table();
 }

@@ -4,7 +4,7 @@
 #include <windows.h>
 
 
-extern mps_space_t space;
+extern mps_arena_t arena;
 
 /* controlling variables */
 
@@ -716,7 +716,7 @@ void add_target_object_of_wrapper (mps_addr_t object,
 
 void add_target_objects_from_wrapper (void *wrapper)
 {
-  mps_arena_formatted_objects_walk(space, &add_target_object_of_wrapper, wrapper, 0);
+  mps_arena_formatted_objects_walk(arena, &add_target_object_of_wrapper, wrapper, 0);
 }
 
 
@@ -789,7 +789,7 @@ void look_for_reference (mps_addr_t object, mps_fmt_t format, mps_pool_t pool,
 /* traverse the heap looking for any objects which reference this generation */
 void process_generation ()
 {
-  mps_arena_formatted_objects_walk(space, &look_for_reference, NULL, 0);
+  mps_arena_formatted_objects_walk(arena, &look_for_reference, NULL, 0);
 }
 
 
@@ -892,7 +892,7 @@ void record_a_root (mps_addr_t *objectref, mps_root_t root,
 
 void find_all_roots()
 {
-  mps_arena_roots_walk(space, &record_a_root, 0, 0);
+  mps_arena_roots_walk(arena, &record_a_root, 0, 0);
 }
 
 int follow_reference_paths ()
@@ -926,7 +926,7 @@ void display_stats_for_memory_usage ()
 {
   if (check_wrapper_stats) {
     clear_wrapper_stats();
-    mps_arena_formatted_objects_walk(space, &record_an_object, 0, 0);
+    mps_arena_formatted_objects_walk(arena, &record_an_object, 0, 0);
     display_wrapper_stats();
   }
   if (check_reference_paths) {

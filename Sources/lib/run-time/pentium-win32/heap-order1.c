@@ -173,6 +173,6 @@ void display_wrapper_stats (void)
 void display_heap_stats_order_1 (void)
 {
   clear_wrapper_stats();
-  mps_arena_formatted_objects_walk(space, &record_order_1_object, 0, 0);
+  mps_arena_formatted_objects_walk(arena, &record_order_1_object, 0, 0);
   display_wrapper_stats();
 }
