@@ -246,7 +246,7 @@ static mps_pool_t main_pool, weak_table_pool, wrapper_pool, misc_pool, leaf_pool
 static mps_message_type_t finalization_type;
 #endif
 
-#define genCOUNT 3
+#define genCOUNT 2
 
 static mps_gen_param_s gc_default_gen_param[genCOUNT] = {
   { 8 * 1024, 0.45 },
