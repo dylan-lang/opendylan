@@ -108,7 +108,7 @@ extern void free_obj(void *obj, size_t size);
 
 /* some variables defined elsewhere in the runtime */
 
-extern mps_space_t space;
+extern mps_arena_t arena;
 
 extern int mps_lib_fputs_(const char *s, int end, mps_lib_FILE *stream);
 

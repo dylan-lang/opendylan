@@ -85,10 +85,6 @@ void force_reference_to_spy_interface()
 #define MMCommitLeafTerminated MMCommitObject
 #endif
 
-#ifdef TUNE_GEN0_FREQ 
-extern long AMCGen0Frequency;
-#endif
-
 #ifndef MAXIMUM_HEAP_SIZE
 #define MAXIMUM_HEAP_SIZE (512 * 1024 * 1024)
 #endif
@@ -222,7 +218,8 @@ static void defaultHandler(MMError e, const char *opName, size_t size)
 #endif
 }
 
-mps_space_t space;
+mps_arena_t arena;
+mps_chain_t chain;
 static mps_fmt_t format;
 static mps_fmt_t dylan_fmt_weak_s;
 static mps_fmt_A_t fmt_A;
@@ -232,6 +229,11 @@ static mps_pool_t main_pool, weak_table_pool, wrapper_pool, misc_pool, leaf_pool
 #ifndef NO_FINALIZATION
 static mps_message_type_t finalization_type;
 #endif
+
+#define genCOUNT 2
+
+static mps_gen_param_s gc_gen_param[genCOUNT] = {
+  { 128, 0.85 }, { 192, 0.45 } };
 
 static MMAllocHandler main_handler = defaultHandler;
 static MMAllocHandler weak_awl_handler = defaultHandler;
@@ -676,7 +678,7 @@ void update_runtime_thread_count(int increment)
   enter_CRITICAL_SECTION(&reservoir_limit_set_lock);
     num_threads = num_threads + increment;
 #ifndef BOEHM_GC
-    mps_reservoir_limit_set(space, num_threads * low_memory_allocation_per_thread);
+    mps_reservoir_limit_set(arena, num_threads * low_memory_allocation_per_thread);
 #endif
   leave_CRITICAL_SECTION(&reservoir_limit_set_lock);
 }
@@ -706,12 +708,12 @@ MMError dylan_mm_register_thread(void *stackBot)
   res = mps_ap_create(&gc_teb->gc_teb_exact_awl_ap, weak_table_pool, MPS_RANK_EXACT);
   if(res) goto failExactAWLApCreate;
 
-  res = mps_thread_reg(&gc_teb->gc_teb_thread, space);
+  res = mps_thread_reg(&gc_teb->gc_teb_thread, arena);
   if(res) goto failThreadReg;
 
   /* Create a root object for ambiguously scanning the stack. */
   assert(stackBot != NULL);
-  res = mps_root_create_reg(&gc_teb->gc_teb_stack_root, space, MPS_RANK_AMBIG, 
+  res = mps_root_create_reg(&gc_teb->gc_teb_stack_root, arena, MPS_RANK_AMBIG, 
                            (mps_rm_t)0,
                             gc_teb->gc_teb_thread, mps_stack_scan_ambig, stackBot, 0);
   if(res) goto failStackRootCreate;
@@ -1030,8 +1032,8 @@ extern void *dylan_false;
         /* Do this inside a critical region with the limit setting function */  \
 	enter_CRITICAL_SECTION(&reservoir_limit_set_lock);  \
 	  { \
-          size_t limit = mps_reservoir_limit(space);  \
-          size_t avail = mps_reservoir_available(space);  \
+          size_t limit = mps_reservoir_limit(arena);  \
+          size_t avail = mps_reservoir_available(arena);  \
           if (avail < limit) {  \
             /* The reservoir is not full - so the handling policy failed */  \
             /* Could attempt to do something smart here - like work out */  \
@@ -1239,7 +1241,7 @@ int MMCommitWrapper(void *p, size_t size, gc_teb_t gc_teb)
   assert(gc_teb->gc_teb_inside_tramp);
   assert(dylan_check(p));
 
-  res = mps_root_create_fmt(&root, space, MPS_RANK_EXACT,
+  res = mps_root_create_fmt(&root, arena, MPS_RANK_EXACT,
                              (mps_rm_t)0, fmt_A->scan, p, (char *)p + size);
   if(res) return 0;
   return 1;
@@ -2075,7 +2077,7 @@ unsigned MMCollectCount(void)
 
   assert(gc_teb->gc_teb_inside_tramp);
 #ifndef BOEHM_GC
-  return (unsigned)mps_collections(space);
+  return (unsigned)mps_collections(arena);
 #else
   return 0;
 #endif
@@ -2085,7 +2087,7 @@ MMError MMRegisterRootStatic(mps_root_t *rootp, void *base, void *limit)
 {
 #ifndef BOEHM_GC
   /* assert(gc_teb->gc_teb_inside_tramp); tramp not needed for root registration */
-  return mps_root_create_fmt(rootp, space, MPS_RANK_EXACT,
+  return mps_root_create_fmt(rootp, arena, MPS_RANK_EXACT,
                              MPS_RM_PROT, fmt_A->scan, base, limit);
 #else
   return 0;
@@ -2096,7 +2098,7 @@ MMError MMRegisterRootImmut(mps_root_t *rootp, void *base, void *limit)
 {
 #ifndef BOEHM_GC
   /* assert(gc_teb->gc_teb_inside_tramp); tramp not needed for root registration */
-  return mps_root_create_fmt(rootp, space, MPS_RANK_EXACT,
+  return mps_root_create_fmt(rootp, arena, MPS_RANK_EXACT,
                              MPS_RM_CONST, fmt_A->scan, base, limit);
 #else
   return 0;
@@ -2114,7 +2116,7 @@ MMError MMRegisterRootAmbig(mps_root_t *rootp, void *base, void *limit)
 #ifndef BOEHM_GC
   size_t s = ((char *)limit - (char *)base) / sizeof(mps_addr_t);
   /* assert(gc_teb->gc_teb_inside_tramp); tramp not needed for root registration */
-  return mps_root_create_table(rootp, space, MPS_RANK_AMBIG,
+  return mps_root_create_table(rootp, arena, MPS_RANK_AMBIG,
                                0, base, s);
 #else
   return 0;
@@ -2126,7 +2128,7 @@ MMError MMRegisterRootExact(mps_root_t *rootp, void *base, void *limit)
 #ifndef BOEHM_GC
   size_t s = ((char *)limit - (char *)base) / sizeof(mps_addr_t);
   /* assert(gc_teb->gc_teb_inside_tramp); tramp not needed for root registration */
-  return mps_root_create_table_masked(rootp, space, MPS_RANK_EXACT,
+  return mps_root_create_table_masked(rootp, arena, MPS_RANK_EXACT,
 				      MPS_RM_PROT, base, s, 3);
 #else
   return 0;
@@ -2186,7 +2188,7 @@ MMError MMRootStatic(void *base, void *limit)
 {
 #ifndef BOEHM_GC
   mps_root_t root;
-  return mps_root_create_fmt(&root, space, MPS_RANK_EXACT,
+  return mps_root_create_fmt(&root, arena, MPS_RANK_EXACT,
                              0, fmt_A->scan, base, limit);
 #else
   return 0;
@@ -2204,7 +2206,7 @@ MMError MMRootAmbig(void *base, void *limit)
 #ifndef BOEHM_GC
   mps_root_t root;
   size_t s = ((char *)limit - (char *)base) / sizeof(mps_addr_t);
-  return mps_root_create_table(&root, space, MPS_RANK_AMBIG,
+  return mps_root_create_table(&root, arena, MPS_RANK_AMBIG,
                                0, base, s);
 #else
   return 0;
@@ -2216,7 +2218,7 @@ MMError MMRootExact(void *base, void *limit)
 #ifndef BOEHM_GC
   mps_root_t root;
   size_t s = ((char *)limit - (char *)base) / sizeof(mps_addr_t);
-  return mps_root_create_table_masked(&root, space, MPS_RANK_EXACT,
+  return mps_root_create_table_masked(&root, arena, MPS_RANK_EXACT,
 				      0, base, s, 3);
 #else
   return 0;
@@ -2230,7 +2232,7 @@ RUN_TIME_API
 void primitive_mps_clamp()
 {
 #ifndef BOEHM_GC
-  mps_space_clamp(space);
+  mps_arena_clamp(arena);
 #endif
 }
 
@@ -2238,7 +2240,7 @@ RUN_TIME_API
 void primitive_mps_park()
 {
 #ifndef BOEHM_GC
-  mps_space_park(space);
+  mps_arena_park(arena);
 #endif
 }
 
@@ -2246,7 +2248,7 @@ RUN_TIME_API
 void primitive_mps_release()
 {
 #ifndef BOEHM_GC
-  mps_space_release(space);
+  mps_arena_release(arena);
 #endif
 }
 
@@ -2256,7 +2258,7 @@ RUN_TIME_API
 void primitive_mps_collect(BOOL display_stats)
 {
 #ifndef BOEHM_GC
-  mps_space_collect(space);
+  mps_arena_collect(arena);
   if (display_stats)
     display_stats_for_memory_usage();
 #endif
@@ -2266,7 +2268,7 @@ RUN_TIME_API
 size_t primitive_mps_committed()
 {
 #ifndef BOEHM_GC
-  return mps_space_committed(space);
+  return mps_arena_committed(arena);
 #else
   return 0;
 #endif
@@ -2335,7 +2337,7 @@ RUN_TIME_API
 void primitive_mps_enable_gc_messages()
 {
 #ifndef BOEHM_GC
-  mps_message_type_enable(space, mps_message_type_gc());
+  mps_message_type_enable(arena, mps_message_type_gc());
 #endif
 }
 
@@ -2346,13 +2348,13 @@ BOOL primitive_mps_collection_stats(void** results)
 #ifndef BOEHM_GC
   size_t live, condemned, not_condemned;
 
-  if (mps_message_get(&message, space, mps_message_type_gc())) {
+  if (mps_message_get(&message, arena, mps_message_type_gc())) {
 
-    live = mps_message_gc_live_size(space, message);
-    condemned = mps_message_gc_condemned_size(space, message);
-    not_condemned = mps_message_gc_not_condemned_size(space, message);
+    live = mps_message_gc_live_size(arena, message);
+    condemned = mps_message_gc_condemned_size(arena, message);
+    not_condemned = mps_message_gc_not_condemned_size(arena, message);
 
-    mps_message_discard(space, message);
+    mps_message_discard(arena, message);
     
     results[0] =   (void*)((live << 2) + 1);
     results[1] = (void*)((condemned << 2) + 1);
@@ -2373,7 +2375,7 @@ BOOL primitive_mps_collection_stats(void** results)
 void primitive_mps_finalize(void *obj)
 {
 #ifndef NO_FINALIZATION
-  mps_finalize(space, &obj);
+  mps_finalize(arena, &obj);
 #endif
 }
 
@@ -2383,11 +2385,11 @@ void* primitive_mps_finalization_queue_first()
   return 0;
 #else
   mps_message_t finalization_message;
-  if (mps_message_get(&finalization_message, space, finalization_type))
+  if (mps_message_get(&finalization_message, arena, finalization_type))
     {
       mps_addr_t object_ref;
-      mps_message_finalization_ref(&object_ref, space, finalization_message);
-      mps_message_discard(space, finalization_message);
+      mps_message_finalization_ref(&object_ref, arena, finalization_message);
+      mps_message_discard(arena, finalization_message);
       return object_ref;
     }
   else
@@ -2413,7 +2415,7 @@ void primitive_mps_ld_reset(d_hs_t d_hs)
   mps_ld_t mps_ld = &(d_hs->internal_state);
   gc_teb_t gc_teb = current_gc_teb();
   assert(gc_teb->gc_teb_inside_tramp);
-  mps_ld_reset(mps_ld, space);
+  mps_ld_reset(mps_ld, arena);
 #endif
 }
 
@@ -2423,7 +2425,7 @@ void primitive_mps_ld_add(d_hs_t d_hs, mps_addr_t addr)
   mps_ld_t mps_ld = &(d_hs->internal_state);
   gc_teb_t gc_teb = current_gc_teb();
   assert(gc_teb->gc_teb_inside_tramp);
-  mps_ld_add(mps_ld, space, addr);
+  mps_ld_add(mps_ld, arena, addr);
 #endif
 }
 
@@ -2434,7 +2436,7 @@ mps_bool_t primitive_mps_ld_isstale(d_hs_t d_hs)
   mps_ld_t mps_ld = &(d_hs->internal_state);
   gc_teb_t gc_teb = current_gc_teb();
   assert(gc_teb->gc_teb_inside_tramp);
-  return(mps_ld_isstale(mps_ld, space, 0));
+  return(mps_ld_isstale(mps_ld, arena, 0));
 
 #else
 
@@ -2451,7 +2453,7 @@ void primitive_mps_ld_merge(d_hs_t d_into, d_hs_t d_obj)
   mps_ld_t addr = &(d_obj->internal_state);
   gc_teb_t gc_teb = current_gc_teb();
   assert(gc_teb->gc_teb_inside_tramp);
-  mps_ld_merge(into, space, addr);
+  mps_ld_merge(into, arena, addr);
 #endif
 }
 
@@ -2556,27 +2558,30 @@ MMError dylan_init_memory_manager()
   assert(TARG_CHECK);
 
 #ifndef BOEHM_GC
-  res = mps_arena_create(&space, mps_arena_class_vm(), (size_t)max_heap_size);
+  res = mps_arena_create(&arena, mps_arena_class_vm(), (size_t)max_heap_size);
   if(res) { init_error("create arena"); return(res); }
 
+  res = mps_chain_create(&chain, arena, 2, gc_gen_param);
+  if(res) { init_error("create chain"); return(res); }
+
   fmt_A = dylan_fmt_A();    
-  res = mps_fmt_create_A(&format, space, fmt_A);
+  res = mps_fmt_create_A(&format, arena, fmt_A);
   if(res) { init_error("create format"); return(res); }
 
 #ifndef NO_WEAKNESS
   fmt_A_weak = dylan_fmt_A_weak();    
-  res = mps_fmt_create_A(&dylan_fmt_weak_s, space, fmt_A_weak);
+  res = mps_fmt_create_A(&dylan_fmt_weak_s, arena, fmt_A_weak);
   if(res) { init_error("create weak format"); return(res); }
 #endif
 
-  res = mps_pool_create(&main_pool, space, mps_class_amc(), format);
+  res = mps_pool_create(&main_pool, arena, mps_class_amc(), format, chain);
   if(res) { init_error("create main pool"); return(res); }
 
 #ifdef NO_LEAF_OBJECT
   leaf_pool = main_pool;
 #else
   /* Create the Leaf Object pool */
-  res = mps_pool_create(&leaf_pool, space, mps_class_amcz(), format);
+  res = mps_pool_create(&leaf_pool, arena, mps_class_amcz(), format, chain);
   if(res) { init_error("create leaf pool"); return(res); }
 #endif
 
@@ -2584,13 +2589,14 @@ MMError dylan_init_memory_manager()
   weak_table_pool = main_pool;
 #else
   /* Create the Automatic Weak Linked pool */
-  res = mps_pool_create(&weak_table_pool, space, mps_class_awl(), dylan_fmt_weak_s);
+  res = mps_pool_create(&weak_table_pool, arena, mps_class_awl(),
+			dylan_fmt_weak_s, dylan_weak_dependent);
   if(res) { init_error("create weak pool"); return(res); }
 #endif
 
   /* Create the MV pool for miscellaneous objects. */
   /* This is also used for wrappers. */
-  res = mps_pool_create(&misc_pool, space, mps_class_mv(),
+  res = mps_pool_create(&misc_pool, arena, mps_class_mv(),
                         MISCEXTENDBY, MISCAVGSIZE, MISCMAXSIZE);
   if(res) { init_error("create misc pool"); return(res); }
 
@@ -2598,11 +2604,7 @@ MMError dylan_init_memory_manager()
 
 #ifndef NO_FINALIZATION
   finalization_type = mps_message_type_finalization();
-  mps_message_type_enable(space, finalization_type);
-#endif
-
-#ifdef TUNE_GEN0_FREQ
-  AMCGen0Frequency = TUNE_GEN0_FREQ;
+  mps_message_type_enable(arena, finalization_type);
 #endif
 
 #endif
@@ -2659,7 +2661,8 @@ void dylan_shut_down_memory_manager()
   mps_fmt_destroy(dylan_fmt_weak_s);
 #endif
   mps_fmt_destroy(format);
-  mps_space_destroy(space);
+  mps_chain_destroy(chain);
+  mps_arena_destroy(arena);
 
 #endif
 }
