@@ -8,6 +8,14 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // Source: http://www.opengroup.org/onlinepubs/007908799/xnsix.html
 
+define inline-only C-function ioctl
+  parameter socket :: <C-int>;
+  parameter request-type :: <C-int>;
+  parameter param :: <C-void*>;
+  result val :: <C-int>;
+  c-name: "ioctl";
+end C-function;
+
 define inline-only C-function accept
   parameter socket :: <C-int>;
   parameter address :: <sockaddr*>;

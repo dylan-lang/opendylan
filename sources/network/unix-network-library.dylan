@@ -26,13 +26,17 @@ define module unix-sockets
 
   // From sys/socket.h
   export
-    $AF-UNIX, $AF-UNSPEC, $AF-INET;
+    $AF-UNSPEC, $AF-UNIX, $AF-INET, $AF-PACKET;
   export
-    $SOCK-STREAM, $SOCK-DGRAM, $SOCK-SEQPACKET;
+    $PF-UNSPEC, $PF-LOCAL, $PF-UNIX, $PF-INET, $PF-PACKET;
+  export
+    $SOCK-STREAM, $SOCK-DGRAM, $SOCK-SEQPACKET, $SOCK-RAW;
   export
     $SHUT-RD, $SHUT-WR, $SHUT-RDWR;
   export 
     $SOL-SOCKET;
+  export
+    $ETH-P-ALL;
   export
     $SO-ACCEPTCONN, $SO-BROADCAST, $SO-DEBUG, $SO-DONTROUTE, $SO-ERROR,
     $SO-KEEPALIVE, $SO-LINGER, $SO-OOBINLINE, $SO-RCVBUF, $SO-RCVLOWAT,
@@ -65,7 +69,7 @@ define module unix-sockets
   export
     accept, bind, close, connect, getpeername, getsockname, getsockopt, listen,
     recv, recvfrom, recvmsg, send, sendmsg, sendto, setsockopt, shutdown,
-    socket, socketpair;
+    socket, socketpair, ioctl;
 
   // --
   export
@@ -87,6 +91,15 @@ define module unix-sockets
       sin-family-value, sin-family-value-setter,
       sin-port-value, sin-port-value-setter,
       sin-addr-value, sin-addr-value-setter;
+  export
+    <sockaddr-ll>, <sockaddr-ll*>,
+      sll-family, sll-family-setter,
+      sll-protocol, sll-protocol-setter,
+      sll-ifindex, sll-ifindex-setter,
+      sll-hatype, sll-hatype-setter,
+      sll-pkttype, sll-pkttype-setter,
+      sll-halen, sll-halen-setter,
+      sll-addr, sll-addr-setter;
 
   // From arpa/inet.h
   export
@@ -119,6 +132,11 @@ define module unix-sockets
       s-aliases-value, s-aliases-value-setter,
       s-port-value, s-port-value-setter,
       s-proto-value, s-proto-value-setter;
+  export
+    <ifreq>, <ifreq*>,
+      ifr-name, ifr-name-setter,
+      ifr-ifindex, ifr-ifindex-setter,
+      $IF-NAMESIZE, $SIOCGIFINDEX;
   export
     endhostent, gethostbyaddr, gethostbyname, gethostent, sethostent,
     endnetent, getnetbyaddr, getnetbyname, getnetent, setnetent,

@@ -53,6 +53,19 @@ end C-struct;
 
 ignore(sin-data, sin-data-setter);
 
+// link layer socket structure
+define C-struct <sockaddr-ll>
+  slot sll-family :: <C-unsigned-short>;
+  slot sll-protocol :: <C-unsigned-short>;
+  slot sll-ifindex :: <C-int>;
+  slot sll-hatype :: <C-unsigned-short>;
+  slot sll-pkttype :: <C-unsigned-char>;
+  slot sll-halen :: <C-unsigned-char>;
+  array slot sll-addr :: <C-unsigned-char>, length: 8;
+
+  pointer-type-name: <sockaddr-ll*>;
+end C-struct;
+
 // IP_PROTO*
 
 define constant $INADDR-ANY = as(<machine-word>, 0);
@@ -130,5 +143,17 @@ define C-function gethostname
   result val :: <C-int>;
   c-name: "gethostname";
 end C-function;
+
+/// from net/if.h
+
+define constant $IF-NAMESIZE = 16; 
+
+define C-struct <ifreq>
+  array slot ifr-name :: <C-char>, length: $IF-NAMESIZE;
+  slot ifr-ifindex :: <C-int>;
+  pointer-type-name: <ifreq*>;
+end C-structure;
+
+define constant $SIOCGIFINDEX = #x8933;
 
 // eof

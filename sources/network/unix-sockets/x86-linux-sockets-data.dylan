@@ -50,16 +50,21 @@ end C-struct;
 
 define constant $SOCK-STREAM = 1;
 define constant $SOCK-DGRAM = 2;
+define constant $SOCK-RAW = 3;
 define constant $SOCK-SEQPACKET = 5;
 
 define constant $PF-UNSPEC = 0;
 define constant $PF-LOCAL = 1;
 define constant $PF-UNIX = $PF-LOCAL;
 define constant $PF-INET = 2;
+define constant $PF-PACKET = 17;
 
 define constant $AF-UNIX =	$PF-UNIX;
 define constant $AF-INET =	$PF-INET;
+define constant $AF-PACKET =    $PF-PACKET;
 define constant $AF-UNSPEC =	$PF-UNSPEC;
+
+define constant $ETH-P-ALL = 3;
 
 define constant $SHUT-RD = 0;
 define constant $SHUT-WR = 1;
