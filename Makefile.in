@@ -39,7 +39,7 @@ stage-1-bootstrap: \
 
 Bootstrap.1:
 	mkdir Bootstrap.1
-	mkdir Bootstrap.1/Build 
+	mkdir Bootstrap.1/build 
 	mkdir Bootstrap.1/logs
 	mkdir Bootstrap.1/bin
 	mkdir Bootstrap.1/lib
@@ -86,14 +86,14 @@ Bootstrap.1/bin/minimal-console-compiler:
 	  FUNCTIONAL_DEVELOPER_USER_INSTALL=$(abs_builddir)/Bootstrap.1 \
 	  FUNCTIONAL_DEVELOPER_USER_REGISTRIES=$(BOOTSTRAP1_REGISTRY) \
 	  FUNCTIONAL_DEVELOPER_USER_SOURCES=$(abs_srcdir)/Sources \
-	  FUNCTIONAL_DEVELOPER_USER_BUILD=$(abs_builddir)/Bootstrap.1/Build \
+	  FUNCTIONAL_DEVELOPER_USER_BUILD=$(abs_builddir)/Bootstrap.1/build \
 	  $(fdmake) --compiler="$(FDCOMPILE)" minimal-console-compiler
 
 stage-2-bootstrap: Bootstrap.2 Bootstrap.2/bin/minimal-console-compiler
 
 Bootstrap.2:
 	mkdir Bootstrap.2
-	mkdir Bootstrap.2/Build 
+	mkdir Bootstrap.2/build 
 	mkdir Bootstrap.2/logs
 	mkdir Bootstrap.2/bin
 	mkdir Bootstrap.2/lib
@@ -111,7 +111,7 @@ Bootstrap.2/bin/minimal-console-compiler: stage-1-bootstrap
 	  FUNCTIONAL_DEVELOPER_USER_INSTALL=$(abs_builddir)/Bootstrap.2 \
 	  FUNCTIONAL_DEVELOPER_USER_REGISTRIES=$(abs_srcdir)/Sources/registry \
 	  FUNCTIONAL_DEVELOPER_USER_SOURCES=$(abs_srcdir)/Sources \
-	  FUNCTIONAL_DEVELOPER_USER_BUILD=$(abs_builddir)/Bootstrap.2/Build \
+	  FUNCTIONAL_DEVELOPER_USER_BUILD=$(abs_builddir)/Bootstrap.2/build \
 	  $(fdmake) --compiler="Bootstrap.1/bin/minimal-console-compiler -build -save" \
 		    minimal-console-compiler
 
@@ -119,7 +119,7 @@ stage-3-bootstrap: Bootstrap.3 Bootstrap.3/bin/minimal-console-compiler
 
 Bootstrap.3:
 	mkdir Bootstrap.3
-	mkdir Bootstrap.3/Build 
+	mkdir Bootstrap.3/build 
 	mkdir Bootstrap.3/logs
 	mkdir Bootstrap.3/bin
 	mkdir Bootstrap.3/lib
@@ -136,13 +136,13 @@ Bootstrap.3/bin/minimal-console-compiler: stage-2-bootstrap
 	  FUNCTIONAL_DEVELOPER_USER_INSTALL=$(abs_builddir)/Bootstrap.3 \
 	  FUNCTIONAL_DEVELOPER_USER_REGISTRIES=$(abs_srcdir)/Sources/registry \
 	  FUNCTIONAL_DEVELOPER_USER_SOURCES=$(abs_srcdir)/Sources \
-	  FUNCTIONAL_DEVELOPER_USER_BUILD=$(abs_builddir)/Bootstrap.3/Build \
+	  FUNCTIONAL_DEVELOPER_USER_BUILD=$(abs_builddir)/Bootstrap.3/build \
 	  $(fdmake) --compiler="Bootstrap.2/bin/minimal-console-compiler -build -save" \
 		    minimal-console-compiler
 
 Bootstrap.final:
 	mkdir Bootstrap.final
-	mkdir Bootstrap.final/Build 
+	mkdir Bootstrap.final/build 
 	mkdir Bootstrap.final/logs
 	mkdir Bootstrap.final/bin
 	mkdir Bootstrap.final/lib
@@ -155,7 +155,7 @@ FINAL_ENV = \
 	FUNCTIONAL_DEVELOPER_USER_INSTALL=$(abs_builddir)/Bootstrap.final \
 	FUNCTIONAL_DEVELOPER_USER_REGISTRIES=$(abs_srcdir)/Sources/registry \
 	FUNCTIONAL_DEVELOPER_USER_SOURCES=$(abs_srcdir)/Sources \
-	FUNCTIONAL_DEVELOPER_USER_BUILD=$(abs_builddir)/Bootstrap.final/Build
+	FUNCTIONAL_DEVELOPER_USER_BUILD=$(abs_builddir)/Bootstrap.final/build
 
 FINAL_LIBRARIES = \
 	minimal-console-compiler \
