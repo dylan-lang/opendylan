@@ -11,7 +11,7 @@ define library deuce-test-suite
   use functional-dylan;
   use deuce;
 
-  use streams;
+  use io;
   use testworks;
 
   export deuce-test-suite;
