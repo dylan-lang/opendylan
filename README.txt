@@ -35,16 +35,21 @@ you read this.)  You will also need VC++ 6.0.
 
 HOW TO BUILD ON LINUX
 
---- 2004.03.18 ---
+--- 2005.04.05 ---
 These directions are likely to change soon, but here's how to build as
 of now:
 
-Install the FD Linux Alpha and disable its expiration date with this
-command:
+* Install the FD Linux Alpha and disable its expiration date with this
+  command:
 
-echo "001ce9c0: 00 00 00 00" | sudo xxd -r - /usr/local/lib/functional-developer/lib/libdylan.so
+ echo "001ce9c0: 00 00 00 00" | sudo xxd -r - /usr/local/lib/functional-developer/lib/libdylan.so
 
-cvs co fundev
+or
+
+* Unpack latest snapshot from http://www.gwydiondylan.org/~andreas/
+
+
+svn co svn+ssh://anonsvn@anonsvn.gwydiondylan.org/scm/svn/dylan/trunk/fundev fundev
 export SRCDIR=`pwd`/fundev        # must be absolute path!
 export BUILDDIR=<your build dir>
 
@@ -53,10 +58,12 @@ Build the MPS and copy it into the fundev source tree (see below).
 cd $SRCDIR
 ./autogen.sh
 
-sudo cp Sources/lib/run-time/pentium-linux/dylan-elf-*.script /usr/local/lib/functional-developer/lib
+If FD Linux Alpha was used, you need to copy new linker scripts:
+ sudo cp sources/lib/run-time/pentium-linux/dylan-elf-*.script /usr/local/lib/functional-developer/lib
 
 cd $BUILDDIR
-$SRCDIR/configure            # you must call configure with absolute path!
+$SRCDIR/configure --with-mps=/path/to/mps-header-files
+              # you must call configure with absolute path!
 make
 
 The goal was ultimately to make it possible to build FunDev in the FunDev IDE,
@@ -77,9 +84,9 @@ http://www.ravenbrook.com/project/mps/ and extract it to some directory.  cd to
 the 'code' subdirectory in the MPS sources and build the mmdw.lib target.
 
   Windows:  nmake /k /f w3i3mv.nmk mmdw.lib
-            copy *.h w3i3mv/ci/mmdw.lib %FUNDEV%/Sources/lib/run-time/pentium-win32/
+            copy *.h w3i3mv/ci/mmdw.lib %FUNDEV%/sources/lib/run-time/pentium-win32/
   Linux:    make -f lii4gc.gmk mmdw.a mpsplan.a
-            cp *.h lii4gc/ci/mmdw.a lii4gc/ci/mpsplan.a $FUNDEV/Sources/lib/run-time/pentium-linux/
+            cp lii4gc/ci/mmdw.a lii4gc/ci/mpsplan.a $FUNDEV/sources/lib/run-time/pentium-linux/
             [if you don't have a lii4gc/ci directory, choose a different ?i directory.]
 
 The actual makefile you use may differ depending on your platform.
@@ -88,7 +95,7 @@ target, as described in the MPS documentation.  You must build
 mmdw.lib or mmdw.a instead.
 
 Copy mmdw.lib or mmdw.a and mpsplan.a into the FunDev source tree in
-fundev/Sources/lib/run-time/pentium-win32/ or pentium-linux,
+fundev/sources/lib/run-time/pentium-win32/ or pentium-linux,
 respectively.  This will be picked up by the FunDev build scripts.
 
 There are to caveats here.  Number one: the above instructions make
