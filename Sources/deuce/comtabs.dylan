@@ -80,7 +80,7 @@ define sealed method add-command!
   if (instance?(bucket, <integer>))
     let entries = command-table.%key-table[bucket];
     when (empty?(entries))
-      entries := make(<simple-object-vector>, size: 8);
+      entries := make(<simple-object-vector>, size: 128); // XXX: hardcoded number of modifier bits!
       command-table.%key-table[bucket] := entries
     end;
     old := entries[modifier-state];
@@ -88,7 +88,7 @@ define sealed method add-command!
   else
     let entries = gethash(command-table.%keysym-table, bucket);
     unless (entries)
-      entries := make(<simple-object-vector>, size: 16);
+      entries := make(<simple-object-vector>, size: 128); // XXX: hardcoded number of modifier bits!
       gethash(command-table.%keysym-table, bucket) := entries
     end;
     old := entries[modifier-state];
