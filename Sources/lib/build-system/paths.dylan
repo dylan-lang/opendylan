@@ -82,12 +82,7 @@ end;
 define function user-install-path
     ()
  => (path :: false-or(<directory-locator>))
-  let path = read-environment-variable("FUNCTIONAL_DEVELOPER_USER_INSTALL");
-  if (path)
-    let directory = as(<directory-locator>, path);
-    ensure-directories-exist(directory);
-    directory
-  end
+  read-environment-path("FUNCTIONAL_DEVELOPER_USER_INSTALL");
 end;
 
 define variable *user-projects-path* = #f;
@@ -113,6 +108,31 @@ end;
 
 define function user-build-path()
  => (path :: false-or(<locator>));
-  let path = read-environment-variable("FUNCTIONAL_DEVELOPER_USER_BUILD");
+  read-environment-path("FUNCTIONAL_DEVELOPER_USER_BUILD", default: "build");
+end;
+
+define function read-environment-path
+    (name :: <string>, #key default :: false-or(<string>))
+ => (path :: false-or(<directory-locator>))
+  let path = read-environment-variable(name);
+  if (~path)
+    let root-path = user-root-path();
+    if (root-path)
+      if (default)
+        path := subdirectory-locator(user-root-path, default);
+      else
+        root-path
+      end;
+    end;
+  else
+    path := as(<directory-locator>, path)
+  end;
+  path & ensure-directories-exist(path);
+  path;
+end;
+
+define function user-root-path()
+ => (path :: false-or(<locator>));
+  let path = read-environment-variable("FUNCTIONAL_DEVELOPER_USER_ROOT");
   path & as(<directory-locator>, path)
 end;
