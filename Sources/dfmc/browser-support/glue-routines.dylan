@@ -945,16 +945,6 @@ define function open-compilation-context
 				    build-settings: build-settings,
 				    read-only?: read-only?,
 				    load-namespace?: load-namespace?);
-  when (database-already-exists?)
-    let library-pack = ld.dfmc-library-description-library-pack;
-    unless (zero?(library-pack))
-      unless (release-contains-library-pack?(library-pack))
-	dfmc-raise(<library-pack-not-installed>,
-		   project: project,
-		   library-pack: library-pack)
-      end
-    end
-  end;
   ld
 end function;
 
