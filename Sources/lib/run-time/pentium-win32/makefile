@@ -38,9 +38,11 @@ mmtuneflags = /DTUNE_GEN0_FREQ=$(gen0freq)
 mmtuneflags = 
 !endif
 
+MPSKIT	 = C:\fundev\mps-kit\code
+
 CC	 = $(cc)
 LINKLIB	 = $(implib) /nologo /out:
-CFLAGS	 = $(cflags) $(cvarsmt) $(cdebug) /I$(INCLUDEDEST) $(FUNCTIONAL_DEVELOPER_C_FLAGS) $(mmtuneflags) /DEXPIRATION=$(EXPIRATION)
+CFLAGS	 = $(cflags) $(cvarsmt) $(cdebug) /I$(INCLUDEDEST) /I$(MPSKIT) $(FUNCTIONAL_DEVELOPER_C_FLAGS) $(mmtuneflags) /DEXPIRATION=$(EXPIRATION)
 HEAPOBJS = heap-display.obj heap-utils.obj heap-trail.obj heap-order1.obj heap-order2.obj heap-table.obj
 OBJS	 = collector.obj $(HEAPOBJS) runtime.obj win32-threads-primitives.obj spy-interfaces.obj expiration.obj
 LIBFILE	 = pentium-run-time.lib
@@ -64,8 +66,8 @@ NOWEAKLIBFILE	 = no-weakness-pentium-run-time.lib
 BOEHMOBJS	 = boehm-collector.obj $(HEAPOBJS) runtime.obj win32-threads-primitives.obj spy-interfaces.obj
 BOEHMLIBFILE	 = boehm-pentium-run-time.lib
 
-RELEASEMMDW      = mmdw.lib
-RELEASEPLINTH	 = mpsplan.lib
+RELEASEMMDW      = $(MPSKIT)\w3i3mv\hi\mmdw.lib
+RELEASEPLINTH	 = $(MPSKIT)\w3i3mv\hi\mpsplan.lib
 
 DEBUGMMDW        = debug-mmdw.lib
 DEBUGPLINTH	 = debug-mpsplan.lib
@@ -76,8 +78,7 @@ SYMBOLICPLINTH	 = mpsplan.lib
 PLINTHOBJS       = plinth.obj mpsiowin32.obj
 DYLANPLINTH      = dylan-plinth.lib
 
-MINCRTOBJS       = exsup.obj exsup3.obj fltused.obj assert.obj memcpy.obj tran.lib lldiv.obj llshl.obj
-
+VCINSTALLDIR	 = C:\Progra~1\Micros~4
 
 # Install shared runtime sources
 
@@ -91,8 +92,12 @@ boehm-collector.obj:       collector.c
 !if defined(fullcrt)
 $(MINCRT): 
 !else
-$(MINCRT): $(MINCRTOBJS)
-	$(LINKLIB)$(MINCRT) $(MINCRTOBJS)
+#$(MINCRT): $(MINCRTOBJS)
+#	$(LINKLIB)$(MINCRT) $(MINCRTOBJS)
+$(MINCRT): 
+	copy $(VCINSTALLDIR)\vc98\lib\libcmt.lib $(MINCRT)
+	lib /remove:build\intel\mt_obj\crt0.obj $(MINCRT)
+	lib /remove:build\intel\mt_obj\wwcrt0.obj $(MINCRT)
 !endif
 
 
@@ -119,8 +124,10 @@ ensure-dirs: collector.c
 	if not exist $(BINDEST) mkdir $(BINDEST)
 
 install-build:
-        if not exist $(BINDEST)\microsoft-linker.script copy microsoft-linker.script $(BINDEST)
-        if not exist $(BINDEST)\gnu-linker.script copy gnu-linker.script $(BINDEST)
+	if not exist $(LIBDEST)\mini-jambase.jam copy ..\mini-jambase.jam $(LIBDEST)
+	if not exist $(LIBDEST)\x86-win32-build.jam copy x86-win32-vc6-build.jam $(LIBDEST)\x86-win32-build.jam
+	if not exist $(LIBDEST)\x86-win32-vc6-build.jam copy x86-win32-vc6-build.jam $(LIBDEST)
+	if not exist $(LIBDEST)\x86-win32-pellesc-build.jam copy x86-win32-pellesc-build.jam $(LIBDEST)
 	if not exist $(LIBDEST)\dylan-support.obj copy dylan-support.obj $(LIBDEST)
 	if not exist $(LIBDEST)\dylanpe.script copy dylanpe.script $(LIBDEST)
 	if not exist $(BINDEST)\make-reloc.exe copy make-reloc.exe $(BINDEST)
@@ -142,7 +149,6 @@ install-boehm-runtime: $(BOEHMLIBFILE)
 	if exist $(RUNTIMELIBDEST) del /q /f $(RUNTIMELIBDEST)
 	copy $(BOEHMLIBFILE) $(RUNTIMELIBDEST)
 	copy gc.dll $(BOEHMGCDEST)
-    
 
 install-buffalo-runtime: $(BUFFLIBFILE)
 	if exist $(RUNTIMELIBDEST) del /q /f $(RUNTIMELIBDEST)
