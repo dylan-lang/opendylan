@@ -189,6 +189,8 @@ void simple_error (char* message)
   report_runtime_error("\nDylan runtime error: ", message);
 }
 
+#ifndef BOEHM_GC
+
 #define unused(param)   ((void)param)
 
 mps_bool_t dylan_check(mps_addr_t addr)
@@ -201,6 +203,8 @@ mps_bool_t dylan_check(mps_addr_t addr)
   unused(addr);
   return 1;
 }
+
+#endif
 
 
 /* Default Error Handler
