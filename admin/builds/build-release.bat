@@ -56,9 +56,9 @@ echo -       Show more information during building
 echo - 
 echo -
 echo - PREREQUISITES:
-echo -   - You must have the internal release installed.
-echo -   - You should remove <internal-release>\bin\projects.txt
-echo -   - If you didn't install the internal release in the standard location
+echo -   - You must have the Hacker Edition installed.
+echo -   - You should remove <hacker-edition>\bin\projects.txt
+echo -   - If you didn't install the Hacker Edition in the standard location
 echo -     you should use the /dylan argument to specify its location.
 echo -   - It's a good idea to also set FUNCTIONAL_DEVELOPER_DEFAULT_ROOT to
 echo -     the same value passed as the /dylan argument.
