@@ -183,7 +183,7 @@ define function read-project-from-stream
 	  end
 	end method, key(files:));
   let subprojects = 
-	  map(compose(curry(as, <locator>), keyval), (subprojects:).key);
+	  map(compose(curry(as, <file-locator>), keyval), (subprojects:).key);
   let executable = single-key((executable:).key, executable:);
   let p :: <project-information> = 
 	  make(<project-information>, files: files, subprojects: subprojects,
