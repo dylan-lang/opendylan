@@ -6,6 +6,11 @@
 #include <sys/time.h>
 #include <sys/resource.h>
 
+void mps_lib_abort(void)
+{ 
+  fflush(stdout);
+  abort();
+}
 
 /* Support for Dylan timer primitives */
 
