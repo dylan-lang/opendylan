@@ -35,6 +35,7 @@ define constant    $R_OK = #o4;
 
 /// From <errno.h>
 define constant $ENOENT  =  2;
+define constant $EINTR   =  4;
 define constant $EACCESS = 13;
 define constant $EINVAL  = 22;
 

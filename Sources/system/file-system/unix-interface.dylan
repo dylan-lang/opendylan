@@ -7,72 +7,96 @@ License:      Functional Objects Library Public License Version 1.0
 Dual-license: GNU Lesser General Public License
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
+
+define macro with-interrupt-repeat
+  { with-interrupt-repeat ?:body end }
+    =>
+  { iterate loop()
+      let result = ?body;
+      if(result < 0 & unix-errno-value() == $EINTR)
+        loop()
+      else
+        result
+      end if;
+    end iterate }
+end macro;
+
 /// LOW LEVEL FFI
 
 define function unix-open
     (path :: <byte-string>, mode :: <integer>, create-flags :: <integer>) => (fd :: <integer>)
-  raw-as-integer
-    (%call-c-function ("open")
-         (path :: <raw-byte-string>, oflag :: <raw-c-unsigned-int>, 
-          mode :: <raw-c-unsigned-int>)
-      => (fd :: <raw-c-unsigned-int>)
-       (primitive-string-as-raw(path), 
-        integer-as-raw(mode), 
-        integer-as-raw(create-flags))
-     end);
+  with-interrupt-repeat
+    raw-as-integer
+      (%call-c-function ("open")
+           (path :: <raw-byte-string>, oflag :: <raw-c-unsigned-int>, 
+            mode :: <raw-c-unsigned-int>)
+        => (fd :: <raw-c-unsigned-int>)
+         (primitive-string-as-raw(path), 
+          integer-as-raw(mode), 
+          integer-as-raw(create-flags))
+       end)
+  end
 end function unix-open;
 
 define function unix-close (fd :: <integer>) => (result :: <integer>)
-  raw-as-integer
-    (%call-c-function ("close") (fd :: <raw-c-unsigned-int>)
-          => (result :: <raw-c-signed-int>)
-       (integer-as-raw(fd)) end)
+  with-interrupt-repeat
+    raw-as-integer
+      (%call-c-function ("close") (fd :: <raw-c-unsigned-int>)
+            => (result :: <raw-c-signed-int>)
+         (integer-as-raw(fd)) end)
+  end
 end function unix-close;
 
 define function unix-read
     (fd :: <integer>, data :: <buffer>, offset :: <integer>, count :: <integer>) => (result :: <integer>)
-  raw-as-integer
-    (%call-c-function ("read")
-         (fd :: <raw-c-unsigned-int>, address :: <raw-pointer>, 
-          size :: <raw-c-unsigned-long>)
-      => (result :: <raw-c-signed-int>)
-       (integer-as-raw(fd), 
-	primitive-cast-raw-as-pointer
-	  (primitive-machine-word-add
-	     (primitive-cast-pointer-as-raw
-		(primitive-repeated-slot-as-raw(data, primitive-repeated-slot-offset(data))), 
-	      primitive-cast-pointer-as-raw(integer-as-raw(offset)))), 
-	integer-as-raw(count))
-     end)
+  with-interrupt-repeat
+    raw-as-integer
+      (%call-c-function ("read")
+           (fd :: <raw-c-unsigned-int>, address :: <raw-pointer>, 
+            size :: <raw-c-unsigned-long>)
+        => (result :: <raw-c-signed-int>)
+         (integer-as-raw(fd), 
+	  primitive-cast-raw-as-pointer
+	    (primitive-machine-word-add
+	       (primitive-cast-pointer-as-raw
+		  (primitive-repeated-slot-as-raw(data, primitive-repeated-slot-offset(data))), 
+                primitive-cast-pointer-as-raw(integer-as-raw(offset)))), 
+          integer-as-raw(count))
+       end)
+  end
 end function unix-read;
 
 define function unix-write
     (fd :: <integer>, data, offset :: <integer>, count :: <integer>) => (result :: <integer>)
-  raw-as-integer
-    (%call-c-function ("write")
-         (fd :: <raw-c-unsigned-int>, address :: <raw-pointer>, 
-          size :: <raw-c-unsigned-long>)
-      => (result :: <raw-c-signed-int>)
-       (integer-as-raw(fd), 
-	primitive-cast-raw-as-pointer
-	  (primitive-machine-word-add
-	     (primitive-cast-pointer-as-raw
-		(primitive-repeated-slot-as-raw(data, primitive-repeated-slot-offset(data))), 
-	      primitive-cast-pointer-as-raw(integer-as-raw(offset)))), 
-	integer-as-raw(count))
-     end)
+  with-interrupt-repeat
+    raw-as-integer
+      (%call-c-function ("write")
+           (fd :: <raw-c-unsigned-int>, address :: <raw-pointer>, 
+            size :: <raw-c-unsigned-long>)
+        => (result :: <raw-c-signed-int>)
+         (integer-as-raw(fd), 
+	  primitive-cast-raw-as-pointer
+	    (primitive-machine-word-add
+	       (primitive-cast-pointer-as-raw
+		  (primitive-repeated-slot-as-raw(data, primitive-repeated-slot-offset(data))), 
+	        primitive-cast-pointer-as-raw(integer-as-raw(offset)))), 
+	  integer-as-raw(count))
+       end)
+  end
 end function unix-write;
 
 define function unix-lseek
     (fd :: <integer>, position :: <integer>, mode :: <integer>) => (position :: <integer>)
-  raw-as-integer
-    (%call-c-function ("lseek")
-         (fd :: <raw-c-unsigned-int>, position :: <raw-c-unsigned-long>, 
-          mode :: <raw-c-unsigned-int>) 
-      => (result :: <raw-c-signed-int>)
-       (integer-as-raw(fd), 
-	integer-as-raw(position), integer-as-raw(mode))
-     end)
+  with-interrupt-repeat
+    raw-as-integer
+      (%call-c-function ("lseek")
+           (fd :: <raw-c-unsigned-int>, position :: <raw-c-unsigned-long>, 
+            mode :: <raw-c-unsigned-int>) 
+        => (result :: <raw-c-signed-int>)
+         (integer-as-raw(fd), 
+	  integer-as-raw(position), integer-as-raw(mode))
+       end)
+  end
 end function unix-lseek;
 
 define function get-unix-error (errno :: <integer>) => (message :: <string>)
@@ -104,7 +128,7 @@ define thread variable *stat-buffer* = make(<byte-vector>, size: $stat-size, fil
 define function unix-file-exists? (path :: <byte-string>) => (exists? :: <boolean>)
   ~primitive-raw-as-boolean
     (%call-c-function ("stat")
-	 (path :: <raw-byte-string>, statbuf :: <raw-pointer>)
+       (path :: <raw-byte-string>, statbuf :: <raw-pointer>)
       => (result :: <raw-c-signed-int>)
        (primitive-string-as-raw(path),
 	primitive-cast-raw-as-pointer(primitive-string-as-raw(*stat-buffer*)))
@@ -112,11 +136,12 @@ define function unix-file-exists? (path :: <byte-string>) => (exists? :: <boolea
 end function unix-file-exists?;
 
 define function unix-delete-file (path :: <byte-string>) => (ok :: <boolean>)
-  raw-as-integer(%call-c-function ("unlink")
-		     (path :: <raw-byte-string>) => (result :: <raw-c-signed-int>)
-		   (primitive-string-as-raw(path))
-		 end)
-    = 0;
+  with-interrupt-repeat
+    raw-as-integer(%call-c-function ("unlink")
+		       (path :: <raw-byte-string>) => (result :: <raw-c-signed-int>)
+		     (primitive-string-as-raw(path))
+		   end)
+  end = 0;
 end function unix-delete-file;
 
 // POSIX lseek whence definitions:

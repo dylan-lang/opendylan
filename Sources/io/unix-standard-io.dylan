@@ -7,40 +7,59 @@ License:      Functional Objects Library Public License Version 1.0
 Dual-license: GNU Lesser General Public License
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
+define constant $EINTR = 4;
+
+define macro with-interrupt-repeat
+  { with-interrupt-repeat ?:body end }
+    =>
+  { iterate loop()
+      let result = ?body;
+      if(result < 0 & unix-errno-value() == $EINTR)
+        loop()
+      else
+        result
+      end if;
+    end iterate }
+end macro;
+
 define function unix-read
     (fd :: <integer>, data :: <buffer>, offset :: <integer>, count :: <integer>)
  => (nread :: <integer>)
-  raw-as-integer
-    (%call-c-function ("read")
-	 (fd :: <raw-c-unsigned-int>, address :: <raw-pointer>, 
-	  size :: <raw-c-unsigned-long>)
-      => (result :: <raw-c-signed-int>)
-       (integer-as-raw(fd), 
-	primitive-cast-raw-as-pointer
-	  (primitive-machine-word-add
-	     (primitive-cast-pointer-as-raw
-		(primitive-repeated-slot-as-raw(data, primitive-repeated-slot-offset(data))), 
-	      primitive-cast-pointer-as-raw(integer-as-raw(offset)))), 
-	integer-as-raw(count))
-     end);
+  with-interrupt-repeat
+    raw-as-integer
+      (%call-c-function ("read")
+         (fd :: <raw-c-unsigned-int>, address :: <raw-pointer>, 
+          size :: <raw-c-unsigned-long>)
+         => (result :: <raw-c-signed-int>)
+         (integer-as-raw(fd), 
+          primitive-cast-raw-as-pointer
+            (primitive-machine-word-add
+               (primitive-cast-pointer-as-raw
+                  (primitive-repeated-slot-as-raw(data, primitive-repeated-slot-offset(data))), 
+                primitive-cast-pointer-as-raw(integer-as-raw(offset)))), 
+          integer-as-raw(count))
+      end)
+  end
 end function;
 
 define function unix-write
     (fd :: <integer>, data :: <buffer>, offset :: <integer>, count :: <integer>)
  => (nwritten :: <integer>)
-  raw-as-integer
-    (%call-c-function ("write")
-         (fd :: <raw-c-unsigned-int>, address :: <raw-pointer>, 
-          size :: <raw-c-unsigned-long>)
-      => (result :: <raw-c-signed-int>)
-       (integer-as-raw(fd), 
-	primitive-cast-raw-as-pointer
-	  (primitive-machine-word-add
-	     (primitive-cast-pointer-as-raw
-		(primitive-repeated-slot-as-raw(data, primitive-repeated-slot-offset(data))), 
-	      primitive-cast-pointer-as-raw(integer-as-raw(offset)))), 
-	integer-as-raw(count))
-     end)
+  with-interrupt-repeat
+    raw-as-integer
+       (%call-c-function ("write")
+           (fd :: <raw-c-unsigned-int>, address :: <raw-pointer>, 
+            size :: <raw-c-unsigned-long>)
+        => (result :: <raw-c-signed-int>)
+         (integer-as-raw(fd), 
+	  primitive-cast-raw-as-pointer
+	    (primitive-machine-word-add
+	       (primitive-cast-pointer-as-raw
+		  (primitive-repeated-slot-as-raw(data, primitive-repeated-slot-offset(data))), 
+                primitive-cast-pointer-as-raw(integer-as-raw(offset)))), 
+          integer-as-raw(count))
+       end)
+  end
 end function unix-write;
 
 // standard unix error definitions

@@ -20,9 +20,9 @@ Files: library
        file-system/multi-buffered-streams
        file-system/wrapper-file-accessor
        file-system/unix-ffi
+       file-system/unix-interface
        file-system/unix-file-system
        file-system/unix-file-accessor
-       file-system/unix-interface
        file-system/posix-locators
        file-system/microsoft-locators
        file-system/macintosh-locators
