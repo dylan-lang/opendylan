@@ -1,3 +1,26 @@
+# $(dllname)            library name (lowercased)
+# $(script)             Pathname to gnu linker script
+# $(rpath)              $FUNCTIONAL_DEVELOPER_RPATH
+# $(full-dll-name)      Name (from Library: or Executable:) w/suffix ".so"
+# $(full-exe-name)      Name (from Library: or Executable:)
+# $(entry-point)        Mangled library name, with "Exe0" appended
+# $(personal-lib)       $FUNCTIONAL_DEVELOPER_USER_INSTALL/lib
+# $(system-lib)         $FUNCTIONAL_DEVELOPER_RELEASE_INSTALL/lib
+# $(libraries)          Set below
+# $(dllobjs)            Object files:
+#                         _glue.o (linkdll) or _main.o (linkexe)
+#                         LID files: keyword
+#                         LID c-object-files: keyword
+#                         LID c-source-files: keyword
+# $(dylan-support)      "*.o $(libgc) -lpthread -lc" when linking Dylan itself
+# $(dlllibs)            -lxxx for each library in MKF used-libraries: keyword
+# $(c-libs)             Contents of LID all-c-libraries: and rtlibs: keywords
+#                       (in elf-linker case, -l prefix/downcased/.lib removed)
+# $(base)               From HDP base-address: keyword
+# $(linkopts)           Variable-expanded from LID linker-options: keyword
+# $(image-version)      major.minor, from LID major-version: and minor-version:
+# $(libcmt)             C library, multithreaded: set below
+#
 linkdll
 gcc -shared -o $(full-dll-name) -T $(script) -L$(personal-lib) -L$(system-lib) $(libraries) $(dllobjs) $(dylan-support) $(dlllibs) $(c-libs) $(linkopts) $(libcmt)
 
