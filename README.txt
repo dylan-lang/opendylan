@@ -53,7 +53,7 @@ cd $SRCDIR
 sudo cp Sources/lib/run-time/pentium-linux/dylan-elf-*.script /usr/local/lib/functional-developer/lib
 
 cd $BUILDDIR
-$SRCDIR/configure
+$SRCDIR/configure            # you must call configure with absolute path!
 make
 
 The goal was ultimately to make it possible to build FunDev in the FunDev IDE,
