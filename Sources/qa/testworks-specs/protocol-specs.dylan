@@ -10,7 +10,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 /// Protocol bindings modeling
 
 define class <protocol-bindings-info> (<object>)
-  constant slot protocol-binding-functions = make(<table>);
+  constant slot names = make(<stretchy-vector>);
+  constant slot protocol-binding-functions = make(<stretchy-vector>);
   slot %unbound-bindings :: false-or(<sequence>) = #f;
   slot %definitions :: false-or(<table>) = #f;
 end class <protocol-bindings-info>;
@@ -24,7 +25,7 @@ define method evaluate-bindings
  => (bindings :: <table>, unbound-bindings :: <sequence>)
   let table = make(<table>);
   let unbound-bindings = make(<stretchy-vector>);
-  for (function keyed-by name in info.protocol-binding-functions)
+  for (name in info.names, function in info.protocol-binding-functions)
     let (value, spec)
       = block ()
 	  function();
@@ -68,8 +69,8 @@ define method register-binding
     (info :: <protocol-bindings-info>, name :: <symbol>, 
      binding-function :: <function>)
  => ()
-  let table = protocol-binding-functions(info);
-  table[name] := binding-function;
+  add!(info.names, name);
+  add!(info.protocol-binding-functions, binding-function);
   // Clear the caches so that they get recomputed
   info.%unbound-bindings := #f;
   info.%definitions := #f;
