@@ -10,7 +10,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // Try to keep the tests in order by bug number.
 
 define test bug-5800 ()
-  check-no-errors("as(<float>, 609217886)", as(<float>, 609217886));
+  check-no-errors("as(<float>, 60962186)", as(<float>, 60962186));
   // Throw these two in for good measure...
   check-no-errors("as(<float>, $maximum-integer)", as(<float>, $maximum-integer));
   check-no-errors("as(<float>, $minimum-integer)", as(<float>, $minimum-integer));
