@@ -104,6 +104,8 @@ rule DylanLibrary image : version {
   _dll_$(image[1]:L) = $(_dll) ;
   _lib_$(image[1]:L) = $(_lib) ;
 
+  _system_$(image[1]:L) = $(SYSTEM) ;
+
   # Shared libraries and executable images
 
   MakeLocate $(_dll) : $(BINDIR) ;
@@ -171,7 +173,9 @@ rule DylanLibraryFiles image : files {
     if ! $(PARENT) {
       Clean clean : $(_obj) $(_el) ;
     }
-    Clean clean-all : $(_obj) $(_el) ;
+    if ! $(SYSTEM) {
+      Clean clean-all : $(_obj) $(_el) ;
+    }
     
     LinkDLL $(_dll) $(_lib) : $(_obj) ;
     LinkEXE $(_exe) : $(_obj) ;
@@ -356,10 +360,18 @@ rule DylanLibraryClosure image : libraries {
   for _i in $(libraries) {
     if ! $(_i) in $(_use_$(image[1]:L)) {
       _use_$(image[1]:L) += $(_i) ;
-      Depends $(_dll) $(_exe) : $(_dll_$(_i)) ;
       Depends $(_dll) : $(_lib_$(_i)) ;
       NEEDLIBS on $(_dll) $(_lib) $(_exe) += $(_lib_$(_i)) ;
       LINKLIBS on $(_dll) $(_lib) $(_exe) += $(_clib_$(_i)) ;
+
+      if $(PERSONAL_ROOT) {
+	Depends $(_exe) : $(_dll_$(_i)) ;
+      } else if ! $(_system_$(_i)) {
+	local _xdll = [ FGristFiles $(_dll_$(_i)) ] ;
+	File $(_xdll) : $(_dll_$(_i)) ;
+	MakeLocate $(_xdll) : $(BINDIR) ;
+	Depends $(_exe) : $(_xdll) ;
+      }
 
       DylanLibraryClosure $(image) : $(_use_$(_i)) ;
     }
