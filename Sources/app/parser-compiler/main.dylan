@@ -32,7 +32,7 @@ define function main () => ();
       usage()
     else
       let arg :: <string> = args[index];
-      if (arg.size > 1 & member?(arg[0], "-/"))
+      if (arg.size > 1 & arg[0] = command-line-option-prefix())
 	select (as-uppercase(arg[1]))
 	  'T' =>
 	    if (index + 1 == nargs)
