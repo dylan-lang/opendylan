@@ -248,10 +248,9 @@ static mps_message_type_t finalization_type;
 
 #define genCOUNT 3
 
-static mps_gen_param_s gc_gen_param[genCOUNT] = {
-  { 2 * 1024, 0.85 },
-  { 16 * 1024, 0.45 },
-  { MAXIMUM_HEAP_SIZE/1024 - 3 * 1024, 0.25 }
+static mps_gen_param_s gc_default_gen_param[genCOUNT] = {
+  { 8 * 1024, 0.45 },
+  { MAXIMUM_HEAP_SIZE/1024 - 8 * 1024, 1.0 }
 };
 
 static MMAllocHandler main_handler = defaultHandler;
@@ -2569,10 +2568,63 @@ void check_runtime_thread_library_uses_segment_register() {
 
 #endif
 
+#ifndef BOEHM_GC
+#include <stdlib.h>
+#include <limits.h>
+
+static mps_gen_param_s *
+get_gen_params(const char *spec,
+	       size_t *gen_count_return,
+	       size_t *max_heap_size_return)
+{
+  size_t gen_count = 0;
+  size_t max_heap_size = 0;
+  mps_gen_param_s *params = NULL;
+  
+  while(*spec != '\0') {
+    char *end;
+    unsigned long capacity = strtoul(spec, &end, 0);
+    double mortality;
+
+    if(capacity == 0 || capacity > 2048 * 1024 || *end != ',') {
+      free(params);
+      return NULL;
+    }
+    max_heap_size += capacity * 1024;
+
+    spec = end + 1;
+    mortality = strtod(spec, &end);
+    if(mortality < 0.0 || mortality > 1.0) {
+      free(params);
+      return NULL;
+    }
+
+    if(*end == ';') {
+      spec = end + 1;
+    } else if(*end == '\0') {
+      spec = end;
+    } else {
+      free(params);
+      return NULL;
+    }
+
+    ++gen_count;
+    params = realloc(params, gen_count * sizeof(mps_gen_param_s));
+    params[gen_count - 1].mps_capacity = capacity;
+    params[gen_count - 1].mps_mortality = mortality;
+  }
+
+  *gen_count_return = gen_count;
+  *max_heap_size_return = max_heap_size;
+  
+  return params;
+}
+#endif
+
 MMError dylan_init_memory_manager()
 {
   mps_res_t res;
-  int max_heap_size = MAXIMUM_HEAP_SIZE;
+  size_t max_heap_size = MAXIMUM_HEAP_SIZE;
 
   gc_teb_t gc_teb = current_gc_teb();
 
@@ -2583,11 +2635,28 @@ MMError dylan_init_memory_manager()
   assert(TARG_CHECK);
 
 #ifndef BOEHM_GC
-  res = mps_arena_create(&arena, mps_arena_class_vm(), (size_t)max_heap_size);
-  if(res) { init_error("create arena"); return(res); }
+  {
+    size_t gen_count = genCOUNT;
+    const char *spec = getenv("FUNCTIONAL_DEVELOPER_MPS_HEAP");
+    mps_gen_param_s *params = NULL;
 
-  res = mps_chain_create(&chain, arena, genCOUNT, gc_gen_param);
-  if(res) { init_error("create chain"); return(res); }
+    res = mps_arena_create(&arena, mps_arena_class_vm(), max_heap_size);
+    if(res) { init_error("create arena"); return(res); }
+
+    if(spec) {
+      params = get_gen_params(spec, &gen_count, &max_heap_size);
+      if(!params)
+	init_error("parse FUNCTIONAL_DEVELOPER_MPS_HEAP format");
+    }
+
+    if(params) {
+      res = mps_chain_create(&chain, arena, gen_count, params);
+      free(params);
+    } else {
+      res = mps_chain_create(&chain, arena, genCOUNT, gc_default_gen_param);
+    }
+    if(res) { init_error("create chain"); return(res); }
+  }
 
   fmt_A = dylan_fmt_A();    
   res = mps_fmt_create_A(&format, arena, fmt_A);
