@@ -1,0 +1,25 @@
+#
+# Configuration variables
+#
+
+{
+  local _lib = lib ;
+  local _bin = bin ;
+
+  # SYSTEM_ROOT is set by the build-system
+  SYSTEM_LIBDIR ?= $(_lib:P=$(SYSTEM_ROOT)) ;
+  SYSTEM_BINDIR ?= $(_bin:P=$(SYSTEM_ROOT)) ;
+
+  # PERSONAL_ROOT is set by the build-system
+  PERSONAL_LIBDIR ?= $(_lib:P=$(PERSONAL_ROOT)) ;
+  PERSONAL_BINDIR ?= $(_bin:P=$(PERSONAL_ROOT)) ;
+
+  # . is set by the build system
+  LIBDIR ?= $(_lib:P=$(PERSONAL_ROOT:E=$(.:P))) ;
+  BINDIR ?= $(_bin:P=$(PERSONAL_ROOT:E=$(.:P))) ;
+}
+
+LINKFLAGS ?= /NODEFAULTLIB /INCREMENTAL:NO /DEBUG ;
+
+include $(SYSTEM_LIBDIR)/x86-win32-vc6-build.jam ;
+
