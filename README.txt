@@ -78,8 +78,8 @@ the 'code' subdirectory in the MPS sources and build the mmdw.lib target.
 
   Windows:  nmake /k /f w3i3mv.nmk mmdw.lib
             copy *.h w3i3mv/ci/mmdw.lib %FUNDEV%/Sources/lib/run-time/pentium-win32/
-  Linux:    make -f lii4gc.gmk mmdw.a
-            cp *.h lii4gc/ci/mmdw.a $FUNDEV/Sources/lib/run-time/pentium-linux/
+  Linux:    make -f lii4gc.gmk mmdw.a mpsplan.a
+            cp *.h lii4gc/ci/mmdw.a lii4gc/ci/mpsplan.a $FUNDEV/Sources/lib/run-time/pentium-linux/
             [if you don't have a lii4gc/ci directory, choose a different ?i directory.]
 
 The actual makefile you use may differ depending on your platform.
@@ -87,7 +87,7 @@ The main point to notice here is that you don't just build the default
 target, as described in the MPS documentation.  You must build
 mmdw.lib or mmdw.a instead.
 
-Copy mmdw.lib or mmdw.a into the FunDev source tree in
+Copy mmdw.lib or mmdw.a and mpsplan.a into the FunDev source tree in
 fundev/Sources/lib/run-time/pentium-win32/ or pentium-linux,
 respectively.  This will be picked up by the FunDev build scripts.
 
