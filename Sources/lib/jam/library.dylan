@@ -71,6 +71,7 @@ end module;
 define module jam-internals
   use common-dylan;
   use threads;
+  use set;
   use bit-set;
   use collectors;
   use streams;

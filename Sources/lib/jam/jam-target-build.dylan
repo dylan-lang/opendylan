@@ -171,10 +171,27 @@ define method jam-target-build
         target.target-build-progress := #"onstack";
 
         let failed? = #f;
+        let seen = make(<object-set>);
+
         for(depend in target.target-depends)
           unless (build(depend))
             failed? := #t;
           end unless;
+        end for;
+        add!(seen, target);
+        if (failed?) return(#f) end;
+        
+        for (invocation in target.target-action-invocations)
+          for (target in invocation.action-invocation-targets)
+            unless (member?(target, seen))
+              for(depend in target.target-depends)
+                unless (build(depend))
+                  failed? := #t;
+                end unless;
+              end for;
+              add!(seen, target);
+            end unless;
+          end for;
         end for;
         if (failed?) return(#f) end;
         
