@@ -1,0 +1,123 @@
+Title:   DUIM library release
+Version: 0.1
+Authors: Scott McKay, Andy Armstrong
+
+
+* Disclaimer
+
+This release constitutes a work in progress.  Not everything in the
+code is in its final form.  Where possible, we have flagged "hot"
+items with comments starting with "//---***".
+
+
+* Specification
+
+There is not yet any specification document as such.  The file
+outline.text contains the outline of such a specification.
+
+
+* Libraries
+
+The following are the libraries supplied in this DUIM release.  In addition to
+the following, DUIM also uses the standard Streams, Format, Print, and Threads
+libraries.  It will also use Transcendentals.
+
+functional-extensions	Some Functional Developer extensions to Dylan.  Note
+			that this won't compile in other Dylan implementations,
+			but we provide it as a reference.  The intention is
+			for DUIM to use only agreed-upon extensions, so the
+			dependency on functional-extensions will eventually
+			be removed.
+
+CL			Some simple 'Common Lisp' utilities.  Again, the
+			dependency on this library will eventually be removed.
+
+DUIM			DUIM 'wrapper' library, provides the entire
+			DUIM core functionality, consists of the
+			following libraries...
+
+  DUIM-Utilities	DUIM utilities -- extensions to Dylan.
+
+  DUIM-Geometry		DUIM geometry support -- regions, transforms,
+			bounding boxes.
+
+  DUIM-DCs		DUIM device context support -- colors, palettes,
+			pens, brushes, text styles.
+
+  DUIM-Silica		DUIM window modelling layer -- sheets (abstract
+			windows), mediums (drawing surfaces), ports
+			(connection to display server), displays; events;
+			pointers and cursors; frame managers.
+
+  DUIM-Graphics		DUIM graphics layer -- figure drawing, path-based
+			drawing, pixmaps.
+
+  DUIM-Layouts		DUIM layouts -- abstract layout modelling, rows
+			and columns, tables.
+
+  DUIM-Gadgets		DUIM gadget layer -- abstract gadgets modelling;
+			some gadget implementations (button boxes).
+
+  DUIM-Frames		DUIM frame support -- application frames, commands,
+			command tables; dialogs.
+
+
+DUIM-Gadget-Panes	DUIM gadget 'pane' implementations -- separately
+			loadable library that portably implements some
+			useful gadgets that aren't found everywhere.
+
+DUIM-Extended-Geometry	DUIM extended geometry support -- separately
+			loadable library that implements more complex
+			geometric regions.
+
+CAPI-DUIM		CAPI back-end -- separately loadable library that
+			implements a back-end that runs in the LispWorks
+			Dylan emulator.
+
+PostScript-DUIM		PostScript back-end -- separately loadable library
+			that implements a back-end for PostScript drawing.
+
+Vanilla-DUIM		"Vanilla" skeleton back-end -- a template; fill
+			in the blanks to get your very own back-end.
+
+DUIM-Test-Suite		DUIM test suite and harness -- load it and
+			evaluate 'run-all-tests()'.
+
+DUIM-Examples		DUIM cookbook examples.
+
+Othello			Sample DUIM Othello game.
+
+Interface-Builder	Beginnings of a DUIM Interface Builder, used
+			to test a bunch of DUIM's dynamic gadget stuff.
+
+
+* Instructions for use under LispWorks
+
+You can load things into the LispWorks Dylan emulator by doing:
+
+ require: capi-duim;		// gets DUIM core + CAPI back-end
+ require: duim-test-suite;	// loads the test suite
+
+Note that the CAPI back-end will generate some redefinition errors.
+You can get around this by setting sys::*handle-warn-on-redefinition*
+to :warn in your .lispworks file.
+
+You can verify that everything compiled correctly by doing:
+
+ in: duim-test-suite;
+ run-all-tests();
+
+The test results will be output in the listener, and the final three lines
+should show that there is only a few failed checks, as below:
+
+  Ran 15 test suites: 12 passed, 3 failed
+  Ran 62 tests: 59 passed, 3 failed, 0 crashed
+  Completed 4964 checks: 4960 passed, 4 failed (0.1%)
+
+You can also load some examples:
+
+ require: duim-examples;
+ require: othello;
+ require: web-browser;
+ require: interface-builder;
+

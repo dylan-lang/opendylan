@@ -1,0 +1,27 @@
+comment:	This file is generated, please don't edit
+format-version:	2
+Library-Pack:   CORBA
+base-address:	0x63EE0000
+minor-version:	1
+files:	orb-connections-library
+	manager
+	receiver
+	sender
+	reclaimer
+	request
+	conditions
+	sockets
+	in-memory
+other-files:	iop-idl.spec
+major-version:	2
+subprojects:	..\iop-protocol\iop-protocol.hdp
+	..\core\orb-core.hdp
+	..\iiop\orb-iiop.hdp
+	..\streams\orb-streams.hdp
+	..\dylan\corba-dylan.hdp
+	..\protocols\corba\corba-protocol.hdp
+	..\protocols\portableserver\portableserver-protocol.hdp
+	..\utilities\orb-utilities.hdp
+compilation-mode:	tight
+target-type:	dll
+library:	orb-connections

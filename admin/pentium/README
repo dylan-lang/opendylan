@@ -1,0 +1,560 @@
+This document describes the third alpha release of Functional
+Developer Version 2.1 for the x86 Linux platform.
+
+This release will expire on January 1, 2004.
+
+
+CHANGES SINCE VERSION 2.1 [Alpha 2]
+
+The compiler and runtime have been upgraded to transparently support
+both thread models used by the various Linux distributions.  (These
+changes have been tested on Mandrake 8.1, Mandrake 9.0, and
+Red Hat 8.0.)  No source code changes are needed to take advantage of
+these changes.  However, all code must be recompiled.
+
+The Network library and its test suite have been open sourced.
+
+
+CHANGES SINCE VERSION 2.1 [Alpha 1]
+
+The major change in this release is the addition of threads support.
+With a few exceptions, as noted below, it is now safe to use the
+interfaces defined in the Common-Dylan library's Threads module.
+
+A new set of condition classes which are used to report errors during
+arithmetic computations have been added to the Common-Dylan library's
+Common-Extensions module.  (See below for additional details.)
+
+A bug in exception handling which caused only the first floating point
+exception in a program to be signalled has been fixed.  Previously,
+subsequent exceptions would return either a {NaN} or an {infinity}.
+
+
+INSTALLATION INSTRUCTIONS
+
+You must be using version 4.0.x, or later, of RPM to install
+Functional Developer.  While running as root, issue the command
+
+  rpm -Uvh functional-developer-2.1alpha3-1.i386.rpm
+
+to install this release.
+
+When upgrading from an older version of Functional Developer, you do
+not need to remove it before running the above command.
+
+If you are installing Functional Developer for the first time, you
+will be asked to read and agree to the license agreement before
+installation proceeds.
+
+Functional Developer will be installed in the directory
+
+  /usr/local/lib/functional-developer/
+
+Symbolic links to the compilers, fdcompile and xfdcompile, will be
+placed in /usr/local/bin/.
+
+To remove Functional Developer, issue the command
+
+  rpm -e functional-developer
+
+Again, you must be running as root when you issue this command.
+
+
+CONTENTS OF RELEASE
+
+As noted above, this release is the third alpha release for the Linux
+platform.  As such, it provides only a command-line compiler and a
+subset of the libraries available in the Windows release.  Additional
+functionality, including the IDE, and libraries will be added in
+subsequent alpha and beta releases of Functional Developer.
+
+This section describes the contents of the current release.
+
+  ------------------------------------------------------------------
+
+  Two command-line compilers are included in this release.
+
+  The first, fdcompile, is equivalent to fdbc in the Windows release.
+  For a brief description of its command line options, run
+
+    fdcompile -help
+
+  (Do not use '/' to identify options as indicated in the help text,
+  use '-' instead.)  Even though they are listed as available, do not
+  use the '-microsoft', '-gnu', or '-nolink' options as they will
+  prevent your project from being built correctly.
+
+  The second compiler, xfdcompile, is a subset of fdce in the Windows
+  release.  Eventually, it will replace fdcompile but is, for now,
+  considered experimental due to problems noted below.  Again, for a
+  brief description of the command line options, run
+
+    xfdcompile -help
+
+  ------------------------------------------------------------------
+
+  The libraries included in this release are:
+
+    Dylan               Common-Dylan        Functional-Dylan
+    Collections         IO                  System
+    Generic-Arithmetic  Big-Integers
+    C-FFI               Network
+    TestWorks           TestWorks-Specs
+
+  The source code of all of the above libraries except the Dylan
+  library is also included in this release.  If a library's source
+  code is not explicitly marked as open source, it is included for
+  reference purposes only.
+
+  ------------------------------------------------------------------
+
+  This release includes several simple examples located in
+ 
+    /usr/local/lib/functional-developer/examples/
+
+  If you wish to build any of these examples, you must first copy them
+  to a directory where you have write permission.  For example, you
+  can build and run the airport example using the commands
+
+    cp -a /usr/local/lib/functional-developer/examples/airport/ ~/airport/
+    fdcompile ~/airport/airport-test.hdp
+    ~/airport/bin/airport-test
+
+  In addition, test suites for the following libraries are also
+  included in this release:
+
+    Dylan               Common-Dylan        Functional-Dylan
+    Collections         IO                  System
+    Network             TestWorks
+
+  For each library, its test suite source code is located in the tests
+  subdirectory of the library's source directory.  For example, the
+  Common-Dylan library's test suite will be found in
+
+    /usr/local/lib/functional-developer/sources/common-dylan/tests/
+
+  With the exception of the Functional-Dylan test suite, the test
+  suites are open source.  We appreciate any contributions you may
+  wish to make to these suites.
+
+
+KNOWN LIMITATIONS
+
+There are a number of known limitations in this release.  These issues
+will be addressed in subsequent alpha and beta releases of Functional
+Developer.  This section provides details on these limitations.
+
+  ------------------------------------------------------------------
+
+  This release does not provide any debugger support.
+
+  In particular, the compiler does not generate what gdb describes as
+  symbol files.  (Even though they are called "files", symbol files
+  are usually embedded in the program's executable file.)  As a
+  result, while gdb can display a backtrace after an error occurs, it
+  will be unable to display the source code corresponding to the
+  address where the error occured or display the values of any
+  arguments or local variables in your program.
+
+  Given the lack of debugger support, the simplest way to debug a
+  program in this release is to add calls to debug-message to your
+  program to track its progress and display intermediate results.
+
+  But ...
+
+  The debug-message function is not fully implemented.  In particular,
+  using debug-message will not crash your application but it will also
+  not display the message.
+
+  To generate debugging output in this release, replace all calls to
+  debug-message with calls to format-out.  (We apologize for this
+  inconvenience.)  A simple way to do this that does not involve
+  changing each occurence of debug-message is to use the rename clause
+  in your module definition.  For example,
+
+    define module my-module
+      use common-dylan,
+        exclude: { debug-message };   // TEMPORARY
+      use simple-io;                  // format-out
+      use simple-io,                  // TEMPORARY
+        rename: { format-out => debug-message };  // TEMPORARY
+      ...
+    end module my-module;
+
+  ------------------------------------------------------------------
+
+  The following limitations apply to the use of threads in this release:
+
+    The join-thread function may only be used to join a single thread.
+    If more than one thread is supplied in a call to join-thread, all
+    but the first will be ignored.
+
+    All threads are created with normal priority.  The value of the
+    priority: initialization keyword is ignored.
+
+    The granularity of the timeout: parameter in calls to wait-for is
+    approximately 0.1 seconds.
+
+  ------------------------------------------------------------------
+
+  Shared libraries produced by this release can only be used with
+  Dylan executable programs.  (In other words, you can't link a Dylan
+  library into a C or C++ program.)
+
+  Further, shared libraries produced by this release cannot be loaded
+  dynamically using dlopen.
+
+  ------------------------------------------------------------------
+
+  When building an application, the compiler uses the linker's --rpath
+  option to set the application's DT_RPATH dynamic section attribute
+  to
+
+    APPLIB:/usr/local/lib/functional-developer/lib/
+
+  where APPLIB is that pathname of the application's lib directory as
+  created by the compiler.  For example, when compiling the Airport
+  example mentioned above, the value of APPLIB will the expansion of
+
+    ~/airport/lib/
+  
+  Some variants of Linux, notably Debian, discourage the use of --rpath.
+  We plan to provide a different mechanism in a subsequent release.
+  (We will also address the issue of versioning of our runtime
+  libraries in a subsequent release.)
+
+  ------------------------------------------------------------------
+
+  As mentioned above, there are two known problems with the xfdcompile
+  compiler which is why it is still considered experimental.
+
+  1) xfdcompile issues an unintelligble error message when asked to
+     compile a non-existant project.
+
+  2) xfdcompile occasionally does not display all compiler warnings
+     produced while compiling a project.
+
+
+MAJOR CHANGES SINCE THE 2.0 RELEASE
+
+A number of significant changes, in addition to numerous bug fixes,
+have been made to Functional Developer since the release of Version 2.0 
+for Windows.  This section provides details on these changes.
+
+  ------------------------------------------------------------------
+
+  This release of Functional Developer eliminates a number of
+  individual libraries in favor of the libraries introduced
+  several years ago by the Harlequin Dylan 1.1 release.
+
+  In particular, if your library definition uses any of the
+  following libraries, you must change it to use the new library as
+  shown in this table.
+
+      New Library           Old Libraries
+
+      common-dylan          common-extensions, byte-vector,
+			    machine-word, transcendentals, threads
+
+      functional-dylan      functional-extensions, byte-vector,
+			    machine-word, transcendentals, threads
+
+      collections           byte-vector, bit-vector, bit-set,
+			    collectors, plists, set, table-extensions
+
+      system                date, file-system, locators,
+			    operating-system, settings
+
+      io                    format, format-out, print, standard-io,
+			    streams
+
+      network               sockets, winsock2, unix-sockets
+
+  For those old libraries which appear in more than one entry above,
+  you should choose the replacement library based on the other needs
+  of your library.  (E.g., if your library uses functional-dylan to
+  access Functional Objects specific extensions, there's no need to
+  also use common-dylan to access the Threads module.)
+
+  With one exception described below, each of the new libraries
+  exports the same modules as were exported by the combination of
+  all the old libraries.  (Of course, the common-dylan and
+  functional-dylan libraries also export the common-dylan and
+  functional-dylan modules, respectively.)
+
+  The one exception is the machine-word library.  Previously, this
+  library exported several modules, each providing access to a
+  specific part of the <machine-word> implementation.  Now, the
+  common-dylan and functional-dylan libraries export a single module
+  named machine-words which provides access to all features of the
+  <machine-word> implementation.  If you used any of the old
+  machine-word library's modules, you must update your code to use
+  the machine-words module as described in Chapter 6, The
+  Machine-Words Module, of Common Dylan and Functional Extensions
+  accessible through the Developer's online help and on the Web at
+
+      http://www.functionalobjects.com/products/doc/core/core_225.htm
+
+  Finally, with the exception of the functional-dylan library and some
+  parts of the io library (as noted), all of the above libraries are
+  now open sourced using a dual license scheme of the Functional
+  Objects Library Public License and the GNU Lesser General Public
+  License.
+
+  ------------------------------------------------------------------
+
+  The TestWorks and TestWorks-Specs libraries are now available.
+  These libraries provide a framework to build library test suites.
+  Unfortunately, the documentation for these libraries is not yet
+  available.  Until the documentation is ready, please consult the
+  test suites mentioned above for examples of how to use TestWorks and
+  TestWorks-Specs.  For additional details, the source code for
+  TestWorks, TestWorks-Specs, and all the test suites is included in
+  this release.
+
+  ------------------------------------------------------------------
+
+  The System library's Locators module is now intended for use 
+  in user code.  Unfortunately, the documentation for this module is
+  not yet available.  Until the documentation is ready, please consult
+  the source code of the module, which is open source, for details on
+  its use.
+
+  A number of changes have been made to the System library's
+  File-System module which may require source code changes on your
+  part.
+
+  The definition of the type <pathname> has been changed to
+
+      type-union(<file-system-locator>, <string>)
+
+  We recommend that you use <directory-locator>s as input to those
+  functions which operate only on directories (i.e., do-directory,
+  ensure-directories-exist, empty-directory?, create-directory,
+  delete-directory, working-directory-setter) to avoid ambiguities
+  with these functions' interpretation of <string> arguments.
+
+  The signatures of home-directory and working-directory have been
+  changed to
+
+      home-directory () => (home-dir :: false-or(<pathname>))
+      working-directory () => (working-dir :: false-or(<pathname>))
+
+  Four new functions have been added.  They are
+
+    expand-pathname (path :: <pathname>) => (expanded-path :: <pathname>)
+      Returns the fully expanded equivalent of the pathname path.
+      If path is a relative pathname, this function will convert it
+      to an absolute pathname relative to the working directory.
+      On Windows, this function uses the GetFullPathname API.
+      On UNIX platforms, this function will also expand the '~'
+      convention as appropriate.
+
+    shorten-pathname (path :: <pathname>) => (shortened-path :: <pathname>)
+      Returns a possibly shorter but equivalent representation of
+      the pathname path.  On Windows, this function returns a DOS
+      pathname (i.e., all names are limited to the 8.3 filename
+      convention).  On UNIX platforms, this function simply returns path.
+
+    link-target (link :: <pathname>) => (link-target :: <pathname>)
+      Returns the pathname of the file or directory pointed to by
+      the file system entity identified by link, if the <file-type>
+      of said entity is #"link".  Otherwise, this function returns
+      the same value as expand-pathname.
+
+    directory-empty? (directory :: <pathname>) => (empty? :: <boolean>)
+      Returns #t if the specified directory is empty (i.e., contains
+      no files or subdirectories).
+
+  The value returned by the following functions is now a
+  <directory-locator> instead of a <string>:
+
+      create-directory
+      home-directory            [May also return #f]
+      working-directory         [May also return #f]
+      working-directory-setter
+      temp-directory            [May also return #f]
+
+  The elements of the <sequence> returned by root-directories are
+  now <directory-locator>s instead of <string>s.
+
+  The function do-directory no longer calls the function you supply
+  to process the directory itself and its parent (i.e., your
+  function will no longer see the value "." (the directory) or
+  ".." (the parent) as its second argument).
+
+  The function do-directory now passes a <directory-locator> instead
+  of a <string> as the first argument to your function.  In prior
+  releases, your function would use
+
+    concatenate(directory, filename)
+
+  to get the pathname of the entry for subsequent calls to file-system
+  functions.  Now, it should use
+
+    if (type == #"directory")
+      subdirectory-locator(directory, filename)
+    else
+      make(<file-locator>, directory: directory, name: filename)
+    end;
+
+  ------------------------------------------------------------------
+
+  All functionality in the Common-Dylan, IO and System libraries
+  related to the file system have been moved to the File-System module
+  of the System library.
+
+  In particular, <file-stream>, with-open-file, and <file-error> (and
+  its subclasses) were moved from the Streams module to the
+  File-System module.  If you use these bindings, you must update your
+  library and module definitions to use the System library and
+  File-System module in addition to the IO library and Streams module.
+
+  The class <file-error> is now a subclass of <file-system-error>.
+
+  A new locator class, <file-system-locator>, has been added to the
+  File-System module.  It is a subclass of <physical-locator> and a
+  superclass of all concrete classes representing file system entities
+  (e.g., <posix-directory-locator> and <posix-file-locator> for UNIX
+  file systems).
+
+  Use of the construct
+
+    as(<physical-locator>, filename)
+
+  to convert a filename, which may identify a directory or a file,
+  into the appropriate locator, a subclass of <directory-locator> or
+  <file-locator>, is no longer supported.  Instead, use
+
+    as(<file-system-locator>, filename)
+
+  ------------------------------------------------------------------
+
+  A new function, command-line-option-prefix, has been added to the
+  System library's Operating-System module.
+
+    command-line-option-prefix () => (prefix :: <character>)
+      Returns the preferred character used to indicate that a command
+      line argument is an command option.  (On UNIX, it returns '-';
+      on Windows, it returns '/')
+
+  ------------------------------------------------------------------
+
+  A new function, file-system-separator, has been added to the System
+  library's File-System module.
+
+    file-system-separator () => (separator :: <character>)
+      Returns the character used to separate components of a
+      pathname.  (On UNIX, it returns '/'; on Windows, it returns '\')
+
+  Note that this function is likely to be renamed in subsequent releases.
+
+  ------------------------------------------------------------------
+
+  A new function, split, has been added to the Common-Dylan library's
+  Common-Extensions module.
+
+    split (string :: <string>, character :: <character>,
+           #key start :: <integer> = 0, 
+                end: :: <integer> = size(string),
+                trim? :: <boolean> = #t)
+     => (strings :: <sequence>)
+
+  Arguments:
+    string    - the string to split
+    character - the character to use as a separator
+    start     - the start position to split from
+    end       - the end position to split to
+    trim?     - trim the resulting strings of whitespace
+
+  Examples:
+
+    split("a/b/file.txt", '/') 
+      => #["a", "b", "file.txt"]
+    split("one, two, three", ',')
+      => #["one", "two", "three"]
+    split("one, two, three", ',', trim?: #f)
+      => #["one", " two", " three"]
+    split("http://www.dylan.com/first/second/third", '/', start: 21)
+      => #["first", "second", "third"]
+    split("http://www.dylan.com/first/second/third", '.', start: 7, end: 20)
+      => #["www", "dylan", "com"]
+    split("x=100&y=200&width=30&height=10", '&'),
+      => #["x=100", "y=200", "width=30", "height=10"]);
+
+  ------------------------------------------------------------------
+
+  A new set of condition classes are now exported from the
+  Common-Dylan library's Common-Extensions module.  These condition
+  classes are used to signal errors which may occur during
+  arithmetic computations.  The classes are
+
+    <arithmetic-error>                   [Open Abstract Class]
+      Superclasses:  <error>
+      Init-Keywords:
+	format-string:    An instance of <string>.  A format string
+			  describing the error.  Each subclass of this
+			  condition is expected to supply an appropriate
+			  value for this keyword.
+	format-arguments: An instance of <sequence>.  Format arguments to
+			  be spliced into the format string to describe
+			  the error.  The default value is #[].
+      Description:   The superclass of all arithmetic error conditions.
+      Operations:    None
+
+    <division-by-zero-error>             [Sealed Instantiable Class]
+      Superclasses:  <arithmetic-error>
+      Init-Keywords: Same as for <arithmetic-error>.
+		     Supplies "Division by zero" as the default value
+		     for format-string:.
+      Description:   Signalled when the divisor of a division function
+		     (e.g., floor/(1, 0) or 1.0s0 / 0.0s0) is zero.
+      Operations:    None
+      Recovery Protocol: None
+
+    <arithmetic-overflow-error>          [Sealed Instantiable Class]
+      Superclasses:  <arithmetic-error>
+      Init-Keywords: Same as for <arithmetic-error>.
+		     Supplies "Arithmetic overflow" as the default value
+		     for format-string:.
+      Description:   Signalled when the result of a calculation is too large
+		     to be represented as an object of the result class for
+		     the operation.  For integer calculations, this condition
+		     is signalled when the result would be greater than
+		     $maximum-integer or less than $minimum-integer.  For
+		     floating point calculations, an example of an operation
+		     that will signal this condition on Pentium class
+		     machines is 1.0s20 * 1.0s20.
+      Operations:    None
+      Recovery Protocol: None
+      Recovery Protocol: None
+
+    <arithmetic-underflow-error>         [Sealed Instantiable Class]
+      Superclasses:  <arithmetic-error>
+      Init-Keywords: Same as for <arithmetic-error>.
+		     Supplies "Arithmetic underflow" as the default value
+		     for format-string:.
+      Description:   Signalled when the magnitude of the result of a
+		     calculation is too small to be represented by the result
+		     class for the operation.  In other words, this value of
+		     the computation is extremely close to but not equal
+		     to zero.  This condition is never signalled for integer
+		     calculations.  For floating point calculations, an
+		     example of an operation that will signal this condition
+		     on a Pentium class machine is 1.0s-20 * 1.0s-20.
+      Operations:    None
+      Recovery Protocol: None
+
+  These errors are distinct from other subclasses of <error> so that
+  you can establish a handler for arithmetic errors that does not
+  also trap other unpredictable errors.
+
+  If you create your own subclasses of <number>, you may wish to
+  create your own subclasses of <arithmetic-error> to signal errors
+  during your computations.  You may, of course, define a recovery
+  protocol for any such <arithmetic-error> subclasses that you create.
+
+  ------------------------------------------------------------------
+
+  A new module, generic-arithmetic-common-dylan, has been added to the
+  Generic-Arithmetic library.

@@ -1,0 +1,39 @@
+Library: source-db
+Author: Roman Budzianowski
+
+This is basically a reimplementation (not port) of John Dunnings
+prototype in Dylan plus some layers on top of it. 
+
+It is not hooked to a DB, hence not usable at the moment. Performance
+was not a priority.
+
+Interfaces:
+
+High level:
+
+boot-dylan-library(name :: <string>) => <db-source-system>
+
+update-dylan-library (sys :: <db-source-system>)
+
+define method describe (sys :: <db-source-system>, #key verbose?(#f))
+
+branch-search-list-setter(l :: <list>, sys :: <db-source-system>)
+
+	l is a list of strings, branch names
+
+find-file(sys :: <db-source-system>, file :: <string>) => values(meta, branch)
+
+update-file(sys :: <db-source-system>, file :: <string>)
+
+update-or-boot-file(sys :: <db-source-system>, file :: <string>)
+
+update-file-in-branch(sys :: <db-source-system>, file :: <string>)
+
+default-branch(sys :: <db-source-system>)
+
+create-snapshot(sys :: <db-source-system>, s-name,
+			      #key
+		branch-list(sys.branch-search-list))
+
+create-branch(sys :: <db-source-system>, s :: <string>)
+

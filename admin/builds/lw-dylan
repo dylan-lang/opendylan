@@ -1,0 +1,45 @@
+#!/usr/local/bin/bash
+#      Script: lw-dylan
+#      Author: Shri Amit(amit)
+usage=" Usage: $0 -r <Root> -e"
+# Opts & Flgs: -r: <Root>, default: /u/dylan
+#              -e: invoke lw+dylan+env image instead of plain emulator
+#    Synopsis: A platform independent and trouble free way to invoke
+#              the emulator and environment images. Any extra arguments
+#              shall be passed along to the image.
+######################################################################
+
+## Parse the command line and check incorrect usage ##
+##
+extra_args=""
+while [ "$#" -ne 0 ]; do
+  case $1 in
+    -r) shift
+        root="$1" ;;
+    -e) env=Yes ;;
+     *) extra_args="$extra_args $1";;
+  esac
+  shift
+done
+
+## Set the defaults and invoke the image ##
+##
+root=${root:-/u/dylan}
+platform=`$root/tools/scripts/dylan-platform`
+env=${env:-No}
+case $env in
+     Yes) image=$root/local/lw+dylan+env-$platform ;;
+      No) image=$root/local/lw+dylan-$platform ;;
+esac
+echo Setting up environment variables
+export DYLAN_ROOT=$root
+export TRUNK_SYSTEM_ROOT="$root/"
+case $extra_args in
+    "") ;;
+     *) echo The image is being executed with the following arguments:
+        echo "   $extra_args" ;;
+esac
+echo Executing the image, please standby ...
+exec $image $extra_args
+
+#eof

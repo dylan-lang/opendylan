@@ -1,0 +1,165 @@
+<library-pack name="Win32" title="Win32" number="3">
+  <description>Raw Win32 interface libraries</description>
+  <copyright>Copyright (c) 1995-2001 Functional Objects, Inc. All rights reserved.</copyright>
+  <company>Functional Developer</company>
+  <libraries>
+    <library name="win32-common" title="Win32 common code library">
+      <sources location="win32/win32-common">
+        <project platform="x86-win32">win32-common.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+        <binary file="DxW32CMN.dll"/>
+      </release>
+    </library>
+    <library name="win32-controls" title="Win32 Controls">
+      <sources location="win32/win32-controls">
+        <project platform="x86-win32">win32-controls.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+        <binary file="DxW32CTL.dll"/>
+      </release>
+    </library>
+    <library name="win32-dialog" title="Win32 Dialog">
+      <sources location="win32/win32-dialog">
+        <project platform="x86-win32">win32-dialog.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+        <binary file="DxW32DLG.dll"/>
+        <lib file="DxW32DLG.lib"/>
+      </release>
+    </library>
+    <library name="win32-gdi" title="Win32 GDI">
+      <sources location="win32/win32-gdi">
+        <project platform="x86-win32">win32-gdi.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+        <binary file="DxW32GDI.dll"/>
+        <lib file="DxW32GDI.lib"/>
+      </release>
+    </library>
+    <library name="win32-html-help" title="Win32 HTML Help">
+      <sources location="win32/win32-html-help">
+        <project platform="x86-win32">win32-html-help.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+        <binary file="DxHTMHLP.dll"/>
+        <lib file="DxHTMHLP.lib"/>
+      </release>
+    </library>
+    <library name="win32-kernel" title="Win32 Kernel">
+      <sources location="win32/win32-kernel">
+        <project platform="x86-win32">win32-kernel.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+        <binary file="DxW32KNL.dll"/>
+        <lib file="DxW32KNL.lib"/>
+      </release>
+    </library>
+    <library name="win32-registry" title="Win32 Registry">
+      <sources location="win32/win32-registry">
+        <project platform="x86-win32">win32-registry.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+        <binary file="DxW32REG.dll"/>
+        <lib file="DxW32REG.lib"/>
+      </release>
+    </library>
+    <library name="win32-resources" title="Win32 Resources">
+      <sources location="win32/win32-resources">
+        <project platform="x86-win32">win32-resources.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+        <binary file="DxW32RES.dll"/>
+        <lib file="DxW32RES.lib"/>
+      </release>
+    </library>
+    <library name="win32-user" title="Win32 User">
+      <sources location="win32/win32-user">
+        <project platform="x86-win32">win32-user.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+        <binary file="DxW32USR.dll"/>
+        <lib file="DxW32USR.lib"/>
+      </release>
+    </library>
+    <library name="win32-dde" title="Win32 DDE">
+      <sources location="win32/win32-dde">
+	<project platform="x86-win32">win32-dde.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+	<binary file="DxW32DDE.dll"/>
+	<lib file="DxW32DDE.lib"/>
+      </release>
+    </library>
+    <library name="win32-gl" title="Win32 GL">
+      <sources location="win32/win32-gl">
+	<project platform="x86-win32">win32-gl.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+	<binary file="DxW32GL.dll"/>
+	<lib file="DxW32GL.lib"/>
+      </release>
+    </library>
+    <library name="win32-glu" title="Win32 GLU">
+      <sources location="win32/win32-glu">
+	<project platform="x86-win32">win32-glu.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+	<binary file="DxW32GLU.dll"/>
+	<lib file="DxW32GLU.lib"/>
+      </release>
+    </library>
+    <library name="win32-multimedia" title="Win32 Multimedia">
+      <sources location="win32/win32-multimedia">
+	<project platform="x86-win32">win32-multimedia.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+	<binary file="DxW32MM.dll"/>
+	<lib file="DxW32MM.lib"/>
+      </release>
+    </library>
+    <library name="win32-rich-edit" title="Win32 Rich Edit">
+      <sources location="win32/win32-rich-edit">
+	<project platform="x86-win32">win32-rich-edit.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+	<binary file="DxW32RED.dll"/>
+	<lib file="DxW32RED.lib"/>
+      </release>
+    </library>
+    <library name="win32-shell" title="Win32 Shell">
+      <sources location="win32/win32-shell">
+	<project platform="x86-win32">win32-shell.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+	<binary file="DxW32SHL.dll"/>
+	<lib file="DxW32SHL.lib"/>
+      </release>
+    </library>
+    <library name="win32-version" title="Win32 Version">
+      <sources location="win32/win32-version">
+	<project platform="x86-win32">win32-version.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+	<binary file="DxW32VER.dll"/>
+	<lib file="DxW32VER.lib"/>
+      </release>
+    </library>
+  </libraries>
+  <examples>
+    <library name="windows-ffi-example" title="Windows FFI Example">
+      <category>Technologies/Win32</category>
+      <description>An example use of the Windows FFI</description>
+      <sources location="win32/windows-ffi-example">
+	<project platform="x86-win32">windows-ffi-example.lid</project>
+      </sources>
+    </library>
+    <library name="windows-gadgets-example" title="Windows Gadgets Example">
+      <category>Technologies/Win32</category>
+      <description>An example use of Windows controls</description>
+      <sources location="win32/windows-gadgets-example">
+	<project platform="x86-win32">windows-gadgets-example.lid</project>
+      </sources>
+    </library>
+  </examples>
+</library-pack>

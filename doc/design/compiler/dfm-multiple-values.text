@@ -1,0 +1,182 @@
+From haahr Sun Sep 10 20:17:08 1995
+From: Paul Haahr <haahr>
+Subject: multiple values in the DFM
+Date: Sun, 10 Sep 95 20:17:04 +0100
+
+I'm finally ready to check the multiple values code into the DFM.  In
+fact, I came in tonight to check it in.  Unfortunately, I lost my
+battle with hope, which ran out of disk space somewhere important, so
+it'll take me a while tomorrow to do that.
+
+Anyway, here's the design for using multiple values in the DFM.  It's
+pretty pervasive in its effect on the data flow graph, so it's
+probably worth it for everybody to read this through.
+
+Let me know if you see problems here.  The sooner the better.
+
+Thanks to Tony for helping me sort this out the design for this.
+
+Paul
+
+----
+
+To represent multiple values, there's a new temporary class in the
+DFM, <multiple-value-temporary>.  Multiple values temporaries are not
+interchangable with other temporaries;  maybe we should introduce a
+<simple-temporary> class for non-multiple-value temporaries, but we
+can do that later.  In the debugging print code, MV temporaries print
+with a * in front of them.
+
+A multiple value temporary is the result of any computation which can
+produce multiple values, notably a call.
+
+In order to produce efficient code, we've imposed the requirement that
+at most one MV temporary is live at a time (per thread).  This allows
+us to allocate space for all MV temporaries ahead of time, as part of
+the calling convention, in the ``multiple value area.''  It's
+generally best to think of the multiple value area, which is used to
+pass multiple values across calls, as a single multiple valued
+register, which we allocate to the live MV temporary.
+
+When there really is more than one live MV temporary, we must spill
+and unspill uses.  One of the important optimizations is to reduce
+these spills when the number of values in a MV temporary is known, by
+extracting them into normal temporaries and repackaging them as an MV
+temporary when needed as one.
+
+A multiple value temporary has slots which describe the number of
+required values and whether there are rest values.  Types need to be
+incorporated here, just as with other temporaries.  There's also a
+slot for a normal temporary, which is used when spilling the multiple
+value temporary.
+
+To manipulate multiple values, there are five new computation classes:
+
+  <values>
+
+    super: <computation>
+    slots: fixed-values, rest-value
+
+    Creates a <multiple-value-temporary> from a set of single value
+    temporaries.  For now, a <values> node comes from a converter
+    for the ``function macro'' values;  in the future, there should
+    be only one <values> node created directly, and the rest created
+    by inlining the function values from the Dylan library.  (A
+    similar change needs to be made for <apply>.)
+
+      values(1, 2, 3) =>
+        [BIND]
+        t0 := ^1
+        t1 := ^2
+        t2 := ^3
+        *t3 := [VALUES t0 t1 t2]
+        return *t3
+
+  <extract-single-value>
+
+    super: <computation>
+    slots: multiple-values, index, rest-vector?
+
+    Produces a single-valued temporary from an MV temporary.  The
+    index is used to select which multiple value is extracted;  the
+    indices are numbered from 0.  If rest-vector? is true, a vector
+    of the values from index on is returned, rather than just the
+    index.  (Perhaps that should be a different <computation> class.)
+
+    These very commonly follow calls, extracting the single value.
+    They should also appear based on optimizations of let bindings.
+
+      f(g()) =>
+        [BIND]
+        t0 := ^f
+        t1 := ^g
+        *t2 := [CALLx t1()]
+        t3 := *t2 [0]
+        *t4 := [CALLx t0(t3)] // tail call
+        return *t4
+
+  <multiple-value-call>
+
+    super: <function-call>
+
+    Like an <apply> with no fixed arguments and a MV temporary as the
+    single (last) argument.  Constructed from ``let'' declarations
+    which bind multiple values.  (This could be used for all lets, but
+    I wanted to wait with that until the multiple value optimizations
+    were in place.)
+
+    The most important optimization with these nodes is to upgrade
+    the calls to <simple-call> or <apply> with the shape of the
+    MV temporary argument is know.  If it's not known, the simplest
+    code generation strategy is to extract all of the temporary
+    values and transform the call into an <apply>.
+
+      begin let (a, b) = f(); g(a, b) end =>
+        [BIND]
+        t3 := ^[XEP lambda 741 [743] (a, b)
+          [BIND]
+          t0 := ^g
+          *t1 := [CALLx t0(a, b)] // tail call
+          return *t1
+        end lambda]
+        t0 := ^f
+        *t1 := [CALLx t0()]
+        *t2 := [MV-CALLx t3(*t1)] // tail call
+        return *t2
+
+  <multiple-value-spill>
+  <multiple-value-unspill>
+
+    super: <temporary-transfer>
+
+    These instructions turn an MV temporary into a single-value
+    temporary and vice-versa, for the purpose of maintaining the
+    property that a single MV temporary is live at a time.  As much as
+    possible, we should try to avoid these instructions in generated
+    code, which can be done when we know we're dealing with a fixed
+    number of values.
+
+    These computations are only generated by the mandatory compiler
+    pass ``spill-multiple-values,'' which should run after all
+    optimizations have happened.  (The reason that it should run
+    afterwards is the spill code can defeat other optimizations and
+    other optimizations can get rid of the need to spill.)
+
+      block () f() afterwards g() end =>
+        [BIND]
+        t0 := ^f
+        *t1 := [CALLx t0()]
+        t3 := [MV-SPILL *t1]
+        t2 := ^g
+        [CALLx t2()]
+        *t4 := [MV-UNSPILL t3]
+        return *t4
+
+    The reason the spill is needed is that the call to g tramples over
+    the multiple value area.
+
+In the C run time, there's an extra data structure, MV, as follows:
+
+  typedef struct _mv {
+    int count;
+    D   value[VALUES_MAX];
+  } MV;
+
+There's one global such thing (Preturn_values), and one per bind-exit
+or unwind-protect frame, used for the return value that's being passed
+around.  The ones that live in those frames should probably be
+shortened to some small number of values (2? 4? 8?) and evacuate to
+the heap if more multiple values are stored;  it's pretty rare, I
+expect, for a large number of values to appear in an unwind-protect
+frame, or to be passed back with an exit procedure.
+
+The C code generated for all of these is pretty stupid right now,
+calling out to primitives in all cases, so I won't bother to present
+it.  I want to get to the task of optimizing multiple values soon.  I
+think that a little bit of optimization will go a long way here.
+
+In the native run-time, we'll pass the first few multiple values and
+(if there is one) the count in registers.  Tony can describe that far
+better than I can.
+
+

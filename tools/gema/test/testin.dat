@@ -1,0 +1,109 @@
+first line
+two woks
+some wo end
+The ( Ren + Stimpy ) Show
+end
+Control character: ''
+[Control chars]
+Some {\em italicized {\tt command}
+thing} here.
+
+This <f> sentence
+does <b>not</b> mean anything</f> yet.
+do7
+ /* try /* nested */ comment */
+Quote(x=a[i] * b - c)
+tic oz tac
+tic xOxX tac
+[duh]
+[abcxoxyz]
+and foo and ...... so
+@begin(list)
+@item apples @item oranges @item bananas
+@end(list)
+Buzz
+All
+Num(alpha)
+Num( 3.5 )
+Num( -12345.00 )
+All
+The firehouse.
+@Rem -- following commented out because system dependent --
+@Rem Merge("/foo/bar/junk.x", "baz.c", "bonk.o" )
+@Rem Merge("C:\foo\bar\junk.x", "baz.c", "bonk.o" )
+@Rem Merge("/foo/bar", "/bozo/baz", "text" )
+Tabs(alpha,beta,gamma)
+\verb-foo-
+@begin(roman_list)
+@roman_item apples @roman_item oranges @roman_item bananas
+@roman_item peaches @roman_item strawberries @roman_item pears
+@roman_item apricots @roman_item pinapples @roman_item mangos
+@end(roman_list)
+@Just(abc)
+@Fill(123)
+@Dee(a+b=c)
+@Dum(a+b=c)
+Beetjuice
+Beetle
+david David DAVID
+@Letters
+@Wrap(now is the time for all good men to come to the aid of their party)
+@Wrap2(The area of a circle is pi [3.14159] times r [the radius] squared.)
+@add(@length(abcd),@mul( 2 , 5 ))
+@or(3,9) @and(3,9) @and(15,@not(3))
+@radix(8,16,14)
+@radix(2,8,1101)
+@radix(16,10,1A)
+@subst(in,out,what is in now)
+@cmpn(@charint(	),9,wrong 1,yes,wrong 2)
+@intchar(@add(@charint(2),1))
+@substring(-1,23,abcdefg)
+@substring(2,3,abcdefg)
+@upcase(tOuPpEr 123)
+@downcase(tOlOWeR 123)
+@reverse(abc xyz)
+@strcmp(abc,ac,yes,no 1,no 2)
+@strcmp(abc,abc,no 3,yes,no 4)
+@strcmp(abc,ab,no 5,no 6,yes)
+@stricmp(abc,ABC,no 7,yes,no 8)
+@Define(magic,enchanted)
+some magic evening
+@Define(magic,dreary)
+some magic evening
+@UnDefine(magic)
+some magic evening
+@Twenty(abcdefghijklmnopqrstuvwxyz)
+@Probes
+.ARGS one "and ""a"" two"
+ack(x3.4.y)
+nack(x3.4.y)
+watch(this and wo)
+@Bunch: ignore everything until
+   we find the beginning of the next command
+@Ctypes(a3, )
+@Cgroups(isn't 2Af 123 z7 )
+@Cgroups(a_b foo.c )
+@Cgroups( 	. )
+@Cgroups( %? )
+@Cgroups( co-op )
+@Count(a b c (x y) d e)
+@Line
+@Lisp: b-c
+@Lisp: (a*b)-c
+@Line
+@MethBug 
+  x := north;
+  y := self.east;
+ end method;
+..@3Spaces..
+//  Lion
+//	Tiger
+//  Elephant
+@It(ant)
+Is it ant?
+Is it bee?
+Hit plantation
+Swat plantation
+the last
+
+

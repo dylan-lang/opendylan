@@ -1,0 +1,3008 @@
+%!PS-Adobe-3.0
+%%BoundingBox: (atend)
+%%Pages: (atend)
+%%PageOrder: (atend)
+%%DocumentFonts: (atend)
+%%Creator: Frame 4.0
+%%DocumentData: Clean7Bit
+%%EndComments
+%%BeginProlog
+%
+% Frame ps_prolog 4.0, for use with Frame 4.0 products
+% This ps_prolog file is Copyright (c) 1986-1993 Frame Technology
+% Corporation.  All rights reserved.  This ps_prolog file may be
+% freely copied and distributed in conjunction with documents created
+% using FrameMaker, FrameBuilder and FrameViewer as long as this 
+% copyright notice is preserved.
+%
+% Frame products normally print colors as their true color on a color printer
+% or as shades of gray, based on luminance, on a black-and white printer. The
+% following flag, if set to True, forces all non-white colors to print as pure
+% black. This has no effect on bitmap images.
+/FMPrintAllColorsAsBlack             false def
+%
+% Frame products can either set their own line screens or use a printer's 
+% default settings. Three flags below control this separately for no 
+% separations, spot separations and process separations. If a flag
+% is true, then the default printer settings will not be changed. If it is
+% false, Frame products will use their own settings from a table based on
+% the printer's resolution.
+/FMUseDefaultNoSeparationScreen      true  def
+/FMUseDefaultSpotSeparationScreen    true  def
+/FMUseDefaultProcessSeparationScreen false def
+%
+% For any given PostScript printer resolution, Frame products have two sets of 
+% screen angles and frequencies for printing process separations, which are 
+% recomended by Adobe. The following variable chooses the higher frequencies
+% when set to true or the lower frequencies when set to false. This is only
+% effective if the appropriate FMUseDefault...SeparationScreen flag is false.
+/FMUseHighFrequencyScreens true def
+%
+% PostScript Level 2 printers contain an "Accurate Screens" feature which can
+% improve process separation rendering at the expense of compute time. This 
+% flag is ignored by PostScript Level 1 printers.
+/FMUseAcccurateScreens true def
+%
+% The following PostScript procedure defines the spot function that Frame
+% products will use for process separations. You may un-comment-out one of
+% the alternative functions below, or use your own.
+%
+% Dot function
+/FMSpotFunction {abs exch abs 2 copy add 1 gt 
+		{1 sub dup mul exch 1 sub dup mul add 1 sub }
+		{dup mul exch dup mul add 1 exch sub }ifelse } def
+%
+% Line function
+% /FMSpotFunction { pop } def
+%
+% Elipse function
+% /FMSpotFunction { dup 5 mul 8 div mul exch dup mul exch add 
+%		sqrt 1 exch sub } def
+%
+%
+/FMversion (4.0) def 
+/FMLevel1 /languagelevel where {pop languagelevel} {1} ifelse 2 lt def
+/FMPColor
+	FMLevel1 {
+		false
+		/colorimage where {pop pop true} if
+	} {
+		true
+	} ifelse
+def
+/FrameDict 400 dict def 
+systemdict /errordict known not {/errordict 10 dict def
+		errordict /rangecheck {stop} put} if
+% The readline in PS 23.0 doesn't recognize cr's as nl's on AppleTalk
+FrameDict /tmprangecheck errordict /rangecheck get put 
+errordict /rangecheck {FrameDict /bug true put} put 
+FrameDict /bug false put 
+mark 
+% Some PS machines read past the CR, so keep the following 3 lines together!
+currentfile 5 string readline
+00
+0000000000
+cleartomark 
+errordict /rangecheck FrameDict /tmprangecheck get put 
+FrameDict /bug get { 
+	/readline {
+		/gstring exch def
+		/gfile exch def
+		/gindex 0 def
+		{
+			gfile read pop 
+			dup 10 eq {exit} if 
+			dup 13 eq {exit} if 
+			gstring exch gindex exch put 
+			/gindex gindex 1 add def 
+		} loop
+		pop 
+		gstring 0 gindex getinterval true 
+		} bind def
+	} if
+/FMshowpage /showpage load def
+/FMquit /quit load def
+/FMFAILURE { 
+	dup = flush 
+	FMshowpage 
+	/Helvetica findfont 12 scalefont setfont
+	72 200 moveto
+	show FMshowpage 
+	FMquit 
+	} def 
+/FMVERSION {
+	FMversion ne {
+		(Frame product version does not match ps_prolog!) FMFAILURE
+		} if
+	} def 
+/FMBADEPSF { 
+	(PostScript Lang. Ref. Man., 2nd Ed., H.2.4 says EPS must not call X              )
+	dup dup (X) search pop exch pop exch pop length 
+	4 -1 roll 
+	putinterval 
+	FMFAILURE
+	} def
+/FMLOCAL {
+	FrameDict begin
+	0 def 
+	end 
+	} def 
+/concatprocs
+	{
+	/proc2 exch cvlit def/proc1 exch cvlit def/newproc proc1 length proc2 length add array def
+	newproc 0 proc1 putinterval newproc proc1 length proc2 putinterval newproc cvx
+}def
+FrameDict begin 
+/FMnone 0 def
+/FMcyan 1 def
+/FMmagenta 2 def
+/FMyellow 3 def
+/FMblack 4 def
+/FMcustom 5 def
+/FrameNegative false def 
+/FrameSepIs FMnone def 
+/FrameSepBlack 0 def
+/FrameSepYellow 0 def
+/FrameSepMagenta 0 def
+/FrameSepCyan 0 def
+/FrameSepRed 1 def
+/FrameSepGreen 1 def
+/FrameSepBlue 1 def
+/FrameCurGray 1 def
+/FrameCurPat null def
+/FrameCurColors [ 0 0 0 1 0 0 0 ] def 
+/FrameColorEpsilon .001 def	
+/eqepsilon {		
+	sub dup 0 lt {neg} if
+	FrameColorEpsilon le
+} bind def
+/FrameCmpColorsCMYK { 
+	2 copy 0 get exch 0 get eqepsilon {
+		2 copy 1 get exch 1 get eqepsilon {
+			2 copy 2 get exch 2 get eqepsilon {
+				3 get exch 3 get eqepsilon
+			} {pop pop false} ifelse
+		}{pop pop false} ifelse
+	} {pop pop false} ifelse
+} bind def
+/FrameCmpColorsRGB { 
+	2 copy 4 get exch 0 get eqepsilon {
+		2 copy 5 get exch 1 get eqepsilon {
+			6 get exch 2 get eqepsilon
+		}{pop pop false} ifelse
+	} {pop pop false} ifelse
+} bind def
+/RGBtoCMYK { 
+	1 exch sub 
+	3 1 roll 
+	1 exch sub 
+	3 1 roll 
+	1 exch sub 
+	3 1 roll 
+	3 copy 
+	2 copy 
+	le { pop } { exch pop } ifelse 
+	2 copy 
+	le { pop } { exch pop } ifelse 
+	dup dup dup 
+	6 1 roll 
+	4 1 roll 
+	7 1 roll 
+	sub 
+	6 1 roll 
+	sub 
+	5 1 roll 
+	sub 
+	4 1 roll 
+} bind def
+/CMYKtoRGB { 
+	dup dup 4 -1 roll add 						  
+	5 1 roll 3 -1 roll add 						  
+	4 1 roll add 								  
+	1 exch sub dup 0 lt {pop 0} if 3 1 roll 	  
+	1 exch sub dup 0 lt {pop 0} if exch 	      
+	1 exch sub dup 0 lt {pop 0} if exch	  		  
+} bind def
+/FrameSepInit {
+	1.0 RealSetgray
+} bind def
+/FrameSetSepColor { 
+	/FrameSepBlue exch def
+	/FrameSepGreen exch def
+	/FrameSepRed exch def
+	/FrameSepBlack exch def
+	/FrameSepYellow exch def
+	/FrameSepMagenta exch def
+	/FrameSepCyan exch def
+	/FrameSepIs FMcustom def
+	setCurrentScreen	
+} bind def
+/FrameSetCyan {
+	/FrameSepBlue 1.0 def
+	/FrameSepGreen 1.0 def
+	/FrameSepRed 0.0 def
+	/FrameSepBlack 0.0 def
+	/FrameSepYellow 0.0 def
+	/FrameSepMagenta 0.0 def
+	/FrameSepCyan 1.0 def
+	/FrameSepIs FMcyan def
+	setCurrentScreen	
+} bind def
+ 
+/FrameSetMagenta {
+	/FrameSepBlue 1.0 def
+	/FrameSepGreen 0.0 def
+	/FrameSepRed 1.0 def
+	/FrameSepBlack 0.0 def
+	/FrameSepYellow 0.0 def
+	/FrameSepMagenta 1.0 def
+	/FrameSepCyan 0.0 def
+	/FrameSepIs FMmagenta def
+	setCurrentScreen
+} bind def
+ 
+/FrameSetYellow {
+	/FrameSepBlue 0.0 def
+	/FrameSepGreen 1.0 def
+	/FrameSepRed 1.0 def
+	/FrameSepBlack 0.0 def
+	/FrameSepYellow 1.0 def
+	/FrameSepMagenta 0.0 def
+	/FrameSepCyan 0.0 def
+	/FrameSepIs FMyellow def
+	setCurrentScreen
+} bind def
+ 
+/FrameSetBlack {
+	/FrameSepBlue 0.0 def
+	/FrameSepGreen 0.0 def
+	/FrameSepRed 0.0 def
+	/FrameSepBlack 1.0 def
+	/FrameSepYellow 0.0 def
+	/FrameSepMagenta 0.0 def
+	/FrameSepCyan 0.0 def
+	/FrameSepIs FMblack def
+	setCurrentScreen
+} bind def
+ 
+/FrameNoSep { 
+	/FrameSepIs FMnone def
+	setCurrentScreen
+} bind def
+/FrameSetSepColors { 
+	FrameDict begin
+	[ exch 1 add 1 roll ]
+	/FrameSepColors  
+	exch def end
+	} bind def
+/FrameColorInSepListCMYK { 
+	FrameSepColors {  
+       		exch dup 3 -1 roll 
+       		FrameCmpColorsCMYK 
+       		{ pop true exit } if
+    	} forall 
+	dup true ne {pop false} if
+	} bind def
+/FrameColorInSepListRGB { 
+	FrameSepColors {  
+       		exch dup 3 -1 roll 
+       		FrameCmpColorsRGB 
+       		{ pop true exit } if
+    	} forall 
+	dup true ne {pop false} if
+	} bind def
+/RealSetgray /setgray load def
+/RealSetrgbcolor /setrgbcolor load def
+/RealSethsbcolor /sethsbcolor load def
+end 
+/setgray { 
+	FrameDict begin
+	FrameSepIs FMnone eq
+		{ RealSetgray } 
+		{ 
+		FrameSepIs FMblack eq 
+			{ RealSetgray } 
+			{ FrameSepIs FMcustom eq 
+			  FrameSepRed 0 eq and
+			  FrameSepGreen 0 eq and
+			  FrameSepBlue 0 eq and {
+			  	RealSetgray
+			  } {
+				1 RealSetgray pop 
+			  } ifelse
+			} ifelse
+		} ifelse
+	end
+} bind def
+/setrgbcolor { 
+	FrameDict begin
+	FrameSepIs FMnone eq
+	{  RealSetrgbcolor }
+	{
+		3 copy [ 4 1 roll ] 
+		FrameColorInSepListRGB
+		{
+				FrameSepBlue eq exch 
+			 	FrameSepGreen eq and exch 
+			 	FrameSepRed eq and
+			 	{ 0 } { 1 } ifelse
+		}
+		{
+			FMPColor {
+				RealSetrgbcolor
+				currentcmykcolor
+			} {
+				RGBtoCMYK
+			} ifelse
+			FrameSepIs FMblack eq
+			{1.0 exch sub 4 1 roll pop pop pop} {
+			FrameSepIs FMyellow eq
+			{pop 1.0 exch sub 3 1 roll pop pop} {
+			FrameSepIs FMmagenta eq
+			{pop pop 1.0 exch sub exch pop } {
+			FrameSepIs FMcyan eq
+			{pop pop pop 1.0 exch sub } 
+			{pop pop pop pop 1} ifelse } ifelse } ifelse } ifelse 
+		} ifelse
+		RealSetgray
+	} 
+	ifelse
+	end
+} bind def
+/sethsbcolor {
+	FrameDict begin
+	FrameSepIs FMnone eq 
+	{ RealSethsbcolor } 
+	{
+		RealSethsbcolor 
+		currentrgbcolor  
+		setrgbcolor 
+	} 
+	ifelse
+	end
+} bind def
+FrameDict begin
+/setcmykcolor where {
+	pop /RealSetcmykcolor /setcmykcolor load def
+} {
+	/RealSetcmykcolor {
+		4 1 roll
+		3 { 3 index add 0 max 1 min 1 exch sub 3 1 roll} repeat 
+		setrgbcolor pop
+	} bind def
+} ifelse
+userdict /setcmykcolor { 
+		FrameDict begin
+		FrameSepIs FMnone eq
+		{ RealSetcmykcolor } 
+		{
+			4 copy [ 5 1 roll ]
+			FrameColorInSepListCMYK
+			{
+				FrameSepBlack eq exch 
+				FrameSepYellow eq and exch 
+				FrameSepMagenta eq and exch 
+				FrameSepCyan eq and 
+				{ 0 } { 1 } ifelse
+			}
+			{
+				FrameSepIs FMblack eq
+				{1.0 exch sub 4 1 roll pop pop pop} {
+				FrameSepIs FMyellow eq
+				{pop 1.0 exch sub 3 1 roll pop pop} {
+				FrameSepIs FMmagenta eq
+				{pop pop 1.0 exch sub exch pop } {
+				FrameSepIs FMcyan eq
+				{pop pop pop 1.0 exch sub } 
+				{pop pop pop pop 1} ifelse } ifelse } ifelse } ifelse 
+			} ifelse
+			RealSetgray
+		}
+		ifelse
+		end
+	} bind put
+FMLevel1 not { 
+	
+	/patProcDict 5 dict dup begin
+		<0f1e3c78f0e1c387> { 3 setlinewidth -1 -1 moveto 9 9 lineto stroke 
+											4 -4 moveto 12 4 lineto stroke
+											-4 4 moveto 4 12 lineto stroke} bind def
+		<0f87c3e1f0783c1e> { 3 setlinewidth -1 9 moveto 9 -1 lineto stroke 
+											-4 4 moveto 4 -4 lineto stroke
+											4 12 moveto 12 4 lineto stroke} bind def
+		<8142241818244281> { 1 setlinewidth -1 9 moveto 9 -1 lineto stroke
+											-1 -1 moveto 9 9 lineto stroke } bind def
+		<03060c183060c081> { 1 setlinewidth -1 -1 moveto 9 9 lineto stroke 
+											4 -4 moveto 12 4 lineto stroke
+											-4 4 moveto 4 12 lineto stroke} bind def
+		<8040201008040201> { 1 setlinewidth -1 9 moveto 9 -1 lineto stroke 
+											-4 4 moveto 4 -4 lineto stroke
+											4 12 moveto 12 4 lineto stroke} bind def
+	end def
+	/patDict 15 dict dup begin
+		/PatternType 1 def		
+		/PaintType 2 def		
+		/TilingType 3 def		
+		/BBox [ 0 0 8 8 ] def 	
+		/XStep 8 def			
+		/YStep 8 def			
+		/PaintProc {
+			begin
+			patProcDict bstring known {
+				patProcDict bstring get exec
+			} {
+				8 8 true [1 0 0 -1 0 8] bstring imagemask
+			} ifelse
+			end
+		} bind def
+	end def
+} if
+/combineColor {
+    FrameSepIs FMnone eq
+	{
+		graymode FMLevel1 or not {
+			
+			[/Pattern [/DeviceCMYK]] setcolorspace
+			FrameCurColors 0 4 getinterval aload pop FrameCurPat setcolor
+		} {
+			FrameCurColors 3 get 1.0 ge {
+				FrameCurGray RealSetgray
+			} {
+				FMPColor graymode and {
+					0 1 3 { 
+						FrameCurColors exch get
+						1 FrameCurGray sub mul
+					} for
+					RealSetcmykcolor
+				} {
+					4 1 6 {
+						FrameCurColors exch get
+						graymode {
+							1 exch sub 1 FrameCurGray sub mul 1 exch sub
+						} {
+							1.0 lt {FrameCurGray} {1} ifelse
+						} ifelse
+					} for
+					RealSetrgbcolor
+				} ifelse
+			} ifelse
+		} ifelse
+	} { 
+		FrameCurColors 0 4 getinterval aload
+		FrameColorInSepListCMYK {
+			FrameSepBlack eq exch 
+			FrameSepYellow eq and exch 
+			FrameSepMagenta eq and exch 
+			FrameSepCyan eq and
+			FrameSepIs FMcustom eq and
+			{ FrameCurGray } { 1 } ifelse
+		} {
+			FrameSepIs FMblack eq
+			{FrameCurGray 1.0 exch sub mul 1.0 exch sub 4 1 roll pop pop pop} {
+			FrameSepIs FMyellow eq
+			{pop FrameCurGray 1.0 exch sub mul 1.0 exch sub 3 1 roll pop pop} {
+			FrameSepIs FMmagenta eq
+			{pop pop FrameCurGray 1.0 exch sub mul 1.0 exch sub exch pop } {
+			FrameSepIs FMcyan eq
+			{pop pop pop FrameCurGray 1.0 exch sub mul 1.0 exch sub } 
+			{pop pop pop pop 1} ifelse } ifelse } ifelse } ifelse 
+		} ifelse
+		graymode FMLevel1 or not {
+			
+			[/Pattern [/DeviceGray]] setcolorspace
+			FrameCurPat setcolor
+		} { 
+			graymode not FMLevel1 and {
+				
+				dup 1 lt {pop FrameCurGray} if
+			} if
+			RealSetgray
+		} ifelse
+	} ifelse
+} bind def
+/savematrix {
+	orgmatrix currentmatrix pop
+	} bind def
+/restorematrix {
+	orgmatrix setmatrix
+	} bind def
+/dmatrix matrix def
+/dpi    72 0 dmatrix defaultmatrix dtransform
+    dup mul exch   dup mul add   sqrt def
+	
+/freq dpi dup 72 div round dup 0 eq {pop 1} if 8 mul div def
+/sangle 1 0 dmatrix defaultmatrix dtransform exch atan def
+/dpiranges   [  2540    2400    1693     1270    1200     635      600      0      ] def
+/CMLowFreqs  [ 100.402  94.8683 89.2289 100.402  94.8683  66.9349  63.2456 47.4342 ] def
+/YLowFreqs   [  95.25   90.0    84.65    95.25   90.0     70.5556  66.6667 50.0    ] def
+/KLowFreqs   [  89.8026 84.8528 79.8088  89.8026 84.8528  74.8355  70.7107 53.033  ] def
+/CLowAngles  [  71.5651 71.5651 71.5651 71.5651  71.5651  71.5651  71.5651 71.5651 ] def
+/MLowAngles  [  18.4349 18.4349 18.4349 18.4349  18.4349  18.4349  18.4349 18.4349 ] def
+/YLowTDot    [  true    true    false    true    true     false    false   false   ] def
+/CMHighFreqs [ 133.87  126.491 133.843  108.503 102.523  100.402   94.8683 63.2456 ] def
+/YHighFreqs  [ 127.0   120.0   126.975  115.455 109.091   95.25    90.0    60.0    ] def
+/KHighFreqs  [ 119.737 113.137 119.713  128.289 121.218   89.8026  84.8528 63.6395 ] def
+/CHighAngles [  71.5651 71.5651 71.5651  70.0169 70.0169  71.5651  71.5651 71.5651 ] def
+/MHighAngles [  18.4349 18.4349 18.4349  19.9831 19.9831  18.4349  18.4349 18.4349 ] def
+/YHighTDot   [  false   false   true     false   false    true     true    false   ] def
+/PatFreq     [	10.5833 10.0     9.4055  10.5833 10.0	  10.5833  10.0	   9.375   ] def
+/screenIndex {
+	0 1 dpiranges length 1 sub { dup dpiranges exch get 1 sub dpi le {exit} {pop} ifelse } for
+} bind def
+/getCyanScreen {
+	FMUseHighFrequencyScreens { CHighAngles CMHighFreqs} {CLowAngles CMLowFreqs} ifelse
+		screenIndex dup 3 1 roll get 3 1 roll get /FMSpotFunction load
+} bind def
+/getMagentaScreen {
+	FMUseHighFrequencyScreens { MHighAngles CMHighFreqs } {MLowAngles CMLowFreqs} ifelse
+		screenIndex dup 3 1 roll get 3 1 roll get /FMSpotFunction load
+} bind def
+/getYellowScreen {
+	FMUseHighFrequencyScreens { YHighTDot YHighFreqs} { YLowTDot YLowFreqs } ifelse
+		screenIndex dup 3 1 roll get 3 1 roll get { 3 div
+			{2 { 1 add 2 div 3 mul dup floor sub 2 mul 1 sub exch} repeat
+			FMSpotFunction } } {/FMSpotFunction load } ifelse
+			0.0 exch
+} bind def
+/getBlackScreen  {
+	FMUseHighFrequencyScreens { KHighFreqs } { KLowFreqs } ifelse
+		screenIndex get 45.0 /FMSpotFunction load 
+} bind def
+/getSpotScreen {
+	getBlackScreen
+} bind def
+/getCompositeScreen {
+	getBlackScreen
+} bind def
+/FMSetScreen 
+	FMLevel1 { /setscreen load 
+	}{ {
+		8 dict begin
+		/HalftoneType 1 def
+		/SpotFunction exch def
+		/Angle exch def
+		/Frequency exch def
+		/AccurateScreens FMUseAcccurateScreens def
+		currentdict end sethalftone
+	} bind } ifelse
+def
+/setDefaultScreen {
+	FMPColor {
+		orgrxfer cvx orggxfer cvx orgbxfer cvx orgxfer cvx setcolortransfer
+	}
+	{
+		orgxfer cvx settransfer
+	} ifelse
+	orgfreq organgle orgproc cvx setscreen
+} bind def
+/setCurrentScreen {
+	FrameSepIs FMnone eq {
+		FMUseDefaultNoSeparationScreen {
+			setDefaultScreen
+		} {
+			getCompositeScreen FMSetScreen
+		} ifelse
+	} {
+		FrameSepIs FMcustom eq {
+			FMUseDefaultSpotSeparationScreen {
+				setDefaultScreen
+			} {
+				getSpotScreen FMSetScreen
+			} ifelse
+		} {
+			FMUseDefaultProcessSeparationScreen {
+				setDefaultScreen
+			} {
+				FrameSepIs FMcyan eq {
+					getCyanScreen FMSetScreen
+				} {
+					FrameSepIs FMmagenta eq {
+						getMagentaScreen FMSetScreen
+					} {
+						FrameSepIs FMyellow eq {
+							getYellowScreen FMSetScreen
+						} {
+							getBlackScreen FMSetScreen
+						} ifelse
+					} ifelse
+				} ifelse
+			} ifelse
+		} ifelse
+	} ifelse 
+} bind def
+end
+	/gstring FMLOCAL
+	/gfile FMLOCAL
+	/gindex FMLOCAL
+	/orgrxfer FMLOCAL
+	/orggxfer FMLOCAL
+	/orgbxfer FMLOCAL
+	/orgxfer FMLOCAL
+	/orgproc FMLOCAL
+	/orgrproc FMLOCAL
+	/orggproc FMLOCAL
+	/orgbproc FMLOCAL
+	/organgle FMLOCAL
+	/orgrangle FMLOCAL
+	/orggangle FMLOCAL
+	/orgbangle FMLOCAL
+	/orgfreq FMLOCAL
+	/orgrfreq FMLOCAL
+	/orggfreq FMLOCAL
+	/orgbfreq FMLOCAL
+	/yscale FMLOCAL
+	/xscale FMLOCAL
+	/edown FMLOCAL
+	/manualfeed FMLOCAL
+	/paperheight FMLOCAL
+	/paperwidth FMLOCAL
+/FMDOCUMENT { 
+	array /FMfonts exch def 
+	/#copies exch def
+	FrameDict begin
+	0 ne /manualfeed exch def
+	/paperheight exch def
+	/paperwidth exch def
+	0 ne /FrameNegative exch def 
+	0 ne /edown exch def 
+	/yscale exch def
+	/xscale exch def
+	FMLevel1 {
+		manualfeed {setmanualfeed} if
+		/FMdicttop countdictstack 1 add def 
+		/FMoptop count def 
+		setpapername 
+		manualfeed {true} {papersize} ifelse 
+		{manualpapersize} {false} ifelse 
+		{desperatepapersize} {false} ifelse 
+		{ (Can't select requested paper size for Frame print job!) FMFAILURE } if
+		count -1 FMoptop {pop pop} for
+		countdictstack -1 FMdicttop {pop end} for 
+		}
+		{{1 dict dup /PageSize [paperwidth paperheight]put setpagedevice}stopped
+		{ (Can't select requested paper size for Frame print job!) FMFAILURE } if
+		 {1 dict dup /ManualFeed manualfeed put setpagedevice } stopped pop }
+	ifelse 
+	
+	FMPColor {
+		currentcolorscreen
+			cvlit /orgproc exch def
+				  /organgle exch def 
+				  /orgfreq exch def
+			cvlit /orgbproc exch def
+				  /orgbangle exch def 
+				  /orgbfreq exch def
+			cvlit /orggproc exch def
+				  /orggangle exch def 
+				  /orggfreq exch def
+			cvlit /orgrproc exch def
+				  /orgrangle exch def 
+				  /orgrfreq exch def
+			currentcolortransfer 
+			FrameNegative {
+				1 1 4 { 
+					pop { 1 exch sub } concatprocs 4 1 roll
+				} for
+				4 copy
+				setcolortransfer
+			} if
+			cvlit /orgxfer exch def
+			cvlit /orgbxfer exch def
+			cvlit /orggxfer exch def
+			cvlit /orgrxfer exch def
+	} {
+		currentscreen 
+			cvlit /orgproc exch def
+				  /organgle exch def 
+				  /orgfreq exch def
+				  
+		currenttransfer 
+		FrameNegative {
+			{ 1 exch sub } concatprocs
+			dup settransfer
+		} if 
+		cvlit /orgxfer exch def
+	} ifelse
+	end 
+} def 
+/pagesave FMLOCAL
+/orgmatrix FMLOCAL
+/landscape FMLOCAL
+/pwid FMLOCAL
+/FMBEGINPAGE { 
+	FrameDict begin 
+	/pagesave save def
+	3.86 setmiterlimit
+	/landscape exch 0 ne def
+	landscape { 
+		90 rotate 0 exch dup /pwid exch def neg translate pop 
+	}{
+		pop /pwid exch def
+	} ifelse
+	edown { [-1 0 0 1 pwid 0] concat } if
+	0 0 moveto paperwidth 0 lineto paperwidth paperheight lineto 
+	0 paperheight lineto 0 0 lineto 1 setgray fill
+	xscale yscale scale
+	/orgmatrix matrix def
+	gsave 
+} def 
+/FMENDPAGE {
+	grestore 
+	pagesave restore
+	end 
+	showpage
+	} def 
+/FMFONTDEFINE { 
+	FrameDict begin
+	findfont 
+	ReEncode 
+	1 index exch 
+	definefont 
+	FMfonts 3 1 roll 
+	put
+	end 
+	} def 
+/FMFILLS {
+	FrameDict begin dup
+	array /fillvals exch def
+	dict /patCache exch def
+	end 
+	} def 
+/FMFILL {
+	FrameDict begin
+	 fillvals 3 1 roll put
+	end 
+	} def 
+/FMNORMALIZEGRAPHICS { 
+	newpath
+	0.0 0.0 moveto
+	1 setlinewidth
+	0 setlinecap
+	0 0 0 sethsbcolor
+	0 setgray 
+	} bind def
+	/fx FMLOCAL
+	/fy FMLOCAL
+	/fh FMLOCAL
+	/fw FMLOCAL
+	/llx FMLOCAL
+	/lly FMLOCAL
+	/urx FMLOCAL
+	/ury FMLOCAL
+/FMBEGINEPSF { 
+	end 
+	/FMEPSF save def 
+	/showpage {} def 
+% See Adobe's "PostScript Language Reference Manual, 2nd Edition", page 714.
+% "...the following operators MUST NOT be used in an EPS file:" (emphasis ours)
+	/banddevice {(banddevice) FMBADEPSF} def
+	/clear {(clear) FMBADEPSF} def
+	/cleardictstack {(cleardictstack) FMBADEPSF} def 
+	/copypage {(copypage) FMBADEPSF} def
+	/erasepage {(erasepage) FMBADEPSF} def
+	/exitserver {(exitserver) FMBADEPSF} def
+	/framedevice {(framedevice) FMBADEPSF} def
+	/grestoreall {(grestoreall) FMBADEPSF} def
+	/initclip {(initclip) FMBADEPSF} def
+	/initgraphics {(initgraphics) FMBADEPSF} def
+	/initmatrix {(initmatrix) FMBADEPSF} def
+	/quit {(quit) FMBADEPSF} def
+	/renderbands {(renderbands) FMBADEPSF} def
+	/setglobal {(setglobal) FMBADEPSF} def
+	/setpagedevice {(setpagedevice) FMBADEPSF} def
+	/setshared {(setshared) FMBADEPSF} def
+	/startjob {(startjob) FMBADEPSF} def
+	/lettertray {(lettertray) FMBADEPSF} def
+	/letter {(letter) FMBADEPSF} def
+	/lettersmall {(lettersmall) FMBADEPSF} def
+	/11x17tray {(11x17tray) FMBADEPSF} def
+	/11x17 {(11x17) FMBADEPSF} def
+	/ledgertray {(ledgertray) FMBADEPSF} def
+	/ledger {(ledger) FMBADEPSF} def
+	/legaltray {(legaltray) FMBADEPSF} def
+	/legal {(legal) FMBADEPSF} def
+	/statementtray {(statementtray) FMBADEPSF} def
+	/statement {(statement) FMBADEPSF} def
+	/executivetray {(executivetray) FMBADEPSF} def
+	/executive {(executive) FMBADEPSF} def
+	/a3tray {(a3tray) FMBADEPSF} def
+	/a3 {(a3) FMBADEPSF} def
+	/a4tray {(a4tray) FMBADEPSF} def
+	/a4 {(a4) FMBADEPSF} def
+	/a4small {(a4small) FMBADEPSF} def
+	/b4tray {(b4tray) FMBADEPSF} def
+	/b4 {(b4) FMBADEPSF} def
+	/b5tray {(b5tray) FMBADEPSF} def
+	/b5 {(b5) FMBADEPSF} def
+	FMNORMALIZEGRAPHICS 
+	[/fy /fx /fh /fw /ury /urx /lly /llx] {exch def} forall 
+	fx fw 2 div add fy fh 2 div add  translate
+	rotate
+	fw 2 div neg fh 2 div neg translate
+	fw urx llx sub div fh ury lly sub div scale 
+	llx neg lly neg translate 
+	/FMdicttop countdictstack 1 add def 
+	/FMoptop count def 
+	} bind def
+/FMENDEPSF {
+	count -1 FMoptop {pop pop} for 
+	countdictstack -1 FMdicttop {pop end} for 
+	FMEPSF restore
+	FrameDict begin 
+	} bind def
+FrameDict begin 
+/setmanualfeed {
+%%BeginFeature *ManualFeed True
+	 statusdict /manualfeed true put
+%%EndFeature
+	} bind def
+/max {2 copy lt {exch} if pop} bind def
+/min {2 copy gt {exch} if pop} bind def
+/inch {72 mul} def
+/pagedimen { 
+	paperheight sub abs 16 lt exch 
+	paperwidth sub abs 16 lt and
+	{/papername exch def} {pop} ifelse
+	} bind def
+	/papersizedict FMLOCAL
+/setpapername { 
+	/papersizedict 14 dict def 
+	papersizedict begin
+	/papername /unknown def 
+		/Letter 8.5 inch 11.0 inch pagedimen
+		/LetterSmall 7.68 inch 10.16 inch pagedimen
+		/Tabloid 11.0 inch 17.0 inch pagedimen
+		/Ledger 17.0 inch 11.0 inch pagedimen
+		/Legal 8.5 inch 14.0 inch pagedimen
+		/Statement 5.5 inch 8.5 inch pagedimen
+		/Executive 7.5 inch 10.0 inch pagedimen
+		/A3 11.69 inch 16.5 inch pagedimen
+		/A4 8.26 inch 11.69 inch pagedimen
+		/A4Small 7.47 inch 10.85 inch pagedimen
+		/B4 10.125 inch 14.33 inch pagedimen
+		/B5 7.16 inch 10.125 inch pagedimen
+	end
+	} bind def
+/papersize {
+	papersizedict begin
+		/Letter {lettertray letter} def
+		/LetterSmall {lettertray lettersmall} def
+		/Tabloid {11x17tray 11x17} def
+		/Ledger {ledgertray ledger} def
+		/Legal {legaltray legal} def
+		/Statement {statementtray statement} def
+		/Executive {executivetray executive} def
+		/A3 {a3tray a3} def
+		/A4 {a4tray a4} def
+		/A4Small {a4tray a4small} def
+		/B4 {b4tray b4} def
+		/B5 {b5tray b5} def
+		/unknown {unknown} def
+	papersizedict dup papername known {papername} {/unknown} ifelse get
+	end
+	statusdict begin stopped end 
+	} bind def
+/manualpapersize {
+	papersizedict begin
+		/Letter {letter} def
+		/LetterSmall {lettersmall} def
+		/Tabloid {11x17} def
+		/Ledger {ledger} def
+		/Legal {legal} def
+		/Statement {statement} def
+		/Executive {executive} def
+		/A3 {a3} def
+		/A4 {a4} def
+		/A4Small {a4small} def
+		/B4 {b4} def
+		/B5 {b5} def
+		/unknown {unknown} def
+	papersizedict dup papername known {papername} {/unknown} ifelse get
+	end
+	stopped 
+	} bind def
+/desperatepapersize {
+	statusdict /setpageparams known
+		{
+		paperwidth paperheight 0 1 
+		statusdict begin
+		{setpageparams} stopped 
+		end
+		} {true} ifelse 
+	} bind def
+/DiacriticEncoding [
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /space /exclam /quotedbl
+/numbersign /dollar /percent /ampersand /quotesingle /parenleft
+/parenright /asterisk /plus /comma /hyphen /period /slash /zero /one
+/two /three /four /five /six /seven /eight /nine /colon /semicolon
+/less /equal /greater /question /at /A /B /C /D /E /F /G /H /I /J /K
+/L /M /N /O /P /Q /R /S /T /U /V /W /X /Y /Z /bracketleft /backslash
+/bracketright /asciicircum /underscore /grave /a /b /c /d /e /f /g /h
+/i /j /k /l /m /n /o /p /q /r /s /t /u /v /w /x /y /z /braceleft /bar
+/braceright /asciitilde /.notdef /Adieresis /Aring /Ccedilla /Eacute
+/Ntilde /Odieresis /Udieresis /aacute /agrave /acircumflex /adieresis
+/atilde /aring /ccedilla /eacute /egrave /ecircumflex /edieresis
+/iacute /igrave /icircumflex /idieresis /ntilde /oacute /ograve
+/ocircumflex /odieresis /otilde /uacute /ugrave /ucircumflex
+/udieresis /dagger /.notdef /cent /sterling /section /bullet
+/paragraph /germandbls /registered /copyright /trademark /acute
+/dieresis /.notdef /AE /Oslash /.notdef /.notdef /.notdef /.notdef
+/yen /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/ordfeminine /ordmasculine /.notdef /ae /oslash /questiondown
+/exclamdown /logicalnot /.notdef /florin /.notdef /.notdef
+/guillemotleft /guillemotright /ellipsis /.notdef /Agrave /Atilde
+/Otilde /OE /oe /endash /emdash /quotedblleft /quotedblright
+/quoteleft /quoteright /.notdef /.notdef /ydieresis /Ydieresis
+/fraction /currency /guilsinglleft /guilsinglright /fi /fl /daggerdbl
+/periodcentered /quotesinglbase /quotedblbase /perthousand
+/Acircumflex /Ecircumflex /Aacute /Edieresis /Egrave /Iacute
+/Icircumflex /Idieresis /Igrave /Oacute /Ocircumflex /.notdef /Ograve
+/Uacute /Ucircumflex /Ugrave /dotlessi /circumflex /tilde /macron
+/breve /dotaccent /ring /cedilla /hungarumlaut /ogonek /caron
+] def
+/ReEncode { 
+	dup 
+	length 
+	dict begin 
+	{
+	1 index /FID ne 
+		{def} 
+		{pop pop} ifelse 
+	} forall 
+	0 eq {/Encoding DiacriticEncoding def} if 
+	currentdict 
+	end 
+	} bind def
+FMPColor 
+	
+	{
+	/BEGINBITMAPCOLOR { 
+		BITMAPCOLOR} def
+	/BEGINBITMAPCOLORc { 
+		BITMAPCOLORc} def
+	/BEGINBITMAPTRUECOLOR { 
+		BITMAPTRUECOLOR } def
+	/BEGINBITMAPTRUECOLORc { 
+		BITMAPTRUECOLORc } def
+	}
+	
+	{
+	/BEGINBITMAPCOLOR { 
+		BITMAPGRAY} def
+	/BEGINBITMAPCOLORc { 
+		BITMAPGRAYc} def
+	/BEGINBITMAPTRUECOLOR { 
+		BITMAPTRUEGRAY } def
+	/BEGINBITMAPTRUECOLORc { 
+		BITMAPTRUEGRAYc } def
+	}
+ifelse
+/K { 
+	FMPrintAllColorsAsBlack {
+		dup 1 eq 2 index 1 eq and 3 index 1 eq and not
+			{7 {pop} repeat 0 0 0 1 0 0 0} if
+	} if 
+	FrameCurColors astore 
+	pop combineColor
+} bind def
+/graymode true def
+	/bwidth FMLOCAL
+	/bpside FMLOCAL
+	/bstring FMLOCAL
+	/onbits FMLOCAL
+	/offbits FMLOCAL
+	/xindex FMLOCAL
+	/yindex FMLOCAL
+	/x FMLOCAL
+	/y FMLOCAL
+/setPatternMode {
+	FMLevel1 {
+		/bwidth  exch def
+		/bpside  exch def
+		/bstring exch def
+		/onbits 0 def  /offbits 0 def
+		freq sangle landscape {90 add} if 
+			{/y exch def
+			 /x exch def
+			 /xindex x 1 add 2 div bpside mul cvi def
+			 /yindex y 1 add 2 div bpside mul cvi def
+			 bstring yindex bwidth mul xindex 8 idiv add get
+			 1 7 xindex 8 mod sub bitshift and 0 ne FrameNegative {not} if
+			 {/onbits  onbits  1 add def 1}
+			 {/offbits offbits 1 add def 0}
+			 ifelse
+			}
+			setscreen
+		offbits offbits onbits add div FrameNegative {1.0 exch sub} if
+		/FrameCurGray exch def
+	} { 
+		pop pop
+		dup patCache exch known {
+			patCache exch get
+		} { 
+			dup
+			patDict /bstring 3 -1 roll put
+			patDict 
+			9 PatFreq screenIndex get div dup matrix scale
+			makepattern
+			dup 
+			patCache 4 -1 roll 3 -1 roll put
+		} ifelse
+		/FrameCurGray 0 def
+		/FrameCurPat exch def
+	} ifelse
+	/graymode false def
+	combineColor
+} bind def
+/setGrayScaleMode {
+	graymode not {
+		/graymode true def
+		FMLevel1 {
+			setCurrentScreen
+		} if
+	} if
+	/FrameCurGray exch def
+	combineColor
+} bind def
+/normalize {
+	transform round exch round exch itransform
+	} bind def
+/dnormalize {
+	dtransform round exch round exch idtransform
+	} bind def
+/lnormalize { 
+	0 dtransform exch cvi 2 idiv 2 mul 1 add exch idtransform pop
+	} bind def
+/H { 
+	lnormalize setlinewidth
+	} bind def
+/Z {
+	setlinecap
+	} bind def
+	
+/PFill {
+	graymode FMLevel1 or not {
+		gsave 1 setgray eofill grestore
+	} if
+} bind def
+/PStroke {
+	graymode FMLevel1 or not {
+		gsave 1 setgray stroke grestore
+	} if
+	stroke
+} bind def
+	/fillvals FMLOCAL
+/X { 
+	fillvals exch get
+	dup type /stringtype eq
+	{8 1 setPatternMode} 
+	{setGrayScaleMode}
+	ifelse
+	} bind def
+/V { 
+	PFill gsave eofill grestore
+	} bind def
+/Vclip {
+	clip
+	} bind def
+/Vstrk {
+	currentlinewidth exch setlinewidth PStroke setlinewidth
+	} bind def
+/N { 
+	PStroke
+	} bind def
+/Nclip {
+	strokepath clip newpath
+	} bind def
+/Nstrk {
+	currentlinewidth exch setlinewidth PStroke setlinewidth
+	} bind def
+/M {newpath moveto} bind def
+/E {lineto} bind def
+/D {curveto} bind def
+/O {closepath} bind def
+	/n FMLOCAL
+/L { 
+ 	/n exch def
+	newpath
+	normalize
+	moveto 
+	2 1 n {pop normalize lineto} for
+	} bind def
+/Y { 
+	L 
+	closepath
+	} bind def
+	/x1 FMLOCAL
+	/x2 FMLOCAL
+	/y1 FMLOCAL
+	/y2 FMLOCAL
+/R { 
+	/y2 exch def
+	/x2 exch def
+	/y1 exch def
+	/x1 exch def
+	x1 y1
+	x2 y1
+	x2 y2
+	x1 y2
+	4 Y 
+	} bind def
+	/rad FMLOCAL
+/rarc 
+	{rad 
+	 arcto
+	} bind def
+/RR { 
+	/rad exch def
+	normalize
+	/y2 exch def
+	/x2 exch def
+	normalize
+	/y1 exch def
+	/x1 exch def
+	mark
+	newpath
+	{
+	x1 y1 rad add moveto
+	x1 y2 x2 y2 rarc
+	x2 y2 x2 y1 rarc
+	x2 y1 x1 y1 rarc
+	x1 y1 x1 y2 rarc
+	closepath
+	} stopped {x1 y1 x2 y2 R} if 
+	cleartomark
+	} bind def
+/RRR { 
+	/rad exch def
+	normalize /y4 exch def /x4 exch def
+	normalize /y3 exch def /x3 exch def
+	normalize /y2 exch def /x2 exch def
+	normalize /y1 exch def /x1 exch def
+	newpath
+	normalize moveto 
+	mark
+	{
+	x2 y2 x3 y3 rarc
+	x3 y3 x4 y4 rarc
+	x4 y4 x1 y1 rarc
+	x1 y1 x2 y2 rarc
+	closepath
+	} stopped
+	 {x1 y1 x2 y2 x3 y3 x4 y4 newpath moveto lineto lineto lineto closepath} if
+	cleartomark
+	} bind def
+/C { 
+	grestore
+	gsave
+	R 
+	clip
+	setCurrentScreen
+} bind def
+/CP { 
+	grestore
+	gsave
+	Y 
+	clip
+	setCurrentScreen
+} bind def
+	/FMpointsize FMLOCAL
+/F { 
+	FMfonts exch get
+	FMpointsize scalefont
+	setfont
+	} bind def
+/Q { 
+	/FMpointsize exch def
+	F 
+	} bind def
+/T { 
+	moveto show
+	} bind def
+/RF { 
+	rotate
+	0 ne {-1 1 scale} if
+	} bind def
+/TF { 
+	gsave
+	moveto 
+	RF
+	show
+	grestore
+	} bind def
+/P { 
+	moveto
+	0 32 3 2 roll widthshow
+	} bind def
+/PF { 
+	gsave
+	moveto 
+	RF
+	0 32 3 2 roll widthshow
+	grestore
+	} bind def
+/S { 
+	moveto
+	0 exch ashow
+	} bind def
+/SF { 
+	gsave
+	moveto
+	RF
+	0 exch ashow
+	grestore
+	} bind def
+/B { 
+	moveto
+	0 32 4 2 roll 0 exch awidthshow
+	} bind def
+/BF { 
+	gsave
+	moveto
+	RF
+	0 32 4 2 roll 0 exch awidthshow
+	grestore
+	} bind def
+/G { 
+	gsave
+	newpath
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath 
+	PFill fill
+	grestore
+	} bind def
+/Gstrk {
+	savematrix
+    newpath
+    2 index 2 div add exch 3 index 2 div sub exch 
+    normalize 2 index 2 div sub exch 3 index 2 div add exch 
+    translate
+    scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    restorematrix
+    currentlinewidth exch setlinewidth PStroke setlinewidth
+    } bind def
+/Gclip { 
+	newpath
+	savematrix
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath 
+	clip newpath
+	restorematrix
+	} bind def
+/GG { 
+	gsave
+	newpath
+	normalize translate 0.0 0.0 moveto 
+	rotate 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath
+	PFill
+	fill
+	grestore
+	} bind def
+/GGclip { 
+	savematrix
+	newpath
+    normalize translate 0.0 0.0 moveto 
+    rotate 
+    dnormalize scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    closepath
+	clip newpath
+	restorematrix
+	} bind def
+/GGstrk { 
+	savematrix
+    newpath
+    normalize translate 0.0 0.0 moveto 
+    rotate 
+    dnormalize scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    closepath 
+	restorematrix
+    currentlinewidth exch setlinewidth PStroke setlinewidth
+	} bind def
+/A { 
+	gsave
+	savematrix
+	newpath
+	2 index 2 div add exch 3 index 2 div sub exch 
+	normalize 2 index 2 div sub exch 3 index 2 div add exch 
+	translate 
+	scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	restorematrix
+	PStroke
+	grestore
+	} bind def
+/Aclip {
+	newpath
+	savematrix
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath 
+	strokepath clip newpath
+	restorematrix
+} bind def
+/Astrk {
+	Gstrk
+} bind def
+/AA { 
+	gsave
+	savematrix
+	newpath
+	
+	3 index 2 div add exch 4 index 2 div sub exch 
+	
+	normalize 3 index 2 div sub exch 4 index 2 div add exch
+	translate 
+	rotate 
+	scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	restorematrix
+	PStroke
+	grestore
+	} bind def
+/AAclip {
+	savematrix
+	newpath
+    normalize translate 0.0 0.0 moveto 
+    rotate 
+    dnormalize scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    closepath
+	strokepath clip newpath
+	restorematrix
+} bind def
+/AAstrk {
+	GGstrk
+} bind def
+	/x FMLOCAL
+	/y FMLOCAL
+	/w FMLOCAL
+	/h FMLOCAL
+	/xx FMLOCAL
+	/yy FMLOCAL
+	/ww FMLOCAL
+	/hh FMLOCAL
+	/FMsaveobject FMLOCAL
+	/FMoptop FMLOCAL
+	/FMdicttop FMLOCAL
+/BEGINPRINTCODE { 
+	/FMdicttop countdictstack 1 add def 
+	/FMoptop count 7 sub def 
+	/FMsaveobject save def
+	userdict begin 
+	/showpage {} def 
+	FMNORMALIZEGRAPHICS 
+	3 index neg 3 index neg translate
+	} bind def
+/ENDPRINTCODE {
+	count -1 FMoptop {pop pop} for 
+	countdictstack -1 FMdicttop {pop end} for 
+	FMsaveobject restore 
+	} bind def
+/gn { 
+	0 
+	{	46 mul 
+		cf read pop 
+		32 sub 
+		dup 46 lt {exit} if 
+		46 sub add 
+		} loop
+	add 
+	} bind def
+	/str FMLOCAL
+/cfs { 
+	/str sl string def 
+	0 1 sl 1 sub {str exch val put} for 
+	str def 
+	} bind def
+/ic [ 
+	0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0223
+	0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0223
+	0
+	{0 hx} {1 hx} {2 hx} {3 hx} {4 hx} {5 hx} {6 hx} {7 hx} {8 hx} {9 hx}
+	{10 hx} {11 hx} {12 hx} {13 hx} {14 hx} {15 hx} {16 hx} {17 hx} {18 hx}
+	{19 hx} {gn hx} {0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12}
+	{13} {14} {15} {16} {17} {18} {19} {gn} {0 wh} {1 wh} {2 wh} {3 wh}
+	{4 wh} {5 wh} {6 wh} {7 wh} {8 wh} {9 wh} {10 wh} {11 wh} {12 wh}
+	{13 wh} {14 wh} {gn wh} {0 bl} {1 bl} {2 bl} {3 bl} {4 bl} {5 bl} {6 bl}
+	{7 bl} {8 bl} {9 bl} {10 bl} {11 bl} {12 bl} {13 bl} {14 bl} {gn bl}
+	{0 fl} {1 fl} {2 fl} {3 fl} {4 fl} {5 fl} {6 fl} {7 fl} {8 fl} {9 fl}
+	{10 fl} {11 fl} {12 fl} {13 fl} {14 fl} {gn fl}
+	] def
+	/sl FMLOCAL
+	/val FMLOCAL
+	/ws FMLOCAL
+	/im FMLOCAL
+	/bs FMLOCAL
+	/cs FMLOCAL
+	/len FMLOCAL
+	/pos FMLOCAL
+/ms { 
+	/sl exch def 
+	/val 255 def 
+	/ws cfs 
+	/im cfs 
+	/val 0 def 
+	/bs cfs 
+	/cs cfs 
+	} bind def
+400 ms 
+/ip { 
+	is 
+	0 
+	cf cs readline pop 
+	{	ic exch get exec 
+		add 
+		} forall 
+	pop 
+	
+	} bind def
+/rip { 
+	   
+	  
+	  bis ris copy pop 
+      is
+      0
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+	  pop pop 
+	  ris gis copy pop 
+	  dup is exch 
+	  
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+	  pop pop
+	  gis bis copy pop 
+	  dup add is exch 
+	  
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+      pop 
+      
+      } bind def
+/wh { 
+	/len exch def 
+	/pos exch def 
+	ws 0 len getinterval im pos len getinterval copy pop
+	pos len 
+	} bind def
+/bl { 
+	/len exch def 
+	/pos exch def 
+	bs 0 len getinterval im pos len getinterval copy pop
+	pos len 
+	} bind def
+/s1 1 string def
+/fl { 
+	/len exch def 
+	/pos exch def 
+	/val cf s1 readhexstring pop 0 get def
+	pos 1 pos len add 1 sub {im exch val put} for
+	pos len 
+	} bind def
+/hx { 
+	3 copy getinterval 
+	cf exch readhexstring pop pop 
+	} bind def
+	/h FMLOCAL
+	/w FMLOCAL
+	/d FMLOCAL
+	/lb FMLOCAL
+	/bitmapsave FMLOCAL
+	/is FMLOCAL
+	/cf FMLOCAL
+/wbytes { 
+      dup dup
+      24 eq { pop pop 3 mul }
+      { 8 eq {pop} {1 eq {7 add 8 idiv} {3 add 4 idiv} ifelse} ifelse } ifelse
+	} bind def
+/BEGINBITMAPBWc { 
+	1 {} COMMONBITMAPc
+	} bind def
+/BEGINBITMAPGRAYc { 
+	8 {} COMMONBITMAPc
+	} bind def
+/BEGINBITMAP2BITc { 
+	2 {} COMMONBITMAPc
+	} bind def
+/COMMONBITMAPc { 
+		 
+	/r exch def
+	/d exch def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+	/bitmapsave save def 
+	r                    
+	/is im 0 lb getinterval def 
+	ws 0 lb getinterval is copy pop 
+	/cf currentfile def 
+	w h d [w 0 0 h neg 0 h] 
+	{ip} image 
+	bitmapsave restore 
+	grestore
+	} bind def
+/BEGINBITMAPBW { 
+	1 {} COMMONBITMAP
+	} bind def
+/BEGINBITMAPGRAY { 
+	8 {} COMMONBITMAP
+	} bind def
+/BEGINBITMAP2BIT { 
+	2 {} COMMONBITMAP
+	} bind def
+/COMMONBITMAP { 
+	/r exch def
+	/d exch def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/bitmapsave save def 
+	r                    
+	/is w d wbytes string def
+	/cf currentfile def 
+	w h d [w 0 0 h neg 0 h] 
+	{cf is readhexstring pop} image
+	bitmapsave restore 
+	grestore
+	} bind def
+/ngrayt 256 array def
+/nredt 256 array def
+/nbluet 256 array def
+/ngreent 256 array def
+	/gryt FMLOCAL
+	/blut FMLOCAL
+	/grnt FMLOCAL
+	/redt FMLOCAL
+	/indx FMLOCAL
+	/cynu FMLOCAL
+	/magu FMLOCAL
+	/yelu FMLOCAL
+	/k FMLOCAL
+	/u FMLOCAL
+FMLevel1 {
+/colorsetup {
+	currentcolortransfer
+	/gryt exch def
+	/blut exch def
+	/grnt exch def
+	/redt exch def
+	0 1 255 {
+		/indx exch def
+		/cynu 1 red indx get 255 div sub def
+		/magu 1 green indx get 255 div sub def
+		/yelu 1 blue indx get 255 div sub def
+		/k cynu magu min yelu min def
+		/u k currentundercolorremoval exec def
+%		/u 0 def
+		nredt indx 1 0 cynu u sub max sub redt exec put
+		ngreent indx 1 0 magu u sub max sub grnt exec put
+		nbluet indx 1 0 yelu u sub max sub blut exec put
+		ngrayt indx 1 k currentblackgeneration exec sub gryt exec put
+	} for
+	{255 mul cvi nredt exch get}
+	{255 mul cvi ngreent exch get}
+	{255 mul cvi nbluet exch get}
+	{255 mul cvi ngrayt exch get}
+	setcolortransfer
+	{pop 0} setundercolorremoval
+	{} setblackgeneration
+	} bind def
+}
+{
+/colorSetup2 {
+	[ /Indexed /DeviceRGB 255 
+		{dup red exch get 255 div 
+		 exch dup green exch get 255 div 
+		 exch blue exch get 255 div}
+	] setcolorspace
+} bind def
+} ifelse
+	/tran FMLOCAL
+/fakecolorsetup {
+	/tran 256 string def
+	0 1 255 {/indx exch def 
+		tran indx
+		red indx get 77 mul
+		green indx get 151 mul
+		blue indx get 28 mul
+		add add 256 idiv put} for
+	currenttransfer
+	{255 mul cvi tran exch get 255.0 div}
+	exch concatprocs settransfer
+} bind def
+/BITMAPCOLOR { 
+	/d 8 def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/bitmapsave save def
+	FMLevel1 {	
+		colorsetup
+		/is w d wbytes string def
+		/cf currentfile def 
+		w h d [w 0 0 h neg 0 h] 
+		{cf is readhexstring pop} {is} {is} true 3 colorimage 
+	} {
+		colorSetup2
+		/is w d wbytes string def
+		/cf currentfile def 
+		7 dict dup begin
+			/ImageType 1 def
+			/Width w def
+			/Height h def
+			/ImageMatrix [w 0 0 h neg 0 h] def
+			/DataSource {cf is readhexstring pop} bind def
+			/BitsPerComponent d def
+			/Decode [0 255] def
+		end image	
+	} ifelse
+	bitmapsave restore 
+	grestore
+	} bind def
+/BITMAPCOLORc { 
+	/d 8 def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+	/bitmapsave save def 
+	FMLevel1 {	
+		colorsetup
+		/is im 0 lb getinterval def 
+		ws 0 lb getinterval is copy pop 
+		/cf currentfile def 
+		w h d [w 0 0 h neg 0 h] 
+		{ip} {is} {is} true 3 colorimage
+	} {
+		colorSetup2
+		/is im 0 lb getinterval def 
+		ws 0 lb getinterval is copy pop 
+		/cf currentfile def 
+		7 dict dup begin
+			/ImageType 1 def
+			/Width w def
+			/Height h def
+			/ImageMatrix [w 0 0 h neg 0 h] def
+			/DataSource {ip} bind def
+			/BitsPerComponent d def
+			/Decode [0 255] def
+		end image	
+	} ifelse
+	bitmapsave restore 
+	grestore
+	} bind def
+/BITMAPTRUECOLORc { 
+	/d 24 def
+        gsave
+ 	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+        /bitmapsave save def 
+        
+	/is im 0 lb getinterval def	
+	/ris im 0 w getinterval def	
+	/gis im w w getinterval def	
+	/bis im w 2 mul w getinterval def 
+        
+        ws 0 lb getinterval is copy pop 
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        {w rip pop ris} {gis} {bis} true 3 colorimage
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPTRUECOLOR { 
+        gsave
+		
+		3 index 2 div add exch	
+		4 index 2 div add exch	
+		translate		
+		rotate			
+		1 index 2 div neg	
+		1 index 2 div neg	
+		translate		
+		scale			
+		/h exch def /w exch def
+        /bitmapsave save def 
+        /is w string def
+        /gis w string def
+        /bis w string def
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        { cf is readhexstring pop } 
+        { cf gis readhexstring pop } 
+        { cf bis readhexstring pop } 
+        true 3 colorimage 
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPTRUEGRAYc { 
+	/d 24 def
+        gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+        /bitmapsave save def 
+        
+	/is im 0 lb getinterval def	
+	/ris im 0 w getinterval def	
+	/gis im w w getinterval def	
+	/bis im w 2 mul w getinterval def 
+        ws 0 lb getinterval is copy pop 
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        {w rip pop ris gis bis w gray} image
+        bitmapsave restore 
+        grestore
+        } bind def
+/ww FMLOCAL
+/r FMLOCAL
+/g FMLOCAL
+/b FMLOCAL
+/i FMLOCAL
+/gray { 
+        /ww exch def
+        /b exch def
+        /g exch def
+        /r exch def
+        0 1 ww 1 sub { /i exch def r i get .299 mul g i get .587 mul
+			b i get .114 mul add add r i 3 -1 roll floor cvi put } for
+        r
+        } bind def
+/BITMAPTRUEGRAY { 
+        gsave
+		
+		3 index 2 div add exch	
+		4 index 2 div add exch	
+		translate		
+		rotate			
+		1 index 2 div neg	
+		1 index 2 div neg	
+		translate		
+		scale			
+		/h exch def /w exch def
+        /bitmapsave save def 
+        /is w string def
+        /gis w string def
+        /bis w string def
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        { cf is readhexstring pop 
+          cf gis readhexstring pop 
+          cf bis readhexstring pop w gray}  image
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPGRAY { 
+	8 {fakecolorsetup} COMMONBITMAP
+	} bind def
+/BITMAPGRAYc { 
+	8 {fakecolorsetup} COMMONBITMAPc
+	} bind def
+/ENDBITMAP {
+	} bind def
+end 
+	/ALDsave FMLOCAL
+	/ALDmatrix matrix def ALDmatrix currentmatrix pop
+/StartALD {
+	/ALDsave save def
+	 savematrix
+	 ALDmatrix setmatrix
+	} bind def
+/InALD {
+	 restorematrix
+	} bind def
+/DoneALD {
+	 ALDsave restore
+	} bind def
+/I { setdash } bind def
+/J { [] 0 setdash } bind def
+%%EndProlog
+%%BeginSetup
+(4.0) FMVERSION
+1 1 0 0 612 792 0 1 7 FMDOCUMENT
+0 0 /Times-Roman FMFONTDEFINE
+1 0 /Times-Bold FMFONTDEFINE
+2 0 /Times-Italic FMFONTDEFINE
+32 FMFILLS
+0 0 FMFILL
+1 0.1 FMFILL
+2 0.3 FMFILL
+3 0.5 FMFILL
+4 0.7 FMFILL
+5 0.9 FMFILL
+6 0.97 FMFILL
+7 1 FMFILL
+8 <0f1e3c78f0e1c387> FMFILL
+9 <0f87c3e1f0783c1e> FMFILL
+10 <cccccccccccccccc> FMFILL
+11 <ffff0000ffff0000> FMFILL
+12 <8142241818244281> FMFILL
+13 <03060c183060c081> FMFILL
+14 <8040201008040201> FMFILL
+16 1 FMFILL
+17 0.9 FMFILL
+18 0.7 FMFILL
+19 0.5 FMFILL
+20 0.3 FMFILL
+21 0.1 FMFILL
+22 0.03 FMFILL
+23 0 FMFILL
+24 <f0e1c3870f1e3c78> FMFILL
+25 <f0783c1e0f87c3e1> FMFILL
+26 <3333333333333333> FMFILL
+27 <0000ffff0000ffff> FMFILL
+28 <7ebddbe7e7dbbd7e> FMFILL
+29 <fcf9f3e7cf9f3f7e> FMFILL
+30 <7fbfdfeff7fbfdfe> FMFILL
+%%EndSetup
+%%Page: "1" 1
+%%BeginPaperSize: Letter
+%%EndPaperSize
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+J
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(DylanW) 72 42.62 T
+(orks Design Papers) 98.46 42.62 T
+(September 5, 1995) 275.89 42.62 T
+(1) 536 42.62 T
+0 24 Q
+(DylanW) 173.65 704 T
+(orks Design Papers) 253.04 704 T
+1 12 Q
+(Scott McKay & Chris Fry) 239.35 661.39 T
+1 16 Q
+(1.  Intr) 72 597.5 T
+(oduction) 119.26 597.5 T
+0 12 Q
+(The overall long-term goal of DylanW) 72 567.56 T
+(orks is to create an integrated software development envi-) 256.67 567.56 T
+-0.13 (ronment that allows a team \050or teams\051 of people to create and manage a software product through) 72 553.56 P
+-0.1 (all the phases of its lifetime. The environment will encourage the development of software that is) 72 539.56 P
+(based on resuable components. It will also support the process of \322growing\323 software from an) 72 525.56 T
+(evolving set of requirements and prototypes into a \336nal product. The \336nal delivered product will) 72 511.56 T
+(not be encumbered by any residues of the development environment.) 72 497.56 T
+-0.02 (The purpose of this paper is to outline a suite of short white papers that describe the DylanW) 72 468.95 P
+-0.02 (orks) 516.35 468.95 P
+-0.09 (environment. Each of these white papers is intended to address one portion of DylanW) 72 454.95 P
+-0.09 (orks. Each) 486.52 454.95 P
+(white paper will:) 72 440.95 T
+1 F
+(\245) 85.5 418.33 T
+0 F
+(Identify its scope,) 99 418.33 T
+1 F
+(\245) 85.5 395.72 T
+0 F
+(Identify the overall strategy to be used in its area,) 99 395.72 T
+1 F
+(\245) 85.5 373.11 T
+0 F
+(Identify candidate solution\050s\051, and) 99 373.11 T
+1 F
+(\245) 85.5 350.5 T
+0 F
+(Identify problems for which we have no good solutions yet.) 99 350.5 T
+1 16 Q
+(2.  Overview Papers) 72 307.22 T
+0 12 Q
+(This set of white papers describes the overall requirements, goals, and design principles for) 72 277.28 T
+(DylanW) 72 263.28 T
+(orks.) 111.7 263.28 T
+1 13 Q
+(Paper 1.  Overall Requir) 72 229 T
+(ements of DylanW) 208.62 229 T
+(orks) 310.45 229 T
+0 12 Q
+(\321) 338.25 229 T
+1 13 Q
+( r) 350.25 229 T
+(equir) 359.04 229 T
+(ements.doc) 388.42 229 T
+0 12 Q
+(This paper describes what the Dylan team thinks the overall requirements for DylanW) 72 208.06 T
+(orks is.) 484.96 208.06 T
+-0.16 (There will presumably be many assumptions and questions that need to be answered by people in) 72 194.06 P
+(product management and marketing. For example:) 72 180.06 T
+1 F
+(\245) 85.5 157.45 T
+0 F
+(What hardware and OS will the typical user have?) 99 157.45 T
+1 F
+(\245) 85.5 134.83 T
+0 F
+(How much disk and memory will the typical user have?) 99 134.83 T
+1 F
+(\245) 85.5 112.22 T
+0 F
+(What other devices will he have? For example, what size display?) 99 112.22 T
+1 F
+(\245) 85.5 89.61 T
+0 F
+(What tools will he have used in the past?) 99 89.61 T
+1 F
+(\245) 85.5 67 T
+0 F
+(What kind of applications will he be writing?) 99 67 T
+FMENDPAGE
+%%EndPage: "1" 1
+%%Page: "2" 2
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(DylanW) 72 42.62 T
+(orks Design Papers) 98.46 42.62 T
+(September 5, 1995) 275.89 42.62 T
+(2) 536 42.62 T
+1 13 Q
+(Paper 2.  Overview of Envir) 72 711.33 T
+(onment and Methodology) 227.02 711.33 T
+0 12 Q
+(\321) 372.56 711.33 T
+1 13 Q
+( methodology) 384.56 711.33 T
+(.doc) 458.6 711.33 T
+0 12 Q
+(This paper presents an overall map of the Dylan environment, whose \322parts\323 include an applica-) 72 688.94 T
+(tion being worked on which is separated from the development environment itself. These two) 72 674.94 T
+(major pieces are linked via an \322access path\323. This paper also describes the relationship between) 72 660.94 T
+(the compiler and the rest of the environment, how we will model a project via databases, and the) 72 646.94 T
+(interaction between the various tools.) 72 632.94 T
+1 13 Q
+(Paper 3. Overall Class Library Design Guidelines) 72 604.21 T
+0 12 Q
+(\321) 350.07 604.21 T
+1 13 Q
+( library-design.doc) 362.07 604.21 T
+0 12 Q
+(This paper is basically a summary of available literature that describes how to do robust, extensi-) 72 575.81 T
+(ble class library design. It also describes more prosaic things, such as the naming conventions) 72 561.81 T
+(used by the Dylan libraries.) 72 547.81 T
+1 13 Q
+(Paper 4. Overall UI Design Guidelines) 72 519.08 T
+0 12 Q
+(\321) 287.59 519.08 T
+1 13 Q
+( ui-design.doc) 299.59 519.08 T
+0 12 Q
+(This paper describes overall guidelines and principles for the DylanW) 72 490.69 T
+(orks user interface, that is,) 407.3 490.69 T
+(its \322look and feel\323. Some typical guidelines are:) 72 476.69 T
+1 F
+(\245) 85.5 455.62 T
+0 F
+(All the tools should fit together seamlessly and serendipitously.) 99 455.62 T
+1 F
+(\245) 85.5 434.56 T
+0 F
+(There should be uniform undo/redo everywhere.) 99 434.56 T
+1 F
+(\245) 85.5 413.5 T
+0 F
+(There should be context-sensitive help and documentation everywhere.) 99 413.5 T
+1 F
+(\245) 85.5 392.44 T
+0 F
+(All functionality should be accessible via both mouse and keyboard. It should scale to sup-) 99 392.44 T
+(port other input devices, such as voice input.) 99 378.44 T
+1 F
+(\245) 85.5 357.38 T
+0 F
+(Hardcopy should be supported everywhere.) 99 357.38 T
+1 16 Q
+(3.  Pr) 72 315.65 T
+(oject Databases) 108.59 315.65 T
+0 12 Q
+-0.08 (Libraries and applications built in DylanW) 72 287.25 P
+-0.08 (orks are or) 276.3 287.25 P
+-0.08 (ganized into \322projects\323. Each project has its) 327.25 287.25 P
+(source code, documentation, speci\336cations, and other additional information stored in databases.) 72 273.25 T
+1 13 Q
+(Paper 5. Persistent Storage) 72 244.52 T
+0 12 Q
+(\321) 225.44 244.52 T
+1 13 Q
+( persistent-stor) 237.44 244.52 T
+(e.doc) 320.6 244.52 T
+0 12 Q
+(This paper describes the strategy that DylanW) 72 216.12 T
+(orks itself will use for the persistent storage of) 292.99 216.12 T
+(sucvh things as source code and derived information. Note that this is not necessarily the same) 72 202.12 T
+-0.41 (thing that a customer will use as an object-oriented database; customer needs are more likely to be) 72 188.12 P
+(addressed by an interface to a commercial object database, such as ObjectStore.) 72 174.12 T
+1 13 Q
+(Paper 6. Sour) 72 145.4 T
+(ce Database) 147.96 145.4 T
+0 12 Q
+(\321) 217.27 145.4 T
+1 13 Q
+( sour) 229.27 145.4 T
+(ce-db.doc) 256.85 145.4 T
+0 12 Q
+(This paper describes the source database. Initially) 72 123 T
+(, the source database will contain versioned) 310.16 123 T
+(source code with \322simple\323 annotations \050such as author) 72 109 T
+(, change comments, and so forth\051. In the) 332.47 109 T
+(long term, this will contain many other annotations, which are listed beelow) 72 95 T
+(. The initial imple-) 436.19 95 T
+(mentation will probably be a \322quick and easy\323 version control substrate; later) 72 81 T
+(, this will either be) 443.12 81 T
+(extended or we will use a third-party system such as ClearCase.) 72 67 T
+FMENDPAGE
+%%EndPage: "2" 2
+%%Page: "3" 3
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(DylanW) 72 42.62 T
+(orks Design Papers) 98.46 42.62 T
+(September 5, 1995) 275.89 42.62 T
+(3) 536 42.62 T
+0 12 Q
+(The source database will contain versioned source \322sections\323 that are or) 72 712 T
+(ganized into \322\336les\323 \050i.e.,) 417.02 712 T
+(ordered sets of sections\051. Each section tracks such things as its author and creation time, why) 72 698 T
+(changes were made, it\325) 72 684 T
+(s status \050completed, experimental, broken\051, and so on. Other tools can) 181.97 684 T
+-0.01 (access the source database at the granularity of a single section. There are numerous kinds of sec-) 72 670 P
+(tions, all or) 72 656 T
+(ganized in a web. Kinds of sections include, but are not limited to:) 126.12 656 T
+1 F
+(\245) 85.5 634.35 T
+0 F
+(Requirements and specifications) 99 634.35 T
+1 F
+(\245) 85.5 612.7 T
+0 F
+(Documentation) 99 612.7 T
+1 F
+(\245) 85.5 591.05 T
+0 F
+(Test suites and examples) 99 591.05 T
+1 F
+(\245) 85.5 569.4 T
+0 F
+(Bug tracking information) 99 569.4 T
+1 F
+(\245) 85.5 547.75 T
+0 F
+(Schedules and to-do lists) 99 547.75 T
+(Of course, the source database will allow importing \337at \336les or \336les from other version control) 72 528.1 T
+-0.08 (systems \050such as RCS\051, and will support exporting source into an interchange format, such as \337at) 72 514.1 P
+(\336les.) 72 500.1 T
+1 13 Q
+(Paper 7. Derived Information Database) 72 470.78 T
+0 12 Q
+(\321) 294.42 470.78 T
+1 13 Q
+( derived-db.doc) 306.42 470.78 T
+0 12 Q
+(This paper describes the derived information database, which comprises all of the information) 72 447.8 T
+(that can be derived by running a compiler \050or some compiler) 72 433.8 T
+(-like tool\051 over the source code of a) 363.04 433.8 T
+(particular project. It contains such information as:) 72 419.8 T
+1 F
+(\245) 85.5 398.15 T
+0 F
+(Mapping from \322definition names\323 to section names) 99 398.15 T
+1 F
+(\245) 85.5 376.5 T
+0 F
+(Source location \050\322meta-point\323\051 information) 99 376.5 T
+1 F
+(\245) 85.5 354.85 T
+0 F
+(Mapping from program counters to source code fragments, and vice-versa) 99 354.85 T
+1 F
+(\245) 85.5 333.2 T
+0 F
+(Argument and local variable names and types) 99 333.2 T
+1 F
+(\245) 85.5 311.55 T
+0 F
+(Meta-object information for all types and classes) 99 311.55 T
+1 F
+(\245) 85.5 289.9 T
+0 F
+(\322Who calls\323 and \322calls who\323 information) 99 289.9 T
+1 F
+(\245) 85.5 268.25 T
+0 F
+(Macro-expanders and in-line function information) 99 268.25 T
+1 F
+(\245) 85.5 246.6 T
+0 F
+(Compiler warnings) 99 246.6 T
+1 16 Q
+(4.  Cor) 72 204.28 T
+(e Envir) 118.37 204.28 T
+(onment) 168.3 204.28 T
+0 12 Q
+(The \322core environment\323 comprises those tools that are required by essentially all users of Dylan-) 72 175.3 T
+(W) 72 161.3 T
+(orks to do their day-to-day work.) 82.37 161.3 T
+1 13 Q
+(Paper 8. Pr) 72 131.98 T
+(oject and Library Manager) 134.95 131.98 T
+0 12 Q
+(\321) 290.2 131.98 T
+1 13 Q
+( pr) 302.2 131.98 T
+(oject-manager) 318.22 131.98 T
+(.doc) 397.16 131.98 T
+0 12 Q
+(This paper describes the \322application\323 that controls the overall aspects of a DylanW) 72 109 T
+(orks session.) 473.62 109 T
+-0.13 (The project and library manager allows a user to select what project \050or projects\051 is being worked) 72 95 P
+(on, set the attributes of the current session \050such as the compiler settings\051, and select an access) 72 81 T
+(path. In a sense, this tool provvides the entry into the rest of the DylanW) 72 67 T
+(orks environment.) 419.66 67 T
+FMENDPAGE
+%%EndPage: "3" 3
+%%Page: "4" 4
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(DylanW) 72 42.62 T
+(orks Design Papers) 98.46 42.62 T
+(September 5, 1995) 275.89 42.62 T
+(4) 536 42.62 T
+0 12 Q
+(The \322librarian\323 aspect of this tool allows the user to or) 72 712 T
+(ganize a set of source into a library) 333.07 712 T
+(, and) 500.58 712 T
+-0.14 (provides for some system con\336guration management. \050In the future, we may choose to use an of) 72 698 P
+-0.14 (f-) 532.01 698 P
+(the-shelf product to do this, such as Atria\325) 72 684 T
+(s ClearCase.\051 Some of the the functionality includes:) 273.31 684 T
+1 F
+(\245) 85.5 664 T
+0 F
+(Management of libraries, which may be nested.) 99 664 T
+1 F
+(\245) 85.5 644 T
+0 F
+(\322Journalling\323, that is, tracking the exact state of a project at any point in time.) 99 644 T
+1 F
+(\245) 85.5 624 T
+0 F
+(Integration with the source version control component of DylanWorks.) 99 624 T
+1 F
+(\245) 85.5 604 T
+0 F
+(Assistsing users in locating relevant functionality; this might be assisted by some sort of) 99 604 T
+(\322agent\323 that determines what is in various libraries.) 99 590 T
+1 F
+(\245) 85.5 570 T
+0 F
+-0.15 (\322Costing\323 of functionality, so that users can see how expensive any piece of functionality is) 99 570 P
+(\050in space and speed\051.) 99 556 T
+1 13 Q
+(Paper 9. Compiler Overview) 72 528.33 T
+0 12 Q
+(\321) 234.11 528.33 T
+1 13 Q
+( compiler) 246.11 528.33 T
+(.doc) 297.27 528.33 T
+0 12 Q
+(This paper describes the overall functionality and or) 72 501 T
+(ganization of the compiler) 322.07 501 T
+(.) 447.72 501 T
+1 13 Q
+(Paper 10. Edit/Compile/Debug Cycle) 72 473.33 T
+0 12 Q
+(\321) 279.64 473.33 T
+1 13 Q
+( edit-compiler) 291.64 473.33 T
+(-debug.doc) 368.78 473.33 T
+0 12 Q
+(This paper describes the DylanW) 72 452 T
+(orks edit/compile/debug cycle. The basic model is built on an) 231 452 T
+(incremental compilation/dynamic linking model; of course, certain \322tightly compiled\323 applica-) 72 438 T
+(tions may not support full incrementality) 72 424 T
+(, but the overall goal is to provide this facility during) 267.55 424 T
+(most of the development process. This paper also describes the concept of patching and the tools) 72 410 T
+(that support patching; such patching tools provides one aspect of groupware.) 72 396 T
+1 13 Q
+(Paper 1) 72 368.33 T
+(1. Editor) 114.25 368.33 T
+0 12 Q
+(\321) 166.61 368.33 T
+1 13 Q
+( editor) 178.61 368.33 T
+(.doc) 213.88 368.33 T
+0 12 Q
+(This paper describes various strategies for doing editing within DylanW) 72 347 T
+(orks. The strategies) 417.32 347 T
+(include using a third-party editor \050such as Gnu Emacs or PFE\051, and writing some sort of editor) 72 333 T
+(from scratch. In a perfect world, the editor would include support for:) 72 319 T
+1 F
+(\245) 85.5 299 T
+0 F
+(\322Hard\323 sections.) 99 299 T
+1 F
+(\245) 85.5 279 T
+0 F
+-0.43 (Buffers that are constructed by explicitly linking together sections; in particular, buffers will) 99 279 P
+(have a finer granularity than a whole file.) 99 265 T
+1 F
+(\245) 85.5 245 T
+0 F
+(Each section, and each \322line\323 in a section knows how to display itself; this allows for) 99 245 T
+(embedded graphics, gadgets and icons, \322fish-eye\323 views, and so forth.) 99 231 T
+1 F
+(\245) 85.5 211 T
+0 F
+(Language and context-sensitivity, allowing for such things as templates, intelligent help,) 99 211 T
+(and so on.) 99 197 T
+1 F
+(\245) 85.5 177 T
+0 F
+(It will support multi-media, in that things like sound and video can be encapsulated in con-) 99 177 T
+(tainers \050such as OpenDoc parts\051 within a buffer.) 99 163 T
+1 F
+(\245) 85.5 143 T
+0 F
+(Other Emacs-like functionality, such as macros and an extension language.) 99 143 T
+FMENDPAGE
+%%EndPage: "4" 4
+%%Page: "5" 5
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(DylanW) 72 42.62 T
+(orks Design Papers) 98.46 42.62 T
+(September 5, 1995) 275.89 42.62 T
+(5) 536 42.62 T
+1 13 Q
+(Paper 12. Debugger) 72 711.33 T
+0 12 Q
+(\321) 185.37 711.33 T
+1 13 Q
+( debugger) 197.37 711.33 T
+(.doc) 251.43 711.33 T
+0 12 Q
+(This paper describes the both the substrate and some proposed functionality for the DylanW) 72 688.71 T
+(orks) 513.3 688.71 T
+(debugger) 72 674.71 T
+(, and the requirements the debugger puts on the compiler) 116.17 674.71 T
+(. This debugger will support a) 388.8 674.71 T
+(uniform model for debugging programs written in various languages. There will be the usual) 72 660.71 T
+(functionality) 72 646.71 T
+(, such as:) 132.55 646.71 T
+1 F
+(\245) 85.5 625.43 T
+0 F
+(A backtrace \050stack\051 browser) 99 625.43 T
+1 F
+(\245) 85.5 604.14 T
+0 F
+(By-name access to argument and local values and types) 99 604.14 T
+1 F
+(\245) 85.5 582.86 T
+0 F
+(Evaluation of language forms in the appropriate context) 99 582.86 T
+1 F
+(\245) 85.5 561.57 T
+0 F
+(Breakpoints and watchpoints, and trap-on-exit) 99 561.57 T
+1 F
+(\245) 85.5 540.29 T
+0 F
+(Source-level stepper) 99 540.29 T
+1 F
+(\245) 85.5 519 T
+0 F
+(\322Fix and continue\323 and restarting of frames) 99 519 T
+1 13 Q
+(Paper 13. Listener) 72 490.05 T
+0 12 Q
+(\321) 177.43 490.05 T
+1 13 Q
+( listener) 189.43 490.05 T
+(.doc) 232.64 490.05 T
+0 12 Q
+(This paper describes the listeners, which are essentially a kind of \322null\323 debugger that lets the) 72 467.43 T
+-0.25 (user evaluate language forms. In particular) 72 453.43 P
+-0.25 (, this paper discusses how interactions with the listener) 275.57 453.43 P
+-0.22 (relate to the edit/compile/debug cycle and to modules and libraries \050i.e., how de\336nitions de\336ned a) 72 439.43 P
+(listener can be captured in a module, or how debugging forms might be captured into a test case\051.) 72 425.43 T
+(This paper also discusses a model for FFI-like remote evaluation and printing of \322proxy\323 objects) 72 406.14 T
+(that underlies the listener) 72 392.14 T
+(.) 192.32 392.14 T
+1 13 Q
+(Paper 14. Br) 72 363.19 T
+(owsers) 142.17 363.19 T
+0 12 Q
+(\321) 182.97 363.19 T
+1 13 Q
+( br) 194.97 363.19 T
+(owsers.doc) 210.98 363.19 T
+0 12 Q
+(This paper presents an overall \322theory of browsing\323, some proposed architectures for browser) 72 340.57 T
+(implementations, and describes a suite of browsing tools provided by DylanW) 72 326.57 T
+(orks. It also) 447.34 326.57 T
+(describes how the various browsers interact with each other in a tightly integrated way) 72 312.57 T
+(.) 486.8 312.57 T
+(The DylanW) 72 293.29 T
+(orks browsers are intended to be extensible, but also provide some built-in \322tools\323.) 133.36 293.29 T
+(The built-in functionality provides easy access to:) 72 279.29 T
+1 F
+(\245) 85.5 258 T
+0 F
+(Dynamic data browsing \050aka, inspector\051) 99 258 T
+1 F
+(\245) 85.5 236.71 T
+0 F
+(Class browsing) 99 236.71 T
+1 F
+(\245) 85.5 215.43 T
+0 F
+(Generic function and method browsing) 99 215.43 T
+1 F
+(\245) 85.5 194.14 T
+0 F
+(Caller/callee browsing) 99 194.14 T
+1 F
+(\245) 85.5 172.86 T
+0 F
+(Project/library/module/source browsing, including \322apropos\323) 99 172.86 T
+1 F
+(\245) 85.5 151.57 T
+0 F
+(Thread and process browsing) 99 151.57 T
+1 16 Q
+(5.  Auxiliary T) 72 109.62 T
+(ools) 170.1 109.62 T
+0 12 Q
+-0.04 (The auxiliary tools in DylanW) 72 81 P
+-0.04 (orks are those tools that, while still important, are likely to be used) 217.53 81 P
+(less frequently than the core tools.) 72 67 T
+FMENDPAGE
+%%EndPage: "5" 5
+%%Page: "6" 6
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(DylanW) 72 42.62 T
+(orks Design Papers) 98.46 42.62 T
+(September 5, 1995) 275.89 42.62 T
+(6) 536 42.62 T
+1 13 Q
+(Paper 15. Interface Builder) 72 711.33 T
+0 12 Q
+(\321) 226.9 711.33 T
+1 13 Q
+( ui-builder) 238.9 711.33 T
+(.doc) 296.58 711.33 T
+0 12 Q
+(This paper describes our strategy for providing an interface builder) 72 689.22 T
+(. W) 392.93 689.22 T
+(e anticipate that this will,) 409.3 689.22 T
+-0.24 (for the most part, be a fairly traditional GUI builder \050at least in the initial release of DylanW) 72 675.22 P
+-0.24 (orks\051,) 509.58 675.22 P
+-0.26 (so there is a buy) 72 661.22 P
+2 F
+-0.26 (vs.) 151.67 661.22 P
+0 F
+-0.26 ( build decision here. Note that, whether we buy or build, the GUI builder must) 164.67 661.22 P
+(be prepared to create OLE/OpenDoc compliant interfaces.) 72 647.22 T
+1 13 Q
+(Paper 16. Pr) 72 618.78 T
+(o\336ling T) 141.45 618.78 T
+(ools) 186.85 618.78 T
+0 12 Q
+(\321) 211.78 618.78 T
+1 13 Q
+( pr) 223.78 618.78 T
+(o\336ling.doc) 239.79 618.78 T
+0 12 Q
+(This paper describes the DylanW) 72 596.67 T
+(orks pro\336ling tools. W) 231 596.67 T
+(e plan to break these tools into three) 338.71 596.67 T
+(phases:) 72 582.67 T
+1 F
+(\245) 85.5 561.89 T
+0 F
+(Data collection \050including time and memory usage\051.) 99 561.89 T
+1 F
+(\245) 85.5 541.11 T
+0 F
+(Profiling data browser, which uses information hiding and filtering to allow a user to sift) 99 541.11 T
+(through the large amounts of data generated during a profiling run. The profiling interface) 99 527.11 T
+(will be built on the same substrate as is used by the other browsers.) 99 513.11 T
+1 F
+(\245) 85.5 492.33 T
+0 F
+-0.09 (Protocol for feeding information back to compiler, and for feeding back cost information to) 99 492.33 P
+(the librarian.) 99 478.33 T
+1 13 Q
+(Paper 17. Mail Reader) 72 449.89 T
+0 12 Q
+(\321) 200.9 449.89 T
+1 13 Q
+( mail-r) 212.9 449.89 T
+(eader) 250.57 449.89 T
+(.doc) 280.42 449.89 T
+0 12 Q
+-0.21 (This paper describes a strategy for integrating mail reading into the rest of DylanW) 72 427.78 P
+-0.21 (orks. This will) 467.95 427.78 P
+-0.07 (include some sort of \322Chat\323 or \322Converse\323 facility) 72 413.78 P
+-0.07 (. Note that the initial release of DylanW) 313.66 413.78 P
+-0.07 (orks in) 504.15 413.78 P
+(unlikely to include this.) 72 399.78 T
+1 13 Q
+(Paper 18. Bug Reporting and T) 72 371.33 T
+(racking) 245.11 371.33 T
+0 12 Q
+(\321) 290.97 371.33 T
+1 13 Q
+( bug-tracking.doc) 302.97 371.33 T
+0 12 Q
+(This paper describes our strategy for doing bug reporting and bug tracking. Note that the initial) 72 349.22 T
+(release of DylanW) 72 335.22 T
+(orks in unlikely to include this.) 161 335.22 T
+1 13 Q
+(Paper 19. Application Packaging and Delivery) 72 306.78 T
+0 12 Q
+(\321) 331.65 306.78 T
+1 13 Q
+( packaging.doc) 343.65 306.78 T
+0 12 Q
+(This paper describes the phase of application development that \322shrink wraps\323 an application for) 72 284.67 T
+(delivery) 72 270.67 T
+(. It addresses issues such as DLL creation, installers, logical pathname installation and) 110.54 270.67 T
+(other site management issues, and how delivered applications might be patched or otherwise) 72 256.67 T
+(modi\336ed.) 72 242.67 T
+1 16 Q
+(6.  Libraries) 72 201.22 T
+0 12 Q
+(These white papers are) 72 173.11 T
+2 F
+(not) 185.29 173.11 T
+0 F
+( full speci\336cations of the libraries, but are simply high-level descrip-) 200.63 173.11 T
+(tions of what the libraries will do.) 72 159.11 T
+1 13 Q
+(Paper 20. Standard I/O Libraries) 72 130.67 T
+0 12 Q
+(\321) 260.51 130.67 T
+1 13 Q
+( standard-io.doc) 272.51 130.67 T
+0 12 Q
+(This paper describes the goals of a set of standard I/O libraries, which include:) 72 108.56 T
+1 F
+(\245) 85.5 87.78 T
+0 F
+(Streams, which includes support for streams over sequences and files) 99 87.78 T
+1 F
+(\245) 85.5 67 T
+0 F
+(\322Stdio\323, which includes support for Lisp-style) 99 67 T
+1 F
+(*standard-input*) 323.32 67 T
+0 F
+( and) 412.67 67 T
+1 F
+(*standard-output*) 436 67 T
+FMENDPAGE
+%%EndPage: "6" 6
+%%Page: "7" 7
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(DylanW) 72 42.62 T
+(orks Design Papers) 98.46 42.62 T
+(September 5, 1995) 275.89 42.62 T
+(7) 536 42.62 T
+1 12 Q
+(\245) 85.5 712 T
+0 F
+(Locators \050aka, pathnames\051, which include support for URL pathnames) 99 712 T
+1 F
+(\245) 85.5 690.3 T
+0 F
+(Format) 99 690.3 T
+1 13 Q
+(Paper 21. Thr) 72 660.93 T
+(eads) 149.4 660.93 T
+0 12 Q
+(\321) 177.21 660.93 T
+1 13 Q
+( thr) 189.21 660.93 T
+(eads.doc) 209.55 660.93 T
+0 12 Q
+(This paper describes the goals and issues of a multi-thread library for Dylan, including locking) 72 637.9 T
+(and \337uid binding. This library will use native facilities wherever possible.) 72 623.9 T
+1 13 Q
+(Paper 22. Memory Management) 72 594.53 T
+0 12 Q
+(\321) 255.04 594.53 T
+1 13 Q
+( memory) 267.04 594.53 T
+(.doc) 315.78 594.53 T
+0 12 Q
+(This paper describes the high-level goals of memory management and garbage collection in) 72 571.5 T
+(DylanW) 72 557.5 T
+(orks.) 111.7 557.5 T
+1 13 Q
+(Paper 23. FFI and Interface Importation) 72 528.13 T
+0 12 Q
+(\321) 301.28 528.13 T
+1 13 Q
+( f\336.doc) 313.28 528.13 T
+0 12 Q
+-0.05 (This paper describes the goals of the Dylan foreign-function interface library) 72 505.1 P
+-0.05 (. The FFI part of the) 439.97 505.1 P
+(paper mainly describe the Dylan object representation, issues of data marshalling and unmarshal-) 72 491.1 T
+(ling, and function calling conventions. The Interface Importation part of the paper describes a) 72 477.1 T
+(facility for mostly-automated importation of foreign interfaces, such as those described in C) 72 463.1 T
+(include \336les.) 72 449.1 T
+1 13 Q
+(Paper 24. User Interface Substrate) 72 419.73 T
+0 12 Q
+(\321) 267.68 419.73 T
+1 13 Q
+( ui-substrate.doc) 279.68 419.73 T
+0 12 Q
+(This paper describes the components of a high-level portable user interface library) 72 396.7 T
+(. This library) 466.79 396.7 T
+(will consist of several distinct layers, each of which can be used by any user application. From) 72 382.7 T
+(bottom to top, these layers are:) 72 368.7 T
+1 F
+(\245) 85.5 347 T
+0 F
+(A low-level, fairly platform-dependent layer that links directly to the native UI toolkits.) 99 347 T
+1 F
+(\245) 85.5 325.3 T
+0 F
+-0.16 (A mid-level, portable layer that describes the traditional composition toolkit model of build-) 99 325.3 P
+(ing user interfaces \050i.e., events and gadgets, simple graphics, color, etc.\051; this will be based) 99 311.3 T
+(on the ideas of CAPI, Silica, and Fresco.) 99 297.3 T
+1 F
+(\245) 85.5 275.6 T
+0 F
+(A high-level, portable layer that allows programmers to describe their user interface in) 99 275.6 T
+(terms of the semantics of the application; this will be built on the ideas of CLIM.) 99 261.6 T
+(The user interface libraries will also integrate with embedding protocols \050such as OpenDoc or) 72 241.9 T
+(Ole\051 and scripting protocols \050such as OSA or Ole Automation\051.) 72 227.9 T
+1 13 Q
+(Paper 25. Envir) 72 198.53 T
+(onment Query \050\322Gestalt\323\051) 159.52 198.53 T
+0 12 Q
+(\321) 307.91 198.53 T
+1 13 Q
+( gestalt.doc) 319.91 198.53 T
+0 12 Q
+-0.26 (This paper describes a library that provides a portable way to query the environment, for example:) 72 175.5 P
+1 F
+(\245) 85.5 153.8 T
+0 F
+(Host name and host type) 99 153.8 T
+1 F
+(\245) 85.5 132.1 T
+0 F
+(User name) 99 132.1 T
+1 F
+(\245) 85.5 110.4 T
+0 F
+(Current date and time) 99 110.4 T
+1 F
+(\245) 85.5 88.7 T
+0 F
+(Operating system type and version number) 99 88.7 T
+1 F
+(\245) 85.5 67 T
+0 F
+(Hardware configuration) 99 67 T
+FMENDPAGE
+%%EndPage: "7" 7
+%%Page: "8" 8
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(DylanW) 72 42.62 T
+(orks Design Papers) 98.46 42.62 T
+(September 5, 1995) 275.89 42.62 T
+(8) 536 42.62 T
+0 12 Q
+(This paper also describes a simple set of \322compile-time\323 queries that can be used as \322compile-) 72 712 T
+(time conditionals\323 in code.) 72 698 T
+1 13 Q
+(Paper 26. OODB Interface) 72 670.33 T
+0 12 Q
+(\321) 223.28 670.33 T
+1 13 Q
+( oodb.doc) 235.28 670.33 T
+0 12 Q
+(This paper describes the strategy to be used for providing user access to persistence and object-) 72 649 T
+(oriented databases \050such as ObjectStore\051.) 72 635 T
+1 16 Q
+(7.  Standards Integration) 72 594.33 T
+0 12 Q
+(DylanW) 72 567 T
+(orks needs to integrate well with a number of emer) 111.7 567 T
+(ging standards. Unfortunately) 355.76 567 T
+(, since) 497.96 567 T
+(some of these standards are still competing with one another in the marketplace, it is not clear) 72 553 T
+(which of them we should use. These papers outline the issues surrounding these standards, and) 72 539 T
+(what we might do.) 72 525 T
+1 13 Q
+(Paper 27. CORBA Strategy) 72 497.33 T
+0 12 Q
+(\321) 228.34 497.33 T
+1 13 Q
+( corba.doc) 240.34 497.33 T
+0 12 Q
+-0.06 (This paper discusses what options are available to us in the domain of common object representa-) 72 476 P
+(tions. Options include DSOM \050which is CORBA-compliant\051 and COM \050Microsoft\325) 72 462 T
+(s crack at) 471.32 462 T
+(objects, which is not yet CORBA-compliant\051.) 72 448 T
+1 13 Q
+(Paper 28. Embedded Documents) 72 420.33 T
+0 12 Q
+(\321) 256.52 420.33 T
+1 13 Q
+( embedded-docs.doc) 268.52 420.33 T
+0 12 Q
+(This paper discusses what options are available to us in the domain of document embedding. It) 72 399 T
+(addresses the issues of both creating user applications that can act as \322parts\323 or \322part handlers\323,) 72 385 T
+(and how DylanW) 72 371 T
+(orks might itself be composed of parts and part handlers. The primary) 155.69 371 T
+(, compet-) 490.19 371 T
+(ing standards here are OpenDoc and OLE.) 72 357 T
+1 13 Q
+(Paper 29. Internationalization Strategy) 72 329.33 T
+0 12 Q
+(\321) 292.62 329.33 T
+1 13 Q
+( internationalization.doc) 304.62 329.33 T
+0 12 Q
+(This paper discusses possible strategies for making DylanW) 72 308 T
+(orks internationalizable. It addresses) 360 308 T
+(such issues as Unicode.) 72 294 T
+1 13 Q
+(Paper 30. Third-party Integration) 72 266.33 T
+0 12 Q
+(\321) 264.46 266.33 T
+1 13 Q
+( third-party) 276.46 266.33 T
+(.doc) 341.83 266.33 T
+0 12 Q
+(This paper discusses how we might integrate with 3rd-party tools and standards. This discussion) 72 245 T
+(is related to CORBA and OpenDoc/OLE issues. Such 3rd-party tools and standards include:) 72 231 T
+1 F
+(\245) 85.5 211 T
+0 F
+(Mail reading tools) 99 211 T
+1 F
+(\245) 85.5 191 T
+0 F
+(Version control tools \050RCS, ClearCase\051) 99 191 T
+1 F
+(\245) 85.5 171 T
+0 F
+(Configuration management tools \050ClearCase\051) 99 171 T
+1 F
+(\245) 85.5 151 T
+0 F
+(On-line documentation \050Web, Frame, Acrobat\051) 99 151 T
+FMENDPAGE
+%%EndPage: "8" 8
+%%Page: "9" 9
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(DylanW) 72 42.62 T
+(orks Design Papers) 98.46 42.62 T
+(September 5, 1995) 275.89 42.62 T
+(9) 536 42.62 T
+1 16 Q
+(8.  Documentation) 72 709.33 T
+1 13 Q
+(Paper 31. Documentation Issues) 72 678.55 T
+0 12 Q
+(\321) 252.91 678.55 T
+1 13 Q
+( documentation.doc) 264.91 678.55 T
+0 12 Q
+(This paper discuss how we will develop documentation, and how it will be accessed in Dylan-) 72 655.43 T
+(W) 72 641.43 T
+(orks. There are two separate issues here:) 82.37 641.43 T
+1 F
+(\245) 85.5 619.65 T
+0 F
+(Contents of the documentation, including scenarios and tutorials, a users guide, and a refer-) 99 619.65 T
+-0.37 (ence manual, all of which should be available both in hardcopy form and on-line \050preferably) 99 605.65 P
+(through a hypertext book reader\051.) 99 591.65 T
+1 F
+(\245) 85.5 569.87 T
+0 F
+(Integration with environment, such as integration with the context-sensitive input facilities) 99 569.87 T
+(provided by the user interface substrate and support for \322smart apropos\323.) 99 555.87 T
+(This will also discuss how DylanW) 72 536.09 T
+(orks users will create documentation for themselves and for) 241.37 536.09 T
+(their end-users.) 72 522.09 T
+1 16 Q
+(9.  Futur) 72 479.64 T
+(es) 131.71 479.64 T
+1 13 Q
+(Paper 32. Futur) 72 448.86 T
+(es) 160.23 448.86 T
+0 12 Q
+(\321) 174.31 448.86 T
+1 13 Q
+( futur) 186.31 448.86 T
+(es.doc) 218.21 448.86 T
+0 12 Q
+(This paper will describe some things that we are explicitly not dealing with in the \336rst release of) 72 425.74 T
+-0.05 (DylanW) 72 411.74 P
+-0.05 (orks, but which we are considering for future releases. Such things include either produc-) 111.7 411.74 P
+(ing or integrating with:) 72 397.74 T
+1 F
+(\245) 85.5 375.96 T
+0 F
+(Multi-media libraries) 99 375.96 T
+1 F
+(\245) 85.5 354.17 T
+0 F
+(Documentation editing tools) 99 354.17 T
+1 F
+(\245) 85.5 332.39 T
+0 F
+(Graphical editing Tools) 99 332.39 T
+1 F
+(\245) 85.5 310.61 T
+0 F
+(Project scheduling and management tools) 99 310.61 T
+1 F
+(\245) 85.5 288.83 T
+0 F
+(Bug tracking and QA tools) 99 288.83 T
+(Other things we will not be addressing in the \336rst release of DylanW) 72 269.04 T
+(orks include:) 400.99 269.04 T
+1 F
+(\245) 85.5 247.26 T
+0 F
+(Support for multiple programming languages) 99 247.26 T
+1 F
+(\245) 85.5 225.48 T
+0 F
+(Cross-compilation and cross-debugging) 99 225.48 T
+1 F
+(\245) 85.5 203.7 T
+0 F
+(Visual programming) 99 203.7 T
+1 F
+(\245) 85.5 181.91 T
+0 F
+(Design rationale capture) 99 181.91 T
+1 F
+(\245) 85.5 160.13 T
+0 F
+(CASE) 99 160.13 T
+1 F
+(\245) 85.5 138.35 T
+0 F
+(Generation of real-time and embedded applications) 99 138.35 T
+1 F
+(\245) 85.5 116.57 T
+0 F
+(True RPC and IPC) 99 116.57 T
+1 F
+(\245) 85.5 94.78 T
+0 F
+(ISO 9000) 99 94.78 T
+FMENDPAGE
+%%EndPage: "9" 9
+%%Trailer
+%%BoundingBox: 0 0 612 792
+%%PageOrder: Ascend
+%%Pages: 9
+%%DocumentFonts: Times-Roman
+%%+ Times-Bold
+%%+ Times-Italic
+%%EOF

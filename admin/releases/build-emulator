@@ -1,0 +1,129 @@
+#!/usr/local/bin/bash
+#      Script: build-emulator
+#      Author: Shri Amit(amit)
+usage=" Usage: $0 -r <Root> -i <Image> -t <Target> -m <Usernames> -l <LogFile> -ne"
+# Opts & Flgs: -i: Source image, default: /u/dylan/tools/scripts/dylan-lw
+#              -r: Root of sources, DYLAN_ROOT, default: /u/dylan/releases/kansas-next
+#              -t: Target image, default: $localdir/lw+dylan-$platform
+#              -l: Logfile,default: $logsdir/$0-log-$host-$platform
+#              -m: Sends mail upon completion. (eg: -m foo,bar,foobar)
+#              -e: Flag, sends mail to usernames ONLY if an error occurs
+#              -n: Flag, disables image testing, default: enabled
+#    Synopsis: . Loads the emulator into <Image>, save to <Target>. 
+#              . If -m option has arg(s), sends mail upon completion.
+#              . If -e flag is enabled, sends mail only upon error
+######################################################################
+## Application exit status legend ##
+##  0: Build successful
+##  1: Invalid command line argument
+##  2: The build exited abnormally from within lispworks
+##  3: The image test failed
+
+## Parse the options & flags on the command line ##
+while getopts i:r:t:m:l:en option
+do case $option in
+     i) image=$OPTARG;;
+     t) target=$OPTARG;;
+     r) root=$OPTARG;;
+     m) usernames=$OPTARG;;
+     l) logfile=$OPTARG;;
+     e) error_only=Yes;;
+     n) test_image=No;;
+    \?) echo $usage
+        exit 1;;
+   esac
+done
+shift `expr $OPTIND - 1`
+root=${root:-/u/dylan/releases/kansas-next}
+source $root/admin/env.bash $root
+
+## Assign defaults to options & flags ##
+##
+image=${image:-/u/dylan/tools/scripts/dylan-lw}
+target=${target:-$localdir/lw+dylan-$platform}
+logfile=${logfile:-$logsdir/build-emulator-log-$host-$platform}
+usernames=${usernames:-unspecified}
+error_only=${error_only:-No}
+test_image=${test_image:-Yes}
+
+app=emulator-test-suite-app
+app_logfile=$qadir/local/logs/$app-$platform.log
+app_cmd="run-test-application(emulator-test-suite, filename: \"$app_logfile\", report-function: log-report-function)"
+
+tmpfile="/tmp/dylan-build-emulator-lisp-stuff"
+lib_reg_cmd="(setf dylan::*library-registries* NIL)"
+echo "$lib_reg_cmd" > $tmpfile
+
+## The emulator uses this to decide its root ##
+##
+export DYLAN_ROOT=$root
+export TRUNK_SYSTEM_ROOT="$root/"
+
+## Everything from here goes to the logfile ##
+## Prompt the options                       ##
+##
+{
+    echo "Starting at: `date`"
+    echo "Running build-emulator with options:"
+    echo "             The root is: $DYLAN_ROOT"
+    echo "     The source image is: $image"
+    echo "     The target image is: $target"
+    echo "            Send mail to: $usernames"
+    echo "Send mail on error only?: $error_only"
+    echo "         Test the image?: $test_image"
+    echo "          The logfile is: $logfile"
+    echo
+
+printenv
+## Build the image ##
+##
+$image -init - <<SCRIPT
+(with-build-handler
+  (extend-current-stack 300)
+  (load "$root/emulator/demand-compiler")
+  (format t "~&Loaded demand-compiler~%Loading main-resources.~%")
+  (load "$root/emulator/main-resources")
+  (load "$tmpfile")
+  (format t "~&Saving emulator image in ~a~%" "$target")
+  (user::save-emulator-image "$target")
+  (bye 0))
+SCRIPT
+    rm -f $tmpfile
+    status=$?
+    echo "Ending at: `date`"
+    subject="Report for emulator build on $host-$platform"
+    if [ "$status" != 0 ]; then
+	message="The emulator build exited with an exit status $status"
+	case $usernames in
+	   unspecified) echo $message;;
+	   *) send-mail "$message" "$usernames" "$logfile" "$subject" ;;
+	esac
+	exit 2;
+    else
+	echo The emulator build completed successfully.
+	if [ "$test_image" = "Yes" ]; then
+	    echo Testing the image now...
+	    eval "$qadir/admin/compile-in-emulator -r $root -i $target -l $app -c "\'$app_cmd\'""
+	    teststatus=$?
+	    if [ $teststatus != 0 ]; then
+		message="The emulator test exited with an exit status $status"
+		case $usernames in
+		    unspecified) echo $message ;;
+		    *) send-mail "$message" "$usernames" "$logfile" "$subject" ;;
+		esac
+		exit 3;
+	    fi
+        else
+	    echo Skipping the image test
+	fi
+	message="The emulator build completed successfully"
+	if [ "$usernames" != "unspecified" -a "$error_only" = "No" ]; then
+	    send-mail "$message" "$usernames" "$logfile" "$subject"
+	else
+	    echo $message
+	fi
+    fi    
+} 2>&1 | tee $logfile
+
+exit 0
+#eof

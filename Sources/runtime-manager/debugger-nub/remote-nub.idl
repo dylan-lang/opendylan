@@ -1,0 +1,676 @@
+#pragma prefix "functionalobjects.com"
+
+module Rtmgr {
+
+interface AccessPath {
+
+typedef long           NUBINT;
+typedef unsigned long  RTARGET_ADDRESS;
+typedef unsigned long  RNUBPROCESS;
+typedef unsigned long  RNUBTHREAD;
+
+void create_thread_stop_reason_handler
+  (in RNUBPROCESS process,
+   in RNUBTHREAD thread,
+   in NUBINT priority);
+
+void debugger_message
+  (in string message,
+   in RTARGET_ADDRESS arg1,
+   in RTARGET_ADDRESS arg2);
+
+void nub_debug_message
+  (in string message,
+   in RTARGET_ADDRESS arg1,
+   in RTARGET_ADDRESS arg2);
+
+void debugger_error
+  (in string message,
+   in RTARGET_ADDRESS arg1,
+   in RTARGET_ADDRESS arg2);
+
+};
+
+interface RemoteNub {
+
+typedef char           INT8;
+typedef short          INT16;
+typedef long           INT32;
+typedef short          UNICODE;
+typedef long           NUBINT;
+typedef long           NUB_INDEX;
+typedef long           NUB_ERROR;
+typedef float          NUBFLOAT;
+typedef double         NUBDOUBLE;
+typedef long           TARGET_INT;
+
+typedef unsigned long  RNUBHANDLE;
+typedef unsigned long  RNUB;
+typedef unsigned long  RSERVER;
+typedef unsigned long  RNUBPROCESS;
+typedef unsigned long  RNUBTHREAD;
+typedef unsigned long  RNUBLIBRARY;
+typedef unsigned long  RTARGET_ADDRESS;
+
+typedef unsigned long FLAG;
+
+typedef sequence<RTARGET_ADDRESS> RTARGET_ADDRESS_SEQ;
+typedef sequence<string> STRING_SEQ;
+
+
+readonly attribute RNUB process;
+
+readonly attribute AccessPath access_path;
+
+RNUB create_and_debug_process
+  (in string command, 
+   in string args,
+   in NUBINT path_count,
+   in NUBINT lib_count,
+   in string working_dir, 
+   in NUBINT create_shell);
+
+RNUB debug_active_process
+  (in string process_name,
+   in string process_id,
+   in unsigned long actual_process_id,
+   in NUBINT path_count,
+   in string jit_info);
+
+
+NUBINT remote_value_byte_size
+  ();
+
+NUBINT get_process_page_fault_count 
+  ();
+
+NUBINT thread_os_priority 
+  (in RNUBTHREAD nubthread);
+
+NUBINT get_thread_cpu_time 
+  (in RNUBTHREAD nubthread);
+
+
+RTARGET_ADDRESS get_library_base_address
+  (in RNUBLIBRARY dll);
+
+void get_library_version 
+  (in RNUBLIBRARY dll,
+   out NUBINT maj,
+   out NUBINT min);
+
+string get_library_filename
+  (in RNUBLIBRARY dll);
+
+string get_library_undecorated_name
+  (in RNUBLIBRARY dll);
+
+
+string get_register_name
+  (in NUB_INDEX reg);
+
+NUBINT get_register_enumeration_code
+  (in NUB_INDEX reg);
+
+void all_registers
+  (out NUBINT first, out NUBINT last);
+
+void general_registers
+  (out NUBINT first, out NUBINT last);
+
+void special_registers
+  (out NUBINT first, out NUBINT last);
+
+void floating_registers
+  (out NUBINT first, out NUBINT last);
+
+
+NUBINT page_read_permission
+  (in RTARGET_ADDRESS address);
+
+NUBINT page_write_permission
+  (in RTARGET_ADDRESS address);
+
+
+NUBINT page_relative_address
+  (in RTARGET_ADDRESS address,
+   out NUBINT offset);
+
+NUBINT virtual_page_size
+  ();
+
+
+RTARGET_ADDRESS read_value_from_process_memory
+   (in RTARGET_ADDRESS address,
+    out NUB_ERROR status);
+
+void write_value_to_process_memory
+   (in RTARGET_ADDRESS address,
+    in RTARGET_ADDRESS val,
+    out NUBINT status);
+
+
+RTARGET_ADDRESS calculate_stack_address
+  (in RNUBTHREAD nubthread,
+   in NUBINT offset);
+
+
+string target_address_to_string
+  (in RTARGET_ADDRESS x,
+   in NUBINT sz,
+   in NUBINT radix,
+   in NUBINT pad,
+   out NUBINT truncated);
+
+RTARGET_ADDRESS string_to_target_address
+  (in NUBINT sz,
+   in string buffer, 
+   in NUBINT radix,
+   out NUBINT overflow);
+
+
+NUBFLOAT read_single_float_from_process_memory
+  (in RTARGET_ADDRESS address,
+   out NUB_ERROR status);
+
+void write_single_float_to_process_memory
+  (in RTARGET_ADDRESS address,
+   in NUBFLOAT value,
+   out NUB_ERROR status);
+
+NUBDOUBLE read_double_float_from_process_memory
+  (in RTARGET_ADDRESS address,
+   out NUB_ERROR status);
+
+void write_double_float_to_process_memory
+  (in RTARGET_ADDRESS address,
+   in NUBDOUBLE value,
+   out NUB_ERROR status);
+
+void read_byte_string_from_process_memory
+  (in RTARGET_ADDRESS address,
+   in NUBINT sz,
+   out string buffer,
+   out NUB_ERROR status);
+
+void write_byte_string_to_process_memory
+  (in RTARGET_ADDRESS address,
+   in NUBINT sz,
+   in string buffer,
+   out NUB_ERROR status);
+
+
+RTARGET_ADDRESS read_value_from_process_register_in_stack_frame
+  (in RNUBTHREAD nubthread,
+   in NUB_INDEX reg,
+   in NUB_INDEX frame_index,
+   out NUB_ERROR status);
+
+
+RTARGET_ADDRESS read_value_from_process_register
+  (in RNUBTHREAD nubthread,
+   in NUB_INDEX reg,
+   out NUB_ERROR status);
+
+void write_value_to_process_register
+  (in RNUBTHREAD nubthread,
+   in NUB_INDEX reg,
+   in RTARGET_ADDRESS value,
+   out NUB_ERROR status);
+
+NUBFLOAT read_single_float_from_process_register
+  (in RNUBTHREAD nubthread,
+   in NUB_INDEX reg,
+   out NUB_ERROR status);
+
+void write_single_float_to_process_register
+  (in RNUBTHREAD nubthread,
+   in NUB_INDEX reg,
+   in NUBFLOAT value,
+   out NUB_ERROR status);
+
+NUBDOUBLE read_double_float_from_process_register
+  (in RNUBTHREAD nubthread,
+   in NUB_INDEX reg,
+   out NUB_ERROR status);
+
+void write_double_float_to_process_register
+  (in RNUBTHREAD nubthread,
+   in NUB_INDEX reg,
+   in NUBDOUBLE value,
+   out NUB_ERROR status);
+
+
+void application_restart
+  ();
+
+void application_stop
+  ();
+
+void application_continue
+  ();
+
+void application_continue_unhandled
+  ();
+
+void application_step
+  (in NUBINT n);
+
+void application_step_over
+  (in NUBINT n);
+
+void application_step_out
+  ();
+
+
+NUB_ERROR set_stepping_control_on_thread
+  (in RNUBTHREAD nubthread,
+   in RTARGET_ADDRESS fp,
+   in RTARGET_ADDRESS calling_fp,
+   in NUBINT location_count,
+   in RTARGET_ADDRESS_SEQ locs,
+   in NUBINT operation);
+
+void clear_stepping_control_on_thread
+  (in RNUBTHREAD nubthread);
+
+
+void thread_stop
+  (in RNUBTHREAD nubthread);
+
+void thread_continue
+  (in RNUBTHREAD nubthread);
+
+NUBINT thread_suspendedQ
+  (in RNUBTHREAD thread);
+
+void thread_suspended
+  (in RNUBTHREAD thread);
+
+void thread_resumed
+  (in RNUBTHREAD thread);
+
+
+NUB_ERROR kill_application
+  ();
+
+void close_application
+  ();
+
+void close_remote_tether
+  ();
+
+
+RTARGET_ADDRESS setup_function_call
+  (in RNUBTHREAD nubthread,
+   in RTARGET_ADDRESS func,
+   in NUBINT arg_count,
+   in RTARGET_ADDRESS_SEQ args,
+   out RNUBHANDLE cx_handle);
+
+RTARGET_ADDRESS remote_call_spy
+  (in RNUBTHREAD nubthread,
+   in RTARGET_ADDRESS func,
+   in NUBINT arg_count,
+   in RTARGET_ADDRESS_SEQ args,
+   out NUB_ERROR status);
+
+RTARGET_ADDRESS get_function_result
+  (in RNUBTHREAD nubthread);
+
+void restore_context
+  (in RNUBTHREAD nubthread,
+   in RNUBHANDLE the_context);
+
+
+NUB_ERROR set_breakpoint
+  (in RTARGET_ADDRESS address);
+
+NUB_ERROR clear_breakpoint
+  (in RTARGET_ADDRESS address);
+
+NUBINT query_breakpoint
+  (in RTARGET_ADDRESS address);
+
+
+void wait_for_stop_reason_with_timeout
+  (in NUBINT timeout,
+   out NUBINT code);
+
+void profile_wait_for_stop_reason_with_timeout
+  (in NUBINT timeout,
+   in NUBINT profiling_interval,
+   out NUBINT code);
+
+void inform_profiling_started
+  ();
+
+void inform_profiling_stopped
+  ();
+
+NUBINT can_receive_first_chance
+  (in NUBINT ecode);
+
+void set_first_chance
+  (in NUBINT ecode);
+
+void unset_first_chance
+  (in NUBINT ecode);
+
+NUBINT thread_stop_information
+  (in RNUBTHREAD nubthread,
+   out NUBINT fchance,
+   out NUBINT fstart,
+   out RTARGET_ADDRESS ret_addr);
+
+void wait_for_stop_reason_no_timeout
+  (out NUBINT ecode);
+
+void profile_wait_for_stop_reason_no_timeout
+  (in NUBINT profile_interval,
+   out NUBINT ecode);
+
+RNUB stop_reason_process
+  ();
+
+RNUBTHREAD stop_reason_thread
+  ();
+
+NUBINT first_hard_coded_breakpoint
+  ();
+
+NUBINT stop_reason_process_exit_code
+  ();
+
+NUBINT stop_reason_thread_exit_code
+  ();
+
+RNUBLIBRARY stop_reason_library
+  ();
+
+NUBINT stop_reason_violation_op
+  ();
+
+NUBINT exception_first_chance
+  ();
+
+RTARGET_ADDRESS stop_reason_violation_address
+  ();
+
+RTARGET_ADDRESS stop_reason_exception_address
+  ();
+
+RTARGET_ADDRESS stop_reason_debug_string_address
+  ();
+
+NUBINT stop_reason_debug_string_length
+  ();
+
+NUBINT stop_reason_debug_string_is_unicode
+  ();
+
+
+NUBINT initialize_stack_vectors
+  (in RNUBTHREAD nubthread);
+
+void read_stack_vectors
+  (in RNUBTHREAD nubthread,
+   in NUBINT frame_count,
+   out RTARGET_ADDRESS_SEQ frame_pointers,
+   out RTARGET_ADDRESS_SEQ instruction_pointers,
+   out RTARGET_ADDRESS_SEQ return_addresses);
+
+void all_frame_lexicals
+  (in RTARGET_ADDRESS frame,
+   in RTARGET_ADDRESS ip,
+   out NUB_INDEX first,
+   out NUB_INDEX last,
+   out RNUBHANDLE table);
+
+void register_interactive_code_segment
+  (in RTARGET_ADDRESS lo,
+   in RTARGET_ADDRESS hi);
+
+string get_lexical_variable_name
+  (in RNUBHANDLE table,
+   in NUB_INDEX variable);
+
+RTARGET_ADDRESS lexical_variable_address
+  (in RTARGET_ADDRESS fp,
+   in RNUBHANDLE table,
+   in NUB_INDEX variable,
+   out NUBINT in_reg,
+   out NUB_INDEX hireg,
+   out NUB_INDEX loreg,
+   out NUBINT arg);
+
+
+string lookup_symbol_name
+  (in RNUBHANDLE table,
+   in NUB_INDEX sym);
+
+RTARGET_ADDRESS lookup_symbol_address
+  (in RNUBHANDLE table,
+   in NUB_INDEX sym);
+
+RTARGET_ADDRESS lookup_function_debug_start
+  (in RNUBHANDLE table,
+   in NUB_INDEX sym);
+
+RTARGET_ADDRESS lookup_function_debug_end
+  (in RNUBHANDLE table,
+   in NUB_INDEX sym);
+
+NUBINT lookup_symbol_language
+  (in RNUBHANDLE table,
+   in NUB_INDEX sym);
+
+RTARGET_ADDRESS lookup_function_end
+  (in RNUBHANDLE table,
+   in NUB_INDEX sym);
+
+NUBINT symbol_is_function
+  (in RNUBHANDLE table,
+   in NUB_INDEX sym);
+
+NUBINT nearest_symbols
+  (in RTARGET_ADDRESS address,
+   out RNUBLIBRARY lib,
+   out RNUBHANDLE table);
+
+NUBINT closest_symbol
+  (in RTARGET_ADDRESS address,
+   out RNUBLIBRARY lib,
+   out RTARGET_ADDRESS actual_address,
+   out NUBINT offset,
+   out NUBINT name_length,
+   out NUBINT type,
+   out NUBINT is_function,
+   out RTARGET_ADDRESS debug_start,
+   out RTARGET_ADDRESS debug_end,
+   out NUBINT language,
+   out RTARGET_ADDRESS final_address_of_definition);
+
+void function_bounding_addresses
+  (in RTARGET_ADDRESS address,
+   out RTARGET_ADDRESS lower,
+   out RTARGET_ADDRESS upper);
+
+string closest_symbol_name
+  (in NUBINT sz);
+
+NUBINT find_symbol_in_library
+  (in RNUBLIBRARY nublibrary,
+   in NUBINT sz,
+   in string name, 
+   out RTARGET_ADDRESS address,
+   out NUBINT type,
+   out NUBINT is_function,
+   out RTARGET_ADDRESS debug_start,
+   out RTARGET_ADDRESS debug_end,
+   out NUBINT symbol_language,
+   out RTARGET_ADDRESS final_address_of_definition);
+
+void dispose_lookups
+  (in RNUBHANDLE lookups);
+
+
+RTARGET_ADDRESS resolve_source_location
+  (in RNUBLIBRARY nublibrary,
+   in string filename,
+   in NUBINT line_number,
+   in NUBINT column_number,
+   out NUBINT valid,
+   out NUBINT path,
+   out RNUBHANDLE search,
+   out NUBINT exact);
+
+RNUBHANDLE fetch_source_locations
+  (in RTARGET_ADDRESS start_loc,
+   in RTARGET_ADDRESS end_loc);
+
+NUBINT source_location_address
+  (in RNUBHANDLE table,
+   in NUB_INDEX index);
+
+NUBINT source_location_linenumber
+  (in RNUBHANDLE table,
+   in NUB_INDEX index);
+
+string source_location_filename
+  (in RNUBHANDLE table);
+
+NUBINT number_of_source_locations
+  (in RNUBHANDLE table);
+
+void dispose_source_locations
+  (in RNUBHANDLE table);
+
+void interpret_instruction_at_current_location
+  (in RNUBTHREAD nubthread,
+   out NUBINT flow,
+   out RTARGET_ADDRESS destination,
+   out NUBINT instruction_size);
+
+
+RTARGET_ADDRESS dylan_calculate_step_into
+  (in RNUBTHREAD nubthread,
+   out NUBINT function_register_live,
+   out NUBINT ok);
+
+RTARGET_ADDRESS dylan_thread_environment_block_address
+  (in RNUBTHREAD thread,
+   out NUBINT valid);
+
+NUBINT dylan_thread_mv_buffer_live
+  (in RNUBTHREAD thread);
+
+NUBINT older_stack_frame
+  (in RTARGET_ADDRESS this_one,
+   in RTARGET_ADDRESS than_this_one);
+
+RTARGET_ADDRESS dylan_current_function
+  (in RNUBTHREAD nubthread);
+
+
+NUBINT perform_absolute_relocation
+  (in RTARGET_ADDRESS address,
+   in RTARGET_ADDRESS destination);
+
+NUBINT perform_relative_relocation
+  (in RTARGET_ADDRESS address,
+   in RTARGET_ADDRESS destination);
+
+void recover_breakpoint
+  (in RNUBTHREAD thread);
+
+NUBINT get_process_wall_clock_time
+  ();
+
+void register_exit_process_function
+  (in RTARGET_ADDRESS ExitProcess);
+
+RNUB open_local_tether
+  (in string command,
+   in string args, 
+   in STRING_SEQ paths,
+   in STRING_SEQ lib_paths,
+   in string working_directory,
+   in NUBINT create_shell,
+   out NUBINT success);
+
+RNUB attach_local_tether
+  (in RNUBPROCESS process,
+   in string process_name,
+   in string process_system_id,
+   in RNUB process_actual_id,
+   in STRING_SEQ symbol_paths,
+   in string system_JIT_information,
+   out NUBINT success);
+
+void OpenNub (in AccessPath access_path);
+
+void CloseNub ();
+
+};
+
+
+interface NubServer {
+
+typedef long           NUBINT;
+typedef long           NUB_INDEX;
+typedef unsigned long  RNUB;
+typedef unsigned long  RNUBPROCESS;
+
+typedef sequence<RemoteNub> RemoteNub_SEQ;
+
+readonly attribute RemoteNub_SEQ nubs;
+
+RemoteNub CreateNub
+  (in string process_name,
+   in string remote_machine);
+
+void DestroyNub
+  (in RemoteNub nub);
+
+void RegisterNub
+  (in RemoteNub nub,
+   in string process_name,
+   in string process_id,
+   in string remote_machine);
+
+void DeregisterNub
+  (in RemoteNub nub);
+
+void ShutdownServer
+  ();
+
+
+string get_local_hostname
+  ();
+
+NUBINT verify_local_password
+  (in string password,
+   in string remote_machine);
+
+NUBINT update_local_process_list
+  ();
+
+RNUBPROCESS local_process_nub_descriptor
+  (in NUB_INDEX i);
+
+NUBINT local_process_identifier
+  (in RNUBPROCESS nubprocess);
+
+string local_process_name
+  (in NUB_INDEX i);
+
+string local_process_system_identifier
+  (in NUB_INDEX i);
+
+RNUB local_process_actual_identifier
+  (in NUB_INDEX i);
+
+};
+
+};

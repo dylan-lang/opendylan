@@ -1,0 +1,277 @@
+<library-pack name="Compiler" title="Compiler">
+  <description>The Functional Developer Dylan compiler</description>
+  <copyright>Copyright (c) 1995-2001 Functional Objects, Inc. All rights reserved.</copyright>
+  <company>Functional Developer</company>
+  <libraries>
+    <library name="dfmc-management">
+      <sources location="dfmc/management">
+	<project>management.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+	<binary file="dfmc-management.dll">
+	  <merge>dfmc-optimization</merge>
+	  <merge>dfmc-linker</merge>
+	  <merge>dfmc-c-ffi</merge>
+	  <merge>dfmc-back-end</merge>
+	  <merge>dfmc-conversion</merge>
+	  <merge>dfmc-typist</merge>
+	  <merge>dfmc-core</merge>
+	  <merge>dfmc-flow-graph</merge>
+	  <merge>dfmc-modeling</merge>
+	  <merge>dfmc-definitions</merge>
+	  <merge>dfmc-namespace</merge>
+	  <merge>dfmc-macro-expander</merge>
+	  <merge>dfmc-reader</merge>
+	  <merge>dfmc-conditions</merge>
+	  <merge>dfmc-common</merge>
+	</binary>
+      </release>
+    </library>
+    <library name="dfmc-optimization">
+      <sources location="dfmc/optimization">
+        <project>optimization.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="dfmc-linker">
+      <sources location="dfmc/linker">
+        <project>linker.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="dfmc-c-ffi">
+      <sources location="dfmc/c-ffi">
+        <project>dfmc-ffi.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="dfmc-back-end">
+      <sources location="dfmc/back-end">
+        <project>dfmc-back-end.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="dfmc-conversion">
+      <sources location="dfmc/conversion">
+        <project>conversion.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="dfmc-typist">
+      <sources location="dfmc/typist">
+        <project>typist.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="dfmc-core">
+      <sources location="dfmc/core">
+        <project>core.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="dfmc-flow-graph">
+      <sources location="dfmc/flow-graph">
+        <project>flow-graph.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="dfmc-modeling">
+      <sources location="dfmc/modeling">
+        <project>modeling.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="dfmc-definitions">
+      <sources location="dfmc/definitions">
+        <project>definitions.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="dfmc-namespace">
+      <sources location="dfmc/namespace">
+        <project>namespace.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="dfmc-macro-expander">
+      <sources location="dfmc/macro-expander">
+        <project>macro-expander.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="dfmc-reader">
+      <sources location="dfmc/reader">
+        <project>reader.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="dfmc-conditions">
+      <sources location="dfmc/conditions">
+        <project>conditions.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="dfmc-common">
+      <sources location="dfmc/common">
+        <project>common.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="dfmc-pentium-harp-cg">
+      <sources location="dfmc/pentium-harp-cg">
+	<project>pentium-harp-cg.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+	<binary file="dfmc-pentium-harp-cg.dll">
+	  <merge>dfmc-harp-cg-linker</merge>
+	  <merge>pentium-harp</merge>
+	  <merge>harp-coff</merge>
+	  <merge>gnu-outputter</merge>
+	  <merge>binary-outputter</merge>
+	  <merge>dfmc-native-harp-cg</merge>
+	  <merge>pentium-linux-glue-rtg</merge>
+	  <merge>pentium-glue-rtg</merge>
+	  <merge>linux-glue-rtg</merge>
+	  <merge>native-glue-rtg</merge>
+	  <merge>dfmc-harp-cg</merge>
+	  <merge>mnemonic-assembler</merge>
+	  <merge>native-harp</merge>
+	</binary>
+      </release>
+    </library>
+    <library name="dfmc-harp-cg-linker">
+      <sources location="dfmc/harp-cg-linker">
+	<project>harp-cg-linker.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="pentium-harp">
+      <sources location="dfmc/pentium-harp">
+	<project>pentium-harp.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="harp-coff">
+      <sources location="dfmc/harp-coff">
+	<project>harp-coff.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="gnu-outputter">
+      <sources location="dfmc/gnu-outputter">
+	<project>gnu-outputter.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="binary-outputter">
+      <sources location="dfmc/binary-outputter">
+	<project>binary-outputter.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="dfmc-native-harp-cg">
+      <sources location="dfmc/dfmc-native-harp-cg">
+	<project>native-harp-cg.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="pentium-linux-glue-rtg">
+      <sources location="harp/pentium-linux-rtg">
+	<project>pentium-linux-glue-rtg.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="pentium-glue-rtg">
+      <sources location="harp/pentium-rtg">
+	<project>pentium-glue-rtg.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="linux-glue-rtg">
+      <sources location="harp/linux-rtg">
+	<project>linux-glue-rtg.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="native-glue-rtg">
+      <sources location="harp/native-rtg">
+	<project>native-glue-rtg.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="dfmc-harp-cg">
+      <sources location="dfmc/harp-cg">
+	<project>harp-cg.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="mnemonic-assembler">
+      <sources location="lib/mnemonic-assembler">
+	<project>mnemonic-assembler.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="native-harp">
+      <sources location="dfmc/native-harp">
+	<project>native-harp.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="harp">
+      <sources location="dfmc/harp">
+	<project>harp.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+	<binary file="harp.dll">
+	  <merge>harp-cg-back-end</merge>
+	</binary>
+      </release>
+    </library>
+    <library name="harp-cg-back-end">
+      <sources location="dfmc/harp-cg-back-end">
+	<project>harp-cg-back-end.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="gnu-linker">
+      <sources location="lib/linker-support">
+	<project>gnu-linker.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+	<binary file="gnu-linker.dll">
+	  <merge>linker-support</merge>
+	</binary>
+      </release>
+    </library>
+    <library name="linker-support">
+      <sources location="lib/linker-support">
+	<project>linker-support.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="user-projects">
+      <sources location="project-manager/user-projects">
+	<project>user-projects.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+	<binary file="user-projects.dll">
+	  <merge>registry-projects</merge>
+	  <merge>projects</merge>
+	</binary>
+      </release>
+    </library>
+    <library name="registry-projects">
+      <sources location="project-manager/registry-projects">
+	<project>registry-projects.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="projects">
+      <sources location="project-manager/projects">
+	<project>projects.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+  </libraries>
+</library-pack>
+

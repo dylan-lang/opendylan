@@ -1,0 +1,74 @@
+<library-pack name="Network" title="Basic Networking" number="7">
+  <description>A set of basic networking libraries</description>
+  <copyright>Copyright (c) 1995-2001 Functional Objects, Inc. All rights reserved.</copyright>
+  <company>Functional Developer</company>
+  <libraries>
+    <library name="network" title="Network">
+      <sources location="network/">
+	<project platform="x86-win32">win32-network.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+	<binary file="DxNETWRK.dll"/>
+	<lib file="DxNETWRK.lib"/>
+      </release>
+    </library>
+  </libraries>
+  <examples>
+    <library name="daytime-client" title="Daytime Client">
+      <category>Technologies/Sockets/Daytime Server</category>
+      <description>Daytime client application.</description>
+      <sources location="network/daytime-client">
+	<project>daytime-client.hdp</project>
+      </sources>
+    </library>
+    <library name="daytime-server" title="Daytime Server">
+      <category>Technologies/Sockets/Daytime Server</category>
+      <description>Daytime server application.</description>
+      <sources location="network/daytime-server">
+	<project>daytime-server.hdp</project>
+      </sources>
+    </library>
+    <library name="simple-daytime-client" title="Daytime Client (simplified)">
+      <category>Technologies/Sockets/Daytime Server</category>
+      <description>Daytime client simplified by using networking macros.</description>
+      <sources location="network/simple-daytime-client">
+	<project>daytime-client.hdp</project>
+      </sources>
+    </library>
+    <library name="simple-daytime-server" title="Daytime Server (simplified)">
+      <category>Technologies/Sockets/Daytime Server</category>
+      <description>Daytime server simplified by using networking macros.</description>
+      <sources location="network/simple-daytime-server">
+	<project>daytime-server.hdp</project>
+      </sources>
+    </library>
+    <library name="echo-client" title="Echo Client">
+      <category>Technologies/Sockets/Echo Server</category>
+      <description>Echo client application.</description>
+      <sources location="network/echo-client">
+	<project>echo-client.hdp</project>
+      </sources>
+    </library>
+    <library name="echo-server" title="Echo Server">
+      <category>Technologies/Sockets/Echo Server</category>
+      <description>Echo server application.</description>
+      <sources location="network/echo-server">
+	<project>echo-server.hdp</project>
+      </sources>
+    </library>
+  </examples>
+  <test-suites>
+    <library name="sockets-tests-client" title="Sockets Test Client">
+      <description>The client side of the Sockets test suite</description>
+      <sources location="network/tests/client">
+        <project>sockets-tests-client.hdp</project>
+      </sources>
+    </library>
+    <library name="sockets-tests-server" title="Sockets Test Server">
+      <description>The server side of the Sockets test suite</description>
+      <sources location="network/tests/server">
+        <project>sockets-test-server.hdp</project>
+      </sources>
+    </library>
+  </test-suites>
+</library-pack>

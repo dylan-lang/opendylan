@@ -1,0 +1,5 @@
+# compile-runtime
+
+repeat compile dylan-test-suite common-dylan-test-suite functional-dylan-test-suite collections-test-suite io-test-suite system-test-suite testworks-test-suite libraries-test-suite
+
+repeat compile-app cmu-test-suite libraries-test-suite-app

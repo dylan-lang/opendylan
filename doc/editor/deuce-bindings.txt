@@ -1,0 +1,1198 @@
+Emacs-mode: -*- outline-mode -*-
+Author: Hugh Greene
+Synopsis: A record of all the key bindings use in Deuce.
+Version: $HopeName$
+
+[hughg, 1999/02/11: This document would be easier to read and perhaps
+maintain (even auto-generate) if it were written in XML/HTML!  The
+section of commands "Functionally by major-mode" was described by the
+dylan-doc folks as very useful, but this would be hard to
+auto-generate at the moment; perhaps Deuce commands could be tagged
+with a "category", if only for documentation use?]
+
+[hughg, 1999/02/12: Section marking is in Emacs outline style --
+number of asterisks starting in the first column indicates heading
+depth.]
+
+[hughg, 1999/02/12: See comments marked "---***" which describe the
+status of various parts of this document.  Those described as
+"up-to-date" have been checked against the sources of HD2.0a6.]
+
+[hughg, 1999/02/12: This document does NOT describe any other key
+bindings made by the Functional Developer environment via DUIM, for the
+editor or other tools.  Obviously it's important that key bindings be
+consistent across the environment, so see also the document
+	   D-doc-environment!environment-keys.txt
+and keep these two in synch.]
+
+
+* UI Background Notes
+---------------------
+
+[---*** hughg, 1999/02/12: This whole "*"-level section is
+up-to-date.]
+
+[hughg, 1999/02/12: This section applies to the Dylan environment as
+well, and to any Windows-based products, so perhaps it belongs in a
+separate document.]
+
+
+** Win32 Keyboard guidelines
+
+Extracted from the "Windows Interface Guidelines for Software Design"
+(found in the MSDN library and available in printed form) are the
+following reccommendations about assignments for "shortcut"
+(a.k.a. "accelerator") keys in Win32 programs, i.e., in Deuce's
+Windows binding.
+
+<quote>
+<!-- from Chapter 4: Input Basics / Keyboard Input / Shortcut Keys -->
+
+  - Assign single keys where possible because these keys are the
+    easiest for the user to perform.
+
+  - Make modified-letter key combinations case insensitive.
+
+  - Use SHIFT+key combinations for actions that extend or complement
+    the actions of the key or key combination used without the SHIFT
+    key. For example, ALT+TAB switches windows in a top-to-bottom
+    order. SHIFT+ALT+TAB switches windows in reverse order. However,
+    avoid SHIFT+text keys, because the effect of the SHIFT key may
+    differ for some international keyboards.
+
+  - Use CTRL+key combinations for actions that represent a larger
+    scale effect. For example, in text editing contexts, HOME moves to
+    the beginning of a line, and CTRL+HOME moves to the beginning of
+    the text. Use CTRL+key combinations for access to commands where a
+    letter key is used -- for example, CTRL+B for bold. Remember
+    that such assignments may be meaningful only for English-speaking
+    users.
+
+  - Avoid ALT+key combinations because they may conflict with the
+    standard keyboard access for menus and controls. The ALT+key
+    combinations -- ALT+TAB, ALT+ESC, and ALT+SPACEBAR -- are
+    reserved for system use. ALT+number combinations enter special
+    characters.
+
+  - Avoid assigning shortcut keys defined in this guide to other
+    operations in your software. That is, if CTRL+C is the shortcut
+    for the Copy command and your application supports the standard
+    copy operation, don't assign CTRL+C to another operation.
+
+  - Provide support for allowing the user to change the shortcut key
+    assignments in your software, when possible.
+
+  - Use the ESC key to stop a function in process or to cancel a
+    direct manipulation operation. It is also usually interpreted as
+    the shortcut key for a Cancel button.
+</quote>
+
+<quote>
+<!-- from Chapter 14: Special Design Considerations /
+     Internationalization / Keyboards -->
+International keyboards also differ from those used in the U.S.  Avoid
+using punctuation character keys as shortcut keys because they are not
+always found on international keyboards or easily produced by the
+user.  Remember too, that what seems like an effective shortcut
+because of its mnemonic association (for example, CTRL+B for Bold) can
+warrant a change to fit a particular language.  Similarly, macros or
+other utilities that invoke menus or commands based on access keys are
+not likely to work in an international version, because the command
+names on which the access keys are based differ.
+
+Keys do not always occupy the same positions on all international
+keyboards.  Even when they do, the interpretation of the unmodified
+keystroke can be different.  For example, on U.S. keyboards, SHIFT+8
+results in an asterisk character.  However, on French keyboards, it
+generates the number 8.  Similarly, avoid using CTRL+ALT combinations,
+because the system interprets this combination for some language
+versions as the ALTGR key, which generates some alphanumeric
+characters.  Similarly, avoid using the ALT key as a modifier because
+it is the primary keyboard interface for accessing menus and
+controls.  In addition, the system uses many specialized versions for
+special input.  For example, ALT+~ invokes special input editors in Far
+East versions of Windows.  For text fields, pressing ALT+number enters
+characters in the upper range of a character set. Similarly, avoid
+using the following characters when assigning the following shortcut
+keys.
+
+@ &pound; $ { } [ ] \ ~ | ^ &apos; &lt; &gt;
+<!-- hughg: I suppose that leaves
+     ! &quot; % &amp; * ( ) - _ = + ; : # ~ , . / ?
+-->
+</quote>
+
+So basically, you should use "Ctrl+" with letters, numbers, function
+keys and perhaps some punctuation; and also -- preferably only for
+"reversed" operations -- "Ctrl+Shift+" with the aforementioned.  For a
+high-powered editor, that doesn't give you a lot of shortcuts, so
+you'll have to either
+  - have some commands appear only on menus and/or toolbars;
+  - enable users to rebind keys to suit themselves;
+  - violate some of the guidelines (I'd say in this order:
+    - Use Ctrl+Shift+ for any kind of command, not just reversed.
+    - Use Alt+Shift+<letter> combinations.
+    - Use Ctrl+Alt+(Shift+) combinations -- bad for i18n[*].
+    - Use multi-key combinations, like Emacs' C-x C-s.); or
+  - provide some other access to commands (like Emacs' M-x).
+
+[* "internationalisation": i - 18 letters - n]
+
+It's not entirely clear to me but I *think* the WIG allows us to treat
+the "Application" key as an extra modifier (the one which looks like a
+pointer over a pull-down menu), which could correspond to Deuce's
+"super" modifier.  However, this would only be available to people
+with a "Win95-style" keyboard.
+
+*** Table of reserved and suggested key assignments
+
+This also comes from the "WIG", "Appendix B: Keyboard Interface
+Summary".
+
+Note: the "command names" here are just general descriptions of
+functionality, not corresponding directly to Deuce's commands.  Some
+explanations:
+
+	context-help	Help relevant to the user's current context.
+
+	help-mode	Next gadget-click, menu-selection or key-press
+			will show command help, not run the command.
+
+	prev-app-window Cycle to the next/previous non-modal top-level
+	next-app-window window of the application.
+
+	menu-access	This is intended to have the same effect as
+			pressing and releasing Alt, i.e., to activate
+			the menu bar for keyboard navigation.
+
+	context-menu	Pops up the right-mouse-button- or
+			context-menu.
+
+	break-to-debugger Not a "command" as such.  Under Windows NT,
+			but not Win95/98, if a process is running
+			under a debugger, pressing F11 (without
+			modifiers) will cause it to execute a
+			breakpoint instruction and hence enter the
+			debugger.  There is *NO* way to override this,
+			so I would deprecate F11 as a shortcut key.
+
+	left-screen	Or, "previous/next largish unit", if moving
+	right-screen	left/right by screens doesn't make sense in
+			the given app.
+
+	copy-desktop	Copy a bitmap of the desktop or active window
+	copy-window	to the clipboard.
+
+	taskbar-start	Activate the "Start" button on the taskbar.
+
+	property-sheet	Show a property sheet for the relevant
+			object.
+
+Note: "(extend-sel)" means that the selection is extended while
+performing the navigation action which the unshifted key combination
+performs.
+
+	Key	/-------------------------------------------------------- Modifiers ---------------------------------------------------------\
+		None		Shift		Ctrl		Alt		Ctrl+Shift	Ctrl+Alt	Alt+Shift	Ctrl+Alt+Shift
+	F1	context-help	help-mode
+	F2
+	F3
+	F4					close-MDI-child	close-window
+	F5
+	F6					next-MDI-child	next-app-window	prev-MDI-child			prev-app-window
+	F7
+	F8
+	F9
+	F10	menu-access	context-menu
+	F11	break-to-debugger
+	F12
+
+	Up	up-line		(extend sel)	up-more				(extend sel)			(extend sel)
+	Dn	down-line	(extend sel)	down-more			(extend sel)			(extend sel)
+	Lt	left-unit	(extend sel)	left-more			(extend sel)			(extend sel)
+	Rt	right-unit	(extend sel)	right-more			(extend sel)			(extend sel)
+	Home	start-of-line	(extend sel)	start-of-data			(extend sel)			(extend sel)
+	End	end-of-line	(extend sel)	end-of-data			(extend sel)			(extend sel)
+	PgUp	scroll-bwd	(extend sel)	left-screen			(extend sel)			(extend sel)
+	PgDn	scroll-fwd	(extend sel)	right-screen			(extend sel)			(extend sel)
+	Ins	toggle-insert
+	Del	delete		delete		delete-word			delete-word				        RESERVED
+	BkSp	backspace	backspace	backspace-word			backspace-word
+
+	PrtSc	copy-desktop					copy-window
+	Esc	cancel				taskbar-start	next-window					prev-window
+	TAB					next-page/child	next-app	prev-page/child			prev-app
+	Return							property-sheet
+	Space	select[1]			select[1]	window-menu
+	-							MDI-child-window-menu
+
+	Q
+	W
+	E
+	R
+	T
+	Y
+	U
+	I
+	O					open
+	P					print
+
+	A
+	S					save
+	D
+	F
+	G
+	H
+	J
+	K
+	L
+
+	Z					undo
+	X					cut
+	C					copy
+	V					paste
+	B
+	N
+	M
+
+[1 Use Ctrl+Space for select if Space is used to insert a character in
+your context.  If Ctrl+Space is also used for something, define your
+own key.]
+
+
+** Keyboard features
+
+On a PC keyboard, a LFD (linefeed) character can be generated by typing
+Shift+Enter.
+
+On non-US/UK keyboards, some C-M- and M- combinations may perform other
+system functions, overriding certain Emacs-mode key bindings.  This may
+be worked around in the stadard way for Emacs, by removing the "M-" from
+the key combination and preceding it with a separate "ESC".  So, for
+example, "M-~" ("press '~' while holding down Alt", which has a special
+function in Far East versions of Windows) is also available as "ESC ~"
+("press 'ESC', then '~'").  Similarly, "C-M-a" is available as "ESC C-a".
+
+
+
+* Key to the tables below
+-------------------------
+
+[---*** hughg, 1999/02/12: This whole "*"-level section is
+up-to-date.]
+
+
+	PgDn	Page Down
+	PgUp	Page Up
+	Lt	Left
+	Rt	Right
+	Dn	Down
+	BkSp	Backspace
+	Del	Delete
+	C-	control +
+	S-	shift +
+	M-	meta [= alt] +
+	*-	"all combinations of control/shift/meta" +
+	WIN+	Windows key (Win95/NT4+) +
+	APP+	Application key (Win95/NT4+) +
+	n/a	Not applicable
+
+'Emacs' key descriptions are case-sensitive, so C-s (control + s) is not
+the same as C-S (control + shift + s).  Win32 ones are always shown in
+upper case, as Ctrl+S or Ctrl+Shift+S
+
+The table may list several bindings per command, separated by ','.
+
+
+** Command meanings
+
+"delete-<x>" means "delete the <x> at/following the cursor"; "rubout-<x>"
+means "delete the <x> before the cursor".
+
+Motion commands whose names end in "-ext" work as follows:
+ - if the Shift key is not held down, they reset the selection and move
+   the editing cursor;
+ - if the Shift key is held down, they move the editing cursor and extend
+   the selection.
+
+
+** Notes to Deuce maintainers, in the tables below
+
+[-] = Implemented, but we DON'T want it.
+[~] = Implemented, but do we want it?
+[&] = Not implemented, but we'd want it.
+[?] = Not implemented, not sure we want it.
+[?E] = Not implemented, not sure we want it, but if we do, only for Emacs-keys.
+[C] = The binding is implemented but does nothing, because the _c_ommand isn't!
+[B] = The binding is implemented but is _b_roken somehow, so it doesn't work!
+[N] = Only in e_n_vironment-deuce
+[d] = Only in core Deuce's _D_ylan-mode (and the environment's "dylanworks-mode")
+[D] = Only in the environment's "_d_ylanworks-mode"
+[S] = Only in _S_hell-mode (i.e., in the interactor/debugger)
+[T] = Next key typed is interpreted using a different command _t_able
+[!] = Err, what on earth DOES this mean?
+"(... ...)" indicate general ideas for future assignments.
+
+
+
+* Commands
+----------
+
+[---*** hughg, 1999/02/12: The lists of commands in this "*"-level
+section is up-to-date, but the key bindings and menu/toolbar
+suggestions are not.
+  - The "wide" tables in the following "*"-level sections, going from
+    keys to commands, *are* up-to-date, so they should be used to fix
+    up these tables.
+  - The commands in UPPERCASE here are ones added since the last time
+    this document was updated.
+]
+
+** Alphabetically by major-mode
+
+Status key:
+	P = proposed (i.e., not yet implemented)
+
+Notes:
+
+[1] In Windows, the standard way to do this is to select the object, then
+    delete (or otherwise operate on) it.
+
+[2] To insert a literal TAB character in Dylan mode with the Emacs keyboard layout,
+    use the sequence "C-q TAB".
+
+[3] These shouldn't need separate implementation, which they have just now.
+    They should happen as a side effect of "Shift extends selection for Win32",
+    which isn't implemented in Deuce yet.
+
+[#] This command is accessed via a dialog box.
+
+/n/ indicates one of the digit keys 0 to 9.
+
+
+Status	Command				Deuce Keys		Menu	Toolbar
+				'Emacs'		Win32
+
+*** Fundamental mode
+
+	backward-character	C-b		-		-	-
+	backward-character-ext	Lt,Shift+Lt	Lt,Shift+Lt	-	-
+	backward-list		C-M-b		Ctrl+(		-	-
+	backward-word		C-f		-		-	-
+	backward-word-ext	Ctrl+Rt, Ctrl+Shift+Rt		-	-
+	cancel-command		C-g,C-x C-g,	ESC		-	-
+	capitalize-word		M-c		Ctrl+K		Edit[?]	-
+	CHANGE-REGION-FONT
+P	check-in		- [&]		- [&]		File?	- [?]
+P	check-out		- [&]		- [&]		File?	- [?]
+	choose-buffer		C-x b		Alt+F11[~]	File	-
+	choose-configuration	-		-		View	-
+P	choose-font		-		-		View?	-
+	close-file		C-x k		Ctrl+F4[&]	File	-
+P	close-window		C-x 5 0 [?]	Alt+F4		File	-
+	copy-region		M-w		Ctrl+C		Edit	-
+	[copy-atom-to-cursor]	[Alt+left-mouse-button]
+	cut-region		C-w		Ctrl+X		Edit	-
+	...			ESC C-g
+	delete-character	C-d,Del		Del		-	-
+	delete-list		C-M-k,C-M-Del	[1]		-	-
+	delete-whitespace	M-\		- [?]		Edit[?]	-
+	delete-word		M-d,M-Del	Ctrl+Del[1]	-	-
+	downcase-region		C-x C-l		Ctrl+L		Edit[?]	-
+	downcase-word		M-l		[1]		Edit[?E] -
+	down-list		C-M-u		Ctrl++[~]	-	-
+	DYNAMIC-COMPLETE-NAME
+	EDITOR-HELP
+	EDITOR-KEY-BINDINGS
+	FINISH-KEYBOARD-MACRO
+	end-of-buffer		M->,C-End	Ctrl+End	-	-
+	end-of-line		C-e		-		-	-
+	end-of-line-ext		End,Shift+End	End,Shift+End	-	-
+	end-of-page		-		Ctrl+PgDn	-	-
+	end-of-section		C-M-e,M-PgDn	Alt+PgDn	-	-
+	exchange-point-pdl	C-M-SPC		- [?]		- [?E]	-
+	EXECUTE-KEYBOARD-MACRO
+P	exit-application	C-x C-c		- [?]		-	-
+	find-file		C-x C-f		Ctrl+O		File	Yes
+	find-next-string	C-s		F3		Edit	Yes
+	find-previous-string	C-r		Shift+F3	Edit	Yes
+	find-string		C-S[#]		Ctrl+F[#],	Edit	Yes
+	force-recenter		C-l		Ctrl+F5		View[?]	-
+	force-redisplay		-		F5		View	-
+	forward-character	C-f		-		-	-
+	forward-character-ext	Rt,Shift+Rt	Rt,Shift+Rt	-	-
+	forward-list		C-M-f		Ctrl+)		-	-
+	forward-word		M-f		-		-
+	forward-word-ext	  Ctrl+Rt, Ctrl+Shift+Rt		-	-
+	goto-character		M-g		(Ctrl+G[#])	Edit[#]	-
+	goto-line		M-G		Ctrl+G[#]	Edit[#]	-
+	INCREMENTAL-SEARCH-FORWARD
+	INCREMENTAL-SEARCH-BACKWARD
+	indent-newline		LFD		LFD		- [?]	-
+	indent-rigidly		C-x TAB		- [?]		Edit[?]	Yes[&]
+	INSERT-FILE
+	insert-newline		RET		RET		-	-
+	INSERT-POINT-FROM-REGISTER
+	join-lines		M-^		-		- [?]	-
+	kill-line		C-k		[1]		-	-
+P	lock			- [?]		- [?]		File?	- [?]
+	mark-atom		-		-		-	-
+	mark-buffer		C-x h		Ctrl+A		Edit	-
+	mark-next-atom		-		-		-	-
+	mark-next-expression	C-M-@		-		- [?E]	-
+	mark-next-word		-		-		-	-
+	mark-to-beginning	C-<		Ctrl+Shift+Home[3]- [?E] -
+	mark-to-end		C->		Ctrl+Shift+End[3]- [?E]	-
+	mark-unmodified		M-~		- [?]		- [?E]	-
+	mark-word		-		-		-	
+	new-file		C-x C-n?[&]	Ctrl+N		File	Yes
+	next-line		C-n		-		-	-
+	next-line-ext		Dn,Shift+Dn	Dn,Shift+Dn	-	-
+	numeric-argument	*-/n/		Ctrl+/n/	-	-
+	numeric-negative	C--,M--,C-M--	Ctrl+-		-	-
+	open-line		C-o		-		- [?]	-
+	paste			C-S-y		Ctrl+V		Edit	-
+	previous-line		C-p		-		-	-
+	previous-line-ext	Up,Shift+Up	Up,Shift+Up	-	-
+	print-file		-		-		File	Yes[&]
+	query-replace-string	M-%[#]		Ctrl+H[#]	Edit	Yes
+	quoted-insert		C-q		Ctrl+Q		Edit[&]	- [?]
+	redo-all-commands	-		-		Edit[&]	-
+	redo-command		C-R,M-_		Ctrl+Y		Edit	-
+	replace-string		C-%[#]		-		Go[?E]	-
+	RESTORE-POINT-FROM-REGISTER
+	revert-file		-		-		File	-
+	rubout-character	BkSp		BkSp		-	-
+	rubout-list		C-M-BkSp	[1]		-	-
+	rubout-word		M-BkSp		Ctrl+BkSp[1]	-	-
+	save-all-files		C-x s		Ctrl+Shift+S[&]	File	-
+	save-file		C-x C-s		Ctrl+S		File	Yes
+	save-file-as		C-x C-w		-		File	-
+	SAVE-POINT-IN-REGISTER
+	SAVE-STRING-IN-REGISTER
+	scroll-backward		M-v,PgUp,ESC v	PgUp		-	-
+	scroll-forward		C-v,PgDn	PgDn		-	-
+	sectionize-file		-		-		-	-
+	self-insert		n/a		n/a		n/a	n/a
+	set-mark		C-SPC		-		-	-
+	show-position		C-x =		Ctrl+=		View	-
+	split-line		C-M-o		-		- [?]	-
+	START-KEYBOARD-MACRO
+	start-of-buffer		M-<,C-Home	Ctrl+Home	-	-
+	start-of-line		C-a		-		-	-
+	start-of-line-ext	Home,Shift+Hm	Home,Shift+Hm	-	-
+	start-of-page		-		Ctrl+PgUp	-	-
+	start-of-section	C-M-a,M-PgUp	Alt+PgUp	-	-
+	swap-point-and-mark	C-x C-x		n/a		- [?E]	-
+	switch-buffers		C-M-l		F11[~]		- [&]	-
+	toggle-overwrite	INS		INS		-	-
+	toggle-read-only	C-x C-q		- [?]		- [&]	-
+	transpose-characters	C-t		Ctrl+T		- [?]	-
+	transpose-words		M-t		Ctrl+R		- [?]	-
+	TRANSPOSE-LINES
+	transpose-lists		C-M-t		-		- [?]	-
+	universal-argument	C-u		Ctrl+*	-	-
+	undo-command		C-U,C-_		Ctrl+Z		Edit	-
+	undo-all-commands	-		-		Edit[&]	-
+	unindent-rigidly	C-x S-TAB[&]	- [?]		Edit[?]	Yes[&]
+P	unlock			- [?]		- [?]		File?	- [?]
+	up-list			C-M-d		Ctrl+_[~]	-	-
+	upcase-word		M-u		[1]		Edit[?E] -
+	upcase-region		C-x C-u		Ctrl+U		Edit[?]	-
+	VC-CLAIM
+	VC-CHECK-OUT
+	VC-CHECK-IN
+	VC-ABANDON
+	VC-MERGE
+	VC-DIFF
+	VC-REPORT
+	VC-ADD
+	VC-REMOVE
+	yank			C-y		Ctrl+B		Edit[&]	-
+	yank-next		M-y		-		Edit[&]	-
+
+*** Dylan mode
+
+	backward-expression	C-M-b		Alt+Lt		-	-
+	browse-object		C-M-O		Alt+F12[~]	Object	- [?]
+	browse-class		C-M-C		Alt+Shift+F12[~] Object	- [?]
+	build-project		C-C		F7		Project	Yes
+	color-optimizations	-		-		View	-
+	compile-file		-		-		-	-
+	compile-project		-		-		-	-
+	clean-build-project	M-C		Ctrl+F7		Project	-
+	clean-compile-project	-		-		-	-
+	complete-name		M-TAB		F12		Object[&] -
+	down-expression		C-M-d		Alt+Dn		-	-
+	delete-expression	C-M-k,C-M-Del	[1]		-	-
+	DESCRIBE-OBJECT
+	edit-definition		M-.		Ctrl+F12	Object	-	[Also: Alt+left-mouse-button]
+[E]	EDIT-NEXT-COMPILER-WARNING
+	end-of-definition	C-M-e		Alt+PgDn	-	-
+	evaluate-definition	-		-		- [?]	-
+	evaluate-region		C-C		Ctrl+Shift+F7	- [&]	- [?]
+	evaluate-buffer		M-C		-		- [&]	- [?]
+P	find-uses		C-M-.		Ctrl+Shift+F12	Object	- [?]
+	forward-expression	C-M-f		Alt+Rt		-	-
+[E]	FRAME-ADVANCED-BUILD-DIALOG C-M-C[&]	Shift+F7[&]	Project	-
+[E]	FRAME-CREATE-OR-TOGGLE-BREAKPOINT
+[E]	FRAME-NEW-BREAKPOINT
+[E]	FRAME-RUN-TO-TARGET
+[E]	FRAME-EDIT-BREAKPOINT-OPTIONS
+	indent-line		TAB[2]		TAB,Ctrl+F8[~]	Edit[?]	-
+	indent-expression	C-M-q		-		Edit[?]	-
+	indent-region		C-M-\		Alt+F8[~]	Edit[?]	- [?]
+	INSERT-COMMENT
+P	insert-template		- [?]		- [?]		Edit?	- [?]
+	link-project		- ?		- ?		Project	-
+	load-file		-		-		-	-
+P	macro-expand		- [?]		- [?]		Edit?,Object? - [?]
+	parse-project		- ?		- ?		Project	-
+P	repeat-last-command	-		- [?]		Edit[&]	-
+	rubout-expression	C-M-BkSp	[1]		-	-
+	show-arglist		C-A		- ?		Object	- [?]
+	show-documentation	C-D		Alt+F1		Object/Help[&] -
+	show-value		C-V		?		Object[&] - [?]
+	start-of-definition	C-M-a		Alt+PgUp	-	-
+	transpose-expressions	C-M-t		-		- [?]	-
+	up-expression		C-M-u		Alt+Up		-	-
+
+*** Shell mode
+
+	activate-sh-input	End		End		-	-
+	activate-sh-input-nl	RET		RET		-	-
+	CANCEL-SHELL-COMMAND
+	next-shell-input	M-n		Ctrl+Dn		- [?]	-
+	previous-shell-input	M-p		Ctrl+Up		- [?]	-
+	trim-sh-output-history	C-w		Ctrl+X		Edit???	-
+	(... and commands on the Application menu, which work but have no shortcuts.)
+
+
+** Functionally by major-mode
+
+*** Fundamental mode
+
+Group	Command
+
+Character Insertion
+
+	self-insert
+	quoted-insert
+	toggle-overwrite
+	numeric-argument
+	numeric-negative
+	universal-argument
+	delete-character
+	rubout-character
+	delete-word
+	rubout-word
+	delete-list
+	rubout-list
+	cut-region
+	copy-region
+	paste
+	yank
+	yank-next
+	insert-newline
+	indent-newline
+	open-line
+	split-line
+	kill-line
+	join-lines
+	INSERT-STRING-FROM-REGISTER
+	SAVE-STRING-IN-REGISTER
+
+Character Transformation
+
+	transpose-characters
+	transpose-words
+	TRANSPOSE-LINES
+	transpose-lists
+	upcase-word
+	downcase-word
+	capitalize-word
+	upcase-region
+	downcase-region
+	indent-rigidly
+	unindent-rigidly
+	delete-whitespace
+
+Navigation
+
+	scroll-forward
+	scroll-backward
+	start-of-page
+	end-of-page
+	show-position
+	forward-character	forward-character-ext
+	backward-character	backward-character-ext
+	forward-word 		forward-word-ext
+	backward-word		backward-word-ext
+	forward-list
+	backward-list
+	next-line		next-line-ext
+	previous-line		previous-line-ext
+	start-of-line		start-of-line-ext
+	end-of-line		end-of-line-ext
+	start-of-buffer
+	end-of-buffer
+	start-of-section
+	end-of-section
+	down-list
+	up-list
+	goto-character
+	goto-line
+	RESTORE-POINT-FROM-REGISTER
+	SAVE-POINT-IN-REGISTER
+
+Region Marking
+
+	set-mark
+	exchange-point-pdl
+	swap-point-and-mark
+	mark-buffer
+	mark-to-beginning
+	mark-to-end
+	mark-next-word
+	mark-word
+	mark-next-atom
+	mark-atom
+	mark-next-expression
+
+Searching
+
+	find-string
+	find-next-string
+	find-previous-string
+	replace-string
+	query-replace-string
+	INCREMENTAL-SEARCH-FORWARD
+	INCREMENTAL-SEARCH-BACKWARD
+
+Commands
+
+	cancel-command
+	undo-command
+	undo-all-commands
+	redo-command
+	redo-all-commands
+P	repeat-last-command
+	START-KEYBOARD-MACRO
+	FINISH-KEYBOARD-MACRO
+	EXECUTE-KEYBOARD-MACRO
+
+File Handling
+
+	find-file
+	new-file
+	save-file
+	save-file-as
+	save-all-files
+	revert-file
+	close-file
+	print-file
+	sectionize-file
+	INSERT-FILE
+	mark-unmodified
+	toggle-read-only
+	choose-buffer
+	switch-buffers
+	
+Misc
+
+	force-recenter
+	force-redisplay
+	choose-configuration
+P	close-window
+P	exit-application
+P	choose-font
+	CHANGE-REGION-FONT
+	EDITOR-HELP
+	EDITOR-KEY-BINDINGS
+
+Version Control
+
+	VC-CLAIM
+	VC-CHECK-OUT
+	VC-CHECK-IN
+	VC-ABANDON
+	VC-MERGE
+	VC-DIFF
+	VC-REPORT
+	VC-ADD
+	VC-REMOVE
+
+*** Dylan mode
+
+Character Insertion
+
+	delete-expression
+	rubout-expression
+	INSERT-COMMENT
+
+Character Transformation
+
+	transpose-expressions
+	indent-line
+	indent-expression
+	indent-region
+
+Navigation
+
+	forward-expression
+	backward-expression
+	down-expression
+	up-expression
+	start-of-definition
+	end-of-definition
+
+Lookup
+
+	edit-definition
+	complete-name
+	show-value
+	browse-object
+	browse-class
+	show-arglist
+	show-documentation
+	color-optimizations
+P	find-uses
+P	insert-template
+P	macro-expand
+	DESCRIBE-OBJECT
+	DYNAMIC-COMPLETE-NAME
+[E]	EDIT-NEXT-COMPILER-WARNING
+
+Build
+
+	evaluate-definition
+	evaluate-region
+	evaluate-buffer
+	compile-file
+	load-file
+	parse-project
+	compile-project
+	clean-compile-project
+	link-project
+	build-project
+	clean-build-project
+[E]	FRAME-CREATE-OR-TOGGLE-BREAKPOINT
+[E]	FRAME-NEW-BREAKPOINT
+[E]	FRAME-RUN-TO-TARGET
+[E]	FRAME-EDIT-BREAKPOINT-OPTIONS
+[E]	FRAME-ADVANCED-BUILD-DIALOG
+
+*** Shell mode
+
+Navigation
+
+	previous-shell-input
+	next-shell-input
+
+Character Insertion
+
+	trim-shell-output-history
+
+Commands
+	CANCEL-SHELL-COMMAND
+
+Shell
+
+	activate-shell-input
+	activate-shell-input-newline
+
+
+
+* Windows Layout Key Assignments
+--------------------------------
+
+[---*** hughg, 1999/02/12: This whole "*"-level section is
+up-to-date.]
+
+Notes:
+
+"[command-name]" indicate functions reserved by or recommended for Windows.
+
+[1] As well as performing the same as "C-h k" in the Emacs binding,
+    this should perform the usual Windows "What's This?" action, as
+    described in the "reserved and suggested key assignments" above.
+
+[2] Clashes with envrionment debugger's stepping commands.
+
+	Key	/-------------------------------------------------------- Modifiers ---------------------------------------------------------\
+		None		Shift		Ctrl		Alt		Ctrl+Shift	Ctrl+Alt	Alt+Shift	Ctrl+Alt+Shift
+	F1	editor-key-bdgs	[long-command-help&1]		show-doc[dC]
+	F2	browse-obj[d]	edit-def'n[d]	browse-class[d]
+	F3	find-str[#]	find-next-str[-]		find-str[#][-]
+	F4					[CLOSE-MDI-CHILD] [CLOSE-WINDOW]
+	F5	force-redisplay			force-recenter
+	F6	(... PANE NAVIGATION? ...)	[NEXT-MDI-CHILD] [NEXT-WINDOW&N] [PREV-MDI-CHILD]		[PREV-WINDOW&N]
+	F7	build-proj[d]	fr-adv-build[D]	clean-bld-prj[d] [eval-buffer&d] eval-region[d]
+	F8
+	F9	fr-create-or-toggle-bkpt[D]	fr-run-to-target[D]
+				fr-new-bkpt[D]					fr-edit-bkpt-opts[D]
+	F10	[menu-access]	[popup-menu]	choose-buffer	switch-buffers
+	F11
+	F12	COMPLETE-NAME[C2]						FIND-USES[?]
+
+		None		Shift		Ctrl		Alt		Ctrl+Shift	Ctrl+Alt	Alt+Shift	Ctrl+Alt+Shift
+	Up	prev-line-ext	prev-line-ext	prev-sh-inpt[S]	up-expr[d]	[EXTEND SEL?]			[EXTEND SEL?D&]
+	Dn	next-line-ext	next-line-ext	next-sh-inpt[S]	down-expr[d]	[EXTEND SEL?]			[EXTEND SEL?D&]
+	Lt	bwd-char-ext	bwd-char-ext	bwd-word-ext	bwd-expr[d]	bwd-word-ext			[EXTEND SEL?D&]
+	Rt	fwd-char-ext	fwd-char-ext	fwd-word-ext	fwd-expr[d]	fwd-word-ext			[EXTEND SEL?D&]
+	Home	start-of-line-ext (<- ditto)	start-of-buffer			mark-to-begin
+	End	end-of-line-ext	(<- ditto)	end-of-buffer			mark-to-end
+	PgUp	scroll-bwd-ext	scroll-bwd-ext	start-of-page	start-of-sect'n	[EXTEND SEL&]			[EXTEND SEL&D&]
+								start-of-def'n[d]
+	PgDp	scroll-fwd-ext	scroll-fwd-ext	end-of-page	end-of-section	[EXTEND SEL&]			[EXTEND SEL&D&]
+								end-of-def'n[d]
+	Ins	toggle-overwrite[C]
+	Del	delete-char			delete-word
+	BkSp	rubout-char			rubout-word
+
+	ESC	cancel-command
+		cancel-shell-command[S]
+	TAB	insert-tab
+		indent-region[d]
+	RETURN	insert-newline	indent-newline			[PROPERTIES]
+		activate-shell-input-newline[S]	activate-shell-input[S]
+
+	[I don't show modified numbers because different keyboards produce different punctuation.]
+	[Ctrl+/n/ acts as numeric-argument.]
+
+		None		Shift		Ctrl		Alt		Ctrl+Shift	Ctrl+Alt	Alt+Shift	Ctrl+Alt+Shift
+	Q					quoted-insert
+	W
+	E
+	R					transpose-words
+	T					transpose-chars
+	Y					redo-command
+	U					upcase-region
+	I					insert-tab
+						insert-tab[d]
+	O					find-file
+	P					[print-buffer&]
+
+	A					mark-buffer
+	S					save-file
+	D
+	F					find-next-string		find-prev-string
+	G					goto-line[#]
+	H					query-replace-str[#&]
+	J
+	K					capitalize-word
+	L					downcase-region
+
+	Z					undo-command
+	X					cut-region
+						trim-shell-output-history[S]
+	C					copy-region
+	V					paste
+	B
+	N					new-file
+	M
+
+	Key	/-------------------------- Modifiers ---------------------------\
+		None		Ctrl		Alt		Ctrl+Alt
+	(			fwd-list
+	)			bwd-list
+	-			numeric-neg
+	=			show-position[B]
+	_			down-list
+	+			up-list
+	;
+	'
+	,
+	.
+	/
+
+	*			universal-arg
+
+
+** Rationales
+
+For the modified-letter and -punctuation bindings, I put the following
+commands in their standard places:
+
+      find-file, print-buffer, mark-buffer, save-file, undo-command,
+      cut-region, copy-region, paste, new-file
+
+I put the following in places where they appear in "quite a few"
+window editors:
+
+       redo-command, find-next-string, find-prev-string, goto-line,
+       query-replace-string
+
+I put the following in Emacs-like places, when they didn't conflict
+with bindings above and didn't seem "unintuitive" given my survey of
+Windows editors:
+
+	quoted-insert, transpose-chars, upcase-region, insert-tab,
+	capitalize-region, downcase-word, foreward-list,
+	backward-list, numeric-negative
+
+I put the following near related keys:
+
+	transpose-words, down-list, up-list
+
+and I just invented these:
+
+	show-position, universal-arg
+
+For the modified function key assignments, I tried to go with the
+following themes
+
+"Finding"
+	F1	help
+	F2	browse (which is a bit like help-lookup)
+	F3	find
+"Window management"
+	F4	window-closing
+	F5	redisplay
+	F6	window/pane navigation
+"Project management"
+	F7	build/compile
+	F8	run (in the environment, not Deuce)
+	F9	breakpoints (in the environment, not Deuce)
+	F10	buffer management
+	F11	stepping (in the environment, not Deuce)
+	F12	stepping (in the environment, not Deuce)
+
+I tried to group related actions close to each other.  The use of F11
+should be reviewed, given the problem with the "break-to-debugger
+command" (see UI background).  In retrospect, the two commands on F10
+are somewhat out of place and should perhaps move to F4 ... except
+that that might annoy existing users, so it should wait for a major
+version jump at least.
+
+
+** Problems
+
+As a user of Deuce, I have found that indentation is annoyingly
+inaccessible with the Windows bindings.  I find I want to be able to
+"(un)indent-rigidly" more often than I want Deuce's "indent-region" or
+"indent-newline", probably because Deuce's quick'n'dirty algorithm
+isn't perfect.  Having "(un)indent-rigidly" on toolbar/menu might
+satisfy me, if only because that's the most I'm used to in other
+Windows editors; but if there's space for a plausible key binding
+-- maybe "I"/"J"? -- that would be good too.
+
+
+
+* Emacs Layout Key Assignments
+--------------------------------
+
+[---*** hughg, 1999/02/12: This whole "*"-level section is
+up-to-date.]
+
+** No Prefix
+
+	Key	/-------------------------------------------------------- Modifiers ---------------------------------------------------------\
+		None		Shift		Ctrl		Alt		Ctrl+Shift	Ctrl+Alt	Alt+Shift	Ctrl+Alt+Shift
+	F1	editor-key-bdgs	[HELP MODE ON]			SHOW-DOC[C]
+	F2	browse-obj[d]	edit-def'n[d]	browse-class[d]
+	F3	find-str[#]	find-next-str	query-repl-str
+	F4					[CLOSE MDI]	[CLOSE WINDOW]
+	F5	force-redisplay			force-recenter
+	F6	(... PANE NAVIGATION? ...)	[NEXT MDI]	[NEXT WINDOW]
+	F7	build-proj[d]	fr-adv-build[D]	clean-bld-prj[d] [eval-buffer&d] eval-region[d]
+	F8
+	F9	fr-create-or-toggle-bkpt[D]	fr-run-to-target[D]
+				fr-new-bkpt[D]					fr-edit-bkpt-opts[D]
+	F10	[MENU ACCESS]	[POPUP MENU]
+	F11
+	F12	complete-name[C4]						FIND-USES[C?!]
+
+		None		Shift		Ctrl		Alt		Ctrl+Shift	Ctrl+Alt	Alt+Shift	Ctrl+Alt+Shift
+	Up	prev-line-ext	prev-line-ext	prev-sh-inpt[S]	up-expr[d]	[EXTEND SEL?]			[EXTEND SEL?D&]
+	Dn	next-line-ext	next-line-ext	next-sh-inpt[S]	down-expr[d]	[EXTEND SEL?]			[EXTEND SEL?D&]
+	Lt	bwd-char-ext	bwd-char-ext	bwd-word-ext	bwd-expr[d]	bwd-word-ext			[EXTEND SEL?D&]
+	Rt	fwd-char-ext	fwd-char-ext	fwd-word-ext	fwd-expr[d]	fwd-word-ext			[EXTEND SEL?D&]
+	Home	start-of-line-ext (<- ditto)	start-of-buffer			EXTEND SEL[!]			[EXTEND SEL]
+	End	end-of-line-ext (<- ditto)	end-of-buffer			EXTEND SEL[!]			[EXTEND SEL]
+	PgUp	scroll-bwd-ext	scroll-bwd-ext	start-of-page[!] start-of-sect'n	[EXTEND SEL&]			[EXTEND SEL&D&]
+								start-of-def'n[d]
+	PgDn	scroll-fwd-ext	scroll-fwd-ext[B] end-of-page[!] end-of-section	[EXTEND SEL&]			[EXTEND SEL&D&]
+								end-of-def'n[d]
+	Ins	toggle-overwrite[C]
+	Del	delete-char			delete-word	delete-word			delete-list
+												delete-expr[d]
+	BkSp	rubout-char			rubout-word	rubout-word			rubout-list
+												rubout-expr[d]
+
+	ESC	
+	TAB	insert-tab			insert-tab[d]
+		indent-line[d]
+	Return	insert-newline	indent-newline
+		activate-shell-input-newline[S]	activate-shell-input[S]
+
+	[I don't show modified numbers because different keyboards produce different punctuation.]
+	[<any-modifier-combination-except-shift>+/n/ acts as numeric-argument.]
+
+		None		Shift		Ctrl		Alt		Ctrl+Shift	Ctrl+Alt	Alt+Shift	Ctrl+Alt+Shift
+	Q					quoted-insert					indent-expr[d]
+	W					cut-region	copy-region
+						trim-shell-output-history[S]
+	E					end-of-line			EVAL-REGION[DC]	end-of-section	EVAL-BUFFER[DC]
+												end-of-def'n[d]
+	R					inc-search-bwd			redo-command	FIND-PREV-STR
+	T					transp-chars	transp-words			transp-lists
+												transp-exprs[d]
+	Y					yank		yank-next	paste
+	U					universal-arg	upcase-word	undo-command	up-list
+												up-expr[d]
+	I					insert-tab					complete-name[dC]
+	O					open-line					split-line		        browse-object[d]
+	P					prev-line	prev-sh-inpt[S]
+
+	A					start-of-line			show-arglist[d]	start-of-section
+												start-of-def'n[d]
+	S					inc-search-fwd			find-string[#]
+	D					delete-char	delete-word	show-doc[dC]	down-list
+												down-expr[d]
+	F					fwd-char	fwd-word			fwd-list
+												fwd-expr[d]
+	G					cancel-command	goto-char[#]					goto-line[#]
+						cancel-shell-command[S]
+	H					editor-help[T]
+	J					indent-newline	change-region-font
+	K					kill-line					delete-list
+												delete-expr[d]
+	L					force-recenter	downcase-word			switch-buffers
+
+	Z					
+	X					c-x-prefix[T]
+	C					c-c-prefix[T]	capitalise-word	eval-region[d]			eval-buffer[d] browse-class[d]
+	V					scroll-fwd	scroll-bwd	describe-object[d]
+	B					bwd-char	bwd-word			bwd-list
+												bwd-expr[d]
+	N					next-line	next-sh-inpt[S]
+	M
+
+	Key	/-------------------------- Modifiers ---------------------------\
+		None		Ctrl		Alt		Ctrl+Alt
+	[SPACE]			set-mark			exch-point-pdl
+	%			replace-str[#]	query-rep-str[#]
+	^					join-lines
+	-			numeric-neg	numeric-neg	numeric-neg
+	_			undo-command			redo-command
+	;			insert-comment
+	.			edit-next-warn[D] edit-def'n[d]
+	<			mark-to-begin	start-of-buf
+	>			mark-to-end	end-of-buf
+	\			delete-whitespace		indent-region[d]
+	~					mark-unmodified
+	@							mark-next-expr
+
+** "C-x" Prefix
+
+	Key	/----------------- Modifiers ------------------\
+		None		Shift		Ctrl
+	Q					toggle-read-only
+	W					save-file-as
+	E	execute-kbd-macro
+	R
+	T					transp-lines
+	Y
+	U					upcase-region
+	I	insert-file			indent-rigidly
+	O
+	P
+
+	A
+	S	save-all-files			save-file
+	D
+	F					find-file
+	G					cancel-command
+	H					mark-buffer
+	J
+	K	close-file
+	L					downcase-region
+
+	Z					
+	X					swap-point-and-mark
+	C
+	V
+	B	choose-buffer			choose-buffer
+	N
+	M
+
+		None		Shift		Ctrl
+	(	start-kbd-macro
+	)	finish-kbd-macro
+	=	show-position					
+	[	start-of-page
+	]	end-of-page
+
+** "C-c" Prefix
+
+	Key	/----------------- Modifiers ------------------\
+		None		Shift		Ctrl
+	Q
+	W
+	E
+	R	vc-report
+	T
+	Y
+	U
+	I	vc-check-in
+	O	vc-check-out
+	P
+
+	A	vc-abandon
+	S
+	D
+	F
+	G
+	H
+	J
+	K
+	L
+
+	Z					
+	X
+	C	vc-claim
+	V
+	B
+	N
+	M	vc-merge
+
+		None		Shift		Ctrl
+	-	vc-remove
+	=	vc-diff
+	+	vc-add
+
+** "C-h" Prefix
+
+	Key	/----------------- Modifiers ------------------\
+		None		Shift		Ctrl
+	Q
+	W
+	E
+	R
+	T
+	Y
+	U
+	I
+	O
+	P
+
+	A
+	S
+	D
+	F
+	G
+	H
+	J
+	K	long-command-help
+	L
+
+	Z					
+	X
+	C	brief-command-help
+	V
+	B	editor-key-bindings
+	N
+	M
+
+	?	help-on-editor-help

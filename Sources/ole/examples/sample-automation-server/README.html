@@ -1,0 +1,92 @@
+<HTML>
+<HEAD>
+	<TITLE>Functional Developer Example: Sample-automation-server</TITLE>
+	<LINK REL="stylesheet" TYPE="text/css" HREF="../../examples.css">
+</HEAD>
+
+<BODY>
+
+<H2>Sample-automation-server library</H2>
+
+<HR ALIGN="CENTER">
+
+<P>This project contains an example program that is a demonstration of
+a simple OLE Automation server in Dylan. It uses the utility functions
+of the Dylan <b>OLE-Automation</b> library rather than the low-level
+Windows OLE API.  The program responds to commands issued by the companion
+program in the project <b>sample-automation-controller</b>.</P>
+
+<P>The <b>OLE-Automation</b> library is documented in the Functional Developer
+"OLE, COM, ActiveX and DBMS" reference manual.</P>
+
+<P>This program by itself doesn't do anything except put an empty window
+up on the screen.  All drawing in the window is done in response to
+commands issued from the <b>sample-automation-controller</b> program.</P>
+
+<P>The definition of <code>&lt;painter&gt;</code> at the top of the
+file <em>drawing.dylan</em> specifies the functions and properties
+that are made available for a controller to use.  The only thing the
+controller needs to know is the class ID and the names of the members.
+The class <code>&lt;painter&gt;</code> is the IDispatch object that
+the controller will be interacting with.</P>
+
+<H3>Server registration and invocation</H3>
+
+<P>This project can be built in either of two configurations.  It can
+be built as an EXE file which can then be used as a local server, or
+it can be built as a DLL file which can then be used as an in-process
+server.  The default is to build an EXE file.  Use the "Target file"
+entry in the "Link" tab of the "Project &gt; Settings..." dialog to
+switch between these two options.</P>
+
+<P>The easiest way to use a local (EXE) server is to just start it first, and
+then start the controller program.  It is also possible to just start a
+controller and let it start the server, but that requires registering the
+server first.  If you are using the in-process (DLL) server configuration, you
+have no choice but to register the server and let the controller start it.
+</P>
+
+<P>In either case, in order for the server to work when started from
+a client program, all of the libraries used by your server need to either
+be in the same directory as the server file, or else in a directory which is
+in the system PATH (not the individual user's PATH on NT). The simplest way to
+accomplish this is to use the "Project &gt; Build Release" command to create a
+release directory. If you wish, you can move that directory to any location you
+want, but you must do so before you attempt to register the server.
+</P>
+
+<P>To register the local server, run it from a DOS command prompt like this:<P>
+
+  <blockquote><code>sample-automation-server.exe /regserver</code></blockquote>
+
+<P>This will create the necessary entries in the Windows System Registry and
+then terminate without creating any windows. The full pathname of the server
+is recorded, so you must unregister the server before you move or delete it.
+You can unregister it by doing:
+  <blockquote><code>sample-automation-server.exe /unregserver</code></blockquote>
+
+<P>To register an in-process server, use the <code>regsvr32</code> command
+line utility like this:</P>
+
+ <blockquote><code>regsvr32 sample-automation-server.dll</code></blockquote>
+
+<P>(The complete pathname will need to be given if the file is in a
+different directory that is not in the PATH.)  This will cause the
+appropriate entries to be made in the Windows System Registry. (For
+use in a batch script, the "<code>/s</code>" option may be used to suppress the
+dialog box reporting completion.) The full pathname of the server
+is recorded, so you must unregister the server before you move or delete it.
+You can unregister it by doing:</P>
+
+ <blockquote><code>regsvr32 /u sample-automation-server.dll</code></blockquote>
+
+<P>This invokes the server to unregister itself, so won't work
+if the server has been deleted first.</P>
+
+
+<P>After registering the server, you can run the
+<b>sample-automation-controller</b> example program to test it.</P>
+
+</BODY>
+
+</HTML>

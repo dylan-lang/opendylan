@@ -1,0 +1,11 @@
+set-write-databases? true
+compile -save com
+compile -save ole
+compile -save ole-server
+compile -save ole-automation
+compile -save ole-controls
+compile -save ole-control-framework
+compile -save ole-dialogs
+compile -save duim-ole-control
+compile -save duim-ole-server
+exit

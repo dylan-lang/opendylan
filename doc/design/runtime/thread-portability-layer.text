@@ -1,0 +1,210 @@
+Thread Library: Portability Layer. Version 5 (18 October 1996)
+
+Introduction:
+-------------
+
+The interface is still described in terms of C types, even though the
+objects are mostly Dylan obects:
+
+We invent the following C types to describe Dylan types:-
+
+  C Name	Dylan Name		Description
+  ------	----------		-----------
+
+  Z		<object>		typedef void* Z;
+
+  ZINT	<small-integer>	typedef int32 ZINT;   /* This is a TAGGED integer */
+
+  ZFN		<function>		typedef Z (*ZFN)(Z,int,...);
+
+  SOV*	<simple-object-vector>  typedef struct _sov{ Z class;
+							     Z size;
+							     Z data[1];} SOV;
+
+  B_STRING*	<byte-string>	typedef struct _bst{ Z class;
+							     Z size;
+							     char data[1];} B_STRING;
+
+  D_NAME	false-or(<byte-string>)	typedef void* D_NAME;
+
+  CONTAINER*	<portable-container>	typedef struct _ctr{ Z class;
+							     void * handle;} CONTAINER;
+
+  DTHREAD*	<thread>		typedef struct _ctr{ Z class;
+							     void * handle1;
+							     void * handle2;} DTHREAD;
+
+The type D_NAME represents a Dylan synchronization name field, which will
+either be a B_STRING* or %false.
+
+The type CONTAINER* is used to implement the synchronization
+objects. Each one may have more fields than described above, but the
+runtime need only care about the handle field, which is available for
+storing any OS-specific data. The following classes are implemented as
+CONTAINERs:- 
+
+   <simple-lock> <recursive-lock> <semaphore> <notification>
+
+The type DTHREAD* is used to implement <thread> objects, which have 2
+handle fields (one for the underlying thread, and one extra handle for
+making join work). 
+
+
+Reference
+---------
+
+
+1.      define primitive primitive-make-thread
+  (D_THREAD* thread, D_NAME name, ZINT priority, ZFN function) => (ZINT error_code)
+  [0 = ok, -1 = other error, 1 = error creating thread, 2 = error setting priority]
+
+  The container slots in the Dylan thread object are destructively
+  modified with the handles of the new OS thread. The new OS thread is
+  started in a way which calls the supllied Dylan function.
+
+2.      define primitive primitive-destroy-thread
+  (D_THREAD* thread) => (ZINT error_code) [0 = ok, -1 = error]
+
+   Free any runtime-allocated memory associated with the thread
+
+3.      define primitive primitive-thread-join-single
+  (D_THREAD* thread) => (ZINT error_code) 
+
+  error_code [0 = ok, anything else is an error]
+
+4.      define primitive primitive-thread-join-multiple
+  (SOV* thread_vector) => (Z result) 
+
+  result [a D_THREAD* if the join was OK. Else it's a ZINT with the error]
+  thread_vector is a <simple-object-vector> containing <thread> objects
+
+5.      define primitive primitive-thread-yield
+  (void) => (void)
+
+6.      define primitive primitive-current-thread
+  (void) => (Z thread).
+
+  Return the Dylan object representing the current thread. 
+
+7.      define primitive primitive-wait-for-simple-lock
+  (CONTAINER* lock) => (ZINT error_code) [ 0 = ok, -1 = error, 2 = already owned]
+
+8.      define primitive primitive-wait-for-recursive-lock
+  (CONTAINER* lock) => (ZINT error_code) [ 0 = ok, -1 = error]
+
+9.      define primitive primitive-wait-for-semaphore
+  (CONTAINER* lock) => (ZINT error_code) [ 0 = ok, -1 = error]
+
+10.     define primitive primitive-wait-for-notification
+  (CONTAINER* notification, CONTAINER* lock) 
+  => (ZINT error_code) [ 0 = ok, -1 = other error, 2 = not locked]
+
+11.     define primitive primitive-wait-for-simple-lock-timed
+  (CONTAINER* lock, ZINT millisecs) => (ZINT error_code) [ 0 = ok, -1 = error, 1 = timeout, 2 = already owned]
+
+12.     define primitive primitive-wait-for-recursive-lock-timed
+  (CONTAINER* lock, ZINT millisecs) => (ZINT error_code) [ 0 = ok, -1 = error, 1 = timeout]
+
+13.     define primitive primitive-wait-for-semaphore-timed
+  (CONTAINER* lock, ZINT millisecs) => (ZINT error_code) [ 0 = ok, -1 = error, 1 = timeout]
+
+14.     define primitive primitive-wait-for-notification-timed
+  (CONTAINER* notification, CONTAINER* lock, ZINT millisecs) 
+  => (ZINT error code) [ 0 = ok, 1 = timeout, 2 = not locked, -1 = other error ]
+
+15.     define primitive primitive-release-simple-lock
+  (CONTAINER* lock) => (ZINT error_code) [ 0 = ok, 2 = not locked, -1 = other error]
+
+16.     define primitive primitive-release-recursive-lock
+  (CONTAINER* lock) => (ZINT error_code) [ 0 = ok, 2 = not locked, -1 = other error]
+
+17.     define primitive primitive-release-semaphore
+  (CONTAINER* lock) => (ZINT error_code) [ 0 = ok, 3 = count exceeded]
+
+18.     define primitive primitive-release-notification
+  (CONTAINER* notification, CONTAINER* lock) 
+  => (ZINT error_code)  [ 0 = ok, 2 = not locked, -1 = other error]
+
+This should check that the lock is owned by the current thread.
+
+19.     define primitive primitive-release-all-notification
+  (CONTAINER* notification, CONTAINER* lock) 
+  => (ZINT error_code)  [ 0 = ok, 2 = not locked, -1 = other error]
+
+This should check that the lock is owned by the current thread.
+
+20.     define primitive primitive-make-recursive-lock
+  (CONTAINER* lock, name: D_NAME) => (ZINT error_code) [ 0 = ok, -1 = error]
+
+The lock object is destructively updated so that it's handle slot refers to
+a handle on an OS provided lock.
+
+21.     define primitive primitive-destroy-recursive-lock
+  (CONTAINER* lock) => (ZINT error_code) [ 0 = ok, -1 = error]
+
+22.     define primitive primitive-make-simple-lock
+  (CONTAINER* lock, name: D_NAME) => (ZINT error_code) [ 0 = ok, -1 = error]
+
+23.     define primitive primitive-destroy-simple-lock
+  (CONTAINER* lock) => (ZINT error_code) [ 0 = ok, -1 = error]
+
+24.     define primitive primitive-owned-simple-lock
+  (CONTAINER* lock) => (ZINT owned) [0= not owned, 1 = owned]
+
+25.     define primitive primitive-owned-recursive-lock
+  (CONTAINER* lock) => (ZINT owned) [0= not owned, 1 = owned]
+
+26.     define primitive primitive-make-semaphore
+  (CONTAINER* lock, name: D_NAME, ZINT initial, ZINT max) => (ZINT error_code) [ 0 = ok, -1 = error]
+
+27.     define primitive primitive-destroy-semaphore
+  (CONTAINER* lock) => (ZINT error_code) [ 0 =ok, -1 = error]
+
+28.     define primitive primitive-make-notification
+  (CONTAINER* notification, name: D_NAME) => (ZINT error_code) [ 0 = ok, -1 = error]
+
+29.     define primitive primitive-destroy-notification
+  (CONTAINER* notification) => (ZINT) [ 0 = ok, -1 = error]
+
+30.     define primitive primitive-sleep
+  (ZINT millisecs) => (void)
+
+31.     define primitive primitive-assign-atomic-memory
+  (void* location, Z newval) => (Z newval)
+
+32.     define primitive primitive-conditional-update-memory
+  (void* location, Z newval, Z oldval) 
+  => (ZINT result) [1 = didit, 0 = didnot]
+
+33.     define primitive primitive-allocate-thread-variable
+  (Z initial_value) => (void* handle_on_variable).
+
+34.     define primitive primitive-read-thread-variable
+  (void* handle_on_variable) => (Z value)
+
+35.     define primitive primitive-write-thread-variable
+ (void* handle_on_variable, Z newval) => (Z newval)
+
+36.      define primitive primitive-initialize-current-thread
+  (D_THREAD* thread) => (void)
+
+  The container slots in the Dylan thread object are destructively
+  modified with the handles of the current OS thread. This function
+  will be used to initialize every thread before any real Dylan
+  code gets to run in the thread.
+
+37.      define primitive primitive-unlock-simple-lock
+  (CONTAINER* lock) => (ZINT error_code) [0 = ok, -1 = error]
+
+  Releases the lock no matter which thread owns it. The intention
+  is to make this primitive available some way through the
+  development environment so a developer can fix problems (such
+  as thread forgetting to release a lock) interactively.
+
+38.      define primitive primitive-unlock-recursive-lock
+  (CONTAINER* lock) => (ZINT error_code) [0 = ok, -1 = error]
+
+  Releases the lock no matter which thread owns it. The intention
+  is to make this primitive available some way through the
+  development environment so a developer can fix problems (such
+  as thread forgetting to release a lock) interactively.

@@ -1,0 +1,23 @@
+# dylan source directory for which we create TAG files each night
+# read by nightly-tag-file
+# Modification history:
+#   Aug 27 1996 by amit - remove D-dfm-compiler(defunct)
+#   Nov 25 1996 by amit - add qa directory in here
+#   Sep 25 1997 by andrewa - update to match new directory layout
+#################################################################
+
+/u/dylan/sources/app
+/u/dylan/sources/databases
+/u/dylan/sources/deuce
+/u/dylan/sources/dfmc
+/u/dylan/sources/duim
+/u/dylan/sources/emulator
+/u/dylan/sources/environment
+/u/dylan/sources/harp
+/u/dylan/sources/lib
+/u/dylan/sources/network
+/u/dylan/sources/ole
+/u/dylan/sources/qa
+/u/dylan/sources/partners
+/u/dylan/sources/runtime-manager
+/u/dylan/sources/win32

@@ -1,0 +1,61 @@
+[
+  uuid (45f7bfc0-1b70-11d0-a8f4-00aa006b0423),
+  version (1.0),
+  pointer_default(ref)
+]
+interface nubserve
+{
+  import "nub-core-types.h";
+
+  NUBINT open_new_debugger_nub 
+    (handle_t s, 
+     [in] NUBINT protocol,
+     [in] NUBINT buf_size, 
+     [in, out, size_is(buf_size)] char *buf);
+
+  NUBINT svr_server_get_hostname_length(handle_t s);
+
+  void svr_server_get_hostname
+    (handle_t s,
+     [in] NUBINT buf_size,
+     [in, out, size_is(buf_size)] char *buf);
+
+  NUBINT svr_server_verify_password
+    (handle_t s,
+     [in] NUBINT buf_size,
+     [in, size_is(buf_size)] char *buf);
+
+  void svr_server_shutdown (handle_t s);
+
+  NUBINT svr_update_server_process_list
+    (handle_t s);
+
+  RNUBPROCESS svr_server_process_nub_descriptor
+    (handle_t s,
+     [in] NUB_INDEX i);
+
+  unsigned long svr_server_process_actual_id
+    (handle_t s,
+     [in] RNUBPROCESS nubprocess);
+
+  NUBINT svr_server_process_name_length
+    (handle_t s,
+    [in] NUB_INDEX i);
+
+  void svr_server_process_name
+    (handle_t s,
+     [in] NUB_INDEX i,
+     [in] NUBINT buf_size,
+     [in, out, size_is(buf_size)] char *buf);
+
+  NUBINT svr_server_process_system_identifier_length
+    (handle_t s,
+    [in] NUB_INDEX i);
+
+  void svr_server_process_system_identifier
+    (handle_t s,
+     [in] NUB_INDEX i,
+     [in] NUBINT buf_size,
+     [in, out, size_is(buf_size)] char *buf);
+
+}

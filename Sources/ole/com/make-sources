@@ -1,0 +1,102 @@
+
+#  Dylan library for interfacing with COM
+#  (Microsoft's Component Object Model)
+#
+#  This file controls the generation of source files that are created
+#  automatically by adapting information from the Microsoft header files.
+#
+#  To create the Dylan FFI files:
+#	make -f make-sources
+
+# Copyright: 1996 Functional Objects, Inc.  All rights reserved.
+
+# $Header: /scm/cvs/fundev/Sources/ole/com/make-sources,v 1.1 2004/03/12 00:09:33 cgay Exp $
+
+# files automatically generated from the C++ headers:
+DYLAN_FILES=library.dylan com-err.dylan com-intf.dylan cmisc.dylan
+C_FILES=c-com.c
+
+# text processing utility:
+GEMA=gema
+
+# directory for files common to the various Win32 libraries:
+WIN32COMMON=..\..\win32\win32-common
+
+# directory containing the header files from the Microsoft Win32 SDK:
+MSTOOLS_H=..\..\win32\microsoft-headers
+
+PATTERNS=$(WIN32COMMON)\patterns.pat
+OLEPAT=ole.pat
+
+COM: $(DYLAN_FILES) $(C_FILES)
+
+all: COM
+
+#    ---------------
+
+#    error codes
+
+com-err.dylan: $(MSTOOLS_H)\winerror.h com-err.pat
+	$(GEMA) -f com-err.pat  -f exports.pat  -exports com-err.exp \
+		-f $(WIN32COMMON)\copyright.pat \
+		-in $(MSTOOLS_H)\winerror.h   -out $@ 
+
+com-err.exp: com-err.dylan
+	touch $@
+
+#    library and module declarations
+
+library.dylan: library.src $(WIN32COMMON)\include.pat \
+		com-err.exp com-intf.exp cmisc.exp
+	$(GEMA) -f $(WIN32COMMON)\include.pat library.src $@
+
+#    interface declarations
+
+c-com.c: cinterf.pat $(MSTOOLS_H)\unknwn.h $(MSTOOLS_H)\objidl.h interfaces.pat
+	$(GEMA) -f cinterf.pat  -out $@ \
+		-f $(WIN32COMMON)\copyright.pat \
+		$(MSTOOLS_H)\unknwn.h  $(MSTOOLS_H)\objidl.h
+
+com-intf.dylan: dinterf.pat $(MSTOOLS_H)\unknwn.h $(MSTOOLS_H)\objidl.h \
+		interfaces.pat
+	$(GEMA) -f dinterf.pat  -exports com-intf.exp \
+		-f $(WIN32COMMON)\copyright.pat  -module COM  -out $@ \
+		$(MSTOOLS_H)\unknwn.h $(MSTOOLS_H)\objidl.h
+
+# exported symbols written as a side-effect of COM conversion:
+com-intf.exp: com-intf.dylan
+	touch $@
+
+# virtual table information written as side-effect of COM conversion:
+unknwn.vtb:
+	rm -f c-com.c
+	$(MAKE) -f make-sources c-com.c
+
+#    miscellaneous functions, structures, and constants
+
+cmisc.dylan: com-misc.dylan collage.pat $(OLEPAT) $(PATTERNS) com.pat \
+	   $(MSTOOLS_H)\objbase.h $(MSTOOLS_H)\unknwn.h $(MSTOOLS_H)\objidl.h
+	$(GEMA) -f com.pat -f $(PATTERNS)  -f collage.pat  -f $(OLEPAT) \
+		-idir $(MSTOOLS_H) \
+		-out $@  -exports cmisc.exp  -input com-misc.dylan
+
+cmisc.exp: cmisc.dylan
+	touch $@
+
+#    ---------------
+
+# tags for Emacs Meta-.
+
+DTAGS=/u/dylan/tools/gnuemacs/dtags
+SOURCE_FILES=after.dylan com.dylan
+
+TAGS: $(DYLAN_FILES) $(SOURCE_FILES)
+	$(DTAGS) $(SOURCE_FILES) $(DYLAN_FILES)
+
+tags: TAGS
+
+
+#    ---------------
+
+clean:
+	rm -f $(DYLAN_FILES) $(C_FILES) *.bak *.exp *.vtb c-com.h

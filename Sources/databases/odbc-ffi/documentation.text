@@ -1,0 +1,184 @@
+	       Notes about the low level ODBC interface
+
+Current file structure of library:
+	odbc-library.dylan: the library and module definitions
+	macros.dylan: wrapper for define-c-function to handle error return values
+  	sql.dylan: sql.h file from microsoft converted to c-ffi. Defines
+		ODBC core level functions.
+	sqlext.dylan: sqlext.h file from microsoft converted to c-ffi.
+		Defines ODBC level 1 and level 2 functions.
+	globals.dylan: This file should go away or be enhanced.  It
+	 	has some global variables for the connection and
+		statement handles.
+	error-handling: Error classes and error reporting functions.
+		needs work.
+
+
+Eventual module setup:
+
+	dylan-odbc: Defines functions which convert input variables as
+	necessary to foreign pointers, and which return as multiple
+	values all returns from the functions.
+
+	dylan-odbc-ffi: Defines the very lowest level of functionality.
+	To access these functions, you must supply appropriate foreign
+	pointers to foreign types for those parameters which return
+	output values in such pointers.
+
+	dylan-odbc-internal: defines "-internal" versions of all the
+	functions.  These are all exported to be used by the above two
+	modules, but it is not expected that users will ever make use
+	of this directly.
+	
+The dylan-odbc module has not yet been defined.  A fair amount of
+boilerplate needs to be written to handle it, that is, to convert
+between dylan types and the low level C-FFI types that the
+dylan-odbc-ffi module functions take.
+
+The following types are referenced:
+
+<HENV> :: a C datatype which refers to the allocated SQL Environment handle.
+<HDBC> :: a C datatype which refers to the ODBC Connection handle.
+<HSTMT> :: a C datatype which refers to a statement handle.
+
+The following convention is used:
+
+input means that this is an ordinary parameter.
+output means that this is a parameter which points to storage for the specified
+ODBC function to fill in.  Always implies pointer-to() with integer or short,
+and with string implies the storage for the string has been allocated.  In the
+"dylan-odbc" library, output parameters would be returned as multiple values.
+input/output is only used in SQLBindParameter---sometimes this is for input
+and sometimes it is for output, so it is treated as an input and also returned
+as a multiple value.  Or hm, I'm not sure how to handle this.
+
+Dylan-ODBC defines the following ODBC Core Functions:
+
+ SQLAllocConnect (input environment :: <HENV>, output connection :: <HDBC>)
+ SQLAllocEnv (output environment :: <HENV>)
+ SQLAllocStmt (input connection :: <HDBC>, output statement :: <HSTMT>)
+ SQLBindCol (input statement :: <HSTMT>, input column-number :: <INTEGER>,
+	input C-data-type :: <INTEGER>, output data :: <INTEGER>,
+	input data-length :: <INTEGER>, output data-bytes-available ::
+	<INTEGER>)
+ SQLCancel (input statement :: <HSTMT>)
+ SQLColAttributes (input statement :: <HSTMT>, input column-number :: <INTEGER>)
+ SQLConnect(input connection :: <HDBC>, input source-name :: <STRING>, 
+	input source-length :: <INTEGER>, input user :: <STRING>,
+	input user-length :: <INTEGER>, input password :: <STRING>,
+	input password-length :: <INTEGER>)
+ SQLDescribeCol(input statement :: <HSTMT>, input column-number :: <INTEGER>,
+	output column-name :: <STRING>, input max-col-name :: <INTEGER>, 
+	output col-name-size :: <SHORT>, output column-type :: <SHORT>,
+	output precision :: <INTEGER>, output scale :: <SHORT>, 
+	output null-permitted :: <SHORT>)
+ SQLDisconnect(input connection :: <HDBC>)
+ SQLError(input environment :: <HENV>, input connection :: <HDBC>, input
+	statement :: <HSTMT>, output sqlstate :: <STRING>, output code ::
+	<INTEGER>, output message :: <STRING>, input max-msg-size :: <INTEGER>,
+	output message-size :: <SHORT>)
+ SQLExecDirect(input statement :: <HSTMT>, input string :: <STRING>, input
+	string-size :: <INTEGER>)
+ SQLExecute(input statement :: <HSTMT>)
+ SQLFetch(input statement :: <HSTMT>)
+ SQLFreeConnect(input connection :: <HDBC>)
+ SQLFreeEnv(input environment :: <HENV>)
+ SQLFreeStmt(input statement :: <HSTMT>)
+ SQLGetCursorName(input statement :: <HSTMT>, output cursor-name :: <STRING>,
+	input max-name-size :: <INTEGER>, output actual-name-size :: <INTEGER>)
+ SQLNumResultCols(input statement :: <HSTMT>, output num-cols :: <SHORT>)
+ SQLPrepare(input statement :: <HSTMT>, input string :: <STRING>, input
+	string-length :: <INTEGER>)
+ SQLRowCount(input statement :: <HSTMT>, output rowcount :: <INTEGER>)
+ SQLSetCursorName(input statement :: <HSTMT>, input cursor-name :: <STRING>,
+	input name-size :: <INTEGER>)
+ SQLTransact(input environment :: <HENV>, input connection :: <HDBC>, 
+	input flag :: <INTEGER>)
+ SQLSetParam
+	SQLSetParam is obsolete.  Use SQLBindParameter instead.
+
+Dylan-ODBC defines the following ODBC Level 1 Functions:
+ SQLColumns(input statement :: <HSTMT>, input table-qualifier :: <STRING>,
+	input qualifier-length :: <INTEGER>, input table-owner :: <STRING>,
+	input owner-length :: <INTEGER>, input table-name :: <STRING>,
+	input name-length :: <INTEGER>, input column-name :: <STRING>,
+	input column-length :: <INTEGER>)
+ SQLDriverConnect(input connection :: <HDBC>, input window :: <HWND>,
+	input connection-string :: <STRING>, input string-size :: <INTEGER>,
+	output real-conn-string :: <STRING>, input max-r-c-size :: <INTEGER>,
+	output real-c-size :: <SHORT>, input completion-flag :: <INTEGER>)
+ SQLGetConnectOption(input connection :: <HDBC>, input option :: <INTEGER>,
+	output value :: union(<INTEGER>,<STRING>))
+ SQLGetData(input statement :: <HSTMT>, input column :: <INTEGER>, 
+	input datatype :: <INTEGER>, output value :: <appropriate type>,
+	input max-data-size :: <INTEGER>, output actual-data-size :: <INTEGER>)
+ SQLGetFunctions(input connection :: <HDBC>, input function :: <INTEGER>,
+	output status :: <SHORT>)
+ SQLGetInfo(input connection :: <HDBC>, input infotype :: <INTEGER>,
+	output value :: union(<INTEGER>, <SHORT>), input val-size :: <INTEGER>,
+	output value-size :: <INTEGER>)
+ SQLGetTypeInfo(input statement :: <HSTMT>, input datatype :: <INTEGER>)
+ SQLParamData(input statement :: <HSTMT>, output data :: <appropriate type>)
+ SQLPutData(input statement :: <HSTMT>, input data :: <appropriate type>,
+	input data-size :: <INTEGER>)
+ SQLSetConnectOption(input connection :: <HDBC>, input option :: <INTEGER>, 
+	input value :: <INTEGER>)
+ SQLSpecialColumns(input statement :: <HSTMT>, input col-type :: <INTEGER>,
+	input table-qualifier :: <STRING>, input qualifier-size :: <INTEGER>,
+	input table-owner :: <STRING>, input owner-size :: <INTEGER>, 
+	input table-name :: <STRING>, input name-size :: <INTEGER>, 
+	scope :: <INTEGER>, input nullable :: <INTEGER>)
+ SQLStatistics(input statement :: <HSTMT>, input table-qualifier :: <STRING>,
+	input qualifier-size :: <INTEGER>, input table-owner :: <STRING>,
+	input owner-size :: <INTEGER>, input table-name :: <STRING>, input
+	name-size :: <INTEGER>, input unique :: <INTEGER>, 
+	input accuracy :: <INTEGER>)
+ SQLTables(input statement :: <HSTMT>, input table-qualifier :: <STRING>,
+	input qualifier-size :: <INTEGER>, input table-owner :: <STRING>,
+	input owner-size :: <INTEGER>, input table-name :: <STRING>, input
+	name-size :: <INTEGER>, input table-type :: <STRING>, 
+	input type-size :: <INTEGER>)
+
+Dylan-ODBC defines the following ODBC Level 2 Functions:
+
+ SQLDataSources(input environment :: <HENV>, input direction :: <INTEGER>,
+	output data-source-name :: <STRING>, input name-max-size :: <INTEGER>,
+	output name-real-size :: <SHORT>, output description :: <STRING>,
+	input desc-max-size :: <STRING>, output desc-real-size :: <SHORT>)
+ SQLExtendedFetch(input statement :: <HSTMT>, input type :: <INTEGER>,
+	input row-number :: <INTEGER>, output rows-fetched :: <INTEGER>,
+	output status :: <array of status values?>)
+ SQLMoreResults(input statement :: <HSTMT>)
+ SQLNativeSql(input connection :: <HDBC>, input sql-string :: <STRING>,
+	input string-size :: <INTEGER>, output translated-string :: <STRING>,
+	input max-trans-size :: <INTEGER>, output real-trans-size :: <INTEGER>)
+ SQLParamOptions(input statement :: <HSTMT>, input numvalues :: <INTEGER>,
+	output rownumber :: <INTEGER>)
+ SQLDrivers(input environment :: <HENV>, input direction :: <INTEGER>,
+	output driver-desc :: <STRING>, input driver-max-size :: <INTEGER>,
+	output driver-real-size :: <SHORT>, output attributes :: <STRING>,
+	input attr-max-size :: <STRING>, output attr-real-size :: <SHORT>)
+ SQLBindParameter(input statement :: <HSTMT>, input param-number :: <INTEGER>,
+	input param-type :: <INTEGER>, input C-type :: <INTEGER,
+	input SQL-type :: <INTEGER>, input precision :: <INTEGER>, 
+	input scale :: <INTEGER>, input/output param-buf :: <appropriate type>,
+	input buf-len :: <INTEGER>, input/output real-buf-len :: <INTEGER>)
+
+The following are not documented in the book I have.  I don't know
+which parameters are input and which are output.
+Level 1 functions:
+ SQLGetStmtOption
+ SQLSetStmtOption
+
+Level 2 functions:
+ SQLBrowseConnect
+ SQLColumnPrivileges
+ SQLDescribeParam
+ SQLForeignKeys
+ SQLNumParams
+ SQLPrimaryKeys
+ SQLProcedureColumns
+ SQLProcedures
+ SQLSetPos
+ SQLTablePrivileges
+ SQLSetScrollOptions

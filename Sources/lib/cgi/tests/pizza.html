@@ -1,0 +1,55 @@
+<html><head>
+<title>
+  Scrumpy's Pizza Order Form
+</title>
+</head>
+
+<body BGCOLOR=#EEEEFF>
+<FORM METHOD="POST" ACTION="/cgi-bin/cgi-pizza"> 
+ 
+<h2><CENTER>Scrumpy's Pizza Order Form</CENTER></h2> 
+
+Do you want your pizza for carry-out or eat-in?
+<SELECT NAME="function"> 
+<OPTION SELECTED>Carry-out 
+<OPTION>Eat-in
+<OPTION>Print-environment-variables
+<OPTION>A bogus method
+</SELECT>  
+<BR>
+
+What name would you like to use to claim your pizza?
+<INPUT NAME="name">
+<BR>
+
+Which toppings would you like on your pizza?
+<SELECT NAME="toppings-list" MULTIPLE SIZE=5> 
+<OPTION SELECTED>Cheese 
+<OPTION>Pepperoni 
+<OPTION>Sausage 
+<OPTION>Canadian bacon 
+<OPTION>Spinach 
+<OPTION>Mushroom 
+<OPTION>Green pepper 
+</SELECT> 
+<BR>
+
+Which spices would you like on your pizza?
+<OL> 
+<LI> <INPUT TYPE="checkbox" NAME="spices-list" VALUE="garlic"> Pepperoni
+<LI> <INPUT TYPE="checkbox" NAME="spices-list" VALUE="pepper"> Anchovies
+<LI> <INPUT TYPE="checkbox" NAME="spices-list" VALUE="oregano"> Sausage
+</OL> 
+
+Special Requests<BR>
+<TEXTAREA NAME="requests" ROWS=2 COLS=40></TEXTAREA>    
+<BR>
+
+<INPUT TYPE="hidden" NAME="user-id" VALUE="91634932750"> 
+ 
+<INPUT TYPE="submit" VALUE="Submit Choices"> <INPUT TYPE="reset" VALUE="Reset">
+ 
+</FORM>
+ 
+</body>
+</html> 

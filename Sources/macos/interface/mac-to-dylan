@@ -1,0 +1,11 @@
+#!/bin/sh
+# Convert a MacOS header file to Dylan C-FFI declarations.
+# Usage:
+#   mac-to-dylan -module x foo.h foo.dylan
+# or:
+#   mac-to-dylan -module x -odir . *.h
+#
+/u/dylan/local/gema -f ../interface/patterns.pat \
+	-f ../interface/modcopyr.pat -exclude obsolete.text \
+        -rename renamings.text \
+	-otyp .dylan   "$@"

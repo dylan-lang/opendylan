@@ -1,0 +1,1546 @@
+
+
+File: dylan-debug,  Node: Top,  Next: Introduction,  Up: (dir)
+
+                       PROTOTYPE DYLAN DEBUGGER 
+                       ("The Console Debugger")
+                          User Instructions
+
+                              Paul Howard
+                         phoward@harlequin.co.uk
+  Copyright: (c) 1997 Functional Objects, Inc. All Rights Reserved.
+                        Version: March 4th 1997
+
+
+* Menu:
+
+* Introduction::
+* What is it?::
+* How is it built?::
+* What it can do::
+* What it can't do::
+* Starting up::
+* Opening an Application::
+* Quitting the Debugger::
+* Controlling the Application::
+* Controlling Individual Threads in the Application::
+* Examining the Stack::
+* The Current Library and Module Context::
+* DLLs::
+* Expressions::
+* Setting Breakpoints::
+* Printing and Inspecting Dylan Instances::
+* Finding Symbols::
+* The Evaluator::
+* Tracing Functions::
+* Stepping Through Source Code::
+* Debug Messages::
+* Selecting Restarts::
+* Displaying Regions of Memory::
+* Setting Values in the Runtime::
+* Multiple Values::
+* Exceptions::
+* Profiling::
+
+
+File: dylan-debug,  Node: Introduction,  Next: What is it?,  Prev: Top, Up: Top
+
+Introduction
+------------
+
+This document is meant as a very brief user guide to the interface and
+facilities offered by the "devel" prototype dylan debugger. It describes
+all available commands, and roughly describes how to build the debugger
+program from sources in the D-runtime-manager tree.
+
+There is now a related document in the same directory as this one.
+It's called debugger-command-line.text, and describes the various
+command-line options you can pass into the debugger on startup.
+
+
+
+File: dylan-debug,  Node: What is it?,  Next: How is it built?,  Prev: Introduction, Up: Top
+
+What is it?
+-----------
+
+The console debugger is a stripped-down, command-driven interface to
+the facilities provided by the dylan Runtime Manager. It allows the
+internals of the debugger-manager, access-path and debugger-nub to be
+developed and tested without the need for the complex GUI interface that
+will go on to form part of the Dylan environment product.
+
+Although it started life as purely a test harness for the tether
+implementation, it has been extended into a basic command-driven debugging
+tool for Dylan, in the hope that it will help developers who are now
+beginning to run native Dylan applications on Windows. Since it is
+specifically a Dylan debugger, with privileged information about the
+architecture of the native Dylan runtime, and also offers a very basic
+evaluator for Dylan expressions, it is likely to be more useful than
+generic debuggers such as WinDBG or Visual C++.
+
+It is less useful for debugging at the low level - foreign code errors
+and out-of-language errors are often best debugged with a tool that offers
+disassembly and instruction stepping, of which the console debugger only
+has the former.
+
+
+
+File: dylan-debug,  Node: How is it Built?,  Next: What it can do,  Prev: What is it?, Up: Top
+
+How is it Built?
+----------------
+
+The debugger ends up as a completely self-contained, stand-alone 
+exectuable program that runs in a console window but also displays a STOP
+button in a separate window. You might be able to just copy the debugger
+from somewhere, but it can also be built out of runtime-manager sources:
+the debugger nub (in D-runtime-manager-debugger-nub-x86-win32 which
+includes a makefile for the target "devnub.lib" as required by the
+debugger), and the four dylan libraries:
+
+         D-runtime-manager-access-path(access-path.lid)
+         D-runtime-manager-tether-downloader(experimental-downloader.lid)
+         D-runtime-manager-debugger-manager(dfmc-debugger-manager.lid)
+         D-runtime-manager-devel-dbg-ui(devel-dbg-ui.lid)
+
+This last library is the top-level program for the debugger. Its
+compound also contains two extra non-dylan files:
+
+         stop-button.c
+         stop-button.rc
+
+The LID file for devel-dbg-ui contains everything necessary to tell the
+compiler what units of foreign code have to be linked with the final
+debugger. This includes a component called IMAGEHLP, which is part of
+the Win32 operating system.
+
+
+
+File: dylan-debug,  Node: What it can do,  Next: What it can't do,  Prev: How is it Built?, Up: Top
+
+What it Can Do
+--------------
+
+  - Debug executables built with the DFMC compiler using the native backend
+    or the C backend, but it strongly prefers native code.
+
+  - Cope with the presence foreign code, and with multiple threads.
+
+  - Print and inspect dylan objects in the runtime using a readable,
+    dylan-like notation. It can also generate simple statistical
+    reports on the amount of memory taken up by dylan data structures.
+
+  - Trace the stack and print local variables.
+
+  - Produce bug reports.
+
+  - Trace functions, including foreign functions and generic functions.
+    It can display the arguments that are passed in at each call, and
+    the values passed out on return. With the restricted console UI,
+    this can produce vast quanitities of output, and can be confusing
+    in the presence of multiple threads.
+
+  - Set breakpoints at arbitrary locations, and also on entry into
+    generic functions.
+
+  - Set breakpoints at line locations in source code files.
+
+  - Evaluate simple dylan expressions within the context of the running
+    application.
+
+  - Step the execution of your program at the source code level.
+
+  - Invoke Dylan restarts.
+
+  - Display the values of registers and the contents of arbitrary regions
+    of memory. For native dylan code, you can also view the current set
+    of values in the multiple-values area on a per-thread basis.
+
+  - Disassemble portions of memory.
+
+  - Give a description of the source file and linenumber that corresponds
+    to each stack frame.
+
+  - Generate basic statistical profiles.
+
+  - Set the contents of registers and memory locations with values.
+
+  - Download the contents of object files into the connected application.
+    (This is primarily for testing the interactive downloader, and may
+    not be particularly useful for general users).
+
+
+File: dylan-debug,  Node: What it can't do,  Next: Starting Up,  Prev: What it can do, Up: Top
+
+What it Can't Do
+----------------
+
+  - Extract debugging information from PDB files. The debugger will only
+    be able to make use of debugging information channeled directly into
+    the target executables or DLLs.
+
+  - Instruction-level stepping.
+
+
+
+
+File: dylan-debug,  Node: Starting Up,  Next: Opening an Application,  Prev: What it can't do, Up: Top
+
+Starting up
+-----------
+
+The executable (which you may want to rename) is "devel-dbg-ui.exe". You
+can simply run it from a DOS shell prompt without any command-line
+arguments. After a short startup pause, the STOP button will appear on
+the screen, and a welcome banner followed by a command prompt will appear
+in the console window. You can now open an application and begin debugging
+it. (See *Note Opening an Application::).
+
+
+
+File: dylan-debug,  Node: Opening an Application,  Next: Quitting the Debugger,  Prev: Starting Up, Up: Top
+
+Opening an Application
+----------------------
+
+To open an application, use the "open" command as follows:
+
+            open <executable-name> [<arguments>]
+
+The executable name must be enclosed in double quotes, as must the arguments
+string if you wish to send arguments to the target program. The executable
+name can be qualified with relative or absolute path information. Eg:
+
+            open "c:\users\phoward\stink.exe" "-option a"
+
+The debugger will attempt to locate and start up the executable file you have
+specified. If it succeeds, it will become the "current" application for
+debugging operations. You cannot open another application until this one
+terminates, or you kill it.
+
+If you see the message "Could not start process", this means that the
+debugger either failed to locate the executable that you named, or some kind
+of stupid operating system problem prevented it from begin started.
+You can either swear under your breath and try again, or swear very loudly
+and just give up. Check your spelling of the filename, of course.
+
+The debugger will adopt the OS conventions when searching for the program
+that you specify, such that it is often not necessary to specify pathnames
+or file extensions, eg:
+
+       Command> open "win32-environment"
+
+To save time, you can open your target program at the same time as starting
+up the debugger by passing the name of the target program (without the
+surrounding double-quotes) as a command-line argument:
+
+       DOS> devel-dbg-ui c:\users\phoward\stink.exe
+
+and you can also include any command-line arguments that you want the
+target program to be given:
+
+       DOS> devel-dbg-ui c:\users\phoward\stink.exe -option a
+
+Debugging operations on the target program are performed by issuing commands
+at the debugger's command prompt. This prompt will only be available while
+the application is stopped. If you wish to stop the application by force
+in order to obtain the command prompt, press the STOP button.
+
+
+
+File: dylan-debug,  Node: Quitting the Debugger,  Next: Controlling the Application, Prev: Opening an Application, Up: Top
+
+Quitting the Debugger
+---------------------
+
+Typing "quit" (or just "q") at the command prompt exits the debugger. This
+works at any time. If an application is in progress, it will be terminated
+first. Typing Ctrl-Break at the debugger will also close everything down,
+though this is normally only necessary if things go wrong. (Er...yes, they
+sometimes do). A word of warning, don't press Ctrl-Break into the application
+you are debugging. This has been known to really screw things up.
+
+
+
+File: dylan-debug,  Node: Controlling the Application,  Next: Controlling Individual Threads in the Application,  Prev: Quitting the Debugger, Up: Top
+
+Controlling the Application
+---------------------------
+
+When you first open an application, it will proceed through some low-level
+initializations and then stop at a specially-arranged breakpoint. (At this
+point, the application will not have run any dylan code at all). The basic
+control commands are:
+
+continue - Allows the application to proceed from the current point.
+restart - Starts the application running from the beginning again.
+kill - Closes the application, allowing you to open a new one.
+
+When you use the restart command, you may notice that dead windows from
+the current invocation "hang around" on the screen. They may not even
+vanish until you quit out of the debugger completely.
+
+When the application is running, you will not have an active command prompt
+and so you can't give commands. To get a prompt, you must wait for the
+application to stop again, or stop it yourself by pressing the STOP
+button.
+
+If the program comes to a natural termination, the debugger will notify you
+of this, and also what the exit code was. The program will then be considered
+closed, and further debugging operations are not permitted. At this point,
+you can quit the debugger, or open a new (possibly the same) target
+program. Note that "restart" can still be used at this time to re-open the
+application that terminated.
+
+
+
+File: dylan-debug,  Node: Controlling Individual Threads in the Application,  Next: Examining the Stack,  Prev: Controlling the Application, Up: Top
+
+Controlling Individual Threads in the Application
+-------------------------------------------------
+
+The threads that are active in the application can be listed with the
+command:
+
+          show threads
+
+This produces a list of threads where each is numbered. Each thread is given
+a name by the debugger, and one of them will have the symbol [*] next to
+it. This is the currently selected thread. To change the current thread
+use the command:
+
+          in thread <number>
+
+where <number> is the number of the desired thread according to the list.
+
+Note that when the application stops, the selected thread is changed
+automatically to be the one that generated the reason for stopping. If you
+stop the application with the STOP button, the selected thread will be
+changed to the thread that was created first (the primary thread).
+
+
+
+File: dylan-debug,  Node: Examining the Stack,  Next: The Current Library and Module Context,  Prev: Controlling Individual Threads in the Application, Up: Top
+
+Examining the Stack
+-------------------
+
+While the application is stopped, you can view the stack of any thread in
+the application by selecting that thread and typing the commands:
+
+          backtrace (or just "bt")
+or:       backtrace verbose (or just "bt v")
+
+This gives a list summary of all frames on the stack, numbered from 1,
+which is the "top", or most recent, stack frame. The debugger will try to
+tell you the name of the function active in each frame, but may fail
+and just print question marks. The debugger will also try to distinguish
+frames running dylan code from frames running foreign code. Cleanup
+frames are displayed in the trace as:
+
+         #[Dylan Cleanup Frame]
+
+When "verbose" is specified, all local variable information for each
+stack frame will also be printed.
+
+You can limit the number of frames printed in a stack trace by adding this
+limit to the "bt" command, eg:
+
+         backtrace 25
+
+Will print a backtrace, but will not display any more than the 25 topmost
+frames.
+
+Call frames contain a numeric signature represented as two hexadecimal
+numbers separated by a colon, eg:
+
+         [0x12FF80:0x401079 Foreign Call Frame]
+
+The number on the left is the frame pointer for that call frame, and the
+number on the right is the instruction pointer.
+
+Call frames also attempt to describe the closest location in the source
+code corresponding to the code running in that frame. This might be
+displayed as
+
+         {Line 47 of yerwhat.dylan}
+
+If there is not sufficient debugging information for the debugger to
+determine the closest line of source code, the message
+
+         {Unknown source location}
+
+will be used instead.
+
+The current frame will initially be the topmost frame. To give a more
+detailed view of the current frame type:
+
+         frame
+
+which will print the frame along with all of the live local variables and
+their values. If the frame is running dylan code, the values will be presented
+to you as dylan objects. Otherwise, they will just appear in hexadecimal.
+
+The commands "up" and "down" move through the stack. You can also use "frame"
+with a frame number to select a specific frame directly. "top" and "bottom"
+select the top and bottom stack frames respectively.
+
+
+
+File: dylan-debug,  Node: The Current Library and Module Context,  Next: DLLs,  Prev: Examining the Stack, Up: Top
+
+The Current Library and Module Context
+--------------------------------------
+
+When you type a dylan name at the debugger, it is assumed to belong to the
+currently selected dylan module and library. These start off as being
+the "dylan" module and the "dylan" library, and appear in parentheses
+just above the command prompt, along with the name of the executable you
+are debugging, in case you forget.
+
+Use the commands:
+
+          in module <module-name>
+          in library <library-name>
+
+to change this default context. However, note that you can qualify names to
+temporarily override the defaults. (See *Note Expressions::).
+
+
+
+File: dylan-debug,  Node: DLLs,  Next: Expressions,  Prev: The Current Library and Module Context, Up: Top
+
+DLLs
+----
+
+The debugger will notify you of each DLL that loads into the application.
+At load time, the name of the DLL will be printed. These names are used
+later in stack traces to show you which DLL a particular function belongs
+to. The notation for this will be familiar to WinDBG users:
+
+       <dll-name>!<function-name>
+
+You can also use this notation yourself when typing in symbol names.
+(See *Note Expressions::).
+
+
+
+File: dylan-debug,  Node: Expressions,  Next: Setting Breakpoints,  Prev: DLLs, Up: Top
+
+Expressions
+-----------
+
+Many commands in the debugger include "expressions", so now is a good time
+to describe these.
+
+Expressions in the debugger are classified into simple expressions and
+functional expressions. Functional expressions can only be used in an
+"eval" command. Simple expressions can be used in many other commands, such
+as "print", "describe" and "break". All of the following can be used as
+simple expressions:
+
+Literal Integer:
+  A series of decimal digits (eg 278) is interpreted as a literal dylan integer
+  value by the debugger. It is evaluated by performing whatever 
+  transformations are required for it to conform to the tagging scheme.
+
+  BUG WARNING: Negative literal integers are not accepted on the command
+               line.
+
+Literal Character:
+  A single character surrounded by single-quote marks (eg 'A') will be
+  interpreted as a literal dylan character. Again, it is evaluated by
+  adding a tag as necessary.
+
+Literal Address:
+  To specify a low-level address directly, you MUST use the sequence "0x"
+  (the digit zero followed by a lower-case letter 'x')
+  followed by the address in hexadecimal format, using decimal digits and
+  the letters A-F (in upper or lower case) where necessary. (Eg "0x43ed32").
+  The debugger will use this value directly, without attatching tags.
+
+Literal Boolean:
+  You may use either of the symbols #t or #f to specify their dylan equivalents
+  in the application that you are debugging. These are equivalent to the
+  symbolic expressions "%true:internal:dylan" and "%false:internal:dylan"
+  respectively.
+
+Literal Empty List:
+  You may use the sequence "#()" to specify its dylan equivalent in the
+  application you are debugging. This is equivalent to using the symbolic
+  expression "%empty-list:internal:dylan".
+
+Literal Keyword:
+  Keywords are symbols followed directly by a colon (eg size:). Any symbol
+  terminated by a colon will be evaluated by looking it up against interned
+  symbols in the runtime. If the symbol does not already exist, it will
+  be created and interned within the application.
+
+Literal String:
+  Any sequence of characters surrounded by double-quotes in an expression
+  will be treated as a literal <byte-string> object. The debugger will
+  attempt to reconstruct the string object within the application.
+  Within a literal string, you can use the \n sequence to denote a
+  newline.
+
+Literal Vector:
+  You can use dylan-like notation for a vector, ie. the symbol '#[',
+  followed by zero or more further simple expressions, followed by the
+  symbol ']'. Note that elements of vectors can be simple-expressions
+  of any kind, eg:
+
+        #[1, 2, 3, 4]
+        #["Nest in a string", $1, make:dylan:dylan, [eax], #['a', #f]]
+
+  Note that, while the first of these is legal dylan source code, the
+  second is not. The debugger will accept both, and reconstruct the
+  correct object within the application. It will be of type
+  <simple-object-vector>.
+
+Literal List:
+  The notation for a literal list is identical to that for vector, except
+  that the delimiters are '#(' and ')'. Any amount of nesting of lists
+  and vectors is acceptable.
+
+Register Expression:
+  To specify the value of a register, use the name of the register (in upper
+  or lower case), surrounded by square brackets. (Eg [eax], [ESP]). If
+  the register model of the machine you are running on includes a register
+  with that name, the expression will be evaluated by reading the value
+  from that register within the context of the currently selected thread.
+
+History Variable:
+  All value results reported by the debugger are also stored in a history
+  and can be referred back to by using their history variable. This is denoted
+  by a dollar sign followed by a series of decimal digits (eg $20).
+
+Symbolic Expression:
+  Any symbolic name will be interpreted as a dylan variable/constant within
+  the application, and will be evaluated as such. Unless otherwise 
+  directed (see below), the symbol will be assumed to exist within the
+  currently selected module and library. It will be treated
+  case-insensitively.
+
+  To denote a symbol that is in a module different from the currently
+  selected module, qualify it by adding a colon followed by the module
+  name (eg *var*:my-module). If you also want to specify a different library,
+  use a further colon and add the library name (eg *var*:my-module:my-library).
+  Note that, when a symbol name clashes with a reserved word in the debugger,
+  you can use this kind of qualification to get around the problem.
+
+  To denote a symbol that is a lexical variable or argument within the current
+  stack frame, prefix the symbol with the reserved word "local" (eg local x).
+
+  You may wish to refer to a symbol while avoiding any automatic "mangling"
+  that is normally performed by the debugger. For instance, you may wish
+  to refer to a symbol from C code. To do this, prefix the name of the
+  symbol with a single underscore ("_"). The rest of the name will be
+  interpreted case-sensitively, and no mangling will be performed. The
+  underscore is _not_ considered part of the name. (If your symbol really
+  does start with an underscore, you will have to use two underscores
+  on the command line).
+
+  Any symbol can be further qualified with the name of a DLL, using the
+  WinDBG style of qualification. If you do not use a DLL name, this is
+  not a problem as long as the debugger can find the symbol in any one
+  of the available DLLs. However, if symbols are duplicated between DLLs,
+  it is undefined which occurence will be found if you do not qualify.
+  Eg:
+
+         DYLAN!make
+         KERNEL32!_DbgBreakPoint
+
+  (note that the DLL name is treated case-insensitively).
+
+Functional expressions basically follow the dylan syntax for a function
+call. The grammar is simplified to:
+
+  <functional-expression> ::= <simple-expression> <argument-list>
+  <argument-list> ::= "(" [<argument>, {"," <argument>}] ")"
+  <argument> ::= [keyword] <simple-expression>
+
+Some examples are:
+
+  format-out:format-out:format-out("Here is a %d and a %c\n", 56, 'a')
+  make:dylan(<simple-object-vector>:dylan, size: 34, fill: #t)
+  concatenate(#['a', 'b', 'c', 'd'], #['e', 'f', 'g', 'h'])
+  reverse!(#(#[1, 2, 3], #[4, 5, 6], #[7, 8, 9]))
+  $55()
+
+Note that a comma is optional between a keyword argument and its specified
+value, hence these two are equivalent:
+
+  spam(spam: spam)
+  spam(spam:, spam)
+
+In the current version, functional expressions may not be nested, hence
+the following are illegal:
+
+  head(tail(tautologies:dylan-test:cmu-test-suite))
+  make:dylan(<simple-object-vector>:dylan, size: +:dylan(10, 20), fill: #t)
+
+
+
+File: dylan-debug,  Node: Setting Breakpoints,  Next: Printing and Inspecting Dylan Instances,  Prev: Expressions, Up: Top
+
+Setting Breakpoints
+-------------------
+
+A breakpoint can be set on any address in the application by the command:
+
+            break <simple-expression>
+
+The debugger will evaluate the expression, which must be a symbolic name or
+a literal address. If the expression evaluates to a generic function object,
+the debugger will place breakpoints on the entry points of all methods in
+the generic function. If the expression evaluates to a method object,
+the debugger will place a single breakpoint on the entry point of the method.
+Otherwise, the debugger will simply place the breakpoint on the address
+yielded by the expression. For each breakpoint placed, the debugger will
+issue a message giving the address that the breakpoint was placed at.
+
+Sometimes, the debugger will not use the precise entry point of a function
+for a breakpoint. Instead, it will offset this to account for any "prolog"
+code that it knows about. This is done completely transparently, and you
+don't have to worry about it. If you use a literal hex address for your
+breakpoint, though, the debugger guarantees that it will use exactly that
+address.
+
+When a breakpoint is subsequently encountered, the application will stop,
+and the debugger console will display a message:
+
+            >>> BREAK <function>
+
+followed by the command prompt.
+
+To clear a breakpoint, type:
+
+            clear <the-same-simple-expression>
+
+Which will remove the breakpoint, and also forget about it altogether.
+
+Breakpoints can also be set on linenumber locations in source files.
+For this, use the following syntax:
+
+            break line <x> of "<filename>"
+
+The linenumber <x> must be an integer, and the filename must contain the
+name of a source file, surrounded by double quotes. The name MUST NOT
+contain any path qualifications. If the debugger cannot find enough source 
+information to calculate the position of the breakpoint, it will notify you 
+of an error, and no breakpoint will be set.
+
+If you want to guard against any ambiguity in the filename, you can
+additionally specify the library that the source file belongs to:
+
+   break line 42 of "definition-objects.dylan" in environment-protocols
+   break line 42 of "definition-objects.dylan" in dfmc-environment-database
+
+When source code breakpoints are encountered, they appear with the
+message:
+
+           >>> BREAK line <x> of source file <name>
+
+
+All individual breakpoints, whether entry-point breakpoints or source code
+breakpoints, are assigned an integer identifier which can be used to refer
+to them easily. The command "breakpoints" (or just "bp") will list all
+existing breakpoints, along with their integer codes. A breakpoint can
+be cleared by its numeric code, eg. with zero as an example:
+
+          clear 0
+
+It can also be disabled:
+
+          disable 0    (Abbreviation: bd 0)
+
+This causes the breakpoint to be removed, and prevents it from ever being
+encountered. However, its position is still remembered, and it can be
+re-enabled by the command:
+
+          enable 0     (Abbreviation: be 0)
+
+(The "breakpoints" command will tell you whether each breakpoint is
+currently enabled or disabled).
+
+You can also "ignore" a breakpoint (if it is enabled):
+
+          ignore 0     (Abbreviation: bi 0)
+
+This will keep the breakpoint in place, and still notify you of hits
+on that breakpoint. However, instead of stopping the application and giving
+you the command prompt, it will simply "run over" the breakpoint and
+keep going. You will see the ">>> BREAK" message, and nothing else.
+This behaviour can be cancelled again with:
+
+          enable 0
+
+Or, you can limit the number of times a breakpoint is ignored using:
+
+          ignore 0 for 10
+
+For the next 10 hits on breakpoint #0, you will be notified of the hit,
+but the application will be allowed to run past it. On the 11th hit,
+the application will stop, and you will be given the command prompt.
+
+Finally, the command "clear" by itself can be used to remove and forget
+all breakpoints that are currently set in the application.
+
+
+File: dylan-debug,  Node: Printing and Inspecting Dylan Instances,  Next: Finding Symbols,  Prev: Setting Breakpoints, Up: Top
+
+Printing and Inspecting Dylan Instances
+---------------------------------------
+
+The debugger provides two commands for inspecting the values of instances
+in the runtime. The first is:
+
+             print <simple-expression>
+
+which attempts to evaluate the given simple expression, and then display
+the resulting value as a dylan object using a fairly compact representation.
+The value will also be assigned a history entry. An example of the output
+might be:
+
+             $1 : #(#"spam", #"eggs", #"chips", ...)
+
+In this case, the ellipsis is a signal that the list contains more items
+than those shown.
+
+If the expression evaluates to something that is apparently not a dylan
+object, the value will just be printed in hexadecimal.
+
+The debugger uses several printing conventions to make the output
+as readable as possible. Integers and characters will be displayed
+directly, as will the values #t and #f. Lists and vectors will be printed
+using dylan notation as in the example above. More general instances will
+just be presented as:
+
+             {instance of <SOME-CLASS>}
+
+but this behaviour can be extended by a new feature called "directives".
+A directive is what you use to tell the debugger that it should adopt
+a special method for printing an object. The best way to describe this
+feature is via an example. Suppose you have a class <SPAM> defined in
+module SPAM-MODULE in your application. This class has two slots
+FIRST-SPAM and SECOND-SPAM, both of which are strings (say). You can
+instruct the debugger to adopt a more descriptive approach when
+printing instances of <SPAM>:
+
+ directive <spam> in spam-module
+     print "{spam instance with " first-spam " and " second-spam "}"
+
+(I've split over lines to make it more readable, but you must actually type
+the command on a single line in the debugger, of course).
+
+Which reads as follows: when printing an object of class <spam> (from
+module spam-module), generate the representation by concatenating
+the string "{spam instance with ", followed by the representation
+of the object in slot FIRST-SPAM, followed by the string " and ", followed
+by the object in slot SECOND-SPAM, followed finally by the string "}".
+After receiving this directive, the debugger would print all <SPAM>
+instances as (eg):
+
+           {spam instance with "some string" and "some other string"}
+
+which is far more informative than:
+
+           {instance of <SPAM>}
+
+You can also ask the debugger to walk deeper into the data structure,
+by specifying sequences of indirection. To do this, specify a comma-seperated
+list of slot names, instead of a single slot name. Example:
+
+   directive <thingy> in thingy print "{thingy " splat, splunge "}"
+
+This will expect all <THINGY> instances to have a slot called SPLAT,
+but also that the object in the SPLAT slot will have a slot called
+SPLUNGE. It will use the object in the SPLUNGE slot, and splice its
+representation into the final printed form. If the lookups fail at
+any point, the debugger will splice short error messages into the
+strings, but it will still attempt to follow the protocol you specify as
+far as possible.
+
+The second inspector command is:
+
+             describe <simple-expression>
+
+Here, the expression is evaluated as for the print command. If the result
+is apparently a dylan object, it will be displayed in full, with all
+slots in the instance listed along with their values. Each slot value will
+be assigned a history entry, and will be printed using the same notations
+as with the print command. The class of the instance is also shown at the
+top of the list of slots. Eg:
+
+             class = <LIST>
+             $2 : head = #"spam"
+             $3 : tail = #(#"eggs", #"chips", #"spam", ...)
+
+Instances which have repeated slots will be described with all repeats
+shown, eg:
+
+             class = <SIMPLE-OBJECT-VECTOR>
+             $4 : size = 2
+             $5 : vector-element[0] = {class <TYPE>}
+             $6 : vector-element[1] = {class <OBJECT>}
+
+
+Many dylan objects have special printed representations in the debugger.
+Here is a summary of how they appear:
+
+Simple Vector:              #[x, y, z ...]
+Stretchy Vector:            {stretchy vector of x, y, z ...}
+Empty Stretchy Vector:      {empty stretchy vector}
+List:                       #(x, y, z)
+Pair:                       #(x . y)
+Improper List:              #(a, b, c . z)
+Boolean:                    #t or #f
+Integer:                    42 or -42
+Character:                  'A'
+String:                     "String"
+Symbol:                     #"symbol"
+Boxed Machine Word:         {MW:0x1234ABCD}
+Boxed Double Integer:       {DOUBLE:0x1234ABCD5678CDEF}
+Dylan Thread:               {thread "Name"} or {anonymous thread}
+Condition with Formatting:  {ERROR: Description} or {RESTART: Description}
+Generic Function:           {generic spam}
+Method:                     {method on (<object>, <object>)}
+Class:                      {class <spam>}
+Singleton Type:             {SINGLETON: #f}
+General:                    {instance of <SPAM>}
+Illegal or Raw Object:      {? 0x1234ABCD}
+
+The third inspection command, "explode", is specifically for use with
+collections (vectors, lists, tables etc...). It is very similar to
+"describe", but will ensure that every semantic element of the collection
+is printed individually. For example, the list #('a', 'b', 'c') would produce
+the following output from "describe":
+
+       $1 head = 'a'
+       $2 tail = #('b', 'c')
+
+but "explode" does better:
+
+       0 --> $1 : 'a'
+       1 --> $2 : 'b'
+       2 --> $3 : 'c'
+
+"Explode" also works very well with object tables, telling you exactly
+how each key maps to each element. This command is recommended over
+"describe" for tables, lists, strings and stretchy-vectors.
+
+The fourth and final inspection command is called "walk". This command
+will traverse the data structure rooted at the expression you supply,
+and generate a statistical report telling you:
+
+   -  How many different classes of object make up the entire structure.
+   -  How many instances of each of those classes were traversed.
+   -  What proportion of the total storage for the structure is attributed
+      to each of those classes.
+   -  How much memory the structure is taking up in total.
+
+Like the three other inspector commands, "walk" just takes a simple
+expression as its argument, eg:
+
+         walk *my-big-table*:my-module:my-library
+
+
+File: dylan-debug,  Node: Finding Symbols,  Next: The Evaluator,  Prev: Printing and Inspecting Dylan Instances, Up: Top
+
+Finding Symbols
+---------------
+
+You can find the three closest symbol definitions to a particular address
+using the command:
+
+             nearto <simple-expression>
+
+This will attempt to evaluate the expression to obtain an address. Given
+that a legal address results, the debugger will then search for symbols
+whose definitions are close to that address. It will display, if possible,
+the closest symbol to that address, and also the nearest preceeding symbol
+and the nearest following symbol. This command invokes quite low-level
+functionality in the debugger, hence the names of the symbols might be
+mangled. Eg:
+
+            Command> nearto #f
+
+            ;;; Closest is KPfalseYinternalVdylan at 0x48BE0C
+            ;;; Closest behind is KPtrueYinternalVdylan at 0x48BE08
+            ;;; Closest ahead is KLcharacterGYdylanVdylan at 0x48BE40
+
+
+
+File: dylan-debug,  Node: The Evaluator,  Next: Tracing Functions,  Prev: Finding Symbols, Up: Top
+
+The Evaluator
+-------------
+
+The debugger allows you to evaluate simple Dylan expressions within the
+context of the running application using:
+
+            evaluate <functional-expression>
+
+(See *note Expressions:: for a description of how to legally
+form a functional expression). Note that "evaluate" can be abbreviated
+to just "eval". 
+
+An example is:
+
+            eval +(100, 240)
+
+Infix syntax is not permitted by the debugger, hence the need for
+prefix function call notation in this case.
+
+When you issue an "eval" command, the debugger needs to run code in the
+application in order to obtain the value of your expression in the correct
+context. When your function has run in the application, the result will be
+returned to you with a message on the console window:
+
+            <Evaluator> $7 : 340
+
+When this happens, the application will stop. Everything about the application
+will be just as it was before you issued the "eval" command.
+
+Where the evaluated form returns multiple values, these will be printed
+separately, eg:
+
+            <Evaluator> $8 : 200
+                        $9 : 23
+                        $10 : #f
+
+Note that the application might stop for some other reason _before_ your
+evaluation has completed. If this happens, you'll just have to keep
+continuing the application until your result comes back.
+
+Be aware that the evaluator should not be used when the application was
+stopped by the STOP button. This is because the STOP button forces the
+application to stop in some random location, and such a location might
+not be an appropriate point to begin executing a Dylan function. You
+should use the evaluator when stopped at breakpoints, dylan errors,
+following "step" operations, or when a previous evaluation has just
+returned.
+
+
+
+File: dylan-debug,  Node: Tracing Functions,  Next: Stepping Through Source Code,  Prev: The Evaluator, Up: Top
+
+Tracing Functions
+-----------------
+
+You can trace the invocation of functions as the program runs by issuing the
+command:
+
+             trace <simple-expression>
+
+As with "break", this will trace all of the methods if your expression
+evaluates to a generic function, as with:
+
+             trace make:dylan:dylan
+
+You can trace dylan functions or foreign functions:
+
+             trace vector:dylan:dylan
+             trace _my_foreign_function
+
+After issuing a "trace" command, and continuing the application, the entry
+and exit points of the traced functions will be monitored on the console,
+using a message such as:
+
+             -> make:dylan:dylan#12
+
+to show that a method on 'make' was entered, and:
+
+             <- make:dylan:dylan#12
+
+to show that it returned.
+
+To clear a tracepoint, type:
+
+             untrace <the-same-simple-expression>
+
+You can print a list of all the breakpoints and tracepoints you currently
+have set in the application, simply by typing "breakpoints" at the command
+prompt.
+
+Note that it is perfectly legal to have a breakpoint and a tracepoint on
+the same function at the same time.
+
+Finally, you can use the command "untrace" by itself to remove all
+tracepoints that are currently set in the application.
+
+
+File: dylan-debug,  Node: Stepping Through Source Code,  Next: Debug Messages,  Prev: Tracing Functions, Up: Top
+
+Stepping Through Source Code
+----------------------------
+
+You can step through the execution of your program at the source-code
+level. This should work for both dylan and foreign code, but will not work
+for dylan code compiled with the C-backend. (Although, in that case,
+stepping through the generated C should be possible).
+
+There are currently two implemented stepping commands: "step over" and
+"step out". Both of these are sensitive to the currently selected
+thread, and the currently selected stack frame.
+
+step out
+
+  -  This continues execution until the function running in the selected
+     stack frame returns.
+
+step over
+
+  -  This continues execution until the function running in the selected
+     stack frame reaches the next recorded source location point, or
+     returns, whichever happens first. This has the effect of stepping
+     over function calls rather than into them.
+
+Both of these commands will cause the application to start running again.
+When the thread in question reaches its destination step-point, the
+application will stop, and you will see the message:
+
+    Thread <thread-name> stepped from <point-A> to <point-B>
+
+Each of <point-A> and <point-B> will be printed as:
+
+    {line <x> of <filename>}
+
+or as
+
+    {unknown source location}
+
+
+When stepping, all threads are permitted to run while the _selected_
+thread moves from the source point to the destination point.
+
+Note that the destination of a step might not always be exactly what
+you expect. Stepping through optimized code can sometimes be slightly
+confusing, and there is also the possibility of a non-local exit
+that unwinds several stack frames.
+
+There is as yet no working "step into" operation.
+
+
+File: dylan-debug,  Node: Debug Messages,  Next: Selecting Restarts,  Prev: Stepping Through Source Code, Up: Top
+
+Debug Messages
+--------------
+
+Occasionally, the application may want to send a diagnostic message to
+the debugger. When the debugger receives these, it simply prints them to
+the console window and continues. There are two kinds of debug message
+you should be aware of:
+
+1. Those produced by an operating system API specifically for that
+   purpose. On Windows, such an API is OutputDebugString.
+
+2. Those produced by native Dylan programs calling "debug-message" from
+   the functional-extensions library.
+
+In case 1, the string sent from the application is just echoed to the
+console debugger's screen, prefixed by the note "APPLICATION MESSAGE:".
+
+In case 2, the debugger receives the format string and format arguments
+that were supplied to debug-message, and generates a formatted string
+from these. The formatted string is printed, prefixed by the note
+"DEBUG MESSAGE". 
+
+
+File: dylan-debug,  Node: Selecting Restarts,  Next: Displaying Regions of Memory,  Prev: Debug Messages, Up: Top
+
+Selecting Restarts
+------------------
+
+Whenever a Dylan application is stopped, there may be various restart
+handlers available. When the application actually invokes the debugger
+(via "error", or an unhandled condition), these restart handlers will be
+automatically listed on the console window. If the restarts have format
+strings to describe them, these descriptions will be formatted by the
+debugger. Otherwise, they will be printed as "Undescribed Restart". All
+restarts are given a number.
+
+To invoke a restart, simply use the "continue" (or "c") command, followed
+by the number of the required restart. Eg:
+
+      Command> continue
+      ;;; Application continuing. Press STOP button if needed...
+     
+      ;;; Application invoked the debugger.
+      ;;; Stopped in thread DBGTHREAD0
+      ;;; Restarts Available:
+          1. Restart the event loop for {instance of <my-window>}
+          2. Close the window {instance of <my-window>}
+          3. Destroy process.
+
+      Command> continue 1
+      ;;; Application continuing. Press STOP button if needed...
+      .  
+      .
+      .
+
+The command "options" can be used at any time to show a list of available
+restarts. ("options" can be abbreviated to "opt"). Note that the list of
+restarts may well be different for each thread in the application. 
+
+A Note on Restarts and the Evaluator:
+
+The Evaluator always causes the application to set up a restart handler
+that will remain in force while the interactive function executes. If
+the interactive function breaks to the debugger, you can select this
+restart to abandon the evaluation if necessary. 
+
+These restarts are named with a notion of "level", much like the way
+listeners work in the emulator. The actual application is considered
+"Level 0". An interactive evaluation typed from a breakpoint in level 0
+will be considered "Level 1". An interactive evaluation typed from a
+breakpoint in level 1 will run as "Level 2", and so on... Whenever an
+interactive form breaks or signals an error, there will be restarts
+allowing you to abandon any number of levels. Eg:
+
+      Command> eval +(10, #f)
+
+      ;;; Evaluating...
+      ;;; Application invoked the debugger.
+      ;;; Restarts Available:
+          1. Return to level 0
+
+      Command> eval +(10, #f, #t)
+
+      ;;; Evaluating...
+      ;;; Application invoked the debugger.
+      ;;; Restarts Available:
+          1. Return to level 1
+          2. Return to level 0
+
+      Command> continue 0
+      .
+      .
+      .
+
+
+File: dylan-debug,  Node: Displaying Regions of Memory,  Next: Setting Values in the Runtime,  Prev: Selecting Restarts, Up: Top
+
+Displaying Regions of Memory
+----------------------------
+
+The debugger is capable of displaying (in hexadecimal), the contents of
+memory starting from a specified address. The command is:
+
+           display <simple-expression> [lines <n>]
+
+The simple expression will be evaluated to an address. If the address
+is readable, the debugger will list out the contents of locations
+starting at that address. The display will be in lines of 4 word-sized
+locations, each printed as unsigned hexadecimal. By default, 8 lines
+will be displayed (32 words in total). If you use the "lines" directive,
+you can specify how many lines are printed.
+
+Examples:
+
+          display [eip]
+          display 0x1234abcd lines 50
+          display local x lines 2
+          display DISPATCH-TEST-SUITE!make:dylan:dylan
+
+(Note that "display" can be abbreviated to "disp")
+
+
+File: dylan-debug,  Node: Setting Values in the Runtime,  Next: Profiling,  Prev: Displaying Regions of Memory, Up: Top
+
+Setting Values in the Runtime
+-----------------------------
+
+You can modify the application directly by poking values into registers and
+memory locations. The command to do this is of the form:
+
+             set <simple-expression> <simple-expression>
+
+The debugger will evaluate the left-hand expression to a destination
+location, and the right-hand expression to a value. It will then attempt
+to write the value into the location. If either expression cannot be
+evaluated, you will see an error message. The debugger also generates an
+error message if the memory write operation fails.
+
+Example:
+
+             set local spam 45
+
+If there is a local variable called "spam" in the currently selected stack
+frame, it will be altered to hold the dylan integer 45.
+
+Note that left-hand expressions cannot be:
+
+          - Literals
+          - History variables
+
+Note also that the 'set' operation is ultimately low-level. There are no
+language-level semantics associated with it, and behaviour of the 
+memory manager is not taken into account. Hence, this facility should be
+used with care.
+
+
+File: dylan-debug,  Node: Multiple Values,  Next: Exceptions,  Prev: Setting Values in the Runtime, Up: Top
+
+Multiple Values
+---------------
+
+The command "mv" can be used to list the current contents of the multiple
+values area for the selected thread. Each object in the MV area is printed
+as a dylan object, and assigned to a history entry.
+
+
+File: dylan-debug,  Node: Exceptions,  Next: Profiling,  Prev: Multiple Values, Up: Top
+
+Exceptions
+----------
+
+When an exception is signalled in the application, the debugger is notified
+of this straight away. This is called a "first chance" exception. The
+application may have a handler in force for that exception, but this will
+not have been invoked at the time of the first chance signal to the
+debugger.
+
+By default, the debugger will not notify you of any first chance exceptions
+other than breakpoints. Instead, it will pass them - immediately and
+silently - back to the application to handle. If the application can
+handle the exception, then it will do so and continue. If the application
+cannot handle the exception, the debugger will be notified of it again.
+This is the "second chance" exception. When these occur, the debugger will
+notify you, stop the application, and give you a command prompt.
+
+You can escape this default behaviour, and ask for the prompt to be
+given to you at the first chance signal, before any application handlers
+have the chance to process it. To do this, type the "exceptions"
+(or just "ex") command.
+
+The debugger will go through every type of exception that it knows
+about, and ask whether you want to debug it at first or second chance.
+(For each exception, type Y to debug at first chance, or N to debug
+only at second chance).
+
+When you continue from a first chance exception, it will still be
+considered "unhandled", and hence passed to any available handler in
+the application. After having continued, you may immediately see the
+second chance signal, and be returned to the command prompt. In future,
+this behaviour will be made more flexible.
+
+Note: When debugging natively-compiled dylan, there should be no need
+to use this command. 
+
+
+File: dylan-debug,  Node: Profiling,  Prev: Exceptions, Up: Top
+
+Profiling
+---------
+
+The debugger is equipped with a statistical profiling engine, and a data
+interpreter that can show you basic information about the behaviour of
+your program. You can use this information as a guide to whereabouts in
+your application the most time is being spent or the most memory is being
+allocated. Currently, there is no high-level support for formatting this
+data, only a default display.
+
+The command to control profiling is "profile". This command is potentially
+very complicated, but is normally quite simple to use due to the amount
+of defaulting that is done.
+
+Here, the profiling command is documented in stages of increasing complexity.
+
+0. Time versus allocation profiling
+
+   In all uses of the "profile" command you can add the word "allocation"
+   (before any other directives) to perform allocation profiling instead of
+   time profiling:
+
+          profile allocation ...
+
+1. Switching profiling on and off.
+
+   When your target application is stopped, and you have the command prompt
+   available, you can issue the command:
+
+          profile
+
+   to instruct the debugger to begin gathering statistical data. When you
+   continue the application, the debugger will obtain this data in the
+   background. You will probably notice the speed of your application
+   drop considerably, as the profiler needs to stop it periodically to
+   collect information.
+
+   The debugger will continue to obtain profiling information, no matter
+   what other debugging operations you perform on it. Even when profiling,
+   the "STOP" button can still be used to halt the application.
+
+   To stop profiling, and print the table of results, issue the command:
+
+          profile results
+
+   (If the application terminates while profiling is still switched on,
+   the table of results will be generated automatically).
+
+   When the profiler is switched off, the results have to be processed,
+   which may take some considerable time. When the results are ready,
+   they are displayed in two separate tables.
+
+   The first table shows counts of the number of times (or number of bytes
+   allocated while) specific functions were seen anywhere on the call stack.
+   The second table shows the number of times (or number of bytes allocated
+   while) functions were seen only at the top of the stack. On each table,
+   entries are of the form:
+
+       <count> <approximate percentage> : <name of function>
+
+   with a total shown at the bottom.
+
+   Note that, if your application was multi-threaded, the two tables will
+   be shown for each thread separately.
+
+   If you wish to stop profiling immediately, and throw away all the
+   results without waiting for them to be printed, just type:
+
+       profile off
+
+2. Selecting which threads to profile.
+
+   [If you are profiling single-threaded applications, ignore this section].
+
+   When using "profile" as described above, all existing threads will be
+   included in the profile information, as will all threads subsequently
+   created by the application up until you switch profiling off.
+
+   When you switch on profiling, you can specify which of the currently
+   existing threads you wish to include in the profile. Threads are
+   referred to by their numbers (NOT their names!) as they appear in
+   the list generated by the "show threads" command.
+
+   To switch on the profiler for a specific list of threads, use:
+
+        profile threads <threadlist> [ask]
+
+   where <threadlist> is a list of zero or more thread numbers, separated
+   by commas. These threads will be profiled when you continue the
+   application. Any threads subsequently created by the application will
+   NOT be profiled.
+
+   Note: the debugger reserved word "all" can be used in place of a
+   <threadlist> as a shorthand for all currently existing threads.
+
+   If you include the "ask" directive, the behaviour is altered slightly.
+   Now, when new threads are created in the application, the debugger will
+   stop it, and prompt you as to whether this thread should be included
+   in the profile.
+
+   Okay, so that's a bit of a mouthful. Here are some examples:
+
+   profile threads 1, 2
+      Profiles threads numbered 1 and 2 when you continue. Does not profile
+      any new threads if they are created.
+
+   profile threads 1, 2 ask
+      Profiles threads numbered 1 and 2 when you continue. If any new threads
+      are created, you will be asked whether or not they should be included.
+
+   profile threads ask
+      Profiles none of the existing threads. New threads can be added into
+      the profile as and when they are created.
+
+   profile threads all
+      Profiles all existing threads, but ignores new threads.
+
+   profile threads all ask
+      Profiles all existing threads, and asks about new threads.
+
+   profile threads
+      Profiles nothing. Legal, but pointless!
+
+
+3. Specifying the granularity of snapshots.
+
+   The statistical profiler works by forcing the application to stop at
+   regular intervals, and examining which functions are active on the
+   stack. The size of the interval defaults to 100 milliseconds, but you
+   can change this with the 'at' directive when switching on the profiler.
+   Eg:
+
+             profile at 50
+
+   will use a 50ms interval instead. Shorter intervals generate more
+   sensitive results, at the expense of "clock on the wall" time.
+
+   Note: The 'at' directive (if supplied), must come _after_ the
+         'threads' directive (if supplied).
+
+
+4. Specifying the depth of stack traces.
+
+   The profiler generally looks at the entire stack trace of a thread during
+   each periodic snapshot. However, you can limit the number of stack
+   frames examined using the 'depth' directive. Eg:
+
+             profile depth 5
+
+   will activate the profiler as normal. However, any stack containing
+   more than 5 frames at a snapshot, will only be traced as far as the 5th
+   frame.
+
+   Note: The 'depth' directive (if supplied), must come _after_ the
+         'at' directive (if supplied).
+
+
+5. Deferring activation of the profiler.
+
+   All use of the 'profile' command so far has assumed that you want to
+   start profiling straight away, whatever the various options. There is,
+   however, a directive that allows you set up the profiler to switch
+   itself on automatically when a particular function in the runtime is
+   entered. This is done using the 'in' directive. Eg:
+
+             profile in some-function:my-module:my-library
+
+   Here, when the application is continued, the profiler will not gather
+   statistics until "some-function" (or a method thereof) is entered by
+   any application thread. When the function is entered, the profiler
+   switches itself on, taking into account any other directives that were
+   supplied - in this case, none. The profiler remains switched on until
+   the function returns, unless you issue the "profile results" command
+   beforehand. In either case, the results table(s) will be generated and
+   printed. Further invocations of the specified function do _not_ cause
+   the profiler to be activated again. You would have to re-issue the
+   command to get this behaviour.
+
+   The specified function can refer to any callable dylan object, or
+   a foreign function.
+
+   Note: The 'in' directive (if supplied), must come at the end of the
+         command, after all other optional directives.
+
+These directives do not exclude each other. They can be concatenated together
+to form weird and wonderful combinations such as:
+
+      profile threads 1, 2 at 10 depth 2 in make:dylan:dylan
+
+6. Second Order Addendum (supercedes some of the previous material)
+
+  After you've got your samples you can repeatedly process the results
+  with different settings.
+
+     SYNTAX				EXPLANATION
+     ------------------------------------------------------------------------
+     PROFILE RESULTS			process samples and print
+
+  The results are printed out in a quasi gprof format, where the first
+  bunch of results are on stack results or inclusive results and the
+  second bunch of results are top of stack results or exclusive results.
+  Within each category top consumers are written out with their callers
+  indented above and callees indented below.  Each line reports raw units
+  (msec or bytes), number of calls, percentage (of total time or space),
+  cumulative percentage, and then name of function.
+
+  The results can be pruned with 
+
+     SYNTAX			EXPLANATION
+     --------------------------------------------------------------------
+     PROFILE LIMIT percentile	where percentile is an integer 100x the
+                                the percentage (e.g., 99.9% -> 9990)
+     PROFILE TOP-N count	where count is an integer
+
+  More powerfully though functions can be filtered and aggregated to
+  concentrate results.  These operations revolve around the definition
+  of function sets, where function sets can be defined from the following
+  set building blocks:
+
+     SYNTAX			EXPLANATION
+     --------------------------------------------------------------------
+     expression			like breakpoint
+     EMPTY			bottom
+     FULL			top
+     SET name			named set
+     CONTAINS string		function name contains substring
+     DLL name			function lives in dll name without suffix
+     LIBRARY name		lives in library
+     MODULE name		lives in module
+     FILE string		lives in file
+     UNION set-1 set-2		in either set
+     INTERSECT set-1 set-2	in both sets
+     NOT set-1			not in this set
+   
+  Names can be associated with sets as follows:
+
+     SYNTAX			EXPLANATION
+     --------------------------------------------------------------------
+     PROFILE SET name set	add named set to named sets
+     PROFILE SETS		print out all defined named sets
+
+  Filtering can be defined to exclude certain functions from a profiling
+  report.  This is useful for removing extraneous information.  Filters
+  can be defined separately for the first and second order statistics.  This
+  can be used to look specifically at the callers and callees of one
+  particular function for example.
+
+     SYNTAX			EXPLANATION
+     --------------------------------------------------------------------
+     PROFILE FILTER [set]       excludes functions in set from all reports
+     PROFILE FILTER1 [set]      excludes functions in set from 1st reports
+     PROFILE FILTER2 [set]      excludes functions in set from 2nd reports
+ 
+  When no set-names are specified the current filters are printed.
+
+  Aggregates can be defined to combine results from many functions in a
+  conceptual category (e.g., dispatch).  aggregation can be defined
+  separately for first and second order statistics to control the
+  detail of the report:
+  
+     SYNTAX				EXPLANATION
+     --------------------------------------------------------------------
+     PROFILE AGGREGATES [set-name ...]  aggregates 
+     PROFILE AGGREGATES1 [set-name ...] excludes functions in set from 1st reports
+     PROFILE AGGREGATES2 [set-name ...] excludes functions in set from 2nd reports
+
+  where set-name can be a previously defined named set or LIBRARIES which
+  is a special set which includes all defined libraries.  This permits
+  summarizing results over libraries.  Any function not found in one of the
+  aggregates is reported by itself as before.  When no  set-names are
+  specified the current aggregates are printed.
+
+  A number of predefined named sets are provided:
+
+    NAME		EXPLANATION
+    ----------------------------------------------------
+    malloc		allocation functions
+    calls		call runtime support
+    dispatch		dispatch support
+    type-checks		type-check processing
+    runtime		miscellaneous runtime support
+    input-output	low-level i/o support
+    ----------------------------------------------------
+    none		empty
+    every		full
+    system		dylan + nt support libraries
+    user		not system
+    ----------------------------------------------------
+    closure		closure creation functions
+    copy-vector		vector copying for heaping rest
+    gc                  mm specific functions
+  
+  A useful start is:
+
+    COMMAND			EXPLANATION
+    -------------------------------------------------------
+    profile set filter1 system	filter out system functions
+    profile top-n 10		only report top 10 
+
+  A more sophisticated breakdown involves the following:
+
+    profile aggregates malloc calls dispatch type-checks runtime input-output
+
+  Filters can be turned off with:
+
+    profile filter1 none
+
+  A catchall aggregate can be added to the end with every:
+
+    profile aggregates malloc every
+
+

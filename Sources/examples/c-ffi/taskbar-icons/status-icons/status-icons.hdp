@@ -1,0 +1,21 @@
+comment:	This file is generated, please don't edit
+format-version:	2
+library:	status-icons
+files:	library
+	module
+	status-icons
+	c-interface
+	start
+subprojects:	..\win32-taskbar\win32-taskbar.hdp
+base-address:	0x64FC0000
+start-function:	main
+linker-options:	$(guilflags)
+c-header-files:	taskbar-error.ico
+	taskbar-warning.ico
+	taskbar-ok.ico
+rc-files:	bitmaps.rc
+major-version:	2
+minor-version:	1
+compilation-mode:	loose
+target-type:	dll
+comment:	additional keywords

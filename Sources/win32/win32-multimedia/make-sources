@@ -1,0 +1,52 @@
+
+#  Dylan libraries for interfacing with the Win32 API (Microsoft Windows)
+#
+#  This file controls the generation of source files that are created
+#  automatically by adapting information from the Microsoft header files.
+#
+#  This version works with the header files from the MSDN "Platform SDK" of
+#  October 1997 or January 1998.
+
+# Copyright: 1998 Functional Objects, Inc.  All rights reserved.
+
+# $HopeName: D-win32-multi-media!make-sources(trunk.1) $
+# $Date: 2004/03/12 00:10:28 $
+
+
+MMSYSTEM=mmsystem.dylan library.dylan
+
+all: $(MMSYSTEM)
+
+mmsystem: $(MMSYSTEM)
+
+COMDIR=../win32-common
+
+include $(COMDIR)/sources.mak
+
+library.dylan: library.src mmsystem.exp
+
+mmsystem.dylan: $(MSH)mmsystem.h $(PATTERNS) make-sources more.pat \
+		inherited-slots.pat
+	$(GEMA) -f more.pat -f $(PATTERNS) -f $(COMDIR)/winpat.pat \
+		-f $(COMDIR)/modcopyr.pat  -f inherited-slots.pat \
+		-D SC_SCREENSAVE  -f $(COMDIR)/callback.pat \
+		-omit sndAlias -omit MCI_MAKE_MSF -omit MCI_MAKE_TMSF \
+		-omit MCI_MAKE_HMS \
+		-module Win32-Multi-Media  $(MSH)mmsystem.h $@
+
+# The omitted names above are macros that are too complicated for
+# automatic translation.
+
+# This notes which slot accessors should not be exported here because the
+# name is inherited from another module:
+inherited-slots.pat: library.src
+	$(GEMA) -match -idchars '_-$$<>@%&*+=/?' \
+	  -p '\Iexport\:\W\{<exports>\}=$$1' \
+	  -p 'exports:<I>-value-setter\I=export-slot\:\\C$$1\=\$$0-value\@end\n;<I>=;?=' \
+	  -in library.src -out $@
+
+clean:
+	rm -f $(MMSYSTEM) *.bak *.exp
+
+
+

@@ -1,0 +1,23 @@
+:play
+:set messages verbose
+define method foo (x :: <integer>)
+   if (x < 10) x else foo(floor/(x, 17)) end
+end;
+define method foo (x :: <float>) 
+  foo(floor(x))
+end;
+:trace foo
+foo(46.2);
+define function bar (x :: <integer>)
+  integer-to-string(x)
+end;
+:trace bar
+bar(100);
+define function bar-loop (x :: <integer>)
+  for (i from 0 below x)
+    bar(i)
+  end
+end function bar-loop;
+:trace bar-loop
+bar-loop(10);
+:exit

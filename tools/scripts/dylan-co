@@ -1,0 +1,68 @@
+#!/bin/sh 
+
+# Checks out files or compounds. If a compound isn't specified then 
+# a local compound for each file is determined from the .version file 
+# in the same directory. Obviously this assumes there is a checked out
+# source tree in place already. If a compound is specified, the file
+# names are all treated as unit names of the given compound. If a
+# compound is specified and no files, the compound is checket out
+# recursively.
+
+script=`basename $0`
+
+compound=""
+hope_options=""
+
+while [ $# -gt 0 ]; do
+  case $1 in
+    -c | -comp | -compound) 
+      compound=$2; shift 2
+      ;;
+    -reason | -rea)
+      hope_options="$hope_options $1 \"$2\""; shift 2
+      # hope_options="$hope_options $1 $2"; shift 2
+      ;;
+    -claim | -writable-files | -missing-dir | -extra-files | -version | -date | -branch)
+      hope_options="$hope_options $1 \"$2\""; shift 2
+      ;;
+    -recursive | -not-recurse)
+      hope_options="$hope_options $1"; shift
+      ;;
+    -force)
+      hope_options="$hope_options $1"; shift
+      ;;
+    -*)
+      echo "$script: unrecognised option $1"
+      exit 1
+      ;;
+    *)        
+      break
+      ;;
+  esac
+done
+
+files=$*
+
+if [ "$files" = "" ]; then
+  echo "$script: checking out $compound"
+  eval "dylan-hope co -comp $compound -recursive $hope_options"
+  exit $?
+fi
+
+for file in $files; do
+  name=`basename $file`
+  dir=`dirname $file`
+  (cd $dir
+   if [ "$compound" = "" ]; then
+     compound=`dylan-local-compound`
+   fi
+   if [ "$compound" = "" ]; then
+     echo "$script: error - no compound found for $file"
+   else
+     echo "dylan-hope co -compound $compound $hope_options -unit $name" 
+     eval "dylan-hope co -compound $compound $hope_options -unit $name" 
+   fi
+  )
+done
+
+## eof

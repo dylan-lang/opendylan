@@ -1,0 +1,154 @@
+
+Title:	Description of the X11 and Motif libraries
+
+Author:	David N. Gray
+
+Date:	October 26, 1998
+
+Status:	describes what is currently implemented
+
+Copyright (C) 1998 Functional Objects, Inc. All rights reserved.
+
+Version: $HopeName$
+         $Date: 2004/03/12 00:10:34 $
+
+---------------------------
+
+This document provides a user-level explanation of the the "xlib", "xt",
+and "motif" libraries.
+
+What is being described here is a set of Dylan libraries that provide a
+low-level interface to X Windows by doing a simple translation from
+the C/C++ header files to Dylan C-FFI declarations, so that X Windows
+programs can be written in Dylan using the same functions as from C.
+These libraries are originally intended for use by the Motif back-end of
+DUIM. 
+
+The libraries are:
+
+  xlib  - the basic "Xlib" support, corresponding to "libX11.so".
+  xt    - the "Xt" toolkit, corresponding to "libXt.so".
+  motif - the "Motif" toolkit, corresponding to "libXm.so".
+
+Each of these libraries exports a module with the same name.
+
+The libraries also export a few names from the `C-FFI' module that the user
+may need to use directly, without the user needing to directly `use' (or
+know about) the `C-FFI' module.  These include:
+
+  null-pointer, null-pointer?, pointer-address, pointer-value,
+  pointer-value-setter, size-of, <C-void*>, <C-pointer>, <C-string>,
+  <C-unicode-string>, <C-string*>, <C-unicode-string*>, pointer-cast,
+  destroy, pointer-value-address, c-type-cast, \with-c-string,
+  \with-stack-structure
+
+Names that are documented as being obsolete are not supported.
+Refer to the file "~dylan/sources/x11/xlib/obsolete.text" for a list.
+
+Some C macros, such as `XtNew' and `XtNumber' cannot be directly translated
+to Dylan, and so are not supported.  Any functions that take a variable
+number of arguments are not currently supported by the FFI (ref Bug 4176),
+so are not defined in the Dylan libraries.
+
+A Dylan X Windows program will generally use the same API names as a C
+program would, with the following modifications for consistency with Dylan
+conventions:
+
+  * Type names are enclosed in angle brackets.  For example,
+    `Widget' becomes `<Widget>', and `Widget*' becomes `<Widget*>'
+
+  * Names of constants are prefixed by "$".  
+    For example, `None' becomes `$None'. 
+
+  * Underscores are replaced by hyphens.  For example, `X_PROTOCOL' becomes
+    `$X-PROTOCOL'.  However, a leading underscore is replaced by `%' since
+    Dylan does not allow a leading hyphen.
+
+    (Hyphens are _not_ inserted between capitalized words (for example,
+    `CreateWindow' to `Create-Window') since that is a less obvious mapping
+    that is more likely to cause confusion when going back and forth
+    between Dylan code and X documentation.)
+
+  * There is no `NULL' constant in Dylan.  Use `null-pointer(<Foo*>)'
+    to create a null pointer to a `<Foo>', or 'null-pointer?(ptr)' to test
+    whether a pointer is null.  Do not just say `if(ptr)...' like is often
+    done in C, since a null pointer is not the same as `#f'.
+ 
+  * The multitude of integer data types in C code (`int', `long',
+    `short, `unsigned int, etc.) are all designated as `<integer>' (or some
+    appropriate subrange thereof) in Dylan method argument types.  However,
+    a `<machine-word>' needs to be used to represent values that don't fit
+    in the signed 30-bit representation of an `<integer>'.
+
+    Symbolic types that are aliases for integral types have two Dylan types
+    defined, one for use in the C-FFI, and one for the corresponding Dylan
+    objects.  For example, in C, `KeySym' is an alias for `unsigned-long';
+    in Dylan, `<C-KeySym>' is an alias for `<C-unsigned-long>' and
+    `<KeySym>' is an alias for `<integer>'.
+
+  * The C types `Bool' and `Boolean' are mapped to `<boolean>' in Dylan.
+    Use `#t' and `#f' instead of `TRUE' and `FALSE'.  
+
+  * The C type `char', is mapped to `<character>' in Dylan.
+
+  * Values of type `char*' in C are represented as instances of class
+    `<C-string>' in Dylan.  This is a subclass of `<string>', so all of the
+    normal string operations can be used directly.  C function parameters
+    of type `char*' will also accept an instance of `<byte-string>'; a C
+    pointer is created to point to the characters of the Dylan data, so the
+    string does not need to be copied.  (Dylan byte strings maintain a NUL
+    character at the end in order to allow them to be used directly by C.)
+    at run time, but the need for copying is intended to be removed later.
+
+  * Because slot names are not in a separate name space in Dylan, the names
+    of C structure fields will have the suffix "-value" added to form the
+    name of the Dylan accessor function.  For example, the C statement:
+	pt->x = x;
+    becomes in Dylan:
+        pt.x-value := x;
+
+  * An "X-" prefix is added to names that would otherwise conflict with
+    predefined Dylan names.  For example, `String' becomes `<X-String>' and
+    `Object' becomes `<X-Object>'.
+
+  * Some of the names in "keysymdef.h" depend on C being case-sensitive, so
+    the Dylan names need to be different.  For example, `XK_A' becomes
+    `$XK-capital-A' and `XK_a' becomes `$XK-small-a'.
+
+There is no attempt to append "?" to the names of predicate functions since
+it isn't obvious exactly which functions that should apply to.
+
+Names which are global variables in C become in Dylan a function of no
+arguments which needs to be called to return the variable's value.
+
+In cases where the C library function takes a pointer argument as a place
+to store a pointer, integer, or boolean value, the corresponding Dylan
+function uses multiple return values to return such output parameters
+following the original function return value.  For example, where C code
+does:
+
+  char * bytes;
+  int nbytes;
+  bytes = XFetchBytes(display, & nbytes);
+
+in Dylan it would be:
+
+  let ( bytes :: <C-string>, nbytes :: <integer> ) = XFetchBytes(display);
+
+The `xlib' library provides a macro to make it easy to define call-back
+functions without the application programmer needing to use the FFI `define
+C-callable-wrapper' macro directly.  For example:
+
+  define callback ErrProc :: <XErrorHandler> = my-error-handler;
+
+This says that `ErrProc' is being defined as a C function pointer of type
+`<XErrorHandler>', which when called from C will cause the Dylan function
+`my-error-handler' to be run.  The Dylan function will be defined
+normally using `define method' or `define function', and it is the
+programmer's responsibility to ensure that its argument signature is
+consistent with what ``<XErrorHandler>' requires.
+
+For type casts from one pointer type to another, use the function
+`pointer-cast' or `c-type-cast' instead of `as'.  (Think of `as' as
+converting the data structure pointed to, while `pointer-cast' operates on
+just the pointer itself.)

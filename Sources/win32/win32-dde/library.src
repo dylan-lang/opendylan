@@ -1,0 +1,41 @@
+Module:    Dylan-user	%comment  -*- Mode: Dylan -*-
+Synopsis:  Win32 API for "DDE"
+Copyright: Copyright (c) 1997-2000 Functional Objects, Inc. All rights reserved.
+
+%comment $HopeName: D-lib-win32-dde!library.src(trunk.4) $
+
+define library Win32-DDE
+  use Dylan;
+  use C-FFI;
+  use Win32-common;
+  use Win32-User;
+  export Win32-DDE;
+end;
+
+define module Win32-DDE
+  use Dylan;
+  use C-FFI;
+  use Win32-common,
+    export: {// Accessors for which we need to add methods:
+	     cb-value, cb-value-setter,
+	     wFlags-value, wFlags-value-setter };
+  use Win32-User,
+    export: {// Accessors for which we need to add methods:
+	     hwnd-value, hwnd-value-setter,
+	     lParam-value, lParam-value-setter,
+	     wParam-value, wParam-value-setter,
+	     length-value, length-value-setter,
+	     wFmt-value, wFmt-value-setter,
+	     // Constants used in data structures here:
+	     $CF-BITMAP, $CF-DIB, $CF-DIF, $CF-ENHMETAFILE, $CF-METAFILEPICT,
+	     $CF-OEMTEXT, $CF-PALETTE, $CF-PENDATA, $CF-RIFF, $CF-SYLK,
+	     $CF-TEXT, $CF-TIFF, $CF-WAVE, $CF-UNICODETEXT };
+ 
+%include dde.exp 
+%include ddeml.exp
+%include security.exp
+
+  // additional constants for convenience:
+  export $NULL-HCONVLIST, $NULL-HCONV, $NULL-HSZ, $NULL-HDDEDATA;
+
+end module Win32-DDE;

@@ -1,0 +1,100 @@
+<HTML>
+<HEAD>
+	<TITLE>Functional Developer Example: sample-ole-server</TITLE>
+	<LINK REL="stylesheet" TYPE="text/css" HREF="../../examples.css">
+</HEAD>
+
+<BODY>
+
+<H2>sample-ole-server library</H2>
+
+<HR ALIGN="CENTER">
+
+<P>This project contains an example program that demonstrates use of the
+low-level OLE interface to create a graphical object that can be embedded
+in compound documents.</P>
+
+<P>See the Functional Developer "OLE, COM, ActiveX and DBMS" reference manual for
+documentation of the <b>OLE</b> library which the program uses.<P>
+
+<P>The example was translated to Dylan from a C++ program in directory
+"\MSTOOLS\samples\ole\simpsvr\" from the Microsoft Win32 SDK of July
+1995. The "README.TXT" file there describes it as:</P>
+
+   <BLOCKQUOTE>
+    This sample is the simplest OLE 2.0 object that can be written and
+    still support the visual editing feature.  The object that this server
+    supports is a colored square with a black border.
+   </BLOCKQUOTE>
+
+<P>This example intentionally maintains the style of the original C++
+version, and uses the same low-level OLE and user interface APIs as
+the C++ program.  See the example project <b>win32-ole-server</b> for
+an implementation of the same functionality using the higher-level
+server framework provided by Functional Developer.</P>
+
+<H3>Program internals</H3>
+
+<P>Program execution begins in file <em>last.dylan</em>, which calls
+<code>WinMain</code> in <em>simpsvr.dylan</em>, which contains the
+Windows event loop.  That same file contains function
+<code>main-wnd-proc</code> which handles Windows events.  The actual
+drawing of the picture is done by function <code>Draw</code> in
+<em>obj.dylan</em>.  Note also the initialization function
+<code>fInitInstance</code> in <em>app.dylan</em>, which, when the
+program is invoked embedded, registers a Class Factory object, which
+the container application uses to obtain the handles used to
+manipulate the object.</P>
+
+<H3>Server registration and invocation</H3>
+
+<P>After building the program, you will have a file called
+<em>sample-ole-server.exe</em> which you can execute.  By itself,
+it doesn't do much very interesting -- just draws a square whose color
+you can select from a menu.</P>
+
+<P>The really interesting thing is using the program as an embedded
+object invoked by a client. But first, in order for the server to work
+when invoked from a client program, all of the libraries used by your
+server need to either be in the same directory as the server file, or
+else in a directory which is in the system PATH (not the individual
+user's PATH on NT). The simplest way to accomplish this is to use the
+"Project &gt; Build Release" command to create a release directory. If
+you wish, you can move that directory to any location you want, but you
+must do so before you attempt to register the server.</P>
+
+<P>Next, the server must be registered with the operating system.  To do that,
+edit the file <em>sample.reg</em> to replace the three pathnames in there
+with the actual pathname where your <em>sample-ole-server.exe</em> resides.  It
+has to have a full pathname.  Then the actual registration is done by
+entering the following at a DOS command prompt:</P>
+
+	<blockquote><code>regedit /s sample.reg</code></blockquote>
+
+<P>Now you can use any OLE container program, such as Microsoft Write or
+WordPad, or the sample container application "simpcntr" in the SDK, to
+choose the "Dylan simple OLE server" object from the "Insert Object"
+command of the "Edit" menu or the "Object" command of the "Insert" menu,
+depending on the program.  The program will then be invoked to draw its
+picture which will then appear in the compound document.</P>
+
+<P>Note that the object title as displayed in the "Insert Object"
+dialog comes from the second line of the <em>sample.reg</em> file, and
+that the Class ID used in the registration has to match the call to
+<code>make-GUID</code> at the top of file <em>app.dylan</em>.  The Dylan
+version has been given a different Class ID from that used by the
+original C++ version to enable both to be installed without
+conflicting.</P>
+
+<P>The SDK sample container uses in-place activation, in which the picture is
+drawn directly in the window of the container program, and the menu for
+changing the color is added to the container's menu bar.  However, "Write"
+first invokes the program in its own window, and then when you select "File
+-> Exit", the picture will be copied into the document in Write.  So the
+two containers exercise different parts of this server program.</P>
+
+
+</BODY>
+
+</HTML>
+

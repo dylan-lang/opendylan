@@ -1,0 +1,167 @@
+#!/usr/local/bin/bash
+#      Script: compile-dfmc-libs
+#      Author: Shri Amit(amit)
+usage=" Usage: $0 -i <Image> -r <Root> -pr <PersonalRoot> -f <Logfile> -cp <List of filenames with libs to compile>"
+# Opts & Flgs: -i: Source image,
+#                  default: $root/install/$platform/bin
+#              -r: Root, default: /u/dylan
+#             -pr: PersonalRoot, default: $root
+#              -f: Logfile, default: $logsdir/$0-<Lib>-log
+#              -c: Compile for x86-win32 w/ targetted for the c back end
+#              -p: Compile for x86-win32 w/ targetted for the pentium back end
+#<List of lib files>: File(s) containing list of libs of libs to be installed, 
+#                     default: unix: loaded-libs, 
+#                                pc: loaded-pc-libs
+#    Synopsis: . Compiles <List of Libs> in <Image>
+#              . Installs all the List of libs and then runs the apps
+#	       . Pipes output to <Logfile>
+######################################################################
+## Application exit status legend ##
+##  0: Compilation successful
+
+## Parse the options & flags on the command line ##
+lib=""
+while [ "$#" -ne 0 ]; do
+  case $1 in
+    -i) shift
+        image="$1" ;;
+    -r) shift
+        root="$1" ;;
+   -pr) shift
+	pr="$1" ;;
+    -f) shift
+        logfile="$1" ;;
+    -c) target_for_pc=C ;;
+    -p) target_for_pc=pentium ;;
+     *) lib="$lib $1" ;;
+  esac
+  shift
+done
+
+## source env.bash and set other variables ##
+##
+source /u/dylan/admin/builds/env.bash
+root=${root:-$dylandir}
+
+## Assign defaults to options & flags ##
+##
+target_for_pc=${target_for_pc:-No}
+pr=${pr:-$root}
+
+## Set other variables depending upon pc targetted or not ##
+##
+case $target_for_pc in
+     No) image=${image:-$root/install/$platform/bin/lw+dylan+dfmc-$platform}
+	 loaded_libs="$admindir/loaded-libs"
+         logfile=${logfile:-$logsdir/compile-dfmc-libs-$platform-log}
+	 target_platform=$platform ;;
+
+      C) logfile=${logfile:-$logsdir/compile-dfmc-libs-pc-$platform-log} ;;
+
+pentium) logfile=${logfile:-$logsdir/compile-dfmc-libs-native-$platform-log} ;;
+esac
+loaded_libs=${loaded_libs:-"$admindir/loaded-pc-libs"}
+target_platform=${target_platform:-"x86-win32"}
+image=${image:-"$root/install/$platform/bin/lw+dylan+dfmc-$platform"}
+
+## Get the dylan library out as the first one since everything uses it ##
+##
+dylanfile="/tmp/dylan-library"
+echo "dylan" > $dylanfile
+lib="$dylanfile $loaded_libs $lib"
+
+## Everything from here goes to the logfile ##
+## Prompt the options                       ##
+##
+{
+    echo "Starting at: `date`"
+    echo "Running $0 with options:"
+    echo "   The source image is: $image"
+    echo "           The root is: $root"
+    echo "  The personal root is: $pr"
+    echo "The target platform is: $target_platform"
+    echo " Libs to cross compile: $lib"
+    echo "        The logfile is: $logfile"
+    echo
+
+## Cross compile all the libs ##
+##
+## source $admindir/dfmc-env.bash -r $root -p $root -l $target_platform
+source $admindir/set-build-variables.bash -r $root -p $root -l $target_platform
+printenv
+
+$image <<EOC
+(load "$admindir/compile-dfmc-libs.lisp")
+(in-package dylan)
+(compile-library-list "$dylanfile")
+(compile-library-list "$loaded_libs")
+(bye 0)
+EOC
+echo "Generation of C files completed"
+
+rm -f $dylanfile
+subject="Report for compile-dfmc-libs at $site on $host"
+case $target_for_pc in
+  No) 
+    ## Setup the environment and make the runtime and ##
+    ## and then make all libs for the c back end      ##
+    ##
+##    source $admindir/dfmc-env.bash -r $root -p $root -l $target_platform
+    source $admindir/set-build-variables.bash -r $root -p $root -l $target_platform
+    printenv
+
+    echo
+    echo ";;;;;;; Making the c-run-time ;;;;;;"
+    echo
+    cd $root/build/$platform/c-run-time
+    make clean
+    make install
+
+    echo
+    echo ";;;;;;; Running ranlib for sparc-sunos4 only ;;;;;;"
+    echo
+    ranlib $root/install/sparc-sunos4/lib/lib_gc.a
+
+    ## The dylan library should be made first as all libs ##
+    ## will need it and then shall try to do it over      ##
+    ##
+    echo
+    echo ";;;;;;; Making the dylan library ;;;;;;"
+    cd $root/build/$platform/dylan
+    make clean
+    make install
+
+    ## Now install all the libraries that need to be    ##
+    ## installed, default - loaded libs and install_lib ##
+    echo
+    echo ";;;;;;; Installing the libraries ;;;;;;;;;"
+    echo
+    all_libs="dylan `cat $loaded_libs`"
+    for i in $all_libs; do
+	echo
+	echo ";;;;;;; Installing $i ;;;;;;;;;"
+	echo
+	cd $root/build/$platform/$i
+	make clean
+	make install
+    done
+    message=`$admindir/fabs $logfile '"Stop"' -all -a 3 -b 3 -t`
+    send-mail "$the_message" "$rel_eng" "$logfile" "$subject" ;;
+  *)
+    ## The pc makes need to be called from a pc, they ##
+    ## cannot be executed from here                   ##
+    ##
+    echo
+    echo Sorry, the pc makes need to be done on the pc.
+    echo They cannot be done directly from unix
+    echo ;;
+esac
+
+echo $0 successful
+echo "Ending at `date`"
+echo
+
+} 2>&1 | tee $logfile
+
+exit 0
+#eof

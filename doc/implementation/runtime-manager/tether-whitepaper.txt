@@ -1,0 +1,341 @@
+-*-outline-*-
+                  -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+                   Tether-Based Interactive Development
+                  -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+* INTRODUCTION
+
+An essential feature of the Functional Developer IDE is its support for
+Interactive Development: the ability to both execute and redefine code
+within a natively-compiled user application while that application is 
+running, eliminating the need to first shut it down and rebuild it. This 
+accelerates development and the debugging cycle, and also provides a 
+convenient vehicle for exploratory programming. It is therefore
+invaluable for users at all levels of experience. 
+
+Since the Functional Developer compiler produces self-contained, native
+executables, which run as entirely independant processes, the
+IDE requires a means to communicate with them externally, in order
+to make modifications to them at runtime. Tether technology is the
+vehicle for this communication.
+
+When users run their Dylan applications from within the IDE, the
+tether is always present between the two processes. A parent/child
+relationship is established between them, where the IDE is the parent,
+and the user's application - which we refer to as the Target - is
+the child. In this state, the Target - the user's application under
+development - is said to be "tethered" to the IDE. It is important to
+keep this dual process model in mind.
+
+The tether is the cornerstone of Functional Developer's debugger. It
+supports a range of information retrieval capabilities, such as
+stack tracing, and the interpretation of various native debugging
+information formats. However, it is also a two-way channel, and allows
+the parent process - the IDE - to effect changes in the Target
+while it is running.
+
+* BROAD ARCHITECTURAL OVERVIEW
+
+The tether has a layered architecture. At the primitive level, it makes
+use of whatever support is provided by the relevant operating system for
+process creation, inspection and control. Expanding outwards from this are 
+components that provide varying useful abstraction shells, each layer implemented
+in terms of the abstractions provided by the layer beneath.
+
+The innermost layer is a system-level component, and is indeed the only layer 
+that is permitted to be platform-specific. It implements a set of primitive 
+operations, pitched at a level of abstraction that is likely to allow the 
+component to be re-written for a wholly different platform while adhering to the
+same interface.
+
+Built on top of this is a platform-independant library, designed as an
+abstract API for implementing a debugger for any language on any
+platform. This library essentially provides and manages the connection between 
+the IDE and the Target application, exporting a suite of fundamental operations 
+for controlling the Target, reading and writing its address space, tracing its 
+stack, and so forth. These will be described in some more detail later.
+
+This fundamental toolkit is then the foundation of various higher-level
+components, which provide not only debugging services that are specific
+to the Dylan programming language, but also the support for interactive 
+development.
+
+* BASIC TETHER IMPLEMENTATION
+
+** PARTITION OF RESPONSIBILITIES
+
+Conceptually, the tether exists "between" the the Target application and
+the IDE, serving as a two-way communication channel. However, in terms of
+its implementation, support for the tether is almost entirely the responsiblity
+of the parent process (ie. the IDE). There is a small exception to this:
+the Target application has a small fragment of runtime support to
+assist the implementation of the tether, in the form of a small suite of
+functions collectively referred to as the Spy.
+
+The other components of the tether's implementation, as described below,
+form part of the IDE itself, and run within its process space.
+
+** DEBUGGER-NUB: THE SYSTEM-LEVEL COMPONENT
+
+Ultimately, the tether's implementation needs to make use of specific
+support provided by the operating system on which the Target is running.
+Examples of such support are the Win32 Debugging API (along with
+extensions provided by the Imagehlp and PSAPI toolkits) on Windows NT and
+Windows 95.
+
+To maximize future portability, all dependencies on platform-level support 
+are confined to a single component known as the Debugger Nub.
+
+Although the Debugger Nub's implementation is platform-specific, the
+interfaces that it exposes are abstract. This is because the same 
+interface specification must be adhered to by a Debugger Nub when 
+written for a new platform, in order for it to be seamlessly linked into a
+platform-independant layer of the architecture (described in the next
+section). Seen in this light, the Debugger Nub is essentially an adaptor
+of system-level APIs.
+
+** THE ACCESS PATH: A PLATFORM-INDEPENDANT ABSTRACTION
+
+The only immediate client of the Debugger Nub is the Access Path
+Library, which is implemented using Dylan. It uses Functional Developer's
+FFI (Foreign Function Interface) in order to access the C interfaces
+provided by the Debugger Nub.
+
+The Access Path library can be thought of as a generic API for
+writing debuggers and debugger-related tools (such as profilers),
+with the Debugger Nub as its platform-specific "back end". In the
+Functional Developer IDE, the Access Path library is the foundation of
+tether technology.
+
+The provisions of the Access Path library fall into the following categories:
+
+    [1] Creation of connections to one or more Targets.
+        (The library exports a class that encapsulates all details
+        of such connections, allowing a connection to be described by
+        a single object. This object is an essential parameter to all
+        other functions provided by the library, meaning that any number
+        of connections can be managed simultaneously. The object is
+        called an "access path", which is how the library has acquired
+        its name).
+
+    [2] Useful abstractions over general process properties, such as
+        threads, stack frames, symbols and libraries.
+
+    [3] Control of the Target, such as freezing, restarting and termination.
+
+    [4] Setting and clearing of breakpoints.
+
+    [5] Receipt of "Stop Reasons". These are notable events that occur
+        within the Target, and are so-called because they result in
+        complete suspension of the Target's execution, pending the
+        instruction - from a higher level of the system - to continue.
+        Examples of stop reasons are: breakpoint hits, system exceptions
+        (eg. stack overflow or access violation), thread creation or
+        termination. The list is substantial.
+
+    [6] Exploration of active threads.
+
+    [7] Memory/Register transactions (reading and writing values, and
+        also examining the protection status of memory regions).
+
+    [8] Stack-tracing facilities.
+
+    [9] Symbolic information lookup.
+
+    [10] Remote function calls.
+
+Many of these are self-explanatory, but the last warrants some further
+explanation, since it is crucial to what follows.
+
+The Access Path is capable of writing data into the Target's memory,
+and also to its registers. This consequently allows it to force the
+Target to execute a specified function that it would not otherwise have
+executed. Memory writing allows function arguments, and an appropriate
+return address, to be written onto the stack. Register writing allows
+the Stack Pointer to be modified accordingly, and also for the
+Program Counter to be pointed at the function to be called. With these
+modifications in place, the Target will execute the desired function.
+Using breakpoints, the Access Path is able to trap the return of the
+function, and import the results. All of this requires a specific calling
+convention to be adopted for such remote calls, and the Access Path
+library adopts the C convention.
+
+* SUPPORTING THE DYLAN LANGUAGE
+
+** THE SPY
+
+The Spy is the smallest component of this architecture, and also unique
+in that it is implemented on the _Target's_ side of the tether. It consists of
+a small number of functions included with the Dylan low-level runtime
+support library (and hence present in all Dylan applications), and
+called remotely via the Access Path. A few of these Spy functions will
+be mentioned in the sections that follow.
+
+
+** DYLAN RUNTIME "MANAGER": AN INTERFACE TO THE I.D.E.
+
+The Access Path Library is not a suitable level at which to present
+tethering functionality to the IDE. Its API, while functionally sufficient,
+is far too primitive. After all, the IDE is primarily interested in debugging 
+and interacting with Dylan programs, and Dylan is an extraordinarily rich
+high-level language with a complex runtime environment. This presents
+several challenges for which the Access Path library is not equipped,
+for example:
+
+   [1] Interpreting the layout of Dylan data structures at runtime.
+   [2] Other Dylan runtime details, such as condition handlers and
+       special stack frame types.
+   [3] Interpreting the symbols emitted by the compiler, and presenting
+       them as Dylan identifiers. (Dylan allows a rich set of characters
+       within its identifiers, and these need to be lowered to a format
+       that common linkers will accept: a process known as "mangling". The
+       debugger is required to reverse this operation, since mangled
+       symbols are essentially meaningless to users).
+     
+Therefore, we introduce a "manager" Library, which builds on functionality
+provided by the Access Path in order to present an interface that
+abstracts over these details, and provides Dylan-specific inspection
+operations. This library also communicates with the compiler in order to
+obtain debugging information recorded by its back-end.
+
+* INTERACTIVE DEVELOPMENT
+
+** CONCEPT
+
+In order to support interactive development, the IDE needs to be able
+to accept fragments of Dylan source code from the user, and execute
+them within the process space of the Target. At the UI level, there
+are two mechanisms for capturing such fragments of code:
+
+   [1] The "interactor" (traditionally known as a "listener"). This
+       provides a prompt at which Dylan expressions and definitions
+       can be entered and evaluated, with immediate feedback on the
+       results of the evalaution.
+
+   [2] The editor. Users are allowed to select regions of Dylan source
+       code in editor windows, and evaluate them from there. This is
+       convenient when making changes to function definitions, for
+       example.
+
+These code fragments are processed by the Dylan compiler, which compiles
+them to native object code in the normal way. The requirement then is to update 
+the running Target application with this new code, and to execute it, without 
+requiring the user to shut down the Target and re-compile it. Functional Developer 
+achieves this by a process known as "interactive downloading", which is 
+implemented using the tether.
+
+
+** HOW THE TETHER CAN SUPPORT INTERACTIVE DOWNLOADING
+
+The tether's role in interactive downloading is broadly that of an
+in-place linker. Having processed the user's source code fragment, the
+compiler will have produced native object code. In a conventional development 
+cycle, object code generated by the compiler is typically stored on disk in the 
+form of object files. The object files are then processed by the linker to 
+produce executable images, which can then be loaded into memory and 
+executed. 
+
+In the case of interactive downloading, the executable image exists already.
+Indeed, it is in memory, _being_ executed! The new object code needs to
+be injected directly into this running [*] image, and the tether provides
+all of the functionality required to achieve this. It is a staged procedure,
+managed as follows.
+
+[*] Note:
+    Interactive downloading cannot occur while the Target application is
+    _literally_ running. Its execution must first be frozen, in order to
+    allow memory and registers to be modified safely. However, this is 
+    managed automatically and transparently; for reasonably small
+    downloading transactions, the pause is barely visible.
+
+*** STAGE 1: MEMORY ALLOCATION
+
+The Access Path library's ability to call functions within the Target
+Application means that we can make calls to memory allocation functions,
+thus acquiring regions of memory into which new code and data can
+safely be written, and linked to that which existed beforehand.
+Memory allocation routines used for this purpose are included in the Spy,
+although they are essentially the same as the familiar "malloc".
+
+*** STAGE 2: RAW DATA DOWNLOADING
+
+The compiler's output will include byte-streams of raw data, segmented
+in much the same way as typical object files. Some segments (traditionally
+referred to as "text segments") contain compiled machine code, and
+others contain data. Once sufficient memory for these has been allocated in 
+the Target application via the tether, these arrays of bytes  can be safely 
+written into it - at known addresses - using the Access Path's memory writing
+facilities.
+
+*** STAGE 3: SYMBOLIC RELOCATIONS
+
+The raw data streams written into the Target's address space will
+inevitably contain "holes", points at which the compiler knows that a reference
+to a specific symbol is required, but does not know the physical address
+that corresponds to it. The compiler will inform the interactive downloader of 
+all the points at which such symbolic relocations are required. The
+downloader, making extensive use of the symbol lookup facilities provided by
+Access Path, as well as its own knowledge of the addresses into which
+interactive code and data have been written, will resolve each reference.
+
+During the process of downloading, it is also possible for new symbols to
+be defined, and even for existing symbols to be re-defined. It is essential
+that the downloader always consults the most up-to-date set of symbols,
+and this is managed by a dedicated library that forms part of the
+tether.
+
+*** STAGE 4: COMMUNICATION WITH THE MEMORY MANAGER
+
+The addition of new Dylan objects to the Target application is something
+of which the in-build Garbage Collector must be notified, and this notification
+forms the final stage of interactive downloading. It is achieved by remotely
+calling Spy functions, passing them the address ranges into which new
+Dylan objects have been written.
+
+*** STAGE 5: EXECUTION OF INTERACTIVE CODE
+
+Of course, it is not sufficient just to download the compiled code and data:
+the code then needs to be executed. To acheive this, the compiler communicates
+to the interactive downloader a symbol denoting a top-level function
+that must be executed by the Target once the downloading is complete.
+Once again, the remote function calling capabilities are used to begin
+this execution.
+
+* TETHERING ACROSS MACHINES
+
+** INTRODUCTION
+
+The Enterprise release of Functional Developer will be the first to provide
+debugging and interactive development where the Target application is running
+on a separate machine from the IDE. This is motivated by the inclusion
+of client/server application development support, also due in the
+Enterprise release.
+
+** IMPLEMENTATION
+
+This additional feature does not require a wholly new implementation of
+the tether, simply an extension of the architecture at its lowest level.
+An extended version of the Debugger Nub is created that is capable of
+running as an invisible, stand-alone process, making its interfaces available
+as an RPC server. This "Remote" Debugger Nub runs on the same machine as
+the Target application, meaning that the rest of its implementation is
+identical to that which has already been described.
+
+In addition, a "Proxy" Debugger Nub is created, and linked into the
+Access Path library, hence it runs on the same machine as the IDE rather
+than the Target. For operations that span remote connections, the
+Access Path dispatches to the Proxy Debugger Nub, which in turn makes
+use of platform RPC support to call the corresponding operation in the
+Remote Debugger Nub.
+
+Of course, Remote Debugger Nubs cannot be started by magic. For this, we
+introduce a server program that must be started manually on the remote
+machine. The IDE establishes connections to one or more of these
+remote servers, and is able to instruct them to spawn a new instance of
+the Remote Debugger Nub when a new cross-machine tether is needed.
+
+There is a huge advantage in managing remote connections at the lowest
+level of the tether architecture, in that everything that is built on
+top - all of the debugging support and, of course, interactive downloading - 
+continues to work without modification.
+

@@ -1,0 +1,57 @@
+How To Build The Windows Debugger Nub
+-------------------------------------
+
+This directory contains a Windows makefile that can build the debugger nub.
+It can make the following targets:
+
+1. devnub.lib
+   This is the implementation of the local debugger nub which should be
+   linked in with environment-side code.
+
+2. rdevnub.lib
+   This is the same as devnub.lib but is for use when building the
+   remote debugger nub. It is not necessary to make this target explicitly
+   since it gets built as part of (3).
+
+3. debugger-nub.exe (Also builds rdevnub.lib)
+   This is the remote debugger nub executable. Not currently functional.
+
+4. test.exe
+   A test program for the remote debugger nub. Not currently functional.
+
+5. basic-test.exe (Also builds devnub.lib)
+   A simple test program for testing the debugger nub on the local machine
+   without needing the rest of the development environment. This executable
+   should be invoked with a single string argument specifying a program
+   to debug eg (assuming E: is mapping ~dylan, or your personal dylan):
+
+   e:\runtime-manager\debugger-nub\x86-win32>basic-test c:\spam\thingy.exe
+
+   This program does not offer a user interface. It simply runs the program
+   and reports its sequence of stop-reasons to the console.
+
+
+Everything gets built in the same directory along with the source code.
+In future we might be a little cleaner about this and allow an environment
+variable to specify where the build output goes.
+
+You do, however, need to set an environment variable called IMAGEHLPDIR.
+This should hold full path to the file IMAGEHLP.LIB, which is required
+by the debugger nub. Windows NT 4.00 provides IMAGEHLP.LIB in
+the MSTOOLS\lib directory on your system drive. (You need to have the
+necessary SDKs installed).
+
+Example:
+
+      > set IMAGEHLPDIR=c:\mstools\lib
+
+      > nmake basic-test.exe
+
+      ...[output]...
+
+      > basic-test c:\somewhere\something.exe
+
+      ...[output]...
+
+      >
+

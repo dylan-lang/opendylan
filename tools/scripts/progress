@@ -1,0 +1,51 @@
+#!/usr/local/bin/bash
+
+###
+### Author: Steve Rowley <sgr@Harlequin.COM>
+###
+### Synopsis: Help in writing progress reports by telling what you've checked in
+###   over the last week.  See `hope help report` for lots and lots and lots of details;
+###   this script is meant to simplify that task.  Events are in time-ascending order.
+###
+### Usage: progress -r range-of-dates -a author -t type-of-event -c compounds
+###
+### -r: Range if dates.  Default is 'from now - 2 weeks to now'. See `hope help date`.
+### -a: Author.  Default is `whoami`, i.e., you.
+### -t: Type of Hope event.  Default is checkin.
+### -c: Compounds.  Defaults to D-dfmc.
+###
+### Example:
+###
+### progress -c "D-dfmc D-tools-scripts D-lib-dylan"
+###
+
+## Parse the flags
+while getopts c:t:a:r: option
+do case $option in
+     r) range=$OPTARG;;
+     a) author=$OPTARG;;
+     t) type=$OPTARG;;
+     c) compound=$OPTARG;;
+    \?) echo "Usage: progress -c compounds (D-dfmc) -t type (checkin) -a author (\`whoami\`) -r range ('from now - 2 weeks to now')"
+        exit 2;;
+   esac
+done
+shift `expr $OPTIND - 1`
+
+## Assign defaults
+compound=${compound:-D-dfmc}
+type=${type:-checkin}
+author=${author:-`whoami`}
+range=${range:-'from now - 2 weeks to now'}
+
+## Ask hope what we've been up to!
+for comp in $compound; do
+  echo "*********************"
+  echo "compound: $comp"
+  echo "type:     $type"
+  echo "author:   $author"
+  echo "range:    $range"
+  echo "*********************"
+
+  hope report -ascending -comp $comp -rec -type $type -author $author -date "$range"
+done

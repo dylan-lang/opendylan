@@ -1,0 +1,728 @@
+Title:     The Functional Extensions Library
+Synopsis:  A reference for the functional-extensions library
+Authors:   Andy Armstrong
+Copyright: 1997 Functional Objects, Inc. All rights reserved.
+History:
+  05-21 Mar 97 - andrewa initial version.
+     01 Apr 97 - andrewa add simple-random and simple-format modules.
+     17 Apr 97 - andrewa add modules to descriptions, plus random function.
+     23 Apr 97 - andrewa added fill keyword to integer-to-string.
+     29 Apr 97 - andrewa add debug-assert, make assert a macro.
+     23 Jun 97 - andrewa rename find-value as find-element
+
+Description:
+
+The The functional-extensions library provides a number of useful features
+that were omitted from the language for one reason or another.
+
+There are three important modules:
+
+  functional-extensions	- the majority of the extensions
+  simple-format		- provides format-to-string and format-out
+  simple-random		- provides random and <random>
+
+The two simple modules are not intended to provide complete
+functionality within their area, but are instead meant to provide
+enough for the majority of users. The names were chosen so that more
+complete libraries can be added which define a more extensible
+framework, and then the user can choose between them by choosing
+between modules.
+
+This documentation uses the convention that a binding is in the
+functional-extensions module unless specified otherwise.
+
+
+Variables:
+
+$unsupplied			[<object>]
+
+  A value indicating that a keyword was not supplied.
+
+$unfound			[<object>]
+
+  A value indicating that a search operation failed.
+
+
+Classes:
+
+<byte-character>		[sealed class]
+
+  Superclasses:		<character>
+
+  Init-keywords:	None.
+
+  Description:
+
+
+<format-string-condition>       [sealed instantiable class]
+
+  Superclasses:		<condition>
+
+  Init-keywords:	None.
+
+  Description:
+
+
+<object-set>			[sealed instantiable class]
+
+  Superclasses:		<set>
+
+  Init-keywords:	None.
+
+  Description:
+
+
+<random>			[sealed instantiable class]
+
+  Module:		simple-random
+
+  Superclasses:		<object>
+
+  Init-keywords:
+
+	seed	- the seed value from which to start the sequence
+
+  Description:
+
+
+<set>				[sealed instantiable class]
+  [Issue: should be open and abstract?]
+
+  Superclasses:		<collection>
+
+  Init-keywords:	None.
+
+  Description:
+
+
+<simple-condition>		[sealed instantiable class]
+
+  Superclasses:		<condition>
+
+  Init-keywords:	None.
+
+  Description:
+
+
+<stretchy-sequence>		[open abstract class]
+
+  Superclasses:		<sequence>
+
+  Init-keywords:	None.
+
+  Description:
+
+
+<string-table>			[sealed instantiable class]
+
+  Superclasses:		<table>
+
+  Init-keywords:	None.
+
+  Description:
+
+
+Functions:
+
+concatenate!			[open generic function]
+
+  Signature:	concatenate! sequence #rest more-sequences => result-sequence
+
+  Description:
+
+
+condition-to-string		[open generic function]
+
+  Signature:	condition-to-string condition => string
+
+  Description:
+
+
+debug-message			[function]
+
+  Signature:	debug-message format-string #rest format-arguments => false
+
+  Description:
+
+
+difference			[open generic function]
+
+  Signature:	difference sequence-1 sequence-2 #key test => result-sequence
+
+  Description:
+
+
+false-or			[function]
+
+  Signature:	false-or type #rest more-types => result-type
+
+  Description:
+
+
+fill-table!			[function]
+
+  Signature:	table keys-and-elements => table
+
+  Description:
+
+
+find-element			[open generic function]
+
+  Signature:	find-element collection function #key skip failure => element
+
+  Description:
+
+
+float-to-string		[function]
+
+  Signature:	float-to-string float => string
+
+  Description:
+
+
+format-out			[function]
+
+  Module:       simple-format
+
+  Signature:	format-out format-string #rest format-arguments => false
+
+  Description:
+
+
+format-to-string		[function]
+
+  Module:       simple-format
+
+  Signature:	format-to-string format-string #rest format-arguments => string
+
+  Description:
+
+
+found?				[function]
+
+  Signature:	found => found?
+
+  Description:
+
+
+ignorable			[function]
+
+  Signature:	ignorable variable => false
+
+  Description:
+
+
+ignore				[function]
+
+  Signature:	ignore variable => false
+
+  Description:
+
+
+integer-to-string		[function]
+
+  Signature:	integer-to-string integer #key base size fill => string
+
+  Arguments:
+
+    integer	an instance of <integer>
+    base	an instance of <integer>. The default value is 10.
+    size	an instance of <integer> or #f
+    fill	an instance of <character>. The default value is '0'.
+
+  Values:
+
+    string	An instance of <byte-string>. The integer as a string.
+   
+  Description:
+
+    Returns a string representation of the integer in the given base,
+    which must be between 2 and 36. The size of the string is
+    right-aligned to size if size is not #f, and it is filled with the
+    fill character. If the string is already larger than size then it
+    is not truncated.
+
+
+not-found			[function]
+
+  Signature:	not-found => not-found-marker
+
+  Description:
+
+
+not-found?			[function]
+
+  Signature:	not-found? object => not-found-marker?
+
+  Description:
+
+
+number-to-string		[function]
+
+  Signature:	number-to-string number => string
+
+  Description:
+
+
+one-of				[function]
+
+  Signature:	one-of type #rest more-types => result-type
+
+  Description:
+
+
+position			[open generic function]
+
+  Signature:	position sequence value #key test count => key
+
+  Description:
+
+
+random				[function]
+
+  Module:	simple-random
+
+  Signature:	random integer #key random => random-integer
+
+  Description:
+
+
+remove-all-keys!		[open generic function]
+
+  Signature:	remove-all-keys! mutable-collection => false
+
+  Description:
+
+
+string-to-integer		[function]
+
+  Signature:	string-to-integer string #key base start end default
+                  => integer next-key
+
+    string	An instance of <byte-string>.
+    base	An instance of <integer>. The default value is 10.
+    start	An instance of <integer>. The default value is 0.
+    end		An instance of <character>.
+    default	An instance of <integer>.
+
+  Values:
+
+    integer	An instance of <integer>.
+    next-key	An instance of <integer>. The next key beyond the integer
+
+  Description:
+
+    Returns the integer that is represented by the string in the base,
+    where base is between 2 and 36. The string is only searched
+    between start and end. The next key beyond the last key of the
+    character is returned. If there is no integer contained in the
+    specified region of the string, then if default is specified it is
+    returned. Otherwise an error is signalled.
+
+
+subclass			[function]
+
+  Signature:	subclass class => subclass-type
+
+  Description:
+
+
+supplied?			[function]
+
+  Signature:	supplied? value => not-unsupplied-value?
+
+  Description:
+
+
+unsupplied			[function]
+
+  Signature:	unsupplied => unsupplied-value
+
+  Description:
+
+
+unsupplied?			[function]
+
+  Signature:	unsupplied? value => unsupplied-value?
+
+  Description:
+
+
+
+Macros:
+
+assert			[statement]
+
+  Signature:	assert value format-string [format-argument]* => false
+             or assert value => false
+
+  Arguments:
+
+    value		expression
+
+    format-string	expression
+
+    format-argument	expression
+
+  Description:
+
+    This macro evaluates value, and if it is #f then it signals an
+    error, using the format-string and format-arguments if
+    supplied. Note that if value is not #f then neither the
+    format-string nor any of the format-arguments are evaluated.
+
+debug-assert		[statement]
+
+  Signature:	debug-assert value format-string [format-argument]* => false
+             or debug-assert value => false
+
+  Arguments:
+
+    value		expression
+
+    format-string	expression
+
+    format-argument	expression
+
+  Description:
+
+    This macro is identical to assert, except that the assertion is
+    only defined to take place while debugging. Although it is not
+    required, it is hoped that these assertions will be removed by the
+    compiler when in 'production' mode as opposed to 'debugging'
+    mode.
+
+define table		[definition]
+
+  Macro Call:
+
+    define table name [ :: type ] = { [ key => element ]* }
+
+  Arguments:
+
+    name		constant-name
+
+    type		operand
+
+    key			expression
+
+    element		expression
+
+  Description:
+
+    Creates a table of type type (defaulting to <table>), which is
+    filled in with the keys and elements specified.
+
+      define table $colors :: <object-table>
+        = { #"red"    => $red,
+	    #"green"  => $green,
+            #"blue"   => $blue };
+
+
+iterate				[statement]
+
+  Macro Call:
+
+    iterate name ({argument [ = init-value ]}*)
+      [body]
+    end [iterate]
+
+  Arguments:
+
+    name		variable-name
+
+    argument		variable-name
+
+    init-value		expression
+
+    body		body
+
+  Values:
+
+    Zero or more instances of <object>
+
+  Description:
+
+    iterate is a lower level iteration construct than for. It creates
+    a function called name which will do the next iteration, and then
+    body can call name whenever it wants to iterate another step. The
+    form evaluates by calling the new function with the initial values
+    specified.
+
+
+timing				[statement]
+
+  Macro Call:
+
+    timing ()
+      [body]
+    end [timing]
+
+  Arguments:
+
+    test	expression
+    consequent	body
+
+  Values:
+
+    seconds		elapsed seconds
+    microseconds	elapsed extra microseconds
+
+  Description:
+
+    The macro timing can be wrapped around any piece of code and it
+    will return two values indicating the time spent in that code. The
+    first value is an integer representing the number of seconds and
+    the second is an integer for the number of extra microseconds.
+
+      timing () 
+        for (i from 0 to 200) format-to-string("%d %d", i, i + 1) end
+      end;
+      => 1 671000
+
+
+when				[statement]
+
+  Macro Call:
+
+    when (test)
+      [consequent]
+    end [when]
+
+  Arguments:
+
+    test	expression
+    consequent	body
+
+  Values:
+
+    Zero or more instances of <object>
+
+  Description:
+
+    when behaves identically to if, except that no else clauses are
+    allowed.
+
+      when (x < 0)
+	~ x;
+      end;
+
+8<----------------------------------------------------------------------
+
+LAST-HANDLER-DEFINER
+
+	Defining macro.
+
+SUMMARY
+
+Defines a 'last-handler' to be used after any dynamic handlers and
+before DEFAULT-HANDLER is called.
+
+MACRO DEFINITION
+
+	define last-handler (condition, #key test, init-arguments) = handler;
+
+	define last-handler condition = handler;
+
+	define last-handler;
+
+ARGUMENTS
+
+	condition
+		A Dylan expressionBNF. The class of condition for
+		which the handler should be invoked.
+
+	test
+		A Dylan expressionBNF. A function of one argument
+		called on the condition to test applicability of the
+		handler.
+
+	init-arguments
+		A Dylan expressionBNF. A sequence of initialization
+		arguments used to make an instance of the handlers
+		condition class.
+
+	handler
+		A Dylan expressionBNF. A function of two arguments
+		'condition', and 'next-handler', that is called on a
+		condition which matches the handler's condition class
+		and test function.
+
+VALUES
+
+	none
+
+LIBRARY
+
+	functional-extensions
+
+MODULE
+
+	functional-extensions
+
+DESCRIPTION
+
+A last-handler is a global form of the dynamic handler introduced via
+'let handler', and is defined using an identical syntax. The last
+handler is treated as a globally visible dynamic handler. During
+signalling if a last-handler has been installed then it is the last
+handler tested for applicability before 'default-handler' is
+invoked. If a last-handler has been installed then it is also the last
+handler iterated over in a call to 'do-handlers'.
+
+The first two defining forms are equivalent to the two alternate forms
+of 'let handler'. If more than one of these first defining forms is
+executed then the last one executed determines the installed
+handler. The current last-handler can be uninstalled by using the
+degenerate third case of the defining form that has no condition
+description or handler function.
+
+The intention is that libraries will install last handlers to provide
+basic runtime error handling, taking recovery actions such as
+quitting the application, trying to abort the current application
+operation, or entering a connected debugger.
+
+EXAMPLE
+
+The following form defines a last-handler function called
+'default-last-handler' that is invoked on conditions of class
+<serious-condition>:
+
+	define last-handler <serious-condition> = default-last-handler;
+
+SEE ALSO
+
+	default-last-handler
+	win32-last-handler
+
+8<----------------------------------------------------------------------
+
+DEFAULT-LAST-HANDLER
+
+	Function.
+
+SUMMARY
+
+Formats and outputs the Dylan condition to using 'format-out' and
+passes control on to the next handler.
+
+FUNCTION DEFINITION
+
+	default-last-handler (serious-condition, next-handler)
+
+ARGUMENTS
+
+	serious-condition
+		A object of class serious condition.
+
+	next-handler
+		A function.
+
+VALUES
+
+	none
+
+LIBRARY
+
+	functional-extensions
+
+MODULE
+
+	functional-extensions
+
+DESCRIPTION
+
+A handler utility function defined on objects of class
+'<serious-condition>' that can be by bound dynamically around a
+computation via 'let handler' or installed globally via
+'last-handler-definer'. 'default-last-handler' formats and outputs the
+Dylan condition using 'format-out' and passes control on to the next
+handler.
+
+'default-last-handler' is also automatically installed as the last
+handler simply by using the 'functional-extensions' library. 
+
+EXAMPLE
+
+The following form defines a dynamic handler around some body:
+
+	let handler <serious-condition> = default-last-handler;
+
+while the following form installs a globally visible last-handler:
+
+	define last-handler <serious-condition> = default-last-handler;
+
+SEE ALSO
+
+	last-handler-definer
+	win32-last-handler
+
+8<----------------------------------------------------------------------
+
+
+The following new binding is exported from the Win32-Default-Handler
+module: WIN32-LAST-HANDLER.
+
+8<----------------------------------------------------------------------
+
+WIN32-LAST-HANDLER
+
+	Function.
+
+SUMMARY
+
+Displays a rudimentary Win32 dialog to allow the user to decide what
+to do with the Dylan condition that has been signalled.
+
+FUNCTION  DEFINITION
+
+	win32-last-handler (serious-condition, next-handler)
+
+ARGUMENTS
+
+	serious-condition
+		A object of class serious condition.
+
+	next-handler
+		A function.
+
+VALUES
+
+	none
+
+LIBRARY
+
+	win32-user
+
+MODULE
+
+	win32-default-handler
+
+DESCRIPTION
+
+A handler utility function defined on objects of class
+'<serious-condition>' that can be by bound dynamically around a
+computation via 'let handler' or installed globally via
+'last-handler-definer'. win32-last-handler' displays a rudimentary
+Win32 dialog to allow the user to decide what to do with the Dylan
+condition that has been signalled.
+
+'win32-last-handler' is also automatically installed as the last
+handler simply by using the 'win32-user' library. 
+
+
+EXAMPLE
+
+The following form defines a dynamic handler around some body:
+
+	let handler <serious-condition> = win32-last-handler;
+
+while the following form installs a globally visible last-handler:
+
+	define last-handler <serious-condition> = win32-last-handler;
+
+SEE ALSO
+
+	last-handler-definer
+	default-last-handler
+

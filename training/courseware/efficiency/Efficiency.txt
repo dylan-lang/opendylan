@@ -1,0 +1,233 @@
+; -*- outline -*-
+
+* Efficient Dylan
+
+
+** [1h] Presentation
+
+o  Overview
+  o  language constructs, tools (incl. comp'n modes) and library issues
+  o  time and space efficiency
+  o  efficiency vs. debuggability
+  o  tools and language constructs
+
+o  [5m] Tools (1)
+  o  HD has Development and Production modes for compilation
+    o  Many optimisations don't happen in the former; interaction better
+    o  The latter is less debuggable, due to inlining, code motion etc.
+  o  Command-line only profiler -- details later
+    o  There's also a blunt instrument in the hqn-exts "\timing" macro
+    o  In general, as always, profile to find hotspots, then
+       optimise those
+  o  Dispatch colouring -- see doc
+    o  dynamic dispatch; direct call, slot access; inlined, eliminated
+
+o  [20m] Language constructs
+  o  Overview: dispatch, type-checks, allocation
+  o  Mechanisms: contraining functions, classes, binding types
+  o  Dispatch efficiency comes down to getting as much as possible to
+     happen at compile time.
+    o  "define function" versus GFs (always blue)
+    o  inlining adjectives: not-, default-, may- and -only (always grey)
+    o  adding type constraints (to improve red)
+      o  can reportedly make things worse, if the compiler would have
+         done something cleverer, so always profile for best efficiency
+    o  sealing functions (to improve magenta; or add constraints to
+       bring into a sealed domain)
+      o  what is sealing?  static and dynamic implications
+        o  unexported ~== sealed (because of dynamism)
+      o  sealed GFs; sealed slots; sealed domains
+      o  seal make/initialize for small, many-instance classes
+    o  sealing classes: restricting dynamism
+      o  not directly related to efficiency, but might allow constant-
+         offset slot accesses (as with primary classes) or more
+         efficient GF dispatch.
+    o  primary classes: single-inheritance backbone
+      o  allows constant-offset slot access
+    o  constant slots
+      o  one less function, so saves on memory!
+      o  may allow constant-folding of slot accesses
+  o  Allocation
+    o  class and each-subclass slots
+    o  constant slots, as I said
+    o  Design Patterns: Singleton, Flyweight
+  o  Debuggability trade-offs
+    o  "define function", inlining and sealed GFs less debuggable, because
+       it may be harder to place breakpoints at runtime
+
+
+o  [10m] Efficiency issues in standard libraries
+  o  dylan
+    o  object construction
+      o  already mentioned sealing make and initialize
+      o  try not to leave uninitialised slots => type-checks
+    o  collections
+      o  time-efficiency: lists, tables; limited sequences
+      o  space-efficiency: bit vectors (Hqn), weak tables as caches,
+         copy-on-write ("xxx!")
+      o  bounds checking: can't turn it off
+      o  size can return #f for <collection>, so may be type-check
+         (always returns <integer> for <array> and <table>)
+    o  arithmetic
+      o  generic arith (<integer>, Generic-arithmetic and Big-integers)
+      o  \+ etc. may return any objects, except under <complex>
+    o  higher-order operations (e.g., mapping, composition) are meant to
+       be compilable as efficiently as hand-coded versions, so try them!
+  o  c-ffi, duim, streams, format/print, std-io, ...
+    o  There may well be issues here, but that's too much detail for now.
+
+
+o  [20m] Tools (2) -- profiler
+  o  Part of the console debugger, but won't detail other functionality.
+  o  "console-debug [/go] path\project.exe"
+  o  "STOP", "profile" command, "continue"
+    o  threads [1, 2, ..., <n> | all] [ask]
+    o  at <n> // milliseconds
+    o  depth <n> // stack frames
+    o  allocation // allocation instead of time
+    o  in <f:m:l> // start on entry, stop on exit
+      o  It helps to export functions, so they're easily profilable
+  o  "profile results" once done, or "profile off" to discard
+    o  Provides "second order" results: includes callers/callees
+      o  callees indented above, callers indented below (doc wrong?)
+    o  Provides "on stack" (inclusive) then "top of stack" (exclusive)
+    o  Pruning results
+      o  limit <nnnn> // 100 x %ile -- lower limit to show
+      o  top-n <n> // only show top n functions
+      o  filter[|1|2] [set] // exclude fns in set from a11/1st/2nd results
+        o  <f:m:l> | EMPTY | FULL | SET <name> | CONTAINS <string>
+           | DLL <name> | LIBRARY <name> | MODULE <name> | FILE <string>
+           | UNION <set-1> <set-2> | INTERSECT <set-1> <set-2> | NOT <set>
+      o  aggregates[|1|2] [<set-name> ...] // ditto, but named sets
+        o  set <name> <set> // name a set
+        o  sets // list all sets
+        o  Predefined sets:
+
+    NAME		EXPLANATION
+    ----------------------------------------------------
+    malloc		allocation functions
+    calls		call runtime support
+    dispatch		dispatch support
+    type-checks		type-check processing
+    runtime		miscellaneous runtime support
+    input-output		low-level i/o support
+    ----------------------------------------------------
+    none			empty
+    every		full
+    system		dylan + nt support libraries
+    user			not system
+    ----------------------------------------------------
+    closure		closure creation functions
+    copy-vector		vector copying for heaping rest
+    gc			mm specific functions
+
+o  [5m] Summary
+  o  compilation modes
+  o  dispatch: colouring, sealing, type constraints
+  o  allocation: [each-sub]class slots, constant slots
+  o  dylan library: creation, collections, arithmetic, higher-order
+  o  profiler: time and allocation
+
+** [2h] Practical
+
+o  [40m] Reversi example [covers colouring and language]
+  o  Go through example in online doc
+  o  Add remaining optmisations to game.dylan, considering how to
+     optimise and also whether it'd be a good idea. [Maybe order by
+     obviousness, in case people take too long?]
+    o  element-setter @ 79, 112, 441, 472 [key :: <integer>]
+       o  in some cases, could use "limited(<vector>, of: <integer>)"?
+    o  choose @ 167, 176
+[would have to restrict arg type to <stretchy-vector>, probably bad idea]
+    o  corner-square? @ 168
+[move :: limited-vec-of-int ... but that fails, as the vec turns out
+not to be of limited type; could add explicit local with type-check,
+but not much point; BTW, why is colouring within the method body
+different for the two choose calls?]
+    o  \< @ 190 [x & y :: <integer>]
+    o  element @ 206, 227, 319 [key :: <integer>]
+    o  reverse! @ 260
+[no sealed domain, so normally don't fix, but could reasonably seal
+if type were lowered to a sealed class; add! is already sealed, BTW]
+    o  \= @ 270 [sealing non-conformance for "\="!],
+            330 [piece :: false-or(<player>)]
+    o  empty? @ 283, 438, 469
+[would have to lower type of squares-to-take: bad idea because we're
+changing protocol, not just implementation as in doc example]
+    o  \+ @ 296, 331
+[both ":: <integer>", though ideally unneeded; will new typist fix?]
+    o  choose-move-for-player @ 437
+[prob. because <algorithm> = <symbol>, but only methods for some symbols;
+could define it to be equal to a type-union of symbols]
+    o  %player-setter @ 502
+[implicit type-check of "type", prob. not worth fixing (by adding
+explicit type-check) as the same check will be done in dispatch,
+since the parameter constraint is a type-union]
+
+o  [30m] Simple "great improvements" example [covers "\timing"]
+  o  Take "inefficient-1" example and follow the various steps suggested.
+    (1) initial state		10000ms
+    (2) constrain accumulator	 9000ms
+    (3) constrain n		 8250ms
+    (4) constrain i		 8100ms
+    (5) seal make & initialize	 1300ms
+
+[coffee in here somewhere]
+
+o  Profile some fairly complicated piece of code: the Life example.
+  o  Time profiling
+    o  Diagnosis, Display Loop thread [DBGTHREAD1]
+      o  Spends a 28% of time in CallNextHookEx -- track this down via
+         KpostmessageF545I and generate-trigger-event to call-in-frame.  It
+         also spends 53% of time in do-n-generations, so things which that
+         calls are important: aref (41%), "local update" (36%) and dynamic
+         dispatch (11%).  (This suggests that improving the implementation
+         of aref would have more effect that just ensuring it's statically
+         dispatched.)  And guess what?  The local update function calls the
+         cell-displayer, which calls call-in-frame.  So we have our two
+         major suspects.
+    o  Diagnosis, Master thread (which does the repainting) [DBGTHREAD0]
+      o  56% of time is spent waiting for events, which is probably okay
+         for and event-driven app but supports the hypothesis that doing
+         more repainting per call-in-frame would make better use of time.
+    o  Solutions
+      o  call-in-frame:
+        o  Could rewrite do-n-generations to update once per row or once
+           for the whole board; but can also just make cell-displayer
+           queue updates in closed-over array and do per-row or per-board
+           repaints transparently :-)
+      o  aref[-setter]:
+        o  Implement your own sealed class of arrays (multiplying into a
+           vector, or using arrays of arrays) and write sealed methods over
+           those?
+[
+Summary of call-in-frame solutions
+  (0) Original state
+  (1) Perform all updates in one go after each step
+  (2) Clear and redraw the whole board after each step
+
+                            (0)   (1)   (2)
+DBGTHERAD0
+  SendMessageWorker         56%   51%   26%
+  process-next-event         3%   --    --
+  NtGdiEllipse               5%    7%    9%
+  draw-ellipse               2%    6%    3%
+
+DBGTHREAD1
+    aref                      64%   71%   68%
+    dispatch                  19%   15%   18%
+  do-n-generations          54%   70%   63%
+  CallNextHookEx            28%   --    --
+  NtDuplicateToken           5%   19%   26%
+  life-display-top-level     8%    9%    9%
+]
+    o  Conclusions
+      (1) and (2) waste negligible amounts of time in call-in-frame
+      (2) leads to most time spent drawing, but not enough processing events
+          -- the UI becomes unresponsive!
+
+  o  Allocation profiling
+    o  Won't go into detail here -- you get the idea, and I don't have any
+       great tips.  Try it on the Life example if you like ...
+    o  Strangely, aref seems to do lots of allocation, too!
+

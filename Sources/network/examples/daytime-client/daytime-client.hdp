@@ -1,0 +1,17 @@
+comment:	This file is generated, please don't edit
+format-version:	2
+library:	daytime-client
+files:	library
+	daytime-client
+other-files:  Open-Source-License.txt
+base-address:	0x63FE0000
+major-version:	2
+minor-version:	1
+compilation-mode:	loose
+target-type:	executable
+comment:	additional keywords
+Copyright:    Original Code is Copyright (c) 1999-2002 Functional Objects, Inc.
+              All rights reserved.
+License:      Functional Objects Library Public License Version 1.0
+Dual License: GNU Lesser General Public License
+Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND

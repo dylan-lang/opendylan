@@ -1,0 +1,18 @@
+// This file lists names that are only supported on Windows 95,
+// not on Windows NT.
+//
+// $HopeName$
+// $Date: 2004/03/12 00:10:22 $
+
+
+// Power Management Functions - in Windows 95 and NT 5.0 but not NT 4.0
+CancelDeviceWakeupRequest
+GetDevicePowerState
+GetSystemPowerStatus
+RequestDeviceWakeup
+RequestWakeupLatency
+SetMessageWaitingIndicator
+SetSystemPowerState 
+SetThreadExecutionState
+SYSTEM_POWER_STATUS
+LPSYSTEM_POWER_STATUS

@@ -1,0 +1,196 @@
+TESTING ENVIRONMENT SERVICES
+
+* Introduction
+
+This document describes how to manually test the services provided by
+"DylanWorks" to external programs, e.g., editors.  Since use of these
+services in general requires inter-process communication and user
+interaction, it is difficult to test automatically.
+
+** Scope
+
+This document covers the following services and clients.
+
+Services:
+
+  - Describe
+  - Find Definitions
+  - Browse
+  - Compile (parse, compile changes, compile all, link only, build)
+  - Complete [NYI]
+  - Find Uses [NYI]
+  - Documentation [NYI]
+
+[NYI = Not yet implemented]
+
+Clients:
+
+  - Deuce
+  - Emacs [NYI]
+
+Deuce is not, strictly speaking, an external program, but it uses the
+same channels to access the services.
+
+** Usage
+
+This document is intended as a manual test-suite for the services
+provided by the environment.  Testers should follow the descriptions
+for the combinations of client and service they wish to test.
+
+All responses, correct or incorrect, should be recorded.  Any errors
+or problems not anticipated in this document should be reported,
+including (but not limited to): error dialogs other than those
+anticipated; crashes; lack of successful response from a service, when
+it should succeed; or unavailability of any given means to invoke a
+service (e.g., some menu item is missing).
+
+
+* Test Descriptions
+
+** Lookup servics
+
+The services Describe, Find Definitions, Browse, Complete and Find
+Uses require that string, to which they are applied, appear as the
+name (or, for Complete, an initial substring of a name) of a Dylan
+definition in a project, which is loaded into the environment.  Such a
+string will be referred to as "valid" here.  Invalid strings include
+(but may not be limited to) strings which do not appear in any open
+project, strings which are not valid Dylan names (since they cannot be
+names of definitions) and strings used as names of things other than
+definitions (module names in headers, local variables, symbols etc.).
+
+The project must also have been at least "parsed" for these services
+to produce the desired information, but if it has not been, the
+environment should remain stable.
+
+The term "function" here includes definitions of generic functions,
+methods on generic functions, bare methods (from "define function")
+and also definitions of sealed domains, since these have the same name
+as some generic function.
+
+To test each lookup service, select a string and invoke the service.
+Try the following kinds of string:
+
+  - Before any project has been loaded ...
+    - a Dylan definition name appearing in some existing project. [*]
+    - a non-name string; [*]
+  - With a project loaded but not parsed ...
+    - a Dylan definition name appearing in some loaded project. [*]
+    - a non-name string; [*]
+    - a name of a local variable; [*]
+  - With a project loaded and parsed ...
+    - an invalid string; [*]
+    - a name of a local variable; [*]
+    - the name of some defined instance of each of the following:
+      - a class;
+      - a function (only finds generic functions and bare methods);
+      - a variable;
+      - a constant;
+      - a macro.
+
+For cases marked [*], the environment should display an error message
+informing you that the string could not be found (or that no project
+or module could be found relevant to the context where the service was
+invoked).  In no cases should the environment crash, or provide any
+other sort of error message.
+
+*** Describe
+
+This service provides a summary of the definition of a name in a
+project.
+
+For valid strings, the string and the kind of definition it refers to
+are displayed.  The module, library and source record where the
+definition appears may also be given, depending on environment
+options.  Further information displayed depends on the kind of
+definition:
+
+  Definition		Information
+  ----------		-----------
+  class			superclasses list
+  function		parameter list and return values list
+  variable, constant	type
+  macro			none
+
+*** Find Definitions
+
+This service finds all definitions with a given name, in a given
+module and project context.
+
+For names of objects which have at least one explicit definition in
+the given context, the environment's editor will display that
+definition.  For those which have more than one definition, these will
+be displayed in some kind of "chooser" window, from which you should
+be able easily to edit any one.
+
+Objects may have no explicit definition, e.g., implicit generic
+functions, or they may have several, if searching is done across
+modules or projects, or includes module and library names as well as
+binding names.  Objects may have several definitions either because
+that is normal for Dylan (i.e., for methods) or again because
+searching is done across contexts.
+
+[As of 1997/06/09, searching is _not_ done across contexts, nor are
+modules and libraries included in searching.]
+
+*** Browse
+
+This service causes the environment to browse the object to which a
+valid name is bound, exactly as if it had had the environment's
+standard "Browse" operation applied to it.  It may or may not open a
+new browser window to do so.
+
+If the same name appears in more than one open project, the
+environment should open a "chooser" window from which a name can be
+selected and browsed -- check that it does.
+
+
+*** Complete [NYI]
+
+*** Find Uses [NYI]
+
+*** Documentation [NYI]
+
+
+** Compilation service
+
+The interface to compilation is sufficiently simple that it is
+provided by one service, Compile, with a parameter governing which
+state or stages of compilation processing to perform: parse, compile
+changes, compile all, link only, build.  [Parse may be omitted in
+future versions of the environment.]
+
+Each of these stages is identical to the action of the same (or
+similar) name on a project window's "Build" menu.  Invoking one of
+these actions should apply the normal compilation process(*) to the
+"relevant" open project.  For invocation from editors, this means
+whichever project contains the source file displayed in the window
+from which the service was invoked.
+
+(* This process will occur either in a project window or in a separate
+compilation window, depending on what we've decided to implement.)
+
+---*** Issue: In the unlikely but possible circumstance that the
+source file occurs in more than one open project, it seems to be
+curently undefined, what the environment will do.  Please check this.
+
+
+* Clients
+
+** Deuce
+
+The lookup services are all invoked by selecting a region of text and
+then using the context (right mouse button) menu to select the
+service.  If no selection exists, right-clicking over text will select
+"the nearest string which looks like a Dylan name".
+
+[---*** Issue: these services should probably also be available from
+an "Object" menu on the menu bar.]
+
+The compile services are available on the "Build" menu, just as in the
+environment's project windows.  They should also be available from the
+context menu, when the right mouse button is clicked outside any
+selection and not over any text (i.e., off the right-hand side of the
+text).
+
+** Emacs [NYI]

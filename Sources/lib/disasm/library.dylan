@@ -1,0 +1,39 @@
+module:    dylan-user
+Synopsis:  A disassembler for 386 code
+Author:    Jon Thackray
+Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
+              All rights reserved.
+License:      Functional Objects Library Public License Version 1.0
+Dual-license: GNU Lesser General Public License
+Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
+
+
+define library disasm
+  use functional-dylan;
+  use collections;
+  use io;
+  use generic-arithmetic;
+  use big-integers;
+
+  export disasm;
+end library;
+
+define module disasm
+  use generic-arithmetic-dylan;
+  use functional-extensions;
+  use byte-vector;
+  use format;
+  use format-out;
+
+  export decode-opcodes,
+	 opcodes-to-string,
+	 <general-opcode-and-offsets>,
+         <external>,
+         <no-external>,
+         <some-external>,
+         <labelled-external>,
+         <relative-external>,
+	 general-opcode-opcode,
+	 general-opcode-offset,
+	 general-opcode-end-offset;
+end module;

@@ -1,0 +1,49 @@
+<library-pack name="DOOD" title="Persistent Storage" number="4">
+  <description>A simple persistent storage library</description>
+  <copyright>Copyright (c) 1995-2001 Functional Objects, Inc. All rights reserved.</copyright>
+  <company>Functional Developer</company>
+  <libraries>
+    <library name="dood" title="DOOD">
+      <sources location="lib/dood/">
+	<project platform="x86-win32">win32-dood.lid</project>
+	<project>dood.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+	<binary file="DxDOOD.dll">
+	  <merge>dfmc-mangling</merge>
+	  <merge>variable-search</merge>
+	  <merge>walker</merge>
+	</binary>
+	<lib file="DxDOOD.lib"/>
+      </release>
+    </library>
+    <library name="dfmc-mangling" title="DFMC Mangling">
+      <sources location="sources/dfmc/mangling">
+	<project>dfmc-mangling.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="variable-search" title="Variable Search">
+      <sources location="lib/variable-search">
+	<project platform="x86-win32">win32-variable-search.lid</project>
+	<project>variable-search.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="walker" title="Walker">
+      <sources location="lib/walker">
+	<project platform="x86-win32">win32-walker.lid</project>
+	<project>walker.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+  </libraries>
+  <test-suites>
+    <library name="dood-test-suite" title="DOOD test suite">
+      <sources location="lib/dood/tests">
+        <project>dood-test-suite.lid</project>
+      </sources>
+      <description>DOOD test suite</description>
+    </library>
+  </test-suites>
+</library-pack>

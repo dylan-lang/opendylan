@@ -1,0 +1,31 @@
+This directory contains a Dylan implementation of the DOM interfaces.
+
+The implementation conforms to the DOM specification except as follows:
+ - It uses Dylan naming conventions:
+   - Hyphens are inserted at case breaks, e.g., 'appendChild' becomes 'append-child'.
+   - Hyphens are used instead of underscores.
+   - Constants have "$" prefixes, e.g., 'TEXT_NODE' becomes '$text-node'.
+   - Class names have "<>" around them, e.g., 'Node' becomes '<node>'.
+   - Predicates get '?' appended to the end of the name.
+   - We don't use 'get' and 'set' in the names of accessors, this, 'getNodeValue'
+     and 'setNodeValue' are just 'node-value' and 'node-value-setter'.
+ - There are some additional bits of basic functionality:
+   - 'create-xml-document' can be used to create an XML document.
+   - 'create-html-document' can be used to create an HTML document.
+   - 'do-nodes' maps over all the descendents of a node.
+   - 'do-elements' maps over all the element descendents of a node.
+   - 'do-elements-by-tag-name' maps over all the descendent elements of a document
+     or an element.
+   - 'do-attributes' maps over all the attributes of an element.
+   - 'text' returns a concatenation of all the text stored in text nodes that are 
+     the descendents of an element.
+   - You can access the children of an element using the Dylan collection protocol
+     protocol, e.g., 'body["P", 0]' gets the first paragraph element of 'body'.
+ - Rather than a set of separate "NS" functions to support namespaces, all the
+   relevent non-namespace DOM functions take a 'namespace' keyword parameter.
+ - For the "equals" functions ('equalsNode', e.g.), just use \=.
+   For the "identity" functions ('isSameNode', e.g.), just use \==.
+ - There are no corresponding Dylan methods for 'getAs'.
+ - The names for all of the HTML element attribute-hacking function have "html/"
+   prepended to the name.  This is done in order to fix some egregious name clash
+   problems that would not be seen if Dylan used Java- or CORBA-style namespaces.

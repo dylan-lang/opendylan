@@ -1,0 +1,242 @@
+<library-pack name="GUI" title="GUI Framework" number="2">
+  <description>A complete framework for GUI applications</description>
+  <copyright>Copyright (c) 1995-2001 Functional Objects, Inc. All rights reserved.</copyright>
+  <company>Functional Developer</company>
+  <libraries>
+    <library name="duim-core" title="DUIM Core">
+      <description>Dylan User Interface Manager portable libraries</description>
+      <sources location="duim/core">
+	<project platform="x86-win32">win32-duim-core.lid</project>
+	<project>duim-core.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+	<binary file="DxDUIM.dll">
+	  <merge>duim-dcs</merge>
+	  <merge>duim-extended-geometry</merge>
+	  <merge>duim-frames</merge>
+	  <merge>duim-gadgets</merge>
+	  <merge>duim-geometry</merge>
+	  <merge>duim-graphics</merge>
+	  <merge>duim-layouts</merge>
+	  <merge>duim-recording</merge>
+	  <merge>duim-sheets</merge>
+	  <merge>duim-utilities</merge>
+	</binary>
+	<lib file="DxDUIM.lib"/>
+      </release>
+    </library>
+    <library name="duim-dcs" title="DUIM DCs">
+      <sources location="duim/dcs">
+        <project platform="x86-win32">win32-duim-dcs.lid</project>
+        <project>duim-dcs.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="duim-extended-geometry" title="DUIM Extended Geometry">
+      <sources location="duim/extended-geometry">
+        <project platform="x86-win32">win32-duim-extended-geometry.lid</project>
+        <project>duim-extended-geometry.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="duim-frames" title="DUIM Frames">
+      <sources location="duim/frames">
+        <project platform="x86-win32">win32-duim-frames.lid</project>
+        <project>duim-frames.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="duim-gadgets" title="DUIM Gadgets">
+      <sources location="duim/gadgets">
+        <project platform="x86-win32">win32-duim-gadgets.lid</project>
+        <project>duim-gadgets.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="duim-geometry" title="DUIM Geometry">
+      <sources location="duim/geometry">
+        <project platform="x86-win32">win32-duim-geometry.lid</project>
+        <project>duim-geometry.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="duim-graphics" title="DUIM Graphics">
+      <sources location="duim/graphics">
+        <project platform="x86-win32">win32-duim-graphics.lid</project>
+        <project>duim-graphics.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="duim-layouts" title="DUIM Layouts">
+      <sources location="duim/layouts">
+        <project platform="x86-win32">win32-duim-layouts.lid</project>
+        <project>duim-layouts.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="duim-recording" title="DUIM Recording">
+      <sources location="duim/recording">
+        <project platform="x86-win32">win32-duim-recording.lid</project>
+        <project>duim-recording.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="duim-sheets" title="DUIM Sheets">
+      <sources location="duim/sheets">
+        <project platform="x86-win32">win32-duim-sheets.lid</project>
+        <project>duim-sheets.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="duim-utilities" title="DUIM Utilities">
+      <sources location="duim/utilities">
+        <project platform="x86-win32">win32-duim-utilities.lid</project>
+        <project>duim-utilities.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="duim" title="DUIM">
+      <description>Dylan User Interface Manager</description>
+      <sources location="duim/win32">
+	<project platform="x86-win32">duim.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+	<binary file="DxWDUIM.dll">
+	  <merge>duim-gadget-panes</merge>
+	  <merge>win32-duim</merge>
+	</binary>
+	<lib file="DxWDUIM.lib"/>
+      </release>
+    </library>
+    <library name="duim-gadget-panes" title="DUIM Gadget Panes">
+      <sources location="duim/gadget-panes">
+        <project platform="x86-win32">win32-duim-gadget-panes.lid</project>
+        <project>duim-gadget-panes.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="win32-duim" title="Win32 DUIM">
+      <sources location="duim/win32">
+        <project platform="x86-win32">win32-duim.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+  </libraries>
+  <examples>
+    <library name="scribble" title="Scribble">
+      <category>Getting Started</category>
+      <category>Technologies/DUIM</category>
+      <description>A simple drawing program implemented with DUIM</description>
+      <sources location="duim/scribble">
+	<project>scribble.hdp</project>
+      </sources>
+    </library>
+    <library name="duim-gui-test-suite" title="DUIM GUI Test Suite">
+      <category>Technologies/DUIM</category>
+      <description>A demonstration of all the functionality of DUIM</description>
+      <sources location="duim/duim-gui-test-suite">
+        <project>duim-gui-test-suite.hdp</project>
+      </sources>
+    </library>
+    <library name="win32-duim-gui-test-suite" title="Win32 Test Suite">
+      <category>Technologies/DUIM/Win32</category>
+      <description>A DUIM test suite for just the Win32 specific features</description>
+      <sources location="duim/win32-duim-gui-test-suite">
+        <project>win32-duim-gui-test-suite.hdp</project>
+      </sources>
+    </library>
+    <library name="interface-builder" title="DUIM Interface Builder">
+      <category>Technologies/DUIM/Tools</category>
+      <category>Tools/GUI</category>
+      <description>A toy interface builder that can generate DUIM code</description>
+      <sources location="duim/interface-builder">
+        <project>interface-builder.hdp</project>
+      </sources>
+    </library>
+    <library name="duim-resource-example" title="Resources">
+      <category>Technologies/DUIM/Win32</category>
+      <description>A simple example of accessing resources using DUIM</description>
+      <sources location="duim/resources">
+        <project>duim-resource-example.hdp</project>
+      </sources>
+    </library>
+    <library name="life" title="Life">
+      <category>Technologies/DUIM/Games</category>
+      <description>A life simulation game</description>
+      <sources location="duim/life">
+        <project>life.hdp</project>
+      </sources>
+    </library>
+    <library name="reversi" title="Reversi">
+      <category>Technologies/DUIM/Games</category>
+      <description>The board game Reversi</description>
+      <sources location="duim/reversi">
+        <project>reversi.hdp</project>
+      </sources>
+    </library>
+    <library name="pente" title="Pente">
+      <category>Technologies/DUIM/Games</category>
+      <description>The board game Pente</description>
+      <sources location="duim/pente">
+        <project>pente.hdp</project>
+      </sources>
+    </library>
+    <library name="tetris" title="Tetris">
+      <category>Technologies/DUIM/Games</category>
+      <description>The classic game</description>
+      <sources location="duim/tetris">
+        <project>tetris.hdp</project>
+      </sources>
+    </library>
+    <library name="windows-viewer" title="Windows viewer">
+      <category>Technologies/DUIM/Win32</category>
+      <category>Tools/GUI</category>
+      <description>A simple Windows viewer and event tracer</description>
+      <sources location="duim/windows-viewer">
+        <project>windows-viewer.hdp</project>
+      </sources>
+    </library>
+    <library name="win32-scribble" title="Win32 Scribble">
+      <category>Technologies/DUIM/Win32</category>
+      <description>A Win32-only version of scribble, that implements printing</description>
+      <sources location="duim/win32-scribble">
+        <project>win32-scribble.hdp</project>
+      </sources>
+    </library>
+    <library name="duim-gl-demo" title="DUIM OpenGL demo">
+      <category>Technologies/OpenGL</category>
+      <description>An example use of OpenGL within DUIM</description>
+      <sources location="duim/duim-gl-demo">
+        <project>duim-gl-demo.hdp</project>
+      </sources>
+    </library>
+    <library name="flying-squares" title="Flying Squares">
+      <category>Technologies/OpenGL</category>
+      <description>An animated logo using OpenGL and DUIM</description>
+      <sources location="duim/flying-squares">
+        <project>flying-squares.hdp</project>
+      </sources>
+    </library>
+    <library name="reversi" title="Reversi">
+      <category>Documentation/Getting Started with Functional Developer</category>
+      <description>The DUIM Reversi example from the Getting Started guide</description>
+      <sources location="documentation/reversi">
+        <project>reversi.hdp</project>
+      </sources>
+    </library>
+    <library name="task-list-1" title="Task List 1">
+      <category>Documentation/Building Applications Using DUIM</category>
+      <description>The first task list example from the DUIM user guide</description>
+      <sources location="documentation/task-list-1">
+        <project>task-list.hdp</project>
+      </sources>
+    </library>
+    <library name="task-list-2" title="Task List 2">
+      <category>Documentation/Building Applications Using DUIM</category>
+      <description>The second task list example from the DUIM user guide</description>
+      <sources location="documentation/task-list-2">
+        <project>task-list.hdp</project>
+      </sources>
+    </library>
+  </examples>
+</library-pack>

@@ -1,0 +1,14 @@
+pushd $FUNCTIONAL_DEVELOPER_USER_BUILD/build
+
+assemble
+
+gcc -o build -L$FUNCTIONAL_DEVELOPER_USER_INSTALL/lib -L$FUNCTIONAL_DEVELOPER_RELEASE/lib -L/usr/lib -L/usr/X11R6/lib -L/usr/X11/lib -L/lib -L/usr/X11R6/lib/xrt/lib $FUNCTIONAL_DEVELOPER_USER_INSTALL/lib/dylan-support.o *.o -ldylan -lcommon-dylan -lfunctional-dylan -lcollections -lio -lsystem -lsource-records -lfile-source-records -lrelease-info -linternal-release-info -lgeneric-arithmetic -lbig-integers -lbinary-manager -lbinary-builder -lcoff-manager -lcoff-builder -lbuild-system -lelf-linker -lccl-linker -llinker-support -lgnu-linker -Xlinker -rpath -Xlinker .
+
+cp -fp build $FUNCTIONAL_DEVELOPER_USER_INSTALL/lib/
+
+# cp -fp ~/dylan/lib/* ~/dylan/lib/boot/
+# LD_LIBRARY_PATH=$FUNCTIONAL_DEVELOPER_USER_INSTALL/lib/boot
+# printenv LD_LIBRARY_PATH
+# ~/dylan/lib/boot/build elf assemble-all basic-pentium-dw.exe
+
+popd

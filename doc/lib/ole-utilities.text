@@ -1,0 +1,1397 @@
+
+Title:  OLE high-level support for Dylan -- user description
+
+Author: David N. Gray  <gray@harlequin.com>
+
+Date:	September 12, 1996 - initial proposal.
+	September 25, 1996 - as checked in to HOPE.
+	December 10, 1996 - self-registration added.
+	January 28, 1997 - adjustments for consistency with OLE-Automation.
+	February 6, 1997 - add tool bar and accelerator support.
+	February 25, 1997 - add support for OLE Controls.
+	May 27, 1997 - fix storage model for controls.
+	June 6, 1997 - more clarifications for OLE Controls.
+	July 22, 1997 - add support for in-process servers.
+	August 15, 1997 - minor clarifications.
+	September 22, 1997 - more features for OLE Controls.
+	September 25, 1997 - add ambient property support.
+	October 17, 1997 - more trivial updates.
+	December 3, 1997 - update details of DLL support.
+
+Status: This describes what is currently implemented and checked in.
+
+Copyright: 1996, 1997 Functional Objects, Inc.  All rights reserved.
+
+Version: $HopeName: D-doc-lib!ole-utilities.text(trunk.24) $
+
+--------------
+
+
+Introduction
+------------
+
+The file "~dylan/doc/lib/ole-user-doc.text" specifies how a Dylan program
+can use OLE at the level of the low-level API.  File "ole-duim.text"
+specifies how DUIM applications can use OLE.  This document describes the
+support layer between those two, which enables OLE to be used much more
+easily than with the low-level API, yet does not require use of DUIM.
+
+The intent is that this layer will not require direct use of either OLE
+interface pointers or the `C-FFI' library, but it should still be possible
+to use the low-level API to extend the capabilities of the library. 
+
+This document is intended to provide a user-level view, not to document
+the internal implementation.
+
+All of this is only applicable to programs running under Windows NT or
+Windows 95.  There are no plans to support or emulate OLE on any other
+platform. 
+
+The reader of this document is assumed to have some acquaintance with the
+basic concepts of OLE, but detailed knowledge should not be necessary.
+
+
+OLE Server
+----------
+
+An OLE server application (in other words, an embeddable part) is
+constructed by using the `OLE-Server' library and module and implementing a
+subclass of either `<ole-server-framework>' (for a "local server" in an EXE
+file) or `<ole-in-process-server>' (for an "in-process server" in a DLL
+file) and the necessary methods on that
+class.  A single instance of this class will be instantiated when a
+container application connects to the server application.  This interface
+object is the "controlling unknown" for all of the low-level OLE
+interfaces, so `QueryInterface' may be called on it if it is necessary to
+obtain any of the low-level interface pointers in order to extend the
+capabilities of the library.
+
+Note that due to compiler limitations, the subclass of
+`<ole-server-framework>' or `<ole-in-process-server>' currently needs to be
+defined by using `define COM-interface' instead of `define class'.
+
+This document provides more of a brief outline than a comprehensive
+specification.  Many of the details will be clearer by examining the
+accompanying example program in directory "~dylan/app/win32-ole-server/";
+see its "README.text" file.
+
+For a "local server", the basic structure of the application program is
+like for any GUI program using the Win32 API, with the following
+exceptions:
+
+ * Call `OLE-util-started-by-OLE?()' to find out whether the program is
+   running under OLE.  If it returns `#f', then the program should just run
+   as a normal independent application.  Otherwise, the program should not
+   show any of its windows; that will be done at the appropriate time by
+   the OLE support library.
+
+ * When running under OLE, before entering the event loop, the program
+   needs to make an instance of `<class-factory>', passing it the program's
+   OLE class ID and the Dylan object class to be instantiated (i.e. the
+   user's subclass of `<ole-server-framework>').  This will take care of
+   registering the server process so that the container can connect to it.
+   (Not to be confused with registering the class so that the container
+   knows which program to initiate.)  When the program terminates, it
+   should call the function `revoke-registration' on the instance of
+   `<class-factory>'.
+
+ * Within the event loop, when the application is activated in-place, the
+   function `OLE-util-translate-accelerator' needs to be called to properly
+   handle the top-level menu.  (It is harmless to call it in other
+   contexts.)  Note that the interface object is created during the
+   processing of events so it can't be simply placed in a local variable
+   before entering the loop.
+
+ * Before the program terminates, such as when responding to a `$WM-CLOSE'
+   message, if an interface object has been created, the function
+   `OLE-util-close-server' should be called on it to ensure that it is
+   properly disconnected from the container if it is still connected.
+   (Note that the class will need an `initialize' method that stores the
+   object somewhere that it can be found later, since `make' is not called
+   directly.)
+
+An application needs to have at least two windows: a top-level frame window
+(which includes the border and title bar), and a single child window
+occupying the client area within the border, and referred to as the
+"document window".  The document window may be subdivided into other child
+windows, but there needs to be a single window handle representing the
+whole client region.  In stand-alone execution, the application uses
+`ShowWindow' to display the frame window as with any Windows program.  For
+out-of-place activation under OLE, this is not done until the application's
+`OLE-part-open-out' method is called by the support library.  For in-place
+activation, the support library calls the application's
+`OLE-part-doc-window' method to get the document window, and then it takes
+care of displaying it as a child of the container's window, and also
+automatically places a "hatch" border around it.  The frame window is not
+used in in-place activation, but it still needs to exist to serve as the
+initial parent when creating the document window.  The code that actually
+draws to the document window needs to be set up to be called from either of
+two contexts: in response to a $WM-PAINT message, or when the application's
+`OLE-part-draw-metafile' method is called to produce an image of the window
+that will be displayed by the container when the server is not active, and
+will be saved with the container's other data.  If the application has
+state information other than the screen image (which it most likely will),
+it will need to provide methods to direct the loading and storing of that
+data.
+
+Following is the minimal set of methods that must be implemented by a
+server application to be called by the support library.  In each case, the
+first argument (named `obj' here) is to be specialized on the application's
+subclass of `<ole-server-framework>' or `<ole-in-process-server>'.
+
+  OLE-part-doc-window (obj) => doc-window :: <HWND>
+
+	Return the handle of the application's document window.
+
+	If this returns a null handle (e.g. `$NULL-HWND'), then in-place
+	activation will not be supported, and out-of-place activation will
+	be used instead.  (However, in this case, a method must also be
+	provided for `OLE-part-requested-size'.)
+
+  OLE-part-open-out(obj) => frame-window :: <HWND>
+
+	Do out-of-place activation by showing the frame window.  The handle
+	of the frame window is returned.  If this returns a null handle
+	(e.g. `$NULL-HWND'), then the container is told that the activation
+	has failed.
+
+  OLE-part-draw-metafile(obj, hDC :: <HDC>) => status :: <HRESULT>
+
+	This method should draw all of the document window display 
+	to the given Device Context.  This is what will be displayed by the
+	container when the server is no longer active.  Normally this
+	should return `$S-OK', but it is possible to return an error status
+	code that will be reported back to the container program.
+
+	[Issue: does it make sense that this is the only one of these
+	functions that returns an error status?]
+
+  terminate (obj) => ()
+
+	This method will be called when the container disconnects, so it
+	needs to take whatever action is appropriate to the fact that this
+	object is no longer being used.  Typically, for a "local server",
+	it will post a close message to cause the process to be terminated.
+	For example:
+
+	  define method terminate (obj :: <my-server-object>) => ()
+	    next-method();
+	    if ( OLE-util-started-by-OLE?() ) // if we were started by OLE
+	      // post close message to terminate the process.
+	      PostMessage( obj.main-window, $WM-SYSCOMMAND, $SC-CLOSE, 0);
+	    end if;
+	    values()
+	  end;
+
+	Don't forget to always call `next-method' first because there is
+	important bookkeeping done by the default method.
+
+	For an in-process server, the `terminate' method needs to make sure
+	to release any Windows resources created by the program.  For
+	example, you might need to call the Win32 functions `DestroyWindow'
+	and `UnregisterClass'.
+
+The following group of methods is used to implement persistent storage of
+any data that needs to be saved in addition to the window image.  If there
+is no such data, these methods can all be defined to do nothing, but there
+are no default methods provided since most applications will need these and
+silently ignoring the operation could cause problems that would be
+difficult to figure out.
+
+  OLE-part-Create-Streams(obj, storage :: <LPSTORAGE>) => ()
+
+	Create any streams (instances of `<LPSTREAM>', the "IStream"
+	interface, not to be confused with the Dylan `<stream>' class)
+	that are needed for persistent data.  These streams are ways of
+	accessing a portion of data within the supplied `storage' object.
+	Usually this will be done like:
+	  obj.my-stream := OLE-util-Create-Stream(storage, stream-name);
+	for each stream needed, where the second argument is an OLE string
+	(instance of class `<LPOLESTR>') which is the name of the stream.
+	For example:
+	  define constant $my-stream-name = as(<LPOLESTR>, "MyData");
+
+  OLE-part-Open-Streams(obj, storage :: <LPSTORAGE>) => ()
+
+	Open any streams needed.  Usually this will be done like:
+	  obj.my-stream := OLE-util-open-stream(storage, stream-name);
+
+  OLE-part-Release-Streams(obj) => ()
+
+	Call `Release' on each of the stream objects and forget them.
+
+  OLE-part-Save-To-Storage(obj, storage :: <LPSTORAGE>,
+			   SameAsLoad? :: <boolean>) => ()
+
+	Save your persistent data to storage by writing it to your stream
+	objects.  The `SameAsLoad?' parameter indicates whether this is the
+	same storage that the object was originally created with.  If so,
+	it should write to the streams remembered from a previous call to
+	`OLE-part-Create-Streams' or `OLE-part-Open-Streams'; otherwise,
+	`OLE-util-Create-Stream' should be called to create new temporary
+	streams that should be `Release'd before returning.
+
+	You can call `istream-rewrite' on each stream to position it at the
+	beginning and erase any old data, or use `IStream/Seek' to do
+	selective updates.  The writing can be done either by using helper
+	functions such as `istream-write-integer' and
+	`istream-write-int16', or by using the low-level API function
+	`IStream/Write'.
+
+  OLE-part-Load-From-Storage(obj, width :: <integer>, height :: <integer>)
+			=> ()
+
+	Initialize the size of your document window to the saved width and
+	height (in pixels), and load your persistent data from storage by
+	reading from your stream objects which were created by
+	`OLE-part-Open-Streams'.
+
+	The reading can be done either by using helper functions such as
+	`istream-read-integer' and `istream-read-int16', or by using the
+	low-level API function `IStream/Read'.
+
+The following methods may optionally be provided if needed:
+
+  OLE-part-init-new (obj) => ()
+
+	This function is called when a new object is being created, i.e.,
+	when `OLE-part-Load-From-Storage' will not be called to load an old
+	object.  A method may be defined to perform any desired
+	initialization.  The default method does nothing.
+
+  OLE-part-dirty? (obj) => dirty? :: <boolean>
+
+	Return `#t' if the any of the application's data has changed since
+	it was last loaded or stored.  This is used to decide whether your
+	`OLE-part-Save-To-Storage' method needs to be called.  Typically
+	you would want your object to contain a slot which is returned by
+	this function, set to `#f' by `OLE-part-Save-To-Storage' and
+	`OLE-part-Load-From-Storage', and set to `#t' when any relevant
+	data is changed.  The default method always returns `#t'.
+
+  OLE-part-title (obj) => title :: false-or(<string>)
+
+	Return either #f or a string identifying the server application.
+	(#f and an empty string have the same effect -- no title.)
+	Typically this would be the same as what would be shown in the
+	window title bar for stand-alone execution.  However, most
+	containers don't use this information.  The default method returns
+	no title.
+
+  OLE-part-set-focus (obj) => ()
+
+	Set focus to the document window.  The default method does:
+	  SetFocus(OLE-part-doc-window(obj));
+	which is usually the right thing, but some applications might want
+	to provide an override for performing additional bookkeeping.
+
+  OLE-part-requested-size (obj) => (width, height)
+
+	Return the desired amount of space to be occupied by the object in
+	the container, as two integers representing the number of pixels.
+	Usually the container will make the requested amount of space
+	available, but if not, it will call `OLE-part-change-size' (see
+	below) to report the actual size.
+
+	The default method uses `GetClientRect' to get the initial size of
+	the window returned by `OLE-part-doc-window'.
+
+  OLE-part-change-size (obj, width :: <integer>, height :: <integer>)
+		=> ok :: <boolean>
+
+	This function is called when the container changes the size of the
+	space allocated for the embedded object, such as if the user
+	resizes the object.  This won't be called as long as the space is
+	the same as requested by `OLE-part-requested-size'.  The width and
+	height are given in pixels.  Return #t if the change is acceptable
+	or #f if in-place activation can no longer be supported in the
+	given space.
+
+	The default method does nothing and returns #t.  An override method
+	should be supplied if you want to respond by altering the display
+	such as by scaling or scrolling instead of merely letting it be
+	clipped.
+
+	Note that the actual change to the window size is done separately
+	by OLE-part-position-window.
+
+  OLE-part-position-window (obj, rect :: <LPRECT>, repaint? :: <boolean>) => ()
+
+	Used during in-place activation to set the size and position of the
+	document window as designated by the given rectangle with pixel
+	coordinates.  If `repaint?' is true, the window should then be
+	re-drawn.  Note that the window size given here is what is
+	currently visible in the container after clipping, not necessarily
+	the full size of the allocated space (as from `OLE-part-change-size').
+
+	The default method does:
+
+	  MoveWindow(OLE-part-doc-window(obj),
+		     rect.left-value, rect.top-value,
+		     rect.right-value - rect.left-value,
+		     rect.bottom-value - rect.top-value,
+		     repaint?);
+ 
+        As is documented for the IOleInPlaceObject/SetObjectRects operation
+	that uses it, this method must not make calls to the Windows
+	`PeekMessage' or `GetMessage' functions, or a dialog box.
+
+  OLE-part-hide (obj) => ()
+
+	Remove the application frame window from the screen.  This is only
+	used during out-of-place activation.  The default method does
+	  ShowWindow(window, $SW-HIDE);
+	where `window' is the value returned by `OLE-part-open-out'.
+
+  OLE-part-in-place-activated (obj) => ()
+
+	This method is called when in-place activation is begun,
+	immediately after completion of displaying the application's
+	document window, menus, and tool bar in the container.  It simply
+	allows the application to recognize that this has happened and
+	perform any desired bookkeeping or visual changes.  The default
+	method does nothing.
+
+  OLE-part-UI-activated (obj) => ()
+
+	This method is called after adding any frame-level user interface
+	(such as menus or tool bar) for an in-place activation.  It simply
+	allows the application to recognize that this has happened and
+	perform any desired bookkeeping or visual changes.  The default
+	method does nothing.
+
+	Usually in-place activation of an embedded document server causes
+	both `OLE-part-in-place-activated' and `OLE-part-UI-activated' to
+	be called, but for an OLE Control which can be one of several
+	active at the same time, `OLE-part-UI-activated' will not be
+	called since the frame-level user interface is not altered.
+
+  OLE-part-in-place-deactivated (obj) => ()
+
+	This method is called when in-place activation is ended, just
+	before restoring the container's user interface.  It simply allows
+	the application to recognize that this is going to happen and to
+	perform any desired bookkeeping.  The default method does nothing.
+
+	[Issue: is this (a "before" notification) what is desired, or would
+	an "after" notification be more useful?]
+
+	`OLE-util-set-status-text' can be called here to leave a parting
+	message.
+
+  OLE-part-UI-deactivated (obj) => ()
+
+	This method is called before removing any frame-level user
+	interface (such as menus or tool bar) for an in-place activation.
+	The default method does nothing.
+
+	Usually for an embedded document server, this will be followed by a
+	call to `OLE-part-in-place-deactivated', but an OLE Control can
+	remain in-place-active even though it is no longer UI active.
+
+  OLE-part-insert-menus (obj, hmenu :: <HMENU>, edit-pos :: <integer>,
+			 object-pos :: <integer>, help-pos :: <integer>)
+	  => (nedit :: <integer>, nobject :: <integer>, nhelp :: <integer>)
+
+	This method can be implemented to specify menus that will be merged
+	into the container's menu bar during in-place activation. 
+	The second argument is the shared menu bar with the container's
+	menus already installed.  The last three arguments are the
+	positions in the menu bar at which menus may be inserted for each
+	of three groups, designated "edit", "object", and "help" menus.
+	The method needs to return the number of menus added in each group.
+	Menus can be inserted by calling the Win32 function `InsertMenu'.
+	For example, if there is just one menu to be inserted, the method
+	body might look something like:
+
+          InsertMenu(hmenu, edit-pos, logior($MF-BYPOSITION,$MF-POPUP), 
+	             pointer-address(my-hMenu), TEXT("&Mine"));
+          values( 1, 0, 0 )
+
+	The default method does nothing, returning values(0, 0, 0).
+
+  OLE-part-release-menu (obj, hmenu :: <HMENU>) => ()
+
+	When an in-place activation is ended, this method is called on
+	each of the menus that were inserted by `OLE-part-insert-menus'.
+	This provides an opportunity to call `DestroyMenu' if appropriate.
+	The default method does nothing.
+
+  OLE-part-command-window (obj) => window :: <HWND>
+
+	Return the window handle to which command messages will be
+	directed when any items from the inserted menus are invoked.
+	The default method uses the document window; an override method
+	will be needed if the menu commands are to be processed by the
+	frame window.
+
+  OLE-part-accelerators (obj) => table :: false-or(<HACCEL>)
+
+	Return the handle of the application's accelerator key table, or
+	`#f' if the application does not use any accelerators.  The default
+	method returns `#f'.  This is used during in-place activation of an
+	in-process server to handle keystrokes received by the container.
+	An accelerator handle is obtained from the Win32 function
+	`LoadAccelerators' or `CreateAcceleratorTable', but those should
+	not be called in this method since it will be called for each
+	keystroke.  Instead, this method should simply be an accessor for a
+	previously computed value.  Note that this should be the same value
+	as is passed to `TranslateAccelerator' in the server's event loop.
+
+  OLE-part-toolbar-window (obj) => toolbar-window :: <HWND>
+
+	Return the window handle of the application's tool bar.  If the
+	handle is not null, the window will be displayed at the top of the
+	container window during in-place activation.  The height of the
+	window should have been set as desired before this function
+	returns.  The width of the window will be automatically adjusted to
+	fit the container.  The default method returns `$NULL-HWND'.
+
+  OLE-part-get-data (obj, pformatetc :: <LPFORMATETC>,
+		     pmedium :: <LPSTGMEDIUM>) => status :: <HRESULT>
+
+	Implements the `IDataObject/GetData' operation by storing a
+	representation of the document window in the given `pmedium',
+	according to the format specified by `pformatetc'.  If `pmedium' is
+	a null pointer, don't actually store any data, but just indicate by
+	the returned status whether the format is supported (this case is
+	used to implement `IDataObject/QueryGetData').
+
+	The default method creates a "metafile" and calls
+	`OLE-part-draw-metafile' to draw into it.  (Both old style and
+	enhanced metafiles are supported for compatibility with both 16-bit
+	and 32-bit container applications.)  You should only need to
+	override this if you need to support some other data format or some
+	representation other than the entire window (`$DVASPECT-CONTENT').
+	See also the companion function `OLE-part-formats-for-get' below.
+
+  OLE-part-set-data (obj, pformatetc :: <LPFORMATETC>,
+		     pmedium :: <LPSTGMEDIUM>) => status :: <HRESULT>
+
+	Implements the `IDataObject/SetData' operation by storing the given
+	data into the application.  The default method simply returns an
+	error status indicating that this operation is not supported, which
+	is sufficient for many applications.  Most compound document
+	containers don't even call this.
+
+  OLE-part-formats-for-get (obj) => formats :: <list>
+
+	Used in the implementation of the `IDataObject/EnumFormatEtc'
+	operation (not used by all containers) when the direction is
+	`$DATADIR-GET'.  It returns a list in which each element is an
+	instance of `<FORMATETC-info>' which describes a supported data
+	format for `IDataObject/GetData'.  The default method returns:
+
+	  list(make(<FORMATETC-info>,
+		    format: $CF-METAFILEPICT,
+		    aspect: $DVASPECT-CONTENT,
+		    tymed: logior($TYMED-MFPICT, $TYMED-ENHMF)))
+
+	If `OLE-part-get-data' is overridden to support additional formats,
+	then a corresponding override should be provided here also.  To add
+	one additional format, the method body might look like:
+
+	  pair( make(<FORMATETC-info>, ...), next-method() )
+
+	[Rationale: it would be simpler to just put this information in the
+	registry, but then there would be no modular way to extend it.]
+
+  OLE-part-formats-for-set (obj) => formats :: <list>
+
+	Used in the implementation of the `IDataObject/EnumFormatEtc'
+	operation when the direction is `$DATADIR-SET'.  It returns a list
+	in which each element is a description of a supported data format
+	for `IDataObject/SetData'.  The default method returns an empty
+	list.  If `OLE-part-set-data' is overridden, then a corresponding
+	override should be provided here also.
+
+  OLE-part-enable-dialog (obj, enable? :: <boolean>) => ()
+
+	A server should provide a method for this if it displays any
+	modeless dialog boxes.  When the second argument is false, any
+	modeless dialog boxes currently being displayed should be disabled
+	because the container is showing a modal dialog box.  When the
+	second argument is true, any modeless dialog boxes should be
+	re-enabled.  The default method does nothing.
+
+
+Following are some functions that are implemented and exported by the
+`OLE-Server' module and may be used by a server application:
+
+  make-GUID
+
+	Creates a GUID object (class <REFGUID>, alias <REFCLSID>) from the
+	constituent integers.  This is used for specifying the OLE class ID
+	of the server application.  For example:
+
+	  define constant $my-class-ID =
+		make-GUID(#xBCF6D4A0, #xBE8C, #x1068,
+			  #xB6, #xD4, #x00, #xDD, #x01, #x0C, #x05, #x09);
+
+  istream-rewrite ( stream :: <LPSTREAM> ) => ()
+
+	Rewind the stream to the beginning and set the size to 0 in
+	preparation for writing new data.
+
+  istream-write-integer( stream :: <LPSTREAM>, value :: <integer> ) => ()
+  istream-write-int16  ( stream :: <LPSTREAM>, value :: <integer> ) => ()
+
+	Write an integer to the OLE data stream.  The first function writes
+	any <integer> or <machine-word> as a 32-bit value, while the second
+	only writes an <integer> as 16 bits. 
+
+  istream-read-integer ( stream :: <LPSTREAM> ) => value :: <integer>
+
+	Read a value written by `istream-write-integer'.
+
+  istream-read-int16 ( stream :: <LPSTREAM> ) => value :: <integer>
+
+	Read a value written by `istream-write-int16'.
+
+  istream-write-float ( stream :: <LPSTREAM>, value :: <single-float> ) => ()
+  istream-read-float ( stream :: <LPSTREAM> ) => (value :: <single-float>)
+
+	Read and write floating point values on an OLE data stream.
+
+  istream-write-string ( stream :: <LPSTREAM>, value :: <byte-string> ) => ()
+  istream-read-string ( stream :: <LPSTREAM> ) => (value :: <byte-string>)
+
+	Read and write strings on an OLE data stream.
+
+  OLE-util-Create-Stream (storage :: <LPSTORAGE>, name :: <LPOLESTR>,
+			  #key mode: ) => stream :: <LPSTREAM>
+
+	Create a storage stream.  This would be used in a method for
+	`OLE-part-Create-Streams', described above.  The `mode:' option
+	defaults to:
+	  logior($STGM-READWRITE, $STGM-SHARE-EXCLUSIVE, $STGM-CREATE)
+	(For an explanation of those constants, see the OLE documentation for
+	the method `IStorage::CreateStream'.) 
+
+  OLE-util-open-stream (storage :: <LPSTORAGE>, name :: <LPOLESTR>,
+			#key mode: ) => stream :: <LPSTREAM>
+
+	Open a storage stream.  This would be used in a method for
+	`OLE-part-Open-Streams', described above.  The `mode:' option
+	defaults to:
+	  logior($STGM-READWRITE,$STGM-SHARE-EXCLUSIVE)
+
+  OLE-util-set-status-text (obj :: <ole-server-framework>,
+			    text :: false-or(<string>)) => status :: <HRESULT>
+
+	Display the given string in the container application's status bar,
+	or clear the status bar if the second argument is `#f' or empty.
+	Typically this would be used in a window callback function to
+	respond to a `$WM-MENUSELECT' message by showing a description of
+	the menu item.  The returned value could be one of:
+
+	  $S-OK		-- whole text successfully displayed.
+	  $S-TRUNCATED	-- displayed part of message too long to fit.
+	  $E-FAIL	-- container does not support a status bar.
+	  $OLE-E-NOT-INPLACEACTIVE -- not running in-place active.
+
+	(The first two values satisfy predicate `SUCCEEDED?'; the latter
+	two satisfy `FAILED?'.)
+
+	A string of type <LPOLESTR> is preferred, but any other type of
+	<string> will be automatically converted.  Thus, if a literal is
+	being used, you might want to call `OLESTR' on it to cache the
+	conversion. 
+
+  OLE-util-started-by-OLE? () => start-by-ole? :: <boolean>
+
+	Returns `#t' if the program was initiated by OLE; `#f' if running
+	by itself.
+
+  OLE-util-container-name ( obj :: <ole-server-framework> )
+     => ( application :: false-or(<string>), document :: false-or(<string>) )
+
+	Returns the name of the container application program (or #f if not
+	running under OLE or if called too soon) and the name of the
+	container document (or #f if not applicable).  This won't have
+	meaningful data until the server is activated, so it should
+	typically be called from the `OLE-part-open-out' or
+	`OLE-part-insert-menus' methods.
+
+	One use for this is that when running in an out-of-place
+	activation, the "Exit" menu item should say
+	"Exit to <container-application-name>".
+
+  OLE-util-translate-accelerator ( obj :: false-or(<ole-server-framework>),
+				   msg :: <LPMSG> ) => handled? :: <boolean>
+
+	If the program is running as an in-place activation and the window
+	message is a key press which is an accelerator key for the
+	container application, then the corresponding command is posted to
+	the container and `#t' is returned.  Otherwise, `#f' is returned,
+	indicating that the message should be passed on to
+	`DispatchMessage'.  This should be used in the server's event loop
+	after handling the server's own accelerators, like this:
+
+	  while ( GetMessage(msg, $NULL-HWND, 0, 0) )
+	    // Check the server's accelerator keys first:
+	    if ( zero?(TranslateAccelerator(msg.hwnd-value,
+	                                    *my-accelerator-table*, msg))
+	         // Check the container's accelerator keys:
+	         & ~ OLE-util-translate-accelerator(*server-object*, msg) )
+	      // Message is not an accelerator key.
+	      TranslateMessage(msg); // Translates virtual key codes
+	      DispatchMessage(msg);  // Dispatches message to window
+	    end if;
+	  end while;
+
+  OLE-util-current-size (obj) => (width, height)
+
+	Return the current size of the space allocated to the object in the
+	container, as two integers representing the number of pixels.
+	These are the same values that would have been passed in the most
+	recent call to `OLE-part-requested-size' or `OLE-part-change-size'.
+
+  OLE-util-HIMETRIC-size ( obj :: <ole-server-framework> )
+		=> ( width :: <integer>, height :: <integer> )
+
+	Returns the document window size (as from `OLE-util-current-size')
+	converted to HIMETRIC coordinates.  This is probably only useful in
+	a method for `OLE-part-get-data'.
+
+  OLE-util-close-server ( obj :: <ole-server-framework> )
+
+	Disconnects the object from the container application, if it is
+	still connected to one.  Does nothing otherwise.
+	The return value is not useful in this context.
+
+  OLE-util-in-place-active? (obj :: <ole-server-framework>)
+		=> active? :: <boolean>
+
+	Returns true if currently running in-place active.
+
+  OLE-util-UI-active? (obj :: <ole-server-framework>)
+		=> active? :: <boolean>
+
+	Returns true if currently running in-place active with the
+	frame-level user interface (menu bar, tool bar, hatch border)
+	enabled.  (This usually differs from `OLE-util-in-place-active?'
+	only for OLE Controls.)
+
+  OLE-util-view-changed (obj :: <ole-server-framework>) => ()
+
+	Tell the container that the server's image data has changed.
+	This will ensure that `OLE-part-get-data' will be invoked to copy
+	the image to the container.
+
+  revoke-registration(factory :: <class-factory>) => ()
+
+	Before the program terminates, call this function on the factory
+	instance to cancel the registration of the server object instance.
+	In other words, this makes the object no longer available for
+	clients to connect to it.  (The class is still available, but a new
+	copy of the program will be initiated instead of using this one.)
+
+	This function does nothing if the argument is `#f' or
+	`$null-instance', or if the factory was not registered anyway.
+
+The class `<class-factory>', which is provided by the support library and
+instantiated by the application, supports the following initialization
+options:
+
+    clsid: 	The OLE class ID of the server object, as returned from
+    		make-GUID.  Required. 
+
+    class:	The Dylan class of the server object to be created (the
+		user-defined subclass of `<ole-server-framework>').
+		Required. 
+
+    args:	Optional sequence of initialization arguments to be passed to
+		`make' when instantiating the object.  The default is to
+		pass the same arguments as for the `<class-factory>'
+		(`<ole-server-framework>' accepts and ignores those that
+		are only for the factory, and `<class-factory>' ignores any
+		that it doesn't recognize.)  Note that
+		`<ole-server-framework>' needs `clsid:' to be specified.
+
+    server-context:  Optional context in which the server will be running.
+		The value should be one of the following constants:
+
+		 $CLSCTX-LOCAL-SERVER   - server in separate process (default)
+		 $CLSCTX-INPROC-SERVER  - in-process server
+		 $CLSCTX-INPROC-HANDLER - in-process handler
+
+		$CLSCTX-LOCAL-SERVER causes the factory to be registered
+		for external clients; $CLSCTX-INPROC-SERVER could be used
+		to suppress registration if the factory was only to be used
+		within the same process.
+
+    connection-flags:  Optional connection flags, controlling whether more
+		than one client is allowed to invoke the same class
+		factory (and hence use the same server process).  The value
+		is one of the following OLE constants:
+ 
+		 $REGCLS-SINGLEUSE   - only one connection allowed (default)
+		 $REGCLS-MULTIPLEUSE - multiple connections permitted
+		 $REGCLS-MULTI-SEPARATE - multiple connect, separate control
+
+		For a further explanation of these constants, see the OLE
+		documentation for function `CoRegisterClassObject'.
+
+ Any other keyword arguments are passed in the `make' call when the Dylan
+ class is instantiated.
+
+  `<class-factory>' is an open class that may be subclassed (using `define
+  COM-interface') if desired for adding additional functionality (such as
+  overriding the `IClassFactory/LockServer' and `terminate' methods).
+
+The following group of functions provide hooks into the low-level OLE API
+if that is needed for extensibility.  It isn't clear when or if these would
+be useful or what other hooks might be appropriate.
+
+  in-place-frame-info (obj :: <ole-server-framework>)
+		=> pInfo :: <LPOLEINPLACEFRAMEINFO>
+
+	Returns the container's frame information structure pointer.
+
+  container-IOleInPlaceFrame (obj :: <ole-server-framework>)
+		=> pFrame :: <LPOLEINPLACEFRAME>
+
+	Returns the container's IOleInPlaceFrame interface pointer.
+	(This is just a slot accessor, it does not call `AddRef' on the
+	returned value.) The pointer is null when not in-place active.
+
+  server-IOleObject (obj :: <ole-server-framework>) => value :: <IOleObject>;
+
+	Returns the server object's IOleObject interface pointer.
+	(It does not call `AddRef'.)
+
+  container-parent-window (obj :: <ole-server-framework>) => window :: <HWND>
+
+	Returns the container's window which is the parent of the embedded
+	part during in-place activation.
+
+  hatch-window (obj :: <ole-server-framework>) => window :: <HWND>
+
+	Returns the hatch border window provided by the server support
+	library for in-place activation.
+
+Error handling:
+  Errors in the OLE protocol will cause a condition of class `<ole-error>'
+  (subclass of `<error>') to be signalled.  The following accessors may be
+  used to extract information from the condition:
+
+     ole-error-status   - The <HRESULT> status code.
+     ole-error-context  - A string identifying the function involved.
+     ole-error-instance - The OLE interface instance. (or #f)
+     ole-error-args     - Sequence of additional relevant values.
+
+  If you want to signal such conditions yourself, use this function:
+
+    check-ole-status (status, context, instance, #rest args) => ()
+
+	Given an <HRESULT> status code and other identifying information,
+	if the status represents an error, then an instance of
+	`<ole-error>' will be created and signalled.
+
+  In some contexts, the support library will handle such errors by
+  reporting the status back to the container application.  This is done by
+  using the macro
+      returning-error-status ?body end
+  which returns `$S-OK' if all of the body forms were successfully executed,
+  or the error status code if an `<ole-error>' was signalled during
+  execution of the body.
+
+
+Each OLE server application needs to be registered in the Windows system
+registry in order for container programs to be able to find and invoke it.
+One way to do this is by preparing a registration data file (see example in
+"~dylan/app/sample-ole-server/sample.reg") and running the command 
+"regedit /s sample.reg" to record the information in the registry.  
+A simpler way is to have the program register itself.  To do this, the body
+of the main program should have something like this wrapped around it:
+
+   if ( OLE-util-register-only?() ) // just [un]register and terminate
+     register-ole-server(class-id, prog-id, title-string, 
+			 short-name: short-name-string);
+   else // actually run the program
+     ...
+   end if;
+
+Then if the program is run with the "/RegServer" option (typically done as
+part of an installation script), it will just register itself and
+terminate, or if run with the "/UnregServer" option, it will try to
+un-register itself and terminate.  Otherwise, `OLE-util-register-only?'
+returns `#f' and the program will run.  (However, some of the Microsoft
+documentation recommends that a server should always register itself
+anytime it is run, and the "/RegServer" option should just mean to not do
+anything else.)
+
+  OLE-util-register-only? () => register?
+
+	Returns `#f' unless the program's first command line argument is
+	any of "/RegServer", "-RegServer", "/UnregServer" or "-UnregServer"
+	(using case-insensitive comparison).  When a non-false value is
+	returned, the program should just call `register-ole-server' and
+	terminate without doing anything else.
+
+  register-ole-server ( class-id :: <REFCLSID>, prog-id :: <string>,
+			title-string :: <string>,
+			#key full-name, short-name, app-name,
+			     misc-status, verbs ) => ()
+
+	This function will create the necessary system registry entries for
+	the current program to be used as an embeddable OLE object, or if
+	the program was invoked with "/UnregServer" or "-UnregServer", then
+	it will attempt to delete any registry entries belonging to the
+	program.
+
+	class-id
+		must have the same value as the `clsid:' argument for
+		making the `<class-factory>'. 
+
+	prog-id
+		is a unique internal name for the class; it must start with
+		a letter, it cannot contain any spaces or punctuation
+		except period, and it must not be more than 39 characters
+		long.  In order to ensure uniqueness, the recommended
+		format is:
+		  <vendor-name>.<product-name>.<version-number>
+		For example:
+		  AcmeWidgets.FrobMaster.2
+ 
+	title-string
+		is what will appear in a container's "insert object" dialog
+		box to identify this server application. 
+
+	full-name:
+		(optional) is the full type name of the class; it
+		defaults to the short-name.  
+
+	short-name: 
+		(optional) is a string of not more than 15 characters, and
+		is used for popup menus and the Links dialog box.  It
+		defaults to the app-name.  
+
+	app-name:
+		(optional) is the name of the application servicing the
+		class and is used in the Result text in dialog boxes.  It
+		defaults to the title-string.
+
+	misc-status:
+		(optional) may be provided to specify the value to be
+		returned by `IOleObject::GetMiscStatus'.  The value is
+		formed by using `logior' to combine `$OLEMISC-...'
+		constants.  The default value is 0.
+
+		Values that might be relevant or useful include:
+
+		$OLEMISC-INSIDEOUT
+		Activate in-place, without any menus or tool bar.  More
+		than one such control can be active at the same time.
+
+		$OLEMISC-ACTIVATEWHENVISIBLE 
+		Requests that the container always make this control active
+		whenever it is visible.  Requires $OLEMISC-INSIDEOUT also.
+
+		$OLEMISC-ACTSLIKEBUTTON
+		The control behaves as a button.
+
+		$OLEMISC-ACTSLIKELABEL
+		The control acts as a label for the control following it in
+		the form.
+
+		$OLEMISC-NOUIACTIVATE
+		Control without any user interface.  It has no menu, no
+		accelerators, does not need to be activated, and never
+		needs the focus.
+
+		$OLEMISC-WANTSTOMENUMERGE
+		The control wants to merge it's menu with the container's.
+
+		$OLEMISC-INVISIBLEATRUNTIME
+		The control has no run time user interface but should be
+		visible at design time.
+
+		$OLEMISC-STATIC
+		A static object, containing only a presentation without any
+		native data.
+
+		Refer to the Microsoft OLE documentation for additional
+		values and further details.
+
+	verbs:
+		(optional) specifies the verbs and menu entries supported
+		by this object.  The value is a vector, with each element
+		representing the attributes of one verb.  The default value
+		is: 
+		   vector(vector(0, "&Edit",  // in-place activation
+			         $MF-ENABLED, $OLEVERBATTRIB-ONCONTAINERMENU),
+		          vector(1, "&Open",  // out-of-place activation
+			         $MF-ENABLED, $OLEVERBATTRIB-ONCONTAINERMENU))
+		which produces the following registry entries:
+		  HKEY_CLASSES_ROOT\CLSID\{...}\Verb\0 = &Edit,0,2
+		  HKEY_CLASSES_ROOT\CLSID\{...}\Verb\1 = &Open,0,2
+
+Alternatively [not yet sure which is best], registration can be done as:
+
+   // check for "/RegServer" or "/UnregServer"
+   if ( ~ OLE-util-maybe-just-register(class-id, prog-id, title-string, 
+	  			       short-name: short-name-string) )
+     // actually run the program
+     ...
+   end if;
+
+where the `OLE-util-maybe-just-register' function has the same arguments as
+`register-ole-server'.  It either performs [un]registration and returns #t,
+or does nothing and returns #f.
+
+
+
+In-process servers
+------------------
+
+Much of the discussion above has assumed that the application is a "local
+server", that is, an EXE file running in its own process.  For a DLL file
+which runs in the client's process, there are a few differences and
+additional considerations:
+
+ * define a subclass of `<ole-in-process-server>' instead of
+   `<ole-server-framework>'.  `<ole-in-process-server>' is itself a
+   subclass of `<ole-server-framework>', so methods documented above as
+   applying to `<ole-server-framework>' apply to it also.
+
+ * Persistent storage may be handled in a different way, which is described
+   below. 
+
+ * Drawing is handled a little differently -- instead of
+   `OLE-part-draw-metafile', the function `OLE-part-draw' will be called,
+   which takes one additional parameter which is a rectangle specifying the
+   size and position within which to draw.  (More details are given below.)
+
+ * The application must be built as a ".DLL" file instead of an ".EXE"
+   file.  Since it is a Dynamic Link Library instead of a complete program,
+   there will be no main program.  The event loop will be provided by the
+   container application.  Do not call `ExitProcess' or `PostQuitMessage'
+   because that would terminate the container process.
+
+ * Since there is no main program, self-registration and creation of
+   a class factory are handled by code generated by the
+   `initialize-ole-server' macro.
+
+So the over-all application code will look something like:
+
+	define constant $my-class-ID = make-GUID(...);
+	define COM-interface <my-object-class> ( <ole-in-process-server> )
+	  ...
+	end;
+	... // methods on <my-object-class>
+	initialize-ole-server(<my-object-class>, $my-class-ID, "my.prog.id",
+			      "title of my program");
+
+The following is defined for use by the in-process application:
+
+  initialize-ole-server ( class, class-id, prog-id, title-string,
+			  #rest options )			     [Macro]
+
+	This macro needs to be called at top-level in order to set up some
+	static initializations needed for DLL initialization and
+	registration.  (It is not an executable expression.)  The macro
+	expansion provides definitions for the Windows functions
+	`DllRegisterServer', `DllUnregisterServer', `DllGetClassObject',
+	and `DllCanUnloadNow'.  Without this, the container application
+	will be unable to connect to the server.  This macro cannot be used
+	more than once in a DLL library.  The arguments are:
+
+	class
+		The user-defined subclass of `<ole-in-process-server>'
+		which is to be instantiated when the server is invoked.
+
+	class-id
+	 	The OLE class ID of the server object, as returned from
+    		make-GUID.  Required. 
+
+	prog-id
+		The "programatic identifier" string, as described for
+		`register-ole-server' above.
+
+	title-string
+		String to appear in a container's "insert object" dialog
+		box to identify this server application. 
+
+	options
+		Optional keyword and value pairs for additional
+		registration options.  The options accepted are any that
+		are specified above for `register-ole-server'.
+
+
+The following methods are defined by the user to implement persistent
+storage for an in-process server in the case where the container
+application chooses to utilize the IPersistStream or IPersistStreamInit
+interface instead of IPersistStorage:
+
+  OLE-part-max-save-size (obj) => (max-size)
+
+	Return the maximum size, as an integer number of bytes, that will
+	be needed for the stream to which the persistent data will be
+	written, or return `#f' if it is not possible to make such an
+	estimate.   The default method returns `#f'.
+
+  OLE-part-Save-To-Stream (obj, stream :: <LPSTREAM>) => ()
+
+	Write the object's persistent data to the given stream.  This is
+	similar to `OLE-part-Save-To-Storage' above, except that the stream
+	is provided instead of having to be created and remembered by the
+	user.  This method must be defined, as there is no default.
+
+  OLE-part-Load-From-Stream (obj, stream :: <LPSTREAM>) => ()
+
+	Read the object's persistent data from the given stream.  This is
+	similar to `OLE-part-Load-From-Storage' above, except that the
+	stream is provided instead of having to be created and remembered
+	by the user.  This method must be defined, as there is no default.
+
+  OLE-part-init-new (obj) => ()
+
+	Like above; the library will call either `OLE-part-init-new' or
+	`OLE-part-Load-From-Stream' after the `initialize' method for the
+	object.  The default method does nothing.  (However, this will not
+	get called if the container is using the obsolete IPersistStream
+	interface instead of IPersistStreamInit.)
+
+  OLE-part-dirty?-setter (dirty? :: <boolean>, obj) => dirty? :: <boolean>
+
+	An in-process server needs to supply a method for
+	`OLE-part-dirty?-setter' as well as for `OLE-part-dirty?' (as
+	described above for a server).  The application's dirty status
+	should _not_be reset by `OLE-part-Save-To-Stream' or
+	`OLE-part-Load-From-Stream'; instead, this setter function will be
+	called separately by the library when appropriate.  This method
+	must be defined, as there is no default.
+
+
+Other generic functions for which the in-process server application should
+provide methods:
+
+  OLE-part-draw (obj, hDC :: <HDC>, rect :: <LPRECTL>) => status :: <HRESULT>
+
+	This method should draw all of the document window display to the
+	given Device Context, scaled and translated to fit within the given
+	rectangle.  This is what will be displayed by the container when
+	the server is no longer active.  Normally this should return
+	`$S-OK', but it is possible to return an error status code that
+	will be reported back to the container program.
+
+
+
+The server support described above is incomplete; following are some
+potential features that are not yet provided for:
+
+    * Re-sizing handles on the in-place activation border.
+    * Support linking as well as embedding.
+    * Adding additional control or label panes around an in-place activation.
+    * Clipboard.
+    * Drag and drop.
+    * Context-sensitive help.
+    * Undo.
+    * Presentation as icon or thumbnail.
+    * Additional considerations for MDI context.
+    * Additional storage utilities, including being able to 
+      access an <LPSTREAM> as a <stream>.
+    * Cloning of an embedded object.
+    * Using container's recommended color palette.
+    * Application that terminates when multi-use factory is unlocked.
+
+Current implementation bugs:
+
+    * Changing the size of the embedded image in MS Word doesn't work
+      right for subsequent in-place activation.
+    * Needs more error checking.
+
+
+OLE Automation
+--------------
+
+See file "~dylan/doc/lib/ole-automation.text" and the example programs in
+directories "~dylan/app/sample-automation-controller/" and
+"~dylan/app/sample-automation-server/" (see their "README.text" files).
+
+
+OLE Controls (also known as "OCX" or "ActiveX Controls")
+-------------
+
+An application which is an "OLE Control" combines the features of an
+in-process OLE Server and an Automation Server, so much of what is
+described above applies to Controls also.  The differences from an OLE
+Server are:
+
+ * Use the `OLE-control-framework' library instead of the `OLE-Server'
+   library. 
+
+ * define a subclass of `<ole-control-framework>' instead of
+   `<ole-server-framework>' or `<ole-in-process-server>'.
+   (`<ole-control-framework>' is a subclass of both
+   `<ole-in-process-server>' and `<simple-component-object>'.)
+
+ * Define "coclass" type information, as for an Automation server.
+
+ * Out-of-place activation will not be used.
+
+ * As for an in-process server, the application must be built as a Dynamic
+   Link Library, although, by convention, the file suffix ".OCX" may be
+   used instead of ".DLL".
+
+ * Since there is no main program, self-registration and creation of
+   a class factory are handled by code generated by the
+   `initialize-ole-control' macro.
+
+
+So the over-all application code will look something like:
+
+	define COM-interface <my-object-class> ( <ole-control-framework> )
+	  ...
+	end;
+
+	define constant my-type-info = make(<coclass-type-info>,
+					    class: <my-object-class>,
+					    ...);
+
+	...
+	initialize-ole-control(my-type-info, "my.prog.id");
+
+
+The following is defined for use by the application:
+
+  initialize-ole-control ( coclass-type-info, prog-id, #rest options ) [Macro]
+
+	This macro needs to be called at top-level in order to set up some
+	static initializations needed for DLL initialization and
+	registration.  (It is not an executable expression.)  The macro
+	expansion provides definitions for the Windows functions
+	`DllRegisterServer', `DllUnregisterServer', `DllGetClassObject',
+	and `DllCanUnloadNow'.  Without this, the OCX container will be
+	unable to connect to the control application.  This macro cannot be
+	used more than once in a DLL library.  The arguments are:
+
+	coclass-type-info
+		The type info describing the Automation functionality of
+		the control.  The value should be an instance of class
+		`<coclass-Type-Info>', with the `class:' option specifying
+		the user-defined subclass of `<ole-control-framework>'.
+
+	prog-id
+		The "programatic identifier" string, as described for
+		`register-ole-server' above.
+
+	options
+		Optional keyword and value pairs for additional
+		registration options.  The options accepted are any that
+		are specified for either `register-ole-server' or
+		`register-automation-server', except that `title:' is
+		accepted in place of the title-string positional argument
+		(it defaults from the `name:' of the type info) and the
+		default value for the `verbs:' option is:
+		  vector(vector($OLEIVERB-PRIMARY, "&Edit",
+				$MF-ENABLED, $OLEVERBATTRIB-ONCONTAINERMENU),
+			 vector($OLEIVERB-PROPERTIES, "&Properties",
+				$MF-ENABLED, $OLEVERBATTRIB-ONCONTAINERMENU))
+
+Besides the "accelerator" keys that apply when a server is active (see 
+`OLE-part-accelerators' above), OLE Controls can also have "mnemonic" keys
+that will be processed by the control even if it is not already active.
+This is implemented by using the following functions:
+
+  OLE-part-mnemonics (obj) => table :: false-or(<HACCEL>)	[Open G.F.]
+
+	The application can define a method on this function to return the
+	handle of an accelerator table specifying the application's
+	mnemonic keys, or `#f' if the application does not use any
+	mnemonics.  The default method returns `#f'.  This is used by the
+	container to forward keyboard events to a control that is not
+	currently active.
+
+	(The control indicates which keys it is prepared to handle, but the
+	container is not required to honor the request.  Various containers
+	may have different policies about what kind of keystrokes they pass
+	through.)
+
+  OLE-part-on-mnemonic (obj, vkey :: <integer>, pMsg :: <LPMSG>) => ()
+								[Open G.F.]
+
+	This function is called by the container when one of the designated
+	mnemonic keys is pressed.  The second argument is the virtual key
+	code.  The third argument is a pointer to the actual keypress
+	message, in case additional information might be needed from it.
+
+	The default method sends the corresponding $WM-SYSCOMMAND message
+	by doing:
+
+	  TranslateAccelerator(OLE-part-command-window(obj),
+			       OLE-part-mnemonics(obj),
+			       pMsg);
+
+	The application can define an override method if that is not
+	appropriate.
+
+
+  OLE-util-key-change (obj :: <ole-control-framework>) => ()	[Function] 
+	
+	The application should call this function when it wants to change
+	the set of mnemonics supported.  This will force
+	`OLE-part-mnemonics' to be called again to get the new information.
+
+
+Following are some additional support functions which may be called by an
+OLE Control.
+
+  OLE-util-on-focus ( obj :: <ole-control-framework>,
+		      got-focus? :: <boolean> ) => ()		[Function] 
+
+	The application should call this function when it receives (second
+	argument #t) or loses (argument #f) the focus, if it might affect
+	the way the container handles it.  For example, a button might need
+	to be displayed differently when it becomes the default button, or
+	the handling of the Return and Escape keys may depend on which
+	control has the focus.
+
+
+Ambient Properties
+------------------
+
+An OLE Control container application typically makes available to the
+contained control certain information about the environment in which is is
+running.  This information is referred to as "ambient properties" of the
+container.  Some of these properties are used directly by the
+"DUIM-OLE-Control" library and the user does not need to be concerned with
+them.  (This includes `$DISPID-AMBIENT-SHOWHATCHING'.)
+Some properties are cached by the library so that the user can
+easily access them by calling the following functions:
+
+  freeze-events? ( obj :: <ole-control-framework> ) => (frozen? :: <boolean>)
+
+	Returns true when the container is not accepting events
+	(i.e. IDispatch method calls) from the control.
+
+  freeze-UI? ( obj :: <ole-control-framework> ) => (frozen? :: <boolean>)
+
+	When this returns true, the control should ignore user input events
+	such as mouse clicks.  (This corresponds to the ambient property
+	`$DISPID-AMBIENT-UIDEAD'.) 
+
+  OLE-util-locale ( obj :: <ole-control-framework> ) => (lcid :: <integer>)
+								[Function]
+
+	Returns the Windows locale code obtained from the container.  This
+	could be used to adapt messages to the user's language.  (Refer to
+	the documentation for the OLE-Automation library for more
+	information about locale codes.)  If the container does not supply
+	a value, it defaults to `$LOCALE-USER-DEFAULT'.
+
+The current value of any ambient property can be obtained like this:
+
+  let dispatch-interface = object.container-IDispatch;
+  unless ( null-pointer?(dispatch-interface) )
+    let value = get-property(dispatch-interface, disp-id,
+			     default: $unfound);
+    unless ( value == $unfound )
+      ... // use the value
+    end unless;
+  end unless;
+
+The function `get-property' is from the OLE-Automation library.  A
+`default:' value must be supplied because containers are not required to
+support all properties.  The particular property is identified by a
+"disp-id", which is one of the following constants:
+
+  $DISPID-AMBIENT-BACKCOLOR	  background color
+				(convert value with OLE-util-translate-color)
+  $DISPID-AMBIENT-FORECOLOR	  foreground color
+				(convert value with OLE-util-translate-color)
+  $DISPID-AMBIENT-FONT		  font, as an IDispatch interface
+  $DISPID-AMBIENT-DISPLAYNAME     name of control for use in error messages
+  $DISPID-AMBIENT-LOCALEID	  locale
+  $DISPID-AMBIENT-MESSAGEREFLECT  boolean value indicating whether the
+				container wants to receive Windows messages
+				such as $WM-CTLCOLOR, $WM-DRAWITEM, or
+				$WM-PARENTNOTIFY.
+  $DISPID-AMBIENT-SCALEUNITS	  string (actually a <BSTR>) naming the
+				coordinate unit used by the container.
+  $DISPID-AMBIENT-TEXTALIGN       text alignment: 0 => numbers to the
+				right and text to the left, 1 => left, 2 =>
+				center, 3 => right, 4 => fill justify.
+  $DISPID-AMBIENT-USERMODE	  true if user mode, false if design mode
+  $DISPID-AMBIENT-UIDEAD	  true if user input should be ignored
+  $DISPID-AMBIENT-SHOWGRABHANDLES true to enable resize handles
+  $DISPID-AMBIENT-DISPLAYASDEFAULT true if control is the default button
+  $DISPID-AMBIENT-SUPPORTSMNEMONICS true if control supports mnemonics
+
+Alternatively, a control can ask to be notified whenever the value of an
+ambient property changes.  This is done by defining a method on
+`OLE-part-ambient-properties' to specify which properties are of interest,
+and defining one or more methods on `OLE-part-set-ambient-property' to
+receive the values.
+
+Following are more details about the functions related to ambient
+properties: 
+
+  container-IDispatch (obj :: <ole-server-framework>)
+		=> idisp :: <LPDISPATCH>		[Function]
+
+	Returns the container's IDispatch interface pointer.  (This is just
+	a slot accessor -- it does not call `AddRef' on the returned value.)
+	If not null, this can be used as the first argument to `get-property'
+	(from the OLE-Automation library) to obtain the current values of
+	ambient properties from the container.  The pointer may be null if
+	the container does not support ambient properties or if this is
+	called before the control is fully initialized.
+
+  OLE-part-ambient-properties ( obj ) => ( properties :: <sequence> ) [Open GF]
+
+	Define a method on this function to return a sequence of dispatch
+	IDs for ambient properties for which the application wishes to be
+	notified of any changes by a call to
+	`OLE-part-set-ambient-property'.  The default method returns an
+	empty sequence.  
+
+	If defining a method on a subclass of `<DUIM-OCX>' (i.e., when
+	using the "DUIM-OLE-Control" library), merge your values with those
+	returned by `next-method' (e.g. by using `union' or `add-new'.)
+ 
+  OLE-part-set-ambient-property ( obj, disp-id :: <integer>, value ) => ()
+								[Open GF]
+
+	This function is called to report the value of an ambient property,
+	either at start-up or whenever the value changes.  This will be
+	called only for properties that are supported by the container and
+	have either been requested by being included in the value returned
+	from `OLE-part-ambient-properties' or are used directly by the
+	library.
+
+	The application provides methods as needed for the properties it
+	wishes to receive.  `next-method' should be called in case the
+	library also wants to handle the property.
+
+	Note that `OLE-util-translate-color' should be used if the value is
+	to be interpreted as a color.
+
+
+  OLE-util-translate-color ( obj :: <ole-control-framework>, ambient-color )
+		=> ( color-ref :: <integer> )			[Function]
+
+	This should be used for converting the value of the ambient
+	properties for foreground or background color to a Win32 color
+	value.  For example:
+
+		define method OLE-part-set-ambient-property
+		    ( obj :: <my-object-class>,
+		      disp-id == $DISPID-AMBIENT-FORECOLOR,
+		      value :: <object> ) => ()
+		  let color = OLE-util-translate-color(obj, value);
+		 ...
+
+
+OLE Container for compound documents
+------------------------------------
+
+[to be supplied]
+
+
+OLE Control Container
+---------------------
+
+[to be supplied]

@@ -1,0 +1,127 @@
+#!/usr/local/bin/bash
+#      Script: build-emulator
+#      Author: Shri Amit(amit)
+usage=" Usage: $0 -i <Image> -r <Root> -t <Target> -m <Usernames> -l <LogFile> -ne"
+# Opts & Flgs: -i: Source image, default: dylan-lw
+#              -r: Emulator root, DYLAN_ROOT, default: /u/dylan
+#              -t: Target image, default: $localdir/lw+dylan-$platform.$suffix
+#              -l: Logfile,default: $logsdir/build-emulator-log-$host-$platform.$suffix
+#              -m: Sends mail upon completion. (eg: -m foo,bar,foobar)
+#              -e: Flag, sends mail to usernames ONLY if an error occurs
+#              -n: Flag, disables image testing, default: enabled
+#    Synopsis: . Loads the emulator into <Image>, save to <Target>. 
+#              . If -m option has arg(s), sends mail upon completion.
+#              . If -e flag is enabled, sends mail only upon error
+#              . Restores link in $localdir,deletes old images,logs
+######################################################################
+## Application exit status legend ##
+##  0: Build successful
+##  1: Invalid command line argument
+##  2: The build exited abnormally from within lispworks
+##  3: The image test failed
+
+## Parse the options & flags on the command line ##
+while getopts i:r:t:m:l:en option
+do case $option in
+     i) image=$OPTARG;;
+     t) target=$OPTARG;;
+     r) root=$OPTARG;;
+     m) usernames=$OPTARG;;
+     l) logfile=$OPTARG;;
+     e) error_only=Yes;;
+     n) test_image=No;;
+    \?) echo $usage
+        exit 1;;
+   esac
+done
+shift `expr $OPTIND - 1`
+
+source /u/dylan/tools/admin/env.bash
+
+## Assign defaults to options & flags ##
+##
+image=${image:-$scriptsdir/dylan-lw}
+target=${target:-$localdir/lw+dylan-$platform.$suffix}
+root=${root:-$dylandir}
+logfile=${logfile:-$logsdir/build-emulator-log-$host-$platform.$suffix}
+usernames=${usernames:-unspecified}
+error_only=${error_only:-No}
+test_image=${test_image:-Yes}
+
+## The emulator uses this to decide its root ##
+##
+DYLAN_ROOT=$root; export DYLAN_ROOT
+
+## Everything from here goes to the logfile ##
+## Prompt the options                       ##
+##
+{
+    echo "Starting at: `date`"
+    echo "Running $0 with options:"
+    echo "             The root is: $DYLAN_ROOT"
+    echo "     The source image is: $image"
+    echo "     The target image is: $target"
+    echo "            Send mail to: $usernames"
+    echo "Send mail on error only?: $error_only"
+    echo "         Test the image?: $test_image"
+    echo "          The logfile is: $logfile"
+    echo
+
+## Build the image ##
+##
+$image -init - <<SCRIPT
+(with-build-handler
+  (extend-current-stack 300)
+  (setq *sg-default-size* (* 4 *sg-default-size*))
+  (load "$root/emulator/demand-compiler")
+  (format t "~&Loaded demand-compiler~%Loading main-resources.~%")
+  (load "$root/emulator/main-resources")
+  (format t "~&Saving emulator image in ~a~%" "$target")
+  (user::save-emulator-image "$target")
+  (bye 0))
+SCRIPT
+    status=$?
+    echo "Ending at: `date`"
+    subject="Report for emulator build on $host-$platform"
+    if [ "$status" != 0 ]; then
+	message="The emulator build exited with an exit status $status"
+	case $usernames in
+	   unspecified) echo $message;;
+	   *) send-mail "$message" "$usernames" "$logfile" "$subject" ;;
+	esac
+	exit 2;
+    else
+	echo The emulator build completed successfully.
+	if [ "$test_image" = "Yes" ]; then
+	    echo Testing the image now...
+	    $qadir/admin/compile-in-emulator -i $target -l emulator-test-suite -c 'perform-suite(emulator-test-suite)'
+	    teststatus=$?
+	    if [ $teststatus != 0 ]; then
+		message="The emulator test exited with an exit status $status"
+		case $usernames in
+		    unspecified) echo $message;;
+		    *) send-mail "$message" "$usernames" "$logfile" "$subject" ;;
+		esac
+		exit 3;
+	    fi
+        else
+	    echo Skipping the image test
+	fi
+	message="The emulator build completed successfully"
+	if [ "$usernames" != "unspecified" -a "$error_only" = "No" ]; then
+	    send-mail "$message" "$usernames" "$logfile" "$subject"
+	else
+	    echo $message
+	fi
+	if test -f $target; then
+	    $admindir/remove-old-files $localdir/lw+dylan-$platform $imagestokeep
+	    rm -f $localdir/lw+dylan-$platform
+	    ln -s $target $localdir/lw+dylan-$platform
+	    $admindir/remove-old-files $logsdir/build-emulator-log-$host-$platform $logstokeep
+        fi
+    fi    
+
+} 2>&1 | tee $logfile
+
+exit 0
+#eof

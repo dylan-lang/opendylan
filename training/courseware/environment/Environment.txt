@@ -1,0 +1,211 @@
+; -*- outline -*-
+
+* Intro to Training Week
+
+
+** [1h30m] Arrival, machine setup, wait for 2QC-ers
+
+
+** [10m] Overview of week
+
+o  Aims
+  o  Teach use of Dylan, Harlequin Dylan and supplied libraries
+  o  Help CaseCall developers kick-start their effort
+  o  Get feedback on HD and Dylan.
+o  Relevance to CaseCall
+o  Timetable
+o  Daily Format
+o  Topics
+
+o  Meta-comments on the course
+  o  Tell us your expectations, concerns, etc.
+  o  Shout if you're not getting what you need!
+  o  Bear in mind that some libraries are pre-beta, and the course is an
+     alpha release!
+
+o  Today: intro to Dylan and Harlequin Dylan
+
+
+
+* Intro to Dylan and Harlequin Dylan, Part 1
+
+
+** [30m] Language Intro, Part 1
+
+[Note: The language intro stuff here is my notes and ideas, but it was MarkT
+who actually gave the presentation.  See the sibling "language" directory
+for his notes.]
+
+o  History of Dylan
+  o  The language: goals, design, history etc.
+  o  Dylan at Harlequin
+
+o  Basic syntax
+  o  names (conventions), punctuation, operators (+ etc., and assignment),
+     "{start} ... end", function calls, multiple values?
+  o  "let", "local method"?
+  o  lexical gotchas
+  o  libraries/modules/bindings; functions don't belong to classes!;
+     basic interchange format ("module:")
+  o  simple examples (hello-world, factorial)
+
+o  Classes/slots and inheritance
+  o  <object>, some example user-defined classes (from Dylan Programming?)
+  o  introduce a few Dylan library classes (numbers; strings -> sequences
+     -> collections)
+  o  element and array (getter and setter) syntax?
+
+o  Generic functions, dispatch, #key/#rest; multiple values?
+
+
+** [30m] HD Intro, Part 1
+
+o  Main window, intro dialog (you can turn it off :-)
+  o  Open an example (hello-world, factorial or DP example?)
+  o  Tools: project window, editor, browser, interactor/debugger
+
+o  Project window
+  o  See source files (show editor), note no other info till built
+  o  What's a project?
+    o  source files, build products, database;
+       project name, library -> project, subprojects;
+       settings (console, comp'n mode, EXE/DLL, version, etc.)
+
+o  Other tools
+  o  Open source file in editor, note nifty sections
+    o  Emacs- and Win-alike modes, lots of options (not all work!)
+  o  Build (see progress window) & Run (see output)
+  o  Browse (pretty boring for hello-world and factorial)
+  o  Editor -- can now right-click and Browse :-)
+  o  Interactor
+    o  "say-hello();" -- see output
+    o  "1 + 1;" -- compiling & linking
+    o  right-click "$0 = 2" and "Browse Class" :-)
+
+
+[coffee]
+
+** [1h] Practical 1
+
+Worked example of small class or library, including basic use of
+Harlequin Dylan project manager.
+
+[??m]
+
+o  Just do some stuff in the Playground to start with?
+  o  Evaluate some expressions (times from DP?)
+  o  Redefine and re-execute "say-hello" to say "goodbye"
+  o  99 bottles? :-)
+  o  Define a class, make instances, browse (add dates to times from DP?)
+  o  Write methods, call some (\+, \=, \< on dates, then (date, time)?)
+  o  ... but, we can't save this, so ...
+
+[??m]
+
+o  Wizard a Minimal EXE project, no GUI, no templates.
+  o  Look at the wizarded files to remind of basic construction.
+  o  Explain the start function, initialisation and "the entry point"?
+  o  (Can also do DLLs, for projects for reuse ... more later.)
+  o  Create a few simple classes
+     (binary trees (as collections)? business objects?)
+  o  Some useful methods (summation, traversal, reporting, ...?)
+  o  Make some classes and GFs use #rest and #key -- otherwise keep syntax
+     simple
+
+(They might meet the debugger and learn about restarts during this, if
+there's a runtime error in some interaction.)
+
+
+* Intro to Dylan and Harlequin Dylan, Part 2
+
+
+** [30m] Language Intro Part 2
+
+o   more on classes/slots/adjectives/make/initialize
+o   "-setter" methods and GFs [if not covered in part 1]
+o   more on inheritance (CPL, ambiguity, mixins, use of abstract
+    classes; NOT sealing or primarity)
+o   more on syntax - catalog control-flow macros
+o   "apply", "as", "shallow-copy", "copy-sequence"?
+
+(Advanced)
+
+o  unwind-protect, exceptions
+  o  just "block (exit) ... exception (...) ... cleanup ... end",
+     no dynamic handlers or handle-by-recovery
+  o  basic restarts (for use in debugger)?
+o  higher-order functions
+  o  just pass in and call
+  o  do, map, reduce
+  o  compose, con-/disjoin, curry
+o  introspection (functions, classes, types)
+
+o  We did NOT cover
+  o  Use of "create" in module definitions
+  o  Dynamic handlers
+  o  Restarts and recovery protocols
+  o  Writing macros
+
+
+** [30m] HD Intro, Part 2
+
+o  Wizard -- show templates, Typical and Custom
+
+o  Debugger
+  o  Run app, pause; expand stack, see source, see locals
+  o  Evaluate locals in different stack frames (factorial?)
+  o  Stepping
+  o  Multiple threads (Life example)
+  o  Browse from results, from stack, from locals
+  o  Show how to edit source
+  o  Restarts versus Resume
+
+o  Browser
+  o  Explore defintions page, names page; explain "n:m:l" notation
+  o  Show filtering in definitions page
+  o  Cover various kinds of object (library, module, class,
+     function, GF, constant, variable, top-level-expression,
+     macro(?)) and show relevant pages, explaining columns
+  o  Demonstrate history :-)  Also direct entry in object bar
+  o  Demonstrate Usage :-)
+  o  Browse runtime instances :-)  Browse DUIM objects :-)
+
+o  Others
+  o  Find, Definition Summarizer
+    o  Let us know if they're actually useful!
+  o  Advanced Build
+
+o  We did NOT cover
+  o  The Custom library choice path in the Wizard
+  o  Multiple projects, subprojects and DLLs (in much detail)
+  o  Delivering an application (the "Build > Make Release" command)
+  o  Setting breakpoints
+  o  Using the debugger "for real" (but they discovered some of this during
+     the practical)
+
+
+** Practical 2
+
+[2h]
+
+o  Rewrite <sorted-sequence>s to have virtual slots for key/comparison?
+o  Rewrite binary tree traversal to be parameterised on a function to apply?
+
+o  Use some multiple inheritance
+  o  Use it correctly for something useful -- <stretchy-string>?
+  o  Create ambiguous methods; call interactively, abort from error
+    o  manages?(X, Y); concat. w/ new coll.; \+ w/ new num. (<ratio>?)
+  o  Use SORTED-APPLICABLE-METHODS to diagnose?   Fix, somehow.
+     [A bit artificial, as you usually design to avoid this!]
+
+o  Wizard up a Typical second project
+  o  Make it use another somehow (rebuild first as DLL or use one from DP?)
+  o  Try to extend an unexported GF?
+    o  Note confusion when next-method fails
+    o  Use Browser and module gadget to reveal problem
+    o  Export it, rebuild main, note that subproject is rebuilt
+  o  Advanced control constructs:
+    o  multi-collection iteration (using, while:/until:, finally)
+    o  case/select (by)
+    o  block/exit, block/exception, block/cleanup
+

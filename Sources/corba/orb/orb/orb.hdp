@@ -1,0 +1,24 @@
+comment:	This file is generated, please don't edit
+format-version:	2
+target-type:	dll
+Library-Pack:   CORBA
+RC-Files:       version.rc
+base-address:	0x64EC0000
+files:	orb-library
+major-version:	2
+minor-version:	1
+other-files:	iop-idl.spec
+compilation-mode:	tight
+library:	dylan-orb
+subprojects:	..\iop-protocol\iop-protocol.hdp
+	..\protocols\portableserver\portableserver-protocol.hdp
+	..\connections\orb-connections.hdp
+	..\protocols\corba\corba-protocol.hdp
+	..\dylan\corba-dylan.hdp
+	..\streams\orb-streams.hdp
+	..\iiop\orb-iiop.hdp
+	..\poa\orb-poa.hdp
+	..\core\orb-core.hdp
+	..\ir\orb-ir.hdp
+	..\utilities\orb-utilities.hdp
+executable:	DxORB

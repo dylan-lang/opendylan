@@ -1,0 +1,48 @@
+module BankingDemo
+{
+interface account {
+
+    readonly attribute string name;
+
+    readonly attribute long balance;
+
+    void credit (in unsigned long amount);
+
+    exception refusal {string reason;}; 
+    void debit (in long amount) 
+       raises (refusal);
+};
+
+interface checkingAccount : account {
+    readonly attribute long limit;
+};
+
+interface bank {
+
+    readonly attribute string name;
+
+    exception duplicateAccount{};
+
+    account openAccount (in string name) 
+       raises (duplicateAccount);
+
+    checkingAccount openCheckingAccount(in string name, in long limit)
+       raises (duplicateAccount);
+
+    exception nonExistentAccount{};
+
+    account retrieveAccount(in string name)
+       raises (nonExistentAccount);   
+
+    void closeAccount (in account account);
+ };
+
+};
+
+
+
+
+
+
+
+

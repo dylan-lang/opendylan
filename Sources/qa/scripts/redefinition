@@ -1,0 +1,10 @@
+:play
+define class <bar> (<foo>)
+  slot b, init-keyword: b:;
+end class <bar>;
+make(<bar>, a: 10, b: 20);
+define class <foo> (<object>)
+  slot a, init-keyword: a:;
+end class <foo>;
+:continue 1
+:exit

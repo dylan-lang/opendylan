@@ -1,0 +1,27 @@
+
+Support Pack ID Number:
+[If you have purchased a support pack, please include the ID in the subject 
+ line of email to dylan-support@functionalobjects.com.]
+Customer Name:
+Customer Email:  
+
+Summary of problem:
+[A brief description, suitable for an email Subject.]
+
+Dylan Version: 
+CPU/Speed:  
+OS Version:
+[Please include any upgrades, patches, service packs etc.]
+Physical Memory:
+Virtual Memory:
+Free Disk Space:
+
+Full description of problem: 
+
+Steps to repeat the problem:
+
+Other relevant information:
+[For example, other applications running at the time.]
+
+Backtrace, if available:
+

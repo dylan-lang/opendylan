@@ -1,0 +1,125 @@
+From haahr Wed Sep 20 16:47:50 1995
+From: Paul Haahr <haahr>
+Subject: define compilation-pass macro
+Date: Wed, 20 Sep 95 16:47:37 +0100
+
+[These notes are sketchy, and this system probably will have to be
+revised at some point soon, but that's only worth doing that once we
+have some experience with what's wrong about it.  I'm checking it in
+now.  Please yell at me as soon as you find bugs.  -- Paul]
+
+I've now replaced the old mechanism for specifying compilation passes
+in the DFM compiler (setting the vector *compilation-passes* in
+compile.dylan) with a declarative system, based around a macro, define
+compilation-pass.
+
+The macro is exported by dfmc-common, so every module should have it.
+The basic idea is that you put a compilation-pass definition in the
+same place as you define the main entry point for a compiler-pass;
+the definition includes things about the pass, such as when its run,
+how it is called, and if it should cause other passes to run.
+
+First, a simple example:
+
+  define compilation-pass eliminate-assignments,
+    visit: functions,
+    mandatory?: #t,
+    before: analyze-calls;
+
+This defines a pass named ``eliminate-assignments,'' which runs before
+analyze-calls is run;  it's possible to use arbitrarily many before:
+options.  The mandatory option declares that the pass is part of
+optimization level 0;  that is, it's always run.
+
+The ``visit: functions'' option says that the function is called for
+every function in the form being compiled.  The default is ``visit:
+top-level-forms,'' which corresponds to the previous behavior.
+
+  define compilation-pass try-inlining,
+    visit: computations,
+    optimization: medium,
+    after: analyze-calls,
+    before: single-value-propagation,
+    triggered-by: analyze-calls,
+    trigger: analyze-calls;
+
+The ``visit: computations'' option says that every computation (in the
+top-level and all nested lambdas) is passed to the pass's function.
+The after: option is like before: in reverse.
+
+The trigger: option runs the named pass if the pass being defined
+reports that it changed anything.  If the triggered pass has already
+run, then it is queued to run again;  if the triggered pass is
+disabled or of a higher optimization level than currently being used,
+it's not run.  Triggered-by: is trigger: in reverse.
+
+A pass function reports that it changed something by returning any
+non-false value.
+
+
+Full catalog of options:
+
+  visit:             What things to pass to the pass's function:
+    top-level-forms    Just the top-level function.
+    functions          Every function.
+    computations       Every computation in every function.
+
+  optimization:      What level of optimization to run this pass for?
+                     (Choices:  mandatory, low, medium, high.)
+  mandatory?:        Always run this pass;  overrides optimization:.
+
+  before:            Run this pass before the named one.
+  after:             Run this pass after the named one.
+
+  trigger:           If this pass changed something, run the named pass.
+  triggered-by:	     If the named pass changes something, run this pass.
+
+  print-before?:     Print the DFM code before calling the pass.
+  print-after?:      Print the DFM code after the pass is done.
+  print?:            Same as print-before?: #t and print-after?: #t.
+
+  check-before?:     Call ensure-invariants before calling the pass.
+  check-after?:      Call ensure-invariants after the pass is done.
+  check?:            Same as check-before?: #t and check-after?: #t.
+
+  back-end:          Turn pass on for the named back end. (Default: all)
+  exclude-back-end:  Turn pass off for the named back end. (Default: none.)
+
+  disabled?:         Turn pass off;  overrides everything else.
+
+
+Convenience functions:
+
+  trace-pass(pass-name)
+  untrace-pass(pass-name)
+
+    Turns on (or off) printing and checking (both before and after)
+    for the pass.
+
+  untrace-passes()
+
+    Calls untrace-pass for all traced passes.
+
+
+Global state:
+
+The fluid-variable *optimization-level* is meant to be a gross control
+of how much optimization is done.  The constants
+
+  define constant $optimization-mandatory = 0;
+  define constant $optimization-low       = 1;
+  define constant $optimization-medium    = 2;
+  define constant $optimization-high      = 3;
+  
+  define constant $optimization-default   = $optimization-medium;
+
+are defined and correspond to the optimization: option in the define
+compilation-pass macro.
+
+The fluid-variable *back-end* is used with the options back-end: and
+exclude-back-end:.
+
+The fluid-variable *trace-compilation-passes* will print a message
+about each pass as it runs, and report when one pass triggers another.
+
+

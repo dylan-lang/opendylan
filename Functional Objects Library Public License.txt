@@ -1,0 +1,497 @@
+	       FUNCTIONAL OBJECTS LIBRARY PUBLIC LICENSE
+                              Version 1.0
+________________________________________________________________________
+
+Preamble.
+
+This license permits the use and distribution of the source code for
+certain Functional Objects libraries under terms intended to satisfy the Open
+Source Definition (http://www.opensource.org/osd.html).
+
+This license sets the terms and conditions for distribution of these
+libraries either:
+- as source code, or
+- as compiled libraries for use with programs such as development tools.
+
+These terms and conditions require, among other things, that any such
+distribution involve the preservation of the copyright notice and
+license terms, identification of all modifications, and a declaration of
+no warranty.  They also provide for use of Functional Objects' trade names and
+trade marks in any distribution and govern their use in any advertising,
+publicity, or other such public use.
+
+This license allows the distribution of these libraries in binary form
+without requiring the distribution of source code, provided such
+libraries are distributed as part of a larger application, other than
+development tools, as further set forth below.  In this respect it is
+unlike most open source agreements, which require that the source be
+made available with all binary distributions.
+
+You are not required to accept this license, since you have not signed
+it. However, nothing else grants you permission to modify or distribute
+any code, library, or any derivative works thereof. These actions are
+prohibited by law if you do not accept this license. Therefore, by
+using, modifying or distributing any code, library (or any work based on
+the code), you indicate your acceptance of the License set forth below,
+and all its terms and conditions for copying, distributing or modifying
+such Code, library, or works based on them.
+
+
+1. Definitions. 
+
+1.1. "Contributor" means each entity that creates or contributes to the
+creation of Modifications.
+
+1.2. "Contributor Version" means the combination of the Original Code,
+prior Modifications used by a Contributor, and the Modifications made by
+that particular Contributor.
+
+1.3. "Covered Code" means the Original Code or Modifications or the
+combination of the Original Code and Modifications, in each case
+including portions thereof.
+
+1.4. "Deploy" means to use, sublicense or distribute Covered Code other
+than for Your internal research and development (R&D), and includes
+without limitation, any and all internal use or distribution of Covered
+Code within Your business or organization except for R&D use, as well as
+direct or indirect sublicensing or distribution of Covered Code by You
+to any third party in any form or manner.
+
+1.5. "Developer" means Functional Objects, Inc., or its affiliates or
+licensors, as applicable.
+
+1.6. "Electronic Distribution Mechanism" means a mechanism generally
+accepted in the software development community for the electronic
+transfer of data.
+
+1.7. "Executable" means Covered Code in any form other than Source Code.
+
+1.8. "Larger Work" means a work which combines Covered Code or portions
+thereof with code not governed by the terms of this License. There are
+two forms of Larger Work relevant to this license:
+
+     A. A work that Uses Covered Code means software that contains no
+     derivative of any portion of the Covered Code, but is designed to
+     work with the Covered Code by being compiled or linked with it, and
+     is not and has no ability to link to other application programs.
+
+     B. A work that Includes Covered Code means any other work,
+     including, but not limited to, one that is intended to make Covered
+     Code available as a Library to users of the Larger Work, whether by
+     aggregation, re-export of functionality, or any other method.
+
+1.9. "Library" means a collection of software functions and/or data
+prepared so as to be linked with application programs (which use some of
+those functions and data) to form executables.
+
+1.10. "License" means this document.
+
+1.11. "Licensable" means having the right to grant, to the maximum
+extent possible, whether at the time of the initial grant or
+subsequently acquired, any and all of the rights conveyed herein
+
+1.12. "Modifications" means any addition to or deletion from the
+substance or structure of either the Original Code or any previous
+Modifications. When Covered Code is released as a series of files, a
+Modification is:
+
+      A. Any addition to or deletion from the contents of a file
+      containing Original Code or previous Modifications.
+
+      B. Any new file that contains any part of the Original Code or
+      previous Modifications.
+
+      C. Any new file that extends the operation of the Covered Code, as
+      part of the same Library.
+
+1.13. "Original Code" means Source Code of computer software code
+identified under this License, excluding Modifications.
+
+1.14. "Patent Claims" means any patent claim(s), now owned or hereafter
+acquired, including without limitation, method, process, and apparatus
+claims, in any patent Licensable by grantor.
+
+1.15. "Source Code" means the preferred form of the Covered Code for
+making modifications to it, including all modules it contains, plus any
+associated interface definition files, scripts used to control
+compilation and installation of an Executable, or a list of source code
+differential comparisons against either the Original Code or another
+well-known, available Covered Code of the Contributor's choice. The
+Source Code can be in a compressed or archival form, provided the
+appropriate decompression or de-archiving software is widely available
+for no charge.
+
+1.16. "You" (or "Your") means an individual or a legal entity exercising
+rights under, and complying with all of the terms of, this License or a
+future version of this License issued under Section 5.1. For legal
+entities, "You" includes any entity which controls, is controlled by, or
+is under common control with You. For purposes of this definition,
+"control" means (a) the power, direct or indirect, to cause the
+direction or management of such entity, whether by contract or
+otherwise, or (b) ownership of fifty percent (50%) or more of the
+outstanding shares or beneficial ownership of such entity.
+
+
+2. Source Code License. 
+
+2.1. License Grant. 
+The Developer and each Contributor hereby grants You a world-wide,
+royalty-free, non-exclusive license, subject to third party intellectual
+property claims:
+
+(a) under intellectual property rights (other than patent or trademark)
+Licensable by Developer to use, reproduce, modify, display, perform,
+sublicense and distribute the Original Code (or portions thereof) with
+or without Modifications, alone and/or as part of a Larger Work; and
+
+(b) under Patents Claims infringed by the making, using or selling of
+Original Code, to make, have made, use, practice, sell, and offer for
+sale, and/or otherwise dispose of the Original Code (or portions
+thereof).
+
+(c) the licenses granted in this Section 2.1(a) and (b) are effective on
+the date Developer first distributes Original Code under the terms of
+this License.
+
+(d) Notwithstanding Section 2.1(b) above, no patent license is granted:
+1) for code that You delete from the Original Code; 2) separate from the
+Original Code; or 3) for infringements caused by: i) the modification of
+the Original Code or ii) the combination of the Original Code with other
+software or devices.
+
+2.2. Contributor Grant. 
+Subject to third party intellectual property claims, each Contributor
+hereby grants You a world-wide, royalty-free, non-exclusive license
+ 
+(a) under intellectual property rights (other than patent or trademark)
+Licensable by Contributor, to use, reproduce, modify, display, perform,
+sublicense and distribute the Modifications created by such Contributor
+(or portions thereof) either on an unmodified basis, with other
+Modifications, as Covered Code and/or as part of a Larger Work; and
+
+(b) under Patent Claims infringed by the making, using, or selling of
+Modifications made by that Contributor either alone and/or in
+combination with its Contributor Version (or portions of such
+combination), to make, use, sell, offer for sale, have made, and/or
+otherwise dispose of: 1) Modifications made by that Contributor (or
+portions thereof); and 2) the combination of Modifications made by that
+Contributor with its Contributor Version (or portions of such
+combination).
+
+(c) the licenses granted in Sections 2.2(a) and 2.2(b) are effective on
+the date Contributor first Deploys the Covered Code.
+
+(d) Notwithstanding Section 2.2(b) above, no patent license is granted:
+1) for any code that Contributor has deleted from the Contributor
+Version; 2) separate from the Contributor Version; 3) for infringements
+caused by: i) third party modifications of Contributor Version or ii)
+the combination of Modifications made by that Contributor with other
+software (except as part of the Contributor Version) or other devices;
+or 4) under Patent Claims infringed by Covered Code in the absence of
+Modifications made by that Contributor.
+
+
+3. Distribution Obligations. 
+
+3.1. Application of License. 
+The Modifications which You create or to which You contribute are
+governed by the terms of this License, including without limitation
+Section 2.2. The Source Code version of Covered Code may be distributed
+only under the terms of this License or a future version of this License
+released under Section 5.1, and You must include a copy of this License
+with every copy of the Source Code You distribute. You may not offer or
+impose any terms on any Source Code version that alters or restricts the
+applicable version of this License or the recipients' rights
+hereunder. However, You may include an additional document offering the
+additional rights described in Section 3.5.
+
+3.2. Availability of Source Code. 
+Any distribution of Covered Code as a Library, or as part of a Larger
+Work that Includes the Covered Code, must include the full Source Code
+for that Covered Code under the terms of this License either on the same
+media as an Executable version or via an accepted Electronic
+Distribution Mechanism to anyone to whom you made an Executable version
+available; and if made available via Electronic Distribution Mechanism,
+must remain available for at least twelve (12) months after the date it
+initially became available, or at least six (6) months after a
+subsequent version of that particular Modification has been made
+available to such recipients. You are responsible for ensuring that the
+Source Code version remains available even if the Electronic
+Distribution Mechanism is maintained by a third party.
+
+3.3. Description of Modifications. 
+You must cause all Covered Code to which you contribute to contain a
+file documenting the changes You made to create that Covered Code and
+the date of any change. You must include a prominent statement that the
+Modification is derived, directly or indirectly, from Original Code
+provided by the Developer and including the name of the Developer in (a)
+the Source Code, and (b) in any notice in an Executable version or
+related documentation in which You describe the origin or ownership of
+the Covered Code.
+
+3.4. Intellectual Property Matters 
+
+(a) Third Party Claims. 
+If Contributor has knowledge that a party claims an intellectual
+property right in particular functionality or code (or its utilization
+under this License), Contributor must include a text file with the
+source code distribution titled "LEGAL" which describes the claim and
+the party making the claim in sufficient detail that a recipient will
+know whom to contact. If Contributor obtains such knowledge after the
+Modification is made available as described in Section 3.2, Contributor
+shall promptly modify the LEGAL file in all copies You make available
+thereafter and shall take other steps (such as notifying appropriate
+mailing lists or newsgroups) reasonably calculated to inform those who
+received the Covered Code that new knowledge has been obtained.
+
+(b) Contributor APIs. 
+If Contributor's Modification is an application programming interface
+and Contributor owns or controls patents which are reasonably necessary
+to implement that API, Contributor must also include this information in
+the LEGAL file.
+
+(c) Representations. 
+Contributor represents that, except as disclosed pursuant to Section
+3.4(a), Contributor believes that Contributor's Modifications are
+Contributor's original creation(s) and/or Contributor has sufficient
+rights to grant the rights conveyed by this License.
+
+3.5. Required Notices. 
+You must duplicate the notice in Exhibit A in a location (such as a
+relevant directory file, or a library specification file, or in every
+file of the source code) where a user would be likely to look for such a
+notice. You must duplicate this License in any documentation for the
+Source Code, where You describe recipients' rights relating to Covered
+Code.  If You created one or more Modification(s), You may add your name
+as a Contributor to the notice described in Exhibit A. You may choose
+to offer, and to charge a fee for, warranty, support, indemnity or
+liability obligations to one or more recipients of Covered
+Code. However, You may do so only on Your own behalf, and not on behalf
+of the Developer or any Contributor. You must make it absolutely clear
+than any such warranty, support, indemnity or liability obligation is
+offered by You alone, and You hereby agree to indemnify the Developer
+and every Contributor for any liability incurred by the Developer or
+such Contributor as a result of warranty, support, indemnity, liability
+or other additional terms You offer.
+
+3.6. Distribution of Executable Versions. 
+You may distribute Covered Code in Executable form only as part of a
+Larger Work that Uses the Covered Code without restriction.  Otherwise
+You may distribute Covered Code in Executable form only if the
+requirements of Section 3.1-3.5 have been met for that Covered Code, and
+only if You include a notice stating that the Source Code version of the
+Covered Code is available under the terms of this License, including a
+description of how and where You have fulfilled the obligations of
+Section 3.2. The notice must be conspicuously included in any notice in
+an Executable version, related documentation or collateral in which You
+describe recipients' rights relating to the Covered Code. You may
+distribute the Executable version of Covered Code under a license of
+Your choice, which may contain terms different from this License,
+provided that You are in compliance with the terms of this License and
+that the license for the Executable version does not attempt to limit or
+alter the recipient's rights in the Source Code version from the rights
+set forth in this License. If You distribute the Executable version
+under a different license You must make it absolutely clear that any
+terms which differ from this License are offered by You alone, not by
+the Developer or any Contributor. You hereby agree to indemnify the
+Developer and every Contributor for any damages or liability incurred by
+the Developer or such Contributor as a result of any such terms You
+offer.
+
+3.7. Larger Works. 
+You may create a Larger Work by combining Covered Code with other code
+not governed by the terms of this License and distribute the Larger Work
+as a single product. In such a case, You must make sure the requirements
+of this License are fulfilled for the Covered Code.
+
+
+4. Application of this License. 
+
+This License applies to code to which the Developer has attached the
+notice in Exhibit A, and to related Covered Code.
+
+You may not copy, modify, sublicense, link with, or distribute the code
+except as expressly provided under this License. Any attempt otherwise
+to copy, modify, sublicense, link with, or distribute the code is void,
+and will automatically terminate your rights under this
+License. However, parties who have received copies, or rights, from you
+under this License will not have their licenses terminated so long as
+such parties remain in full compliance.
+
+
+5. Versions of the License. 
+
+5.1. New Versions. 
+Functional Objects, Inc. ("Functional Objects") may publish revised
+and/or new versions of the License from time to time. Each version will
+be given a distinguishing version number.
+
+5.2. Effect of New Versions. 
+Once Covered Code has been published under a particular version of the
+License, You may always continue to use it under the terms of that
+version. You may also choose to use such Covered Code under the terms of
+any subsequent version of the License published by Functional
+Objects. No one other than Functional Objects has the right to modify
+the terms applicable to Covered Code created under this License.
+
+5.3. Derivative Works. 
+If you create or use a modified version of this License (which you may
+only do in order to apply it to code which is not already Covered Code
+governed by this License), you must (a) rename Your license so that the
+phrase Functional Objects or any confusingly similar phrase do not
+appear anywhere in your license and (b) otherwise make it clear that
+your version of the license contains terms which differ from the
+Functional Objects Library Public License.
+
+
+6. DISCLAIMER OF WARRANTY. 
+
+COVERED CODE IS PROVIDED UNDER THIS LICENSE ON AN "AS IS" BASIS, WITHOUT
+WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, WITHOUT
+LIMITATION, WARRANTIES THAT THE COVERED CODE IS FREE OF DEFECTS,
+MERCHANTABLE, FIT FOR A PARTICULAR PURPOSE OR NON-INFRINGING. THE ENTIRE
+RISK AS TO THE QUALITY AND PERFORMANCE OF THE COVERED CODE IS WITH
+YOU. SHOULD ANY COVERED CODE PROVE DEFECTIVE IN ANY RESPECT, YOU (NOT
+THE DEVELOPER OR ANY OTHER CONTRIBUTOR) ASSUME THE COST OF ANY NECESSARY
+SERVICING, REPAIR OR CORRECTION. THIS DISCLAIMER OF WARRANTY CONSTITUTES
+AN ESSENTIAL PART OF THIS LICENSE. NO USE OF ANY COVERED CODE IS
+AUTHORIZED HEREUNDER EXCEPT UNDER THIS DISCLAIMER.
+
+
+7. TERMINATION. 
+
+7.1 This License and the rights granted hereunder will terminate
+automatically if You fail to comply with terms herein and fail to cure
+such breach within 30 days of becoming aware of the breach. All
+sublicenses to the Covered Code which are properly granted shall survive
+any termination of this License. Provisions which, by their nature, must
+remain in effect beyond the termination of this License shall survive.
+
+7.2. If You initiate litigation by asserting a patent infringement claim
+(excluding declatory judgment actions) against Developer or a
+Contributor (the Developer or Contributor against whom You file such
+action is referred to as "Participant") alleging that:
+
+(a) such Participant's Contributor Version directly or indirectly
+infringes any patent, then any and all rights granted by such
+Participant to You under Sections 2.1 and/or 2.2 of this License shall,
+upon 60 days notice from Participant terminate prospectively, unless if
+within 60 days after receipt of notice You either: (i) agree in writing
+to pay Participant a mutually agreeable reasonable royalty for Your past
+and future use of Modifications made by such Participant, or (ii)
+withdraw Your litigation claim with respect to the Contributor Version
+against such Participant. If within 60 days of notice, a reasonable
+royalty and payment arrangement are not mutually agreed upon in writing
+by the parties or the litigation claim is not withdrawn, the rights
+granted by Participant to You under Sections 2.1 and/or 2.2
+automatically terminate at the expiration of the 60 day notice period
+specified above.
+
+(b) any software, hardware, or device, other than such Participant's
+Contributor Version, directly or indirectly infringes any patent, then
+any rights granted to You by such Participant under Sections 2.1(b)
+and/or 2.2(b) are revoked effective as of the date You first made, used,
+sold, distributed, or had made, Modifications made by that Participant.
+
+7.3. If You assert a patent infringement claim against Participant
+alleging that such Participant's Contributor Version directly or
+indirectly infringes any patent where such claim is resolved (such as by
+license or settlement) prior to the initiation of patent infringement
+litigation, then the reasonable value of the licenses granted by such
+Participant under Sections 2.1 or 2.2 shall be taken into account in
+determining the amount or value of any payment or license.
+
+7.4. In the event of termination under Sections 7.1 or 7.2 above, all
+end user license agreements (excluding distributors and resellers) which
+have been validly granted by You or any distributor hereunder prior to
+termination shall survive termination.
+
+
+8. LIMITATION OF LIABILITY. 
+
+UNDER NO CIRCUMSTANCES AND UNDER NO LEGAL THEORY, WHETHER TORT
+(INCLUDING NEGLIGENCE), CONTRACT, OR OTHERWISE, SHALL THE DEVELOPER, ANY
+OTHER CONTRIBUTOR, OR ANY DISTRIBUTOR OF COVERED CODE, OR ANY SUPPLIER
+OF ANY OF SUCH PARTIES, BE LIABLE TO YOU OR ANY OTHER PERSON FOR ANY
+INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES OF ANY CHARACTER
+INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOSS OF GOODWILL, WORK
+STOPPAGE, COMPUTER FAILURE OR MALFUNCTION, OR ANY AND ALL OTHER
+COMMERCIAL DAMAGES OR LOSSES, EVEN IF SUCH PARTY SHALL HAVE BEEN
+INFORMED OF THE POSSIBILITY OF SUCH DAMAGES. THIS LIMITATION OF
+LIABILITY SHALL NOT APPLY TO LIABILITY FOR DEATH OR PERSONAL INJURY
+RESULTING FROM SUCH PARTY'S NEGLIGENCE TO THE EXTENT APPLICABLE LAW
+PROHIBITS SUCH LIMITATION. SOME JURISDICTIONS DO NOT ALLOW THE EXCLUSION
+OR LIMITATION OF INCIDENTAL OR CONSEQUENTIAL DAMAGES, SO THAT EXCLUSION
+AND LIMITATION MAY NOT APPLY TO YOU.
+
+
+9. U.S. GOVERNMENT END USERS. 
+
+All Covered Code is commercial computer software program developed at
+private expense and is subject to the following Restricted Rights
+Legend: "Use, duplication, or disclosure by the United States Government
+is subject to restrictions as set forth in (i) FAR 52.227-14 Alt III or
+(ii) FAR 52.227-19, as applicable.  Use by agencies of the Department of
+Defense (DOD) is subject to Functional Objects' customary commercial license
+terms, contained in this License, in accordance with DFAR 227.7202-1
+(a).  For purposes of the FAR, the Software shall be deemed to
+'unpublished' and licensed with disclosure prohibitions, rights reserved
+under the copyright laws of the United States.  Functional Objects, Inc.,
+86 Chandler Street, Somerville, Massachusetts 02144."
+
+
+10. MISCELLANEOUS.
+
+This License represents the complete agreement concerning subject matter
+hereof. If any provision of this License is held to be unenforceable,
+such provision shall be reformed only to the extent necessary to make it
+enforceable. This License shall be governed by the laws of the
+Commonwealth of Massachusetts, excluding its conflicts of law
+provisions.  The application of the United Nations Convention on
+Contracts for the International Sale of Goods is expressly excluded.
+
+
+11. RESPONSIBILITY FOR CLAIMS. 
+
+Except in cases where another Contributor has failed to comply with
+Section 3.4, You are responsible for damages arising, directly or
+indirectly, out of Your utilization of rights under this License, based
+on the number of copies of Covered Code you made available, the revenues
+you received from utilizing such rights, and other relevant factors. You
+agree to work with affected parties to distribute responsibility on an
+equitable basis.
+
+
+12. MULTIPLE-LICENSED CODE. 
+
+Developer may designate portions of the Covered Code as
+"Multiple-Licensed". "Multiple-Licensed" means that the Developer
+permits you to utilize portions of the Covered Code under Your choice of
+the HLPL or the alternative licenses, if any, specified by the Developer
+as described in Exhibit A.
+
+
+EXHIBIT A. -- Functional Objects Library Public License.
+
+"The contents of this library are subject to the Functional Objects Library
+Public License Version 1.0 (the "License"); you may not use this library
+except in compliance with the License. You may obtain a copy of the License
+at http://www.functionalobjects.com/licenses/library-public-license-1.0.txt
+
+Software distributed under the License is distributed on an "AS IS"
+basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+License for the specific language governing rights and limitations under
+the License.
+
+Original Code is Copyright (C) 1999 Functional Objects, Inc.  All rights reserved.
+
+Alternatively, the contents of this library may be used under the terms
+of the [_____] license (the "[___] License"), in which case the
+provisions of [______] License are applicable instead of those above. If
+you wish to allow use of your version of this library only under the
+terms of the [____] License and not to allow others to use your version
+of this library under the License, indicate your decision by deleting the
+provisions above and replace them with the notice and other provisions
+required by the [___] License. If you do not delete the provisions
+above, a recipient may use your version of this library under either the
+License or the [___] License."

@@ -1,0 +1,33 @@
+compile-runtime
+
+repeat compile source-records file-source-records release-info \
+               internal-release-info binary-manager binary-builder \
+               coff-manager coff-builder build-system elf-linker \
+               ccl-linker linker-support gnu-linker build-system
+
+compile-app build
+
+repeat compile command-shell walker dfmc-mangling variable-search \
+               dood dfmc-common dfmc-conditions parser-run-time \
+               dfmc-reader dfmc-macro-expander dfmc-namespace \
+               dfmc-definitions dfmc-modeling dfmc-flow-graph dfmc-core \
+               dfmc-typist dfmc-conversion dfmc-c-ffi dfmc-back-end-protocol \
+               dfmc-back-end dfmc-linker dfmc-optimization memory-manager \
+               dfmc-management dfmc-browser-support tools-interface \
+               projects registry-projects user-projects harp-cg-back-end harp \
+               dfmc-harp-browser-support disasm mnemonic-assembler \
+               native-harp native-glue-rtg linux-glue-rtg \
+               dfmc-execution dfmc-harp-cg dfmc-harp-cg-linker \
+               binary-outputter gnu-outputter harp-coff pentium-harp \
+               pentium-glue-rtg pentium-linux-glue-rtg \
+               dfmc-pentium-harp-cg dfmc-debug-back-end metering \
+               dfmc-pentium-file-compiler dfmc-shell dispatch-profiler \
+               licensing basic-release-info
+
+compile-app basic-pentium-dw
+
+repeat compile channels commands environment-protocols environment-manager \
+               environment-reports source-control-manager dfmc-environment-database \
+               dfmc-environment-projects environment-commands
+
+compile-app basic-console-compiler

@@ -1,0 +1,9 @@
+pushd $FUNCTIONAL_DEVELOPER_USER_INSTALL
+
+rm -rf build
+rm -rf lib
+rm -rf databases
+
+new-build-area $FUNCTIONAL_DEVELOPER_USER_INSTALL
+
+popd

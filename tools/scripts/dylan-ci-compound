@@ -1,0 +1,12 @@
+#!/usr/local/bin/bash
+
+if [ $# = 1 ]; then
+  reason=$1
+else
+  reason="editing"
+fi
+compound=`dylan-local-compound`
+units=`echo *.dylan *.lid`
+hopified_units=`unitify $units`
+
+hope ci -reason \"$reason\" -compound $compound $hopified_units; hope abandon -compound $compound $hopified_units

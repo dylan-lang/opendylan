@@ -1,0 +1,128 @@
+#!/usr/local/bin/bash
+#     Script: nightly-sync
+#     Author: Shri Amit(amit)
+usage="Usage: $0"
+#   Synopsis: . Searches for the file $admindir/comps2sync, if found then
+#               it syncs only those compounds, otherwise it syncs the entire
+#               D compound.
+#             . Removes old logfiles
+#############################################################
+## Application exit status legend ##
+## 0: Checkout successful
+## 1: Checkout failed
+
+## Set all required variables ##
+##
+source /u/dylan/admin/builds/env.bash
+comp_file_name=$admindir/comps2sync
+logfile="$logsdir/nightly-sync-log-$host-$platform.$suffix"
+
+## Perform the sync, everything from   ##
+## this point on goes into the logfile ##
+##
+{
+    echo "Starting at: `date`"
+    echo "Running $0 with options:"
+    echo "     The hostname is: $host"
+    echo "     The platform is: $platform"
+    echo "         The path is: `pwd`"
+    echo "         The user is: `whoami`"
+    echo "      The logfile is: $logfile"
+
+    ## Make stuff writable by dylan ##
+    ## andrewa+dodds: commented this out because it confuses Hope
+    ##
+    ## chmod u+w $dylandir
+    ## cd $dylandir
+    ## chmod -R u+w *
+
+    echo
+    echo "Checking out, special files"
+    echo
+    if test ! -e "$toolsdir/hope"; then
+	echo "Creating $toolsdir/hope"
+	mkdir $toolsdir/hope
+    fi
+    /usr/local/bin/hope co -c HOPEemacs-lisp -br trunk -u hope.el -filename $toolsdir/hope -writ force
+    ls -l $comp_file_name
+    if test ! -f $comp_file_name; then
+	echo "The file $comp_file_name not found!"
+	compounds="-compound D"
+    else
+	echo "The file $comp_file_name found!"
+	the_comps=`cat $comp_file_name`
+	flag="firstone"
+	for comp in $the_comps; do
+	    case $flag in
+		firstone) flag="rest" ;;
+		*) compounds="$compounds -and" ;;
+	    esac
+	    compounds="$compounds -compound $comp"
+	done
+    fi
+
+    ## Synch the main compounds now.
+    cd $dylandir
+    echo "Comps to sync are: $compounds"
+    echo "The cmd is --/usr/local/bin/hope co -recursive -writable-files force -missing-dir create -extra-files force -diff-unit-files force -diff-branch-files force -branch trunk $compounds--"
+    /usr/local/bin/hope co -recursive -writable-files force -missing-dir create -extra-files force -diff-unit-files force -diff-branch-files force -branch trunk $compounds
+    status=$?
+    echo "Ending at `date`"
+
+    ## Make everything readable but non writable except the system logs used ##
+    ## for nightlys and for the various releases which must be 777           ##
+    ## andrewa+dodds: commented this out because it confuses Hope
+    ##
+    ## cd $dylandir
+    ## echo "Current directory is: $dylandir"
+    ## echo "Current umask is: `umask`"
+    ## cd $dylandir
+    ## chmod -R go-w *
+    ## chmod -R a+r *
+    chmod 777 $logsdir
+    chmod 777 $dylandir/admin/logs
+    chmod 777 $dylandir/admin/logs/promote.log
+    ## for i in kan kan-next; do
+    ##  cd $dylandir/releases/$i/admin
+    ##  chmod 777 logs
+    ##  chmod 777 logs/images-used.log
+    ##	chmod 777 logs/install-patch.log
+    ##	chmod 777 logs/promote.log
+    ## done
+
+    ## Run ranlib on the gc for sparc-sunos4. Unfortunately must  ##
+    ## be run from a sparc-sunos4 machine only, which makes the   ##
+    ## following nasty hack necessary. All the sites that wish to ##
+    ## be able to use the gc for a sparc-sunos4 must be specified ##
+    ## here so that the symbol table can be kept up-to-date.      ##
+    ##
+    sunos_machine=""
+    case $site in
+	1cc)     sunos_machine="bakura" ;;
+	menlo)   sunos_machine="meteor" ;;
+	seattle) sunos_machine="bright" ;;
+	*) ;;
+    esac
+    case $sunos_machine in
+	"") ;;
+	 *) rsh $sunos_machine -n chmod +w $dylandir/install/sparc-sunos4/lib/lib_gc.a
+            rsh $sunos_machine -n ranlib $dylandir/install/sparc-sunos4/lib/lib_gc.a
+            rsh $sunos_machine -n chmod -w $dylandir/install/sparc-sunos4/lib/lib_gc.a ;;
+    esac
+
+    subject="Report on Nightly Sync on $host at $site";
+    if [ $status != 0 ]; then
+	message="nightly-sync: Error - The sync failed."
+	error_string="Error,"
+	send-mail "$message" "$rel_eng" "$logfile" "$subject" "$error_string"
+        echo "nightly-sync failed"
+	echo
+	exit 1;
+    fi
+    echo "nightly-sync successful"
+    echo
+    $admindir/remove-old-files $logsdir/nightly-sync-log-$host-$platform $logstokeep
+} >& $logfile
+
+exit 0
+#eof

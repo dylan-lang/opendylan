@@ -1,0 +1,429 @@
+Emacs-mode: -*- outline-mode -*-
+Author: Hugh Greene
+Synopsis: A record of all the key bindings use in the Environment,
+	with reference to Deuce.
+Version: $HopeName: D-doc-environment!environment-keys.txt(trunk.1) $
+Note: Keep this in synch with D-doc-editor!deuce-bindings.txt
+
+
+* Introduction
+
+This document describes the "key bindings" or "shortcut keys" used in 
+the various environment tools.
+
+The bindings are listed by menu and menu item.  Commands in "()" are
+not currently available in the Environment, but may be in the future.
+
+* Main window
+
+** File
+
+New...				Ctrl+N
+Open...				Ctrl+O
+Exit
+
+** Options
+
+Environment Options...
+
+** Window
+
+Minimize All
+Undo Minimize All
+Restore All
+Bring All To Front
+
+** Help
+
+Contents and Index		F1
+Open Exmaple...
+Open Playground
+About Functional Developer
+
+
+* Project window
+
+** File
+
+New...				Ctrl+N
+Open...				Ctrl+O
+Open
+Save As...
+(Page Setup...			)
+(Print...			Ctrl+P)
+Close				Alt+F4
+
+** Edit
+
+Undo				Ctrl+Z
+Redo				Ctrl+Y
+Cut				Ctrl+X
+Copy				Ctrl+C
+Paste				Ctrl+V
+Delete				Delete
+Select All			Ctrl+A
+(Find>				)
+  Find...			F3
+  Find Next			Ctrl+F
+  Find Previous			Ctrl+Shift+F
+  (Find In Next File		F4)
+  (Find In Previous File 	Shift+F4)
+  Enter 'Find' String		Ctrl+D
+  (Enter 'Replace' String	Ctrl+E)
+  (Find Selection		Ctrl+W)
+  (Find Selection Previous	Shift+Ctrl+W)
+  (Replace[...?]		Ctrl+H)
+  (Replace & Find Next		Ctrl+J)
+  (Replace & Find Previous	Shift+Ctrl+J)
+  (Replace All			)
+
+** View
+
+Toolbar
+Status Bar
+Refresh				F5
+(Project Window Options...	)
+
+** Go
+
+Library
+
+** Project
+
+Insert File...
+Move File Up			Alt+Up
+Move File Down			Alt+Down
+Build				F7
+Clean Build			Ctrl+F7
+Advanced Build...		Shift+F7
+Settings...
+
+** Application
+
+Start				F8
+Debug				Shift+F8
+Interact			Ctrl+F8
+Pause
+Resume
+Stop
+Restart
+Browse Threads
+Breakpoints>
+  New Function Breakpoint...	Shift+F9
+  Browse All Breakpoints
+  Enable All Breakpoints
+  Disable All Breakpoints
+  Clear All Breakpoints
+
+** Window
+
+[As Main Window]
+
+** Help
+
+[As Main Window]
+
+
+* Browser
+
+** File
+
+New Window			Ctrl+N
+New Linked Window
+Browse...			Ctrl+O
+(Print Setup...			)
+(Print...			)
+Close				Alt+F4
+
+** Edit
+
+[As Project Window]
+
+** View
+
+Toolbar
+Object Bar
+Status Bar
+Refresh				F5
+(Browser Options...		)
+
+** Go
+
+Back				Alt+Left
+Forward				Alt+Right
+View History
+Browse Project
+
+** Object
+
+Browse				F2
+Browse Class			Alt+F2
+Edit Source			Shift+F2
+
+** Window
+
+New Window
+New Linked Window
+[then as Main Window]
+
+** Help
+
+[As Main Window]
+
+
+* Debugger
+
+** File
+
+Save Bug Report...
+(Print Setup...			)
+(Print...			)
+Close				Alt+F4
+
+** Edit
+
+[As Project Window]
+
+** View
+
+Toolbar
+Status Bar
+Pane Tooltips
+Refresh				F5
+Refresh All Debuggers		Alt+F5
+Debugger Options...
+Debugging Layout
+Interacting Layout
+Expand All
+Expand
+Collapse
+Collapse All
+
+** Application
+
+[As Project Window]
+
+** Thread
+
+Abort
+Abort All
+Continue...
+Step Over			F11
+Step Into			F12
+Step Out			Shift+F12
+
+** Object
+
+[As Browser]
+
+** Window
+
+New Window
+New Linked Window
+Minimize All
+Restore All
+
+** Help
+
+[As Main Window]
+
+
+* Editor
+
+** File
+
+New...				Ctrl+N
+Open				Ctrl+O
+Revert
+Save				Ctrl+S
+Save As...
+Save All			Shift+Ctrl+S
+(Page Setup...			)
+(Print...			Ctrl+P)
+Files...			Ctrl+F10
+Other File			Alt+F10
+Close Window			Ctrl+F4
+Close				Alt+F4
+
+** Edit
+
+[As Project Window up to Select All, then]
+Find...				F3
+Find Next			Ctrl+F
+Find Previous			Ctrl+Shift+F
+Replace...			Ctrl+F3
+Go To...			Ctrl+G
+Capitalize Word			Ctrl+K
+Lowercase Selection		Ctrl+L
+Uppercase Selection		Ctrl+U
+
+** View
+
+Toolbar
+Status Bar
+Cursor Location			Ctrl+=
+Color Dispatch Optimizations
+Refresh				F5
+Recenter			Ctrl+F5
+Options...
+
+** Object
+
+Describe			Ctrl+F2
+[... then as Browser, then]
+Edit Subclasses
+Edit Superclasses
+Edit Class Methods
+Edit GF Methods
+Edit Callees
+
+** Project
+
+Build				F7
+Clean Build			Alt+F7
+Advanced Build...		Shift+F7
+Settings...
+
+** Application
+
+[As Project Window, but]
+Breakpoints>
+  Run To Cursor			Ctrl+F9
+  Set Or Toggle Breakpoint	F9
+  Clear Breakpoint
+  Edit Breakpoint Options	Shift+Ctrl+F9
+
+** Window
+
+[As Debugger]
+
+** Help
+
+Contents and Index		F1
+Key Bindings
+Open Exmaple...
+Open Playground
+About Functional Developer
+
+
+* Other windows
+
+The following other windows exist in the environment but have no
+menus, and hence no shortcut keys.
+
+  - Initial dialog
+  - New Project wizard
+  - Advanced Build dialog
+  - Various "Options" dialogs
+
+
+* Binding-to-command mapping
+
+The following table lists the various possible key combinations and
+the commands they map to.  It's sort of the inverse of the
+menu-item-to-binding mapping in the previous sections, but it covers
+some commands which don't (currently) have any bindings.  I've also
+included notes of keys which are reserved or conventionally used by
+Windows for other purposes.
+
+You'll have to make your editor _really_wide_ to see this list
+properly!
+
+This table also only covers the "Windows keyboard layout" for Deuce.
+The Emacs layout is a law unto itself!
+
+
+** Key
+
+"#" = clash between env and Deuce.
+"[]" indicate functions reserved by Windows.
+"()" indicate commands unimplemented (or implemented but not actually
+  bound to that key)
+"(... ...)" indicate general ideas for future assignments.
+[D] = Only in Dylan-mode (in Deuce)
+[S] = Only in Shell-mode (i.e., in the interactor/debugger)
+
+	Key	/-------------------------------------------------------- Modifiers ---------------------------------------------------------\
+		None		Shift		Ctrl		Alt		Ctrl+Shift	Ctrl+Alt	Alt+Shift	Ctrl+Alt+Shift
+	F1	[context help]	[help mode on]	(... apropos, complete-name, show-doc, ...)
+	F2	Object/Browse   Object/EditSrc	Object/Describe	Object/BrowseCls (... find-uses, find-used ...)
+	F3	Edit/FindD			Edit/ReplaceD
+	F4	(Edit/FindInNext)(Edit/FindInPrev)File/Close	File/CloseWin
+	F5	View/Refresh			View/Recenter
+	F6	(... pane navigation? ...)	[next MDI]	[next window]
+	F7	Project/Build	Project/AdvancedBuildD		Project/CleanBuild EvalRegion
+	F8	App/Start	App/Debug	App/Interact
+	F9	App/NewOrToggleBp		App/RunToCursor			App/EditBpOptsD
+				App/NewFnBp	
+	F10	[menu access]	[popup menu]	File/FilesD	File/OtherFile
+	F11	Thread/StepOver
+	F12	Thread/StepInto	Thread/StepOut
+
+	Up	prev-line	[extend sel]	prev-sh-inpt[S] Project/MoveFileUp
+										[extend sel]			[extend sel]
+	Dn	next-line	[extend sel]	next-sh-inpt[S] Project/MoveFileDown
+										[extend sel]			[extend sel]
+	Lt	prev-char	[extend sel]	backward-word	Go/Back		[extend sel]			[extend sel]
+	Rt	next-char	[extend sel]	forward-word	Go/Forward	[extend sel]			[extend sel]
+	Ins
+	Del	Edit/Delete			delete-word
+	Home	start-of-line	[extend sel]	start-of-buffer			[extend sel]			[extend sel]
+	End	end-of-line	[extend sel]	end-of-buffer			[extend sel]			[extend sel]
+	PgUp	scroll-backward	[extend sel]	start-of-page	start-of-sect'n	[extend sel]			[extend sel]
+								start-of-def'n[D]
+	PgDn	scroll-forward	[extend sel]	end-of-page	end-of-section	[extend sel]			[extend sel]
+								end-of-def'n[D]
+	BkSp	rubout-char			rubout-word
+
+	TAB	indent-region[D]
+	Return	newline		line-feed			[Properties]
+
+	Q					quoted-insert
+	W					(Edit/FindSel)			(Edit/FindSelPrev)
+	E					(Edit/ToReplace)
+	R					transpose-words
+	T					transpose-chars
+	Y					Edit/Redo
+	U					upcase-region
+	I
+	O					File/OpenD
+	P					File/PrintD
+
+	A					Edit/SelectAll
+	S					File/Save			File/SaveAll
+	D					Edit/ToFind
+	F					Edit/FindNext			Edit/FindPrev
+	G					Edit/GoToD
+	H					(Edit/ReplaceSel#)
+	J					(Edit/RepFindNext)		(Edit/RepFindPrev)
+	K					capitalize-word
+	L
+
+	Z					Edit/Undo
+	X					Edit/Cut
+	C					Edit/Copy
+	V					Edit/Paste
+	B					(yank)
+	N					File/NewD
+	M
+
+	-
+	=					Edit/Replace#
+	[
+	]
+	;
+	'
+	,
+	.
+	/
+
+** Clashes with Deuce:
+	Env has ...		Deuce has ...		On key ...
+	(Edit/ReplaceSel)	query-replace-str	Ctrl+H
+
+  Suggested fixes:
+	query-replace-str	Drop if we get the new Find dialog integrated
+	(Edit/Replace)		Ctrl+H, if the new Find dialog is in; drop if not
+
+** Bindings unimplemented in Deuce (Windows keyboard layout):
+	[All the old Windows cut/copy/paste keys, e.g., Ctrl+Ins]

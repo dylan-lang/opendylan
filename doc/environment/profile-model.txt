@@ -1,0 +1,372 @@
+Document:  Environment Profiling Protocols
+Synopsis:  A design for profiling in the environment
+Authors:   Andy Armstrong
+Copyright: 1998 Functional Objects, Inc. All rights reserved.
+History:
+  22 Oct 98 - andrewa:
+    initial version
+  01 Nov 98 - andrewa:
+    added the introduction, and updated the protocols to match the
+    current implementation.
+
+
+HOW PROFILING WORKS:
+
+Basically, a profiler takes snapshots of interesting application
+state at intervals, and then the environment processes this
+information to produce reports.
+
+There are two orthogonal options when profiling:
+
+1. When do the snapshots take place?
+
+  The simplest form of profiling is to take samples at an interval
+  appropriate to the particular machines. Another alternative is to
+  take snapshots when certain events occur (the application allocates,
+  for example, or a function is called). The ultimate profiling would
+  involve taking a snapshot when anything of importance happens
+  (allocation, function entry/exit etc), this would obviously produce
+  a lot of raw data.
+
+2. What information is recorded in a snapshot?
+
+  Currently we take a snapshot per thread of the application, where
+  each snapshot includes the frames on the stack, the time elapsed
+  since the previous snapshot (in both CPU and wall-clock time), and
+  the number of new bytes allocated. We might consider also
+  taking some sort of snapshot of the heap.
+
+Once the raw data has been collected, the environment can then process
+it in interesting ways. In general, the environment needs to reduce
+the amount of information so that the user can get a quick sense of
+where the trouble spots are. Some possibilities are:
+
+ * reducing the number of snapshots that are considered by some kind
+   of sampling strategy.
+
+ * filtering out functions that aren't of interest to the user. For
+   example, a useful filtering approach is to assign data for Dylan
+   functions to the invoking user function, because users need to find
+   problems in their own code.
+
+ * aggregating the results into broader categories. For example, all
+   the memory management functions could be lumped into a single
+   'memory management' category, since mosts users won't need a finer
+   breakdown than this.
+
+ * second-order statistics are invaluable, it is not enough to know
+   that a function is taking too much time, it is important to know
+   which functions are invoking the inefficient function too. For
+   example, a function might be being called too often, rather than
+   being inefficient in itself.
+
+There are a large number of possible reports that could be generated,
+a competitive analysis of other development environments will be done
+to ensure that possibilities aren't missed. Here are some of the
+reports currently being considered:
+
+ * raw report:
+
+   Just presents all of the information recorded. This is probably
+   only useful internally as a way to debug the profiler, although it
+   is possible it will be useful for small profile runs.
+
+ * breakdown report:
+
+   Shows the wall clock time of the application, and shows a breakdown
+   of where this time was spent according to broad categories. Such
+   categories would include the time spent in user code, in Dylan
+   system code, in memory management, in dispatching, in IO, in OS
+   calls and in thread-blocking.
+
+ * inclusive/exclusive report:
+
+   This summarizes the functions with the biggest effect on a
+   particular property of the application (CPU speed, allocation or
+   whatever). It shows both an inclusive and an exclusive report,
+   where the inclusive report accounts for all functions called by the
+   function in question as well.
+
+ * time line:
+
+   Shows how the application changes over time. In particular, it
+   shows how the functions call each other. It also uses a
+   customizable cut off point that elides functions that don't stay on
+   the stack long enough.
+
+ * statistical package import formats:
+
+   Exports all of the profile information in a format ready to be
+   imported into a statistical package of some form. For example,
+   importing the information into Excel would allow for all sorts of
+   interesting statistical analysis beyond the scope of the
+   environment. Another good example is that Watson's data mining
+   capabilities could be very helpful.
+
+USER MODEL:
+
+Profiling in the environment will work roughly as follows:
+
+ - the user will set options for controlling the data to be
+   gathered. Ideally a set of options could be named and saved
+   persistently.
+
+ - the user will clear the previous profile if there is one. This may
+   be done implicitly by the following step, or we may allow
+   subsequent profile runs to add to previous results.
+
+ - the user will get the application to a state ready to start
+   profiling, and then will switch profiling on.
+
+ - the user will run the program such that the code to be profiled
+   gets exercised, and then will switch profiling off again.
+
+ - the user will finally ask to generate one or more reports from the
+   gathered data.
+
+
+PROFILING PROTOCOLS:
+
+<profile-options>
+
+  Class representing the options to be presented to the profiler.
+
+  init-keywords:
+ 
+    sampling-options:	- the sampling options
+    snapshot-options:	- the snapshot options
+
+<profile-sampling-options>
+
+  Class representing the profiler's sampling options:
+
+  init-keywords:
+ 
+    style:	- one-of(#"interval", #"allocation", #"breakpoints")
+    rate:	- the interval rate, if style == #"interval".
+
+<profile-snapshot-options>
+
+  Class representing the profiler's snapshot options:
+
+  init-keywords:
+ 
+    values:		- the values to record for each snapshot
+    stack-depth:	- the depth of stack to record (or #f for all)
+
+application-possible-snapshot-values (application) => (values)
+
+  Returns a sequence of values that can be recorded in a
+  snapshot. Combinations of these values can be specified to the
+  profile snapshot options using the values: keyword.
+
+application-default-profile-options (application) => (options)
+application-default-profile-options-setter (options, application) => (options)
+
+  Sets/queries the default options to be used by the profiler. 
+
+profile-sampling-options (options) => (sampling-options)
+profile-sampling-style (sampling-options) => (style)
+profile-sampling-rate (sampling-options) => (rate)
+profile-snapshot-options (options) => (snapshot-options)
+profile-snapshot-values (snapshot-options) => (values)
+profile-snapshot-stack-depth (snapshot-options) => (stack-depth)
+
+  Queries the options used by the profiler. Setters aren't provided,
+  instead a new options object should be created and installed using
+  application-profile-options-setter. This means that a particular
+  profile can record its options without the risk of having them being
+  retroactively changed.
+
+application-start-profiling (application, #key options) => ();
+
+  Sets the application up ready for profiling. When the application
+  starts/resumes then data will start collecting.
+
+application-stop-profiling (application) => (application-profile);
+
+  Stops the current profile run, and prepares the data for querying. 
+
+application-last-profile (application) => (application-profile)
+
+  Returns the last application profile generated by
+  application-stop-profiling, so that it is available to the
+  environment in general.
+
+PROFILER RESULTS:
+
+<application-profile>
+ 
+  Records all of the data gathered for a particular application's
+  profiling run.
+
+application-profile-options (application-profile) => (options)
+
+  Returns the options associated with this profile run.
+
+application-profile-threads (application-profile) => (threads)
+
+  Returns the profiling information for each of the application's
+  threads. This is just a convenience function implemented in terms of
+  do-profile-threads.
+
+do-profile-threads (function, application, application-profile) => ()
+
+  Maps over the profile information recorded for each thread in the
+  application profile.
+
+<thread-profile>
+
+  Records all of the data gathered for a particular thread in a
+  profile run.
+
+thread-profile-name (thread-profile) => (name)
+
+  Returns the name of the thread which is being profiled. 
+
+  [ISSUE: We might want to instead return the actual <thread-object>,
+  I'm not sure if they are unique throughout the lifetime of the
+  application.]
+  
+thread-profile-snapshots (application, thread-profile) => (snapshots)
+
+  Returns all of the snapshots for the particular thread profile. This
+  is just a convenience function implemented using
+  do-thread-profile-snapshots.
+
+do-thread-profile-snapshots (function, application, thread-profile) => ()
+
+  Iterates over the thread snapshots for the given thread profile.
+
+<thread-snapshot>
+
+  Represents a single snapshot for a thread.
+
+thread-snapshot-value (application, snapshot, type) => (value)
+
+  Returns a value recorded for the snapshot. The type must be one of
+  the possible types returned by application-profile-snapshot-values. 
+
+thread-snapshot-stack-size (application, snapshot) => (size)
+
+  Returns the size of the stack recorded in the snapshot.
+
+thread-snapshot-functions (application, snapshot) => (functions)
+
+  This returns the functions recorded on the stack in the thread
+  snapshot, from top to bottom. This is a convenience function
+  implemented using do-thread-snapshot-functions.
+
+do-thread-snapshot-functions (function, application, snapshot) => ()
+
+  Iterates over the functions in the stack snapshot, from the top. We
+  might also want to provide a way to iterate up from the
+  bottom.
+
+  Providing this function as an iterator allows the backend to lazily
+  map from the raw profile information to the environment function
+  objects, which could greatly reduce the amount of allocation
+  needed. For example, if doing 'top of stack' profiling, the code
+  will only ever iterate over the first function, leaving the rest
+  unprocessed. It might turn out that being this lazy isn't necessary,
+  though, and this protocol doesn't require that it is implemented
+  lazily.
+
+USER INTERFACE:
+
+This section will be deliberately left vague, the principle is that
+the protocols are flexible enough to provide whatever data is needed
+by the environment's UI.
+
+I imagine that there will be a profiling options page in the Project
+settings dialog, and that there will be 'start' and 'stop' profiling
+buttons (this could be a single toggle button on the toolbar). Reports
+can be generated using the "File>Export..." menu item, we might also
+want to provide a viewer.
+
+For heap visualization, we could have a page in the browser ("Heap"?)
+on the application, plus some report generators. I imagine again that
+a separate viewer might be needed, though, since there are so many
+ways to want to visualize the heap.
+
+Filtering and aggregation should be provided like the current console
+compiler, and possibly extended. These options might also want to be
+applied to other parts of the environment (like the debugger
+filtering). Also some sampling of the results could be provided (say
+show only every other result, if there is too much information).
+
+Some possible reports:
+
+ - standard profiling reports (like the console compiler).
+
+ - application time-line (show calls/allocation as it happens, but
+   filtered down so that only the 'key' events are shown by default).
+
+ - second-order allocation statistics (show allocation by class,
+   broken down by owner).
+
+ - heap statistics (instances by class, again broken down by owner).
+
+As well as having static reports, providing a viewer of some sort
+could be very powerful. Being able to expand and contract the data
+dynamically allows the user to build up a model for themselves of what
+is happening.
+
+HEAP VISUALIZATION:
+
+This is probably beyond the scope of this document, but here are a few
+ideas. These are much less thought out than the rest of this document,
+and can be ignored if they are too far off the mark. :-)
+
+One issue I was wondering was whether the nature of browsing these
+objects would change the heap (i.e. does the environment add
+references to these objects that will show up when trying to visualize
+the heap?). Maybe we can factor this out somehow, so that we don't
+muddy the waters, I'm not really sure.
+
+Anyway, here are some protocols:
+
+do-application-roots (function, application) => ()
+
+  Iterates over the root objects in the application's heap.
+
+do-application-object-referenced-objects (function, application, object) => ()
+
+  Not a very good name, but this iterates over all objects that are
+  pointed to by an application object.
+
+do-application-object-client-objects (function, application, object) => ()
+
+  Again not very well named, but this iterates over all objects in the
+  heap that point to this object.
+
+application-object-size (application, object) => (size)
+
+  Returns the number of bytes allocated for a given application
+  object.
+
+It would probably be possible to do all heap visualization tools with
+just these protocols, but for efficiency we probably need some
+others. I'm not sure what they'd be, but for starters something like
+the following. I'd love to hear what the MM group were proposing.
+
+do-all-application-objects (function, application) => ()
+
+  Iterates over all objects in an application. This would probably be
+  too inefficient, it would allocate a huge amount of memory in the
+  environment. It might be worth considering though, particularly for
+  debugging small(ish) applications.
+
+do-application-objects-of-class (function, application, class) => ()
+
+  Iterates over all application objects of a given class.
+
+do-application-objects-in-generation (function, application, generation) => ()
+
+  I'm not sure how we'd specify the generation, but being able to map
+  over all of the objects in a generation could be useful.
+
+application-object-generation (application, object) => (generation)
+
+  What generation is this object in? I'm not sure if it is possible to
+  implement this, or even how useful it would be.

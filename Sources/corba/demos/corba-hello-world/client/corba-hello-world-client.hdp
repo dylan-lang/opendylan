@@ -1,0 +1,15 @@
+comment:	This file is generated, please don't edit
+format-version:	2
+library:	corba-hello-world-client
+files:	library
+	module
+	corba-hello-world-client
+base-address:	0x63AC0000
+start-function:	main
+major-version:	2
+minor-version:	1
+compilation-mode:	loose
+target-type:	executable
+other-files:	..\README.htm
+	corba-hello-world.spec
+comment:	additional keywords

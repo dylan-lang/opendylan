@@ -1,0 +1,108 @@
+:show breakpoints
+:show commands
+:show compilation-mode
+:show debugger
+:show directory
+:show frame
+:show libraries
+:show library
+:show linker
+:show machine
+:show machines
+:show messages
+:show module
+:show modules
+:show personal-root
+:show project
+:show projects
+:show registers
+:show registries
+:show reports
+:show restarts
+:show system-root
+:show thread
+:show threads
+:set compilation-mode tight
+:set debugger off
+:set directory c:\
+:set frame 2
+:set library threads
+:set linker microsoft
+:set machine xxx
+:set messages verbose
+:set module duim-gadgets:duim-gadgets
+:set project dylan-playground
+:set thread 2
+:play
+:show breakpoints
+:show commands
+:show compilation-mode
+:show debugger
+:show directory
+:show frame
+:show libraries
+:show library
+:show linker
+:show machine
+:show machines
+:show messages
+:show module
+:show modules
+:show personal-root
+:show project
+:show projects
+:show registers
+:show registries
+:show reports
+:show restarts
+:show system-root
+:show thread
+:show threads
+:set compilation-mode tight
+:set debugger off
+:set directory c:\
+:set frame 2
+:set library threads
+:set linker microsoft
+:set machine xxx
+:set messages verbose
+:set module duim-gadgets:duim-gadgets
+:set project dylan-playground
+:set thread 2
+:stop
+:show breakpoints
+:show commands
+:show compilation-mode
+:show debugger
+:show directory
+:show frame
+:show libraries
+:show library
+:show linker
+:show machine
+:show machines
+:show messages
+:show module
+:show modules
+:show personal-root
+:show project
+:show projects
+:show registers
+:show registries
+:show reports
+:show restarts
+:show system-root
+:show thread
+:show threads
+:set compilation-mode tight
+:set debugger off
+:set directory c:\
+:set frame 2
+:set library threads
+:set linker microsoft
+:set machine xxx
+:set messages verbose
+:set module duim-gadgets:duim-gadgets
+:set project dylan-playground
+:set thread 2
+:exit

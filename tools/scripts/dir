@@ -1,0 +1,604 @@
+#!/usr/local/bin/perl
+#
+#  it's a dos dir routine in perl!!!
+#
+# usage: [-c] [-d] [-r] <search parameters>
+#
+# optional arguments: -c  search for files which "contain" the search 
+#                         parameters.  Ex. '% dir -c a' would display all
+#                         files that have an 'a' in its name.  Note:  you
+#                         should not use wildcards when using -c.
+#                     -d  list only directories.  Can be used in conjunction
+#                         with -c and any search parameters.
+#                     -r  recursive search through directories. Note:  don't
+#                         use wildcards when doing a recursive search.  use
+#                         the -c option to look for files containing specific
+#                         strings
+#                     <search parameters> any shorthand expression of a 
+#                         filename which can include wildcards.  
+#                         Ex. 'dir library*' would list all files that start
+#                         with the word library.
+#
+#            
+############################################################################
+
+$directory_flag = "false";
+$contain_flag = "false";
+$recurse_flag = "false";
+
+$count = 0;
+$count_dirs = 0;
+$count_files = 0;
+$total_size = 0;
+$tot_dir_size = 0;
+$tot_file_size = 0;
+
+$tot_count = 0;
+$tot_count_dirs = 0;
+$tot_count_files = 0;
+$tot_total_size = 0;
+$tot_tot_dir_size = 0;
+$tot_tot_file_size = 0;
+
+$dir_file = `which dir`; chop($dir_file);
+
+###########################################################################
+#                             Main Program                                #
+###########################################################################
+
+&get_dir_type();
+&parse_arguments();
+&get_ls();
+
+&get_dirlist();
+&get_dirlist_info();
+&format_dirlist();
+
+&print_dirlist();
+&print_totals();
+&check_recurse();
+&print_recurse_totals();
+
+
+###########################################################################
+#                          local subroutines                              #
+###########################################################################
+
+sub check_recurse
+  {
+    local(@recurse_list, $recurse_file, @directories);
+
+    if ($recurse_flag eq "true")
+      {
+        &get_directories();
+
+        foreach $recurse_file (@directories)
+          {
+	    @dirsplit = split(/ +/, $recurse_file);
+	    $dirname = $dirsplit[$s7];
+
+	    chdir($dirname);
+
+	    &get_ls();
+
+            &get_dirlist();
+	    &get_dirlist_info();
+	    &format_dirlist();
+
+	    &print_dirlist();
+	    &print_totals();
+	    &check_recurse();
+
+	    $_ = "..";
+	    chdir($_);
+         }
+      }
+  }
+
+###########################################################################
+
+sub comma_number
+  {
+    local($temp_size, $digit, $digits, $digit_list);
+
+    $temp_size = @_[0];
+    $digit = chop($temp_size);
+    $digits = 0;
+
+    while ($digit ne "")
+      {
+	$digits++;
+
+	$digit_list = $digit . $digit_list;
+
+	$digit = chop($temp_size);
+	if ((($digits % 3) == 0) && ($digit ne ""))
+	  {
+	    $digit_list = "," . $digit_list;
+	  }
+      }
+
+    sprintf("$digit_list");
+
+  }  # end comma_number
+
+###########################################################################
+
+sub format_dirlist
+  {
+    for ($i = 0; $i < $count; $i++)
+      {
+	@fields = split(/ +/, $dirlist[$i]);
+        $fields[$s3] = &comma_number($fields[$s3]);
+
+	#  comment out fields you don't want
+	#
+	# s0 - privilages                    %10s
+	# s1 - number of links               %$max_link s
+	# s2 - owner                         %-$max_user s
+	# s3 - size                          %$max_size s
+	# s4 - month of last modification    %3s
+	# s5 - day of last modification      %02d
+	# s6 - time of last modification     %5s
+	# s7 - filename                      %s
+
+	$str =        sprintf("%10s ",          $fields[$s0]);
+	$str = $str . sprintf("%$max_link s ",  $fields[$s1]);
+	$str = $str . sprintf("%-$max_user s ", $fields[$s2]);
+	$str = $str . sprintf("%$max_size s ",  $fields[$s3]);
+	$str = $str . sprintf("%3s ",           $fields[$s4]);
+	$str = $str . sprintf("%02s ",          $fields[$s5]);
+	$str = $str . sprintf("%5s ",           $fields[$s6]);
+	$str = $str . sprintf("%s ",            $fields[$s7]);
+
+        $dirlist[$i] = $str;
+      } 
+
+  }  # end format_dirlist
+
+###########################################################################
+
+sub get_directories
+  {
+    local (@templist);
+
+    @templist = `ls -Al`;
+    chop(@templist);
+
+    foreach $_ (@templist)
+      {
+	if (/^d/)
+	  {
+	    push(@directories, $_);
+	  }
+      }
+
+  }  # end get_directories
+
+###########################################################################
+
+sub get_dirlist
+  {
+    local (@templist, @temp2);
+
+    if (@args)
+      {
+	foreach $i (@args)
+	  {
+	    foreach $file (@filelist)
+	      {
+		@split_file = split(/ +/, $file);
+		$filename = $split_file[$s7];
+
+		if ((($filename eq $i) && ($contain_flag eq "false")) ||
+		    (($filename =~ /$i/) && ($contain_flag eq "true")))
+		  {
+		    push(@temp2, $file);
+                    if ($contain_flag eq "false")
+                      {
+                        last;  # break
+                      }
+		  }
+	      }
+	  }
+
+	$last = "";
+	foreach $file (sort(@temp2))
+	  {
+	    if ($file ne $last)
+	      {
+		$last = $file;
+		push(@templist, $file);
+	      }
+	  }
+	@dirlist = @templist;
+      }
+    else
+      {
+	@dirlist = @filelist;
+      }
+
+  }  # end get_dirlist
+
+###########################################################################
+
+sub get_dirlist_info
+  {
+    $count = 0;
+    $count_dirs = 0;
+    $count_files = 0;
+    $total_size = 0;
+    $tot_dir_size = 0;
+    $tot_file_size = 0;
+
+    $max_size = 0;
+    $max_user = 6;
+    $max_link = 2;
+
+    foreach $i (@dirlist) 
+      {
+	@fields = split(/ +/, $i);
+	$size = $fields[$s3];
+
+	if ($i =~ /^d/)
+	  {
+	    $tot_dir_size += $size;
+	    $tot_tot_dir_size += $size;
+	    $count_dirs ++;
+	    $tot_count_dirs ++;
+	  }
+	else
+	  {
+	    $tot_file_size += $size;
+	    $tot_tot_file_size += $size;
+	    $count_files ++;
+	    $tot_count_files ++;
+	  }
+
+	$total_size += $size;
+	$tot_total_size += $size;
+
+	$temp_size = length($fields[$s2]);
+	if (($temp_size + 1) > $max_user)
+	  {
+	    $max_user = $temp_size + 1;
+	  }
+
+	$temp_size = length($fields[$s1]);
+	if ($temp_size > $max_link)
+	  {
+	    $max_link = $temp_size;
+	  }
+
+	$count++;
+	$tot_count++;
+      } 
+
+    $comma_total = &comma_number($total_size);
+    $comma_dir_tot = &comma_number($tot_dir_size);
+    $comma_file_tot = &comma_number($tot_file_size);
+
+    $tot_comma_total = &comma_number($tot_total_size);
+    $tot_comma_dir_tot = &comma_number($tot_tot_dir_size);
+    $tot_comma_file_tot = &comma_number($tot_tot_file_size);
+
+    $max_size = length($comma_total);
+
+  }  # end get_dirlist_info
+
+###########################################################################
+
+sub get_dir_type
+  {
+    ##   because different platforms have different formats for `ls -AL`,
+    ## this subroutine determines the location of the filename in an ls,
+    ## and sets the pointers accordingly.  Most commonly, the filename
+    ## appears in either field 7 or 8 (zero being the first field.)
+
+    $dir_line = "none";
+
+    if ( -f "$dir_file" )
+      {
+        $dir_line = `ls -Al $dir_file`;
+        chop($dir_line);
+      }
+
+    @dir_line_list = split(/ +/, $dir_line);
+
+    if ($dir_line_list[7] =~ /dir/)
+      {
+	$dir_type = "dir1";
+      }
+    elsif ($dir_line_list[8] =~ /dir/)
+      {
+	$dir_type = "dir2";
+      }
+    else
+      {
+	$dir_type = "dir2";
+      }
+
+
+    if ($dir_type eq "dir1")
+      {
+        $s0 = 0; # permissions
+        $s1 = 1; # links
+        $s2 = 2; # username
+        $s3 = 3; # filesize
+        $s4 = 4; # month
+        $s5 = 5; # day
+        $s6 = 6; # time
+        $s7 = 7; # filename
+      }
+    elsif ($dir_type eq "dir2")  # skip field 3 of the `ls -Al`
+      {
+        $s0 = 0; # permissions
+        $s1 = 1; # links
+        $s2 = 2; # username
+        $s3 = 4; # filesize
+        $s4 = 5; # month
+        $s5 = 6; # day
+        $s6 = 7; # time
+        $s7 = 8; # filename
+      }
+
+  }  # end get_dir_type
+
+###########################################################################
+
+sub get_ls
+  {
+    local (@templist);
+
+    $here =  `pwd`; chop($here);
+
+    @filelist = `ls -Al`;
+
+    if ($filelist[0] =~ /total/)
+      {
+	shift(@filelist);
+      }
+
+    chop(@filelist);
+
+    if ($directory_flag eq "true")
+      {
+	foreach $_ (@filelist)
+	  {
+	    if (/^d/)
+	      {
+		push(@templist, $_);
+	      }
+	  }
+        @filelist = @templist;
+      }
+
+  }  # end get_ls
+
+###########################################################################
+
+sub parse_arguments
+  {
+    while (@ARGV)
+      {
+	$i = shift(@ARGV);
+
+	if ($i eq "-d")
+	  {
+            $directory_flag = "true";
+	  }
+	elsif ($i eq "-c")
+	  {
+	    $contain_flag = "true";
+	  }
+	elsif ($i eq "-r")
+	  {
+	    $recurse_flag = "true";
+            print "\n";
+            print "============================================================\n";
+            print "============================================================\n";
+	  }
+	else 
+	  {
+	    push (@args, $i);
+	  }
+      }
+
+  }  # end parse_arguments
+
+###########################################################################
+
+sub print_dirlist
+  {
+    $dir_flag = "false";
+    $file_flag = "false";
+
+    if (($recurse_flag eq "false") || 
+        (($recurse_flag eq "true") && ($count > 0)))
+      {
+        print "\n     Directory of $here\n\n";
+      }
+
+    foreach $i (@dirlist) 
+      {
+	if ($i =~ /^d/)
+	  {
+	    print "$i\n";
+	    $dir_flag = "true";
+	  } 
+      } 
+
+    if ($dir_flag eq "true")
+      {
+        print "\n";
+      }
+
+    foreach $i (@dirlist) 
+      {
+	unless (($i =~ /^d/) || ($i =~ /^total/))
+	  {
+	    print "$i\n";
+	    $file_flag = "true";
+	  }
+      } 
+
+    if ($file_flag eq "true")
+      {
+        print "\n";
+      }
+
+  }  # end print_dirlist
+
+###########################################################################
+
+sub print_recurse_totals
+  {
+    if ($recurse_flag eq "true")
+      {
+        $tot_max_size = length($tot_comma_total);
+	$file_size = length($tot_count);
+        $start_dash = 11 - $file_size;
+
+        $dashes = "---------------";
+        for ($dash_count = 0; $dash_count < $file_size; $dash_count ++)
+          {
+            $dashes = $dashes . "-";
+          }
+        for ($dash_count = 0; $dash_count < $tot_max_size; $dash_count ++)
+          {
+            $dashes = $dashes . "-";
+          }
+
+        $mid_dash = int(length($dashes) / 2) + $start_dash - 13;
+
+        if ($tot_count > 0)
+          {
+            print "==================================";
+            print "==========================\n\n";
+          }
+        else
+          {
+            print "\n";
+          }
+
+	printf "%$mid_dash + 1 s Recursive Directory Results\n\n", "";
+
+	if ($tot_count > 0)
+	  {
+	    if ($tot_count_dirs > 0)
+	      {
+                $str = "dir";
+                if ($tot_count_dirs != 1) { $str = $str . "s"; }
+		printf "%12s ", $tot_count_dirs;
+		printf "%-7s ", $str;
+		printf "%$tot_max_size s bytes\n", $tot_comma_dir_tot;
+	      }
+	    if ($tot_count_files > 0)
+	      {
+                $str = "file";
+                if ($tot_count_files != 1) { $str = $str . "s"; }
+		printf "%12s ", $tot_count_files;
+		printf "%-7s ", $str;
+		printf "%$tot_max_size s bytes\n", $tot_comma_file_tot;
+	      }
+
+
+	    $start_dash = 11 - $file_size;
+
+	    if (($tot_count_dirs > 0) && ($tot_count_files > 0))
+	      {
+		printf "%$start_dash s %s\n", "", $dashes;
+
+		printf "%12s ", $tot_count;
+		printf "%-7s ", "total";
+		printf "%$tot_max_size s bytes\n\n", $tot_comma_total;
+	      }
+	    else
+	      {
+		print "\n";
+	      }
+
+	  }
+	else
+	  {
+	    print "            No files found\n\n";
+	  }
+
+      }
+
+  }  # end print_recurse_totals
+
+###########################################################################
+
+sub print_totals
+  {
+    $file_size = length($count);
+
+    $max_link = 11 + $max_link;
+
+    if ($count > 0)
+      {
+        if ($count_dirs > 0)
+	  {
+            $str = "dir";
+            if ($count_dirs != 1) { $str = $str . "s"; }
+	    printf "%$max_link s ", $count_dirs;
+	    printf "%-$max_user s ", $str;
+	    printf "%$max_size s bytes\n", $comma_dir_tot;
+          }
+        if ($count_files > 0)
+	  {
+            $str = "file";
+            if ($count_files != 1) { $str = $str . "s"; }
+	    printf "%$max_link s ", $count_files;
+	    printf "%-$max_user s ", $str;
+	    printf "%$max_size s bytes\n", $comma_file_tot;
+          }
+
+	$dashes = "--------";
+	for ($dash_count = 0; $dash_count < $file_size; $dash_count ++)
+	  {
+	    $dashes = $dashes . "-";
+	  }
+	for ($dash_count = 0; $dash_count < $max_user; $dash_count ++)
+	  {
+	    $dashes = $dashes . "-";
+	  }
+	for ($dash_count = 0; $dash_count < $max_size; $dash_count ++)
+	  {
+	    $dashes = $dashes . "-";
+	  }
+
+	$start_dash = $max_link -1 - $file_size;
+
+        if (($count_dirs > 0) && ($count_files > 0))
+	  {
+	    printf "%$start_dash s %s\n", "", $dashes;
+
+	    printf "%$max_link s ", $count;
+	    printf "%-$max_user s ", "total";
+	    printf "%$max_size s bytes\n\n", $comma_total;
+          }
+        else
+          {
+            print "\n";
+          }
+
+      }
+    else
+      {
+	if (($recurse_flag eq "false") ||
+            (($recurse_flag eq "true") && ($count > 0)))
+	  {
+            print "            No files found\n\n";
+	  }
+      }
+
+    if (($recurse_flag eq "true") && ($count > 0))
+      {
+        print "============================================================\n";
+      }
+
+  }  # end print_totals
+
+###########################################################################

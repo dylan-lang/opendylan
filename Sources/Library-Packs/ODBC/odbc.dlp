@@ -1,0 +1,58 @@
+<library-pack name="ODBC" title="Database Connectivity" number="8">
+  <description>Dylan database support libraries</description>
+  <copyright>Copyright (c) 1995-2001 Functional Objects, Inc. All rights reserved.</copyright>
+  <company>Functional Developer</company>
+  <libraries>
+    <library name="sql-odbc" title="SQL ODBC">
+      <sources location="databases/sql-odbc">
+	<project>sql-odbc.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+	<binary file="DxDB.dll">
+	  <merge>odbc-ffi</merge>
+	  <merge>sql</merge>
+	</binary>
+	<lib file="DxDB.lib"/>
+      </release>
+    </library>
+    <library name="odbc-ffi" title="ODBC FFI">
+      <sources location="sources/databases/odbc-ffi">
+	<project>odbc-ffi.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="sql" title="SQL">
+      <sources location="win32/winsock2">
+	<project>sql.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+  </libraries>
+  <examples>
+    <library name="database-stress-tool" title="Database stress tool">
+      <category>Technologies/ODBC</category>
+      <category>Tools/Databases</category>
+      <description>A simple database test suite</description>
+      <sources location="odbc/database-stress-tool">
+        <project>database-stress-tool.hdp</project>
+      </sources>
+    </library>
+    <library name="database-viewer" title="Database viewer">
+      <category>Technologies/ODBC</category>
+      <category>Tools/Databases</category>
+      <description>A simple database viewing tool</description>
+      <sources location="odbc/database-viewer">
+        <project>database-viewer.hdp</project>
+      </sources>
+    </library>
+  </examples>
+  <test-suites>
+    <library name="sql-odbc-test" title="SQL ODBC test suite">
+      <category>ODBC</category>
+      <description>SQL-ODBC test suite</description>
+      <sources location="databases/sql-odbc-test/">
+        <project>sql-odbc-test.lid</project>
+      </sources>
+    </library>
+  </test-suites>
+</library-pack>

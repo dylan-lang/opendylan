@@ -1,0 +1,525 @@
+Ref:	Dylan Notebook
+Topic:	DylanWorks\Libraries\TestWorks
+Title:	Testworks User's Documentation
+Author:	CN=Judy Anderson/O=Harlequin
+Date:	Friday 30th August 1996, 09:09:58 PM
+Categories:	Tests, QA
+Status:	released
+Readership:	Everybody
+Next review:	 
+
+Testworks User's Documentation
+Synopsis: A detailed overview and a description of all exported objects. 
+
+  The testworks library is a test harness that can be used to write 
+test-suites for testing Dylan code. The Testworks API provides three 
+layers of functionality to create test code with: checks,  tests and 
+suites. This document is divided into two parts: Quickstart  - which will 
+help the user get a basic understanding of TestWorks and get going with a 
+simple test-suite and Advanced Topics - which explains some of the more 
+interesting features of TestWorks which may be utilized by the user to 
+produce more useful results.
+
+					Quickstart
+
+Checks:
+   Checks are the fundamental elements of writing a test-suite. A check 
+accepts an expression to evaluate and report back on, saying if the 
+expression passed, failed, or crashed. Checks are of the format:
+	check(name :: <string>, <function>, #rest arguments);
+
+Here the function is applied to the arguments, and the result is reported. 
+The following are some examples of simple checks: 
+		
+	TESTWORKS 1 ?  check("Test less than operator", \<, 2, 3);
+	Ran check: Test less than operator passed
+
+	TESTWORKS 2 ? check("Test my method", 
+					method (a, b, c) a + b = c end, 
+					3, 5, 10);
+	Ran check: Test my method failed
+
+  	TESTWORKS 3 ? check("Flamed check", \<, 5, 'c'); 
+	Ran check: Flamed check crashed [No applicable methods for 
+	           <STANDARD-GENERIC-FUNCTION < 1096F208> with args 
+	           (5 #\c)]
+
+	TESTWORKS 4 ? check("Bad Arguments", zero?, asdfdf); 
+	Ran check: Bad Arguments crashed [The variable 
+		     DYLAN+DYLAN/TESTWORKS::ASDFDF is unbound]
+
+There are four additional types of checks: check-equal, check-true, 
+check-false, and check-condition. As the mnemonic names suggest they are 
+very useful in testing code in a variety of situations. The format for 
+check-equal is: 		
+	check-equal (name :: <string>, expression-1, expression-2); 
+
+The objective of this check is to see if expression-1 and expression-2. 
+evaluate to the same object. Some examples of this are:		
+
+	TESTWORKS 7 ? check-equal("Test the addition operator", 4, 1 + 3); 
+	Ran check: Test the addition operator passed
+
+	TESTWORKS 8 ? check-equal("Intentional failure", 3, 4);
+	Ran check: Intentional failure failed [3 not = 4]
+
+The format for check-true is the following:
+	check-true(name :: <string>, expression);  
+
+Its objective is to see if the expression evaluates to #t. An example of 
+this check would be:
+
+	TESTWORKS 9 ? check-true("Test zero?", zero?(0)); 
+	Ran check: Test zero? passed
+
+Check-false is of the same form as check-true, except that it sees if the 
+expression evaluates to #f.
+
+Check-condition is the final variety of checks. Its basic format is of the 
+form:
+	check-condition(name :: <string>, the-condition :: <condition>, expression
+); 
+
+The objective of this check is to determine if the evaluation of expression
+ results in the same
+condition as the-condition. Some simple examples of the same would be:
+
+	TESTWORKS 10 ? check-condition("Raise simple-error", 
+<simple-error>, 
+							error("My simple 
+error"));
+	Ran check: Raise simple-error passed
+
+	TESTWORKS 11? check-condition("Look for wrong error", 
+							<end-of-stream-error>,
+	                              	signal(make(<error>))); 
+	Ran check: Look for wrong error crashed [The variable   
+		     DYLAN+DYLAN/TESTWORKS::<END-OF-STREAM-ERROR> is 
+		     unbound.]
+
+Tests:
+   Tests are objects which contain checks and any arbitrary code. Tests 
+may be defined with a set of optional arguments, namely: 
+
+	name:             A required keyword - an instance of <string>
+	description:  An instance of <string>
+ Tests are of the format:
+
+	define test _name_ (#key all of the above mentioned arguments)
+	  body 
+	end test _name_;
+
+An example of a simple test could be:
+
+	TESTWORKS 12 ? define test my-test (description: "A sample test")
+	                 check-equal("Basic integer test", 2, 2);
+                       check-equal("Basic boolean test", #f, #f);
+                       check("Check indentity function", identity, #t);
+                     end test my-test;
+
+Once a test has been defined, it can be executed using the function 
+perform-test. For example:
+
+	TESTWORKS 13 ? perform-test(my-test); 
+	MY-TEST passed
+
+	MY-TEST summary:
+  	Ran 0 suites: 0 passed (100%), 0 failed, 0 not executed, 0 
+crashed
+  	Ran 1 test:  1 passed (100.0%), 0 failed, 0 not executed, 0 
+crashed
+  	Ran 3 checks: 3 passed (100.0%), 0 failed, 0 not executed, 0 
+crashed
+
+	TESTWORKS 14 ? define test example-test ()
+                       check-equal("Symbol test", #"ChickEN", #"chICken");
+                       check-equal("Integer failure", 2, 3);
+                       check-true("Passes", #t);
+                       check("Fails", instance?, #t, <integer>);
+	               end test example-test;
+
+	TESTWORKS 15 ? perform-test(example-test);
+	
+	EXAMPLE-TEST failed 
+	  Integer failure failed [2 not = 3]
+  	  Fails failed
+
+	EXAMPLE-TEST summary:
+  	  Ran 0 suites: 0 passed (100%), 0 failed, 0 not executed, 0 
+crashed
+  	  Ran 1 test:  0 passed (0.0%), 1 failed, 0 not executed, 0 
+crashed
+  	  Ran 4 checks: 2 passed (50.0%), 2 failed, 0 not executed, 0 
+crashed 
+
+
+Suites:
+	Suites are objects which contain tests and other suites. A suite may be 
+defined with the following arguments:
+
+	name:               A required keyword - an instance of <string>
+	description:     An instance of <string>
+
+Thus, the format of a suite would be:
+
+	define suite _name_ (#key any of the arguments described above)
+  	  test _name_;
+  	  suite _name_; 
+	end suite;
+
+Note: Suites must be defined after any included tests (and suites) are 
+defined.
+
+Some examples are:
+
+	TESTWORKS 26 ? define suite my-suite (description: "my first 
+suite")
+                       test my-test;
+                       test example-test;
+                       test my-test-2;
+	               end;
+	TESTWORKS 27 ? define suite second-suite ()
+                       suite my-suite;
+                       test my-test;
+	               end;
+
+Similar to perform-test, there is a function called perform-suite which is 
+used to execute
+the suite:
+
+	TESTWORKS 28 ? perform-suite(my-suite);
+	MY-SUITE failed
+
+	EXAMPLE-TEST failed
+    	  Integer failure failed [2 not = 3]
+    	  Fails failed
+				
+	MY-SUITE summary:
+  	Ran 1 suite:  0 passed (0.0%), 1 failed, 0 not executed, 0 
+crashed
+  	Ran 3 tests: 2 passed (66.7%), 1 failed, 0 not executed, 0 
+crashed
+  	Ran 8 checks: 6 passed (75.0%), 2 failed, 0 not executed, 0 
+crashed
+
+
+					Advanced Topics
+
+  This section assumes that the user has read and at least to a fair 
+extent understood the basic structure and functionality of TestWorks as 
+described in the QuickStart section above.
+
+Debugging:
+To debug a failure in a test suite, you can pass debug?: as a keyword to 
+perform-test or perform-suite, and this will then just enter the debugger 
+when a failure or a crash occurs. If you only want to debug crashes, pass 
+debug?: #"crashes" instead. Use the variable *debug?* described below to 
+set the default state for debugging.
+
+*debug?*:
+	This variable allows the user to control whether the debugger is 
+entered if a check fails in any way. By default this is set to #f meaning 
+that the debugger is never entered. If it is set to #t then the debugger 
+will always be entered when a check fails, either by an error being 
+signalled or by an explicit call to break if the check returned #f. If it 
+is set to #"crashes" then it will only enter the debugger when an error is 
+signalled, and it will just report check failures as normal. As an example
+
+	TESTWORKS 5 ? *debug?* := #t; 
+	#t 
+
+	TESTWORKS 6 ? check-true("Intentional error", 2 < 'c');
+	Error: No applicable methods for #<STANDARD-GENERIC-FUNCTION 
+	< 10AEE9A0> with args (2 #\c)
+  	1 (continue) Call #<STANDARD-GENERIC-FUNCTION < 10AEE9A0> again
+  	2 (abort) Return to level 0.
+  	3 return to top loop level 0.
+  	4 Destroy process.
+	Type :c followed by a number to proceed or type :? for other 
+options
+
+Redirecting Output:
+*format-function*: 
+	This variable allows the user to control the output mechanism of 
+TestWorks. The default is format-out (which is a function exported by 
+simple-format) that outputs its arguments to standard-output. If a user 
+desires to say for instance send the output to a file, all the user would 
+need to do would be to implement (or import) a format function that 
+formats its arguments to a file-stream and set this control variable to 
+that function - testworks will respond by sending all output to that 
+file-stream.
+
+Tests:
+  An additional slot of <test> is tags: - an instance of <sequence> (see 
+below)
+
+The method perform-test accepts a number of keyword (#key) arguments: 
+	debug?,			(see Control Objects: above)
+	progress-function,		(see Progress Functions: below)
+	report-function,			(see Report Functions: below)
+	progress-format-function, report-format-function 
+                  (both are set to *format-function*  - see Control 
+Objects: above)
+	and tags.
+The tags argument controls whether a test defined with certain tags is 
+performed or not. Tags are either a 
+list of symbols or the keyword #"all". For example:
+
+	TESTWORKS 20 ? define test my-test-2 (tags: #[#"one", #"two"])
+                		let a = 2;
+                		check-equal("Let test", a, 2);
+              	   end test;
+	#<TEST MY-TEST-2>
+
+	TESTWORKS 21 ? perform-test(my-test-2, tags: #[#"one"]); 
+	MY-TEST-2 passed
+
+	MY-TEST-2 summary:
+  	Ran 0 suites: 0 passed (100%), 0 failed, 0 not executed, 0 
+crashed
+  	Ran 1 test:  1 passed (100.0%), 0 failed, 0 not executed, 0 
+crashed
+  	Ran 1 check:  1 passed (100.0%), 0 failed, 0 not executed, 0 
+crashed
+
+	TESTWORKS 22 ? perform-test(my-test-2, tags: #[#"two", #"three"]); 
+	MY-TEST-2 passed
+
+	MY-TEST-2 summary:
+  	Ran 0 suites: 0 passed (100%), 0 failed, 0 not executed, 0 
+crashed
+  	Ran 1 test:  1 passed (100.0%), 0 failed, 0 not executed, 0 
+crashed
+  	Ran 1 check:  1 passed (100.0%), 0 failed, 0 not executed, 0 
+crashed
+
+	TESTWORKS 23 ? perform-test(my-test-2, 
+				tags: #[#"four", #"five", #"turkey"]); 
+      MY-TEST-2 passed
+
+	MY-TEST-2 summary:
+  	Ran 0 suites: 0 passed (100%), 0 failed, 0 not executed, 0 
+crashed
+  	Ran 0 tests: 0 passed (100%), 0 failed, 1 not executed, 0 crashed
+  	Ran 0 checks: 0 passed (100%), 0 failed, 0 not executed, 0 
+crashed
+
+	TESTWORKS 24 ? perform-test(my-test-2, tags: $all); 
+	MY-TEST-2 passed
+
+	MY-TEST-2 summary:
+  	Ran 0 suites: 0 passed (100%), 0 failed, 0 not executed, 0 
+crashed
+  	Ran 1 test:  1 passed (100.0%), 0 failed, 0 not executed, 0 
+crashed
+  	Ran 1 check:  1 passed (100.0%), 0 failed, 0 not executed, 0 
+crashed
+
+	TESTWORKS 25 ? perform-test(my-test-2, 
+				tags: #[#"one", #"water", #"two"]); 
+	MY-TEST-2 passed
+
+	MY-TEST-2 summary:
+  	Ran 0 suites: 0 passed (100%), 0 failed, 0 not executed, 0 
+crashed
+ 	Ran 1 test:  1 passed (100.0%), 0 failed, 0 not executed, 0 
+crashed
+  	Ran 1 check:  1 passed (100.0%), 0 failed, 0 not executed, 0 
+crashed
+
+If tags is set to $all, then the test will be performed regardless of its 
+tags. By default tags = $all.
+
+find-test :   this method has been provided for the benefit of other 
+libraries that use testworks. It takes as argument a <string> and an 
+optional root-suite (defaults to the constant root-suite) , searches 
+through the test-suite heirarchy and returns the first <test> to have the 
+same name as the string argument. If no <test> is found it returns #f.
+
+Suites:
+  The following are some additional keywords that may be specified while 
+defining a suite:
+	tags:                     An instance of <sequence> 
+			   (See Tests: above)
+	setup-function:    An instance of <function>
+			   (Any function that the user might desire to be 
+executed before the suite)
+	cleanup-function: An instance of  <function>
+			   (Any function that the user might desire to be 
+executed after the suite).
+
+The method perform-suite accepts the same arguments as perform-test (see 
+Tests: above) and they all have the same functionality. In addition, 
+perform-suite can accept a setup-function and/or cleanup-function as 
+arguments. An example of a suite which would use the setup-function and 
+cleanup-function arguments would be a suite which tested a file stream. 
+The setup-function could create the file-stream, and the cleanup-function 
+could close the file stream.
+
+Other suite related objects exported are:
+	<suite>:     the class suite itself
+	root-suite: a constant that contains a list of all the suites and tests 
+defined in the parent suite
+	find-suite:  this method is exactly like find-test (see Tests: above), 
+except that it works on a <suite> instead of <test>
+
+Components:
+<component>:
+	This is the superclass for <test> and <suite>. Instances of <component> 
+contain information common to both its subclasses - name, description and 
+tags. A component should be looked at as an organizational object for 
+checks. As most internal methods in testworks have been written to work 
+for both tests and suites, having such a superclass is very useful.
+
+<peform-options>:
+	Instances of this class can be used to control the various options 
+used to perform a <test> or a <suite>. It has the following slots (with 
+initialized defaults): 
+
+	slot perform-tags :: <sequence>		       = 
+$all,                                   
+		init-keyword: 
+tags:;                                             (See Tests: above)
+  	slot perform-progress-format-function               =  
+*format-function*,        
+		init-keyword: progress-format-function:;      (See Control Objects: above
+)
+  	slot perform-progress-function                            = 
+full-progress-function,  
+		init-keyword: progress-function:;                   (See Progress 
+functions: below)
+  	slot 
+perform-debug?                                               = 
+*debug?*,                  
+		init-keyword: 
+debug?:;                                      (See Control Objects: above)
+
+All the slots and slot setters have been exported and hence may be used by 
+other libraries to install desired variation in the execution of their 
+test suites.
+
+perform-component:
+	This method takes instances of <component> and <perform-options> and 
+keyword arguments report-function: and report-format-function: which are 
+by default set to failures-report-function (see Report functions: below) 
+and *format-function* (see Control Objects: above). Thus the functions 
+perform-test  and perform-suite merely provide a nice interface to the 
+user. They both instantiate <perform-options> and set its slots according 
+to the keyword arguments recieved and then call perform-component which 
+goes ahead and executes the component. As all these functions are 
+exported, the user can also instantiate <perform-options> and directly 
+call perform-component. However notice that the user does not really need 
+to use <component> and perform-component . This is just an alternative way 
+to do what can (and rather should) be done using perform-suite and 
+perform-test.
+
+execute-component?:
+	This method is used to determine if an instance of <component> is to be 
+executed or not. The generic function is exported so that other libraries 
+using testworks may implement any desired criteria for selective 
+execution. TestWorks only provides one criteria  for execution - tags (see 
+Tests: above). The tags of the argument <component> are tested against the 
+tags of the argument <perform-options> to determine if the execution is to 
+be performed?
+
+
+Report functions:
+	Testworks provides the user three different report functions: 
+
+	summary-report-function:
+		prints out only a summary of how many checks,tests and 
+suites were executed, passed, 
+		failed or crashed.
+	failures-report-function:
+		prints out only the list of failures and a summary.
+	full-report-function:
+		prints the result of every single check - whether it 
+passed, failed or crashed and then a 
+		summary at the end.
+	null-report-function: 
+		prints nothing at all! 
+
+The default is the failures-report-function.
+
+Progress functions:
+	At present there is only one progress function provided by Testworks 
+which is the full-progress-function. This essentially prints the outcome 
+of each check as soon as the check is executed. The advantage of this is 
+very obvious when running large suites as it may take some time before the 
+entire suite is executed (reports are printed in the end). So, a user can 
+get "active" information as the check gets executed. This option can be 
+disabled by using the null-progress-function. The default is the 
+full-progress-function.
+
+Report objects:
+	As reports are generated automatically during the execution of checks, 
+the user is protected from having to use any of the objects that generate 
+and store results and reports. However, these contain information that can 
+be used in many valuable ways and hence are good to know about:
+	<result>:                          the superclass of all results. 
+Contains a result-name: and result-status:
+	<component-result>:  the superclass of <test-result> and <suite-result>. 
+Contains the subresults: 
+	<check-result>            a subclass of <result> which contains the 
+operation:  and its value:
+	<test-result>                 a subclass of  <component-result>
+	<suite-result>	           a subclass of  <component-result>
+	result-name, result-status are slots of <result>
+	result-operation, result-value are slots of <check-result>
+	result-subresults is a slot of <component-result>
+	do-results, do-results-of-class and count-results-of-class are various 
+methods that
+		assist in the process of generating the results
+
+Organization of a Test-Suite:
+	As mentioned above, components (or tests and suites) should be viewed as 
+"super" objects to organize and observe control over checks. Normally a 
+test-suite will be in its own Dylan library. The test-suite library may 
+look something like:
+
+	define library my-test-suite
+  	  use dylan;
+  	  use testworks;
+  	  use xxx <- the library you are testing; 
+	end library;
+
+	It is recommended that tests contain no more than 10-15 checks. It 
+is much easier to track failures and errors in smaller tests . Putting 
+names on checks and descriptions on tests and suites is something that is 
+often ignored by many user's. It might seem like too much work at first 
+but introducing names and descriptions allow better error tracking and 
+save significant amounts of time by providing information at a glance, 
+saving a lot of time later. Tests can be used to combine similar checks 
+into a unit and suites can further organize similar or related tests into 
+units. Once all tests and suites have been created and organized into the 
+desired hierarchy, it is probably best to define a wrapper suite and 
+define all your tests and suites in that mother suite. Hope you enjoy 
+TestWorks!
+
+Created by:	Judy Anderson <yduj>, Shri Amit <amit>, Friday 30th August 
+1996, 09:09:58 PM
+Last edited by:	Judy Anderson <yduj>, Monday 28th April 1997, 01:41:59 PM
+Other editors:	Andy Armstrong <andrewa>, Shri Amit <amit>
+Contacts:	CN=Shri Amit/O=Harlequin @ Harlequin, CN=Andy 
+Armstrong/O=Harlequin @ Harlequin
+
+Change log:
+--- Andy Armstrong, 1997-04-24, 05:51:27 PM ---
+Improve the description of debugging
+--- Andy Armstrong, 1997-02-12, 06:44:20 PM ---
+Described new 'debug?' variable and option, and removed references to 
+trap-errors? and abort-on-failure?
+--- Shri Amit, 1997-01-24, 01:54:31 PM ---
+remove rthor's name from contact list
+--- Shri Amit, 1996-10-31, 05:10:55 PM ---
+Internals reorganization
+--- Andy Armstrong, 1996-10-14, 09:45:24 AM ---
+Fix up the indentation of the examples
+--- Shri Amit, 1996-10-13, 06:43:36 PM ---
+Update new additions
+--- Shri Amit, 1996-09-19, 12:39:45 PM ---
+Minor editing
+--- Shri Amit, 1996-09-18, 11:18:15 AM ---
+Massive re-organization
+--- Shri Amit, 1996-08-30, 09:30:03 PM ---
+New Document

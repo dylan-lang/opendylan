@@ -1,0 +1,45 @@
+	===========================================
+	Functional Developer Environment To-Do List
+	===========================================
+
+
+High priority
+=============
+
+ - Browser:
+   - fix history problems, particularly in using the combo box.
+   - get typing of object names to work quickly and accurately.
+
+Medium priority
+===============
+
+ - Rationalize the compiler warning classifications.
+
+Low priority
+============
+
+Future Ideas
+============
+
+ - URL-style browser fields
+
+  It seems like it would be really cool if in the browser as you
+  inspected down through slots in an object it could display the path
+  you'd followed. So, say in the browser you'd double-clicked on a
+  slot called gadget, and then double clicked on its sheet-child slot
+  and then on the gadget-items slot in the child, the field would
+  show:
+
+    gadget.sheet-child.gadget-items
+
+  rather than the current:
+
+    #[0, 1, 2, 3, 4]
+
+  i.e. the name would be like a URL address within the scope of the
+  debugger, so you can see the path that you followed.
+
+  It is hard to see how to do this in a uniform way for all the kinds of
+  objects we'd be browsing, so I don't think we can do it for this
+  release. But I do like the idea in concept, and I'll keep thinking
+  about how we might be able to do it.

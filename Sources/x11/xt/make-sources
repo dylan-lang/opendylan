@@ -1,0 +1,71 @@
+
+#  Dylan libraries for interfacing with Xt.
+#
+#  This file controls the generation of source files that are created
+#  automatically by adapting information from the Xt C header files.
+
+# Copyright (C) 1998 Functional Objects, Inc. All rights reserved.
+
+
+XT=Xutil.dylan Xresource.dylan Intrinsic.dylan StringDefs.dylan \
+	Shell.dylan Composite.dylan Constraint.dylan Core.dylan \
+	Object.dylan RectObj.dylan Vendor.dylan library.dylan
+
+all: $(XT)
+
+COMDIR=../xlib
+
+include $(COMDIR)/sources.mak
+
+
+library.dylan: library.src Xutil.dylan Xresource.dylan \
+		Intrinsic.dylan StringDefs.dylan Shell.dylan \
+		Composite.dylan Constraint.dylan Core.dylan \
+		Object.dylan RectObj.dylan Vendor.dylan
+
+Xutil.dylan: $(XHDIR)/Xutil.h $(PATTERN-DEP) $(COMSLOT)
+	$(XTOD) -f $(COMSLOT)  -module Xt  $(XHDIR)/Xutil.h $@
+
+Xresource.dylan: $(XHDIR)/Xresource.h  $(PATTERN-DEP) $(COMSLOT)
+	$(XTOD) -f $(COMSLOT)  -module Xt  $(XHDIR)/Xresource.h $@
+
+Intrinsic.dylan: $(XHDIR)/Intrinsic.h  $(PATTERN-DEP) $(COMSLOT)
+	$(XTOD) -f $(COMSLOT)  -module Xt  $(XHDIR)/Intrinsic.h $@
+
+StringDefs.dylan: $(XHDIR)/StringDefs.h $(PATTERN-DEP)
+	$(XTOD) -module Xt  $(XHDIR)/StringDefs.h $@
+
+Shell.dylan: $(XHDIR)/Shell.h $(PATTERN-DEP) $(COMSLOT) make-sources
+	$(XTOD) -f $(COMSLOT)  -module Xt  -D XtRAtom $(XHDIR)/Shell.h $@
+
+Composite.dylan: $(XHDIR)/Composite.h $(PATTERN-DEP) $(COMSLOT) make-sources
+	$(XTOD) -f $(COMSLOT)  -module Xt  $(XHDIR)/Composite.h $@
+
+Constraint.dylan: $(XHDIR)/Constraint.h $(PATTERN-DEP) $(COMSLOT) make-sources
+	$(XTOD) -f $(COMSLOT)  -module Xt  $(XHDIR)/Constraint.h $@
+
+Core.dylan: $(XHDIR)/Core.h $(PATTERN-DEP) $(COMSLOT) make-sources
+	$(XTOD) -f $(COMSLOT)  -module Xt  $(XHDIR)/Core.h $@
+
+Object.dylan: $(XHDIR)/Object.h $(PATTERN-DEP) $(COMSLOT) make-sources
+	$(XTOD) -f $(COMSLOT)  -module Xt  $(XHDIR)/Object.h $@
+
+RectObj.dylan: $(XHDIR)/RectObj.h $(PATTERN-DEP) $(COMSLOT) make-sources
+	$(XTOD) -f $(COMSLOT)  -module Xt  $(XHDIR)/RectObj.h $@
+
+Vendor.dylan: $(XHDIR)/Vendor.h $(PATTERN-DEP) $(COMSLOT) make-sources
+	$(XTOD) -f $(COMSLOT)  -module Xt  $(XHDIR)/Vendor.h $@
+
+# remove all generated files
+clean:
+	rm -f $(XT) *.bak *.exp
+
+# remove internal temporary files
+tidy:
+	rm -f *.bak *.exp
+
+DTAGS=/u/dylan/tools/gnuemacs/dtags
+TAGS: $(XT) extra.dylan
+	$(DTAGS) extra.dylan $(XT)
+
+tags: TAGS

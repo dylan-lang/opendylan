@@ -1,0 +1,17 @@
+comment:	This file is generated, please don't edit
+format-version:	2
+library:	bank-server
+files:	server-library
+	server
+	database
+	server-frame
+	server-main
+subprojects:	..\interface\bank-interface.hdp
+base-address:	0x63BE0000
+linker-options:	$(guilflags)
+major-version:	2
+minor-version:	1
+compilation-mode:	tight
+target-type:	executable
+other-files:	README.html
+comment:	additional keywords

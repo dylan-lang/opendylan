@@ -1,0 +1,28 @@
+linkdll
+gcc -shared -o $(full-dll-name) -T $(script) -L$(personal-lib) -L$(system-lib) $(libraries) $(dllobjs) $(dylan-support) $(dlllibs) $(c-libs) $(linkopts) $(libcmt)
+
+linkexe
+gcc -o $(full-exe-name) -T $(script) -Wl,-rpath,$(rpath) -L$(personal-lib) -L$(system-lib) $(libraries) $(dllobjs) $(dylan-support) -lpthread $(dlllibs) $(c-libs) $(linkopts) $(libcmt)
+
+assemble
+as -L -o $(object) $(source)
+
+ccompile
+gcc -O2 -g -c 
+
+rccompile
+echo Ignoring resource file $(resource).rc
+touch $(resource).res
+
+libraries
+
+
+libcmt
+-lpthread -ldl -lc
+
+libgc
+-lgc
+
+guilflags
+
+

@@ -1,0 +1,43 @@
+A hack at driving Dylan libraries in the translator.
+
+We extend the standard define-library form in a couple of ways, and
+expand it into a common lisp defsystem (or systems).
+
+  (define-library generic-capi
+    (use dylan)
+    (export capi-library capi)
+    
+    (run-stage-components
+      "Elements/element"
+      ...)
+
+    (compile-stage-components
+      "Macros/define-interface"
+      "Macros/define-geometry"
+      ...))
+
+  =>
+
+  (ensure-dylan-library-definition dylan)
+
+  ;; Both require the dylan library compile stage code to be loaded.
+  ;; The capi run stage requires the capi compile stage to be loaded.
+
+  (defsystem generic-capi-compile-stage (:default-type :dylan-file)
+    members: ("Macros/define-interface" ...)
+    rules:   ...)
+
+  (defsystem generic-capi-run-stage (:default-type :dylan-file)
+    members: ("Elements/element" ...)
+    rules: ...)
+  
+Compile stage components are compiled and loaded in order and include
+the module definitions. I guess they have to be loaded to actually
+take effect. But this implies that they aren't actually needed at run
+time at least.
+
+We'll have a lisp or environment variable which provides a search path
+for the standard Dylan libraries and it's here that
+ensure-dylan-library-definition looks. I guess it'll be directories
+with files containing the names of the library definition files to 
+load. We'll remember what's been loaded/seen by the compiler already. 

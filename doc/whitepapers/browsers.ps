@@ -1,0 +1,3074 @@
+%!PS-Adobe-3.0
+%%BoundingBox: (atend)
+%%Pages: (atend)
+%%PageOrder: (atend)
+%%DocumentFonts: (atend)
+%%Creator: Frame 4.0
+%%DocumentData: Clean7Bit
+%%EndComments
+%%BeginProlog
+%
+% Frame ps_prolog 4.0, for use with Frame 4.0 products
+% This ps_prolog file is Copyright (c) 1986-1993 Frame Technology
+% Corporation.  All rights reserved.  This ps_prolog file may be
+% freely copied and distributed in conjunction with documents created
+% using FrameMaker, FrameBuilder and FrameViewer as long as this 
+% copyright notice is preserved.
+%
+% Frame products normally print colors as their true color on a color printer
+% or as shades of gray, based on luminance, on a black-and white printer. The
+% following flag, if set to True, forces all non-white colors to print as pure
+% black. This has no effect on bitmap images.
+/FMPrintAllColorsAsBlack             false def
+%
+% Frame products can either set their own line screens or use a printer's 
+% default settings. Three flags below control this separately for no 
+% separations, spot separations and process separations. If a flag
+% is true, then the default printer settings will not be changed. If it is
+% false, Frame products will use their own settings from a table based on
+% the printer's resolution.
+/FMUseDefaultNoSeparationScreen      true  def
+/FMUseDefaultSpotSeparationScreen    true  def
+/FMUseDefaultProcessSeparationScreen false def
+%
+% For any given PostScript printer resolution, Frame products have two sets of 
+% screen angles and frequencies for printing process separations, which are 
+% recomended by Adobe. The following variable chooses the higher frequencies
+% when set to true or the lower frequencies when set to false. This is only
+% effective if the appropriate FMUseDefault...SeparationScreen flag is false.
+/FMUseHighFrequencyScreens true def
+%
+% PostScript Level 2 printers contain an "Accurate Screens" feature which can
+% improve process separation rendering at the expense of compute time. This 
+% flag is ignored by PostScript Level 1 printers.
+/FMUseAcccurateScreens true def
+%
+% The following PostScript procedure defines the spot function that Frame
+% products will use for process separations. You may un-comment-out one of
+% the alternative functions below, or use your own.
+%
+% Dot function
+/FMSpotFunction {abs exch abs 2 copy add 1 gt 
+		{1 sub dup mul exch 1 sub dup mul add 1 sub }
+		{dup mul exch dup mul add 1 exch sub }ifelse } def
+%
+% Line function
+% /FMSpotFunction { pop } def
+%
+% Elipse function
+% /FMSpotFunction { dup 5 mul 8 div mul exch dup mul exch add 
+%		sqrt 1 exch sub } def
+%
+%
+/FMversion (4.0) def 
+/FMLevel1 /languagelevel where {pop languagelevel} {1} ifelse 2 lt def
+/FMPColor
+	FMLevel1 {
+		false
+		/colorimage where {pop pop true} if
+	} {
+		true
+	} ifelse
+def
+/FrameDict 400 dict def 
+systemdict /errordict known not {/errordict 10 dict def
+		errordict /rangecheck {stop} put} if
+% The readline in PS 23.0 doesn't recognize cr's as nl's on AppleTalk
+FrameDict /tmprangecheck errordict /rangecheck get put 
+errordict /rangecheck {FrameDict /bug true put} put 
+FrameDict /bug false put 
+mark 
+% Some PS machines read past the CR, so keep the following 3 lines together!
+currentfile 5 string readline
+00
+0000000000
+cleartomark 
+errordict /rangecheck FrameDict /tmprangecheck get put 
+FrameDict /bug get { 
+	/readline {
+		/gstring exch def
+		/gfile exch def
+		/gindex 0 def
+		{
+			gfile read pop 
+			dup 10 eq {exit} if 
+			dup 13 eq {exit} if 
+			gstring exch gindex exch put 
+			/gindex gindex 1 add def 
+		} loop
+		pop 
+		gstring 0 gindex getinterval true 
+		} bind def
+	} if
+/FMshowpage /showpage load def
+/FMquit /quit load def
+/FMFAILURE { 
+	dup = flush 
+	FMshowpage 
+	/Helvetica findfont 12 scalefont setfont
+	72 200 moveto
+	show FMshowpage 
+	FMquit 
+	} def 
+/FMVERSION {
+	FMversion ne {
+		(Frame product version does not match ps_prolog!) FMFAILURE
+		} if
+	} def 
+/FMBADEPSF { 
+	(PostScript Lang. Ref. Man., 2nd Ed., H.2.4 says EPS must not call X              )
+	dup dup (X) search pop exch pop exch pop length 
+	4 -1 roll 
+	putinterval 
+	FMFAILURE
+	} def
+/FMLOCAL {
+	FrameDict begin
+	0 def 
+	end 
+	} def 
+/concatprocs
+	{
+	/proc2 exch cvlit def/proc1 exch cvlit def/newproc proc1 length proc2 length add array def
+	newproc 0 proc1 putinterval newproc proc1 length proc2 putinterval newproc cvx
+}def
+FrameDict begin 
+/FMnone 0 def
+/FMcyan 1 def
+/FMmagenta 2 def
+/FMyellow 3 def
+/FMblack 4 def
+/FMcustom 5 def
+/FrameNegative false def 
+/FrameSepIs FMnone def 
+/FrameSepBlack 0 def
+/FrameSepYellow 0 def
+/FrameSepMagenta 0 def
+/FrameSepCyan 0 def
+/FrameSepRed 1 def
+/FrameSepGreen 1 def
+/FrameSepBlue 1 def
+/FrameCurGray 1 def
+/FrameCurPat null def
+/FrameCurColors [ 0 0 0 1 0 0 0 ] def 
+/FrameColorEpsilon .001 def	
+/eqepsilon {		
+	sub dup 0 lt {neg} if
+	FrameColorEpsilon le
+} bind def
+/FrameCmpColorsCMYK { 
+	2 copy 0 get exch 0 get eqepsilon {
+		2 copy 1 get exch 1 get eqepsilon {
+			2 copy 2 get exch 2 get eqepsilon {
+				3 get exch 3 get eqepsilon
+			} {pop pop false} ifelse
+		}{pop pop false} ifelse
+	} {pop pop false} ifelse
+} bind def
+/FrameCmpColorsRGB { 
+	2 copy 4 get exch 0 get eqepsilon {
+		2 copy 5 get exch 1 get eqepsilon {
+			6 get exch 2 get eqepsilon
+		}{pop pop false} ifelse
+	} {pop pop false} ifelse
+} bind def
+/RGBtoCMYK { 
+	1 exch sub 
+	3 1 roll 
+	1 exch sub 
+	3 1 roll 
+	1 exch sub 
+	3 1 roll 
+	3 copy 
+	2 copy 
+	le { pop } { exch pop } ifelse 
+	2 copy 
+	le { pop } { exch pop } ifelse 
+	dup dup dup 
+	6 1 roll 
+	4 1 roll 
+	7 1 roll 
+	sub 
+	6 1 roll 
+	sub 
+	5 1 roll 
+	sub 
+	4 1 roll 
+} bind def
+/CMYKtoRGB { 
+	dup dup 4 -1 roll add 						  
+	5 1 roll 3 -1 roll add 						  
+	4 1 roll add 								  
+	1 exch sub dup 0 lt {pop 0} if 3 1 roll 	  
+	1 exch sub dup 0 lt {pop 0} if exch 	      
+	1 exch sub dup 0 lt {pop 0} if exch	  		  
+} bind def
+/FrameSepInit {
+	1.0 RealSetgray
+} bind def
+/FrameSetSepColor { 
+	/FrameSepBlue exch def
+	/FrameSepGreen exch def
+	/FrameSepRed exch def
+	/FrameSepBlack exch def
+	/FrameSepYellow exch def
+	/FrameSepMagenta exch def
+	/FrameSepCyan exch def
+	/FrameSepIs FMcustom def
+	setCurrentScreen	
+} bind def
+/FrameSetCyan {
+	/FrameSepBlue 1.0 def
+	/FrameSepGreen 1.0 def
+	/FrameSepRed 0.0 def
+	/FrameSepBlack 0.0 def
+	/FrameSepYellow 0.0 def
+	/FrameSepMagenta 0.0 def
+	/FrameSepCyan 1.0 def
+	/FrameSepIs FMcyan def
+	setCurrentScreen	
+} bind def
+ 
+/FrameSetMagenta {
+	/FrameSepBlue 1.0 def
+	/FrameSepGreen 0.0 def
+	/FrameSepRed 1.0 def
+	/FrameSepBlack 0.0 def
+	/FrameSepYellow 0.0 def
+	/FrameSepMagenta 1.0 def
+	/FrameSepCyan 0.0 def
+	/FrameSepIs FMmagenta def
+	setCurrentScreen
+} bind def
+ 
+/FrameSetYellow {
+	/FrameSepBlue 0.0 def
+	/FrameSepGreen 1.0 def
+	/FrameSepRed 1.0 def
+	/FrameSepBlack 0.0 def
+	/FrameSepYellow 1.0 def
+	/FrameSepMagenta 0.0 def
+	/FrameSepCyan 0.0 def
+	/FrameSepIs FMyellow def
+	setCurrentScreen
+} bind def
+ 
+/FrameSetBlack {
+	/FrameSepBlue 0.0 def
+	/FrameSepGreen 0.0 def
+	/FrameSepRed 0.0 def
+	/FrameSepBlack 1.0 def
+	/FrameSepYellow 0.0 def
+	/FrameSepMagenta 0.0 def
+	/FrameSepCyan 0.0 def
+	/FrameSepIs FMblack def
+	setCurrentScreen
+} bind def
+ 
+/FrameNoSep { 
+	/FrameSepIs FMnone def
+	setCurrentScreen
+} bind def
+/FrameSetSepColors { 
+	FrameDict begin
+	[ exch 1 add 1 roll ]
+	/FrameSepColors  
+	exch def end
+	} bind def
+/FrameColorInSepListCMYK { 
+	FrameSepColors {  
+       		exch dup 3 -1 roll 
+       		FrameCmpColorsCMYK 
+       		{ pop true exit } if
+    	} forall 
+	dup true ne {pop false} if
+	} bind def
+/FrameColorInSepListRGB { 
+	FrameSepColors {  
+       		exch dup 3 -1 roll 
+       		FrameCmpColorsRGB 
+       		{ pop true exit } if
+    	} forall 
+	dup true ne {pop false} if
+	} bind def
+/RealSetgray /setgray load def
+/RealSetrgbcolor /setrgbcolor load def
+/RealSethsbcolor /sethsbcolor load def
+end 
+/setgray { 
+	FrameDict begin
+	FrameSepIs FMnone eq
+		{ RealSetgray } 
+		{ 
+		FrameSepIs FMblack eq 
+			{ RealSetgray } 
+			{ FrameSepIs FMcustom eq 
+			  FrameSepRed 0 eq and
+			  FrameSepGreen 0 eq and
+			  FrameSepBlue 0 eq and {
+			  	RealSetgray
+			  } {
+				1 RealSetgray pop 
+			  } ifelse
+			} ifelse
+		} ifelse
+	end
+} bind def
+/setrgbcolor { 
+	FrameDict begin
+	FrameSepIs FMnone eq
+	{  RealSetrgbcolor }
+	{
+		3 copy [ 4 1 roll ] 
+		FrameColorInSepListRGB
+		{
+				FrameSepBlue eq exch 
+			 	FrameSepGreen eq and exch 
+			 	FrameSepRed eq and
+			 	{ 0 } { 1 } ifelse
+		}
+		{
+			FMPColor {
+				RealSetrgbcolor
+				currentcmykcolor
+			} {
+				RGBtoCMYK
+			} ifelse
+			FrameSepIs FMblack eq
+			{1.0 exch sub 4 1 roll pop pop pop} {
+			FrameSepIs FMyellow eq
+			{pop 1.0 exch sub 3 1 roll pop pop} {
+			FrameSepIs FMmagenta eq
+			{pop pop 1.0 exch sub exch pop } {
+			FrameSepIs FMcyan eq
+			{pop pop pop 1.0 exch sub } 
+			{pop pop pop pop 1} ifelse } ifelse } ifelse } ifelse 
+		} ifelse
+		RealSetgray
+	} 
+	ifelse
+	end
+} bind def
+/sethsbcolor {
+	FrameDict begin
+	FrameSepIs FMnone eq 
+	{ RealSethsbcolor } 
+	{
+		RealSethsbcolor 
+		currentrgbcolor  
+		setrgbcolor 
+	} 
+	ifelse
+	end
+} bind def
+FrameDict begin
+/setcmykcolor where {
+	pop /RealSetcmykcolor /setcmykcolor load def
+} {
+	/RealSetcmykcolor {
+		4 1 roll
+		3 { 3 index add 0 max 1 min 1 exch sub 3 1 roll} repeat 
+		setrgbcolor pop
+	} bind def
+} ifelse
+userdict /setcmykcolor { 
+		FrameDict begin
+		FrameSepIs FMnone eq
+		{ RealSetcmykcolor } 
+		{
+			4 copy [ 5 1 roll ]
+			FrameColorInSepListCMYK
+			{
+				FrameSepBlack eq exch 
+				FrameSepYellow eq and exch 
+				FrameSepMagenta eq and exch 
+				FrameSepCyan eq and 
+				{ 0 } { 1 } ifelse
+			}
+			{
+				FrameSepIs FMblack eq
+				{1.0 exch sub 4 1 roll pop pop pop} {
+				FrameSepIs FMyellow eq
+				{pop 1.0 exch sub 3 1 roll pop pop} {
+				FrameSepIs FMmagenta eq
+				{pop pop 1.0 exch sub exch pop } {
+				FrameSepIs FMcyan eq
+				{pop pop pop 1.0 exch sub } 
+				{pop pop pop pop 1} ifelse } ifelse } ifelse } ifelse 
+			} ifelse
+			RealSetgray
+		}
+		ifelse
+		end
+	} bind put
+FMLevel1 not { 
+	
+	/patProcDict 5 dict dup begin
+		<0f1e3c78f0e1c387> { 3 setlinewidth -1 -1 moveto 9 9 lineto stroke 
+											4 -4 moveto 12 4 lineto stroke
+											-4 4 moveto 4 12 lineto stroke} bind def
+		<0f87c3e1f0783c1e> { 3 setlinewidth -1 9 moveto 9 -1 lineto stroke 
+											-4 4 moveto 4 -4 lineto stroke
+											4 12 moveto 12 4 lineto stroke} bind def
+		<8142241818244281> { 1 setlinewidth -1 9 moveto 9 -1 lineto stroke
+											-1 -1 moveto 9 9 lineto stroke } bind def
+		<03060c183060c081> { 1 setlinewidth -1 -1 moveto 9 9 lineto stroke 
+											4 -4 moveto 12 4 lineto stroke
+											-4 4 moveto 4 12 lineto stroke} bind def
+		<8040201008040201> { 1 setlinewidth -1 9 moveto 9 -1 lineto stroke 
+											-4 4 moveto 4 -4 lineto stroke
+											4 12 moveto 12 4 lineto stroke} bind def
+	end def
+	/patDict 15 dict dup begin
+		/PatternType 1 def		
+		/PaintType 2 def		
+		/TilingType 3 def		
+		/BBox [ 0 0 8 8 ] def 	
+		/XStep 8 def			
+		/YStep 8 def			
+		/PaintProc {
+			begin
+			patProcDict bstring known {
+				patProcDict bstring get exec
+			} {
+				8 8 true [1 0 0 -1 0 8] bstring imagemask
+			} ifelse
+			end
+		} bind def
+	end def
+} if
+/combineColor {
+    FrameSepIs FMnone eq
+	{
+		graymode FMLevel1 or not {
+			
+			[/Pattern [/DeviceCMYK]] setcolorspace
+			FrameCurColors 0 4 getinterval aload pop FrameCurPat setcolor
+		} {
+			FrameCurColors 3 get 1.0 ge {
+				FrameCurGray RealSetgray
+			} {
+				FMPColor graymode and {
+					0 1 3 { 
+						FrameCurColors exch get
+						1 FrameCurGray sub mul
+					} for
+					RealSetcmykcolor
+				} {
+					4 1 6 {
+						FrameCurColors exch get
+						graymode {
+							1 exch sub 1 FrameCurGray sub mul 1 exch sub
+						} {
+							1.0 lt {FrameCurGray} {1} ifelse
+						} ifelse
+					} for
+					RealSetrgbcolor
+				} ifelse
+			} ifelse
+		} ifelse
+	} { 
+		FrameCurColors 0 4 getinterval aload
+		FrameColorInSepListCMYK {
+			FrameSepBlack eq exch 
+			FrameSepYellow eq and exch 
+			FrameSepMagenta eq and exch 
+			FrameSepCyan eq and
+			FrameSepIs FMcustom eq and
+			{ FrameCurGray } { 1 } ifelse
+		} {
+			FrameSepIs FMblack eq
+			{FrameCurGray 1.0 exch sub mul 1.0 exch sub 4 1 roll pop pop pop} {
+			FrameSepIs FMyellow eq
+			{pop FrameCurGray 1.0 exch sub mul 1.0 exch sub 3 1 roll pop pop} {
+			FrameSepIs FMmagenta eq
+			{pop pop FrameCurGray 1.0 exch sub mul 1.0 exch sub exch pop } {
+			FrameSepIs FMcyan eq
+			{pop pop pop FrameCurGray 1.0 exch sub mul 1.0 exch sub } 
+			{pop pop pop pop 1} ifelse } ifelse } ifelse } ifelse 
+		} ifelse
+		graymode FMLevel1 or not {
+			
+			[/Pattern [/DeviceGray]] setcolorspace
+			FrameCurPat setcolor
+		} { 
+			graymode not FMLevel1 and {
+				
+				dup 1 lt {pop FrameCurGray} if
+			} if
+			RealSetgray
+		} ifelse
+	} ifelse
+} bind def
+/savematrix {
+	orgmatrix currentmatrix pop
+	} bind def
+/restorematrix {
+	orgmatrix setmatrix
+	} bind def
+/dmatrix matrix def
+/dpi    72 0 dmatrix defaultmatrix dtransform
+    dup mul exch   dup mul add   sqrt def
+	
+/freq dpi dup 72 div round dup 0 eq {pop 1} if 8 mul div def
+/sangle 1 0 dmatrix defaultmatrix dtransform exch atan def
+/dpiranges   [  2540    2400    1693     1270    1200     635      600      0      ] def
+/CMLowFreqs  [ 100.402  94.8683 89.2289 100.402  94.8683  66.9349  63.2456 47.4342 ] def
+/YLowFreqs   [  95.25   90.0    84.65    95.25   90.0     70.5556  66.6667 50.0    ] def
+/KLowFreqs   [  89.8026 84.8528 79.8088  89.8026 84.8528  74.8355  70.7107 53.033  ] def
+/CLowAngles  [  71.5651 71.5651 71.5651 71.5651  71.5651  71.5651  71.5651 71.5651 ] def
+/MLowAngles  [  18.4349 18.4349 18.4349 18.4349  18.4349  18.4349  18.4349 18.4349 ] def
+/YLowTDot    [  true    true    false    true    true     false    false   false   ] def
+/CMHighFreqs [ 133.87  126.491 133.843  108.503 102.523  100.402   94.8683 63.2456 ] def
+/YHighFreqs  [ 127.0   120.0   126.975  115.455 109.091   95.25    90.0    60.0    ] def
+/KHighFreqs  [ 119.737 113.137 119.713  128.289 121.218   89.8026  84.8528 63.6395 ] def
+/CHighAngles [  71.5651 71.5651 71.5651  70.0169 70.0169  71.5651  71.5651 71.5651 ] def
+/MHighAngles [  18.4349 18.4349 18.4349  19.9831 19.9831  18.4349  18.4349 18.4349 ] def
+/YHighTDot   [  false   false   true     false   false    true     true    false   ] def
+/PatFreq     [	10.5833 10.0     9.4055  10.5833 10.0	  10.5833  10.0	   9.375   ] def
+/screenIndex {
+	0 1 dpiranges length 1 sub { dup dpiranges exch get 1 sub dpi le {exit} {pop} ifelse } for
+} bind def
+/getCyanScreen {
+	FMUseHighFrequencyScreens { CHighAngles CMHighFreqs} {CLowAngles CMLowFreqs} ifelse
+		screenIndex dup 3 1 roll get 3 1 roll get /FMSpotFunction load
+} bind def
+/getMagentaScreen {
+	FMUseHighFrequencyScreens { MHighAngles CMHighFreqs } {MLowAngles CMLowFreqs} ifelse
+		screenIndex dup 3 1 roll get 3 1 roll get /FMSpotFunction load
+} bind def
+/getYellowScreen {
+	FMUseHighFrequencyScreens { YHighTDot YHighFreqs} { YLowTDot YLowFreqs } ifelse
+		screenIndex dup 3 1 roll get 3 1 roll get { 3 div
+			{2 { 1 add 2 div 3 mul dup floor sub 2 mul 1 sub exch} repeat
+			FMSpotFunction } } {/FMSpotFunction load } ifelse
+			0.0 exch
+} bind def
+/getBlackScreen  {
+	FMUseHighFrequencyScreens { KHighFreqs } { KLowFreqs } ifelse
+		screenIndex get 45.0 /FMSpotFunction load 
+} bind def
+/getSpotScreen {
+	getBlackScreen
+} bind def
+/getCompositeScreen {
+	getBlackScreen
+} bind def
+/FMSetScreen 
+	FMLevel1 { /setscreen load 
+	}{ {
+		8 dict begin
+		/HalftoneType 1 def
+		/SpotFunction exch def
+		/Angle exch def
+		/Frequency exch def
+		/AccurateScreens FMUseAcccurateScreens def
+		currentdict end sethalftone
+	} bind } ifelse
+def
+/setDefaultScreen {
+	FMPColor {
+		orgrxfer cvx orggxfer cvx orgbxfer cvx orgxfer cvx setcolortransfer
+	}
+	{
+		orgxfer cvx settransfer
+	} ifelse
+	orgfreq organgle orgproc cvx setscreen
+} bind def
+/setCurrentScreen {
+	FrameSepIs FMnone eq {
+		FMUseDefaultNoSeparationScreen {
+			setDefaultScreen
+		} {
+			getCompositeScreen FMSetScreen
+		} ifelse
+	} {
+		FrameSepIs FMcustom eq {
+			FMUseDefaultSpotSeparationScreen {
+				setDefaultScreen
+			} {
+				getSpotScreen FMSetScreen
+			} ifelse
+		} {
+			FMUseDefaultProcessSeparationScreen {
+				setDefaultScreen
+			} {
+				FrameSepIs FMcyan eq {
+					getCyanScreen FMSetScreen
+				} {
+					FrameSepIs FMmagenta eq {
+						getMagentaScreen FMSetScreen
+					} {
+						FrameSepIs FMyellow eq {
+							getYellowScreen FMSetScreen
+						} {
+							getBlackScreen FMSetScreen
+						} ifelse
+					} ifelse
+				} ifelse
+			} ifelse
+		} ifelse
+	} ifelse 
+} bind def
+end
+	/gstring FMLOCAL
+	/gfile FMLOCAL
+	/gindex FMLOCAL
+	/orgrxfer FMLOCAL
+	/orggxfer FMLOCAL
+	/orgbxfer FMLOCAL
+	/orgxfer FMLOCAL
+	/orgproc FMLOCAL
+	/orgrproc FMLOCAL
+	/orggproc FMLOCAL
+	/orgbproc FMLOCAL
+	/organgle FMLOCAL
+	/orgrangle FMLOCAL
+	/orggangle FMLOCAL
+	/orgbangle FMLOCAL
+	/orgfreq FMLOCAL
+	/orgrfreq FMLOCAL
+	/orggfreq FMLOCAL
+	/orgbfreq FMLOCAL
+	/yscale FMLOCAL
+	/xscale FMLOCAL
+	/edown FMLOCAL
+	/manualfeed FMLOCAL
+	/paperheight FMLOCAL
+	/paperwidth FMLOCAL
+/FMDOCUMENT { 
+	array /FMfonts exch def 
+	/#copies exch def
+	FrameDict begin
+	0 ne /manualfeed exch def
+	/paperheight exch def
+	/paperwidth exch def
+	0 ne /FrameNegative exch def 
+	0 ne /edown exch def 
+	/yscale exch def
+	/xscale exch def
+	FMLevel1 {
+		manualfeed {setmanualfeed} if
+		/FMdicttop countdictstack 1 add def 
+		/FMoptop count def 
+		setpapername 
+		manualfeed {true} {papersize} ifelse 
+		{manualpapersize} {false} ifelse 
+		{desperatepapersize} {false} ifelse 
+		{ (Can't select requested paper size for Frame print job!) FMFAILURE } if
+		count -1 FMoptop {pop pop} for
+		countdictstack -1 FMdicttop {pop end} for 
+		}
+		{{1 dict dup /PageSize [paperwidth paperheight]put setpagedevice}stopped
+		{ (Can't select requested paper size for Frame print job!) FMFAILURE } if
+		 {1 dict dup /ManualFeed manualfeed put setpagedevice } stopped pop }
+	ifelse 
+	
+	FMPColor {
+		currentcolorscreen
+			cvlit /orgproc exch def
+				  /organgle exch def 
+				  /orgfreq exch def
+			cvlit /orgbproc exch def
+				  /orgbangle exch def 
+				  /orgbfreq exch def
+			cvlit /orggproc exch def
+				  /orggangle exch def 
+				  /orggfreq exch def
+			cvlit /orgrproc exch def
+				  /orgrangle exch def 
+				  /orgrfreq exch def
+			currentcolortransfer 
+			FrameNegative {
+				1 1 4 { 
+					pop { 1 exch sub } concatprocs 4 1 roll
+				} for
+				4 copy
+				setcolortransfer
+			} if
+			cvlit /orgxfer exch def
+			cvlit /orgbxfer exch def
+			cvlit /orggxfer exch def
+			cvlit /orgrxfer exch def
+	} {
+		currentscreen 
+			cvlit /orgproc exch def
+				  /organgle exch def 
+				  /orgfreq exch def
+				  
+		currenttransfer 
+		FrameNegative {
+			{ 1 exch sub } concatprocs
+			dup settransfer
+		} if 
+		cvlit /orgxfer exch def
+	} ifelse
+	end 
+} def 
+/pagesave FMLOCAL
+/orgmatrix FMLOCAL
+/landscape FMLOCAL
+/pwid FMLOCAL
+/FMBEGINPAGE { 
+	FrameDict begin 
+	/pagesave save def
+	3.86 setmiterlimit
+	/landscape exch 0 ne def
+	landscape { 
+		90 rotate 0 exch dup /pwid exch def neg translate pop 
+	}{
+		pop /pwid exch def
+	} ifelse
+	edown { [-1 0 0 1 pwid 0] concat } if
+	0 0 moveto paperwidth 0 lineto paperwidth paperheight lineto 
+	0 paperheight lineto 0 0 lineto 1 setgray fill
+	xscale yscale scale
+	/orgmatrix matrix def
+	gsave 
+} def 
+/FMENDPAGE {
+	grestore 
+	pagesave restore
+	end 
+	showpage
+	} def 
+/FMFONTDEFINE { 
+	FrameDict begin
+	findfont 
+	ReEncode 
+	1 index exch 
+	definefont 
+	FMfonts 3 1 roll 
+	put
+	end 
+	} def 
+/FMFILLS {
+	FrameDict begin dup
+	array /fillvals exch def
+	dict /patCache exch def
+	end 
+	} def 
+/FMFILL {
+	FrameDict begin
+	 fillvals 3 1 roll put
+	end 
+	} def 
+/FMNORMALIZEGRAPHICS { 
+	newpath
+	0.0 0.0 moveto
+	1 setlinewidth
+	0 setlinecap
+	0 0 0 sethsbcolor
+	0 setgray 
+	} bind def
+	/fx FMLOCAL
+	/fy FMLOCAL
+	/fh FMLOCAL
+	/fw FMLOCAL
+	/llx FMLOCAL
+	/lly FMLOCAL
+	/urx FMLOCAL
+	/ury FMLOCAL
+/FMBEGINEPSF { 
+	end 
+	/FMEPSF save def 
+	/showpage {} def 
+% See Adobe's "PostScript Language Reference Manual, 2nd Edition", page 714.
+% "...the following operators MUST NOT be used in an EPS file:" (emphasis ours)
+	/banddevice {(banddevice) FMBADEPSF} def
+	/clear {(clear) FMBADEPSF} def
+	/cleardictstack {(cleardictstack) FMBADEPSF} def 
+	/copypage {(copypage) FMBADEPSF} def
+	/erasepage {(erasepage) FMBADEPSF} def
+	/exitserver {(exitserver) FMBADEPSF} def
+	/framedevice {(framedevice) FMBADEPSF} def
+	/grestoreall {(grestoreall) FMBADEPSF} def
+	/initclip {(initclip) FMBADEPSF} def
+	/initgraphics {(initgraphics) FMBADEPSF} def
+	/initmatrix {(initmatrix) FMBADEPSF} def
+	/quit {(quit) FMBADEPSF} def
+	/renderbands {(renderbands) FMBADEPSF} def
+	/setglobal {(setglobal) FMBADEPSF} def
+	/setpagedevice {(setpagedevice) FMBADEPSF} def
+	/setshared {(setshared) FMBADEPSF} def
+	/startjob {(startjob) FMBADEPSF} def
+	/lettertray {(lettertray) FMBADEPSF} def
+	/letter {(letter) FMBADEPSF} def
+	/lettersmall {(lettersmall) FMBADEPSF} def
+	/11x17tray {(11x17tray) FMBADEPSF} def
+	/11x17 {(11x17) FMBADEPSF} def
+	/ledgertray {(ledgertray) FMBADEPSF} def
+	/ledger {(ledger) FMBADEPSF} def
+	/legaltray {(legaltray) FMBADEPSF} def
+	/legal {(legal) FMBADEPSF} def
+	/statementtray {(statementtray) FMBADEPSF} def
+	/statement {(statement) FMBADEPSF} def
+	/executivetray {(executivetray) FMBADEPSF} def
+	/executive {(executive) FMBADEPSF} def
+	/a3tray {(a3tray) FMBADEPSF} def
+	/a3 {(a3) FMBADEPSF} def
+	/a4tray {(a4tray) FMBADEPSF} def
+	/a4 {(a4) FMBADEPSF} def
+	/a4small {(a4small) FMBADEPSF} def
+	/b4tray {(b4tray) FMBADEPSF} def
+	/b4 {(b4) FMBADEPSF} def
+	/b5tray {(b5tray) FMBADEPSF} def
+	/b5 {(b5) FMBADEPSF} def
+	FMNORMALIZEGRAPHICS 
+	[/fy /fx /fh /fw /ury /urx /lly /llx] {exch def} forall 
+	fx fw 2 div add fy fh 2 div add  translate
+	rotate
+	fw 2 div neg fh 2 div neg translate
+	fw urx llx sub div fh ury lly sub div scale 
+	llx neg lly neg translate 
+	/FMdicttop countdictstack 1 add def 
+	/FMoptop count def 
+	} bind def
+/FMENDEPSF {
+	count -1 FMoptop {pop pop} for 
+	countdictstack -1 FMdicttop {pop end} for 
+	FMEPSF restore
+	FrameDict begin 
+	} bind def
+FrameDict begin 
+/setmanualfeed {
+%%BeginFeature *ManualFeed True
+	 statusdict /manualfeed true put
+%%EndFeature
+	} bind def
+/max {2 copy lt {exch} if pop} bind def
+/min {2 copy gt {exch} if pop} bind def
+/inch {72 mul} def
+/pagedimen { 
+	paperheight sub abs 16 lt exch 
+	paperwidth sub abs 16 lt and
+	{/papername exch def} {pop} ifelse
+	} bind def
+	/papersizedict FMLOCAL
+/setpapername { 
+	/papersizedict 14 dict def 
+	papersizedict begin
+	/papername /unknown def 
+		/Letter 8.5 inch 11.0 inch pagedimen
+		/LetterSmall 7.68 inch 10.16 inch pagedimen
+		/Tabloid 11.0 inch 17.0 inch pagedimen
+		/Ledger 17.0 inch 11.0 inch pagedimen
+		/Legal 8.5 inch 14.0 inch pagedimen
+		/Statement 5.5 inch 8.5 inch pagedimen
+		/Executive 7.5 inch 10.0 inch pagedimen
+		/A3 11.69 inch 16.5 inch pagedimen
+		/A4 8.26 inch 11.69 inch pagedimen
+		/A4Small 7.47 inch 10.85 inch pagedimen
+		/B4 10.125 inch 14.33 inch pagedimen
+		/B5 7.16 inch 10.125 inch pagedimen
+	end
+	} bind def
+/papersize {
+	papersizedict begin
+		/Letter {lettertray letter} def
+		/LetterSmall {lettertray lettersmall} def
+		/Tabloid {11x17tray 11x17} def
+		/Ledger {ledgertray ledger} def
+		/Legal {legaltray legal} def
+		/Statement {statementtray statement} def
+		/Executive {executivetray executive} def
+		/A3 {a3tray a3} def
+		/A4 {a4tray a4} def
+		/A4Small {a4tray a4small} def
+		/B4 {b4tray b4} def
+		/B5 {b5tray b5} def
+		/unknown {unknown} def
+	papersizedict dup papername known {papername} {/unknown} ifelse get
+	end
+	statusdict begin stopped end 
+	} bind def
+/manualpapersize {
+	papersizedict begin
+		/Letter {letter} def
+		/LetterSmall {lettersmall} def
+		/Tabloid {11x17} def
+		/Ledger {ledger} def
+		/Legal {legal} def
+		/Statement {statement} def
+		/Executive {executive} def
+		/A3 {a3} def
+		/A4 {a4} def
+		/A4Small {a4small} def
+		/B4 {b4} def
+		/B5 {b5} def
+		/unknown {unknown} def
+	papersizedict dup papername known {papername} {/unknown} ifelse get
+	end
+	stopped 
+	} bind def
+/desperatepapersize {
+	statusdict /setpageparams known
+		{
+		paperwidth paperheight 0 1 
+		statusdict begin
+		{setpageparams} stopped 
+		end
+		} {true} ifelse 
+	} bind def
+/DiacriticEncoding [
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /space /exclam /quotedbl
+/numbersign /dollar /percent /ampersand /quotesingle /parenleft
+/parenright /asterisk /plus /comma /hyphen /period /slash /zero /one
+/two /three /four /five /six /seven /eight /nine /colon /semicolon
+/less /equal /greater /question /at /A /B /C /D /E /F /G /H /I /J /K
+/L /M /N /O /P /Q /R /S /T /U /V /W /X /Y /Z /bracketleft /backslash
+/bracketright /asciicircum /underscore /grave /a /b /c /d /e /f /g /h
+/i /j /k /l /m /n /o /p /q /r /s /t /u /v /w /x /y /z /braceleft /bar
+/braceright /asciitilde /.notdef /Adieresis /Aring /Ccedilla /Eacute
+/Ntilde /Odieresis /Udieresis /aacute /agrave /acircumflex /adieresis
+/atilde /aring /ccedilla /eacute /egrave /ecircumflex /edieresis
+/iacute /igrave /icircumflex /idieresis /ntilde /oacute /ograve
+/ocircumflex /odieresis /otilde /uacute /ugrave /ucircumflex
+/udieresis /dagger /.notdef /cent /sterling /section /bullet
+/paragraph /germandbls /registered /copyright /trademark /acute
+/dieresis /.notdef /AE /Oslash /.notdef /.notdef /.notdef /.notdef
+/yen /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/ordfeminine /ordmasculine /.notdef /ae /oslash /questiondown
+/exclamdown /logicalnot /.notdef /florin /.notdef /.notdef
+/guillemotleft /guillemotright /ellipsis /.notdef /Agrave /Atilde
+/Otilde /OE /oe /endash /emdash /quotedblleft /quotedblright
+/quoteleft /quoteright /.notdef /.notdef /ydieresis /Ydieresis
+/fraction /currency /guilsinglleft /guilsinglright /fi /fl /daggerdbl
+/periodcentered /quotesinglbase /quotedblbase /perthousand
+/Acircumflex /Ecircumflex /Aacute /Edieresis /Egrave /Iacute
+/Icircumflex /Idieresis /Igrave /Oacute /Ocircumflex /.notdef /Ograve
+/Uacute /Ucircumflex /Ugrave /dotlessi /circumflex /tilde /macron
+/breve /dotaccent /ring /cedilla /hungarumlaut /ogonek /caron
+] def
+/ReEncode { 
+	dup 
+	length 
+	dict begin 
+	{
+	1 index /FID ne 
+		{def} 
+		{pop pop} ifelse 
+	} forall 
+	0 eq {/Encoding DiacriticEncoding def} if 
+	currentdict 
+	end 
+	} bind def
+FMPColor 
+	
+	{
+	/BEGINBITMAPCOLOR { 
+		BITMAPCOLOR} def
+	/BEGINBITMAPCOLORc { 
+		BITMAPCOLORc} def
+	/BEGINBITMAPTRUECOLOR { 
+		BITMAPTRUECOLOR } def
+	/BEGINBITMAPTRUECOLORc { 
+		BITMAPTRUECOLORc } def
+	}
+	
+	{
+	/BEGINBITMAPCOLOR { 
+		BITMAPGRAY} def
+	/BEGINBITMAPCOLORc { 
+		BITMAPGRAYc} def
+	/BEGINBITMAPTRUECOLOR { 
+		BITMAPTRUEGRAY } def
+	/BEGINBITMAPTRUECOLORc { 
+		BITMAPTRUEGRAYc } def
+	}
+ifelse
+/K { 
+	FMPrintAllColorsAsBlack {
+		dup 1 eq 2 index 1 eq and 3 index 1 eq and not
+			{7 {pop} repeat 0 0 0 1 0 0 0} if
+	} if 
+	FrameCurColors astore 
+	pop combineColor
+} bind def
+/graymode true def
+	/bwidth FMLOCAL
+	/bpside FMLOCAL
+	/bstring FMLOCAL
+	/onbits FMLOCAL
+	/offbits FMLOCAL
+	/xindex FMLOCAL
+	/yindex FMLOCAL
+	/x FMLOCAL
+	/y FMLOCAL
+/setPatternMode {
+	FMLevel1 {
+		/bwidth  exch def
+		/bpside  exch def
+		/bstring exch def
+		/onbits 0 def  /offbits 0 def
+		freq sangle landscape {90 add} if 
+			{/y exch def
+			 /x exch def
+			 /xindex x 1 add 2 div bpside mul cvi def
+			 /yindex y 1 add 2 div bpside mul cvi def
+			 bstring yindex bwidth mul xindex 8 idiv add get
+			 1 7 xindex 8 mod sub bitshift and 0 ne FrameNegative {not} if
+			 {/onbits  onbits  1 add def 1}
+			 {/offbits offbits 1 add def 0}
+			 ifelse
+			}
+			setscreen
+		offbits offbits onbits add div FrameNegative {1.0 exch sub} if
+		/FrameCurGray exch def
+	} { 
+		pop pop
+		dup patCache exch known {
+			patCache exch get
+		} { 
+			dup
+			patDict /bstring 3 -1 roll put
+			patDict 
+			9 PatFreq screenIndex get div dup matrix scale
+			makepattern
+			dup 
+			patCache 4 -1 roll 3 -1 roll put
+		} ifelse
+		/FrameCurGray 0 def
+		/FrameCurPat exch def
+	} ifelse
+	/graymode false def
+	combineColor
+} bind def
+/setGrayScaleMode {
+	graymode not {
+		/graymode true def
+		FMLevel1 {
+			setCurrentScreen
+		} if
+	} if
+	/FrameCurGray exch def
+	combineColor
+} bind def
+/normalize {
+	transform round exch round exch itransform
+	} bind def
+/dnormalize {
+	dtransform round exch round exch idtransform
+	} bind def
+/lnormalize { 
+	0 dtransform exch cvi 2 idiv 2 mul 1 add exch idtransform pop
+	} bind def
+/H { 
+	lnormalize setlinewidth
+	} bind def
+/Z {
+	setlinecap
+	} bind def
+	
+/PFill {
+	graymode FMLevel1 or not {
+		gsave 1 setgray eofill grestore
+	} if
+} bind def
+/PStroke {
+	graymode FMLevel1 or not {
+		gsave 1 setgray stroke grestore
+	} if
+	stroke
+} bind def
+	/fillvals FMLOCAL
+/X { 
+	fillvals exch get
+	dup type /stringtype eq
+	{8 1 setPatternMode} 
+	{setGrayScaleMode}
+	ifelse
+	} bind def
+/V { 
+	PFill gsave eofill grestore
+	} bind def
+/Vclip {
+	clip
+	} bind def
+/Vstrk {
+	currentlinewidth exch setlinewidth PStroke setlinewidth
+	} bind def
+/N { 
+	PStroke
+	} bind def
+/Nclip {
+	strokepath clip newpath
+	} bind def
+/Nstrk {
+	currentlinewidth exch setlinewidth PStroke setlinewidth
+	} bind def
+/M {newpath moveto} bind def
+/E {lineto} bind def
+/D {curveto} bind def
+/O {closepath} bind def
+	/n FMLOCAL
+/L { 
+ 	/n exch def
+	newpath
+	normalize
+	moveto 
+	2 1 n {pop normalize lineto} for
+	} bind def
+/Y { 
+	L 
+	closepath
+	} bind def
+	/x1 FMLOCAL
+	/x2 FMLOCAL
+	/y1 FMLOCAL
+	/y2 FMLOCAL
+/R { 
+	/y2 exch def
+	/x2 exch def
+	/y1 exch def
+	/x1 exch def
+	x1 y1
+	x2 y1
+	x2 y2
+	x1 y2
+	4 Y 
+	} bind def
+	/rad FMLOCAL
+/rarc 
+	{rad 
+	 arcto
+	} bind def
+/RR { 
+	/rad exch def
+	normalize
+	/y2 exch def
+	/x2 exch def
+	normalize
+	/y1 exch def
+	/x1 exch def
+	mark
+	newpath
+	{
+	x1 y1 rad add moveto
+	x1 y2 x2 y2 rarc
+	x2 y2 x2 y1 rarc
+	x2 y1 x1 y1 rarc
+	x1 y1 x1 y2 rarc
+	closepath
+	} stopped {x1 y1 x2 y2 R} if 
+	cleartomark
+	} bind def
+/RRR { 
+	/rad exch def
+	normalize /y4 exch def /x4 exch def
+	normalize /y3 exch def /x3 exch def
+	normalize /y2 exch def /x2 exch def
+	normalize /y1 exch def /x1 exch def
+	newpath
+	normalize moveto 
+	mark
+	{
+	x2 y2 x3 y3 rarc
+	x3 y3 x4 y4 rarc
+	x4 y4 x1 y1 rarc
+	x1 y1 x2 y2 rarc
+	closepath
+	} stopped
+	 {x1 y1 x2 y2 x3 y3 x4 y4 newpath moveto lineto lineto lineto closepath} if
+	cleartomark
+	} bind def
+/C { 
+	grestore
+	gsave
+	R 
+	clip
+	setCurrentScreen
+} bind def
+/CP { 
+	grestore
+	gsave
+	Y 
+	clip
+	setCurrentScreen
+} bind def
+	/FMpointsize FMLOCAL
+/F { 
+	FMfonts exch get
+	FMpointsize scalefont
+	setfont
+	} bind def
+/Q { 
+	/FMpointsize exch def
+	F 
+	} bind def
+/T { 
+	moveto show
+	} bind def
+/RF { 
+	rotate
+	0 ne {-1 1 scale} if
+	} bind def
+/TF { 
+	gsave
+	moveto 
+	RF
+	show
+	grestore
+	} bind def
+/P { 
+	moveto
+	0 32 3 2 roll widthshow
+	} bind def
+/PF { 
+	gsave
+	moveto 
+	RF
+	0 32 3 2 roll widthshow
+	grestore
+	} bind def
+/S { 
+	moveto
+	0 exch ashow
+	} bind def
+/SF { 
+	gsave
+	moveto
+	RF
+	0 exch ashow
+	grestore
+	} bind def
+/B { 
+	moveto
+	0 32 4 2 roll 0 exch awidthshow
+	} bind def
+/BF { 
+	gsave
+	moveto
+	RF
+	0 32 4 2 roll 0 exch awidthshow
+	grestore
+	} bind def
+/G { 
+	gsave
+	newpath
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath 
+	PFill fill
+	grestore
+	} bind def
+/Gstrk {
+	savematrix
+    newpath
+    2 index 2 div add exch 3 index 2 div sub exch 
+    normalize 2 index 2 div sub exch 3 index 2 div add exch 
+    translate
+    scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    restorematrix
+    currentlinewidth exch setlinewidth PStroke setlinewidth
+    } bind def
+/Gclip { 
+	newpath
+	savematrix
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath 
+	clip newpath
+	restorematrix
+	} bind def
+/GG { 
+	gsave
+	newpath
+	normalize translate 0.0 0.0 moveto 
+	rotate 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath
+	PFill
+	fill
+	grestore
+	} bind def
+/GGclip { 
+	savematrix
+	newpath
+    normalize translate 0.0 0.0 moveto 
+    rotate 
+    dnormalize scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    closepath
+	clip newpath
+	restorematrix
+	} bind def
+/GGstrk { 
+	savematrix
+    newpath
+    normalize translate 0.0 0.0 moveto 
+    rotate 
+    dnormalize scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    closepath 
+	restorematrix
+    currentlinewidth exch setlinewidth PStroke setlinewidth
+	} bind def
+/A { 
+	gsave
+	savematrix
+	newpath
+	2 index 2 div add exch 3 index 2 div sub exch 
+	normalize 2 index 2 div sub exch 3 index 2 div add exch 
+	translate 
+	scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	restorematrix
+	PStroke
+	grestore
+	} bind def
+/Aclip {
+	newpath
+	savematrix
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath 
+	strokepath clip newpath
+	restorematrix
+} bind def
+/Astrk {
+	Gstrk
+} bind def
+/AA { 
+	gsave
+	savematrix
+	newpath
+	
+	3 index 2 div add exch 4 index 2 div sub exch 
+	
+	normalize 3 index 2 div sub exch 4 index 2 div add exch
+	translate 
+	rotate 
+	scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	restorematrix
+	PStroke
+	grestore
+	} bind def
+/AAclip {
+	savematrix
+	newpath
+    normalize translate 0.0 0.0 moveto 
+    rotate 
+    dnormalize scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    closepath
+	strokepath clip newpath
+	restorematrix
+} bind def
+/AAstrk {
+	GGstrk
+} bind def
+	/x FMLOCAL
+	/y FMLOCAL
+	/w FMLOCAL
+	/h FMLOCAL
+	/xx FMLOCAL
+	/yy FMLOCAL
+	/ww FMLOCAL
+	/hh FMLOCAL
+	/FMsaveobject FMLOCAL
+	/FMoptop FMLOCAL
+	/FMdicttop FMLOCAL
+/BEGINPRINTCODE { 
+	/FMdicttop countdictstack 1 add def 
+	/FMoptop count 7 sub def 
+	/FMsaveobject save def
+	userdict begin 
+	/showpage {} def 
+	FMNORMALIZEGRAPHICS 
+	3 index neg 3 index neg translate
+	} bind def
+/ENDPRINTCODE {
+	count -1 FMoptop {pop pop} for 
+	countdictstack -1 FMdicttop {pop end} for 
+	FMsaveobject restore 
+	} bind def
+/gn { 
+	0 
+	{	46 mul 
+		cf read pop 
+		32 sub 
+		dup 46 lt {exit} if 
+		46 sub add 
+		} loop
+	add 
+	} bind def
+	/str FMLOCAL
+/cfs { 
+	/str sl string def 
+	0 1 sl 1 sub {str exch val put} for 
+	str def 
+	} bind def
+/ic [ 
+	0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0223
+	0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0223
+	0
+	{0 hx} {1 hx} {2 hx} {3 hx} {4 hx} {5 hx} {6 hx} {7 hx} {8 hx} {9 hx}
+	{10 hx} {11 hx} {12 hx} {13 hx} {14 hx} {15 hx} {16 hx} {17 hx} {18 hx}
+	{19 hx} {gn hx} {0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12}
+	{13} {14} {15} {16} {17} {18} {19} {gn} {0 wh} {1 wh} {2 wh} {3 wh}
+	{4 wh} {5 wh} {6 wh} {7 wh} {8 wh} {9 wh} {10 wh} {11 wh} {12 wh}
+	{13 wh} {14 wh} {gn wh} {0 bl} {1 bl} {2 bl} {3 bl} {4 bl} {5 bl} {6 bl}
+	{7 bl} {8 bl} {9 bl} {10 bl} {11 bl} {12 bl} {13 bl} {14 bl} {gn bl}
+	{0 fl} {1 fl} {2 fl} {3 fl} {4 fl} {5 fl} {6 fl} {7 fl} {8 fl} {9 fl}
+	{10 fl} {11 fl} {12 fl} {13 fl} {14 fl} {gn fl}
+	] def
+	/sl FMLOCAL
+	/val FMLOCAL
+	/ws FMLOCAL
+	/im FMLOCAL
+	/bs FMLOCAL
+	/cs FMLOCAL
+	/len FMLOCAL
+	/pos FMLOCAL
+/ms { 
+	/sl exch def 
+	/val 255 def 
+	/ws cfs 
+	/im cfs 
+	/val 0 def 
+	/bs cfs 
+	/cs cfs 
+	} bind def
+400 ms 
+/ip { 
+	is 
+	0 
+	cf cs readline pop 
+	{	ic exch get exec 
+		add 
+		} forall 
+	pop 
+	
+	} bind def
+/rip { 
+	   
+	  
+	  bis ris copy pop 
+      is
+      0
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+	  pop pop 
+	  ris gis copy pop 
+	  dup is exch 
+	  
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+	  pop pop
+	  gis bis copy pop 
+	  dup add is exch 
+	  
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+      pop 
+      
+      } bind def
+/wh { 
+	/len exch def 
+	/pos exch def 
+	ws 0 len getinterval im pos len getinterval copy pop
+	pos len 
+	} bind def
+/bl { 
+	/len exch def 
+	/pos exch def 
+	bs 0 len getinterval im pos len getinterval copy pop
+	pos len 
+	} bind def
+/s1 1 string def
+/fl { 
+	/len exch def 
+	/pos exch def 
+	/val cf s1 readhexstring pop 0 get def
+	pos 1 pos len add 1 sub {im exch val put} for
+	pos len 
+	} bind def
+/hx { 
+	3 copy getinterval 
+	cf exch readhexstring pop pop 
+	} bind def
+	/h FMLOCAL
+	/w FMLOCAL
+	/d FMLOCAL
+	/lb FMLOCAL
+	/bitmapsave FMLOCAL
+	/is FMLOCAL
+	/cf FMLOCAL
+/wbytes { 
+      dup dup
+      24 eq { pop pop 3 mul }
+      { 8 eq {pop} {1 eq {7 add 8 idiv} {3 add 4 idiv} ifelse} ifelse } ifelse
+	} bind def
+/BEGINBITMAPBWc { 
+	1 {} COMMONBITMAPc
+	} bind def
+/BEGINBITMAPGRAYc { 
+	8 {} COMMONBITMAPc
+	} bind def
+/BEGINBITMAP2BITc { 
+	2 {} COMMONBITMAPc
+	} bind def
+/COMMONBITMAPc { 
+		 
+	/r exch def
+	/d exch def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+	/bitmapsave save def 
+	r                    
+	/is im 0 lb getinterval def 
+	ws 0 lb getinterval is copy pop 
+	/cf currentfile def 
+	w h d [w 0 0 h neg 0 h] 
+	{ip} image 
+	bitmapsave restore 
+	grestore
+	} bind def
+/BEGINBITMAPBW { 
+	1 {} COMMONBITMAP
+	} bind def
+/BEGINBITMAPGRAY { 
+	8 {} COMMONBITMAP
+	} bind def
+/BEGINBITMAP2BIT { 
+	2 {} COMMONBITMAP
+	} bind def
+/COMMONBITMAP { 
+	/r exch def
+	/d exch def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/bitmapsave save def 
+	r                    
+	/is w d wbytes string def
+	/cf currentfile def 
+	w h d [w 0 0 h neg 0 h] 
+	{cf is readhexstring pop} image
+	bitmapsave restore 
+	grestore
+	} bind def
+/ngrayt 256 array def
+/nredt 256 array def
+/nbluet 256 array def
+/ngreent 256 array def
+	/gryt FMLOCAL
+	/blut FMLOCAL
+	/grnt FMLOCAL
+	/redt FMLOCAL
+	/indx FMLOCAL
+	/cynu FMLOCAL
+	/magu FMLOCAL
+	/yelu FMLOCAL
+	/k FMLOCAL
+	/u FMLOCAL
+FMLevel1 {
+/colorsetup {
+	currentcolortransfer
+	/gryt exch def
+	/blut exch def
+	/grnt exch def
+	/redt exch def
+	0 1 255 {
+		/indx exch def
+		/cynu 1 red indx get 255 div sub def
+		/magu 1 green indx get 255 div sub def
+		/yelu 1 blue indx get 255 div sub def
+		/k cynu magu min yelu min def
+		/u k currentundercolorremoval exec def
+%		/u 0 def
+		nredt indx 1 0 cynu u sub max sub redt exec put
+		ngreent indx 1 0 magu u sub max sub grnt exec put
+		nbluet indx 1 0 yelu u sub max sub blut exec put
+		ngrayt indx 1 k currentblackgeneration exec sub gryt exec put
+	} for
+	{255 mul cvi nredt exch get}
+	{255 mul cvi ngreent exch get}
+	{255 mul cvi nbluet exch get}
+	{255 mul cvi ngrayt exch get}
+	setcolortransfer
+	{pop 0} setundercolorremoval
+	{} setblackgeneration
+	} bind def
+}
+{
+/colorSetup2 {
+	[ /Indexed /DeviceRGB 255 
+		{dup red exch get 255 div 
+		 exch dup green exch get 255 div 
+		 exch blue exch get 255 div}
+	] setcolorspace
+} bind def
+} ifelse
+	/tran FMLOCAL
+/fakecolorsetup {
+	/tran 256 string def
+	0 1 255 {/indx exch def 
+		tran indx
+		red indx get 77 mul
+		green indx get 151 mul
+		blue indx get 28 mul
+		add add 256 idiv put} for
+	currenttransfer
+	{255 mul cvi tran exch get 255.0 div}
+	exch concatprocs settransfer
+} bind def
+/BITMAPCOLOR { 
+	/d 8 def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/bitmapsave save def
+	FMLevel1 {	
+		colorsetup
+		/is w d wbytes string def
+		/cf currentfile def 
+		w h d [w 0 0 h neg 0 h] 
+		{cf is readhexstring pop} {is} {is} true 3 colorimage 
+	} {
+		colorSetup2
+		/is w d wbytes string def
+		/cf currentfile def 
+		7 dict dup begin
+			/ImageType 1 def
+			/Width w def
+			/Height h def
+			/ImageMatrix [w 0 0 h neg 0 h] def
+			/DataSource {cf is readhexstring pop} bind def
+			/BitsPerComponent d def
+			/Decode [0 255] def
+		end image	
+	} ifelse
+	bitmapsave restore 
+	grestore
+	} bind def
+/BITMAPCOLORc { 
+	/d 8 def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+	/bitmapsave save def 
+	FMLevel1 {	
+		colorsetup
+		/is im 0 lb getinterval def 
+		ws 0 lb getinterval is copy pop 
+		/cf currentfile def 
+		w h d [w 0 0 h neg 0 h] 
+		{ip} {is} {is} true 3 colorimage
+	} {
+		colorSetup2
+		/is im 0 lb getinterval def 
+		ws 0 lb getinterval is copy pop 
+		/cf currentfile def 
+		7 dict dup begin
+			/ImageType 1 def
+			/Width w def
+			/Height h def
+			/ImageMatrix [w 0 0 h neg 0 h] def
+			/DataSource {ip} bind def
+			/BitsPerComponent d def
+			/Decode [0 255] def
+		end image	
+	} ifelse
+	bitmapsave restore 
+	grestore
+	} bind def
+/BITMAPTRUECOLORc { 
+	/d 24 def
+        gsave
+ 	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+        /bitmapsave save def 
+        
+	/is im 0 lb getinterval def	
+	/ris im 0 w getinterval def	
+	/gis im w w getinterval def	
+	/bis im w 2 mul w getinterval def 
+        
+        ws 0 lb getinterval is copy pop 
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        {w rip pop ris} {gis} {bis} true 3 colorimage
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPTRUECOLOR { 
+        gsave
+		
+		3 index 2 div add exch	
+		4 index 2 div add exch	
+		translate		
+		rotate			
+		1 index 2 div neg	
+		1 index 2 div neg	
+		translate		
+		scale			
+		/h exch def /w exch def
+        /bitmapsave save def 
+        /is w string def
+        /gis w string def
+        /bis w string def
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        { cf is readhexstring pop } 
+        { cf gis readhexstring pop } 
+        { cf bis readhexstring pop } 
+        true 3 colorimage 
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPTRUEGRAYc { 
+	/d 24 def
+        gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+        /bitmapsave save def 
+        
+	/is im 0 lb getinterval def	
+	/ris im 0 w getinterval def	
+	/gis im w w getinterval def	
+	/bis im w 2 mul w getinterval def 
+        ws 0 lb getinterval is copy pop 
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        {w rip pop ris gis bis w gray} image
+        bitmapsave restore 
+        grestore
+        } bind def
+/ww FMLOCAL
+/r FMLOCAL
+/g FMLOCAL
+/b FMLOCAL
+/i FMLOCAL
+/gray { 
+        /ww exch def
+        /b exch def
+        /g exch def
+        /r exch def
+        0 1 ww 1 sub { /i exch def r i get .299 mul g i get .587 mul
+			b i get .114 mul add add r i 3 -1 roll floor cvi put } for
+        r
+        } bind def
+/BITMAPTRUEGRAY { 
+        gsave
+		
+		3 index 2 div add exch	
+		4 index 2 div add exch	
+		translate		
+		rotate			
+		1 index 2 div neg	
+		1 index 2 div neg	
+		translate		
+		scale			
+		/h exch def /w exch def
+        /bitmapsave save def 
+        /is w string def
+        /gis w string def
+        /bis w string def
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        { cf is readhexstring pop 
+          cf gis readhexstring pop 
+          cf bis readhexstring pop w gray}  image
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPGRAY { 
+	8 {fakecolorsetup} COMMONBITMAP
+	} bind def
+/BITMAPGRAYc { 
+	8 {fakecolorsetup} COMMONBITMAPc
+	} bind def
+/ENDBITMAP {
+	} bind def
+end 
+	/ALDsave FMLOCAL
+	/ALDmatrix matrix def ALDmatrix currentmatrix pop
+/StartALD {
+	/ALDsave save def
+	 savematrix
+	 ALDmatrix setmatrix
+	} bind def
+/InALD {
+	 restorematrix
+	} bind def
+/DoneALD {
+	 ALDsave restore
+	} bind def
+/I { setdash } bind def
+/J { [] 0 setdash } bind def
+%%EndProlog
+%%BeginSetup
+(4.0) FMVERSION
+1 1 0 0 612 792 0 1 9 FMDOCUMENT
+0 0 /Times-Roman FMFONTDEFINE
+1 0 /Times-Bold FMFONTDEFINE
+2 0 /Times-Italic FMFONTDEFINE
+32 FMFILLS
+0 0 FMFILL
+1 0.1 FMFILL
+2 0.3 FMFILL
+3 0.5 FMFILL
+4 0.7 FMFILL
+5 0.9 FMFILL
+6 0.97 FMFILL
+7 1 FMFILL
+8 <0f1e3c78f0e1c387> FMFILL
+9 <0f87c3e1f0783c1e> FMFILL
+10 <cccccccccccccccc> FMFILL
+11 <ffff0000ffff0000> FMFILL
+12 <8142241818244281> FMFILL
+13 <03060c183060c081> FMFILL
+14 <8040201008040201> FMFILL
+16 1 FMFILL
+17 0.9 FMFILL
+18 0.7 FMFILL
+19 0.5 FMFILL
+20 0.3 FMFILL
+21 0.1 FMFILL
+22 0.03 FMFILL
+23 0 FMFILL
+24 <f0e1c3870f1e3c78> FMFILL
+25 <f0783c1e0f87c3e1> FMFILL
+26 <3333333333333333> FMFILL
+27 <0000ffff0000ffff> FMFILL
+28 <7ebddbe7e7dbbd7e> FMFILL
+29 <fcf9f3e7cf9f3f7e> FMFILL
+30 <7fbfdfeff7fbfdfe> FMFILL
+%%EndSetup
+%%Page: "1" 1
+%%BeginPaperSize: Letter
+%%EndPaperSize
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+J
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(DylanW) 72 42.62 T
+(orks Browsers Design) 98.46 42.62 T
+(September 7, 1995) 275.89 42.62 T
+(1) 536 42.62 T
+0 24 Q
+(DylanW) 160.32 704 T
+(orks Browsers Design) 239.71 704 T
+1 12 Q
+(Scott McKay & Chris Fry) 239.35 662.83 T
+1 16 Q
+(1. Intr) 72 619 T
+(oduction) 115.26 619 T
+0 12 Q
+-0.39 (This paper discusses a set of design goals and principles for browsers, describes an abstract model) 72 590.5 P
+(that can be used to escribe a broad class of browsers, and lists a set of browsing \322tools\323 provided) 72 576.5 T
+(by DylanW) 72 562.5 T
+(orks. It also describes how the various browsers can interact with each other in a) 126.7 562.5 T
+(tightly integrated way) 72 548.5 T
+(. Finally) 176.54 548.5 T
+(, some speci\336c architectures for browsing substrates are described) 215.77 548.5 T
+(in the appendices.) 72 534.5 T
+1 14 Q
+(1.1  Br) 72 500 T
+(owsing \322T) 111.8 500 T
+(ools\323) 171.58 500 T
+0 12 Q
+(In DylanW) 72 472.17 T
+(orks, there are several important browsing \322tools\323 that will be implemented on top of) 124.69 472.17 T
+-0.32 (the browsing substrate, which provides data generation and \336ltering functionality) 72 458.17 P
+-0.32 (, as well as basic) 458.29 458.17 P
+(data display functionality) 72 444.17 T
+(.) 193.21 444.17 T
+1 F
+(\245) 85.5 423 T
+0 F
+(Class browser.) 99 423 T
+1 F
+(\245) 85.5 401.83 T
+0 F
+(Generic function and method browser.) 99 401.83 T
+1 F
+(\245) 85.5 380.67 T
+0 F
+(Caller/callee browser.) 99 380.67 T
+1 F
+(\245) 85.5 359.5 T
+0 F
+(Module, including \322apropos\323 facilities.) 99 359.5 T
+1 F
+(\245) 85.5 338.33 T
+0 F
+(Project/library/source browser.) 99 338.33 T
+1 F
+(\245) 85.5 317.17 T
+0 F
+(Thread and process browser.) 99 317.17 T
+1 F
+(\245) 85.5 296 T
+0 F
+(An \322inspector\323.) 99 296 T
+(Other tools may also use the browsing substrate, such as:) 72 268.83 T
+1 F
+(\245) 85.5 247.67 T
+0 F
+(Stack backtraces in the debugger.) 99 247.67 T
+1 F
+(\245) 85.5 226.5 T
+0 F
+(One or more \322profiling\323 browsers.) 99 226.5 T
+1 14 Q
+(1.2  Basic Strategy) 72 192 T
+0 12 Q
+-0.33 (Note that there are is a spectrum of basic strategies for building all these tools. At one end, we can) 72 164.17 P
+(build a uniform browser that can accommodate numerous kinds of \322views\323 that default to dif) 72 150.17 T
+(fer-) 518.38 150.17 T
+(ent settings based on the type of data being browsed. At the other end, we can create a series of) 72 136.17 T
+(specialized browsers, each of which is tailored to a particular task. W) 72 122.17 T
+(e plan to use a hybrid strat-) 403.96 122.17 T
+(egy) 72 108.17 T
+(, in which we build a set of \322embeddable\323 tools which can be combined into a uniform) 88.55 108.17 T
+(browser) 72 94.17 T
+(, but which can also be used in a standalone frame.) 110.17 94.17 T
+FMENDPAGE
+%%EndPage: "1" 1
+%%Page: "2" 2
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(DylanW) 72 42.62 T
+(orks Browsers Design) 98.46 42.62 T
+(September 7, 1995) 275.89 42.62 T
+(2) 536 42.62 T
+1 16 Q
+(2. Goals and Principles) 72 709.33 T
+1 14 Q
+(2.1  Design Goals for a Br) 72 674.67 T
+(owser) 225.36 674.67 T
+0 12 Q
+(Here are the goals that our architecture must meet:) 72 648 T
+(1.) 84.85 628 T
+(It needs to provide the ability to manipulate, that is, inspect and modify) 99 628 T
+(, a \050potentially very) 440.87 628 T
+(lar) 99 614 T
+(ge\051 body of heterogeneous data. It should be possible to manipulate this data in multiple) 111.44 614 T
+(ways using multiple views.) 99 600 T
+(2.) 85.5 580 T
+(It needs to be able to reduce lar) 99 580 T
+(ge amounts of) 249.07 580 T
+2 F
+( data) 317.06 580 T
+0 F
+(into a manageable amount of useful) 344.4 580 T
+2 F
+-0.38 (information) 99 566 P
+0 F
+-0.38 (. The user should be able to see a lot of data at once, and in what context the data) 155.68 566 P
+(is used. The user should have a good deal of control over this process.) 99 552 T
+(3.) 85.5 532 T
+(It needs to assist users in developing a coherent and accurate model of the data.) 99 532 T
+(4.) 85.5 512 T
+(It needs to assist users in developing a coherent and accurate model of how the browser) 99 512 T
+(itself operates.) 99 498 T
+(5.) 85.5 478 T
+(The computer should do most of the mechanical work.) 99 478 T
+1 14 Q
+(2.2  Overall Design Principles) 72 444.67 T
+0 12 Q
+(1.) 84.85 424 T
+(Anything \322of interest\323 that is displayed should be manipulable. \050This contributes mainly to) 99 424 T
+(Goal 1 above.\051) 99 410 T
+(2.) 85.5 390 T
+-0.44 (\322Less interesting\323 data should be hidden or otherwise deemphasized, and \322more interesting\323) 99 390 P
+(data should draw the users attention. \050This contributes mainly to Goal 2 above.\051) 99 376 T
+(3.) 85.5 356 T
+(The UI of the browser needs to assist people in walking through datasets. \322Hot spots\323) 99 356 T
+(should be obvious. Things should not appear to happen by magic. \050This contributes mainly) 99 342 T
+(to Goal 3 above.\051) 99 328 T
+1 14 Q
+(2.3  UI Design Principles) 72 294.67 T
+0 12 Q
+(1.) 84.85 274 T
+(It needs to conform to platform-speci\336c UI guidelines wherever possible. Any contraven-) 99 274 T
+-0.14 (tion of these guidelines needs to have obvious bene\336t, or it must be an obvious extension of) 99 260 P
+(the existing guidelines. \050This contributes to Goal 4 above.\051) 99 246 T
+(2.) 85.5 226 T
+-0.29 (The usual other UI design principles apply: self-consistent, self-documenting, context-sensi-) 99 226 P
+(tive help, accessible documentation, and so forth. \050This contributes to Goal 4 above.\051) 99 212 T
+(3.) 85.5 192 T
+-0.07 (As far as possible, one \322mental operation\323 should correspond to one UI operation. This sug-) 99 192 P
+(gests that there should be a reasonably \336ne granularity for the initial set of UI operations,) 99 178 T
+-0.42 (and there should be a way to group common UI idioms in macros \050and the most important of) 99 164 P
+(these should be pre-packaged\051. \050This contributes to Goal 5 above.\051) 99 150 T
+FMENDPAGE
+%%EndPage: "2" 2
+%%Page: "3" 3
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(DylanW) 72 42.62 T
+(orks Browsers Design) 98.46 42.62 T
+(September 7, 1995) 275.89 42.62 T
+(3) 536 42.62 T
+1 14 Q
+(2.4  Additional Claims) 72 710.67 T
+0 12 Q
+(1.) 84.85 689.38 T
+-0.38 (Overloading too many operations in a single gesture might be convenient, but it impedes the) 99 689.38 P
+-0.37 (ability of a user to model how the browser actually works. It\325) 99 675.38 P
+-0.37 (s better to have slightly simpler) 388.22 675.38 P
+(gestures that make \322important\323 operations explicit, because having to explicitly perform an) 99 661.38 T
+(operation will \322stick\323 in the user) 99 647.38 T
+(\325) 255.76 647.38 T
+(s head. Of course, you can\325) 259.09 647.38 T
+(t choose the granularity too) 389.83 647.38 T
+(\336nely) 99 633.38 T
+(, or else the UI is a pain to use.) 125.56 633.38 T
+(2.) 85.5 612.75 T
+(Grouping unrelated data together \050by not providing good visual separation, for example\051) 99 612.75 T
+(breeds confusion. Failure to group related data can also breed confusion.) 99 598.75 T
+1 16 Q
+(3. An Abstract Model for a Br) 72 557.46 T
+(owser) 277.46 557.46 T
+0 12 Q
+(The functionality of any browser can be described in terms of three major \050and orthogonal\051 axes) 72 529.5 T
+-0.2 (of functionality: data generation, data display) 72 515.5 P
+-0.2 (, and real estate management. There are some minor) 288.19 515.5 P
+(axes as well, which we will also describe. The separation of these three axes is meant to allow) 72 501.5 T
+(multiple views and interfaces to be built easily) 72 487.5 T
+(.) 294.86 487.5 T
+(Along the way) 72 460.88 T
+(, we will give examples of various things that can be called \322browsers\323. Note that) 141.88 460.88 T
+(the term browser is not intended to connote a tool that is capable only of examining data; we use) 72 446.88 T
+(the word to mean something that can modify data as well.) 72 432.88 T
+1 14 Q
+(3.1  Data Generation) 72 398.92 T
+0 12 Q
+(The \336rst major axis is) 72 371.62 T
+2 F
+(data generation) 179.66 371.62 T
+0 F
+(. For any piece of data, there is a protocol that describes) 256 371.62 T
+(how to get to related data. This protocol also includes \336ltering and sorting.) 72 357.62 T
+(As an example, let\325) 72 331 T
+(s look at a browser for \322static\323 data. Here are some types of data and genera-) 164.65 331 T
+(tion, sorting, and \336ltering operations that apply to the data:) 72 317 T
+1 10 Q
+(Object) 85.78 292.33 T
+(Attributes) 139.78 292.33 T
+(Filters) 283.78 292.33 T
+0 F
+(Project) 85.78 260.33 T
+(Libraries) 139.78 260.33 T
+(Owner) 139.78 244.33 T
+(Source \322containers\323) 139.78 228.33 T
+(Compiler warnings) 139.78 212.33 T
+(Filter based on \336xed/un\336xed) 283.78 212.33 T
+(Sort based on de\336nition, type) 283.78 196.33 T
+(Library) 85.78 180.33 T
+(Uses) 139.78 180.33 T
+(Clients) 139.78 164.33 T
+(Modules \050internal and exported\051) 139.78 148.33 T
+(Filter based on substring matching) 283.78 148.33 T
+(Source code) 139.78 132.33 T
+(Module) 85.78 116.33 T
+(Uses) 139.78 116.33 T
+(Clients) 139.78 100.33 T
+(V) 139.78 84.33 T
+(ariables \050internal and exported\051) 145.89 84.33 T
+(Filter based on matching substring) 283.78 84.33 T
+(Source code) 139.78 68.33 T
+FMENDPAGE
+%%EndPage: "3" 3
+%%Page: "4" 4
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(DylanW) 72 42.62 T
+(orks Browsers Design) 98.46 42.62 T
+(September 7, 1995) 275.89 42.62 T
+(4) 536 42.62 T
+0 12 Q
+(The data generation for a debugger would include methods that generate stack traces, and so on.) 72 360 T
+(The data generation for a traditional editor is something that, given a \336le name, reads the source) 72 330.75 T
+(code into an editor buf) 72 316.75 T
+(fer) 180.43 316.75 T
+(. In a more \322hyper\323 editor) 193.09 316.75 T
+(, the data generation function would be more) 316.57 316.75 T
+(complex, for example, generating callers of a function and \336lling in source sections in the editor) 72 302.75 T
+(based on the set of callers.) 72 288.75 T
+(Related to data generation are two minor axes: storing of modi\336ed data \050which we will not) 72 259.5 T
+(describe in detail here\051 and query modelling.) 72 245.5 T
+2 F
+(Query modelling) 289.96 245.5 T
+0 F
+(is a layer which data generation) 373.94 245.5 T
+-0.27 (goes through that remembers the exact query that was used to generate the data, and it remembers) 72 231.5 P
+-0.28 (the client who asked for the data. The idea of this layer is to provide multiple-view update, that is,) 72 217.5 P
+-0.07 (if some other client modi\336es some data which is active in a query) 72 203.5 P
+-0.07 (, the query modelling layer noti-) 385.03 203.5 P
+(\336es all the other clients to update their views.) 72 189.5 T
+1 14 Q
+(3.2  Data Display) 72 152.92 T
+0 12 Q
+(The second major axis is) 72 123 T
+2 F
+(data display) 194.32 123 T
+0 F
+(. Roughly speaking, this is the display of a set of related) 252.54 123 T
+(information in a visually related grouping. \322Related information\323 is slippery to de\336ne, but one) 72 109 T
+(simple model of this is that each piece of information should be conceptually of the same type.) 72 95 T
+(For instance, in a class browser) 72 81 T
+(, a class and all its subclasses \050direct and indirect\051 are in one data) 222.16 81 T
+(display group, but the slots of one or more of these classes is in another visually distinct group.) 72 67 T
+0 10 Q
+(V) 85.78 689.33 T
+(ariable) 91.89 689.33 T
+(De\336nitions) 139.78 689.33 T
+(References \050caller\051) 139.78 673.33 T
+(Filter based on library/module) 283.78 673.33 T
+(Sort based on caller types) 283.78 657.33 T
+(Class) 85.78 641.33 T
+(Subclass) 139.78 641.33 T
+(Filter based on library/module) 283.78 641.33 T
+(Superclass) 139.78 625.33 T
+(Filter based on library/module) 283.78 625.33 T
+(Slots \050direct and indirect\051) 139.78 609.33 T
+(Methods \050direct and indirect\051) 139.78 593.33 T
+(Filter based on library/module) 283.78 593.33 T
+(Source code) 139.78 577.33 T
+(Slot) 85.78 561.33 T
+(Getter and setter) 139.78 561.33 T
+(T) 139.78 545.33 T
+(ype and allocation) 145.19 545.33 T
+(Initar) 139.78 529.33 T
+(g, init value or init function) 161.26 529.33 T
+(Generic) 85.78 513.33 T
+(Methods) 139.78 513.33 T
+(Parameters and values) 139.78 497.33 T
+(Source code) 139.78 481.33 T
+(Method) 85.78 465.33 T
+(Parameters and values) 139.78 465.33 T
+(Specializers) 139.78 449.33 T
+(Callees) 139.78 433.33 T
+(Source code) 139.78 417.33 T
+(Object) 85.78 401.33 T
+(Class) 139.78 401.33 T
+(Slot name and value) 139.78 385.33 T
+1 F
+(Object) 85.78 705.33 T
+(Attributes) 139.78 705.33 T
+(Filters) 283.78 705.33 T
+FMENDPAGE
+%%EndPage: "4" 4
+%%Page: "5" 5
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(DylanW) 72 42.62 T
+(orks Browsers Design) 98.46 42.62 T
+(September 7, 1995) 275.89 42.62 T
+(5) 536 42.62 T
+0 12 Q
+(Another example might be in an \322inspector\323, which displays a handle to a long list; selecting the) 72 712 T
+-0.42 (list might enumerate each item in the list, which may of course all have dif) 72 698 P
+-0.42 (ferent) 424.8 698 P
+2 F
+-0.42 (data) 455.36 698 P
+0 F
+-0.42 ( types, but in) 476.69 698 P
+-0.06 (the mind of the user) 72 684 P
+-0.06 (, they are grouped because they were generated by a single action in the inter-) 167.27 684 P
+(face. \050So maybe a less slippery way to de\336ne \322related information\323 is \322information that gets gen-) 72 670 T
+(erated by a single call to a data generation function.\051) 72 656 T
+-0.38 (The basic display protocol is, given a data set and a \322canvas\323, display the data on the canvas. Note) 72 629.08 P
+(that data display is actually broken into two bits: the display of each item in the display) 72 615.08 T
+(, and the) 489.86 615.08 T
+(layout of all of those items.) 72 601.08 T
+-0.11 (The display of an item is typically driven by what CLIM would call its presentation type. That is,) 72 574.17 P
+(the item displayer is a property of each item being displayed. In a directory editor) 72 560.17 T
+(, pathnames) 463.12 560.17 T
+-0.31 (would be presentation as a pathname object, and the visual represention might be a name string or) 72 546.17 P
+(a \336le folder icon. In an inspector) 72 532.17 T
+(, the same pathname might simply be presented as a Lisp or) 227.82 532.17 T
+(Dylan object.) 72 518.17 T
+(The layout of the displayed items is a property of each canvas. The sorts of layouts used during) 72 491.25 T
+(data display include:) 72 477.25 T
+1 F
+(\245) 85.5 456.33 T
+0 F
+(Tree graph.) 99 456.33 T
+(For hierarchical data \050for example, a library and all) 157.31 456.33 T
+(the libraries that use it\051.) 405.9 456.33 T
+(Clicking on an \322expansion) 99 442.33 T
+(target\323 adds a new node\050s\051 to the tree.) 229.66 442.33 T
+1 F
+(\245) 85.5 421.42 T
+0 F
+(Directed graph.) 99 421.42 T
+(For heterarchical data \050for example, a set of root) 176.64 421.42 T
+(classes and all the classes) 411.9 421.42 T
+(that use it\051. Clicking on) 99 407.42 T
+(an \322expansion target\323 adds a new node\050s\051 to the tree.) 215 407.42 T
+1 F
+(\245) 85.5 386.5 T
+0 F
+(Outline.) 99 386.5 T
+(For roughly hierarchical data, where a tree graph does) 141 386.5 T
+(not convey any extra useful) 403.58 386.5 T
+(information. Each item is) 99 372.5 T
+(on its own line, and levels of indentation represent) 223.99 372.5 T
+(depth in the) 469.3 372.5 T
+(hierarchy. For example, a directory editor.) 99 358.5 T
+1 F
+(\245) 85.5 337.58 T
+0 F
+(Table.) 99 337.58 T
+(A 2-column table where the left column displays an) 132.32 337.58 T
+(item name and the right column) 383.95 337.58 T
+(displays an item value.) 99 323.58 T
+(\050Note that this sort of layout could also be done by) 211.99 323.58 T
+(the item dis-) 458.3 323.58 T
+(player. This is the sort of arrangement) 99 309.58 T
+(that is found in an traditional Inspector tools.\051) 284.96 309.58 T
+1 F
+(\245) 85.5 288.67 T
+0 F
+-0.04 (\322List.\323) 99 288.67 P
+-0.04 (A simple list of items, where there is no detail below) 134.29 288.67 P
+-0.04 (any item. For example, a scrol-) 390.54 288.67 P
+(lable list containing a) 99 274.67 T
+(stack backtrace.) 205 274.67 T
+1 F
+(\245) 85.5 253.75 T
+0 F
+(\322Detail list\323.) 99 253.75 T
+(Like a list of items, except that each item has an) 162.66 253.75 T
+(additional control that might) 396.62 253.75 T
+(open a level of) 99 239.75 T
+(additional detail of a different sort. For example, a) 172.98 239.75 T
+(list of names of source) 417.94 239.75 T
+(definitions whose additional) 99 225.75 T
+(detail is the source code for the definition.) 238 225.75 T
+1 F
+(\245) 85.5 204.83 T
+0 F
+(\322Editor\323.) 99 204.83 T
+(A display that allows editing of text, etc.) 145.66 204.83 T
+(Editing is taken to be an extension of the display protocols. For example, deleting a line from an) 72 177.92 T
+(outline in a directory editor might delete the corresponding \336le, or there might be a gesture in an) 72 163.92 T
+(inspector that allows a value to be modi\336ed, and so forth.) 72 149.92 T
+-0.25 (Note that, in this model, data display is responsible for all \322in-line expansion\323. For example, trees) 72 123 P
+-0.03 (and DAGs know how to incrementally add nodes to their display) 72 109 P
+-0.03 (, and are responsible for display-) 382.86 109 P
+(ing tar) 72 95 T
+(gets that indicate where the expansion takes place. Outlines know how to add new lines to) 102.78 95 T
+-0.07 (the outline, and are again responsible for displaying tar) 72 81 P
+-0.07 (gets to indicate where the expansion takes) 335.52 81 P
+(place.) 72 67 T
+FMENDPAGE
+%%EndPage: "5" 5
+%%Page: "6" 6
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(DylanW) 72 42.62 T
+(orks Browsers Design) 98.46 42.62 T
+(September 7, 1995) 275.89 42.62 T
+(6) 536 42.62 T
+1 14 Q
+(3.3  Real-Estate Management) 72 710.67 T
+0 12 Q
+-0.38 (The third major axis is) 72 683.89 P
+2 F
+-0.38 (r) 181.75 683.89 P
+-0.38 (eal estate management) 185.98 683.89 P
+0 F
+-0.38 (, that is, the arrangement of \322display groups\323 into a) 295.19 683.89 P
+(lar) 72 669.89 T
+(ger scale layout. This might be provided by careful layout of display groups within a single) 84.44 669.89 T
+(window) 72 655.89 T
+(, or by multiple panes in a frame \050tiled or not\051, or by multiple top-level windows. Real) 109.88 655.89 T
+(estate management includes such things as placement and size of the display groups. This real) 72 641.89 T
+-0.27 (estate management might be done explicitly under user control, or the browser itself might have a) 72 627.89 P
+(real estate management policy) 72 613.89 T
+(.) 216.85 613.89 T
+(T) 72 587.78 T
+(raditional inspectors typically have only a single display canvas. The browsers in SWM\325) 78.91 587.78 T
+(s) 503.2 587.78 T
+(CLIM-based environment usually have a DAG display) 72 573.78 T
+(, which is coupled with one or two list dis-) 334.51 573.78 T
+(plays; the relationship between these displays is not made clear) 72 559.78 T
+(. Fry\325) 374.96 559.78 T
+(s Outliner has almost all of) 400.97 559.78 T
+-0.27 (the displays, and the real estate management is done by a \322best guess\323 \050with hints provided by the) 72 545.78 P
+(user based on choosing slightly dif) 72 531.78 T
+(ferent tar) 238.78 531.78 T
+(gets in each display\051.) 282.2 531.78 T
+(A good implementation of a browser should permit some user control over layout without requir-) 72 505.67 T
+-0.13 (ing the user to carefully arrange windows and panes in order to get useful views for typical opera-) 72 491.67 P
+(tions.) 72 477.67 T
+1 16 Q
+(4. Adding a UI to a \322Abstract Br) 72 436.89 T
+(owser\323) 294.82 436.89 T
+0 12 Q
+(Of course, given the three major components \050data generation, data display) 72 409.44 T
+(, real estate manage-) 431.81 409.44 T
+(ment\051, they need to be combined under a user interface that allows the functionality provided by) 72 395.44 T
+-0.27 (the components to be called. The display component needs to provide \322handles\323 on pieces of data) 72 381.44 P
+(that allow further data to be generated and displayed. The display component might also provide) 72 367.44 T
+(for \336ltering and sorting existing data sets. The real estate manager might provide for \322hot links\323) 72 353.44 T
+(between display groups.) 72 339.44 T
+(W) 72 313.33 T
+(e believe that each of the three components of a browser should be separately and explicitly) 82.37 313.33 T
+(manipulable. This is based on a model of a user that says that, if any UI gesture does \322too many\323) 72 299.33 T
+(things, then it is hard to build a model of what the UI is actually doing.) 72 285.33 T
+(SWM\325) 72 259.22 T
+(s CLIM-based browsers do not currently have any manipulable real estate management;) 104 259.22 T
+(the multi-pane browsers have hard-wired real-estate management. The most a gesture will do is) 72 245.22 T
+(generate data and display it. This is not a suf) 72 231.22 T
+(\336ciently \337exible architectures. There is also no) 285.76 231.22 T
+(explicit connection between the various panes of a browser) 72 217.22 T
+(.) 355.27 217.22 T
+(What is called \322in-line expansion\323 in Fry\325) 72 191.11 T
+(s Outliner falls mainly under the data generation and) 272.64 191.11 T
+(data display componenets. \322Out of line\323 expansion has aspects of all of data generation, data dis-) 72 177.11 T
+-0.18 (play) 72 163.11 P
+-0.18 (, and real estate management. What this means is that single gestures can simultaneously gen-) 91.88 163.11 P
+(erate data, pick a new piece of real estate, and do display; we believe that is too much) 72 149.11 T
+-0.24 (functionality to wrap into a single, and it makes modelling the Outliner itself more dif) 72 135.11 P
+-0.24 (\336cult. From) 480.79 135.11 P
+(a pure UI point of view) 72 121.11 T
+(, the Outliner does not adequately visually distinguish the displays of dif-) 183.53 121.11 T
+(ferent groups of data; perhaps the use of embedded bordered regions will help here.) 72 107.11 T
+(Apple\325) 72 81 T
+(s \322Binder\323 requires explicit real-estate management via pane-splitting, and a \322hot link\323 is) 104.66 81 T
+(created between the original pane and its new sibling \050that is, there is a data generation operation) 72 67 T
+FMENDPAGE
+%%EndPage: "6" 6
+%%Page: "7" 7
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(DylanW) 72 42.62 T
+(orks Browsers Design) 98.46 42.62 T
+(September 7, 1995) 275.89 42.62 T
+(7) 536 42.62 T
+0 12 Q
+-0.2 (done at the same time\051. Binder then groups data generation with data display) 72 712 P
+-0.2 (. W) 437.15 712 P
+-0.2 (e think that of the) 453.32 712 P
+(three reasonable browser implementations we can point to, Apple\325) 72 698 T
+(s Binder has the best overall) 390.28 698 T
+(architecture, although there is signi\336cant room for improvement. It is also reasonable to question) 72 684 T
+(whether splitter panes are the best way to distinguish between dif) 72 670 T
+(ferent groups of data. The cre-) 385.07 670 T
+(ation of hot links is very simple, and they are really useful; there is some visual indication of the) 72 656 T
+(connection between the output of one pane and input of another) 72 642 T
+(, but it is not very good.) 377.46 642 T
+(Fry\325) 72 615 T
+(s Outliner provides for the mixing of all sorts of dif) 92 615 T
+(ferent displays. SWM\325) 338.44 615 T
+(s browsers and) 446.76 615 T
+(Apple\325) 72 601 T
+(s Binder have a more restrictive model, where each group of data is fairly homogeneous) 104.66 601 T
+(and has a single appearance. I would make the ar) 72 587 T
+(gument that the \337exibility provided by the Out-) 307.04 587 T
+-0.39 (liner tends to make it more visually confusing, and the more restrictive display model provided by) 72 573 P
+(SWM\325) 72 559 T
+(s browsers and Apple\325) 104 559 T
+(s Binder actually make them simpler to understand \050that is, a user) 210.98 559 T
+(has an easier time modelling what these browsers are actually doing\051.) 72 545 T
+(Fry\325) 72 518 T
+(s Outliner also allows recursive nesting of in-line and out of line display) 92 518 T
+(, whereas Apple\325) 437.86 518 T
+(s) 518.83 518 T
+(Binder does not do this -- it allows real estate management only at a single, top level. The recur-) 72 504 T
+(sive structure of the Outliner could be ameliorated by providing more borders, colored back-) 72 490 T
+-0.38 (ground, etc., but it\325) 72 476 P
+-0.38 (s not clear that these measures will make it suf) 162.2 476 P
+-0.38 (\336ciently less confusing to justify) 382.22 476 P
+(the ef) 72 462 T
+(fort. It\325) 98.77 462 T
+(s also possible that the fact that we don\325) 132.77 462 T
+(t all have enormous screens makes deeply) 324.53 462 T
+(recursive browsers impractical even if we can solve the problem of visual confusion.) 72 448 T
+(The splitter panes in Apple\325) 72 421 T
+(s Binder take up a lot of room on the screen. This could be a genuine) 205.32 421 T
+(problem.) 72 407 T
+1 16 Q
+(Appendix A.  SWM\325) 72 365.33 T
+(s Pr) 210.98 365.33 T
+(oposed Br) 237.79 365.33 T
+(owser Design) 306.4 365.33 T
+0 12 Q
+(This is an attempt to capture the key characteristics of SWM\325) 72 337 T
+(s ideas for the implementation of a) 365.95 337 T
+(browser that meets the abstract architecture described above. It is meant to be descriptive rather) 72 323 T
+(than provide rationale or comparison to the Outliner) 72 309 T
+(, though we will insert rationale or compari-) 321.82 309 T
+(son in places purely to aid in making the description clear) 72 295 T
+(.) 348.64 295 T
+1 14 Q
+(A.1   Overall Ar) 72 260.67 T
+(chitectur) 167.79 260.67 T
+(e) 221.18 260.67 T
+0 12 Q
+(The Browser starts out with single lar) 72 233 T
+(ge window that will be used to contain multiple panes. The) 252.43 233 T
+(panes get created on the \337y \050see below\051. It\325) 72 219 T
+(s not clear if the \322single lar) 278.28 219 T
+(ge window\323 is scrollable;) 408.04 219 T
+(this will have to be decided based on some prototyping \050note that the Binder) 72 205 T
+(\325) 438.74 205 T
+(s \322single lar) 442.08 205 T
+(ge win-) 499.19 205 T
+(dow\323 isn\325) 72 191 T
+(t scrollable\051.) 118.78 191 T
+(There can be multiple Browsers; a new one can be created from an existing Browser) 72 164 T
+(, but on the) 476.75 164 T
+(whole there isn\325) 72 150 T
+(t much communication between Browsers.) 149.1 150 T
+(The \322single lar) 72 123 T
+(ge window\323 has a bunch of tiled panes, each of which potentially has scroll bars.) 143.1 123 T
+(The user can create new panes by \322splitting\323 an existing pane. This splitting might be accom-) 72 109 T
+(plished the way the Binder does it \050via a splitter control in each pane\051, or by some other other) 72 95 T
+-0.14 (means. The important point here is that all of the panes within the main window are kept in a sim-) 72 81 P
+(ple, tiled layout.) 72 67 T
+FMENDPAGE
+%%EndPage: "7" 7
+%%Page: "8" 8
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(DylanW) 72 42.62 T
+(orks Browsers Design) 98.46 42.62 T
+(September 7, 1995) 275.89 42.62 T
+(8) 536 42.62 T
+0 12 Q
+(A user can enlar) 72 712 T
+(ge any one pane at the expense of an adjacent pane by dragging the border) 150.08 712 T
+(between the two panes.) 72 698 T
+(Each pane has a \322title bar\323, whose contents will include:) 72 671.58 T
+1 F
+(\245) 85.5 651.17 T
+0 F
+(The name of the description, or generator function for the pane.) 99 651.17 T
+1 F
+(\245) 85.5 630.75 T
+0 F
+(The name of the \322parent\323 node for the pane, that is, the piece of data that will be passed to) 99 630.75 T
+(the pane\325s generating function.) 99 616.75 T
+1 F
+(\245) 85.5 596.33 T
+0 F
+(A way to choose a new generator for the pane.) 99 596.33 T
+1 F
+(\245) 85.5 575.92 T
+0 F
+(A way to choose filtering and sorting options.) 99 575.92 T
+1 F
+(\245) 85.5 555.5 T
+0 F
+-0.07 (A way to \322reparent\323 the pane, and redirect the output of the pane \050where the output is given) 99 555.5 P
+-0.37 (by the set of selected objects in the pane\051. This will be accomplish by having \322In\323 and \322Out\323) 99 541.5 P
+-0.4 (targets in the title bar. A user reparents a pane by dragging the \322out\323 icon from one pane into) 99 527.5 P
+-0.26 (the \322in\323 icon of the pane you want to reparent. The \322in\323 and \322out\323 icons of linked panes will) 99 513.5 P
+(be designed such that it will be clear from their visual appearance what their corresponding) 99 499.5 T
+-0.26 (out or in icon is in the parent or child pane of the pane in question. [Using unique colors and) 99 485.5 P
+(shapes will work here.]) 99 471.5 T
+1 14 Q
+(A.2   Display W) 72 437.75 T
+(ithin a Pane) 165.48 437.75 T
+0 12 Q
+(A pane has only one generator associated with it at any point in time. This generator is used both) 72 410.67 T
+(to determine the initial contents of the pane [in conjunction with the selected item in the parent) 72 396.67 T
+-0.2 (pane] as well as any \322sub-items\323 shown in the pane. When browsing heterogeneous data, the user) 72 382.67 P
+-0.06 (will need to use a new pane for each \322new kind\323 of data, since that data will probably not be able) 72 368.67 P
+(to use the same generator as the generator its parent was created from. For example, if you\325re) 72 354.67 T
+-0.28 (descending a class-and-subclasses structure \050displayed as a DAG\051 and want to see the slots of one) 72 340.67 P
+-0.12 (of the classes, then another pane will be required to see the slots. Or you are browsing a directory) 72 326.67 P
+(structure and you run into a \336le, the generator of \322Directory Contents\323 won\325) 72 312.67 T
+(t be applicable to a) 437.38 312.67 T
+-0.28 (\336le, so you might create a new pane and assign to it a generator of \322File Contents\323 or \322De\336nitions) 72 298.67 P
+(in File\323 or whatever) 72 284.67 T
+(.) 167.65 284.67 T
+(The pane will also have the ability to \336lter and sort the output of the generator to determine) 72 258.25 T
+(exactly which items to display) 72 244.25 T
+(. These \336lters and sorters are chosen by the user) 217.21 244.25 T
+(, probably through) 446.68 244.25 T
+(icons/menus accessable from the pane\325) 72 230.25 T
+(s title bar) 258.62 230.25 T
+(.) 302.63 230.25 T
+(The display of the contents of a pane has two aspects.) 72 203.83 T
+-0.09 (The \336rst aspect is the \322item view\323, that is the way each individual data item is shown. Usually all) 72 177.42 P
+(items in the same pane will have the same item view) 72 163.42 T
+(. The most common examples of an item) 323.86 163.42 T
+(view might just be the \322name\323 of an item or some other short handle, for instance, the name of a) 72 149.42 T
+(class or a \336le name with an associated folder icon. For source code items, something more com-) 72 135.42 T
+-0.28 (plex is called for: a \322handle\323 consisting of the de\336nition name with a tar) 72 121.42 P
+-0.28 (get that calls up an in-line) 414.38 121.42 P
+(editing area which displays the source code for the de\336nition.) 72 107.42 T
+(In general, this Browser doesn\325) 72 81 T
+(t mix dif) 222.08 81 T
+(ferent item views in the same pane. For example, a direc-) 263.21 81 T
+(tory editing pane will not typically allow a user to in-line expand the list of source de\336nition in a) 72 67 T
+FMENDPAGE
+%%EndPage: "8" 8
+%%Page: "9" 9
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(DylanW) 72 42.62 T
+(orks Browsers Design) 98.46 42.62 T
+(September 7, 1995) 275.89 42.62 T
+(9) 536 42.62 T
+0 12 Q
+(source \336le. T) 72 712 T
+(o do this, you need to hot-link in another pane that is prepare to display source code) 134.15 712 T
+(or source code handles.) 72 698 T
+(The other aspect of data display a \322layout\323, which determines how the items are positioned w) 72 670.39 T
+(.r) 519.8 670.39 T
+(.t.) 526.14 670.39 T
+(each other) 72 656.39 T
+(. There is only one layout per pane. T) 120.98 656.39 T
+(ypical examples are an \322outline\323 layout, letting) 300.11 656.39 T
+(you expand each item into a place immediately beneath and indented from the item. Another lay-) 72 642.39 T
+(out is a \322graph\323 layout allowing you to show DAG\325) 72 628.39 T
+(s and interactively expand each item in both) 319.64 628.39 T
+-0.37 (directions. Still another might be a \322tabular\323 layout, although it may be better to implement this in) 72 614.39 P
+(terms of \322item view\323.) 72 600.39 T
+1 14 Q
+(A.3  Cr) 72 565.44 T
+(eating New Panes) 115.68 565.44 T
+0 12 Q
+(The steps to create a new pane are:) 72 537.15 T
+1 F
+(\245) 85.5 515.54 T
+0 F
+(Create the space for the new pane. For example, this can be done by dragging a splitter bar) 99 515.54 T
+(on an existing pane.) 99 501.54 T
+1 F
+(\245) 85.5 479.92 T
+0 F
+(Drag the output icon of the desired parent pane into the input icon of the new pane. By) 99 479.92 T
+(default, the new pane will be linked to the pane it was split from.) 99 465.92 T
+1 F
+(\245) 85.5 444.31 T
+0 F
+(Optionally, choose a generator to use to expand the parent into the new pane. The Browser) 99 444.31 T
+(will try to pick a reasonable generator, so this step isn\325t always necessary.) 99 430.31 T
+-0.16 (At this point, there is a new pane that is ready to be populated with new data. T) 72 402.69 P
+-0.16 (o \336ll the new pane:) 448.66 402.69 P
+1 F
+(\245) 85.5 381.08 T
+0 F
+(Select a parent item to expand in an existing pane.) 99 381.08 T
+(Note that the creation of a new pane can be accelerated by providing more sophisticated com-) 72 353.46 T
+(mands on displayed objects that perform the splitting and linking automatically) 72 339.46 T
+(.) 451.87 339.46 T
+(Of course, the layout and item view of the new pane will default to something reasonable like a) 72 311.85 T
+-0.17 (standard view for each, or perhaps \322inherit\323 them from the [semantic] parent or [syntactic] parent) 72 297.85 P
+(pane. The user can change these defaults through controls on the pane\325) 72 283.85 T
+(s title bar) 411.25 283.85 T
+(.) 455.26 283.85 T
+(Note the semantic parent pane is the pane containing the selected parent item to be expanded,) 72 256.23 T
+(whereas the syntactic parent is the pane that was split to make the new pane. The Outliner does) 72 242.23 T
+-0.12 (not have a distinction between the syntactic and semantic parent panes since a pane\325) 72 228.23 P
+-0.12 (s parent pane) 474.04 228.23 P
+([or \322outlevel\323] is always above or to the left of the pane. \050There are exceptions to this for new) 72 214.23 T
+(window and for nested out-levels in some contexts.\051) 72 200.23 T
+1 14 Q
+(A.4  Generators) 72 165.28 T
+0 12 Q
+-0.2 (For each presentation type for an item there is a set of generators \050that is, functions that produce a) 72 137 P
+(set of \322kids\323 from a data item\051 that take that item\325) 72 123 T
+(s data as input and produce the new output.) 310.63 123 T
+-0.38 (Rather than using the current Outliner) 72 109 P
+-0.38 (\325) 252.83 109 P
+-0.38 (s current \322generic\323 generators, there are speci\336cally named) 256.17 109 P
+-0.27 (generators such as \322subclasses\323 and \322directory contents\323, so that it is very clear what the user will) 72 95 P
+(get when they choose a generator) 72 81 T
+(. When you pop up the generators menu for a parent of type) 231.62 81 T
+(class, you will \322subclasses\323, \322superclasses\323, \322slots\323, etc., but not \322\336le contents\323 as an option.) 72 67 T
+FMENDPAGE
+%%EndPage: "9" 9
+%%Page: "10" 10
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(DylanW) 72 42.62 T
+(orks Browsers Design) 98.46 42.62 T
+(September 7, 1995) 275.89 42.62 T
+(10) 532 42.62 T
+1 14 Q
+(A.5  Reusing Panes) 72 710.67 T
+0 12 Q
+-0.06 (T) 72 683.22 P
+-0.06 (o avoid pane proliferation, you may want to reuse a pane. So rather than expanding an item into) 78.49 683.22 P
+(another pane, we\325ll have some way of replacing the contents of a pane with the expansion of one) 72 669.22 T
+-0.41 (of its items. The old contents of the pane will be put on a history list which can be recalled later by) 72 655.22 P
+(picking it of) 72 641.22 T
+(f of a menu accessable from the pane\325) 130.45 641.22 T
+(s title bar as in the Lispworks inspector) 312.06 641.22 T
+(.) 499.72 641.22 T
+1 16 Q
+(Appendix B.  Fry\325) 72 599.78 T
+(s Pr) 194.98 599.78 T
+(oposed Br) 221.79 599.78 T
+(owser Design) 290.4 599.78 T
+1 14 Q
+(B.1  The Design) 72 564.33 T
+0 12 Q
+(The Fry/Plusch general browser design \050referred to hereafter as) 72 536.89 T
+2 F
+(W) 378.9 536.89 T
+(orkspace) 387.79 536.89 T
+0 F
+(\051 incorporates numer-) 431.11 536.89 T
+(ous features to ful\336ll the goals listed in the strategy section. Some of its key ideas follow) 72 522.89 T
+(.) 496.86 522.89 T
+(Recognition of the need to formally characterize the layout between parents and children. This) 72 496.11 T
+(permits the architecture to support multiple ways of showing the relationship between a parent) 72 482.11 T
+(and its children. The two fundamental categories are \322children near parent\050s\051\323 \050typical of outline) 72 468.11 T
+(views and graph views\051, and \322siblings together\323 \050where the children appear in an area that is spa-) 72 454.11 T
+(tially separated from the area containing the parent and the parent\325) 72 440.11 T
+(s siblings\051. Horizontal layouts) 390.59 440.11 T
+(such as the classical Smalltalk browser capture some advantages of both.) 72 426.11 T
+-0.02 (Information hiding. This is essential when the user is walking very deep or very bushy data struc-) 72 399.33 P
+(tures. A key concept here is to hide the \322uncles\323 \050the non-direct ancestors\051 of the data being) 72 385.33 T
+(focused on, making it easier to see the context of the focused data set. Hiding the uncles also) 72 371.33 T
+(requires less screen real-estate, meaning that more of the relevant data can be shown. Should a) 72 357.33 T
+-0.1 (user wish to see uncles, grand-uncles, and so on, that can be achieved by \322opening up\323 one of the) 72 343.33 P
+(ancestors, which remains visible on the display) 72 329.33 T
+(. This makes it easy to backtrack and go down) 297.53 329.33 T
+(other paths.) 72 315.33 T
+(Each instance of a) 72 288.56 T
+2 F
+(W) 162.64 288.56 T
+(orkspace) 171.53 288.56 T
+0 F
+(-style browser contains a number of \322view frames\323, each of which) 214.85 288.56 T
+(contains one or more views into the data being display in that \322view frame\323. The major views in) 72 274.56 T
+-0.14 (one of these frames are the) 72 260.56 P
+2 F
+-0.14 (description) 203.12 260.56 P
+0 F
+-0.14 ( of the data-set being shown \050for example, \322Subclasses\323 or) 257.12 260.56 P
+(\322V) 72 246.56 T
+(ariables in Module\323\051 and a view of the data-set itself \050for example, the set of subclasses or the) 84.66 246.56 T
+(names of the module variables\051.) 72 232.56 T
+(The simplest model of a description is that it is a function that takes one ar) 72 205.78 T
+(gument, typically a) 429.42 205.78 T
+(selected data item from another frame, and generates a collection of new data items. T) 72 191.78 T
+(ypical gen-) 485.05 191.78 T
+-0.44 (erating functions include subclasses-of-class, slots-of-class, methods-of-class, methods of generic) 72 177.78 P
+-0.18 (function, attributes-of-method, documentation-on-symbol, and so on. More complex descriptions) 72 163.78 P
+(may take additional user) 72 149.78 T
+(-speci\336ed ar) 189.41 149.78 T
+(guments, all of which will have defaults; this extra informa-) 248.17 149.78 T
+(tion can be used to \336lter the generated data \050for example, only the direct methods of a class, or) 72 135.78 T
+(only the module variables that have the string \322-setter\323 in their name\051.) 72 121.78 T
+-0.03 (The resulting data is shown in a collection view) 72 95 P
+-0.03 (. The exact appearance of the collection view can) 300.32 95 P
+-0.38 (be tailored by the user) 72 81 P
+-0.38 (, such as a simple scrollable list, a graph, or even an editor buf) 176.65 81 P
+-0.38 (fer containing) 470.77 81 P
+-0.12 (sources for the selected functions. The view of the frame is also user changeable to show more or) 72 67 P
+FMENDPAGE
+%%EndPage: "10" 10
+%%Page: "11" 11
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(DylanW) 72 42.62 T
+(orks Browsers Design) 98.46 42.62 T
+(September 7, 1995) 275.89 42.62 T
+(1) 532.3 42.62 T
+(1) 536 42.62 T
+0 12 Q
+(less detail of the description set as well as the relationship of the description to the data set. The) 72 712 T
+(expanded view of a description might be a menu or dialog box that gives the user \336ner control) 72 698 T
+(over the items to be viewed. An example of such control would be something like the complex) 72 684 T
+-0.04 (\322Find Symbol\323 dialog in Emacs Menus, where the things displayed in the view can be \336ltered by) 72 670 P
+(their home package, the occurrence of a substring in the name, and so forth. Note that such) 72 656 T
+(detailed control should be permitted, but not typically required, since all such additional ar) 72 642 T
+(gu-) 506.74 642 T
+(ments will have generally useful defaults. As previously mentioned, the relationship between) 72 628 T
+(view frames \050which boils down to the relationship between parent and children\051 is also user) 72 614 T
+(-) 511.68 614 T
+-0 (changeable. Changing this view could have the ef) 72 600 P
+-0 (fect of changing between an outline view and a) 310.4 600 P
+(\322siblings together\323 view) 72 586 T
+(. A user might also toggle the direction of browser growth between hori-) 187.87 586 T
+(zontal and vertical by changing the parent-child view) 72 572 T
+(.) 326.83 572 T
+1 14 Q
+(B.2  Pr) 72 536.87 T
+(oblems in W) 113.36 536.87 T
+(indow Management) 187.78 536.87 T
+0 12 Q
+-0.15 (The Smalltalk Agents browsers and the MCL inspector \050originally Fry\325) 72 508.4 P
+-0.15 (s design\051 typify one of the) 412.26 508.4 P
+-0.42 (common problems witnessed in the Programing Environments Review) 72 494.4 P
+-0.42 (, namely) 407.92 494.4 P
+-0.42 (, screen clutter due) 448.05 494.4 P
+(to a profusion of little windows. Some of the tools on the Lisp machine resulted in the opposite) 72 480.4 T
+(problem: one window takes over the whole screen and doesn\325) 72 466.4 T
+(t let the user see additional contex-) 368.05 466.4 T
+(tual information. Solutions that involve several lar) 72 452.4 T
+(ge, resizable windows \050about 20 in the case of) 313.44 452.4 T
+(LispW) 72 438.4 T
+(orks\051 permit the user to see more than one thing at once, but they tend to hide important) 103.7 438.4 T
+(contextual history) 72 424.4 T
+(, which forces the user to continually position and resize the windows to see) 157.55 424.4 T
+-0.27 (necessary information. Ultimately) 72 410.4 P
+-0.27 (, this is an unsolvable problem since there are only so many pix-) 234.32 410.4 P
+-0.29 (els. Even if the user is wearing in\336nite resolution eyephones, the eyes and brain can only focus on) 72 396.4 P
+(so much information at a time. W) 72 382.4 T
+(e can maximize screen real-estate and the user) 232.69 382.4 T
+(\325) 455.39 382.4 T
+(s abilities better) 458.72 382.4 T
+-0.28 (than existing environments by clever dynamic layout with quick UI gestures for allowing the user) 72 368.4 P
+(to adjust views. This was one of the overall concerns throughout the process of developing the) 72 354.4 T
+2 F
+(W) 72 340.4 T
+(orkspace) 80.89 340.4 T
+0 F
+( architecture.) 124.21 340.4 T
+1 14 Q
+(B.3  Overwhelming Quantity of Choices and Options) 72 305.27 T
+0 12 Q
+-0.02 (The challenge of presenting an easy-of-use interface in the presence of a lar) 72 276.8 P
+-0.02 (ge number of options) 434.75 276.8 P
+-0.3 (must be considered carefully) 72 262.8 P
+-0.3 (. One approach is simply to limit the number of options available at a) 208.61 262.8 P
+(time. Specialize-purpose browsers take advantage of this. This is the easy solution and has been) 72 248.8 T
+(proven to work passably well. Its disadvantages include lack of \337exibility and the necessity to) 72 234.8 T
+(implement \050as well as learn how to use\051 a variety of dif) 72 220.8 T
+(ferent browsers. W) 336.73 220.8 T
+(ith good, uniform UI) 427.88 220.8 T
+-0.27 (design the learning curve can be minimized, but the fact remains that switching from one browser) 72 206.8 P
+(to another can require a \322context switch\323 on the part of the user) 72 192.8 T
+(. Sometimes this is the desired) 375.92 192.8 T
+(behavior \321 using multiple browsers to represent dif) 72 178.8 T
+(ferent activities \321 but sometimes the frame-) 322.75 178.8 T
+-0.38 (of-mind change in undesirable because it causes the user to lose track of the task at hand. Multiple) 72 164.8 P
+(browsers may also limit the amount of useful information visible at any one time due to screen) 72 150.8 T
+(clutter of a bunch of dif) 72 136.8 T
+(ferent overlapping windows.) 185.42 136.8 T
+(The other basic strategy of one very general browser \322workspace\323 necessitates having lots of) 72 109 T
+(options available at a time to accommodate the users wishes. W) 72 95 T
+(e need more than just good) 377.33 95 T
+(graphic design to minimize the potential confusion here. Making common choices easy and obvi-) 72 81 T
+-0.45 (ous while preserving a smooth ramp of increasing dif) 72 67 P
+-0.45 (\336culty for invoking the less common choices) 324.15 67 P
+FMENDPAGE
+%%EndPage: "11" 11
+%%Page: "12" 12
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(DylanW) 72 42.62 T
+(orks Browsers Design) 98.46 42.62 T
+(September 7, 1995) 275.89 42.62 T
+(12) 532 42.62 T
+0 12 Q
+(is one strategy) 72 712 T
+(. Another is to have smart, dynamically changing defaults. For example, if a user) 140.54 712 T
+-0.22 (wants to walk down the subclass tree as opposed to the slot tree for a set of classes, he can choose) 72 698 P
+-0.35 (the \322subclass description\323 for the top object, then just click on title of the descriptions menu to get) 72 684 P
+-0.17 (the inherited default of subclass in each successive frame. In addition to the problem of streamlin-) 72 670 P
+(ing this \322navigation\323 process, there is also the problem that, in a heterogeneous browser) 72 656 T
+(, it is not) 493.12 656 T
+(always obvious what relationship a parent object has to its children.) 72 642 T
+1 14 Q
+(B.4  T) 72 608.67 T
+(oo Much T) 106.89 608.67 T
+(o Implement) 170.94 608.67 T
+0 12 Q
+-0.3 (W) 72 582 P
+-0.3 (e run the danger of attempting to include so many features that we won\325) 82.37 582 P
+-0.3 (t be able to make any of) 423.81 582 P
+(them reliable by a reasonable code-freeze date for Release 1. The separate browsers strategy has) 72 568 T
+-0.22 (modularity going for it: we can simply not bother implementing certain browsers. It has the disad-) 72 554 P
+(vantage of redundancy) 72 540 T
+(, i.e., some of the same features need to be implemented for each browser) 180.52 540 T
+-0.03 (albeit in a slightly dif) 72 526 P
+-0.03 (ferent way for each. Using a common browsing substrate should ameliorate) 174.35 526 P
+(this latter risk.) 72 512 T
+-0.09 (The one general browser approach has economy of code on its side as well as economy of pixels.) 72 486 P
+-0.14 (This may help out when running DylanW) 72 472 P
+-0.14 (orks on smaller machines. Unfortunately it requires that) 270.17 472 P
+(the underlying architecture be \322just right\323 to accommodate the wide range of possibilities. The) 72 458 T
+(one general browser may also prove less than optimal for certain highly specialized tasks. The) 72 444 T
+(underlying principles of design \050such as parent-child relationships, description-dataset relation-) 72 430 T
+-0.35 (ship, and so on\051 aim for generality so that unforeseen holes will be serendipitously \050to use SWM\325) 72 416 P
+-0.35 (s) 532.68 416 P
+(term\051 covered anyway) 72 402 T
+(. The) 178.51 402 T
+2 F
+(W) 206.17 402 T
+(orkspace) 215.06 402 T
+0 F
+( design is also modular but on a dif) 258.38 402 T
+(ferent axis. First, each) 426.83 402 T
+(of the view/layout categories \050parent-child, frame, description, and collection\051 are designed to) 72 388 T
+(have a number of possibilities, where selection of the used one is made dynamically by the user) 72 374 T
+-0.43 (on a case-by-case basis \050with inheriting defaults\051. The initial release could have a small number of) 72 360 P
+-0.07 (views, say 1 to 3 possibilities, for each category) 72 346 P
+-0.07 (. Additional view types can be plug-in add-ons to) 300.64 346 P
+(be implemented in subsequent releases. Also the descriptions is an extensible list where we can) 72 332 T
+(provide a basic set in Release 1 and extend them as we see \336t later on. W) 72 318 T
+(e may even choose to) 421.97 318 T
+-0.18 (publish the specs for generators, \336lters, and views, as well as provide documented base classes so) 72 304 P
+(that a user can create new subclasses should they so desire.) 72 290 T
+FMENDPAGE
+%%EndPage: "12" 12
+%%Trailer
+%%BoundingBox: 0 0 612 792
+%%PageOrder: Ascend
+%%Pages: 12
+%%DocumentFonts: Times-Roman
+%%+ Times-Bold
+%%+ Times-Italic
+%%EOF

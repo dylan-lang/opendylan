@@ -1,0 +1,4157 @@
+%!PS-Adobe-3.0
+%%BoundingBox: (atend)
+%%Pages: (atend)
+%%PageOrder: (atend)
+%%DocumentFonts: (atend)
+%%Creator: Frame 5.0
+%%DocumentData: Clean7Bit
+%%EndComments
+%%BeginProlog
+%
+% Frame ps_prolog 5.0, for use with Frame 5.0 products
+% This ps_prolog file is Copyright (c) 1986-1995 Frame Technology
+% Corporation.  All rights reserved.  This ps_prolog file may be
+% freely copied and distributed in conjunction with documents created
+% using FrameMaker, FrameMaker/SGML and FrameViewer as long as this 
+% copyright notice is preserved.
+%
+% FrameMaker users specify the proper paper size for each print job in the
+% "Print" dialog's "Printer Paper Size" "Width" and "Height~ fields.  If the
+% printer that the PS file is sent to does not support the requested paper
+% size, or if there is no paper tray of the proper size currently installed, 
+% then the job will not be printed.  The following flag, if set to true, will
+% cause the job to print on the default paper in such cases.
+/FMAllowPaperSizeMismatch            true  def
+%
+% Frame products normally print colors as their true color on a color printer
+% or as shades of gray, based on luminance, on a black-and white printer. The
+% following flag, if set to true, forces all non-white colors to print as pure
+% black. This has no effect on bitmap images.
+/FMPrintAllColorsAsBlack             false def
+%
+% Frame products can either set their own line screens or use a printer's 
+% default settings. Three flags below control this separately for no 
+% separations, spot separations and process separations. If a flag
+% is true, then the default printer settings will not be changed. If it is
+% false, Frame products will use their own settings from a table based on
+% the printer's resolution.
+/FMUseDefaultNoSeparationScreen      true  def
+/FMUseDefaultSpotSeparationScreen    true  def
+/FMUseDefaultProcessSeparationScreen false def
+%
+% For any given PostScript printer resolution, Frame products have two sets of 
+% screen angles and frequencies for printing process separations, which are 
+% recomended by Adobe. The following variable chooses the higher frequencies
+% when set to true or the lower frequencies when set to false. This is only
+% effective if the appropriate FMUseDefault...SeparationScreen flag is false.
+/FMUseHighFrequencyScreens true def
+%
+% The following is a set of predefined optimal frequencies and angles for various
+% common dpi settings. This is taken from "Advances in Color Separation Using
+% PostScript Software Technology," from Adobe Systems (3/13/89 P.N. LPS 0043)
+% and corrolated with information which is in various PPD (4.0) files.
+%
+% The "dpiranges" figure is the minimum dots per inch device resolution which
+% can support this setting. The "low" and "high" values are controlled by the
+% setting of the FMUseHighFrequencyScreens flag above. The "TDot" flags control
+% the use of the "Yellow Triple Dot" feature whereby the frequency id divided by
+% three, but the dot function is "trippled" giving a block of 3x3 dots per cell.
+%
+% PatFreq is a compromise pattern frequency for ps Level 2 printers which is close
+% to the ideal WYSIWYG pattern frequency of 9 repetitions/inch but does not beat
+% (too badly) against the screen frequencies of any separations for that DPI.
+/dpiranges   [  2540    2400    1693     1270    1200     635      600      0      ] def
+/CMLowFreqs  [ 100.402  94.8683 89.2289 100.402  94.8683  66.9349  63.2456 47.4342 ] def
+/YLowFreqs   [  95.25   90.0    84.65    95.25   90.0     70.5556  66.6667 50.0    ] def
+/KLowFreqs   [  89.8026 84.8528 79.8088  89.8026 84.8528  74.8355  70.7107 53.033  ] def
+/CLowAngles  [  71.5651 71.5651 71.5651 71.5651  71.5651  71.5651  71.5651 71.5651 ] def
+/MLowAngles  [  18.4349 18.4349 18.4349 18.4349  18.4349  18.4349  18.4349 18.4349 ] def
+/YLowTDot    [  true    true    false    true    true     false    false   false   ] def
+/CMHighFreqs [ 133.87  126.491 133.843  108.503 102.523  100.402   94.8683 63.2456 ] def
+/YHighFreqs  [ 127.0   120.0   126.975  115.455 109.091   95.25    90.0    60.0    ] def
+/KHighFreqs  [ 119.737 113.137 119.713  128.289 121.218   89.8026  84.8528 63.6395 ] def
+/CHighAngles [  71.5651 71.5651 71.5651  70.0169 70.0169  71.5651  71.5651 71.5651 ] def
+/MHighAngles [  18.4349 18.4349 18.4349  19.9831 19.9831  18.4349  18.4349 18.4349 ] def
+/YHighTDot   [  false   false   true     false   false    true     true    false   ] def
+/PatFreq     [	10.5833 10.0     9.4055  10.5833 10.0	  10.5833  10.0	   9.375   ] def
+%
+% PostScript Level 2 printers contain an "Accurate Screens" feature which can
+% improve process separation rendering at the expense of compute time. This 
+% flag is ignored by PostScript Level 1 printers.
+/FMUseAcccurateScreens true def
+%
+% The following PostScript procedure defines the spot function that Frame
+% products will use for process separations. You may un-comment-out one of
+% the alternative functions below, or use your own.
+%
+% Dot function
+/FMSpotFunction {abs exch abs 2 copy add 1 gt 
+		{1 sub dup mul exch 1 sub dup mul add 1 sub }
+		{dup mul exch dup mul add 1 exch sub }ifelse } def
+%
+% Line function
+% /FMSpotFunction { pop } def
+%
+% Elipse function
+% /FMSpotFunction { dup 5 mul 8 div mul exch dup mul exch add 
+%		sqrt 1 exch sub } def
+%
+%
+/FMversion (5.0) def 
+/fMLevel1 /languagelevel where {pop languagelevel} {1} ifelse 2 lt def
+/FMPColor
+	fMLevel1 {
+		false
+		/colorimage where {pop pop true} if
+	} {
+		true
+	} ifelse
+def
+/FrameDict 400 dict def 
+systemdict /errordict known not {/errordict 10 dict def
+		errordict /rangecheck {stop} put} if
+% The readline in PS 23.0 doesn't recognize cr's as nl's on AppleTalk
+FrameDict /tmprangecheck errordict /rangecheck get put 
+errordict /rangecheck {FrameDict /bug true put} put 
+FrameDict /bug false put 
+mark 
+% Some PS machines read past the CR, so keep the following 3 lines together!
+currentfile 5 string readline
+00
+0000000000
+cleartomark 
+errordict /rangecheck FrameDict /tmprangecheck get put 
+FrameDict /bug get { 
+	/readline {
+		/gstring exch def
+		/gfile exch def
+		/gindex 0 def
+		{
+			gfile read pop 
+			dup 10 eq {exit} if 
+			dup 13 eq {exit} if 
+			gstring exch gindex exch put 
+			/gindex gindex 1 add def 
+		} loop
+		pop 
+		gstring 0 gindex getinterval true 
+		} bind def
+	} if
+/FMshowpage /showpage load def
+/FMquit /quit load def
+/FMFAILURE { 
+	dup = flush 
+	FMshowpage 
+	/Helvetica findfont 12 scalefont setfont
+	72 200 moveto show
+	72 220 moveto show
+	FMshowpage 
+%	FMquit  % Uncomment this line for traditional Frame failure behaviour
+	} def 
+/FMVERSION {
+	FMversion ne {
+		(Frame product version does not match ps_prolog!  Check installation;)
+		(also check ~/fminit and ./fminit for old versions) FMFAILURE
+		} if
+	} def 
+/FMBADEPSF { 
+	(Adobe's PostScript Language Reference Manual, 2nd Edition, section H.2.4)
+	(says your EPS file is not valid, as it calls X              )
+	dup dup (X) search pop exch pop exch pop length 
+	5 -1 roll 
+	putinterval 
+	FMFAILURE
+	} def
+/fmConcatProcs
+	{
+	/proc2 exch cvlit def/proc1 exch cvlit def/newproc proc1 length proc2 length add array def
+	newproc 0 proc1 putinterval newproc proc1 length proc2 putinterval newproc cvx
+}def
+FrameDict begin [
+	/ALDsave
+	/FMdicttop
+	/FMoptop
+	/FMpointsize
+	/FMsaveobject
+	/b
+	/bitmapsave
+	/blut
+	/bpside
+	/bs
+	/bstring
+	/bwidth
+	/c
+	/cf
+	/cs
+	/cynu
+	/depth
+	/edown
+	/fh
+	/fillvals
+	/fw
+	/fx
+	/fy
+	/g
+	/gfile
+	/gindex
+	/grnt
+	/gryt
+	/gstring
+	/height
+	/hh
+	/i
+	/im
+	/indx
+	/is
+	/k
+	/kk
+	/landscape
+	/lb
+	/len
+	/llx
+	/lly
+	/m
+	/magu
+	/manualfeed
+	/n
+	/offbits
+	/onbits
+	/organgle
+	/orgbangle
+	/orgbfreq
+	/orgbproc
+	/orgbxfer
+	/orgfreq
+	/orggangle
+	/orggfreq
+	/orggproc
+	/orggxfer
+	/orgmatrix
+	/orgproc
+	/orgrangle
+	/orgrfreq
+	/orgrproc
+	/orgrxfer
+	/orgxfer
+	/pagesave
+	/paperheight
+	/papersizedict
+	/paperwidth
+	/pos
+	/pwid
+	/r
+	/rad
+	/redt
+	/sl
+	/str
+	/tran
+	/u
+	/urx
+	/ury
+	/val
+	/width
+	/width
+	/ws
+	/ww
+	/x
+	/x1
+	/x2
+	/xindex
+	/xpoint
+	/xscale
+	/xx
+	/y
+	/y1
+	/y2
+	/yelu
+	/yindex
+	/ypoint
+	/yscale
+	/yy
+] { 0 def } forall
+/FmBD {bind def} bind def
+systemdict /pdfmark known {
+	/fMAcrobat true def
+	
+	/FmPD /pdfmark load def
+	
+	
+	/FmPT /show load def
+	
+	
+	currentdistillerparams /CoreDistVersion get 2000 ge {
+	
+		
+		/FmPD2 /pdfmark load def
+		
+		
+		
+		
+		
+		/FmPA { mark exch /Dest exch 5 3 roll 
+				/View [ /XYZ null 6 -2 roll FmDC exch pop null] /DEST FmPD 
+		}FmBD
+	} {
+		
+		/FmPD2 /cleartomark load def
+		/FmPA {pop pop pop}FmBD
+	} ifelse
+} {
+	
+	/fMAcrobat false def
+	/FmPD /cleartomark load def
+	/FmPD2 /cleartomark load def
+	/FmPT /pop load def
+	/FmPA {pop pop pop}FmBD
+} ifelse
+/FmDC {
+	transform fMDefaultMatrix itransform cvi exch cvi exch
+}FmBD
+/FmBx {
+	dup 3 index lt {3 1 roll exch} if 
+	1 index 4 index lt {4 -1 roll 3 1 roll exch 4 1 roll} if
+}FmBD
+/FMnone 0 def
+/FMcyan 1 def
+/FMmagenta 2 def
+/FMyellow 3 def
+/FMblack 4 def
+/FMcustom 5 def
+/fMNegative false def 
+/FrameSepIs FMnone def 
+/FrameSepBlack 0 def
+/FrameSepYellow 0 def
+/FrameSepMagenta 0 def
+/FrameSepCyan 0 def
+/FrameSepRed 1 def
+/FrameSepGreen 1 def
+/FrameSepBlue 1 def
+/FrameCurGray 1 def
+/FrameCurPat null def
+/FrameCurColors [ 0 0 0 1 0 0 0 ] def 
+/FrameColorEpsilon .001 def	
+/eqepsilon {		
+	sub dup 0 lt {neg} if
+	FrameColorEpsilon le
+} bind def
+/FrameCmpColorsCMYK { 
+	2 copy 0 get exch 0 get eqepsilon {
+		2 copy 1 get exch 1 get eqepsilon {
+			2 copy 2 get exch 2 get eqepsilon {
+				3 get exch 3 get eqepsilon
+			} {pop pop false} ifelse
+		}{pop pop false} ifelse
+	} {pop pop false} ifelse
+} bind def
+/FrameCmpColorsRGB { 
+	2 copy 4 get exch 0 get eqepsilon {
+		2 copy 5 get exch 1 get eqepsilon {
+			6 get exch 2 get eqepsilon
+		}{pop pop false} ifelse
+	} {pop pop false} ifelse
+} bind def
+/RGBtoCMYK { 
+	1 exch sub 
+	3 1 roll 
+	1 exch sub 
+	3 1 roll 
+	1 exch sub 
+	3 1 roll 
+	3 copy 
+	2 copy 
+	le { pop } { exch pop } ifelse 
+	2 copy 
+	le { pop } { exch pop } ifelse 
+	dup dup dup 
+	6 1 roll 
+	4 1 roll 
+	7 1 roll 
+	sub 
+	6 1 roll 
+	sub 
+	5 1 roll 
+	sub 
+	4 1 roll 
+} bind def
+/CMYKtoRGB { 
+	dup dup 4 -1 roll add 						  
+	5 1 roll 3 -1 roll add 						  
+	4 1 roll add 								  
+	1 exch sub dup 0 lt {pop 0} if 3 1 roll 	  
+	1 exch sub dup 0 lt {pop 0} if exch 	      
+	1 exch sub dup 0 lt {pop 0} if exch	  		  
+} bind def
+/FrameSepInit {
+	1.0 RealSetgray
+} bind def
+/FrameSetSepColor { 
+	/FrameSepBlue exch def
+	/FrameSepGreen exch def
+	/FrameSepRed exch def
+	/FrameSepBlack exch def
+	/FrameSepYellow exch def
+	/FrameSepMagenta exch def
+	/FrameSepCyan exch def
+	/FrameSepIs FMcustom def
+	setCurrentScreen	
+} bind def
+/FrameSetCyan {
+	/FrameSepBlue 1.0 def
+	/FrameSepGreen 1.0 def
+	/FrameSepRed 0.0 def
+	/FrameSepBlack 0.0 def
+	/FrameSepYellow 0.0 def
+	/FrameSepMagenta 0.0 def
+	/FrameSepCyan 1.0 def
+	/FrameSepIs FMcyan def
+	setCurrentScreen	
+} bind def
+ 
+/FrameSetMagenta {
+	/FrameSepBlue 1.0 def
+	/FrameSepGreen 0.0 def
+	/FrameSepRed 1.0 def
+	/FrameSepBlack 0.0 def
+	/FrameSepYellow 0.0 def
+	/FrameSepMagenta 1.0 def
+	/FrameSepCyan 0.0 def
+	/FrameSepIs FMmagenta def
+	setCurrentScreen
+} bind def
+ 
+/FrameSetYellow {
+	/FrameSepBlue 0.0 def
+	/FrameSepGreen 1.0 def
+	/FrameSepRed 1.0 def
+	/FrameSepBlack 0.0 def
+	/FrameSepYellow 1.0 def
+	/FrameSepMagenta 0.0 def
+	/FrameSepCyan 0.0 def
+	/FrameSepIs FMyellow def
+	setCurrentScreen
+} bind def
+ 
+/FrameSetBlack {
+	/FrameSepBlue 0.0 def
+	/FrameSepGreen 0.0 def
+	/FrameSepRed 0.0 def
+	/FrameSepBlack 1.0 def
+	/FrameSepYellow 0.0 def
+	/FrameSepMagenta 0.0 def
+	/FrameSepCyan 0.0 def
+	/FrameSepIs FMblack def
+	setCurrentScreen
+} bind def
+ 
+/FrameNoSep { 
+	/FrameSepIs FMnone def
+	setCurrentScreen
+} bind def
+/FrameSetSepColors { 
+	FrameDict begin
+	[ exch 1 add 1 roll ]
+	/FrameSepColors  
+	exch def end
+	} bind def
+/FrameColorInSepListCMYK { 
+	FrameSepColors {  
+       		exch dup 3 -1 roll 
+       		FrameCmpColorsCMYK 
+       		{ pop true exit } if
+    	} forall 
+	dup true ne {pop false} if
+	} bind def
+/FrameColorInSepListRGB { 
+	FrameSepColors {  
+       		exch dup 3 -1 roll 
+       		FrameCmpColorsRGB 
+       		{ pop true exit } if
+    	} forall 
+	dup true ne {pop false} if
+	} bind def
+/RealSetgray /setgray load def
+/RealSetrgbcolor /setrgbcolor load def
+/RealSethsbcolor /sethsbcolor load def
+end 
+/setgray { 
+	FrameDict begin
+	FrameSepIs FMnone eq
+		{ RealSetgray } 
+		{ 
+		FrameSepIs FMblack eq 
+			{ RealSetgray } 
+			{ FrameSepIs FMcustom eq 
+			  FrameSepRed 0 eq and
+			  FrameSepGreen 0 eq and
+			  FrameSepBlue 0 eq and {
+			  	RealSetgray
+			  } {
+				1 RealSetgray pop 
+			  } ifelse
+			} ifelse
+		} ifelse
+	end
+} bind def
+/setrgbcolor { 
+	FrameDict begin
+	FrameSepIs FMnone eq
+	{  RealSetrgbcolor }
+	{
+		3 copy [ 4 1 roll ] 
+		FrameColorInSepListRGB
+		{
+				FrameSepBlue eq exch 
+			 	FrameSepGreen eq and exch 
+			 	FrameSepRed eq and
+			 	{ 0 } { 1 } ifelse
+		}
+		{
+			FMPColor {
+				RealSetrgbcolor
+				currentcmykcolor
+			} {
+				RGBtoCMYK
+			} ifelse
+			FrameSepIs FMblack eq
+			{1.0 exch sub 4 1 roll pop pop pop} {
+			FrameSepIs FMyellow eq
+			{pop 1.0 exch sub 3 1 roll pop pop} {
+			FrameSepIs FMmagenta eq
+			{pop pop 1.0 exch sub exch pop } {
+			FrameSepIs FMcyan eq
+			{pop pop pop 1.0 exch sub } 
+			{pop pop pop pop 1} ifelse } ifelse } ifelse } ifelse 
+		} ifelse
+		RealSetgray
+	} 
+	ifelse
+	end
+} bind def
+/sethsbcolor {
+	FrameDict begin
+	FrameSepIs FMnone eq 
+	{ RealSethsbcolor } 
+	{
+		RealSethsbcolor 
+		currentrgbcolor  
+		setrgbcolor 
+	} 
+	ifelse
+	end
+} bind def
+FrameDict begin
+/setcmykcolor where {
+	pop /RealSetcmykcolor /setcmykcolor load def
+} {
+	/RealSetcmykcolor {
+		4 1 roll
+		3 { 3 index add 0 max 1 min 1 exch sub 3 1 roll} repeat 
+		RealSetrgbcolor pop
+	} bind def
+} ifelse
+userdict /setcmykcolor { 
+		FrameDict begin
+		FrameSepIs FMnone eq
+		{ RealSetcmykcolor } 
+		{
+			4 copy [ 5 1 roll ]
+			FrameColorInSepListCMYK
+			{
+				FrameSepBlack eq exch 
+				FrameSepYellow eq and exch 
+				FrameSepMagenta eq and exch 
+				FrameSepCyan eq and 
+				{ 0 } { 1 } ifelse
+			}
+			{
+				FrameSepIs FMblack eq
+				{1.0 exch sub 4 1 roll pop pop pop} {
+				FrameSepIs FMyellow eq
+				{pop 1.0 exch sub 3 1 roll pop pop} {
+				FrameSepIs FMmagenta eq
+				{pop pop 1.0 exch sub exch pop } {
+				FrameSepIs FMcyan eq
+				{pop pop pop 1.0 exch sub } 
+				{pop pop pop pop 1} ifelse } ifelse } ifelse } ifelse 
+			} ifelse
+			RealSetgray
+		}
+		ifelse
+		end
+	} bind put
+fMLevel1 { 
+	
+	
+	
+	/patScreenDict 7 dict dup begin
+		<0f1e3c78f0e1c387> [ 45  { pop } {exch pop} 		.5   2 sqrt] FmBD
+		<0f87c3e1f0783c1e> [ 135 { pop } {exch pop}			.5   2 sqrt] FmBD
+		<cccccccccccccccc> [ 0   { pop } dup				.5   2	   ] FmBD
+		<ffff0000ffff0000> [ 90  { pop } dup				.5   2	   ] FmBD
+		<8142241818244281> [ 45  { 2 copy lt {exch} if pop}	dup .75  2 sqrt] FmBD
+		<03060c183060c081> [ 45  { pop } {exch pop}			.875 2 sqrt] FmBD
+		<8040201008040201> [ 135 { pop } {exch pop}			.875 2 sqrt] FmBD
+	end def
+} { 
+	
+	/patProcDict 5 dict dup begin
+		<0f1e3c78f0e1c387> { 3 setlinewidth -1 -1 moveto 9 9 lineto stroke 
+											4 -4 moveto 12 4 lineto stroke
+											-4 4 moveto 4 12 lineto stroke} bind def
+		<0f87c3e1f0783c1e> { 3 setlinewidth -1 9 moveto 9 -1 lineto stroke 
+											-4 4 moveto 4 -4 lineto stroke
+											4 12 moveto 12 4 lineto stroke} bind def
+		<8142241818244281> { 1 setlinewidth -1 9 moveto 9 -1 lineto stroke
+											-1 -1 moveto 9 9 lineto stroke } bind def
+		<03060c183060c081> { 1 setlinewidth -1 -1 moveto 9 9 lineto stroke 
+											4 -4 moveto 12 4 lineto stroke
+											-4 4 moveto 4 12 lineto stroke} bind def
+		<8040201008040201> { 1 setlinewidth -1 9 moveto 9 -1 lineto stroke 
+											-4 4 moveto 4 -4 lineto stroke
+											4 12 moveto 12 4 lineto stroke} bind def
+	end def
+	/patDict 15 dict dup begin
+		/PatternType 1 def		
+		/PaintType 2 def		
+		/TilingType 3 def		
+		/BBox [ 0 0 8 8 ] def 	
+		/XStep 8 def			
+		/YStep 8 def			
+		/PaintProc {
+			begin
+			patProcDict bstring known {
+				patProcDict bstring get exec
+			} {
+				8 8 true [1 0 0 -1 0 8] bstring imagemask
+			} ifelse
+			end
+		} bind def
+	end def
+} ifelse
+/combineColor {
+    FrameSepIs FMnone eq
+	{
+		graymode fMLevel1 or not {
+			
+			[/Pattern [/DeviceCMYK]] setcolorspace
+			FrameCurColors 0 4 getinterval aload pop FrameCurPat setcolor
+		} {
+			FrameCurColors 3 get 1.0 ge {
+				FrameCurGray RealSetgray
+			} {
+				fMAcrobat not FMPColor graymode and and {
+					0 1 3 { 
+						FrameCurColors exch get
+						1 FrameCurGray sub mul
+					} for
+					RealSetcmykcolor
+				} {
+					4 1 6 {
+						FrameCurColors exch get
+						graymode {
+							1 exch sub 1 FrameCurGray sub mul 1 exch sub
+						} {
+							1.0 lt {FrameCurGray} {1} ifelse
+						} ifelse
+					} for
+					RealSetrgbcolor
+				} ifelse
+			} ifelse
+		} ifelse
+	} { 
+		FrameCurColors 0 4 getinterval aload
+		FrameColorInSepListCMYK {
+			FrameSepBlack eq exch 
+			FrameSepYellow eq and exch 
+			FrameSepMagenta eq and exch 
+			FrameSepCyan eq and
+			FrameSepIs FMcustom eq and
+			{ FrameCurGray } { 1 } ifelse
+		} {
+			FrameSepIs FMblack eq
+			{FrameCurGray 1.0 exch sub mul 1.0 exch sub 4 1 roll pop pop pop} {
+			FrameSepIs FMyellow eq
+			{pop FrameCurGray 1.0 exch sub mul 1.0 exch sub 3 1 roll pop pop} {
+			FrameSepIs FMmagenta eq
+			{pop pop FrameCurGray 1.0 exch sub mul 1.0 exch sub exch pop } {
+			FrameSepIs FMcyan eq
+			{pop pop pop FrameCurGray 1.0 exch sub mul 1.0 exch sub } 
+			{pop pop pop pop 1} ifelse } ifelse } ifelse } ifelse 
+		} ifelse
+		graymode fMLevel1 or not {
+			
+			[/Pattern [/DeviceGray]] setcolorspace
+			FrameCurPat setcolor
+		} { 
+			graymode not fMLevel1 and {
+				
+				dup 1 lt {pop FrameCurGray} if
+			} if
+			RealSetgray
+		} ifelse
+	} ifelse
+} bind def
+/savematrix {
+	orgmatrix currentmatrix pop
+	} bind def
+/restorematrix {
+	orgmatrix setmatrix
+	} bind def
+/fMDefaultMatrix matrix defaultmatrix def
+/fMatrix2 matrix def
+/dpi    72 0 fMDefaultMatrix dtransform
+    dup mul exch   dup mul add   sqrt def
+	
+/freq dpi dup 72 div round dup 0 eq {pop 1} if 8 mul div def
+/sangle 1 0 fMDefaultMatrix dtransform exch atan def
+	sangle fMatrix2 rotate 
+	fMDefaultMatrix fMatrix2 concatmatrix 
+	dup 0 get /sflipx exch def
+	    3 get /sflipy exch def
+/screenIndex {
+	0 1 dpiranges length 1 sub { dup dpiranges exch get 1 sub dpi le {exit} {pop} ifelse } for
+} bind def
+/getCyanScreen {
+	FMUseHighFrequencyScreens { CHighAngles CMHighFreqs} {CLowAngles CMLowFreqs} ifelse
+		screenIndex dup 3 1 roll get 3 1 roll get /FMSpotFunction load
+} bind def
+/getMagentaScreen {
+	FMUseHighFrequencyScreens { MHighAngles CMHighFreqs } {MLowAngles CMLowFreqs} ifelse
+		screenIndex dup 3 1 roll get 3 1 roll get /FMSpotFunction load
+} bind def
+/getYellowScreen {
+	FMUseHighFrequencyScreens { YHighTDot YHighFreqs} { YLowTDot YLowFreqs } ifelse
+		screenIndex dup 3 1 roll get 3 1 roll get { 3 div
+			{2 { 1 add 2 div 3 mul dup floor sub 2 mul 1 sub exch} repeat
+			FMSpotFunction } } {/FMSpotFunction load } ifelse
+			0.0 exch
+} bind def
+/getBlackScreen  {
+	FMUseHighFrequencyScreens { KHighFreqs } { KLowFreqs } ifelse
+		screenIndex get 45.0 /FMSpotFunction load 
+} bind def
+/getSpotScreen {
+	getBlackScreen
+} bind def
+/getCompositeScreen {
+	getBlackScreen
+} bind def
+/FMSetScreen 
+	fMLevel1 { /setscreen load 
+	}{ {
+		8 dict begin
+		/HalftoneType 1 def
+		/SpotFunction exch def
+		/Angle exch def
+		/Frequency exch def
+		/AccurateScreens FMUseAcccurateScreens def
+		currentdict end sethalftone
+	} bind } ifelse
+def
+/setDefaultScreen {
+	FMPColor {
+		orgrxfer cvx orggxfer cvx orgbxfer cvx orgxfer cvx setcolortransfer
+	}
+	{
+		orgxfer cvx settransfer
+	} ifelse
+	orgfreq organgle orgproc cvx setscreen
+} bind def
+/setCurrentScreen {
+	FrameSepIs FMnone eq {
+		FMUseDefaultNoSeparationScreen {
+			setDefaultScreen
+		} {
+			getCompositeScreen FMSetScreen
+		} ifelse
+	} {
+		FrameSepIs FMcustom eq {
+			FMUseDefaultSpotSeparationScreen {
+				setDefaultScreen
+			} {
+				getSpotScreen FMSetScreen
+			} ifelse
+		} {
+			FMUseDefaultProcessSeparationScreen {
+				setDefaultScreen
+			} {
+				FrameSepIs FMcyan eq {
+					getCyanScreen FMSetScreen
+				} {
+					FrameSepIs FMmagenta eq {
+						getMagentaScreen FMSetScreen
+					} {
+						FrameSepIs FMyellow eq {
+							getYellowScreen FMSetScreen
+						} {
+							getBlackScreen FMSetScreen
+						} ifelse
+					} ifelse
+				} ifelse
+			} ifelse
+		} ifelse
+	} ifelse 
+} bind def
+end
+	
+/FMDOCUMENT { 
+	array /FMfonts exch def 
+	/#copies exch def
+	FrameDict begin
+	0 ne /manualfeed exch def
+	/paperheight exch def
+	/paperwidth exch def
+	0 ne /fMNegative exch def 
+	0 ne /edown exch def 
+	/yscale exch def
+	/xscale exch def
+	fMLevel1 {
+		manualfeed {setmanualfeed} if
+		/FMdicttop countdictstack 1 add def 
+		/FMoptop count def 
+		setpapername 
+		manualfeed {true} {papersize} ifelse 
+		{manualpapersize} {false} ifelse 
+		{desperatepapersize} {false} ifelse 
+		{papersizefailure} if
+		count -1 FMoptop {pop pop} for
+		countdictstack -1 FMdicttop {pop end} for 
+		}
+		{2 dict
+		 dup /PageSize [paperwidth paperheight] put
+		 manualfeed {dup /ManualFeed manualfeed put} if
+		 {setpagedevice} stopped {papersizefailure} if
+		}
+	ifelse 
+	
+	FMPColor {
+		currentcolorscreen
+			cvlit /orgproc exch def
+				  /organgle exch def 
+				  /orgfreq exch def
+			cvlit /orgbproc exch def
+				  /orgbangle exch def 
+				  /orgbfreq exch def
+			cvlit /orggproc exch def
+				  /orggangle exch def 
+				  /orggfreq exch def
+			cvlit /orgrproc exch def
+				  /orgrangle exch def 
+				  /orgrfreq exch def
+			currentcolortransfer 
+			fMNegative {
+				1 1 4 { 
+					pop { 1 exch sub } fmConcatProcs 4 1 roll
+				} for
+				4 copy
+				setcolortransfer
+			} if
+			cvlit /orgxfer exch def
+			cvlit /orgbxfer exch def
+			cvlit /orggxfer exch def
+			cvlit /orgrxfer exch def
+	} {
+		currentscreen 
+			cvlit /orgproc exch def
+				  /organgle exch def 
+				  /orgfreq exch def
+				  
+		currenttransfer 
+		fMNegative {
+			{ 1 exch sub } fmConcatProcs
+			dup settransfer
+		} if 
+		cvlit /orgxfer exch def
+	} ifelse
+	end 
+} def 
+/FMBEGINPAGE { 
+	FrameDict begin 
+	/pagesave save def
+	3.86 setmiterlimit
+	/landscape exch 0 ne def
+	landscape { 
+		90 rotate 0 exch dup /pwid exch def neg translate pop 
+	}{
+		pop /pwid exch def
+	} ifelse
+	edown { [-1 0 0 1 pwid 0] concat } if
+	0 0 moveto paperwidth 0 lineto paperwidth paperheight lineto 
+	0 paperheight lineto 0 0 lineto 1 setgray fill
+	xscale yscale scale
+	/orgmatrix matrix def
+	gsave 
+} def 
+/FMENDPAGE {
+	grestore 
+	pagesave restore
+	end 
+	showpage
+	} def 
+/FMFONTDEFINE { 
+	FrameDict begin
+	findfont 
+	ReEncode 
+	1 index exch 
+	definefont 
+	FMfonts 3 1 roll 
+	put
+	end 
+	} def 
+/FMFILLS {
+	FrameDict begin dup
+	array /fillvals exch def
+	dict /patCache exch def
+	end 
+	} def 
+/FMFILL {
+	FrameDict begin
+	 fillvals 3 1 roll put
+	end 
+	} def 
+/FMNORMALIZEGRAPHICS { 
+	newpath
+	1 setlinewidth
+	0 setlinecap
+	0 0 0 sethsbcolor
+	0 setgray 
+	} bind def
+/FMBEGINEPSF { 
+	end 
+	/FMEPSF save def 
+	/showpage {} def 
+% See Adobe's "PostScript Language Reference Manual, 2nd Edition", page 714.
+% "...the following operators MUST NOT be used in an EPS file:" (emphasis ours)
+	/banddevice {(banddevice) FMBADEPSF} def
+	/clear {(clear) FMBADEPSF} def
+	/cleardictstack {(cleardictstack) FMBADEPSF} def 
+	/copypage {(copypage) FMBADEPSF} def
+	/erasepage {(erasepage) FMBADEPSF} def
+	/exitserver {(exitserver) FMBADEPSF} def
+	/framedevice {(framedevice) FMBADEPSF} def
+	/grestoreall {(grestoreall) FMBADEPSF} def
+	/initclip {(initclip) FMBADEPSF} def
+	/initgraphics {(initgraphics) FMBADEPSF} def
+	/quit {(quit) FMBADEPSF} def
+	/renderbands {(renderbands) FMBADEPSF} def
+	/setglobal {(setglobal) FMBADEPSF} def
+	/setpagedevice {(setpagedevice) FMBADEPSF} def
+	/setshared {(setshared) FMBADEPSF} def
+	/startjob {(startjob) FMBADEPSF} def
+	/lettertray {(lettertray) FMBADEPSF} def
+	/letter {(letter) FMBADEPSF} def
+	/lettersmall {(lettersmall) FMBADEPSF} def
+	/11x17tray {(11x17tray) FMBADEPSF} def
+	/11x17 {(11x17) FMBADEPSF} def
+	/ledgertray {(ledgertray) FMBADEPSF} def
+	/ledger {(ledger) FMBADEPSF} def
+	/legaltray {(legaltray) FMBADEPSF} def
+	/legal {(legal) FMBADEPSF} def
+	/statementtray {(statementtray) FMBADEPSF} def
+	/statement {(statement) FMBADEPSF} def
+	/executivetray {(executivetray) FMBADEPSF} def
+	/executive {(executive) FMBADEPSF} def
+	/a3tray {(a3tray) FMBADEPSF} def
+	/a3 {(a3) FMBADEPSF} def
+	/a4tray {(a4tray) FMBADEPSF} def
+	/a4 {(a4) FMBADEPSF} def
+	/a4small {(a4small) FMBADEPSF} def
+	/b4tray {(b4tray) FMBADEPSF} def
+	/b4 {(b4) FMBADEPSF} def
+	/b5tray {(b5tray) FMBADEPSF} def
+	/b5 {(b5) FMBADEPSF} def
+	FMNORMALIZEGRAPHICS 
+	[/fy /fx /fh /fw /ury /urx /lly /llx] {exch def} forall 
+	fx fw 2 div add fy fh 2 div add  translate
+	rotate
+	fw 2 div neg fh 2 div neg translate
+	fw urx llx sub div fh ury lly sub div scale 
+	llx neg lly neg translate 
+	/FMdicttop countdictstack 1 add def 
+	/FMoptop count def 
+	} bind def
+/FMENDEPSF {
+	count -1 FMoptop {pop pop} for 
+	countdictstack -1 FMdicttop {pop end} for 
+	FMEPSF restore
+	FrameDict begin 
+	} bind def
+FrameDict begin 
+/setmanualfeed {
+%%BeginFeature *ManualFeed True
+	 statusdict /manualfeed true put
+%%EndFeature
+	} bind def
+/max {2 copy lt {exch} if pop} bind def
+/min {2 copy gt {exch} if pop} bind def
+/inch {72 mul} def
+/pagedimen { 
+	paperheight sub abs 16 lt exch 
+	paperwidth sub abs 16 lt and
+	{/papername exch def} {pop} ifelse
+	} bind def
+/setpapername { 
+	/papersizedict 14 dict def 
+	papersizedict begin
+	/papername /unknown def 
+		/Letter 8.5 inch 11.0 inch pagedimen
+		/LetterSmall 7.68 inch 10.16 inch pagedimen
+		/Tabloid 11.0 inch 17.0 inch pagedimen
+		/Ledger 17.0 inch 11.0 inch pagedimen
+		/Legal 8.5 inch 14.0 inch pagedimen
+		/Statement 5.5 inch 8.5 inch pagedimen
+		/Executive 7.5 inch 10.0 inch pagedimen
+		/A3 11.69 inch 16.5 inch pagedimen
+		/A4 8.26 inch 11.69 inch pagedimen
+		/A4Small 7.47 inch 10.85 inch pagedimen
+		/B4 10.125 inch 14.33 inch pagedimen
+		/B5 7.16 inch 10.125 inch pagedimen
+	end
+	} bind def
+/papersize {
+	papersizedict begin
+		/Letter {lettertray letter} def
+		/LetterSmall {lettertray lettersmall} def
+		/Tabloid {11x17tray 11x17} def
+		/Ledger {ledgertray ledger} def
+		/Legal {legaltray legal} def
+		/Statement {statementtray statement} def
+		/Executive {executivetray executive} def
+		/A3 {a3tray a3} def
+		/A4 {a4tray a4} def
+		/A4Small {a4tray a4small} def
+		/B4 {b4tray b4} def
+		/B5 {b5tray b5} def
+		/unknown {unknown} def
+	papersizedict dup papername known {papername} {/unknown} ifelse get
+	end
+	statusdict begin stopped end 
+	} bind def
+/manualpapersize {
+	papersizedict begin
+		/Letter {letter} def
+		/LetterSmall {lettersmall} def
+		/Tabloid {11x17} def
+		/Ledger {ledger} def
+		/Legal {legal} def
+		/Statement {statement} def
+		/Executive {executive} def
+		/A3 {a3} def
+		/A4 {a4} def
+		/A4Small {a4small} def
+		/B4 {b4} def
+		/B5 {b5} def
+		/unknown {unknown} def
+	papersizedict dup papername known {papername} {/unknown} ifelse get
+	end
+	stopped 
+	} bind def
+/desperatepapersize {
+	statusdict /setpageparams known
+		{
+		paperwidth paperheight 0 1 
+		statusdict begin
+		{setpageparams} stopped 
+		end
+		} {true} ifelse 
+	} bind def
+/papersizefailure {
+	FMAllowPaperSizeMismatch not
+		{
+(The requested paper size is not available in any currently-installed tray)
+(Edit the PS file to "FMAllowPaperSizeMismatch true" to use default tray)
+		 FMFAILURE } if
+	} def
+/DiacriticEncoding [
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /space /exclam /quotedbl
+/numbersign /dollar /percent /ampersand /quotesingle /parenleft
+/parenright /asterisk /plus /comma /hyphen /period /slash /zero /one
+/two /three /four /five /six /seven /eight /nine /colon /semicolon
+/less /equal /greater /question /at /A /B /C /D /E /F /G /H /I /J /K
+/L /M /N /O /P /Q /R /S /T /U /V /W /X /Y /Z /bracketleft /backslash
+/bracketright /asciicircum /underscore /grave /a /b /c /d /e /f /g /h
+/i /j /k /l /m /n /o /p /q /r /s /t /u /v /w /x /y /z /braceleft /bar
+/braceright /asciitilde /.notdef /Adieresis /Aring /Ccedilla /Eacute
+/Ntilde /Odieresis /Udieresis /aacute /agrave /acircumflex /adieresis
+/atilde /aring /ccedilla /eacute /egrave /ecircumflex /edieresis
+/iacute /igrave /icircumflex /idieresis /ntilde /oacute /ograve
+/ocircumflex /odieresis /otilde /uacute /ugrave /ucircumflex
+/udieresis /dagger /.notdef /cent /sterling /section /bullet
+/paragraph /germandbls /registered /copyright /trademark /acute
+/dieresis /.notdef /AE /Oslash /.notdef /.notdef /.notdef /.notdef
+/yen /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/ordfeminine /ordmasculine /.notdef /ae /oslash /questiondown
+/exclamdown /logicalnot /.notdef /florin /.notdef /.notdef
+/guillemotleft /guillemotright /ellipsis /.notdef /Agrave /Atilde
+/Otilde /OE /oe /endash /emdash /quotedblleft /quotedblright
+/quoteleft /quoteright /.notdef /.notdef /ydieresis /Ydieresis
+/fraction /currency /guilsinglleft /guilsinglright /fi /fl /daggerdbl
+/periodcentered /quotesinglbase /quotedblbase /perthousand
+/Acircumflex /Ecircumflex /Aacute /Edieresis /Egrave /Iacute
+/Icircumflex /Idieresis /Igrave /Oacute /Ocircumflex /.notdef /Ograve
+/Uacute /Ucircumflex /Ugrave /dotlessi /circumflex /tilde /macron
+/breve /dotaccent /ring /cedilla /hungarumlaut /ogonek /caron
+] def
+/ReEncode { 
+	dup 
+	length 
+	dict begin 
+	{
+	1 index /FID ne 
+		{def} 
+		{pop pop} ifelse 
+	} forall 
+	0 eq {/Encoding DiacriticEncoding def} if 
+	currentdict 
+	end 
+	} bind def
+FMPColor 
+	
+	{
+	/BEGINBITMAPCOLOR { 
+		BITMAPCOLOR} def
+	/BEGINBITMAPCOLORc { 
+		BITMAPCOLORc} def
+	/BEGINBITMAPTRUECOLOR { 
+		BITMAPTRUECOLOR } def
+	/BEGINBITMAPTRUECOLORc { 
+		BITMAPTRUECOLORc } def
+	/BEGINBITMAPCMYK { 
+		BITMAPCMYK } def
+	/BEGINBITMAPCMYKc { 
+		BITMAPCMYKc } def
+	}
+	
+	{
+	/BEGINBITMAPCOLOR { 
+		BITMAPGRAY} def
+	/BEGINBITMAPCOLORc { 
+		BITMAPGRAYc} def
+	/BEGINBITMAPTRUECOLOR { 
+		BITMAPTRUEGRAY } def
+	/BEGINBITMAPTRUECOLORc { 
+		BITMAPTRUEGRAYc } def
+	/BEGINBITMAPCMYK { 
+		BITMAPCMYKGRAY } def
+	/BEGINBITMAPCMYKc { 
+		BITMAPCMYKGRAYc } def
+	}
+ifelse
+/K { 
+	FMPrintAllColorsAsBlack {
+		dup 1 eq 2 index 1 eq and 3 index 1 eq and not
+			{7 {pop} repeat 0 0 0 1 0 0 0} if
+	} if 
+	FrameCurColors astore 
+	pop combineColor
+} bind def
+/graymode true def
+fMLevel1 {
+	/fmGetFlip {
+		fMatrix2 exch get mul 0 lt { -1 } { 1 } ifelse
+	} FmBD
+} if
+/setPatternMode {
+	fMLevel1 {
+		2 index patScreenDict exch known {
+			pop pop
+			patScreenDict exch get aload pop 
+			freq 								
+			mul									
+			5 2 roll							
+			fMatrix2 currentmatrix 1 get 0 ne {
+				3 -1 roll 90 add 3 1 roll 		
+				sflipx 1 fmGetFlip sflipy 2 fmGetFlip neg mul
+			} {  								
+				sflipx 0 fmGetFlip sflipy 3 fmGetFlip mul 
+			} ifelse
+			0 lt {exch pop} {pop} ifelse 		
+			fMNegative { 
+				{neg} fmConcatProcs 			
+			} if
+			bind
+			
+			
+			
+			systemdict /setscreen get exec		
+			/FrameCurGray exch def
+		} {
+			/bwidth  exch def
+			/bpside  exch def
+			/bstring exch def
+			/onbits 0 def  /offbits 0 def
+			freq sangle landscape {90 add} if 
+				{/ypoint exch def
+				 /xpoint exch def
+				 /xindex xpoint 1 add 2 div bpside mul cvi def
+				 /yindex ypoint 1 add 2 div bpside mul cvi def
+				 bstring yindex bwidth mul xindex 8 idiv add get
+				 1 7 xindex 8 mod sub bitshift and 0 ne fMNegative {not} if
+				 {/onbits  onbits  1 add def 1}
+				 {/offbits offbits 1 add def 0}
+				 ifelse
+				}
+				setscreen
+			offbits offbits onbits add div fMNegative {1.0 exch sub} if
+			/FrameCurGray exch def
+		} ifelse
+	} { 
+		pop pop
+		dup patCache exch known {
+			patCache exch get
+		} { 
+			dup
+			patDict /bstring 3 -1 roll put
+			patDict 
+			9 PatFreq screenIndex get div dup matrix scale
+			makepattern
+			dup 
+			patCache 4 -1 roll 3 -1 roll put
+		} ifelse
+		/FrameCurGray 0 def
+		/FrameCurPat exch def
+	} ifelse
+	/graymode false def
+	combineColor
+} bind def
+/setGrayScaleMode {
+	graymode not {
+		/graymode true def
+		fMLevel1 {
+			setCurrentScreen
+		} if
+	} if
+	/FrameCurGray exch def
+	combineColor
+} bind def
+/normalize {
+	transform round exch round exch itransform
+	} bind def
+/dnormalize {
+	dtransform round exch round exch idtransform
+	} bind def
+/lnormalize { 
+	0 dtransform exch cvi 2 idiv 2 mul 1 add exch idtransform pop
+	} bind def
+/H { 
+	lnormalize setlinewidth
+	} bind def
+/Z {
+	setlinecap
+	} bind def
+	
+/PFill {
+	graymode fMLevel1 or not {
+		gsave 1 setgray eofill grestore
+	} if
+} bind def
+/PStroke {
+	graymode fMLevel1 or not {
+		gsave 1 setgray stroke grestore
+	} if
+	stroke
+} bind def
+/X { 
+	fillvals exch get
+	dup type /stringtype eq
+	{8 1 setPatternMode} 
+	{setGrayScaleMode}
+	ifelse
+	} bind def
+/V { 
+	PFill gsave eofill grestore
+	} bind def
+/Vclip {
+	clip
+	} bind def
+/Vstrk {
+	currentlinewidth exch setlinewidth PStroke setlinewidth
+	} bind def
+/N { 
+	PStroke
+	} bind def
+/Nclip {
+	strokepath clip newpath
+	} bind def
+/Nstrk {
+	currentlinewidth exch setlinewidth PStroke setlinewidth
+	} bind def
+/M {newpath moveto} bind def
+/E {lineto} bind def
+/D {curveto} bind def
+/O {closepath} bind def
+/L { 
+ 	/n exch def
+	newpath
+	normalize
+	moveto 
+	2 1 n {pop normalize lineto} for
+	} bind def
+/Y { 
+	L 
+	closepath
+	} bind def
+/R { 
+	/y2 exch def
+	/x2 exch def
+	/y1 exch def
+	/x1 exch def
+	x1 y1
+	x2 y1
+	x2 y2
+	x1 y2
+	4 Y 
+	} bind def
+/rarc 
+	{rad 
+	 arcto
+	} bind def
+/RR { 
+	/rad exch def
+	normalize
+	/y2 exch def
+	/x2 exch def
+	normalize
+	/y1 exch def
+	/x1 exch def
+	mark
+	newpath
+	{
+	x1 y1 rad add moveto
+	x1 y2 x2 y2 rarc
+	x2 y2 x2 y1 rarc
+	x2 y1 x1 y1 rarc
+	x1 y1 x1 y2 rarc
+	closepath
+	} stopped {x1 y1 x2 y2 R} if 
+	cleartomark
+	} bind def
+/RRR { 
+	/rad exch def
+	normalize /y4 exch def /x4 exch def
+	normalize /y3 exch def /x3 exch def
+	normalize /y2 exch def /x2 exch def
+	normalize /y1 exch def /x1 exch def
+	newpath
+	normalize moveto 
+	mark
+	{
+	x2 y2 x3 y3 rarc
+	x3 y3 x4 y4 rarc
+	x4 y4 x1 y1 rarc
+	x1 y1 x2 y2 rarc
+	closepath
+	} stopped
+	 {x1 y1 x2 y2 x3 y3 x4 y4 newpath moveto lineto lineto lineto closepath} if
+	cleartomark
+	} bind def
+/C { 
+	grestore
+	gsave
+	R 
+	clip
+	setCurrentScreen
+} bind def
+/CP { 
+	grestore
+	gsave
+	Y 
+	clip
+	setCurrentScreen
+} bind def
+/F { 
+	FMfonts exch get
+	FMpointsize scalefont
+	setfont
+	} bind def
+/Q { 
+	/FMpointsize exch def
+	F 
+	} bind def
+/T { 
+	moveto show
+	} bind def
+/RF { 
+	rotate
+	0 ne {-1 1 scale} if
+	} bind def
+/TF { 
+	gsave
+	moveto 
+	RF
+	show
+	grestore
+	} bind def
+/P { 
+	moveto
+	0 32 3 2 roll widthshow
+	} bind def
+/PF { 
+	gsave
+	moveto 
+	RF
+	0 32 3 2 roll widthshow
+	grestore
+	} bind def
+/S { 
+	moveto
+	0 exch ashow
+	} bind def
+/SF { 
+	gsave
+	moveto
+	RF
+	0 exch ashow
+	grestore
+	} bind def
+/B { 
+	moveto
+	0 32 4 2 roll 0 exch awidthshow
+	} bind def
+/BF { 
+	gsave
+	moveto
+	RF
+	0 32 4 2 roll 0 exch awidthshow
+	grestore
+	} bind def
+/G { 
+	gsave
+	newpath
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath 
+	PFill fill
+	grestore
+	} bind def
+/Gstrk {
+	savematrix
+    newpath
+    2 index 2 div add exch 3 index 2 div sub exch 
+    normalize 2 index 2 div sub exch 3 index 2 div add exch 
+    translate
+    scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    restorematrix
+    currentlinewidth exch setlinewidth PStroke setlinewidth
+    } bind def
+/Gclip { 
+	newpath
+	savematrix
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath 
+	clip newpath
+	restorematrix
+	} bind def
+/GG { 
+	gsave
+	newpath
+	normalize translate 0.0 0.0 moveto 
+	rotate 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath
+	PFill
+	fill
+	grestore
+	} bind def
+/GGclip { 
+	savematrix
+	newpath
+    normalize translate 0.0 0.0 moveto 
+    rotate 
+    dnormalize scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    closepath
+	clip newpath
+	restorematrix
+	} bind def
+/GGstrk { 
+	savematrix
+    newpath
+    normalize translate 0.0 0.0 moveto 
+    rotate 
+    dnormalize scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    closepath 
+	restorematrix
+    currentlinewidth exch setlinewidth PStroke setlinewidth
+	} bind def
+/A { 
+	gsave
+	savematrix
+	newpath
+	2 index 2 div add exch 3 index 2 div sub exch 
+	normalize 2 index 2 div sub exch 3 index 2 div add exch 
+	translate 
+	scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	restorematrix
+	PStroke
+	grestore
+	} bind def
+/Aclip {
+	newpath
+	savematrix
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath 
+	strokepath clip newpath
+	restorematrix
+} bind def
+/Astrk {
+	Gstrk
+} bind def
+/AA { 
+	gsave
+	savematrix
+	newpath
+	
+	3 index 2 div add exch 4 index 2 div sub exch 
+	
+	normalize 3 index 2 div sub exch 4 index 2 div add exch
+	translate 
+	rotate 
+	scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	restorematrix
+	PStroke
+	grestore
+	} bind def
+/AAclip {
+	savematrix
+	newpath
+    normalize translate 0.0 0.0 moveto 
+    rotate 
+    dnormalize scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    closepath
+	strokepath clip newpath
+	restorematrix
+} bind def
+/AAstrk {
+	GGstrk
+} bind def
+/BEGINPRINTCODE { 
+	/FMdicttop countdictstack 1 add def 
+	/FMoptop count 7 sub def 
+	/FMsaveobject save def
+	userdict begin 
+	/showpage {} def 
+	FMNORMALIZEGRAPHICS 
+	3 index neg 3 index neg translate
+	} bind def
+/ENDPRINTCODE {
+	count -1 FMoptop {pop pop} for 
+	countdictstack -1 FMdicttop {pop end} for 
+	FMsaveobject restore 
+	} bind def
+/gn { 
+	0 
+	{	46 mul 
+		cf read pop 
+		32 sub 
+		dup 46 lt {exit} if 
+		46 sub add 
+		} loop
+	add 
+	} bind def
+/cfs { 
+	/str sl string def 
+	0 1 sl 1 sub {str exch val put} for 
+	str def 
+	} bind def
+/ic [ 
+	0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0223
+	0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0223
+	0
+	{0 hx} {1 hx} {2 hx} {3 hx} {4 hx} {5 hx} {6 hx} {7 hx} {8 hx} {9 hx}
+	{10 hx} {11 hx} {12 hx} {13 hx} {14 hx} {15 hx} {16 hx} {17 hx} {18 hx}
+	{19 hx} {gn hx} {0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12}
+	{13} {14} {15} {16} {17} {18} {19} {gn} {0 wh} {1 wh} {2 wh} {3 wh}
+	{4 wh} {5 wh} {6 wh} {7 wh} {8 wh} {9 wh} {10 wh} {11 wh} {12 wh}
+	{13 wh} {14 wh} {gn wh} {0 bl} {1 bl} {2 bl} {3 bl} {4 bl} {5 bl} {6 bl}
+	{7 bl} {8 bl} {9 bl} {10 bl} {11 bl} {12 bl} {13 bl} {14 bl} {gn bl}
+	{0 fl} {1 fl} {2 fl} {3 fl} {4 fl} {5 fl} {6 fl} {7 fl} {8 fl} {9 fl}
+	{10 fl} {11 fl} {12 fl} {13 fl} {14 fl} {gn fl}
+	] def
+/ms { 
+	/sl exch def 
+	/val 255 def 
+	/ws cfs 
+	/im cfs 
+	/val 0 def 
+	/bs cfs 
+	/cs cfs 
+	} bind def
+400 ms 
+/ip { 
+	is 
+	0 
+	cf cs readline pop 
+	{	ic exch get exec 
+		add 
+		} forall 
+	pop 
+	
+	} bind def
+/rip { 
+	   
+	  
+	  bis ris copy pop 
+      is
+      0
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+	  pop pop 
+	  ris gis copy pop 
+	  dup is exch 
+	  
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+	  pop pop
+	  gis bis copy pop 
+	  dup add is exch 
+	  
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+      pop 
+      
+      } bind def
+/rip4 { 
+	   
+	  
+	  kis cis copy pop 
+      is
+      0
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+	  pop pop 
+	  cis mis copy pop 
+	  dup is exch 
+	  
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+	  pop pop
+	  mis yis copy pop 
+	  dup dup add is exch 
+	  
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+	  pop pop
+	  yis kis copy pop 
+	  3 mul is exch 
+	  
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+      pop 
+      
+      } bind def
+/wh { 
+	/len exch def 
+	/pos exch def 
+	ws 0 len getinterval im pos len getinterval copy pop
+	pos len 
+	} bind def
+/bl { 
+	/len exch def 
+	/pos exch def 
+	bs 0 len getinterval im pos len getinterval copy pop
+	pos len 
+	} bind def
+/s1 1 string def
+/fl { 
+	/len exch def 
+	/pos exch def 
+	/val cf s1 readhexstring pop 0 get def
+	pos 1 pos len add 1 sub {im exch val put} for
+	pos len 
+	} bind def
+/hx { 
+	3 copy getinterval 
+	cf exch readhexstring pop pop 
+	} bind def
+/wbytes { 
+      dup dup
+      8 gt { pop 8 idiv mul }
+      { 8 eq {pop} {1 eq {7 add 8 idiv} {3 add 4 idiv} ifelse} ifelse } ifelse
+	} bind def
+/BEGINBITMAPBWc { 
+	1 {} COMMONBITMAPc
+	} bind def
+/BEGINBITMAPGRAYc { 
+	8 {} COMMONBITMAPc
+	} bind def
+/BEGINBITMAP2BITc { 
+	2 {} COMMONBITMAPc
+	} bind def
+/COMMONBITMAPc { 
+		 
+	/cvtProc exch def
+	/depth exch def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/height exch def /width exch def
+	/lb width depth wbytes def 
+	sl lb lt {lb ms} if 
+	/bitmapsave save def 
+	cvtProc                
+	/is im 0 lb getinterval def 
+	ws 0 lb getinterval is copy pop 
+	/cf currentfile def 
+	width height depth [width 0 0 height neg 0 height] 
+	{ip} image 
+	bitmapsave restore 
+	grestore
+	} bind def
+/BEGINBITMAPBW { 
+	1 {} COMMONBITMAP
+	} bind def
+/BEGINBITMAPGRAY { 
+	8 {} COMMONBITMAP
+	} bind def
+/BEGINBITMAP2BIT { 
+	2 {} COMMONBITMAP
+	} bind def
+/COMMONBITMAP { 
+	/cvtProc exch def
+	/depth exch def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/height exch def /width exch def
+	/bitmapsave save def 
+	cvtProc              
+	/is width depth wbytes string def
+	/cf currentfile def 
+	width height depth [width 0 0 height neg 0 height] 
+	{cf is readhexstring pop} image
+	bitmapsave restore 
+	grestore
+	} bind def
+/ngrayt 256 array def
+/nredt 256 array def
+/nbluet 256 array def
+/ngreent 256 array def
+fMLevel1 {
+/colorsetup {
+	currentcolortransfer
+	/gryt exch def
+	/blut exch def
+	/grnt exch def
+	/redt exch def
+	0 1 255 {
+		/indx exch def
+		/cynu 1 red indx get 255 div sub def
+		/magu 1 green indx get 255 div sub def
+		/yelu 1 blue indx get 255 div sub def
+		/kk cynu magu min yelu min def
+		/u kk currentundercolorremoval exec def
+%		/u 0 def
+		nredt indx 1 0 cynu u sub max sub redt exec put
+		ngreent indx 1 0 magu u sub max sub grnt exec put
+		nbluet indx 1 0 yelu u sub max sub blut exec put
+		ngrayt indx 1 kk currentblackgeneration exec sub gryt exec put
+	} for
+	{255 mul cvi nredt exch get}
+	{255 mul cvi ngreent exch get}
+	{255 mul cvi nbluet exch get}
+	{255 mul cvi ngrayt exch get}
+	setcolortransfer
+	{pop 0} setundercolorremoval
+	{} setblackgeneration
+	} bind def
+}
+{
+/colorSetup2 {
+	[ /Indexed /DeviceRGB 255 
+		{dup red exch get 255 div 
+		 exch dup green exch get 255 div 
+		 exch blue exch get 255 div}
+	] setcolorspace
+} bind def
+} ifelse
+/fakecolorsetup {
+	/tran 256 string def
+	0 1 255 {/indx exch def 
+		tran indx
+		red indx get 77 mul
+		green indx get 151 mul
+		blue indx get 28 mul
+		add add 256 idiv put} for
+	currenttransfer
+	{255 mul cvi tran exch get 255.0 div}
+	exch fmConcatProcs settransfer
+} bind def
+/BITMAPCOLOR { 
+	/depth 8 def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/height exch def /width exch def
+	/bitmapsave save def
+	fMLevel1 {	
+		colorsetup
+		/is width depth wbytes string def
+		/cf currentfile def 
+		width height depth [width 0 0 height neg 0 height] 
+		{cf is readhexstring pop} {is} {is} true 3 colorimage 
+	} {
+		colorSetup2
+		/is width depth wbytes string def
+		/cf currentfile def 
+		7 dict dup begin
+			/ImageType 1 def
+			/Width width def
+			/Height height def
+			/ImageMatrix [width 0 0 height neg 0 height] def
+			/DataSource {cf is readhexstring pop} bind def
+			/BitsPerComponent depth def
+			/Decode [0 255] def
+		end image	
+	} ifelse
+	bitmapsave restore 
+	grestore
+	} bind def
+/BITMAPCOLORc { 
+	/depth 8 def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/height exch def /width exch def
+	/lb width depth wbytes def 
+	sl lb lt {lb ms} if 
+	/bitmapsave save def 
+	fMLevel1 {	
+		colorsetup
+		/is im 0 lb getinterval def 
+		ws 0 lb getinterval is copy pop 
+		/cf currentfile def 
+		width height depth [width 0 0 height neg 0 height] 
+		{ip} {is} {is} true 3 colorimage
+	} {
+		colorSetup2
+		/is im 0 lb getinterval def 
+		ws 0 lb getinterval is copy pop 
+		/cf currentfile def 
+		7 dict dup begin
+			/ImageType 1 def
+			/Width width def
+			/Height height def
+			/ImageMatrix [width 0 0 height neg 0 height] def
+			/DataSource {ip} bind def
+			/BitsPerComponent depth def
+			/Decode [0 255] def
+		end image	
+	} ifelse
+	bitmapsave restore 
+	grestore
+	} bind def
+/BITMAPTRUECOLORc { 
+	/depth 24 def
+        gsave
+ 	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/height exch def /width exch def
+	/lb width depth wbytes def 
+	sl lb lt {lb ms} if 
+	/bitmapsave save def 
+        
+	/is im 0 lb getinterval def	
+	/ris im 0 width getinterval def	
+	/gis im width width getinterval def	
+	/bis im width 2 mul width getinterval def 
+        
+	ws 0 lb getinterval is copy pop 
+	/cf currentfile def 
+	width height 8 [width 0 0 height neg 0 height] 
+	{width rip pop ris} {gis} {bis} true 3 colorimage
+	bitmapsave restore 
+	grestore
+	} bind def
+/BITMAPCMYKc { 
+	/depth 32 def
+        gsave
+ 	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/height exch def /width exch def
+	/lb width depth wbytes def 
+	sl lb lt {lb ms} if 
+	/bitmapsave save def 
+        
+	/is im 0 lb getinterval def	
+	/cis im 0 width getinterval def	
+	/mis im width width getinterval def	
+	/yis im width 2 mul width getinterval def 
+	/kis im width 3 mul width getinterval def 
+        
+	ws 0 lb getinterval is copy pop 
+	/cf currentfile def 
+	width height 8 [width 0 0 height neg 0 height] 
+	{width rip4 pop cis} {mis} {yis} {kis} true 4 colorimage
+	bitmapsave restore 
+	grestore
+	} bind def
+/BITMAPTRUECOLOR { 
+        gsave
+		
+		3 index 2 div add exch	
+		4 index 2 div add exch	
+		translate		
+		rotate			
+		1 index 2 div neg	
+		1 index 2 div neg	
+		translate		
+		scale			
+		/height exch def /width exch def
+        /bitmapsave save def 
+        /is width string def
+        /gis width string def
+        /bis width string def
+        /cf currentfile def 
+        width height 8 [width 0 0 height neg 0 height] 
+        { cf is readhexstring pop } 
+        { cf gis readhexstring pop } 
+        { cf bis readhexstring pop } 
+        true 3 colorimage 
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPCMYK { 
+        gsave
+		
+		3 index 2 div add exch	
+		4 index 2 div add exch	
+		translate		
+		rotate			
+		1 index 2 div neg	
+		1 index 2 div neg	
+		translate		
+		scale			
+		/height exch def /width exch def
+        /bitmapsave save def 
+        /is width string def
+        /mis width string def
+        /yis width string def
+        /kis width string def
+        /cf currentfile def 
+        width height 8 [width 0 0 height neg 0 height] 
+        { cf is readhexstring pop } 
+        { cf mis readhexstring pop } 
+        { cf yis readhexstring pop } 
+        { cf kis readhexstring pop } 
+        true 4 colorimage 
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPTRUEGRAYc { 
+	/depth 24 def
+        gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/height exch def /width exch def
+	/lb width depth wbytes def 
+	sl lb lt {lb ms} if 
+        /bitmapsave save def 
+        
+	/is im 0 lb getinterval def	
+	/ris im 0 width getinterval def	
+	/gis im width width getinterval def	
+	/bis im width 2 mul width getinterval def 
+        ws 0 lb getinterval is copy pop 
+        /cf currentfile def 
+        width height 8 [width 0 0 height neg 0 height] 
+        {width rip pop ris gis bis width gray} image
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPCMYKGRAYc { 
+	/depth 32 def
+        gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/height exch def /width exch def
+	/lb width depth wbytes def 
+	sl lb lt {lb ms} if 
+        /bitmapsave save def 
+        
+	/is im 0 lb getinterval def	
+	/cis im 0 width getinterval def	
+	/mis im width width getinterval def	
+	/yis im width 2 mul width getinterval def 
+	/kis im width 3 mul width getinterval def 
+        ws 0 lb getinterval is copy pop 
+        /cf currentfile def 
+        width height 8 [width 0 0 height neg 0 height] 
+        {width rip pop cis mis yis kis width cgray} image
+        bitmapsave restore 
+        grestore
+        } bind def
+/cgray { 
+        /ww exch def
+        /k exch def
+        /y exch def
+        /m exch def
+        /c exch def
+        0 1 ww 1 sub { /i exch def c i get m i get y i get k i get CMYKtoRGB
+				.144 mul 3 1 roll .587 mul 3 1 roll .299 mul add add
+				c i 3 -1 roll floor cvi put } for
+        c
+ 		} bind def
+/gray { 
+        /ww exch def
+        /b exch def
+        /g exch def
+        /r exch def
+        0 1 ww 1 sub { /i exch def r i get .299 mul g i get .587 mul
+			b i get .114 mul add add r i 3 -1 roll floor cvi put } for
+        r
+        } bind def
+/BITMAPTRUEGRAY { 
+        gsave
+		
+		3 index 2 div add exch	
+		4 index 2 div add exch	
+		translate		
+		rotate			
+		1 index 2 div neg	
+		1 index 2 div neg	
+		translate		
+		scale			
+		/height exch def /width exch def
+        /bitmapsave save def 
+        /is width string def
+        /gis width string def
+        /bis width string def
+        /cf currentfile def 
+        width height 8 [width 0 0 height neg 0 height] 
+        { cf is readhexstring pop 
+          cf gis readhexstring pop 
+          cf bis readhexstring pop width gray}  image
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPCMYKGRAY { 
+        gsave
+		
+		3 index 2 div add exch	
+		4 index 2 div add exch	
+		translate		
+		rotate			
+		1 index 2 div neg	
+		1 index 2 div neg	
+		translate		
+		scale			
+		/height exch def /width exch def
+        /bitmapsave save def 
+        /is width string def
+        /yis width string def
+        /mis width string def
+        /kis width string def
+        /cf currentfile def 
+        width height 8 [width 0 0 height neg 0 height] 
+        { cf is readhexstring pop 
+          cf mis readhexstring pop 
+          cf yis readhexstring pop 
+          cf kis readhexstring pop width cgray}  image
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPGRAY { 
+	8 {fakecolorsetup} COMMONBITMAP
+	} bind def
+/BITMAPGRAYc { 
+	8 {fakecolorsetup} COMMONBITMAPc
+	} bind def
+/ENDBITMAP {
+	} bind def
+end 
+	/ALDmatrix matrix def ALDmatrix currentmatrix pop
+/StartALD {
+	/ALDsave save def
+	 savematrix
+	 ALDmatrix setmatrix
+	} bind def
+/InALD {
+	 restorematrix
+	} bind def
+/DoneALD {
+	 ALDsave restore
+	} bind def
+/I { setdash } bind def
+/J { [] 0 setdash } bind def
+%%EndProlog
+%%BeginSetup
+(5.0) FMVERSION
+1 1 0 0 595.3 841.9 0 1 12 FMDOCUMENT
+0 0 /Helvetica-Bold FMFONTDEFINE
+1 0 /Times-Roman FMFONTDEFINE
+2 0 /Times-Bold FMFONTDEFINE
+3 0 /Times-Italic FMFONTDEFINE
+4 0 /Courier-Bold FMFONTDEFINE
+32 FMFILLS
+0 0 FMFILL
+1 0.1 FMFILL
+2 0.3 FMFILL
+3 0.5 FMFILL
+4 0.7 FMFILL
+5 0.9 FMFILL
+6 0.97 FMFILL
+7 1 FMFILL
+8 <0f1e3c78f0e1c387> FMFILL
+9 <0f87c3e1f0783c1e> FMFILL
+10 <cccccccccccccccc> FMFILL
+11 <ffff0000ffff0000> FMFILL
+12 <8142241818244281> FMFILL
+13 <03060c183060c081> FMFILL
+14 <8040201008040201> FMFILL
+16 1 FMFILL
+17 0.9 FMFILL
+18 0.7 FMFILL
+19 0.5 FMFILL
+20 0.3 FMFILL
+21 0.1 FMFILL
+22 0.03 FMFILL
+23 0 FMFILL
+24 <f0e1c3870f1e3c78> FMFILL
+25 <f0783c1e0f87c3e1> FMFILL
+26 <3333333333333333> FMFILL
+27 <0000ffff0000ffff> FMFILL
+28 <7ebddbe7e7dbbd7e> FMFILL
+29 <fcf9f3e7cf9f3f7e> FMFILL
+30 <7fbfdfeff7fbfdfe> FMFILL
+%%EndSetup
+%%Page: "1" 1
+%%BeginPaperSize: A4
+%%EndPaperSize
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+J
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 8 Q
+(Dylan Threads Librar) 402.19 766.62 T
+(y Extensions) 482.3 766.62 T
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+0 9 Q
+(December 4, 1996 12:16 pm) 63.65 84.9 T
+0 10 Q
+(1) 526.09 84.9 T
+1 26 Q
+-0.18 (Threads Library Extensions) 155.56 727.62 S
+2 12 Q
+(T) 268.03 679.45 T
+(ony Mann) 274.93 679.45 T
+(Harlequin Ltd.) 258.97 654.45 T
+0 15 Q
+(1.) 63.65 612.45 T
+(Intr) 90.65 612.45 T
+(oduction) 114.51 612.45 T
+1 11 Q
+0.26 (This document describes some e) 63.65 590.12 P
+0.26 (xtensions to the Dylan threads library) 207.52 590.12 P
+0.26 (. These e) 373.42 590.12 P
+0.26 (xtensions are implemented) 413.19 590.12 P
+-0.22 (by Harlequin, and may be part of other Dylan implementations too. Ho) 63.65 577.12 P
+-0.22 (we) 373.45 577.12 P
+-0.22 (v) 386 577.12 P
+-0.22 (er) 391.33 577.12 P
+-0.22 (, the) 399.44 577.12 P
+-0.22 (y ha) 417.99 577.12 P
+-0.22 (v) 436.18 577.12 P
+-0.22 (e not been agreed by) 441.52 577.12 P
+-0.25 (CMU, and hence are documented separately) 63.65 564.12 P
+-0.25 (. The document also pro) 256.55 564.12 P
+-0.25 (vides some ideas for future e) 362 564.12 P
+-0.25 (xtensions,) 487.34 564.12 P
+-0.08 (and discusses the implementation of threads in general on v) 63.65 551.12 P
+-0.08 (arious platforms that may be of interest to Har-) 325.13 551.12 P
+(lequin.) 63.65 538.12 T
+(This document should be read in conjunction with the documentation on the standard threads library) 63.65 513.12 T
+(.) 504.71 513.12 T
+0.28 0.11 (All implemented bindings described in this document are e) 63.65 488.12 B
+0.28 0.11 (xported from module) 331.51 488.12 B
+2 F
+0.28 0.11 (thr) 430.73 488.12 B
+0.28 0.11 (eads-extensions) 445.52 488.12 B
+1 F
+0.28 0.11 ( in) 519.85 488.12 B
+-0.2 (library) 63.65 475.12 P
+2 F
+-0.2 (thr) 95.52 475.12 P
+-0.2 (eads) 109.99 475.12 P
+1 F
+-0.2 (. As an additional con) 130.76 475.12 P
+-0.2 (v) 225.74 475.12 P
+-0.2 (enience, the module) 231.08 475.12 P
+2 F
+-0.2 (extended-thr) 321.5 475.12 P
+-0.2 (eads) 381.79 475.12 P
+1 F
+-0.2 ( in library) 402.57 475.12 P
+2 F
+-0.2 (thr) 448.09 475.12 P
+-0.2 (eads) 462.56 475.12 P
+1 F
+-0.2 ( e) 483.34 475.12 P
+-0.2 (xports all) 490.6 475.12 P
+(documented bindings from both the) 63.65 462.12 T
+2 F
+(thr) 223.45 462.12 T
+(eads) 237.91 462.12 T
+1 F
+( and) 258.69 462.12 T
+2 F
+(thr) 280.07 462.12 T
+(eads-extensions) 294.54 462.12 T
+1 F
+( modules.) 367.26 462.12 T
+0 15 Q
+(2.) 63.65 420.45 T
+(Ac) 90.65 420.45 T
+(kno) 109.52 420.45 T
+(wledg) 135.96 420.45 T
+(ements) 178.62 420.45 T
+1 12 Q
+(The follo) 63.65 393.45 T
+(wing people ha) 107.68 393.45 T
+(v) 180.76 393.45 T
+(e been instrumental in the production of this document: P) 186.58 393.45 T
+(aul Haahr) 462.05 393.45 T
+(,) 508.55 393.45 T
+(K) 63.65 379.45 T
+(eith Playford and T) 72.01 379.45 T
+(uck) 164.46 379.45 T
+(er W) 181.67 379.45 T
+(ithington.) 204.84 379.45 T
+0 15 Q
+(3.) 63.65 337.45 T
+(Multi-thread Semantics) 90.65 337.45 T
+0 12 Q
+(3.1) 63.65 298.45 T
+(Explicit Sync) 90.65 298.45 T
+(hr) 165.23 298.45 T
+(onization) 176.99 298.45 T
+1 11 Q
+0.28 0.09 (The threads library pro) 63.65 280.12 B
+0.28 0.09 (vides a lo) 167.52 280.12 B
+0.28 0.09 (w-le) 210.88 280.12 B
+0.28 0.09 (v) 230.51 280.12 B
+0.28 0.09 (el side ef) 235.94 280.12 B
+0.28 0.09 (fect synchronization function which ensures that all side) 276.84 280.12 B
+-0.25 (ef) 63.65 267.12 P
+-0.25 (fects which ha) 71.92 267.12 P
+-0.25 (v) 134.74 267.12 P
+-0.25 (e been performed within one thread are also visible within all other threads. On a strongly) 140.07 267.12 P
+(ordered machine this function might le) 63.65 254.12 T
+(gitimately be implemented as a null operation.) 234.27 254.12 T
+0.28 0.29 (In addition, the library pro) 63.65 229.12 B
+0.28 0.29 (vides a sequencing function. This constrains the compiler not to re-order) 189.01 229.12 B
+-0.2 (accesses to resources which are potentially visible from other threads. The compiler must not re-order such) 63.65 216.12 P
+(an access relati) 63.65 203.12 T
+(v) 129.96 203.12 T
+(e to the call to the sequencing function.) 135.29 203.12 T
+0 12 Q
+(3.2) 63.65 165.45 T
+(Conditional Update) 90.65 165.45 T
+1 11 Q
+-0.25 (In addition to the synchronization primiti) 63.65 140.12 P
+-0.25 (v) 243.34 140.12 P
+-0.25 (es, the library pro) 248.67 140.12 P
+-0.25 (vides a conditional update mechanism which is) 325.36 140.12 P
+-0.14 (not sychronized, b) 63.65 127.12 P
+-0.14 (ut which tests whether the v) 144.12 127.12 P
+-0.14 (alue in a v) 266.28 127.12 P
+-0.14 (ariable or slot has changed and atomically updates) 311.12 127.12 P
+(it if not.) 63.65 114.12 T
+FMENDPAGE
+%%EndPage: "1" 1
+%%Page: "2" 2
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Dylan Threads Librar) 402.19 766.62 T
+(y Extensions) 482.3 766.62 T
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+N
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+0 10 Q
+(2) 63.65 84.9 T
+0 9 Q
+(December 4, 1996 12:16 pm) 414.09 84.9 T
+1 11 Q
+-0.13 (By using conditional updates, a thread can con\336rm \050or den) 63.65 737.62 P
+-0.13 (y\051 that there has been no interference from other) 320.12 737.62 P
+0.28 0.07 (threads, without an) 63.65 724.62 B
+0.28 0.07 (y need for a blocking operation. This is more ef) 149.34 724.62 B
+0.28 0.07 (f) 364.37 724.62 B
+0.28 0.07 (icient for those circumstances where) 367.5 724.62 B
+(interference is not disastrous and it is possible to re-compute the update.) 63.65 711.62 T
+0.28 0.05 (F) 63.65 686.62 B
+0.28 0.05 (or e) 69.64 686.62 B
+0.28 0.05 (xample, a function which increments the v) 86.74 686.62 B
+0.28 0.05 (alue of a v) 277.27 686.62 B
+0.28 0.05 (ariable might use a conditional update to store) 324.44 686.62 B
+0.28 0.08 (the ne) 63.65 673.62 B
+0.28 0.08 (w v) 90.72 673.62 B
+0.28 0.08 (alue into place, in order to guarantee a numeric sequence for the v) 107.16 673.62 B
+0.28 0.08 (ariable. In this e) 406.2 673.62 B
+0.28 0.08 (xample, the) 479.22 673.62 B
+(function might loop until the conditional update has succeeded.) 63.65 660.62 T
+0.27 (It is possible to achie) 63.65 635.62 P
+0.27 (v) 157.34 635.62 P
+0.27 (e synchronization by looping until a conditional update is successful, and then syn-) 162.68 635.62 P
+0.13 (chronizing side ef) 63.65 622.62 P
+0.13 (fects. This is not recommended, because the) 142.45 622.62 P
+3 F
+0.13 (b) 340.42 622.62 P
+0.13 (usy-waiting) 345.7 622.62 P
+1 F
+0.13 ( state during the loop may dis-) 397.03 622.62 P
+-0.01 (allo) 63.65 609.62 P
+-0.01 (w other threads from running. Normally) 79.87 609.62 P
+-0.01 (, conditional update should be used only when it is e) 255.7 609.62 P
+-0.01 (xpected to) 486.14 609.62 P
+0.11 (succeed. If it is lik) 63.65 596.62 P
+0.11 (ely that the conditional update might f) 144.94 596.62 P
+0.11 (ail multiple times around the loop, then either the) 313.53 596.62 P
+-0.03 (number of times around the loop should be limited, or a blocking function from the) 63.65 583.62 P
+2 F
+-0.03 (thr) 432.3 583.62 P
+-0.03 (eads) 446.76 583.62 P
+1 F
+-0.03 ( library should) 467.54 583.62 P
+(be used within the loop.) 63.65 570.62 T
+0 15 Q
+(4.) 63.65 528.95 T
+(Librar) 90.65 528.95 T
+(y Ref) 133.31 528.95 T
+(erence) 169.83 528.95 T
+0 12 Q
+(4.1) 63.65 489.95 T
+(Lo) 90.65 489.95 T
+(w-le) 105.13 489.95 T
+(vel sync) 128.29 489.95 T
+(hr) 175.54 489.95 T
+(onization) 187.3 489.95 T
+2 11 Q
+(synchronize-side-effects) 63.65 460.62 T
+1 F
+([Function]) 485.21 460.62 T
+3 F
+(Signatur) 81.65 435.62 T
+(e) 119.14 435.62 T
+2 F
+(\050\051 => \050\051) 99.65 416.62 T
+3 F
+(Description) 81.65 391.62 T
+1 F
+0.28 0.04 (Ensures that all side ef) 99.65 369.62 B
+0.28 0.04 (fects which ha) 201.11 369.62 B
+0.28 0.04 (v) 265.58 369.62 B
+0.28 0.04 (e been performed within the calling thread are also visible) 270.96 369.62 B
+0.28 0 (within all other threads, and vice-v) 99.65 356.62 B
+0.28 0 (ersa. On a strongly ordered machine this function might le) 254.28 356.62 B
+0.28 0 (giti-) 513.3 356.62 B
+0.28 0.1 (mately be implemented as a null operation. On a weakly ordered machine, this might be imple-) 99.65 343.62 B
+(mented as a memory cache \337ushing operation.) 99.65 330.62 T
+0.28 0.02 (Some of the standard synchronization functions in the threads library also ensure the visibility of) 99.65 308.62 B
+(side ef) 99.65 295.62 T
+(fects, as if with a call to this function. This is de\336ned to happen as follo) 128.39 295.62 T
+(ws:) 442.51 295.62 T
+4 F
+(\245) 99.65 276.62 T
+1 F
+(Immediately before) 113.4 276.62 T
+2 F
+(join-thr) 202.6 276.62 T
+(ead) 239.06 276.62 T
+1 F
+( returns) 255.56 276.62 T
+4 F
+(\245) 99.65 260.62 T
+1 F
+(Before) 113.4 260.62 T
+2 F
+(thr) 146.08 260.62 T
+(ead-yield) 160.55 260.62 T
+1 F
+( yields control) 203.32 260.62 T
+4 F
+(\245) 99.65 244.62 T
+1 F
+(After) 113.4 244.62 T
+2 F
+(wait-f) 139.36 244.62 T
+(or) 166.57 244.62 T
+1 F
+( achie) 176.96 244.62 T
+(v) 202.64 244.62 T
+(es synchronization \050for all methods pro) 207.98 244.62 T
+(vided by the threads library\051) 380.42 244.62 T
+4 F
+(\245) 99.65 228.62 T
+1 F
+(On entry to) 113.4 228.62 T
+2 F
+(r) 166.26 228.62 T
+(elease) 170.94 228.62 T
+1 F
+(\050for all methods pro) 201.18 228.62 T
+(vided by the threads library\051) 288.7 228.62 T
+4 F
+(\245) 99.65 212.62 T
+1 F
+(On entry to) 113.4 212.62 T
+2 F
+( r) 163.51 212.62 T
+(elease-all) 170.94 212.62 T
+FMENDPAGE
+%%EndPage: "2" 2
+%%Page: "3" 3
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 8 Q
+(Dylan Threads Librar) 402.19 766.62 T
+(y Extensions) 482.3 766.62 T
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+0 9 Q
+(December 4, 1996 12:16 pm) 63.65 84.9 T
+0 10 Q
+(3) 526.09 84.9 T
+2 11 Q
+(sequence-point) 63.65 737.62 T
+1 F
+([Function]) 485.21 737.62 T
+3 F
+(Signatur) 81.65 712.62 T
+(e) 119.14 712.62 T
+2 F
+(\050\051 => \050\051) 99.65 693.62 T
+3 F
+(Description) 81.65 668.62 T
+1 F
+0.28 0.13 (A call to this function is an instruction to the compiler that it must consider the possibility that) 99.65 646.62 B
+0.28 0.05 (there might be visible side ef) 99.65 633.62 B
+0.28 0.05 (fects from other threads at the point of the call. Normally) 229.76 633.62 B
+0.28 0.05 (, the com-) 486.37 633.62 B
+-0.16 (piler is not obliged to consider this possibility) 99.65 620.62 P
+-0.16 (, and is free to rearrange program order pro) 299.23 620.62 P
+-0.16 (vided that) 488.11 620.62 P
+0.28 0.12 (the reordering can\325) 99.65 607.62 B
+0.28 0.12 (t be detected within a thread. A call to this function ef) 185.91 607.62 B
+0.28 0.12 (fecti) 432.41 607.62 B
+0.28 0.12 (v) 452.27 607.62 B
+0.28 0.12 (ely prohibits the) 457.72 607.62 B
+0.28 0.04 (compiler from rearranging the order of reads or writes from or to global data, relati) 99.65 594.62 B
+0.28 0.04 (v) 471.23 594.62 B
+0.28 0.04 (e to the call.) 476.6 594.62 B
+0.28 0.31 (This function may disallo) 99.65 581.62 B
+0.28 0.31 (w compiler optimizations, leading to less ef) 220.63 581.62 B
+0.28 0.31 (f) 427.7 581.62 B
+0.28 0.31 (icient code - e) 431.07 581.62 B
+0.28 0.31 (v) 498.23 581.62 B
+0.28 0.31 (en for) 503.88 581.62 B
+0.15 (strongly ordered machines.) 99.65 568.62 P
+2 F
+0.15 (sequence-point) 222.29 568.62 P
+1 F
+0.15 ( does not ensure the visibility of side ef) 292.56 568.62 P
+0.15 (fects, lik) 466.39 568.62 P
+0.15 (e) 504.31 568.62 P
+2 F
+0.15 (syn-) 512.09 568.62 P
+-0.1 (chr) 99.65 555.62 P
+-0.1 (onize-side-effects) 115.33 555.62 P
+1 F
+-0.1 (. Ho) 195.36 555.62 P
+-0.1 (we) 213.92 555.62 P
+-0.1 (v) 226.47 555.62 P
+-0.1 (er) 231.81 555.62 P
+-0.1 (,) 239.91 555.62 P
+2 F
+-0.1 (synchr) 245.31 555.62 P
+-0.1 (onize-side-effects) 276.89 555.62 P
+1 F
+-0.1 ( does imply at least the same set of con-) 356.92 555.62 P
+(straints on the compiler as) 99.65 542.62 T
+2 F
+(sequence-point) 217.89 542.62 T
+1 F
+(.) 288.17 542.62 T
+0 12 Q
+(4.2) 63.65 504.95 T
+(Conditional Update) 90.65 504.95 T
+2 11 Q
+(conditional-update!) 63.65 475.62 T
+1 F
+([Macro]) 495.61 475.62 T
+3 F
+(Syntax) 81.65 450.62 T
+2 F
+(conditional-update!\050) 99.65 431.62 T
+3 F
+(local-name) 195.6 431.62 T
+2 F
+( =) 245.09 431.62 T
+3 F
+(place) 256.86 431.62 T
+2 F
+(\051) 280.69 431.62 T
+3 F
+(body) 121.25 418.62 T
+1 F
+([) 99.65 405.62 T
+2 F
+(success) 103.31 405.62 T
+3 F
+(success-e) 139.67 405.62 T
+(xpr) 180.98 405.62 T
+1 F
+(]) 195.65 405.62 T
+([) 99.65 392.62 T
+2 F
+(failur) 103.31 392.62 T
+(e) 129.39 392.62 T
+3 F
+(failur) 137.03 392.62 T
+(e-e) 161.07 392.62 T
+(xpr) 174.28 392.62 T
+1 F
+(]) 188.95 392.62 T
+2 F
+(end) 99.65 379.62 T
+3 F
+(Description) 81.65 354.62 T
+1 F
+0.28 0.2 (This is a con) 99.65 332.62 B
+0.28 0.2 (v) 158.49 332.62 B
+0.28 0.2 (enient macro for performing atomic) 164.02 332.62 B
+3 F
+0.28 0.2 (test-and-set) 332.62 332.62 B
+1 F
+0.28 0.2 ( operations. This will be imple-) 386.3 332.62 B
+0.28 0.41 (mented using dedicated processor instructions where appropriate, and is is e) 99.65 319.62 B
+0.28 0.41 (xpected to be) 467.58 319.62 B
+(e) 99.65 306.62 T
+(xtremely ef) 104.37 306.62 T
+(\336cient on most platforms.) 154.49 306.62 T
+0.28 0.01 (The v) 99.65 284.62 B
+0.28 0.01 (alue of the place is e) 125.04 284.62 B
+0.28 0.01 (v) 216.42 284.62 B
+0.28 0.01 (aluated once to determine the initial v) 221.65 284.62 B
+0.28 0.01 (alue, which is then bound to the) 389.52 284.62 B
+3 F
+0.28 0.13 (local-name) 99.65 271.62 B
+1 F
+0.28 0.13 ( as a le) 150.43 271.62 B
+0.28 0.13 (xical v) 182.36 271.62 B
+0.28 0.13 (ariable. The body is then e) 212.9 271.62 B
+0.28 0.13 (v) 334.19 271.62 B
+0.28 0.13 (aluated to determine the ne) 339.55 271.62 B
+0.28 0.13 (w v) 463 271.62 B
+0.28 0.13 (alue for the) 479.58 271.62 B
+0.28 0.18 (place. The place is then conditionally updated - which means that the follo) 99.65 258.62 B
+0.28 0.18 (wing steps are per-) 444.3 258.62 B
+(formed atomically:) 99.65 245.62 T
+0 9 Q
+(1.) 99.65 226.62 T
+1 11 Q
+(The place is e) 113.4 226.62 T
+(v) 173.91 226.62 T
+(aluated ag) 179.14 226.62 T
+(ain and compared with the initial v) 223.98 226.62 T
+(alue in) 377.08 226.62 T
+3 F
+(local-name) 409.46 226.62 T
+1 F
+( using) 458.95 226.62 T
+2 F
+(\134==) 488.29 226.62 T
+0 9 Q
+(2.) 99.65 207.62 T
+1 11 Q
+-0.18 (If the v) 113.4 207.62 P
+-0.18 (alue w) 144.53 207.62 P
+-0.18 (as found to be the same as the initial v) 173.25 207.62 P
+-0.18 (alue, then the ne) 339.67 207.62 P
+-0.18 (w v) 410.94 207.62 P
+-0.18 (alue is stored by assign-) 426.67 207.62 P
+(ment, otherwise the conditional update f) 113.4 195.62 T
+(ails.) 290.49 195.62 T
+0.28 0.1 (If the update w) 99.65 174.62 B
+0.28 0.1 (as successful, then) 168.17 174.62 B
+2 F
+0.28 0.1 (conditional-update!) 255.34 174.62 B
+1 F
+0.28 0.1 ( returns the result of the) 349.56 174.62 B
+2 F
+0.28 0.1 (success) 461.49 174.62 B
+1 F
+0.28 0.1 (e) 498.93 174.62 B
+0.28 0.1 (xpres-) 503.75 174.62 B
+(sion, or returns the ne) 99.65 161.62 T
+(w v) 195 161.62 T
+(alue of the place if no) 210.91 161.62 T
+2 F
+(success) 309.27 161.62 T
+1 F
+(clause w) 345.63 161.62 T
+(as supplied.) 383.7 161.62 T
+0.28 0.17 (If the update f) 99.65 139.62 B
+0.28 0.17 (ailed, then) 164.94 139.62 B
+2 F
+0.28 0.17 (conditional-update!) 216.11 139.62 B
+1 F
+0.28 0.17 ( signals a condition, unless a) 311.65 139.62 B
+2 F
+0.28 0.17 (failur) 447.24 139.62 B
+0.28 0.17 (e) 474.35 139.62 B
+1 F
+0.28 0.17 ( clause w) 479.4 139.62 B
+0.28 0.17 (as) 522.31 139.62 B
+(gi) 99.65 126.62 T
+(v) 107.93 126.62 T
+(en, in which case the v) 113.27 126.62 T
+(alue is returned.) 213.19 126.62 T
+FMENDPAGE
+%%EndPage: "3" 3
+%%Page: "4" 4
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Dylan Threads Librar) 402.19 766.62 T
+(y Extensions) 482.3 766.62 T
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+N
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+0 10 Q
+(4) 63.65 84.9 T
+0 9 Q
+(December 4, 1996 12:16 pm) 414.09 84.9 T
+1 11 Q
+0.28 0.03 (If the) 99.65 737.62 B
+3 F
+0.28 0.03 (place) 126.68 737.62 B
+1 F
+0.28 0.03 ( is a) 150.66 737.62 B
+3 F
+0.28 0.03 (name) 172.15 737.62 B
+1 F
+0.28 0.03 (, it must be the name of a) 196.1 737.62 B
+2 F
+0.28 0.03 (lock) 313.09 737.62 B
+0.28 0.03 (ed v) 332.67 737.62 B
+0.28 0.03 (ariable) 352.2 737.62 B
+1 F
+0.28 0.03 (in the curent module scope [See) 388.48 737.62 B
+-0.14 (\3224.4 Lock) 99.65 724.62 P
+-0.14 (ed V) 143.38 724.62 P
+-0.14 (ariables\323.]. If) 163.1 724.62 P
+3 F
+-0.14 (place) 223.9 724.62 P
+1 F
+-0.14 ( is not a name, then it may ha) 247.73 724.62 P
+-0.14 (v) 375.61 724.62 P
+-0.14 (e the syntax of a call to a function.) 380.95 724.62 P
+-0.16 (This permits an) 99.65 711.62 P
+3 F
+-0.16 (e) 170.36 711.62 P
+-0.16 (xtended form) 175.03 711.62 P
+1 F
+-0.16 ( for) 232.61 711.62 P
+2 F
+-0.16 (conditional-update!) 250.62 711.62 P
+1 F
+-0.16 (, by analogy with the e) 342.9 711.62 P
+-0.16 (xtended form for) 442.16 711.62 P
+2 F
+-0.16 (:=) 518.97 711.62 P
+1 F
+-0.16 (.) 528.9 711.62 P
+-0.03 (In this case, if the place appears syntactically as) 99.65 698.62 P
+2 F
+-0.03 (name\050ar) 312.57 698.62 P
+-0.03 (g1, ...ar) 352.17 698.62 P
+-0.03 (gn\051) 387.16 698.62 P
+1 F
+-0.03 (, then the macro e) 402.44 698.62 P
+-0.03 (xpands into) 480.65 698.62 P
+0.28 0.12 (a call to the function) 99.65 685.62 B
+2 F
+0.28 0.12 (name-conditional-updater\050) 197.03 685.62 B
+3 F
+0.28 0.12 (ne) 326.6 685.62 B
+0.28 0.12 (w-value) 337.06 685.62 B
+2 F
+0.28 0.12 (,) 372.74 685.62 B
+3 F
+0.28 0.12 (local-name) 378.77 685.62 B
+2 F
+0.28 0.12 (, ar) 429.48 685.62 B
+0.28 0.12 (g1, ... ar) 446.02 685.62 B
+0.28 0.12 (gn\051) 485.57 685.62 B
+1 F
+0.28 0.12 (. If the) 501.22 685.62 B
+(result of this function call is) 99.65 672.62 T
+2 F
+(#f) 225.53 672.62 T
+1 F
+(, then the conditional update is deemed to ha) 234.7 672.62 T
+(v) 430.92 672.62 T
+(e f) 436.26 672.62 T
+(ailed.) 447.45 672.62 T
+3 F
+(Exceptions) 81.65 647.62 T
+2 F
+0.28 0.38 (conditional-update!) 99.65 625.62 B
+1 F
+0.28 0.38 ( may signal a condition of the follo) 199.2 625.62 B
+0.28 0.38 (wing class \050which is a subclass of) 368.91 625.62 B
+2 F
+(<err) 99.65 612.62 T
+(or>) 120.37 612.62 T
+1 F
+(\051, unless a) 137.03 612.62 T
+2 F
+(failur) 184.07 612.62 T
+(e) 210.15 612.62 T
+1 F
+( clause is supplied.) 215.04 612.62 T
+2 F
+(<conditional-update-err) 99.65 590.62 T
+(or>) 212.66 590.62 T
+3 F
+(Example) 81.65 565.62 T
+1 F
+(The follo) 99.65 543.62 T
+(wing e) 140.01 543.62 T
+(xample does an atomic increment of) 169.48 543.62 T
+2 F
+(*number) 332 543.62 T
+(-detected*) 374.37 543.62 T
+1 F
+(.) 422.63 543.62 T
+2 F
+(until \050) 99.65 524.62 T
+(conditional-update! \050curr) 128.07 524.62 T
+(ent-v) 247.35 524.62 T
+(al = *number) 271.06 524.62 T
+(-detected*\051) 333.76 524.62 T
+(curr) 135.65 511.62 T
+(ent-v) 156.22 511.62 T
+(al + 1) 179.93 511.62 T
+( failur) 121.25 498.62 T
+(e #f) 150.08 498.62 T
+( end conditional-update!\051) 121.25 485.62 T
+(end until) 99.65 472.62 T
+(conditional-set-variable!) 63.65 443.62 T
+1 F
+([Macro]) 495.61 443.62 T
+3 F
+(Syntax) 81.65 418.62 T
+2 F
+(conditional-set-v) 99.65 399.62 T
+(ariable!\050) 177.76 399.62 T
+3 F
+(loc) 218.09 399.62 T
+(k) 231.31 399.62 T
+(ed-variable-name) 236.08 399.62 T
+(, ne) 314.17 399.62 T
+(w-value) 329.89 399.62 T
+(, comparison-value) 364.61 399.62 T
+2 F
+(\051) 449.54 399.62 T
+3 F
+(Description) 81.65 374.62 T
+2 F
+0.26 (conditional-set-v) 99.65 352.62 P
+0.26 (ariable!) 177.76 352.62 P
+1 F
+0.26 ( e) 214.42 352.62 P
+0.26 (xposes the underlying mechanism used by) 222.15 352.62 P
+2 F
+0.26 (conditional-update!) 412.52 352.62 P
+1 F
+0.26 ( when) 504.81 352.62 P
+0.28 0.08 (conditionally updating a lock) 99.65 339.62 B
+0.28 0.08 (ed v) 231.38 339.62 B
+0.28 0.08 (ariable. The follo) 250.34 339.62 B
+0.28 0.08 (wing beha) 328.15 339.62 B
+0.28 0.08 (viour is performed atomically with) 374.47 339.62 B
+0.28 0.17 (respect to other threads: The lock) 99.65 326.62 B
+0.28 0.17 (ed v) 253.72 326.62 B
+0.28 0.17 (ariable) 273.05 326.62 B
+3 F
+0.28 0.17 (loc) 307.39 326.62 B
+0.28 0.17 (k) 321.12 326.62 B
+0.28 0.17 (ed-variable-name) 326.07 326.62 B
+1 F
+0.28 0.17 ( is e) 407.03 326.62 B
+0.28 0.17 (v) 425.89 326.62 B
+0.28 0.17 (aluated and compared) 431.29 326.62 B
+0.28 0.05 (with) 99.65 313.62 B
+3 F
+0.28 0.05 (comparison-value) 122.46 313.62 B
+1 F
+0.28 0.05 ( using) 202.63 313.62 B
+2 F
+0.28 0.05 (\134==) 232.85 313.62 B
+1 F
+0.28 0.05 (. If the v) 248.58 313.62 B
+0.28 0.05 (alues are the same, then) 286.86 313.62 B
+3 F
+0.28 0.05 (loc) 396.92 313.62 B
+0.28 0.05 (k) 410.28 313.62 B
+0.28 0.05 (ed-variable-name) 415.1 313.62 B
+1 F
+0.28 0.05 ( is set to) 494.04 313.62 B
+3 F
+(ne) 99.65 300.62 T
+(w-value) 109.87 300.62 T
+1 F
+( \050by assignment\051 and the macro returns) 144.69 300.62 T
+2 F
+(#t) 319.13 300.62 T
+1 F
+(. Otherwise, the macro returns) 328.29 300.62 T
+2 F
+(#f) 464.23 300.62 T
+1 F
+(.) 473.39 300.62 T
+3 F
+(Example) 81.65 275.62 T
+1 F
+(The follo) 99.65 253.62 T
+(wing e) 140.01 253.62 T
+(xample computes and sets the v) 169.48 253.62 T
+(alue of) 308.82 253.62 T
+2 F
+(*lazy*) 341.81 253.62 T
+1 F
+(, pro) 371.76 253.62 T
+(vided that it\325) 391.75 253.62 T
+(s v) 447.37 253.62 T
+(alue is) 459.62 253.62 T
+2 F
+(#f) 490.79 253.62 T
+1 F
+(.) 499.95 253.62 T
+FMENDPAGE
+%%EndPage: "4" 4
+%%Page: "5" 5
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 8 Q
+(Dylan Threads Librar) 402.19 766.62 T
+(y Extensions) 482.3 766.62 T
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+0 9 Q
+(December 4, 1996 12:16 pm) 63.65 84.9 T
+0 10 Q
+(5) 526.09 84.9 T
+2 11 Q
+(unless \050*lazy*\051) 99.65 737.62 T
+(conditional-set-v) 121.25 724.62 T
+(ariable!\050*lazy*, compute-lazy-v) 199.36 724.62 T
+(alue\050\051, #f\051) 347.11 724.62 T
+(end unless) 99.65 711.62 T
+0 12 Q
+(4.3) 63.65 673.95 T
+(Atomic Increment) 90.65 673.95 T
+2 11 Q
+(atomic-increment!) 63.65 644.62 T
+1 F
+([Macro]) 495.61 644.62 T
+3 F
+(Syntax) 81.65 619.62 T
+2 F
+(atomic-incr) 99.65 600.62 T
+(ement!\050) 153.82 600.62 T
+3 F
+(place) 189.86 600.62 T
+2 F
+(\051) 213.68 600.62 T
+(atomic-incr) 99.65 587.62 T
+(ement!\050) 153.82 587.62 T
+3 F
+(place) 189.86 587.62 T
+(, by) 213.57 587.62 T
+2 F
+(\051) 229.46 587.62 T
+3 F
+(Description) 81.65 562.62 T
+1 F
+(This is a con) 99.65 540.62 T
+(v) 155.12 540.62 T
+(enient macro for atomically incrementing a place containing a numeric v) 160.46 540.62 T
+(alue.) 480.34 540.62 T
+0.28 0.02 (The v) 99.65 518.62 B
+0.28 0.02 (alue of the) 125.09 518.62 B
+3 F
+0.28 0.02 (place) 175.29 518.62 B
+1 F
+0.28 0.02 ( is e) 199.2 518.62 B
+0.28 0.02 (v) 217.28 518.62 B
+0.28 0.02 (aluated one or more times to determine the initial v) 222.52 518.62 B
+0.28 0.02 (alue. This v) 450.75 518.62 B
+0.28 0.02 (alue is) 502.86 518.62 B
+0.28 0.1 (then incremented by the v) 99.65 505.62 B
+0.28 0.1 (alue of) 217.29 505.62 B
+3 F
+0.28 0.1 (by) 251.65 505.62 B
+1 F
+0.28 0.1 ( \050which def) 262.24 505.62 B
+0.28 0.1 (aults to 1, if not supplied\051 and atomically stored) 313.9 505.62 B
+(back into) 99.65 492.62 T
+3 F
+(place) 143.03 492.62 T
+1 F
+(. The ne) 166.86 492.62 T
+(w v) 202.32 492.62 T
+(alue of) 218.24 492.62 T
+3 F
+(place) 251.23 492.62 T
+1 F
+( is returned.) 275.05 492.62 T
+0.28 0.03 (If the) 99.65 470.62 B
+3 F
+0.28 0.03 (place) 126.68 470.62 B
+1 F
+0.28 0.03 ( is a) 150.66 470.62 B
+3 F
+0.28 0.03 (name) 172.15 470.62 B
+1 F
+0.28 0.03 (, it must be the name of a) 196.1 470.62 B
+2 F
+0.28 0.03 (lock) 313.09 470.62 B
+0.28 0.03 (ed v) 332.67 470.62 B
+0.28 0.03 (ariable) 352.2 470.62 B
+1 F
+0.28 0.03 (in the curent module scope [See) 388.48 470.62 B
+-0.14 (\3224.4 Lock) 99.65 457.62 P
+-0.14 (ed V) 143.38 457.62 P
+-0.14 (ariables\323.]. If) 163.1 457.62 P
+3 F
+-0.14 (place) 223.9 457.62 P
+1 F
+-0.14 ( is not a name, then it may ha) 247.73 457.62 P
+-0.14 (v) 375.61 457.62 P
+-0.14 (e the syntax of a call to a function,) 380.95 457.62 P
+(as for) 99.65 444.62 T
+2 F
+(conditional-update!) 127.14 444.62 T
+1 F
+(.) 219.43 444.62 T
+0.28 0.19 (The implementation of) 99.65 422.62 B
+2 F
+0.28 0.19 (atomic-incr) 208.35 422.62 B
+0.28 0.19 (ement!) 264.67 422.62 B
+1 F
+0.28 0.19 ( may use) 298.22 422.62 B
+2 F
+0.28 0.19 (conditional-update!) 342.66 422.62 B
+1 F
+0.28 0.19 ( \050as in the described) 438.66 422.62 B
+-0.27 (e) 99.65 409.62 P
+-0.27 (xample\051, and hence may in) 104.37 409.62 P
+-0.27 (v) 221.69 409.62 P
+-0.27 (olv) 226.97 409.62 P
+-0.27 (e a loop and may cause) 240.87 409.62 P
+3 F
+-0.27 (place) 344.35 409.62 P
+1 F
+-0.27 ( to be e) 368.17 409.62 P
+-0.27 (v) 399.17 409.62 P
+-0.27 (aluated multiple times. Ho) 404.4 409.62 P
+-0.27 (w-) 520.04 409.62 P
+0.28 0.14 (e) 99.65 396.62 B
+0.28 0.14 (v) 104.4 396.62 B
+0.28 0.14 (er an atomic increment of a) 109.88 396.62 B
+2 F
+0.28 0.14 (lock) 238.99 396.62 B
+0.28 0.14 (ed) 259.01 396.62 B
+0.28 0.14 (v) 273.47 396.62 B
+0.28 0.14 (ariable) 279.01 396.62 B
+1 F
+0.28 0.14 ( might be implemented by a more ef) 313.02 396.62 B
+0.28 0.14 (f) 479.37 396.62 B
+0.28 0.14 (icient non-) 482.57 396.62 B
+(looping mechanism on some platforms.) 99.65 383.62 T
+3 F
+(Example) 81.65 358.62 T
+1 F
+0.28 0.14 (The follo) 99.65 336.62 B
+0.28 0.14 (wing e) 141.5 336.62 B
+0.28 0.14 (xample atomically increments) 172.05 336.62 B
+2 F
+0.28 0.14 (*number) 312.14 336.62 B
+0.28 0.14 (-detected*) 355.46 336.62 B
+1 F
+0.28 0.14 ( by 2, and returns the incre-) 405.07 336.62 B
+(mented v) 99.65 323.62 T
+(alue.) 140.01 323.62 T
+2 F
+(atomic-incr) 99.65 304.62 T
+(ement!\050*number) 153.82 304.62 T
+(-detected*, 2\051) 232.23 304.62 T
+(atomic-decrement!) 63.65 275.62 T
+1 F
+([Macro]) 495.61 275.62 T
+3 F
+(Syntax) 81.65 250.62 T
+2 F
+(atomic-decr) 99.65 231.62 T
+(ement!\050) 155.65 231.62 T
+3 F
+(place) 191.68 231.62 T
+2 F
+(\051) 215.51 231.62 T
+(atomic-decr) 99.65 218.62 T
+(ement!\050) 155.65 218.62 T
+3 F
+(place) 191.68 218.62 T
+(, by) 215.4 218.62 T
+2 F
+(\051) 231.29 218.62 T
+3 F
+(Description) 81.65 193.62 T
+2 F
+0.28 0.02 (atomic-decr) 99.65 171.62 B
+0.28 0.02 (ement!) 155.88 171.62 B
+1 F
+0.28 0.02 ( is lik) 188.39 171.62 B
+0.28 0.02 (e) 213.43 171.62 B
+2 F
+0.28 0.02 (atomic-incr) 221.38 171.62 B
+0.28 0.02 (ement!) 275.79 171.62 B
+1 F
+0.28 0.02 ( e) 308.3 171.62 B
+0.28 0.02 (xcept that it decrements) 316.08 171.62 B
+3 F
+0.28 0.02 (place) 425.26 171.62 B
+1 F
+0.28 0.02 (, rather than incre-) 449.19 171.62 B
+(menting it.) 99.65 158.62 T
+FMENDPAGE
+%%EndPage: "5" 5
+%%Page: "6" 6
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Dylan Threads Librar) 402.19 766.62 T
+(y Extensions) 482.3 766.62 T
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+N
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+0 10 Q
+(6) 63.65 84.9 T
+0 9 Q
+(December 4, 1996 12:16 pm) 414.09 84.9 T
+0 12 Q
+(4.4) 63.65 736.95 T
+(Loc) 90.65 736.95 T
+(ked V) 111.74 736.95 T
+(ariab) 143.04 736.95 T
+(les) 171.6 736.95 T
+2 11 Q
+(locked) 63.65 707.62 T
+1 F
+([V) 400.73 707.62 T
+(ariable de\336nition adjecti) 411.11 707.62 T
+(v) 517.77 707.62 T
+(e]) 523.1 707.62 T
+3 F
+(Syntax) 81.65 682.62 T
+2 F
+(de\336ne lock) 99.65 663.62 T
+(ed v) 149.96 663.62 T
+(ariable) 169.1 663.62 T
+3 F
+(bindings) 204.85 663.62 T
+2 F
+( =) 242.75 663.62 T
+3 F
+(init) 254.52 663.62 T
+2 F
+(;) 269.19 663.62 T
+3 F
+(Description) 81.65 638.62 T
+2 F
+0.28 0.06 (def) 99.65 616.62 B
+0.28 0.06 (ine lock) 113.9 616.62 B
+0.28 0.06 (ed v) 150.96 616.62 B
+0.28 0.06 (ariable) 170.63 616.62 B
+1 F
+0.28 0.06 ( def) 204.09 616.62 B
+0.28 0.06 (ines module v) 220.82 616.62 B
+0.28 0.06 (ariables in the current module. These v) 283.66 616.62 B
+0.28 0.06 (ariables ha) 458.96 616.62 B
+0.28 0.06 (v) 507.08 616.62 B
+0.28 0.06 (e all) 512.48 616.62 B
+0.28 0.1 (the properties of normal module v) 99.65 603.62 B
+0.28 0.1 (ariables, and in addition the) 254 603.62 B
+0.28 0.1 (y may be tested and updated with) 379.69 603.62 B
+2 F
+0.28 0.24 (conditional-update) 99.65 590.62 B
+1 F
+0.28 0.24 (!,) 192.57 590.62 B
+2 F
+0.28 0.24 (conditional-set-v) 202.72 590.62 B
+0.28 0.24 (ariable!, atomic-incr) 284.88 590.62 B
+0.28 0.24 (ement!) 386.5 590.62 B
+1 F
+0.28 0.24 (or) 423.57 590.62 B
+2 F
+0.28 0.24 (atomic-decr) 436.47 590.62 B
+0.28 0.24 (ement!) 495.1 590.62 B
+1 F
+0.28 0.24 (.) 528.9 590.62 B
+0.28 0.18 (Other threads are pre) 99.65 577.62 B
+0.28 0.18 (v) 196.55 577.62 B
+0.28 0.18 (ented from modifying the lock) 202.06 577.62 B
+0.28 0.18 (ed v) 342.74 577.62 B
+0.28 0.18 (ariable during the conditional update) 362.1 577.62 B
+(operation by means of lo) 99.65 564.62 T
+(w-le) 208.75 564.62 T
+(v) 228.02 564.62 T
+(el locking mechanism, which is e) 233.35 564.62 T
+(xpected to be e) 379.84 564.62 T
+(xtremely ef) 445.96 564.62 T
+(\336cient.) 496.09 564.62 T
+3 F
+(Oper) 81.65 539.62 T
+(ations) 104.09 539.62 T
+2 F
+(conditional-set-v) 99.65 517.62 T
+(ariable!) 177.76 517.62 T
+1 F
+0.28 0.14 (Compares the v) 171.65 504.62 B
+0.28 0.14 (ariable with a supplied v) 242.86 504.62 B
+0.28 0.14 (alue. If these v) 355.21 504.62 B
+0.28 0.14 (alues are the same, then) 422.67 504.62 B
+(atomically updates the v) 171.65 491.62 T
+(ariable to a ne) 278.61 491.62 T
+(w v) 340.34 491.62 T
+(alue.) 356.26 491.62 T
+3 F
+(Example) 81.65 466.62 T
+2 F
+(de\336ne lock) 99.65 447.62 T
+(ed v) 149.96 447.62 T
+(ariable *number) 169.1 447.62 T
+(-detected* = 0;) 247.22 447.62 T
+0 12 Q
+(4.5) 63.65 384.95 T
+(Loc) 90.65 384.95 T
+(ked Slots) 111.74 384.95 T
+2 11 Q
+(locked) 63.65 355.62 T
+1 F
+([Slot de\336nition adjecti) 419.65 355.62 T
+(v) 517.77 355.62 T
+(e]) 523.1 355.62 T
+3 F
+(Syntax) 81.65 330.62 T
+2 F
+(lock) 99.65 308.62 T
+(ed) 119.1 308.62 T
+1 F
+( may be used as an adjecti) 130.1 308.62 T
+(v) 244.68 308.62 T
+(e in slot speci\336cations in a) 250.02 308.62 T
+2 F
+(de\336ne class) 369.18 308.62 T
+1 F
+(.) 422.05 308.62 T
+3 F
+(Description) 81.65 283.62 T
+1 F
+0.28 0.24 (The) 99.65 261.62 B
+2 F
+0.28 0.24 (lock) 120.73 261.62 B
+0.28 0.24 (ed) 141.12 261.62 B
+1 F
+0.28 0.24 (adjecti) 155.86 261.62 B
+0.28 0.24 (v) 186.57 261.62 B
+0.28 0.24 (e may be used to def) 192.14 261.62 B
+0.28 0.24 (ine) 288.38 261.62 B
+3 F
+0.28 0.24 (conditional-updater) 305.79 261.62 B
+1 F
+0.28 0.24 ( methods for indi) 398.29 261.62 B
+0.28 0.24 (vidual slots) 478.34 261.62 B
+0.28 0.13 (def) 99.65 248.62 B
+0.28 0.13 (ined by) 113.47 248.62 B
+2 F
+0.28 0.13 (def) 150.48 248.62 B
+0.28 0.13 (ine synchr) 164.92 248.62 B
+0.28 0.13 (onized-class) 214.85 248.62 B
+1 F
+0.28 0.13 (. This adjecti) 272.6 248.62 B
+0.28 0.13 (v) 331.79 248.62 B
+0.28 0.13 (e may only be used for slots with) 337.25 248.62 B
+2 F
+0.28 0.13 (instance) 492.26 248.62 B
+1 F
+0.28 0.11 (allocation. The adjecti) 99.65 235.62 B
+0.28 0.11 (v) 200.48 235.62 B
+0.28 0.11 (e causes the additional creation of a) 205.92 235.62 B
+3 F
+0.28 0.11 (conditional-updater) 371.73 235.62 B
+1 F
+0.28 0.11 ( method for the) 461.79 235.62 B
+(slot, suitable for use with the) 99.65 222.62 T
+2 F
+(conditional-update!) 229.5 222.62 T
+1 F
+( macro.) 321.79 222.62 T
+0.18 (A) 99.65 200.62 P
+3 F
+0.18 (conditional-updater) 110.52 200.62 P
+1 F
+0.18 ( method has three required parameters) 198.52 200.62 P
+2 F
+0.18 (\050new-v) 370.64 200.62 P
+0.18 (alue, old-v) 402.3 200.62 P
+0.18 (alue, object\051) 451.26 200.62 P
+1 F
+0.18 (. The) 508.87 200.62 P
+-0.27 (method atomically compares the slot contents for) 99.65 187.62 P
+2 F
+-0.27 (object) 317.41 187.62 P
+1 F
+-0.27 ( with) 346.12 187.62 P
+2 F
+-0.27 (old-v) 370.63 187.62 P
+-0.27 (alue) 394.36 187.62 P
+1 F
+-0.27 (, and conditionally updates) 413.92 187.62 P
+0.28 0.08 (the slot. If the comparison f) 99.65 174.62 B
+0.28 0.08 (ails, the method returns) 224.67 174.62 B
+2 F
+0.28 0.08 (#f) 333.65 174.62 B
+1 F
+0.28 0.08 (. Otherwise, the slot contents are replaced) 342.97 174.62 B
+(with) 99.65 161.62 T
+2 F
+(new-v) 121.96 161.62 T
+(alue) 149.95 161.62 T
+1 F
+(, and the method returns) 169.51 161.62 T
+2 F
+(#t) 278.88 161.62 T
+1 F
+(.) 288.05 161.62 T
+3 F
+(K) 81.65 136.62 T
+(e) 88.6 136.62 T
+(ywor) 93.15 136.62 T
+(ds) 114.75 136.62 T
+1 F
+(The follo) 99.65 114.62 T
+(wing additional k) 140.01 114.62 T
+(e) 216.9 114.62 T
+(yw) 221.62 114.62 T
+(ords are permitted for) 234.95 114.62 T
+2 F
+(lock) 333.31 114.62 T
+(ed) 352.76 114.62 T
+1 F
+( slots:) 363.76 114.62 T
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "6" 6
+%%Page: "7" 7
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 8 Q
+(Dylan Threads Librar) 402.19 766.62 T
+(y Extensions) 482.3 766.62 T
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+0 9 Q
+(December 4, 1996 12:16 pm) 63.65 84.9 T
+0 10 Q
+(7) 526.09 84.9 T
+2 11 Q
+(conditional-updater:) 99.65 737.62 T
+1 F
+0.28 0.08 (The name of a module v) 171.65 724.62 B
+0.28 0.08 (ariable to which the conditional-updater method should) 281.8 724.62 B
+-0.04 (be added, or) 171.65 711.62 P
+2 F
+-0.04 (#f) 228.35 711.62 P
+1 F
+-0.04 ( if no conditional-updater method should be de\336ned \050in which case) 237.51 711.62 P
+0.28 0.28 (the use of the) 171.65 698.62 B
+2 F
+0.28 0.28 (lock) 238.63 698.62 B
+0.28 0.28 (ed) 259.19 698.62 B
+1 F
+0.28 0.28 ( adjecti) 270.74 698.62 B
+0.28 0.28 (v) 305.04 698.62 B
+0.28 0.28 (e w) 310.66 698.62 B
+0.28 0.28 (as unnecessary\051. If it is not supplied, it will) 327.23 698.62 B
+0.28 0.03 (def) 171.65 685.62 B
+0.28 0.03 (ault to) 185.67 685.62 B
+2 F
+0.28 0.03 (getter) 216.99 685.62 B
+0.28 0.03 (-name-conditional-updater) 244.23 685.62 B
+1 F
+0.28 0.03 (, where) 370.97 685.62 B
+2 F
+0.28 0.03 (getter) 406.87 685.62 B
+0.28 0.03 (-name) 434.1 685.62 B
+1 F
+0.28 0.03 ( names the get-) 463.56 685.62 B
+(ter for the slot.) 171.65 672.62 T
+3 F
+(Example) 81.65 647.62 T
+1 F
+(The follo) 99.65 625.62 T
+(wing e) 140.01 625.62 T
+(xample de\336nes a class with a single slot suitable for conditional updating:) 169.48 625.62 T
+2 F
+(de\336ne class <lock) 99.65 606.62 T
+(ed-v) 180.98 606.62 T
+(alue> \050<object>\051) 201.04 606.62 T
+(lock) 121.25 593.62 T
+(ed slot counter :: <integer> = 0;) 140.7 593.62 T
+(end class) 99.65 580.62 T
+1 F
+(This e) 99.65 558.62 T
+(xample de\336nes a conditional-updater method with the follo) 126.68 558.62 T
+(wing signature:) 387.01 558.62 T
+2 F
+(de\336ne method counter) 99.65 539.62 T
+(-conditional-updater) 204.35 539.62 T
+(\050new-v) 135.65 526.62 T
+(alue, old-v) 167.31 526.62 T
+(alue, object :: <lock) 216.09 526.62 T
+(ed-v) 308.4 526.62 T
+(alue>\051) 328.46 526.62 T
+(end method) 99.65 513.62 T
+0 15 Q
+(5.) 63.65 471.95 T
+(Place Holder) 90.65 471.95 T
+(s) 181.29 471.95 T
+1 11 Q
+(The features described in this section are not implemented, and are not a part of the library) 63.65 449.62 T
+(.) 461.6 449.62 T
+-0.13 (This library omits some useful high-le) 63.65 424.62 P
+-0.13 (v) 231.09 424.62 P
+-0.13 (el functionality that man) 236.43 424.62 P
+-0.13 (y programmers may desire. It is hoped that) 343.73 424.62 P
+-0.01 (man) 63.65 411.62 P
+-0.01 (y of these f) 82.43 411.62 P
+-0.01 (acilities can be b) 131.47 411.62 P
+-0.01 (uilt on top of the primiti) 204.84 411.62 P
+-0.01 (v) 310.56 411.62 P
+-0.01 (es de\336ned here in a portable manner) 315.89 411.62 P
+-0.01 (, leading to a) 474.85 411.62 P
+0.28 0.01 (possible higher le) 63.65 398.62 B
+0.28 0.01 (v) 141.71 398.62 B
+0.28 0.01 (el threads library in the future. Here are some e) 147.05 398.62 B
+0.28 0.01 (xamples, with suggestions about where) 357.57 398.62 B
+(the e) 63.65 385.62 T
+(xtensions \336t in relation to e) 84.56 385.62 T
+(xisting features:) 204.48 385.62 T
+0 12 Q
+(5.1) 63.65 347.95 T
+(Messa) 90.65 347.95 T
+(g) 127.21 347.95 T
+(e Queue) 134.66 347.95 T
+2 11 Q
+(<message-queue>) 63.65 316.62 T
+1 F
+([Class]) 500.48 316.62 T
+3 F
+(Super) 81.65 291.62 T
+(classes) 106.9 291.62 T
+2 F
+(<str) 99.65 269.62 T
+(etch) 118.55 269.62 T
+(y-collection>) 137.93 269.62 T
+(<mutable-sequence>) 99.65 247.62 T
+3 F
+(Description) 81.65 222.62 T
+1 F
+0.28 0.05 (The) 99.65 200.62 B
+2 F
+0.28 0.05 (<message-queue>) 119.99 200.62 B
+1 F
+0.28 0.05 ( class permits threads to send messages \050arbitrary Dylan objects\051 to other) 203.61 200.62 B
+0.28 0.17 (threads. A thread may block while w) 99.65 187.62 B
+0.28 0.17 (aiting for a message. An instance of a) 269.34 187.62 B
+2 F
+0.28 0.17 (<message-queue>) 446.47 187.62 B
+1 F
+0.28 0.14 (beha) 99.65 174.62 B
+0.28 0.14 (v) 120.78 174.62 B
+0.28 0.14 (es lik) 126.25 174.62 B
+0.28 0.14 (e a) 150.82 174.62 B
+2 F
+0.28 0.14 (<deque>) 167.22 174.62 B
+1 F
+0.28 0.14 ( combined with a) 208.89 174.62 B
+2 F
+0.28 0.14 (<semaphor) 291.27 174.62 B
+0.28 0.14 (e>) 345.09 174.62 B
+1 F
+0.28 0.14 (, and may possibly be b) 356.54 174.62 B
+0.28 0.14 (uilt) 464.91 174.62 B
+0.28 0.14 (from these) 483.33 174.62 B
+0.28 0.17 (classes. The semaphore count corresponds to the size of the queue. A thread will block on the) 99.65 161.62 B
+(semaphore if it attempts to pop a message from the queue when the size is zero.) 99.65 148.62 T
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "7" 7
+%%Page: "8" 8
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Dylan Threads Librar) 402.19 766.62 T
+(y Extensions) 482.3 766.62 T
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+N
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+0 10 Q
+(8) 63.65 84.9 T
+0 9 Q
+(December 4, 1996 12:16 pm) 414.09 84.9 T
+3 11 Q
+(Oper) 81.65 737.62 T
+(ations) 104.09 737.62 T
+2 F
+(<message-queue>) 99.65 715.62 T
+1 F
+( supports all the operations of) 182.46 715.62 T
+2 F
+(<deque>) 315.67 715.62 T
+1 F
+(, notably:) 356.32 715.62 T
+2 F
+(push) 99.65 693.62 T
+1 F
+(,) 122.28 693.62 T
+2 F
+(push-last) 127.78 693.62 T
+1 F
+0.23 (These functions ef) 171.65 680.62 P
+0.23 (fecti) 253.1 680.62 P
+0.23 (v) 272.37 680.62 P
+0.23 (ely call) 277.71 680.62 P
+2 F
+0.23 (r) 313 680.62 P
+0.23 (elease) 317.69 680.62 P
+1 F
+0.23 ( on the internal semaphore after pushing a) 345.18 680.62 P
+(v) 171.65 667.62 T
+(alue onto the queue.) 176.87 667.62 T
+2 F
+(pop) 99.65 645.62 T
+1 F
+(,) 117.38 645.62 T
+2 F
+(pop-last) 122.88 645.62 T
+1 F
+0.28 0.11 (These functions ef) 171.65 645.62 B
+0.28 0.11 (fecti) 255.23 645.62 B
+0.28 0.11 (v) 275.08 645.62 B
+0.28 0.11 (ely call) 280.52 645.62 B
+2 F
+0.28 0.11 (wait-f) 316.93 645.62 B
+0.28 0.11 (or) 344.82 645.62 B
+1 F
+0.28 0.11 ( on the internal semaphore before pop-) 355.44 645.62 B
+(ping a v) 171.65 632.62 T
+(alue from the queue.) 206.82 632.62 T
+0 12 Q
+(5.2) 63.65 594.95 T
+(Read-Write Loc) 90.65 594.95 T
+(ks) 178.42 594.95 T
+2 11 Q
+(<read-write-lock>) 63.65 563.62 T
+1 F
+([Class]) 500.48 563.62 T
+3 F
+(Super) 81.65 538.62 T
+(classes) 106.9 538.62 T
+2 F
+(<lock>) 99.65 516.62 T
+3 F
+(Description) 81.65 491.62 T
+1 F
+0.28 0.01 (Instances of) 99.65 469.62 B
+2 F
+0.28 0.01 (<r) 155.96 469.62 B
+0.28 0.01 (ead-write-lock>) 166.94 469.62 B
+1 F
+0.28 0.01 ( may be lock) 241.21 469.62 B
+0.28 0.01 (ed for either reading or writing. Se) 298.6 469.62 B
+0.28 0.01 (v) 452.86 469.62 B
+0.28 0.01 (eral threads may) 458.21 469.62 B
+0.28 0.04 (o) 99.65 456.62 B
+0.28 0.04 (wn a read-write lock simultaneously for reading. Alternati) 104.91 456.62 B
+0.28 0.04 (v) 364.64 456.62 B
+0.28 0.04 (ely) 370.01 456.62 B
+0.28 0.04 (, a single thread may o) 382.84 456.62 B
+0.28 0.04 (wn a read-) 484.36 456.62 B
+(write lock for writing.) 99.65 443.62 T
+3 F
+(Oper) 81.65 418.62 T
+(ations) 104.09 418.62 T
+1 F
+(The class) 99.65 396.62 T
+2 F
+(<r) 143.64 396.62 T
+(ead-write-lock>) 154.59 396.62 T
+1 F
+( pro) 228.68 396.62 T
+(vides the follo) 245.93 396.62 T
+(wing methods:) 308.59 396.62 T
+2 F
+(wait-f) 99.65 374.62 T
+(or) 126.86 374.62 T
+1 F
+0.28 0.2 (This method accepts the k) 171.65 374.62 B
+0.28 0.2 (e) 292.46 374.62 B
+0.28 0.2 (yw) 297.38 374.62 B
+0.28 0.2 (ord) 311.1 374.62 B
+2 F
+0.28 0.2 (write?:) 329.58 374.62 B
+1 F
+0.28 0.2 (. If a true v) 364.56 374.62 B
+0.28 0.2 (alue is supplied, then the) 416.52 374.62 B
+0.28 0.09 (thread blocks until the lock can be claimed for writing. If) 171.65 361.62 B
+2 F
+0.28 0.09 (#f) 434.18 361.62 B
+1 F
+0.28 0.09 ( is suplied, then the) 443.52 361.62 B
+(thread blocks until the lock can be claimed for reading. The def) 171.65 348.62 T
+(ault v) 450.75 348.62 T
+(alue is) 475.23 348.62 T
+2 F
+(#f) 506.39 348.62 T
+1 F
+(.) 515.55 348.62 T
+0 15 Q
+(6.) 63.65 287.95 T
+(Implementation Notes) 90.65 287.95 T
+0 12 Q
+(6.1) 63.65 248.95 T
+(Finalization) 90.65 248.95 T
+1 11 Q
+0.28 0 (The Dylan synchronization objects will be implemented as wrappers around lo) 63.65 223.62 B
+0.28 0 (wer) 412.6 223.62 B
+0.28 0 (-le) 428.87 223.62 B
+0.28 0 (v) 440.21 223.62 B
+0.28 0 (el operating system) 445.54 223.62 B
+0.19 (structures. The Dylan objects are subject to g) 63.65 210.62 P
+0.19 (arbage collection, b) 263.48 210.62 P
+0.19 (ut the lo) 350.09 210.62 P
+0.19 (w-le) 386.24 210.62 P
+0.19 (v) 405.52 210.62 P
+0.19 (el structures are not. Hence) 410.85 210.62 P
+0.28 0.06 (it will be necessary to ha) 63.65 197.62 B
+0.28 0.06 (v) 175.38 197.62 B
+0.28 0.06 (e f) 180.77 197.62 B
+0.28 0.06 (inalization methods for each of the Dylan classes, which will dispose of the) 191.91 197.62 B
+(lo) 63.65 184.62 T
+(w-le) 71.93 184.62 T
+(v) 91.2 184.62 T
+(el structures.) 96.54 184.62 T
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "8" 8
+%%Page: "9" 9
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 8 Q
+(Dylan Threads Librar) 402.19 766.62 T
+(y Extensions) 482.3 766.62 T
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+0 9 Q
+(December 4, 1996 12:16 pm) 63.65 84.9 T
+0 10 Q
+(9) 526.09 84.9 T
+0 12 Q
+(6.2) 63.65 736.95 T
+(Garba) 90.65 736.95 T
+(g) 125.21 736.95 T
+(e Collection Considerations) 132.66 736.95 T
+1 11 Q
+-0.21 (There are some general constraints that an) 63.65 711.62 P
+-0.21 (y combination of a threads implementation and a g) 247.95 711.62 P
+-0.21 (arbage collec-) 469.86 711.62 P
+-0.27 (tor implementation must agree about. First, allocation must be synchronized by some means so that threads) 63.65 698.62 P
+0.28 0.05 (are able to allocate and initialize objects without being concerned that another thread might be doing the) 63.65 685.62 B
+0.28 0.16 (same thing. Secondly) 63.65 672.62 B
+0.28 0.16 (, the g) 160.99 672.62 B
+0.28 0.16 (arbage collector must be able to locate all the roots of the entire program -) 189.76 672.62 B
+(including an) 63.65 659.62 T
+(y thread-local v) 118.18 659.62 T
+(ariables.) 186.94 659.62 T
+-0.01 (F) 63.65 634.62 P
+-0.01 (or Boehm\325) 69.6 634.62 P
+-0.01 (s fully conserv) 116.34 634.62 P
+-0.01 (ati) 180.81 634.62 P
+-0.01 (v) 191.53 634.62 P
+-0.01 (e collector) 196.87 634.62 P
+-0.01 (, the collector itself tak) 242.54 634.62 P
+-0.01 (es full responsibility for ensuring that allo-) 343.51 634.62 P
+-0.27 (cation and root location w) 63.65 621.62 P
+-0.27 (orks \050at least for some of those platforms for which the Boehm collector supports) 177.35 621.62 P
+(threads, e.g. W) 63.65 608.62 T
+(in32, I think\051.) 129.49 608.62 T
+0.28 0.32 (The responsibilities are shared for Harlequin\325) 63.65 583.62 B
+0.28 0.32 (s collector) 279.14 583.62 B
+0.28 0.32 (. The designs are not yet f) 327.83 583.62 B
+0.28 0.32 (inalized - b) 451.41 583.62 B
+0.28 0.32 (ut are) 505.04 583.62 B
+(e) 63.65 570.62 T
+(xpected to look lik) 68.37 570.62 T
+(e the follo) 150.45 570.62 T
+(wing:) 194.78 570.62 T
+-0.11 (F) 63.65 545.62 P
+-0.11 (or allocation, each thread will ha) 69.6 545.62 P
+-0.11 (v) 213.01 545.62 P
+-0.11 (e a pri) 218.35 545.62 P
+-0.11 (v) 245.34 545.62 P
+-0.11 (ate b) 250.56 545.62 P
+-0.11 (uf) 271.31 545.62 P
+-0.11 (fer from which allocate memory) 280.2 545.62 P
+-0.11 (. Allocation is performed) 421.39 545.62 P
+0.28 0.12 (by incrementing a pointer into the b) 63.65 532.62 B
+0.28 0.12 (uf) 227.02 532.62 B
+0.28 0.12 (fer \050and the memory manager has responsibility for f) 236.14 532.62 B
+0.28 0.12 (inding more) 476.71 532.62 B
+-0.19 (space if there is not enough a) 63.65 519.62 P
+-0.19 (v) 190.57 519.62 P
+-0.19 (ailable\051. The space which has just been allocated must be initialized before it) 195.79 519.62 P
+0.28 0.03 (can be processed by the collector - b) 63.65 506.62 B
+0.28 0.03 (ut during this initialization phase, the memory manager may be pro-) 226.98 506.62 B
+0.24 (cessing other objects. The memory manager will ignore the freshly-allocated memory until it is) 63.65 493.62 P
+3 F
+0.24 (commited) 488.88 493.62 P
+1 F
+0.28 0.04 (by the thread \050which the thread is obliged to do before allocating an) 63.65 480.62 B
+0.28 0.04 (y more memory\051. Synchronization is) 367.64 480.62 B
+(achie) 63.65 467.62 T
+(v) 86.58 467.62 T
+(ed by means of the follo) 91.92 467.62 T
+(wing constraints:) 198.27 467.62 T
+4 F
+(\245) 99.65 448.62 T
+1 F
+-0.08 (The allocation / initialization must be performed in a loop, to allo) 113.4 448.62 P
+-0.08 (w for the f) 400.05 448.62 P
+-0.08 (act that the) 445.82 448.62 P
+3 F
+-0.08 (commit) 496.6 448.62 P
+1 F
+-0.39 (might f) 113.4 435.62 P
+-0.39 (ail. \050F) 144.99 435.62 P
+-0.39 (ailure might occur if the collector has just changed phase, and the allocation b) 170.71 435.62 P
+-0.39 (uf) 508.19 435.62 P
+-0.39 (fer) 517.08 435.62 P
+(is no longer current, for instance\051. This is the basis of synchronization with the collector and) 113.4 422.62 T
+(with other threads. Since the initialization code may be e) 113.4 409.62 T
+(x) 363.14 409.62 T
+(ecuted more than once, it must be) 368.48 409.62 T
+(careful about performing side-ef) 113.4 396.62 T
+(fects.) 255.77 396.62 T
+4 F
+(\245) 99.65 380.62 T
+1 F
+-0.09 (During initialization, the thread must ensure that no v) 113.4 380.62 P
+-0.09 (alue stored into the ne) 347.95 380.62 P
+-0.09 (wly allocated mem-) 444.46 380.62 P
+(ory might become in) 113.4 367.62 T
+(v) 204.32 367.62 T
+(alid as a result of relocation performed by the memory manager) 209.54 367.62 T
+(. Where) 489.37 367.62 T
+(objects are kno) 113.4 354.62 T
+(wn to be static or untraced, this imposes no constraint. Otherwise, it is possible) 179.72 354.62 T
+-0.06 (to ensure that the v) 113.4 341.62 P
+-0.06 (alue will not be relocated by putting it in an) 196.6 341.62 P
+3 F
+-0.06 (ambiguous r) 390.96 341.62 P
+-0.06 (oot) 445.71 341.62 P
+1 F
+-0.06 ( \050e.g. by storing) 459.77 341.62 P
+(it on the stack\051.) 113.4 328.62 T
+0.28 0.15 (In practice, this means that we will probably implement tw) 63.65 303.62 B
+0.28 0.15 (o primiti) 333.7 303.62 B
+0.28 0.15 (v) 373.24 303.62 B
+0.28 0.15 (e memory allocators in the Dylan) 378.72 303.62 B
+0.28 0.01 (runtime. One will allocate memory and initialize it from a prototype object. The other will allocate mem-) 63.65 290.62 B
+0.28 0.01 (ory and f) 63.65 277.62 B
+0.28 0.01 (ill it with a v) 103.42 277.62 B
+0.28 0.01 (alue \050e.g. the canonical uninitialized v) 160.68 277.62 B
+0.28 0.01 (alue\051. Programmer) 330.04 277.62 B
+0.28 0.01 (-def) 412.8 277.62 B
+0.28 0.01 (ined initialization code) 429.96 277.62 B
+(can then be safely run with no constraints once the primiti) 63.65 264.62 T
+(v) 318.78 264.62 T
+(e allocation has \336nished.) 324.12 264.62 T
+0.28 0 (Root location poses tw) 63.65 239.62 B
+0.28 0 (o particular challenges for the Harlequin collector) 164.94 239.62 B
+0.28 0 (. The design implies that the col-) 385.42 239.62 B
+0.13 (lector must be able to trace all roots atomically) 63.65 226.62 P
+0.13 (. Since this tracing phase may be started from an) 270.52 226.62 P
+0.13 (y arbitrary) 485.39 226.62 P
+(thread, it may be necessary to impose the follo) 63.65 213.62 T
+(wing constraints:) 268.37 213.62 T
+4 F
+(\245) 99.65 194.62 T
+1 F
+(It may be necessary to stop all other threads temporarily) 113.4 194.62 T
+(. \050Actually it is not important that) 359.83 194.62 T
+(threads are stopped - merely that the) 113.4 181.62 T
+(y cannot de-reference an) 273.31 181.62 T
+(y roots. Stopping threads is just) 381.56 181.62 T
+(one w) 113.4 168.62 T
+(ay to achie) 139.87 168.62 T
+(v) 187.24 168.62 T
+(e that\051. An) 192.58 168.62 T
+(y mechanism to stop all threads will be implemented in the runt-) 239.15 168.62 T
+(ime. It is purposefully not e) 113.4 155.62 T
+(xposed in the threads library) 234.84 155.62 T
+(.) 359.38 155.62 T
+4 F
+(\245) 99.65 139.62 T
+1 F
+(An) 113.4 139.62 T
+(y thread must be able to address and \336nd all roots - e) 126.68 139.62 T
+(v) 358.59 139.62 T
+(en if the roots include thread-local) 363.92 139.62 T
+-0.13 (v) 113.4 126.62 P
+-0.13 (ariables. This may mean that thread-local v) 118.62 126.62 P
+-0.13 (ariables ha) 307.91 126.62 P
+-0.13 (v) 354.9 126.62 P
+-0.13 (e to be re) 360.24 126.62 P
+-0.13 (gistered on thread creation. It) 400.32 126.62 P
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "9" 9
+%%Page: "10" 10
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Dylan Threads Librar) 402.19 766.62 T
+(y Extensions) 482.3 766.62 T
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+N
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+0 10 Q
+(10) 63.65 84.9 T
+0 9 Q
+(December 4, 1996 12:16 pm) 414.09 84.9 T
+1 11 Q
+(may e) 113.4 737.62 T
+(v) 139.7 737.62 T
+(en mean that thread-local v) 145.04 737.62 T
+(ariables may not be able to use v) 264.51 737.62 T
+(alue calls pro) 408.12 737.62 T
+(vided by the) 466.61 737.62 T
+(OS threads interf) 113.4 724.62 T
+(ace for direct storage.) 188.44 724.62 T
+0 12 Q
+(6.3) 63.65 686.95 T
+(Interfacing to Foreign Code) 90.65 686.95 T
+1 11 Q
+0.28 0.08 (It is intended that threads created by the Dylan library may call code written in other languages with no) 63.65 661.62 B
+(special constraints. It is also intended that threads created in foreign code may call into Dylan.) 63.65 648.62 T
+-0.01 (In the latter case, a <thread> object might not e) 63.65 623.62 P
+-0.01 (xist for the thread, so it may ha) 271.3 623.62 P
+-0.01 (v) 407.87 623.62 P
+-0.01 (e to be created either at the) 413.2 623.62 P
+(call-in point, or at the call to current-thread\050\051.) 63.65 610.62 T
+0.28 0.01 (What about dynamic loading of Dylan code, when multiple threads already e) 63.65 585.62 B
+0.28 0.01 (xist?? May ha) 405.92 585.62 B
+0.28 0.01 (v) 468.13 585.62 B
+0.28 0.01 (e to initialize) 473.48 585.62 B
+(thread-local v) 63.65 572.62 T
+(ariables v) 124.16 572.62 T
+(ery carefully then.) 166.45 572.62 T
+0 12 Q
+(6.4) 63.65 534.95 T
+(Solaris Implementation) 90.65 534.95 T
+1 11 Q
+(<simple-lock> -> mute) 63.65 509.62 T
+(x) 165.2 509.62 T
+(<recursi) 63.65 484.62 T
+(v) 99.51 484.62 T
+(e-lock> -> mute) 104.84 484.62 T
+(x) 175.74 484.62 T
+(<semaphore> -> semaphore) 63.65 459.62 T
+(<noti\336cation> -> condition v) 63.65 434.62 T
+(ariable) 191.07 434.62 T
+(<thread> -> thread) 63.65 409.62 T
+(thread v) 63.65 384.62 T
+(ariable -> element in a v) 99.11 384.62 T
+(ector referenced via a re) 206.26 384.62 T
+(gister) 312.37 384.62 T
+(conditional-update! -> compare-and-e) 63.65 359.62 T
+(xchange ??) 230.97 359.62 T
+0 12 Q
+(6.5) 63.65 321.95 T
+(Win32 Implementation) 90.65 321.95 T
+1 11 Q
+(<simple-lock> -> single spin lock stored in a slot, resorting to a semaphore on f) 63.65 296.62 T
+(ailure) 413.65 296.62 T
+(<recursi) 63.65 271.62 T
+(v) 99.51 271.62 T
+(e-lock> -> single spin lock stored in a slot, resorting to a semaphore on f) 104.84 271.62 T
+(ailure) 424.18 271.62 T
+(<semaphore> -> semaphore) 63.65 246.62 T
+(<noti\336cation> -> pair of e) 63.65 221.62 T
+(v) 177.92 221.62 T
+(ents, k) 183.25 221.62 T
+(ept in anti-phase) 211.86 221.62 T
+(<thread> -> thread) 63.65 196.62 T
+(thread v) 63.65 171.62 T
+(ariable -> element in a v) 99.11 171.62 T
+(ector referenced via a se) 206.26 171.62 T
+(gment re) 312.98 171.62 T
+(gister) 351.62 171.62 T
+(conditional-update! -> compare-and-e) 63.65 146.62 T
+(xchange) 230.97 146.62 T
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "10" 10
+%%Page: "11" 11
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 8 Q
+(Dylan Threads Librar) 402.19 766.62 T
+(y Extensions) 482.3 766.62 T
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+0 9 Q
+(December 4, 1996 12:16 pm) 63.65 84.9 T
+0 10 Q
+(11) 520.53 84.9 T
+0 12 Q
+(6.6) 63.65 736.95 T
+(Macintosh Implementation) 90.65 736.95 T
+1 11 Q
+(<simple-lock> -> critical re) 63.65 711.62 T
+(gion) 185.04 711.62 T
+(<recursi) 63.65 686.62 T
+(v) 99.51 686.62 T
+(e-lock> -> critical re) 104.84 686.62 T
+(gion) 195.58 686.62 T
+(<semaphore> -> b) 63.65 661.62 T
+(uilt using critical re) 144.35 661.62 T
+(gion as a primiti) 230.04 661.62 T
+(v) 301.58 661.62 T
+(e) 306.91 661.62 T
+(<noti\336cation> -> b) 63.65 636.62 T
+(uilt using critical re) 146.82 636.62 T
+(gion as a primiti) 232.51 636.62 T
+(v) 304.04 636.62 T
+(e) 309.38 636.62 T
+(<thread> -> thread) 63.65 611.62 T
+(thread v) 63.65 586.62 T
+(ariable -> element in a v) 99.11 586.62 T
+(ector referenced via a thread-local v) 206.26 586.62 T
+(ariable ??) 364.5 586.62 T
+(conditional-update! -> ??) 63.65 561.62 T
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "11" 11
+%%Trailer
+%%BoundingBox: 0 0 595.3 841.9
+%%PageOrder: Ascend
+%%Pages: 11
+%%DocumentFonts: Helvetica-Bold
+%%+ Times-Roman
+%%+ Times-Bold
+%%+ Times-Italic
+%%+ Courier-Bold
+%%EOF

@@ -1,0 +1,23 @@
+Site: 
+    
+LW Version:
+
+Machine & OS: 
+
+Display & window manager: 
+
+People to CC: 
+
+Description: 
+
+Category: 
+
+Visibility:
+
+Difficulty of workaround:
+
+Repeat by:
+
+Test Suite Entry: 
+
+Backtrace:

@@ -1,0 +1,6 @@
+
+# rm -f $FUNCTIONAL_DEVELOPER_USER_INSTALL/lib/lib$1.so
+# cp -p /home/nosa/dylan/build/$1/$1.so $FUNCTIONAL_DEVELOPER_USER_INSTALL/lib/lib$1.so
+
+rm -f $FUNCTIONAL_DEVELOPER_USER_INSTALL/lib/lib$1.a
+cp -p /home/nosa/dylan/build/$1/$1.a $FUNCTIONAL_DEVELOPER_USER_INSTALL/lib/lib$1.a

@@ -1,0 +1,146 @@
+
+		-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+		Editor "Complete" Operation Proposal
+		-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+* INTRODUCTION
+
+The DEEP specification document included a "complete" command, for
+providing completions of partial names based on Dylan namespace
+context.  It is likely that for Kansas possible completions (even if
+there is only one) will have to be displayed outside the editor.
+
+This document describes 
+
+* REQUIREMENTS
+
+The use of name completion is (I assume) well understood.  Ideally the
+alternatives (and a means to choose one of them) would be made
+availble with a minimum of visual and cognitive context switching.  In
+detail, the operation should:
+
+  (1) provide completions quickly;
+
+  (2) optionally complete only up to the largest unique initial
+      substring, and require another completion command before listing
+      alternatives (since this mode is popular, e.g., in bash and
+      Emacs);
+
+  (3) display alternatives within the editor and allow choice among
+      them with a small number of gestures (with keyboard and mouse
+      alternatives);
+
+  (4) allow a chosen alternative to be inserted into the editor text
+      easily;
+
+  (5) disturb focus, screen layout etc. as little as possible, and
+      restore them once finished;
+
+It is likely that (3) and (4) will not be satisfied for most or all
+editors for Kansas, inasmuch as the alternatives will be displayed
+outside the editor.  See the "user interface" section below for details.
+
+* DESIGN
+
+** INFORMATION
+
+As with the "describe" command, the operation will apply to the
+curently selected region within the editor, or the "nearest" word,
+depending on whether the editor can easily extract a "current word".
+
+The completer will also need to know the library and module context
+for the file, which I assume it will be able to derive from the file
+name (including path).  It may also need to know whether the user want
+the search to follow "use" chains and to bypass "export" lists.
+
+The completer may choose to offer alternatives based on information
+derived from compilation and/or it may perform textual searching,
+analogous to the usual TAGS mechanism.  For both, it may need to check
+for file modification (i.e., datestamps) and ask the user whether to
+re-derive information.  On the other end, the editor will optionally
+ask the user whether it should save files before performing the
+operation, if it is powerful enough to do so.
+
+** USER INTERFACE
+
+Since I expect the UI for display of alternatives to be separate from
+the editor for Kansas, I won't try to describe an in-editor UI for
+this.  The UI for invoking completion will probably be different for
+each editor, as many have their own conventions for this sort of
+thing.
+
+*** LISTING ALTERNATIVES
+
+This section describes a proposed UI for displaying alternatives,
+choosing from them and inserting them into the editor.
+
+Basically, a small scrollable list of alternatives is displayed, with
+a button which copies the selected alternative to the "standard"
+clipboard.  This is to allow the user to easily paste it into the
+editor.  The editor may be able to help with this by selecting the
+partial name before invoking completion, such that pasting will
+overwrite it.  [Except that's not the standard in Emacs.]
+
+  - size & shape
+
+    + small window (approx 10 lines, <= 80 cols, plus controls; fixed
+      height, or proportionally larger for more alternatives, up to some
+      max?)
+
+    + interactively resizeable
+
+    + minimal decoration (i.e., by "window manager"), to minimize
+      drawing time
+
+    + vertical and horizontal scroll bars (if needed); maybe should
+      appear horizontally scrolled to show only the last few supplied
+      characters; should NOT "word-wrap"
+
+  - interactivity
+
+    + only one active at once; completion fails if a second completion
+      is attempted while one is in progress
+
+    + non-modal; takes focus but returns it once used
+
+    + closes automatically after use, i.e. after any of the operations
+      below (always; this is not an option); perhaps also closes if it
+      loses focus (no good if the user has "X-mouse"-style
+      auto-focussing)? 
+
+  - operations
+
+    + two buttons, for "copy to clipboard" and "cancel"; "escape" (or
+      some similar key/gesture) is probably a synonym for "cancel";
+      "return" (or whatever the usual "default gesture" is) is a
+      synonym for "copy to clipboard"
+
+    + standard context menu for launching into browsers, just in case;
+      this does _not_ close the completer window.
+
+    + double-clicking a name in the list will be the same as
+      single-clicking it (selecting it) and then clicking "copy to
+      clipboard" 
+
+*** CONFIGURING COMPLETION
+
+The following configuration options may need to be settable somewhere,
+e.g., within some page of an environment "Options ..." dialog.
+
+  - whether to first complete the "unique initial substring"  [I'd
+    suggest that this is only useful if completions are handled
+    entirely within the editor; i.e., not in Kansas.]
+
+  - whether to follow "use" chains (or only complete names within the
+    current module)
+
+  - whether to bypass "export" lists (or only to offer exported names
+    from other modules)
+
+  - whether the environment should re-derive the completion info
+    (always, never or "after asking the user")  [This applies to
+    almost all lookup operations, except documentation.]
+
+  - whether to ask DylanWorks for alternatives, or use some
+    editor-internal mechanism  [This would probably be configurable
+    within the editor, not DW.]

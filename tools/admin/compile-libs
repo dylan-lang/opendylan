@@ -1,0 +1,95 @@
+#!/usr/local/bin/bash
+#      Script: compile-libs
+#      Author: Shri Amit(amit)
+usage=" Usage: $0 -i <Image> -r <Root> -f <Listoflibsfile> -m <Usernames> -l <LogFile> -e"
+# Opts & Flgs: -i: Source image, default: lw+dylan-$platform
+#              -r: Source root, default: /u/dylan
+#              -f: File containing list of libs, default $admindir/libs2compile
+#              -l: Logfile, default: $logsdir/$0-log-$host-$platform.$suffix
+#              -m: Sends mail upon completion. (eg: -m foo,bar,foobar)
+#              -e: Flag, sends mail to usernames ONLY if an error occurs"
+#    Synopsis: . Compile libs in <Listoflibsfile> in <Image>
+#              . If -m option has arg(s), sends mail upon completion.
+#              . If -e flag is enabled, sends mail only upon error
+#              . Removes old logs from $logsdir
+###################################################################
+## Application exit status legend ##
+##  0: Build successful
+##  1: Invalid command line argument
+##  2: The build exited abnormally from within lispworks
+
+## Parse the options & flags on the command line ##
+while getopts i:r:f:m:l:e option
+do case $option in
+     i) image=$OPTARG;;
+     r) root=$OPTARG;;
+     f) file=$OPTARG;;
+     m) usernames=$OPTARG;;
+     l) logfile=$OPTARG;;
+     e) error_only=Yes;;
+    \?) echo $usage
+        exit 1;;
+   esac
+done
+shift `expr $OPTIND - 1`
+
+source /u/dylan/tools/admin/env.bash
+
+## Assign defaults to options & flags ##
+image=${image:-$localdir/lw+dylan-$platform}
+file=${file:-$admindir/libs2compile}
+root=${root:-$dylandir}
+logfile=${logfile:-$logsdir/compile-libs-log-$host-$platform.$suffix}
+usernames=${usernames:-unspecified}
+error_only=${error_only:-No}
+
+## Export this variable to ensure new registry libs get read ##
+## from the correct root sources                             ##
+##
+TRUNK_SYSTEM_ROOT="$root/"; export $TRUNK_SYSTEM_ROOT
+
+## Everything from here goes to the logfile ##
+## Prompt the options                       ##
+##
+{
+    echo "Starting at: `date`"
+    echo "Running $0 with options:"
+    echo "             The root is: $TRUNK_SYSTEM_ROOT"
+    echo "     The source image is: $image"
+    echo "The list of libs file is: $file"
+    echo "            Send mail to: $usernames"
+    echo "Send mail on error only?: $error_only"
+    echo "          The logfile is: $logfile"
+    echo
+
+## load the libs ##
+##
+$image -init - <<SCRIPT
+(load "$admindir/load-libs.lisp")
+(load-libraries "$file")
+(bye)
+SCRIPT
+    status=$?
+    subject="Report for library build on $host-$platform"
+    echo "Ending at: `date`"
+    if [ "$status" != 0 ]; then
+	message="The library build abnormally with an exit status $status"
+	case $usernames in
+	   unspecified) echo $message;;
+	   *) send-mail "$message" "$usernames" "$logfile" "$subject" ;;
+	esac
+	exit 2;
+    else
+	message="The library build completed successfully."
+	if [ "$usernames" != "unspecified" -a "$error_only" = "No" ]; then
+	    send-mail "$message" "$usernames" "$logfile" "$subject"
+	else
+	    echo $message
+        fi
+	$admindir/remove-old-files $logsdir/compile-libs-log-$host-$platform $logstokeep
+    fi
+
+} 2>&1 | tee $logfile
+
+exit 0;
+#eof

@@ -1,0 +1,13 @@
+[I can't remember if we really got on to discussing this.]
+
+library/protocol/in-the-large issues, e.g,
+
+  o  interface/implementation
+    o  interface (open, abstract classes/GFs)
+       & implementation (closed, sealed classes/domains) libraries
+    o  e.g., tables and vectors in the Dylan library
+    o  give example of "delegating" make method
+  o  abstract vs. concrete (Kim Barret sez)
+    o  never have concrete non-leaf classes, because you can't
+       add abstract subclasses later
+

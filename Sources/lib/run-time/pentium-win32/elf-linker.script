@@ -1,0 +1,18 @@
+linkdll
+gcc -shared -o $(full-dll-name) -L$(personal-lib) -L$(system-lib) $(libraries) $(dllobjs) $(dylan-support) $(dlllibs) $(c-libs) $(linkopts)
+
+linkexe
+gcc -o $(full-exe-name) -L$(personal-lib) -L$(system-lib) $(libraries) $(dllobjs) $(dylan-support) $(dlllibs) $(c-libs) $(linkopts)
+
+assemble
+as-dylan -L -d -o $(object) $(source)
+
+ccompile
+gcc -O2 -g -c 
+
+libraries
+-L/usr/lib -L/usr/X11R6/lib -L/usr/X11/lib -L/lib -L/usr/X11R6/lib/xrt/lib
+
+libcmt
+-lc
+

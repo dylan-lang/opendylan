@@ -1,0 +1,7140 @@
+%!PS-Adobe-3.0
+%%BoundingBox: (atend)
+%%Pages: (atend)
+%%PageOrder: (atend)
+%%DocumentFonts: (atend)
+%%Creator: Frame 4.0
+%%DocumentData: Clean7Bit
+%%EndComments
+%%BeginProlog
+%
+% Frame ps_prolog 4.0, for use with Frame 4.0 products
+% This ps_prolog file is Copyright (c) 1986-1993 Frame Technology
+% Corporation.  All rights reserved.  This ps_prolog file may be
+% freely copied and distributed in conjunction with documents created
+% using FrameMaker, FrameBuilder and FrameViewer as long as this 
+% copyright notice is preserved.
+%
+% Frame products normally print colors as their true color on a color printer
+% or as shades of gray, based on luminance, on a black-and white printer. The
+% following flag, if set to True, forces all non-white colors to print as pure
+% black. This has no effect on bitmap images.
+/FMPrintAllColorsAsBlack             false def
+%
+% Frame products can either set their own line screens or use a printer's 
+% default settings. Three flags below control this separately for no 
+% separations, spot separations and process separations. If a flag
+% is true, then the default printer settings will not be changed. If it is
+% false, Frame products will use their own settings from a table based on
+% the printer's resolution.
+/FMUseDefaultNoSeparationScreen      true  def
+/FMUseDefaultSpotSeparationScreen    true  def
+/FMUseDefaultProcessSeparationScreen false def
+%
+% For any given PostScript printer resolution, Frame products have two sets of 
+% screen angles and frequencies for printing process separations, which are 
+% recomended by Adobe. The following variable chooses the higher frequencies
+% when set to true or the lower frequencies when set to false. This is only
+% effective if the appropriate FMUseDefault...SeparationScreen flag is false.
+/FMUseHighFrequencyScreens true def
+%
+% PostScript Level 2 printers contain an "Accurate Screens" feature which can
+% improve process separation rendering at the expense of compute time. This 
+% flag is ignored by PostScript Level 1 printers.
+/FMUseAcccurateScreens true def
+%
+% The following PostScript procedure defines the spot function that Frame
+% products will use for process separations. You may un-comment-out one of
+% the alternative functions below, or use your own.
+%
+% Dot function
+/FMSpotFunction {abs exch abs 2 copy add 1 gt 
+		{1 sub dup mul exch 1 sub dup mul add 1 sub }
+		{dup mul exch dup mul add 1 exch sub }ifelse } def
+%
+% Line function
+% /FMSpotFunction { pop } def
+%
+% Elipse function
+% /FMSpotFunction { dup 5 mul 8 div mul exch dup mul exch add 
+%		sqrt 1 exch sub } def
+%
+%
+/FMversion (4.0) def 
+/FMLevel1 /languagelevel where {pop languagelevel} {1} ifelse 2 lt def
+/FMPColor
+	FMLevel1 {
+		false
+		/colorimage where {pop pop true} if
+	} {
+		true
+	} ifelse
+def
+/FrameDict 400 dict def 
+systemdict /errordict known not {/errordict 10 dict def
+		errordict /rangecheck {stop} put} if
+% The readline in PS 23.0 doesn't recognize cr's as nl's on AppleTalk
+FrameDict /tmprangecheck errordict /rangecheck get put 
+errordict /rangecheck {FrameDict /bug true put} put 
+FrameDict /bug false put 
+mark 
+% Some PS machines read past the CR, so keep the following 3 lines together!
+currentfile 5 string readline
+00
+0000000000
+cleartomark 
+errordict /rangecheck FrameDict /tmprangecheck get put 
+FrameDict /bug get { 
+	/readline {
+		/gstring exch def
+		/gfile exch def
+		/gindex 0 def
+		{
+			gfile read pop 
+			dup 10 eq {exit} if 
+			dup 13 eq {exit} if 
+			gstring exch gindex exch put 
+			/gindex gindex 1 add def 
+		} loop
+		pop 
+		gstring 0 gindex getinterval true 
+		} bind def
+	} if
+/FMshowpage /showpage load def
+/FMquit /quit load def
+/FMFAILURE { 
+	dup = flush 
+	FMshowpage 
+	/Helvetica findfont 12 scalefont setfont
+	72 200 moveto
+	show FMshowpage 
+	FMquit 
+	} def 
+/FMVERSION {
+	FMversion ne {
+		(Frame product version does not match ps_prolog!) FMFAILURE
+		} if
+	} def 
+/FMBADEPSF { 
+	(PostScript Lang. Ref. Man., 2nd Ed., H.2.4 says EPS must not call X              )
+	dup dup (X) search pop exch pop exch pop length 
+	4 -1 roll 
+	putinterval 
+	FMFAILURE
+	} def
+/FMLOCAL {
+	FrameDict begin
+	0 def 
+	end 
+	} def 
+/concatprocs
+	{
+	/proc2 exch cvlit def/proc1 exch cvlit def/newproc proc1 length proc2 length add array def
+	newproc 0 proc1 putinterval newproc proc1 length proc2 putinterval newproc cvx
+}def
+FrameDict begin 
+/FMnone 0 def
+/FMcyan 1 def
+/FMmagenta 2 def
+/FMyellow 3 def
+/FMblack 4 def
+/FMcustom 5 def
+/FrameNegative false def 
+/FrameSepIs FMnone def 
+/FrameSepBlack 0 def
+/FrameSepYellow 0 def
+/FrameSepMagenta 0 def
+/FrameSepCyan 0 def
+/FrameSepRed 1 def
+/FrameSepGreen 1 def
+/FrameSepBlue 1 def
+/FrameCurGray 1 def
+/FrameCurPat null def
+/FrameCurColors [ 0 0 0 1 0 0 0 ] def 
+/FrameColorEpsilon .001 def	
+/eqepsilon {		
+	sub dup 0 lt {neg} if
+	FrameColorEpsilon le
+} bind def
+/FrameCmpColorsCMYK { 
+	2 copy 0 get exch 0 get eqepsilon {
+		2 copy 1 get exch 1 get eqepsilon {
+			2 copy 2 get exch 2 get eqepsilon {
+				3 get exch 3 get eqepsilon
+			} {pop pop false} ifelse
+		}{pop pop false} ifelse
+	} {pop pop false} ifelse
+} bind def
+/FrameCmpColorsRGB { 
+	2 copy 4 get exch 0 get eqepsilon {
+		2 copy 5 get exch 1 get eqepsilon {
+			6 get exch 2 get eqepsilon
+		}{pop pop false} ifelse
+	} {pop pop false} ifelse
+} bind def
+/RGBtoCMYK { 
+	1 exch sub 
+	3 1 roll 
+	1 exch sub 
+	3 1 roll 
+	1 exch sub 
+	3 1 roll 
+	3 copy 
+	2 copy 
+	le { pop } { exch pop } ifelse 
+	2 copy 
+	le { pop } { exch pop } ifelse 
+	dup dup dup 
+	6 1 roll 
+	4 1 roll 
+	7 1 roll 
+	sub 
+	6 1 roll 
+	sub 
+	5 1 roll 
+	sub 
+	4 1 roll 
+} bind def
+/CMYKtoRGB { 
+	dup dup 4 -1 roll add 						  
+	5 1 roll 3 -1 roll add 						  
+	4 1 roll add 								  
+	1 exch sub dup 0 lt {pop 0} if 3 1 roll 	  
+	1 exch sub dup 0 lt {pop 0} if exch 	      
+	1 exch sub dup 0 lt {pop 0} if exch	  		  
+} bind def
+/FrameSepInit {
+	1.0 RealSetgray
+} bind def
+/FrameSetSepColor { 
+	/FrameSepBlue exch def
+	/FrameSepGreen exch def
+	/FrameSepRed exch def
+	/FrameSepBlack exch def
+	/FrameSepYellow exch def
+	/FrameSepMagenta exch def
+	/FrameSepCyan exch def
+	/FrameSepIs FMcustom def
+	setCurrentScreen	
+} bind def
+/FrameSetCyan {
+	/FrameSepBlue 1.0 def
+	/FrameSepGreen 1.0 def
+	/FrameSepRed 0.0 def
+	/FrameSepBlack 0.0 def
+	/FrameSepYellow 0.0 def
+	/FrameSepMagenta 0.0 def
+	/FrameSepCyan 1.0 def
+	/FrameSepIs FMcyan def
+	setCurrentScreen	
+} bind def
+ 
+/FrameSetMagenta {
+	/FrameSepBlue 1.0 def
+	/FrameSepGreen 0.0 def
+	/FrameSepRed 1.0 def
+	/FrameSepBlack 0.0 def
+	/FrameSepYellow 0.0 def
+	/FrameSepMagenta 1.0 def
+	/FrameSepCyan 0.0 def
+	/FrameSepIs FMmagenta def
+	setCurrentScreen
+} bind def
+ 
+/FrameSetYellow {
+	/FrameSepBlue 0.0 def
+	/FrameSepGreen 1.0 def
+	/FrameSepRed 1.0 def
+	/FrameSepBlack 0.0 def
+	/FrameSepYellow 1.0 def
+	/FrameSepMagenta 0.0 def
+	/FrameSepCyan 0.0 def
+	/FrameSepIs FMyellow def
+	setCurrentScreen
+} bind def
+ 
+/FrameSetBlack {
+	/FrameSepBlue 0.0 def
+	/FrameSepGreen 0.0 def
+	/FrameSepRed 0.0 def
+	/FrameSepBlack 1.0 def
+	/FrameSepYellow 0.0 def
+	/FrameSepMagenta 0.0 def
+	/FrameSepCyan 0.0 def
+	/FrameSepIs FMblack def
+	setCurrentScreen
+} bind def
+ 
+/FrameNoSep { 
+	/FrameSepIs FMnone def
+	setCurrentScreen
+} bind def
+/FrameSetSepColors { 
+	FrameDict begin
+	[ exch 1 add 1 roll ]
+	/FrameSepColors  
+	exch def end
+	} bind def
+/FrameColorInSepListCMYK { 
+	FrameSepColors {  
+       		exch dup 3 -1 roll 
+       		FrameCmpColorsCMYK 
+       		{ pop true exit } if
+    	} forall 
+	dup true ne {pop false} if
+	} bind def
+/FrameColorInSepListRGB { 
+	FrameSepColors {  
+       		exch dup 3 -1 roll 
+       		FrameCmpColorsRGB 
+       		{ pop true exit } if
+    	} forall 
+	dup true ne {pop false} if
+	} bind def
+/RealSetgray /setgray load def
+/RealSetrgbcolor /setrgbcolor load def
+/RealSethsbcolor /sethsbcolor load def
+end 
+/setgray { 
+	FrameDict begin
+	FrameSepIs FMnone eq
+		{ RealSetgray } 
+		{ 
+		FrameSepIs FMblack eq 
+			{ RealSetgray } 
+			{ FrameSepIs FMcustom eq 
+			  FrameSepRed 0 eq and
+			  FrameSepGreen 0 eq and
+			  FrameSepBlue 0 eq and {
+			  	RealSetgray
+			  } {
+				1 RealSetgray pop 
+			  } ifelse
+			} ifelse
+		} ifelse
+	end
+} bind def
+/setrgbcolor { 
+	FrameDict begin
+	FrameSepIs FMnone eq
+	{  RealSetrgbcolor }
+	{
+		3 copy [ 4 1 roll ] 
+		FrameColorInSepListRGB
+		{
+				FrameSepBlue eq exch 
+			 	FrameSepGreen eq and exch 
+			 	FrameSepRed eq and
+			 	{ 0 } { 1 } ifelse
+		}
+		{
+			FMPColor {
+				RealSetrgbcolor
+				currentcmykcolor
+			} {
+				RGBtoCMYK
+			} ifelse
+			FrameSepIs FMblack eq
+			{1.0 exch sub 4 1 roll pop pop pop} {
+			FrameSepIs FMyellow eq
+			{pop 1.0 exch sub 3 1 roll pop pop} {
+			FrameSepIs FMmagenta eq
+			{pop pop 1.0 exch sub exch pop } {
+			FrameSepIs FMcyan eq
+			{pop pop pop 1.0 exch sub } 
+			{pop pop pop pop 1} ifelse } ifelse } ifelse } ifelse 
+		} ifelse
+		RealSetgray
+	} 
+	ifelse
+	end
+} bind def
+/sethsbcolor {
+	FrameDict begin
+	FrameSepIs FMnone eq 
+	{ RealSethsbcolor } 
+	{
+		RealSethsbcolor 
+		currentrgbcolor  
+		setrgbcolor 
+	} 
+	ifelse
+	end
+} bind def
+FrameDict begin
+/setcmykcolor where {
+	pop /RealSetcmykcolor /setcmykcolor load def
+} {
+	/RealSetcmykcolor {
+		4 1 roll
+		3 { 3 index add 0 max 1 min 1 exch sub 3 1 roll} repeat 
+		setrgbcolor pop
+	} bind def
+} ifelse
+userdict /setcmykcolor { 
+		FrameDict begin
+		FrameSepIs FMnone eq
+		{ RealSetcmykcolor } 
+		{
+			4 copy [ 5 1 roll ]
+			FrameColorInSepListCMYK
+			{
+				FrameSepBlack eq exch 
+				FrameSepYellow eq and exch 
+				FrameSepMagenta eq and exch 
+				FrameSepCyan eq and 
+				{ 0 } { 1 } ifelse
+			}
+			{
+				FrameSepIs FMblack eq
+				{1.0 exch sub 4 1 roll pop pop pop} {
+				FrameSepIs FMyellow eq
+				{pop 1.0 exch sub 3 1 roll pop pop} {
+				FrameSepIs FMmagenta eq
+				{pop pop 1.0 exch sub exch pop } {
+				FrameSepIs FMcyan eq
+				{pop pop pop 1.0 exch sub } 
+				{pop pop pop pop 1} ifelse } ifelse } ifelse } ifelse 
+			} ifelse
+			RealSetgray
+		}
+		ifelse
+		end
+	} bind put
+FMLevel1 not { 
+	
+	/patProcDict 5 dict dup begin
+		<0f1e3c78f0e1c387> { 3 setlinewidth -1 -1 moveto 9 9 lineto stroke 
+											4 -4 moveto 12 4 lineto stroke
+											-4 4 moveto 4 12 lineto stroke} bind def
+		<0f87c3e1f0783c1e> { 3 setlinewidth -1 9 moveto 9 -1 lineto stroke 
+											-4 4 moveto 4 -4 lineto stroke
+											4 12 moveto 12 4 lineto stroke} bind def
+		<8142241818244281> { 1 setlinewidth -1 9 moveto 9 -1 lineto stroke
+											-1 -1 moveto 9 9 lineto stroke } bind def
+		<03060c183060c081> { 1 setlinewidth -1 -1 moveto 9 9 lineto stroke 
+											4 -4 moveto 12 4 lineto stroke
+											-4 4 moveto 4 12 lineto stroke} bind def
+		<8040201008040201> { 1 setlinewidth -1 9 moveto 9 -1 lineto stroke 
+											-4 4 moveto 4 -4 lineto stroke
+											4 12 moveto 12 4 lineto stroke} bind def
+	end def
+	/patDict 15 dict dup begin
+		/PatternType 1 def		
+		/PaintType 2 def		
+		/TilingType 3 def		
+		/BBox [ 0 0 8 8 ] def 	
+		/XStep 8 def			
+		/YStep 8 def			
+		/PaintProc {
+			begin
+			patProcDict bstring known {
+				patProcDict bstring get exec
+			} {
+				8 8 true [1 0 0 -1 0 8] bstring imagemask
+			} ifelse
+			end
+		} bind def
+	end def
+} if
+/combineColor {
+    FrameSepIs FMnone eq
+	{
+		graymode FMLevel1 or not {
+			
+			[/Pattern [/DeviceCMYK]] setcolorspace
+			FrameCurColors 0 4 getinterval aload pop FrameCurPat setcolor
+		} {
+			FrameCurColors 3 get 1.0 ge {
+				FrameCurGray RealSetgray
+			} {
+				FMPColor graymode and {
+					0 1 3 { 
+						FrameCurColors exch get
+						1 FrameCurGray sub mul
+					} for
+					RealSetcmykcolor
+				} {
+					4 1 6 {
+						FrameCurColors exch get
+						graymode {
+							1 exch sub 1 FrameCurGray sub mul 1 exch sub
+						} {
+							1.0 lt {FrameCurGray} {1} ifelse
+						} ifelse
+					} for
+					RealSetrgbcolor
+				} ifelse
+			} ifelse
+		} ifelse
+	} { 
+		FrameCurColors 0 4 getinterval aload
+		FrameColorInSepListCMYK {
+			FrameSepBlack eq exch 
+			FrameSepYellow eq and exch 
+			FrameSepMagenta eq and exch 
+			FrameSepCyan eq and
+			FrameSepIs FMcustom eq and
+			{ FrameCurGray } { 1 } ifelse
+		} {
+			FrameSepIs FMblack eq
+			{FrameCurGray 1.0 exch sub mul 1.0 exch sub 4 1 roll pop pop pop} {
+			FrameSepIs FMyellow eq
+			{pop FrameCurGray 1.0 exch sub mul 1.0 exch sub 3 1 roll pop pop} {
+			FrameSepIs FMmagenta eq
+			{pop pop FrameCurGray 1.0 exch sub mul 1.0 exch sub exch pop } {
+			FrameSepIs FMcyan eq
+			{pop pop pop FrameCurGray 1.0 exch sub mul 1.0 exch sub } 
+			{pop pop pop pop 1} ifelse } ifelse } ifelse } ifelse 
+		} ifelse
+		graymode FMLevel1 or not {
+			
+			[/Pattern [/DeviceGray]] setcolorspace
+			FrameCurPat setcolor
+		} { 
+			graymode not FMLevel1 and {
+				
+				dup 1 lt {pop FrameCurGray} if
+			} if
+			RealSetgray
+		} ifelse
+	} ifelse
+} bind def
+/savematrix {
+	orgmatrix currentmatrix pop
+	} bind def
+/restorematrix {
+	orgmatrix setmatrix
+	} bind def
+/dmatrix matrix def
+/dpi    72 0 dmatrix defaultmatrix dtransform
+    dup mul exch   dup mul add   sqrt def
+	
+/freq dpi dup 72 div round dup 0 eq {pop 1} if 8 mul div def
+/sangle 1 0 dmatrix defaultmatrix dtransform exch atan def
+/dpiranges   [  2540    2400    1693     1270    1200     635      600      0      ] def
+/CMLowFreqs  [ 100.402  94.8683 89.2289 100.402  94.8683  66.9349  63.2456 47.4342 ] def
+/YLowFreqs   [  95.25   90.0    84.65    95.25   90.0     70.5556  66.6667 50.0    ] def
+/KLowFreqs   [  89.8026 84.8528 79.8088  89.8026 84.8528  74.8355  70.7107 53.033  ] def
+/CLowAngles  [  71.5651 71.5651 71.5651 71.5651  71.5651  71.5651  71.5651 71.5651 ] def
+/MLowAngles  [  18.4349 18.4349 18.4349 18.4349  18.4349  18.4349  18.4349 18.4349 ] def
+/YLowTDot    [  true    true    false    true    true     false    false   false   ] def
+/CMHighFreqs [ 133.87  126.491 133.843  108.503 102.523  100.402   94.8683 63.2456 ] def
+/YHighFreqs  [ 127.0   120.0   126.975  115.455 109.091   95.25    90.0    60.0    ] def
+/KHighFreqs  [ 119.737 113.137 119.713  128.289 121.218   89.8026  84.8528 63.6395 ] def
+/CHighAngles [  71.5651 71.5651 71.5651  70.0169 70.0169  71.5651  71.5651 71.5651 ] def
+/MHighAngles [  18.4349 18.4349 18.4349  19.9831 19.9831  18.4349  18.4349 18.4349 ] def
+/YHighTDot   [  false   false   true     false   false    true     true    false   ] def
+/PatFreq     [	10.5833 10.0     9.4055  10.5833 10.0	  10.5833  10.0	   9.375   ] def
+/screenIndex {
+	0 1 dpiranges length 1 sub { dup dpiranges exch get 1 sub dpi le {exit} {pop} ifelse } for
+} bind def
+/getCyanScreen {
+	FMUseHighFrequencyScreens { CHighAngles CMHighFreqs} {CLowAngles CMLowFreqs} ifelse
+		screenIndex dup 3 1 roll get 3 1 roll get /FMSpotFunction load
+} bind def
+/getMagentaScreen {
+	FMUseHighFrequencyScreens { MHighAngles CMHighFreqs } {MLowAngles CMLowFreqs} ifelse
+		screenIndex dup 3 1 roll get 3 1 roll get /FMSpotFunction load
+} bind def
+/getYellowScreen {
+	FMUseHighFrequencyScreens { YHighTDot YHighFreqs} { YLowTDot YLowFreqs } ifelse
+		screenIndex dup 3 1 roll get 3 1 roll get { 3 div
+			{2 { 1 add 2 div 3 mul dup floor sub 2 mul 1 sub exch} repeat
+			FMSpotFunction } } {/FMSpotFunction load } ifelse
+			0.0 exch
+} bind def
+/getBlackScreen  {
+	FMUseHighFrequencyScreens { KHighFreqs } { KLowFreqs } ifelse
+		screenIndex get 45.0 /FMSpotFunction load 
+} bind def
+/getSpotScreen {
+	getBlackScreen
+} bind def
+/getCompositeScreen {
+	getBlackScreen
+} bind def
+/FMSetScreen 
+	FMLevel1 { /setscreen load 
+	}{ {
+		8 dict begin
+		/HalftoneType 1 def
+		/SpotFunction exch def
+		/Angle exch def
+		/Frequency exch def
+		/AccurateScreens FMUseAcccurateScreens def
+		currentdict end sethalftone
+	} bind } ifelse
+def
+/setDefaultScreen {
+	FMPColor {
+		orgrxfer cvx orggxfer cvx orgbxfer cvx orgxfer cvx setcolortransfer
+	}
+	{
+		orgxfer cvx settransfer
+	} ifelse
+	orgfreq organgle orgproc cvx setscreen
+} bind def
+/setCurrentScreen {
+	FrameSepIs FMnone eq {
+		FMUseDefaultNoSeparationScreen {
+			setDefaultScreen
+		} {
+			getCompositeScreen FMSetScreen
+		} ifelse
+	} {
+		FrameSepIs FMcustom eq {
+			FMUseDefaultSpotSeparationScreen {
+				setDefaultScreen
+			} {
+				getSpotScreen FMSetScreen
+			} ifelse
+		} {
+			FMUseDefaultProcessSeparationScreen {
+				setDefaultScreen
+			} {
+				FrameSepIs FMcyan eq {
+					getCyanScreen FMSetScreen
+				} {
+					FrameSepIs FMmagenta eq {
+						getMagentaScreen FMSetScreen
+					} {
+						FrameSepIs FMyellow eq {
+							getYellowScreen FMSetScreen
+						} {
+							getBlackScreen FMSetScreen
+						} ifelse
+					} ifelse
+				} ifelse
+			} ifelse
+		} ifelse
+	} ifelse 
+} bind def
+end
+	/gstring FMLOCAL
+	/gfile FMLOCAL
+	/gindex FMLOCAL
+	/orgrxfer FMLOCAL
+	/orggxfer FMLOCAL
+	/orgbxfer FMLOCAL
+	/orgxfer FMLOCAL
+	/orgproc FMLOCAL
+	/orgrproc FMLOCAL
+	/orggproc FMLOCAL
+	/orgbproc FMLOCAL
+	/organgle FMLOCAL
+	/orgrangle FMLOCAL
+	/orggangle FMLOCAL
+	/orgbangle FMLOCAL
+	/orgfreq FMLOCAL
+	/orgrfreq FMLOCAL
+	/orggfreq FMLOCAL
+	/orgbfreq FMLOCAL
+	/yscale FMLOCAL
+	/xscale FMLOCAL
+	/edown FMLOCAL
+	/manualfeed FMLOCAL
+	/paperheight FMLOCAL
+	/paperwidth FMLOCAL
+/FMDOCUMENT { 
+	array /FMfonts exch def 
+	/#copies exch def
+	FrameDict begin
+	0 ne /manualfeed exch def
+	/paperheight exch def
+	/paperwidth exch def
+	0 ne /FrameNegative exch def 
+	0 ne /edown exch def 
+	/yscale exch def
+	/xscale exch def
+	FMLevel1 {
+		manualfeed {setmanualfeed} if
+		/FMdicttop countdictstack 1 add def 
+		/FMoptop count def 
+		setpapername 
+		manualfeed {true} {papersize} ifelse 
+		{manualpapersize} {false} ifelse 
+		{desperatepapersize} {false} ifelse 
+		{ (Can't select requested paper size for Frame print job!) FMFAILURE } if
+		count -1 FMoptop {pop pop} for
+		countdictstack -1 FMdicttop {pop end} for 
+		}
+		{{1 dict dup /PageSize [paperwidth paperheight]put setpagedevice}stopped
+		{ (Can't select requested paper size for Frame print job!) FMFAILURE } if
+		 {1 dict dup /ManualFeed manualfeed put setpagedevice } stopped pop }
+	ifelse 
+	
+	FMPColor {
+		currentcolorscreen
+			cvlit /orgproc exch def
+				  /organgle exch def 
+				  /orgfreq exch def
+			cvlit /orgbproc exch def
+				  /orgbangle exch def 
+				  /orgbfreq exch def
+			cvlit /orggproc exch def
+				  /orggangle exch def 
+				  /orggfreq exch def
+			cvlit /orgrproc exch def
+				  /orgrangle exch def 
+				  /orgrfreq exch def
+			currentcolortransfer 
+			FrameNegative {
+				1 1 4 { 
+					pop { 1 exch sub } concatprocs 4 1 roll
+				} for
+				4 copy
+				setcolortransfer
+			} if
+			cvlit /orgxfer exch def
+			cvlit /orgbxfer exch def
+			cvlit /orggxfer exch def
+			cvlit /orgrxfer exch def
+	} {
+		currentscreen 
+			cvlit /orgproc exch def
+				  /organgle exch def 
+				  /orgfreq exch def
+				  
+		currenttransfer 
+		FrameNegative {
+			{ 1 exch sub } concatprocs
+			dup settransfer
+		} if 
+		cvlit /orgxfer exch def
+	} ifelse
+	end 
+} def 
+/pagesave FMLOCAL
+/orgmatrix FMLOCAL
+/landscape FMLOCAL
+/pwid FMLOCAL
+/FMBEGINPAGE { 
+	FrameDict begin 
+	/pagesave save def
+	3.86 setmiterlimit
+	/landscape exch 0 ne def
+	landscape { 
+		90 rotate 0 exch dup /pwid exch def neg translate pop 
+	}{
+		pop /pwid exch def
+	} ifelse
+	edown { [-1 0 0 1 pwid 0] concat } if
+	0 0 moveto paperwidth 0 lineto paperwidth paperheight lineto 
+	0 paperheight lineto 0 0 lineto 1 setgray fill
+	xscale yscale scale
+	/orgmatrix matrix def
+	gsave 
+} def 
+/FMENDPAGE {
+	grestore 
+	pagesave restore
+	end 
+	showpage
+	} def 
+/FMFONTDEFINE { 
+	FrameDict begin
+	findfont 
+	ReEncode 
+	1 index exch 
+	definefont 
+	FMfonts 3 1 roll 
+	put
+	end 
+	} def 
+/FMFILLS {
+	FrameDict begin dup
+	array /fillvals exch def
+	dict /patCache exch def
+	end 
+	} def 
+/FMFILL {
+	FrameDict begin
+	 fillvals 3 1 roll put
+	end 
+	} def 
+/FMNORMALIZEGRAPHICS { 
+	newpath
+	0.0 0.0 moveto
+	1 setlinewidth
+	0 setlinecap
+	0 0 0 sethsbcolor
+	0 setgray 
+	} bind def
+	/fx FMLOCAL
+	/fy FMLOCAL
+	/fh FMLOCAL
+	/fw FMLOCAL
+	/llx FMLOCAL
+	/lly FMLOCAL
+	/urx FMLOCAL
+	/ury FMLOCAL
+/FMBEGINEPSF { 
+	end 
+	/FMEPSF save def 
+	/showpage {} def 
+% See Adobe's "PostScript Language Reference Manual, 2nd Edition", page 714.
+% "...the following operators MUST NOT be used in an EPS file:" (emphasis ours)
+	/banddevice {(banddevice) FMBADEPSF} def
+	/clear {(clear) FMBADEPSF} def
+	/cleardictstack {(cleardictstack) FMBADEPSF} def 
+	/copypage {(copypage) FMBADEPSF} def
+	/erasepage {(erasepage) FMBADEPSF} def
+	/exitserver {(exitserver) FMBADEPSF} def
+	/framedevice {(framedevice) FMBADEPSF} def
+	/grestoreall {(grestoreall) FMBADEPSF} def
+	/initclip {(initclip) FMBADEPSF} def
+	/initgraphics {(initgraphics) FMBADEPSF} def
+	/initmatrix {(initmatrix) FMBADEPSF} def
+	/quit {(quit) FMBADEPSF} def
+	/renderbands {(renderbands) FMBADEPSF} def
+	/setglobal {(setglobal) FMBADEPSF} def
+	/setpagedevice {(setpagedevice) FMBADEPSF} def
+	/setshared {(setshared) FMBADEPSF} def
+	/startjob {(startjob) FMBADEPSF} def
+	/lettertray {(lettertray) FMBADEPSF} def
+	/letter {(letter) FMBADEPSF} def
+	/lettersmall {(lettersmall) FMBADEPSF} def
+	/11x17tray {(11x17tray) FMBADEPSF} def
+	/11x17 {(11x17) FMBADEPSF} def
+	/ledgertray {(ledgertray) FMBADEPSF} def
+	/ledger {(ledger) FMBADEPSF} def
+	/legaltray {(legaltray) FMBADEPSF} def
+	/legal {(legal) FMBADEPSF} def
+	/statementtray {(statementtray) FMBADEPSF} def
+	/statement {(statement) FMBADEPSF} def
+	/executivetray {(executivetray) FMBADEPSF} def
+	/executive {(executive) FMBADEPSF} def
+	/a3tray {(a3tray) FMBADEPSF} def
+	/a3 {(a3) FMBADEPSF} def
+	/a4tray {(a4tray) FMBADEPSF} def
+	/a4 {(a4) FMBADEPSF} def
+	/a4small {(a4small) FMBADEPSF} def
+	/b4tray {(b4tray) FMBADEPSF} def
+	/b4 {(b4) FMBADEPSF} def
+	/b5tray {(b5tray) FMBADEPSF} def
+	/b5 {(b5) FMBADEPSF} def
+	FMNORMALIZEGRAPHICS 
+	[/fy /fx /fh /fw /ury /urx /lly /llx] {exch def} forall 
+	fx fw 2 div add fy fh 2 div add  translate
+	rotate
+	fw 2 div neg fh 2 div neg translate
+	fw urx llx sub div fh ury lly sub div scale 
+	llx neg lly neg translate 
+	/FMdicttop countdictstack 1 add def 
+	/FMoptop count def 
+	} bind def
+/FMENDEPSF {
+	count -1 FMoptop {pop pop} for 
+	countdictstack -1 FMdicttop {pop end} for 
+	FMEPSF restore
+	FrameDict begin 
+	} bind def
+FrameDict begin 
+/setmanualfeed {
+%%BeginFeature *ManualFeed True
+	 statusdict /manualfeed true put
+%%EndFeature
+	} bind def
+/max {2 copy lt {exch} if pop} bind def
+/min {2 copy gt {exch} if pop} bind def
+/inch {72 mul} def
+/pagedimen { 
+	paperheight sub abs 16 lt exch 
+	paperwidth sub abs 16 lt and
+	{/papername exch def} {pop} ifelse
+	} bind def
+	/papersizedict FMLOCAL
+/setpapername { 
+	/papersizedict 14 dict def 
+	papersizedict begin
+	/papername /unknown def 
+		/Letter 8.5 inch 11.0 inch pagedimen
+		/LetterSmall 7.68 inch 10.16 inch pagedimen
+		/Tabloid 11.0 inch 17.0 inch pagedimen
+		/Ledger 17.0 inch 11.0 inch pagedimen
+		/Legal 8.5 inch 14.0 inch pagedimen
+		/Statement 5.5 inch 8.5 inch pagedimen
+		/Executive 7.5 inch 10.0 inch pagedimen
+		/A3 11.69 inch 16.5 inch pagedimen
+		/A4 8.26 inch 11.69 inch pagedimen
+		/A4Small 7.47 inch 10.85 inch pagedimen
+		/B4 10.125 inch 14.33 inch pagedimen
+		/B5 7.16 inch 10.125 inch pagedimen
+	end
+	} bind def
+/papersize {
+	papersizedict begin
+		/Letter {lettertray letter} def
+		/LetterSmall {lettertray lettersmall} def
+		/Tabloid {11x17tray 11x17} def
+		/Ledger {ledgertray ledger} def
+		/Legal {legaltray legal} def
+		/Statement {statementtray statement} def
+		/Executive {executivetray executive} def
+		/A3 {a3tray a3} def
+		/A4 {a4tray a4} def
+		/A4Small {a4tray a4small} def
+		/B4 {b4tray b4} def
+		/B5 {b5tray b5} def
+		/unknown {unknown} def
+	papersizedict dup papername known {papername} {/unknown} ifelse get
+	end
+	statusdict begin stopped end 
+	} bind def
+/manualpapersize {
+	papersizedict begin
+		/Letter {letter} def
+		/LetterSmall {lettersmall} def
+		/Tabloid {11x17} def
+		/Ledger {ledger} def
+		/Legal {legal} def
+		/Statement {statement} def
+		/Executive {executive} def
+		/A3 {a3} def
+		/A4 {a4} def
+		/A4Small {a4small} def
+		/B4 {b4} def
+		/B5 {b5} def
+		/unknown {unknown} def
+	papersizedict dup papername known {papername} {/unknown} ifelse get
+	end
+	stopped 
+	} bind def
+/desperatepapersize {
+	statusdict /setpageparams known
+		{
+		paperwidth paperheight 0 1 
+		statusdict begin
+		{setpageparams} stopped 
+		end
+		} {true} ifelse 
+	} bind def
+/DiacriticEncoding [
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /space /exclam /quotedbl
+/numbersign /dollar /percent /ampersand /quotesingle /parenleft
+/parenright /asterisk /plus /comma /hyphen /period /slash /zero /one
+/two /three /four /five /six /seven /eight /nine /colon /semicolon
+/less /equal /greater /question /at /A /B /C /D /E /F /G /H /I /J /K
+/L /M /N /O /P /Q /R /S /T /U /V /W /X /Y /Z /bracketleft /backslash
+/bracketright /asciicircum /underscore /grave /a /b /c /d /e /f /g /h
+/i /j /k /l /m /n /o /p /q /r /s /t /u /v /w /x /y /z /braceleft /bar
+/braceright /asciitilde /.notdef /Adieresis /Aring /Ccedilla /Eacute
+/Ntilde /Odieresis /Udieresis /aacute /agrave /acircumflex /adieresis
+/atilde /aring /ccedilla /eacute /egrave /ecircumflex /edieresis
+/iacute /igrave /icircumflex /idieresis /ntilde /oacute /ograve
+/ocircumflex /odieresis /otilde /uacute /ugrave /ucircumflex
+/udieresis /dagger /.notdef /cent /sterling /section /bullet
+/paragraph /germandbls /registered /copyright /trademark /acute
+/dieresis /.notdef /AE /Oslash /.notdef /.notdef /.notdef /.notdef
+/yen /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/ordfeminine /ordmasculine /.notdef /ae /oslash /questiondown
+/exclamdown /logicalnot /.notdef /florin /.notdef /.notdef
+/guillemotleft /guillemotright /ellipsis /.notdef /Agrave /Atilde
+/Otilde /OE /oe /endash /emdash /quotedblleft /quotedblright
+/quoteleft /quoteright /.notdef /.notdef /ydieresis /Ydieresis
+/fraction /currency /guilsinglleft /guilsinglright /fi /fl /daggerdbl
+/periodcentered /quotesinglbase /quotedblbase /perthousand
+/Acircumflex /Ecircumflex /Aacute /Edieresis /Egrave /Iacute
+/Icircumflex /Idieresis /Igrave /Oacute /Ocircumflex /.notdef /Ograve
+/Uacute /Ucircumflex /Ugrave /dotlessi /circumflex /tilde /macron
+/breve /dotaccent /ring /cedilla /hungarumlaut /ogonek /caron
+] def
+/ReEncode { 
+	dup 
+	length 
+	dict begin 
+	{
+	1 index /FID ne 
+		{def} 
+		{pop pop} ifelse 
+	} forall 
+	0 eq {/Encoding DiacriticEncoding def} if 
+	currentdict 
+	end 
+	} bind def
+FMPColor 
+	
+	{
+	/BEGINBITMAPCOLOR { 
+		BITMAPCOLOR} def
+	/BEGINBITMAPCOLORc { 
+		BITMAPCOLORc} def
+	/BEGINBITMAPTRUECOLOR { 
+		BITMAPTRUECOLOR } def
+	/BEGINBITMAPTRUECOLORc { 
+		BITMAPTRUECOLORc } def
+	}
+	
+	{
+	/BEGINBITMAPCOLOR { 
+		BITMAPGRAY} def
+	/BEGINBITMAPCOLORc { 
+		BITMAPGRAYc} def
+	/BEGINBITMAPTRUECOLOR { 
+		BITMAPTRUEGRAY } def
+	/BEGINBITMAPTRUECOLORc { 
+		BITMAPTRUEGRAYc } def
+	}
+ifelse
+/K { 
+	FMPrintAllColorsAsBlack {
+		dup 1 eq 2 index 1 eq and 3 index 1 eq and not
+			{7 {pop} repeat 0 0 0 1 0 0 0} if
+	} if 
+	FrameCurColors astore 
+	pop combineColor
+} bind def
+/graymode true def
+	/bwidth FMLOCAL
+	/bpside FMLOCAL
+	/bstring FMLOCAL
+	/onbits FMLOCAL
+	/offbits FMLOCAL
+	/xindex FMLOCAL
+	/yindex FMLOCAL
+	/x FMLOCAL
+	/y FMLOCAL
+/setPatternMode {
+	FMLevel1 {
+		/bwidth  exch def
+		/bpside  exch def
+		/bstring exch def
+		/onbits 0 def  /offbits 0 def
+		freq sangle landscape {90 add} if 
+			{/y exch def
+			 /x exch def
+			 /xindex x 1 add 2 div bpside mul cvi def
+			 /yindex y 1 add 2 div bpside mul cvi def
+			 bstring yindex bwidth mul xindex 8 idiv add get
+			 1 7 xindex 8 mod sub bitshift and 0 ne FrameNegative {not} if
+			 {/onbits  onbits  1 add def 1}
+			 {/offbits offbits 1 add def 0}
+			 ifelse
+			}
+			setscreen
+		offbits offbits onbits add div FrameNegative {1.0 exch sub} if
+		/FrameCurGray exch def
+	} { 
+		pop pop
+		dup patCache exch known {
+			patCache exch get
+		} { 
+			dup
+			patDict /bstring 3 -1 roll put
+			patDict 
+			9 PatFreq screenIndex get div dup matrix scale
+			makepattern
+			dup 
+			patCache 4 -1 roll 3 -1 roll put
+		} ifelse
+		/FrameCurGray 0 def
+		/FrameCurPat exch def
+	} ifelse
+	/graymode false def
+	combineColor
+} bind def
+/setGrayScaleMode {
+	graymode not {
+		/graymode true def
+		FMLevel1 {
+			setCurrentScreen
+		} if
+	} if
+	/FrameCurGray exch def
+	combineColor
+} bind def
+/normalize {
+	transform round exch round exch itransform
+	} bind def
+/dnormalize {
+	dtransform round exch round exch idtransform
+	} bind def
+/lnormalize { 
+	0 dtransform exch cvi 2 idiv 2 mul 1 add exch idtransform pop
+	} bind def
+/H { 
+	lnormalize setlinewidth
+	} bind def
+/Z {
+	setlinecap
+	} bind def
+	
+/PFill {
+	graymode FMLevel1 or not {
+		gsave 1 setgray eofill grestore
+	} if
+} bind def
+/PStroke {
+	graymode FMLevel1 or not {
+		gsave 1 setgray stroke grestore
+	} if
+	stroke
+} bind def
+	/fillvals FMLOCAL
+/X { 
+	fillvals exch get
+	dup type /stringtype eq
+	{8 1 setPatternMode} 
+	{setGrayScaleMode}
+	ifelse
+	} bind def
+/V { 
+	PFill gsave eofill grestore
+	} bind def
+/Vclip {
+	clip
+	} bind def
+/Vstrk {
+	currentlinewidth exch setlinewidth PStroke setlinewidth
+	} bind def
+/N { 
+	PStroke
+	} bind def
+/Nclip {
+	strokepath clip newpath
+	} bind def
+/Nstrk {
+	currentlinewidth exch setlinewidth PStroke setlinewidth
+	} bind def
+/M {newpath moveto} bind def
+/E {lineto} bind def
+/D {curveto} bind def
+/O {closepath} bind def
+	/n FMLOCAL
+/L { 
+ 	/n exch def
+	newpath
+	normalize
+	moveto 
+	2 1 n {pop normalize lineto} for
+	} bind def
+/Y { 
+	L 
+	closepath
+	} bind def
+	/x1 FMLOCAL
+	/x2 FMLOCAL
+	/y1 FMLOCAL
+	/y2 FMLOCAL
+/R { 
+	/y2 exch def
+	/x2 exch def
+	/y1 exch def
+	/x1 exch def
+	x1 y1
+	x2 y1
+	x2 y2
+	x1 y2
+	4 Y 
+	} bind def
+	/rad FMLOCAL
+/rarc 
+	{rad 
+	 arcto
+	} bind def
+/RR { 
+	/rad exch def
+	normalize
+	/y2 exch def
+	/x2 exch def
+	normalize
+	/y1 exch def
+	/x1 exch def
+	mark
+	newpath
+	{
+	x1 y1 rad add moveto
+	x1 y2 x2 y2 rarc
+	x2 y2 x2 y1 rarc
+	x2 y1 x1 y1 rarc
+	x1 y1 x1 y2 rarc
+	closepath
+	} stopped {x1 y1 x2 y2 R} if 
+	cleartomark
+	} bind def
+/RRR { 
+	/rad exch def
+	normalize /y4 exch def /x4 exch def
+	normalize /y3 exch def /x3 exch def
+	normalize /y2 exch def /x2 exch def
+	normalize /y1 exch def /x1 exch def
+	newpath
+	normalize moveto 
+	mark
+	{
+	x2 y2 x3 y3 rarc
+	x3 y3 x4 y4 rarc
+	x4 y4 x1 y1 rarc
+	x1 y1 x2 y2 rarc
+	closepath
+	} stopped
+	 {x1 y1 x2 y2 x3 y3 x4 y4 newpath moveto lineto lineto lineto closepath} if
+	cleartomark
+	} bind def
+/C { 
+	grestore
+	gsave
+	R 
+	clip
+	setCurrentScreen
+} bind def
+/CP { 
+	grestore
+	gsave
+	Y 
+	clip
+	setCurrentScreen
+} bind def
+	/FMpointsize FMLOCAL
+/F { 
+	FMfonts exch get
+	FMpointsize scalefont
+	setfont
+	} bind def
+/Q { 
+	/FMpointsize exch def
+	F 
+	} bind def
+/T { 
+	moveto show
+	} bind def
+/RF { 
+	rotate
+	0 ne {-1 1 scale} if
+	} bind def
+/TF { 
+	gsave
+	moveto 
+	RF
+	show
+	grestore
+	} bind def
+/P { 
+	moveto
+	0 32 3 2 roll widthshow
+	} bind def
+/PF { 
+	gsave
+	moveto 
+	RF
+	0 32 3 2 roll widthshow
+	grestore
+	} bind def
+/S { 
+	moveto
+	0 exch ashow
+	} bind def
+/SF { 
+	gsave
+	moveto
+	RF
+	0 exch ashow
+	grestore
+	} bind def
+/B { 
+	moveto
+	0 32 4 2 roll 0 exch awidthshow
+	} bind def
+/BF { 
+	gsave
+	moveto
+	RF
+	0 32 4 2 roll 0 exch awidthshow
+	grestore
+	} bind def
+/G { 
+	gsave
+	newpath
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath 
+	PFill fill
+	grestore
+	} bind def
+/Gstrk {
+	savematrix
+    newpath
+    2 index 2 div add exch 3 index 2 div sub exch 
+    normalize 2 index 2 div sub exch 3 index 2 div add exch 
+    translate
+    scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    restorematrix
+    currentlinewidth exch setlinewidth PStroke setlinewidth
+    } bind def
+/Gclip { 
+	newpath
+	savematrix
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath 
+	clip newpath
+	restorematrix
+	} bind def
+/GG { 
+	gsave
+	newpath
+	normalize translate 0.0 0.0 moveto 
+	rotate 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath
+	PFill
+	fill
+	grestore
+	} bind def
+/GGclip { 
+	savematrix
+	newpath
+    normalize translate 0.0 0.0 moveto 
+    rotate 
+    dnormalize scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    closepath
+	clip newpath
+	restorematrix
+	} bind def
+/GGstrk { 
+	savematrix
+    newpath
+    normalize translate 0.0 0.0 moveto 
+    rotate 
+    dnormalize scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    closepath 
+	restorematrix
+    currentlinewidth exch setlinewidth PStroke setlinewidth
+	} bind def
+/A { 
+	gsave
+	savematrix
+	newpath
+	2 index 2 div add exch 3 index 2 div sub exch 
+	normalize 2 index 2 div sub exch 3 index 2 div add exch 
+	translate 
+	scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	restorematrix
+	PStroke
+	grestore
+	} bind def
+/Aclip {
+	newpath
+	savematrix
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath 
+	strokepath clip newpath
+	restorematrix
+} bind def
+/Astrk {
+	Gstrk
+} bind def
+/AA { 
+	gsave
+	savematrix
+	newpath
+	
+	3 index 2 div add exch 4 index 2 div sub exch 
+	
+	normalize 3 index 2 div sub exch 4 index 2 div add exch
+	translate 
+	rotate 
+	scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	restorematrix
+	PStroke
+	grestore
+	} bind def
+/AAclip {
+	savematrix
+	newpath
+    normalize translate 0.0 0.0 moveto 
+    rotate 
+    dnormalize scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    closepath
+	strokepath clip newpath
+	restorematrix
+} bind def
+/AAstrk {
+	GGstrk
+} bind def
+	/x FMLOCAL
+	/y FMLOCAL
+	/w FMLOCAL
+	/h FMLOCAL
+	/xx FMLOCAL
+	/yy FMLOCAL
+	/ww FMLOCAL
+	/hh FMLOCAL
+	/FMsaveobject FMLOCAL
+	/FMoptop FMLOCAL
+	/FMdicttop FMLOCAL
+/BEGINPRINTCODE { 
+	/FMdicttop countdictstack 1 add def 
+	/FMoptop count 7 sub def 
+	/FMsaveobject save def
+	userdict begin 
+	/showpage {} def 
+	FMNORMALIZEGRAPHICS 
+	3 index neg 3 index neg translate
+	} bind def
+/ENDPRINTCODE {
+	count -1 FMoptop {pop pop} for 
+	countdictstack -1 FMdicttop {pop end} for 
+	FMsaveobject restore 
+	} bind def
+/gn { 
+	0 
+	{	46 mul 
+		cf read pop 
+		32 sub 
+		dup 46 lt {exit} if 
+		46 sub add 
+		} loop
+	add 
+	} bind def
+	/str FMLOCAL
+/cfs { 
+	/str sl string def 
+	0 1 sl 1 sub {str exch val put} for 
+	str def 
+	} bind def
+/ic [ 
+	0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0223
+	0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0223
+	0
+	{0 hx} {1 hx} {2 hx} {3 hx} {4 hx} {5 hx} {6 hx} {7 hx} {8 hx} {9 hx}
+	{10 hx} {11 hx} {12 hx} {13 hx} {14 hx} {15 hx} {16 hx} {17 hx} {18 hx}
+	{19 hx} {gn hx} {0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12}
+	{13} {14} {15} {16} {17} {18} {19} {gn} {0 wh} {1 wh} {2 wh} {3 wh}
+	{4 wh} {5 wh} {6 wh} {7 wh} {8 wh} {9 wh} {10 wh} {11 wh} {12 wh}
+	{13 wh} {14 wh} {gn wh} {0 bl} {1 bl} {2 bl} {3 bl} {4 bl} {5 bl} {6 bl}
+	{7 bl} {8 bl} {9 bl} {10 bl} {11 bl} {12 bl} {13 bl} {14 bl} {gn bl}
+	{0 fl} {1 fl} {2 fl} {3 fl} {4 fl} {5 fl} {6 fl} {7 fl} {8 fl} {9 fl}
+	{10 fl} {11 fl} {12 fl} {13 fl} {14 fl} {gn fl}
+	] def
+	/sl FMLOCAL
+	/val FMLOCAL
+	/ws FMLOCAL
+	/im FMLOCAL
+	/bs FMLOCAL
+	/cs FMLOCAL
+	/len FMLOCAL
+	/pos FMLOCAL
+/ms { 
+	/sl exch def 
+	/val 255 def 
+	/ws cfs 
+	/im cfs 
+	/val 0 def 
+	/bs cfs 
+	/cs cfs 
+	} bind def
+400 ms 
+/ip { 
+	is 
+	0 
+	cf cs readline pop 
+	{	ic exch get exec 
+		add 
+		} forall 
+	pop 
+	
+	} bind def
+/rip { 
+	   
+	  
+	  bis ris copy pop 
+      is
+      0
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+	  pop pop 
+	  ris gis copy pop 
+	  dup is exch 
+	  
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+	  pop pop
+	  gis bis copy pop 
+	  dup add is exch 
+	  
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+      pop 
+      
+      } bind def
+/wh { 
+	/len exch def 
+	/pos exch def 
+	ws 0 len getinterval im pos len getinterval copy pop
+	pos len 
+	} bind def
+/bl { 
+	/len exch def 
+	/pos exch def 
+	bs 0 len getinterval im pos len getinterval copy pop
+	pos len 
+	} bind def
+/s1 1 string def
+/fl { 
+	/len exch def 
+	/pos exch def 
+	/val cf s1 readhexstring pop 0 get def
+	pos 1 pos len add 1 sub {im exch val put} for
+	pos len 
+	} bind def
+/hx { 
+	3 copy getinterval 
+	cf exch readhexstring pop pop 
+	} bind def
+	/h FMLOCAL
+	/w FMLOCAL
+	/d FMLOCAL
+	/lb FMLOCAL
+	/bitmapsave FMLOCAL
+	/is FMLOCAL
+	/cf FMLOCAL
+/wbytes { 
+      dup dup
+      24 eq { pop pop 3 mul }
+      { 8 eq {pop} {1 eq {7 add 8 idiv} {3 add 4 idiv} ifelse} ifelse } ifelse
+	} bind def
+/BEGINBITMAPBWc { 
+	1 {} COMMONBITMAPc
+	} bind def
+/BEGINBITMAPGRAYc { 
+	8 {} COMMONBITMAPc
+	} bind def
+/BEGINBITMAP2BITc { 
+	2 {} COMMONBITMAPc
+	} bind def
+/COMMONBITMAPc { 
+		 
+	/r exch def
+	/d exch def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+	/bitmapsave save def 
+	r                    
+	/is im 0 lb getinterval def 
+	ws 0 lb getinterval is copy pop 
+	/cf currentfile def 
+	w h d [w 0 0 h neg 0 h] 
+	{ip} image 
+	bitmapsave restore 
+	grestore
+	} bind def
+/BEGINBITMAPBW { 
+	1 {} COMMONBITMAP
+	} bind def
+/BEGINBITMAPGRAY { 
+	8 {} COMMONBITMAP
+	} bind def
+/BEGINBITMAP2BIT { 
+	2 {} COMMONBITMAP
+	} bind def
+/COMMONBITMAP { 
+	/r exch def
+	/d exch def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/bitmapsave save def 
+	r                    
+	/is w d wbytes string def
+	/cf currentfile def 
+	w h d [w 0 0 h neg 0 h] 
+	{cf is readhexstring pop} image
+	bitmapsave restore 
+	grestore
+	} bind def
+/ngrayt 256 array def
+/nredt 256 array def
+/nbluet 256 array def
+/ngreent 256 array def
+	/gryt FMLOCAL
+	/blut FMLOCAL
+	/grnt FMLOCAL
+	/redt FMLOCAL
+	/indx FMLOCAL
+	/cynu FMLOCAL
+	/magu FMLOCAL
+	/yelu FMLOCAL
+	/k FMLOCAL
+	/u FMLOCAL
+FMLevel1 {
+/colorsetup {
+	currentcolortransfer
+	/gryt exch def
+	/blut exch def
+	/grnt exch def
+	/redt exch def
+	0 1 255 {
+		/indx exch def
+		/cynu 1 red indx get 255 div sub def
+		/magu 1 green indx get 255 div sub def
+		/yelu 1 blue indx get 255 div sub def
+		/k cynu magu min yelu min def
+		/u k currentundercolorremoval exec def
+%		/u 0 def
+		nredt indx 1 0 cynu u sub max sub redt exec put
+		ngreent indx 1 0 magu u sub max sub grnt exec put
+		nbluet indx 1 0 yelu u sub max sub blut exec put
+		ngrayt indx 1 k currentblackgeneration exec sub gryt exec put
+	} for
+	{255 mul cvi nredt exch get}
+	{255 mul cvi ngreent exch get}
+	{255 mul cvi nbluet exch get}
+	{255 mul cvi ngrayt exch get}
+	setcolortransfer
+	{pop 0} setundercolorremoval
+	{} setblackgeneration
+	} bind def
+}
+{
+/colorSetup2 {
+	[ /Indexed /DeviceRGB 255 
+		{dup red exch get 255 div 
+		 exch dup green exch get 255 div 
+		 exch blue exch get 255 div}
+	] setcolorspace
+} bind def
+} ifelse
+	/tran FMLOCAL
+/fakecolorsetup {
+	/tran 256 string def
+	0 1 255 {/indx exch def 
+		tran indx
+		red indx get 77 mul
+		green indx get 151 mul
+		blue indx get 28 mul
+		add add 256 idiv put} for
+	currenttransfer
+	{255 mul cvi tran exch get 255.0 div}
+	exch concatprocs settransfer
+} bind def
+/BITMAPCOLOR { 
+	/d 8 def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/bitmapsave save def
+	FMLevel1 {	
+		colorsetup
+		/is w d wbytes string def
+		/cf currentfile def 
+		w h d [w 0 0 h neg 0 h] 
+		{cf is readhexstring pop} {is} {is} true 3 colorimage 
+	} {
+		colorSetup2
+		/is w d wbytes string def
+		/cf currentfile def 
+		7 dict dup begin
+			/ImageType 1 def
+			/Width w def
+			/Height h def
+			/ImageMatrix [w 0 0 h neg 0 h] def
+			/DataSource {cf is readhexstring pop} bind def
+			/BitsPerComponent d def
+			/Decode [0 255] def
+		end image	
+	} ifelse
+	bitmapsave restore 
+	grestore
+	} bind def
+/BITMAPCOLORc { 
+	/d 8 def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+	/bitmapsave save def 
+	FMLevel1 {	
+		colorsetup
+		/is im 0 lb getinterval def 
+		ws 0 lb getinterval is copy pop 
+		/cf currentfile def 
+		w h d [w 0 0 h neg 0 h] 
+		{ip} {is} {is} true 3 colorimage
+	} {
+		colorSetup2
+		/is im 0 lb getinterval def 
+		ws 0 lb getinterval is copy pop 
+		/cf currentfile def 
+		7 dict dup begin
+			/ImageType 1 def
+			/Width w def
+			/Height h def
+			/ImageMatrix [w 0 0 h neg 0 h] def
+			/DataSource {ip} bind def
+			/BitsPerComponent d def
+			/Decode [0 255] def
+		end image	
+	} ifelse
+	bitmapsave restore 
+	grestore
+	} bind def
+/BITMAPTRUECOLORc { 
+	/d 24 def
+        gsave
+ 	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+        /bitmapsave save def 
+        
+	/is im 0 lb getinterval def	
+	/ris im 0 w getinterval def	
+	/gis im w w getinterval def	
+	/bis im w 2 mul w getinterval def 
+        
+        ws 0 lb getinterval is copy pop 
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        {w rip pop ris} {gis} {bis} true 3 colorimage
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPTRUECOLOR { 
+        gsave
+		
+		3 index 2 div add exch	
+		4 index 2 div add exch	
+		translate		
+		rotate			
+		1 index 2 div neg	
+		1 index 2 div neg	
+		translate		
+		scale			
+		/h exch def /w exch def
+        /bitmapsave save def 
+        /is w string def
+        /gis w string def
+        /bis w string def
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        { cf is readhexstring pop } 
+        { cf gis readhexstring pop } 
+        { cf bis readhexstring pop } 
+        true 3 colorimage 
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPTRUEGRAYc { 
+	/d 24 def
+        gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+        /bitmapsave save def 
+        
+	/is im 0 lb getinterval def	
+	/ris im 0 w getinterval def	
+	/gis im w w getinterval def	
+	/bis im w 2 mul w getinterval def 
+        ws 0 lb getinterval is copy pop 
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        {w rip pop ris gis bis w gray} image
+        bitmapsave restore 
+        grestore
+        } bind def
+/ww FMLOCAL
+/r FMLOCAL
+/g FMLOCAL
+/b FMLOCAL
+/i FMLOCAL
+/gray { 
+        /ww exch def
+        /b exch def
+        /g exch def
+        /r exch def
+        0 1 ww 1 sub { /i exch def r i get .299 mul g i get .587 mul
+			b i get .114 mul add add r i 3 -1 roll floor cvi put } for
+        r
+        } bind def
+/BITMAPTRUEGRAY { 
+        gsave
+		
+		3 index 2 div add exch	
+		4 index 2 div add exch	
+		translate		
+		rotate			
+		1 index 2 div neg	
+		1 index 2 div neg	
+		translate		
+		scale			
+		/h exch def /w exch def
+        /bitmapsave save def 
+        /is w string def
+        /gis w string def
+        /bis w string def
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        { cf is readhexstring pop 
+          cf gis readhexstring pop 
+          cf bis readhexstring pop w gray}  image
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPGRAY { 
+	8 {fakecolorsetup} COMMONBITMAP
+	} bind def
+/BITMAPGRAYc { 
+	8 {fakecolorsetup} COMMONBITMAPc
+	} bind def
+/ENDBITMAP {
+	} bind def
+end 
+	/ALDsave FMLOCAL
+	/ALDmatrix matrix def ALDmatrix currentmatrix pop
+/StartALD {
+	/ALDsave save def
+	 savematrix
+	 ALDmatrix setmatrix
+	} bind def
+/InALD {
+	 restorematrix
+	} bind def
+/DoneALD {
+	 ALDsave restore
+	} bind def
+/I { setdash } bind def
+/J { [] 0 setdash } bind def
+%%EndProlog
+%%BeginSetup
+(4.0) FMVERSION
+1 1 0 0 612 792 0 1 16 FMDOCUMENT
+0 0 /Times-Roman FMFONTDEFINE
+1 0 /Times-Bold FMFONTDEFINE
+2 0 /Courier FMFONTDEFINE
+3 0 /Times-Italic FMFONTDEFINE
+4 0 /Courier-Oblique FMFONTDEFINE
+5 0 /Helvetica-BoldOblique FMFONTDEFINE
+6 0 /Helvetica-Bold FMFONTDEFINE
+7 1 /Symbol FMFONTDEFINE
+32 FMFILLS
+0 0 FMFILL
+1 0.1 FMFILL
+2 0.3 FMFILL
+3 0.5 FMFILL
+4 0.7 FMFILL
+5 0.9 FMFILL
+6 0.97 FMFILL
+7 1 FMFILL
+8 <0f1e3c78f0e1c387> FMFILL
+9 <0f87c3e1f0783c1e> FMFILL
+10 <cccccccccccccccc> FMFILL
+11 <ffff0000ffff0000> FMFILL
+12 <8142241818244281> FMFILL
+13 <03060c183060c081> FMFILL
+14 <8040201008040201> FMFILL
+16 1 FMFILL
+17 0.9 FMFILL
+18 0.7 FMFILL
+19 0.5 FMFILL
+20 0.3 FMFILL
+21 0.1 FMFILL
+22 0.03 FMFILL
+23 0 FMFILL
+24 <f0e1c3870f1e3c78> FMFILL
+25 <f0783c1e0f87c3e1> FMFILL
+26 <3333333333333333> FMFILL
+27 <0000ffff0000ffff> FMFILL
+28 <7ebddbe7e7dbbd7e> FMFILL
+29 <fcf9f3e7cf9f3f7e> FMFILL
+30 <7fbfdfeff7fbfdfe> FMFILL
+%%EndSetup
+%%Page: "1" 1
+%%BeginPaperSize: Letter
+%%EndPaperSize
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+J
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Dylan Streams Library Proposal) 72 42.62 T
+(November 9, 1995) 276.12 42.62 T
+(1) 536 42.62 T
+0 24 Q
+(Dylan Streams Library Proposal) 151.02 704 T
+1 12 Q
+(Scott McKay) 185.95 662.72 T
+(, Mar) 252.28 662.72 T
+(c Ferguson & Eliot Miranda) 280.72 662.72 T
+(Harlequin, Inc.) 266.83 645.44 T
+1 16 Q
+(1.  Intr) 72 601.5 T
+(oduction) 119.26 601.5 T
+0 12 Q
+(The Dylan Streams Library described by this paper has several major goals:) 72 572.89 T
+1 F
+(\245) 85.5 551.61 T
+0 F
+-0.49 (To provide a generic, easy-to-use interface for streaming over sequences and files. The same) 99 551.61 P
+(interface for consuming or producing is available irrespective of the type of stream, or the) 99 537.61 T
+(types of the elements being streamed over.) 99 523.61 T
+1 F
+(\245) 85.5 502.33 T
+0 F
+(To provide an efficient system, especially for the common case of file I/O.) 99 502.33 T
+1 F
+(\245) 85.5 481.06 T
+0 F
+(To provide access to an underlying buffer management protocol.) 99 481.06 T
+1 F
+(\245) 85.5 459.78 T
+0 F
+(To provide an extensible framework. Other functionality that sits behind a stream interface) 99 459.78 T
+(should be easy to integrate to this stream library.) 99 445.78 T
+(The proposal presents the design of a streams library that meets these goals in the context of) 72 418.5 T
+(Dylan\325) 72 404.5 T
+(s internal sequences and \050buf) 104.66 404.5 T
+(fered\051 access to disk \336les. It does not address a number of) 243.74 404.5 T
+(related issues, including:) 72 390.5 T
+1 F
+(\245) 85.5 369.22 T
+0 F
+(A standard object-printing package such as Smalltalk\325s) 99 369.22 T
+2 F
+(printOn:) 366.62 369.22 T
+0 F
+( or Lisp\325s) 424.22 369.22 T
+2 F
+(print-) 473.22 369.22 T
+(object) 99 355.22 T
+0 F
+(, or a formatted printing facility such as Lisp\325s) 142.2 355.22 T
+2 F
+(format) 368.17 355.22 T
+0 F
+(. It is expected that these) 411.37 355.22 T
+(facilities will be provided by additional libraries.) 99 341.22 T
+1 F
+(\245) 85.5 319.95 T
+0 F
+(General object dumping and loading.) 99 319.95 T
+1 F
+(\245) 85.5 298.67 T
+0 F
+(A comprehensive range of I/O facilities for using memory-mapped files, network connec-) 99 298.67 T
+(tions, etc., although it is expected that such facilities can be easily added to the Streams) 99 284.67 T
+(Library by virtue of its extensible framework.) 99 270.67 T
+1 F
+(\245) 85.5 249.39 T
+0 F
+(An interface for naming files. This is addressed by the Dylan Locators Library.) 99 249.39 T
+1 F
+(\245) 85.5 228.11 T
+0 F
+(An interface to operating system functionality renaming or deleting files. This is addressed) 99 228.11 T
+(by the Dylan File System Library.) 99 214.11 T
+1 F
+(\245) 85.5 192.83 T
+0 F
+(How the library might be factored into smaller units of functionality.) 99 192.83 T
+(The macros, classes, and functions de\336ned in this document are exported from the) 72 165.56 T
+1 F
+(streams) 469.6 165.56 T
+0 F
+( mod-) 509.58 165.56 T
+(ule of the) 72 151.56 T
+1 F
+(streams) 120.32 151.56 T
+0 F
+( library under the names used here.) 160.31 151.56 T
+1 16 Q
+(2.  Concepts) 72 109.61 T
+0 12 Q
+(A) 72 81 T
+3 F
+(str) 83.66 81 T
+(eam) 95.89 81 T
+0 F
+( provides sequential access to an aggregate of data, such as sequences, disk \336les,) 115.88 81 T
+(sequences of random numbers, and so forth. A stream can be usefully considered to be an encap-) 72 67 T
+FMENDPAGE
+%%EndPage: "1" 1
+%%Page: "2" 2
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Dylan Streams Library Proposal) 72 42.62 T
+(November 9, 1995) 276.12 42.62 T
+(2) 536 42.62 T
+0 12 Q
+-0.26 (sulation of the aggregate of data and an iteration state. An input \050or readable\051 stream produces ele-) 72 712 P
+(ments; an output \050or writable\051 stream consumes elements; an input-output stream does both.) 72 698 T
+3 F
+(Input str) 72 671.64 T
+(eams) 112.56 671.64 T
+0 F
+( return successive data elements via the function) 137.22 671.64 T
+1 F
+(r) 372.5 671.64 T
+(ead-element) 377.62 671.64 T
+0 F
+(, hiding details of) 439.6 671.64 T
+(indexing, buf) 72 657.64 T
+(fering, and so on. For example, the expression) 135.78 657.64 T
+2 10 Q
+(let stream = make\050<string-stream>,) 144 638.62 T
+4 F
+(ex. 1) 504 638.62 T
+2 F
+(                  contents: "hello world"\051) 144 626.26 T
+(;) 396 626.26 T
+0 12 Q
+(binds) 72 600.57 T
+1 F
+(str) 101 600.57 T
+(eam) 114.78 600.57 T
+0 F
+( to an input stream over the string) 136.1 600.57 T
+2 F
+("hello world") 300.76 600.57 T
+0 F
+(. The \336rst invocation of) 394.36 600.57 T
+1 F
+(r) 510.35 600.57 T
+(ead-) 515.46 600.57 T
+(element) 72 586.57 T
+0 F
+( returns the character) 111.98 586.57 T
+2 10 Q
+(\325h\325) 215.94 586.57 T
+0 12 Q
+(, the next) 233.94 586.57 T
+2 10 Q
+(\325e\325) 281.27 586.57 T
+0 12 Q
+(, and so on. Once a stream has been used to con-) 299.27 586.57 T
+-0.47 (sume all the elements of the data set \050via suf) 72 572.57 P
+-0.47 (\336cient invocations of) 280.54 572.57 P
+1 F
+-0.47 (r) 383.47 572.57 P
+-0.47 (ead-element) 388.58 572.57 P
+0 F
+-0.47 (, for example\051, the) 450.56 572.57 P
+(stream is said to be at its end. This condition can be tested via the function) 72 558.57 T
+1 F
+(str) 432.3 558.57 T
+(eam-at-end?) 446.08 558.57 T
+0 F
+(. So,) 510.06 558.57 T
+(the following code fragment applies) 72 544.57 T
+1 F
+(function) 248.3 544.57 T
+0 F
+( to all elements of the sequence:) 290.98 544.57 T
+2 10 Q
+(let stream = make\050<sequence-stream>, contents: seq\051;) 144 525.55 T
+4 F
+(ex. 2) 504 525.55 T
+2 F
+(while \050~stream-at-end?\050stream\051\051) 144 513.55 T
+(  function\050read-element\050stream\051\051;) 144 501.55 T
+0 12 Q
+-0.12 (After all the elements of a stream have been read, any further invocations of) 72 475.86 P
+1 F
+-0.12 (r) 438.49 475.86 P
+-0.12 (ead-element) 443.6 475.86 P
+0 F
+-0.12 ( signal) 505.58 475.86 P
+(an) 72 461.86 T
+1 F
+(<end-of-str) 86.33 461.86 T
+(eam-err) 143.6 461.86 T
+(or>) 184.69 461.86 T
+0 F
+( condition. An alternative end-of-stream behavior is to return a distin-) 202.86 461.86 T
+-0.37 (guished end-of-stream element, which can be any object. The end-of-stream element can be given) 72 447.86 P
+(as a keyword ar) 72 433.86 T
+(gument to the various read functions.) 147.42 433.86 T
+3 F
+(Output str) 72 407.5 T
+(eams) 120.56 407.5 T
+0 F
+( update mutable data sets that are modi\336ed by invocations of the) 145.22 407.5 T
+1 F
+(write-element) 457.19 407.5 T
+0 F
+(function, hiding details of indexing, growing the underlying collection, buf) 72 393.5 T
+(fering, and so on. For) 431.76 393.5 T
+(example, the following forms bind) 72 379.5 T
+1 F
+(str) 241.32 379.5 T
+(eam) 255.1 379.5 T
+0 F
+( to an output stream over an empty string, and creates) 276.42 379.5 T
+(the string) 72 365.5 T
+2 10 Q
+("I see!") 120 365.5 T
+0 12 Q
+(, using the function) 168 365.5 T
+1 F
+(str) 263.66 365.5 T
+(eam-contents) 277.44 365.5 T
+0 F
+( to access all of the stream\325) 345.42 365.5 T
+(s elements.) 475.39 365.5 T
+2 10 Q
+(let stream = make\050<string-stream>, direction: #"output"\051;) 144 346.48 T
+4 F
+(ex. 3) 504 346.48 T
+2 F
+(write-element\050stream,\325I\325\051) 144 334.48 T
+(;) 294 334.48 T
+(write-element\050stream,\325 \325\051;) 144 322.48 T
+(write\050stream,"See"\051;) 144 310.48 T
+(write-element\050stream,\325!\325\051;) 144 298.48 T
+(stream-contents\050stream\051;) 144 286.48 T
+0 12 Q
+(Calling) 72 260.79 T
+1 F
+(write) 110.34 260.79 T
+0 F
+( on a sequence is equivalent to calling) 136.99 260.79 T
+1 F
+(write-element) 322.3 260.79 T
+0 F
+( on all the elements of the) 392.93 260.79 T
+-0.08 (sequence. However) 72 246.79 P
+-0.08 (,) 165.4 246.79 P
+1 F
+-0.08 (write) 171.33 246.79 P
+0 F
+-0.08 ( will be implemented more ef) 197.98 246.79 P
+-0.08 (\336ciently in certain cases, notably for buf) 339.04 246.79 P
+-0.08 (f-) 532.01 246.79 P
+(ered streams such as streams over disk \336les.) 72 232.79 T
+(Streams over sequences \050both subclasses of) 72 206.43 T
+1 F
+(<sequence>) 283.96 206.43 T
+0 F
+( and external \336les\051 are positionable \050that) 343.63 206.43 T
+-0.1 (is, you can do \322random access\323 on them\051. In this example, the \336rst element of the string stream is) 72 192.43 P
+(at 0, so the following forms:) 72 178.43 T
+2 10 Q
+(let stream = make\050<string-stream>,) 144 159.41 T
+4 F
+(ex. 4) 504 159.41 T
+2 F
+(                  contents: "hello world"\051;) 144 147.05 T
+(stream-position\050stream\051 := 6;) 144 135.05 T
+(read-element\050stream\051;) 144 123.05 T
+0 12 Q
+(return the character) 72 97.36 T
+2 10 Q
+(\325w\325) 168.29 97.36 T
+0 12 Q
+(. The following forms) 186.29 97.36 T
+2 10 Q
+(let stream = make\050<string-stream>, direction: #"output"\051;) 144 78.33 T
+4 F
+(ex. 5) 504 78.33 T
+2 F
+(stream-position\050stream\051 := 10;) 144 66.33 T
+FMENDPAGE
+%%EndPage: "2" 2
+%%Page: "3" 3
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Dylan Streams Library Proposal) 72 42.62 T
+(November 9, 1995) 276.12 42.62 T
+(3) 536 42.62 T
+2 10 Q
+(write\050stream,"whoa!"\051;) 144 713.33 T
+(stream-contents\050stream\051;) 144 701.33 T
+0 12 Q
+-0.27 (have an unpredictable result, because the contents of the unwritten portion of the string \050from 0 to) 72 675.36 P
+(10\051 are unspeci\336ed. \050Some implementations might return) 72 661.36 T
+2 10 Q
+("          whoa!") 349.31 661.36 T
+0 12 Q
+(, but this is not) 451.31 661.36 T
+(guaranteed.\051) 72 647.36 T
+(Access to the sequences created by output streams is provided by the function) 72 620.71 T
+1 F
+(str) 448.93 620.71 T
+(eam-contents) 462.71 620.71 T
+0 F
+(,) 530.69 620.71 T
+(which returns a) 72 606.71 T
+3 F
+(copy) 148.98 606.71 T
+0 F
+( of the underlying sequence comprising the elements from the start of the) 171.64 606.71 T
+(stream through to the latest element added via any of the write functions \050) 72 592.71 T
+1 F
+(write-element) 426.28 592.71 T
+0 F
+(,) 496.91 592.71 T
+1 F
+(write) 502.91 592.71 T
+0 F
+(,) 529.56 592.71 T
+(and so on.\051.) 72 578.71 T
+(Streams over sequences also allow streaming over subsequences of the elements of their underly-) 72 552.07 T
+(ing sequence. For example, the following:) 72 538.07 T
+2 10 Q
+(read-to-end\050make\050<string-stream>,) 144 518.76 T
+4 F
+(ex. 6) 504 518.76 T
+2 F
+(                 contents: "hello there, world",) 144 506.12 T
+(                 start: 6, end: 11\051\051;) 144 493.48 T
+0 12 Q
+(evaluates to) 72 467.5 T
+2 10 Q
+("there") 131.99 467.5 T
+0 12 Q
+(. The limits specify the index one after the last accessible element in the) 173.99 467.5 T
+-0.41 (stream. That is, the interval [) 72 453.5 P
+3 F
+-0.41 (start) 208.29 453.5 P
+0 F
+-0.41 (,) 230.29 453.5 P
+3 F
+-0.41 (end) 235.89 453.5 P
+0 F
+-0.41 (\051 includes the index) 253.22 453.5 P
+3 F
+-0.41 (start) 348.91 453.5 P
+0 F
+-0.41 ( but excludes the index) 370.92 453.5 P
+3 F
+-0.41 (end) 482.55 453.5 P
+0 F
+-0.41 (. This is) 499.88 453.5 P
+-0.14 (consistent with standard Dylan functions over sequences, such as) 72 439.5 P
+1 F
+-0.14 (copy-sequence) 386.66 439.5 P
+0 F
+-0.14 (.) 460.65 439.5 P
+1 F
+-0.14 (r) 466.51 439.5 P
+-0.14 (ead-to-end) 471.62 439.5 P
+0 F
+-0.14 ( is) 526.28 439.5 P
+-0.12 (one of a number of convenient utility functions for accessing streams and returns all the elements) 72 425.5 P
+(up to the end of the stream from its current position.) 72 411.5 T
+1 14 Q
+(2.1  Str) 72 377.52 T
+(eams versus Gr) 114.91 377.52 T
+(owing Sequences and Object Identity) 207.2 377.52 T
+0 12 Q
+(Dylan does not provide stretchiness for arbitrary containers, hence an output stream over a non-) 72 350.21 T
+(stretchy sequence cannot grow the sequence. Instead, a copy of the sequence must be created,) 72 336.21 T
+(potentially breaking desired shared references to the sequence. The initial empty string in exam-) 72 322.21 T
+(ples 3 and 5 above has to replaced each time the stream needs to grow the string in order to) 72 308.21 T
+(accommodate new elements. Streams can only reliably be used to modify existing sequences if) 72 294.21 T
+(these sequences are already stretchy) 72 280.21 T
+(. A stream over a stretchy vector will use the same stretchy) 244.49 280.21 T
+(vector throughout the stream's existence. For example, the following:) 72 266.21 T
+2 10 Q
+(let sv = make\050<stretchy-vector>\051;) 144 246.91 T
+4 F
+(ex. 7a) 504 246.91 T
+2 F
+(let stream = make\050<sequence-stream>,) 144 234.91 T
+(                  contents: sv, direction: #"output"\051;) 144 222.26 T
+(write\050stream,#\0501, 2, 3, 4, 5, 6, 7, 8, 9\051\051;) 144 210.26 T
+(write\050stream,"ABCDEF"\051;) 144 198.26 T
+(values\050) 144 186.26 T
+(sv, stream-contents\050stream\051\051;) 186 186.26 T
+0 12 Q
+(returns two values; each value is the same stretchy vector of) 72 160.29 T
+2 10 Q
+(\0501, 2, 3, 4, 5, 6, 7, 8, 9,) 363.6 160.29 T
+(\325A\325, \325B\325, \325C\325, \325D\325, \325E\325, \325F\325\051) 72 146.29 T
+0 12 Q
+(. However) 246 146.29 T
+(, the following:) 295.5 146.29 T
+2 10 Q
+(let v = make\050<vector>, size: 5\051;) 144 126.98 T
+4 F
+(ex. 7b) 504 126.98 T
+2 F
+(let stream = make\050<sequence-stream>,) 144 114.98 T
+(                  contents: v, direction: #"output"\051;) 144 102.33 T
+(write\050stream,#\0501, 2, 3, 4, 5, 6, 7, 8, 9\051\051;) 144 90.33 T
+(write\050stream,"ABCDEF"\051;) 144 78.33 T
+(values\050v, stream-contents\050stream\051\051;) 144 66.33 T
+FMENDPAGE
+%%EndPage: "3" 3
+%%Page: "4" 4
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Dylan Streams Library Proposal) 72 42.62 T
+(November 9, 1995) 276.12 42.62 T
+(4) 536 42.62 T
+0 12 Q
+(returns as its \336rst value the original vector of 5 elements, but the second value is a new vector) 72 712 T
+-0.3 (containing) 72 698 P
+2 10 Q
+-0.61 (\0501, 2, 3, 4, 5, 6, 7, 8, 9, \325A\325, \325B\325, \325C\325, \325D\325, \325E\325, \325F\325\051) 125.36 698 P
+0 12 Q
+-0.3 (. This is because) 458.89 698 P
+(the output stream in example 7b needs at least a vector of size 15 to accommodate the elements) 72 684 T
+(written to the stream, but the given vector can only hold 5 elements. Since the stream cannot) 72 670 T
+-0.12 (change) 72 656 P
+1 F
+-0.12 (v) 108.87 656 P
+0 F
+-0.12 (\325) 114.87 656 P
+-0.12 (s size, it must allocate a new vector each time it grows, but the original value of the vec-) 118.2 656 P
+(tor is returned as the result of the example.) 72 642 T
+(Output streams to internal sequences grow their underlying sequences in suf) 72 615.75 T
+(\336ciently lar) 437.72 615.75 T
+(ge incre-) 492.5 615.75 T
+-0.06 (ments so as to reduce the frequency of expensive grow operations. Streams over disk \336les) 72 601.75 P
+3 F
+-0.06 (should) 505.05 601.75 P
+0 F
+-0.31 (grow their underlying \336les by only as much as is needed to store elements. In the case of these \336le) 72 587.75 P
+(streams, excessive \336le size and excessive numbers of I/O operations are avoided by using buf) 72 573.75 T
+(f-) 520.69 573.75 T
+(ered I/O in the internals of the streams implementation.) 72 559.75 T
+1 14 Q
+(2.2  T) 72 526.17 T
+(ypes of Objects that can be Str) 104.8 526.17 T
+(eamed Over) 287.31 526.17 T
+0 12 Q
+(This stream proposal requires that streams  be implemented used for two major) 72 499.25 T
+( categories of) 454.94 499.25 T
+(aggregate: sequences  and disk \336les. The Dylan Streams Library may be extended to other kinds) 72 485.25 T
+(of streams \050network streams, streams over the results of a computation, and so on\051, but such) 72 471.25 T
+(extensions are not part of the Streams Library itself.) 72 457.25 T
+-0.11 (Sequences are accessed via positionable streams, allowing one to \322move around\323 in the sequence) 72 431 P
+(by using functions like) 72 417 T
+1 F
+(str) 184.67 417 T
+(eam-position-setter) 198.44 417 T
+0 F
+( and) 297.08 417 T
+1 F
+(adjust-str) 320.41 417 T
+(eam-position) 370.19 417 T
+0 F
+(. Sequences such as) 436.19 417 T
+1 F
+(<vector>) 72 403 T
+0 F
+( and) 117.66 403 T
+1 F
+(<string>) 140.99 403 T
+0 F
+( can be accessed via) 184.67 403 T
+1 F
+(<sequence-str) 284.29 403 T
+(eam>) 354.9 403 T
+0 F
+( and its the concrete subclasses.) 383.06 403 T
+(External I/O to and from disk \336les can be accomplished via instances of the subclasses of) 72 376.75 T
+1 F
+(<\336le-) 503.93 376.75 T
+(str) 72 362.75 T
+(eam>) 85.78 362.75 T
+0 F
+(. Streams that allow access to pipes, sockets, and terminals can be added at a later time,) 113.94 362.75 T
+(as they are needed.) 72 348.75 T
+1 16 Q
+(3.  Str) 72 307.83 T
+(eam Classes) 113.04 307.83 T
+0 12 Q
+(The exported streams class heterarchy is as follows:) 72 280.25 T
+(Except for the classes) 72 81 T
+1 F
+(<str) 179.3 81 T
+(eam>) 199.92 81 T
+0 F
+(,) 228.08 81 T
+1 F
+(<buffer) 231.08 81 T
+(ed-str) 269.7 81 T
+(eam>) 299.47 81 T
+0 F
+(, and) 327.64 81 T
+1 F
+(<positionable-str) 353.96 81 T
+(eam>) 440.59 81 T
+0 F
+(, these are) 468.76 81 T
+(instantiable classes that provide clients with a convenient way to type the uses of streams.) 72 67 T
+72 63 540 720 C
+89.8 103.25 522.2 276.25 C
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+391.55 181.44 391.55 165.44 2 L
+0.5 H
+0 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+5 10 Q
+(<stream>) 260.8 259.96 T
+6 F
+(<sequence-stream>) 339.64 188.77 T
+(<file-stream>) 144.55 188.44 T
+(<string-stream>) 349.35 153.58 T
+392.35 147.58 319.55 127.44 2 L
+N
+(<byte-string-stream>) 268.55 116.58 T
+(<unicode-string-stream>) 395.55 116.44 T
+391.55 147.44 454.55 128.44 2 L
+2 Z
+N
+5 F
+(<buffered-stream>) 179.8 223.96 T
+(<positionable-stream>) 296.8 223.96 T
+280 254.25 217 236.25 2 L
+N
+281 254.25 359 236.25 2 L
+N
+388 200.25 360 220.25 2 L
+N
+218 219.25 176 199.25 2 L
+N
+358 221.25 177 200.25 2 L
+N
+72 63 540 720 C
+0 0 612 792 C
+FMENDPAGE
+%%EndPage: "4" 4
+%%Page: "5" 5
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Dylan Streams Library Proposal) 72 42.62 T
+(November 9, 1995) 276.12 42.62 T
+(5) 536 42.62 T
+1 12 Q
+(<stream>) 72 712 T
+0 F
+([Open abstract class]) 439.37 712 T
+(The basic, abstract stream class. The superclass of all other stream classes.) 90 684.68 T
+1 F
+(<buffered-stream>) 72 651.37 T
+0 F
+([Open abstract class]) 439.37 651.37 T
+(The abstract stream class that implements buf) 90 624.05 T
+(fering. A subclass of) 309.08 624.05 T
+1 F
+(<str) 411.4 624.05 T
+(eam>) 432.01 624.05 T
+0 F
+(.) 460.18 624.05 T
+1 F
+(<positionable-stream>) 72 590.74 T
+0 F
+([Open abstract class]) 439.37 590.74 T
+(The abstract stream class that allows positioning. A subclass of) 90 563.42 T
+1 F
+(<str) 396.3 563.42 T
+(eam>) 416.92 563.42 T
+0 F
+(.) 445.08 563.42 T
+1 F
+(<file-stream>) 72 530.1 T
+0 F
+([Open instantiable class]) 421.36 530.1 T
+(The stream class that implements streams over disk \336les; more precisely) 90 502.79 T
+(, the class of streams) 436.51 502.79 T
+(that are created by \322opening\323 a locator) 90 488.79 T
+(. A subclass of) 274.61 488.79 T
+1 F
+(<str) 348.26 488.79 T
+(eam>) 368.88 488.79 T
+0 F
+(.) 397.04 488.79 T
+1 F
+(<sequence-stream>) 72 455.47 T
+0 F
+([Open instantiable class]) 421.36 455.47 T
+(The stream class that implements streams over general sequences. A subclass of) 90 428.16 T
+1 F
+(<str) 477.59 428.16 T
+(eam>) 498.2 428.16 T
+0 F
+(.) 526.37 428.16 T
+1 F
+(<string-stream>) 72 394.84 T
+0 F
+([Abstract instantiable class]) 406.69 394.84 T
+(The stream class that implements streams over strings. A subclass of) 90 367.53 T
+1 F
+(<sequence-str) 422.63 367.53 T
+(eam>) 493.24 367.53 T
+0 F
+(.) 521.4 367.53 T
+1 F
+(<byte-string-stream>) 72 334.21 T
+0 F
+([Sealed instantiable class]) 415.36 334.21 T
+(The stream class that implements streams over byte strings. A subclass of) 90 306.89 T
+1 F
+(<string-str) 446.29 306.89 T
+(eam>) 500.9 306.89 T
+0 F
+(.) 529.07 306.89 T
+1 F
+(<unicode-string-stream>) 72 273.58 T
+0 F
+([Sealed instantiable class]) 415.36 273.58 T
+(The stream class that implements streams over Unicode strings. A subclass of) 90 246.26 T
+1 F
+(<string-) 466.28 246.26 T
+(str) 90 232.26 T
+(eam>) 103.78 232.26 T
+0 F
+(.) 131.94 232.26 T
+1 14 Q
+(3.1  Cr) 72 197.61 T
+(eating Str) 112.57 197.61 T
+(eams) 171.04 197.61 T
+0 12 Q
+(The following are the basic functions used to create streams.) 72 169.63 T
+1 F
+(make <file-stream>) 72 136.32 T
+0 F
+( #key) 171.98 136.32 T
+3 F
+( locator direction if-exists if-does-not-exist element-type encoding) 198.31 136.32 T
+(buffer-size) 72 122.32 T
+7 F
+(\336) 125.66 122.32 T
+3 F
+(<file-stream>) 140.51 122.32 T
+0 F
+([G. F. method]) 468.67 122.32 T
+-0.11 (Returns a new instance of a concrete subclass of) 90 95 P
+1 F
+-0.11 (<\336le-str) 323.92 95 P
+-0.11 (eam>) 363.87 95 P
+0 F
+-0.11 ( that streams over the contents) 392.03 95 P
+-0.16 (of the \336le \322named\323) 90 81 P
+3 F
+-0.16 (locator) 183.99 81 P
+0 F
+-0.16 (.) 217.99 81 P
+3 F
+-0.16 (locator) 223.83 81 P
+0 F
+-0.16 ( is a string that names a \336le, or) 258.5 81 P
+-0.16 (\321) 407.01 81 P
+-0.16 (if the Locators library is) 421.84 81 P
+(being used) 90 67 T
+(\321) 144.66 67 T
+(it can be a) 159.66 67 T
+1 F
+(<locator>) 211.64 67 T
+0 F
+( or a string that can be coerced to a) 261.31 67 T
+1 F
+(<locator>) 431.93 67 T
+0 F
+(.) 481.6 67 T
+3 F
+(dir) 487.6 67 T
+(ection) 501.16 67 T
+FMENDPAGE
+%%EndPage: "5" 5
+%%Page: "6" 6
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Dylan Streams Library Proposal) 72 42.62 T
+(November 9, 1995) 276.12 42.62 T
+(6) 536 42.62 T
+0 12 Q
+(must be one of) 90 712 T
+1 F
+(#"input") 163.99 712 T
+0 F
+(,) 210.66 712 T
+1 F
+(#"output") 216.66 712 T
+0 F
+(, or) 269.99 712 T
+1 F
+(#"input-output") 288.98 712 T
+0 F
+(; the default is) 373.66 712 T
+1 F
+(#"input") 444.98 712 T
+0 F
+(.) 491.65 712 T
+3 F
+(if-exists) 497.65 712 T
+0 F
+(and) 90 698 T
+3 F
+( if-does-not-exist) 107.33 698 T
+0 F
+( are described below) 188.32 698 T
+(.) 286.5 698 T
+3 F
+-0.3 (element-type) 90 668.64 P
+0 F
+-0.3 ( is described below; it defaults to) 151.31 668.64 P
+1 F
+-0.3 (<character>) 310.84 668.64 P
+0 F
+-0.3 ( or a subtype of) 373.82 668.64 P
+1 F
+-0.3 (<character>) 449.96 668.64 P
+0 F
+-0.3 (. The) 512.95 668.64 P
+(exact subtype is left unspeci\336ed so that implementations can choose a speci\336c element type) 90 654.64 T
+(based on the contents of the \336le.) 90 640.64 T
+3 F
+(encoding) 90 611.29 T
+0 F
+( is described below; its default is dependent on the value of) 133.99 611.29 T
+3 F
+(element-type) 421.28 611.29 T
+0 F
+( and on) 482.59 611.29 T
+(other platform-dependent conditions.) 90 597.29 T
+3 F
+(buffer) 90 567.93 T
+(-size) 118.43 567.93 T
+0 F
+( is an integer that speci\336es the size of the buf) 140.42 567.93 T
+(fer to use for the \336le; it defaults to an) 356.17 567.93 T
+(implementation-dependent value.) 90 553.93 T
+1 F
+(type-for-file-stream) 72 518.57 T
+3 F
+(element-type encoding) 175.62 518.57 T
+7 F
+(\336) 286.92 518.57 T
+3 F
+(file-stream-type) 301.76 518.57 T
+0 F
+([Open generic function]) 424.7 518.57 T
+(Given an element type and an encoding, returns the type of \336lestream class to create.) 90 489.21 T
+1 F
+(make <sequence-stream>) 72 453.86 T
+0 F
+( #key) 201.98 453.86 T
+3 F
+( contents direction start end) 228.31 453.86 T
+7 F
+(\336) 365.98 453.86 T
+3 F
+(<sequence-stream>) 380.82 453.86 T
+0 F
+-1.5 ([G. F.) 511.67 453.86 P
+(method]) 72 439.86 T
+(Returns a new instance of a concrete subclass of) 90 410.5 T
+1 F
+(<sequence-str) 324.94 410.5 T
+(eam>) 395.54 410.5 T
+0 F
+( that streams over the) 423.71 410.5 T
+-0.43 (contents of) 90 396.5 P
+3 F
+-0.43 (contents) 145.14 396.5 P
+0 F
+-0.43 (.) 185.14 396.5 P
+3 F
+-0.43 (dir) 190.71 396.5 P
+-0.43 (ection) 204.27 396.5 P
+0 F
+-0.43 ( must be one of) 233.6 396.5 P
+1 F
+-0.43 (#"input") 308.46 396.5 P
+0 F
+-0.43 (,) 355.13 396.5 P
+1 F
+-0.43 (#"output") 360.71 396.5 P
+0 F
+-0.43 (, or) 414.03 396.5 P
+1 F
+-0.43 (#"input-output") 432.18 396.5 P
+0 F
+-0.43 (; the) 516.85 396.5 P
+(default is) 90 382.5 T
+1 F
+(#"input") 137.33 382.5 T
+0 F
+(.) 184 382.5 T
+3 F
+(start) 90 353.14 T
+0 F
+(and) 115.01 353.14 T
+3 F
+(end) 135.34 353.14 T
+0 F
+( are integers that specify what part of the sequence to create a stream over) 152.66 353.14 T
+(. The) 506.56 353.14 T
+(default for) 90 339.14 T
+3 F
+(start) 143.32 339.14 T
+0 F
+( is 0; the default for) 165.32 339.14 T
+3 F
+(end) 262.64 339.14 T
+0 F
+( is) 279.97 339.14 T
+1 F
+(#f) 293.98 339.14 T
+0 F
+(. If) 303.97 339.14 T
+3 F
+(end) 320.96 339.14 T
+0 F
+( is an integer) 338.29 339.14 T
+(, it speci\336es the end of the) 399.47 339.14 T
+(stream for reading. If) 90 325.14 T
+3 F
+(end) 194.96 325.14 T
+0 F
+( is) 212.29 325.14 T
+1 F
+(#f) 226.3 325.14 T
+0 F
+(, then reads are limited by the end of the sequence.) 236.29 325.14 T
+-0.12 (Note that the sequence given by) 90 295.79 P
+3 F
+-0.12 (contents) 245.91 295.79 P
+0 F
+-0.12 ( must be mutable when an output sequence stream is) 285.91 295.79 P
+(created. Calling any of the write functions will modify the sequence.) 90 281.79 T
+1 F
+(type-for-sequence-stream) 72 246.43 T
+3 F
+(sequence-type) 205.62 246.43 T
+7 F
+(\336) 276.59 246.43 T
+3 F
+(sequence-stream-type) 291.43 246.43 T
+0 F
+([Open generic function]) 424.7 246.43 T
+(Given a sequence type, returns the type of sequence stream class to create.) 90 217.07 T
+(For example, when the sequence type is) 90 187.71 T
+1 F
+(<byte-string>) 284.63 187.71 T
+0 F
+(, this will return) 354.3 187.71 T
+1 F
+(<byte-string-) 433.97 187.71 T
+(str) 90 173.71 T
+(eam>) 103.78 173.71 T
+0 F
+(. When the sequence type is) 131.94 173.71 T
+1 F
+(<unicode-string>) 268.91 173.71 T
+0 F
+(, this will return) 356.59 173.71 T
+1 F
+(<unicode-string-) 436.26 173.71 T
+(str) 90 159.71 T
+(eam>) 103.78 159.71 T
+0 F
+(.) 131.94 159.71 T
+1 F
+(make <string-stream>) 72 124.36 T
+0 F
+( #key) 185.99 124.36 T
+3 F
+( contents direction start end) 212.32 124.36 T
+7 F
+(\336) 349.98 124.36 T
+3 F
+(<string-stream>) 364.82 124.36 T
+0 F
+([G. F. method]) 468.67 124.36 T
+(Similar to calling) 90 95 T
+1 F
+(make) 176.34 95 T
+0 F
+( on) 204.34 95 T
+1 F
+(<sequence-str) 222.34 95 T
+(eam>) 292.94 95 T
+0 F
+(, except that the contents is an instance of) 321.11 95 T
+1 F
+(<string>) 90 81 T
+0 F
+(. The exact class created \050) 133.68 81 T
+1 F
+(<byte-string-str) 257.63 81 T
+(eam>) 338.23 81 T
+0 F
+( or) 366.4 81 T
+1 F
+(<unicode-string-str) 382.39 81 T
+(eam>) 481.01 81 T
+0 F
+(depends on the class of) 90 67 T
+3 F
+(contents) 204.31 67 T
+0 F
+(.) 244.31 67 T
+FMENDPAGE
+%%EndPage: "6" 6
+%%Page: "7" 7
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Dylan Streams Library Proposal) 72 42.62 T
+(November 9, 1995) 276.12 42.62 T
+(7) 536 42.62 T
+1 12 Q
+(close) 72 712 T
+3 F
+(stream) 99.66 712 T
+0 F
+( #key #all-keys) 132.32 712 T
+7 F
+(\336) 208.64 712 T
+3 F
+(\050\051) 223.49 712 T
+0 F
+([Generic function]) 451.03 712 T
+(Closes the stream.) 90 684.88 T
+1 F
+(3.1.1  Options when Cr) 72 651.77 T
+(eating File Str) 189.79 651.77 T
+(eams) 262.24 651.77 T
+0 F
+(The) 72 624.65 T
+3 F
+(element-type) 93.66 624.65 T
+0 F
+(ar) 157.97 624.65 T
+(gument controls how the underlying \336le is accessed. Ideally its value is any) 167.08 624.65 T
+(valid Dylan type such as) 72 610.65 T
+1 F
+( limited\050<integer>, min: 0, max: 255\051) 189.98 610.65 T
+0 F
+( or) 378.64 610.65 T
+1 F
+(<unicode-character>) 394.63 610.65 T
+0 F
+(. This) 501.62 610.65 T
+(approach may make it possible to implement a potentially inef) 72 596.65 T
+(\336cient but general set of \336le) 371.42 596.65 T
+(streams. However) 72 582.65 T
+(, the current language de\336nition does not include adequate support for this) 158.16 582.65 T
+-0.02 (approach. Consequently we specify an interim minimum set of element types, which for the time) 72 568.65 P
+(being are exported from the) 72 554.65 T
+1 F
+(str) 208.3 554.65 T
+(eams) 222.07 554.65 T
+0 F
+( module of the Streams library) 248.06 554.65 T
+(.) 393.6 554.65 T
+1 F
+(\245) 85.5 533.53 T
+(<byte-character>) 99 533.53 T
+0 F
+( \321 file is accessed as 8-bit ASCII characters.) 187.98 533.53 T
+1 F
+(\245) 85.5 512.41 T
+(<unicode-character>) 99 512.41 T
+0 F
+( \321 file is accessed as 16-bit Unicode characters.) 205.99 512.41 T
+1 F
+(\245) 85.5 491.29 T
+(<byte>) 99 491.29 T
+0 F
+( \321 file is accessed as unsigned 8-bit integers.) 134.68 491.29 T
+(The implementation may provide more than these types, but the above three types are required.) 72 464.18 T
+-0.03 (The) 72 437.06 P
+3 F
+-0.03 (encoding) 93.64 437.06 P
+0 F
+-0.03 ( ar) 137.63 437.06 P
+-0.03 (gument controls how the contents of the underlying \336le is encoded in the \336le sys-) 149.71 437.06 P
+(tem. When) 72 423.06 T
+3 F
+(element-type) 127.66 423.06 T
+0 F
+( is) 188.96 423.06 T
+1 F
+(<byte-character>) 202.97 423.06 T
+0 F
+(, encoding may be) 291.95 423.06 T
+1 F
+(#"ANSI") 382.93 423.06 T
+0 F
+( or) 430.92 423.06 T
+1 F
+(#"ISO-Latin-1") 446.92 423.06 T
+0 F
+(.) 528.91 423.06 T
+(When) 72 409.06 T
+3 F
+(element-type) 103.66 409.06 T
+0 F
+( is) 164.96 409.06 T
+1 F
+(<unicode-character>) 178.97 409.06 T
+0 F
+(,) 285.96 409.06 T
+(encoding may be) 291.96 409.06 T
+1 F
+(#"UTF") 376.94 409.06 T
+0 F
+(,) 420.26 409.06 T
+1 F
+(#"little-endian") 426.26 409.06 T
+0 F
+(, or) 507.59 409.06 T
+1 F
+(#"big-endian") 72 395.06 T
+0 F
+(. Each platform does not need to support every encoding, but each platform must) 146 395.06 T
+(support at least one encoding for each element type.) 72 381.06 T
+(The behavior controlled by the) 72 353.94 T
+3 F
+(if-exists) 222.97 353.94 T
+0 F
+( ar) 260.3 353.94 T
+(gument is as follows:) 272.41 353.94 T
+1 F
+(\245) 85.5 332.82 T
+-0.06 (#f) 99 332.82 P
+0 F
+-0.06 ( \321 no action. This is the default when the stream\325s direction is) 109 332.82 P
+1 F
+-0.06 (#"input") 412.8 332.82 P
+0 F
+-0.06 ( or) 459.46 332.82 P
+1 F
+-0.06 (#"input-out-) 475.33 332.82 P
+(put") 99 318.82 T
+0 F
+(.) 123 318.82 T
+1 F
+(\245) 85.5 297.71 T
+(#"new-version") 99 297.71 T
+0 F
+( \321 if the underlying file system supports versions, then a new version of) 180.31 297.71 T
+(the file will be created. This is the default when the stream\325s direction is) 99 283.71 T
+1 F
+(#"output") 448.61 283.71 T
+0 F
+(. If the) 501.94 283.71 T
+(underlying file system does) 99 269.71 T
+3 F
+(not) 234.32 269.71 T
+0 F
+( support) 249.66 269.71 T
+-0.67 (versions, then it is up to the implementation to make) 291.66 269.71 P
+(the appropriate) 99 255.71 T
+(policy decision, and substitute one of the behaviors below; the) 174.31 255.71 T
+1 F
+(#"replace") 476.62 255.71 T
+0 F
+(behavior is a good choice for this.) 99 241.71 T
+1 F
+(\245) 85.5 220.59 T
+(#"overwrite") 99 220.59 T
+0 F
+( \321 set the stream\325s position to the beginning of the file, but preserve the cur-) 167.63 220.59 T
+(rent contents) 99 206.59 T
+-0.19 (of the file. This is useful when the direction is) 163.66 206.59 P
+1 F
+-0.19 (#"input-output") 385.42 206.59 P
+0 F
+-0.19 ( and you want) 470.09 206.59 P
+(to overwrite an existing file.) 99 192.59 T
+1 F
+(\245) 85.5 171.47 T
+(#"replace") 99 171.47 T
+0 F
+(\321 delete or rename any existing file and create a new file.) 158.64 171.47 T
+1 F
+(\245) 85.5 150.35 T
+(#"append") 99 150.35 T
+0 F
+( \321 if the file exists, set the stream\325s initial position to the end of the file so that) 156.34 150.35 T
+(all new output occurs at the end of the file.) 99 136.35 T
+1 F
+(\245) 85.5 115.23 T
+(#"truncate") 99 115.23 T
+0 F
+( \321 if the file exists, then truncate its size to 0, otherwise create) 161.64 115.23 T
+(a new file.) 466.92 115.23 T
+1 F
+(\245) 85.5 94.12 T
+(#"signal") 99 94.12 T
+0 F
+( \321 signal a) 148.33 94.12 T
+1 F
+(<file-exists-error>) 206.33 94.12 T
+0 F
+( condition if the file exists.) 299.3 94.12 T
+(The behavior controlled by the) 72 67 T
+3 F
+(if-does-not-exist) 222.97 67 T
+0 F
+( ar) 300.96 67 T
+(gument is as follows:) 313.07 67 T
+FMENDPAGE
+%%EndPage: "7" 7
+%%Page: "8" 8
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Dylan Streams Library Proposal) 72 42.62 T
+(November 9, 1995) 276.12 42.62 T
+(8) 536 42.62 T
+1 12 Q
+(\245) 85.5 712 T
+(#f) 99 712 T
+0 F
+( \321 no action.) 109 712 T
+1 F
+(\245) 85.5 690.6 T
+(#"signal") 99 690.6 T
+6 10 Q
+( \321) 148.33 690.6 T
+0 12 Q
+(if the file does not exist, signal a) 163.89 690.6 T
+1 F
+(<file-does-not-exist-error>) 322.88 690.6 T
+0 F
+( condition. This) 458.52 690.6 T
+(is the default when the stream\325s direction is) 99 676.6 T
+1 F
+(#"input") 310.97 676.6 T
+0 F
+(.) 357.64 676.6 T
+1 F
+(\245) 85.5 655.2 T
+-0.42 (#"create") 99 655.2 P
+0 F
+-0.42 ( \321 if the file does not exist, create a new zero-length file. This is the default when) 149.63 655.2 P
+(the stream\325s direction is) 99 641.2 T
+1 F
+(#"output") 216.98 641.2 T
+0 F
+( or) 270.31 641.2 T
+1 F
+(#"input-output") 286.31 641.2 T
+0 F
+(.) 370.98 641.2 T
+(Creating a \336le stream) 72 613.8 T
+3 F
+(always) 177.98 613.8 T
+0 F
+( involves an attempt to open the underlying \336le, so the aforemen-) 211.32 613.8 T
+(tioned errors will occur during \336le stream instance initialization.) 72 599.8 T
+(If while opening a \336le stream, the implementation is able to detect an attempt to read a \336le for) 72 572.4 T
+(which the user has no read permission, or to write a \336le for which the user has no write permis-) 72 558.4 T
+(sion, then an) 72 544.4 T
+1 F
+(<invalid-\336le-permission-err) 136 544.4 T
+(or>) 277.28 544.4 T
+0 F
+( condition will be signalled at the time the \336le) 295.45 544.4 T
+(stream is created.) 72 530.4 T
+(File streams are intended only for accessing the contents of \336les, and are) 72 503 T
+3 F
+(not) 423.26 503 T
+0 F
+( intended to provide) 438.6 503 T
+-0.41 (facilities for renaming, deleting, and moving \336les, parsing directory names, etc. This functionality) 72 489 P
+(is handled by the Dylan Locators Library) 72 475 T
+(.) 269.18 475 T
+1 16 Q
+(4.  The Str) 72 432.93 T
+(eam Pr) 143.71 432.93 T
+(otocols) 192.74 432.93 T
+1 14 Q
+(4.1  Input Str) 72 396.87 T
+(eam Pr) 151.87 396.87 T
+(otocol) 194.77 396.87 T
+0 12 Q
+(The following are the basic functions for reading from streams. It is an error to call any of these) 72 368.8 T
+(functions on a buf) 72 354.8 T
+(fered stream while its input buf) 158.77 354.8 T
+(fer is held.) 308.87 354.8 T
+(In order to implement a new input stream, methods for) 72 327.4 T
+1 F
+(r) 337.63 327.4 T
+(ead-element) 342.74 327.4 T
+0 F
+(,) 404.72 327.4 T
+1 F
+(unr) 410.72 327.4 T
+(ead-element) 429.18 327.4 T
+0 F
+(,) 491.16 327.4 T
+1 F
+(peek) 497.16 327.4 T
+0 F
+(,) 521.16 327.4 T
+1 F
+(r) 72 313.4 T
+(ead) 77.11 313.4 T
+0 F
+(,) 95.11 313.4 T
+1 F
+(r) 101.11 313.4 T
+(ead-into!) 106.22 313.4 T
+0 F
+(, and) 152.22 313.4 T
+1 F
+(discard-input) 178.55 313.4 T
+0 F
+(must be provided.) 250.9 313.4 T
+1 F
+(read-element) 72 280 T
+3 F
+(input-stream) 142.31 280 T
+0 F
+(#key) 206.64 280 T
+3 F
+( on-end-of-stream) 229.97 280 T
+7 F
+(\336) 319.28 280 T
+3 F
+(element-or-eof) 334.13 280 T
+0 F
+([Open generic function]) 424.7 280 T
+-0.43 (Returns the next element in the stream. If the stream is not at its end, the stream is advanced so) 90 252.6 P
+(that a subsequent call to) 90 238.6 T
+1 F
+(r) 208.32 238.6 T
+(ead-element) 213.43 238.6 T
+0 F
+( returns the next element.) 275.41 238.6 T
+(If the stream is already at its end when) 90 211.2 T
+1 F
+(r) 278.29 211.2 T
+(ead-element) 283.4 211.2 T
+0 F
+( is called, the behavior of) 345.38 211.2 T
+1 F
+(r) 469.69 211.2 T
+(ead-element) 474.8 211.2 T
+0 F
+(is as follows. If the) 90 197.2 T
+3 F
+(on-end-of-str) 184.66 197.2 T
+(eam) 247.54 197.2 T
+0 F
+( ar) 267.53 197.2 T
+(gument is supplied, then its value is returned. Other-) 279.64 197.2 T
+(wise, an) 90 183.2 T
+1 F
+(<end-of-str) 132.32 183.2 T
+(eam-err) 189.6 183.2 T
+(or>) 230.69 183.2 T
+0 F
+( condition is signalled.) 248.86 183.2 T
+(If no input is available and the stream is not at its end,) 90 155.8 T
+1 F
+(r) 352.64 155.8 T
+(ead-element) 357.76 155.8 T
+0 F
+( will block until input) 419.74 155.8 T
+(becomes available.) 90 141.8 T
+1 F
+(unread-element) 72 108.4 T
+3 F
+(input-stream element) 155.65 108.4 T
+7 F
+( \336) 257.3 108.4 T
+3 F
+(element) 275.15 108.4 T
+0 F
+([Open generic function]) 424.7 108.4 T
+-0.13 (\322Unreads\323 the last element from the stream, that is, returns) 90 81 P
+3 F
+-0.13 (element) 373.95 81 P
+0 F
+-0.13 ( into the stream so that the) 411.27 81 P
+(next call to) 90 67 T
+1 F
+(r) 146.33 67 T
+(ead-element) 151.44 67 T
+0 F
+( will return) 213.42 67 T
+3 F
+(element) 269.75 67 T
+0 F
+(.) 307.07 67 T
+FMENDPAGE
+%%EndPage: "8" 8
+%%Page: "9" 9
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Dylan Streams Library Proposal) 72 42.62 T
+(November 9, 1995) 276.12 42.62 T
+(9) 536 42.62 T
+0 12 Q
+-0.32 (It is an error to apply) 90 712 P
+1 F
+-0.32 (unr) 192.08 712 P
+-0.32 (ead-element) 210.53 712 P
+0 F
+-0.32 ( to an element that is not the element most recently read) 272.51 712 P
+-0.35 (from the stream. It is also an error to call) 90 698 P
+1 F
+-0.35 (unr) 285.43 698 P
+-0.35 (ead-element) 303.88 698 P
+0 F
+-0.35 ( twice in succession, or to unread an) 365.86 698 P
+(element if the stream is at its initial position or after explicitly setting the stream\325) 90 684 T
+(s position.) 477.98 684 T
+1 F
+(peek) 72 650.25 T
+3 F
+(input-stream) 99 650.25 T
+0 F
+(#key) 163.33 650.25 T
+3 F
+( on-end-of-stream) 186.66 650.25 T
+7 F
+( \336) 272.98 650.25 T
+3 F
+(element-or-eof) 290.82 650.25 T
+0 F
+([Open generic function]) 424.7 650.25 T
+1 F
+(peek) 90 622.5 T
+0 F
+( is identical to) 114 622.5 T
+1 F
+(r) 184.67 622.5 T
+(ead-element) 189.78 622.5 T
+0 F
+(, except that the stream is not advanced.) 251.76 622.5 T
+1 F
+(peek) 446.39 622.5 T
+0 F
+( could be) 470.39 622.5 T
+(implemented by calling) 90 608.5 T
+1 F
+(r) 206.33 608.5 T
+(ead-element) 211.44 608.5 T
+0 F
+(, then calling) 273.42 608.5 T
+1 F
+(unr) 338.75 608.5 T
+(ead-element) 357.2 608.5 T
+0 F
+(.) 419.18 608.5 T
+1 F
+(read) 72 574.75 T
+3 F
+(input-stream n::<integer>) 98.33 574.75 T
+0 F
+(#key) 229.85 574.75 T
+3 F
+( on-end-of-stream) 253.18 574.75 T
+7 F
+( \336) 339.49 574.75 T
+3 F
+(sequence-or-eof) 357.34 574.75 T
+0 F
+-1.5 ([Open generic) 471.7 574.75 P
+(function]) 72 560.75 T
+1 F
+(r) 90 533 T
+(ead) 95.11 533 T
+0 F
+( returns a sequence of the next) 113.11 533 T
+3 F
+(n) 262.07 533 T
+0 F
+( elements from the stream. The type of resulting) 268.07 533 T
+(sequence depends on the type of the stream\325) 90 519 T
+(s underlying aggregate. For instances of) 301.62 519 T
+1 F
+-0.02 (<sequence-str) 90 505 P
+-0.02 (eam>) 160.61 505 P
+0 F
+-0.02 (, the type of the result is given by) 188.77 505 P
+1 F
+-0.02 (type-for) 351.91 505 P
+-0.02 (-copy) 392.78 505 P
+0 F
+-0.02 ( of the underlying aggre-) 420.78 505 P
+(gate. For instances of) 90 491 T
+1 F
+(<\336le-str) 195.65 491 T
+(eam>) 235.6 491 T
+0 F
+(, the result is a vector that can contain elements whose) 263.76 491 T
+(type is given by) 90 477 T
+1 F
+(str) 169.33 477 T
+(eam-element-type) 183.11 477 T
+0 F
+( of the stream.) 274.4 477 T
+(The stream is advanced so that subsequent reads start after the) 90 449.25 T
+3 F
+(n) 391.6 449.25 T
+0 F
+( elements.) 397.6 449.25 T
+-0.38 (If the end of the stream is reached before all) 90 421.5 P
+3 F
+-0.38 (n) 300.83 421.5 P
+0 F
+-0.38 ( elements have been read, then the behavior is as) 306.83 421.5 P
+(follows. If the) 90 407.5 T
+3 F
+(on-end-of-str) 160.66 407.5 T
+(eam) 223.54 407.5 T
+0 F
+( ar) 243.53 407.5 T
+(gument is supplied, then it will be returned as the value of) 255.64 407.5 T
+1 F
+(r) 90 393.5 T
+(ead) 95.11 393.5 T
+0 F
+(. If the) 113.11 393.5 T
+3 F
+(on-end-of-str) 147.77 393.5 T
+(eam) 210.65 393.5 T
+0 F
+( ar) 230.64 393.5 T
+(gument was not supplied and at least one element was read) 242.75 393.5 T
+(from the stream, then an) 90 379.5 T
+1 F
+(<incomplete-r) 209.98 379.5 T
+(ead-err) 281.92 379.5 T
+(or>) 319.68 379.5 T
+0 F
+( condition will be signalled, and supplied) 337.85 379.5 T
+(with the incomplete sequence and the number of elements read. Otherwise if the) 90 365.5 T
+3 F
+(on-end-of-) 478.58 365.5 T
+(str) 90 351.5 T
+(eam) 102.23 351.5 T
+0 F
+( ar) 122.22 351.5 T
+(gument was not supplied and no elements were read from the stream, then an) 134.33 351.5 T
+1 F
+(<end-) 507.92 351.5 T
+(of-str) 90 337.5 T
+(eam-err) 117.77 337.5 T
+(or>) 158.86 337.5 T
+0 F
+( condition will be signalled.) 177.02 337.5 T
+(If the stream is not at its end,) 90 309.75 T
+1 F
+(r) 232.32 309.75 T
+(ead) 237.43 309.75 T
+0 F
+( will block until input becomes available.) 255.43 309.75 T
+(It is intended that buf) 90 282 T
+(fered streams will provide a very ef) 192.44 282 T
+(\336cient implementation of) 362.84 282 T
+1 F
+(r) 487.18 282 T
+(ead) 492.29 282 T
+0 F
+(, par-) 510.29 282 T
+(ticularly in the cases when) 90 268 T
+3 F
+(sequence) 220.31 268 T
+0 F
+( is an instance of) 264.29 268 T
+1 F
+(<byte-string>) 347.94 268 T
+0 F
+(,) 417.61 268 T
+1 F
+(<unicode-string>) 423.61 268 T
+0 F
+(, or) 511.3 268 T
+1 F
+(<byte-vector>) 90 254 T
+0 F
+( and the stream\325) 161.65 254 T
+(s element type is the same as the element type of) 237.97 254 T
+3 F
+(sequence) 474.94 254 T
+0 F
+(.) 518.92 254 T
+1 F
+(read-into!) 72 220.25 T
+3 F
+(input-stream n::<integer> sequence::<mutable-sequence>) 126.32 220.25 T
+0 F
+(#key) 415.66 220.25 T
+3 F
+(start) 441.98 220.25 T
+(on-end-of-) 466.99 220.25 T
+(stream) 72 206.25 T
+7 F
+(\336) 107.66 206.25 T
+3 F
+(count-or-eof) 122.51 206.25 T
+0 F
+([Open generic function]) 424.7 206.25 T
+1 F
+(r) 90 178.5 T
+(ead-into!) 95.11 178.5 T
+0 F
+( reads the next) 141.11 178.5 T
+3 F
+(n) 213.76 178.5 T
+0 F
+( elements from the stream and inserts them into the mutable) 219.76 178.5 T
+(sequence) 90 164.5 T
+3 F
+(sequence) 136.98 164.5 T
+0 F
+(starting at) 183.96 164.5 T
+3 F
+(start) 234.62 164.5 T
+0 F
+(. If the sum of) 256.63 164.5 T
+3 F
+(start) 327.29 164.5 T
+0 F
+( plus) 349.3 164.5 T
+3 F
+(n) 375.3 164.5 T
+0 F
+( is greater than the size of) 381.3 164.5 T
+3 F
+-0.23 (sequence) 90 150.5 P
+0 F
+-0.23 (, only enough elements are read to \336ll in to the end of) 133.98 150.5 P
+3 F
+-0.23 (sequence) 390.89 150.5 P
+0 F
+-0.23 (. \050That is, if) 434.87 150.5 P
+3 F
+-0.23 (sequence) 493.26 150.5 P
+0 F
+(is a stretchy vector) 90 136.5 T
+(, it is not grown.\051) 179.83 136.5 T
+(If no end-of-stream occurred, this returns the an integer giving the number of elements actu-) 90 108.75 T
+(ally assigned to) 90 94.75 T
+3 F
+(sequence) 167.66 94.75 T
+0 F
+(.) 211.64 94.75 T
+(The end of stream behavior is as for) 90 67 T
+1 F
+(r) 265.96 67 T
+(ead) 271.07 67 T
+0 F
+(.) 289.07 67 T
+FMENDPAGE
+%%EndPage: "9" 9
+%%Page: "10" 10
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Dylan Streams Library Proposal) 72 42.62 T
+(November 9, 1995) 276.12 42.62 T
+(10) 532 42.62 T
+0 12 Q
+(If the stream is not at its end,) 90 712 T
+1 F
+(r) 232.32 712 T
+(ead-into!) 237.43 712 T
+0 F
+( will block until input becomes available.) 283.43 712 T
+-0.31 (It is intended that buf) 90 683 P
+-0.31 (fered streams will provide a very ef) 191.22 683 P
+-0.31 (\336cient implementation of) 359.78 683 P
+1 F
+-0.31 (r) 483.2 683 P
+-0.31 (ead-into!) 488.31 683 P
+0 F
+-0.31 (,) 534.3 683 P
+(particularly in the cases when) 90 669 T
+3 F
+(seq) 235.63 669 T
+0 F
+( is an instance of) 251.63 669 T
+1 F
+(<byte-string>) 335.28 669 T
+0 F
+(,) 404.95 669 T
+1 F
+(<byte-vector>) 410.95 669 T
+0 F
+(, or) 482.6 669 T
+1 F
+(<buffer>) 90 655 T
+0 F
+(.) 135.67 655 T
+1 F
+(discard-input) 72 620 T
+3 F
+(input-stream) 144.35 620 T
+7 F
+(\336) 208.68 620 T
+3 F
+(\050\051) 223.52 620 T
+0 F
+([Open generic function]) 424.7 620 T
+(Discards any pending input from the stream, both buf) 90 591 T
+(fered input and, if possible, any input) 346.75 591 T
+(that might be at the stream\325) 90 577 T
+(s source.) 220.99 577 T
+-0.02 (This operation is primarily useful on \322interactive\323 streams \050such as TTY streams\051 for discard-) 90 548 P
+(ing unwanted input after an error condition. There is a default method on) 90 534 T
+1 F
+(<str) 443.27 534 T
+(eam>) 463.88 534 T
+0 F
+( so that) 492.05 534 T
+(user programs can call this on any sort of stream; this default method does nothing.) 90 520 T
+1 F
+(4.1.1  Convenience Functions for Reading fr) 72 485 T
+(om Str) 297.11 485 T
+(eams) 331.88 485 T
+0 F
+-0.12 (The following is a small set of convenient reading functions that search for particular elements in) 72 456 P
+(a stream. These functions are implemented in terms of the more primitive functions described in) 72 442 T
+(the previous section.) 72 428 T
+1 F
+(read-to) 72 393 T
+3 F
+(input-stream element) 112.32 393 T
+0 F
+(#key) 216.97 393 T
+3 F
+( on-end-of-stream test) 240.3 393 T
+7 F
+(\336) 349.28 393 T
+3 F
+(sequence-or-eof) 364.13 393 T
+(found?::<boolean>) 72 379 T
+0 F
+([Function]) 489.34 379 T
+(Returns a sequence of all the elements of the stream up to, but not including, the \336rst occur-) 90 350 T
+-0.28 (rence of) 90 336 P
+3 F
+-0.28 (element) 131.41 336 P
+0 F
+-0.28 (, starting from the stream\325) 168.73 336 P
+-0.28 (s current position. The occurrence test) 291.93 336 P
+3 F
+-0.28 (test) 476.52 336 P
+0 F
+-0.28 ( is a func-) 493.19 336 P
+-0.41 (tion of two ar) 90 322 P
+-0.41 (guments, defaulting to) 153.55 322 P
+1 F
+-0.41 (\134=) 262.99 322 P
+0 F
+-0.41 (=. It is called on the element gotten from the stream and) 273.17 322 P
+3 F
+(element) 90 308 T
+0 F
+(, in that order) 127.32 308 T
+(. The \322boundary\323 element is consumed, that is, the stream is left posi-) 191.32 308 T
+(tioned after) 90 294 T
+3 F
+(element) 147.98 294 T
+0 F
+(.) 185.3 294 T
+(The type of the returned sequence is as described for) 90 265 T
+1 F
+(r) 345.92 265 T
+(ead) 351.04 265 T
+0 F
+(. The end-of-stream behavior is as) 369.04 265 T
+-0.38 (speci\336ed for) 90 251 P
+1 F
+-0.38 (r) 151.88 251 P
+-0.38 (ead) 157 251 P
+0 F
+-0.38 (. The second returned value is) 175 251 P
+1 F
+-0.38 (#t) 319.66 251 P
+0 F
+-0.38 ( if the element was found, or) 329.65 251 P
+1 F
+-0.38 (#f) 467.6 251 P
+0 F
+-0.38 ( if the end of) 477.6 251 P
+(the stream was encountered.) 90 237 T
+1 F
+(read-through) 72 202 T
+3 F
+(input-stream element) 143.66 202 T
+0 F
+( #key) 245.32 202 T
+3 F
+( on-end-of-stream test) 271.64 202 T
+7 F
+(\336) 380.63 202 T
+3 F
+(sequence-or-eof) 395.47 202 T
+(found?::<boolean>) 72 188 T
+0 F
+([Function]) 489.34 188 T
+-0.26 (Identical to) 90 159 P
+1 F
+-0.26 (r) 146.8 159 P
+-0.26 (ead-to) 151.91 159 P
+0 F
+-0.26 (, except that the \322boundary\323 element is included in the resulting sequence.) 183.9 159 P
+(The stream is left positioned after) 90 145 T
+3 F
+(element) 254.64 145 T
+0 F
+(.) 291.96 145 T
+1 F
+(read-to-end) 72 110 T
+3 F
+(input-stream) 134.99 110 T
+7 F
+(\336) 199.32 110 T
+3 F
+(<sequence>) 214.16 110 T
+0 F
+([Function]) 489.34 110 T
+(Returns a sequence of all the elements up to, and including, the last element of the stream,) 90 81 T
+(starting from its current position.) 90 67 T
+FMENDPAGE
+%%EndPage: "10" 10
+%%Page: "11" 11
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Dylan Streams Library Proposal) 72 42.62 T
+(November 9, 1995) 276.12 42.62 T
+(1) 532.3 42.62 T
+(1) 536 42.62 T
+0 12 Q
+(The type of the result sequence is as described for) 90 712 T
+1 F
+(r) 332.6 712 T
+(ead) 337.72 712 T
+0 F
+(. There is no special end-of-stream) 355.72 712 T
+(behavior; if the stream is already at the end, an empty collection will be returned.) 90 698 T
+1 F
+(skip-through) 72 664.53 T
+3 F
+(input-stream element) 141.68 664.53 T
+0 F
+(#key) 246.34 664.53 T
+3 F
+( test) 269.66 664.53 T
+7 F
+(\336) 292.33 664.53 T
+3 F
+(found?::<boolean>) 307.18 664.53 T
+0 F
+([Function]) 489.34 664.53 T
+-0.02 (Positions the stream at the \336rst occurrence of element,) 90 637.06 P
+-0.02 (starting from the stream\325) 353.12 637.06 P
+-0.02 (s current posi-) 471.39 637.06 P
+(tion. The occurrence test) 90 623.06 T
+3 F
+(test) 211.63 623.06 T
+0 F
+( is a function of two ar) 228.3 623.06 T
+(guments, defaulting to) 336.73 623.06 T
+1 F
+(\134==) 447.4 623.06 T
+0 F
+(. It is called on) 464.41 623.06 T
+(the element gotten from the stream and) 90 609.06 T
+3 F
+(element) 280.97 609.06 T
+0 F
+(, in that order) 318.29 609.06 T
+(. The boundary element is con-) 382.28 609.06 T
+(sumed, that is, the stream is left positioned after) 90 595.06 T
+3 F
+(element) 322.98 595.06 T
+0 F
+(.) 360.3 595.06 T
+(Returns) 90 567.59 T
+1 F
+(#t) 130.33 567.59 T
+0 F
+( if the element was found, or) 140.33 567.59 T
+1 F
+(#f) 280.97 567.59 T
+0 F
+( if the end of the stream was encountered.) 290.96 567.59 T
+1 14 Q
+(4.2  Output Str) 72 532.78 T
+(eam Pr) 161.98 532.78 T
+(otocol) 204.87 532.78 T
+0 12 Q
+-0.24 (The following are the basic functions for writing to streams. It is an error to call any of these func-) 72 504.65 P
+(tions on a buf) 72 490.65 T
+(fered stream while its output buf) 137.45 490.65 T
+(fer is held.) 293.54 490.65 T
+(In order to implement a new input stream, methods for) 72 463.18 T
+1 F
+(write-element) 337.63 463.18 T
+0 F
+(,) 408.26 463.18 T
+1 F
+(write) 414.26 463.18 T
+0 F
+(,) 440.92 463.18 T
+1 F
+(for) 446.92 463.18 T
+(ce-output) 462.02 463.18 T
+0 F
+(, and) 510.68 463.18 T
+1 F
+(discard-output) 72 449.18 T
+0 F
+(must be provided.) 151.01 449.18 T
+1 F
+(write-element) 72 415.71 T
+3 F
+( output-stream) 142.63 415.71 T
+( element) 212.96 415.71 T
+7 F
+(\336) 256.28 415.71 T
+3 F
+(\050\051) 271.13 415.71 T
+0 F
+([Open generic function]) 424.7 415.71 T
+-0.2 (Appends) 90 388.23 P
+3 F
+-0.2 (element) 135.46 388.23 P
+0 F
+-0.2 ( to the end of the stream. A type error may occur if) 172.77 388.23 P
+3 F
+-0.2 (element) 417.39 388.23 P
+0 F
+-0.2 ( does not have an) 454.71 388.23 P
+(appropriate type for the elements of the stream's underlying aggregate.) 90 374.23 T
+(If the stream is a positionable stream and the stream is not positioned at its end,) 90 346.77 T
+1 F
+(write-ele-) 474.3 346.77 T
+(ment) 90 332.77 T
+0 F
+( will overwrite the element at the current position and then advance the stream position.) 115.99 332.77 T
+1 F
+(write) 72 299.29 T
+3 F
+(output-stream sequence) 101.65 299.29 T
+0 F
+(#key) 218.96 299.29 T
+3 F
+( start end) 242.29 299.29 T
+7 F
+(\336) 290.63 299.29 T
+3 F
+(\050\051) 305.47 299.29 T
+0 F
+([Open generic function]) 424.7 299.29 T
+(Appends each of the elements in sequence to the stream in the order de\336ned by the forward) 90 271.82 T
+(iteration protocol on) 90 257.82 T
+1 F
+(<sequence>) 190.99 257.82 T
+0 F
+(. This is equivalent to the following:) 250.67 257.82 T
+2 10 Q
+(do\050method \050elt\051 write-element\050stream, elt\051 end, sequence\051;) 144 237.69 T
+(sequence;) 144 224.22 T
+0 12 Q
+(If supplied,) 90 197.41 T
+3 F
+(start) 147.66 197.41 T
+0 F
+( and) 169.67 197.41 T
+3 F
+(end) 193 197.41 T
+0 F
+( delimit the portion of sequence to write to the stream. They default) 210.32 197.41 T
+(to 0 and the length of the sequence, respectively) 90 183.41 T
+(.) 320.17 183.41 T
+(It is intended that buf) 90 155.94 T
+(fered streams will provide a very ef) 192.44 155.94 T
+(\336cient implementation of) 362.84 155.94 T
+1 F
+(write) 487.18 155.94 T
+0 F
+(, par-) 513.83 155.94 T
+(ticularly in the cases when) 90 141.94 T
+3 F
+(sequence) 220.31 141.94 T
+0 F
+( is an instance of) 264.29 141.94 T
+1 F
+(<byte-string>) 347.94 141.94 T
+0 F
+(,) 417.61 141.94 T
+1 F
+(<unicode-string>) 423.61 141.94 T
+0 F
+(, or) 511.3 141.94 T
+1 F
+(<byte-vector>) 90 127.94 T
+0 F
+( and the stream\325) 161.65 127.94 T
+(s element type is the same as the element type of) 237.97 127.94 T
+3 F
+(sequence) 474.94 127.94 T
+0 F
+(.) 518.92 127.94 T
+1 F
+(force-output) 72 94.47 T
+3 F
+(output-stream) 138.98 94.47 T
+7 F
+(\336) 209.32 94.47 T
+3 F
+( \050\051) 221.16 94.47 T
+0 F
+([Open generic function]) 424.7 94.47 T
+(Forces any pending output from the stream\325) 90 67 T
+(s buf) 299.98 67 T
+(fers to its destination.) 323.42 67 T
+FMENDPAGE
+%%EndPage: "11" 11
+%%Page: "12" 12
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Dylan Streams Library Proposal) 72 42.62 T
+(November 9, 1995) 276.12 42.62 T
+(12) 532 42.62 T
+1 12 Q
+(synchronize-output) 72 712 T
+3 F
+(output-stream) 174.34 712 T
+7 F
+(\336) 244.67 712 T
+3 F
+(\050\051) 259.51 712 T
+0 F
+([Open generic function]) 424.7 712 T
+-0.29 (Forces any pending output from the stream\325) 90 682.08 P
+-0.29 (s buf) 298.21 682.08 P
+-0.29 (fers to its destination. This function also does) 321.36 682.08 P
+(whatever it can to ensure that the output reaches the stream\325) 90 668.08 T
+(s destination before returning,) 377.27 668.08 T
+(thereby synchronizing the output destination with the application.) 90 654.08 T
+1 F
+(discard-output) 72 618.17 T
+3 F
+(output-stream) 151.01 618.17 T
+7 F
+(\336) 221.34 618.17 T
+3 F
+(\050\051) 236.18 618.17 T
+0 F
+([Open generic function]) 424.7 618.17 T
+(Attempts to abort an outstanding output operation on the stream.) 90 588.25 T
+(This operation is primarily useful on buf) 90 558.33 T
+(fered streams, or streams such as TTY streams, for) 284.44 558.33 T
+(discarding lengthy output after an error condition. There is a default method on) 90 544.33 T
+1 F
+(<str) 473.27 544.33 T
+(eam>) 493.88 544.33 T
+0 F
+( so) 522.05 544.33 T
+(that user programs can call this on any sort of stream; this default method does nothing.) 90 530.33 T
+1 14 Q
+(4.3  Line Oriented Input and Output) 72 493.08 T
+0 12 Q
+(This section presents several functions for doing line-oriented input and output.) 72 462.5 T
+(The newline sequence for string streams is a sequence comprising the single newline character) 72 432.58 T
+2 F
+(\134n) 72 418.58 T
+0 F
+(. For character \336le streams, the newline sequence is whatever sequence of characters the) 86.4 418.58 T
+(underlying platform uses to represent a newline. For example, on MSDOS platforms, the) 72 404.58 T
+(sequence might comprise the two characters carriage return followed by line feed.) 72 390.58 T
+-0.45 (Note that the functions described in this section are potentially an interim solution to one aspect of) 72 360.67 P
+-0.37 (the more general problem of encoding and data translation. At some point, these functions may be) 72 346.67 P
+-0.32 (moved into, or subsumed by) 72 332.67 P
+-0.32 (, another higher level library that deals with the encoding problems in) 206.26 332.67 P
+-0.19 (a better way) 72 318.67 P
+-0.19 (. Note that no other functions in the Streams library do anything to manage the encod-) 129.49 318.67 P
+-0.02 (ing of newlines; calling) 72 304.67 P
+1 F
+-0.02 (write-element) 187.91 304.67 P
+0 F
+-0.02 ( on the character) 258.55 304.67 P
+2 F
+-0.05 (\134n) 341.1 304.67 P
+0 F
+-0.02 ( does not cause the) 355.5 304.67 P
+2 F
+-0.05 (\134n) 449.05 304.67 P
+0 F
+-0.02 ( character to be) 463.45 304.67 P
+(written as the newline sequence, except by coincidence.) 72 290.67 T
+1 F
+(read-line) 72 254.75 T
+3 F
+(input-stream) 121 254.75 T
+0 F
+(#key) 185.33 254.75 T
+3 F
+(on-end-of-stream) 211.66 254.75 T
+7 F
+(\336) 297.97 254.75 T
+3 F
+(string-or-eof) 312.82 254.75 T
+(newline?::<boolean>) 380.15 254.75 T
+0 F
+-3 ([Open) 510.01 254.75 P
+(generic function]) 72 240.75 T
+-0.43 (Returns a new string containing all the input up to the next newline sequence. The result string) 90 210.83 P
+(does not contain the newline sequence. The second value is) 90 196.83 T
+1 F
+(#t) 378.28 196.83 T
+0 F
+( if the read terminated with a) 388.27 196.83 T
+(newline or) 90 182.83 T
+1 F
+(#f) 143.99 182.83 T
+0 F
+( if the read completed by getting to the end of the input stream.) 153.98 182.83 T
+(The type of the result string is chosen to be able to contain characters of the stream\325) 90 152.92 T
+(s element) 491.26 152.92 T
+(type \050for example, if the element type is) 90 138.92 T
+1 F
+(<byte-character>) 284.96 138.92 T
+0 F
+(, then the string will be of type) 373.94 138.92 T
+1 F
+(<byte-string>) 90 124.92 T
+0 F
+(\051.) 159.67 124.92 T
+(If the end of the stream is detected immediately upon calling) 90 95 T
+1 F
+(r) 384.29 95 T
+(ead-line) 389.4 95 T
+0 F
+( \050that is, the end of) 430.07 95 T
+(stream appears to be at the end of an empty line\051, then the end of stream handling \050and the) 90 81 T
+(interpretation of) 90 67 T
+3 F
+(on-end-of-str) 170.65 67 T
+(eam) 233.53 67 T
+0 F
+(\051 is as for) 253.52 67 T
+1 F
+(r) 301.51 67 T
+(ead-element) 306.62 67 T
+0 F
+(.) 368.6 67 T
+FMENDPAGE
+%%EndPage: "12" 12
+%%Page: "13" 13
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Dylan Streams Library Proposal) 72 42.62 T
+(November 9, 1995) 276.12 42.62 T
+(13) 532 42.62 T
+1 12 Q
+(read-line-into!) 72 712 T
+3 F
+(input-stream string) 148.99 712 T
+0 F
+(#key) 244.33 712 T
+3 F
+(start on-end-of-stream grow?) 270.66 712 T
+7 F
+(\336) 415.66 712 T
+3 F
+(string-or-eof) 430.5 712 T
+(newline?::<boolean>) 72 698 T
+0 F
+([Open generic function]) 424.7 698 T
+(Fills) 90 671.82 T
+3 F
+(string) 114.35 671.82 T
+0 F
+( with all the input up to the next newline sequence.) 142.36 671.82 T
+3 F
+(string) 389.66 671.82 T
+0 F
+( must be an instance of) 417.67 671.82 T
+1 F
+-0.42 (<string>) 90 657.82 P
+0 F
+-0.42 (\051 that can hold elements of the stream\325) 133.68 657.82 P
+-0.42 (s element type. The input is inserted into) 314.41 657.82 P
+3 F
+-0.42 (string) 509.41 657.82 P
+0 F
+(starting at the position) 90 643.82 T
+3 F
+(start) 200 643.82 T
+0 F
+(, which is an integer defaulting to 0. The second value is) 222.01 643.82 T
+1 F
+(#t) 495.97 643.82 T
+0 F
+( if the) 505.97 643.82 T
+(read terminated with a newline or) 90 629.82 T
+1 F
+(#f) 254.63 629.82 T
+0 F
+( if the read completed by getting to the end of the input) 264.62 629.82 T
+(stream.) 90 615.82 T
+3 F
+(string) 90 589.65 T
+0 F
+( must have the same element type as the element type of the stream.) 118.01 589.65 T
+-0.03 (If) 90 563.47 P
+3 F
+-0.03 (gr) 100.96 563.47 P
+-0.03 (ow?) 111.19 563.47 P
+0 F
+-0.03 ( is) 131.19 563.47 P
+1 F
+-0.03 (#t) 145.13 563.47 P
+0 F
+-0.03 ( \050the default\051 and) 155.13 563.47 P
+3 F
+-0.03 (string) 240.32 563.47 P
+0 F
+-0.03 (is not lar) 271.29 563.47 P
+-0.03 (ge enough to hold all of the input, a new string) 313.02 563.47 P
+-0.31 (is created that can hold the input, and it is returned as the value. If) 90 549.47 P
+3 F
+-0.31 (gr) 404.94 549.47 P
+-0.31 (ow?) 415.17 549.47 P
+0 F
+-0.31 ( is) 435.17 549.47 P
+1 F
+-0.31 (#f) 448.55 549.47 P
+0 F
+-0.31 (and string is not) 461.24 549.47 P
+(lar) 90 535.47 T
+(ge enough to hold the input, an error is signalled.) 102.44 535.47 T
+3 F
+(on-end-of-str) 90 509.29 T
+(eam) 152.88 509.29 T
+0 F
+( is as for) 172.87 509.29 T
+1 F
+(r) 216.86 509.29 T
+(ead-line) 221.98 509.29 T
+0 F
+(.) 262.64 509.29 T
+1 F
+(write-line) 72 477.12 T
+3 F
+(output-stream string) 124.32 477.12 T
+0 F
+(#key) 225.66 477.12 T
+3 F
+( start end) 248.99 477.12 T
+7 F
+(\336) 297.32 477.12 T
+3 F
+(\050\051) 312.17 477.12 T
+0 F
+([Open generic function]) 424.7 477.12 T
+-0.36 (W) 90 450.94 P
+-0.36 (rites the string into the stream followed by a newline sequence. The default method behaves) 100.85 450.94 P
+(as though it calls) 90 436.94 T
+1 F
+(write) 174 436.94 T
+0 F
+( and then calls) 200.65 436.94 T
+1 F
+(new-line) 272.64 436.94 T
+0 F
+(.) 315.97 436.94 T
+(If supplied,) 90 410.77 T
+3 F
+(start) 147.66 410.77 T
+0 F
+( and) 169.67 410.77 T
+3 F
+(end) 193 410.77 T
+0 F
+( delimit the portion of sequence to write to the stream. They default) 210.32 410.77 T
+(to 0 and the length of the sequence, respectively) 90 396.77 T
+(.) 320.17 396.77 T
+-0.12 (Multi-threaded implementations should take care that the string and the newline sequence are) 90 370.59 P
+(written contiguously) 90 356.59 T
+(.) 188.22 356.59 T
+1 F
+(new-line) 72 324.41 T
+3 F
+( output-stream) 115.33 324.41 T
+7 F
+(\336) 188.66 324.41 T
+3 F
+(\050\051) 203.51 324.41 T
+0 F
+([Open generic function]) 424.7 324.41 T
+(W) 90 298.23 T
+(rites a newline sequence to the output stream.) 100.85 298.23 T
+1 14 Q
+(4.4  Str) 72 264.73 T
+(eam Characteristics Pr) 114.91 264.73 T
+(otocol) 252.28 264.73 T
+0 12 Q
+-0.26 (The following functions can be used to determine the size of a stream, its limit \050if one was given\051,) 72 237.88 P
+(and whether it is at its end.) 72 223.88 T
+(All streams must implement methods for) 72 197.71 T
+1 F
+(str) 271.33 197.71 T
+(ean-open?) 285.11 197.71 T
+0 F
+(,) 337.78 197.71 T
+1 F
+(str) 343.78 197.71 T
+(eam-at-end?) 357.55 197.71 T
+0 F
+(,) 421.54 197.71 T
+1 F
+(str) 427.54 197.71 T
+(eam-input-avail-) 441.31 197.71 T
+(able?) 72 183.71 T
+0 F
+(,) 99.34 183.71 T
+1 F
+(str) 105.34 183.71 T
+(eam-size) 119.11 183.71 T
+0 F
+(,) 163.09 183.71 T
+1 F
+(str) 169.09 183.71 T
+(eam-limit) 182.87 183.71 T
+0 F
+(, and) 232.19 183.71 T
+1 F
+(str) 258.52 183.71 T
+(eam-element-type) 272.29 183.71 T
+0 F
+(.) 363.59 183.71 T
+1 F
+(stream-open?) 72 151.53 T
+3 F
+(stream) 144.98 151.53 T
+7 F
+(\336) 180.65 151.53 T
+3 F
+(boolean) 195.49 151.53 T
+0 F
+([Open generic function]) 424.7 151.53 T
+(Returns) 90 125.35 T
+1 F
+(#t) 130.33 125.35 T
+0 F
+( if the stream is open, otherwise returns) 140.33 125.35 T
+1 F
+(#f) 332.63 125.35 T
+0 F
+(.) 342.62 125.35 T
+1 F
+(stream-element-type) 72 93.18 T
+3 F
+(stream) 180.29 93.18 T
+7 F
+( \336) 212.95 93.18 T
+3 F
+(element-type) 230.8 93.18 T
+0 F
+([Open generic function]) 424.7 93.18 T
+(Returns the element type of the stream as a Dylan) 90 67 T
+1 F
+(<type>) 331.96 67 T
+0 F
+(.) 367.63 67 T
+FMENDPAGE
+%%EndPage: "13" 13
+%%Page: "14" 14
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Dylan Streams Library Proposal) 72 42.62 T
+(November 9, 1995) 276.12 42.62 T
+(14) 532 42.62 T
+1 12 Q
+(stream-at-end?) 72 712 T
+3 F
+(stream) 152.98 712 T
+7 F
+( \336) 185.64 712 T
+0 F
+( <) 200.48 712 T
+3 F
+(boolean>) 210.25 712 T
+0 F
+([Open generic function]) 424.7 712 T
+-0.24 (Returns) 90 684.79 P
+1 F
+-0.24 (#t) 130.09 684.79 P
+0 F
+-0.24 ( if the stream is at its end, otherwise returns) 140.09 684.79 P
+1 F
+-0.24 (#f) 349.99 684.79 P
+0 F
+-0.24 (. That is, it returns) 359.98 684.79 P
+1 F
+-0.24 (#t) 449.77 684.79 P
+0 F
+-0.24 ( if a call to) 459.77 684.79 P
+1 F
+-0.24 (r) 512.89 684.79 P
+-0.24 (ead-) 518 684.79 P
+(element) 90 670.79 T
+0 F
+( would return the end-of-stream element or signal the) 129.98 670.79 T
+1 F
+(<end-of-str) 388.93 670.79 T
+(eam-err) 446.21 670.79 T
+(or>) 487.3 670.79 T
+0 F
+( condi-) 505.46 670.79 T
+(tion.) 90 656.79 T
+(It is an error to call) 90 629.57 T
+1 F
+(str) 184.64 629.57 T
+(eam-at-end?) 198.42 629.57 T
+0 F
+( on a buf) 262.4 629.57 T
+(fered stream while its buf) 304.51 629.57 T
+(fers are held.) 426.94 629.57 T
+1 F
+(stream-input-available?) 72 596.36 T
+3 F
+(stream) 197.66 596.36 T
+7 F
+( \336) 230.33 596.36 T
+0 F
+( <) 245.17 596.36 T
+3 F
+(boolean>) 254.94 596.36 T
+0 F
+([Open generic function]) 424.7 596.36 T
+(Returns) 90 569.14 T
+1 F
+(#t) 130.33 569.14 T
+0 F
+( if the stream would block on the next input operation, otherwise returns) 140.33 569.14 T
+1 F
+(#f) 490.28 569.14 T
+0 F
+(.) 500.28 569.14 T
+(It is an error to call) 90 541.93 T
+1 F
+(str) 184.64 541.93 T
+(eam-input-avilable?) 198.42 541.93 T
+0 F
+( on a buf) 301.09 541.93 T
+(fered stream while its buf) 343.2 541.93 T
+(fers are held.) 465.62 541.93 T
+1 F
+(stream-size) 72 508.71 T
+3 F
+(positionable-stream) 132.97 508.71 T
+7 F
+( \336) 228.97 508.71 T
+3 F
+(limit::type-union\050<integer>,singleton\050#f\051\051) 246.82 508.71 T
+0 F
+-1.5 ([Open generic) 471.7 508.71 P
+(function]) 72 494.71 T
+-0.42 (Returns the size of the stream\325) 90 467.5 P
+-0.42 (s underlying aggregate. For streams over sequences, this returns) 233.53 467.5 P
+(the length of the part of the collection or sequence being streamed over) 90 453.5 T
+(. For \336le streams, this) 430.6 453.5 T
+-0.35 (returns the current length of the \336le in units appropriate to the stream \050for example, 8-bit bytes) 90 439.5 P
+(for standard \336le streams\051. If the underlying aggregate has no well de\336ned size \050for an in\336nite) 90 425.5 T
+(stream, for example\051, then this will return) 90 411.5 T
+1 F
+(#f) 292.97 411.5 T
+0 F
+(.) 302.96 411.5 T
+(It is an error to call) 90 384.29 T
+1 F
+(str) 184.64 384.29 T
+(eam-size) 198.42 384.29 T
+0 F
+( on a buf) 242.4 384.29 T
+(fered stream while its buf) 284.51 384.29 T
+(fers are held.) 406.93 384.29 T
+1 14 Q
+(4.5  Positionable Str) 72 349.74 T
+(eam Pr) 191.53 349.74 T
+(otocol) 234.43 349.74 T
+0 12 Q
+(The following comprises the protocol for positionable streams.) 72 321.86 T
+(A stream position can be thought of as a natural number that indicates how many elements into) 72 294.64 T
+(the stream the stream\325) 72 280.64 T
+(s \322cursor\323 is. However) 177.65 280.64 T
+(, it is not always the case that a single integer con-) 286.46 280.64 T
+(tains enough information to reposition a stream. Consider the case of an \322uncompressing\323 \336le) 72 266.64 T
+-0.33 (stream that requires additional state beyond simply the \336le position to be able to get the next input) 72 252.64 P
+(character from the compressed \336le.) 72 238.64 T
+(The Streams Library addresses this problem by introducing a) 72 211.43 T
+1 F
+(<str) 368.29 211.43 T
+(eam-position>) 388.91 211.43 T
+0 F
+( class, which is) 461.75 211.43 T
+(subclassed by various kinds of streams that need to maintain additional state. A stream may) 72 197.43 T
+-0.06 (always be ef) 72 183.43 P
+-0.06 (\336ciently positioned to a stream position previously returned by a call to) 131.64 183.43 P
+1 F
+-0.06 (str) 476.23 183.43 P
+-0.06 (eam-posi-) 490.01 183.43 P
+(tion) 72 169.43 T
+0 F
+( on the same stream. Furthermore, it is legal to set the position of a stream to an integer posi-) 92 169.43 T
+(tion; however) 72 155.43 T
+(, for some types of streams, doing this might be arbitrarily slow) 137.84 155.43 T
+(, perhaps requiring) 442.04 155.43 T
+(reading the entire contents of the stream up to that point.) 72 141.43 T
+1 F
+(<stream-position>) 72 108.21 T
+0 F
+([Abstract class]) 465.02 108.21 T
+(This class is used to represent a position within certain classes of streams for which a natural) 90 81 T
+(number is not suf) 90 67 T
+(\336cient to fully describe the position in the stream. \050For example, a stream) 173.45 67 T
+FMENDPAGE
+%%EndPage: "14" 14
+%%Page: "15" 15
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Dylan Streams Library Proposal) 72 42.62 T
+(November 9, 1995) 276.12 42.62 T
+(15) 532 42.62 T
+0 12 Q
+-0.14 (that supports encryption or compression will have some state associated with each position in) 90 712 P
+(the stream, and a single integer is not suf) 90 698 T
+(\336cient to store that state.\051) 286.09 698 T
+(The) 90 669.08 T
+1 F
+(<str) 111.66 669.08 T
+(eam-position>) 132.28 669.08 T
+0 F
+( class must be disjoint from) 205.12 669.08 T
+1 F
+(<integer>) 340.45 669.08 T
+0 F
+(.) 390.12 669.08 T
+1 F
+(stream-position) 72 634.17 T
+3 F
+(positionable-stream) 154.99 634.17 T
+7 F
+(\336) 253.99 634.17 T
+3 F
+(position::type-union\050<stream-position>,<integer>\051) 268.84 634.17 T
+0 F
+([Open generic function]) 72 620.17 T
+(Returns the current position of the stream.) 90 591.25 T
+(For streams over sequences, this is the index \050as de\336ned by the generic function) 90 562.33 T
+1 F
+(element) 476.27 562.33 T
+0 F
+(\051 of) 516.25 562.33 T
+(the element that will be read or written by a subsequent call of) 90 548.33 T
+1 F
+(r) 392.28 548.33 T
+(ead-element) 397.39 548.33 T
+0 F
+( or) 459.37 548.33 T
+1 F
+(write-ele-) 475.37 548.33 T
+(ment) 90 534.33 T
+0 F
+(. For some other streams \050such as \322binary\323 \336le streams\051, this will be an integer that indi-) 115.99 534.33 T
+(cates the position in the stream. For still other streams \050such as character \336le streams and the) 90 520.33 T
+(hypothetical \322compressing\323 \336le stream\051, the returned position may be a more complex) 90 506.33 T
+1 F
+-0.29 (<str) 90 492.33 P
+-0.29 (eam-position>) 110.62 492.33 P
+0 F
+-0.29 ( object that represents the position in the stream and the state of the stream) 183.46 492.33 P
+(at that position.) 90 478.33 T
+1 F
+(stream-position-setter) 72 443.42 T
+3 F
+(position positionable-stream) 187.63 443.42 T
+7 F
+(\336) 328.31 443.42 T
+3 F
+(new-position::type-union\050<stream-) 343.15 443.42 T
+(position>,<integer>\051) 72 429.42 T
+0 F
+([Open generic function]) 424.7 429.42 T
+-0.31 (Repositions the stream to the new position) 90 400.5 P
+3 F
+-0.31 (position) 294.83 400.5 P
+0 F
+-0.31 (. Streams are permitted to signal an error if) 333.5 400.5 P
+3 F
+(position) 90 386.5 T
+0 F
+( is not a valid stream position, where a valid stream position is an integer for some) 128.68 386.5 T
+-0.21 (streams, or a) 90 372.5 P
+1 F
+-0.21 (<str) 153.35 372.5 P
+-0.21 (eam-position>) 173.96 372.5 P
+0 F
+-0.21 ( for others. An error will be signalled if the position is before) 246.8 372.5 P
+(the beginning of the stream or after the end of the stream.) 90 358.5 T
+3 F
+(position) 90 329.58 T
+0 F
+( may also be) 128.68 329.58 T
+1 F
+(#"start") 192 329.58 T
+0 F
+(, meaning that the stream should be positioned to its start,) 235.31 329.58 T
+(or) 514.97 329.58 T
+1 F
+(#"end") 90 315.58 T
+0 F
+(, meaning that the stream should be positioned to its end.) 127.99 315.58 T
+(Streams are permitted to restrict the new position to values previously returned by a call to) 90 286.67 T
+1 F
+(str) 90 272.67 T
+(eam-position) 103.78 272.67 T
+0 F
+( on the same stream; this will be the case for streams that need to capture) 169.78 272.67 T
+(additional state beyond just the location in the aggregate.) 90 258.67 T
+(It is an error to set the position of a buf) 90 229.75 T
+(fered stream while its buf) 277.09 229.75 T
+(fers are held.) 399.52 229.75 T
+1 F
+(adjust-stream-position) 72 194.83 T
+3 F
+(positionable-stream delta::<integer>) 190.99 194.83 T
+0 F
+( #key) 372.18 194.83 T
+3 F
+(from) 401.51 194.83 T
+7 F
+(\336) 427.18 194.83 T
+3 F
+(new-position::type-) 442.02 194.83 T
+(union\050<stream-position>,<integer>\051) 72 180.83 T
+0 F
+([Open generic function]) 424.7 180.83 T
+(Moves the position of the stream to) 90 151.92 T
+3 F
+(delta) 262.99 151.92 T
+0 F
+(from) 289.99 151.92 T
+3 F
+( fr) 313.32 151.92 T
+(om) 323.88 151.92 T
+0 F
+(.) 338.54 151.92 T
+3 F
+(fr) 344.54 151.92 T
+(om) 352.1 151.92 T
+0 F
+(\325) 366.77 151.92 T
+(s value is one of the symbols) 370.1 151.92 T
+1 F
+(#"her) 90 137.92 T
+(e") 119.77 137.92 T
+0 F
+(,) 131.76 137.92 T
+1 F
+(#"start") 137.76 137.92 T
+0 F
+(, and) 181.07 137.92 T
+1 F
+(#"end") 207.4 137.92 T
+0 F
+(, with the default being) 245.39 137.92 T
+1 F
+(#"her) 359.38 137.92 T
+(e") 389.15 137.92 T
+0 F
+(. Returns the new position.) 401.14 137.92 T
+(All positionable streams must support the case where) 90 109 T
+3 F
+(delta) 348.64 109 T
+0 F
+( is positive and) 372.64 109 T
+3 F
+(fr) 447.97 109 T
+(om) 455.53 109 T
+0 F
+( is) 470.2 109 T
+1 F
+(#"her) 484.2 109 T
+(e") 513.97 109 T
+0 F
+(\050that is, skipping forward from the current position\051. Some streams may not support skipping) 90 95 T
+-0.12 (backwards from the current position. Some streams may not support skipping relative to their) 90 81 P
+(start and/or end.) 90 67 T
+FMENDPAGE
+%%EndPage: "15" 15
+%%Page: "16" 16
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Dylan Streams Library Proposal) 72 42.62 T
+(November 9, 1995) 276.12 42.62 T
+(16) 532 42.62 T
+0 12 Q
+(When) 90 712 T
+3 F
+(fr) 121.66 712 T
+(om) 129.22 712 T
+0 F
+( is) 143.88 712 T
+1 F
+(#"start") 157.88 712 T
+0 F
+(, the stream is positioned relative to the beginning of the stream \050that) 201.19 712 T
+(is,) 90 698 T
+1 F
+(adjust-str) 104 698 T
+(eam-position) 153.78 698 T
+0 F
+( acts like) 219.78 698 T
+1 F
+(str) 265.44 698 T
+(eam-position-setter) 279.22 698 T
+0 F
+(\051. When) 377.86 698 T
+3 F
+(fr) 419.51 698 T
+(om) 427.07 698 T
+0 F
+( is) 441.73 698 T
+1 F
+(#"end") 455.74 698 T
+0 F
+(, the) 493.73 698 T
+(stream is positioned relative to its end \050the stream\325) 90 684 T
+(s limit if it has one, otherwise the stream\325) 331.98 684 T
+(s) 530.3 684 T
+(current size\051.) 90 670 T
+(Using) 90 643.36 T
+1 F
+(adjust-str) 121.67 643.36 T
+(eam-position) 171.44 643.36 T
+0 F
+( to set the position of a stream beyond its current last element) 237.44 643.36 T
+-0.04 (will have the ef) 90 629.36 P
+-0.04 (fect of growing the underlying aggregate to the new size. When extending the) 163.97 629.36 P
+(underlying aggregate for a stream, it is unde\336ned what will the unwritten portions of the) 90 615.36 T
+(aggregate will contain. For \336le streams, the unwritten portions of the \336le will be \336lled by) 90 601.36 T
+(whatever elements are provided by the underlying \336le system.) 90 587.36 T
+(It is an error to call) 90 560.71 T
+1 F
+(adjust-str) 184.64 560.71 T
+(eam-position) 234.42 560.71 T
+0 F
+( on a buf) 300.42 560.71 T
+(fered stream while its buf) 342.53 560.71 T
+(fers are held.) 464.95 560.71 T
+1 F
+(as <integer>) 72 528.07 T
+3 F
+( stream-position) 135.34 528.07 T
+7 F
+(\336) 216.67 528.07 T
+3 F
+(<integer>) 231.52 528.07 T
+0 F
+([G. F. method]) 468.67 528.07 T
+(Coerces a stream position object \050an object that is a subclass of) 90 501.43 T
+1 F
+(<str) 395.95 501.43 T
+(eam-position>) 416.57 501.43 T
+0 F
+(\051 to an) 489.41 501.43 T
+(integer) 90 487.43 T
+(.) 122.66 487.43 T
+1 14 Q
+(4.6  Sequence Str) 72 453.45 T
+(eam Contents Accessing Pr) 174.41 453.45 T
+(otocol) 336.29 453.45 T
+1 12 Q
+(stream-contents) 72 420.14 T
+3 F
+( sequence-stream) 153.97 420.14 T
+0 F
+( #key) 237.61 420.14 T
+3 F
+( clear-contents?) 263.94 420.14 T
+7 F
+(\336) 344.59 420.14 T
+0 F
+( <) 356.44 420.14 T
+3 F
+(sequence) 366.2 420.14 T
+0 F
+(>) 410.18 420.14 T
+([Open generic function]) 424.7 420.14 T
+(Returns a sequence comprising all the elements in the stream's underlying sequence from its) 90 393.5 T
+(initial position \050taken from the) 90 379.5 T
+1 F
+(start:) 239.66 379.5 T
+0 F
+( ar) 267.65 379.5 T
+(gument passed to) 279.76 379.5 T
+1 F
+(make) 366.08 379.5 T
+0 F
+(\051 up to \050but not including\051 the) 394.08 379.5 T
+(limit of the stream for input streams, and up to the current position of the stream for output) 90 365.5 T
+-0.1 (streams. The type of the returned sequence is given by calling) 90 351.5 P
+1 F
+-0.1 (type-for) 388.88 351.5 P
+-0.1 (-copy) 429.75 351.5 P
+0 F
+-0.1 ( on the sequence) 457.74 351.5 P
+(over which the stream was created.) 90 337.5 T
+(Note that an output stream to a non-stretchy sequence might grow the sequence by creating a) 90 310.86 T
+(new one.) 90 296.86 T
+1 F
+(str) 136.32 296.86 T
+(eam-contents) 150.1 296.86 T
+0 F
+( will return the contents of the new sequence in this case.) 218.08 296.86 T
+-0.05 (If) 90 270.21 P
+3 F
+-0.05 (clear-contents?) 100.94 270.21 P
+0 F
+-0.05 ( is true, then the size and position of the stream will be reset. Thus, the next) 175.59 270.21 P
+-0.3 (call to) 90 256.21 P
+1 F
+-0.3 (str) 122.07 256.21 P
+-0.3 (eam-contents) 135.85 256.21 P
+0 F
+-0.3 ( will return only the elements written after the previous call to s) 203.83 256.21 P
+1 F
+-0.3 (tr) 505.57 256.21 P
+-0.3 (eam-) 514.68 256.21 P
+(contents) 90 242.21 T
+0 F
+(.) 132.66 242.21 T
+-0.05 (For non-sequence streams such as \336le streams,the equivalent functionality can be gotten with) 90 215.57 P
+1 F
+(r) 90 201.57 T
+(ead-to-end) 95.11 201.57 T
+0 F
+(.) 149.77 201.57 T
+1 14 Q
+(4.7  File Str) 72 167.59 T
+(eams) 140.96 167.59 T
+0 12 Q
+(The following are operations that pertain to \336le streams.) 72 140.29 T
+1 F
+(close) 72 107.64 T
+3 F
+(stream::<file-stream>) 99.66 107.64 T
+0 F
+( #key) 208.51 107.64 T
+3 F
+(abort::<boolean> wait?::<boolean>) 237.84 107.64 T
+0 F
+([G. F. method]) 468.67 107.64 T
+-0.04 (If) 90 81 P
+3 F
+-0.04 (abort) 100.95 81 P
+0 F
+-0.04 ( is false \050the default\051, any unwritten data is written to the \336le by calling) 126.95 81 P
+1 F
+-0.04 (for) 470.27 81 P
+-0.04 (ce-output) 485.38 81 P
+0 F
+-0.04 (.) 534.04 81 P
+(Then the connection to the underlying \336le system is closed, releasing any resources backing) 90 67 T
+FMENDPAGE
+%%EndPage: "16" 16
+%%Page: "17" 17
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Dylan Streams Library Proposal) 72 42.62 T
+(November 9, 1995) 276.12 42.62 T
+(17) 532 42.62 T
+0 12 Q
+-0.06 (the connection. If) 90 712 P
+3 F
+-0.06 (abort) 177.14 712 P
+0 F
+-0.06 ( is true, then any errors caused by closing the \336le are ignored. Further-) 203.15 712 P
+(more, if) 90 698 T
+3 F
+(abort) 130.99 698 T
+0 F
+( is true, the \336le should be restored to its initial state wherever possible \050for) 157 698 T
+(example, on a versioned \336le system, the previous version of the \336le should be restored as the) 90 684 T
+(latest version\051.) 90 670 T
+(It is an error for a user program to call) 90 641.15 T
+1 F
+(close) 276.61 641.15 T
+0 F
+( on a buf) 301.27 641.15 T
+(fered stream while its buf) 343.38 641.15 T
+(fers are held.) 465.8 641.15 T
+1 F
+(with-open-file) 72 606.31 T
+3 F
+(\050stream-var) 146.33 606.31 T
+0 F
+( =) 202.98 606.31 T
+3 F
+(locator) 215.75 606.31 T
+0 F
+(, #rest) 250.42 606.31 T
+3 F
+(keys) 282.74 606.31 T
+0 F
+(\051) 303.4 606.31 T
+3 F
+(body) 310.39 606.31 T
+1 F
+(end) 336.72 606.31 T
+0 F
+([Macro]) 500.69 606.31 T
+-0.11 (The macro) 90 577.46 P
+1 F
+-0.11 (with-open-\336le) 144.42 577.46 P
+0 F
+-0.11 ( is provided as a safe mechanism for using \336le streams. It is used to) 215.09 577.46 P
+(create the \336le-stream, evaluate some block of code using the stream, and then close the) 90 563.46 T
+(stream.) 90 549.46 T
+1 F
+(with-open-\336le) 127.99 549.46 T
+0 F
+( ensures that the \336le will be closed on exiting the block, if it was not) 198.66 549.46 T
+(already closed within the block.) 90 535.46 T
+3 F
+(stream-var) 90 506.61 T
+0 F
+( is a variable name; it will be bound to the created stream.) 142.66 506.61 T
+3 F
+(locator) 423.28 506.61 T
+0 F
+(should evaluate) 460.94 506.61 T
+(to a valid ar) 90 492.61 T
+(gument to) 146.77 492.61 T
+1 F
+(as\050<locator>,) 198.11 492.61 T
+3 F
+(locator) 268.44 492.61 T
+1 F
+(\051) 303.11 492.61 T
+0 F
+(. The macro evaluates to the values of the last) 307.1 492.61 T
+(expression in) 90 478.61 T
+3 F
+(body) 156.66 478.61 T
+0 F
+(.) 179.21 478.61 T
+-0.04 (For example, the following expression yields the contents of \336le) 72 449.77 P
+2 F
+-0.1 (foo.text) 383.21 449.77 P
+0 F
+-0.04 ( as a) 440.82 449.77 P
+1 F
+-0.04 (<byte-vector>) 465.01 449.77 P
+0 F
+-0.04 (:) 536.66 449.77 P
+2 10 Q
+(with-open-file \050fs = \050"foo.text", element-type: <byte>\051\051) 108 428.26 T
+(  read-to-end\050fs\051) 108 416.26 T
+(end;) 108 404.26 T
+0 12 Q
+(and is roughly equivalent to:) 72 376.08 T
+2 10 Q
+(begin) 108 354.56 T
+(let hidden-fs = #f;     // In case the user bashes fs variable) 126 342.56 T
+(block \050\051) 126 330.56 T
+(hidden-fs := make\050<file-stream>,) 144 318.56 T
+(                        locator: "foo.text",) 108 303.72 T
+(element-type: <byte>\051;) 378 303.72 T
+(let fs = hidden-fs;) 144 291.72 T
+(read-to-end\050fs\051;) 144 279.72 T
+(cleanup) 126 267.72 T
+(if \050hidden-fs\051 close\050hidden-fs\051 end;) 144 255.72 T
+(end block;) 126 243.72 T
+(end;) 108 231.72 T
+1 16 Q
+(5.  Str) 72 188.87 T
+(eam Locking) 113.04 188.87 T
+0 12 Q
+(Stream locks are intended to have multi-lock semantics. That is, a thread can take the lock more) 72 158.69 T
+-0.03 (than once, but the lock must be released for each time is is taken. Furthermore, it is expected that) 72 144.69 P
+(threads waiting for a stream lock should do so by blocking, not by \322spinning\323.) 72 130.69 T
+1 F
+(stream-locked?) 72 95.85 T
+3 F
+( stream) 150.65 95.85 T
+7 F
+(\336) 189.31 95.85 T
+3 F
+( boolean) 201.16 95.85 T
+0 F
+([Open generic function]) 424.7 95.85 T
+(Returns) 90 67 T
+1 F
+(#t) 130.33 67 T
+0 F
+( if the stream is locked, otherwise returns) 140.33 67 T
+1 F
+(#f) 341.29 67 T
+0 F
+(.) 351.29 67 T
+FMENDPAGE
+%%EndPage: "17" 17
+%%Page: "18" 18
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Dylan Streams Library Proposal) 72 42.62 T
+(November 9, 1995) 276.12 42.62 T
+(18) 532 42.62 T
+1 12 Q
+(lock-stream) 72 712 T
+3 F
+( stream) 132.65 712 T
+7 F
+(\336) 171.31 712 T
+3 F
+(\050\051) 186.16 712 T
+0 F
+([Open generic function]) 424.7 712 T
+(T) 90 685.5 T
+(akes a lock on the stream, returning only after the lock has been taken.) 96.49 685.5 T
+(In a single-threaded Dylan implementation, this function does nothing.) 90 659 T
+1 F
+(unlock-stream) 72 626.5 T
+3 F
+( stream) 145.99 626.5 T
+7 F
+(\336) 184.66 626.5 T
+3 F
+(\050\051) 199.5 626.5 T
+0 F
+([Open generic function]) 424.7 626.5 T
+(Releases the stream\325) 90 600 T
+(s lock.  Stream locks can be taken more than once by a thread, so they) 187.98 600 T
+(must be unlocked for each time they are locked. This will signal an error if it tries to release) 90 586 T
+(the stream\325) 90 572 T
+(s lock, but the current thread does not actually hold it.) 142.99 572 T
+(In a single-threaded Dylan implementation, this function does nothing.) 90 545.5 T
+1 F
+(with-stream-locked) 72 513 T
+3 F
+(\050stream\051) 174.31 513 T
+(body) 217.97 513 T
+1 F
+(end) 244.3 513 T
+0 F
+([Macro]) 500.69 513 T
+(Evalutes body in a context in which the stream is locked.) 90 486.5 T
+1 16 Q
+(6.  Buffer) 72 445.33 T
+(ed Str) 136.14 445.33 T
+(eams) 177.18 445.33 T
+0 12 Q
+-0.05 (One major goal of any streams package that includes support for \336le I/O is ef) 72 417.5 P
+-0.05 (\336cient buf) 441.72 417.5 P
+-0.05 (fered I/O.) 490.45 417.5 P
+-0.4 (At the same time, the user should not be need to be concerned with buf) 72 403.5 P
+-0.4 (fering for normal use of the) 407.11 403.5 P
+(streams library) 72 389.5 T
+(. The buf) 142.87 389.5 T
+(fering will usually be transparent, but programs requiring more control) 186.31 389.5 T
+(should be able to access this functionality when appropriate.) 72 375.5 T
+(A buf) 72 349 T
+(fered stream maintains some sort of buf) 99.44 349 T
+(fer) 289.86 349 T
+(. All streams use the sealed class) 302.52 349 T
+1 F
+(<buffer>) 462.49 349 T
+0 F
+( for) 508.16 349 T
+(these buf) 72 335 T
+(fers. The size of these buf) 115.44 335 T
+(fers is explicitly unspeci\336ed, but it is expected that it will be) 239.18 335 T
+-0.31 (chosen to be of a sensible size with respect to the underlying data source or data sink. Instances of) 72 321 P
+-0.24 (the class) 72 307 P
+1 F
+-0.24 (<buffer>) 115.52 307 P
+0 F
+-0.24 ( also contain some state information. This state information includes start, end,) 161.19 307 P
+(and position indices and, in a multi-threaded environment, a lock so that the buf) 72 293 T
+(fer cannot be) 455.41 293 T
+(accessed simultaneously by multiple threads.) 72 279 T
+(The following buf) 72 252.5 T
+(fer protocols are expected to be used by buf) 159.11 252.5 T
+(fered streams to implement the) 368.83 252.5 T
+-0.29 (appropriate stream protocols. Implementors should strive to provide high-performance implemen-) 72 238.5 P
+(tations for at least) 72 224.5 T
+1 F
+(r) 160.66 224.5 T
+(ead) 165.77 224.5 T
+0 F
+(,) 183.77 224.5 T
+1 F
+(r) 189.77 224.5 T
+(ead-into!) 194.88 224.5 T
+0 F
+(, and) 240.88 224.5 T
+1 F
+(write) 267.2 224.5 T
+0 F
+(, particularly in the case where they are reading or) 293.86 224.5 T
+(writing objects of type) 72 210.5 T
+1 F
+(<byte-string>) 183.32 210.5 T
+0 F
+( or) 253 210.5 T
+1 F
+(<byte-vector>) 268.99 210.5 T
+0 F
+(.) 340.64 210.5 T
+1 14 Q
+(6.1  Buffer) 72 176.67 T
+(ed Str) 135.13 176.67 T
+(eam Pr) 171.04 176.67 T
+(otocols) 213.93 176.67 T
+0 12 Q
+(This section describes the functions that user) 72 149.5 T
+(-level programs can use to directly manipulate the) 287.06 149.5 T
+(buf) 72 135.5 T
+(fers of buf) 87.78 135.5 T
+(fered streams. When users manipulate buf) 137.54 135.5 T
+(fers, they are entirely responsible for) 339.28 135.5 T
+(tracking the buf) 72 121.5 T
+(fer) 147.77 121.5 T
+(\325) 161.53 121.5 T
+(s state and informing the stream of any changes to the buf) 164.87 121.5 T
+(fer) 442.27 121.5 T
+(\325) 456.04 121.5 T
+(s state.) 459.37 121.5 T
+(The overall technique for using a buf) 72 95 T
+(fer is to get the input or output buf) 249.74 95 T
+(fer and its bounds, con-) 414.85 95 T
+(sume or produce data, and then release the buf) 72 81 T
+(fer and its updated bounds back to the stream. The) 294.72 81 T
+(new bounds are indicated by calling) 72 67 T
+1 F
+(buffer) 247.97 67 T
+(-index-setter) 279.52 67 T
+0 F
+( and) 344.16 67 T
+1 F
+(buffer) 367.49 67 T
+(-end-setter) 399.04 67 T
+0 F
+(. There is no) 453.68 67 T
+FMENDPAGE
+%%EndPage: "18" 18
+%%Page: "19" 19
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Dylan Streams Library Proposal) 72 42.62 T
+(November 9, 1995) 276.12 42.62 T
+(19) 532 42.62 T
+0 12 Q
+(notion of the user \336lling or emptying the buf) 72 712 T
+(fer explicitly; the stream is responsible for this. This) 285.78 712 T
+-0.13 (simple model allows the stream implementation the leeway to be very ef) 72 698 P
+-0.13 (\336cient, since this may be) 418.65 698 P
+(done with no extra data copying whatsoever) 72 684 T
+(.) 283.3 684 T
+0 9.6 Q
+(1) 286.3 688.8 T
+0 12 Q
+(Note that, in a multi-threaded implementation of Dylan, getting an input or output buf) 72 655.8 T
+(fer causes) 484.09 655.8 T
+-0.41 (the requesting thread to hold that buf) 72 641.8 P
+-0.41 (fer) 246.65 641.8 P
+-0.41 (. When a buf) 259.32 641.8 P
+-0.41 (fer is held by a thread, no other thread may do) 319.86 641.8 P
+(anything on the same stream. Releasing the buf) 72 627.8 T
+(fer allows other threads to access the stream. It is) 299.09 627.8 T
+-0.26 (an error to perform any operations on a buf) 72 613.8 P
+-0.26 (fer once the buf) 276.98 613.8 P
+-0.26 (fer has been released. Furthermore, the) 351.62 613.8 P
+(consequences are unde\336ned when a user program uses any high-level stream operations \050such as) 72 599.8 T
+1 F
+(r) 72 585.8 T
+(ead-element) 77.11 585.8 T
+0 F
+( or) 139.09 585.8 T
+1 F
+(write-element) 155.09 585.8 T
+0 F
+(\051 on a stream while holding the buf) 225.72 585.8 T
+(fer) 393.82 585.8 T
+(.) 406.48 585.8 T
+1 F
+(with-input-buffer) 72 551.6 T
+3 F
+(\050buffer-var) 165 551.6 T
+0 F
+(=) 220.66 551.6 T
+3 F
+( buffered-stream) 227.42 551.6 T
+0 F
+(, #key) 307.08 551.6 T
+3 F
+(wait?) 339.41 551.6 T
+0 F
+(\051) 366.08 551.6 T
+3 F
+(body) 373.08 551.6 T
+1 F
+(end) 399.41 551.6 T
+0 F
+([Macro]) 500.69 551.6 T
+(Evaluates) 90 523.4 T
+3 F
+(body) 139.66 523.4 T
+0 F
+( with) 162.98 523.4 T
+3 F
+(buffer-var) 190.32 523.4 T
+0 F
+( bound to a) 238.98 523.4 T
+1 F
+(<buffer>) 295.64 523.4 T
+0 F
+( or to) 341.32 523.4 T
+1 F
+(#f) 369.65 523.4 T
+0 F
+( if) 379.64 523.4 T
+3 F
+(buffered-stream) 392.98 523.4 T
+0 F
+(is at its end.) 472.63 523.4 T
+(The input buf) 90 509.4 T
+(fer is held during the evaluation of) 155.11 509.4 T
+3 F
+(body) 324.08 509.4 T
+0 F
+( and released on exit. The process of) 347.41 509.4 T
+-0.34 (obtaining the buf) 90 495.4 P
+-0.34 (fer may block for any number of reasons, such as blocking on order to \336ll the) 171.11 495.4 P
+(buf) 90 481.4 T
+(fer or blocking if some thread is already holding the input buf) 105.78 481.4 T
+(fer) 401.86 481.4 T
+(. The macro evaluates to) 414.52 481.4 T
+(the values of the last expression in) 90 467.4 T
+3 F
+(body) 258.31 467.4 T
+0 F
+(.) 280.86 467.4 T
+1 F
+(next-input-buffer) 72 433.2 T
+3 F
+(buffered-stream) 164.33 433.2 T
+0 F
+(#key) 243.98 433.2 T
+3 F
+( wait?) 267.31 433.2 T
+7 F
+(\336) 299.99 433.2 T
+3 F
+(<buffer>) 314.83 433.2 T
+0 F
+([Function]) 489.34 433.2 T
+(Gets an input buf) 90 405 T
+(fer for the stream or returns) 172.78 405 T
+1 F
+(#f) 308.06 405 T
+0 F
+( if the stream is at its end. If) 318.06 405 T
+3 F
+(wait?) 455.38 405 T
+0 F
+( is true \050the) 482.05 405 T
+-0.39 (default\051, this will block if necessary in order to \336ll the buf) 90 391 P
+-0.39 (fer) 363.48 391 P
+-0.39 (, and the buf) 376.32 391 P
+-0.39 (fer returned will have) 434.92 391 P
+(at least one element in it. If) 90 377 T
+3 F
+(wait?) 223.98 377 T
+0 F
+( is false, the buf) 250.66 377 T
+(fer will be returned in its current state,) 326.76 377 T
+(regardless of whether there is any data in it. Note that) 90 363 T
+1 F
+(next-input-buffer) 349.94 363 T
+0 F
+( might return) 439.27 363 T
+1 F
+(#f) 504.94 363 T
+0 F
+( if it) 514.93 363 T
+(cannot get an input buf) 90 349 T
+(fer in the case where) 200.44 349 T
+3 F
+(wait?) 302.72 349 T
+0 F
+( is false.) 329.4 349 T
+(If the user is not actually holding the buf) 90 320.8 T
+(fer \050by using) 285.1 320.8 T
+1 F
+(with-input-buffer) 349.42 320.8 T
+0 F
+(\051, this will signal an) 439.42 320.8 T
+(error) 90 306.8 T
+(.) 112.66 306.8 T
+1 F
+(with-output-buffer) 72 272.6 T
+3 F
+(\050buffer-var) 171.66 272.6 T
+0 F
+(=) 227.32 272.6 T
+3 F
+( buffered-stream) 234.08 272.6 T
+0 F
+(, #key) 313.74 272.6 T
+3 F
+(wait?) 346.07 272.6 T
+0 F
+(\051) 372.74 272.6 T
+3 F
+(body) 379.74 272.6 T
+1 F
+(end) 406.07 272.6 T
+0 F
+([Macro]) 500.69 272.6 T
+(Evaluates) 90 244.4 T
+3 F
+(body) 139.66 244.4 T
+0 F
+( with) 162.98 244.4 T
+3 F
+(buffer-var) 190.32 244.4 T
+0 F
+( bound to a) 238.98 244.4 T
+1 F
+(<buffer>) 295.64 244.4 T
+0 F
+( or to) 341.32 244.4 T
+1 F
+(#f) 369.65 244.4 T
+0 F
+( if) 379.64 244.4 T
+3 F
+(buffered-stream.) 392.98 244.4 T
+0 F
+(is at its end.) 475.63 244.4 T
+(The output buf) 90 230.4 T
+(fer is held during the evaluation of) 161.11 230.4 T
+3 F
+(body) 330.08 230.4 T
+0 F
+( and released on exit. The process of) 353.41 230.4 T
+(obtaining the buf) 90 216.4 T
+(fer may block for any number of reasons, such as blocking if some thread is) 171.78 216.4 T
+(holding the output buf) 90 202.4 T
+(fer) 196.79 202.4 T
+(. The macro evaluates to the values of the last expression in) 209.45 202.4 T
+3 F
+(body) 498.4 202.4 T
+0 F
+(.) 520.94 202.4 T
+1 F
+(next-output-buffer) 72 168.2 T
+3 F
+(buffered-stream) 170.99 168.2 T
+0 F
+(#key) 250.64 168.2 T
+3 F
+( wait?) 273.97 168.2 T
+7 F
+(\336) 306.65 168.2 T
+3 F
+(<buffer>) 321.49 168.2 T
+0 F
+([Function]) 489.34 168.2 T
+(Gets an output buf) 90 140 T
+(fer for the stream. If) 178.78 140 T
+3 F
+(wait?) 278.74 140 T
+0 F
+( is true \050the default\051, this will block if necessary) 305.41 140 T
+-0.37 (to allocate a new buf) 90 126 P
+-0.37 (fer) 188.29 126 P
+-0.37 (, and the buf) 201.13 126 P
+-0.37 (fer returned will have room for the insertion of at least one) 259.8 126 P
+72 102 540 122 C
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+72 110 204 110 2 L
+0.25 H
+2 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 0 612 792 C
+0 10 Q
+0 X
+0 0 0 1 0 0 0 K
+-0.32 (1.  In some operating systems, buf) 72 95.33 P
+-0.32 (fers can be shared by the application and the operating system, so that, for example,) 207.1 95.33 P
+-0.17 (device drivers can read and write data directly from and to buf) 72 83.33 P
+-0.17 (fers shared between a user application and a peripheral) 319.63 83.33 P
+(device.) 72 71.33 T
+FMENDPAGE
+%%EndPage: "19" 19
+%%Page: "20" 20
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Dylan Streams Library Proposal) 72 42.62 T
+(November 9, 1995) 276.12 42.62 T
+(20) 532 42.62 T
+0 12 Q
+-0.11 (element. If) 90 712 P
+3 F
+-0.11 (wait?) 144.77 712 P
+0 F
+-0.11 ( is false,) 171.44 712 P
+1 F
+-0.11 (next-output-buffer) 213.78 712 P
+0 F
+-0.11 ( might return) 309.77 712 P
+1 F
+-0.11 (#f) 375.11 712 P
+0 F
+-0.11 ( if it cannot get an output buf) 385.1 712 P
+-0.11 (fer) 523.79 712 P
+(in this case.) 90 698 T
+-0.25 (If the user is not actually holding the buf) 90 671.71 P
+-0.25 (fer \050by using) 283.06 671.71 P
+1 F
+-0.25 (with-output-buffer) 346.61 671.71 P
+0 F
+-0.25 (\051, this will signal an) 443.27 671.71 P
+(error) 90 657.71 T
+(.) 112.66 657.71 T
+1 14 Q
+(6.2  Internal Buffering Pr) 72 624.08 T
+(otocols) 224.57 624.08 T
+0 12 Q
+(Note that user) 72 597.12 T
+(-level programs should not call any of the function speci\336ed in this section. These) 139.08 597.12 T
+-0.05 (are intended to be specialized by programmers implementing streams. User programs should call) 72 583.12 P
+(the functions speci\336ed in the previous section.) 72 569.12 T
+1 F
+(<byte>) 72 536.82 T
+0 F
+([Type]) 507.35 536.82 T
+(This type represents limited integers in the range from 0 to 255.) 90 510.53 T
+1 F
+(<byte-vector>) 72 478.23 T
+0 F
+([Type]) 507.35 478.23 T
+(This type is a vector that contains only elements whose type is) 90 451.94 T
+1 F
+(<byte>) 392.64 451.94 T
+0 F
+(. This could be imple-) 428.32 451.94 T
+(mented as a sealed subclass of) 90 437.94 T
+1 F
+(<vector>) 238.63 437.94 T
+0 F
+(, or as a limited subtype of) 284.29 437.94 T
+1 F
+(<vector>) 414.95 437.94 T
+0 F
+(.) 460.61 437.94 T
+1 F
+(<buffer-index>) 72 405.65 T
+0 F
+([Type]) 507.35 405.65 T
+(This type represents limited integers that are guaranteed to be \322unboxed\323 and \336xed precision.) 90 379.35 T
+1 F
+(<buffer>) 72 347.06 T
+0 F
+([Sealed instantiable class]) 415.36 347.06 T
+-0.19 (Instances of) 90 320.77 P
+1 F
+-0.19 (<buffer>) 150.26 320.77 P
+0 F
+-0.19 (contain buf) 198.74 320.77 P
+-0.19 (fered data along with state information such as position and) 252.65 320.77 P
+(end indices. The required init keyword) 90 306.77 T
+1 F
+(buffer) 278.96 306.77 T
+(-size:) 310.51 306.77 T
+0 F
+(controls the size of the) 340.16 306.77 T
+1 F
+(<buffer>) 451.81 306.77 T
+0 F
+(.) 497.48 306.77 T
+1 F
+(buffer-subsequence) 72 274.47 T
+3 F
+(buffer result-class start end) 175 274.47 T
+7 F
+(\336) 310.33 274.47 T
+3 F
+(<sequence>) 325.18 274.47 T
+0 F
+([Open generic function) 424.7 274.47 T
+(]) 536 274.47 T
+(Returns an instance of the class) 90 248.18 T
+3 F
+(r) 243.97 248.18 T
+(esult-class) 248.2 248.18 T
+0 F
+(, which will be \336lled with the elements from the) 298.86 248.18 T
+(buf) 90 234.18 T
+(fer from) 105.78 234.18 T
+3 F
+(start) 148.43 234.18 T
+0 F
+( up to) 170.44 234.18 T
+3 F
+(end) 200.77 234.18 T
+0 F
+( \050which are both) 218.1 234.18 T
+1 F
+(<buffer) 299.41 234.18 T
+(-index>) 337.8 234.18 T
+0 F
+(\325es\051.) 376.64 234.18 T
+(This should be implemented as ef) 90 207.88 T
+(\336ciently as possible, and there should be sealed methods) 251.44 207.88 T
+(when) 90 193.88 T
+3 F
+(r) 118.99 193.88 T
+(esult-class) 123.22 193.88 T
+0 F
+( is) 173.88 193.88 T
+1 F
+(<byte-string>) 187.88 193.88 T
+0 F
+(,) 257.56 193.88 T
+1 F
+(<byte-vector>) 263.56 193.88 T
+0 F
+(, and) 335.21 193.88 T
+1 F
+(<buffer>) 361.54 193.88 T
+0 F
+(.) 407.21 193.88 T
+1 F
+(copy-into-buffer!) 72 161.59 T
+3 F
+(buffer buffer-start sequence) 162.98 161.59 T
+0 F
+( #key) 296.3 161.59 T
+3 F
+(start end) 325.63 161.59 T
+7 F
+(\336) 370.97 161.59 T
+3 F
+(\050\051) 385.81 161.59 T
+0 F
+([Open generic function]) 424.7 161.59 T
+(Copies the portion of) 90 135.29 T
+3 F
+(sequence) 194.66 135.29 T
+0 F
+( given by) 238.64 135.29 T
+3 F
+(start) 286.31 135.29 T
+0 F
+( and) 308.32 135.29 T
+3 F
+(end) 331.64 135.29 T
+0 F
+( into) 348.97 135.29 T
+3 F
+(buffer) 373.64 135.29 T
+0 F
+(. The buf) 401.65 135.29 T
+(fer is \336lled starting) 445.09 135.29 T
+-0.44 (at) 90 121.29 P
+3 F
+-0.44 (buffer) 101.22 121.29 P
+-0.44 (-start) 129.65 121.29 P
+0 F
+-0.44 (.) 155.65 121.29 P
+3 F
+-0.44 (start) 161.21 121.29 P
+0 F
+-0.44 ( defaults to 0, and) 183.22 121.29 P
+3 F
+-0.44 (end) 269.67 121.29 P
+0 F
+-0.44 ( defaults to the end of) 287 121.29 P
+3 F
+-0.44 (sequence) 391.67 121.29 P
+0 F
+-0.44 (.) 435.64 121.29 P
+-0.44 (If) 441.2 121.29 P
+3 F
+-0.44 (buffer) 451.75 121.29 P
+0 F
+-0.44 ( is too small) 480.42 121.29 P
+(to hold the data, an error is signalled.) 90 107.29 T
+(This should be implemented as ef) 90 81 T
+(\336ciently as possible, and there should be sealed methods) 251.44 81 T
+(when) 90 67 T
+3 F
+(sequence) 118.99 67 T
+0 F
+(is an instance of) 165.97 67 T
+1 F
+(<byte-string>) 246.62 67 T
+0 F
+(,) 316.3 67 T
+1 F
+(<byte-vector>) 322.3 67 T
+0 F
+(, or) 393.95 67 T
+1 F
+(<buffer>) 412.94 67 T
+0 F
+(.) 458.62 67 T
+FMENDPAGE
+%%EndPage: "20" 20
+%%Page: "21" 21
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Dylan Streams Library Proposal) 72 42.62 T
+(November 9, 1995) 276.12 42.62 T
+(21) 532 42.62 T
+1 12 Q
+(copy-from-buffer!) 72 712 T
+3 F
+(sequence sequence-start buffer) 168.3 712 T
+0 F
+(key) 319.93 712 T
+3 F
+(start end) 340.26 712 T
+7 F
+(\336) 385.6 712 T
+3 F
+(\050\051) 400.44 712 T
+0 F
+([Open generic function]) 424.7 712 T
+-0.02 (Copies the portion of) 90 682.72 P
+3 F
+-0.02 (buffer) 194.59 682.72 P
+0 F
+-0.02 ( given by) 223.26 682.72 P
+3 F
+-0.02 (start) 270.87 682.72 P
+0 F
+-0.02 ( and) 292.88 682.72 P
+3 F
+-0.02 (end) 316.17 682.72 P
+0 F
+-0.02 ( into) 333.5 682.72 P
+3 F
+-0.02 (sequence) 358.13 682.72 P
+0 F
+-0.02 (. The sequence is \336lled start-) 402.11 682.72 P
+-0.08 (ing at) 90 668.72 P
+3 F
+-0.08 (sequence-start) 119.85 668.72 P
+0 F
+-0.08 (.) 189.83 668.72 P
+3 F
+-0.08 (start) 195.76 668.72 P
+0 F
+-0.08 ( defaults to 0, and) 217.76 668.72 P
+3 F
+-0.08 (end) 306.04 668.72 P
+0 F
+-0.08 ( defaults to the end of the buf) 323.37 668.72 P
+-0.08 (fer) 463.6 668.72 P
+-0.08 (.) 476.26 668.72 P
+-0.08 (If) 482.18 668.72 P
+3 F
+-0.08 (sequence) 493.1 668.72 P
+0 F
+(is too small to hold the data, an error is signalled.) 90 654.72 T
+(This should be implemented as ef) 90 625.44 T
+(\336ciently as possible, and there should be sealed methods) 251.44 625.44 T
+(when) 90 611.44 T
+3 F
+(sequence) 118.99 611.44 T
+0 F
+(is an instance of) 165.97 611.44 T
+1 F
+(<byte-string>) 246.62 611.44 T
+0 F
+(,) 316.3 611.44 T
+1 F
+(<byte-vector>) 322.3 611.44 T
+0 F
+(, or) 393.95 611.44 T
+1 F
+(<buffer>) 412.94 611.44 T
+0 F
+(.) 458.62 611.44 T
+1 F
+(buffer-position) 72 576.17 T
+3 F
+(buffer) 151.67 576.17 T
+7 F
+(\336) 183.34 576.17 T
+3 F
+(type-union\050<stream-position>,<integer>\051) 198.18 576.17 T
+0 F
+([Generic function]) 451.03 576.17 T
+(Returns the stream position corresponding to the \336rst element in the buf) 90 546.89 T
+(fer) 434.76 546.89 T
+(.) 447.42 546.89 T
+1 F
+(buffer) 453.42 546.89 T
+(-position) 484.97 546.89 T
+0 F
+(may return the constant) 90 532.89 T
+1 F
+($invalid-buffer) 205.98 532.89 T
+(-position) 282.88 532.89 T
+0 F
+( if the buf) 327.55 532.89 T
+(fer contains no valid data.) 374.33 532.89 T
+1 F
+(buffer-index) 72 497.61 T
+3 F
+(buffer) 139 497.61 T
+7 F
+(\336) 170.66 497.61 T
+3 F
+(<buffer-index>) 185.51 497.61 T
+0 F
+([Generic function]) 451.03 497.61 T
+(Returns a) 90 468.33 T
+1 F
+(<buffer) 138.66 468.33 T
+(-index>) 177.05 468.33 T
+0 F
+( corresponding to the next element in the buf) 215.89 468.33 T
+(fer) 430.98 468.33 T
+(.) 443.64 468.33 T
+1 F
+(buffer-index-setter) 72 433.06 T
+3 F
+(index buffer) 171.64 433.06 T
+7 F
+(\336) 232.3 433.06 T
+3 F
+(<buffer-index>) 247.14 433.06 T
+0 F
+([Generic function]) 451.03 433.06 T
+(Sets the index of the next element in the buf) 90 403.78 T
+(fer to be) 301.43 403.78 T
+3 F
+(index) 344.41 403.78 T
+0 F
+(. This is used to update the buf) 370.4 403.78 T
+(fer) 517.51 403.78 T
+(position after an element has been consumed from or inserted into the buf) 90 389.78 T
+(fer) 443.72 389.78 T
+(.) 456.38 389.78 T
+1 F
+(buffer-end) 72 354.5 T
+3 F
+(buffer) 129.66 354.5 T
+7 F
+(\336) 161.33 354.5 T
+3 F
+(<buffer-index>) 176.17 354.5 T
+0 F
+([Generic function]) 451.03 354.5 T
+(Returns a) 90 325.22 T
+1 F
+(<buffer) 138.66 325.22 T
+(-index>) 177.05 325.22 T
+0 F
+( corresponding to the last valid element in the buf) 215.89 325.22 T
+(fer) 453.98 325.22 T
+(.) 466.64 325.22 T
+1 F
+(buffer-end-setter) 72 289.95 T
+3 F
+(index buffer) 162.3 289.95 T
+7 F
+(\336) 222.96 289.95 T
+3 F
+(<buffer-index>) 237.8 289.95 T
+0 F
+([Generic function]) 451.03 289.95 T
+(Sets the index of the last element in the buf) 90 260.67 T
+(fer to be) 297.43 260.67 T
+3 F
+(index) 340.42 260.67 T
+0 F
+(.) 366.41 260.67 T
+1 F
+(buffer-size) 72 225.39 T
+3 F
+(stream-buffer) 129.65 225.39 T
+7 F
+(\336) 197.98 225.39 T
+3 F
+(<integer>) 212.82 225.39 T
+0 F
+([Generic function]) 451.03 225.39 T
+(Returns the size of the underlying) 90 196.11 T
+1 F
+(<buffer>) 255.31 196.11 T
+0 F
+(.) 300.98 196.11 T
+1 F
+(input-buffer) 72 160.83 T
+3 F
+( buffered-stream) 135.34 160.83 T
+7 F
+(\336) 217.99 160.83 T
+3 F
+(<buffer>) 232.84 160.83 T
+0 F
+([Generic function]) 451.03 160.83 T
+(Returns the current input buf) 90 131.56 T
+(fer for the stream.) 228.43 131.56 T
+1 F
+(input-buffer-setter) 72 96.28 T
+3 F
+( buffer buffered-stream) 167.98 96.28 T
+7 F
+(\336) 282.3 96.28 T
+3 F
+(<buffer>) 297.14 96.28 T
+0 F
+([Generic function]) 451.03 96.28 T
+(Sets the current input buf) 90 67 T
+(fer of a stream.) 211.1 67 T
+FMENDPAGE
+%%EndPage: "21" 21
+%%Page: "22" 22
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Dylan Streams Library Proposal) 72 42.62 T
+(November 9, 1995) 276.12 42.62 T
+(22) 532 42.62 T
+1 12 Q
+(output-buffer) 72 712 T
+3 F
+( buffered-stream) 142 712 T
+7 F
+(\336) 224.65 712 T
+3 F
+(<buffer>) 239.5 712 T
+0 F
+([Generic function]) 451.03 712 T
+(Returns the current output buf) 90 684.07 T
+(fer for the stream. For a stream with a single buf) 234.43 684.07 T
+(fer the current) 466.5 684.07 T
+(input buf) 90 670.07 T
+(fer and the current output buf) 133.45 670.07 T
+(fer should be the same.) 274.2 670.07 T
+1 F
+(output-buffer-setter) 72 636.13 T
+3 F
+( buffer buffered-stream) 174.64 636.13 T
+7 F
+(\336) 288.96 636.13 T
+3 F
+(<buffer>) 303.8 636.13 T
+0 F
+([Generic function]) 451.03 636.13 T
+(Sets the current output buf) 90 608.2 T
+(fer of a stream. For a stream with a single buf) 217.1 608.2 T
+(fer) 435.84 608.2 T
+(, the current input) 448.68 608.2 T
+(buf) 90 594.2 T
+(fer and the current output buf) 105.78 594.2 T
+(fer should be the same.) 246.53 594.2 T
+1 F
+(stream-get-input-buffer) 72 560.27 T
+3 F
+(buffered-stream) 196.97 560.27 T
+0 F
+(#key) 276.62 560.27 T
+3 F
+( wait?) 299.95 560.27 T
+7 F
+(\336) 332.63 560.27 T
+3 F
+(<buffer>) 347.47 560.27 T
+0 F
+([Open generic function]) 424.7 560.27 T
+(Acquires an input buf) 90 532.33 T
+(fer from the underlying data source. This might be accomplished by) 194.1 532.33 T
+-0.26 (allocating a buf) 90 518.33 P
+-0.26 (fer and then \336lling it \050for a simple \336le stream implementation\051, or by taking an) 163.92 518.33 P
+(already-\336lled buf) 90 504.33 T
+(fer of) 172.76 504.33 T
+(f a queue of buf) 198.86 504.33 T
+(fers \050for example, for a network implementation\051.) 274.62 504.33 T
+-0.39 (This may block for any number of reasons, such as blocking on order to \336ll the buf) 90 476.4 P
+-0.39 (fer) 481.84 476.4 P
+-0.39 (. If) 494.5 476.4 P
+3 F
+-0.39 (wait?) 510.71 476.4 P
+0 F
+(is true \050the default\051, this will block if necessary in order to \336ll the buf) 90 462.4 T
+(fer) 422.08 462.4 T
+(, and the buf) 434.92 462.4 T
+(fer) 494.69 462.4 T
+(returned will have at least one element in it. If) 90 448.4 T
+3 F
+(wait?) 314.29 448.4 T
+0 F
+( is false, the buf) 340.97 448.4 T
+(fer will be returned in its) 417.07 448.4 T
+(current state, regardless of whether there is any data in it; note that) 90 434.4 T
+1 F
+(str) 412.6 434.4 T
+(eam-get-input-buffer) 426.37 434.4 T
+0 F
+(might return) 90 420.4 T
+1 F
+(#f) 152.66 420.4 T
+0 F
+( as its \336rst value if it cannot get an input buf) 162.66 420.4 T
+(fer in this case.) 374.1 420.4 T
+1 F
+(str) 90 392.47 T
+(eam-get-input-buffer) 103.78 392.47 T
+0 F
+( returns a) 211.75 392.47 T
+1 F
+(<buffer>) 259.4 392.47 T
+0 F
+( or) 305.08 392.47 T
+1 F
+(#f) 321.07 392.47 T
+0 F
+( if the stream is at its end.) 331.07 392.47 T
+(The default method returns the current input buf) 90 364.53 T
+(fer or calls) 321.41 364.53 T
+1 F
+(stream-next-input-buffer) 375.72 364.53 T
+0 F
+( if the) 504.36 364.53 T
+(current input buf) 90 350.53 T
+(fer is empty) 170.44 350.53 T
+(.) 226.98 350.53 T
+1 F
+(stream-next-input-buffer) 72 316.6 T
+3 F
+(buffered-stream) 203.64 316.6 T
+0 F
+(#key) 283.3 316.6 T
+3 F
+( wait?) 306.62 316.6 T
+7 F
+(\336) 339.3 316.6 T
+3 F
+(<buffer>) 354.14 316.6 T
+0 F
+([Open generic function]) 424.7 316.6 T
+1 F
+(stream-next-input-buffer) 90 288.67 T
+0 F
+(may be called when the data in a buf) 221.64 288.67 T
+(fer has been consumed. The) 397.38 288.67 T
+(default method \336lls the current input buf) 90 274.67 T
+(fer) 284.44 274.67 T
+(.) 297.1 274.67 T
+-0.11 (Note that the state of the stream\325) 90 246.73 P
+-0.11 (s input buf) 245.33 246.73 P
+-0.11 (fer should be updated by calls to) 296.24 246.73 P
+1 F
+-0.11 (buffer) 454.46 246.73 P
+-0.11 (-index-set-) 486.01 246.73 P
+-0.22 (ter) 90 232.73 P
+0 F
+-0.22 ( before calling) 104.65 232.73 P
+1 F
+-0.22 (str) 176.29 232.73 P
+-0.22 (eam-next-input-buffer) 190.07 232.73 P
+0 F
+-0.22 (. The stream itself is responsible for updating the) 304.05 232.73 P
+(state of) 90 218.73 T
+1 F
+(buffer) 127.99 218.73 T
+(-position) 159.54 218.73 T
+0 F
+( to correspond to the new index.) 204.22 218.73 T
+1 F
+(stream-release-input-buffer) 72 184.8 T
+3 F
+( buffered-stream) 213.96 184.8 T
+7 F
+(\336) 296.62 184.8 T
+3 F
+(\050\051) 311.46 184.8 T
+0 F
+([Open generic function]) 424.7 184.8 T
+(Release the buf) 90 156.87 T
+(fer back to the stream\325) 163.76 156.87 T
+(s underlying data source.) 271.07 156.87 T
+1 F
+(stream-get-output-buffer) 72 122.93 T
+3 F
+(buffered-stream) 203.63 122.93 T
+0 F
+(#key) 283.28 122.93 T
+3 F
+( wait?) 306.61 122.93 T
+7 F
+(\336) 339.29 122.93 T
+3 F
+(<stream-buffer>) 354.13 122.93 T
+0 F
+-1.5 ([Open generic) 471.7 122.93 P
+(function]) 72 108.93 T
+(Acquires an empty output buf) 90 81 T
+(fer) 233.1 81 T
+(on behalf of the underlying data sink. This might be accom-) 249.42 81 T
+(plished by allocating a new buf) 90 67 T
+(fer) 240.1 67 T
+(, or taking one from a pool of output buf) 252.94 67 T
+(fers.) 446.7 67 T
+FMENDPAGE
+%%EndPage: "22" 22
+%%Page: "23" 23
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Dylan Streams Library Proposal) 72 42.62 T
+(November 9, 1995) 276.12 42.62 T
+(23) 532 42.62 T
+0 12 Q
+(This may block for any number of reasons, such as blocking on order to wait for a buf) 90 712 T
+(fer in) 503.04 712 T
+-0.15 (the pool of buf) 90 698 P
+-0.15 (fers. If) 160.32 698 P
+3 F
+-0.15 (wait?) 194.99 698 P
+0 F
+-0.15 ( is true \050the default\051, this will block if necessary in order to get the) 221.67 698 P
+-0.43 (buf) 90 684 P
+-0.43 (fer) 105.78 684 P
+-0.43 (, and the buf) 118.62 684 P
+-0.43 (fer returned will have room for the insertion of at least one element. If) 177.12 684 P
+3 F
+-0.43 (wait?) 510.75 684 P
+0 F
+-0.29 (is false, then) 90 670 P
+1 F
+-0.29 (str) 152.44 670 P
+-0.29 (eam-get-output-buffer) 166.22 670 P
+0 F
+-0.29 ( might return) 280.85 670 P
+1 F
+-0.29 (#f) 345.63 670 P
+0 F
+-0.29 ( as its \336rst value if it cannot get an out-) 355.63 670 P
+(put buf) 90 656 T
+(fer) 124.12 656 T
+(.) 136.78 656 T
+1 F
+(str) 90 629.13 T
+(eam-get-output-buffer) 103.78 629.13 T
+0 F
+( returns a) 218.41 629.13 T
+1 F
+(<buffer>) 266.06 629.13 T
+0 F
+( or) 311.74 629.13 T
+1 F
+(#f) 327.73 629.13 T
+0 F
+( if the stream is at its end.) 337.73 629.13 T
+(The default method returns the current output buf) 90 602.27 T
+(fer or calls) 327.41 602.27 T
+1 F
+(stream-next-output-buffer) 381.72 602.27 T
+0 F
+( if) 517.02 602.27 T
+(the current output buf) 90 588.27 T
+(fer is empty) 194.1 588.27 T
+(.) 250.64 588.27 T
+1 F
+(stream-next-output-buffer) 72 555.4 T
+3 F
+(buffered-stream) 210.3 555.4 T
+0 F
+(#key) 289.96 555.4 T
+3 F
+( wait?) 313.28 555.4 T
+7 F
+(\336) 345.96 555.4 T
+3 F
+(<stream-buffer>) 360.8 555.4 T
+0 F
+-1.5 ([Open generic) 471.7 555.4 P
+(function]) 72 541.4 T
+1 F
+(stream-next-output-buffer) 90 514.53 T
+0 F
+(always sends the data in the current buf) 228.3 514.53 T
+(fer) 417.71 514.53 T
+(, otherwise it is identi-) 430.55 514.53 T
+(cal to) 90 500.53 T
+1 F
+(stream-get-output-buffer) 119.33 500.53 T
+0 F
+(.) 247.3 500.53 T
+(Note that the state of the stream\325) 90 473.67 T
+(s output buf) 245.98 473.67 T
+(fer should be updated by calls to) 303.1 473.67 T
+1 F
+(buffer) 462.07 473.67 T
+(-index-) 493.62 473.67 T
+-0.52 (setter) 90 459.67 P
+0 F
+-0.52 ( before calling) 118.64 459.67 P
+1 F
+-0.52 (str) 189.4 459.67 P
+-0.52 (eam-next-output-buffer) 203.18 459.67 P
+0 F
+-0.52 (. The stream itself is responsible for updating) 323.83 459.67 P
+(the state of) 90 445.67 T
+1 F
+(buffer) 145.66 445.67 T
+(-position) 177.2 445.67 T
+0 F
+( to correspond to the new index.) 221.88 445.67 T
+1 F
+(stream-release-output-buffer) 72 412.8 T
+3 F
+( buffered-stream) 220.62 412.8 T
+7 F
+(\336) 303.28 412.8 T
+3 F
+(\050\051) 318.12 412.8 T
+0 F
+([Open generic function]) 424.7 412.8 T
+(Release the buf) 90 385.93 T
+(fer back to the stream\325) 163.76 385.93 T
+(s underlying data sink.) 271.07 385.93 T
+1 F
+(stream-send-output-buffer) 72 353.07 T
+3 F
+( buffered-stream) 208.64 353.07 T
+7 F
+(\336) 291.3 353.07 T
+3 F
+(\050\051) 306.14 353.07 T
+0 F
+([Open generic function]) 424.7 353.07 T
+(Informs the underlying data sink that the contents of the buf) 90 326.2 T
+(fer up through) 377.75 326.2 T
+3 F
+(end) 449.4 326.2 T
+0 F
+( can be sent to) 466.73 326.2 T
+(the data sink.) 90 312.2 T
+1 F
+(stream-send-output-buffer) 156.66 312.2 T
+0 F
+( is not expected to wait for the output to complete.) 293.3 312.2 T
+1 16 Q
+(7.  Str) 72 270.67 T
+(eam-Related Conditions) 113.04 270.67 T
+0 12 Q
+-0.22 (The class de\336nitions for the error conditions are as follows. There is no recovery protocol de\336ned) 72 242.47 P
+(for any of these errors.) 72 228.47 T
+1 F
+(<end-of-stream-error>) 72 195.6 T
+0 F
+([Error]) 506.69 195.6 T
+-0.21 (This error is signalled when one of the read functions reaches the end of the input stream. It is) 90 168.73 P
+(a subclass of) 90 154.73 T
+1 F
+(<err) 154.32 154.73 T
+(or>) 176.93 154.73 T
+0 F
+(. It takes one init keyword,) 195.1 154.73 T
+1 F
+(str) 326.41 154.73 T
+(eam:) 340.19 154.73 T
+0 F
+(.) 365.51 154.73 T
+1 F
+(<incomplete-read-error>) 72 121.87 T
+0 F
+([Error]) 506.69 121.87 T
+-0.43 (This error is signalled when) 90 95 P
+1 F
+-0.43 (r) 224.85 95 P
+-0.43 (ead) 229.96 95 P
+0 F
+-0.43 ( reaches the end of the input stream before it has read enough) 247.96 95 P
+(data. It is a subclass of) 90 81 T
+1 F
+(<end-of-str) 201.65 81 T
+(eam-err) 258.92 81 T
+(or>) 300.01 81 T
+0 F
+(. It takes two additional init keywords,) 318.18 81 T
+1 F
+(sequence:) 90 67 T
+0 F
+( and) 139.99 67 T
+1 F
+(count:) 163.32 67 T
+0 F
+(.) 195.98 67 T
+FMENDPAGE
+%%EndPage: "23" 23
+%%Page: "24" 24
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Dylan Streams Library Proposal) 72 42.62 T
+(November 9, 1995) 276.12 42.62 T
+(24) 532 42.62 T
+1 12 Q
+(<file-error>) 72 712 T
+0 F
+([Error]) 506.69 712 T
+-0.17 (This is the base class for all \336le I/O-related errors. It is a subclass of) 90 686 P
+1 F
+-0.17 (<err) 416.74 686 P
+-0.17 (or>) 439.35 686 P
+0 F
+-0.17 (. It takes one init) 457.52 686 P
+(keyword,) 90 672 T
+1 F
+(locator:) 137.99 672 T
+0 F
+(.) 177.97 672 T
+1 F
+(<file-exists-error>) 72 640 T
+0 F
+([Error]) 506.69 640 T
+(This error is signalled when an output \336le stream creation function tries to create a \336le that) 90 614 T
+(already exists. It is a subclass of) 90 600 T
+1 F
+(<\336le-err) 247.31 600 T
+(or>) 289.25 600 T
+0 F
+(.) 307.42 600 T
+1 F
+(<file-does-not-exist-error>) 72 568 T
+0 F
+([Error]) 506.69 568 T
+(This error is signalled when an input \336le stream creation function tries to read a \336le that does) 90 542 T
+(not exist. It is a subclass of) 90 528 T
+1 F
+(<\336le-err) 222.66 528 T
+(or>) 264.6 528 T
+0 F
+(.) 282.77 528 T
+1 F
+(<invalid-file-permissions-error>) 72 496 T
+0 F
+([Error]) 506.69 496 T
+(This error is signalled when one of the \336le stream creation functions tries to access a \336le in a) 90 470 T
+(manner for which the user does not have permission. It is a subclass of) 90 456 T
+1 F
+(<\336le-err) 432.28 456 T
+(or>) 474.22 456 T
+0 F
+(.) 492.38 456 T
+1 16 Q
+(8.  W) 72 415.33 T
+(rapper Str) 107.71 415.33 T
+(eams) 179.86 415.33 T
+0 12 Q
+(One common programming problem is of conversions applied to streams, such as accessing the) 72 388 T
+-0.09 (characters in an EBCDIC \336le as their ASCII equivalents or encrypting/decrypting the contents of) 72 374 P
+(a \336le. One way to handle such tasks is via) 72 360 T
+3 F
+(wrapper str) 275.64 360 T
+(eams) 331.54 360 T
+0 F
+(. W) 356.2 360 T
+(rapper streams hold on to some) 373.04 360 T
+-0.19 (underlying stream, delegating to it most of the operations that implement streaming. The wrapper) 72 346 P
+(stream then carries out appropriate processing in its own implementations of the streaming proto-) 72 332 T
+(col. The Dylan Streams Library includes a base class called) 72 318 T
+1 F
+(<wrapper) 360.94 318 T
+(-str) 411.32 318 T
+(eam>) 429.1 318 T
+0 F
+( upon which) 457.26 318 T
+(other wrapping streams can be implemented.) 72 304 T
+2 10 Q
+(define class <wrapper-stream> \050<stream>\051) 108 285.33 T
+(slot inner-stream :: <stream>, required-init-keyword: on:;) 126 273.33 T
+(end class;) 108 261.33 T
+0 12 Q
+(A subclass of) 72 236 T
+1 F
+(<wrapper) 139.66 236 T
+(-str) 190.04 236 T
+(eam>) 207.82 236 T
+0 F
+( can \322pass on\323 functions such as) 235.98 236 T
+1 F
+(r) 393.61 236 T
+(ead-element) 398.72 236 T
+0 F
+( and) 460.7 236 T
+1 F
+(write-ele-) 484.03 236 T
+(ment) 72 222 T
+0 F
+( by simply delegating these operations to the inner stream:) 97.99 222 T
+2 10 Q
+(define method read-element \050ws :: <io-wrapper-stream>\051;) 108 203.33 T
+(read-element\050ws.inner-stream\051) 126 191.33 T
+(end;) 108 179.33 T
+(define method write-element \050ws :: <io-wrapper-stream>, element\051;) 108 155.33 T
+(write-element\050ws.inner-stream,element\051) 126 143.33 T
+(end;) 108 131.33 T
+FMENDPAGE
+%%EndPage: "24" 24
+%%Page: "25" 25
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Dylan Streams Library Proposal) 72 42.62 T
+(November 9, 1995) 276.12 42.62 T
+(25) 532 42.62 T
+0 12 Q
+(Assuming that) 72 712 T
+1 F
+(<io-wrapper) 144.67 712 T
+(-str) 208.39 712 T
+(eam>) 226.16 712 T
+0 F
+( delegates all other operations to its inner stream, the fol-) 254.33 712 T
+-0.26 (lowing would suf) 72 698 P
+-0.26 (\336ce to implement a 16-bit Unicode character stream wrapping an 8-bit character) 155.26 698 P
+(stream.) 72 684 T
+2 10 Q
+(define class <unicode-stream> \050<io-wrapper-stream>\051 end;) 108 664.18 T
+(define method read-element) 108 640.18 T
+(    \050s :: <unicode-stream>\051 => ch :: <unicode-character>;) 108 627.03 T
+(  with-stream-locked \050s\051) 108 615.03 T
+(    let first-char = read-element\050s.inner-stream\051;) 108 601.87 T
+(    let second-char = read-element\050s.inner-stream\051) 108 589.87 T
+(  end;) 108 577.87 T
+(  convert-ascii-pair-to-unicode\050first-char, second-char\051) 108 564.72 T
+(end;) 108 552.72 T
+(define method write-element) 108 528.72 T
+(    \050s :: <unicode-stream>, c :: <character>\051;) 108 515.56 T
+(  let \050first-char, second-char\051 = convert-unicode-to-ascii-pair\050c\051;) 108 503.56 T
+(  with-stream-locked \050s\051) 108 491.56 T
+(    write-element\050s.inner-stream, first-char\051;) 108 478.41 T
+(    write-element\050s.inner-stream, second-char\051) 108 466.41 T
+(  end;) 108 454.41 T
+(  c) 108 441.26 T
+(end;) 108 429.26 T
+(define method stream-position) 108 405.26 T
+(    \050s :: <unicode-stream>\051 =>) 108 392.1 T
+(p :: <integer>;) 296.5 392.1 T
+(  truncate/\050stream-position\050s.inner-stream\051, 2\051) 108 380.1 T
+(end;) 108 368.1 T
+(define method stream-position-setter) 108 344.1 T
+(    \050p :: <integer>,s :: <unicode-stream>\051;) 108 330.95 T
+(  stream-position\050s.inner-stream\051 := p * 2) 108 318.95 T
+(end;) 108 306.95 T
+1 14 Q
+(8.1  W) 72 273.13 T
+(rapper Str) 110.25 273.13 T
+(eams and Delegation) 173.37 273.13 T
+0 12 Q
+-0.24 (One problem with wrapper streams is the need for a wrapper stream to intercept methods invoked) 72 245.31 P
+(by its inner stream. For example, consider two hypothetical streams,) 72 231.31 T
+1 F
+(<interactive-str) 402.96 231.31 T
+(eam>) 482.22 231.31 T
+0 F
+( and) 510.38 231.31 T
+1 F
+(<dialog-str) 72 217.31 T
+(eam>) 127.96 217.31 T
+0 F
+( \050which is a subclass of) 156.12 217.31 T
+1 F
+(<wrapper) 270.77 217.31 T
+(-str) 321.16 217.31 T
+(eam>) 338.93 217.31 T
+0 F
+(\051. Both of these classes have a) 367.09 217.31 T
+(method called prompt.) 72 203.31 T
+1 F
+(<interactive-str) 183.32 203.31 T
+(eam>) 262.58 203.31 T
+0 F
+( specializes) 290.75 203.31 T
+1 F
+(r) 348.73 203.31 T
+(ead) 353.84 203.31 T
+0 F
+( thus:) 371.84 203.31 T
+2 10 Q
+(define method read \050s :: <interactive-stream>, n :: <integer>,) 108 183.49 T
+(                    #key on-end-of-stream\051;) 108 171.49 T
+(  prompt\050s\051;) 108 159.49 T
+(  next-method\050\051) 108 147.49 T
+(end;) 108 135.49 T
+0 12 Q
+-0.11 (If a) 72 109 P
+1 F
+-0.11 (<dialog-str) 91.1 109 P
+-0.11 (eam>) 147.06 109 P
+0 F
+-0.11 (is used to wrap an) 177.9 109 P
+1 F
+-0.11 (<interactive-str) 267.01 109 P
+-0.11 (eam>) 346.27 109 P
+0 F
+-0.11 ( then an invocation of) 374.44 109 P
+1 F
+-0.11 (r) 481.55 109 P
+-0.11 (ead) 486.66 109 P
+0 F
+-0.11 (on the) 507.55 109 P
+1 F
+(<dialog-str) 72 95 T
+(eam>) 127.96 95 T
+0 F
+( will call prompt on the inner) 156.12 95 T
+1 F
+(<interactive-str) 299.11 95 T
+(eam>) 378.37 95 T
+0 F
+(, not on the) 406.54 95 T
+1 F
+(<dialog-) 463.54 95 T
+-0.21 (str) 72 81 P
+-0.21 (eam>) 85.78 81 P
+0 F
+-0.21 (, as desired. The problem is that the) 113.94 81 P
+1 F
+-0.21 (<dialog-str) 286.24 81 P
+-0.21 (eam>) 342.19 81 P
+0 F
+-0.21 ( wants to delegate some tasks to its) 370.36 81 P
+(inner stream, but handle some other tasks itself.) 72 67 T
+FMENDPAGE
+%%EndPage: "25" 25
+%%Page: "26" 26
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Dylan Streams Library Proposal) 72 42.62 T
+(November 9, 1995) 276.12 42.62 T
+(26) 532 42.62 T
+0 12 Q
+(Some languages, notably Self, support such delegation in the language. Dylan, in keeping with) 72 712 T
+(other generic-function-based languages, does not, but experience with streams packages in a) 72 698 T
+(number of other generic-function-based languages has shown that it is) 72 684 T
+3 F
+(very) 411.94 684 T
+0 F
+( useful to provide del-) 432.59 684 T
+(egation for wrapper streams. So we provide an explicit implementation of delegation in the) 72 670 T
+(streams system.) 72 656 T
+-0.08 (Delegation is implemented by the use of the) 72 629.46 P
+1 F
+-0.08 (outer) 286.05 629.46 P
+-0.08 (-str) 312.92 629.46 P
+-0.08 (eam) 330.7 629.46 P
+0 F
+-0.08 ( slot, which is de\336ned in the base class) 352.02 629.46 P
+1 F
+(<str) 72 615.46 T
+(eam>) 92.62 615.46 T
+0 F
+(.) 120.78 615.46 T
+2 10 Q
+(define abstract class <stream> \050<object>\051) 108 596.24 T
+(slot outer-stream :: <stream>, init-keyword: outer-stream:;) 126 584.24 T
+(end class;) 108 572.24 T
+1 12 Q
+-0 (outer) 72 546.36 P
+-0 (-str) 98.88 546.36 P
+-0 (eam) 116.65 546.36 P
+0 F
+-0 ( is used instead of the stream itself whenever a stream invokes one of its other) 137.98 546.36 P
+0 9.6 Q
+-0 (2) 512.21 551.16 P
+0 12 Q
+-0 ( pro-) 517.01 546.36 P
+(tocol methods. For example, a correct implementation of the) 72 532.36 T
+1 F
+(r) 365.63 532.36 T
+(ead) 370.74 532.36 T
+0 F
+( method in the example above) 388.74 532.36 T
+(would be as follows:) 72 518.36 T
+2 10 Q
+(define method read \050stream :: <interactive-stream>, n :: <integer>) 108 499.15 T
+(                    #key on-end-of-stream\051) 108 487.15 T
+(  prompt\050s.outer-stream\051;) 108 475.15 T
+(  next-method\050\051) 108 463.15 T
+(end method;) 108 451.15 T
+0 12 Q
+-0.04 (The) 72 425.27 P
+1 F
+-0.04 (initialize) 93.62 425.27 P
+0 F
+-0.04 ( method on) 137.62 425.27 P
+1 F
+-0.04 (<str) 194.49 425.27 P
+-0.04 (eam>) 215.1 425.27 P
+0 F
+-0.04 ( is de\336ned to set the) 243.27 425.27 P
+1 F
+-0.04 (outer) 341.67 425.27 P
+-0.04 (-str) 368.55 425.27 P
+-0.04 (eam) 386.32 425.27 P
+0 F
+-0.04 ( slot to be the stream itself.) 407.65 425.27 P
+-0.09 (The) 72 411.27 P
+1 F
+-0.09 (initialize) 93.57 411.27 P
+0 F
+-0.09 ( method on) 137.58 411.27 P
+1 F
+-0.09 (<wrapper) 194.32 411.27 P
+-0.09 (-str) 244.71 411.27 P
+-0.09 (eam>) 262.48 411.27 P
+0 F
+-0.09 ( is specialized to set the) 290.64 411.27 P
+1 F
+-0.09 (outer) 406.78 411.27 P
+-0.09 (-str) 433.66 411.27 P
+-0.09 (eam) 451.44 411.27 P
+0 F
+-0.09 ( slot to be the) 472.76 411.27 P
+(\322parent\323 stream:) 72 397.27 T
+2 10 Q
+(define method initialize \050stream :: <wrapper-stream>,) 108 378.06 T
+( #key on, #rest all-keys\051;) 252 366.06 T
+(  an-inner-stream.outer-stream := stream;) 108 354.06 T
+(  next-method\050\051) 108 342.06 T
+(end;) 108 330.06 T
+0 12 Q
+(One disadvantage of this scheme is that it may prevent useful optimizations, such as inlining. If) 72 304.18 T
+(this is an important performance issue in circumstances where wrapper streams are not needed) 72 290.18 T
+-0.04 (then it is relatively simple to provide an implementation of the streams module that omits the del-) 72 276.18 P
+(egation mechanism. An alternative is to provide the delegation mechanism as a mixin instead of) 72 262.18 T
+(on the class) 72 248.18 T
+1 F
+(<str) 130.99 248.18 T
+(eam>) 151.61 248.18 T
+0 F
+(, and delegating streams can be constructed explicitly) 179.77 248.18 T
+(.) 435.61 248.18 T
+1 14 Q
+(8.2  W) 72 214.3 T
+(rapper Str) 110.25 214.3 T
+(eam Pr) 173.37 214.3 T
+(otocol) 216.27 214.3 T
+1 12 Q
+(<wrapper-stream>) 72 181.09 T
+0 F
+([Open instantiable class]) 421.36 181.09 T
+(The class that implements the basic wrapper stream functionality) 90 154.55 T
+(.) 401.17 154.55 T
+(If takes a single init keyword,) 90 128 T
+1 F
+(inner) 235.64 128 T
+(-str) 262.54 128 T
+(eam:) 280.31 128 T
+0 F
+(, which is used to specify the stream being) 305.63 128 T
+(wrapped in the wrapper stream.) 90 114 T
+72 90 540 110 C
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+72 98 204 98 2 L
+0.25 H
+2 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 0 612 792 C
+0 10 Q
+0 X
+0 0 0 1 0 0 0 K
+(2.  A stream) 72 83.33 T
+3 F
+(must not) 123.38 83.33 T
+0 F
+( use inner) 157.55 83.33 T
+(-stream if recursing since this would cause an in\336nite regress. No such recursion) 196.23 83.33 T
+(occurs in the prototype streams implementation.) 72 71.33 T
+FMENDPAGE
+%%EndPage: "26" 26
+%%Page: "27" 27
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Dylan Streams Library Proposal) 72 42.62 T
+(November 9, 1995) 276.12 42.62 T
+(27) 532 42.62 T
+0 12 Q
+-0.18 (The <) 90 712 P
+1 F
+-0.18 (wrapper) 118.25 712 P
+-0.18 (-str) 161.79 712 P
+-0.18 (eam>) 179.57 712 P
+0 F
+-0.18 ( class implements default methods for all of the stream protocol func-) 207.73 712 P
+(tions described in this document. Each default method on) 90 698 T
+1 F
+(<wrapper) 368.64 698 T
+(-str) 419.03 698 T
+(eam>) 436.8 698 T
+0 F
+( simply \322tram-) 464.96 698 T
+(polines\323 to its inner stream.) 90 684 T
+1 F
+(inner-stream) 72 649.93 T
+3 F
+(wrapper-stream) 141.65 649.93 T
+7 F
+(\336) 221.98 649.93 T
+3 F
+(type-union\050<stream>, singleton\050#f\051\051) 236.82 649.93 T
+0 F
+([Open generic function]) 424.7 649.93 T
+(Returns the stream \322wrapped\323 by) 90 621.87 T
+3 F
+(wrapper) 252.96 621.87 T
+(-str) 293.39 621.87 T
+(eam) 309.61 621.87 T
+0 F
+(, or) 329.6 621.87 T
+1 F
+(#f) 348.6 621.87 T
+0 F
+( if no stream is currently wrapped.) 358.6 621.87 T
+1 F
+(inner-stream-setter) 72 587.8 T
+3 F
+(stream wrapper-stream) 174.29 587.8 T
+7 F
+(\336) 290.28 587.8 T
+3 F
+(type-union\050<stream>, singleton\050#f\051\051) 305.12 587.8 T
+0 F
+-3 ([Open) 510.01 587.8 P
+(generic function]) 72 573.8 T
+(Sets the \322wrapped\323 stream of) 90 545.73 T
+3 F
+(wrapper) 233.63 545.73 T
+(-str) 274.06 545.73 T
+(eam) 290.28 545.73 T
+0 F
+( to) 310.27 545.73 T
+3 F
+(str) 325.61 545.73 T
+(eam) 337.84 545.73 T
+0 F
+(, and sets the) 357.83 545.73 T
+1 F
+(outer) 422.82 545.73 T
+(-str) 449.7 545.73 T
+(eam) 467.47 545.73 T
+0 F
+( slot of) 488.8 545.73 T
+3 F
+(str) 90 531.73 T
+(eam) 102.23 531.73 T
+0 F
+( to) 122.22 531.73 T
+3 F
+(wrapper) 137.56 531.73 T
+(-str) 177.98 531.73 T
+(eam) 194.21 531.73 T
+0 F
+(.) 214.2 531.73 T
+1 F
+(outer-stream) 72 497.67 T
+3 F
+(stream) 141.64 497.67 T
+7 F
+(\336) 177.3 497.67 T
+3 F
+(type-union\050<stream>,singleton\050#f\051\051) 192.14 497.67 T
+0 F
+([Open generic function]) 424.7 497.67 T
+(Returns the stream wrapping) 90 469.6 T
+3 F
+(str) 231.31 469.6 T
+(eam) 243.54 469.6 T
+0 F
+(, or) 263.53 469.6 T
+1 F
+(#f) 282.53 469.6 T
+0 F
+( if) 292.52 469.6 T
+3 F
+(str) 305.86 469.6 T
+(eam) 318.08 469.6 T
+0 F
+( is not currently wrapped by anything.) 338.08 469.6 T
+1 F
+(outer-stream-setter) 72 435.53 T
+3 F
+(wrapper-stream stream) 174.28 435.53 T
+7 F
+(\336) 290.27 435.53 T
+3 F
+(type-union\050<stream>, singleton\050#f\051\051) 305.11 435.53 T
+0 F
+-3 ([Open) 510.01 435.53 P
+(generic function]) 72 421.53 T
+(Sets the) 90 393.47 T
+1 F
+(outer) 130.67 393.47 T
+(-str) 157.55 393.47 T
+(eam) 175.32 393.47 T
+0 F
+( slot of) 196.64 393.47 T
+3 F
+(str) 232.98 393.47 T
+(eam) 245.21 393.47 T
+0 F
+( to) 265.2 393.47 T
+3 F
+(wrapper) 280.54 393.47 T
+(-str) 320.96 393.47 T
+(eam) 337.19 393.47 T
+0 F
+(.) 357.18 393.47 T
+1 16 Q
+(9.  Acknowledgments) 72 350.73 T
+0 12 Q
+(W) 72 321.33 T
+(e\325d like to thank the other people who have been instrumental in the production of this pro-) 82.37 321.33 T
+(posal: Jonathan Bachrach, Dave Berry) 72 307.33 T
+(, Bill Chiles, John Dunning, Chris Fry) 255.5 307.33 T
+(, Paul Haahr) 437.75 307.33 T
+(, Rob) 496.92 307.33 T
+(Maclachlan, T) 72 293.33 T
+(im McNerney) 140.89 293.33 T
+(, T) 207.1 293.33 T
+(ony Mann, Keith Playford, and T) 219.59 293.33 T
+(ucker W) 378.82 293.33 T
+(ithington.) 419.32 293.33 T
+1 16 Q
+(10.  Open Issues) 72 250.6 T
+0 12 Q
+(The current speci\336cation of encoding vs. element-type is the simplest possible glossing over of a) 72 221.2 T
+(more complex set of issue.) 72 207.2 T
+(The current speci\336cation of newline handling is the simplest possible glossing over of a more) 72 179.13 T
+(complex set of issues.) 72 165.13 T
+(CMU wants to \337ush) 72 137.07 T
+1 F
+(unr) 172.01 137.07 T
+(ead-element) 190.46 137.07 T
+0 F
+(, but a survey by SWM of CLIM reveals that \337ushing it) 252.44 137.07 T
+-0.16 (would be quite painful indeed. How can we de\336ne it so that it does not become a thorn in the side) 72 123.07 P
+(for non-interactive streams?) 72 109.07 T
+(Do we need to introduce) 72 81 T
+1 F
+(r) 192.97 81 T
+(ead-with-timeout) 198.08 81 T
+0 F
+(, or is) 286.07 81 T
+1 F
+(str) 316.07 81 T
+(eam-input-available?) 329.84 81 T
+0 F
+( going to be enough) 438.52 81 T
+(to do the trick \050it\325) 72 67 T
+(s certainly enough for the case when the timeout is 0\051?) 156 67 T
+FMENDPAGE
+%%EndPage: "27" 27
+%%Page: "28" 28
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Dylan Streams Library Proposal) 72 42.62 T
+(November 9, 1995) 276.12 42.62 T
+(28) 532 42.62 T
+0 12 Q
+(The Dylan language is not clear on the relation between the string classes and their underlying) 72 712 T
+-0.05 (character types. W) 72 698 P
+-0.05 (e have introduced) 160.57 698 P
+1 F
+-0.05 (<byte-character>) 248.73 698 P
+0 F
+-0.05 ( for) 337.71 698 P
+1 F
+-0.05 (<byte-string>) 357.6 698 P
+0 F
+-0.05 ( and) 427.27 698 P
+1 F
+-0.05 (<unicode-charac-) 450.5 698 P
+(ter>) 72 684 T
+0 F
+( for) 93.49 684 T
+1 F
+(<unicode-string>) 113.48 684 T
+0 F
+( as a stopgap measure.) 201.17 684 T
+(It would be nice to roll a stream\325) 72 658 T
+(s) 228.31 658 T
+1 F
+(element-type:) 235.98 658 T
+0 F
+( into limited collections. That is, you create a) 305.95 658 T
+(stream via something like) 72 644 T
+1 F
+(make\050limited\050<\336le-str) 198.66 644 T
+(eam>, element-type: <byte-character>\051,) 310.6 644 T
+0 F
+(...) 516.71 644 T
+1 F
+(\051) 525.71 644 T
+0 F
+(.) 529.7 644 T
+-0.35 (This should make any classes like) 72 630 P
+1 F
+-0.35 (<byte-string-str) 235.88 630 P
+-0.35 (eam>) 316.48 630 P
+0 F
+-0.35 ( and) 344.64 630 P
+1 F
+-0.35 (<unicode-\336le-str) 367.27 630 P
+-0.35 (eam>) 451.22 630 P
+0 F
+-0.35 ( be invisible) 479.39 630 P
+(at the API level.) 72 616 T
+(The wrapper streams stuf) 72 590 T
+(f is explained very badly indeed.) 193.42 590 T
+(This proposal presents several condition classes, some of which relate to external errors, such as) 72 564 T
+(attempting to open a non-existent \336le. Conceptually such conditions are subclasses of more gen-) 72 550 T
+-0.22 (eral conditions, such as) 72 536 P
+1 F
+-0.22 (<operating-system-err) 186.09 536 P
+-0.22 (or>) 300.67 536 P
+0 F
+-0.22 (. Should a richer condition heterarchy) 318.84 536 P
+-0.22 (, encom-) 498.24 536 P
+(passing the conditions in the streams proposal, be speci\336ed? \050Note that in modern Smalltalk-80) 72 522 T
+(implementations and in Common Lisp, the equivalent condition hierarchy is much richer than) 72 508 T
+-0.08 (Dylan\325) 72 494 P
+-0.08 (s. For example, in Smalltalk, the division by zero condition is a subclass of a domain error) 104.66 494 P
+(class, which is a subclass of the more general arithmetic error class.) 72 480 T
+1 F
+(#"append") 72 454 T
+0 F
+( is currently de\336ned to provide Unix) 129.34 454 T
+2 F
+(open\0502\051) 306.98 454 T
+0 F
+( semantics, i.e., all subsequent writes) 357.38 454 T
+(occur at the end of the \336le, always extending the \336le. This behavior is rare \050we know of no other) 72 440 T
+-0.21 (operating systems that provide it\051 and broken in NFS \050it\325) 72 426 P
+-0.21 (s an inherent problem in the V2 NFS pro-) 341.73 426 P
+-0.09 (tocol\051. Should) 72 412 P
+1 F
+-0.09 (#"append") 142.82 412 P
+0 F
+-0.09 ( instead to be de\336ned to simply position the \336le at the end after the \336le) 200.16 412 P
+(is opened?) 72 398 T
+FMENDPAGE
+%%EndPage: "28" 28
+%%Trailer
+%%BoundingBox: 0 0 612 792
+%%PageOrder: Ascend
+%%Pages: 28
+%%DocumentFonts: Times-Roman
+%%+ Times-Bold
+%%+ Courier
+%%+ Times-Italic
+%%+ Courier-Oblique
+%%+ Helvetica-BoldOblique
+%%+ Helvetica-Bold
+%%+ Symbol
+%%EOF

@@ -1,0 +1,149 @@
+
+Title:  DUIM-OLE-Container library for Dylan -- user description
+
+Author: David N. Gray  <gray@harlequin.com>
+
+Date:	November 5, 1998 - initial version
+
+Status: A preliminary sketch of what is being implemented.
+
+Copyright (c) 1998 Functional Objects, Inc.  All rights reserved.
+
+Version: $HopeName$
+         $Date: 2004/03/12 00:11:42 $
+
+A DUIM program can act as an OLE container by using the
+"duim-ole-container" library, and utilizing the following features which it
+provides:
+
+
+  insert-from-dialog (parent-sheet, #key x = 0, y = 0, ...)
+			=> ( doc :: false-or(<ole-gadget>) )
+  insert-by-class (parent-sheet, ID, #key x = 0, y = 0, ...)
+			=> ( doc :: <ole-gadget> )
+  insert-from-file (parent-sheet, file-name, #key x = 0, y = 0, ...)
+			=> ( doc :: <ole-gadget> )
+
+    Call one of these functions to initiate an OLE server running embedded
+    at position x,y (in pixels) in the given sheet.
+
+    insert-by-class initiates a server for a given class ID,
+    insert-from-file initiates the appropriate server to display and edit
+    the given file, and insert-from-dialog lets the user choose from a list
+    of the registered servers in a dialog box.
+
+    The parent sheet needs to be a mirrored sheet, such as a
+    <drawing-pane>.  Usually you will want it to be a subclass of
+    <container-sheet-mixin> (see below), but that is not required.
+
+    The returned value is a sheet that has been created to represent the
+    embedded OLE object, and has already been attached to the parent sheet
+    and made visible.  
+
+    [Additional optional keyword arguments to be specified; see the
+    corresponding functions in the "ole-container" library.]
+
+    If the server cannot be started, `insert-from-dialog' will report the
+    error to the user in a second dialog box and return `#f'; the other
+    functions will signal an <ole-error>.  Since this could happen for
+    external reasons outside the control of your program, it is recommended
+    that your program be prepared to handle that exception.
+
+
+  <ole-gadget>				[open primary instantiable class]
+
+    This is a subclass of both <sheet> and <gadget>.  You can use the
+    normal sheet protocol functions to move, re-size, or destroy it.  Use
+    gadget-enabled?-setter to activate or deactivate it.  If the object is
+    an OLE Control, additional gadget protocol functions will be applicable
+    [details to be specified].
+
+    Usually an instance will be created by calling one of the `insert-...'
+    functions above, but it can also be created directly by `make', in
+    which case one (but not both) of the following keyword options must be
+    specified:
+
+      class-id:		The class ID or prog ID of the server to be run.
+
+      file-name:	The pathname of a file to be inserted by running
+			the appropriate server application.
+
+    Besides the normal `make' options for a <sheet>, it also accepts one
+    additional optional keyword argument:
+
+      insert-options:	A <sequence> of keyword and value pairs to be
+		        passed as options to the appropriate `insert-...'
+			function, as documented for the `ole-container'
+			library.   Defaults to an empty sequence.
+
+    The OLE server will actually be initiated at the time the sheet's
+    mirror is created.  If a `parent:' sheet that is already mapped is not
+    specified, this won't happen until some time after `make' has returned.
+    Since if there is any problem with initiating the server, it probably
+    won't be feasible for the program to handle this exception when it
+    finally occurs, it is probably usually better to use the `insert-...'
+    functions after the application's sheets have all been mapped.
+
+
+  <container-sheet-mixin>		[open abstract free class]
+
+    Using this in the superclass list of a pane that will contain OLE
+    objects implements the following two behaviors:
+
+     * Double-clicking on an inactive OLE object will activate it.
+
+     * A single left click that is within the pane but outside of an active
+       object will de-activate the server, in addition to whatever other
+       action is defined for the click.
+
+
+  <container-frame-mixin>		[open abstract free class]
+
+    Use this in the superclass list of the frame for an OLE Container
+    application in order to provide support for the frame-level user
+    interface of any UI-active embedded OLE servers.  This allows the
+    server to share the menu bar, to place messages in the container's
+    status bar, and to replace the container's tool bar with the server's
+    tool bar(s).  It also takes care of forwarding accelerator key events
+    when a key belonging to the container or server is received by the
+    other.
+
+    [Issue: actually, only the accelerator key handling appears to really
+    require this class; should the other services be provided even without
+    this, or is it better to have this control over them?]
+
+    [Design note: making this a mixin class facilitates having applications
+    that can act as either a server or container.]
+
+
+  frame-active-container-menus ( frame )
+			=> ( file-menus, edit-menus, help-menus )
+					[Open Generic Function]
+
+    Define a method specialized on your frame class in order to control
+    sharing of the menu bar with a UI-active OLE server.  During
+    activation, the frame's menu bar will contain a mixture of menus
+    belonging to both the container application and the server.  This
+    function determines which of the container's menus are included in the
+    mix.  Each of the three return values is either #f or a menu or
+    <sequence> of menus that are to appear in the merged menu bar.  The
+    first value specifies menus to appear at the left end, the second value
+    is menus to appear in the middle, and the third value for menus to
+    appear at the right end.
+
+    The default method returns:
+      values(first(sheet-children(frame.menu-bar)) #f, #f)
+    which has the effect of retaining only the container's "File" menu,
+    assuming it is first.
+
+
+  sheet-contained-object ( doc :: <ole-gadget> ) 
+	=> ( obj :: false-or(<duim-contained-object>))
+
+    For optional access to the lower level APIs, this function may be
+    called to obtain an instance of <contained-object> to which the
+    functions from the `ole-container' library may be applied.
+
+
+[Need to add a means for connecting the server's persistent storage with
+the container application's data file.]

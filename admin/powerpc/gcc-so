@@ -1,0 +1,6 @@
+#/bin/csh
+
+# gcc -shared -o $1.so -L$FUNCTIONAL_DEVELOPER_USER_INSTALL/lib -L$FUNCTIONAL_DEVELOPER_RELEASE/lib -L/usr/lib -L/usr/X11R6/lib -L/usr/X11/lib -L/lib -L/usr/X11R6/lib/xrt/lib $FUNCTIONAL_DEVELOPER_USER_INSTALL/lib/dylan-support.o *.o 
+
+rm -f $1.a
+ar -q $1.a *.o

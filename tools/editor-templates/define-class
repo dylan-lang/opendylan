@@ -1,0 +1,23 @@
+define class
+define XadjectiveX class %e%(<Xclass-nameX>) (<XsuperclassX>, )
+  XadjectiveX slot XnameX :: <XtypeX> = XexprX,
+    setter: XnameXor#f,
+    init-keyword: XkeyX:,
+    required-init-keyword: XkeyX:,
+    init-value: XexprX,
+    init-function: XexprX,
+    type: XexprX
+;
+
+  required
+  keyword XkeyX: = XexprX,
+    init-value: XexprX,
+    init-function: XexprX,
+    type: XexprX
+;
+    
+  inherited slot XnameX = XexprX,
+    init-value: XexprX,
+    init-function: XexprX
+;
+end class ;

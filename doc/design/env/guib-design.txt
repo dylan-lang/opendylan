@@ -1,0 +1,329 @@
+
+Dylan Works GUI builder design
+
+Roman Budzianowski
+
+Change log:
+	9/12/95 - initial draft
+
+
+1. Introduction
+---------------
+
+For the purpose of this document a GUI builder is NOT a drawing
+program which generates some code to implement the design. It IS a
+subsystem which aids in developing UIs for applications. It is
+integrated with the rest of the environment, i.e. the debugger,
+editor, compiler etc.
+
+The subsystem consists of support for building GUI components/gadgets,
+an editor for building windows and dialogs out of those components and
+of runtime support for creating the UI and interfacing with the
+application code.
+
+2. Requirements
+---------------
+
+The primary platform we need to support is Win32/OLE. We also need to
+support Macintosh and Unix at a later time.
+
+It is critical that the components build in Dylan are usable in other
+environments and that other standard components can be used in Dylan
+programs. In particular this means that OLE controls built in Dylan
+can be used in, say VisualBasic 4.0 and Access.
+
+2.1 Users
+
+90% of software development is component programming. GUI builder
+caters to this audience. This approach relies on a large component
+market. Dylan as a complete language can compete with the VisualBasic
+environment if the component GUI building is well supported. In most
+applications of this type a simple event/callback control flow is
+sufficient and a GUI builder can easily accomodate it.
+
+Our environment has to provide support for component development. This 
+is strictly speaking outside of the domain of a GUI builder, but for
+practical reasons is included, at least at a lower level, in this
+project because the GUI builder will need a set of components to work
+with. 
+
+3. Portability
+--------------
+
+Portability is not the highest priority. We need to be 100% compatible
+with native platforms, at least Win32/OLE. We will rely to large
+extent on base technologies to provide portability.
+
+In particular the OLE technology may give us portability to the
+Macintosh platform.
+
+We may consider, in the future, using OpenDoc technology to give us
+Mac/Windows portability.
+
+The X/Motif technology on Unix is basically similar in architecture,
+but limited to local, in-process objects. (I will meet with X
+Consortium's technology director Ralph Swick to gather some insight on
+X's future).
+
+3.1 Components
+
+We may attempt to provide a portable layer, which would make possible
+to easily port Dylan implemented components from Win32/OLE to
+OpenDoc/SOM to Motif/SOM(?). This would be the role of Silica and
+Graphic Port substrates. Some elements of a component may not be
+portable. E.g. OLE protocol requires that OCXs provide their own
+property pages for editing of the attributes.
+
+3.2 GUI editor
+
+I don't think that it can be 100% portable, though most basic editing
+operations should be implemented on top of Silica/GP. On the OLE
+platform it will be a container which has to interact with OLE
+controls, both at design time and at run time. It doesn't have to deal
+with property pages since they are provided by the components. On other
+platforms the GUI editor may have to provide the UI for editing
+properties of the components.
+
+3.3 Specialized editors
+
+Icon/bitmap editor, font selector, color selector/editor are
+more like components than applications in this respect since we build
+them all.
+
+
+3.4 Applications
+
+The portability of user applications depends mostly on availability of
+the components with identical semantics on other platforms. In this
+sense it's beyond our control.
+
+4.0 External Functionality
+--------------------------
+
+At this time this section doesn't intend to cover the functional spec
+in full detail, but rather to give a flavor of the planned
+functionality of DylanWorks GUI support system.
+
+4.1 Primitive components (i.e. non-containers)
+
+We will implement a set of basic components based on Win32 built-in
+components. The exact semantics in term of supported attributes and
+events(callbacks) has to be determined.
+
+4.2 Frame
+
+This is going to be a workhorse for grouping components geometrically. 
+The frame will support geometry editing depending on the
+style. We may provide either one frame with choosable style (bulletin
+board, row column, constrained form etc) or separate types. Frame will
+support the menu protocol to add the alignment menu for the bulletin
+board.  
+
+Explanation: in case of e.g. a row column the alignment menu doesn't
+make sense, the editing is done through drag&drop to change the
+sequence of elements. Other types of frames may add other editing
+menus. 
+
+A frame will be capable of storing the mapping between the events of
+components contained within and dylan code. Frame will have a
+serialization method to store itself persistently. There will be a
+simple frame which can contain only one object - it will be used to
+store single components (inlcuding the event/callback mapping). The
+simple frame may actually not have its own window.
+
+See below for the design of the mapping and 'load' facility (not done
+yet). 
+
+Efectively, a frame represents a piece of an application since it has
+to know the library the callbacks come from.
+
+4.3 Templates and Prototypes
+
+Component programming covers a majority of software
+development. There is a pressure to add more flexibility to this level
+of programming. Short of a fully blown graphical programming we can
+enhance this environment by introducing the concept of templates and
+prototypes. 
+
+A simple extension of the frame - ability to create new frames in the
+GUI builder based on existing frames - leads us to templates. It
+allows the user to reuse the designs. Icons can be added to the
+toolbar to represent the templates.
+
+Prototypes provide more powerful tool for reusability. We introduce
+the notion of inheritance. When the user builds a template, each
+element inherits its attributes from its prototype. This inheritance
+link is maintained by the template. Note that the attributes include
+events along with their mapping to callbacks. 
+
+Now when the user modifies the prototype all templates inheriting from
+it reflect the changes - both visual attributes and "behavior" as
+represented by the event/callback mapping.
+
+The user  has to be able to designate some templates as prototypes and
+control the inheritance links on indivdual basis.
+
+A more sophisticated mechanism is needed to create "dynamic"
+templates. An example might be a grid with its cells "inheriting"
+from, say, a button prototype. Whatever the rank of the grid, all
+cells inherit from this button.
+
+4.4 GUI editor
+
+In the OLE model the GUI editor doesn't have much to do. It has a
+toolbar. I lets the user load new components (types). New objects are
+created through drag&drop. The objects have their own property pages
+and the mechanism to modify/edit the property. As we said above the
+frames are resposible for geometry editing. The GUI editor will have
+to manage the mechanism and the UI for setting the event/calback
+mapping, but the mapping will be stored in the frames.
+
+In the OLE model the objects are supposed to be able to highlight
+themselves and even display resizing handles. I think it would be
+better if the GUI editor (or frames) were responsible for this (which
+is still allowed in OLE) but I am not sure at this point.
+
+Note: we are creating and editing real objects and NOT some drawings
+of the objects.
+
+Another resposibility of the GUI editor will be to set attributes on
+the top level window if requested. Some frames are designed to be top
+level windows. Through the Win32 API one has to set the appropriate
+attributes, e.g. type of window or dialog, decoration, title, initial
+state, etc. Those attributes can be set on the frame's window.
+
+The GUI editor is also responsible for creating and editing the
+menus. Both top level and child windows can have menus. The menu on a
+child window is merged with the top level menu when the child is
+selected. 
+
+Top level windows can also have toolbars and status lines. The user
+can add those elements and edit them. Both are just specialized
+components. I think that instead of implementing them as magic gadgets
+they should be just another type of OLE controls which are placed at
+the top and bottom of the windows. We can have a special frame which
+could handle it.
+
+We will have to provide support for MDI windows.
+
+Note that the GUI editor doesn't know the semantics of the objects it
+deals with. It can handle any object which obeys the standard
+protocols. 
+
+4.5 Specialized editors
+
+OLE provides a couple of standard property pages: color and font. We
+may want to develop our own versions (better) as some point. For now
+we can use those.
+
+4.6 Runtime support
+
+The main function of the runtime support is to load frames and
+windows, to allow access for the application code to components (by
+name) and to dispatch events/callbacks.
+
+Example API:
+
+load-frame name :: <string> #key location :: <locator>
+			=> frame :: <frame>		[method]
+
+load-frame-create name :: <string> #key location :: <locator>
+			=> frame :: <frame>		[method]
+
+load-frames where :: <locator> => frames :: <list>	[method]
+
+find-ui-object root :: <frame> name :: <string> => 
+				object :: <ui-object>	[method]
+
+We can also have a minimum interface which all components will obey (I
+am assuming here that this can be done for OLE controls):
+
+create-window frame :: <frame>				[method]
+
+map-window frame :: <ui-object>				[method]
+
+unmap-window frame :: <ui-object>			[method]
+
+move-window frame :: <ui-object> to :: <point>		[method]
+
+5.0 OLE controls development
+----------------------------
+
+This is a substrate for developing new components/controls. We need to
+support "subclassing" of built-in Windows controls and development from
+scratch. Subclassing means typically that we don't have to worry about
+drawing the control. The suggested architecture is to wrap the
+control's window in another window and intercept all window messages
+to decide locally what to do (fire your own semantic events which
+eventually will be dispatched to callbacks).
+
+We need some substrate here, so that a new control can leverage as
+much built-in code as possible. A new control would subclass a class
+and write only methods needed for this control. The base class would
+implement most of OLE basic stuff. 
+
+5.1 Registration
+
+Generate registry *.REG files and run the registration program - part
+of SDK. Eventually we will have to write code to do the
+self-registration. 
+
+5.2 Type Library
+
+Generate *.ODL files and run the ODL compiler. I am not sure if we
+have to write our own ODL compiler (if it's part of SDK then yes).
+The *.ODL files would be generated based on either some UI, which
+would then generate Dylan code and ODL or directly from Dylan.
+
+5.3 Property pages
+
+Use dialog editor from the SDK and generate the RC file. Eventually we
+will have to stop using the MS dialog editor. When the GUI builder is
+ready we can start building the property pages with the GUI builder.
+
+5.3 Packaging
+
+Into an *.ocx file (like *.dll). Generate *.RC2 file and include the
+version number, the type library and other info. Append the resource
+file to the ddl. This has to be made part of the makefile generation.
+
+6.0 Programming with the GUI builder
+------------------------------------
+
+6.1 Simple component programming
+--------------------------------
+
+In this style the user builds frames and windows with the GUI
+builder. The application code is hooked up through the event/callback
+mappings. The GUI builder provides a UI to make those mappings. There
+is no additional layer. The user is fully resposible for designing the
+logic of the application. The UI is loaded and accessed using the
+run-time support library. The user accesses the UI objects by
+name. The run-time library maintains the event/callback mappings and
+does the dispatch.
+
+One may call it a UI centered application development. This is the
+model of VisualBasic which is very popular because of its
+simplicity. The developments in this area go in the direction of
+visual programming. 
+
+6.2 Framework component programming
+-----------------------------------
+
+In this style the environment (the GUI builder) generates code which
+encapsulates the UI objects created with the GUI builder. Mind you it
+doesn't generate code to create the UI itself - it's still done by the
+run-time library.
+
+Rather it generates new class definitions and method stubs based on
+some application framework. The user then writes the bodies of the
+methods. The dispatch again happens automatically.
+
+The advantage of this approach is that the access to the UI is more
+direct and that the user can add state to the objects encapsulating
+the UI. 
+
+This is a more sophisticated version of the previous style. An example
+of this is Visual C++.
+
+

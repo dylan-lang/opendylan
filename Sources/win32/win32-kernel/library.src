@@ -1,0 +1,70 @@
+Module:    Dylan-user	%comment -*- Mode: Dylan -*-
+Synopsis:  Win32 API for non-GUI system services in "KERNEL32.DLL"
+%comment   This file is a template that is expanded to produce "library.dylan".
+Copyright: 1996, 1997, 1998 Functional Objects, Inc.  All rights reserved.
+
+%comment $HopeName: D-lib-win32-kernel!library.src(trunk.12) $
+%comment $Date: 2004/03/12 00:10:27 $
+
+define library Win32-kernel
+  use Dylan;
+  use functional-extensions;
+  use C-FFI;
+  use Win32-common;
+  export Win32-kernel;
+end;
+
+define module Win32-kernel
+  use Dylan;
+  use functional-extensions, import: { false-or };
+  use C-FFI;
+  use Win32-common,
+    /* have to export here names that are used as structure accessors in
+       both modules. */
+    export: {X-value, X-value-setter, Y-value, Y-value-setter,
+	       Left-value, Left-value-setter, Top-value, Top-value-setter,
+	       Right-value, Right-value-setter,
+	       Bottom-value, Bottom-value-setter,
+	     offset-value, offset-value-setter,
+	     cb-value, cb-value-setter, dwFlags-value, dwFlags-value-setter,
+	     cbData-value, cbData-value-setter,
+	     lpData-value, lpData-value-setter, 
+	     dwSize-value, dwSize-value-setter,
+	     wFlags-value, wFlags-value-setter,
+	     u-value, u-value-setter, wSecond-value, wSecond-value-setter,
+      /* also export some things that the user may want to use directly: */
+	     %logand, <C-string>, <C-void*>, <HANDLE>, <HGLOBAL>, <HINSTANCE>,
+	     <HLOCAL>, <HMODULE>, <HRSRC>, <LPSTR>, <LPTSTR>,
+	     pointer-cast, with-stack-structure };
+
+%include winbase.exp
+
+  // Additional definitions from "winnt.h":
+%include winnt.exp
+
+%include winnls.exp
+%comment  [later] %include wincon.exp
+
+  // special case in "kernhack.dylan":
+  export GetLargestConsoleWindowSize;
+  export FormatMessage;
+  export <LCTYPE>;
+  export <LPLPSTR>, <LPLPCSTR>, <LPLPOVERLAPPED>;
+  export <LPLARGE-INTEGER>, <DWORDLONG>, <PVOID64>;
+
+  // utility functions:
+  export win32-error-message,
+         check-win32-result,
+         report-win32-error,
+         ensure-no-win32-error;
+
+  // shared slot accessors:
+  export dwPlatformId-value, cBytes-value, dwPlatformId-value, cBytes-value;
+  export dwPlatformId-value-setter, cBytes-value-setter,
+    dwPlatformId-value-setter, cBytes-value-setter;
+
+  // accessors for "WinMain" parameters:
+  export application-instance-handle, application-command-line,
+    application-show-window;
+
+end module Win32-kernel;

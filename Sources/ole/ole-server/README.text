@@ -1,0 +1,31 @@
+Title:     `OLE-Server' library description
+Author:    David N. Gray
+Date:	   September 26, 1996, revised October 2, 1996, December 11, 1996,
+		July 22, 1997
+Status:    Describes what is currently checked in and working.
+Copyright: 1996, 1997 Functional Objects, Inc.  All rights reserved.
+Version:   $HopeName$
+
+See the file "~dylan/doc/lib/ole-utilities.text" for a user-level
+description of this library.
+
+The source files are:
+
+ library.dylan	library and module definition
+ util.dylan	utilities for debugging and detecting and reporting errors.
+ declobj.dylan	Definitions of OLE interface classes.
+ appgen.dylan	Declare generic functions for users to add methods.
+ obj.dylan	OLE server object class <ole-server-framework> and its methods.
+ ioo.dylan	Methods for class <COleObject>
+ iec.dylan	Methods for class <CExternalConnection>
+ ioipao.dylan	Methods for class <COleInPlaceActiveObject>
+ ips.dylan	Persistent storage -- methods for class <CPersistStorage>
+ ido.dylan	Methods for class <CDataObject>
+ ioipo.dylan	Methods for class <COleInPlaceObject>
+ oleutl.dylan	OLE utility functions
+ hatch.dylan	Hatch window (border for in-place activation)
+ register.dylan support for self-registration
+ enums.dylan	implementation of enumerator interfaces
+ inproc.dylan	additional code for "in-process" servers (DLL instead of EXE)
+ inp-ips.dylan	in-process persistent storage using IPersistStorage
+ iviewobj.dylan	IViewObject[2] interface for in-process drawing

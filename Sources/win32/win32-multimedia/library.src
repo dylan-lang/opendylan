@@ -1,0 +1,50 @@
+Module:    Dylan-user	%comment -*- Mode: Dylan -*-
+Synopsis:  Win32 API for multimedia from "MMSYSTEM.H" and "WINMM.DLL"
+Copyright: Copyright (c) 1998-2000 Functional Objects, Inc. All rights reserved.
+
+define library Win32-multimedia
+  use functional-dylan;
+  use C-FFI;
+  use Win32-common;
+  use Win32-user;
+  export Win32-multimedia;
+end library;
+
+define module Win32-multimedia
+  use Dylan;
+  use C-FFI,
+    export: {null-pointer, null-pointer?, pointer-address,
+	     pointer-value, pointer-value-setter, size-of,
+	     pointer-cast, destroy, \with-stack-structure,
+	     c-type-cast};
+  use Machine-Integer-User;
+  use Win32-common,
+    export: {// data types used as arguments and fields:
+	     <HANDLE>, <HDC>, <HMODULE>, <HTASK>, <HWND>, 
+	     <LPARAM>, <LPBYTE>, <LPCSTR>, <LPDWORD>, <LPSTR>,
+	     <LPUINT>, <LPVOID>, <LPWORD>, <LRESULT>, <LPRECT>,
+	     // fields of a RECT:
+	     left-value, top-value, right-value, bottom-value, 
+	     left-value-setter, top-value-setter,
+	     right-value-setter, bottom-value-setter, 
+	     // generics with methods defined in both libraries:
+	     cb-value, cb-value-setter, cbSize-value, cbSize-value-setter,
+	     dwFlags-value, dwFlags-value-setter,
+	     dwSize-value, dwSize-value-setter,
+	     lpData-value, lpData-value-setter,
+	     u-value, u-value-setter};
+  use Win32-user,
+    export: {$SC-SCREENSAVE, dwStyle-value, dwStyle-value-setter,
+	     hDC-value, hDC-value-setter, hWnd-value, hWnd-value-setter,
+	     hWndParent-value, hWndParent-value-setter,
+	     hwndOwner-value, hwndOwner-value-setter};
+
+%include mmsystem.exp
+
+  export <bounds-union*>;
+  export lMinimum-value, lMaximum-value, dwMinimum-value, dwMaximum-value;
+  export lMinimum-value-setter, lMaximum-value-setter,
+    dwMinimum-value-setter, dwMaximum-value-setter;
+  export sndAlias, MCI-MAKE-MSF, MCI-MAKE-TMSF, MCI-MAKE-HMS;
+
+end module;

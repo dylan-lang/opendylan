@@ -1,0 +1,42 @@
+/* Header*/
+
+/* not header, ignore */
+
+extern enum Foo_Status
+  { Foo_Complete, Foo_Continue,Foo_Exited, Foo_Failed }
+  foo_status;
+
+/* foo_bar */
+alfoo_bar
+foo_bart
+
+Ignore random junk that doesn't match.
+
+-*- hello -*-
+
+DH(Foo) DH ( FooBar ) DH(pFoo) DH(FOO_BAR)
+
+fixthis([magic])
+fixthis(int This)
+fixthis(DataType This)
+
+Parenthesize item
+Parenthesize alpha & beta
+
+Convert(s.x)
+Convert(a[i])
+DHX(Foo)
+ODH(Foo)
+
+define variable apple
+define constant banana
+define type orange
+definetypelemon
+define typelemon
+fig
+prune
+figs
+prunes
+figst
+
+

@@ -1,0 +1,2220 @@
+Subject:  Some preliminary design notes on calling conventions
+From:  Tony Mann <tony@harlequin.co.uk>
+Newsgroups:  harlqn.dylan.design,
+Date:  Fri, 25 Feb 1994 15:12:28 GMT
+
+I've had a rethink about calling conventions since the Manchester
+meeting, and I'd like to propose an alternative design for scrutiny.
+
+I believe that the new design is an improvement in the following
+areas:
+
+	- support for stack allocation of #rest and #key args
+
+	- Efficiency of entry points for direct and next-method calls
+
+	- support for call caches
+
+	- Efficiency of closures
+
+	- More scalable use of registers for argument passing
+
+
+As with everything, though, there are tradeoffs. The drawback with the
+new design is:
+
+	- Function objects increase in size by 3 words
+
+
+Here is an outline. Please tell me what you think ....
+
+
+1. The <function> class
+-----------------------
+
+define class <function> (<object>)
+  slot direct-entry;		// code for direct entry point
+  slot method-entry;		// code for next-method entry point
+  slot internal-entry;		// code for shared entry point (no 
+optionals)
+  slot environment;		// environment vector (for closures)
+  ...
+end;
+
+In the Manchester proposal, these last 3 slots would not have been present.
+
+
+2. The register model
+---------------------
+
+4 registers are used within the calling convention:
+
+	Register	Use
+	--------	---
+	arg-count	number of args passed (as a byte for 486).
+	function	the <function> object being called
+	mlist		the next-method list (not valid for direct-entry)
+	environment	the closure environment (only valid for internal
+			entry, and only for closures)
+
+
+This is similar to the Manchester proposal, except that we now have a
+function register, there are no longer any requirements to negate the
+arg-count  - and the environment register is not a part of the calling
+convention at the external entry points.
+
+In addition, the following register is used to cache the argument that would
+be at top of stack:
+
+	arg0		First argument
+
+This is similar to the Manchester proposal - except that it is now the first
+arg that appears in a reg (not the last). The mechanism is scalable - so that
+on a RISC machine, perhaps up to 4 arguments are passed in registers.
+
+
+The arg passing convention
+--------------------------
+
+Arguments are pushed onto the stack in reverse order (i.e. the rightmost
+argument is pushed first). The first (or first few) arguments are passed in
+registers. This is a change of ordering from the Manchester proposal, and has
+a possible disadvantage in terms of the need for temporary variables to hold
+interim results for order-of-evaluation reasons. In practice, I think that
+the disadvantages will be small because:
+
+	1. Most arguments to functions are likely to be simple expressions
+	   (like constants or variable references) - so order of evaluation
+	   does not normally matter. ????? Anyone agree with me about this ???
+
+	2. On a RISC implementation, we won't want to push each argument
+	   anyway - instead it will be more efficient to allocate enough stack
+	   space for the call, and store each argument when it's available.
+	   This works well with a conservative GC - but it might be poor with
+	   a total GC ????
+
+This calling convention has the following advantages:
+
+	- required arguments can always be found (even before stack fixing)
+
+	- optional arguments appear in the same order in memory as they would
+	  if vectored up as #rest variables
+
+	- Stack allocating the optional arguments as vectors is now trivial.
+
+As before, the callee is responsible for popping any arguments from the stack.
+This is always possible (even with optional args), because the argcount is
+available to say how many arguments were passed. This is the only substantial
+difference from the C arg passing convention.
+
+
+The direct entry point convention
+---------------------------------
+
+Direct entry points are used for all unoptimized, normal calls to
+functions. This includes direct calls to methods and generic functions. Of
+course, whenever the compiler can use an internal entry point instead, then it
+will. Similarly, if the compiler knows it is calling a generic function which
+requires a dynamic dispatch then it will use a special convention for
+supporting in-line call caches.
+
+The registers are used as follows:
+
+	
+	argcount		number of arguments
+	function		the function object
+	mlist			not used
+	environment		not used
+
+A call   foo(a, b)  therefore looks as follows (in HARP)
+
+	(ins::push <register containing b>)
+	(ins::move reg::arg0 <register containing a>)
+	(ins::move reg::function <register containing foo>)
+	(ins::move reg::argcount 2)
+	(ins::call-indirect reg::function $function-direct-entry-offset)
+
+If the function has a complex lambda list (with #rest or #key), then the
+direct entry code will be one of a standard set of stack fixing functions. This
+stack fixer will make use of information in the function register to determine
+which keys to look for, whether the arg-count is legal, whether the arguments
+have appropriate types etc. The stack fixer will then tail jump to the
+internal entry point (again, found from the function object).
+
+This mechanism requires 2 transfers of control (caller -> stack-fixer ->
+callee). This is better than the Manchester proposal, which had 3 (caller ->
+calleee -> stack-fixer -> callee).
+
+
+The method entry point
+----------------------
+
+When a method is called by a generic function (or via next method), the caller
+can now use a special entry point (available from the function object). This
+is better than the Manchester proposal - where the callee had to test the
+argcount to determine which entry point was required.
+
+If the method accepts #key or #rest parameters, then the method is called with
+a (possibly stack-allocated) vector representing the optional args. This
+vector appears as a single extra required argument.
+
+If the method accepts #key parameters, then the method entry point will
+process the supplied keywords - stack fixing them so that they appear as
+required arguments. It will then tail-call the internal entry point. 
+
+If the method does not accept #key, then the method entry point is the same as
+the internal entry point.
+
+
+In-line call caches
+-------------------
+
+The conventions discussed above work very well with the in-line call-cached
+scheme discussed by Eliot and me last week.
+
+It seems to me that we could represent the cache object as a function object.
+Its direct-entry point is the cache function (for verifying the args against
+the cache). It's internal-entry point is the internal-entry point of the
+cached method (which it will tail-call if the args are valid - after suitable
+stack fixing). It's method entry point is the generic-function itself (OK I
+agree that this bends the convention - but it does seem to work).
+
+If we decide to use normal function objects for the call-cache - then we get
+suitable slots for everything else too:
+
+	slot		purpose
+	----		-------
+	specializers	data to test the parameters against
+	key-specifiers	Keywords accepted by the method (for 
+stack-fixing)
+	environment	The next-method list (OK a bit contrived again :-)
+
+The cache object still has to be called by a special convention - but this
+basically just means that the address of the cache should be put in the MList
+register before doing a normal call.
+
+A cached generic function call   foo(a, b)  therefore looks as follows (in 
+HARP)
+
+	(ins::push <register containing b>)
+	(ins::move reg::arg0 <register containing a>)
+	(ins::move reg::mlist <address of cache variable>)
+	(ins::ld reg::function reg::mlist 0)
+	(ins::move reg::argcount 2)  ;; this might be unnecessary
+	(ins::call-indirect reg::function $function-direct-entry-offset)
+
+
+Closures
+--------
+
+The Manchester proposal implemented closures as dummy stubs of code which
+moved the environment into a register before tail-calling the real code. Under
+the new proposal we do not need to do this, as the environment can always be
+found by the callee from the <function> object itself.  This means that the
+implementation of closures is less platform dependent - and also that a
+closure call requires one less transfer of control.
+
+There is no extra cost to normal functions for supporting this - since normal
+functions can avoid loading the environment field from the function object.
+
+
+
+The stack fixing conventions
+----------------------------
+
+One change I propose is that the stack fixing functions never heap allocate
+any #rest variables. It is now extremely fast to stack allocate them (as this
+does not require moving the optional args) - so I suggest that we always do
+that. If a function requires the #rest variable to be heap allocated, then it
+must duplicate the stack-allocated one on the heap. This can be done in the
+inners of the function - as a function call, explicit in the ICR.
+
+This approach has the advantage that we no longer need different versions of
+the stack fixers for both stack and heap allocation.
+
+For this mechanism to work, we need a standard convention for how callees can
+determine how many arguments to drop on return if they accept any optional
+args. This works by having the stack fixers leave an extra required argument
+containing the number of bytes to drop from the stack.
+
+Consider the following:
+
+define method foo (a, b, #rest r, #key x y z)
+  ...
+end
+
+foo(1, 2, y: 3, z: 4);
+
+
+	Stack of foo at call		Stack of foo after stack fixing
+	--------------------		-------------------------------
+
+	.....				....
+	4				4:
+	z:				z:
+	3				3
+	y:				y:
+	2				<simple-object-vector>
+	return address			4	// size of vector (like 
+a header)
+					48	// number of bytes of args 
+on stack
+					4	// value of z
+					3	// value of y
+					#F	// value of x
+					r 	// points to 
+<simple-object-vector>
+					2
+					return address
+		arg0: 1				arg0: 1
+
+NB: stack grows downwards.
+
+
+This convention of using the number of stack args as an extra  value on the
+stack is a standard part of the calling convention. It is used for
+method-entry and internal-entry points - as well as all static internal entry
+points (but only if the function takes #rest or #key).
+
+
+Overall comments
+----------------
+
+Note that this mechanism is actually similar to that used by the C backend.
+The main differences are:
+
+	1. C cannot do tail calls - so stack-fixing is not possible
+	2. C (probably) cannot do the satck allocation of #rest vars
+	3. C backend always uses the same external-entry point (is this true??)
+	4. C backend does not have a method-entry point
+
+It might be worth changing the C backend to have the same representation of
+functions - so that points 2 and 3 are done the same as for the native code
+backend. 
+
+It also occurs to me that we might want to change the VM to work in a manner
+more similar to this. I doubt this will matter much for efficiency - but it
+might make it easier to share code-generator implementations. Any idea how
+long it would take to reimplement, Eliot? NB: if we do reimplement, then we
+will almost certainly want to have a stack model which grows downwards.
+
+
+
+
+
+Sorry to take up your time with this. It's hard to change these things later,
+though - so I'd like to get them right before we start implementing. 
+
+Any comments would be welcome.
+
+
+-- Tony
+
+
+
+Subject:  Some more notes about functions and entry points
+From:  Tony Mann <tony@harlequin.co.uk>
+Date:  Mon, 21 Mar 1994 19:11:10 GMT
+
+Some more notes about functions and entry points:
+-------------------------------------------------
+
+We have already had some email discussion about the new calling
+convention, and the need for some changes to the $function class
+hierarchy to support this.
+
+Here is a proposal for the function hierarchy, and a discussion
+about how this fits in with the calling convention.
+
+The main goal is to modify the class hierarchy so that all the slots
+required by the calling convention appear. In addition, I have taken the
+opportunity to clean up the class definitions to support the static
+bootstrap (i.e. drop support for dynamic features).
+
+
+Function clsss hierarchy:
+-------------------------
+
+I imagine a hierarchy like this:
+
+					$function
+					    |
+			      |--------------------------------------|
+			      |     	                             |
+		     $dispatch_function                           $lambda
+			      |				             |
+	       |-------------------------|		             |
+	       |			 |		             |
+	$cache_function         $generic_function   		  $method
+					 |      		     |
+					 |      		     |
+					 |      		     |
+			      $open_generic_function          $complex_method
+
+
+The following code is a (not necessarily complete) description of the
+function classes for our implementation. Please excuse any incorrect
+(or exaggerated) use of Dylan:
+
+
+// $function is a (non-instantiable) class which represents all those
+// objects which may be called with the "normal" calling convention.
+
+define primary abstract dont_mess_with_me class $function ($object)
+  slot xep :: $raw_code;		// external entry point
+  slot iep :: $raw_code;		// internal entry point
+end;
+
+
+// $dispatch_function is a (non-instantiable) class which represents
+// those function objects which provide dynamic dispatch, and behave like
+// generic functions. Dynamic dispatch is optimized via a cache entry point.
+
+define primary abstract class $dispatch_function ($function)
+  slot cep :: $raw_code;		// cache entry point
+end;
+
+
+// $generic_function is an instantiable class which represents generic
+// functions. Direct instances do not support ADD_METHOD
+
+define primary class $generic_function ($dispatch_function)
+  slot methods :: $list;		// list of methods
+  slot cache :: $gf_cache		// internal effective method cache
+  ...
+end;
+
+// $open_generic_function is an instantiable class which represents those 
+// generic functions to which one may add methods.
+
+define primary class $open_generic_function ($dispatch_function)
+  slot number_required :: $integer;	// the number of required parameters
+  slot rest? :: $boolean;		// whether there is a #rest parameter
+  slot key? :: $boolean;		// whether there is a #key
+end;
+
+
+// $cache_function is an instantiable class which represents a call-cache
+// objects for generic functions.
+
+define primary class $cache_function ($dispatch_function)
+  slot generic_function :: $generic_function; // GF (for cache miss)
+  slot first_method :: $method;		// most specific method on cache 
+hit
+  slot next_methods :: $list;		// remaining methods on cache hit
+  slot key_specifiers :: $vector;	// vector of keyword / default pairs
+  repeated slot specializers;		// the cache data itself
+  ...
+end;
+
+
+// $lambda is a (maybe instantiable) class which represents anonymous
+// lambdas which may be closures. Direct instances of $lambda are not
+// permitted to be added to generic functions.
+
+
+define primary class $lambda ($function)
+  slot environment;			// closure environment (or #F)
+  slot specializers :: $simple_object_vector;
+end;
+
+
+// $method is an instantiable class which represents methods. Direct
+// instances of $method have no optional parameters.
+
+define primary class $method ($lambda)
+  slot mep :: $raw_code;		// method entry point (from a GF)
+  slot next? :: $boolean;		// #F if the method is known NOT to
+					// call its next methods
+  slot required_args :: $integer; 	// the number of required args
+end;
+
+
+// $complex_method is an instantiable class which represents methods which
+// accept optional parameters.
+
+define primary class $complex_method ($method)
+  slot rest? :: $boolean;		// whether the method has #rest
+  slot key?  :: $boolean;		// whether the method has #key
+  slot key_specifiers :: $vector;	// vector of keyword / default pairs
+end;
+
+
+
+
+
+Some notes about the hierarchy
+------------------------------
+
+In earlier discussions about the new calling convention, I assumed that all
+function objects would have 3 entry points, all inherited from class
+$function. In this proposal, only 2 entry points are inherited throughout
+the hierarchy. The old "MList" entry point which had an ambiguous meaning
+between methods and GFs has now been dropped. It is replaced for GFs and
+cache functions by the slot CEP, the "cache entry point". For methods it is
+replaced by MEP, the "method entry point". I hope that this will reduce
+confusion.
+
+I have tried to reduce the number of slots in methods which do not use the
+more dynamic features of Dylan. This was complicated by the fact that there
+is a multiple inheritance of dynamic features (e.g. support for closures,
+keyword parameters, #rest etc.) and yet efficient, primary inheritance does
+not fully support multiple inheritance. The current compromise design always
+uses a slot for the closure environment for methods - but does not require
+space to support optional arguments unless required. The smallest class,
+$lambda, supports the concept of a method which may not be added to a
+generic function; I don't know if we would make use of this. 
+
+Unlike methods, I have not attempted a slot-reduction exercise for cache
+functions (where it is difficult because of the repeated slot) or for GFs
+(which are correspondingly rarer). However, in the hope that sealed GFs will
+be common, there is a GF class which does not contain the slots necessary to
+do lambda list congruency checking, as needed for ADD_METHOD.
+
+Note: dispatch functions do not contain an environment slot. This is because
+the language only allows methods to be closures, and not GFs. I can't forsee
+us ever extending the language to support GFs which are closures - so I
+think this is reasonable.
+
+I'd like to solicit opinions as to whether the inheritance compromises are
+misguided. 
+
+
+
+
+Types of call
+-------------
+
+I'm going to write some notes about the details of each type of call.
+Unfortunately, I won't have time to do this today - so I'll just distinguish
+what I think are the different cases, and promise to fill in the blanks some
+time real soon.
+
+
+1. General Call
+
+2. Cached GF call
+
+3. Internal entry call with required arguments only
+
+4. Internal entry call with optional arguments
+
+5. Next method call with required arguments only
+
+6. Next method call with optional arguments
+
+7. Raw call
+
+
+Subject:  Some more notes on calling conventions
+From:  Tony Mann <tony@harlequin.co.uk>
+Date:  Thu, 31 Mar 1994 18:11:47 GMT
+
+Here are some notes about how I see the calling conventions working with the
+new function classes.
+
+
+Calling convention goals
+------------------------
+
+1. Internal entry points should be as efficient as possible. I.e.
+there should not be any constraints on them because Dylan is a dynamic
+language. 
+
+2. External entry points must offer a consistent convention for all
+functions, so that functions can be called without any knowledge of
+what they are.
+
+3. The code which is executed at external entry points should be
+shared by all functions with similar properties / lambda-lists.
+
+4. The design should make the path from the external entry point to
+the internal entry point as simple as is reasonably possible.
+
+
+
+What has been discussed before
+------------------------------
+
+I have previously sent out mail describing the general calling
+convention, design of function classes, and an overview of the
+responsibilities of the different entry points. 
+
+I'm hoping to fill in some details here - especially:
+
+ . To update some earlier mail where designs have changed slightly
+
+ . To include more detail about the conventions at internal entry
+   points (especially for handling optional arguments)
+
+ . To show how the design potentially maps onto all backends.
+
+
+Terminology
+-----------
+
+Arguments passed to a function at the implementation level fall into 2
+different groups. "Language" arguments correspond to the explicit
+arguments in the source code. "Implementation" arguments correspond to
+house-keeping information used by the impementation. Implementation arguments
+comprise:
+
+	argcount	- the number of language arguments  (as an integer)
+	function	- the function object being called
+	mlist		- the list of next methods
+	cache-ref	- the address of the call-cache variable
+	environment	- the closure environment
+
+An "Internal function" is a body of code located by an "Internal entry
+point". An "external function" is a body of code located by an
+"external entry point"
+
+All "internal functions" are generated by the Dylan compiler, while
+performing normal compilation of Dylan code. The Dylan compiler is
+therefore responsible for creating all "internal entry points". Each
+Dylan method will have an internal entry point known as the "IEP", and
+possible other internal entry points - such as the "raw-direct-entry".
+
+"External functions" are not generated during normal compilation. They
+will be generated by a low-level mechanism (e.g. by writing them in C
+or assembler or HARP). 
+
+All functions have an external entry point known as the "XEP" which
+supports the general calling convention.
+
+All functions which are instances of $method have an external entry
+point known as "MEP" which supports the calling of methods from
+generic functions and via next-method.
+
+All functions which are instances of $dispatch_function (including
+cache functions and generic functions) have an external entry point
+known as "CEP" which supports the in-line call-cache convention.
+
+
+Fundamental problem description
+-------------------------------
+
+The internal and external entry points have different needs for both
+the language arguments and the implementation arguments. 
+
+External entry points expect implementation arguments for values such
+as the argument count & the function object. Usually, internal entry
+points do not need any implementation arguments (exception are
+closures and generic functions which require the function object in
+order to obtain the environment).
+
+Language arguments may inlude optional arguments. These appear like
+any other arguments at external entry points - but are processed
+(according to #key or #rest semantics) by the external functions,
+before being passed as processed arguments to the internal functions. 
+
+Hence there is a desire for efficient independent manipulation of both
+language and implementation arguments. For the purposes of discussion,
+I'll consider these 2 sets of arguments separately, and consider
+conventions for each for each entry point. The implementation of these
+conventions is backend specific, as follows:
+
+Native code backend:
+
+  Language arguments: 		First n arguments passed in registers 
+arg0 ..
+				argn-1 Remainder pushed on the stack in
+				reverse order. The value of n is processor
+				specific (but will be 1 for the 486).
+
+  Implementation arguments:	All passed in registers. These registers are
+				given the symbolic name of the argument
+				(except for cache-ref, which is always punned
+				as mlist).
+
+  Returns:			Callee pops args off the stack (so tail jumps
+				to internal functions are always possible).
+
+
+C backend:
+
+  Language arguments: 		Map to normal C arguments in the same 
+order.
+
+  Implementation arguments:	Map to normal C arguments, preceeding the
+				language arguments.
+
+  Returns:			Normal C conventions apply. This almost
+				certainly means that tail calls to internal
+				functions will not be optimised to jumps.
+
+
+ANDF backend (for ANDF with extensions to support Dylan):
+
+  Language arguments: 		Correspond to "callee" parameters
+
+  Implementation arguments:	Correspond to "caller" parameters. NB there 
+may
+				be a requirement for an extra impl. arg. or 2
+				for ANDF to support GC. If so, then the extra
+				args always come _before_ the ones described 
+here.
+
+  Returns:			"Callee" parameters are popped by the callee.
+				"Caller" parameters are popped by the caller.
+				By arranging for internal functions to take a
+				subset of the implementation arguments of
+				external functions,  tail jumps	to 
+internal
+				functions will always be possible.
+
+VM backend:
+
+  I won't consider this here - because a different calling convention is
+heavily built into the instruction set design.
+
+
+Nitty gritty stuff about arguments for each type of call
+--------------------------------------------------------
+
+In this section, ordered argument lists are given for each type of call. A
+separate list is given for language arguments and implementation arguments.
+For the native code backend, the ordering of the implementation arguments is
+not important - but for the ANDF backend (and possibly the C backend), the
+order is significant to improve the performance of tail-call optimization.
+
+1. General Call (to XEP)
+
+   language args: 	as specified in source code
+   implementation args:	(function, argcount)
+
+
+1b. SPECIAL-APPLY Call (to XEP)
+
+This call may be used as a fast way of implementing APPLY if the last argument
+to apply is a <simple-object-vector> and the compiler can prove that the other
+applied arguments exactly correspond to the required parameters of the callee
+function: 
+
+   language args:	(required-args ..., $special-rest-marker, rest-vector)
+   implementation args:	(function, argcount) [NB argcount may not be 
+necessary]
+
+
+2. Cached GF Call (to CEP)
+
+   language args:	as specified in the source code 
+   implementation args:	(function, argcount, cache-ref)
+
+
+2b. Cached GF SPECIAL-APPLY Call (to CEP)
+
+   language args:	(required-args ..., $special-rest-marker, rest-vector)
+   implementation args:	(function, argcount, cache-ref)
+
+
+3. Internal entry call with required arguments only (to IEP)
+
+   language args:	(required-args ...)
+   implementation args:	(function, mlist)
+			[NB function is only necessary for closures, mlist is
+			only necessary for methods which call next-method]
+
+If the function was called directly (not via a GF or next-method call) and it
+potentially does a next-method call, then mlist has the value #F.
+
+
+4. Internal entry call with optional arguments (to IEP)
+
+E.g. imagine a function with the following lambda list:
+ (r1, r2, #rest r, #key k1 = d1, k2 = d2)
+
+   language args:	(r1, r2, k1, k2, num, r)
+   implementation args:	(function, mlist) 
+			[NB function is only necessary for closures, mlist is
+			only necessary for methods which call next-method]
+
+In this example, k1 and k2 will have already been defaulted to d1 and d2 if the
+relevant key was not supplied (unless d1 or d2 are not compiler-determinable
+constants, in which case they will have the value $unsupplied-key.
+
+The value "num" is a value which represents how much to pop the stack on return
+from the function. For the native code backend, this will specify the number of
+bytes. Backends which cannot stack-allocate #rest values and do tail calls will
+not pass this value. The use of this value permits stack-allocated #rest values
+using the following extended language arguments:
+
+   language args:	(r1, r2, k1, k2, num, r, <s-o-vector>, size, rest args 
+...)
+
+The stack-allocated vector is included in the arguments, and is represented as
+a pointer to the <s-o-vector> argument. In this case, num will allow for the
+stack-allocated vector in its description of how much to pop from the stack.
+
+Note 1: the key arguments and num precede the rest argument. This slightly
+reduces the amount of stack shuffling which is necessary for the internal
+function to tail-jump to the MEP of the next method during a next-method call.
+
+If there is no #rest parameter, then a dummy "r" will normally have to be
+created anyway to support next-method. If the method is known not to call
+next-method then the dummy "r" is not needed (the calling convention permits it
+to either be present or not, provided that num is appropriately set).
+
+Note 2: num is _always_ required - even for methods which are known not to call
+next-method. This is an inefficiency compared with the C calling convention -
+but I haven't yet thought of a way to avoid this without making things more
+compilcated. Any suggestions ??
+
+Note 3: #rest vectors will ALWAYS be stack allocated by the XEPs for backends
+which support this. This means that if the binding cannot be shown to have
+dynamic extent, then the vector must be explicitly copied in the inner
+function. Given that stack-allocation is pretty cheap, there is no extra time
+cost for doing this copy (as the external function would have had to copy the
+values to the heap anyway). However, there is potentially a code size increase,
+as the call to copy the vector is in the internal function, not the shared
+external function. I hope it will be rare to need to copy (given that the
+common case when the vector is passed to another function's #rest position does
+not break the dynamic extent rule).
+
+
+
+5. Next method call with required arguments only (to MEP)
+
+   language args:	(required-args ...)
+   implementation args:	(function, mlist)
+
+ 
+6. Next method call with optional arguments (to MEP)
+
+E.g. imagine a call to a method with the following lambda list:
+ (r1, r2, #rest r, #key k1 = d1, k2 = d2)
+
+   language args:	(r1, r2, num, r)
+   implementation args:	(function, mlist)
+
+Arguments "num" and "r" behave in the same way as for internal entry points
+(except that it is never permissible for "r" to be omitted).
+
+
+7. Raw call (to raw-direct-entry)
+
+This is really left to our imagination for when the compiler has all its
+optimisations in place. I imagine something like the following (for the complex
+lambda list case again):
+
+
+   language args:	(r1, r2, k1, k2, num, r)
+   implementation args:	(environment, mlist) 
+			[NB environment is only necessary for closures, mlist is
+			only necessary for methods which call next-method]
+
+Notes: any of the values r1, r2, k1, k2 might be raw (untagged) if the compiler
+can prove that they are of a suitable type to do this (e.g. for <single-float>,
+<32-bit-integer> or whatever).
+
+Similarly, the result might be returned raw. In this case, the IEP will
+actually perform a call to the raw-direct-entry, and it will tag or box
+the result as appropriate before returning itself.
+
+
+
+Well, this turned out longer than I'd hoped. I hope it's not too boring. I'd
+appreciate any comments.
+
+-- Tony
+
+
+
+Subject:  [eliot@ircam.fr: Re: Some preliminary design notes on calling conventions (fwd)]
+From: Eliot Miranda <eliot@ircam.fr>
+Date: Fri, 25 Feb 94 18:32:59 MET
+
+Tony T. Mann writes:
+>
+>I've had a rethink about calling conventions since the Manchester
+>meeting, and I'd like to propose an alternative design for scrutiny.
+>
+>I believe that the new design is an improvement in the following
+>areas:
+>
+>	- support for stack allocation of #rest and #key args
+>	- Efficiency of entry points for direct and next-method calls
+>	- support for call caches
+>	- Efficiency of closures
+>	- More scalable use of registers for argument passing
+>
+>As with everything, though, there are tradeoffs. The drawback with the
+>new design is:
+>
+>	- Function objects increase in size by 3 words
+
+I suspect its worth it.  3 words per function is not a large overhead,
+especially on 32-bit instruction machines (e.g. MIPS). e.g. in Smalltalk,
+about 10% of all objects are methods, so you're talking of an overhead
+of around 1 byte per object, which is small.
+
+... lots of good stuff deleted ...
+
+>The arg passing convention
+>--------------------------
+>
+>Arguments are pushed onto the stack in reverse order (i.e. the rightmost
+>argument is pushed first). The first (or first few) arguments are passed in
+>registers. This is a change of ordering from the Manchester proposal, and has
+>a possible disadvantage in terms of the need for temporary variables to hold
+>interim results for order-of-evaluation reasons. In practice, I think that
+>the disadvantages will be small because:
+>
+>	1. Most arguments to functions are likely to be simple expressions
+>	   (like constants or variable references) - so order of evaluation
+>	   does not normally matter. ????? Anyone agree with me about this ???
+
+I doubt it has much performance impact either way.  Most calls have 
+small numbers of arguments so keeping intermediate results around
+should be a minor performance hit if you preserve a left-to-right
+evaluation order with this calling convention.
+
+>	2. On a RISC implementation, we won't want to push each argument
+>	   anyway - instead it will be more efficient to allocate enough stack
+>	   space for the call, and store each argument when it's available.
+>	   This works well with a conservative GC - but it might be poor with
+>	   a total GC ????
+
+Yes, since some total GCs would require nilling out the space reserved.
+However, on SPARCS (6 arg regs) & MIPS (4 arg regs), so few calls would be
+affected that it wouldn't have a significant impact.  So I think its not
+going to be a problem on most RISCs.
+
+
+>This calling convention has the following advantages:
+>
+>	- required arguments can always be found (even before stack fixing)
+
+and hence faster in-line cache checking...
+
+>	- optional arguments appear in the same order in memory as they would
+>	  if vectored up as #rest variables
+>
+>	- Stack allocating the optional arguments as vectors is now trivial.
+>
+>As before, the callee is responsible for popping any arguments from the stack.
+>This is always possible (even with optional args), because the argcount is
+>available to say how many arguments were passed. This is the only substantial
+>difference from the C arg passing convention.
+
+We've gone over the reasons for this convention before, and I'm only
+asking this out of curiosity, but doesn't the necessity of keeping the
+argument count around for the duration of the call cause a significant
+number of spills, either through saving/restoring the arg count, or
+through increased register pressure?   (I know that in the case of key &
+rest processing it makes much more sense for the callee to adjust the stack,
+but I suspect this isn't the common case.  Do you have stats on the
+dynamic frequency of key & rest calls?)
+
+
+... lots of guff stood deleted ...
+
+>In-line call caches
+>-------------------
+>
+>The conventions discussed above work very well with the in-line call-cached
+>scheme discussed by Eliot and me last week.
+>
+>It seems to me that we could represent the cache object as a function object.
+>Its direct-entry point is the cache function (for verifying the args against
+>the cache). It's internal-entry point is the internal-entry point of the
+>cached method (which it will tail-call if the args are valid - after suitable
+>stack fixing). It's method entry point is the generic-function itself (OK I
+>agree that this bends the convention - but it does seem to work).
+>
+>If we decide to use normal function objects for the call-cache - then we get
+>suitable slots for everything else too:
+>
+>	slot		purpose
+>	----		-------
+>	specializers	data to test the parameters against
+>	key-specifiers	Keywords accepted by the method (for 
+stack-fixing)
+>	environment	The next-method list (OK a bit contrived again :-)
+
+I'd like to suggest using "repeated" (in-line) slots for specialisers to
+avoid the indirection cost when checking specialisers. Since call cache
+"function" objects are specific to the system they don't need to be sub-
+classable, and hence there should be no problem with adding slots after
+a variable number of specialiser slots.  So:
+
+	>1. The <function> class
+	>-----------------------
+	>
+	>define class <function> (<object>)
+	>  slot direct-entry;		// code for direct entry point
+	>  slot method-entry;		// code for next-method entry 
+point
+	>  slot internal-entry;		// code for shared entry point
+	>  slot environment;		// environment vector (for 
+closures)
+	  rslot specialiser1;		// first specialiser slot
+	  ...
+	  rslot specialiserN;		// last specialiser slot
+
+
+>The cache object still has to be called by a special convention - but this
+>basically just means that the address of the cache should be put in the MList
+>register before doing a normal call.
+
+Not if you add a *fourth* entry point <:)>, i.e. an entry point that implies
+mlist contains the address of a cache variable.  I'm not necessarily serious
+about this, but it might mean that we could always do cached calls.
+e.g.
+define class <function> (<object>)
+  slot direct-entry;		// code for direct entry point
+  slot direct-entry-cached;	// code for direct entry point with mlist
+				// bound to a valid cache variable
+  slot method-entry;		// code for next-method entry point
+  slot internal-entry;		// code for shared entry point
+  slot environment;		// environment vector (for closures)
+
+and cached calls always invoke direct-entry-cached.  For callees that don't
+handle in-line cacheing direct-entry and direct-entry-cached are the same.
+For callees that do handle in-line cacheing, the two entry points provide a
+simple way of avoiding erroneous cache updating.  It would mean that we could
+cache calls to generic functions that were not known to be generic functions
+at compile time.  (An alternative implementation would require every non-
+cached call to zero mlist, which has got to be more expensive than the
+scheme just described).  Is this worth while?
+
+... lots o f food guts deleted ...
+
+>Overall comments
+>----------------
+>
+>Note that this mechanism is actually similar to that used by the C backend.
+>The main differences are:
+>
+>	1. C cannot do tail calls - so stack-fixing is not possible
+
+FYI, gcc (v >= 2.2) now does tail-call elimination for recursive calls.
+I believe general tail-call elminination is on the wish list.
+
+>	2. C (probably) cannot do the stack allocation of #rest vars
+
+I disagree.  Although alloca has been removed from ANSI C its easy
+to write your own.
+
+>	3. C backend always uses the same external-entry point (is this 
+true??)
+
+Yes, & its not possible to fix this portably.  Although I can think of
+a way of hacking gcc's output to achieve multiple entry points.  But its
+too disgusting to bring up in polite company.
+
+>	4. C backend does not have a method-entry point
+>
+>It might be worth changing the C backend to have the same representation of
+>functions - so that points 2 and 3 are done the same as for the native code
+>backend. 
+>
+>It also occurs to me that we might want to change the VM to work in a manner
+>more similar to this. I doubt this will matter much for efficiency - but it
+>might make it easier to share code-generator implementations. Any idea how
+>long it would take to reimplement, Eliot? NB: if we do reimplement, then we
+>will almost certainly want to have a stack model which grows downwards.
+
+If stack allocation doesn't involve putting random bit patterns (i.e.
+object headers) on the stack, and doesn't expect to be able to pass
+stack object references, then it should be easy to do.  Otherwise I'd
+have to extensively modify, or junk, the VM garbage collector.
+-- 
+Eliot 
+
+
+
+Subject:  Re: Some preliminary design notes on calling conventions (fwd)
+From:  Tony Mann <tony@harlequin.co.uk>
+Date:  Fri, 25 Feb 1994 18:45:23 GMT
+
+> >As with everything, though, there are tradeoffs. The drawback with the
+> >new design is:
+> >
+> >	- Function objects increase in size by 3 words
+> 
+> I suspect its worth it.  3 words per function is not a large overhead,
+> especially on 32-bit instruction machines (e.g. MIPS). e.g. in Smalltalk,
+> about 10% of all objects are methods, so you're talking of an overhead
+> of around 1 byte per object, which is small.
+
+An interesting statistic. Does anyone volunteer to do this calculation
+for Zimmerman? Also, what is the total number of method objects in the
+basic Dylan library?
+
+From what you say, it does sound as though the 3 words is not too
+serious. 
+
+
+> >The arg passing convention
+> >--------------------------
+> > [ ... ]
+
+> >	2. On a RISC implementation, we won't want to push each argument
+> >	   anyway - instead it will be more efficient to allocate enough 
+stack
+> >	   space for the call, and store each argument when it's available.
+> >	   This works well with a conservative GC - but it might be poor 
+with
+> >	   a total GC ????
+> 
+> Yes, since some total GCs would require nilling out the space reserved.
+> However, on SPARCS (6 arg regs) & MIPS (4 arg regs), so few calls would be
+> affected that it wouldn't have a significant impact.  So I think its not
+> going to be a problem on most RISCs.
+
+Right. And if we adopt the ANDF style of total GC via a map of live
+local variables then we don't even have to do the nilling.
+
+> 
+> 
+> >This calling convention has the following advantages:
+> >
+> >	- required arguments can always be found (even before stack fixing)
+> 
+> and hence faster in-line cache checking...
+
+Actually, this does not necessarily follow. The in-line cache checking
+must do the stack fixing anyway before calling the cached method. The
+big advantage of being able to find the required arguments first is
+that the cache-miss case becomes a lot simpler.
+
+I.e. we can do the validity test before stack fixing, & call the GF with
+unfixed args on a cache fail - or stack fix & call the cached method
+on a cache hit.
+
+The alternative would be to stack fix first, and then call the GF with
+fixed args on a cache miss. There is not much extra cost to this - as
+the GF must be called with a special entry point anyway to show that
+there is a valid cache variable address in the MList register.
+
+The big advantage of stack fixing after a validity test is that we can
+stack fix #key parameters directly for the cached method. If we stack
+fix first, we must leave the keys alone, as we have to arrange the
+args so that they are useful for either the cached method or the GF.
+
+> >As before, the callee is responsible for popping any arguments from the 
+stack.
+> >This is always possible (even with optional args), because the argcount is
+> >available to say how many arguments were passed. This is the only 
+substantial
+> >difference from the C arg passing convention.
+> 
+> We've gone over the reasons for this convention before, and I'm only
+> asking this out of curiosity, but doesn't the necessity of keeping the
+> argument count around for the duration of the call cause a significant
+> number of spills, either through saving/restoring the arg count, or
+> through increased register pressure?   
+
+No. There is no necessity of keeping the argument count around for the
+duration of the call. It is only valid during the prolog - and ceases
+to be used from the internal entry point onwards.
+
+We manage this because functions with only required args know how many
+args they got anyway as a compile time constant (it's an error to
+supply any other number). On the other hand, for functions with
+optional args, the calling convention reserves a word on the stack for
+the number of args to be dropped from the stack. Hence, there is no
+pressure on spills / registers (apart from the implicit extra word on
+the stack, which could be thought of as a spill).
+
+> (I know that in the case of key &
+> rest processing it makes much more sense for the callee to adjust the stack,
+> but I suspect this isn't the common case.  Do you have stats on the
+> dynamic frequency of key & rest calls?)
+
+I don't have these stats. But do you still need them in the light of
+the explanation above??
+
+NB: callee argument removal is not only useful for key and rest
+processing. It is the ONLY way that tail calls can be optimized in the
+case where the tail callee requires more stack arguments than the tail
+caller. 
+
+[ ... ]
+
+> I'd like to suggest using "repeated" (in-line) slots for specialisers to
+> avoid the indirection cost when checking specialisers. Since call cache
+> "function" objects are specific to the system they don't need to be sub-
+> classable, and hence there should be no problem with adding slots after
+> a variable number of specialiser slots.  So:
+> 
+> 	>1. The <function> class
+> 	>-----------------------
+> 	>
+> 	>define class <function> (<object>)
+> 	>  slot direct-entry;		// code for direct entry point
+> 	>  slot method-entry;		// code for next-method entry 
+point
+> 	>  slot internal-entry;		// code for shared entry point
+> 	>  slot environment;		// environment vector (for 
+closures)
+> 	  rslot specialiser1;		// first specialiser slot
+> 	  ...
+> 	  rslot specialiserN;		// last specialiser slot
+
+This makes sense. We just need:
+
+define sealed class <call-cache-function> (<function>)
+  slot key-specifiers;
+  repeated slot specializers;
+end
+
+Or summat like that.
+
+> >The cache object still has to be called by a special convention - but this
+> >basically just means that the address of the cache should be put in the 
+MList
+> >register before doing a normal call.
+> 
+> Not if you add a *fourth* entry point <:)>, i.e. an entry point that implies
+> mlist contains the address of a cache variable.  I'm not necessarily serious
+> about this, but it might mean that we could always do cached calls.
+> e.g.
+> define class <function> (<object>)
+>   slot direct-entry;		// code for direct entry point
+>   slot direct-entry-cached;	// code for direct entry point with mlist
+> 				// bound to a valid cache variable
+>   slot method-entry;		// code for next-method entry point
+>   slot internal-entry;		// code for shared entry point
+>   slot environment;		// environment vector (for closures)
+> 
+> and cached calls always invoke direct-entry-cached.  For callees that don't
+> handle in-line cacheing direct-entry and direct-entry-cached are the same.
+> For callees that do handle in-line cacheing, the two entry points provide a
+> simple way of avoiding erroneous cache updating.  It would mean that we could
+> cache calls to generic functions that were not known to be generic functions
+> at compile time.  (An alternative implementation would require every non-
+> cached call to zero mlist, which has got to be more expensive than the
+> scheme just described).  Is this worth while?
+
+My guess is that it's not worth while. I imagine that the compiler
+normally WILL know when it's calling a GF (as almost all GFs are
+constant). But, in the case where it doesn't know, the requirement for
+a dedicated cache variable along with the extra indirection in the call
+itself and the need for the extra word per method object are probably
+prohibitive. 
+
+Of course, these are just gut feelings based on no real data at all.
+
+> >	1. C cannot do tail calls - so stack-fixing is not possible
+> 
+> FYI, gcc (v >= 2.2) now does tail-call elimination for recursive calls.
+> I believe general tail-call elminination is on the wish list.
+
+I don't believe they will achieve this in the presence of VARARGS.
+(unless they adopt an arg-count convention like Dylan).
+
+[ ... ]
+
+> >It also occurs to me that we might want to change the VM to work in a manner
+> >more similar to this. I doubt this will matter much for efficiency - but it
+> >might make it easier to share code-generator implementations. Any idea how
+> >long it would take to reimplement, Eliot? NB: if we do reimplement, then we
+> >will almost certainly want to have a stack model which grows downwards.
+> 
+> If stack allocation doesn't involve putting random bit patterns (i.e.
+> object headers) on the stack, and doesn't expect to be able to pass
+> stack object references, then it should be easy to do.  Otherwise I'd
+> have to extensively modify, or junk, the VM garbage collector.
+
+I think that there would only be a need for an object header on the
+stack if we choose to implement SIZE for vectors by getting the info
+from the header. If we can store SIZE in a slot, then the main problem
+for your GC would be the existence of a pointer into the stack.
+
+Actually, I don't think it is necessary to include the
+stack-allocation part of the proposal into the VM. I really had in
+mind the other parts of the calling convention (i.e. passing the
+arguments in reverse order, and growing the stack downwards). 
+
+From our phone call earlier, I guess it's probably not worth it.
+
+> -- 
+> Eliot 
+
+Thanks for your comments. I'm reassured that the design wasn't
+ridiculed at first muster.
+
+-- Tony
+
+
+Sender:  root@harlequin.co.uk
+From:  Jonathan.Bachrach@ircam.fr (Jonathan Richard Bachrach)
+Date:  Sun, 27 Feb 1994 21:25:20 GMT
+
+> From: Tony Mann <tony@harlequin.co.uk>
+> Date: Fri, 25 Feb 94 15:12:28 GMT
+> Content-Length: 11022
+> [...]
+> Overall comments
+> ----------------
+> 
+> Note that this mechanism is actually similar to that used by the C backend.
+> The main differences are:
+> 
+> 	1. C cannot do tail calls - so stack-fixing is not possible
+> 	2. C (probably) cannot do the stack allocation of #rest vars
+
+`Alloca' could be used as Eliot says.
+
+> 	3. C backend always uses the same external-entry point (is this 
+true??)
+
+There are 22 external entry-point's.  There are 11 method-call
+entry-point's (where next-methods is explicitly passed as an argument)
+and 11 non method-call entry-points (where next-methods is #f).  In
+each category, there are 10 external entry-point's whose name
+implicitly encodes the number of arguments in the call (e.g., CALL0,
+..., CALL9 and METHOD_CALL0, ..., METHOD_CALL9), and there is one
+general case external entry-point (e.g., CALL and METHOD_CALL) for
+greater than 10 arguments.  The optional argument processing routines
+are optionally called from these entry-points:
+
+  Z* CALL1(Z* closure, Z* a1) {
+    CALL_CHECK(closure); /* stack overflow check */
+    switch ((int)((FN*)closure)->c) { /* code encodes type of function */
+    case XEP: /* required only inlined */
+      {
+      Z** environment = ((FN*)closure)->e; 
+      Z*  local_function = environment[LOCAL__FUNCTION__CLOSURE__OFFSET];
+      if ((int)environment[REQUIRED__ARGUMENT__COUNT__CLOSURE__OFFSET] != 2)
+	CALL2(z__pc_argument__count__error, closure, (Z*)2);
+      return ((ZLFN)(((FN*)local_function)->c))(local_function,z__pc_false,a1);
+      }
+    case REST__XEP:	 return z_rest__xep(closure,2,z__pc_false,a1);
+    case KEY__XEP:	 return z_key__xep(closure,2,z__pc_false,a1);
+    case REST__KEY__XEP: return z_rest__key__xep(closure,2,z__pc_false,a1);
+    }
+  }
+
+  CALL1(z_identity, z__pc_true); /* example call site */
+
+Note that this is pre static-bootstrap where the function is not a
+full fledged object and thus I stored the argument count and local
+function and all the rest on the environment of the external entry
+point (yuk).  
+
+The advantage to this approach is that for most of the time, the
+arg-count can be implicit in the call obviating the need to pass the
+arg-count and potentially speeding up the arg-count test by making it
+a comparison against a constant.  Furthermore, this approach works
+better for C where variable numbers of arguments are heavier weight.
+
+I now understand that I can make your scheme work somehow in an
+analogous manner (in the way I used to do it):
+
+  ((ZLFN)(((FN*)z_identity)->function_xep))(z_identity, 1, z_pc_true);
+
+which could be macrofied as
+
+  CALL1(z_identity, z_pc_true);
+
+which looks very much like current version (but CALL1 is now a macro).
+I actually used to do it this way.
+
+The direct entry point of z_identity would be xep_1 (or should
+it be dep_1?):
+
+  xep_1(Z* function, int arg_count, Z* a1) {
+    CALL_CHECK(function); /* stack overflow check */
+    if (closure->function_number_required != 1)
+      z__pc_argument__count__error__LOC(function, (Z*)1);
+    return ((ZLFN)(((FN*)function)->function_lep))(function,z__pc_false,a1);
+  }
+
+and the general case would use varargs:
+
+  xep(Z* function, int arg_count, ...) {
+    extern Z* arguments[ARGUMENT__COUNT__MAX];
+    CALL_CHECK(function); /* stack overflow check */
+    if (closure->function_number_required !=
+        (((FN*)function)->function_number_required))
+      z__pc_argument__count__error__LOC(function, (Z*)arg_count);
+    va_start(ap,arg_count);
+    arguments[0] := z__pc_false; /* next-methods */
+    for (i=1; i<=arg_count; i++)
+      arguments[i] = va_arg(ap, Z*);
+    va_end(ap);
+    return(z_primitive__local__apply
+           (new_argument_count, ((FN*)function)->function_lep, arguments));
+  }
+
+Note that I could check for whether next-methods were used in the
+internal entry point and avoid passing this as an argument. 
+
+It's probably ok to have only one of each of the optional entry points
+(i.e., rest_xep, key_xep, rest_key_xep) as they would need to use
+apply anyways (in the C back_end anyways).
+
+I assume that generic-function's would have prologs that mimic these
+xep's.  Comments Tony, please?
+
+>	4. C backend does not have a method-entry point
+
+I don't see why I couldn't also have method entry point's.  Why not?  
+
+> Any comments would be welcome.
+
+I generally like your scheme.  It seems quite clean.  Any concerns
+over bloated call sites go away when one considers the high percentage
+of calls directly to internal entry points.
+
+I prefer external entry point to direct entry point.
+
+Jonathan
+
+
+Subject:  Re: Some preliminary design notes on calling conventions
+From:  Tony Mann <tony@harlequin.co.uk>
+Date:  Mon, 28 Feb 1994 12:03:46 GMT
+
+> > Note that this mechanism is actually similar to that used by the C backend.
+> > The main differences are:
+> > 
+> > 	1. C cannot do tail calls - so stack-fixing is not possible
+> > 	2. C (probably) cannot do the stack allocation of #rest vars
+> 
+> `Alloca' could be used as Eliot says.
+
+True. Another alternative would be to invent a new sequence class with
+an iteration protocol making direct use of C's VARARGs.
+
+> > 	3. C backend always uses the same external-entry point (is this 
+true??)
+> 
+> There are 22 external entry-point's.  There are 11 method-call
+> entry-point's (where next-methods is explicitly passed as an argument)
+> and 11 non method-call entry-points (where next-methods is #f).  In
+> each category, there are 10 external entry-point's whose name
+> implicitly encodes the number of arguments in the call (e.g., CALL0,
+> ..., CALL9 and METHOD_CALL0, ..., METHOD_CALL9), and there is one
+> general case external entry-point (e.g., CALL and METHOD_CALL) for
+> greater than 10 arguments.  The optional argument processing routines
+> are optionally called from these entry-points:
+
+Ah yes. I forgot how hard it is to do dynamic-length calls in C :-)
+The native code backend will have a much easier task here.
+
+> Note that this is pre static-bootstrap where the function is not a
+> full fledged object and thus I stored the argument count and local
+> function and all the rest on the environment of the external entry
+> point (yuk).  
+> 
+> The advantage to this approach is that for most of the time, the
+> arg-count can be implicit in the call obviating the need to pass the
+> arg-count and potentially speeding up the arg-count test by making it
+> a comparison against a constant.  Furthermore, this approach works
+> better for C where variable numbers of arguments are heavier weight.
+
+I agree that this obviates the need to pass the arg-count - but with
+the new scheme, the comparison is still against a constant. Similarly,
+the new scheme still does not require use of variable numbers of
+arguments. 
+
+> 
+> I now understand that I can make your scheme work somehow in an
+> analogous manner (in the way I used to do it):
+> 
+>   ((ZLFN)(((FN*)z_identity)->function_xep))(z_identity, 1, z_pc_true);
+> 
+> which could be macrofied as
+> 
+>   CALL1(z_identity, z_pc_true);
+> 
+> which looks very much like current version (but CALL1 is now a macro).
+> I actually used to do it this way.
+> 
+> The direct entry point of z_identity would be xep_1 (or should
+> it be dep_1?):
+> 
+>   xep_1(Z* function, int arg_count, Z* a1) {
+>     CALL_CHECK(function); /* stack overflow check */
+>     if (closure->function_number_required != 1)
+>       z__pc_argument__count__error__LOC(function, (Z*)1);
+>     return ((ZLFN)(((FN*)function)->function_lep))(function,z__pc_false,a1);
+>   }
+
+Presumably the IF above should be:
+
+     if (arg_count != 1)
+
+Is this right ?? 
+
+If so, then this does nicely map the proposal into C.
+
+> ...
+> It's probably ok to have only one of each of the optional entry points
+> (i.e., rest_xep, key_xep, rest_key_xep) as they would need to use
+> apply anyways (in the C back_end anyways).
+
+For rest_xep (at least) you wouldn't need to use apply. Provided that
+the xep vectors up the optional args (e.g. by using alloca), you can
+call the iep directly with a fixed number of arguments. This might be a
+big win - and suggests that you should keep rest_xep_1 etc.
+
+This might get more difficult with keywords, because you would
+need a whole load of special case xeps - e.g. key_xep_5requireds_3keys.
+So in this case it might not be worth the extra effort.
+
+> 
+> I assume that generic-function's would have prologs that mimic these
+> xep's.  Comments Tony, please?
+
+Yes, exactly. They would not have to worry about keywords, though (as
+keyword processing is done in the methods). Generic-functions can
+probably share xep_n and rest_xep_n with normal methods.
+
+> 
+> >	4. C backend does not have a method-entry point
+> 
+> I don't see why I couldn't also have method entry point's.  Why not?
+
+I agree that there is no reason why not. I was only intending to
+comment on the similarity / differences between the native code
+proposal and the C backend status quo.
+
+> 
+> > Any comments would be welcome.
+> 
+> I generally like your scheme.  It seems quite clean.  Any concerns
+> over bloated call sites go away when one considers the high percentage
+> of calls directly to internal entry points.
+
+NB. For the native code backend (at least) the proposal should not
+bloat the call site. The calling convention forces the loading of the
+function object into a register - but the caller would probably have to
+do that anyway in order to indirect to the code slot. I haven't yet
+seen a proposal for the native code backend that avoids the need for
+argcounts for an external entry point (although I agree that the
+current C mechanism _could_ be made to work in this way).
+
+The main cause of bloat is in the size of method objects.
+
+> 
+> I prefer external entry point to direct entry point.
+
+I don't have any strong feelings about this. Let's go for "external"
+then. 
+
+
+As a general comment, I agree that we could make the C machanism look
+very similar to the proposed native code version.
+
+I don't think it is worth doing this just from the point of view that
+it makes the 2 backends more similar. However, it would be worth doing
+it if it makes more of the library code similar (e.g. the class
+descriptions for functions, and the congruency testing for GF methods).
+At first glance, I would have thought that we _could_ share more library
+code if we make the change - so we should probably do it.
+
+Jonathan, can you give a more informed opinion about how long the
+change would take? - and how much code would diverge if we didn't?
+
+Mike - before you think I am circumventing the plan :-) - I did allow a
+task for this sort of thing: "Update for compiler changes". If we
+decide to go ahead with the change, then we may need more time for the
+task. Let's discuss this if / when the need arises.
+
+-- Tony
+
+
+Subject:  Re: Some preliminary design notes on calling conventions (fwd)
+From:  Tony Mann <tony@harlequin.co.uk>
+Date:  Mon, 28 Feb 1994 12:27:46 GMT
+
+I've just realised that I missed a trick to do with the interaction
+between in-line call caches and the new calling convention proposal.
+This might remove most of the need for Eliot's and my exchange:
+
+> > >The cache object still has to be called by a special convention - but this
+> > >basically just means that the address of the cache should be put in the 
+MList
+> > >register before doing a normal call.
+> > 
+> > Not if you add a *fourth* entry point <:)>, i.e. an entry point that implies
+> > mlist contains the address of a cache variable.  I'm not necessarily serious
+> > about this, but it might mean that we could always do cached calls.
+> > e.g.
+> > define class <function> (<object>)
+> >   slot direct-entry;		// code for direct entry point
+> >   slot direct-entry-cached;	// code for direct entry point with mlist
+> > 				// bound to a valid cache variable
+> >   slot method-entry;		// code for next-method entry point
+> >   slot internal-entry;		// code for shared entry point
+> >   slot environment;		// environment vector (for closures)
+> > 
+> > and cached calls always invoke direct-entry-cached.  For callees that don't
+> > handle in-line cacheing direct-entry and direct-entry-cached are the same.
+> > For callees that do handle in-line cacheing, the two entry points provide a
+> > simple way of avoiding erroneous cache updating.  It would mean that we 
+could
+> > cache calls to generic functions that were not known to be generic functions
+> > at compile time.  (An alternative implementation would require every non-
+> > cached call to zero mlist, which has got to be more expensive than the
+> > scheme just described).  Is this worth while?
+> 
+> My guess is that it's not worth while. I imagine that the compiler
+> normally WILL know when it's calling a GF (as almost all GFs are
+> constant). But, in the case where it doesn't know, the requirement for
+> a dedicated cache variable along with the extra indirection in the call
+> itself and the need for the extra word per method object are probably
+> prohibitive. 
+
+Under the proposal, if a call-cache function is called and it detects
+a cache miss, then it will call the GF via the "method" entry point.
+
+I had suggested that we make cache objects look like normal functions
+and that we can call them through the normal external entry point. 
+
+I now suggest that we call them through the "method" entry point. The
+advantage of this is that we can pre-fill the cache variables with the
+generic functions themselves (rather than having to have a default
+cache object). This now works because the calling convention for a
+call-cache call is identical to the calling convention used on a cache
+miss to call the GF. Hence the GF works as an in-line call cache - but
+the in-line cache will always miss. 
+
+By extension, the external entry point of a cache object should
+tail call the GF itself. This means that we can always think of cache
+objects as a possibly optimized way of calling the GF, and all the
+same calling conventions apply to both.
+
+Of course, methods still attach a different meaning to the "method"
+entry point - so there might still be an argument for a fourth entry
+point to make this more consistent. I still feel that this is
+unnecessary - on the "gut feel" grounds that I doubt that there will
+be enough times when an unknown function is called in such a way that
+in-line call cacheing would help if it were a GF. I could be wrong,
+though. I'd welcome any statistics or counter-arguments.
+
+In any case, I think we have a naming problem with "method" entry
+points - since they have different meanings for <method> and either
+<generic-function> or <cache-function>.
+
+The best alternative I can think of is "mlist-entry" as the mlist
+register (or argument in the case of the C backend) is always valid
+over this entry point - but never is for the external entry. This
+sounds like a very implementation specific name, though. Any better
+ideas, anyone?
+
+-- Tony
+
+
+Subject:  Re: entry points and C back-end
+From:  Tony Mann <tony@harlequin.co.uk>
+Date:  Tue, 1 Mar 1994 12:32:55 GMT
+
+> the current C run-time is bastardized because of the lack of a static
+> bootstrap.  The static bootstrap permits us to use a uniform format
+> for functions.  The current C run-time stored the function slots
+> (number-required, keywords, specializers, ...) in the function's
+> environment.  This is clearly the wrong approach and I think it would
+> be grave error to continue this practice in light of the possibilities
+> that static booting offers.  
+> 
+> In other words, I would be seriously bummed out if I had to support
+> this bastardized approach in a the new static bootstrap
+> implementation.
+
+OK. It sounds like we must make time to change the C backend. Mike is
+already aware that this is a likely outcome - but it would be useful
+to give him any further details you might have about the work
+involved.
+
+If we are going to have to make changes of this nature to the C
+backend, it would certainly seem to make sense to share as many ideas
+as possible with the native code approach.
+
+We still have some design work to do, though. It would help to try and
+get some answers to these questions:
+
+
+1. Is the new proposal about calling conventions a sensible approach
+for the native code backend?
+
+2. Is it a good approach for the C backend?
+
+3. How similar should the conventions be for the native / C backends?
+(Note: if the backend is responsible for calling / building functions,
+then just sharing the same number of slots in <function> objects might
+be the only necessary shared convention).
+
+4. Does it make sense to stack allocate optional args in C?
+
+5. If the answer to (4) is no, then how will these different
+appropaches affect front-end analysis about dynamic extent objects? 
+
+6. Should we include the in-line call cache mechanism in the C
+backend?
+
+7. Which special purpose entry points do we wish to provide for the
+native code backend (e.g.  xep_rest_22)??
+
+8. Which special purpose entry points do we want for the C backend.
+
+9. What slots should <function> objects contain.
+
+
+Without wanting to prejudice anyone else's reply, I'd answer these as
+follows:
+
+1. Yes (I'm waiting for any reason why it's not).
+
+2. Yes.
+
+3. The conventions should be as similar as possible. Arguments passed
+in registers in the native code model should be passed as required
+arguments in C. This means that Jonathan and I should thrash out the
+fine details of the calling convention before implementing.
+
+4. Yes. We should use alloca. This will be less efficient than for the
+native code backend, but will allow us to share more of the front-end
+analysis. 
+
+5. n/a
+
+6. Yes. Include this as an integral part of the change. (However, we
+might want to remove this from a future release of Zimmerman).
+
+7. Don't have a complete answer to this, yet.
+
+8. Don't have a complete answer to this, yet.
+
+9. We need to be very careful that <function> objects do not get too
+big. This might mean that we need some carefully chosen sealed
+subclasses to avoid extra slots for simple methods with no keywords or
+#rest. Some further design is necessary.
+
+
+This was not meant to be an exhaustive set of questions. I'm sure
+there are others. (E.g. how does this effect the ANDF backend ??).
+
+-- Tony
+
+
+Subject:  Re: entry points and C back-end
+From:  Jonathan.Bachrach@ircam.fr (Jonathan Richard Bachrach)
+Date:  Tue, 1 Mar 1994 17:11:57 GMT
+
+> From: Tony Mann <tony@harlequin.co.uk>
+> Date: Tue, 1 Mar 94 12:32:55 GMT
+>
+> [...]
+>
+> 1. Is the new proposal about calling conventions a sensible approach
+> for the native code backend?
+
+It looks sensible.  Well done ole chap!
+
+I still want to see what are the other entry points you'd be
+proposing.  I assume that you still want hairy keyword defaults and
+boxing/unboxing entry points.  What's the complete list?
+
+> 2. Is it a good approach for the C backend?
+
+I think that we can confortably collapse (through inlining) all entry
+points that we can't efficiently support in C and avoid calling them.
+I am hopeful that by using GCC we can get tail calls going and will
+thus be able to use the full set of entry-points.
+
+> 3. How similar should the conventions be for the native / C backends?
+
+I agree that the calling conventions should be as similar as possible.
+As you say Tony, we will need to thrash out the details.
+
+> 4. Does it make sense to stack allocate optional args in C?
+
+yes and it should be fairly easy (especially because we only have to
+worry about allocating one type of class, a <stack-vector>).
+
+> 5. If the answer to (4) is no, then how will these different
+> approaches affect front-end analysis about dynamic extent objects? 
+
+N/A
+
+> 6. Should we include the in-line call cache mechanism in the C
+> backend?
+
+I agree it would be a good testing ground for this technology.  We
+should be able to write so that we can easily rip it out if we don't
+want to include it in Zimmerman.
+
+> 7. Which special purpose entry points do we wish to provide for the
+> native code backend (e.g. xep_rest_22)??
+
+I'm not sure.  It could be that the native back-end could get by with
+less than C because varargs is much lighter-weight.  But you're the
+expert Tony.
+
+> 8. Which special purpose entry points do we want for the C backend.
+
+If we can get tail calls to work in GCC then we might want the same
+ones.  Otherwise, I would say that we should only have XEP, MEP, and
+IEP.  I think that we would want for starters:
+
+SHARED: one off in the run-time
+
+XEP_0 -> XEP_9, XEP, XEP_REST, XEP_KEY_REST, 
+XEP_KEY, MEP_KEY, MEP_KEY_REST, and
+
+UNIQUE: generated separated for each method
+
+IEPs
+
+> 9. What slots should <function> objects contain.
+
+I'm open to suggestions about carefully chosen sealed subclasses.  For
+starters we're going to need:
+
+ENTRY POINTS
+
+  xep
+  mep
+  iep
+
+REQUIRED
+
+  specializers  
+  number-required	could be computed indirectly from specializers
+  environment
+  next?			method actually uses next-methods list
+
+OPTIONAL
+
+  rest?
+  all-keys?		needed for new proposal (i'm sure there's a
+			clever encoding of this)
+  keyword/defaults	#(keyword-1 default-1 ... keyword-n default-n)
+			stores defaults for literal defaults else %unsupplied?
+			
+MIGHT BE NICE
+
+  debug-name    	perhaps this wants to go away
+  slot-descriptor	useful for optimizing accessors but might not
+			be necessary with sealing and inline call caches
+
+I'm not sure what the best design would be.
+
+What slots have i forgotten?
+
+
+jonathan
+
+
+Subject:  Re: entry points and C back-end
+From:  Tony Mann <tony@harlequin.co.uk>
+Date:  Wed, 2 Mar 1994 15:54:42 GMT
+
+> > 1. Is the new proposal about calling conventions a sensible approach
+> > for the native code backend?
+> 
+> I still want to see what are the other entry points you'd be
+> proposing.  I assume that you still want hairy keyword defaults and
+> boxing/unboxing entry points.  What's the complete list?
+
+Without guaranteeing that this list is exhaustive, here's how I expect
+entry points to work: (N.B. entry points available through <function> objects
+are starred)
+
+Entry points for <method> functions
+-----------------------------------
+
+SHARED XEP CODE:
+*external-entry:		[live regs: argcount, function, arg0]
+	check argcount
+	stack allocate any optional args
+	create & init any #key variables (constant defaults)
+no-optionals-direct-entry:	[live regs: function, arg0]
+	// at this point, we have a standard calling convention which
+	// has no support for optional arguments (and yet supports
+	// stack allocated vectors)
+	check classes of required arguments
+	mlist := #F 				// if used
+	goto internal-entry:
+
+SHARED MEP CODE:
+*mlist-entry:			[live regs: function, mlist, arg0]
+	// NB: for methods with no #key, mlist-entry: == internal-entry:
+	create & init any #key variables (constant defaults)
+	goto internal-entry:
+
+SPECIFIC COMPILER GENERATED CODE:
+*internal-entry:		[live regs: function, (mlist if used), arg0]
+	environment := function.environment	// if used
+closure-internal-entry:		[live regs: (environment if used), 
+(mlist if used), arg0]
+	unbox / untag any relevant arguments - leaving the raw value in place
+	call raw-direct-entry:			// usually a tail jump 
+(which falls thru)
+	box any raw result
+	return
+raw-direct-entry:		[live regs: (environment if used), (mlist if 
+used), arg0]
+	do non-constant keyword defaulting
+innermost-entry:
+	do main body of code
+	return
+
+
+Entry points for <generic-function> functions
+---------------------------------------------
+
+SHARED XEP_GF CODE:
+*external-entry:		[live regs: argcount, function, arg0]
+	mlist := <a unique value to show no call-cache>
+	goto mlist-entry:	// will fall through for native code
+
+SHARED MEP_GF CODE:
+*mlist-entry:			[live regs: argcount, function, mlist, 
+arg0]
+	check argcount
+	stack allocate any optional args
+	goto internal-entry:
+
+STANDARD DISPATCH TEMPLATE CODE:
+*internal-entry:		[live regs: function, mlist, arg0]
+	// NB GFs are not closures, and store all their cache tables etc.
+	// in slots in the GF object itself
+	do normal cache lookup
+	update call-cache variable (in mlist)
+	tail call applicable methods
+
+
+
+Entry points for <call-cache-function> functions
+------------------------------------------------
+
+SHARED XEP_CF CODE:
+*external-entry:		[live regs: argcount, function, arg0]
+	function := function.generic-function
+	tail-call function.external-entry
+
+SHARED MEP_CF CODE:
+*mlist-entry:			[live regs: argcount, function, mlist, 
+arg0]
+	// NB there is no need to check the argcount. It must be OK.
+	// the argcount register is only used if there are optional args.
+	if (args are valid against cache data) then
+		mlist := remaining methods (if needed)
+		function := cached-method
+		stack allocate any optional args
+		create & init any #key variables for cached-method
+		tail-call function.internal-entry
+	else // cache miss
+		function := function.generic-function
+		tail-call function.mlist-entry
+	endif
+
+SHARED IEP_CF CODE:
+*internal-entry		[live regs: function, mlist, arg0]
+	function := function.generic-function
+	tail-call function.internal-entry
+
+[ ... ]
+> > 4. Does it make sense to stack allocate optional args in C?
+> 
+> yes and it should be fairly easy (especially because we only have to
+> worry about allocating one type of class, a <stack-vector>).
+
+Any reason why this can't be <simple-object-vector> ??
+
+[ ... ]
+
+> > 7. Which special purpose entry points do we wish to provide for the
+> > native code backend (e.g. xep_rest_22)??
+> 
+> I'm not sure.  It could be that the native back-end could get by with
+> less than C because varargs is much lighter-weight.  But you're the
+> expert Tony.
+
+I'll have more of a think about this once Eliot & I have got the GLUE
+deliverable out the way.
+
+> > 8. Which special purpose entry points do we want for the C backend.
+> 
+> If we can get tail calls to work in GCC then we might want the same
+> ones.  Otherwise, I would say that we should only have XEP, MEP, and
+> IEP.  I think that we would want for starters:
+> 
+> SHARED: one off in the run-time
+> 
+> XEP_0 -> XEP_9, XEP, XEP_REST, XEP_KEY_REST, 
+> XEP_KEY, MEP_KEY, MEP_KEY_REST, and
+
+You may also need 
+	XEP_REST_0 - XEP_REST_9  (will save having to do APPLY)
+	
+You may also need some differnt oned for GFs and Cache functions, in order to
+fit in with the different uses of entry points outlined above. We need to
+talk some more about this.
+
+> UNIQUE: generated separated for each method
+> 
+> IEPs
+
+
+
+> > 9. What slots should <function> objects contain.
+> 
+> I'm open to suggestions about carefully chosen sealed subclasses.  For
+> starters we're going to need:
+> 
+> ENTRY POINTS
+> 
+>   xep
+>   mep
+>   iep
+> 
+> REQUIRED
+> 
+>   specializers  
+>   number-required	could be computed indirectly from specializers
+>   environment
+>   next?			method actually uses next-methods list
+
+All these last 4 are needed for <method> functions. But only number-required
+is needed for GFs or cache functions.
+
+> 
+> OPTIONAL
+> 
+>   rest?
+>   all-keys?		needed for new proposal (i'm sure there's a
+> 			clever encoding of this)
+This is only used for GFs / cache funcs, I think ??
+
+>   keyword/defaults	#(keyword-1 default-1 ... keyword-n default-n)
+> 			stores defaults for literal defaults else %unsupplied?
+This is only used for <method>.
+
+> 			
+> MIGHT BE NICE
+> 
+>   debug-name    	perhaps this wants to go away
+>   slot-descriptor	useful for optimizing accessors but might not
+> 			be necessary with sealing and inline call caches
+> 
+> I'm not sure what the best design would be.
+
+I haven't thought this through yet - so I don't have much to add here.
+
+> 
+> What slots have i forgotten?
+
+There will be some specific ones for <generic-function> and
+<call-cache-function>, as all the cache data should be stored in the function
+object. I haven't thought about this in detail.
+
+-- Tony
+
+
+Subject:  Some preliminary design notes on calling conventions
+From:  Keith Playford <keith@functionalobjects.com>
+Date:  Sun, 27 Feb 1994 23:17:03 GMT
+
+   From: Tony Mann <tony@harlequin.co.uk>
+   Date: Fri, 25 Feb 94 15:12:28 GMT
+
+   [...]
+
+   The arg passing convention
+   --------------------------
+
+   Arguments are pushed onto the stack in reverse order (i.e. the rightmost
+   argument is pushed first). The first (or first few) arguments are passed in
+   registers. [...]
+
+   This calling convention has the following advantages:
+
+	   - required arguments can always be found (even before stack fixing)
+
+	   - optional arguments appear in the same order in memory as
+             they would if vectored up as #rest variables
+
+	   - Stack allocating the optional arguments as vectors is now
+             trivial. 
+
+This is an obvious question but I'm interested.
+
+On systems where the convention is that stacks grow up instead of down
+what will the argument passing strategy be? We can buck any local
+convention of course but that forces a stack switch on foreign calls,
+something I thought we were trying to avoid.
+
+Perhaps all the systems we're interested in have stacks that grow
+down?  
+  
+-- Keith
+
+
+Subject:  Re: Some preliminary design notes on calling conventions
+From:  Tony Mann <tony@harlequin.co.uk>
+Date:  Mon, 28 Feb 1994 13:00:32 GMT
+
+Keith,
+
+> This is an obvious question but I'm interested.
+> 
+> On systems where the convention is that stacks grow up instead of down
+> what will the argument passing strategy be? We can buck any local
+> convention of course but that forces a stack switch on foreign calls,
+> something I thought we were trying to avoid.
+> 
+> Perhaps all the systems we're interested in have stacks that grow
+> down?  
+
+A good question. 
+
+In fact, all the machines that I can think of that we might be
+interested in happen to have stacks that grow down - with ONE
+exception. The exception is the HP PA - where the standard C
+convention (for Unix) is that stacks grow upwards.
+
+LispWorks gets around this by bucking the local convention and using a
+separate stack from C. I suggest that this would be a very BAD idea for
+Dylan (as I expect us to have a much lighter-weight FFI).
+
+I suggest that for such architectures we also use the new argument
+passing proposal. We adopt one or other of the following options in
+order to make stack allocation of #rest vectors possible:
+
+	1. We invent a new class <stack-vector>. Stack allocated
+	vectors are instances of this class. The class is identical to
+	<simple-object-vector> for all implementations except the HP
+	PA. On the HP PA it is a new subclass of <vector> with
+	elements stored in reverse order.
+
+	2. The stack fixers reverse the arguments in place on the
+	stack. We can then continue to stack allocate
+	<simple-object-vector> 
+
+Of these, I prefer option 1. It suggests that we should build
+<stack-vector> into our library now  - e.g. with
+
+	define constant <stack-vector> = <simple-object-vector>
+
+For the HP PA we would have a class definition instead - along with
+methods for element etc.
+
+The compiler should annotate the ICR with information that #rest
+variables are of type <stack-vector>, not <simple-object-vector>.
+
+-- Tony
+
+
+Subject:  Some preliminary design notes on calling conventions
+From:  Keith Playford <keith@functionalobjects.com>
+Date:  Mon, 28 Feb 1994 14:58:40 GMT
+
+   From: Tony Mann <tony@harlequin.co.uk>
+   Date: Mon, 28 Feb 94 13:00:32 GMT
+
+   > Perhaps all the systems we're interested in have stacks that grow
+   > down?  
+
+   [...]
+
+   I suggest that for such architectures we also use the new argument
+   passing proposal. We adopt one or other of the following options in
+   order to make stack allocation of #rest vectors possible:
+
+	   1. We invent a new class <stack-vector>. Stack allocated
+	   vectors are instances of this class. The class is identical to
+	   <simple-object-vector> for all implementations except the HP
+	   PA. On the HP PA it is a new subclass of <vector> with
+	   elements stored in reverse order.
+
+I think this requires either an argument shift to make space for the
+vector object header on the stack or that <stack-vector>s be some kind
+of stack-allocated trampoline.
+
+	   2. The stack fixers reverse the arguments in place on the
+	   stack. We can then continue to stack allocate
+	   <simple-object-vector> 
+
+What's the overhead of a shift compared to a reversal?
+
+   Of these, I prefer option 1. It suggests that we should build
+   <stack-vector> into our library now  - e.g. with
+
+	   define constant <stack-vector> = <simple-object-vector>
+
+Looks good to me.
+
+-- Keith
+
+
+Subject:  Some preliminary design notes on calling conventions
+From:  Keith Playford <keith@functionalobjects.com>
+Date:  Mon, 28 Feb 1994 15:06:21 GMT
+
+   From: Keith Playford <keith>
+   Date: Mon, 28 Feb 94 09:58:40 EST
+ 
+   [...]
+
+	      2. The stack fixers reverse the arguments in place on the
+	      stack. We can then continue to stack allocate
+	      <simple-object-vector> 
+
+   What's the overhead of a shift compared to a reversal?
+
+Sorry, make that a reversal with a shift - you still to make space for
+the header if you take this route.
+
+-- Keith
+
+
+Subject:  Re: Some preliminary design notes on calling conventions
+From:  Tony Mann <tony@harlequin.co.uk>
+Date:  Mon, 28 Feb 1994 15:24:37 GMT
+
+> 	   1. We invent a new class <stack-vector>. Stack allocated
+> 	   vectors are instances of this class. The class is identical to
+> 	   <simple-object-vector> for all implementations except the HP
+> 	   PA. On the HP PA it is a new subclass of <vector> with
+> 	   elements stored in reverse order.
+> 
+> I think this requires either an argument shift to make space for the
+> vector object header on the stack or that <stack-vector>s be some kind
+> of stack-allocated trampoline.
+
+Correct - it requires an argument shift. This is true whether we use
+<stack-vector> or <simple-object-vector>. We have to shift to make way
+for the #rest variable, as well as for the object header. For
+keywords, the shift must also make way for the #key variables.
+
+> 
+> 	   2. The stack fixers reverse the arguments in place on the
+> 	   stack. We can then continue to stack allocate
+> 	   <simple-object-vector> 
+> 
+> What's the overhead of a shift compared to a reversal?
+
+A shift requires shuffling along the required parameters only. Because
+the arguments end up in the same order in memory, it can normally be
+achieved with a very tight inner loop. (The loop is actually a single
+instruction on the 486 !! ). 
+
+A reversal requires reversing the optional parameters only. Because of
+the reordering, each time around the loop which does this is likely to
+take about 2 to 3 times as for a shift. The size of the reversal must
+be determined dynamically, which means that the loop initialization
+will be slower too. I'm not sure if there are likely to be more
+required arguments than optional arguments in practice.
+
+But since doing the reversal doesn't get rid of the need for the shift
+anyway, the comparison is academic.
+
+> 
+>    Of these, I prefer option 1. It suggests that we should build
+>    <stack-vector> into our library now  - e.g. with
+> 
+> 	   define constant <stack-vector> = <simple-object-vector>
+> 
+> Looks good to me.
+
+-- Tony
+
+

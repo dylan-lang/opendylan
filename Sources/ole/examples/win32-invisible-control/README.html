@@ -1,0 +1,126 @@
+<HTML>
+<HEAD>
+	<TITLE>Functional Developer Example: win32-invisible-control</TITLE>
+	<LINK REL="stylesheet" TYPE="text/css" HREF="../../examples.css">
+</HEAD>
+
+<BODY>
+
+<H2>win32-invisible-control library</H2>
+
+<HR ALIGN="CENTER">
+
+<P>This project contains an example program that demonstrates use of the
+<b>OLE-control-framework</b> library to create an invisible OLE Control (also
+known as an ActiveX Control).  An invisible control is one that is
+displayed as an icon during form design time, through which its properties
+can be examined and set.  When the program is run, it does not have any
+visual representation or user interface, but it is available to perform
+some service through its <code>IDispatch</code> interface(s).</P>
+
+<P>The <b>OLE-control-framework</b> library is documented in the
+Functional Developer "OLE, COM, ActiveX and DBMS" reference manual.</P>
+
+
+<P>The program consists of the following source files:</P>
+
+<dl>
+  <dt><em>library.dylan</em>
+    <dd> Library and module definitions.
+  <dt><em>windows.dylan</em>
+     <dd>Window management.
+  <dt><em>control.dylan</em>
+     <dd>The OLE Control object class and methods.
+</dl>
+
+<P>The macro call <code>initialize-ole-server</code> at the end of the file
+<em>control.dylan</em> provides the information needed for registering the
+server and automatically creating a class factory when requested by a client.
+Note that it is the flag <code>$OLEMISC-INVISIBLEATRUNTIME</code> that causes
+this to be an "invisible at runtime" control; it just tells the container to
+not display it.  The program's windows are created in the object's
+<code>initialize</code> method and destroyed in the <code>terminate</code>
+method which will be called when the client releases the server.  There is
+both a main window and a "document" window; the main window is never actually
+shown, but it needs to exist to serve as a foster parent for the document
+window.  The document window is the image that will be displayed at design
+time.</P>
+
+<P>In order for the control to work when invoked from a client program, all of
+the libraries used by your control need to either be in the same directory as
+the server file, or else in a directory which is in the system PATH (not the
+individual user's PATH on NT). The simplest way to accomplish this is to use
+the "Project &gt; Build Release" command to create a release directory. If you
+wish, you can move that directory to any location you want, but you must do so
+before you attempt to register the control.  </P>
+
+<P>To register the control, use the <code>regsvr32</code> command line
+utility like this:</P>
+
+  <blockquote><code>regsvr32 win32-invisible-control.dll</code></blockquote>
+
+<P>(The complete pathname will need to be given if the file is in a
+different directory that is not in the PATH.)  This will cause the
+appropriate entries to be made in the Windows System Registry. (For
+use in a batch script, the "<code>/s</code>" option may be used to suppress the
+dialog box reporting completion.) The full pathname of the control
+is recorded, so you must unregister the control before you move or delete it.
+You can unregister it by doing:</P>
+
+<BLOCKQUOTE><CODE>regsvr32 /u win32-ole-server.dll</CODE></BLOCKQUOTE>
+
+<P>This invokes the server to unregister itself, so won't work
+if the server has been deleted first.</P>
+
+<P>To use this control from Visual Basic 5.0, in the VB "Project" menu (or
+from a right-click on the tool palette), invoke "Components".  In the
+"Controls" tab, look for the line that says "Dylan invisible-at-runtime
+control example".  (Note that this comes from the <code>documentation</code>
+option of the <code>define coclass</code> form in <em>control.dylan</em>.)
+Click the check box to select it, the press the "OK" button.  An icon
+representing the control is added to the tool palette.  Its tool tip name is
+"InvisCtl", which comes from the "name" option of the coclass.  Double click
+on the icon to insert the control into the current form.  When the icon in the
+form is selected, its property values can be examined and modified, and the
+new values will be saved as part of the Visual Basic program.  This example
+has no direct user interface, even at design time.<P>
+
+<P>This example program really doesn't do anything; it is just a skeleton that
+you can extend to create a useful application.  Note that the class
+<code>&lt;my-dispinterface&gt;</code> defines an IDispatch interface that will
+provide some service to the client.  Here it is shown with two properties
+(called <code>dummy-integer-property</code> and
+<code>dummy-string-property</code>) and one function (called
+<code>dummy-function</code>) which don't really do anything; they just serve
+to illustrate how properties and methods are defined and how the values of
+properties can be made persistent as part of the client application's data.</P>
+
+<P>So to extend this example into a real application, some of the things you
+would want to do are:</P>
+<UL>
+ <LI>Change the library and module names.</LI>
+
+ <LI>In file <em>control.dylan</em>, replace the interface ID and class ID
+   (in the two <code>uuid</code> clauses) with your own ID values, which you
+    can get from the <code>create-id</code> utility.</LI>
+
+ <LI>Change the documentation, prog-id and title strings in the <code>define
+   coclass</code> and <code>initialize-ole-control</code> forms.  You will
+   probably want to add <code>name</code> and <code>documentation</code>
+   clauses to the <code>define dispatch-interface</code> form.</LI>
+
+ <LI>Replace the <code>dummy-...</code> dispatch members with whatever you
+   need to implement your application.</LI>
+
+ <LI>Adjust the design-time visual representation as desired.  In file
+   <em>windows.dylan</em>, see function <code>draw-image</code> and related
+   constants <code>$image-width</code>, <code>$image-height</code>,
+   and <code>$caption-message</code>.</LI>
+
+ <LI>You could optionally add a resource file to the project that specifies
+   an icon which will be shown in the Visual Basic tool bar.</LI>
+</UL>
+
+</BODY>
+
+</HTML>

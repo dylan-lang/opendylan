@@ -1,0 +1,5 @@
+define variable
+// ---*** Do we have any (more) adjectives for this?
+define XadjectiveX variable %e%(*Xvariable-nameX*)
+    :: <XtypeX>
+  = XexprX;

@@ -1,0 +1,479 @@
+Subject:  Re: In line call caches
+From:  Tony Mann <tony@harlequin.co.uk>
+Date:  Thu, 17 Feb 1994 16:04:02 GMT
+
+Eliot,
+
+> I think I have an improvement. It starts with the nearly same idea:
+> 
+> >If the compiler knows it is compiling a call to a GF which requires a
+> >dynamic dispatch, then it reserves an invisible variable for storing a
+> >"call-cache".
+> 
+> The call is implemented by doing an indirect function call (or tail-call) to
+> the function pointed to by the variable.  The compiler/linker initialises
+> the pointer to point to the default call-cache for that generic function.
+> (i.e. there is at link time one call cache pre-allocated per generic 
+function).
+
+I have now had a bit of a think about this. 
+
+If I could just summarize the difference, and attempt to establish a
+naming convention: In Eliot's scheme, the cache is implemented by a
+dedicated function (which I'll call the "cache function"). This
+function is stored in a slot inside the call cache object itself
+(which I'll call the "cache object" - sounds a bit like Monty Python,
+doesn't it?). When called, the cache function must be passed the
+address of the variable containing the cache object (dare I call this
+the "cache variable"?).
+
+In Eliot's scheme, the cache function is separate from the generic
+function, so I'll call it the "separate cache function" or SCF scheme.
+In my scheme, the cache function and the generic function are one and
+the same, so I'll call it "integrated cache function" or ICF scheme.
+
+At first I wasn't very keen on Eliot's SCF scheme - mainly because of
+the need for a default cache object for each generic function - but
+also because of the knowledge the cache function and generic function
+must have about each other. However, I now think that this is an
+important improvement. In particular, this sort of call-cache could be
+very effective for functions like AS or MAKE.
+
+One big advantage of the SCF scheme, as Eliot pointed out, is that the
+cache function can be dynamically chosen to be most appropriate for
+the choice of argument specialization required. Although my scheme did
+not describe this, in principle that could also be done for an ICF
+scheme, since we expect to be able to dynamically update the generic
+function - but in this case we don't get the flexibility of doing this
+per call-site, and may only do it per generic function.  (Actually
+this lack of flexibility is not a killer - as I doubt there are too
+many generic functions which have both class and singleton
+specializers on the same argument??)
+
+The other big advantage of the SCF scheme, though, is that the cached
+call transfers control directly to the cache function - whereas with
+an ICF there must be a test first to see whether the GF is being
+called with a cache. In addition, the GF is likely to be a closure,
+and hence has a more expensive calling convention than a normal
+function like the cache function. These are the advantages that swing
+the SCF scheme for me.
+
+> This requires that the runtime contains a number of different handlers for
+> the different permutations of required argument checking.  It seems sensible 
+to
+> support all permutations up to some small number of arguments (like four),
+> and use a generic handler for more arguments.  This handler might use e.g.
+> a byte vector to distinguish between unchecked, singleton & class  
+specialisers.
+
+I agree with the choice of fast handlers. Might there also be a case
+for fast handlers for GFs of up to (say) 8 arguments where
+specialization only happens on the first (or even second) argument? In
+CLOS, I'm sure this is very common - but I'm not so sure about Dylan.
+
+> Jonathan & I discussed this before the Manchester meeting & Jonathan 
+collected
+> some stats on all the dylan files in the Zimmerman compiler.  We don't claim
+> that these are great statistics, simply illustrative of what one might 
+expect.
+> 
+> In this set of figures, # is number of methods with a particular
+> permutation of specialiser types , and the second column gives the particular
+> permutation (unchecked = x, class = C, singleton = S)
+>   # TYPE
+>  14 ?			<- zero argument methods
+>  16 x
+> 352 C
+>  23 S
+>  29 xC
+>   8 xx
+> 182 CC
+>  35 Cx
+>  44 SC
+>   5 CCx
+>  15 CCC
+>  13 xCC
+>   4 xxC
+>   1 xxx
+>   4 xCx
+>   1 CxC
+>   2 CCCC
+>   1 xxCC
+>   1 CxCx
+
+These stats are interesting. Obviously it would be even more
+interesting to see what the ratio of dynamic calls to these types of
+methods is. 
+
+> 
+> Which gives us the following breakdown for the number of handler functions
+> number of required arguments  number of permutations of checking code
+>  0				 1 (same null handler for ? x xx xxx cases)
+>  1				 2
+>  2				 4
+>  3				 6
+>  4				 3
+> 		total:	        16
+
+
+Either you have omitted optimizations for GFs with #rest / #key or
+there is a flaw in this line of reasoning. I assume that the stats
+you showed above only looked at required arguments, and some of the
+methods accepted either #rest or #key args too. Is this right?
+
+In any case, I think we must extend the scheme to handle GFs with
+optional args. To fit in with our calling convention, and to make the
+determination of the required arguments possible at all, the cache
+function must do arg-fixing on the optional args. This means that we
+potentially have 3 times as many cache functions as Eliot described: 1
+for only required parameters, 1 for optionals which must be heap
+allocated and 1 for optionals which can be stack allocated.
+
+I suggest that we always stack allocate the optional args in GFs. Any
+method which wishes to give the #rest parameter indefinite extent must
+then heap allocate it itself. I suspect that this approach may be
+best, because I imagine that the indefinite extent case will be very
+unlikely. If we adopt this approach, then we can reduce the number of
+possible stack functions from 48 to 32.
+
+In the case of a cache miss, then the cache function must call the GF
+with the optional args already stack fixed (i.e. using a no-optionals
+convention). This is actually more consistent with our conventions for
+calling methods, since for methods stack fixing has already occurred
+whenever an MList value is passed. Since the GF no longer has to do
+stack fixing when called in this way, we can go back to the convention
+of passing -1 as an argcount to show that MList is live. This means
+that our calling convention can now support 254 arguments, instead of
+127 as for the ICF scheme.
+
+> 
+> Note that the handlers would be coded in-line (no loops) and probably in
+> assembler.  As an example here's "C" for the SC checker:
+
+Initially we might code these in assembler. Ultimately, they should be
+either be coded in HARP or (if possible) SYSLISP.
+
+-- Tony
+
+Subject:  [eliot@ircam.fr: Re: In line call caches]
+From:  Eliot
+Date: Thu, 17 Feb 94 18:34:33 MET
+
+
+Tony T. Mann writes:
+>
+>One big advantage of the SCF scheme, as Eliot pointed out, is that the
+>cache function can be dynamically chosen to be most appropriate for
+>the choice of argument specialization required. Although my scheme did
+>not describe this, in principle that could also be done for an ICF
+>scheme, since we expect to be able to dynamically update the generic
+>function - but in this case we don't get the flexibility of doing this
+>per call-site, and may only do it per generic function.  (Actually
+>this lack of flexibility is not a killer - as I doubt there are too
+>many generic functions which have both class and singleton
+>specializers on the same argument??)
+
+Quite.  I think that if we want to wring the last possible drop of speed out of
+this case we'll need to provide good optional profiling code.
+
+For example, (appologies for pointing out the obvious) in the following case:
+
+		<doobie_class>
+		/	     \
+	  <bar_class>	<baz_class>
+
+	method de_doo_ron_ron(diana :: <doobie_class>)
+
+with two call sites, one of which passes an instance of bar_class, the other
+of which passes an instance of baz_class, its clear that if the two call sites
+share the same call cache there's a possibility of thrashing.  There's then
+a time/space tradeoff to be made on the number of call caches, given that its
+possible for each call site to have a different call cache.  
+
+The in-line cache idea works because the same call site is extremely likely to
+use the same types of arguments in subsequent calls.  Therefore the sensible
+thing to do would be to dynamically allocate a call caches per method per
+permutation of argument types.  When a cached call misses the cache, its
+cache pointer is updated to point to a call cache with the correct set of
+argument types.  So in this example, if de_doo_ron_ron only gets invoked
+with bars & bazs but no doobies (:-() only two call caches are created.
+
+
+Further, in the case of a single call site which always thrashes, (e.g.
+a map over a list of alternating bar & baz instances, which we've observed
+in some CAPI code we looked at), the best thing to do is probably to call the
+generic function directly and use its dispatch code to select the method.
+
+I guess we could consider including code such as:
+	if (arg->class != <doobie_class> &&
+	    arg->class != <bar_class> &&
+	    arg->class != <baz_class)
+		fail;
+but it looks too heavyweight to me, & equivalent code in the generic function
+dispatch makes much more sense:
+	if (arg->class == <doobie_class> ||
+	    arg->class != <bar_class> ||
+	    arg->class != <baz_class)
+		tail_call do_doo_ron_ron;
+
+To detect whether its sensible to do this we need to count both cache hits
+and cache misses on a per call site basis.  This would be easy to implement,
+but expensive in the number of call caches allocated, and the counting in the
+cache checking code.  I suspect that in the development environment it
+would be sensible for the generic function to always count when its invoked
+on a cache miss (easiliy identified from the cache data, handler != GF on a
+cache miss).  The programmer can then ask to list generic functions by cache
+miss count, and profile those generic functions.  A profiled generic function
+would then maintain call caches per method/call-site pair rather than
+call-caches per method and argument type permutation.  Whats nice about this is
+it doesnt require global recompilation; we only need to recompile the checking
+code in the GF's methods, and change the GF's call cache allocation policy.
+
+>The other big advantage of the SCF scheme, though, is that the cached
+>call transfers control directly to the cache function - whereas with
+>an ICF there must be a test first to see whether the GF is being
+>called with a cache. In addition, the GF is likely to be a closure,
+>and hence has a more expensive calling convention than a normal
+>function like the cache function. These are the advantages that swing
+>the SCF scheme for me.
+>
+>> This requires that the runtime contains a number of different handlers for
+>> the different permutations of required argument checking.  It seems sensible
+>> to support all permutations up to some small number of arguments (e.g. 
+four),
+>> and use a generic handler for more arguments.  This handler might use e.g.
+>> a byte vector to distinguish between unchecked, singleton & class 
+>> specialisers.
+>
+>I agree with the choice of fast handlers. Might there also be a case
+>for fast handlers for GFs of up to (say) 8 arguments where
+>specialization only happens on the first (or even second) argument? In
+>CLOS, I'm sure this is very common - but I'm not so sure about Dylan.
+
+Yes, it seems eminently sensible.  We just need to get some numbers from
+a big Dylan application; roll on the compiler!
+
+
+>> In this set of figures, # is number of methods with a particular
+>> permutation of specialiser types , and the second column gives the 
+particular
+>> permutation (unchecked = x, class = C, singleton = S)
+>>   # TYPE
+>>  14 ?			<- zero argument methods
+>>  16 x
+>> 352 C
+>>  23 S
+>>  29 xC
+>>   8 xx
+>> 182 CC
+>>  35 Cx
+>>  44 SC
+>>   5 CCx
+>>  15 CCC
+>>  13 xCC
+>>   4 xxC
+>>   1 xxx
+>>   4 xCx
+>>   1 CxC
+>>   2 CCCC
+>>   1 xxCC
+>>   1 CxCx
+>
+>These stats are interesting. Obviously it would be even more
+>interesting to see what the ratio of dynamic calls to these types of
+>methods is. 
+>
+>> 
+>> Which gives us the following breakdown for the number of handler functions
+>> number of required arguments  number of permutations of checking code
+>>  0				 1 (same null handler for ? x xx xxx 
+cases)
+>>  1				 2
+>>  2				 4
+>>  3				 6
+>>  4				 3
+>> 		total:	        16
+>
+>
+>Either you have omitted optimizations for GFs with #rest / #key or
+>there is a flaw in this line of reasoning. I assume that the stats
+>you showed above only looked at required arguments, and some of the
+>methods accepted either #rest or #key args too. Is this right?
+
+Yes, I had omitted the permutations for that.  See below...
+
+>In any case, I think we must extend the scheme to handle GFs with
+>optional args. To fit in with our calling convention, and to make the
+>determination of the required arguments possible at all, the cache
+>function must do arg-fixing on the optional args. This means that we
+>potentially have 3 times as many cache functions as Eliot described: 1
+>for only required parameters, 1 for optionals which must be heap
+>allocated and 1 for optionals which can be stack allocated.
+
+I'm being dense (read: he's only a thick-as-pig-shit Smalltalk hacker)
+but why do you only need 3 additional permutations rather than 5?
+
+I compute
+	arg type permutations *
+		required,
+		+ rest args, + key args, + rest & key args,
+		+ special rest args
+
+what am I missing?  (Smalltalk, clearly)
+
+>
+>I suggest that we always stack allocate the optional args in GFs. Any
+>method which wishes to give the #rest parameter indefinite extent must
+>then heap allocate it itself. I suspect that this approach may be
+>best, because I imagine that the indefinite extent case will be very
+>unlikely. If we adopt this approach, then we can reduce the number of
+>possible stack functions from 48 to 32.
+>
+>In the case of a cache miss, then the cache function must call the GF
+>with the optional args already stack fixed (i.e. using a no-optionals
+>convention). This is actually more consistent with our conventions for
+>calling methods, since for methods stack fixing has already occurred
+>whenever an MList value is passed. Since the GF no longer has to do
+>stack fixing when called in this way, we can go back to the convention
+>of passing -1 as an argcount to show that MList is live. This means
+>that our calling convention can now support 254 arguments, instead of
+>127 as for the ICF scheme.
+>
+>> 
+>> Note that the handlers would be coded in-line (no loops) and probably in
+>> assembler.  As an example here's "C" for the SC checker:
+>
+>Initially we might code these in assembler. Ultimately, they should be
+>either be coded in HARP or (if possible) SYSLISP.
+
+I strongly agree, I only meant to imply they were coded at a very low-level.
+HARP should be low enough :-)
+
+>-- Tony
+>
+
+-- 
+Eliot 
+
+
+Subject:  [tony: Re: In line call caches]
+From:  Tony Mann <tony@harlequin.co.uk>
+Date:  Fri, 18 Feb 1994 12:04:37 GMT
+
+> > ... Although my scheme did
+> >not describe this, in principle that could also be done for an ICF
+> >scheme, since we expect to be able to dynamically update the generic
+> >function - but in this case we don't get the flexibility of doing this
+> >per call-site, and may only do it per generic function.  (Actually
+> >this lack of flexibility is not a killer - as I doubt there are too
+> >many generic functions which have both class and singleton
+> >specializers on the same argument??)
+> 
+> Quite.  I think that if we want to wring the last possible drop of speed out 
+of
+> this case we'll need to provide good optional profiling code.
+> 
+> ...
+>
+> with two call sites, one of which passes an instance of bar_class, the other
+> of which passes an instance of baz_class, its clear that if the two call 
+sites
+> share the same call cache there's a possibility of thrashing.  There's then
+> a time/space tradeoff to be made on the number of call caches, given that its
+> possible for each call site to have a different call cache.  
+
+I think you misunderstood me here (although I could have that the
+wrong way around :-) The point of the call cache is that you don't get
+this type of thrashing, because there is a different cache variable
+per call site.
+
+The point I was (poorly) trying to make was that although my scheme
+does give genuine call-site caches with a separate variable per call
+site, the modification of the validity-test code (which decides
+whether to do a singleton match or a class match) can only be updated
+on a per-GF basis, and not on a per-call site basis (as with the SCF
+scheme). The cache *data* is still per-call site, though.
+
+I don't think this deficiency is too serious, because I suspect that
+it will be unlikely that 2 different cache objects for the same GF will
+ever actually use different validity-test code. I could be wrong here,
+though. 
+
+> Further, in the case of a single call site which always thrashes, (e.g.
+> a map over a list of alternating bar & baz instances, which we've observed
+> in some CAPI code we looked at), the best thing to do is probably to call the
+> generic function directly and use its dispatch code to select the method.
+
+I agree with this. But as discussed with Andy, it will be difficult
+for the compiler to spot this case.
+
+> To detect whether its sensible to do this we need to count both cache hits
+> and cache misses on a per call site basis.  This would be easy to implement,
+> but expensive in the number of call caches allocated, and the counting in the
+> cache checking code.  
+
+Maybe a better way to do this would be to have 2 consecutive cache
+variables - one for the (shared) cache object and one to store private
+statistics about cache performance. This would be a development
+environment option only.
+
+
+> I'm being dense (read: he's only a thick-as-pig-shit Smalltalk hacker)
+> but why do you only need 3 additional permutations rather than 5?
+> 
+> I compute
+> 	arg type permutations *
+> 		required,
+> 		+ rest args, + key args, + rest & key args,
+> 		+ special rest args
+> 
+> what am I missing?  (Smalltalk, clearly)
+
+Well, the GF cannot do any special processing on the keywords, because
+different methods have different uses of #key. Hence a GF will process
+any optional arguments as #rest, and then keyword processing within
+the method will make use of the #rest vector. The stack fixing
+function which knows how to process #rest is designed to know about
+special rest args - hence there is no need for a special permutation
+for this. Hence the 3 options are:
+
+	1. required args only
+	2. process #rest with heap allocation
+	3. process #rest with stack allocation
+
+NB. I am considering changing my mind about our calling convention. I
+had thought before that it would be best to push args onto the stack
+in left-to-right order, so that it is easier to code generate
+arguments in the right order. I am now leaning towards the C
+convention which pushes args right-to-left. The C convention makes it
+easier to stack allocate the #rest args. NB I am *not* advocating
+following the C convention of caller-pops-args.
+
+Sometime, I'll get around to mailing some more details about this.
+Anyone got any initial comments, though?
+
+> >> Note that the handlers would be coded in-line (no loops) and probably in
+> >> assembler.  As an example here's "C" for the SC checker:
+> >
+> >Initially we might code these in assembler. Ultimately, they should be
+> >either be coded in HARP or (if possible) SYSLISP.
+> 
+> I strongly agree, I only meant to imply they were coded at a very low-level.
+> HARP should be low enough :-)
+
+Actually, I hope that we can code these at a high level, using
+carefully written Dylan. The only special thing about these handler
+functions is that they have to make use of the address of the cache
+variable - but everything else can be done using normal Dylan
+constructs, I think. If that's true, then we can embed some SYSLISP
+(or rather sys_dylan :-) for the weird bit inside normal Dylan code.
+HARP would be a last resort.
+
+This contrasts with the stack fixing functions themselves (which
+process #rest & #key args). These cannot be written using sys_dylan,
+will certainly be written in assembler to start with, but should
+really be written in HARP.
+
+
+-- Tony
+

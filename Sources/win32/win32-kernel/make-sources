@@ -1,0 +1,62 @@
+
+#  Dylan libraries for interfacing with the Win32 API (Microsoft Windows)
+#
+#  This file controls the generation of source files that are created
+#  automatically by adapting information from the Microsoft header files.
+
+# This version has been tuned to work with the SDK files in the
+# October 1997 MSDN distribution.
+
+# Copyright: 1996, 1998 Functional Objects, Inc.  All rights reserved.
+
+# $HopeName: D-lib-win32-kernel!make-sources(trunk.4) $
+# $Date: 2004/03/12 00:10:27 $
+
+
+#Later:
+#WIN32-KERNEL=winnt.dylan winbase.dylan winnls.dylan wincon.dylan library.dylan
+WIN32-KERNEL=winnt.dylan winbase.dylan winnls.dylan library.dylan
+
+all: $(WIN32-KERNEL)
+
+kernel: $(WIN32-KERNEL)
+
+COMDIR=../win32-common
+
+include $(COMDIR)/sources.mak
+
+#Later:
+#library.dylan: library.src winbase.exp winnls.exp wincon.exp winnt.exp
+library.dylan: library.src winbase.exp winnls.exp winnt.exp
+
+winbase.dylan: $(MSH)winbase.h $(WINPAT) $(PATTERNS) $(COMSLOT) $(OPTDEP) \
+		$(COMDIR)/callback.pat basepat.pat make-sources exclude.text
+	$(GEMA) -f basepat.pat  -f $(WINPAT)  -f $(PATTERNS)  -f $(COMSLOT) \
+		-f $(COMDIR)/callback.pat  $(OPTIONS) -exclude exclude.text \
+		-f $(COMDIR)/modcopyr.pat  -module Win32-Kernel \
+		-exports winbase.exp  $(MSH)winbase.h $@
+
+winnls.dylan: $(MSH)winnls.h $(WINPAT) $(PATTERNS) make-sources
+	$(GEMA) -p 'relevant-name:<K>\J_ENUMPROC\J<k>\JW\I=@fail' \
+		-p 'fnname:_=-' \
+  -p '\#define\ <K>\J_ENUMPRO\J<k> $$1_ENUMPRO\J$$2\JA\I=define inline-only constant @export{@type{$$1_ENUMPRO$$2}} \= @type{$$1_ENUMPRO$$2A}\;\n' \
+		-f $(WINPAT) -f $(PATTERNS) -f $(COMSLOT) \
+		-f $(COMDIR)/callback.pat \
+		$(OPTIONS) -f $(COMDIR)/modcopyr.pat  -module Win32-Kernel \
+		-omit LCTYPE  $(MSH)winnls.h $@
+wincon.dylan: $(MSH)wincon.h $(WINPAT) $(PATTERNS) $(COMSLOT) $(OPTDEP)
+	$(GEMA) -f $(WINPAT) -f $(PATTERNS) -f $(COMSLOT) \
+		$(OPTIONS)  -f $(COMDIR)/modcopyr.pat  -module Win32-Kernel \
+		-omit GetLargestConsoleWindowSize  $(MSH)wincon.h $@
+
+# Skip over the portion of "winnt.h" that was already included in 
+# win32-common, and get some selected items from the remainder:
+winnt.dylan: $(MSH)winnt.h $(WINPAT) $(PATTERNS) $(COMSLOT) \
+		$(COMDIR)/appnames.text make-sources nt.pat
+	$(GEMA) -f $(WINPAT) -f $(PATTERNS) -f $(COMSLOT) \
+		-f $(COMDIR)/modcopyr.pat  -module Win32-Kernel \
+		$(SUBSET-OPTIONS)  -f nt.pat \
+		-exports winnt.exp  -in $(MSH)winnt.h -out $@
+
+clean:
+	rm -f $(WIN32-KERNEL) *.bak win*.exp

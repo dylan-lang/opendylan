@@ -1,0 +1,27 @@
+#!/bin/sh
+#
+# Crude hack to generate Dylan FFI declarations from C header files.
+# This is a temporary technique until Collage is available; it only recognizes
+# certain common patterns of usage and ignores declarations that it doesn't
+# understand.  It ignores #include directives, so any included files that 
+# are required need to be explicitly listed.
+#
+# Typical usage:
+#	h-to-dylan -module Foo *.h
+#
+# This says that for each .h file, a corresponding .dylan file will be
+# generated, in module Foo.  There will also be a .exp file generated for
+# each file, which contains a Dylan `export' clause that can be copied into
+# the module definition.
+#
+# Optional argments:
+#   -exclude <file>   -- the file contains a list of names to not be included.
+#   -only <file>      -- only include those names listed in the file.
+#   -exports <file>   -- specify an alternate destination for the export file.
+#   -odir <dir>       -- specify destination directory (default ".").
+#
+# A description of how the conversion works can be found in:
+#   /u/dylan/win32/win32-common/how-to-generate.text 
+
+/u/dylan/local/gema  -f /u/dylan/sources/win32/win32-common/patterns.pat \
+	-odir .  -otyp .dylan  "$@"

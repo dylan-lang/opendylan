@@ -1,0 +1,169 @@
+#-----------------------------------------------------------------------
+# WebMaker, a FrameMaker to WWW converter
+# 
+# Copyright (C) 1995 by The Harlequin Group Limited
+#-----------------------------------------------------------------------
+
+#-----------------------------------------------------------------------
+#
+# Contains definition of:
+#
+#          PARAGRAPH      Default
+#          PARAGRAPH      FMDocumentTitle
+#          PARAGRAPH      SimpleBody
+#          PARAGRAPH      NumberedBody
+#          PARAGRAPH      PreformattedText
+#          PARAGRAPH      FixedWidthText
+#          PARAGRAPH      QuotedText
+#          PARAGRAPH      Ignore
+#          PARAGRAPH      InListSimple
+#          PARAGRAPH      InListNumbered
+
+
+#---------------------------------------------------------------------
+#
+# The Default paragraph provides simple printing.
+
+# Default specifies a simple body paragraph preceded by a number and a
+# space. The number is the character or characters created by FrameMaker
+# autonumbering for this item.
+PARAGRAPH "Default" TYPE Normal
+{
+  ACTIONS
+  {
+    write(*,paragraph(concatenate(number()," ",text()))); 
+  }
+}
+
+#---------------------------------------------------------------------
+#
+# A rule that should never be fired.  Useful sometimes in being sure that
+# you've really removed all uses of a paragraph format.
+
+PARAGRAPH "ErrantParagraph" TYPE Normal
+{
+  ACTIONS
+  {
+    error(concatenate("Errant Paragraph:  ",text()));
+  }
+}
+
+#---------------------------------------------------------------------
+#
+# The title of the Frame document is treated specially:
+# It is TYPE Normal. 
+
+# FMDocumentTitle specifies that text be displayed as a level 1 header
+# followed by a rule.
+
+PARAGRAPH "FMDocumentTitle" TYPE Normal
+{
+  ACTIONS
+  {
+    write(*,heading(1,text())); 
+    write(*,hrule());
+  }
+}
+
+
+#---------------------------------------------------------------------
+#
+# Normal paragraphs.
+
+# SimpleBody specifies a simple body paragraph.
+PARAGRAPH "SimpleBody" TYPE Normal
+{
+  ACTIONS
+  {
+    write(*,paragraph(text()));
+  }
+}
+
+# NumberedBody specifies a simple body paragraph preceded by a number
+# and a space. The number is the character or characters created by
+# FrameMaker autonumbering for this item.
+PARAGRAPH "NumberedBody" TYPE Normal
+{
+  ACTIONS
+  {
+    write(*,paragraph(concatenate(number()," ",text())));
+  }
+}
+
+# PreformattedText specifies that all line breaks, spaces, and tabs
+# of the source text be preserved in the display. Display is in a
+# fixed-width font like Courier.
+PARAGRAPH "PreformattedText" TYPE Normal
+{
+  CONTEXT Preformatted
+  ACTIONS
+  {
+    write(*,text());
+  }
+}
+
+# FixedWidthText specifies display in a fixed-width font.
+PARAGRAPH "FixedWidthText" TYPE Normal
+{
+  ACTIONS
+  {
+    write(*,paragraph(teletype(text())));
+  }
+}
+
+# QuotedText specifies that text be displayed as a BLOCKQUOTE,
+# separated from text above and below by a blank line.
+PARAGRAPH "QuotedText" TYPE Normal
+{
+  CONTEXT Quote
+  ACTIONS
+  {
+    write(*,paragraph(text()));
+  }
+}
+
+# Ignore specifies that the text not be written to HTML or displayed.
+PARAGRAPH "Ignore" TYPE Normal
+{
+  ACTIONS
+  {
+    write(*,comment(concatenate("FM pgf ignored")));
+  }
+}
+
+
+#---------------------------------------------------------------------
+#
+# Normal InList paragraphs.
+
+# InListSimple specifies a paragraph with the same text indentation as
+# the preceding list item.
+PARAGRAPH "InListSimple" TYPE Normal
+{
+  INLIST
+  ACTIONS
+  {
+    write(*,paragraph(text()));
+  }
+}
+
+# InListNumbered specifies a paragraph preceded by a number and a
+# space with the same text indentation as the preceding list item. The
+# number is the character or characters created by FrameMaker
+# autonumbering for this item.
+PARAGRAPH "InListNumbered" TYPE Normal
+{
+  INLIST
+  ACTIONS
+  {
+    write(*,paragraph(concatenate(number()," ",text())));
+  }
+}
+
+
+
+
+
+
+
+

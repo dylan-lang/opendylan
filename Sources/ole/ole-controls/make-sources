@@ -1,0 +1,122 @@
+
+# Do:
+#	make -f make-sources
+# to create the Dylan FFI declarations from the Microsoft header files.
+#
+# Note: this currently works with the header files from either
+#	Visual C++ version 4.2 or from the Platform SDK of January 1998.
+#	Some modifications might be needed for other versions.
+ 
+# Copyright: 1997, 1998 Functional Objects, Inc.  All rights reserved.
+
+# Special note:
+#   If you get this error:
+#
+#	File "oaidl.vtb" line 2: Action is too long.
+#	*** Error code 4
+#	make: Fatal error: Command failed for target `c-ctl.c'
+#
+#   just manually edit file "../ole-automation/oaidl.vtb" to delete the
+#   second line, which isn't needed anyway.
+
+
+WINDIR=..\..\win32\win32-common
+COMDIR=..\com
+OLEDIR=..\ole
+AUTODIR=..\ole-automation
+MSH=..\..\win32\microsoft-headers
+
+GEMA=gema
+
+PATTERNS=$(WINDIR)\patterns.pat
+OLEPAT=$(COMDIR)\ole.pat
+
+DYLAN_FILES=olectl.dylan ocmisc.dylan interfaces.dylan library.dylan
+
+C_FILES=c-ctl.c
+
+all: $(DYLAN_FILES) $(C_FILES)
+
+#    types, constants, and functions
+
+olectl.dylan: $(MSH)\olectl.h $(PATTERNS) $(OLEPAT) \
+		inherited-slots.pat special.pat imported.names
+	$(GEMA) -f $(PATTERNS) -f $(OLEPAT) -exclude imported.names \
+		-f $(WINDIR)\modcopyr.pat  -module Ole-Controls \
+		-f inherited-slots.pat -f special.pat \
+		-in $(MSH)\olectl.h -out $@
+
+ocmisc.dylan: $(MSH)\ocidl.h $(PATTERNS) $(OLEPAT) \
+		inherited-slots.pat special.pat misc-names.text
+	$(GEMA) -f $(PATTERNS) -f $(OLEPAT)  -exports ocmisc.exp \
+		-f $(WINDIR)\modcopyr.pat  -module Ole-Controls \
+		-f inherited-slots.pat -f special.pat -only misc-names.text \
+		-in $(MSH)\ocidl.h -out $@
+
+#    interface declarations
+
+c-ctl.c: $(COMDIR)\cinterf.pat $(MSH)\ocidl.h $(COMDIR)\unknwn.vtb cint.pat \
+		$(COMDIR)\objidl.vtb $(OLEDIR)\oleidl.vtb $(AUTODIR)\oaidl.vtb
+	$(GEMA) -f $(COMDIR)\cinterf.pat  -f cint.pat  -insert ctl-aux.c  \
+		-f $(WINDIR)\copyright.pat -f $(COMDIR)\unknwn.vtb \
+		-f $(COMDIR)\objidl.vtb  -f $(OLEDIR)\oleidl.vtb  \
+		-f $(AUTODIR)\oaidl.vtb \
+		-prolog '#include <objbase.h>' \
+		-in $(MSH)\ocidl.h  -out $@
+
+interfaces.dylan: $(COMDIR)\dinterf.pat $(MSH)\ocidl.h \
+		$(COMDIR)\objidl.vtb make-sources 
+	$(GEMA) -f $(COMDIR)\dinterf.pat  -exports interfaces.exp \
+		-f $(WINDIR)\copyright.pat  -module Ole-Controls \
+		-out $@  $(MSH)\ocidl.h
+
+$(COMDIR)\unknwn.vtb:
+	( cd $(COMDIR) ; $(MAKE) -f make-sources unknwn.vtb )
+
+$(AUTODIR)\oaidl.vtb:
+	( cd $(AUTODIR) ; mv c-auto.c c-auto.c~ ; \
+	  $(MAKE) -f make-sources c-auto.c )
+
+
+# exported symbols written as a side-effect of OLE conversion:
+interfaces.exp: interfaces.dylan
+	touch $@
+
+# collect names to be re-exported from the OLE library:
+olemisc.exp: $(OLEDIR)\library.dylan make-sources
+	$(GEMA) -match -p '@set-wrap{70;\t\s\s\s\s\s}' -p \
+	  '\$$OLEMISC-<F>=,@wrap{\s$$0}@write{imported.names;OLEMISC_$$1\n}' \
+		-p '\E=\N;\B=\t\t' \
+		-in $(OLEDIR)\library.dylan -out $@
+
+# to suppress duplicate definition of constants in both olectl.h and oleidl.h:
+imported.names: olemisc.exp
+
+library.dylan: library.src  $(WINDIR)\include.pat \
+		olectl.exp ocmisc.exp interfaces.exp olemisc.exp
+	$(GEMA) -f $(WINDIR)\include.pat library.src $@
+
+# This notes which slot accessors should not be exported here because the
+# name is inherited from another module:
+inherited-slots.pat: library.src
+	$(GEMA) -match -idchars '_-$$<>@%&*+=/?' \
+	  -p '\Iexport\:\W\{<exports>\}=$$1' \
+	  -p 'exports:<I>-value-setter\I=export-slot\:\\C$$1\=\$$0-value\@end\n;<I>=;?=' \
+	  -in library.src -out $@
+
+
+
+#    ---------------
+
+# tags for Emacs Meta-.
+
+DTAGS=/u/dylan/tools/gnuemacs/dtags
+
+TAGS: $(DYLAN_FILES) extra.dylan
+	$(DTAGS) $(DYLAN_FILES) extra.dylan
+
+tags: TAGS
+
+clean:
+	rm -f $(DYLAN_FILES) $(C_FILES) c-ctl.h *.bak *.exp \
+		inherited-slots.pat imported.names TAGS

@@ -1,0 +1,16 @@
+unifyexe
+gcc -o $(full-exe-name) -L$(personal-lib) -L$(system-lib) $(libraries) $(objects) _main.o $(dylan-support) -lm
+
+assemble
+!as -L -Z -o $(object) $(source)
+ls -l $(object)
+
+ccompile
+gcc -O2 -g -c 
+
+libraries
+-L/usr/lib -L/usr/X11R6/lib -L/usr/X11/lib -L/lib -L/usr/X11R6/lib/xrt/lib
+
+libcmt
+-lc
+

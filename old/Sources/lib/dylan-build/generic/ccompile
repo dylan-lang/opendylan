@@ -1,0 +1,1 @@
+cl -c -W3 -DCRTAPI1=_cdecl -DCRTAPI2=_cdecl -nologo -D_X86_=1 -DWINVER=0x0400 -DWIN32  -D_WIN32 -D_MT -D_DLL -MD -Z7 -Od /I%WEBSTER_SYSTEM_INCLUDE% /c

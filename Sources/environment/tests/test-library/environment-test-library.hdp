@@ -1,0 +1,14 @@
+Hdp-Version:      1 0
+Library:          environment-test-library
+Synopsis:         A library to be used by the environment test suite
+Author:           Andy Armstrong
+Copyright:        Copyright (c) 1998-2000 Functional Objects, Inc. All rights reserved.
+Major-Version:    2
+Minor-Version:    1
+Files:  library
+	module
+        classes
+Linker-Options:   $(guilflags)
+Compilation-Mode: loose
+Start-Function:   start-project
+Target-Type:      dll

@@ -1,0 +1,39 @@
+// Icons borrowed from Functional Developer
+//
+
+// Program and document icons
+// We use this name to ensure it's the first icon to be picked up by the installer
+//
+AAA   ICON DISCARDABLE "deuce.ico"
+DEUCE ICON DISCARDABLE "deuce.ico"
+
+// Tool bar icons
+//
+UNDO         ICON DISCARDABLE "undo.ico"
+REDO         ICON DISCARDABLE "redo.ico"
+CUT          ICON DISCARDABLE "cut.ico"
+COPY         ICON DISCARDABLE "copy.ico"
+PASTE        ICON DISCARDABLE "paste.ico"
+FIND         ICON DISCARDABLE "find.ico"
+REPLACE      ICON DISCARDABLE "replace.ico"
+FINDNEXT     ICON DISCARDABLE "find-next.ico"
+FINDPREVIOUS ICON DISCARDABLE "find-previous.ico"
+NEW          ICON DISCARDABLE "new.ico"
+OPEN         ICON DISCARDABLE "open.ico"
+SAVE         ICON DISCARDABLE "save.ico"
+
+// Deuce/Debugger bitmaps
+//
+POTENTIALBREAKPOINT ICON DISCARDABLE "potential-break.ico"
+ENABLEDBREAKPOINT   ICON DISCARDABLE "enabled-break.ico"
+DISABLEDBREAKPOINT  ICON DISCARDABLE "disabled-break.ico"
+STEPBREAKPOINT      ICON DISCARDABLE "step-break.ico"
+TESTBREAKPOINT      ICON DISCARDABLE "test-break.ico"
+ENABLEDTRACEPOINT   ICON DISCARDABLE "enabled-trace.ico"
+DISABLEDTRACEPOINT  ICON DISCARDABLE "disabled-trace.ico"
+PROFILEPOINT        ICON DISCARDABLE "profile.ico"
+CURRENTLOCATION     ICON DISCARDABLE "current-location.ico"
+PROMPT              ICON DISCARDABLE "prompt.ico"
+VALUES              ICON DISCARDABLE "values.ico"
+WARNING             ICON DISCARDABLE "warning.ico"
+SERIOUSWARNING      ICON DISCARDABLE "serious-warning.ico"

@@ -1,0 +1,70 @@
+#!/usr/local/bin/bash
+#      Script: dist-cand-one-site
+#      Author: Doug Dodds
+usage=" Usage: $0 <site-name> <release-name> <candidate-name> [<filename> [<filename> ...]]"
+#   Synopsis: A script to copy the components of a candidate build from 1CC
+#             to one other site.  Generally called under the 
+#             script distribute-candidate.
+#             (Now suspended:)
+#             Supports the following special case: if the site being copied
+#             to is cam, follow the copy of each file with a copy of the
+#             same file from cam to long.  (Assumes very high-speed link
+#             between those sites; optimizes transatlantic traffic.)
+#             Accepts a list of files to be copied, for flexibility; if
+#             the list is null, defaults to a "standard" full set.
+#             
+###################################################################
+
+# parse the arguments
+
+site=$1
+case $site in
+    long) ;;
+#   cam) ;;
+    ed) ;;
+#   seattle) ;;
+#   menlo) ;;
+    1cc) echo "$0: Can't copy from 1CC to 1CC."
+         exit 2 ;;
+    *) echo "$0: Error - Site $site unrecognized"
+       echo $usage
+       exit 2 ;;
+esac
+
+shift
+release_name=$1
+if test -z $release_name; then
+    echo "  Need a release name."
+    echo $usage
+    exit 1
+fi
+
+shift
+candidate_name=$1
+if test -z $candidate_name; then
+    echo "  Need a candidate name."
+    echo $usage
+    exit 1
+fi
+
+shift
+files=$*
+
+if test -z "$files"; then
+    files=`cat $release_name.files`
+fi
+
+
+for file in $files
+do
+
+daas "nohup rcp aragorn.functionalobjects.com:/u/dylan/releases/$release_name/$candidate_name/$file /u/dylan/releases/$release_name/$candidate_name" $site
+
+# if test $site = "cam"; then
+#     daas "nohup rcp ventral.cam.harlequin.co.uk:/u/dylan/releases/$release_name/$candidate_name/$file /u/dylan/releases/$release_name/$candidate_name" long &
+#
+# fi
+
+done
+
+#eof

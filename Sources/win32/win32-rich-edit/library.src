@@ -1,0 +1,40 @@
+Module:    Dylan-user	%comment  -*- Mode: Dylan -*-
+Synopsis:  Win32 API for "rich edit" controls in "RICHEDIT.H", "RICHED32.DLL"
+Copyright: Copyright (c) 1996-2000 Functional Objects, Inc. All rights reserved.
+
+%comment $HopeName: D-lib-win32-rich-edit!library.src(trunk.6) $
+
+// Note: there isn't any "RICHED32.LIB"; the user needs to 
+//       do an explicit dynamic load of "RICHED32.DLL".
+
+define library Win32-Rich-Edit
+  use Dylan;
+  use C-FFI;
+  use Win32-common;
+  use Win32-User;
+  use Win32-GDI;
+  export Win32-Rich-Edit;
+end;
+
+define module Win32-Rich-Edit
+  use Dylan;
+  use C-FFI;
+  use Win32-common,
+    export: {// this library adds methods to these generic functions:
+	     cb-value, cb-value-setter, flags-value, flags-value-setter };
+  use Win32-User,
+    export: {$EM-SCROLLCARET, $WM-CONTEXTMENU, $WM-NOTIFY,
+	     <NMHDR>, <LPNMHDR>, hwndFrom-value, idFrom-value, code-value,
+	     hwndFrom-value-setter, idFrom-value-setter, code-value-setter,
+	     // this library adds methods to these generic functions:
+	     cbSize-value, cbSize-value-setter,
+	     cch-value, cch-value-setter,
+	     hdc-value, hdc-value-setter,
+	     lParam-value, lParam-value-setter,
+	     wParam-value, wParam-value-setter };
+
+  use Win32-GDI, import: { $LF-FACESIZE };
+
+%include richedit.exp
+
+end module Win32-Rich-Edit;

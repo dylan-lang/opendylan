@@ -1,0 +1,13 @@
+define generic
+// ---*** Do we have any (more) adjectives for this?
+// ---*** Do we have any "options" for this?
+define XadjectiveX generic %e%(Xgeneric-nameX)
+    (XnameX :: <XtypeX>,
+     XnameX == XexprX,
+     #next XnameX,
+     #rest XnameX,
+     #key XkeyX: XkeyX = XexprX,
+     #all-keys)
+ => (XnameX,
+     #rest XnameX)
+;

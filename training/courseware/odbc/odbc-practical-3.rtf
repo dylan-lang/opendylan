@@ -1,0 +1,44 @@
+{\rtf1\ansi \deff7\deflang1033{\fonttbl{\f1\froman\fcharset2\fprq2 Symbol;}{\f5\fswiss\fcharset0\fprq2 Arial;}{\f7\fswiss\fcharset0\fprq2 MS Sans Serif;}{\f49\fswiss\fcharset0\fprq2 Tahoma;}}{\colortbl;\red0\green0\blue0;
+\red0\green0\blue255;\red0\green255\blue255;\red0\green255\blue0;\red255\green0\blue255;\red255\green0\blue0;\red255\green255\blue0;\red255\green255\blue255;\red0\green0\blue128;\red0\green128\blue128;\red0\green128\blue0;\red128\green0\blue128;
+\red128\green0\blue0;\red128\green128\blue0;\red128\green128\blue128;\red192\green192\blue192;}{\stylesheet{\widctlpar \f7\fs20 \snext0 Normal;}{\s1\qr\keepn\widctlpar \b\shad\f5\fs32\lang2057 \sbasedon0\snext0 heading 1;}{
+\s2\li-900\ri-720\keepn\widctlpar \b\f7\fs20\lang2057 \sbasedon0\snext0 heading 2;}{\*\cs10 \additive Default Paragraph Font;}{\s15\widctlpar \cbpat9 \f49\fs20 \sbasedon0\snext15 Document Map;}{\s16\widctlpar\tqc\tx4320\tqr\tx8640 \f7\fs20 
+\sbasedon0\snext16 footer;}{\*\cs17 \additive\sbasedon10 page number;}{\s18\widctlpar\tqc\tx4320\tqr\tx8640 \f7\fs20 \sbasedon0\snext18 header;}{\s19\li720\widctlpar \f5\fs32\lang2057 \sbasedon0\snext19 Body Text 2;}{\s20\li-810\widctlpar 
+\b\f7\fs20\lang2057 \sbasedon0\snext20 Body Text Indent 2;}{\*\cs21 \additive\b\f5\fs40\ulnone\lang2057\nosupersub \sbasedon10 Slide Title;}{\s22\widctlpar \f5\fs36\lang2057 \sbasedon0\snext22 Slide Body;}{\s23\li90\widctlpar \b\f7\fs20\lang2057 
+\sbasedon0\snext23 Body Text Indent 3;}{\s24\widctlpar \b\f7\fs20\lang2057 \sbasedon0\snext24 Body Text;}}{\info{\title C Types in Dylan}{\author Keith Playford}{\operator Hugh George Greene}{\creatim\yr1998\mo10\dy15\hr21\min43}
+{\revtim\yr1998\mo10\dy16\hr11\min49}{\version2}{\edmins0}{\nofpages1}{\nofwords385}{\nofchars2200}{\*\company  }{\vern57431}}\margl547\margr806\margt446\margb547 \widowctrl\ftnbj\aendnotes\aftnstart0\hyphhotz0\aftnnar\hyphcaps0 \fet0\sectd 
+\psz1\linex0\headery709\footery709\cols2\colsx709\linebetcol\endnhere {\footer \pard\plain \s16\qc\ri360\widctlpar\tqc\tx4320\tqr\tx8640 \f7\fs20 {\cs17\i\shad 
+\par }{\i\lang2057 
+\par }}{\*\pnseclvl1\pnucrm\pnstart1\pnindent720\pnhang{\pntxta .}}{\*\pnseclvl2\pnucltr\pnstart1\pnindent720\pnhang{\pntxta .}}{\*\pnseclvl3\pndec\pnstart1\pnindent720\pnhang{\pntxta .}}{\*\pnseclvl4\pnlcltr\pnstart1\pnindent720\pnhang{\pntxta )}}
+{\*\pnseclvl5\pndec\pnstart1\pnindent720\pnhang{\pntxtb (}{\pntxta )}}{\*\pnseclvl6\pnlcltr\pnstart1\pnindent720\pnhang{\pntxtb (}{\pntxta )}}{\*\pnseclvl7\pnlcrm\pnstart1\pnindent720\pnhang{\pntxtb (}{\pntxta )}}{\*\pnseclvl8
+\pnlcltr\pnstart1\pnindent720\pnhang{\pntxtb (}{\pntxta )}}{\*\pnseclvl9\pnlcrm\pnstart1\pnindent720\pnhang{\pntxtb (}{\pntxta )}}\pard\plain \s20\widctlpar \b\f7\fs20\lang2057 {\f5 An Introduction to Dylan ODBC
+\par 
+\par Practical 3: The Employee Explorer}{\b0\f5 
+\par 
+\par The goal of this practical is again to complete a small DUIM application, this time for displaying an employee hierarchy derived from the Northwind database. This involves making multiple, parameterised queries and the implementation of a liaison function
+.}{\f5 
+\par }{\b0\f5 
+\par Open the }{\f5 employee-explorer}{\b0\f5  project provided.
+\par 
+\par {\pntext\pard\plain\f1\fs20 \'a8\tab}}\pard \s20\fi-360\li360\widctlpar\tx360{\*\pn \pnlvlblt\pnf1\pnstart1\pnindent360\pnhang{\pntxtb \'a8}}{\b0\f5 Build and run }{\f5 employee-explorer}{\b0\f5 
+ just to see what the application does. You will see some dummy data displayed in a Windows-explorer-like two-pane tree view/table view arrangement. The table on the right shows the subordinates of the employee selected on the left.
+\par {\pntext\pard\plain\f1\fs20 \'a8\tab}Open }{\f5 back-end.dylan}{\b0\f5 . You\rquote ll find a number of \ldblquote TODO\rdblquote  comments and a stub implementation generating dummy data.
+\par {\pntext\pard\plain\f1\fs20 \'a8\tab}Four functions need to be implemented for real: }{\f5 do-with-open-database}{\b0\f5 , }{\f5 compute-bosses, compute-subordinates}{\b0\f5 , and the liaison function }{\f5 employee-maker}{\b0\f5 .
+\par }\pard \s20\widctlpar {\b0\f5  
+\par Here\rquote s what each function needs to do.
+\par 
+\par {\pntext\pard\plain\b\f1\fs20 \'a8\tab}}\pard \s20\fi-360\li360\widctlpar\tx360{\*\pn \pnlvlblt\pnf1\pnstart1\pnindent360\pnhang{\pntxtb \'a8}}{\b0\f5 Implement }{\f5 do-with-open-database}{\b0\f5 
+ to establish a default odbc-dbms context and an active connection to the database and user specified by the arguments. Call the argument function in the scope of that established context. All the other functions you need to implement are run within the c
+ontext this function sets up.}{\f5 
+\par {\pntext\pard\plain\b\f1\fs20 \'a8\tab}}{\b0\f5 Implement the }{\f5 employee-maker}{\b0\f5  liaison function. The record it gets as an argument will contain the four fields: }{\f5 employeeId, lastName, firstName, Extension}{\b0\f5  in that
+ order. Concatenate the first and last names together to construct a full name for the employee, and instantiate and return a filled in instance of }{\f5 <employee>}{\b0\f5 
+ (see its source or the Keywords tab in a browser for the keyword names corresponding to the fields and full name).}{\f5 
+\par {\pntext\pard\plain\f1\fs20 \'a8\tab}}{\b0\f5 Implement }{\f5 compute-bosses}{\b0\f5  with this query:}{\f5  \ldblquote select employeeId, lastName, firstName, Extension from employees where reportsTo is null\rdblquote }{\b0\f5 
+. This returns the four fields requested as a record for each employee in the company without a boss. Use a liaison function that calls }{\f5 employee-maker}{\b0\f5  with }{\f5 #f}{\b0\f5  (no boss) and the record. }{\f5 Compute-bosses}{\b0\f5 
+ should return all the query results in a vector.
+\par {\pntext\pard\plain\f1\fs20 \'a8\tab}Implement }{\f5 compute-subordinates}{\b0\f5  with this parameterised query: }{\f5 \ldblquote select employeeId, lastName, firstName, Extension from employees where reportsTo = ?\rdblquote }{\b0\f5 . Supply the }{\f5 
+id}{\b0\f5  of the boss parameter to }{\f5 compute-subordinates}{\b0\f5  as the parameter to the query. Use a liaison function that calls }{\f5 employee-maker}{\b0\f5  with the given }{\f5 boss}{\b0\f5  and the record. }{\f5 Compute-subordinates}{\b0\f5 
+ should return all the query results in a vector.
+\par }\pard \s20\widctlpar {\b0\f5 
+\par You should now have something that queries for bosses and subordinates from Northwind, and converts the results into a hierarchy of  }{\f5 <employee>}{\b0\f5  objects that gets displayed in the UI. Compile and debug.
+\par 
+\par }}

@@ -1,0 +1,67 @@
+#!/usr/local/bin/bash
+#      Script: daas (do-at-all-sites)
+#      Author: Shri Amit(amit)
+usage=" Usage: $0 <Cmd> <Site1>, <Site2> .. .."
+# Opts & Args:   <Cmd>: The command to be executed at <Site>
+#               <Site>: Domain names of valid sites.
+#               Currently the recognized sites are:
+#               1cc, menlo, seattle, cam, ed, and long 
+#
+#    Synopsis: Executes <Cmd> at all <Site>'s specified
+#              Note that if nothing is specified then the cmd is
+#              executed at all sites.
+#############################################################
+## Application exit status legend ##
+## 0: Successful
+## 1: Command not specified
+## 2: Unrecognized site
+
+## Parse the command line and decide the sites and machines ##
+##
+cmd="$1"
+case $cmd in
+    "") echo "A command must be specified"
+        echo $usage
+	exit 1 ;;
+     *) ;;
+esac
+shift
+sites=$@
+case $sites in
+   "") sites="1cc menlo seattle ed cam long" ;;
+    *) ;;
+esac
+for i in $sites; do 
+    case $i in
+	1cc) machine="$machine banshee.functionalobjects.com" ;;
+	long) machine="$machine zaphod.long.harlequin.co.uk" ;;
+	ed) machine="$machine lordosis.ed.harlequin.co.uk" ;;
+	seattle) machine="$machine bright.seattle.functionalobjects.com" ;;
+	menlo) machine="$machine meteor.menlo.functionalobjects.com" ;;
+	cam) machine="$machine ventral.cam.harlequin.co.uk" ;;
+	*) echo "$0: Error - Site $i unrecognized"
+           echo $usage
+           exit 2 ;;
+
+    esac
+done
+
+echo "Starting at: `date`"
+echo "Running $0 with options:"
+echo " The command to execute is: $cmd"
+echo "  The sites to cleanup are: $sites"
+echo "          The machines are: $machine"
+echo "            The logfile is:  $log_file"
+echo "          The directory is:  `pwd`"
+echo
+ 
+for i in $machine; do
+    echo 
+    echo "Starting $cmd at $i"
+    echo
+    rsh $i -n $cmd
+    echo
+    echo "Completed $cmd at $i"
+done
+
+#eof

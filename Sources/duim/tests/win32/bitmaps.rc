@@ -1,0 +1,14 @@
+// Tool bar icons
+//
+CUT             ICON   DISCARDABLE "cut.ico"
+COPY            ICON   DISCARDABLE "copy.ico"
+PASTE           ICON   DISCARDABLE "paste.ico"
+
+// Wizard icon
+WIZARD          ICON   DISCARDABLE "wizard.ico"
+
+// Deuce/Debugger bitmaps
+//
+CURRENTLOCATION BITMAP DISCARDABLE "current-location.bmp"
+PROMPT          BITMAP DISCARDABLE "prompt.bmp"
+VALUES          BITMAP DISCARDABLE "values.bmp"

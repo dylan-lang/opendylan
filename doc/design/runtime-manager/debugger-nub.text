@@ -1,0 +1,1104 @@
+                        Interface to the Debugger Nub.
+                     =====================================
+
+
+                           Paul Howard and Tony Mann
+
+
+
+1. Introduction.
+==================
+
+This document describes the nature of, and the interface to, the DylanWorks
+"Debugger Nub". This is a low-level component of the debugger that forms
+a stepping-stone between the running application, and the Debugger Access
+Path.
+
+The architecture is such that, in a remote debugging environment, the
+debugger nub must run on the same machine as the application being
+debugged (often referred to as "the target application", 
+"the running application" or maybe just "the application"). Therefore, the
+nub is capable of standing alone as an executable when equipped with
+an RPC listener via which nub functions are invoked. This is called
+the "remote debugger nub". Any number of remote debugger nubs can be
+running - one per target application.
+
+However, debugging is often performed locally, so there is also an
+implementation of the nub linked in (as a library) to the development
+environment. This is referred to as the "local debugger nub". It does
+not need an RPC listener, since its functions are just invoked from the
+development environment. (They can be called from dylan using the
+low-level FFI).
+
+
+
+2. Debugger Nub C Interface.
+==============================
+
+
+This section describes the C functions which interact with the running
+application. 
+
+The datatypes used in this section are outlined below:
+
+NUB                 - A descriptor for making nub calls to applications
+                      that are locally tethered.
+
+RNUB                - A descriptor for making nub calls to applications
+                      that are remotely tethered.
+
+SERVER              - An instance of the nub server, an API for instantiating
+                      nubs. (See the section on establishing access paths).
+
+NUBHANDLE           - A handle on some object in the nub.
+
+NUBINT              - The representation of an integer within the nub.
+
+FLOAT               - The representation of a single-precision floating-point
+                      value in the nub.
+
+DOUBLE              - The representation of a double-precision floating-point
+                      value in the nub.
+
+INT8                - An 8-bit signed integer.
+
+INT16               - A 16-bit signed integer.
+
+INT32               - A 32-bit signed integer.
+
+INT64               - A 64-bit signed integer.
+
+UNICODE             - A unicode character.
+
+NUBTHREAD           - A handle on the nub representation of a thread.
+
+NUBPROCESS          - A handle on the nub representation of a process.
+
+NUBLIBRARY          - A handle on the nub representation of a loaded
+                      library.
+
+NUBFRAME            - A handle on the nub representation of a stack frame.
+
+NUB_INDEX           - A type returned by the nub as an enumeration code,
+                      eg for registers or loaded libraries.
+
+NUB_ERROR           - An error code returned by the nub.
+
+FLAG                - A data type for representing flags. (This has only
+                      replaced "unsigned long" in the watchpoint functions).
+
+TARGET_ADDRESS      - An address in the target process.
+
+TARGET_INT          - An integer in the target process.
+
+
+
+Model of the Debugger Nub.
+--------------------------
+
+The Debugger Nub is the lowest level of our debugger architecture. It is
+invoked by the access-path layer (via the FFI, since the access-path is
+implemented in Dylan and the Nub is implemented in C).
+
+The development environment has an implementation of the debugger nub
+linked into it. This implementation provides three interfaces:
+
+   1. An interface for establishing connections.
+
+   2. A proxy interface to an instance of the debugger nub that is
+      running remotely. In this case, the debugger nub is an independent
+      process running on the remote machine, the same machine as the
+      application.
+
+   3. An interface to the local implementation, for debugging applications
+      created on the local machine. In this case, everything except the
+      application is in the environment's process space.
+
+Interfaces 2 and 3 are identical to the extent that only (3) is described.
+(2) can be easily derived following descriptions given.
+
+
+INTERFACE 1: Establishing Connections.
+======================================
+
+All of these functions return error codes. An error code of 0 means that
+the function failed. An error code of 1 means that the function
+succeeded.
+
+These functions all run in the process space of the environment. They
+do not have proxy equivalents.
+
+
+SERVER establish_server_connection (..., NUB_ERROR *err)
+
+  Not sure yet... 
+  This function will return a SERVER description, which can be used as a
+  handle for opening applications remotely. The argument may just be
+  a network machine name or IP address.
+
+  This function attemps to connect to an instance of the debugger
+  connection server running on the specified machine. This server has to
+  have been started manually by the user at some point. (This is the only
+  thing we require the user to do in order to debug remotely).
+
+
+NUB open_local_tether (char *command, char *arguments, NUB_ERROR *err)
+
+  Opens and connects to a new application on the local machine. 'command'
+  is the name of the executable file to open and run, and 'arguments'
+  is a single string specifying the command line.
+
+
+RNUB open_remote_tether (SERVER server, char *command, char *arguments,
+                         NUB_ERROR *err)
+
+  Exactly equivalent to open_local_tether, except that the application
+  is opened on the machine specified by the SERVER descriptor. Note
+  that this function returns an RNUB, and hence only calls to the
+  proxy interface can be made for this tether.
+
+
+
+INTERFACE 2: The Proxy Debugger Nub.
+====================================
+
+
+ALL of the functions described from this point on have a proxy
+equivalent defined for them. Obviously, it's pointless to describe them
+all explicitly, since they are defined 'mechanically' given the
+local definitions:
+
+      - The proxy function has the same name, but suffixed by 'proxy_'
+        (proxy with an underscore). Hence nub_all_threads has a
+        proxy equivalent proxy_nub_all_threads.
+
+      - The first argument is of type RNUB instead of NUB.
+
+
+
+INTERFACE 3: The Local Implementation.
+======================================
+
+
+Modelling Remote Descriptors.
+-----------------------------
+
+
+void nub_all_threads (NUB nub, NUB_INDEX *first, NUB_INDEX *last)
+
+  Returns the number of threads existing in the application's process.
+  Use this function before entering a loop to read thread descriptors
+  for the all-threads function.
+
+
+NUBTHREAD nub_thread_handle (NUB nub, NUB_INDEX thread)
+
+  Returns a handle on a thread, given its integer enumeration code.
+
+
+NUBINT nub_get_thread_name_length (NUB nub, NUBTHREAD thread)
+
+  Returns the length of the given thread's name. This is so that an
+  appropriately sized buffer can be supplied to the following
+  function.
+
+
+void nub_get_thread_name (NUB nub, NUBTHREAD thread, 
+                          NUBINT buf_size, char *buf)
+
+  Obtains the name of the given thread and stores it in the array buf. The
+  supplied buf_size is the number of characters that will fit in buf. This
+  function will null-terminate or truncate the thread name as appropriate
+  according to buf_size.
+
+
+NUBINT nub_thread_state (NUB nub, NUBTHREAD thread)
+
+  Obtains the state of a thread and returns it as an integer descriptor.
+  A whole bunch of constants, eg WAITING_FOR_LOCK or SLEEP can be defined,
+  and then the dylan layer can convert this to a string as necessary.
+
+
+void nub_all_libraries (NUB nub, NUB_INDEX *first, NUB_INDEX *last)
+
+  Returns a range for the enumeration of library objects.
+
+
+NUBLIBRARY nub_library_handle (NUB nub, NUB_INDEX library)
+
+  Returns a handle on the library, given its integer enumeration
+  code.
+
+
+NUBINT nub_get_library_version_length (NUB nub, NUBLIBRARY library);
+
+  Returns the length (in characters) of the version string for the remote
+  library.
+
+
+void nub_get_library_version (NUB nub, NUBLIBRARY library, NUBINT buf_size,
+                              char *buf)
+
+  Returns the version of the remote library as a string.
+
+
+NUBINT nub_get_library_filename_length (NUB nub, NUBLIBRARY library)
+
+  Returns the length (in characters) of the filename of the remote
+  library.
+
+
+void nub_get_library_filename (NUB nub, NUBLIBRARY library,
+                               NUBINT buf_size, char *buf)
+
+  Obtains the filename of the remote library.
+
+  
+
+Reading and Writing Memory.
+----------------------------
+
+
+NUBINT nub_get_register_name_length (NUB nub, NUB_INDEX register)
+
+  Returns the length (in characters) of the name of the given
+  register.
+
+
+void nub_get_register_name (NUB nub, NUB_INDEX register, 
+                            NUBINT buf_size, char *buf)
+
+  Constructs a printable name for the supplied register and returns
+  it.
+    
+
+void nub_all_registers (NUB nub, NUB_INDEX *first, NUB_INDEX *last)
+
+  Returns the range of registers for the machine that the nub is running
+  on.
+
+
+void nub_general_registers (NUB nub, NUB_INDEX *first, NUB_INDEX *last)
+
+  Returns the range of general-purpose registers for the machine that
+  the nub is running on.
+
+
+void nub_special_registers (NUB nub, NUB_INDEX *first, NUB_INDEX *last)
+
+  Returns the range of special-purpose registers for the machine that
+  the nub is running on.
+
+
+void nub_floating_registers (NUB nub, NUB_INDEX *first, NUB_INDEX *last)
+
+  Returns the range of floating-point registers for the machine that
+  the nub is running on.
+
+
+TARGET_ADDRESS read_value_from_process_memory (NUB nub, 
+                                               TARGET_ADDRESS  address,
+                                               NUB_ERROR *error_code)
+
+  Obtains a value from the debugee's memory at the given address and
+  returns it.
+
+
+void write_value_to_process_memory (NUB nub, 
+                                    TARGET_ADDRESS address, 
+                                    TARGET_ADDRESS value, 
+                                    NUB_ERROR *error_code)
+
+  Writes the value into the debugee's memory at the given address.
+
+
+INT8 read_8b_from_process_memory (NUB nub, TARGET_ADDRESS address, 
+                                  NUB_ERROR *error_code)
+
+  Reads an 8-bit byte from the debugee's memory at the given address and
+  returns it as a sign-extended integer.
+
+
+void write_8b_to_process_memory (NUB nub, TARGET_ADDRESS address, 
+                                 INT8 value, NUB_ERROR *error_code)
+
+  Writes an 8-bit byte into the debugee's memory at the given address.
+
+
+INT16 read_16b_from_process_memory (NUB nub, TARGET_ADDRESS address,
+                                    NUB_ERROR *error_code)
+
+  Reads a 16-bit word from the debugee's memory at the given address and
+  returns it as a sign-extended integer.
+
+
+void write_16b_to_process_memory (NUB nub, TARGET_ADDRESS address, 
+                                  INT16 value, NUB_ERROR *error_code)
+
+  Writes the 16-bit word into the debugee's memory at the given address.
+
+
+INT32 read_32b_from_process_memory (NUB nub, TARGET_ADDRESS address,
+                                    NUB_ERROR *error_code)
+
+  Reads a 16-bit word from the debugee's memory at the given address and
+  returns it as a sign-extended integer.
+
+
+void write_32b_to_process_memory (NUB nub, TARGET_ADDRESS address, 
+                                  INT32 value, NUB_ERROR *error_code)
+
+  Writes the 32-bit word into the debugee's memory at the given address.
+
+
+INT64 read_64b_from_process_memory (NUB nub, TARGET_ADDRESS address,
+                                    NUB_ERROR *error_code)
+
+  Reads a 64-bit word from the debugee's memory at the given address and
+  returns it as a sign-extended integer.
+
+
+void write_64b_to_process_memory (NUB nub, TARGET_ADDRESS address, 
+                                  INT64 value, NUB_ERROR *error_code)
+
+  Writes the 64-bit word into the debugee's memory at the given address.
+
+
+FLOAT read_single_float_from_process_memory (NUB nub, 
+                                             TARGET_ADDRESS address,
+                                             NUB_ERROR *error_code)
+
+  Reads a single-precision floating-point value from the debugee's memory
+  at the given address, and returns it as a C float.
+
+
+void write_single_float_to_process_memory (NUB nub, 
+                                           TARGET_ADDRESS address, 
+                                           FLOAT value, NUB_ERROR *error_code)
+
+  Writes the single-precision floating-point value into the debugee's
+  memory.
+
+
+DOUBLE read_double_float_from_process_memory (NUB nub, 
+                                              TARGET_ADDRESS address,
+                                              NUB_ERROR *error_code)
+
+  Reads a double-precision floating-point value from the debugee's
+  memory and returns it as a C double.
+
+
+void write_double_float_to_process_memory (NUB nub, 
+                                           TARGET_ADDRESS address, 
+                                           DOUBLE value, NUB_ERROR *error_code)
+
+  Writes a double-precision floating-point value into the debugee's memory
+  at the given address.
+
+
+void read_byte_string_from_process_memory (NUB nub, 
+                                           TARGET_ADDRESS address, 
+                                           NUBINT length, char *buf,
+                                           NUB_ERROR *error_code)
+
+  Reads a byte-coded string from the debugee's memory at the given address.
+  The number of bytes to read is specified by length, and the characters
+  will be poked into the supplied buffer (which must be at least as large
+  as length).
+
+
+void write_byte_string_to_process_memory (NUB nub, 
+                                          TARGET_ADDRESS address, 
+                                          NUBINT length, char *buf,
+                                          NUB_ERROR *error_code)
+
+  Writes a byte-coded string into the debugee's memory at the given address.
+  The number of bytes to write is specified by length, and the characers
+  to insert are held in buf.
+
+
+void read_unicode_string_from_process_memory (NUB nub, 
+                                              TARGET_ADDRESS address, 
+                                              NUBINT length, UNICODE *buf,
+                                              NUB_ERROR *error_code)
+
+  Reads a unicoded string from the debugee's memory at the given address.
+  The number of characters to read is specified by length, and the characters
+  will be poked into the supplied buffer (which must be at least as large
+  as length).
+
+
+void write_unicode_string_to_process_memory (NUB nub, 
+                                             TARGET_ADDRESS address, 
+                                             NUBINT length, UNICODE *buf,
+                                             NUB_ERROR *error_code)
+
+  Writes a unicoded string into the debugee's memory at the given address.
+  The number of characters to write is specified by length, and the characers
+  to insert are held in buf.
+
+
+TARGET_ADDRESS read_value_from_process_register (NUB nub, NUBTHREAD thread, 
+                                                 NUB_INDEX register,
+                                                 NUB_ERROR *error_code)
+
+  Obtains a value from the given register and returns it as a machine 
+  word.
+
+
+void write_value_to_process_register (NUB nub, NUBTHREAD thread,
+                                      NUB_INDEX register, 
+                                      TARGET_ADDRESS value,
+                                      NUB_ERROR *error_code)
+
+  Writes the value into the given register.
+
+
+INT8 read_8b_from_process_register (NUB nub, NUBTHREAD thread,
+                                    NUB_INDEX register, 
+                                    NUB_ERROR *error_code)
+
+  Reads an 8-bit byte from the given register and returns it as a 
+  sign-extended integer.
+
+
+void write_8b_to_process_register (NUB nub, NUBTHREAD thread,
+                                   NUB_INDEX register, 
+                                   INT8 value,
+                                   NUB_ERROR *error_code)
+
+  Writes an 8-bit byte into the given register.
+
+
+INT16 read_16b_from_process_register (NUB nub, NUBTHREAD thread,
+                                      NUB_INDEX register,
+                                      NUB_ERROR *error_code)
+
+  Reads a 16-bit word from the given register and returns it as a 
+  sign-extended integer.
+
+
+void write_16b_to_process_register (NUB nub, NUBTHREAD thread,
+                                    NUB_INDEX register, 
+                                    INT16 value, NUB_ERROR *error_code)
+
+  Writes the 16-bit word into the given register.
+
+
+INT32 read_32b_from_process_register (NUB nub, NUBTHREAD thread,
+                                      NUB_INDEX register,
+                                      NUB_ERROR *error_code)
+
+  Reads a 32-bit word from the given register and returns it as a 
+  sign-extended integer.
+
+
+void write_32b_to_process_register (NUB nub, NUBTHREAD thread,
+                                    NUB_INDEX register, 
+                                    INT32 value, NUB_ERROR *error_code)
+
+  Writes the 32-bit word into the given register.
+
+
+INT64 read_64b_from_process_register (NUB nub, NUBTHREAD thread,
+                                      NUB_INDEX register,
+                                      NUB_ERROR *error_code)
+
+  Reads a 64-bit word from the given register and returns it as a 
+  sign-extended integer.
+
+
+void write_64b_to_process_register (NUB nub, NUBTHREAD thread,
+                                    NUB_INDEX register, 
+                                    INT64 value, NUB_ERROR *error_code)
+
+  Writes the 64-bit word into the given register.
+
+
+FLOAT read_single_float_from_process_register (NUB nub, NUBTHREAD thread, 
+                                               NUB_INDEX register,
+                                               NUB_ERROR *error_code)
+
+  Reads a single-precision floating-point value from the given register, 
+  and returns it as a C float.
+
+
+void write_single_float_to_process_register (NUB nub, NUBTHREAD thread, 
+                                             NUB_INDEX register, 
+                                             FLOAT value, 
+                                             NUB_ERROR *error_code)
+
+  Writes the single-precision floating-point value into the given
+  register.
+
+
+DOUBLE read_double_float_from_process_register (NUB nub, NUBTHREAD thread, 
+                                                NUB_INDEX register,
+                                                NUB_ERROR *error_code)
+
+  Reads a double-precision floating-point value from the given
+  register and returns it as a C double.
+
+
+void write_double_float_to_process_register (NUB nub, NUBTHREAD thread, 
+                                             NUB_INDEX register, 
+                                             DOUBLE value, 
+                                             NUB_ERROR *error_code)
+
+  Writes a double-precision floating-point value into the given register.
+
+
+
+Controlling the Application.
+-----------------------------
+
+Functions for low-level control of the debugee's execution.
+
+
+void nub_application_restart (NUB nub)
+
+  Starts (or restarts) the debugee from the beginning.
+
+
+void nub_application_stop (NUB nub)
+
+  Supends all threads in the debugee.
+
+
+void nub_application_continue (NUB nub)
+
+  Resumes execution of the debugee from the point where it was stopped.
+  All threads in the application are resumed, and in such a way as
+  is relevant to why they last stopped.
+  Any exceptions are flagged as "handled".
+
+
+void nub_application_continue_unhandled (NUB nub)
+
+  As nub_application_continue, except that any exceptions are flagged
+  as "unhandled" (with the exception of breakpoint exceptions, which
+  are never passed to the application to handle).
+
+
+void nub_thread_stop (NUB nub, NUBTHREAD thread)
+
+  Suspends the execution of the specified thread. It will be flagged as
+  "waiting for the debugger", and will not be resumed by
+  nub_application_continue or nub_application_continue_unhandled.
+
+
+void nub_thread_continue (NUB nub, NUBTHREAD thread)
+
+  Allows the specified thread to continue along with the others if
+  it is currently flagged as "waiting for the debugger".
+
+
+void nub_application_step (NUB nub, NUBTHREAD thread, NUBINT instrs)
+
+  Steps the debugee through the supplied number of instructions. Only
+  the supplied thread is stepped.
+
+
+void nub_application_step_over (NUB nub, NUBTHREAD thread, NUBINT instrs)
+
+  Steps the debugee through the supplied number of instructions, but
+  considers CALLs to be atomic, ie does not step into functions.
+  Only the supplied thread is stepped.
+
+
+void nub_application_step_out (NUB nub, NUBTHREAD thread)
+
+  Steps the debugee through as many instructions as are required until
+  the current function frame returns. Only the supplied thread is
+  stepped.
+
+
+NUB_ERROR nub_kill_application (NUB nub)
+
+  Destroys the application's process. This is defined to return 0
+  if the kill was successful, and non-0 otherwise.
+
+
+
+Remote Function Calls and Spy Calls
+-----------------------------------
+
+The debugger nub provides two basic facilities for invoking code in the
+target application: remote function calls and spy calls. The spy call
+is synchronous, meaning that the nub function invoking the target function
+does not return until the target function has returned. The remote 
+function call is asynchronous, and its use is slightly more complex.
+Both protocols assume that the target function will be called with the
+C calling convention.
+
+
+TARGET_ADDRESS nub_remote_call_spy
+    (NUB nub, NUBTHREAD thread, TARGET_ADDRESS entry_point,
+     NUBINT argument_count, TARGET_ADDRESS *argument_vector)
+
+  Calls a spy function in the target application, and returns the spy
+  function's own return value. The spy function runs on the specified
+  thread, and no other threads are permitted to run during its
+  execution. The spy function may use the stack as necessary, but
+  MUST NOT unwind the stack past the state it was in to begin with.
+  It must also be incapable of generating stop-reasons. Spy functions
+  have to be very carefully coded to satisfy these requirements. Most
+  spy functions are very small fragments of C code.
+
+
+TARGET_ADDRESS nub_setup_function_call
+    (NUB nub, NUBTHREAD thread, TARGET_ADDRESS entry_point,
+     NUBINT argument_count, TARGET_ADDRESS *argument_vector,
+     NUBHANDLE *context_cookie)
+
+  Prepares the application for the execution of a function on the
+  specified thread. This DOES NOT run any code in the application -
+  it merely modifies its state. The _current_ state is saved as
+  a context cookie, and passed back via the NUBHANDLE reference
+  parameter. When the specified thread resumes, it will execute the
+  function at the address given by the 'entry_point' parameter.
+
+  To execute the function, the application simply has to be allowed to
+  continue. All threads will be permitted to run, unless they have
+  been explicitly suspended by nub_thread_stop.
+
+  In order to catch the return of the remote function, a breakpoint
+  has to be set on the function's return address. The address to
+  breakpoint is the TARGET_ADDRESS return value of this API. Placing
+  this breakpoint is mandatory, since we adopt the C calling convention
+  and the callee (which is effectively the debugger nub!) has to pop
+  the stack and restore the saved state.
+
+  Note that the breakpoint is only relevant if it is signalled on the
+  same thread and in the same stack frame that we are making the call
+  from.
+
+
+void nub_restore_context
+    (NUB nub, NUBTHREAD thread, NUBHANDLE context_cookie)
+
+  This function must be called when the breakpoint (set after calling
+  nub_setup_function_call) is encountered in the correct context as
+  described above. It restores the saved state. The context_cookie
+  to pass in must be the same as the one that was communicated out
+  from nub_setup_function_call.
+
+
+TARGET_ADDRESS nub_get_function_result
+    (NUB nub, NUBTHREAD thread)
+
+  Obtains and returns the return value of an asynchronous remote call.
+
+  This function can optionally be called in the same conditions as
+  nub_restore_context. However, if calling this function, it must be
+  called _before_ nub_restore_context. (The reason for this is that the
+  return value may be in a register, and thus could be obliterated by
+  restoring the previous context).
+
+
+
+Breakpoints and Watchpoints.
+-----------------------------
+
+Low level functions for setting breakpoints and watchpoints in the
+application. For all of these functions, the integer code returned will
+be one of the following:
+
+  NOT_SUPPORTED      There is no implementation of this operation
+                     available, so the function call had no effect.
+                     (This is likely to apply to watchpoints, which
+                     may be goal-reduced for Kansas).
+
+  INVALID_HANDLE     The process/socket handle is nonsensical.
+
+  INVALID_ADDRESS    The address given is not within the address space
+                     of the debugee.
+
+  OK                 The function call was successful.
+
+
+NUB_ERROR nub_set_breakpoint (NUB nub, TARGET_ADDRESS address)
+
+  Inserts a breakpoint into the application's code at the given address.
+  
+
+NUB_ERROR nub_clear_breakpoint (NUB nub, TARGET_ADDRESS address)
+
+  Provided that a breakpoint resides at the given address in the debugee,
+  this function clears it.
+
+
+NUBINT nub_query_breakpoint (NUB nub, TARGET_ADDRESS address)
+
+  Checks whether a breakpoint has already been positioned at a given
+  address. Returns zero if no breakpoint exists at that address, and
+  non-zero otherwise. Note that this function works by searching for
+  a descriptor for the breakpoint, not the breakpoint instruction (0xcc),
+  so it will only return "true" if the breakpoint was previously set by a
+  call to nub_set_breakpoint.
+
+
+NUB_ERROR nub_set_watchpoint (NUB nub, TARGET_ADDRESS address, 
+                              FLAG flag, NUBINT size)
+
+  Creates a watchpoint over the given address. The flag is a bitwise
+  inclusive OR of the following:
+
+      READ      Trap whenever the watched area is accessed.
+
+      WRITE     Trap whenever the watched area is written to.
+
+      EXECUTE   Trap whenever the watched area is executed.
+
+  The size is the number of words that the watchpoint is to cover.
+
+
+NUB_ERROR nub_clear_watchpoint (NUB nub, TARGET_ADDRESS address, 
+                                FLAG flag, NUBINT size)
+
+  Provided that a watchpoint exists of the given type at the given
+  address, this function clears it.
+
+
+
+Stop Reasons.
+--------------
+
+The first three functions deal with the general aspects of stop reasons.
+
+
+void nub_wait_for_stop_reason_no_timeout (NUB nub, NUBINT *event_type)
+
+  Receive a stop reason from the event queue. If there is no event to
+  receive, wait indefinitely until an event occurs. This function is
+  therefore guaranteed to return a stop reason. The integer code
+  communicated back corresponds to a Dylan stop reason type.
+
+
+void nub_wait_for_stop_reason_with_timeout (NUB nub, NUBINT timeout,
+                                            NUBINT *event_type)
+
+  Receive a stop reason from the event queue. If there is no event to
+  receive, wait either until an event occurs, or until the timeout
+  expires (whichever happens sooner). The integer code communicated
+  back corresponds to a Dylan stop reason type, or will be the
+  specific code TIMED_OUT.
+
+  The timeout must be in milliseconds.
+
+
+void nub_flush_all_stop_reasons (NUB nub)
+
+  Remove all unhandled stop reasons from the event queue.
+
+
+NUBPROCESS nub_stop_reason_process (NUB nub)
+
+  Returns the process in which the most recent stop-reason occured.
+
+
+NUBTHREAD nub_stop_reason_thread (NUB nub)
+
+  Returns the thread in which the most recent stop reason occured.
+
+
+NUBINT nub_stop_reason_process_exit_code (NUB nub)
+
+  Returns the exit code of the process which quit. (Call only for
+  exit-process-stop-reason).
+
+
+NUBINT nub_stop_reason_thread_exit_code (NUB nub)
+
+  Returns the exit code of the thread which quit. (Call only for
+  exit-thread-debug-events).
+
+
+NUBLIBRARY nub_stop_reason_library (NUB nub)
+
+  Returns the library to which the most recent stop reason refers. (Call
+  only for library-debug-events).
+
+
+NUBINT nub_stop_reason_RIP_exit_code (NUB nub)
+
+  Returns the exit code for the application which fell over on its
+  face. (Call only for the tastelessly named RIP-debug-event).
+
+
+TARGET_ADDRESS nub_stop_reason_debug_point_address (NUB nub)
+
+  Returns the debug point instance to which the specified debug
+  event refers. (Call only for debug-point-debug-events).
+
+
+
+Stack Backtraces.
+------------------
+
+Note [Design Change]: The debugger nub was originally designed to
+enable stack backtraces in both directions (ie, by supplying a frame, one
+could obtain the next most recent frame as well as the next older frame).
+This is no longer supported since it required the nub to remember frame
+linkage, and this is neither desirable nor necessary. The nub now only
+allows us to get the top stack frame, and then all older frames. The
+access path can memorize these as it reads them, allowing bi-directional
+tracing once all have been read.
+
+
+NUBFRAME nub_initialize_stack_trace (NUB nub, NUBTHREAD thread)
+
+  Instructs the nub to set up a stack backtrace. The value returned is
+  a handle on the topmost stack frame (and will probably be equivalent
+  to its frame pointer).
+
+
+NUBFRAME nub_previous_frame (NUB nub, NUBFRAME frame)
+
+  Given a function frame, this returns the adjacent (older) frame.
+
+
+TARGET_ADDRESS nub_frame_pointer (NUB nub, NUBFRAME frame)
+
+  Returns the frame pointer for the given stack frame. (If we chose to
+  represent frames by their frame pointers, then this function just
+  returns its argument unchanged).
+
+
+TARGET_ADDRESS nub_frame_return_address (NUB nub, NUBFRAME frame)
+
+  Returns the return address for the given function frame.
+
+
+TARGET_ADDRESS nub_thread_next_instruction_address (NUB nub, NUBTHREAD thread)
+
+  Returns the address of the next instruction that will be executed in
+  the specified thread. This function is required so that the access path
+  can obtain a next-instruction address for the topmost frame. (For other
+  frames, the next-instruction address is simply equal to the return address
+  of the adjacent newer frame).
+
+
+void nub_all_frame_lexicals (NUB nub, NUBFRAME frame,
+                             TARGET_ADDRESS IP, 
+                             NUB_INDEX *first, NUB_INDEX *last,
+                             NUBHANDLE *lookups)
+
+  Returns the range of frame variables that correspond to lexicals
+  for the frame, as well as a lookup table for them. The "IP" argument
+  is the next-instruction address for the frame.
+  This function returns all lexicals within the scope of the frame,
+  and all inner scopes.
+
+
+NUBINT nub_get_lexical_variable_name_length (NUB nub, NUBHANDLE lookups,
+                                             NUB_INDEX lexical)
+
+  Returns the length (in characters) of the name of the lexical
+  variable.
+
+
+void nub_get_lexical_variable_name (NUB nub, NUBHANDLE lookups,
+                                    NUB_INDEX lexical, NUBINT buf_size, 
+                                    char *buf)
+
+  Returns the name of the lexical variable.
+
+
+TARGET_ADDRESS nub_lexical_variable_address (NUB nub, NUBFRAME frame,
+                                             NUBHANDLE lookups,
+                                             NUB_INDEX lexical)
+
+  Returns the address of the lexical variable. This address is absolute,
+  not frame-relative (which is why the "frame" argument is required, it
+  is involved in the calculation).
+
+
+  
+Symbol Lookup.
+---------------
+
+Exactly how the debugger nub stores symbolic information internally
+is implementation dependant. However, it is capable of forming 'lookup'
+tables containing a subset of symbols. Such lookup tables (referenced
+vai a NUBHANDLE) can be used with an index (of type NUB_INDEX) to
+construct a symbol record. In the access-path, such records are
+<remote-symbol> objects.
+
+
+NUBINT nub_lookup_symbol_name_length (NUB nub, NUBHANDLE lookups, 
+                                      NUB_INDEX symbol)
+
+  Returns the length (in characters) of the name of the remote
+  symbol.
+
+
+void nub_lookup_symbol_name (NUB nub, NUBHANDLE lookups,
+                             NUB_INDEX symbol, 
+                             NUBINT buf_size, char *buf)
+
+  Obtains the string name of the given remote symbol. This name may be
+  mangled. It is stored in buf, which the function assumes to be exactly
+  as large as buf_size. The string is truncated or null-terminated as
+  necessary.
+
+
+TARGET_ADDRESS nub_lookup_symbol_address (NUB nub, NUBHANDLE lookups,
+                                          NUB_INDEX symbol)
+
+  Obtains the address of the given remote symbol.
+
+
+void nub_do_static_symbols (NUB nub, 
+                            NUB_INDEX library,
+                            NUB_INDEX *first, NUB_INDEX *last, 
+                            NUBHANDLE *table)
+
+  The nub constructs a temporary lookup table of static symbols
+  which belong to the specified library. It returns a pointer to this table, 
+  along with its dimensions.
+
+
+void nub_do_exported_symbols (NUB nub, 
+                              NUB_INDEX library,
+                              NUB_INDEX *first, NUB_INDEX *last, 
+                              NUBHANDLE *table)
+
+  The nub constructs a temporary lookup table of exported symbols
+  which belong to the specified library. It returns a pointer to this table, 
+  along with its dimensions.
+
+
+void nub_do_global_symbols (NUB nub, 
+                            NUB_INDEX library,
+                            NUB_INDEX *first, NUB_INDEX *last, 
+                            NUBHANDLE *table)
+
+  The nub constructs a temporary lookup table of global symbols
+  which belong to the specified library. It returns a pointer to this table, 
+  along with its dimensions.
+
+
+void nub_dispose_lookups (NUB nub, NUBHANDLE table)
+
+  Instructs the nub to free up a lookup table that was constructed by
+  one of the do_symbols functions.
+
+
+
+Disassembly.
+-------------
+
+Yeah, right!
+
+
+Source Code.
+-------------
+
+This section has been altered since source-locator alterations were also
+made to the access-path design.
+
+
+3. Debugger Nub Architecture.
+===============================
+
+This section briefly describes the architecture of the nub, and the data
+structures that it maintains. It is basically the rationale behind the
+C interface as described. It also goes some of the way to showing how
+the Dylan and C layers interact.
+
+
+General Interfacing between Nub and Access Path.
+-------------------------------------------------
+
+Functions in the access path interface are parameterized with respect to
+an <access-path> object. Since a new nub is spawned for each access
+path created, there is no need for this abstraction at the nub level.
+Instead, the nub functions take initial "handle" parameters. The
+interpretation of the handle depends on whether the development
+environment is remote from the nub/application.
+
+Here is the meaning of the handle in each case (as I see it!):-
+
+Local Case:    The handle is a handle on the running process being
+               debugged. This may just be a process ID. (The nub
+               itself will hold much more information about the
+               process).
+
+Remote Case:   The handle is an identifier for a TCP socket. In this
+               case, the nub function is a local "proxy" for the
+               _actual_ nub function. The proxy handles the remote
+               procedure call, and maps the socket ID to a process
+               handle. The actual nub function is then called with this
+               handle, and the behaviour is effectively the same as in
+               the local case. 
+
+All <access-path> objects will possess an <access-connection> slot. This
+will have two subclasses:-
+
+
+                      <access-connection>
+                              |
+                 -------------------------------
+                 |                             |
+       <local-access-connection>    <remote-access-connection>
+
+
+These will likely be further subclassed to cope with differences in
+machine word size across the connection:-
+
+
+                   <remote-access-connection>
+                               |
+             -----------------------------------------
+             |                                       |
+  <remote-access-connection-32>         <remote-access-connection-64>
+
+
+(and similarly for <local-access-connection>).
+
+The access path functions will dispatch on the <access-connection> slot,
+and call the relevant nub functions.
+
+
+Example:-
+---------
+
+Here is an example (simplified) implementation of the access path function
+read-single-float:-
+
+define method read-single-float (ap :: <access-path>, ra :: <remote-address>)
+                                  => (_ :: <single-float>)
+
+       let conn = ap.connection;
+       read-single-float-from-memory (conn, ra);
+
+end method;
+
+
+define method read-single-float-from-memory
+                   (conn :: <local-access-connection>, ra :: <remote-address>)
+                   => (_ :: <single-float>)
+
+       // FFI call resulting in a call to the nub C function
+       // read_single_float_from_process_memory.
+
+       local-nub-read-single-float-from-memory(conn.proc-handle, ra)
+
+end method;
+
+
+define method read-single-float-from-memory
+                   (conn :: <remote-access-connection>, ra :: <remote-address>)
+                   => (_ :: <single-float>)
+
+       // Transport FFI call to invoke an RPC.
+
+       remote-nub-read-single-float-from-memory(conn.socket, ra)
+
+end method;
+
+
+This mechanism is to be used consistently to interface the access path to
+the individual nub instances.
+

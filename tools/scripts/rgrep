@@ -1,0 +1,51 @@
+#!/usr/local/bin/perl
+#      Script: rgrep
+#      Author: Shri Amit
+$usage="Usage: rgrep <Flags to grep> <Search String> <Directory Name> <File Pattern>";
+#
+#   Arguments:  <Flags to grep>: All the valid grep options start with a "-",
+#                                default: "-i"
+#               <Search String>: Pattern to search for within the files
+#                                default: none
+#              <Directory Name>: Dir within which files are to be searched,
+#                                default: none
+#                <File Pattern>: Pattern used to find the file names.
+#                                default: *.dylan
+#
+#    Synopsis: Recursively finds all files matching <File Pattern> in <Directory Name>
+#              and applies grep <Flags to grep> to each of them. All extra arguments
+#              are ignored.
+###################################################################################
+## Application exit codes ##
+## 0: successful
+
+## Parse command line arguments ##
+##
+$search_string = $grep_flags = $dir_name = $file_pattern  = "";
+foreach $i (@ARGV) {
+    if ($i =~ /^-/) {
+	$grep_flags = $grep_flags . " $i";
+    } elsif ($search_string eq "") {
+	$search_string = $i;
+    } elsif ($dir_name eq "") {
+	$dir_name = $i;
+    } elsif ($file_pattern eq "") {
+	$file_pattern = $i;
+    }
+}
+
+## Set defaults ##
+##
+if ($grep_flags eq "") {
+    $grep_flags = "-i";
+}
+if ($file_pattern eq "") {
+  $file_pattern = "*.dylan";
+}
+
+print "\nExecuting: find $dir_name -name \'$file_pattern\' -exec grep $grep_flags -l \'$search_string\' {} \\;\n\n";
+`find $dir_name -name \'$file_pattern\' -exec grep $grep_flags -l \'$search_string\' {} \\; 2>&1 | tee -a /dev/tty`;
+
+exit(0);
+
+# eof

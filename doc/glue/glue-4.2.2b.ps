@@ -1,0 +1,4920 @@
+%!PS-Adobe-3.0
+/mysave save def
+
+%%Creator: Frame 4.0
+%%DocumentData: Clean7Bit
+%%EndComments
+%%BeginProlog
+%
+% Frame ps_prolog 4.0, for use with Frame 4.0 products
+% This ps_prolog file is Copyright (c) 1986-1993 Frame Technology
+% Corporation.  All rights reserved.  This ps_prolog file may be
+% freely copied and distributed in conjunction with documents created
+% using FrameMaker, FrameBuilder and FrameViewer as long as this 
+% copyright notice is preserved.
+%
+% Frame products normally print colors as their true color on a color printer
+% or as shades of gray, based on luminance, on a black-and white printer. The
+% following flag, if set to True, forces all non-white colors to print as pure
+% black. This has no effect on bitmap images.
+/FMPrintAllColorsAsBlack             false def
+%
+% Frame products can either set their own line screens or use a printer's 
+% default settings. Three flags below control this separately for no 
+% separations, spot separations and process separations. If a flag
+% is true, then the default printer settings will not be changed. If it is
+% false, Frame products will use their own settings from a table based on
+% the printer's resolution.
+/FMUseDefaultNoSeparationScreen      true  def
+/FMUseDefaultSpotSeparationScreen    true  def
+/FMUseDefaultProcessSeparationScreen false def
+%
+% For any given PostScript printer resolution, Frame products have two sets of 
+% screen angles and frequencies for printing process separations, which are 
+% recomended by Adobe. The following variable chooses the higher frequencies
+% when set to true or the lower frequencies when set to false. This is only
+% effective if the appropriate FMUseDefault...SeparationScreen flag is false.
+/FMUseHighFrequencyScreens true def
+%
+% PostScript Level 2 printers contain an "Accurate Screens" feature which can
+% improve process separation rendering at the expense of compute time. This 
+% flag is ignored by PostScript Level 1 printers.
+/FMUseAcccurateScreens true def
+%
+% The following PostScript procedure defines the spot function that Frame
+% products will use for process separations. You may un-comment-out one of
+% the alternative functions below, or use your own.
+%
+% Dot function
+/FMSpotFunction {abs exch abs 2 copy add 1 gt 
+		{1 sub dup mul exch 1 sub dup mul add 1 sub }
+		{dup mul exch dup mul add 1 exch sub }ifelse } def
+%
+% Line function
+% /FMSpotFunction { pop } def
+%
+% Elipse function
+% /FMSpotFunction { dup 5 mul 8 div mul exch dup mul exch add 
+%		sqrt 1 exch sub } def
+%
+%
+/FMversion (4.0) def 
+/FMLevel1 /languagelevel where {pop languagelevel} {1} ifelse 2 lt def
+/FMPColor
+	FMLevel1 {
+		false
+		/colorimage where {pop pop true} if
+	} {
+		true
+	} ifelse
+def
+/FrameDict 400 dict def 
+systemdict /errordict known not {/errordict 10 dict def
+		errordict /rangecheck {stop} put} if
+% The readline in PS 23.0 doesn't recognize cr's as nl's on AppleTalk
+FrameDict /tmprangecheck errordict /rangecheck get put 
+errordict /rangecheck {FrameDict /bug true put} put 
+FrameDict /bug false put 
+mark 
+% Some PS machines read past the CR, so keep the following 3 lines together!
+currentfile 5 string readline
+00
+0000000000
+cleartomark 
+errordict /rangecheck FrameDict /tmprangecheck get put 
+FrameDict /bug get { 
+	/readline {
+		/gstring exch def
+		/gfile exch def
+		/gindex 0 def
+		{
+			gfile read pop 
+			dup 10 eq {exit} if 
+			dup 13 eq {exit} if 
+			gstring exch gindex exch put 
+			/gindex gindex 1 add def 
+		} loop
+		pop 
+		gstring 0 gindex getinterval true 
+		} bind def
+	} if
+/FMshowpage /showpage load def
+/FMquit /quit load def
+/FMFAILURE { 
+	dup = flush 
+	FMshowpage 
+	/Helvetica findfont 12 scalefont setfont
+	72 200 moveto
+	show FMshowpage 
+	FMquit 
+	} def 
+/FMVERSION {
+	FMversion ne {
+		(Frame product version does not match ps_prolog!) FMFAILURE
+		} if
+	} def 
+/FMBADEPSF { 
+	(PostScript Lang. Ref. Man., 2nd Ed., H.2.4 says EPS must not call X              )
+	dup dup (X) search pop exch pop exch pop length 
+	4 -1 roll 
+	putinterval 
+	FMFAILURE
+	} def
+/FMLOCAL {
+	FrameDict begin
+	0 def 
+	end 
+	} def 
+/concatprocs
+	{
+	/proc2 exch cvlit def/proc1 exch cvlit def/newproc proc1 length proc2 length add array def
+	newproc 0 proc1 putinterval newproc proc1 length proc2 putinterval newproc cvx
+}def
+FrameDict begin 
+/FMnone 0 def
+/FMcyan 1 def
+/FMmagenta 2 def
+/FMyellow 3 def
+/FMblack 4 def
+/FMcustom 5 def
+/FrameNegative false def 
+/FrameSepIs FMnone def 
+/FrameSepBlack 0 def
+/FrameSepYellow 0 def
+/FrameSepMagenta 0 def
+/FrameSepCyan 0 def
+/FrameSepRed 1 def
+/FrameSepGreen 1 def
+/FrameSepBlue 1 def
+/FrameCurGray 1 def
+/FrameCurPat null def
+/FrameCurColors [ 0 0 0 1 0 0 0 ] def 
+/FrameColorEpsilon .001 def	
+/eqepsilon {		
+	sub dup 0 lt {neg} if
+	FrameColorEpsilon le
+} bind def
+/FrameCmpColorsCMYK { 
+	2 copy 0 get exch 0 get eqepsilon {
+		2 copy 1 get exch 1 get eqepsilon {
+			2 copy 2 get exch 2 get eqepsilon {
+				3 get exch 3 get eqepsilon
+			} {pop pop false} ifelse
+		}{pop pop false} ifelse
+	} {pop pop false} ifelse
+} bind def
+/FrameCmpColorsRGB { 
+	2 copy 4 get exch 0 get eqepsilon {
+		2 copy 5 get exch 1 get eqepsilon {
+			6 get exch 2 get eqepsilon
+		}{pop pop false} ifelse
+	} {pop pop false} ifelse
+} bind def
+/RGBtoCMYK { 
+	1 exch sub 
+	3 1 roll 
+	1 exch sub 
+	3 1 roll 
+	1 exch sub 
+	3 1 roll 
+	3 copy 
+	2 copy 
+	le { pop } { exch pop } ifelse 
+	2 copy 
+	le { pop } { exch pop } ifelse 
+	dup dup dup 
+	6 1 roll 
+	4 1 roll 
+	7 1 roll 
+	sub 
+	6 1 roll 
+	sub 
+	5 1 roll 
+	sub 
+	4 1 roll 
+} bind def
+/CMYKtoRGB { 
+	dup dup 4 -1 roll add 						  
+	5 1 roll 3 -1 roll add 						  
+	4 1 roll add 								  
+	1 exch sub dup 0 lt {pop 0} if 3 1 roll 	  
+	1 exch sub dup 0 lt {pop 0} if exch 	      
+	1 exch sub dup 0 lt {pop 0} if exch	  		  
+} bind def
+/FrameSepInit {
+	1.0 RealSetgray
+} bind def
+/FrameSetSepColor { 
+	/FrameSepBlue exch def
+	/FrameSepGreen exch def
+	/FrameSepRed exch def
+	/FrameSepBlack exch def
+	/FrameSepYellow exch def
+	/FrameSepMagenta exch def
+	/FrameSepCyan exch def
+	/FrameSepIs FMcustom def
+	setCurrentScreen	
+} bind def
+/FrameSetCyan {
+	/FrameSepBlue 1.0 def
+	/FrameSepGreen 1.0 def
+	/FrameSepRed 0.0 def
+	/FrameSepBlack 0.0 def
+	/FrameSepYellow 0.0 def
+	/FrameSepMagenta 0.0 def
+	/FrameSepCyan 1.0 def
+	/FrameSepIs FMcyan def
+	setCurrentScreen	
+} bind def
+ 
+/FrameSetMagenta {
+	/FrameSepBlue 1.0 def
+	/FrameSepGreen 0.0 def
+	/FrameSepRed 1.0 def
+	/FrameSepBlack 0.0 def
+	/FrameSepYellow 0.0 def
+	/FrameSepMagenta 1.0 def
+	/FrameSepCyan 0.0 def
+	/FrameSepIs FMmagenta def
+	setCurrentScreen
+} bind def
+ 
+/FrameSetYellow {
+	/FrameSepBlue 0.0 def
+	/FrameSepGreen 1.0 def
+	/FrameSepRed 1.0 def
+	/FrameSepBlack 0.0 def
+	/FrameSepYellow 1.0 def
+	/FrameSepMagenta 0.0 def
+	/FrameSepCyan 0.0 def
+	/FrameSepIs FMyellow def
+	setCurrentScreen
+} bind def
+ 
+/FrameSetBlack {
+	/FrameSepBlue 0.0 def
+	/FrameSepGreen 0.0 def
+	/FrameSepRed 0.0 def
+	/FrameSepBlack 1.0 def
+	/FrameSepYellow 0.0 def
+	/FrameSepMagenta 0.0 def
+	/FrameSepCyan 0.0 def
+	/FrameSepIs FMblack def
+	setCurrentScreen
+} bind def
+ 
+/FrameNoSep { 
+	/FrameSepIs FMnone def
+	setCurrentScreen
+} bind def
+/FrameSetSepColors { 
+	FrameDict begin
+	[ exch 1 add 1 roll ]
+	/FrameSepColors  
+	exch def end
+	} bind def
+/FrameColorInSepListCMYK { 
+	FrameSepColors {  
+       		exch dup 3 -1 roll 
+       		FrameCmpColorsCMYK 
+       		{ pop true exit } if
+    	} forall 
+	dup true ne {pop false} if
+	} bind def
+/FrameColorInSepListRGB { 
+	FrameSepColors {  
+       		exch dup 3 -1 roll 
+       		FrameCmpColorsRGB 
+       		{ pop true exit } if
+    	} forall 
+	dup true ne {pop false} if
+	} bind def
+/RealSetgray /setgray load def
+/RealSetrgbcolor /setrgbcolor load def
+/RealSethsbcolor /sethsbcolor load def
+end 
+/setgray { 
+	FrameDict begin
+	FrameSepIs FMnone eq
+		{ RealSetgray } 
+		{ 
+		FrameSepIs FMblack eq 
+			{ RealSetgray } 
+			{ FrameSepIs FMcustom eq 
+			  FrameSepRed 0 eq and
+			  FrameSepGreen 0 eq and
+			  FrameSepBlue 0 eq and {
+			  	RealSetgray
+			  } {
+				1 RealSetgray pop 
+			  } ifelse
+			} ifelse
+		} ifelse
+	end
+} bind def
+/setrgbcolor { 
+	FrameDict begin
+	FrameSepIs FMnone eq
+	{  RealSetrgbcolor }
+	{
+		3 copy [ 4 1 roll ] 
+		FrameColorInSepListRGB
+		{
+				FrameSepBlue eq exch 
+			 	FrameSepGreen eq and exch 
+			 	FrameSepRed eq and
+			 	{ 0 } { 1 } ifelse
+		}
+		{
+			FMPColor {
+				RealSetrgbcolor
+				currentcmykcolor
+			} {
+				RGBtoCMYK
+			} ifelse
+			FrameSepIs FMblack eq
+			{1.0 exch sub 4 1 roll pop pop pop} {
+			FrameSepIs FMyellow eq
+			{pop 1.0 exch sub 3 1 roll pop pop} {
+			FrameSepIs FMmagenta eq
+			{pop pop 1.0 exch sub exch pop } {
+			FrameSepIs FMcyan eq
+			{pop pop pop 1.0 exch sub } 
+			{pop pop pop pop 1} ifelse } ifelse } ifelse } ifelse 
+		} ifelse
+		RealSetgray
+	} 
+	ifelse
+	end
+} bind def
+/sethsbcolor {
+	FrameDict begin
+	FrameSepIs FMnone eq 
+	{ RealSethsbcolor } 
+	{
+		RealSethsbcolor 
+		currentrgbcolor  
+		setrgbcolor 
+	} 
+	ifelse
+	end
+} bind def
+FrameDict begin
+/setcmykcolor where {
+	pop /RealSetcmykcolor /setcmykcolor load def
+} {
+	/RealSetcmykcolor {
+		4 1 roll
+		3 { 3 index add 0 max 1 min 1 exch sub 3 1 roll} repeat 
+		setrgbcolor pop
+	} bind def
+} ifelse
+userdict /setcmykcolor { 
+		FrameDict begin
+		FrameSepIs FMnone eq
+		{ RealSetcmykcolor } 
+		{
+			4 copy [ 5 1 roll ]
+			FrameColorInSepListCMYK
+			{
+				FrameSepBlack eq exch 
+				FrameSepYellow eq and exch 
+				FrameSepMagenta eq and exch 
+				FrameSepCyan eq and 
+				{ 0 } { 1 } ifelse
+			}
+			{
+				FrameSepIs FMblack eq
+				{1.0 exch sub 4 1 roll pop pop pop} {
+				FrameSepIs FMyellow eq
+				{pop 1.0 exch sub 3 1 roll pop pop} {
+				FrameSepIs FMmagenta eq
+				{pop pop 1.0 exch sub exch pop } {
+				FrameSepIs FMcyan eq
+				{pop pop pop 1.0 exch sub } 
+				{pop pop pop pop 1} ifelse } ifelse } ifelse } ifelse 
+			} ifelse
+			RealSetgray
+		}
+		ifelse
+		end
+	} bind put
+FMLevel1 not { 
+	
+	/patProcDict 5 dict dup begin
+		<0f1e3c78f0e1c387> { 3 setlinewidth -1 -1 moveto 9 9 lineto stroke 
+											4 -4 moveto 12 4 lineto stroke
+											-4 4 moveto 4 12 lineto stroke} bind def
+		<0f87c3e1f0783c1e> { 3 setlinewidth -1 9 moveto 9 -1 lineto stroke 
+											-4 4 moveto 4 -4 lineto stroke
+											4 12 moveto 12 4 lineto stroke} bind def
+		<8142241818244281> { 1 setlinewidth -1 9 moveto 9 -1 lineto stroke
+											-1 -1 moveto 9 9 lineto stroke } bind def
+		<03060c183060c081> { 1 setlinewidth -1 -1 moveto 9 9 lineto stroke 
+											4 -4 moveto 12 4 lineto stroke
+											-4 4 moveto 4 12 lineto stroke} bind def
+		<8040201008040201> { 1 setlinewidth -1 9 moveto 9 -1 lineto stroke 
+											-4 4 moveto 4 -4 lineto stroke
+											4 12 moveto 12 4 lineto stroke} bind def
+	end def
+	/patDict 15 dict dup begin
+		/PatternType 1 def		
+		/PaintType 2 def		
+		/TilingType 3 def		
+		/BBox [ 0 0 8 8 ] def 	
+		/XStep 8 def			
+		/YStep 8 def			
+		/PaintProc {
+			begin
+			patProcDict bstring known {
+				patProcDict bstring get exec
+			} {
+				8 8 true [1 0 0 -1 0 8] bstring imagemask
+			} ifelse
+			end
+		} bind def
+	end def
+} if
+/combineColor {
+    FrameSepIs FMnone eq
+	{
+		graymode FMLevel1 or not {
+			
+			[/Pattern [/DeviceCMYK]] setcolorspace
+			FrameCurColors 0 4 getinterval aload pop FrameCurPat setcolor
+		} {
+			FrameCurColors 3 get 1.0 ge {
+				FrameCurGray RealSetgray
+			} {
+				FMPColor graymode and {
+					0 1 3 { 
+						FrameCurColors exch get
+						1 FrameCurGray sub mul
+					} for
+					RealSetcmykcolor
+				} {
+					4 1 6 {
+						FrameCurColors exch get
+						graymode {
+							1 exch sub 1 FrameCurGray sub mul 1 exch sub
+						} {
+							1.0 lt {FrameCurGray} {1} ifelse
+						} ifelse
+					} for
+					RealSetrgbcolor
+				} ifelse
+			} ifelse
+		} ifelse
+	} { 
+		FrameCurColors 0 4 getinterval aload
+		FrameColorInSepListCMYK {
+			FrameSepBlack eq exch 
+			FrameSepYellow eq and exch 
+			FrameSepMagenta eq and exch 
+			FrameSepCyan eq and
+			FrameSepIs FMcustom eq and
+			{ FrameCurGray } { 1 } ifelse
+		} {
+			FrameSepIs FMblack eq
+			{FrameCurGray 1.0 exch sub mul 1.0 exch sub 4 1 roll pop pop pop} {
+			FrameSepIs FMyellow eq
+			{pop FrameCurGray 1.0 exch sub mul 1.0 exch sub 3 1 roll pop pop} {
+			FrameSepIs FMmagenta eq
+			{pop pop FrameCurGray 1.0 exch sub mul 1.0 exch sub exch pop } {
+			FrameSepIs FMcyan eq
+			{pop pop pop FrameCurGray 1.0 exch sub mul 1.0 exch sub } 
+			{pop pop pop pop 1} ifelse } ifelse } ifelse } ifelse 
+		} ifelse
+		graymode FMLevel1 or not {
+			
+			[/Pattern [/DeviceGray]] setcolorspace
+			FrameCurPat setcolor
+		} { 
+			graymode not FMLevel1 and {
+				
+				dup 1 lt {pop FrameCurGray} if
+			} if
+			RealSetgray
+		} ifelse
+	} ifelse
+} bind def
+/savematrix {
+	orgmatrix currentmatrix pop
+	} bind def
+/restorematrix {
+	orgmatrix setmatrix
+	} bind def
+/dmatrix matrix def
+/dpi    72 0 dmatrix defaultmatrix dtransform
+    dup mul exch   dup mul add   sqrt def
+	
+/freq dpi dup 72 div round dup 0 eq {pop 1} if 8 mul div def
+/sangle 1 0 dmatrix defaultmatrix dtransform exch atan def
+/dpiranges   [  2540    2400    1693     1270    1200     635      600      0      ] def
+/CMLowFreqs  [ 100.402  94.8683 89.2289 100.402  94.8683  66.9349  63.2456 47.4342 ] def
+/YLowFreqs   [  95.25   90.0    84.65    95.25   90.0     70.5556  66.6667 50.0    ] def
+/KLowFreqs   [  89.8026 84.8528 79.8088  89.8026 84.8528  74.8355  70.7107 53.033  ] def
+/CLowAngles  [  71.5651 71.5651 71.5651 71.5651  71.5651  71.5651  71.5651 71.5651 ] def
+/MLowAngles  [  18.4349 18.4349 18.4349 18.4349  18.4349  18.4349  18.4349 18.4349 ] def
+/YLowTDot    [  true    true    false    true    true     false    false   false   ] def
+/CMHighFreqs [ 133.87  126.491 133.843  108.503 102.523  100.402   94.8683 63.2456 ] def
+/YHighFreqs  [ 127.0   120.0   126.975  115.455 109.091   95.25    90.0    60.0    ] def
+/KHighFreqs  [ 119.737 113.137 119.713  128.289 121.218   89.8026  84.8528 63.6395 ] def
+/CHighAngles [  71.5651 71.5651 71.5651  70.0169 70.0169  71.5651  71.5651 71.5651 ] def
+/MHighAngles [  18.4349 18.4349 18.4349  19.9831 19.9831  18.4349  18.4349 18.4349 ] def
+/YHighTDot   [  false   false   true     false   false    true     true    false   ] def
+/PatFreq     [	10.5833 10.0     9.4055  10.5833 10.0	  10.5833  10.0	   9.375   ] def
+/screenIndex {
+	0 1 dpiranges length 1 sub { dup dpiranges exch get 1 sub dpi le {exit} {pop} ifelse } for
+} bind def
+/getCyanScreen {
+	FMUseHighFrequencyScreens { CHighAngles CMHighFreqs} {CLowAngles CMLowFreqs} ifelse
+		screenIndex dup 3 1 roll get 3 1 roll get /FMSpotFunction load
+} bind def
+/getMagentaScreen {
+	FMUseHighFrequencyScreens { MHighAngles CMHighFreqs } {MLowAngles CMLowFreqs} ifelse
+		screenIndex dup 3 1 roll get 3 1 roll get /FMSpotFunction load
+} bind def
+/getYellowScreen {
+	FMUseHighFrequencyScreens { YHighTDot YHighFreqs} { YLowTDot YLowFreqs } ifelse
+		screenIndex dup 3 1 roll get 3 1 roll get { 3 div
+			{2 { 1 add 2 div 3 mul dup floor sub 2 mul 1 sub exch} repeat
+			FMSpotFunction } } {/FMSpotFunction load } ifelse
+			0.0 exch
+} bind def
+/getBlackScreen  {
+	FMUseHighFrequencyScreens { KHighFreqs } { KLowFreqs } ifelse
+		screenIndex get 45.0 /FMSpotFunction load 
+} bind def
+/getSpotScreen {
+	getBlackScreen
+} bind def
+/getCompositeScreen {
+	getBlackScreen
+} bind def
+/FMSetScreen 
+	FMLevel1 { /setscreen load 
+	}{ {
+		8 dict begin
+		/HalftoneType 1 def
+		/SpotFunction exch def
+		/Angle exch def
+		/Frequency exch def
+		/AccurateScreens FMUseAcccurateScreens def
+		currentdict end sethalftone
+	} bind } ifelse
+def
+/setDefaultScreen {
+	FMPColor {
+		orgrxfer cvx orggxfer cvx orgbxfer cvx orgxfer cvx setcolortransfer
+	}
+	{
+		orgxfer cvx settransfer
+	} ifelse
+	orgfreq organgle orgproc cvx setscreen
+} bind def
+/setCurrentScreen {
+	FrameSepIs FMnone eq {
+		FMUseDefaultNoSeparationScreen {
+			setDefaultScreen
+		} {
+			getCompositeScreen FMSetScreen
+		} ifelse
+	} {
+		FrameSepIs FMcustom eq {
+			FMUseDefaultSpotSeparationScreen {
+				setDefaultScreen
+			} {
+				getSpotScreen FMSetScreen
+			} ifelse
+		} {
+			FMUseDefaultProcessSeparationScreen {
+				setDefaultScreen
+			} {
+				FrameSepIs FMcyan eq {
+					getCyanScreen FMSetScreen
+				} {
+					FrameSepIs FMmagenta eq {
+						getMagentaScreen FMSetScreen
+					} {
+						FrameSepIs FMyellow eq {
+							getYellowScreen FMSetScreen
+						} {
+							getBlackScreen FMSetScreen
+						} ifelse
+					} ifelse
+				} ifelse
+			} ifelse
+		} ifelse
+	} ifelse 
+} bind def
+end
+	/gstring FMLOCAL
+	/gfile FMLOCAL
+	/gindex FMLOCAL
+	/orgrxfer FMLOCAL
+	/orggxfer FMLOCAL
+	/orgbxfer FMLOCAL
+	/orgxfer FMLOCAL
+	/orgproc FMLOCAL
+	/orgrproc FMLOCAL
+	/orggproc FMLOCAL
+	/orgbproc FMLOCAL
+	/organgle FMLOCAL
+	/orgrangle FMLOCAL
+	/orggangle FMLOCAL
+	/orgbangle FMLOCAL
+	/orgfreq FMLOCAL
+	/orgrfreq FMLOCAL
+	/orggfreq FMLOCAL
+	/orgbfreq FMLOCAL
+	/yscale FMLOCAL
+	/xscale FMLOCAL
+	/edown FMLOCAL
+	/manualfeed FMLOCAL
+	/paperheight FMLOCAL
+	/paperwidth FMLOCAL
+/FMDOCUMENT { 
+	array /FMfonts exch def 
+	/#copies exch def
+	FrameDict begin
+	0 ne /manualfeed exch def
+	/paperheight exch def
+	/paperwidth exch def
+	0 ne /FrameNegative exch def 
+	0 ne /edown exch def 
+	/yscale exch def
+	/xscale exch def
+	FMLevel1 {
+		manualfeed {setmanualfeed} if
+		/FMdicttop countdictstack 1 add def 
+		/FMoptop count def 
+		setpapername 
+		manualfeed {true} {papersize} ifelse 
+		{manualpapersize} {false} ifelse 
+		{desperatepapersize} {false} ifelse 
+%%		{ (Can't select requested paper size for Frame print job!) FMFAILURE }
+	        {true} if
+		count -1 FMoptop {pop pop} for
+		countdictstack -1 FMdicttop {pop end} for 
+		}
+		{{1 dict dup /PageSize [paperwidth paperheight]put setpagedevice}stopped
+%%		{ (Can't select requested paper size for Frame print job!) FMFAILURE } if
+	        {true} if
+		 {1 dict dup /ManualFeed manualfeed put setpagedevice } stopped pop }
+	ifelse 
+	
+	FMPColor {
+		currentcolorscreen
+			cvlit /orgproc exch def
+				  /organgle exch def 
+				  /orgfreq exch def
+			cvlit /orgbproc exch def
+				  /orgbangle exch def 
+				  /orgbfreq exch def
+			cvlit /orggproc exch def
+				  /orggangle exch def 
+				  /orggfreq exch def
+			cvlit /orgrproc exch def
+				  /orgrangle exch def 
+				  /orgrfreq exch def
+			currentcolortransfer 
+			FrameNegative {
+				1 1 4 { 
+					pop { 1 exch sub } concatprocs 4 1 roll
+				} for
+				4 copy
+				setcolortransfer
+			} if
+			cvlit /orgxfer exch def
+			cvlit /orgbxfer exch def
+			cvlit /orggxfer exch def
+			cvlit /orgrxfer exch def
+	} {
+		currentscreen 
+			cvlit /orgproc exch def
+				  /organgle exch def 
+				  /orgfreq exch def
+				  
+		currenttransfer 
+		FrameNegative {
+			{ 1 exch sub } concatprocs
+			dup settransfer
+		} if 
+		cvlit /orgxfer exch def
+	} ifelse
+	end 
+} def 
+/pagesave FMLOCAL
+/orgmatrix FMLOCAL
+/landscape FMLOCAL
+/pwid FMLOCAL
+/FMBEGINPAGE { 
+	FrameDict begin 
+	/pagesave save def
+	3.86 setmiterlimit
+	/landscape exch 0 ne def
+	landscape { 
+		90 rotate 0 exch dup /pwid exch def neg translate pop 
+	}{
+		pop /pwid exch def
+	} ifelse
+	edown { [-1 0 0 1 pwid 0] concat } if
+	0 0 moveto paperwidth 0 lineto paperwidth paperheight lineto 
+	0 paperheight lineto 0 0 lineto 1 setgray fill
+	xscale yscale scale
+	/orgmatrix matrix def
+	gsave 
+} def 
+/FMENDPAGE {
+	grestore 
+	pagesave restore
+	end 
+	showpage
+	} def 
+/FMFONTDEFINE { 
+	FrameDict begin
+	findfont 
+	ReEncode 
+	1 index exch 
+	definefont 
+	FMfonts 3 1 roll 
+	put
+	end 
+	} def 
+/FMFILLS {
+	FrameDict begin dup
+	array /fillvals exch def
+	dict /patCache exch def
+	end 
+	} def 
+/FMFILL {
+	FrameDict begin
+	 fillvals 3 1 roll put
+	end 
+	} def 
+/FMNORMALIZEGRAPHICS { 
+	newpath
+	0.0 0.0 moveto
+	1 setlinewidth
+	0 setlinecap
+	0 0 0 sethsbcolor
+	0 setgray 
+	} bind def
+	/fx FMLOCAL
+	/fy FMLOCAL
+	/fh FMLOCAL
+	/fw FMLOCAL
+	/llx FMLOCAL
+	/lly FMLOCAL
+	/urx FMLOCAL
+	/ury FMLOCAL
+/FMBEGINEPSF { 
+	end 
+	/FMEPSF save def 
+	/showpage {} def 
+% See Adobe's "PostScript Language Reference Manual, 2nd Edition", page 714.
+% "...the following operators MUST NOT be used in an EPS file:" (emphasis ours)
+	/banddevice {(banddevice) FMBADEPSF} def
+	/clear {(clear) FMBADEPSF} def
+	/cleardictstack {(cleardictstack) FMBADEPSF} def 
+	/copypage {(copypage) FMBADEPSF} def
+	/erasepage {(erasepage) FMBADEPSF} def
+	/exitserver {(exitserver) FMBADEPSF} def
+	/framedevice {(framedevice) FMBADEPSF} def
+	/grestoreall {(grestoreall) FMBADEPSF} def
+	/initclip {(initclip) FMBADEPSF} def
+	/initgraphics {(initgraphics) FMBADEPSF} def
+	/initmatrix {(initmatrix) FMBADEPSF} def
+	/quit {(quit) FMBADEPSF} def
+	/renderbands {(renderbands) FMBADEPSF} def
+	/setglobal {(setglobal) FMBADEPSF} def
+	/setpagedevice {(setpagedevice) FMBADEPSF} def
+	/setshared {(setshared) FMBADEPSF} def
+	/startjob {(startjob) FMBADEPSF} def
+	/lettertray {(lettertray) FMBADEPSF} def
+	/letter {(letter) FMBADEPSF} def
+	/lettersmall {(lettersmall) FMBADEPSF} def
+	/11x17tray {(11x17tray) FMBADEPSF} def
+	/11x17 {(11x17) FMBADEPSF} def
+	/ledgertray {(ledgertray) FMBADEPSF} def
+	/ledger {(ledger) FMBADEPSF} def
+	/legaltray {(legaltray) FMBADEPSF} def
+	/legal {(legal) FMBADEPSF} def
+	/statementtray {(statementtray) FMBADEPSF} def
+	/statement {(statement) FMBADEPSF} def
+	/executivetray {(executivetray) FMBADEPSF} def
+	/executive {(executive) FMBADEPSF} def
+	/a3tray {(a3tray) FMBADEPSF} def
+	/a3 {(a3) FMBADEPSF} def
+	/a4tray {(a4tray) FMBADEPSF} def
+	/a4 {(a4) FMBADEPSF} def
+	/a4small {(a4small) FMBADEPSF} def
+	/b4tray {(b4tray) FMBADEPSF} def
+	/b4 {(b4) FMBADEPSF} def
+	/b5tray {(b5tray) FMBADEPSF} def
+	/b5 {(b5) FMBADEPSF} def
+	FMNORMALIZEGRAPHICS 
+	[/fy /fx /fh /fw /ury /urx /lly /llx] {exch def} forall 
+	fx fw 2 div add fy fh 2 div add  translate
+	rotate
+	fw 2 div neg fh 2 div neg translate
+	fw urx llx sub div fh ury lly sub div scale 
+	llx neg lly neg translate 
+	/FMdicttop countdictstack 1 add def 
+	/FMoptop count def 
+	} bind def
+/FMENDEPSF {
+	count -1 FMoptop {pop pop} for 
+	countdictstack -1 FMdicttop {pop end} for 
+	FMEPSF restore
+	FrameDict begin 
+	} bind def
+FrameDict begin 
+/setmanualfeed {
+%%BeginFeature *ManualFeed True
+	 statusdict /manualfeed true put
+%%EndFeature
+	} bind def
+/max {2 copy lt {exch} if pop} bind def
+/min {2 copy gt {exch} if pop} bind def
+/inch {72 mul} def
+/pagedimen { 
+	paperheight sub abs 16 lt exch 
+	paperwidth sub abs 16 lt and
+	{/papername exch def} {pop} ifelse
+	} bind def
+	/papersizedict FMLOCAL
+/setpapername { 
+	/papersizedict 14 dict def 
+	papersizedict begin
+	/papername /unknown def 
+		/Letter 8.5 inch 11.0 inch pagedimen
+		/LetterSmall 7.68 inch 10.16 inch pagedimen
+		/Tabloid 11.0 inch 17.0 inch pagedimen
+		/Ledger 17.0 inch 11.0 inch pagedimen
+		/Legal 8.5 inch 14.0 inch pagedimen
+		/Statement 5.5 inch 8.5 inch pagedimen
+		/Executive 7.5 inch 10.0 inch pagedimen
+		/A3 11.69 inch 16.5 inch pagedimen
+		/A4 8.26 inch 11.69 inch pagedimen
+		/A4Small 7.47 inch 10.85 inch pagedimen
+		/B4 10.125 inch 14.33 inch pagedimen
+		/B5 7.16 inch 10.125 inch pagedimen
+	end
+	} bind def
+/papersize {
+	papersizedict begin
+		/Letter {lettertray letter} def
+		/LetterSmall {lettertray lettersmall} def
+		/Tabloid {11x17tray 11x17} def
+		/Ledger {ledgertray ledger} def
+		/Legal {legaltray legal} def
+		/Statement {statementtray statement} def
+		/Executive {executivetray executive} def
+		/A3 {a3tray a3} def
+		/A4 {a4tray a4} def
+		/A4Small {a4tray a4small} def
+		/B4 {b4tray b4} def
+		/B5 {b5tray b5} def
+		/unknown {unknown} def
+	papersizedict dup papername known {papername} {/unknown} ifelse get
+	end
+	statusdict begin stopped end 
+	} bind def
+/manualpapersize {
+	papersizedict begin
+		/Letter {letter} def
+		/LetterSmall {lettersmall} def
+		/Tabloid {11x17} def
+		/Ledger {ledger} def
+		/Legal {legal} def
+		/Statement {statement} def
+		/Executive {executive} def
+		/A3 {a3} def
+		/A4 {a4} def
+		/A4Small {a4small} def
+		/B4 {b4} def
+		/B5 {b5} def
+		/unknown {unknown} def
+	papersizedict dup papername known {papername} {/unknown} ifelse get
+	end
+	stopped 
+	} bind def
+/desperatepapersize {
+	statusdict /setpageparams known
+		{
+		paperwidth paperheight 0 1 
+		statusdict begin
+		{setpageparams} stopped 
+		end
+		} {true} ifelse 
+	} bind def
+/DiacriticEncoding [
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /space /exclam /quotedbl
+/numbersign /dollar /percent /ampersand /quotesingle /parenleft
+/parenright /asterisk /plus /comma /hyphen /period /slash /zero /one
+/two /three /four /five /six /seven /eight /nine /colon /semicolon
+/less /equal /greater /question /at /A /B /C /D /E /F /G /H /I /J /K
+/L /M /N /O /P /Q /R /S /T /U /V /W /X /Y /Z /bracketleft /backslash
+/bracketright /asciicircum /underscore /grave /a /b /c /d /e /f /g /h
+/i /j /k /l /m /n /o /p /q /r /s /t /u /v /w /x /y /z /braceleft /bar
+/braceright /asciitilde /.notdef /Adieresis /Aring /Ccedilla /Eacute
+/Ntilde /Odieresis /Udieresis /aacute /agrave /acircumflex /adieresis
+/atilde /aring /ccedilla /eacute /egrave /ecircumflex /edieresis
+/iacute /igrave /icircumflex /idieresis /ntilde /oacute /ograve
+/ocircumflex /odieresis /otilde /uacute /ugrave /ucircumflex
+/udieresis /dagger /.notdef /cent /sterling /section /bullet
+/paragraph /germandbls /registered /copyright /trademark /acute
+/dieresis /.notdef /AE /Oslash /.notdef /.notdef /.notdef /.notdef
+/yen /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/ordfeminine /ordmasculine /.notdef /ae /oslash /questiondown
+/exclamdown /logicalnot /.notdef /florin /.notdef /.notdef
+/guillemotleft /guillemotright /ellipsis /.notdef /Agrave /Atilde
+/Otilde /OE /oe /endash /emdash /quotedblleft /quotedblright
+/quoteleft /quoteright /.notdef /.notdef /ydieresis /Ydieresis
+/fraction /currency /guilsinglleft /guilsinglright /fi /fl /daggerdbl
+/periodcentered /quotesinglbase /quotedblbase /perthousand
+/Acircumflex /Ecircumflex /Aacute /Edieresis /Egrave /Iacute
+/Icircumflex /Idieresis /Igrave /Oacute /Ocircumflex /.notdef /Ograve
+/Uacute /Ucircumflex /Ugrave /dotlessi /circumflex /tilde /macron
+/breve /dotaccent /ring /cedilla /hungarumlaut /ogonek /caron
+] def
+/ReEncode { 
+	dup 
+	length 
+	dict begin 
+	{
+	1 index /FID ne 
+		{def} 
+		{pop pop} ifelse 
+	} forall 
+	0 eq {/Encoding DiacriticEncoding def} if 
+	currentdict 
+	end 
+	} bind def
+FMPColor 
+	
+	{
+	/BEGINBITMAPCOLOR { 
+		BITMAPCOLOR} def
+	/BEGINBITMAPCOLORc { 
+		BITMAPCOLORc} def
+	/BEGINBITMAPTRUECOLOR { 
+		BITMAPTRUECOLOR } def
+	/BEGINBITMAPTRUECOLORc { 
+		BITMAPTRUECOLORc } def
+	}
+	
+	{
+	/BEGINBITMAPCOLOR { 
+		BITMAPGRAY} def
+	/BEGINBITMAPCOLORc { 
+		BITMAPGRAYc} def
+	/BEGINBITMAPTRUECOLOR { 
+		BITMAPTRUEGRAY } def
+	/BEGINBITMAPTRUECOLORc { 
+		BITMAPTRUEGRAYc } def
+	}
+ifelse
+/K { 
+	FMPrintAllColorsAsBlack {
+		dup 1 eq 2 index 1 eq and 3 index 1 eq and not
+			{7 {pop} repeat 0 0 0 1 0 0 0} if
+	} if 
+	FrameCurColors astore 
+	pop combineColor
+} bind def
+/graymode true def
+	/bwidth FMLOCAL
+	/bpside FMLOCAL
+	/bstring FMLOCAL
+	/onbits FMLOCAL
+	/offbits FMLOCAL
+	/xindex FMLOCAL
+	/yindex FMLOCAL
+	/x FMLOCAL
+	/y FMLOCAL
+/setPatternMode {
+	FMLevel1 {
+		/bwidth  exch def
+		/bpside  exch def
+		/bstring exch def
+		/onbits 0 def  /offbits 0 def
+		freq sangle landscape {90 add} if 
+			{/y exch def
+			 /x exch def
+			 /xindex x 1 add 2 div bpside mul cvi def
+			 /yindex y 1 add 2 div bpside mul cvi def
+			 bstring yindex bwidth mul xindex 8 idiv add get
+			 1 7 xindex 8 mod sub bitshift and 0 ne FrameNegative {not} if
+			 {/onbits  onbits  1 add def 1}
+			 {/offbits offbits 1 add def 0}
+			 ifelse
+			}
+			setscreen
+		offbits offbits onbits add div FrameNegative {1.0 exch sub} if
+		/FrameCurGray exch def
+	} { 
+		pop pop
+		dup patCache exch known {
+			patCache exch get
+		} { 
+			dup
+			patDict /bstring 3 -1 roll put
+			patDict 
+			9 PatFreq screenIndex get div dup matrix scale
+			makepattern
+			dup 
+			patCache 4 -1 roll 3 -1 roll put
+		} ifelse
+		/FrameCurGray 0 def
+		/FrameCurPat exch def
+	} ifelse
+	/graymode false def
+	combineColor
+} bind def
+/setGrayScaleMode {
+	graymode not {
+		/graymode true def
+		FMLevel1 {
+			setCurrentScreen
+		} if
+	} if
+	/FrameCurGray exch def
+	combineColor
+} bind def
+/normalize {
+	transform round exch round exch itransform
+	} bind def
+/dnormalize {
+	dtransform round exch round exch idtransform
+	} bind def
+/lnormalize { 
+	0 dtransform exch cvi 2 idiv 2 mul 1 add exch idtransform pop
+	} bind def
+/H { 
+	lnormalize setlinewidth
+	} bind def
+/Z {
+	setlinecap
+	} bind def
+	
+/PFill {
+	graymode FMLevel1 or not {
+		gsave 1 setgray eofill grestore
+	} if
+} bind def
+/PStroke {
+	graymode FMLevel1 or not {
+		gsave 1 setgray stroke grestore
+	} if
+	stroke
+} bind def
+	/fillvals FMLOCAL
+/X { 
+	fillvals exch get
+	dup type /stringtype eq
+	{8 1 setPatternMode} 
+	{setGrayScaleMode}
+	ifelse
+	} bind def
+/V { 
+	PFill gsave eofill grestore
+	} bind def
+/Vclip {
+	clip
+	} bind def
+/Vstrk {
+	currentlinewidth exch setlinewidth PStroke setlinewidth
+	} bind def
+/N { 
+	PStroke
+	} bind def
+/Nclip {
+	strokepath clip newpath
+	} bind def
+/Nstrk {
+	currentlinewidth exch setlinewidth PStroke setlinewidth
+	} bind def
+/M {newpath moveto} bind def
+/E {lineto} bind def
+/D {curveto} bind def
+/O {closepath} bind def
+	/n FMLOCAL
+/L { 
+ 	/n exch def
+	newpath
+	normalize
+	moveto 
+	2 1 n {pop normalize lineto} for
+	} bind def
+/Y { 
+	L 
+	closepath
+	} bind def
+	/x1 FMLOCAL
+	/x2 FMLOCAL
+	/y1 FMLOCAL
+	/y2 FMLOCAL
+/R { 
+	/y2 exch def
+	/x2 exch def
+	/y1 exch def
+	/x1 exch def
+	x1 y1
+	x2 y1
+	x2 y2
+	x1 y2
+	4 Y 
+	} bind def
+	/rad FMLOCAL
+/rarc 
+	{rad 
+	 arcto
+	} bind def
+/RR { 
+	/rad exch def
+	normalize
+	/y2 exch def
+	/x2 exch def
+	normalize
+	/y1 exch def
+	/x1 exch def
+	mark
+	newpath
+	{
+	x1 y1 rad add moveto
+	x1 y2 x2 y2 rarc
+	x2 y2 x2 y1 rarc
+	x2 y1 x1 y1 rarc
+	x1 y1 x1 y2 rarc
+	closepath
+	} stopped {x1 y1 x2 y2 R} if 
+	cleartomark
+	} bind def
+/RRR { 
+	/rad exch def
+	normalize /y4 exch def /x4 exch def
+	normalize /y3 exch def /x3 exch def
+	normalize /y2 exch def /x2 exch def
+	normalize /y1 exch def /x1 exch def
+	newpath
+	normalize moveto 
+	mark
+	{
+	x2 y2 x3 y3 rarc
+	x3 y3 x4 y4 rarc
+	x4 y4 x1 y1 rarc
+	x1 y1 x2 y2 rarc
+	closepath
+	} stopped
+	 {x1 y1 x2 y2 x3 y3 x4 y4 newpath moveto lineto lineto lineto closepath} if
+	cleartomark
+	} bind def
+/C { 
+	grestore
+	gsave
+	R 
+	clip
+	setCurrentScreen
+} bind def
+/CP { 
+	grestore
+	gsave
+	Y 
+	clip
+	setCurrentScreen
+} bind def
+	/FMpointsize FMLOCAL
+/F { 
+	FMfonts exch get
+	FMpointsize scalefont
+	setfont
+	} bind def
+/Q { 
+	/FMpointsize exch def
+	F 
+	} bind def
+/T { 
+	moveto show
+	} bind def
+/RF { 
+	rotate
+	0 ne {-1 1 scale} if
+	} bind def
+/TF { 
+	gsave
+	moveto 
+	RF
+	show
+	grestore
+	} bind def
+/P { 
+	moveto
+	0 32 3 2 roll widthshow
+	} bind def
+/PF { 
+	gsave
+	moveto 
+	RF
+	0 32 3 2 roll widthshow
+	grestore
+	} bind def
+/S { 
+	moveto
+	0 exch ashow
+	} bind def
+/SF { 
+	gsave
+	moveto
+	RF
+	0 exch ashow
+	grestore
+	} bind def
+/B { 
+	moveto
+	0 32 4 2 roll 0 exch awidthshow
+	} bind def
+/BF { 
+	gsave
+	moveto
+	RF
+	0 32 4 2 roll 0 exch awidthshow
+	grestore
+	} bind def
+/G { 
+	gsave
+	newpath
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath 
+	PFill fill
+	grestore
+	} bind def
+/Gstrk {
+	savematrix
+    newpath
+    2 index 2 div add exch 3 index 2 div sub exch 
+    normalize 2 index 2 div sub exch 3 index 2 div add exch 
+    translate
+    scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    restorematrix
+    currentlinewidth exch setlinewidth PStroke setlinewidth
+    } bind def
+/Gclip { 
+	newpath
+	savematrix
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath 
+	clip newpath
+	restorematrix
+	} bind def
+/GG { 
+	gsave
+	newpath
+	normalize translate 0.0 0.0 moveto 
+	rotate 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath
+	PFill
+	fill
+	grestore
+	} bind def
+/GGclip { 
+	savematrix
+	newpath
+    normalize translate 0.0 0.0 moveto 
+    rotate 
+    dnormalize scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    closepath
+	clip newpath
+	restorematrix
+	} bind def
+/GGstrk { 
+	savematrix
+    newpath
+    normalize translate 0.0 0.0 moveto 
+    rotate 
+    dnormalize scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    closepath 
+	restorematrix
+    currentlinewidth exch setlinewidth PStroke setlinewidth
+	} bind def
+/A { 
+	gsave
+	savematrix
+	newpath
+	2 index 2 div add exch 3 index 2 div sub exch 
+	normalize 2 index 2 div sub exch 3 index 2 div add exch 
+	translate 
+	scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	restorematrix
+	PStroke
+	grestore
+	} bind def
+/Aclip {
+	newpath
+	savematrix
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath 
+	strokepath clip newpath
+	restorematrix
+} bind def
+/Astrk {
+	Gstrk
+} bind def
+/AA { 
+	gsave
+	savematrix
+	newpath
+	
+	3 index 2 div add exch 4 index 2 div sub exch 
+	
+	normalize 3 index 2 div sub exch 4 index 2 div add exch
+	translate 
+	rotate 
+	scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	restorematrix
+	PStroke
+	grestore
+	} bind def
+/AAclip {
+	savematrix
+	newpath
+    normalize translate 0.0 0.0 moveto 
+    rotate 
+    dnormalize scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    closepath
+	strokepath clip newpath
+	restorematrix
+} bind def
+/AAstrk {
+	GGstrk
+} bind def
+	/x FMLOCAL
+	/y FMLOCAL
+	/w FMLOCAL
+	/h FMLOCAL
+	/xx FMLOCAL
+	/yy FMLOCAL
+	/ww FMLOCAL
+	/hh FMLOCAL
+	/FMsaveobject FMLOCAL
+	/FMoptop FMLOCAL
+	/FMdicttop FMLOCAL
+/BEGINPRINTCODE { 
+	/FMdicttop countdictstack 1 add def 
+	/FMoptop count 7 sub def 
+	/FMsaveobject save def
+	userdict begin 
+	/showpage {} def 
+	FMNORMALIZEGRAPHICS 
+	3 index neg 3 index neg translate
+	} bind def
+/ENDPRINTCODE {
+	count -1 FMoptop {pop pop} for 
+	countdictstack -1 FMdicttop {pop end} for 
+	FMsaveobject restore 
+	} bind def
+/gn { 
+	0 
+	{	46 mul 
+		cf read pop 
+		32 sub 
+		dup 46 lt {exit} if 
+		46 sub add 
+		} loop
+	add 
+	} bind def
+	/str FMLOCAL
+/cfs { 
+	/str sl string def 
+	0 1 sl 1 sub {str exch val put} for 
+	str def 
+	} bind def
+/ic [ 
+	0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0223
+	0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0223
+	0
+	{0 hx} {1 hx} {2 hx} {3 hx} {4 hx} {5 hx} {6 hx} {7 hx} {8 hx} {9 hx}
+	{10 hx} {11 hx} {12 hx} {13 hx} {14 hx} {15 hx} {16 hx} {17 hx} {18 hx}
+	{19 hx} {gn hx} {0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12}
+	{13} {14} {15} {16} {17} {18} {19} {gn} {0 wh} {1 wh} {2 wh} {3 wh}
+	{4 wh} {5 wh} {6 wh} {7 wh} {8 wh} {9 wh} {10 wh} {11 wh} {12 wh}
+	{13 wh} {14 wh} {gn wh} {0 bl} {1 bl} {2 bl} {3 bl} {4 bl} {5 bl} {6 bl}
+	{7 bl} {8 bl} {9 bl} {10 bl} {11 bl} {12 bl} {13 bl} {14 bl} {gn bl}
+	{0 fl} {1 fl} {2 fl} {3 fl} {4 fl} {5 fl} {6 fl} {7 fl} {8 fl} {9 fl}
+	{10 fl} {11 fl} {12 fl} {13 fl} {14 fl} {gn fl}
+	] def
+	/sl FMLOCAL
+	/val FMLOCAL
+	/ws FMLOCAL
+	/im FMLOCAL
+	/bs FMLOCAL
+	/cs FMLOCAL
+	/len FMLOCAL
+	/pos FMLOCAL
+/ms { 
+	/sl exch def 
+	/val 255 def 
+	/ws cfs 
+	/im cfs 
+	/val 0 def 
+	/bs cfs 
+	/cs cfs 
+	} bind def
+400 ms 
+/ip { 
+	is 
+	0 
+	cf cs readline pop 
+	{	ic exch get exec 
+		add 
+		} forall 
+	pop 
+	
+	} bind def
+/rip { 
+	   
+	  
+	  bis ris copy pop 
+      is
+      0
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+	  pop pop 
+	  ris gis copy pop 
+	  dup is exch 
+	  
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+	  pop pop
+	  gis bis copy pop 
+	  dup add is exch 
+	  
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+      pop 
+      
+      } bind def
+/wh { 
+	/len exch def 
+	/pos exch def 
+	ws 0 len getinterval im pos len getinterval copy pop
+	pos len 
+	} bind def
+/bl { 
+	/len exch def 
+	/pos exch def 
+	bs 0 len getinterval im pos len getinterval copy pop
+	pos len 
+	} bind def
+/s1 1 string def
+/fl { 
+	/len exch def 
+	/pos exch def 
+	/val cf s1 readhexstring pop 0 get def
+	pos 1 pos len add 1 sub {im exch val put} for
+	pos len 
+	} bind def
+/hx { 
+	3 copy getinterval 
+	cf exch readhexstring pop pop 
+	} bind def
+	/h FMLOCAL
+	/w FMLOCAL
+	/d FMLOCAL
+	/lb FMLOCAL
+	/bitmapsave FMLOCAL
+	/is FMLOCAL
+	/cf FMLOCAL
+/wbytes { 
+      dup dup
+      24 eq { pop pop 3 mul }
+      { 8 eq {pop} {1 eq {7 add 8 idiv} {3 add 4 idiv} ifelse} ifelse } ifelse
+	} bind def
+/BEGINBITMAPBWc { 
+	1 {} COMMONBITMAPc
+	} bind def
+/BEGINBITMAPGRAYc { 
+	8 {} COMMONBITMAPc
+	} bind def
+/BEGINBITMAP2BITc { 
+	2 {} COMMONBITMAPc
+	} bind def
+/COMMONBITMAPc { 
+		 
+	/r exch def
+	/d exch def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+	/bitmapsave save def 
+	r                    
+	/is im 0 lb getinterval def 
+	ws 0 lb getinterval is copy pop 
+	/cf currentfile def 
+	w h d [w 0 0 h neg 0 h] 
+	{ip} image 
+	bitmapsave restore 
+	grestore
+	} bind def
+/BEGINBITMAPBW { 
+	1 {} COMMONBITMAP
+	} bind def
+/BEGINBITMAPGRAY { 
+	8 {} COMMONBITMAP
+	} bind def
+/BEGINBITMAP2BIT { 
+	2 {} COMMONBITMAP
+	} bind def
+/COMMONBITMAP { 
+	/r exch def
+	/d exch def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/bitmapsave save def 
+	r                    
+	/is w d wbytes string def
+	/cf currentfile def 
+	w h d [w 0 0 h neg 0 h] 
+	{cf is readhexstring pop} image
+	bitmapsave restore 
+	grestore
+	} bind def
+/ngrayt 256 array def
+/nredt 256 array def
+/nbluet 256 array def
+/ngreent 256 array def
+	/gryt FMLOCAL
+	/blut FMLOCAL
+	/grnt FMLOCAL
+	/redt FMLOCAL
+	/indx FMLOCAL
+	/cynu FMLOCAL
+	/magu FMLOCAL
+	/yelu FMLOCAL
+	/k FMLOCAL
+	/u FMLOCAL
+FMLevel1 {
+/colorsetup {
+	currentcolortransfer
+	/gryt exch def
+	/blut exch def
+	/grnt exch def
+	/redt exch def
+	0 1 255 {
+		/indx exch def
+		/cynu 1 red indx get 255 div sub def
+		/magu 1 green indx get 255 div sub def
+		/yelu 1 blue indx get 255 div sub def
+		/k cynu magu min yelu min def
+		/u k currentundercolorremoval exec def
+%		/u 0 def
+		nredt indx 1 0 cynu u sub max sub redt exec put
+		ngreent indx 1 0 magu u sub max sub grnt exec put
+		nbluet indx 1 0 yelu u sub max sub blut exec put
+		ngrayt indx 1 k currentblackgeneration exec sub gryt exec put
+	} for
+	{255 mul cvi nredt exch get}
+	{255 mul cvi ngreent exch get}
+	{255 mul cvi nbluet exch get}
+	{255 mul cvi ngrayt exch get}
+	setcolortransfer
+	{pop 0} setundercolorremoval
+	{} setblackgeneration
+	} bind def
+}
+{
+/colorSetup2 {
+	[ /Indexed /DeviceRGB 255 
+		{dup red exch get 255 div 
+		 exch dup green exch get 255 div 
+		 exch blue exch get 255 div}
+	] setcolorspace
+} bind def
+} ifelse
+	/tran FMLOCAL
+/fakecolorsetup {
+	/tran 256 string def
+	0 1 255 {/indx exch def 
+		tran indx
+		red indx get 77 mul
+		green indx get 151 mul
+		blue indx get 28 mul
+		add add 256 idiv put} for
+	currenttransfer
+	{255 mul cvi tran exch get 255.0 div}
+	exch concatprocs settransfer
+} bind def
+/BITMAPCOLOR { 
+	/d 8 def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/bitmapsave save def
+	FMLevel1 {	
+		colorsetup
+		/is w d wbytes string def
+		/cf currentfile def 
+		w h d [w 0 0 h neg 0 h] 
+		{cf is readhexstring pop} {is} {is} true 3 colorimage 
+	} {
+		colorSetup2
+		/is w d wbytes string def
+		/cf currentfile def 
+		7 dict dup begin
+			/ImageType 1 def
+			/Width w def
+			/Height h def
+			/ImageMatrix [w 0 0 h neg 0 h] def
+			/DataSource {cf is readhexstring pop} bind def
+			/BitsPerComponent d def
+			/Decode [0 255] def
+		end image	
+	} ifelse
+	bitmapsave restore 
+	grestore
+	} bind def
+/BITMAPCOLORc { 
+	/d 8 def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+	/bitmapsave save def 
+	FMLevel1 {	
+		colorsetup
+		/is im 0 lb getinterval def 
+		ws 0 lb getinterval is copy pop 
+		/cf currentfile def 
+		w h d [w 0 0 h neg 0 h] 
+		{ip} {is} {is} true 3 colorimage
+	} {
+		colorSetup2
+		/is im 0 lb getinterval def 
+		ws 0 lb getinterval is copy pop 
+		/cf currentfile def 
+		7 dict dup begin
+			/ImageType 1 def
+			/Width w def
+			/Height h def
+			/ImageMatrix [w 0 0 h neg 0 h] def
+			/DataSource {ip} bind def
+			/BitsPerComponent d def
+			/Decode [0 255] def
+		end image	
+	} ifelse
+	bitmapsave restore 
+	grestore
+	} bind def
+/BITMAPTRUECOLORc { 
+	/d 24 def
+        gsave
+ 	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+        /bitmapsave save def 
+        
+	/is im 0 lb getinterval def	
+	/ris im 0 w getinterval def	
+	/gis im w w getinterval def	
+	/bis im w 2 mul w getinterval def 
+        
+        ws 0 lb getinterval is copy pop 
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        {w rip pop ris} {gis} {bis} true 3 colorimage
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPTRUECOLOR { 
+        gsave
+		
+		3 index 2 div add exch	
+		4 index 2 div add exch	
+		translate		
+		rotate			
+		1 index 2 div neg	
+		1 index 2 div neg	
+		translate		
+		scale			
+		/h exch def /w exch def
+        /bitmapsave save def 
+        /is w string def
+        /gis w string def
+        /bis w string def
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        { cf is readhexstring pop } 
+        { cf gis readhexstring pop } 
+        { cf bis readhexstring pop } 
+        true 3 colorimage 
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPTRUEGRAYc { 
+	/d 24 def
+        gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+        /bitmapsave save def 
+        
+	/is im 0 lb getinterval def	
+	/ris im 0 w getinterval def	
+	/gis im w w getinterval def	
+	/bis im w 2 mul w getinterval def 
+        ws 0 lb getinterval is copy pop 
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        {w rip pop ris gis bis w gray} image
+        bitmapsave restore 
+        grestore
+        } bind def
+/ww FMLOCAL
+/r FMLOCAL
+/g FMLOCAL
+/b FMLOCAL
+/i FMLOCAL
+/gray { 
+        /ww exch def
+        /b exch def
+        /g exch def
+        /r exch def
+        0 1 ww 1 sub { /i exch def r i get .299 mul g i get .587 mul
+			b i get .114 mul add add r i 3 -1 roll floor cvi put } for
+        r
+        } bind def
+/BITMAPTRUEGRAY { 
+        gsave
+		
+		3 index 2 div add exch	
+		4 index 2 div add exch	
+		translate		
+		rotate			
+		1 index 2 div neg	
+		1 index 2 div neg	
+		translate		
+		scale			
+		/h exch def /w exch def
+        /bitmapsave save def 
+        /is w string def
+        /gis w string def
+        /bis w string def
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        { cf is readhexstring pop 
+          cf gis readhexstring pop 
+          cf bis readhexstring pop w gray}  image
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPGRAY { 
+	8 {fakecolorsetup} COMMONBITMAP
+	} bind def
+/BITMAPGRAYc { 
+	8 {fakecolorsetup} COMMONBITMAPc
+	} bind def
+/ENDBITMAP {
+	} bind def
+end 
+	/ALDsave FMLOCAL
+	/ALDmatrix matrix def ALDmatrix currentmatrix pop
+/StartALD {
+	/ALDsave save def
+	 savematrix
+	 ALDmatrix setmatrix
+	} bind def
+/InALD {
+	 restorematrix
+	} bind def
+/DoneALD {
+	 ALDsave restore
+	} bind def
+/I { setdash } bind def
+/J { [] 0 setdash } bind def
+%%EndProlog
+%%BeginSetup
+(4.0) FMVERSION
+1 1 0 0 595.3 841.9 0 1 7 FMDOCUMENT
+0 0 /Times-Bold FMFONTDEFINE
+1 0 /Times-Italic FMFONTDEFINE
+2 0 /Times-Roman FMFONTDEFINE
+3 0 /Helvetica-Bold FMFONTDEFINE
+32 FMFILLS
+0 0 FMFILL
+1 0.1 FMFILL
+2 0.3 FMFILL
+3 0.5 FMFILL
+4 0.7 FMFILL
+5 0.9 FMFILL
+6 0.97 FMFILL
+7 1 FMFILL
+8 <0f1e3c78f0e1c387> FMFILL
+9 <0f87c3e1f0783c1e> FMFILL
+10 <cccccccccccccccc> FMFILL
+11 <ffff0000ffff0000> FMFILL
+12 <8142241818244281> FMFILL
+13 <03060c183060c081> FMFILL
+14 <8040201008040201> FMFILL
+16 1 FMFILL
+17 0.9 FMFILL
+18 0.7 FMFILL
+19 0.5 FMFILL
+20 0.3 FMFILL
+21 0.1 FMFILL
+22 0.03 FMFILL
+23 0 FMFILL
+24 <f0e1c3870f1e3c78> FMFILL
+25 <f0783c1e0f87c3e1> FMFILL
+26 <3333333333333333> FMFILL
+27 <0000ffff0000ffff> FMFILL
+28 <7ebddbe7e7dbbd7e> FMFILL
+29 <fcf9f3e7cf9f3f7e> FMFILL
+30 <7fbfdfeff7fbfdfe> FMFILL
+%%EndSetup
+%%Page: "1" 1
+%%BeginPaperSize: A4
+%%EndPaperSize
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+J
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+113.4 694.5 544.26 739.85 R
+7 X
+0 0 0 1 0 0 0 K
+V
+0 24 Q
+0 X
+(Description and Evaluation of the Initial) 113.4 699.54 T
+(Dylan Pr) 113.4 676.86 T
+(oducer and Runtime Support) 205.63 676.86 T
+255.13 433.71 544.26 473.39 R
+7 X
+V
+1 10 Q
+0 X
+(The status of this document is \322WORKING\323 if signed only by its) 255.13 466.73 T
+(author\050s\051; it is \322ISSUED\323 if signed by the W) 255.13 454.73 T
+(orkpackage Manager; it is) 433.65 454.73 T
+(\322DELIVERED\323 if signed by the Pr) 255.13 442.73 T
+(oject Dir) 395.59 442.73 T
+(ector) 431.05 442.73 T
+(.) 450.49 442.73 T
+255.13 615.13 544.26 643.47 R
+7 X
+V
+2 12 Q
+0 X
+(Ian Piumarta) 255.13 635.47 T
+(________________________) 396.86 635.47 T
+(Harlequin Ltd.) 255.13 621.47 T
+255.13 547.09 544.26 586.78 R
+7 X
+V
+0 X
+(Jor) 255.13 578.78 T
+(gen Bundgaard) 269.58 578.78 T
+(________________________) 396.86 578.78 T
+(DDC International) 255.13 564.78 T
+255.13 501.74 544.26 530.09 R
+7 X
+V
+0 X
+(Gianluigi Castelli) 255.13 522.09 T
+(________________________) 396.86 522.09 T
+(Project Director) 255.13 508.09 T
+113.4 615.13 226.78 643.47 R
+7 X
+V
+0 F
+0 X
+(W) 113.4 635.47 T
+(ritten by:) 125.18 635.47 T
+113.4 558.43 226.78 586.78 R
+7 X
+V
+0 X
+(Issued by:) 113.4 578.78 T
+113.4 501.74 226.78 530.09 R
+7 X
+V
+0 X
+(Deliver) 113.4 522.09 T
+(ed by:) 150.5 522.09 T
+113.4 388.36 226.78 416.7 R
+7 X
+V
+0 X
+-0.19 (Pr) 113.4 408.7 P
+-0.19 (oject deliverable id:) 125.84 408.7 P
+255.13 388.36 544.26 416.7 R
+7 X
+V
+2 F
+0 X
+(TR4.2.2b-01) 255.13 408.7 T
+113.4 331.66 226.78 360.01 R
+7 X
+V
+0 F
+0 X
+(Document code:) 113.4 352.01 T
+113.4 274.97 226.78 303.32 R
+7 X
+V
+0 X
+(Date of \336rst issue:) 113.4 295.32 T
+(Date of last issue:) 113.4 281.32 T
+113.4 218.28 226.78 246.62 R
+7 X
+V
+0 X
+(A) 113.4 238.62 T
+(vailability:) 121.17 238.62 T
+255.13 331.66 544.26 360.01 R
+7 X
+V
+2 F
+0 X
+(Harlequin GLUE4.2.2b - 01) 255.13 352.01 T
+255.13 274.97 544.26 303.32 R
+7 X
+V
+0 X
+(1994-05-21) 255.13 295.32 T
+(1994-05-21) 255.13 281.32 T
+255.13 218.28 544.26 246.62 R
+7 X
+V
+0 X
+(Con\336dential) 255.13 238.62 T
+255.13 155.91 544.26 189.93 R
+7 X
+V
+1 10 Q
+0 X
+-0.12 (The contents of this document ar) 255.13 183.26 P
+-0.12 (e con\336dential and subject to copyrights) 384.99 183.26 P
+(pr) 255.13 171.26 T
+(otection. Any infringement will be pr) 263.65 171.26 T
+(osecuted by law) 410.5 171.26 T
+(.) 473.64 171.26 T
+198.43 59.54 544.26 133.24 R
+7 X
+V
+1 0 1 0 0 1 0 K
+0 93 Q
+0 X
+1 0 1 0 0 1 0 K
+(omi/glue) 198.43 71.24 T
+0 0 0 1 0 0 0 K
+5.68 19.85 102.06 813.55 R
+3 X
+0 0 0 1 0 0 0 K
+V
+0.5 H
+2 Z
+0 X
+N
+113.4 751.19 544.26 790.87 R
+7 X
+V
+1 0 1 0 0 1 0 K
+0 0 0 1 0 0 0 K
+0 36 Q
+0 X
+(ESPRIT PROJECT 6062) 116.53 736.07 T
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "1" 1
+%%Page: "1" 2
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+3 8 Q
+(ESPRIT Project 6062 OMI/GLUE - D4.2.2b) 63.65 766.62 T
+(Description and Evaluation of the Initial Dylan Producer and Runtime Support) 236.48 766.62 T
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+0 12 Q
+(CHANGE HIST) 63.65 716.95 T
+(OR) 147.78 716.95 T
+(Y) 165.36 716.95 T
+(This is the \336rst version.) 63.65 676.95 T
+FMENDPAGE
+%%EndPage: "1" 2
+%%Page: "2" 3
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+3 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(ESPRIT Project 6062 OMI/GLUE - D4.2.2b) 63.65 766.62 T
+(Description and Evaluation of the Initial Dylan Producer and Runtime Support) 236.48 766.62 T
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+N
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+FMENDPAGE
+%%EndPage: "2" 3
+%%Page: "3" 4
+
+
+clear
+cleardictstack
+
+mysave restore
+
+/mysave save def
+
+
+%!PS-Adobe-2.0
+%%Creator: dvips 5.514 Copyright 1986, 1993 Radical Eye Software
+%%Title: main.dvi
+%%CreationDate: Fri May 20 19:06:38 1994
+%%Pages: 24
+%%PageOrder: Ascend
+%%BoundingBox: 0 0 596 842
+%%DocumentFonts: Helvetica-Bold Palatino-Bold Palatino-Roman
+%%+ Palatino-Italic Helvetica Courier
+%%EndComments
+%DVIPSCommandLine: dvips -o main.ps main
+%DVIPSSource:  TeX output 1994.05.20:1706
+%%BeginProcSet: thicken.ps
+
+
+/ThickenFont {  % factor ThickenFont
+20 dict begin
+  /factor exch def
+  /StrokeWidth where {
+    /fdict exch def
+    PaintType dup
+    1 eq exch 3 eq or
+      { StrokeWidth factor mul
+	fdict /StrokeWidth 3 2 roll put
+      } if
+  } if
+end
+} def
+%%EndProcSet
+%%BeginProcSet: tex.pro
+/TeXDict 250 dict def TeXDict begin /N{def}def /B{bind def}N /S{exch}N /X{S N}
+B /TR{translate}N /isls false N /vsize 11 72 mul N /@rigin{isls{[0 -1 1 0 0 0]
+concat}if 72 Resolution div 72 VResolution div neg scale isls{Resolution hsize
+-72 div mul 0 TR}if Resolution VResolution vsize -72 div 1 add mul TR matrix
+currentmatrix dup dup 4 get round 4 exch put dup dup 5 get round 5 exch put
+setmatrix}N /@landscape{/isls true N}B /@manualfeed{statusdict /manualfeed
+true put}B /@copies{/#copies X}B /FMat[1 0 0 -1 0 0]N /FBB[0 0 0 0]N /nn 0 N
+/IE 0 N /ctr 0 N /df-tail{/nn 8 dict N nn begin /FontType 3 N /FontMatrix
+fntrx N /FontBBox FBB N string /base X array /BitMaps X /BuildChar{
+CharBuilder}N /Encoding IE N end dup{/foo setfont}2 array copy cvx N load 0 nn
+put /ctr 0 N[}B /df{/sf 1 N /fntrx FMat N df-tail}B /dfs{div /sf X /fntrx[sf 0
+0 sf neg 0 0]N df-tail}B /E{pop nn dup definefont setfont}B /ch-width{ch-data
+dup length 5 sub get}B /ch-height{ch-data dup length 4 sub get}B /ch-xoff{128
+ch-data dup length 3 sub get sub}B /ch-yoff{ch-data dup length 2 sub get 127
+sub}B /ch-dx{ch-data dup length 1 sub get}B /ch-image{ch-data dup type
+/stringtype ne{ctr get /ctr ctr 1 add N}if}B /id 0 N /rw 0 N /rc 0 N /gp 0 N
+/cp 0 N /G 0 N /sf 0 N /CharBuilder{save 3 1 roll S dup /base get 2 index get
+S /BitMaps get S get /ch-data X pop /ctr 0 N ch-dx 0 ch-xoff ch-yoff ch-height
+sub ch-xoff ch-width add ch-yoff setcachedevice ch-width ch-height true[1 0 0
+-1 -.1 ch-xoff sub ch-yoff .1 add]{ch-image}imagemask restore}B /D{/cc X dup
+type /stringtype ne{]}if nn /base get cc ctr put nn /BitMaps get S ctr S sf 1
+ne{dup dup length 1 sub dup 2 index S get sf div put}if put /ctr ctr 1 add N}
+B /I{cc 1 add D}B /bop{userdict /bop-hook known{bop-hook}if /SI save N @rigin
+0 0 moveto /V matrix currentmatrix dup 1 get dup mul exch 0 get dup mul add
+.99 lt{/QV}{/RV}ifelse load def pop pop}N /eop{SI restore showpage userdict
+/eop-hook known{eop-hook}if}N /@start{userdict /start-hook known{start-hook}
+if pop /VResolution X /Resolution X 1000 div /DVImag X /IE 256 array N 0 1 255
+{IE S 1 string dup 0 3 index put cvn put}for 65781.76 div /vsize X 65781.76
+div /hsize X}N /p{show}N /RMat[1 0 0 -1 0 0]N /BDot 260 string N /rulex 0 N
+/ruley 0 N /v{/ruley X /rulex X V}B /V{}B /RV statusdict begin /product where{
+pop product dup length 7 ge{0 7 getinterval dup(Display)eq exch 0 4
+getinterval(NeXT)eq or}{pop false}ifelse}{false}ifelse end{{gsave TR -.1 -.1
+TR 1 1 scale rulex ruley false RMat{BDot}imagemask grestore}}{{gsave TR -.1
+-.1 TR rulex ruley scale 1 1 false RMat{BDot}imagemask grestore}}ifelse B /QV{
+gsave transform round exch round exch itransform moveto rulex 0 rlineto 0
+ruley neg rlineto rulex neg 0 rlineto fill grestore}B /a{moveto}B /delta 0 N
+/tail{dup /delta X 0 rmoveto}B /M{S p delta add tail}B /b{S p tail}B /c{-4 M}
+B /d{-3 M}B /e{-2 M}B /f{-1 M}B /g{0 M}B /h{1 M}B /i{2 M}B /j{3 M}B /k{4 M}B
+/w{0 rmoveto}B /l{p -4 w}B /m{p -3 w}B /n{p -2 w}B /o{p -1 w}B /q{p 1 w}B /r{
+p 2 w}B /s{p 3 w}B /t{p 4 w}B /x{0 S rmoveto}B /y{3 2 roll p a}B /bos{/SS save
+N}B /eos{SS restore}B end
+%%EndProcSet
+%%BeginProcSet: texps.pro
+TeXDict begin /rf{findfont dup length 1 add dict begin{1 index /FID ne 2 index
+/UniqueID ne and{def}{pop pop}ifelse}forall[1 index 0 6 -1 roll exec 0 exch 5
+-1 roll VResolution Resolution div mul neg 0 0]/Metrics exch def dict begin
+Encoding{exch dup type /integertype ne{pop pop 1 sub dup 0 le{pop}{[}ifelse}{
+FontMatrix 0 get div Metrics 0 get div def}ifelse}forall Metrics /Metrics
+currentdict end def[2 index currentdict end definefont 3 -1 roll makefont
+/setfont load]cvx def}def /ObliqueSlant{dup sin S cos div neg}B /SlantFont{4
+index mul add}def /ExtendFont{3 -1 roll mul exch}def /ReEncodeFont{/Encoding
+exch def}def end
+%%EndProcSet
+%%BeginProcSet: special.pro
+TeXDict begin /SDict 200 dict N SDict begin /@SpecialDefaults{/hs 612 N /vs
+792 N /ho 0 N /vo 0 N /hsc 1 N /vsc 1 N /ang 0 N /CLIP 0 N /rwiSeen false N
+/rhiSeen false N /letter{}N /note{}N /a4{}N /legal{}N}B /@scaleunit 100 N
+/@hscale{@scaleunit div /hsc X}B /@vscale{@scaleunit div /vsc X}B /@hsize{/hs
+X /CLIP 1 N}B /@vsize{/vs X /CLIP 1 N}B /@clip{/CLIP 2 N}B /@hoffset{/ho X}B
+/@voffset{/vo X}B /@angle{/ang X}B /@rwi{10 div /rwi X /rwiSeen true N}B /@rhi
+{10 div /rhi X /rhiSeen true N}B /@llx{/llx X}B /@lly{/lly X}B /@urx{/urx X}B
+/@ury{/ury X}B /magscale true def end /@MacSetUp{userdict /md known{userdict
+/md get type /dicttype eq{userdict begin md length 10 add md maxlength ge{/md
+md dup length 20 add dict copy def}if end md begin /letter{}N /note{}N /legal{
+}N /od{txpose 1 0 mtx defaultmatrix dtransform S atan/pa X newpath clippath
+mark{transform{itransform moveto}}{transform{itransform lineto}}{6 -2 roll
+transform 6 -2 roll transform 6 -2 roll transform{itransform 6 2 roll
+itransform 6 2 roll itransform 6 2 roll curveto}}{{closepath}}pathforall
+newpath counttomark array astore /gc xdf pop ct 39 0 put 10 fz 0 fs 2
+F/|______Courier fnt invertflag{PaintBlack}if}N /txpose{pxs pys scale ppr
+aload pop por{noflips{pop S neg S TR pop 1 -1 scale}if xflip yflip and{pop S
+neg S TR 180 rotate 1 -1 scale ppr 3 get ppr 1 get neg sub neg ppr 2 get ppr 0
+get neg sub neg TR}if xflip yflip not and{pop S neg S TR pop 180 rotate ppr 3
+get ppr 1 get neg sub neg 0 TR}if yflip xflip not and{ppr 1 get neg ppr 0 get
+neg TR}if}{noflips{TR pop pop 270 rotate 1 -1 scale}if xflip yflip and{TR pop
+pop 90 rotate 1 -1 scale ppr 3 get ppr 1 get neg sub neg ppr 2 get ppr 0 get
+neg sub neg TR}if xflip yflip not and{TR pop pop 90 rotate ppr 3 get ppr 1 get
+neg sub neg 0 TR}if yflip xflip not and{TR pop pop 270 rotate ppr 2 get ppr 0
+get neg sub neg 0 S TR}if}ifelse scaleby96{ppr aload pop 4 -1 roll add 2 div 3
+1 roll add 2 div 2 copy TR .96 dup scale neg S neg S TR}if}N /cp{pop pop
+showpage pm restore}N end}if}if}N /normalscale{Resolution 72 div VResolution
+72 div neg scale magscale{DVImag dup scale}if 0 setgray}N /psfts{S 65781.76
+div N}N /startTexFig{/psf$SavedState save N userdict maxlength dict begin
+/magscale false def normalscale currentpoint TR /psf$ury psfts /psf$urx psfts
+/psf$lly psfts /psf$llx psfts /psf$y psfts /psf$x psfts currentpoint /psf$cy X
+/psf$cx X /psf$sx psf$x psf$urx psf$llx sub div N /psf$sy psf$y psf$ury
+psf$lly sub div N psf$sx psf$sy scale psf$cx psf$sx div psf$llx sub psf$cy
+psf$sy div psf$ury sub TR /showpage{}N /erasepage{}N /copypage{}N /p 3 def
+@MacSetUp}N /doclip{psf$llx psf$lly psf$urx psf$ury currentpoint 6 2 roll
+newpath 4 copy 4 2 roll moveto 6 -1 roll S lineto S lineto S lineto closepath
+clip newpath moveto}N /endTexFig{end psf$SavedState restore}N /@beginspecial{
+SDict begin /SpecialSave save N gsave normalscale currentpoint TR
+@SpecialDefaults count /ocount X /dcount countdictstack N}N /@setspecial{CLIP
+1 eq{newpath 0 0 moveto hs 0 rlineto 0 vs rlineto hs neg 0 rlineto closepath
+clip}if ho vo TR hsc vsc scale ang rotate rwiSeen{rwi urx llx sub div rhiSeen{
+rhi ury lly sub div}{dup}ifelse scale llx neg lly neg TR}{rhiSeen{rhi ury lly
+sub div dup scale llx neg lly neg TR}if}ifelse CLIP 2 eq{newpath llx lly
+moveto urx lly lineto urx ury lineto llx ury lineto closepath clip}if
+/showpage{}N /erasepage{}N /copypage{}N newpath}N /@endspecial{count ocount
+sub{pop}repeat countdictstack dcount sub{end}repeat grestore SpecialSave
+restore end}N /@defspecial{SDict begin}N /@fedspecial{end}B /li{lineto}B /rl{
+rlineto}B /rc{rcurveto}B /np{/SaveX currentpoint /SaveY X N 1 setlinecap
+newpath}N /st{stroke SaveX SaveY moveto}N /fil{fill SaveX SaveY moveto}N
+/ellipse{/endangle X /startangle X /yrad X /xrad X /savematrix matrix
+currentmatrix N TR xrad yrad scale 0 0 1 startangle endangle arc savematrix
+setmatrix}N end
+%%EndProcSet
+TeXDict begin 39158280 55380996 1000 300 300
+(/usr/people/ikp/doc/glue/4.2.2/main.dvi) @start /Fa
+81[24 54[33 23 25 15 18 18 1[23 20 25 35 13 20 13 13
+23 23 13 18 23 18 21 20 3[15 1[15 14[25 4[33 25 19[23
+3[11 46[{}30 45.624989 /Palatino-Italic rf /Fb 133[25
+25 25 25 25 25 25 25 25 25 25 25 25 25 25 25 1[25 25
+25 25 25 25 25 25 25 1[25 1[25 1[25 25 1[25 2[25 25 25
+25 1[25 25 25 25 25 2[25 1[25 25 25 25 25 25 25 1[25
+25 25 25 25 25 25 25 25 25 25 25 25 25 25 25 25 1[25
+25 25 25 25 25 25 3[25 25 25 33[{.85 ExtendFont 1.3 ThickenFont}74
+50.000000 /Courier rf /Fc 134[23 3[25 14 18 16 2[23 25
+1[14 25 1[14 25 23 16 21 2[25 21 26[23 1[35 9[10 8[21
+2[10 46[{}21 41.666668 /Palatino-Bold rf /Fd 81[22 49[11
+1[22 22 22 31 22 24 12 22 15 24 24 24 24 36 10 22 1[10
+24 24 12 24 24 22 24 24 1[24 5[29 29 2[31 27 29 31 1[29
+34 31 36 24 2[12 31 34 27 29 31 31 29 29 6[12 24 24 24
+24 24 24 24 24 24 24 12 1[15 3[15 15 4[24 15 12 33[{}66
+43.749428 /Helvetica rf /Fe 81[37 52[33 30 50 33 37 20
+27 23 1[37 33 37 53 20 2[20 37 33 23 30 37 27 37 30 12[40
+37 43 1[37 50 50 60 37 2[23 1[50 33 37 50 43 40 47 8[30
+30 30 30 30 30 30 30 2[15 46[{}48 59.999973 /Palatino-Bold
+rf /Ff 134[21 2[21 23 14 16 16 1[21 18 23 32 12 2[12
+21 21 12 16 21 17 19 18 51[14 45[{}21 41.666668 /Palatino-Italic
+rf /Fg 47[42 21[21 11[25 3[21 47[21 23 21 35 23 25 14
+18 16 23 25 23 24 37 12 23 10 12 24 23 14 20 25 18 23
+21 9[42 1[32 25 22 2[25 33 34 1[25 2[14 2[23 25 32 29
+25 32 5[10 10 11[10 14 10 2[14 14 40[{}52 41.666668 /Palatino-Roman
+rf /Fh 198[15 15 15 15 15 15 15 15 15 15 48[{}10 29.166668
+/Palatino-Roman rf /Fi 198[17 17 17 17 17 17 17 17 17
+17 48[{}10 33.333332 /Palatino-Roman rf /Fj 81[26 51[22
+25 25 36 25 28 17 19 19 1[25 22 28 39 14 1[14 14 25 25
+14 19 25 20 23 22 16[30 33[12 17 3[17 17 40[{}30 50.000000
+/Palatino-Italic rf /Fk 10[14 36[50 7[17 13[25 10[30
+30 3[25 47[25 28 26 42 28 30 16 21 20 28 30 27 29 44
+14 28 12 14 29 28 17 24 30 22 28 25 3[17 1[17 3[50 36
+39 31 26 33 1[30 39 41 47 30 2[17 41 38 28 30 39 35 30
+39 5[12 12 25 25 25 25 25 25 25 25 25 25 30 12 17 12
+2[17 17 14 5[14 33[{}75 50.000000 /Palatino-Roman rf
+/Fl 81[30 52[28 25 41 28 30 17 22 19 30 30 28 30 44 17
+30 1[17 30 28 19 25 30 22 30 25 12[33 30 36 1[30 41 2[30
+2[19 1[41 28 30 41 36 33 39 7[25 25 25 25 25 25 25 25
+25 25 2[17 45[{}50 50.000000 /Palatino-Bold rf /Fm 134[40
+36 60 40 44 24 32 28 44 44 40 44 64 24 44 1[24 44 40
+28 36 44 32 44 36 12[48 44 52 1[44 60 2[44 2[28 1[60
+40 44 60 52 48 56 7[36 36 36 36 36 36 36 36 36 36 48[{}48
+72.000000 /Palatino-Bold rf /Fn 47[45 208[{}1 45.624989
+/Palatino-Bold rf /Fo 134[19 2[19 21 12 19 13 1[21 21
+21 31 10 1[10 10 21 1[12 19 21 19 21 19 11[25 21 23 25
+1[23 27 1[29 21 2[10 1[27 1[23 25 10[19 19 19 19 19 19
+19 19 19 19 10 10 46[{}44 34.708275 /Helvetica-Bold rf
+end
+%%EndProlog
+%%BeginSetup
+%%Feature: *Resolution 300dpi
+TeXDict begin
+%%PaperSize: A4
+
+%%EndSetup
+%%Page: 1 1
+1 0 bop 0 -175 1878 2 v 0 -128 a Fo(ESPRIT)10 b(Project)f(6062)i
+(OMI/GLUE)d Fn(\320)j Fo(D4.2.2b)271 b(Description)9
+b(and)f(evaluation)h(of)f(the)g(initial)f(Dylan)h(producer)978
+-91 y(and)i(runtime)f(support.)0 53 y Fm(Contents)0 167
+y Fl(1)50 b(Purpose)1594 b(2)0 277 y(2)50 b(Executive)13
+b(Summary)1326 b(2)0 387 y(3)50 b(Scope)14 b(of)g(the)f(Initial)g
+(Producer)1125 b(2)0 497 y(4)50 b(Design)14 b(Goals)1468
+b(3)0 607 y(5)50 b(Overview)14 b(of)f(the)h(Dylan)g(Producer)1036
+b(4)75 667 y Fk(5.1)52 b(Intermediate)14 b(Repr)o(esentation)j
+Fj(.)26 b(.)f(.)g(.)h(.)f(.)h(.)f(.)g(.)h(.)f(.)g(.)h(.)f(.)g(.)h(.)f
+(.)g(.)h(.)f(.)h(.)f(.)g(.)h(.)f(.)g(.)73 b Fk(4)75 727
+y(5.2)52 b(Library)13 b(Or)o(ganisation)32 b Fj(.)25
+b(.)h(.)f(.)g(.)h(.)f(.)g(.)h(.)f(.)h(.)f(.)g(.)h(.)f(.)g(.)h(.)f(.)g
+(.)h(.)f(.)g(.)h(.)f(.)h(.)f(.)g(.)h(.)f(.)g(.)73 b Fk(5)0
+837 y Fl(6)50 b(Overview)14 b(of)f(the)h(Generated)h(TDF)1040
+b(6)75 898 y Fk(6.1)52 b(Declarations)15 b(and)f(De\256nitions)f
+Fj(.)26 b(.)f(.)g(.)h(.)f(.)h(.)f(.)g(.)h(.)f(.)g(.)h(.)f(.)g(.)h(.)f
+(.)g(.)h(.)f(.)h(.)f(.)g(.)h(.)f(.)g(.)73 b Fk(6)75 958
+y(6.2)52 b(Accessing)14 b(and)g(Modifying)h(State)32
+b Fj(.)25 b(.)h(.)f(.)h(.)f(.)g(.)h(.)f(.)g(.)h(.)f(.)g(.)h(.)f(.)g(.)h
+(.)f(.)h(.)f(.)g(.)h(.)f(.)g(.)73 b Fk(7)75 1018 y(6.3)52
+b(Conditionals)17 b(and)d(Contr)o(ol)h(Flow)31 b Fj(.)25
+b(.)h(.)f(.)h(.)f(.)g(.)h(.)f(.)g(.)h(.)f(.)g(.)h(.)f(.)g(.)h(.)f(.)h
+(.)f(.)g(.)h(.)f(.)g(.)73 b Fk(7)75 1078 y(6.4)52 b(Function)15
+b(Application)26 b Fj(.)f(.)h(.)f(.)g(.)h(.)f(.)g(.)h(.)f(.)h(.)f(.)g
+(.)h(.)f(.)g(.)h(.)f(.)g(.)h(.)f(.)g(.)h(.)f(.)h(.)f(.)g(.)h(.)f(.)g(.)
+73 b Fk(8)75 1138 y(6.5)52 b(Literals)33 b Fj(.)25 b(.)h(.)f(.)g(.)h(.)
+f(.)h(.)f(.)g(.)h(.)f(.)g(.)h(.)f(.)g(.)h(.)f(.)h(.)f(.)g(.)h(.)f(.)g
+(.)h(.)f(.)g(.)h(.)f(.)g(.)h(.)f(.)h(.)f(.)g(.)h(.)f(.)g(.)73
+b Fk(8)0 1248 y Fl(7)50 b(Future)14 b(Directions)f(and)i(Requirements)
+944 b(9)75 1309 y Fk(7.1)52 b(Calling)15 b(Convention)h(Abstraction)f
+Fj(.)25 b(.)h(.)f(.)h(.)f(.)g(.)h(.)f(.)g(.)h(.)f(.)g(.)h(.)f(.)g(.)h
+(.)f(.)h(.)f(.)g(.)h(.)f(.)g(.)73 b Fk(9)75 1369 y(7.2)52
+b(Internal)14 b(and)g(External)g(Entry)g(Points)37 b
+Fj(.)25 b(.)h(.)f(.)g(.)h(.)f(.)g(.)h(.)f(.)g(.)h(.)f(.)g(.)h(.)f(.)h
+(.)f(.)g(.)h(.)f(.)g(.)48 b Fk(10)75 1429 y(7.3)k(Dynamic)14
+b(and)g(Static)h(Booting)27 b Fj(.)f(.)f(.)g(.)h(.)f(.)h(.)f(.)g(.)h(.)
+f(.)g(.)h(.)f(.)g(.)h(.)f(.)g(.)h(.)f(.)h(.)f(.)g(.)h(.)f(.)g(.)51
+b Fk(1)m(1)0 1539 y Fl(8)f(Suitability)12 b(of)i(TDF)g(for)g(Language)g
+(and)g(Runtime)706 b(12)75 1599 y Fk(8.1)52 b(Function)15
+b(Bodies)g(and)f(Conditionals)45 b Fj(.)25 b(.)h(.)f(.)g(.)h(.)f(.)g(.)
+h(.)f(.)g(.)h(.)f(.)g(.)h(.)f(.)h(.)f(.)g(.)h(.)f(.)g(.)48
+b Fk(12)75 1659 y(8.2)k(Pr)o(oblems)14 b(with)g(Dead)f(Code)25
+b Fj(.)g(.)h(.)f(.)g(.)h(.)f(.)h(.)f(.)g(.)h(.)f(.)g(.)h(.)f(.)g(.)h(.)
+f(.)g(.)h(.)f(.)h(.)f(.)g(.)h(.)f(.)g(.)48 b Fk(13)75
+1719 y(8.3)k(Missing)15 b(SOR)n(TNAME)23 b Fj(.)i(.)h(.)f(.)g(.)h(.)f
+(.)g(.)h(.)f(.)h(.)f(.)g(.)h(.)f(.)g(.)h(.)f(.)g(.)h(.)f(.)g(.)h(.)f(.)
+h(.)f(.)g(.)h(.)f(.)g(.)48 b Fk(13)0 1830 y Fl(9)i(Performance)1467
+b(13)0 1940 y(10)25 b(Conclusions)1471 b(14)0 2050 y(A)36
+b(The)14 b(Benchmarks)1371 b(15)75 2110 y Fk(A.1)38 b(Dylan)14
+b(Sour)o(ce)49 b Fj(.)26 b(.)f(.)h(.)f(.)g(.)h(.)f(.)g(.)h(.)f(.)g(.)h
+(.)f(.)h(.)f(.)g(.)h(.)f(.)g(.)h(.)f(.)g(.)h(.)f(.)g(.)h(.)f(.)h(.)f(.)
+g(.)h(.)f(.)g(.)48 b Fk(15)75 2170 y(A.2)38 b(Generated)14
+b(TDF)42 b Fj(.)25 b(.)h(.)f(.)g(.)h(.)f(.)g(.)h(.)f(.)g(.)h(.)f(.)h(.)
+f(.)g(.)h(.)f(.)g(.)h(.)f(.)g(.)h(.)f(.)g(.)h(.)f(.)h(.)f(.)g(.)h(.)f
+(.)g(.)48 b Fk(16)75 2230 y(A.3)38 b(Generated)14 b(C)30
+b Fj(.)25 b(.)h(.)f(.)h(.)f(.)g(.)h(.)f(.)g(.)h(.)f(.)g(.)h(.)f(.)h(.)f
+(.)g(.)h(.)f(.)g(.)h(.)f(.)g(.)h(.)f(.)g(.)h(.)f(.)h(.)f(.)g(.)h(.)f(.)
+g(.)48 b Fk(20)0 2340 y Fl(References)1580 b(24)p 0 2916
+V 1859 2963 a Fo(1)p eop
+%%Page: 2 2
+2 1 bop 0 -175 1878 2 v 0 -128 a Fo(Description)9 b(and)f(evaluation)h
+(of)f(the)g(initial)f(Dylan)h(producer)0 -91 y(and)i(runtime)g
+(support.)1171 -128 y(ESPRIT)g(Project)g(6062)g(OMI/GLUE)f
+Fn(\320)h Fo(D4.2.2b)0 53 y Fm(1)72 b(Purpose)0 173 y
+Fk(The)13 b(purpose)g(of)g(this)h(document)g(is)g(to)g(assess)g(the)f
+(suitability)i(of)e(TDF)f([FC92])h(as)g(a)g(tar)o(get)g(for)0
+233 y(compiled)g(Dylan)e([App92)o(].)17 b(In)11 b(or)o(der)g(to)h(do)g
+(this,)h(the)e(TDF)g(generated)f(by)h(Harlequin's)h(initial)0
+293 y(Dylan)h(pr)o(oducer)h(is)g(described)h(and)f(an)f(analysis)i
+(made)f(of)f(the)h(TDF)e(pr)o(oduced.)75 356 y(This)i(work)e(was)i
+(sponsor)o(ed)g(by)f(the)h(Commission)h(of)f(the)g(Eur)o(opean)f
+(Communities.)0 548 y Fm(2)72 b(Executive)18 b(Summary)0
+668 y Fk(Dylan)10 b(is)i(an)e(advanced,)j(modern,)f(dynamically-typed,)
+g(object-oriented)f(pr)o(ogramming)f(lan-)0 728 y(guage.)26
+b(It)16 b(contains)i(featur)o(es)e(not)h(found)f(in)h(most)g(other)f
+(languages)h(\320)f(such)g(as)h(automatic)0 788 y(memory)d(management,)
+h(and)g(an)g(exception)g(mechanism.)23 b(The)14 b(language)g(is)i
+(still)g(under)f(de-)0 848 y(velopment,)23 b(although)e(most)g(of)f
+(the)g(design)h(work)e(that)i(r)o(emains)f(concerns)h(the)f(standar)o
+(d)0 908 y(language)13 b(libraries)h(rather)f(than)h(the)g(semantics)g
+(of)g(the)g(language)f(itself.)75 971 y(As)f(part)g(of)g(their)h(work)e
+(with)i(OMI/GLUE,)g(Harlequin)g(have)f(undertaken)g(to)h(implement)0
+1031 y(a)h(Dylan)f(pr)o(oducer)l(.)20 b(This)14 b(will)h(establish)f
+(the)g(adequacy)g(of)g(TDF)e(for)i(the)g(implementation)h(of)0
+1092 y(modern,)e(dynamically-typed,)g(object-oriented)f(languages,)h
+(and)f(also)g(allow)h(comparison)f(of)0 1152 y(the)j(run-time)g(ef)o
+(\256ciency)g(of)g(a)g(TDF)e(implementation)k(with)f(native)f
+(implementations)i(based)0 1212 y(on)c(compilers)h(using)g(the)f(same)g
+(fr)o(ont-end,)g(intermediate)h(r)o(epr)o(esentation)f(and)h
+(optimisation)0 1272 y(technologies.)75 1335 y(This)j(document)h(pr)o
+(esents)f(Harlequin's)h(initial)h(Dylan)e(pr)o(oducer)l(,)i(in)e(terms)
+g(of)g(the)g(TDF)0 1395 y(sequences)c(corr)o(esponding)g(to)h(various)f
+(constructs)h(in)f(Dylan)g(sour)o(ce,)g(and)g(the)h(initial)h(imple-)0
+1456 y(mentation)k(of)f(a)g(token)g(library)f(for)h(Dylan.)31
+b(The)17 b(Dylan)h(token)g(library)f(must)i(be)e(designed)0
+1516 y(car)o(efully)f(to)g(ensur)o(e)f(it)h(supports)g(dif)o(fer)o(ent)
+g(combinations)h(of)e(run-time)g(activities)j(\(garbage)0
+1576 y(collection)j(strategies)e(and)g(calling)h(conventions)g(being)e
+(two)h(important)g(examples\))f(whilst)0 1636 y(keeping)13
+b(the)h(externally)g(visible)h(set)e(of)h(tokens)g(simple.)1115
+1618 y Fi(1)75 1699 y Fk(Mor)o(e)g(than)g(simply)h(a)f(\252porting)g
+(technology\272,)h(Harlequin)g(see)f(TDF)e(as)j(the)f(ideal)h(vehicle)0
+1759 y(for)h(experimentation)i(with)f(implementation)h(techniques.)29
+b(The)16 b(design)h(of)g(the)g(Dylan)f(pr)o(o-)0 1820
+y(ducer)e(emphasizes)g(the)h(possibilities)h(inher)o(ent)f(in)f(TDF)f
+(for)h(rapid)g(modi\256cation)i(and)f(evalu-)0 1880 y(ation)g(of)e
+(implementation)i(techniques.)0 2071 y Fm(3)72 b(Scope)19
+b(of)g(the)g(Initial)g(Producer)0 2191 y Fk(The)13 b(initial)j(pr)o
+(oducer)e(is)g(limited)i(in)e(scope)g(for)f(a)h(number)e(of)i(r)o
+(easons.)75 2254 y(Ther)o(e)e(has)i(not)g(yet)g(been)f(any)g
+(development)i(work)e(on)h Fj(integrated)f Fk(garbage)f(collection)k
+(al-)0 2314 y(gorithms.)211 2296 y Fi(2)251 2314 y Fk(The)e(initial)i
+(Dylan)e(pr)o(oducer)g(uses)h(a)f(conservative)h(garbage)e(collector)j
+(which)e(is)0 2374 y(completely)h(transpar)o(ent)f(to)h(the)f(Dylan)g
+(token)g(library)-6 b(,)15 b(so)f(no)h(special)g(token)f(de\256nitions)
+i(ar)o(e)0 2435 y(necessary)f(to)i(aid)g(garbage)d(collection.)29
+b(The)15 b(places)i(in)f(which)h(garbage)d(collection)19
+b(strategy)p 0 2494 752 2 v 58 2525 a Fh(1)75 2540 y
+Fg(This)10 b(is)g(desirable)h(for)f(two)f(r)o(easons:)15
+b(a)10 b(simple)f(token)h(library)h(will)g(both)e(keep)h(the)g
+(compiler)h(back-end)g(r)o(ela-)0 2589 y(tively)h(simple)f(\(by)g
+(moving)h(complexity)f(out)g(of)g(the)h(compiler)f(and)h(into)f(the)h
+(token)f(library\),)h(and)g(also)f(pr)o(ovide)0 2639
+y(for)j(futur)o(e)h(extensibility)e(without)g(the)h(need)h(for)f
+(extensive)h(modi\256cation)e(to)h(the)g(compiler)g(\(ideally)h(only)f
+(the)0 2689 y(de\256nitions)d(in)h(the)f(token)f(library)j(will)e
+(change\).)58 2724 y Fh(2)75 2739 y Fg(By)g(\252integrated\272)e(we)h
+(mean)g(a)g(garbage)g(collector)h(which)g(r)o(elies)f(upon)h(compiler)f
+(support)g(for)g(its)f(operation.)0 2789 y(Such)h(compiler)h(support)e
+(might)h(be)f(the)h(inclusion)g(of)g(r)o(ead)h(or)f(write)f(barriers,)j
+(context)d(maps)g(for)h(each)h(function,)0 2839 y(and)h(so)e(on.)p
+0 2916 1878 2 v 0 2963 a Fo(2)p eop
+%%Page: 3 3
+3 2 bop 0 -175 1878 2 v 0 -128 a Fo(ESPRIT)10 b(Project)f(6062)i
+(OMI/GLUE)d Fn(\320)j Fo(D4.2.2b)271 b(Description)9
+b(and)f(evaluation)h(of)f(the)g(initial)f(Dylan)h(producer)978
+-91 y(and)i(runtime)f(support.)0 45 y Fk(impinges)16
+b(on)g(the)f(library)g(token)g(de\256nitions)j(will)e(not)g(be)f(clear)
+g(until)i(we)e(begin)g(to)h(support)0 106 y(mor)o(e)e(integrated)g
+(garbage)e(collectors.)75 166 y(Similarly)-6 b(,)14 b(the)e(initial)j
+(Dylan)c(pr)o(oducer)h(does)h(not)f(use)g(advanced)h(calling)g
+(conventions.)20 b(It)0 227 y(uses)12 b(a)g(C-style)g(calling)i
+(convention)f(employing)f(only)h Fj(caller)f Fk(parameters)g(and)g
+(ignoring)g Fj(callee)0 287 y Fk(parameters)18 b(entir)o(ely)-6
+b(.)441 269 y Fi(3)496 287 y Fk(The)19 b(places)g(wher)o(e)f(calling)j
+(conventions)f(impinge)g(on)f(the)g(library)0 347 y(token)h
+(de\256nitions)h(will)g(not)f(be)f(clear)h(until)g(we)f(start)h(to)g
+(support)g(mor)o(e)f(elaborate)h(calling)0 407 y(conventions.)278
+389 y Fi(4)75 468 y Fk(The)14 b(initial)k(pr)o(oducer)d(does)h(not)g(r)
+o(ely)f(on)h(any)f(low-level)h(mechanisms)g(for)e(dealing)j(with)0
+528 y(tagged)11 b(data.)18 b(Nor)11 b(does)h(it)g(have)e(any)h(library)
+f(tokens)h(which)h(pr)o(ovide)f(an)g(abstraction)h(ar)o(ound)0
+588 y Fj(boxed)k Fk(values)g([Man93a)o(].)509 570 y Fi(5)551
+588 y Fk(The)f(places)h(in)g(which)g(support)f(for)g(tagged)g(and/or)h
+(transpar)o(ent)0 648 y(handling)h(of)e(boxed)h(values)g(impinges)h(on)
+f(the)g(library)f(token)h(de\256nitions)i(will)e(not)h(be)e(clear)0
+709 y(until)g(support)f(for)f(these)h(is)g(added)h(at)f(a)f(later)h
+(date.)75 769 y(Some)c(of)g(the)g(mor)o(e)g(inter)o(esting)h(work)e
+(that)i(could)g(be)f(described)g(dir)o(ectly)i(by)d(token)h(expan-)0
+829 y(sions)17 b(is)g(instead)g(pushed)g(into)g(the)f(runtime)g
+(support)h(\(written)f(in)g(C,)h(and)g(shar)o(ed)f(between)0
+890 y(the)11 b(Dylan)g(pr)o(oducer)g(and)g(a)g(separate)f(back-end)h
+(which)g(generates)f(C\);)h(this)h(is)g(especially)g(true)0
+950 y(of)h(some)h(of)f(the)g(work)g(for)g(accessing)h(boxed)f(values)h
+(mentioned)g(above.)k(Consequently)-6 b(,)15 b(any)0
+1010 y(runtime)f(activities)i(that)e(would)h(impinge)f(upon)g(library)g
+(token)f(de\256nitions)j(in)f(a)f(pr)o(oduction)0 1070
+y(quality)g(Dylan)g(pr)o(oducer)g(will)g(not)g(be)g(clear)f(in)h(the)g
+(initial)i(pr)o(oducer)l(.)0 1246 y Fm(4)72 b(Design)18
+b(Goals)0 1361 y Fk(The)12 b(initial)i(Dylan)f(pr)o(oducer)f(has)g(a)h
+(modest)g(set)g(of)f(design)h(goals.)19 b(Its)12 b(primary)g(purpose)g
+(is)i(to)0 1421 y(facilitate)h(an)f(evaluation)g(of)g(the)g
+(suitability)h(of)e(TDF)g(as)g(a)h(tar)o(get)f(language)h(for)f(Dylan.)
+18 b(What)0 1482 y(is)g(important)f(at)h(this)g(stage)e(is)i(to)g
+(identify)f(quickly)h(if)f(ther)o(e)g(ar)o(e)f(any)h(serious)h
+(omissions)g(in)0 1542 y(TDF)12 b(that)j(will)f(hamper)f(even)h(a)g(na)
+o(\310)-16 b(\365ve)13 b(implementation)j(of)d(a)h(Dylan)f(pr)o(oducer)
+l(.)75 1603 y(A)i(popular)g(r)o(oute)g(to)h(platform)f(independent)h
+(code)g(generation)f(is)h(to)f(tar)o(get)g(a)g(language)0
+1663 y(to)k(C.)g(This)f(has)g(been)f(a)i(parallel)g(strategy)e(adopted)
+i(by)f(Harlequin)h(in)f(their)h(Dylan)f(imple-)0 1723
+y(mentation)f(ef)o(forts.)26 b(A)15 b(secondary)i(design)f(goal)h(has)f
+(ther)o(efor)o(e)f(been)h(to)g(keep)g(the)g(compiler)0
+1783 y(technology)i(suf)o(\256ciently)g(close)h(to)e(an)h(existing)g(C)
+g(back-end)e(to)i(facilitate)h(an)e(evaluation)i(of)0
+1843 y(the)12 b(ef)o(\256ciency)g(of)f(the)h(installed)i(TDF)d
+(executable)g(with)h(r)o(espect)g(to)g(an)g(executable)f(cr)o(eated)h
+(via)0 1903 y(another)i(platform)f(independent)i(r)o(epr)o(esentation.)
+1013 1885 y Fi(6)75 1964 y Fk(The)d(\256nal)h(design)g(goal)g(at)f
+(this)i(stage,)f(although)g(of)f(much)h(less)g(importance)g(than)f(the)
+h(pr)o(e-)0 2024 y(ceding)h(two)f(at)h(the)f(moment,)h(is)g(to)g(pr)o
+(ovide)g(a)f(degr)o(ee)g(of)g(algorithmic)h(inter)o(changeability)g(in)
+0 2085 y(certain)e(important)h(subsystems)f(of)g(the)h(implementation)g
+(\(for)f(example,)g(the)h(garbage)d(collec-)0 2145 y(tor)i(and)h(the)f
+(function)h(calling)g(mechanism\).)18 b(Although)13 b(this)g(has)f
+(been)f(borne)h(in)h(mind)g(while)p 0 2195 752 2 v 58
+2226 a Fh(3)75 2241 y Fg(A)e(parameter)f(is)h(classi\256ed)g(as)f
+(caller)i(or)f(callee)g(accor)o(ding)h(to)e(the)h(party)g(r)o
+(esponsible)f(for)h(r)o(emoving)h(it)e(fr)o(om)0 2290
+y(the)h(stack)g(\(or)g(some)f(other)h(cleanup)h(operation\))e(befor)o
+(e)i(or)f(after)g(the)g(function)g(r)o(eturns.)58 2325
+y Fh(4)75 2340 y Fg(The)17 b(use)e(of)h(callee)h(parameters)e(allows)g
+(some)g(important,)i(if)f(not)g(fundamental,)h(optimisations.)28
+b(These)0 2390 y(include)10 b Ff(tail)f(call)g(elimination)g
+Fg(in)h(which)f(the)g(r)o(esult)h(of)f(a)g(function)g(call)h(is)f(pr)o
+(ovided)i(by)e(a)g(call)h(to)f(another)g(function:)0
+2440 y(the)g(ar)o(guments)g(to)f(the)h(original)h(function)f(ar)o(e)h
+(r)o(eplaced)h Ff(in-situ)d Fg(by)h(those)g(for)g(the)g(new)g(function)
+g(and)h(a)f(tail-jump)0 2490 y(\(rather)h(than)f(a)g(call\))h(executed)
+g(to)f(ef)o(fect)g(the)g(ar)o(gument)h(passing,)f(function)h(call,)g
+(and)g(a)g(r)o(eturn)g(fr)o(om)f(the)h(original)0 2540
+y(function.)24 b(Note)14 b(that)f(this)h(is)g(possible)f(in)h
+(implementations)e(that)h(use)h(caller)h(rather)g(than)e(callee)i
+(parameters,)0 2589 y(pr)o(oviding)e(car)o(e)f(is)f(taken)g(that)f(a)i
+(tail-jump)e(to)g(a)h(function)h(r)o(equiring)h(mor)o(e)e(caller)h
+(parameters)e(is)h(never)h(made.)58 2624 y Fh(5)75 2639
+y Fg(This)h(is)f(not)h Ff(strictly)e Fg(true:)18 b(ther)o(e)13
+b(ar)o(e)g(two)f(tokens)g(that)g(pr)o(ovide)i(insertion)e(and)h
+(extraction)g(of)f(values)h(fr)o(om)0 2689 y(\(number)o(ed\))f(slots)f
+(in)h(a)g(pr)o(oper)h(object.)j(These)d(tokens)e(ar)o(e)h(equally)g
+(well)g(suited)g(to)f(extracting)h(the)g(value)g(fr)o(om)0
+2739 y(a)f(boxed)h(object.)58 2774 y Fh(6)75 2789 y Fg(At)h(this)g
+(stage)g(ther)o(e)h(is)f(one)h Ff(advantage)g Fg(in)g(r)o(etaining)g
+(the)f(C-style)h(calling)g(convention)g(for)f(Dylan,)i(namely)0
+2839 y(that)10 b(the)h(existing)h(C)f(runtime)g(system)f(can)i(be)f
+(used)g(practically)h(unmodi\256ed)g(for)f(the)g(Dylan)h(pr)o(oducer)m
+(.)p 0 2916 1878 2 v 1859 2963 a Fo(3)p eop
+%%Page: 4 4
+4 3 bop 0 -175 1878 2 v 0 -128 a Fo(Description)9 b(and)f(evaluation)h
+(of)f(the)g(initial)f(Dylan)h(producer)0 -91 y(and)i(runtime)g
+(support.)1171 -128 y(ESPRIT)g(Project)g(6062)g(OMI/GLUE)f
+Fn(\320)h Fo(D4.2.2b)0 45 y Fk(developing)17 b(the)f(Dylan)g(pr)o
+(oducer)l(,)h(it)g(has)f(not)g(yet)g(had)h(much)f(impact)g(on)h(the)f
+(design)g(since)0 106 y(the)f(initial)j(pr)o(oducer)d(uses)g(a)g
+(transpar)o(ent)g(garbage)e(collector)k(and)f(supports)f(only)h(a)f
+(C-style)0 166 y(calling)g(convention.)75 229 y(The)21
+b(abstraction)h(of)g(important)h(subsystems)e(such)i(as)e(function)i
+(calling)g(conventions,)0 289 y(garbage)13 b(collection)18
+b(techniques,)e(and)g(manipulation)h(of)d(tagged)h(data,)i(allows)f
+(rapid)f(exper)o(-)0 349 y(imentation)h(with)g(the)f(implementation)h
+(of)f(these)g(subsystems.)22 b(TDF)14 b(link)h(and)h(install)g(times)0
+409 y(ar)o(e)h(signi\256cantly)h(lower)f(than)g(compilation)i(times)f
+(for)f(r)o(eal)g(pr)o(ograms,)h(such)f(as)g(the)g(Dylan)0
+470 y(compiler)c(itself.)19 b(Development)12 b(and)h(evaluation)g(of)f
+(new)g(language)f(implementation)j(strate-)0 530 y(gies)c(can)g(be)f
+(hamper)o(ed)h(by)f(the)h(time)g(taken)g(to)g(r)o(ecompile)h(the)f
+(compiler)l(,)i(language)d(test)i(suites,)0 590 y(and)16
+b(benchmarking)f(pr)o(ograms.)23 b(By)16 b(moving)g(as)g(many)f(of)h
+(the)f(details)i(of)f(the)g(implementa-)0 650 y(tion)g(into)h(the)e
+(Dylan)h(token)f(library)-6 b(,)16 b(the)g
+(\252edit-compile-evaluate\272)h(cycle)f(for)f(experimenta-)0
+710 y(tion)c(with)f(implementation)i(techniques)e(should)i(r)o(equir)o
+(e)d(signi\256cantly)j(less)e(time:)18 b(changes)10 b(to)0
+771 y(token)i(de\256nitions)h(will)g(become)f(ef)o(fective)f(as)h(soon)
+g(as)g(the)g(modi\256ed)h(token)f(library)f(is)h(r)o(ecom-)0
+831 y(piled,)19 b(and)e(the)g(\(alr)o(eady)g(pr)o(oduced\))g
+(test-suite)h(and)f(benchmark)e(pr)o(ograms)h(need)h(only)h(be)0
+891 y(r)o(einstalled)e(\(with)d(the)h(modi\256ed)i(token)e(library\))f
+(befor)o(e)g(the)h(new)f(implementation)j(strategy)0
+951 y(can)e(be)f(evaluated.)0 1142 y Fm(5)72 b(Overview)18
+b(of)i(the)f(Dylan)g(Producer)0 1262 y Fk(This)14 b(section)h(pr)o
+(ovides)f(some)g(context)g(in)g(which)g(the)g(r)o(est)g(of)f(the)h
+(document)g(can)g(be)f(r)o(ead.)0 1431 y Fe(5.1)59 b(Intermediate)16
+b(Representation)0 1532 y Fk(T)l(raditionally)-6 b(,)12
+b(compilers)f(use)f(one)f(or)h(two)f(intermediate)i(r)o(epr)o
+(esentations)f(for)f(code.)18 b(The)9 b(\256rst)0 1592
+y(of)15 b(these)g(is)h(usually)g(a)f(parse)f(tr)o(ee)h(which)g(is)h(a)f
+(structur)o(ed)g(r)o(epr)o(esentation)g(of)g(the)h(derivation)0
+1652 y(of)g(the)h(sour)o(ce)f(pr)o(ogram,)h(accor)o(ding)g(to)g(pr)o
+(oductions)h(in)f(the)f(grammar)g(of)g(the)g(language)g(in)0
+1712 y(which)10 b(it)h(is)g(written.)18 b(This)10 b(tr)o(ee)g(carries)g
+(both)h(syntactic)g(and)f(semantic)h(information,)h(although)0
+1773 y(it)17 b(is)g(the)f(latter)h(that)f(is)h(important)g(for)e(code)i
+(generation.)26 b(Code)17 b(can)g(be)e(generated)h(dir)o(ectly)0
+1833 y(fr)o(om)d(the)h(parse)g(tr)o(ee)g(by)f(a)h(variety)f(of)h
+(techniques,)h(or)f(a)g(second)g(intermediate)h(form)f(such)g(as)0
+1893 y(3-addr)o(ess)g(code)g(can)g(be)f(generated)g(befor)o(e)g
+(\256nally)h(emitting)h(the)f(executable)f(code.)75 1956
+y(Each)i(r)o(epr)o(esentation)g(is)g(amenable)g(to)g(dif)o(fer)o(ent)g
+(kinds)g(of)g(analyses)g(and)g(optimisations;)0 2016
+y(higher)o(-level)22 b(structur)o(ed)f(r)o(epr)o(esentations)h(being)e
+(good)i(for)f Fj(global)g Fk(optimisations)j(involv-)0
+2076 y(ing)13 b(mutation)h(and/or)f(movement)g(of)g(code,)h(and)f
+(lower)o(-level)g(linear)g(r)o(epr)o(esentations)g(being)0
+2137 y(good)i(for)f Fj(local)h Fk(\(or)f Fj(peephole)p
+Fk(\))h(optimisations)i(such)e(as)g(move)g(chain)g(and)g(dead)g(code)g
+(elimina-)0 2197 y(tion.)75 2260 y(Harlequin's)f(Dylan)f(pr)o(oducer)h
+(uses)g(a)f(single)i(\252medium-level\272)f(intermediate)h(r)o(epr)o
+(esen-)0 2320 y(tation,)e(which)e(to)g(some)g(extent)g(allows)h(both)f
+(global)g(and)g(local)h(optimisations.)20 b(This)11 b(takes)g(the)0
+2380 y(form)16 b(of)h(a)f(dir)o(ected)i(acyclic)g(graph)e(\(DAG\))f
+(composed)i(of)g(several)g(layers,)g(in)g(which)g(lower)0
+2440 y(layers)f(describe)g(individual)j(operations,)f(and)e(higher)g
+(layers)g(gr)o(oup)g(the)g(lower)g(layers)g(into)0 2500
+y(structural)f(units.)22 b(This)14 b(r)o(epr)o(esentation)h(carries)g
+(mor)o(e)f(semantic)h(information,)h(but)f(destr)o(oys)0
+2561 y(most)f(of)g(the)g(syntactic)g(information)h(in)f(the)g(original)
+g(sour)o(ce.)75 2624 y(Flow)j(of)h(contr)o(ol)g(is)h(r)o(epr)o(esented)
+e(in)h(the)g(DAG)f(as)h(edges)f(between)g(nodes,)i(wher)o(e)e(each)0
+2684 y(node)i(is)g(a)f(basic)g(block.)485 2666 y Fi(7)536
+2684 y Fk(The)g(back-end)f(can)i(only)f(emit)h(a)f(basic)h(block)f(as)g
+(an)g(entir)o(e)h(unit:)p 0 2743 752 2 v 58 2774 a Fh(7)75
+2789 y Fg(A)8 b(basic)h(block)f(is)g(a)h(fragment)e(of)h(code)h(that)e
+(starts)g(with)h(a)g(label)g(and)h(ends)f(in)h(a)f(jump)g(or)g(a)h
+(fork)f(\(a)g(conditional)0 2839 y(jump)j(to)f(one)h(of)g(two)g
+(labels\).)j(Ther)o(e)f(ar)o(e)f(never)g(any)f(jumps)g(into)f(the)h
+(middle)h(of)f(a)g(basic)h(block.)p 0 2916 1878 2 v 0
+2963 a Fo(4)p eop
+%%Page: 5 5
+5 4 bop 0 -175 1878 2 v 0 -128 a Fo(ESPRIT)10 b(Project)f(6062)i
+(OMI/GLUE)d Fn(\320)j Fo(D4.2.2b)271 b(Description)9
+b(and)f(evaluation)h(of)f(the)g(initial)f(Dylan)h(producer)978
+-91 y(and)i(runtime)f(support.)0 45 y Fk(basic)k(blocks)g(can)g(never)f
+(be)g(divided)j(into)f(individual)i(statements)d(for)f(the)h(purposes)g
+(of)f(code)0 106 y(generation.)248 88 y Fi(8)0 359 y
+Fe(5.2)59 b(Library)17 b(Organisation)0 487 y Fk(The)c(TDF)f(generated)
+g(by)h(the)g(Dylan)g(pr)o(oducer)g(makes)g(use)g(of)g(two)h(external)e
+(sour)o(ces)i(of)f(de\256-)0 547 y(nitions.)23 b(The)14
+b(runtime)g(envir)o(onment)h(is)g(described)h(by)d(a)i(set)g(of)f
+Fd(tagdef)p Fk(s,)i(one)f(for)f(each)h(of)f(the)0 607
+y(functions)d(pr)o(ovided)h(by)d(the)h(runtime)h(system.)17
+b(In)10 b(addition)j(to)d(these,)i(a)e(library)g(of)g(pr)o(ede\256ned)0
+667 y(tokens)i(insulate)h(the)f(generated)f(code)h(fr)o(om)g
+(activities)i(that)e(ar)o(e)f(necessary)g(for)h(particular)g(im-)0
+728 y(plementation)j(subsystems,)f(such)g(as)g(the)f(garbage)f
+(collector)j(and)f(calling)h(conventions.)75 803 y(Any)f(particular)h
+(subsystem,)g(the)g(garbage)e(collector)j(for)e(example,)h(may)f(have)g
+(no)h(single)0 864 y(\252corr)o(ect\272)j(implementation)i(since)f
+(ther)o(e)f(may)g(be)f(many)h(possible)h(implementations,)j(each)0
+924 y(having)11 b(a)f(dif)o(fer)o(ent)h(set)g(of)f(characteristics,)j
+(with)e(the)f(best)h(choice)g(depending)g(on)g(factors)g(such)0
+984 y(as)j(the)f(particular)h(platform)g(upon)g(which)g(the)f
+(installed)j(code)e(will)h(run)e(or)g(the)h(natur)o(e)f(of)h(the)0
+1044 y(application)g(being)e(compiled.)612 1026 y Fi(9)650
+1044 y Fk(Depending)h(on)f(the)h(particular)f(garbage)f(collection)k
+(strategy)0 1104 y(employed)d(it)h(might)f(be)f(necessary)g(to)h
+(include)h(extra)f(operations)g(and/or)g(information)h(in)f(the)0
+1164 y(generated)f(code)h(such)g(as)f(write-barriers,)g(or)g(context)h
+(maps)f(for)g(the)h(garbage)d(collector)k(to)f(use)0
+1225 y(when)h(tracing)h(the)g(stack)f([Man93b)o(].)75
+1300 y(This)20 b(insulation)h(is)f(desirable)g(since)h(the)e(compiler)i
+(back-end)e(is)h(kept)f(independent)i(of)0 1361 y(changes)d(in)h(the)f
+(particular)h(strategies)g(employed)g(to)g(solve)g(any)f(given)g
+(runtime)h(pr)o(oblem;)0 1421 y(thus)13 b(a)f(change)g(in)h
+(implementation)i(strategy)-6 b(,)13 b(at)f(the)h(TDF)e(token)i(level,)
+h(will)f(not)g(r)o(equir)o(e)f(any)0 1481 y(changes)h(to)i(the)e
+(compiler)i(back-end.)75 1557 y(This)10 b(appr)o(oach)g(also)g
+(facilitates)i(rapid)e(experimentation)h(with)f(dif)o(fer)o(ent)g
+(implementation)0 1617 y(strategies.)19 b(Given)c(several)f(dif)o(fer)o
+(ent)f(garbage)f(collector)k(implementations,)g(each)d(described)0
+1677 y(by)18 b(a)g(dif)o(fer)o(ent)h(set)f(of)h(TDF)e(tokens)i(sharing)
+f(a)h(common)g(external)f(pr)o(otocol,)j(comparisons)0
+1737 y(can)13 b(be)g(made)h(against)f(each)g(strategy)g(by)g(linking)h
+(and)g(installing)h(a)e(test)h(suite)g(or)f(benchmark)0
+1797 y(\(which)g(need)h(be)f(compiled)j(only)e(once\))f(with)h(each)g
+(library)-6 b(.)75 1873 y(T)h(o)13 b(achieve)g(some)g(degr)o(ee)g(of)f
+(independence)i(between)e(the)h(compiler)h(back-end,)e(the)i(var)o(-)0
+1933 y(ious)k(orthogonal)f(axes)g(along)g(which)g(implementation)i
+(subsystems)e(can)g(be)f(changed,)j(and)0 1993 y(any)c(underlying)h
+(support)g(for)e(pervasive)i(featur)o(es)f(such)h(as)f(tagged)h(data,)g
+(the)g(or)o(ganisation)0 2054 y(shown)c(in)h(\256gur)o(e)f(1)h(has)f
+(been)g(adopted)h(for)f(the)h(token)f(library)-6 b(.)19
+b(However)l(,)13 b(little)h(of)e(this)i(struc-)0 2114
+y(tur)o(e)c(is)h(pr)o(esent)f(in)h(the)f(library)g(that)h(accompanies)g
+(the)f(initial)j(pr)o(oducer)d(due)h(to)f(the)h(simplicity)0
+2174 y(of)j(the)g(initial)i(garbage)c(collector)j(and)f(calling)h
+(conventions,)h(and)e(the)g(lack)g(of)g(any)f(tokenised)0
+2234 y(support)h(for)f(optimised)i(r)o(epr)o(esentations)g(of)e(data.)p
+0 2344 752 2 v 58 2375 a Fh(8)75 2390 y Fg(This)g(r)o(estriction)g(is)g
+(imposed)f(by)h(the)g(part)f(of)h(the)g(compiler)g(\252middle-end\272)g
+(that)f(delivers)i(information)e(to)0 2440 y(the)f(\(tar)o
+(get-speci\256c\))g(back-end.)58 2475 y Fh(9)75 2490
+y Fg(A)i(pr)o(ogram)h(which)g(manipulates)d(data)i(of)o(f-line,)h
+(generating)f(huge)h(amounts)d(of)i(garbage)g(in)h(the)f(pr)o(ocess,)0
+2540 y(will)f(want)f(to)h(r)o(educe)h(the)f(time)g(spent)f(collecting)i
+(garbage)f(to)g(a)g(minimum)f(\320)h(r)o(egar)o(dless)h(of)f(any)g
+(long)g(pauses)0 2590 y(that)h(may)h(interrupt)f(normal)h(pr)o
+(ocessing.)24 b(On)14 b(the)f(other)h(hand)g(an)g(interactive)h
+(drawing)f(package)g(would)g(be)0 2639 y(better)g(with)g(an)h
+Ff(incr)o(emental)g Fg(collector)g(\(one)f(which)h(collects)g(a)f
+(little)g(garbage)h(every)g(time)f(it)h(allocates)e(a)i(little)0
+2689 y(storage\),)e(devoting)g(a)g(lar)o(ger)h(per)o(centage)f(of)g
+(the)g(CPU)h(to)e(garbage)h(collection,)h(but)f(without)f(intr)o
+(oducing)i(any)0 2739 y(noticeable)c(pauses)f(into)h(normal)g(pr)o
+(ocessing)h(\(which)g(is)f(essential)f(in)i(any)f(interactive)h
+(context\).)k(Other)10 b(types)f(of)0 2789 y(application)j(might)h(be)g
+(best)f(matched)h(with)f(one)h(of)f(the)h(many)g(other)f(types)g(of)h
+(garbage)g(collector)m(,)h(or)f(in)g(some)0 2839 y(cases)e(it)g(might)g
+(be)g(best)f(to)h(have)h(no)f(garbage)g(collector)h(at)e(all.)p
+0 2916 1878 2 v 1859 2963 a Fo(5)p eop
+%%Page: 6 6
+6 5 bop 0 -175 1878 2 v 0 -128 a Fo(Description)9 b(and)f(evaluation)h
+(of)f(the)g(initial)f(Dylan)h(producer)0 -91 y(and)i(runtime)g
+(support.)1171 -128 y(ESPRIT)g(Project)g(6062)g(OMI/GLUE)f
+Fn(\320)h Fo(D4.2.2b)p 325 60 1229 2 v 325 792 2 733
+v 339 72 a
+ 18945146 11177629 3646282 32063345 32781682 49311322 startTexFig
+ 339 72 a
+%%BeginDocument: fig/organisation.pse
+/FMversion (3.0) def 
+	/FMPrintInColor systemdict /colorimage known
+		systemdict /currentcolortransfer known or def
+/FrameDict 195 dict def 
+systemdict /errordict known not {/errordict 10 dict def
+		errordict /rangecheck {stop} put} if
+FrameDict /tmprangecheck errordict /rangecheck get put 
+errordict /rangecheck {FrameDict /bug true put} put 
+FrameDict /bug false put 
+mark 
+currentfile 5 string readline
+00
+0000000000
+cleartomark 
+errordict /rangecheck FrameDict /tmprangecheck get put 
+FrameDict /bug get { 
+	/readline {
+		/gstring exch def
+		/gfile exch def
+		/gindex 0 def
+		{
+			gfile read pop 
+			dup 10 eq {exit} if 
+			dup 13 eq {exit} if 
+			gstring exch gindex exch put 
+			/gindex gindex 1 add def 
+		} loop
+		pop 
+		gstring 0 gindex getinterval true 
+		} def
+	} if
+/FMVERSION {
+	FMversion ne {
+		/Times-Roman findfont 18 scalefont setfont
+		100 100 moveto
+		(FrameMaker version does not match postscript_prolog!)
+		dup =
+		show showpage
+		} if
+	} def 
+/FMLOCAL {
+	FrameDict begin
+	0 def 
+	end 
+	} def 
+	/gstring FMLOCAL
+	/gfile FMLOCAL
+	/gindex FMLOCAL
+	/orgxfer FMLOCAL
+	/orgproc FMLOCAL
+	/organgle FMLOCAL
+	/orgfreq FMLOCAL
+	/yscale FMLOCAL
+	/xscale FMLOCAL
+	/manualfeed FMLOCAL
+	/paperheight FMLOCAL
+	/paperwidth FMLOCAL
+/FMDOCUMENT { 
+	array /FMfonts exch def 
+	/#copies exch def
+	FrameDict begin
+	0 ne dup {setmanualfeed} if
+	/manualfeed exch def
+	/paperheight exch def
+	/paperwidth exch def
+	/yscale exch def
+	/xscale exch def
+	currenttransfer cvlit /orgxfer exch def
+	currentscreen cvlit /orgproc exch def
+	/organgle exch def /orgfreq exch def
+	setpapername 
+	manualfeed {true} {papersize} ifelse 
+	{manualpapersize} {false} ifelse 
+	{desperatepapersize} if
+	end 
+	} def 
+	/pagesave FMLOCAL
+	/orgmatrix FMLOCAL
+	/landscape FMLOCAL
+/FMBEGINPAGE { 
+	FrameDict begin 
+	/pagesave save def
+	3.86 setmiterlimit
+	/landscape exch 0 ne def
+	landscape { 
+		90 rotate 0 exch neg translate pop 
+		}
+		{pop pop}
+		ifelse
+	xscale yscale scale
+	/orgmatrix matrix def
+	gsave 
+	} def 
+/FMENDPAGE {
+	grestore 
+	pagesave restore
+	end 
+	showpage
+	} def 
+/FMFONTDEFINE { 
+	FrameDict begin
+	findfont 
+	ReEncode 
+	1 index exch 
+	definefont 
+	FMfonts 3 1 roll 
+	put
+	end 
+	} def 
+/FMFILLS {
+	FrameDict begin
+	array /fillvals exch def
+	end 
+	} def 
+/FMFILL {
+	FrameDict begin
+	 fillvals 3 1 roll put
+	end 
+	} def 
+/FMNORMALIZEGRAPHICS { 
+	newpath
+	0.0 0.0 moveto
+	1 setlinewidth
+	0 setlinecap
+	0 0 0 sethsbcolor
+	0 setgray 
+	} bind def
+	/fx FMLOCAL
+	/fy FMLOCAL
+	/fh FMLOCAL
+	/fw FMLOCAL
+	/llx FMLOCAL
+	/lly FMLOCAL
+	/urx FMLOCAL
+	/ury FMLOCAL
+/FMBEGINEPSF { 
+	end 
+	/FMEPSF save def 
+	/showpage {} def 
+	FMNORMALIZEGRAPHICS 
+	[/fy /fx /fh /fw /ury /urx /lly /llx] {exch def} forall 
+	fx fy translate 
+	rotate
+	fw urx llx sub div fh ury lly sub div scale 
+	llx neg lly neg translate 
+	} bind def
+/FMENDEPSF {
+	FMEPSF restore
+	FrameDict begin 
+	} bind def
+FrameDict begin 
+/setmanualfeed {
+	 statusdict /manualfeed true put
+	} def
+/max {2 copy lt {exch} if pop} bind def
+/min {2 copy gt {exch} if pop} bind def
+/inch {72 mul} def
+/pagedimen { 
+	paperheight sub abs 16 lt exch 
+	paperwidth sub abs 16 lt and
+	{/papername exch def} {pop} ifelse
+	} def
+	/papersizedict FMLOCAL
+/setpapername { 
+	/papersizedict 14 dict def 
+	papersizedict begin
+	/papername /unknown def 
+		/Letter 8.5 inch 11.0 inch pagedimen
+		/LetterSmall 7.68 inch 10.16 inch pagedimen
+		/Tabloid 11.0 inch 17.0 inch pagedimen
+		/Ledger 17.0 inch 11.0 inch pagedimen
+		/Legal 8.5 inch 14.0 inch pagedimen
+		/Statement 5.5 inch 8.5 inch pagedimen
+		/Executive 7.5 inch 10.0 inch pagedimen
+		/A3 11.69 inch 16.5 inch pagedimen
+		/A4 8.26 inch 11.69 inch pagedimen
+		/A4Small 7.47 inch 10.85 inch pagedimen
+		/B4 10.125 inch 14.33 inch pagedimen
+		/B5 7.16 inch 10.125 inch pagedimen
+	end
+	} def
+/papersize {
+	papersizedict begin
+		/Letter {lettertray letter} def
+		/LetterSmall {lettertray lettersmall} def
+		/Tabloid {11x17tray 11x17} def
+		/Ledger {ledgertray ledger} def
+		/Legal {legaltray legal} def
+		/Statement {statementtray statement} def
+		/Executive {executivetray executive} def
+		/A3 {a3tray a3} def
+		/A4 {a4tray a4} def
+		/A4Small {a4tray a4small} def
+		/B4 {b4tray b4} def
+		/B5 {b5tray b5} def
+		/unknown {unknown} def
+	papersizedict dup papername known {papername} {/unknown} ifelse get
+	end
+	/FMdicttop countdictstack 1 add def 
+	statusdict begin stopped end 
+	countdictstack -1 FMdicttop {pop end} for 
+	} def
+/manualpapersize {
+	papersizedict begin
+		/Letter {letter} def
+		/LetterSmall {lettersmall} def
+		/Tabloid {11x17} def
+		/Ledger {ledger} def
+		/Legal {legal} def
+		/Statement {statement} def
+		/Executive {executive} def
+		/A3 {a3} def
+		/A4 {a4} def
+		/A4Small {a4small} def
+		/B4 {b4} def
+		/B5 {b5} def
+		/unknown {unknown} def
+	papersizedict dup papername known {papername} {/unknown} ifelse get
+	end
+	stopped 
+	} def
+/desperatepapersize {
+	statusdict /setpageparams known
+		{
+		paperwidth paperheight 0 1 
+		statusdict begin
+		{setpageparams} stopped pop 
+		end
+		} if
+	} def
+/savematrix {
+	orgmatrix currentmatrix pop
+	} bind def
+/restorematrix {
+	orgmatrix setmatrix
+	} bind def
+/dmatrix matrix def
+/dpi    72 0 dmatrix defaultmatrix dtransform
+    dup mul exch   dup mul add   sqrt def
+/freq dpi 18.75 div 8 div round dup 0 eq {pop 1} if 8 mul dpi exch div def
+/sangle 1 0 dmatrix defaultmatrix dtransform exch atan def
+/DiacriticEncoding [
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /space /exclam /quotedbl
+/numbersign /dollar /percent /ampersand /quotesingle /parenleft
+/parenright /asterisk /plus /comma /hyphen /period /slash /zero /one
+/two /three /four /five /six /seven /eight /nine /colon /semicolon
+/less /equal /greater /question /at /A /B /C /D /E /F /G /H /I /J /K
+/L /M /N /O /P /Q /R /S /T /U /V /W /X /Y /Z /bracketleft /backslash
+/bracketright /asciicircum /underscore /grave /a /b /c /d /e /f /g /h
+/i /j /k /l /m /n /o /p /q /r /s /t /u /v /w /x /y /z /braceleft /bar
+/braceright /asciitilde /.notdef /Adieresis /Aring /Ccedilla /Eacute
+/Ntilde /Odieresis /Udieresis /aacute /agrave /acircumflex /adieresis
+/atilde /aring /ccedilla /eacute /egrave /ecircumflex /edieresis
+/iacute /igrave /icircumflex /idieresis /ntilde /oacute /ograve
+/ocircumflex /odieresis /otilde /uacute /ugrave /ucircumflex
+/udieresis /dagger /.notdef /cent /sterling /section /bullet
+/paragraph /germandbls /registered /copyright /trademark /acute
+/dieresis /.notdef /AE /Oslash /.notdef /.notdef /.notdef /.notdef
+/yen /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/ordfeminine /ordmasculine /.notdef /ae /oslash /questiondown
+/exclamdown /logicalnot /.notdef /florin /.notdef /.notdef
+/guillemotleft /guillemotright /ellipsis /.notdef /Agrave /Atilde
+/Otilde /OE /oe /endash /emdash /quotedblleft /quotedblright
+/quoteleft /quoteright /.notdef /.notdef /ydieresis /Ydieresis
+/fraction /currency /guilsinglleft /guilsinglright /fi /fl /daggerdbl
+/periodcentered /quotesinglbase /quotedblbase /perthousand
+/Acircumflex /Ecircumflex /Aacute /Edieresis /Egrave /Iacute
+/Icircumflex /Idieresis /Igrave /Oacute /Ocircumflex /.notdef /Ograve
+/Uacute /Ucircumflex /Ugrave /dotlessi /circumflex /tilde /macron
+/breve /dotaccent /ring /cedilla /hungarumlaut /ogonek /caron
+] def
+/ReEncode { 
+	dup 
+	length 
+	dict begin 
+	{
+	1 index /FID ne 
+		{def} 
+		{pop pop} ifelse 
+	} forall 
+	0 eq {/Encoding DiacriticEncoding def} if 
+	currentdict 
+	end 
+	} bind def
+/graymode true def
+	/bwidth FMLOCAL
+	/bpside FMLOCAL
+	/bstring FMLOCAL
+	/onbits FMLOCAL
+	/offbits FMLOCAL
+	/xindex FMLOCAL
+	/yindex FMLOCAL
+	/x FMLOCAL
+	/y FMLOCAL
+/setpattern {
+	 /bwidth  exch def
+	 /bpside  exch def
+	 /bstring exch def
+	 /onbits 0 def  /offbits 0 def
+	 freq sangle landscape {90 add} if 
+		{/y exch def
+		 /x exch def
+		 /xindex x 1 add 2 div bpside mul cvi def
+		 /yindex y 1 add 2 div bpside mul cvi def
+		 bstring yindex bwidth mul xindex 8 idiv add get
+		 1 7 xindex 8 mod sub bitshift and 0 ne
+		 {/onbits  onbits  1 add def 1}
+		 {/offbits offbits 1 add def 0}
+		 ifelse
+		}
+		setscreen
+	 {} settransfer
+	 offbits offbits onbits add div FMsetgray
+	/graymode false def
+	} bind def
+/grayness {
+	FMsetgray
+	graymode not {
+		/graymode true def
+		orgxfer cvx settransfer
+		orgfreq organgle orgproc cvx setscreen
+		} if
+	} bind def
+	/HUE FMLOCAL
+	/SAT FMLOCAL
+	/BRIGHT FMLOCAL
+	/Colors FMLOCAL
+FMPrintInColor 
+	
+	{
+	/HUE 0 def
+	/SAT 0 def
+	/BRIGHT 0 def
+	% array of arrays Hue and Sat values for the separations [HUE BRIGHT]
+	/Colors   
+	[[0    0  ]    % black
+	 [0    0  ]    % white
+	 [0.00 1.0]    % red
+	 [0.37 1.0]    % green
+	 [0.60 1.0]    % blue
+	 [0.50 1.0]    % cyan
+	 [0.83 1.0]    % magenta
+	 [0.16 1.0]    % comment / yellow
+	 ] def
+      
+	/BEGINBITMAPCOLOR { 
+		BITMAPCOLOR} def
+	/BEGINBITMAPCOLORc { 
+		BITMAPCOLORc} def
+	/BEGINBITMAPTRUECOLOR { 
+		BITMAPTRUECOLOR } def
+	/BEGINBITMAPTRUECOLORc { 
+		BITMAPTRUECOLORc } def
+	/K { 
+		Colors exch get dup
+		0 get /HUE exch store 
+		1 get /BRIGHT exch store
+		  HUE 0 eq BRIGHT 0 eq and
+			{1.0 SAT sub setgray}
+			{HUE SAT BRIGHT sethsbcolor} 
+		  ifelse
+		} def
+	/FMsetgray { 
+		/SAT exch 1.0 exch sub store 
+		  HUE 0 eq BRIGHT 0 eq and
+			{1.0 SAT sub setgray}
+			{HUE SAT BRIGHT sethsbcolor} 
+		  ifelse
+		} bind def
+	}
+	
+	{
+	/BEGINBITMAPCOLOR { 
+		BITMAPGRAY} def
+	/BEGINBITMAPCOLORc { 
+		BITMAPGRAYc} def
+	/BEGINBITMAPTRUECOLOR { 
+		BITMAPTRUEGRAY } def
+	/BEGINBITMAPTRUECOLORc { 
+		BITMAPTRUEGRAYc } def
+	/FMsetgray {setgray} bind def
+	/K { 
+		pop
+		} def
+	}
+ifelse
+/normalize {
+	transform round exch round exch itransform
+	} bind def
+/dnormalize {
+	dtransform round exch round exch idtransform
+	} bind def
+/lnormalize { 
+	0 dtransform exch cvi 2 idiv 2 mul 1 add exch idtransform pop
+	} bind def
+/H { 
+	lnormalize setlinewidth
+	} bind def
+/Z {
+	setlinecap
+	} bind def
+	/fillvals FMLOCAL
+/X { 
+	fillvals exch get
+	dup type /stringtype eq
+	{8 1 setpattern} 
+	{grayness}
+	ifelse
+	} bind def
+/V { 
+	gsave eofill grestore
+	} bind def
+/N { 
+	stroke
+	} bind def
+/M {newpath moveto} bind def
+/E {lineto} bind def
+/D {curveto} bind def
+/O {closepath} bind def
+	/n FMLOCAL
+/L { 
+ 	/n exch def
+	newpath
+	normalize
+	moveto 
+	2 1 n {pop normalize lineto} for
+	} bind def
+/Y { 
+	L 
+	closepath
+	} bind def
+	/x1 FMLOCAL
+	/x2 FMLOCAL
+	/y1 FMLOCAL
+	/y2 FMLOCAL
+	/rad FMLOCAL
+/R { 
+	/y2 exch def
+	/x2 exch def
+	/y1 exch def
+	/x1 exch def
+	x1 y1
+	x2 y1
+	x2 y2
+	x1 y2
+	4 Y 
+	} bind def
+/RR { 
+	/rad exch def
+	normalize
+	/y2 exch def
+	/x2 exch def
+	normalize
+	/y1 exch def
+	/x1 exch def
+	newpath
+	x1 y1 rad add moveto
+	x1 y2 x2 y2 rad arcto
+	x2 y2 x2 y1 rad arcto
+	x2 y1 x1 y1 rad arcto
+	x1 y1 x1 y2 rad arcto
+	closepath
+	16 {pop} repeat
+	} bind def
+/C { 
+	grestore
+	gsave
+	R 
+	clip
+	} bind def
+	/FMpointsize FMLOCAL
+/F { 
+	FMfonts exch get
+	FMpointsize scalefont
+	setfont
+	} bind def
+/Q { 
+	/FMpointsize exch def
+	F 
+	} bind def
+/T { 
+	moveto show
+	} bind def
+/RF { 
+	rotate
+	0 ne {-1 1 scale} if
+	} bind def
+/TF { 
+	gsave
+	moveto 
+	RF
+	show
+	grestore
+	} bind def
+/P { 
+	moveto
+	0 32 3 2 roll widthshow
+	} bind def
+/PF { 
+	gsave
+	moveto 
+	RF
+	0 32 3 2 roll widthshow
+	grestore
+	} bind def
+/S { 
+	moveto
+	0 exch ashow
+	} bind def
+/SF { 
+	gsave
+	moveto
+	RF
+	0 exch ashow
+	grestore
+	} bind def
+/B { 
+	moveto
+	0 32 4 2 roll 0 exch awidthshow
+	} bind def
+/BF { 
+	gsave
+	moveto
+	RF
+	0 32 4 2 roll 0 exch awidthshow
+	grestore
+	} bind def
+/G { 
+	gsave
+	newpath
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath fill
+	grestore
+	} bind def
+/A { 
+	gsave
+	savematrix
+	newpath
+	2 index 2 div add exch 3 index 2 div sub exch 
+	normalize 2 index 2 div sub exch 3 index 2 div add exch 
+	translate 
+	scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	restorematrix
+	stroke
+	grestore
+	} bind def
+	/x FMLOCAL
+	/y FMLOCAL
+	/w FMLOCAL
+	/h FMLOCAL
+	/xx FMLOCAL
+	/yy FMLOCAL
+	/ww FMLOCAL
+	/hh FMLOCAL
+	/FMsaveobject FMLOCAL
+	/FMoptop FMLOCAL
+	/FMdicttop FMLOCAL
+/BEGINPRINTCODE { 
+	/FMdicttop countdictstack 1 add def 
+	/FMoptop count 4 sub def 
+	/FMsaveobject save def
+	userdict begin 
+	/showpage {} def 
+	FMNORMALIZEGRAPHICS 
+	3 index neg 3 index neg translate
+	} bind def
+/ENDPRINTCODE {
+	count -1 FMoptop {pop pop} for 
+	countdictstack -1 FMdicttop {pop end} for 
+	FMsaveobject restore 
+	} bind def
+/gn { 
+	0 
+	{	46 mul 
+		cf read pop 
+		32 sub 
+		dup 46 lt {exit} if 
+		46 sub add 
+		} loop
+	add 
+	} bind def
+	/str FMLOCAL
+/cfs { 
+	/str sl string def 
+	0 1 sl 1 sub {str exch val put} for 
+	str def 
+	} bind def
+/ic [ 
+	0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0223
+	0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0223
+	0
+	{0 hx} {1 hx} {2 hx} {3 hx} {4 hx} {5 hx} {6 hx} {7 hx} {8 hx} {9 hx}
+	{10 hx} {11 hx} {12 hx} {13 hx} {14 hx} {15 hx} {16 hx} {17 hx} {18 hx}
+	{19 hx} {gn hx} {0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12}
+	{13} {14} {15} {16} {17} {18} {19} {gn} {0 wh} {1 wh} {2 wh} {3 wh}
+	{4 wh} {5 wh} {6 wh} {7 wh} {8 wh} {9 wh} {10 wh} {11 wh} {12 wh}
+	{13 wh} {14 wh} {gn wh} {0 bl} {1 bl} {2 bl} {3 bl} {4 bl} {5 bl} {6 bl}
+	{7 bl} {8 bl} {9 bl} {10 bl} {11 bl} {12 bl} {13 bl} {14 bl} {gn bl}
+	{0 fl} {1 fl} {2 fl} {3 fl} {4 fl} {5 fl} {6 fl} {7 fl} {8 fl} {9 fl}
+	{10 fl} {11 fl} {12 fl} {13 fl} {14 fl} {gn fl}
+	] def
+	/sl FMLOCAL
+	/val FMLOCAL
+	/ws FMLOCAL
+	/im FMLOCAL
+	/bs FMLOCAL
+	/cs FMLOCAL
+	/len FMLOCAL
+	/pos FMLOCAL
+/ms { 
+	/sl exch def 
+	/val 255 def 
+	/ws cfs 
+	/im cfs 
+	/val 0 def 
+	/bs cfs 
+	/cs cfs 
+	} bind def
+400 ms 
+/ip { 
+	is 
+	0 
+	cf cs readline pop 
+	{	ic exch get exec 
+		add 
+		} forall 
+	pop 
+	
+	} bind def
+/wh { 
+	/len exch def 
+	/pos exch def 
+	ws 0 len getinterval im pos len getinterval copy pop
+	pos len 
+	} bind def
+/bl { 
+	/len exch def 
+	/pos exch def 
+	bs 0 len getinterval im pos len getinterval copy pop
+	pos len 
+	} bind def
+/s1 1 string def
+/fl { 
+	/len exch def 
+	/pos exch def 
+	/val cf s1 readhexstring pop 0 get def
+	pos 1 pos len add 1 sub {im exch val put} for
+	pos len 
+	} bind def
+/hx { 
+	3 copy getinterval 
+	cf exch readhexstring pop pop 
+	} bind def
+	/h FMLOCAL
+	/w FMLOCAL
+	/d FMLOCAL
+	/lb FMLOCAL
+	/bitmapsave FMLOCAL
+	/is FMLOCAL
+	/cf FMLOCAL
+/wbytes { 
+	dup 
+	8 eq {pop} {1 eq {7 add 8 idiv} {3 add 4 idiv} ifelse} ifelse
+	} bind def
+/BEGINBITMAPBWc { 
+	1 {} COMMONBITMAPc
+	} bind def
+/BEGINBITMAPGRAYc { 
+	8 {} COMMONBITMAPc
+	} bind def
+/BEGINBITMAP2BITc { 
+	2 {} COMMONBITMAPc
+	} bind def
+/COMMONBITMAPc { 
+	/r exch def
+	/d exch def
+	gsave
+	translate rotate scale /h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+	/bitmapsave save def 
+	r                    
+	/is im 0 lb getinterval def 
+	ws 0 lb getinterval is copy pop 
+	/cf currentfile def 
+	w h d [w 0 0 h neg 0 h] 
+	{ip} image 
+	bitmapsave restore 
+	grestore
+	} bind def
+/BEGINBITMAPBW { 
+	1 {} COMMONBITMAP
+	} bind def
+/BEGINBITMAPGRAY { 
+	8 {} COMMONBITMAP
+	} bind def
+/BEGINBITMAP2BIT { 
+	2 {} COMMONBITMAP
+	} bind def
+/COMMONBITMAP { 
+	/r exch def
+	/d exch def
+	gsave
+	translate rotate scale /h exch def /w exch def
+	/bitmapsave save def 
+	r                    
+	/is w d wbytes string def
+	/cf currentfile def 
+	w h d [w 0 0 h neg 0 h] 
+	{cf is readhexstring pop} image
+	bitmapsave restore 
+	grestore
+	} bind def
+	/proc1 FMLOCAL
+	/proc2 FMLOCAL
+	/newproc FMLOCAL
+/Fmcc {
+    /proc2 exch cvlit def
+    /proc1 exch cvlit def
+    /newproc proc1 length proc2 length add array def
+    newproc 0 proc1 putinterval
+    newproc proc1 length proc2 putinterval
+    newproc cvx
+} bind def
+/ngrayt 256 array def
+/nredt 256 array def
+/nbluet 256 array def
+/ngreent 256 array def
+	/gryt FMLOCAL
+	/blut FMLOCAL
+	/grnt FMLOCAL
+	/redt FMLOCAL
+	/indx FMLOCAL
+	/cynu FMLOCAL
+	/magu FMLOCAL
+	/yelu FMLOCAL
+	/k FMLOCAL
+	/u FMLOCAL
+/colorsetup {
+	currentcolortransfer
+	/gryt exch def
+	/blut exch def
+	/grnt exch def
+	/redt exch def
+	0 1 255 {
+		/indx exch def
+		/cynu 1 red indx get 255 div sub def
+		/magu 1 green indx get 255 div sub def
+		/yelu 1 blue indx get 255 div sub def
+		/k cynu magu min yelu min def
+		/u k currentundercolorremoval exec def
+		nredt indx 1 0 cynu u sub max sub redt exec put
+		ngreent indx 1 0 magu u sub max sub grnt exec put
+		nbluet indx 1 0 yelu u sub max sub blut exec put
+		ngrayt indx 1 k currentblackgeneration exec sub gryt exec put
+	} for
+	{255 mul cvi nredt exch get}
+	{255 mul cvi ngreent exch get}
+	{255 mul cvi nbluet exch get}
+	{255 mul cvi ngrayt exch get}
+	setcolortransfer
+	{pop 0} setundercolorremoval
+	{} setblackgeneration
+	} bind def
+	/tran FMLOCAL
+/fakecolorsetup {
+	/tran 256 string def
+	0 1 255 {/indx exch def 
+		tran indx
+		red indx get 77 mul
+		green indx get 151 mul
+		blue indx get 28 mul
+		add add 256 idiv put} for
+	currenttransfer
+	{255 mul cvi tran exch get 255.0 div}
+	exch Fmcc settransfer
+} bind def
+/BITMAPCOLOR { 
+	/d 8 def
+	gsave
+	translate rotate scale /h exch def /w exch def
+	/bitmapsave save def 
+	colorsetup
+	/is w d wbytes string def
+	/cf currentfile def 
+	w h d [w 0 0 h neg 0 h] 
+	{cf is readhexstring pop} {is} {is} true 3 colorimage 
+	bitmapsave restore 
+	grestore
+	} bind def
+/BITMAPCOLORc { 
+	/d 8 def
+	gsave
+	translate rotate scale /h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+	/bitmapsave save def 
+	colorsetup
+	/is im 0 lb getinterval def 
+	ws 0 lb getinterval is copy pop 
+	/cf currentfile def 
+	w h d [w 0 0 h neg 0 h] 
+	{ip} {is} {is} true 3 colorimage
+	bitmapsave restore 
+	grestore
+	} bind def
+/BITMAPTRUECOLORc { 
+        gsave
+        translate rotate scale /h exch def /w exch def
+        /bitmapsave save def 
+        
+        /is w string def
+        
+        ws 0 w getinterval is copy pop 
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        {ip} {gip} {bip} true 3 colorimage
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPTRUECOLOR { 
+        gsave
+        translate rotate scale /h exch def /w exch def
+        /bitmapsave save def 
+        /is w string def
+        /gis w string def
+        /bis w string def
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        { cf is readhexstring pop } 
+        { cf gis readhexstring pop } 
+        { cf bis readhexstring pop } 
+        true 3 colorimage 
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPTRUEGRAYc { 
+        gsave
+        translate rotate scale /h exch def /w exch def
+        /bitmapsave save def 
+        
+        /is w string def
+        
+        ws 0 w getinterval is copy pop 
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        {ip gip bip w gray} image
+        bitmapsave restore 
+        grestore
+        } bind def
+/ww FMLOCAL
+/r FMLOCAL
+/g FMLOCAL
+/b FMLOCAL
+/i FMLOCAL
+/gray { 
+        /ww exch def
+        /b exch def
+        /g exch def
+        /r exch def
+        0 1 ww 1 sub { /i exch def r i get .299 mul g i get .587 mul
+			b i get .114 mul add add r i 3 -1 roll floor cvi put } for
+        r
+        } bind def
+/BITMAPTRUEGRAY { 
+        gsave
+        translate rotate scale /h exch def /w exch def
+        /bitmapsave save def 
+        /is w string def
+        /gis w string def
+        /bis w string def
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        { cf is readhexstring pop 
+          cf gis readhexstring pop 
+          cf bis readhexstring pop w gray}  image
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPGRAY { 
+	8 {fakecolorsetup} COMMONBITMAP
+	} bind def
+/BITMAPGRAYc { 
+	8 {fakecolorsetup} COMMONBITMAPc
+	} bind def
+/ENDBITMAP {
+	} bind def
+end 
+	/ALDsave FMLOCAL
+	/ALDmatrix matrix def ALDmatrix currentmatrix pop
+/StartALD {
+	/ALDsave save def
+	 savematrix
+	 ALDmatrix setmatrix
+	} bind def
+/InALD {
+	 restorematrix
+	} bind def
+/DoneALD {
+	 ALDsave restore
+	} bind def
+(3.0) FMVERSION
+1 1 2 2 0 1 1 FMDOCUMENT
+0 0 /Times-Roman FMFONTDEFINE
+32 FMFILLS
+0 0 FMFILL
+1 0.1 FMFILL
+2 0.3 FMFILL
+3 0.5 FMFILL
+4 0.7 FMFILL
+5 0.9 FMFILL
+6 0.97 FMFILL
+7 1 FMFILL
+8 <0f1e3c78f0e1c387> FMFILL
+9 <0f87c3e1f0783c1e> FMFILL
+10 <cccccccccccccccc> FMFILL
+11 <ffff0000ffff0000> FMFILL
+12 <8142241818244281> FMFILL
+13 <03060c183060c081> FMFILL
+14 <8040201008040201> FMFILL
+16 1 FMFILL
+17 0.9 FMFILL
+18 0.7 FMFILL
+19 0.5 FMFILL
+20 0.3 FMFILL
+21 0.1 FMFILL
+22 0.03 FMFILL
+23 0 FMFILL
+24 <f0e1c3870f1e3c78> FMFILL
+25 <f0783c1e0f87c3e1> FMFILL
+26 <3333333333333333> FMFILL
+27 <0000ffff0000ffff> FMFILL
+28 <7ebddbe7e7dbbd7e> FMFILL
+29 <fcf9f3e7cf9f3f7e> FMFILL
+30 <7fbfdfeff7fbfdfe> FMFILL
+595.3 841.89 0 FMBEGINPAGE
+112.12 551.2 81.42 598.44 76.69 593.72 3 Y
+2 X
+0 K
+V
+0.5 H
+2 Z
+N
+90 450 42.52 20.99 277.86 573.53 G
+0 X
+90 450 42.52 20.99 277.86 573.53 A
+4 X
+90 450 42.52 20.99 269.86 581.53 G
+0 X
+90 450 42.52 20.99 269.86 581.53 A
+6 X
+90 450 42.52 20.99 261.86 589.53 G
+0 X
+90 450 42.52 20.99 261.86 589.53 A
+2 X
+90 450 42.52 20.99 171.56 573.53 G
+0 X
+90 450 42.52 20.99 171.56 573.53 A
+0 12 Q
+(GC) 163.23 569.78 T
+4 X
+90 450 42.52 20.99 163.56 581.53 G
+0 X
+90 450 42.52 20.99 163.56 581.53 A
+(GC) 155.23 577.78 T
+6 X
+90 450 42.52 20.99 155.56 589.53 G
+0 X
+90 450 42.52 20.99 155.56 589.53 A
+(GC) 147.23 585.78 T
+257.16 545.02 253.86 533.48 250.55 545.02 253.86 545.02 4 Y
+V
+253.86 618.52 253.86 545.02 2 L
+N
+214.16 534.08 218.42 522.86 208.86 530.12 211.51 532.1 4 Y
+V
+147.56 618.52 211.52 532.09 2 L
+N
+298.84 530.12 289.28 522.86 293.54 534.08 296.19 532.1 4 Y
+V
+360.16 618.52 296.19 532.09 2 L
+N
+179.66 620.1 168.81 614.98 175.3 625.08 177.48 622.59 4 Y
+V
+253.86 689.39 177.49 622.58 2 L
+N
+257.16 630.06 253.86 618.52 250.55 630.06 253.86 630.06 4 Y
+V
+253.86 689.39 253.86 630.06 2 L
+N
+332.39 625.08 338.88 614.98 328.03 620.1 330.21 622.59 4 Y
+V
+253.86 689.39 330.22 622.58 2 L
+N
+204.25 746.08 204.25 717.73 2 L
+N
+204.25 717.73 303.46 717.73 2 L
+N
+303.46 717.73 303.46 746.08 2 L
+N
+(compiler backend) 211.06 727.82 T
+7 X
+90 450 58.46 23.03 253.86 666.35 G
+0 X
+90 450 58.46 23.03 253.86 666.35 A
+(external protocol) 213.05 662.72 T
+257.16 700.92 253.86 689.39 250.55 700.92 253.86 700.92 4 Y
+V
+253.86 717.73 253.86 700.92 2 L
+N
+7 X
+90 450 42.52 20.99 147.56 597.53 G
+0 X
+90 450 42.52 20.99 147.56 597.53 A
+(GC) 139.23 593.78 T
+7 X
+90 450 42.52 20.99 253.86 597.53 G
+0 X
+90 450 42.52 20.99 253.86 597.53 A
+(call convention) 217.05 593.78 T
+7 X
+90 450 42.52 20.99 360.16 597.53 G
+0 X
+90 450 42.52 20.99 360.16 597.53 A
+(intrinsics) 338.17 593.78 T
+7 X
+90 450 42.52 20.99 253.86 511.95 G
+0 X
+90 450 42.52 20.99 253.86 511.95 A
+(tagging, etc...) 221.38 508.2 T
+416.85 618.52 416.85 576 2 L
+N
+416.85 618.52 409.76 618.52 2 L
+N
+416.85 576 409.76 576 2 L
+N
+416.85 533.48 416.85 490.96 2 L
+N
+416.85 533.48 409.76 533.48 2 L
+N
+416.85 490.96 409.76 490.96 2 L
+N
+416.85 689.39 416.85 643.32 2 L
+N
+416.85 689.39 409.76 689.39 2 L
+N
+416.85 643.32 409.76 643.32 2 L
+N
+(high-level) 420.39 669.57 T
+(library) 420.39 657.57 T
+(implementation) 420.39 600.47 T
+(platform) 420.39 515.43 T
+(library) 420.39 503.43 T
+(library) 420.39 588.47 T
+107.92 562.44 112.12 551.2 102.6 558.51 105.26 560.47 4 Y
+2 X
+V
+86.14 586.63 105.26 560.47 2 L
+V
+N
+0 X
+(implementation) 62.52 543.02 T
+(axes) 89.51 531.02 T
+FMENDPAGE
+%%EndDocument
+
+ endTexFig
+ 1551 792 2 733 v 325 794 1229 2 v 339 864 a Fc(Figure)i(1:)g
+(organisation)g(of)h(the)e(Dylan)h(token)g(library)l(.)17
+b Fg(The)c(dylan)f(to-)339 913 y(ken)17 b(library)g(has)f(thr)o(ee)g
+(levels.)31 b(A)16 b Ff(high-level)f(library)h Fg(which)h(contains)339
+963 y(a)12 b(small,)g(platform-)f(and)i(implementation-neutral)d(set)h
+(of)h(tokens)f(visi-)339 1013 y(ble)i(to)f(the)g(compiler)h(back-end.)
+21 b(Below)12 b(these)g(ar)o(e)i(the)e Ff(implementation)339
+1063 y(libraries)i Fg(containing)h(tokens)e(which)i(implement)e(the)h
+(various)g(subsys-)339 1113 y(tems)9 b(\(garbage)h(collection,)h
+(calling)f(conventions,)h Ff(et)f(caetera)p Fg(\).)16
+b(The)11 b(low-)339 1162 y(est)h(level)g(is)h(any)f(r)o(equir)o(ed)i
+Ff(platform)f(library)f Fg(containing)h(any)f(platform-)339
+1212 y(speci\256c)j(\(or)g(implementation-pervasive\))e(tokens)h(for)g
+(activities)h(such)339 1262 y(as)c(the)g(manipulation)f(of)h(tagged)g
+(data.)p 626 1303 626 2 v 0 1499 a Fm(6)72 b(Overview)18
+b(of)i(the)f(Generated)f(TDF)0 1621 y Fk(This)12 b(section)h(pr)o
+(esents)f(an)g(overview)g(of)g(the)g(TDF)f(generated)h(by)f(the)h
+(initial)i(Dylan)e(pr)o(oducer)l(.)0 1681 y(It)h(is)g(far)g(fr)o(om)f
+(a)h(complete)g(description)i(of)d(the)h(TDF)f(generated)h(by)f(the)h
+(Dylan)f(pr)o(oducer)l(,)i(but)0 1741 y(will)k(be)e(suf)o(\256cient)i
+(to)f(give)g(an)g(idea)g(of)g(the)g(implementation)h(of)f(the)f
+(important)i(featur)o(es)e(of)0 1801 y(the)e(language.)0
+1976 y Fe(6.1)59 b(Declarations)15 b(and)h(De\256nitions)0
+2079 y Fk(Almost)j(all)h(values)f(in)g(a)g(Dylan)f(pr)o(ogram)g(ar)o(e)
+g Fj(object)h(pointers)p Fk(,)1279 2061 y Fi(10)1335
+2079 y Fk(ther)o(efor)o(e)f(most)h(variables)0 2139 y(\(and)14
+b(function)g(r)o(eturn)g(values\))g(have)g(type)g(\252pointer)g(to)g
+(object\272.)19 b(The)14 b(Dylan)f(library)h(de\256nes)0
+2200 y(a)i(shape)g(called)h Fb(pz)g Fk(to)g(r)o(epr)o(esent)e(an)h
+(object)g(pointer)l(,)i(which)e(is)h(used)f(almost)h(universally)g(in)0
+2260 y(declarations)e(for)e(variables)h(\(both)f(global)h(and)g
+(local\))h(and)f(functions.)75 2324 y(Since)i(functions)g(bodies)g(ar)o
+(e)g(collections)h(of)f(basic)g(blocks)f(\(section)h(5.1\),)h(with)f
+(jumps)f(al-)0 2384 y(ways)10 b(occurring)h(to)h(the)f(start)g(of)g(a)g
+(basic)h(block,)g(it)f(is)h(most)g(natural)f(to)h(de\256ne)f(them)g(as)
+g(a)g(single)0 2444 y Fd(LABELLED)k Fk(statement:)461
+2426 y Fi(1)n(1)p 0 2494 752 2 v 44 2525 a Fh(10)75 2540
+y Fg(An)e(object)f(pointer)g(is)h(pr)o(ecisely)g(that:)18
+b(a)12 b(pointer)h(to)f(the)g(structur)o(e)h(r)o(epr)o(esenting)g(an)g
+(object)f(\(some)f(combi-)0 2589 y(nation)j(of)f(class,)i(size,)g(and)f
+(the)g(\256elds)g(holding)h(the)f(state)e(of)i(the)g(object)f(would)h
+(be)g(typical\).)24 b(In)14 b(dynamically)0 2639 y(typed)c
+(object-oriented)f(languages,)h(objects)f(ar)o(e)h(normally)g(known)g
+(by)g(their)h(object)e(pointers:)14 b(variables)c(always)0
+2689 y(contain)h(object)g(pointers,)h(parameters)e(ar)o(e)i(always)f
+(object)g(pointers,)g(and)h(so)f(on.)16 b(T)l(agging)d(is)e(often)g
+(used)g(to)g(en-)0 2739 y(code)h(both)f(the)h(class)f(and)h(data)f(for)
+h(some)f(objects)f(dir)o(ectly)j(within)f(the)f(object)g(pointer)h
+(\(typically)f(integers)h(and)0 2789 y(characters)g(ar)o(e)f(r)o(epr)o
+(esented)h(like)g(this\),)f(in)g(which)h(case)f(the)g(object)g(pointer)
+g(is)g(not)g(strictly)g(a)g(pointer)g(at)g(all.)45 2824
+y Fh(1)n(1)75 2839 y Fg(All)e(the)g(examples)f(of)h(TDF)g(in)h(this)e
+(document)h(use)g(the)f(notation)g(accepted)h(by)g(the)g(TDF)h
+(Notation)e(Compiler)m(.)p 0 2916 1878 2 v 0 2963 a Fo(6)p
+eop
+%%Page: 7 7
+7 6 bop 0 -175 1878 2 v 0 -128 a Fo(ESPRIT)10 b(Project)f(6062)i
+(OMI/GLUE)d Fn(\320)j Fo(D4.2.2b)271 b(Description)9
+b(and)f(evaluation)h(of)f(the)g(initial)f(Dylan)h(producer)978
+-91 y(and)i(runtime)f(support.)137 45 y Fd(\(local)k(make_id_tagdec)i
+(z_emit__if)f(-)f(proc\))137 129 y(\(local)g(make_id_tagdef)i
+(z_emit__if)275 189 y(\(make_proc)e(pz)412 249 y(pfpz)h(-)e(function)
+412 309 y(pz)h(-)g(next_methods)412 369 y(pz)g(-)g(z_stream)412
+429 y Fa(...ar)o(guments)275 490 y Fd(|)g(-)g(\(sequence)412
+550 y(\(variable)f(var_acc)h(RET__0)h(UNBOUND)i(\(sequence)412
+610 y(\(variable)c(var_acc)h(ARG__0)i(UNBOUND)g(\(sequence)412
+670 y Fa(...local)f(variables)549 730 y Fd(\(labelled)f(block_intro)g
+(LBL__0)i(LBL__1)f(|)g(\(goto)g(block_intro\))686 791
+y(\(sequence)g Fa(...basic)g(block)g Fd(\))686 851 y(\(sequence)g
+Fa(...basic)g(block)g Fd(\))686 911 y(\(sequence)g Fa(...basic)g(block)
+g Fd(\))549 971 y(\)\)\)\)\)\)\)\))0 1067 y Fk(\(The)8
+b(alert)i(r)o(eader)f(will,)i(by)e(now)-5 b(,)11 b(be)e(wondering)g
+(what)g(a)g(\252)p Fd(pfpz)p Fk(\272)h(is:)17 b(it's)10
+b(a)f Fj(p)p Fk(ointer)h(to)g(a)f Fj(f)t Fk(unction)0
+1127 y(r)o(eturning)k(a)h(\252)p Fd(pz)p Fk(\272!\))0
+1275 y Fe(6.2)59 b(Accessing)14 b(and)i(Modifying)g(State)0
+1370 y Fk(V)-5 b(ariable)13 b(accesses)f(ar)o(e)g(either)g(by)g(r)o
+(efer)o(ence)f(\(an)g Fj(lvalue)h Fk(in)h(C)g(parlance\))e(or)i(for)e
+(their)i(value)f(\(an)0 1431 y Fj(rvalue)p Fk(\).)23
+b(All)16 b(accesses)f(of)g(this)h(type)f(ar)o(e)g(handled)h(by)f(Dylan)
+g(library)f(tokens)i(which)f(take)g(the)0 1491 y(variable's)f
+Fd(T)m(AG)f Fk(as)h(an)f(ar)o(gument.)18 b(An)c(additional)i(library)d
+(token)h(implements)h(assignment:)137 1587 y Fd(\(set)e(\(lval)g
+(z_destination\))g(\(rval)f(z_source\)\))0 1683 y Fk(These)i(tokens)g
+(have)g(been)g(intr)o(oduced)i(both)e(as)g(a)g(means)g(to)h(slightly)g
+(r)o(educe)g(the)f(size)h(of)f(the)0 1743 y(generated)i(TDF)-5
+b(,)16 b(and)g(also)h(as)f(hooks)h(onto)f(which)h
+(implementation-speci\256c)h(actions)f(\(such)0 1803
+y(as)d(the)g(imposition)h(of)f(r)o(ead)g(or)f(write)h(barriers\))e(can)
+i(be)f(hung.)0 1951 y Fe(6.3)59 b(Conditionals)15 b(and)h(Control)g
+(Flow)0 2046 y Fk(Conditional)k(statements)e(\()p Fb(if)p
+Fk(,)h Fb(case)p Fk(,)h(and)d(so)h(on\))f(ar)o(e)f(all)i(converted)g
+(into)g(a)f(generic)g(condi-)0 2107 y(tional)g(construct)g(which)f
+(performs)f(a)h(test)h(and)f(branches)f(to)i(one)f(of)g(two)g(labels)g
+(depending)0 2167 y(on)e(the)f(r)o(esult.)19 b(Due)13
+b(to)h(optimisations)i(performed)d(on)g(the)h(intermediate)g(r)o(epr)o
+(esentation)g(be-)0 2227 y(for)o(e)k(TDF)g(is)i(emitted,)i(one)d(or)g
+(other)g(of)g(these)g(branches)f(is)i(often)f(elided.)36
+b(Ther)o(efor)o(e)18 b(it)h(is)0 2287 y(necessary)13
+b(to)i(have)e(thr)o(ee)h(tokens)g(that)g(perform)f(condition)j
+(branching,)e(plus)h(one)f(other)g(that)0 2347 y(performs)f(an)g
+(unconditional)k(branch.)162 2443 y Fd(\(goto)d Fa(aLabel)f
+Fd(\))495 b Fa(unconditional)162 2504 y Fd(\(goto_true)14
+b Fa(value)f(aLabel)g Fd(\))284 b Fa(branch)13 b(to)f(aLabel)h(if)f
+(value)g(is)g(true)162 2564 y Fd(\(goto_false)i Fa(value)f(aLabel)g
+Fd(\))267 b Fa(branch)13 b(to)f(aLabel)h(if)f(value)g(is)g(false)162
+2624 y Fd(\(goto_true_false)i Fa(value)f(tLabel)h(fLabel)e
+Fd(\))50 b Fa(branch)13 b(to)f([tLabel)h(fLabel])f(if)g(value)g(is)g
+([true)g(false])0 2718 y Fk(The)f(Dylan)g(library)f(also)i(includes)h
+(various)f(tokens)f(for)g(constructing)h(r)o(elational)g(expr)o
+(essions,)0 2778 y(such)f(as)g Fd(eq)p Fk(,)h Fd(neq)p
+Fk(,)g(and)f(so)g(on,)h(which)f(ar)o(e)f(used)h(mainly)h(within)f(expr)
+o(essions)g(forming)f(the)h Fj(value)0 2839 y Fk(ar)o(guments)i(to)h
+(the)g Fd(goto)h Fk(tokens.)p 0 2916 V 1859 2963 a Fo(7)p
+eop
+%%Page: 8 8
+8 7 bop 0 -175 1878 2 v 0 -128 a Fo(Description)9 b(and)f(evaluation)h
+(of)f(the)g(initial)f(Dylan)h(producer)0 -91 y(and)i(runtime)g
+(support.)1171 -128 y(ESPRIT)g(Project)g(6062)g(OMI/GLUE)f
+Fn(\320)h Fo(D4.2.2b)0 47 y Fe(6.4)59 b(Function)15 b(Application)0
+144 y Fk(Function)20 b(application)g(falls)f(into)h(two)f(categories.)
+34 b Fj(Primitive)18 b Fk(functions)1482 126 y Fi(12)1537
+144 y Fk(ar)o(e)h(applied)g(via)0 204 y(the)f Fd(APPL)m(Y_PROC)i
+Fk(token,)f(with)f(each)g(primitive)i(function)e(being)g(tr)o(eated)g
+(specially)i(by)d(the)0 265 y(pr)o(oducer)l(.)28 b(Ther)o(e)16
+b(ar)o(e)g(many)g(such)h(primitive)h(functions,)h(and)e(a)f(discussion)
+j(is)e(beyond)g(the)0 325 y(scope)d(of)f(this)i(document.)524
+307 y Fi(13)75 386 y Fk(The)9 b(application)j(of)e(a)g
+Fj(generic)h(function)e Fk([Man93a])h(is)g(a)g(r)o(elatively)i(complex)
+e(task)g(involving)0 446 y(pr)o(ocessing)18 b(of)f(ar)o(guments,)h
+(construction)g(of)f(a)g(list)i(of)e Fj(sorted)h(applicable)f(methods)h
+Fk([Man93a)o(],)0 506 y(and)i(so)g(on,)i(befor)o(e)c(the)i(intended)h
+(destination)h(method)e(is)h(called.)38 b(This)20 b(work)e(is)j
+(carried)0 567 y(out)13 b(by)f(the)h(runtime)g(system)f(and)h(a)g
+(handful)g(of)g(auxiliary)g(functions)g(\(implemented)h(in)f(both)0
+627 y(C)k(and)g(Dylan\))f(on)h(behalf)f(of)g(the)h(generic)g(function,)
+h(so)f(the)g(TDF)e(generated)i(in)g(such)g(cases)0 687
+y(simply)12 b(calls)g(the)f(r)o(elevant)g(pr)o(ocedur)o(e)g(in)h(the)f
+(runtime)g(system)g(with)g(information)h(specifying)0
+747 y(the)19 b(number)f(of)g(actual)i(ar)o(guments,)g(the)f(object)f(r)
+o(epr)o(esenting)h(the)f(generic)h(function)g(to)h(be)0
+807 y(called,)15 b(the)f(ar)o(guments)g(themselves,)g(and)g(so)g
+(forth.)19 b(For)13 b(example:)162 929 y Fd(\(apply_proc)g(pz)299
+989 y(\(lval)g(CALL2\))259 b Fa(runtime)12 b(function)i(which)d
+(applies)g(a)i(GF)f(to)h(2)g(ar)o(guments)299 1050 y
+Fd(\(rval)g(z_format\))217 b Fa(the)12 b(generic)f(function)j(object)e
+(to)h(be)f(applied)299 1110 y Fd(\(rval)h(z_stream_46_M_\))51
+b Fa(\256rst)12 b(actual)h(ar)o(gument)299 1170 y Fd(\(rval)g
+(z_LIT__16\)\))166 b Fa(second)12 b(actual)i(ar)o(gument)0
+1317 y Fe(6.5)59 b(Literals)0 1415 y Fk(All)17 b(literals)h(ar)o(e)f
+(initially)i(de\256ned)e(as)g(\252unbound\272.)27 b(Each)17
+b(Dylan)g(sour)o(ce)f(\256le)i(has)e(functions)0 1475
+y(r)o(esponsible)f(for)g(initialising)i(these)e(literals,)i(in)e(one)g
+(of)g(two)g(ways.)21 b(Simple)16 b(literals)g(ar)o(e)e(built)0
+1535 y(by)d(calling)i(the)f(appr)o(opriate)f(\(Dylan\))g(constructor)h
+(function.)19 b(Lar)o(ger)11 b(and/or)h(mor)o(e)g(complex)0
+1595 y(literals)g(ar)o(e)e(built)i(by)e(generating)g(a)g(static)i
+(structur)o(e)f(containing)g(a)g(\252pr)o(ogram\272)f(describing)h(the)
+0 1655 y(literal,)j(which)f(is)g(evaluated)g(by)f(a)g(tiny)h
+(stack-oriented)f(interpr)o(eter)g(to)h(yield)h(the)e(appr)o(opriate)0
+1716 y(value.)75 1777 y(A)19 b(handful)h(of)f(tokens)g(ar)o(e)g
+(de\256ned)h(in)g(the)f(Dylan)g(library)g(to)h(help)g(with)f(this)h(pr)
+o(ocess.)0 1837 y(For)13 b(example,)h(a)g(literal)h(list)g(containing)g
+(an)f(integer)l(,)g(a)g(character)l(,)g(and)g(a)g(string)g(\(maybe)e
+Fb('\(42)0 1897 y("hi!")24 b(#)199 1897 y
+gsave currentpoint currentpoint translate -1 1 scale neg exch neg exch
+translate
+ 199 1897 a
+Fb(/)199 1897 y
+currentpoint grestore moveto
+ 199 1897 a Fb(a\))p Fk(\))15 b(r)o(esults)f(in)g(the)g
+(following)g(TDF:)137 2019 y Fd(\(make_id_tagdec)h(z_LIT__0)f(-)f(pz\))
+137 2079 y(\(make_id_tagdef)i(z_LIT__0)f(UNBOUND\))137
+2162 y(\(local)f(make_var_tagdec)i(Fstr1)d(-)h(\(nof)g(4)h(\(integer)26
+b(char\)\)\))137 2222 y(\(local)13 b(make_var_tagdef)i(Fstr1)d
+(\(make_nof_int)28 b(char)13 b("hi!)1192 2222 y
+gsave currentpoint currentpoint translate -1 1 scale neg exch neg exch
+translate
+ 1192
+2222 a Fd(/)1192 2222 y
+currentpoint grestore moveto
+ 1192 2222 a Fd(000"\)\))137 2305
+y(\(make_var_tagdec)i(z_LIT__0__F)n(ASL)f(-)f(pz\))137
+2366 y(\(make_var_tagdef)i(z_LIT__0__F)n(ASL)f(\(make_compound)h(pz_of)
+o(fset)275 2426 y(\(FSpec)d(0)i(INTEGER)g(\(raw_integer)g(42\)\))275
+2486 y(\(FSpec)e(1)i(STRING)g(\(lval)e(Fstr1\)\))275
+2546 y(\(FSpec)g(2)i(CHARACTER)h(\(raw_integer)f(97\)\))p
+0 2594 752 2 v 44 2624 a Fh(12)75 2639 y Fg(Usually)-5
+b(,)11 b(a)f(\252primitive)h(function\272)f(is)g(one)h(which)g
+(supports)e(the)h(operation)g(of)g(a)g(language)g(but)g(which)h(is)g
+(not)0 2689 y(\(for)g(r)o(easons)g(of)g(ef)o(\256ciency)h(or)g
+(possibility\))e(written)g(in)i(that)e(language.)44 2724
+y Fh(13)75 2739 y Fg(Although)h(not)g(strictly)h(the)f(same,)g(numeric)
+i(operators)d(ar)o(e)i(tr)o(eated)f(similarly)h(to)f(primitive)h
+(functions)f(and)0 2789 y(r)o(eceive)h(special)f(tr)o(eatment)e(in)i
+(the)f(back-end;)i(thus)e(most)f(of)i(the)f(available)h(numeric)g
+(operations)f(in)h(TDF)g(can)g(be)0 2839 y(used)g(by)h(the)f(Dylan)g
+(pr)o(oducer)m(.)p 0 2916 1878 2 v 0 2963 a Fo(8)p eop
+%%Page: 9 9
+9 8 bop 0 -175 1878 2 v 0 -128 a Fo(ESPRIT)10 b(Project)f(6062)i
+(OMI/GLUE)d Fn(\320)j Fo(D4.2.2b)271 b(Description)9
+b(and)f(evaluation)h(of)f(the)g(initial)f(Dylan)h(producer)978
+-91 y(and)i(runtime)f(support.)275 45 y Fd(\(FSpec)j(3)i(LIST)f
+(\(raw_integer)h(3\)\))275 106 y(\(FSpec)e(4)i(FEND)g(FEND\)\)\))0
+223 y Fk(The)j(variable)h Fd(z_LIT__0)h Fk(will)g(hold)g(the)f(value)g
+(of)g(the)g(literal,)i Fd(z_LIT__0_F)n(ASL)f Fk(is)f(a)g(structur)o(e)0
+284 y(containing)13 b(the)f(\252pr)o(ogram\272)f(describing)h(the)g
+(literal,)i(and)f(variables)f(such)g(as)g Fd(Fstr1)f
+Fk(ar)o(e)h(out-of-)0 344 y(line)17 b(strings)f(used)g(for)f(cr)o
+(eating)h(symbols,)h(keywor)o(ds,)g(\257oating)f(point)h(numbers)e(and)
+h(so)g(on.)0 404 y(This)c(mechanism)h(is)f(part)g(of)g(the)g
+Fj(dynamic)f(bootstrap)i Fk(mechanism,)g(and)f(such)g(complex)h
+(literals)0 464 y(will)g(soon)f(be)f(described)i(as)e(initialised)k
+(structur)o(es)d(when)f(the)h Fj(static)f(bootstrap)h
+Fk(comes)g(into)h(use)0 524 y(\(see)g(section)i(7.3\).)0
+701 y Fm(7)72 b(Future)19 b(Directions)f(and)h(Requirements)0
+816 y Fk(As)e(is)i(pr)o(obably)d(appar)o(ent)i(fr)o(om)f(the)h(pr)o
+(evious)g(sections)h(in)f(this)g(document,)i(the)e(most)g(im-)0
+876 y(portant)e(futur)o(e)f(work)g(is)i(to)f(pr)o(ovide)g(callee)h
+(parameters,)f(an)g(integrated)g(garbage)e(collector)l(,)0
+936 y(and)g(support)f(for)g(platform-speci\256c)h(har)o(dwar)o(e)e
+(featur)o(es)h(\(such)g(as)h(tagged)f(data)h(types\).)k(The)0
+996 y(long-term)10 b(intention)h(is)f(to)h(support)e(several)h(inter)o
+(changeable)g(algorithms)h(and/or)f(har)o(dwar)o(e)0
+1056 y(characteristics)j(along)f(each)g(of)f(these)h(axes,)g(using)h
+(abstractions)f(at)g(the)g(TDF)e(token)i(level)h(both)0
+1116 y(to)g(make)f(them)h(inter)o(operable)f(and)h(also)g(to)g(pr)o
+(esent)f(a)h(single,)h(uni\256ed)f(token)g(interface)f(to)h(the)0
+1177 y(compiler)h(back-end)f(in)h(the)g(Dylan)g(pr)o(oducer)l(.)75
+1237 y(Although)j(our)f(experiences)g(with)h(TDF)e(as)i(a)f(delivery)h
+(vehicle)h(for)e(Dylan)g(applications)0 1298 y(have)i(thus)g(far)e
+(been)h(pr)o(omising,)j(we)d(do)h(not)g(envisage)g(futur)o(e)f
+(developments)i(to)f(be)f(com-)0 1358 y(pletely)i(fr)o(ee)e(fr)o(om)h
+(compr)o(omises.)34 b(This)18 b(section)i(pr)o(esents)e(brie\257y)g
+(some)g(of)g(the)h(pr)o(edicted)0 1418 y(pr)o(oblems)14
+b(and)g(ar)o(eas)f(of)g(concern.)0 1572 y Fe(7.1)59 b(Calling)16
+b(Convention)g(Abstraction)0 1668 y Fk(The)e(initial)j(Dylan)e(pr)o
+(oducer)g(r)o(emains)g(\256rmly)g(within)h(a)e(C-style)i(calling)g
+(convention,)h(using)0 1728 y(caller)e(parameters)f(exclusively)-6
+b(.)23 b(This)15 b(hides)g(a)g(potential)h(compr)o(omise)f(which)g(may)
+f(have)h(to)0 1788 y(be)e(made)h(r)o(egar)o(ding)f(function)i
+(application.)75 1849 y(In)g(TDF)-5 b(,)14 b(the)i Fd(apply_proc)f
+Fk(token)g(is)h(given)f(all)h(the)g(information)f(r)o(equir)o(ed)h
+(\(function,)g(ar)o(gu-)0 1909 y(ments,)h(r)o(eturn)f(type,)h(and)g(so)
+f(on\))g(to)g(generate)g(code)g(to)h(apply)f(the)g(function)h
+(atomically)h(\(in)0 1970 y(a)e(single)h(token)f(expansion\).)26
+b(In)16 b(futur)o(e)f(we)h(will)h(want)f(to)h(support)f(mor)o(e)g
+(elaborate)g(calling)0 2030 y(conventions,)f(possibly)e(by)e
+(de\256ning)j(our)e(own)g(tokens)h(as)f(r)o(eplacements)h(for)l(,)g
+(but)f(eventually)0 2090 y(making)19 b(use)g(of,)h Fd(apply_proc)p
+Fk(.)34 b(The)19 b(back-end)f(then)h(need)g(not)g(worry)f(about)g(the)h
+(particular)0 2150 y(calling)13 b(convention)h(being)e(used)g(since)h
+(such)f(details)i(ar)o(e)e(hidden)h(behind)g(the)f(particular)g(def-)0
+2210 y(inition)h(of)d(the)h Fd(apply_proc)g Fk(r)o(eplacement)g(pr)o
+(ovided)h(with)f(any)g(particular)g(Dylan)g(token)g(library)-6
+b(.)75 2271 y(The)13 b(ideal)h(solution)i(would)e(be)f(to)h(allow)g
+(LIST)m(-valued)h(ar)o(guments)e(in)h(token)g(de\256nitions.)0
+2331 y(However)l(,)k(DRA)f(have)g(pointed)i(out)e(that)h(this)g(would)f
+(necessitate)h(constructor)g(and)f(acces-)0 2391 y(sor)f(tokens)g(to)h
+(manipulate)g(such)f(ar)o(guments,)h(and)g(that)f(such)h(extensions)f
+(could)i(intr)o(oduce)0 2452 y(algebraic)13 b(pr)o(oblems)h(into)h(TDF)
+d(itself.)20 b(Given)14 b(the)g(pr)o(esent)g(de\256nition)h(of)f(TDF)e
+(ther)o(e)i(ar)o(e)f(two)0 2512 y(possible)h(solutions)i(to)e(this)h
+(pr)o(oblem.)75 2572 y(The)i(Dylan)g(language)g(de\256nition)i(allows)f
+(an)f(implementation)i(to)f(\252place)g(a)f(r)o(easonable)0
+2633 y(limit)f(on)e(the)g(number)f(of)h(ar)o(guments)g(that)g(may)g(be)
+f(passed)i(to)f(any)g(function\272)g([App92)o(],)h(and)0
+2693 y(Harlequin's)20 b(Dylan)g(implementations)h(impose)g(a)e(limit)j
+(of)d(255.)1326 2675 y Fi(14)1398 2693 y Fk(Since)h(ther)o(e)f(is)i(a)e
+(\256nite)p 0 2743 752 2 v 44 2774 a Fh(14)75 2789 y
+Fg(On)13 b(some)f(ar)o(chitectur)o(es)h(ther)o(e)h(ar)o(e)f
+(signi\256cant)g(performance)g(gains)g(to)f(be)h(made)g(if)g(the)g
+(limit)f(is)h(kept)g(to)f(a)0 2839 y(r)o(elatively)g(small)e(number)i
+(which)g(\256ts)f(into)f(a)i(single)f(byte.)p 0 2916
+1878 2 v 1859 2963 a Fo(9)p eop
+%%Page: 10 10
+10 9 bop 0 -175 1878 2 v 0 -128 a Fo(Description)9 b(and)f(evaluation)h
+(of)f(the)g(initial)f(Dylan)h(producer)0 -91 y(and)i(runtime)g
+(support.)1171 -128 y(ESPRIT)g(Project)g(6062)g(OMI/GLUE)f
+Fn(\320)h Fo(D4.2.2b)0 45 y Fk(upper)g(limit)i(on)e(the)h(number)e(of)h
+(parameters)f(that)i(may)f(be)g(passed)g(to)h(a)f(function)h(it)g(is)g
+(possible)0 106 y(to)16 b(de\256ne)h(a)f(token)g(in)g(the)g(library)g
+(for)f(each)h(possible)h(arity)f(of)g(function)g(call.)27
+b(This)16 b(solution)0 166 y(moves)g(complexity)h(out)f(of)f(the)h
+(back)f(end)h(and)h(into)f(the)g(library)f(\(which)h(is,)h(in)g
+(general,)f(the)0 226 y(dir)o(ection)g(we)e(want)g(complexity)h(to)g
+(\257ow\),)g(but)f(has)g(the)h(distinct)h(disadvantage)g(that)f(a)f
+(lar)o(ge)0 286 y(number)j(of)g(tokens)h(would)g(be)g(r)o(ede\256ned)g
+(each)f(time)h(the)g(calling)h(convention)g(is)f(modi\256ed)0
+346 y(\(although)c(in)h(practice,)g(once)g(they)f(wer)o(e)f(stable,)i
+(modi\256cations)i(to)e(the)f(calling)i(conventions)0
+407 y(would)e(be)g(a)f(very)g(rar)o(e\).)491 389 y Fi(15)75
+467 y Fk(Alternatively)k(it)g(would)g(be)e(possible)i(to)g(have)f(the)g
+(back-end)g(emit)h(tokens)f(befor)o(e,)g(dur)o(-)0 528
+y(ing,)g(and)g(after)e(an)h Fd(apply_proc)p Fk(.)23 b(These)14
+b(tokens)i(would)f(mark,)h(or)f(wrap,)g(important)g(points)h(in)0
+588 y(the)i(function)g(application.)32 b(For)17 b(example)h(ther)o(e)f
+(would)h(pr)o(obably)f(be)g(tokens)h(to)g(mark)f(the)0
+648 y(beginning)f(and)g(end)h(of)f(the)g(call,)j(and)d(also)h(wrapper)e
+(tokens)h(intr)o(oduced)i(to)e(the)h Fd(apply_proc)0
+708 y Fk(ar)o(guments)j(to)g(aid)h(in)g(the)f(computation)i(of)e(appr)o
+(opriate)g Fd(proc_prop)p Fk(s)g(and)h(similar)g(values.)0
+768 y(This)12 b(solution)h(has)f(the)g(advantage)f(that)i(the)e(token)h
+(library)f(need)h(only)g(r)o(ede\256ne)g(a)f(few)g(tokens)0
+828 y(\(which)17 b(would)h(have)f(equivalents)h(in)f(the)h(\256rst)f
+(solution\))h(whenever)e(a)h(calling)i(convention)0 889
+y(is)14 b(modi\256ed.)20 b(However)13 b(ther)o(e)g(is)h(also)g(the)f
+(disadvantage)h(that)g(at)f(each)g(function)h(application)0
+949 y(in)h(the)g(generated)f(TDF)f(ther)o(e)h(will)i(be)e(many)g
+(tokens)h(that)g(have)f(no)h(ef)o(fect)f(on)h(the)f(generated)0
+1009 y(code)g(whatsoever)g(when)f(the)g(calling)i(convention)g(is)g
+(simple.)75 1070 y(This)h(may)h(seem)f(like)h(a)g(trivial)h(pr)o
+(oblem,)f(but)g(implementations)h(of)f(languages)f(such)h(as)0
+1130 y(Dylan)c(have)g(a)g(much)g(br)o(oader)g(conception)h(of)f
+(\252calling)h(convention\272)g(than)g(do)f(conventional)0
+1190 y(languages)f(such)h(as)f(C.)i(For)e(example,)g(our)h(calling)g
+(convention)h(for)e(Dylan)g(will)i(soon)f(include)0 1250
+y(mechanisms)k(such)g(as)g(method)g(and)g(inline)h(caches)f(to)g(impr)o
+(ove)g(performance.)1619 1232 y Fi(16)1681 1250 y Fk(The)f(TDF)0
+1311 y(generated)e(by)h(the)g(Dylan)f(pr)o(oducer)h(must)h(ther)o(efor)
+o(e)e(not)h(only)g(cater)g(for)g(dif)o(fer)o(ences)f(in)i(the)0
+1371 y(caller/callee)i(parameter)d(conventions,)j(but)e(must)g(also)h
+(be)f(\257exible)g(enough)g(to)g(cause)g(code)0 1431
+y(to)e(be)f(installed)j(that)e(implements)h(none,)f(one,)g(or)g(both)f
+(of)h(these)g(types)f(of)h(cache.)0 1585 y Fe(7.2)59
+b(Internal)16 b(and)f(External)h(Entry)g(Points)0 1681
+y Fk(Object-oriented)g(languages)g(often)f(pr)o(ovide)i(inheritance)g
+(as)f(a)f(mechanism)i(for)e(code)i(r)o(euse.)0 1741 y(Dylan)g(follows)h
+(in)g(this)h(tradition,)h(pr)o(oviding)f(inheritance)f(thr)o(ough)g
+(generic)f(functions.)31 b(A)0 1802 y(generic)15 b(function)h(has)g
+(many)f(implementations)i(\(called)g Fj(methods)p Fk(\),)f(the)f
+(particular)h(methods)0 1862 y(appr)o(opriate)f(to)g(any)f(particular)h
+(call)h(being)e(determined)h(by)f(the)h(class)g(of)g(each)f(of)h(the)f
+(actual)0 1922 y(ar)o(guments.)75 1983 y(Dylan,)g(in)g(common)g(with)g
+(many)g(dialects)h(of)f(Lisp,)h(also)g(allows)f(optional)h(parameters)e
+(in)0 2043 y(function)i(de\256nitions.)22 b(Corr)o(esponding)14
+b(optional)i(ar)o(guments)e(ar)o(e)f(not)i(identi\256ed)h
+(\252position-)0 2103 y(ally\272,)e(but)f(rather)g(by)f(keywor)o(ds)h
+(which)g(pr)o(e\256x)f(each)h(optional)i(ar)o(gument)e(in)g(the)h
+(sender)f(and)0 2163 y(corr)o(espond)h(to)g(named)g(parameters)f
+(associated)i(with)f(the)g(same)g(keywor)o(d)e(in)j(the)f(r)o(eceiver)t
+('s)0 2224 y(de\256nition.)225 2205 y Fi(17)282 2224
+y Fk(Also,)h(Dylan)f(supports)g(so-called)h Fj(r)o(est)g(ar)o(guments)p
+Fk(:)20 b(an)14 b(indeterminate)h(number)0 2284 y(of)i
+(\252anonymous\272)h(ar)o(guments)f(which)h(may)f(be)g(passed)g(after)g
+(all)i(the)e(r)o(equir)o(ed)h(ar)o(guments.)0 2344 y(Rest)d(ar)o
+(guments)f(passed)g(to)h(a)f(generic)g(function)h(ar)o(e)f(pr)o
+(ocessed)h(into)g(a)g(runtime)f(data)h(struc-)p 0 2394
+752 2 v 44 2425 a Fh(15)75 2440 y Fg(In)k(practice,)k(wer)o(e)c(this)g
+(to)g(be)h(the)f(adopted)g(appr)o(oach,)j(the)d(token)g(de\256nitions)g
+(would)h(be)f(generated)0 2490 y(pr)o(ogrammatically)-5
+b(.)44 2525 y Fh(16)75 2540 y Fg(A)11 b Ff(method)g(cache)h
+Fg(r)o(emembers)e(which)i(method)e(was)g(invoked)i(for)f(any)g(given)h
+(combination)e(of)h(generic)h(func-)0 2589 y(tion)g(and)g(set)g(of)g
+(ar)o(gument)g(types;)g(such)h(a)f(cache)h(could)g(be)f(global)g
+(\(hashing)g(on)g(the)g(generic)h(function)g(as)e(well)0
+2639 y(as)h(the)h(ar)o(gument)g(types\))e(or)i(local)g(to)g(each)g
+(generic)h(function.)20 b(An)13 b Ff(inline)f(cache)h
+Fg(r)o(emembers)g(the)f(last)g(set)g(of)h(ar)o(-)0 2689
+y(gument)e(types)g(at)h(each)g(call)g(site)g(and)g(which)g(method)g
+(was)f(invoked)i(as)e(a)h(r)o(esult.)17 b(The)c(next)f(call)g(fr)o(om)g
+(that)f(site)0 2739 y(can)h(go)f(straight)f(to)h(the)g(appr)o(opriate)g
+(methods)f(if)i(the)f(ar)o(guments)f(have)i(identical)g(types.)44
+2774 y Fh(17)75 2789 y Fg(Note)k(that)g(Common)g(Lisp)g(has)h(two)e
+(mechanisms)h(which)h(pr)o(ovide)h(optional)d(parameters:)25
+b(parameters)0 2839 y(identi\256ed)12 b(by)f(keywor)o(d)h(\(as)f(in)g
+(Dylan\))h(and)f(by)h(position)e(\(with)h(defaults)f(if)h(they)h(ar)o
+(e)f(not)g(pr)o(esent\).)p 0 2916 1878 2 v 0 2963 a Fo(10)p
+eop
+%%Page: 11 11
+11 10 bop 0 -175 1878 2 v 0 -128 a Fo(ESPRIT)10 b(Project)f(6062)i
+(OMI/GLUE)d Fn(\320)j Fo(D4.2.2b)271 b(Description)9
+b(and)f(evaluation)h(of)f(the)g(initial)f(Dylan)h(producer)978
+-91 y(and)i(runtime)f(support.)0 45 y Fk(tur)o(e)18 b(\(such)f(as)h(a)f
+(list)i(or)e(a)h(vector\))f(befor)o(e)g(being)g(passed)h(to)g(the)g
+(appr)o(opriate)f(method)h(as)g(a)0 106 y(single)c(\252r)o(egular)t
+(\272)f(ar)o(gument,)g(corr)o(esponding)h(to)g(the)g(named)g
+Fj(r)o(est)g(parameter)h Fk(in)f(the)f(function)0 166
+y(de\256nition.)75 228 y(Our)d(curr)o(ent)f(Dylan)h(implementation)h
+(ther)o(efor)o(e)f(has)g(two)f Fj(entry)h(functions)1545
+210 y Fi(18)1590 228 y Fk(for)f(any)h(given)0 288 y(generic)f
+(function:)18 b(an)10 b Fj(external)g(entry)f(function)g
+Fk(performs)g(the)g(additional)k(pr)o(ocessing)d(r)o(equir)o(ed)0
+349 y(to)h(\256x)f(the)g(keywor)o(d)f(and)i(r)o(est)f(ar)o(guments,)h
+(and)g(an)f Fj(internal)g(entry)g(function)f Fk(which)h(expects)g(this)
+0 409 y(pr)o(ocessing)k(to)g(have)g(been)f(done)h(alr)o(eady)-6
+b(.)75 471 y(W)h(e)15 b(will)h(soon)g(be)e(moving)i(to)g(a)f(calling)h
+(convention)h(that)e(uses)g(mixed)h(caller)g(and)f(callee)0
+531 y(parameters.)22 b(The)14 b(callee)i(parameters)e(will)i(be)e(used)
+i(for)e(all)i(of)f(the)g(\252normal\272)g(ar)o(guments)g(to)0
+591 y(functions)d(\(the)f(r)o(equir)o(ed)g(ar)o(guments,)g(and)h(any)e
+(keywor)o(d)h(and)g(r)o(est)g(ar)o(guments,)h(or)e(the)i(struc-)0
+652 y(tur)o(es)i(that)h(have)g(been)e(built)j(by)d(an)i(external)f
+(entry)g(function)h(for)f(them\).)21 b(Caller)15 b(parameters)0
+712 y(will)20 b(be)f(used)h(to)g(build)g(up)g(implicit)h(chains)f(of)g
+(information)g(that)f(typically)i(has)e(dynamic)0 772
+y(extent)c(that)h(mirr)o(ors)f(the)g(dynamic)h(behaviour)f(of)g(the)h
+(pr)o(ogram)e(itself.)1433 754 y Fi(19)1493 772 y Fk(Such)h
+(information)0 832 y(includes)i(chains)f(of)f(context)h(maps)f(\(used)h
+(by)e(certain)i(kinds)g(of)f(garbage)f(collector\))i(and)g(the)0
+892 y Fj(next)f(methods)h Fk(lists)h(\(used)e(to)h(call)h(less)f
+(speci\256c)g(methods)h(in)f(the)f(same)h(generic)f(function,)i(al-)0
+953 y(lowing)d(a)g(mor)o(e)f(speci\256c)i(method)f(to)g(be)f
+(\252wrapped\272)g(ar)o(ound)h(a)g(less)g(speci\256c)h(one\).)75
+1015 y(W)-5 b(e)14 b(wish)h(to)g(avoid)h(wasting)f(contexts)g(between)e
+(external)i(and)g(internal)g(entry)f(functions)0 1075
+y(\320)k(the)h(ideal)g(situation)i(is)e(for)e(an)i(external)f(entry)g
+(function)h(to)g(perform)e(a)h(tail-jump)h(to)g(an)0
+1135 y(internal)14 b(entry)f(function)h(after)f(any)g(necessary)g(ar)o
+(gument)g(pr)o(ocessing)h(\(the)f(implementation)0 1195
+y(is)j(fr)o(ee)e(to)i(modify)g(the)f(callee)h(parameters)f(in)g(any)g
+(way)g(it)h(chooses,)g(since)g(the)g(function)g(that)0
+1256 y(performs)h(the)g(modi\256cations)j(is)e(r)o(esponsible)g(for)f
+(tidying)i(up)e(befor)o(e)g(r)o(eturning\).)29 b(W)-5
+b(e)18 b(will)0 1316 y(also)c(want)e(to)i(pass)f(a)g(subset)g(of)f(the)
+h(caller)h(parameters)e(fr)o(om)h(the)g(external)f(entry)h(function)h
+(to)0 1376 y(the)g(internal)g(entry)f(function.)75 1438
+y(One)j(way)g(to)g(arrange)g(this)h(is)g(to)g(have)f(the)g(internal)i
+(entry)d(function)i(expect)g(a)f(subset)g(of)0 1498 y(the)i(caller)f
+(parameters)g(expected)g(by)g(the)h(external)f(entry)g(function.)30
+b(By)18 b(ensuring)f(that)h(the)0 1559 y(caller)j(parameters)f(of)g
+(inter)o(est)h(to)g(the)f(internal)i(entry)d(function)j(appear)d
+(\256rst,)k(and)e(in)g(the)0 1619 y(same)e(or)o(der)l(,)j(to)d(the)h
+(external)f(entry)f(function)i(it)g(should)h(be)e(possible)h(to)g
+(tail-jump)f(to)h(the)0 1679 y(internal)13 b(entry)g(function.)19
+b(The)12 b(internal)h(entry)g(function)g(will)h(be)e(expecting)h(a)f
+(\252pr)o(e\256x\272)g(of)h(the)0 1739 y(caller)k(parameters)f(passed)g
+(to)h(the)g(external)f(entry)g(function,)i(and)f(should)h(ignor)o(e)e
+(the)h(extra)0 1799 y(ar)o(guments)c(without)i(the)f(need)f(for)h(any)f
+(special)h(action)h(on)f(the)g(part)f(of)h(the)g(pr)o(oducer)l(.)0
+1964 y Fe(7.3)59 b(Dynamic)16 b(and)f(Static)g(Booting)0
+2064 y Fk(The)h(initial)j(Dylan)d(pr)o(oducer)h(uses)f(a)h
+Fj(dynamic)f(bootstrap)p Fk(,)i(in)f(which)g(all)h(literals)f(ar)o(e)g
+(initially)0 2124 y(unde\256ned.)27 b(Code)17 b(is)g(pr)o(oduced)g(for)
+e(each)i(sour)o(ce)f(\256le)h(which)f(must)g(be)g(run)g(to)g
+(initialise)j(all)0 2184 y(such)g(literals)h(befor)o(e)d(the)i
+(compiled)h(pr)o(ogram)d(can)i(be)f(used.)34 b(After)17
+b(compilation)k(a)d(Dylan)0 2244 y(application)e(must)f(be)f(run)g
+(once)h(for)f(this)h(initialisatio)q(n)i(pr)o(ocess)e(to)g(happen,)g
+(after)e(which)i(an)0 2304 y(image)g(of)f(the)h(running)f(pr)o(ogram)g
+(\(with)h(all)g(literals)h(initialised\))i(is)d(dumped.)22
+b(This)15 b(dumped)0 2365 y(image)f(becomes)f(the)h(\256nal)g(runnable)
+f(application.)1017 2346 y Fi(20)75 2427 y Fk(W)-5 b(ork)18
+b(is)h(curr)o(ently)f(pr)o(ogr)o(essing)g(towar)o(ds)g(a)g
+Fj(static)g(bootstrap)h Fk(in)f(which)h(literals)g(ar)o(e)f(de-)0
+2487 y(scribed)d(dir)o(ectly)h(in)f(the)f(pr)o(oduced)i(code,)f(in)g
+(exactly)g(the)g(same)f(way)g(that)h(initialised)i(aggr)o(e-)p
+0 2544 752 2 v 44 2574 a Fh(18)75 2589 y Fg(Dif)o(fer)o(ent)9
+b Ff(entry)g(functions)g Fg(ar)o(e)h(associated)d(with)i(dif)o(fer)o
+(ent)h(means)e(of)h(entering)g(a)g(given)h(method.)k(Each)c(entry)0
+2639 y(function)k(has)f(an)h(associated)f Ff(entry)h(point)g
+Fg(to)f(which)i(contr)o(ol)f(is)g(passed)f(in)h(or)o(der)h(to)e(enter)h
+(the)g(corr)o(esponding)0 2689 y(method.)44 2724 y Fh(19)75
+2739 y Fg(In)i(certain)h(situations)d(this)i(information)f(will)h(have)
+h(inde\256nite)f(scope,)i(and)e(appr)o(opriate)g(action)g(will)g(be)0
+2789 y(taken)11 b(in)g(these)g(exceptional)g(cases.)44
+2824 y Fh(20)75 2839 y Fg(This)g(mechanism)g(is)g(identical)h(to)f(the)
+g(way)g(that)f(most)g(Lisp)h(implementations)e(initialise)i
+(themselves.)p 0 2916 1878 2 v 1840 2963 a Fo(11)p eop
+%%Page: 12 12
+12 11 bop 0 -175 1878 2 v 0 -128 a Fo(Description)9 b(and)f(evaluation)
+h(of)f(the)g(initial)f(Dylan)h(producer)0 -91 y(and)i(runtime)g
+(support.)1171 -128 y(ESPRIT)g(Project)g(6062)g(OMI/GLUE)f
+Fn(\320)h Fo(D4.2.2b)0 45 y Fk(gate)16 b(structur)o(es)g(in)h(C)g
+(would)g(be)e(described.)28 b(This)16 b(will)h(place)g(much)f(heavier)h
+(demands)g(on)0 106 y(TDF)12 b(than)h(does)g(the)g(pr)o(esent)g
+(dynamic)g(bootstrap,)h(but)f(no)g(dif)o(\256culties)i(ar)o(e)d
+(envisaged)i(given)0 166 y(that)f(TDF)f(is)i(capable)f(of)f(describing)
+i(any)f(static)h(structur)o(e)e(that)i(a)f(C)g(pr)o(ogram)f(might)i(r)o
+(equir)o(e.)0 335 y Fm(8)72 b(Suitability)18 b(of)h(TDF)h(for)f
+(Language)g(and)g(Runtime)0 449 y Fk(Only)f(a)f(few)g(speci\256c)h(pr)o
+(oblems)g(wer)o(e)e(encounter)o(ed,)k(and)e(wer)o(e)e(due)i(to)g(the)g
+(particular)g(in-)0 509 y(termediate)g(r)o(epr)o(esentation)f(used)h
+(by)e(the)h(initial)j(Dylan)d(pr)o(oducer)l(,)h(rather)f(than)g(any)g
+(gr)o(oss)0 569 y(de\256ciencies)f(in)f(TDF)e(itself.)22
+b(Although)15 b(the)g(ideal)h(solution)g(in)f(some)g(of)f(the)h
+(following)g(cases)0 629 y(would)j(be)f(to)h(modify)f(either)h(the)f
+(intermediate)i(r)o(epr)o(esentation)e(or)h(the)f(way)g(in)g(which)h
+(the)0 690 y(compiler)f(optimisations)h(modify)f(it,)h(it)e(should)i
+(be)d(noted)i(that)f(the)g(Dylan)g(pr)o(oducer)g(is)h(one)0
+750 y(particular)f(back-end)e(for)g(a)i(compiler)f(that)h(supports)f
+(back-ends)g(for)f(many)h(dif)o(fer)o(ent)g(ar)o(chi-)0
+810 y(tectur)o(es.)k(Since)14 b(all)g(the)g(initial)i(phases)d(of)g
+(compilation)j(ar)o(e)d(shar)o(ed)h(between)e(all)j(these)e(back-)0
+870 y(ends,)h(it)h(is)f(undesirable)f(to)h(modify)g(any)f(aspect)h(of)f
+(the)h(initial)h(phases)e(of)h(the)f(compiler)h(since)0
+930 y(this)i(will)h(cause)f(a)f(signi\256cant)i(amount)f(of)f(work)g
+(to)h(be)f(r)o(equir)o(ed)h(in)g(updating)g(all)g(the)g(back-)0
+991 y(ends)e(to)g(accommodate)h(those)f(changes.)0 1137
+y Fe(8.1)59 b(Function)15 b(Bodies)h(and)f(Conditionals)0
+1233 y Fk(Function)d(bodies)g(ar)o(e)f(always)h(kept)f(as)g(a)h(DAG)e
+(of)i(basic)f(blocks)h(\(as)f(described)h(in)g(section)h(5.1\).)0
+1293 y(When)18 b(generating)g(code)h(for)f(a)g(function,)i(code)f
+(should)h(be)e(emitted)h(for)f(each)g(of)g(the)h(basic)0
+1353 y(blocks)d(in)g(an)g(or)o(der)g(that)g(maximises)g(the)g(number)f
+(of)g(jumps)h(which)g(immediately)h(pr)o(ecede)0 1413
+y(their)g(destination,)k(thus)d(permitting)f(many)g(of)g(these)h(jumps)
+f(to)g(be)g(elided.)31 b(However)l(,)18 b(it)g(is)0 1473
+y(dif)o(\256cult)c(to)e(elide)i(any)d(of)h(these)h(labels)f(without)h
+(considerable)g(extra)e(work)h(in)g(the)h(pr)o(oducer)1843
+1455 y Fi(21)0 1533 y Fk(since)18 b(these)g(might)h(still)h(be)d(valid)
+i(destinations)h(for)e(loop)g(entry)g(points,)i(or)e(for)f(alternative)
+0 1594 y(branches)c(of)i(conditional)h(constructs.)21
+b(This)15 b(poses)f(a)g(pr)o(oblem)g(for)g(a)g(Dylan)g(pr)o(oducer)l(,)
+h(since)0 1654 y(it)f(is)h(not)f(possible)g(in)h(TDF)d(to)i(make)f
+(uncontr)o(olled)j(use)e(of)f Fd(label)p Fk(s)h(and)g
+Fd(goto)p Fk(s.)75 1714 y(The)9 b(solution)k(to)d(this)i(pr)o(oblem,)f
+(in)g(the)f(initial)j(pr)o(oducer)d(at)h(least,)h(is)f(to)g(generate)e
+(the)i(entir)o(e)0 1774 y(body)i(of)g(a)g(function)h(as)g(a)f
+Fd(labelled)g Fk(construct,)i(with)e(each)g(of)g(the)h(basic)f(blocks)h
+(of)f(the)g(function)0 1834 y(appearing)18 b(as)g Fd(sequence)h
+Fk(associated)h(with)f(its)g Fd(label)p Fk(.)33 b(This)18
+b(or)o(ganisation)i(is)e(also)i(intimately)0 1895 y(connected)15
+b(with)e(the)h(way)f(conditionals)j(ar)o(e)e(tr)o(eated.)75
+1955 y(The)i(initial)j(Dylan)e(pr)o(oducer)g(does)g(not)g(make)g(use)g
+(of)f(the)i(tokens)f(pr)o(ovided)h(for)e(condi-)0 2015
+y(tional)f(execution)f(\()p Fd(conditional)f Fk(and)h
+Fd(integer_test)p Fk(\),)g(because)f(of)h(the)f(way)g(the)h(back-end)e
+(handles)0 2075 y(blocks.)28 b(The)16 b(entir)o(e)h(body)f(of)h(a)f
+(function)i(is)f(r)o(epr)o(esented)f(as)h(a)g(collection)i(of)d
+(labelled)i(basic)0 2135 y(blocks,)g(each)e(of)g(which)h(is)g(emitted)g
+(as)g(a)f Fd(sequence)h Fk(within)g(a)g(lar)o(ge)f Fd(labelled)g
+Fk(construct.)28 b(Any)0 2196 y(conditionals)21 b(within)d(this)h
+(structur)o(e)f(ar)o(e)f(converted)i(into)g(explicit)g(tests)f(and)h
+(jumps)e(in)i(the)0 2256 y(intermediate)c(r)o(epr)o(esentation)g(befor)
+o(e)d(the)j(back-end)e(has)h(a)g(chance)g(to)h(emit)f(any)g
+(specialised)0 2316 y(conditional)i(constructs.)499 2298
+y Fi(22)554 2316 y Fk(For)d(example,)h(the)g(trivial)h(Dylan)e(expr)o
+(ession)131 2395 y Fb(if)22 b(\(test\))261 2436 y(consequen)q(t;)131
+2481 y(else)261 2519 y(alternate)q(;)131 2560 y(end;)p
+0 2594 752 2 v 44 2624 a Fh(21)75 2639 y Fg(W)l(e)11
+b(expect)g(the)g(installer)g(to)g(perform)g(the)g(equivalent)h
+(analysis.)44 2674 y Fh(22)75 2689 y Fg(This)i(is)g(due)h(to)e(the)h
+(heritage)g(of)g(the)g(intermediate)f(code,)j(which)f(was)e(originally)
+i(designed)f(to)g(make)f(the)0 2739 y(generation)j(of)g(machine)h(code)
+g(easy)-5 b(.)31 b(One)17 b(can)g(see)f(that)f(the)h(behaviour)h
+(mentioned)f(above)h(is)f(much)h(mor)o(e)0 2789 y(sensible)c(when)g
+(the)g(tar)o(get)g(language)h(is)f(machine)h(code)g(than)f(when)g(it)h
+(is)f(a)g(mor)o(e)h(abstract)e(language)i(such)g(as)0
+2839 y(TDF)l(.)p 0 2916 1878 2 v 0 2963 a Fo(12)p eop
+%%Page: 13 13
+13 12 bop 0 -175 1878 2 v 0 -128 a Fo(ESPRIT)10 b(Project)f(6062)i
+(OMI/GLUE)d Fn(\320)j Fo(D4.2.2b)271 b(Description)9
+b(and)f(evaluation)h(of)f(the)g(initial)f(Dylan)h(producer)978
+-91 y(and)i(runtime)f(support.)0 45 y Fk(r)o(esults)14
+b(in)h(the)e(following)i(TDF:)137 160 y Fd(\(labelled)e(block_intro)g
+(LBL__0)i(LBL__1)g(|)e(\(goto)h(block_intro\))275 221
+y(\(sequence)f(#)h(block_intro:)412 281 y(\(if)f(\(neq)g(\(rval)f
+(z_test\))h(\(rval)f(z__pc_false\))i(\))549 341 y(\(goto)g(LBL__1\)\))
+412 401 y(\(assign)f(RET__0)h(\(rval)e(z_alternate\))h(\))412
+461 y(\(goto)h(LBL__0\)\))275 522 y(\(sequence)f(#)h(LBL__0:)412
+582 y(\(return)f(\(rval)f(RET__0\)\)\))275 642 y(\(sequence)h(#)h
+(LBL__1:)412 702 y(\(assign)f(RET__0)h(\(rval)e(z_consequent\))i(\))412
+762 y(\(goto)g(LBL__0\)\)\))0 877 y Fk(The)19 b(initial)j(pr)o(oducer)d
+(r)o(elies)h(on)g(the)g(installer)h(to)f(perform)e(analysis)i(and)g
+(optimisation)i(of)0 937 y Fd(labelled)14 b Fk(constructs)g(like)g
+(these.)0 1089 y Fe(8.2)59 b(Problems)16 b(with)g(Dead)f(Code)0
+1184 y Fk(Some)k(basic)g(blocks)g(within)h(the)f(intermediate)h(r)o
+(epr)o(esentation)f(may)f(generate)g(no)h(code)h(at)0
+1244 y(all.)31 b(It)18 b(is)g(impossible)h(to)f(simply)g(ignor)o(e)g
+(such)g(blocks)f(since)i(they)e(will)i(alr)o(eady)e(have)h(been)0
+1304 y(given)c(labels)g(\(in)f(the)h Fd(labelled)g Fk(construct)g
+(which)f(surr)o(ounds)h(a)g(function)g(body\).)k(The)13
+b(solution)0 1365 y(adopted)i(in)f(the)g(initial)i(pr)o(oducer)d(is)i
+(to)f(emit)g(a)g(\252no-op\272)f(at)h(the)g(start)g(of)f(every)g
+(sequence:)137 1467 y Fd(\(sequence)h(\(make_null_ptr)g(\(alignment)f
+(top\)\)\))0 1569 y Fk(\(which)g(r)o(elies)i(on)f(the)f(TDF)g
+(installer)i(to)f(to)g(elide)h(these)f(in)g(every)f(case\).)0
+1720 y Fe(8.3)59 b(Missing)15 b(SOR)m(TNAME)0 1816 y
+Fk(Although)10 b(only)f(a)g(very)g(minor)g(pr)o(oblem,)i(it)f(was)e
+(noticed)j(that)e(ther)o(e)g(is)h(no)f Fd(sortname)h
+Fk(for)f Fd(tdfstring)0 1876 y Fk(\(analogous)k(to)f
+Fd(signed_nat)p Fk(\).)20 b(This)12 b(makes)g(it)h(impossible)h(to)f
+(de\256ne)g(\(for)e(example\))h(a)g(token)g(for)0 1936
+y(cr)o(eating)i(\257oating)g(constants.)0 2110 y Fm(9)72
+b(Performance)0 2224 y Fk(Both)18 b(the)f(execution)g(speed)h(and)f(pr)
+o(ogram)f(size)h(wer)o(e)f(compar)o(ed)h(between)f(the)h(TDF)f(back-)0
+2284 y(end)f(and)g(the)f(C)h(back-end)f(for)g(several)g(simple)h
+(benchmarks.)20 b(The)14 b(absolute)h(measur)o(ements)0
+2344 y(wer)o(e)e(as)g(follows:)p 177 2406 1524 2 v 177
+2854 2 448 v 513 2478 2 61 v 681 2460 a(C)i(back-end)303
+b(TDF)13 b(back-end)230 2520 y Fj(pr)o(ogram)p 513 2538
+V 139 w(code)h(size)68 b(execution)14 b(time)p 1099 2538
+V 49 w(code)h(size)67 b(execution)14 b(time)p 205 2540
+1482 2 v 230 2582 a Fk(library)p 513 2600 2 61 v 185
+w(183600)50 b Fj(\(not)12 b(applicable\))p 1099 2600
+V 76 w Fk(189824)49 b Fj(\(not)13 b(applicable\))230
+2642 y Fk(hello-world)p 513 2660 V 151 w(240)50 b Fj(\(not)12
+b(applicable\))p 1099 2660 V 151 w Fk(176)49 b Fj(\(not)13
+b(applicable\))230 2703 y Fk(n\256b)p 513 2721 V 322
+w(512)274 b(3.40)p 1099 2721 V 151 w(448)f(8.72)230 2763
+y(bubble-sort)p 513 2781 V 131 w(1008)h(5.32)p 1099 2781
+V 151 w(928)249 b(14.61)230 2823 y(closur)o(es)p 513
+2841 V 231 w(576)274 b(6.50)p 1099 2841 V 151 w(544)249
+b(15.27)p 1699 2854 2 448 v 177 2856 1524 2 v 0 2916
+1878 2 v 1840 2963 a Fo(13)p eop
+%%Page: 14 14
+14 13 bop 0 -175 1878 2 v 0 -128 a Fo(Description)9 b(and)f(evaluation)
+h(of)f(the)g(initial)f(Dylan)h(producer)0 -91 y(and)i(runtime)g
+(support.)1171 -128 y(ESPRIT)g(Project)g(6062)g(OMI/GLUE)f
+Fn(\320)h Fo(D4.2.2b)0 45 y Fk(which)k(give)g(the)g(following)g(r)o
+(elative)g(measur)o(ements:)p 470 119 938 2 v 470 629
+2 510 v 806 192 2 61 v 910 174 a(TDF)e(r)o(elative)i(to)h(C)523
+234 y Fj(pr)o(ogram)p 806 252 V 139 w(code)f(size)68
+b(execution)14 b(time)p 498 254 896 2 v 523 296 a Fk(library)p
+806 314 2 61 v 223 w(1.034)50 b Fj(\(not)13 b(applicable\))523
+356 y Fk(hello-world)p 806 374 V 114 w(0.733)50 b Fj(\(not)13
+b(applicable\))523 416 y Fk(n\256b)p 806 434 V 285 w(0.875)249
+b(2.564)523 477 y(bubble-sort)p 806 495 V 119 w(0.921)g(2.746)523
+537 y(closur)o(es)p 806 555 V 194 w(0.944)g(2.349)p 498
+556 896 2 v 523 599 a Fj(average)p 806 617 2 61 v 582
+w Fk(2.553)p 1406 629 2 510 v 470 631 938 2 v 0 725 a(wher)o(e:)28
+b Fj(library)19 b Fk(is)h(the)f(runtime)g(support)g(package)f
+(\(written)g(in)h(Dylan\);)j Fj(hello-world)c Fk(is)i(the)0
+785 y(usual)12 b(minimal)h(pr)o(ogram;)e Fj(n\256b)h
+Fk(generates)e(\256bonnacci-like)i(numbers)f(which)g(have)g(the)h
+(useful)0 846 y(pr)o(operty)g(that)h(the)g(r)o(esult)g(is)g(the)g
+(number)e(of)i(pr)o(ocedur)o(e)f(calls)i(made)f(during)g(the)f
+(calculation;)0 906 y Fj(bubble-sort)17 b Fk(is)h(a)f(simple)i(sorting)
+e(pr)o(ogram)g(applied)h(to)g(a)f(list)h(of)f(100)g(integers;)j(and)d
+Fj(closur)o(es)0 966 y Fk(builds)e(\(dynamically\))f(and)g(calls)h(a)e
+(closur)o(e)i(several)e(hundr)o(ed)i(times.)75 1026 y(The)9
+b(\252execution)h(time\272)f(is)i(the)e(dif)o(fer)o(ence)g(in)h(the)g
+(Unix)f(user)o(-time)h(for)f(the)g(pr)o(ocess)h(between)0
+1086 y(the)16 b(start)f(and)h(end)g(of)g(the)f(benchmark.)23
+b(The)15 b(\252code)h(size\272)g(is)h(the)e(sum)h(of)f(the)h(text)g
+(and)f(data)0 1147 y(sizes)f(for)f(the)h(\252.o\272)g(\256le)h(just)e
+(prior)h(to)g(the)g(\256nal)g(loading.)75 1207 y(Based)i(on)g(the)g(r)o
+(eturn)g(value)g(fr)o(om)g(n\256b,)g(the)g(speed)g(of)g(the)g(code)g
+(generated)g(by)f(the)h(two)0 1267 y(back)g(ends)i(is)f(appr)o
+(oximately)g(939)g(calls-per)o(-second)g(for)g(the)g(C,)g(and)h(366)e
+(calls-per)o(-second)0 1327 y(for)11 b(the)h(TDF)-5 b(,)11
+b(back-end.)17 b(This)12 b(dif)o(fer)o(ence)f(in)h(performance)e(is)j
+(due)f(to)g(several)f(simpli\256cations)0 1387 y(in)k(the)h(TDF)d
+(back-end)h(which)i(ar)o(e)e(curr)o(ently)h(being)g(corr)o(ected.)22
+b(The)15 b(TDF)f(back-end)g(should)0 1448 y(soon)g(pr)o(oduce)g(code)h
+(that)f(runs)f(faster)g(than)h(that)g(pr)o(oduced)g(by)f(the)h(C)g
+(back-end.)0 1620 y Fm(10)71 b(Conclusions)0 1734 y Fk(Our)17
+b(experience)g(with)h(TDF)e(as)i(a)f(delivery)h(vehicle)h(for)e(Dylan)g
+(pr)o(ograms)g(has)g(so)h(far)f(been)0 1794 y(encouraging.)31
+b(Although)18 b(some)g(minor)g(pr)o(oblems)f(have)h(alr)o(eady)g(been)f
+(encounter)o(ed,)j(and)0 1855 y(others)10 b(ar)o(e)g(for)o(eseen,)h
+(these)f(ar)o(e)g(not)g(likely)h(to)g(seriously)g(af)o(fect)e(the)i
+(Dylan)e(pr)o(oducer)l(.)18 b(Many)10 b(of)0 1915 y(these)k(dif)o
+(\256culties)h(have)f(been)f(due)h(to)g(the)f(dif)o(\256culty)i(of)f
+(generating)f(\252natural\272)g(TDF)g(because)0 1975
+y(of)18 b(r)o(estrictions)i(imposed)g(on)f(the)g(pr)o(oducer)f(fr)o(om)
+h(parts)f(of)g(the)h(compiler)h(that)f(ar)o(e)f(shar)o(ed)0
+2035 y(between)13 b(many)g(back-ends.)75 2095 y(It)d(is)h(important)g
+(to)g(be)f(awar)o(e)f(that)i(the)g(initial)h(pr)o(oducer)f(makes)f(no)g
+(attempt)h(to)g(implement)0 2156 y(the)18 b(mor)o(e)h(complex)f
+(language)g(featur)o(es)g(\(integrated)g(garbage)f(collection)j(and)f
+(thr)o(eads)f(ar)o(e)0 2216 y(two)h(important)h(examples\))f(at)g(the)h
+(TDF)e(level.)36 b(However)l(,)21 b(we)e(do)h(not)f(feel)g(that)h(this)
+g(is)g(a)0 2276 y(serious)12 b(omission)i(since)e(the)g(demands)h
+(which)f(these)g(will)h(make)e(on)h(TDF)f(have)h(alr)o(eady)g(been)0
+2336 y(pr)o(edicted)j(thor)o(oughly)f(elsewher)o(e)f([Man93b)o(])g
+([MM94].)p 0 2916 1878 2 v 0 2963 a Fo(14)p eop
+%%Page: 15 15
+15 14 bop 0 -175 1878 2 v 0 -128 a Fo(ESPRIT)10 b(Project)f(6062)i
+(OMI/GLUE)d Fn(\320)j Fo(D4.2.2b)271 b(Description)9
+b(and)f(evaluation)h(of)f(the)g(initial)f(Dylan)h(producer)978
+-91 y(and)i(runtime)f(support.)0 56 y Fm(A)72 b(The)19
+b(Benchmarks)0 170 y Fk(This)14 b(appendix)g(pr)o(esents)g(the)g(sour)o
+(ce)g(code)h(for)e(the)i(benchmarks)d(used)j(to)f(pr)o(oduce)h(the)f
+(tim-)0 230 y(ings)g(given)g(in)g(section)h(9,)f(and)g(the)g(code)g
+(generated)f(by)g(both)h(the)g(TDF)e(and)i(C)g(back-ends.)0
+380 y Fe(A.1)59 b(Dylan)16 b(Source)0 475 y Fk(The)e(benchmarks)f(wer)o
+(e)g(written)i(for)f(a)g(pr)o(e\256x)g(Dylan)g(compiler)l(,)i(and)e(so)
+h(they)f(ar)o(e)g(pr)o(esented)0 536 y(using)g(that)g(notation)h
+(rather)e(than)h(the)g(mor)o(e)f(r)o(ecent)h(in\256x)g(equivalent.)0
+672 y Fl(bubble-sort)0 767 y Fb(\(define-m)q(eth)q(od)25
+b(make-big)q(-li)q(st)g(\(size\))43 827 y(\(if)e(\(=)f(size)i(0\))130
+887 y(\(\))130 947 y(\(pair)f(size)h(\(make-big-)q(lis)q(t)h(\(-)d
+(size)i(1\)\)\)\)\))0 1068 y(\(define-m)q(eth)q(od)h(bubble-s)q(ort)g
+(\(\(list)f(<list>\)\))43 1128 y(\(bind)g(\(\(tmp)g(#f\)\))86
+1188 y(\(until)h(\(=)d(tmp)h(\(head)g(list\)\))130 1248
+y(\(set!)g(tmp)g(\(head)h(list\)\))130 1308 y(\(for)f(\(\(prev)h(=)e
+(list)h(then)g(\(tail)h(prev\)\))259 1369 y(\(next)g(=)e(\(tail)i
+(list\))f(then)h(\(tail)f(next\)\))259 1429 y(\(until)h(\(empty?)h
+(next\)\)\))173 1489 y(\(when)f(\(<)e(\(head)i(prev\))f(\(head)h
+(next\)\))216 1549 y(\(set!)g(tmp)f(\(head)g(prev\)\))216
+1609 y(\(set!)h(\(head)f(prev\))h(\(head)g(next\)\))216
+1670 y(\(set!)g(\(head)f(next\))h(tmp\)\)\)\))86 1730
+y(list\)\))0 1850 y(\(bubble-s)q(ort)h(\(make-bi)q(g-)q(lis)q(t)g
+(100\)\))0 2030 y Fl(n\256b)0 2125 y Fb(\(define-m)q(eth)q(od)g(nfib)f
+(\(x\))43 2186 y(\(if)f(\(<)f(x)h(1\))130 2246 y(1)130
+2306 y(\(+)f(1)g(\(+)h(\(nfib)g(\(-)g(x)f(2\)\))303 2366
+y(\(nfib)h(\(-)g(x)f(1\)\)\)\)\)\))0 2487 y(\(nfib)i(15\))0
+2607 y Fl(closures)0 2702 y Fb(\(define-m)q(eth)q(od)h(make-cou)q(nte)q
+(r)g(\(\))43 2762 y(\(bind)f(\(\(x)f(0\)\))86 2822 y(\(method)i(\(\))d
+(\(set!)i(x)e(\(+)g(1)g(x\)\)\)\)\))p 0 2916 V 1840 2963
+a Fo(15)p eop
+%%Page: 16 16
+16 15 bop 0 -175 1878 2 v 0 -128 a Fo(Description)9 b(and)f(evaluation)
+h(of)f(the)g(initial)f(Dylan)h(producer)0 -91 y(and)i(runtime)g
+(support.)1171 -128 y(ESPRIT)g(Project)g(6062)g(OMI/GLUE)f
+Fn(\320)h Fo(D4.2.2b)0 106 y Fb(\(define-m)q(eth)q(od)25
+b(closure-)q(tes)q(ts)g(\(\))43 166 y(\(for)e(\(\(n)g(from)h(0)e(below)
+h(5000\)\))86 226 y(\(\(make-c)q(ou)q(nte)q(r\))q(\)\)\))0
+346 y(\(closure-)q(tes)q(ts)q(\))0 467 y Fe(A.2)59 b(Generated)15
+b(TDF)0 563 y Fk(The)j(following)h(examples)f(of)g(generated)g(TDF)f
+(follow)i(the)f(notation)i(understood)f(by)f(TNC)0 623
+y(\(the)i(TDF)g(Notation)i(Compiler\).)40 b(T)-5 b(o)20
+b(r)o(educe)h(these)g(examples)f(to)h(a)f(manageable)g(size)h(all)0
+683 y(declarations)f(of)f(external)f(variables)h(and)g(identi\256ers,)j
+(and)d(all)h(declarations)g(pertaining)g(to)0 743 y(F)l(ASL)14
+b(literals)h(and)f(literal)h(initialisatio)q(n,)i(have)c(been)g(ignor)o
+(ed)h(in)h(the)e(code)i(quoted)f(her)o(e.)0 878 y Fl(bubble-sort)0
+973 y Fd(\(make_id_tagdef)h(z_make__big__list__LOC)53
+1033 y(\(make_proc)f(pz)107 1093 y(pfn)g(-)e(function)107
+1153 y(pz)h(-)g(next_methods)107 1213 y(pz)g(-)g(z_size_L_)53
+1274 y(|)h(-)f(\(sequence)107 1334 y(\(variable)f(var_acc)h(TST__0)g
+(UNBOUND)j(\(sequence)107 1394 y(\(variable)c(var_acc)h(z_list_24_M_)h
+(UNBOUND)i(\(sequence)107 1454 y(\(labelled)d(block_intro)g(LBL__0)h
+(LBL__1)h(|)f(\(goto)f(block_intro\))213 1514 y(\(sequence)h
+(\(make_null_ptr)g(\(alignment)f(top\)\))g(#)h(block_intro:)107
+1575 y(\(assign)e(\(lval)h(z_list_24_M_\))g(\(rval)f
+(z__pc_empty__list\)\))107 1635 y(\(goto)h(LBL__0\)\))213
+1695 y(\(sequence)h(\(make_null_ptr)g(\(alignment)f(top\)\))g(#)h
+(LBL__0:)107 1755 y(\(assign)e(\(lval)h(TST__0\))g(\(apply_proc)g(pz)g
+(\(lval)f(CALL2\))i(\(rval)e(z__pc_equals_qm_\))1013
+1815 y(\(rval)g(z_size_L_\))h(\(rval)f(z__pc_0\)\)\))107
+1876 y(\(goto_if_true)i(\(rval)e(TST__0\))h(LBL__1\))107
+1936 y(\(assign)f(\(lval)h(z_list_24_M_\))g(\(apply_proc)g(pz)h(\(lval)
+e(CALL2\))i(\(rval)e(z_pair\))1158 1996 y(\(rval)g(z_size_L_\))h
+(\(rval)f(z_list_24_M_\)\)\))107 2056 y(\(assign)g(\(lval)h
+(z_size_L_\))g(\(apply_proc)g(pz)g(\(lval)f(CALL2\))i(\(rval)e
+(z_binary__\))1080 2116 y(\(rval)g(z_size_L_\))h(\(rval)f
+(z__pc_1\)\)\))107 2176 y(\(goto)h(LBL__0\)\))213 2237
+y(\(sequence)h(\(make_null_ptr)g(\(alignment)f(top\)\))g(#)h(LBL__1:)
+107 2297 y(\(assign)e(\(lval)h(z__pc_number__values\))h(\(raw_integer)g
+(1\)\))107 2357 y(\(return)e(\(rval)g(z_list_24_M_\)\))107
+2417 y(\)\)\)\)\)\)\))o(\)\))0 2538 y(\(make_id_tagdef)j
+(z_bubble__sort__LOC)53 2598 y(\(make_proc)f(pz)107 2658
+y(pfn)g(-)e(function)107 2718 y(pz)h(-)g(next_methods)107
+2778 y(pz)g(-)g(z_c_L_)53 2839 y(|)h(-)f(\(sequence)p
+0 2916 V 0 2963 a Fo(16)p eop
+%%Page: 17 17
+17 16 bop 0 -175 1878 2 v 0 -128 a Fo(ESPRIT)10 b(Project)f(6062)i
+(OMI/GLUE)d Fn(\320)j Fo(D4.2.2b)271 b(Description)9
+b(and)f(evaluation)h(of)f(the)g(initial)f(Dylan)h(producer)978
+-91 y(and)i(runtime)f(support.)107 45 y Fd(\(variable)j(var_acc)h
+(ARG__5)h(UNBOUND)i(\(sequence)107 106 y(\(variable)c(var_acc)h(ARG__4)
+h(UNBOUND)i(\(sequence)107 166 y(\(variable)c(var_acc)h(TST__2)g
+(UNBOUND)j(\(sequence)107 226 y(\(variable)c(var_acc)h(ARG__3)h
+(UNBOUND)i(\(sequence)107 286 y(\(variable)c(var_acc)h(ARG__2)h
+(UNBOUND)i(\(sequence)107 346 y(\(variable)c(var_acc)h(TST__1)g
+(UNBOUND)j(\(sequence)107 407 y(\(variable)c(var_acc)h(ARG__1)h
+(UNBOUND)i(\(sequence)107 467 y(\(variable)c(var_acc)h(TST__0)g
+(UNBOUND)j(\(sequence)107 527 y(\(variable)c(var_acc)h(ARG__0)h
+(UNBOUND)i(\(sequence)107 587 y(\(variable)c(var_acc)h(z_next_30_M_)i
+(UNBOUND)h(\(sequence)107 647 y(\(variable)c(var_acc)h(z_prev_30_M_)i
+(UNBOUND)g(\(sequence)107 708 y(\(variable)d(var_acc)h(z_tmp_27_M_)i
+(UNBOUND)h(\(sequence)107 768 y(\(labelled)d(block_intro)g(LBL__2)h
+(LBL__3)h(LBL__4)f(LBL__5)h(LBL__6)g(LBL__7)f(|)g(\(goto)f
+(block_intro\))213 828 y(\(sequence)h(\(make_null_ptr)g(\(alignment)f
+(top\)\))g(#)h(block_intro:)107 888 y(\(assign)e(\(lval)h
+(z_tmp_27_M_\))i(\(rval)d(z__pc_false\)\))107 948 y(\(goto)h
+(LBL__2\)\))213 1008 y(\(sequence)h(\(make_null_ptr)g(\(alignment)f
+(top\)\))g(#)h(LBL__2:)107 1069 y(\(assign)e(\(lval)h(ARG__0\))h
+(\(apply_proc)f(pz)g(\(lval)f(CALL1\))i(\(rval)e(z__pc_head\))j(\(rval)
+d(z_c_L_\)\)\))107 1129 y(\(assign)g(\(lval)h(TST__0\))g(\(apply_proc)g
+(pz)g(\(lval)f(CALL2\))i(\(rval)e(z__pc_equals_qm_\))1013
+1189 y(\(rval)g(z_tmp_27_M_\))j(\(rval)d(ARG__0\)\)\))107
+1249 y(\(goto_if_true)i(\(rval)e(TST__0\))h(LBL__7\))107
+1309 y(\(assign)f(\(lval)h(z_tmp_27_M_\))i(\(apply_proc)e(pz)g(\(lval)f
+(CALL1\))i(\(rval)e(z__pc_head\))j(\(rval)d(z_c_L_\)\)\))107
+1370 y(\(assign)g(\(lval)h(ARG__1\))h(\(rval)e(z_c_L_\)\))107
+1430 y(\(assign)g(\(lval)h(z_next_30_M_\))h(\(apply_proc)f(pz)h(\(lval)
+e(CALL1\))i(\(rval)e(z__pc_tail\))h(\(rval)f(z_c_L_\)\)\))107
+1490 y(\(assign)g(\(lval)h(z_prev_30_M_\))h(\(rval)e(ARG__1\)\))107
+1550 y(\(goto)h(LBL__3\)\))213 1610 y(\(sequence)h(\(make_null_ptr)g
+(\(alignment)f(top\)\))g(#)h(LBL__3:)71 1671 y(\(assign)8
+b(\(lval)g(TST__1\))h(\(apply_proc)f(pz)h(\(lval)f(CALL1\))i(\(rval)d
+(z__pc_null_qm_\))j(\(rval)e(z_next_30_M_\)\)\))107 1731
+y(\(goto_if_true)14 b(\(rval)e(TST__1\))h(LBL__6\))98
+1791 y(\(assign)f(\(lval)f(ARG__2\))i(\(apply_proc)f(pz)h(\(lval)e
+(CALL1\))i(\(rval)e(z__pc_head\))i(\(rval)e(z_prev_30_M_\)\)\))99
+1851 y(\(assign)h(\(lval)g(ARG__3\))h(\(apply_proc)f(pz)g(\(lval)g
+(CALL1\))h(\(rval)e(z__pc_head\))i(\(rval)f(z_next_30_M_\)\)\))107
+1911 y(\(assign)g(\(lval)h(TST__2\))g(\(apply_proc)g(pz)g(\(lval)f
+(CALL2\))i(\(rval)e(z_binary_lt_\))1013 1972 y(\(rval)g(ARG__2\))i
+(\(rval)e(ARG__3\)\)\))107 2032 y(\(goto_if_true)i(\(rval)e(TST__2\))h
+(LBL__5\))107 2092 y(\(goto)g(LBL__4\)\))213 2152 y(\(sequence)h
+(\(make_null_ptr)g(\(alignment)f(top\)\))g(#)h(LBL__4:)107
+2212 y(\(assign)e(\(lval)h(ARG__4\))h(\(apply_proc)f(pz)g(\(lval)f
+(CALL1\))i(\(rval)e(z__pc_tail\))h(\(rval)g(z_prev_30_M_\)\)\))107
+2273 y(\(assign)f(\(lval)h(z_next_30_M_\))h(\(apply_proc)f(pz)h(\(lval)
+e(CALL1\))i(\(rval)e(z__pc_tail\))853 2333 y(\(rval)g
+(z_next_30_M_\)\)\))107 2393 y(\(assign)g(\(lval)h(z_prev_30_M_\))h
+(\(rval)e(ARG__4\)\))107 2453 y(\(goto)h(LBL__3\)\))213
+2513 y(\(sequence)h(\(make_null_ptr)g(\(alignment)f(top\)\))g(#)h
+(LBL__5:)107 2573 y(\(assign)e(\(lval)h(z_tmp_27_M_\))i(\(apply_proc)e
+(pz)g(\(lval)f(CALL1\))i(\(rval)e(z__pc_head\))1133 2634
+y(\(rval)g(z_prev_30_M_\)\)\))99 2694 y(\(assign)g(\(lval)g(ARG__5\))h
+(\(apply_proc)f(pz)g(\(lval)g(CALL1\))h(\(rval)e(z__pc_head\))i(\(rval)
+f(z_next_30_M_\)\)\))101 2754 y(\(apply_proc)g(pz)h(\(lval)e(CALL2\))i
+(\(rval)f(z__pc_head__setter\))i(\(rval)d(ARG__5\))i(\(rval)f
+(z_prev_30_M_\)\))107 2814 y(\(apply_proc)h(pz)g(\(lval)f(CALL2\))i
+(\(rval)e(z__pc_head__setter\))p 0 2916 V 1840 2963 a
+Fo(17)p eop
+%%Page: 18 18
+18 17 bop 0 -175 1878 2 v 0 -128 a Fo(Description)9 b(and)f(evaluation)
+h(of)f(the)g(initial)f(Dylan)h(producer)0 -91 y(and)i(runtime)g
+(support.)1171 -128 y(ESPRIT)g(Project)g(6062)g(OMI/GLUE)f
+Fn(\320)h Fo(D4.2.2b)427 45 y Fd(\(rval)i(z_tmp_27_M_\))j(\(rval)d
+(z_next_30_M_\)\))107 106 y(\(goto)h(LBL__4\)\))213 166
+y(\(sequence)h(\(make_null_ptr)g(\(alignment)f(top\)\))g(#)h(LBL__6:)
+107 226 y(\(goto)f(LBL__2\)\))213 286 y(\(sequence)h(\(make_null_ptr)g
+(\(alignment)f(top\)\))g(#)h(LBL__7:)107 346 y(\(assign)e(\(lval)h
+(z__pc_number__values\))h(\(raw_integer)g(1\)\))107 407
+y(\(return)e(\(rval)g(z_c_L_\)\))107 467 y(\)\)\)\)\)\)\))o(\)\))o
+(\)\))o(\)\))o(\)\))o(\)\))o(\)\))o(\)\))o(\)\))o(\)\))o(\)\)\))o(\))0
+617 y Fe(n\256b)0 712 y Fd(\(make_id_tagdef)j(z_n\256b__LOC)53
+773 y(\(make_proc)f(pz)107 833 y(pfn)g(-)e(function)107
+893 y(pz)h(-)g(next_methods)107 953 y(pz)g(-)g(z_x_L_)53
+1013 y(|)h(-)f(\(sequence)107 1074 y(\(variable)f(var_acc)h(RET__0)h
+(UNBOUND)i(\(sequence)107 1134 y(\(variable)c(var_acc)h(ARG__4)h
+(UNBOUND)i(\(sequence)107 1194 y(\(variable)c(var_acc)h(ARG__3)h
+(UNBOUND)i(\(sequence)107 1254 y(\(variable)c(var_acc)h(ARG__2)h
+(UNBOUND)i(\(sequence)107 1314 y(\(variable)c(var_acc)h(ARG__1)h
+(UNBOUND)i(\(sequence)107 1375 y(\(variable)c(var_acc)h(ARG__0)h
+(UNBOUND)i(\(sequence)107 1435 y(\(variable)c(var_acc)h(TST__0)g
+(UNBOUND)j(\(sequence)107 1495 y(\(labelled)d(block_intro)g(LBL__8)h
+(LBL__9)h(|)f(\(goto)f(block_intro\))213 1555 y(\(sequence)h
+(\(make_null_ptr)g(\(alignment)f(top\)\))g(#)h(block_intro:)107
+1615 y(\(assign)e(\(lval)h(TST__0\))g(\(apply_proc)g(pz)g(\(lval)f
+(CALL2\))i(\(rval)e(z_binary_lt_\))1013 1675 y(\(rval)g(z_x_L_\))h
+(\(rval)f(z__pc_1\)\)\))107 1736 y(\(goto_if_true)i(\(rval)e(TST__0\))h
+(LBL__9\))107 1796 y(\(assign)f(\(lval)h(ARG__0\))h(\(apply_proc)f(pz)g
+(\(lval)f(CALL2\))i(\(rval)e(z_binary__\))1013 1856 y(\(rval)g
+(z_x_L_\))h(\(rval)f(z__pc_2\)\)\))107 1916 y(\(assign)g(\(lval)h
+(ARG__2\))h(\(apply_proc)f(pz)g(\(lval)f(CALL1\))i(\(rval)e(z_n\256b\))
+i(\(rval)e(ARG__0\)\)\))107 1976 y(\(assign)g(\(lval)h(ARG__1\))h
+(\(apply_proc)f(pz)g(\(lval)f(CALL2\))i(\(rval)e(z_binary__\))1013
+2037 y(\(rval)g(z_x_L_\))h(\(rval)f(z__pc_1\)\)\))107
+2097 y(\(assign)g(\(lval)h(ARG__3\))h(\(apply_proc)f(pz)g(\(lval)f
+(CALL1\))i(\(rval)e(z_n\256b\))i(\(rval)e(ARG__1\)\)\))107
+2157 y(\(assign)g(\(lval)h(ARG__4\))h(\(apply_proc)f(pz)g(\(lval)f
+(CALL2\))i(\(rval)e(z_binary_pl_\))1013 2217 y(\(rval)g(ARG__2\))i
+(\(rval)e(ARG__3\)\)\))107 2277 y(\(assign)g(\(lval)h(RET__0\))g
+(\(apply_proc)g(pz)h(\(lval)e(CALL2\))i(\(rval)e(z_binary_pl_\))1013
+2338 y(\(rval)g(z__pc_1\))i(\(rval)e(ARG__4\)\)\))107
+2398 y(\(goto)h(LBL__8\)\))213 2458 y(\(sequence)h(\(make_null_ptr)g
+(\(alignment)f(top\)\))g(#)h(LBL__8:)107 2518 y(\(return)e(\(rval)g
+(RET__0\)\))213 2578 y(\(sequence)i(\(make_null_ptr)g(\(alignment)f
+(top\)\))g(#)h(LBL__9:)107 2639 y(\(assign)e(\(lval)h(RET__0\))g
+(\(rval)f(z__pc_1\)\))107 2699 y(\(assign)g(\(lval)h
+(z__pc_number__values\))h(\(raw_integer)g(1\)\))107 2759
+y(\(goto)f(LBL__8\))107 2819 y(\)\)\)\)\)\)\))o(\)\))o(\)\))o(\)\))o
+(\)\))o(\)\))o(\)\))p 0 2916 V 0 2963 a Fo(18)p eop
+%%Page: 19 19
+19 18 bop 0 -175 1878 2 v 0 -128 a Fo(ESPRIT)10 b(Project)f(6062)i
+(OMI/GLUE)d Fn(\320)j Fo(D4.2.2b)271 b(Description)9
+b(and)f(evaluation)h(of)f(the)g(initial)f(Dylan)h(producer)978
+-91 y(and)i(runtime)f(support.)0 47 y Fe(closures)0 142
+y Fd(\(make_id_tagdef)15 b(z_closure__tests__LOC)53 202
+y(\(make_proc)f(pz)107 263 y(pfn)g(-)e(function)107 323
+y(pz)h(-)g(next_methods)53 383 y(|)h(-)f(\(sequence)107
+443 y(\(variable)f(var_acc)h(ARG__1)h(UNBOUND)i(\(sequence)107
+503 y(\(variable)c(var_acc)h(ARG__0)h(UNBOUND)i(\(sequence)107
+564 y(\(variable)c(var_acc)h(FUN__0)i(UNBOUND)g(\(sequence)107
+624 y(\(variable)d(var_acc)h(TST__0)g(UNBOUND)j(\(sequence)107
+684 y(\(variable)c(var_acc)h(z_n__increment_L_)i(UNBOUND)h(\(sequence)
+107 744 y(\(variable)c(var_acc)h(z_n__limit_L_)h(UNBOUND)i(\(sequence)
+107 804 y(\(variable)c(var_acc)h(z_n_38_M_)i(UNBOUND)h(\(sequence)107
+865 y(\(labelled)d(block_intro)g(LBL__10)i(LBL__1)m(1)f(|)g(\(goto)f
+(block_intro\))213 925 y(\(sequence)h(\(make_null_ptr)g(\(alignment)f
+(top\)\))g(#)h(block_intro:)107 985 y(\(assign)e(\(lval)h(z_n_38_M_\))h
+(\(rval)e(z__pc_0\)\))107 1045 y(\(assign)g(\(lval)h(z_n__limit_L_\))g
+(\(rval)f(z_LIT__5\)\))107 1105 y(\(assign)g(\(lval)h
+(z_n__increment_L_\))h(\(rval)e(z__pc_1\)\))107 1165
+y(\(goto)h(LBL__10\)\))213 1226 y(\(sequence)h(\(make_null_ptr)g
+(\(alignment)f(top\)\))g(#)h(LBL__10:)107 1286 y(\(assign)e(\(lval)h
+(TST__0\))g(\(apply_proc)g(pz)g(\(lval)f(CALL2\))i(\(rval)e
+(z_binary_lt_\))1013 1346 y(\(rval)g(z_n_38_M_\))j(\(rval)d
+(z_n__limit_L_\)\)\))107 1406 y(\(goto_if_false)i(\(rval)e(TST__0\))h
+(LBL__1)m(1\))107 1466 y(\(assign)f(\(lval)h(FUN__0\))h(\(apply_proc)f
+(pz)g(\(lval)f(z_make__counter__LOC\))1013 1527 y(UNBOUND)k(\(rval)c
+(z__pc_false\)\)\))107 1587 y(\(apply_proc)h(pz)g(\(lval)f(CALL0\))i
+(\(rval)e(FUN__0\)\))107 1647 y(\(assign)g(\(lval)h(ARG__0\))h
+(\(apply_proc)f(pz)g(\(lval)f(CALL2\))i(\(rval)e(z_binary_pl_\))1000
+1707 y(\(rval)g(z_n_38_M_\))j(\(rval)d(z_n__increment_L_\)\)\))107
+1767 y(\(assign)g(\(lval)h(ARG__1\))h(\(rval)e(z_n__limit_L_\)\))107
+1828 y(\(assign)g(\(lval)h(z_n__increment_L_\))h(\(rval)e
+(z_n__increment_L_\)\))107 1888 y(\(assign)g(\(lval)h(z_n_38_M_\))h
+(\(rval)e(ARG__0\)\))107 1948 y(\(assign)g(\(lval)h(z_n__limit_L_\))g
+(\(rval)f(ARG__1\)\))107 2008 y(\(goto)h(LBL__10\)\))213
+2068 y(\(sequence)h(\(make_null_ptr)g(\(alignment)f(top\)\))g(#)h
+(LBL__1)m(1:)107 2129 y(\(assign)e(\(lval)h(z__pc_number__values\))h
+(\(raw_integer)g(1\)\))107 2189 y(\(return)e(\(rval)g(z__pc_false\)\))
+107 2249 y(\)\)\)\)\)\)\))o(\)\))o(\)\))o(\)\))o(\)\))o(\)\))o(\)\))0
+2369 y(\(local)g(make_id_tagdef)k(z_method__LOC__0_3)q(6_M_)53
+2430 y(\(make_proc)e(pz)107 2490 y(pfn)g(-)e(function)107
+2550 y(pz)h(-)g(next_methods)53 2610 y(|)h(-)f(\(sequence)107
+2670 y(\(variable)f(var_acc)h(environment)h(\(get_e)g(\(rval)e
+(function\)\))h(\(sequence)107 2730 y(\(labelled)g(block_intro)g(|)g
+(\(goto)h(block_intro\))213 2791 y(\(sequence)g(\(make_null_ptr)g
+(\(alignment)f(top\)\))g(#)h(block_intro:)p 0 2916 V
+1840 2963 a Fo(19)p eop
+%%Page: 20 20
+20 19 bop 0 -175 1878 2 v 0 -128 a Fo(Description)9 b(and)f(evaluation)
+h(of)f(the)g(initial)f(Dylan)h(producer)0 -91 y(and)i(runtime)g
+(support.)1171 -128 y(ESPRIT)g(Project)g(6062)g(OMI/GLUE)f
+Fn(\320)h Fo(D4.2.2b)107 45 y Fd(\(assign)i(\(lref)h
+(\(primitive_element)g(environment)h(0\)\))f(\(rval)f(z__pc_42\)\))107
+106 y(\(assign)g(\(lval)h(z__pc_number__values\))h(\(raw_integer)g
+(1\)\))107 166 y(\(return)e(\(rref)h(\(primitive_element)g(environment)
+h(0\)\)\))107 226 y(\)\)\)\)\)\)\))0 346 y(\(make_id_tagdef)h
+(z_make__counter__LOC)53 407 y(\(make_proc)f(pz)107 467
+y(pfn)g(-)e(function)107 527 y(pz)h(-)g(next_methods)53
+587 y(|)h(-)f(\(sequence)107 647 y(\(variable)f(var_acc)h(RET__0)h
+(UNBOUND)i(\(sequence)107 708 y(\(variable)c(var_acc)h(ARG__1)h
+(UNBOUND)i(\(sequence)107 768 y(\(variable)c(var_acc)h(ARG__0)h
+(UNBOUND)i(\(sequence)107 828 y(\(variable)c(var_acc)h(z_x_34_M_)i
+(\(make_box)f(UNBOUND\))h(\(sequence)107 888 y(\(labelled)e
+(block_intro)g(|)g(\(goto)h(block_intro\))213 948 y(\(sequence)g
+(\(make_null_ptr)g(\(alignment)f(top\)\))g(#)h(block_intro:)107
+1008 y(\(assign)e(\(lref)h(\(rval)f(z_x_34_M_\)\))i(\(rval)e
+(z__pc_0\)\))107 1069 y(\(assign)g(\(lval)h(ARG__0\))320
+1129 y(\(apply_proc)g(pz)g(\(lval)f(z_primitive__make__xep__closure\))
+373 1189 y(\(lval)g(z_method__LOC__0)q(_36_)q(M_\))373
+1249 y(\(apply_proc)h(pz)h(\(lval)e(z_primitive__make__environment\))
+693 1309 y(\(raw_integer)i(1\))f(\(rval)f(z_x_34_M_\)\))373
+1370 y(\(raw_integer)i(1\)\)\))107 1430 y(\(assign)e(\(lval)h(ARG__1\))
+h(\(apply_proc)f(pz)g(\(lval)f(CALL0\))i(\(rval)e(z__pc_list\)\)\))107
+1490 y(\(assign)g(\(lval)h(RET__0\))320 1550 y(\(apply_proc)g(pz)g
+(\(lval)f(CALL\))373 1610 y(\(rval)g(z__pc_make__method\))k
+(\(raw_integer)e(12\))f(XEP)g(\(rval)f(ARG__0\))373 1671
+y(\(rval)g(z__pc_k__debug__name)q(\))k(\(rval)c(z__pc_false\))373
+1731 y(\(rval)g(z__pc_k__number__required\))j(\(rval)d(z__pc_0\))i
+(\(rval)e(z__pc_k__rest_qm_\))373 1791 y(\(rval)g(z__pc_false\))i
+(\(rval)e(z__pc_k__key_qm_\))i(\(rval)e(z__pc_false\))373
+1851 y(\(rval)g(z__pc_k__specializers\))h(\(rval)f(ARG__1\)\)\))107
+1911 y(\(return)g(\(rval)g(RET__0\)\))107 1972 y(\)\)\)\)\)\)\))o(\)\))
+o(\)\))o(\)\))0 2122 y Fe(A.3)59 b(Generated)15 b(C)0
+2217 y Fk(As)h(with)h(the)f(TDF)g(above,)h(the)f(following)h(examples)g
+(of)f(generated)g(C)h(omit)g(many)f(declara-)0 2277 y(tions)g(of)f
+(external)g(variables)h(for)e(sake)h(of)g(br)o(evity)-6
+b(.)24 b(They)14 b(ar)o(e)h(intended)h(mer)o(ely)f(to)h(show)f(the)0
+2338 y(corr)o(espondence)f(between)e(the)i(generated)f(TDF)g(and)h
+(equivalent)h(C.)0 2474 y Fl(bubble-sort)0 2569 y Fb(Z*)22
+b(z_make__)q(big)q(__)q(lis)q(t_)q(_L)q(OC\()q(Z*)j(function,)g(Z*)e
+(next_metho)q(ds)q(,)i(Z*)d(z_size_L_)q(\))86 2629 y(Z)g(*TST__0,)j
+(*z_list_)q(24_)q(M_)q(;)86 2689 y(z_list_2)q(4_)q(M_)g(=)d(z__pc_emp)q
+(ty_)q(_l)q(ist)q(;)43 2749 y(LBL__0:)86 2809 y(TST__0)j(=)d
+(CALL2\(z__p)q(c_e)q(qu)q(als)q(_q)q(m_,)q(z_)q(siz)q(e_)q(L_,)q(z_)q
+(_p)q(c_0)q(\);)p 0 2916 V 0 2963 a Fo(20)p eop
+%%Page: 21 21
+21 20 bop 0 -175 1878 2 v 0 -128 a Fo(ESPRIT)10 b(Project)f(6062)i
+(OMI/GLUE)d Fn(\320)j Fo(D4.2.2b)271 b(Description)9
+b(and)f(evaluation)h(of)f(the)g(initial)f(Dylan)h(producer)978
+-91 y(and)i(runtime)f(support.)86 45 y Fb(if)23 b(\(TST__0)h(!=)f
+(z__pc_fals)q(e\))173 106 y(goto)g(LBL__1;)86 166 y(z_list_2)q(4_)q(M_)
+i(=)d(CALL2\(z_p)q(air)q(,z)q(_si)q(ze)q(_L_)q(,z)q(_li)q(st)q(_2)q
+(4_M)q(_\))q(;)86 226 y(z_size_L)q(_)j(=)d(CALL2\(z_bi)q(na)q(ry_)q(_,)
+q(z_s)q(iz)q(e_L)q(_,)q(z__)q(pc)q(_1)q(\);)86 286 y(goto)i(LBL__0;)43
+346 y(LBL__1:)86 407 y(z__pc_nu)q(mb)q(er_)q(_v)q(alu)q(es)h(=)d
+(\(Z*\)1;)86 467 y(return\(z)q(_l)q(ist)q(_2)q(4_M)q(_\))q(;)0
+647 y(Z*)g(z_bubble)q(__s)q(or)q(t__)q(LO)q(C\()q(Z*)j(function,)g(Z*)e
+(next_metho)q(ds,)j(Z*)c(z_c_L_\))86 708 y(Z)g(*ARG__5,)j(*ARG__4,)g
+(*TST__2,)g(*ARG__3,)g(*ARG__2,)g(*TST__1,)g(*ARG__1,)130
+768 y(*TST__0,)g(*ARG__0,)f(*z_next_)q(30_)q(M_)q(,)h(*z_prev_30)q(_M)q
+(_,)g(*z_tmp_27)q(_M_)q(;)86 828 y(z_tmp_27)q(_M)q(_)g(=)d(z__pc_fals)q
+(e;)43 888 y(LBL__2:)86 948 y(ARG__0)j(=)d(CALL1\(z__p)q(c_h)q(ea)q
+(d,z)q(_c)q(_L_)q(\);)86 1008 y(TST__0)j(=)d(CALL2\(z__p)q(c_e)q(qu)q
+(als)q(_q)q(m_,)q(z_)q(tmp)q(_2)q(7_M)q(_,)q(AR)q(G__)q(0\))q(;)86
+1069 y(if)h(\(TST__0)h(!=)f(z__pc_fals)q(e\))173 1129
+y(goto)g(LBL__7;)86 1189 y(z_tmp_27)q(_M)q(_)i(=)d(CALL1\(z__p)q(c_h)q
+(ea)q(d,z)q(_c)q(_L_)q(\);)86 1249 y(ARG__1)j(=)d(z_c_L_;)86
+1309 y(z_next_3)q(0_)q(M_)j(=)d(CALL1\(z__)q(pc_)q(ta)q(il,)q(z_)q(c_L)
+q(_\))q(;)86 1370 y(z_prev_3)q(0_)q(M_)j(=)d(ARG__1;)43
+1430 y(LBL__3:)86 1490 y(TST__1)j(=)d(CALL1\(z__p)q(c_n)q(ul)q(l_q)q
+(m_)q(,z_)q(ne)q(xt_)q(30)q(_M_)q(\);)86 1550 y(if)h(\(TST__1)h(!=)f
+(z__pc_fals)q(e\))173 1610 y(goto)g(LBL__6;)86 1671 y(ARG__2)i(=)d
+(CALL1\(z__p)q(c_h)q(ea)q(d,z)q(_p)q(rev)q(_3)q(0_M)q(_\))q(;)86
+1731 y(ARG__3)j(=)d(CALL1\(z__p)q(c_h)q(ea)q(d,z)q(_n)q(ext)q(_3)q(0_M)
+q(_\))q(;)86 1791 y(TST__2)j(=)d(CALL2\(z_bi)q(nar)q(y_)q(lt_)q(,A)q
+(RG_)q(_2)q(,AR)q(G_)q(_3\))q(;)86 1851 y(if)h(\(TST__2)h(!=)f
+(z__pc_fals)q(e\))173 1911 y(goto)g(LBL__5;)43 1972 y(LBL__4:)86
+2032 y(ARG__4)i(=)d(CALL1\(z__p)q(c_t)q(ai)q(l,z)q(_p)q(rev)q(_3)q(0_M)
+q(_\))q(;)86 2092 y(z_next_3)q(0_)q(M_)j(=)d(CALL1\(z__)q(pc_)q(ta)q
+(il,)q(z_)q(nex)q(t_)q(30_)q(M_)q(\);)86 2152 y(z_prev_3)q(0_)q(M_)j(=)
+d(ARG__4;)86 2212 y(goto)i(LBL__3;)43 2273 y(LBL__5:)86
+2333 y(z_tmp_27)q(_M)q(_)h(=)d(CALL1\(z__p)q(c_h)q(ea)q(d,z)q(_p)q(rev)
+q(_3)q(0_M)q(_\))q(;)86 2393 y(ARG__5)j(=)d(CALL1\(z__p)q(c_h)q(ea)q
+(d,z)q(_n)q(ext)q(_3)q(0_M)q(_\))q(;)86 2453 y(CALL2\(z_)q(_p)q(c_h)q
+(ea)q(d__)q(se)q(tte)q(r,)q(ARG)q(__)q(5,z)q(_p)q(rev)q(_3)q(0_M)q(_\))
+q(;)86 2513 y(CALL2\(z_)q(_p)q(c_h)q(ea)q(d__)q(se)q(tte)q(r,)q(z_t)q
+(mp)q(_27)q(_M)q(_,z)q(_n)q(ext)q(_3)q(0_M)q(_\))q(;)86
+2573 y(goto)i(LBL__4;)43 2634 y(LBL__6:)86 2694 y(goto)g(LBL__2;)43
+2754 y(LBL__7:)86 2814 y(z__pc_nu)q(mb)q(er_)q(_v)q(alu)q(es)h(=)d
+(\(Z*\)1;)p 0 2916 V 1840 2963 a Fo(21)p eop
+%%Page: 22 22
+22 21 bop 0 -175 1878 2 v 0 -128 a Fo(Description)9 b(and)f(evaluation)
+h(of)f(the)g(initial)f(Dylan)h(producer)0 -91 y(and)i(runtime)g
+(support.)1171 -128 y(ESPRIT)g(Project)g(6062)g(OMI/GLUE)f
+Fn(\320)h Fo(D4.2.2b)86 45 y Fb(return\(z)q(_c)q(_L_)q(\);)0
+242 y Fl(n\256b)0 337 y Fb(Z*)22 b(z_nfib__)q(LOC)q(\(Z)q(*)j
+(function,)g(Z*)d(next_met)q(hod)q(s,)j(Z*)e(z_x_L_\))86
+397 y(Z)f(*RET__0,)j(*ARG__4,)g(*ARG__3,)g(*ARG__2,)g(*ARG__1,)g
+(*ARG__0,)g(*TST__0;)86 457 y(TST__0)g(=)d(CALL2\(z_bi)q(nar)q(y_)q
+(lt_)q(,z)q(_x_)q(L_)q(,z_)q(_p)q(c_1)q(\);)86 517 y(if)h(\(TST__0)h
+(!=)f(z__pc_fals)q(e\))173 578 y(goto)g(LBL__9;)86 638
+y(ARG__0)i(=)d(CALL2\(z_bi)q(nar)q(y_)q(_,z)q(_x)q(_L_)q(,z)q(__p)q(c_)
+q(2\);)86 698 y(ARG__2)j(=)d(CALL1\(z_nf)q(ib,)q(AR)q(G__)q(0\))q(;)86
+758 y(ARG__1)j(=)d(CALL2\(z_bi)q(nar)q(y_)q(_,z)q(_x)q(_L_)q(,z)q(__p)q
+(c_)q(1\);)86 818 y(ARG__3)j(=)d(CALL1\(z_nf)q(ib,)q(AR)q(G__)q(1\))q
+(;)86 878 y(ARG__4)j(=)d(CALL2\(z_bi)q(nar)q(y_)q(pl_)q(,A)q(RG_)q(_2)q
+(,AR)q(G_)q(_3\))q(;)86 939 y(RET__0)j(=)d(CALL2\(z_bi)q(nar)q(y_)q
+(pl_)q(,z)q(__p)q(c_)q(1,A)q(RG)q(__4)q(\);)43 999 y(LBL__8:)86
+1059 y(return\(R)q(ET)q(__0)q(\);)43 1119 y(LBL__9:)86
+1179 y(RET__0)j(=)d(z__pc_1;)86 1240 y(z__pc_nu)q(mb)q(er_)q(_v)q(alu)q
+(es)j(=)d(\(Z*\)1;)86 1300 y(goto)i(LBL__8;)0 1496 y
+Fl(closures)0 1591 y Fb(Z*)e(z_closur)q(e__)q(te)q(sts)q(__)q(LO)q
+(C\(Z)q(*)j(function,)g(Z*)d(next_met)q(hod)q(s\))86
+1651 y(Z)g(*ARG__1,)j(*ARG__0,)g(*FUN__0,)g(*TST__0,)g(*z_n__inc)q(rem)
+q(en)q(t_L)q(_,)130 1711 y(*z_n__limi)q(t_)q(L_,)g(*z_n_38_)q(M_;)86
+1772 y(z_n_38_M)q(_)g(=)d(z__pc_0;)86 1832 y(z_n__lim)q(it)q(_L_)j(=)d
+(z_LIT__5)q(;)86 1892 y(z_n__inc)q(re)q(men)q(t_)q(L_)j(=)d(z__pc_1;)43
+1952 y(LBL__10:)86 2012 y(TST__0)j(=)d(CALL2\(z_bi)q(nar)q(y_)q(lt_)q
+(,z)q(_n_)q(38)q(_M_)q(,z)q(_n_)q(_l)q(im)q(it_)q(L_)q(\);)86
+2073 y(if)h(\(TST__0)h(==)f(z__pc_fals)q(e\))173 2133
+y(goto)g(LBL__11;)86 2193 y(FUN__0)i(=)d(z_make__co)q(unt)q(er)q(__L)q
+(OC)q(\(UN)q(BO)q(UND)q(,z)q(__p)q(c_)q(fa)q(lse)q(\);)86
+2253 y(CALL0\(FU)q(N_)q(_0\))q(;)86 2313 y(ARG__0)j(=)d(CALL2\(z_bi)q
+(nar)q(y_)q(pl_)q(,z)q(_n_)q(38)q(_M_)q(,z)q(_n_)q(_i)q(nc)q(rem)q(en)q
+(t_L)q(_\))q(;)86 2374 y(ARG__1)j(=)d(z_n__limit)q(_L_)q(;)86
+2434 y(z_n__inc)q(re)q(men)q(t_)q(L_)j(=)d(z_n__incr)q(eme)q(nt)q(_L_)q
+(;)86 2494 y(z_n_38_M)q(_)j(=)d(ARG__0;)86 2554 y(z_n__lim)q(it)q(_L_)j
+(=)d(ARG__1;)86 2614 y(goto)i(LBL__10;)43 2675 y(LBL__11:)86
+2735 y(z__pc_nu)q(mb)q(er_)q(_v)q(alu)q(es)h(=)d(\(Z*\)1;)86
+2795 y(return\(z)q(__)q(pc_)q(fa)q(lse)q(\);)p 0 2916
+V 0 2963 a Fo(22)p eop
+%%Page: 23 23
+23 22 bop 0 -175 1878 2 v 0 -128 a Fo(ESPRIT)10 b(Project)f(6062)i
+(OMI/GLUE)d Fn(\320)j Fo(D4.2.2b)271 b(Description)9
+b(and)f(evaluation)h(of)f(the)g(initial)f(Dylan)h(producer)978
+-91 y(and)i(runtime)f(support.)0 166 y Fb(static)24 b(Z*)e(z_method)q
+(__)q(LOC)q(__)q(0_3)q(6_)q(M_\()q(Z*)j(function,)g(Z*)e(next_meth)q
+(ods)q(\))86 226 y(Z**)g(environm)q(ent)i(=)d(\(\(FN*\)fu)q(nct)q(io)q
+(n\)-)q(>e)q(;)86 286 y(*\(\(Z**\)e)q(nv)q(iro)q(nm)q(ent)q([0)q(]\))j
+(=)d(\(int\)\(*\(\()q(Z**)q(\)e)q(nvi)q(ro)q(nm)q(ent)q([0)q(]\)\))q
+(+\()q(int)q(\)\()q(Z*\))q(1;)86 346 y(z__pc_nu)q(mb)q(er_)q(_v)q(alu)q
+(es)j(=)d(\(Z*\)1;)86 407 y(return\(*)q(\(\()q(Z**)q(\)e)q(nvi)q(ro)q
+(nme)q(nt)q([0])q(\)\))q(;)0 587 y(Z*)g(z_make__)q(cou)q(nt)q(er_)q(_L)
+q(OC)q(\(Z*)j(function)q(,)g(Z*)d(next_meth)q(ods)q(\))86
+647 y(Z)g(*RET__0,)j(*ARG__1,)g(*ARG__0;)86 708 y(Z**)e(z_x_34_M)q(_)i
+(=)d(z_primitiv)q(e__)q(ma)q(ke_)q(_b)q(ox\()q(UN)q(BO)q(UND)q(\);)86
+768 y(*\(\(Z**\)z)q(_x)q(_34)q(_M)q(_\))j(=)d(z__pc_0;)86
+828 y(ARG__0)j(=)d(\(Z*\)z_prim)q(iti)q(ve)q(__m)q(ak)q(e__)q(xe)q(p__)
+q(cl)q(osu)q(re)q(\()476 888 y(z_method__)q(LOC)q(__)q(0_3)q(6_)q(M_)q
+(,)476 948 y(z_primitiv)q(e__)q(ma)q(ke_)q(_e)q(nv)q(iro)q(nm)q(ent)q
+(\(1)q(,z_)q(x_)q(34_)q(M_)q(\),1)q(\);)86 1008 y(ARG__1)j(=)d
+(CALL0\(z__p)q(c_l)q(is)q(t\);)86 1069 y(RET__0)j(=)d(CALL\(z__pc)q
+(_ma)q(ke)q(__m)q(et)q(hod)q(,1)q(2,X)q(EP)q(,AR)q(G_)q(_0)q(,z_)q(_p)q
+(c_k)q(__)q(deb)q(ug)q(__n)q(am)q(e,)389 1129 y(z__pc_fal)q(se)q(,z_)q
+(_p)q(c_k)q(__)q(num)q(be)q(r__)q(re)q(qui)q(re)q(d,)q(z__)q(pc)q(_0,)
+389 1189 y(z__pc_k__)q(re)q(st_)q(qm)q(_,z)q(__)q(pc_)q(fa)q(lse)q(,z)q
+(__p)q(c_)q(k_)q(_ke)q(y_)q(qm_)q(,)389 1249 y(z__pc_fal)q(se)q(,z_)q
+(_p)q(c_k)q(__)q(spe)q(ci)q(ali)q(ze)q(rs,)q(AR)q(G_)q(_1\))q(;)86
+1309 y(return\(R)q(ET)q(__0)q(\);)p 0 2916 V 1840 2963
+a Fo(23)p eop
+%%Page: 24 24
+24 23 bop 0 -175 1878 2 v 0 -128 a Fo(Description)9 b(and)f(evaluation)
+h(of)f(the)g(initial)f(Dylan)h(producer)0 -91 y(and)i(runtime)g
+(support.)1171 -128 y(ESPRIT)g(Project)g(6062)g(OMI/GLUE)f
+Fn(\320)h Fo(D4.2.2b)0 56 y Fm(References)51 170 y Fk([App92])23
+b(Apple)c(Computer)l(,)i(\252Dylan:)28 b(an)19 b(object-oriented)f
+(dynamic)i(language\272,)g(April)257 230 y(1992.)87 331
+y([FC92])j(M.)d(Foster)e(and)h(I.)g(Currie,)h(\252TDF)d
+(Speci\256cation\272,)22 b(DRA)c(Malvern,)j(September)257
+392 y(1992.)24 493 y([Man93a])i(T)l(.)13 b(Mann,)g(\252TDF)e(Support)h
+(Requir)o(ed)h(by)e(Lisp\272,)j(OMI/GLUE)f(Deliverable)f(4.2.1,)257
+554 y(Harlequin)j(Ltd.,)h(1993.)21 655 y([Man93b])23
+b(T)l(.)h(Mann,)i(\252Initial)f(Evaluation)g(of)e(TDF)f(Support)i(for)e
+(Garbage)g(Collection\272,)257 715 y(OMI/GLUE)15 b(Deliverable)f
+(4.2.2a,)g(Harlequin)h(Ltd.,)h(1993.)55 817 y([MM94])24
+b(T)l(.)17 b(Mann)g(and)f(E.)i(Miranda,)g(\252Requir)o(ements)f
+(speci\256cation)h(for)e(parallel)h(exten-)257 877 y(sions)11
+b(to)e(TDF)g(to)g(support)h(Dylan)f(\320)g(including)i(runtime)e
+(support\272,)i(OMI/GLUE)257 937 y(Deliverable)j(5.7.1,)h(Harlequin)f
+(Ltd.,)i(Mar)o(ch)e(1994.)p 0 2916 V 0 2963 a Fo(24)p
+eop
+%%Trailer
+end
+userdict /end-hook known{end-hook}if
+
+mysave restore
+
+%%EOF

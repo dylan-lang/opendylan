@@ -1,0 +1,20 @@
+Date: Oct 6
+Author: rthor, ex 2505
+
+This compound/directory is soon to be defunct. 
+
+The follwing units have been moved from here:
+
+  D-doc-internal!guib-design.txt(1.1) 		to 	D-doc-env
+  D-doc-internal!guib-short.doc(1.1)		to 	D-doc-env
+  D-doc-internal!guib-short.ps(1.1)		to	D-doc-env
+  D-doc-internal!lib-manager-arch.txt(1.1)	to	D-doc-misc-obsolete
+  D-doc-internal!source-db-arch.txt(1.1)	to	D-doc-misc-obsolete
+  D-doc-internal!mailing-lists.text(1.2)	to	D-doc-org
+  D-doc-internal!ole-implementation.text(1.1)	to	D-doc-design-env
+  D-doc-internal!ole-user-doc.text(1.4)		to	D-doc-lib
+  D-doc-internal!threads-lib-5.7.2.doc(1.1)	to	D-doc-lib/simple-threads.doc
+  D-doc-internal!threads-lib-5.7.2.ps(1.1)	to	D-doc-lib/simple-threads.ps
+  D-doc-internal!win32-library.text(1.11)	to	D-doc-lib
+
+See D-doc-README (~dylan/doc/README) for explination of D-doc reorg.

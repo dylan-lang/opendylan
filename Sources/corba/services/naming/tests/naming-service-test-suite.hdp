@@ -1,0 +1,14 @@
+comment:	This file is generated, please don't edit
+format-version:	2
+base-address:	0x63FC0000
+compilation-mode:	tight
+target-type:	executable
+files:	library
+	module
+	naming-service-test-suite
+other-files:	naming-idl.spec
+start-function:	main
+minor-version:	1
+debug-arguments:	-progress
+major-version:	2
+library:	naming-service-test-suite

@@ -1,0 +1,1350 @@
+Module: scepter-file-front-end
+Author: Jason Trenouth
+Copyright: Copyright 1996 Functional Objects, Inc.  All rights reserved.
+
+define parser idl-parser
+
+start:
+  definitions EOI
+    => #f;;
+
+definitions:
+    => #f;;
+  definitions definition
+    => #f;;
+  
+definition:
+  type-dcl-seen semicolon-seen => #f;;
+  const-dcl-seen semicolon-seen => #f;;
+  exception-dcl-seen semicolon-seen => #f;;
+  interface-dcl-seen semicolon-seen => #f;;
+  module-dcl-seen semicolon-seen => #f;;
+  error-seen semicolon-seen => #f;;
+
+semicolon-seen:
+  SEMICOLON
+    => begin
+	 update-parser-state($idl-parser-no-state);
+       end;;
+
+type-dcl-seen:
+  type-dcl 
+    => begin
+	 update-parser-state($idl-parser-type-declaration-seen);
+       end;;
+
+const-dcl-seen:
+  const-dcl
+    => begin
+         update-parser-state($idl-parser-constant-declaration-seen);
+       end;;
+
+exception-dcl-seen:
+  exception-dcl
+    => begin
+         update-parser-state($idl-parser-exception-declaration-seen);
+       end;;
+
+interface-dcl-seen:
+  interface-def
+    => begin
+         update-parser-state($idl-parser-interface-declaration-seen);
+       end;;
+
+module-dcl-seen:
+  module
+    => begin
+         update-parser-state($idl-parser-module-declaration-seen);
+       end;;
+
+error-seen:
+  SYNTAX-ERROR
+    => signal(make(<idl-syntax-error>, parser-state: *parser-state*));;
+
+module:
+  module-seen
+  module-identifier
+  module-sq-seen
+  module-definitions
+  module-qs-seen
+    => #f;;
+
+module-seen:
+  MODULE-WORD
+    => begin
+         update-parser-state($idl-parser-module-seen);
+       end;;
+
+module-identifier:
+  IDENTIFIER
+    => begin
+	 update-parser-state($idl-parser-module-id-seen);
+	 parser-action-module-identifier(arg$1);
+       end;;
+
+module-sq-seen:
+  LEFT-BRACE
+    => begin
+         update-parser-state($idl-parser-module-sq-seen);
+       end;;
+
+module-definitions:
+  definitions
+  => begin
+       update-parser-state($idl-parser-module-body-seen);
+     end;;
+
+module-qs-seen:
+  RIGHT-BRACE
+    => begin
+         update-parser-state($idl-parser-module-qs-seen);
+	 parser-action-module-qs-seen();
+       end;;
+
+interface-def:
+  interface
+    => #f;;
+  forward
+    => #f;;
+
+interface:
+  interface-header-seen
+  interface-sq-seen
+  interface-exports
+  interface-qs-seen
+    => #f;;
+
+interface-header-seen:
+  interface-header
+    => parser-action-interface-header-seen(arg$1);;
+
+interface-header:
+  interface-decl
+  inheritance-spec
+    => begin
+         update-parser-state($idl-parser-inheritance-spec-seen);
+         parser-action-interface-header(arg$1, arg$2);
+       end;;
+
+interface-decl:
+  interface-seen
+  interface-id-seen
+    => arg$2;;
+
+interface-seen:
+  INTERFACE-WORD
+    => begin
+         update-parser-state($idl-parser-interface-seen);
+       end;;
+
+interface-id-seen:
+  id
+    => begin
+         update-parser-state($idl-parser-interface-id-seen);
+         arg$1;
+       end;;
+
+inheritance-spec:
+    => #f;;
+  inheritance-spec-colon-seen
+  at-least-one-scoped-name
+    => arg$2;;
+
+inheritance-spec-colon-seen:
+  COLON
+    => begin
+         update-parser-state($idl-parser-inheritance-spec-colon-seen);
+       end;;
+
+interface-sq-seen:
+  LEFT-BRACE
+    => begin
+         update-parser-state($idl-parser-interface-sq-seen);
+       end;;
+
+interface-exports:
+  exports
+    => begin
+         update-parser-state($idl-parser-interface-body-seen);
+       end;;
+
+interface-qs-seen:
+  RIGHT-BRACE
+    => begin
+         update-parser-state($idl-parser-interface-qs-seen);
+	 let scepter = get-scepter();
+         pop(scepter.scepter-scopes);
+       end;;
+
+exports:
+    => #f;;
+  exports export
+    => #f;;
+
+attribute-dcl-seen:
+  attribute-dcl
+    => begin
+         update-parser-state($idl-parser-attribute-declaration-seen);
+       end;;
+
+operation-dcl-seen:
+  operation
+    => begin
+         update-parser-state($idl-parser-operation-declaration-seen);
+       end;;
+
+export:
+  type-dcl-seen semicolon-seen => #f;;
+  const-dcl-seen semicolon-seen => #f;;
+  exception-dcl-seen semicolon-seen => #f;;
+  attribute-dcl-seen semicolon-seen => #f;;
+  operation-dcl-seen semicolon-seen => #f;;
+  error-seen semicolon-seen => #f;; 
+
+at-least-one-scoped-name:
+  scoped-name
+  scoped-names
+    => begin
+         push(arg$2, arg$1);
+	 arg$2;
+       end;;
+
+scoped-names-comma-seen:
+  scoped-names
+  COMMA
+    => begin
+         update-parser-state($idl-parser-scoped-names-comma-seen);
+	 arg$1;
+       end;;
+
+scoped-names:
+    => make(<deque>);;
+  scoped-names-comma-seen
+  scoped-name
+    => begin
+	 parser-action-scoped-names(arg$1, arg$2);
+       end;;
+
+scope-delimiter-seen:
+  DOUBLE-COLON
+    => begin
+         update-parser-state($idl-parser-scope-delimiter-seen);
+         arg$1;
+       end;;
+
+scoped-name:
+  id
+    => begin
+	 parser-action-scoped-name$1(arg$1);
+       end;;
+  scope-delimiter-seen
+  id
+    => begin
+	 parser-action-scoped-name$2(arg$1, arg$2);
+       end;;
+  scoped-name
+  scope-delimiter-seen
+  id
+    => begin
+	 parser-action-scoped-name$3(arg$1, arg$2, arg$3);
+       end;;
+
+id:
+  IDENTIFIER
+    => parser-action-id(arg$1);;
+
+forward:
+  interface-decl
+    => begin
+	 parser-action-forward(arg$1);
+       end;;
+
+const-seen:
+  CONST
+    => begin
+         update-parser-state($idl-parser-constant-seen);
+       end;;
+
+const-type-seen:
+  const-type
+    => begin
+         update-parser-state($idl-parser-constant-type-seen);
+         arg$1;
+       end;;
+
+const-id-seen:
+  id
+    => begin
+         update-parser-state($idl-parser-constant-id-seen);
+         arg$1;
+       end;;
+
+const-assignment-seen:
+  EQUALS
+    => begin
+         update-parser-state($idl-parser-constant-assignment-seen);
+       end;;
+
+const-dcl:
+  const-seen
+  const-type-seen
+  const-id-seen
+  const-assignment-seen
+  expression
+    => begin
+	 parser-action-const-dcl(arg$2, arg$3, arg$5);
+       end;;
+
+const-type:
+  integer-type => resolve-primitive-type(last(scepter-scopes(get-scepter())), arg$1);;
+  char-type => resolve-primitive-type(last(scepter-scopes(get-scepter())), arg$1);;
+  octet-type => resolve-primitive-type(last(scepter-scopes(get-scepter())), arg$1);;
+  boolean-type => resolve-primitive-type(last(scepter-scopes(get-scepter())), arg$1);;
+  floating-pt-type => resolve-primitive-type(last(scepter-scopes(get-scepter())), arg$1);;
+  string-type-spec => arg$1;;
+  wstring-type-spec => resolve-primitive-type(last(scepter-scopes(get-scepter())), $wstring-idl-type);;
+  scoped-name => resolve-scoped-name(first(scepter-scopes(get-scepter())), arg$1, reference?: #t);;
+
+expression:
+  const-expr
+    => arg$1;;
+
+const-expr:
+  or-expr
+    => arg$1;;
+
+or-expr:
+  xor-expr
+    => arg$1;;
+  or-expr VERTICAL-BAR xor-expr
+    => make(<ast-expression>,
+            combinator: $or-combinator,
+            left-subexpression: arg$1,
+            right-subexpression: arg$3);;
+
+xor-expr:
+  and-expr
+    => arg$1;;
+  xor-expr CIRCUMFLEX and-expr
+    => make(<ast-expression>,
+            combinator: $xor-combinator,
+            left-subexpression: arg$1,
+            right-subexpression: arg$3);;
+
+and-expr:
+  shift-expr
+    => arg$1;;
+  and-expr AMPERSAND shift-expr
+    => make(<ast-expression>,
+            combinator: $and-combinator,
+            left-subexpression: arg$1,
+            right-subexpression: arg$3);;
+
+shift-expr:
+  add-expr
+    => arg$1;;
+  shift-expr DOUBLE-LEFT-ANGLE add-expr
+    => make(<ast-expression>,
+            combinator: $left-shift-combinator,
+            left-subexpression: arg$1,
+            right-subexpression: arg$3);;
+  shift-expr DOUBLE-RIGHT-ANGLE add-expr
+    => make(<ast-expression>,
+            combinator: $right-shift-combinator,
+            left-subexpression: arg$1,
+            right-subexpression: arg$3);;
+
+add-expr:
+  mult-expr
+    => arg$1;;
+  add-expr PLUS mult-expr
+    => make(<ast-expression>,
+            combinator: $add-combinator,
+            left-subexpression: arg$1,
+            right-subexpression: arg$3);;
+  add-expr MINUS mult-expr
+    => make(<ast-expression>,
+            combinator: $minus-combinator,
+            left-subexpression: arg$1,
+            right-subexpression: arg$3);;
+
+mult-expr:
+  unary-expr
+    => arg$1;;
+  mult-expr ASTERISK unary-expr
+    => make(<ast-expression>,
+            combinator: $multiply-combinator,
+            left-subexpression: arg$1,
+            right-subexpression: arg$3);;
+  mult-expr SLASH unary-expr
+    => make(<ast-expression>,
+            combinator: $divide-combinator,
+            left-subexpression: arg$1,
+            right-subexpression: arg$3);;
+  mult-expr PERCENT unary-expr
+    => make(<ast-expression>,
+            combinator: $modulus-combinator,
+            left-subexpression: arg$1,
+            right-subexpression: arg$3);;
+
+unary-expr:
+  primary-expr
+    => arg$1;;
+  PLUS primary-expr
+    => make(<ast-expression>,
+            combinator: $unary-plus-combinator,
+            right-subexpression: arg$2);;
+  MINUS primary-expr
+    => make(<ast-expression>,
+            combinator: $unary-minus-combinator,
+            right-subexpression: arg$2);;
+  TILDE primary-expr
+    => make(<ast-expression>,
+            combinator: $bitwise-negation-combinator,
+            right-subexpression: arg$2);;
+    
+primary-expr:
+  scoped-name
+    => make(<ast-expression>,
+            combinator: $symbol-combinator,
+            scoped-name: arg$1);;
+  literal
+    => arg$1;;
+  LEFT-PAREN const-expr RIGHT-PAREN
+    => arg$2;;
+
+literal:
+  INTEGER-LITERAL
+    => make(<ast-expression>,
+            combinator: $no-combinator,
+            value: arg$1);;
+  STRING-LITERAL
+    => make(<ast-expression>,
+            combinator: $no-combinator,
+            value: arg$1);;
+  CHARACTER-LITERAL
+    => make(<ast-expression>,
+            combinator: $no-combinator,
+            value: as(<character>, arg$1));;
+  FLOATING-PT-LITERAL
+    => make(<ast-expression>,
+            combinator: $no-combinator,
+            value: arg$1);;
+  TRUE
+    => make(<ast-expression>,
+            combinator: $no-combinator,
+            value: #t);;
+  FALSE
+    => make(<ast-expression>,
+            combinator: $no-combinator,
+            value: #f);;
+
+positive-int-expr:
+  const-expr
+    => begin
+	 parser-action-positive-int-expr(arg$1);
+       end;;
+
+typedef-seen:
+  TYPEDEF
+    => begin
+         update-parser-state($idl-parser-typedef-seen);
+       end;;
+
+type-dcl:
+  typedef-seen
+  type-declarator
+    => arg$2;;
+  struct-type
+    => arg$1;;
+  union-type
+    => arg$1;;
+  enum-type
+    => arg$1;;
+
+type-spec-seen:
+  type-spec
+    => begin
+         update-parser-state($idl-parser-type-spec-seen);
+         arg$1;
+       end;;
+
+type-declarator:
+  type-spec-seen
+  at-least-one-declarator
+    => begin
+	 parser-action-type-declarator(arg$1, arg$2);
+       end;;
+
+type-spec:
+  simple-type-spec
+    => arg$1;;
+  constructed-type-spec
+    => arg$1;;
+
+simple-type-spec:
+  base-type-spec
+    => resolve-primitive-type(last(scepter-scopes(get-scepter())), arg$1);;
+  template-type-spec
+    => arg$1;;
+  scoped-name
+    => resolve-scoped-name(first(scepter-scopes(get-scepter())), arg$1, reference?: #t, error?: #t);;
+
+base-type-spec:
+  integer-type => arg$1;;
+  floating-pt-type => arg$1;;
+  char-type => arg$1;;
+  boolean-type => arg$1;;
+  octet-type => arg$1;;
+  any-type => arg$1;;
+
+template-type-spec:
+  sequence-type-spec => arg$1;;
+  string-type-spec => arg$1;;
+  wstring-type-spec => arg$1;;
+
+constructed-type-spec:
+  struct-type => arg$1;;
+  union-type => arg$1;;
+  enum-type => arg$1;;
+
+at-least-one-declarator:
+  declarator
+  declarators
+    => begin
+         push(arg$2, arg$1);
+	 arg$2;
+       end;;
+
+declarators-comma-seen:
+  declarators
+  COMMA
+    => begin
+         update-parser-state($idl-parser-declarators-comma-seen);
+	 arg$1;
+       end;;
+
+declarators:
+    => make(<deque>);;
+  declarators-comma-seen
+  declarator
+    => begin
+         update-parser-state($idl-parser-declarators-declarator-seen);
+         push-last(arg$1, arg$2);
+	 arg$1;
+       end;;
+
+declarator:
+  simple-declarator
+    => arg$1;;
+  complex-declarator
+    => arg$1;;
+
+simple-declarator:
+  id
+    => make(<fe-simple-declarator>, local-name: arg$1);;
+
+complex-declarator:
+  array-declarator
+    => make(<fe-complex-declarator>, local-name: arg$1.declarator-local-name, complex-part: arg$1);;
+
+integer-type:
+  signed-int
+    => arg$1;;
+  unsigned-int
+    => arg$1;;
+
+signed-int:
+  LONG
+    => $long-idl-type;;
+  LONG LONG
+    => $longlong-idl-type;;
+  SHORT
+    => $short-idl-type;;
+
+unsigned-int:
+  UNSIGNED LONG
+    => $ulong-idl-type;;
+  UNSIGNED LONG LONG
+    => $ulonglong-idl-type;;
+  UNSIGNED SHORT
+    => $ushort-idl-type;;
+
+floating-pt-type:
+  DOUBLE
+    => $double-idl-type;;
+  FLOAT
+    => $float-idl-type;;
+  LONG DOUBLE
+    => $longdouble-idl-type;;
+
+char-type:
+  CHAR
+    => $char-idl-type;;
+  WCHAR
+    => $wchar-idl-type;;
+
+octet-type:
+  OCTET
+    => $octet-idl-type;;
+
+boolean-type:
+  BOOLEAN
+    => $boolean-idl-type;;
+
+any-type:
+  ANY
+    => $any-idl-type;;
+
+struct-type-seen:
+  STRUCT
+    => begin
+         update-parser-state($idl-parser-struct-seen);
+       end;;
+
+struct-type-id-seen:
+  id
+    => begin
+	 parser-action-struct-type-id-seen(arg$1);
+       end;;
+
+struct-type-sq-seen:
+  LEFT-BRACE
+    => begin
+         update-parser-state($idl-parser-struct-sq-seen);
+       end;;
+
+struct-type-at-least-one-member:
+  at-least-one-member
+    => begin
+         update-parser-state($idl-parser-struct-body-seen);
+         arg$1;
+       end;;
+
+struct-type:
+  struct-type-seen
+  struct-type-id-seen
+  struct-type-sq-seen
+  struct-type-at-least-one-member
+  RIGHT-BRACE
+    => begin
+         update-parser-state($idl-parser-struct-qs-seen);
+         pop(scepter-scopes(get-scepter()));
+       end;;
+
+at-least-one-member:
+  member
+  members
+    => #f;;
+
+members:
+    => #f;;
+  members
+  member
+    => #f;;
+
+member-type-spec-seen:
+  type-spec
+    => begin
+         update-parser-state($idl-parser-member-type-seen);
+         arg$1;
+       end;;
+
+member-at-least-one-declarator:
+  at-least-one-declarator
+    => begin
+         update-parser-state($idl-parser-member-declarators-seen);
+         arg$1;
+       end;;
+
+member:
+  member-type-spec-seen
+  member-at-least-one-declarator
+  SEMICOLON
+    => begin
+	 parser-action-member(arg$1, arg$2);
+       end;;
+  error-seen
+  semicolon-seen
+    => #f;;
+
+union-type-seen:
+  UNION
+    => begin
+         update-parser-state($idl-parser-union-seen);
+       end;;
+
+union-type-id-seen:
+  id
+    => begin
+         update-parser-state($idl-parser-union-id-seen);
+         arg$1;
+       end;;
+
+union-type-switch-seen:
+  SWITCH
+    => begin
+         update-parser-state($idl-parser-switch-seen);
+       end;;
+
+union-type-switch-open-paren-seen:
+  LEFT-PAREN
+    => *parser-state* :=$idl-parser-switch-open-paren-seen;;
+
+union-type-switch-type-spec-seen:
+  switch-type-spec
+    => begin
+         update-parser-state($idl-parser-switch-type-seen);
+         arg$1;
+       end;;
+
+union-type-start:
+  union-type-seen
+  union-type-id-seen
+  union-type-switch-seen
+  union-type-switch-open-paren-seen
+  union-type-switch-type-spec-seen  
+  RIGHT-PAREN
+    => begin
+	 parser-action-union-type-start(arg$2, arg$5);
+       end;;
+
+union-type-sq-seen:
+  LEFT-BRACE
+    => begin
+         update-parser-state($idl-parser-union-sq-seen);
+       end;;
+
+union-type-at-least-one-case-branch:
+  at-least-one-case-branch
+    => begin
+         update-parser-state($idl-parser-union-body-seen);
+         arg$1;
+       end;;
+
+union-type-qs-seen:
+  RIGHT-BRACE
+    => begin
+         update-parser-state($idl-parser-union-qs-seen);
+         pop(scepter-scopes(get-scepter()));
+       end;;
+
+union-type:
+  union-type-start
+  union-type-sq-seen
+  union-type-at-least-one-case-branch
+  union-type-qs-seen
+    => arg$4;;
+
+switch-type-spec:
+  integer-type
+    => resolve-primitive-type(last(scepter-scopes(get-scepter())), arg$1);;
+  char-type
+    => resolve-primitive-type(last(scepter-scopes(get-scepter())), arg$1);;
+  octet-type
+    => resolve-primitive-type(last(scepter-scopes(get-scepter())), arg$1);;
+  boolean-type
+    => resolve-primitive-type(last(scepter-scopes(get-scepter())), arg$1);;
+  enum-type
+    => arg$1;;
+  scoped-name
+    => resolve-scoped-name(first(scepter-scopes(get-scepter())), arg$1, reference?: #t, error?: #t);;
+
+at-least-one-case-branch:
+  case-branch
+  case-branches
+    => #f;;
+
+case-branches:
+    => #f;;
+  case-branches
+  case-branch
+    => #f;;
+
+case-branch-at-least-one-case-label-seen:
+  at-least-one-case-label
+    => begin
+         update-parser-state($idl-parser-union-label-seen);
+         arg$1;
+       end;;
+
+case-branch-element-spec-seen:
+  element-spec
+    => begin
+         update-parser-state($idl-parser-union-element-seen);
+         arg$1;
+       end;;
+
+case-branch:
+  case-branch-at-least-one-case-label-seen
+  case-branch-element-spec-seen
+  SEMICOLON
+    => begin
+	 parser-action-case-branch(arg$1, arg$2);
+       end;;
+  error-seen
+  semicolon-seen
+    => #f;;
+
+at-least-one-case-label:
+  case-label
+  case-labels
+    => begin
+         push(arg$2, arg$1);
+	 arg$2;
+       end;;
+
+case-labels:
+    => make(<deque>);;
+  case-labels
+  case-label
+    => begin
+         push-last(arg$1, arg$2);
+	 arg$1;
+       end;;
+
+case-label-default-seen:
+  DEFAULT
+    => begin
+         update-parser-state($idl-parser-default-seen);
+       end;;
+
+case-label-case-seen:
+  CASE
+    => begin
+         update-parser-state($idl-parser-case-seen);
+       end;;
+
+case-label-const-expr-seen:
+  const-expr
+    => begin
+         update-parser-state($idl-parser-label-expression-seen);
+         arg$1;
+       end;;
+
+case-label:
+  case-label-default-seen
+  COLON
+    => begin
+         update-parser-state($idl-parser-label-colon-seen);
+         make(<ast-default-union-branch-label>);
+       end;;
+  case-label-case-seen
+  case-label-const-expr-seen
+  COLON
+    => begin
+         update-parser-state($idl-parser-label-colon-seen);
+         make(<ast-union-branch-label>, value: arg$2);
+       end;;
+
+element-type-spec-seen:
+  type-spec
+    => begin
+         update-parser-state($idl-parser-union-element-type-seen);
+         arg$1;
+       end;;
+
+element-spec:
+  element-type-spec-seen
+  declarator
+    => begin
+	 parser-action-element-spec(arg$1, arg$2);
+       end;;
+
+enum-type-seen:
+  ENUM
+    => begin
+         update-parser-state($idl-parser-enum-seen)
+       end;;
+
+enum-type-id-seen:
+  id
+    => begin
+	 parser-action-enum-type-id-seen(arg$1);
+       end;;
+
+enum-type-sq-seen:
+  LEFT-BRACE
+    => begin
+         update-parser-state($idl-parser-enum-sq-seen)
+       end;;
+
+enum-type-at-least-one-enumerator:
+  at-least-one-enumerator
+    => begin
+         update-parser-state($idl-parser-enum-body-seen);
+         arg$1;
+       end;;
+
+enum-type-qs-seen:
+  RIGHT-BRACE
+    => begin
+         update-parser-state($idl-parser-enum-qs-seen);
+         pop(scepter-scopes(get-scepter()));
+       end;;
+
+enum-type:
+  enum-type-seen
+  enum-type-id-seen
+  enum-type-sq-seen
+  enum-type-at-least-one-enumerator
+  enum-type-qs-seen
+    => arg$5;;
+
+at-least-one-enumerator:
+  enumerator
+  enumerators
+    => #f;;
+
+enumerators-comma-seen:
+  enumerators
+  COMMA
+    => begin
+         update-parser-state($idl-parser-enum-comma-seen);
+       end;;
+
+enumerators:
+    => #f;;
+  enumerators-comma-seen
+  enumerator
+    => #f;;
+
+enumerator:
+  IDENTIFIER
+    => begin
+	 parser-action-enumerator(arg$1);
+       end;;
+
+sequence-type-spec:
+  sequence-type-comma-seen
+  sequence-type-expression-seen
+  RIGHT-ANGLE
+    => begin
+	 parser-action-sequence-type-spec$1(arg$1, arg$2);
+       end;;
+  seq-head
+  RIGHT-ANGLE
+    => begin
+	 parser-action-sequence-type-spec$2(arg$1);
+       end;;
+
+sequence-type-comma-seen:
+  seq-head
+  COMMA
+    => begin
+         update-parser-state($idl-parser-sequence-comma-seen);
+         arg$1;
+       end;;
+
+sequence-type-expression-seen:
+  positive-int-expr
+    => begin
+         update-parser-state($idl-parser-sequence-expression-seen);
+         arg$1;
+       end;;
+
+seq-head:
+  seq-head-sequence-seen
+  seq-head-sq-seen
+  simple-type-spec
+    => begin
+         update-parser-state($idl-parser-sequence-type-seen);
+         arg$3;
+       end;;
+
+seq-head-sequence-seen:
+  SEQUENCE
+    => begin
+	 parser-action-seq-head-sequence-seen();
+       end;;
+
+seq-head-sq-seen:
+  LEFT-ANGLE
+    => begin
+         update-parser-state($idl-parser-sequence-sq-seen);
+       end;;
+
+string-type-spec-sq-seen:
+  string-head
+  LEFT-ANGLE
+    => begin
+         update-parser-state($idl-parser-string-sq-seen);
+         arg$1;
+       end;;
+
+string-type-spec-expression-seen:
+  positive-int-expr
+    => begin
+         update-parser-state($idl-parser-string-expression-seen);
+         arg$1;
+       end;;
+
+string-type-spec:
+  string-type-spec-sq-seen
+  string-type-spec-expression-seen
+  RIGHT-ANGLE
+    => begin
+	 parser-action-string-type-spec$1(arg$2);
+       end;;
+  string-head
+    => begin
+	 parser-action-string-type-spec$2();
+       end;;
+
+string-head:
+  STRING
+    => begin
+         update-parser-state($idl-parser-string-seen);
+         arg$1;
+       end;;
+
+wstring-type-spec-sq-seen:
+  wstring-head
+  LEFT-ANGLE
+    => begin
+         update-parser-state($idl-parser-string-sq-seen);
+         arg$1;
+       end;;
+
+wstring-type-spec-positive-int-expr-seen:
+  positive-int-expr
+    => begin
+         update-parser-state($idl-parser-string-expression-seen);
+         arg$1;
+       end;;
+
+wstring-type-spec:
+  wstring-type-spec-sq-seen
+  wstring-type-spec-positive-int-expr-seen
+  RIGHT-ANGLE
+    => begin
+	 parser-action-wstring-type-spec$1(arg$2);
+       end;;
+  wstring-head
+    => begin
+	 parser-action-wstring-type-spec$2();
+       end;;
+
+wstring-head:
+  WSTRING
+    => begin
+         update-parser-state($idl-parser-string-seen);
+         arg$1;
+       end;;
+
+array-id-seen:
+  id
+    => begin
+         update-parser-state($idl-parser-array-id-seen);
+         arg$1;
+       end;;
+
+array-declarator:
+  array-id-seen
+  at-least-one-array-dim
+    => begin
+         update-parser-state($idl-parser-array-completed);
+         make(<ast-array>, local-name: arg$1, dimensions: arg$2);
+       end;;
+
+at-least-one-array-dim:
+  array-dim
+  array-dims
+    => begin
+         push(arg$2, arg$1);
+	 arg$2;
+       end;;
+
+array-dims:
+    => make(<deque>);;
+  array-dims
+  array-dim
+    => begin
+         push-last(arg$1, arg$2);
+	 arg$1;
+       end;;
+
+array-dim-sq-seen:
+  LEFT-BRACKET
+    => begin
+         update-parser-state($idl-parser-dimension-sq-seen);
+       end;;
+
+array-dim-expression-seen:
+  positive-int-expr
+    => begin
+         update-parser-state($idl-parser-dimension-expression-seen);
+         arg$1;
+       end;;
+
+array-dim:
+  array-dim-sq-seen
+  array-dim-expression-seen
+  RIGHT-BRACKET
+    => begin
+         update-parser-state($idl-parser-dimension-qs-seen);
+         coerce(arg$2, $ulong-idl-type);
+         arg$2;
+       end;;
+
+attribute-dcl:
+  attribute-seen
+  attribute-simple-type-spec-seen
+  at-least-one-declarator
+    => begin
+	 parser-action-attribute-dcl(arg$1, arg$2, arg$3);
+       end;;
+
+attribute-seen:
+  opt-readonly
+  ATTRIBUTE
+    => begin
+         update-parser-state($idl-parser-attribute-seen);
+         arg$1;
+       end;;
+
+opt-readonly:
+    => #f;;
+  READONLY
+    => begin
+         update-parser-state($idl-parser-attribute-ro-seen);
+	 #t;
+       end;;
+
+exception-dcl:
+  exception-seen
+  exception-id-seen
+  exception-sq-seen
+  exception-members-seen
+  RIGHT-BRACE
+    => begin
+         update-parser-state($idl-parser-exception-qs-seen);
+         pop(scepter-scopes(get-scepter()));
+       end;;
+
+attribute-simple-type-spec-seen:
+  simple-type-spec
+    => begin
+         update-parser-state($idl-parser-attribute-type-seen);
+         arg$1;
+       end;;
+
+exception-seen:
+  EXCEPTION
+    => begin
+         update-parser-state($idl-parser-exception-seen);
+       end;;
+
+exception-id-seen:
+  id
+    => begin
+	 parser-action-exception-id-seen(arg$1);
+       end;;
+
+exception-sq-seen:
+  LEFT-BRACE
+    => begin
+         update-parser-state($idl-parser-exception-sq-seen);
+       end;;
+
+exception-members-seen:
+  members
+    => begin
+         update-parser-state($idl-parser-exception-body-seen);
+         arg$1;
+       end;;
+
+operation:
+  operation-id-seen
+  operation-parameters-completed
+  operation-raises-completed
+  opt-context
+    => begin
+	 parser-action-operation(arg$3, arg$4);
+       end;;
+
+operation-id-seen:
+  opt-op-attribute
+  operation-type-seen
+  IDENTIFIER
+    => begin
+	 parser-action-operation-id-seen(arg$1, arg$2, arg$3);
+       end;;
+
+opt-op-attribute:
+    => $no-operation-flag;;
+  ONEWAY
+    => begin
+         update-parser-state($idl-parser-operation-attribute-seen);
+         $oneway-operation-flag;
+       end;;
+  IDEMPOTENT
+    => begin
+         update-parser-state($idl-parser-operation-attribute-seen);
+         $idempotent-operation-flag;
+       end;;
+
+operation-type-seen:
+  op-type-spec
+    => begin
+         update-parser-state($idl-parser-operation-type-seen);
+         arg$1;
+       end;;
+
+op-type-spec:
+  simple-type-spec
+    => arg$1;;
+  VOID
+    => resolve-primitive-type(last(scepter-scopes(get-scepter())), $void-idl-type);;
+
+operation-parameters-completed:
+  parameter-list
+    => begin
+         update-parser-state($idl-parser-operation-parameters-completed);
+         arg$1;
+       end;;
+
+operation-raises-completed:
+  opt-raises
+    => begin
+	 parser-action-operation-raises-completed(arg$1);
+       end;;
+
+parameter-list:
+  parameter-list-sq-seen
+  parameter-list-qs-seen
+    => #f;;
+  parameter-list-sq-seen
+  at-least-one-parameter
+  parameter-list-qs-seen
+    => arg$2;;
+
+parameter-list-sq-seen:
+  LEFT-PAREN
+    => update-parser-state($idl-parser-operation-sq-seen);;
+
+parameter-list-qs-seen:
+  RIGHT-PAREN
+    => update-parser-state($idl-parser-operation-qs-seen);;
+
+at-least-one-parameter:
+  parameter
+  parameters
+    => #f;;
+
+parameters:
+    => #f;;
+  parameters-comma-seen
+  parameter
+    => #f;;
+
+parameters-comma-seen:
+  parameters
+  COMMA
+    => begin
+         update-parser-state($idl-parser-operation-parameters-comma-seen);
+       end;;
+
+parameter:
+  parameter-direction-seen
+  parameter-simple-type-spec-seen
+  declarator
+    => begin
+	 parser-action-parameter(arg$1, arg$2, arg$3);
+       end;;
+
+parameter-direction-seen:
+  direction
+    => begin
+         update-parser-state($idl-parser-operation-parameter-direction-seen);
+         arg$1;
+       end;;
+
+parameter-simple-type-spec-seen:
+  simple-type-spec
+    => begin
+         update-parser-state($idl-parser-operation-parameter-type-seen);
+         arg$1;
+       end;;
+
+direction:
+  IN
+    => $in-argument-direction;;
+  OUT
+    => $out-argument-direction;;
+  INOUT
+    => $inout-argument-direction;;
+
+opt-raises:
+    => #f;;
+  raises-seen
+  raises-sq-seen
+  at-least-one-scoped-name
+  RIGHT-PAREN
+    => begin
+         update-parser-state($idl-parser-operation-raises-qs-seen);
+         arg$3;
+       end;;
+
+raises-seen:
+  RAISES
+    => begin
+         update-parser-state($idl-parser-operation-raises-seen);
+       end;;
+
+raises-sq-seen:
+  LEFT-PAREN
+    => begin
+         update-parser-state($idl-parser-operation-raises-sq-seen);
+       end;;
+
+context-seen:
+  CONTEXT
+    => begin
+         update-parser-state($idl-parser-operation-context-seen);
+       end;;
+
+context-sq-seen:
+  LEFT-PAREN
+    => begin
+         update-parser-state($idl-parser-operation-context-sq-seen);
+       end;;
+
+opt-context:
+    => make(<context-collection>);;
+  context-seen
+  context-sq-seen
+  at-least-one-string-literal
+  RIGHT-PAREN
+    => begin
+	 parser-action-opt-context(arg$3);
+       end;;
+
+operation-context-comma-seen:
+  string-literals
+  COMMA
+    => begin
+         update-parser-state($idl-parser-operation-context-comma-seen);
+         arg$1;
+       end;;
+
+at-least-one-string-literal:
+  STRING-LITERAL
+  string-literals
+    => begin
+         push(arg$2, arg$1);
+	 arg$2;
+       end;;
+
+string-literals:
+    => make(<deque>);;
+  operation-context-comma-seen
+  STRING-LITERAL
+    => begin
+         push-last(arg$1, arg$2);
+	 arg$1;
+       end;;
+
+end parser;
+
+// eof

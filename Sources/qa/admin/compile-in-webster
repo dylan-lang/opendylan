@@ -1,0 +1,93 @@
+#!/usr/local/bin/bash
+#      Script: compile-in-webster
+#      Author: Shri Amit(amit)
+usage=" Usage: compile-in-webster -i <Image> -l <Lib> -r <Root> -p <PersonalRoot> 
+               -c <Command> -f <Logfile>"
+# Opts & Flgs: -i: Source image, default: <Root>/admin/webster
+#              -l: Lib to compile, required argument
+#              -r: Root, default: defaults /u/dylan/releases/webster
+#              -p: PersonalRoot, default: /u/dylan
+#              -c: Command to execute after compilation, default: none
+#              -f: Logfile, default: $logsdir/compile-in-webster-<Lib>-log.$suffix
+#    Synopsis: . Compiles <Lib> in <Image>
+#              . Makes the app for the c back end
+#	       . Invokes <Command> to run the executable
+#	       . Pipes output to <Logfile>
+######################################################################
+## Application exit status legend ##
+##  0: Compilation successful
+##  1: Invalid command line argument
+##  2: Library name not specified
+
+source /u/dylan/sources/qa/admin/env.bash
+websterdir=$dylandir/releases/webster
+
+## Parse the options & flags on the command line ##
+while getopts i:l:p:r:c:f: option
+do case $option in
+     i) image=$OPTARG;;
+     l) lib=$OPTARG;;
+     c) cmd=$OPTARG;;
+     p) pr=$OPTARG;;
+     r) root=$OPTARG;;
+     f) logfile=$OPTARG;;
+    \?) echo $usage
+        exit 1;;
+   esac
+done
+shift `expr $OPTIND - 1`
+
+## Assign defaults to options & flags ##
+##
+root=${root:-$websterdir}
+pr=${pr:-$dylandir}
+image=${image:-$root/admin/webster}
+lib=${lib:-unspecified}
+logfile=${logfile:-$logsdir/compile-in-webster-$lib-$platform-log.$suffix}
+
+## Check to see if lib has been specified ##
+##
+case $lib in
+   unspecified) echo The library name must be specified
+                exit 2;;
+   *) ;;
+esac
+
+## Everything from here goes to the logfile ##
+## Prompt the options                       ##
+##
+{
+    echo "Starting at: `date`"
+    echo "Running compile-in-webster with options:"
+    echo "  The source image is: $image"
+    echo "       The library is: $lib"
+    echo "          The root is: $root"
+    echo " The personal root is: $pr"
+    echo "       The command is: $cmd"
+    echo "       The logfile is: $logfile"
+    echo
+
+$image -pr $pr -r $root <<EOC
+(dylan::tty-infix-dylan-listen)
+import-cl-functions(system(bye)(as: bye));
+in: webster;
+update-libraries(#"$lib");
+bye:;
+(bye 0)
+EOC
+echo "Exiting webster ..."
+echo "Building app .."
+cd $pr/build/$platform/$lib
+source $root/admin/webster-env.sh -pr $pr -r $root
+make app
+`$cmd`
+$toolsdir/admin/remove-old-files $logsdir/compile-in-webster-log-$lib-$platform $logstokeep
+
+echo compile-in-webster successful
+echo "Ending at `date`"
+echo
+
+} 2>&1 | tee $logfile
+
+exit 0
+#eof

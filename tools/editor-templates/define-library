@@ -1,0 +1,12 @@
+define library
+define library %e%(Xlibrary-nameX)
+  export XmoduleX, ;
+
+  use XlibraryX,
+    import: all / { XmoduleX, Xmodule1X => Xmodule2X, },
+    exclude: { XmoduleX, },
+    prefix: "",
+    rename: { Xmodule1X => Xmodule2X, },
+    export: all / { XmoduleX, }
+;
+end library ;

@@ -1,0 +1,85 @@
+Module:    Dylan-user	%comment	-*- Mode: Dylan -*-
+Copyright: Copyright (c) 1996-2000 Functional Objects, Inc. All rights reserved.
+
+define library win32-automation
+  use functional-dylan;
+  use c-ffi;
+  use com;
+  use win32-common;
+  use win32-kernel;
+  use win32-registry;
+  export win32-automation;
+end;
+
+define module win32-automation
+  use functional-dylan;
+  use Dylan-extensions,
+    import: {<abstract-integer>, <big-integer>, <double-integer>,
+	     <simple-byte-vector>, <simple-double-byte-vector>,
+	     <simple-integer-vector>, <simple-machine-word-vector>,
+	     <simple-single-float-vector>, <simple-double-float-vector>,
+	     <simple-byte-array>, <simple-double-byte-array>,
+	     <simple-integer-array>, <simple-machine-word-array>,
+	     <simple-single-float-array> };
+  use simple-format;
+  use finalization;
+  use C-FFI;
+  use COM;
+  use COM-internal;
+  use Win32-common; // this defines types such as <DWORD>, <ULONG>, etc.
+  use Win32-kernel, import: { GetLastError, GetModuleFileName,
+			      OutputDebugString, GetFileAttributes,
+			      win32-error-message,
+			      application-instance-handle,
+			      application-command-line };
+  use Win32-registry;
+
+  // This module includes the following interfaces:
+%include auto-intf.exp
+
+  // stuff from "auto-misc":
+%include amisc.exp
+
+  // error codes from "winerror.h":
+%include auto-err.exp
+
+  // from "variant.dylan":
+  export <VARIANT>, <LPVARIANT>, <VARIANTARG>, <LPVARIANTARG>;
+  export lVal-value, bVal-value, iVal-value, fltVal-value,
+    dblVal-value, bool-value, scode-value, cyVal-value, date-value,
+    ptr-value, parray-value;
+  export lVal-value-setter, bVal-value-setter,
+    iVal-value-setter, fltVal-value-setter, dblVal-value-setter,
+    bool-value-setter, scode-value-setter, date-value-setter,
+    ptr-value-setter, parray-value-setter;
+  export <CY>, <VARIANT-BOOL>;
+  export $SQL-NULL;
+  export $NULL-VARIANT;
+  export <CY*>, <DATE*>, <PLARGE-INTEGER*>, <PULARGE-INTEGER*>, <BSTR*>;
+  export <ole-arg-spec>, <ole-value-arg-spec>, <ole-by-ref-arg-spec>,
+     out-ref, inout-ref, pass-as, arg-spec-vt, arg-spec-value, 
+     arg-spec-value-setter, arg-spec-direction, arg-spec-ptr;
+
+  // from "strings.dylan":
+  export $NULL-BSTR, copy-as-BSTR;
+
+  // from "arrays.dylan":
+  export <ole-array>, <ole-vector>, ole-vector, <c-safe-array>;
+
+  // In IDLDESC, this field is supposed to be set to NULL:
+  export dwReserved, dwReserved-setter;
+
+  // Extra stuff needed when split off win32-automation
+  //  - used to be in typeinfo
+  export <array-type-description>, ole-array-type,
+         as-typedesc, typedesc-dylan-class, typedesc-c-class;
+  // - didn't used to be exported at all
+  export <ole-type>;
+  export <disp-id>;
+  export $VT-VARIANT-MIN;
+  export $VT-C-CLASSES, $VT-C-POINTER-CLASSES, $VT-DYLAN-CLASSES;
+  export <LPDISPID>, <LPMEMBERID>, <LPLPDISPATCH>;
+  export  set-typedesc,;
+  export indexed-variant, vt-from-type;
+
+end;

@@ -1,0 +1,128 @@
+#!/usr/local/bin/perl
+#
+# Scriptname: create-app-lib
+# Arguments:  Test-library-name (default: none)
+#             dylandir          (default: ~/dylan)
+#             registrydir       (default: dylandir/registry/generic)
+#
+# Author: Shri Amit(amit)
+#
+# Purpose: This script automates the process of an application library
+#          creation for Dylan Test Suites that use testworks-plus and
+#          the suite Test-library-name (compulsory argument).
+#          It provides several convenient features like:
+#             . optional dylandir argument
+#             . optional registrydir argument
+#             . creates dylan/qa/test-apps if they dont exist
+#             . automatically includes Author's name and Synopsis etc.
+# Preconditions:
+#	  . To be able to specify a registrydir argument, a dylandir
+#           argument must be specified otherwise that argument shall
+#           be assumed to be the dylandir.
+#         . User must have write permissions on the dylandir this
+#           script is executed upon
+#####################################################################
+
+## Initialize all variables according to arguments passed
+##
+$testname = "$ARGV[0]";
+$dylandir = "$ARGV[1]";
+$registrydir = "$ARGV[2]";
+if ($testname eq "") {
+    die "Usage: create-app-lib LibraryName [DYLAN-DIR] [REGISTRY-DIR]";
+} elsif ($dylandir eq "") {
+    $home = $ENV{'HOME'} || $ENV{'LOGDIR'} ||
+	(getpwuid($<))[7] || die "You're homeless!\n";
+    $dylandir = "$home/dylan";
+} 
+if ($registrydir eq "") {
+    $registrydir = "$dylandir/registry/generic";
+}
+$appname = "$testname-app";
+$appdir = "$dylandir/qa/test-apps/$testname";
+$registry_entry = "$registrydir/$appname";
+
+## Prompt user on current settings
+##
+print "Setting the application name to : $appname\n";
+print "Setting dylan directory to: $dylandir\n";
+print "Setting the registry directory to: $registrydir\n";
+
+## Make registry entry in the registry
+## for the test-app-library
+##
+`echo abstract://dylan/qa/test-apps/$testname/$appname.lid > $registry_entry`;
+
+## Create the appropriate directory structure
+##
+unless (-d "$dylandir/qa") {
+    print "\n$dylandir/qa does not exist...creating it now";
+    `mkdir $dylandir/qa`;
+}
+unless (-d "$dylandir/qa/test-apps") {
+    print "\n$dylandir/qa/test-apps does not exist...creating it now";
+    `mkdir $dylandir/qa/test-apps`;
+}
+unless (-d $appdir) {
+    print "\nThe application library shall be located in: $appdir\n";
+    `mkdir $appdir`;
+}
+
+## Store the text in an array to be looped upon
+##
+$authorname = `/u/dylan/tools/scripts/user2fullname`;
+chop($authorname);
+$author    = "Author:    $authorname";
+$synopsis  = "Synopsis:  An application library for test-suite $testname";
+$copyright = "Copyright: (c) 1996, Functional Objects, Inc.
+           All rights reserved.";
+$filename[0]  =  "$appdir/$appname-lib.dylan";
+$filetext[0]  =
+"Module:    dylan-user
+$author
+$synopsis
+$copyright
+
+define library $appname
+  use $testname;
+  use testworks-plus;
+end;
+
+define module $appname
+  use $testname;
+  use testworks-plus;
+end;";
+
+$filename[1]  =  "$appdir/$appname.dylan";
+$filetext[1]  =  
+"Module:    $appname
+$author
+$synopsis
+$copyright
+
+run-test-application($testname);";
+
+$filename[2]  =  "$appdir/$appname.lid";
+$filetext[2]  =  
+"Library:   $appname
+$author
+$synopsis
+$copyright
+Files: $appname-lib
+       $appname";
+
+## Loop over the arrays and create the files
+##
+for ($i = 0; $i < 3; $i++) {
+    if (-f "$filename[$i]") {
+        `rm -f $filename[$i]`;
+    }
+    open (FILE, ">$filename[$i]") || die "Uh Oh!..Could not open $filename[$i]";
+    print FILE "$filetext[$i]";
+    close(FILE);
+    print "Created $filename[$i]...\n";
+}
+
+## Done
+##
+print "\nCompleted the generation of $appname library\n";

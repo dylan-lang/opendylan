@@ -1,0 +1,86 @@
+Module:    Dylan-User
+Synopsis:  FFI declarations translated from MacOS Carbon header files.
+Copyright: Copyright (c) 1999-2000 Functional Objects, Inc. All rights reserved.
+%comment   This file is a template that is expanded to produce "library.dylan".
+
+
+define library carbon-interface
+  use functional-dylan;
+  use c-ffi;
+  use machine-word;
+
+  export carbon-interface;
+end library carbon-interface;
+
+define module carbon-interface
+  use functional-dylan;
+  use c-ffi,
+    export: {null-pointer, null-pointer?, pointer-address,
+	     pointer-value, pointer-value-setter, size-of,
+	     <C-void*>, <C-pointer>, <C-string>, <C-unicode-string>,
+	     <C-string*>, <C-unicode-string*>,
+	     pointer-cast, destroy,
+	     pointer-value-address, c-type-cast,
+	     c-callable-wrapper-definer, 
+	     \with-c-string, \with-stack-structure } ;
+  use machine-integer-user,
+    export: {%logior, %logand};
+
+  // Handcoded types, etc. from special.dylan
+  export
+    \FOUR_CHAR_CODE, with-pascal-string, C-array-definer,
+    <Str255>, <Str63>, <Str32>, <Str31>, <Str27>, <Str15>, <Str32Field>,
+    <Bits16>, <FormatOrder>, <OffsetTable>, <CSpecArray>, <KeyMap>, <MCTable>, <ScrpSTTable>,
+    <Handle*>, <TECInfoHandle*>, <EvQElPtr*>, <GDHandle*>, <PixMapHandle*>,
+    <GrafPtr*>, <CGrafPtr*>, <AEEventHandlerUPP*>, <AliasHandle*>, <AuxWinHandle*>,
+    <IconGetterUPP*>, <IconFamilyHandle*>, <C-void**>,
+    <ControlHandle*>, <AuxCtlHandle*>, <MenuHandle*>, <ModalFilterUPP*>,
+    <OpaqueCollection*>, <OpaqueDragReference*>, <OpaqueIconRef*>,
+    <OpaqueCFragConnectionID*>, <OpaqueCFragClosureID*>, <OpaqueCFragContainerID*>,
+    <OpaqueCFragContextID*>;
+
+  //---*** NOTE: Need a way to do this automatically!
+  export
+    randSeed-address, thePort-address;
+
+  //---*** NOTE: TEMPORARY: I don't feel like converting Sound.h today ...
+  export
+    SysBeep;
+
+  //---*** NOTE: Need to do a proper 64-bit implementation ...
+  export
+    <SInt64>, <UInt64>;			 
+
+  // %include ConditionalMacros.exp
+%include MixedMode.exp
+%include MacTypes.exp
+%include Errors.exp
+%include OSUtils.exp
+%include DateTimeUtils.exp
+%include TextCommon.exp
+%include QuickdrawText.exp
+%include QDOffscreen.exp
+%include Quickdraw.exp
+%include Fonts.exp
+%include Events.exp
+%include Notification.exp
+%include AEDataModel.exp
+%include AppleEvents.exp
+%include Finder.exp
+%include Files.exp
+%include Processes.exp
+%include AppleTalk.exp
+%include Aliases.exp
+%include Collections.exp
+%include Drag.exp
+%include Menus.exp
+%include CodeFragments.exp
+%include Icons.exp
+%include MacWindows.exp
+%include TextEdit.exp
+%include Controls.exp
+%include Dialogs.exp
+
+  // Useful extensions from first.dylan
+  export \open-accessor-definer;
+end module carbon-interface;

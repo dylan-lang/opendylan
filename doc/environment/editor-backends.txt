@@ -1,0 +1,182 @@
+EDITOR BACKENDS
+
+* Introduction
+
+This document lists the available editor "backends" for use with the
+editor-common library.  See the documentation for that library for
+more information.
+
+Briefly, in order to use the functionality of the editor-common
+library, your library must also (directly or indirectly) use one or
+more of the following backends, at least one of which must not be an
+"abstract" backend.
+
+None of these libraries exports any names.  Rather, each creates objects
+and/or adds methods to generic functions defined in editor-common.
+
+
+* Reference
+
+** Supported backends
+
+
+EDITOR-EXE-BACKEND
+
+Library:		editor-exe-backend
+Symbolic name:		#"generic-exe"
+Printable name:		"Generic Command-Line Editor"
+Abstract?:		Yes
+Re-uses windows?:	Not applicable
+Commands supported:	Not applicable
+Implementation notes:
+  - This is an _abstract_ backend, providing an abstract class for other
+    backends to inherit from, plus some related methods.
+  - The default method for editor-call-main calls run-application (which
+    runs synchronously, I believe) on a concatenation of the (<string>)
+    values of the editor objects editor-image slot and the command
+    object's editor-command-string slot.  The command must be an <editor-
+    string-based-command> (unless subclasses provide other methods, of
+    course).
+  - No error-handling for the launched processes is attempted.  It is
+    unknown/untested where or if any "standard-error" output from the
+    processes would appear, for the win32-environment.  For the emulator-
+    environment, it should appear in the terminal where LispWorks was
+    started.
+  - Provision was initially made for tracking process IDs of launched
+    processes, but this has not yet been possible or necessary.  This
+    may be deemed "vestigial" and removed in the future.
+Documentation notes:
+  - This is an abstract backend, from which others (such as the gnuserv
+    backend) inherit functionality.  Users do not currently have direct
+    access to it, so it needn't appear in user documentation.
+
+
+EDITOR-DEUCE-BACKEND
+
+Library:		editor-deuce-backend
+Symbolic name:		#"deuce"
+Printable name:		"Deuce"
+Abstract?:		No
+Re-uses windows?:	Yes
+Commands supported:	#"open-editor", #"show-location"
+Implementation notes:
+  - Makes use of both "from-" and "to-" coordinates.
+  - Not fully tested (or thought through) for thread-safety.
+  - See source for comments on making sure that calls go through
+    deuce's execute-command correctly.
+
+
+EDITOR-GNUSERV-BACKEND
+
+Library:		editor-gnuserv-backend
+Symbolic name:		#"gnuserv"
+Printable name:		"Emacs via gnuserv"
+Abstract?:		No
+Re-uses windows?:	Yes
+Commands supported:	#"open-editor", #"show-location"
+Implementation notes:
+  - Only uses "from-" coordinates just now, but could use "to-".
+  - Some extra work done here to put extra '\'s into filenames, for
+    Emacs on Win32.  Might be a platform-specific problem later on
+    (i.e., other platforms might not require the extra '\'s).
+  - If the gnuserv package is not correctly installed, or the "gnudoit"
+    program cannot be launched, this backend may fail in unforseen (but
+    almost certainly harmless) ways.
+User notes:
+  - Gnuserv is available for Unix as well as Win32 platforms, but this
+    beckend works better with Win32 than Unix.  This is because gnuserv
+    on Win32 will launch Emacs if it's not already running, but the
+    Unix version won't.  Aside from this, both work just as well.
+  - The gnuserv server process must be running in Emacs for this backend
+    to work.  See the documentation for the gnuserv package for how to
+    make this happen automatically.  Remember to set the HOME and/or
+    LOGNAME environment variables under Win32, or Emacs may not find
+    it's initialisation file (and so fail to start gnuserv).
+
+
+
+** Unsupported backends
+
+There are also the following backends, which are currently poorly
+documented and unsupported for the reasons given.  They are not available
+in the win32-environment at the moment, and some never will be.
+
+EDITOR-EMACSSERVER-BACKEND
+
+Library:		editor-emacsserver-backend
+Symbolic name:		#"emacsserver"
+Abstract?:		No
+Re-uses windows?	Yes
+Implementation notes:
+  - You must have "emacs19" and "emacsclient19" in your PATH for this
+    backend to work.  Also, your ".emacs" file should contain ''(require
+    'server)'' (or ''(load-library "server")'') and then
+    ''(server-start)'' (to start up the emacsserver process
+    automatically).
+  - This backend will launch emacs19 if the emacsserver process is not
+    already running, or use emacsclient to access a running Emacs if it
+    is.
+Reason for lack of support:
+  This backend is roughly equivalent to the "gnuserv" backend, but is
+  only of use on Unix platforms.  Since we don't plan to release a Unix
+  product soon, it doesn't seem worth documenting.
+
+
+EDITOR-LISPWORKS-BACKEND
+
+Library:		editor-lispworks-backend
+Symbolic name:		#"lispworks"
+Abstract?:		No
+Reason for lack of support:
+  This backend was created for early testing of the callout process with
+  the emulator-environment.  It is now probably obsolete.
+
+
+EDITOR-WIN32SHELL-BACKEND
+
+Library:		editor-win32shell-backend
+Symbolic name:		#"win32shell"
+Abstract?:		No
+Reason for lack of support:
+  This backend was intended to be shipped with the Win32 product, but
+  has never quite worked due (I think) to C-FFI and/or Win32-library
+  bugs.  It offers little functionality, so it has been "goal-reduced".
+
+
+EDITOR-VI-BACKEND
+
+Library:		editor-vi-backend
+Symbolic name:		#"vi"
+Abstract?:		No
+Implementation notes:
+  You must have "xterm" and "vi" in your PATH for this backend to work.
+Reason for lack of support:
+  This backend launches the Unix editor "vi" in an xterm.  It's only of
+  use on Unix systems, and not much use even then.  It was created as
+  a simple test case of launching external programs but is not intended
+  for serious use.
+
+
+
+** Future backends
+
+The following backends may be implemented in the future.
+
+
+EDITOR-DDE-BACKEND
+
+Library:		editor-dde-backend
+Symbolic name:		#"dde"
+Abstract?:		Yes
+Description:
+  An _abstract_ backend for editors which are addressed via Win32's DDE
+  communication mechanism.
+
+
+EDITOR-CRISP-BACKEND
+
+Library:		editor-crisp-backend
+Symbolic name:		#"crisp"
+Abstract?:		No
+Description:
+  A backend for the commercial CRiSP Unix and Win32 editor.

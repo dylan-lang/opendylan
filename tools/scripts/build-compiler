@@ -1,0 +1,12 @@
+#!/bin/sh
+
+dylan-lw -init - <<SCRIPT
+(system::without-warning-on-redefinition
+  (load "~ext/editor/macros"))
+
+(extend-current-stack 300)
+(load "~dylan/translator/load/compiler")
+
+(bye)
+SCRIPT
+

@@ -1,0 +1,80 @@
+<HTML>
+<HEAD>
+<TITLE>Hello World using CORBA</TITLE> 
+</HEAD>
+
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<H1>Hello World using CORBA</H1>
+
+<HR>
+
+This is a very basic CORBA application.
+
+<P>A client program asks a server program for a string, prints it to
+standard output, and then exits.
+
+<P>The client program is composed of the following parts:
+
+<DL>
+  <DT><EM>library.dylan</EM>
+    <DD>Dylan library definition for client
+  <DT><EM>module.dylan</EM>
+    <DD>Dylan module definition for client
+  <DT><EM>corba-hello-world-client.dylan</EM>
+    <DD>Dylan client implementation
+  <DT><EM>corba-hello-world.spec</EM>
+    <DD>client configuration file for IDL
+  <DT><EM>README.htm</EM>
+    <DD>this file
+</DL>
+
+<P>The server program is similarly composed of the following parts:
+
+<DL>
+  <DT><EM>library.dylan</EM>
+    <DD>Dylan library definition for server
+  <DT><EM>module.dylan</EM>
+    <DD>Dylan module definition for server
+  <DT><EM>corba-hello-world-server.dylan</EM>
+    <DD>Dylan server implementation
+  <DT><EM>corba-hello-world.spec</EM>
+    <DD>server configuration file for IDL
+  <DT><EM>README.htm</EM>
+    <DD>this file
+</DL>
+
+<P>See the "Getting Started" chapter of the CORBA User Guide for a
+tutorial on how to construct this kind of project, and for more
+information on what the various parts are for.
+
+<P>
+
+<HR>
+
+<H2>Building and Testing the Application</H2>
+
+Just press the "Build" buttons on the respective Project Windows.
+
+<P>Now, you can run the application to test that it works. You
+need to run the server first so that it is waiting to receive
+calls from the client.
+
+<UL>
+<LI>Select "Project->Start" or press the "Start/Resume" button in the
+tool bar on the Project Window for the "my-hello-world-server" project.
+<LI>Wait until a DOS windows appears. The server is now running.
+<LI>Do the same for the client project. It should display "Hello
+World!" before the environment traps its exit and presents a dialog.
+</UL>
+
+<P>You can allow the client to quit by confirming the final dialog, and
+then run it again and again. Each time it gets a string from the same
+server which keeps running all the while.
+
+<P>You can set breakpoints in the client and server code to trap the
+request and open debugger windows as it passes from client to server,
+or you can experiment and extend the code, e.g. by returning one of a
+number of greetings!
+
+
+

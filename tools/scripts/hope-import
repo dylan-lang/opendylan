@@ -1,0 +1,390 @@
+#!/usr/local/bin/perl
+# hope-import, By John Kamp, December 1993
+# $Id: hope-import,v 1.1 2004/03/12 00:42:13 cgay Exp $
+#
+# This File Is Part Of The HOPE System
+#
+# Real: John Kamp                 Title   : Systems Administrator
+# Post: Harlequin LTD (UK)        Internet: johnk@harlequin.co.uk
+# Barrington Hall, Barrington     Phone   : +44 223 872 522
+# Cambridge CB2 5RG, England      FAX     : +44 223 872 519
+#
+# Info:
+#   Quick hack to import RCS files or files from a directory structure.
+#   This script generates a bourne shell script on <STDOUT> that may be
+#   used to aid in generating an import script for HOPE.
+#
+# Bugs/Limitations:
+#   None known. No checkpoint information as yet.
+#   RCS files must to have no outstanding locks.
+#
+# Modification History:
+#   See end of file.
+#
+# -----------------------------------------------------------------------------
+
+require('pwd.pl');
+
+$usage="USAGE: hope-import -rcs|-file <package-prefix> <startdir>\n\n".
+       "   eg: hope-import -rcs MLW /usr/users/ml/sml";
+
+if ($#ARGV ne 2) {
+    print STDERR "\n$usage\n";
+    exit 1;
+}
+
+#
+local($line);
+$importtype    = $ARGV[0];
+$package       = $ARGV[1];
+$startdir      = $ARGV[2];
+%createdircomp = ();
+%compdir       = ();
+@allrcsdirs    = ();
+%allrcsdirs    = ();
+$rcsfile       = '';
+$rcsdir        = '';
+@pwent         = ();
+
+@createcommands   = ();
+@addcompcommands  = ();
+@addfilecommands  = ();
+@importcommands   = ();
+
+if ($importtype ne '-rcs' && $importtype ne '-file') {
+    print STDERR "Unknown import type $importtype\n";
+    print STDERR "\n$usage\n";
+    exit 1;
+}
+
+# Expand ~ syntax.
+if ($startdir =~ /^~([^\/]*)/) {
+    $1 = getlogin unless $1;
+    @pwent = getpwnam($1);
+    $startdir =~ s#^~[^/]*#$pwent[7]# if @pwent[7];
+}
+
+sub mapcompound {
+    local($thedir, $full_expansion) = @_;
+    local($relative, $importdir, $createdir, $comp, $workdir);
+    local($anyfile);
+    local($hasrcs) = 0;
+
+    $hasrcs = 1 if (grep(/^$thedir/, @allrcsdirs));
+
+    # Save some information.
+    $relative = $thedir;
+    $relative =~ s/$startdir//;
+    $importdir = $thedir;
+
+    $createdir="$package/$relative";
+    # ./a.c,v and ./RCS/b.c,v would both go into the same $createdir.
+    if ($createdir =~ m+^(.*)/RCS$+) {
+        $createdir = $1;
+    }
+    $createdir =~ s/\/\.\//\//;
+    $createdir =~ s/\.\//\//;
+    $createdir =~ s/\/\.//;
+    $createdir =~ s/\/\//\//;
+    $createdir =~ s/\/$//;
+
+    if ($full_expansion) {
+        local($done) = 0;
+
+        # Calculate compound name from createdir
+        $workdir=$createdir;
+        $comp = ''; 
+        while (! $done) {
+            if ( $workdir =~ m+^(.*)/(.*)+ ) {
+                $workdir = $1;
+
+                if ($comp) {
+                    $comp = "$2-$comp";
+                } else {
+                    $comp = "$2";
+                }
+            } else {
+                $done = 1;
+            }
+        }
+        $comp="$package$comp";
+
+        $createdircomp{$createdir}=$comp;
+        $compdir{$comp}=$importdir;
+
+        $comp = $createdircomp{$createdir};
+
+    } else {
+        # Calculate compound name from createdir
+        $workdir=$createdir;
+        $comp = ''; 
+        while (! $createdircomp{$createdir}) {
+            if ( $workdir =~ m+^(.*)/(.*)+ ) {
+                $workdir = $1;
+
+                if ($comp) {
+                    $comp = "$2-$comp";
+                } else {
+                    $comp = "$2";
+                }
+            }
+            if ( ! $compdir{"$package$comp"} ) {
+                $comp="$package$comp";
+                $createdircomp{$createdir}=$comp;
+                $compdir{$comp}=$importdir;
+            }
+        }
+        $comp = $createdircomp{$createdir};
+    }
+
+    return($importdir, $createdir, $comp, $hasrcs);
+}
+
+sub importRCS {
+    local($thedir, $indent) = @_;
+    local(@filenames, @dirs, @files);
+    local($filename, $createdir, $importdir, $workdir, $comp, $hasrcs);
+    local($parentcomp, $prevfile);
+
+    ($importdir, $createdir, $comp, $hasrcs) = &mapcompound($thedir, 1);
+    return if (! $hasrcs);
+
+    opendir(DIR, $thedir) || print STDERR "WARNING: Can't open directory $dir\n";
+    @filenames = readdir(DIR);
+    closedir(DIR);
+
+    local($fullname, $file);
+    foreach $file (@filenames) {
+        # Don't recurse the wrong way.
+        next if $file eq '.';
+        next if $file eq '..';
+        $fullname = $thedir . "/" . $file;
+
+        if (-d $fullname) {
+            if ($importtype eq '-rcs') {
+                next if ($fullname =~ m+^.*/RCS/.*$+);
+            }
+            push(@dirs, $fullname);
+        } elsif (-f $fullname) {
+            if ($importtype eq '-rcs') {
+                next if (! ($file =~ m+,v$+));
+            } else {
+                if ( ($file =~ m+,v$+)  ||    # Skip ,v files. RCS
+                     ($file =~ m+~$+)   ||    # Skip ~ files.
+                     ($file =~ m+\.o$+) ||    # Skip .o files.
+                     ($file =~ m+^\.version$+) ||    # HOPE version files.
+                     ($file =~ m+^\.ver$+)     ||    # HOPE version files.
+                     ($file =~ m+^\.rev$+)     ||    # HOPE version files.
+                     ($file =~ m+^\.\#+)  ){         # Skip .# files. CVS
+                    print "# Warning, skipped file: $file\n";
+                    next;
+                }
+            }
+            push(@files, $fullname);
+        }
+    }
+
+
+    # We have the compound name!
+    push(@createcommands, "create -directory $createdir $comp\n") if ($hasrcs);
+
+    # Add this compound to its parent.
+    $workdir = $createdir;
+    if ($workdir =~ m+^(.*)/.*/RCS$+) {
+        $workdir = $1;
+    } elsif ($workdir =~ m+^(.*)/.*$+) {
+        $workdir = $1;
+    }
+    $workdir =~ s/\/\.\//\//;
+    $workdir =~ s/\.\//\//;
+    $workdir =~ s/\/\.//;
+    $workdir =~ s/\/\//\//;
+    $workdir =~ s/\/$//;
+
+    $parentcomp=$createdircomp{$workdir};
+    push(@addcompcommands, "add -parent $parentcomp -compound $comp\n") unless 
+        ($parentcomp eq $comp || ! $hasrcs);
+
+    # Process all file names before going deeper. Otherwise we might get
+    # into a compound name conflict when we recurse backwards.
+    #
+
+    $prevfile = '';
+    local($allunits) = '';
+    foreach $file (@files) {
+        # We have an RCS file. Whats the real name?
+
+        if ($importtype eq '-rcs') {
+            ($filename) = ($file =~ m+^.*/(.*),v$+);
+            if ($prevfile eq '') {
+                $allunits = "add -parent $comp -file /dev/null $filename ";
+            } else {
+                $allunits =  "${allunits}-and -file /dev/null $filename ";
+            }
+            push(@addfilecommands, "add -parent $comp -file /dev/null $filename ");
+        } else {
+            ($filename) = ($file =~ m+^.*/(.*)$+);
+            if ($prevfile eq '') {
+                $allunits = "add -parent $comp -file ${thedir}/${filename} $filename ";
+            } else {
+                $allunits =  "${allunits}-and -file ${thedir}/${filename} $filename ";
+            }
+            push(@addfilecommands, "add -parent $comp -file  ${thedir}/${filename} $filename ");
+        }
+        $prevfile = $file;
+    }
+##    push(@addfilecommands, "$allunits\n\n") if ($allunits);
+
+    # No processing done on the dir list.
+
+    # We have the compound name!
+    if ($importtype eq '-rcs') {
+        push(@importcommands,
+             "importRCS -directory $importdir -compound $comp\n")
+             if ($allunits);
+    }
+
+    foreach $dir (@dirs) {
+        &mapcompound("$dir", 1);
+    }
+
+    # Do the recursion now.
+    foreach $dir (@dirs) {
+        &importRCS($dir, $indent . "  ");
+    }
+}
+
+sub myFind {
+    local($thedir, $link, $pat) = @_;
+    local(@filenames, @dirs, @files, *DIR, $file, $fullname);
+
+    opendir(DIR, $thedir) || print STDERR "WARNING: Can't open directory $dir\n";
+    @filenames = readdir(DIR);
+    closedir(DIR);
+
+    foreach $file (@filenames) {
+        # Don't recurse the wrong way.
+        next if $file eq '.';
+        next if $file eq '..';
+        $fullname = $thedir . "/" . $file;
+
+        # This is true for link's!
+        #
+        if (-d $fullname) {
+            push(@dirs, $fullname);
+        } elsif (-f $fullname) {
+            push(@files, $fullname);
+       }
+    }
+
+    # Do the recursion now.
+    foreach $dir (@dirs) {
+       &myFind($dir, $link, $pat);
+    }
+    foreach $file (@files) {
+        next if (! ($file =~ /$pat/));
+        $allrcsdirs{$thedir} = 1;
+    }
+}
+
+
+if (! chdir($startdir)) {
+    print STDERR "ERROR: Unable to go to directory $startdir\n";
+    exit(1);
+}
+
+# Some source within Harlequin is going to require the hostname to get
+# unique compound names. ie. A worst case of:
+# $package-$hostname-$root-$dir sort of thing. Yuk!
+# 
+chop($hostname = `hostname`);
+chop($root     = `pwd`);
+($top) = $root =~ m+.*/(.*)+;
+select((select(STDOUT), $| = 1)[0]);
+select((select(STDERR), $| = 1)[0]);
+
+print "#!/bin/sh\n#\n";
+
+if ($importtype eq '-rcs') {
+
+    print "# Importing RCS files from $startdir into package $package\n#\n";
+    print "# Scanning RCS files, please wait.. ";
+    &myFind($startdir, '-f', '.*,v' );
+
+} elsif ($importtype eq '-file') {
+
+    print "# Importing files from $startdir into package $package\n#\n";
+    print "# Scanning files, please wait.. ";
+    &myFind($startdir, '-f', '.*' );
+}
+
+print "# Done!\n#\n# directories are:\n";
+
+foreach $rcsdir (keys %allrcsdirs) {
+    push(@allrcsdirs, $rcsdir);
+    print "#   $rcsdir\n";
+}
+print "#\n#\n";
+
+&importRCS($startdir, '');
+ 
+print "echo \'";
+print "echo -on\n";
+
+foreach $line (@createcommands) {
+    print "$line";
+}
+
+print "\n# Parenting.\n\n";
+
+foreach $line (@addcompcommands) {
+    print "$line";
+}
+
+print "\n# Adding files.\n\n";
+    foreach $line (@addfilecommands) {
+    print "$line\n";
+}
+
+if ($importtype eq '-rcs') {
+    print "\n# Importing RCS files.\n\n";
+
+    foreach $line (@importcommands) {
+        print "$line";
+    }
+}
+
+print "\' | hope -s\n";
+print "\nexit 1\n";
+
+1;
+
+#------------------------------------------------------------------------------
+# END OF SCRIPT
+#------------------------------------------------------------------------------
+#
+# Modification History:
+#   $Log: hope-import,v $
+#   Revision 1.1  2004/03/12 00:42:13  cgay
+#   Initial revision
+#
+#   Revision 1.1  1994/04/19 11:10:19  keith
+#   new file
+#
+# Revision 1.4  1994/02/25  09:17:08  johnk
+# Added my own find command.
+# Changed the adding of files to be single commands. This allows us\nto find file clash's with the Dylan import.\n\nWhat needs to be done now is to add some more options on the\ncommand line and document how it works.
+#
+# Revision 1.2  1994/02/18  15:59:34  johnk
+# Fixed small bug. Arggg!
+#
+# Revision 1.4  1994/02/18  15:46:45  johnk
+# Now builds a much more readable script.
+#
+# Revision 1.3  1994/01/18  11:40:38  johnk
+# Added commmand line arguments.
+#
+
+### Local Variables:
+### mode: perl
+### End:

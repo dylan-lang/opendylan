@@ -1,0 +1,2779 @@
+%!PS-Adobe-3.0
+%%BoundingBox: (atend)
+%%Pages: (atend)
+%%PageOrder: (atend)
+%%DocumentFonts: (atend)
+%%Creator: Frame 4.0
+%%DocumentData: Clean7Bit
+%%EndComments
+%%BeginProlog
+%
+% Frame ps_prolog 4.0, for use with Frame 4.0 products
+% This ps_prolog file is Copyright (c) 1986-1993 Frame Technology
+% Corporation.  All rights reserved.  This ps_prolog file may be
+% freely copied and distributed in conjunction with documents created
+% using FrameMaker, FrameBuilder and FrameViewer as long as this 
+% copyright notice is preserved.
+%
+% Frame products normally print colors as their true color on a color printer
+% or as shades of gray, based on luminance, on a black-and white printer. The
+% following flag, if set to True, forces all non-white colors to print as pure
+% black. This has no effect on bitmap images.
+/FMPrintAllColorsAsBlack             false def
+%
+% Frame products can either set their own line screens or use a printer's 
+% default settings. Three flags below control this separately for no 
+% separations, spot separations and process separations. If a flag
+% is true, then the default printer settings will not be changed. If it is
+% false, Frame products will use their own settings from a table based on
+% the printer's resolution.
+/FMUseDefaultNoSeparationScreen      true  def
+/FMUseDefaultSpotSeparationScreen    true  def
+/FMUseDefaultProcessSeparationScreen false def
+%
+% For any given PostScript printer resolution, Frame products have two sets of 
+% screen angles and frequencies for printing process separations, which are 
+% recomended by Adobe. The following variable chooses the higher frequencies
+% when set to true or the lower frequencies when set to false. This is only
+% effective if the appropriate FMUseDefault...SeparationScreen flag is false.
+/FMUseHighFrequencyScreens true def
+%
+% PostScript Level 2 printers contain an "Accurate Screens" feature which can
+% improve process separation rendering at the expense of compute time. This 
+% flag is ignored by PostScript Level 1 printers.
+/FMUseAcccurateScreens true def
+%
+% The following PostScript procedure defines the spot function that Frame
+% products will use for process separations. You may un-comment-out one of
+% the alternative functions below, or use your own.
+%
+% Dot function
+/FMSpotFunction {abs exch abs 2 copy add 1 gt 
+		{1 sub dup mul exch 1 sub dup mul add 1 sub }
+		{dup mul exch dup mul add 1 exch sub }ifelse } def
+%
+% Line function
+% /FMSpotFunction { pop } def
+%
+% Elipse function
+% /FMSpotFunction { dup 5 mul 8 div mul exch dup mul exch add 
+%		sqrt 1 exch sub } def
+%
+%
+/FMversion (4.0) def 
+/FMLevel1 /languagelevel where {pop languagelevel} {1} ifelse 2 lt def
+/FMPColor
+	FMLevel1 {
+		false
+		/colorimage where {pop pop true} if
+	} {
+		true
+	} ifelse
+def
+/FrameDict 400 dict def 
+systemdict /errordict known not {/errordict 10 dict def
+		errordict /rangecheck {stop} put} if
+% The readline in PS 23.0 doesn't recognize cr's as nl's on AppleTalk
+FrameDict /tmprangecheck errordict /rangecheck get put 
+errordict /rangecheck {FrameDict /bug true put} put 
+FrameDict /bug false put 
+mark 
+% Some PS machines read past the CR, so keep the following 3 lines together!
+currentfile 5 string readline
+00
+0000000000
+cleartomark 
+errordict /rangecheck FrameDict /tmprangecheck get put 
+FrameDict /bug get { 
+	/readline {
+		/gstring exch def
+		/gfile exch def
+		/gindex 0 def
+		{
+			gfile read pop 
+			dup 10 eq {exit} if 
+			dup 13 eq {exit} if 
+			gstring exch gindex exch put 
+			/gindex gindex 1 add def 
+		} loop
+		pop 
+		gstring 0 gindex getinterval true 
+		} bind def
+	} if
+/FMshowpage /showpage load def
+/FMquit /quit load def
+/FMFAILURE { 
+	dup = flush 
+	FMshowpage 
+	/Helvetica findfont 12 scalefont setfont
+	72 200 moveto
+	show FMshowpage 
+	FMquit 
+	} def 
+/FMVERSION {
+	FMversion ne {
+		(Frame product version does not match ps_prolog!) FMFAILURE
+		} if
+	} def 
+/FMBADEPSF { 
+	(PostScript Lang. Ref. Man., 2nd Ed., H.2.4 says EPS must not call X              )
+	dup dup (X) search pop exch pop exch pop length 
+	4 -1 roll 
+	putinterval 
+	FMFAILURE
+	} def
+/FMLOCAL {
+	FrameDict begin
+	0 def 
+	end 
+	} def 
+/concatprocs
+	{
+	/proc2 exch cvlit def/proc1 exch cvlit def/newproc proc1 length proc2 length add array def
+	newproc 0 proc1 putinterval newproc proc1 length proc2 putinterval newproc cvx
+}def
+FrameDict begin 
+/FMnone 0 def
+/FMcyan 1 def
+/FMmagenta 2 def
+/FMyellow 3 def
+/FMblack 4 def
+/FMcustom 5 def
+/FrameNegative false def 
+/FrameSepIs FMnone def 
+/FrameSepBlack 0 def
+/FrameSepYellow 0 def
+/FrameSepMagenta 0 def
+/FrameSepCyan 0 def
+/FrameSepRed 1 def
+/FrameSepGreen 1 def
+/FrameSepBlue 1 def
+/FrameCurGray 1 def
+/FrameCurPat null def
+/FrameCurColors [ 0 0 0 1 0 0 0 ] def 
+/FrameColorEpsilon .001 def	
+/eqepsilon {		
+	sub dup 0 lt {neg} if
+	FrameColorEpsilon le
+} bind def
+/FrameCmpColorsCMYK { 
+	2 copy 0 get exch 0 get eqepsilon {
+		2 copy 1 get exch 1 get eqepsilon {
+			2 copy 2 get exch 2 get eqepsilon {
+				3 get exch 3 get eqepsilon
+			} {pop pop false} ifelse
+		}{pop pop false} ifelse
+	} {pop pop false} ifelse
+} bind def
+/FrameCmpColorsRGB { 
+	2 copy 4 get exch 0 get eqepsilon {
+		2 copy 5 get exch 1 get eqepsilon {
+			6 get exch 2 get eqepsilon
+		}{pop pop false} ifelse
+	} {pop pop false} ifelse
+} bind def
+/RGBtoCMYK { 
+	1 exch sub 
+	3 1 roll 
+	1 exch sub 
+	3 1 roll 
+	1 exch sub 
+	3 1 roll 
+	3 copy 
+	2 copy 
+	le { pop } { exch pop } ifelse 
+	2 copy 
+	le { pop } { exch pop } ifelse 
+	dup dup dup 
+	6 1 roll 
+	4 1 roll 
+	7 1 roll 
+	sub 
+	6 1 roll 
+	sub 
+	5 1 roll 
+	sub 
+	4 1 roll 
+} bind def
+/CMYKtoRGB { 
+	dup dup 4 -1 roll add 						  
+	5 1 roll 3 -1 roll add 						  
+	4 1 roll add 								  
+	1 exch sub dup 0 lt {pop 0} if 3 1 roll 	  
+	1 exch sub dup 0 lt {pop 0} if exch 	      
+	1 exch sub dup 0 lt {pop 0} if exch	  		  
+} bind def
+/FrameSepInit {
+	1.0 RealSetgray
+} bind def
+/FrameSetSepColor { 
+	/FrameSepBlue exch def
+	/FrameSepGreen exch def
+	/FrameSepRed exch def
+	/FrameSepBlack exch def
+	/FrameSepYellow exch def
+	/FrameSepMagenta exch def
+	/FrameSepCyan exch def
+	/FrameSepIs FMcustom def
+	setCurrentScreen	
+} bind def
+/FrameSetCyan {
+	/FrameSepBlue 1.0 def
+	/FrameSepGreen 1.0 def
+	/FrameSepRed 0.0 def
+	/FrameSepBlack 0.0 def
+	/FrameSepYellow 0.0 def
+	/FrameSepMagenta 0.0 def
+	/FrameSepCyan 1.0 def
+	/FrameSepIs FMcyan def
+	setCurrentScreen	
+} bind def
+ 
+/FrameSetMagenta {
+	/FrameSepBlue 1.0 def
+	/FrameSepGreen 0.0 def
+	/FrameSepRed 1.0 def
+	/FrameSepBlack 0.0 def
+	/FrameSepYellow 0.0 def
+	/FrameSepMagenta 1.0 def
+	/FrameSepCyan 0.0 def
+	/FrameSepIs FMmagenta def
+	setCurrentScreen
+} bind def
+ 
+/FrameSetYellow {
+	/FrameSepBlue 0.0 def
+	/FrameSepGreen 1.0 def
+	/FrameSepRed 1.0 def
+	/FrameSepBlack 0.0 def
+	/FrameSepYellow 1.0 def
+	/FrameSepMagenta 0.0 def
+	/FrameSepCyan 0.0 def
+	/FrameSepIs FMyellow def
+	setCurrentScreen
+} bind def
+ 
+/FrameSetBlack {
+	/FrameSepBlue 0.0 def
+	/FrameSepGreen 0.0 def
+	/FrameSepRed 0.0 def
+	/FrameSepBlack 1.0 def
+	/FrameSepYellow 0.0 def
+	/FrameSepMagenta 0.0 def
+	/FrameSepCyan 0.0 def
+	/FrameSepIs FMblack def
+	setCurrentScreen
+} bind def
+ 
+/FrameNoSep { 
+	/FrameSepIs FMnone def
+	setCurrentScreen
+} bind def
+/FrameSetSepColors { 
+	FrameDict begin
+	[ exch 1 add 1 roll ]
+	/FrameSepColors  
+	exch def end
+	} bind def
+/FrameColorInSepListCMYK { 
+	FrameSepColors {  
+       		exch dup 3 -1 roll 
+       		FrameCmpColorsCMYK 
+       		{ pop true exit } if
+    	} forall 
+	dup true ne {pop false} if
+	} bind def
+/FrameColorInSepListRGB { 
+	FrameSepColors {  
+       		exch dup 3 -1 roll 
+       		FrameCmpColorsRGB 
+       		{ pop true exit } if
+    	} forall 
+	dup true ne {pop false} if
+	} bind def
+/RealSetgray /setgray load def
+/RealSetrgbcolor /setrgbcolor load def
+/RealSethsbcolor /sethsbcolor load def
+end 
+/setgray { 
+	FrameDict begin
+	FrameSepIs FMnone eq
+		{ RealSetgray } 
+		{ 
+		FrameSepIs FMblack eq 
+			{ RealSetgray } 
+			{ FrameSepIs FMcustom eq 
+			  FrameSepRed 0 eq and
+			  FrameSepGreen 0 eq and
+			  FrameSepBlue 0 eq and {
+			  	RealSetgray
+			  } {
+				1 RealSetgray pop 
+			  } ifelse
+			} ifelse
+		} ifelse
+	end
+} bind def
+/setrgbcolor { 
+	FrameDict begin
+	FrameSepIs FMnone eq
+	{  RealSetrgbcolor }
+	{
+		3 copy [ 4 1 roll ] 
+		FrameColorInSepListRGB
+		{
+				FrameSepBlue eq exch 
+			 	FrameSepGreen eq and exch 
+			 	FrameSepRed eq and
+			 	{ 0 } { 1 } ifelse
+		}
+		{
+			FMPColor {
+				RealSetrgbcolor
+				currentcmykcolor
+			} {
+				RGBtoCMYK
+			} ifelse
+			FrameSepIs FMblack eq
+			{1.0 exch sub 4 1 roll pop pop pop} {
+			FrameSepIs FMyellow eq
+			{pop 1.0 exch sub 3 1 roll pop pop} {
+			FrameSepIs FMmagenta eq
+			{pop pop 1.0 exch sub exch pop } {
+			FrameSepIs FMcyan eq
+			{pop pop pop 1.0 exch sub } 
+			{pop pop pop pop 1} ifelse } ifelse } ifelse } ifelse 
+		} ifelse
+		RealSetgray
+	} 
+	ifelse
+	end
+} bind def
+/sethsbcolor {
+	FrameDict begin
+	FrameSepIs FMnone eq 
+	{ RealSethsbcolor } 
+	{
+		RealSethsbcolor 
+		currentrgbcolor  
+		setrgbcolor 
+	} 
+	ifelse
+	end
+} bind def
+FrameDict begin
+/setcmykcolor where {
+	pop /RealSetcmykcolor /setcmykcolor load def
+} {
+	/RealSetcmykcolor {
+		4 1 roll
+		3 { 3 index add 0 max 1 min 1 exch sub 3 1 roll} repeat 
+		setrgbcolor pop
+	} bind def
+} ifelse
+userdict /setcmykcolor { 
+		FrameDict begin
+		FrameSepIs FMnone eq
+		{ RealSetcmykcolor } 
+		{
+			4 copy [ 5 1 roll ]
+			FrameColorInSepListCMYK
+			{
+				FrameSepBlack eq exch 
+				FrameSepYellow eq and exch 
+				FrameSepMagenta eq and exch 
+				FrameSepCyan eq and 
+				{ 0 } { 1 } ifelse
+			}
+			{
+				FrameSepIs FMblack eq
+				{1.0 exch sub 4 1 roll pop pop pop} {
+				FrameSepIs FMyellow eq
+				{pop 1.0 exch sub 3 1 roll pop pop} {
+				FrameSepIs FMmagenta eq
+				{pop pop 1.0 exch sub exch pop } {
+				FrameSepIs FMcyan eq
+				{pop pop pop 1.0 exch sub } 
+				{pop pop pop pop 1} ifelse } ifelse } ifelse } ifelse 
+			} ifelse
+			RealSetgray
+		}
+		ifelse
+		end
+	} bind put
+FMLevel1 not { 
+	
+	/patProcDict 5 dict dup begin
+		<0f1e3c78f0e1c387> { 3 setlinewidth -1 -1 moveto 9 9 lineto stroke 
+											4 -4 moveto 12 4 lineto stroke
+											-4 4 moveto 4 12 lineto stroke} bind def
+		<0f87c3e1f0783c1e> { 3 setlinewidth -1 9 moveto 9 -1 lineto stroke 
+											-4 4 moveto 4 -4 lineto stroke
+											4 12 moveto 12 4 lineto stroke} bind def
+		<8142241818244281> { 1 setlinewidth -1 9 moveto 9 -1 lineto stroke
+											-1 -1 moveto 9 9 lineto stroke } bind def
+		<03060c183060c081> { 1 setlinewidth -1 -1 moveto 9 9 lineto stroke 
+											4 -4 moveto 12 4 lineto stroke
+											-4 4 moveto 4 12 lineto stroke} bind def
+		<8040201008040201> { 1 setlinewidth -1 9 moveto 9 -1 lineto stroke 
+											-4 4 moveto 4 -4 lineto stroke
+											4 12 moveto 12 4 lineto stroke} bind def
+	end def
+	/patDict 15 dict dup begin
+		/PatternType 1 def		
+		/PaintType 2 def		
+		/TilingType 3 def		
+		/BBox [ 0 0 8 8 ] def 	
+		/XStep 8 def			
+		/YStep 8 def			
+		/PaintProc {
+			begin
+			patProcDict bstring known {
+				patProcDict bstring get exec
+			} {
+				8 8 true [1 0 0 -1 0 8] bstring imagemask
+			} ifelse
+			end
+		} bind def
+	end def
+} if
+/combineColor {
+    FrameSepIs FMnone eq
+	{
+		graymode FMLevel1 or not {
+			
+			[/Pattern [/DeviceCMYK]] setcolorspace
+			FrameCurColors 0 4 getinterval aload pop FrameCurPat setcolor
+		} {
+			FrameCurColors 3 get 1.0 ge {
+				FrameCurGray RealSetgray
+			} {
+				FMPColor graymode and {
+					0 1 3 { 
+						FrameCurColors exch get
+						1 FrameCurGray sub mul
+					} for
+					RealSetcmykcolor
+				} {
+					4 1 6 {
+						FrameCurColors exch get
+						graymode {
+							1 exch sub 1 FrameCurGray sub mul 1 exch sub
+						} {
+							1.0 lt {FrameCurGray} {1} ifelse
+						} ifelse
+					} for
+					RealSetrgbcolor
+				} ifelse
+			} ifelse
+		} ifelse
+	} { 
+		FrameCurColors 0 4 getinterval aload
+		FrameColorInSepListCMYK {
+			FrameSepBlack eq exch 
+			FrameSepYellow eq and exch 
+			FrameSepMagenta eq and exch 
+			FrameSepCyan eq and
+			FrameSepIs FMcustom eq and
+			{ FrameCurGray } { 1 } ifelse
+		} {
+			FrameSepIs FMblack eq
+			{FrameCurGray 1.0 exch sub mul 1.0 exch sub 4 1 roll pop pop pop} {
+			FrameSepIs FMyellow eq
+			{pop FrameCurGray 1.0 exch sub mul 1.0 exch sub 3 1 roll pop pop} {
+			FrameSepIs FMmagenta eq
+			{pop pop FrameCurGray 1.0 exch sub mul 1.0 exch sub exch pop } {
+			FrameSepIs FMcyan eq
+			{pop pop pop FrameCurGray 1.0 exch sub mul 1.0 exch sub } 
+			{pop pop pop pop 1} ifelse } ifelse } ifelse } ifelse 
+		} ifelse
+		graymode FMLevel1 or not {
+			
+			[/Pattern [/DeviceGray]] setcolorspace
+			FrameCurPat setcolor
+		} { 
+			graymode not FMLevel1 and {
+				
+				dup 1 lt {pop FrameCurGray} if
+			} if
+			RealSetgray
+		} ifelse
+	} ifelse
+} bind def
+/savematrix {
+	orgmatrix currentmatrix pop
+	} bind def
+/restorematrix {
+	orgmatrix setmatrix
+	} bind def
+/dmatrix matrix def
+/dpi    72 0 dmatrix defaultmatrix dtransform
+    dup mul exch   dup mul add   sqrt def
+	
+/freq dpi dup 72 div round dup 0 eq {pop 1} if 8 mul div def
+/sangle 1 0 dmatrix defaultmatrix dtransform exch atan def
+/dpiranges   [  2540    2400    1693     1270    1200     635      600      0      ] def
+/CMLowFreqs  [ 100.402  94.8683 89.2289 100.402  94.8683  66.9349  63.2456 47.4342 ] def
+/YLowFreqs   [  95.25   90.0    84.65    95.25   90.0     70.5556  66.6667 50.0    ] def
+/KLowFreqs   [  89.8026 84.8528 79.8088  89.8026 84.8528  74.8355  70.7107 53.033  ] def
+/CLowAngles  [  71.5651 71.5651 71.5651 71.5651  71.5651  71.5651  71.5651 71.5651 ] def
+/MLowAngles  [  18.4349 18.4349 18.4349 18.4349  18.4349  18.4349  18.4349 18.4349 ] def
+/YLowTDot    [  true    true    false    true    true     false    false   false   ] def
+/CMHighFreqs [ 133.87  126.491 133.843  108.503 102.523  100.402   94.8683 63.2456 ] def
+/YHighFreqs  [ 127.0   120.0   126.975  115.455 109.091   95.25    90.0    60.0    ] def
+/KHighFreqs  [ 119.737 113.137 119.713  128.289 121.218   89.8026  84.8528 63.6395 ] def
+/CHighAngles [  71.5651 71.5651 71.5651  70.0169 70.0169  71.5651  71.5651 71.5651 ] def
+/MHighAngles [  18.4349 18.4349 18.4349  19.9831 19.9831  18.4349  18.4349 18.4349 ] def
+/YHighTDot   [  false   false   true     false   false    true     true    false   ] def
+/PatFreq     [	10.5833 10.0     9.4055  10.5833 10.0	  10.5833  10.0	   9.375   ] def
+/screenIndex {
+	0 1 dpiranges length 1 sub { dup dpiranges exch get 1 sub dpi le {exit} {pop} ifelse } for
+} bind def
+/getCyanScreen {
+	FMUseHighFrequencyScreens { CHighAngles CMHighFreqs} {CLowAngles CMLowFreqs} ifelse
+		screenIndex dup 3 1 roll get 3 1 roll get /FMSpotFunction load
+} bind def
+/getMagentaScreen {
+	FMUseHighFrequencyScreens { MHighAngles CMHighFreqs } {MLowAngles CMLowFreqs} ifelse
+		screenIndex dup 3 1 roll get 3 1 roll get /FMSpotFunction load
+} bind def
+/getYellowScreen {
+	FMUseHighFrequencyScreens { YHighTDot YHighFreqs} { YLowTDot YLowFreqs } ifelse
+		screenIndex dup 3 1 roll get 3 1 roll get { 3 div
+			{2 { 1 add 2 div 3 mul dup floor sub 2 mul 1 sub exch} repeat
+			FMSpotFunction } } {/FMSpotFunction load } ifelse
+			0.0 exch
+} bind def
+/getBlackScreen  {
+	FMUseHighFrequencyScreens { KHighFreqs } { KLowFreqs } ifelse
+		screenIndex get 45.0 /FMSpotFunction load 
+} bind def
+/getSpotScreen {
+	getBlackScreen
+} bind def
+/getCompositeScreen {
+	getBlackScreen
+} bind def
+/FMSetScreen 
+	FMLevel1 { /setscreen load 
+	}{ {
+		8 dict begin
+		/HalftoneType 1 def
+		/SpotFunction exch def
+		/Angle exch def
+		/Frequency exch def
+		/AccurateScreens FMUseAcccurateScreens def
+		currentdict end sethalftone
+	} bind } ifelse
+def
+/setDefaultScreen {
+	FMPColor {
+		orgrxfer cvx orggxfer cvx orgbxfer cvx orgxfer cvx setcolortransfer
+	}
+	{
+		orgxfer cvx settransfer
+	} ifelse
+	orgfreq organgle orgproc cvx setscreen
+} bind def
+/setCurrentScreen {
+	FrameSepIs FMnone eq {
+		FMUseDefaultNoSeparationScreen {
+			setDefaultScreen
+		} {
+			getCompositeScreen FMSetScreen
+		} ifelse
+	} {
+		FrameSepIs FMcustom eq {
+			FMUseDefaultSpotSeparationScreen {
+				setDefaultScreen
+			} {
+				getSpotScreen FMSetScreen
+			} ifelse
+		} {
+			FMUseDefaultProcessSeparationScreen {
+				setDefaultScreen
+			} {
+				FrameSepIs FMcyan eq {
+					getCyanScreen FMSetScreen
+				} {
+					FrameSepIs FMmagenta eq {
+						getMagentaScreen FMSetScreen
+					} {
+						FrameSepIs FMyellow eq {
+							getYellowScreen FMSetScreen
+						} {
+							getBlackScreen FMSetScreen
+						} ifelse
+					} ifelse
+				} ifelse
+			} ifelse
+		} ifelse
+	} ifelse 
+} bind def
+end
+	/gstring FMLOCAL
+	/gfile FMLOCAL
+	/gindex FMLOCAL
+	/orgrxfer FMLOCAL
+	/orggxfer FMLOCAL
+	/orgbxfer FMLOCAL
+	/orgxfer FMLOCAL
+	/orgproc FMLOCAL
+	/orgrproc FMLOCAL
+	/orggproc FMLOCAL
+	/orgbproc FMLOCAL
+	/organgle FMLOCAL
+	/orgrangle FMLOCAL
+	/orggangle FMLOCAL
+	/orgbangle FMLOCAL
+	/orgfreq FMLOCAL
+	/orgrfreq FMLOCAL
+	/orggfreq FMLOCAL
+	/orgbfreq FMLOCAL
+	/yscale FMLOCAL
+	/xscale FMLOCAL
+	/edown FMLOCAL
+	/manualfeed FMLOCAL
+	/paperheight FMLOCAL
+	/paperwidth FMLOCAL
+/FMDOCUMENT { 
+	array /FMfonts exch def 
+	/#copies exch def
+	FrameDict begin
+	0 ne /manualfeed exch def
+	/paperheight exch def
+	/paperwidth exch def
+	0 ne /FrameNegative exch def 
+	0 ne /edown exch def 
+	/yscale exch def
+	/xscale exch def
+	FMLevel1 {
+		manualfeed {setmanualfeed} if
+		/FMdicttop countdictstack 1 add def 
+		/FMoptop count def 
+		setpapername 
+		manualfeed {true} {papersize} ifelse 
+		{manualpapersize} {false} ifelse 
+		{desperatepapersize} {false} ifelse 
+		{ (Can't select requested paper size for Frame print job!) FMFAILURE } if
+		count -1 FMoptop {pop pop} for
+		countdictstack -1 FMdicttop {pop end} for 
+		}
+		{{1 dict dup /PageSize [paperwidth paperheight]put setpagedevice}stopped
+		{ (Can't select requested paper size for Frame print job!) FMFAILURE } if
+		 {1 dict dup /ManualFeed manualfeed put setpagedevice } stopped pop }
+	ifelse 
+	
+	FMPColor {
+		currentcolorscreen
+			cvlit /orgproc exch def
+				  /organgle exch def 
+				  /orgfreq exch def
+			cvlit /orgbproc exch def
+				  /orgbangle exch def 
+				  /orgbfreq exch def
+			cvlit /orggproc exch def
+				  /orggangle exch def 
+				  /orggfreq exch def
+			cvlit /orgrproc exch def
+				  /orgrangle exch def 
+				  /orgrfreq exch def
+			currentcolortransfer 
+			FrameNegative {
+				1 1 4 { 
+					pop { 1 exch sub } concatprocs 4 1 roll
+				} for
+				4 copy
+				setcolortransfer
+			} if
+			cvlit /orgxfer exch def
+			cvlit /orgbxfer exch def
+			cvlit /orggxfer exch def
+			cvlit /orgrxfer exch def
+	} {
+		currentscreen 
+			cvlit /orgproc exch def
+				  /organgle exch def 
+				  /orgfreq exch def
+				  
+		currenttransfer 
+		FrameNegative {
+			{ 1 exch sub } concatprocs
+			dup settransfer
+		} if 
+		cvlit /orgxfer exch def
+	} ifelse
+	end 
+} def 
+/pagesave FMLOCAL
+/orgmatrix FMLOCAL
+/landscape FMLOCAL
+/pwid FMLOCAL
+/FMBEGINPAGE { 
+	FrameDict begin 
+	/pagesave save def
+	3.86 setmiterlimit
+	/landscape exch 0 ne def
+	landscape { 
+		90 rotate 0 exch dup /pwid exch def neg translate pop 
+	}{
+		pop /pwid exch def
+	} ifelse
+	edown { [-1 0 0 1 pwid 0] concat } if
+	0 0 moveto paperwidth 0 lineto paperwidth paperheight lineto 
+	0 paperheight lineto 0 0 lineto 1 setgray fill
+	xscale yscale scale
+	/orgmatrix matrix def
+	gsave 
+} def 
+/FMENDPAGE {
+	grestore 
+	pagesave restore
+	end 
+	showpage
+	} def 
+/FMFONTDEFINE { 
+	FrameDict begin
+	findfont 
+	ReEncode 
+	1 index exch 
+	definefont 
+	FMfonts 3 1 roll 
+	put
+	end 
+	} def 
+/FMFILLS {
+	FrameDict begin dup
+	array /fillvals exch def
+	dict /patCache exch def
+	end 
+	} def 
+/FMFILL {
+	FrameDict begin
+	 fillvals 3 1 roll put
+	end 
+	} def 
+/FMNORMALIZEGRAPHICS { 
+	newpath
+	0.0 0.0 moveto
+	1 setlinewidth
+	0 setlinecap
+	0 0 0 sethsbcolor
+	0 setgray 
+	} bind def
+	/fx FMLOCAL
+	/fy FMLOCAL
+	/fh FMLOCAL
+	/fw FMLOCAL
+	/llx FMLOCAL
+	/lly FMLOCAL
+	/urx FMLOCAL
+	/ury FMLOCAL
+/FMBEGINEPSF { 
+	end 
+	/FMEPSF save def 
+	/showpage {} def 
+% See Adobe's "PostScript Language Reference Manual, 2nd Edition", page 714.
+% "...the following operators MUST NOT be used in an EPS file:" (emphasis ours)
+	/banddevice {(banddevice) FMBADEPSF} def
+	/clear {(clear) FMBADEPSF} def
+	/cleardictstack {(cleardictstack) FMBADEPSF} def 
+	/copypage {(copypage) FMBADEPSF} def
+	/erasepage {(erasepage) FMBADEPSF} def
+	/exitserver {(exitserver) FMBADEPSF} def
+	/framedevice {(framedevice) FMBADEPSF} def
+	/grestoreall {(grestoreall) FMBADEPSF} def
+	/initclip {(initclip) FMBADEPSF} def
+	/initgraphics {(initgraphics) FMBADEPSF} def
+	/initmatrix {(initmatrix) FMBADEPSF} def
+	/quit {(quit) FMBADEPSF} def
+	/renderbands {(renderbands) FMBADEPSF} def
+	/setglobal {(setglobal) FMBADEPSF} def
+	/setpagedevice {(setpagedevice) FMBADEPSF} def
+	/setshared {(setshared) FMBADEPSF} def
+	/startjob {(startjob) FMBADEPSF} def
+	/lettertray {(lettertray) FMBADEPSF} def
+	/letter {(letter) FMBADEPSF} def
+	/lettersmall {(lettersmall) FMBADEPSF} def
+	/11x17tray {(11x17tray) FMBADEPSF} def
+	/11x17 {(11x17) FMBADEPSF} def
+	/ledgertray {(ledgertray) FMBADEPSF} def
+	/ledger {(ledger) FMBADEPSF} def
+	/legaltray {(legaltray) FMBADEPSF} def
+	/legal {(legal) FMBADEPSF} def
+	/statementtray {(statementtray) FMBADEPSF} def
+	/statement {(statement) FMBADEPSF} def
+	/executivetray {(executivetray) FMBADEPSF} def
+	/executive {(executive) FMBADEPSF} def
+	/a3tray {(a3tray) FMBADEPSF} def
+	/a3 {(a3) FMBADEPSF} def
+	/a4tray {(a4tray) FMBADEPSF} def
+	/a4 {(a4) FMBADEPSF} def
+	/a4small {(a4small) FMBADEPSF} def
+	/b4tray {(b4tray) FMBADEPSF} def
+	/b4 {(b4) FMBADEPSF} def
+	/b5tray {(b5tray) FMBADEPSF} def
+	/b5 {(b5) FMBADEPSF} def
+	FMNORMALIZEGRAPHICS 
+	[/fy /fx /fh /fw /ury /urx /lly /llx] {exch def} forall 
+	fx fw 2 div add fy fh 2 div add  translate
+	rotate
+	fw 2 div neg fh 2 div neg translate
+	fw urx llx sub div fh ury lly sub div scale 
+	llx neg lly neg translate 
+	/FMdicttop countdictstack 1 add def 
+	/FMoptop count def 
+	} bind def
+/FMENDEPSF {
+	count -1 FMoptop {pop pop} for 
+	countdictstack -1 FMdicttop {pop end} for 
+	FMEPSF restore
+	FrameDict begin 
+	} bind def
+FrameDict begin 
+/setmanualfeed {
+%%BeginFeature *ManualFeed True
+	 statusdict /manualfeed true put
+%%EndFeature
+	} bind def
+/max {2 copy lt {exch} if pop} bind def
+/min {2 copy gt {exch} if pop} bind def
+/inch {72 mul} def
+/pagedimen { 
+	paperheight sub abs 16 lt exch 
+	paperwidth sub abs 16 lt and
+	{/papername exch def} {pop} ifelse
+	} bind def
+	/papersizedict FMLOCAL
+/setpapername { 
+	/papersizedict 14 dict def 
+	papersizedict begin
+	/papername /unknown def 
+		/Letter 8.5 inch 11.0 inch pagedimen
+		/LetterSmall 7.68 inch 10.16 inch pagedimen
+		/Tabloid 11.0 inch 17.0 inch pagedimen
+		/Ledger 17.0 inch 11.0 inch pagedimen
+		/Legal 8.5 inch 14.0 inch pagedimen
+		/Statement 5.5 inch 8.5 inch pagedimen
+		/Executive 7.5 inch 10.0 inch pagedimen
+		/A3 11.69 inch 16.5 inch pagedimen
+		/A4 8.26 inch 11.69 inch pagedimen
+		/A4Small 7.47 inch 10.85 inch pagedimen
+		/B4 10.125 inch 14.33 inch pagedimen
+		/B5 7.16 inch 10.125 inch pagedimen
+	end
+	} bind def
+/papersize {
+	papersizedict begin
+		/Letter {lettertray letter} def
+		/LetterSmall {lettertray lettersmall} def
+		/Tabloid {11x17tray 11x17} def
+		/Ledger {ledgertray ledger} def
+		/Legal {legaltray legal} def
+		/Statement {statementtray statement} def
+		/Executive {executivetray executive} def
+		/A3 {a3tray a3} def
+		/A4 {a4tray a4} def
+		/A4Small {a4tray a4small} def
+		/B4 {b4tray b4} def
+		/B5 {b5tray b5} def
+		/unknown {unknown} def
+	papersizedict dup papername known {papername} {/unknown} ifelse get
+	end
+	statusdict begin stopped end 
+	} bind def
+/manualpapersize {
+	papersizedict begin
+		/Letter {letter} def
+		/LetterSmall {lettersmall} def
+		/Tabloid {11x17} def
+		/Ledger {ledger} def
+		/Legal {legal} def
+		/Statement {statement} def
+		/Executive {executive} def
+		/A3 {a3} def
+		/A4 {a4} def
+		/A4Small {a4small} def
+		/B4 {b4} def
+		/B5 {b5} def
+		/unknown {unknown} def
+	papersizedict dup papername known {papername} {/unknown} ifelse get
+	end
+	stopped 
+	} bind def
+/desperatepapersize {
+	statusdict /setpageparams known
+		{
+		paperwidth paperheight 0 1 
+		statusdict begin
+		{setpageparams} stopped 
+		end
+		} {true} ifelse 
+	} bind def
+/DiacriticEncoding [
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /space /exclam /quotedbl
+/numbersign /dollar /percent /ampersand /quotesingle /parenleft
+/parenright /asterisk /plus /comma /hyphen /period /slash /zero /one
+/two /three /four /five /six /seven /eight /nine /colon /semicolon
+/less /equal /greater /question /at /A /B /C /D /E /F /G /H /I /J /K
+/L /M /N /O /P /Q /R /S /T /U /V /W /X /Y /Z /bracketleft /backslash
+/bracketright /asciicircum /underscore /grave /a /b /c /d /e /f /g /h
+/i /j /k /l /m /n /o /p /q /r /s /t /u /v /w /x /y /z /braceleft /bar
+/braceright /asciitilde /.notdef /Adieresis /Aring /Ccedilla /Eacute
+/Ntilde /Odieresis /Udieresis /aacute /agrave /acircumflex /adieresis
+/atilde /aring /ccedilla /eacute /egrave /ecircumflex /edieresis
+/iacute /igrave /icircumflex /idieresis /ntilde /oacute /ograve
+/ocircumflex /odieresis /otilde /uacute /ugrave /ucircumflex
+/udieresis /dagger /.notdef /cent /sterling /section /bullet
+/paragraph /germandbls /registered /copyright /trademark /acute
+/dieresis /.notdef /AE /Oslash /.notdef /.notdef /.notdef /.notdef
+/yen /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/ordfeminine /ordmasculine /.notdef /ae /oslash /questiondown
+/exclamdown /logicalnot /.notdef /florin /.notdef /.notdef
+/guillemotleft /guillemotright /ellipsis /.notdef /Agrave /Atilde
+/Otilde /OE /oe /endash /emdash /quotedblleft /quotedblright
+/quoteleft /quoteright /.notdef /.notdef /ydieresis /Ydieresis
+/fraction /currency /guilsinglleft /guilsinglright /fi /fl /daggerdbl
+/periodcentered /quotesinglbase /quotedblbase /perthousand
+/Acircumflex /Ecircumflex /Aacute /Edieresis /Egrave /Iacute
+/Icircumflex /Idieresis /Igrave /Oacute /Ocircumflex /.notdef /Ograve
+/Uacute /Ucircumflex /Ugrave /dotlessi /circumflex /tilde /macron
+/breve /dotaccent /ring /cedilla /hungarumlaut /ogonek /caron
+] def
+/ReEncode { 
+	dup 
+	length 
+	dict begin 
+	{
+	1 index /FID ne 
+		{def} 
+		{pop pop} ifelse 
+	} forall 
+	0 eq {/Encoding DiacriticEncoding def} if 
+	currentdict 
+	end 
+	} bind def
+FMPColor 
+	
+	{
+	/BEGINBITMAPCOLOR { 
+		BITMAPCOLOR} def
+	/BEGINBITMAPCOLORc { 
+		BITMAPCOLORc} def
+	/BEGINBITMAPTRUECOLOR { 
+		BITMAPTRUECOLOR } def
+	/BEGINBITMAPTRUECOLORc { 
+		BITMAPTRUECOLORc } def
+	}
+	
+	{
+	/BEGINBITMAPCOLOR { 
+		BITMAPGRAY} def
+	/BEGINBITMAPCOLORc { 
+		BITMAPGRAYc} def
+	/BEGINBITMAPTRUECOLOR { 
+		BITMAPTRUEGRAY } def
+	/BEGINBITMAPTRUECOLORc { 
+		BITMAPTRUEGRAYc } def
+	}
+ifelse
+/K { 
+	FMPrintAllColorsAsBlack {
+		dup 1 eq 2 index 1 eq and 3 index 1 eq and not
+			{7 {pop} repeat 0 0 0 1 0 0 0} if
+	} if 
+	FrameCurColors astore 
+	pop combineColor
+} bind def
+/graymode true def
+	/bwidth FMLOCAL
+	/bpside FMLOCAL
+	/bstring FMLOCAL
+	/onbits FMLOCAL
+	/offbits FMLOCAL
+	/xindex FMLOCAL
+	/yindex FMLOCAL
+	/x FMLOCAL
+	/y FMLOCAL
+/setPatternMode {
+	FMLevel1 {
+		/bwidth  exch def
+		/bpside  exch def
+		/bstring exch def
+		/onbits 0 def  /offbits 0 def
+		freq sangle landscape {90 add} if 
+			{/y exch def
+			 /x exch def
+			 /xindex x 1 add 2 div bpside mul cvi def
+			 /yindex y 1 add 2 div bpside mul cvi def
+			 bstring yindex bwidth mul xindex 8 idiv add get
+			 1 7 xindex 8 mod sub bitshift and 0 ne FrameNegative {not} if
+			 {/onbits  onbits  1 add def 1}
+			 {/offbits offbits 1 add def 0}
+			 ifelse
+			}
+			setscreen
+		offbits offbits onbits add div FrameNegative {1.0 exch sub} if
+		/FrameCurGray exch def
+	} { 
+		pop pop
+		dup patCache exch known {
+			patCache exch get
+		} { 
+			dup
+			patDict /bstring 3 -1 roll put
+			patDict 
+			9 PatFreq screenIndex get div dup matrix scale
+			makepattern
+			dup 
+			patCache 4 -1 roll 3 -1 roll put
+		} ifelse
+		/FrameCurGray 0 def
+		/FrameCurPat exch def
+	} ifelse
+	/graymode false def
+	combineColor
+} bind def
+/setGrayScaleMode {
+	graymode not {
+		/graymode true def
+		FMLevel1 {
+			setCurrentScreen
+		} if
+	} if
+	/FrameCurGray exch def
+	combineColor
+} bind def
+/normalize {
+	transform round exch round exch itransform
+	} bind def
+/dnormalize {
+	dtransform round exch round exch idtransform
+	} bind def
+/lnormalize { 
+	0 dtransform exch cvi 2 idiv 2 mul 1 add exch idtransform pop
+	} bind def
+/H { 
+	lnormalize setlinewidth
+	} bind def
+/Z {
+	setlinecap
+	} bind def
+	
+/PFill {
+	graymode FMLevel1 or not {
+		gsave 1 setgray eofill grestore
+	} if
+} bind def
+/PStroke {
+	graymode FMLevel1 or not {
+		gsave 1 setgray stroke grestore
+	} if
+	stroke
+} bind def
+	/fillvals FMLOCAL
+/X { 
+	fillvals exch get
+	dup type /stringtype eq
+	{8 1 setPatternMode} 
+	{setGrayScaleMode}
+	ifelse
+	} bind def
+/V { 
+	PFill gsave eofill grestore
+	} bind def
+/Vclip {
+	clip
+	} bind def
+/Vstrk {
+	currentlinewidth exch setlinewidth PStroke setlinewidth
+	} bind def
+/N { 
+	PStroke
+	} bind def
+/Nclip {
+	strokepath clip newpath
+	} bind def
+/Nstrk {
+	currentlinewidth exch setlinewidth PStroke setlinewidth
+	} bind def
+/M {newpath moveto} bind def
+/E {lineto} bind def
+/D {curveto} bind def
+/O {closepath} bind def
+	/n FMLOCAL
+/L { 
+ 	/n exch def
+	newpath
+	normalize
+	moveto 
+	2 1 n {pop normalize lineto} for
+	} bind def
+/Y { 
+	L 
+	closepath
+	} bind def
+	/x1 FMLOCAL
+	/x2 FMLOCAL
+	/y1 FMLOCAL
+	/y2 FMLOCAL
+/R { 
+	/y2 exch def
+	/x2 exch def
+	/y1 exch def
+	/x1 exch def
+	x1 y1
+	x2 y1
+	x2 y2
+	x1 y2
+	4 Y 
+	} bind def
+	/rad FMLOCAL
+/rarc 
+	{rad 
+	 arcto
+	} bind def
+/RR { 
+	/rad exch def
+	normalize
+	/y2 exch def
+	/x2 exch def
+	normalize
+	/y1 exch def
+	/x1 exch def
+	mark
+	newpath
+	{
+	x1 y1 rad add moveto
+	x1 y2 x2 y2 rarc
+	x2 y2 x2 y1 rarc
+	x2 y1 x1 y1 rarc
+	x1 y1 x1 y2 rarc
+	closepath
+	} stopped {x1 y1 x2 y2 R} if 
+	cleartomark
+	} bind def
+/RRR { 
+	/rad exch def
+	normalize /y4 exch def /x4 exch def
+	normalize /y3 exch def /x3 exch def
+	normalize /y2 exch def /x2 exch def
+	normalize /y1 exch def /x1 exch def
+	newpath
+	normalize moveto 
+	mark
+	{
+	x2 y2 x3 y3 rarc
+	x3 y3 x4 y4 rarc
+	x4 y4 x1 y1 rarc
+	x1 y1 x2 y2 rarc
+	closepath
+	} stopped
+	 {x1 y1 x2 y2 x3 y3 x4 y4 newpath moveto lineto lineto lineto closepath} if
+	cleartomark
+	} bind def
+/C { 
+	grestore
+	gsave
+	R 
+	clip
+	setCurrentScreen
+} bind def
+/CP { 
+	grestore
+	gsave
+	Y 
+	clip
+	setCurrentScreen
+} bind def
+	/FMpointsize FMLOCAL
+/F { 
+	FMfonts exch get
+	FMpointsize scalefont
+	setfont
+	} bind def
+/Q { 
+	/FMpointsize exch def
+	F 
+	} bind def
+/T { 
+	moveto show
+	} bind def
+/RF { 
+	rotate
+	0 ne {-1 1 scale} if
+	} bind def
+/TF { 
+	gsave
+	moveto 
+	RF
+	show
+	grestore
+	} bind def
+/P { 
+	moveto
+	0 32 3 2 roll widthshow
+	} bind def
+/PF { 
+	gsave
+	moveto 
+	RF
+	0 32 3 2 roll widthshow
+	grestore
+	} bind def
+/S { 
+	moveto
+	0 exch ashow
+	} bind def
+/SF { 
+	gsave
+	moveto
+	RF
+	0 exch ashow
+	grestore
+	} bind def
+/B { 
+	moveto
+	0 32 4 2 roll 0 exch awidthshow
+	} bind def
+/BF { 
+	gsave
+	moveto
+	RF
+	0 32 4 2 roll 0 exch awidthshow
+	grestore
+	} bind def
+/G { 
+	gsave
+	newpath
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath 
+	PFill fill
+	grestore
+	} bind def
+/Gstrk {
+	savematrix
+    newpath
+    2 index 2 div add exch 3 index 2 div sub exch 
+    normalize 2 index 2 div sub exch 3 index 2 div add exch 
+    translate
+    scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    restorematrix
+    currentlinewidth exch setlinewidth PStroke setlinewidth
+    } bind def
+/Gclip { 
+	newpath
+	savematrix
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath 
+	clip newpath
+	restorematrix
+	} bind def
+/GG { 
+	gsave
+	newpath
+	normalize translate 0.0 0.0 moveto 
+	rotate 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath
+	PFill
+	fill
+	grestore
+	} bind def
+/GGclip { 
+	savematrix
+	newpath
+    normalize translate 0.0 0.0 moveto 
+    rotate 
+    dnormalize scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    closepath
+	clip newpath
+	restorematrix
+	} bind def
+/GGstrk { 
+	savematrix
+    newpath
+    normalize translate 0.0 0.0 moveto 
+    rotate 
+    dnormalize scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    closepath 
+	restorematrix
+    currentlinewidth exch setlinewidth PStroke setlinewidth
+	} bind def
+/A { 
+	gsave
+	savematrix
+	newpath
+	2 index 2 div add exch 3 index 2 div sub exch 
+	normalize 2 index 2 div sub exch 3 index 2 div add exch 
+	translate 
+	scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	restorematrix
+	PStroke
+	grestore
+	} bind def
+/Aclip {
+	newpath
+	savematrix
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath 
+	strokepath clip newpath
+	restorematrix
+} bind def
+/Astrk {
+	Gstrk
+} bind def
+/AA { 
+	gsave
+	savematrix
+	newpath
+	
+	3 index 2 div add exch 4 index 2 div sub exch 
+	
+	normalize 3 index 2 div sub exch 4 index 2 div add exch
+	translate 
+	rotate 
+	scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	restorematrix
+	PStroke
+	grestore
+	} bind def
+/AAclip {
+	savematrix
+	newpath
+    normalize translate 0.0 0.0 moveto 
+    rotate 
+    dnormalize scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    closepath
+	strokepath clip newpath
+	restorematrix
+} bind def
+/AAstrk {
+	GGstrk
+} bind def
+	/x FMLOCAL
+	/y FMLOCAL
+	/w FMLOCAL
+	/h FMLOCAL
+	/xx FMLOCAL
+	/yy FMLOCAL
+	/ww FMLOCAL
+	/hh FMLOCAL
+	/FMsaveobject FMLOCAL
+	/FMoptop FMLOCAL
+	/FMdicttop FMLOCAL
+/BEGINPRINTCODE { 
+	/FMdicttop countdictstack 1 add def 
+	/FMoptop count 7 sub def 
+	/FMsaveobject save def
+	userdict begin 
+	/showpage {} def 
+	FMNORMALIZEGRAPHICS 
+	3 index neg 3 index neg translate
+	} bind def
+/ENDPRINTCODE {
+	count -1 FMoptop {pop pop} for 
+	countdictstack -1 FMdicttop {pop end} for 
+	FMsaveobject restore 
+	} bind def
+/gn { 
+	0 
+	{	46 mul 
+		cf read pop 
+		32 sub 
+		dup 46 lt {exit} if 
+		46 sub add 
+		} loop
+	add 
+	} bind def
+	/str FMLOCAL
+/cfs { 
+	/str sl string def 
+	0 1 sl 1 sub {str exch val put} for 
+	str def 
+	} bind def
+/ic [ 
+	0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0223
+	0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0223
+	0
+	{0 hx} {1 hx} {2 hx} {3 hx} {4 hx} {5 hx} {6 hx} {7 hx} {8 hx} {9 hx}
+	{10 hx} {11 hx} {12 hx} {13 hx} {14 hx} {15 hx} {16 hx} {17 hx} {18 hx}
+	{19 hx} {gn hx} {0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12}
+	{13} {14} {15} {16} {17} {18} {19} {gn} {0 wh} {1 wh} {2 wh} {3 wh}
+	{4 wh} {5 wh} {6 wh} {7 wh} {8 wh} {9 wh} {10 wh} {11 wh} {12 wh}
+	{13 wh} {14 wh} {gn wh} {0 bl} {1 bl} {2 bl} {3 bl} {4 bl} {5 bl} {6 bl}
+	{7 bl} {8 bl} {9 bl} {10 bl} {11 bl} {12 bl} {13 bl} {14 bl} {gn bl}
+	{0 fl} {1 fl} {2 fl} {3 fl} {4 fl} {5 fl} {6 fl} {7 fl} {8 fl} {9 fl}
+	{10 fl} {11 fl} {12 fl} {13 fl} {14 fl} {gn fl}
+	] def
+	/sl FMLOCAL
+	/val FMLOCAL
+	/ws FMLOCAL
+	/im FMLOCAL
+	/bs FMLOCAL
+	/cs FMLOCAL
+	/len FMLOCAL
+	/pos FMLOCAL
+/ms { 
+	/sl exch def 
+	/val 255 def 
+	/ws cfs 
+	/im cfs 
+	/val 0 def 
+	/bs cfs 
+	/cs cfs 
+	} bind def
+400 ms 
+/ip { 
+	is 
+	0 
+	cf cs readline pop 
+	{	ic exch get exec 
+		add 
+		} forall 
+	pop 
+	
+	} bind def
+/rip { 
+	   
+	  
+	  bis ris copy pop 
+      is
+      0
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+	  pop pop 
+	  ris gis copy pop 
+	  dup is exch 
+	  
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+	  pop pop
+	  gis bis copy pop 
+	  dup add is exch 
+	  
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+      pop 
+      
+      } bind def
+/wh { 
+	/len exch def 
+	/pos exch def 
+	ws 0 len getinterval im pos len getinterval copy pop
+	pos len 
+	} bind def
+/bl { 
+	/len exch def 
+	/pos exch def 
+	bs 0 len getinterval im pos len getinterval copy pop
+	pos len 
+	} bind def
+/s1 1 string def
+/fl { 
+	/len exch def 
+	/pos exch def 
+	/val cf s1 readhexstring pop 0 get def
+	pos 1 pos len add 1 sub {im exch val put} for
+	pos len 
+	} bind def
+/hx { 
+	3 copy getinterval 
+	cf exch readhexstring pop pop 
+	} bind def
+	/h FMLOCAL
+	/w FMLOCAL
+	/d FMLOCAL
+	/lb FMLOCAL
+	/bitmapsave FMLOCAL
+	/is FMLOCAL
+	/cf FMLOCAL
+/wbytes { 
+      dup dup
+      24 eq { pop pop 3 mul }
+      { 8 eq {pop} {1 eq {7 add 8 idiv} {3 add 4 idiv} ifelse} ifelse } ifelse
+	} bind def
+/BEGINBITMAPBWc { 
+	1 {} COMMONBITMAPc
+	} bind def
+/BEGINBITMAPGRAYc { 
+	8 {} COMMONBITMAPc
+	} bind def
+/BEGINBITMAP2BITc { 
+	2 {} COMMONBITMAPc
+	} bind def
+/COMMONBITMAPc { 
+		 
+	/r exch def
+	/d exch def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+	/bitmapsave save def 
+	r                    
+	/is im 0 lb getinterval def 
+	ws 0 lb getinterval is copy pop 
+	/cf currentfile def 
+	w h d [w 0 0 h neg 0 h] 
+	{ip} image 
+	bitmapsave restore 
+	grestore
+	} bind def
+/BEGINBITMAPBW { 
+	1 {} COMMONBITMAP
+	} bind def
+/BEGINBITMAPGRAY { 
+	8 {} COMMONBITMAP
+	} bind def
+/BEGINBITMAP2BIT { 
+	2 {} COMMONBITMAP
+	} bind def
+/COMMONBITMAP { 
+	/r exch def
+	/d exch def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/bitmapsave save def 
+	r                    
+	/is w d wbytes string def
+	/cf currentfile def 
+	w h d [w 0 0 h neg 0 h] 
+	{cf is readhexstring pop} image
+	bitmapsave restore 
+	grestore
+	} bind def
+/ngrayt 256 array def
+/nredt 256 array def
+/nbluet 256 array def
+/ngreent 256 array def
+	/gryt FMLOCAL
+	/blut FMLOCAL
+	/grnt FMLOCAL
+	/redt FMLOCAL
+	/indx FMLOCAL
+	/cynu FMLOCAL
+	/magu FMLOCAL
+	/yelu FMLOCAL
+	/k FMLOCAL
+	/u FMLOCAL
+FMLevel1 {
+/colorsetup {
+	currentcolortransfer
+	/gryt exch def
+	/blut exch def
+	/grnt exch def
+	/redt exch def
+	0 1 255 {
+		/indx exch def
+		/cynu 1 red indx get 255 div sub def
+		/magu 1 green indx get 255 div sub def
+		/yelu 1 blue indx get 255 div sub def
+		/k cynu magu min yelu min def
+		/u k currentundercolorremoval exec def
+%		/u 0 def
+		nredt indx 1 0 cynu u sub max sub redt exec put
+		ngreent indx 1 0 magu u sub max sub grnt exec put
+		nbluet indx 1 0 yelu u sub max sub blut exec put
+		ngrayt indx 1 k currentblackgeneration exec sub gryt exec put
+	} for
+	{255 mul cvi nredt exch get}
+	{255 mul cvi ngreent exch get}
+	{255 mul cvi nbluet exch get}
+	{255 mul cvi ngrayt exch get}
+	setcolortransfer
+	{pop 0} setundercolorremoval
+	{} setblackgeneration
+	} bind def
+}
+{
+/colorSetup2 {
+	[ /Indexed /DeviceRGB 255 
+		{dup red exch get 255 div 
+		 exch dup green exch get 255 div 
+		 exch blue exch get 255 div}
+	] setcolorspace
+} bind def
+} ifelse
+	/tran FMLOCAL
+/fakecolorsetup {
+	/tran 256 string def
+	0 1 255 {/indx exch def 
+		tran indx
+		red indx get 77 mul
+		green indx get 151 mul
+		blue indx get 28 mul
+		add add 256 idiv put} for
+	currenttransfer
+	{255 mul cvi tran exch get 255.0 div}
+	exch concatprocs settransfer
+} bind def
+/BITMAPCOLOR { 
+	/d 8 def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/bitmapsave save def
+	FMLevel1 {	
+		colorsetup
+		/is w d wbytes string def
+		/cf currentfile def 
+		w h d [w 0 0 h neg 0 h] 
+		{cf is readhexstring pop} {is} {is} true 3 colorimage 
+	} {
+		colorSetup2
+		/is w d wbytes string def
+		/cf currentfile def 
+		7 dict dup begin
+			/ImageType 1 def
+			/Width w def
+			/Height h def
+			/ImageMatrix [w 0 0 h neg 0 h] def
+			/DataSource {cf is readhexstring pop} bind def
+			/BitsPerComponent d def
+			/Decode [0 255] def
+		end image	
+	} ifelse
+	bitmapsave restore 
+	grestore
+	} bind def
+/BITMAPCOLORc { 
+	/d 8 def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+	/bitmapsave save def 
+	FMLevel1 {	
+		colorsetup
+		/is im 0 lb getinterval def 
+		ws 0 lb getinterval is copy pop 
+		/cf currentfile def 
+		w h d [w 0 0 h neg 0 h] 
+		{ip} {is} {is} true 3 colorimage
+	} {
+		colorSetup2
+		/is im 0 lb getinterval def 
+		ws 0 lb getinterval is copy pop 
+		/cf currentfile def 
+		7 dict dup begin
+			/ImageType 1 def
+			/Width w def
+			/Height h def
+			/ImageMatrix [w 0 0 h neg 0 h] def
+			/DataSource {ip} bind def
+			/BitsPerComponent d def
+			/Decode [0 255] def
+		end image	
+	} ifelse
+	bitmapsave restore 
+	grestore
+	} bind def
+/BITMAPTRUECOLORc { 
+	/d 24 def
+        gsave
+ 	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+        /bitmapsave save def 
+        
+	/is im 0 lb getinterval def	
+	/ris im 0 w getinterval def	
+	/gis im w w getinterval def	
+	/bis im w 2 mul w getinterval def 
+        
+        ws 0 lb getinterval is copy pop 
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        {w rip pop ris} {gis} {bis} true 3 colorimage
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPTRUECOLOR { 
+        gsave
+		
+		3 index 2 div add exch	
+		4 index 2 div add exch	
+		translate		
+		rotate			
+		1 index 2 div neg	
+		1 index 2 div neg	
+		translate		
+		scale			
+		/h exch def /w exch def
+        /bitmapsave save def 
+        /is w string def
+        /gis w string def
+        /bis w string def
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        { cf is readhexstring pop } 
+        { cf gis readhexstring pop } 
+        { cf bis readhexstring pop } 
+        true 3 colorimage 
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPTRUEGRAYc { 
+	/d 24 def
+        gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+        /bitmapsave save def 
+        
+	/is im 0 lb getinterval def	
+	/ris im 0 w getinterval def	
+	/gis im w w getinterval def	
+	/bis im w 2 mul w getinterval def 
+        ws 0 lb getinterval is copy pop 
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        {w rip pop ris gis bis w gray} image
+        bitmapsave restore 
+        grestore
+        } bind def
+/ww FMLOCAL
+/r FMLOCAL
+/g FMLOCAL
+/b FMLOCAL
+/i FMLOCAL
+/gray { 
+        /ww exch def
+        /b exch def
+        /g exch def
+        /r exch def
+        0 1 ww 1 sub { /i exch def r i get .299 mul g i get .587 mul
+			b i get .114 mul add add r i 3 -1 roll floor cvi put } for
+        r
+        } bind def
+/BITMAPTRUEGRAY { 
+        gsave
+		
+		3 index 2 div add exch	
+		4 index 2 div add exch	
+		translate		
+		rotate			
+		1 index 2 div neg	
+		1 index 2 div neg	
+		translate		
+		scale			
+		/h exch def /w exch def
+        /bitmapsave save def 
+        /is w string def
+        /gis w string def
+        /bis w string def
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        { cf is readhexstring pop 
+          cf gis readhexstring pop 
+          cf bis readhexstring pop w gray}  image
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPGRAY { 
+	8 {fakecolorsetup} COMMONBITMAP
+	} bind def
+/BITMAPGRAYc { 
+	8 {fakecolorsetup} COMMONBITMAPc
+	} bind def
+/ENDBITMAP {
+	} bind def
+end 
+	/ALDsave FMLOCAL
+	/ALDmatrix matrix def ALDmatrix currentmatrix pop
+/StartALD {
+	/ALDsave save def
+	 savematrix
+	 ALDmatrix setmatrix
+	} bind def
+/InALD {
+	 restorematrix
+	} bind def
+/DoneALD {
+	 ALDsave restore
+	} bind def
+/I { setdash } bind def
+/J { [] 0 setdash } bind def
+%%EndProlog
+%%BeginSetup
+(4.0) FMVERSION
+1 1 0 0 612 792 0 1 10 FMDOCUMENT
+0 0 /Times-Roman FMFONTDEFINE
+1 0 /Times-Bold FMFONTDEFINE
+2 0 /Times-Italic FMFONTDEFINE
+3 0 /Helvetica FMFONTDEFINE
+4 0 /Courier FMFONTDEFINE
+32 FMFILLS
+0 0 FMFILL
+1 0.1 FMFILL
+2 0.3 FMFILL
+3 0.5 FMFILL
+4 0.7 FMFILL
+5 0.9 FMFILL
+6 0.97 FMFILL
+7 1 FMFILL
+8 <0f1e3c78f0e1c387> FMFILL
+9 <0f87c3e1f0783c1e> FMFILL
+10 <cccccccccccccccc> FMFILL
+11 <ffff0000ffff0000> FMFILL
+12 <8142241818244281> FMFILL
+13 <03060c183060c081> FMFILL
+14 <8040201008040201> FMFILL
+16 1 FMFILL
+17 0.9 FMFILL
+18 0.7 FMFILL
+19 0.5 FMFILL
+20 0.3 FMFILL
+21 0.1 FMFILL
+22 0.03 FMFILL
+23 0 FMFILL
+24 <f0e1c3870f1e3c78> FMFILL
+25 <f0783c1e0f87c3e1> FMFILL
+26 <3333333333333333> FMFILL
+27 <0000ffff0000ffff> FMFILL
+28 <7ebddbe7e7dbbd7e> FMFILL
+29 <fcf9f3e7cf9f3f7e> FMFILL
+30 <7fbfdfeff7fbfdfe> FMFILL
+%%EndSetup
+%%Page: "1" 1
+%%BeginPaperSize: Letter
+%%EndPaperSize
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+J
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Library Design Guidelines) 72 42.62 T
+(August 31, 1995) 279.44 42.62 T
+(1) 536 42.62 T
+0 24 Q
+(Library Design Guidelines) 178.02 704 T
+1 12 Q
+(Scott McKay) 272.51 663.7 T
+1 16 Q
+(1.  Intr) 72 620.73 T
+(oduction) 119.26 620.73 T
+0 12 Q
+(The purpose of this paper is to of) 72 593.1 T
+(fer some guidelines for doing robust class library design and) 230.76 593.1 T
+-0.08 (implementation. In part, this paper is a summary of the paper \322Issues in the Design and Speci\336ca-) 72 579.1 P
+(tion of Class Libraries\323, by Kiczales and Lamping \050OOPSLA \32492\051.) 72 565.1 T
+1 16 Q
+(2.  Guidelines for Designing Dylan Components) 72 524.13 T
+0 12 Q
+(All Dylan components must obey the following guidelines:) 72 496.5 T
+1 F
+(\245) 85.5 476.2 T
+0 F
+(Provide interoperability with other components on equal terms. That is, Dylan components) 99 476.2 T
+(need to be usable with other components that may or may not be written in Dylan. On the) 99 462.2 T
+(whole, we cannot make the assumption that Dylan components are unique in that they are) 99 448.2 T
+(solely \322in charge\323 of any operating system resources \050such as memory, threads, event) 99 434.2 T
+-0.42 (queues, etc.\051. We can also not assume that Dylan components will \322get control\323 before other) 99 420.2 P
+(components, since Dylan may be called from other components. We cannot assume that) 99 406.2 T
+(other components will be limited in their use of other library or OS calls.) 99 392.2 T
+1 F
+(\245) 85.5 371.9 T
+0 F
+(Dylan components must not prevent the sharing of operating system resources. We should) 99 371.9 T
+(not make any assumptions that operating system resources might be limited by component) 99 357.9 T
+-0.44 (boundaries. For example, any component can create a thread which may then execute within) 99 343.9 P
+(other components. Thus, threads created in Dylan must be usable by foreign components) 99 329.9 T
+(and vice-versa.) 99 315.9 T
+1 F
+(\245) 85.5 295.6 T
+0 F
+-0.14 (It is not acceptable to modify the API to the operating system or standard libraries by \322shad-) 99 295.6 P
+(owing\323 the standard calls. Although this can be tempting, it has two major problems: doing) 99 281.6 T
+(so would introduce an interoperability problem for the future; and it\325s not practical \050for) 99 267.6 T
+(example, name resolution in the Windows linking mechanism uses both the symbol and) 99 253.6 T
+(library names, so if you wanted to shadow an API function, you would have to replace the) 99 239.6 T
+(entire kernel library and provide a different version of the masquerading library for each) 99 225.6 T
+(version of Windows \321 a perturbation that would be visible to all applications, whether or) 99 211.6 T
+(not they used any Dylan code\051.) 99 197.6 T
+1 F
+(\245) 85.5 177.3 T
+0 F
+-0.02 (We can implement functionality in Dylan components in any way we want that doesn\325t vio-) 99 177.3 P
+(late the constraints above, provided that the Dylan components interact properly with other) 99 163.3 T
+(components via FFI. That is, anything that might be \322unusual\323 about a Dylan component) 99 149.3 T
+(should not be visible on the foreign side of the FFI.) 99 135.3 T
+-0.29 (It is a fact that Dylan components will be judged in lar) 72 109 P
+-0.29 (ge part on how well they operate with other) 330.28 109 P
+(components. If the above constraints lead to some loss of ef) 72 95 T
+(\336ciency in Dylan components, we) 358.74 95 T
+(must in general simply pay the price, because if an ef) 72 81 T
+(\336cient Dylan component does not work) 327.4 81 T
+(properly on an equal footing with non-Dylan components, it will be judged not to work at all.) 72 67 T
+FMENDPAGE
+%%EndPage: "1" 1
+%%Page: "2" 2
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Library Design Guidelines) 72 42.62 T
+(August 31, 1995) 279.44 42.62 T
+(2) 536 42.62 T
+1 16 Q
+(3.  Guidelines for Designing General Classes) 72 709.33 T
+0 12 Q
+(The best overall guideline is, make the design just complex enough to solve the problem, but no) 72 680.36 T
+(more complex. Or put another way) 72 666.36 T
+(, design the simplest thing that meets the requirements, but) 239.18 666.36 T
+(don\325) 72 652.36 T
+(t make it any simpler) 93.78 652.36 T
+(.) 194.45 652.36 T
+1 F
+(\245) 85.5 630.71 T
+0 F
+(Don\325t think in terms of just classes, think about what protocols each class obeys.) 99 630.71 T
+1 F
+(\245) 85.5 609.07 T
+0 F
+(Don\325t introduce new classes unnecessarily, since they just add conceptual baggage.) 99 609.07 T
+1 16 Q
+(4.  Guidelines for Designing Extensible Classes) 72 566.76 T
+0 12 Q
+(There are two basic properties we are striving for in class library design:) 72 537.79 T
+1 F
+(\245) 85.5 516.14 T
+0 F
+(Generality, that is, the ability of a library to serve in a wide range of circumstances without) 99 516.14 T
+(modification.) 99 502.14 T
+1 F
+(\245) 85.5 480.5 T
+0 F
+(Extensibility, that is, the ability of a library to be easily modified to meet a particular need.) 99 480.5 T
+(One other important property for the API for a class library \050or any kind of component\051 is that it) 72 452.86 T
+(should be easy to use. The ease of implementing a component should not be given priority over) 72 438.86 T
+(the component\325) 72 424.86 T
+(s ease of use.) 146.33 424.86 T
+(An issue in the speci\336cation of class libraries is, how does one specify an extensible library pre-) 72 397.21 T
+(cisely \050so that a client can write specializations or replacement modules\051, without over) 72 383.21 T
+(-constrain-) 486.68 383.21 T
+(ing the implementation \050which would give the implementor no room to work\051? The problem has) 72 369.21 T
+(two major parts:) 72 355.21 T
+1 F
+(\245) 85.5 333.57 T
+0 F
+(The client of a library needs to know that, when they subclass a class, what methods they) 99 333.57 T
+(will inherit.) 99 319.57 T
+1 F
+(\245) 85.5 297.93 T
+0 F
+(The client also needs to know, when they subclass a class, what methods they must define,) 99 297.93 T
+(what methods they can rely on, and what their methods must and must not do.) 99 283.93 T
+(Our major task in designing for extensibility is to identify what the replaceable parts are in a) 72 256.29 T
+(library and how they interact, and to ensure that other details remain hidden. W) 72 242.29 T
+(e need to specify) 451.97 242.29 T
+-0.35 (the programmer interface \050API\051 for client users, and also the relationship between parts so that we) 72 228.29 P
+(can maximize extensibility and reuse. W) 72 214.29 T
+(e want to allow users to replace parts that have new and) 266.34 214.29 T
+(dif) 72 200.29 T
+(ferent behaviors \050that obey the protocols, of course\051, or have dif) 85.12 200.29 T
+(ferent implementation strate-) 391.49 200.29 T
+(gies. All such changes must have predictable consequences.) 72 186.29 T
+1 14 Q
+(4.1  Class Graph and Inheritance) 72 151.31 T
+0 12 Q
+(The approach of \0501\051 specifying each class in the lattice and its direct superclasses, \0502\051 the set of) 72 123 T
+(generic functions, and \0503\051 the set of methods \050by giving the generic function and its specializers\051) 72 109 T
+-0.36 (is simple, but it\325) 72 95 P
+-0.36 (s too restrictive \050see Kiczales and Lamping for details\051. In particular) 148.27 95 P
+-0.36 (, this does not) 471.77 95 P
+(allow for \322interposed\323 classes that might be used to promote code-sharing in the implementation) 72 81 T
+(of the library) 72 67 T
+(.) 133.87 67 T
+FMENDPAGE
+%%EndPage: "2" 2
+%%Page: "3" 3
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Library Design Guidelines) 72 42.62 T
+(August 31, 1995) 279.44 42.62 T
+(3) 536 42.62 T
+0 12 Q
+(T) 72 712 T
+(o start rectifying the situation, we \336rst de\336ne some terminology:) 78.49 712 T
+1 F
+(\245) 85.5 691.15 T
+0 F
+(A) 99 691.15 T
+2 F
+(system-defined) 110.66 691.15 T
+0 F
+(definition is one that is part of the library, either specified or implementa-) 184.98 691.15 T
+(tion-specific.) 99 677.15 T
+1 F
+(\245) 85.5 656.31 T
+0 F
+-0.33 (A) 99 656.31 P
+2 F
+-0.33 (specified) 110.33 656.31 P
+0 F
+-0.33 ( definition is a system-defined definition that is listed in the library specification,) 152.99 656.31 P
+(that is, is part of the advertised API of the library. \050In Dylan, such a definition will be) 99 642.31 T
+(exported from the library.\051) 99 628.31 T
+1 F
+(\245) 85.5 607.46 T
+0 F
+(An) 99 607.46 T
+2 F
+(implementation-specific) 116.66 607.46 T
+0 F
+( definition is a system-defined definition that is present in an) 231.98 607.46 T
+(implementation, but does not appear in the specification. That is, it is not part of the) 99 593.46 T
+(library\325s API. \050In Dylan, such a definition will not be exported from the library.\051) 99 579.46 T
+1 F
+(\245) 85.5 558.61 T
+0 F
+(A) 99 558.61 T
+2 F
+(user-defined) 110.66 558.61 T
+0 F
+( definition is one that is defined by the user, portable or not. This is the) 170.65 558.61 T
+(\322opposite\323 of a system-defined definition.) 99 544.61 T
+1 F
+(\245) 85.5 523.77 T
+0 F
+-0.18 (A) 99 523.77 P
+2 F
+-0.18 (portable) 110.49 523.77 P
+0 F
+-0.18 ( definition is a user-defined definition that depends only on specified definitions.) 151.16 523.77 P
+(It will work with any implementation of the library.) 99 509.77 T
+(So:) 72 482.92 T
+1 F
+(\245) 85.5 462.08 T
+0 F
+-0.3 (An implementor may provide implementation-specific leaf classes as subclasses of the spec-) 99 462.08 P
+(ified classes; such leaf classes can provide methods for any system-defined generic func-) 99 448.08 T
+(tion. \050In Dylan, an unadvertised concrete class might be such a leaf class; an instantiable) 99 434.08 T
+(abstract superclass would be advertised in the API.\051) 99 420.08 T
+1 F
+(\245) 85.5 399.23 T
+0 F
+(An implementor may provide implementation-specific generic functions on any class, but) 99 399.23 T
+(these definitions should not be visible in user packages/modules.) 99 385.23 T
+1 F
+(\245) 85.5 364.39 T
+0 F
+(Implementation-specific interposed classes are allowed for any specified or portable class) 99 364.39 T
+0 0 0 1 0 0 0 K
+3 F
+(C) 99 350.39 T
+0 0 0 1 0 0 0 K
+3 9.6 Q
+(P) 107.66 347.39 T
+0 12 Q
+( that is a subclass of one or more specified classes) 114.07 350.39 T
+0 0 0 1 0 0 0 K
+3 F
+(C) 357.02 350.39 T
+0 0 0 1 0 0 0 K
+3 9.6 Q
+(0) 365.68 347.39 T
+0 0 0 1 0 0 0 K
+3 12 Q
+(...C) 374.36 350.39 T
+0 0 0 1 0 0 0 K
+3 9.6 Q
+(i) 393.03 347.39 T
+0 12 Q
+( as long as this condition is) 398.16 350.39 T
+-0.14 (met: in the class precedence list of) 99 336.39 P
+0 0 0 1 0 0 0 K
+3 F
+-0.16 (C) 266.31 336.39 P
+0 0 0 1 0 0 0 K
+3 9.6 Q
+-0.13 (p) 274.98 333.39 P
+0 12 Q
+-0.14 (: the classes) 280.31 336.39 P
+0 0 0 1 0 0 0 K
+3 F
+-0.16 (C) 340.21 336.39 P
+0 0 0 1 0 0 0 K
+3 9.6 Q
+-0.13 (0) 348.88 333.39 P
+0 0 0 1 0 0 0 K
+3 12 Q
+-0.16 (...C) 357.55 336.39 P
+0 0 0 1 0 0 0 K
+3 9.6 Q
+-0.13 (i) 376.22 333.39 P
+0 12 Q
+-0.14 ( must appear in exactly the same) 381.35 336.39 P
+(order as if there was no interposed class. That is, the introduction of an interposed imple-) 99 322.39 T
+-0.39 (mentation class must not change the ordering of the specified classes in the class precedence) 99 308.39 P
+(list for any specified or portable class.) 99 294.39 T
+(It is often the case that these interposed classes will be \322mix-in\323 classes that are used to) 99 275.54 T
+-0.04 (share implementation rather than de\336ne a semantic type. These classes will not typically be) 99 261.54 P
+(instantiable classes. \050In Dylan, such classes should not be exported from the library) 99 247.54 T
+(.\051) 498.16 247.54 T
+1 F
+(\245) 85.5 226.69 T
+0 F
+(An implementor may \322promote\323 a method to an interposed superclass only if the method) 99 226.69 T
+(inheritance for the specified generic function stays the same at any specified or portable) 99 212.69 T
+(class, as it would have been with no such promotion.) 99 198.69 T
+1 F
+(\245) 85.5 177.85 T
+0 F
+-0.1 (User programs must not redefine any specified classes, generic functions, or methods. User-) 99 177.85 P
+(defined methods on specified generic functions must be specialized to a user-defined class) 99 163.85 T
+(\050although) 99 149.85 T
+4 F
+(eql) 148 149.85 T
+0 F
+(-specializers do complicate this a bit\051.) 169.6 149.85 T
+(There is an ef) 72 123 T
+(\336ciency issue in extensible classes in Dylan. Classes that are intended to be sub-) 137.42 123 T
+(classed must, by de\336nition, not be sealed. However) 72 109 T
+(, to gain maximum performance, it is often) 318.16 109 T
+-0.17 (desirable to seal classes. Clearly) 72 95 P
+-0.17 (, a balance must be struck here. One way to do this is to advertise) 225.53 95 P
+-0.2 (an abstract, instantiable class that is not sealed, and to have a concrete class that is sealed. Calling) 72 81 P
+1 F
+-0.08 (make) 72 67 P
+0 F
+-0.08 ( on the abstract class creates an instance of the sealed implementation class. When user pro-) 100 67 P
+FMENDPAGE
+%%EndPage: "3" 3
+%%Page: "4" 4
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Library Design Guidelines) 72 42.62 T
+(August 31, 1995) 279.44 42.62 T
+(4) 536 42.62 T
+0 12 Q
+(grams wish to extend the protocol, they must subclass the abstract class rather than the sealed) 72 712 T
+(implementation class. T) 72 698 T
+(o realize the full ef) 186.16 698 T
+(\336ciency gains that can be provided by having sealed) 276.58 698 T
+(classes, the sealed subclass may also have to be exported.) 72 684 T
+-0.15 (The speci\336cation of a Dylan library must explicitly state whether classes and generic functions in) 72 657.21 P
+(the library\325) 72 643.21 T
+(s API are sealed or open. Furthermore, it must be explicitly stated whether a class is) 124.99 643.21 T
+(abstract or concrete, when it is instantiable, and when a class is a primary class.) 72 629.21 T
+1 14 Q
+(4.2  Pr) 72 595.09 T
+(otocols) 111.02 595.09 T
+0 12 Q
+(A) 72 567.64 T
+2 F
+(pr) 83.66 567.64 T
+(otocol) 93.89 567.64 T
+0 F
+( is the behavior given by a set of speci\336ed generic functions and methods. In object-) 123.89 567.64 T
+-0.08 (oriented class libraries, it is not enough to specify only behavior; one must also specify how each) 72 553.64 P
+(generic function relies on the behavior of other generic functions. That is, the speci\336cation of a) 72 539.64 T
+(generic function has two roles:) 72 525.64 T
+1 F
+(\245) 85.5 504.86 T
+0 F
+(It says what each generic function does when it is called, and what each of its methods) 99 504.86 T
+(should do.) 99 490.86 T
+1 F
+(\245) 85.5 470.07 T
+0 F
+(It says how it relies on other generic functions to provides its behavior, in effect providing) 99 470.07 T
+-0.48 (the \322backbone\323 of the protocol. Specifying this guarantees that all \322callee\323 generic functions) 99 456.07 P
+(will be allowed to fulfill their proper roles.) 99 442.07 T
+(So the speci\336cation for a) 72 415.29 T
+1 F
+(pointer) 194.32 415.29 T
+(-enter) 231.2 415.29 T
+0 F
+( generic function might read:) 261.85 415.29 T
+-0.2 (This generic function is called by the toolkit whenever the mouse enters the gadget. It arranges) 85.03 388.5 P
+(for) 85.03 374.5 T
+1 F
+(mouse-inside-button?) 102.02 374.5 T
+0 F
+( to return) 212.7 374.5 T
+1 F
+(#t) 259.69 374.5 T
+0 F
+( until the next call to) 269.69 374.5 T
+1 F
+(pointer) 371.69 374.5 T
+(-exit) 408.58 374.5 T
+0 F
+( on the gadget. When) 431.23 374.5 T
+1 F
+(pointer) 85.03 360.5 T
+(-enter) 121.92 360.5 T
+0 F
+( is called,) 152.57 360.5 T
+1 F
+(draw) 201.23 360.5 T
+0 F
+( is also called to highlight the gadget.) 227.89 360.5 T
+-0.1 (It is also important to say something more concrete about the behavior of particular methods. For) 72 333.71 P
+(example, the following speci\336cation for the) 72 319.71 T
+1 F
+(draw) 284.3 319.71 T
+0 F
+( generic function:) 310.97 319.71 T
+(Draws the gadget on the display) 85 292.93 T
+(. Calls) 238.53 292.93 T
+1 F
+(pointer) 272.2 292.93 T
+(-within-gadget?) 309.09 292.93 T
+0 F
+( to determine if the gadget) 389.75 292.93 T
+(should be drawn with highlighting.) 85 278.93 T
+(might be specialized for a particular push-button containing text:) 72 252.14 T
+(For a text button, this draws the button and its text in a 12 point Helvetica font. The button\325) 85 225.36 T
+(s) 522.99 225.36 T
+(border is a 2 pixel-thick solid line. The button is highlighted, if necessary) 85 211.36 T
+(, by underlining the) 436.19 211.36 T
+(text.) 85 197.36 T
+1 14 Q
+(4.3  Abstract Classes) 72 163.24 T
+0 12 Q
+(Often a library will provide incomplete \322abstract\323 classes that must be subclasses and extended) 72 135.79 T
+-0.37 (before they can be used. In this case, the speci\336cation should state what required methods must be) 72 121.79 P
+(implemented.) 72 107.79 T
+(Note that there are sometimes methods which should not be overridden. Any such methods) 72 81 T
+(should be explicitly noted.) 72 67 T
+FMENDPAGE
+%%EndPage: "4" 4
+%%Page: "5" 5
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Library Design Guidelines) 72 42.62 T
+(August 31, 1995) 279.44 42.62 T
+(5) 536 42.62 T
+1 14 Q
+(4.4  Ef\336ciency Concerns) 72 710.67 T
+0 12 Q
+(Fully specifying the inter) 72 682.08 T
+(-relationships between generic functions gives a lot of power) 192.76 682.08 T
+(, but it can) 484.88 682.08 T
+(overconstrain the implementation to the point where ef) 72 668.08 T
+(\336ciency can be lost. For example, specify-) 335.41 668.08 T
+(ing that a) 72 654.08 T
+1 F
+(drag) 119.66 654.08 T
+0 F
+( generic function must be implemented by repeatedly calling) 143.66 654.08 T
+1 F
+(draw) 437.95 654.08 T
+0 F
+( and) 464.62 654.08 T
+1 F
+(erase) 487.94 654.08 T
+0 F
+(would prevent the implementor from choosing a more ef) 72 640.08 T
+(\336cient strategy) 343.74 640.08 T
+(, such as drawing into a) 413.95 640.08 T
+(pixmap and then moving the pixmap. W) 72 626.08 T
+(e can use several techniques to help here:) 264.7 626.08 T
+1 F
+(\245) 85.5 604.17 T
+0 F
+(Use \322functional\323 protocols that allow results to be memoized as long as the memoized) 99 604.17 T
+(results remain valid. The specification describes the conditions under which memoized) 99 590.17 T
+(results remain valid.) 99 576.17 T
+1 F
+(\245) 85.5 554.25 T
+0 F
+(Describe sets of \322consistent\323 generic functions, which are explicitly identified sets of) 99 554.25 T
+(generic functions that behave as though there are calls between them, but are free to in-line) 99 540.25 T
+(knowledge about one another. This means that users who specialize one generic function) 99 526.25 T
+(may need to specialize others as well. The specification of such sets of functions must) 99 512.25 T
+(explicitly identify the relationships between each other.) 99 498.25 T
+-0.28 (Note that some generic functions may have \322private\323 pieces of state among themselves \050for exam-) 72 470.33 P
+(ple,) 72 456.33 T
+1 F
+(pointer) 92.66 456.33 T
+(-enter) 129.55 456.33 T
+0 F
+( and) 160.2 456.33 T
+1 F
+(pointer) 183.53 456.33 T
+(-exit) 220.42 456.33 T
+0 F
+( may both maintain an \322inside\323 bit\051. This sort of state may be) 243.07 456.33 T
+(inferred from the speci\336cation, but it is best to state it explicitly) 72 442.33 T
+(.) 376.54 442.33 T
+1 14 Q
+(4.5  Layer) 72 407.08 T
+(ed Pr) 132.02 407.08 T
+(otocols) 164.04 407.08 T
+0 12 Q
+-0.46 (There is often a tension between ease-of-use and ease-of-extensibility) 72 378.5 P
+-0.46 (. For example, it is generally) 402.11 378.5 P
+-0.14 (hard to write a speci\336cation \050and the code\051 for a function that is very powerful, and it is generally) 72 364.5 P
+-0.25 (easy to write a speci\336cation \050and the code\051 for one that is weaker) 72 350.5 P
+-0.25 (. One way to help here is to layer) 380.27 350.5 P
+(protocols, by specifying calls to generic functions that are not necessarily visible in the top-level) 72 336.5 T
+(API. For example, the) 72 322.5 T
+1 F
+(draw) 181.32 322.5 T
+0 F
+( method for text push-buttons might be speci\336ed as follows:) 207.98 322.5 T
+(A text button is displayed as a text string surrounded by a border) 85 294.58 T
+(. The text is drawn in the font) 394.97 294.58 T
+(given by calling the) 85 280.58 T
+1 F
+(font) 182.99 280.58 T
+0 F
+( generic function, and the border is an un\336lled rectangle whose thick-) 203.66 280.58 T
+(ness is given by calling) 85 266.58 T
+1 F
+(border) 200 266.58 T
+(-width) 234.88 266.58 T
+0 F
+(. The button is highlighted, if necessary) 268.22 266.58 T
+(, by underlining) 457.42 266.58 T
+(the text.) 85 252.58 T
+(Such protocol layering allows more code-sharing to take place than might otherwise.) 72 224.67 T
+1 16 Q
+(5.  Naming Conventions) 72 182.08 T
+0 12 Q
+(Here are some suggested naming conventions for module variables:) 72 152.83 T
+1 F
+(\245) 85.5 130.92 T
+0 F
+-0.33 (Follow the naming conventions given in the DIRM: hyphens between words, angle brackets) 99 130.92 P
+(around class names, asterisks around read/write module variables, a dollar sign in front of) 99 116.92 T
+(read-only variables \050constants\051, question marks at the ends of predicates, and exclamation) 99 102.92 T
+(points at the end of \322destructive\323 functions.) 99 88.92 T
+1 F
+(\245) 85.5 67 T
+0 F
+(Avoid abbreviations and acronyms.) 99 67 T
+FMENDPAGE
+%%EndPage: "5" 5
+%%Page: "6" 6
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Library Design Guidelines) 72 42.62 T
+(August 31, 1995) 279.44 42.62 T
+(6) 536 42.62 T
+1 12 Q
+(\245) 85.5 712 T
+0 F
+-0.09 (Combine words with hyphens, not just concatenation. Of course, standard English morphol-) 99 712 P
+(ogy such as prefixes \050the) 99 698 T
+1 F
+(super) 221.3 698 T
+0 F
+( in) 249.97 698 T
+1 F
+(superclass) 265.31 698 T
+0 F
+(\051 and suffixes \050the) 317.98 698 T
+1 F
+(es) 407.95 698 T
+0 F
+( in) 417.95 698 T
+1 F
+(all-superclasses) 433.28 698 T
+0 F
+(\051 is) 512.62 698 T
+(acceptable.) 99 684 T
+1 F
+(\245) 85.5 663.46 T
+0 F
+(Combine words with standard patterns. One common pattern is) 99 663.46 T
+2 F
+(verb-object) 405.64 663.46 T
+0 F
+(:) 460.28 663.46 T
+1 F
+(add-method) 466.62 663.46 T
+0 F
+(,) 528.62 663.46 T
+1 F
+(fr) 99 649.46 T
+(eeze-methods) 108.11 649.46 T
+0 F
+(,) 176.75 649.46 T
+1 F
+(r) 182.75 649.46 T
+(emove-duplicates) 187.86 649.46 T
+0 F
+(. Another is) 276.52 649.46 T
+2 F
+(adjective-noun) 335.84 649.46 T
+0 F
+(:) 407.16 649.46 T
+1 F
+(simple-err) 413.5 649.46 T
+(or) 466.6 649.46 T
+0 F
+(,) 477.92 649.46 T
+1 F
+(double-) 483.92 649.46 T
+(\337oat) 99 635.46 T
+0 F
+(,) 121.67 635.46 T
+1 F
+(dir) 127.67 635.46 T
+(ect-subclasses) 142.79 635.46 T
+0 F
+(. A third is) 213.44 635.46 T
+2 F
+(object-attribute) 267.78 635.46 T
+0 F
+(:) 342.44 635.46 T
+1 F
+(object-class) 348.78 635.46 T
+0 F
+(,) 408.1 635.46 T
+1 F
+(slot-allocation) 414.1 635.46 T
+0 F
+(. Note that) 486.1 635.46 T
+(one should not use the pattern) 99 621.46 T
+2 F
+(object-verb) 245.65 621.46 T
+0 F
+(: do not say) 300.3 621.46 T
+1 F
+(\336le-delete) 358.97 621.46 T
+0 F
+(.) 408.29 621.46 T
+1 F
+(\245) 85.5 600.92 T
+0 F
+(Choose a set of words and stick to them. Don\325t use) 99 600.92 T
+1 F
+(make) 346.31 600.92 T
+0 F
+( in some symbols and) 374.3 600.92 T
+1 F
+(create) 481.31 600.92 T
+0 F
+( in) 512.62 600.92 T
+(others for no good reason. Use the words that Dylan provides. For example, Dylan uses the) 99 586.92 T
+(word) 99 572.92 T
+1 F
+(slot) 126.66 572.92 T
+0 F
+(, not \322field\323 or \322instance variable.\323) 144.66 572.92 T
+1 F
+(\245) 85.5 552.39 T
+0 F
+-0.04 (Macros that establish some sort of an environment and then evaluate a body in that environ-) 99 552.39 P
+(ment should have a name such as) 99 538.39 T
+1 F
+(with-indentation.) 261.97 538.39 T
+0 F
+(If such a macro has a functional inter-) 353.32 538.39 T
+(face, then function should be named something like) 99 524.39 T
+1 F
+(call-with-indentation) 349.97 524.39 T
+0 F
+( or) 457.31 524.39 T
+1 F
+(do-with-) 473.3 524.39 T
+(indentation) 99 510.39 T
+0 F
+(.) 157.68 510.39 T
+1 F
+(\245) 85.5 489.85 T
+0 F
+(If you need to introduce a constructor function, it should be called something like) 99 489.85 T
+1 F
+(make-) 493.28 489.85 T
+(point) 99 475.85 T
+0 F
+(. One reason for introducing a constructor function is when there are some required) 125.68 475.85 T
+(initargs; the constructor function should take these as ordinary required arguments. Other-) 99 461.85 T
+(wise, it is best to use) 99 447.85 T
+1 F
+(make) 201.34 447.85 T
+2 F
+(<class>) 232.33 447.85 T
+0 F
+(.) 272.53 447.85 T
+1 F
+(\245) 85.5 427.31 T
+0 F
+(Instead of introducing coercion functions, specialize Dylan\325s) 99 427.31 T
+1 F
+(as) 394.27 427.31 T
+0 F
+( operator.) 404.94 427.31 T
+1 F
+(\245) 85.5 406.77 T
+0 F
+(Accessor \050and accessor-like\051 functions should generally include the name of the thing they) 99 406.77 T
+(are accessing, especially if the name would otherwise be too brief. For example,) 99 392.77 T
+1 F
+(text-style-) 486.91 392.77 T
+(height) 99 378.77 T
+0 F
+( and) 131 378.77 T
+1 F
+(region-height) 154.33 378.77 T
+0 F
+( instead of just) 223 378.77 T
+1 F
+(height) 296.33 378.77 T
+0 F
+(; this is especially important, since the) 328.33 378.77 T
+(semantics of) 99 364.77 T
+1 F
+(height) 162.32 364.77 T
+0 F
+( on a text style is different from its semantics on a region.) 194.33 364.77 T
+1 16 Q
+(6.  Other Conventions) 72 323.56 T
+0 12 Q
+(The following is a laundry list of other conventions:) 72 295.69 T
+1 F
+(\245) 85.5 275.15 T
+0 F
+(Functions should take their most important arguments first.) 99 275.15 T
+1 F
+(\245) 85.5 254.61 T
+0 F
+-0.29 (For \322copying\323 functions, the \322destination\323 argument should precede the \322source\323 argument,) 99 254.61 P
+(such as Dylan\325s) 99 240.61 T
+1 F
+(replace-subsequence!) 177.98 240.61 T
+0 F
+( function.) 287.3 240.61 T
+1 F
+(\245) 85.5 220.08 T
+0 F
+-0.18 (\322Start\323 and \322end\323 keyword arguments should be named) 99 220.08 P
+1 F
+-0.18 (start:) 367.47 220.08 P
+0 F
+-0.18 ( and) 395.46 220.08 P
+1 F
+-0.18 (end:) 418.42 220.08 P
+0 F
+-0.18 (. The start argument) 441.08 220.08 P
+(should be inclusive, and the end argument should be exclusive. This is modelled after) 99 206.08 T
+(Dylan\325s) 99 192.08 T
+1 F
+(fill!) 139.99 192.08 T
+0 F
+( function.) 157.99 192.08 T
+1 16 Q
+(7.  Open Issues) 72 150.87 T
+0 12 Q
+(W) 72 123 T
+(e need to provide guidelines for when to seal classes, and when the a sealed subclass of an) 82.37 123 T
+(advertised abstract instantiable class should be sealed. Every library should provide its own) 72 109 T
+(guidelines for users about when to specialize on the abstract or the sealed classes \050c.f., specializ-) 72 95 T
+(ing on) 72 81 T
+1 F
+(<vector>) 105.34 81 T
+2 F
+(vs.) 154 81 T
+1 F
+(<simple-object-vector>) 169.99 81 T
+0 F
+(\051, based on the likely loss of ef) 288.3 81 T
+(\336ciency of a more) 435.4 81 T
+(abstract protocol.) 72 67 T
+FMENDPAGE
+%%EndPage: "6" 6
+%%Page: "7" 7
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Library Design Guidelines) 72 42.62 T
+(August 31, 1995) 279.44 42.62 T
+(7) 536 42.62 T
+FMENDPAGE
+%%EndPage: "7" 7
+%%Trailer
+%%BoundingBox: 0 0 612 792
+%%PageOrder: Ascend
+%%Pages: 7
+%%DocumentFonts: Times-Roman
+%%+ Times-Bold
+%%+ Times-Italic
+%%+ Helvetica
+%%+ Courier
+%%EOF

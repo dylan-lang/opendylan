@@ -1,0 +1,68 @@
+<HTML>
+
+<HEAD>
+	<TITLE>Functional Developer Example: life</TITLE>
+	<LINK REL="stylesheet" TYPE="text/css" HREF="../../examples.css">
+</HEAD>
+
+<BODY>
+
+<H2>Life Example Project</H2>
+
+<HR ALIGN="CENTER">
+
+<P>This is a DUIM implementation of John Conway's game of Life.  See
+the <b>Help > Rules</b> menu item in the example for the rules of the
+game.  You can choose a predefined pattern from the menu or draw
+your own pattern on the window and see how long it lives.</P>
+
+<P>Note that because this example contains resources (icons for the toolbar)
+it requires the Windows resource compiler, rc.exe and associated files, in order to compile
+successfully.  The resource compiler is available for download from the Microsoft website
+as part of the "Microsoft Platform SDK build environment".  At the time of this writing
+the URL is <a href="http://msdn.microsoft.com/developer/sdk/sdktools.asp">
+http://msdn.microsoft.com/developer/sdk/sdktools.asp</a>.
+
+<P>The program is composed of the following parts:</P>
+
+<BLOCKQUOTE>
+<DL>
+
+  <DT><CODE>library.dylan</CODE></DT>
+  <DD>Contains the library and module definitions.</DD>
+  <P>
+  <DT><CODE>util.dylan</CODE></DT>
+  <DD>Utility functions, macros, and constants used by the rest of the program.</DD>
+  <P>
+  <DT><CODE>logic.dylan</CODE></DT>
+  <DD>  The game rules are implemented here, in the function
+    do-n-generations.</DD>
+  <P>
+  <DT><CODE>events.dylan</CODE></DT>
+  <DD>Implements freehand pattern drawing on the Life window by
+    handling various mouse events.</DD>
+  <P>
+  <DT><CODE>patterns.dylan</CODE></DT>
+  <DD>Definitions for the patterns in the Patterns menu.</DD>
+  <P>
+  <DT><CODE>frame.dylan</CODE></DT>
+  <DD>The DUIM frame definition, including command tables and
+  most command implementations.</DD>
+  <P>
+  <DT><CODE>display.dylan</CODE></DT>
+  <DD>Code for redisplaying the Life window.</DD>
+  <P>
+  <DT><CODE>*.ico</CODE></DT>
+  <DD>Various icon files used by the Life user interface.</DD>
+  <P>
+  <DT><CODE>life-resources.rc</CODE></DT>
+  <DD>Resource file giving names to the various icons used.</DD>
+  <P>
+  <DT><CODE>README.html</CODE></DT>
+  <DD>This file.</DD>
+</DL>
+</BLOCKQUOTE>
+
+</BODY>
+
+</HTML>

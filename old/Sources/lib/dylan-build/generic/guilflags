@@ -1,0 +1,1 @@
+/NODEFAULTLIB /INCREMENTAL:NO /PDB:NONE /RELEASE /NOLOGO -subsystem:windows,4.0 /entry:WinMainCRTStartup

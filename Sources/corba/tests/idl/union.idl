@@ -1,0 +1,60 @@
+// Author:    Keith Dennison
+// Copyright: Copyright 1998, Functional Objects, Inc.  All rights reserved.
+// Version:   $HopeName: D-corba-tests-idl!union.idl(trunk.1) $
+
+union RLE_entity_1 switch (short) {
+  case 0:
+  case 1: short length;
+  case 2: char  character;
+};
+
+union RLE_entity_2 switch (char) {
+  case 'n': short length;
+  default:  char  character;
+};
+
+union RLE_entity_3 switch (boolean) {
+  case FALSE: short length;
+  case TRUE:  char  character;
+};
+
+union RLE_entity_4 switch (enum RLE_entity_sort {one, two, three}) {
+  case one: short length;
+  case two: char  character;
+  case three: unsigned long code;
+};
+
+#ifdef ORBIXWEB
+  enum RLE_entity_sort {one, two, three};
+#endif
+
+union RLE_entity_5 switch (RLE_entity_sort) {
+  case one: short length;
+  default:
+  case two: char  character;
+};
+
+
+interface UnionTest {
+
+  attribute RLE_entity_1 rle_entity_1_attribute;
+  attribute RLE_entity_2 rle_entity_2_attribute;
+  attribute RLE_entity_3 rle_entity_3_attribute;
+  attribute RLE_entity_4 rle_entity_4_attribute;
+  attribute RLE_entity_5 rle_entity_5_attribute;
+
+  exception failure {
+  };
+
+  void check_rle_entity_1_attribute () raises (failure);
+  void check_rle_entity_2_attribute () raises (failure);
+  void check_rle_entity_3_attribute () raises (failure);
+  void check_rle_entity_4_attribute () raises (failure);
+  void check_rle_entity_5_attribute () raises (failure);
+
+  RLE_entity_1 rle_entity_1_operation (in RLE_entity_1 one, inout RLE_entity_1 two, out RLE_entity_1 three);
+  RLE_entity_2 rle_entity_2_operation (in RLE_entity_2 one, inout RLE_entity_2 two, out RLE_entity_2 three);
+  RLE_entity_3 rle_entity_3_operation (in RLE_entity_3 one, inout RLE_entity_3 two, out RLE_entity_3 three);
+  RLE_entity_4 rle_entity_4_operation (in RLE_entity_4 one, inout RLE_entity_4 two, out RLE_entity_4 three);
+  RLE_entity_5 rle_entity_5_operation (in RLE_entity_5 one, inout RLE_entity_5 two, out RLE_entity_5 three);
+};

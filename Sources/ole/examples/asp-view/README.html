@@ -1,0 +1,107 @@
+<HTML>
+<HEAD>
+	<TITLE>Functional Developer Example: ASP-view</TITLE>
+	<LINK REL="stylesheet" TYPE="text/css" HREF="../../examples.css">
+</HEAD>
+
+<BODY>
+
+<H2>ASP-view component</H2>
+
+<HR ALIGN="CENTER">
+
+<P>This project contains an example program that is a demonstration of
+a WWW server-side Automation component using the Microsoft Active Server Pages
+(ASP) protocols.  It also demonstrates the use of type libraries
+in a Dylan project.</P>
+
+<P>The <b>OLE-Automation</b> library used by this program is documented in
+the Functional Developer "OLE, COM, ActiveX and DBMS" reference manual.</P>
+
+<H3>Web Server configuration</H3>
+
+<P>In order to use this example, you must have a Web server that supports
+Active Server Pages, such as 
+ <A HREF="http://www.microsoft.com/iis/default.asp">Windows NT Internet
+Information Server (IIS)</A>, or a <A
+HREF="http://msdn.microsoft.com/library/officedev/office/html/settinguppersonalwebserver.htm">Microsoft
+personal Web server</A>.  Make sure to install the Active Server Pages
+component of the Web server by downloading any additional Setup programs
+needed.</P>
+
+<P>Once you have a server installed, copy the file <em>asp-view.asp</em> from
+this project's source directory to a directory used by the server (e.g.
+to <em>c:\inetpub\wwwroot</em> or <em>c:\wwwroot\</em>).</P>
+
+<H3>Project configuration</H3>
+
+<P>This project uses the Automation type library defined by the
+Web server.  Before you can compile the project, you must update it
+to know the location of the type library on your system:</P>
+
+<ol>
+<li>First, find your Web server's <em>asp.dll</em> file.  Typically
+it will be in <em>c:\windows\system\inetsrv\asp.dll</em> or
+<em>c:\winnt\system32\inetsrv\asp.dll</em>.  If you cannot access the Web
+server files directly from your development machine, just put a copy
+of <em>asp.dll</em> anywhere where it will be accessible -- the file is only
+used to extract type information, it will not be actually executed by this
+project.
+<li>In the Sources tab of the Project window, open the file
+<em>asp-type-library.spec</em> (the last file in the project) by
+double-clicking on it.
+<li>Edit the "Type-library:" line to contain the actual location of
+the <em>asp.dll</em> file.
+</ol>
+
+<P>You can now build the component, e.g. by pressing the "Build" button
+in the Project window.</P>
+
+<H3>Component registration</H3>
+
+<P>In order for the component to work when started by the Web server,
+all of the libraries used by the component need to either be in the same
+directory as the component, or else in a directory which is in
+the system PATH (not the individual user's PATH on NT). The simplest
+way to accomplish this is to use the "Project &gt; Build Release"
+command to create a release directory. If you wish, you can move that
+directory to any location you want, but you must do so before you
+attempt to register the component.  If your Web server is on a different
+machine than the project, you must copy the release directory
+to the Web server's machine and register it there, since this is a
+server-side component.</P>
+
+<P>To register the component, use the <code>regsvr32</code> command
+line utility like this:</P>
+
+ <blockquote><code>regsvr32 asp-view.dll</code></blockquote>
+
+<P>(The complete pathname will need to be given if the file is in a
+different directory that is not in the PATH.)  This will cause the
+appropriate entries to be made in the Windows System Registry. (For
+use in a batch script, the "<code>/s</code>" option may be used to suppress the
+dialog box reporting completion.) The full pathname of the server
+is recorded, so you must unregister the server before you move or delete it.
+You can unregister it by doing:</P>
+
+ <blockquote><code>regsvr32 /u asp-view.dll</code></blockquote>
+
+<P>This invokes the server to unregister itself, so won't work
+if the server has been deleted first.</P>
+
+<H3>Usage</H3>
+
+<P>To test out the component, use any browser to connect to your Web server,
+and ask it to load the <em>asp-view.asp</em> file.  E.g. if you installed
+<em>asp-view.asp</em> in the server's top-level <em>wwwroot</em> directory,
+and the browser is running on the same host as the server, the url would look
+like this: <code>http://localserver/asp-view.asp</code>
+
+<P>The resulting page will give you the option of viewing different aspects
+of the Active Server Pages environment, such as the values of all server
+variables or the session id.  The asp-view component is invoked to compute
+and display the requested information back on the page.</P>
+
+</BODY>
+
+</HTML>

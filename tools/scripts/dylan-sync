@@ -1,0 +1,53 @@
+#!/bin/sh 
+
+# Syncs local compounds. 
+
+# Name of this script, for use in error messages.
+script_name=`basename $0`
+
+# Location of this script, for relative filenames.
+script_location=`dirname $0`
+
+# default hope options
+hope_options="-working-file skip "
+
+# Initial value for the compound.  It is overridden by
+# command line argument or dylan-local-compound.
+compound=""
+
+while [ $# -gt 0 ]; do
+  case $1 in
+    -c | -comp | -compound) 
+      compound=$2; shift 2
+      ;;
+    -working-file | -missing-dir | -extra-files | -version | -date | -branch)
+      hope_options="$hope_options $1 \"$2\""; shift 2
+      ;;
+    -linked | -not-linked | -recursive | -not-recurse)
+      hope_options="$hope_options $1"; shift
+      ;;
+    -*)
+      echo "$script_name: unrecognised option $1"
+      exit 1
+      ;;
+    *)        
+      break
+      ;;
+  esac
+done
+
+# If no compound specified in the command line, default.
+if [ -z "$compound" ]; then
+  compound=`$script_location/dylan-local-compound`;
+fi
+
+# Complain if no compound explicitly specified and no default.
+if [ -z "$compound" ]; then
+  echo "$script_name: no compound specified."
+  exit 1
+fi
+
+echo "$script_location/dylan-hope co -comp $compound $hope_options"
+eval "$script_location/dylan-hope co -comp $compound $hope_options"
+
+## eof

@@ -1,0 +1,331 @@
+notes on the Dylan language, for teaching
+-----------------------------------------
+
+PART 1
+------
+
+Quick bit of history - Lisp/CLOS ancestry, but with ability to lose dynamic
+overhead where not used.  Perhaps a little motivation here.
+
+   Dylan was devised at Apple back in 199??, originally as a high level
+   language for delivering software onto the Apple Newton????
+
+   Its basic design goals were to be a high-level dynamic OO language that
+   supported efficient implementation through the ability to declare
+   away unwanted dynamism.
+
+   Its actual design is part lifted from Common Lisp and CLOS, but with a
+   whole new syntax, and a complete overhaul of the integration of object-
+   system into the language.  Whereas CLOS is a bolted-on OO extension to
+   Common Lisp, Dylan is one consistent language, and hence has a flavour
+   all its own (pun intended?)
+
+   What do I mean by high-level?  In Dylan every value is an instance of a
+   class, and the representation of data is not specified down to the
+   bit level.  It is typed, and type checking cannot be subverted.  Values
+   include numbers, characters, strings, functions, classes themselves,
+   methods and generic functions.
+
+   Syntactically Dylan has a simple core, but a sophisticated macro system
+   allows many of the familiar high-level constructs to be built on top of
+   this core.
+
+   By dynamic, I mean that types and type-checking notionally all happens at
+   runtime.  In practice the compiler can move much of this to compile time
+   and optimize it away, without compromizing the programmer's ability to
+   manipulate types at runtime.  Dylan is also dynamic in that classes can
+   be created at runtime, methods added and removed from generic functions.
+   It supports true closures.
+
+Semantic model - everything is an instance of a class.  Apart from various
+numerics and useful data structures, the key kinds of object are <method>,
+<generic-function>, <class>.
+
+   As for object oriented, I've hinted this already.  There is a uniform
+   model where all values are instances of some class, including classes,
+   methods, generics numbers.  Dylan supports multiple inheritance (of
+   implementation).  It's generic functions support multi-method dispatch
+   (where any number of arguments can contribute to the selection of the set
+   of applicable methods), and a generic function method can "call next-
+   method" to punt to the next-most-specific method.
+
+   When a class is defined, a set of slots can be defined with it (slots
+   themselves are not first-class in Dylan), and they are named via generic
+   functions that contain their accessor methods.  This means that slot-
+   access is syntactically identical to function-calling, making it easy to
+   alter the implementation of a slot without changing any of the source
+   that uses it.
+
+   There are various qualifiers for classes and generics, but perhaps the
+   most quintessential to Dylan is the "sealed" adjective.  A class can be
+   sealed, indicating to the compiler that (outside of its library's source)
+   there can be no future subclassing.
+ 
+   A "domain" can be sealed, indicating a class of methods that the compiler
+   can know won't be overridden in future.
+
+The dynamic view is that a class is defined by creating an instance of
+<class> at runtime.  In practice nearly all code uses the "define class"
+syntax, which in most cases is treated specially by the compiler and handled
+statically, "much as you might expect".
+
+   Having said that you can dynamically create classes and generics at
+   runtime, in practice this is very rare.  There are definitions ("define
+   class" and "define generic") to statically declare classes (with slots)
+   and generics.
+
+   Using these gives the compiler more information, as well as associating
+   the class or generic with a constant binding.
+
+   Ah yes, bindings.  At the top level, Dylan has modules, which are sets of
+   bindings and binding import/exports.  A dylan library consists of a set
+   of modules and module import/exports, and is typically compiled to a DLL
+   or shared object.  Basically bindings name definitions in libraries, and
+   these definitions are grouped into modules to help manage large
+   namespaces.
+
+   Anyway, it is time to look at some Dylan now that I've covered the basic
+   concepts, and explain some of the syntactic/lexical details and
+   conventions.
+
+[ need example from the DRM here, hacked to actually compile ]
+
+   [ Just look at a few functions and explain method, bare-method, function
+   and generic more clearly. ]
+
+
+   Need to go over number syntax, character, string, list, vector, method,
+   arg-list function call, and use of whitespace.
+
+Again generic functions can be created dynamically and methods added with
+"add-method" at runtime, but nearly always you'll use "define method" and
+"define generic".
+
+Fairly standard lexical syntax exists for representing instances of
+<boolean>, <integer>, <float>, <byte-character>, <byte-string>,
+<simple-object-vector>, <list> (anything else?)
+    (3.4).object-class -> <single-float> 
+
+   // comment
+   /* comment  /* which may nest */  comment */
+   /*   // line comment /* /* /* still line comment
+        end of comment */
+
+   <boolean>     #f   #t
+   <integer>     123  7.  -45  #xfe  -#xff
+   <character>   'a'  '2'   '\''  ' '   '\)'  '\\'
+                 '\<0d>'   '\<01e8>'   (ascii/unicode escape)
+
+   <byte-string> "abc"   "a quoted \"string\" with string quotes"
+                 "(must escap\<65> close-parentheses\)"
+
+   binding or variable name
+     either start with a letter
+     or contains 2 consecutive letters
+     or starts with !&*<=>|^$%@_ and contains at least one letter
+     or starts with \ and continues as a name (syntactic escape)
+
+   operator - specific fixed sequences of !&*<=>|^$%@_ are recognized as
+   operators:
+          +  -  *  /  ^
+          =  ==  <  >  <=  >=  ~=  ~==
+          &  |  :=  ~
+
+   punctuation
+          (  )  [  ]  {  }  ,  .  ;  =  (also an operator)
+          ::  =>  #(  #[  ?   ??  ...  == (also an operator)
+
+   other combinations of graphic chars (not qualifying as names or comment-
+   starters) are illegal.
+
+
+   #-words
+          #f  #t  (already met)
+          #next  #rest  #key  #all-keys   (parameter lists)
+
+
+Form of a program: set of libraries, with development environment providing
+a means of determining the function (like C's "main").
+
+A library can import and export namespaces call modules, modules can import,
+export and rename bindings.  A libraries definitions are typical definitions
+of these bindings as methods/generics/variables/constants/macros.
+
+Syntax is Algol-like, with most constructs denoted by a keyword, and ending
+with "end".  The "end" can be following with the keyword for clarity:
+
+if (..)
+  ...
+else
+  ...
+end;
+
+if (..)
+  ...
+end if;
+
+There is no hard distinction between expressions and statements, begin-end
+blocks return the value of their last semi-colon separated item: 
+
+begin       /* multi-line nesting comment style */
+  let t = a ;
+  a := b ;
+  b := c ;
+  t ;       // comment to end of line, semi colon optional before end
+end;
+
+[ Most statement clauses implicitly contain begin-end blocks (such as the if
+statement) ]
+
+  return (if (a) 7 else 9 end) ;
+
+
+
+Introducing names:
+
+  let  a :: <integer> = 43 ;
+  
+introduces name a until the end of scope.  Here it is typed <integer>, which
+means that every assignment to a will, if necessary, check the value is an
+instance of <integer>.
+
+  let (a, b) = foo() ;
+
+introduces several variables and binds them to the multiple values of a call
+to function foo.
+
+  let  f = \+ ;
+  let  x = 42 ;
+  f(x, 7)    // call function + on 42 and 7
+
+  let  sq = method (a) a * a end ;    // sq is a bare method
+
+  sq (3) + 4 . sq  ;   // 3^2 + 4^2  , using . notation for postfix function call
+            ^ whitespace needed here (ambiguity with 4.)
+
+lexemes:  integers, floats, booleans, strings, characters
+
+hello word example - explain format-out
+factorial example - explain implicit generics
+
+
+Class definitions - class basically inherits from one or more other
+classes (exception being the root class <object>). <> convention for
+naming classes (actually types).  Simple slot definitions.
+
+Example of the Dylan numeric classes (mention abstract)
+
+
+   A feature of Dylan is the ability to conveniently pass more than one
+   value as the result of an expression.  Thus
+
+define function sum-and-product (a, b)  
+  values (a + b, a * b)  
+end function ;
+
+define function test (a)
+  let  (doub, square) = sum-and-product (a, a) ;
+  doub > square
+end;
+
+Generic functions.
+-----------------
+
+A generic function is, to the caller, just a function (called just like any
+method / function), but with a type-based dispatch mechanism built in.  
+
+A generic is a set of methods (not necessarily a constant set), all of which
+are parameter-list compatible with the generic's definition.  Further no two
+methods within a given generic have the same specializers.  
+
+  A method can be in more than one generic simultaneously if desired -
+  methods are not owned by a generic they happen to be in.  The define
+  method statement does not actually give the method a name, more correctly
+  it creates a method object, and adds it to the named generic (creating a
+  default generic if necessary). 
+
+  Generic function dispatch, in its full generality, is a protocol for
+  resolving a specific incoming argument list against the set of methods and
+  selecting a "most specific applicable method" to call on those arguments.
+  The resolution can depend on the class or identity of each argument and
+  all argument positions are equal in status.
+  
+  It is entirely possible for there to be no applicable methods, or for 
+  several to be equally applicable (ambiguity).  Both of these situations
+  signal errors - there is no default rule brought into play.
+
+  The resolution depends on the inheritance graph of the classes involved,
+  but this is converted into a list called the class-precedence-list, to
+  make the algorithm tractable in practice.  The class-precedence-list for a
+  class <foo> is an ordered list of <foo> and all its superclasses, such
+  that if <a> inherits from <b>, then <a> occurs before <b> in the CPL.
+  Furthermore the order of <foo>'s CPL is consistent with the ordering of
+  the CPL's for all of <foo>'s superclasses (monotonicity).
+
+  End of technical diversion - most of the time the subtleties of this
+  semantics won't be an issue - it is usually obvious which is the most
+  specific method.
+
+  However note that this differs crucially from Java and C++, where dynamic
+  (virtual) dispatch is only done on one argument....
+
+Multi-method dispatch: choose the most specific given all the argument types
+- class dispatch and singleton dispatch.  Mention that "most specific" can
+get quite complex, but usually its simple and obvious.  Examples.  Contrast
+with a language where methods belong to a class (Java, C++).
+
+Mention that more care is needed in Dylan with naming things (method-name
+clashes, lisp1) but that such discipline is probably a good thing anyway.
+
+Mention that the compiler's job is to spot cases where the dispatch can be
+determined at compile time (in presence of static knowledge).
+
+Given example of some stream functions as obvious generics.
+
+lambda lists - required, #rest, #key, keywords.  Touch on apply and
+make/initialize.
+
+
+  define function int-sum
+      (a :: <integer>, #rest r :: <integer>)
+   => (sum :: <integer>)
+    // one required <integer> argument, any number of <integer> rest args
+    for (other in r)    // iteration construct over <sequence>
+      a := a + other    // 'a' is a variable like a let-introduced one
+    end;                // whitespace is needed around operators...
+    a         // result
+  end;
+
+  // valid calls:
+
+  int-sum (0) ;
+  7 . int-sum ;
+  int-sum (1,2,3,4,5,6,7,8) ;
+  apply (int-sum, #(1,2,3,4,5,6,7,8)) ;
+  apply (int-sum, 42, 100, #(1,2,3,4,5,6,7,8)) ;
+
+  // error
+  int-sum() ;
+  int-sum("foo") ;
+  apply (int-sum, #()) ;
+
+PART 2
+------
+
+Worked example - find one of the right size
+
+
+PART 3
+------
+
+Classes - slot allocation, multiple inheritance, abstract,
+instantiable, primary.  Sealing.  Slot options and make/initialize
+protocol.  Next methods?
+
+CPL algorithm via example - how ambiguity can arise.  Use of mixin
+classes, recommended use of abstract layer for exporting, sealed 
+implementation inside library.  Contrast with Java interfaces?
+
+More Syntax and constructs - for, case, block, while, if.  Closures.
+Unwind protect.  Defining macros.  Exceptions.
+

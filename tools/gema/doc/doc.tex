@@ -1,0 +1,47 @@
+% $Id: doc.tex,v 1.1 2004/03/12 00:42:06 cgay Exp $
+
+\documentstyle{article}
+\pagestyle{headings}
+
+\oddsidemargin 0.5in \evensidemargin 0.5in
+\topmargin 0pt \headsep .5in
+\textheight 8.1in \textwidth 6in
+
+\title{\bf Gema --- \\ a general purpose macro processor}
+\author{David N. Gray \verb/<dgray@acm.org>/}
+\date{March 17, 1995 \\ Revised May 21 and August 20, 1995}
+
+\begin{document}
+
+\maketitle
+
+\chardef\ttlb=`\{
+\chardef\ttrb=`\}
+\chardef\ttcaret=`\^
+
+\section{Introduction}
+
+This document is the user manual for {\bf gema}, a program whose name
+stands for {\bf ge}neral purpose {\bf ma}cro processor.
+This is a utility program which is run as a shell command under Unix or
+MS-DOS and can be used for performing conversions or translations
+of data files or extracting information from files.
+
+The {\tt man} page for {\bf gema} provides a tutorial introduction and a
+brief reference summary, while this document provides a
+more detailed specification.
+It would probably be best to read the tutorial section first before
+reading the rest of this document.  The command line options are fully
+documented in the {\tt man} page, so will not be repeated here.
+
+This version of the document corresponds to version 1.2 of the program.
+(Note that the \verb/-version/ option can be used to check which version
+you are running.)
+
+\include{overview}
+\include{notation}
+\include{function}
+\include{conclude}
+
+\end{document}
+

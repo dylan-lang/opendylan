@@ -1,0 +1,239 @@
+<library-pack name="OLE" title="OLE/ActiveX" number="6">
+  <description>Dylan COM and OLE support libraries</description>
+  <copyright>Copyright (c) 1995-2001 Functional Objects, Inc. All rights reserved.</copyright>
+  <company>Functional Developer</company>
+  <libraries>
+    <library name="com" title="COM">
+      <description>An interface to COM</description>
+      <sources location="ole/com">
+        <project platform="x86-win32">com.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+        <binary file="DxCOM.dll"/>
+        <lib file="DxCOM.lib"/>
+      </release>
+    </library>
+    <library name="ole" title="OLE">
+      <description>An interface to OLE</description>
+      <sources location="ole/ole">
+        <project platform="x86-win32">ole.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+        <binary file="DxOLE.dll"/>
+        <lib file="DxOLE.lib"/>
+      </release>
+    </library>
+    <library name="ole-automation" title="OLE Automation">
+      <description>An interface to OLE Automation</description>
+      <sources location="ole/ole-automation">
+        <project platform="x86-win32">ole-automation.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+        <binary file="DxOLEAUT.dll">
+	  <merge>win32-automation</merge>
+	</binary>
+        <lib file="DxOLEAUT.lib"/>
+      </release>
+    </library>
+    <library name="win32-automation" title="Win32 Automation">
+      <description>A low-level Win32 interface to automation</description>
+      <sources location="ole/win32-automation">
+        <project platform="x86-win32">win32-automation.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="ole-container" title="OLE Container">
+      <description>A low-level interface to OLE Containers</description>
+      <sources location="ole/ole-container">
+        <project platform="x86-win32">ole-container.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+        <binary file="DxOLECON.dll"/>
+        <lib file="DxOLECON.lib"/>
+      </release>
+    </library>
+    <library name="ole-control-framework" title="OLE Control Framework">
+      <description>A framework for OLE Controls without DUIM</description>
+      <sources location="ole/ole-control-framework">
+        <project platform="x86-win32">ole-control-framework.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+        <binary file="DxOLECFR.dll"/>
+        <lib file="DxOLECFR.lib"/>
+      </release>
+    </library>
+    <library name="ole-controls" title="OLE Controls">
+      <description>A low-level interface to OLE Controls</description>
+      <sources location="ole/ole-controls">
+        <project platform="x86-win32">ole-controls.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+        <binary file="DxOLECTL.dll"/>
+        <lib file="DxOLECTL.lib"/>
+      </release>
+    </library>
+    <library name="ole-dialogs" title="OLE Dialogs">
+      <description>An interface to OLE Dialogs</description>
+      <sources location="ole/ole-dialogs">
+        <project platform="x86-win32">ole-dialogs.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+        <binary file="DxOLEDLG.dll"/>
+        <lib file="DxOLEDLG.lib"/>
+      </release>
+    </library>
+    <library name="ole-server" title="OLE Server">
+      <description>A framework for creating OLE Servers</description>
+      <sources location="ole/ole-server">
+        <project platform="x86-win32">ole-server.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+        <binary file="DxOLESVR.dll"/>
+        <lib file="DxOLESVR.lib"/>
+      </release>
+    </library>
+    <library name="duim-ole-container" title="DUIM OLE Container">
+      <description>A framework for OLE Server applications using DUIM</description>
+      <sources location="ole/duim-ole-container">
+        <project platform="x86-win32">duim-ole-container.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+        <binary file="DxDOCON.dll"/>
+        <lib file="DxDOCON.lib"/>
+      </release>
+    </library>
+    <library name="duim-ole-control" title="DUIM OLE Control">
+      <description>A framework for OLE Controls using DUIM</description>
+      <sources location="ole/duim-ole-control">
+        <project platform="x86-win32">duim-ole-control.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+        <binary file="DxDOLEC.dll"/>
+        <lib file="DxDOLEC.lib"/>
+      </release>
+    </library>
+    <library name="duim-ole-server" title="DUIM OLE Server">
+      <description>A framework for OLE Servers using DUIM</description>
+      <sources location="ole/duim-ole-server">
+        <project platform="x86-win32">duim-ole-server.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+        <binary file="DxDOLES.dll"/>
+        <lib file="DxDOLES.lib"/>
+      </release>
+    </library>
+  </libraries>
+  <examples>
+    <library name="ocx-scribble" title="OCX Scribble">
+      <category>Technologies/OLE/Controls</category>
+      <category>Technologies/DUIM/OLE</category>
+      <description>A simple OLE control written with DUIM</description>
+      <sources location="ole/ocx-scribble">
+        <project>ocx-scribble.hdp</project>
+      </sources>
+    </library>
+    <library name="ole-scribble" title="OLE Scribble">
+      <category>Technologies/OLE/Servers</category>
+      <category>Technologies/DUIM/OLE</category>
+      <description>A simple OLE server written with DUIM</description>
+      <sources location="ole/ole-scribble">
+        <project>ole-scribble.hdp</project>
+      </sources>
+    </library>
+    <library name="button-ocx" title="Button OCX">
+      <category>Technologies/OLE/Controls</category>
+      <category>Technologies/DUIM/OLE</category>
+      <description>An example of using a DUIM gadget as an OLE control</description>
+      <sources location="ole/button-ocx">
+        <project>button-ocx.hdp</project>
+      </sources>
+    </library>
+    <library name="asp-view" title="ASP View">
+      <category>Technologies/OLE/Automation</category>
+      <description>A WWW server-side automation component using ASP (Active Server Pages)</description>
+      <sources location="ole/asp-view">
+        <project>asp-view.hdp</project>
+      </sources>
+    </library>
+    <library name="bank-client" title="Bank Client">
+      <category>Technologies/COM</category>
+      <description>The client side of a 3-tier COM banking demo</description>
+      <sources location="ole/bank/Client">
+        <project>bank-client.hdp</project>
+      </sources>
+    </library>
+    <library name="bank-server" title="Bank Server">
+      <category>Technologies/COM</category>
+      <description>The server side of a 3-tier COM banking demo</description>
+      <sources location="ole/bank/Server">
+        <project>bank-server.hdp</project>
+      </sources>
+    </library>
+    <library name="sample-automation-controller" title="Sample Automation Controller">
+      <category>Technologies/OLE/Automation</category>
+      <description>Simple OLE automation controller example</description>
+      <sources location="ole/sample-automation-controller">
+        <project>sample-automation-controller.hdp</project>
+      </sources>
+    </library>
+    <library name="sample-automation-server" title="Sample Automation Server">
+      <category>Technologies/OLE/Servers</category>
+      <description>Simple OLE automation server example</description>
+      <sources location="ole/sample-automation-server">
+        <project>sample-automation-server.hdp</project>
+      </sources>
+    </library>
+    <library name="win32-ole-server" title="Win32 OLE Server">
+      <category>Technologies/OLE/Servers</category>
+      <description>OLE server with an FFI level user interface (not DUIM)</description>
+      <sources location="ole/win32-ole-server">
+        <project>win32-ole-server.hdp</project>
+      </sources>
+    </library>
+    <library name="win32-invisible-control" title="Win32 Invisible Control">
+      <category>Technologies/OLE/Controls</category>
+      <description>Simple OLE invisible control example</description>
+      <sources location="ole/win32-invisible-control">
+        <project>win32-invisible-control.hdp</project>
+      </sources>
+    </library>
+    <library name="sample-ole-server" title="Sample OLE Server">
+      <category>Technologies/OLE/Servers</category>
+      <description>Simple OLE server example</description>
+      <sources location="ole/sample-ole-server">
+        <project>sample-ole-server.hdp</project>
+      </sources>
+    </library>
+    <library name="sample-duim-container" title="Sample DUIM Container">
+      <category>Technologies/OLE/Containers</category>
+      <category>Technologies/DUIM/OLE</category>
+      <description>A simple OLE container written with DUIM</description>
+      <sources location="duim-ole/sample-duim-container">
+        <project>sample-duim-container.hdp</project>
+      </sources>
+    </library>
+    <library name="win32-ole-container" title="Win32 OLE Container">
+      <category>Technologies/OLE/Containers</category>
+      <description>OLE container with an FFI level user interface (not DUIM)</description>
+      <sources location="ole/win32-ole-container">
+        <project>win32-ole-container.hdp</project>
+      </sources>
+    </library>
+    <library name="sample-ole-container" title="Sample OLE Container">
+      <category>Technologies/OLE/Containers</category>
+      <description>Simple OLE container example</description>
+      <sources location="ole/sample-ole-container">
+        <project>sample-ole-container.hdp</project>
+      </sources>
+    </library>
+  </examples>
+  <test-suites>
+    <library name="ole-test" title="OLE Automation test suite">
+      <category>OLE</category>
+      <description>A test suite for OLE automation</description>
+      <sources location="OLE/tests/ole-test">
+        <project>ole-test.lid</project>
+      </sources>
+    </library>
+  </test-suites>
+</library-pack>

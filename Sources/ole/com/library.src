@@ -1,0 +1,122 @@
+Module:    Dylan-user	%comment	-*- Mode:Dylan -*-
+Synopsis:  This is a Dylan library to act as an interface to the Microsoft
+	   ``Component Object Model'' (32-bit API) which is the
+	   foundation for OLE.
+Author:    David N. Gray
+Copyright: Copyright (c) 1996-2000 Functional Objects, Inc. All rights reserved.
+
+%comment  This file is expanded by "include.pat" to create the real Dylan file.
+
+define library COM
+  use functional-dylan;
+  use C-FFI;
+  use Win32-common;
+  use Win32-kernel;
+  export COM, COM-internal;
+end;
+
+define module COM-internal
+  // The following exports would probably not be used by application
+  // programmers, but are needed in the OLE or OLE-Automation library:
+  create <C-COM-vtbl>;
+  create vtbl, vtbl-setter;
+  create c-type-macro, c-pointer-type-macro, dylan-type-macro;
+end;
+
+define module COM
+  use functional-dylan;
+  use streams-protocol;
+  use Dylan-extensions, import: {<byte>,
+				 <byte-character>,
+				 element-type => collection-element-type
+				};
+  use simple-format, import: { format-to-string };
+  use C-FFI, export: { null-pointer, null-pointer?, pointer-address,
+			pointer-value, pointer-value-setter,
+			<C-pointer>, <C-string>, <C-unicode-string>,
+		        <C-void*>, pointer-cast, c-type-cast,
+			destroy, with-stack-structure, with-c-string,
+		        size-of, <machine-word>, <ffi-integer>
+			 };
+  use dylan-direct-c-ffi, import: { primitive-runtime-module-handle };
+  use Machine-Words;
+  use Win32-common,
+    export: {  <LPVOID>, <SIZEL>, <HWND>, <HTASK>,
+	       <LARGE-INTEGER>, <ULARGE-INTEGER>,
+	       <PLARGE-INTEGER>, <PULARGE-INTEGER>,
+	       $NULL-string, <C-void**>, <LPLPVOID>, <LPULONG>,
+	       cbSize-value, cbSize-value-setter,
+	       Buffer-value, Buffer-value-setter,
+	       cb-value, cb-value-setter, u-value, u-value-setter };
+  use Win32-kernel,
+    export: { <FILETIME>, <LPFILETIME>,
+	      dwLowDateTime-value, dwHighDateTime-value,
+	      dwLowDateTime-value-setter, dwHighDateTime-value-setter,
+	      cBytes-value, cBytes-value-setter,
+	      dwPlatformId-value, dwPlatformId-value-setter };
+  use COM-internal;
+
+  // This module includes the following interfaces:
+  export <IUnknown>, $IID-IUnknown, QueryInterface, AddRef, Release,
+	IUnknown/QueryInterface, IUnknown/AddRef, IUnknown/Release;
+%include com-intf.exp
+
+  // Defined in "com.dylan" or "after.dylan":
+  export <SCODE>, <HRESULT>, SCODE-CODE, SCODE-FACILITY, SCODE-SEVERITY,
+	MAKE-SCODE, SUCCEEDED?, FAILED?, $NOERROR,
+	HRESULT-FROM-WIN32, HRESULT-FROM-NT;
+  export <C-interface>, <C-interface*>, <Dylan-interface>;
+  export <C-HRESULT>, <C-HRESULT*>;
+  export <REFGUID>, make-GUID, <REFIID>, IsEqualGUID?, IsEqualIID?, $IID-NULL;
+  export <CLSID>, <REFCLSID>, IsEqualCLSID?, $CLSID-NULL;
+  export COM-interface-definer;
+  export <Interface>, <Interface*>, $NULL-interface, null?, add-interface,
+	controlling-unknown, terminate, dylan-interface,
+        <mapped-interface>;
+  export SubRef;
+  export $NULL-OLESTR, <SNB>, <LPOLESTR>, <LPCOLESTR>, OLESTR;
+  export <LPCLIPFORMAT>, <LPLPOLESTR>, <LPPROPID>;
+  export %memcpy; // temporary for compatibility
+  export IStream/Read, IStream/Write;
+  export <PROPVARIANT>, <LPPROPVARIANT>;
+
+  export $null-vtable, <IUnknown>-vstruct;
+
+  // misc. stuff from "com-misc.dylan":
+%include cmisc.exp
+
+  // status and error codes from "winerror.h":
+%include com-err.exp
+
+  // helper functions:
+  export IStream/Write-integer, IStream/Read-integer;
+
+  // from "factory.dylan":
+  export <class-factory>, revoke-registration, 
+    <factory-args-mixin>, \with-class-factory;
+  export create-COM-instance, \with-COM-interface;
+
+  // from "dll-init.dylan":
+  export <dll-lock-mixin>, <object-with-dll-lock>,
+	<class-factory-with-lock>,
+	dll-active-interface-counter, dll-active-interface-counter-setter,
+	\initialize-in-process-server;
+
+  // from "custom.dylan":
+  export custom-interface-definer, dummy-value-for-type;
+
+  // from "com-util.dylan":
+  export ole-error, ole-cerror, <ole-error>, make-ole-error,
+	ole-error-status, ole-error-instance,
+	ole-error-context, ole-error-args, check-ole-status;
+  export <LPSTREAM>, <storage-istream>, $null-istream;
+  export OLE-util-in-process-startup?,
+         OLE-util-register-only?, OLE-util-unregister?,
+	 OLE-util-started-by-OLE?, OLE-util-automation?, OLE-util-file-arg;
+  export OleInitialize, OleUninitialize;
+  export OLE-Initialize, OLE-UnInitialize, \with-ole, <lib-init-mixin>;
+  export Output-Debug-String;
+
+  export hAccel-value, hAccel-value-setter;
+
+end;

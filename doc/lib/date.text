@@ -1,0 +1,152 @@
+The Date library provides a machine-independent facility for the
+representation of dates.
+
+The library exports a single module, date, which exports the following
+classes/types and functions.
+
+
+Classes/Types:
+
+  <date>                                [Sealed class]
+    Superclasses: <number>
+    Synopsis: Represents a date and time between 1 Jan 1800 00:00:00
+              and 31 Dec 2199 23:59:59, Greenwich Mean Time (GMT).
+              A <date> can be specified to microsecond precision and
+              includes a time zone indication.
+    Init Keywords: iso8601-string :: false-or(<string>) = #f,
+                   year :: limited(<integer>, min: 1800, max: 2199)
+                   month :: limited(<integer>, min: 1, max: 12)
+                   day :: limited(<integer>, min: 1, max: 31)
+                   hours :: limited(<integer>, min: 0, max: 23) = 0
+                   minutes :: limited(<integer>, min: 0, max: 59) = 0
+                   seconds :: limited(<integer>, min: 0, max: 59) = 0
+                   microseconds :: limited(<integer>, min: 0, max: 999999) = 0
+                   time-zone-offset :: <integer> = 0
+    Notes: The limits on the range of acceptable dates are arbitrary
+           and may be changed in response to customer feedback.
+           If supplied, the iso8601-string: init keyword completely
+           specifies the value of the <date>.  Otherwise, the year:,
+           month:, and day: init keywords must be supplied.
+
+  <day-of-week>                         [Type]
+    Equivalent: one-of(#"Sunday", #"Monday", #"Tuesday", #"Wednesday",
+                       #"Thursday", #"Friday", #"Saturday")
+    Synopsis: The return value of the date-day-of-week function.
+
+
+Notes About Time Zones:
+
+  Time zones are represented in the Date library as <integer> values
+  representing the offset in minutes from Greenwich Mean Time (GMT).  
+  Positive values are used for time zones east of Greenwich; negative
+  values represent time zones to the west of Greenwich.
+
+  For example, the value -300 (-5 hours) is U.S. Eastern Standard Time
+  and the value -240 (-4 hours) is U.S. Eastern Daylight Savings Time.
+
+
+Functions:
+
+  encode-date                           [Function]
+    Signature: (year :: <integer>, month :: <integer>, day :: <integer>,
+                hours :: <integer>, minutes :: <integer>, seconds :: <integer>, 
+                #key microseconds :: <integer> = 0,
+	             time-zone-offset :: <integer> = local-time-zone-offset())
+            => (date :: <date>)
+    Synopsis: Creates a <date> object for the specified date and time.
+
+  decode-date                           [Function]
+    Signature: (date :: <date>)
+            => (year :: <integer>, month :: <integer>, day :: <integer>,
+                hours :: <integer>, minutes :: <integer>, seconds :: <integer>,
+                day-of-week :: <day-of-week>, time-zone-offset :: <integer>)
+    Synopsis: Returns the date and time stored in a <date> object.
+
+  \=                                    [Method]
+    Signature: (date1 :: <date>, date2 :: <date>) => (equal? :: <boolean>)
+    Synopsis: Compares two <date>s for equality.
+    Notes: Any differences in microseconds between the two <date>s are ignored.
+
+  \<                                    [Method]
+    Signature: (date1 :: <date>, date2 :: <date>) => (less-than? :: <boolean>)
+    Synopsis: Determines if date1 is earlier than date2.
+    Notes: Any differences in microseconds between the two <date>s are ignored.
+
+  date-year                             [Sealed generic]
+    Signature: (date :: <date>) => (year :: <integer>)
+    Synopsis: Returns the year of the specified <date>.
+
+  date-month                            [Sealed generic]
+    Signature: (date :: <date>) => (month :: <integer>)
+    Synopsis: Returns the month of the specified <date>.
+
+  date-day                              [Sealed generic]
+    Signature: (date :: <date>) => (day :: <integer>)
+    Synopsis: Returns the day of month of the specified <date>.
+
+  date-hours                            [Sealed generic]
+    Signature: (date :: <date>) => (hours :: <integer>)
+    Synopsis: Returns the hours of the day of the specified <date>.
+
+  date-minutes                          [Sealed generic]
+    Signature: (date :: <date>) => (minutes :: <integer>)
+    Synopsis: Returns the minutes of the hour of the specified <date>.
+
+  date-seconds                          [Sealed generic]
+    Signature: (date :: <date>) => (seconds :: <integer>)
+    Synopsis: Returns the seconds of the minute of the specified <date>.
+
+  date-microseconds                     [Sealed generic]
+    Signature: (date :: <date>) => (microseconds :: <integer>)
+    Synopsis: Returns the microseconds of the second of the specified <date>.
+
+  date-time-zone-offset                 [Sealed generic]
+    Signature: (date :: <date>) => (time-zone-offset :: <integer>)
+    Synopsis: Returns the time zone offset of the specified <date>.
+    Notes: The values of the other components of the <date> reflect
+           this time zone.
+
+  date-time-zone-offset-setter          [Sealed generic]
+    Signature: (new-time-zone-offset :: <integer>, date :: <date>)
+            => (new-time-zone-offset :: <integer>)
+    Synopsis: Changes the time zone offset of the specified <date>
+              without changing the actual point in time identified by
+              the <date>.
+    Notes: The values of the other components of the <date> will be
+           adjusted to reflect the new time zone.
+
+  date-day-of-week                      [Function]
+    Signature: (date :: <date>) => (day-of-week :: <day-of-week>)
+    Synopsis: Returns the day of the week of the specified <date>.
+
+  as-iso8601-string                     [Function]
+    Signature: (date :: <date>, #key precision :: <integer> = 0)
+            => (iso8601-string :: <string>)
+    Synopsis: Returns a string repsentation of the specified <date>
+              using the format identified by International Standard
+              ISO 8601 (e.g., "19960418T210634Z").  If precision is
+              non-zero, the specified number of digits of a fraction
+              of a second are included in the string (e.g.,
+              "19960418T210634.0034Z").
+    Notes: The returned string always expresses the time in Greenwich
+           Mean Time.  The iso8601-string: init keyword, however,
+           accepts strings with other time zone specifications.
+
+  current-date                          [Function]
+    Signature: () => (current-date :: <date>)
+    Synopsis: Returns a <date> object for the current date and time.
+
+  local-time-zone-offset                [Function]
+    Signature: () => (time-zone-offset :: <integer>)
+    Synopsis: Returns the time zone offset in use by the local machine.
+
+  local-time-zone-name                  [Function]
+    Signature: () => (time-zone-name :: <string>)
+    Synopsis: Returns the time zone name in use by the local machine,
+              if available, or a string of the form +/-HHMM if the
+              time zone name is unknown.
+
+  local-daylight-saving-time?           [Function]
+    Signature: () => (dst? :: <boolean>)
+    Synopsis: Returns #t if the local machine is using Daylight
+              Savings Time.

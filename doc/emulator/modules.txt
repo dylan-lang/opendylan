@@ -1,0 +1,23 @@
+MODULES IN THE EMULATOR
+
+The commands:
+
+  in:    [module-name] ;
+  which: [name] ;
+
+are provided to help you navigate the module system in the emulator.
+See the listener commands documentation for a more detailed
+description. 
+
+In addition, the emulator provides the special form "access" for
+getting at variables without having to abide by module interface
+restrictions. Its syntax is:
+
+  access(module-name, variable-name) => value
+
+It returns the value the variable called variable-name has in the
+module module-name. 
+
+The emulator has a single module name space, using libraries only in
+a system-like way, so a library argument to access isn't needed.
+

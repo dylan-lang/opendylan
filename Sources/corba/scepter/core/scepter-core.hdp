@@ -1,0 +1,17 @@
+comment:	This file is generated, please don't edit
+format-version:	2
+library:	scepter-core
+files:	scepter-core-library
+	scepter-core-module
+	driver
+	args
+	front-end
+	back-end
+	error
+subprojects:	..\utilities\scepter-utilities.hdp
+base-address:	0x63FE0000
+major-version:	2
+minor-version:	1
+compilation-mode:	tight
+target-type:	dll
+comment:	additional keywords

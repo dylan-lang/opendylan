@@ -1,0 +1,52 @@
+Module:    Dylan-user	%comment -*- Mode: Dylan -*-
+Synopsis:  FFI declarations translated from X11 header files.
+%comment   This file is a template that is expanded to produce "library.dylan".
+Copyright: (c) 1998 Functional Objects, Inc.  All rights reserved.
+
+
+define library Xlib
+  use functional-dylan;
+  use C-FFI;
+  use Machine-Word;
+  export Xlib;
+end library Xlib;
+
+define module Xlib
+  use functional-dylan;
+  use C-FFI,
+    export: {null-pointer, null-pointer?, pointer-address,
+	     pointer-value, pointer-value-setter, size-of,
+	     <C-void*>, <C-pointer>, <C-string>, <C-unicode-string>,
+	     <C-string*>, <C-unicode-string*>,
+	     pointer-cast, destroy,
+	     pointer-value-address, c-type-cast,
+	     c-callable-wrapper-definer, 
+	     \with-c-string, \with-stack-structure } ;
+  use Machine-Integer-User, 
+    export: {%logior, %logand};
+
+%include X.exp
+%include Xlib.exp
+%include Xatom.exp
+%include keysymdef.exp
+%include cursorfont.exp
+
+  // from "aux-xlib.dylan":
+  export <Cardinal>, <Dimension>, <Position>,
+	<XID>, <Window>, <Drawable>, <Font>,
+	<Pixmap>, <Cursor>, <Colormap>, <GContext>, <KeySym>, <Mask>; 
+  export <Cardinal*>, <Dimension*>, <Position*>;
+  export <XrmHashBucketRec*>;
+  export <Atom*>, <Colormap*>, <KeyCode*>, <KeySym*>,
+	<Modifiers*>, <Pixmap*>, <Time*>,
+	<Window*>, <XEvent*>, <XPointer*>;
+  export <Atom**>, <Dimension**>, <KeyCode**>, <Window**>, <XExtData**>,
+	<XFontStruct**>, <XFontStruct***>;
+  export <C-string**>, <C-unicode-string**>, <C-unsigned-char**>;
+  export \callback-definer, \open-accessor-definer;
+  // open generic accessors that don't have methods defined here:
+  export res-class-value, res-class-value-setter,
+	string-value, string-value-setter,
+	value-value, value-value-setter;
+
+end module Xlib;

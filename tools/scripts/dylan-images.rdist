@@ -1,0 +1,8 @@
+REMOTEHOSTS = (	propos.long.harlequin.co.uk
+	    )
+
+SRCFILES = (/u/dylan/local/lw+dylan-mips-irix5 
+	    /u/dylan/release)
+
+${SRCFILES} -> (${REMOTEHOSTS})
+	install ;

@@ -1,0 +1,1159 @@
+<!doctype html public "-//W3C//DTD HTML 3.2//EN">
+<!--#config errmsg="There has been an error.  Please notify webmaster@functionalobjects.com" -->
+<?php $current_part = "resources";
+   $current_sub = "com";
+   $title = "Functional Objects, Inc.";
+   $description = "Functional Objects -- software development tools combining ease of use with power and efficiency.";
+   require "../config.php3";
+?>
+
+<?php include $top_inc ?>
+
+
+<center><h2>COM Simplified:</h2></center>
+<center><h2>Modern Languages &amp; Microsoft's Component Object Model</h2></center>
+<center>
+David N. Gray, Harlequin Inc., Menlo Park, CA<BR> 
+John Hotchkiss, Harlequin Inc., Cambridge, MA<BR> 
+Seth LaForge, Harlequin Inc., Seattle, WA<BR> 
+Andrew Shalit, Harlequin Inc., Cambridge, MA<BR> 
+Toby Weinberg, Harlequin Inc., Cambridge, MA
+</center>
+<P>
+<center>This work was sponsored in part by DARPA and USAF Air Force 
+Research Laboratory - Rome Site.</center>
+<blockquote>
+<P>This is an extended version of a paper that originally appeared in a
+the May 1998 issue of Communications of the ACM. The original paper is 
+available on <A HREF="http://www.acm.org/pubs/articles/journals/cacm/1998-41-5/p55-gray/p55-gray.pdf">the 
+ACM Web site</A>.</P> 
+
+<P>Copyright (c) 1998 by the Association for Computing Machinery, 
+Inc. Permission to make digital or hard copies of part or all of this 
+work for personal or classroom use is granted without fee provided 
+that copies are not made or distributed for profit or commercial 
+advantage and that copies bear this notice and the full citation on 
+the first page. Copyrights for components of this work owned by 
+others than ACM must be honored. Abstracting with credit is 
+permitted. To copy otherwise, to republish, to post on servers, or to 
+redistribute to lists, requires prior specific permission and/or a 
+fee. Request permissions from Publications Dept, ACM Inc., fax +1 
+(212) 869-0481, or <A HREF="mailto:permissions@acm.org">permissions@acm.org</A>.</P> 
+</blockquote>
+
+<H3><B>Introduction</B></H3>
+
+<P>As the computer industry's reliance on component software
+increases, it becomes increasingly difficult to integrate complex
+component systems. Modern development environments take a variety of
+approaches to simplifying this programming problem.</P>
+
+<P>This paper describes how three programming language
+implementations provide access to Microsoft's Component Object Model
+(COM), and how they attempt to reduce the complexity of writing and
+using COM objects. Using COM is complex for two reasons. COM
+semantics may not match the object semantics of the language and
+hence require glue code between COM and the application. In addition,
+COM itself is very complex, with a large API and many special
+cases.</P>
+
+<P>This paper describes three contrasting approaches.</P>
+
+<UL>
+   <LI>Extension using code generation. This approach uses software
+   tools such as wizards to generate code which implements the
+   connection between COM and the application code. Visual C++ uses
+   this methodology.</LI>
+   
+   <LI>Extension using hard-wired language changes. This approach
+   integrates COM semantics into the language in a vendor-supplied
+   non-extensible way. Visual J++ uses this method.</LI>
+   
+   <LI>Extension using dynamic language features. This approach
+   integrates COM semantics into the language by extending the
+   language in a customizable and layered fashion; the extensions are
+   created using standard language features. Dylan uses this
+   method.</LI>
+</UL>
+
+<P>The paper begins with brief introductions to some of the relevant
+features of Dylan and COM. It then describes the basic COM interface
+mechanisms used by Visual C++, Visual J++, and Harlequin Dylan. This
+is followed by additional examples from a Dylan interface to
+Microsoft's Active Server Pages, a COM technology used to dynamically
+generate HTML.</P>
+
+<H3><B>The Dylan Programming Language</B></H3>
+
+<P><B>Overview</B></P>
+
+<P>Harlequin Dylan is an implementation of the Dylan programming
+language that produces native code for the Win32 platform. The Dylan
+language was designed at Apple Computer in cooperation with
+researchers at Harlequin, Carnegie Mellon University, and elsewhere
+&#91;<A HREF="#shalit96">Shalit96</A>&#93;. Harlequin Dylan extends
+the Dylan language with programming tools and platform integration
+libraries supporting, for example, GUI, network, COM, and CORBA
+programming.</P>
+
+<P>Dylan is described as "fully object oriented" because all data in
+running programs is represented as instances of classes. The method
+dispatch mechanism is applicable to all data, including classes,
+functions, and numbers. In addition, all data can be stored in
+variables, passed as function arguments, and returned as function
+results. This consistency increases both the simplicity and the
+expressiveness of the language. In contrast, most other languages
+have some primitive types - for example, numbers - that must be cast
+to object types before they can participate in the object system.</P>
+
+<P>To recapture the efficiency of statically compiled languages and
+primitive types, Dylan allows portions of a program to be sealed
+(declared invariant). This selectively prevents further program
+extension and allows extensive compile time optimization.</P>
+
+<H4><B>Objects and Method Dispatch</B></H4>
+
+<P>Dylan's object system operates through the interaction of classes,
+instances, and generic functions.</P>
+
+<P>Classes are used to describe all objects in a Dylan program. The
+following example defines a new class with one superclass and two
+slots (instance variables).</P>
+
+<P><TT><CODE>define class &lt;window&gt; (&lt;view&gt;)<BR>
+</CODE></TT><CODE>&nbsp;&nbsp;</CODE><TT><CODE>slot title ::
+&lt;string&gt; = "untitled";<BR>
+</CODE></TT><CODE>&nbsp;&nbsp;</CODE><TT><CODE>slot position ::
+&lt;point&gt;, init-keyword: window-position:;<BR>
+end class &lt;window&gt;;</CODE></TT></P>
+
+<P>This example defines a new class, <TT>&lt;window&gt;</TT>, which
+inherits from the class <TT>&lt;view&gt;</TT>. By convention, angle
+brackets are placed around class names to make classes more visually
+distinct in source code, and to reduce accidental name collisions.
+The angle brackets are part of the name of the class.</P>
+
+<P>The <TT>title</TT> slot is constrained to holding instances of
+<TT>&lt;string&gt;</TT>. In fresh instances, this slot is initialized
+to the value <TT>"untitled"</TT>.</P>
+
+<P>The <TT>position</TT> slot is constrained to hold instances of
+<TT>&lt;point&gt;</TT>. The initial value of this slot can be
+specified by the <TT>window-position:</TT> keyword argument when a
+fresh instance is created. If no initial value is specified, the slot
+will remain uninitialized. The slot must be set before it is
+accessed, or an error will be signaled.</P>
+
+<H4><B>Generic Functions</B></H4>
+
+<P>In Dylan, methods are not placed within types or classes. Instead,
+they are placed in generic functions. When a generic function is
+called, it compares the classes of its arguments to the full
+signatures of the methods it contains. It then chooses the best
+match, and invokes that method. This dispatch will be performed at
+compile-time or run-time, depending on the compile-time information
+available.</P>
+
+<P>The following example defines a new method on the
+<TT>contents</TT> generic function:</P>
+
+<P><TT><CODE>define method contents (w :: &lt;window&gt;)<BR>
+&nbsp;&nbsp;// code to return the window's contents<BR>
+end method contents;</CODE></TT></P>
+
+<P>When the methods of a generic function differ only in the class of
+one parameter, the semantics are the same as in message-passing
+languages such as C++ and Java. In practice, many generic functions
+work this way. However, there are many cases where dispatching on the
+types of multiple arguments can be very useful.</P>
+
+<P>Because methods are placed in generic functions and not in
+classes, new protocols can be created by defining a new set of
+generic functions and methods. This protocol can be applied to
+existing classes, even if the source code of those classes is not
+available.</P>
+
+<H4><B>Slots</B></H4>
+
+<P>Slots are accessed through function calls. When a class is
+defined, generic functions and methods are automatically created to
+access the slots. To the client, a slot access is indistinguishable
+from any other function call. The same generic function may contain
+some methods which perform a raw slot access, and others which
+perform a more complex calculation to retrieve or compute their
+result. And, of course, a single class may have both slots and more
+complex methods.</P>
+
+<P>For example, a client of the <TT>&lt;window&gt;</TT> class,
+defined above, does not need to know that <TT>position</TT> is
+implemented as a slot, while <TT>contents</TT> is implemented as a
+more complex method. Both are called the same way.</P>
+
+<P><TT><CODE>contents(my-window)</CODE></TT><CODE>
+or</CODE><TT><CODE> my-window.contents<BR>
+position(my-window)</CODE></TT><CODE> or</CODE><TT><CODE>
+my-window.position</CODE></TT></P>
+
+<P>By hiding these implementation details, programmers have the
+freedom to experiment with different implementations or use different
+implementations in different objects. For example, Dylan uses this
+feature to allow the same underlying storage to be used as a C
+structure by C code and a Dylan object by Dylan code. The C code can
+directly access the fields of the structure, and the Dylan code can
+use ordinary slot access syntax to access those same fields.</P>
+
+<H4><B>Macros</B></H4>
+
+<P>Dylan supports a hygienic pattern-template based macro system.
+Rather than performing text-to-text transformation, the macro system
+manipulates syntactic patterns. This approach has several advantages.
+It allows programmers to construct many standard Dylan forms,
+including definitions and statements, and it guarantees that macro
+calls will maintain the syntactic "flavor" of the language. It also
+avoids the accidental name clashes and captures typical in simpler,
+non-hygienic macro systems.</P>
+
+<P>Dylan macros are commonly used to customize the language so that
+it directly and declaratively expresses the structure of a problem
+domain. For example, it is quite common to create additional
+definition forms (e.g. <TT>define dispatch-interface</TT>) to extend
+the built in set of Dylan defining forms (e.g. <TT>define class</TT>,
+<TT>define method</TT>, etc.).</P>
+
+<P>Macros are a powerful tool for hiding complexity, creating layered
+systems, and ensuring full compliance with protocols. Macros can also
+be used to divide a project among system architects (those who define
+the macros) and system programmers (those who use the macros).</P>
+
+<P>For example, the following macro ensures that COM objects used by
+a Dylan program have their reference counts appropriately incremented
+and decremented, even in the presence of errors.</P>
+
+<P><TT><CODE>define macro with-interface<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;{<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with-interface
+(?variable-name:name = ?interface:expression)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;?block-body:body<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;} =&gt; {<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;let ?variable-name =
+?interface;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;block ()<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;?block-body;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cleanup // the cleanup clause is
+guaranteed to run<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Release(?variable-name);
+// regardless of how the body terminates.<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end block;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;}<BR>
+end macro with-interface;</CODE></TT></P>
+
+<P>A call to this macro would take the following form:</P>
+
+<P><TT><CODE>with-interface (request =
+sc.IScriptingContext-Request)<BR>
+&nbsp;&nbsp;// Code using request goes in here.<BR>
+</CODE></TT><CODE>&nbsp;&nbsp;</CODE><TT><CODE>do-something
+(request)<BR>
+end with-interface;</CODE></TT></P>
+
+<P>The call would expand to the following Dylan code:</P>
+
+<P><TT><CODE>let request = sc.IScriptingContext-Request;<BR>
+</CODE></TT><CODE>&nbsp;&nbsp;</CODE><TT><CODE>block ()<BR>
+</CODE></TT><CODE>&nbsp;&nbsp;&nbsp;&nbsp;</CODE><TT><CODE>// Code
+using request code in here.<BR>
+</CODE></TT><CODE>&nbsp;&nbsp;&nbsp;&nbsp;</CODE><TT><CODE>do-something
+(request);<BR>
+</CODE></TT><CODE>&nbsp;&nbsp;</CODE><TT><CODE>Cleanup<BR>
+</CODE></TT><CODE>&nbsp;&nbsp;&nbsp;&nbsp;</CODE><TT><CODE>Release(request);<BR>
+end block;</CODE></TT></P>
+
+<H3><B>COM Overview</B></H3>
+
+<P>In COM, software components communicate by means of
+<B>interfaces</B>, objects that are implemented by a server component
+and used by a client component &#91;<A HREF="#chappell96">Chappell96</A>&#93;
+&#91;<A HREF="#rogerson97">Rogerson97</A>&#93;. An interface is
+actually a pointer to a block of memory in which, like a C++ class,
+the first word is a pointer to a table of function addresses (called
+a <B>virtual function table</B> or <B>v-table</B>). Interfaces are
+identified by <B>UUID</B>s, unique 16-byte values, and described with
+Interface Description Language (IDL). These descriptions allow the
+interfaces to be used from various programming languages.</P>
+
+<P>Figure A: COM interface representation</P>
+
+<P>&nbsp;<IMG SRC="com-figurea.gif" WIDTH=481 HEIGHT=211 ALIGN=bottom></P>
+
+<P>The client uses the interface by calling the functions from the
+table (referred to as <B>methods</B> of the interface), passing the
+<B>interface pointer</B> itself as the first argument, with
+additional arguments depending on the particular function.</P>
+
+<P>For all interfaces, the first three elements of the v-table are
+the methods <TT>QueryInterface</TT>, <TT>AddRef</TT>, and
+<TT>Release</TT>. An interface that supports only these three methods
+is called an <TT>IUnknown</TT> interface, and all other interfaces
+are said to inherit from <TT>IUnknown</TT>. <TT>QueryInterface</TT>
+is used to obtain additional interface pointers supported by the
+object, while <TT>AddRef</TT> and <TT>Release</TT> increment and
+decrement a reference count to enable the server to know when all
+clients have finished using the interface.</P>
+
+<P>The client uses the interface only through its v-table, not by
+directly accessing any of the memory locations beyond the v-table
+pointer. This is necessary because the object may actually be nothing
+more than a proxy whose functions forward the argument values to the
+real object in another process.</P>
+
+<P>While the fundamental mechanisms described above sound simple, the
+complexity of COM-based systems lies mainly in the various COM
+protocols--many kinds of interfaces, each with a number of methods,
+often using awkward structures for passing data. Constructing
+connections to these interfaces can be a very complex task.</P>
+
+<H4><B>OLE, OLE Automation, and ActiveX Controls</B></H4>
+
+<P>The object linking and embedding (OLE) facility for compound
+documents allows one GUI application to be embedded within another.
+OLE uses a number of special purpose COM interfaces, some provided by
+the embedded object and some provided by the container &#91;<A HREF="#brockschmidt95">Brockschmidt95</A>&#93;.</P>
+
+<P>Another use of COM is in the <B>OLE Automation</B> facility, which
+provides a general mechanism for the dynamic communication of data
+and commands between programs. The central feature is a COM interface
+called <TT>IDispatch</TT> whose methods provide for accessing
+<B>methods</B> and <B>properties</B> in a server object by using
+<B>type library</B> data that specifies the services provided. This
+is done in place of creating a custom COM interface. An object
+implemented this way may also be referred to as a <B>disp
+interface</B>, or <B>dispatch interface</B>. An IDL file is often
+used as a textual representation of the type library information.</P>
+
+<P>Components called <B>OLE Controls</B> or <B>ActiveX Controls</B>
+use both the OLE interfaces for managing the embedded user interface
+and <TT>IDispatch</TT> interfaces for the functionality specific to
+the particular component &#91;<A HREF="#denning97">Denning97</A>&#93;.</P>
+
+<H4><B>Active Server Pages</B></H4>
+
+<P>Active Server Pages (ASP) is Microsoft's newest technology for
+generating HTML on the fly in a web server &#91;<A HREF="#homer97">Homer97</A>&#93;.
+ASP allows the web developer to include script code in a web page.
+When a web browser requests that web page, the web server executes
+the code on the web page to generate HTML which is then fed to the
+client. The script code can be written in any scripting language
+which supports Microsoft's Active Scripting Architecture, including
+VBscript or JavaScript.</P>
+
+<P>An important part of the ASP architecture is that script code can
+invoke COM objects. This gives web developers the ability to take
+advantage of pre-existing code, or to write the bulk of the
+functionality of their ASP pages in a more powerful language.</P>
+
+<P>Support for ASP components is mainly provided by the ability of
+the underlying scripting language to use COM objects. In addition,
+ASP contributes important functionality to any COM component which
+provides <TT>OnStartPage</TT> and <TT>OnEndPage</TT> methods. When
+such a component is used from the script code on an ASP page, the
+component's <TT>OnStartPage</TT> method is invoked and passed a
+pointer to a <B>scripting context</B> COM object built into the web
+server. The scripting context allows the component to access other
+built-in objects that can provide information (e.g. the type of
+browser being used to access the web page), session management, and
+much additional functionality.</P>
+
+<H3><B>COM from C++ and Java</B></H3>
+
+<P>COM is an important Microsoft technology. Not surprisingly, it
+receives extensive support from the programming tools provided by
+Microsoft. We'll look at two tools which provide this support through
+very different mechanisms: Microsoft Visual C++ (MSVC) and Microsoft
+Visual J++.</P>
+
+<H4><B>COM from Visual C++</B></H4>
+
+<P>Microsoft currently recommends writing components in C++ by using
+the Microsoft Active Template Library (ATL) along with a number of
+wizards built into the Microsoft Developer Studio. To demonstrate the
+advantages and disadvantages of ATL we look at the steps required to
+create a simple component for use with Active Server Pages.</P>
+
+<H4><B>C++ Wizards</B></H4>
+
+<P>The first step in creating an ASP component in MSVC is to use the
+AppWizard to generate a new ATL-based project. After the user enters
+the desired project name and specifies that it is to be a DLL, the
+wizard generates a number of files for the new project. Among these
+are the project file, a source file containing routines to initialize
+the DLL, a linker directives file, a source file in Microsoft's IDL
+to describe the project's COM types, and files to support precompiled
+headers. All in all, the newly created project includes 14 files of
+automatically generated source.</P>
+
+<P>Next the user invokes another wizard designed specifically for
+generating ASP components. This wizard generates IDL describing the
+new component and its interface and generates a C++ file and header
+file defining the new class, along with a large amount of code
+defining standard ASP component methods. When this wizard is done we
+have an ASP component with no behavior. To add behavior we define
+additional properties and methods using more wizards. These wizards
+add descriptions to the IDL for the component's interface and also
+add stub definitions for the component's implementation of each
+property or method. The user can then modify those definitions as
+desired.</P>
+
+<P>As the above description makes clear, MSVC's reliance on wizards
+does make it easy to create the framework of a component, especially
+if the type of component you are making is one that Microsoft has
+specifically targeted. However, two other points should be equally
+clear: the code generated by the wizards is highly complex and
+therefore internally fragile; and the programmer often does not have
+any idea how the code generated by the wizards works.</P>
+
+<P>Once the programmer needs to perform some task which is not
+handled by wizards--such as changing some aspect (parameter list or
+name, perhaps) of a component's method or debugging a component--the
+programmer must understand this wizard generated code. Unfortunately,
+this code tends to be very low-level and more amenable to machine
+generation than human understanding.</P>
+
+<P>Thus, while wizards do simplify certain aspects of writing COM
+objects, they do not fully achieve another more important goal:
+isolating the user from the complex, difficult low-level details of
+their component. A wizard only isolates the user from the low-level
+details of the exact tasks for which it was designed. Once the user
+goes beyond those limitations, the abstraction boundaries fail.</P>
+
+<H4><B>C++ and the ATL Library</B></H4>
+
+<P>ATL is the second prong of Microsoft's attempt to simplify COM in
+C++. ATL is a C++ template library, much like the Standard Template
+Library which is now part of the C++ standard. Where wizards are used
+to help create the framework of a COM interface, ATL simplifies the
+code which the programmer must subsequently write within the
+framework. It does this by providing classes that wrap much of the
+COM functionality. In addition, it provides basic functionality like
+automatic interface coercion, automatic counting of interface
+references, and dispatch handling for components. ATL uses templated
+classes heavily, for example <TT>CComPtr&lt;IDispatch&gt;</TT>
+represents a wrapper around a pointer to an COM object with interface
+<TT>IDispatch</TT>.</P>
+
+<P>ATL does make many aspects of dealing with COM objects simpler.
+For example, the wrapper pointers just mentioned automatically handle
+decrementing reference counts when the pointers go out of scope, so
+ATL eliminates the need for most manual reference count adjustments.
+On the other hand, it shares many problems with STL. In particular,
+simple errors in the code often result in mysterious compiler errors
+deep in the midst of template instantiations. Debugging code with
+heavy use of templates can be quite painful.</P>
+
+<P>Additionally, programmers often need to circumvent ATL's
+functionality to access the underlying mechanisms, even in simple
+situations. For example, the only way we could find to extract a
+string from a COM variant type involved casting the ATL-wrapped
+variant to a COM variant, extracting the string, casting that to the
+ATL wrapper type, copying it (so that the string didn't get
+deallocated with the variant), and then copying the result back to
+the COM string type:</P>
+
+<P><TT><CODE>CComVariant in = </CODE></TT><CODE>. .
+.</CODE><TT><CODE>;<BR>
+BSTR out =
+BSTR(CComBSTR(VARIANT(vtOut).bstrVal).Copy());</CODE></TT></P>
+
+<P>This shows that ATL wraps the COM type system rather incompletely.
+At least, though, access to the underlying layers is available in
+those cases where it is needed.</P>
+
+<H4><B>COM from Visual J++</B></H4>
+
+<P>Microsoft has taken a considerably different approach to COM
+interoperability in their Java implementation. Here they have focused
+much more on simplicity and elegance and less on performance than in
+C++. This is consistent with the general philosophy of Java.</P>
+
+<P>The approach differs from that of C++ in other ways as well.
+Rather than building COM support on top of the existing language,
+they've integrated it into the language itself. In order to support
+this, they've built COM support into their Java compiler (Microsoft
+Visual J++). Java code that uses the support must be run on
+Microsoft's version of the Java Virtual Machine (JVM). One
+consequence of this is that Java applets that make use of COM cannot
+be used with Netscape's or Sun's virtual machines, negating one of
+Java's key advantages.</P>
+
+<P>To allow access to a COM component from within Java as a client,
+Microsoft provides a tool that reads the type library describing a
+set of COM components and generates JVM class files which define Java
+interfaces and classes corresponding to the COM interfaces and
+classes. Fortunately, the COM model matches the Java model very well.
+Basic COM types, such as strings, are mapped onto the Java
+equivalents. COM classes map directly to Java classes, and COM
+interfaces to Java interfaces. COM error codes map onto Java
+exceptions.</P>
+
+<P>Through compiler support and a few language extensions, much of
+the complexity of manipulating COM objects is hidden and made to look
+like manipulation of Java objects. For example, fetching the
+interface <TT>IBar</TT> for a COM object <TT>foo</TT> is done with
+what looks like a typecast:</P>
+
+<P><TT><CODE>IBar foo2 = (IBar)foo;</CODE></TT></P>
+
+<P>Implementing a COM server class is almost as simple as
+implementing a client. You just declare your server class to
+implement the COM interfaces you want it to support, and compile your
+class. The only additional step required is to invoke a separate
+program to register your new COM class and provide it with a
+UUID.</P>
+
+<P>Microsoft's approach of integrating COM support directly into the
+Java language makes working with COM in Java remarkably painless.
+Their development environment provides the same wizards for Java as
+it does for C++, but the wizards are much less important. Because COM
+operations look like Java language operations, the experienced Java
+programmer has to learn little more to take advantage of COM.</P>
+
+<P>This language integration approach does, though, have some
+disadvantages. It requires extensive support within the Java compiler
+and Java Virtual Machine, putting a burden on the tool developer and
+locking programmers to a single tool vendor. If you want to do COM
+development in Java, you are bound to Microsoft's J++ and Microsoft's
+JVM implementation. Moreover, you are limited to using only those
+features of COM that Microsoft has chosen to make available in their
+Java tools.</P>
+
+<P>Because J++'s COM implementation is at such a high level and all
+of the low-level details of COM are hidden, you cannot use lower
+level mechanisms when necessary. This means that there is no way to
+get around limitations in the implementation. For example, because
+Java doesn't support multiple implementation inheritance, J++ does
+not support multiple aggregation, COM's mechanism for combining
+functionality from multiple interfaces.</P>
+
+<P>Finally, the fact that Microsoft chose to use internal extensions
+to implement COM support in J++ gives little hope to programmers who
+wish to implement interfaces to similar external functionality from
+Java. The message appears to be that creating such interfaces is
+outside the scope of the language.</P>
+
+<H3><B>Implementing COM in Dylan</B></H3>
+
+<P>In contrast to C++'s wizards and J++'s internal support, Harlequin
+Dylan's support for COM is built with layered abstractions using the
+standard language mechanisms.</P>
+
+<P>The low-level COM interfaces - needed to directly access all of
+the functionality of COM - is implemented using the Dylan Foreign
+Function Interface, which accesses the Windows API directly. Although
+this access is described as "low-level", it does translate foreign
+types into Dylan classes, and foreign functions into Dylan
+methods.</P>
+
+<P>At the next level we use the Dylan macro system and type system to
+build a sophisticated layer of abstraction on top of our lower-level
+COM implementation. This high-level abstraction provides interfaces
+to COM functionality with syntax that will be familiar to any Dylan
+programmer.</P>
+
+<P>By building Dylan's COM system entirely in the language, the
+implementation is simplified and familiar. By providing integrated
+dual layers, we allow the programmer to access the entire COM API in
+those cases where our higher-layer is insufficient. Finally, this
+implementation illustrates the ability of dynamic languages to
+integrate cleanly with existing systems. By providing the ability to
+implement such a large amount of abstraction within the language, we
+make it possible for customers as well as vendors to build dynamic
+object layers for complex systems.</P>
+
+<H4><B>Lowest Layer: Foreign Functionality from Dylan</B></H4>
+
+<P>Harlequin Dylan's COM interface is built using our general
+facility for accessing foreign functionality. Foreign functionality
+is defined as functions and data not defined by the Dylan object
+system.</P>
+
+<P>The roots of Harlequin Dylan's foreign function interface are the
+classes <TT>&lt;machine-word&gt;</TT>, which represents an arbitrary
+32-bit value, and <TT>&lt;C-pointer&gt;</TT>, which represents a
+memory address. Subclasses of <TT>&lt;C-pointer&gt;</TT> are defined
+so that the Dylan class system can be used to distinguish pointers
+according to the type of data at the designated address. Dylan
+methods are then defined on these subclasses to access the fields of
+the C structure and convert the raw machine words into corresponding
+Dylan objects. These methods can then be used to access foreign data
+in the same way slots are accessed in native Dylan objects. Thus such
+classes can be used to hide the actual representation of foreign
+data. Since these classes are subclasses of
+<TT>&lt;C-pointer&gt;</TT>, containing actual pointers to static
+memory, they can be used simultaneously by foreign code and Dylan
+code.</P>
+
+<P>Figure B: A Dylan C Pointer supports dual interfaces to a C
+Structure</P>
+
+<P><IMG SRC="com-figureb.gif" WIDTH=455 HEIGHT=316 ALIGN=bottom></P>
+
+<P>Because <TT>&lt;C-Pointer&gt;</TT> and <TT>pointer-address</TT>
+are sealed, the <TT>pointer-address</TT> can be accessed very
+efficiently. Syntactically, <TT>pointer-address</TT> looks just like
+any other slot accessor.&nbsp;</P>
+
+<H4><B>Lowest COM Layer</B></H4>
+
+<P>The class <TT>&lt;interface&gt;</TT> is a subclass of
+<TT>&lt;C-pointer&gt;</TT>. <TT>&lt;interface&gt;</TT> represents a
+COM interface pointer. Methods can be defined on this class which
+will perform a C function call to the appropriate element of the
+virtual function table that is pointed to by the first word of a COM
+interface object.</P>
+
+<P>Figure C: A Dylan client to a COM interface</P>
+
+<P><IMG SRC="com-figurec.gif" WIDTH=474 HEIGHT=345 ALIGN=bottom></P>
+
+<P>For a COM interface implemented in Dylan, the pointer points to a
+two-word structure containing the virtual function table pointer and
+a handle to the Dylan object that contains the pointer address. The
+Dylan object can then contain additional slots that are used to
+implement the interface's functionality.</P>
+
+<P>Figure D: A COM interface implemented in Dylan</P>
+
+<P><IMG SRC="com-figured.gif" WIDTH=470 HEIGHT=336 ALIGN=bottom></P>
+
+<P>For example, the class <TT>&lt;IUnknown&gt;</TT> is a subclass of
+<TT>&lt;interface&gt;</TT> that provides a v-table and adds slots for
+supporting a reference count and aggregation of interfaces. The
+elements of the v-table are automatically generated trampoline
+functions which transform their arguments into Dylan objects and call
+a corresponding Dylan generic function. The Dylan
+<TT>&lt;IUnknown&gt;</TT> class also provides the Dylan methods
+implementing the basic COM operations of <TT>QueryInterface</TT>,
+<TT>AddRef</TT>, and <TT>Release</TT>. These same methods can be
+accessed either directly through normal Dylan method dispatch, or by
+a remote client calling through the v-table trampolines. This dual
+implementation is transparent to the clients.</P>
+
+<P>Other interfaces are implemented as subclasses of
+<TT>&lt;IUnknown&gt;</TT>. These subclasses inherit the
+implementation of the three basic methods. Thus, these methods are
+implemented only once, in contrast to C++ where there would be
+separate source code for these methods in every interface class. Note
+that in Dylan it is still possible for a subclass to override the
+inherited behavior of this class if it has special requirements.</P>
+
+<H4><B>Higher COM Layer</B></H4>
+
+<P>Having implemented raw access to COM interfaces, Harlequin Dylan
+then provides access to specific sets of COM interfaces.</P>
+
+<P>The OLE compound document protocols are supported by a subclass of
+<TT>&lt;IUnknown&gt;</TT> called
+<TT>&lt;ole-server-framework&gt;</TT>.
+<TT>&lt;ole-server-framework&gt;</TT> implements all of the
+interfaces and methods required for an embedded component. This in
+turn has the subclass <TT>&lt;ole-control-framework&gt;</TT> which
+adds additional functionality for OLE Controls. Users can create
+applications by subclassing these classes. They can either treat the
+classes as black boxes or add their own extensions that use the
+low-level interfaces. Using these libraries, a minimal embeddable
+application can be written in less than 900 lines of code, compared
+to the more than 6,000 lines needed when using the low-level
+protocols directly.</P>
+
+<P>We also provide an even higher level library which connects the
+OLE protocols with our user interface library (DUIM). At this level
+an embedded OLE application needs only a few dozen lines of code more
+than an ordinary stand-alone application and a minimal embeddable
+program can be written in less than 200 lines of code. Yet even at
+this level, the programmer can access the low-level interfaces to use
+functionality not directly supported by the high level libraries.</P>
+
+<P>OLE Automation dispatch interface servers are implemented using a
+subclass of <TT>&lt;IUnknown&gt;</TT> called
+<TT>&lt;IDispatch&gt;</TT>. <TT>&lt;IDispatch&gt;</TT> provides a
+v-table to access the corresponding Dylan generic functions. An
+implementation of the methods for those generic functions is provided
+by a subclass of <TT>&lt;IDispatch&gt;</TT> called
+<TT>&lt;simple-dispatch&gt;</TT>. <TT>&lt;simple-dispatch&gt;</TT>
+provides a complete implementation of the dispatch mechanism for
+members of dispatch interfaces. Users create their own dispatch
+interfaces by defining their own subclass of
+<TT>&lt;simple-dispatch&gt;</TT>, specifying the methods and
+properties to be exposed to users of the interface. These methods and
+properties are used to automatically generate the type information
+data for the type library. The user doesn't have to write any of the
+<TT>IDispatch</TT> methods since they are all inherited. In C++,
+there is library support for implementing the dispatch, but the user
+still has to write all the methods to call the appropriate library
+function.</P>
+
+<H3><B>Example 1: Using IDispatch from Dylan</B></H3>
+
+<P>To illustrate how the complexity of COM interfaces can be hidden
+by higher level abstractions, we'll look at how the
+<TT>IDispatch</TT> interface is used to obtain property values.
+Members are accessed by using the <TT>IDispatch</TT> method
+<TT>Invoke</TT>, which takes eight arguments, including pointers to
+two structures, one describing the arguments for a method call and
+the other to receive the result value. The work needed to initialize
+these data structures and check the returned status code requires at
+least half a dozen statements just to fetch the value of a single
+property. We provide a Dylan function called <TT>get-property</TT>
+that takes just two arguments, the interface and the property ID, and
+either returns the value or signals an error.</P>
+
+<P>The following examples illustrate a typical C++ definition, and
+the corresponding Dylan functionality.</P>
+
+<P>In C++:</P>
+
+<P><TT><CODE>DISPPARAMS NEAR g_dispparamsNoArgs = {NULL, NULL, 0,
+0};</CODE></TT></P>
+
+<P><TT><CODE>HRESULT<BR>
+CFoo::GetWidth(short FAR* pwidth)<BR>
+{<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;HRESULT hresult;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;VARIANT varResult;</CODE></TT></P>
+
+<P><TT><CODE>&nbsp;&nbsp;&nbsp;&nbsp;VariantInit(&amp;varResult);<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;hresult = m_pdisp-&gt;Invoke(<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_width_disp_id,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IID_NULL,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LOCALE_USER_DEFAULT,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DISPATCH_METHOD,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;g_dispparamsNoArgs,
+&amp;varResult, NULL, NULL);</CODE></TT></P>
+
+<P><TT><CODE>&nbsp;&nbsp;&nbsp;&nbsp;if(FAILED(hresult))<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return hresult;</CODE></TT></P>
+
+<P><TT><CODE>&nbsp;&nbsp;&nbsp;&nbsp;*pwidth =
+V_I2(&amp;varResult);<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;VariantClear(&amp;varResult);<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;return S_OK;<BR>
+}</CODE></TT></P>
+
+<P>In Dylan:</P>
+
+<P><TT><CODE>define method GetWidth(this :: &lt;Foo&gt;) =&gt; (width
+:: &lt;integer&gt;)<BR>
+&nbsp;&nbsp;get-property(this.disp-interface, this.width-disp-id)<BR>
+end method GetWidth;</CODE></TT></P>
+
+<P>The return value structure is automatically decoded to return the
+corresponding Dylan object. Dylan's run-time data typing enables us
+to have a single function which can return instances of any of
+several classes. For strings or arrays, we return an object that is a
+special subclass of <TT>&lt;string&gt;</TT> or <TT>&lt;array&gt;</TT>
+that transparently implements the protocols of the corresponding
+Dylan class but still uses the internal representation of the C
+structures rather than copying the data.</P>
+
+<H3><B>Example 2: Client Interfaces from Dylan</B></H3>
+
+<P>To illustrate the mechanisms we use to define Dylan clients to OLE
+interfaces, let us consider defining a client for a small portion of
+the ASP component interface. In particular we will define Dylan code
+to access parts of the <TT>IRequest</TT> and
+<TT>IRequestDictionary</TT> dispatch interfaces. The
+<TT>IRequest</TT> interface is used to retrieve the values that the
+client browser passed to the server during an HTTP request.
+<TT>IRequest</TT> contains a member called <TT>ServerVariables</TT>.
+<TT>ServerVariables</TT> is used to access the values of
+predetermined environment variables, including the remote host name,
+remote user name and forty-odd other bits of useful information about
+the client request. For the purposes of this example we will ignore
+the other eight members of <TT>IRequest</TT>.
+<TT>ServerVariables</TT> is a read-only property which returns a
+pointer to an interface of type <TT>IRequestDictionary</TT>. It is
+the request dictionary which actually allows access to the
+environment variable values. <TT>IRequestDictionary</TT>, a kind of
+collection interface, has four members:</P>
+
+<DL>
+   <DT><TT>Item</TT></DT>
+   
+   <DD>given a key, returns the value for an element in the
+   collection</DD>
+   
+   <DT><TT>Count</TT></DT>
+   
+   <DD>returns the number of elements in the collection</DD>
+   
+   <DT><TT>Key</TT> and <TT>NewEnum</TT></DT>
+   
+   <DD>used together, these allow iteration over the collection</DD>
+</DL>
+
+<P>A call to access an item from the <TT>IRequestDictionary</TT> of
+an <TT>IRequest</TT> object might look something like the following
+pseudocode:</P>
+
+<P><TT><CODE>request-object-instance.ServerVariables.Item("REMOTE_HOST")</CODE></TT></P>
+
+<P>To gain access to these interfaces in Dylan we first define
+subclasses of the Dylan/OLE class <TT>&lt;C-interface&gt;</TT> for
+<TT>IRequest</TT> and <TT>IRequestDictionary</TT>:</P>
+
+<P><TT><CODE>define class &lt;IRequest&gt;
+(&lt;C-interface&gt;);</CODE></TT></P>
+
+<P><TT><CODE>// Dictionary for request collections<BR>
+define class &lt;IRequestDictionary&gt;
+(&lt;collection&gt;,&lt;C-interface&gt;);</CODE></TT></P>
+
+<P>In addition to encapsulating the raw interface pointers, these
+classes make it possible to write Dylan methods which dispatch on the
+class of the interface. Defining the class
+<TT>&lt;IRequestDictionary&gt;</TT> as inheriting from
+<TT>&lt;collection&gt;</TT> as well as from
+<TT>&lt;C-interface&gt;</TT> allows it to participate in the portions
+of the Dylan collection protocol corresponding to the member
+functions <TT>Item</TT> and <TT>Count</TT>.</P>
+
+<P>Next we define Dylan methods to access the member functions we
+wish to call:</P>
+
+<P><TT>// Collection of predetermined environment variables<BR>
+define method IRequest-ServerVariables<BR>
+&nbsp;&nbsp;(interface :: &lt;IRequest&gt;) =&gt; (result ::
+&lt;IRequestDictionary&gt;)<BR>
+&nbsp;&nbsp;let result = get-property(interface, #x60020004);<BR>
+&nbsp;&nbsp;pointer-cast(&lt;IRequestDictionary&gt;, result)<BR>
+end method;</TT></P>
+
+<P><TT>define method IRequestDictionary-Item<BR>
+&nbsp;&nbsp;(interface :: &lt;IRequestDictionary&gt;, key) =&gt;
+(result)<BR>
+&nbsp;&nbsp;call-simple-method(interface, #x00000000, key);<BR>
+end method;</TT></P>
+
+<P><TT>define method element<BR>
+&nbsp;&nbsp;(collection-interface :: &lt;IRequestDictionary&gt;, key,
+#key default)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;=&gt; (result)<BR>
+&nbsp;&nbsp;IRequestDictionary-Item(collection-interface, key)<BR>
+end;</TT></P>
+
+<P>These are simple trampoline methods which call the appropriate
+functions using the dispatch interface pointers encapsulated in the
+class of the interface objects passed as their first argument. By
+convention, the Dylan method name is constructed by combining the
+name of the interface with the name of the method from the
+interface.</P>
+
+<P><TT>call-simple-method</TT>, like <TT>get-property</TT>, is a
+function defined in the Dylan ole-automation library. The hexadecimal
+integer constants passed to these functions are <B>disp-ids</B> which
+identify the members being called. These constants are obtained from
+the type-library for the Microsoft ASP component interfaces which is
+part of the ASP DLL.</P>
+
+<P>The call to <TT>pointer-cast</TT> in the
+<TT>IRequest-ServerVariables</TT> method casts the result from an
+instance of <TT>&lt;LPDISPATCH&gt;</TT>, which is the super class of
+all pointers to dispatch interfaces, to the more specific
+<TT>&lt;IRequestDictionary&gt;</TT> (a subclass of
+<TT>&lt;LPDISPATCH&gt;</TT>). The pointer is returned to
+<TT>get-property</TT> as a variant record which does not identify its
+type as as anything more specific than <TT>LPDISPATCH</TT> (a pointer
+to a dispatch interface). The more specific information about what
+kind of dispatch interface is being returned is not encoded in the
+variant. By using the <TT>pointer-cast</TT> to strongly type the
+returned object, methods like <TT>IRequestDictionary-Item</TT> can be
+successfully dispatched to using interface objects returned from
+<TT>IRequest-ServerVariables</TT>.</P>
+
+<P>The class definitions and trampoline methods described above do
+work. We do not, however, expect users to write them by hand. Instead
+we provide the <TT>define dispatch-client</TT> Dylan macro to
+accomplish the task. <TT>define dispatch-client</TT> has syntax
+similar to that of <TT>define class</TT> and is used to define
+dispatch clients. The code as it appears above, both class and
+methods (including comments) was actually generated as the expansion
+of the following two macro calls:</P>
+
+<P><TT><CODE>define dispatch-client &lt;IRequest&gt;<BR>
+&nbsp;&nbsp;constant property<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;IRequest-ServerVariables ::
+disp-interface(&lt;IRequestDictionary&gt;),<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;disp-id: #x60020004,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;doc-string: "Collection of
+predetermined environment variables";<BR>
+end dispatch-client;</CODE></TT></P>
+
+<P><TT><CODE>define dispatch-client &lt;IRequestDictionary&gt;
+(&lt;collection&gt;)<BR>
+&nbsp;&nbsp;doc-string "Dictionary for request collections";<BR>
+&nbsp;&nbsp;element member-function<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IRequestDictionary-Item (key)
+=&gt; (result),<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;disp-id: #x00000000;<BR>
+end dispatch-client;</CODE></TT></P>
+
+<P>The <TT>element</TT> modifier in front of the
+<TT>member-function</TT> clause for <TT>IRequestDictionary-Item</TT>
+identifies it as the member function which should be used to
+implement an <TT>element</TT> method for the Dylan
+<TT>&lt;collection&gt;</TT> protocol. It is also possible to replace
+the <TT>disp-id:</TT> keyword option in the <TT>dispatch-client</TT>
+macro calls with a <TT>c-name:</TT> option which specifies the name
+of the member-function or property as it appears in the type-library.
+When the <TT>c-name:</TT> option is used and the <TT>disp-id:</TT>
+option is omitted, the corresponding trampoline method will contain a
+runtime call on the function <TT>get-id-of-name</TT> which uses the
+type-library to retrieve the dispatch id for a named method or
+property. This avoids hard coding the disp-ids at the cost of some
+runtime overhead.</P>
+
+<P>Because generating correct macro calls for a large type by hand
+may still be a tedious proposition, we also provide a type-library
+interface generator as part of the Harlequin Dylan development
+environment. Calling the function:</P>
+
+<P><TT><CODE>generate-type-library-interface("asp.DLL", <BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;output-file:
+"asp-interfaces.Dylan");</CODE></TT></P>
+
+<P>will generate a Dylan source file, named
+<TT>"asp-interfaces.Dylan"</TT>, containing <TT>dispatch-client</TT>
+macro calls for all of the dispatch interfaces defined in the type
+library contained in the ASP DLL, including the complete
+<TT>IRequest</TT> and <TT>IRequestDictionary</TT> interfaces. Note
+that the macro calls shown above, complete with
+documentation-strings, were generated in this way.</P>
+
+<H3><B>Example 3: Abstract Server Pages</B></H3>
+
+<P>As an example of a COM interface implemented in Dylan, we give a
+simple component written to work with Microsoft's Active Server
+Pages.</P>
+
+<P>The following component is not intended to be strikingly useful,
+but only to demonstrate how some of the actions that an ASP component
+might want to perform can be implemented in Dylan. This example
+assumes that the type-library converter mentioned above has been used
+to generate client interfaces for all of the ASP interfaces.</P>
+
+<H4><B>Setup</B></H4>
+
+<P>The first step in defining our component is to call a macro,
+<TT>define dispatch-interface</TT>, which is part of Dylan's
+high-level COM interface and allows simple definition of COM
+components with Dylan's normal class definition syntax.</P>
+
+<P><TT><CODE>define dispatch-interface &lt;power-component&gt;
+(&lt;simple-dispatch&gt;)<BR>
+&nbsp;&nbsp;documentation<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"A sample ActiveX component using
+the ASP support components.";<BR>
+&nbsp;&nbsp;slot context :: false-or(&lt;IScriptingContext&gt;) =
+#f;<BR>
+&nbsp;&nbsp;member-function OnStartPage (sc ::
+&lt;IScriptingContext&gt;) =&gt; ();<BR>
+&nbsp;&nbsp;member-function GetBrowserName () =&gt; (name ::
+&lt;string&gt;);<BR>
+&nbsp;&nbsp;member-function SessionCounter () =&gt; (count ::
+&lt;integer&gt;);<BR>
+&nbsp;&nbsp;member-function OnEndPage () =&gt; ();<BR>
+end;</CODE></TT>&nbsp;</P>
+
+<P>This macro defines a new class, <TT>&lt;power-component&gt;</TT>.
+<TT>&lt;power-component&gt;</TT> inherits from
+<TT>&lt;simple-dispatch&gt;</TT>, and thus inherits the mechanisms
+required to allow COM clients to invoke its methods. The macro also
+defines type information for the new COM class.</P>
+
+<P>(Note that the slot <TT>context</TT> is of type
+<TT>false-or(&lt;IScriptingContext&gt;)</TT>. This is an example of
+Dylan types being treated as values. <TT>false-or</TT> is a function
+which returns the type union of its argument and the singleton type
+containing the false value (<TT>#f</TT>). An object will be an
+instance of this type if it is an instance of the argument type, or
+if it is false. While <TT>false-or</TT> is a standard Dylan function
+that can be called by a running program, it is also known to the
+Harlequin Dylan compiler. Calls to <TT>false-or</TT> are usually
+analyzed at compile-time to generate compile-time types and
+type-checking.)</P>
+
+<P>The first method that we define is <TT>OnStartPage</TT>. Note that
+the actual method definition includes an additional argument for the
+object we are operating on:</P>
+
+<P><TT><CODE>define method OnStartPage (this ::
+&lt;power-component&gt;,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sc
+:: &lt;IScriptingContext&gt;) =&gt; ()<BR>
+&nbsp;&nbsp;this.context := sc;<BR>
+&nbsp;&nbsp;AddRef(this.context);<BR>
+end;</CODE></TT></P>
+
+<P>This method is invoked when the web server begins generating HTML
+for a page that uses our component. We simply save a reference to the
+scripting context and increment its reference count.</P>
+
+<P><TT>OnStartPage</TT> has a counterpart, <TT>OnEndPage</TT>, which
+is called when the web server finishes generating HTML. At that point
+we have no further need for the scripting context:</P>
+
+<P><TT><CODE>define method OnEndPage (this ::
+&lt;power-component&gt;) =&gt; ()<BR>
+&nbsp;&nbsp;Release(this.context);<BR>
+&nbsp;&nbsp;this.context := #f;<BR>
+end;</CODE></TT></P>
+
+<H4><B>Adding Functionality</B></H4>
+
+<P>Next we define a method that actually does something. The
+following code gets the identifying string sent by the browser with
+its web page request. For example, Netscape 4.03 sends the string
+"Mozilla/4.03 &#91;en&#93; (WinNT; I ;Nav)".</P>
+
+<P><TT><CODE>define method BrowserName (this ::
+&lt;power-component&gt;) =&gt; (r :: &lt;string&gt;)<BR>
+&nbsp;&nbsp;if (this.context = #f)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;ole-error($E-FAIL);<BR>
+&nbsp;&nbsp;end if;<BR>
+&nbsp;&nbsp;with-interface (request =
+this.context.IScriptingContext-Request)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;with-interface (server-vars =
+request.IRequest-ServerVariables)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with-interface (bn-interface =
+server-vars&#91;"HTTP_USER_AGENT"&#93;)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;let browser-name =
+get-property(bn-interface, 0);<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser-name<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end with-interface;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;end with-interface;<BR>
+&nbsp;&nbsp;end with-interface;<BR>
+end method BrowserName;</CODE></TT></P>
+
+<P>The function <TT>ole-error</TT> throws an exception of type
+<TT>&lt;ole-error&gt;</TT>. This exception is caught by the Dylan COM
+implementation and turned into a standard COM error. Likewise, the
+COM client stubs will turn failures into exceptions, so if the
+<TT>IScriptingContext-Request</TT> call above fails, that failure
+will automatically cause the failure of <TT>BrowserName</TT>. Note
+that the <TT>with-interface</TT> macros guarantee that the interfaces
+will be released, even in the event of an error being signaled.</P>
+
+<P>The expression <TT>server-vars&#91;"HTTP_USER_AGENT"&#93;</TT> is
+interpreted by Dylan as a call to <TT>element(server-vars,
+"HTTP_USER_AGENT")</TT>, which in turn calls
+<TT>IRequestDictionary-Item</TT>. For some reason
+<TT>IRequestDictionary-Item</TT> returns a dispatch interface with a
+default property, and the default property returns the actual value
+requested. This is a case in which Harlequin Dylan's lower-level COM
+support is useful. The interface returned by
+<TT>IRequestDictionary-Item</TT> and stored in <TT>bn-interface</TT>
+will be of type <TT>&lt;LPDISPATCH&gt;</TT>. The lower-level function
+<TT>get-property</TT> can be used to extract the value of the
+property with dispatch id <TT>0</TT> (the default property).</P>
+
+<H4><B>Final Demonstration</B></H4>
+
+<P>Another useful feature of ASP worth demonstrating is its ability
+to keep track of sessions via the <TT>ISessionObject</TT> interface.
+This interface provides a mechanism for storing data local to a
+particular web browsing session. We'll use it to implement a method
+which returns a new value each time it is called in a session:</P>
+
+<P><TT><CODE>define method SessionCounter<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;(component :: &lt;power-component&gt;) =&gt;
+(count :: &lt;integer&gt;)<BR>
+&nbsp;&nbsp;if (component.context = #f)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;ole-error($E-FAIL);<BR>
+&nbsp;&nbsp;end if;<BR>
+&nbsp;&nbsp;with-interface (session =
+component.context.IScriptingContext-Session)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;let current = session&#91;"counter"&#93;;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;let count = select (current by instance?)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;integer&gt;
+=&gt; current + 1; // return current + 1<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;otherwise
+=&gt; 1; // return 1<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end
+select;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;session&#91;"counter"&#93; := count;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;count<BR>
+&nbsp;&nbsp;end with-interface;<BR>
+end method session-counter;</CODE></TT></P>
+
+<P>Note this code takes advantage of Dylan's dynamic typing and
+first-class functions. The type of value returned by
+<TT>session&#91;"counter"&#93;</TT> will change over the course of a
+program. In particular, the first time it is called there will have
+been no value stored in the session for key <TT>"counter"</TT>, so
+<TT>session&#91;"counter"&#93;</TT> will return <TT>#f</TT>; at other
+times it will return an integer. The Dylan <TT>select</TT> statement,
+similar to a <TT>switch</TT> statement in C, takes an optional test
+function used to compare the key against the target matches. In this
+case, we use <TT>instance?</TT> as the test, allowing us to select a
+match based on the type of <TT>session&#91;"counter"&#93;</TT>. If it
+is an <TT>&lt;integer&gt;</TT>, it is incremented and returned.
+Otherwise, it is set to <TT>1</TT>, and <TT>1</TT> is returned.</P>
+
+<H3><B>Conclusions</B></H3>
+
+<P>From the examples given, it is clear that many development
+environments can provide access to services such as COM. Though COM
+reflects the linguistic heritage of its creators, it was designed to
+be accessed from all languages, and it can be. Such access can even
+be straightforward, at least initially.</P>
+
+<P>It is also clear, though, that the work required to support COM
+differs greatly from language to language and from environment to
+environment. Visual C++ and Visual J++ depend on extra-linguistic
+features, the former through the extensive use of automatic code
+generation, and the latter through extensive specialized support in
+the compiler and runtime. By contrast, Dylan's standard language
+features provide sufficient abstraction capabilities to support clean
+COM and ASP interfaces without moving outside the scope of the
+language.</P>
+
+<P>Though Dylan is not (yet) a mainstream language, it appears to
+have done a very good job of integrating with this mainstream domain.
+Dylan's macros and object system allowed us to construct a
+multi-layered interface that is both abstract and complete.</P>
+
+<P>In retrospect, this is not surprising. Dynamic languages have
+always been strong at managing complexity, building abstractions, and
+presenting simple interfaces to complex domains. For example, at
+Harlequin we have experience building a CORBA interface for our Lisp
+product which is very similar to our Dylan interface to COM. We
+expect that programmers using dynamic object languages to construct
+interfaces to other complex systems will have similarly positive
+results.</P>
+
+<H3><B>References</B></H3>
+
+<P><A NAME="brockschmidt95">&#91;Brockschmidt95&#93;</a><BR>
+K. Brockschmidt, Inside OLE, Second Edition, Redmond, Washington:
+Microsoft Press, 1995.</P>
+
+<P><A NAME="chappell96">&#91;Chappell96&#93;</a><BR>
+D. Chappell, Understanding ActiveX and OLE, Redmond, Washington:
+Microsoft Press, 1996.</P>
+
+<P><A NAME="denning97">&#91;Denning97&#93;</a><BR>
+A. Denning, ActiveX Controls Inside Out, Redmond, Washington:
+Microsoft Press, 1997.</P>
+
+<P><A NAME="homer97">&#91;Homer97&#93;</a><BR>
+A. Homer, et al, Active Server Pages, Birmingham: Wrox, 1997.</P>
+
+<P><A NAME="rogerson97">&#91;Rogerson97&#93;</a><BR>
+D. Rogerson, Inside COM, Redmond, Washington: Microsoft Press,
+1997.</P>
+
+<P><A NAME="shalit96">&#91;Shalit96&#93;</a><BR>
+A. Shalit, The Dylan Reference Manual, Reading, Massachusetts:
+Addison-Wesley Developer's Press, 1996.</P>
+
+<?php include $bottom_inc ?>

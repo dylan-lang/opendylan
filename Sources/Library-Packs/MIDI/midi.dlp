@@ -1,0 +1,26 @@
+<library-pack name="MIDI" title="MIDI">
+  <description>Some simple MIDI libraries</description>
+  <copyright>Copyright (c) 1995-2001 Functional Objects, Inc. All rights reserved.</copyright>
+  <company>Functional Developer</company>
+  <libraries>
+    <library name="midi" title="MIDI">
+      <description>A MIDI interface library</description>
+      <sources location="lib/midi/">
+	<project platform="x86-win32">win32-midi.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+	<binary file="DxMIDI.dll"/>
+	<lib file="DxMIDI.lib"/>
+      </release>
+    </library>
+  </libraries>
+  <examples>
+    <library name="plonker" title="Plonker">
+      <category>Technologies/MIDI</category>
+      <description>A simple MIDI keyboard</description>
+      <sources location="midi/plonker">
+	<project platform="x86-win32">plonker.hdp</project>
+      </sources>
+    </library>
+  </examples>
+</library-pack>

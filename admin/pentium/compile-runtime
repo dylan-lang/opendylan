@@ -1,0 +1,2 @@
+repeat compile dylan common-dylan functional-dylan collections io system \
+               generic-arithmetic big-integers c-ffi network testworks testworks-specs

@@ -1,0 +1,469 @@
+!  Convert LaTeX to HTML
+! $Id: latex.dat,v 1.4 1995/03/14 23:30:20 gray Exp $
+
+! Unfinished business:
+!	title
+!	vertical lines in tabular environment
+
+@set{Part;0}@set{chapter;0}
+@set{C;}@set{S;0}@set{SS;0}@set{SSS;0}@set{P;0}@set{SP;0}
+@set{cursec;}@set{F;0}@set{T;0}@set{contents;}@set{footnote;0}
+
+\B=\<\!-- "@outpath" generated @just-date{@datime} by "@getenv{USER}" --\>\n\<\!-- Converted from "@inpath" dated @just-date{@file-time} --\>\n@setfnpath{@outpath}@set{labelpath;@var{labelpath;@mergepath{@outpath;@outpath;.LX}}}
+
+\% \$Header\:*\n=\<\!-- \$Header\:* --\>\n
+\% \$Id\:*\n=\<\!-- \$Id\:* --\>\n
+\% Copyright*\n=\<\!-- Copyright* --\>\n
+\N\%*\n=
+\%*\n=\n
+\\includeonly\W\{*\}=
+\\input\W\{\W<F>.<F>\W\}=@{@read{@mergepath{@inpath;$1.$2;.$2}}}
+\\input\W\{\W*\W\}=@{@read{@mergepath{@inpath;$1;.tex}}}
+
+\\include\W\{\W*\W\}=@bind{OP;@mergepath{@outpath;$1.tex;@outpath}}\
+@setfnpath{${OP}}@bind{footnote;0}\
+@write{${OP};@{@read{@mergepath{@inpath;$1.tex;.tex}}}}\
+@close{${OP}}@close{fnpath}@unbind{OP}@unbind{fnpath}@unbind{footnote}
+
+basic:\<=\&lt\;
+basic:\>=\&gt\;
+basic:\&=\&amp\;
+basic:\"=\&quot\;
+
+:\<=\&lt\;
+\>=\&gt\;
+\\\&=\&amp\;
+\\\{=\{
+\\\}=\}
+\\\%=\%
+\\\$=\$
+\\\#=\#
+\\_=_
+! unfortunately, this is not recognized by Mosaic:
+!\~=\&nbsp\;
+! assuming ISO 8859 character set, use its non-breaking-space character:
+!\~=\xA0
+! no, neither Mosaic nor Netscape handle that right either.   
+\~=\ ;
+\\\ =\ ;
+\\\,=\ ;
+\\\/=
+\\\@=
+\\-=
+\\\==
+\\\>=\t
+\I--- =-- ;
+\I-- =- ;
+\\\\=\<BR\>
+\\newline<sep>=\<BR\>
+\\linebreak\[4\]=\<BR\>
+\\linebreak\[?\]=
+\\linebreak<sep>=\<BR\>
+\\pagebreak\[?\]<skip-blank-lines>=\<P\>\n
+\\nopagebreak\[?\]=
+\\samepage<sep>=
+!\\hspace\{*\}=\&nbsp\;\&nbsp\;\&nbsp\;
+\\hspace\{*\}=\t\xA0\xA0\xA0\ ;
+\\hspace\*\{*\}=\t\xA0\xA0\xA0\ ;
+\\vspace\{*\}<skip-blank-lines>=\<P\>\n
+\\vspace\*\{*\}<skip-blank-lines>=\<P\>\n
+\\vfil<sep><skip-blank-lines>=\<P\>\n
+\\vskip <N><I><skip-blank-lines>=\<P\>\n
+\\mbox\{#\}=#
+\\makebox\W\{#\}=#
+\\protect<sep>=
+\\null<sep>=
+
+\\tiny<sep>=
+\\scriptsize<sep>=
+\\small<sep>=
+\\normalsize<sep>=
+\\large<sep>=
+\\Large<sep>#=\<H2\>#\</H2\>
+\\LARGE<sep>#=\<H2\>#\</H2\>
+\\huge<sep>#=\<H1\>#\</H1\>
+\\HUGE<sep>#=\<H1\>#\</H1\>
+
+
+! discard irrelevant page format:
+\\documentstyle\W\{article\}=@set{C;}
+\\documentstyle\W\{report\}=@set{C;${chapter;0}.}
+\\documentstyle\W\{*\}=
+\\pagestyle\W\{*\}=
+\\markboth\W\{<matchbrace>\}\W\{<matchbrace>\}=
+\\oddsidemargin * =
+\\evensidemargin * =
+\\topmargin * =
+\\headsep * =
+\\textheight * =
+\\textwidth * =
+\\maketitle<sep>=
+
+\\begin\W\{document\}=@set{topfile;@outpath}
+\\end\W\{document\}=\N\n\<H2\>Table of Contents\</H2\>\n@var{contents}\N@end
+
+\\title\W\{\\bf<sep>#\}=\<H1\>#\</H1\>
+\\title\W\{#\}=\<H1\>#\</H1\>
+\\part\W\{#\}=@incr{Part}\<H2\>Part ${Part}\</H2\>\<H1\>#\</H1\>@append{contents;\<P\>\nPart ${Part}\: $1\<P\>\n}
+
+\\chapter\W\{#\}=@incr{chapter}@set{C;${chapter}.}@set{cursec;${chapter}}\
+	@set{S;0}@set{SS;0}@set{F;0}@set{T;0}\
+	\<H2\>Chapter ${chapter}\</H2\>\
+	\<H1\>\<A NAME\="${chapter}@cmpname{$1}"\>$1\</A\></H1\>\
+	@append{contents;\<P\>\n\
+	 \<A HREF\="@relative-path{@var{topfile;};@outpath}\
+		\#${chapter}@cmpname{$1}"\>\
+	 ${chapter} $1\</A\>\<BR\>\n}
+
+\\section\W\{#\}=@incr{S}@set{cursec;$C$S}@set{SS;0}@heading{H2\:${cursec} #}
+\\subsection\W\{#\}=@incr{SS}@set{cursec;$C$S.${SS}}@set{SSS;0}@heading{H3\:${cursec} #}
+\\subsubsection\W\{#\}=@incr{SSS}@set{cursec;$C$S.${SS}.${SSS}}@set{P;0}@heading{H4\:${cursec} #}
+!\\paragraph\W\{#\}=@incr{P}@set{cursec;$C$S.${SS}.${SSS}.$P}@set{SP;0}@heading{H4\:${cursec} #}
+\\paragraph\W\{#\}=@dopar{${SSS},$1}
+dopar:0,*=\<H4\>*\</H4\>
+dopar:<D>,*=@incr{P}@set{cursec;$C$S.${SS}.${SSS}.$P}@set{SP;0}\
+	@heading{H4\:${cursec} *}
+\\subparagraph\W\{#\}=@incr{SP}@set{cursec;$C$S.${SS}.${SSS}.$P.${SP}}@heading{H5\:${cursec} #}
+
+\N\W\n<skip-blank-lines>=\N\<P\>\n
+skip-blank-lines:\W\n=;\f=\f;\%*\n=;
+skip-blank-lines:\\pagebreak[?]=;\\vspace\W\{<matchbrace>\}=;
+skip-blank-lines:=@end
+\\par<sep><skip-blank-lines>=\N\<P\>\n
+
+heading:<A>\:* *=\<$1\>\<A NAME\="$2@cmpname{$3}"\>$2\</A\> $3\</$1\>\
+	@append{contents;\<A HREF\="@relative-path{@var{topfile;};@outpath}\
+		\#$2@cmpname{$3}"\>$2\</A\> $3\<BR\>\n}
+heading:?=@err{internal error in heading\n}@fail
+cmpname:<W6><W>=@cmpname{$1};a=;e=;i=;o=; =;\<*\>=;-=;_=;"=;ss=s;?=?
+
+:\\setcounter\W\{\W<I>\W\}\W\{\W<N>\W\}=@setcount{$1,$2}
+setcount:chapter,*=@set{chapter;*}@set{C;$1.}
+setcount:section,*=@set{S;*}
+setcount:table,*=@set{T;*}
+setcount:figure,*=@set{F;*}
+setcount:*,*=@err{"@file" line @line\: ignored\: \\setcounter\{*\}\{*\}\n}
+
+:\\let\\<matchbrace>\\<matchbrace>\S=\
+	@err{"@file" line @line\: ignored\: \\let\\$1\\$2\n}
+
+:\\verb<-L1>*$1=\<TT\>@basic{*}\</TT\>
+:\\verb\*<-L1>*$1=\<TT\>@basic{*}\</TT\>
+
+\\begin\W\{verbatim\}<basic>\\end\{verbatim\}=\<PRE\>$1\</PRE\>
+
+\\noindent<sep>=
+\\raggedbottom<sep>=
+\\raggedright<sep>=
+
+\\begin\W\{description\}=\<DL\>
+\\item\W\[-\]=\<LI\>
+\\item\W\[--\]=\<LI\>
+\\item\W\[\]=\<LI\>
+\\item\W\[#\]=\<DT\>#\<DD\>
+\\item\{#\}=\<DT\>#\<DD\>
+\\end\W\{description\}=\</DL\>
+\\begin\W\{list\}\W\{*\}\W\{\}=\<UL\>
+\\item<sep>=\<LI\>
+\\end\W\{list\}=\</UL\>
+\\list\W\{*\}\W\{*\}=\<UL\>
+\\endlist=\</UL\>
+\\begin\W\{itemize\}=\<UL\>
+\\end\W\{itemize\}=\</UL\>
+\\begin\W\{enumerate\}=\<OL\>
+\\end\W\{enumerate\}=\</OL\>
+
+\\begin\W\{quote\}=\<BLOCKQUOTE\>
+\\end\W\{quote\}=\</BLOCKQUOTE\>
+\\begin\W\{quotation\}=\<BLOCKQUOTE\>
+\\end\W\{quotation\}=\</BLOCKQUOTE\>
+\\begin\W\{center\}=\<BLOCKQUOTE\>
+\\end\W\{center\}=\</BLOCKQUOTE\>
+\\author\W\{#\}=\<BLOCKQUOTE\>#\</BLOCKQUOTE\>
+\\date\W\{#\}=\<BLOCKQUOTE\>#\</BLOCKQUOTE\>
+
+\\begin\W\{sloppypar\}=\<P\>
+\\end\W\{sloppypar\}=\<P\>
+\\begin\W\{flushleft\}=\<P\>
+\\end\W\{flushleft\}=\<P\>
+
+\$<math>\$=$1
+\\\(<math>\\\)=$1
+\\begin\W\{math\}<math>\\end\W\{math\}=$1
+math:\^\{2\}=\²
+math:\^\{3\}=\³
+math:1\^\{st\}=1st;2\^\{nd\}=2nd;3\^\{rd\}=3rd
+! Note: SUB and SUP are only in level 3 (HTML+)
+!math:\^\{#\}=\<SUP\>#\</SUP\>
+!math:\_\{#\}=\<SUB\>#\</SUB\>
+math:\^\{#\}=\*\*#
+math:\_\{#\}=\[#\]
+math:\\leftarrow<sep>=\&lt\;--
+math:\\Leftarrow<sep>=\&lt\;\=
+math:\\rightarrow<sep>=--\&gt\;
+math:\\Rightarrow<sep>=\=\&gt\;
+math:\\leftrightarrow<sep>=\&lt\;--\&gt\;
+math:\\colon<sep>=\:
+math:\\times<sep>=\×
+math:\\div<sep>=\÷
+math:\\pm<sep>=\±
+math:\\neg<sep>=\¬
+math:\\mu<sep>=\µ
+math:\\beta<sep>=ß
+math:\\backslash=\\
+math:\\\|=\|\|
+math:\\langle=\&lt\;
+math:\\rangle=\&gt\;
+math:\\cal <L>=\<EM\>$1\</EM\>
+math:\\hbox\{#\}=$1
+math:<L>=\<VAR\>$1\</VAR\>
+math:\\rm<sep><>=$2
+math:\\frac\W\{<A>\}\W\{<A>\}=\I$1\/$2
+math:\\cdots<sep>=···
+math:\\cdot<sep>=·
+math:\{#\}=#
+math:\\<I>= \\$1 @err{"@file" line @line\: unrecognized in math mode\: \\$1\n}
+
+! inherited from main domain:
+math:\<=\&lt\;;\>=\&gt\;;\&=\&amp\;
+math:\\\{=\{;\\\}=\}
+math:\\ldots<sep>=...
+math:\\\,=\ ;
+math:\\mbox\{#\}=#
+
+:\\ldots<sep>=...
+\\copyright<sep>=\©
+\\S<sep>=\§
+\\P<sep>=\¶
+\\bull<sep>=\¤
+\\hline<sep>=\<HR\>
+
+:\\def\\<I>\{<matchbrace>\}=@define{@quote{\\$1}\<sep\>\=@quote{@{$2}}}
+:\\def\\<I>\[\#<D1>\]\{<matchbrace>\}=@define{@quote{\\$1\[}\*@quote{\]}\<sep\>\=@argsubst{@quote{@basic{@{$3}}}}}
+argsubst:\\\#<D1>=\$$1
+:\\newcommand\W\{*\}\W\{<matchbrace>\}=@define{@quote{$1}\<sep\>\=@quote{@{$2}}}
+:\\newcommand\W\{*\}\W\[1\]\W\{\W\}=@define{@quote{$1}\\W\\\{\<matchbrace\>\\\}=}
+:\\renewcommand\W\{*\}\W\{<matchbrace>\}=@define{@quote{$1}\<sep\>\=@quote{@{$2}}}
+\\newenvironment\W\{*\}\{<matchbrace>\}\W\{<matchbrace>\}=@define{@quote{\\begin\{$1\}}=\@\{@quote{$2}\}}@define{@quote{\\end\{$1\}}=\@\{@quote{$3}\}}
+
+\\chardef\\<I>\=\`\\?=@define{@quote{\\$1}\<sep\>=@quote{@basic{?}}}
+
+matchbrace:\{#\}=\{#\}
+matchbrace:\\<Y1>=\\$1
+matchbrace:\\verb<-L1>\L*$1=$0
+
+!:\\label\{*\}\W# = \<A NAME\="@basic{*}"\>#\</A\> ;
+:\\label\W\{*\}= \<A NAME\="@basic{*}"\>\xA0\</A\> \
+@set{$1\#;${cursec}}@set{$1\!;@outpath}\
+@set{opath;@outpath}\
+@write{${labelpath};\N\@set\{@quote{$1}\\\#\;${cursec}\}\@set\{@quote{$1}\\\!\;@quote{${opath}}\}\n};
+
+:\\ref\W\{<G>\} \Con page \\pageref\W\{$1\}=\I@putref{$1}
+:\\ref\W\{*\}=\I@putref{*}
+:\\pageref\W\{*\}=\I@putref{*}
+:\\footnote\W\{\CPage \\pageref\W\{*\}\}=\I\[\§ @putref{*}\]
+:\\footnote\W\{\\S\W\\ref\{\W<T>\}, \Cpage \\pageref\W\{\W$1\}\}=\I\[\§ @putref{$1}\]
+putref:*=\<A HREF\="@relative-path{@outpath;@var{$1\!;}}\#@basic{*}"\>\
+	@var{$1\#;\*\*}\</A\>
+
+:\\footnote\W\{#\}=@incr{footnote}\
+	@write{${fnpath};\N\<P\>\<A NAME\="FN${footnote}"\>\
+		Footnote ${footnote}\</A\>:\<BR\>\n$1\N\n}\
+	\I[\<A HREF\="@relative-path{@outpath;${fnpath}}\#FN${footnote}"\>\
+	Footnote ${footnote}\</A\>]
+
+setfnpath:<F>.<F>=@bind{fnpath;$1-footnotes.$2}
+
+:\\today<sep>=@just-date{@file-time}
+just-date:<L> <L> <D> <D>\:<D>\:<D> <D>=$2 $3\, $7
+just-date:\n=;
+
+:\{#\}=#
+\\tt<sep>#=\<TT\>#\</TT\>
+\\em<sep>#=\<EM\>#\</EM\>
+\\it<sep>#=\<I\>#\</I\>
+\\sl<sep>#=\<I\>#\</I\>
+\\bf<sep>#=\<B\>#\</B\>
+\\sf<sep>=! no equivalent
+\\rm<sep>=! no equivalent
+! no equivalent, rather arbitrary mapping:
+\\sc<sep>#=\<STRONG\>#\</STRONG\>
+
+! separator marking end of command name:
+sep:\ =@end
+sep:\t=@end
+sep:\n=@end
+sep:\I=@end
+sep:=@fail
+
+\\begin\W\{table<optask>\}<optbrack>*\\end\W\{table$1\}=\
+	@incr{T}@set{caption;Table $C$T}@bind{cursec;$C$T}\
+	@table-body{*}@unbind{cursec}
+\\begin\W\{figure<optask>\}<optbrack>*\\end\W\{figure$1\}=\
+	@incr{F}@set{caption;Figure $C$F}@bind{cursec;$C$F}\
+	@table-body{*}@unbind{cursec}
+! if there is a label, move it to the top.
+table-body:*\\label\W\{*\}*=@{\\label\{$2\}$1$3}
+table-body:*=@{*}
+
+\\begin\W\{table<optask>\}<optbrack>=@incr{T}@set{caption;Table $C$T}\
+	@bind{cursec;$C$T}
+\\end\W\{table<optask>\}=@unbind{cursec}
+\\begin\W\{figure<optask>\}<optbrack>=@incr{F}@set{caption;Figure $C$F}\
+	@bind{cursec;$C$F}
+\\end\W\{figure<optask>\}=@unbind{cursec}
+\\caption\W\{#\}=\<BR\>\<BLOCKQUOTE\>@var{caption}\: #</BLOCKQUOTE\>
+optask:\*=\*@end;=@end!	optional asterisk
+optbrack:\W\[<>\]=@end;=@end! optional brackets
+
+\\TeX<sep>=TeX
+\\LaTeX<sep>=LaTeX
+
+!-------------------------------------------------------
+!	tabbing environment
+
+:\\begin\W\{tabbing\}<matchbrace>\\end\W\{tabbing\}=\N\<PRE\>\n\
+@bind{tabfmt;}@bind{tabraw;}@bind{tabnum;1}\
+@tabfield{@tabsplit{$1}}${tabfmt}\
+@unbind{tabfmt}@unbind{tabraw}@unbind{tabnum}\
+\N</PRE\>
+
+tabsplit:\\\==\eE\n;\\\\=\eN\n\eK\n;\\\>=\eT\n;\\kill<sep>=\eK\n;\S=\S;
+tabsplit:\\\`=\eR\n
+tabsplit:\\tt<sep>=;
+tabsplit:\%*\n=\S
+
+tabfield:<T>=@set{x;@{$1}}@append{tabfmt;$x}@append{tabraw;@rawtext{$x}}
+tabfield:\eN\n=${tabfmt}\n
+tabfield:\eK\n=@set{tabfmt;}@set{tabraw;}@set{tabnum;1}
+tabfield:\eE\n=@set{tab${tabnum};@length{${tabraw}}}@incr{tabnum}
+tabfield:\eT\n=@tabfield{@left{@sub{@var{tab${tabnum}};@length{${tabraw}}};}}@incr{tabnum}
+tabfield:\eR\n<T>=@append{tabfmt;@right{@sub{60;@length{${tabraw}@rawtext{$1}}};}@{$1}}
+tabfield:?=@err{internal error - bad tabfield '?'}
+
+rawtext:\<*\>=;
+rawtext:\&<L>\;=\&
+
+!-------------------------------------------------------
+!	tabular environment
+
+! currently ignoring center, right, and vertical lines
+
+:\\begin\W\{tabular\}\W\{<matchbrace>\}<tabusplit>\\end\W\{tabular\}=\
+	\N\<PRE\>\n\
+	@bind{tabfmt;}@bind{tabraw;}@bind{tabnum;1}@bind{tabucols;$1}\
+	@tabuset{$2}@tabuout{$2}\
+	@unbind{tabfmt}@unbind{tabraw}@unbind{tabnum}@unbind{tabucols}\
+	\N</PRE\>
+
+
+tabusplit:\\\\=\eN\n\eK\n;\\\&=$0;\&=\eT\n;\\kill<sep>=\eK\n;\\tt<sep>=;
+tabusplit:\Z=\eN\n
+tabusplit:\\parbox\W\{<matchbrace>\}\W\{<nonewline>\}=$2\
+	@err{"@file" line @line\: ignored\: \\parbox\{$1\}\{@cut{$2}\}\n}
+tabusplit:\\multicolumn\W\{\W<D>\W\}\W\{\W<L>\W\}\W\{<nonewline>\}=\
+	$3@multtabs{@left{$1;}}
+tabusplit::nonewline
+nonewline:\S=\S
+nonewline:\{#\}=\{#\}
+nonewline:\%*\n=\S
+
+multtabs:?\Z=@end;?=\eM\n
+
+tabuset:<T>=@append{tabraw;@rawtext{@{$1}}}
+tabuset:\eN\n=
+tabuset:\eK\n=@set{tabraw;}@set{tabnum;1}
+tabuset:\eT\n=@set{tab${tabnum};\
+		   @maxn{@length{${tabraw}},@var{tab${tabnum};1}}}\
+	@tabuset{@left{@sub{@var{tab${tabnum}};@length{${tabraw}}};}}\
+	@incr{tabnum}
+tabuset:\eM\n=@incr{tabnum}
+tabuset:?=@err{internal error - bad tabuset '?'}
+
+maxn:<N>,<N>=@cmpn{$1;$2;$2;$1;$1}
+
+tabuout:<T>=@set{x;@{$1}}@append{tabfmt;$x}@append{tabraw;@rawtext{$x}}
+tabuout:\eN\n=${tabfmt}\n
+tabuout:\eK\n=@set{tabfmt;}@set{tabraw;}@set{tabnum;1}
+tabuout:\eT\n=@tabuout{@left{@sub{@var{tab${tabnum}};@length{${tabraw}}};}}\
+	@incr{tabnum}
+tabuout:\eM\n=@incr{tabnum}
+tabuout:?=@err{internal error - bad tabuout '?'}
+
+\\begin\{center\}\W\\begin\{tab<L>\}*\\end\W\{tab$1\}*\\end\{center\}=\
+	@{\\begin\{tab$1\}*\\end\{tab$1\}*}
+
+!--------------------------------------------
+!
+! automatic index generation:
+
+\\makeindex<sep>=@set{index-path;@mergepath{@outpath;@outpath;.IX1}}
+\\tableofcontents<sep>=;
+
+\\index\W\{#\}=@index-entry{z\;# }
+\\glossary\W\{#\}=@index-entry{A\;# }
+
+@set{index-count;0}
+index-entry:*=@index-entry-x{${index-path;\d}\t*}
+index-entry-x:\d\t?\;\W* =$2@end
+index-entry-x:*\t?\;\W* *=@set{tag;@upcase{$2}+@cmpidx{$3}}\
+	\<A NAME\="${tag}"\>$3</A\>\
+	@incr{index-count}\
+	@set{relout;@relative-path{@var{topfile;};@outpath}}\
+	@write{$1;\
+		$2\;@sortkey{$3}\t@nonewline{$3} @nonewline{$4}\t\
+		${cursec}\t${relout}\#${tag}\n}
+index-entry-x:*=@err{Internal error in index-entry\n}
+
+! compress index tag
+cmpidx:\A<L1><l1>=$1$2!		always keep first two characters
+cmpidx:\A_<L1><l1>=_$1$2
+cmpidx:<L5>=@cmpname{$1}!	don't truncate
+cmpidx::cmpname!		else compress like header tags
+
+sortkey:<L>=@upcase{$1}
+sortkey:\A_=;
+sortkey:_=\I;
+sortkey:\S=\S
+sortkey:\<I\>*\<\/I\>=;
+sortkey:\Z=\s\s
+
+gen-index:0 =@end
+gen-index:1 =@end
+gen-index:* *.<I>=@close{$2.$3}@set{sorted-index;$2.IX2}\
+	@shell{sort \< '$2.$3' \> '${sorted-index}'}\
+	@write{$2-index.html;\
+		@{\\chapter\{Index\}}\N\
+		\<PRE\>@do-index{@read{${sorted-index}}}\</PRE\>}
+
+do-index:\N<L1>=@index-heading{$1,@var{IH;_}}
+index-heading:<L1>,$1=@end
+index-heading:<L1>=\N\</PRE\>\n\n@{\\section\{@index-title{$1}\}}\N\n\
+	@set{IH;$1}\<PRE\>@end
+index-heading:z,_=@end
+index-title:A=Glossary
+index-title:z=General Index
+
+!	$1=sort key, $2=text, $3.$4=section, $5=address
+do-index:\;\L*\t*\t*.*\t*\n=\
+	\<A HREF\="$5"\>$2\</A\> \
+	@set{fill;@length{@rawtext{$2 }}}\
+	@substring{@and{${fill};1};@sub{54;${fill}};\
+		. . . . . . . . . . . . . . . . . . . . . . . . . .}\
+	@right{3;$3}.$4\<BR\>\n
+do-index:=@err{internal do-index\n}@end
+
+\\end\W\{document\}=\
+	@gen-index{${index-count;0} ${index-path;}}\
+	\N\n\<H2\>Table of Contents\</H2\>\n@var{contents}\N@end
+
+\\chapter\W\{\CIndex\}\W\\include\W\{<F>.idx\}=@use-idx{${index-count},$1}
+! use the TeX-generated index only if we haven't made one ourselves.
+use-idx:0,*=@{\\chapter\{Index\}}@{\\include\{$1.idx\}}
+use-idx:?=@end
+
+!-------------------------------------------------------
+
+:\\<A>\W\{<matchbrace>\}=@err{"@file" line @line\: unrecognized\: \\$1\{@cut{$2}\}\n} \\$1\{@{$2}\}
+:\\<I>=@err{"@file" line @line\: unrecognized\: \\$1\n} \\$1 ;
+cut:\W* =* ...@end

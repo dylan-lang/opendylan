@@ -1,0 +1,884 @@
+#!/usr/local/bin/perl
+#       Script: build-report
+#       Author: Russell Prince
+$usage=" Usage: build-report [-m <usernames>] [<date>]";
+#  Opts & Args: -m: <Usernames to mail output to>, default: output to stdout
+#               <date>: <YYMMDD> to generate report for, default: current date
+#     Synopsis: Parses log files in /u/dylan/tools/admin/logs for <date>
+#               and generates a report of all the build activity. The report
+#               consists of a chart summarizing the build results and a more
+#               detailed section with relevant sections from logfiles.
+#     Revision: By: dodds. On: 21 May 1997. Reason:
+#               1. Add report on directories cleaned for the build. ?
+#               2. Add report on stale directories it tried to remove. ?
+#		3: Remove the "writable files skipped" report; no longer needed.
+####################################################################
+## Application exit status legend ##
+##  0: Report successful
+##  1: Unable to find nightly-build log file
+##  2: Unable to open tmpfile1
+##  3: Unable to open tmpfile2
+##  4: Unable to open summaryfile
+
+###########################################################################
+##                            Global Variables                           ##
+###########################################################################
+
+require '/u/dylan/tools/admin/env.perl';
+$OUTPUT_TYPE = "stdout";
+$mail = "no";
+$lib_mail = "no";
+$builds = "$admindir/build-machines.txt";
+$num_specs = 0;
+$sendmailto = "unspecified";
+$max_machine_length = 7;
+
+$summary = "$logsdir/build_summary.$suffix";   #  summary file
+$temp1 = "$logsdir/temp_summary1.$suffix";     #  temp chart file
+$temp2 = "$logsdir/temp_summary2.$suffix";     #  temp report file
+
+###########################################################################
+##                            Search Strings                             ##
+###########################################################################
+
+$emu_search_key = "emulator-log";
+$emu_pass_str = "completed successfully";
+$emu_fail_str = "Caught build error";
+
+$env_search_key = "env-log";
+$env_pass_str = "completed successfully";
+$env_fail_str = "Caught build error";
+
+$dfmc_search_key = "build-dfmc";
+$dfmc_pass_str = "CMU test suite execution status: 0";
+
+$dfmc_build_search_key = "build-dfmc-image";
+$dfmc_build_pass_str = "dfmc build completed successfully";
+$dfmc_build_fail_str = "dfmc build exited with an exit status";
+
+$tags_search_key = "nightly-tag-file";
+$tags_pass_str = "Ending at:";
+$tags_fail_str = "Caught build error";
+
+$libs_search_key = "libs-log";
+$libs_pass_str = "completed successfully";
+$libs_fail_str = "build aborted abnormally";
+
+
+###########################################################################
+##                            Main Program                               ##
+###########################################################################
+
+&parse_arguments();
+&init_files();
+&find_log_files();
+&get_site_builds();
+&create_chart();
+&add_tail_to_chart();
+&mail_summary();
+&delete_temp_files();
+
+exit(0);
+
+###########################################################################
+##                            local functions                            ##
+###########################################################################
+
+sub add_tail_to_chart
+  {
+    # Hope errors, list images local,  and df stuff
+
+#    print TEMP2 "\n==================================================================\n";
+#    print TEMP2 "==================== Writable Files skipped by hope:\n\n";
+
+#    &get_hope_errors();
+
+    print TEMP2 "\n==================================================================\n";
+    printf TEMP2 "==================== Images in %s\n\n", $localdir;
+
+    &get_images();
+
+    print TEMP2 "\n$df\n\n";
+
+    close(TEMP1);
+    close(TEMP2);
+
+    `cat $temp1 $temp2 > $summary`;
+
+  }  # end add_tail_to_chart
+
+###########################################################################
+
+sub create_chart
+  {
+    local (@fabs_output);
+
+    print TEMP1 "Build report for $site\n\n";
+
+    if ($platform eq "sparc-sunos4")
+      { $df = `df .`; }
+    else
+      { $df = `df -ek .`; }
+
+    @df_list = split(/ +/, $df);
+    $capacity = $df_list[10];
+    chop($capactiy);
+
+    if ($capacity >= 97)
+      {	print TEMP1 "\n  WARNING!!!  Disk space is exceding 97%\n\n"; }
+
+#    &show_specs();
+
+    printf TEMP1 "%-$max_machine_length s ", "Machine";
+    print TEMP1 "Emu    Env   DFMC   D-Img  Tags    Lib   Lib fails\n";
+
+    printf TEMP1 "%-$max_machine_length s ", "-------";
+    print TEMP1 "---    ---   ----   -----  ----    ---   ---------\n";
+
+####  Initialize failure flags
+    $nf_flag = 0;
+    $fl_flag = 0;
+    $fb_flag = 0;
+    $q_flag  = 0;
+
+    foreach $spec (@specs) 
+      {
+####  initialize all the cells
+	$num_specs++;
+	$emmulator_cell = "  -";
+	$dfmc_cell = "  -";
+	$dfmc_build_cell = "  -";
+	$env_cell = "  -";
+	$tags_cell = "  -";
+	$library_cell = "  -";
+	$library_fails = "  -";
+
+	@keys = split(/\s+/,$spec);
+	$machine = shift(@keys);
+
+        print TEMP2 "\n==================================================================\n";
+	print TEMP2 "==================== Report for machine: $machine\n";
+
+	#  In this section of the script all of the keys are stepped through.
+	#  The keys pertain to what was built..  Sync, clim, emulator, ect.
+	#  If a key is found then the appropriate log files are searched for,
+	#  and respective messages are displayed.  The chart cells are set
+	#  for each key and are all printed out at once for each spec.
+
+	#  Cell message codes:
+	$nf = "N/F : Log file not found";
+	$fl = "F/L : Log file indicated a LOCAL Server Error";
+	$fb = "F/B : Log file indicated an unsuccessful build";
+	$q  = " ?  : Log file did not indicate a successful or unsuccessful build";
+
+	if ($keys[0] eq "all")
+	  {
+	    @keys = split(/ /, "emu env dfmc dfmc_build tags libs");
+	  }
+
+        $found_file = "true";
+
+	foreach $key (@keys)  # step through the keys
+	  {
+######## EMULATOR ########
+	    if ($key eq "emu") 
+	      {
+		print TEMP2 "\nEmulator:\n";
+
+		if (&get_log_file($machine, $emu_search_key))
+		  {
+		    if (&search_log($emu_pass_str))
+		      {       #succesful build 
+			$time = &time_diff ();
+			$emmulator_cell = $time;
+			print TEMP2 "  Emulator build completed. Duration: $time\n";
+		      } 
+		    elsif (&search_log($emu_fail_str))
+		      {  
+			$emmulator_cell = " F/B";
+                        $fb_flag = 1;
+			&print_fabs ($log_file_name, $emu_fail_str, 10, 10);
+		      }
+		    else 
+		      {
+			$emmulator_cell = "  ?";
+                        $q_flag = 1;
+			&print_fabs ($log_file_name, "-t", 20, 0, "emulator");
+		      }
+		  } 
+		else   # no log file found
+		  {
+		    $emmulator_cell = " N/F";
+                    $nf_flag = 1;
+		    print TEMP2 "  WARNING: emulator log file not ";
+                    print TEMP2 "found for $machine on $suffix\n";
+		  }
+	      } 
+
+######## ENVIRONMENT ########
+
+	    elsif ($key eq "env") 
+	      {
+		print TEMP2 "\nEnvironment:\n";
+
+		if (&get_log_file($machine, $env_search_key))
+		  {
+		    if (&search_log($env_pass_str))
+		      {       #succesful build 
+			$time = &time_diff ();
+			$env_cell = $time;
+			print TEMP2 "  Environment build completed. Duration: $time\n";
+		      } 
+		    elsif (&search_log($env_fail_str))
+		      {  
+			$env_cell = " F/B";
+                        $fb_flag = 1;
+			&print_fabs ($log_file_name, $env_fail_str, 10, 10);
+		      }
+		    else 
+		      {
+			$env_cell = "  ?";
+                        $q_flag = 1;
+			&print_fabs ($log_file_name, "-t", 20, 0, "environment");
+		      }
+		  } 
+		else   # no log file found
+		  {
+		    $env_cell = " N/F";
+                    $nf_flag = 1;
+		    print TEMP2 "  WARNING: environment log file not ";
+                    print TEMP2 "found for $machine on $suffix\n";
+		  }
+	      } 
+
+######## DFMC BUILD ########
+
+	    elsif ($key eq "dfmc_build") 
+	      {
+		print TEMP2 "\nDFMC:\n";
+
+		if (&get_log_file($machine, $dfmc_search_key))
+		  {
+		    if (&search_log($dfmc_pass_str))
+		      {       #succesful build 
+			$time = &time_diff ();
+			$dfmc_cell = $time;
+			print TEMP2 "  DFMC build completed. Duration: $time\n";
+		      } 
+                    else
+		      {  
+			$dfmc_cell = " F/B";
+                        $fb_flag = 1;
+			&print_fabs ($log_file_name, "-t", 20, 0, "DFMC");
+		      }
+		  } 
+		else   # no log file found
+		  {
+		    $dfmc_cell = " N/F";
+                    $nf_flag = 1;
+		    print TEMP2 "  WARNING: DFMC log file not ";
+                    print TEMP2 "found for $machine on $suffix\n";
+		  }
+	      } 
+
+######## DFMC IMAGE ########
+	    elsif ($key eq "dfmc_image") 
+	      {
+		print TEMP2 "\nDFMC Environment Build:\n";
+
+		if (&get_log_file($machine, $dfmc_build_search_key))
+		  {
+		    if (&search_log($dfmc_build_pass_str))
+		      {       #succesful build 
+			$time = &time_diff ();
+			$dfmc_duild_cell = $time;
+			print TEMP2 "  DFMC Environment build completed. Duration: $time\n";
+		      } 
+		    elsif (&search_log($dfmc_build_fail_str))
+		      {  
+			$dfmc_build_cell = " F/B";
+                        $fb_flag = 1;
+			&print_fabs ($log_file_name, dfmc_build_fail_str, 10, 10);
+		      }
+		    else 
+		      {
+			$dfmc_build_cell = "  ?";
+                        $q_flag = 1;
+			&print_fabs ($log_file_name, "-t", 20, 0, "DFMC enviroment");
+		      }
+		  } 
+		else   # no log file found
+		  {
+		    $dfmc_build_cell = " N/F";
+                    $nf_flag = 1;
+		    print TEMP2 "  WARNING: dfmc-image log file not ";
+                    print TEMP2 "found for $machine on $suffix\n";
+		  }
+	      } 
+
+######## Tags ########
+
+	    elsif ($key eq "tags") 
+	      {
+		print TEMP2 "\nTags:\n";
+
+		if (&get_log_file($tags_search_key, $tags_search_key))
+		  {
+		    if (&search_log($tags_pass_str))
+		      {       #succesful build 
+			$time = &time_diff ();
+			$tags_cell = $time;
+			print TEMP2 "  Tag build completed. Duration: $time\n";
+
+                        @fabs_output = `$admindir/fabs $log_file_name "The following lid files don't return any dylan files" -t -a 0 -b 20`;
+                        chop(@fabs_output);
+
+                        foreach $_ (@fabs_output)
+                          {
+                            printf TEMP2 "  $_\n";
+                          }
+		      } 
+		    elsif (&search_log($tags_fail_str))
+		      {  
+			$tags_cell = " F/B";
+                        $fb_flag = 1;
+			&print_fabs ($log_file_name, $tags_fail_str, 10, 10);
+		      }
+		    else 
+		      {
+			$tags_cell = "  ?";
+                        $q_flag = 1;
+			&print_fabs ($log_file_name, "-t", 20, 0, "tags");
+		      }
+		  } 
+		else   # no log file found
+		  {
+		    $tags_cell = " N/F";
+                    $nf_flag = 1;
+		    print TEMP2 "  WARNING: tag log file not ";
+                    print TEMP2 "found for $machine on $suffix\n";
+		  }
+	      }
+
+
+######## LIBRARIES ########
+
+	    elsif ($key eq "libs")
+	      {
+		print TEMP2 "\nLibraries:\n";
+
+		if (&get_log_file($machine, $libs_search_key))
+		  {
+		    if (&search_log($libs_pass_str))
+		      {
+			print TEMP2 "  Libraries built successfully\n\n";
+			$time = &time_diff ();
+			$library_cell = $time;
+			$library_fails = &lib_failures();
+		      }
+		    elsif (&search_log($libs_fail_str))
+		      {
+			$library_cell = " F/B";
+			$library_fails = " F/B";
+                        $fb_flag = 1;
+			&print_fabs ($log_file_name, $libs_fail_str, 10, 10);
+                        &lib_failures();
+		      }
+		    else
+		      {
+			$library_cell = "  ?";
+			$library_fails = "  ?";
+                        $q_flag = 1;
+			&print_fabs ($log_file_name, "-t", 20, 0, "library");
+		      }
+		  } 
+		else   # no log file found
+		  {
+		    $library_cell = " N/F";
+		    $library_fails = " N/F";
+                    $nf_flag = 1;
+		    print TEMP2 "  WARNING: library log file not ";
+                    print TEMP2 "found for $machine on $suffix\n";
+		  }
+	      } 
+
+######## ERROR ########
+	    elsif ($key eq "byte") {
+	    } else 
+	      {			
+		print TEMP2 "\nError: Don't understand keyword: $key\n\n";
+	      }
+
+	  }  #  end foreach key
+
+
+## now that all the keys have been stepped through, print out all of the cells
+
+	printf TEMP1 "%-$max_machine_length s%-7s%-7s%-7s%-7s%-7s%-7s",
+                     $machine, $emmulator_cell, $env_cell, $dfmc_cell,
+                     $dfmc_build_cell, $tags_cell, $library_cell;
+
+## print $library_fails as an integer
+	if ($library_fails =~ /[0-9]/)
+	  {
+	    printf TEMP1 "%5d\n", $library_fails;
+	  }
+## print $library_fails as a string
+	else
+	  {
+	    printf TEMP1 "%5s\n", $library_fails;
+	  }
+
+      }  #  end foreach spec
+
+    print TEMP1 "\n\n";
+
+    if ($nf_flag) { print TEMP1 "$nf\n"; }
+    if ($fl_flag) { print TEMP1 "$fl\n"; }
+    if ($fb_flag) { print TEMP1 "$fb\n"; }
+    if ($q_flag)  { print TEMP1 "$q\n"; }
+
+  }  # end create_chart
+
+###########################################################################
+
+sub delete_temp_files
+  {
+    `rm $temp1`;
+    `rm $temp2`;
+
+  }  # end delete_temp_files
+
+###########################################################################
+
+sub find_log_files
+  {
+    chdir($logsdir);
+    opendir(LOGS,$logsdir);    # get all logs corresponding to $suffix
+
+    foreach $i (readdir(LOGS)) 
+      {
+        unless ($i =~ /nightly-build/)
+	  {
+ 	    if (($i =~ /$suffix/) || ($i =~ /nightly-tag-file.log/) ||
+                ($i =~ /build-dfmc/))
+	      {
+	        push(@log_file_names,$i);
+	      }
+          }
+      }
+    closedir(LOGS);
+
+  }  # end find_log_files
+
+###########################################################################
+
+sub get_hope_errors   # pass machine name
+  {
+    local($str, $count, $s1, $s2);
+
+    $count = 0;
+
+    &get_log_file(sync, sync);
+
+    foreach $str (@log_file)
+      {
+        if ($str =~ /Warning, skipping writable file for /)
+          {
+            ($s1, $s2) = split(/ in /, $');
+            print TEMP2 "  $s1\n";
+#            print TEMP2 "  $s2\n";
+            $count++;
+          }
+      }
+
+    if ($count == 0)
+      {
+        print TEMP2 "  None\n";
+      }
+
+  }  # end get_hope_errors
+
+###########################################################################
+
+sub get_images
+  {
+    chdir($localdir);
+    @df_list = `ls lw+*`;  chop(@df_list);
+
+    foreach $_ (@df_list)
+      {
+        print TEMP2 "  $_\n";
+      }
+
+  }  # end get_images
+
+###########################################################################
+
+sub get_log_file   # pass machine name
+  {
+    local($machine_name, $build_name, $return_flag, $str);
+
+    chdir($logsdir);
+
+    $machine_name = @_[0];
+    $build_name = @_[1];
+
+    @log_file = "";
+    $return_flag = 0;
+
+    foreach $str (@log_file_names)
+      {
+        if (($str =~ /$machine_name/) && ($str =~ /$build_name/))
+          {
+            @log_file = `cat $str`;
+            chop(@log_file);
+
+            $log_file_length = @log_file;
+            $log_file_name = $str;
+            $return_flag = 1;
+            last;
+
+          }
+      }
+
+    $return_flag;
+
+  }  # end get_log_file
+
+###########################################################################
+
+sub get_site_builds
+  {
+    local (@temp_list, $machine);
+
+    @builds_file = `cat $builds`;
+    chop(@builds_file);
+
+    $length = @builds_file;
+    $count = 0;
+    $found_site = "false";
+
+    $_ = $builds_file[$count];
+    while (/^\s*#.*|^\s*$/)
+      {
+        $count++;
+	$_ = $builds_file[$count];
+      }
+
+    until (($found_site eq "true") || ($count > $length))
+      {
+	$_ = $builds_file[$count];
+
+	if ($_ =~ /$site/)
+	  {
+	    $found_site = "true";
+	    $count++;
+	    $_ = $builds_file[$count];
+
+	    until ((/Site:/) || ($count > $length) || (/^\s*#.*|^\s*$/))
+	      {
+		push(@specs,$_);
+
+                @temp_list = split(/\s+/,$spec);
+                $machine = shift(@keys);
+                if (length($machine) > $max_machine_length)
+                  {
+                    $max_machine_length = length($machine);
+                  }
+
+		$count++;
+		$_ = $builds_file[$count];
+	      }
+	  }
+	else
+	  {
+	    $count++;
+	  }
+
+      }
+
+    $max_machine_length += 3;
+
+  }  # end get_site_builds
+
+###########################################################################
+
+sub init_files
+  {
+    open(TEMP1, ">$temp1")
+	|| &application_error("Unable to open $temp1", 2, $0, $usage);
+    open(TEMP2, ">$temp2")
+	|| &application_error("Unable to open $temp2", 3, $0, $usage);
+    open(TEST, ">$summary")
+	|| &application_error("Unable to open $summary", 4, $0, $usage);
+
+    close(TEST);
+
+  }  # end init_files
+
+###########################################################################
+
+sub lib_failures
+  {
+    local($line_number, $str, $num_fails, $i, $j, @fabs);
+
+    $line_number = &search_log("Number of failures: ");
+    $str = $log_file[$line_number];
+    ($i, $num_fails) = split(/: +/, $str);
+
+    $line_number -= $num_fails;
+    print TEMP2 "  Number of Library failures: $num_fails\n";
+
+    $str = "Caught error";
+
+    for($i = 1; $i <= $num_fails; $i++)
+      {
+        $j = $num_fails - $i + 1;
+
+        @fabs = `$admindir/fabs $log_file_name \"$str\" -a 1 -b 1 -n $j`;
+
+        print TEMP2 "    $log_file[$line_number]\n";
+        for($j = 1; $j <= 3; $j++)
+          {
+            print TEMP2 "    $fabs[$j]";
+          }
+        $line_number ++;
+
+        if ($i < $num_fails)
+          {
+            print TEMP2 "\n";
+          }
+      }
+
+    $num_fails;
+
+  }  # end lib_failures
+
+###########################################################################
+
+sub mail_summary
+  {
+    if ($mail eq "no") 
+      {
+        &print_summary();
+      } 
+    else  # mail the report out
+      {			 
+        $subject = "Build report at $site on $suffix";
+        $message = `cat $summary`;
+
+	print "The message is: $message";
+	print "\n\n";
+	print "The users are: $sendmailto";
+	print "\n\n";
+	print "The subject is: $subject";
+	print "\n\n";
+
+        &send_mail($message, $sendmailto, $subject);
+      }
+
+  }  # end mail_summary
+
+###########################################################################
+
+sub parse_arguments
+  {
+    while (<@ARGV>)
+      {
+	if ($_ eq "-m")
+	  {
+	    $mail = "yes";
+	  } 
+	elsif ($_ =~ /([0-9]{6})/)
+	  {
+	    $suffix = $_;
+           $temp1 = "$logsdir/temp_summary1.$suffix";
+           $temp2 = "$logsdir/temp_summary2.$suffix";
+
+	  }
+	else   # assume its a mailing list
+	  {
+	    $sendmailto = $_;
+	      print "\n Got here";
+	      print "\n The usernames are: --$sendmailto--";
+	  }
+      }
+
+    if ($sendmailto eq "unspecified")
+      {
+	$sendmailto = $send_report;
+      }
+
+  }  # end parse_arguments
+
+###########################################################################
+
+sub print_fabs     # prints above and below a found string
+  {
+    local($file, $str, $above, $below, @fabs_output);
+
+    $file  = @_[0];
+    $str   = @_[1];
+    $above = @_[2];
+    $below = @_[3];
+    $build_str = @_[4];
+
+    @fabs_output = `$admindir/fabs $file \"$str\" -a $above -b $below -n 1`;
+    chop(@fabs_output);
+
+    if ($str eq "-t")
+      {
+        print TEMP2 "  Error:  $build_str build unsuccessful.\n";
+        print TEMP2 "  Printing tail of $file\n";
+      }
+    else
+      {
+        print TEMP2 "  Warning: $str found.\n";
+        print TEMP2 "  Printing $above lines above, and $below lines below ";
+        print TEMP2 "  first occurrence.\n";
+      }
+
+    foreach $_ (@fabs_output)
+      {
+	printf TEMP2 "$_\n";
+      }
+
+  }  # end print_fabs
+
+###########################################################################
+
+sub print_summary
+  {
+    @file = `cat $summary`;
+    chop(@file);
+
+#    &output("");
+
+    foreach $_ (@file)
+      {
+        &output($_);
+      }
+
+    &output("");
+
+  }  # end print_summary
+
+###########################################################################
+
+sub search_log
+  {	                        # pass it a list of search strings
+    local($flag, $count, $str, $found);
+
+    $count = 0;
+    $flag = 0;
+    $found = "false";
+
+    until (($found eq "true") || ($count > $log_file_length))
+      {
+        foreach $str (@_)
+          {
+            if ($log_file[$count] =~ /$str/)
+              {
+                $flag = $count;
+                $found = "true";
+              }
+
+             $count++;
+          }
+      }
+
+    $flag;
+
+  }  # end search_log
+
+###########################################################################
+
+sub show_specs
+  {
+    print TEMP1 "Build machines    : $builds\n";
+    print TEMP1 "Builds            : ";
+
+    $count = 0;
+
+    foreach $_ (@specs)
+      {
+	if ($count > 0)
+	  {
+	    printf TEMP1 "%19s %s\n", ":", $_;
+	  }
+	else
+	  {
+	    print TEMP1 "$_\n";
+	  }
+
+	$count ++;
+
+      }    if ($count == 0) { print TEMP1 "None found\n"; }
+
+    print TEMP1 "Log file path     : $logsdir\n";
+    print TEMP1 "Log file names    : ";
+
+    $count = 0;
+
+    foreach $_ (@log_file_names)
+      {
+	if ($count > 0)
+	  {
+	    printf TEMP1 "%19s %s\n", ":", $_;
+	  }
+	else
+	  {
+	    print TEMP1 "$_\n";
+	  }
+
+	$count ++;
+
+      }     if ($count == 0) { print TEMP1 "None found\n"; }
+
+    print TEMP1 "Mail report       : $mail\n";
+    print TEMP1 "Mail lib failures : $lib_mail\n";
+    print TEMP1 "Mail reoprts to   : $rel_eng\n";
+    print TEMP1 "Disk capacity     : $capacity\n";
+
+  }  # end show_specs
+
+###########################################################################
+
+sub time_diff
+  {
+    local($start, $end, $line_num, $sh, $sm, $ss, 
+          $eh, $em, $es, $hd, $md, $sd);
+
+    $line_num = &search_log("Starting at");
+    ($start) = ($log_file[$line_num] =~ /([0-9]{2}:[0-9]{2}:[0-9]{2})/);
+    $line_num = &search_log("Ending at");
+    ($end) = ($log_file[$line_num] =~ /([0-9]{2}:[0-9]{2}:[0-9]{2})/);
+
+    ($sh, $sm, $ss) = split(/:/,$start);
+    ($eh, $em, $es) = split(/:/,$end);
+
+    $hd = ($eh - $sh);
+    $md = ($em - $sm);
+    $sd = ($es - $ss);
+
+    if ($sd < 0)
+      {
+	--$md;
+	$sd += 60;
+      }
+    if ($md < 0)
+      {
+	--$hd;
+	$md += 60;
+      }
+    if ($hd < 0)
+      {
+	$hd += 12;
+      }
+
+    $result = sprintf("%02d:%02d", $hd, $md);
+
+  }  # end time_diff
+
+###########################################################################

@@ -1,0 +1,117 @@
+<HTML>
+<HEAD>
+        <TITLE>Banking on CORBA</TITLE> 
+	<LINK REL="stylesheet" TYPE="text/css" HREF="../../examples.css">
+</HEAD>
+
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<H1>Banking on CORBA</H1>
+
+<HR>
+
+<P>
+This is a simple implementation of a banking application. The
+architecture of the bank has three components:
+
+<UL>
+<LI>A database that provides persistent storage for the accounts managed by the bank.
+<LI>A CORBA server that represents the bank and provides an object-oriented interface to its accounts.
+<LI>A CORBA client that provides a graphical user interface to the bank.
+</UL>
+
+<P>This application is a typical example of a three-tier application
+architecture comprising a database access layer, a business logic
+layer, and a user interface layer.
+
+<P>The client program is composed of the following parts:
+
+<DL>
+<DT><A HREF="bank-client/library.dylan">library.dylan</A> <DD>Dylan library definition for client
+<DT><A HREF="bank-client/module.dylan">module.dylan</A> <DD>Dylan module definition for client
+<DT><A HREF="bank-client/bank-client.dylan">bank-client.dylan</A> <DD>Dylan client GUI
+<DT><A HREF="bank-client/init-client.dylan">init-client.dylan</A> <DD>Dylan client initialization
+<DT><A HREF="bank-client/idl.spec">idl.spec</A> <DD>client configuration file for Bank IDL
+<DT><A HREF="bank-client/naming.spec">naming.spec</A> <DD>client configuration file for Naming Service IDL
+<DT><A HREF="bank-client/README.htm">README.htm</A> <DD>this file
+</DL>
+
+<P>The server program is similarly composed of the following parts:
+
+<DL>
+<DT><A HREF="bank-server/library.dylan">library.dylan</A> <DD>Dylan library definition for server
+<DT><A HREF="bank-server/module.dylan">module.dylan</A> <DD>Dylan module definition for server
+<DT><A HREF="bank-server/bank-server.dylan">bank-server.dylan</A> <DD>Dylan server implementation
+<DT><A HREF="bank-server/server-frame.dylan">server-frame.dylan</A> <DD>Dylan server GUI
+<DT><A HREF="bank-server/init-server.dylan">init-server.dylan</A> <DD>Dylan server initialization
+<DT><A HREF="bank-server/idl.spec">idl.spec</A> <DD>server configuration file for Bank IDL
+<DT><A HREF="bank-server/naming.spec">naming.spec</A> <DD>server configuration file for Naming Service IDL
+<DT><A HREF="bank-server/README.htm">README.htm</A> <DD>this file
+</DL>
+
+<P>See the bank chapters of the CORBA documentation for a
+more information on this demonstration and its features.
+
+<P>Also see the separate <A HREF="java-client/README.htm">README</A>
+for the Java version of the Bank client.
+
+<P>
+
+<HR>
+
+<H2>ODBC requirements</H2>
+
+In order to run the example, you need to have ODBC version 3.0 (or
+higher) and an ODBC driver for Microsoft Access installed on the
+machine hosting the server application. You do not need a copy of
+Microsoft Access.
+
+<P>Both ODBC 3.x and the Microsoft Access driver are available free
+for download from the <A
+HREF="http://www.microsoft.com/data/">Microsoft Universal Data Access
+web site</A>.
+
+<P>From the Downloads section, download the Microsoft Data Access
+Components, version 1.5c or higher, for your Windows platform. You do
+not need to download the full 6.4MB file -- mdacfull.exe, the MDAC
+1.5c redistribution setup file, is only 3.4MB and contains everything
+you need.
+
+<P>This file installs ODBC 3.x and the Microsoft Access Driver,
+amongst other things.
+
+<P>This information may change in the future.
+
+<P>
+
+<HR>
+
+<H2>Building and Testing the Application</H2>
+
+Just press the "Build" buttons on the respective Project Windows.
+
+<P>Now, you can run the application to test that it works. You need to
+run the server first so that it is waiting ready to receiver calls
+from the client.
+
+<UL>
+<LI>Select "Project->Start" or press the "Start/Resume" button in the
+tool bar on the Project Window for the "bank-server" project.
+<LI>Wait until the GUI appears. The server is now running.
+<LI>Do the same for the client project. It should also start a GUI.
+<LI>In the client, create an account by select "Open New Account..." from the "Bank" menu.
+<LI>Now you can credit some money to it by selecting "Credit Account..." from the "Account" menu (in the client).
+<LI>Close the client GUI and restart it.
+<LI>In the client, retrieve the account you created using "Retrieve Account..." from the "Bank" menu.
+<LI>In the server, select "active log" in the server GUI to monitor requests from the client.
+</UL>
+
+<P>You can set breakpoints in the client and server code to trap the
+request and open debugger windows as it passes from client to server,
+or you can experiment and extend the code, e.g. by reducing the number
+of CORBA requests needed to redisplay the client's table of accounts
+(e.g. by caching the details in the client, or by sending the details
+in a structure instead of as separate values).
+
+</BODY>
+</HTML>
+

@@ -1,0 +1,71 @@
+<HTML>
+<HEAD>
+	<TITLE>Functional Developer Example: button-ocx</TITLE>
+	<LINK REL="stylesheet" TYPE="text/css" HREF="../../examples.css">
+</HEAD>
+
+<BODY>
+
+<H2>button-ocx library</H2>
+
+<HR ALIGN="CENTER">
+
+<P>This project contains a simple example that demonstrates using a DUIM
+gadget as an OLE Control (also known as an "OCX" or "ActiveX Control").</P>
+
+<P>This example uses the <b>DUIM-OLE-Control</b> library which is
+documented in the Functional Developer "OLE, COM, ActiveX and DBMS"
+reference manual.</P>
+
+<P>The file <em>control.dylan</em> defines a frame containing a single
+button and a dialog box that appears when the button is pressed.  The
+dialog box has a text pane that can be edited.  The file <em>store.dylan</em>
+implements persistent storage of the text in the container document
+file.  The file <em>run.dylan</em> makes the frame into an OLE control and
+implements a "Text" property that can be used to access the dialog box
+text.  Some additional properties will be created automatically for
+the button gadget.</P>
+
+<P>Building this library produces a file named <em>button-ocx.dll</em>.  
+You might want to manually rename it to <em>button.ocx</em>.</P>
+
+<P>In order for the control to work when invoked from a container
+program, all of the libraries used by your control need to either be in
+the same directory as the control DLL file, or else in a directory which
+is in the system PATH (not the individual user's PATH on NT). The
+simplest way to accomplish this is to use the "Project &gt; Build
+Release" command to create a release directory. If you wish, you can
+move that directory to any location you want, but you must do so
+before you attempt to register the control.</P>
+
+<P>To register the control, use the <code>regsvr32</code> command line
+utility like this:</P>
+
+  <blockquote><code>regsvr32 button.ocx</code></blockquote>
+
+<P>(The complete pathname will need to be given if the file is in a
+different directory that is not in the PATH.)  This will cause the
+appropriate entries to be made in the Windows System Registry.  (For
+use in a batch script, the "<code>/s</code>" option may be used to
+suppress the dialog box reporting completion.)  The full pathname of
+the control is recorded, so you must unregister the control before you
+move or delete it.  You can unregister it by doing:</P>
+
+<BLOCKQUOTE><CODE>regsvr32 /u button.ocx</CODE></BLOCKQUOTE>
+
+<P>This invokes the control to unregister itself, so won't work
+if the control has been deleted first.</P>
+
+<P>Now you should be able to insert the object into any OLE Control container
+program.  For example, there is a "Test Container" application included
+with Visual C++ which can be used.  Note that "View -> Properties" can be
+used to view and change the properties of the control, such as the button
+label and the dialog text.  The control can also be embedded in an OLE
+document container, such as WordPad, but the properties will not be
+accessible.  In the "Insert object" dialog, this program will be identified
+as "Dylan button gadget demo", which comes from the <code>documentation</code>
+option in the <code>define coclass</code> form in file <em>run.dylan</em>.</P>
+
+</BODY>
+
+</HTML>

@@ -1,0 +1,59 @@
+#!/usr/local/bin/bash
+#      Script: distribute-candidate
+#      Author: Doug Dodds
+usage=" Usage: $0 <release> <candidate> [<file> [<file> ...]]"
+#   Synopsis: A script to copy the components of a candidate build from 1CC
+#             to the other sites.
+#             Accepts a release name and candidate name; required.
+#             Accepts a list of files to copy; if none given, defaults to
+#             a "standard" full set.
+#             
+###################################################################
+
+# parse the arguments
+
+release_name=$1
+if test -z $release_name; then
+    echo "  Need a release name (e.g., 1.2)."
+    echo $usage
+    exit 1
+fi
+
+shift
+candidate_name=$1
+if test -z $candidate_name; then
+    echo "  Need a candidate name (e.g., alpha2)."
+    echo $usage
+    exit 1
+fi
+
+shift
+files=$*
+
+if test -z "$files"; then
+    files=`cat $release_name.files`
+fi
+
+echo "Distribute $release_name $candidate_name"
+echo " as files --$files--"
+echo ""
+
+# The idea here is to copy the huge *.exe files as efficiently as
+# possible over the slow and somewhat shaky network links
+
+# Step zero: create the proper subirectory everywhere
+
+daas "mkdir /u/dylan/releases/$release_name/$candidate_name" long ed
+
+# We use daas to do the copy by "pulling" it to the remote site
+
+# Copy to ed and long in parallel
+# Lower script will parallel copy from cam to long after copy to long is done.
+# (if we ever use cam again)
+#
+
+nohup dist-cand-one-site ed      $release_name $candidate_name $files &
+
+nohup dist-cand-one-site long    $release_name $candidate_name $files &
+
+#eof

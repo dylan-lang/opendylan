@@ -1,0 +1,25 @@
+comment:	This file is generated, please don't edit
+format-version:	2
+library:	scepter-ir-back-end
+files:	scepter-ir-back-end-library
+	scepter-ir-back-end-module
+	ir-back-end
+	constant
+	enum
+	exception
+	interface
+	module
+	struct
+	typedef
+	union
+	type
+	attribute
+	operation
+subprojects:	..\..\core\scepter-core.hdp
+	..\..\abstract-syntax-tree\scepter-ast.hdp
+base-address:	0x63FE0000
+major-version:	2
+minor-version:	1
+compilation-mode:	tight
+target-type:	dll
+comment:	additional keywords

@@ -1,0 +1,89 @@
+Module:    Dylan-user	%comment -*- Mode: Dylan -*-
+Synopsis:  This library defines data types, constants (including error codes),
+	   and structure accessors that are shared by the other libraries for
+	   the various parts of the Win32 API.
+%comment   This file is a template that is expanded to produce "library.dylan".
+Copyright: 1996-2000 Functional Objects, Inc.  All rights reserved.
+
+%comment $HopeName: !comlib.src(D-kan.5) $
+%comment $Date: 2004/03/12 00:10:22 $
+
+define library Win32-common
+  use functional-dylan;
+  use C-FFI;
+  export Win32-common;
+end;
+
+define module Win32-common
+  use functional-dylan;
+  use C-FFI , export: { null-pointer, null-pointer?, pointer-address,
+		        pointer-value, pointer-value-setter, size-of,
+		        <C-void*>, <C-pointer>, <C-string>, <C-unicode-string>,
+		     	pointer-cast, destroy, \with-stack-structure,
+		        pointer-value-address, c-type-cast,
+		        c-callable-wrapper-definer, \with-c-string } ;
+  use Machine-Integer-User, 
+    export: {%logior, %logand};
+  use Dylan-extensions,
+    import: { <abstract-integer>, <big-integer>,
+	      <double-integer>, %double-integer-low, %double-integer-high };
+  use win32-core, export: all;
+
+%include windef.exp
+%include winnt.exp
+%include winerror.exp
+
+  // types from "first.dylan":
+  export <FARPROC>, <PROC>, <LPARAM>, <LRESULT>, <WPARAM>, 
+	<UINT>, <PUINT>, <LPUINT>, <LPULONG>, <C-void**>, <LPLPVOID>,
+	<LARGE-INTEGER>,  <PLARGE-INTEGER>,
+	<ULARGE-INTEGER>, <PULARGE-INTEGER>; 
+  export LowPart-value, LowPart-value-setter,
+	HighPart-value, HighPart-value-setter;
+  export <RECTL>, <PRECTL>, <LPRECTL>, <LPCRECTL>;
+  export <C-BYTE*>;
+  export <signed-char>,   <signed-short>,   <signed-int>,   <signed-long>,
+         <unsigned-char>, <unsigned-short>, <unsigned-int>, <unsigned-long>;
+
+  // API functions from "first.dylan":
+  export LOWORD, HIWORD, MAKELONG, LPARAM-TO-XY;
+  export LOBYTE, HIBYTE, MAKEWORD;
+  export MAKELANGID, PRIMARYLANGID, SUBLANGID;
+  export MAKELCID, LANGIDFROMLCID, SORTIDFROMLCID;
+  export TEXT;
+
+  // internal hack in "first.dylan":
+  export $FFFFFFFF;
+  export \open-accessor-definer;
+
+  // API functions from "moretype.dylan":
+  export MAKEINTRESOURCE;
+
+  // convenience functions from "moretype.dylan":
+  export %free;
+
+  // convenience constants from "moretype.dylan":
+  export $NULL-HANDLE, $NULL-HWND, $NULL-RECT, $NULL-POINT, $NULL-VOID,
+	 $NULL-string, $NULL-HDC, $NULL-HMENU, $NULL-HINSTANCE;
+
+  // types from "moretype.dylan":
+  export <BOOLEAN-BYTE>, <WCHAR>;
+
+  // callback macro and related names from "callback.dylan":
+  export \callback-definer;
+  export <WNDPROC>-callback-wrapper, <DLGPROC>-callback-wrapper,
+    <LPOFNHOOKPROC>-callback-wrapper, <LPCCHOOKPROC>-callback-wrapper,
+    <LPFRHOOKPROC>-callback-wrapper, <LPCFHOOKPROC>-callback-wrapper,
+    <LPPRINTHOOKPROC>-callback-wrapper, <LPSETUPHOOKPROC>-callback-wrapper;
+
+  // more shared generics in "first.dylan":
+  export flags-value, flags-value-setter,
+    Flink-value, Flink-value-setter,
+    cbSize-value, cbSize-value-setter,
+    offset-value, offset-value-setter,
+    cb-value, cb-value-setter, dwFlags-value, dwFlags-value-setter,
+    cbData-value, cbData-value-setter, lpData-value, lpData-value-setter,
+    dwSize-value, dwSize-value-setter, wFlags-value, wFlags-value-setter,
+    Buffer-value, Buffer-value-setter,
+    u-value, u-value-setter, wSecond-value, wSecond-value-setter;
+end;

@@ -1,0 +1,21 @@
+#include "tree.idl"
+
+// The above include must be the first line of this file. It is a regression test
+// for Bug 4518 (P1): Nested #includes are not recognized on the first line of a file.
+
+// Author:    Keith Dennison
+// Copyright: Copyright (c) 1998.  Functional Objects, Inc.  All rights reserved.
+// Version:   $HopeName: D-corba-tests-idl!any.idl(trunk.2) $
+
+interface AnyTest {
+
+  attribute any any_attribute;
+  attribute any any_tree_attribute;
+
+  exception failure {
+  };
+
+  void check_any_attribute () raises (failure);
+  void check_any_tree_attribute () raises (failure);
+  any any_operation (in any one, inout any two, out any three);
+};

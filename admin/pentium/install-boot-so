@@ -1,0 +1,3 @@
+
+rm -f $FUNCTIONAL_DEVELOPER_USER_INSTALL/lib/boot/lib$1.so
+cp -p /home/nosa/dylan/build/$1/$1.so $FUNCTIONAL_DEVELOPER_USER_INSTALL/lib/boot/lib$1.so

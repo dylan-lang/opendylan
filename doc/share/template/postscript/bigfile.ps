@@ -1,0 +1,9 @@
+%!
+/MB 12 def
+/MB MB 32 mul def
+/myarray MB array def
+/MB MB 1 sub def
+0 1 MB {myarray exch 32768 string put} for
+currentdict /myarray undef
+currentdict /MB undef
+

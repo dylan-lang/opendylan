@@ -1,0 +1,379 @@
+# $Id: june-2-drm-drafts-comments.txt,v 1.1 2004/03/12 00:11:23 cgay Exp $
+# $Log: june-2-drm-drafts-comments.txt,v $
+# Revision 1.1  2004/03/12 00:11:23  cgay
+# Initial revision
+#
+# Revision 1.3  1995/06/28 17:18:44  keith
+# Update with comments from Tony, Roman, and David.
+#
+# Revision 1.2  1995/06/05  16:40:37  keith
+# Add Paul's initial comments, substantially unedited.
+#
+# Revision 1.1  1995/06/05  14:49:58  keith
+# new unit
+# Document shell.
+#
+
+Draft DRM Review Comments
+
+--
+
+CHAPTER: Dylan Reference Manual Goals and Overall Structure 
+VERSION: Draft, April 18, 1994
+
+GENERAL COMMENTS: 
+
+SPECIFIC COMMENTS:
+
+--
+
+CHAPTER: The Built-In Classes
+VERSION: Draft, June 2, 1995
+
+GENERAL COMMENTS: 
+
+What order are the entries for functions in, when listed with the
+classes they are associated with?  It seemed somewhat random;  is this
+just a function of this draft not being finished?
+
+The section on built-in classes should make it clear whether the
+init-keywords mentioned for each class are appropriate for subclasses
+or not. I'm assuming that they _are_ inherited, and these comments
+include some places where that assumption doesn't gel.
+
+SPECIFIC COMMENTS:
+
+p27, Description: ..., shouldn't it be "indirect instances" of
+<object> ?
+
+p27, <class> init keyword supperclasses:  Why is a single class, not
+in a sequence, allowed?  Is this exception worth the price of having
+an anomoly like this?
+
+p27, <class> init keywords:  There doesn't seem to be a way to specify
+init keywords without slots, along the lines of the ``keyword'' items
+in define class.  Do you just specify #f for the getter, or is there
+another mechanism?  Or do we need to make the mechanism non-portable?
+
+p34, float classes:
+I've seen somewhere that the classes <single-float>, <double-float>, and
+<extended-float> are intended to be defined in terms of the IEEE floating
+point standard, but it doesn't say that here.  It doesn't really define
+them at all.
+
+p34, <extended-float>:  Are these ``extended floating-point numbers''
+or, more like <single-float> and <double-float>, ``extended-precision
+floating-point numbers''?
+
+p35-36, <rational> and <ratio>:  I can see some justification for
+<rational> still being in the language -- that permits a library to
+add <ratio> -- but I was pretty sure <ratio> had been punted.
+
+p39, "The class of collections whose keys" - nowhere is explained
+(like maybe on p37) that all collections have keys.
+
+p43, <array> init keyword dimensions:  When was this made required?
+map-into and others supposedly won't work unless size: is accepted.
+
+p43, Reference to undefined class <explicit-key-collectio>
+
+p44, "There is a standard library for arrays" - what does it mean ?
+
+p45. <array>: Should make it clear that the dimensions: init-keyword
+is not inherited by all subclasses (at the least, it's not a required
+init-keyword for <vector>)
+
+[Question: Should the language specify a sealed <simple-object-array>
+class? If not, why not?]
+
+p45. <vector>: Should make it clear that make on <vector> supports all
+The init-keywords of <simple-object-vector>. Perhaps size: should be
+specified as an init-keyword.
+
+p46, <simple-object-vector>:  Should note that they are of
+fixed-length.
+
+p46. <simple-object-vector>: No need to specify the fill:
+init-keyword, because this is inherited from <array>. The same goes
+for <stretchy-vector> on p.47.
+
+p47, <stretchy-vector> superclasses:  Should include
+<stretchy-collection>.
+
+p48, <list>: Should specify that it's an Abstract class.
+
+p49. <pair>: Should specify how init-keywords are inherited from
+<list>. This is a can of worms - but note that the default size:
+parameter is 0 if the init-keywords are simply inherited. It should be
+an error to make a pair of size 0. Perhaps it should also be specified
+that class-for-copy for a <pair> returns <list>. Should <pair> have
+head: and tail: init-keywords?
+
+p50, <empty-list>: Should this really be an instantiable class? If it
+should, then it should be specified what values should be permitted
+for the size: init-keyword. Only 0, I hope. Perhaps it should also be
+specified that class-for-copy of the <empty-list> returns <list>.
+
+p52, on kab's comment ``I expected <byte-string>'':  I'd prefer to
+leave it unspecified.
+
+p53, <byte-string>: Should be no need to specify the init-keywords -
+as these are inherited from <string>. The same goes for
+<unicode-string>.
+
+p54, <table> init keyword size:  What does a non-zero size mean?  I'd
+prefer to disallow it.  Size on sequences is effective, here it has no
+visible semantics, so a different keyword (or none) should be used.
+
+p54, reference to undefined <mutable-explicit-key-collection>
+
+p55, <table> generic function remove-key!:  Why is this not a method
+on <explicit-key-collection> or <mutable-explicit-key-collection>?
+
+p56-67 The section titles (Functions, Methods, etc) seem unnecessary.
+
+p57, descriptions of reduce and reduce1 are identical
+
+p58, why function-specializers and function-arguments are seperate
+functions ?
+
+p59, Shouldn't the definition of <generic-function> precede the
+definition of <method> ?
+
+p60, <generic-function> init keywords:  It's a problem that a return
+values description cannot be included in a dynamically created generic
+function.
+
+p60, <generic-function>: Why should an error be signalled if  the
+value of rest?: is true and the value of key: is a collection? Do they
+mean if rest?: is #f?
+
+p60, What are mandatory keywords
+
+p62, Why are cerror  and break part of the language. It seems like a
+vestige of a tty based lisp listeners. Dylan is not an interpretive
+language. Those functions should be part of an environment. Is a
+debugger always part of Dylan program ? Not to mention that "break" is
+totally unnecessary in window based environments. Even the most
+primitive C environments let you click on the source code to set a
+break.
+
+p66, why is restart-query part of the language ? Another vestige of
+old Lisp with its attemtp to provide some primitive user interface
+functions for the sake of portability. The problem is that nobody uses
+those functions in modern environments.
+
+p65, The sections on conditions, errors, warnings and restarts are not
+well motivated and seem ad hoc. The language should provide a
+mechanism for exception handling, not solutions. I don't like  the
+references to a debugger.
+
+--
+
+CHAPTER: The Built-In Functions
+VERSION: Draft, June 2, 1995
+
+GENERAL COMMENTS: 
+
+It's probably not a surprise to anyone that I strongly dislike the use
+of ``values:'' in every function to identify the return values.  I'd
+prefer any of ``return:'', ``returns:'', ``return values:'', or
+``results:''  to the status quo.
+
+SPECIFIC COMMENTS:
+
+p69, kab & Orca's comment on the type of the first argument to make:
+We should just decide (or admit) that limited collections are classes.
+It confuses too much for them not to be.  Aside from the already noted
+make and class-for-copy issues, I see problems in object-class and as.
+In fact, object-class alone settles the issue for me.
+
+p71, initialize signature:  Why isn't it ()?
+
+p73, The Description: paragraph for the pair function is confusing.
+
+p73, pair:  Why is it listed that the tail is == to the tail argument,
+when nothing is said about the head.  I prefer that neither be
+mentioned;  every collection would have to say stuff like that about
+its elements, by whatever reasoning got it in there for pair.
+
+p76, reviewer's comment:  Is this a reaction to IEEE?  Is it an
+over-reaction?
+
+p83, The functions zero?, positive? and negative? are unnecessary. The
+user can use inequality operators or define their own macros.
+
+p85, Moon's comment about arithmetic operations:  I disagree.  Why are
+these special?  They should be restricted to <number>.
+
+p92, \^ signature:  Why is the second argument restricted to being an
+integer?  This seems unfortunate if we want to add transcendentals and
+complex numbers in a library later.  I would restrict the second
+number to being a number, but only implement it for <integer> in the
+Dylan library.
+
+p98, reviewer's comments about min and max:  Agree with the
+generalization.
+
+p99, identity:  Why is this still in the language?  Isn't values()
+sufficient?
+
+p108, row-major-index:  Why is this a generic function?  What useful
+extensibility is there here?
+
+p112, element methods:  The version for <table> should be mentioned.
+
+p112, element-setter:  Tucker has raised the issue of WORM
+collections, which are stretchy, but not mutable.  Element-setter
+should be possible to define on those.  Perhaps its signature should
+be union(<stretchy-collection>, mutable-collection>).
+
+p115, functions 'second' and 'third' are unnecessary - theybloat the
+language. 
+
+pp122 & 124, add and add-new:  These used to guarantee not sharing
+structure, at least with lists.  That's not changed, has it?
+
+p124, the example for add! is identical to add - doesn't explain the
+difference. 
+
+descriptions for map, etc:  Why is the function argument termed a
+``procedure,'' when that word isn't otherwise used in Dylan?
+
+p132, sort, kab's comment on restrictions on the test procedure:  I'd
+specify the restrictions as ``If the test function is not
+anti-symmetric (test(a, a) == #f) and transitive (test(a, b) & test(b,
+c) => test(a, c)), sort is not guaranteed to terminate.''
+
+p141, subsequence-position, kab's comment:  0-based makes more sense,
+given that everything else in the language is 0-based.  On the other
+hand, if it's 0-based, it should probably be called skip, which is
+probably clearer for its meaning.  On the other other hand, start and
+end keywords, along the lines of copy-sequence, would be both more
+consistent with the rest of the language and more useful.
+
+p155, finished-state?:  Does this return #t or just plain old true?  I
+thought it was the latter.
+
+p157, table-protocol:  Is it possible to define a new kind of table
+simply by subclassing <table> and defining table-protocol?  I guess
+that's an issue for the descriptive parts of the book.
+
+p159 merge-hash-code:  The second constraint on hash functions?  (On a
+similar note, I'm really lost by the description of merge-hash-codes
+here and I once thought I understood it.  I'm probably just confused
+by not have the table section from the book in front of me.)
+
+p161, all-superclasses:  Does this return the class precedence list?
+The value it returns shares some properties of the CPL, but isn't
+necessarily it.  Either this should be tightened to be the CPL (which
+I prefer) or the constraints should be dropped.
+
+p164, union on types:  The pun with union on collections is still
+atrocious.  One of them should just be renamed.
+
+p167-168, curry and rcurry:  The short descriptions are wrong.
+
+p169, apply:  The description is wrong.
+
+p172, If the function function-arguments return the specializer as its
+first argument it could make function-specializers unnecessary.
+
+p180, The function return-query shouldn't be part of the language.
+
+--
+
+CHAPTER: Glossary
+VERSION: Draft, June 2nd, 1995
+
+GENERAL COMMENTS: 
+
+I really like having this.  You might want to classify entries as
+nouns, verbs, adjectives, etc. ``copy,'' among others, is confusing
+for lacking this.
+
+Glossary entries I'd like to see:  assignment syntax.  dot syntax.
+implicit body.  limited (type, collection, integer).  statement.
+union type.
+
+Glossary cross references I'd like to see:  hash function <->
+equivalence predicate.  multiple inheritance <-> single inheritance.
+parameter list, return value specification -> signature.  stable under
+iteration -> natural order, sequence.
+
+SPECIFIC COMMENTS:
+
+p1, apply:  (2) The function apply.  (See page ...)
+
+p1, call:  Functions don't have bodies, methods do.
+
+p2, class heterarchy:  Distinguish from class hierarchy,
+which is used in the rest of the text.
+
+p2, collection class:  Should mention keys and elements.
+
+p2, congruent:  Since congruency isn't a symmetric
+relationship (viz, keywords), I'd phrase this as ``The parammeter list
+of a method must be congruent with the parameter list of its generic
+function.''
+
+p3, direct instance:  This is somehow an unsatisfying
+definition.  It's also circular with class (2).
+
+p5, keyword argument list:  ``a sequence of keyword/value
+pairs'' seems like a misleading phrase to me.
+
+p6, lexical variable: The word "locally" should be defined
+elsewhere to restrict the definition to variables which are local
+within a function. Currently, this definition could be read to include
+module variables too (unless they happen to be visible everywhere). I
+doubt this is intentional.
+
+p6, library:  Should mention that libraries are the unit of
+compilation.
+
+p6, method:  Change ``body of code'' to [italics] ``body.''
+
+p6, multiple values:  Should be some mention that this has to
+do with function calling, etc.
+
+p7, normal exit: This definition doesn't work. How about "a
+transfer of control to an exit-point that is not a non-local exit"
+
+p7, proper list:  Is a circular list (with no last element)
+proper?  (improper list seems equally vague.)
+
+p8, sealed class:  This definition implies that the open
+subclasses of sealed classes proposal has been accepted.  Has it?
+(And there's a subtle difference with ``open class,'' which is missing
+``direct'' before subclasses.)
+
+p8, specializer:  Did you mean ``parameter'' not ``variable''?
+
+p9, type:  Too vague.  Perhaps a types-as-sets definition
+would be handy.  Instance should be mentioned.
+
+p9, uninstantiable class (and elsewhere):  I much prefer the
+term ``noninstantiable.''  I doubt either is English, but my dictionary
+doesn't even have ``instantiable,'' so that's no guide.
+
+--
+
+CHAPTER: Updated "BNF"
+VERSION: Undated, released June 2, 1995
+
+GENERAL COMMENTS: 
+
+The BNF grammar:  I just saw that keyword: and #"symbol" forms are
+considered completely equivalent.  I had thought that the keyword:
+form was still required in parameter and (when used without a comma
+separating it from the next argument) argument lists.  It appears that
+these are accepted:
+
+   define generic foo (#key #"bar");
+   define method foo (#key #"bar") ... end;
+   foo(#"bar" 27);
+
+SPECIFIC COMMENTS:
+
+--

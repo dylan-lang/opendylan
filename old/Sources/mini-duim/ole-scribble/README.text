@@ -1,0 +1,65 @@
+Title:     `OLE-Scribble' library description
+Author:    David N. Gray
+Date:	   August 3, 1996, last updated August 9, 1996
+Status:    describes what is currently checked in and working.
+Copyright: 1996 Functional Objects, Inc.  All rights reserved.
+Hope info: $Header: /scm/cvs/fundev/old/Sources/mini-duim/ole-scribble/README.text,v 1.1 2004/03/12 00:41:41 cgay Exp $
+
+
+This directory contains an example that demonstrates a program written
+using DUIM that is usable as an embedded OLE part.  The file
+"scribble.dylan" has only a couple of modifications from what is in
+compound "D-mini-duim-scribble":  it inherits from `<ole-server-frame>'
+instead of `<frame>', and a couple of calls to `ole-data-changed' have been
+inserted.  The file "run.dylan" adds some additional support for use with
+OLE, as well as initiating execution.
+
+This is a preliminary experimental version that uses "mini-duim" instead of
+the real "duim" library, and uses an experimental "duim-ole-server" library
+whose interfaces probably look quite different from what we will eventually
+end up with.
+
+This works with both the SCC and VM-Tether.  See file
+"~dylan/app/sample-ole-server/README.text" for some special considerations
+involved in building the used libraries with the SCC, and note that the
+file "build.bat" needs to be used for the PC portion of the build after
+compiling with SCC.
+
+The program can still be run directly and works the same as the basic
+"scribble" example.  To use it as an OLE part, first it has to be
+registered by editing the file "sample.reg" to replace the pathnames with
+the actual pathname where your "scribble.exe" resides.  For most
+containers, it has to have a full pathname.  (However, Microsoft Write in
+NT 3.51 requires that it be in a directory on the PATH, regardless of
+whether the full pathname is specified.)  Then either double-click the
+registration file icon or enter the following at a DOS command prompt:
+
+	regedit /s sample.reg
+
+Now you should be able to insert the object into any OLE container program.
+For example, from Microsoft Word, pull down the "Insert" menu, select
+"Object...", and then choose "DUIM OLE Scribble" from the list in the
+dialog box (for "Create New").  The Scribble drawing pane will then be
+embedded in the compound document and you can directly draw in it.
+(However it currently takes about 25 seconds for it to start up; watch for
+the menu bar to change.)  Clicking outside of the drawing pane will
+de-activate it.  Double-clicking will activate it again.
+
+Note that the object name as displayed in the "Insert Object" dialog comes
+from the second line of the "sample.reg" file (not line 8 as you might
+think), and that the Class ID used in the registration has to match the
+call to `make-GUID' at the top of file "run.dylan".  If you use this
+registration file as an example for creating another application, note that
+you need to replace all appearances of the class name "DUIMSVR" as well as
+the class ID and title strings.  A new class ID can be obtained by running
+"UUIDGEN" at a DOS prompt, but because of a limitation of the 1995 Dylan
+compiler, only IDs beginning with the digit '0', '1', 'E', or 'F' will work
+for `make-GUID'.
+
+Current bugs:
+
+ * If the size of the window is changed, the new size is not remembered
+   for use in subsequent activations.
+
+ * Out-of-place activation does not always raise the new window on top of
+   the container window.

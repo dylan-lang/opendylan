@@ -1,0 +1,140 @@
+#!/usr/local/bin/bash
+
+###
+### Author: Steve Rowley <sgr@Harlequin.COM>
+###
+### Synopsis: Check out DFMC code and registries (CMU test suite, too).  
+###           Lighter-weight than build-dfmc.
+###
+### Usage: checkout-dfmc -p PersonalDylanRoot -b Branch
+###
+### * -p: personal Dylan root; defaults to ~/dylan (NB: no trailing slash).
+### * -b: Hope branch to use; defaults to trunk.
+###
+
+## Parse the options & flags on the command line
+while getopts p:b: option
+do case $option in
+     p) personal_dylan_root=$OPTARG;;
+     b) branch=$OPTARG;;
+    \?) echo "Usage: checkout-dfmc -p PersonalDylanRoot -b Branch"
+        exit 2;;
+   esac
+done
+shift `expr $OPTIND - 1`
+
+## Assign defaults to options & flags
+personal_dylan_root=${personal_dylan_root:-~/dylan}
+branch=${branch:-"trunk"}
+
+## Set up PATH so we can find commands.  This isn't strictly necessary for interactive use,
+## but it is necessary for running from a cron job, where your personal $PATH isn't available!
+## See crontab documentation for PATH given to a cron job.
+PATH=.:/usr/etc:/usr/local/bin:/usr/local/new/bin:/usr/ucb:/usr/bsd:/usr/bin/bsd:/bin:/usr/bin:/usr/ccs/bin:/usr/share/all/scripts:/etc:/usr/etc:/usr/lib:/usr/new:/u/dylan/tools/gnuemacs:/u/dylan/tools/scripts:/u/dylan/tools/admin
+
+## Figure out what platform we're using, for platform-dependent stuff.
+machine=`/u/dylan/tools/scripts/dylan-platform`
+
+## Call kan-env.sh script to get shell variables set properly.  Must source, not directly
+## call it, to get variables set in _this_ shell!  Do it early, so we get variables set
+## and can figure out where binaries, libs, & apps went.
+source /u/dylan/releases/kan/admin/kan-env.sh -pr $personal_dylan_root -r $personal_dylan_root
+
+## Sources of DFMC, its relatives, and test suite.  The complete list is:
+## dfmc, these guys, and cmu-test-suite.  These guys all live under $personal_dylan_root/lib.
+DFMC_LIB_COMPOUNDS='D-lib-date D-lib-dood D-lib-file-system D-lib-memory-manager D-lib-ppml D-lib-projects D-lib-registry-projects D-lib-source-records D-lib-threads D-lib-variable-search D-lib-walker D-lib-big-integers D-lib-generic-arithmetic D-lib-dylan D-lib-harlequin-extensions D-lib-harlequin-dylan D-lib-format-out D-lib-collectors D-lib-metering D-lib-build-system D-lib-dylan-build'
+
+## Libraries of DFMC whose registies are GENERIC:
+DFMC_GENERIC_REGISTRIES='dfmc-back-end dfmc-browser-support dfmc-c-back-end dfmc-c-compiler dfmc-c-ffi dfmc-c-file-compiler dfmc-c-linker dfmc-common dfmc-conditions dfmc-conversion dfmc-core dfmc-debug-back-end dfmc-definitions dfmc-execution dfmc-flow-graph dfmc-harp-browser-support dfmc-harp-cg dfmc-harp-cg-linker dfmc-linker dfmc-macro-expander dfmc-management dfmc-mangling dfmc-modeling dfmc-namespace dfmc-optimization dfmc-pentium-harp-cg dfmc-reader dfmc-testing dfmc-typist dfmc-webster projects registry-projects source-records file-source-records walker variable-search memory-manager ppml threads big-integers generic-arithmetic dylan harlequin-dylan cmu-test-suite format-out collectors metering build-system dylan-build'
+
+## Libraries of DFMC which have EMULATOR-SPECIFIC registry files.
+DFMC_EMULATOR_REGISTRIES='dfmc-conditions dfmc-macro-expander dfmc-reader dfmc-typist dood variable-search walker memory-manager date file-system threads harlequin-extensions big-integers generic-arithmetic metering build-system dylan-build'
+
+## Libraries of DFMC which have UNIX-SPECIFIC registry files.
+DFMC_UNIX_REGISTRIES='date dood file-system harlequin-extensions variable-search'
+
+## Libraries of DFMC which have WIN32-SPECIFIC registry files.
+DFMC_WIN32_REGISTRIES='date dood file-system harlequin-extensions'
+
+function checkout-registries(){
+  ## checkout-registries registry-type lib1 ... libN
+  ## Check out registry file to DFMC generic/emulator/unix/win32 registry.
+  ## Save some Hope cycles by bunching up all the registry checkouts with -and.
+  registry=$1
+  shift
+  all="$@"
+  conjuncts="-unit $1"
+  shift
+  for lib in $@; do
+    conjuncts="$conjuncts -and -unit $lib"
+  done
+  echo ""
+  echo "Checking out $registry registry(-ies) for: $all..."
+  case $registry in
+    generic)  pushd $personal_dylan_root/registry/generic/
+	      hope co -branch $branch -writ skip -extra delete -miss create -comp D-registry-$registry $conjuncts
+              popd;;
+    emulator) pushd $personal_dylan_root/registry/emulator/
+              hope co -branch $branch -writ skip -extra delete -miss create -comp D-registry-$registry $conjuncts
+              popd;;
+    unix)     for unix_platform in alpha-osf3 mips-irix5 sparc-solaris2 sparc-sunos4; do
+                pushd $personal_dylan_root/registry/$unix_platform/
+                hope co -branch $branch -writ skip -extra delete -miss create -comp D-registry-$unix_platform $conjuncts
+                popd
+              done;;
+    win32)    pushd $personal_dylan_root/registry/x86-win32/
+              hope co -branch $branch -writ skip -extra delete -miss create -comp D-registry-x86-win32 $conjuncts
+              popd;;
+  esac
+}
+
+function checkout-sources(){
+  ## checkout-sources directory-under-personal-root compound1 ... compoundN
+  ## Checks out HOPE compound to a directory under personal root, recursively.
+  ## Save some HOPE cycles by bunching up compounds with -and.
+  dir=$1
+  shift
+  all="$@"
+  conjuncts="-comp $1"
+  shift
+  for lib in $@; do
+    conjuncts="$conjuncts -and -comp $lib"
+  done
+  echo ""
+  echo "Checking out compounds below $WEBSTER_PERSONAL_ROOT/$dir for: $all ..."
+
+  pushd $WEBSTER_PERSONAL_ROOT/$dir
+  hope co -branch $branch -rec -writ skip -extra delete -miss create $conjuncts
+  popd
+}
+
+echo ""
+echo "********************"
+echo "* Source checkouts *"
+echo "********************"
+checkout-sources dfmc/                        D-dfmc
+checkout-sources lib/                         $DFMC_LIB_COMPOUNDS
+checkout-sources partners/cmu/cmu-test-suite/ D-partners-cmu-cmu-test-suite
+
+echo ""
+echo "**********************"
+echo "* Registry checkouts *"
+echo "**********************"
+checkout-registries generic  $DFMC_GENERIC_REGISTRIES
+checkout-registries emulator $DFMC_EMULATOR_REGISTRIES
+checkout-registries unix     $DFMC_UNIX_REGISTRIES
+checkout-registries win32    $DFMC_WIN32_REGISTRIES
+
+echo ""
+echo "*****************************"
+echo "* Boehm GC library checkout *"
+echo "*****************************"
+pushd $WEBSTER_PERSONAL_LIB
+hope co -comp D-install-$machine-lib -unit lib_gc.$WEBSTER_LIB_SUFFIX -branch $branch -writ skip -extra delete -miss create
+if test $machine=sparc-sunos4; then
+  ## Magic RThor & Jonathan say we gotta do on SunOS.  NB: gets a warning about no symbol table.
+  chmod u+w $WEBSTER_PERSONAL_LIB/lib_gc.$WEBSTER_LIB_SUFFIX # make it writeable
+  ranlib $WEBSTER_PERSONAL_LIB/lib_gc.$WEBSTER_LIB_SUFFIX    # update table of contents
+  chmod u-w $WEBSTER_PERSONAL_LIB/lib_gc.$WEBSTER_LIB_SUFFIX # make it unwriteable
+fi
+popd

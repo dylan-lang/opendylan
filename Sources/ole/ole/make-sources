@@ -1,0 +1,107 @@
+
+#  Dylan library for interfacing with OLE
+#  (Microsoft's Object Linking and Embedding)
+#
+#  This file controls the generation of source files that are created
+#  automatically by adapting information from the Microsoft header files.
+#
+#  To create the Dylan FFI files:
+#	make -f make-sources
+
+# Copyright: 1996, 1997 Functional Objects, Inc.  All rights reserved.
+
+# $Header: /scm/cvs/fundev/Sources/ole/ole/make-sources,v 1.1 2004/03/12 00:09:39 cgay Exp $
+
+# files automatically generated from the C++ headers:
+DYLAN_FILES=library.dylan ole-err.dylan ole-intf.dylan omisc.dylan
+C_FILES=c-ole.c
+
+# text processing utility:
+GEMA=gema
+
+# directory for files common to the various Win32 libraries:
+WIN32COMMON=..\..\win32\win32-common
+
+# directory for the COM library:
+COMDIR=..\com
+
+# directory containing the header files from the Microsoft Win32 SDK:
+MSTOOLS_H=..\..\win32\microsoft-headers
+
+PATTERNS=$(WIN32COMMON)\patterns.pat
+OLEPAT=$(COMDIR)\ole.pat
+
+OLE: $(DYLAN_FILES) $(C_FILES)
+
+all: OLE
+
+#    ---------------
+
+#    error codes
+
+ole-err.dylan: $(MSTOOLS_H)\winerror.h ole-err.pat
+	$(GEMA) -f ole-err.pat  -f $(COMDIR)\exports.pat \
+		-exports ole-err.exp  -f $(WIN32COMMON)\copyright.pat \
+		-in $(MSTOOLS_H)\winerror.h   -out $@ 
+
+ole-err.exp: ole-err.dylan
+	touch $@
+
+#    library and module declarations
+
+library.dylan: library.src $(WIN32COMMON)\include.pat \
+		ole-err.exp ole-intf.exp omisc.exp
+	$(GEMA) -f $(WIN32COMMON)\include.pat library.src $@
+
+#    interface declarations
+
+c-ole.c: $(COMDIR)\cinterf.pat $(MSTOOLS_H)\oleidl.h $(COMDIR)\unknwn.vtb
+	$(GEMA) -f $(COMDIR)\cinterf.pat  -insert ole-aux.c  -out $@ \
+		-f $(WIN32COMMON)\copyright.pat -f $(COMDIR)\unknwn.vtb \
+		$(MSTOOLS_H)\oleidl.h 
+
+ole-intf.dylan: $(COMDIR)\dinterf.pat $(MSTOOLS_H)\oleidl.h
+	$(GEMA) -f $(COMDIR)\dinterf.pat  -exports ole-intf.exp \
+		-f $(WIN32COMMON)\copyright.pat  -module OLE \
+		-in $(MSTOOLS_H)\oleidl.h  -out $@
+
+$(COMDIR)\unknwn.vtb:
+	( cd $(COMDIR) ; $(MAKE) -f make-sources unknwn.vtb )
+
+# exported symbols written as a side-effect of OLE conversion:
+ole-intf.exp: ole-intf.dylan
+	touch $@
+
+#    miscellaneous functions, structures, and constants
+
+omisc.dylan: ole-misc.dylan $(COMDIR)\collage.pat $(OLEPAT) $(PATTERNS) \
+	   $(MSTOOLS_H)\ole2.h $(MSTOOLS_H)\oleidl.h
+	$(GEMA) -f $(PATTERNS)  -f $(COMDIR)\collage.pat  -f $(OLEPAT) \
+		-idir $(MSTOOLS_H) \
+		-p 'export-slot:\Ccb=cb-value@end;\Chaccel=haccel-value@end' \
+		-out $@  -exports omisc.exp  -input ole-misc.dylan
+
+# Note: the export-slot rules above are because cb-value and
+#	hAccel-value are exported from the COM library, so can't be
+#	re-exported here.
+
+omisc.exp: omisc.dylan
+	touch $@
+
+#    ---------------
+
+# tags for Emacs Meta-.
+
+DTAGS=/u/dylan/tools/gnuemacs/dtags
+SOURCE_FILES=ole.dylan
+
+TAGS: $(DYLAN_FILES) $(SOURCE_FILES)
+	$(DTAGS) $(SOURCE_FILES) $(DYLAN_FILES)
+
+tags: TAGS
+
+
+#    ---------------
+
+clean:
+	rm -f $(DYLAN_FILES) $(C_FILES) *.bak *.exp *.vtb c-ole.h

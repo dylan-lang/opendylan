@@ -1,0 +1,745 @@
+Internal design of the project manager of DylanWorks
+----------------------------------------------------
+
+Roman Budzianowski, 9/22/98
+
+General Architecture
+--------------------
+
+There are 3 libraries involved:
+
+1. D-lib-projects. This library defines an abstarct class <project>,
+which is used to communicate with the compiler and an abstract class
+<lid-project> which is a basis for defining concrete project classes
+which support LID like files to store information about project
+configuration. Each Dylan library maps to exactly one object of class
+subclass(<project>). 
+
+The library defines most of the external protocols of the project
+manager, with the exception of those relevant only to any concrete
+class, like <user-project>.
+
+The library includes all code needed to drive the compilation process
+and callbacks needed by the compiler.
+
+The library also includes some code for creating projects.
+
+The library communicates with the compiler by implementing a set of
+callbacks exported from the compiler:
+
+// Return the context for the used library of this project
+define open generic used-library-context
+    (context, used-library-dylan-name, #key canonicalize?) => used-c;
+
+// Return the source record given a source-record-id
+define generic project-record-id-source-record (project, id) => sr;
+
+// Return the id given a source record
+define generic project-source-record-id (project, sr) => id;
+
+// Returns the source record name relative to project
+define generic project-source-record-name (project, sr) => name-or-false;
+
+// Return the version of a library/project
+define open generic project-library-version(project) => 
+    (major-ver, minor-ver);
+
+// Return inter library binding
+define open generic project-inter-library-binding(project, used-project) =>
+    (binding :: one-of(#"tight", #"loose"));
+
+Those callbacks are used by the compiler during the phase of "loading
+namespace" which is performed in cooperation between the compiler and
+the project manager. The resposibility of the project manager is to
+create the source records of libraries and to create any needed
+subprojects (libraries).
+
+2. D-lib-registry-projects. This library defines a class
+<registry-project> and <registry>. It defines an initialize method on
+<registry-project> which uses registries to find the LID file, source
+code and build areas.
+
+3. D-lib-user-projects. This library defines the following classes:
+<user-project>, <system-project> and <binary-project>. 
+<system-project> - registry projects (or LID projects), can be RO or RW;
+<user-project> - HDP projects;
+<binary-project> - RO projects using DDB files;
+
+It also defines <interactive-project> which is mixed in to all the
+above classes and supports interaction with applications.
+
+The library supports opening of projects, adding/removing files from a
+<user-project>, searching for subprojects, replacing of projects,
+running of tools other then the compiler, saving of projects into
+HDP files, cacheing of build state, management of canonical sources.
+
+Opening a project
+-----------------
+
+Each Dylan library has a <project> associated with it. The project
+objects are created explicitly for the top level projects and
+implicitly for subprojects.
+
+There are three internal protocols all used to create project objects:
+make-project, make and initialize. The process of opening a project
+invokes two functions to communicate with the compiler:
+project-open-compilation-context and project-load-namespace. It also
+invokes the callback note-project-open  and possibly runs the compiler
+callback used-library-context.
+
+define open generic make-project (c :: subclass(<project>),
+			     #key key, source-record-class,
+			          // initial compiler settings
+			          processor, operating-system, mode,
+				  load-namespace?,
+				  #all-keys)
+ => project :: <project>;
+
+define method make-project
+    (c :: subclass(<project>), #rest keys, 
+     #key key, parent = #f, load-namespace? = #t,
+     source-record-class, processor = #f, operating-system = #f, mode)
+ => (project :: <project>)
+
+	The generic and the main implementation method for
+	subclass(<project>) is defined in the projects library. The
+	responsiblity of this method is to make the object and perform
+	some book keeping - open the compilation context and verify
+	the database.  
+
+	parent: - if #f, the project is a top level project
+	load-namespace?: - if #f, loading of namespace is delayed
+
+	The method calls a callback note-project-made before opening
+	its compilation context. It is used by user-projects library
+	to open subprojects. 
+
+	The method calls the project-open-compilation-context. For
+	user subprojects open in the note-project-made load-namespace?
+	= #f. This is so the compiler doesn't attempt to automatically
+	load the namespace and the project manager can open user
+	projects in the more convenient sequence. 
+
+	Finally for a top level project, if it has been already
+	compiled, i.e. the compiler db is available, the namespace is
+	loaded without updating the sources. This makes browsing
+	information immediately available. 
+
+	If a top level project doesn't have a database, its namespace
+	is not loaded here and no browsing information is
+	available. System projects have to have the compiler db
+	available and their namespace is always loaded here.
+
+define function project-load-namespace (project :: <project>, #rest keys)
+ => (compilation-contexts-to-recompile :: <sequence>);
+
+	The process of "loading namespace" is as follows. The pm
+	installs the sources for a project by calling
+	canonicalize-project-sources and the compiler preparses the
+	sources to find a library definition. Based on this definition
+	the compiler calls back to the pm using the
+	used-library-context protocol. The pm finds and implicitly
+	opens a subproject returning its compilation context to the
+	compiler. 
+
+define method note-project-made(project :: <user-project>, #key parent) => ();
+
+	This method is defined in user-projects and attempts to open
+	subprojects (stored in HDP file under subprojects: keyword) by
+	calling project-add-file protocol.
+
+define function canonicalize-project-sources
+    (project :: <project>,
+     #key force-parse? = *canonicalize-force-parse?*,
+          update-sources? = *canonicalize-update-sources?*,
+          update-used? = update-sources?,
+          force-parse-used? = update-used? & force-parse?)
+
+	This function installs the sources in the compiler, based on
+	the keyword values.
+
+define sideways method used-library-context 
+    (context, used-library-dylan-name :: <symbol>, #key canonicalize?)
+ => (subcontext)
+
+	This is an implementation of a compiler callback. Here the pm
+	tries to find the project if already open, or calls
+	make-used-project, which has to implemented by the concrete
+	project classes. Note that there is a dynamic cache
+	established during the call to project-load-namespace to avoid
+	multiple processing of subprojects, since the compiler might
+	multipy call used-library-context for the same subproject due
+	to the namespace structure. If found in the cache the function
+	immediately returns the context in question. The cache is
+	established by the with-used-project-cache macro.
+
+define sideways method make (class == <project>,
+		    #rest keys, #key key, 
+		    parent = #f,
+		    processor = #f, operating-system = #f, #all-keys)
+ => (project :: <project>)
+
+	This method is defined in user-projects library. It decides
+	what class of project to create based on available
+	information. It always tries first to find an HDP file in the
+	search path if set. Then it tries to find the project in the
+	registries if set. If this fails it tries to find a binary
+	project, i.e. a db. Finally, if this fails it signals
+	<project-not-found> and sets up a
+	<find-project-location-restart> restart. If the restart is
+	caught it makes the project by calling
+	primitive-make-project-from-file.
+
+define method make-used-project (project :: <user-project>,
+				 key :: <symbol>, processor, os)
+ => project :: <project>;
+
+	This method in user-projects library attempts to open a
+	subproject based on 'key', where key denotes a library
+	name. It first tries to find an HDP project by calling
+	search-for-subproject, which looks up project's caches
+	retrieved from disk. If found it calls
+	make-project-from-file. Otherwise it calls
+	make-project(<project>...) to initiate the general
+	process. This method also calls project-initialize-caches.
+
+define method make-used-project (project :: <system-project>,
+				 key :: <symbol>, processor, os)
+                               => project :: <project>;
+
+	This method defined in user-projects library just calls
+	make-project(<project>, ...). However, it should probably just
+	try to find another <system-project>.
+
+define method initialize (project :: <lid-project>, #rest keys,
+			  #key lid-location = #f,
+			  library-name = #f,
+			  lid-file-info = #f,
+			  source-record-class = #f,
+			  processor, operating-system, mode, #all-keys)
+
+define method initialize (project :: <registry-project-layout>, #rest keys,
+			  #key key, source-record-class, processor, operating-system, 
+			  #all-keys)
+
+define method initialize (project :: <user-disk-project-layout>, #rest keys,
+			  #key project-file, 
+			  source-record-class, processor, operating-system, 
+			  build-dir, database-dir,
+			  read-only? = #f,
+			  #all-keys)
+
+	The standard initialize protocol is used to initialize
+	project's data. It relies on the correct sequence of calling
+	the methods. The methods on <project-layout> are always called
+	first passing additional arguments to the method on
+	<lid-project>. This applies to <system-project>s and
+	<user-project>s. 
+
+define method open-project-from-file(location :: <locator>, 
+				     #rest keys, #key, #all-keys)
+ => (project :: false-or(<project>));
+
+	This method goes through the replace-project-with? protocol
+	and is the internal interface used for opening subprojects.
+
+define method primitive-make-project-from-file(file :: <locator>, 
+					       #rest keys, #key make-method = make,
+					       #all-keys)
+ => (project :: false-or(<project>));
+
+	This method open a project from file directly and by default
+	calls 'make' to make it possible to call it from the 'make'
+	method, i.e. it doesn't call make-project (make-project calls
+	make, which in turn can call this function). This method will
+	import a LID project when given a LID file.
+
+
+define generic replace-project-with?(c :: subclass(<project>), 
+				     #key, #all-keys)
+ => (yes-or-no :: <boolean>, project :: false-or(<project>), key);
+
+define method replace-project-with?(c :: subclass(<project>), 
+				    #rest keys,
+				    #key processor, operating-system,
+				    project-file, force? = #f, dont-replace? = #f,
+				    key, #all-keys)
+ => (yes-or-no :: <boolean>, project :: false-or(<project>), key);
+
+	This protocol requires either project-file: or key: to be
+	set. It decides, possibly with the help of the user if a
+	project should be replaced, i.e. if some user action calls for
+	opening a project and another project is open which defines
+	the same library. In such a case it calls a lower level
+	protocol project-replace-project-with?. The caller of this
+	protocol has to determine the class of the project which is
+	being created. 
+
+define generic project-replace-project-with?(c :: subclass(<project>),
+					     project :: <project>,
+					     #key, #all-keys)
+ => (yes-or-no :: <boolean>, project :: false-or(<project>));
+
+	The methods implementing this protocol finally decide, either
+	automatically or by asking the user, if a project should be
+	replaced.
+
+define method project-add-file(p :: <user-project>, file :: <string>, #key save? = #t)
+
+	This protocol is defined only on <user-projects>. It calls
+	project-add-file-of-type.
+
+
+define method project-remove-file(p :: <user-project>, file :: <string>)
+  project-remove-file(p, as(<locator>, file));
+end;
+
+	This protocol is defined only on <user-projects>. It calls
+	project-remove-file-of-type.
+
+define sideways method open-project(project-file-location :: <locator>)
+ => (project :: false-or(<user-project>));
+
+	This is an external interface and it creates top level projects.
+
+define method import-lid-project(lid-location :: <locator>, #key to-file)
+=> (project :: false-or(<user-project>));
+
+	This is an external interface and it creates top level
+	projects.
+
+
+define method search-for-subproject(project :: <user-project>, key :: <symbol>,
+				    procesor, os)
+ => (location);	
+
+	This function looks up a project in the cache.
+
+define method search-for-project(key :: <symbol>, 
+				 #key search-path = $user-projects-path, 
+				 depth = #f,
+				 procesor, os)
+
+	This is a general searching facility.
+
+define function project-initialize-caches(project :: <user-project>)
+
+	This function uses the cache file and initializes any runtime
+	caches for the project. It supports at this time:
+	used-projects, tools, canonical-sources caches.
+
+ 
+Compiling a project
+------------------
+
+The main entry point is:
+
+define method update-libraries (project :: <project>,
+				#key force? = #f,
+				     save? = #f,
+			             abort-on-all-warnings? = #f,
+			             abort-on-serious-warnings? = #f,
+				     continue-after-abort? = #f,
+				     default-binding = #f,
+				     strip? = *strip-default-policy*,
+				     assembler-output? = #f, harp-output? = #f,
+				     debug-info? = #t, gc? = #f,
+				     flush? = #f,
+				     combine? = combine-object-files?(),
+				     // More fine-grained forcing controls..
+				     force-parse? = force?,
+				     force-batch? = force?,
+				     // This isn't very useful yet...
+				     force-objects? = force?,
+				     recursive? = #t)
+ => (aborted? :: <boolean>);
+
+	This method first calls project-load-namespace to update the
+	compiler's notion of project sources and dependency tree. The
+	process is as described above in Opening a Project, except
+	that the sources are updated to reflect the current state on
+	disk. 
+
+	Then the method calls parse-and-compile in reverse dependency
+	order. 
+
+	The method establishes an <abort-compilation> handlers, first
+	around project-load-namespace, where any problems with sources
+	or used libraries cause an immediate abort of compilation,
+	then around the parse-and-compile loop, where the compiler
+	might signal <abort-compilation> depending on the keywords
+	passed to it: abort-on-all-warnings? = #f,
+	abort-on-serious-warnings? = #f, continue-after-abort? = #f;
+
+	
+define function parse-and-compile (context, strip-policy, parse?,
+				   #rest keys)
+
+	This function optionaly parses the project sources and invokes
+	compile-project-definitions.
+
+define method compile-library (project :: <project>,
+			       #rest flags,
+			       #key force-compile? = #f,
+			            force-parse? = #f,
+			            abort-on-all-warnings? = #f,
+			            abort-on-serious-warnings? = #f,
+			            default-binding = #f,
+			            strip? = *strip-default-policy*,
+			            save? = #f,
+				    // More fine-grained forcing controls..
+				    force-batch? = force-compile?,
+				    force-objects? = force-compile?,
+			       #all-keys)
+ => (aborted? :: <boolean>)
+
+	This method compiles only one library. It first invokes
+	%parse-project, which parses all used-projects. The it calls
+	compile-project-definitions.
+
+	This is in contrast to update-libraries, where each library is
+	parsed and compiled in sequence.
+
+
+define function %parse-project(project :: <project>,
+			       #key force-parse?, 
+			       update-used? = #t,
+			       force-parse-used?)
+ => (compilation-contexts-to-recompile :: <sequence>)
+
+	Load the namespace and then parse all libraries in reverse
+	dependency order.
+
+define function parse-project(project :: <project>,
+			      #rest keys,
+			      #key force-parse?, 
+			      update-used? = #t,
+			      force-parse-used?)
+ => (aborted? :: <boolean>)
+
+	It's an external entry. It calls %parse-project to parse all
+	used libraries. 
+
+
+Rverse usage relationship
+-------------------------
+
+The project manager tries to maintain an up to date reverse usage
+relationship between projects. The compler knows about used
+libraries. This revese relationship knows about using libraries. 
+
+This information is used for two reasons:
+- close unused projects.
+- update parent/owner projects information when a project data/state
+changes. 
+
+define function project-owners(project :: <project>)
+ => (owners :: <sequence>);
+
+define function project-add-owner(project :: <project>, 
+				  owner :: <project>)
+ => (owners :: <sequence>);
+
+	This function is called in used-library-context. Note that it
+	is called outside of with-used-project-cache, since it records
+	every owner. The dylan library does not have owners.
+
+define function project-remove-owner(project :: <project>, 
+				     owner :: <project>)
+ => (owners :: <sequence>);
+
+
+define function remove-all-personal-owners(project :: <project>) => ()
+	
+	This function is called in project-load-namespace while in a
+	compiler transaction, so that the relationship can be updated
+	if it has changed.
+
+define function remove-as-owner(project :: <project>, 
+				#key subprojects = #f) => ()
+
+
+Closing of projects
+-------------------
+
+The following strategy is implemented. The dylan library project is
+never closed. System projects are not closed when a using user project
+is closed. The closing is delayed until after next compilation.
+This area may need further work.
+
+define method close-project (project :: <project>, #key system? = #f)
+ => (closed? :: <boolean>);
+
+	It calls close-subproject after setting %project-top-level? to
+	#f. It allows for non-top-level projects to be closed but the
+	ideally it shouldn't.
+
+define function close-subproject(project :: <project>, #key system?)
+ => (closed? :: <boolean>);
+
+	For project which are: not top level, not closed and not
+	system (if the system?: keyword is #f), the function checks if
+	project-owners is empty. If so it calls %close-project and
+	then recursively calls close-subproject on all
+	directly-usedprojects. 
+
+define method %close-project (project :: <project>, 
+	#key subprojects = #f)
+
+	It removes the project as owner of any other project, it
+	closes the compilation context, removes the project from the
+	list of open projects and calls note-project-closed to inform
+	the environment. It is a raw interface. It only checks if the
+	project has been closed and if it is the dylan project.
+
+define function close-unused-projects(#key system? = #t) => ()
+
+	After each call to project-load-namespace, i.e. after the
+	namespace relationship has been updated, close-unused-projects
+	is called. This call is part of the delayed closing
+	strategy. This strategy speeds up considerable opening of
+	subsequent projects, which frequently use the same or similar
+	set of system projects.
+
+	Caveat: The ownership relationship is established only after
+	the namespace has been loaded. If you open a project with
+	explicit subprojects, but without databases, there is no
+	owner relationship between them until the first compile.
+
+	If you then open one of the subprojects and then close it
+	(i.e. its window), the subproject will be closed, even though
+	there is a potential user of it. Normally this doesn't cause
+	problems, but it may in certain scenarios.
+
+	One solution would be to always load the namespace of the top
+	project upon opening even if there is no db.
+
+	As mentioned above the ownership reflects only the usage
+	relationship in the Dylan language sense. Hence we cannot set
+	the owners based on project relationship. Extending the owner
+	notion to include project relationships could be problematic,
+	since users can add unrelated subproject. The whole
+	close-project protocol could break as it relies on compiler
+	queries to determine project relationship
+	(directly-used-projects). 
+
+
+Verifying databases
+-------------------
+
+The main internal function is verify-project-database. The external
+interface is provided by ensure-project-database. The compiler
+callback note-definitions-updated update the state of the
+database. There are also two pm callbacks used by the environment:
+note-database-unsaved and note-database-saved.
+
+
+define function verify-project-database(project :: <project>, #key verify-if-current = #t)
+ => (in-memory? :: <boolean>, current? :: <boolean>, saved? ::
+ <boolean>);
+
+	This function needs more work. Checking if the sources are
+	current is essentially disabled now to avoind going to disk
+	when opening large sets of projects. I do not think the
+	performance is so bad. Even if we went to disk the algorithm
+	wouldn't take into account if a used project has changed. The
+	owner protocol could help here.
+
+define function ensure-project-database(project :: <project>, #key parse? = #f)
+ => (context, in-memory? :: <boolean>, current? :: <boolean>, saved? :: <boolean>);
+
+	External interface. Note, that the value of context will be #f
+	if the project has not been compiled. This is to indicate to
+	the environment that there is no browsing database.
+
+Source management
+-----------------
+
+Here's how it works. This is another cooperative endeavor between the
+compiler, the project manager with the addition of the source-records
+and file-source-records library. Files are mapped into source records
+and back based on an id, which takes into account the name of the
+files and its timestamp. Source records are immutable. If a file
+changes on disk, it will map into a new source record. Id's are also
+used to store source records in the compiler database. The project
+object maintains a source record cache indexed by the id's. This cache
+implements the immutability of the source record.
+
+When loading the namespace the project manager gives to the compiler
+the set of sources in the form of a sequence of
+<source-record>s as defined by the source-records library.
+
+define open generic project-current-source-records 
+	(project :: <project>) => sr*;
+
+	Returns the current project sources as a sequence of source
+	records. 
+
+define method project-current-source-records 
+	(project :: <registry-project>) => sr*;
+
+	This method calculates the set of source by calling
+	compute-compiler-source-records as defined by the projects
+	library. This method takes into account a possibility that a
+	registry project might have moved.
+
+define method project-current-source-records 
+	(project :: <user-project>) => sr*;
+
+	This method simply calls compute-compiler-source-records. 
+
+
+define function compute-compiler-source-records 
+    (project :: <lid-project>)
+ => sr*;
+
+	This function exported by the projects library from the
+	lid-projects module implements the mechanism of creating the
+	set of source records from a set of source files. It first
+	calls update-project-files, then
+	project-files-to-source-records passing it:
+	the directory (project-compiler-source-location), 
+	project-files (project-compiler-source-files), and
+	id-source-record - a method which can convert a record id into
+	a record. This last method uses
+	project-record-id-source-record for this task.
+
+
+define function project-files-to-source-records
+    (project :: <lid-project>, #key directory, files, id-source-record)
+ => sr*;
+
+	This function actually calculates the records. It calls to
+	file-source-record-ids in the file-source-records library to
+	retrieve the id's (at present just one) corresponding to each
+	file. Then it calls the passed in id-source-record to obtain
+	the source record. 
+
+define method project-record-id-source-record 
+	(project :: <project>, id) => sr;
+
+	This is the actual default implementation of the
+	id-source-record method used above. This method implements a
+	cacheing scheme. It first tries to find a record in the
+	project's cache (project-source-record-table) and if not
+	successful calls id-as-source-record in the source-records
+	library to actually create the record.
+
+	It is also the implementation of the compiler callback
+	mentioned above. The compiler uses it to obtain the set of
+	canonical source records as stored in the database.
+
+
+define open generic project-compiler-source-location
+    (project :: <project>)
+ => (location :: <locator>);
+
+	Returns the location of sources used by the compiler (which
+	might be different then the project sources).
+
+define method project-compiler-source-location
+    (project :: <project>)
+ => (location :: <locator>);
+
+	The default location - same as project sources.
+
+define method project-compiler-source-location
+    (project :: <user-project>)
+ => (location :: <locator>);
+
+	Optionally the build area.
+
+define open generic update-project-files 
+	(project :: <lid-project>) => ();
+
+	This function is called before the set of records is
+	calculated (see above).
+
+define method update-project-files 
+	(project :: <registry-project>) => ();
+
+	This methods simply re-reads the LID file and updates the
+	project info. 
+
+define method update-project-files 
+	(project :: <user-project>) => ();
+
+	This method optionally copies the modifies files to the build
+	directory, thus preserving the so called canonical compiler
+	sources against any modification by the user. It uses the
+	project's cache file to store the canonical source records
+	id's on disk to know which files have changed next time the
+	project is opened.
+
+define method project-source-record-id 
+	(project :: <project>, sr) => id;
+
+	This the implementation of a compiler callback. The compiler
+	uses it to store record id's in the database. 
+
+define method project-source-record-name (project :: <project>, sr)
+ => (name :: false-or(<string>))
+
+	This method is used by the compiler to disambiguate the source
+	record names when unifying multiple libraries.
+
+define open generic project-compiler-source-files
+    (project :: <lid-project>)
+ => (location :: false-or(<sequence>));
+	
+	Returns a raw sequence of files to be processed by the
+	compiler. 
+
+define method project-compiler-source-files
+    (project :: <lid-project>)
+ => (location :: false-or(<sequence>));
+
+	Default implementation - project-source-files. 
+
+define method project-compiler-source-files
+    (project :: <user-project>)
+ => (location :: false-or(<sequence>));
+
+	This method optionally can return the copies of the source
+	files (which correspond to canonical source records).
+
+define variable *copy-canonical-sources?* = #f;
+
+	This is the variable, which controls if the canonical sources
+	are copied to the build area.
+
+define generic project-source-record-location(project :: <project>, 
+					      sr :: <source-record>)
+ => (location :: false-or(<locator>));
+
+	Returns location on disk.
+
+define method project-source-record-location(project :: <project>,
+					     sr :: <source-record>)
+ => (location :: false-or(<locator>));
+	
+	The location as stored in the <source-record>.
+
+define method project-source-record-location(project :: <user-project>,
+					     sr :: <file-source-record>)
+ => (location :: false-or(<locator>));
+
+	Optionally, if the source record is a copied canonical source
+	record, the method will return the location of the
+	corresponding project source file. For use by the environment.
+
+define function compute-project-source-records(project :: <user-project>)
+ => sr*;
+
+	Function used in "copy canonical sources mode", by several
+	methods above, for <user-project>s. It calculates a set of
+	modified source records, using a separate cache mainatined by
+	user projects.
+	
+
+define function project-id-source-record
+	(project :: <user-project>, id) => sr;
+
+	Implements the cacheing scheme for the case of "copy canonical
+	sources mode".
+

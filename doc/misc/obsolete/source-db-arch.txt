@@ -1,0 +1,503 @@
+
+             Implementation architecture of dylan source database
+
+			Roman Budzianowski
+
+0. General description of the implemented functionality
+
+The basic concepts are: section, file, metafile, branch, source
+system, source snapshot, branch search list.
+
+Section contains a text fragment, typically a top level form. File
+consists of a number of sections. Files don't own sections, just
+reference them. Files are versioned. When a section is modified a new
+section is created. Sections maintain the offset to the physical file
+on disk. 
+
+Metafile is a generalization of a file. It has branches. Branch is
+just a name. Each branch can "contain" several versions of the
+file. The metafile is the actual handle to the file. To retrieve the
+contents of a file you need the metafile handle and branch and version
+keys. Note that in a source system the branch is not a global
+attribute. Some metafiles may not have a certain branch.
+
+The source system is an object maintaining a list of metafiles. At
+this stage the metafiles have pathnames to their disk locations. The
+source system also has a branch search list which can be
+set. Effectively this lets you have a view of the source database
+system. The search list is needed, as opposed to just one branch,
+because branches are not global as mentioned before. Typically each
+file would belong to the #"base" branch and possibly to some other
+branches. The "base" branch would be always part of the branch search
+list to assure that each file is found.
+
+In this approach creating a new branch of the source system requires
+creating the new branch only in the metafiles which are actually
+modified. 
+
+The source system snapshot is like a source system. It has a shallow
+copy of all metafiles made according to a branch search list and
+captures the state at the time it was made.
+
+The source is read from a disk using the dylan lexer. Note that the
+lexer doesn't keep the source around. A second stream is used to read
+the source in parallel and its location in the file is recorded.
+The lexer serves as a sectionizer. The lexer also returns an internal
+representation of the code, which is later used for parsing. This code
+is also stored in the section.
+
+The idea here is that the code can be later parsed and compiled
+directly from the source database. Since the lexer has been already
+run through the code there is no need to do that again later.
+
+A unique id is created for each section. At this stage the id is a
+symbol. It captures a "meta" information about the section: what kind
+of definition(class, method), name, signature of a method or generic
+function, etc. This allows me to read again the file from disk and
+identify the sections. Of course when the section is accessed from the
+environment we will have a direct pointer to the section.
+
+The metaobjects in the derived db will have "pointers" to the source
+code sections. However, since the pointers are going to be accross
+databases they have to be opaque handles. The simplest format is a
+unique integer id. At this stage the sections are not stored directly
+in the source system db, only trough references by files. Storing all
+sections in a vector will give us a unique integer id and allow fast
+sequential access. Note that in a branched and versioned source system
+we will have more sections than in the actual source code. The integer
+ids will not be sequential. The derived db will have to also store the
+branch search list to access the source db. Otherwise the id mappings
+may be incorrect.
+
+The source db can be saved in a doss file. A special doss policy has
+been developed. The actual source is not stored. Remember that the
+sections have indecies to the actual physical files. When a particular
+section source needs to be accessed, the file is loaded into memory.
+
+An interface is provided to build a dylan library source system based
+on dylan lid files. 
+
+
+1. Low level functionality (based on John Dunning's design)
+-----------------------------------------------------------
+
+1.1 Database concepts
+---------------------
+
+This part is not developed. There is no database backend. However all
+objects are subclasses of <db-object> and/or <ref-object> which is
+supposed to help managing db access.
+
+1.2 Storing source code
+----------------------
+
+1.2.1 Section concept
+---------------------
+The source code is stored in sections. The sections typically contain
+one top level form along with comments. The section-start and
+section-lenght slots allow for storing the code actual in contingous
+files and retrieving it as needed. section-code is an internal
+representation of the code as produced by the lexer. id is a
+(hopefully) unique string aidentification for the section. It allows
+for retrieving the sections based on the metaobject description of a
+program unit. This requires that the algorithm for generating the
+section id's is a 1-1 mapping between the id and the metaobject
+description. The question is: is it possible ? Further on I will
+describe an implementation if such an alorithm. I have no prove tha
+it's unique.
+
+define class <section> (<object>)
+  slot id :: <symbol>, required-init-keyword: id:;
+  slot author;
+  slot comment;
+  slot date;
+  slot section-text :: union(singleton(#f), <byte-string>), required-init-keyword: text:;
+  slot section-start :: <integer>, init-keyword: start:;
+  slot section-length :: <integer>, init-keyword: length:;
+  slot section-code, init-keyword: code:;
+  slot referencors;		// vector of file instances
+  slot predecessor :: union(<section>, singleton(#f)), 
+    init-value: #f, init-keyword: predecessor:; // parent
+  slot successors;		// children
+end class;
+
+1.2.2 File concept
+------------------
+
+The file concept is supported by three antities:
+- file
+- branch
+- metafile
+
+Branch is just a name which allows for maintaining branched
+containers. <branch-serach-list> allows for finding the appropriate
+version of the contents of a branched container.
+
+define class <branch> (<ref-object>) 
+	slot name, required-init-keyword: name:;
+end class;
+
+define class <branch-search-list> (<list>) end;
+
+define class <branched-container> (<db-object>)
+	slot name, required-init-keyword: name:;
+// active branch specs
+// newest-in-branch containers
+//	table
+	slot branches, init-function: method () make(<table>) end;
+end class;
+
+The metafile concept is central here. In effect it is a generalization
+of the notion of file. The file is organized in two dimensions: the
+named branches and the numbered versions. 
+
+define class <metafile> (<branched-container>)
+  slot pathname, required-init-keyword: pathname:;
+  slot in-core, init-value: #f;
+// active branch specs
+// newest-in-branch files
+end class;
+
+When a file is updated either a new version in the current branch or a
+new version in a new branch is created. The version numbering starts
+with 1 in a new branch. The actual source is tored in sections which
+are referenced by the file versions and shared if possible. No
+optimization is done for storing sections: always a new section is
+created. 
+
+define class <db-file> (<db-object>)
+  slot metafile :: <metafile> , required-init-keyword: metafile:;
+  slot branch :: <branch>, required-init-keyword: branch:;
+  slot version :: <integer>, init-value: 1, init-keyword: version:;
+  slot author :: <author>, init-keyword: author:;
+  slot comment, init-keyword: comment:;
+  slot date;
+  slot predecessor :: union(<db-file>, singleton(#f)), 
+    required-init-keyword: predecessor:;
+  slot sections :: <table>, init-function: method () make(<table>) end;
+  slot section-sequence :: <list>;
+end class;
+
+The slot section-sequence maintains the original sequence of sections,
+while the slot sections is used for random access.
+
+Effectively the metafile is a branched file. When you have a branch
+search list and a metafile you can get at the actual file modulo its
+version. 
+
+1.2.3 Metafile interfaces
+-------------------------
+
+Low level: checks if the new sections differ from the old version
+of the file (if any). If yes new section is created, if not the file
+points to the old section. This interface is aimed at dealing with
+updating the db from disk, a file at a time. Updating a section from
+the environment wouldn't require this analysis. Returns #f if the
+files don't differ.
+
+define method setup-new-file-sections(new-file :: <db-file>, new-sections :: <list>)
+end;
+
+define method find-file-sections(file :: <db-file>, search-string :: <string>)
+end;
+
+Assuming that the metafile is in memory, but the actual source
+hasn't been yet read from disk - reload the file. It asssumes that at
+some point in the past the file was read from disk, then the source db
+dumped without the source. I.e. used for lazy loading of files.
+
+define method reload-from-disk(meta :: <metafile>, branch :: <branch>)
+end;
+
+
+Find all sections matching the substring. Right now it uses a very
+simple algorithm - serach through all sections and match the
+substring. Knowing that we are looking for e.g. a class we could do a
+better job. The section id's have a structure that would help to
+optimize such searches.
+
+define method find-sections(meta :: <metafile>, 
+			    branch :: <branch>, 
+			    search-string :: <string>)
+end;
+
+define method all-sections(meta :: <metafile>, 
+			   branch :: <branch>)
+end;
+
+Used for creating snapshots of the source db.
+
+define method shallow-copy(meta :: <metafile>) end;
+
+Low level: update file from disk in new branch
+
+define method new-branch-from-disk (meta :: <metafile>, 
+				    branch :: <branch>, 
+				    base :: <branch>)
+end;
+
+Low level: update file from disk or boot file, i.e. create new file.
+
+define method update-from-disk ( meta :: <metafile>, branch :: <branch> )
+end;
+
+define method boot-from-disk (meta :: <metafile>, branch :: <branch>)
+end;
+
+If the file differs create new version in the current file otherwise
+do nothing.
+
+define method maybe-update-from-disk (meta :: <metafile>, branch :: <branch> )
+end;
+
+
+Low level creation interfaces:
+
+define method create-new-file-version ( meta :: <metafile>, branch :: <branch> )
+end;
+
+define method create-new-file-branch ( meta :: <metafile>, 
+				      branch :: <branch>,
+				      base-branch :: <branch>)
+end;
+
+define method create-new-file-section(sec :: <list>, 
+				      pre :: union(#f, <section>))
+end;
+
+Note in the above that the word file was used to denote
+<metafile>. Since the state of a file is maintained by <metafile> they
+are synonymous in that sense.
+
+define method find-file(meta :: <metafile>, branch-list :: <list>)
+end;
+
+2. Source database system
+-------------------------
+
+The source is organized into a <db-source-system>. The slot
+branch-search-list determines the results of all file searches and
+updates. 
+
+define class <db-source-snapshot> (<db-object>)
+  slot name, init-value: "unnamed", init-keyword: name:;
+  slot metafiles, init-function: method() make (<table>) end;
+  slot meta-sequence, init-function: method() make (<deque>) end;
+  slot branches, init-function: method() make (<table>) end;
+  slot authors;
+  slot branch-search-list :: <list>;
+end class;
+
+define class <db-source-system> (<db-source-snapshot>)
+  slot db-pointer;
+  slot snapshots, init-function: method() make (<table>) end;
+end class;
+
+Actually <db-source-system> is a <db-source-snapshot> with pointers to
+other snapshots. 
+
+define method find-branch(sys :: <db-source-snapshot>, s :: <string>)
+end;
+
+define method create-branch(sys :: <db-source-system>, s :: <string>)
+end;
+
+define method boot-file(sys :: <db-source-system>, file :: <locator>)
+end;
+
+Looks up the file in the database. If the argument is locator that
+it's translated into a file name. Returns two values: the metafile and
+the branch where it was found.
+
+define method find-file(sys :: <db-source-system>, file :: <locator>)
+end;
+
+define method find-file(sys :: <db-source-system>, file :: <string>)
+end;
+
+define method update-or-boot-file(sys :: <db-source-system>, 
+				  file :: union(<string>, <locator>))
+end;
+
+define method update-file(sys :: <db-source-system>, 
+			  file :: union(<string>, <locator>))
+end;
+
+define method update-file(sys :: <db-source-system>, 
+			  file :: union(<string>, <locator>))
+end;
+
+define method update-file-in-branch(sys :: <db-source-system>, file :: <string>)
+end;
+
+define method default-branch(sys :: <db-source-system>)
+end;
+
+// snapshot contains versions (copies) of metafiles at the time of 
+// the snapshot creation 
+define method create-snapshot(sys :: <db-source-system>, s-name,
+			      #key branch-list = sys.branch-search-list)
+end;
+
+Saves the source db system in a doss file. The actual source is not
+saved. The  system retains pointers to the original files. If a
+section is accessed the file is read into memory.
+
+define method save-source-system(sys :: <db-source-system>, locator :: <locator>)
+end;
+
+Reads the source db from a doss file. Returns a
+<source-db-system>. The actual source in files is not read in at this
+time. 
+
+define method open-source-system(locator :: <locator>)
+end;
+
+Returns the first section which matches the substring.
+define method retrieve-one-section(sys :: <db-source-system>, 
+				   search-string :: <string>)
+end;
+
+Returns all sections which match the substring.
+define method retrieve-some-sections(sys :: <db-source-system>, 
+				     search-string :: <string>)
+end;
+
+define method retrieve-all-sections(sys :: <db-source-system>)
+end;
+
+3. Dylan source db system
+-------------------------
+
+define method update-dylan-library (sys :: <db-source-system>)
+
+define method update-dylan-library-file (sys :: <db-source-system>,
+					 file :: <locator>)
+end;
+
+define method update-source-file-sequence(sys :: <db-source-system>,
+					  filenames :: <list>)
+end;
+
+define method boot-library-source (name :: <string>)
+end;
+
+The file argument is the file name without suffix. Returns the
+internal format of code as produced by the lexer.
+
+define method file-code(sys :: <db-source-system>,
+			file :: <string>)
+end;
+
+4. Reading files into database
+------------------------------
+
+define class <section-reader> (<object>)
+  slot reader-stream, required-init-keyword: stream:;
+  slot file-name, required-init-keyword: file-name:;
+  slot section-length, init-value: 0;
+  slot section-start, init-value: 0;
+  slot section-code, init-value: #f;
+end;
+
+define generic read-section(r :: <section-reader>);
+
+Based on the lexer stream's position retrieves the source for the
+section. 
+
+define generic find-next-section(r :: <section-reader>);
+
+Construct a unique section id.
+
+define generic section-id(r ::  <section-reader>);
+
+define method find-next-section(r :: <section-reader>)
+end;
+
+define method get-signature(l :: <object>)
+
+4.1 Reading dylan source
+------------------------
+
+define class <dylan-reader> (<section-reader>)
+  slot module :: <symbol>, required-init-keyword: module:;
+end;
+
+define class <dylan-infix-reader> (<dylan-reader>)
+end;
+
+Read one section of code. Moves the lexer stream forward one
+section. Returns the internal representation of the source. 
+
+define method read-section (r :: <dylan-infix-reader>)
+  let code = read-infix(stream: r.reader-stream);
+  if(code[0] == #"infix-define-macro")
+    access(front-end,process-macro-definition);
+  end;
+  code;
+end;
+
+define method section-id (r :: <dylan-infix-reader>)
+end;
+
+define class <dylan-prefix-reader> (<dylan-reader>)
+end;
+
+define method read-section (r :: <dylan-prefix-reader>)
+  emulator/read(stream: r.reader-stream);
+end;
+
+define method section-id (r :: <dylan-prefix-reader>)
+end;
+
+Create the appropriate file reader for the file. It can be either
+infix dylan, prefix dylan or lisp.
+
+define method create-file-reader(filename :: <string>)
+end;
+
+Process a file: read the file's sections until eof. Each section at
+this stage is a list containing the id, offset, length, internal code
+and text.
+
+define method read-file-sections( filename :: <string>, #key keep-code = #t )
+end;
+
+5. Dumping source db - doss policy
+----------------------------------
+define class <source-db-doss-policy> (<doss-policy>)
+end class;
+
+// Don't dump the source
+//
+define method doss-slot-value(getter == section-text, object, dd :: <doss-dumper>)
+  false-slot-value(getter, object);
+end;
+
+// Reverse to #f
+define method doss-slot-value(getter == in-core, object, dd :: <doss-dumper>)
+  false-slot-value(getter, object);
+end;
+
+define constant $included-section-getters = vector(id, section-text, section-start,
+						   section-length, referencors, predecessor,
+						   successors);
+
+define method doss-dumpable-slots(class :: subclass(<section>), 
+				  policy :: <source-db-doss-policy>)
+  include-slot-descriptors(class, $included-section-getters);
+end;
+
+6. Errors
+---------
+
+define class <source-db-error> (<simple-error>) end;
+
+
+define class <no-file-in-branch> (<source-db-error>) end;
+
+
+define class <no-file-in-system> (<source-db-error>) end;
+
+
+

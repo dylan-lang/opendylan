@@ -1,0 +1,16 @@
+
+# test script for Unix
+# $Header: /scm/cvs/fundev/tools/gema/test/test,v 1.1 2004/03/12 00:42:10 cgay Exp $
+
+rm -f /tmp/pattest*.out
+./gema -version -f testpat.dat testin.dat /tmp/pattest.out
+diff testout.dat /tmp/pattest.out
+./gema -f testpat.dat -i -idchars "-_" -out /tmp/pattest2.out test2.dat
+diff test2out.dat /tmp/pattest2.out
+echo '@Cgroups(foo.c,v )' | \
+    ./gema -f testpat.dat -filechars '.,:/\\-_' -out /tmp/pattest3.out -in -
+diff test3out.dat /tmp/pattest3.out
+./gema -t -f testtok.dat testin.dat /tmp/pattest4.out
+diff testout.dat /tmp/pattest4.out
+./gema -t -w -match -f testtw.dat -odir /tmp -otyp .out test5in.dat  
+diff test5out.dat /tmp/test5in.out

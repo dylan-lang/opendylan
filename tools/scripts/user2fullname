@@ -1,0 +1,13 @@
+#!/usr/local/bin/perl
+#
+# Scriptname: user2fullname
+# Arguments:  none
+# Author: Shri Amit(amit)
+# Purpose: Determine a person's full name from username
+# Preconditions: Dependent upon finger info of username
+#######################################################
+
+$username = `whoami`;
+@junk = `finger $username`;
+$junk[0] =~ /In real life: /;
+print "$'";

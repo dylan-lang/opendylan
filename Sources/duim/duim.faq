@@ -1,0 +1,30 @@
+Document:  The DUIM FAQ
+Synopsis:  DUIM frequently asked questions
+Author:    Andy Armstrong
+Copyright: 1995-2000 Functional Objects, Inc.  All rights reserved.
+
+1. Where is the DUIM documentation?
+
+The documentation group is writing both a user's guide and a reference
+manual for DUIM, which are on the verge of being ready/useful.
+
+In the interim, the only solutions are in ~dylan/sources/duim:
+ - the file duim/outline.text which gives a brief overview
+   and then outlines every function and class in DUIM.
+ - the examples in duim/examples and duim/tests.
+ - the sources themselves in duim. :-)
+
+2. Why is there so little in here?
+
+Because Scott and I are too lazy to write anymore...
+
+3. Gadgets
+
+o How do I subclass a gadget?
+
+The problem with subclassing gadgets is that the class you call 'make'
+on is an abstract class, so if you subclass it you won't get any of
+the backend's implementation. So you have a number of alternatives:
+
+ - use 'define pane' to encapsulate the gadget instead of subclassing
+ - add a 'make-foo' method that does the appropriate enhancements

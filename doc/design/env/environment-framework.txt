@@ -1,0 +1,281 @@
+
+			-=-=-=-=-=-=-=-=-=-=-
+			FRAME-REUSE PROTOCOL
+			-=-=-=-=-=-=-=-=-=-=-
+
+8<----------------------------------------------------------------------
+
+<FRAME-REUSE-MIXIN>
+
+Mix this into your frame class when you want to be able to toggle the
+reusability of your frames, instance by instance. See FRAME-REUSABLE?.
+
+8<----------------------------------------------------------------------
+
+FIND-ENVIRONMENT-FRAME
+	(portd :: type-union(<port>, <frame>, <display>),
+	 class :: subclass(<frame>),
+	 #key, #all-keys)
+	=>
+	()
+
+Finds an existing frame that matches the initargs or if that fails
+makes a new frame using the initargs. Default method calls
+REUSE-ENVIRONMENT-FRAME, and FORK-ENVIRONMENT-FRAME. It no longer
+returns the frame it found because it may have been made on another
+thread. If you need to run some code on the found-or-made frame then
+use WITH-ENVIRONMENT-FRAME instead.
+
+8<----------------------------------------------------------------------
+
+REUSE-ENVIRONMENT-FRAME
+	(portd :: type-union(<port>, <frame>, <display>),
+	 class :: subclass(<frame>),
+	 #key, #all-keys)
+	=>
+	(frame :: false-or(<frame>))
+
+Finds and reinitializes an existing frame that matches the initargs.
+Default method calls CHOOSE-ENVIRONMENT-FRAME, REINITIALIZE-FRAME,
+and RAISE-FRAME.
+
+8<----------------------------------------------------------------------
+
+CHOOSE-ENVIRONMENT-FRAME
+	(portd :: type-union(<port>, <frame>, <display>),
+	 class :: subclass(<frame>),
+	 #key, #all-keys)
+	=>
+	(frame :: false-or(<frame>))
+
+Finds an existing environment frame that matches the initargs. The
+default method calls CHOOSE-CURRENT-FRAME, and CHOOSE-MATCHING-FRAME.
+
+8<----------------------------------------------------------------------
+
+CHOOSE-CURRENT-FRAME
+	(portd :: type-union(<port>, <frame>, <display>),
+	 class :: subclass(<frame>),
+	 #key, #all-keys)
+	=>
+	(frame :: false-or(<frame>))
+
+This method short-circuits the usual search in order to check whether
+the 'current' frame is suitable for reuse. The default method calls
+CURRENT-ENVIRONMENT-FRAME, and REUSE-MATCHING-FRAME?.
+
+8<----------------------------------------------------------------------
+
+CURRENT-ENVIRONMENT-FRAME
+	(portd :: type-union(<port>, <frame>, <display>))
+	=> (frame :: false-or(<frame>))
+
+Returns the current frame. The default methods return either PORTD if
+it is a frame or the frame dynamically recorded by
+WITH-CURRENT-ENVIRONMENT-FRAME.
+
+8<----------------------------------------------------------------------
+
+REUSE-MATCHING-FRAME?
+	(portd :: type-union(<port>, <frame>, <display>),
+	 frame :: <frame>,
+	 class :: subclass(<frame>),
+	 #key, #all-keys)
+	=>
+	(reuse? :: <boolean>)
+
+Tests whether the given frame is suitable to be reused. Default method
+calls INSTANCE?(FRAME, CLASS), and FRAME-REUSABLE?.
+
+8<----------------------------------------------------------------------
+
+CHOOSE-MATCHING-FRAME
+	(portd :: type-union(<port>, <frame>, <display>),
+	 class :: subclass(<frame>),
+	 #key, #all-keys)
+	=>
+	(frame :: false-or(<frame>))
+
+Searches existing frames for the best match. The default method calls
+FIND-MATCHING-FRAMES, and CHOOSE-FRAME.
+
+8<----------------------------------------------------------------------
+
+REUSE-FRAMES?
+	(class :: subclass(<frame>))
+	=>
+	(reuse? :: <boolean>)
+
+Tests whether a class of frames is reusable at all.
+
+8<----------------------------------------------------------------------
+
+REUSE-FRAMES?-SETTER
+	(value :: <boolean>,
+	 class :: subclass(<frame>))
+	=>
+	(value :: <boolean>)
+
+Sets whether a class of frames is reusable at all. 
+
+8<----------------------------------------------------------------------
+
+FIND-MATCHING-FRAMES
+	(portd :: type-union(<port>, <frame>, <display>),
+	 class :: subclass(<frame>),
+	 #key, #all-keys)
+	=>
+	(frames :: <sequence>)
+
+Finds sequence of matching candidate frames to reuse. Default method
+calls DO-FRAMES, and FRAME-REUSABLE?.
+
+8<----------------------------------------------------------------------
+
+FRAME-REUSABLE?
+	(frame :: <frame>)
+	=>
+	(reusable? :: <boolean>)
+
+Tests whether this particular frame should be reused.
+
+8<----------------------------------------------------------------------
+
+FRAME-REUSABLE?-SETTER
+	(value :: <boolean>,
+	 frame :: <frame>)
+	=>
+	(value :: <boolean>)
+
+Sets whether this particular frame should be reused.
+
+8<----------------------------------------------------------------------
+
+CHOOSE-FRAME
+	(portd :: type-union(<port>, <frame>, <display>),
+	 class :: subclass(<frame>),
+	 frames :: <sequence>,
+	 #key, #all-keys)
+	=>
+	(frame :: <frame>)
+
+Selects a frame from the candidate set for reuse. Default method
+selects first frame.
+
+8<----------------------------------------------------------------------
+
+REINITIALIZE-FRAME
+	(frame :: <frame>,
+	 #key, #all-keys)
+	=>
+	()
+
+Reinitializes a frame chosen for reuse so that it matches the
+requirements of the reuser. Eg changes the primary object.
+
+8<----------------------------------------------------------------------
+
+
+FORK-ENVIRONMENT-FRAME
+	(portd :: type-union(<port>, <frame>, <display>),
+	 class :: subclass(<frame>),
+	 #key, #all-keys)
+	=>
+	(thread :: <thread>)
+
+Spawns new frame and associated event loop thread. Default method
+calls FORK-ENVIRONMENT-FUNCTION with a method that will call
+MAKE-ENVIRONMENT-FRAME.
+
+8<----------------------------------------------------------------------
+
+FORK-ENVIRONMENT-FUNCTION
+	(portd :: type-union(<port>, <frame>, <display>),
+	 class :: subclass(<frame>),
+	 frame-maker :: <function>)
+	=>	
+
+Spawns a new thread for running the event loop of the given frame.
+Default method calls MAKE-ENVIRONMENT-THREAD, FRAME-THREAD-NAME,
+FRAME-THREAD-FUNCTION, and thread's function calls FRAME-MAKER,
+DO-ENVIRONMENT-FRAME, and START-ENVIRONMENT-FRAME.
+
+8<----------------------------------------------------------------------
+
+MAKE-ENVIRONMENT-FRAME
+	(portd :: type-union(<port>, <frame>, <display>),
+	 class :: subclass(<frame>),
+	 #key, #all-keys)
+	=>
+	(frame :: <frame>)
+
+Makes a new frame. Default method calls MAKE.
+
+8<----------------------------------------------------------------------
+
+START-ENVIRONMENT-FRAME
+	(frame :: <frame>)
+	=>
+	()
+
+Enters event loop for frame. Doesn't return. Default method calls
+START-FRAME or START-DIALOG according to frame class.
+
+8<----------------------------------------------------------------------
+
+FRAME-THREAD-NAME
+	(portd :: type-union(<port>, <frame>, <display>),
+	 class :: subclass(<frame>))
+	=>
+	(name :: <string>)
+
+Generates a name for the event loop thread from the given frame.
+Default method adds a count to the FRAME-TITLE.
+
+8<----------------------------------------------------------------------
+
+FRAME-THREAD-FUNCTION
+	(portd :: type-union(<port>, <frame>, <display>),
+	 class :: subclass(<frame>),
+	 function :: <function>)
+	=> (new-function :: <function>)
+
+Wraps frames ordinary function up with right handlers.
+
+8<----------------------------------------------------------------------
+
+FRAME-CLASS-TITLE
+	(portd :: type-union(<port>, <frame>, <display>),
+	 class :: subclass(<frame>))
+	=> 
+	(title :: <string>)
+
+Returns string label based on the frame class.
+
+8<----------------------------------------------------------------------
+
+WITH-ENVIRONMENT-FRAME
+	(frame = portd :: type-union(<type>, <frame>, <display>),
+	 class :: subclass(<frame>),
+	 #rest initargs,
+	 #key)
+	body
+	END;
+
+[Macro] Finds or makes frame and runs body on frame's thread with
+'frame' bound to the found or made frame.
+
+8<----------------------------------------------------------------------
+
+CALL-IN-ENVIRONMENT-FRAME
+	(function :: <function>,
+	 portd :: type-union(<type>, <frame>, <display>),
+	 class :: subclass(<frame>),
+	 #rest initargs,
+	 #key)
+
+Finds or makes frame and runs function on frame's thread passing the
+frame as the only argument to the function.
+
+8<----------------------------------------------------------------------
+

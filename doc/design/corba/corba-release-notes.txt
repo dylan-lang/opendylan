@@ -1,0 +1,214 @@
+* IDL BINDING
+
+** STRUCT MEMBER OVERLOADING
+
+The mapping from IDL to Dylan for struct members is currently
+clumsy. Multiple structs or exceptions that define the same member
+name lead to multiple generic functions in the Dylan mapping.
+
+* ORB RUNTIME
+
+** PORT ASSIGNMENT LIMITATIONS
+
+There is currently not much support for port assignment. The port
+number for the server must currently be set at the command line via
+-ORBport or via a setter method on the ORB, e.g.
+
+	ORB-SERVICE-PORT(ORB) := 9000;
+
+In particular, there is no support for dynamic port assignment from
+the operating system. Nor is there any special support for creating
+IORs with an activator's port number.
+
+** NOT YET IMPLEMENTED
+
+The following constant, types, and functions are not yet implemented:
+
+	CORBA/$SECURITY
+	CORBA/<FIXED>
+	CORBA/<LONG-DOUBLE>
+	CORBA/<LONG-LONG>
+	CORBA/<SERVICEDETAIL>
+	CORBA/<SERVICEDETAILTYPE>
+	CORBA/<SERVICEINFORMATION>
+	CORBA/<SERVICEOPTION>
+	CORBA/<SERVICETYPE>
+	CORBA/<UNSIGNED-LONG-LONG>
+	CORBA/<WCHAR>
+	CORBA/<WSTRING>
+	CORBA/CONTEXT/DELETE		
+	CORBA/FIXED/DIGITS
+	CORBA/FIXED/SCALE
+	CORBA/NVLIST/ADD-ITEM
+	CORBA/NVLIST/FREE
+	CORBA/NVLIST/FREE-MEMORY
+	CORBA/NVLIST/GET-COUNT
+	CORBA/ORB/CREATE-LIST
+	CORBA/ORB/CREATE-OPERATION-LIST
+	CORBA/ORB/GET-NEXT-RESPONSE
+	CORBA/ORB/GET-SERVICE-INFORMATION
+	CORBA/ORB/POLL-NEXT-RESPONSE
+	CORBA/ORB/SEND-MULTIPLE-REQUESTS
+	PORTABLESERVER/<IDASSIGNMENTPOLICY>
+	PORTABLESERVER/<IDASSIGNMENTPOLICYVALUE>
+	PORTABLESERVER/<IDUNIQUENESSPOLICY>
+	PORTABLESERVER/<IDUNIQUENESSPOLICYVALUE>
+	PORTABLESERVER/<IMPLICITACTIVATIONPOLICY>
+	PORTABLESERVER/<IMPLICITACTIVATIONPOLICYVALUE>
+	PORTABLESERVER/<LIFESPANPOLICY>
+	PORTABLESERVER/<LIFESPANPOLICYVALUE>
+	PORTABLESERVER/<REQUESTPROCESSINGPOLICY>
+	PORTABLESERVER/<REQUESTPROCESSINGPOLICYVALUE>
+	PORTABLESERVER/<SERVANTRETENTIONPOLICY>
+	PORTABLESERVER/<SERVANTRETENTIONPOLICYVALUE>
+	PORTABLESERVER/<THREADPOLICY>
+	PORTABLESERVER/<THREADPOLICYVALUE>
+	PORTABLESERVER/IDASSIGNMENTPOLICY/VALUE
+	PORTABLESERVER/IDUNIQUENESSPOLICY/VALUE
+	PORTABLESERVER/IMPLICITACTIVATIONPOLICY/VALUE
+	PORTABLESERVER/LIFESPANPOLICY/VALUE
+	PORTABLESERVER/POAMANAGER/DEACTIVATE
+	PORTABLESERVER/REQUESTPROCESSINGPOLICY/VALUE
+	PORTABLESERVER/SERVANTRETENTIONPOLICY/VALUE
+	PORTABLESERVER/THREADPOLICY/VALUE
+
+The interface to the Interface Repository is not yet implemented,
+including CORBA/OBJECT/GET-INTERFACE. However, the TypeCode interface
+is implemented.
+
+The Interceptor interface for hooking into request and message
+operations is not yet implemented.
+
+The following GIOP/IIOP message formats are not yet fully implemented:
+
+	CANCELREQUEST
+	LOCATEREQUEST
+	LOCATEREPLY
+	CLOSECONNECTION
+	MESSAGEERROR
+
+The DynAny interface is not yet implemented. This is used for
+traversing data structures embedded inside Anys when not enough type
+information is known to the program to coerce the Anys to more
+specific types.
+
+** NO ERROR CHECKING
+
+The invocation order of DSI operations like
+CORBA/SERVERREQUEST/ARGUMENTS and CORBA/SERVERREQUEST/CTX are
+currently not checked.
+
+There is currently no checking on the length of bounded sequences
+during marshalling.
+
+There is currently no error checking if an inappropriate result is set
+using CORBA/SERVERREQUEST/SET-RESULT in the DSI.
+
+There is currently no consistency checking between the typecode and
+the value when making an Any explicitly using the Dylan function MAKE.
+
+The IDL compiler does not yet check for clashing IDL identifiers and
+Dylan reserved words. Nor does it check for clashing attribute and
+operation names.
+
+** INCORRECT API
+
+The arguments to CORBA/SERVEREQUEST/INVOKE are currently the wrong way
+around.
+
+The function CORBA/ORB/SHUTDOWN currently ignores the value of the
+WAIT-FOR-COMPLETION argument.
+
+The function CORBA/CONTEXT/DELETE-VALUES currently doesn't not deal
+with trailing wildcards or unknown properties.
+
+Currently the signature for PORTABLESERVER/POA/CREATE-POA not as
+implicitly specificied in the IDL to Dylan mapping. Instead it is:
+	
+	PORTABLESERVER/POA/CREATE-POA
+		(POA :: PORTABLESERVER/<POA>,
+		 ADAPTER-NAME :: CORBA/<STRING>,
+		 POA-MANAGER :: FALSE-OR(<POA-MANAGER>),
+		#KEY
+		LIFESPAN-POLICY
+		ID-UNIQUENESS-POLICY
+		ID-ASSIGNMENT-POLICY
+		IMPLICIT-ACTIVATION-POLICY
+		SERVANT-RETENTION-POLICY
+		REQUEST-PROCESSING-POLICY
+	=> (POA :: PORTABLESERVER/<POA>)
+
+Moverover there is no means to affect the threading policy of the ORB
+which defaults to ORB_CTRL_MODEL.
+
+The DII operations for specifying the list of context properties and
+the declared exceptions are not specified in the DII chapter of the
+CORBA 2.2 documentation. Instead ContextList and ExceptionList PIDL is
+defined in the C++ binding. However, currently signatures for
+functions performing these tasks are:
+
+	CORBA/REQUEST/ADD-CONTEXT
+		(REQUEST :: CORBA/<REQUEST>,
+		 PROPERTY :: CORBA/<STRING>)
+		=> ()
+
+	CORBA/REQUEST/ADD-EXCEPTION
+		(REQUEST :: CORBA/<REQUEST>,
+		 EXCEPTION-TYPE :: CORBA/<TYPECODE>)
+		=> ()
+
+Neither the built-in APIs nor those generated from IDL support
+automatic coercion from Dylan values to Anys where the API expects an
+Any. The Any object must be made explicitly using AS or MAKE.
+
+** MISCELLANEOUS
+
+The ORB initialization function CORBA/ORB-INIT should only be called
+during initialization of an application's top-level Dylan library or
+afterwards during application execution. It should not be called
+during the initialization of a non-top-level Dylan library. The reason
+is that non-top-level Dylan library initialization currently occurs
+within the context of Windows DLL initialization which prohibits
+certain operations (e.g. dynamically loading another DLL).
+Unfortunately, the initialization of Winsock2, which occurs during ORB
+initialization, violates the prohibition.
+
+The server will still try to send forwarding-info and exceptions to
+the client even in the "oneway" case.
+
+Undeclare application exceptions will currently be returned to the
+client as CORBA/<BAD-OPERATION>. It is not clear if this is the
+correct exception to return.
+
+Invoking requests on transient objects whose POA has since been
+destroyed and recreated are not presently trapped.
+
+
+* CHANGES SINCE 1.1 BETA
+
+The runtime library (functional-dylan-orb) no-longer exports a lot of
+miscellaneous bindings it uses itself internally (e.g. for format and
+functional-dylan itself). This was unnecessary and may have surprised
+users who define clashing identifiers. It also surprised the Project
+Wizard which created projects that used both dylan-orb and
+functional-dylan.
+
+When forcing an in-process server to use the network and do
+marshalling, there is no longer a race condition during application
+cleanup. There should be no more socket errors in this case.
+
+Context passing via the static invocation interface (stubs and
+skeletons) is now implemented. That is, an extra keyword argument
+is added to the signature as defined in the IDL-Dylan mapping.
+
+The #pragma statements for controlling interface repository id
+generation (id, prefix, and version) are now interpreted by
+the IDL compiler.
+
+The following server-side bindings are now implemented:
+
+  PORTABLESERVER/<DYNAMIC-SERVANT>
+  PORTABLESERVER/SERVANT/PRIMARY-INTERFACE
+
+NIL object references are now implemented.
+

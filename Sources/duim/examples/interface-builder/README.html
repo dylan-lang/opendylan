@@ -1,0 +1,106 @@
+<HTML>
+
+<HEAD>
+	<TITLE>Functional Developer Example: interface-builder</TITLE>
+	<LINK REL="stylesheet" TYPE="text/css" HREF="../../examples.css">
+</HEAD>
+
+<BODY>
+
+<H2>Interface Builder Example Project</H2>
+
+<HR ALIGN="CENTER">
+
+<P>This is a very simple interface builder for DUIM that can be
+used to build up a top-level DUIM window (a frame) and then
+generate code for it which can then be compiled and run, or
+modified by hand.</P>
+
+<P>This is not intended to be a real GUI builder by any stretch
+of the imagination, but it will hopefully be useful as a learning
+tool. It is a work in progress.</P>
+
+<H2>Tutorial</H2>
+
+<P>To build an interface, use the menu item <B>File &gt; New</B> to
+create a new interface and then use the <B>Edit &gt; Add...</B>  and
+<B>Edit &gt; Remove...</B> menu items to add and remove items from the
+interface. As you build your interface you will see the hierarchy
+of UI elements displayed in the main window and the interface
+itself will be displayed in its own window so you can see what
+you've built so far.</P>
+
+<P>Note that the Add/Remove commands always operate on the
+selected item in the hierarchy window. Be sure to select the
+correct item before using one of the commands. Note that the Add
+command only makes sense for UI elements that can have children,
+such as layouts or frames, so if you select (for example) a push
+button, the Add command will be disabled.</P>
+
+<P>As a first attempt, try the following sequence:</P>
+
+<OL>
+	<LI>Select <B>File &gt; New</B>
+	<LI>Select <B>Edit &gt; Add...</B> and choose <B>Column Layout</B>
+	<LI>Select <B>column-layout</B> in the hierarchy window and add a <B>Text Field</B>.
+	<LI>Select <B>column-layout</B> again and add another <B>Text Field</B>.
+	<LI>Select <B>column-layout</B> and add a <B>Row Layout</B>.
+	<LI>Select <B>row-layout</B> and add a <B>Push Button</B>.
+	<LI>Select <B>row-layout</B> and add a <B>Push Button</B>.
+	<LI>You should now have a frame that looks like this:
+	<P ALIGN="CENTER"><IMG SRC="my-frame.gif" WIDTH="209" HEIGHT="107" ALIGN="BOTTOM" BORDER="0"></P>
+	<P></P>
+	<LI>Select <B>File > Save</B> to generate Dylan code for this interface.
+
+</OL>
+
+<P>The resulting code looks like this:</P>
+
+<BLOCKQUOTE>
+<PRE>
+Module: my-module
+
+define frame &lt;my-frame&gt; (&lt;simple-frame&gt;)
+  pane text-field-1 (frame)
+    make(&lt;text-field&gt;);
+  pane text-field-2 (frame)
+    make(&lt;text-field&gt;);
+  pane push-button-1 (frame)
+    make(&lt;push-button&gt;);
+  pane push-button-2 (frame)
+    make(&lt;push-button&gt;);
+  layout (frame)
+    vertically ()
+      frame.text-field-1;
+      frame.text-field-2;
+      horizontally ()
+        frame.push-button-1;
+        frame.push-button-2;
+      end;
+    end;
+  keyword title: = "My Frame";
+end frame &lt;my-frame&gt;;
+</PRE>
+</BLOCKQUOTE>
+
+<P>Notice that each visible UI element corresponds to a
+<code>pane</code> clause in the <code>define frame</code> form.
+There is one <code>layout</code> clause which defines how the
+panes are arranged on screen.  The <code>column-layout</code> and
+<code>row-layout</code> were converted into calls to the
+<code>vertically</code> and <code>horizontally</code> macros,
+respectively.</P>
+
+<P>To see how the code looks when run, you can cut-and-paste it
+into the Dylan Playground and then use the following expression
+to start it:</P>
+
+<BLOCKQUOTE>
+<PRE>
+start-frame(make(&lt;my-frame&gt;));
+</PRE>
+</BLOCKQUOTE>
+
+</BODY>
+
+</HTML>

@@ -1,0 +1,60 @@
+Module:    dylan-user	%comment -*- Mode: Dylan -*-
+Synopsis:  Win32 API for Windows Common Controls corresponding to
+	   "COMMCTRL.H" and "PRSHT.H"
+Copyright: Copyright (c) 1996-2000 Functional Objects, Inc. All rights reserved.
+
+%comment $HopeName: D-lib-win32-controls!library.src(trunk.5) $
+
+define library Win32-controls
+  use Dylan;
+  use C-FFI;
+  use Win32-common;
+  use Win32-user;
+  export Win32-controls;
+end;
+
+define module Win32-controls
+  use Dylan;
+  use C-FFI;
+  use Win32-common,
+    // export here structure accessors in both modules.
+    export: {cx-value, cx-value-setter, cy-value, cy-value-setter,
+	     x-value, x-value-setter, y-value, y-value-setter,
+	     flags-value, flags-value-setter,
+	     dwFlags-value, dwFlags-value-setter,
+	     dwSize-value, dwSize-value-setter, u-value, u-value-setter};
+  use Win32-user,
+    export: {// shared accessors:
+	     cbSize-value, cbSize-value-setter,
+	     hIcon-value, hIcon-value-setter, hInstance-value,
+	     hInstance-value-setter, hwnd-value, hwnd-value-setter,
+	     hwndParent-value, hwndParent-value-setter, lParam-value,
+	     lParam-value-setter, pt-value, pt-value-setter,
+	     hdr-value, hdr-value-setter,
+	     <NMHDR>, <LPNMHDR>, hwndFrom-value, idFrom-value, code-value,
+	     hwndFrom-value-setter, idFrom-value-setter, code-value-setter,
+	     hbmMask-value, hbmMask-value-setter,
+	     pszTitle-value, pszTitle-value-setter,
+	     lpszText-value, lpszText-value-setter,
+	     dwData-value, dwData-value-setter,
+	     // types used in functions here:
+	     <WINDOWPOS>, <LPWINDOWPOS>, <PWINDOWPOS>, 
+	     hwndInsertAfter-value, hwndInsertAfter-value-setter,
+	     <DLGPROC>, <LPCDLGTEMPLATE>, style-value, style-value-setter,
+	     dwExtendedStyle-value, dwExtendedStyle-value-setter,
+	     cdit-value, cdit-value-setter, SendMessage };
+ 
+%include commctrl.exp
+
+%include prsht.exp
+
+  // from "special.dylan":
+  export FORWARD-WM-NOTIFY;
+  export ListView-GetItemRect, ListView-SetItemPosition32,
+	 TreeView-GetItemRect, PropSheet-SetTitle;
+  export <LPHPROPSHEETPAGE>;
+  export <TBNOTIFYA>, <LPTBNOTIFYA>, cchText-value, cchText-value-setter,
+    tbButton-value, tbButton-value-setter;
+  export <LPHD-ITEM>, <LPLV-COLUMN>, <LPLV-FINDINFO>, <LPLV-ITEM>, <LPTC-ITEM>;
+
+ end module Win32-controls;

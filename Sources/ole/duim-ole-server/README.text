@@ -1,0 +1,86 @@
+Title:     `DUIM-OLE-Server' library description
+Author:    David N. Gray
+Date:	   September 19, 1996 - Original version.
+	   March 31, 1997 - Updated for new compiler.
+Status:    Preliminary version, specifications subject to change.
+Copyright: 1996, 1997 Functional Objects, Inc.  All rights reserved.
+Hope info: $Header: /scm/cvs/fundev/Sources/ole/duim-ole-server/README.text,v 1.1 2004/03/12 00:09:33 cgay Exp $
+
+This library can be used together with `DUIM' to easily create an
+application program that can be used as an OLE server.  In other words, the
+program can either be run by itself, or it can be embedded within an OLE
+container application.
+
+For a specification of this library from the user's viewpoint, see the file
+"~dylan/doc/lib/ole-duim.text".  
+
+The rest of this file discusses the internal implementation.  Note that
+this library is built on top of the `OLE-Server' library, which
+is documented in "~dylan/doc/lib/ole-utilities.text".
+
+The current version is for the "Kan" compiler.
+
+
+The source files are:
+
+ library.dylan	Library and module definition.
+ classes.dylan	Class definitions and slot accessors.
+ storage.dylan	Loading and saving Persistent data.
+ app.dylan	Methods on the "application" object.
+ actions.dylan	Misc. methods called by the `OLE-Server' library.
+ frame.dylan	Frame class and methods.
+ start.dylan	Program start and end.
+
+
+The implementation uses the following classes:
+
+  <DUIM-server-app>	subclass of <object>
+
+	Represents the application program.
+
+  <DUIM-server-doc>	subclass of <object>
+
+	Represents the document.
+
+  <embeddable-frame>    subclass of <frame> from `duim' module
+
+	User-provided object specifying the DUIM application.
+
+  <DUIM-OLE-server>	subclass of <ole-server-framework>
+
+	The OLE interface object; this is an indirect subclass of
+	`<IUnknown>', and is the "controlloing unknown" for all of the
+	interfaces that comprise the OLE server protocol.  Thus, this is
+	the object that the container uses to obtain the other interface
+	objects. 
+
+This division of "application", "document", and "object", is a remnant of
+the original SDK example program which was the starting point for this
+code.  There doesn't appear to be any reason why four classes are needed;
+probably the "app" and "doc" objects (which are only used internally) could
+be merged into the other two (which are needed as external interfaces to
+the layers above and below), but it isn't clear what the proper model is.
+The question is whether this should be extended to support multiple
+connections and/or multiple document windows, and if so, how that should
+work.  Since I don't know the answer to that, I'm holding off on doing any
+drastic re-arrangement of the classes.
+
+Following are some features that are not yet implemented here:
+
+  * `SetStatusText' should be called in response to `$WM-MENUSELECT' message
+    and to implement DUIM status bar.
+  * Options for command names for Self-registration ("Play" or "Open").
+  * Support linking as well as embedding.
+  * Option for in-process server as well as local server process.
+  * Tool bar support.
+  * Clipboard.
+  * Drag and drop.
+  * Context-sensitive help.
+  * Accelerator keys.
+  * Dialog box control.
+  * Undo.
+  * Presentation as icon or thumbnail.
+  * Additional considerations for MDI context.
+
+Also, this will need to be extended to support OLE Controls (OCX) by an
+additional library on top of this one.

@@ -1,0 +1,213 @@
+DOCUMENT: The Emulator Incompatibilities List
+
+REVISION HISTORY: Version 1, 17th July 1996, Keith
+		  Version 2, 18th July 1996, Keith
+		    Added missing items suggested by Bill.
+		  Version 3, 27th August 1996, Keith
+		    A little more on arrays.
+		  Version 4, 23rd January 1997, Keith
+		    Dynamic extent rest cases and #all-keys.
+
+SYNOPSIS:
+
+This document aims to give a brief description of the known
+incompatibilities between the emulator and a full implementation of
+Dylan, specifically the DylanWorks compiler. Read it for pointers to
+problem areas to beware of when developing code in the emulator for
+later compilation by real Dylan compilers.
+
+INCOMPATIBILITIES:
+
+Terminology
+
+  o The emulator
+
+      The Dylan to Common Lisp translator and environment built on top
+      of LispWorks. 
+
+  o DylanWorks (DW)
+
+      For the purposes of this document, our native implementation of
+      Dylan - compiler, run-time, and libraries. 
+
+  o The DRM
+
+      The Dylan Reference Manual, the specification of the Dylan
+      language. 
+
+  Note that all unqualified statements in the following refer to the
+  emulator alone and indicate an incompatibility with the language
+  specification. For example, "Strings are instances of
+  <simple-object-vector>" means that this is the case in the emulator
+  and that it is an incompatibility.
+
+Basics
+
+  Types
+
+    o With the obvious exception of a method's specializers when
+      called via a generic function, type declarations are not
+      checked. 
+
+    o Only class, singleton, and subclass types work. The emulator's
+      type-union is a stub returning <object>. The emulator's limited
+      is a stub returning just the given base class
+      (i.e. limited(<integer>, min: 0, max: 9) returns just
+      <integer>). 
+
+  Basic Datatypes
+
+    o Keywords and symbols are distinguished in the emulator, an
+      incompatibility with the DRM and DW. Keyword syntax foo: results
+      in a keyword while #"foo" results in a symbol. Only keywords may
+      be passed as selectors to #key functions in the emulator.
+
+    o The empty list, #(), is an instance of <symbol> as well as
+      <empty-list>. 
+
+    o Strings are instances of <simple-object-vector>.
+
+    o There is a single catch-all float class which is bound to all
+      the floating point class names defined in the DRM.
+
+  Function calling
+
+    o #rest sequences are lists in the emulator. This conforms to the
+      DRM, but does not match DW which represents #rest sequences as
+      vectors. 
+
+    o Certain special #rest lists are allocated with dynamic extent in
+      the emulator for performance reasons. In fact, there are just
+      two cases: the #rest lists for make and for initialize. Be
+      careful to make an explicit copy if you with to keep the
+      initargs list after the call to make or initialize has
+      returned. 
+
+    o Unexpected keyword arguments are not checked for in generic
+      function calls. 
+
+    o #all-keys syntax isn't understood properly by the emulator. You
+      can specify #all-keys, but it will have no effect. Because
+      keyword arguments aren't checked in generic function calls in
+      the anyway, this only causes trouble with bare methods
+      (perhaps defined with define function).
+
+  Multiple values
+
+    o Missing multiple values are defaulted to #(), not #f.
+
+    o Multiple value return type declarations in function definitions
+      are ignored. Congruence of such a declaration is not checked, 
+      and the values returned from a function are not padded or
+      trimmed to conform to it.
+
+  Object system
+
+    o By default, bare methods may not be added to generic
+      functions. To specify that a bare method should be a method
+      suitable for use in a call to add-method, declare #next
+      explicitly in its parameter list. Methods defined with "define
+      method" and bare methods declared with an explicit #next can
+      only be called via a generic function, not directly.
+
+    o The each-subclass slot allocation type is not supported.
+
+    o Unexpected initargs are not checked for in make.
+
+    o Accessor methods do not have the correct Dylan signature. The
+      return value of getters and new value and return value of
+      setters are untyped.
+
+    o The CLOS method dispatch rules are used, and ambiguities between
+      applicable methods are not detected.
+
+    o The CLOS class-precedence algorithm is used.
+
+    o Generic function argument and result type declarations are
+      ignored, and congruence with methods, apart from argument
+      pattern congruence, is not checked. Generic function mandatory
+      keywords are ignored and their congruence with methods is not
+      checked. 
+
+  Condition system
+
+    o The condition system is not fully supported. Only simple uses
+      of block/exception for catching errors work reliably.
+
+  Sealing
+
+    o Sealing violations are not checked. Declarations of sealed/open,
+      including sealed domain declarations, are accepted but ignored.
+
+    o Neither primary/free nor abstract/concrete inheritance
+      violations are checked. Declarations of these properties are
+      accepted but ignored.
+
+  Macros
+
+    o Macros do not respect module boundaries and are globally
+      visible. Be careful to remember to export macros that are used
+      outside their module of definition, otherwise they will not be
+      visible to using code in DW.
+
+    o Function macros do not allow an arbitrary fragment as their
+      argument form. Only a comma-separated sequence of expressions
+      (i.e. standard function call syntax) is allowed between the
+      braces. Each expression is delivered to the macro's expander
+      pre-parsed, and may not be further destructured. 
+
+    o Most core infix macros in the emulator are implemented using a
+      legacy macro system which reserves intermediate words where the
+      current system would not. As a result, words like "else",
+      "exception", and "finally" are reserved, both against use as 
+      variable names, and as intermediate words in the DRM macro
+      system. 
+
+  Namespaces
+
+    o Library definitions ("define library" forms) are used only for
+      their use declarations, from which the set of libraries that
+      must be demand loaded is determined. Emulator libraries do not
+      each define a local module namespace. Instead, there is a
+      single, global module space. Be careful to remember to export
+      modules that are used outside their library of definition,
+      otherwise they will not be visible to using code in DW.
+
+    o Names that are exported but not defined are not detected and
+      reported. 
+
+  Backward compatibility
+
+    o The emulator still supports old-style prefix Dylan syntax and
+      some functions and macros found in the original Dylan book that
+      no longer exist in DRM Dylan. Some variable names to avoid:
+
+        set!, setter, bind, bind-methods, bind-exit, unwind-protect,
+	quote, dotimes, handler-bind, not, id?, /=, expt, =hash,
+	subclass?, initial-state, next-state, current-element,
+	current-element-setter, copy-state, final-state,
+	previous-state, class-for-copy 
+
+Library
+
+  o The basic arithmetic operations (+, -, etc.) are not generic for
+    speed. Instead, the names are bound directly to the corresponding
+    (often n-ary) Lisp functions.
+
+  o Arrays are not up to date with the DRM, and still follow the
+    original Dylan book specification. The implications of this
+    are that <array> (and so its common subclasses <vector> and 
+    <string>) are subclasses of <explicit-key-collection> in the
+    emulator. Iteration order over arrays may not be as expected,
+    and array keys are tuples rather than row-major indices (this 
+    overridden in <vector> and its subclasses to allow plain 
+    integer indices again). The protocols related to row-major 
+    access are not implemented.
+
+  o There are a number of know bugs and incompatibilities in the
+    collection implementation, which was based on the definition in
+    the original Dylan book and never fully updated. See the bug
+    database for details. Many of these are to do with key alignment
+    and comparison - most common uses of the collection operations
+    seem to work adequately.
+

@@ -1,0 +1,178 @@
+#!/usr/local/bin/perl
+#      Script: atomic
+#      Author: Shri Amit(amit)
+$usage="Usage: $0 <command> [<object>] [<options>]";
+#
+# Opts & Args: <command>: Should be one of:
+#                          . checkout | co
+#                          . lock
+#                          . unlock
+#              <object>:  See HOPE manpage for checkout
+#              <options>: See HOPE manpage for checkout
+#              Note that both lock and unlock don't support <object> and <options>
+#
+#    Synopsis: . Checks status of the lock unit
+#              . Checkouts:
+#                . If lock is not claimed it executes the checkout.
+#                . If claimed, the date of the lock claim is determined
+#                  and the checkout is performed with that date.
+#              . Locks:
+#                . If lock is not claimed, it claims it.
+#                . If claimed, denies lock. 
+#              . Unlocks:
+#                . If lock is not claimed, it signals an error.
+#                . If lock is claimed, it abandons it.
+######################################################################
+## Application exit status legend ##
+##  0: HOPE command completed
+##  1: Unsupported command
+##  2: Lock unit claimed
+##  3: Unlock requested on free lock
+##  4: Unlock requested on another user's lock
+
+## To see tons of debug output, set this to "enabled" ##
+## 
+$DEBUG_OUTPUT = "disabled";
+
+## Ensure the command line ##
+##
+if ($ARGV[0] eq "lock") {
+    $cmd_type = "l";
+} elsif ($ARGV[0] eq "unlock") {
+    $cmd_type = "u";
+} elsif (($ARGV[0] eq "checkout") || 
+	 ($ARGV[0] eq "co")) {
+    $cmd_type = "co";
+} else {
+    print "\nError, $0: Unsupported command.";
+    print "\n           Only 'lock' 'unlock' and 'checkout' are supported.";
+    print "\n$usage\n\n";
+    &cleanup("1");
+}
+
+## Set up required variables ##
+##
+$user       = `whoami`; chop($user);
+$logfile    = "/u/dylan/tools/admin/logs/atomic.log";
+$hope       = "/usr/local/bin/hope";
+$cmd        = "$hope @ARGV";
+open(LOGFILE, ">$logfile");
+
+## Note that since this mechanism is currently only   ##
+## being implemented for the compiler group, setting  ##
+## the lock unit and lock file to lock.compiler will  ##
+## work. However, if this is extended to be used by   ##
+## other groups at some point, this script will also  ##
+## need to have knowledge of the compounds included   ##
+## in each sub-groups atomic protocol and then decide ##
+## which lock unit to use.                            ##
+##
+$lock_unit  = "-u lock.compiler -c D -br trunk";
+$lock_file  = "-fn /tmp/lock.compiler";
+
+## Check status of the lock unit ##
+##
+&debug_message("The hope cmd is: --@ARGV--");
+print "\nChecking status of lock unit ... please standby";
+@junk = `/usr/local/bin/hope st -fo pr -sh cl $lock_unit`;
+
+&debug_message("The status of the lock unit is: \n--@junk--");
+
+@more_junk = ();
+foreach $i (@junk) {
+    if ($i =~ /claim/) {
+	@more_junk = split(' ', $');
+    }
+}
+
+## Executing appropriate command depending upon lock status ##
+##
+&debug_message("The claim line is: \n--@more_junk--");
+if ($more_junk[0] eq "") {
+
+    # The lock is free:
+    #    co     - execute
+    #    lock   - claim it
+    #    unlock - signal error
+
+    print "\nThe lock is currently free";
+    if ($cmd_type eq "l") {
+	$reason = "\"Checkin in progress\"";
+	print "\nClaiming the lock unit ... please standby\n";
+	&debug_message("$hope cla $lock_unit -rea $reason $lock_file");
+	`$hope co -hard $lock_unit -rea $reason $lock_file -writ over -miss cr -extra del`;
+	print "\nThe lock unit has been claimed.";
+	&cleanup("0");
+    } elsif ($cmd_type eq "co") {
+	print "\nExecuting checkout...\n";
+	&debug_message("$cmd -date \"now\"");
+	system("$cmd -date \"now\"");
+	&cleanup("0");
+    } else {
+	print "\nError, $0: Cannot unlock a free lock!";
+	print "\n$usage\n\n";
+	&cleanup("3");
+    }
+} else {
+    
+    # The lock is claimed:
+    #    co     - figure out the date and then execute
+    #    lock   - deny    
+    #    unlock - check for correct user and then abandon lock unit
+
+    print "\nThe lock is currently claimed by $more_junk[0].";
+    if ($cmd_type eq "l") {
+	print "\nLocks cannot be claimed unless free.";
+	print "\nQuitting...\n\n";
+	&cleanup("2");
+    } elsif ($cmd_type eq "co") {
+	&debug_message("\nThe date is: --$more_junk[5]--");
+	print "\nExecuting checkout for most recent consistant sources...\n";
+	&debug_message("\n$cmd -date \"$more_junk[5]\"");
+	system("$cmd -date \"$more_junk[5]\"");
+	&cleanup("0");
+    } else {
+	&debug_message("   The lock user is: --$more_junk[0]--");
+	&debug_message("The current user is: --$user--");
+	if ($user eq "$more_junk[0]") {
+	    print "\nAbandoning the lock ... please standby\n";
+	    &debug_message("$hope ab $lock_unit $lock_file");
+	    `$hope ab $lock_unit $lock_file`;
+	    &cleanup("0");
+	} else {
+	    print "\nError, $0: You don't have permission to free $more_junk[0]'s lock!";
+	    print "\n$usage\n\n";
+	    &cleanup("4");
+	}
+    }
+}
+
+## Function: cleanup                           ##
+##    Usage: &cleanup(<Exit Code>);            ##
+## Synopsis: Performs all the commands that    ##
+##           need to be performed before the   ##
+##           script is exited with <Exit Code> ##
+##
+sub cleanup {
+    local($code) = $_[0];
+    close(LOGFILE);
+    print "\n";
+    exit($code);
+}
+
+## Function: debug_message                  ##
+##    Usage: &debug_message(<Message>);     ##
+## Synopsis: If the variables $DEBUG_OUTPUT ##
+##           is set to "enabled", then the  ##
+##           <Message> is printed with one  ##
+##           preceeding newline
+##
+sub debug_message {
+    local($message) = $_[0];
+    if ($DEBUG_OUTPUT eq "enabled") {
+	print "\n$message";
+    }
+    print LOGFILE "\n$message";
+}
+
+# eof

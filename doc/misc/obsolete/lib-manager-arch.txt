@@ -1,0 +1,744 @@
+
+		Implementation architecture of the lib-manager
+
+			Roman Budzianowski 6/13/95
+
+0.0 General description of the implemented functionality
+-------------------------------------------------------
+
+The lib-manager library located in dylan/env/lib-manager has several
+functional areas: the library manager, a graph builder, a derived
+database doss dumping policy and loading initialization sequence, an
+interface to the compile time mop plus a discardable user interface
+for the LW/toolkit platform. The lib-manager library uses the
+source-db library and parts of the compiler.
+
+It was an attempt to build a mini environment - you can see it by
+running ~dylan/lib-browser at 1cc on a sparc.
+
+Parts of the library belong to the compiler, parts to the derived db
+library. 
+
+0.1 The lib-manager
+-------------------
+-------------------
+
+The role of the library manager is to manage a registry of libraries,
+i.e. keep track of the available libraries, compile them if necessary,
+dump the mop info if necessary, load the mop info into the
+environment, create an evaluation environment etc.
+
+Concepts:
+---------
+
+World - all libraries available at this site, one and only instance;
+
+Application - A set of libraries;
+
+Project - Application plus additional info like source db, derived db;
+
+Evaluation environment - Closure of all libraries used by a library,
+	an application with hooks to evaluate expressions dynamically;
+
+Evaluation context - Library:Module tuple;
+
+Create evaluation environment - link an executable containing the
+	evaluation context;
+
+Compiler World - all libraries the compiler knows about, there may be
+	multiple compiler worlds;
+
+
+Implementation architecture:
+---------------------------
+
+define variable *dylan-world* = #f;
+
+This is one and only instance of dylan world. A call to
+init-dylan-world creates the world, opens and parses the registry. The
+registry format is a list of lid files paths, one in a line. The name
+of the library is derived initially from the lid file name and then
+checked with the define library clause and updated.
+
+define variable *registry-path* = "abstract://dylan/registry.lib;*";
+define variable *namespace-path* = "abstract://dylan/namespace.mop;*";
+define variable *export-directory* = "abstract://dylan/mop/";
+define variable *mop-directory* = "abstract://dylan/mop/";
+define variable *src-directory* = "abstract://dylan/src/";
+
+The *src-directory* is where the source db for libraries can be
+found. The namespace.mop contains the namespace info for the
+*dylan-world* produced by the compiler. It doesn't contain meta
+information. It can be loaded upon startup. The mop info for a
+libbrary can be loaded on top of the namespace info.
+
+define constant $export-extension = "ei";
+define constant $mop-extension = "ei";
+define constant $src-extension = "src";
+
+The basic concepts are: <dylan-world>, <dylan-registry>, <dylan-library>
+
+define class <dylan-world> (<object>)
+// library objects accessible at this site
+  slot libraries, init-function: curry(make, <table>); 
+  slot sorted-libraries, init-value: #f;
+  slot dylan-registry :: <dylan-registry>, required-init-keyword: registry:;
+  slot dylan-application :: <dylan-application>;
+  slot compiler-world, init-value: #f;
+end;
+
+define class <dylan-registry> (<object>)
+// base system directory must have registry.lib file
+  slot base-path, required-init-keyword: base-path:;
+// list of pathnames found in the registry file
+  slot lid-files, required-init-keyword: lid-files:;
+  slot use-registry, init-keyword: use-registry:;	// delegation registry
+end class;
+
+// library is a unit of compilation
+// book keeping information about a library
+define class <dylan-library> (<object>)
+  slot library-name, required-init-keyword: name:;
+  slot lid-path, required-init-keyword: lid:;		// path to the lid file
+  slot library-filenames, init-keyword: files:;
+  slot library-source :: <db-source-system>;
+  slot mop-stream;		// stream to the mop info file
+  slot mop-object, init-value: #f;// top level mop object gotten from
+				  // the mop file or the compiler
+  slot compiledp;		// if compiled
+  slot lib-path;		// library object file (.a file)
+  slot use-libraries;		// library objects used by this library
+  // an evaluation env ,if any, this library is part of
+  slot evaluation-environment, init-value: #f;	
+end;
+
+define class <undefined-library> (<dylan-library>)
+end;
+
+define method init-dylan-world() end;
+define method start-dylan-world() end;
+define method display-dylan-world(#key world = *dylan-world*) end;
+
+// registry.lib is a list of (possibly abstract) pathnames pointing to lid files
+// may include a pathname to another registry file (with a suffix .lib) end;
+
+define method open-registry(#key registry-file = "abstract://dylan/registry.lib;*") end;
+define method parse-registry (world :: <dylan-world>) end;
+define method create-library-object (world :: <dylan-world>, 
+				     lib :: <library-info>) end;
+
+The term parsing registry means here finding the lid files, creating
+the library objects based on preparsing the first file in each
+lid. The assumption here is that the library has to be defined in this
+file and that one lid file points to one library. The parsing is done
+manually using the compiler's lexer (actually the source-db's
+<file-reader> interface which uses the lexer).
+
+It is supported by the methods:
+
+define method preload-library-info (l :: <locator>, #key #all-keys) end;
+define method read-library-spec (file :: <string>) end;
+define method find-use-clause( lib-code :: <list>) end;
+define method topological-sort(partial-order :: <list>, #key descending = #t) end;
+
+The topological-sort methods returns the sorted library spec list. The
+spec is a list containing the library name and some clauses. This the
+compiler's format. 
+
+define method find-dylan-library(name :: <symbol>, #key world = *dylan-world*) end;
+
+After the call to init-dylan-world() the world is created, the
+registry is opened and parsed and the library objects are created. The
+library objects mainatin the list of dependent libraries.
+
+The concepts defined below (<dylan-application>,
+<evaluation-environment>, <evaluation-context>) are not fully designed
+and implemented.
+
+define class <dylan-application> (<object>)
+  slot name;
+  slot pathname;
+  slot libraries;		// transitive closure of all used libraries
+end;
+
+define class <evaluation-environment> (<dylan-application>)
+end;
+
+define class <evaluation-context> (<object>)
+  slot environment;
+  slot library-focus;
+  slot module-focus;
+end;
+
+0.2 Managing the derived information (mop)
+------------------------------------------
+------------------------------------------
+
+This is part of the lib manager now. Conceptually it is like a
+compiler driver. 
+
+	Library Manager				Compiler
+
+	<dylan-world>	->			<compiler-world>
+	    |						|
+	    v						|
+	<dylan-registry>				|
+	    |						v
+	    v
+	<dylan-library> ->			<compiler-library>
+		|
+		|
+		-> <source-db-system>
+
+
+At this point the library manager maintains all the dependency info to
+prevent the compiler from trying on its own to load dependent
+libraries. From the user point of view we want this control, e.g. to
+avoid operations invoked by mistake. The  compiler might use in the
+future some exceptions to give this control to the driver.
+
+The library manager decides if it needs to invoke the compiler to get
+the mop info or maybe just load it from the derived db. Upon startup
+the namespace info is booted. The namespace info is an incomplete
+<compiler-library>. It contains dependency information about
+libraries, modules and variables. The mop info can be loaded "on top"
+of the namespace info, i.e. we replace the incomplete
+<compiler-library> with the full <compiler-library>. The lib manager
+can also retrieve the <source-db-system> for the library.
+
+Compiling Dylan libraries:
+--------------------------
+
+The dylan library is handled specially. It requires some bootstrapping
+sequence in the compiler. These interfaces check if the mop is
+available and up to date (time dependency not implemented) and either
+load the mop or invoke the compiler and then dump the mop.
+
+define method ensure-dylan-mop-info(lib :: <dylan-library>,
+				    #key 
+				      mop-directory = *mop-directory*,
+				    world = *dylan-world*) end;
+
+define method ensure-mop-info(lib :: <dylan-library>,
+			      #key 
+				mop-directory = *mop-directory*,
+			      world = *dylan-world*) end;
+
+Auxiliary functionality:
+
+define method dump-mop(lib :: <dylan-library>, 
+		       path :: <locator>,
+		       #key policy = <dd-doss-policy>) end;
+
+define method read-mop(lib :: <dylan-library>, 
+		       path :: <locator>) end;
+
+There is some support for two levels of mop info: export info and mop
+info. The idea here was that for the purposes of compiling a library
+we need only export info which is presumably more compact. For the
+development and browsing we need the full mop info.
+
+Included is a patch to the compiler (sorry for the confusion here,
+<dylan-library> is here the same as <compiler-library> above). It is
+invoked by the driver after loading the mop from disk/db:
+
+define method bootstrap-dylan-library (lib :: <dylan-library>) end;
+
+If the library has to be re/compiled we first load the sources. At
+this time the compiler is very much file oriented. The purpose of this
+interface is to break this connection.
+
+
+define method load-library-sources(lib :: <dylan-library>, 
+				   #key 
+				   world = *dylan-world*)
+
+define method ensure-library-source(library-name :: <symbol>) end;
+define method ensure-library-source(lib :: <dylan-library>) end;
+
+The above interfaces use the source db (and the lexer) to build the
+source db for the library.
+
+Auxiliary functionality:
+
+define method update-library-sources(lib :: <dylan-library>, // from disk
+				     #key 
+				       world = *dylan-world*) end;
+
+define method save-library-sources(lib :: <dylan-library>, 
+				   #key 
+				     src-directory = *src-directory*) end;
+
+The first stage fo the compiler is invoked by the following
+interfaces (the first for dylan library):
+
+define method boot-dylan-mop-info(lib :: <dylan-library>, 
+				  #key 
+				    mop-directory = *mop-directory*,
+				  world = *dylan-world*) end;
+
+define method boot-mop-info(lib :: <dylan-library>, 
+			    #key 
+			    mop-directory = *mop-directory*,
+			    world = *dylan-world*) end;
+
+To run the compiler off the source db, instead of directly off a file,
+the front-end library is patched to include the <db-compilation-unit>:
+
+define class <db-compilation-unit> (<file-compilation-unit>)
+end;
+
+define method process-meta-objects(function :: <function>, 
+				   unit :: <db-compilation-unit>) end;
+
+The following method is replaced in the front-end to manage  the
+source code differently:
+
+define method boot-export-information(library :: <library>, 
+				      #key 
+					library-unit = make(<library-compilation-unit>,
+							    library: library,
+							    back-end: *back-end*))
+
+It probably shouldn't be a subclass of <file-compilation-unit> but at
+this time the compiler deals well only with files (see my tiny
+proposal to modify the compiler interface).
+
+The following two methods prepare the source for compilation:
+
+define method setup-source-for-compilation(lib :: <dylan-library>, 
+					   #key 
+					     world = *dylan-world*) end;
+
+define method build-db-compilation-units(unit :: <library-compilation-unit>,
+					 lib :: <dylan-library>) end;
+
+Since the code in the source db is already processed by the lexer and
+divided into sections the compiler doesn't have to do that. There is
+no source code recording however at this time. It would require some
+changes to the compiler structures. This is an issue of the interface
+between the compiler and the source db. A document on the source db
+has been published - it requires more work. The goal is for the
+compiler not to be aware if the source is coming from a file or OO db.
+
+Basically the compiler now accepts the output of the lexer and the
+above interfaces set it up for the compiler. The compier might accept
+an abstract 'section' which would embody both the source and the
+internal representation (a separate discussion of the source db issues
+suppporting this approach will be published).
+
+The interfaces below support the namespace concept as described
+above. The compiler is patched to support it:
+
+define method boot-namespace(lib :: <library>, 
+			     #key 
+			       library-unit = make(<library-compilation-unit>,
+						   library: library,
+						   back-end: *back-end*)) end;
+
+define method boot-library-namespace(lib :: <dylan-library>, 
+				     #key 
+				       mop-directory = *mop-directory*,
+				     world = *dylan-world*) end;
+
+define method boot-dylan-namespace(lib :: <dylan-library>, 
+				   #key 
+				     mop-directory = *mop-directory*,
+				   world = *dylan-world*) end;
+
+define method load-dylan-world-namespace(#key 
+					   world = *dylan-world*,
+					 dump? = #t,
+					 redo? = #f) end;
+
+define method boot-dylan-world-namespace(#key 
+					   namespace-file = *namespace-path*,
+					   world = *dylan-world*,
+					 dump? = #t) end;
+
+Auxiliary:
+
+define method read-dylan-namespace(#key namespace-file = *namespace-path*, 
+				   world = *dylan-world*) end;
+define method dump-dylan-namespace(file-name :: <string>, 
+				   #key world = *dylan-world*) end;
+
+To improve control over the compiler the following interfaces are
+added:
+
+define method reset-compiler-world() end;
+
+define method install-compiler-library(lib :: <library>, #key overwrite = #f) end;
+
+The following utilities manage the location of information:
+
+define method src-db-path(lib :: <dylan-library>, 
+			  #key src-directory = *src-directory*) end;
+
+define method export-info-path(name :: <symbol>, 
+			       #key ei-directory = *export-directory*) end;
+
+define method export-info-path(lib :: <dylan-library>, 
+			       #key ei-directory = *export-directory*) end;
+
+define method mop-info-path(lib :: <dylan-library>, 
+			    #key mop-directory = *mop-directory*) end;
+
+define method lid-file-path(name :: <symbol>) end;
+
+define method lid-file-path(lib :: <dylan-library>) end;
+
+
+0.3 Dumping and loading derived info
+------------------------------------
+------------------------------------
+
+The doss policies for  dumping mop are derived from the current
+compiler policies for dumping export info. However, the problems are
+much bigger. Remember that we are dumping meta information. When I
+talk about library dependencies I mean a dependency between one
+<compiler-library> and another <compiler-library>. Whe I say variable
+I mean <variable> here, i.e. a meta description. Doss handles the
+language level issues, including variable lookup etc.
+
+The policies determine what slots are dumpt (or what don't). Some
+slots are dumped in special ways.
+
+// doss policy for derived db
+
+define class <dd-mop-doss-policy> (<mop-doss-policy>)
+end class;
+
+define class <dd-export-info-doss-policy> (<export-information-doss-policy>)
+end class;
+
+define class <dd-doss-policy> (<dd-export-info-doss-policy>, <dd-mop-doss-policy>)
+end class;
+
+define constant <emulator-doss-dumper> = access(emulator-doss,<emulator-doss-dumper>);
+
+define class <dd-doss-dumper> (<emulator-doss-dumper>)
+  slot library-context :: <library>;
+  slot module-context :: <module>;
+end;
+
+The class <dd-doss-dumper> keeps truck of the dumping context, which
+helps in breaking the library cross-references (below).
+
+
+0.3.1. Breaking references. 
+-----------------------
+
+The assumption is that only metaobjects can
+refer to metaobjects from other libraries (that's the current design
+of the compiler). Each metaobject is in turn represented by a variable
+in its library/module. When dumping we detect if the object refers to
+another library and dump a symbolic reference. This reference is
+resolved during loading.
+
+used library		the library		library which uses the library
+------------		-----------------       ------------------------------
+
+&class objects:
+
+a super class obj	a super class obj
+
+
+			&class object
+
+			a subclass obj		a subclass obj
+
+A &class object may refer to a superclass and a subclass. The
+superclass reference in a used library has to be dumped
+symbolically. The subclass reference to a library which uses the
+library in question has to be removed alltogether.
+
+&generic-function objects:
+
+			&generic-function
+
+&class			&method			&method
+
+The references to &method objects on the right have to be removed
+altogether. The &class is dumped by reference.
+
+			&class
+&generic-function
+						&generic-function
+The &generic-function on the left is dumped by reference. The one on
+the right is removed.
+
+&method objects:
+
+&generic-function
+			&method
+
+The &method object never have to be dumped by reference. Local (in the
+library) &methods are dumped as is. The &generic-function is dumped by
+reference. 
+
+Of course the above scheme depends on the compiler's data structures.
+There is an assumption that variables are always "local" to the
+library.
+
+There is always a danger of leaks. That is only the meta objects are
+filtered (&class, &generic-function, &method). If some other object in
+the meta compiler structure (the <compiler-library>) refers to another
+library we end up with a "leak" (i.e. dumping other libraries).
+
+define method internal-object?(object :: <&meta-object>, dd :: <dd-doss-dumper>)
+
+Determine if the object belongs to the current library based on the
+dumping context.
+
+define method dump-object-reference(object :: <&meta-object>, loader :: <function>, 
+				    dd :: <dd-doss-dumper>)
+
+Dump the meta object symbolically.
+
+define method doss-slot-value(getter == &generic-function-methods, 
+			      object :: <&generic-function>, dd :: <dd-doss-dumper>)
+
+We remove methods not belonging to the same module (or should it be
+library?) before dumping this slot.
+
+define method doss-slot-value(getter == body, object :: <&method>, dd :: <dd-doss-dumper>)
+
+We dump only the method's body if it's inlinable.
+
+define method doss-slot-value(getter == %parameters, object :: <&function>, dd :: <dd-doss-dumper>)
+
+We strip the %parameters.
+
+define method put-specially(object :: <library>, 
+			    policy :: <dd-doss-policy>,
+			    dd :: <dd-doss-dumper>)
+This is for the purpose of setting the dumping context. The library is
+actually not dumped here. Returns #f to indicate to doss to dump the
+object.
+
+define method put-specially(object :: <module>, 
+			    policy :: <dd-doss-policy>,
+			    dd :: <dd-doss-dumper>)
+
+Set the module dumping context.
+
+define method put-specially(object :: <&generic-function>,
+			    policy :: <dd-doss-policy>, 
+			    dd :: <dd-doss-dumper>)
+
+define method put-specially(object :: <&class>,
+			    policy :: <dd-doss-policy>, 
+			    dd :: <dd-doss-dumper>)
+
+Check the context and dump symbolic reference if necessary.
+
+
+Using the mechanism in the compiler one can control the slots which
+are dumped for a particular object class. The doss'
+doss-dumpable-slots interface is then used.
+
+define constant $included-function-getters = vector(debug-name,module,%parameters,
+						    specializers,return-types);
+
+define constant $included-generic-getters = concatenate($included-function-getters,
+							vector(&generic-function-methods,
+							       non-literal-methods));
+
+define constant $included-method-getters = concatenate($included-function-getters,
+						       vector(tag,generic-functions,body,inlineable?));
+
+define constant $excluded-class-getters = vector();
+
+define constant $included-variable-getters = vector(module,debug-name,leaf);
+
+define constant $excluded-leaf-getters = vector(info);
+
+define constant $included-namespace-getters = vector(debug-name, create-spec, export-spec,
+						     symbolic-uses, symbolic-re-exports,
+						     local-key-collection);
+
+define constant $included-library-getters = concatenate($included-namespace-getters,
+							vector(filenames));
+
+define constant $included-module-getters = concatenate($included-namespace-getters,
+						       vector(library));
+
+0.3.2. Loading and re/initialization
+--------------------------------
+
+When the meta structure is loaded the libraries have to be
+initialized. Partly because of compiler requirements, partly because
+not everything is dumped, since the information is redundant and it's
+better to recreate it.
+
+define method resolve-variable-reference(lib :: <symbol>, mod :: <symbol>, var :: <symbol>)
+
+This method is called for objects dumped symbolically. There is an
+assumption that the loading environment already contains the object.
+
+post-load-cleanup is a generic in doss called after loading an
+object. However not all initialization can be done in the sequence of
+loading. The post-load-setup is a generic which can be called at the
+right moment to finish the reinitialization.
+
+define method post-load-cleanup(gf :: <&generic-function>)
+
+define method post-load-cleanup(space :: <namespace>)
+
+define method post-load-cleanup(mod :: <module>)
+After loading a module we call post-load-setup for &class, &method and
+&generic-function objects in this module in that sequence.
+
+define method post-load-cleanup(lib :: <compiler-dylan-library>)
+
+define method post-load-cleanup(lib :: <library>)
+
+After the library is loaded we call post-load-setup for this library.
+
+
+define method post-load-setup (space :: <namespace>)
+
+Reinitialize the namespace.
+
+define method post-load-setup(space :: <library>)
+
+Resolve symbolic uses and initialize literals in the library.
+
+define method post-load-setup (space :: <module>)
+
+Resolve symbolic uses.
+
+define method post-load-setup(f :: <&function>)
+
+// we have to register methods with the generics
+define method post-load-setup(met :: <&method>)
+
+define method post-load-setup(gf :: <&generic-function>)
+
+Do post load setup for &slot-method's.
+
+define method post-load-setup(class :: <&class>)
+
+Add this class to the direct-subclasses slot of the
+direct-superclasses. 
+
+0.4 Access to the meta information
+----------------------------------
+
+This is a simple interface to the mop info. The full interface as
+described in the appropriate paper has to be implemented.
+
+define method library-modules(l :: <dylan-library>)
+
+define method library-module-used-modules(l :: <symbol>, m :: <symbol>)
+
+define method library-module-export-variables(l :: <symbol>, m :: <symbol>)
+
+define method library-export-modules(l :: <symbol>)
+
+define method library-module-variables(l :: <symbol>, m :: <symbol>)
+
+define method find-compiler-library(l :: <symbol>)
+
+define method find-compiler-module(l :: <symbol>, m :: <symbol>)
+
+define method library-module-classes(l :: <symbol>, m :: <symbol>)
+
+define method library-module-gfs(l :: <symbol>, m :: <symbol>)
+
+define method library-module-methods(l :: <symbol>, m :: <symbol>)
+
+define method compile-stage-variable-value(v :: <variable>)
+
+0.5 Generic graph
+-----------------
+-----------------
+
+This is a very simple graph system which was developed to support both
+CAPI and the toolkit in LW.
+
+define class <graph> (<object>)
+  slot graph-roots, required-init-keyword: roots:;
+  slot graph-nodes, required-init-keyword: graph:;
+  slot selected-node, init-value: #f;
+end;
+
+define class <graph-node> (<object>)
+  slot node-children :: <list>, init-value: #();
+  slot node-parents :: <list>, init-value: #();
+  slot node-gadget, init-value: #f;
+  slot hide-node, init-value: #f;
+end;
+
+define method active-node-children(g :: <graph-node>) 
+
+define method active-graph-roots(g :: <graph>)
+
+define generic display-sub-graph(lg :: <graph>, disp);
+
+define generic display-full-graph(lg :: <graph>, disp);
+
+define generic ensure-gadgets(lg :: <graph>, disp);
+Makes sure that the <graph-node>'s point to the rigt gadgets
+(e.g. after redoing the graph display).
+
+define generic display-node(disp, node);
+
+0.6 Library graph
+-----------------
+-----------------
+
+define class <library-graph> (graph/<graph>)
+  slot references, required-init-keyword: references:;
+  slot selected-closure, init-value: #();
+end;
+
+define class <library-node> (graph/<graph-node>)
+  slot node-lib :: <dylan-library>, required-init-keyword: lib:;
+end;
+
+define method make-graph(libs)
+
+The libs argument here is a list of libraries, each one is a list
+containing its name and the library spec, as defined by the compiler.
+The method builds a graph structure, in a list form, i.e. a list of
+roots (libs not dependent on any others), each root containing a list
+of libraries dependent on it, etc. The method the makes an instance of
+<library-graph>. 
+
+
+define method build-node-graph(lg :: <library-graph>)
+
+This method finishes the job, creating the <library-node>'s. The split
+of functionality is historical.
+
+define method select-library(lib-node, disp, lgraph)
+define method highlight-eval-environment(disp, lgraph :: <library-graph>)
+
+Those methods analyse the graph and highlight the transitive closure
+of all libraries used by the selected library.
+
+0.7 Module  graph
+-----------------
+-----------------
+
+define class <module-graph> (graph/<graph>)
+  slot modules, required-init-keyword: modules:;
+  slot selected-module, init-value: #();
+end;
+
+define class <module-node> (graph/<graph-node>)
+  slot node-module :: <module>, required-init-keyword: module:;
+  slot node-name :: <symbol>, required-init-keyword: name:;
+end;
+
+define method make-module-graph(lib-graph :: <library-graph>)
+
+This is a complex method which uses compiler data (the namespace info)
+to build a graph of modules in an evaluation environment, i.e. in a
+transitive closure of all libraries used by a library.
+
+The library and module building algorithms are independent of any UI
+toolkit or platform used.
+

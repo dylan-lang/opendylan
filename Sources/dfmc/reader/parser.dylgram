@@ -1,0 +1,989 @@
+Module: dfmc-reader
+
+// Notes: No right arrow for a single component production means just
+// return that.
+
+define parser dylan-parser
+
+start:
+    top-level-form
+      => arg$1;;
+
+top-level-form:
+    TOKEN-CONSTRAINT token END-CONSTRAINT
+      => arg$2;;
+    NAME-CONSTRAINT variable-name END-CONSTRAINT
+      => arg$2;;
+    EXPRESSION-CONSTRAINT expression END-CONSTRAINT
+      => arg$2;;
+    VARIABLE-CONSTRAINT variable END-CONSTRAINT
+      => arg$2;;
+    BODY-CONSTRAINT body-OPT END-CONSTRAINT
+      => arg$2;;
+    CASE-BODY-CONSTRAINT case-body-OPT END-CONSTRAINT
+      => arg$2;;
+    PROPERTY-LIST-CONSTRAINT property-list-OPT END-CONSTRAINT
+      => arg$2;;
+    FRAGMENT-CONSTRAINT body-fragment-OPT END-CONSTRAINT
+      => arg$2;;
+    constituent SEMICOLON
+      => arg$1;;
+    constituent EOF
+      => arg$1;;
+    EOF
+      => #f;;
+
+hash-word:
+    HASH-T        => arg$1;;
+    HASH-F        => arg$1;;
+    HASH-NEXT     => arg$1;;
+    HASH-REST     => arg$1;;
+    HASH-KEY      => arg$1;;
+    HASH-ALL-KEYS => arg$1;;
+
+reserved-word:
+    core-word => arg$1;;
+    BEGIN-WORD-ONLY => arg$1;;
+    FUNCTION-WORD-ONLY => arg$1;;
+    DEFINE-BODY-WORD-ONLY => arg$1;;
+    DEFINE-LIST-WORD-ONLY => arg$1;;
+    BEGIN-AND-DEFINE-LIST-WORD => arg$1;;
+    BEGIN-AND-DEFINE-BODY-WORD => arg$1;;
+    FUNCTION-AND-DEFINE-LIST-WORD => arg$1;;
+    FUNCTION-AND-DEFINE-BODY-WORD => arg$1;;
+    LOCAL-DECLARATION-WORD-ONLY => arg$1;;
+    LOCAL-METHODS-WORD-ONLY => arg$1;;
+    MACRO-CASE-BEGIN-WORD-ONLY => arg$1;;
+    MACRO-CASE-BEGIN-AND-DEFINE-MACRO-BODY-WORD => arg$1;;
+
+core-word:
+    DEFINE => arg$1;;
+    END => arg$1;;
+    OTHERWISE => arg$1;;
+
+DEFINE-WORD-ONLY:
+    DEFINE-BODY-WORD-ONLY => arg$1;;
+    DEFINE-LIST-WORD-ONLY => arg$1;;
+
+ORDINARY-NAME:
+    UNRESERVED-NAME  => arg$1;;
+    DEFINE-WORD-ONLY => arg$1;;
+    DEFINE-MACRO-BODY-WORD-ONLY => arg$1;;
+
+NAME:
+    UNRESERVED-NAME => arg$1;;
+    reserved-word   => arg$1;;
+
+DEFINE-MACRO-BODY-WORD:
+    DEFINE-MACRO-BODY-WORD-ONLY => arg$1;;
+    MACRO-CASE-BEGIN-AND-DEFINE-MACRO-BODY-WORD => arg$1;;
+
+NAME-NOT-END:
+    BEGIN-WORD => arg$1;;
+    MACRO-CASE-BEGIN-WORD => arg$1;;
+    ORDINARY-NAME => arg$1;;
+
+BEGIN-WORD-OPT:
+    => #f;; BEGIN-WORD => arg$1;;
+
+BEGIN-WORD:
+    BEGIN-WORD-ONLY
+      => arg$1;;
+    BEGIN-AND-DEFINE-BODY-WORD
+      => arg$1;;
+    BEGIN-AND-DEFINE-LIST-WORD
+      => arg$1;;
+
+MACRO-CASE-BEGIN-WORD-OPT:
+    => #f;; MACRO-CASE-BEGIN-WORD => arg$1;;
+
+MACRO-CASE-BEGIN-WORD:
+    MACRO-CASE-BEGIN-WORD-ONLY
+      => arg$1;;
+    MACRO-CASE-BEGIN-AND-DEFINE-MACRO-BODY-WORD
+      => arg$1;;
+
+DEFINE-BODY-WORD-OPT:
+    => #f;; DEFINE-BODY-WORD => arg$1;;
+
+DEFINE-BODY-WORD:
+    DEFINE-BODY-WORD-ONLY
+      => arg$1;;
+    FUNCTION-AND-DEFINE-BODY-WORD
+      => arg$1;;
+    BEGIN-AND-DEFINE-BODY-WORD
+      => arg$1;;
+
+DEFINE-LIST-WORD:
+    DEFINE-LIST-WORD-ONLY
+      => arg$1;;
+
+LOCAL-DECLARATION-WORD:
+    LOCAL-DECLARATION-WORD-ONLY
+      => arg$1;;
+
+LOCAL-METHODS-WORD:
+    LOCAL-METHODS-WORD-ONLY
+      => arg$1;;
+
+FUNCTION-WORD:
+    FUNCTION-WORD-ONLY
+      => arg$1;;
+
+UNARY-OPERATOR:
+    UNARY-OPERATOR-ONLY
+      => arg$1;;
+    UNARY-AND-BINARY-OPERATOR
+      => arg$1;;
+
+BINARY-OPERATOR:
+    BINARY-OPERATOR-ONLY
+      => arg$1;;
+    UNARY-AND-BINARY-OPERATOR
+      => arg$1;;
+    EQUAL
+      => arg$1;;
+    EQUAL-EQUAL
+      => arg$1;;
+
+OPERATOR:
+    UNARY-OPERATOR-ONLY       => arg$1;;
+    BINARY-OPERATOR-ONLY      => arg$1;;
+    UNARY-AND-BINARY-OPERATOR => arg$1;;
+    EQUAL                     => arg$1;;
+    EQUAL-EQUAL               => arg$1;;
+
+source-record:
+    body-OPT
+      => arg$1;;
+
+body-OPT:
+      => empty-body-fragment();;
+    body 
+      => arg$1;;
+
+body:
+    constituents SEMICOLON-OPT
+      => body-fragment(elements(arg$1));;
+
+constituents-OPT:
+    => #();; constituents => arg$1;;
+
+constituents:
+    constituent
+      => append-sequence(arg$1);;
+    constituents SEMICOLON constituent
+      => append-element!(arg$1, arg$3);;
+
+constituent:
+    definition
+      => arg$1;;
+    local-declaration
+      => arg$1;;
+    expression
+      => arg$1;;
+
+property-list-OPT:
+    => #();; property-list => arg$1;;
+
+property-list:
+    property 
+      => arg$1;;
+    property COMMA property-list
+      => concatenate(arg$1, pair(arg$2, arg$3));;
+
+property:
+    SYMBOL value
+      => pair(arg$1, arg$2);;
+
+value:
+    basic-fragment
+      => arg$1;;
+
+body-fragment-OPT:
+    => #();; body-fragment => arg$1;;
+
+body-fragment:
+    non-statement-body-fragment
+      => arg$1;; 
+    statement non-statement-body-fragment-OPT
+      => pair(arg$1, arg$2);;
+
+list-fragment-OPT:
+    => #();; list-fragment => arg$1;;
+
+list-fragment:
+    non-statement-list-fragment
+      => arg$1;;
+    statement non-statement-list-fragment-OPT
+      => pair(arg$1, arg$2);;
+
+basic-fragment-OPT:
+    => #();; basic-fragment => arg$1;;
+
+basic-fragment:
+    non-statement-basic-fragment
+      => arg$1;;
+    statement non-statement-basic-fragment-OPT
+      => pair(arg$1, arg$2);;
+
+non-statement-body-fragment-OPT:
+    => #();; non-statement-body-fragment => arg$1;;
+
+non-statement-body-fragment:
+    definition semicolon-fragment-OPT
+      => pair(arg$1, arg$2);;
+    local-declaration semicolon-fragment-OPT
+      => pair(arg$1, arg$2);;
+    simple-fragment body-fragment-OPT
+      => pair(arg$1, arg$2);;
+    COMMA body-fragment-OPT
+      => pair(arg$1, arg$2);;
+    SEMICOLON body-fragment-OPT
+      => pair(arg$1, arg$2);;
+
+semicolon-fragment-OPT:
+    => #();; semicolon-fragment => arg$1;;
+
+semicolon-fragment:
+    SEMICOLON body-fragment-OPT
+      => pair(arg$1, arg$2);;
+
+non-statement-list-fragment-OPT:
+    => #();; non-statement-list-fragment => arg$1;;
+
+non-statement-list-fragment:
+    simple-fragment list-fragment-OPT
+      => pair(arg$1, arg$2);;
+    COMMA list-fragment-OPT
+      => pair(arg$1, arg$2);;
+
+non-statement-basic-fragment-OPT:
+    => #();; non-statement-basic-fragment => arg$1;;
+
+non-statement-basic-fragment:
+    simple-fragment basic-fragment-OPT
+      => pair(arg$1, arg$2);;
+
+simple-fragment:
+    ORDINARY-NAME        => arg$1;;
+    constant-fragment    => arg$1;;
+    OPERATOR             => arg$1;;
+    bracketed-fragment   => arg$1;;
+    function-macro-call  => arg$1;;
+    hash-word            => arg$1;;
+    punctuation-fragment => arg$1;;
+    PARSED-FUNCTION-CALL => arg$1;;
+    PARSED-MACRO-CALL    => arg$1;;
+    ESCAPED-SUBSTITUTION => arg$1;;
+    CONSTRAINED-NAME     => arg$1;;
+
+punctuation-fragment:
+    DOT           => arg$1;;
+    COLON-COLON   => arg$1;;
+    EQUAL-GREATER => arg$1;;
+    QUERY         => arg$1;;
+    QUERY-QUERY   => arg$1;;
+    QUERY-EQUAL   => arg$1;;
+    QUERY-AT      => arg$1;;
+    ELLIPSIS      => arg$1;;
+    HASH-HASH     => arg$1;;
+    OTHERWISE     => arg$1;;
+
+bracketed-fragment:
+    LPAREN body-fragment-OPT RPAREN
+      => make(<parens-fragment>, 
+              record:           fragment-record(arg$1),
+	      source-position:  position-between(arg$1, arg$3),
+	      left-delimiter:   arg$1,
+	      nested-fragments: arg$2,
+	      right-delimiter:  arg$3);;
+    LBRACKET body-fragment-OPT RBRACKET
+      => make(<brackets-fragment>, 
+              record:           fragment-record(arg$1),
+	      source-position:  position-between(arg$1, arg$3),
+	      left-delimiter:   arg$1,
+	      nested-fragments: arg$2,
+	      right-delimiter:  arg$3);;
+    LBRACE body-fragment-OPT RBRACE
+      => make(<braces-fragment>, 
+              record:           fragment-record(arg$1),
+	      source-position:  position-between(arg$1, arg$3),
+	      left-delimiter:   arg$1,
+	      nested-fragments: arg$2,
+	      right-delimiter:  arg$3);;
+
+constant-fragment:
+    NUMBER                                    => arg$1;;
+    CHARACTER-LITERAL                         => arg$1;;
+    STRING                                    => arg$1;;
+    SYMBOL                                    => arg$1;;
+    sequence-literal                          => arg$1;;
+
+local-declaration:
+    LOCAL-DECLARATION-WORD list-fragment-OPT
+      => make(<local-declaration-fragment>,
+              record:          fragment-record(arg$1),
+	      source-position: position-between(arg$1, arg$2),
+              macro: arg$1,
+              list-fragment: arg$2);;
+    LOCAL-METHODS-WORD local-methods
+      => make(<local-declaration-fragment>,
+              record:          fragment-record(arg$1),
+	      source-position: position-between(arg$1, arg$2),
+              macro: arg$1,
+              list-fragment: arg$2);;
+    PARSED-LOCAL-DECLARATION
+      => arg$1;;
+
+local-methods:
+    local-method
+      => list(arg$1);;
+    local-method COMMA local-methods
+      => pair(arg$1, pair(arg$2, arg$3));;
+
+local-method:
+    BEGIN-WORD body-fragment-OPT definition-tail
+      => begin
+           verify-definition-tail
+	     (arg$1, arg$1, maybe-defined-name(arg$2), arg$3);
+           make(<statement-fragment>,
+                record:          fragment-record(arg$1),
+  	        source-position: position-between(arg$1, arg$3),
+	        macro: arg$1,
+                body-fragment: arg$2);
+         end;;
+    MACRO-CASE-BEGIN-WORD macro-body-fragment-OPT definition-tail
+      => begin
+           verify-definition-tail
+	     (arg$1, arg$1, maybe-defined-name(arg$2), arg$3);
+           make(<statement-fragment>,
+                record:          fragment-record(arg$1),
+	        source-position: position-between(arg$1, arg$3),
+	        macro: arg$1,
+                body-fragment: arg$2);
+         end;;
+    variable-name body-fragment-OPT definition-tail
+      => begin
+           let implicit-method = dylan-variable-name(#"method");
+           verify-definition-tail
+	     (arg$1, implicit-method, arg$1, arg$3);
+           make(<statement-fragment>,
+                record:          fragment-record(arg$1),
+  	        source-position: position-between(arg$1, arg$3),
+	        macro:           implicit-method,
+                body-fragment:   pair(arg$1, arg$2));
+         end;;
+
+definition:
+    definition-macro-call
+      => arg$1;;
+
+definition-macro-call:
+    DEFINE modifiers-OPT DEFINE-BODY-WORD body-fragment-OPT definition-tail
+      => begin
+           verify-definition-tail
+             (arg$1, arg$3, maybe-defined-name(arg$4), arg$5);
+	   make(<body-definition-fragment>,
+                record:          fragment-record(arg$1),
+	        source-position: position-between(arg$1, arg$5),
+	        modifiers: arg$2,
+	        define-word: arg$3,
+	        body-fragment: arg$4);
+         end;;
+    DEFINE modifiers-OPT DEFINE-LIST-WORD list-fragment-OPT 
+      => make(<list-definition-fragment>,
+              record:          fragment-record(arg$1),
+	      source-position: position-between(arg$1, arg$4),
+	      modifiers: arg$2,
+	      define-word: arg$3,
+	      list-fragment: arg$4);;
+    DEFINE modifiers-OPT DEFINE-MACRO-BODY-WORD NAME 
+      macro-body-fragment-OPT
+    macro-definition-tail
+      => begin
+           verify-definition-tail(arg$1, arg$3, arg$4, arg$6);
+           make(<macro-body-definition-fragment>,
+                record:          fragment-record(arg$1),
+	        source-position: position-between(arg$1, arg$6),
+	        modifiers: arg$2,
+	        define-word: arg$3,
+	        macro-body-fragment: pair(arg$4, arg$5));
+         end;;
+
+modifier:
+    UNRESERVED-NAME
+      => arg$1;;
+
+modifiers-OPT:
+    => #();; modifiers => arg$1;;
+
+modifiers:
+    modifier
+      => list(arg$1);;
+    modifier modifiers
+      => pair(arg$1, arg$2);;
+
+definition-tail:
+    END 
+      => make(<definition-tail-fragment>, 
+              record:          fragment-record(arg$1),
+              source-position: fragment-source-position(arg$1),
+              end: arg$1);;
+    END NAME-NOT-END
+      => make(<definition-tail-fragment>, 
+              record:          fragment-record(arg$1),
+              source-position: position-between(arg$1, arg$2),
+              end: arg$1, tail-name-1: arg$2);;
+    END DEFINE-BODY-WORD NAME-NOT-END
+      => make(<definition-tail-fragment>, 
+              record:          fragment-record(arg$1),
+              source-position: position-between(arg$1, arg$3),
+              end: arg$1, tail-name-1: arg$2, tail-name-2: arg$3);;
+
+operand: 
+    operand LPAREN arguments-OPT RPAREN
+      => make(<prefix-call-fragment>, 
+              record:          fragment-record(arg$1),
+              source-position: position-between(arg$1, arg$4),
+              function: arg$1, arguments: arg$3);;
+    operand LBRACKET arguments RBRACKET
+      => begin
+	   let getter-name 
+             = if (size(arg$3) = 1) #"element" else #"aref" end;
+           make(<array-call-fragment>, 
+                record:          fragment-record(arg$1),
+                source-position: position-between(arg$1, arg$4),
+                function:
+                  make-variable-name-like
+                    (arg$2,
+                     record:          fragment-record(arg$2),
+		     source-position: position-between(arg$2, arg$4),
+		     name: getter-name,
+		     kind: syntax-for-name(*current-module*, getter-name)),
+	        arguments: pair(arg$1, arg$3));
+         end;;
+    operand DOT variable-name
+      => make(<dot-call-fragment>, 
+	      record:          fragment-record(arg$1),
+              source-position: position-between(arg$1, arg$3),
+              function: arg$3, arguments: list(arg$1));;
+    leaf
+      => arg$1;;
+
+arguments:
+    arguments-guts
+      => elements(arg$1);;
+
+arguments-guts:
+    argument
+      => append-sequence(arg$1);;
+    arguments-guts COMMA argument
+      => append-element!(arg$1, arg$3);;
+
+argument:
+    SYMBOL expression
+      => list(arg$1, arg$2);;
+    expression-no-symbol
+      => arg$1;;
+    SYMBOL
+      => arg$1;;
+
+function-macro-call:
+    FUNCTION-WORD LPAREN body-fragment-OPT RPAREN
+      => make(<function-macro-fragment>,
+              record:          fragment-record(arg$1),
+              source-position: position-between(arg$1, arg$4),
+              macro: arg$1,
+              body-fragment: arg$3);;
+
+leaf:
+    literal
+      => arg$1;;
+    variable-name
+      => arg$1;;
+    LPAREN expression RPAREN
+      => arg$2;;
+    function-macro-call
+      => arg$1;;
+    statement
+      => arg$1;;
+    PARSED-FUNCTION-CALL
+      => arg$1;;
+    PARSED-MACRO-CALL
+      => arg$1;;
+
+literal:
+    NUMBER            => arg$1;;
+    CHARACTER-LITERAL => arg$1;;
+    string-literal    => arg$1;;
+    HASH-T            => arg$1;;
+    HASH-F            => arg$1;;
+    sequence-literal  => arg$1;;
+
+string-literal:
+    STRING 
+      => arg$1;;
+    STRING string-literal 
+      => make(<string-fragment>, 
+	      record:          fragment-record(arg$1),
+              source-position: position-between(arg$1, arg$2),
+              value: concatenate(fragment-value(arg$1), fragment-value(arg$2)));;
+
+sequence-literal:
+    HASH-LPAREN constants DOT constant RPAREN 
+      => make(<improper-list-fragment>,
+              record:          fragment-record(arg$1),
+              source-position: position-between(arg$1, arg$5),
+	      elements:        arg$2,
+	      improper-tail:   arg$4);;
+    HASH-LPAREN constants-OPT RPAREN
+      => make(<proper-list-fragment>,
+              record:          fragment-record(arg$1),
+              source-position: position-between(arg$1, arg$3),
+	      elements:        arg$2);;
+    HASH-LBRACKET constants-OPT RBRACKET
+      => make(<vector-fragment>,
+              record:          fragment-record(arg$1),
+              source-position: position-between(arg$1, arg$3),
+	      elements:        arg$2);;
+    PARSED-LIST-CONSTANT
+      => arg$1;;
+    PARSED-VECTOR-CONSTANT
+      => arg$1;;
+
+constants-OPT:
+    => #();; constants => arg$1;;
+
+constants:
+    constants-guts 
+      => elements(arg$1);;
+
+constants-guts:
+    constant
+      => append-sequence(arg$1);;
+    constants-guts COMMA constant
+      => append-element!(arg$1, arg$3);;
+
+constant:
+    literal => arg$1;;
+    SYMBOL  => arg$1;;
+
+arguments-OPT:
+      => #();;
+    arguments
+      => arg$1;;
+
+SEMICOLON-OPT:
+    => #f;; SEMICOLON => arg$1;;    
+
+variable:
+    variable-name
+      => list(arg$1);;
+    variable-name COLON-COLON type
+      => list(arg$1, arg$2, arg$3);;
+
+variable-name:
+    ORDINARY-NAME
+      => arg$1;;
+    ELLIPSIS
+      => make-variable-name-like
+	   (arg$1, 
+            record:          fragment-record(arg$1),
+            source-position: fragment-source-position(arg$1),
+	    name: #"...");;
+
+type:
+    operand
+      => arg$1;;
+
+expressions:
+    expression
+      => list(arg$1);;
+    expression COMMA expressions
+      => pair(arg$1, pair(arg$2, arg$3));;
+
+expression:
+    expression-guts
+      => binop-fragment(arg$1);;
+    
+expression-guts:
+    binary-operand
+      => (arg$1);;
+    expression-guts BINARY-OPERATOR binary-operand
+      => append-binop!(arg$1, arg$2, arg$3);;
+
+expression-no-symbol:
+    expression-no-symbol-guts
+      => binop-fragment(arg$1);;
+
+expression-no-symbol-guts:
+    binary-operand-no-symbol
+      => arg$1;;
+    expression-no-symbol-guts BINARY-OPERATOR binary-operand
+      => append-binop!(arg$1, arg$2, arg$3);;
+
+binary-operand:
+    SYMBOL
+      => arg$1;;
+    binary-operand-no-symbol
+      => arg$1;;
+
+binary-operand-no-symbol:
+    operand
+      => arg$1;;
+    UNARY-OPERATOR operand
+      => make(<unary-operator-call-fragment>,
+              record:          fragment-record(arg$1),
+              source-position: position-between(arg$1, arg$2),
+              function: arg$1,
+              arguments: list(arg$2));;
+
+statement:
+    BEGIN-WORD body-fragment-OPT end-clause
+      => begin
+           verify-statement-tail(arg$1, arg$3);
+           make(<statement-fragment>,
+                record:          fragment-record(arg$1),
+  	        source-position: position-between(arg$1, arg$3),
+	        macro: arg$1,
+                body-fragment: arg$2);
+         end;;
+    MACRO-CASE-BEGIN-WORD macro-body-fragment-OPT end-clause
+      => begin
+           verify-statement-tail(arg$1, arg$3);
+           make(<statement-fragment>,
+                record:          fragment-record(arg$1),
+	        source-position: position-between(arg$1, arg$3),
+	        macro: arg$1,
+                body-fragment: arg$2);
+         end;;
+    HASH-LBRACE template-OPT RBRACE
+      => make(<statement-fragment>,
+              record:          fragment-record(arg$1),
+              source-position: position-between(arg$1, arg$3),
+              macro:
+                make-variable-name-like
+                  (arg$1, 
+                   record:          fragment-record(arg$1),
+                   source-position: fragment-source-position(arg$1),
+                   name:            #"macro-template"),
+              body-fragment:   arg$2);;
+
+end-clause:
+    END BEGIN-WORD-OPT
+      => arg$2 | arg$1;;
+    END MACRO-CASE-BEGIN-WORD
+      => arg$1;;
+
+case-body-OPT:
+    => #();; case-body => arg$1;;
+
+case-body:
+    intermediate-case intermediate-case-tail
+      => concatenate(arg$1, arg$2);;
+    final-case
+      => arg$1;;
+
+intermediate-case:
+    case-label SEMICOLON case-label
+      => concatenate(arg$1, list(arg$2), arg$3);;
+    case-label constituents SEMICOLON case-label
+      => concatenate(arg$1, list(body-fragment(elements(arg$2))), list(arg$3), arg$4);;
+
+intermediate-case-tail:
+    SEMICOLON case-body
+      => pair(arg$1, arg$2);;
+    constituents SEMICOLON case-body
+      => pair(body-fragment(elements(arg$1)), pair(arg$2, arg$3));;
+    final-case-body
+      => arg$1;;
+
+final-case:
+    case-label final-case-body
+      => concatenate(arg$1, arg$2);;
+
+final-case-body:
+    body
+      => list(arg$1);;
+    SEMICOLON
+      => list(arg$1);;
+      => #();;
+
+case-label:
+    expressions EQUAL-GREATER 
+      => concatenate(arg$1, list(arg$2));;
+    LPAREN expression COMMA expressions RPAREN EQUAL-GREATER 
+      => pair(make(<parens-fragment>, 
+                   record:           fragment-record(arg$1),
+	           source-position:  position-between(arg$1, arg$5),
+	           left-delimiter:   arg$1,
+	           nested-fragments: pair(arg$2, pair(arg$3, arg$4)),
+	           right-delimiter:  arg$5),
+              list(arg$6));;
+    OTHERWISE EQUAL-GREATER-OPT
+      => pair(arg$1, arg$2);;
+
+EQUAL-GREATER-OPT:
+    => #();; EQUAL-GREATER => list(arg$1);;
+
+macro-body-fragment-OPT:
+    => #();; macro-body-fragment => arg$1;;
+
+macro-body-fragment:
+    non-statement-macro-body-fragment
+      => arg$1;; 
+    statement non-statement-macro-body-fragment-OPT
+      => pair(arg$1, arg$2);;
+
+macro-list-fragment-OPT:
+    => #();; macro-list-fragment => arg$1;;
+
+macro-list-fragment:
+    non-statement-macro-list-fragment
+      => arg$1;;
+    statement non-statement-macro-list-fragment-OPT
+      => pair(arg$1, arg$2);;
+
+macro-basic-fragment-OPT:
+    => #();; macro-basic-fragment => arg$1;;
+
+macro-basic-fragment:
+    non-statement-macro-basic-fragment
+      => arg$1;;
+    statement non-statement-macro-basic-fragment-OPT
+      => pair(arg$1, arg$2);;
+
+non-statement-macro-body-fragment-OPT:
+    => #();; non-statement-macro-body-fragment => arg$1;;
+
+non-statement-macro-body-fragment:
+    definition macro-semicolon-fragment-OPT
+      => pair(arg$1, arg$2);;
+    local-declaration macro-semicolon-fragment-OPT
+      => pair(arg$1, arg$2);;
+    macro-simple-fragment macro-body-fragment-OPT
+      => pair(arg$1, arg$2);;
+    COMMA macro-body-fragment-OPT
+      => pair(arg$1, arg$2);;
+    SEMICOLON macro-body-fragment-OPT
+      => pair(arg$1, arg$2);;
+
+macro-semicolon-fragment-OPT:
+    => #();; macro-semicolon-fragment => arg$1;;
+
+macro-semicolon-fragment:
+    SEMICOLON macro-body-fragment-OPT
+      => pair(arg$1, arg$2);;
+
+non-statement-macro-list-fragment-OPT:
+    => #();; non-statement-macro-list-fragment => arg$1;;
+
+non-statement-macro-list-fragment:
+    macro-simple-fragment macro-list-fragment-OPT
+      => pair(arg$1, arg$2);;
+    COMMA macro-list-fragment-OPT
+      => pair(arg$1, arg$2);;
+
+non-statement-macro-basic-fragment-OPT:
+    => #();; non-statement-macro-basic-fragment => arg$1;;
+
+non-statement-macro-basic-fragment:
+    macro-simple-fragment macro-basic-fragment-OPT
+      => pair(arg$1, arg$2);;
+
+macro-simple-fragment:
+    ORDINARY-NAME            => arg$1;;
+    constant-fragment        => arg$1;;
+    OPERATOR                 => arg$1;;
+    macro-bracketed-fragment => arg$1;;
+    function-macro-call      => arg$1;;
+    hash-word                => arg$1;;
+    punctuation-fragment     => arg$1;;
+    PARSED-FUNCTION-CALL     => arg$1;;
+    PARSED-MACRO-CALL        => arg$1;;
+    ESCAPED-SUBSTITUTION     => arg$1;;
+    CONSTRAINED-NAME         => arg$1;;
+
+macro-bracketed-fragment:
+    LPAREN template-OPT RPAREN
+      => make(<parens-fragment>, 
+              record:           fragment-record(arg$1),
+	      source-position:  position-between(arg$1, arg$3),
+	      left-delimiter:   arg$1,
+	      nested-fragments: arg$2,
+	      right-delimiter:  arg$3);;
+    LBRACKET template-OPT RBRACKET
+      => make(<brackets-fragment>, 
+              record:           fragment-record(arg$1),
+	      source-position:  position-between(arg$1, arg$3),
+	      left-delimiter:   arg$1,
+	      nested-fragments: arg$2,
+	      right-delimiter:  arg$3);;
+    bracketed-template
+      => arg$1;;
+
+bracketed-template:
+    LBRACE template-OPT RBRACE
+      => make(<braces-fragment>, 
+              record:           fragment-record(arg$1),
+	      source-position:  position-between(arg$1, arg$3),
+	      left-delimiter:   arg$1,
+	      nested-fragments: arg$2,
+	      right-delimiter:  arg$3);;
+
+template-OPT:
+    => #();; template => arg$1;;
+
+template:
+    template-element
+      => list(arg$1);;
+    template-element template
+      => pair(arg$1, arg$2);;
+    compound-template-element
+      => arg$1;;
+    compound-template-element template
+      => concatenate(arg$1, arg$2);;
+
+compound-template-element:
+    HASH-LPAREN template-OPT RPAREN 
+      => pair(arg$1, concatenate(arg$2, list(arg$3)));;
+    HASH-LBRACKET template-OPT RBRACKET
+      => pair(arg$1, concatenate(arg$2, list(arg$3)));;
+    HASH-LBRACE template-OPT RBRACE
+      => pair(arg$1, concatenate(arg$2, list(arg$3)));;
+
+template-element:
+    NAME => arg$1;;
+    SYMBOL => arg$1;;
+    NUMBER => arg$1;;
+    CHARACTER-LITERAL => arg$1;;
+    STRING => arg$1;;
+    UNARY-OPERATOR-ONLY => arg$1;;
+    separator => arg$1;;
+    hash-word => arg$1;;
+    DOT => arg$1;;
+    COLON-COLON => arg$1;;
+    EQUAL-GREATER => arg$1;;
+    LPAREN template-OPT RPAREN 
+      => make(<parens-fragment>, 
+              record:           fragment-record(arg$1),
+	      source-position:  position-between(arg$1, arg$3),
+	      left-delimiter:   arg$1,
+	      nested-fragments: arg$2,
+	      right-delimiter:  arg$3);;
+    LBRACKET template-OPT RBRACKET
+      => make(<brackets-fragment>, 
+              record:           fragment-record(arg$1),
+	      source-position:  position-between(arg$1, arg$3),
+	      left-delimiter:   arg$1,
+	      nested-fragments: arg$2,
+	      right-delimiter:  arg$3);;
+    LBRACE template-OPT RBRACE
+      => make(<braces-fragment>, 
+              record:           fragment-record(arg$1),
+	      source-position:  position-between(arg$1, arg$3),
+	      left-delimiter:   arg$1,
+	      nested-fragments: arg$2,
+	      right-delimiter:  arg$3);;
+    substitution => arg$1;;
+    ESCAPED-SUBSTITUTION => arg$1;;
+    CONSTRAINED-NAME     => arg$1;;
+    PARSED-FUNCTION-CALL => arg$1;;
+    PARSED-MACRO-CALL => arg$1;;
+    PARSED-LOCAL-DECLARATION => arg$1;;
+    PARSED-LIST-CONSTANT => arg$1;;
+    PARSED-VECTOR-CONSTANT => arg$1;;
+
+separator-OPT:
+    => #f;; separator => arg$1;;
+
+separator:
+    SEMICOLON => arg$1;;
+    COMMA => arg$1;;
+    BINARY-OPERATOR => arg$1;;
+
+substitution: 
+    name-prefix-OPT QUERY name-string-or-symbol name-suffix-OPT
+      => begin
+	   let first = arg$1 | arg$2;
+           let last  = arg$4 | arg$3;
+	   make(<spliced-pattern-variable-fragment>,
+                record:           fragment-record(first),
+                source-position:  position-between(first, last),
+                prefix:           arg$1 & fragment-value(arg$1),
+                suffix:           arg$4 & fragment-value(arg$4),
+                pattern-variable: arg$3);
+         end;;
+    QUERY-QUERY CONSTRAINED-NAME 
+      => make(<sequence-pattern-variable-fragment>,
+              record:          fragment-record(arg$1),
+              source-position: position-between(arg$1, arg$2),
+              name:            arg$2,
+              separator:       #f);;
+    QUERY-QUERY NAME 
+      => make(<sequence-pattern-variable-fragment>,
+              record:          fragment-record(arg$1),
+              source-position: position-between(arg$1, arg$2),
+              name:            arg$2,
+              separator:       #f);;
+    ELLIPSIS
+      => arg$1;;
+    QUERY-EQUAL NAME
+      => make(<unhygienic-name-fragment>,
+              record:          fragment-record(arg$1),
+              source-position: position-between(arg$1, arg$2),
+              name:            arg$2);;
+    QUERY-AT NAME bracketed-template
+      => make(<template-aux-rule-call-fragment>,
+              record:          fragment-record(arg$1),
+              source-position: position-between(arg$1, arg$3),
+              rule-name:       arg$2,
+              template:        arg$3);;
+    QUERY-AT bracketed-template
+      => make(<template-macro-call-fragment>,
+              record:          fragment-record(arg$1),
+              source-position: position-between(arg$1, arg$2),
+              template:        arg$2);;
+
+name-prefix-OPT:
+    => #f;; name-prefix => arg$1;;
+
+name-prefix:
+    STRING HASH-HASH
+      => arg$1;;
+
+name-suffix-OPT:
+    => #f;; name-suffix => arg$1;;
+
+name-suffix:
+    HASH-HASH STRING 
+      => arg$2;;
+
+name-string-or-symbol:
+    NAME   => arg$1;;
+    STRING => arg$1;;
+    SYMBOL => arg$1;;
+    CONSTRAINED-NAME => arg$1;;
+    LPAREN expression RPAREN => arg$1;;
+
+macro-definition-tail:
+    END 
+      => make(<definition-tail-fragment>, 
+              record:          fragment-record(arg$1),
+              source-position: fragment-source-position(arg$1),
+              end: arg$1);;
+    END NAME-NOT-END
+      => make(<definition-tail-fragment>, 
+              record:          fragment-record(arg$1),
+              source-position: position-between(arg$1, arg$2),
+              end: arg$1, tail-name-1: arg$2);;
+    END DEFINE-MACRO-BODY-WORD NAME-NOT-END
+      => make(<definition-tail-fragment>, 
+              record:          fragment-record(arg$1),
+              source-position: position-between(arg$1, arg$3),
+              end: arg$1, tail-name-1: arg$2, tail-name-2: arg$3);;
+
+end parser;
+
+// eof

@@ -1,0 +1,8 @@
+This test needs to be run with the "-i" (case-insensitive) option,
+and with:  -idchars "_-"
+<F>WO</F>
+And ...
+@Lisp: a*b-c
+END
+quit
+ignore the rest of the file.

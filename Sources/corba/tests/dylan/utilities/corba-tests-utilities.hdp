@@ -1,0 +1,11 @@
+comment:	This file is generated, please don't edit
+format-version:	2
+library:	corba-tests-utilities
+files:	corba-tests-utilities-library
+	servers
+base-address:	0x63FE0000
+major-version:	2
+minor-version:	1
+compilation-mode:	tight
+target-type:	dll
+comment:	additional keywords

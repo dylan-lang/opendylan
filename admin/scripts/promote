@@ -1,0 +1,683 @@
+#!/usr/local/bin/perl
+#      Script: promote
+#      Author: Shri Amit(amit)
+$usage="Usage: $0 <Compounds> <Units> -[rec[ursive] not-rec[ursive]] -branch <from-branch-name> -to-branch <to-branch-name> -date <Date>";
+#
+# Opts & Args: <Compounds> and <Units>:
+#                0 compounds and n units: 
+#                    promote the n units from the local compound
+#                1 compound and 0 units:
+#                    promote the compound
+#                1 compound and n units:
+#                    promote the n units from the specified compound
+#                m compounds and n units: 
+#                    promote the m compounds, promote the n units from 
+#                    the local compound
+#              -[rec / not-rec]: 
+#                    recursive or non-recursive promotion, 
+#                    Note that this is applicable for compounds only.
+#                    Default: recursive
+#              -to-branch:
+#                    The name of the branch the promoted material is
+#                    going to.  Default: D-kan.
+#              -branch:
+#                    The name of the branch from which the promoted material
+#                    is coming.  Default: trunk.
+#              -date: "YY/MM/DD" or "YY/MM/DD HH:MM:SS", the version of the
+#                    compound and/or units specified to be promoted.
+#                    Default: now
+#	             Note that this supports any dates that HOPE supports
+#                    (for instance relative dates etc. - refer hope manpage
+#                     on date if you want to use those)
+#
+#    Synopsis: . Searches for new and stale compounds and units
+#              . Branches the new compounds, removes old units and compounds
+#              . Checks out new units and compounds and adds them to to-branch.
+#              . Checks out <Comps> and/or <Units> to `pwd`/promote-HHMMSS
+#              . Claims the corresponding units and comp from the from-branch
+#              . Checks them into the corresponding compounds of the
+#                to-branch, skipping and abandoning claims on unmodified units
+#
+# Note that this script will not let you promote the D compound.
+# Any specified compounds should be below the D compound.
+######################################################################
+## Application exit status legend ##
+##  0: Promote completed
+##  1: Help option specified
+##  2: Unsupported command line option
+##  3: No compounds or units to be promoted were specified
+##  4: Parse Error - unknown tokens in the hope status
+
+## Initialize global variables ##
+##
+$dylanroot    = "/u/dylan";
+@branch_comps = @trunk_comps = @new_comps = @new_units 
+    = @stale_comps = @stale_units = @units = @compounds = ();
+$to_branch_name  = "D-kan";
+$from_branch_name  = "trunk";
+$rec_option   = "-recursive";
+$reason       = "Promotion to $to_branch_name branch for the weekly release";
+$curr_path    = `pwd`; chop($curr_path);
+$dir_suffix   = `date +%H%M%S`; chop($dir_suffix);
+$xfer_dir     = "$curr_path/promote-$dir_suffix";
+$promote_date = "now";
+$logfile      = "$dylanroot/admin/logs/promote.log";
+
+## Parse the command line ##
+##
+$no_of_args = @ARGV;
+for ($i = 0; $i < $no_of_args; $i++) {
+    $arg = @ARGV[$i];
+    if ($arg =~ /^-r(ec|ecursive)/) {
+	$rec_option = "-recursive";
+    } elsif ($arg =~ /^-not-rec(ursive)/) {
+	$rec_option = "-not-recursive";
+    } elsif ($arg =~ /^D-/) {
+	push(@compounds, $arg);
+    } elsif ($arg =~ /^-d(a|ate)/) {
+	$i++;
+	$promote_date = @ARGV[$i];
+    } elsif ($arg =~ /^-to-branch/) {
+	$i++;
+	$to_branch_name = @ARGV[$i];
+    } elsif ($arg =~ /^-branch/) {
+	$i++;
+	$from_branch_name = @ARGV[$i];
+    } elsif ($arg =~ /^-h(e|elp)/) {
+	&cleanup("$usage", 1);
+    } elsif ($arg =~ /^-/) {
+	&cleanup("$0: Error - the option $arg not is not supported",
+		 $usage, 2);
+    } else {
+	push(@units, $arg);
+    }
+}
+
+## Prompt the options ##
+##
+$start_date = `date`;
+&output("Starting at: $start_date");
+&output("Running $0 with options:");
+&output("Compound(s): @compounds");
+&output("    Unit(s): @units");
+&output("       Date: $promote_date");
+&output(" Recursive?: $rec_option");
+
+## Promote depending upon arguments ##
+##
+`echo The current path is $curr_path | tee -a $logfile`;
+if (-d $xfer_dir) {
+    die "The directory $xfer_dir exists, it must be removed from the current working directory";
+} else {
+    mkdir("$xfer_dir",0777) || 
+	die "Unable to create the tmp dir, there might be a write problem with the filesystem";
+}
+`echo Just created the directory | tee -a $logfile`;
+`ls -ld "$xfer_dir" | tee -a $logfile`;
+$no_of_compounds = @compounds;
+$no_of_units = @units;
+if ($no_of_compounds == 0) {
+    if ($no_of_units == 0) {
+	&cleanup("Error - You must specify compounds or units to be promoted",
+                 $usage, 3);
+    } else {
+	&promote_units(`/u/dylan/tools/scripts/dylan-local-compound`, @units);
+    }
+} elsif ($no_of_compounds == 1) {
+    if ($no_of_units == 0) {
+	&promote_compounds(@compounds[0]);
+    } else {
+	&promote_units(@compounds[0], @units);
+    }
+} else {
+    &promote_compounds(@compounds);
+    &promote_units(`/u/dylan/tools/scripts/dylan-local-compound`, @units);
+}
+$ending_date = `date`;
+&cleanup("Ending at $ending_date", 0);
+
+## Logical end of script, all subroutines start below ##
+
+## Function: output                                    ##
+##    Usage: &output(<Arg1>, <Arg2>, <Arg3>)           ##
+## Synopsis: Sends all the arguments to stdout as well ##
+##           as tees them to the promote logfile       ##
+##
+sub output {
+    local(@strings_to_output) = @_;
+    local($i);
+    foreach $i (@strings_to_output) {
+	print "$i";
+	`echo "$i" | tee -a $logfile`;
+    }
+    print "\n";
+}
+
+## Function: cleanup                                          ##
+##    Usage: &cleanup(<Message1>, <Message2> .., <Exit Code>) ##
+## Synopsis: `echos all arguments to stdout, except the last  ##
+##           one which is treated as an exit code. Then remove##
+##           the xfer_dir and exits with exit code.           ##
+##
+sub cleanup {
+    local(@messages) = @_;
+    local($exit_code) = pop(@messages);
+    local($i);
+    foreach $i (@messages) {
+	&output("$0: $i");
+    }
+    `echo "\n\n"`;
+    `rm -rf "$xfer_dir"`;
+    exit($exit_code);
+}
+
+## Function: error_in_output                       ##
+##    Usage: &error_in_output()                    ##
+## Synopsis: Checks the HOPE output to see if the  ##
+##           operation being done failed or passed ##
+##           Upon failure it exits the program else##
+##           goes on.                              ##
+##
+sub error_in_output {
+    local(@the_output) = @_;
+    local($i);
+    foreach $i (@the_output) {
+	if ($i =~ /Error /) {
+	    return("$i");
+	}
+	if ($i =~ /Error,/) {
+	    return("$i");
+	}
+	if ($i =~ /Error:/) {
+	    return("$i");
+	}
+	if ($i =~ /Errors /) {
+	    return("$i");
+	}
+	if ($i =~ /Errors,/) {
+	    return("$i");
+	}
+	if ($i =~ /Errors:/) {
+	    return("$i");
+	}
+    }
+    return("No");
+}
+
+## Function: promote_units                                   ##
+##    Usage: &promote_units(<Compound>, <Units>)             ##
+## Synopsis: promotes the specified units from the specified ##
+##           compound                                        ##
+##
+sub promote_units {
+    local(@the_units) = @_;
+    local($the_compound) = shift(@the_units);
+    local($the_unit, $error_msg);
+    foreach $the_unit (@the_units) {
+	## clear the xfer directory for each checkout
+	&create_new_xfer_dir();
+	`echo \"The dir is $xfer_dir\" | tee -a $logfile`;
+	&output("Promoting the unit $the_unit from compound $the_compound");
+	@junk = `hope co -missing-dir force -extra-files force -br $from_branch_name -c "$the_compound" -u "$the_unit" -filename "$xfer_dir" -date \"$promote_date\" 2>&1 | tee -a "$logfile"`;
+	$error_msg = &error_in_output(@junk);
+	`echo The msg is "$error_msg" | tee -a $logfile`;
+
+	if ($error_msg eq "No") {
+	    ## The co passed move on ##
+
+	    &output("Checked out the unit from $from_branch_name");
+	    `echo \"The dir is $xfer_dir\" | tee -a $logfile`;
+	    @junk = `hope claim -rea \"$reason\" -soft -br "$to_branch_name" -c "$the_compound" -u "$the_unit" -filename "$xfer_dir" 2>&1 | tee -a $logfile`;
+	    $error_msg = &error_in_output(@junk);
+	    `echo The msg is "$error_msg" | tee -a $logfile`;
+
+	    if ($error_msg eq "No") {
+		## The claim passed move on ##
+
+		&output("Claimed the unit from the branch");
+		`echo \"The dir is $xfer_dir\" | tee -a $logfile`;
+		@junk = `hope ci -diff-branch-files force -non-tip-files force -use-claim-reason -br "$to_branch_name" -c "$the_compound" -u "$the_unit" -filename "$xfer_dir" 2>&1 | tee -a $logfile`;
+		$error_msg = &error_in_output(@junk);
+		`echo The msg is "$error_msg" | tee -a $logfile`;
+
+		if ($error_msg eq "No") {
+		    ## The checkin passed, promotion of unit completed ##
+
+		    &output("Checked in the unit into the branch");
+
+		} else {
+		    ## The checkin failed ##
+		    &output("Checkin for unit the $the_unit exited with error:\n",
+			    "$error_msg", "Skipping unit $the_unit...");
+		    `echo \"Abandoning the claim.\" | tee -a $logfile`;
+		    @junk = `hope abandon -br "$to_branch_name" -c "$the_compound" -u "$the_unit" 2>&1 | tee -a $logfile`;
+		    $error_msg = &error_in_output(@junk);
+		    `echo The msg is "$error_msg" | tee -a $logfile`;
+		    &output("Abandoned the claim in the branch");
+		}
+
+	    } elsif ($error_msg =~ /Cannot find branch or checkpoint/ ||
+		     $error_msg =~ /you must supply a full version/) {
+		## The claim failed - a new unit, it should be added ##
+		@new_units = ("$the_compound:$the_unit");
+		&add_new_units();
+
+		## promotion for comp done ##
+
+	    } else {
+		## The claim failed due to something else ##
+		&output("Claim for unit $the_unit exited with error:\n",
+			"$error_msg", "Skipping unit $the_unit...");
+	    }		
+	} else {
+	    ## The checkout failed ##
+	    &output("Checkout for unit $the_unit exited with error:\n",
+		    "$error_msg", "Skipping unit $the_unit...");
+	}
+    }
+}
+
+## Function: promote_compounds                ##
+##    Usage: &promote_compounds(<Compounds>)  ##
+## Synopsis: promotes the specified compounds ##
+##
+sub promote_compounds {
+    local(@the_compounds) = @_;
+    local($the_compound, $comp1, $comp2, $i, @find_parent,
+	  @the_parent, $error_msg);
+    foreach $the_compound (@the_compounds) {
+	@branch_comps = @trunk_comps = @new_comps = 
+	    @new_units = @stale_comps = @stale_units = ();
+	$comp1 = "$the_compound($from_branch_name)";
+	$comp2 = "$the_compound($to_branch_name)";
+	&output("Promoting $the_compound to $to_branch_name branch");
+	`echo \"The dir is $xfer_dir\" | tee -a $logfile`;
+	@hope_status = `hope st -rec -hide claims,attributes,names,subcompound -format program -c "$comp1" -and -c "$comp2" 2>&1 | tee -a $logfile`;
+	$error_msg = &error_in_output(@hope_status);
+	`echo The msg is "$error_msg" | tee -a $logfile`;
+
+	if ($error_msg eq "No") {
+	    ## Status passed, move on ##
+
+	    &parse_hope_status();
+	    &output("Completed comparison of $comp1 and $comp2");
+	    &find_source_diffs();
+	    &output("Computed differences");
+	    `echo \"The new units are: --@new_units--\" | tee -a $logfile`;
+	    `echo \"The old units are: --@stale_units--\" | tee -a $logfile`;
+	    `echo \"The new comps are: --@new_comps--\" | tee -a $logfile`;
+	    `echo \"The old comps are: --@stale_comps--\" | tee -a $logfile`;
+	    &branch_new_comps();
+	    &remove_stale_comps();
+	    `echo Just about to call add new units | tee -a $logfile`;
+	    `ls -ld "$xfer_dir" | tee -a $logfile`;
+	    &add_new_units();
+	    `echo Just returned from add new units | tee -a $logfile`;
+	    `ls -ld "$xfer_dir" "$xfer_dir" | tee -a $logfile`;
+	    &remove_stale_units();
+	    ## clear the xfer directory for each checkout
+	    &create_new_xfer_dir();
+	    `echo \"The dir is $xfer_dir\" | tee -a $logfile`;
+	    `echo The compound here is: "$the_compound" | tee -a $logfile`;
+	    &output("Promoting the unit $the_unit from compound $the_compound");
+	    @hope_status = `hope co -diff-branch-files force -missing-dir create -extra-files delete "$rec_option" -br $from_branch_name -c "$the_compound" -filename "$xfer_dir" -date \"$promote_date\" 2>&1 | tee -a $logfile`;
+	    $error_msg = &error_in_output(@hope_status);
+	    `echo The msg is "$error_msg" | tee -a $logfile`;
+
+	    if ($error_msg eq "No") {
+		## Checkout passed, move on ##
+		
+		&output("Completed checkout of $the_compound from $from_branch_name");
+		`echo \"The dir is $xfer_dir\" | tee -a $logfile`;
+		@hope_status = `hope claim -rea \"$reason\" -soft "$rec_option" -br "$to_branch_name" -c "$the_compound" -filename "$xfer_dir" 2>&1 | tee -a $logfile`;
+		$error_msg = &error_in_output(@hope_status);
+		`echo The msg is $error_msg | tee -a $logfile`;
+
+		if ($error_msg eq "No") {
+		    ## Claim passed, move on ##
+
+		    &output("Claimed $the_compound from $to_branch_name branch");
+		    `echo \"The dir is $xfer_dir\" | tee -a $logfile`;
+		    @hope_status = `hope ci -diff-branch-files force -non-tip-files force -use-claim-reason "$rec_option" -br "$to_branch_name" -c "$the_compound" -filename "$xfer_dir" -unmodified abandon 2>&1 | tee -a $logfile`;
+		    $error_msg = &error_in_output(@hope_status);
+		    `echo The msg is "$error_msg" | tee -a $logfile`;
+
+		    if ($error_msg eq "No") {
+			## checkin passed, promotion complete ##
+			
+			&output("Checked in $the_compound to $to_branch_name branch");
+		    } else {
+			## checkin failed, skip ##
+			&output("Checkin for $the_compound exited with error:\n",
+			    "$error_msg", "Skipping $the_compound...");
+		    }
+
+		} else {
+		    ## Claim failed, skip ##
+		    &output("Claim for $the_compound exited with error:\n",
+			    "$error_msg", "Skipping $the_compound...");
+		}
+	    } else {
+		## Checkout failed, skip ##
+		&output("Checkout for $the_compound exited with error:\n",
+			"$error_msg", "Skipping $the_compound...");
+	    }
+
+	} elsif ($error_msg =~ /Error, collect: Cannot find branch or checkpoint/) {
+	    ## Status failed - toplevel new compound to be branched ##
+
+	    @find_parent = `hope st -not-rec -show parent -format program -c $the_compound -br $from_branch_name 2>&1 | tee -a $logfile`;
+	    `echo \"The full find parent is --@find_parent--\" | tee -a $logfile`;
+	    foreach (@find_parent) {
+		if ($_ =~ "parent") {
+		    $the_parent_and_branch = $';
+		}
+	    }
+	    @the_parent = split(' ', $the_parent_and_branch);
+	    @new_comps = ("$the_compound:$the_parent[0]");
+	    `echo \"The new comps are --@new_comps--\" | tee -a $logfile`;
+	    &branch_new_comps();
+
+	} else {
+	    ## Status failed due to something else ##
+	    &output("Status on $comp1 and $comp2 exited with error:\n",
+		     "$error_msg", "Skipping $the_compound ...");
+	}
+    }
+}
+
+## Function: parse_hope_status                         ##
+##    Usage: &parse_hope_status()                      ##
+## Synopsis: Parses the global @hope_status which has  ##
+##           a status report provided by HOPE in the   ##
+##           program format to obtain the info needed  ##
+##           to find the difference between the origin ##
+##           and the destination branch sources.       ##
+##
+sub parse_hope_status {
+    local ($i, @line, $the_branch, $the_comp);
+    foreach $i (@hope_status) {
+	@line = ();
+	chop($i);
+	@line = split(' ', $i);
+	if ($line[0] eq "startcompound") {
+	    $the_branch = $line[2];
+	    $the_comp = $the_comp . "$line[1]";
+	} elsif ($line[0] eq "unit") {
+	    $the_comp = $the_comp . ":$line[1]";
+	} elsif ($line[0] eq "endcompound") {
+	    if ($the_branch eq "$from_branch_name") {
+		push(@trunk_comps, $the_comp);
+	    } elsif ($the_branch eq "$to_branch_name") {
+		push(@branch_comps, $the_comp);
+	    } else {
+		&cleanup("Parse Error - The hope status report has unexpected tokens", 4);
+	    }
+	    $the_comp = "";
+	} elsif ($line[0] eq "parent") {
+	    $the_comp = $the_comp . ":$line[1]";
+	} elsif ($line[0] eq "endstatus") {
+	    return;
+	}
+    }
+}
+
+## The following functions &find_source_diffs, &branch_new_comps,   ##
+## &remove_stale_comps, &add_new_units and &remove_stale_units      ##
+## operate on the global lists @branch_comps, @trunk_comps, @new_units,##
+## @stale_units, @new_comps and @stale_comps. Even though I don't like  ##
+## doing things this way on globals lists , I dont really have an   ##
+## option as perl 4 does not support the sort of nested data        ##
+## structure that I am trying to emulate. If this script is ever    ##
+## ported to perl 5, then this can be changed and the data structure##
+## can be passed around as lists without running the risk of being  ##
+## flattened out by perl 4's naive interpreter.                     ##
+
+## Function: find_source_diffs                                        ##
+##    Usage: &find_source_diffs()                                     ##
+## Synopsis: Uses the global variables @branch_comps and @trunk_comps ##
+##           and compares them to generate @new_units, @stale_units   ##
+##           @new_comps and @stale_comps.                             ##
+## Note: Some output-generating code is commented out.  For debugging,##
+##       it can be reinstated or put under control of a "verbose"     ##
+##       option, if desired.                                          ##
+##                                                                    ##
+sub find_source_diffs {
+    local ($trunk_len, @trunk_bits);
+    local ($kan_len, @kan_bits);
+    local ($comp_name, $comp_parent, $unit);
+    $kan_len   = @branch_comps;
+    $trunk_len = @trunk_comps;
+##  `echo The kan comps are --@branch_comps-- | tee -a $logfile`;
+##  `echo The trunk comps are --@trunk_comps-- | tee -a $logfile`;
+    while ($kan_len > 0 && $trunk_len > 0) {
+	@kan_bits   = split(':', @branch_comps[0]);
+	@trunk_bits = split(':', @trunk_comps[0]);
+	if ($kan_bits[0] eq $trunk_bits[0]) {
+	    ## The compounds are the same, check for new and stale units
+	    ##
+##	    `echo The compounds are the same | tee -a $logfile`;
+	    $comp_name = shift(@trunk_bits);
+	    shift(@kan_bits);               
+	    pop(@trunk_bits);               
+	    pop(@kan_bits);                 
+	    foreach $unit (@kan_bits) {
+		if (grep(/^$unit$/, @trunk_bits) == 0) {
+		    push(@stale_units, "$comp_name:$unit");
+		}
+	    }
+	    foreach $unit (@trunk_bits) {
+		if (grep(/^$unit$/, @kan_bits) == 0) {
+		    push(@new_units, "$comp_name:$unit");
+		}
+	    }
+	    shift(@branch_comps);
+	    shift(@trunk_comps);
+	} elsif ($trunk_bits[0] lt $kan_bits[0]) {
+	    ## This is a new compound that should be branched
+	    ##
+##	    `echo New compound should be branched | tee -a $logfile`;
+	    $comp_name   = shift(@trunk_bits);
+	    $comp_parent = pop(@trunk_bits);
+##	    `echo The comp name is: --$comp_name-- | tee -a $logfile`;
+##	    `echo The comp parent is: --$comp_parent-- | tee -a $logfile`;
+	    push(@new_comps, "$comp_name:$comp_parent");
+	    shift(@trunk_comps);
+	} else {
+	    ## This is a stale compound and must be removed
+	    ##
+##	    `echo Stale compounds, should be removed | tee -a $logfile`;
+	    $comp_name   = shift(@kan_bits);
+	    $comp_parent = pop(@kan_bits);
+	    push(@stale_comps, "$comp_name:$comp_parent");
+	    shift(@branch_comps);
+	}
+	$kan_len   = @branch_comps;
+	$trunk_len = @trunk_comps;
+    }
+    push(@new_comps, @trunk_comps);
+    push(@stale_comps, @branch_comps);
+    `echo The new comps are --@new_comps-- | tee -a $logfile`;
+    `echo The stale comps are --@stale_comps-- | tee -a $logfile`;
+}
+
+## Function: branch_new_comps                         ##
+##    Usage: &branch_new_comps()                      ##
+## Synopsis: Branches the compounds in @new_comps     ##
+##           from the origin branch, removes their origin branch parent ##
+##           then adds it to the destination branch parent        ##
+##
+sub branch_new_comps {
+    local ($i, @the_comp, @junk, $error_msg, $the_parent);
+    foreach $i (@new_comps) {
+	@the_comp = split(':', $i);
+	$the_parent = pop(@the_comp);
+	`echo \"The dir is $xfer_dir\" | tee -a $logfile`;
+        `echo Branching --$the_comp[0]-- to --$the_parent-- | tee -a $logfile`;
+	@junk = `hope br -c "$the_comp[0]" -br $from_branch_name -label "$to_branch_name" -reuse-label "$rec_option" -date \"$promote_date\" 2>&1 | tee -a $logfile`;
+	$error_msg = &error_in_output(@junk);
+	`echo The msg is "$error_msg" | tee -a $logfile`;
+       
+	if ($error_msg eq "No") {
+	    ## The branching passed, move on ##
+	    `echo \"The dir is $xfer_dir\" | tee -a $logfile`;
+	    `echo About to remove $from_branch_name parent | tee -a $logfile`;
+	    @junk = `hope rem -rea \"$reason\" -c "$the_parent" -br $from_branch_name -subc "$the_comp[0]" -subv "$to_branch_name" 2>&1 | tee -a $logfile`;
+	    $error_msg = &error_in_output(@junk);
+	    `echo The msg is "$error_msg" | tee -a $logfile`;
+
+	    if ($error_msg eq "No") {
+		## The removing of the $from_branch_name parent passed, move on ##
+
+		`echo \"The dir is $xfer_dir\" | tee -a $logfile`;
+		@junk = `hope add -rea \"$reason\" -c "$the_parent" -br "$to_branch_name" -subc "$the_comp[0]" -subv "$to_branch_name" 2>&1 | tee -a $logfile`;
+		$error_msg = &error_in_output(@junk);
+		`echo The msg is "$error_msg" | tee -a $logfile`;
+
+		if ($error_msg eq "No") {
+		    ## The adding to branch parent worked, move on ##
+		    &output("Branched $the_comp[0] to $to_branch_name");
+		} else {
+		    ## The adding to the branch parent failed ##
+		    &output("Adding $the_comp[0] to parent exited with error:\n",
+			    "$error_msg", "Skipping $the_comp[0]");
+		}
+	    } else {
+		## The removing of the $from_branch_name parent failed ##
+		&output("Removing of the $from_branch_name parent of $i exited with error:\n",
+			"$error_msg", "Skipping $i ...");
+	    }
+	} else {
+	    ## The branching failed, skip ##
+	    &output("Branching of $i exited with error:\n",
+		    "$error_msg", "Skipping $i ...");
+	}
+    }
+}
+
+## Function: remove_stale_comps                    ##
+##    Usage: &remove_stale_comps()                 ##
+## Synopsis: Removes the compounds in @stale_comps ##
+##           from its parent in the branch         ##
+##
+sub remove_stale_comps {
+    local ($i, @the_comp, @junk, $error_msg, $the_parent);
+    foreach $i (@stale_comps) {
+	@the_comp = split(':', $i);
+	$the_parent = pop(@the_comp);
+	`echo \"The dir is $xfer_dir\" | tee -a $logfile`;
+	@junk = `hope remove -rea \" $reason\" -c "$the_parent" -br "$to_branch_name" -subc "$the_comp[0]" -subv "$to_branch_name" 2>&1 | tee -a $logfile`;
+	$error_msg = &error_in_output(@junk);
+	`echo The msg is "$error_msg" | tee -a $logfile`;
+
+	if ($error_msg eq "No") {
+	    ## The removal worked, move on ##
+	    &output("Removed $the_comp[0] from $the_parent");
+	} else {
+	    ## The removal did not work ##
+	    &output("Remove of $the_comp[0] exited with error:\n",
+		     "$error_msg", "Skipping $the_comp[0]...");
+	}
+    }
+}
+
+## Function: add_new_units                           ##
+##    Usage: &add_new_units()                        ##
+## Synopsis: Checks out the units in @new_units from ##
+##           the origin branch and then add it to the##
+##           parent in the destination branch.       ##
+##
+sub add_new_units {
+    local ($i, @the_unit, @junk, $error_msg);
+    foreach $i (@new_units) {
+	@the_unit = split(':', $i);
+	## clear the xfer directory for each checkout
+	&create_new_xfer_dir();
+	`echo \"The dir is $xfer_dir\" | tee -a $logfile`;
+	@junk = `hope co -miss cr -c "$the_unit[0]" -br $from_branch_name -u "$the_unit[1]" -date \"$promote_date\" -filename "$xfer_dir" 2>&1 | tee -a $logfile`;
+	$error_msg = &error_in_output(@junk);
+	`echo The msg is "$error_msg" | tee -a $logfile`;
+
+	if ($error_msg eq "No") {
+	    ## The checkout worked ##
+	    
+	    `echo \"The dir is $xfer_dir\" | tee -a $logfile`;
+	    @junk=`hope add -rea \"$reason\" -c "$the_unit[0]" -br "$to_branch_name" -u "$the_unit[1]" -filename "$xfer_dir" 2>&1 | tee -a $logfile`;
+	    $error_msg = &error_in_output(@junk);
+	    `echo The msg is "$error_msg" | tee -a $logfile`;
+
+            ## Remove the file again, in case we need to check out   ##
+            ## another file of the same name into the same location. ##
+	    ## This can happen with identically named units from     ##
+            ## different compounds.                                  ##
+            $added_filename = "$xfer_dir/$the_unit[1]";
+            `rm -f $added_filename`;
+            `echo Deleted temporary file $added_filename`;
+    
+	    if ($error_msg eq "No") {
+		## The add worked ##
+		&output("Added unit $the_unit[1] to $the_unit[0]");
+	    } else {
+		## The add failed ##
+		&output("Adding $i exited with error:\n",
+			"$error_msg", "Skipping ...");
+	    }
+	} else {
+	    ## The checkout failed ##
+	    &output("Checkout of $i exited with error:\n",
+		    "$error_msg", "Skipping ...");
+	}
+    }
+    `echo Right at the end of add new units | tee -a $logfile`;
+    `ls -ld "$xfer_dir" "$xfer_dir" | tee -a $logfile`;
+}
+
+## Function: remove_stale_units                ##
+##    Usage: &remove_stale_units()             ##
+## Synopsis: Removes the units in @stale_units ##
+##           from its parent in the branch     ##
+##
+sub remove_stale_units {
+    local ($i, @the_unit, @junk, $error_msg);
+    foreach $i (@stale_units) {
+	@the_unit = split(':', $i);
+	`echo \"The dir is $xfer_dir\" | tee -a $logfile`;
+	@junk = `hope remove -rea \" $reason\" -c "$the_unit[0]" -br "$to_branch_name" -u "$the_unit[1]" 2>&1 | tee -a $logfile`;
+	$error_msg = &error_in_output(@junk);
+	`echo The msg is "$error_msg" | tee -a $logfile`;
+
+	if ($error_msg eq "No") {
+	    ## The remove worked ##
+	    &output("Removed unit $the_unit[1] from $the_unit[0]");
+	} else {
+	    ## The remove failed ##
+	    &output("Remove of unit $the_uni[1] exited with error:\n",
+		    "$error_msg", "Skipping $the_unit[1]");
+	}
+    }
+}
+    
+## Function: create_new_xfer_dir                  ##
+##    Usage: &create_new_xfer_dir()               ##
+## Synopsis: flush the old transfer directory     ##
+##           and create a new one.  Seems         ##
+##           baroque and inefficient, but Unix    ##
+##           semms not always to remove subdirs   ##
+##           of xfer_dir with rm -rf $xfer_dir/*  ##
+##           thus snagging promotion of added     ##
+##           units sometimes.                     ##
+##
+sub create_new_xfer_dir {
+    `echo The current path is $curr_path | tee -a $logfile`;
+    `rm -rf $xfer_dir`;
+    `sleep 1`;         # wait 0:01 just in case, to get different suffix
+    $dir_suffix   = `date +%H%M%S`; chop($dir_suffix);
+    $xfer_dir     = "$curr_path/promote-$dir_suffix";
+    mkdir("$xfer_dir",0777) || 
+	die "Unable to create the tmp dir, there might be a write problem with the filesystem";
+    `echo Just created the directory | tee -a $logfile`;
+    `ls -ld "$xfer_dir" | tee -a $logfile`;
+}
+
+
+## eof

@@ -1,0 +1,59 @@
+#!/bin/sh
+
+deltadir=/nfs/abel/usr/users/keith/jonathan/delta/src/compiler
+hopedir=/nfs/abel/usr/users/keith/dylan/translator/lib/dw/compiler
+
+files=`(cd $deltadir; find . -name \*.dylan -print)`
+
+cd $hopedir
+
+for file in $files; do
+  dylan-co -claim soft -co-reason "Sync with delta from jonathan" $file
+  cp $deltadir/$file $file
+  dylan-ci -ci-reason "Sync with delta from jonathan" $file
+done
+
+# Hacks
+
+cd $hopedir/../macro
+
+search="macros.dylan syntax-macros.dylan discrimination-macros.dylan"
+
+for file in $search; do
+  if [ -f $deltadir/../system/$file ]; then
+    dylan-co -claim soft -co-reason "Sync with delta from jonathan" $file
+    cp $deltadir/../system/$file .
+    dylan-ci -ci-reason "Sync with delta from jonathan" $file
+  fi
+done
+
+cd $hopedir/../system
+
+search="system/lexical-environment.dylan extended-library/variable.dylan"
+
+for file in $search; do
+  base=`basename $file`
+  if [ -f $deltadir/../$file ]; then
+    dylan-co -claim soft -co-reason "Sync with delta from jonathan" $base
+    cp $deltadir/../$file .
+    dylan-ci -ci-reason "Sync with delta from jonathan" $base
+  fi
+done
+
+# Extended-library stuff too...
+
+files=`(cd $deltadir/../extended-library; find . -name \*.dylan -print)`
+
+echo $files
+
+cd $hopedir/../../app/extended-dylan
+
+for file in $files; do
+  if [ "$file" != "variable.dylan" ]; then
+    dylan-co -claim soft -co-reason "Sync with delta from jonathan" $file
+    cp $deltadir/../extended-library/$file .
+    dylan-ci -ci-reason "Sync with delta from jonathan" $file
+  fi
+done
+
+# eof

@@ -1,0 +1,103 @@
+#!/usr/local/bin/perl 
+#      Script: remove-old-files
+#      Author: Shri Amit (amit)     
+$usage="Usage: remove-old-files <PATHANME> <NUM2KEEP>";
+#    Synopsis: The following script takes as arguments the full
+#              pathname of a file of the format name.suffix
+#              NOTE: only the name should be passed in as argument
+#              not the suffix.
+#              The other argument is the number of images to keep.
+#              This script hunts path specified and keeps the 
+#              specified number of files starting with the most
+#              recent one.
+#############################################################
+## Application exit codes ##
+## 0: removal of old files successful
+## 1: improper usage
+## 2: Unable to open the directory from which to delete
+## 3: Nothing to delete
+
+## Checks for appropriate arguments ##
+##
+require '/u/dylan/tools/admin/env.perl';
+$OUTPUT_TYPE = "stdout";
+$imagepath = @ARGV[0]; # the long pathname of the image
+$keeper    = @ARGV[1]; # the number of images to keep 
+
+## Now to parse out the imagename from the long path ## 
+##
+@chunks = split (/[\/]/, $imagepath);
+$imagename = pop(@chunks);
+$imagepath = join ("/", @chunks);
+unless (($imagepath != "") || ($keeper > 0) || ($imagename != "")) {
+    &application_error("Improper usage: argument expected", 1,
+		       $0, $usage);
+
+}
+
+## Gather filenames that match format and sort ##
+##
+opendir(CURRPATH, "$imagepath") 
+    || &application_error("Could not open $imagepath", 2,
+			  $0, $usage);
+
+foreach $i (readdir(CURRPATH)) {
+        if (((index($i, $imagename)) == 0) && (&check_suffix($i))) {
+	    push (@images, "$imagepath/$i");
+        }
+    }
+@images = sort (@images);
+
+## Check to make sure that there are images to delete ##
+##
+$length = @images;
+if ($length <= $keeper) {
+    &output("Number present: $length");
+    &output("\nNumber to keep: $keeper");
+    &application_error("Nothing to delete", 3, $0, $usage);
+} else {
+    while ($length != $keeper) {
+	$i = shift(@images);	 
+	push(@rmimages, $i);	 
+	$length = @images;	 
+    }
+}
+
+## Viola! - as a Gail script would say ##
+##
+&output("The files to be removed are:");
+foreach $i (@rmimages) {
+	&output("$i\n");
+	&execute("rm -f $i");
+    }
+
+## put this all on one line when we get better at Perl
+##
+&output("Removal of old files completed on ");
+&execute("date");
+&output("");
+
+## The subroutine to check if the suffix is 6 digits long and is all digits ##
+##
+## Function: check_suffix                   ##
+## Synopsis: Ensures arg has a suffix which ##
+##           is all digits and has a length ##
+##           equal to 6                     ##
+##
+sub check_suffix {
+    $filename = $_[0];		    # The argument which is the filename
+    $where = index ($filename, "."); 
+    $suffix = substr($i, $where, 7); # Gets the suffix
+
+    $filelength = length($filename); # Length of the entire file
+    $imagelength = length($imagename); # Length of the image only
+    $suffixlength = $filelength - $imagelength;	# The diff. is the suffix
+
+    if (($suffix =~ /[\d]/) && ($suffixlength == 7)) {
+	$returnvalue = 1;
+    }
+    else {
+	$returnvalue = 0;
+    }
+    $returnvalue;
+}

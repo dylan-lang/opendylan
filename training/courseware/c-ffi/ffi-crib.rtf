@@ -1,0 +1,138 @@
+{\rtf1\ansi \deff7\deflang1033{\fonttbl{\f5\fswiss\fcharset0\fprq2 Arial;}{\f7\fswiss\fcharset0\fprq2 MS Sans Serif;}{\f11\fmodern\fcharset0\fprq1 Courier New;}{\f49\fswiss\fcharset0\fprq2 Tahoma;}}
+{\colortbl;\red0\green0\blue0;\red0\green0\blue255;\red0\green255\blue255;\red0\green255\blue0;\red255\green0\blue255;\red255\green0\blue0;\red255\green255\blue0;\red255\green255\blue255;\red0\green0\blue128;\red0\green128\blue128;\red0\green128\blue0;
+\red128\green0\blue128;\red128\green0\blue0;\red128\green128\blue0;\red128\green128\blue128;\red192\green192\blue192;}{\stylesheet{\widctlpar \f7\fs20 \snext0 Normal;}{\s1\qr\keepn\widctlpar \b\shad\f5\fs32\lang2057 \sbasedon0\snext0 heading 1;}{
+\s2\li-900\ri-720\keepn\widctlpar \b\f7\fs20\lang2057 \sbasedon0\snext0 heading 2;}{\*\cs10 \additive Default Paragraph Font;}{\s15\widctlpar \cbpat9 \f49\fs20 \sbasedon0\snext15 Document Map;}{\s16\widctlpar\tqc\tx4320\tqr\tx8640 \f7\fs20 
+\sbasedon0\snext16 footer;}{\*\cs17 \additive\sbasedon10 page number;}{\s18\widctlpar\tqc\tx4320\tqr\tx8640 \f7\fs20 \sbasedon0\snext18 header;}{\s19\li720\widctlpar \f5\fs32\lang2057 \sbasedon0\snext19 Body Text 2;}{\s20\li-810\widctlpar 
+\b\f7\fs20\lang2057 \sbasedon0\snext20 Body Text Indent 2;}{\*\cs21 \additive\b\f5\fs40\ulnone\lang2057\nosupersub \sbasedon10 Slide Title;}{\s22\widctlpar \f5\fs36\lang2057 \sbasedon0\snext22 Slide Body;}{\s23\li90\widctlpar \b\f7\fs20\lang2057 
+\sbasedon0\snext23 Body Text Indent 3;}{\s24\widctlpar \b\f7\fs20\lang2057 \sbasedon0\snext24 Body Text;}}{\info{\title C Types in Dylan}{\author Keith Playford}{\operator Hugh George Greene}{\creatim\yr1998\mo10\dy15\hr21\min41}
+{\revtim\yr1998\mo10\dy16\hr12\min6}{\version2}{\edmins0}{\nofpages1}{\nofwords439}{\nofchars2503}{\*\company  }{\vern57431}}\margl547\margr806\margt446\margb180 \widowctrl\ftnbj\aendnotes\aftnstart0\hyphhotz0\aftnnar\hyphcaps0 \fet0\sectd 
+\psz1\linex0\headery709\footery709\cols2\colsx709\linebetcol\endnhere {\footer \pard\plain \s16\qc\ri360\widctlpar\tqc\tx4320\tqr\tx8640 \f7\fs20 {\cs17\i\shad 
+\par }{\i\lang2057 
+\par }}{\*\pnseclvl1\pnucrm\pnstart1\pnindent720\pnhang{\pntxta .}}{\*\pnseclvl2\pnucltr\pnstart1\pnindent720\pnhang{\pntxta .}}{\*\pnseclvl3\pndec\pnstart1\pnindent720\pnhang{\pntxta .}}{\*\pnseclvl4\pnlcltr\pnstart1\pnindent720\pnhang{\pntxta )}}
+{\*\pnseclvl5\pndec\pnstart1\pnindent720\pnhang{\pntxtb (}{\pntxta )}}{\*\pnseclvl6\pnlcltr\pnstart1\pnindent720\pnhang{\pntxtb (}{\pntxta )}}{\*\pnseclvl7\pnlcrm\pnstart1\pnindent720\pnhang{\pntxtb (}{\pntxta )}}{\*\pnseclvl8
+\pnlcltr\pnstart1\pnindent720\pnhang{\pntxtb (}{\pntxta )}}{\*\pnseclvl9\pnlcrm\pnstart1\pnindent720\pnhang{\pntxtb (}{\pntxta )}}\pard\plain \s20\widctlpar \b\f7\fs20\lang2057 {\f5 An Introduction to the Dylan C FFI
+\par 
+\par Crib Sheet for the Practicals}{\b0\f5 
+\par 
+\par }{\f5 Standard Designator Classes: Numeric}{\b0\f5 
+\par 
+\par }{\b0\f11\fs18 <C-char>\tab \tab <C-signed-char>
+\par <C-unsigned-char>
+\par <C-short>\tab \tab <C-signed-short>
+\par <C-unsigned-short>
+\par <C-int>\tab \tab <C-signed-int>
+\par <C-unsigned-int>
+\par <C-long>\tab \tab <C-signed-long>
+\par <C-unsigned-long>
+\par 
+\par <C-float>\tab \tab <C-double>
+\par 
+\par }{\f5 Standard Designator Classes: Pointer}{\b0\f5 
+\par 
+\par }{\b0\f11\fs18 <C-char*>\tab \tab <C-signed-char*>
+\par <C-unsigned-char*>\tab etc.
+\par }{\b0\f5 
+\par }{\f5 Standard Designator Classes: Converting}{\b0\f5 
+\par 
+\par }\pard \s20\fi-1440\li1440\widctlpar {\b0\f5 <C-boolean>\tab converts to/from Dylan <boolean>, is a version of <C-int>
+\par <C-character>\tab converts to/from Dylan <character>, is a version of <C-char>
+\par <C-string> \tab converts from Dylan <byte-string>, is a valid subclass of Dylan <string>, is a version of <C-char*>
+\par 
+\par }{\f5 Allocation and Deallocation}{\b0\f5 
+\par 
+\par // Pointer to space for one (default) or more chars:
+\par }{\b0\f11 make(<char*>) \tab 
+\par make(<char*>, element-count: 50)
+\par }{\b0\f5 // Pointer to space for one or more <POINT> structs:
+\par }{\b0\f11 make(<LPPOINT>)
+\par make(<LPPOINT>, element-count: 5)
+\par }{\b0\f5 
+\par // Free memory associated with a pointer:
+\par }{\b0\f11 destroy(pointer);
+\par }{\b0\f5 
+\par // Stack allocation:
+\par }{\b0\f11 with-stack-structure 
+\par    (chars :: <C-char*>, element-count: 10)
+\par   // body
+\par end;
+\par }{\b0\f5 
+\par }{\b0\f11 with-stack-structure 
+\par     (struct-ptr :: <LPPOINT>)
+\par   // body
+\par end;
+\par }{\b0\f5 
+\par }{\f5 Array Access Through Pointers}{\b0\f5 
+\par 
+\par // Access an element:
+\par }{\b0\f11 element(ptr, 5)}{\b0\f5  }{\f5 or}{\b0\f5  }{\b0\f11 ptr[5]
+\par }{\b0\f5 // Set an element:
+\par }{\b0\f11 element(ptr, 5) := val}{\b0\f5  }{\f5 or}{\b0\f5  }{\b0\f11 ptr[5] := val}{\b0\f5 
+\par // New pointer to an element:
+\par }{\b0\f11 pointer-value-address(ptr, index: 5)
+\par }{\b0\f5 
+\par }{\f5 Pointer Manipulation}{\b0\f5 
+\par 
+\par // Pointer address as a numeric value:
+\par }{\b0\f11 pointer-address(ptr)
+\par }{\b0\f5 // Pointer comparison:
+\par }{\b0\f11 ptr1 = ptr2}{\b0\f5  }{\f5 or}{\b0\f5  }{\b0\f11 ptr1 < ptr2
+\par }{\b0\f5 // Null pointer:
+\par }{\b0\f11 null-pointer(<C-char*>)
+\par }{\b0\f5 // Null pointer predicate:
+\par }{\b0\f11 null-pointer?(ptr)
+\par }{\b0\f5 // Casting:
+\par }{\b0\f11 c-type-cast(<C-char*>, ptr-to-ints)
+\par c-type-cast(<C-unsigned-long>, ptr)
+\par }{\b0\f5 // Introspection:
+\par }{\b0\f11 size-of(<POINT>)}{\b0\f5  }{\f5 or}{\b0\f5  }{\b0\f11 alignment-of(<POINT>)
+\par }{\b0\f5 
+\par }{\f5 Importing Functions}{\b0\f5 
+\par 
+\par }{\b0\f11\fs18 define C-function foo-in-dylan
+\par                parameter normal1 :: <C-int*>;
+\par   input        parameter normal2 :: <C-int*>;
+\par   output       parameter ref-ret :: <C-int*>;
+\par   input output parameter by-ref  :: <C-int*>;
+\par   c-name: \ldblquote FooInC\rdblquote , c-modifiers: \ldblquote __stdcall\rdblquote ;
+\par end C-function;
+\par }{\b0\f5 
+\par }{\f5 Exporting Functions}{\b0\f5 
+\par 
+\par }{\b0\f11\fs18 define C-callable-wrapper 
+\par     $foo-ref of foo-in-dylan
+\par                parameter normal1 :: <C-int*>;
+\par   input        parameter normal2 :: <C-int*>;
+\par   output       parameter ref-ret :: <C-int*>;
+\par   input output parameter by-ref  :: <C-int*>;
+\par   c-name: \ldblquote FooInC\rdblquote , c-modifiers: \ldblquote __stdcall\rdblquote , 
+\par     export: #t;
+\par end C-callable-wrapper;
+\par }{\b0\f5 
+\par }{\f5 Defining C Structs and Unions}{\b0\f5 
+\par 
+\par }{\b0\f11\fs18 define C-struct <FOO>
+\par   slot normal-value :: <C-int*>;
+\par   array slot name-array :: <C-char>, 
+\par     length: 5, address-getter: name-value;
+\par   pointer-type-name: <FOO*>,
+\par   c-name: \ldblquote struct FOO\rdblquote ; // Documentation only
+\par end C-struct;
+\par }{\b0\f5 
+\par }{\f5 Accessing C Variables}{\b0\f5 
+\par 
+\par }{\b0\f11\fs18 define C-variable proc-count :: <C-int>
+\par   c-name: \ldblquote proc_count\rdblquote , import: #t;
+\par end C-variable;
+\par }{\b0\f5 
+\par }{\b0\f11\fs18 define C-address $proc-count-ptr :: <C-int*>
+\par   c-name: \ldblquote proc_count\rdblquote , import: #t;
+\par end C-address}{\b0\f5 ;
+\par 
+\par }{\f5 Win32 Naming}{\b0\f5 
+\par 
+\par Type }{\b0\f11 HWND}{\b0\f5 \tab \tab becomes\tab }{\b0\f11 <HWND>
+\par }{\b0\f5 #define }{\b0\f11 OPAQUE}{\b0\f5 \tab becomes\tab }{\b0\f11 $OPAQUE}{\b0\f5 
+\par #define }{\b0\f11 RT_BRUSH}{\b0\f5 \tab becomes\tab }{\b0\f11 $RT-BRUSH}{\b0\f5 
+\par }{\b0\f11 CreateWindow}{\b0\f5 \tab remains\tab }{\b0\f11 CreateWindow}{\b0\f5 
+\par Struct field }{\b0\f11 x}{\b0\f5 \tab \tab becomes          \tab }{\b0\f11 slot x-value}{\b0\f5 
+\par }}

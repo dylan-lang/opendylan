@@ -1,0 +1,59 @@
+#!/bin/sh 
+
+# Checks in files. If a compound is specified explicitly then all
+# files are checked into that compound. If no compound is specified
+# then each file is checked into its local compound as determined from
+# the .version file of its directory. 
+
+script=`basename $0`
+
+compound=""
+hope_options=""
+
+# This quoting hackery is an attempt to preserve grouping
+
+while [ $# -gt 0 ]; do
+  case $1 in
+    -c | -comp | -compound) 
+      compound=$2; shift 2
+      ;;
+    -reason | -rea)
+      hope_options="$hope_options $1 \"$2\""; shift 2
+      # hope_options="$hope_options $1 $2"; shift 2
+      ;;
+    -claim | -working-file | -version | -branch)
+      hope_options="$hope_options $1 \"$2\""; shift 2
+      ;;
+    -*)
+      echo "$script: unrecognised option $1"
+      exit 1
+      ;;
+    *)        
+      break
+      ;;
+  esac
+done
+
+files=$*
+
+if [ "$files" = "" ]; then
+  echo "$script: check in on directories is not yet implemented"
+  exit 1
+fi
+
+for file in $files; do
+  name=`basename $file`
+  dir=`dirname $file`
+  (cd $dir
+   if [ "$compound" = "" ]; then
+     compound=`dylan-local-compound`
+   fi
+   if [ "$compound" = "" ]; then
+     echo "$script: error - no compound found for $file"
+   fi
+   echo "dylan-hope ci -comp $compound $hope_options -unit $name" 
+   eval "dylan-hope ci -comp $compound $hope_options -unit $name" 
+  )
+done
+
+## eof

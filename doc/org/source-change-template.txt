@@ -1,0 +1,27 @@
+Author: 
+
+Description of changes: 
+
+Related Tasks: 
+
+Bugs Fixed: 
+
+Reviewed by: 
+
+Testing: 
+
+QA Impact: 
+
+Doc Impact: 
+
+User Impact: 
+
+Build Impact: 
+
+Additional Issues Raised: 
+
+New Files: 
+
+Files Changed: 
+
+Files Removed: 

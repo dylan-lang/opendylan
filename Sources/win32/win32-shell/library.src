@@ -1,0 +1,31 @@
+Module:    Dylan-user	%comment -*- Mode: Dylan -*-
+Synopsis:  Interface to Win32 shell API -- "SHELLAPI.H" and "SHELL.DLL".
+Copyright: Copyright (c) 1998-2000 Functional Objects, Inc. All rights reserved.
+
+define library Win32-shell
+  use Dylan;
+  use C-FFI;
+  use Win32-common;
+  use Win32-user;
+  export Win32-shell;
+end library;
+
+define module Win32-shell
+  use Dylan;
+  use C-FFI;
+  use Win32-common,
+    // export structure accessors defined in both modules. 
+    export: { cbSize-value, cbSize-value-setter,
+	      u-value, u-value-setter } ;
+  use Win32-user,
+    // we don't actually use anything from Win32-user, but we need to 
+    // add methods to these generic functions.
+    export: {hWnd-value, hWnd-value-setter,
+	     lParam-value, lParam-value-setter,
+	     fMask-value, fMask-value-setter,
+	     hIcon-value, hIcon-value-setter, pt-value, pt-value-setter};
+
+%include shellapi.exp
+
+  export <LPHICON>;
+end module;

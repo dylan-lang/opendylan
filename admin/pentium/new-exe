@@ -1,0 +1,7 @@
+pushd /home/nosa/dylan/build
+rm $1.tar
+unarchive $1
+
+# linkexe $1
+
+popd

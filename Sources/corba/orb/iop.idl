@@ -1,0 +1,190 @@
+#pragma prefix "omg.org"
+
+module IOP{                                                                                                             // IDL
+	  //
+	 // Standard Protocol Profile tag values 
+	// 
+	typedef unsigned long			ProfileId;
+	const ProfileId				TAG_INTERNET_IOP = 0;
+	const ProfileId				TAG_MULTIPLE_COMPONENTS = 1;
+
+	struct TaggedProfile {
+		ProfileId		tag;
+		sequence <octet> 	profile_data;
+	 };
+
+	 //
+	// an Interoperable Object Reference is a sequence of
+	// object-specific protocol profiles, plus a type ID.
+	//
+	struct IOR {
+		string		type_id;
+		sequence <TaggedProfile>		profiles;
+	};
+
+	//
+	// Standard way of representing multicomponent profiles.
+	// This would be encapsulated in a TaggedProfile.
+	//
+	typedef unsigned long ComponentId;
+	struct TaggedComponent {
+		ComponentId			tag;
+		sequence <octet>			component_data;
+	};
+	typedef sequence <TaggedComponent>MultipleComponentProfile;
+
+	const ComponentId		TAG_ORB_TYPE = 0;
+	const ComponentId		TAG_CODE_SETS = 1;
+	const ComponentId		TAG_SEC_NAME = 2;
+	const ComponentId		TAG_ASSOCIATION_OPTION = 3;
+
+	typedef unsigned long				ServiceID;
+
+	struct ServiceContext {
+ 		ServiceID			context_id;
+ 		sequence <octet>			context_data;
+ 	};
+	typedef sequence <ServiceContext>ServiceContextList;
+
+	const ServiceID					TransactionService = 0;
+	const ServiceID					CodeSets = 1;
+
+};
+
+module CONV_FRAME {					// IDL
+	typedef unsigned long CodeSetId;
+	struct CodeSetComponent {
+		CodeSetId			native_code_set;
+		sequence<CodeSetId>		conversion_code_sets;
+	};
+	struct CodeSetComponentInfo {
+		CodeSetComponent ForCharData;
+		CodeSetComponent ForWcharData;
+	};
+	struct CodeSetContext {
+		CodeSetId char_data;
+		CodeSetId wchar_data;
+	};
+};
+
+module GIOP {					// IDL extended for version 1.1
+
+	typedef string Principal;
+
+	struct Version {						 	
+		octet		major;
+		octet		minor;
+	};
+
+	#ifndef GIOP_1_1
+	// GIOP 1.0
+	enum MsgType_1_0{ 	// rename from MsgType
+		Request, Reply, CancelRequest,
+		LocateRequest, LocateReply,
+		CloseConnection, MessageError
+	};
+
+	#else
+	// GIOP 1.1
+	enum MsgType{
+		Request, Reply, CancelRequest,
+		LocateRequest, LocateReply,
+		CloseConnection, MessageError,					
+		Fragment			// GIOP 1.1 addition
+	};
+	#endif
+
+	// GIOP 1.0 
+		struct MessageHeader_1_0 { // Renamed from MessageHeader
+ 			char		magic [4];
+			Version		GIOP_version;
+			boolean		byte_order;		 	
+			octet		message_type;
+ 			unsigned long	message_size;
+						};
+
+	// GIOP 1.1
+                #ifdef GIOP_1_1
+		struct MessageHeader_1_1 {
+ 			char		magic [4];
+			Version		GIOP_version;
+		 	octet		flags;			 // GIOP 1.1 change
+ 			octet		message_type;
+ 			unsigned long	message_size;
+		};						
+                #endif
+
+		struct RequestHeader_1_0 {
+ 			IOP::ServiceContextList		service_context;
+			unsigned long			request_id;
+ 			boolean				response_expected;
+ 			sequence <octet>			object_key;
+ 			string				operation;
+ 			Principal			requesting_principal;
+ 		};
+
+		// GIOP 1.1
+		struct RequestHeader_1_1 {
+ 			IOP::ServiceContextList		service_context;
+			unsigned long		request_id;
+ 			boolean		response_expected;
+	 		octet 		reserved[3]; // Added in GIOP 1.1
+ 			sequence <octet>		object_key;
+ 			string		operation;
+ 			Principal		requesting_principal;
+ 		};
+		enum ReplyStatusType {
+ 			NO_EXCEPTION,
+			USER_EXCEPTION,
+ 			SYSTEM_EXCEPTION,
+			LOCATION_FORWARD
+ 		};
+
+		struct ReplyHeader {
+			IOP::ServiceContextList			service_context;
+ 			unsigned long 		request_id;
+ 			ReplyStatusType		reply_status;
+ 		};
+
+		struct CancelRequestHeader {
+ 			unsigned long		request_id;
+ 		};
+
+		struct LocateRequestHeader {
+ 			unsigned long		request_id;
+ 			sequence <octet>		object_key;
+		};
+		enum LocateStatusType {
+ 			UNKNOWN_OBJECT,
+ 			OBJECT_HERE,
+ 			OBJECT_FORWARD
+		};
+
+		struct LocateReplyHeader {
+ 			unsigned long		request_id;
+ 			LocateStatusType		locate_status;
+ 		};
+};
+
+module IIOP {				// IDL extended for version 1.1
+						
+	struct Version {
+ 		octet			major;
+ 		octet			minor;
+	};
+
+	struct ProfileBody_1_0 { // renamed from ProfileBody
+ 		Version			iiop_version;
+		string			host;
+ 		unsigned short		port;
+ 		sequence <octet>		object_key;
+	};
+
+	struct ProfileBody_1_1 {
+ 		Version			iiop_version;
+		string			host;
+ 		unsigned short		port;
+ 		sequence <octet>		object_key;
+	 	sequence <IOP::TaggedComponent> components;
+	};
+};

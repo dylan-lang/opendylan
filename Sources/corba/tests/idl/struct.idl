@@ -1,0 +1,78 @@
+// Author:    Keith Dennison
+// Copyright: Copyright (c) 1998.  Functional Objects, Inc.  All rights reserved.
+// Version:   $HopeName$
+
+struct StructureA {
+//    short               a_short;
+//    unsigned short      a_ushort;
+    long                a_long;
+    unsigned long       a_ulong;
+//    long long           a_longlong;
+//    unsigned long long  a_ulonglong;
+    octet               a_octet;
+};
+
+struct StructureB {
+     boolean  b_boolean;
+};
+
+struct StructureC {
+    string      c_string;
+    StructureB  c_struct;
+    char        c_char;
+};
+
+typedef struct StructureD {
+    float   d_float;
+    double  d_double;
+} StructureX;
+
+/*
+struct StructureE {
+    char                  character;
+    sequence<StructureE>  children;
+};
+*/
+
+interface StructTest {
+
+  attribute StructureA struct_a;
+  attribute StructureB struct_b;
+  attribute StructureC struct_c;
+  attribute StructureD struct_d;
+//  attribute structureE struct_e;
+
+//  short get_a_short ();
+//  unsigned short get_a_ushort ();
+  long get_a_long ();
+  unsigned long get_a_ulong ();
+//  long long get_a_longlong ();
+//  unsigned long long get_a_ulonglong ();
+  octet get_a_octet ();
+
+  boolean get_b_boolean ();
+
+  string get_c_string ();
+  StructureB get_c_struct ();
+  char get_c_char ();
+
+  float get_d_float ();
+  double get_d_double ();
+
+//  char get_character ();
+//  sequence<StructureE> get_children ();
+
+  boolean in_parameter_a (in StructureA structure);
+  boolean in_parameter_b (in StructureB structure);
+  boolean in_parameter_c (in StructureC structure);
+  boolean in_parameter_d (in StructureD structure);
+//  boolean in_parameter_e (in StructureD structure);
+
+  StructureA result_a ();
+  StructureB result_b ();
+  StructureC result_c ();
+  StructureD result_d ();
+//  structureE result_e ();
+
+};
+

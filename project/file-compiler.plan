@@ -1,0 +1,883 @@
+Introduction
+------------
+
+This is the first pass at a plan for Harlequin's Dylan developments,
+which gets us to the point of being able to demo a file compiler under
+Windows NT at Apple's World Wide Developers' Conference in early May.
+
+Don't worry - it's only a first pass. Where it's blatantly wrong, it
+can be fixed. Just make sure the errors are pointed out.
+
+Currently there are some over-assignments (especially Keith), and
+some guesses for how long some tasks will take). These will be
+resolved in the next pass.
+
+This plan says little about our future plans for Dylan. It also says
+nothing about Zimmerman. These will be covered in other plans when
+more information is available.
+
+
+Initial Goals
+-------------
+
+An optimzed Dylan file compiler technology, for 486 / Win32S:
+	
+	Compact code and data size.
+
+	Performance similar to C++ where equivalent facilities are used. 
+
+	An efficient implementation of the Dylan language libraries.
+
+	Compiler tracks evolving infix-Dylan specification - and is
+	written in that language.
+
+	Libraries can be either statically or dynamically linked
+
+	Foreign language interface
+
+	Direct interface to Windows API
+
+	CAPI, with Win32 backend
+
+	Graphics library with Win32 backend. (GP?)
+
+	Source-code debugging of Dylan compiled code.
+
+	Performance monitoring tools - e.g. time & allocation profiler.
+
+	An incremental GC, suitable for interactive performance.
+
+
+
+Longer term goals
+-----------------
+
+Full development environment, using OODB technology.
+
+Threads library. O/S independent, but mapping onto Win32 API
+
+Support for other types of applications (types TBD: e.g. real-time /
+memory intensive ...)
+
+Support for other OS and processor architectures.
+
+
+Development strategy
+--------------------
+
+Code will be written in Dylan, using infix syntax as soon as possible. 
+
+Until we have a standalone development environment, development will
+take place under LispWorks, using the translator technology. This will
+allow development of all aspects of Dylan - but might be slow for
+testing the compiler optimizations. Such testing will be done using the
+Lisp backend.
+
+NB: the translator technology is unlikely to ever implement the full
+Dylan syntax. The differences should be minimized, documented and
+avoided. 
+
+
+Task Templates
+--------------
+
+
+GLUE
+Description: Carry out our commitments to the OMI GLUE project in ANDF
+	     technology 
+
+Tasks:
+   Name:		Deliverable 5.7.1 
+		Write up deliverable (parallelism requirements)
+	Resources: Tony (2 weeks), Eliot (2 weeks)
+
+   Name:		Design notes for ANDF producer
+		Design the structure of the ANDF producer, & release
+		design document.
+	Resources: Ian (2 weeks)
+
+   Name:		ICR -> ANDF TOKENs
+		Implement compiler backend to ANDF (generating
+		equivalent code to C backend).
+	Requires: Design notes for ANDF producer
+	Resources: Ian (3 weeks)
+
+   Name:		TOKEN library for 32bit stock hardware
+		Implement TOKEN expansions, and test on SGI. Support a
+		conservative GC model, and a C calling convention only.
+	Requires: Design notes for ANDF producer
+	Resources: Ian (2 weeks)
+
+   Name:		Deliverable 4.2.2
+		Write up deliverable (evaluation of TDF supported Dylan)
+	Requires: ICR -> ANDF TOKENs, TOKEN library for 32bit stock hardware 
+	Resources: Ian (2 weeks), Tony (1 week)
+
+   Name:		Extend producer to use new features of TDF
+		Extend ANDF producer to support callee parameters and
+		total garabage collection with a software write barrier.
+	Requires: Deliverable 4.2.2
+	Resources: Ian (unplanned time)
+
+	
+
+VM IMPLEMENTATION
+Description: Implement the Dylan Virtual Machine 
+
+Tasks:
+   Name:		Implement VM
+		Implement the Dylan Virtual Machine for the Mac in GCC
+	Resources: Eliot (finish by 28 Jan 94)
+
+   Name:		Bootstrap an object table
+		Bootstrap a dummy VM memory image in LispWorks and dump it.
+	Requires: Implement VM
+	Resources: Unassigned
+
+
+
+LISP BACKEND
+Description: Implement a compiler backend ICR -> Lisp
+
+Tasks:
+   Name:		Test Bootstrap
+		Finish Lisp Backend, so that Dynamic bootstrap completes
+	Resources: Tim (finish by 4 Feb 94)
+
+   Name:		Update to static boot
+		Modify Lisp backend primitives and literal creation to work
+		with the static bootstrap.
+	Requires: STATIC BOOT
+	Resources: Tim (1 week)
+
+
+
+NATIVE BACKEND
+Description: Implement a native code backend from ICR to 486
+	     assembler, using HARP. 
+
+Tasks:
+   Name:		Native Backend Brainstorm
+		Discuss a compilation model for the native code / 486
+	Resources: ALL for 2 days discussion each
+
+   Name:		Native Backend Design Notes
+		Design an implementation strategy for 486 native code
+		generation.
+	Requires: Native Backend Brainstorm
+	Resources: Tony (1 week)
+
+   Name:		Compiler / library changes to support native code
+		Makes changes to current Dylan implementation to allow for
+		differences between native code generation and existing
+		approach. This includes support for tail calls, new function
+		representation, inlining APPLY etc.
+	Requires: Native Backend Design Notes
+	Resources: Jonathan (1 week)
+
+   Name:		Implement HARP
+		Implement HARP technology in Dylan - including register
+		colouring and the 486 backend.
+	Resources: Tony (4 weeks)
+
+   Name:		ICR -> HARP
+		Implement a HARP backend
+	Requires: Native Backend Design Notes
+	Resources: Tim (3 weeks), Ian (3 weeks), Tony (3 weeks)
+
+   Name:		HARP -> .o
+		Provide a route from the 486 backend to .o (by generating
+		assembler).
+	Resources: Tony (2 weeks)
+
+
+
+
+C BACKEND 
+Description: Update Compiler backend, ICR -> C, following compiler
+	     changes
+
+Requires: NATIVE BACKEND
+
+Tasks:
+   Name:		Update for compiler changes
+		Ensure C backend still functions after making changes to
+		support Native backend
+	Resources: Jonathan (time unknown)
+
+
+
+
+VM BACKEND
+Description: Implement a compiler backend for the DVM, based on HARP
+	     technology.
+
+Requires: NATIVE BACKEND
+
+Tasks:
+   Name:		DVM compiler design notes
+		Design a mechanism to generate code for the DVM - including
+		and additions which will be required by HARP.
+	Resources: Unassigned
+
+   Name:		DVM compiler implementation
+		Implement the DVM compiler.
+	Resources: Unassigned
+
+
+
+STATIC BOOT
+Description: Change the Dylan bootstrap to avoid the need for runtime
+	     circularity resolving, and to allow the linker to statically
+	     create literals.
+
+Tasks:
+   Name:		Static Boot  Design Notes
+		Write design notes for how to statically boot 
+	Resources: Jonathan (now done)
+
+   Name:		Compile time MOP
+		Implement a notion of classes within the compiler
+	Requires: Static Boot design notes
+	Resources: Jonathan (1 week)
+
+   Name:		Library Support
+		Implement compiler support for separate library compilation.
+		Include support for block compilation.
+	Requires: Compile time MOP
+	Resources: Jonathan (1 week)
+
+   Name:		Static Literals
+		Modify compiler & C backend to generate static literals for
+		sealed objects.
+	Requires: Library support
+	Resources: Jonathan (1 week)
+
+   Name:		Runtime Support
+		Change the runtime representation of objects / classes and
+			change to bootstrap design for the static bootstrap.
+	Resources: Jonathan (2 weeks)
+
+
+
+
+COMPILER OPTIMIZATIONS
+Description: Optimize the quality of the ICR to give us the proverbial
+	     Sufficiently Smart Compiler
+
+Requires: STATIC BOOT
+
+Tasks:
+ 
+   Name:		Type algebra within compiler
+		Improve compiler type inferencing by implementing type
+		algebra inside the compiler, and ensuring results are
+		propogated. 
+	Resources: Keith (2 weeks)
+
+   Name:		Static dispatch
+		Use type inferencing to avoid dynamic method dispatch, where
+		possible. This will involve storing sealed method info in the
+		compiler. Also use internal entry points, when possible.
+	Resources: Jonathan (1 week)
+
+   Name:		Compiler type consistency checks
+		Ensure the compiler provides warnings / errors if type
+		inferencing shows an inconsistency
+	Resources: Keith (2 days)
+
+   Name:		Boxing analysis
+		Ensure the compiler can work with raw values (esp. integers
+		and floats) wherever possible. This includes ensuring that
+		use is made of internal entry points which accept raw values
+		- and that no unnecessary boxing / unboxing & tagging /
+		untagging occurs.
+	Resources: AndyS (4 weeks)
+
+   Name:		Type test promotion
+		Use type inferencing to promote tests on object classes to an
+		earlier moment if that reduces  duplicated tests.
+	Resources: Unassigned
+
+   Name:		Inlining
+		Implement method inlining, and design heuristics for when to
+		inline. 
+	Requires: static dispatch
+	Resources: Jonathan (1 week)
+
+   Name:		Transforms
+		Study whether compiler performance could be improved with
+		some ad-hoc transforms. If so, implement a mechanism for
+		ad-hoc transforms within the compiler on a backend-local
+		basis. Implement the appropriate transforms.
+	Resources: Jonathan (1 week)
+
+   Name:		Stack Allocation
+		Support stack allocation of e.g. #rest, closures
+	Resources: Unassigned
+
+	
+
+MACROS
+Description: Implement the forthcoming Macro proposal from Apple
+
+Tasks:
+   Name:		Apple provide macros design
+	Requires: Apple
+	Resources: n/a
+
+   Name:		Macros design notes
+		decide how to implement macros, and write design notes. One
+ 		option to consider is that we ask Apple to supply an
+		implementation. 
+	Requires: Apple provide macros design
+	Resources: Keith (1 week)
+
+   Name:		Implement macros
+		Assuming that we must do our own macro system, implement
+		support for macro expansion to expression objects.
+	Requires: Macros design notes
+	Resources: Keith (1 week?)
+
+
+
+INFIX PARSER
+Description: Implement a parser for Infix Dylan with macros
+
+Requires: MACROS
+
+Tasks:
+   Name:		Parser & Macro interaction
+		Extend / rewrite Dylan infix parser to support macros
+	Requires: Implement macros
+	Resources: Keith (2 weeks?)
+
+   Name:		Debugger support from macros
+		Implement a source-code mapping path through the parser and
+		macro expander to be used by tyhe compiler backends.
+	Requires: Parser & Macro interaction
+	Resources: Keith (1 week)
+
+   Name:		Analyse performance of macros
+		Study and improve the performance of the parser / macro
+		subsystem. 
+	Requires: Debugger support
+	Resources: Keith (1 week)
+
+
+
+LIBRARY SUPPORT
+Description: Implement support for separate compilation via libraries.
+
+Tasks:
+   Name:		Apple provide library design
+	Requires: Apple
+	Resources: n/a
+
+   Name:		Library support design notes
+		Decide how to support separate compilation & write design
+		notes. 
+	Requires: Apple provide library design
+	Resources: Keith (1 week)
+
+   Name:		Compiler interface format
+		Implement a separate compilation interchange mechanism.
+		Includes a file format, and functions to dump and load
+		compiler information.
+	Requires: Library support design notes
+	Resources: Keith (1 week)
+
+   Name:		Dynamic / static linking support
+		It should be possible to load libraries by both dynamic and
+		static linking them. Provide support for both under Win32S.
+	Requires: NATIVE BACKEND, STATIC BOOT
+	Resources: Keith (2 days)
+
+   Name:		Consistency checking
+		Implement any changes necessary to consistency  check the
+		loading or linking of libraries.
+	Resources: Keith (1 week)
+
+
+
+COMPILER TUNING
+Description: Improve the efficiency of the Dylan compiler
+
+Requires: COMPILER OPTIMIZATIONS
+
+Tasks:
+   Name:		Monitor performance of compiler
+		Profile the compiler, looking for improvements. Document the
+		problems & suggest solutions.
+	Resources: AndyS (2 weeks)
+
+   Name:		Implement changes
+		Fix the problems found above
+	Requires: Monitor performance of compiler
+	Resources: AndyS (2 weeks), Jonathan (1 week)
+
+
+
+GC/RUNTIME
+Description: This task includes the runtime support necessary for GC,
+	     as well as any other support which might be provided by a
+	     runtime system.
+
+Tasks:
+   Name:		Study GC options
+		Study what GC technology is available, and what options are
+		available to support applications with various different
+		requirements. 
+	Resources: AndyS 
+
+   Name:		Port Boehm GC to Windows NT
+		Name says it all
+	Resources: Tim (1 week)
+
+   Name:		Other GCs
+		Port any other  chosen GCs to Windows
+	Requires: Study GC options
+	Resources: Unassigned
+
+
+
+
+LANGUAGE CHANGES
+Description: Keep the implementation of Dylan compatible with the
+	     language changes published by Apple.
+
+Tasks:
+   Name:		Type system
+		Support  new type system - e.g. union types, limited types 
+	Resources: Keith (1 week??)
+
+   Name:		Sealing
+		Support sealing protocol - i.e. implement macros, MOP, &
+		library changes. This task does not consider compiler
+		optimizations. 
+	Resources: Keith (1 week??)
+
+   Name:		Initialization protocol
+	Resources: Jonathan (1 week??)
+
+   Name:		Hashtables
+	Resources: Jonathan (3 days??)
+
+   Name:		Array changes
+	Resources: Jonathan (2 days)
+
+   Name:		Others as they arrive 
+	Resources: Unassigned
+
+	
+
+LIBRARY OPTIMIZATIONS
+Description: Improve the implementation of the language libraries to
+	     increase performance.
+
+Tasks:
+   Name:		Minimize consing 
+		Improve the library algorithms to avoid use of #rest etc.
+	Resources: Unassigned
+
+   Name:		Improve runtime dispatch
+		Improve the cacheing design of the runtime dispatch code.
+	Resources: Unassigned
+
+   Name:		IO improvements
+		Improve the speed of IO
+	Resources: Unassigned
+
+   Name:		Collection improvements
+		Improve the speed of the collections library
+	Resources: Unassigned
+
+   Name:		Remove incorrect library assumptions
+		Modify the library code where is makes incorrect assumptions
+		about the Dylan language  (e.g. that #rest -> list).
+	Resources: Jonathan (1 week)
+
+   Name:		Identify critical regions for threads support
+		Make sure the library code will work with a future threads
+		library, by determining critical regions, and by not making
+		wrong assumptions about fluid-bind etc.
+	Resources: Unassigned
+
+
+
+CODE REARRANGEMENT
+Description: Rearange module structure of code to align with language
+	     model.
+
+Requires: LIBRARY SUPPORT
+
+Tasks:
+   Name:		Separate core & libs
+		Rearrange code. This should fit in with the Apple library
+		partitions. 
+	Resources: Jonathan (3 days)
+
+
+
+FFI
+Description: Design / implement a foreign function interface for Dylan
+
+Requires:
+
+Tasks:
+   Name:		Document current design
+	Resources: Keith (by 1 Feb 94)
+
+   Name:		Improve FFI design
+		Discuss and improve the FFI design - including a design for
+		defining and mapping foreign types. Then write design notes.
+	Resources: Keith (1 week)
+
+   Name:		General compiler support for FFI
+	Requires: Improve FFI design
+	Resources: Keith (3 days)
+
+   Name:		HARP FFI
+		Implement low-level calls & accessors to foreign code from
+		HARP backend.
+	Requires:  General compiler support for FFI
+	Resources: Tony (2 days)
+
+   Name:		C FFI
+		Implement low-level calls & accessors to foreign code from
+		C backend.
+	Requires:  General compiler support for FFI
+	Resources: Jonathan (2 days)
+
+   Name:		High level interface
+		Design and implement a user-visible layer for accessing the FFI
+	Resources: Unassigned
+
+
+
+
+STANDARD LIBRARIES
+Description: Implement the Apple or CMU published standard libraries, once
+	     published.  
+
+Tasks:
+   Name:		IO
+	Resources: Unassigned
+
+   Name:		Numbers
+	Resources: Unassigned
+
+   Name:		Threads
+	Resources: Unassigned
+
+
+
+EXTRA LIBRARIES
+Description: Implement the extra libraries that Harlequin design
+
+Tasks:
+   Name:		Fix CAPI motif backend
+		Fix Dylan CAPI implementation to work with the Motif backend
+		- both in the translator and standalone.
+	Resources: Keith (1 week)
+
+   Name:		Implement CAPI Windows backend
+		Modify PC Lisp Windows CAPI backend for Dylan / Win32S
+	Resources: MikeS (3 weeks)
+
+   Name:		Implement CAPI grapher
+	Resources: Unassigned
+
+   Name:		Implemement CAPI editor
+	Resources: Unassigned
+
+   Name:		Design & implement CAPI foreign widget i/f
+	Resources: Unassigned
+		
+   Name:		Choose which graphics library to use
+		Choose a graphics library. Most likely options seem to be
+		Open GL or Graphics Ports.
+	Resources: MikeS, ALL
+
+   Name:		Implement graphics library
+	Requires: Choose which graphics library to use
+	Resources: MikeS (?? weeks)
+		
+   Name:		Listener
+		Redesign the Zimmerman listener so that it can be loaded as a
+		library without requiring any symbolic support before loading
+	Resources: Jonathan (time unassigned)
+
+   Name:		Direct OS mapping
+		Implement a direct Dylan interface to the Windows Win32S API
+		calls.
+	Requires: FFI: Low level calling / accessing
+	Resources: Tim (2 weeks)
+
+   Name:		Other interfaces
+		Implement direct Dylan interfaces, and also higher level
+		interfaces to important libraries - such as ODBC, OLE, DDE.
+	Resources: Unassigned
+
+
+
+
+SOURCE CODE SUPPORT
+Description: Provide tools for automatically converting source code
+	     between the various syntaxes.
+
+Requires: INFIX PARSER
+
+Tasks:
+   Name:		Emacs editor support for infix
+		Modify the C mode in GNU Emacs to support Dylan
+	Resources: Tim (3 days)
+
+   Name:		LispWorks editor support for infix
+		Support a Dylan editor mode in LispWorks
+	Requires: Emacs editor support for infix
+	Resources: Tim (2 weeks)
+
+   Name:		 parser preserving comments
+		Improve the infix and prefix  parser to preserve comments.
+		The comments are built as expression objects, as for code.
+	Resources: Keith (3 days)
+
+   Name:		PPrint to prefix syntax from expression tree
+		Enable a translator to prefix syntax, by pretty printing
+		expression objects (including comments)
+	Resources: Keith (1 day)
+
+   Name:		PPrint to infix syntax from expression tree
+		Enable a translator to infix syntax, by pretty printing
+		expression objects (including comments)
+	Resources: Keith (4 days)
+
+   Name:		PPrint to Common Lisp from expression tree
+		Enable a translator to Common Lisp, by pretty printing
+		expression objects (including comments)
+	Resources: Unassigned
+
+
+
+
+DYLAN -> CL TRANSLATOR
+Description: Support / maintain the Dylan translator technology within
+	     LispWorks. 
+
+Tasks:
+   Name:		document problems
+		The translator does not implement the full semantics of
+		Dylan. Look for all discrepancies, and either fix, or
+		document the differences.
+	Resources: Keith (2 days)
+
+   Name:		implement language changes
+		Keep the translator current with Dylan language changes.
+	Resources: Keith (unassigned time)
+
+
+
+TOOLS
+Description: Implement some tools for analysing compiled code
+
+Tasks:
+   Name:		Statistical time Profiler
+	Resources: Unassigned
+
+   Name:		Statistical allocation Profiler
+	Resources: Unassigned
+
+   Name:		Determinate Profiler
+	Resources: Unassigned
+
+   Name:		Debugger for Translator / infix syntax
+		Source language debugger for infix syntax in LispWorks
+	Resources: Tim (2 weeks)
+
+   Name:		Debugger for Lisp Backend / Infix syntax
+		Source language debugger for infix syntax for Lisp backend
+	Resources: Unassigned
+
+   Name:		Debugger for GDB / Infix syntax
+		Source language debugger for infix syntax in GDB
+	Resources: Unassigned
+
+   Name:		Debugger for Windows / Infix syntax.
+		Source language debugger for infix syntax in Windows
+	Resources: Eliot (4 weeks) (with some support from MikeS & PaulB)
+
+
+DEMO TO WWDC
+Description: Demonstrate Windows NT Dylan file compiler at Apple's
+	     World Wide Developer's Conference in May.
+
+Requires: NATIVE BACKEND
+
+Tasks:
+   Name:		Decide Demo
+		Agree on a demo for WWDC
+	Resources: ALL / Apple
+
+   Name:		Write Demo
+		Implement the chosen demo
+	Requires: Decide Demo
+	Resources: ??
+
+   Name:		Check demo works
+		Milestone: the chosen demo does perform
+	Requires: Write Demo
+	Resources: ALL (by 22 Apr 94)
+
+   Name:		Improve the demo
+		Improve the performance and look of the demo
+	Requires: Check demo works
+	Resources: ALL (by 29 Apr 94)
+
+   Name:		Demo it
+		Do the demo at WWDC
+	Requires: Improve the demo
+	Resources: ?? (by 1st week of May 94)
+
+
+
+
+TESTING
+Description: Support and maintain a means of testing the Dylan implementation
+
+Tasks:
+   Name:		Apple suite
+		Maintain and regularly use the Apple test suite
+	Resources: Jonathan (ongoing background task)
+
+   Name:		Harlequin suite
+		Design and implement a Harlequin test suite for Dylan.
+	Resources: Unassigned.
+
+   Name:		Library performance testing
+		Design and implement a test suite for timing parts of the
+		language libraries.
+	Resources: Unassigned
+
+   Name:		Compiler optimization suite
+		Design and implement a test suite for checking compiler
+		optimizations 
+	Resources: Jonathan (?? weeks)
+
+
+
+
+
+
+
+
+Individuals' work assignments
+-----------------------------
+
+
+
+Keith
+-----
+	COMPILER OPTIMIZATIONS: Type algebra within compiler (2 weeks)
+	COMPILER OPTIMIZATIONS: Compiler type consistency checks (2 days)
+	MACROS: Macros design notes (1 week)
+	MACROS: Implement macros (1 week?)
+	INFIX PARSER: Parser & Macro interaction (2 weeks?)
+	INFIX PARSER: Debugger support from macros (1 week)
+	INFIX PARSER: Analyse performance of macros (1 week)
+	LIBRARY SUPPORT: Library support design notes (1 week)
+	LIBRARY SUPPORT: Compiler interface format (1 week)
+	LIBRARY SUPPORT: Dynamic / static linking support (2 days)
+	LIBRARY SUPPORT: Consistency checking (1 week)
+	LANGUAGE CHANGES: Type system (1 week??)
+	LANGUAGE CHANGES: Sealing (1 week??)
+	FFI: Document current design (by 1 Feb 94)
+	FFI: Improve FFI design (1 week)
+	FFI: General compiler support for FFI (3 days)
+	EXTRA LIBRARIES: Fix CAPI motif backend (1 week)
+	SOURCE CODE SUPPORT: parser preserving comments (3 days)
+	SOURCE CODE SUPPORT: PPrint to prefix syntax from expression tree (1 day)
+	SOURCE CODE SUPPORT: PPrint to infix syntax from expression tree (4 days)
+	DYLAN -> CL TRANSLATOR: document problems (2 days)
+
+Tony
+----
+	GLUE: Deliverable 5.7.1  (2 weeks)
+	GLUE: Deliverable 4.2.2 (1 week)
+	NATIVE BACKEND: Design Notes (1 week)
+	NATIVE BACKEND: Implement HARP (4 weeks)
+	NATIVE BACKEND: ICR -> HARP (3 weeks)
+	NATIVE BACKEND: HARP -> .o (2 weeks)
+	FFI: HARP FFI (2 days)
+
+
+Eliot
+-----
+	VM: Implement VM (finish by 28 Jan 94)
+	GLUE: Deliverable 5.7.1  (2 weeks)
+	NATIVE BACKEND: ICR -> HARP (3 weeks)
+	TOOLS: Debugger for Windows / Infix syntax. (4 weeks)
+
+Ian
+---
+	GLUE: Design notes for ANDF producer (2 weeks)
+	GLUE: ICR -> ANDF TOKENs (3 weeks)
+	GLUE: TOKEN library for 32bit stock hardware (2 weeks)
+	GLUE: Deliverable 4.2.2 (2 weeks)
+	NATIVE BACKEND: ICR -> HARP (3 weeks)
+
+
+Jonathan
+--------
+	STATIC BOOT: Static Boot  Design Notes (done)
+	STATIC BOOT: Compile time MOP (1 week)
+	STATIC BOOT: Library Support (1 week)
+	STATIC BOOT: Static Literals (1 week)
+	STATIC BOOT: Runtime Support (2 weeks)
+	NATIVE BACKEND: Compiler / library changes to support native code (1 week)
+	COMPILER OPTIMIZATIONS: Static dispatch (1 week)
+	COMPILER OPTIMIZATIONS: Inlining (1 week)
+	COMPILER OPTIMIZATIONS: Transforms (1 week)
+	COMPILER TUNING: Implement changes (1 week)
+	LANGUAGE CHANGES: Initialization protocol (1 week??)
+	LANGUAGE CHANGES: Hashtables (3 days??)
+	LANGUAGE CHANGES: Array changes (2 days)
+	LIBRARY OPTIMIZATIONS: Remove incorrect library assumptions (1 week)
+	CODE REARRANGEMENT: Separate core & libs (3 days)
+	FFI: C FFI (2 days)
+
+
+MikeS
+-----
+	EXTRA LIBRARIES: Implement CAPI Windows backend (3 weeks)
+	EXTRA LIBRARIES: Implement graphics library (?? weeks)
+
+
+Tim
+---
+	LISP BACKEND: Test Bootstrap (finish by 4 Feb 94)
+	LISP BACKEND: Update to static boot (1 week)
+	NATIVE BACKEND: ICR -> HARP (3 weeks)
+	GC/RUNTIME: Port Boehm GC to Windows NT (1 week)
+	EXTRA LIBRARIES: Direct OS mapping (2 weeks)
+	SOURCE CODE SUPPORT: Emacs editor support for infix (3 days)
+	SOURCE CODE SUPPORT: LispWorks editor support for infix (2 weeks)
+	TOOLS: Debugger for Translator / infix syntax (2 weeks)
+
+
+AndyS
+-----
+	GC/RUNTIME: Study GC options
+	COMPILER OPTIMIZATIONS: Boxing analysis (4 weeks)
+	COMPILER TUNING: Monitor performance of compiler (2 weeks)
+	COMPILER TUNING: Implement changes (2 weeks)
+
+
+
+
+
+								Tony
+
+
+
+

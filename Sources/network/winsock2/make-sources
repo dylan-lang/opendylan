@@ -1,0 +1,51 @@
+
+#  Dylan libraries for interfacing with the Win32 API (Microsoft Windows)
+#
+#  This file controls the generation of source files that are created
+#  automatically by adapting information from the Microsoft header files.
+#
+#  This version works with the header files from the MSDN "Platform SDK" of
+#  October 1997 or January 1998.
+
+# Copyright:    Original Code is Copyright (c) 1998-2002 Functional Objects, Inc.
+#               All rights reserved.
+# License:      Functional Objects Library Public License Version 1.0
+# Dual License: GNU Lesser General Public License
+# Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
+
+# $HopeName: D-win32-winsock2!make-sources(trunk.2) $
+# $Date: 2004/03/12 00:09:30 $
+
+
+WINSOCK2=winsock2.dylan qos.dylan mswsock.dylan module.dylan 
+
+all: $(WINSOCK2)
+
+winsock2: $(WINSOCK2)
+
+COMDIR=../../win32/win32-common
+
+include $(COMDIR)/sources.mak
+
+module.dylan: module.src winsock2.exp qos.exp mswsock.exp
+
+winsock2.dylan: $(MSH)winsock2.h $(PATTERNS) make-sources more.pat
+	$(GEMA) -f more.pat -f $(PATTERNS) \
+		-f $(COMDIR)/modcopyr.pat  -module WinSock2 \
+		-omit INCL_WINSOCK_API_PROTOTYPES \
+		-omit INCL_WINSOCK_API_TYPEDEFS -omit timercmp \
+		-U INCL_WINSOCK_API_TYPEDEFS \
+		$(MSH)winsock2.h $@
+
+qos.dylan: $(MSH)qos.h $(PATTERNS) make-sources more.pat
+	$(GEMA) -f more.pat -f $(PATTERNS) \
+		-f $(COMDIR)/modcopyr.pat  -module WinSock2 \
+		$(MSH)qos.h $@
+
+mswsock.dylan: $(MSH)mswsock.h $(PATTERNS) make-sources more.pat
+	$(GEMA) -f more.pat -f $(PATTERNS) \
+		-f $(COMDIR)/modcopyr.pat  -module WinSock2 \
+		$(MSH)mswsock.h $@
+
+clean:
+	rm -f $(WINSOCK2) *.bak win*.exp

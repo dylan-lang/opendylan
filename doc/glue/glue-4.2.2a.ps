@@ -1,0 +1,3631 @@
+%!PS-Adobe-3.0
+%%BoundingBox: (atend)
+%%Pages: (atend)
+%%PageOrder: (atend)
+%%DocumentFonts: (atend)
+%%Creator: Frame 4.0
+%%DocumentData: Clean7Bit
+%%EndComments
+%%BeginProlog
+%
+% Frame ps_prolog 4.0, for use with Frame 4.0 products
+% This ps_prolog file is Copyright (c) 1986-1993 Frame Technology
+% Corporation.  All rights reserved.  This ps_prolog file may be
+% freely copied and distributed in conjunction with documents created
+% using FrameMaker, FrameBuilder and FrameViewer as long as this 
+% copyright notice is preserved.
+%
+% Frame products normally print colors as their true color on a color printer
+% or as shades of gray, based on luminance, on a black-and white printer. The
+% following flag, if set to True, forces all non-white colors to print as pure
+% black. This has no effect on bitmap images.
+/FMPrintAllColorsAsBlack             false def
+%
+% Frame products can either set their own line screens or use a printer's 
+% default settings. Three flags below control this separately for no 
+% separations, spot separations and process separations. If a flag
+% is true, then the default printer settings will not be changed. If it is
+% false, Frame products will use their own settings from a table based on
+% the printer's resolution.
+/FMUseDefaultNoSeparationScreen      true  def
+/FMUseDefaultSpotSeparationScreen    true  def
+/FMUseDefaultProcessSeparationScreen false def
+%
+% For any given PostScript printer resolution, Frame products have two sets of 
+% screen angles and frequencies for printing process separations, which are 
+% recomended by Adobe. The following variable chooses the higher frequencies
+% when set to true or the lower frequencies when set to false. This is only
+% effective if the appropriate FMUseDefault...SeparationScreen flag is false.
+/FMUseHighFrequencyScreens true def
+%
+% PostScript Level 2 printers contain an "Accurate Screens" feature which can
+% improve process separation rendering at the expense of compute time. This 
+% flag is ignored by PostScript Level 1 printers.
+/FMUseAcccurateScreens true def
+%
+% The following PostScript procedure defines the spot function that Frame
+% products will use for process separations. You may un-comment-out one of
+% the alternative functions below, or use your own.
+%
+% Dot function
+/FMSpotFunction {abs exch abs 2 copy add 1 gt 
+		{1 sub dup mul exch 1 sub dup mul add 1 sub }
+		{dup mul exch dup mul add 1 exch sub }ifelse } def
+%
+% Line function
+% /FMSpotFunction { pop } def
+%
+% Elipse function
+% /FMSpotFunction { dup 5 mul 8 div mul exch dup mul exch add 
+%		sqrt 1 exch sub } def
+%
+%
+/FMversion (4.0) def 
+/FMLevel1 /languagelevel where {pop languagelevel} {1} ifelse 2 lt def
+/FMPColor
+	FMLevel1 {
+		false
+		/colorimage where {pop pop true} if
+	} {
+		true
+	} ifelse
+def
+/FrameDict 400 dict def 
+systemdict /errordict known not {/errordict 10 dict def
+		errordict /rangecheck {stop} put} if
+% The readline in PS 23.0 doesn't recognize cr's as nl's on AppleTalk
+FrameDict /tmprangecheck errordict /rangecheck get put 
+errordict /rangecheck {FrameDict /bug true put} put 
+FrameDict /bug false put 
+mark 
+% Some PS machines read past the CR, so keep the following 3 lines together!
+currentfile 5 string readline
+00
+0000000000
+cleartomark 
+errordict /rangecheck FrameDict /tmprangecheck get put 
+FrameDict /bug get { 
+	/readline {
+		/gstring exch def
+		/gfile exch def
+		/gindex 0 def
+		{
+			gfile read pop 
+			dup 10 eq {exit} if 
+			dup 13 eq {exit} if 
+			gstring exch gindex exch put 
+			/gindex gindex 1 add def 
+		} loop
+		pop 
+		gstring 0 gindex getinterval true 
+		} bind def
+	} if
+/FMshowpage /showpage load def
+/FMquit /quit load def
+/FMFAILURE { 
+	dup = flush 
+	FMshowpage 
+	/Helvetica findfont 12 scalefont setfont
+	72 200 moveto
+	show FMshowpage 
+	FMquit 
+	} def 
+/FMVERSION {
+	FMversion ne {
+		(Frame product version does not match ps_prolog!) FMFAILURE
+		} if
+	} def 
+/FMBADEPSF { 
+	(PostScript Lang. Ref. Man., 2nd Ed., H.2.4 says EPS must not call X              )
+	dup dup (X) search pop exch pop exch pop length 
+	4 -1 roll 
+	putinterval 
+	FMFAILURE
+	} def
+/FMLOCAL {
+	FrameDict begin
+	0 def 
+	end 
+	} def 
+/concatprocs
+	{
+	/proc2 exch cvlit def/proc1 exch cvlit def/newproc proc1 length proc2 length add array def
+	newproc 0 proc1 putinterval newproc proc1 length proc2 putinterval newproc cvx
+}def
+FrameDict begin 
+/FMnone 0 def
+/FMcyan 1 def
+/FMmagenta 2 def
+/FMyellow 3 def
+/FMblack 4 def
+/FMcustom 5 def
+/FrameNegative false def 
+/FrameSepIs FMnone def 
+/FrameSepBlack 0 def
+/FrameSepYellow 0 def
+/FrameSepMagenta 0 def
+/FrameSepCyan 0 def
+/FrameSepRed 1 def
+/FrameSepGreen 1 def
+/FrameSepBlue 1 def
+/FrameCurGray 1 def
+/FrameCurPat null def
+/FrameCurColors [ 0 0 0 1 0 0 0 ] def 
+/FrameColorEpsilon .001 def	
+/eqepsilon {		
+	sub dup 0 lt {neg} if
+	FrameColorEpsilon le
+} bind def
+/FrameCmpColorsCMYK { 
+	2 copy 0 get exch 0 get eqepsilon {
+		2 copy 1 get exch 1 get eqepsilon {
+			2 copy 2 get exch 2 get eqepsilon {
+				3 get exch 3 get eqepsilon
+			} {pop pop false} ifelse
+		}{pop pop false} ifelse
+	} {pop pop false} ifelse
+} bind def
+/FrameCmpColorsRGB { 
+	2 copy 4 get exch 0 get eqepsilon {
+		2 copy 5 get exch 1 get eqepsilon {
+			6 get exch 2 get eqepsilon
+		}{pop pop false} ifelse
+	} {pop pop false} ifelse
+} bind def
+/RGBtoCMYK { 
+	1 exch sub 
+	3 1 roll 
+	1 exch sub 
+	3 1 roll 
+	1 exch sub 
+	3 1 roll 
+	3 copy 
+	2 copy 
+	le { pop } { exch pop } ifelse 
+	2 copy 
+	le { pop } { exch pop } ifelse 
+	dup dup dup 
+	6 1 roll 
+	4 1 roll 
+	7 1 roll 
+	sub 
+	6 1 roll 
+	sub 
+	5 1 roll 
+	sub 
+	4 1 roll 
+} bind def
+/CMYKtoRGB { 
+	dup dup 4 -1 roll add 						  
+	5 1 roll 3 -1 roll add 						  
+	4 1 roll add 								  
+	1 exch sub dup 0 lt {pop 0} if 3 1 roll 	  
+	1 exch sub dup 0 lt {pop 0} if exch 	      
+	1 exch sub dup 0 lt {pop 0} if exch	  		  
+} bind def
+/FrameSepInit {
+	1.0 RealSetgray
+} bind def
+/FrameSetSepColor { 
+	/FrameSepBlue exch def
+	/FrameSepGreen exch def
+	/FrameSepRed exch def
+	/FrameSepBlack exch def
+	/FrameSepYellow exch def
+	/FrameSepMagenta exch def
+	/FrameSepCyan exch def
+	/FrameSepIs FMcustom def
+	setCurrentScreen	
+} bind def
+/FrameSetCyan {
+	/FrameSepBlue 1.0 def
+	/FrameSepGreen 1.0 def
+	/FrameSepRed 0.0 def
+	/FrameSepBlack 0.0 def
+	/FrameSepYellow 0.0 def
+	/FrameSepMagenta 0.0 def
+	/FrameSepCyan 1.0 def
+	/FrameSepIs FMcyan def
+	setCurrentScreen	
+} bind def
+ 
+/FrameSetMagenta {
+	/FrameSepBlue 1.0 def
+	/FrameSepGreen 0.0 def
+	/FrameSepRed 1.0 def
+	/FrameSepBlack 0.0 def
+	/FrameSepYellow 0.0 def
+	/FrameSepMagenta 1.0 def
+	/FrameSepCyan 0.0 def
+	/FrameSepIs FMmagenta def
+	setCurrentScreen
+} bind def
+ 
+/FrameSetYellow {
+	/FrameSepBlue 0.0 def
+	/FrameSepGreen 1.0 def
+	/FrameSepRed 1.0 def
+	/FrameSepBlack 0.0 def
+	/FrameSepYellow 1.0 def
+	/FrameSepMagenta 0.0 def
+	/FrameSepCyan 0.0 def
+	/FrameSepIs FMyellow def
+	setCurrentScreen
+} bind def
+ 
+/FrameSetBlack {
+	/FrameSepBlue 0.0 def
+	/FrameSepGreen 0.0 def
+	/FrameSepRed 0.0 def
+	/FrameSepBlack 1.0 def
+	/FrameSepYellow 0.0 def
+	/FrameSepMagenta 0.0 def
+	/FrameSepCyan 0.0 def
+	/FrameSepIs FMblack def
+	setCurrentScreen
+} bind def
+ 
+/FrameNoSep { 
+	/FrameSepIs FMnone def
+	setCurrentScreen
+} bind def
+/FrameSetSepColors { 
+	FrameDict begin
+	[ exch 1 add 1 roll ]
+	/FrameSepColors  
+	exch def end
+	} bind def
+/FrameColorInSepListCMYK { 
+	FrameSepColors {  
+       		exch dup 3 -1 roll 
+       		FrameCmpColorsCMYK 
+       		{ pop true exit } if
+    	} forall 
+	dup true ne {pop false} if
+	} bind def
+/FrameColorInSepListRGB { 
+	FrameSepColors {  
+       		exch dup 3 -1 roll 
+       		FrameCmpColorsRGB 
+       		{ pop true exit } if
+    	} forall 
+	dup true ne {pop false} if
+	} bind def
+/RealSetgray /setgray load def
+/RealSetrgbcolor /setrgbcolor load def
+/RealSethsbcolor /sethsbcolor load def
+end 
+/setgray { 
+	FrameDict begin
+	FrameSepIs FMnone eq
+		{ RealSetgray } 
+		{ 
+		FrameSepIs FMblack eq 
+			{ RealSetgray } 
+			{ FrameSepIs FMcustom eq 
+			  FrameSepRed 0 eq and
+			  FrameSepGreen 0 eq and
+			  FrameSepBlue 0 eq and {
+			  	RealSetgray
+			  } {
+				1 RealSetgray pop 
+			  } ifelse
+			} ifelse
+		} ifelse
+	end
+} bind def
+/setrgbcolor { 
+	FrameDict begin
+	FrameSepIs FMnone eq
+	{  RealSetrgbcolor }
+	{
+		3 copy [ 4 1 roll ] 
+		FrameColorInSepListRGB
+		{
+				FrameSepBlue eq exch 
+			 	FrameSepGreen eq and exch 
+			 	FrameSepRed eq and
+			 	{ 0 } { 1 } ifelse
+		}
+		{
+			FMPColor {
+				RealSetrgbcolor
+				currentcmykcolor
+			} {
+				RGBtoCMYK
+			} ifelse
+			FrameSepIs FMblack eq
+			{1.0 exch sub 4 1 roll pop pop pop} {
+			FrameSepIs FMyellow eq
+			{pop 1.0 exch sub 3 1 roll pop pop} {
+			FrameSepIs FMmagenta eq
+			{pop pop 1.0 exch sub exch pop } {
+			FrameSepIs FMcyan eq
+			{pop pop pop 1.0 exch sub } 
+			{pop pop pop pop 1} ifelse } ifelse } ifelse } ifelse 
+		} ifelse
+		RealSetgray
+	} 
+	ifelse
+	end
+} bind def
+/sethsbcolor {
+	FrameDict begin
+	FrameSepIs FMnone eq 
+	{ RealSethsbcolor } 
+	{
+		RealSethsbcolor 
+		currentrgbcolor  
+		setrgbcolor 
+	} 
+	ifelse
+	end
+} bind def
+FrameDict begin
+/setcmykcolor where {
+	pop /RealSetcmykcolor /setcmykcolor load def
+} {
+	/RealSetcmykcolor {
+		4 1 roll
+		3 { 3 index add 0 max 1 min 1 exch sub 3 1 roll} repeat 
+		setrgbcolor pop
+	} bind def
+} ifelse
+userdict /setcmykcolor { 
+		FrameDict begin
+		FrameSepIs FMnone eq
+		{ RealSetcmykcolor } 
+		{
+			4 copy [ 5 1 roll ]
+			FrameColorInSepListCMYK
+			{
+				FrameSepBlack eq exch 
+				FrameSepYellow eq and exch 
+				FrameSepMagenta eq and exch 
+				FrameSepCyan eq and 
+				{ 0 } { 1 } ifelse
+			}
+			{
+				FrameSepIs FMblack eq
+				{1.0 exch sub 4 1 roll pop pop pop} {
+				FrameSepIs FMyellow eq
+				{pop 1.0 exch sub 3 1 roll pop pop} {
+				FrameSepIs FMmagenta eq
+				{pop pop 1.0 exch sub exch pop } {
+				FrameSepIs FMcyan eq
+				{pop pop pop 1.0 exch sub } 
+				{pop pop pop pop 1} ifelse } ifelse } ifelse } ifelse 
+			} ifelse
+			RealSetgray
+		}
+		ifelse
+		end
+	} bind put
+FMLevel1 not { 
+	
+	/patProcDict 5 dict dup begin
+		<0f1e3c78f0e1c387> { 3 setlinewidth -1 -1 moveto 9 9 lineto stroke 
+											4 -4 moveto 12 4 lineto stroke
+											-4 4 moveto 4 12 lineto stroke} bind def
+		<0f87c3e1f0783c1e> { 3 setlinewidth -1 9 moveto 9 -1 lineto stroke 
+											-4 4 moveto 4 -4 lineto stroke
+											4 12 moveto 12 4 lineto stroke} bind def
+		<8142241818244281> { 1 setlinewidth -1 9 moveto 9 -1 lineto stroke
+											-1 -1 moveto 9 9 lineto stroke } bind def
+		<03060c183060c081> { 1 setlinewidth -1 -1 moveto 9 9 lineto stroke 
+											4 -4 moveto 12 4 lineto stroke
+											-4 4 moveto 4 12 lineto stroke} bind def
+		<8040201008040201> { 1 setlinewidth -1 9 moveto 9 -1 lineto stroke 
+											-4 4 moveto 4 -4 lineto stroke
+											4 12 moveto 12 4 lineto stroke} bind def
+	end def
+	/patDict 15 dict dup begin
+		/PatternType 1 def		
+		/PaintType 2 def		
+		/TilingType 3 def		
+		/BBox [ 0 0 8 8 ] def 	
+		/XStep 8 def			
+		/YStep 8 def			
+		/PaintProc {
+			begin
+			patProcDict bstring known {
+				patProcDict bstring get exec
+			} {
+				8 8 true [1 0 0 -1 0 8] bstring imagemask
+			} ifelse
+			end
+		} bind def
+	end def
+} if
+/combineColor {
+    FrameSepIs FMnone eq
+	{
+		graymode FMLevel1 or not {
+			
+			[/Pattern [/DeviceCMYK]] setcolorspace
+			FrameCurColors 0 4 getinterval aload pop FrameCurPat setcolor
+		} {
+			FrameCurColors 3 get 1.0 ge {
+				FrameCurGray RealSetgray
+			} {
+				FMPColor graymode and {
+					0 1 3 { 
+						FrameCurColors exch get
+						1 FrameCurGray sub mul
+					} for
+					RealSetcmykcolor
+				} {
+					4 1 6 {
+						FrameCurColors exch get
+						graymode {
+							1 exch sub 1 FrameCurGray sub mul 1 exch sub
+						} {
+							1.0 lt {FrameCurGray} {1} ifelse
+						} ifelse
+					} for
+					RealSetrgbcolor
+				} ifelse
+			} ifelse
+		} ifelse
+	} { 
+		FrameCurColors 0 4 getinterval aload
+		FrameColorInSepListCMYK {
+			FrameSepBlack eq exch 
+			FrameSepYellow eq and exch 
+			FrameSepMagenta eq and exch 
+			FrameSepCyan eq and
+			FrameSepIs FMcustom eq and
+			{ FrameCurGray } { 1 } ifelse
+		} {
+			FrameSepIs FMblack eq
+			{FrameCurGray 1.0 exch sub mul 1.0 exch sub 4 1 roll pop pop pop} {
+			FrameSepIs FMyellow eq
+			{pop FrameCurGray 1.0 exch sub mul 1.0 exch sub 3 1 roll pop pop} {
+			FrameSepIs FMmagenta eq
+			{pop pop FrameCurGray 1.0 exch sub mul 1.0 exch sub exch pop } {
+			FrameSepIs FMcyan eq
+			{pop pop pop FrameCurGray 1.0 exch sub mul 1.0 exch sub } 
+			{pop pop pop pop 1} ifelse } ifelse } ifelse } ifelse 
+		} ifelse
+		graymode FMLevel1 or not {
+			
+			[/Pattern [/DeviceGray]] setcolorspace
+			FrameCurPat setcolor
+		} { 
+			graymode not FMLevel1 and {
+				
+				dup 1 lt {pop FrameCurGray} if
+			} if
+			RealSetgray
+		} ifelse
+	} ifelse
+} bind def
+/savematrix {
+	orgmatrix currentmatrix pop
+	} bind def
+/restorematrix {
+	orgmatrix setmatrix
+	} bind def
+/dmatrix matrix def
+/dpi    72 0 dmatrix defaultmatrix dtransform
+    dup mul exch   dup mul add   sqrt def
+	
+/freq dpi dup 72 div round dup 0 eq {pop 1} if 8 mul div def
+/sangle 1 0 dmatrix defaultmatrix dtransform exch atan def
+/dpiranges   [  2540    2400    1693     1270    1200     635      600      0      ] def
+/CMLowFreqs  [ 100.402  94.8683 89.2289 100.402  94.8683  66.9349  63.2456 47.4342 ] def
+/YLowFreqs   [  95.25   90.0    84.65    95.25   90.0     70.5556  66.6667 50.0    ] def
+/KLowFreqs   [  89.8026 84.8528 79.8088  89.8026 84.8528  74.8355  70.7107 53.033  ] def
+/CLowAngles  [  71.5651 71.5651 71.5651 71.5651  71.5651  71.5651  71.5651 71.5651 ] def
+/MLowAngles  [  18.4349 18.4349 18.4349 18.4349  18.4349  18.4349  18.4349 18.4349 ] def
+/YLowTDot    [  true    true    false    true    true     false    false   false   ] def
+/CMHighFreqs [ 133.87  126.491 133.843  108.503 102.523  100.402   94.8683 63.2456 ] def
+/YHighFreqs  [ 127.0   120.0   126.975  115.455 109.091   95.25    90.0    60.0    ] def
+/KHighFreqs  [ 119.737 113.137 119.713  128.289 121.218   89.8026  84.8528 63.6395 ] def
+/CHighAngles [  71.5651 71.5651 71.5651  70.0169 70.0169  71.5651  71.5651 71.5651 ] def
+/MHighAngles [  18.4349 18.4349 18.4349  19.9831 19.9831  18.4349  18.4349 18.4349 ] def
+/YHighTDot   [  false   false   true     false   false    true     true    false   ] def
+/PatFreq     [	10.5833 10.0     9.4055  10.5833 10.0	  10.5833  10.0	   9.375   ] def
+/screenIndex {
+	0 1 dpiranges length 1 sub { dup dpiranges exch get 1 sub dpi le {exit} {pop} ifelse } for
+} bind def
+/getCyanScreen {
+	FMUseHighFrequencyScreens { CHighAngles CMHighFreqs} {CLowAngles CMLowFreqs} ifelse
+		screenIndex dup 3 1 roll get 3 1 roll get /FMSpotFunction load
+} bind def
+/getMagentaScreen {
+	FMUseHighFrequencyScreens { MHighAngles CMHighFreqs } {MLowAngles CMLowFreqs} ifelse
+		screenIndex dup 3 1 roll get 3 1 roll get /FMSpotFunction load
+} bind def
+/getYellowScreen {
+	FMUseHighFrequencyScreens { YHighTDot YHighFreqs} { YLowTDot YLowFreqs } ifelse
+		screenIndex dup 3 1 roll get 3 1 roll get { 3 div
+			{2 { 1 add 2 div 3 mul dup floor sub 2 mul 1 sub exch} repeat
+			FMSpotFunction } } {/FMSpotFunction load } ifelse
+			0.0 exch
+} bind def
+/getBlackScreen  {
+	FMUseHighFrequencyScreens { KHighFreqs } { KLowFreqs } ifelse
+		screenIndex get 45.0 /FMSpotFunction load 
+} bind def
+/getSpotScreen {
+	getBlackScreen
+} bind def
+/getCompositeScreen {
+	getBlackScreen
+} bind def
+/FMSetScreen 
+	FMLevel1 { /setscreen load 
+	}{ {
+		8 dict begin
+		/HalftoneType 1 def
+		/SpotFunction exch def
+		/Angle exch def
+		/Frequency exch def
+		/AccurateScreens FMUseAcccurateScreens def
+		currentdict end sethalftone
+	} bind } ifelse
+def
+/setDefaultScreen {
+	FMPColor {
+		orgrxfer cvx orggxfer cvx orgbxfer cvx orgxfer cvx setcolortransfer
+	}
+	{
+		orgxfer cvx settransfer
+	} ifelse
+	orgfreq organgle orgproc cvx setscreen
+} bind def
+/setCurrentScreen {
+	FrameSepIs FMnone eq {
+		FMUseDefaultNoSeparationScreen {
+			setDefaultScreen
+		} {
+			getCompositeScreen FMSetScreen
+		} ifelse
+	} {
+		FrameSepIs FMcustom eq {
+			FMUseDefaultSpotSeparationScreen {
+				setDefaultScreen
+			} {
+				getSpotScreen FMSetScreen
+			} ifelse
+		} {
+			FMUseDefaultProcessSeparationScreen {
+				setDefaultScreen
+			} {
+				FrameSepIs FMcyan eq {
+					getCyanScreen FMSetScreen
+				} {
+					FrameSepIs FMmagenta eq {
+						getMagentaScreen FMSetScreen
+					} {
+						FrameSepIs FMyellow eq {
+							getYellowScreen FMSetScreen
+						} {
+							getBlackScreen FMSetScreen
+						} ifelse
+					} ifelse
+				} ifelse
+			} ifelse
+		} ifelse
+	} ifelse 
+} bind def
+end
+	/gstring FMLOCAL
+	/gfile FMLOCAL
+	/gindex FMLOCAL
+	/orgrxfer FMLOCAL
+	/orggxfer FMLOCAL
+	/orgbxfer FMLOCAL
+	/orgxfer FMLOCAL
+	/orgproc FMLOCAL
+	/orgrproc FMLOCAL
+	/orggproc FMLOCAL
+	/orgbproc FMLOCAL
+	/organgle FMLOCAL
+	/orgrangle FMLOCAL
+	/orggangle FMLOCAL
+	/orgbangle FMLOCAL
+	/orgfreq FMLOCAL
+	/orgrfreq FMLOCAL
+	/orggfreq FMLOCAL
+	/orgbfreq FMLOCAL
+	/yscale FMLOCAL
+	/xscale FMLOCAL
+	/edown FMLOCAL
+	/manualfeed FMLOCAL
+	/paperheight FMLOCAL
+	/paperwidth FMLOCAL
+/FMDOCUMENT { 
+	array /FMfonts exch def 
+	/#copies exch def
+	FrameDict begin
+	0 ne /manualfeed exch def
+	/paperheight exch def
+	/paperwidth exch def
+	0 ne /FrameNegative exch def 
+	0 ne /edown exch def 
+	/yscale exch def
+	/xscale exch def
+	FMLevel1 {
+		manualfeed {setmanualfeed} if
+		/FMdicttop countdictstack 1 add def 
+		/FMoptop count def 
+		setpapername 
+		manualfeed {true} {papersize} ifelse 
+		{manualpapersize} {false} ifelse 
+		{desperatepapersize} {false} ifelse 
+		{ (Can't select requested paper size for Frame print job!) FMFAILURE } if
+		count -1 FMoptop {pop pop} for
+		countdictstack -1 FMdicttop {pop end} for 
+		}
+		{{1 dict dup /PageSize [paperwidth paperheight]put setpagedevice}stopped
+		{ (Can't select requested paper size for Frame print job!) FMFAILURE } if
+		 {1 dict dup /ManualFeed manualfeed put setpagedevice } stopped pop }
+	ifelse 
+	
+	FMPColor {
+		currentcolorscreen
+			cvlit /orgproc exch def
+				  /organgle exch def 
+				  /orgfreq exch def
+			cvlit /orgbproc exch def
+				  /orgbangle exch def 
+				  /orgbfreq exch def
+			cvlit /orggproc exch def
+				  /orggangle exch def 
+				  /orggfreq exch def
+			cvlit /orgrproc exch def
+				  /orgrangle exch def 
+				  /orgrfreq exch def
+			currentcolortransfer 
+			FrameNegative {
+				1 1 4 { 
+					pop { 1 exch sub } concatprocs 4 1 roll
+				} for
+				4 copy
+				setcolortransfer
+			} if
+			cvlit /orgxfer exch def
+			cvlit /orgbxfer exch def
+			cvlit /orggxfer exch def
+			cvlit /orgrxfer exch def
+	} {
+		currentscreen 
+			cvlit /orgproc exch def
+				  /organgle exch def 
+				  /orgfreq exch def
+				  
+		currenttransfer 
+		FrameNegative {
+			{ 1 exch sub } concatprocs
+			dup settransfer
+		} if 
+		cvlit /orgxfer exch def
+	} ifelse
+	end 
+} def 
+/pagesave FMLOCAL
+/orgmatrix FMLOCAL
+/landscape FMLOCAL
+/pwid FMLOCAL
+/FMBEGINPAGE { 
+	FrameDict begin 
+	/pagesave save def
+	3.86 setmiterlimit
+	/landscape exch 0 ne def
+	landscape { 
+		90 rotate 0 exch dup /pwid exch def neg translate pop 
+	}{
+		pop /pwid exch def
+	} ifelse
+	edown { [-1 0 0 1 pwid 0] concat } if
+	0 0 moveto paperwidth 0 lineto paperwidth paperheight lineto 
+	0 paperheight lineto 0 0 lineto 1 setgray fill
+	xscale yscale scale
+	/orgmatrix matrix def
+	gsave 
+} def 
+/FMENDPAGE {
+	grestore 
+	pagesave restore
+	end 
+	showpage
+	} def 
+/FMFONTDEFINE { 
+	FrameDict begin
+	findfont 
+	ReEncode 
+	1 index exch 
+	definefont 
+	FMfonts 3 1 roll 
+	put
+	end 
+	} def 
+/FMFILLS {
+	FrameDict begin dup
+	array /fillvals exch def
+	dict /patCache exch def
+	end 
+	} def 
+/FMFILL {
+	FrameDict begin
+	 fillvals 3 1 roll put
+	end 
+	} def 
+/FMNORMALIZEGRAPHICS { 
+	newpath
+	0.0 0.0 moveto
+	1 setlinewidth
+	0 setlinecap
+	0 0 0 sethsbcolor
+	0 setgray 
+	} bind def
+	/fx FMLOCAL
+	/fy FMLOCAL
+	/fh FMLOCAL
+	/fw FMLOCAL
+	/llx FMLOCAL
+	/lly FMLOCAL
+	/urx FMLOCAL
+	/ury FMLOCAL
+/FMBEGINEPSF { 
+	end 
+	/FMEPSF save def 
+	/showpage {} def 
+% See Adobe's "PostScript Language Reference Manual, 2nd Edition", page 714.
+% "...the following operators MUST NOT be used in an EPS file:" (emphasis ours)
+	/banddevice {(banddevice) FMBADEPSF} def
+	/clear {(clear) FMBADEPSF} def
+	/cleardictstack {(cleardictstack) FMBADEPSF} def 
+	/copypage {(copypage) FMBADEPSF} def
+	/erasepage {(erasepage) FMBADEPSF} def
+	/exitserver {(exitserver) FMBADEPSF} def
+	/framedevice {(framedevice) FMBADEPSF} def
+	/grestoreall {(grestoreall) FMBADEPSF} def
+	/initclip {(initclip) FMBADEPSF} def
+	/initgraphics {(initgraphics) FMBADEPSF} def
+	/initmatrix {(initmatrix) FMBADEPSF} def
+	/quit {(quit) FMBADEPSF} def
+	/renderbands {(renderbands) FMBADEPSF} def
+	/setglobal {(setglobal) FMBADEPSF} def
+	/setpagedevice {(setpagedevice) FMBADEPSF} def
+	/setshared {(setshared) FMBADEPSF} def
+	/startjob {(startjob) FMBADEPSF} def
+	/lettertray {(lettertray) FMBADEPSF} def
+	/letter {(letter) FMBADEPSF} def
+	/lettersmall {(lettersmall) FMBADEPSF} def
+	/11x17tray {(11x17tray) FMBADEPSF} def
+	/11x17 {(11x17) FMBADEPSF} def
+	/ledgertray {(ledgertray) FMBADEPSF} def
+	/ledger {(ledger) FMBADEPSF} def
+	/legaltray {(legaltray) FMBADEPSF} def
+	/legal {(legal) FMBADEPSF} def
+	/statementtray {(statementtray) FMBADEPSF} def
+	/statement {(statement) FMBADEPSF} def
+	/executivetray {(executivetray) FMBADEPSF} def
+	/executive {(executive) FMBADEPSF} def
+	/a3tray {(a3tray) FMBADEPSF} def
+	/a3 {(a3) FMBADEPSF} def
+	/a4tray {(a4tray) FMBADEPSF} def
+	/a4 {(a4) FMBADEPSF} def
+	/a4small {(a4small) FMBADEPSF} def
+	/b4tray {(b4tray) FMBADEPSF} def
+	/b4 {(b4) FMBADEPSF} def
+	/b5tray {(b5tray) FMBADEPSF} def
+	/b5 {(b5) FMBADEPSF} def
+	FMNORMALIZEGRAPHICS 
+	[/fy /fx /fh /fw /ury /urx /lly /llx] {exch def} forall 
+	fx fw 2 div add fy fh 2 div add  translate
+	rotate
+	fw 2 div neg fh 2 div neg translate
+	fw urx llx sub div fh ury lly sub div scale 
+	llx neg lly neg translate 
+	/FMdicttop countdictstack 1 add def 
+	/FMoptop count def 
+	} bind def
+/FMENDEPSF {
+	count -1 FMoptop {pop pop} for 
+	countdictstack -1 FMdicttop {pop end} for 
+	FMEPSF restore
+	FrameDict begin 
+	} bind def
+FrameDict begin 
+/setmanualfeed {
+%%BeginFeature *ManualFeed True
+	 statusdict /manualfeed true put
+%%EndFeature
+	} bind def
+/max {2 copy lt {exch} if pop} bind def
+/min {2 copy gt {exch} if pop} bind def
+/inch {72 mul} def
+/pagedimen { 
+	paperheight sub abs 16 lt exch 
+	paperwidth sub abs 16 lt and
+	{/papername exch def} {pop} ifelse
+	} bind def
+	/papersizedict FMLOCAL
+/setpapername { 
+	/papersizedict 14 dict def 
+	papersizedict begin
+	/papername /unknown def 
+		/Letter 8.5 inch 11.0 inch pagedimen
+		/LetterSmall 7.68 inch 10.16 inch pagedimen
+		/Tabloid 11.0 inch 17.0 inch pagedimen
+		/Ledger 17.0 inch 11.0 inch pagedimen
+		/Legal 8.5 inch 14.0 inch pagedimen
+		/Statement 5.5 inch 8.5 inch pagedimen
+		/Executive 7.5 inch 10.0 inch pagedimen
+		/A3 11.69 inch 16.5 inch pagedimen
+		/A4 8.26 inch 11.69 inch pagedimen
+		/A4Small 7.47 inch 10.85 inch pagedimen
+		/B4 10.125 inch 14.33 inch pagedimen
+		/B5 7.16 inch 10.125 inch pagedimen
+	end
+	} bind def
+/papersize {
+	papersizedict begin
+		/Letter {lettertray letter} def
+		/LetterSmall {lettertray lettersmall} def
+		/Tabloid {11x17tray 11x17} def
+		/Ledger {ledgertray ledger} def
+		/Legal {legaltray legal} def
+		/Statement {statementtray statement} def
+		/Executive {executivetray executive} def
+		/A3 {a3tray a3} def
+		/A4 {a4tray a4} def
+		/A4Small {a4tray a4small} def
+		/B4 {b4tray b4} def
+		/B5 {b5tray b5} def
+		/unknown {unknown} def
+	papersizedict dup papername known {papername} {/unknown} ifelse get
+	end
+	statusdict begin stopped end 
+	} bind def
+/manualpapersize {
+	papersizedict begin
+		/Letter {letter} def
+		/LetterSmall {lettersmall} def
+		/Tabloid {11x17} def
+		/Ledger {ledger} def
+		/Legal {legal} def
+		/Statement {statement} def
+		/Executive {executive} def
+		/A3 {a3} def
+		/A4 {a4} def
+		/A4Small {a4small} def
+		/B4 {b4} def
+		/B5 {b5} def
+		/unknown {unknown} def
+	papersizedict dup papername known {papername} {/unknown} ifelse get
+	end
+	stopped 
+	} bind def
+/desperatepapersize {
+	statusdict /setpageparams known
+		{
+		paperwidth paperheight 0 1 
+		statusdict begin
+		{setpageparams} stopped 
+		end
+		} {true} ifelse 
+	} bind def
+/DiacriticEncoding [
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /space /exclam /quotedbl
+/numbersign /dollar /percent /ampersand /quotesingle /parenleft
+/parenright /asterisk /plus /comma /hyphen /period /slash /zero /one
+/two /three /four /five /six /seven /eight /nine /colon /semicolon
+/less /equal /greater /question /at /A /B /C /D /E /F /G /H /I /J /K
+/L /M /N /O /P /Q /R /S /T /U /V /W /X /Y /Z /bracketleft /backslash
+/bracketright /asciicircum /underscore /grave /a /b /c /d /e /f /g /h
+/i /j /k /l /m /n /o /p /q /r /s /t /u /v /w /x /y /z /braceleft /bar
+/braceright /asciitilde /.notdef /Adieresis /Aring /Ccedilla /Eacute
+/Ntilde /Odieresis /Udieresis /aacute /agrave /acircumflex /adieresis
+/atilde /aring /ccedilla /eacute /egrave /ecircumflex /edieresis
+/iacute /igrave /icircumflex /idieresis /ntilde /oacute /ograve
+/ocircumflex /odieresis /otilde /uacute /ugrave /ucircumflex
+/udieresis /dagger /.notdef /cent /sterling /section /bullet
+/paragraph /germandbls /registered /copyright /trademark /acute
+/dieresis /.notdef /AE /Oslash /.notdef /.notdef /.notdef /.notdef
+/yen /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/ordfeminine /ordmasculine /.notdef /ae /oslash /questiondown
+/exclamdown /logicalnot /.notdef /florin /.notdef /.notdef
+/guillemotleft /guillemotright /ellipsis /.notdef /Agrave /Atilde
+/Otilde /OE /oe /endash /emdash /quotedblleft /quotedblright
+/quoteleft /quoteright /.notdef /.notdef /ydieresis /Ydieresis
+/fraction /currency /guilsinglleft /guilsinglright /fi /fl /daggerdbl
+/periodcentered /quotesinglbase /quotedblbase /perthousand
+/Acircumflex /Ecircumflex /Aacute /Edieresis /Egrave /Iacute
+/Icircumflex /Idieresis /Igrave /Oacute /Ocircumflex /.notdef /Ograve
+/Uacute /Ucircumflex /Ugrave /dotlessi /circumflex /tilde /macron
+/breve /dotaccent /ring /cedilla /hungarumlaut /ogonek /caron
+] def
+/ReEncode { 
+	dup 
+	length 
+	dict begin 
+	{
+	1 index /FID ne 
+		{def} 
+		{pop pop} ifelse 
+	} forall 
+	0 eq {/Encoding DiacriticEncoding def} if 
+	currentdict 
+	end 
+	} bind def
+FMPColor 
+	
+	{
+	/BEGINBITMAPCOLOR { 
+		BITMAPCOLOR} def
+	/BEGINBITMAPCOLORc { 
+		BITMAPCOLORc} def
+	/BEGINBITMAPTRUECOLOR { 
+		BITMAPTRUECOLOR } def
+	/BEGINBITMAPTRUECOLORc { 
+		BITMAPTRUECOLORc } def
+	}
+	
+	{
+	/BEGINBITMAPCOLOR { 
+		BITMAPGRAY} def
+	/BEGINBITMAPCOLORc { 
+		BITMAPGRAYc} def
+	/BEGINBITMAPTRUECOLOR { 
+		BITMAPTRUEGRAY } def
+	/BEGINBITMAPTRUECOLORc { 
+		BITMAPTRUEGRAYc } def
+	}
+ifelse
+/K { 
+	FMPrintAllColorsAsBlack {
+		dup 1 eq 2 index 1 eq and 3 index 1 eq and not
+			{7 {pop} repeat 0 0 0 1 0 0 0} if
+	} if 
+	FrameCurColors astore 
+	pop combineColor
+} bind def
+/graymode true def
+	/bwidth FMLOCAL
+	/bpside FMLOCAL
+	/bstring FMLOCAL
+	/onbits FMLOCAL
+	/offbits FMLOCAL
+	/xindex FMLOCAL
+	/yindex FMLOCAL
+	/x FMLOCAL
+	/y FMLOCAL
+/setPatternMode {
+	FMLevel1 {
+		/bwidth  exch def
+		/bpside  exch def
+		/bstring exch def
+		/onbits 0 def  /offbits 0 def
+		freq sangle landscape {90 add} if 
+			{/y exch def
+			 /x exch def
+			 /xindex x 1 add 2 div bpside mul cvi def
+			 /yindex y 1 add 2 div bpside mul cvi def
+			 bstring yindex bwidth mul xindex 8 idiv add get
+			 1 7 xindex 8 mod sub bitshift and 0 ne FrameNegative {not} if
+			 {/onbits  onbits  1 add def 1}
+			 {/offbits offbits 1 add def 0}
+			 ifelse
+			}
+			setscreen
+		offbits offbits onbits add div FrameNegative {1.0 exch sub} if
+		/FrameCurGray exch def
+	} { 
+		pop pop
+		dup patCache exch known {
+			patCache exch get
+		} { 
+			dup
+			patDict /bstring 3 -1 roll put
+			patDict 
+			9 PatFreq screenIndex get div dup matrix scale
+			makepattern
+			dup 
+			patCache 4 -1 roll 3 -1 roll put
+		} ifelse
+		/FrameCurGray 0 def
+		/FrameCurPat exch def
+	} ifelse
+	/graymode false def
+	combineColor
+} bind def
+/setGrayScaleMode {
+	graymode not {
+		/graymode true def
+		FMLevel1 {
+			setCurrentScreen
+		} if
+	} if
+	/FrameCurGray exch def
+	combineColor
+} bind def
+/normalize {
+	transform round exch round exch itransform
+	} bind def
+/dnormalize {
+	dtransform round exch round exch idtransform
+	} bind def
+/lnormalize { 
+	0 dtransform exch cvi 2 idiv 2 mul 1 add exch idtransform pop
+	} bind def
+/H { 
+	lnormalize setlinewidth
+	} bind def
+/Z {
+	setlinecap
+	} bind def
+	
+/PFill {
+	graymode FMLevel1 or not {
+		gsave 1 setgray eofill grestore
+	} if
+} bind def
+/PStroke {
+	graymode FMLevel1 or not {
+		gsave 1 setgray stroke grestore
+	} if
+	stroke
+} bind def
+	/fillvals FMLOCAL
+/X { 
+	fillvals exch get
+	dup type /stringtype eq
+	{8 1 setPatternMode} 
+	{setGrayScaleMode}
+	ifelse
+	} bind def
+/V { 
+	PFill gsave eofill grestore
+	} bind def
+/Vclip {
+	clip
+	} bind def
+/Vstrk {
+	currentlinewidth exch setlinewidth PStroke setlinewidth
+	} bind def
+/N { 
+	PStroke
+	} bind def
+/Nclip {
+	strokepath clip newpath
+	} bind def
+/Nstrk {
+	currentlinewidth exch setlinewidth PStroke setlinewidth
+	} bind def
+/M {newpath moveto} bind def
+/E {lineto} bind def
+/D {curveto} bind def
+/O {closepath} bind def
+	/n FMLOCAL
+/L { 
+ 	/n exch def
+	newpath
+	normalize
+	moveto 
+	2 1 n {pop normalize lineto} for
+	} bind def
+/Y { 
+	L 
+	closepath
+	} bind def
+	/x1 FMLOCAL
+	/x2 FMLOCAL
+	/y1 FMLOCAL
+	/y2 FMLOCAL
+/R { 
+	/y2 exch def
+	/x2 exch def
+	/y1 exch def
+	/x1 exch def
+	x1 y1
+	x2 y1
+	x2 y2
+	x1 y2
+	4 Y 
+	} bind def
+	/rad FMLOCAL
+/rarc 
+	{rad 
+	 arcto
+	} bind def
+/RR { 
+	/rad exch def
+	normalize
+	/y2 exch def
+	/x2 exch def
+	normalize
+	/y1 exch def
+	/x1 exch def
+	mark
+	newpath
+	{
+	x1 y1 rad add moveto
+	x1 y2 x2 y2 rarc
+	x2 y2 x2 y1 rarc
+	x2 y1 x1 y1 rarc
+	x1 y1 x1 y2 rarc
+	closepath
+	} stopped {x1 y1 x2 y2 R} if 
+	cleartomark
+	} bind def
+/RRR { 
+	/rad exch def
+	normalize /y4 exch def /x4 exch def
+	normalize /y3 exch def /x3 exch def
+	normalize /y2 exch def /x2 exch def
+	normalize /y1 exch def /x1 exch def
+	newpath
+	normalize moveto 
+	mark
+	{
+	x2 y2 x3 y3 rarc
+	x3 y3 x4 y4 rarc
+	x4 y4 x1 y1 rarc
+	x1 y1 x2 y2 rarc
+	closepath
+	} stopped
+	 {x1 y1 x2 y2 x3 y3 x4 y4 newpath moveto lineto lineto lineto closepath} if
+	cleartomark
+	} bind def
+/C { 
+	grestore
+	gsave
+	R 
+	clip
+	setCurrentScreen
+} bind def
+/CP { 
+	grestore
+	gsave
+	Y 
+	clip
+	setCurrentScreen
+} bind def
+	/FMpointsize FMLOCAL
+/F { 
+	FMfonts exch get
+	FMpointsize scalefont
+	setfont
+	} bind def
+/Q { 
+	/FMpointsize exch def
+	F 
+	} bind def
+/T { 
+	moveto show
+	} bind def
+/RF { 
+	rotate
+	0 ne {-1 1 scale} if
+	} bind def
+/TF { 
+	gsave
+	moveto 
+	RF
+	show
+	grestore
+	} bind def
+/P { 
+	moveto
+	0 32 3 2 roll widthshow
+	} bind def
+/PF { 
+	gsave
+	moveto 
+	RF
+	0 32 3 2 roll widthshow
+	grestore
+	} bind def
+/S { 
+	moveto
+	0 exch ashow
+	} bind def
+/SF { 
+	gsave
+	moveto
+	RF
+	0 exch ashow
+	grestore
+	} bind def
+/B { 
+	moveto
+	0 32 4 2 roll 0 exch awidthshow
+	} bind def
+/BF { 
+	gsave
+	moveto
+	RF
+	0 32 4 2 roll 0 exch awidthshow
+	grestore
+	} bind def
+/G { 
+	gsave
+	newpath
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath 
+	PFill fill
+	grestore
+	} bind def
+/Gstrk {
+	savematrix
+    newpath
+    2 index 2 div add exch 3 index 2 div sub exch 
+    normalize 2 index 2 div sub exch 3 index 2 div add exch 
+    translate
+    scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    restorematrix
+    currentlinewidth exch setlinewidth PStroke setlinewidth
+    } bind def
+/Gclip { 
+	newpath
+	savematrix
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath 
+	clip newpath
+	restorematrix
+	} bind def
+/GG { 
+	gsave
+	newpath
+	normalize translate 0.0 0.0 moveto 
+	rotate 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath
+	PFill
+	fill
+	grestore
+	} bind def
+/GGclip { 
+	savematrix
+	newpath
+    normalize translate 0.0 0.0 moveto 
+    rotate 
+    dnormalize scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    closepath
+	clip newpath
+	restorematrix
+	} bind def
+/GGstrk { 
+	savematrix
+    newpath
+    normalize translate 0.0 0.0 moveto 
+    rotate 
+    dnormalize scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    closepath 
+	restorematrix
+    currentlinewidth exch setlinewidth PStroke setlinewidth
+	} bind def
+/A { 
+	gsave
+	savematrix
+	newpath
+	2 index 2 div add exch 3 index 2 div sub exch 
+	normalize 2 index 2 div sub exch 3 index 2 div add exch 
+	translate 
+	scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	restorematrix
+	PStroke
+	grestore
+	} bind def
+/Aclip {
+	newpath
+	savematrix
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath 
+	strokepath clip newpath
+	restorematrix
+} bind def
+/Astrk {
+	Gstrk
+} bind def
+/AA { 
+	gsave
+	savematrix
+	newpath
+	
+	3 index 2 div add exch 4 index 2 div sub exch 
+	
+	normalize 3 index 2 div sub exch 4 index 2 div add exch
+	translate 
+	rotate 
+	scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	restorematrix
+	PStroke
+	grestore
+	} bind def
+/AAclip {
+	savematrix
+	newpath
+    normalize translate 0.0 0.0 moveto 
+    rotate 
+    dnormalize scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    closepath
+	strokepath clip newpath
+	restorematrix
+} bind def
+/AAstrk {
+	GGstrk
+} bind def
+	/x FMLOCAL
+	/y FMLOCAL
+	/w FMLOCAL
+	/h FMLOCAL
+	/xx FMLOCAL
+	/yy FMLOCAL
+	/ww FMLOCAL
+	/hh FMLOCAL
+	/FMsaveobject FMLOCAL
+	/FMoptop FMLOCAL
+	/FMdicttop FMLOCAL
+/BEGINPRINTCODE { 
+	/FMdicttop countdictstack 1 add def 
+	/FMoptop count 7 sub def 
+	/FMsaveobject save def
+	userdict begin 
+	/showpage {} def 
+	FMNORMALIZEGRAPHICS 
+	3 index neg 3 index neg translate
+	} bind def
+/ENDPRINTCODE {
+	count -1 FMoptop {pop pop} for 
+	countdictstack -1 FMdicttop {pop end} for 
+	FMsaveobject restore 
+	} bind def
+/gn { 
+	0 
+	{	46 mul 
+		cf read pop 
+		32 sub 
+		dup 46 lt {exit} if 
+		46 sub add 
+		} loop
+	add 
+	} bind def
+	/str FMLOCAL
+/cfs { 
+	/str sl string def 
+	0 1 sl 1 sub {str exch val put} for 
+	str def 
+	} bind def
+/ic [ 
+	0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0223
+	0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0223
+	0
+	{0 hx} {1 hx} {2 hx} {3 hx} {4 hx} {5 hx} {6 hx} {7 hx} {8 hx} {9 hx}
+	{10 hx} {11 hx} {12 hx} {13 hx} {14 hx} {15 hx} {16 hx} {17 hx} {18 hx}
+	{19 hx} {gn hx} {0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12}
+	{13} {14} {15} {16} {17} {18} {19} {gn} {0 wh} {1 wh} {2 wh} {3 wh}
+	{4 wh} {5 wh} {6 wh} {7 wh} {8 wh} {9 wh} {10 wh} {11 wh} {12 wh}
+	{13 wh} {14 wh} {gn wh} {0 bl} {1 bl} {2 bl} {3 bl} {4 bl} {5 bl} {6 bl}
+	{7 bl} {8 bl} {9 bl} {10 bl} {11 bl} {12 bl} {13 bl} {14 bl} {gn bl}
+	{0 fl} {1 fl} {2 fl} {3 fl} {4 fl} {5 fl} {6 fl} {7 fl} {8 fl} {9 fl}
+	{10 fl} {11 fl} {12 fl} {13 fl} {14 fl} {gn fl}
+	] def
+	/sl FMLOCAL
+	/val FMLOCAL
+	/ws FMLOCAL
+	/im FMLOCAL
+	/bs FMLOCAL
+	/cs FMLOCAL
+	/len FMLOCAL
+	/pos FMLOCAL
+/ms { 
+	/sl exch def 
+	/val 255 def 
+	/ws cfs 
+	/im cfs 
+	/val 0 def 
+	/bs cfs 
+	/cs cfs 
+	} bind def
+400 ms 
+/ip { 
+	is 
+	0 
+	cf cs readline pop 
+	{	ic exch get exec 
+		add 
+		} forall 
+	pop 
+	
+	} bind def
+/rip { 
+	   
+	  
+	  bis ris copy pop 
+      is
+      0
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+	  pop pop 
+	  ris gis copy pop 
+	  dup is exch 
+	  
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+	  pop pop
+	  gis bis copy pop 
+	  dup add is exch 
+	  
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+      pop 
+      
+      } bind def
+/wh { 
+	/len exch def 
+	/pos exch def 
+	ws 0 len getinterval im pos len getinterval copy pop
+	pos len 
+	} bind def
+/bl { 
+	/len exch def 
+	/pos exch def 
+	bs 0 len getinterval im pos len getinterval copy pop
+	pos len 
+	} bind def
+/s1 1 string def
+/fl { 
+	/len exch def 
+	/pos exch def 
+	/val cf s1 readhexstring pop 0 get def
+	pos 1 pos len add 1 sub {im exch val put} for
+	pos len 
+	} bind def
+/hx { 
+	3 copy getinterval 
+	cf exch readhexstring pop pop 
+	} bind def
+	/h FMLOCAL
+	/w FMLOCAL
+	/d FMLOCAL
+	/lb FMLOCAL
+	/bitmapsave FMLOCAL
+	/is FMLOCAL
+	/cf FMLOCAL
+/wbytes { 
+      dup dup
+      24 eq { pop pop 3 mul }
+      { 8 eq {pop} {1 eq {7 add 8 idiv} {3 add 4 idiv} ifelse} ifelse } ifelse
+	} bind def
+/BEGINBITMAPBWc { 
+	1 {} COMMONBITMAPc
+	} bind def
+/BEGINBITMAPGRAYc { 
+	8 {} COMMONBITMAPc
+	} bind def
+/BEGINBITMAP2BITc { 
+	2 {} COMMONBITMAPc
+	} bind def
+/COMMONBITMAPc { 
+		 
+	/r exch def
+	/d exch def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+	/bitmapsave save def 
+	r                    
+	/is im 0 lb getinterval def 
+	ws 0 lb getinterval is copy pop 
+	/cf currentfile def 
+	w h d [w 0 0 h neg 0 h] 
+	{ip} image 
+	bitmapsave restore 
+	grestore
+	} bind def
+/BEGINBITMAPBW { 
+	1 {} COMMONBITMAP
+	} bind def
+/BEGINBITMAPGRAY { 
+	8 {} COMMONBITMAP
+	} bind def
+/BEGINBITMAP2BIT { 
+	2 {} COMMONBITMAP
+	} bind def
+/COMMONBITMAP { 
+	/r exch def
+	/d exch def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/bitmapsave save def 
+	r                    
+	/is w d wbytes string def
+	/cf currentfile def 
+	w h d [w 0 0 h neg 0 h] 
+	{cf is readhexstring pop} image
+	bitmapsave restore 
+	grestore
+	} bind def
+/ngrayt 256 array def
+/nredt 256 array def
+/nbluet 256 array def
+/ngreent 256 array def
+	/gryt FMLOCAL
+	/blut FMLOCAL
+	/grnt FMLOCAL
+	/redt FMLOCAL
+	/indx FMLOCAL
+	/cynu FMLOCAL
+	/magu FMLOCAL
+	/yelu FMLOCAL
+	/k FMLOCAL
+	/u FMLOCAL
+FMLevel1 {
+/colorsetup {
+	currentcolortransfer
+	/gryt exch def
+	/blut exch def
+	/grnt exch def
+	/redt exch def
+	0 1 255 {
+		/indx exch def
+		/cynu 1 red indx get 255 div sub def
+		/magu 1 green indx get 255 div sub def
+		/yelu 1 blue indx get 255 div sub def
+		/k cynu magu min yelu min def
+		/u k currentundercolorremoval exec def
+%		/u 0 def
+		nredt indx 1 0 cynu u sub max sub redt exec put
+		ngreent indx 1 0 magu u sub max sub grnt exec put
+		nbluet indx 1 0 yelu u sub max sub blut exec put
+		ngrayt indx 1 k currentblackgeneration exec sub gryt exec put
+	} for
+	{255 mul cvi nredt exch get}
+	{255 mul cvi ngreent exch get}
+	{255 mul cvi nbluet exch get}
+	{255 mul cvi ngrayt exch get}
+	setcolortransfer
+	{pop 0} setundercolorremoval
+	{} setblackgeneration
+	} bind def
+}
+{
+/colorSetup2 {
+	[ /Indexed /DeviceRGB 255 
+		{dup red exch get 255 div 
+		 exch dup green exch get 255 div 
+		 exch blue exch get 255 div}
+	] setcolorspace
+} bind def
+} ifelse
+	/tran FMLOCAL
+/fakecolorsetup {
+	/tran 256 string def
+	0 1 255 {/indx exch def 
+		tran indx
+		red indx get 77 mul
+		green indx get 151 mul
+		blue indx get 28 mul
+		add add 256 idiv put} for
+	currenttransfer
+	{255 mul cvi tran exch get 255.0 div}
+	exch concatprocs settransfer
+} bind def
+/BITMAPCOLOR { 
+	/d 8 def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/bitmapsave save def
+	FMLevel1 {	
+		colorsetup
+		/is w d wbytes string def
+		/cf currentfile def 
+		w h d [w 0 0 h neg 0 h] 
+		{cf is readhexstring pop} {is} {is} true 3 colorimage 
+	} {
+		colorSetup2
+		/is w d wbytes string def
+		/cf currentfile def 
+		7 dict dup begin
+			/ImageType 1 def
+			/Width w def
+			/Height h def
+			/ImageMatrix [w 0 0 h neg 0 h] def
+			/DataSource {cf is readhexstring pop} bind def
+			/BitsPerComponent d def
+			/Decode [0 255] def
+		end image	
+	} ifelse
+	bitmapsave restore 
+	grestore
+	} bind def
+/BITMAPCOLORc { 
+	/d 8 def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+	/bitmapsave save def 
+	FMLevel1 {	
+		colorsetup
+		/is im 0 lb getinterval def 
+		ws 0 lb getinterval is copy pop 
+		/cf currentfile def 
+		w h d [w 0 0 h neg 0 h] 
+		{ip} {is} {is} true 3 colorimage
+	} {
+		colorSetup2
+		/is im 0 lb getinterval def 
+		ws 0 lb getinterval is copy pop 
+		/cf currentfile def 
+		7 dict dup begin
+			/ImageType 1 def
+			/Width w def
+			/Height h def
+			/ImageMatrix [w 0 0 h neg 0 h] def
+			/DataSource {ip} bind def
+			/BitsPerComponent d def
+			/Decode [0 255] def
+		end image	
+	} ifelse
+	bitmapsave restore 
+	grestore
+	} bind def
+/BITMAPTRUECOLORc { 
+	/d 24 def
+        gsave
+ 	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+        /bitmapsave save def 
+        
+	/is im 0 lb getinterval def	
+	/ris im 0 w getinterval def	
+	/gis im w w getinterval def	
+	/bis im w 2 mul w getinterval def 
+        
+        ws 0 lb getinterval is copy pop 
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        {w rip pop ris} {gis} {bis} true 3 colorimage
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPTRUECOLOR { 
+        gsave
+		
+		3 index 2 div add exch	
+		4 index 2 div add exch	
+		translate		
+		rotate			
+		1 index 2 div neg	
+		1 index 2 div neg	
+		translate		
+		scale			
+		/h exch def /w exch def
+        /bitmapsave save def 
+        /is w string def
+        /gis w string def
+        /bis w string def
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        { cf is readhexstring pop } 
+        { cf gis readhexstring pop } 
+        { cf bis readhexstring pop } 
+        true 3 colorimage 
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPTRUEGRAYc { 
+	/d 24 def
+        gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+        /bitmapsave save def 
+        
+	/is im 0 lb getinterval def	
+	/ris im 0 w getinterval def	
+	/gis im w w getinterval def	
+	/bis im w 2 mul w getinterval def 
+        ws 0 lb getinterval is copy pop 
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        {w rip pop ris gis bis w gray} image
+        bitmapsave restore 
+        grestore
+        } bind def
+/ww FMLOCAL
+/r FMLOCAL
+/g FMLOCAL
+/b FMLOCAL
+/i FMLOCAL
+/gray { 
+        /ww exch def
+        /b exch def
+        /g exch def
+        /r exch def
+        0 1 ww 1 sub { /i exch def r i get .299 mul g i get .587 mul
+			b i get .114 mul add add r i 3 -1 roll floor cvi put } for
+        r
+        } bind def
+/BITMAPTRUEGRAY { 
+        gsave
+		
+		3 index 2 div add exch	
+		4 index 2 div add exch	
+		translate		
+		rotate			
+		1 index 2 div neg	
+		1 index 2 div neg	
+		translate		
+		scale			
+		/h exch def /w exch def
+        /bitmapsave save def 
+        /is w string def
+        /gis w string def
+        /bis w string def
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        { cf is readhexstring pop 
+          cf gis readhexstring pop 
+          cf bis readhexstring pop w gray}  image
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPGRAY { 
+	8 {fakecolorsetup} COMMONBITMAP
+	} bind def
+/BITMAPGRAYc { 
+	8 {fakecolorsetup} COMMONBITMAPc
+	} bind def
+/ENDBITMAP {
+	} bind def
+end 
+	/ALDsave FMLOCAL
+	/ALDmatrix matrix def ALDmatrix currentmatrix pop
+/StartALD {
+	/ALDsave save def
+	 savematrix
+	 ALDmatrix setmatrix
+	} bind def
+/InALD {
+	 restorematrix
+	} bind def
+/DoneALD {
+	 ALDsave restore
+	} bind def
+/I { setdash } bind def
+/J { [] 0 setdash } bind def
+%%EndProlog
+%%BeginSetup
+(4.0) FMVERSION
+1 1 0 0 595.3 841.9 0 1 14 FMDOCUMENT
+0 0 /Helvetica-Bold FMFONTDEFINE
+1 0 /Times-Bold FMFONTDEFINE
+2 0 /Times-Roman FMFONTDEFINE
+3 0 /Times-Italic FMFONTDEFINE
+4 0 /Courier-Bold FMFONTDEFINE
+5 0 /Courier-Oblique FMFONTDEFINE
+6 0 /Courier FMFONTDEFINE
+32 FMFILLS
+0 0 FMFILL
+1 0.1 FMFILL
+2 0.3 FMFILL
+3 0.5 FMFILL
+4 0.7 FMFILL
+5 0.9 FMFILL
+6 0.97 FMFILL
+7 1 FMFILL
+8 <0f1e3c78f0e1c387> FMFILL
+9 <0f87c3e1f0783c1e> FMFILL
+10 <cccccccccccccccc> FMFILL
+11 <ffff0000ffff0000> FMFILL
+12 <8142241818244281> FMFILL
+13 <03060c183060c081> FMFILL
+14 <8040201008040201> FMFILL
+16 1 FMFILL
+17 0.9 FMFILL
+18 0.7 FMFILL
+19 0.5 FMFILL
+20 0.3 FMFILL
+21 0.1 FMFILL
+22 0.03 FMFILL
+23 0 FMFILL
+24 <f0e1c3870f1e3c78> FMFILL
+25 <f0783c1e0f87c3e1> FMFILL
+26 <3333333333333333> FMFILL
+27 <0000ffff0000ffff> FMFILL
+28 <7ebddbe7e7dbbd7e> FMFILL
+29 <fcf9f3e7cf9f3f7e> FMFILL
+30 <7fbfdfeff7fbfdfe> FMFILL
+%%EndSetup
+%%Page: "1" 1
+%%BeginPaperSize: A4
+%%EndPaperSize
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+J
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 8 Q
+(ESPRIT Project 6062 OMI/GLUE - D4.2.2a) 63.65 766.62 T
+(Initial evaluation of TDF Support for Garbage Collection) 320.06 766.62 T
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+1 12 Q
+(CHANGE HIST) 63.65 716.95 T
+(OR) 147.78 716.95 T
+(Y) 165.36 716.95 T
+(This is the \336rst version.) 63.65 676.95 T
+FMENDPAGE
+%%EndPage: "1" 1
+%%Page: "2" 2
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(ESPRIT Project 6062 OMI/GLUE - D4.2.2a) 63.65 766.62 T
+(Initial evaluation of TDF Support for Garbage Collection) 320.06 766.62 T
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+N
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+FMENDPAGE
+%%EndPage: "2" 2
+%%Page: "1" 3
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+(ESPRIT Project 6062 OMI/GLUE - D4.2.2a) 63.65 766.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+( Initial evaluation of TDF Support for Garbage Collection) 317.83 766.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 9 Q
+(i) 529.15 84.9 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 12 Q
+(T) 63.65 736.95 T
+(ABLE OF CONTENTS) 70.76 736.95 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(1.) 63.65 696.95 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Purpose) 90.65 696.95 T
+(1) 144.65 696.95 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(2.) 63.65 676.95 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Executive Summary) 90.65 676.95 T
+(1) 206.3 676.95 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(3.) 63.65 656.95 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(An Overview of Garbage Collector T) 90.65 656.95 T
+(echnology) 279.18 656.95 T
+(1) 342.52 656.95 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+2 11 Q
+(3.1) 90.65 643.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Fundamentals) 117.65 643.62 T
+(1) 190.37 643.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(3.2) 90.65 630.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Common Basic T) 117.65 630.62 T
+(echniques) 194.49 630.62 T
+(2) 249.48 630.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+2 10 Q
+(3.2.1) 117.65 618.29 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Mark and Sweep) 144.65 618.29 T
+(2) 222.41 618.29 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(3.2.2) 117.65 606.29 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Mark and Compact) 144.65 606.29 T
+(3) 231.86 606.29 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(3.2.3) 117.65 594.29 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Copying Garbage Collectors) 144.65 594.29 T
+(4) 269.08 594.29 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+2 11 Q
+(3.3) 90.65 581.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Implementation Optimizations) 117.65 581.62 T
+(4) 263.4 581.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+2 10 Q
+(3.3.1) 117.65 569.29 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Conservative Collectors) 144.65 569.29 T
+(4) 251.03 569.29 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(3.3.2) 117.65 557.29 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Incremental Collectors) 144.65 557.29 T
+(5) 246.02 557.29 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(3.3.3) 117.65 545.29 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Generational Collectors) 144.65 545.29 T
+(6) 249.91 545.29 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 12 Q
+(4.) 63.65 525.95 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Responsibilities of TDF) 90.65 525.95 T
+(6) 222.66 525.95 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(5.) 63.65 505.95 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Identifying Objects in TDF) 90.65 505.95 T
+(7) 241.66 505.95 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+2 11 Q
+(5.1) 90.65 492.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(T) 117.65 492.62 T
+(agging) 123.6 492.62 T
+(7) 164.54 492.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(5.2) 90.65 479.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Object Headers) 117.65 479.62 T
+(7) 196.76 479.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 12 Q
+(6.) 63.65 459.95 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Supporting Garbage Collection in TDF) 90.65 459.95 T
+(8) 303.34 459.95 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+2 11 Q
+(6.1) 90.65 446.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Conservative Garbage Collection) 117.65 446.62 T
+(8) 275.29 446.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(6.2) 90.65 433.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Relocating Garbage Collection) 117.65 433.62 T
+(8) 264.9 433.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+2 10 Q
+(6.2.1) 117.65 421.29 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(V) 144.65 421.29 T
+(ariables on the Stack) 150.76 421.29 T
+(8) 243.8 421.29 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(6.2.2) 117.65 409.29 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Relocation of simple objects) 144.65 409.29 T
+(9) 268.81 409.29 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(6.2.3) 117.65 397.29 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Expected Cost and Bene\336ts) 144.65 397.29 T
+(10) 264.92 397.29 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+2 11 Q
+(6.3) 90.65 384.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Generational or Incremental Garbage Collection) 117.65 384.62 T
+(10) 341.26 384.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 12 Q
+(7.) 63.65 364.95 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Implementation Development Strategy) 90.65 364.95 T
+(10) 301.28 364.95 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(8.) 63.65 344.95 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Futur) 90.65 344.95 T
+(e considerations) 120.43 344.95 T
+(1) 214.76 344.95 T
+(1) 220.1 344.95 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+2 11 Q
+(8.1) 90.65 331.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Relocation of code) 117.65 331.62 T
+(1) 211.74 331.62 T
+(1) 216.84 331.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(8.2) 90.65 318.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Relocation of stacks) 117.65 318.62 T
+(12) 217.86 318.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 12 Q
+(9.) 63.65 298.95 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Conclusions) 90.65 298.95 T
+(12) 164.66 298.95 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(10.) 63.65 278.95 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Refer) 90.65 278.95 T
+(ences) 119.08 278.95 T
+(12) 158.4 278.95 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "1" 3
+%%Page: "1" 4
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 8 Q
+(ESPRIT Project 6062 OMI/GLUE - D4.2.2a) 63.65 766.62 T
+( Initial evaluation of TDF Support for Garbage Collection) 317.83 766.62 T
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+0 10 Q
+(1) 526.09 84.9 T
+0 15 Q
+(1.) 63.65 734.95 T
+(Purpose) 90.65 734.95 T
+2 11 Q
+-0.19 (The purpose of this document is to describe possible techniques to support garbage collection with the pro-) 63.65 712.62 P
+-0 (totype Dylan to ANDF producer) 63.65 699.62 P
+-0 (. For each technique, the underlying TDF primitives are explained, and an) 206.01 699.62 P
+0.28 0.08 (evaluation is made of the expected ef) 63.65 686.62 B
+0.28 0.08 (f) 231.76 686.62 B
+0.28 0.08 (iciency of the technique compared to a corresponding native code) 234.9 686.62 B
+0.28 0.05 (implementation. The evaluation is limited to garbage collection in a strictly serial single threaded imple-) 63.65 673.62 B
+(mentation.) 63.65 660.62 T
+(The work was sponsored by the Commission of the European Communities.) 63.65 635.62 T
+0 15 Q
+(2.) 63.65 596.95 T
+(Executive Summary) 90.65 596.95 T
+2 11 Q
+0.25 (The programming language) 63.65 574.62 P
+1 F
+0.25 (Dylan) 189.33 574.62 P
+2 F
+0.25 ( [Dyl92] requires the presence of a garbage collector) 217.45 574.62 P
+0.25 (. This is a require-) 450.33 574.62 P
+0.28 0.09 (ment for many other languages also - but it is unique to Dylan amongst the languages considered in the) 63.65 561.62 B
+(GLUE project.) 63.65 548.62 T
+-0.07 (Garbage collection is normally implemented by a run-time system, which is linked together with compiled) 63.65 523.62 P
+0.28 0.1 (code written in the garbage collected language. Depending on the algorithm in use, there may also be a) 63.65 510.62 B
+(need for some support from the compiled code itself.) 63.65 497.62 T
+0.28 0.28 (There are too many dif) 63.65 472.62 B
+0.28 0.28 (ferent garbage collection algorithms and techniques to discuss them all here.) 171.46 472.62 B
+-0.04 (Instead, an overview is given of the main classes of algorithm, followed by a discussion of how such algo-) 63.65 459.62 P
+-0.12 (rithms might be supported in TDF - both for the run-time system and for the compiled code. An evaluation) 63.65 446.62 P
+0.28 0.09 (is made of the expected ef) 63.65 433.62 B
+0.28 0.09 (f) 182.36 433.62 B
+0.28 0.09 (iciency of the implementation compared to a similar one using a native code) 185.51 433.62 B
+0.26 (compiler) 63.65 420.62 P
+0.26 (. Each of the algorithms can be implemented using a combination of core TDF support, architec-) 102.15 420.62 P
+-0.09 (ture speci\336c token de\336nitions, and architecture speci\336c libraries. TDF does not provide a fully architecture) 63.65 407.62 P
+0.28 0.06 (neutral solution to garbage collection - but this is probably not surprising to discover) 63.65 394.62 B
+0.28 0.06 (, since the best gar-) 444.24 394.62 B
+0.28 0.04 (bage collection algorithms tend to make extensive use of the API facilities of the tar) 63.65 381.62 B
+0.28 0.04 (get architecture, and) 440.73 381.62 B
+(TDF is not attempting to provide an architecture neutral API.) 63.65 368.62 T
+0.28 0.01 (The expected ef) 63.65 343.62 B
+0.28 0.01 (f) 134.43 343.62 B
+0.28 0.01 (iciency of the TDF supported solution varies depending on the level of compiler interac-) 137.5 343.62 B
+-0.06 (tion with the run-time system. For the least interacting algorithm, there should be no loss of ef) 63.65 330.62 P
+-0.06 (\336ciency) 476.82 330.62 P
+-0.06 (. For) 510.93 330.62 P
+0.15 (the more complex algorithms there will probably be some loss of ef) 63.65 317.62 P
+0.15 (\336ciency at function call time, and also) 363.01 317.62 P
+(a similar increase in code size.) 63.65 304.62 T
+0 15 Q
+(3.) 63.65 265.95 T
+(An Overview of Garbage Collector T) 90.65 265.95 T
+(echnology) 346.28 265.95 T
+0 12 Q
+(3.1) 63.65 230.95 T
+(Fundamentals) 90.65 230.95 T
+2 11 Q
+0.28 0 (For many traditional languages, programmers are required to explicitly free heap allocated memory when) 63.65 213.62 B
+0.28 0.06 (it is no longer required. This approach leads to a simply expressed def) 63.65 200.62 B
+0.28 0.06 (inition of) 378.8 200.62 B
+3 F
+0.28 0.06 (liveness) 423.4 200.62 B
+2 F
+0.28 0.06 ( for an allocated) 458.7 200.62 B
+0.28 0.1 (object: an object is) 63.65 187.62 B
+3 F
+0.28 0.1 (live) 152.31 187.62 B
+2 F
+0.28 0.1 ( until it is explicitly freed. Unfortunately) 168.58 187.62 B
+0.28 0.1 (, although it may be easy to express the) 352.48 187.62 B
+-0.09 (liveness of an object in these terms, it can still be a very dif) 63.65 174.62 P
+-0.09 (\336cult problem for the programmer to determine) 323.21 174.62 P
+(the real lifetime of an object - and hence when to free it.) 63.65 161.62 T
+-0.02 (In contrast garbage collected languages make the freeing of heap objects automatic. The programmer does) 63.65 136.62 P
+0.28 0.04 (not have the responsibility for determining when the lifetime of an object ends - so the garbage collector) 63.65 123.62 B
+(must be able to determine this instead.) 63.65 110.62 T
+FMENDPAGE
+%%EndPage: "1" 4
+%%Page: "2" 5
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(ESPRIT Project 6062 OMI/GLUE - D4.2.2a) 63.65 766.62 T
+(Initial evaluation of TDF Support for Garbage Collection) 320.06 766.62 T
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+N
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+0 10 Q
+(2) 63.65 84.9 T
+2 11 Q
+0.28 0.02 (A garbage collector must determine which objects are live and which ones are garbage. This is known as) 63.65 737.62 B
+3 F
+-0.15 (garbage detection) 63.65 724.62 P
+2 F
+-0.15 (. The space occupied by the garbage objects will then be reclaimed \050known as) 143.24 724.62 P
+3 F
+-0.15 (space r) 486.69 724.62 P
+-0.15 (ec-) 518.22 724.62 P
+0.28 0.02 (lamation) 63.65 711.62 B
+2 F
+0.28 0.02 (\051, so that the program may use it again. Depending on the algorithm used, these two phases may) 102.92 711.62 B
+0.28 0.04 (be interleaved. The techniques used for space reclamation depend on the garbage detection technique. In) 63.65 698.62 B
+0.08 (many algorithms live objects are moved during garbage collection, so the reclaimed space does not neces-) 63.65 685.62 P
+0.28 0.24 (sarily correspond to any particular garbage object. In some algorithms, the space reclamation occurs) 63.65 672.62 B
+(implicitly as part of the garbage detection algorithm.) 63.65 659.62 T
+0.28 0.05 (Garbage detection requires a criterion for determining the liveness of an object. The theoretical criterion) 63.65 634.62 B
+0.28 0.19 (would be that an object is garbage if it will never be used again by a running program. This might be) 63.65 621.62 B
+0.28 0.02 (impossible to determine in practice - even assuming an optimizing compiler which does control f) 63.65 608.62 B
+0.28 0.02 (low and) 496.11 608.62 B
+0.28 0.01 (data f) 63.65 595.62 B
+0.28 0.01 (low analysis. In practice, most garbage collector algorithms use a simpler) 88.12 595.62 B
+0.28 0.01 (, slightly pessimistic crite-) 414.42 595.62 B
+0.28 0.01 (rion, def) 63.65 582.62 B
+0.28 0.01 (ined in terms of a) 100.72 582.62 B
+3 F
+0.28 0.01 (r) 182.12 582.62 B
+0.28 0.01 (oot set) 186.01 582.62 B
+2 F
+0.28 0.01 ( of objects, and) 215.42 582.62 B
+3 F
+0.28 0.01 ( r) 283.69 582.62 B
+0.28 0.01 (eachability) 290.62 582.62 B
+2 F
+0.28 0.01 ( from those objects. The root set represents) 339.67 582.62 B
+0.28 0.16 (all the conceivable starting points from which a program might f) 63.65 569.62 B
+0.28 0.16 (ind a path to an object. This typically) 359.98 569.62 B
+0.28 0.24 (includes global variables, and all local variables of active functions at the time garbage collection is) 63.65 556.62 B
+0.27 (invoked \050typically) 63.65 543.62 P
+0.27 (, when an attempt is made to allocate an object, and there is insuf) 143.56 543.62 P
+0.27 (\336cient free space\051. An) 433.71 543.62 P
+0.28 0.08 (object is reachable if it is either pointed to by a variable in the root set, or if there is a pointer to it from) 63.65 530.62 B
+0.28 0.02 (another reachable object. The process of following all the pointers of an object to f) 63.65 517.62 B
+0.28 0.02 (ind all other reachable) 432.35 517.62 B
+(objects is called) 63.65 504.62 T
+3 F
+(tracing) 136.67 504.62 T
+2 F
+(.) 168.45 504.62 T
+0.28 0.05 (Determination of liveness by tracing all objects from a root set is a safe approximation, as the root set is) 63.65 479.62 B
+0.2 (guaranteed to include all those starting points from which the program) 63.65 466.62 P
+1 F
+0.2 (will) 378.39 466.62 P
+2 F
+0.2 ( \336nd a path. Similarly) 395.5 466.62 P
+0.2 (, the run-) 491.23 466.62 P
+(ning program will actually only encounter a subset of all the reachable objects.) 63.65 453.62 T
+-0.2 (Evaluating the relative performance of dif) 63.65 428.62 P
+-0.2 (ferent algorithms can be very dif) 247.24 428.62 P
+-0.2 (\336cult. The performance depends) 389.91 428.62 P
+0.28 0.1 (on details of the hardware and operating system being used - details of data caches and virtual memory) 63.65 415.62 B
+0.28 0.04 (paging methods can be particularly important. Performance will depend on the application itself too. For) 63.65 402.62 B
+0.1 (instance, if an application is designed to process data for an inde\336nite period of time, then it will probably) 63.65 389.62 P
+0.28 0.01 (be necessary to choose a garbage collection algorithm which compacts objects into a contiguous memory) 63.65 376.62 B
+-0.06 (space, to avoid fragmentation problems. In contrast, an application which is short lived may get better per-) 63.65 363.62 P
+0.07 (formance with a simpler garbage collector which never moves objects. Another application may have par-) 63.65 350.62 P
+0.28 0.12 (ticular real-time or interactive performance requirements, which require a form of incremental garbage) 63.65 337.62 B
+-0.04 (collection. If an application is very short lived, then the best performance may be obtained by not having a) 63.65 324.62 P
+0.28 0.07 (garbage collector at all. This is why no single algorithm has emer) 63.65 311.62 B
+0.28 0.07 (ged as a clear winner) 358.64 311.62 B
+0.28 0.07 (. This also means) 453.38 311.62 B
+(that it is important that TDF can support many dif) 63.65 298.62 T
+(ferent algorithms.) 283.14 298.62 T
+0 12 Q
+(3.2) 63.65 264.95 T
+(Common Basic T) 90.65 264.95 T
+(echniques) 187.78 264.95 T
+2 11 Q
+0.28 0.08 (This section brief) 63.65 240.62 B
+0.28 0.08 (ly describes the most well known garbage collector algorithms. For each general algo-) 142.01 240.62 B
+-0.23 (rithm described, there may be many possible re\336nements or optimizations. The intention here is not to give) 63.65 227.62 P
+0.18 (an implementation guide - but rather to explain the basic approach. For a more complete study of garbage) 63.65 214.62 P
+0.28 0.08 (collector techniques, see [W) 63.65 201.62 B
+0.28 0.08 (ilson]. Section 6 shows how the important features of the algorithm may be) 190.93 201.62 B
+(supported by TDF) 63.65 188.62 T
+(.) 143.43 188.62 T
+0 10 Q
+(3.2.1) 63.65 164.29 T
+(Mark and Sweep) 90.65 164.29 T
+2 11 Q
+0.28 0.09 (Mark and Sweep collectors are so named because of the way they implement the garbage detection and) 63.65 150.62 B
+(space reclamation, respectively) 63.65 137.62 T
+(.) 200.7 137.62 T
+FMENDPAGE
+%%EndPage: "2" 5
+%%Page: "3" 6
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 8 Q
+(ESPRIT Project 6062 OMI/GLUE - D4.2.2a) 63.65 766.62 T
+( Initial evaluation of TDF Support for Garbage Collection) 317.83 766.62 T
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+0 10 Q
+(3) 526.09 84.9 T
+2 11 Q
+0.28 0.14 (Garbage detection is performed by scanning all objects \050those in the root set, and all objects reachable) 63.65 737.62 B
+0.19 (from there\051. Each object encountered is then marked in some way - typically by setting a bit in the header) 63.65 724.62 P
+0.28 0 (of the object. Once this phase is complete, live objects will have been marked, while garbage objects will) 63.65 711.62 B
+(not.) 63.65 698.62 T
+0.28 0.05 (Space reclamation is performed by sweeping the memory \050i.e. scanning it exhaustively\051, looking at each) 63.65 673.62 B
+0.14 (object. Each object encountered in the sweep is then tested for liveness \050by looking at the mark bit\051. If the) 63.65 660.62 P
+0.2 (object is live, then the mark bit is unset for next time. If the object is garbage, then the object is appended) 63.65 647.62 P
+-0.05 (to a list of free objects \050after possibly coalescing it \336rst with any neighbours which are also garbage\051. Note) 63.65 634.62 P
+(the implicit assumption here that it is possible to \336nd the start of every object during the sweep.) 63.65 621.62 T
+0.28 0.04 (Allocation is performed by searching the list of free objects for a suitably sized block. This block is then) 63.65 596.62 B
+-0.09 (unchained from the free list and initialized as a new object. If no such free object is available, then the gar-) 63.65 583.62 P
+0.28 0.07 (bage collector is invoked in the expectation that a suitable block will have been freed. If there is still no) 63.65 570.62 B
+(suitable block available, then the heap size must be extended with a suitable operating system call.) 63.65 557.62 T
+0.28 0.01 (Mark and sweep collectors never move objects in memory) 63.65 532.62 B
+0.28 0.01 (, and hence are relatively simple to implement,) 322.98 532.62 B
+0.28 0.16 (and can give good performance. However the algorithm does have some drawbacks, which might rule) 63.65 519.62 B
+0.28 0.16 (them out for some applications. First, the fact that objects are never moved may lead to fragmentation) 63.65 506.62 B
+-0.14 (problems, as discussed above. Secondly) 63.65 493.62 P
+-0.14 (, the sweep phase has a cost which is proportional to the total num-) 238.35 493.62 P
+0.28 0.06 (ber of objects \050either live or garbage\051 in heap memory) 63.65 480.62 B
+0.28 0.06 (. Since, in most situations, there are more garbage) 306.7 480.62 B
+0.28 0.06 (objects than live objects this is potentially serious compared with an algorithm where the cost is propor-) 63.65 467.62 B
+0.28 0.01 (tional to the number of live objects. In practice, though, this may not be a problem since the sweep phase) 63.65 454.62 B
+(tends to be much faster than the mark phase.) 63.65 441.62 T
+0.28 0 (A mark and sweep implementation requires a minimal amount of support from the compiler) 63.65 416.62 B
+0.28 0 (. The runtime) 471.51 416.62 B
+0.28 0 (system must be able to determine the root set, so normally the compiler must ensure that the runtime sys-) 63.65 403.62 B
+-0.2 (tem is aware of all global variables and can \336nd all the local variables for each stack frame. As will be seen) 63.65 390.62 P
+-0.1 (in section 3.3.3, the runtime may be able to infer this information for itself without any help from the com-) 63.65 377.62 P
+(piler) 63.65 364.62 T
+(.) 83.21 364.62 T
+0 10 Q
+(3.2.2) 63.65 340.29 T
+(Mark and Compact) 90.65 340.29 T
+2 11 Q
+0.28 0.06 (The mark and compact algorithm is a modif) 63.65 314.62 B
+0.28 0.06 (ication of mark and sweep to stop it from suf) 260.9 314.62 B
+0.28 0.06 (fering the frag-) 463.64 314.62 B
+0.28 0.27 (mentation problems. The f) 63.65 301.62 B
+0.28 0.27 (irst phase of garbage detection is performed in the same way) 187.24 301.62 B
+0.28 0.27 (, by marking) 472.25 301.62 B
+-0.19 (objects. However space reclamation is performed by compacting the live objects - for instance by shuf) 63.65 288.62 P
+-0.19 (\337ing) 511.47 288.62 P
+0.28 0.22 (downwards each live object encountered during the sweep, so that it is contiguous with all other live) 63.65 275.62 B
+-0.09 (objects encountered so far) 63.65 262.62 P
+-0.09 (. Once the compaction has been completed, the free space is also in a contiguous) 177.93 262.62 P
+0.28 0.2 (area immediately following the last object. This makes allocation simpler than with mark and sweep,) 63.65 249.62 B
+(because there is no need to search a free list for a block of an appropriate size.) 63.65 236.62 T
+0.07 (This is an example of a) 63.65 211.62 P
+3 F
+0.07 (r) 169.14 211.62 P
+0.07 (elocating) 173.01 211.62 P
+2 F
+0.07 ( garbage collector) 213.96 211.62 P
+0.07 (, since objects are moved during the compact phase. It) 292.45 211.62 P
+0.23 (is therefore necessary to) 63.65 198.62 P
+3 F
+0.23 (\336x up) 173.92 198.62 P
+2 F
+0.23 (, or update, any pointers the moved objects. One way to do this is to use an) 198.29 198.62 P
+-0.15 (extra pass to compute the intended new location of objects before moving them, recording this address in a) 63.65 185.62 P
+0.23 (reserved location inside the object. Another extra pass then scans all roots and objects again, updating the) 63.65 172.62 P
+0.28 0.14 (pointers they contain to refer to the new location - obtained from the still unmoved object. Finally) 63.65 159.62 B
+0.28 0.14 (, the) 511.87 159.62 B
+0.28 0.01 (actual compaction is performed. Hence the cost of the compaction can be high. For this reason, mark and) 63.65 146.62 B
+-0.1 (compact collectors often behave as mark and sweep collectors most of the time, and perform a compaction) 63.65 133.62 P
+(only when it appears that fragmentation is becoming a problem.) 63.65 120.62 T
+FMENDPAGE
+%%EndPage: "3" 6
+%%Page: "4" 7
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(ESPRIT Project 6062 OMI/GLUE - D4.2.2a) 63.65 766.62 T
+(Initial evaluation of TDF Support for Garbage Collection) 320.06 766.62 T
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+N
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+0 10 Q
+(4) 63.65 84.9 T
+2 11 Q
+-0.17 (Mark and compact collectors require more accurate information about the root set than mark and sweep. In) 63.65 737.62 P
+-0.25 (particular the runtime system must be able to determine which variables contain pointers and which do not,) 63.65 724.62 P
+-0 (so that non-pointer variables are not \336xed up by mistake. The compiler can arrange for the runtime system) 63.65 711.62 P
+0.17 (to \336nd the location of global variables at the time the program is linked, for example, by arranging for the) 63.65 698.62 P
+0.28 0.09 (variables to all be arranged in a contiguous area of memory) 63.65 685.62 B
+0.28 0.09 (. The compiler must arrange for the runtime) 332.71 685.62 B
+0.04 (system to \336nd local pointer variables by ensuring that the relevant information is associated with the func-) 63.65 672.62 P
+0.05 (tion frame, and by ensuring that all function frames can be found. In addition, the compiler must allow for) 63.65 659.62 P
+-0.12 (the fact that local pointer variables may change over function calls, if there is any chance that an allocation) 63.65 646.62 P
+(request might occur as a result of that call.) 63.65 633.62 T
+0 10 Q
+(3.2.3) 63.65 609.29 T
+(Copying Garbage Collectors) 90.65 609.29 T
+2 11 Q
+0.28 0.01 (In the simplest example of a copying collector) 63.65 583.62 B
+0.28 0.01 (, the heap memory is split into two contiguous) 269.56 583.62 B
+3 F
+0.28 0.01 (semispaces) 479.27 583.62 B
+2 F
+0.28 0.01 (.) 528.9 583.62 B
+-0.13 (While the program is executing, only one of the semispaces, the) 63.65 570.62 P
+3 F
+-0.13 (curr) 346.61 570.62 P
+-0.13 (ent) 365.15 570.62 P
+2 F
+-0.13 ( semispace, will be used to hold all) 378.59 570.62 P
+0.28 0.03 (current objects, and to allocate new ones. When there is no longer any room to allocate a new object, the) 63.65 557.62 B
+0.28 0.01 (garbage collector is invoked. The garbage collector will then, in a single pass, copy all objects in the cur-) 63.65 544.62 B
+(rent semispace \050known to the garbage collector as) 63.65 531.62 T
+3 F
+(fr) 286.04 531.62 T
+(omspace) 292.96 531.62 T
+2 F
+(\051 to the other semispace \050) 331.45 531.62 T
+3 F
+(tospace) 442.35 531.62 T
+2 F
+(\051.) 475.95 531.62 T
+0.01 (This is done by iterating over all objects in the root set, and copying each object found into tospace. When) 63.65 506.62 P
+-0.09 (a copy happens, the new location is saved in the old object as a) 63.65 493.62 P
+3 F
+-0.09 (forwar) 342.47 493.62 P
+-0.09 (ding pointer) 372.02 493.62 P
+2 F
+-0.09 (. Each pointer inside the) 425.4 493.62 P
+0.23 (copied object is then examined: it will still be a pointer to fromspace, and must be \336xed up to point to the) 63.65 480.62 P
+0.28 0.09 (new version in tospace instead. If the fromspace copy has a forwarding pointer) 63.65 467.62 B
+0.28 0.09 (, then this is used for the) 419.91 467.62 B
+0.28 0.05 (new address. Alternatively) 63.65 454.62 B
+0.28 0.05 (, the object is itself copied and f) 182.35 454.62 B
+0.28 0.05 (ixed up, and then the pointer is updated to the) 325.91 454.62 B
+(address of this new copy) 63.65 441.62 T
+(.) 171.69 441.62 T
+0.23 (Once all the root set objects have been processed in this way) 63.65 416.62 P
+0.23 (, all the objects reside in a contiguous part of) 332.19 416.62 P
+0.28 0.04 (tospace, with a contiguous area of unallocated memory at the end of the space. T) 63.65 403.62 B
+0.28 0.04 (ospace is then made the) 425.26 403.62 B
+0.28 0.03 (current space, and the garbage collection is then f) 63.65 390.62 B
+0.28 0.03 (inished. Allocation then occurs by simply incrementing) 284.43 390.62 B
+(the pointer into the unallocated part of the current space.) 63.65 377.62 T
+0.28 0.19 (Like mark and compact collectors, copying collectors do not suf) 63.65 352.62 B
+0.28 0.19 (fer from fragmentation, because they) 360.98 352.62 B
+-0.04 (move objects into contiguous areas. An advantage of copying collectors over mark and sweep collectors is) 63.65 339.62 P
+0.28 0.03 (that they avoid the sweep phase, and hence the cost of the algorithm is proportional is the amount of live) 63.65 326.62 B
+-0.07 (data. In fact, the algorithm can be made to be arbitrarily ef) 63.65 313.62 P
+-0.07 (\336cient by increasing the sizes of the semispaces.) 319.54 313.62 P
+-0.27 (The cost for this is the permanent requirement for the two semispaces - which doubles the memory require-) 63.65 300.62 P
+(ment of a simple copying collector compared with mark and sweep.) 63.65 287.62 T
+0.23 (Interaction will be required between the compiler and runtime system to determine an accurate root set of) 63.65 262.62 P
+(pointers - exactly as for the mark and compact collector) 63.65 249.62 T
+(.) 308.34 249.62 T
+0 12 Q
+(3.3) 63.65 215.95 T
+(Implementation Optimizations) 90.65 215.95 T
+0 10 Q
+(3.3.1) 63.65 192.29 T
+(Conservative Collectors) 90.65 192.29 T
+2 11 Q
+0.09 (Conservative garbage collectors are designed in such a way that they do not require any compiler support.) 63.65 166.62 P
+0.28 0.44 (This allows them to be used with existing compilers for languages which do not require garbage) 63.65 153.62 B
+-0.16 (collection) 63.65 140.62 P
+-0.16 (- such as C or C++. For instance it is possible to take the compiled binary \336les for an application) 109.78 140.62 P
+-0.01 (written in C and link them with a library implementing a conservative garbage collector) 63.65 127.62 P
+-0.01 (, and hence get the) 449.53 127.62 P
+0.28 0.15 (benef) 63.65 114.62 B
+0.28 0.15 (it of automatic memory management. The library must contain an appropriate implementation of) 88.24 114.62 B
+FMENDPAGE
+%%EndPage: "4" 7
+%%Page: "5" 8
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 8 Q
+(ESPRIT Project 6062 OMI/GLUE - D4.2.2a) 63.65 766.62 T
+( Initial evaluation of TDF Support for Garbage Collection) 317.83 766.62 T
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+0 10 Q
+(5) 526.09 84.9 T
+3 11 Q
+0.28 0.04 (malloc) 63.65 737.62 B
+2 F
+0.28 0.04 (, which interacts correctly with the garbage collector) 93.81 737.62 B
+0.28 0.04 (. The implementation of) 328.69 737.62 B
+3 F
+0.28 0.04 (fr) 439.75 737.62 B
+0.28 0.04 (ee) 446.76 737.62 B
+2 F
+0.28 0.04 ( will presumably) 456.6 737.62 B
+(be designed to do nothing - although it might put the object on a free list.) 63.65 724.62 T
+0.28 0.24 (Since the conservative collector gets no information from the compiler) 63.65 699.62 B
+0.28 0.24 (, it cannot get a very accurate) 393.65 699.62 B
+-0.04 (description of its root set. T) 63.65 686.62 P
+-0.04 (ypically) 184.28 686.62 P
+-0.04 (, conservative collectors treat all global variables and all of the stack as) 219.01 686.62 P
+0.28 0.04 (roots. In addition, the conservative collector is given no information about where to f) 63.65 673.62 B
+0.28 0.04 (ind variables which) 444.25 673.62 B
+-0.22 (contain pointers to other objects, and it must always allow for confusion with other values it might encoun-) 63.65 660.62 P
+-0.01 (ter \050such as integers, or return addresses on the stack\051. The approach taken is to scan all the roots, and pro-) 63.65 647.62 P
+0.12 (cess any which look like they might be pointers \050for instance, because they have a value which lies within) 63.65 634.62 P
+-0.09 (the bounds of the allocation area\051. The assumption is that all processed objects might be live - even though) 63.65 621.62 P
+0.17 (it is possible that an object only appears to be live because an integer happened to look like a pointer) 63.65 608.62 P
+0.17 (. The) 508.88 608.62 P
+(algorithm is therefore conservative about what might be a pointer \050hence the name\051.) 63.65 595.62 T
+0.28 0.05 (It is important that conservative collectors never move objects because that would require f) 63.65 570.62 B
+0.28 0.05 (ixing up any-) 471.93 570.62 B
+0.28 0.02 (thing looking like a pointer) 63.65 557.62 B
+0.28 0.02 (, which might, in turn, mean changing the value of an integer) 184.57 557.62 B
+0.28 0.02 (. For this reason,) 456.89 557.62 B
+-0.11 (conservative collectors are often based on the mark and sweep algorithm, and suf) 63.65 544.62 P
+-0.11 (fer from fragmentation in) 419.86 544.62 P
+(some applications.) 63.65 531.62 T
+0 10 Q
+(3.3.2) 63.65 507.29 T
+(Incremental Collectors) 90.65 507.29 T
+2 11 Q
+-0.22 (All of the algorithms described in section 3.2 involve stopping the program at irregular intervals in order to) 63.65 481.62 P
+0.24 (perform garbage collection of all objects. The program continues when a complete garbage collection has) 63.65 468.62 P
+0.01 (been performed. These algorithms may be very ef) 63.65 455.62 P
+0.01 (\336cient in terms of the percentage of program time lost to) 282.85 455.62 P
+-0.04 (garbage collection - but they may have very poor interactive or real time performance because the garbage) 63.65 442.62 P
+(collection time can be lar) 63.65 429.62 T
+(ge.) 174.65 429.62 T
+0.28 0.02 (Many modern garbage collectors manage to do small amounts of garbage collection very frequently \050e.g.) 63.65 404.62 B
+-0.13 (with every allocation request\051. This allows the garbage collector to appear unobtrusive - or even to guaran-) 63.65 391.62 P
+0.28 0.02 (tee real time performance. Such collectors are called) 63.65 378.62 B
+3 F
+0.28 0.02 (incr) 300.45 378.62 B
+0.28 0.02 (emental) 317.83 378.62 B
+2 F
+0.28 0.02 ( because instead of carrying out a single) 352.77 378.62 B
+(atomic garbage collection they perform it in small increments.) 63.65 365.62 T
+0.18 (Incremental algorithms are based on the algorithms in section 3.2, but with modi\336cations which allow the) 63.65 340.62 P
+0.28 0.07 (program to continue work in the middle of a garbage collection cycle. T) 63.65 327.62 B
+0.28 0.07 (o the garbage collector) 388 327.62 B
+0.28 0.07 (, the pro-) 490.51 327.62 B
+0.27 (gram appears as a coroutine which is capable of modifying the very memory that the collector is attempt-) 63.65 314.62 P
+0.09 (ing to collect. For this reason, the program is referred to as the) 63.65 301.62 P
+3 F
+0.09 (mutator) 341.96 301.62 P
+2 F
+0.09 (. The collector must make sure that) 376.19 301.62 P
+(it maintains a consistent view of memory with the mutator as it traces through all reachable objects.) 63.65 288.62 T
+0.28 0.07 (The types of inconsistencies, and the techniques for avoiding them are too complex to describe in detail) 63.65 263.62 B
+0.28 0.01 (here. A good overview may be found in [W) 63.65 250.62 B
+0.28 0.01 (ilson]. As a simplif) 258.03 250.62 B
+0.28 0.01 (ication, the mutator can cause inconsisten-) 342.82 250.62 B
+0.28 0.04 (cies when writing to memory \050assigning to values in objects\051. Similarly) 63.65 237.62 B
+0.28 0.04 (, the mutator can notice inconsis-) 382.95 237.62 B
+(tencies created by the collector when reading from memory) 63.65 224.62 T
+(.) 325.03 224.62 T
+0.26 (Incremental collectors normally cause the mutator to take special action for one of these situations \050either) 63.65 199.62 P
+0.28 0.02 (reading or writing\051, and attempt to ensure by design that the other situation never causes problems. If the) 63.65 186.62 B
+0.28 0.04 (mutator takes special action on reading memory) 63.65 173.62 B
+0.28 0.04 (, this is called a) 277.62 173.62 B
+3 F
+0.28 0.04 (r) 350.56 173.62 B
+0.28 0.04 (ead barrier) 354.47 173.62 B
+2 F
+0.28 0.04 (. Alternatively) 404.94 173.62 B
+0.28 0.04 (, if the special) 468.58 173.62 B
+-0.07 (action is taken on writing, this is called a) 63.65 160.62 P
+3 F
+-0.07 (write barrier) 245.73 160.62 P
+2 F
+-0.07 (. The read barrier approach is normally more expen-) 302.2 160.62 P
+0.28 0.03 (sive to implement \050since reading occurs more often than writing in most programs\051. So most incremental) 63.65 147.62 B
+0.28 0.03 (garbage collectors use a write barrier - although read barriers have been used successfully on specialized) 63.65 134.62 B
+(hardware.) 63.65 121.62 T
+FMENDPAGE
+%%EndPage: "5" 8
+%%Page: "6" 9
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(ESPRIT Project 6062 OMI/GLUE - D4.2.2a) 63.65 766.62 T
+(Initial evaluation of TDF Support for Garbage Collection) 320.06 766.62 T
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+N
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+0 10 Q
+(6) 63.65 84.9 T
+2 11 Q
+0.28 0.1 (The implementation of a write barrier varies depending on the details of the collector) 63.65 737.62 B
+0.28 0.1 (. A common tech-) 449.92 737.62 B
+-0.14 (nique is for the write barrier code to save in a table the address of the location in memory which is about to) 63.65 724.62 P
+(be updated. The collector then has information about how to avoid the inconsistency) 63.65 711.62 T
+(.) 434.74 711.62 T
+0.08 (The write barrier is normally performed by in-lined code, wherever a store into memory occurs. The com-) 63.65 686.62 P
+(piler must arrange for this code to be generated.) 63.65 673.62 T
+0 10 Q
+(3.3.3) 63.65 649.29 T
+(Generational Collectors) 90.65 649.29 T
+2 11 Q
+0.13 (The basic algorithms described in section 3.2 may be improved for real applications by making them gen-) 63.65 635.62 P
+-0.12 (erational. The optimization is based on the observation that in most applications, most objects live for only) 63.65 622.62 P
+0.28 0.06 (a short amount of time - although some objects live much longer) 63.65 609.62 B
+0.28 0.06 (. Most objects actually become garbage) 354.06 609.62 B
+0.28 0.09 (before a garbage collection occurs - but those which survive more than one collection are very likely to) 63.65 596.62 B
+0.28 0.12 (survive many collections. The intention behind the optimization is to avoid processing the longer lived) 63.65 583.62 B
+0.28 0.24 (objects during every collection because they are probably still live and there is little to be gained by) 63.65 570.62 B
+0.15 (attempting to collect them. This is done by segregating memory into two or more) 63.65 557.62 P
+3 F
+0.15 (generations) 425.95 557.62 P
+2 F
+0.15 (, and group-) 477.89 557.62 P
+0.17 (ing objects in generations according to their age. Once an object has survived some number of collections) 63.65 544.62 P
+0.28 0.16 (in one generation it will be) 63.65 531.62 B
+3 F
+0.28 0.16 (pr) 190.83 531.62 B
+0.28 0.16 (omoted) 200.51 531.62 B
+2 F
+0.28 0.16 ( to an older generation. The garbage collector will normally only) 233.84 531.62 B
+0.28 0.09 (attempt to collect the youngest generation, although it may decide to collect any number of consecutive) 63.65 518.62 B
+(generations including the youngest, to avoid garbage building up in other generations.) 63.65 505.62 T
+0.24 (In order to collect the younger generation\050s\051 without collecting the older one\050s\051, the basic algorithms may) 63.65 480.62 P
+0.28 0.08 (be simply modif) 63.65 467.62 B
+0.28 0.08 (ied to ignore pointers to objects which are in too old a generation. \050The generation may) 136.9 467.62 B
+0.03 (either be determined by storing it as an integer with the object itself, or) 63.65 454.62 P
+0.03 (, if all objects in a generation are in) 375.88 454.62 P
+0.28 0.09 (a unique memory space, by comparing the object\325) 63.65 441.62 B
+0.28 0.09 (s address with the memory bounds of the generation.\051) 288.93 441.62 B
+-0.08 (However) 63.65 428.62 P
+-0.08 (, the liveness of the objects cannot be determined simply from the normal root set if older genera-) 103.52 428.62 P
+0.25 (tions are ignored, because there may be a pointer from an older generation object to a younger generation) 63.65 415.62 P
+0.28 0.29 (one. Such pointers must also be considered as roots for the garbage collection, and so they must be) 63.65 402.62 B
+0.28 0.01 (recorded somewhere. This may be done by recording the possible location of such a pointer whenever an) 63.65 389.62 B
+0.28 0 (assignment occurs. The location may then be used as a root, and is subject to processing and f) 63.65 376.62 B
+0.28 0 (ix up in the) 480.95 376.62 B
+(normal way) 63.65 363.62 T
+(.) 115.17 363.62 T
+-0.06 (Recording of pointers in this way is conceptually equivalent to using a write barrier) 63.65 338.62 P
+-0.06 (, as described in 3.3.2 -) 429.92 338.62 P
+(and may be implemented in the same way) 63.65 325.62 T
+(.) 247.77 325.62 T
+0 15 Q
+(4.) 63.65 286.95 T
+(Responsibilities of TDF) 90.65 286.95 T
+2 11 Q
+0.28 0.01 (It has already been observed that garbage collection is normally implemented by means of a runtime sys-) 63.65 264.62 B
+-0.25 (tem and a co-operating compiled program. If the \336nal phase of compilation is actually a TDF installer) 63.65 251.62 P
+-0.25 (, then) 507.45 251.62 P
+-0.12 (this installer must be able to generate appropriate code to support the runtime. Hence it must be possible to) 63.65 238.62 P
+-0.2 (express this support in TDF) 63.65 225.62 P
+-0.2 (. TDF has the responsibility for expressing all the forms of support discussed in) 184.17 225.62 P
+0.12 (Section 3: indicating the locations of pointer variables for both local and global variables, and implement-) 63.65 212.62 P
+(ing write barriers.) 63.65 199.62 T
+0.28 0.05 (For ef) 63.65 174.62 B
+0.28 0.05 (f) 90.58 174.62 B
+0.28 0.05 (iciency reasons, the details of the support may vary from one architecture to another) 93.69 174.62 B
+0.28 0.05 (. For instance) 470.91 174.62 B
+0.16 (the implementation of a write barrier might be managed by hardware alone on a machine with support for) 63.65 161.62 P
+0.28 0.13 (trapping writes to individual pages of memory) 63.65 148.62 B
+0.28 0.13 (. Such details may be implemented either in the installer) 274.48 148.62 B
+0.28 0.18 (itself \050in which case core TDF expresses the required semantics\051, or by means of architecture specif) 63.65 135.62 B
+0.28 0.18 (ic) 523.53 135.62 B
+(token expansions. From the point of view of the compiler) 63.65 122.62 T
+(, it makes no dif) 316.18 122.62 T
+(ference which approach is taken.) 387.17 122.62 T
+0.2 (The interface between the compiler and the runtime system will be either a core TDF construct or a token) 63.65 109.62 P
+FMENDPAGE
+%%EndPage: "6" 9
+%%Page: "7" 10
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 8 Q
+(ESPRIT Project 6062 OMI/GLUE - D4.2.2a) 63.65 766.62 T
+( Initial evaluation of TDF Support for Garbage Collection) 317.83 766.62 T
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+0 10 Q
+(7) 526.09 84.9 T
+2 11 Q
+0.28 0.14 (def) 63.65 737.62 B
+0.28 0.14 (inition. The only important consideration is that it is possible to design such an interface which can) 77.5 737.62 B
+0.28 0.15 (work on any platform, provided there is a suitable installer and environment of token def) 63.65 724.62 B
+0.28 0.15 (initions. This) 471.3 724.62 B
+0.28 0.02 (means that the compiler must make assumptions about the availability of a such an environment for each) 63.65 711.62 B
+(tar) 63.65 698.62 T
+(get architecture, in the same way that it must assume the installer itself.) 75.06 698.62 T
+0.28 0.02 (This document does not address the issues of who is responsible for ensuring that a suitable environment) 63.65 673.62 B
+-0.2 (exists) 63.65 660.62 P
+-0.2 (- although this issue is clearly of vital importance if the TDF approach is to be of bene\336t to end users) 91.46 660.62 P
+(of the technology wishing to port applications from one machine to another) 63.65 647.62 T
+(.) 395.14 647.62 T
+-0.11 (Similarly) 63.65 622.62 P
+-0.11 (, this document does not address the issue of whose responsibility it is to provide the runtime sys-) 103.89 622.62 P
+-0.06 (tem. It is possible to provide a runtime system which was compiled completely independently of TDF) 63.65 609.62 P
+-0.06 (, and) 510.33 609.62 P
+0.05 (then link it together with the output from the TDF installer) 63.65 596.62 P
+0.05 (. The Dylan compiler simply has to assume that) 321.38 596.62 P
+(an appropriate runtime system will be present.) 63.65 583.62 T
+0 15 Q
+(5.) 63.65 544.95 T
+(Identifying Objects in TDF) 90.65 544.95 T
+2 11 Q
+0.28 0.07 (Like Lisp, Smalltalk, and some other languages, Dylan is a dynamically typed language. Dylan requires) 63.65 522.62 B
+0.04 (that some variables be allowed to hold values of any type. This means that it is not always possible for the) 63.65 509.62 P
+0.28 0.24 (compiler to determine whether a variable or memory location will be used to contain a pointer or an) 63.65 496.62 B
+-0.17 (integer) 63.65 483.62 P
+-0.17 (- or perhaps even both at dif) 96.94 483.62 P
+-0.17 (ferent times. Implementations of Dylan must ensure that the type infor-) 219.77 483.62 P
+0.28 0.12 (mation is available at runtime. The garbage collector may require this information - as well as the type) 63.65 470.62 B
+0.28 0.02 (checking mechanism of the language implementation itself. See [G4.2.1] for a more detailed study of the) 63.65 457.62 B
+(requirements of a dynamically typed language.) 63.65 444.62 T
+0 12 Q
+(5.1) 63.65 410.95 T
+(T) 90.65 410.95 T
+(agging) 97.09 410.95 T
+2 11 Q
+0.28 0.04 (Dylan objects will normally be represented as pointers to heap allocated structures. These structures will) 63.65 393.62 B
+0.28 0 (contain a f) 63.65 380.62 B
+0.28 0 (ield which identif) 110.03 380.62 B
+0.28 0 (ies the class \050or distinguishing type\051 of the object. For ef) 187.58 380.62 B
+0.28 0 (f) 438.55 380.62 B
+0.28 0 (iciency reasons, it is) 441.6 380.62 B
+0.28 0.08 (important that some classes of object do not require heap memory for their representation. For instance,) 63.65 367.62 B
+0.28 0.07 (integers and characters are normally represented as) 63.65 354.62 B
+3 F
+0.28 0.07 (immediate) 296.74 354.62 B
+2 F
+0.28 0.07 ( values, not as pointers. All Dylan objects) 343.19 354.62 B
+(are therefore represented as) 63.65 341.62 T
+3 F
+(tagged) 187.64 341.62 T
+2 F
+( values.) 217.58 341.62 T
+0.28 0 (Some possible tagging schemes are described in [G4.2.1]. The details of the tagging scheme implementa-) 63.65 316.62 B
+0.19 (tion are likely to be architecture dependent, so the support for the scheme will be provided by a tokenized) 63.65 303.62 P
+(interface which may have speci\336c token expansions for dif) 63.65 290.62 T
+(ferent architectures.) 322.5 290.62 T
+0.28 0.01 (The garbage collector runtime system may also have to determine whether a variable holds an immediate) 63.65 265.62 B
+0.06 (value or a pointer) 63.65 252.62 P
+0.06 (. It may either do this by using the same tokenized interface as the type checking mecha-) 140.52 252.62 P
+0.28 0.05 (nism, or alternatively with some specif) 63.65 239.62 B
+0.28 0.05 (ic code directly written in the high level language used for imple-) 237.4 239.62 B
+0.1 (menting the collector) 63.65 226.62 P
+0.1 (. All that matters is that the interface between the compiler and the runtime system is) 156.74 226.62 P
+(consistent, so that both agree about what is really a pointer) 63.65 213.62 T
+(.) 321.2 213.62 T
+0 12 Q
+(5.2) 63.65 179.95 T
+(Object Headers) 90.65 179.95 T
+2 11 Q
+0.05 (Some objects contain \336elds which are not tagged Dylan values, and hence should not be traced by the col-) 63.65 162.62 P
+-0.05 (lector) 63.65 149.62 P
+-0.05 (. A string is a likely example of such an object - its \336elds would normally contain bytes. The garbage) 88.09 149.62 P
+0.28 0.01 (collector must therefore be able to determine which objects contain tagged values and which do not. This) 63.65 136.62 B
+0.28 0.02 (might be achieved by setting a bit in the header of the object. The runtime system will test this bit before) 63.65 123.62 B
+(deciding whether to trace any reachable objects.) 63.65 110.62 T
+FMENDPAGE
+%%EndPage: "7" 10
+%%Page: "8" 11
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(ESPRIT Project 6062 OMI/GLUE - D4.2.2a) 63.65 766.62 T
+(Initial evaluation of TDF Support for Garbage Collection) 320.06 766.62 T
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+N
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+0 10 Q
+(8) 63.65 84.9 T
+0 15 Q
+(6.) 63.65 734.95 T
+(Supporting Garbage Collection in TDF) 90.65 734.95 T
+0 12 Q
+(6.1) 63.65 699.95 T
+(Conservative Garbage Collection) 90.65 699.95 T
+2 11 Q
+0.28 0.04 (It was seen in section 3.3.1 that conservative garbage collectors require no special compiler support, and) 63.65 675.62 B
+0.05 (hence require no support from TDF either) 63.65 662.62 P
+0.05 (. Since TDF is not contributing to the garbage collection mecha-) 247.88 662.62 P
+0.28 0.01 (nism, there should be no extra cost for providing this sort of garbage collector to a program compiled via) 63.65 649.62 B
+(TDF compared to a native code version.) 63.65 636.62 T
+0 12 Q
+(6.2) 63.65 602.95 T
+(Relocating Garbage Collection) 90.65 602.95 T
+2 11 Q
+0.28 0.09 (It was shown in sections 3.2.2 and 3.2.3 that relocating garbage collectors must be able to determine an) 63.65 585.62 B
+-0.17 (accurate root set, which must be exactly equal to the set of global and local pointer variables. The compiler) 63.65 572.62 P
+0.28 0.01 (must therefore output suitable TDF constructs or tokens to ensure that this is possible, and that such vari-) 63.65 559.62 B
+(ables can be \336xed up.) 63.65 546.62 T
+0.06 (The compiler must also allow for the fact that any pointer value, whether in a local variable or in a \336eld in) 63.65 521.62 P
+(an object, is subject to change across a function call.) 63.65 508.62 T
+0 10 Q
+(6.2.1) 63.65 484.29 T
+(V) 90.65 484.29 T
+(ariables on the Stack) 96.77 484.29 T
+2 11 Q
+-0.26 (Harlequin\325) 63.65 470.62 P
+-0.26 (s native implementations of garbage collected languages locate variables on the stack by context) 110.69 470.62 P
+-0.02 ([G4.2.1]. The caller frame can be found by context from any function frame by following a chain of frame) 63.65 457.62 P
+-0.22 (pointers. Similarly) 63.65 444.62 P
+-0.22 (, the garbage collector traceable variables of a function within a frame are known to start) 144.6 444.62 P
+0.28 0.02 (at a f) 63.65 431.62 B
+0.28 0.02 (ixed of) 85.71 431.62 B
+0.28 0.02 (fset relative to the frame pointer) 116.79 431.62 B
+0.28 0.02 (, and are known to continue until a f) 259.9 431.62 B
+0.28 0.02 (ixed of) 421.47 431.62 B
+0.28 0.02 (fset from the next) 452.55 431.62 B
+0.27 (frame. Exceptions to this rule are also marked by context, for instance by using a uniquely tagged marker) 63.65 418.62 P
+(to identify a region of values which should not be traced.) 63.65 405.62 T
+0.11 (The native implementation makes the assumption that values on the stack should be traced by the garbage) 63.65 380.62 P
+0.28 0.03 (collector by default, unless there is information to the contrary) 63.65 367.62 B
+0.28 0.03 (. This assumption is not valid within TDF) 342.52 367.62 B
+0.28 0.03 (,) 528.9 367.62 B
+0.28 0.18 (because the producer has no control over how the installer will arrange its temporary variables on the) 63.65 354.62 B
+(stack) 63.65 341.62 T
+(- and nor may it make assumptions about what values such temporaries might contain.) 89 341.62 T
+-0.08 (A more appropriate approach for supporting garbage collection within TDF is to assume that values on the) 63.65 316.62 P
+0.28 0.07 (stack should) 63.65 303.62 B
+1 F
+0.28 0.07 (not) 122.54 303.62 B
+2 F
+0.28 0.07 ( be treated as roots by the garbage collector) 138.03 303.62 B
+0.28 0.07 (, unless there is information to say that they) 334.14 303.62 B
+-0.2 (should. The producer must therefore arrange that each function provides information to the garbage collec-) 63.65 290.62 P
+(tor to say what variables it has which contain tagged Dylan values.) 63.65 277.62 T
+0.28 0.11 (Core TDF includes a mechanism to locate a local variable on the stack relative to the frame pointer \050or) 63.65 252.62 B
+3 F
+0.28 0.32 (envir) 63.65 239.62 B
+0.28 0.32 (onment) 87.43 239.62 B
+2 F
+0.28 0.32 (\051 of the function invocation creating the variable. The TDF expression \050) 121.71 239.62 B
+4 F
+0.66 0.32 (env_offset) 462.8 239.62 B
+5 F
+0.66 0.07 (variable) 63.65 226.62 B
+4 F
+0.66 0.07 (\051) 117.01 226.62 B
+2 F
+0.28 0.07 (gives the OFFSET of) 131.01 226.62 B
+5 F
+0.66 0.07 (variable) 230.08 226.62 B
+2 F
+0.28 0.07 ( relative to the environment \050this is a constant at install) 283.44 226.62 B
+0.28 0.06 (time\051, while) 63.65 213.62 B
+1 F
+0.28 0.06 (\050) 120.84 213.62 B
+4 F
+0.66 0.06 (current_env\051) 124.56 213.62 B
+2 F
+0.28 0.06 ( gives a POINTER representing the environment itself. It is a rule within) 204.43 213.62 B
+-0.24 (TDF that if the of) 63.65 200.62 P
+-0.24 (fset of a variable is taken in this way) 140.1 200.62 P
+-0.24 (, then the variable must be de\336ned to have) 298.79 200.62 P
+4 F
+-0.57 (visible) 485.45 200.62 P
+2 F
+(ACCESS.) 63.65 187.62 T
+0.14 (In order to make this information available to the runtime system, the producer will enforce a calling con-) 63.65 162.62 P
+0.01 (vention in which the of) 63.65 149.62 P
+0.01 (fsets of all the live, garbage collected variables of the caller are passed to the callee) 165.54 149.62 P
+0.28 0.01 (as an additional ar) 63.65 136.62 B
+0.28 0.01 (gument. These of) 144.88 136.62 B
+0.28 0.01 (fsets are known as the) 222.12 136.62 B
+3 F
+0.28 0.01 (variable map) 323.7 136.62 B
+2 F
+0.28 0.01 ( for the caller) 382.49 136.62 B
+0.28 0.01 (, and they are repre-) 442.03 136.62 B
+-0.15 (sented as a pointer to a constant structure which contains the number of variables, and an array of their of) 63.65 123.62 P
+-0.15 (f-) 524.32 123.62 P
+0.28 0.11 (sets. As well as the variable map, the environment pointer of the caller will also be passed, as a second) 63.65 110.62 B
+FMENDPAGE
+%%EndPage: "8" 11
+%%Page: "9" 12
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 8 Q
+(ESPRIT Project 6062 OMI/GLUE - D4.2.2a) 63.65 766.62 T
+( Initial evaluation of TDF Support for Garbage Collection) 317.83 766.62 T
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+0 10 Q
+(9) 526.09 84.9 T
+2 11 Q
+-0.25 (additional ar) 63.65 737.62 P
+-0.25 (gument. When the transition is ultimately made to use the TDF procedure extensions [G4.1.2],) 118.5 737.62 P
+0.28 0.09 (these additional ar) 63.65 724.62 B
+0.28 0.09 (guments will correspond to) 146.39 724.62 B
+3 F
+0.28 0.09 (caller parameters) 272.79 724.62 B
+2 F
+0.28 0.09 (, and all Dylan functions will use caller) 353.14 724.62 B
+0.28 0.02 (parameters only for passing these additional ar) 63.65 711.62 B
+0.28 0.02 (guments \050normal Dylan parameters will correspond to cal-) 271.23 711.62 B
+(lee parameters\051.) 63.65 698.62 T
+0.27 (The following code fragments \050in pseudo TNC notation\051 give an indication of how the map might be cre-) 63.65 673.62 P
+(ated, and also how the extra parameters are passed and received.) 63.65 660.62 T
+6 10 Q
+(\050make_var_tagdef function1_var_map) 63.65 642.29 T
+(  \050make_compound \050shape_offset var_map_shape\051) 63.65 630.29 T
+(    num_vars_tok  \050make_int ~signed_int 3\051) 63.65 618.29 T
+(    var_map_1_tok \050make_int ~signed_int \050env_offset function1_arg1\051\051) 63.65 606.29 T
+(    var_map_2_tok \050make_int ~signed_int \050env_offset function1_arg2\051\051) 63.65 594.29 T
+(    var_map_3_tok \050make_int ~signed_int \050env_offset function1_arg3\051\051 | \051\051) 63.65 582.29 T
+(\050make_id_tagdef function1) 63.65 558.29 T
+(  \050make_proc \050integer ~signed_int\051) 63.65 546.29 T
+(    var_map_ptr_shape - caller_var_map) 63.65 534.29 T
+(    env_ptr_shape - caller_env_ptr) 63.65 522.29 T
+(    object_shape  - function1_arg1) 63.65 510.29 T
+(    object_shape  - function1_arg2) 63.65 498.29 T
+(    object_shape  - function1_arg3) 63.65 486.29 T
+(    |) 63.65 474.29 T
+(    -) 63.65 462.29 T
+(    \050sequence) 63.65 450.29 T
+(      ...) 63.65 438.29 T
+(      \050apply_proc \050integer ~signed_int\051) 63.65 426.29 T
+(\050obtain_tag function2\051) 297.65 426.29 T
+(\050obtain_tag function1_v) 111.65 414.29 T
+(ar_map\051) 249.65 414.29 T
+(\050current_env\051) 111.65 402.29 T
+(.....\051) 111.65 390.29 T
+(      ...\051\051\051) 63.65 378.29 T
+2 11 Q
+0.28 0.06 (Since each function) 63.65 353.62 B
+1 F
+0.28 0.06 (F) 155.09 353.62 B
+2 F
+0.28 0.06 ( is passed the environment pointer) 161.87 353.62 B
+1 F
+0.28 0.06 (P1) 318.84 353.62 B
+2 F
+0.28 0.06 ( of its caller) 331.17 353.62 B
+1 F
+0.28 0.06 (C1) 388.1 353.62 B
+2 F
+0.28 0.06 (,) 401.65 353.62 B
+1 F
+0.28 0.06 (F) 407.54 353.62 B
+2 F
+0.28 0.06 ( can also f) 414.32 353.62 B
+0.28 0.06 (ind the environ-) 460.05 353.62 B
+0.22 (ment pointer) 63.65 340.62 P
+1 F
+0.22 (P2) 122.75 340.62 P
+2 F
+0.22 ( for function) 134.98 340.62 P
+1 F
+0.22 (C2) 193.38 340.62 P
+2 F
+0.22 (\050the caller of) 209.79 340.62 P
+1 F
+0.22 (C1) 269.41 340.62 P
+2 F
+0.22 (\051, since this is a parameter of) 282.85 340.62 P
+1 F
+0.22 (C1) 413.93 340.62 P
+2 F
+0.22 (, and may be found at a) 427.37 340.62 P
+0.28 0.11 (known of) 63.65 327.62 B
+0.28 0.11 (fset from) 106.46 327.62 B
+1 F
+0.28 0.11 (P1) 150.88 327.62 B
+2 F
+0.28 0.11 (. By extension,) 163.32 327.62 B
+1 F
+0.28 0.11 (F) 234.65 327.62 B
+2 F
+0.28 0.11 ( can also f) 241.49 327.62 B
+0.28 0.11 (ind the environment pointer of) 287.82 327.62 B
+1 F
+0.28 0.11 (C2) 429.79 327.62 B
+2 F
+0.28 0.11 (\325) 443.45 327.62 B
+0.28 0.11 (s caller) 446.62 327.62 B
+0.28 0.11 (, and for all) 478.79 327.62 B
+0.11 (other functions in the calling stack. Similarly) 63.65 314.62 P
+0.11 (,) 261.9 314.62 P
+1 F
+0.11 (F) 267.51 314.62 P
+2 F
+0.11 ( can \336nd the variable map for each function. Provided that) 274.23 314.62 P
+0.28 0 (the garbage collector itself is called with this convention, the garbage collector can locate all variables on) 63.65 301.62 B
+(the stack.) 63.65 288.62 T
+0.28 0.03 (This mechanism uses the calling convention itself to create a chain of saved environment pointers on the) 63.65 263.62 B
+0.16 (stack. This is more ef) 63.65 250.62 P
+0.16 (\336cient than creating a chain where the head is a global variable \050a mechanism which) 158.51 250.62 P
+0.28 0.04 (was discussed by Harlequin and DRA\051. But the mechanism does rely on the consistent use of the calling) 63.65 237.62 B
+-0.06 (convention. There is a requirement for Dylan to be able to call, and be called by) 63.65 224.62 P
+-0.06 (, other languages which do) 413.66 224.62 P
+0.28 0.02 (not respect this convention. This can be made to work by arranging that whenever a foreign call is made,) 63.65 211.62 B
+0.18 (the environment pointer chain is saved in a global variable. The convention can then be resumed by using) 63.65 198.62 P
+(this global value whenever a callback occurs into Dylan.) 63.65 185.62 T
+0 10 Q
+(6.2.2) 63.65 161.29 T
+(Relocation of simple objects) 90.65 161.29 T
+2 11 Q
+0.28 0.17 (The garbage collector runtime system can locate all local variables on the stack, using the mechanism) 63.65 147.62 B
+0.28 0.09 (described above. Because all the variables are declared to be) 63.65 134.62 B
+4 F
+0.66 0.09 (visible) 340.87 134.62 B
+2 F
+0.28 0.09 (, the garbage collector may also) 387.68 134.62 B
+0.07 (modify these variables. This gives the garbage collector the same freedom to \336x up pointers that would be) 63.65 121.62 P
+FMENDPAGE
+%%EndPage: "9" 12
+%%Page: "10" 13
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(ESPRIT Project 6062 OMI/GLUE - D4.2.2a) 63.65 766.62 T
+(Initial evaluation of TDF Support for Garbage Collection) 320.06 766.62 T
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+N
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+0 10 Q
+(10) 63.65 84.9 T
+2 11 Q
+0.28 0.3 (enjoyed by a native code implementation. The semantics of TDF ensure that the installer makes no) 63.65 737.62 B
+(assumptions about such values being preserved during a function call.) 63.65 724.62 T
+0 10 Q
+(6.2.3) 63.65 700.29 T
+(Expected Cost and Bene\336ts) 90.65 700.29 T
+2 11 Q
+0.28 0.08 (The convention described above for locating variables on the stack has an initial cost of two extra ar) 63.65 686.62 B
+0.28 0.08 (gu-) 516.91 686.62 B
+-0.23 (ments to pass per function call. The importance of this cost will depend on the nature of the Dylan program) 63.65 673.62 P
+0.28 0.02 (itself. There is also a cost in terms of space, as the convention requires the variable location maps, which) 63.65 660.62 B
+(are constant arrays.) 63.65 647.62 T
+-0.12 (There may be an additional cost for the use of visible variables. This cost will depend on the installer used.) 63.65 622.62 P
+-0.18 (On some platforms, this will make no dif) 63.65 609.62 P
+-0.18 (ference. On other platforms some possible optimisations might be) 243.1 609.62 P
+(missed \050for instance, storing variables in registers\051.) 63.65 596.62 T
+0.28 0.06 (However) 63.65 571.62 B
+0.28 0.06 (, there is a possible benef) 103.94 571.62 B
+0.28 0.06 (it of this technique compared with Harlequin\325) 217.5 571.62 B
+0.28 0.06 (s native code techniques) 422.23 571.62 B
+0.06 ([G4.2.1]. It is possible for a function to be more accurate about liveness of variables at the time of making) 63.65 558.62 P
+0.27 (a call. The native code mechanism assumes that all tagged values still on the stack must be live. The map) 63.65 545.62 P
+0.28 0.05 (mechanism described above, however) 63.65 532.62 B
+0.28 0.05 (, allows a function to ignore those variables which it knows are no) 233.18 532.62 B
+0.17 (longer in use. This might allow the garbage collector to free more objects. It is impossible to quantify this) 63.65 519.62 P
+(bene\336t, as it will be program dependent.) 63.65 506.62 T
+0 12 Q
+(6.3) 63.65 472.95 T
+(Generational or Incremental Garbage Collection) 90.65 472.95 T
+2 11 Q
+0.28 0.12 (It was shown in sections 3.3.2 and 3.3.3 that both generational and incremental garbage collectors nor-) 63.65 448.62 B
+0.05 (mally use a write barrier) 63.65 435.62 P
+0.05 (, requiring code to be inserted by the compiler whenever a value is written into an) 170.95 435.62 P
+0.28 0.11 (object. For some specialist hardware it might be more appropriate to implement a read barrier instead -) 63.65 422.62 B
+(especially if the barrier can be completely implemented in hardware.) 63.65 409.62 T
+0.28 0.01 (The implementation of these read or write barriers cannot be expressed in an architecture neutral manner) 63.65 384.62 B
+0.28 0.01 (.) 528.9 384.62 B
+0.28 0.15 (There is a strong dependency on the details of the garbage collector runtime system, and the hardware) 63.65 371.62 B
+0.28 0.14 (capabilities of the computer) 63.65 358.62 B
+0.28 0.14 (. However) 190.44 358.62 B
+0.28 0.14 (, it is possible to abstract the code generated by the compiler for) 237.4 358.62 B
+0.13 (reading and writing objects. A suitable tar) 63.65 345.62 P
+0.13 (get speci\336c token de\336nition can then cause the appropriate code) 249.09 345.62 P
+(for the read or write barrier to be installed.) 63.65 332.62 T
+0.28 0.11 (It is expected that by using carefully designed token def) 63.65 313.62 B
+0.28 0.11 (initions in this way) 317.89 313.62 B
+0.28 0.11 (, it will be possible for TDF) 404.3 313.62 B
+0.28 0.08 (installers to generate comparable code to native compilers. Hence there should be no additional cost for) 63.65 300.62 B
+(supporting these types of collectors.) 63.65 287.62 T
+0 15 Q
+(7.) 63.65 248.95 T
+(Implementation Development Strategy) 90.65 248.95 T
+2 11 Q
+0.28 0.18 (Harlequin Ltd. are currently working on the implementation of a Dylan to TDF producer) 63.65 226.62 B
+0.28 0.18 (, as well as a) 472.33 226.62 B
+0.28 0.16 (design for a token interface between compiler and runtime system, encapsulating support for the most) 63.65 213.62 B
+(complex envisaged garbage collector algorithms.) 63.65 200.62 T
+-0.21 (It is an interesting observation that the power of the TDF token mechanism allows this interface to be com-) 63.65 175.62 P
+-0.11 (pletely abstracted, so that the details of the requirements for a particular runtime system can be satis\336ed by) 63.65 162.62 P
+-0.06 (installing the TDF representing an application in the presence of an appropriate token de\336nition library for) 63.65 149.62 P
+0.28 0.13 (that runtime system. Provided the interface description contains enough information, it may be used to) 63.65 136.62 B
+0.28 0.03 (communicate with any runtime system by inserting write barrier code or local variable maps as required.) 63.65 123.62 B
+FMENDPAGE
+%%EndPage: "10" 13
+%%Page: "11" 14
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 8 Q
+(ESPRIT Project 6062 OMI/GLUE - D4.2.2a) 63.65 766.62 T
+( Initial evaluation of TDF Support for Garbage Collection) 317.83 766.62 T
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+0 10 Q
+(1) 521.08 84.9 T
+(1) 526.09 84.9 T
+2 11 Q
+0.03 (Indeed, it is possible to use tokens to give an abstract interface to the layout of objects themselves - allow-) 63.65 737.62 P
+(ing runtime systems to use dif) 63.65 724.62 T
+(ferent object representations.) 195.76 724.62 T
+0.17 (This form of late binding of compiler behaviour is not possible with traditional compilers. It is potentially) 63.65 699.62 P
+-0.09 (extremely useful, allowing application writers to choose an appropriate garbage collector and object repre-) 63.65 686.62 P
+0.28 0.21 (sentation, and yet still make use of binary representations of standard libraries which also allocate or) 63.65 673.62 B
+(manipulate heap memory) 63.65 660.62 T
+(.) 174.75 660.62 T
+0.28 0 (Harlequin will initially test this interface with a conservative garbage collector - with appropriate dummy) 63.65 635.62 B
+0.28 0.14 (token expansions for the compiler interface to the runtime system. The compiler can then be tested for) 63.65 622.62 B
+(implementation robustness without having to worry about garbage collector bugs.) 63.65 609.62 T
+0.28 0.03 (An interface will then be written to a simple relocating runtime system, which will test the local variable) 63.65 584.62 B
+0.28 0.22 (mapping mechanism, and the accurate detection of pointers. Finally) 63.65 571.62 B
+0.28 0.22 (, an incremental collector will be) 378.08 571.62 B
+(tested.) 63.65 558.62 T
+0 15 Q
+(8.) 63.65 519.95 T
+(Future considerations) 90.65 519.95 T
+2 11 Q
+0.27 (The evaluation of garbage collector mechanisms discussed in this paper have so far assumed that the pro-) 63.65 497.62 P
+-0.18 (grams requiring support are complete applications. The program development phase introduces some extra) 63.65 484.62 P
+0.28 0.08 (complications which have not yet been considered. Use of the TDF technology for supporting program-) 63.65 471.62 B
+-0.21 (ming development environments is outside of the scope of GLUE, so this chapter merely poses some ques-) 63.65 458.62 P
+(tions for future study) 63.65 445.62 T
+(.) 155.51 445.62 T
+0 12 Q
+(8.1) 63.65 411.95 T
+(Relocation of code) 90.65 411.95 T
+2 11 Q
+0.28 0.04 (A state of the art program development environment will allow the programmer to incrementally modify) 63.65 387.62 B
+0.03 (the code within a program as it is being debugged. Supporting this with TDF raises some interesting ques-) 63.65 374.62 P
+-0.04 (tions about how to load compiled code dynamically into a running program - but we will not address these) 63.65 361.62 P
+(questions here.) 63.65 348.62 T
+-0.11 (Assuming that a mechanism can be found for dynamically loading code, an appropriate mechanism should) 63.65 323.62 P
+0.28 0.05 (also be found for garbage collecting the old versions of code which have been modif) 63.65 310.62 B
+0.28 0.05 (ied. This introduces) 443.08 310.62 B
+(some new problems not encountered with the garbage collection of other objects.) 63.65 297.62 T
+0.28 0.03 (If code can be garbage collected, then the root set must take into account any currently active functions -) 63.65 272.62 B
+0.03 (since these must also be considered to be live. The compiler must be able to express to the runtime system) 63.65 259.62 P
+0.28 0.21 (how to f) 63.65 246.62 B
+0.28 0.21 (ind the active functions. In native code implementations this is done by looking at the return) 101.96 246.62 B
+0.28 0.01 (addresses on the stack, which may be found at a known of) 63.65 233.62 B
+0.28 0.01 (fset from each frame pointer [G4.2.1]. There is) 322.89 233.62 B
+(currently no mechanism in TDF to extract this return address.) 63.65 220.62 T
+-0.08 (Ideally) 63.65 195.62 P
+-0.08 (, this garbage collector will support relocation of code objects - because a non-moving collector can) 93.48 195.62 P
+-0 (cause fragmentation problems. This requires either that the code produced by the installer is position inde-) 63.65 182.62 P
+-0.02 (pendent \050not possible on some architectures\051, or alternatively that the code itself contains enough informa-) 63.65 169.62 P
+(tion for the garbage collector to relocate it.) 63.65 156.62 T
+FMENDPAGE
+%%EndPage: "11" 14
+%%Page: "12" 15
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(ESPRIT Project 6062 OMI/GLUE - D4.2.2a) 63.65 766.62 T
+(Initial evaluation of TDF Support for Garbage Collection) 320.06 766.62 T
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+N
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+0 10 Q
+(12) 63.65 84.9 T
+0 12 Q
+(8.2) 63.65 736.95 T
+(Relocation of stacks) 90.65 736.95 T
+2 11 Q
+0.22 (It can be useful to support the relocation of stacks - either in a development environment, or to permit the) 63.65 719.62 P
+-0.21 (garbage collection of stacks in a language implementation of a parallel language. If this facility is available) 63.65 706.62 P
+0.28 0.05 (in a development environment, then a useful option for the programmer is the ability to switch to a new) 63.65 693.62 B
+0.28 0.05 (,) 528.9 693.62 B
+(bigger stack if a stack over\337ow is detected.) 63.65 680.62 T
+0.06 (If a stack is relocated, then any pointers into the stack must be \336xed up. In normal circumstances, the only) 63.65 655.62 P
+0.28 0.01 (such pointers would be in the stack itself \050such as saved frame pointers\051, or in registers \050such as the stack) 63.65 642.62 B
+(pointer or frame pointer\051.) 63.65 629.62 T
+-0.22 (TDF does not provide a mechanism for locating all such pointers, because the installer is free to implement) 63.65 604.62 P
+0.28 0.11 (stacks any way it chooses. However) 63.65 591.62 B
+0.28 0.11 (, there are standard ABIs for some architectures which might mean) 227.14 591.62 B
+(that the runtime system can infer this information for itself.) 63.65 578.62 T
+0 15 Q
+(9.) 63.65 539.95 T
+(Conclusions) 90.65 539.95 T
+2 11 Q
+0.13 (TDF is required to provide an interface between the compiler output and the runtime system, although the) 63.65 513.62 P
+(implementation of the runtime system itself is outside of the scope of TDF) 63.65 500.62 T
+(.) 390.92 500.62 T
+0.28 0.05 (TDF is able to support all major forms of serial garbage collection, using a combination of core features) 63.65 475.62 B
+(and tar) 63.65 462.62 T
+(get speci\336c token libraries.) 93.69 462.62 T
+-0.08 (It should be possible to mix TDF code produced by two dif) 63.65 437.62 P
+-0.08 (ferent language compilers - one which supports) 323.18 437.62 P
+0.13 (garbage collection and one which does not - without compromising the ef) 63.65 424.62 P
+0.13 (\336ciency of either language. This) 389.06 424.62 P
+(will require a suitable foreign language interface between the two languages.) 63.65 411.62 T
+0.01 (There is a cost for using TDF as opposed to native code to support relocating garbage collectors. This cost) 63.65 386.62 P
+0.28 0.13 (appears in terms of speed, code and size. The cost comes from passing two extra parameters with each) 63.65 373.62 B
+0.28 0.19 (function call. One of the parameters will require the reservation and initialization of some static data.) 63.65 360.62 B
+-0.23 (There is also an additional cost as Dylan variables will normally have to be declared to be visible. This will) 63.65 347.62 P
+(remove the opportunity to locate them in registers.) 63.65 334.62 T
+0 15 Q
+(10.) 63.65 295.95 T
+(References) 90.65 295.95 T
+2 10 Q
+([Dyl92]) 63.65 274.29 T
+(Apple Computer) 117.65 274.29 T
+(,) 184.19 274.29 T
+3 F
+(Dylan - an object oriented dynamic language) 189.19 274.29 T
+2 F
+(, April 1992) 370.83 274.29 T
+([G4.1.2]) 63.65 256.29 T
+0.25 0.05 (Ian Currie,) 117.65 256.29 B
+3 F
+0.25 0.05 (Pr) 164.51 256.29 B
+0.25 0.05 (oposed Extensions to TDF for Ada and Lisp) 174.23 256.29 B
+2 F
+0.25 0.05 (, GLUE deliverable 4.1.2, DRA, September) 353.67 256.29 B
+(1993) 117.65 244.29 T
+([G4.2.1]) 63.65 226.29 T
+(T) 117.65 226.29 T
+(ony Mann,) 123.06 226.29 T
+3 F
+(TDF support r) 168.89 226.29 T
+(equir) 226.86 226.29 T
+(ed by Lisp) 247.6 226.29 T
+2 F
+(, GLUE deliverable 4.2.1, Harlequin Ltd., April 1993) 288.71 226.29 T
+([TDFspec]) 63.65 208.29 T
+(DRA Malvern,) 117.65 208.29 T
+3 F
+(TDF Speci\336cation, Issue 2.1) 180.14 208.29 T
+2 F
+(, June 1993) 293.74 208.29 T
+([W) 63.65 190.29 T
+(ilson]) 76.02 190.29 T
+(Paul R. W) 117.65 190.29 T
+(ilson,) 158.64 190.29 T
+3 F
+(Unipr) 183.09 190.29 T
+(ocessor Garbage Collection T) 206.61 190.29 T
+(echniques) 326.52 190.29 T
+2 F
+(, University of T) 366.51 190.29 T
+(exas, 1992) 432.47 190.29 T
+FMENDPAGE
+%%EndPage: "12" 15
+%%Trailer
+%%BoundingBox: 0 0 595.3 841.9
+%%PageOrder: Ascend
+%%Pages: 15
+%%DocumentFonts: Helvetica-Bold
+%%+ Times-Bold
+%%+ Times-Roman
+%%+ Times-Italic
+%%+ Courier-Bold
+%%+ Courier-Oblique
+%%+ Courier
+%%EOF

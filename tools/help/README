@@ -1,0 +1,46 @@
+* CONTENTS
+
+This directory (compound) contains the following files:
+
+convert-to-hhc.pl
+
+	Perl script to convert DRM's WebMakered HTML contents page
+	into HTML Help's HHC format of HTML.	
+
+convert-to-hhk.pl
+
+	Perl script to convert DRM's WebMakered HTML index page
+	into HTML Help's HHK format of HTML.	
+
+contents.hhc		
+	
+	DRM's contents page converted to HHC format.
+
+contents.htm*
+	
+	DRM's contents page ActiveX control info.
+
+index.hhk*
+	
+	DRM's index page converted to HHK format.
+
+index.htm*
+	
+	DRM's index page ActiveX control info.
+
+dylanworks.htm*
+	
+	Top level frameset for HTML Help version of DRM.
+
+nav.htm*
+
+	Some buttons for the HTML Help version of the DRM:
+	contents, index, and back.
+
+* INSTRUCTIONS
+
+For the moment, to try out this new interface to the DRM you have to
+copy the *.HTM and *.HH* files into a directory containing the DRM
+(eg ~dylan/public-html/dylan-framed/drm/) and point Internet Explorer
+3.0 at "dylanworks.htm".
+

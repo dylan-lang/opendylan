@@ -1,0 +1,44 @@
+
+#  Dylan libraries for interfacing with the Win32 API (Microsoft Windows)
+#
+#  This file controls the generation of source files that are created
+#  automatically by adapting information from the Microsoft header files.
+
+# Copyright: 1997 Functional Objects, Inc.  All rights reserved.
+
+# $Header: /scm/cvs/fundev/Sources/win32/win32-rich-edit/make-sources,v 1.1 2004/03/12 00:10:29 cgay Exp $
+
+WIN32-RICH-EDIT=richedit.dylan library.dylan
+
+all: $(WIN32-RICH-EDIT)
+
+richedit: $(WIN32-RICH-EDIT)
+
+COMDIR=../win32-common
+
+include $(COMDIR)/sources.mak
+
+library.dylan: library.src richedit.exp
+
+richedit.dylan: $(MSH)richedit.h $(WINPAT) $(PATTERNS) before.pat after.pat \
+		$(COMDIR)/obsolete-names.text inherited-slots.pat
+	$(GEMA) -f before.pat  -f $(WINPAT)  -f $(PATTERNS)  $(FULL-OPTIONS) \
+		-f $(COMDIR)/copyright.pat  -f after.pat \
+		-f inherited-slots.pat  -module Win32-Rich-Edit \
+		-D WM_PRINTCLIENT  \
+		-D EM_GETLIMITTEXT  -D EM_POSFROMCHAR  -D EM_CHARFROMPOS \
+		-out $@  -in $(MSH)richedit.h
+
+# Note: the "-D" options above are to prevent duplicating constants that
+#	are defined in the "win32-user" library.
+
+# This notes which slot accessors should not be exported here because the
+# name is inherited from another module:
+inherited-slots.pat: library.src
+	$(GEMA) -match  -idchars '_-$$<>@%&*+=/?' \
+	  -p '\Iexport\:\W\{<exports>\}=$$1' \
+	  -p 'exports:<I>-value-setter\I=export-slot\:\\C$$1\=\$$0-value\@end\n;<I>=;?=' \
+	  -in library.src  -out $@
+
+clean:
+	rm -f $(WIN32-RICH-EDIT) *.bak win*.exp

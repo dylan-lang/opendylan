@@ -1,0 +1,85 @@
+Module:    Dylan-user	%comment -*- Mode: Dylan -*-
+Synopsis:  Win32 API for window functions implemented in "USER32.DLL".
+%comment   This file is a template that is expanded to produce "library.dylan".
+Copyright: 1997, 1998 Functional Objects, Inc.  All rights reserved.
+
+%comment $HopeName: D-lib-win32-user!library.src(trunk.12) $
+%comment $Date: 2004/03/12 00:10:30 $
+
+define library Win32-user
+  use Dylan;
+  use C-FFI;
+  use Win32-common;
+  use Win32-GDI;
+  export Win32-user;
+
+  use Win32-kernel;
+  use functional-extensions;	// only used by Win32-default-handler
+  export Win32-default-handler;
+end library Win32-user;
+
+
+define module Win32-user
+  use Dylan;
+  use C-FFI;
+  use Win32-common,
+    /* have to export here names that are used as structure accessors in
+       both modules. */
+    export: {cx-value, cy-value, x-value, y-value,
+	       cx-value-setter, cy-value-setter, x-value-setter, y-setter,
+	     cbSize-value, cbSize-value-setter,
+	     cbData-value, cbData-value-setter,
+	     lpData-value, lpData-value-setter,
+	     offset-value, offset-value-setter,
+       /* also export some names that the user may want to use directly: */
+	     $MAX-PATH, $NULL-HWND, %logior, <HACCEL>, <HANDLE>,
+	     <HBITMAP>, <HBRUSH>, <HCURSOR>, <HDC>, <HICON>, <HINSTANCE>,
+	     <HMENU>, <HRGN>, <HWND>, <LPCSTR>, <LPPOINT>, <LPRECT>, <LPSTR>,
+	     <LPTSTR>, <LPVOID>, <PPOINT>, MAKEINTRESOURCE, MAKELONG,
+	     pointer-address, pointer-cast,
+	     left-value, right-value, top-value, bottom-value} ;
+
+  use Win32-GDI,
+    import: { <LOGFONTA>, <LPDEVMODEA> },
+    export: { <LOGFONTA>, <LPDEVMODEA> };
+
+  // Accessor for "WinMain" parameters:
+  //   Make them accessible from both Win32-kernel and Win32-user
+  use Win32-kernel,
+    import: { application-instance-handle, application-command-line, 
+	      application-show-window },
+    export: { application-instance-handle, application-command-line,
+	      application-show-window };
+
+%include winuser.exp
+
+  // defined in "moreuser.dylan":
+  export CreateWindow, CreateDialog, CreateDialogIndirect, DialogBox,
+	GetNextWindow, CopyCursor;
+  export MAKEWPARAM, MAKELPARAM, MAKELRESULT;
+  export CreateWindowEx;
+
+  // defined in "predecl.dylan":
+  export hdr-value, hdr-value-setter, pszTitle-value, pszTitle-value-setter;
+  export lpszCaption-value, length-value, hWndOwner-value, wFmt-value,
+    dwData-value, lpszText-value;
+  export lpszCaption-value-setter, length-value-setter,
+    hWndOwner-value-setter, wFmt-value-setter,
+    dwData-value-setter, lpszText-value-setter;
+  export <LPHKL>, <LPHWND>;
+
+end module Win32-user;
+
+
+
+define module Win32-default-handler
+  use Dylan;
+  use Win32-common;
+  use Win32-user;
+  use Win32-kernel;
+  use simple-format;
+  use functional-extensions;
+  export
+    *error-module-handle*,
+    win32-last-handler;
+end module Win32-default-handler;

@@ -1,0 +1,39 @@
+# Build runtime library for Dylan under Win32
+
+FUNCTIONAL_DYLAN_RELEASE_BIN=$(FUNCTIONAL_DYLAN_RELEASE_INSTALL)\bin
+FUNCTIONAL_DYLAN_RELEASE_INCLUDE=$(FUNCTIONAL_DYLAN_RELEASE_INSTALL)\include
+FUNCTIONAL_DYLAN_RELEASE_LIB=$(FUNCTIONAL_DYLAN_RELEASE_INSTALL)\lib
+FUNCTIONAL_DYLAN_USER_BIN=$(FUNCTIONAL_DYLAN_USER_INSTALL)\bin
+FUNCTIONAL_DYLAN_USER_INCLUDE=$(FUNCTIONAL_DYLAN_USER_INSTALL)\include
+FUNCTIONAL_DYLAN_USER_LIB=$(FUNCTIONAL_DYLAN_USER_INSTALL)\lib
+
+APPVER	= 4.0
+TARGETOS = BOTH
+
+!include <win32.mak>
+
+!if !defined(NODEBUG) && !defined(PROFILE) && !defined(TUNE)
+cdebug = $(cdebug)
+!endif
+
+CC	= $(cc)
+LINKLIB	= $(implib) /nologo /out:
+CFLAGS	= $(cflags) $(cvarsmt) $(cdebug) /I$(FUNCTIONAL_DYLAN_RELEASE_INCLUDE) $(FUNCTIONAL_DYLAN_C_FLAGS)
+OBJS	= run-time.obj debug-print.obj
+LIBFILE	= run-time.lib
+
+$(LIBFILE): $(OBJS)
+	$(LINKLIB)$(LIBFILE) $(OBJS)
+
+install: $(LIBFILE)
+	pushd $(FUNCTIONAL_DYLAN_USER_LIB) & del /q /f $(LIBFILE) & popd
+	copy $(LIBFILE) $(FUNCTIONAL_DYLAN_USER_LIB)
+	pushd $(FUNCTIONAL_DYLAN_USER_INCLUDE) & del /q /f run-time.h & popd
+	copy run-time.h $(FUNCTIONAL_DYLAN_USER_INCLUDE)
+	pushd $(FUNCTIONAL_DYLAN_USER_BIN) & del /q /f ccl-linker.script & popd
+	copy win32-ccl-linker.script $(FUNCTIONAL_DYLAN_USER_BIN)\ccl-linker.script
+
+clean:
+	del /q /f $(OBJS) $(LIBFILE)
+
+

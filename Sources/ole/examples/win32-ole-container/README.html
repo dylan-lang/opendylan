@@ -1,0 +1,61 @@
+<HTML>
+<HEAD>
+	<TITLE>Functional Developer Example: win32-ole-container</TITLE>
+	<LINK REL="stylesheet" TYPE="text/css" HREF="../../examples.css">
+</HEAD>
+
+<BODY>
+
+<H2>win32-ole-container library</H2>
+
+<HR ALIGN="CENTER">
+
+<P>This project contains an example program which demonstrates use of the
+Functional Developer's <b>ole-container</b> library to support embedding of
+graphical OLE objects produced by other programs.</P>
+
+<P>The <b>OLE-Container</b> library is documented in the Functional Developer
+"OLE, COM, ActiveX and DBMS" reference manual.</P>
+
+<P>This example provides the same simple functionality as the
+<b>sample-ole-container</b> example under the "Low-level OLE"
+examples, which uses the low-level Windows OLE API directly.  This
+example uses the framework provided by the <b>OLE-Container</b>
+library to simplify the program.  It uses the low-level Win32 API for
+its user interface.  See also the <b>sample-duim-container</b> project
+for an example of a container program which uses <b>DUIM</b> for its
+user interface.</P>
+
+<P>This example has the following limitations:</P>
+<UL>
+ <LI>It has no support for saving state to a file.</LI>
+ <LI>It only supports one embedded object at a time.</LI>
+ <LI>It supports only the basic OLE compound document protocols, not any
+   of the newer optional ActiveX features.</LI>
+ <LI>The embedded object cannot be moved or resized.</LI>
+</UL> 
+
+<P>Program execution begins in <code>main-program</code> in
+<em>main.dylan</em>, which contains the Windows event loop.  The file
+<em>windows.dylan</em> contains the function
+<code>main-wnd-proc</code>, which handles Windows events.  When the
+"Insert Object" command is invoked from the "Edit" menu, the function
+<code>insert-object</code> in the file <em>appdoc.dylan</em> calls
+<code>insert-object-from-dialog</code> from the <b>ole-container</b>
+library to handle choosing and connecting to an object.</P>
+
+<P>After building the program, run it and use the "Insert Object" command
+from the "Edit" menu to choose an object from among those registered on
+your system.  Some may directly draw in the container window, while
+others pop up a separate application window in which you create the
+object, which is inserted in the container when you exit the
+application.  Some objects add their own commands to the menu bar.
+Click outside the object to de-activate it; double click on it to
+re-activate.  You can invoke "New" from the "File" menu to erase the
+current object and enable selecting another.</P>
+
+
+</BODY>
+
+</HTML>
+

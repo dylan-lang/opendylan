@@ -1,0 +1,31 @@
+set-write-databases? true
+compile -force-parse win32-common
+save -export-only win32-common
+close win32-common
+compile -force-parse win32-kernel
+save -export-only win32-kernel
+close win32-kernel
+compile -force-parse win32-user
+save -export-only win32-user
+close win32-user
+compile -force-parse win32-gdi
+save -export-only win32-gdi
+compile -force-parse win32-dialog
+save -export-only win32-dialog
+close win32-dialog
+compile -force-parse win32-controls
+save -export-only win32-controls
+close win32-controls
+compile -force-parse win32-dde
+save -export-only win32-dde
+close win32-dde
+compile -force-parse win32-registry
+save -export-only win32-registry
+close win32-registry
+compile -force-parse win32-version
+save -export-only win32-version
+close win32-version
+compile -force-parse win32-rich-edit
+save -export-only win32-rich-edit
+close win32-rich-edit
+exit

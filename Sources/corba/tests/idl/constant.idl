@@ -1,0 +1,142 @@
+// Author:    Keith Dennison
+// Copyright: Copyright 1998, Functional Objects, Inc.  All rights reserved.
+// Version:   $HopeName: D-corba-tests-idl!constant.idl(trunk.5) $
+
+
+// integer constants
+//
+const short MIN_SHORT = -32768;
+const short MAX_SHORT = 32767;
+const unsigned short MIN_USHORT = 0;
+const unsigned short MAX_USHORT = 65535;
+const long MIN_LONG = -536870911;           // should be -2147483648
+const long MAX_LONG =  536870911;           // should be 2147483647
+const unsigned long MIN_ULONG = 0;
+const unsigned long MAX_ULONG = 536870911;  // should be 4294967295;
+const long OCTAL_INTEGER = 01234567;
+const long HEXADECIMAL_INTEGER_1 = 0x0abcdef;
+const long HEXADECIMAL_INTEGER_2 = 0XABCDEF;
+
+// Not supported in ORB/Scepter yet
+//
+//const long long MIN_LONGLONG = 0;
+//const unsigned long long MIN_ULONGLONG = 0;
+
+
+// character constants
+//
+const char SPACE = ' ';
+const char DIGIT0 = '0';
+const char UNDERSCORE = '_';
+const char LETTERA = 'A';
+const char NEWLINE = '\n';
+const char HORIZONTAL_TAB = '\t';
+const char VERTICAL_TAB = '\v';
+const char BACKSPACE = '\b';
+const char CARRIAGE_RETURN = '\r';
+const char FORM_FEED = '\f';
+const char ALERT = '\a';
+#ifndef ORBIXWEB
+  const char BACKSLASH = '\\';
+#endif
+const char QUESTION_MARK = '\?';
+const char SINGLE_QUOTE = '\'';
+#ifndef ORBIXWEB
+  const char DOUBLE_QUOTE = '\"';
+#endif
+const char OCTAL_NUMBER_1 = '\1';
+const char OCTAL_NUMBER_2 = '\12';
+const char OCTAL_NUMBER_3 = '\123';
+const char HEXADECIMAL_NUMBER_1 = '\x1';
+const char HEXADECIMAL_NUMBER_2 = '\x12';
+
+
+// string constants
+//
+const string EMPTY_STRING = "";
+const string NAME = "Keith";
+const string CONCATENATED_STRINGS = "First part" "+" "Second part";
+const string CONCATENATED_STRINGS_2 = "\xA" "B";
+#ifndef ORBIXWEB
+  const string ESCAPE_SEQUENCES = "\n \t \v \b \r \f \a \\ \? \' \" \1 \12 \123 \x1 \x12";
+#endif
+
+
+// boolean constants
+//
+const boolean MY_TRUE = TRUE;
+const boolean MY_FALSE = FALSE;
+
+
+// floating point constants
+//
+const float ZERO_FLOAT = 0.0;
+const float WEE_FLOAT = 1.175494E-30;
+const float BIG_FLOAT = 3.4028236E+30;
+const float NEGATIVE_FLOAT1 = -123.45E10;
+const float NEGATIVE_FLOAT2 = -123.45E-10;
+const double ZERO_DOUBLE = 0.0;
+const double WEE_DOUBLE = 2.225E-300;
+const double BIG_DOUBLE = 1.7976931E+300;
+const double NEGATIVE_DOUBLE1 = -678.9E100;
+const double NEGATIVE_DOUBLE2 = -678.9E-100;
+
+// These just check coercing works
+const float FLOAT_EXPR1 = 0.0 + 0;
+const float FLOAT_EXPR2 = 0.0 + ZERO_DOUBLE;
+const double DOUBLE_EXPR1 = ZERO_DOUBLE + 0;
+const double DOUBLE_EXPR2 = ZERO_DOUBLE + ZERO_FLOAT;
+
+
+// Constant expressions
+
+const short UNARY_PLUS = +(1+1);
+const short UNARY_MINUS = -(1+2);
+const short BINARY_MINUS = 1 - 2;
+const short BINARY_DIVISION = 100 / 7;
+const short BINARY_MOD = 100 % 7;
+
+const short BINARY_XOR = 2 ^ 3;
+const short BINARY_OR = 2 | 3;
+const short BINARY_AND = 2 & 3;
+const short BINARY_LSHIFT = 20 << 1;
+const short BINARY_RSHIFT = 100 >> 2;
+
+const short MINUS_ONE = -1;
+const long SECS_IN_1_DAY = 24 * 60 * 60;
+const unsigned short ICE_CREAM = 100 + MINUS_ONE;
+const unsigned long FOO = (5 + 3) * 6;
+const float PRICE = 5 * 100.00;
+const double OVERDRAFT = 1234567.8;
+
+const long A = 100;
+const long B = 7;
+const long C = 5;
+const long D = 3;
+const long A_PRIME = (A / B) * B + A % B;
+
+const long DISTRIB_1 = (A | B | C) ^ D;
+const long DISTRIB_2 = A^D | B^D | C^D;
+
+const long DISTRIB_3 = (A ^ B ^ C) & D;
+const long DISTRIB_4 = (A&D ^ B&D ^ C&D);
+
+const long DISTRIB_5 = (A & B & C) >> D;
+const long DISTRIB_6 = A>>D & B>>D & C>>D;
+const long DISTRIB_7 = (A & B & C) << D;
+const long DISTRIB_8 = A<<D & B<<D & C<<D;
+
+const long DISTRIB_9 = (A >> B >> C) + D;
+const long DISTRIB_10 = A+D >> B+D >> C+D;
+const long DISTRIB_11 = (A << B << C) - D;
+const long DISTRIB_12 = A-D << B-D << C-D;
+
+const long DISTRIB_13 = (A + B + C) / D;
+const long DISTRIB_14 = A / D + B / D + C / D;
+const long DISTRIB_15 = (A - B - C) * D;
+const long DISTRIB_16 = A*D - B*D - C*D;
+const long DISTRIB_17 = (A + B + C) % D;
+const long DISTRIB_18 = A%D + B%D + C%D;
+
+const long UNARY_1 = +A + -B + ~C;
+const long UNARY_2 = (+A) + (-B) + (~C);

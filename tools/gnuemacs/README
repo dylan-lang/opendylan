@@ -1,0 +1,67 @@
+	
+		-=-=-=-=-=-=-=-=-=-=-=-=-=-
+		GNU Emacs Support for Dylan
+		-=-=-=-=-=-=-=-=-=-=-=-=-=-
+	
+
+* DYLAN-MODE.EL
+
+	From CMU.
+
+	General Dylan mode that deals with indentation,
+	movement, and syntax highlighting of Dylan
+	source files.
+
+* DYLANWORKS.EL
+		
+	From Harlequin.
+
+	Commands that invoke DylanWorks environment itself
+	via a small command-line DDE client that talks to
+	a DDE server running in DylanWorks.
+		
+		dw-describe
+		dw-find-definition
+		dw-browse
+		dw-compile-file
+		dw-complete
+		dw-find-uses
+		dw-find-documentation
+
+* DYLAN-PARAMS.EL
+
+	From CMU.
+
+	Dylan language API help.
+
+	(Superseded by the DW-DESCRIBE command
+	when using DylanWorks.)
+
+* DYLAN-OPTIMIZATION-COLOURING.EL
+
+	From Harlequin.
+
+	Colours function calls according to the optimizations
+	that the DylanWorks compiler has been able to
+	perform.
+
+* DYLAN-BUG.EL
+
+	From Harlequin.
+
+	Bug reporting mail templates.
+
+* DYLAN-SOURCE-CHANGE-MAIL.EL
+
+	From Harlequin.
+
+	Source change reporting mail templates.
+
+* HOPE.EL
+
+	From Harlequin.
+
+	(Get this from HOPEemacs-lisp.)
+
+	Interface to the HOPE distributed version control system.
+

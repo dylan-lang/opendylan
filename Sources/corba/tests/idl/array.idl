@@ -1,0 +1,28 @@
+// Author:    Keith Dennison
+// Copyright: Copyright 1998 Functional Objects, Inc.  All rights reserved.
+// Version:   $HopeName$
+
+
+typedef string StringArray[10];
+typedef short  ShortArray[4][4];
+typedef float  FloatArray[3][3][3];
+
+
+interface ArrayTest {
+
+  attribute StringArray string_array_attribute;
+  attribute ShortArray  short_array_attribute;
+  attribute FloatArray  float_array_attribute;
+
+  exception failure {
+  };
+
+  void check_string_array_attribute () raises (failure);
+  void check_short_array_attribute () raises (failure);
+  void check_float_array_attribute () raises (failure);
+
+  StringArray string_array_operation (in StringArray one, inout StringArray two, out StringArray three);
+  ShortArray  short_array_operation  (in ShortArray one, inout ShortArray two, out ShortArray three);
+  FloatArray  float_array_operation  (in FloatArray one, inout FloatArray two, out FloatArray three);
+};
+

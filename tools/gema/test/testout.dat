@@ -1,0 +1,120 @@
+Begin File
+head
+ line
+two woks
+some ya end
+The 
+ADD  Ren,Stimpy 
+ Show
+	Stop!
+
+Control character: ''
+[	.	~]
+Some <I>italicized <TT>command</TT>
+thing</I> here.
+<P>
+This @f( sentence
+does @b[not] mean anything) yet.
+do{7}
+ " try /* nested */ comment "
+'x\=a[i]\ \*\ b\ -\ c'
+tic oz tac
+Tic Tac: "XOXX"
+[duh]
+["abc", "XOX", "yz"]
+and foo and etc. so
+
+ (1) apples 
+ (2) oranges 
+ (3) bananas
+
+Buzz=yes
+All = [none]
+Num(alpha)
+Num(3.5)
+Num(-12,345.00)
+All = +3.5+-12345.00
+The [firehouse.]
+alpha    beta      gamma
+<TT>foo</TT>
+
+ (i) apples 
+ (ii) oranges 
+ (iii) bananas
+ (iv) peaches 
+ (v) strawberries 
+ (vi) pears
+ (vii) apricots 
+ (viii) pinapples 
+ (ix) mangos
+
+|abc       |   abc    |       abc|
+|123. . . .|___123____|0000000123|
+a plus b=c
+a plus b equals c
+[Beet juice]
+[Bug]
+David David David
+a b c d e f g h i j k l m n o p q r s t u v w x y z aa ab ac ad 
+    now is the time for all 
+    good men to come to the 
+    aid of their party
+    The area of a circle is
+    pi [3.14159] times r [the
+    radius] squared.
+
+14
+11 1 12
+C
+15
+26
+what is out now
+yes
+3
+"abcdefg"
+"cde"
+TOUPPER 123
+tolower 123
+zyx cba
+yes
+yes
+yes
+yes
+some enchanted evening
+some dreary evening
+some magic evening
+[abcdefghijklmnopqrst] [uvwxyz]
+this="F", none="U"
+ARGS(`one',`and "a" two',`')
+ack(`x3.4',`y')
+nack(`x3',`4.y')
+-- watch(this and ya) --
+[bunch]
+LDTSC
+ word(isn't) hex(2Af) octal(123) alnum(z7)
+ id(a_b) file(foo.c)
+ text(	.) universal( )
+ graphic(%?)
+ word(co-op)
+(1 a, 2 b, 3 c, (1 x, 2 y) 4 d, 5 e)
+--------------------
+
+(- b c)
+(- (* a b) c)
+--------------------
+
+@MethBug 
+  x := self.north;
+  y := self.east;
+ end method;
+..   ..
+Lion!
+Tiger!
+[default comment]
+
+Yes it is ant.
+No it is not bee.
+Hit pl[It]ation
+Swat pl[It]ation
+the tail
+End File

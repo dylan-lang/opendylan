@@ -1,0 +1,69 @@
+#!/usr/local/bin/bash
+#      Script: daas (do-at-all-sites)
+#      Author: Shri Amit(amit)
+usage=" Usage: $0 <Cmd> <Site1>, <Site2> .. .."
+# Opts & Args:   <Cmd>: The command to be executed at <Site>
+#               <Site>: Domain names of valid sites.
+#               Currently the recognized sites are:
+#               1cc, cam, long, ed
+#
+#    Synopsis: Executes <Cmd> at all <Site>'s specified
+#              Note that if no sites are specified then the cmd
+#              is executed at all sites except cam.
+###############################################################
+## Application exit status legend ##
+## 0: Successful
+## 1: Command not specified
+## 2: Unrecognized site
+
+## Parse the command line and decide the sites and machines ##
+##
+cmd="$1"
+case $cmd in
+    "") echo "A command must be specified"
+        echo $usage
+	exit 1 ;;
+     *) ;;
+esac
+shift
+sites=$@
+case $sites in
+   "") sites="1cc long ed" ;;
+    *) ;;
+esac
+for i in $sites; do 
+    case $i in
+	1cc) machine="$machine banshee.functionalobjects.com" ;;
+	cam) machine="$machine watson.cam.harlequin.co.uk" ;;
+	long) machine="$machine casper.long.harlequin.co.uk" ;;
+	ed) machine="$machine lordosis.ed.harlequin.co.uk" ;;
+# Seattle has been shutdown by the Powers That Be ...
+#	seattle) machine="$machine bright.seattle.functionalobjects.com" ;;
+# Menlo has been shutdown by The Powers That Be ...
+#	menlo) machine="$machine meteor.menlo.functionalobjects.com" ;;
+	*) echo "$0: Error - Site $i unrecognized"
+           echo $usage
+           exit 2 ;;
+
+    esac
+done
+
+echo "Starting at: `date`"
+echo "Running $0 with options:"
+echo " The command to execute is: $cmd"
+echo "  The sites to cleanup are: $sites"
+echo "          The machines are: $machine"
+echo "            The logfile is:  $log_file"
+echo "          The directory is:  `pwd`"
+echo
+ 
+for i in $machine; do
+    echo 
+    echo "Starting $cmd at $i"
+    echo
+    rsh $i -n $cmd
+    echo
+    echo "Completed $cmd at $i"
+done
+
+#eof

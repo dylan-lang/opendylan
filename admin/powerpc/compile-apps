@@ -1,0 +1,4 @@
+repeat compile dylan threads transcendentals functional-extensions byte-vector machine-word functional-dylan common-extensions common-dylan testworks testworks-specs dylan-test-suite testworks-test-suite functional-extensions-test-suite operating-system date locators file-system settings system streams streams-test-suite print print-test-suite format format-test-suite
+
+repeat compile-app cmu-test-suite dylan-test-suite-app testworks-test-suite-app functional-extensions-test-suite-app streams-test-suite-app print-test-suite-app format-test-suite-app
+

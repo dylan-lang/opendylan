@@ -1,0 +1,180 @@
+<library-pack name="CORBA" title="CORBA" number="9">
+  <description>A Dylan ORB</description>
+  <company>Functional Developer</company>
+  <copyright>Copyright (c) 1995-2001 Functional Objects, Inc. All rights reserved.</copyright>
+  <libraries>
+    <library name="dylan-orb" title="Dylan ORB">
+      <description>An interface to COM</description>
+      <sources location="corba/orb/orb">
+        <project platform="x86-win32">orb.hdp</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+        <binary file="DxORB.dll">
+          <merge>corba-dylan</merge>
+          <merge>corba-protocol</merge>
+          <merge>iop-protocol</merge>
+          <merge>orb-connections</merge>
+          <merge>orb-core</merge>
+          <merge>orb-iiop</merge>
+          <merge>orb-poa</merge>
+          <merge>orb-ir</merge>
+          <merge>orb-streams</merge>
+          <merge>orb-utilities</merge>
+          <merge>portableserver-protocol</merge>
+          <merge>ir-protocol</merge>
+          <merge>ir-stubs</merge>
+	</binary>
+        <lib file="DxORB.lib"/>
+      </release>
+    </library>
+    <library name="corba-dylan" title="CORBA Dylan">
+      <sources location="corba/orb/corba-dylan">
+        <project platform="x86-win32">corba-dylan.hdp</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="corba-protocol" title="CORBA Protocol">
+      <sources location="corba/orb/corba-protocol">
+        <project platform="x86-win32">corba-protocol.hdp</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="iop-protocol" title="IOP Protocol">
+      <sources location="corba/orb/iop-protocol">
+        <project platform="x86-win32">iop-protocol.hdp</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="orb-connections" title="ORB Connections">
+      <sources location="corba/orb/orb-connections">
+        <project platform="x86-win32">orb-connections.hdp</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="orb-core" title="ORB Core Library">
+      <sources location="corba/orb/orb-core">
+        <project platform="x86-win32">orb-core.hdp</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="orb-iiop" title="ORB IIOP">
+      <sources location="corba/orb/orb-iiop">
+        <project platform="x86-win32">orb-iiop.hdp</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="orb-poa" title="ORB POA">
+      <sources location="corba/orb/orb-poa">
+        <project platform="x86-win32">orb-poa.hdp</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="orb-ir" title="ORB IR">
+      <sources location="corba/orb/orb-ir">
+        <project platform="x86-win32">orb-ir.hdp</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="orb-streams" title="ORB Streams">
+      <sources location="corba/orb/orb-streams">
+        <project platform="x86-win32">orb-streams.hdp</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="orb-utilities" title="ORB Utilities">
+      <sources location="corba/orb/orb-utilities">
+        <project platform="x86-win32">orb-utilities.hdp</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="portableserver-protocol" title="Portable Server Protocol">
+      <sources location="corba/orb/portableserver-protocol">
+        <project platform="x86-win32">portableserver-protocol.hdp</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="ir-protocol" title="IR Protocol">
+      <sources location="corba/orb/ir-protocol">
+        <project platform="x86-win32">ir-protocol.hdp</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="ir-stubs" title="IR Stubs">
+      <sources location="corba/orb/ir-stubs">
+        <project platform="x86-win32">ir-stubs.hdp</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="naming-client" title="Dylan ORB Naming Client">
+      <description>An interface to COM</description>
+      <sources location="corba/services/naming/client">
+        <project platform="x86-win32">naming-client.hdp</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+        <binary file="DxCNSC.dll">
+          <merge>naming-protocol</merge>
+          <merge>naming-stubs</merge>
+	</binary>
+        <lib file="DxCNSC.lib"/>
+      </release>
+    </library>
+    <library name="naming-protocol" title="Dylan ORB Naming Protocol">
+      <sources location="corba/services/naming/naming-protocol">
+        <project platform="x86-win32">naming-protocol.hdp</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="naming-stubs" title="Naming Stubs">
+      <sources location="corba/services/naming/naming-stubs">
+        <project platform="x86-win32">naming-stubs.hdp</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+  </libraries>
+  <examples>
+    <library name="hello-world-client" title="Hello World Client">
+      <description>The client side of a simple CORBA \</description>
+      <sources location="corba/corba-hello-world/client">
+        <project>corba-hello-world-client.hdp</project>
+      </sources>
+    </library>
+    <library name="hello-world-server" title="Hello World Server">
+      <description>The server side of a simple CORBA \</description>
+      <sources location="corba/corba-hello-world/server">
+        <project>corba-hello-world-server.hdp</project>
+      </sources>
+    </library>
+    <library name="bank-client" title="Bank Client">
+      <description>The client side of a 3-tier CORBA banking demo</description>
+      <sources location="corba/bank/bank-client">
+        <project>bank-client.hdp</project>
+      </sources>
+    </library>
+    <library name="bank-server" title="Bank Server">
+      <description>The server side of a 3-tier CORBA banking demo</description>
+      <sources location="corba/bank/bank-server">
+        <project>bank-server.hdp</project>
+      </sources>
+    </library>
+    <library name="chat-client" title="Chat Client">
+      <description>The client side of a CORBA chat demo</description>
+      <sources location="corba/chat/client">
+        <project>chat-client.hdp</project>
+      </sources>
+    </library>
+    <library name="chat-server" title="Chat Server">
+      <description>The server side of a CORBA chat demo</description>
+      <sources location="corba/chat/server">
+        <project>chat-server.hdp</project>
+      </sources>
+    </library>
+    <library name="corba-pente" title="Network Pente">
+      <description>A distributed two-player version of the Pente game.</description>
+      <sources location="corba/pente">
+        <project>corba-pente.hdp</project>
+      </sources>
+    </library>
+  </examples>
+  <test-suites>
+  </test-suites>
+</library-pack>

@@ -1,0 +1,60 @@
+{\rtf1\ansi \deff7\deflang1033{\fonttbl{\f1\froman\fcharset2\fprq2 Symbol;}{\f5\fswiss\fcharset0\fprq2 Arial;}{\f7\fswiss\fcharset0\fprq2 MS Sans Serif;}{\f11\fmodern\fcharset0\fprq1 Courier New;}
+{\f49\fswiss\fcharset0\fprq2 Tahoma;}}{\colortbl;\red0\green0\blue0;\red0\green0\blue255;\red0\green255\blue255;\red0\green255\blue0;\red255\green0\blue255;\red255\green0\blue0;\red255\green255\blue0;\red255\green255\blue255;\red0\green0\blue128;
+\red0\green128\blue128;\red0\green128\blue0;\red128\green0\blue128;\red128\green0\blue0;\red128\green128\blue0;\red128\green128\blue128;\red192\green192\blue192;}{\stylesheet{\widctlpar \f7\fs20 \snext0 Normal;}{\s1\qr\keepn\widctlpar 
+\b\shad\f5\fs32\lang2057 \sbasedon0\snext0 heading 1;}{\s2\li-900\ri-720\keepn\widctlpar \b\f7\fs20\lang2057 \sbasedon0\snext0 heading 2;}{\*\cs10 \additive Default Paragraph Font;}{\s15\widctlpar \cbpat9 \f49\fs20 \sbasedon0\snext15 Document Map;}{
+\s16\widctlpar\tqc\tx4320\tqr\tx8640 \f7\fs20 \sbasedon0\snext16 footer;}{\*\cs17 \additive\sbasedon10 page number;}{\s18\widctlpar\tqc\tx4320\tqr\tx8640 \f7\fs20 \sbasedon0\snext18 header;}{\s19\li720\widctlpar \f5\fs32\lang2057 \sbasedon0\snext19 
+Body Text 2;}{\s20\li-810\widctlpar \b\f7\fs20\lang2057 \sbasedon0\snext20 Body Text Indent 2;}{\*\cs21 \additive\b\f5\fs40\ulnone\lang2057\nosupersub \sbasedon10 Slide Title;}{\s22\widctlpar \f5\fs36\lang2057 \sbasedon0\snext22 Slide Body;}{
+\s23\li90\widctlpar \b\f7\fs20\lang2057 \sbasedon0\snext23 Body Text Indent 3;}{\s24\widctlpar \b\f7\fs20\lang2057 \sbasedon0\snext24 Body Text;}{\s25\widctlpar \f7\fs20 \sbasedon0\snext25 footnote text;}{\*\cs26 \additive\super \sbasedon10 
+footnote reference;}}{\info{\title C Types in Dylan}{\author Keith Playford}{\operator Hugh George Greene}{\creatim\yr1998\mo10\dy15\hr21\min42}{\revtim\yr1998\mo10\dy16\hr12\min8}{\version3}{\edmins0}{\nofpages1}{\nofwords354}{\nofchars2018}
+{\*\company  }{\vern57431}}\margl547\margr806\margt446\margb547 \widowctrl\ftnbj\aendnotes\aftnstart0\hyphhotz0\aftnnar\hyphcaps0 \fet0\sectd \psz1\linex0\headery709\footery709\cols2\colsx709\linebetcol\endnhere {\footer \pard\plain 
+\s16\qc\ri360\widctlpar\tqc\tx4320\tqr\tx8640 \f7\fs20 {\cs17\i\shad 
+\par }{\i\lang2057 
+\par }}{\*\pnseclvl1\pnucrm\pnstart1\pnindent720\pnhang{\pntxta .}}{\*\pnseclvl2\pnucltr\pnstart1\pnindent720\pnhang{\pntxta .}}{\*\pnseclvl3\pndec\pnstart1\pnindent720\pnhang{\pntxta .}}{\*\pnseclvl4\pnlcltr\pnstart1\pnindent720\pnhang{\pntxta )}}
+{\*\pnseclvl5\pndec\pnstart1\pnindent720\pnhang{\pntxtb (}{\pntxta )}}{\*\pnseclvl6\pnlcltr\pnstart1\pnindent720\pnhang{\pntxtb (}{\pntxta )}}{\*\pnseclvl7\pnlcrm\pnstart1\pnindent720\pnhang{\pntxtb (}{\pntxta )}}{\*\pnseclvl8
+\pnlcltr\pnstart1\pnindent720\pnhang{\pntxtb (}{\pntxta )}}{\*\pnseclvl9\pnlcrm\pnstart1\pnindent720\pnhang{\pntxtb (}{\pntxta )}}\pard\plain \s20\widctlpar \b\f7\fs20\lang2057 {\f5 An Introduction to the Dylan C FFI
+\par 
+\par Practical 3: Providing C Interfaces}{\b0\f5 
+\par 
+\par The goal of this practical is to export the functionality of the }{\f5 status-icons}{\b0\f5  library developed in practical 2 for use by a C program. The C program in question is }{\f5 c-status-buttons.exe}{\b0\f5 
+, the C version of the Dylan test application used in practical 2.
+\par 
+\par The interface the C program was written against is as follows:
+\par 
+\par }{\b0\f11\fs16 #define STATUS_NONE     0
+\par #define STATUS_OK       1
+\par #define STATUS_WARNING  2
+\par #define STATUS_ERROR    3
+\par 
+\par int DisplayStatus(int status, char *tip);
+\par }{\b0\f5 
+\par The C program requires a DLL called }{\f5 status-icons.dll}{\b0\f5  that implements and exports }{\f5 DisplayStatus}{\b0\f5  as a }{\f5 __stdcall}{\b0\f5  function.
+\par 
+\par The steps involved here are to:
+\par 
+\par {\pntext\pard\plain\f1\fs20 \'a8\tab}}\pard \s20\fi-360\li360\widctlpar\tx360{\*\pn \pnlvlblt\pnf1\pnstart1\pnindent360\pnhang{\pntxtb \'a8}}{\b0\f5 extend }{\f5 status-icons}{\b0\f5  with a Dylan implementation of }{\f5 DisplayStatus}{\b0\f5 .
+\par {\pntext\pard\plain\f1\fs20 \'a8\tab}write an exported C callable wrapper for }{\f5 DisplayStatus}{\b0\f5 .
+\par {\pntext\pard\plain\f1\fs20 \'a8\tab}debug the implementation of }{\f5 DisplayStatus}{\b0\f5  using the environment by specifying }{\f5 c-status-buttons.exe}{\b0\f5  as the executable to run when debugging }{\f5 status-icons}{\b0\f5 .
+\par }\pard \s20\widctlpar {\b0\f5 
+\par To begin with, get the whole system up and running by implementing and exporting a stub version of }{\f5 DisplayStatus}{\b0\f5 .
+\par 
+\par {\pntext\pard\plain\f1\fs20 \'a8\tab}}\pard \s20\fi-360\li360\widctlpar\tx360{\*\pn \pnlvlblt\pnf1\pnstart1\pnindent360\pnhang{\pntxtb \'a8}}{\b0\f5 If not already open, open the }{\f5 status-icons}{\b0\f5  project.
+\par {\pntext\pard\plain\f1\fs20 \'a8\tab}Open }{\f5 c-interface.dylan}{\b0\f5 .
+\par {\pntext\pard\plain\f1\fs20 \'a8\tab}Define a new method, }{\f5 DisplayStatus}{\b0\f5 , which takes an }{\f5 <integer>}{\b0\f5  and a }{\f5 <C-string>}{\b0\f5  and returns an }{\f5 <integer>}{\b0\f5 . Its body should just print out the arguments using }{
+\f5 format-out}{\b0\f5  and return 0.
+\par {\pntext\pard\plain\f1\fs20 \'a8\tab}Use }{\f5 define C-callable-wrapper}{\b0\f5  to implement a C entry point around }{\f5 DisplayStatus}{\b0\f5 . Use }{\f5 <C-string>}{\b0\f5  as the type for the second argume
+nt. Make sure the wrapper is declared as exported from the DLL.
+\par {\pntext\pard\plain\f1\fs20 \'a8\tab}Compile the project to a DLL.
+\par }\pard \s20\widctlpar {\b0\f5 
+\par For the purposes of this practical, the easiest way to ensure that }{\f5 c-status-buttons.exe}{\b0\f5  picks up this new DLL is to copy }{\f5 c-status-buttons.exe}{\b0\f5  into the bin directory of }{\f5 status-icons}{\b0\f5 
+ and run it from there. In reality, you might build a release of }{\f5 status-icons}{\b0\f5  using the option on the Project menu and copy the release DLLs to wherever they need to be for testing.
+\par 
+\par {\pntext\pard\plain\f1\fs20 \'a8\tab}}\pard \s20\fi-360\li360\widctlpar\tx360{\*\pn \pnlvlblt\pnf1\pnstart1\pnindent360\pnhang{\pntxtb \'a8}}{\b0\f5 So, use the Windows explorer to copy }{\f5 c-status-buttons.exe}{\b0\f5  into }{\f5 status-icons\\bin\\}{
+\b0\f5 
+\par {\pntext\pard\plain\f1\fs20 \'a8\tab}Open the project settings dialog for }{\f5 status-icons}{\b0\f5  and switch to the Debug tab. Enter the full path of your copy of }{\f5 c-status-buttons.exe}{\b0\f5  in the \ldblquote Executable:\rdblquote  text field.
+
+\par {\pntext\pard\plain\f1\fs20 \'a8\tab}Close the settings dialog and run the project. Hopefully, when you press a button a console will appear containing your stub output.
+\par }\pard \s20\widctlpar {\b0\f5 
+\par All that\rquote s left to do, if there\rquote s time, is to implement }{\f5 DisplayStatus}{\b0\f5  properly using the taskbar icon interface defined in }{\f5 status-icons}{\b0\f5 .
+\par 
+\par 
+\par }}

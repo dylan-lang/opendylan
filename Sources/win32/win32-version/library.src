@@ -1,0 +1,21 @@
+Module:    Dylan-user	%comment -*- Mode: Dylan -*-
+Synopsis:  Win32 API for version management -- "WINVER.H" and "VERSION.DLL"
+Copyright: Copyright (c) 1996-2000 Functional Objects, Inc. All rights reserved.
+
+%comment $Header: /scm/cvs/fundev/Sources/win32/win32-version/library.src,v 1.1 2004/03/12 00:10:31 cgay Exp $
+
+define library Win32-version
+  use Dylan;
+  use C-FFI;
+  use Win32-common;
+  export Win32-version;
+end;
+
+define module Win32-version
+  use Dylan;
+  use C-FFI;
+  use Win32-common;
+
+%include winver.exp
+
+end module Win32-version;

@@ -1,0 +1,71 @@
+<HTML>
+<HEAD>
+	<TITLE>Functional Developer Example: OLE Bank ASP VB Client</TITLE>
+	<LINK REL="stylesheet" TYPE="text/css" HREF="../../../examples.css">
+</HEAD>
+
+<BODY>
+
+<H2>OLE Bank ASP VB Client</H2>
+
+<HR ALIGN="CENTER">
+
+<P>This directory contains an Active Server Pages script that
+provides a Web-based client interface to the
+ <A HREF="../Server/README.html">Dylan Bank Server</A> in a Web context.
+The script is written in VBScript and demonstrates the use of
+the dispatch interface facet of the Bank's dual interface to
+provide interoperability with Visual Basic.
+See the <A HREF="../Client/README.html">Dylan Client</A> for a use
+of the customer interface facet of the Bank's dual interface.
+See the <A HREF="../../ASP-view/README.html">ASP-View example</A> for an
+example of Dylan interoperability with Active Server Pages.</P>
+
+<H3>Web Server configuration</H3>
+
+<P>In order to use this example, you must have a Web server that supports
+Active Server Pages, such as described
+ <A HREF="http://www.microsoft.com/iis/default.asp">Windows NT Internet
+Information Server (IIS)</A>, or a <A
+HREF="http://msdn.microsoft.com/library/officedev/office/html/settinguppersonalwebserver.htm">Microsoft
+personal Web server</A>.  Make sure to install the Active Server Pages
+component of the Web server by downloading any additional Setup programs
+needed.</P>
+
+<P>Once you have a Web server installed, copy the file
+<em>vb-bank-client.asp</em> from this directory to a directory used by the
+server (e.g. to <em>c:\inetpub\wwwroot</em> or <em>c:\wwwroot\</em>).</P>
+
+<H3>Bank Server installation</H3>
+
+<P>In order to use this example, you must install the Bank Server as described
+in its <A HREF="../Server/README.html">README</A> file.  Note that
+if your Web server is on a different machine than the Bank Server project,
+you must copy the release directory to the Web server's machine and register
+it there, since this is a server-side component.</P>
+
+<H3>Usage</H3>
+
+<P>To test out the component, use any browser to connect to your Web server,
+and ask it to load the <em>vb-bank-client.asp</em> file.  E.g. if you installed
+<em>vb-bank-client.asp</em> in the server's top-level <em>wwwroot</em>
+directory, and the browser is running on the same host as the server, the url
+would look like this:<br>
+<blockquote> <code>http://localserver/vb-bank-client.asp</code>
+</blockquote>
+
+<P>The resulting page will give you the option of retrieving information
+about an existing account or opening a new account.  Once you have retrieved
+or opened some accounts, you can debit or credit them.  The commands you
+give in your Web browser are transmitted to the Bank Server located
+on the server machine, which then in turn updates the master database.
+</P>
+
+</BODY>
+
+</HTML>
+
+
+</BODY>
+
+</HTML>

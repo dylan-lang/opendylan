@@ -1,0 +1,37 @@
+<HTML>
+
+<HEAD>
+        <TITLE>Functional Developer Example: Database Stress Tool</TITLE>
+        <LINK REL="stylesheet" TYPE="text/css" HREF="../../examples.css">
+</HEAD>
+
+<BODY>
+
+<H2>Database Stress Tool Example Project</H2>
+
+<HR ALIGN="CENTER">
+
+<P>A simple database command line stress tool, use the /help option
+for more details.</P>
+
+<PRE>
+C:>database-stress-tool /help
+Usage: database-stress-tool [options *]
+
+Options:
+  /help         - show this help  /database     - the database to use [default: testDB]
+  /table        - the table to use [default Accounts]
+  /update       - update the table [default: just query]
+  /statement    - the SQL statement to use [default SELECT * FROM Accounts]
+  /iterations   - how many iterations per phase [default 100]
+  /phases       - how many phases to run [default 10]
+  /truncate     - truncate the table before starting [default off]
+  /share        - share a connection for each phase [default off]
+  /transactions - wrap each phase in a transaction [default off]
+  /rollback     - don't commit the updates during a transaction [default commit]
+  /quiet        - don't show progress information [default: show progress]
+  /debug        - don't catch errors [default: off]
+</PRE>
+</BODY>
+
+</HTML>

@@ -1,0 +1,80 @@
+			    Test Profiler
+			    =============
+
+Some quick and sketchy instructions for the test profiler ... it's
+going to dissappear into the prototype console debugger soon anyway.
+
+Using it
+========
+
+Invoke the profiler at the DOS prompt as follows:
+
+  test-profiler [-i profile-interval] application.exe [application-args]
+
+    -i profile-interval
+         Optional. Allows you to specify an integer for the profile
+         interval (in millisecs). The default is 50ms. The profiler
+         stops the application regularly at intervals of this value
+         to take a snapshot. The snapshots involve recording which
+         functions are present on the stack of each thread.
+
+    application.exe
+         The name of the thing you want to profile. Make sure you include
+         the .exe extension (and pathname if it's not in the current
+         directory).
+
+    application-args
+         Any arguments you want to supply to the program you are profiling.
+         These should be supplied as a single argument i.e. put them in
+         quotes. For example to profile the command:
+              my-prog arg1 arg2 arg3
+         type
+              test-profiler -i 100 my-prog.exe "arg1 arg2 arg3"
+
+
+The Results
+===========
+
+Two tables are printed for each thread that was profiled. The first
+gives a count of the number of times each function was seen on the
+stack. The count is also expressed as a percentage of the total
+counts, in brackets after the count value.
+
+The second table gives a list of functions which were found at the top
+of the stack when the application was stopped. There is a count for
+each function giving the number of times it was found at the top of
+the stack. Each count is also expressed as a percentage.
+
+Both tables are sorted with the higher counts appearing first.
+
+Entries for "????" indicate functions for which a name could not be
+found e.g. calls into Windows. All such functions are lumped together
+under one entry in each table.
+
+Note that the profiler will not always stop the application precisely
+after the required interval, and threads will not always have had the
+same amount of CPU time from interval to interval. To compensate for
+this it is planned that the profiler will provide a weight for the
+data collected at each snapshot based on the length of time since the
+last snapshot. It would then be possible to adjust the counts using
+these weights. This has not been implemented yet.
+
+
+Building it
+===========
+
+You'll need to build the following Dylan libraries:
+
+  * D-runtime-manager-access-path
+  * D-runtime-manager-debugger-manager
+  * D-runtime-manager-test-profiler
+  * you may also need to build the table-extensions library.
+
+You will also need to build the debugger nub in D-runtime-manager-
+debugger-nub-x86-win32. A makefile is included (you need to make the
+target devnub.lib).
+
+Finally you need to edit the makefile generated for the test-profiler
+library by adding devnub.lib and IMAGEHLP.LIB to the definition of
+LIBS. You will also need to make sure the linker can find both files
+(IMAGEHLP.LIB should be somewhere in C:\MSTOOLS).

@@ -1,0 +1,48 @@
+Author: 
+	The person who checked in the changes. 
+	Format should be login name (i.e. mail address).                                     
+
+Description of changes: 
+	A description of the changes made. 
+
+Related Tasks: 
+	Pointer(s) to Tasks (from Task DB) that this work relates to.
+	Format - Task Name
+
+Bugs Fixed: 
+	Pointers to Bugs that are fixed by these changes or whose status 
+	might change due to these changes. 
+	Format:  Bug # - summary.
+
+Reviewed by: 
+	Name of person(s) who reviewed the changes prior to checkin.
+	Format should be login name. 
+
+Testing: 
+	If changes were tested, how? (i.e. what tests in the testsuites were run).
+
+QA Impact: 
+	Heads up to QA (i.e. new code to tests, tests that may need
+	updates, pointers to bugs who staus may be affected, etc.)
+
+Doc Impact: 
+	Heads up to Documentation. 
+
+User Impact: 
+	Any changes that may effect users - UI changes, protocol changes etc.
+
+Build Impact:
+	Any changes that may alter how build are/will be done.
+
+Additional Issues Raised: 
+	Any other heads up. 
+
+New Files: 
+	A list of new files (units) being added.  
+	Format should be hope path (e.g. D-lib-streams!module.dylan).		
+
+Files Changed: 
+	A list of files being checked in. 
+
+Files Removed: 
+	A list of any files being removed.		               

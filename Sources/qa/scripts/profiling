@@ -1,0 +1,18 @@
+:play
+define function random-sort (x :: <integer>) => (result :: <vector>)
+  let vector = make(<vector>, size: x);
+  for (i from 0 below x)
+    vector[i] := random(x)
+  end;
+  sort!(vector)
+end function random-sort;
+random-sort(10);
+:profile
+random-sort(100);
+:export raw-profile
+:profile /stop
+:profile /allocation
+random-sort(5);
+:profile /stop
+:export raw-profile
+:exit

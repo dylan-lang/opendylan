@@ -1,0 +1,5 @@
+<library-pack name="MSLinker" title="Microsoft Linker" number="10">
+  <description>Support for using the Microsoft Linker with Functional Developer</description>
+  <copyright>Copyright (c) 1995-2001 Functional Objects, Inc. All rights reserved.</copyright>
+  <company>Functional Developer</company>
+</library-pack>

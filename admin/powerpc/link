@@ -1,0 +1,10 @@
+#/bin/csh
+
+cd /home/nosa/dylan/build/$1
+
+assemble
+
+# gcc-so $1
+
+# install-so $1
+

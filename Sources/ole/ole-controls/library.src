@@ -1,0 +1,89 @@
+Module:    dylan-user	%comment -*- Mode: Dylan -*-
+Synopsis:  Windows OLE Controls API (OLECTL.H and OLEPRO32.DLL)
+Author:    David N. Gray
+Copyright: Copyright (c) 1997-2000 Functional Objects, Inc. All rights reserved.
+
+%comment  This file, "library.src", is expanded to produce "library.dylan". 
+
+%comment $HopeName: D-lib-ole-controls!library.src(trunk.4) $
+
+define library OLE-Controls
+  use functional-dylan;
+  use C-FFI;
+  use Win32-Common;
+  use Win32-User;
+  use Win32-GDI;
+  use COM;
+  use OLE;
+  use OLE-Automation;
+  export OLE-Controls;
+end;
+
+define module OLE-Controls
+  use Dylan;
+  use C-FFI;
+  use machine-words;
+  use Win32-common, // need:  <BOOL>, <COLORREF>, <DWORD>, $FFFFFFFF,
+		    //	      <HACCEL>, <HBITMAP>, <HCURSOR>, <HINSTANCE>,
+		    //	      <HMETAFILE>, <HPALETTE>, <HWND>, <LONG>,
+		    //	      <LPVOID>, <SHORT>, <SIZE>, <UINT>, <ULONG>,
+		    //	      <USHORT>
+    // slot accessors used in both libraries:
+    export: { x-value, x-value-setter, y-value, y-value-setter,
+	      cbSize-value, cbSize-value-setter,
+	      dwFlags-value, dwFlags-value-setter };
+
+  use Win32-GDI,
+    // import: { <TEXTMETRICW> },
+    export: { xExt-value, xExt-value-setter, yExt-value, yExt-value-setter,
+	      dwType-value, dwType-value-setter };
+
+  use Win32-User,
+    import: { <LPMSG>, hicon-value, hicon-value-setter },
+    export: { hicon-value, hicon-value-setter,
+	      pszTitle-value, pszTitle-value-setter };
+
+  use COM, // need: $FACILITY-CONTROL, $FACILITY-ITF, <C-COM-vtbl>,
+	   //	<C-HRESULT>, <C-interface>, <CLSID>, <GUID>, <IClassFactory>,
+	   //	<IID>, <IPersist>, <IUnknown>, <Interface>, <LPCLSID>,
+	   //	<LPCOLESTR>, <LPOLESTR>, <LPSTREAM>, <LPUNKNOWN>,
+	   //	<REFIID>, <mapped-interface>, MAKE-SCODE, add-interface
+    // slot accessors used in both libraries:
+    export: { u-value, u-value-setter, hBitmap-value, hBitmap-value-setter,
+	     pUnk-value, pUnk-value-setter,
+	     clsid-value, clsid-value-setter };
+
+  use COM-internal;
+  use OLE,
+    // need: $CLASS-E-NOAGGREGATION, <IViewObject2>, <IOleInPlaceObject>,
+    //		<IOleInPlaceSite>, cb-value, cb-value-setter,
+    //		hAccel-value, hAccel-value-setter
+    export: {cb-value, cb-value-setter,
+	     hAccel-value, hAccel-value-setter
+%include olemisc.exp
+	     };
+
+  use OLE-Automation,
+    import: { $VT-BOOL, $VT-DISPATCH, $VT-I2, $VT-I4,
+	      <BSTR>, <LPBSTR>, <DISPID>,
+	      <DISPPARAMS>, <LPDISPPARAMS>, <EXCEPINFO>, <LPEXCEPINFO>, 
+	      <IDispatch>, <LPDISPATCH>, <LPLPDISPATCH>,
+	      <LPTYPEINFO>, <LPVARIANT>, <VARIANT>, <VARIANT-BOOL>,
+	      <VARTYPE>, <CY>,
+	      dwHelpContext-value, dwHelpContext-value-setter,
+	      lcid-value, lcid-value-setter,
+	      vt-value, vt-value-setter },
+    export: { dwHelpContext-value, dwHelpContext-value-setter,
+	      lcid-value, lcid-value-setter,
+	      vt-value, vt-value-setter, <CY> };
+
+%include olectl.exp
+
+%include ocmisc.exp
+
+%include interfaces.exp
+
+  // from "extra.dylan":
+  export <LPOLE-HANDLE>, <LPOLE-XSIZE-HIMETRIC>, <LPOLE-YSIZE-HIMETRIC>;
+
+end module OLE-Controls;

@@ -1,0 +1,5 @@
+cd /home/nosa/dylan/build/build
+
+gcc -o build -L$FUNCTIONAL_DEVELOPER_USER_INSTALL/lib -L$FUNCTIONAL_DEVELOPER_RELEASE/lib -L/usr/lib -L/usr/X11R6/lib -L/usr/X11/lib -L/lib -L/usr/X11R6/lib/xrt/lib $FUNCTIONAL_DEVELOPER_USER_INSTALL/lib/runtime/*.o *.o ../dylan/*.o ../threads/*.o ../transcendentals/*.o ../functional-extensions/*.o ../byte-vector/*.o ../machine-word/*.o ../functional-dylan/*.o ../settings/*.o ../locators/*.o ../operating-system/*.o ../date/*.o ../file-system/*.o ../system/*.o ../streams/*.o ../print/*.o ../format/*.o ../standard-io/*.o ../format-out/*.o ../io/*.o ../table-extensions/*.o ../bit-vector/*.o ../bit-set/*.o ../set/*.o ../plists/*.o ../collectors/*.o ../collections/*.o ../source-records/*.o ../file-source-records/*.o ../release-info/*.o ../internal-release-info/*.o ../generic-arithmetic/*.o ../big-integers/*.o ../binary-manager/*.o ../binary-builder/*.o ../coff-manager/*.o ../coff-builder/*.o ../build-system/*.o ../elf-linker/*.o ../powerpc-elf-linker/*.o ../ccl-linker/*.o ../linker-support/*.o ../gnu-linker/*.o  -lm  -lgc 
+
+cp -fp build /home/nosa/dylan/lib/.

@@ -1,0 +1,87 @@
+Why has it taken me forever?  Well, because it's hard, and because I
+haven't been working on it very much at all.  Unfortunately, this
+seems to have turned into a one-person project, and I hate those.  If
+this weren't the end of the world, I would have tried to make some
+changes to the work style, but it just wasn't worth it.  Of course,
+that meant that I didn't get anything done.
+
+So I started by trying to use gdb as a guide, but that is really a
+huge program, and somewhat of a pigsty, and I really didn't get very
+far when I was trying to use it has a model.  At first, I was trying
+to implement the thread aware functions, because they were artist, and
+it seemed like getting them done would be a good thing.  However, it
+seemed also that I should try to do something that might be more
+conducive to actually making noticeable progress and not feeling bad
+about failure to accomplish things, so my next trick was to start
+implementing some of the read-a-word functions then, for testing, it
+seemed to me that by should be able to find out what valid ranges of
+addresses for these read-a-word functions were, which would entail
+looking in need debugging info to find out things like the start
+address and the ranges of the text and data segments and so forth.  So
+I then got stuck in another huge morass, which is the bfd system.
+Again I was using gdb as my guide, and that was not helpful.  I also
+tried to read the bfd documentation, but it turns out that primarily
+they intended you to use this to write the linker, and so almost all
+of the documentation is how to OUTPUT a bfd, and how you go about
+inputting is simply neglected!  It was at this point that I started
+just throwing out Oracle documentation instead of actually getting
+things done.  I did, however, find a different guide to use then gdb,
+for the purpose of bfd, although I never did anything with this
+information.  In particular, if you look at the bin utils system,
+there is a program called objdump which heavily uses bfd.  I was
+planning to edit this file to do various things and show me what it
+was doing, but I sort of stopped.  (I'm sorry, I suck.)
+
+If you want to look at gdb, I did find a gdb internals web page
+(documented in the top-level URL's file).  I read this web page, but
+then I didn't do anymore work on it, so it was a complete waste of
+time to read the documentation.  It seemed like a good idea at the
+time...
+
+	Individual Files:
+
+Basic-test.c defines an extremely stupid top-level loop which reads
+memory.  I basically just added this whenever I want to test something
+new.
+
+App-control is basically some test functions which use the correct
+API, but don't really implement the right thing yet.  Note that I was
+trying to figure out how ptrace works, and so there are various tests
+going on.  One of the tasks yet to do is to have it create a signal
+handler and see how all that interacts with ptrace.  In particular,
+using ptrace sys call makes it stop when it gets an interrupt, and
+various of the interrupts have to do with creating processes.  Signal
+10 and 12, I believe, were mentioned in some piece of documentation I
+read, as signals which control Linux threads.  The thing I haven't
+figured out is how to acquire the process IDs from the newly created
+threads, which you will want to do in order to ptrace them.
+
+Memory-access is just the first read a word function.  It actually
+works :-)
+
+Nub- interface.h is a copy from the Windows port, with the actually
+Windows-specific stuff moved to nub-Windows.  Nub-core is a very small
+amount of stuff copy from the Windows version of that file; basically
+my goal here was to build up this file as necessary, but of course be
+various structures will want to have different stuff in them for the
+one export than for the Windows port, because of course the process
+structure is a little different, so I added and removed slots as
+necessary when I took a structure from Windows.  I did try to keep the
+same basic names for structures and so forth.
+
+Proxy.c I believe to be a copy from Windows as well.
+
+Server.c is the part that creates processes to run the debuggee.  And
+it contains my first attempt at trying to use the bfd.  The very first
+thing that needs to be done is to figure out the correct arguments to
+the function bfd_set_default_target.
+
+Utilities.h is a random macro that makes it easy to actually check
+error codes in C code.
+
+There is a makefile, but I believe it to just be a copy from the PC,
+and it just made membrane hurt to actually use it, so I just kept the
+command in a kill ring and yanked it whenever I wanted to re-compile.
+
+gcc -g basic-test.c  server.c proxy.c app_control.c memory_access.c -lbfd -liberty
+

@@ -1,0 +1,26 @@
+[OPTIONS]
+Compatibility=1.1
+Compiled file=per.chm
+Contents file=per.hhc
+Default Window=hqndylan.chm
+Default topic=per.htm
+Display compile progress=Yes
+Full-text search=Yes
+Index file=per.hhk
+Language=0x409 English (United States)
+Title=Harlequin Dylan Documentation
+
+[WINDOWS]
+hqndylan.chm=,"per.hhc","per.hhk","per.htm","per.htm",,,,,0x2520,,0x207e,[425,166,1111,668],0xb0000,,,0,,,
+
+
+[FILES]
+per.htm
+env\env_1.htm
+dguide\dguide_1.htm
+core\core_1.htm
+io\io_1.htm
+dref\dref_1.htm
+interop1\intero_1.htm
+drm\drm_1.htm
+dpg\DB_1.HTM

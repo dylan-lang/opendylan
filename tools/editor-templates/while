@@ -1,0 +1,4 @@
+while
+while ( %e%(XtestX) )
+  XbodyX ;
+end while;

@@ -1,0 +1,17 @@
+DDECLIENT
+---------
+
+This small program uses the Win32 DDEML library to send a command to a
+DDE server.  In particular, it sends a single Execute (XTYP_EXECUTE)
+transaction to a given service name, under a given topic.
+
+The command format is:
+
+  ddeclient <service> <topic> <command-string> ...
+
+All arguments are required and there must be at least one
+<command-string>.  If there are several, they will be concatentated
+_without_ spaces, as appears to be the norm.  If you need to include
+spaces between commands, enclose the whole lot in quotes.  The format
+of the command string will depend on the DDE service.
+

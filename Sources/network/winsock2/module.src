@@ -1,0 +1,23 @@
+define module WinSock2
+  use Dylan;
+  use C-FFI, export: { <C-both-unsigned-long*>, <C-char*>,
+		       <C-int*>, <C-unsigned-short*>, <C-string> };
+  use win32-core, export: { <HANDLE>, <HWND> };
+
+  // Special case because no setter
+  export Buffer-value;
+
+%include winsock2.exp
+
+%include qos.exp
+
+%include mswsock.exp
+
+  // defined in "hand.dylan":
+  export <C-SOCKET>, <SOCKET>;
+  export FD-CLR, FD-SET, FD-ZERO, timerisset, timercmp;
+  export <in-addr**>, <in-addr*>, win32-send-buffer, win32-recv-buffer,
+    win32-send-buffer-to, win32-recv-buffer-from,
+    <C-buffer-offset>, <C-char**>, <sockaddr**>;
+
+end module WinSock2;

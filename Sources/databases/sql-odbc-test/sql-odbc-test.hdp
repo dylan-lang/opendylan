@@ -1,0 +1,24 @@
+comment:	This file is generated, please don't edit
+format-version:	2
+library:	sql-odbc-test
+files:	library
+	big-integer-tests
+	creation-tests
+	connection-tests
+	ddl-tests
+	dml-tests
+	query-tests
+	collection-tests
+	transaction-test
+	datatype-tests
+	introspection-tests
+	sql-odbc-test
+executable:	sql-odbc-test
+base-address:	0x64FE0000
+debug-arguments:	-oracle
+start-function:	main
+major-version: 2
+minor-version: 1
+compilation-mode:	loose
+target-type:	executable
+comment:	additional keywords

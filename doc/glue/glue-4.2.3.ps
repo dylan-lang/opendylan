@@ -1,0 +1,5462 @@
+%!PS-Adobe-3.0
+%%BoundingBox: (atend)
+%%Pages: (atend)
+%%PageOrder: (atend)
+%%DocumentFonts: (atend)
+%%Creator: Frame 4.0
+%%DocumentData: Clean7Bit
+%%EndComments
+%%BeginProlog
+%
+% Frame ps_prolog 4.0, for use with Frame 4.0 products
+% This ps_prolog file is Copyright (c) 1986-1993 Frame Technology
+% Corporation.  All rights reserved.  This ps_prolog file may be
+% freely copied and distributed in conjunction with documents created
+% using FrameMaker, FrameBuilder and FrameViewer as long as this 
+% copyright notice is preserved.
+%
+% Frame products normally print colors as their true color on a color printer
+% or as shades of gray, based on luminance, on a black-and white printer. The
+% following flag, if set to True, forces all non-white colors to print as pure
+% black. This has no effect on bitmap images.
+/FMPrintAllColorsAsBlack             false def
+%
+% Frame products can either set their own line screens or use a printer's 
+% default settings. Three flags below control this separately for no 
+% separations, spot separations and process separations. If a flag
+% is true, then the default printer settings will not be changed. If it is
+% false, Frame products will use their own settings from a table based on
+% the printer's resolution.
+/FMUseDefaultNoSeparationScreen      true  def
+/FMUseDefaultSpotSeparationScreen    true  def
+/FMUseDefaultProcessSeparationScreen false def
+%
+% For any given PostScript printer resolution, Frame products have two sets of 
+% screen angles and frequencies for printing process separations, which are 
+% recomended by Adobe. The following variable chooses the higher frequencies
+% when set to true or the lower frequencies when set to false. This is only
+% effective if the appropriate FMUseDefault...SeparationScreen flag is false.
+/FMUseHighFrequencyScreens true def
+%
+% PostScript Level 2 printers contain an "Accurate Screens" feature which can
+% improve process separation rendering at the expense of compute time. This 
+% flag is ignored by PostScript Level 1 printers.
+/FMUseAcccurateScreens true def
+%
+% The following PostScript procedure defines the spot function that Frame
+% products will use for process separations. You may un-comment-out one of
+% the alternative functions below, or use your own.
+%
+% Dot function
+/FMSpotFunction {abs exch abs 2 copy add 1 gt 
+		{1 sub dup mul exch 1 sub dup mul add 1 sub }
+		{dup mul exch dup mul add 1 exch sub }ifelse } def
+%
+% Line function
+% /FMSpotFunction { pop } def
+%
+% Elipse function
+% /FMSpotFunction { dup 5 mul 8 div mul exch dup mul exch add 
+%		sqrt 1 exch sub } def
+%
+%
+/FMversion (4.0) def 
+/FMLevel1 /languagelevel where {pop languagelevel} {1} ifelse 2 lt def
+/FMPColor
+	FMLevel1 {
+		false
+		/colorimage where {pop pop true} if
+	} {
+		true
+	} ifelse
+def
+/FrameDict 400 dict def 
+systemdict /errordict known not {/errordict 10 dict def
+		errordict /rangecheck {stop} put} if
+% The readline in PS 23.0 doesn't recognize cr's as nl's on AppleTalk
+FrameDict /tmprangecheck errordict /rangecheck get put 
+errordict /rangecheck {FrameDict /bug true put} put 
+FrameDict /bug false put 
+mark 
+% Some PS machines read past the CR, so keep the following 3 lines together!
+currentfile 5 string readline
+00
+0000000000
+cleartomark 
+errordict /rangecheck FrameDict /tmprangecheck get put 
+FrameDict /bug get { 
+	/readline {
+		/gstring exch def
+		/gfile exch def
+		/gindex 0 def
+		{
+			gfile read pop 
+			dup 10 eq {exit} if 
+			dup 13 eq {exit} if 
+			gstring exch gindex exch put 
+			/gindex gindex 1 add def 
+		} loop
+		pop 
+		gstring 0 gindex getinterval true 
+		} bind def
+	} if
+/FMshowpage /showpage load def
+/FMquit /quit load def
+/FMFAILURE { 
+	dup = flush 
+	FMshowpage 
+	/Helvetica findfont 12 scalefont setfont
+	72 200 moveto
+	show FMshowpage 
+	FMquit 
+	} def 
+/FMVERSION {
+	FMversion ne {
+		(Frame product version does not match ps_prolog!) FMFAILURE
+		} if
+	} def 
+/FMBADEPSF { 
+	(PostScript Lang. Ref. Man., 2nd Ed., H.2.4 says EPS must not call X              )
+	dup dup (X) search pop exch pop exch pop length 
+	4 -1 roll 
+	putinterval 
+	FMFAILURE
+	} def
+/FMLOCAL {
+	FrameDict begin
+	0 def 
+	end 
+	} def 
+/concatprocs
+	{
+	/proc2 exch cvlit def/proc1 exch cvlit def/newproc proc1 length proc2 length add array def
+	newproc 0 proc1 putinterval newproc proc1 length proc2 putinterval newproc cvx
+}def
+FrameDict begin 
+/FMnone 0 def
+/FMcyan 1 def
+/FMmagenta 2 def
+/FMyellow 3 def
+/FMblack 4 def
+/FMcustom 5 def
+/FrameNegative false def 
+/FrameSepIs FMnone def 
+/FrameSepBlack 0 def
+/FrameSepYellow 0 def
+/FrameSepMagenta 0 def
+/FrameSepCyan 0 def
+/FrameSepRed 1 def
+/FrameSepGreen 1 def
+/FrameSepBlue 1 def
+/FrameCurGray 1 def
+/FrameCurPat null def
+/FrameCurColors [ 0 0 0 1 0 0 0 ] def 
+/FrameColorEpsilon .001 def	
+/eqepsilon {		
+	sub dup 0 lt {neg} if
+	FrameColorEpsilon le
+} bind def
+/FrameCmpColorsCMYK { 
+	2 copy 0 get exch 0 get eqepsilon {
+		2 copy 1 get exch 1 get eqepsilon {
+			2 copy 2 get exch 2 get eqepsilon {
+				3 get exch 3 get eqepsilon
+			} {pop pop false} ifelse
+		}{pop pop false} ifelse
+	} {pop pop false} ifelse
+} bind def
+/FrameCmpColorsRGB { 
+	2 copy 4 get exch 0 get eqepsilon {
+		2 copy 5 get exch 1 get eqepsilon {
+			6 get exch 2 get eqepsilon
+		}{pop pop false} ifelse
+	} {pop pop false} ifelse
+} bind def
+/RGBtoCMYK { 
+	1 exch sub 
+	3 1 roll 
+	1 exch sub 
+	3 1 roll 
+	1 exch sub 
+	3 1 roll 
+	3 copy 
+	2 copy 
+	le { pop } { exch pop } ifelse 
+	2 copy 
+	le { pop } { exch pop } ifelse 
+	dup dup dup 
+	6 1 roll 
+	4 1 roll 
+	7 1 roll 
+	sub 
+	6 1 roll 
+	sub 
+	5 1 roll 
+	sub 
+	4 1 roll 
+} bind def
+/CMYKtoRGB { 
+	dup dup 4 -1 roll add 						  
+	5 1 roll 3 -1 roll add 						  
+	4 1 roll add 								  
+	1 exch sub dup 0 lt {pop 0} if 3 1 roll 	  
+	1 exch sub dup 0 lt {pop 0} if exch 	      
+	1 exch sub dup 0 lt {pop 0} if exch	  		  
+} bind def
+/FrameSepInit {
+	1.0 RealSetgray
+} bind def
+/FrameSetSepColor { 
+	/FrameSepBlue exch def
+	/FrameSepGreen exch def
+	/FrameSepRed exch def
+	/FrameSepBlack exch def
+	/FrameSepYellow exch def
+	/FrameSepMagenta exch def
+	/FrameSepCyan exch def
+	/FrameSepIs FMcustom def
+	setCurrentScreen	
+} bind def
+/FrameSetCyan {
+	/FrameSepBlue 1.0 def
+	/FrameSepGreen 1.0 def
+	/FrameSepRed 0.0 def
+	/FrameSepBlack 0.0 def
+	/FrameSepYellow 0.0 def
+	/FrameSepMagenta 0.0 def
+	/FrameSepCyan 1.0 def
+	/FrameSepIs FMcyan def
+	setCurrentScreen	
+} bind def
+ 
+/FrameSetMagenta {
+	/FrameSepBlue 1.0 def
+	/FrameSepGreen 0.0 def
+	/FrameSepRed 1.0 def
+	/FrameSepBlack 0.0 def
+	/FrameSepYellow 0.0 def
+	/FrameSepMagenta 1.0 def
+	/FrameSepCyan 0.0 def
+	/FrameSepIs FMmagenta def
+	setCurrentScreen
+} bind def
+ 
+/FrameSetYellow {
+	/FrameSepBlue 0.0 def
+	/FrameSepGreen 1.0 def
+	/FrameSepRed 1.0 def
+	/FrameSepBlack 0.0 def
+	/FrameSepYellow 1.0 def
+	/FrameSepMagenta 0.0 def
+	/FrameSepCyan 0.0 def
+	/FrameSepIs FMyellow def
+	setCurrentScreen
+} bind def
+ 
+/FrameSetBlack {
+	/FrameSepBlue 0.0 def
+	/FrameSepGreen 0.0 def
+	/FrameSepRed 0.0 def
+	/FrameSepBlack 1.0 def
+	/FrameSepYellow 0.0 def
+	/FrameSepMagenta 0.0 def
+	/FrameSepCyan 0.0 def
+	/FrameSepIs FMblack def
+	setCurrentScreen
+} bind def
+ 
+/FrameNoSep { 
+	/FrameSepIs FMnone def
+	setCurrentScreen
+} bind def
+/FrameSetSepColors { 
+	FrameDict begin
+	[ exch 1 add 1 roll ]
+	/FrameSepColors  
+	exch def end
+	} bind def
+/FrameColorInSepListCMYK { 
+	FrameSepColors {  
+       		exch dup 3 -1 roll 
+       		FrameCmpColorsCMYK 
+       		{ pop true exit } if
+    	} forall 
+	dup true ne {pop false} if
+	} bind def
+/FrameColorInSepListRGB { 
+	FrameSepColors {  
+       		exch dup 3 -1 roll 
+       		FrameCmpColorsRGB 
+       		{ pop true exit } if
+    	} forall 
+	dup true ne {pop false} if
+	} bind def
+/RealSetgray /setgray load def
+/RealSetrgbcolor /setrgbcolor load def
+/RealSethsbcolor /sethsbcolor load def
+end 
+/setgray { 
+	FrameDict begin
+	FrameSepIs FMnone eq
+		{ RealSetgray } 
+		{ 
+		FrameSepIs FMblack eq 
+			{ RealSetgray } 
+			{ FrameSepIs FMcustom eq 
+			  FrameSepRed 0 eq and
+			  FrameSepGreen 0 eq and
+			  FrameSepBlue 0 eq and {
+			  	RealSetgray
+			  } {
+				1 RealSetgray pop 
+			  } ifelse
+			} ifelse
+		} ifelse
+	end
+} bind def
+/setrgbcolor { 
+	FrameDict begin
+	FrameSepIs FMnone eq
+	{  RealSetrgbcolor }
+	{
+		3 copy [ 4 1 roll ] 
+		FrameColorInSepListRGB
+		{
+				FrameSepBlue eq exch 
+			 	FrameSepGreen eq and exch 
+			 	FrameSepRed eq and
+			 	{ 0 } { 1 } ifelse
+		}
+		{
+			FMPColor {
+				RealSetrgbcolor
+				currentcmykcolor
+			} {
+				RGBtoCMYK
+			} ifelse
+			FrameSepIs FMblack eq
+			{1.0 exch sub 4 1 roll pop pop pop} {
+			FrameSepIs FMyellow eq
+			{pop 1.0 exch sub 3 1 roll pop pop} {
+			FrameSepIs FMmagenta eq
+			{pop pop 1.0 exch sub exch pop } {
+			FrameSepIs FMcyan eq
+			{pop pop pop 1.0 exch sub } 
+			{pop pop pop pop 1} ifelse } ifelse } ifelse } ifelse 
+		} ifelse
+		RealSetgray
+	} 
+	ifelse
+	end
+} bind def
+/sethsbcolor {
+	FrameDict begin
+	FrameSepIs FMnone eq 
+	{ RealSethsbcolor } 
+	{
+		RealSethsbcolor 
+		currentrgbcolor  
+		setrgbcolor 
+	} 
+	ifelse
+	end
+} bind def
+FrameDict begin
+/setcmykcolor where {
+	pop /RealSetcmykcolor /setcmykcolor load def
+} {
+	/RealSetcmykcolor {
+		4 1 roll
+		3 { 3 index add 0 max 1 min 1 exch sub 3 1 roll} repeat 
+		setrgbcolor pop
+	} bind def
+} ifelse
+userdict /setcmykcolor { 
+		FrameDict begin
+		FrameSepIs FMnone eq
+		{ RealSetcmykcolor } 
+		{
+			4 copy [ 5 1 roll ]
+			FrameColorInSepListCMYK
+			{
+				FrameSepBlack eq exch 
+				FrameSepYellow eq and exch 
+				FrameSepMagenta eq and exch 
+				FrameSepCyan eq and 
+				{ 0 } { 1 } ifelse
+			}
+			{
+				FrameSepIs FMblack eq
+				{1.0 exch sub 4 1 roll pop pop pop} {
+				FrameSepIs FMyellow eq
+				{pop 1.0 exch sub 3 1 roll pop pop} {
+				FrameSepIs FMmagenta eq
+				{pop pop 1.0 exch sub exch pop } {
+				FrameSepIs FMcyan eq
+				{pop pop pop 1.0 exch sub } 
+				{pop pop pop pop 1} ifelse } ifelse } ifelse } ifelse 
+			} ifelse
+			RealSetgray
+		}
+		ifelse
+		end
+	} bind put
+FMLevel1 not { 
+	
+	/patProcDict 5 dict dup begin
+		<0f1e3c78f0e1c387> { 3 setlinewidth -1 -1 moveto 9 9 lineto stroke 
+											4 -4 moveto 12 4 lineto stroke
+											-4 4 moveto 4 12 lineto stroke} bind def
+		<0f87c3e1f0783c1e> { 3 setlinewidth -1 9 moveto 9 -1 lineto stroke 
+											-4 4 moveto 4 -4 lineto stroke
+											4 12 moveto 12 4 lineto stroke} bind def
+		<8142241818244281> { 1 setlinewidth -1 9 moveto 9 -1 lineto stroke
+											-1 -1 moveto 9 9 lineto stroke } bind def
+		<03060c183060c081> { 1 setlinewidth -1 -1 moveto 9 9 lineto stroke 
+											4 -4 moveto 12 4 lineto stroke
+											-4 4 moveto 4 12 lineto stroke} bind def
+		<8040201008040201> { 1 setlinewidth -1 9 moveto 9 -1 lineto stroke 
+											-4 4 moveto 4 -4 lineto stroke
+											4 12 moveto 12 4 lineto stroke} bind def
+	end def
+	/patDict 15 dict dup begin
+		/PatternType 1 def		
+		/PaintType 2 def		
+		/TilingType 3 def		
+		/BBox [ 0 0 8 8 ] def 	
+		/XStep 8 def			
+		/YStep 8 def			
+		/PaintProc {
+			begin
+			patProcDict bstring known {
+				patProcDict bstring get exec
+			} {
+				8 8 true [1 0 0 -1 0 8] bstring imagemask
+			} ifelse
+			end
+		} bind def
+	end def
+} if
+/combineColor {
+    FrameSepIs FMnone eq
+	{
+		graymode FMLevel1 or not {
+			
+			[/Pattern [/DeviceCMYK]] setcolorspace
+			FrameCurColors 0 4 getinterval aload pop FrameCurPat setcolor
+		} {
+			FrameCurColors 3 get 1.0 ge {
+				FrameCurGray RealSetgray
+			} {
+				FMPColor graymode and {
+					0 1 3 { 
+						FrameCurColors exch get
+						1 FrameCurGray sub mul
+					} for
+					RealSetcmykcolor
+				} {
+					4 1 6 {
+						FrameCurColors exch get
+						graymode {
+							1 exch sub 1 FrameCurGray sub mul 1 exch sub
+						} {
+							1.0 lt {FrameCurGray} {1} ifelse
+						} ifelse
+					} for
+					RealSetrgbcolor
+				} ifelse
+			} ifelse
+		} ifelse
+	} { 
+		FrameCurColors 0 4 getinterval aload
+		FrameColorInSepListCMYK {
+			FrameSepBlack eq exch 
+			FrameSepYellow eq and exch 
+			FrameSepMagenta eq and exch 
+			FrameSepCyan eq and
+			FrameSepIs FMcustom eq and
+			{ FrameCurGray } { 1 } ifelse
+		} {
+			FrameSepIs FMblack eq
+			{FrameCurGray 1.0 exch sub mul 1.0 exch sub 4 1 roll pop pop pop} {
+			FrameSepIs FMyellow eq
+			{pop FrameCurGray 1.0 exch sub mul 1.0 exch sub 3 1 roll pop pop} {
+			FrameSepIs FMmagenta eq
+			{pop pop FrameCurGray 1.0 exch sub mul 1.0 exch sub exch pop } {
+			FrameSepIs FMcyan eq
+			{pop pop pop FrameCurGray 1.0 exch sub mul 1.0 exch sub } 
+			{pop pop pop pop 1} ifelse } ifelse } ifelse } ifelse 
+		} ifelse
+		graymode FMLevel1 or not {
+			
+			[/Pattern [/DeviceGray]] setcolorspace
+			FrameCurPat setcolor
+		} { 
+			graymode not FMLevel1 and {
+				
+				dup 1 lt {pop FrameCurGray} if
+			} if
+			RealSetgray
+		} ifelse
+	} ifelse
+} bind def
+/savematrix {
+	orgmatrix currentmatrix pop
+	} bind def
+/restorematrix {
+	orgmatrix setmatrix
+	} bind def
+/dmatrix matrix def
+/dpi    72 0 dmatrix defaultmatrix dtransform
+    dup mul exch   dup mul add   sqrt def
+	
+/freq dpi dup 72 div round dup 0 eq {pop 1} if 8 mul div def
+/sangle 1 0 dmatrix defaultmatrix dtransform exch atan def
+/dpiranges   [  2540    2400    1693     1270    1200     635      600      0      ] def
+/CMLowFreqs  [ 100.402  94.8683 89.2289 100.402  94.8683  66.9349  63.2456 47.4342 ] def
+/YLowFreqs   [  95.25   90.0    84.65    95.25   90.0     70.5556  66.6667 50.0    ] def
+/KLowFreqs   [  89.8026 84.8528 79.8088  89.8026 84.8528  74.8355  70.7107 53.033  ] def
+/CLowAngles  [  71.5651 71.5651 71.5651 71.5651  71.5651  71.5651  71.5651 71.5651 ] def
+/MLowAngles  [  18.4349 18.4349 18.4349 18.4349  18.4349  18.4349  18.4349 18.4349 ] def
+/YLowTDot    [  true    true    false    true    true     false    false   false   ] def
+/CMHighFreqs [ 133.87  126.491 133.843  108.503 102.523  100.402   94.8683 63.2456 ] def
+/YHighFreqs  [ 127.0   120.0   126.975  115.455 109.091   95.25    90.0    60.0    ] def
+/KHighFreqs  [ 119.737 113.137 119.713  128.289 121.218   89.8026  84.8528 63.6395 ] def
+/CHighAngles [  71.5651 71.5651 71.5651  70.0169 70.0169  71.5651  71.5651 71.5651 ] def
+/MHighAngles [  18.4349 18.4349 18.4349  19.9831 19.9831  18.4349  18.4349 18.4349 ] def
+/YHighTDot   [  false   false   true     false   false    true     true    false   ] def
+/PatFreq     [	10.5833 10.0     9.4055  10.5833 10.0	  10.5833  10.0	   9.375   ] def
+/screenIndex {
+	0 1 dpiranges length 1 sub { dup dpiranges exch get 1 sub dpi le {exit} {pop} ifelse } for
+} bind def
+/getCyanScreen {
+	FMUseHighFrequencyScreens { CHighAngles CMHighFreqs} {CLowAngles CMLowFreqs} ifelse
+		screenIndex dup 3 1 roll get 3 1 roll get /FMSpotFunction load
+} bind def
+/getMagentaScreen {
+	FMUseHighFrequencyScreens { MHighAngles CMHighFreqs } {MLowAngles CMLowFreqs} ifelse
+		screenIndex dup 3 1 roll get 3 1 roll get /FMSpotFunction load
+} bind def
+/getYellowScreen {
+	FMUseHighFrequencyScreens { YHighTDot YHighFreqs} { YLowTDot YLowFreqs } ifelse
+		screenIndex dup 3 1 roll get 3 1 roll get { 3 div
+			{2 { 1 add 2 div 3 mul dup floor sub 2 mul 1 sub exch} repeat
+			FMSpotFunction } } {/FMSpotFunction load } ifelse
+			0.0 exch
+} bind def
+/getBlackScreen  {
+	FMUseHighFrequencyScreens { KHighFreqs } { KLowFreqs } ifelse
+		screenIndex get 45.0 /FMSpotFunction load 
+} bind def
+/getSpotScreen {
+	getBlackScreen
+} bind def
+/getCompositeScreen {
+	getBlackScreen
+} bind def
+/FMSetScreen 
+	FMLevel1 { /setscreen load 
+	}{ {
+		8 dict begin
+		/HalftoneType 1 def
+		/SpotFunction exch def
+		/Angle exch def
+		/Frequency exch def
+		/AccurateScreens FMUseAcccurateScreens def
+		currentdict end sethalftone
+	} bind } ifelse
+def
+/setDefaultScreen {
+	FMPColor {
+		orgrxfer cvx orggxfer cvx orgbxfer cvx orgxfer cvx setcolortransfer
+	}
+	{
+		orgxfer cvx settransfer
+	} ifelse
+	orgfreq organgle orgproc cvx setscreen
+} bind def
+/setCurrentScreen {
+	FrameSepIs FMnone eq {
+		FMUseDefaultNoSeparationScreen {
+			setDefaultScreen
+		} {
+			getCompositeScreen FMSetScreen
+		} ifelse
+	} {
+		FrameSepIs FMcustom eq {
+			FMUseDefaultSpotSeparationScreen {
+				setDefaultScreen
+			} {
+				getSpotScreen FMSetScreen
+			} ifelse
+		} {
+			FMUseDefaultProcessSeparationScreen {
+				setDefaultScreen
+			} {
+				FrameSepIs FMcyan eq {
+					getCyanScreen FMSetScreen
+				} {
+					FrameSepIs FMmagenta eq {
+						getMagentaScreen FMSetScreen
+					} {
+						FrameSepIs FMyellow eq {
+							getYellowScreen FMSetScreen
+						} {
+							getBlackScreen FMSetScreen
+						} ifelse
+					} ifelse
+				} ifelse
+			} ifelse
+		} ifelse
+	} ifelse 
+} bind def
+end
+	/gstring FMLOCAL
+	/gfile FMLOCAL
+	/gindex FMLOCAL
+	/orgrxfer FMLOCAL
+	/orggxfer FMLOCAL
+	/orgbxfer FMLOCAL
+	/orgxfer FMLOCAL
+	/orgproc FMLOCAL
+	/orgrproc FMLOCAL
+	/orggproc FMLOCAL
+	/orgbproc FMLOCAL
+	/organgle FMLOCAL
+	/orgrangle FMLOCAL
+	/orggangle FMLOCAL
+	/orgbangle FMLOCAL
+	/orgfreq FMLOCAL
+	/orgrfreq FMLOCAL
+	/orggfreq FMLOCAL
+	/orgbfreq FMLOCAL
+	/yscale FMLOCAL
+	/xscale FMLOCAL
+	/edown FMLOCAL
+	/manualfeed FMLOCAL
+	/paperheight FMLOCAL
+	/paperwidth FMLOCAL
+/FMDOCUMENT { 
+	array /FMfonts exch def 
+	/#copies exch def
+	FrameDict begin
+	0 ne /manualfeed exch def
+	/paperheight exch def
+	/paperwidth exch def
+	0 ne /FrameNegative exch def 
+	0 ne /edown exch def 
+	/yscale exch def
+	/xscale exch def
+	FMLevel1 {
+		manualfeed {setmanualfeed} if
+		/FMdicttop countdictstack 1 add def 
+		/FMoptop count def 
+		setpapername 
+		manualfeed {true} {papersize} ifelse 
+		{manualpapersize} {false} ifelse 
+		{desperatepapersize} {false} ifelse 
+		{ (Can't select requested paper size for Frame print job!) FMFAILURE } if
+		count -1 FMoptop {pop pop} for
+		countdictstack -1 FMdicttop {pop end} for 
+		}
+		{{1 dict dup /PageSize [paperwidth paperheight]put setpagedevice}stopped
+		{ (Can't select requested paper size for Frame print job!) FMFAILURE } if
+		 {1 dict dup /ManualFeed manualfeed put setpagedevice } stopped pop }
+	ifelse 
+	
+	FMPColor {
+		currentcolorscreen
+			cvlit /orgproc exch def
+				  /organgle exch def 
+				  /orgfreq exch def
+			cvlit /orgbproc exch def
+				  /orgbangle exch def 
+				  /orgbfreq exch def
+			cvlit /orggproc exch def
+				  /orggangle exch def 
+				  /orggfreq exch def
+			cvlit /orgrproc exch def
+				  /orgrangle exch def 
+				  /orgrfreq exch def
+			currentcolortransfer 
+			FrameNegative {
+				1 1 4 { 
+					pop { 1 exch sub } concatprocs 4 1 roll
+				} for
+				4 copy
+				setcolortransfer
+			} if
+			cvlit /orgxfer exch def
+			cvlit /orgbxfer exch def
+			cvlit /orggxfer exch def
+			cvlit /orgrxfer exch def
+	} {
+		currentscreen 
+			cvlit /orgproc exch def
+				  /organgle exch def 
+				  /orgfreq exch def
+				  
+		currenttransfer 
+		FrameNegative {
+			{ 1 exch sub } concatprocs
+			dup settransfer
+		} if 
+		cvlit /orgxfer exch def
+	} ifelse
+	end 
+} def 
+/pagesave FMLOCAL
+/orgmatrix FMLOCAL
+/landscape FMLOCAL
+/pwid FMLOCAL
+/FMBEGINPAGE { 
+	FrameDict begin 
+	/pagesave save def
+	3.86 setmiterlimit
+	/landscape exch 0 ne def
+	landscape { 
+		90 rotate 0 exch dup /pwid exch def neg translate pop 
+	}{
+		pop /pwid exch def
+	} ifelse
+	edown { [-1 0 0 1 pwid 0] concat } if
+	0 0 moveto paperwidth 0 lineto paperwidth paperheight lineto 
+	0 paperheight lineto 0 0 lineto 1 setgray fill
+	xscale yscale scale
+	/orgmatrix matrix def
+	gsave 
+} def 
+/FMENDPAGE {
+	grestore 
+	pagesave restore
+	end 
+	showpage
+	} def 
+/FMFONTDEFINE { 
+	FrameDict begin
+	findfont 
+	ReEncode 
+	1 index exch 
+	definefont 
+	FMfonts 3 1 roll 
+	put
+	end 
+	} def 
+/FMFILLS {
+	FrameDict begin dup
+	array /fillvals exch def
+	dict /patCache exch def
+	end 
+	} def 
+/FMFILL {
+	FrameDict begin
+	 fillvals 3 1 roll put
+	end 
+	} def 
+/FMNORMALIZEGRAPHICS { 
+	newpath
+	0.0 0.0 moveto
+	1 setlinewidth
+	0 setlinecap
+	0 0 0 sethsbcolor
+	0 setgray 
+	} bind def
+	/fx FMLOCAL
+	/fy FMLOCAL
+	/fh FMLOCAL
+	/fw FMLOCAL
+	/llx FMLOCAL
+	/lly FMLOCAL
+	/urx FMLOCAL
+	/ury FMLOCAL
+/FMBEGINEPSF { 
+	end 
+	/FMEPSF save def 
+	/showpage {} def 
+% See Adobe's "PostScript Language Reference Manual, 2nd Edition", page 714.
+% "...the following operators MUST NOT be used in an EPS file:" (emphasis ours)
+	/banddevice {(banddevice) FMBADEPSF} def
+	/clear {(clear) FMBADEPSF} def
+	/cleardictstack {(cleardictstack) FMBADEPSF} def 
+	/copypage {(copypage) FMBADEPSF} def
+	/erasepage {(erasepage) FMBADEPSF} def
+	/exitserver {(exitserver) FMBADEPSF} def
+	/framedevice {(framedevice) FMBADEPSF} def
+	/grestoreall {(grestoreall) FMBADEPSF} def
+	/initclip {(initclip) FMBADEPSF} def
+	/initgraphics {(initgraphics) FMBADEPSF} def
+	/initmatrix {(initmatrix) FMBADEPSF} def
+	/quit {(quit) FMBADEPSF} def
+	/renderbands {(renderbands) FMBADEPSF} def
+	/setglobal {(setglobal) FMBADEPSF} def
+	/setpagedevice {(setpagedevice) FMBADEPSF} def
+	/setshared {(setshared) FMBADEPSF} def
+	/startjob {(startjob) FMBADEPSF} def
+	/lettertray {(lettertray) FMBADEPSF} def
+	/letter {(letter) FMBADEPSF} def
+	/lettersmall {(lettersmall) FMBADEPSF} def
+	/11x17tray {(11x17tray) FMBADEPSF} def
+	/11x17 {(11x17) FMBADEPSF} def
+	/ledgertray {(ledgertray) FMBADEPSF} def
+	/ledger {(ledger) FMBADEPSF} def
+	/legaltray {(legaltray) FMBADEPSF} def
+	/legal {(legal) FMBADEPSF} def
+	/statementtray {(statementtray) FMBADEPSF} def
+	/statement {(statement) FMBADEPSF} def
+	/executivetray {(executivetray) FMBADEPSF} def
+	/executive {(executive) FMBADEPSF} def
+	/a3tray {(a3tray) FMBADEPSF} def
+	/a3 {(a3) FMBADEPSF} def
+	/a4tray {(a4tray) FMBADEPSF} def
+	/a4 {(a4) FMBADEPSF} def
+	/a4small {(a4small) FMBADEPSF} def
+	/b4tray {(b4tray) FMBADEPSF} def
+	/b4 {(b4) FMBADEPSF} def
+	/b5tray {(b5tray) FMBADEPSF} def
+	/b5 {(b5) FMBADEPSF} def
+	FMNORMALIZEGRAPHICS 
+	[/fy /fx /fh /fw /ury /urx /lly /llx] {exch def} forall 
+	fx fw 2 div add fy fh 2 div add  translate
+	rotate
+	fw 2 div neg fh 2 div neg translate
+	fw urx llx sub div fh ury lly sub div scale 
+	llx neg lly neg translate 
+	/FMdicttop countdictstack 1 add def 
+	/FMoptop count def 
+	} bind def
+/FMENDEPSF {
+	count -1 FMoptop {pop pop} for 
+	countdictstack -1 FMdicttop {pop end} for 
+	FMEPSF restore
+	FrameDict begin 
+	} bind def
+FrameDict begin 
+/setmanualfeed {
+%%BeginFeature *ManualFeed True
+	 statusdict /manualfeed true put
+%%EndFeature
+	} bind def
+/max {2 copy lt {exch} if pop} bind def
+/min {2 copy gt {exch} if pop} bind def
+/inch {72 mul} def
+/pagedimen { 
+	paperheight sub abs 16 lt exch 
+	paperwidth sub abs 16 lt and
+	{/papername exch def} {pop} ifelse
+	} bind def
+	/papersizedict FMLOCAL
+/setpapername { 
+	/papersizedict 14 dict def 
+	papersizedict begin
+	/papername /unknown def 
+		/Letter 8.5 inch 11.0 inch pagedimen
+		/LetterSmall 7.68 inch 10.16 inch pagedimen
+		/Tabloid 11.0 inch 17.0 inch pagedimen
+		/Ledger 17.0 inch 11.0 inch pagedimen
+		/Legal 8.5 inch 14.0 inch pagedimen
+		/Statement 5.5 inch 8.5 inch pagedimen
+		/Executive 7.5 inch 10.0 inch pagedimen
+		/A3 11.69 inch 16.5 inch pagedimen
+		/A4 8.26 inch 11.69 inch pagedimen
+		/A4Small 7.47 inch 10.85 inch pagedimen
+		/B4 10.125 inch 14.33 inch pagedimen
+		/B5 7.16 inch 10.125 inch pagedimen
+	end
+	} bind def
+/papersize {
+	papersizedict begin
+		/Letter {lettertray letter} def
+		/LetterSmall {lettertray lettersmall} def
+		/Tabloid {11x17tray 11x17} def
+		/Ledger {ledgertray ledger} def
+		/Legal {legaltray legal} def
+		/Statement {statementtray statement} def
+		/Executive {executivetray executive} def
+		/A3 {a3tray a3} def
+		/A4 {a4tray a4} def
+		/A4Small {a4tray a4small} def
+		/B4 {b4tray b4} def
+		/B5 {b5tray b5} def
+		/unknown {unknown} def
+	papersizedict dup papername known {papername} {/unknown} ifelse get
+	end
+	statusdict begin stopped end 
+	} bind def
+/manualpapersize {
+	papersizedict begin
+		/Letter {letter} def
+		/LetterSmall {lettersmall} def
+		/Tabloid {11x17} def
+		/Ledger {ledger} def
+		/Legal {legal} def
+		/Statement {statement} def
+		/Executive {executive} def
+		/A3 {a3} def
+		/A4 {a4} def
+		/A4Small {a4small} def
+		/B4 {b4} def
+		/B5 {b5} def
+		/unknown {unknown} def
+	papersizedict dup papername known {papername} {/unknown} ifelse get
+	end
+	stopped 
+	} bind def
+/desperatepapersize {
+	statusdict /setpageparams known
+		{
+		paperwidth paperheight 0 1 
+		statusdict begin
+		{setpageparams} stopped 
+		end
+		} {true} ifelse 
+	} bind def
+/DiacriticEncoding [
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /space /exclam /quotedbl
+/numbersign /dollar /percent /ampersand /quotesingle /parenleft
+/parenright /asterisk /plus /comma /hyphen /period /slash /zero /one
+/two /three /four /five /six /seven /eight /nine /colon /semicolon
+/less /equal /greater /question /at /A /B /C /D /E /F /G /H /I /J /K
+/L /M /N /O /P /Q /R /S /T /U /V /W /X /Y /Z /bracketleft /backslash
+/bracketright /asciicircum /underscore /grave /a /b /c /d /e /f /g /h
+/i /j /k /l /m /n /o /p /q /r /s /t /u /v /w /x /y /z /braceleft /bar
+/braceright /asciitilde /.notdef /Adieresis /Aring /Ccedilla /Eacute
+/Ntilde /Odieresis /Udieresis /aacute /agrave /acircumflex /adieresis
+/atilde /aring /ccedilla /eacute /egrave /ecircumflex /edieresis
+/iacute /igrave /icircumflex /idieresis /ntilde /oacute /ograve
+/ocircumflex /odieresis /otilde /uacute /ugrave /ucircumflex
+/udieresis /dagger /.notdef /cent /sterling /section /bullet
+/paragraph /germandbls /registered /copyright /trademark /acute
+/dieresis /.notdef /AE /Oslash /.notdef /.notdef /.notdef /.notdef
+/yen /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/ordfeminine /ordmasculine /.notdef /ae /oslash /questiondown
+/exclamdown /logicalnot /.notdef /florin /.notdef /.notdef
+/guillemotleft /guillemotright /ellipsis /.notdef /Agrave /Atilde
+/Otilde /OE /oe /endash /emdash /quotedblleft /quotedblright
+/quoteleft /quoteright /.notdef /.notdef /ydieresis /Ydieresis
+/fraction /currency /guilsinglleft /guilsinglright /fi /fl /daggerdbl
+/periodcentered /quotesinglbase /quotedblbase /perthousand
+/Acircumflex /Ecircumflex /Aacute /Edieresis /Egrave /Iacute
+/Icircumflex /Idieresis /Igrave /Oacute /Ocircumflex /.notdef /Ograve
+/Uacute /Ucircumflex /Ugrave /dotlessi /circumflex /tilde /macron
+/breve /dotaccent /ring /cedilla /hungarumlaut /ogonek /caron
+] def
+/ReEncode { 
+	dup 
+	length 
+	dict begin 
+	{
+	1 index /FID ne 
+		{def} 
+		{pop pop} ifelse 
+	} forall 
+	0 eq {/Encoding DiacriticEncoding def} if 
+	currentdict 
+	end 
+	} bind def
+FMPColor 
+	
+	{
+	/BEGINBITMAPCOLOR { 
+		BITMAPCOLOR} def
+	/BEGINBITMAPCOLORc { 
+		BITMAPCOLORc} def
+	/BEGINBITMAPTRUECOLOR { 
+		BITMAPTRUECOLOR } def
+	/BEGINBITMAPTRUECOLORc { 
+		BITMAPTRUECOLORc } def
+	}
+	
+	{
+	/BEGINBITMAPCOLOR { 
+		BITMAPGRAY} def
+	/BEGINBITMAPCOLORc { 
+		BITMAPGRAYc} def
+	/BEGINBITMAPTRUECOLOR { 
+		BITMAPTRUEGRAY } def
+	/BEGINBITMAPTRUECOLORc { 
+		BITMAPTRUEGRAYc } def
+	}
+ifelse
+/K { 
+	FMPrintAllColorsAsBlack {
+		dup 1 eq 2 index 1 eq and 3 index 1 eq and not
+			{7 {pop} repeat 0 0 0 1 0 0 0} if
+	} if 
+	FrameCurColors astore 
+	pop combineColor
+} bind def
+/graymode true def
+	/bwidth FMLOCAL
+	/bpside FMLOCAL
+	/bstring FMLOCAL
+	/onbits FMLOCAL
+	/offbits FMLOCAL
+	/xindex FMLOCAL
+	/yindex FMLOCAL
+	/x FMLOCAL
+	/y FMLOCAL
+/setPatternMode {
+	FMLevel1 {
+		/bwidth  exch def
+		/bpside  exch def
+		/bstring exch def
+		/onbits 0 def  /offbits 0 def
+		freq sangle landscape {90 add} if 
+			{/y exch def
+			 /x exch def
+			 /xindex x 1 add 2 div bpside mul cvi def
+			 /yindex y 1 add 2 div bpside mul cvi def
+			 bstring yindex bwidth mul xindex 8 idiv add get
+			 1 7 xindex 8 mod sub bitshift and 0 ne FrameNegative {not} if
+			 {/onbits  onbits  1 add def 1}
+			 {/offbits offbits 1 add def 0}
+			 ifelse
+			}
+			setscreen
+		offbits offbits onbits add div FrameNegative {1.0 exch sub} if
+		/FrameCurGray exch def
+	} { 
+		pop pop
+		dup patCache exch known {
+			patCache exch get
+		} { 
+			dup
+			patDict /bstring 3 -1 roll put
+			patDict 
+			9 PatFreq screenIndex get div dup matrix scale
+			makepattern
+			dup 
+			patCache 4 -1 roll 3 -1 roll put
+		} ifelse
+		/FrameCurGray 0 def
+		/FrameCurPat exch def
+	} ifelse
+	/graymode false def
+	combineColor
+} bind def
+/setGrayScaleMode {
+	graymode not {
+		/graymode true def
+		FMLevel1 {
+			setCurrentScreen
+		} if
+	} if
+	/FrameCurGray exch def
+	combineColor
+} bind def
+/normalize {
+	transform round exch round exch itransform
+	} bind def
+/dnormalize {
+	dtransform round exch round exch idtransform
+	} bind def
+/lnormalize { 
+	0 dtransform exch cvi 2 idiv 2 mul 1 add exch idtransform pop
+	} bind def
+/H { 
+	lnormalize setlinewidth
+	} bind def
+/Z {
+	setlinecap
+	} bind def
+	
+/PFill {
+	graymode FMLevel1 or not {
+		gsave 1 setgray eofill grestore
+	} if
+} bind def
+/PStroke {
+	graymode FMLevel1 or not {
+		gsave 1 setgray stroke grestore
+	} if
+	stroke
+} bind def
+	/fillvals FMLOCAL
+/X { 
+	fillvals exch get
+	dup type /stringtype eq
+	{8 1 setPatternMode} 
+	{setGrayScaleMode}
+	ifelse
+	} bind def
+/V { 
+	PFill gsave eofill grestore
+	} bind def
+/Vclip {
+	clip
+	} bind def
+/Vstrk {
+	currentlinewidth exch setlinewidth PStroke setlinewidth
+	} bind def
+/N { 
+	PStroke
+	} bind def
+/Nclip {
+	strokepath clip newpath
+	} bind def
+/Nstrk {
+	currentlinewidth exch setlinewidth PStroke setlinewidth
+	} bind def
+/M {newpath moveto} bind def
+/E {lineto} bind def
+/D {curveto} bind def
+/O {closepath} bind def
+	/n FMLOCAL
+/L { 
+ 	/n exch def
+	newpath
+	normalize
+	moveto 
+	2 1 n {pop normalize lineto} for
+	} bind def
+/Y { 
+	L 
+	closepath
+	} bind def
+	/x1 FMLOCAL
+	/x2 FMLOCAL
+	/y1 FMLOCAL
+	/y2 FMLOCAL
+/R { 
+	/y2 exch def
+	/x2 exch def
+	/y1 exch def
+	/x1 exch def
+	x1 y1
+	x2 y1
+	x2 y2
+	x1 y2
+	4 Y 
+	} bind def
+	/rad FMLOCAL
+/rarc 
+	{rad 
+	 arcto
+	} bind def
+/RR { 
+	/rad exch def
+	normalize
+	/y2 exch def
+	/x2 exch def
+	normalize
+	/y1 exch def
+	/x1 exch def
+	mark
+	newpath
+	{
+	x1 y1 rad add moveto
+	x1 y2 x2 y2 rarc
+	x2 y2 x2 y1 rarc
+	x2 y1 x1 y1 rarc
+	x1 y1 x1 y2 rarc
+	closepath
+	} stopped {x1 y1 x2 y2 R} if 
+	cleartomark
+	} bind def
+/RRR { 
+	/rad exch def
+	normalize /y4 exch def /x4 exch def
+	normalize /y3 exch def /x3 exch def
+	normalize /y2 exch def /x2 exch def
+	normalize /y1 exch def /x1 exch def
+	newpath
+	normalize moveto 
+	mark
+	{
+	x2 y2 x3 y3 rarc
+	x3 y3 x4 y4 rarc
+	x4 y4 x1 y1 rarc
+	x1 y1 x2 y2 rarc
+	closepath
+	} stopped
+	 {x1 y1 x2 y2 x3 y3 x4 y4 newpath moveto lineto lineto lineto closepath} if
+	cleartomark
+	} bind def
+/C { 
+	grestore
+	gsave
+	R 
+	clip
+	setCurrentScreen
+} bind def
+/CP { 
+	grestore
+	gsave
+	Y 
+	clip
+	setCurrentScreen
+} bind def
+	/FMpointsize FMLOCAL
+/F { 
+	FMfonts exch get
+	FMpointsize scalefont
+	setfont
+	} bind def
+/Q { 
+	/FMpointsize exch def
+	F 
+	} bind def
+/T { 
+	moveto show
+	} bind def
+/RF { 
+	rotate
+	0 ne {-1 1 scale} if
+	} bind def
+/TF { 
+	gsave
+	moveto 
+	RF
+	show
+	grestore
+	} bind def
+/P { 
+	moveto
+	0 32 3 2 roll widthshow
+	} bind def
+/PF { 
+	gsave
+	moveto 
+	RF
+	0 32 3 2 roll widthshow
+	grestore
+	} bind def
+/S { 
+	moveto
+	0 exch ashow
+	} bind def
+/SF { 
+	gsave
+	moveto
+	RF
+	0 exch ashow
+	grestore
+	} bind def
+/B { 
+	moveto
+	0 32 4 2 roll 0 exch awidthshow
+	} bind def
+/BF { 
+	gsave
+	moveto
+	RF
+	0 32 4 2 roll 0 exch awidthshow
+	grestore
+	} bind def
+/G { 
+	gsave
+	newpath
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath 
+	PFill fill
+	grestore
+	} bind def
+/Gstrk {
+	savematrix
+    newpath
+    2 index 2 div add exch 3 index 2 div sub exch 
+    normalize 2 index 2 div sub exch 3 index 2 div add exch 
+    translate
+    scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    restorematrix
+    currentlinewidth exch setlinewidth PStroke setlinewidth
+    } bind def
+/Gclip { 
+	newpath
+	savematrix
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath 
+	clip newpath
+	restorematrix
+	} bind def
+/GG { 
+	gsave
+	newpath
+	normalize translate 0.0 0.0 moveto 
+	rotate 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath
+	PFill
+	fill
+	grestore
+	} bind def
+/GGclip { 
+	savematrix
+	newpath
+    normalize translate 0.0 0.0 moveto 
+    rotate 
+    dnormalize scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    closepath
+	clip newpath
+	restorematrix
+	} bind def
+/GGstrk { 
+	savematrix
+    newpath
+    normalize translate 0.0 0.0 moveto 
+    rotate 
+    dnormalize scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    closepath 
+	restorematrix
+    currentlinewidth exch setlinewidth PStroke setlinewidth
+	} bind def
+/A { 
+	gsave
+	savematrix
+	newpath
+	2 index 2 div add exch 3 index 2 div sub exch 
+	normalize 2 index 2 div sub exch 3 index 2 div add exch 
+	translate 
+	scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	restorematrix
+	PStroke
+	grestore
+	} bind def
+/Aclip {
+	newpath
+	savematrix
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath 
+	strokepath clip newpath
+	restorematrix
+} bind def
+/Astrk {
+	Gstrk
+} bind def
+/AA { 
+	gsave
+	savematrix
+	newpath
+	
+	3 index 2 div add exch 4 index 2 div sub exch 
+	
+	normalize 3 index 2 div sub exch 4 index 2 div add exch
+	translate 
+	rotate 
+	scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	restorematrix
+	PStroke
+	grestore
+	} bind def
+/AAclip {
+	savematrix
+	newpath
+    normalize translate 0.0 0.0 moveto 
+    rotate 
+    dnormalize scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    closepath
+	strokepath clip newpath
+	restorematrix
+} bind def
+/AAstrk {
+	GGstrk
+} bind def
+	/x FMLOCAL
+	/y FMLOCAL
+	/w FMLOCAL
+	/h FMLOCAL
+	/xx FMLOCAL
+	/yy FMLOCAL
+	/ww FMLOCAL
+	/hh FMLOCAL
+	/FMsaveobject FMLOCAL
+	/FMoptop FMLOCAL
+	/FMdicttop FMLOCAL
+/BEGINPRINTCODE { 
+	/FMdicttop countdictstack 1 add def 
+	/FMoptop count 7 sub def 
+	/FMsaveobject save def
+	userdict begin 
+	/showpage {} def 
+	FMNORMALIZEGRAPHICS 
+	3 index neg 3 index neg translate
+	} bind def
+/ENDPRINTCODE {
+	count -1 FMoptop {pop pop} for 
+	countdictstack -1 FMdicttop {pop end} for 
+	FMsaveobject restore 
+	} bind def
+/gn { 
+	0 
+	{	46 mul 
+		cf read pop 
+		32 sub 
+		dup 46 lt {exit} if 
+		46 sub add 
+		} loop
+	add 
+	} bind def
+	/str FMLOCAL
+/cfs { 
+	/str sl string def 
+	0 1 sl 1 sub {str exch val put} for 
+	str def 
+	} bind def
+/ic [ 
+	0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0223
+	0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0223
+	0
+	{0 hx} {1 hx} {2 hx} {3 hx} {4 hx} {5 hx} {6 hx} {7 hx} {8 hx} {9 hx}
+	{10 hx} {11 hx} {12 hx} {13 hx} {14 hx} {15 hx} {16 hx} {17 hx} {18 hx}
+	{19 hx} {gn hx} {0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12}
+	{13} {14} {15} {16} {17} {18} {19} {gn} {0 wh} {1 wh} {2 wh} {3 wh}
+	{4 wh} {5 wh} {6 wh} {7 wh} {8 wh} {9 wh} {10 wh} {11 wh} {12 wh}
+	{13 wh} {14 wh} {gn wh} {0 bl} {1 bl} {2 bl} {3 bl} {4 bl} {5 bl} {6 bl}
+	{7 bl} {8 bl} {9 bl} {10 bl} {11 bl} {12 bl} {13 bl} {14 bl} {gn bl}
+	{0 fl} {1 fl} {2 fl} {3 fl} {4 fl} {5 fl} {6 fl} {7 fl} {8 fl} {9 fl}
+	{10 fl} {11 fl} {12 fl} {13 fl} {14 fl} {gn fl}
+	] def
+	/sl FMLOCAL
+	/val FMLOCAL
+	/ws FMLOCAL
+	/im FMLOCAL
+	/bs FMLOCAL
+	/cs FMLOCAL
+	/len FMLOCAL
+	/pos FMLOCAL
+/ms { 
+	/sl exch def 
+	/val 255 def 
+	/ws cfs 
+	/im cfs 
+	/val 0 def 
+	/bs cfs 
+	/cs cfs 
+	} bind def
+400 ms 
+/ip { 
+	is 
+	0 
+	cf cs readline pop 
+	{	ic exch get exec 
+		add 
+		} forall 
+	pop 
+	
+	} bind def
+/rip { 
+	   
+	  
+	  bis ris copy pop 
+      is
+      0
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+	  pop pop 
+	  ris gis copy pop 
+	  dup is exch 
+	  
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+	  pop pop
+	  gis bis copy pop 
+	  dup add is exch 
+	  
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+      pop 
+      
+      } bind def
+/wh { 
+	/len exch def 
+	/pos exch def 
+	ws 0 len getinterval im pos len getinterval copy pop
+	pos len 
+	} bind def
+/bl { 
+	/len exch def 
+	/pos exch def 
+	bs 0 len getinterval im pos len getinterval copy pop
+	pos len 
+	} bind def
+/s1 1 string def
+/fl { 
+	/len exch def 
+	/pos exch def 
+	/val cf s1 readhexstring pop 0 get def
+	pos 1 pos len add 1 sub {im exch val put} for
+	pos len 
+	} bind def
+/hx { 
+	3 copy getinterval 
+	cf exch readhexstring pop pop 
+	} bind def
+	/h FMLOCAL
+	/w FMLOCAL
+	/d FMLOCAL
+	/lb FMLOCAL
+	/bitmapsave FMLOCAL
+	/is FMLOCAL
+	/cf FMLOCAL
+/wbytes { 
+      dup dup
+      24 eq { pop pop 3 mul }
+      { 8 eq {pop} {1 eq {7 add 8 idiv} {3 add 4 idiv} ifelse} ifelse } ifelse
+	} bind def
+/BEGINBITMAPBWc { 
+	1 {} COMMONBITMAPc
+	} bind def
+/BEGINBITMAPGRAYc { 
+	8 {} COMMONBITMAPc
+	} bind def
+/BEGINBITMAP2BITc { 
+	2 {} COMMONBITMAPc
+	} bind def
+/COMMONBITMAPc { 
+		 
+	/r exch def
+	/d exch def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+	/bitmapsave save def 
+	r                    
+	/is im 0 lb getinterval def 
+	ws 0 lb getinterval is copy pop 
+	/cf currentfile def 
+	w h d [w 0 0 h neg 0 h] 
+	{ip} image 
+	bitmapsave restore 
+	grestore
+	} bind def
+/BEGINBITMAPBW { 
+	1 {} COMMONBITMAP
+	} bind def
+/BEGINBITMAPGRAY { 
+	8 {} COMMONBITMAP
+	} bind def
+/BEGINBITMAP2BIT { 
+	2 {} COMMONBITMAP
+	} bind def
+/COMMONBITMAP { 
+	/r exch def
+	/d exch def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/bitmapsave save def 
+	r                    
+	/is w d wbytes string def
+	/cf currentfile def 
+	w h d [w 0 0 h neg 0 h] 
+	{cf is readhexstring pop} image
+	bitmapsave restore 
+	grestore
+	} bind def
+/ngrayt 256 array def
+/nredt 256 array def
+/nbluet 256 array def
+/ngreent 256 array def
+	/gryt FMLOCAL
+	/blut FMLOCAL
+	/grnt FMLOCAL
+	/redt FMLOCAL
+	/indx FMLOCAL
+	/cynu FMLOCAL
+	/magu FMLOCAL
+	/yelu FMLOCAL
+	/k FMLOCAL
+	/u FMLOCAL
+FMLevel1 {
+/colorsetup {
+	currentcolortransfer
+	/gryt exch def
+	/blut exch def
+	/grnt exch def
+	/redt exch def
+	0 1 255 {
+		/indx exch def
+		/cynu 1 red indx get 255 div sub def
+		/magu 1 green indx get 255 div sub def
+		/yelu 1 blue indx get 255 div sub def
+		/k cynu magu min yelu min def
+		/u k currentundercolorremoval exec def
+%		/u 0 def
+		nredt indx 1 0 cynu u sub max sub redt exec put
+		ngreent indx 1 0 magu u sub max sub grnt exec put
+		nbluet indx 1 0 yelu u sub max sub blut exec put
+		ngrayt indx 1 k currentblackgeneration exec sub gryt exec put
+	} for
+	{255 mul cvi nredt exch get}
+	{255 mul cvi ngreent exch get}
+	{255 mul cvi nbluet exch get}
+	{255 mul cvi ngrayt exch get}
+	setcolortransfer
+	{pop 0} setundercolorremoval
+	{} setblackgeneration
+	} bind def
+}
+{
+/colorSetup2 {
+	[ /Indexed /DeviceRGB 255 
+		{dup red exch get 255 div 
+		 exch dup green exch get 255 div 
+		 exch blue exch get 255 div}
+	] setcolorspace
+} bind def
+} ifelse
+	/tran FMLOCAL
+/fakecolorsetup {
+	/tran 256 string def
+	0 1 255 {/indx exch def 
+		tran indx
+		red indx get 77 mul
+		green indx get 151 mul
+		blue indx get 28 mul
+		add add 256 idiv put} for
+	currenttransfer
+	{255 mul cvi tran exch get 255.0 div}
+	exch concatprocs settransfer
+} bind def
+/BITMAPCOLOR { 
+	/d 8 def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/bitmapsave save def
+	FMLevel1 {	
+		colorsetup
+		/is w d wbytes string def
+		/cf currentfile def 
+		w h d [w 0 0 h neg 0 h] 
+		{cf is readhexstring pop} {is} {is} true 3 colorimage 
+	} {
+		colorSetup2
+		/is w d wbytes string def
+		/cf currentfile def 
+		7 dict dup begin
+			/ImageType 1 def
+			/Width w def
+			/Height h def
+			/ImageMatrix [w 0 0 h neg 0 h] def
+			/DataSource {cf is readhexstring pop} bind def
+			/BitsPerComponent d def
+			/Decode [0 255] def
+		end image	
+	} ifelse
+	bitmapsave restore 
+	grestore
+	} bind def
+/BITMAPCOLORc { 
+	/d 8 def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+	/bitmapsave save def 
+	FMLevel1 {	
+		colorsetup
+		/is im 0 lb getinterval def 
+		ws 0 lb getinterval is copy pop 
+		/cf currentfile def 
+		w h d [w 0 0 h neg 0 h] 
+		{ip} {is} {is} true 3 colorimage
+	} {
+		colorSetup2
+		/is im 0 lb getinterval def 
+		ws 0 lb getinterval is copy pop 
+		/cf currentfile def 
+		7 dict dup begin
+			/ImageType 1 def
+			/Width w def
+			/Height h def
+			/ImageMatrix [w 0 0 h neg 0 h] def
+			/DataSource {ip} bind def
+			/BitsPerComponent d def
+			/Decode [0 255] def
+		end image	
+	} ifelse
+	bitmapsave restore 
+	grestore
+	} bind def
+/BITMAPTRUECOLORc { 
+	/d 24 def
+        gsave
+ 	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+        /bitmapsave save def 
+        
+	/is im 0 lb getinterval def	
+	/ris im 0 w getinterval def	
+	/gis im w w getinterval def	
+	/bis im w 2 mul w getinterval def 
+        
+        ws 0 lb getinterval is copy pop 
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        {w rip pop ris} {gis} {bis} true 3 colorimage
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPTRUECOLOR { 
+        gsave
+		
+		3 index 2 div add exch	
+		4 index 2 div add exch	
+		translate		
+		rotate			
+		1 index 2 div neg	
+		1 index 2 div neg	
+		translate		
+		scale			
+		/h exch def /w exch def
+        /bitmapsave save def 
+        /is w string def
+        /gis w string def
+        /bis w string def
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        { cf is readhexstring pop } 
+        { cf gis readhexstring pop } 
+        { cf bis readhexstring pop } 
+        true 3 colorimage 
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPTRUEGRAYc { 
+	/d 24 def
+        gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+        /bitmapsave save def 
+        
+	/is im 0 lb getinterval def	
+	/ris im 0 w getinterval def	
+	/gis im w w getinterval def	
+	/bis im w 2 mul w getinterval def 
+        ws 0 lb getinterval is copy pop 
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        {w rip pop ris gis bis w gray} image
+        bitmapsave restore 
+        grestore
+        } bind def
+/ww FMLOCAL
+/r FMLOCAL
+/g FMLOCAL
+/b FMLOCAL
+/i FMLOCAL
+/gray { 
+        /ww exch def
+        /b exch def
+        /g exch def
+        /r exch def
+        0 1 ww 1 sub { /i exch def r i get .299 mul g i get .587 mul
+			b i get .114 mul add add r i 3 -1 roll floor cvi put } for
+        r
+        } bind def
+/BITMAPTRUEGRAY { 
+        gsave
+		
+		3 index 2 div add exch	
+		4 index 2 div add exch	
+		translate		
+		rotate			
+		1 index 2 div neg	
+		1 index 2 div neg	
+		translate		
+		scale			
+		/h exch def /w exch def
+        /bitmapsave save def 
+        /is w string def
+        /gis w string def
+        /bis w string def
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        { cf is readhexstring pop 
+          cf gis readhexstring pop 
+          cf bis readhexstring pop w gray}  image
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPGRAY { 
+	8 {fakecolorsetup} COMMONBITMAP
+	} bind def
+/BITMAPGRAYc { 
+	8 {fakecolorsetup} COMMONBITMAPc
+	} bind def
+/ENDBITMAP {
+	} bind def
+end 
+	/ALDsave FMLOCAL
+	/ALDmatrix matrix def ALDmatrix currentmatrix pop
+/StartALD {
+	/ALDsave save def
+	 savematrix
+	 ALDmatrix setmatrix
+	} bind def
+/InALD {
+	 restorematrix
+	} bind def
+/DoneALD {
+	 ALDsave restore
+	} bind def
+/I { setdash } bind def
+/J { [] 0 setdash } bind def
+%%EndProlog
+%%BeginSetup
+(4.0) FMVERSION
+1 1 0 0 595.3 841.9 0 1 16 FMDOCUMENT
+0 0 /Times-Bold FMFONTDEFINE
+1 0 /Times-Italic FMFONTDEFINE
+2 0 /Times-Roman FMFONTDEFINE
+3 0 /Helvetica-Bold FMFONTDEFINE
+4 0 /Courier FMFONTDEFINE
+5 0 /Courier-Bold FMFONTDEFINE
+6 0 /Courier-Oblique FMFONTDEFINE
+32 FMFILLS
+0 0 FMFILL
+1 0.1 FMFILL
+2 0.3 FMFILL
+3 0.5 FMFILL
+4 0.7 FMFILL
+5 0.9 FMFILL
+6 0.97 FMFILL
+7 1 FMFILL
+8 <0f1e3c78f0e1c387> FMFILL
+9 <0f87c3e1f0783c1e> FMFILL
+10 <cccccccccccccccc> FMFILL
+11 <ffff0000ffff0000> FMFILL
+12 <8142241818244281> FMFILL
+13 <03060c183060c081> FMFILL
+14 <8040201008040201> FMFILL
+16 1 FMFILL
+17 0.9 FMFILL
+18 0.7 FMFILL
+19 0.5 FMFILL
+20 0.3 FMFILL
+21 0.1 FMFILL
+22 0.03 FMFILL
+23 0 FMFILL
+24 <f0e1c3870f1e3c78> FMFILL
+25 <f0783c1e0f87c3e1> FMFILL
+26 <3333333333333333> FMFILL
+27 <0000ffff0000ffff> FMFILL
+28 <7ebddbe7e7dbbd7e> FMFILL
+29 <fcf9f3e7cf9f3f7e> FMFILL
+30 <7fbfdfeff7fbfdfe> FMFILL
+%%EndSetup
+%%Page: "1" 1
+%%BeginPaperSize: A4
+%%EndPaperSize
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+J
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+113.4 694.5 544.26 739.85 R
+7 X
+0 0 0 1 0 0 0 K
+V
+0 24 Q
+0 X
+(Report on inter) 113.4 699.54 T
+(-language working in ANDF) 271.15 699.54 T
+255.13 433.71 544.26 473.39 R
+7 X
+V
+1 10 Q
+0 X
+(The status of this document is \322WORKING\323 if signed only by its) 255.13 466.73 T
+(author\050s\051; it is \322ISSUED\323 if signed by the W) 255.13 454.73 T
+(orkpackage Manager; it is) 433.65 454.73 T
+(\322DELIVERED\323 if signed by the Pr) 255.13 442.73 T
+(oject Dir) 395.59 442.73 T
+(ector) 431.05 442.73 T
+(.) 450.49 442.73 T
+255.13 615.13 544.26 643.47 R
+7 X
+V
+2 12 Q
+0 X
+(T) 255.13 635.47 T
+(ony Mann, Simon Green) 261.62 635.47 T
+(________________________) 396.86 635.47 T
+(Harlequin Ltd.) 255.13 621.47 T
+255.13 547.09 544.26 586.78 R
+7 X
+V
+0 X
+(Jor) 255.13 578.78 T
+(gen Bundgaard) 269.58 578.78 T
+(________________________) 396.86 578.78 T
+(DDC International) 255.13 564.78 T
+255.13 501.74 544.26 530.09 R
+7 X
+V
+0 X
+(Gianluigi Castelli) 255.13 522.09 T
+(________________________) 396.86 522.09 T
+(Project Director) 255.13 508.09 T
+113.4 615.13 226.78 643.47 R
+7 X
+V
+0 F
+0 X
+(W) 113.4 635.47 T
+(ritten by:) 125.18 635.47 T
+113.4 558.43 226.78 586.78 R
+7 X
+V
+0 X
+(Issued by:) 113.4 578.78 T
+113.4 501.74 226.78 530.09 R
+7 X
+V
+0 X
+(Deliver) 113.4 522.09 T
+(ed by:) 150.5 522.09 T
+113.4 388.36 226.78 416.7 R
+7 X
+V
+0 X
+-0.19 (Pr) 113.4 408.7 P
+-0.19 (oject deliverable id:) 125.84 408.7 P
+255.13 388.36 544.26 416.7 R
+7 X
+V
+2 F
+0 X
+(TR4.2.3-01) 255.13 408.7 T
+113.4 331.66 226.78 360.01 R
+7 X
+V
+0 F
+0 X
+(Document code:) 113.4 352.01 T
+113.4 274.97 226.78 303.32 R
+7 X
+V
+0 X
+(Date of \336rst issue:) 113.4 295.32 T
+(Date of last issue:) 113.4 281.32 T
+113.4 218.28 226.78 246.62 R
+7 X
+V
+0 X
+(A) 113.4 238.62 T
+(vailability:) 121.17 238.62 T
+255.13 331.66 544.26 360.01 R
+7 X
+V
+2 F
+0 X
+(Harlequin GLUE4.2.3 - 01) 255.13 352.01 T
+255.13 274.97 544.26 303.32 R
+7 X
+V
+0 X
+(1995-01-24) 255.13 295.32 T
+(1995-01-24) 255.13 281.32 T
+255.13 218.28 544.26 246.62 R
+7 X
+V
+0 X
+(Con\336dential) 255.13 238.62 T
+255.13 155.91 544.26 189.93 R
+7 X
+V
+1 10 Q
+0 X
+-0.12 (The contents of this document ar) 255.13 183.26 P
+-0.12 (e con\336dential and subject to copyrights) 384.99 183.26 P
+(pr) 255.13 171.26 T
+(otection. Any infringement will be pr) 263.65 171.26 T
+(osecuted by law) 410.5 171.26 T
+(.) 473.64 171.26 T
+198.43 59.54 544.26 133.24 R
+7 X
+V
+1 0 1 0 0 1 0 K
+0 93 Q
+0 X
+1 0 1 0 0 1 0 K
+(omi/glue) 198.43 71.24 T
+0 0 0 1 0 0 0 K
+5.68 19.85 102.06 813.55 R
+3 X
+0 0 0 1 0 0 0 K
+V
+0.5 H
+2 Z
+0 X
+N
+113.4 751.19 544.26 790.87 R
+7 X
+V
+1 0 1 0 0 1 0 K
+0 0 0 1 0 0 0 K
+0 36 Q
+0 X
+(ESPRIT PROJECT 6062) 116.53 736.07 T
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "1" 1
+%%Page: "1" 2
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+3 8 Q
+(ESPRIT Project 6062 OMI/GLUE - D4.2.3) 63.65 766.62 T
+(Report on inter-language working in ANDF) 369.86 766.62 T
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+0 12 Q
+(CHANGE HIST) 63.65 716.95 T
+(OR) 147.78 716.95 T
+(Y) 165.36 716.95 T
+(This is the \336rst version.) 63.65 676.95 T
+FMENDPAGE
+%%EndPage: "1" 2
+%%Page: "2" 3
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+3 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(ESPRIT Project 6062 OMI/GLUE - D4.2.3) 63.65 766.62 T
+(Report on inter-language working in ANDF) 369.86 766.62 T
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+N
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+FMENDPAGE
+%%EndPage: "2" 3
+%%Page: "1" 4
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+3 8 Q
+(ESPRIT Project 6062 OMI/GLUE - D4.2.3) 63.65 766.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Report on inter-language working in ANDF) 369.86 766.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+3 10 Q
+(1) 526.09 84.9 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(1.) 63.65 736.95 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Purpose) 90.65 736.95 T
+(1) 144.65 736.95 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(2.) 63.65 716.95 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Executive Summary) 90.65 716.95 T
+(1) 206.3 716.95 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(3.) 63.65 696.95 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(How to Mix Components in Multiple Languages) 90.65 696.95 T
+(2) 349.33 696.95 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+2 11 Q
+(3.1) 90.65 683.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(What is a Software Component?) 117.65 683.62 T
+(2) 271.63 683.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(3.2) 90.65 670.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Inter) 117.65 670.62 T
+(-language Semantics) 138.2 670.62 T
+(3) 240.54 670.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(3.3) 90.65 657.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Potential Problems) 117.65 657.62 T
+(4) 212.07 657.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+2 10 Q
+(3.3.1) 117.65 645.29 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(API Limitations) 144.65 645.29 T
+(4) 219.38 645.29 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(3.3.2) 117.65 633.29 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(ABI Limitations) 144.65 633.29 T
+(4) 220.49 633.29 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(3.3.3) 117.65 621.29 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Component Behaviour Assumptions) 144.65 621.29 T
+(5) 300.21 621.29 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+2 11 Q
+(3.4) 90.65 608.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Guidelines and Constraints) 117.65 608.62 T
+(5) 247.81 608.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+2 10 Q
+(3.4.1) 117.65 596.29 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Language Implementor Guidelines) 144.65 596.29 T
+(6) 294.07 596.29 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(3.4.2) 117.65 584.29 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Component Designer Guidelines) 144.65 584.29 T
+(6) 285.75 584.29 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(3.4.3) 117.65 572.29 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Systems with Multiple Garbage Collectors) 144.65 572.29 T
+(6) 325.2 572.29 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(3.4.4) 117.65 560.29 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Mixed Systems with a Single Garbage Collector) 144.65 560.29 T
+(7) 347.97 560.29 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(4.) 63.65 540.95 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Signi\336cant Featur) 90.65 540.95 T
+(es of Dylan) 182.77 540.95 T
+(8) 251.44 540.95 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+2 11 Q
+(4.1) 90.65 527.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Dynamic T) 117.65 527.62 T
+(yping) 166.68 527.62 T
+(8) 202.73 527.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(4.2) 90.65 514.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Data Abstraction) 117.65 514.62 T
+(8) 203.49 514.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(4.3) 90.65 501.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(First Class Functions) 117.65 501.62 T
+(9) 221.55 501.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(4.4) 90.65 488.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Memory Management) 117.65 488.62 T
+(10) 226.71 488.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(4.5) 90.65 475.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Dynamic Environment) 117.65 475.62 T
+(1) 229.17 475.62 T
+(1) 234.26 475.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(5.) 63.65 455.95 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Status of the Dylan Pr) 90.65 455.95 T
+(oducer) 203.76 455.95 T
+(12) 251.09 455.95 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+2 11 Q
+(5.1) 90.65 442.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(The Static Bootstrap) 117.65 442.62 T
+(12) 219.09 442.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(5.2) 90.65 429.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Use of the ANDF Extensions) 117.65 429.62 T
+(13) 257.58 429.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(5.3) 90.65 416.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Garbage Collector Implementation) 117.65 416.62 T
+(14) 282.01 416.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(6.) 63.65 396.95 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Details of the Dylan For) 90.65 396.95 T
+(eign Language Interface) 213.08 396.95 T
+(14) 349.74 396.95 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+2 11 Q
+(6.1) 90.65 383.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Interface Speci\336cation) 117.65 383.62 T
+(14) 227.92 383.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(6.2) 90.65 370.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Architecture Neutrality) 117.65 370.62 T
+(15) 230.98 370.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(6.3) 90.65 357.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Calling Functions Across the FLI) 117.65 357.62 T
+(15) 275.93 357.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(6.4) 90.65 344.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Mapping Data Across the FLI) 117.65 344.62 T
+(16) 260.63 344.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(6.5) 90.65 331.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Maintaining the Dynamic Environment) 117.65 331.62 T
+(18) 301.89 331.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(6.6) 90.65 318.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Garbage Collection) 117.65 318.62 T
+(18) 214.49 318.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(6.7) 90.65 305.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(An Example Interface) 117.65 305.62 T
+(19) 225.78 305.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+2 10 Q
+(6.7.1) 117.65 293.29 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(C Header File) 144.65 293.29 T
+(19) 210.75 293.29 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(6.7.2) 117.65 281.29 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Dylan Interface Speci\336cation) 144.65 281.29 T
+(19) 271.84 281.29 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(6.7.3) 117.65 269.29 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Dylan Primitive Interface) 144.65 269.29 T
+(20) 256.85 269.29 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(6.7.4) 117.65 257.29 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Glossary of Low-Level Functions and Primitives) 144.65 257.29 T
+(21) 350.47 257.29 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(7.) 63.65 237.95 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Conclusions) 90.65 237.95 T
+(21) 164.66 237.95 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(8.) 63.65 217.95 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Refer) 90.65 217.95 T
+(ences) 119.08 217.95 T
+(23) 158.4 217.95 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "1" 4
+%%Page: "2" 5
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+3 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(ESPRIT Project 6062 OMI/GLUE - D4.2.3) 63.65 766.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Report on inter-language working in ANDF) 369.86 766.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+N
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+3 10 Q
+(2) 63.65 84.9 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "2" 5
+%%Page: "1" 6
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+3 8 Q
+(ESPRIT Project 6062 OMI/GLUE - D4.2.3) 63.65 766.62 T
+(Report on inter-language working in ANDF) 369.86 766.62 T
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+3 10 Q
+(1) 526.09 84.9 T
+3 15 Q
+(1.) 63.65 734.95 T
+(Purpose) 90.65 734.95 T
+2 11 Q
+0.28 0.1 (The software development process is evolving due to ever increasing complexity and commercial pres-) 63.65 708.62 B
+-0.21 (sures. One common trend is to develop software as reusable components, which are designed to inter) 63.65 695.62 P
+-0.21 (-oper-) 504.77 695.62 P
+-0.22 (ate with other components. Dylan [DIRM94], a dynamic, object oriented language, is speci\336cally designed) 63.65 682.62 P
+(with this trend in mind.) 63.65 669.62 T
+0.28 0.16 (Dylan, like other high level languages, provides abstractions of programming concepts which must be) 63.65 650.62 B
+0.25 (made explicit in the more traditional languages at which ANDF is primarily aimed \050such as C\051. The com-) 63.65 637.62 P
+0.04 (pilation of some of these abstractions depends upon the consistent use of conventions which must be care-) 63.65 624.62 P
+0.28 0.01 (fully chosen by the implementor for ef) 63.65 611.62 B
+0.28 0.01 (f) 235.33 611.62 B
+0.28 0.01 (iciency) 238.4 611.62 B
+0.28 0.01 (. Features which require such conventions for their support) 269.52 611.62 B
+(include automatic memory management \050garbage collection\051, exception handling and dynamic functions.) 63.65 598.62 T
+0.28 0.13 (Components written in other languages will be unaware of any Dylan-specif) 63.65 573.62 B
+0.28 0.13 (ic conventions, so a Dylan) 411.01 573.62 B
+-0.07 (implementation which supports mixed-language component integration must be tolerant of unco-operative) 63.65 560.62 P
+(behaviour across component boundaries.) 63.65 547.62 T
+0.28 0.04 (Harlequin are in the process of developing a Dylan to ANDF compiler under task 4.2 of the OMI/GLUE) 63.65 522.62 B
+0.28 0.09 (project. ANDF is specif) 63.65 509.62 B
+0.28 0.09 (ically designed as a format which can represent the partially compiled output of) 170.92 509.62 B
+0.28 0.17 (many dif) 63.65 496.62 B
+0.28 0.17 (ferent languages, such that the compilation process can be completed on many dif) 104.47 496.62 B
+0.28 0.17 (ferent plat-) 481.14 496.62 B
+0.28 0.01 (forms. However) 63.65 483.62 B
+0.28 0.01 (, in order to compile some of Dylan\325) 135.16 483.62 B
+0.28 0.01 (s conventions ef) 297.7 483.62 B
+0.28 0.01 (f) 369.78 483.62 B
+0.28 0.01 (iciently) 372.85 483.62 B
+0.28 0.01 (, we have found it necessary) 405.25 483.62 B
+(to extend ANDF) 63.65 470.62 T
+(.) 136.09 470.62 T
+0.28 0.02 (The algorithms and ANDF extensions used by the producer to implement the Dylan-specif) 63.65 445.62 B
+0.28 0.02 (ic conventions) 467.23 445.62 B
+-0.24 (were described in [G4.2.2a],[G4.2.2b], but the analysis was limited to homogeneous Dylan applications. In) 63.65 432.62 P
+0.28 0.08 (this document we identify the problems that may be encountered when a component written in Dylan is) 63.65 419.62 B
+0.28 0.07 (combined via ANDF with a component written in another language. W) 63.65 406.62 B
+0.28 0.07 (e look at solutions to those prob-) 383.43 406.62 B
+0.28 0.09 (lems, and of) 63.65 393.62 B
+0.28 0.09 (fer guidelines for language implementation in general when multiple-language components) 119.22 393.62 B
+0.28 0.07 (must be supported. Finally) 63.65 380.62 B
+0.28 0.07 (, we examine the cost of those solutions and guidelines when implemented in) 182.97 380.62 B
+(ANDF) 63.65 367.62 T
+(.) 92.71 367.62 T
+0.28 0.03 (A serial execution model is assumed throughout the document. Extensions to these techniques to support) 63.65 342.62 B
+(multiple threads are being examined in task 5.7.) 63.65 329.62 T
+1 F
+(This work was partially funded by the Commission of the Eur) 63.65 304.62 T
+(opean Communities.) 333.37 304.62 T
+3 15 Q
+(2.) 63.65 265.95 T
+(Executive Summary) 90.65 265.95 T
+2 11 Q
+-0.05 (Harlequin\325) 63.65 239.62 P
+-0.05 (s Dylan producer uses implementation techniques which are not used by producers for the other) 110.69 239.62 P
+0.11 (languages under development in the GLUE project. These techniques are designed to be used consistently) 63.65 226.62 P
+0.2 (by the producer to provide services which are not available with more traditional languages. Garbage col-) 63.65 213.62 P
+0.28 0.01 (lection, for example, is a Dylan service which requires a global understanding of a running application in) 63.65 200.62 B
+(order to determine the liveness of data and collect unreferenced objects.) 63.65 187.62 T
+-0.17 (Dylan is unlikely to be used as the only language for building any application, however) 63.65 162.62 P
+-0.17 (. It is therefore vital) 445.27 162.62 P
+0.28 0.04 (for the commercial success of Harlequin\325) 63.65 149.62 B
+0.28 0.04 (s Dylan compiler that it is able to support inter) 247.81 149.62 B
+0.28 0.04 (-operability with) 457.08 149.62 B
+(other languages.) 63.65 136.62 T
+FMENDPAGE
+%%EndPage: "1" 6
+%%Page: "2" 7
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+3 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(ESPRIT Project 6062 OMI/GLUE - D4.2.3) 63.65 766.62 T
+(Report on inter-language working in ANDF) 369.86 766.62 T
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+N
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+3 10 Q
+(2) 63.65 84.9 T
+2 11 Q
+0.28 0.02 (If Dylan producer output is naively linked with ANDF from another source, then the producer) 63.65 737.62 B
+0.28 0.02 (\325) 483.83 737.62 B
+0.28 0.02 (s expecta-) 486.91 737.62 B
+0.15 (tion of consistency will not be met. Garbage collection might be expected to fail, for example, as the live-) 63.65 724.62 P
+0.28 0.22 (ness of objects is a global property) 63.65 711.62 B
+0.28 0.22 (, and yet only functions created by the Dylan producer will be co-) 225.08 711.62 B
+0.28 0.09 (operating with the garbage collector) 63.65 698.62 B
+0.28 0.09 (. Even function calls might be expected to fail, as our Dylan imple-) 226.39 698.62 B
+0.01 (mentation depends upon consistent use of an ar) 63.65 685.62 P
+0.01 (gument passing convention which is not used by other pro-) 271.56 685.62 P
+(ducers.) 63.65 672.62 T
+-0.08 (In this document, we show that the techniques we have developed to support homogeneous Dylan applica-) 63.65 647.62 P
+0.28 0.01 (tions can be readily extended to support heterogeneous, mixed-language applications, provided that some) 63.65 634.62 B
+0.28 0.06 (care is taken by the Dylan producer when generating code which will interface with \322foreign\323 parts. W) 63.65 621.62 B
+0.28 0.06 (e) 526.76 621.62 B
+0.28 0.1 (present guidelines for inter) 63.65 608.62 B
+0.28 0.1 (-operability between mixed-language components in general. The guidelines) 185.27 608.62 B
+0.28 0.02 (restrict the types of conventions that complex components may depend upon, so that inter) 63.65 595.62 B
+0.28 0.02 (-operation with) 463.56 595.62 B
+0.28 0.09 (other components which do not follow the conventions is still possible. The guidelines impose minimal) 63.65 582.62 B
+(runtime cost, except at the interface boundaries of complex components.) 63.65 569.62 T
+0.28 0.11 (W) 63.65 544.62 B
+0.28 0.11 (e describe the details of the interface that makes inter) 73.26 544.62 B
+0.28 0.11 (-operation possible. The implementation of this) 316.11 544.62 B
+0.18 (interface is independent of the output format of the compiler) 63.65 531.62 P
+0.18 (, and hence can be described at a higher level) 330.89 531.62 P
+0.28 0.06 (than ANDF) 63.65 518.62 B
+0.28 0.06 (. W) 115.21 518.62 B
+0.28 0.06 (e choose to describe it in terms of primitive extensions to Dylan, and we show how these) 130.67 518.62 B
+0.28 0.06 (primitives are mapped onto ANDF) 63.65 505.62 B
+0.28 0.06 (. Since ANDF is able to implement this interface in full, we conclude) 219.18 505.62 B
+-0.03 (that) 63.65 492.62 P
+1 F
+-0.03 (ANDF pr) 82.86 492.62 P
+-0.03 (esents no obstacles to inter) 123.67 492.62 P
+-0.03 (-operability) 242.48 492.62 P
+2 F
+-0.03 (. Indeed, because of it\325) 293.71 492.62 P
+-0.03 (s architecture neutrality) 393.16 492.62 P
+-0.03 (, ANDF) 496.24 492.62 P
+(is a signi\336cant aid to inter) 63.65 479.62 T
+(-operability) 177.4 479.62 T
+(.) 228.01 479.62 T
+0.16 (Not all inter) 63.65 454.62 P
+0.16 (-language interfacing problems can be solved with this model, however) 116.9 454.62 P
+0.16 (. There are some com-) 432.36 454.62 P
+-0 (plexities related to exception handling and unusual control \337ow which have no obvious solution - either in) 63.65 441.62 P
+0.28 0.12 (ANDF or in native code. It is hoped that by documenting the existence of these problems they will not) 63.65 428.62 B
+(prove to be a signi\336cant obstacle to inter) 63.65 415.62 T
+(-operability) 242.16 415.62 T
+(.) 292.77 415.62 T
+0.05 (W) 63.65 390.62 P
+0.05 (e have tested calling-out across simple interfaces from Dylan to C using the described techniques with a) 73.15 390.62 P
+0.28 0 (low-level interface description. These tests constituted part of Harlequin\325) 63.65 377.62 B
+0.28 0 (s demonstration at the OMI con-) 386.97 377.62 B
+0.28 0.02 (ference in Dublin \0507 - 9 November 1994\051. The work to support high-level interface descriptions and call-) 63.65 364.62 B
+0.28 0.03 (ing-in from C to Dylan is still ongoing, as is the Dylan standardization process on which it depends. The) 63.65 351.62 B
+0.28 0.11 (implementation techniques required to support this work in ANDF are now in place, and the remaining) 63.65 338.62 B
+0.28 0.02 (work is mostly limited to implementing macro support for the Dylan extensions to support the high-level) 63.65 325.62 B
+(interface.) 63.65 312.62 T
+3 15 Q
+(3.) 63.65 273.95 T
+(How to Mix Components in Multiple Languages) 90.65 273.95 T
+3 12 Q
+(3.1) 63.65 238.95 T
+(What is a Software Component?) 90.65 238.95 T
+2 11 Q
+0.09 (In the most general sense, a) 63.65 221.62 P
+1 F
+0.09 (component) 188.49 221.62 P
+2 F
+0.09 ( is a replaceable, reusable unit of software. A library is an example) 236.76 221.62 P
+-0.26 (of a component; it provides functionality which can be used in many contexts, and it may be substituted for) 63.65 208.62 P
+0.28 0.01 (another version. Components must have a well-def) 63.65 195.62 B
+0.28 0.01 (ined interface, and in a good component-based design,) 289.24 195.62 B
+(each of the components will of) 63.65 182.62 T
+(fer behaviour which is orthogonal to the others in the set.) 199.4 182.62 T
+0.28 0.13 (Components are bound together by some means. In the case of a library) 63.65 157.62 B
+0.28 0.13 (, the binding is performed by a) 390.76 157.62 B
+0.28 0.07 (linker) 63.65 144.62 B
+0.28 0.07 (, to form a single executable or process. Components can be bound together by other means. Unix) 89.31 144.62 B
+0.28 0.02 (utilities interconnected via pipes, OLE parts interconnected graphically under W) 63.65 131.62 B
+0.28 0.02 (indows and network ser-) 421.89 131.62 B
+(vices via RPC are all examples of components with their binding mechanisms.) 63.65 118.62 T
+FMENDPAGE
+%%EndPage: "2" 7
+%%Page: "3" 8
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+3 8 Q
+(ESPRIT Project 6062 OMI/GLUE - D4.2.3) 63.65 766.62 T
+(Report on inter-language working in ANDF) 369.86 766.62 T
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+3 10 Q
+(3) 526.09 84.9 T
+2 11 Q
+0.28 0.12 (For the purposes of this document, we particularly focus on ANDF) 63.65 737.62 B
+1 F
+0.28 0.12 (capsules) 372.3 737.62 B
+2 F
+0.28 0.12 ( as components, where the) 411.18 737.62 B
+-0.25 (binding is performed by the ANDF linker) 63.65 724.62 P
+-0.25 (. The discussion can be readily generalized to other types of bind-) 244.83 724.62 P
+0.28 0.08 (ings, though. The guidelines are appropriate for all component models, although the details of the inter-) 63.65 711.62 B
+(faces between components may have to be modi\336ed for other architectures.) 63.65 698.62 T
+3 12 Q
+(3.2) 63.65 664.95 T
+(Inter-language Semantics) 90.65 664.95 T
+2 11 Q
+0.28 0.06 (Since components have interfaces which are well) 63.65 647.62 B
+1 F
+0.28 0.06 (def) 288.22 647.62 B
+0.28 0.06 (ined) 301.23 647.62 B
+2 F
+0.28 0.06 ( in terms of some interface language, they may) 320.42 647.62 B
+0.28 0 (actually be implemented in any programming language provided that the chosen language can) 63.65 634.62 B
+1 F
+0.28 0 (specify) 484.59 634.62 B
+2 F
+0.28 0 ( the) 515.17 634.62 B
+0.28 0.03 (interface in a way which is compatible with the def) 63.65 621.62 B
+0.28 0.03 (inition, and provided that the compiler can) 292.25 621.62 B
+1 F
+0.28 0.03 (implement) 485.57 621.62 B
+2 F
+0.26 (the interface compatibly with the interface rules. In other words, compatibility is required at both the API) 63.65 608.62 P
+(and ABI levels, respectively) 63.65 595.62 T
+(.) 187.57 595.62 T
+0.28 0.21 (Usually) 63.65 570.62 B
+0.28 0.21 (, ordinary programming languages are used as interface languages, and the interface rules are) 98.62 570.62 B
+0.05 (de\336ned by either the ABI of a particular operating system, or the implementation of the programming lan-) 63.65 557.62 P
+-0.06 (guage itself. For many general-purpose operating systems, it is common for the ABI to be de\336ned in terms) 63.65 544.62 P
+0.28 0 (of the C compiler output, since operating systems are commonly implemented in C. For such a system, C) 63.65 531.62 B
+-0.17 (is also typically used as the API. It is clearly possible to implement conforming components in C, since the) 63.65 518.62 P
+-0.09 (interface de\336nition and speci\336cation languages are the same, and the interface rules are de\336ned in terms of) 63.65 505.62 P
+(the compiler) 63.65 492.62 T
+(\325) 119.35 492.62 T
+(s implementation.) 122.41 492.62 T
+0.13 (Some component interfaces will be speci\336able only in the programming language which de\336nes the inter-) 63.65 467.62 P
+0.28 0.04 (face. For example, Dylan permits programmers to design components which can have their functionality) 63.65 454.62 B
+0.28 0.15 (extended by other components by means of high-level Dylan facilities such as inheritance and generic) 63.65 441.62 B
+0.16 (function specialization. It is unlikely that the Dylan API will be speci\336able in any other language, so such) 63.65 428.62 P
+0.2 (components may only be written in Dylan. Components will very probably also require the consistent use) 63.65 415.62 P
+0.19 (of a single Dylan compiler for their correct behaviour because Dylan does not specify how these facilities) 63.65 402.62 P
+-0.09 (are to be implemented in a portable manner) 63.65 389.62 P
+-0.09 (. Interfaces which are speci\336ed in this way are thus not suitable) 253.98 389.62 P
+(for mixed-language binding.) 63.65 376.62 T
+0.28 0.24 (Component interfaces which do not contain high-level language-specif) 63.65 351.62 B
+0.28 0.24 (ic features may potentially be) 393.37 351.62 B
+0.28 0.02 (implementable in many languages. If such an interface is def) 63.65 338.62 B
+0.28 0.02 (ined in a suitable) 334.11 338.62 B
+1 F
+0.28 0.02 (neutral) 413.13 338.62 B
+2 F
+0.28 0.02 ( API and ABI, then) 445.03 338.62 B
+0.28 0.14 (the component may be generated by any compiler which is able to specify the API and conform to the) 63.65 325.62 B
+0.19 (ABI. For the standard general-purpose operating systems, the) 63.65 312.62 P
+1 F
+0.19 (de facto) 338.28 312.62 P
+2 F
+0.19 ( neutral interface is that used by the) 373.61 312.62 P
+0.11 (C compiler provided by the operating system vendor) 63.65 299.62 P
+0.11 (. ANDF itself also describes a neutral interface, but it) 295.72 299.62 P
+-0.07 (is a very low-level language for de\336ning an interface and hence may not be suitable for API de\336nition. W) 63.65 286.62 P
+-0.07 (e) 526.76 286.62 P
+0.28 0.21 (assume here that the neutral interface of relevance is the) 63.65 273.62 B
+1 F
+0.28 0.21 (de facto) 328.65 273.62 B
+2 F
+0.28 0.21 ( C-centric one, and note that ANDF) 365.74 273.62 B
+(installers are designed to be ABI compatible with this.) 63.65 260.62 T
+0.28 0.07 (If we use C as the neutral interface language, then the semantics of inter) 63.65 235.62 B
+0.28 0.07 (-component communication are) 389.28 235.62 B
+-0.01 (de\336ned in terms of C. This implies that the semantics of inter) 63.65 222.62 P
+-0.01 (-) 332.81 222.62 P
+1 F
+-0.01 (language) 336.47 222.62 P
+2 F
+-0.01 ( communication are also de\336ned in) 377.41 222.62 P
+-0.08 (terms of C. This is simply a pragmatic choice, which allows us to concentrate on a single) 63.65 209.62 P
+1 F
+-0.08 (for) 456.67 209.62 P
+-0.08 (eign language) 469.1 209.62 P
+(interface \050FLI\051,) 63.65 196.62 T
+2 F
+(in which) 134.83 196.62 T
+(the C interface de\336nition is speci\336ed in Dylan.) 175.77 196.62 T
+0.11 (Since ANDF is language neutral, at \336rst sight it seems limiting to concentrate on C. However) 63.65 171.62 P
+0.11 (, we are able) 475.74 171.62 P
+0.06 (to interface to components produced by any compiler which also has a C interface. Given suf) 63.65 158.62 P
+0.06 (\336cient ef) 474.35 158.62 P
+0.06 (fort,) 513.01 158.62 P
+0.28 0.22 (it should be possible to interface Dylan directly to other languages, such as C++ or FOR) 63.65 145.62 B
+0.28 0.22 (TRAN. This) 474.42 145.62 B
+-0.15 (would permit the interface to specify any high-level language features which are present in both Dylan and) 63.65 132.62 P
+FMENDPAGE
+%%EndPage: "3" 8
+%%Page: "4" 9
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+3 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(ESPRIT Project 6062 OMI/GLUE - D4.2.3) 63.65 766.62 T
+(Report on inter-language working in ANDF) 369.86 766.62 T
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+N
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+3 10 Q
+(4) 63.65 84.9 T
+2 11 Q
+0.28 0.16 (the other language, but not present in C. This ability might allow a mapping between C++ classes and) 63.65 737.62 B
+(Dylan classes, for instance.) 63.65 724.62 T
+0.28 0.16 (There are interface languages which are designed specif) 63.65 699.62 B
+0.28 0.16 (ically to support the high-level abstractions of) 320.24 699.62 B
+0.28 0.03 (object-oriented languages in a language independent manner) 63.65 686.62 B
+0.28 0.03 (. IDL \050) 333.11 686.62 B
+1 F
+0.28 0.03 (Interface Def) 364.07 686.62 B
+0.28 0.03 (inition Language) 422.39 686.62 B
+2 F
+0.28 0.03 (\051 is one) 498.54 686.62 B
+0.28 0.1 (example. These languages are not discussed here in any detail \321 but it worth noting that they typically) 63.65 673.62 B
+0.26 (work by de\336ning conventions for using the object oriented features in terms of APIs which are ultimately) 63.65 660.62 P
+(expressible in C.) 63.65 647.62 T
+0.28 0.05 (The examples in this document refer to a C interface, ref) 63.65 622.62 B
+0.28 0.05 (lecting Harlequin\325) 317.83 622.62 B
+0.28 0.05 (s current FLI ef) 398.81 622.62 B
+0.28 0.05 (fort. However) 469.03 622.62 B
+-0.22 (the analysis does not depend on the details of the interface, and may be readily extended to other languages) 63.65 609.62 P
+0.28 0.01 (\050such as IDL\051 and other component binding techniques \050such as RPC\051, provided that the guidelines given) 63.65 596.62 B
+0.21 (below are not violated. An extension to another language in this way may require Dylan\325) 63.65 583.62 P
+0.21 (s FLI implemen-) 457.29 583.62 P
+(tation to have knowledge of any speci\336c ANDF tokens used by the foreign language producer) 63.65 570.62 T
+(.) 476.69 570.62 T
+3 12 Q
+(3.3) 63.65 536.95 T
+(Potential Problems) 90.65 536.95 T
+2 11 Q
+0.28 0.09 (W) 63.65 519.62 B
+0.28 0.09 (e have seen that the pragmatic and semantic problems of interfacing two languages may be solved by) 73.24 519.62 B
+-0.19 (choosing a neutral API and ABI for the interface. However) 63.65 506.62 P
+-0.19 (, there may still be problems of inter) 321.77 506.62 P
+-0.19 (-operability) 480.32 506.62 P
+(due to higher level considerations. These fall into three broad categories:) 63.65 493.62 T
+3 10 Q
+(3.3.1) 63.65 469.29 T
+(API Limitations) 90.65 469.29 T
+2 11 Q
+-0.2 (There may be a mismatch between the semantics of the neutral language and the implementation language,) 63.65 455.62 P
+-0.13 (such that the neutral API is unable to express a desired language feature. High-level languages, like Dylan,) 63.65 442.62 P
+0.28 0.04 (are particularly likely to suf) 63.65 429.62 B
+0.28 0.04 (fer from this problem. This will limit the complexity of the component inter-) 187.88 429.62 B
+(face to the lowest common denominator of the features of the implementation and neutral languages.) 63.65 416.62 T
+0.28 0.05 (In practice, the interfacing logic of the high-level component may be able to map between language fea-) 63.65 391.62 B
+0.28 0.16 (tures which are similar but not identical, but this may cause additional complexity or inef) 63.65 378.62 B
+0.28 0.16 (f) 474.55 378.62 B
+0.28 0.16 (iciency) 477.77 378.62 B
+0.28 0.16 (. For) 509.95 378.62 B
+0.28 0.05 (example, if a C interface function returns a string to a Dylan component, it is probably important for the) 63.65 365.62 B
+0.28 0.07 (interface logic to map the C string \050a pointer to a null-terminated byte-array\051 into a Dylan string \050a self-) 63.65 352.62 B
+0.28 0.05 (identifying object with an object slot containing the string\325) 63.65 339.62 B
+0.28 0.05 (s size as well as the characters\051. The mapping) 326.62 339.62 B
+0.27 (will require the allocation of the Dylan object, and may require copying of the characters. This is particu-) 63.65 326.62 P
+0.28 0.18 (larly inef) 63.65 313.62 B
+0.28 0.18 (f) 105.55 313.62 B
+0.28 0.18 (icient if the component on the other side of the interface also happens to be implemented in) 108.79 313.62 B
+(Dylan and hence has to do its own mapping in the reverse direction.) 63.65 300.62 T
+0.08 (In general, when interfacing Dylan to C, the interface cannot support many of the dynamic and object-ori-) 63.65 275.62 P
+0.28 0.18 (ented features of the language. It is always likely to be more ef) 63.65 262.62 B
+0.28 0.18 (f) 354.65 262.62 B
+0.28 0.18 (icient and convenient to interface two) 357.88 262.62 B
+(Dylan components together directly) 63.65 249.62 T
+(, rather than via the C API.) 220.88 249.62 T
+3 10 Q
+(3.3.2) 63.65 225.29 T
+(ABI Limitations) 90.65 225.29 T
+2 11 Q
+0.28 0.2 (Simple dif) 63.65 211.62 B
+0.28 0.2 (ferences in the ABI are easily resolved by suitable interface logic. For example, if a Dylan) 111.87 211.62 B
+0.28 0.08 (implementation internally uses a calling convention in which ar) 63.65 198.62 B
+0.28 0.08 (guments are passed as callee parameters) 350.44 198.62 B
+0.28 0.06 ([G4.1.2], then Dylan code may be interfaced by using stub functions which use callee parameters on the) 63.65 185.62 B
+(Dylan side of the interface and caller parameters on the C side.) 63.65 172.62 T
+-0.05 (Where a high-level language uses an extended ABI for supporting language features, ABI dif) 63.65 147.62 P
+-0.05 (ferences may) 473.36 147.62 P
+0.28 0.04 (be more complex - or even impossible to solve. For example, Harlequin\325) 63.65 134.62 B
+0.28 0.04 (s Dylan ABI is designed to sup-) 388.42 134.62 B
+0.28 0 (port Dylan\325) 63.65 121.62 B
+0.28 0 (s dynamic features, including garbage collection, closures and multiple values [G4.2.1]. Some) 114.34 121.62 B
+FMENDPAGE
+%%EndPage: "4" 9
+%%Page: "5" 10
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+3 8 Q
+(ESPRIT Project 6062 OMI/GLUE - D4.2.3) 63.65 766.62 T
+(Report on inter-language working in ANDF) 369.86 766.62 T
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+3 10 Q
+(5) 526.09 84.9 T
+2 11 Q
+0.28 0 (of these features cannot be used across the interface anyway because the API does not permit them either) 63.65 737.62 B
+0.28 0.06 (\050multiple values, for example\051. Certain uses of Dylan\325) 63.65 724.62 B
+0.28 0.06 (s dynamic environment must be disallowed across) 306.11 724.62 B
+0.28 0.04 (the interface specif) 63.65 711.62 B
+0.28 0.04 (ically to circumvent ABI problems \321 for example a Dylan function must not call a C) 147.98 711.62 B
+-0.08 (function in the context an) 63.65 698.62 P
+4 10 Q
+-0.17 (unwind-protect) 178.45 698.62 P
+2 11 Q
+-0.08 ( body if there is any possibility that the C function might per-) 262.45 698.62 P
+(form a) 63.65 685.62 T
+4 10 Q
+(longjmp) 95.42 685.62 T
+2 11 Q
+( to transfer control to a point outside of the context of the) 137.42 685.62 T
+4 10 Q
+(unwind-protect) 391.91 685.62 T
+2 11 Q
+(.) 475.91 685.62 T
+0.28 0.12 (The fact that C is statically linked imposes a more subtle ABI restriction. For compatibility) 63.65 660.62 B
+0.28 0.12 (, any Dylan) 478.84 660.62 B
+0.28 0.14 (interface implementation must also be statically linkable, hence a Dylan function which may be called) 63.65 647.62 B
+0.22 (across the C interface must be describable statically) 63.65 634.62 P
+0.22 (, ruling out the possibility of implementing it as a clo-) 292.05 634.62 P
+0.04 (sure. If it were possible to create a closure statically) 63.65 621.62 P
+0.04 (, then the ABI would not, actually) 291.21 621.62 P
+0.04 (, prohibit the closure) 440.47 621.62 P
+(being used in this way \321 but Dylan has no static closure facility) 63.65 608.62 T
+(.) 347.07 608.62 T
+-0.17 (Garbage collection can be made to work in the presence of an ABI which of) 63.65 583.62 P
+-0.17 (fers no direct support \050see Sec-) 395.93 583.62 P
+0.18 (tion 4.4\051 \321 but there are restrictions on the design of possible garbage collectors, and there may be a cost) 63.65 570.62 P
+(associated with the lack of direct support on the remote side of the interface.) 63.65 557.62 T
+3 10 Q
+(3.3.3) 63.65 533.29 T
+(Component Behaviour Assumptions) 90.65 533.29 T
+2 11 Q
+0.28 0.12 (If an interface is genuinely both API and ABI compatible with the neutral def) 63.65 519.62 B
+0.28 0.12 (inition, there still may be) 417.11 519.62 B
+0.28 0.03 (problems with the design of the component if it makes assumptions about the behaviour of other compo-) 63.65 506.62 B
+(nents which are invalid.) 63.65 493.62 T
+0.15 (Consider) 63.65 468.62 P
+0.15 (, for example, a hypothetical memory allocator which is provided as a component called MA1. It) 102.93 468.62 P
+0.28 0.07 (requests memory from the operating system in lar) 63.65 455.62 B
+0.28 0.07 (ge blocks, and allocates objects from the lar) 287.98 455.62 B
+0.28 0.07 (ge blocks.) 486.1 455.62 B
+0.28 0.09 (The operating system guarantees that each successive block requested will be contiguous in the address) 63.65 442.62 B
+-0.15 (space with the last, and the allocator is implemented with the implicit assumption that all blocks it requests) 63.65 429.62 P
+(will be contiguous.) 63.65 416.62 T
+0.18 (Component MA1 may perform correctly in some circumstances, but as soon as it is used in a system with) 63.65 391.62 P
+0.28 0.02 (another component which also requests blocks from the operating system, its assumptions about contigu-) 63.65 378.62 B
+0.19 (ous memory will be invalidated. If an alternative implementation of the memory allocator) 63.65 365.62 P
+0.19 (, called MA2, is) 460.51 365.62 P
+-0.19 (designed to be tolerant of gaps in its memory space then it is more likely to perform correctly when used in) 63.65 352.62 P
+(a system of components.) 63.65 339.62 T
+0.28 0.01 (Note, however) 63.65 314.62 B
+0.28 0.01 (, that adding MA2 to a previously working system may still cause the system to break. For) 128.32 314.62 B
+0.28 0.11 (instance, the system may have been working correctly with MA1, and the addition of MA2 would then) 63.65 301.62 B
+0.2 (break the system by violating the assumptions of MA1. In a complex system, it may be impossible to iso-) 63.65 288.62 P
+0.28 0.1 (late the blame for a failure to a single component, but the observation is that \322good\323 components avoid) 63.65 275.62 B
+(making assumptions about what other components will do wherever possible.) 63.65 262.62 T
+-0.09 (Both language implementors and component programmers must be aware of the problem of making incor-) 63.65 237.62 P
+-0.09 (rect assumptions about the behaviour of other components, and must adjust their designs accordingly) 63.65 224.62 P
+-0.09 (. This) 506.67 224.62 P
+-0.16 (is in contrast to the API and ABI problems which must be solved by language implementors, and appear to) 63.65 211.62 P
+(component programmers as restrictions only) 63.65 198.62 T
+(.) 259.07 198.62 T
+3 12 Q
+(3.4) 63.65 164.95 T
+(Guidelines and Constraints) 90.65 164.95 T
+2 11 Q
+0.28 0.02 (It is possible to build systems from reusable components without suf) 63.65 147.62 B
+0.28 0.02 (fering from the integration problems) 369.25 147.62 B
+0.28 0.1 (described above. Inevitably) 63.65 134.62 B
+0.28 0.1 (, some constraints must be imposed on both the language implementor for a) 187.55 134.62 B
+0.28 0.01 (high-level language and the component designer) 63.65 121.62 B
+0.28 0.01 (. If all components are designed with these constraints in) 278.54 121.62 B
+FMENDPAGE
+%%EndPage: "5" 10
+%%Page: "6" 11
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+3 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(ESPRIT Project 6062 OMI/GLUE - D4.2.3) 63.65 766.62 T
+(Report on inter-language working in ANDF) 369.86 766.62 T
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+N
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+3 10 Q
+(6) 63.65 84.9 T
+2 11 Q
+0.28 0.02 (mind, system integration of components should be signif) 63.65 737.62 B
+0.28 0.02 (icantly less problematic. Unfortunately) 315.94 737.62 B
+0.28 0.02 (, it is par-) 488.47 737.62 B
+(ticularly likely that older components will have been designed without following these guidelines.) 63.65 724.62 T
+0.21 (It is outside the scope of this document to consider all component integration problems, as we are consid-) 63.65 699.62 P
+-0.2 (ering language implementation issues. But we note that the language implementor of a high-level language) 63.65 686.62 P
+0.28 0.04 (may need to design a run-time system component too, so it is useful to pay some attention to component) 63.65 673.62 B
+(design guidelines.) 63.65 660.62 T
+3 10 Q
+(3.4.1) 63.65 636.29 T
+(Language Implementor Guidelines) 90.65 636.29 T
+2 11 Q
+0.28 0.05 (The language implementor is responsible for ensuring that components obey the rules of the neutral lan-) 63.65 622.62 B
+0.11 (guage at the interfaces to foreign components. Speci\336cally function calls and data representations must be) 63.65 609.62 P
+(compatible with the neutral ABI, and must follow the de\336nition given by the API.) 63.65 596.62 T
+0.28 0.18 (There are two implementation choices for meeting this responsibility) 63.65 571.62 B
+0.28 0.18 (. Either languages will be imple-) 381.09 571.62 B
+0.15 (mented to be compatible with the neutral ABI at all times, or the implementor must arrange for a protocol) 63.65 558.62 P
+-0.25 (conversion in the FLI. Implementors have the freedom to use any language-speci\336c ABI within the code of) 63.65 545.62 P
+0.17 (a component, provided that the use of any language-speci\336c conventions is not visible from the other side) 63.65 532.62 P
+-0.08 (of the neutral interface. Note that implementors are permitted to use the language-speci\336c ABI to interface) 63.65 519.62 P
+0.28 0.02 (components written in the same high-level language \321 the neutral interface is only necessary for foreign) 63.65 506.62 B
+(components.) 63.65 493.62 T
+0.28 0.11 (The high-level features of Dylan require implementors to use a more complex ABI than C \321 so Dylan) 63.65 468.62 B
+0.28 0.18 (components will inevitably need a FLI to interface with C components and to hide Dylan\325) 63.65 455.62 B
+0.28 0.18 (s \322unusual\323) 478.55 455.62 B
+(implementation choices.) 63.65 442.62 T
+3 10 Q
+(3.4.2) 63.65 418.29 T
+(Component Designer Guidelines) 90.65 418.29 T
+2 11 Q
+0.28 0.2 (Component designers must be aware that there may be other components present in the system about) 63.65 404.62 B
+0.21 (which they have no knowledge. It is valid to assume that these unknown components will, themselves, be) 63.65 391.62 P
+0.28 0.16 (designed with the component guidelines in mind, but it is dangerous to make other assumptions about) 63.65 378.62 B
+(them.) 63.65 365.62 T
+0.28 0.02 (A helpful hint to component designers is to imagine another unknown component in the system perform-) 63.65 340.62 B
+0.28 0.01 (ing identical tasks with an identical algorithm. If the pair of components are making invalid assumptions,) 63.65 327.62 B
+0.06 (then they are most likely to break when combined in this way \050because components of) 63.65 314.62 P
+0.06 (fering the same ser-) 444.4 314.62 P
+(vices are most likely to compete for the same resources\051.) 63.65 301.62 T
+0.28 0.02 (The component designer is responsible for documenting the interface provided to clients of the interface.) 63.65 276.62 B
+0.28 0.16 (This documentation must include any restrictions in the use of the interface. Similarly) 63.65 263.62 B
+0.28 0.16 (, the component) 458.26 263.62 B
+0.06 (implementor must ensure that no restrictions are violated when interfacing as a client to other components) 63.65 250.62 P
+0.28 0.03 (or to the operating system. In particular) 63.65 237.62 B
+0.28 0.03 (, implementors must assume that other components might also be) 239.76 237.62 B
+0.19 (clients of the same services unless the documentation of the interface says otherwise. In general, it should) 63.65 224.62 P
+(be assumed that operating system services and resources may be used by any client.) 63.65 211.62 T
+3 10 Q
+(3.4.3) 63.65 187.29 T
+(Systems with Multiple Garbage Collectors) 90.65 187.29 T
+2 11 Q
+0.28 0.04 (A garbage collector \050GC\051 is always associated with a memory allocator) 63.65 173.62 B
+0.28 0.04 (, which will be provided as a ser-) 382.52 173.62 B
+0.28 0.18 (vice by a GC component. T) 63.65 160.62 B
+0.28 0.18 (ypically) 190.35 160.62 B
+0.28 0.18 (, the allocator will make use of operating system services to claim) 226.51 160.62 B
+0.28 0.11 (memory for its purposes. If such an allocator creates an object in a system, then the associated GC will) 63.65 147.62 B
+1 F
+(manage) 63.65 134.62 T
+2 F
+( that object \321 it is responsible for collecting that object.) 98.47 134.62 T
+FMENDPAGE
+%%EndPage: "6" 11
+%%Page: "7" 12
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+3 8 Q
+(ESPRIT Project 6062 OMI/GLUE - D4.2.3) 63.65 766.62 T
+(Report on inter-language working in ANDF) 369.86 766.62 T
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+3 10 Q
+(7) 526.09 84.9 T
+2 11 Q
+-0.22 (Any GC component must be able to) 63.65 737.62 P
+1 F
+-0.22 (trace) 223.12 737.62 P
+2 F
+-0.22 ( all of the objects it is managing which are still) 245.72 737.62 P
+1 F
+-0.22 (live) 451.97 737.62 P
+2 F
+-0.22 (and collect all) 470.38 737.62 P
+0.09 (the non-live ones [G4.2.2a]. In order to do this it must document how it expects its clients to use allocated) 63.65 724.62 P
+0.28 0.06 (memory) 63.65 711.62 B
+0.28 0.06 (. This may include rules about the compiler support required from clients \050in which case, it may) 99.96 711.62 B
+0.28 0.11 (not be permissible for clients to interface to the GC using a neutral interface alone\051. There may also be) 63.65 698.62 B
+0.28 0.14 (rules about how allocated memory may be passed across interfaces to other components which are not) 63.65 685.62 B
+(themselves clients of the GC.) 63.65 672.62 T
+0.28 0.08 (For multiple GCs to co-exist in a system, it is necessary for each GC to be able to trace its own objects,) 63.65 647.62 B
+0.28 0.19 (without violating the rules of any other collector in the process \050such as modifying the contents of an) 63.65 634.62 B
+0.16 (object created by another collector\051. It is assumed that it is always possible for a collector to read the con-) 63.65 621.62 P
+0.28 0.11 (tents of an object created by another collector \321 but that it is not valid to make any assumptions about) 63.65 608.62 B
+0.28 0.12 (what the contents mean. This places some restrictions on the types of tracing and collection algorithms) 63.65 595.62 B
+(which may be used.) 63.65 582.62 T
+0.28 0.14 (T) 63.65 557.62 B
+0.28 0.14 (racing algorithms for GCs work by starting from a set of) 70.12 557.62 B
+1 F
+0.28 0.14 (r) 332.37 557.62 B
+0.28 0.14 (oots) 336.38 557.62 B
+2 F
+0.28 0.14 (, processing each object found there to) 355.26 557.62 B
+0.23 (mark it live, and following all direct references from the object to other objects, which are then processed) 63.65 544.62 P
+0.28 0.1 (in turn. However) 63.65 531.62 B
+0.28 0.1 (, a GC is only permitted to process an object it is managing. Each GC must, therefore,) 140.25 531.62 B
+0.25 (either arrange to detect and ignore objects it is not managing while tracing, or alternatively it must ensure) 63.65 518.62 P
+0.28 0.03 (that it will never encounter objects it is not managing while tracing \050by documenting appropriate rules to) 63.65 505.62 B
+-0.25 (disallow inappropriate pointers from being written there in the \336rst place\051. T) 63.65 492.62 P
+-0.25 (ypically) 396.25 492.62 P
+-0.25 (, a) 430.97 492.62 P
+1 F
+-0.25 (conservative) 443.62 492.62 P
+2 F
+-0.25 ( collec-) 499.21 492.62 P
+(tor [G4.2.2a] would follow the former approach, while a) 63.65 479.62 T
+1 F
+(total) 314.76 479.62 T
+2 F
+( collector would use the latter) 334.93 479.62 T
+(.) 464.77 479.62 T
+0.18 (Conservative collectors can be used successfully in a multi-GC system provided that the algorithm is able) 63.65 454.62 P
+0.28 0.02 (to ignore objects which are not being managed, but continue to process them as possible roots. T) 63.65 441.62 B
+0.28 0.02 (otal col-) 494.85 441.62 B
+0.28 0.05 (lectors can also be used successfully) 63.65 428.62 B
+0.28 0.05 (, but they may be forced to impose very restrictive rules to their cli-) 226.72 428.62 B
+0.28 0.27 (ents, depending on the details of the algorithm used. For some collectors, it might be illegal to pass) 63.65 415.62 B
+0.22 (managed objects across a neutral interface, for example. The implications to garbage collectors of foreign) 63.65 402.62 P
+(language interfaces are discussed in more detail in section 4.4.) 63.65 389.62 T
+3 10 Q
+(3.4.4) 63.65 365.29 T
+(Mixed Systems with a Single Garbage Collector) 90.65 365.29 T
+2 11 Q
+0.28 0.06 (In some carefully designed systems, it may be possible to combine components written in more that one) 63.65 351.62 B
+0.16 (language with a single garbage collector) 63.65 338.62 P
+0.16 (. Since, in general, a garbage collector algorithm depends on con-) 241.34 338.62 P
+0.28 0.01 (sistent co-operation from compiled code, there is a minimum rule that the compilers for each of the com-) 63.65 325.62 B
+-0.14 (ponents requiring garbage collection must all co-operate appropriately according to the garbage collector) 63.65 312.62 P
+-0.14 (\325) 524.31 312.62 P
+-0.14 (s) 527.37 312.62 P
+(rules, and must use the same API to invoke the garbage collector and its associated allocator) 63.65 299.62 T
+(.) 469.36 299.62 T
+0.28 0.07 (If a mixed-language system is built with a single garbage collector in this way) 63.65 274.62 B
+0.28 0.07 (, then there is no need for) 415.99 274.62 B
+0.28 0.06 (any restrictions at the interfaces specif) 63.65 261.62 B
+0.28 0.06 (ically to support garbage collection, provided that the normal gar-) 235.75 261.62 B
+0.28 0.01 (bage collector co-operation is maintained for cross-interface calls. This is an example of an interface lan-) 63.65 248.62 B
+0.28 0.16 (guage which is at a higher level than the neutral language \050because it supports the co-operation\051, even) 63.65 235.62 B
+(though it may be de\336nable and implementable in the neutral language.) 63.65 222.62 T
+0.28 0.11 (In practice, most languages which require garbage collection have traditionally been implemented with) 63.65 197.62 B
+0.28 0.11 (custom garbage collectors which are designed to work ef) 63.65 184.62 B
+0.28 0.11 (f) 322.19 184.62 B
+0.28 0.11 (iciently with the language\325) 325.36 184.62 B
+0.28 0.11 (s features. In all of) 446.18 184.62 B
+0.28 0.03 (Harlequin\325) 63.65 171.62 B
+0.28 0.03 (s experience of dynamic language implementation, we have not yet encountered two language) 111.01 171.62 B
+-0 (implementations with garbage collector interfaces which are similar enough to be implemented with a sin-) 63.65 158.62 P
+0.28 0.25 (gle collector component. \050In fact, the need for this diversity is the main reason why ANDF does not) 63.65 145.62 B
+(attempt to provide its own direct support for garbage collection\051.) 63.65 132.62 T
+FMENDPAGE
+%%EndPage: "7" 12
+%%Page: "8" 13
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+3 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(ESPRIT Project 6062 OMI/GLUE - D4.2.3) 63.65 766.62 T
+(Report on inter-language working in ANDF) 369.86 766.62 T
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+N
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+3 10 Q
+(8) 63.65 84.9 T
+2 11 Q
+0.28 0.04 (There is one case in particular which might be particularly suitable for implementation in this way) 63.65 737.62 B
+0.28 0.04 (, how-) 503.11 737.62 B
+0.19 (ever) 63.65 724.62 P
+0.19 (. It is possible to implement a conservative garbage collector which requires virtually no co-operation) 81.97 724.62 P
+0.28 0.15 (from compiled code. T) 63.65 711.62 B
+0.28 0.15 (ypically) 167.74 711.62 B
+0.28 0.15 (, there is just a minimum requirement which restricts the use of) 203.69 711.62 B
+1 F
+0.28 0.15 (derived) 497.74 711.62 B
+2 F
+-0.06 (pointers \050that is, pointers which do not point directly at the object itself\051 [BW88]. For many standard static) 63.65 698.62 P
+(languages, including C, this requirement will only be violated by the most optimizing of compilers.) 63.65 685.62 T
+0.28 0.03 (In principle a single conservative collector can be used successfully in a multi-language system provided) 63.65 660.62 B
+0.28 0.17 (that each compiler meets the requirement concerning derived pointers, and provided that all the client) 63.65 647.62 B
+0.14 (components agree on the API. If it is possible to replace the standard implementations of C\325) 63.65 634.62 P
+0.14 (s) 469.7 634.62 P
+4 10 Q
+0.31 (malloc) 476.87 634.62 P
+2 11 Q
+0.14 ( and) 512.87 634.62 P
+4 10 Q
+0.6 0.02 (free) 63.65 621.62 B
+2 11 Q
+0.28 0.02 ( in a system, then these functions could be used as the API to the garbage collector \050possibly with a) 87.72 621.62 B
+-0.1 (null implementation for) 63.65 608.62 P
+4 10 Q
+-0.21 (free) 170.61 608.62 P
+2 11 Q
+-0.1 (\051. It may be possible to use garbage collection in this way even if the compo-) 194.61 608.62 P
+0.28 0.04 (nents were originally designed for manual memory management. W) 63.65 595.62 B
+0.28 0.04 (e have successfully tested systems in) 366.8 595.62 B
+(this way with components written in Dylan and C, and using Boehm\325) 63.65 582.62 T
+(s conservative collector) 367.97 582.62 T
+(.) 471.23 582.62 T
+3 15 Q
+(4.) 63.65 543.95 T
+(Signi\336cant Features of Dylan) 90.65 543.95 T
+2 11 Q
+0.28 0.15 (The unusual features of Dylan were described in detail in [G4.2.1]. There are some features which are) 63.65 521.62 B
+-0.27 (worth discussing again in terms of their impact on inter) 63.65 508.62 P
+-0.27 (-operability) 304.48 508.62 P
+-0.27 (, and what must be done to support them) 355.09 508.62 P
+(across a C interface.) 63.65 495.62 T
+3 12 Q
+(4.1) 63.65 461.95 T
+(Dynamic T) 90.65 461.95 T
+(yping) 150.44 461.95 T
+2 11 Q
+0.12 (All Dylan values are self-identifying at the language level. This means that the implementation must store) 63.65 444.62 P
+-0.1 (the type of the value alongside the value, either as tag bits or as an extra \336eld in a data-structure, unless the) 63.65 431.62 P
+0.28 0.13 (type can be inferred from the context. For example, a double-precision f) 63.65 418.62 B
+0.28 0.13 (loating point number in Harle-) 392.57 418.62 B
+0.28 0.04 (quin\325) 63.65 405.62 B
+0.28 0.04 (s Dylan is represented as a pointer to a region of memory containing a reference to the class) 86.44 405.62 B
+4 10 Q
+0.6 0.04 (<dou-) 501.54 405.62 B
+(ble-f) 63.65 392.62 T
+(loat>) 93.65 392.62 T
+2 11 Q
+( as well as the 64 bits of \337oating point data itself.) 123.65 392.62 T
+0.28 0.03 (For several common numeric types in Dylan, there is an equivalent type in C. For example, a) 63.65 367.62 B
+4 10 Q
+0.6 0.03 (<double-) 483.44 367.62 B
+0.05 (f) 63.65 354.62 P
+0.05 (loat>) 69.65 354.62 P
+2 11 Q
+0.02 ( corresponds to the equivalent C type) 99.65 354.62 P
+4 10 Q
+0.05 (double) 266.3 354.62 P
+2 11 Q
+0.02 (. In these cases, it is possible to convert between the) 302.3 354.62 P
+0.11 (Dylan representation and the C representation by either adding or removing the type information, depend-) 63.65 341.62 P
+0.28 0.02 (ing on the direction of the conversion. V) 63.65 328.62 B
+0.28 0.02 (alues represented as dynamically-typed Dylan quantities are said) 243.53 328.62 B
+0.11 (to be) 63.65 315.62 P
+1 F
+0.11 (wrapped) 88.3 315.62 P
+2 F
+0.11 (, while values represented as C quantities are said to be) 126.8 315.62 P
+1 F
+0.11 (raw) 373.59 315.62 P
+2 F
+0.11 (. The Dylan interface code must) 389.99 315.62 P
+(be able to convert between raw values and wrapped values automatically) 63.65 302.62 T
+(, as appropriate.) 383.68 302.62 T
+0.28 0.16 (For other types, a more complex coercion may be needed. The Dylan FLI \050described in more detail in) 63.65 277.62 B
+0.28 0.14 (chapter 6\051 has built-in converters for simple f) 63.65 264.62 B
+0.28 0.14 (lat types like strings. These conversions typically require) 271.05 264.62 B
+-0.11 (allocating memory for the alternative representation and copying data from one representation to the other) 63.65 251.62 P
+-0.11 (.) 528.9 251.62 P
+0.28 0.01 (The FLI also permits programmers to encode their own converters in terms of the simpler ones provided.) 63.65 238.62 B
+0.28 0.06 (By default, if no conversion is specif) 63.65 225.62 B
+0.28 0.06 (ied, the Dylan value is passed directly through the interface. In this) 229.37 225.62 B
+0.28 0.04 (case, the value must be treated as an opaque type in the foreign component; operations on the value may) 63.65 212.62 B
+(only be performed from within Dylan, so the value must \336rst be passed back into a Dylan component.) 63.65 199.62 T
+3 12 Q
+(4.2) 63.65 165.95 T
+(Data Abstraction) 90.65 165.95 T
+2 11 Q
+0.28 0.02 (Objects in Dylan may contain) 63.65 148.62 B
+1 F
+0.28 0.02 (slots) 199.6 148.62 B
+2 F
+0.28 0.02 (, which are analogous to f) 219.85 148.62 B
+0.28 0.02 (ields in C\325) 334.67 148.62 B
+0.28 0.02 (s) 380.62 148.62 B
+1 F
+0.28 0.02 (structs) 387.96 148.62 B
+2 F
+0.28 0.02 (. Accessing these f) 417.4 148.62 B
+0.28 0.02 (ields is) 500.4 148.62 B
+0.28 0.04 (done through function calls \321 although implementations can in-line the function in most circumstances,) 63.65 135.62 B
+0.28 0 (so the language does not imply that slot access will be inef) 63.65 122.62 B
+0.28 0 (f) 324.87 122.62 B
+0.28 0 (icient. The details of the arrangement of these) 327.93 122.62 B
+0.28 0.03 (slots in memory is left to the Dylan implementation, and is encapsulated by the accessor functions them-) 63.65 109.62 B
+FMENDPAGE
+%%EndPage: "8" 13
+%%Page: "9" 14
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+3 8 Q
+(ESPRIT Project 6062 OMI/GLUE - D4.2.3) 63.65 766.62 T
+(Report on inter-language working in ANDF) 369.86 766.62 T
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+3 10 Q
+(9) 526.09 84.9 T
+2 11 Q
+0.28 0.15 (selves. There is no way in the C interface to describe how to access the slot, other than by passing the) 63.65 737.62 B
+0.19 (accessor functions themselves. Since the accessor functions are on the Dylan side of the interface, calls to) 63.65 724.62 P
+(these functions are permitted from C without violating the opaque type rules.) 63.65 711.62 T
+3 12 Q
+(4.3) 63.65 677.95 T
+(First Class Functions) 90.65 677.95 T
+2 11 Q
+0.28 0.09 (Control is always passed between C and Dylan across an interface boundary by means of function calls) 63.65 660.62 B
+0.28 0 (and returns. But Dylan functions have properties which are not found in C functions, so some restrictions) 63.65 647.62 B
+(must be made about what types of functions can be mapped across the interface.) 63.65 634.62 T
+0.28 0.17 (W) 63.65 609.62 B
+0.28 0.17 (e refer to Dylan calling C as a) 73.32 609.62 B
+1 F
+0.28 0.17 (call-out) 215.32 609.62 B
+2 F
+0.28 0.17 (, and C calling Dylan as a) 250.88 609.62 B
+1 F
+0.28 0.17 (call-in) 373.45 609.62 B
+2 F
+0.28 0.17 (. A call-out function will be) 403.35 609.62 B
+-0.17 (implemented in C \050or compatibly with C\051 \321 and the FLI provides a stub interface function in Dylan which) 63.65 596.62 P
+0.2 (looks like a Dylan function and which calls the C function. Similarly) 63.65 583.62 P
+0.2 (, a call-in function is implemented in) 368.21 583.62 P
+-0 (Dylan, and the FLI provides a stub function which looks like a C function and which calls the Dylan func-) 63.65 570.62 P
+(tion.) 63.65 557.62 T
+0.02 (One feature of Dylan functions is that they may be) 63.65 532.62 P
+1 F
+0.02 (closur) 289.3 532.62 P
+0.02 (es) 316.39 532.62 P
+2 F
+0.02 ( \321 that is, they may require an environment to) 325.55 532.62 P
+0.28 0.18 (represent the values or variables they have closed over) 63.65 519.62 B
+0.28 0.18 (. A call-out function will appear as a f) 315.13 519.62 B
+0.28 0.18 (irst-class) 490.94 519.62 B
+0.28 0.03 (Dylan function object with a null environment. A call-in function must appear as a C function which has) 63.65 506.62 B
+(no environment, so only Dylan functions which have no environment may be directly called from C.) 63.65 493.62 T
+-0 (A \336rst-class function object in Dylan may be passed to C as a value of an opaque type even if it is actually) 63.65 468.62 P
+-0.1 (a closure. In this case, as with all opaque types, the value must be passed back to Dylan as a parameter in a) 63.65 455.62 P
+(call before an operation, such as a function call, may be performed on the function.) 63.65 442.62 T
+-0.13 (All Dylan functions obey a consistent calling convention which checks the number and types of ar) 63.65 417.62 P
+-0.13 (guments) 494.37 417.62 P
+0.28 0.12 (passed for consistency with the function\325) 63.65 404.62 B
+0.28 0.12 (s contract. All f) 249.75 404.62 B
+0.28 0.12 (irst-class Dylan functions \050including call-outs\051) 320.38 404.62 B
+0.28 0.08 (will obey this contract. Call-in functions are not f) 63.65 391.62 B
+0.28 0.08 (irst-class Dylan functions, and they obey the C calling) 286.57 391.62 B
+0.12 (convention. Hence call-in functions are susceptible to the same level of consistency checking as any other) 63.65 378.62 P
+0.28 0.15 (C function, and they may rely on the programmer to ensure that they are called with appropriate ar) 63.65 365.62 B
+0.28 0.15 (gu-) 516.83 365.62 B
+(ments.) 63.65 352.62 T
+0.28 0 (Dylan functions also support optional ar) 63.65 327.62 B
+0.28 0 (guments, where the called function may determine the number of) 241.84 327.62 B
+0.28 0.06 (optional ar) 63.65 314.62 B
+0.28 0.06 (guments it was actually passed. This contrasts with C\325) 111.69 314.62 B
+0.28 0.06 (s varar) 354.92 314.62 B
+0.28 0.06 (gs mechanism, where there is no) 385.02 314.62 B
+-0.11 (information about the number of ar) 63.65 301.62 P
+-0.11 (guments actually supplied. It is relatively simple for the FLI to map a C) 217.78 301.62 P
+0.28 0.05 (call-out function which accepts varar) 63.65 288.62 B
+0.28 0.05 (gs. In this case the corresponding Dylan function object will accept) 229.52 288.62 B
+0.17 (optional ar) 63.65 275.62 P
+0.17 (guments and pass them all to C. However) 110.98 275.62 P
+0.17 (, it\325) 295.05 275.62 P
+0.17 (s not possible to implement a varar) 309.89 275.62 P
+0.17 (gs call-in func-) 464.71 275.62 P
+0.28 0.02 (tion in Dylan without inventing a new language feature to access the ar) 63.65 262.62 B
+0.28 0.02 (guments, because the Dylan func-) 380.7 262.62 B
+(tion has no way to determine how many ar) 63.65 249.62 T
+(guments were supplied.) 251.03 249.62 T
+0.28 0.07 (Dylan functions are also capable of returning multiple values. This is a useful language feature which is) 63.65 224.62 B
+0.28 0.14 (often simulated in C by having functions assign to global variables \050such as) 63.65 211.62 B
+4 10 Q
+0.6 0.14 (errno) 413.17 211.62 B
+2 11 Q
+0.28 0.14 (\051, or by passing the) 443.87 211.62 B
+0.28 0.06 (address of a variable as an ar) 63.65 198.62 B
+0.28 0.06 (gument \050otherwise known as) 194.01 198.62 B
+1 F
+0.28 0.06 (call by r) 326.31 198.62 B
+0.28 0.06 (efer) 363.67 198.62 B
+0.28 0.06 (ence) 380.62 198.62 B
+2 F
+0.28 0.06 (\051. For a call-in function, only) 401.02 198.62 B
+0.28 0.03 (the f) 63.65 185.62 B
+0.28 0.03 (irst value returned by the Dylan function may be passed back to C, because the C language can only) 83.33 185.62 B
+0.08 (express a return of a single value. \050It is possible to de\336ne a convention to permit C code to retrieve further) 63.65 172.62 P
+-0.1 (values, though. A C function could be speci\336ed to do this, for example\051. For a call-out, only one value will) 63.65 159.62 P
+-0.02 (be returned to Dylan, unless a use of call by reference is explicitly mapped into a multiple-value return via) 63.65 146.62 P
+(the interface speci\336cation.) 63.65 133.62 T
+FMENDPAGE
+%%EndPage: "9" 14
+%%Page: "10" 15
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+3 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(ESPRIT Project 6062 OMI/GLUE - D4.2.3) 63.65 766.62 T
+(Report on inter-language working in ANDF) 369.86 766.62 T
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+N
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+3 10 Q
+(10) 63.65 84.9 T
+3 12 Q
+(4.4) 63.65 736.95 T
+(Memory Management) 90.65 736.95 T
+2 11 Q
+-0.12 (One important feature of Dylan is automatic memory management. Dylan provides a) 63.65 719.62 P
+4 10 Q
+-0.27 (make) 438.85 719.62 P
+2 11 Q
+-0.12 ( function which) 462.85 719.62 P
+0.01 (allocates memory in a similar way to C\325) 63.65 706.62 P
+0.01 (s) 239.37 706.62 P
+4 10 Q
+0.01 (malloc) 246.41 706.62 P
+2 11 Q
+0.01 ( \321 but Dylan has no equivalent to C\325) 282.41 706.62 P
+0.01 (s) 446.84 706.62 P
+4 10 Q
+0.01 (free) 453.87 706.62 P
+2 11 Q
+0.01 (. Implemen-) 477.87 706.62 P
+0.06 (tations must, therefore, provide a garbage collector to recycle objects in memory which are no longer live,) 63.65 693.62 P
+(if memory usage exceeds available resources.) 63.65 680.62 T
+0.28 0.1 (The concept of) 63.65 655.62 B
+1 F
+0.28 0.1 (liveness) 134.71 655.62 B
+2 F
+0.28 0.1 ( is discussed in some detail in [G4.2.2a], and an important point to recall is that) 170.34 655.62 B
+-0 (liveness is a global property of a program. Most garbage collection techniques depend upon consistent use) 63.65 642.62 P
+0.28 0.01 (of conventions to determine liveness \321 but foreign components may not obey the conventions, so global) 63.65 629.62 B
+(liveness information may be impossible to determine.) 63.65 616.62 T
+0.28 0.04 (One way to implement garbage collection in a mixed-language environment is to use a conservative gar-) 63.65 591.62 B
+0.28 0 (bage collector to provide memory management services for all components, as described in section 3.4.4.) 63.65 578.62 B
+0.15 (A conservative collector can scan C variables and data-structures as well as Dylan ones to determine live-) 63.65 565.62 P
+0.28 0.02 (ness. It does this by blindly scanning any area of memory which could conceivably be a) 63.65 552.62 B
+1 F
+0.28 0.02 (r) 459.14 552.62 B
+0.28 0.02 (oot) 463.04 552.62 B
+2 F
+0.28 0.02 ( from which) 477.15 552.62 B
+0.16 (other objects might be reached, and by assuming that any value it \336nds during the scan which looks like a) 63.65 539.62 P
+-0.18 (pointer to a heap object should actually be treated as suf) 63.65 526.62 P
+-0.18 (\336cient proof that the heap object is live. Since such) 308.45 526.62 P
+(a system is able to analyse all components, it does not suf) 63.65 513.62 T
+(fer from locality of liveness information.) 317.04 513.62 T
+0.28 0.11 (Alternatively) 63.65 488.62 B
+0.28 0.11 (, it is possible to provide local garbage collection for Dylan components only) 122.44 488.62 B
+0.28 0.11 (. This can be) 473.26 488.62 B
+0.14 (achieved by keeping a record of all references to objects which are passed across the interface to an unco-) 63.65 475.62 P
+0.28 0.06 (operative foreign component. A notion of global liveness can then be determined from a combination of) 63.65 462.62 B
+0.25 (local information and the interface record. The interface record is, therefore, being used as surrogate live-) 63.65 449.62 P
+(ness information for the components across the interface.) 63.65 436.62 T
+-0.24 (However) 63.65 411.62 P
+-0.24 (, it is impossible to calculate liveness information accurately from the interface alone, as the inter-) 103.52 411.62 P
+-0.22 (face does not provide enough information about how the foreign component uses the objects it is passed. A) 63.65 398.62 P
+0.28 0.01 (worst-case scenario is that an object passed across the interface will be stored in some foreign data-struc-) 63.65 385.62 B
+0.18 (ture and will be kept live inde\336nitely \321 so the default action of the interface must be to record all objects) 63.65 372.62 P
+0.28 0.06 (passed across the interface as permanently live. This is pessimistic, and hence inef) 63.65 359.62 B
+0.28 0.06 (f) 434.18 359.62 B
+0.28 0.06 (icient, in comparison) 437.3 359.62 B
+-0.21 (with having real liveness data. Applications may exhaust their memory limits if many objects are protected) 63.65 346.62 P
+(from recycling in this way) 63.65 333.62 T
+(.) 179.03 333.62 T
+-0.24 (In practice, it is possible to improve the accuracy of the interface records, and so reduce the cost of garbage) 63.65 308.62 P
+0.28 0.02 (collection with unco-operative components. One way is to provide an implementation of) 63.65 295.62 B
+4 10 Q
+0.6 0.02 (free) 461.6 295.62 B
+2 11 Q
+0.28 0.02 ( \050or some-) 485.7 295.62 B
+0.04 (thing equivalent\051 by which components can indicate that they have \336nished with an object which has been) 63.65 282.62 P
+-0.27 (passed to them. This ef) 63.65 269.62 P
+-0.27 (fectively provides graceful degradation from automatic to explicit memory manage-) 164.11 269.62 P
+0.15 (ment. Another technique is to remove an object from the interface record when the call which caused it to) 63.65 256.62 P
+-0.14 (be recorded returns. This technique is only valid if the parameter passed to the called function has) 63.65 243.62 P
+1 F
+-0.14 (dynamic) 494.38 243.62 P
+-0.03 (extent) 63.65 230.62 P
+2 F
+-0.03 (, \050that is, if the value is not stored anywhere for a longer time than the call\051. It is common for param-) 89.92 230.62 P
+0.28 0.17 (eters in C function calls to have dynamic extent, although this is normally assumed, rather than docu-) 63.65 217.62 B
+0.28 0.12 (mented. \050The assumption is important for C programmers too, otherwise explicit memory management) 63.65 204.62 B
+0.28 0.21 (would be impossible for component based programming\051. Ideally) 63.65 191.62 B
+0.28 0.21 (, the foreign language interface will) 365.84 191.62 B
+0.28 0.06 (allow the programmer to specify whether each parameter in a function call has dynamic extent, and will) 63.65 178.62 B
+(also provide a) 63.65 165.62 T
+4 10 Q
+(free) 128.11 165.62 T
+2 11 Q
+( mechanism for the other parameters.) 152.11 165.62 T
+0.14 (Note that if a conservative collector is being used to manage Dylan components, but not the other compo-) 63.65 140.62 P
+0.06 (nents in the system, then it may still be advantageous to maintain the interface records. Although it is pos-) 63.65 127.62 P
+-0.17 (sible to imagine a conservative collector which is able to \336nd all memory maintained by foreign allocators,) 63.65 114.62 P
+FMENDPAGE
+%%EndPage: "10" 15
+%%Page: "11" 16
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+3 8 Q
+(ESPRIT Project 6062 OMI/GLUE - D4.2.3) 63.65 766.62 T
+(Report on inter-language working in ANDF) 369.86 766.62 T
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+3 10 Q
+(1) 521.08 84.9 T
+(1) 526.09 84.9 T
+2 11 Q
+0.28 0.06 (and treat that memory as potential roots, such a collector is likely to be very inef) 63.65 737.62 B
+0.28 0.06 (f) 426.03 737.62 B
+0.28 0.06 (icient compared with a) 429.15 737.62 B
+0.28 0.01 (collector which uses a smaller root set \050typically) 63.65 724.62 B
+0.28 0.01 (, the stack, the global variables, and any statically initial-) 278.18 724.62 B
+0.28 0.06 (ized data\051. W) 63.65 711.62 B
+0.28 0.06 (e assume here that interface records will always be used with Dylan components, except in) 122.99 711.62 B
+(the special case with a single collector providing memory management for every component.) 63.65 698.62 T
+0.28 0.09 (If a local garbage collection service is being provided, then objects which are passed to foreign compo-) 63.65 673.62 B
+-0.16 (nents must be marked as) 63.65 660.62 P
+1 F
+-0.16 (static) 173.77 660.62 P
+2 F
+-0.16 (, not just live. That is, they must never be relocated by the garbage collector) 197.61 660.62 P
+-0.16 (,) 528.9 660.62 P
+0.28 0.02 (as the garbage collector cannot determine how to correct all references to the object from an unco-opera-) 63.65 647.62 B
+0.03 (tive component. This places a restriction on the type of garbage collector which is suitable for a multi-lan-) 63.65 634.62 P
+0.28 0.13 (guage system. A simple copying collector) 63.65 621.62 B
+0.28 0.13 (, for example,) 254.21 621.62 B
+1 F
+0.28 0.13 (always) 320.78 621.62 B
+2 F
+0.28 0.13 ( relocates objects after processing them) 352.11 621.62 B
+0.28 0.06 ([G4.2.2a]. Such a collector is, therefore, inappropriate for this type of system. However) 63.65 608.62 B
+0.28 0.06 (, it might still be) 456.99 608.62 B
+-0.09 (possible to use a copying collector as part of a hybrid scheme if it is used to manage a pool of local objects) 63.65 595.62 P
+0.28 0.02 (only) 63.65 582.62 B
+0.28 0.02 (. In such a scheme, an object must be copied into a separate pool \050with a dif) 82.57 582.62 B
+0.28 0.02 (ferent garbage collection) 421.27 582.62 B
+(technique\051 whenever it is passed across the C interface.) 63.65 569.62 T
+-0.04 (Conservative collectors never relocate objects which were in the root set \050in case the root actually happens) 63.65 544.62 P
+0.28 0.05 (to be a non-pointer which is confused with a managed pointer\051. So for a conservative collector the static) 63.65 531.62 B
+(property is guaranteed for root objects, including those on the stack, and need not be explicitly marked.) 63.65 518.62 T
+0.28 0.12 (The transitive closure of objects referenced by a static object do not, themselves, have to be marked as) 63.65 493.62 B
+0.28 0.2 (static. This is true at least if we assume that the garbage collector is only permitted to relocate Dylan) 63.65 480.62 B
+-0.03 (objects, which are treated as opaque types in C. For a C component to access an inner reference of such an) 63.65 467.62 P
+0.28 0.16 (object, it is obliged to call a Dylan function, so the static property of the inner reference can be set on) 63.65 454.62 B
+0.28 0.01 (demand, when the Dylan function returns the reference. There is no way to enforce that a C function will) 63.65 441.62 B
+(not de-reference an opaque type in this way - but it is an error for a C program to do so.) 63.65 428.62 T
+3 12 Q
+(4.5) 63.65 394.95 T
+(Dynamic Environment) 90.65 394.95 T
+2 11 Q
+0.28 0.26 (The core Dylan language provides two facilities for modifying a dynamic environment. One def) 63.65 377.62 B
+0.28 0.26 (ines) 513.15 377.62 B
+0.28 0.07 (exception handlers, the other def) 63.65 364.62 B
+0.28 0.07 (ines) 210.24 364.62 B
+1 F
+0.28 0.07 (cleanup) 231.32 364.62 B
+2 F
+0.28 0.07 ( code which is guaranteed to be invoked even if there is an) 266.62 364.62 B
+0.28 0.14 (unusual transfer of f) 63.65 351.62 B
+0.28 0.14 (low of control. These facilities are described in [G4.2.2a], although the syntax has) 155.68 351.62 B
+0.28 0.05 (changed now that Dylan has adopted an Algol-style syntax. Under the old Lisp-style syntax, the cleanup) 63.65 338.62 B
+(mechanism was called) 63.65 325.62 T
+4 10 Q
+(unwind-protect) 165.38 325.62 T
+2 11 Q
+(.) 249.38 325.62 T
+0.03 (For example, in the following code, both facilities are introduced by the) 63.65 300.62 P
+4 10 Q
+0.06 (block) 382.96 300.62 P
+2 11 Q
+0.03 ( construct. The body of the) 412.96 300.62 P
+0.21 (block \050which includes the calls to) 63.65 287.62 P
+4 10 Q
+0.46 (start-drill-motor) 215.22 287.62 P
+2 11 Q
+0.21 ( and) 317.22 287.62 P
+4 10 Q
+0.46 (drilling-operation) 339.02 287.62 P
+2 11 Q
+0.21 (\051 are both executed) 447.02 287.62 P
+0.15 (in a dynamic environment which guarantees that the) 63.65 274.62 P
+4 10 Q
+0.32 (stop-drill-motor) 297.61 274.62 P
+2 11 Q
+0.15 ( function will be called, even if) 393.61 274.62 P
+0.03 (there is a direct transfer of control to a caller of the) 63.65 261.62 P
+4 10 Q
+0.07 (use-drill) 290.71 261.62 P
+2 11 Q
+0.03 ( function. The body is also executed in the) 344.71 261.62 P
+(context of a handler for) 63.65 248.62 T
+4 10 Q
+(<drilling-error>) 169.64 248.62 T
+2 11 Q
+( exceptions.) 265.64 248.62 T
+4 10 Q
+(def) 63.65 230.29 T
+(ine method use-drill \050drilling-operation :: <function>\051) 81.65 230.29 T
+(block \050return\051) 75.65 218.29 T
+(start-drill-motor\050\051;) 87.65 206.29 T
+(drilling-operation\050\051;) 87.65 194.29 T
+(exception \050err :: <drilling-error>\051) 75.65 182.29 T
+(report-drill-failure\050err\051;) 87.65 170.29 T
+(cleanup) 75.65 158.29 T
+(stop-drill-motor\050\051;) 87.65 146.29 T
+(end block;) 75.65 134.29 T
+(end method;) 63.65 122.29 T
+FMENDPAGE
+%%EndPage: "11" 16
+%%Page: "12" 17
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+3 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(ESPRIT Project 6062 OMI/GLUE - D4.2.3) 63.65 766.62 T
+(Report on inter-language working in ANDF) 369.86 766.62 T
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+N
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+3 10 Q
+(12) 63.65 84.9 T
+2 11 Q
+-0.04 (It is only possible to raise a) 63.65 737.62 P
+4 10 Q
+-0.09 (<drilling-error>) 186.49 737.62 P
+2 11 Q
+-0.04 ( exception by an appropriate call to the) 282.49 737.62 P
+4 10 Q
+-0.09 (signal) 456.28 737.62 P
+2 11 Q
+-0.04 ( function) 492.28 737.62 P
+-0.1 (in Dylan code. However) 63.65 724.62 P
+-0.1 (, it is still possible that foreign functions may have been activated between the call) 170.43 724.62 P
+0.03 (to) 63.65 711.62 P
+4 10 Q
+0.07 (use-drill) 74.99 711.62 P
+2 11 Q
+0.03 ( and the raising of the exception \050for instance, if) 128.99 711.62 P
+4 10 Q
+0.07 (drilling-operation) 343.47 711.62 P
+2 11 Q
+0.03 ( calls a C function) 451.47 711.62 P
+0.28 0.05 (which then does a call-in to a Dylan function which raises the exception\051. In this case, the intervening C) 63.65 698.62 B
+-0.14 (function frames play no part in the handling of the exception, and are simply dropped from the stack. \050This) 63.65 685.62 P
+0.28 0.02 (is probably the most natural semantics for raising exceptions in a mixed language environment, but other) 63.65 672.62 B
+(interpretations may be possible\051.) 63.65 659.62 T
+0.28 0.22 (However) 63.65 634.62 B
+0.28 0.22 (, there are some more complex scenarios. Consider the case where) 105.07 634.62 B
+4 10 Q
+0.6 0.22 (use-drill) 417.24 634.62 B
+2 11 Q
+0.28 0.22 ( is indirectly) 473.22 634.62 B
+0.28 0.01 (called from a C function which also calls) 63.65 621.62 B
+4 10 Q
+0.6 0.01 (setjmp,) 249.47 621.62 B
+2 11 Q
+0.28 0.01 ( and the C function called by) 291.52 621.62 B
+4 10 Q
+0.6 0.01 (drilling-operation) 423.52 621.62 B
+2 11 Q
+0.28 0.1 (than calls) 63.65 608.62 B
+4 10 Q
+0.6 0.1 (longjmp) 109.88 608.62 B
+2 11 Q
+0.28 0.1 ( to transfer control back to the caller of) 152.56 608.62 B
+4 10 Q
+0.6 0.1 (use-drill) 333.67 608.62 B
+2 11 Q
+0.28 0.1 (. The desired semantics are that) 388.55 608.62 B
+4 10 Q
+0.6 0.03 (stop-drill-motor) 63.65 595.62 B
+2 11 Q
+0.28 0.03 ( cleanup function should be called \321 but the implementation of) 160.14 595.62 B
+4 10 Q
+0.6 0.03 (longjmp) 448.92 595.62 B
+2 11 Q
+0.28 0.03 ( does not) 491.13 595.62 B
+0.13 (take any notice of any Dylan dynamic environment. There appears to be no satisfactory way of respecting) 63.65 582.62 P
+0.08 (dynamic environments in foreign components if C is used as the interface language. The simplest solution) 63.65 569.62 P
+-0.12 (is for Dylan components to specify in their documentation that clients are not permitted to use) 63.65 556.62 P
+4 10 Q
+-0.26 (longjmp) 478.46 556.62 P
+2 11 Q
+-0.12 ( to) 520.46 556.62 P
+0.28 0.02 (transfer control from a point after a call into the component to a point before. It is hoped that this restric-) 63.65 543.62 B
+0.28 0.19 (tion will not be too limiting in practice. It would be possible to provide an alternative to) 63.65 530.62 B
+4 10 Q
+0.6 0.19 (setjmp) 474.99 530.62 B
+2 11 Q
+0.28 0.19 ( and) 512.16 530.62 B
+4 10 Q
+-0.11 (longjmp,) 63.65 517.62 P
+2 11 Q
+-0.05 ( implemented in Dylan but callable from C, which would permit components to transfer control) 111.65 517.62 P
+(around Dylan functions.) 63.65 504.62 T
+0.22 (In Dylan, exceptions can also be raised implicitly by the implementation when errors occur) 63.65 479.62 P
+0.22 (, such as over-) 467.46 479.62 P
+0.28 0.06 (f) 63.65 466.62 B
+0.28 0.06 (low for integer addition. C code, however) 66.76 466.62 B
+0.28 0.06 (, is not def) 254.23 466.62 B
+0.28 0.06 (ined to treat such conditions as errors, which ef) 301.58 466.62 B
+0.28 0.06 (fec-) 514.44 466.62 B
+0.28 0.04 (tively rules out the possibility of the Dylan exception mechanism handling this case. For the purposes of) 63.65 453.62 B
+0.28 0.01 (this document, we assume that each language in a heterogeneous system maintains any exception mecha-) 63.65 440.62 B
+-0.06 (nism of its own independently of the other languages. As with other high-level features, it may be possible) 63.65 427.62 P
+0.24 (to permit the exception mechanisms to inter) 63.65 414.62 P
+0.24 (-operate \321 but only if there is co-operation across the neutral) 257.97 414.62 P
+(interface by all components.) 63.65 401.62 T
+3 15 Q
+(5.) 63.65 362.95 T
+(Status of the Dylan Producer) 90.65 362.95 T
+2 11 Q
+0.14 (Harlequin\325) 63.65 340.62 P
+0.14 (s Dylan compiler has been extensively modi\336ed recently) 110.69 340.62 P
+0.14 (. In this section we look at some of the) 360.54 340.62 P
+0.19 (changes that have been made, and also at some expected changes for the future. The techniques described) 63.65 327.62 P
+0.14 (here were developed to implement Dylan-only applications. It is necessary to understand these techniques) 63.65 314.62 P
+(in isolation, before examining how they may be incorporated into a mixed-language design.) 63.65 301.62 T
+3 12 Q
+(5.1) 63.65 267.95 T
+(The Static Bootstrap) 90.65 267.95 T
+2 11 Q
+0.04 (The initial Dylan producer made use of a dynamic bootstrapping mechanism for initializing literal data, as) 63.65 243.62 P
+0.28 0.03 (described in [G4.2.2b]. In essence, this meant that all literals were referenced via variables whose values) 63.65 230.62 B
+-0.24 (were initially unset. Initialization code had to be executed the \336rst time a Dylan program was called, to cal-) 63.65 217.62 P
+0.2 (culate values for these literals \321 the program then saved itself, including its initialized data, to generate a) 63.65 204.62 P
+0.28 0.07 (new application image. Since then, work has been progressing towards a static booting mechanism. The) 63.65 191.62 B
+0.28 0.02 (producer outputs the ANDF to initialize data objects statically in the same manner as a more \324traditional\325) 63.65 178.62 B
+(programming language, such as C.) 63.65 165.62 T
+FMENDPAGE
+%%EndPage: "12" 17
+%%Page: "13" 18
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+3 8 Q
+(ESPRIT Project 6062 OMI/GLUE - D4.2.3) 63.65 766.62 T
+(Report on inter-language working in ANDF) 369.86 766.62 T
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+3 10 Q
+(13) 520.53 84.9 T
+3 12 Q
+(5.2) 63.65 736.95 T
+(Use of the ANDF Extensions) 90.65 736.95 T
+2 11 Q
+0.28 0.03 (Harlequin\325) 63.65 712.62 B
+0.28 0.03 (s Dylan calling convention model divides the ar) 111.01 712.62 B
+0.28 0.03 (guments passed to functions into two dif) 324.7 712.62 B
+0.28 0.03 (ferent) 505.84 712.62 B
+0.28 0.28 (groups:) 63.65 699.62 B
+1 F
+0.28 0.28 (language) 101.9 699.62 B
+2 F
+0.28 0.28 ( and) 145.07 699.62 B
+1 F
+0.28 0.28 (implementation) 168.39 699.62 B
+2 F
+0.28 0.28 ( ar) 240.73 699.62 B
+0.28 0.28 (guments. Language ar) 252.94 699.62 B
+0.28 0.28 (guments correspond to the ar) 356.3 699.62 B
+0.28 0.28 (guments) 492.7 699.62 B
+0.28 0.09 (explicitly passed to a function in the source code. Implementation ar) 63.65 686.62 B
+0.28 0.09 (guments represent pieces of house-) 373.11 686.62 B
+0.14 (keeping information that are used by our implementation, and are passed \322behind the scenes\323, without the) 63.65 673.62 P
+0.28 0.21 (knowledge of the Dylan programmer) 63.65 660.62 B
+0.28 0.21 (. Depending on the exact nature of the call, these ar) 234.22 660.62 B
+0.28 0.21 (guments can) 473.97 660.62 B
+(include:) 63.65 647.62 T
+5 F
+(\245) 99.65 629.29 T
+2 10 Q
+(the number of language ar) 113.4 629.29 T
+(guments \050as an integer\051) 218.19 629.29 T
+5 11 Q
+(\245) 99.65 614.29 T
+2 10 Q
+(the function object being called, which contains the closure environment) 113.4 614.29 T
+5 11 Q
+(\245) 99.65 599.29 T
+2 10 Q
+(the list of next methods) 113.4 599.29 T
+2 11 Q
+(Currently we have two techniques for implementing language and implementation ar) 63.65 574.62 T
+(guments:) 437.39 574.62 T
+0.28 0.08 (The f) 63.65 549.62 B
+0.28 0.08 (irst technique, which is the only one we have implemented so far) 87.26 549.62 B
+0.28 0.08 (, uses only caller parameters, and) 381.18 549.62 B
+0.28 0.02 (does not require the ANDF extensions. This has the disadvantage that it does not permit the optimization) 63.65 536.62 B
+-0.12 (of tail-calls to jumps under all circumstances. This means that it is potentially inef) 63.65 523.62 P
+-0.12 (\336cient, and is not strictly) 423.04 523.62 P
+(a conforming Dylan implementation.) 63.65 510.62 T
+0.14 (For the second technique, which is still under development, the implementation ar) 63.65 485.62 P
+0.14 (guments are still passed) 426.43 485.62 P
+0.28 0.09 (as caller parameters, while callee parameters are used for the language ar) 63.65 472.62 B
+0.28 0.09 (guments. This permits tail call) 394.36 472.62 B
+0.28 0 (optimization in all cases, and will therefore provide a substantial improvement in terms of both execution) 63.65 459.62 B
+(speed and run-time stack size.) 63.65 446.62 T
+0.28 0.02 (W) 63.65 421.62 B
+0.28 0.02 (ith either calling technique, our implementation provides two entry points to each function: an external) 73.61 421.62 B
+0.28 0 (entry point and an internal entry point, known as the) 63.65 408.62 B
+1 F
+0.28 0 (XEP) 299.51 408.62 B
+2 F
+0.28 0 ( and) 319.67 408.62 B
+1 F
+0.28 0 (IEP) 341.61 408.62 B
+2 F
+0.28 0 ( respectively) 358.71 408.62 B
+0.28 0 (. The XEP supports a gen-) 414.18 408.62 B
+0.28 0.17 (eral, consistent calling convention, and is used by unoptimized calls, where the compiler has no static) 63.65 395.62 B
+-0.05 (information about the function being called. The XEP will perform ar) 63.65 382.62 P
+-0.05 (gument count checking and keyword) 369.34 382.62 P
+-0.11 (processing, before tail-calling the IEP function. The XEP always takes two implementation ar) 63.65 369.62 P
+-0.11 (guments: the) 475.23 369.62 P
+(function object and the number of language ar) 63.65 356.62 T
+(guments.) 266.6 356.62 T
+-0.12 (The IEP accepts pre-processed language ar) 63.65 331.62 P
+-0.12 (guments \321 but pre-processing is only necessary when there are) 251.94 331.62 P
+0.05 (optional ar) 63.65 318.62 P
+0.05 (guments, such as keywords, so often the language ar) 110.86 318.62 P
+0.05 (guments to an IEP will be the same as they) 342.04 318.62 P
+0.15 (were to the XEP) 63.65 305.62 P
+0.15 (. All ar) 135.27 305.62 P
+0.15 (gument checking is expected to have been performed before calling the IEP) 166.22 305.62 P
+0.15 (, so the) 499.88 305.62 P
+-0.1 (IEP does not require the ar) 63.65 292.62 P
+-0.1 (gument count as an implementation ar) 180.57 292.62 P
+-0.1 (gument. Other implementation ar) 348.21 292.62 P
+-0.1 (guments) 494.37 292.62 P
+0.28 0.02 (may be required, however: If a function calls next-method then the list of next methods ar) 63.65 279.62 B
+0.28 0.02 (gument will be) 464.82 279.62 B
+0.16 (needed. If the function is a closure then the function object ar) 63.65 266.62 P
+0.16 (gument will be required to provide the func-) 335.29 266.62 P
+(tion\325) 63.65 253.62 T
+(s environment \321 otherwise the function object need not be passed.) 83.82 253.62 T
+0.28 0.28 (Given enough static information, our compiler can optimize away calls to the XEP and call the IEP) 63.65 228.62 B
+-0.23 (directly) 63.65 215.62 P
+-0.23 (. This depends on the selection of the method, and the interface details of the use of implementation) 96.54 215.62 P
+0.28 0.19 (ar) 63.65 202.62 B
+0.28 0.19 (guments, being statically determinable at compile-time. The programmer has some control over the) 72.39 202.62 B
+0.28 0.07 (amount of static information available to the compiler by using language constructs such as sealing \050see) 63.65 189.62 B
+0.25 ([DIRM94] for more details of sealing generic functions and classes\051. For those cases when a function can) 63.65 176.62 P
+0.28 0.15 (be called directly through the IEP) 63.65 163.62 B
+0.28 0.15 (, a function call in Dylan will be no more expensive than a call in C.) 217 163.62 B
+0.13 (Indeed, given callee parameters for the language ar) 63.65 150.62 P
+0.13 (guments and a reasonably optimized ANDF installer) 289.19 150.62 P
+0.13 (, a) 521.13 150.62 P
+0.28 0.09 (Dylan call could actually be more ef) 63.65 137.62 B
+0.28 0.09 (f) 228.41 137.62 B
+0.28 0.09 (icient than an equivalent C call because of the benef) 231.55 137.62 B
+0.28 0.09 (it gained from) 467.6 137.62 B
+(tail-call optimization.) 63.65 124.62 T
+FMENDPAGE
+%%EndPage: "13" 18
+%%Page: "14" 19
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+3 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(ESPRIT Project 6062 OMI/GLUE - D4.2.3) 63.65 766.62 T
+(Report on inter-language working in ANDF) 369.86 766.62 T
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+N
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+3 10 Q
+(14) 63.65 84.9 T
+2 11 Q
+0.28 0 (The ANDF extensions for Dylan also include support for signalling and handling exceptions [G4.1.2]. So) 63.65 737.62 B
+0.28 0.08 (far) 63.65 724.62 B
+0.28 0.08 (, Harlequin\325) 75.67 724.62 B
+0.28 0.08 (s Dylan implementation only has support for explicit signalling of exceptions by the pro-) 129.48 724.62 B
+(grammer) 63.65 711.62 T
+(, and we have not yet tested or used the ANDF extensions related to implicit exception handling.) 102.92 711.62 T
+3 12 Q
+(5.3) 63.65 677.95 T
+(Garbage Collector Implementation) 90.65 677.95 T
+2 11 Q
+0.23 (Our current run-time system for the Dylan producer uses a) 63.65 660.62 P
+1 F
+0.23 (conservative) 326.21 660.62 P
+2 F
+0.23 ( garbage collector) 381.8 660.62 P
+0.23 (, which requires) 460.62 660.62 P
+0.28 0.03 (minimal compiler support [G4.2.2a]. This collector manages the memory for Dylan components only \050so) 63.65 647.62 B
+0.28 0.03 (interface records are required\051. Because the collector is conservative, it never relocates objects which are) 63.65 634.62 B
+0.28 0.09 (referenced via the roots. This removes the necessity to declare local variables as) 63.65 621.62 B
+4 10 Q
+0.6 0.09 (visible) 429.46 621.62 B
+2 11 Q
+0.28 0.09 ( in ANDF) 472.08 621.62 B
+0.28 0.09 (, as) 516.45 621.62 B
+0.28 0.03 (would be necessary for a total collector [G4.2.2a]. W) 63.65 608.62 B
+0.28 0.03 (e have not yet used a) 300.46 608.62 B
+1 F
+0.28 0.03 (total) 397.56 608.62 B
+2 F
+0.28 0.03 ( garbage collector \050which) 417.9 608.62 B
+0.28 0.06 (would require the compiler to identify local variables\051 \321 and we currently have no commercial require-) 63.65 595.62 B
+(ment to do so.) 63.65 582.62 T
+0.28 0.08 (Although this document shows that it is possible to use a total garbage collector and still achieve mixed) 63.65 557.62 B
+0.17 (language support in ANDF) 63.65 544.62 P
+0.17 (, we have no plans to test this. The token libraries used by the producer do not,) 182.74 544.62 P
+(currently) 63.65 531.62 T
+(, support the speci\336cation of the compiler co-operation required by a total collector) 102.64 531.62 T
+(.) 467.72 531.62 T
+3 15 Q
+(6.) 63.65 479.95 T
+(Details of the Dylan Foreign Language Interface) 90.65 479.95 T
+2 11 Q
+0.28 0.08 (In this section, we look at how the Dylan FLI is specif) 63.65 457.62 B
+0.28 0.08 (ied, and how it is implemented by the Dylan pro-) 309.27 457.62 B
+(ducer) 63.65 444.62 T
+(.) 87.47 444.62 T
+3 12 Q
+(6.1) 63.65 410.95 T
+(Interface Speci\336cation) 90.65 410.95 T
+2 11 Q
+0.14 (It is intended that C interfaces will be speci\336ed in Dylan by means of an interface language called) 63.65 393.62 P
+1 F
+0.14 (Cr) 499.36 393.62 P
+0.14 (eole.) 510.57 393.62 P
+2 F
+0.28 0.01 (Creole) 63.65 380.62 B
+0.28 0.01 (is a language extension for Dylan proposed by Apple Computer) 96.04 380.62 B
+0.28 0.01 (, and it is hoped that it will evolve) 379.2 380.62 B
+-0.05 (into a portable standard. It allows the programmer to directly import a C header \336le \050.h\051 and have the com-) 63.65 367.62 P
+0.28 0.03 (piler perform the necessary API and ABI conversions to provide the Dylan language interface. There are) 63.65 354.62 B
+0.28 0.12 (facilities to control what is imported from a header f) 63.65 341.62 B
+0.28 0.12 (ile, name changes of imported functions, how data) 301.95 341.62 B
+(type mapping is performed, etc.) 63.65 328.62 T
+0.14 (W) 63.65 303.62 P
+0.14 (e do not yet have an implementation of Creole. T) 73.15 303.62 P
+0.14 (esting of inter) 289.98 303.62 P
+0.14 (-language working with Dylan so far has) 351.15 303.62 P
+(been performed with low-level interface information built-in to the Dylan compiler as primitives.) 63.65 290.62 T
+0.28 0.09 (The language construct that is used to import C code with Creole is the) 63.65 265.62 B
+4 10 Q
+0.6 0.09 (def) 389.41 265.62 B
+0.6 0.09 (ine) 407.68 265.62 B
+0.6 0.09 (interface) 428.8 265.62 B
+2 11 Q
+0.28 0.09 ( form. The) 483.62 265.62 B
+(code to create an interface to the standard C input and output functions would look something like this:) 63.65 252.62 T
+4 10 Q
+(def) 63.65 234.29 T
+(ine interface) 81.65 234.29 T
+(#include \322stdio.h\323;) 75.65 222.29 T
+(end interface;) 63.65 210.29 T
+2 11 Q
+0.28 0.01 (For more ref) 63.65 185.62 B
+0.28 0.01 (ined control, it is possible to selectively import only certain def) 119.34 185.62 B
+0.28 0.01 (initions - just some of the f) 400.66 185.62 B
+0.28 0.01 (ile) 520.62 185.62 B
+(handling routines for instance:) 63.65 172.62 T
+4 10 Q
+(def) 63.65 154.29 T
+(ine interface) 81.65 154.29 T
+(#include \322stdio.h\323,) 75.65 142.29 T
+(import: { \322fopen\323, \322fclose\323, \322fgetc\323, \322fputc\323 };) 87.65 130.29 T
+(end interface;) 63.65 118.29 T
+FMENDPAGE
+%%EndPage: "14" 19
+%%Page: "15" 20
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+3 8 Q
+(ESPRIT Project 6062 OMI/GLUE - D4.2.3) 63.65 766.62 T
+(Report on inter-language working in ANDF) 369.86 766.62 T
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+3 10 Q
+(15) 520.53 84.9 T
+2 11 Q
+(Creole also allows speci\336cation of how to handle renaming on a global or individual basis:) 63.65 737.62 T
+4 10 Q
+(def) 63.65 719.29 T
+(ine interface) 81.65 719.29 T
+(#include \322stdio.h\323,) 75.65 707.29 T
+(pref) 87.65 695.29 T
+(ix: \322C-\323,) 111.65 695.29 T
+(import: { \322fopen\323, \322fclose\323, \322fgetc\323,) 87.65 683.29 T
+(\322fputc\323 => f) 147.65 671.29 T
+(ile-put-character };) 219.65 671.29 T
+(end interface;) 63.65 659.29 T
+2 11 Q
+0.21 (This makes) 63.65 634.62 P
+4 10 Q
+0.46 (fopen) 117.23 634.62 P
+2 11 Q
+0.21 (,) 147.23 634.62 P
+4 10 Q
+0.46 (fclose) 152.94 634.62 P
+2 11 Q
+0.21 ( and) 188.94 634.62 P
+4 10 Q
+0.46 (fgetc) 210.74 634.62 P
+2 11 Q
+0.21 ( available to dylan as) 240.74 634.62 P
+4 10 Q
+0.46 (C-fopen) 337.42 634.62 P
+2 11 Q
+0.21 (,) 379.42 634.62 P
+4 10 Q
+0.46 (C-fclose) 385.13 634.62 P
+2 11 Q
+0.21 ( and) 433.13 634.62 P
+4 10 Q
+0.46 (C-fgetc) 454.93 634.62 P
+2 11 Q
+0.21 ( respec-) 496.93 634.62 P
+0.28 0.06 (tively) 63.65 621.62 B
+0.28 0.06 (, and explicitly renames) 88.37 621.62 B
+4 10 Q
+0.6 0.06 (fputc) 198.88 621.62 B
+2 11 Q
+0.28 0.06 ( as) 229.19 621.62 B
+4 10 Q
+0.6 0.06 (f) 244.65 621.62 B
+0.6 0.06 (ile-put-character) 250.72 621.62 B
+2 11 Q
+0.28 0.06 (. Name translations can also be handled) 353.18 621.62 B
+(by Dylan functions, so more sophisticated techniques are possible.) 63.65 608.62 T
+0.15 (As well as giving control over how C and Dylan types map with respect to one another) 63.65 583.62 P
+0.15 (, Creole provides a) 448.11 583.62 P
+0.1 (convenient set of standard mappings for common types:) 63.65 570.62 P
+4 10 Q
+0.22 (int) 313.74 570.62 P
+2 11 Q
+0.1 ( to) 331.74 570.62 P
+4 10 Q
+0.22 (<integer>) 346 570.62 P
+2 11 Q
+0.1 (,) 400 570.62 P
+4 10 Q
+0.22 (char) 405.6 570.62 P
+2 11 Q
+0.1 (to) 435.82 570.62 P
+4 10 Q
+0.22 (<character>) 447.22 570.62 P
+2 11 Q
+0.1 ( etc.) 513.22 570.62 P
+-0.01 (T) 63.65 557.62 P
+-0.01 (o explicitly ensure that a C) 69.6 557.62 P
+4 10 Q
+-0.01 (double) 190.55 557.62 P
+2 11 Q
+-0.01 ( is mapped to a Dylan) 226.55 557.62 P
+4 10 Q
+-0.01 (<double-f) 325.49 557.62 P
+-0.01 (loat>) 379.49 557.62 P
+2 11 Q
+-0.01 (, we can specify the follow-) 409.49 557.62 P
+(ing within a de\336ne interface form:) 63.65 544.62 T
+4 10 Q
+(type: { \322double\323 => <double-f) 63.65 526.29 T
+(loat> }) 237.65 526.29 T
+3 12 Q
+(6.2) 63.65 492.95 T
+(Architecture Neutrality) 90.65 492.95 T
+2 11 Q
+0.26 (The Creole interface language is portable in the sense that it permits Dylan to be mapped to C, which is a) 63.65 475.62 P
+-0 (portable language. However) 63.65 462.62 P
+-0 (, C may be used in a non-portable manner) 187.52 462.62 P
+-0 (, and it is common for C header \336les) 371.27 462.62 P
+0.11 (to include implementation-speci\336c information along with a portable interface de\336nition. ANDF producer) 63.65 449.62 P
+-0.02 (output for any source code which is compiled with respect to such a header \336le will therefore not be archi-) 63.65 436.62 P
+(tecture neutral in the ANDF sense.) 63.65 423.62 T
+0.28 0.09 (Although this is not strictly a problem related to inter) 63.65 398.62 B
+0.28 0.09 (-language working, it is worth noting that Dylan\325) 305.31 398.62 B
+0.28 0.09 (s) 527.37 398.62 B
+-0.24 (Creole interface could bene\336t from the techniques used by the C producer to minimize non-portability) 63.65 385.62 P
+-0.24 (. The) 509.28 385.62 P
+0.28 0.09 (C producer permits the interface details to include architecture neutral information specif) 63.65 372.62 B
+0.28 0.09 (ied in terms of) 465.77 372.62 B
+(ANDF tokens, using the) 63.65 359.62 T
+4 10 Q
+(#pragma) 173.34 359.62 T
+(token) 218.09 359.62 T
+2 11 Q
+( syntax.) 248.09 359.62 T
+0.28 0.01 (Since Creole parses C header f) 63.65 334.62 B
+0.28 0.01 (iles directly) 200.14 334.62 B
+0.28 0.01 (, it should be possible to extend Harlequin\325) 251.51 334.62 B
+0.28 0.01 (s implementation of) 442.86 334.62 B
+0.28 0.12 (Creole to support the same syntax as the C producer) 63.65 321.62 B
+0.28 0.12 (. This would signif) 301.17 321.62 B
+0.28 0.12 (icantly improve the architecture) 386.83 321.62 B
+0.28 0.03 (neutrality of Dylan components with respect to standard APIs. W) 63.65 308.62 B
+0.28 0.03 (e are still designing the implementation) 355.12 308.62 B
+0.28 0.09 (details of Creole \321 but it is anticipated that the Dylan producer will at least partially support) 63.65 295.62 B
+4 10 Q
+0.6 0.09 (#pragma) 489.08 295.62 B
+(token) 63.65 282.62 T
+2 11 Q
+( within the lifetime of the GLUE project.) 93.65 282.62 T
+3 12 Q
+(6.3) 63.65 248.95 T
+(Calling Functions Across the FLI) 90.65 248.95 T
+2 11 Q
+0.28 0.08 (Function calls in C and Dylan use dif) 63.65 231.62 B
+0.28 0.08 (ferent calling conventions, so the FLI must map the ABIs for each) 232.28 231.62 B
+0.28 0.03 (language. For each function that is called across the interface barrier) 63.65 218.62 B
+0.28 0.03 (, the compiler generates a stub func-) 369.11 218.62 B
+0.28 0.07 (tion to map between the calling convention of the calling language and that of the called language. This) 63.65 205.62 B
+(function is located in the Dylan component, but is implemented as though it spans the interface.) 63.65 192.62 T
+0.23 (The normal convention for passing language parameters to a Dylan function will be to use callee parame-) 63.65 167.62 P
+0.28 0.07 (ters \050although our compiler does not do this, currently\051. The FLI must, therefore, ensure that parameters) 63.65 154.62 B
+0.28 0.03 (passed in a call-out and parameters received in a call-in follow the C convention and are passed as caller) 63.65 141.62 B
+0.28 0.09 (parameters. Internally) 63.65 128.62 B
+0.28 0.09 (, our compiler represents these usages of the C convention specially in its internal) 161.63 128.62 B
+FMENDPAGE
+%%EndPage: "15" 20
+%%Page: "16" 21
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+3 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(ESPRIT Project 6062 OMI/GLUE - D4.2.3) 63.65 766.62 T
+(Report on inter-language working in ANDF) 369.86 766.62 T
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+N
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+3 10 Q
+(16) 63.65 84.9 T
+2 11 Q
+0.28 0.12 (data structures by using specialized subclasses of the normal) 63.65 737.62 B
+1 F
+0.28 0.12 (lambda) 342.4 737.62 B
+2 F
+0.28 0.12 ( and) 376.09 737.62 B
+1 F
+0.28 0.12 (combination) 398.6 737.62 B
+2 F
+0.28 0.12 ( nodes which are) 454.87 737.62 B
+(used to describe functions and calls to functions, respectively) 63.65 724.62 T
+(.) 332.7 724.62 T
+-0.2 (Low-level language extensions have been de\336ned to correspond to these nodes, and the Creole macros will) 63.65 699.62 P
+0.15 (ultimately expand into usages of these primitive extensions. The following simple example code de\336nes a) 63.65 686.62 P
+(stub function suitable for a call-in:) 63.65 673.62 T
+4 10 Q
+(def) 63.65 655.29 T
+(ine c-entry-point \322simple_test_call_back\323 \050\051) 81.65 655.29 T
+(// Now we\325re on the Dylan side of the barrier, call the real Dylan function) 75.65 643.29 T
+(simple-test-call-back\050\051;) 75.65 631.29 T
+(end c-entry-point;) 63.65 619.29 T
+0.6 0.16 (def) 63.65 594.62 B
+0.6 0.16 (ine) 82.13 594.62 B
+0.6 0.16 (c-entry-point) 103.81 594.62 B
+2 11 Q
+0.28 0.16 ( is syntactically similar to) 183.91 594.62 B
+4 10 Q
+0.6 0.16 (def) 305.79 594.62 B
+0.6 0.16 (ine) 324.27 594.62 B
+0.6 0.16 (method) 345.94 594.62 B
+2 11 Q
+0.28 0.16 (, except that the method name is) 382.92 594.62 B
+0.12 (speci\336ed as a string, to permit C\325) 63.65 581.62 P
+0.12 (s naming conventions. It does not create a \336rst-class Dylan function, but,) 209.51 581.62 P
+0.28 0.14 (in this example, the interface function) 63.65 568.62 B
+4 10 Q
+0.6 0.14 (simple_test_call_back) 240.3 568.62 B
+2 11 Q
+0.28 0.14 ( is a stub to the corresponding f) 369.16 568.62 B
+0.28 0.14 (irst-) 513.38 568.62 B
+(class Dylan function) 63.65 555.62 T
+4 10 Q
+(simple-test-call-back) 156.83 555.62 T
+2 11 Q
+(,) 282.83 555.62 T
+0.28 0.08 (Similarly) 63.65 530.62 B
+0.28 0.08 (, the following code illustrates a simple example of a f) 104.58 530.62 B
+0.28 0.08 (irst-class Dylan function which is a stub) 350.3 530.62 B
+(which performs a call-out: to the C function) 63.65 517.62 T
+4 10 Q
+(simple_test_call_out) 259.79 517.62 T
+2 11 Q
+(, passing no ar) 379.79 517.62 T
+(guments:) 443.14 517.62 T
+4 10 Q
+(def) 63.65 499.29 T
+(ine method simple-test-call-out \050\051) 81.65 499.29 T
+(primitive-call-c-entry-point\050\322simple_test_call_out\323, #f\051;) 75.65 487.29 T
+(end method;) 63.65 475.29 T
+-0.21 (primitive-call-c-entry-point) 63.65 450.62 P
+2 11 Q
+-0.09 (is the mechanism by which the call to C is made \050see section 6.7.4\051) 237.44 450.62 P
+0.28 0.03 (Dylan functions also require implementation parameters, to represent the dynamic information necessary) 63.65 425.62 B
+0 (for a Dylan function call. For a call-out these parameters are not passed. In the) 63.65 412.62 P
+4 10 Q
+0.01 (simple-test-call-out) 411.65 412.62 P
+2 11 Q
+0.28 0.21 (example, above, the XEP accepts and checks the implementation parameters according to the normal) 63.65 399.62 B
+-0.13 (Dylan conventions, but no implementation parameters need to be passed to the IEP) 63.65 386.62 P
+-0.13 (. Normally) 426.57 386.62 P
+-0.13 (, a Dylan call) 473.39 386.62 P
+0.28 0.02 (to the stub function for a call-out would be inlined anyway) 63.65 373.62 B
+0.28 0.02 (, with the caller making the call to the C func-) 325.38 373.62 B
+0.28 0.05 (tion directly because of the compiler) 63.65 360.62 B
+0.28 0.05 (\325) 228.26 360.62 B
+0.28 0.05 (s standard optimizations. This means that the technique of def) 231.37 360.62 B
+0.28 0.05 (ining) 508.83 360.62 B
+(the interface via stubs does not, typically) 63.65 347.62 T
+(, cause any speed penalty) 242.88 347.62 T
+(.) 353.66 347.62 T
+0.28 0.01 (For a call-in function the stub is not a f) 63.65 322.62 B
+0.28 0.01 (irst-class Dylan function, hence no implementation parameters are) 237.22 322.62 B
+0.21 (needed when a call-in is made. When the call is made by the stub to the real Dylan function, the compiler) 63.65 309.62 P
+(arranges to pass appropriate parameters in the same way that it would for any other call.) 63.65 296.62 T
+3 12 Q
+(6.4) 63.65 262.95 T
+(Mapping Data Across the FLI) 90.65 262.95 T
+2 11 Q
+0.28 0.13 (In general, all data passed across the FLI must be mapped to convert from a Dylan representation with) 63.65 245.62 B
+0.26 (dynamic type information to a C representation without, and vice-versa. The only exception to this is that) 63.65 232.62 P
+0.28 0.1 (it is possible to pass Dylan values directly to C without mapping \321 in this case, the value is seen as an) 63.65 219.62 B
+0.28 0 (opaque type to C. T) 63.65 206.62 B
+0.28 0 (ypes are mapped from Dylan to C for ar) 151.11 206.62 B
+0.28 0 (guments of a call-out, and for returned values) 329.19 206.62 B
+-0.1 (of a call-in. Similarly) 63.65 193.62 P
+-0.1 (, types are mapped from C to Dylan for ar) 156.74 193.62 P
+-0.1 (guments of a call-in and for returned values) 340.18 193.62 P
+(of a call-out. T) 63.65 180.62 T
+(ypes are also mapped in this way when accessing \336elds of foreign structures and arrays.) 128.25 180.62 T
+-0.22 (Data mapping actually occurs in two stages, from) 63.65 155.62 P
+1 F
+-0.22 (Dylan r) 282.8 155.62 P
+-0.22 (epr) 316.09 155.62 P
+-0.22 (esentation) 330.35 155.62 P
+2 F
+-0.22 ( to) 375.57 155.62 P
+1 F
+-0.22 (intermediate r) 389.2 155.62 P
+-0.22 (epr) 451.21 155.62 P
+-0.22 (esentation) 465.46 155.62 P
+2 F
+-0.22 ( to) 510.68 155.62 P
+1 F
+-0.22 (C) 524.31 155.62 P
+-0.01 (r) 63.65 142.62 P
+-0.01 (epr) 67.52 142.62 P
+-0.01 (esentation) 81.78 142.62 P
+2 F
+-0.01 ( \050or backwards\051. The intermediate representation is a valid Dylan representation with values) 127 142.62 P
+0.28 0.1 (which are f) 63.65 129.62 B
+0.28 0.1 (irst-class Dylan objects. It corresponds to the smallest possible amount of mapping from the) 114.14 129.62 B
+0.28 0.14 (corresponding C value which is still consistent with a valid representation, and is controlled by Creole) 63.65 116.62 B
+FMENDPAGE
+%%EndPage: "16" 21
+%%Page: "17" 22
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+3 8 Q
+(ESPRIT Project 6062 OMI/GLUE - D4.2.3) 63.65 766.62 T
+(Report on inter-language working in ANDF) 369.86 766.62 T
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+3 10 Q
+(17) 520.53 84.9 T
+2 11 Q
+0.05 (directly) 63.65 737.62 P
+0.05 (. The intermediate representation is mapped to the Dylan representation by using generic functions) 96.54 737.62 P
+0.28 0.09 (which may be specialized by the programmer) 63.65 724.62 B
+0.28 0.09 (. This permits a higher level of control than the type map-) 269.05 724.62 B
+(pings speci\336able in Creole.) 63.65 711.62 T
+0.28 0.02 (The FLI implementation def) 63.65 686.62 B
+0.28 0.02 (ines Dylan classes which correspond to the core C types. These classes iden-) 189.34 686.62 B
+-0.07 (tify the intermediate representation and the corresponding mapping to the C representation. The core types) 63.65 673.62 P
+(are sub-divided into value types and pointer types.) 63.65 660.62 T
+0.28 0.04 (The basic core pointer class is) 63.65 635.62 B
+4 10 Q
+0.6 0.04 (<c-pointer>) 201.48 635.62 B
+2 11 Q
+0.28 0.04 (. All intermediate representations for pointers are instances) 267.88 635.62 B
+0.22 (of this class, and contain the raw C pointer in a slot. A number of sub-classes of this class are provided to) 63.65 622.62 P
+0.28 0.11 (represent specif) 63.65 609.62 B
+0.28 0.11 (ic pointer types, and programmers are permitted to def) 134.44 609.62 B
+0.28 0.11 (ine their own sub-classes. Useful) 381.86 609.62 B
+(ones provided by the implementation include:) 63.65 596.62 T
+4 10 Q
+(<c-function-pointer>) 268.36 596.62 T
+2 11 Q
+(,) 388.36 596.62 T
+4 10 Q
+(<c-char*>) 393.86 596.62 T
+2 11 Q
+(,) 447.86 596.62 T
+4 10 Q
+(<c-string>) 453.36 596.62 T
+2 11 Q
+(.) 513.36 596.62 T
+0.28 0.39 (Intermediate representations for pointer types are created by calling the low-level Dylan function) 63.65 571.62 B
+4 10 Q
+0.6 0.11 (%pointer) 63.65 558.62 B
+2 11 Q
+0.28 0.11 (, which takes the raw pointer and the pointer type as ar) 112.11 558.62 B
+0.28 0.11 (guments. The notation) 361.99 558.62 B
+4 10 Q
+0.6 0.11 (%) 466.74 558.62 B
+6 F
+0.6 0.11 (name) 472.85 558.62 B
+2 11 Q
+0.28 0.11 ( is used) 497.31 558.62 B
+0.28 0.06 (consistently in our implementation to denote low-level functions which are permitted to accept or return) 63.65 545.62 B
+0.28 0.28 (values which are not f) 63.65 532.62 B
+0.28 0.28 (irst-class Dylan objects. These functions are never visible to the programmer) 167.35 532.62 B
+0.28 0.28 (.) 528.9 532.62 B
+4 10 Q
+0.16 (%pointer) 63.65 519.62 P
+2 11 Q
+0.07 ( allocates a Dylan object of the appropriate class, and initializes it\325) 111.65 519.62 P
+0.07 (s raw data slot. For example,) 404.5 519.62 P
+0.11 (the following Dylan code fragment creates a wrapped Dylan object from a C string, \050but does not perform) 63.65 506.62 P
+(data conversion to create a Dylan) 63.65 493.62 T
+4 10 Q
+(<string>) 213.32 493.62 T
+2 11 Q
+(\051:) 261.33 493.62 T
+4 10 Q
+(// convert the raw C string to an object of type <c-string>) 63.65 475.29 T
+(//) 63.65 463.29 T
+(let intermediate-string = %pointer\050raw-c-string, <c-string>\051;) 63.65 451.29 T
+(...) 63.65 439.29 T
+2 11 Q
+-0.12 (In the reverse direction, the intermediate representation of pointer types is converted to the raw representa-) 63.65 414.62 P
+0.28 0.01 (tion using the low-level Dylan function) 63.65 401.62 B
+4 10 Q
+0.6 0.01 (%pointer-data) 241.65 401.62 B
+2 11 Q
+0.28 0.01 (, which retrieves the raw pointer from the inter-) 319.77 401.62 B
+(mediate representation.) 63.65 388.62 T
+0.28 0.14 (The value classes are:) 63.65 363.62 B
+4 10 Q
+0.6 0.14 (<c-signed-char>) 166.92 363.62 B
+2 11 Q
+0.28 0.14 (,) 259.02 363.62 B
+4 10 Q
+0.6 0.14 (<c-unsigned-char>) 265.07 363.62 B
+2 11 Q
+0.28 0.14 (,) 369.44 363.62 B
+4 10 Q
+0.6 0.14 (<c-char>) 375.49 363.62 B
+2 11 Q
+0.28 0.14 (,) 424.61 363.62 B
+4 10 Q
+0.6 0.14 (<c-signed-short>) 430.67 363.62 B
+2 11 Q
+0.28 0.14 (,) 528.9 363.62 B
+4 10 Q
+0.6 0.11 (<c-unsigned-short>) 63.65 350.62 B
+2 11 Q
+0.28 0.11 (,) 173.61 350.62 B
+4 10 Q
+0.6 0.11 (<c-short>) 179.6 350.62 B
+2 11 Q
+0.28 0.11 (,) 234.58 350.62 B
+4 10 Q
+0.6 0.11 (<c-f) 240.57 350.62 B
+0.6 0.11 (loat>) 265.01 350.62 B
+2 11 Q
+0.28 0.11 (,) 295.55 350.62 B
+4 10 Q
+0.6 0.11 (<c-double>) 301.55 350.62 B
+2 11 Q
+0.28 0.11 (,) 362.64 350.62 B
+4 10 Q
+0.6 0.11 (<c-long-double>) 368.63 350.62 B
+2 11 Q
+0.28 0.11 (, which have an) 460.26 350.62 B
+0.28 0.1 (obvious correspondence with C type names. These classes are pre-def) 63.65 337.62 B
+0.28 0.1 (ined in the Creole-level interface,) 379.58 337.62 B
+0.11 (and other value classes may be derived from them using sub-classing in Dylan. The FLI never creates any) 63.65 324.62 P
+0.2 (instances of these value classes \321 the intermediate representation for the C value types is the Dylan class) 63.65 311.62 P
+4 10 Q
+0.6 0.17 (<integer>) 63.65 298.62 B
+2 11 Q
+0.28 0.17 (, apart from) 119.18 298.62 B
+4 10 Q
+0.6 0.17 (<c-f) 176.59 298.62 B
+0.6 0.17 (loat>) 201.27 298.62 B
+2 11 Q
+0.28 0.17 (,) 232.12 298.62 B
+4 10 Q
+0.6 0.17 (<c-double>) 238.24 298.62 B
+2 11 Q
+0.28 0.17 ( and) 299.94 298.62 B
+4 10 Q
+0.6 0.17 (<c-long-double>) 322.73 298.62 B
+2 11 Q
+0.28 0.17 ( which are represented as) 415.28 298.62 B
+4 10 Q
+(<single-f) 63.65 285.62 T
+(loat>) 117.65 285.62 T
+2 11 Q
+(,) 147.65 285.62 T
+4 10 Q
+(<double-f) 153.15 285.62 T
+(loat>) 207.15 285.62 T
+2 11 Q
+( and) 237.15 285.62 T
+4 10 Q
+(<extended-f) 258.53 285.62 T
+(loat>) 324.53 285.62 T
+2 11 Q
+( instead.) 354.53 285.62 T
+0.28 0 (Intermediate representations of the value types are created from the raw values using the low-level Dylan) 63.65 260.62 B
+(mapping functions) 63.65 247.62 T
+4 10 Q
+0 (%integer) 148.59 247.62 P
+2 11 Q
+(,) 196.15 247.62 T
+4 10 Q
+0 (%single-f) 201.65 247.62 P
+0 (loat) 255.65 247.62 P
+2 11 Q
+(,) 279.65 247.62 T
+4 10 Q
+0 (%double-f) 285.15 247.62 P
+0 (loat) 339.15 247.62 P
+2 11 Q
+( and) 363.15 247.62 T
+4 10 Q
+0 (%extended-f) 384.54 247.62 P
+0 (loat) 450.54 247.62 P
+2 11 Q
+(. The reverse) 474.54 247.62 T
+0.28 0.12 (mappings are performed with) 63.65 234.62 B
+4 10 Q
+0.6 0.12 (%integer-data) 200.62 234.62 B
+2 11 Q
+0.28 0.12 (,) 280.14 234.62 B
+4 10 Q
+0.6 0.12 (%single-f) 286.15 234.62 B
+0.6 0.12 (loat-data) 341.21 234.62 B
+2 11 Q
+0.28 0.12 (,) 396.26 234.62 B
+4 10 Q
+0.6 0.12 (%double-f) 402.27 234.62 B
+0.6 0.12 (loat-data) 457.33 234.62 B
+2 11 Q
+0.28 0.12 ( and) 512.39 234.62 B
+4 10 Q
+(%extended-f) 63.65 221.62 T
+(loat-data) 129.65 221.62 T
+2 11 Q
+(, respectively) 183.65 221.62 T
+(.) 241.59 221.62 T
+0.28 0.1 (The mapping between the intermediate representation and the Dylan representation is performed by the) 63.65 196.62 B
+-0.06 (Dylan generic functions) 63.65 183.62 P
+4 10 Q
+-0.12 (import-value) 171.93 183.62 P
+2 11 Q
+-0.06 ( and) 243.93 183.62 P
+4 10 Q
+-0.12 (export-value) 265.2 183.62 P
+2 11 Q
+-0.06 ( which map to and from the Dylan represen-) 337.2 183.62 P
+-0.18 (tation, respectively) 63.65 170.62 P
+-0.18 (. For example, the following methods on these generic functions specify mappings from) 146.46 170.62 P
+0.28 0.18 (the Dylan class) 63.65 157.62 B
+4 10 Q
+0.6 0.18 (<character>) 137.25 157.62 B
+2 11 Q
+0.28 0.18 ( to the intermediate representation) 205.19 157.62 B
+4 10 Q
+0.6 0.18 (<integer>) 365.95 157.62 B
+2 11 Q
+0.28 0.18 (, f) 421.54 157.62 B
+0.28 0.18 (irst forwards and then) 430.9 157.62 B
+(backwards:) 63.65 144.62 T
+4 10 Q
+(def) 63.65 126.29 T
+(ine method export-value) 81.65 126.29 T
+(\050c-class == <c-char>, value :: <character>\051) 87.65 114.29 T
+FMENDPAGE
+%%EndPage: "17" 22
+%%Page: "18" 23
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+3 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(ESPRIT Project 6062 OMI/GLUE - D4.2.3) 63.65 766.62 T
+(Report on inter-language working in ANDF) 369.86 766.62 T
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+N
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+3 10 Q
+(18) 63.65 84.9 T
+4 F
+(=> \050intermediate-representation :: <integer>\051) 87.65 738.29 T
+(as\050<integer>, value\051;) 75.65 726.29 T
+(end method;) 63.65 714.29 T
+(def) 63.65 690.29 T
+(ine method import-value) 81.65 690.29 T
+(\050dylan-class == <character>, c-class == <c-char>, value :: <integer>\051) 87.65 678.29 T
+(=> \050dylan-representation :: <character>\051) 87.65 666.29 T
+(as\050<character>, value\051;) 75.65 654.29 T
+(end method;) 63.65 642.29 T
+3 12 Q
+(6.5) 63.65 608.95 T
+(Maintaining the Dynamic Environment) 90.65 608.95 T
+2 11 Q
+0.28 0.17 (The dynamic environment is represented as a pointer to a chain of stack-allocated frames, where each) 63.65 591.62 B
+0.15 (frame is associated with a single entry in the environment [G4.2.1]. This pointer is stored in a global vari-) 63.65 578.62 P
+(able which is visible to the implementation, but not the Dylan programmer) 63.65 565.62 T
+(.) 391.8 565.62 T
+0.28 0.03 (The neutral interface does not support accessing the dynamic environment, so C functions cannot explic-) 63.65 540.62 B
+-0.25 (itly modify it. C functions could implicitly modify it by using) 63.65 527.62 P
+4 10 Q
+-0.55 (longjmp) 334.69 527.62 P
+2 11 Q
+-0.25 ( to transfer control to a point before) 376.69 527.62 P
+0.28 0.03 (the establishment of a dynamic construct \321 but this is def) 63.65 514.62 B
+0.28 0.03 (ined to be disallowed \050see section 4.5\051. Hence,) 323.62 514.62 B
+0.1 (provided that the restriction on) 63.65 501.62 P
+4 10 Q
+0.22 (longjmp) 202.56 501.62 P
+2 11 Q
+0.1 ( is followed, it is known that the dynamic environment cannot be) 244.56 501.62 P
+0.28 0 (changed between a call-out and a call-in. Therefore the value in the dynamic environment global variable) 63.65 488.62 B
+-0.14 (at the time of a call-in will be correct, and no code is necessary in the FLI implementation to maintain con-) 63.65 475.62 P
+(sistency) 63.65 462.62 T
+(.) 98.38 462.62 T
+3 12 Q
+(6.6) 63.65 428.95 T
+(Garbage Collection) 90.65 428.95 T
+2 11 Q
+0.28 0.03 (Harlequin\325) 63.65 411.62 B
+0.28 0.03 (s Dylan implementation uses a conservative garbage collector which is used to provide a local) 110.97 411.62 B
+-0.04 (memory management service for Dylan components only) 63.65 398.62 P
+-0.04 (. As discussed in section 4.4, this implies that the) 315.66 398.62 P
+0.28 0.04 (FLI must maintain interface records for each managed object passed as a parameter in a foreign call. All) 63.65 385.62 B
+(managed objects passed across the interface must be recorded to indicate that they are both live and static.) 63.65 372.62 T
+0.27 (The FLI is able to manipulate objects which are not allocated by Dylan. In this case, these objects are not) 63.65 347.62 P
+0.28 0.1 (managed by the garbage collector) 63.65 334.62 B
+0.28 0.1 (, although such objects may be enclosed in a wrapper giving dynamic) 215.94 334.62 B
+-0.09 (type information for manipulation by Dylan code. In this case, the wrapper is managed by the garbage col-) 63.65 321.62 P
+0 (lector) 63.65 308.62 P
+0 (, while the foreign data is not. If such an object is passed back across the FLI, then it would typically) 88.25 308.62 P
+0.28 0.02 (be unwrapped f) 63.65 295.62 B
+0.28 0.02 (irst, so the object passed to the C function is unmanaged and not recorded in the interface) 132.29 295.62 B
+(record.) 63.65 282.62 T
+-0.02 (C objects which are passed across the FLI from C to Dylan, or vice-versa, are not managed by the garbage) 63.65 257.62 P
+0.28 0.02 (collector \050because they are not Dylan objects\051, so the collector need take no steps to support them. Dylan) 63.65 244.62 B
+-0.03 (objects which are passed to Dylan by a C function, either as a parameter of a call-in or as a result of a call-) 63.65 231.62 P
+0.28 0.09 (out, must have been passed to C some time before \321 and it is assumed that the interface record will be) 63.65 218.62 B
+(maintained at the time the object is \336rst passed.) 63.65 205.62 T
+-0.22 (For managed objects which are passed to C with dynamic extent during a call-out, the interface record may) 63.65 180.62 P
+0.07 (be implemented by simply ensuring that the object is available as a local variable root for the garbage col-) 63.65 167.62 P
+0.16 (lector \050for example by pushing it on the stack\051. Since we are using a conservative collector) 63.65 154.62 P
+0.16 (, this is enough) 464.56 154.62 P
+0.28 0.03 (to ensure that the object is treated as both live and static. This requires careful implementation in ANDF) 63.65 141.62 B
+0.28 0.03 (,) 528.9 141.62 B
+-0.07 (since installers are permitted to reduce the scope of local variables as a semantics-preserving optimization,) 63.65 128.62 P
+0.28 0.12 (and it is possible that the scope of the local variable would end before the call-out across the FLI. This) 63.65 115.62 B
+FMENDPAGE
+%%EndPage: "18" 23
+%%Page: "19" 24
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+3 8 Q
+(ESPRIT Project 6062 OMI/GLUE - D4.2.3) 63.65 766.62 T
+(Report on inter-language working in ANDF) 369.86 766.62 T
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+3 10 Q
+(19) 520.53 84.9 T
+2 11 Q
+0.28 0.08 (installer optimization can be disabled by def) 63.65 737.62 B
+0.28 0.08 (ining in ANDF that the variable is) 263.24 737.62 B
+4 10 Q
+0.6 0.08 (visible) 421.07 737.62 B
+2 11 Q
+0.28 0.08 (. In our current) 463.63 737.62 B
+(implementation, this is the only time that the declaration is used.) 63.65 724.62 T
+0.28 0.14 (W) 63.65 699.62 B
+0.28 0.14 (e have not yet implemented support for passing Dylan objects to C with indef) 73.29 699.62 B
+0.28 0.14 (inite extent, and this is) 427.95 699.62 B
+0 (probably a rare event. The design is simple, however) 63.65 686.62 P
+0 (. If an object is recorded in this way) 295.85 686.62 P
+0 (, then it should be) 453.11 686.62 P
+0.16 (added to a hash-table of objects. The existence of the object in the table is enough to signify that it is live.) 63.65 673.62 P
+0.28 0.01 (The table must also indicate that the object is to be treated as static, which is implicit for the Boehm con-) 63.65 660.62 B
+0.03 (servative collector) 63.65 647.62 P
+0.03 (, but may require special allocation of the table for a more complex conservative collec-) 144.19 647.62 P
+0.24 (tor) 63.65 634.62 P
+0.24 (. The design of the corresponding) 75.26 634.62 P
+4 10 Q
+0.52 (free) 227.3 634.62 P
+2 11 Q
+0.24 ( function is also simple: this should remove the object from the) 251.3 634.62 P
+(interface table.) 63.65 621.62 T
+-0 (If a Dylan object is passed to C as the result of a call-in, then it must be treated as an object with inde\336nite) 63.65 596.62 P
+(extent, and inserted in the interface table as for call-out parameters with inde\336nite extent.) 63.65 583.62 T
+0.28 0.01 (If a total collector were being used instead, then it would be necessary to explicitly set the static property) 63.65 558.62 B
+-0.17 (of objects in the interface records, in some algorithm-dependent manner) 63.65 545.62 P
+-0.17 (. In addition, it would be necessary) 378.66 545.62 P
+0.28 0.25 (to preserve the chain of live variables in a global variable, as with the dynamic environment, and as) 63.65 532.62 B
+(described in [G4.2.2a].) 63.65 519.62 T
+3 12 Q
+(6.7) 63.65 485.95 T
+(An Example Interface) 90.65 485.95 T
+2 11 Q
+(The following simple example shows how the C functions) 63.65 468.62 T
+4 10 Q
+(fopen) 323.05 468.62 T
+2 11 Q
+( and) 353.05 468.62 T
+4 10 Q
+(fseek) 374.43 468.62 T
+2 11 Q
+( are mapped into Dylan.) 404.43 468.62 T
+3 10 Q
+(6.7.1) 63.65 444.29 T
+(C Header File) 90.65 444.29 T
+2 11 Q
+(Here is the relevant section from) 63.65 430.62 T
+4 10 Q
+(stdio.h) 210.28 430.62 T
+2 11 Q
+(:) 252.28 430.62 T
+4 10 Q
+(typedef struct) 63.65 400.29 T
+({) 63.65 388.29 T
+(int) 75.65 376.29 T
+( _cnt;) 159.65 376.29 T
+(/* number of available characters in buffer */) 225.65 376.29 T
+(unsigned char) 75.65 364.29 T
+(*) 153.65 364.29 T
+(_ptr;) 165.65 364.29 T
+(/* next character from/to here in buffer */) 225.65 364.29 T
+(unsigned char) 75.65 352.29 T
+(*) 153.65 352.29 T
+(_base;) 165.65 352.29 T
+(/* the buffer */) 225.65 352.29 T
+(unsigned char) 75.65 340.29 T
+(_f) 165.65 340.29 T
+(lag;) 177.65 340.29 T
+(/* the state of the stream */) 225.65 340.29 T
+(unsigned char) 75.65 328.29 T
+(f) 165.65 328.29 T
+(ile;) 171.65 328.29 T
+(/* UNIX System f) 225.65 328.29 T
+(ile descriptor */) 321.65 328.29 T
+(} FILE;) 63.65 316.29 T
+(FILE *fopen\050char * f) 63.65 292.29 T
+(ilename, char * mode\051;) 183.65 292.29 T
+(int fseek \050FILE * stream, long offset, int ptrname\051;) 63.65 268.29 T
+3 F
+(6.7.2) 63.65 232.29 T
+(Dylan Interface Speci\336cation) 90.65 232.29 T
+2 11 Q
+(The following code must be written by the programmer:) 63.65 218.62 T
+4 10 Q
+(// This is the actual Creole interface specif) 63.65 188.29 T
+(ication.) 333.65 188.29 T
+(// It creates the interface functions which ultimately call C,) 63.65 176.29 T
+(// and explicitly maps the low-level C type char* into the intermediate) 63.65 164.29 T
+(// representation <c-string>.) 63.65 152.29 T
+(def) 63.65 128.29 T
+(ine interface) 81.65 128.29 T
+(#include \322stdio,h\323,) 75.65 116.29 T
+FMENDPAGE
+%%EndPage: "19" 24
+%%Page: "20" 25
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+3 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(ESPRIT Project 6062 OMI/GLUE - D4.2.3) 63.65 766.62 T
+(Report on inter-language working in ANDF) 369.86 766.62 T
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+N
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+3 10 Q
+(20) 63.65 84.9 T
+4 F
+(pref) 87.65 738.29 T
+(ix: \322c-\323) 111.65 738.29 T
+(import: {\322fopen\323, \322fseek\323, \322FILE *\323 => <c-FILE*>},) 87.65 726.29 T
+(type: {\322char *\323 => <c-string>};) 87.65 714.29 T
+(end interface;) 63.65 702.29 T
+3 F
+(6.7.3) 63.65 678.29 T
+(Dylan Primitive Interface) 90.65 678.29 T
+2 11 Q
+(The interface speci\336cation actually macro-expands into the following primitive Dylan code:) 63.65 664.62 T
+4 10 Q
+(// Create the C type for FILE* pointers. This appears as an opaque type) 63.65 634.29 T
+(// to Dylan, because the struct type FILE was not imported in Creole) 63.65 622.29 T
+(//) 63.65 610.29 T
+(def) 63.65 598.29 T
+(ine class <c-FILE*> \050<c-pointer>\051) 81.65 598.29 T
+(end class;) 63.65 586.29 T
+(// Create the stub function for calling fopen) 63.65 550.29 T
+(// Note that the Creole implementation provides default mappings) 63.65 538.29 T
+(// between <C-string> and <string>, including methods on import-value and) 63.65 526.29 T
+(// export-value.) 63.65 514.29 T
+(//) 63.65 502.29 T
+(def) 63.65 490.29 T
+(ine method c-fopen) 81.65 490.29 T
+(\050f) 81.65 478.29 T
+(ilename :: <string>, mode :: <string>\051 => \050result :: <c-FILE*>\051) 93.65 478.29 T
+(// Map all the arguments to the intermediate representation) 75.65 454.29 T
+(let f) 75.65 442.29 T
+(ilename_ir = export-value\050<c-string>, f) 105.65 442.29 T
+(ilename\051;) 339.65 442.29 T
+(let mode_ir) 75.65 430.29 T
+(= export-value\050<c-string>, mode\051;) 171.65 430.29 T
+(// The real call into C) 75.65 406.29 T
+(let res_raw = primitive-call-c-entry-point) 75.65 394.29 T
+(\050\322fopen\323, <c-FILE*>,) 177.65 382.29 T
+(%pointer-data\050f) 183.65 370.29 T
+(ilename_ir\051 :: <c-string>,) 273.65 370.29 T
+( %pointer-data\050mode_ir\051) 177.65 358.29 T
+(:: <c-string>\051;) 345.65 358.29 T
+(// Return the result, after mapping through both stages) 75.65 334.29 T
+(import-value\050<c-FILE*>, <c-FILE*>, %pointer\050res_raw, <c-FILE*>\051\051) 75.65 322.29 T
+(end method;) 63.65 310.29 T
+(// Create the stub function for calling fseek.) 63.65 274.29 T
+(//) 63.65 262.29 T
+(def) 63.65 250.29 T
+(ine method c-fseek) 81.65 250.29 T
+(\050stream :: <c-FILE*>, offset :: <integer>, ptrname :: <integer>\051) 81.65 238.29 T
+(=> \050result :: <integer>\051) 81.65 226.29 T
+(// Map all the arguments to the intermediate representation) 75.65 202.29 T
+(let stream_ir) 75.65 190.29 T
+(= export-value\050<c-FILE*>, stream\051;) 165.65 190.29 T
+(let offset_ir) 75.65 178.29 T
+(= export-value\050<c-long>, offset\051;) 165.65 178.29 T
+(let ptrname_ir = export-value\050<c-int>, ptrname\051;) 75.65 166.29 T
+(// The real call into C) 75.65 142.29 T
+(let res_raw = primitive-call-c-entry-point) 75.65 130.29 T
+(\050\322fseek\323, <integer>,) 177.65 118.29 T
+FMENDPAGE
+%%EndPage: "20" 25
+%%Page: "21" 26
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+3 8 Q
+(ESPRIT Project 6062 OMI/GLUE - D4.2.3) 63.65 766.62 T
+(Report on inter-language working in ANDF) 369.86 766.62 T
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+3 10 Q
+(21) 520.53 84.9 T
+4 F
+(%pointer-data\050stream_ir\051) 183.65 738.29 T
+(:: <c-FILE*>,) 345.65 738.29 T
+(%integer-data\050mode_ir\051) 183.65 726.29 T
+(:: <c-long>,) 345.65 726.29 T
+(%integer-data\050ptrname_ir\051) 183.65 714.29 T
+(:: <c-int>\051;) 345.65 714.29 T
+(// Return the result, after mapping through both stages) 75.65 690.29 T
+(import-value\050<integer>, <c-int>, %integer\050res_raw\051\051) 75.65 678.29 T
+(end method;) 63.65 666.29 T
+3 F
+(6.7.4) 63.65 642.29 T
+(Glossary of Low-Level Functions and Primitives) 90.65 642.29 T
+0 12 Q
+(%integer) 81.65 609.95 T
+2 F
+(raw-integer => <integer>) 243.65 609.95 T
+([Function]) 480.98 609.95 T
+2 11 Q
+0.11 (Converts a C integer to a Dylan integer) 81.65 590.62 P
+0.11 (. Currently this is implemented as a tagging operation \050a shift\051.) 254.39 590.62 P
+(In the future this may be a boxing operation instead.) 81.65 577.62 T
+0 12 Q
+(%integer-data) 81.65 545.95 T
+2 F
+(<integer> => raw-integer) 243.65 545.95 T
+([Function]) 480.98 545.95 T
+2 11 Q
+0.64 (The inverse of %integer) 81.65 526.62 P
+0.64 (. Converts a Dylan integer to a C integer) 188.97 526.62 P
+0.64 (. Currently this is implemented as a) 371.64 526.62 P
+(shift. In the future, this may be an indirection instead.) 81.65 513.62 T
+0 12 Q
+(%pointer) 81.65 481.95 T
+2 F
+(raw-pointer, wrapper-type => wrapper-type) 243.65 481.95 T
+([Function]) 480.98 481.95 T
+2 11 Q
+(Converts a C pointer to a Dylan object of the supplied wrapper type.) 81.65 462.62 T
+0 12 Q
+(%pointer-data) 81.65 430.95 T
+2 F
+(wrapper-type => raw-pointer) 243.65 430.95 T
+([Function]) 480.98 430.95 T
+2 11 Q
+(The inverse of %pointer) 81.65 411.62 T
+(. Converts a wrapped pointer into a raw pointer using an indirection.) 187.65 411.62 T
+0 12 Q
+(primitive-call-c-entry-point) 81.65 379.95 T
+2 F
+(<string>, result-type,) 243.65 379.95 T
+0 F
+(#rest) 347.84 379.95 T
+2 F
+(arg-type-pairs) 376.16 379.95 T
+([Primitive]) 478.98 379.95 T
+2 11 Q
+0.38 (Primitive for calling C functions. The \336rst ar) 81.65 360.62 P
+0.38 (gument is the name of the C function to call, as a string,) 280.86 360.62 P
+-0.05 (the second ar) 81.65 347.62 P
+-0.05 (gument is the result type. The remaining ar) 139.39 347.62 P
+-0.05 (guments are the raw values to be passed to the) 328.3 347.62 P
+0.63 (C function, along with their associated C types. The raw result from the C function is returned. This) 81.65 334.62 P
+(primitive maps directly onto ANDF\325) 81.65 321.62 T
+(s) 242.37 321.62 T
+4 10 Q
+(apply-proc) 249.4 321.62 T
+2 11 Q
+( construct.) 309.4 321.62 T
+3 15 Q
+(7.) 63.65 282.95 T
+(Conclusions) 90.65 282.95 T
+2 11 Q
+0.28 0.22 (The reusable component model of software development makes it possible for each component to be) 63.65 260.62 B
+0.28 0.12 (implemented in any language provided that the component conforms to the constraints of some chosen) 63.65 247.62 B
+0.28 0.1 (neutral interface language. In practice, C is often chosen as a neutral language \321 although higher) 63.65 234.62 B
+0.28 0.1 (-level) 506.12 234.62 B
+(interface languages exist and may be more appropriate for some programming domains.) 63.65 221.62 T
+-0 (It is possible to combine Dylan code with components written in other languages by using C as the neutral) 63.65 202.62 P
+0.28 0.06 (interface. Dylan may also be combined using a higher) 63.65 189.62 B
+0.28 0.06 (-level interface language, as ultimately the higher) 305.9 189.62 B
+0.28 0.06 (-) 527.98 189.62 B
+-0.12 (level interfaces are typically de\336ned in terms of C. When Dylan is used in a mixed-language system in this) 63.65 176.62 P
+-0.1 (way) 63.65 163.62 P
+-0.1 (, the other components may be used without modi\336cation, provided that they follow some simple rules) 81.26 163.62 P
+-0.1 (of valid component design. There is therefore no cost to foreign components when they are combined with) 63.65 150.62 P
+(Dylan components.) 63.65 137.62 T
+FMENDPAGE
+%%EndPage: "21" 26
+%%Page: "22" 27
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+3 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(ESPRIT Project 6062 OMI/GLUE - D4.2.3) 63.65 766.62 T
+(Report on inter-language working in ANDF) 369.86 766.62 T
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+N
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+3 10 Q
+(22) 63.65 84.9 T
+2 11 Q
+-0.27 (If a system contains several Dylan components, as well as foreign components, then the Dylan components) 63.65 737.62 P
+0.28 0.12 (may be combined with each other using Dylan as the private interface language. This forms a group of) 63.65 724.62 B
+(Dylan components which communicates with the foreign components across the neutral interface.) 63.65 711.62 T
+0.28 0.03 (The neutral interface language does not support the dynamic features of Dylan, so these features are hid-) 63.65 686.62 B
+-0.15 (den at the interface. W) 63.65 673.62 P
+-0.15 (ithin a Dylan group of components, however) 162.5 673.62 P
+-0.15 (, full use may be made of all Dylan fea-) 358.23 673.62 P
+0.28 0.02 (tures. The responsibility for maintaining these dynamic features around interface calls and preserving the) 63.65 660.62 B
+0.07 (mapping between Dylan and C belongs to the Dylan) 63.65 647.62 P
+1 F
+0.07 (FLI) 297.4 647.62 P
+2 F
+0.07 ( \050Foreign Language Interface\051. This acts as a bar-) 313.9 647.62 P
+(rier between Dylan and C code.) 63.65 634.62 T
+0.07 (In order to maintain Dylan\325) 63.65 609.62 P
+0.07 (s dynamic environment for a Dylan group in a heterogeneous system, it is nec-) 184.3 609.62 P
+-0.12 (essary to restrict the use of) 63.65 596.62 P
+4 10 Q
+-0.25 (longjmp) 183.32 596.62 P
+2 11 Q
+-0.12 ( \050or equivalent mechanisms in other languages\051.) 225.32 596.62 P
+4 10 Q
+-0.25 (Longjmp) 438.36 596.62 P
+2 11 Q
+-0.12 ( may not be) 480.36 596.62 P
+0.28 (used to transfer control past any Dylan function invocations \321 although a higher) 63.65 583.62 P
+0.28 (-level Dylan mechanism) 423.56 583.62 P
+0.28 0.02 (may be used instead. If this restriction is followed, Dylan and foreign function invocations may be freely) 63.65 570.62 B
+(inter) 63.65 557.62 T
+(-mixed. This restriction is considered by us to be normal for good component design, anyway) 83.59 557.62 T
+(.) 494.72 557.62 T
+0.22 (Dylan, and some other languages, have their own exception models with the ability to establish exception) 63.65 532.62 P
+0.28 0.07 (handlers for dynamic contexts. These models can only be unif) 63.65 519.62 B
+0.28 0.07 (ied if they are combined with an interface) 343.09 519.62 B
+-0.16 (language which has high-level features to support dynamic exceptions. C considers only static handlers for) 63.65 506.62 P
+-0.07 (signals, and does not support these features, so only exceptions which occur on the Dylan side of the inter-) 63.65 493.62 P
+(face can be detected and handled by Dylan code.) 63.65 480.62 T
+0.28 0.07 (The Dylan interface to C may be specif) 63.65 455.62 B
+0.28 0.07 (ied using the Dylan extension language) 240.74 455.62 B
+1 F
+0.28 0.07 (Cr) 421.01 455.62 B
+0.28 0.07 (eole) 432.35 455.62 B
+2 F
+0.28 0.07 (. It may be imple-) 450.95 455.62 B
+0.26 (mented with a relatively small set of primitives which are ultimately implementable either in ANDF or in) 63.65 442.62 P
+0.28 0 (other compiler output formats. The) 63.65 429.62 B
+1 F
+0.28 0 (token interface) 222.15 429.62 B
+2 F
+0.28 0 ( extensions used by the C producer \050with the) 288.15 429.62 B
+4 10 Q
+0.6 0 (#pragma) 489.63 429.62 B
+0.6 0.03 (token) 63.65 416.62 B
+2 11 Q
+0.28 0.03 ( construct\051 may be appropriate for inclusion into Creole, leading to architecture neutrality of com-) 93.8 416.62 B
+(piler output.) 63.65 403.62 T
+0.28 0.03 (The overhead of the Dylan code to implement the interface is usually minimal, depending on the amount) 63.65 378.62 B
+-0.26 (of data-conversion required. Data conversion is necessary to convert between Dylan and C representations,) 63.65 365.62 P
+0.05 (and is dependent on details of the Dylan implementation. The cost is not related to ANDF) 63.65 352.62 P
+0.05 (. It is fundamen-) 458.8 352.62 P
+(tal to the design of the Dylan language that data must be represented dif) 63.65 339.62 T
+(ferently from C.) 379.64 339.62 T
+0.28 0.02 (The need to support garbage collection in the presence of unco-operative components leads to some con-) 63.65 314.62 B
+0.1 (straints on the design of the garbage collector) 63.65 301.62 P
+0.1 (, and the implementation of the FLI. Harlequin\325) 264.01 301.62 P
+0.1 (s design uses) 474.01 301.62 P
+0.28 0.06 (a conservative collector) 63.65 288.62 B
+0.28 0.06 (, which minimizes the complexity of the interface. The garbage collector restric-) 169.7 288.62 B
+(tions are necessary for mixed-language integration in general, and are not imposed by ANDF speci\336cally) 63.65 275.62 T
+(.) 525.76 275.62 T
+0.21 (Dylan may also be combined with other high-level components via the same type of interface, although it) 63.65 250.62 P
+0.28 0.04 (may be advantageous to combine them with a higher) 63.65 237.62 B
+0.28 0.04 (-level interface instead. In principle, even two com-) 299.94 237.62 B
+0.28 0.07 (plex sub-systems such as garbage collectors can both be made to work without hinderance to each other) 63.65 224.62 B
+(providing that they both follow some simple guidelines.) 63.65 211.62 T
+0.28 0.01 (All the costs and restrictions mentioned above are related to mixed-language integration of Dylan in gen-) 63.65 186.62 B
+0.06 (eral. ANDF imposes no barriers, and adds no direct cost, to the support of this integration. ANDF\325) 63.65 173.62 P
+0.06 (s role is) 497.3 173.62 P
+(purely bene\336cial, by the nature of its architecture neutrality) 63.65 160.62 T
+(.) 324.13 160.62 T
+FMENDPAGE
+%%EndPage: "22" 27
+%%Page: "23" 28
+595.3 841.9 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+63.65 780.95 531.65 780.95 2 L
+0.5 H
+0 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+3 8 Q
+(ESPRIT Project 6062 OMI/GLUE - D4.2.3) 63.65 766.62 T
+(Report on inter-language working in ANDF) 369.86 766.62 T
+63.65 96.95 531.65 96.95 2 L
+2 Z
+N
+3 10 Q
+(23) 520.53 84.9 T
+3 15 Q
+(8.) 63.65 734.95 T
+(References) 90.65 734.95 T
+2 10 Q
+([BW88]) 63.65 713.29 T
+0.25 0.06 (Boehm, H-J., W) 117.65 713.29 B
+0.25 0.06 (eiser) 183.48 713.29 B
+0.25 0.06 (, M., \322Garbage Collection in an Uncooperative Environment\323, Software Practice) 202.27 713.29 B
+(and Experience, vol. 18, #9, September 1988) 117.65 701.29 T
+([DIRM94]) 63.65 683.29 T
+0.25 0.04 (Apple Computer) 117.65 683.29 B
+0.25 0.04 (,) 185.03 683.29 B
+1 F
+0.25 0.04 (Dylan \050TM\051 Interim Refer) 190.37 683.29 B
+0.25 0.04 (ence Manual) 295.36 683.29 B
+2 F
+0.25 0.04 (, Browsable on the W) 348.01 683.29 B
+0.25 0.04 (orld W) 435.99 683.29 B
+0.25 0.04 (ide W) 464.14 683.29 B
+0.25 0.04 (eb through) 487.96 683.29 B
+(http://www) 117.65 671.29 T
+(.cambridge.apple.com/dylan/dylan.html, April 1994) 162.56 671.29 T
+([G4.1.2]) 63.65 653.29 T
+0.25 0.05 (Ian Currie,) 117.65 653.29 B
+1 F
+0.25 0.05 (Pr) 164.51 653.29 B
+0.25 0.05 (oposed Extensions to TDF for Ada and Lisp) 174.23 653.29 B
+2 F
+0.25 0.05 (, GLUE deliverable 4.1.2, DRA, September) 353.67 653.29 B
+(1993) 117.65 641.29 T
+([G4.2.1]) 63.65 623.29 T
+(T) 117.65 623.29 T
+(ony Mann,) 123.06 623.29 T
+1 F
+(TDF support r) 168.89 623.29 T
+(equir) 226.86 623.29 T
+(ed by Lisp) 247.6 623.29 T
+2 F
+(, GLUE deliverable 4.2.1, Harlequin Ltd., April 1993) 288.71 623.29 T
+([G4.2.2a]) 63.65 605.29 T
+0.06 (T) 117.65 605.29 P
+0.06 (ony Mann,) 123.06 605.29 P
+1 F
+0.06 (Initial Evaluation of TDF Support for Garbage Collection) 169.02 605.29 P
+2 F
+0.06 (, GLUE deliverable 4.2.2a, Har-) 402.54 605.29 P
+(lequin Ltd., December 1993) 117.65 593.29 T
+([G4.2.2b]) 63.65 575.29 T
+0.25 0.06 (Ian Piumarta,) 117.65 575.29 B
+1 F
+0.25 0.06 (Description and Evaluation of the Initial Dylan Pr) 175.31 575.29 B
+0.25 0.06 (oducer and Runtime Support) 381.98 575.29 B
+2 F
+0.25 0.06 (, GLUE) 499.46 575.29 B
+(deliverable 4.2.2b, Harlequin Ltd., May 1994) 117.65 563.29 T
+([TDFspec]) 63.65 545.29 T
+(DRA Malvern,) 117.65 545.29 T
+1 F
+(TDF Speci\336cation, Issue 2.1) 180.14 545.29 T
+2 F
+(, June 1993) 293.74 545.29 T
+([W) 63.65 527.29 T
+(ilson]) 76.02 527.29 T
+(Paul R. W) 117.65 527.29 T
+(ilson,) 158.64 527.29 T
+1 F
+(Unipr) 183.09 527.29 T
+(ocessor Garbage Collection T) 206.61 527.29 T
+(echniques) 326.52 527.29 T
+2 F
+(, University of T) 366.51 527.29 T
+(exas, 1992) 432.47 527.29 T
+FMENDPAGE
+%%EndPage: "23" 28
+%%Trailer
+%%BoundingBox: 0 0 595.3 841.9
+%%PageOrder: Ascend
+%%Pages: 28
+%%DocumentFonts: Times-Bold
+%%+ Times-Italic
+%%+ Times-Roman
+%%+ Helvetica-Bold
+%%+ Courier
+%%+ Courier-Bold
+%%+ Courier-Oblique
+%%EOF

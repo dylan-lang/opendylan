@@ -1,0 +1,40 @@
+
+#  Dylan libraries for interfacing with the Win32 API (Microsoft Windows)
+#
+#  This file controls the generation of source files that are created
+#  automatically by adapting information from the Microsoft header files.
+
+# Copyright: 1998 Functional Objects, Inc.  All rights reserved.
+
+# $HopeName$
+# $Date: 2004/03/12 00:10:28 $
+
+WIN32-REGISTRY=winreg.dylan regconst.dylan library.dylan
+
+all: $(WIN32-REGISTRY)
+
+winreg: $(WIN32-REGISTRY)
+
+COMDIR=../win32-common
+
+include $(COMDIR)/sources.mak
+
+library.dylan: library.src winreg.exp winnt.exp
+
+winreg.dylan: $(MSH)winreg.h $(WINPAT) $(PATTERNS) more.pat \
+		$(COMDIR)/obsolete-names.text
+	$(GEMA) -f $(WINPAT)  -f $(PATTERNS)  $(FULL-OPTIONS) \
+		-f $(COMDIR)/copyright.pat  -f $(COMDIR)/wincom.pat \
+		-f more.pat  -module Win32-Registry \
+		-out $@  -in $(MSH)winreg.h
+
+# Need to extract just the "REG_..." and "KEY_..." constants from "winnt.h":
+regconst.dylan: $(MSH)winnt.h $(WINPAT) $(PATTERNS) make-sources constants.dat
+	$(GEMA) -f $(WINPAT)  -f $(PATTERNS)  $(FULL-OPTIONS) \
+		-f $(COMDIR)/copyright.pat  -f more.pat \
+		-module Win32-Registry  -only constants.dat \
+		-p 'typedef\ <i>\W<i>\W\{<matchparen>\}*\;=' \
+		-out $@  -in $(MSH)winnt.h
+
+clean:
+	rm -f $(WIN32-REGISTRY) *.bak win*.exp

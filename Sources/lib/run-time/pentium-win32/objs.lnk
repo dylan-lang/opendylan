@@ -1,0 +1,4 @@
+collector.obj
+runtime.obj
+hacks.obj
+win32-threads-primitives.obj

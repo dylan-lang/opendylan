@@ -1,0 +1,144 @@
+! Convert HTML to LaTeX
+
+! case insensitive
+@set-switch{i;1}
+! literals:
+@set-syntax{L;\/}
+
+\B=\%% "@outpath" generated @just-date{@datime} by "@getenv{USER;}"\
+  \n%% Converted from "@inpath" dated @just-date{@file-time}\n\n\
+  \\begin\{document\}\n\n\\chardef\\ttlb\=\`\\\{\n\\chardef\\ttrb\=\`\\\}\n
+
+\E=\N\n\\end\{document\}\n
+
+\<\!-- <P> --\>=\% $1\n
+
+\&lt\;=\<
+\&gt\;=\>
+\&amp\;=\\\&
+\&quot\;="
+\&\#<D>\;=@int-char{$1}
+\{=\\\{
+\}=\\\}
+\%=\\\%
+\$=\\\$
+\#=\\\#
+_=\\_
+\&nbsp\;=\~
+\==\\\=
+
+"<quot>"=``@{$1}''
+quot:"=@fail
+quot:\<P\>=@fail
+quot:\<LI\>=@fail
+quot:\<<I><u>\>#\</$1\>=$0
+quot:\<=@fail
+"\L#"=``#''
+
+!\<BR\>=\\\\
+\<BR\>=\\newline 
+\<P\>\W=\N\n
+\N\W\n=
+
+\<HEAD\>=
+\<\/HEAD\>=
+\<BODY\>=
+\<\/BODY\>=
+\<HTML\>=
+\<\/HTML\>=@end
+\<A <match>\>#\</A\>=#
+match:\<#\>=\<#\>
+
+\<TITLE\>#\</TITLE\>=\\title\{\\bf #\}
+\<H1\>#\</H1\>=\\title\{\\bf #\}
+\<H2\>Part <D>\</H2\>\<H1\>#\</H1\>=\\part\{#\}
+\<H2\>Chapter <D>\</H2\>\W\<H1\>#\</H1\>=\\chapter\{#\}
+\<H2\>#\</H2\>=\N\n\\section\{#\}
+\<H3\>#\</H3\>=\\subsection\{#\}
+\<H4\>#\</H4\>=\\subsubsection\{#\}
+\<H5\>#\</H5\>=\\paragraph\{#\}
+\<H6\>#\</H6\>=\\subparagraph\{#\}
+
+\<PRE\><pre>\</PRE\>=\\begin\{verbatim\}$1\\end\{verbatim\}
+pre:\&<L>\;=@{$0}
+
+\<DL\>=\\begin\{description\}
+\<LI\>=\\item ;
+\<DT\>#\<DD\>=\\item\[@fixarg{#}\]
+\</DL\>=\\end\{description\}
+\<UL\>=\\begin\{itemize\}
+\</UL\>=\\end\{itemize\}
+\<OL\>=\\begin\{enumerate\}
+\</OL\>=\\end\{enumerate\}
+
+! idiosyncratic TeX doesn't allow \verb in arguments.
+fixarg:\A\S=;\S\Z=;
+fixarg:\\verb<-L1>*$1=\{\\tt @vb{*}\}
+fixarg:\\<-L1>=$0
+! can't use "\{" in "\tt" enviroment because it uses the wrong font.
+vb:\{<Y0>=\\ttlb;
+vb:\}<Y0>=\\ttrb;
+vb:\{=\\ttlb ;
+vb:\}=\\ttrb ;
+vb:_=\\_;\%=\\\%;\$=\\\$;\#=\\\#;\&=\\\&;
+vb:\\=\\backslash ;
+
+\<BLOCKQUOTE\>=\\begin\{quotation\}
+\</BLOCKQUOTE\>=\\end\{quotation\}
+
+! Note: SUB and SUP are only in level 3 (HTML+)
+\<SUP\>#\</SUP\>=\$\^\{#\}\$
+\<SUB\>#\</SUB\>=\$\_\{#\}\$
+
+\\=\\backslash ;
+...=\\ldots ;
+
+! the following 5 assume the input uses ISO 8859 character set (not PC)
+\©=\\copyright ;
+\§=\\S ;
+\¶=\\P ;
+\¤=\\bull ;
+\xA0=\~
+
+\<HR\>=\\hline ;
+
+just-date:<L> <L> <D> <D>\:<D>\:<D> <D>=$2 $3\, $7@end
+just-date:\n=;
+
+\<EM\>#\</EM\>=\{\\em #\}
+\<I\>#\</I\>=\{\\it #\}
+\<B\>#\</B\>=\{\\bf #\}
+\<STRONG\>#\</STRONG\>=\{\\bf #\}
+\<VAR\><L>\</VAR\>=\$$1\$
+\<VAR\>#\</VAR\>=\{\\em #\}
+
+\<TT\><vlit>\</TT\>=@verb{$1}
+\<CODE\><vlit>\</CODE\>=@verb{$1}
+\<SAMP\><vlit>\</SAMP\>=@verb{$1}
+\<KBD\><vlit>\</KBD\>=@verb{$1}
+
+\<TT\><litq>\</TT\>=@ttout{$1}
+\<CODE\><litq>\</CODE\>=@ttout{$1}
+\<SAMP\><litq>\</SAMP\>=@ttout{$1}
+\<KBD\><litq>\</KBD\>=@ttout{$1}
+
+vlit:\&lt\;=\<;\&gt\;=\>;\&amp\;=\&;\&quot\;=\"
+vlit:\<=@fail;\&=fail
+
+litq:\"=\"
+litq::
+
+ttout:<ttarg>=\{\\tt $1\}
+ttarg:@/[{}\\=%#$]+@/=\\verb\|$1\|
+ttarg:_=\\_
+
+verb:\A\Z=;
+verb:\A<A>\Z=\{\\tt $1\}
+verb:*=@verbout{\|\/\'\,\+\!\:\~\=\@\\\0*}
+verbout:?*\0*$1*=@verbout{*\0*$1*}
+verbout:?*\0*=\\verb$1$3$1
+
+\<<I>\>#\</$1\>=@err{"@file" line @line\: unrecognized\: \<$1\>\n}$0
+\<<I>\>=@err{"@file" line @line\: unmatched\: \<$1\>\n}$0
+\</<I>\>=@err{"@file" line @line\: unmatched\: \</$1\>\n}$0
+

@@ -1,0 +1,68 @@
+
+#  Dylan library for interfacing with OLESTD.LIB (The "OLE Standard Utility
+#  Library") in the Microsoft Win32 SDK, directory
+#  "\MSTOOLS\samples\ole\olestd\".  This library is a set of utility
+#  functions used by the sample OLE programs in the SDK.
+
+#  This file controls the generation of source files that are created
+#  automatically by adapting information from the Microsoft header files.
+#
+#  To create the Dylan FFI files:
+#	make -f make-sources
+
+# Copyright: 1996 Functional Objects, Inc.  All rights reserved.
+
+# $Header: /scm/cvs/fundev/old/Sources/lib/ole-std-util/make-sources,v 1.1 2004/03/12 00:41:30 cgay Exp $
+
+# directory for files common to the various Win32 libraries:
+WIN32COMMON=../win32-common
+
+# directory for the COM library:
+COM-DIR=../com
+
+# text processing utility:
+GEMA=gema
+
+# directory containing the header files from the Microsoft Win32 SDK
+# directory "\MSTOOLS\samples\ole\include":
+# (should not be in the current directory because the Dylan C back-end
+#  compiler will over-write them with different files with the same name.)
+SAMPLES_INCLUDE=include
+
+PATTERNS=$(WIN32COMMON)/patterns.pat
+OLEPAT=$(COM-DIR)/ole.pat
+
+# The automatically generated FFI files:
+DYLAN_FILES=olestd.dylan library.dylan
+
+all: $(DYLAN_FILES)
+
+olestd.dylan: $(SAMPLES_INCLUDE)/olestd.h $(PATTERNS) $(OLEPAT) make-sources
+	$(GEMA) -f $(PATTERNS)  -f $(OLEPAT)  -f $(WIN32COMMON)/copyright.pat \
+	      -p '@set{heading;Module\:    OLE-std-util\n@copyright{\:}\n\n}' \
+		-p 'STDAPI_(int)\s\s\s\s*\n=!ignore duplicates' \
+		-omit OleStdCompareFormatEtc -omit OleStdCompareTargetDevice \
+		-omit OleStdNullMethod -omit OleUILockLibrary -omit PVOID \
+		-omit OleUIMetafilePictFromIconAndLabel -omit _DEBUGLEVEL \
+		-in $(SAMPLES_INCLUDE)/olestd.h  -out $@
+
+
+library.dylan: library.src  $(WIN32COMMON)/include.pat olestd.exp
+	$(GEMA) -f $(WIN32COMMON)/include.pat  -in library.src  -out $@
+
+#    ---------------
+
+# tags for Emacs Meta-.
+
+DTAGS=/u/dylan/tools/gnuemacs/dtags
+
+TAGS: $(DYLAN_FILES) misc.dylan
+	$(DTAGS) $(DYLAN_FILES) misc.dylan
+
+tags: TAGS
+
+
+#    ---------------
+
+clean:
+	rm -f $(DYLAN_FILES) *.bak *.exp

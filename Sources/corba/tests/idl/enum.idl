@@ -1,0 +1,14 @@
+// Author:    Keith Dennison
+// Copyright: Copyright (c) 1998.  Functional Objects, Inc.  All rights reserved.
+// Version:   $HopeName$
+
+enum Planet {Mercury, Venus, Earth, Mars, Jupiter,
+             Saturn, Uranus, Neptune, Pluto};
+
+interface EnumTest {
+  void reset_in_parameter ();
+  boolean in_parameter (in Planet p);
+
+  void reset_result ();
+  Planet result ();
+};

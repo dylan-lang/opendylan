@@ -1,0 +1,556 @@
+
+I still don't know exactly how these will be packaged in terms of what
+module in what library will export the new identifiers or the "redefinition"
+of 'for'.
+
+
+---------------------------------------------------------------------------
+For extensions:
+
+   Multiple-value binding in a 'for' statement's then/= clauses:
+      for ((quotient, remainder)
+             = truncate(x, y) then truncate(quotient, y))
+        ...
+      end;
+
+   Keyed-by clauses in 'for' statements:
+      for (my-value keyed-by my-key in my-table)
+        ...
+      end;
+
+   In...using clauses in 'for' statements:
+      for (ele in my-sequence using backward-iteration-protocol)
+        ...
+      end;
+
+I realize this is a completely sketchy proposal.  If there's some subtlety
+of semantics I need to spell out, please point that out.  I'm trying to
+leverage the history of these items in our collective memory.  If I'm
+playing too loose, then call me on it.
+
+
+---------------------------------------------------------------------------
+one-of(X, Y, Z, ...)
+   This is a type expression that is equivalent to
+      type-union(singleton(X), singleton(Y), singleton(Z), ...).
+
+
+---------------------------------------------------------------------------
+false-or(A)
+   This is a type expression that is equivalent to
+      type-union(singleton(#f), A).
+
+
+---------------------------------------------------------------------------
+ignore(x)
+   This is a function that costs nothing in the execution of the program,
+   but it squelches any complaints by the compiler that the variable x is
+   bound but not referenced.
+
+
+---------------------------------------------------------------------------
+<byte-character>
+   This is a type designating characters that can be stored into
+   <byte-string>s.  The Streams module of the Streams library exports the
+   same identifier, but we arrange it so that the identifier exported from
+   the "extensions module" and the Streams module name the same variable.
+
+<unicode-character>
+   This is a type designating characters that can be stored into
+   <unicode-string>s.  The Streams module of the Streams library exports the
+   same identifier, but we arrange it so that the identifier exported from
+   the "extensions module" and the Streams module name the same variable.
+
+<byte>
+   This is a type designating 8-bit unsigned <integer>s, that is,
+   limited(<integer>, min: 0, max: 255).  The Streams module of the Streams
+   library exports the same identifier, but we arrange it so that the
+   identifier exported from the "extensions module" and the Streams module
+   name the same variable.
+
+<byte-vector>
+   This is a subtype of <vector> whose element type is <byte>.  The Streams
+   module of the Streams library exports the same identifier, but we arrange
+   it so that the identifier exported from the "extensions module" and the
+   Streams module name the same variable.
+
+
+---------------------------------------------------------------------------
+ISSUE: Subclass specializers
+
+CATEGORY: Addition
+
+REVISION HISTORY: Version 1, 13th July 95, Keith Playford (Harlequin)
+                  Version 2, 8th August 95, Keith Playford (Harlequin)
+
+RELATED ISSUES: 
+
+  "Subclass Specialization" (historical)
+  "Method Sealing"
+  "Method Sealing Bug" Version 6
+
+PROBLEM DESCRIPTION:
+
+Methods on generic functions such as Dylan's standard "make" and "as"
+which take types as arguments are impossible to reuse in Dylan without
+resorting to ad hoc techniques. As things stand, the only available
+mechanism for specializing such methods is through the use of
+singleton types. A singleton type specializer used in this way, by
+definition, gives a method applicable to exactly one type. In
+particular, such methods are not applicable to subtypes of the type in
+question.
+
+In order to define reusable methods on generic functions like this, we
+need a type which allows us to express applicability to a type and all
+its subtypes. 
+
+PROPOSAL:
+
+Define the following:
+
+subclass class => subclass                                    [Function]
+
+  A call to this function returns a type which describes all the
+  objects representing subclasses of the given class. We term such a
+  type a "subclass type". 
+
+  The subclass function is allowed to return an existing type if that
+  type is type equivalent to the subclass type requested.
+
+For an object O and class Y, the following instance? relationship
+applies:
+
+  INSTANCE-1. instance?(O, subclass(Y)) 
+  This will be true if and only if O is a class and O is a subclass of Y.
+
+For classes X and Y the following subtype? relationships hold (note
+that a rule applies only when no preceding rule matches):
+
+  SUBTYPE-1. subtype?(subclass(X), subclass(Y)) 
+  This will be true if and only if X is a subclass of Y.
+
+  SUBTYPE-2. subtype?(singleton(X), subclass(Y)) 
+  This will be true if and only if X is a class and X is a subclass of
+  Y. 
+
+  SUBTYPE-3. subtype?(subclass(X), singleton(Y))
+  This is always false.
+
+  SUBTYPE-4. subtype?(subclass(X), Y), where Y is not a subclass type
+  This will be true if Y is <class> or any proper superclass of
+  <class> (including <object>, any implementation-defined supertypes,
+  and unions involving any of these). There may be other
+  implementation-defined combinations of types X and Y for which this 
+  is also true.  
+
+  SUBTYPE-5. subtype?(X, subclass(Y)), where X is not a subclass type
+  This will be true if Y is <object> or any proper supertype of
+  <object> and X is a subclass of <class>.
+
+Note that by subclass relationships SUBYPE-4 and SUBTYPE-5, we get
+this correspondance: 
+
+    <class> and subclass(<object>) are type equivalent.
+
+Where the subtype? test has not been sufficient to determine an
+ordering for a method's argument position, the following further
+method ordering rules apply to cases involving subclass types (note
+that a rule applies only when no preceding rule matches):
+
+  SPECIFICITY+1. subclass(X) precedes subclass(Y) when the argument is
+  a class C and X precedes Y in the class precedence list of C.
+
+  SPECIFICITY+2. subclass(X) always precedes Y, Y not a subclass type.
+  That is, applicable subclass types precede any other applicable
+  class-describing specializer.   
+
+The constraints implied by sealing come by direct application of
+sealing rules 1 - 3 and the following disjointness criteria for
+subclass types (note that a rule applies only when no preceding rule
+matches):
+
+  DISJOINTNESS+1. A subclass type subclass(X) and a type Y are
+  disjoint if Y is disjoint from <class>. 
+
+  DISJOINTNESS+2. Two subclass types subclass(X) and subclass(Y) are 
+  disjoint if the classes X and Y are disjoint. 
+
+  DISJOINTNESS+3. A subclass type subclass(X) and a singleton type 
+  singleton(O) are disjoint unless O is a class and O is a subclass of 
+  X. 
+
+Method sealing's rule 3 must be changed to include the following:
+
+  A method M (with specializers S1...Sn) in G also potentially blocks
+  C at argument position i if there exist j and k such that
+  subclass(Dj) is a pseudosubtype of Si, subclass(Dk) is a
+  pseudosubtype of Ti, and subclass(Dk) is not a pseudosubtype of Si. 
+
+This relies on the acceptance of Version 6 of "Method Sealing Bug". 
+
+AMENDMENT:
+
+Specify that a subclass of <class> is considered disjoint from a
+subclass type until a class is created that is a common instance of
+both.
+
+Do this by changing the disjointness rule:
+
+  * A subclass type subclass(X) and a type Y are disjoint if Y is
+    disjoint from <class>.  
+
+to read:
+
+  * A subclass type subclass(X) and a type Y are disjoint if Y is
+    disjoint from <class>, or if Y is a subclass of <class> without
+    instance classes that are also subclasses of X. 
+
+RATIONALE:
+
+Subclass types don't address everything in the problem description,
+particularly limited collection types, but are simpler to understand
+than subtype types and still very useful, particularly within user-
+defined frameworks where limited types are not an issue.
+
+The guiding principle behind the semantics is that, as far as
+possible, methods on classes called with an instance should behave
+isomorphically to corresponding methods on corresponding subclass
+types called with the class of that instance. So, for example, given
+the heterachy:
+
+<object>
+    \
+    <A>
+    / \
+  <B> <C>
+    \ /
+    <D>
+
+and methods:
+
+  method foo (<A>)
+  method foo (<B>)
+  method foo (<C>)
+  method foo (<D>)
+
+  method foo-using-type (subclass(<A>))
+  method foo-using-type (subclass(<B>))
+  method foo-using-type (subclass(<C>))
+  method foo-using-type (subclass(<D>))
+
+that for a direct instance D1 of <D>:
+
+ foo-using-type(<D>)
+
+should behave analogously to:
+
+ foo(D1)
+
+with respect to method selection. 
+
+The clause added to sealing's "Rule 3" forces class creation to
+respect sealing constraints on this parallel heterarchy. Thus, sealing
+methods over subclass(C1), ..., subclass(CN) results in the same
+constraints on class creation as sealing methods with the same
+structure over C1, ..., CN if metaclasses are ignored.
+
+The rule that has subclass specializers precede other specializers
+applicable to types seems arbitrary but looks to be most useful and
+leads to the simplest "rule of thumb", being that for a set of
+applicable types the general order in decreasing order of
+applicability is:
+
+  singleton specializer
+  subclass specializers
+  class specializers 
+
+No attempt is made to be "clever" with subtype? relationships. In
+particular, the simplifying assumption is made that any class might
+have subclasses we know nothing about, regardless of any sealing
+declarations that might appear in the code. This seems a reasonable
+course to take.
+
+The rationale for the amendment is to prevent sealing a generic
+function over a subclass type of a class from blocking the creation of
+new metaclasses unnecessarily. The amendment may or may not be
+considered necessary at this point given that Dylan does not currently
+address the issue of introducing new metaclasses. Note that even
+without the amendment an implementation is free to have a number of
+initial, explicitly-defined metaclasses without any problems, in which
+case the situation is analogous to that of limited <integer>.
+
+EXAMPLES:
+
+// Common usage:
+
+define class <A> (<object>) end;
+  define class <B> (<A>) end;
+  define class <C> (<A>) end;
+    define class <D> (<B>, <C>) end;
+
+define method make (class :: subclass(<A>), #key)
+  print("Making an <A>");
+  next-method();
+end method;
+
+define method make (class :: subclass(<B>), #key)
+  print("Making a <B>");
+  next-method();
+end method;
+
+define method make (class :: subclass(<C>), #key)
+  print("Making a <C>");
+  next-method();
+end method;
+
+define method make (class :: subclass(<D>), #key)
+  print("Making a <D>");
+  next-method();
+end method;
+
+? make(<D>);
+Making a <D>
+Making a <B>
+Making a <C>
+Making an <A>
+{instance of <D>}
+
+// Less common usage:
+
+// Metatype methods
+
+define method classify (type :: <type>)
+  print("A type");
+end method;
+
+define method classify (type :: <class>)
+  print("A class");
+  next-method();
+end method;
+
+define method classify (type :: <singleton>)
+  print("A singleton");
+  next-method();
+end method;
+
+// "User" level subclass methods
+
+define method classify (type :: subclass(<object>))
+  print("A subclass of <object>");
+  next-method();
+end method;
+
+? classify(<symbol>);
+A subclass of <object>
+A class
+A type
+
+? classify(singleton(<symbol>))
+A subclass of <object>
+A singleton
+A type
+
+? classify(subclass(<symbol>))
+A subclass of <object>
+A type
+
+COST TO IMPLEMENTORS:
+
+Another type to implement. Given the number of types Dylan has and
+allows you to specialize on already, any implementation is going to
+require a well thought out type framework. Given this, it should be
+reasonable to add in the new rules for <subclass> as specified.
+
+COST TO USERS:
+
+Another type to understand, although they shouldn't have to face it
+unless they have need of it, and even then only the "obvious" aspects
+of its behaviour are likely to be necessary in user programs.
+
+PERFORMANCE IMPACT:
+
+Singleton types, and possibly limited integer types, are likely to be
+implemented through some kind of secondary dispatch scheme
+already. Subclass types could be dealt with using the same
+technique. In the common case where a generic function defines a
+restriction on an argument that constrains it to be a type object
+(make, as), there is potential to do somewhat better by hijacking the
+primary dispatch mechanism in the corresponding argument position. 
+
+BENEFITS:
+
+Methods that take classes as arguments become reusable!
+
+AESTHETICS:
+
+Good on balance because it fills a tangible hole in the language in a
+consistent, intuitive way rather than leaving the hole there to be
+fallen into or filled by ad hoc techniques.
+
+DISCUSSION:
+
+The subclass relationship definitions don't spell everything out
+explicitly when it comes to union types - for the definition of new
+types to be tractable we have to be able to fall back on existing
+definitions of composite types like union, and we do here.
+
+
+---------------------------------------------------------------------------
+define-function
+
+   Harlequin (that is, dylan-group) and CMU already debated and accepted
+   this extension.  Peter Norvig proposed it to Dylan Partners to extend the
+   Dylan language to include it, but that discussion has gone no where.  I'm
+   including mention of it here as a place holder to make sure it ends up
+   Kansas.
+
+
+ISSUE: Define Function
+
+REVISION HISTORY:
+   Version 1; Functional Objects, Inc.; Bill Chiles; 26 JAN 96.
+      Initial proposal with input from a few people.
+   Version 2; Functional Objects, Inc.; Bill Chiles; 01 FEB 96.
+      New specification of reflective operations on functions.
+      Replaces rationale text for the specification of reflective operations
+         on functions with one sentences about applicable-method?.
+      Strengthens #next restriction by saying there is no implicit #next
+         argument.
+      Removes controversial macro example.
+   Version 3; Functional Objects, Inc.; Bill Chiles; 08 FEB 96.
+      Described "define function" definer without reference to "define
+         method".
+
+
+CATEGORY:
+   Dylan extension for Harlequin/CMU agreement.
+   This proposal at least affects our Extensions Modules, but maybe a
+   future, more formal process will elevate this proposal to affect the core
+   language of Dylan.
+
+PROBLEM DESCRIPTION:
+
+   Programmers frequently define auxiliary or helper functions.  These
+   functions typically get called in one or two places in a program, have
+   highly specific uses, and don't support any notion of a generic operation
+   (or only in a limited sense if they do at all).  Programmers also design
+   interface functions for which users need not know (or should not know)
+   whether the functions are bare methods or generic functions (sealed or
+   otherwise).  The natural way to define the functions described above is
+   with "define method".  This has two problems.  Using "define method"
+   implicitly and unnecessarily defines a generic function and looks like
+   any other method definition that is meant to be a particular
+   implementation of a generic operation.  The human code reader is deceived
+   as to the original programmer's intent.  Inefficiency is not a problem
+   because a compiler can detect that the generic function has a single
+   method and select the method for all calls to the generic function.
+
+   Some programmers recognize this problem and compensate by defining helper
+   functions with "define constant":
+      define constant my-helper-fun = method ... end;
+   This is their attempt to write self-documenting code.  It is a decent
+   attempt, but it can also be obscure and not very self-documenting to some
+   human code readers.
+
+   Alternatively, other programmers add comments to "define method"
+   definitions that state the methods are used solely as a helper functions
+   (sometimes noting the call sites or which functions depend on the helper
+   functions), but comments are often missed and become out of date with
+   respect to the source.
+
+   Many programmers want a means to better express their intent when
+   defining functions that do not need to be generic functions or even
+   full-fledged methods (that can be added to generic functions).  This
+   mechanism should be as efficient as invoking a method directly, without
+   calling through any generic function at run time.
+
+PROPOSAL:
+
+   Add a "define function" definer that creates a constant binding in the
+   current module and initializes it to a new function.  The new definer has
+   the following syntax:
+
+      DEFINE { adjective }* FUNCTION name parameter-list
+        [ body ] 
+      END [ FUNCTION ] [ name ]
+
+   The adjectives allowed are implementation dependent.  The parameter list
+   describes the number and types of the arguments that the function
+   accepts, and the number and types of the values it returns.  It is an
+   error to supply #next in the parameter list, and there is no implicit
+   #next parameter.
+
+   Using reflective operations on "define function" functions:
+      1] For the following functions an implementation may choose to return
+	 a meaningful result (or perform a meaningful side-effect
+	 operation), or the implementation may signal an error:
+	    generic-function-methods, add-method,
+	    generic-function-mandatory-keywords, sorted-applicable-methods,
+	    find-method, remove-method, applicable-method?
+	 Note, the error signalled might not be a <sealed-object-error>, and
+	 this implementation choice holds for a "define function" function
+	 that is passed as either argument to add-method and remove-method.
+      2] The following functions return the same values as they would for a
+	 bare method defined with the same signature:
+	    function-specializers, function-arguments,
+	    function-return-values 
+
+RATIONALE:
+
+   Many programmers desire a way to define a function that clearly says to
+   other programmers that the function is not part of any generic operation;
+   furthermore, the function won't be extended as a generic function, and
+   calling it need not involve any generic dispatch.  Because many
+   programmers may create a macro or some other invention to address their
+   desire, we should provide one way that all programmers can use.
+
+   Programmers who feel they must programmaticly express their intended use
+   of a function turn to "define constant".  Promoting this convention over
+   a "define function" definer is suboptimal.  This convention expresses the
+   intended use of the function, but the convention does not immediately
+   reveal that the definition is for a function.
+
+   The "define function" macro explicitly does not specify what it expands
+   into so that Dylan implementations have latitude to support this definer
+   in the best way suited to the implementation.
+
+   This proposal defines the behavior of applicable-method? when called on
+   "define function" functions based on new wording that describes
+   applicable-method? in the DRM.
+
+COST TO IMPLEMENTORS:
+
+   The cost is very little, essentially a macro definition and exporting the
+   identifier for the macro.  An implementation may also want to annotate
+   the function's name in the compiler's database to indicate that the
+   function should not be extended (or added to a generic function if it is
+   a method), signalling appropriate errors or protecting compiler
+   optimizations based on assumptions about the function.  A rigorous
+   implementation is optional.
+
+COST TO USERS:
+
+   There is no cost to users.  They do not have to use the new feature or
+   change any code.  If users choose to use the new feature, there is little
+   cognitive overhead to understanding it.
+
+PERFORMANCE IMPACT:
+
+   There is no performance impact.
+
+BENEFITS:
+
+   Users can more accurately express their intent when defining a function.
+   Environments can use the information to warn programmers of function uses
+   that are inconsistent with the function's definition.  There is no real
+   efficiency benefit if all uses of the "define function" functions are
+   consistent with the programmer's intent because the compiler should
+   optimize away the generic function space and method dispatch overhead.
+
+AESTHETICS:
+
+   Program aesthetics are improved because programmer intent is explicit,
+   relaying more information more immediately to future maintainers of a
+   piece of code.
+
+

@@ -1,0 +1,18 @@
+comment:	This file is generated, please don't edit
+format-version:	2
+target-type:	executable
+base-address:	0x63F80000
+linker-options:	$(guilflags)
+start-function:	main
+major-version:	2
+minor-version:	1
+other-files:	..\README.htm
+	chat.spec
+debug-arguments:	-ORBport 2346
+compilation-mode:	loose
+files:	library
+	module
+	chat-client
+	callback
+	frame
+library:	chat-client

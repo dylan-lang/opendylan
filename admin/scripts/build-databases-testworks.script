@@ -1,0 +1,10 @@
+set-write-databases? true
+compile -force-parse testworks
+save -export-only testworks
+compile -force-parse testworks-plus
+save -export-only testworks-plus
+compile -force-parse testworks-specs
+save -export-only testworks-specs
+compile -force-parse gui-testworks
+save -export-only gui-testworks
+exit

@@ -1,0 +1,20 @@
+comment:	This file is generated, please don't edit
+format-version:	2
+library:	remote-nub
+files:	library
+	module
+        enhanced-nub-interfacing
+        remote-nub-ffi-defs
+        remote-nub-defs
+        access-path-callbacks
+	remote-nub
+major-version:	2
+minor-version:	1
+target-type:	executable
+other-files:	remote-nub.spec
+RC-Files:	..\debugger-server.rc
+C-Header-Files: ..\debugger-server.ico
+C-libraries: devnub.lib
+             MINCRT.LIB
+             IMAGEHLP.LIB
+comment:	additional keywords

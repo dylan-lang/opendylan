@@ -1,0 +1,54 @@
+Module:    Dylan-user	%comment -*- Mode: Dylan; rcs-header: "$Header: /scm/cvs/fundev/Sources/macos/interface/library.src,v 1.1 2004/03/12 00:09:28 cgay Exp $" -*-
+Synopsis:  FFI declarations translated from MacOS header files.
+%comment   This file is a template that is expanded to produce "library.dylan".
+Copyright: (c) 1999 Functional Objects, Inc.  All rights reserved.
+
+
+define library macos-interface
+  use functional-dylan;
+  use c-ffi;
+  use machine-word;
+
+  export macos-interface;
+end library macos-interface;
+
+define module macos-interface
+  use functional-dylan;
+  use c-ffi,
+    export: {null-pointer, null-pointer?, pointer-address,
+	     pointer-value, pointer-value-setter, size-of,
+	     <C-void*>, <C-pointer>, <C-string>, <C-unicode-string>,
+	     <C-string*>, <C-unicode-string*>,
+	     pointer-cast, destroy,
+	     pointer-value-address, c-type-cast,
+	     c-callable-wrapper-definer, 
+	     \with-c-string, \with-stack-structure } ;
+  use machine-integer-user,
+    export: {%logior, %logand};
+
+  // Handcoded types, etc. from special.dylan
+  export
+    \FOUR_CHAR_CODE,
+    <Str255>, <Str63>, <Str32>, <Str31>, <Str27>, <Str15>, <Str32Field>,
+    <Bits16>, <FormatOrder>, <OffsetTable>, <CSpecArray>, <KeyMap>, <MCTable>,
+    <Handle*>, <TECInfoHandle*>, <EvQElPtr*>, <GrafPtr*>, <AEEventHandlerUPP*>;
+
+// %include ConditionalMacros.exp
+%include MixedMode.exp
+%include MacTypes.exp
+%include OSUtils.exp
+%include TextCommon.exp
+%include QuickdrawText.exp
+%include Quickdraw.exp
+%include Events.exp
+%include Notification.exp
+%include AEDataModel.exp
+%include AppleEvents.exp
+%include Finder.exp
+%include Files.exp
+%include Processes.exp
+%include Menus.exp
+
+  // Useful extensions from first.dylan
+  export \open-accessor-definer;
+end module macos-interface;

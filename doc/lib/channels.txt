@@ -1,0 +1,111 @@
+// 
+// <CHANNEL>
+// 
+// A class that acts as a point of contact for loosely coupled parts of a
+// program. In particular, it acts as a conduit for broadcast messages.
+//
+// Channels are useful for building systems where the communicating
+// parts do not know who each other are, or where they may change
+// dynamically, or even be absent entirely.
+// 
+// Channels are also useful for adding extensibility to a program.
+// 
+// A channel has the following state:
+//
+//	CHANNEL-RECEIVERS	A table of registered receiving
+//				objects which are called upon when a
+//				message is broadcast to the channel.
+//
+//	CHANNEL-MAPPER		A function used to map the message
+//				across the receivers known to the
+//				channel. By default this is DO, which
+//				discards the results, but for example
+//				it could be SOME? which checked to see
+//				if any RECIEVER returned a non-#f value.
+// 	
+// A receivers has the following state:
+//
+//	RECEIVER-MESSAGE-TYPE	A Dylan type that is compared to the
+//				message sent in a broadcast. If the
+//				message matches the message-type then
+//				the callback associated with the
+//				receiver is run.
+//
+// In addition both channels and receivers both have the following bits of
+// state:
+//
+//	CHANNEL-MESSAGE?	A boolean that indicates whether the
+//				message should be passed to the
+//				callback.
+//
+//	CHANNEL-RECEIVER?	A boolean that indicates whether the
+//				receiver itself should be passed to
+//				the callback.
+//
+//	CHANNEL-CALLBACK?	A callback function that is run when
+//				the broadcaster's message matches the
+//				receiver's message type.
+//
+// In each case above, where both the channel and receiver could
+// control the broadcast, the receiver overrides the channel.
+//
+// 
+// BROADCAST (CHANNEL, MESSAGE, #REST ARGS)
+//
+// A function that broadcasts a message and some arguments to a
+// channel. A channel is an instance of <CHANNEL>. A message can be any
+// Dylan object. The channel calls those receivers who have registered
+// an interest that type of message, passing ARGS.
+// 
+//
+// OVERRIDE-CHANNEL (CHANNEL, #KEY ARGS, MAPPER, CALLBACK, MESSAGE?, RECEIVER?)
+//
+// Makes a shallow copy of the channel replacing those parts indicated
+// by the keyword arguments. This allows you to override certain
+// default settings (e.g. the mapper) for a given channel.
+//
+// 
+// TUNE-IN (CHANNEL, RECEIVER, #KEY MESSAGE-TYPE, CALLBACK, MESSAGE?, RECEIVER?)
+//
+// A function that registers a receiving object, and a
+// message type of interest, with a channel. 
+// 
+//
+// TUNE-OUT (CHANNEL, RECEIVER)
+//
+// A function that unregisters a receiving object from a channel.
+//
+// 
+// FAQ
+// 
+// Q1. Why have a separate library when anyone can roll their
+// own mechanism in two shakes of a lambs tail?
+// 
+// A1. Because it standardizes the mechanism so that users know
+// what to expect. You can extend the facility in one place, and
+// all the users will benefit.
+// 
+// Q2. Aren't these things like Dylans conditions?
+//
+// A2. Yes. However, it is different because:
+//	(1) Registering interest in a condition class is an all
+//          or nothing affair, while message classes are associated with
+//          channel objects.
+//	(2) Despite the interest in a condition being binary it is
+//	    also bounded by the dynamic extent of the executing
+//	    program, whereas control can leave the receiver
+//	    completely and yet still return when a message is
+//	    broadcast.
+//	(3) Conditions are intimately associated with printed output
+//	    but broadcast messages are not.
+//	(4) Signalled conditions rarely return control to their call
+//	    site, whereas it is expected that broadcast messages do. 
+//	(5) Conditions are concerned with exceptional situations,
+//	    while channels are concerned with regular phenomena.
+//
+// KEYWORDS
+//
+// hooks, triggers, registered interest, action lists, messaging,
+// broadcasting, multicast, event services, initialization lists,
+// callbacks, publish/subscribe
+//

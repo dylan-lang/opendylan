@@ -1,0 +1,80 @@
+<HTML>
+<HEAD>
+	<TITLE>Functional Developer Example: ole-scribble</TITLE>
+	<LINK REL="stylesheet" TYPE="text/css" HREF="../../examples.css">
+</HEAD>
+
+<BODY>
+
+<H2>ole-scribble library</H2>
+
+<HR ALIGN="CENTER">
+
+<P>This project contains an example that demonstrates a program
+written using DUIM which can be used as an embedded OLE part.</P>
+
+<P>This example uses the <b>DUIM-OLE-Server</b> library which is
+documented in the Functional Developer "OLE, COM, ActiveX and DBMS"
+reference manual.</P>
+
+<P>This is a simple drawing program, where the user can do arbitrary
+free-hand line drawing by dragging the mouse.  The file <em>scribble.dylan</em>
+has only a couple of modifications from the original non-OLE version
+(in the DUIM example <b>scribble</b> in
+<em>Examples\duim\scribble\</em>): the scribble frame inherits from
+<code>&lt;embeddable-frame&gt;</code> instead of
+<code>&lt;simple-frame&gt;</code>, and a couple of calls to
+<code>note-embedded-data-changed</code> have been inserted.  The file
+<em>run.dylan</em> adds some additional support for use with OLE, as
+well as initiating execution.  The file <em>storage.dylan</em>
+implements OLE persistent storage for the part.</P>
+
+<P>The program can still be run directly and works the same as the basic
+<b>scribble</b> example.  But it can also be registered as an OLE part.</P>
+
+<P>In order for the part to work when invoked from a container
+program, all of the libraries used by your part need to either be in
+the same directory as the part EXE file, or else in a directory which
+is in the system PATH (not the individual user's PATH on NT). The
+simplest way to accomplish this is to use the "Project &gt; Build
+Release" command to create a release directory. If you wish, you can
+move that directory to any location you want, but you must do so
+before you attempt to register the part.
+</P>
+
+<P>To register the part, run the program (from the release directory) from a DOS command prompt like this:</P>
+
+	<blockquote><code>ole-scribble.exe /regserver</code></blockquote>
+
+<P>This will create the necessary entries in the Windows System Registry and
+then terminate without creating any windows. The full pathname of the server
+is recorded, so you must unregister the server before you move or delete it.
+You can unregister it by doing:
+  <blockquote><code>ole-scribble.exe /unregserver</code></blockquote>
+
+<P>Note that even though the complete pathname of the part is recorded
+in the registry, some containers (such as Microsoft Write) still
+require that it be in a directory on the PATH.</P>
+
+<P>Now you should be able to insert the object into any OLE container program.
+For example, from Microsoft Word or WordPad, pull down the "Insert" menu,
+select "Object...", and then choose "Dylan DUIM Scribble" from the list in
+the dialog box (for "Create New").  The Scribble drawing pane will then be
+embedded in the compound document and you can directly draw in it.
+Clicking outside of the drawing pane will de-activate it.  Double-clicking
+will activate it again.</P>
+
+<P>In Microsoft Write, select "Insert Object..." from the "Edit" menu.  The
+application will open as a separate top-level window since Write doesn't
+support in-place activation.  When finished drawing, just exit the program
+and the image will be copied into the Write document.</P>
+
+<P>The object name as displayed in the "Insert Object" dialog comes
+from the <code>object-title:</code> option when making the frame in
+the function <code>scribble</code> in <em>run.dylan</em>.</P>
+
+
+
+</BODY>
+
+</HTML>

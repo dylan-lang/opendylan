@@ -1,0 +1,205 @@
+<html>
+<head>
+<title>Chat using CORBA</title> 
+</head>
+
+<body TEXT="#000000" BGCOLOR="#FFFFFF">
+<h1>Chat using CORBA</h1>
+
+<hr>
+
+<h2>Overview</h2>
+
+<p>This is a simple chat application that demonstrates the use of
+callbacks in CORBA.
+
+<p>The server provides a single CORBA Chat Server object that maintains
+a group of chat rooms. Clients may retreive a list of rooms, join a
+room or ask the Chat Server to create a new room. Each room is
+represented by a CORBA object which is implemented by the server.</P>
+
+<p>Once connected to a Chat Server, the client allows the user to join a
+chat room and send messages to all other users in the same room. The
+client also displays messages sent by other users in the same room.
+
+
+<h2>Building</h2>
+
+<h3> Building the Client </h3>
+<p> In the Functional Developer Environment, open the CORBA Chat client
+example from the Open Example Dialog. Choose <b>Project->Build</b>
+from the project's window to compile and link the project.
+
+<h3> Building the Server </h3>
+
+<p> In the Functional Developer Environment, open the CORBA Chat server
+example from the Open Example Dialog. Choose <b>Project->Build</b>
+from the project's window to compile and link the project.
+
+
+<h3> Running the Server and Client </h3>
+
+<p>Since the Chat demo uses callbacks in CORBA, the client-server
+relationship is blurred. The Chat client serves requests sent to it
+by the Chat server and so must listen on a port number. The Functional
+Developer ORB has a default port number for servers so if both programs
+are run on the same machine they will clash unless one of the
+programs is switched to listen on a different port.
+
+<p>If you run the programs from within the Functional Developer
+Environment then the project settings for the Chat client will
+automatically set a different port number for the client (see the
+Debug tab of the Project/Settings dialog). However, when running
+standalone you must do this manually using the -ORBport command
+line argument:
+
+<pre>
+  chat-client -ORBport 3673
+</pre>
+
+If you want to run multiple Chat clients in addition to the server
+then you must assign a different port number for each client.
+
+
+<h3> Using the Server and Client </h3>
+
+<p>The server's window is split into two parts. The top half lists all
+the rooms the server maintains, along with the number of users in each
+room. The bottom half is a log of events and messages. Initially,
+there are no rooms on the server. To create a room click the <b>Create
+Room</b> button or select <b>Room->Create...</b> from the menu bar and
+type in the name of the new room. The room name will appear in the top
+half of the server's window.
+
+<p>In order to join the chat room you will need to connect the client
+to the server. Select the <b>Connect</b> button in the client's
+toolbar or choose <b>Server->Connect...</b> from the client's menu
+bar. The client will prompt you to locate a file. This file should
+contain the string version of the reference to the Chat Server object.
+The Chat server writes the reference for it's Chat Server object to
+the file c:\temp\chat.ior during initialization. By default the
+client's file locator dialog points to this file so just click the
+<b>Open</b> button. When running the client and server on separate
+machines, you may need to copy the chat.ior file from the server's
+machine to the client's machine or you may be able to access it from
+the client's machine across a network connection. In either case you
+should use the dialog to locate the file before clicking <b>Open</b>.
+
+<p>Now that the client is connected to the server the rooms available
+on the server should appear in the top-left of the client's window.
+Selecting a room causes a list of all the users in the room to be
+displayed in the top-right of the window. To join a room select the
+room name and press the <b>Join Room</b> button or choose
+<b>Server->Join Room</b> from the menu. The status bar will be
+updated to indicated which room you have joined. You may send a
+message to the room by typing in the field at the very bottom of the
+client window. Pressing <b>Return</b> sends the message. All messages
+sent to a room are listed in the list box in the middle of the
+client's window.
+
+The user name that other clients and the server know you by is
+displayed in the status bar. To change the user name select the
+<b>Change name</b> button in the client's toolbar and type the new
+name when prompted.
+
+
+<h2>Implementation Overview</h2>
+
+<h3>IDL</h3>
+
+The IDL source defines three interfaces; <tt>ChatRoom</tt>,
+<tt>ChatServer</tt> and <tt>ChatClientCallback</tt>. These are
+described in the following sections.
+
+<h4>ChatServer</h4>
+
+The <tt>ChatServer</tt> interface describes a CORBA object implemented
+by the Chat server. It is used to manage a group of <tt>ChatRoom</tt>
+objects. There is only one <tt>ChatServer</tt> object in the server.
+It has a read-only attribute that contains the sequence of objects it
+manages and a factory operation for creating a new <tt>ChatRoom</tt>
+object.
+
+
+<h4>ChatRoom</h4>
+
+The <tt>ChatRoom</tt> interface describes CORBA objects which
+represent chat rooms. There is one object for each chat room and they
+are implemented by the Chat server. The interface has read-only
+attributes for the chat room name and the users that are currently in
+the chat room. There are operations that clients can use to send a
+message to the chat room (which the room forwards to all its users),
+and to join or leave the room.
+
+
+<h4>ChatClientCallback</h4>
+
+The <tt>ChatClientCallback</tt> interface describes a CORBA callback
+object that is implemented by the Chat client. It includes operations
+which are invoked by the server to notify the client of certain events
+e.g. a message being sent to a room, or a user joining or leaving a
+room. The interface also has a read-only attribute that contains the
+user name for the client. This attribute is read by other Chat clients
+as well as the server.
+
+
+<h3>Chat Client</h3>
+
+The Chat client can be split into three parts; the Chat Client API,
+the callback server and the user interface. The Chat Client API
+implements the logic of the client. It hides the details of using
+CORBA from the user interface and callback server by defining an
+abstract layer of types and functions. Thus, if the CORBA interface
+changes, only the Chat Client API implementation needs to be
+changed. Alternatively, the Chat Client API could be re-implemented
+to reduce the number of CORBA requests that is makes by caching the
+results of previous requests and information it receives from the
+callback server (e.g. room and user names). Again such changes
+would be hidden from the rest of the application.
+
+<p> The implementation is split into four modules:
+<dl>
+  <dt><em>chat-client</em>
+    <dd>Defines the Chat Client API. See the file chat-client.dylan
+  <dt><em>chat-client-implementation</em>
+    <dd>Implementation of the Chat Client API. See the file chat-client.dylan
+  <dt><em>chat-client-callback</em>
+    <dd>Implementation of the <tt>ChatClientCallback</tt> interface. See
+    the file callback.dylan
+  <dt><em>chat-client-gui</em>
+    <dd>Implementation of the <tt>DUIM</tt> user interface for the chat
+        client. See the file frame.dylan
+</dl>
+
+<H3>Chat Server</H3>
+
+Like the client, the Chat server can be split into three parts; the
+Chat Server API, the CORBA server implementation and the user
+interface. However, the Chat Server API is not as independent as the
+Chat Client API. The CORBA server implementation relies on the Chat
+Server API just like the callback server in the client relies on the
+Chat Client API. However, the Chat Server API also relies on the CORBA
+server implementation. In particular it needs the server when creating
+<tt>ChatServer</tt> and <tt>ChatRoom</tt> objects.
+
+<p>The implementation is split into five modules:
+<dl>
+  <dt><em>chat-server</em>
+    <dd>Defines the Chat Server API. See the file chat-server.dylan
+  <dt><em>chat-server-implementation</em>
+    <dd>Implementation of the Chat Server API. See the file
+    chat-server.dylan
+  <dt><em>corba-server</em>
+    <dd>Defines the interface needed by the Chat Server API to create
+    <tt>ChatServer</tt> and <tt>ChatRoom</tt> objects.
+  <dt><em>corba-server-implementation</em>
+    <dd>Implementation of the <tt>ChatServer</tt> and <tt>ChatRoom</tt>
+    interfaces. See the file corba-server.dylan
+  <dt><em>chat-server-gui</em>
+    <dd>Implementation of the <tt>DUIM</tt> user interface for the chat
+    server. See the file frame.dylan
+</dl>
+
+</body>
+
+</html>

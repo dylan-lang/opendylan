@@ -1,0 +1,57 @@
+@set-syntax{L;\/}! literal slash
+@set-syntax{M;\'}! string quote
+
+\B<comment>=// $1\n
+comment:/\**\*/=*@end;=@fail
+
+/\**\*/=
+
+enum <I>\{*\}<I>=Enumeration type $3\n
+
+foo\_bar=FooBar\n
+
+DH(<I>)=\N@hyphenate{$1}\n
+
+hyphenate:\J<J>\J<K>\J=$1-$2
+hyphenate:\J_\J=-
+hyphenate:?=?
+
+'-*-'\W*\W'-*-'=\N'** '*' **'\n
+
+fixthis(<fixcontext>)=$1\N
+fixcontext:<ct>\W\IThis=$1 self
+fixcontext:magic=$0
+ct:<I>=$1@end
+ct:=@fail
+
+Parenthesize *\n=@parenthesize{*}\n
+parenthesize:*\&*=($0)
+parenthesize:\A\W<I>\W\Z=$1
+
+@define{dom2\:\:dom1}
+@define{dom1\:aaa\=bbb\;dom2\:xxx\=yyy}
+
+<expression>:(#)=$0@end
+<expression>:<postfix-expression>=$1@end;=@fail
+<postfix-expression>:<I>\W<optpost>=@putpost{$2\0$1}@end
+<postfix-expression>:=@fail
+optpost:[<expression>]=$0@end
+!optpost:(<argument-expression-list>)=$0@end
+optpost:.<I>=.$1@end
+optpost:-\><I>=.$1@end
+optpost:++=++@end;--=+-@end
+optpost:=@end
+putpost:+?\0*= %prog1($2, $2 := $2 $1 1)
+putpost:*\0*= $2$1
+
+Convert(<expression>)=\N$1\n
+
+define variable <I>=var $1\n
+define  constant   <I>=const $1\n
+define type <I>=type $1\n
+fig\J<opts>\I=plum$1\n
+opts:\Js\J=s@end;=@end
+
+@set-switch{t;0}
+\Iprune\J<optes>\I=peach$1\n
+optes:s=es@end;=@end

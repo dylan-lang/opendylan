@@ -1,0 +1,1 @@
+link /NODEFAULTLIB /INCREMENTAL:NO /PDB:NONE /NOLOGO /ENTRY:DylanDllEntry@12 -align:0x1000 -debug:full -debugtype:cv /nologo /dll /out:%s kernel32.lib

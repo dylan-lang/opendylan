@@ -1,0 +1,515 @@
+
+Title:  Windows API library for Dylan
+
+Author: David N. Gray  <gray@harlequin.com>
+
+Date:	October 5, 1995  - original version
+	January 22, 1997 - most recent substantive update
+	October 13, 1997 - update a few minor details
+
+Status: This describes what is currently implemented except where noted
+	otherwise. 
+
+Copyright: 1997 Functional Objects, Inc.  All rights reserved.
+
+Hope info: $HopeName$ $Date: 2004/03/12 00:12:45 $
+
+--------------
+
+[Note: This file is the original internal documentation.  The new
+ documentation for customers can be found in the "Interoperability"
+ manual.]
+
+What is being described here is a set of Dylan libraries that provide a
+low-level interface to Microsoft Windows by doing a simple translation from
+the C/C++ header files to Dylan C-FFI declarations, so that Windows
+programs can be written in Dylan using the same functions as from C.
+Higher-level interfaces are being defined, but are beyond the scope of
+this document.  (see "DUIM")
+
+This will support the Win32 API for Windows NT and Windows 95.
+It appears that the same Dylan libraries should also work with Win32s on
+Windows 3, but it isn't clear if we want to spend time testing that.  (Note
+though that Win32s is only for GUI applications, not for console mode
+applications.)  
+Support for Win16 (16-bit applications on Windows 3) is not planned.
+
+The general intent is that there should be several Dylan libraries, with
+functionality divided among them in accordance with the division between
+the Microsoft Dynamic Link Libraries, so that programs can avoid references
+to DLLs that they don't really need and to limit the amount of information
+that has to be loaded into the compilation environment.
+
+The following libraries are being provided initially:
+
+  Win32-common - data types, constants (including error codes), and
+		structure accessors that are shared by the other modules.
+		Most of these come from "WINDEF.H", "WINNT.H", and
+		"WINERROR.H".  (This doesn't have any corresponding Windows
+		DLL file because there are no C functions here.)
+
+  Win32-kernel - non-GUI system services implemented in "KERNEL32.DLL" and
+		declared in "WINBASE.H" (files, pipes, semaphores, atoms,
+		time, etc.), "WINCON.H" (NT console subsystem), and
+		"WINNLS.H" (National Language Support).  However, this
+		library will not include thread support since that is being
+		handled at a higher level by the Dylan `threads' library
+		specified in a separate document.
+
+  Win32-GDI  -  "Graphics Device Interface" - drawing graphics and text
+		and printing, corresponding to "WINGDI.H" and "GDI32.DLL"
+
+  Win32-user  -  other window functions, corresponding to "WINUSER.H" and
+		"USER32.DLL"
+
+  Win32-version - version management ("WINVER.H" and "VERSION.DLL")
+
+  Win32-dialog  -  common dialog boxes (implemented in "COMDLG32.DLL" and
+		declared in "COMMDLG.H", "DLGS.H", and "CDERR.H")
+
+  Win32-controls - "common controls", including list view, tree view,
+		property sheets, etc. ("COMMCTRL.H" and "COMCTL32.DLL") 
+
+  Win32-registry - registry ("WINREG.H" and "ADVAPI32.DLL")
+
+  Win32-rich-edit - "rich edit" controls ("RICHEDIT.H" and "RICHED32.DLL")
+
+  Win32-DDE  - Dynamic Data Exchange ("DDE.H" and "DDEML.H")
+
+Libraries for COM and OLE are also provided, but are described in a
+separate document ("~dylan/doc/lib/ole-user-doc.text").
+
+Additional libraries that might be added later as needed include:
+
+  Win32-spool  -  print spooler control ("WINSPOOL.H" and "WINSPOOL.DLL")
+
+  Win32-audio  --  sound ("MMSYSTEM.H" and "WINMM.DLL"; includes both wave
+		and MIDI support)
+
+  Win32-video  --  Video for Windows ("VFW.H")
+
+  Win32-network -- network services ("WINNETWK.H" and "MPR.DLL")
+
+  Win32-shell   -- shell library ("SHELLAPI.H" and "SHELL32.LIB")
+
+  Win32-OpenGL	-- OpenGL graphics ("GLU.H" and "GLU32.DLL")
+
+  ... etc.  Other Microsoft interfaces include:  RPC, pen, MAPI, TAPI,
+	WinG, WinToon, games, DirectX, and BackOffice
+
+Each of these libraries will have a module with the same name.
+
+For some of the libraries, particularly Win32-kernel, it may be useful to
+provide additional modules that export just the names for a particular
+category of functionality.  For example, there could be separate modules
+for files, console, time, etc.  This is not provided in the initial
+implementation, but could be added later.
+
+The Win32-common module also exports a few names from the `C-FFI'
+module that the user may need to use directly, without the user needing to
+directly `use' (or know about) the `C-FFI' module.  These include:
+  null-pointer, null-pointer?, pointer-address, pointer-value,
+  pointer-value-setter, pointer-cast, <C-string>, <C-unicode-string>,
+  destroy, with-stack-structure
+
+*****************************************************************
+* IMPORTANT TEMPORARY NOTE:
+*   Because of inefficiencies in the current Dylan compiler, it is not
+*   practical to implement the full libraries described above at this time.
+*   Instead, the libraries Win32-user, Win32-GDI, and Win32-kernel,
+*   currently define only that minimal subset of names that are
+*   needed for the example programs and other short-term requirements.
+*   The libraries will be extended as additional requirements are identified.
+****************************************************************
+
+The initial implementation of the libraries will generally only include
+those features that apply to both Windows NT and Windows 95.  Support for
+platform-specific features may need to be added later, although it is an
+open issue whether there should be separate modules for that.  
+(In the C headers, functions that are new in Windows 95 are marked by 
+``#if (WINVER >= 0x0400)''. There isn't any conditionalization for
+functions that only apply to NT, although many of them are clustered
+together in "WINNT.H".)
+
+Names that are documented as being obsolete and/or included in Win32 only
+for compatibility with Win16, will generally not be defined in the Dylan
+libraries.
+The excluded names are:
+  AccessResource, AllocDSToCSAlias, AllocResource, AllocSelector,
+  AnsiLowerBuff, AnsiNext, AnsiPrev, AnsiToOem, AnsiToOemBuff, AnsiUpper,
+  AnsiUpperBuff, BN_DBLCLK, BN_DISABLE, BN_DOUBLECLICKED, BN_HILITE,
+  BN_PAINT , BN_PUSHED, BN_UNHILITE, BN_UNPUSHED , BS_USERBUTTON,
+  CPL_INQUIRE, ChangeSelector, CloseComm, CloseSound, CopyLZFile,
+  CountVoiceNotes, DOS3Call, DefHookProc, DefineHandleTable, DeviceMode,
+  DlgDirSelect, DlgDirSelectComboBox, EnumFonts, ERR_..., ExtDeviceMode,
+  FixBrushOrgEx, FlushComm, FreeModule, FreeProcInstance, FreeSelector,
+  GCW_HBRBACKGROUND, GCW_HCURSOR, GCW_HICON, GetCharWidth, GWW_HINSTANCE,
+  GWW_HWNDPARENT, GWW_ID, GWW_USERDATA, GetAspectRatioFilter,
+  GetAtomHandle, GetBitmapBits, GetBitmapDimension, GetBrushOrg,
+  GetCodeHandle, GetCodeInfo, GetCommError, GetCurrentPDB,
+  GetCurrentPosition, GetEnvironment, GetFreeSpace, GetFreeSystemResources,
+  GetInstanceData, GetKBCodePage, GetMetaFile, GetMetaFileBits,
+  GetPrivateProfileInt, GetPrivateProfileSection,
+  GetPrivateProfileSectionNames, GetPrivateProfileString,
+  GetPrivateProfileStruct, GetProfileInt, GetProfileSection,
+  GetProfileString, GetStringTypeA, GetStringTypeW, GetTempDrive,
+  GetTextExtent, GetTextExtentEx, GetTextExtentPoint, GetThresholdEvent,
+  GetThresholdStatus, GetViewportExt, GetViewportOrg, GetWindowExt,
+  GetWindowOrg, GlobalCompact, GlobalDosAlloc, GlobalDosFree, GlobalFix,
+  GlobalLRUNewest, GlobalLRUOldest, GlobalNotify, GlobalPageLock,
+  GlobalPageUnlock, GlobalUnWire, GlobalUnfix, GlobalUnwire, GlobalWire,
+  HFILE, HFILE_ERROR, LZDone, LZStart, LimitEmsPages, LocalCompact,
+  LocalInit, LocalNotify, LocalShrink, LockSegment, MAKEPOINT,
+  MakeProcInstance, MoveTo, NetBIOSCall, OemToAnsi, OemToAnsiBuff,
+  OffsetViewportOrg, OffsetWindowOrg, OpenComm, OpenFile, OpenSound,
+  PM_NOYIELD, ProfClear, ProfFinish, ProfFlush, ProfInsChk, ProfSampRate,
+  ProfSetup, ProfStart, ProfStop, READ, READ_WRITE, ReadComm, RegCreateKey,
+  RegEnumKey, RegOpenKey, RegQueryValue, RegSetValue, SYSTEM_FIXED_FONT,
+  ScaleViewportExt, ScaleWindowExt, SetBitmapDimension, SetCommEventMask,
+  SetEnvironment, SetMetaFileBits, SetMessageQueue, SetResourceHandler,
+  SetScrollPos, SetScrollRange, SetSoundNoise, SetSwapAreaSize,
+  SetViewportExt, SetViewportOrg, SetVoiceAccent, SetVoiceEnvelope,
+  SetVoiceNote, SetVoiceQueueSize, SetVoiceSound, SetVoiceThreshold,
+  SetWindowExt, SetWindowOrg, SetWindowsHook, StartSound, StopSound,
+  SwitchStackBack, SwitchStackTo, SyncAllVoices, UngetCommChar,
+  UnhookWindowsHook, UnlockSegment, ValidateCodeSegments,
+  ValidateFreeSpaces, WM_CTLCOLOR, WNetAddConnection, WNetCancelConnection,
+  WRITE, WaitSoundState, WriteComm, WritePrivateProfileSection,
+  WritePrivateProfileString, WritePrivateProfileStruct,
+  WriteProfileSection, WriteProfileString, Yield, _hread, _hwrite, _lclose,
+  _lcreat, _llseek, _lopen, _lread, _lwrite
+
+Functions for old-style metafiles (`CreateMetaFile', `CloseMetaFile, etc.)
+are described in the Win32 SDK as being obsolete, but they are being
+supported here anyway because they are needed for OLE applications to
+exchange data with 16-bit applications.
+
+Functions `wsprintf' and `wvsprintf' are not supported because the Dylan
+function `format-to-string' serves the same purpose.  (Also, the FFI
+doesn't currently support C functions with a variable number of arguments.)
+
+The extended API macros defined in optional C header file "WINDOWSX.H" will
+not be supported by the Dylan interface.
+
+The 64-bit utility macros Int32x32To64, Int64ShllMod32, Int64ShraMod32,
+Int64ShrlMod32, and UInt32x32To64 are not planned to be supported since
+there is no clear need for them and the functionality can be obtained by
+using Dylan extended integers.  (However, an interface to function `MulDiv'
+is provided, since it is an ordinary C function that is commonly used.)
+
+A Dylan Windows program will generally use the same API names as a C
+program would, with the following modifications for consistency with Dylan
+conventions:
+
+  * Type names are enclosed in angle brackets.  For example,
+    `HANDLE' becomes `<HANDLE>'. 
+
+  * Names of constants are prefixed by "$".  
+    For example, `OPAQUE' becomes `$OPAQUE'. 
+
+  * Underscores are replaced by hyphens.  For example, `NO_ERROR' becomes
+    `$NO-ERROR' and `LIST_ENTRY' becomes `<LIST-ENTRY>'
+
+    (Hyphens will _not_ be inserted between capitalized words (for example,
+    `CreateWindow' to `Create-Window') since that is a less obvious mapping
+    that is more likely to cause confusion when going back and forth
+    between Dylan code and Windows documentation.)
+
+  * In place of `NULL', there are several constants providing null
+    values for frequently used types, such as `$NULL-HANDLE', `$NULL-RECT',
+    and `$NULL-string'.  Null values for other pointer types may be
+    designated by the expression `null-pointer(<FOO>)'.  Use the function
+    `null-pointer?' to test whether a value is null.  Do not just say
+    `if(ptr)...' like is often done in C, since a null pointer is not the
+    same as `#f'.  There are also functions `null-handle' and
+    `null-handle?' for creating and testing handles, since conceptually
+    they are not necessarily pointers.
+
+  * The multitude of integer data types in C code (`int', `long',
+    `unsigned', `ULONG', `DWORD', `LRESULT', etc.) are all designated as
+    `<integer>' (or some appropriate subrange thereof) in Dylan method
+    argument types.  However, a `<machine-word>' needs to be used to
+    represent values that don't fit in the signed 30-bit representation of
+    an integer.
+
+    Names such as `<DWORD>' should not be used in application code because
+    they refer to the FFI designation of the C value representation, not to
+    a Dylan data type.  [However, I would like to see a change to the FFI
+    model to allow such names to be meaningful in both contexts.]
+
+  * The C types `BOOL' and `BOOLEAN' are mapped to `<boolean>' in Dylan.
+    Use `#t' and `#f' instead of `TRUE' and `FALSE'.  
+
+    However, beware that some functions, such as `TranslateAccelerator',
+    are documented to return TRUE or FALSE, but the return type is actually
+    `int' instead of `BOOL'; in such a case, you'll have to compare the
+    result to 0.
+
+    Similarly, watch out for cases where C code passes TRUE or FALSE as an
+    integer argument.  To handle one common case, the Dylan implementation
+    of `MAKELPARAM' accepts either an <integer> or <boolean> as the first
+    argument.
+
+  * The C types `CHAR', `WCHAR', and `TCHAR' are mapped to `<character>' in
+    Dylan.  (However, `UCHAR' is mapped to `<integer>' since that is how it
+    is actually used.)
+
+  * For a Windows function called, for example, "Foo", which is an alias
+    for either "FooA" (an 8-bit character version) or "FooW" (a 16-bit
+    character version), in Dylan, only the name "Foo" will be defined, but
+    it will be a generic function with separate methods for arguments of
+    types `<C-string>', `<C-unicode-string>', `<byte-string>' or
+    `<unicode-string>'.  
+    (Only the 8-bit versions will be supported in the initial
+    implementation, both because the compiler is not ready to handle
+    Unicode and because it won't work on Windows 95.)
+
+  * Most of the pointer types in the Windows API have several names; for
+    example: `PRECT', `NPRECT', and `LPRECT'.  In 16-bit code, these
+    distinguished between `near' and `far' pointers, but in 32-bit code
+    there is no difference.  Rather than carry the duplicate names over
+    into Dylan, it would be simpler to use only the basic "P..." prefix
+    names.  However, the "LP..." names seem to be used much more often, and
+    hence may be more familiar, and the Microsoft documentation still tends
+    to use the "LP..." names in most places.  So the Dylan interface will
+    define both the "<P...>" and "<LP...>" names even though they have
+    identical values.  The "NP..." names will not be defined in Dylan since
+    they are not as commonly used anyway.
+
+  * Values of type `char*' in C are represented as instances of class
+    `<C-string>' in Dylan.  This is a subclass of `<string>', so all of the
+    normal string operations can be used directly.  C function parameters
+    of type `char*' will also accept an instance of `<byte-string>'; a C
+    pointer is created to point to the characters of the Dylan data, so the
+    string does not need to be copied.  (Dylan byte strings maintain a NUL
+    character at the end in order to allow them to be used directly by C.)
+    at run time, but the need for copying is intended to be removed later.
+
+    The `TEXT' function can also be used to coerce a string literal to a
+    `<C-string>'.  (This usage is consistent with the Win32 `TEXT' macro,
+    although the current purpose is different.)
+
+  * Because slot names are not in a separate name space in Dylan, the names
+    of C structure fields will have the suffix "-value" added to form the
+    name of the Dylan accessor function.  For example, the C statement:
+	pt->x = x;
+    becomes in Dylan:
+        pt.x-value := x;
+
+There will not be any attempt to append "?" to the names of predicate
+functions since it isn't obvious exactly which functions that should apply
+to.  The Dylan convention of "*...*" for global variables is not relevant
+since there aren't any global variables here.
+
+The Dylan declarations for C types will generally follow the `STRICT'
+alternative versions of the C declarations.  This means, for example, that
+the various handle types such as <HMENU> and <HWND> are disjoint
+subclasses of <HANDLE>, instead of all being equivalent.
+
+In cases where the C library function takes a pointer argument as a place
+to store a pointer, integer, or boolean value, the corresponding Dylan
+function uses multiple return values to return such output parameters
+following the original function return value.  For example, where C code
+does:
+
+  BOOL ok;
+  DWORD NumberRead;
+  ok = ReadConsoleInput(handle, buffer, length, & NumberRead);
+
+in Dylan it would be:
+
+  let ( ok :: <boolean>, NumberRead :: <integer> ) =
+    ReadConsoleInput(handle, buffer, length);
+
+Similarly, this function returns multiple values instead of a structure:
+  let ( x, y ) = GetLargestConsoleWindowSize(handle);
+
+The `Win32-common' library provides a macro to make it easy to define
+call-back functions without the application programmer needing to use the
+FFI `define C-callable-wrapper' macro directly.  For example:
+
+  define callback WndProc :: <WNDPROC> = my-window-function;
+
+This says that `WndProc' is being defined as a C function pointer of type
+`<WNDPROC>', which when called from C will cause the Dylan function
+`my-window-function' to be run.  The Dylan function will be defined
+normally using `define method' or `define function', and it is the
+programmer's responsibility to ensure that its argument signature is
+consistent with what `<WNDPROC>' requires.  For example:
+
+  define method my-window-function(
+		  hWnd	  :: <HWND>,	// window handle
+		  message :: <integer>,	// type of message
+		  uParam,	  	// additional information
+		  lParam)	  	// additional information
+	  => return :: <integer>;
+    ...
+
+Note that the `uParam' and `lParam' arguments might receive values of
+either type `<integer>' or `<machine-word>', so it may be best not to
+specialize them.  Often these values are not used directly anyway, but
+are passed to other functions (such as `LOWORD' and `HIWORD') which have
+methods for handling either representation.
+
+The other types of functions supported initially by `define callback' are
+dialog functions (`<DLGPROC>') and dialog hooks (`<LP...HOOKPROC>'), both
+of which have the same argument types as a window function, but return
+a <boolean>.  (The dialog hook functions are actually declared in
+"COMMDLG.H" as returning a `UINT', but the value is always supposed to be
+`TRUE' or `FALSE', so the Dylan callback interface has been implemented
+using `BOOL' instead.)
+
+In C, the programmer has to supply a `WinMain' function as the main program
+for a GUI application, but in Dylan there isn't any main program as such.
+The beginning of execution is indicated simply by a top-level function call
+expression; this needs to be at the bottom of the last file listed in the
+".lid" file.  Functions are provided to obtain the values which would
+have been the arguments to `WinMain':
+
+  application-instance-handle() => <HINSTANCE>
+  application-command-line() => <string>   // arguments without program name
+  application-show-window() => <integer>   // one of $SW-...
+
+These functions were originally exported from `Win32-common' but have been
+moved to `win32-kernel' and re-exported from `win32-user'.
+
+(There is no accessor provided for the WinMain previous instance parameter
+because on Win32, that parameter is always null, even for Win32s as well as
+NT and W'95.)
+
+The program can be terminated, with an exit code, by calling either the
+Win32 `ExitProcess' function or the `exit-application' function from the
+Dylan `operating-system' library.  The latter is preferable if the
+application might actually be run as part of another process.
+
+Thus the beginning of an application program might look something like
+this:
+
+  define method my-main ()
+    let hInstance :: <HINSTANCE> = application-instance-handle();
+    let wc :: <PWNDCLASS> = make(<PWNDCLASS>);
+    wc.style-value := 0;
+    wc.lpfnWndProc-value := MainWndProc;
+ ...
+    RegisterClass(wc);
+    let hWnd = CreateWindow( ... );
+    ShowWindow(hWnd, application-show-window());
+    UpdateWindow(hWnd);
+    let msg :: <PMSG> = make(<PMSG>);
+    while ( GetMessage(msg, $NULL-HWND, 0, 0) )
+      TranslateMessage(msg);
+      DispatchMessage(msg);
+    end;
+    ExitProcess(msg.wParam-value);
+  end method my-main;
+
+  my-main();   // this is what initiates execution.
+
+For a complete example program, see file:
+~dylan/app/windows-ffi-example/example.dylan 
+
+
+Other minor details:
+
+  The types <FARPROC> and <PROC> are defined as equivalent to
+  <C-function-pointer>, so any C function wrapper object can be passed to a
+  routine taking a <FARPROC> without needing to do any type conversion like
+  is needed in C.
+
+  Type casts between handles and integers (<integer> or <machine-word>) can
+  be done by using `as'.  For example:
+      window-class.hbrBackground-value := as(<HBRUSH>, $COLOR-WINDOW + 1);
+
+  For type casts from one pointer type to another, use the function
+  `pointer-cast' instead of `as'.  (Think of `as' as converting the data
+  structure pointed to, while `pointer-cast' operates on just the pointer
+  itself.)
+
+  Note that pointers and handles must be compared using `=', not `==', in
+  order to compare the C address instead of the Dylan wrapper objects.
+
+  Where C code would use the `|' operator to combine bit mask constants,
+  Dylan code will usually use the `logior' function, except that a few such
+  constants have values of type `<machine-word>' when they won't fit in a
+  small integer, and `logior' only works on `<integer>'s.  Because of this,
+  the `Win32-Common' library exports a `%logior' function which is used
+  like `logior' except that it accepts values of either type `<integer>' or
+  `<machine-word>' and returns a `<machine-word>' result.  It can be used
+  in most places that accept a bit mask (C types `DWORD', `ULONG',
+  `LPARAM', etc.), but must be used if any of the arguments are a
+  `<machine-word>'.  The contexts where this is likely to occur are:
+
+    * window style parameter of `CreateWindow' ($WS-...) 
+
+    * flags value for `CreateFile' or `CreateNamedPipe' ($FILE-FLAG-...)
+
+    * `$LOCALE-NOUSEROVERRIDE' for `LCTYPE' parameters for `GetLocaleInfoA',
+      `GetLocaleInfo', and possibly others, or `dwFlags' parameter of
+      `GetTimeFormat', `GetNumberFormat', `GetCurrencyFormat', or
+      `GetDateFormat'.
+
+    * mask and effects values in `CHARFORMAT' structure for "rich edit"
+      controls ($CFM-... and $CFE-...)
+
+    * mask value in `PARAFORMAT' structure for "rich edit" controls ($PFM-...)
+
+  The Dylan function `pointer-value' can be used to convert between a Dylan
+  integer and a `LARGE-INTEGER' or `ULARGE-INTEGER'.  For example:
+    let li :: make( <PLARGE-INTEGER> );
+    pointer-value(li) := 0;
+  allocates a LARGE-INTEGER and sets its value to 0, without needing to be
+  concerned with the individual fields of the internal representation.
+  Alternatively, you can use an initialization keyword:
+    let li :: make( <PLARGE-INTEGER>, value: 0 );
+
+  The C macros MAKEPOINT, MAKEPOINTS, and LONG2POINT are crude hacks that
+  don't easily translate to Dylan.  Instead, use the Dylan function
+  LPARAM-TO-XY to split a parameter into two signed numbers.  For example:
+      let ( x, y ) = LPARAM-TO-XY(lParam);
+
+  Where the Windows documentation specifies using a value of `0xFFFFFFFF',
+  this should be denoted in Dylan by using the constant `$FFFFFFFF' because
+  the literal `#xFFFFFFFF' is outside the range for a small integer.
+  (In the SCC or VM-Tether, it would be silently truncated, while the DFMC
+  would report a type error.)
+
+  In Dylan, `<RECTL>' is an alias of `<RECT>' instead of being a distinct
+  type.  (In Win32, they are structurally equivalent but were separate
+  types for the sake of source code compatibility with Win16; there is no
+  need to maintain that artificial distinction in Dylan.)
+
+  Windows resource files (".rc") can be included by using the LID file
+  field `RC-Files:'.
+
+
+Other unfinished business:
+
+ * How will the programmer designate whether the program is to be run as a
+   GUI or console application?
+
+ * There should be a default exception handler that will display an error
+   message dialog box for errors reported by the Dylan run-time, but it
+   isn't clear yet just where this belongs.  Initially, for convenience it
+   is included as part of the `Win32-user' library, so it will be there
+   without the programmer needing to do anything special to include it.
+
+ * This document should be extended to not assume familiarity with the
+   C-FFI -- for example, explain use of C pointer types, including `make',
+   `destroy', `pointer-address', and `with-stack-structure'.
+
+ * Handling of ASCII vs. Unicode versions is still problematic -- functions
+   can be distinguished by method dispatch if they take a string directly,
+   but in many cases there are two variants of a structure type used.  Even
+   some constants have two versions, and there are several functions with
+   two versions having identical argument signatures.  There are probably
+   going to need to be separate modules for ASCII and Unicode versions.
+   (But current plans (as of December 1996) are that the first release of
+   DylanWorks won't support `<unicode-string>' anyway.)
+ 
+ * What will be the actual names of the .LIB and .DLL files for each of the
+   interface libraries?  To enable use with Win32s, they should be limited
+   to eight-character names.  Maybe something like "HQDWWINC.DLL" etc.?
+
+ * The libraries don't currently use input-output parameters (as defined in
+   the FFI), although there are a few place where they could apply.  Should
+   they be used where relevant?

@@ -1,0 +1,4 @@
+#/bin/sh
+
+echo as -L -o $1.o $1.s ...
+as -L -o $1.o $1.s

@@ -1,0 +1,128 @@
+// Functional Developer icons
+//
+
+// Program and document icons
+// We use these stupid names to ensure these are the first icons
+// to be picked up by the installer
+//
+AAA ICON DISCARDABLE "dylan-app.ico"
+AAB ICON DISCARDABLE "dylan-source.ico"
+AAC ICON DISCARDABLE "dylan-project.ico"
+AAD ICON DISCARDABLE "dylan-database.ico"
+AAE ICON DISCARDABLE "lid-file.ico"
+AAF ICON DISCARDABLE "spec-file.ico"
+AAG ICON DISCARDABLE "lp-spec-file.ico"
+
+// Tool bar icons
+//
+BACK		ICON DISCARDABLE "back.ico"
+BUILD		ICON DISCARDABLE "build.ico"
+CLONE		ICON DISCARDABLE "clone.ico"
+COMPILE		ICON DISCARDABLE "compile.ico"
+COMPILEALL	ICON DISCARDABLE "compile-all.ico"
+COMPILECHANGES	ICON DISCARDABLE "compile-changes.ico"
+COPY		ICON DISCARDABLE "copy.ico"
+CUT		ICON DISCARDABLE "cut.ico"
+DEBUG		ICON DISCARDABLE "debug.ico"
+EDITSOURCE	ICON DISCARDABLE "edit-source.ico"
+EXAMPLES	ICON DISCARDABLE "examples.ico"
+FIND		ICON DISCARDABLE "find.ico"
+FINDNEXT	ICON DISCARDABLE "find-next.ico"
+FINDPREVIOUS	ICON DISCARDABLE "find-previous.ico"
+FORWARD		ICON DISCARDABLE "forward.ico"
+HELP		ICON DISCARDABLE "help.ico"
+HOME		ICON DISCARDABLE "home.ico"
+INTERACT	ICON DISCARDABLE "interact.ico"
+LOAD		ICON DISCARDABLE "load.ico"
+LINK		ICON DISCARDABLE "link.ico"
+NEW		ICON DISCARDABLE "new.ico"
+NEWTEXT		ICON DISCARDABLE "new-text.ico"
+NEWPROJECT	ICON DISCARDABLE "new-project.ico"
+OPEN		ICON DISCARDABLE "open.ico"
+PAGESETUP	ICON DISCARDABLE "page-setup.ico"
+PASTE		ICON DISCARDABLE "paste.ico"
+PAUSE		ICON DISCARDABLE "pause.ico"
+PLAY		ICON DISCARDABLE "play.ico"
+PLAYGROUND	ICON DISCARDABLE "playground.ico"
+PRINT		ICON DISCARDABLE "print.ico"
+REDO		ICON DISCARDABLE "redo.ico"
+REPLACE		ICON DISCARDABLE "replace.ico"
+RUN		ICON DISCARDABLE "run.ico"
+SAVE		ICON DISCARDABLE "save.ico"
+SAVEALL		ICON DISCARDABLE "save-all.ico"
+STOP		ICON DISCARDABLE "stop.ico"
+TUTORIAL	ICON DISCARDABLE "tutorial.ico"
+UNDO		ICON DISCARDABLE "undo.ico"
+
+// Tree control icons
+//
+APPLICATION    ICON DISCARDABLE "application.ico"
+CLASS          ICON DISCARDABLE "class.ico"
+CLIENTS        ICON DISCARDABLE "clients-folder.ico"
+CONSTANT       ICON DISCARDABLE "constant.ico"
+DEFAULT        ICON DISCARDABLE "default.ico"
+DEFINITION     ICON DISCARDABLE "definition.ico"
+DYLANFILE      ICON DISCARDABLE "dylan-source.ico"
+CANONICAL      ICON DISCARDABLE "canonical-source.ico"
+CURRENT        ICON DISCARDABLE "current-source.ico"
+ERROR          ICON DISCARDABLE "error.ico"
+FOREIGN        ICON DISCARDABLE "foreign.ico"
+FUNCTION       ICON DISCARDABLE "function.ico"
+GENERIC        ICON DISCARDABLE "generic.ico"
+LIBRARY        ICON DISCARDABLE "library.ico"
+MACRODEF       ICON DISCARDABLE "macro-def.ico"
+METHOD         ICON DISCARDABLE "method.ico"
+MODULE         ICON DISCARDABLE "module.ico"
+OBJECT         ICON DISCARDABLE "object.ico"
+PROFILE        ICON DISCARDABLE "profile.ico"
+PROJECT        ICON DISCARDABLE "dylan-project.ico"
+RESTART        ICON DISCARDABLE "restart.ico"
+SERIOUSWARNING ICON DISCARDABLE "serious-warning.ico"
+SLOT           ICON DISCARDABLE "slot.ico"
+STACKFRAME     ICON DISCARDABLE "stack-frame.ico"
+TEXTFILE       ICON DISCARDABLE "text-file.ico"
+THREADS        ICON DISCARDABLE "threads.ico"
+UNBOUND        ICON DISCARDABLE "unbound.ico"
+USES           ICON DISCARDABLE "uses-folder.ico"
+VARIABLE       ICON DISCARDABLE "variable.ico"
+WARNING        ICON DISCARDABLE "warning.ico"
+
+// Debugger icons
+//
+STEPOVER      ICON DISCARDABLE "step-over.ico"
+STEPINTO      ICON DISCARDABLE "step-into.ico"
+STEPOUT       ICON DISCARDABLE "step-out.ico"
+TOPOFSTACK    ICON DISCARDABLE "top-of-stack.ico"
+BOTTOMOFSTACK ICON DISCARDABLE "bottom-of-stack.ico"
+UPSTACK       ICON DISCARDABLE "up-stack.ico"
+DOWNSTACK     ICON DISCARDABLE "down-stack.ico"
+
+// Deuce/Debugger icons
+//
+POTENTIALBREAKPOINT ICON DISCARDABLE "potential-break.ico"
+ENABLEDBREAKPOINT   ICON DISCARDABLE "enabled-break.ico"
+DISABLEDBREAKPOINT  ICON DISCARDABLE "disabled-break.ico"
+STEPBREAKPOINT      ICON DISCARDABLE "step-break.ico"
+TESTBREAKPOINT      ICON DISCARDABLE "test-break.ico"
+ENABLEDTRACEPOINT   ICON DISCARDABLE "enabled-trace.ico"
+DISABLEDTRACEPOINT  ICON DISCARDABLE "disabled-trace.ico"
+PROFILEPOINT        ICON DISCARDABLE "profile-point.ico"
+CURRENTLOCATION     ICON DISCARDABLE "current-location.ico"
+PROMPT              ICON DISCARDABLE "prompt.ico"
+VALUES              ICON DISCARDABLE "values.ico"
+
+// Frame icons
+BROWSER		ICON DISCARDABLE "browser.ico"
+DEBUGGER	ICON DISCARDABLE "debugger.ico"
+
+// Internal error
+IERROR          ICON DISCARDABLE "ierror.ico"
+
+// Check mark
+CHECKMARK       ICON DISCARDABLE "check-mark.ico"
+UNCHECKMARK     ICON DISCARDABLE "uncheck-mark.ico"
+
+// Bitmaps
+ABOUT		BITMAP DISCARDABLE "about.bmp"
+SPLASHSCREEN	BITMAP DISCARDABLE "splash-screen.bmp"
+WIZARD		BITMAP DISCARDABLE "wizard.bmp"

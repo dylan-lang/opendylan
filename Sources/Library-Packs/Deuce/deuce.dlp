@@ -1,0 +1,57 @@
+<library-pack name="Deuce" title="Deuce" number="5">
+  <description>The Deuce programmable editor</description>
+  <copyright>Copyright (c) 1995-2001 Functional Objects, Inc. All rights reserved.</copyright>
+  <company>Functional Developer</company>
+  <libraries>
+    <library name="deuce" title="Deuce">
+      <description>The Deuce editor toolkit</description>
+      <sources location="deuce/">
+	<project platform="x86-win32">win32-deuce.lid</project>
+	<project>deuce.lid</project>
+      </sources>
+      <documentation location="Documentation/deuce/index.htm"/>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+	<binary file="DxDEUCE.dll"/>
+	<lib file="DxDEUCE.lib"/>
+      </release>
+    </library>
+    <library name="duim-deuce" title="DUIM Deuce">
+      <description>A DUIM implementation of the Deuce editor</description>
+      <requires>duim</requires>
+      <sources location="deuce/duim">
+	<project platform="x86-win32">win32-duim-deuce.lid</project>
+	<project>duim-deuce.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+	<binary file="DxDMDCE.dll"/>
+	<lib file="DxDMDCE.lib"/>
+      </release>
+    </library>
+  </libraries>
+  <examples>
+    <library name="standalone-deuce" title="Standalone Deuce">
+      <category>Technologies/Deuce</category>
+      <category>Tools/Editors</category>
+      <description>A simple editor using the Deuce editor toolkit</description>
+      <sources location="standalone-deuce">
+	<project platform="x86-win32">win32-standalone-deuce.lid</project>
+	<project>standalone-deuce.lid</project>
+      </sources>
+      <description>A simple editor using the Deuce editor toolkit.</description>
+    </library>
+  </examples>
+  <test-suites>
+    <library name="deuce-test-suite" title="Deuce test suite">
+      <description>The Deuce test suite</description>
+      <sources location="Tests/deuce-test-suite">
+        <project>deuce-test-suite.lid</project>
+      </sources>
+    </library>
+    <library name="deuce-test-suite-app" title="Deuce test suite application">
+      <description>The standalone version of the Deuce test suite</description>
+      <sources location="Tests/deuce-test-suite-app">
+        <project>deuce-test-suite-app.lid</project>
+      </sources>
+    </library>
+  </test-suites>
+</library-pack>

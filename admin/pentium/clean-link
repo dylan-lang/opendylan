@@ -1,0 +1,13 @@
+pushd $FUNCTIONAL_DEVELOPER_USER_BUILD
+
+rm */*.o
+rm cmu-test-suite/cmu-test-suite
+rm dylan-test-suite-app/dylan-test-suite-app
+rm functional-extensions-test-suite-app/functional-extensions-test-suite-app
+rm format-test-suite-app/format-test-suite-app
+rm print-test-suite-app/print-test-suite-app
+rm streams-test-suite-app/streams-test-suite-app
+rm build/build
+rm basic-pentium-dw/basic-pentium-dw
+
+popd

@@ -1,0 +1,458 @@
+
+! Preliminary syntax conversion from C to Dylan.
+! (For C++, load companion file "cpp-dyla.dat" before this one.)
+
+! 6/19/95, 7/26/95, 8/16/95, 3/11/96, 4/15/96
+
+! not handled:
+!  `break'
+!  `continue'
+!  `goto'
+!  switch case that falls through to next case
+
+@set-switch{t;1}@set-switch{w;1}
+@set-syntax{L;\-\.\(\)}
+@set-wrap{70;\t}
+
+ARGV:\N-module <G>\n=@set{module;$1}
+
+ARGV:\N-D\J<I>\=*\n=@define{\\I$1\\I\=@quote{$2}}
+!ARGV:\N-D\J<I>\n=@define{\\I$1\\I\=1}
+
+\B=module\: ${module;dylan-user}\n\n\
+	\/\/ "@outpath" generated @just-date{@datime} by "@getenv{USER}"\n\
+	\/\/ Converted from "@inpath" dated @just-date{@file-time}\n
+
+just-date:<L> <L> <D> <D>\:<D>\:<D> <D>=$2 $3\, $7@end
+just-date:\n=;
+
+@set{anonstruct;\@struct0}
+
+\/\/*\n=$0
+\/\*<comment>\*\/=$0
+comment:\/\*<comment>\*\/=$0
+
+code:\/\/*\n=$0
+code:\/\*<comment>\*\/=$0
+
+! optional space
+space:\/\/*\n= $0
+space:\/\*<comment>\*\/= $0 ;
+space:<S>=$1
+space:\N\W\#*\n=$0
+space:=@end
+
+! required space
+ReqSpace:\/\/*\n= $0
+ReqSpace:\/\*<comment>\*\/= $0 ;
+ReqSpace:\N\W\#*\n=$0
+ReqSpace:\s=\s
+ReqSpace:<S>=$1
+ReqSpace:=@terminate
+
+code:\"<string>\"=$0
+string:\\?=\\?
+code:\'<char>\'=$0
+char:\\?=\\?@end;?=?@end
+
+\n\L\W\P\n=\n
+code:\n\L\W\P\n=\n
+
+code:\=\==\S\=\S
+code:\==\S\:\=\S
+code:\!\==\S\~\=\S
+code:\<\==\S\<\=\S
+code:\>\==\S\>\=\S
+code:\<=\S\<\S
+code:\>=\S\>\S
+code:-\>=.
+code:\!=\S\~\S
+code:\~\W(<code>)=\Ilognot($1)
+code:\~\W<I>=\Ilognot(@rid{$1})
+code:\~=\Ilognot\I\/\* \?\?\? \*\/
+
+! quick pass-through of white space before trying to match <type>
+\s=\s
+\n=\n
+\t=\t
+
+code:\s=\s
+code:\n=\n
+code:\t=\t
+
+type:unsigned char\W\*=\I\<string\>@end
+type:unsigned char=\I\<character\>@end
+type:unsigned <itype><stars>=\I\<unsigned-$1$2\>@end
+type:signed <itype><stars>=\I\<$1$2\>@end
+type:struct \{<fields>\}=@incr{anonstruct}\
+	@out{\Ndefine class ${anonstruct} (\<object\>)\N$1\N\
+		end class ${anonstruct}\;\n}\
+	${anonstruct}@end
+type:struct <I><space><stars><space><L0>=\I@optptr{$3}\<$1\>$2$4@end
+type:enum <I>=\I\<$1-enum\>@end
+type:char\W\*=\I\<string\>@end
+type:char=\I\<character\>@end
+type:const <type>= \/\* const \*\/ $1@end
+type:void=()@end
+type:static=\/\*static\*\/ ;
+type:return=@fail
+type:if=@fail
+type:else=@fail
+type:for=@fail
+type:switch=@fail
+type:goto=@fail
+type:case=@fail
+type:typedef=@fail
+type:int<stars>=\<int$1\>@end
+type:long int<stars>=\<long$1\>@end
+type:short int<stars>=\<short$1\>@end
+type:long<stars>=\<long$1\>@end
+type:short<stars>=\<short$1\>@end
+type:<L1><i><stars>=\I@optptr{$3}\<$1$2\>@end
+type:=@fail
+
+itype:int=int@end
+itype:long=long@end
+itype:short=short@end
+itype:long int=long@end
+itype:short int=short@end
+itype:char\W\*=string@end
+itype:char=character@end
+itype:\S=
+itype:=@fail
+
+stars:\W\*=\*
+stars:\WFAR=
+stars:=@end
+
+optptr:\A\*=
+optptr:\*=\/\* pointer to \*\/
+
+typedef <I> <I>\;=define constant \<$2\> \= \<$1\>\;
+typedef <type>\G\W<I>\;=define constant \<$2\> \= $1\;
+typedef *\;=$0 \/\/ \?\?\?
+
+static=\/\*static\*\/ ;
+
+maybe-block:\Wreturn\I\W(<match-paren>)\G\;\W\Z=\/\* return \*\/ $1
+maybe-block:\Wreturn\I\W<match-paren>\;\G\W\Z=\/\* return \*\/ $1
+maybe-block:*return*=block(return)\n\t$0\N\ end block\;
+maybe-block:*=*
+
+\I<type>\G\W<I>(<parms>)\G<space>\{<body>\}=\
+	\ndefine method @rid{$2}($3)@wrap{\ \=\> @rtntype{$1}\;}$4\
+	\n\ @maybe-block{$5}\Nend method @rid{$2}\;
+parms:,<L0>=, ;
+parms:<ReqSpace>=$1
+parms:\I<type>\W<I>=\I@rid{$2} \:\: $1
+parms:<I>=\I@rid{$1}
+
+rtntype:()=();*=value \:\: *
+
+\I<type>\G\W<I><init>=\Ndefine variable @rid{$2} \:\: $1$3
+init:\;=\;@end
+init:\=<expression>\;= \= $1\;@end
+init:<ReqSpace>=$1
+init:=@fail
+
+const <type><space><I>\==\Ndefine constant$2 @rid{$3} \:\: $1 \= ;
+
+body:\{#\}=\Sbegin #\Send\;
+body:<ReqSpace>=$1
+body:<type>\G\W<I><body-init>=\Ilet @rid{$2} \:\: $1$3
+body:<I>\:<ReqSpace>=\I$1%\:$2
+body:<I>\W<optstars>\G\W<I>,<match-paren>\;=@set{T;@out-column}\
+	\Ilet @rid{$3} \:\: @type{$1\I$2}\;\n@tab{$T}\ \ @body{$1\I$4\;}
+body:<statement>=$1
+body:<I>=\I@rid{$1}\I
+body::code
+
+optstars:\*=\*
+optstars:\CNEAR=
+optstars:\CFAR=
+optstars:\S=\I
+optstars:=@end
+
+body-init:\;=\;@end
+body-init:\=<space><val>\;= \= $1$2\;@end
+body-init:\[<val>\]\;= \= make(\<vector\>, size\: $1)\;@end
+body-init:<ReqSpace>=$1
+body-init:=@fail
+
+val:\)=@fail
+val:\{=@fail
+val:\}=@fail
+val::expression
+
+code:0\J\C\Jx\J<X>=\#x$1
+code:0\J<O>=\#o$1
+
+! reserved words in Dylan but not in C
+rid:\Cbegin=begin\@
+rid:\Cdefine=define\@
+rid:\Cmethod=method\@
+rid:\Cselect=select\@
+rid:\Clet=let\@
+rid:\Cblock=block\@
+rid:\Cmake=make\@
+rid:\Cend=end\@
+
+rid:FALSE=\#f
+rid:TRUE=\#t
+
+rid:<I>=$1
+
+\N\W\#define <I> <N><space>\N=define constant @rid{$1} = $2\;$3\N
+\N\W\#include*\n=\N\/\/ \#include*\n
+\N\W\#pragma*\n=\N\/\/ \#pragma*\n
+\N\W\#*\n=$0
+code:\N\W\#*\n=$0
+
+^M\N=
+code:^M\N=
+
+code:\+\+=\S\+\+\S
+code:\-\-=\S\-\-\S
+code:\+\==\S\+\=\S
+code:\-\==\S\-\=\S
+code:\&\&=\S\&\S
+code:\|\|=\S\|\S
+
+code:\+=\S\+\S
+code:\-=\S\-\S
+code:\*=\S\*\S
+code:\/=\S\/\S
+code:\&=\S%logand\S
+code:\|=\S%logior\S
+
+code:,\W\&\W<L0>=, \/\* addr \*\/ ;
+
+statement:if(<expression>)<space><statement><else-part>=\
+	if ( $1 )$2 $3 $4 end if\;@end
+else-part:<space>else<ReqSpace>if(<expression>)<space><statement><else-part>=\
+	$1elseif$2( $3 )$4 $5 $6@end
+else-part:<space>else<space><statement>=$1else$2$3@end
+else-part:=@end
+
+statement:\{<body>\}=$1@end
+statement:<ReqSpace>=$1
+statement:<expression>\;=$1\;@end
+statement:\;=@end
+statement:<G>=$1 @err{@file, line @line\: Can\'t parse statement at\: $1\n}
+statement:\}=@fail;\)=@fail
+code:(\W\&#)=( \/\* addr \*\/ #)
+code:(#)=(#)
+code:\}=@fail;\)=@fail
+:\}=\};\)=\)
+
+statement:return(<expression><space>)<space>\;=return($1$2)$3\;@end
+statement:return\;=return()\;@end
+statement:return<expression><space>\;=return( $1 )$2\;@end
+
+statement:switch\W(<expression>)<space>\{<body>\}=select ( $1 )$2$3\N\  end select\;@end
+body:case <expression>\:<more-case>=$1$2 \=\> ;
+more-case:\W<space>case <expression>\:=$1, $2
+more-case:=@end
+body:default\:= otherwise \=\> ;
+
+statement:for\W(\W<match-paren>)<space><statement>=\
+	for ( @for-clauses{$1} )$2$3\N\tend for\;@end
+match-paren:(#)=$0
+match-paren:\/\/*\n=$0
+match-paren:\/\*<comment>\*\/=$0
+
+for-clauses:\A\;<expression>\;\W\Z=while $1
+for-clauses:\A<I>\=<val>\;\G\W$1\W<cmp><val>\;\G\W$1++\W\Z=@rid{$1} from $2 $3 $4
+for-clauses:\A<type>\G\W<I>\=<val>\;\G\W$2\W<cmp><val>\;\G\W$2++\W\Z=@rid{$2} \:\: $1 from $3 $4 $5
+for-clauses:\A<type>\G\W<I>\=<val>\;<expression>\;\G\W$2\=<expression>=$2 \:\: $1 \= $3 then $5, while $4
+for-clauses:\A<I>\=<val>\;<expression>\;\G\W$1\=<expression>=$1 \= $2 then $4, while $3
+for-clauses::code
+
+cmp:\<\==to@end
+cmp:\<=below@end
+cmp:\>\==@fail
+cmp:\>=above@end
+cmp:=@fail
+
+statement:while\W(<expression>)<space><statement>=$0\N\tend while\;
+statement:do<statement><space>while(<expression>)\;=\
+	block (exit-while)\n\t while(\#t)$1$2\N\t  \
+	unless($3) exit-while()\;\N\t end while\;\n\tend block\;
+
+statement:break\;=%$0@end
+statement:continue\;=%$0@end
+statement:goto <I>\;=%goto $1%\;@end
+
+statement:printf(<argument-expression-list>)\;=format-out($1)\;@end
+statement:fprintf(<argument-expression-list>)\;=format($1)\;@end
+statement:sprintf(<postfix-expression>,\W<argument-expression-list>)\;=\
+	$1 \:\= format-to-string($2)\;@end
+
+struct <I><space>\{<fields>\}<space>*\;=\
+	@set{sclass;\<$1\>}\
+	define class ${sclass} ( \<object\> )$2\N$3\Nend class ${sclass}\;$4\
+	\N@sdefs{*}\N
+fields:<ReqSpace>=$1
+fields:<type>\G\W<I><space><bits>\;=\N\tslot @rid{$2} \:\: $1$3$4\;
+bits:\:<D>= \/\* $1 bits \*\/@end
+bits:=@end
+sdefs:<I>=\Ndefine variable @rid{$1} \:\: ${sclass}\;
+sdefs:\*<I>=\Ndefine variable @rid{$1} \:\: \/\* pointer to \*\/ ${sclass}\;
+sdefs:\,=
+
+code:(\W<type>)<I>=as($1, $2)
+
+code:<I>=\I@rid{$1}
+code:\:\:=\/
+
+::code
+
+
+<expression>:\W<assignment-expression><space><comopt>=@putop{$3\0$1$2}@end
+<expression>:=@fail
+comopt:,\W<assignment-expression><space>=,\0$1$2@end
+comopt:=@end
+
+<assignment-expression>:\W<unary-expression>\W<assignment-operator>\W<assignment-expression>=\
+	$1 \:\= @incop{$2\0$1\0$3}@end
+<assignment-expression>:\W<conditional-expression>=$1@end
+<assignment-expression>:=@fail
+
+<assignment-operator>:\=\==@fail
+<assignment-operator>:\==\:\=@end
+<assignment-operator>:<aop>\==$1@end
+<assignment-operator>:=@fail
+aop:\*=\*@end;\/=\/@end;\%=%mod@end;+=+@end;-=-@end;\<\<=lsh\&@end
+aop:\>\>=rsh\&@end;\&=logand@end;\^=logxor@end;\|=logior@end
+aop:=@fail
+
+incop:\:\=\0*\0*=$2
+incop:<Y>\0*\0*=$2 $1 $3
+incop:*\0*\0*=$1($2,$3)
+
+<conditional-expression>:\W<logical-or-expression>\W<optquest>=@ce{$2\0$1}@end
+<conditional-expression>:=@fail
+optquest:\?<expression>\:\W<conditional-expression>=\?$1\0$2@end
+optquest:=@end
+ce:\?*\0*\0*=if( $3 ) $1 else $2 end if ;
+ce:\0*=*
+
+putop:\0*=*
+putop:,\0*\0*=\Ibegin $2\; $1 end ;
+putop:<Y>\0*\0*=$3 $1 $2
+putop:*\0*\0*=\I$1($3,$2)
+
+!logical-expression:\W<equality-expression>\W<optlog>=@putop{$2\0$1}@end
+!optlog:<logop>\W<logical-expression>=$1\0$2@end
+!optlog:=@end
+!logop:\|\|=\|@end
+!logop:\&\&=\&@end
+!logop:\^=logxor@end
+!logop:=@fail
+
+<logical-or-expression>:<logical-and-expression>=$1
+<logical-or-expression>:\|\|<logical-and-expression>= \| @parenthesize{$1}
+<logical-or-expression>:=@terminate
+
+parenthesize:\A\S=
+parenthesize:<I>\Z=$1
+parenthesize:<N>\Z=$1
+parenthesize:(*)\Z=$0
+parenthesize:"<string>"\Z=$0
+parenthesize:'<string>'\Z=$0
+parenthesize:\#<G>\Z=\#$1
+parenthesize:<I>(*)\Z=$1($2)
+parenthesize:<I><s>\[*\]\Z=$0
+parenthesize:<I>.<I>\Z=$0
+parenthesize:*=(*)
+
+
+<logical-and-expression>:<inclusive-or-expression>=$1
+<logical-and-expression>:\&\&<inclusive-or-expression>= \& $1
+<logical-and-expression>:=@terminate
+
+<inclusive-or-expression>:<ReqSpace>=$1
+<inclusive-or-expression>:<exclusive-or-expression>\W<optor>=@putop{$2\0$1}@end
+<inclusive-or-expression>:=@fail
+optor:\P\|\|=@end
+optor:\|<inclusive-or-expression>=logior\0$1@end;=@end
+
+<exclusive-or-expression>:<and-expression>\W<optxor>=@putop{$2\0$1}@end
+<exclusive-or-expression>:=@fail
+optxor:\^\W<exclusive-or-expression>=logxor\0$1@end;=@end
+
+<and-expression>:<equality-expression>\W<optand>=@putop{$2\0$1}@end
+<and-expression>:=@fail
+optand:\P\&\J\&=@end
+optand:\&\W<and-expression>=logand\0$1@end;=@end
+
+
+<equality-expression>:\W<relational-expression>\W<opteq>=@putop{$2\0$1}@end
+<equality-expression>:=@fail
+opteq:<eqop>\W<relational-expression>=$1\0@parenthesize{$2}@end;=@end
+eqop:\=\==\=@end;\!\==\~\=@end;=@fail
+
+<relational-expression>:<shift-expression>\W<optrel>=@putop{$2\0$1}@end;=@fail
+optrel:<relop>\W<shift-expression>=$1\0$2@end;=@end
+relop:\<\<=@fail;\>\>=@fail
+relop:\<\==\<\=@end;\>\==\>\=@end;\<=\<@end;\>=\>@end;=@fail
+
+<shift-expression>:<additive-expression>\W<optshift>=@putop{$2\0$1}@end;=@fail
+optshift:<shiftop>\W<additive-expression>=$1\0$2@end;=@end
+shiftop:\<\<=lsh@end;\>\>=rsh@end;=@fail
+
+<additive-expression>:<cast-expression><space><optarith>=@putop{$3\0$1$2}@end
+<additive-expression>:=@fail
+optarith:<arithop>\W<additive-expression>=$1\0$2@end;=@end
+arithop:+\J+=@fail;-\J-=@fail
+arithop:+=+@end;-=-@end;\*=\*@end;\/=\/@end;\%=mod@end;=@fail
+
+<cast-expression>:\S=
+<cast-expression>:(<type>)<cast-expression>= as($1, $2)@end;
+<statement>:(void)=
+<cast-expression>::unary-expression
+
+<unary-expression>:\S=
+<unary-expression>:\+\J\+\W<unary-expression>=($1 := $1 + 1)@end
+<unary-expression>:\-\J\-\W<unary-expression>=($1 := $1 - 1)@end
+<unary-expression>:\+\W<cast-expression>=\I\+ $1@end
+<unary-expression>:\-\W<cast-expression>=\I\- $1@end
+<unary-expression>:<unary-operator>\W<cast-expression>=\
+	\I$1@parenthesize{$2}@end
+<unary-expression>:sizeof(<type>)=sizeof($1)@end
+<unary-expression>:sizeof\I\W<unary-expression>=sizeof($1)@end
+<unary-expression>::postfix-expression
+<unary-operator>:\&=%addr @end;\*=%indirect @end;+=+@end;-=-@end;\~=lognot@end
+<unary-operator>:\!=\~ @end;=@fail
+
+<postfix-expression>:<primary-expression>\W<optpost>=@putpost{$2\0$1}@end
+<postfix-expression>:=@fail
+optpost:[<expression>]\W<optpost>=$0@end
+optpost:(<argument-expression-list>)=$0@end
+optpost:.<I>\W<optpost>=.@rid{$1}$2@end
+optpost:-\><I>\W<optpost>=.@rid{$1}$2@end
+optpost:++=++@end;--=+-@end
+optpost:=@end
+putpost:+?\0*= %prog1($2, $2 := $2 $1 1)
+putpost:*\0*= $2$1
+
+<argument-expression-list>:,=,
+<argument-expression-list>:<ReqSpace>=$1
+<argument-expression-list>:<assignment-expression>=$1
+
+<primary-expression>:0\J\C\Jx\J<X>=\#x$1@end
+<primary-expression>:0\J<O>=\#o$1@end
+
+primary-expression:\/\/*\n= $0
+primary-expression:\/\*<comment>\*\/= $0 ;
+primary-expression:\N\W\#*\n=$0
+primary-expression:<S>=$1
+
+<primary-expression>:<N>\J<optexpo>=$1$2@end
+<primary-expression>:<I>=\I@rid{$1}@end
+<primary-expression>:\"<string>\"=$0@end
+<primary-expression>:\'<char>\'=$0@end
+<primary-expression>:(<expression>)=($1)@end
+<primary-expression>:=@fail
+optexpo:\C\JE\J<N>=$1@end;=@end
+

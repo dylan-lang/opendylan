@@ -1,0 +1,34 @@
+From haahr Thu Sep  7 17:05:10 1995
+From: Paul Haahr <haahr>
+Subject: adding DFM nodes
+Date: Thu, 7 Sep 95 17:05:05 +0100
+
+[I've found myself adding new nodes to the DFM several times;  both to
+experiment and to later integrate my changes.  On Keith's suggestion,
+I wrote this up.]
+
+What you have to do to add a new node class to the DFM:
+
+  - Add it to flow-graph/computation.dylan, and ensure that you export
+    it from flow-graph/flow-graph-library.
+
+  - Create the converters to generate it.  Likely in conversion, but
+    some nodes are only created by optimizations.
+
+  - Make sure all the back ends handle it.  This includes, at least:
+
+    - c-back-end
+    - execution (formerly machine.dylan) -- the evaluation engine
+    - debug-back-end -- the printer
+
+    and all the native back ends, whenever those show up.
+
+In addition, it would be good to
+
+  - Add any invariant checks to flow-graph/checker.dylan.
+
+  - Send out a note documenting it.
+
+Now you're ready to actually do something with your new class.
+
+

@@ -1,0 +1,170 @@
+
+		CORBA WIZARDS
+		on the web
+
+Summary:
+
+	CORBA Interface Wizard
+
+	Effectively a UI to an IDL compiler. Let's users select
+	interfaces from IDL file or interface repository and generates
+	stubs and skeletons. Usually supports Application language choices
+	like which module to put generated code in. Sometimes also supports
+	
+
+8<----------------------------------------------------------------------
+
+http://www.objectshare.com/pr/iona.htm
+
+One of the many new features to be incorporated in the next version of
+Parts is the CORBA Wizard. The CORBA Wizard allows the developer to
+browse a CORBA repository and select the objects with which an
+application will communicate. A single mouse-click automatically
+generates and compiles Java source code for connecting to the
+object. The resulting classes can then be added to the developer's
+workbench and wired with other elements in the same manner as local
+objects. It is not necessary for users to address
+
+8<----------------------------------------------------------------------
+
+http://www.sumnet.com/enews/columns/datop0902.html
+
+These features enhance the capabilities and functionality of HP ORB
+Plus 2.0, which is HP's CORBA 2.0-compliant C object-request broker
+for HP-UX, Sun Solaris and Windows NT platforms. The enterprise
+wizards allow Visual C developers to create CORBA objects that can be
+deployed on Windows NT or HP-UX platforms. The wizards are designed to
+simplify development by automating repetitive tasks. The application
+wizard guides the Visual C++ developer through the basic decision
+points related to the development of a CORBA server object and then
+generates a skeleton application source code. The naming-insertion
+wizard simplifies development of functionalities for naming services
+for Windows clients in a CORBA client/server environment. The wizard
+generates all the source code needed to link clients and CORBA server
+components.
+
+8<----------------------------------------------------------------------
+
+http://www.news.com/News/Item/0,4,7000,4000.html
+
+The Parts for Java/OrbixWeb combo will also include wizards for
+building CORBA-compliant Java applications. A CORBA Wizard will let
+developers browse a CORBA repository and select the objects with which
+their application can communicate. All underlying communications
+software is generated automatically, turning one of the most difficult
+CORBA development tasks into a simple point-and-click operation.
+
+8<----------------------------------------------------------------------
+
+http://www.ikonodyne.com/mot-ide.html
+
+MOT/Dev Visual CORBA Development ToolMOT/IDE Features: 
+
+•Distributed network monitoring and administration of CORBA objects
+•Visual naming tool •Visual event management •Visual trader
+•Java Beans wrapper object generation •Versioning support for
+Java implementations •Source text editor for IDL and Java
+
+8<----------------------------------------------------------------------
+
+http://www2.hp.com/csopress/96aug20.html
+
+HP ORB Plus 2.0 Enterprise Wizards 
+
+The HP-developed enterprise wizards for HP ORB Plus 2.0 allow Visual
+C++ developers to create CORBA objects that can be deployed on Windows
+NT or HP-UX platforms. The wizards are designed to simplify
+development by automating often-repeated tasks.
+
+At Object World West, HP is demonstrating an application wizard and a
+naming-insertion wizard. The application wizard guides the Visual C++
+developer through the basic decision points related to the development
+of a CORBA server object and then generates a skeleton application
+source code. The naming-insertion wizard simplifies development of
+functionalities for naming services for Windows clients in a CORBA
+client/server environment. The wizard generates all the source code
+needed to link clients and CORBA server components.
+
+"We are exploiting the features of Windows-based development
+environments so that developers can create solutions using CORBA
+components," said Cyndi Nickel, product line manager at HP's
+Enterprise Objects Program. "Our goal is to support the development of
+mixed-mode solutions that incorporate OLE and CORBA object models
+across UNIX system and Windows platforms."
+
+
+8<----------------------------------------------------------------------
+
+http://tuxedo.novell.com/products/builder/docs/joltwhtm/3-tasks1.htm
+
+Before using Jolt Wizard, you need to install all the software
+applications you will be using during your development effort,
+including the Contract Repository and any Application Development
+Environment tools.
+
+During development, the programmer uses the Jolt Wizard to enhance
+his/her productivity in creating Jolt clients. The Wizard is used to
+perform a number of important tasks:
+
+1.View all client/server interface definitions in the Contract Repository. 
+
+2.Generate and compile client interface classes ("stubs") on the workstation. 
+
+3.Create sample Java source code for using the stub API. 
+
+The client stubs present a CORBA-compliant API to the programmer. The
+stubs, in turn, use the native Jolt API to communicate with TUXEDO
+services. The stub generation process can be enhanced to implement
+application-specific features in the generated stub source. Also, the
+stub API has been designed to be completely thread-safe.
+
+The Jolt Wizard provides several static classes (not generated) used
+for CORBA compliance and TUXEDO session logon, security access, and
+transaction control. The Session, CurrentContext, and
+BEA_Principal_Authenticator classes are used to logon to TUXEDO. The
+COSTransaction.Current object is also used to perform transaction
+control (ie., begin(), commit()).
+
+
+8<----------------------------------------------------------------------
+
+Monica R. Scalpato wrote:
+> 
+> Hello,
+> 
+> Sick of writing test clients in C++ or any other language to test your Orbix server code? Let OrbBrowser expand your productivity by
+> allowing you to point and click your way through your Orbix interfaces.
+> 
+> OrbBrowser allows you to dynamically bind to and browse any Orbix 2.0 object. You can view all of an objects attributes and invoke
+> any of its methods dynamically by typing in any parameter you want. Most IDL types are supported through a User-Friendly
+> interface.
+> 
+> TO find out more Info and how to download go to :
+> 
+> http://www.apma.virginia.edu/~mrs5j/bburke/bmbjb/OrbBrowser/index.html
+> 
+> Thanks.
+> 
+> --
+> **********************************************************************
+> Monica Scalpato
+> Graduate Student and Graduate Research Assistant
+> University of Virginia
+
+Have a look at http://www.zurich.ibm.com/~bba/dsom_interpreter.html for
+a beast that does the same for IBM's (D)SOM ...
+
+Cheers,
+Bela
+
+
+
+-- 
+Regards,
+Bela Ban, IBM Zurich Research Laboratory
+CH-8803 Rueschlikon/Switzerland
+email: bba@zurich.ibm.com   (ban@ifi.unizh.ch),
+http://www.zurich.ibm.com/~bba/
+
+8<----------------------------------------------------------------------
+

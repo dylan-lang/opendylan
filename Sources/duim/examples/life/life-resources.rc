@@ -1,0 +1,15 @@
+// Icons for the Functional Developer Life example
+//
+
+// Program and document icons
+// We use this name to ensure it's the first icon to be picked up by the installer
+//
+AAA	ICON DISCARDABLE "life-large.ico"
+
+// Tool bar icons
+//
+LLARGE  ICON DISCARDABLE "life-large.ico"
+PLAY    ICON DISCARDABLE "play.ico"
+STOP    ICON DISCARDABLE "stop.ico"
+STEP    ICON DISCARDABLE "step.ico"
+ERASE   ICON DISCARDABLE "erase.ico"

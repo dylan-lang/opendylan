@@ -1,0 +1,255 @@
+module:    dylan-user	
+Synopsis:  This is a Dylan library to act as an interface to the 
+	   OLE common dialogs library (OLEDLG.H and OLEDLG.DLL).
+Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
+              All rights reserved.
+License:      Functional Objects Library Public License Version 1.0
+Dual-license: GNU Lesser General Public License
+Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
+
+
+/* Automatically generated from "library.src"; do not edit. */
+
+
+
+define library Ole-Dialogs
+  use Dylan;
+  use C-FFI;
+  use Win32-common;
+  use Win32-dialog;
+  use COM;
+  export Ole-Dialogs;
+end;
+
+define module Ole-Dialogs
+  use Dylan;
+  use C-FFI;
+  use Win32-common,
+    // slot accessors used in both libraries:
+    export: { fLink-value, fLink-value-setter };
+  use COM, // need:  <LPOLEOBJECT>, <CLSID>, <REFCLSID>, <FORMATETC>,
+	   //	     <LPDATAOBJECT>, <Interface>
+    export: { cbStruct-value, cbStruct-value-setter,
+	     clsid-value, clsid-value-setter, iid-value, iid-value-setter };
+  use COM-internal; // need: <C-HRESULT>
+  use Win32-dialog,
+    // slot accessors used in both libraries:
+    export: { lpfnHook-value, lpfnHook-value-setter, 
+	     lCustData-value, lCustData-value-setter,
+	     hWndOwner-value, hWndOwner-value-setter,
+	     lpOFN-value, lpOFN-value-setter };
+
+
+  // from "oledlg.h":
+  export $IDC-OLEUIHELP, $IDC-IO-CREATENEW, $IDC-IO-CREATEFROMFILE,
+	$IDC-IO-LINKFILE, $IDC-IO-OBJECTTYPELIST, $IDC-IO-DISPLAYASICON,
+	$IDC-IO-CHANGEICON, $IDC-IO-FILE, $IDC-IO-FILEDISPLAY,
+	$IDC-IO-RESULTIMAGE, $IDC-IO-RESULTTEXT, $IDC-IO-ICONDISPLAY,
+	$IDC-IO-OBJECTTYPETEXT, $IDC-IO-FILETEXT, $IDC-IO-FILETYPE,
+	$IDC-IO-INSERTCONTROL, $IDC-IO-ADDCONTROL, $IDC-IO-CONTROLTYPELIST,
+	$IDC-PS-PASTE, $IDC-PS-PASTELINK, $IDC-PS-SOURCETEXT,
+	$IDC-PS-PASTELIST, $IDC-PS-PASTELINKLIST, $IDC-PS-DISPLAYLIST,
+	$IDC-PS-DISPLAYASICON, $IDC-PS-ICONDISPLAY, $IDC-PS-CHANGEICON,
+	$IDC-PS-RESULTIMAGE, $IDC-PS-RESULTTEXT, $IDC-CI-GROUP,
+	$IDC-CI-CURRENT, $IDC-CI-CURRENTICON, $IDC-CI-DEFAULT,
+	$IDC-CI-DEFAULTICON, $IDC-CI-FROMFILE, $IDC-CI-FROMFILEEDIT,
+	$IDC-CI-ICONLIST, $IDC-CI-LABEL, $IDC-CI-LABELEDIT, $IDC-CI-BROWSE,
+	$IDC-CI-ICONDISPLAY, $IDC-CV-OBJECTTYPE, $IDC-CV-DISPLAYASICON,
+	$IDC-CV-CHANGEICON, $IDC-CV-ACTIVATELIST, $IDC-CV-CONVERTTO,
+	$IDC-CV-ACTIVATEAS, $IDC-CV-RESULTTEXT, $IDC-CV-CONVERTLIST,
+	$IDC-CV-ICONDISPLAY, $IDC-EL-CHANGESOURCE, $IDC-EL-AUTOMATIC,
+	$IDC-EL-CANCELLINK, $IDC-EL-UPDATENOW, $IDC-EL-OPENSOURCE,
+	$IDC-EL-MANUAL, $IDC-EL-LINKSOURCE, $IDC-EL-LINKTYPE,
+	$IDC-EL-LINKSLISTBOX, $IDC-EL-COL1, $IDC-EL-COL2, $IDC-EL-COL3,
+	$IDC-BZ-RETRY, $IDC-BZ-ICON, $IDC-BZ-MESSAGE1, $IDC-BZ-SWITCHTO,
+	$IDC-UL-METER, $IDC-UL-STOP, $IDC-UL-PERCENT, $IDC-UL-PROGRESS,
+	$IDC-PU-LINKS, $IDC-PU-TEXT, $IDC-PU-CONVERT, $IDC-PU-ICON,
+	$IDC-GP-OBJECTNAME, $IDC-GP-OBJECTTYPE, $IDC-GP-OBJECTSIZE,
+	$IDC-GP-CONVERT, $IDC-GP-OBJECTICON, $IDC-GP-OBJECTLOCATION,
+	$IDC-VP-PERCENT, $IDC-VP-CHANGEICON, $IDC-VP-EDITABLE,
+	$IDC-VP-ASICON, $IDC-VP-RELATIVE, $IDC-VP-SPIN, $IDC-VP-SCALETXT,
+	$IDC-VP-ICONDISPLAY, $IDC-VP-RESULTIMAGE, $IDC-LP-OPENSOURCE,
+	$IDC-LP-UPDATENOW, $IDC-LP-BREAKLINK, $IDC-LP-LINKSOURCE,
+	$IDC-LP-CHANGESOURCE, $IDC-LP-AUTOMATIC, $IDC-LP-MANUAL,
+	$IDC-LP-DATE, $IDC-LP-TIME, $IDD-INSERTOBJECT, $IDD-CHANGEICON,
+	$IDD-CONVERT, $IDD-PASTESPECIAL, $IDD-EDITLINKS, $IDD-BUSY,
+	$IDD-UPDATELINKS, $IDD-CHANGESOURCE, $IDD-INSERTFILEBROWSE,
+	$IDD-CHANGEICONBROWSE, $IDD-CONVERTONLY, $IDD-CHANGESOURCE4,
+	$IDD-GNRLPROPS, $IDD-VIEWPROPS, $IDD-LINKPROPS, $IDD-CONVERT4,
+	$IDD-CONVERTONLY4, $IDD-EDITLINKS4, $IDD-GNRLPROPS4, $IDD-LINKPROPS4,
+	$IDD-PASTESPECIAL4, $IDD-CANNOTUPDATELINK,
+	$IDD-LINKSOURCEUNAVAILABLE, $IDD-SERVERNOTFOUND, $IDD-OUTOFMEMORY,
+	$IDD-SERVERNOTREGW, $IDD-LINKTYPECHANGEDW, $IDD-SERVERNOTREGA,
+	$IDD-LINKTYPECHANGEDA, $OLESTDDELIM, <LPFNOLEUIHOOK>,
+	$SZOLEUI-MSG-HELP, $SZOLEUI-MSG-ENDDIALOG, $SZOLEUI-MSG-BROWSE,
+	$SZOLEUI-MSG-CHANGEICON, $SZOLEUI-MSG-CLOSEBUSYDIALOG,
+	$SZOLEUI-MSG-CONVERT, $SZOLEUI-MSG-CHANGESOURCE,
+	$SZOLEUI-MSG-ADDCONTROL, $SZOLEUI-MSG-BROWSE-OFN,
+	$ID-BROWSE-CHANGEICON, $ID-BROWSE-INSERTFILE, $ID-BROWSE-ADDCONTROL,
+	$ID-BROWSE-CHANGESOURCE, $OLEUI-FALSE, $OLEUI-SUCCESS, $OLEUI-OK,
+	$OLEUI-CANCEL, $OLEUI-ERR-STANDARDMIN, $OLEUI-ERR-OLEMEMALLOC,
+	$OLEUI-ERR-STRUCTURENULL, $OLEUI-ERR-STRUCTUREINVALID,
+	$OLEUI-ERR-CBSTRUCTINCORRECT, $OLEUI-ERR-HWNDOWNERINVALID,
+	$OLEUI-ERR-LPSZCAPTIONINVALID, $OLEUI-ERR-LPFNHOOKINVALID,
+	$OLEUI-ERR-HINSTANCEINVALID, $OLEUI-ERR-LPSZTEMPLATEINVALID,
+	$OLEUI-ERR-HRESOURCEINVALID, $OLEUI-ERR-FINDTEMPLATEFAILURE,
+	$OLEUI-ERR-LOADTEMPLATEFAILURE, $OLEUI-ERR-DIALOGFAILURE,
+	$OLEUI-ERR-LOCALMEMALLOC, $OLEUI-ERR-GLOBALMEMALLOC,
+	$OLEUI-ERR-LOADSTRING, $OLEUI-ERR-STANDARDMAX, OleUIAddVerbMenu,
+	lpszTemplate-value, lpszTemplate-value-setter, hResource-value,
+	hResource-value-setter, lpszFile-value, lpszFile-value-setter,
+	cchFile-value, cchFile-value-setter, cClsidExclude-value,
+	cClsidExclude-value-setter, lpClsidExclude-value,
+	lpClsidExclude-value-setter, oleRender-value, oleRender-value-setter,
+	lpFormatEtc-value, lpFormatEtc-value-setter, lpIOleClientSite-value,
+	lpIOleClientSite-value-setter, lpIStorage-value,
+	lpIStorage-value-setter, ppvObj-value, ppvObj-value-setter, sc-value,
+	sc-value-setter, hMetaPict-value, hMetaPict-value-setter,
+	<OLEUIINSERTOBJECTA>, <LPOLEUIINSERTOBJECTA>, <POLEUIINSERTOBJECTA>,
+	OleUIInsertObject, <LPOLEUIINSERTOBJECT>, $IOF-SHOWHELP,
+	$IOF-SELECTCREATENEW, $IOF-SELECTCREATEFROMFILE, $IOF-CHECKLINK,
+	$IOF-CHECKDISPLAYASICON, $IOF-CREATENEWOBJECT, $IOF-CREATEFILEOBJECT,
+	$IOF-CREATELINKOBJECT, $IOF-DISABLELINK, $IOF-VERIFYSERVERSEXIST,
+	$IOF-DISABLEDISPLAYASICON, $IOF-HIDECHANGEICON,
+	$IOF-SHOWINSERTCONTROL, $IOF-SELECTCREATECONTROL,
+	$OLEUI-IOERR-LPSZFILEINVALID, $OLEUI-IOERR-LPSZLABELINVALID,
+	$OLEUI-IOERR-HICONINVALID, $OLEUI-IOERR-LPFORMATETCINVALID,
+	$OLEUI-IOERR-PPVOBJINVALID, $OLEUI-IOERR-LPIOLECLIENTSITEINVALID,
+	$OLEUI-IOERR-LPISTORAGEINVALID, $OLEUI-IOERR-SCODEHASERROR,
+	$OLEUI-IOERR-LPCLSIDEXCLUDEINVALID, $OLEUI-IOERR-CCHFILEINVALID,
+	$OLEUIPASTE-ENABLEICON, $OLEUIPASTE-PASTEONLY, $OLEUIPASTE-PASTE,
+	$OLEUIPASTE-LINKANYTYPE, $OLEUIPASTE-LINKTYPE1,
+	$OLEUIPASTE-LINKTYPE2, $OLEUIPASTE-LINKTYPE3, $OLEUIPASTE-LINKTYPE4,
+	$OLEUIPASTE-LINKTYPE5, $OLEUIPASTE-LINKTYPE6, $OLEUIPASTE-LINKTYPE7,
+	$OLEUIPASTE-LINKTYPE8, fmtetc-value, fmtetc-value-setter,
+	lpstrFormatName-value, lpstrFormatName-value-setter,
+	lpstrResultText-value, lpstrResultText-value-setter,
+	dwScratchSpace-value, dwScratchSpace-value-setter,
+	<OLEUIPASTEENTRYA>, <LPOLEUIPASTEENTRYA>, <POLEUIPASTEENTRYA>,
+	<LPOLEUIPASTEENTRY>, $PS-MAXLINKTYPES, lpszTemplate-value,
+	lpszTemplate-value-setter, hResource-value, hResource-value-setter,
+	lpSrcDataObj-value, lpSrcDataObj-value-setter, arrPasteEntries-value,
+	arrPasteEntries-value-setter, cPasteEntries-value,
+	cPasteEntries-value-setter, arrLinkTypes-value,
+	arrLinkTypes-value-setter, cLinkTypes-value, cLinkTypes-value-setter,
+	cClsidExclude-value, cClsidExclude-value-setter,
+	lpClsidExclude-value, lpClsidExclude-value-setter,
+	nSelectedIndex-value, nSelectedIndex-value-setter, hMetaPict-value,
+	hMetaPict-value-setter, sizel-value, sizel-value-setter,
+	<OLEUIPASTESPECIALA>, <LPOLEUIPASTESPECIALA>, <POLEUIPASTESPECIALA>,
+	<LPOLEUIPASTESPECIAL>, OleUIPasteSpecial, $PSF-SHOWHELP,
+	$PSF-SELECTPASTE, $PSF-SELECTPASTELINK, $PSF-CHECKDISPLAYASICON,
+	$PSF-DISABLEDISPLAYASICON, $PSF-HIDECHANGEICON,
+	$PSF-STAYONCLIPBOARDCHANGE, $PSF-NOREFRESHDATAOBJECT,
+	$OLEUI-IOERR-SRCDATAOBJECTINVALID,
+	$OLEUI-IOERR-ARRPASTEENTRIESINVALID,
+	$OLEUI-IOERR-ARRLINKTYPESINVALID, $OLEUI-PSERR-CLIPBOARDCHANGED,
+	$OLEUI-PSERR-GETCLIPBOARDFAILED;
+  export <LPOLEUILINKCONTAINERW>;
+  export <LPOLEUILINKCONTAINERA>, <LPOLEUILINKCONTAINER>;
+  export lpszTemplate-value, lpszTemplate-value-setter,
+	hResource-value, hResource-value-setter, lpOleUILinkContainer-value,
+	lpOleUILinkContainer-value-setter, <OLEUIEDITLINKSA>,
+	<LPOLEUIEDITLINKSA>, <POLEUIEDITLINKSA>, <LPOLEUIEDITLINKS>,
+	$OLEUI-ELERR-LINKCNTRNULL, $OLEUI-ELERR-LINKCNTRINVALID,
+	OleUIEditLinks, $ELF-SHOWHELP, $ELF-DISABLEUPDATENOW,
+	$ELF-DISABLEOPENSOURCE, $ELF-DISABLECHANGESOURCE,
+	$ELF-DISABLECANCELLINK;
+  export lpszTemplate-value, lpszTemplate-value-setter,
+	hResource-value, hResource-value-setter, hMetaPict-value,
+	hMetaPict-value-setter, szIconExe-array, szIconExe-array-setter,
+	szIconExe-value, cchIconExe-value, cchIconExe-value-setter,
+	<OLEUICHANGEICONA>, <LPOLEUICHANGEICONA>, <POLEUICHANGEICONA>,
+	OleUIChangeIcon, <LPOLEUICHANGEICON>, $CIF-SHOWHELP,
+	$CIF-SELECTCURRENT, $CIF-SELECTDEFAULT, $CIF-SELECTFROMFILE,
+	$CIF-USEICONEXE, $OLEUI-CIERR-MUSTHAVECLSID,
+	$OLEUI-CIERR-MUSTHAVECURRENTMETAFILE, $OLEUI-CIERR-SZICONEXEINVALID,
+	$PROP-HWND-CHGICONDLG;
+  export lpszTemplate-value, lpszTemplate-value-setter,
+	hResource-value, hResource-value-setter, clsidConvertDefault-value,
+	clsidConvertDefault-value-setter, clsidActivateDefault-value,
+	clsidActivateDefault-value-setter, clsidNew-value,
+	clsidNew-value-setter, dvAspect-value, dvAspect-value-setter,
+	wFormat-value, wFormat-value-setter, fIsLinkedObject-value,
+	fIsLinkedObject-value-setter, hMetaPict-value,
+	hMetaPict-value-setter, lpszUserType-value,
+	lpszUserType-value-setter, fObjectsIconChanged-value,
+	fObjectsIconChanged-value-setter, lpszDefLabel-value,
+	lpszDefLabel-value-setter, cClsidExclude-value,
+	cClsidExclude-value-setter, lpClsidExclude-value,
+	lpClsidExclude-value-setter, <OLEUICONVERTA>, <LPOLEUICONVERTA>,
+	<POLEUICONVERTA>, OleUIConvert, <LPOLEUICONVERT>,
+	OleUICanConvertOrActivateAs, $CF-SHOWHELPBUTTON,
+	$CF-SETCONVERTDEFAULT, $CF-SETACTIVATEDEFAULT, $CF-SELECTCONVERTTO,
+	$CF-SELECTACTIVATEAS, $CF-DISABLEDISPLAYASICON,
+	$CF-DISABLEACTIVATEAS, $CF-HIDECHANGEICON, $CF-CONVERTONLY,
+	$OLEUI-CTERR-CLASSIDINVALID, $OLEUI-CTERR-DVASPECTINVALID,
+	$OLEUI-CTERR-CBFORMATINVALID, $OLEUI-CTERR-HMETAPICTINVALID,
+	$OLEUI-CTERR-STRINGINVALID;
+  export lpszTemplate-value, lpszTemplate-value-setter,
+	hResource-value, hResource-value-setter, hTask-value,
+	hTask-value-setter, lphWndDialog-value, lphWndDialog-value-setter,
+	<OLEUIBUSYA>, <LPOLEUIBUSYA>, <POLEUIBUSYA>, OleUIBusy,
+	<LPOLEUIBUSY>, $BZ-DISABLECANCELBUTTON, $BZ-DISABLESWITCHTOBUTTON,
+	$BZ-DISABLERETRYBUTTON, $BZ-NOTRESPONDINGDIALOG,
+	$OLEUI-BZERR-HTASKINVALID, $OLEUI-BZ-SWITCHTOSELECTED,
+	$OLEUI-BZ-RETRYSELECTED, $OLEUI-BZ-CALLUNBLOCKED;
+  export lpszTemplate-value, lpszTemplate-value-setter,
+	hResource-value, hResource-value-setter, dwReserved1-array,
+	dwReserved1-array-setter, dwReserved1-value,
+	lpOleUILinkContainer-value, lpOleUILinkContainer-value-setter,
+	dwLink-value, dwLink-value-setter, lpszDisplayName-value,
+	lpszDisplayName-value-setter, nFileLength-value,
+	nFileLength-value-setter, lpszFrom-value, lpszFrom-value-setter,
+	lpszTo-value, lpszTo-value-setter, <OLEUICHANGESOURCEA>,
+	<LPOLEUICHANGESOURCEA>, <POLEUICHANGESOURCEA>, OleUIChangeSource,
+	<LPOLEUICHANGESOURCE>, $CSF-SHOWHELP, $CSF-VALIDSOURCE,
+	$CSF-ONLYGETSOURCE, $CSF-EXPLORER, $OLEUI-CSERR-LINKCNTRNULL,
+	$OLEUI-CSERR-LINKCNTRINVALID, $OLEUI-CSERR-FROMNOTNULL,
+	$OLEUI-CSERR-TONOTNULL, $OLEUI-CSERR-SOURCENULL,
+	$OLEUI-CSERR-SOURCEINVALID, $OLEUI-CSERR-SOURCEPARSERROR,
+	$OLEUI-CSERR-SOURCEPARSEERROR;
+  export <LPOLEUIOBJINFOW>;
+  export <LPOLEUIOBJINFOA>, <LPOLEUIOBJINFO>;
+  export <LPOLEUILINKINFOW>;
+  export <LPOLEUILINKINFOA>, <LPOLEUILINKINFO>;
+  export dwReserved1-array, dwReserved1-array-setter,
+	dwReserved1-value, dwReserved2-array, dwReserved2-array-setter,
+	dwReserved2-value, lpOP-value, lpOP-value-setter, <OLEUIGNRLPROPSA>,
+	<LPOLEUIGNRLPROPSA>, <POLEUIGNRLPROPSA>, <LPOLEUIGNRLPROPS>;
+  export dwReserved1-array, dwReserved1-array-setter,
+	dwReserved1-value, dwReserved2-array, dwReserved2-array-setter,
+	dwReserved2-value, lpOP-value, lpOP-value-setter, nScaleMin-value,
+	nScaleMin-value-setter, nScaleMax-value, nScaleMax-value-setter,
+	<OLEUIVIEWPROPSA>, <LPOLEUIVIEWPROPSA>, <POLEUIVIEWPROPSA>,
+	<LPOLEUIVIEWPROPS>, $VPF-SELECTRELATIVE, $VPF-DISABLERELATIVE,
+	$VPF-DISABLESCALE;
+  export dwReserved1-array, dwReserved1-array-setter,
+	dwReserved1-value, dwReserved2-array, dwReserved2-array-setter,
+	dwReserved2-value, lpOP-value, lpOP-value-setter, <OLEUILINKPROPSA>,
+	<LPOLEUILINKPROPSA>, <POLEUILINKPROPSA>, <LPOLEUILINKPROPS>,
+	<LPPROPSHEETHEADERW>, <LPPROPSHEETHEADERA>, <LPPROPSHEETHEADER>;
+  export lpPS-value, lpPS-value-setter, dwObject-value,
+	dwObject-value-setter, lpObjInfo-value, lpObjInfo-value-setter,
+	dwLink-value, dwLink-value-setter, lpLinkInfo-value,
+	lpLinkInfo-value-setter, lpGP-value, lpGP-value-setter, lpVP-value,
+	lpVP-value-setter, lpLP-value, lpLP-value-setter,
+	<OLEUIOBJECTPROPSA>, <LPOLEUIOBJECTPROPSA>, <POLEUIOBJECTPROPSA>,
+	OleUIObjectProperties, <LPOLEUIOBJECTPROPS>, $OPF-OBJECTISLINK,
+	$OPF-NOFILLDEFAULT, $OPF-SHOWHELP, $OPF-DISABLECONVERT,
+	$OLEUI-OPERR-SUBPROPNULL, $OLEUI-OPERR-SUBPROPINVALID,
+	$OLEUI-OPERR-PROPSHEETNULL, $OLEUI-OPERR-PROPSHEETINVALID,
+	$OLEUI-OPERR-SUPPROP, $OLEUI-OPERR-PROPSINVALID,
+	$OLEUI-OPERR-PAGESINCORRECT, $OLEUI-OPERR-INVALIDPAGES,
+	$OLEUI-OPERR-NOTSUPPORTED, $OLEUI-OPERR-DLGPROCNOTNULL,
+	$OLEUI-OPERR-LPARAMNOTZERO, $OLEUI-GPERR-STRINGINVALID,
+	$OLEUI-GPERR-CLASSIDINVALID, $OLEUI-GPERR-LPCLSIDEXCLUDEINVALID,
+	$OLEUI-GPERR-CBFORMATINVALID, $OLEUI-VPERR-METAPICTINVALID,
+	$OLEUI-VPERR-DVASPECTINVALID, $OLEUI-LPERR-LINKCNTRNULL,
+	$OLEUI-LPERR-LINKCNTRINVALID, $OLEUI-OPERR-PROPERTYSHEET,
+	$OLEUI-OPERR-OBJINFOINVALID, $OLEUI-OPERR-LINKINFOINVALID,
+	$OLEUI-QUERY-GETCLASSID, $OLEUI-QUERY-LINKBROKEN, OleUIUpdateLinks;
+
+  // from "extra.dylan":
+  export $IDD-SERVERNOTREG, $IDD-LINKTYPECHANGED;
+end;

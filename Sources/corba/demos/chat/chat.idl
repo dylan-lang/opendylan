@@ -1,0 +1,29 @@
+// Author:    Keith Dennison
+// Copyright: Copyright 1998 Functional Objects, Inc.  All rights reserved.
+// Version:   $HopeName$
+
+interface ChatRoom;
+
+interface ChatClientCallback {
+  readonly attribute string name;
+  oneway void NewMessage     (in string message);
+  oneway void RegisterClient (in ChatClientCallback client, in string name);
+  oneway void RemoveClient   (in ChatClientCallback client, in string name);
+  oneway void NewRoom        (in ChatRoom room, in string name);
+};
+
+interface ChatRoom {
+  readonly attribute string name;
+  readonly attribute sequence<ChatClientCallback> clients;
+  oneway void SendMessage    (in string message);
+  oneway void RegisterClient (in ChatClientCallback client, in string name);
+  oneway void RemoveClient   (in ChatClientCallback client, in string name);
+};
+
+interface ChatServer {
+  readonly attribute sequence<ChatRoom> rooms;
+  void CreateChatRoom (in string name);
+};
+
+
+

@@ -1,0 +1,107 @@
+
+		-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+		OFFLINE EXTERNAL EDITOR INTERFACE
+		-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+This document explores an alternative to the current external editor
+interface design for DylanWorks.
+
+* CURRENT ONLINE DESIGN
+
+The current design links the external editor and DylanWorks quite
+closely. Each editor command that the user invokes results in the
+issue of a request to DylanWorks which is expected to respond to that
+command as soon as possible. The response will probably be
+asynchronous with the ongoing editor operations, but is still expected
+to be relatively immediate.
+
+* ALTERNATIVE OFFLINE DESIGN
+
+There is an alternative to using this tight coupling and immediate
+servicing of requests. Instead of sending the command to DylanWorks
+the editor could use its own native facilities, eg TAGS for source
+code location.
+
+In order to do this DylanWorks would have to export native editor
+formats from its own repositories.
+
+** GNU EMACS 19
+
+Let's have a look at how the alternative would apply to GNU Emacs 19
+to see its strength and weaknesses.
+
+*** DESCRIBE
+
+We would need to design a new format for this information. Emacs does
+not have (AFAIK) a particular format for recording brief API info.
+DylanWorks could export this information without too much trouble.
+
+*** FIND-DEFINITION
+
+Emacs has TAGS files for finding definitions, of course. DylanWorks
+ought to be able to generate TAGS files from its own databases quite
+easily, or a dtags program could be used.
+
+*** BROWSE
+
+Emacs ordinarily has no normal browser mechanism. However, there is a
+freebie Emacs-hosted OO language browser technology that already
+understands C++, Smalltalk, etc. This could be extended to cover
+Dylan.
+
+The OO-browser stuff could implement a Dylan pseudo-parser itself. Or
+DylanWorks presumably could generate the data in the appropriate
+format.
+
+*** COMPILE-FILE
+
+Emacs still needs DylanWorks to compile files. However, the
+compilation messages could be exported in 'grep -n' format for Emacs
+to parse and navigate over within its "*Compilation*" buffer.
+
+*** COMPLETE
+
+Emacs TAG mechanism could be used for completion. This could be much
+faster than communicating with another process.
+
+*** FIND-USES
+
+I believe that the OO browser stuff has a "find uses" facility. I
+don't think that TAGS addresses this.
+
+*** FIND-DOCUMENTATION
+
+Emacs could presumably invoke an external documentation viewer directly.
+
+* STRENGTH AND WEAKNESSES
+
+There is probably a lot of work involved with this alternative route.
+Exporting code would have to be written for each external editor
+multiplied by each distinct facility.
+
+Editors would have to be able to reconcile separate repositories
+generated from different libraries, since this is what DylanWorks will
+want to do.
+
+Reduced runtime resource consumption (don't have to run DylanWorks).
+
+Increased disk resource consumption (exported repositories).
+
+Some faster operations (completion).
+
+Some potentially less precise operations (find-uses).
+
+Uses more familiar native editor facilities.
+
+Large-scale recompiles would have to reexport the editor repositories.
+
+Values and results naturally available in the editor.
+
+** CONCLUSION
+
+On balance I don't think that the benefits of the full approach are
+justified by the amount of work involved.
+
+However, it may be useful to have an basic "Export TAGS" facility in
+the environment to allow some degree of autonomous off-line editing.
+

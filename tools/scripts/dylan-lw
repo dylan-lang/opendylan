@@ -1,0 +1,26 @@
+#!/usr/local/bin/bash
+#   Scriptname: dylan-lw
+#       Author: Keith Playford(keith), Shri Amit(amit)
+#        Usage: dylan-lw <args to image>
+#     Synopsis: This script startsup the lw-3-3-2-patched
+#               images which are used to build the emulator
+#               images.
+#######################################################
+
+## Setup required variables ##
+##
+platform=`/u/dylan/tools/scripts/dylan-platform`
+image="/u/dylan/local/lw-3-2-2-patched-$platform"
+alt_image="/u/lclc/images/lw-3-2-2"
+
+## Setup the lw licensing variables ##
+##
+source /u/dylan/tools/admin/lw-license-variables
+
+if test -f $image; then
+  exec $image "$@"
+else
+  exec $alt_image "$@"
+fi
+
+#eof

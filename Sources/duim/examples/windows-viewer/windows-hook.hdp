@@ -1,0 +1,13 @@
+format-version: 2
+Library:   windows-hook
+Author:    Andy Armstrong
+Synopsis:  Windows hook installer
+Copyright: Copyright (c) 1998-2000 Functional Objects, Inc. All rights reserved.
+Files:	hook-library
+	hook-module
+        constants
+        hook
+Major-Version: 2
+Minor-Version: 1
+Compilation-Mode: tight
+Target-Type: dll

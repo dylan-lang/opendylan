@@ -1,0 +1,315 @@
+-*-outline; rcs-header: "$Header: /scm/cvs/fundev/doc/implementation/corba.txt,v 1.1 2004/03/12 00:11:40 cgay Exp $"-*-
+
+			-=-=-=-=-=-=-=-=-
+			HD-ORB Whitepaper
+			-=-=-=-=-=-=-=-=-
+
+* INTRODUCTION
+
+** PRODUCT
+
+Functional Developer ORB (HD-ORB) 1.1 is an implementation of the Object
+Management Group's (OMG) Common Object Request Broker Architecture
+(CORBA). HD-ORB provides CORBA functionality to Dylan programmers,
+combining standardized distributed system development with this
+state-of-the-art dynamic object-functional language.
+
+** STANDARDS COMPLIANCE
+
+HD-ORB 1.1 conforms to the CORBA 2.0 specification with some elements
+of CORBA 2.2 -- most notably the Portable Object Adaptor (POA). Work
+is underway to complete CORBA 2.2 compliance.
+
+* CORBA
+
+** THE OMG
+
+In their own words:	
+
+	"Established in 1989, OMG's mission is to promote the theory
+	and practice of object technology for the development of
+	distributed computing systems. The goal is to provide a common
+	architectural framework for object oriented applications based
+	on widely available interface specifications."
+
+The OMG has over 800 members. Harlequin has "Domain Contributing"
+membership status.
+
+** CORBA
+
+In their own words again:
+
+"The Common Object Request Broker Architecture (CORBA), is the Object
+Management Group's answer to the need for interoperability among the
+rapidly proliferating number of hardware and software products
+available today. Simply stated, CORBA allows applications to
+communicate with one another no matter where they are located or who
+has designed them. CORBA 1.1 was introduced in 1991 by Object
+Management Group (OMG) and defined the Interface Definition Language
+(IDL) and the Application Programming Interfaces (API) that enable
+client/server object interaction within a specific implementation of
+an Object Request Broker (ORB). CORBA 2.0, adopted in December of
+1994, defines true interoperability by specifying how ORBs from
+different vendors can interoperate.
+
+The (ORB) is the middleware that establishes the client-server
+relationships between objects. Using an ORB, a client can
+transparently invoke a method on a server object, which can be on the
+same machine or across a network. The ORB intercepts the call and is
+responsible for finding an object that can implement the request, pass
+it the parameters, invoke its method, and return the results. The
+client does not have to be aware of where the object is located, its
+programming language, its operating system, or any other system
+aspects that are not part of an object's interface. In so doing, the
+ORB provides interoperability between applications on different
+machines in heterogeneous distributed environments and seamlessly
+interconnects multiple object systems.
+
+In fielding typical client/server applications, developers use their
+own design or a recognized standard to define the protocol to be used
+between the devices. Protocol definition depends on the implementation
+language, network transport and a dozen other factors. ORBs simplify
+this process. With an ORB, the protocol is defined through the
+application interfaces via a single implementation
+language-independent specification, the IDL. And ORBs provide
+flexibility. They let programmers choose the most appropriate
+operating system, execution environment and even programming language
+to use for each component of a system under construction. More
+importantly, they allow the integration of existing components. In an
+ORB-based solution, developers simply model the legacy component using
+the same IDL they use for creating new objects, then write "wrapper"
+code that translates between the standardized bus and the legacy
+interfaces.
+
+..."
+
+* IDL DYLAN BINDING
+
+In order to use Dylan for CORBA work we first defined a mapping from
+OMG IDL to Dylan. This systematically maps IDL features to Dylan ones
+so that a Dylan programmer may use or implement the service described
+by the IDL.
+
+For example, an IDL operation is mapped to a Dylan open generic
+function. Likewise an IDL interface is mapped to a Dylan open abstract
+class.
+
+The IDL-to-Dylan mapping developed at Function Developer Will be submitted to
+the OMG for adoption as the official specification.
+
+* IMPLEMENTATION
+
+** OVERVIEW
+
+Basically, we have written an CORBA-compliant, native-IIOP, ORB in
+Dylan.
+
+The Functional Developer ORB will let you build and run distributed
+applications in Dylan, straight out of the box. When combined with the
+Dylan ODBC interface, that comes with Functional Developer Professional and
+upwards, you will able to build 3-tier client-server applications
+completely in Dylan.
+
+However, the raison d'etre of CORBA is interoperability. Hence, the
+choice of IIOP provides immediate interoperation with any other ORB
+you may be using.  For example, given a Java ORB you could write GUI
+clients in AWT that communicate to servers written in Dylan.
+Conversely, given a C++ ORB you can build DUIM clients that talk to
+C++ servers.
+
+The advantages of building an ORB in Dylan (apart from proving that
+Dylan could tackle another complex domain) were:
+
+	ORB-vendor independence -- The Functional Developer ORB can be
+	married to any existing ORB infrastructure, or introduced
+	first without affecting later ORB procurement decisions.
+
+	"Batteries included" -- No need to purchase a separate ORB to
+	get a full system. The Functional Developer ORB provides "instant
+	CORBA" to get distributed Dylan applications up and running
+	without additional procurement or installation.
+
+	Lower impedance mismatch -- No need to trampoline from Dylan
+	to IIOP via another language binding or via a non-Dylan IIOP
+	engine API.
+
+	CORBA expertise -- A deeper understanding of CORBA inside
+	Function Developer Which can be shared with our customers via technical
+	support.
+
+	CORBA customization -- Functional Objects likes to offer a high level
+	of customization support and consultancy to both internal and
+	external customers which it could not do with a third party
+	product written in a more primitive language. This also means
+	faster fixes for basic bugs.
+
+	100% pure Dylan -- Providing users with enhanced debugging and
+	interaction facilities available in a homogeneous
+	implementation model.
+
+
+** IDL COMPILER
+
+*** OPERATION
+
+The first component of HD-ORB is "Console-Scepter.exe". This is a
+command line IDL compiler that takes an IDL file (plus included files)
+and some options, parses it, and generates three Dylan libraries in
+separate subdirectories:
+
+	protocol	// contains generic protocol functions
+			// and classes specific to the IDL description
+
+	stubs		// contains clientside RPC support specific
+			// to the IDL description
+
+	skeletons	// contains serverside RPC support specific
+			// to the IDL description
+
+Users then use the stubs and/or skeletons libraries as appropriate in
+their application.
+
+Scepter is integrated into the Functional Developer IDE. This
+allows the seamless inclusion of IDL files in Dylan projects with
+automatic regeneration of the above protocol, stubs, and skeletons
+libraries as required.
+
+The Project Wizard is extended to enable the easy creation of client/server
+project pairs that share a CORBA IDL interface. When combined with the build
+system integration above, users have a smooth path to constructing complete
+CORBA systems in Dylan.
+
+*** HOW IT WORKS
+
+The IDL compiler's lexer includes C pre-preprocessing (for statements
+like "#include") and is shared with the Collage compiler (for C-header
+files).
+
+The IDL compiler's parser is a standard bottom-up shift-reduce parser
+using LALR(1) tables generated from a description of the IDL
+grammar. The parser generator is a bundled part of LispWorks. The
+Dylan-syntax front-end to the generator and the Dylan parser runtime
+are shared with the Dylan compiler.
+
+The IDL compiler creates an abstract syntax tree (AST) as the internal
+representation of the IDL files that it parses.
+
+The Dylan emitter subsequently walks this AST from its root node
+converting IDL entities into corresponding Dylan source code according
+to the IDL-Dylan language binding.
+
+There is also an IDL emitter which reverse engineers IDL from the
+AST. This is used in-house for validating the AST by comparing the
+original IDL with the reverse-engineered IDL.
+
+The compiler must generate multiple Dylan projects per IDL file and
+this project generation/manipulation code will be shared with Motley,
+Collage, Project Wizard, and Dylan Compiler (Project Manager).
+
+The stubs and skeletons emitted by the compiler define a static
+invocation interface (SII) for the operations described in the IDL
+file. In its current incarnation the SII utilizes the Dynamic
+Invocation Interface (DII) to send and receive requests. That is, very
+general request sending code is emitted that uses a standard API which
+is also available to the application programmer.
+
+While this is a common approach, we expect that future versions of the
+IDL compiler will emit custom code for each operation that uses more
+of the information available to the compiler, and avoids the general
+mechanisms for request construction and interpretation.
+
+** ORB RUNTIME
+
+*** FEATURES
+
+The second component of HD-ORB is "D1ORB.DLL". This is a runtime
+library that is used by the stub and skeleton libraries generated by
+the Scepter IDL compiler. It provides the universal ORB support needed
+by all applications.
+
+The following features are supported in the 1st Enterprise beta and final
+release:
+
+	CORBA 2.0 with parts of CORBA 2.2
+	IIOP 1.0 (GIOP 1.0)
+	Interfaces to ORB, POA, DII, DSI (POA), 
+	Dylan Language Binding
+	Interoperability with "Harlequin Common Lisp ORB"
+	Interoperability with "Iona OrbixWeb 3.0"
+
+*** HOW IT WORKS
+
+Requests are multiplexed over a single socket connection per host/port
+end-point. For each connection on the clientside there is a sender
+thread and a receiver thread. The sender thread drains a request queue
+and marshals each request according to the Internet Inter-ORB Protocol
+(IIOP). A connection's receiver thread waits for replies to each
+request sent out. The stub code causes the original application
+calling thread to block waiting for the request to be marked as
+finished by the associated connection's receiver thread.
+
+On the serverside, there are various threads: a socket listener that
+accepts connection attempts, a dispatcher thread per connection, and a
+receiver thread per Portable Object Adapter (POA). The listener
+creates a marshaling stream upon connection and hands this off to the
+dispatcher thread. The dispatcher thread unmarshals the message
+headers, creates a serverside request object, and determines the
+applicable POA for processing the request. The POA's receiving thread
+determines the Servant object responsible for implementing requests on
+the request's logical object, and invokes the skeletons generated from
+the IDL. The skeletons unmarshal any accompanying data and invoke the
+actual implementation method.  Finally, the result is set in the
+serverside request object and the reply is marshaled back down the
+connection.
+
+One important optimization of the above process is that if the
+clientside ORB code for invoking the request can determine that the
+server implementation is local (ie in the same Dylan program), then
+the network and associated marshaling is avoided and the actual
+implementation method is invoked on the same thread as the original
+client caller. However, this is currently not as efficient as (say) a
+Dylan open generic function call since the optimization is done at the
+DII level and request objects are still constructed.
+
+Compatibility testing is underway with both Iona OrbixWeb 3.0
+Professional Edition and the Harlequin Common Lisp ORB.
+
+*** RUNTIME DISTRIBUTION AND LICENSING
+
+In addition to being bundled into the HD Enterprise product the HD ORB runtime
+will be available as a separate distribution. No decision has been made yet
+concerning licensing of the separate runtime.
+
+* DOCUMENTATION SET
+
+The following documents are provided:
+
+	+ IDL-to-Dylan Binding Specification
+
+	+ User Guide for compiler and runtime, including
+	  implementation notes on IDL Dylan Binding Specification.
+
+	+ Tutorial based around a 3-tier demo
+
+* TUTORIAL/DEMO
+
+The main demonstration is a 3-tier client-server-database example
+showing off DUIM, CORBA, and ODBC in Dylan. The demo includes a
+tutorial explanation of how it was built and how it plugs together,
+plus how some flaws in it are found and removed.
+
+There will also be a few other less well developed examples. 
+
+* FUTURES
+
+Future releases are anticipated to include (depending on customer
+demand):
+
+	improved performance
+	DynAny interface
+	Interface Repository
+	GUI CORBA Wizard
+	IIOP 1.1 (GIOP 1.1)
+	GUI administration tools
+	Name Service
+

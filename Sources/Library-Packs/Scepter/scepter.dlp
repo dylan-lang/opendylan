@@ -1,0 +1,65 @@
+<library-pack name="Scepter" title="Scepter">
+  <description>The Scepter Dylan CORBA IDL compiler</description>
+  <copyright>Copyright (c) 1995-2001 Functional Objects, Inc. All rights reserved.</copyright>
+  <company>Functional Developer</company>
+  <libraries>
+    <library name="scepter">
+      <sources location="corba/scepter">
+	<project>scepter.hdp</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+	<binary file="scepter.dll">
+	  <merge>scepter-utilities</merge>
+	  <merge>scepter-ast</merge>
+	  <merge>scepter-core</merge>
+	  <merge>scepter-dylan-back-end</merge>
+	  <merge>scepter-dump-back-end</merge>
+	  <merge>scepter-ir-back-end</merge>
+	  <merge>scepter-file-front-end</merge>
+	</binary>
+      </release>
+    </library>
+    <library name="scepter-utilities">
+      <sources location="corba/scepter/utilities">
+	<project>scepter-utilities.hdp</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="scepter-ast">
+      <sources location="corba/scepter/ast">
+	<project>scepter-ast.hdp</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="scepter-core">
+      <sources location="corba/scepter/core">
+	<project>scepter-core.hdp</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="scepter-dylan-back-end">
+      <sources location="corba/scepter/back-end/dylan">
+	<project>scepter-dylan-back-end.hdp</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="scepter-dump-back-end">
+      <sources location="corba/scepter/back-end/dump">
+	<project>scepter-dump-back-end.hdp</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="scepter-ir-back-end">
+      <sources location="corba/scepter/back-end/ir">
+	<project>scepter-ir-back-end.hdp</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="scepter-file-front-end">
+      <sources location="corba/scepter/front-end/file">
+	<project>scepter-file-front-end.hdp</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+  </libraries>
+</library-pack>

@@ -1,0 +1,235 @@
+Definitions for the threads primitives
+======================================
+
+These primitives should map directly onto the C interface for the
+threads portability layer, defined in thread-portability-layer.text
+
+
+Reference
+---------
+
+
+1. primitive-make-thread
+      (thread :: <thread>, name :: <optional-name>,
+       priority :: <integer>, function :: <function>) => (res :: <integer>)
+
+  [0 = ok, -1 = other error, 1 = error creating thread, 
+   2 = error setting priority]
+
+  The container slots in the Dylan thread object are destructively
+  modified with the handles of the new OS thread. The new OS thread is
+  started in a way which calls the supplied Dylan function.
+
+
+2. primitive-destroy-thread
+      (thread :: <thread>) => (res :: <integer>)
+
+   [0 = ok, -1 = error]
+
+   Free any runtime-allocated memory associated with the thread
+
+
+3. primitive-thread-join-single
+      (thread :: <thread>) => (res :: <integer>)
+
+  [0 = ok, anything else is an error]
+
+
+4. primitive-thread-join-multiple
+      (thread-vector :: <simple-object-vector>) => (res)
+
+  result [a <thread> if the join was OK. Else it's an <integer> with the error]
+  thread-vector is a <simple-object-vector> containing <thread> objects
+
+
+5. primitive-thread-yield () => ()
+
+
+6. primitive-current-thread() => (thread :: <thread>)
+
+  Return the Dylan object representing the current thread. 
+
+
+7. primitive-wait-for-simple-lock
+      (lock :: <simple-lock>) => (res :: <integer>)
+  [ 0 = ok, -1 = error, 2 = already owned]
+
+
+8. primitive-wait-for-recursive-lock
+      (lock :: <recursive-lock>) => (res :: <integer>) 
+  [ 0 = ok, -1 = error]
+
+
+9. primitive-wait-for-semaphore
+      (lock :: <semaphore>) => (res :: <integer>) 
+  [ 0 = ok, -1 = error]
+
+
+10. primitive-wait-for-notification
+       (notif :: <notification>, lock :: <simple-lock>) 
+       => (res :: <integer>) 
+  [ 0 = ok, -1 = other error, 2 = not locked]
+
+
+11. primitive-wait-for-simple-lock-timed
+       (lock :: <simple-lock>, ms :: <integer>) => (res :: <integer>)
+  [ 0 = ok, -1 = error, 1 = timeout, 2 = already owned]
+
+
+12. primitive-wait-for-recursive-lock-timed
+       (lock :: <recursive-lock>, ms :: <integer>) => (res :: <integer>)
+  [ 0 = ok, -1 = error, 1 = timeout]
+
+
+13. primitive-wait-for-semaphore-timed
+      (lock :: <semaphore>, ms :: <integer>) => (res :: <integer>) 
+  [ 0 = ok, -1 = error, 1 = timeout]
+
+
+14. primitive-wait-for-notification-timed
+       (notif :: <notification>, lock :: <simple-lock>, 
+        ms :: <integer>)  => (res :: <integer>) 
+  [ 0 = ok, 1 = timeout, 2 = not locked, -1 = other error ]
+
+
+15. primitive-release-simple-lock
+       (lock :: <simple-lock>) => (res :: <integer>)
+  [ 0 = ok, 2 = not locked, -1 = other error]
+
+
+16. primitive-release-recursive-lock
+       (lock :: <recursive-lock>) => (res :: <integer>) 
+  [ 0 = ok, 2 = not locked, -1 = other error]
+
+
+17. primitive-release-semaphore
+       (lock :: <semaphore>) => (res :: <integer>) 
+  [ 0 = ok, 3 = count exceeded]
+
+
+18. primitive-release-notification
+       (notif :: <notification>, lock :: <simple-lock>) 
+       => (res :: <integer>) 
+  [ 0 = ok, 2 = not locked, -1 = other error]
+
+This should check that the lock is owned by the current thread.
+
+
+19. primitive-release-all-notification
+      (notif :: <notification>, lock :: <simple-lock>) 
+      => (res :: <integer>) 
+  [ 0 = ok, 2 = not locked, -1 = other error]
+
+This should check that the lock is owned by the current thread.
+
+
+20. primitive-make-recursive-lock
+       (lock :: <recursive-lock>, name :: <optional-name>) 
+       => (res :: <integer>) 
+  [ 0 = ok, -1 = error]
+
+The lock object is destructively updated so that it's handle slot refers to 
+a handle on an OS provided lock.
+
+
+21. primitive-destroy-recursive-lock (obj) => (res :: <integer>) 
+  [ 0 = ok, -1 = error]
+
+
+22. primitive-make-simple-lock
+       (lock :: <simple-lock>, name :: <optional-name>) 
+       => (res :: <integer>)
+  [ 0 = ok, -1 = error]
+
+
+23. primitive-destroy-simple-lock
+       (lock :: <simple-lock>) => (res :: <integer>)
+  [ 0 = ok, -1 = error]
+
+
+24. primitive-owned-simple-lock 
+       (lock :: <simple-lock>)  => (res :: <integer>) 
+  [0 = not owned, 1 = owned]
+
+
+25. primitive-owned-recursive-lock 
+       (lock :: <recursive-lock>)  => (res :: <integer>) 
+  [0 = not owned, 1 = owned]
+
+
+26. primitive-make-semaphore
+       (lock :: <semaphore>, name :: <optional-name>, 
+        init :: <integer>, max :: <integer>) => (res :: <integer>)
+  [ 0 = ok, -1 = error]
+
+
+27. primitive-destroy-semaphore 
+      (obj :: <semaphore>) => (res :: <integer>)
+  [ 0 = ok, -1 = error]
+
+
+28. primitive-make-notification
+       (lock :: <notification>, name :: <optional-name>) 
+       => (res :: <integer>) 
+  [ 0 = ok, -1 = error]
+
+
+29. primitive-destroy-notification 
+       (obj :: <notification>) => (res :: <integer>) 
+   [ 0 = ok, -1 = error]
+
+
+30. primitive-sleep (ms :: <integer>) => ()
+
+
+31. primitive-assign-atomic-memory
+       (location :: <raw-pointer>, newval :: <object>) => (newval)
+
+
+32. primitive-conditional-update-memory
+       (location :: <raw-pointer>, newval, oldval) 
+       => (res :: <integer>)
+  [1 = didit, 0 = didnot]
+
+
+33. primitive-allocate-thread-variable
+       (initial-value :: <object>) => (handle :: <raw-pointer>)
+
+
+34. primitive-read-thread-variable
+       (handle :: <raw-pointer>) => (value :: <object>)
+
+
+35. primitive-write-thread-variable
+       (handle :: <raw-pointer>, newval :: <object>) => (newval)
+
+
+36. primitive-initialize-current-thread
+       (thread :: <thread>) => ()
+
+  The container slots in the Dylan thread object are destructively
+  modified with the handles of the current OS thread. This function
+  will be used to initialize every thread before any real Dylan
+  code gets to run in the thread.
+
+
+37. primitive-unlock-simple-lock
+       (lock :: <simple-lock>) => (res :: <integer>)
+   [0 = ok, -1 = error]
+
+  Releases the lock no matter which thread owns it. The intention
+  is to make this primitive available some way through the
+  development environment so a developer can fix problems (such
+  as thread forgetting to release a lock) interactively.
+
+
+38. primitive-unlock-recursive-lock
+       (lock :: <recursive-lock>) => (res :: <integer>)
+   [0 = ok, -1 = error]
+
+  Releases the lock no matter which thread owns it. The intention
+  is to make this primitive available some way through the
+  development environment so a developer can fix problems (such
+  as thread forgetting to release a lock) interactively.
+
+

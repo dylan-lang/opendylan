@@ -1,0 +1,67 @@
+<HTML>
+<HEAD>
+<TITLE>Pente using CORBA</TITLE> 
+</HEAD>
+
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<H1>Pente using CORBA</H1>
+
+<HR>
+
+This is an adaptation of the Pente game to run in a distributed way
+using CORBA. Two players each run Pente on their computers and
+play against each other.
+
+<P>The program is composed of the following parts:
+
+<DL>
+  <DT><EM>library.dylan</EM>
+    <DD>Dylan library definition
+  <DT><EM>module.dylan</EM>
+    <DD>Dylan module definition
+  <DT><EM>board.dylan</EM>
+    <DD>Dylan implementation of Pente game and distribution
+  <DT><EM>start.dylan</EM>
+    <DD>Dylan entry point
+  <DT><EM>pente.spec</EM>
+    <DD>configuration file for IDL
+  <DT><EM>pente.idl</EM>
+    <DD>the IDL file itself
+  <DT><EM>README.htm</EM>
+    <DD>this file
+</DL>
+
+<P>
+
+<HR>
+
+<H2>Building and Testing the Application</H2>
+
+Just press the "Build" button on the Project Window.
+
+<P>After it has finished building press the "Build Release" menu item
+on the Project menu of the Project window to create a redistributable
+executable and DLLs for the other player.
+
+<P>Get the other player to copy the "Release" directory to his
+computer.
+
+<P>Now, you can run the application to test that it works. 
+
+<UL>
+<LI>Both players should start up their copies of corba-pente. 
+
+<LI>When both copies are running, one player should press "New Game"
+and enter the hostname of the other player's computer. This initiates
+the connection.
+
+<LI>Now the player who pressed "New Game" plays first. Try to get 5
+stones in a continuous line, or try to surround and capture your
+opponent's pairs of stones 5 times.
+</UL>
+
+<P>At the end of the game, either player can press "New Game" and go
+first for the next game.
+
+</BODY>
+</HTML>

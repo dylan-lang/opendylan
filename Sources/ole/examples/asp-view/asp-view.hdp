@@ -1,0 +1,17 @@
+comment:	This file is generated, please don't edit
+format-version:	2
+library:	asp-view
+files:	library
+	module
+	debugging
+	interface
+	implementation
+base-address:	0x63FE0000
+linker-options:	$(guilflags)
+major-version:	2
+minor-version:	1
+compilation-mode:	tight
+target-type:	dll
+other-files:	README.html
+	asp-type-library.spec
+comment:	additional keywords

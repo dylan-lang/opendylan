@@ -1,0 +1,8466 @@
+%!PS-Adobe-3.0
+%%BoundingBox: (atend)
+%%Pages: (atend)
+%%PageOrder: (atend)
+%%DocumentFonts: (atend)
+%%Creator: Frame 4.0
+%%DocumentData: Clean7Bit
+%%EndComments
+%%BeginProlog
+%
+% Frame ps_prolog 4.0, for use with Frame 4.0 products
+% This ps_prolog file is Copyright (c) 1986-1993 Frame Technology
+% Corporation.  All rights reserved.  This ps_prolog file may be
+% freely copied and distributed in conjunction with documents created
+% using FrameMaker, FrameBuilder and FrameViewer as long as this 
+% copyright notice is preserved.
+%
+% Frame products normally print colors as their true color on a color printer
+% or as shades of gray, based on luminance, on a black-and white printer. The
+% following flag, if set to True, forces all non-white colors to print as pure
+% black. This has no effect on bitmap images.
+/FMPrintAllColorsAsBlack             false def
+%
+% Frame products can either set their own line screens or use a printer's 
+% default settings. Three flags below control this separately for no 
+% separations, spot separations and process separations. If a flag
+% is true, then the default printer settings will not be changed. If it is
+% false, Frame products will use their own settings from a table based on
+% the printer's resolution.
+/FMUseDefaultNoSeparationScreen      true  def
+/FMUseDefaultSpotSeparationScreen    true  def
+/FMUseDefaultProcessSeparationScreen false def
+%
+% For any given PostScript printer resolution, Frame products have two sets of 
+% screen angles and frequencies for printing process separations, which are 
+% recomended by Adobe. The following variable chooses the higher frequencies
+% when set to true or the lower frequencies when set to false. This is only
+% effective if the appropriate FMUseDefault...SeparationScreen flag is false.
+/FMUseHighFrequencyScreens true def
+%
+% PostScript Level 2 printers contain an "Accurate Screens" feature which can
+% improve process separation rendering at the expense of compute time. This 
+% flag is ignored by PostScript Level 1 printers.
+/FMUseAcccurateScreens true def
+%
+% The following PostScript procedure defines the spot function that Frame
+% products will use for process separations. You may un-comment-out one of
+% the alternative functions below, or use your own.
+%
+% Dot function
+/FMSpotFunction {abs exch abs 2 copy add 1 gt 
+		{1 sub dup mul exch 1 sub dup mul add 1 sub }
+		{dup mul exch dup mul add 1 exch sub }ifelse } def
+%
+% Line function
+% /FMSpotFunction { pop } def
+%
+% Elipse function
+% /FMSpotFunction { dup 5 mul 8 div mul exch dup mul exch add 
+%		sqrt 1 exch sub } def
+%
+%
+/FMversion (4.0) def 
+/FMLevel1 /languagelevel where {pop languagelevel} {1} ifelse 2 lt def
+/FMPColor
+	FMLevel1 {
+		false
+		/colorimage where {pop pop true} if
+	} {
+		true
+	} ifelse
+def
+/FrameDict 400 dict def 
+systemdict /errordict known not {/errordict 10 dict def
+		errordict /rangecheck {stop} put} if
+% The readline in PS 23.0 doesn't recognize cr's as nl's on AppleTalk
+FrameDict /tmprangecheck errordict /rangecheck get put 
+errordict /rangecheck {FrameDict /bug true put} put 
+FrameDict /bug false put 
+mark 
+% Some PS machines read past the CR, so keep the following 3 lines together!
+currentfile 5 string readline
+00
+0000000000
+cleartomark 
+errordict /rangecheck FrameDict /tmprangecheck get put 
+FrameDict /bug get { 
+	/readline {
+		/gstring exch def
+		/gfile exch def
+		/gindex 0 def
+		{
+			gfile read pop 
+			dup 10 eq {exit} if 
+			dup 13 eq {exit} if 
+			gstring exch gindex exch put 
+			/gindex gindex 1 add def 
+		} loop
+		pop 
+		gstring 0 gindex getinterval true 
+		} bind def
+	} if
+/FMshowpage /showpage load def
+/FMquit /quit load def
+/FMFAILURE { 
+	dup = flush 
+	FMshowpage 
+	/Helvetica findfont 12 scalefont setfont
+	72 200 moveto
+	show FMshowpage 
+	FMquit 
+	} def 
+/FMVERSION {
+	FMversion ne {
+		(Frame product version does not match ps_prolog!) FMFAILURE
+		} if
+	} def 
+/FMBADEPSF { 
+	(PostScript Lang. Ref. Man., 2nd Ed., H.2.4 says EPS must not call X              )
+	dup dup (X) search pop exch pop exch pop length 
+	4 -1 roll 
+	putinterval 
+	FMFAILURE
+	} def
+/FMLOCAL {
+	FrameDict begin
+	0 def 
+	end 
+	} def 
+/concatprocs
+	{
+	/proc2 exch cvlit def/proc1 exch cvlit def/newproc proc1 length proc2 length add array def
+	newproc 0 proc1 putinterval newproc proc1 length proc2 putinterval newproc cvx
+}def
+FrameDict begin 
+/FMnone 0 def
+/FMcyan 1 def
+/FMmagenta 2 def
+/FMyellow 3 def
+/FMblack 4 def
+/FMcustom 5 def
+/FrameNegative false def 
+/FrameSepIs FMnone def 
+/FrameSepBlack 0 def
+/FrameSepYellow 0 def
+/FrameSepMagenta 0 def
+/FrameSepCyan 0 def
+/FrameSepRed 1 def
+/FrameSepGreen 1 def
+/FrameSepBlue 1 def
+/FrameCurGray 1 def
+/FrameCurPat null def
+/FrameCurColors [ 0 0 0 1 0 0 0 ] def 
+/FrameColorEpsilon .001 def	
+/eqepsilon {		
+	sub dup 0 lt {neg} if
+	FrameColorEpsilon le
+} bind def
+/FrameCmpColorsCMYK { 
+	2 copy 0 get exch 0 get eqepsilon {
+		2 copy 1 get exch 1 get eqepsilon {
+			2 copy 2 get exch 2 get eqepsilon {
+				3 get exch 3 get eqepsilon
+			} {pop pop false} ifelse
+		}{pop pop false} ifelse
+	} {pop pop false} ifelse
+} bind def
+/FrameCmpColorsRGB { 
+	2 copy 4 get exch 0 get eqepsilon {
+		2 copy 5 get exch 1 get eqepsilon {
+			6 get exch 2 get eqepsilon
+		}{pop pop false} ifelse
+	} {pop pop false} ifelse
+} bind def
+/RGBtoCMYK { 
+	1 exch sub 
+	3 1 roll 
+	1 exch sub 
+	3 1 roll 
+	1 exch sub 
+	3 1 roll 
+	3 copy 
+	2 copy 
+	le { pop } { exch pop } ifelse 
+	2 copy 
+	le { pop } { exch pop } ifelse 
+	dup dup dup 
+	6 1 roll 
+	4 1 roll 
+	7 1 roll 
+	sub 
+	6 1 roll 
+	sub 
+	5 1 roll 
+	sub 
+	4 1 roll 
+} bind def
+/CMYKtoRGB { 
+	dup dup 4 -1 roll add 						  
+	5 1 roll 3 -1 roll add 						  
+	4 1 roll add 								  
+	1 exch sub dup 0 lt {pop 0} if 3 1 roll 	  
+	1 exch sub dup 0 lt {pop 0} if exch 	      
+	1 exch sub dup 0 lt {pop 0} if exch	  		  
+} bind def
+/FrameSepInit {
+	1.0 RealSetgray
+} bind def
+/FrameSetSepColor { 
+	/FrameSepBlue exch def
+	/FrameSepGreen exch def
+	/FrameSepRed exch def
+	/FrameSepBlack exch def
+	/FrameSepYellow exch def
+	/FrameSepMagenta exch def
+	/FrameSepCyan exch def
+	/FrameSepIs FMcustom def
+	setCurrentScreen	
+} bind def
+/FrameSetCyan {
+	/FrameSepBlue 1.0 def
+	/FrameSepGreen 1.0 def
+	/FrameSepRed 0.0 def
+	/FrameSepBlack 0.0 def
+	/FrameSepYellow 0.0 def
+	/FrameSepMagenta 0.0 def
+	/FrameSepCyan 1.0 def
+	/FrameSepIs FMcyan def
+	setCurrentScreen	
+} bind def
+ 
+/FrameSetMagenta {
+	/FrameSepBlue 1.0 def
+	/FrameSepGreen 0.0 def
+	/FrameSepRed 1.0 def
+	/FrameSepBlack 0.0 def
+	/FrameSepYellow 0.0 def
+	/FrameSepMagenta 1.0 def
+	/FrameSepCyan 0.0 def
+	/FrameSepIs FMmagenta def
+	setCurrentScreen
+} bind def
+ 
+/FrameSetYellow {
+	/FrameSepBlue 0.0 def
+	/FrameSepGreen 1.0 def
+	/FrameSepRed 1.0 def
+	/FrameSepBlack 0.0 def
+	/FrameSepYellow 1.0 def
+	/FrameSepMagenta 0.0 def
+	/FrameSepCyan 0.0 def
+	/FrameSepIs FMyellow def
+	setCurrentScreen
+} bind def
+ 
+/FrameSetBlack {
+	/FrameSepBlue 0.0 def
+	/FrameSepGreen 0.0 def
+	/FrameSepRed 0.0 def
+	/FrameSepBlack 1.0 def
+	/FrameSepYellow 0.0 def
+	/FrameSepMagenta 0.0 def
+	/FrameSepCyan 0.0 def
+	/FrameSepIs FMblack def
+	setCurrentScreen
+} bind def
+ 
+/FrameNoSep { 
+	/FrameSepIs FMnone def
+	setCurrentScreen
+} bind def
+/FrameSetSepColors { 
+	FrameDict begin
+	[ exch 1 add 1 roll ]
+	/FrameSepColors  
+	exch def end
+	} bind def
+/FrameColorInSepListCMYK { 
+	FrameSepColors {  
+       		exch dup 3 -1 roll 
+       		FrameCmpColorsCMYK 
+       		{ pop true exit } if
+    	} forall 
+	dup true ne {pop false} if
+	} bind def
+/FrameColorInSepListRGB { 
+	FrameSepColors {  
+       		exch dup 3 -1 roll 
+       		FrameCmpColorsRGB 
+       		{ pop true exit } if
+    	} forall 
+	dup true ne {pop false} if
+	} bind def
+/RealSetgray /setgray load def
+/RealSetrgbcolor /setrgbcolor load def
+/RealSethsbcolor /sethsbcolor load def
+end 
+/setgray { 
+	FrameDict begin
+	FrameSepIs FMnone eq
+		{ RealSetgray } 
+		{ 
+		FrameSepIs FMblack eq 
+			{ RealSetgray } 
+			{ FrameSepIs FMcustom eq 
+			  FrameSepRed 0 eq and
+			  FrameSepGreen 0 eq and
+			  FrameSepBlue 0 eq and {
+			  	RealSetgray
+			  } {
+				1 RealSetgray pop 
+			  } ifelse
+			} ifelse
+		} ifelse
+	end
+} bind def
+/setrgbcolor { 
+	FrameDict begin
+	FrameSepIs FMnone eq
+	{  RealSetrgbcolor }
+	{
+		3 copy [ 4 1 roll ] 
+		FrameColorInSepListRGB
+		{
+				FrameSepBlue eq exch 
+			 	FrameSepGreen eq and exch 
+			 	FrameSepRed eq and
+			 	{ 0 } { 1 } ifelse
+		}
+		{
+			FMPColor {
+				RealSetrgbcolor
+				currentcmykcolor
+			} {
+				RGBtoCMYK
+			} ifelse
+			FrameSepIs FMblack eq
+			{1.0 exch sub 4 1 roll pop pop pop} {
+			FrameSepIs FMyellow eq
+			{pop 1.0 exch sub 3 1 roll pop pop} {
+			FrameSepIs FMmagenta eq
+			{pop pop 1.0 exch sub exch pop } {
+			FrameSepIs FMcyan eq
+			{pop pop pop 1.0 exch sub } 
+			{pop pop pop pop 1} ifelse } ifelse } ifelse } ifelse 
+		} ifelse
+		RealSetgray
+	} 
+	ifelse
+	end
+} bind def
+/sethsbcolor {
+	FrameDict begin
+	FrameSepIs FMnone eq 
+	{ RealSethsbcolor } 
+	{
+		RealSethsbcolor 
+		currentrgbcolor  
+		setrgbcolor 
+	} 
+	ifelse
+	end
+} bind def
+FrameDict begin
+/setcmykcolor where {
+	pop /RealSetcmykcolor /setcmykcolor load def
+} {
+	/RealSetcmykcolor {
+		4 1 roll
+		3 { 3 index add 0 max 1 min 1 exch sub 3 1 roll} repeat 
+		setrgbcolor pop
+	} bind def
+} ifelse
+userdict /setcmykcolor { 
+		FrameDict begin
+		FrameSepIs FMnone eq
+		{ RealSetcmykcolor } 
+		{
+			4 copy [ 5 1 roll ]
+			FrameColorInSepListCMYK
+			{
+				FrameSepBlack eq exch 
+				FrameSepYellow eq and exch 
+				FrameSepMagenta eq and exch 
+				FrameSepCyan eq and 
+				{ 0 } { 1 } ifelse
+			}
+			{
+				FrameSepIs FMblack eq
+				{1.0 exch sub 4 1 roll pop pop pop} {
+				FrameSepIs FMyellow eq
+				{pop 1.0 exch sub 3 1 roll pop pop} {
+				FrameSepIs FMmagenta eq
+				{pop pop 1.0 exch sub exch pop } {
+				FrameSepIs FMcyan eq
+				{pop pop pop 1.0 exch sub } 
+				{pop pop pop pop 1} ifelse } ifelse } ifelse } ifelse 
+			} ifelse
+			RealSetgray
+		}
+		ifelse
+		end
+	} bind put
+FMLevel1 not { 
+	
+	/patProcDict 5 dict dup begin
+		<0f1e3c78f0e1c387> { 3 setlinewidth -1 -1 moveto 9 9 lineto stroke 
+											4 -4 moveto 12 4 lineto stroke
+											-4 4 moveto 4 12 lineto stroke} bind def
+		<0f87c3e1f0783c1e> { 3 setlinewidth -1 9 moveto 9 -1 lineto stroke 
+											-4 4 moveto 4 -4 lineto stroke
+											4 12 moveto 12 4 lineto stroke} bind def
+		<8142241818244281> { 1 setlinewidth -1 9 moveto 9 -1 lineto stroke
+											-1 -1 moveto 9 9 lineto stroke } bind def
+		<03060c183060c081> { 1 setlinewidth -1 -1 moveto 9 9 lineto stroke 
+											4 -4 moveto 12 4 lineto stroke
+											-4 4 moveto 4 12 lineto stroke} bind def
+		<8040201008040201> { 1 setlinewidth -1 9 moveto 9 -1 lineto stroke 
+											-4 4 moveto 4 -4 lineto stroke
+											4 12 moveto 12 4 lineto stroke} bind def
+	end def
+	/patDict 15 dict dup begin
+		/PatternType 1 def		
+		/PaintType 2 def		
+		/TilingType 3 def		
+		/BBox [ 0 0 8 8 ] def 	
+		/XStep 8 def			
+		/YStep 8 def			
+		/PaintProc {
+			begin
+			patProcDict bstring known {
+				patProcDict bstring get exec
+			} {
+				8 8 true [1 0 0 -1 0 8] bstring imagemask
+			} ifelse
+			end
+		} bind def
+	end def
+} if
+/combineColor {
+    FrameSepIs FMnone eq
+	{
+		graymode FMLevel1 or not {
+			
+			[/Pattern [/DeviceCMYK]] setcolorspace
+			FrameCurColors 0 4 getinterval aload pop FrameCurPat setcolor
+		} {
+			FrameCurColors 3 get 1.0 ge {
+				FrameCurGray RealSetgray
+			} {
+				FMPColor graymode and {
+					0 1 3 { 
+						FrameCurColors exch get
+						1 FrameCurGray sub mul
+					} for
+					RealSetcmykcolor
+				} {
+					4 1 6 {
+						FrameCurColors exch get
+						graymode {
+							1 exch sub 1 FrameCurGray sub mul 1 exch sub
+						} {
+							1.0 lt {FrameCurGray} {1} ifelse
+						} ifelse
+					} for
+					RealSetrgbcolor
+				} ifelse
+			} ifelse
+		} ifelse
+	} { 
+		FrameCurColors 0 4 getinterval aload
+		FrameColorInSepListCMYK {
+			FrameSepBlack eq exch 
+			FrameSepYellow eq and exch 
+			FrameSepMagenta eq and exch 
+			FrameSepCyan eq and
+			FrameSepIs FMcustom eq and
+			{ FrameCurGray } { 1 } ifelse
+		} {
+			FrameSepIs FMblack eq
+			{FrameCurGray 1.0 exch sub mul 1.0 exch sub 4 1 roll pop pop pop} {
+			FrameSepIs FMyellow eq
+			{pop FrameCurGray 1.0 exch sub mul 1.0 exch sub 3 1 roll pop pop} {
+			FrameSepIs FMmagenta eq
+			{pop pop FrameCurGray 1.0 exch sub mul 1.0 exch sub exch pop } {
+			FrameSepIs FMcyan eq
+			{pop pop pop FrameCurGray 1.0 exch sub mul 1.0 exch sub } 
+			{pop pop pop pop 1} ifelse } ifelse } ifelse } ifelse 
+		} ifelse
+		graymode FMLevel1 or not {
+			
+			[/Pattern [/DeviceGray]] setcolorspace
+			FrameCurPat setcolor
+		} { 
+			graymode not FMLevel1 and {
+				
+				dup 1 lt {pop FrameCurGray} if
+			} if
+			RealSetgray
+		} ifelse
+	} ifelse
+} bind def
+/savematrix {
+	orgmatrix currentmatrix pop
+	} bind def
+/restorematrix {
+	orgmatrix setmatrix
+	} bind def
+/dmatrix matrix def
+/dpi    72 0 dmatrix defaultmatrix dtransform
+    dup mul exch   dup mul add   sqrt def
+	
+/freq dpi dup 72 div round dup 0 eq {pop 1} if 8 mul div def
+/sangle 1 0 dmatrix defaultmatrix dtransform exch atan def
+/dpiranges   [  2540    2400    1693     1270    1200     635      600      0      ] def
+/CMLowFreqs  [ 100.402  94.8683 89.2289 100.402  94.8683  66.9349  63.2456 47.4342 ] def
+/YLowFreqs   [  95.25   90.0    84.65    95.25   90.0     70.5556  66.6667 50.0    ] def
+/KLowFreqs   [  89.8026 84.8528 79.8088  89.8026 84.8528  74.8355  70.7107 53.033  ] def
+/CLowAngles  [  71.5651 71.5651 71.5651 71.5651  71.5651  71.5651  71.5651 71.5651 ] def
+/MLowAngles  [  18.4349 18.4349 18.4349 18.4349  18.4349  18.4349  18.4349 18.4349 ] def
+/YLowTDot    [  true    true    false    true    true     false    false   false   ] def
+/CMHighFreqs [ 133.87  126.491 133.843  108.503 102.523  100.402   94.8683 63.2456 ] def
+/YHighFreqs  [ 127.0   120.0   126.975  115.455 109.091   95.25    90.0    60.0    ] def
+/KHighFreqs  [ 119.737 113.137 119.713  128.289 121.218   89.8026  84.8528 63.6395 ] def
+/CHighAngles [  71.5651 71.5651 71.5651  70.0169 70.0169  71.5651  71.5651 71.5651 ] def
+/MHighAngles [  18.4349 18.4349 18.4349  19.9831 19.9831  18.4349  18.4349 18.4349 ] def
+/YHighTDot   [  false   false   true     false   false    true     true    false   ] def
+/PatFreq     [	10.5833 10.0     9.4055  10.5833 10.0	  10.5833  10.0	   9.375   ] def
+/screenIndex {
+	0 1 dpiranges length 1 sub { dup dpiranges exch get 1 sub dpi le {exit} {pop} ifelse } for
+} bind def
+/getCyanScreen {
+	FMUseHighFrequencyScreens { CHighAngles CMHighFreqs} {CLowAngles CMLowFreqs} ifelse
+		screenIndex dup 3 1 roll get 3 1 roll get /FMSpotFunction load
+} bind def
+/getMagentaScreen {
+	FMUseHighFrequencyScreens { MHighAngles CMHighFreqs } {MLowAngles CMLowFreqs} ifelse
+		screenIndex dup 3 1 roll get 3 1 roll get /FMSpotFunction load
+} bind def
+/getYellowScreen {
+	FMUseHighFrequencyScreens { YHighTDot YHighFreqs} { YLowTDot YLowFreqs } ifelse
+		screenIndex dup 3 1 roll get 3 1 roll get { 3 div
+			{2 { 1 add 2 div 3 mul dup floor sub 2 mul 1 sub exch} repeat
+			FMSpotFunction } } {/FMSpotFunction load } ifelse
+			0.0 exch
+} bind def
+/getBlackScreen  {
+	FMUseHighFrequencyScreens { KHighFreqs } { KLowFreqs } ifelse
+		screenIndex get 45.0 /FMSpotFunction load 
+} bind def
+/getSpotScreen {
+	getBlackScreen
+} bind def
+/getCompositeScreen {
+	getBlackScreen
+} bind def
+/FMSetScreen 
+	FMLevel1 { /setscreen load 
+	}{ {
+		8 dict begin
+		/HalftoneType 1 def
+		/SpotFunction exch def
+		/Angle exch def
+		/Frequency exch def
+		/AccurateScreens FMUseAcccurateScreens def
+		currentdict end sethalftone
+	} bind } ifelse
+def
+/setDefaultScreen {
+	FMPColor {
+		orgrxfer cvx orggxfer cvx orgbxfer cvx orgxfer cvx setcolortransfer
+	}
+	{
+		orgxfer cvx settransfer
+	} ifelse
+	orgfreq organgle orgproc cvx setscreen
+} bind def
+/setCurrentScreen {
+	FrameSepIs FMnone eq {
+		FMUseDefaultNoSeparationScreen {
+			setDefaultScreen
+		} {
+			getCompositeScreen FMSetScreen
+		} ifelse
+	} {
+		FrameSepIs FMcustom eq {
+			FMUseDefaultSpotSeparationScreen {
+				setDefaultScreen
+			} {
+				getSpotScreen FMSetScreen
+			} ifelse
+		} {
+			FMUseDefaultProcessSeparationScreen {
+				setDefaultScreen
+			} {
+				FrameSepIs FMcyan eq {
+					getCyanScreen FMSetScreen
+				} {
+					FrameSepIs FMmagenta eq {
+						getMagentaScreen FMSetScreen
+					} {
+						FrameSepIs FMyellow eq {
+							getYellowScreen FMSetScreen
+						} {
+							getBlackScreen FMSetScreen
+						} ifelse
+					} ifelse
+				} ifelse
+			} ifelse
+		} ifelse
+	} ifelse 
+} bind def
+end
+	/gstring FMLOCAL
+	/gfile FMLOCAL
+	/gindex FMLOCAL
+	/orgrxfer FMLOCAL
+	/orggxfer FMLOCAL
+	/orgbxfer FMLOCAL
+	/orgxfer FMLOCAL
+	/orgproc FMLOCAL
+	/orgrproc FMLOCAL
+	/orggproc FMLOCAL
+	/orgbproc FMLOCAL
+	/organgle FMLOCAL
+	/orgrangle FMLOCAL
+	/orggangle FMLOCAL
+	/orgbangle FMLOCAL
+	/orgfreq FMLOCAL
+	/orgrfreq FMLOCAL
+	/orggfreq FMLOCAL
+	/orgbfreq FMLOCAL
+	/yscale FMLOCAL
+	/xscale FMLOCAL
+	/edown FMLOCAL
+	/manualfeed FMLOCAL
+	/paperheight FMLOCAL
+	/paperwidth FMLOCAL
+/FMDOCUMENT { 
+	array /FMfonts exch def 
+	/#copies exch def
+	FrameDict begin
+	0 ne /manualfeed exch def
+	/paperheight exch def
+	/paperwidth exch def
+	0 ne /FrameNegative exch def 
+	0 ne /edown exch def 
+	/yscale exch def
+	/xscale exch def
+	FMLevel1 {
+		manualfeed {setmanualfeed} if
+		/FMdicttop countdictstack 1 add def 
+		/FMoptop count def 
+		setpapername 
+		manualfeed {true} {papersize} ifelse 
+		{manualpapersize} {false} ifelse 
+		{desperatepapersize} {false} ifelse 
+		{ (Can't select requested paper size for Frame print job!) FMFAILURE } if
+		count -1 FMoptop {pop pop} for
+		countdictstack -1 FMdicttop {pop end} for 
+		}
+		{{1 dict dup /PageSize [paperwidth paperheight]put setpagedevice}stopped
+		{ (Can't select requested paper size for Frame print job!) FMFAILURE } if
+		 {1 dict dup /ManualFeed manualfeed put setpagedevice } stopped pop }
+	ifelse 
+	
+	FMPColor {
+		currentcolorscreen
+			cvlit /orgproc exch def
+				  /organgle exch def 
+				  /orgfreq exch def
+			cvlit /orgbproc exch def
+				  /orgbangle exch def 
+				  /orgbfreq exch def
+			cvlit /orggproc exch def
+				  /orggangle exch def 
+				  /orggfreq exch def
+			cvlit /orgrproc exch def
+				  /orgrangle exch def 
+				  /orgrfreq exch def
+			currentcolortransfer 
+			FrameNegative {
+				1 1 4 { 
+					pop { 1 exch sub } concatprocs 4 1 roll
+				} for
+				4 copy
+				setcolortransfer
+			} if
+			cvlit /orgxfer exch def
+			cvlit /orgbxfer exch def
+			cvlit /orggxfer exch def
+			cvlit /orgrxfer exch def
+	} {
+		currentscreen 
+			cvlit /orgproc exch def
+				  /organgle exch def 
+				  /orgfreq exch def
+				  
+		currenttransfer 
+		FrameNegative {
+			{ 1 exch sub } concatprocs
+			dup settransfer
+		} if 
+		cvlit /orgxfer exch def
+	} ifelse
+	end 
+} def 
+/pagesave FMLOCAL
+/orgmatrix FMLOCAL
+/landscape FMLOCAL
+/pwid FMLOCAL
+/FMBEGINPAGE { 
+	FrameDict begin 
+	/pagesave save def
+	3.86 setmiterlimit
+	/landscape exch 0 ne def
+	landscape { 
+		90 rotate 0 exch dup /pwid exch def neg translate pop 
+	}{
+		pop /pwid exch def
+	} ifelse
+	edown { [-1 0 0 1 pwid 0] concat } if
+	0 0 moveto paperwidth 0 lineto paperwidth paperheight lineto 
+	0 paperheight lineto 0 0 lineto 1 setgray fill
+	xscale yscale scale
+	/orgmatrix matrix def
+	gsave 
+} def 
+/FMENDPAGE {
+	grestore 
+	pagesave restore
+	end 
+	showpage
+	} def 
+/FMFONTDEFINE { 
+	FrameDict begin
+	findfont 
+	ReEncode 
+	1 index exch 
+	definefont 
+	FMfonts 3 1 roll 
+	put
+	end 
+	} def 
+/FMFILLS {
+	FrameDict begin dup
+	array /fillvals exch def
+	dict /patCache exch def
+	end 
+	} def 
+/FMFILL {
+	FrameDict begin
+	 fillvals 3 1 roll put
+	end 
+	} def 
+/FMNORMALIZEGRAPHICS { 
+	newpath
+	0.0 0.0 moveto
+	1 setlinewidth
+	0 setlinecap
+	0 0 0 sethsbcolor
+	0 setgray 
+	} bind def
+	/fx FMLOCAL
+	/fy FMLOCAL
+	/fh FMLOCAL
+	/fw FMLOCAL
+	/llx FMLOCAL
+	/lly FMLOCAL
+	/urx FMLOCAL
+	/ury FMLOCAL
+/FMBEGINEPSF { 
+	end 
+	/FMEPSF save def 
+	/showpage {} def 
+% See Adobe's "PostScript Language Reference Manual, 2nd Edition", page 714.
+% "...the following operators MUST NOT be used in an EPS file:" (emphasis ours)
+	/banddevice {(banddevice) FMBADEPSF} def
+	/clear {(clear) FMBADEPSF} def
+	/cleardictstack {(cleardictstack) FMBADEPSF} def 
+	/copypage {(copypage) FMBADEPSF} def
+	/erasepage {(erasepage) FMBADEPSF} def
+	/exitserver {(exitserver) FMBADEPSF} def
+	/framedevice {(framedevice) FMBADEPSF} def
+	/grestoreall {(grestoreall) FMBADEPSF} def
+	/initclip {(initclip) FMBADEPSF} def
+	/initgraphics {(initgraphics) FMBADEPSF} def
+	/initmatrix {(initmatrix) FMBADEPSF} def
+	/quit {(quit) FMBADEPSF} def
+	/renderbands {(renderbands) FMBADEPSF} def
+	/setglobal {(setglobal) FMBADEPSF} def
+	/setpagedevice {(setpagedevice) FMBADEPSF} def
+	/setshared {(setshared) FMBADEPSF} def
+	/startjob {(startjob) FMBADEPSF} def
+	/lettertray {(lettertray) FMBADEPSF} def
+	/letter {(letter) FMBADEPSF} def
+	/lettersmall {(lettersmall) FMBADEPSF} def
+	/11x17tray {(11x17tray) FMBADEPSF} def
+	/11x17 {(11x17) FMBADEPSF} def
+	/ledgertray {(ledgertray) FMBADEPSF} def
+	/ledger {(ledger) FMBADEPSF} def
+	/legaltray {(legaltray) FMBADEPSF} def
+	/legal {(legal) FMBADEPSF} def
+	/statementtray {(statementtray) FMBADEPSF} def
+	/statement {(statement) FMBADEPSF} def
+	/executivetray {(executivetray) FMBADEPSF} def
+	/executive {(executive) FMBADEPSF} def
+	/a3tray {(a3tray) FMBADEPSF} def
+	/a3 {(a3) FMBADEPSF} def
+	/a4tray {(a4tray) FMBADEPSF} def
+	/a4 {(a4) FMBADEPSF} def
+	/a4small {(a4small) FMBADEPSF} def
+	/b4tray {(b4tray) FMBADEPSF} def
+	/b4 {(b4) FMBADEPSF} def
+	/b5tray {(b5tray) FMBADEPSF} def
+	/b5 {(b5) FMBADEPSF} def
+	FMNORMALIZEGRAPHICS 
+	[/fy /fx /fh /fw /ury /urx /lly /llx] {exch def} forall 
+	fx fw 2 div add fy fh 2 div add  translate
+	rotate
+	fw 2 div neg fh 2 div neg translate
+	fw urx llx sub div fh ury lly sub div scale 
+	llx neg lly neg translate 
+	/FMdicttop countdictstack 1 add def 
+	/FMoptop count def 
+	} bind def
+/FMENDEPSF {
+	count -1 FMoptop {pop pop} for 
+	countdictstack -1 FMdicttop {pop end} for 
+	FMEPSF restore
+	FrameDict begin 
+	} bind def
+FrameDict begin 
+/setmanualfeed {
+%%BeginFeature *ManualFeed True
+	 statusdict /manualfeed true put
+%%EndFeature
+	} bind def
+/max {2 copy lt {exch} if pop} bind def
+/min {2 copy gt {exch} if pop} bind def
+/inch {72 mul} def
+/pagedimen { 
+	paperheight sub abs 16 lt exch 
+	paperwidth sub abs 16 lt and
+	{/papername exch def} {pop} ifelse
+	} bind def
+	/papersizedict FMLOCAL
+/setpapername { 
+	/papersizedict 14 dict def 
+	papersizedict begin
+	/papername /unknown def 
+		/Letter 8.5 inch 11.0 inch pagedimen
+		/LetterSmall 7.68 inch 10.16 inch pagedimen
+		/Tabloid 11.0 inch 17.0 inch pagedimen
+		/Ledger 17.0 inch 11.0 inch pagedimen
+		/Legal 8.5 inch 14.0 inch pagedimen
+		/Statement 5.5 inch 8.5 inch pagedimen
+		/Executive 7.5 inch 10.0 inch pagedimen
+		/A3 11.69 inch 16.5 inch pagedimen
+		/A4 8.26 inch 11.69 inch pagedimen
+		/A4Small 7.47 inch 10.85 inch pagedimen
+		/B4 10.125 inch 14.33 inch pagedimen
+		/B5 7.16 inch 10.125 inch pagedimen
+	end
+	} bind def
+/papersize {
+	papersizedict begin
+		/Letter {lettertray letter} def
+		/LetterSmall {lettertray lettersmall} def
+		/Tabloid {11x17tray 11x17} def
+		/Ledger {ledgertray ledger} def
+		/Legal {legaltray legal} def
+		/Statement {statementtray statement} def
+		/Executive {executivetray executive} def
+		/A3 {a3tray a3} def
+		/A4 {a4tray a4} def
+		/A4Small {a4tray a4small} def
+		/B4 {b4tray b4} def
+		/B5 {b5tray b5} def
+		/unknown {unknown} def
+	papersizedict dup papername known {papername} {/unknown} ifelse get
+	end
+	statusdict begin stopped end 
+	} bind def
+/manualpapersize {
+	papersizedict begin
+		/Letter {letter} def
+		/LetterSmall {lettersmall} def
+		/Tabloid {11x17} def
+		/Ledger {ledger} def
+		/Legal {legal} def
+		/Statement {statement} def
+		/Executive {executive} def
+		/A3 {a3} def
+		/A4 {a4} def
+		/A4Small {a4small} def
+		/B4 {b4} def
+		/B5 {b5} def
+		/unknown {unknown} def
+	papersizedict dup papername known {papername} {/unknown} ifelse get
+	end
+	stopped 
+	} bind def
+/desperatepapersize {
+	statusdict /setpageparams known
+		{
+		paperwidth paperheight 0 1 
+		statusdict begin
+		{setpageparams} stopped 
+		end
+		} {true} ifelse 
+	} bind def
+/DiacriticEncoding [
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /space /exclam /quotedbl
+/numbersign /dollar /percent /ampersand /quotesingle /parenleft
+/parenright /asterisk /plus /comma /hyphen /period /slash /zero /one
+/two /three /four /five /six /seven /eight /nine /colon /semicolon
+/less /equal /greater /question /at /A /B /C /D /E /F /G /H /I /J /K
+/L /M /N /O /P /Q /R /S /T /U /V /W /X /Y /Z /bracketleft /backslash
+/bracketright /asciicircum /underscore /grave /a /b /c /d /e /f /g /h
+/i /j /k /l /m /n /o /p /q /r /s /t /u /v /w /x /y /z /braceleft /bar
+/braceright /asciitilde /.notdef /Adieresis /Aring /Ccedilla /Eacute
+/Ntilde /Odieresis /Udieresis /aacute /agrave /acircumflex /adieresis
+/atilde /aring /ccedilla /eacute /egrave /ecircumflex /edieresis
+/iacute /igrave /icircumflex /idieresis /ntilde /oacute /ograve
+/ocircumflex /odieresis /otilde /uacute /ugrave /ucircumflex
+/udieresis /dagger /.notdef /cent /sterling /section /bullet
+/paragraph /germandbls /registered /copyright /trademark /acute
+/dieresis /.notdef /AE /Oslash /.notdef /.notdef /.notdef /.notdef
+/yen /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/ordfeminine /ordmasculine /.notdef /ae /oslash /questiondown
+/exclamdown /logicalnot /.notdef /florin /.notdef /.notdef
+/guillemotleft /guillemotright /ellipsis /.notdef /Agrave /Atilde
+/Otilde /OE /oe /endash /emdash /quotedblleft /quotedblright
+/quoteleft /quoteright /.notdef /.notdef /ydieresis /Ydieresis
+/fraction /currency /guilsinglleft /guilsinglright /fi /fl /daggerdbl
+/periodcentered /quotesinglbase /quotedblbase /perthousand
+/Acircumflex /Ecircumflex /Aacute /Edieresis /Egrave /Iacute
+/Icircumflex /Idieresis /Igrave /Oacute /Ocircumflex /.notdef /Ograve
+/Uacute /Ucircumflex /Ugrave /dotlessi /circumflex /tilde /macron
+/breve /dotaccent /ring /cedilla /hungarumlaut /ogonek /caron
+] def
+/ReEncode { 
+	dup 
+	length 
+	dict begin 
+	{
+	1 index /FID ne 
+		{def} 
+		{pop pop} ifelse 
+	} forall 
+	0 eq {/Encoding DiacriticEncoding def} if 
+	currentdict 
+	end 
+	} bind def
+FMPColor 
+	
+	{
+	/BEGINBITMAPCOLOR { 
+		BITMAPCOLOR} def
+	/BEGINBITMAPCOLORc { 
+		BITMAPCOLORc} def
+	/BEGINBITMAPTRUECOLOR { 
+		BITMAPTRUECOLOR } def
+	/BEGINBITMAPTRUECOLORc { 
+		BITMAPTRUECOLORc } def
+	}
+	
+	{
+	/BEGINBITMAPCOLOR { 
+		BITMAPGRAY} def
+	/BEGINBITMAPCOLORc { 
+		BITMAPGRAYc} def
+	/BEGINBITMAPTRUECOLOR { 
+		BITMAPTRUEGRAY } def
+	/BEGINBITMAPTRUECOLORc { 
+		BITMAPTRUEGRAYc } def
+	}
+ifelse
+/K { 
+	FMPrintAllColorsAsBlack {
+		dup 1 eq 2 index 1 eq and 3 index 1 eq and not
+			{7 {pop} repeat 0 0 0 1 0 0 0} if
+	} if 
+	FrameCurColors astore 
+	pop combineColor
+} bind def
+/graymode true def
+	/bwidth FMLOCAL
+	/bpside FMLOCAL
+	/bstring FMLOCAL
+	/onbits FMLOCAL
+	/offbits FMLOCAL
+	/xindex FMLOCAL
+	/yindex FMLOCAL
+	/x FMLOCAL
+	/y FMLOCAL
+/setPatternMode {
+	FMLevel1 {
+		/bwidth  exch def
+		/bpside  exch def
+		/bstring exch def
+		/onbits 0 def  /offbits 0 def
+		freq sangle landscape {90 add} if 
+			{/y exch def
+			 /x exch def
+			 /xindex x 1 add 2 div bpside mul cvi def
+			 /yindex y 1 add 2 div bpside mul cvi def
+			 bstring yindex bwidth mul xindex 8 idiv add get
+			 1 7 xindex 8 mod sub bitshift and 0 ne FrameNegative {not} if
+			 {/onbits  onbits  1 add def 1}
+			 {/offbits offbits 1 add def 0}
+			 ifelse
+			}
+			setscreen
+		offbits offbits onbits add div FrameNegative {1.0 exch sub} if
+		/FrameCurGray exch def
+	} { 
+		pop pop
+		dup patCache exch known {
+			patCache exch get
+		} { 
+			dup
+			patDict /bstring 3 -1 roll put
+			patDict 
+			9 PatFreq screenIndex get div dup matrix scale
+			makepattern
+			dup 
+			patCache 4 -1 roll 3 -1 roll put
+		} ifelse
+		/FrameCurGray 0 def
+		/FrameCurPat exch def
+	} ifelse
+	/graymode false def
+	combineColor
+} bind def
+/setGrayScaleMode {
+	graymode not {
+		/graymode true def
+		FMLevel1 {
+			setCurrentScreen
+		} if
+	} if
+	/FrameCurGray exch def
+	combineColor
+} bind def
+/normalize {
+	transform round exch round exch itransform
+	} bind def
+/dnormalize {
+	dtransform round exch round exch idtransform
+	} bind def
+/lnormalize { 
+	0 dtransform exch cvi 2 idiv 2 mul 1 add exch idtransform pop
+	} bind def
+/H { 
+	lnormalize setlinewidth
+	} bind def
+/Z {
+	setlinecap
+	} bind def
+	
+/PFill {
+	graymode FMLevel1 or not {
+		gsave 1 setgray eofill grestore
+	} if
+} bind def
+/PStroke {
+	graymode FMLevel1 or not {
+		gsave 1 setgray stroke grestore
+	} if
+	stroke
+} bind def
+	/fillvals FMLOCAL
+/X { 
+	fillvals exch get
+	dup type /stringtype eq
+	{8 1 setPatternMode} 
+	{setGrayScaleMode}
+	ifelse
+	} bind def
+/V { 
+	PFill gsave eofill grestore
+	} bind def
+/Vclip {
+	clip
+	} bind def
+/Vstrk {
+	currentlinewidth exch setlinewidth PStroke setlinewidth
+	} bind def
+/N { 
+	PStroke
+	} bind def
+/Nclip {
+	strokepath clip newpath
+	} bind def
+/Nstrk {
+	currentlinewidth exch setlinewidth PStroke setlinewidth
+	} bind def
+/M {newpath moveto} bind def
+/E {lineto} bind def
+/D {curveto} bind def
+/O {closepath} bind def
+	/n FMLOCAL
+/L { 
+ 	/n exch def
+	newpath
+	normalize
+	moveto 
+	2 1 n {pop normalize lineto} for
+	} bind def
+/Y { 
+	L 
+	closepath
+	} bind def
+	/x1 FMLOCAL
+	/x2 FMLOCAL
+	/y1 FMLOCAL
+	/y2 FMLOCAL
+/R { 
+	/y2 exch def
+	/x2 exch def
+	/y1 exch def
+	/x1 exch def
+	x1 y1
+	x2 y1
+	x2 y2
+	x1 y2
+	4 Y 
+	} bind def
+	/rad FMLOCAL
+/rarc 
+	{rad 
+	 arcto
+	} bind def
+/RR { 
+	/rad exch def
+	normalize
+	/y2 exch def
+	/x2 exch def
+	normalize
+	/y1 exch def
+	/x1 exch def
+	mark
+	newpath
+	{
+	x1 y1 rad add moveto
+	x1 y2 x2 y2 rarc
+	x2 y2 x2 y1 rarc
+	x2 y1 x1 y1 rarc
+	x1 y1 x1 y2 rarc
+	closepath
+	} stopped {x1 y1 x2 y2 R} if 
+	cleartomark
+	} bind def
+/RRR { 
+	/rad exch def
+	normalize /y4 exch def /x4 exch def
+	normalize /y3 exch def /x3 exch def
+	normalize /y2 exch def /x2 exch def
+	normalize /y1 exch def /x1 exch def
+	newpath
+	normalize moveto 
+	mark
+	{
+	x2 y2 x3 y3 rarc
+	x3 y3 x4 y4 rarc
+	x4 y4 x1 y1 rarc
+	x1 y1 x2 y2 rarc
+	closepath
+	} stopped
+	 {x1 y1 x2 y2 x3 y3 x4 y4 newpath moveto lineto lineto lineto closepath} if
+	cleartomark
+	} bind def
+/C { 
+	grestore
+	gsave
+	R 
+	clip
+	setCurrentScreen
+} bind def
+/CP { 
+	grestore
+	gsave
+	Y 
+	clip
+	setCurrentScreen
+} bind def
+	/FMpointsize FMLOCAL
+/F { 
+	FMfonts exch get
+	FMpointsize scalefont
+	setfont
+	} bind def
+/Q { 
+	/FMpointsize exch def
+	F 
+	} bind def
+/T { 
+	moveto show
+	} bind def
+/RF { 
+	rotate
+	0 ne {-1 1 scale} if
+	} bind def
+/TF { 
+	gsave
+	moveto 
+	RF
+	show
+	grestore
+	} bind def
+/P { 
+	moveto
+	0 32 3 2 roll widthshow
+	} bind def
+/PF { 
+	gsave
+	moveto 
+	RF
+	0 32 3 2 roll widthshow
+	grestore
+	} bind def
+/S { 
+	moveto
+	0 exch ashow
+	} bind def
+/SF { 
+	gsave
+	moveto
+	RF
+	0 exch ashow
+	grestore
+	} bind def
+/B { 
+	moveto
+	0 32 4 2 roll 0 exch awidthshow
+	} bind def
+/BF { 
+	gsave
+	moveto
+	RF
+	0 32 4 2 roll 0 exch awidthshow
+	grestore
+	} bind def
+/G { 
+	gsave
+	newpath
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath 
+	PFill fill
+	grestore
+	} bind def
+/Gstrk {
+	savematrix
+    newpath
+    2 index 2 div add exch 3 index 2 div sub exch 
+    normalize 2 index 2 div sub exch 3 index 2 div add exch 
+    translate
+    scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    restorematrix
+    currentlinewidth exch setlinewidth PStroke setlinewidth
+    } bind def
+/Gclip { 
+	newpath
+	savematrix
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath 
+	clip newpath
+	restorematrix
+	} bind def
+/GG { 
+	gsave
+	newpath
+	normalize translate 0.0 0.0 moveto 
+	rotate 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath
+	PFill
+	fill
+	grestore
+	} bind def
+/GGclip { 
+	savematrix
+	newpath
+    normalize translate 0.0 0.0 moveto 
+    rotate 
+    dnormalize scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    closepath
+	clip newpath
+	restorematrix
+	} bind def
+/GGstrk { 
+	savematrix
+    newpath
+    normalize translate 0.0 0.0 moveto 
+    rotate 
+    dnormalize scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    closepath 
+	restorematrix
+    currentlinewidth exch setlinewidth PStroke setlinewidth
+	} bind def
+/A { 
+	gsave
+	savematrix
+	newpath
+	2 index 2 div add exch 3 index 2 div sub exch 
+	normalize 2 index 2 div sub exch 3 index 2 div add exch 
+	translate 
+	scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	restorematrix
+	PStroke
+	grestore
+	} bind def
+/Aclip {
+	newpath
+	savematrix
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath 
+	strokepath clip newpath
+	restorematrix
+} bind def
+/Astrk {
+	Gstrk
+} bind def
+/AA { 
+	gsave
+	savematrix
+	newpath
+	
+	3 index 2 div add exch 4 index 2 div sub exch 
+	
+	normalize 3 index 2 div sub exch 4 index 2 div add exch
+	translate 
+	rotate 
+	scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	restorematrix
+	PStroke
+	grestore
+	} bind def
+/AAclip {
+	savematrix
+	newpath
+    normalize translate 0.0 0.0 moveto 
+    rotate 
+    dnormalize scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    closepath
+	strokepath clip newpath
+	restorematrix
+} bind def
+/AAstrk {
+	GGstrk
+} bind def
+	/x FMLOCAL
+	/y FMLOCAL
+	/w FMLOCAL
+	/h FMLOCAL
+	/xx FMLOCAL
+	/yy FMLOCAL
+	/ww FMLOCAL
+	/hh FMLOCAL
+	/FMsaveobject FMLOCAL
+	/FMoptop FMLOCAL
+	/FMdicttop FMLOCAL
+/BEGINPRINTCODE { 
+	/FMdicttop countdictstack 1 add def 
+	/FMoptop count 7 sub def 
+	/FMsaveobject save def
+	userdict begin 
+	/showpage {} def 
+	FMNORMALIZEGRAPHICS 
+	3 index neg 3 index neg translate
+	} bind def
+/ENDPRINTCODE {
+	count -1 FMoptop {pop pop} for 
+	countdictstack -1 FMdicttop {pop end} for 
+	FMsaveobject restore 
+	} bind def
+/gn { 
+	0 
+	{	46 mul 
+		cf read pop 
+		32 sub 
+		dup 46 lt {exit} if 
+		46 sub add 
+		} loop
+	add 
+	} bind def
+	/str FMLOCAL
+/cfs { 
+	/str sl string def 
+	0 1 sl 1 sub {str exch val put} for 
+	str def 
+	} bind def
+/ic [ 
+	0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0223
+	0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0223
+	0
+	{0 hx} {1 hx} {2 hx} {3 hx} {4 hx} {5 hx} {6 hx} {7 hx} {8 hx} {9 hx}
+	{10 hx} {11 hx} {12 hx} {13 hx} {14 hx} {15 hx} {16 hx} {17 hx} {18 hx}
+	{19 hx} {gn hx} {0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12}
+	{13} {14} {15} {16} {17} {18} {19} {gn} {0 wh} {1 wh} {2 wh} {3 wh}
+	{4 wh} {5 wh} {6 wh} {7 wh} {8 wh} {9 wh} {10 wh} {11 wh} {12 wh}
+	{13 wh} {14 wh} {gn wh} {0 bl} {1 bl} {2 bl} {3 bl} {4 bl} {5 bl} {6 bl}
+	{7 bl} {8 bl} {9 bl} {10 bl} {11 bl} {12 bl} {13 bl} {14 bl} {gn bl}
+	{0 fl} {1 fl} {2 fl} {3 fl} {4 fl} {5 fl} {6 fl} {7 fl} {8 fl} {9 fl}
+	{10 fl} {11 fl} {12 fl} {13 fl} {14 fl} {gn fl}
+	] def
+	/sl FMLOCAL
+	/val FMLOCAL
+	/ws FMLOCAL
+	/im FMLOCAL
+	/bs FMLOCAL
+	/cs FMLOCAL
+	/len FMLOCAL
+	/pos FMLOCAL
+/ms { 
+	/sl exch def 
+	/val 255 def 
+	/ws cfs 
+	/im cfs 
+	/val 0 def 
+	/bs cfs 
+	/cs cfs 
+	} bind def
+400 ms 
+/ip { 
+	is 
+	0 
+	cf cs readline pop 
+	{	ic exch get exec 
+		add 
+		} forall 
+	pop 
+	
+	} bind def
+/rip { 
+	   
+	  
+	  bis ris copy pop 
+      is
+      0
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+	  pop pop 
+	  ris gis copy pop 
+	  dup is exch 
+	  
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+	  pop pop
+	  gis bis copy pop 
+	  dup add is exch 
+	  
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+      pop 
+      
+      } bind def
+/wh { 
+	/len exch def 
+	/pos exch def 
+	ws 0 len getinterval im pos len getinterval copy pop
+	pos len 
+	} bind def
+/bl { 
+	/len exch def 
+	/pos exch def 
+	bs 0 len getinterval im pos len getinterval copy pop
+	pos len 
+	} bind def
+/s1 1 string def
+/fl { 
+	/len exch def 
+	/pos exch def 
+	/val cf s1 readhexstring pop 0 get def
+	pos 1 pos len add 1 sub {im exch val put} for
+	pos len 
+	} bind def
+/hx { 
+	3 copy getinterval 
+	cf exch readhexstring pop pop 
+	} bind def
+	/h FMLOCAL
+	/w FMLOCAL
+	/d FMLOCAL
+	/lb FMLOCAL
+	/bitmapsave FMLOCAL
+	/is FMLOCAL
+	/cf FMLOCAL
+/wbytes { 
+      dup dup
+      24 eq { pop pop 3 mul }
+      { 8 eq {pop} {1 eq {7 add 8 idiv} {3 add 4 idiv} ifelse} ifelse } ifelse
+	} bind def
+/BEGINBITMAPBWc { 
+	1 {} COMMONBITMAPc
+	} bind def
+/BEGINBITMAPGRAYc { 
+	8 {} COMMONBITMAPc
+	} bind def
+/BEGINBITMAP2BITc { 
+	2 {} COMMONBITMAPc
+	} bind def
+/COMMONBITMAPc { 
+		 
+	/r exch def
+	/d exch def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+	/bitmapsave save def 
+	r                    
+	/is im 0 lb getinterval def 
+	ws 0 lb getinterval is copy pop 
+	/cf currentfile def 
+	w h d [w 0 0 h neg 0 h] 
+	{ip} image 
+	bitmapsave restore 
+	grestore
+	} bind def
+/BEGINBITMAPBW { 
+	1 {} COMMONBITMAP
+	} bind def
+/BEGINBITMAPGRAY { 
+	8 {} COMMONBITMAP
+	} bind def
+/BEGINBITMAP2BIT { 
+	2 {} COMMONBITMAP
+	} bind def
+/COMMONBITMAP { 
+	/r exch def
+	/d exch def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/bitmapsave save def 
+	r                    
+	/is w d wbytes string def
+	/cf currentfile def 
+	w h d [w 0 0 h neg 0 h] 
+	{cf is readhexstring pop} image
+	bitmapsave restore 
+	grestore
+	} bind def
+/ngrayt 256 array def
+/nredt 256 array def
+/nbluet 256 array def
+/ngreent 256 array def
+	/gryt FMLOCAL
+	/blut FMLOCAL
+	/grnt FMLOCAL
+	/redt FMLOCAL
+	/indx FMLOCAL
+	/cynu FMLOCAL
+	/magu FMLOCAL
+	/yelu FMLOCAL
+	/k FMLOCAL
+	/u FMLOCAL
+FMLevel1 {
+/colorsetup {
+	currentcolortransfer
+	/gryt exch def
+	/blut exch def
+	/grnt exch def
+	/redt exch def
+	0 1 255 {
+		/indx exch def
+		/cynu 1 red indx get 255 div sub def
+		/magu 1 green indx get 255 div sub def
+		/yelu 1 blue indx get 255 div sub def
+		/k cynu magu min yelu min def
+		/u k currentundercolorremoval exec def
+%		/u 0 def
+		nredt indx 1 0 cynu u sub max sub redt exec put
+		ngreent indx 1 0 magu u sub max sub grnt exec put
+		nbluet indx 1 0 yelu u sub max sub blut exec put
+		ngrayt indx 1 k currentblackgeneration exec sub gryt exec put
+	} for
+	{255 mul cvi nredt exch get}
+	{255 mul cvi ngreent exch get}
+	{255 mul cvi nbluet exch get}
+	{255 mul cvi ngrayt exch get}
+	setcolortransfer
+	{pop 0} setundercolorremoval
+	{} setblackgeneration
+	} bind def
+}
+{
+/colorSetup2 {
+	[ /Indexed /DeviceRGB 255 
+		{dup red exch get 255 div 
+		 exch dup green exch get 255 div 
+		 exch blue exch get 255 div}
+	] setcolorspace
+} bind def
+} ifelse
+	/tran FMLOCAL
+/fakecolorsetup {
+	/tran 256 string def
+	0 1 255 {/indx exch def 
+		tran indx
+		red indx get 77 mul
+		green indx get 151 mul
+		blue indx get 28 mul
+		add add 256 idiv put} for
+	currenttransfer
+	{255 mul cvi tran exch get 255.0 div}
+	exch concatprocs settransfer
+} bind def
+/BITMAPCOLOR { 
+	/d 8 def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/bitmapsave save def
+	FMLevel1 {	
+		colorsetup
+		/is w d wbytes string def
+		/cf currentfile def 
+		w h d [w 0 0 h neg 0 h] 
+		{cf is readhexstring pop} {is} {is} true 3 colorimage 
+	} {
+		colorSetup2
+		/is w d wbytes string def
+		/cf currentfile def 
+		7 dict dup begin
+			/ImageType 1 def
+			/Width w def
+			/Height h def
+			/ImageMatrix [w 0 0 h neg 0 h] def
+			/DataSource {cf is readhexstring pop} bind def
+			/BitsPerComponent d def
+			/Decode [0 255] def
+		end image	
+	} ifelse
+	bitmapsave restore 
+	grestore
+	} bind def
+/BITMAPCOLORc { 
+	/d 8 def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+	/bitmapsave save def 
+	FMLevel1 {	
+		colorsetup
+		/is im 0 lb getinterval def 
+		ws 0 lb getinterval is copy pop 
+		/cf currentfile def 
+		w h d [w 0 0 h neg 0 h] 
+		{ip} {is} {is} true 3 colorimage
+	} {
+		colorSetup2
+		/is im 0 lb getinterval def 
+		ws 0 lb getinterval is copy pop 
+		/cf currentfile def 
+		7 dict dup begin
+			/ImageType 1 def
+			/Width w def
+			/Height h def
+			/ImageMatrix [w 0 0 h neg 0 h] def
+			/DataSource {ip} bind def
+			/BitsPerComponent d def
+			/Decode [0 255] def
+		end image	
+	} ifelse
+	bitmapsave restore 
+	grestore
+	} bind def
+/BITMAPTRUECOLORc { 
+	/d 24 def
+        gsave
+ 	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+        /bitmapsave save def 
+        
+	/is im 0 lb getinterval def	
+	/ris im 0 w getinterval def	
+	/gis im w w getinterval def	
+	/bis im w 2 mul w getinterval def 
+        
+        ws 0 lb getinterval is copy pop 
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        {w rip pop ris} {gis} {bis} true 3 colorimage
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPTRUECOLOR { 
+        gsave
+		
+		3 index 2 div add exch	
+		4 index 2 div add exch	
+		translate		
+		rotate			
+		1 index 2 div neg	
+		1 index 2 div neg	
+		translate		
+		scale			
+		/h exch def /w exch def
+        /bitmapsave save def 
+        /is w string def
+        /gis w string def
+        /bis w string def
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        { cf is readhexstring pop } 
+        { cf gis readhexstring pop } 
+        { cf bis readhexstring pop } 
+        true 3 colorimage 
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPTRUEGRAYc { 
+	/d 24 def
+        gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+        /bitmapsave save def 
+        
+	/is im 0 lb getinterval def	
+	/ris im 0 w getinterval def	
+	/gis im w w getinterval def	
+	/bis im w 2 mul w getinterval def 
+        ws 0 lb getinterval is copy pop 
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        {w rip pop ris gis bis w gray} image
+        bitmapsave restore 
+        grestore
+        } bind def
+/ww FMLOCAL
+/r FMLOCAL
+/g FMLOCAL
+/b FMLOCAL
+/i FMLOCAL
+/gray { 
+        /ww exch def
+        /b exch def
+        /g exch def
+        /r exch def
+        0 1 ww 1 sub { /i exch def r i get .299 mul g i get .587 mul
+			b i get .114 mul add add r i 3 -1 roll floor cvi put } for
+        r
+        } bind def
+/BITMAPTRUEGRAY { 
+        gsave
+		
+		3 index 2 div add exch	
+		4 index 2 div add exch	
+		translate		
+		rotate			
+		1 index 2 div neg	
+		1 index 2 div neg	
+		translate		
+		scale			
+		/h exch def /w exch def
+        /bitmapsave save def 
+        /is w string def
+        /gis w string def
+        /bis w string def
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        { cf is readhexstring pop 
+          cf gis readhexstring pop 
+          cf bis readhexstring pop w gray}  image
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPGRAY { 
+	8 {fakecolorsetup} COMMONBITMAP
+	} bind def
+/BITMAPGRAYc { 
+	8 {fakecolorsetup} COMMONBITMAPc
+	} bind def
+/ENDBITMAP {
+	} bind def
+end 
+	/ALDsave FMLOCAL
+	/ALDmatrix matrix def ALDmatrix currentmatrix pop
+/StartALD {
+	/ALDsave save def
+	 savematrix
+	 ALDmatrix setmatrix
+	} bind def
+/InALD {
+	 restorematrix
+	} bind def
+/DoneALD {
+	 ALDsave restore
+	} bind def
+/I { setdash } bind def
+/J { [] 0 setdash } bind def
+%%EndProlog
+%%BeginSetup
+(4.0) FMVERSION
+1 1 0 0 612 792 0 1 16 FMDOCUMENT
+0 0 /Times-Roman FMFONTDEFINE
+1 0 /Times-Bold FMFONTDEFINE
+2 0 /Times-Italic FMFONTDEFINE
+3 0 /Times-BoldItalic FMFONTDEFINE
+4 0 /Helvetica-Narrow-Bold FMFONTDEFINE
+5 0 /Helvetica-Narrow FMFONTDEFINE
+6 1 /Symbol FMFONTDEFINE
+7 0 /Helvetica-Narrow-Oblique FMFONTDEFINE
+32 FMFILLS
+0 0 FMFILL
+1 0.1 FMFILL
+2 0.3 FMFILL
+3 0.5 FMFILL
+4 0.7 FMFILL
+5 0.9 FMFILL
+6 0.97 FMFILL
+7 1 FMFILL
+8 <0f1e3c78f0e1c387> FMFILL
+9 <0f87c3e1f0783c1e> FMFILL
+10 <cccccccccccccccc> FMFILL
+11 <ffff0000ffff0000> FMFILL
+12 <8142241818244281> FMFILL
+13 <03060c183060c081> FMFILL
+14 <8040201008040201> FMFILL
+16 1 FMFILL
+17 0.9 FMFILL
+18 0.7 FMFILL
+19 0.5 FMFILL
+20 0.3 FMFILL
+21 0.1 FMFILL
+22 0.03 FMFILL
+23 0 FMFILL
+24 <f0e1c3870f1e3c78> FMFILL
+25 <f0783c1e0f87c3e1> FMFILL
+26 <3333333333333333> FMFILL
+27 <0000ffff0000ffff> FMFILL
+28 <7ebddbe7e7dbbd7e> FMFILL
+29 <fcf9f3e7cf9f3f7e> FMFILL
+30 <7fbfdfeff7fbfdfe> FMFILL
+%%EndSetup
+%%Page: "1" 1
+%%BeginPaperSize: Letter
+%%EndPaperSize
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+[ 1 0.25 1 0.25 0 0.5 0]
+[ 0 1 0.67 0.28 0.72 0 0.05]
+ 9 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+J
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(DOSS: a Dylan Object Storage System) 72 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(February 24, 1995) 276.56 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(1) 536 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 24 Q
+(DOSS: a Dylan Object Storage System) 118.34 695 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 12 Q
+(Eliot Miranda) 269.5 670.29 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(The Harlequin Gr) 249.76 654.29 T
+(oup) 342.89 654.29 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 16 Q
+(1.  Intr) 72 608.91 T
+(oduction) 119.26 608.91 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(The) 72 578.86 T
+1 F
+(Dylan Object Storage System) 93.66 578.86 T
+0 F
+( \050or) 243.97 578.86 T
+1 F
+(DOSS) 263.96 578.86 T
+0 F
+( for the lazy\051 is a simple mechanism for storing) 295.31 578.86 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(arbitrary objects. The DOSS) 72 564.86 T
+1 0.25 1 0.25 0 0.5 0 K
+2 F
+1 0.25 1 0.25 0 0.5 0 K
+(dumper) 211.64 564.86 T
+0 0 0 1 0 0 0 K
+0 F
+0 0 0 1 0 0 0 K
+( traverses a graph of objects and encodes the objects as a) 248.3 564.86 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(sequence of bytes. These bytes are later interpreted by the DOSS) 72 550.86 T
+1 0.25 1 0.25 0 0.5 0 K
+2 F
+1 0.25 1 0.25 0 0.5 0 K
+(loader) 386.59 550.86 T
+0 0 0 1 0 0 0 K
+0 F
+0 0 0 1 0 0 0 K
+( which reconstructs an) 417.92 550.86 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(isomorphic object-graph in which cyclic structures and shared references are preserved. The) 72 536.86 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+-0.45 (sequence of bytes can be stored in a \336le, providing a simple persistent object-storage model. Since) 72 522.86 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(the loader constructs a) 72 508.86 T
+0 1 0 0 1 0 1 K
+3 F
+0 1 0 0 1 0 1 K
+(new) 182.64 508.86 T
+0 0 0 1 0 0 0 K
+0 F
+0 0 0 1 0 0 0 K
+( object-graph the system does not preserve object-identity) 202.64 508.86 T
+(, and hence) 479.48 508.86 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(is inferior to an object-oriented database. However) 72 494.86 T
+(, for many applications it is suf) 315.12 494.86 T
+(\336cient means) 463.9 494.86 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(for saving graphs of objects produced by one Dylan program which are to be used by a subse-) 72 480.86 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+-0.38 (quent run of a \050potentially dif) 72 466.86 P
+-0.38 (ferent\051 Dylan program. DOSS provides ways to control what slots in) 211.54 466.86 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+-0.38 (objects should be stored, and to decide what objects should be stored by reference \050e.g. classes are) 72 452.86 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(typically not stored as a structure but as a name\051.) 72 438.86 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 16 Q
+(2.  Concepts) 72 395.48 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(DOSS is a simple mechanism for storing arbitrary Dylan objects that need to persist across pro-) 72 365.43 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(gram executions. It is similar to a number of Object-Storage Systems \050OSSs\051 found in other) 72 351.43 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Object-Oriented environments, such as Binary Object Storage System \050BOSS\051 in Smalltalk-80,) 72 337.43 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(\322pickles\323 in Modula-3, and F) 72 323.43 T
+(ASt Load \050F) 211.43 323.43 T
+(ASL\051 in Common Lisp. The problem these systems) 270.54 323.43 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(\050including DOSS\051 solve is to traverse a possibly cyclic graph of objects and produce a stream of) 72 309.43 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(bytes which encodes this graph in such a way that a structurally identical graph of objects can be) 72 295.43 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(built by interpreting the byte stream.) 72 281.43 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 14 Q
+(2.1  The Basic Algorithm) 72 231.38 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(The basic storage algorithm is as follows. Starting from a root object, a graph of objects is tra-) 72 202 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(versed. Each time a newly-encountered object is found it is assigned an identi\336er) 72 188 T
+(, and a decision) 460.45 188 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(is made as to whether the object should be traversed \050and later reconstructed\051 or referenced \050and) 72 174 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(later looked up\051. If the object is to be traversed then bytecodes that encode suf) 72 160 T
+(\336cient information) 446.7 160 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(to instantiate an analogous object are output. The bytecodes typically encode the object\325) 72 146 T
+(s identi-) 494.27 146 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(\336er) 72 132 T
+(, class, slots, and the number of repeated slots \050e.g. the number of elements in a vector\051. The) 87.52 132 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(traverse then continues with the object\325) 72 118 T
+(s slots and repeated slots, appending encodings of the) 260.3 118 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(objects contained in these slots. If the object is to be referenced then bytecodes encoding its iden-) 72 104 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(ti\336er and name are output. When the traverse encounters an object already seen bytecodes encod-) 72 90 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(ing the identi\336er assigned that object are output and the traverse of the object is not repeated.) 72 76 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "1" 1
+%%Page: "2" 2
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+[ 1 0.25 1 0.25 0 0.5 0]
+[ 0 1 0.67 0.28 0.72 0 0.05]
+ 9 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(DOSS: a Dylan Object Storage System) 72 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(February 24, 1995) 276.56 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(2) 536 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(Certain objects don\325) 72 703 T
+(t have a slot-like representation, e.g. immediate values such as integers and) 169.1 703 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(characters. These objects values are appropriately encoded.) 72 689 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(The basic reconstruction algorithm is to interpret the byte stream, instantiating objects when indi-) 72 663 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(cated by the byte codes, and assigning subsequent objects encoded in the byte stream to the slots) 72 649 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(of instantiated objects. Referenced objects are looked up in appropriate directories. By maintain-) 72 635 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(ing a table from identi\336ers to objects, references to previously instantiated or referenced objects) 72 621 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(can be resolved by indexing the table. At the end of the reconstruction algorithm a new graph of) 72 607 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(objects has been built, isomorphic to the object graph originally traversed, in which cyclic struc-) 72 593 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(ture and shared references are preserved.) 72 579 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 14 Q
+(2.2  Necessary and/or Useful Extensions) 72 531.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(There are a number of elaborations that can be made to the dumping system to make it more use-) 72 505 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(ful:) 72 491 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 F
+(\245) 85.5 471 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 F
+(being able to specify that only a subset of an object\325s slots are saved. e.g. an object may) 99 471 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+-0.31 (cache information in a slot. Not saving that slot may save space in the graph dump, and time) 99 457 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(during loading and dumping.) 99 443 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 F
+(\245) 85.5 423 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 F
+(being able to substitute a specific value for a slot during dumping. e.g. a file accessor hold-) 99 423 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(ing a file descriptor in a slot. When the file accessor is reconstructed, possibly in another) 99 409 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(program, the file is logically closed. The value of its file descriptor slot should not be an) 99 395 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(obsolete file descriptor, but rather a sensible invalid value.) 99 381 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 F
+(\245) 85.5 361 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 F
+-0.01 (being able to specify that certain ordinary objects \050not just classes\051 are to be stored by refer-) 99 361 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+-0.04 (ence. e.g. a structured graphic object may contain \050references to\051 fonts. A naive traversal of) 99 347 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(the object would include the fonts in the dump. More appropriate would be to store the) 99 333 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+-0.11 (names of the fonts in the dump, and on loading, look up those names in e.g. a font directory.) 99 319 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(An object-oriented design that allows the programmer such \336ne-grained control is to split the) 72 293 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(dumping process between a) 72 279 T
+1 0.25 1 0.25 0 0.5 0 K
+2 F
+1 0.25 1 0.25 0 0.5 0 K
+(dumper) 207.97 279 T
+0 0 0 1 0 0 0 K
+0 F
+0 0 0 1 0 0 0 K
+( object whose job it is to traverse the object graph, maintain) 244.63 279 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+-0.25 (object identi\336ers, and produce the byte stream, and a) 72 265 P
+1 0.25 1 0.25 0 0.5 0 K
+2 F
+1 0.25 1 0.25 0 0.5 0 K
+-0.25 (policy) 325.99 265 P
+0 0 0 1 0 0 0 K
+0 F
+0 0 0 1 0 0 0 K
+-0.25 ( object whose job it is to decide which) 355.31 265 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(mechanism to use for objects, which to store by reference, what slots to be dumped etc. The) 72 251 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(DOSS system uses this design.) 72 237 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(There are a number of facilities that are necessary during object graph reconstruction, without) 72 211 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(which, OSSs have limited use.) 72 197 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 F
+(\245) 85.5 177 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 F
+(to allow post-processing on reconstructed objects after the construction process. For exam-) 99 177 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(ple, hash tables may need to be rehashed after reconstruction. It is occasionally impossible) 99 163 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+-0.4 (to hash elements into a table during reconstruction because the hash function depends on the) 99 149 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(structure of the object being added. In the presence of circularities this hash value could) 99 135 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(only be computable after all objects have been reconstructed.) 99 121 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "2" 2
+%%Page: "3" 3
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+[ 1 0.25 1 0.25 0 0.5 0]
+[ 0 1 0.67 0.28 0.72 0 0.05]
+ 9 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(DOSS: a Dylan Object Storage System) 72 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(February 24, 1995) 276.56 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(3) 536 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 12 Q
+(\245) 85.5 703 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 F
+-0.27 (to allow an object to be reconstructed even though its class definition is different in the load-) 99 703 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(ing system to that in the dumping system. The loader should be able to ignore values for) 99 689 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(non-existent slots, and supply defaults for un-stored slots.) 99 675 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 F
+(\245) 85.5 655 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 F
+(to allow an object to be reconstructed as the result of evaluating an arbitrary expression. In) 99 655 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(some systems first-class objects such as closures may not be constructed via normal instan-) 99 641 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(tiation and slot assignment, but may be built from appropriate primitives such as curry &) 99 627 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(compose.) 99 613 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 14 Q
+(2.3  Dylan-Speci\336c Object Storage) 72 565.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(There are three areas of the algorithm speci\336c to Dylan, object structure, object references, and) 72 539 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(object identity) 72 525 T
+(.) 140.22 525 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Firstly) 72 499 T
+(, a Dylan object\325) 102.56 499 T
+(s structure can be thought of as the set of its instance-allocated slots.) 181.88 499 T
+0 0 0 1 0 0 0 K
+1 0.25 1 0.25 0 0.5 0 K
+2 F
+1 0.25 1 0.25 0 0.5 0 K
+-0.06 (Named) 72 485 P
+0 0 0 1 0 0 0 K
+0 F
+0 0 0 1 0 0 0 K
+-0.06 ( slots are accessed through getter and setter generic functions.) 106 485 P
+1 0.25 1 0.25 0 0.5 0 K
+2 F
+1 0.25 1 0.25 0 0.5 0 K
+-0.06 (Repeated) 404.96 485 P
+0 0 0 1 0 0 0 K
+0 F
+0 0 0 1 0 0 0 K
+-0.06 ( slots are accessed) 449.61 485 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(via integer indices using the element and element-setter generic functions. Currently only named) 72 471 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(slots can be unbound \050repeated slots being initialised with some default \336ll value\051.) 72 457 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(DOSS lets the client control object dumping via its slots by allowing the client to specify which) 72 431 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+-0.06 (slots are to be dumped \050although a default is provided\051, see section 3.2.1. DOSS allows the client) 72 417 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+-0.15 (to control the contents of slots to be dumped by overriding the default slot access through getters,) 72 403 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(and by handling unbound slots, see section 3.2.2.) 72 389 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Secondly) 72 363 T
+(, Dylan some objects are named \050and hence made potentially globally accessible\051) 115.88 363 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+-0.33 (through module variables. A module variable has a unique identi\336er string within a module, and a) 72 349 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(module has a unique name within a uniquely named library) 72 335 T
+(. So DOSS identi\336es a module varia-) 356.18 335 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(ble by the triple \050) 72 321 T
+0 1 0 0 1 0 1 K
+3 F
+0 1 0 0 1 0 1 K
+(module variable name) 154.66 321 T
+0 0 0 1 0 0 0 K
+0 F
+0 0 0 1 0 0 0 K
+(,) 264.66 321 T
+0 1 0 0 1 0 1 K
+3 F
+0 1 0 0 1 0 1 K
+(module name) 270.66 321 T
+0 0 0 1 0 0 0 K
+0 F
+0 0 0 1 0 0 0 K
+(,) 337.67 321 T
+0 1 0 0 1 0 1 K
+3 F
+0 1 0 0 1 0 1 K
+(library name) 343.67 321 T
+0 0 0 1 0 0 0 K
+0 F
+0 0 0 1 0 0 0 K
+(\051. DOSS provides facilities) 407.34 321 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(to look up objects in the set of module variables and allows the client to override the default) 72 307 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(encoding of) 72 293 T
+0 1 0 0 1 0 1 K
+3 F
+0 1 0 0 1 0 1 K
+(module variable name) 131.99 293 T
+0 0 0 1 0 0 0 K
+0 F
+0 0 0 1 0 0 0 K
+(, see section 3.2.4.) 241.99 293 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+-0.44 (Lastly) 72 267 P
+-0.44 (, although an OSS does not preserve object identity \050an OSS is essentially a graph) 101.22 267 P
+1 0.25 1 0.25 0 0.5 0 K
+2 F
+1 0.25 1 0.25 0 0.5 0 K
+-0.44 (copier) 490.55 267 P
+0 0 0 1 0 0 0 K
+0 F
+0 0 0 1 0 0 0 K
+-0.44 (\051, it) 521.22 267 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(does preserve object identity) 72 253 T
+0 1 0 0 1 0 1 K
+3 F
+0 1 0 0 1 0 1 K
+(within) 212.64 253 T
+0 0 0 1 0 0 0 K
+0 F
+0 0 0 1 0 0 0 K
+( an object graph. That is, any pair of references within the) 244 253 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(graph to objects which are) 72 239 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(id?) 201.64 239 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( will reference objects that are) 215.17 239 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(id?) 363.11 239 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( on reconstruction. The DOSS) 376.64 239 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(dumper is however free to dump objects the Dylan language considers computationally equiva-) 72 225 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(lent) 72 211 T
+0 9.6 Q
+(1) 90 215.8 T
+0 12 Q
+( in any way that permits reconstruction of a computationally equivalent object. So instances) 94.8 211 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+-0.24 (of) 72 197 P
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+-0.2 (<character>) 84.76 197 P
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+-0.24 (,) 135.91 197 P
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+-0.2 (<integer>) 141.67 197 P
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+-0.24 ( and) 182.28 197 P
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+-0.2 (<float>) 205.13 197 P
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+-0.24 ( are stored by value. On reconstruction the bytes are interpreted) 234.71 197 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(to re-compute an equivalent object.) 72 183 T
+0 0 0 1 0 0 0 K
+72 87 540 107 C
+0 0 0 1 0 0 0 K
+72 95 204 95 2 L
+0.25 H
+2 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 0 0 1 0 0 0 K
+0 9 612 783 C
+0 0 0 1 0 0 0 K
+0 10 Q
+0 X
+0 0 0 1 0 0 0 K
+(1.  see == in the Dylan Interim Reference Manual, p 39.) 72 80.33 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "3" 3
+%%Page: "4" 4
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+[ 1 0.25 1 0.25 0 0.5 0]
+[ 0 1 0.67 0.28 0.72 0 0.05]
+ 9 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(DOSS: a Dylan Object Storage System) 72 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(February 24, 1995) 276.56 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(4) 536 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 16 Q
+(3.  The Client Interface) 72 700.33 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 14 Q
+(3.1  Basic Dumping and Loading of Objects) 72 667.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(T) 72 641 T
+(o dump an object one instantiates a) 78.49 641 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<doss-dumper>) 250.14 641 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( with an appropriate) 317.81 641 T
+0 1 0 0 1 0 1 K
+3 F
+0 1 0 0 1 0 1 K
+(binary) 417.12 641 T
+0 0 0 1 0 0 0 K
+0 F
+0 0 0 1 0 0 0 K
+( stream and) 449.13 641 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(optional policy and then uses) 72 627 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(store-object) 214.99 627 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(, e.g.:) 266.61 627 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+5 11 Q
+0 1 0.67 0.28 0.72 0 0.05 K
+(let my-\336le = write-stream-over\050as\050<pathname>,\323an-object.doss\323\051, element-type: #\323byte\323\051;) 90 602.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(let dumper = make\050<doss-dumper>, stream: my-\336le\051;) 90 589.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(store-object\050an-object,dumper\051;) 90 563.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(close\050my-\336le\051) 90 550.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(T) 72 525 T
+(o load an object one instantiates a) 78.49 525 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<doss-loader>) 243.47 525 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( with an appropriate stream and then uses) 305.13 525 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(fetch-) 507.09 525 T
+0 0 0 1 0 0 0 K
+1 1 0 0 0 0 1 K
+(object) 72 511 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(:) 98.57 511 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+5 11 Q
+0 1 0.67 0.28 0.72 0 0.05 K
+(let my-\336le = read-stream-over\050as\050<pathname>,\323an-object.doss\323\051, element-type: #\323byte\323\051;) 90 486.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(let loader = make\050<doss-loader>, stream: my-\336le\051;) 90 473.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(let object = loader) 90 460.67 T
+(.fetch-object;) 160.96 460.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(close\050my-\336le\051;) 90 434.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(object) 90 421.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(There is no need for a client to write any code for their objects to make this work, e.g. no equiva-) 72 396 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(lent of CLOS\325) 72 382 T
+(s make-load-form. The default mechanism is to dump information identifying an) 140 382 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+-0.08 (object\325) 72 368 P
+-0.08 (s class and slot setters, and then to dump each of the objects in its slots. However there are) 104.66 368 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(facilities for overriding the default mechanism.) 72 354 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 14 Q
+(3.2  Altering the Default Dumping Behaviour) 72 306.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(The following sections explain how to alter DOSS\325) 72 280 T
+(s default dumping behaviour for speci\336c) 317.65 280 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(objects through the use of policy objects. Clients using such facilities in the LispW) 72 266 T
+(orks Dylan) 469.02 266 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(emulator should be aware of the caveats in section 5.1, DOSS and the Emulator. The caveats are) 72 252 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(minor and boil down to specialising) 72 238 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<emulator-doss-policy>) 247.33 238 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( instead of) 349.09 238 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<basic-doss-policy>) 402.08 238 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(.) 488.82 238 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 14 Q
+(3.2.1  Contr) 72 206.67 T
+(olling Slots to be Stor) 142.52 206.67 T
+(ed) 269.83 206.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(DOSS uses the method) 72 179 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(doss-dumpable-slots) 186 179 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( to choose the slots to be traversed \050and hence, the) 276.72 179 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(objects referenced by those slots to be dumped\051 during dumping. The method returns a sequence) 72 165 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "4" 4
+%%Page: "5" 5
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+[ 1 0.25 1 0.25 0 0.5 0]
+[ 0 1 0.67 0.28 0.72 0 0.05]
+ 9 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(DOSS: a Dylan Object Storage System) 72 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(February 24, 1995) 276.56 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(5) 536 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+-0.05 (and slots are dumped in the order de\336ned by that sequence. Note that the method specialises on a) 72 703 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(policy object. The default method returns all an object\325) 72 689 T
+(s instance-allocated slots:) 335.63 689 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+5 11 Q
+0 1 0.67 0.28 0.72 0 0.05 K
+(de\336ne method doss-dumpable-slots \050a-class :: <class>, dp :: <doss-policy>\051) 90 664.67 T
+6 12 Q
+(\336) 394.33 664.67 T
+5 11 Q
+( s :: <sequence>;) 406.17 664.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(choose\050) 108 651.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(method \050slot-descriptor\051 slot-descriptor) 144 651.67 T
+(.allocation == #\323instance\323 end,) 297.89 651.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(a-class.slot-descriptors) 144 638.67 T
+5 8.8 Q
+(1) 236.22 643.07 T
+5 11 Q
+(\051) 240.24 638.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(end) 90 625.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(A client can easily \336lter out unwanted slots from the default set, e.g.) 72 600 T
+0 9.6 Q
+(2) 399.62 604.8 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+5 11 Q
+0 1 0.67 0.28 0.72 0 0.05 K
+(de\336ne method doss-dumpable-slots \050a-class :: <my-class>, dp :: <doss-policy>\051) 90 575.67 T
+6 12 Q
+(\336) 409.35 575.67 T
+5 11 Q
+( s :: <sequence>) 421.2 575.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(choose\050) 108 562.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(method \050slot-descriptor\051 slot-descriptor) 144 562.67 T
+(.getter ~== cached-info end,) 297.89 562.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(next-method\050\051\051) 144 549.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(end) 90 536.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(Note that this information is cached by the dumper) 72 511 T
+(, so) 315.49 511 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(doss-dumpable-slots) 335.16 511 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( is called on a class the) 425.88 511 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(\336rst time an instance of that class is encountered during dumping,) 72 497 T
+0 1 0 0 1 0 1 K
+3 F
+0 1 0 0 1 0 1 K
+(not) 390.64 497 T
+0 0 0 1 0 0 0 K
+0 F
+0 0 0 1 0 0 0 K
+( every time an instance of) 406.64 497 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(the class is dumped.) 72 483 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+-0.15 (Some classes have integer) 72 457 P
+-0.15 (-indexable slots \050e.g.) 196.95 457 P
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+-0.13 (<vector>) 299.48 457 P
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+-0.15 ( &) 337.09 457 P
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+-0.13 (<string>) 352.12 457 P
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+-0.15 (\051. These slots we term) 387.71 457 P
+1 0.25 1 0.25 0 0.5 0 K
+2 F
+1 0.25 1 0.25 0 0.5 0 K
+-0.15 (r) 495.61 457 P
+-0.15 (epeated) 499.83 457 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 F
+0 0 0 1 0 0 0 K
+(slots. At the moment Dylan has no re\337ective facilities for dealing with repeated slots. So DOSS) 72 443 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(uses a method) 72 429 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(has-repeated-slots?) 142.99 429 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( to identify the classes that have such slots. Currently there\325) 228.7 429 T
+(s no) 514.34 429 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(\336ne-grain control over repeated slots \050such as being able to specify a sub-range of the valid indi-) 72 415 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(ces\051. Simply note that if you hack-up a class with repeated slots it must return true from) 72 401 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(has-) 495.95 401 T
+0 0 0 1 0 0 0 K
+1 1 0 0 0 0 1 K
+(repeated-slots?) 72 387 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( if DOSS is to store the contents of its instances\325 repeated slots, e.g.:) 139.17 387 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+5 11 Q
+0 1 0.67 0.28 0.72 0 0.05 K
+(de\336ne method has-repeated-slots? \050a-class :: <class>\051) 90 362.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+6 12 Q
+(\336) 342 362.67 T
+5 11 Q
+( well? :: <boolean>) 353.84 362.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(#f) 450 362.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(end method;) 468 362.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(de\336ne method has-repeated-slots? \050class-string == <string>\051) 90 349.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+6 12 Q
+(\336) 342 349.67 T
+5 11 Q
+(well? :: <boolean>;) 356.84 349.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(#t) 450 349.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(end method;) 468 349.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(de\336ne method has-repeated-slots? \050class-vector == <vector>\051) 90 336.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+6 12 Q
+(\336) 342 336.67 T
+5 11 Q
+(well? :: <boolean>;) 356.84 336.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(#t) 450 336.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(end method;) 468 336.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(// etc....) 90 323.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(de\336ne method number-of-repeated-slots \050seq == <sequence>\051) 90 310.67 T
+6 12 Q
+(\336) 341.71 310.67 T
+5 11 Q
+(n :: <integer>;) 356.56 310.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(seq.size) 432 310.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(end method;) 468 310.67 T
+0 0 0 1 0 0 0 K
+72 126 540 146 C
+0 0 0 1 0 0 0 K
+72 134 204 134 2 L
+0.25 H
+2 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 0 0 1 0 0 0 K
+0 9 612 783 C
+0 0 0 1 0 0 0 K
+0 10 Q
+0 X
+0 0 0 1 0 0 0 K
+-0.02 (1.  The DIRM does not include slot descriptors. Some analogous mechanism is required to support the default imple-) 72 119.33 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(mentation of doss-dumpable-slots.) 72 107.33 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(2.  A client can supply an explicit slot sequence, but this practice is error prone. If slots are added to the class de\336ni-) 72 92.33 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(tion it is easy to for) 72 80.33 T
+(get to change the doss-dumpable-slots method to supply the new slots.) 149.32 80.33 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "5" 5
+%%Page: "6" 6
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+[ 1 0.25 1 0.25 0 0.5 0]
+[ 0 1 0.67 0.28 0.72 0 0.05]
+ 9 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(DOSS: a Dylan Object Storage System) 72 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(February 24, 1995) 276.56 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(6) 536 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 14 Q
+(3.2.2  Contr) 72 701.67 T
+(olling the Objects Stor) 142.52 701.67 T
+(ed for Slots) 276.43 701.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(DOSS uses the method) 72 673.73 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(doss-slot-value) 186 673.73 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( to get the object to be stored for a particular slot. The) 252.16 673.73 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(default behaviour is to return the value in that slot:) 72 659.73 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+5 11 Q
+0 1 0.67 0.28 0.72 0 0.05 K
+(de\336ne method doss-slot-value \050getter :: <function>, obj, dd :: <doss-dumper>\051) 90 635.12 T
+6 12 Q
+(\336) 401.88 635.12 T
+5 11 Q
+( o :: <object>;) 413.73 635.12 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(if \050slot-initialized?\050getter) 108 622.12 T
+(,obj\051\051) 202.74 622.12 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(getter\050obj\051) 126 609.12 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(else) 108 596.12 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(dd.unbound-proxy) 126 583.12 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(end) 108 570.12 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(end method) 90 557.12 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(The method can be specialised to provide speci\336c values for speci\336c objects. E.g. an) 72 531.18 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<external-) 480.92 531.18 T
+0 0 0 1 0 0 0 K
+1 1 0 0 0 0 1 K
+(stream>) 72 517.18 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( is a stream with some connection to the outside world. When it is dumped it needs to be) 106.85 517.18 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(dumped in a closed state \050since the connection to the outside world won\325) 72 503.18 T
+(t necessarily have been) 421.07 503.18 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+-0.02 (made when the) 72 489.18 P
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+-0.02 (<external-stream>) 147.58 489.18 P
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+-0.02 ( is loaded\051. It has a slot) 225.3 489.18 P
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+-0.02 (open?) 339.13 489.18 P
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+-0.02 ( containing a \337ag,) 366.19 489.18 P
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+-0.02 (#t) 455.1 489.18 P
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+-0.02 ( if the stream is) 463.12 489.18 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(open, and) 72 475.18 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(#f) 121.66 475.18 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( if closed. Here is its doss-slot-value method which arranges that the slot is always) 129.68 475.18 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(dumped with a value of) 72 461.18 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(#f) 188.32 461.18 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(:) 196.34 461.18 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+5 11 Q
+0 1 0.67 0.28 0.72 0 0.05 K
+(de\336ne method doss-slot-value \050getter == open?, obj :: <external-stream>, dd :: <doss-dumper>\051) 90 436.58 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+6 12 Q
+(\336) 162 423.58 T
+5 11 Q
+( closed :: <boolean>;) 173.84 423.58 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(#f) 108 410.58 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(end method) 90 397.58 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(Unbound slots are handled by DOSS substituting a special marker for unbound slots,) 72 371.64 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(a-doss-) 482.64 371.64 T
+0 0 0 1 0 0 0 K
+1 1 0 0 0 0 1 K
+(dumper.unbound-proxy) 72 357.64 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(, which the DOSS loader interprets appropriately) 172.95 357.64 T
+(. A client is free to use this) 407.13 357.64 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(value for any named slot, e.g.) 72 343.64 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+5 11 Q
+0 1 0.67 0.28 0.72 0 0.05 K
+(de\336ne method doss-slot-value \050getter == \336le-descriptor) 90 319.03 T
+(, obj :: <external-\336le-accessor>, dd :: <doss-dumper>\051) 308.1 319.03 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+6 12 Q
+(\336) 162 306.03 T
+5 11 Q
+( unbound :: <object>;) 173.84 306.03 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(dd.unbound-proxy) 108 293.03 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(end method) 90 280.03 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(DOSS allows one to control the values stored for repeated slots through the) 72 254.09 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(doss-repeated-slot-ele-) 436.96 254.09 T
+0 0 0 1 0 0 0 K
+1 1 0 0 0 0 1 K
+(ment method) 72 240.09 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(, which defaults to a call of) 128.63 240.09 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(element) 261.94 240.09 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(:) 296.02 240.09 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+5 11 Q
+0 1 0.67 0.28 0.72 0 0.05 K
+(de\336ne method doss-repeated-slot-element \050obj, i :: <integer>, dd :: <doss-dumper>\051) 90 215.48 T
+6 12 Q
+(\336) 425.94 215.48 T
+5 11 Q
+( o :: <object>;) 437.78 215.48 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(obj[i]) 108 202.48 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(end method;) 90 189.48 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(Note that if you want to control slot values during dumping on the basis of the policy you\325re) 72 163.55 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(using, you can do so since the dumper holds onto the current policy in its policy slot.) 72 149.55 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 14 Q
+(3.2.3  Using Policy Objects) 72 117.94 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+-0.13 (A policy object decides which objects are to be dumped specially \050i.e. not dumped via the default) 72 90 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(mechanism of dumping information identifying an object\325) 72 76 T
+(s class and slot setters, and then dump-) 350.65 76 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "6" 6
+%%Page: "7" 7
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+[ 1 0.25 1 0.25 0 0.5 0]
+[ 0 1 0.67 0.28 0.72 0 0.05]
+ 9 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(DOSS: a Dylan Object Storage System) 72 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(February 24, 1995) 276.56 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(7) 536 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+-0.11 (ing each of the objects in its slots\051 and how) 72 703 P
+-0.11 (.) 277.85 703 P
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+-0.09 (<basic-doss-policy>) 283.74 703 P
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+-0.11 ( is the default policy used by) 370.48 703 P
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+-0.09 (<doss-) 510.67 703 P
+0 0 0 1 0 0 0 K
+1 1 0 0 0 0 1 K
+(dumper>) 72 689 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(. Each time a DOSS dumper encounters a new object to be stored it allows its policy to) 110.35 689 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+-0.41 (store the object in some special way using) 72 675 P
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+-0.34 (put-specially) 274.06 675 P
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+-0.41 (. If the policy \324decides\325 to store the object in) 328.43 675 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(some way it does so using one of the mechanisms in the) 72 661 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<doss-dumper>) 343.98 661 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( policy protocol, see sec-) 411.65 661 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(tion 6.1.2, and) 72 647 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(put-specially) 144 647 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( returns) 199.14 647 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(#t) 238.47 647 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(. If the policy decides the object is not special) 246.49 647 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(put-specially) 468.79 647 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(returns) 72 633 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(#f) 108.32 633 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( and the dumper uses the default traversing storage mechanism.) 116.34 633 T
+0 0 0 1 0 0 0 K
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<doss-policy>) 72 604 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( and) 132.66 604 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<basic-doss-policy>) 155.99 604 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( provide the following implementations of) 242.73 604 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(put-specially) 448.72 604 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( to) 503.86 604 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+-0.15 (arrange that classes are stored as a module variable name and a sequence of setters, and functions) 72 590 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(are stored as module variable names:) 72 576 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+5 11 Q
+0 1 0.67 0.28 0.72 0 0.05 K
+(de\336ne method put-specially \050obj, policy :: <doss-policy>, dd :: <doss-dumper>\051) 90 548.67 T
+6 12 Q
+(\336) 404.86 548.67 T
+5 11 Q
+( object-dumped? :: <boolean>;) 416.71 548.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(#f) 108 535.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(end method;) 90 522.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(de\336ne method put-specially \050obj :: <function>, policy :: <basic-doss-policy>, dd :: <doss-dumper>\051) 90 496.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+6 12 Q
+(\336) 162 483.67 T
+5 11 Q
+( object-dumped? :: <boolean>;) 173.84 483.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(put-reference\050obj, dd\051;) 108 470.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(#t) 108 457.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(end method;) 90 444.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(de\336ne method put-specially \050obj :: <class>, policy :: <basic-doss-policy>, dd :: <doss-dumper>\051) 90 418.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+6 12 Q
+(\336) 162 405.67 T
+5 11 Q
+( object-dumped? :: <boolean>;) 173.84 405.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(put-class-description\050obj, dd\051;) 108 392.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(#t) 108 379.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(end method;) 90 366.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(By adding) 72 338 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(put-specially) 124.67 338 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( methods to) 179.81 338 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<basic-doss-policy>) 238.82 338 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( or one\325) 325.55 338 T
+(s own subclass of) 362.21 338 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<basic-doss-policy>) 449.53 338 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(one can tailor DOSS\325) 72 324 T
+(s dumping behaviour appropriately) 174.32 324 T
+(.) 341.86 324 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(By splitting the making of policy decisions of) 72 295 T
+(f from the dumping process its possible to dump a) 291.46 295 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(given object graph in two completely dif) 72 281 T
+(ferent ways in the same program. This is done by using) 267.1 281 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+-0.41 (two dif) 72 267 P
+-0.41 (ferent policy objects to mediate each dump respectively) 105.7 267 P
+-0.41 (. Why is this useful? An example is) 369.65 267 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(the dumping of code for the virtual machine. When a piece of code is compiled for the virtual) 72 253 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(machine the actual code vector is dumped in such a way that the code can be loaded into a dylan) 72 239 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+-0.13 (program and executed. Such a process will involve naming variables to conform with the loading) 72 225 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+-0.05 (system. At the same time the code may need to be dumped in a dif) 72 211 P
+-0.05 (ferent form to the derived data-) 389.98 211 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(base.) 72 197 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 14 Q
+(3.2.4  Contr) 72 162.67 T
+(olling the Names Used for Objects Stor) 142.52 162.67 T
+(ed by Refer) 374.79 162.67 T
+(ence) 443.74 162.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(When) 72 132 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(put-reference) 103.66 132 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( or) 161.3 132 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(put-class-description) 177.29 132 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( store an object as a module variable they do so using) 268.52 132 T
+0 0 0 1 0 0 0 K
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(locate-variable-via-policy) 72 118 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( and) 179.79 118 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(encode-variable) 203.12 118 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( from the variable search protocol, see section 6.4. If) 271.8 118 T
+0 0 0 1 0 0 0 K
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+-0.08 (locate-variable-via-policy) 72 104 P
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+-0.09 ( \336nds a module variable referencing an object it calls) 179.79 104 P
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+-0.08 (encode-variable) 436.17 104 P
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+-0.09 ( which) 504.85 104 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(decides how to encode the module variable name. By default) 72 90 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(encode-variable) 367.61 90 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( returns three values,) 436.29 90 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(the module variable name as a symbol, the module name as a symbol, and the library name as) 72 76 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(#f) 525.26 76 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "7" 7
+%%Page: "8" 8
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+[ 1 0.25 1 0.25 0 0.5 0]
+[ 0 1 0.67 0.28 0.72 0 0.05]
+ 9 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(DOSS: a Dylan Object Storage System) 72 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(February 24, 1995) 276.56 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(8) 536 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+-0.09 (\050since libraries are not yet implemented\051. If appropriate one can add methods to) 72 703 P
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+-0.07 (encode-variable) 456.15 703 P
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+-0.09 ( to) 524.83 703 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(provide more compact encodings, see see section 7.2 for an example.) 72 689 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(T) 72 663 T
+(o allow policy objects to rename objects) 78.49 663 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(locate-variable-via-policy) 274.8 663 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( specialises both on the object) 382.59 663 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+-0.17 (being looked-up and the current policy) 72 649 P
+-0.17 (. The default method simply defers to) 256.69 649 P
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+-0.14 (locate-variable) 438.83 649 P
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+-0.17 (, which) 502.01 649 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(examines information on the state-of-play of module variables. By adding methods to) 72 635 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(locate-varia-) 486.29 635 T
+0 0 0 1 0 0 0 K
+1 1 0 0 0 0 1 K
+(ble-via-policy) 72 621 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( that specialise on your own policies you can control the naming of objects as) 129.65 621 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(required.) 72 607 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 14 Q
+(3.3  Dumping and Modularisation) 72 559.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(There is a tension between the module system, which exists to hide information, and DOSS,) 72 533 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(which attempts to ferret it out. Methods such as) 72 519 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(doss-dumpable-slots) 303.31 519 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( and) 394.03 519 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(doss-slot-value) 417.36 519 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( may need) 483.52 519 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+-0.12 (access to potentially un-exported getters and setters. T) 72 505 P
+-0.12 (o cope this one usually needs an extra mod-) 330.96 505 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(ule that imports doss and contains the module-speci\336c doss code \050) 72 491 T
+0 0 0 1 0 0 0 K
+429.96 488.75 389.3 488.75 2 L
+V
+0.5 H
+0 Z
+N
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+429.96 486.75 389.3 486.75 2 L
+V
+N
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(example) 389.3 491 T
+(?\051.) 429.96 491 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 14 Q
+(3.4  Altering the Default Load Behaviour) 72 443.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(The client interface for loading of objects is described above, see section 3.1. Internally DOSS) 72 417 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(loads, or more accurately) 72 403 T
+(, reconstructs objects by one of three mechanisms, looking up a module) 192.52 403 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(variable \050see section 6.1.2) 72 389 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(put-reference) 199.97 389 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(,) 257.61 389 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(put-variable) 263.61 389 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( &) 314.74 389 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(put-class-description) 330.07 389 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(\051, evaluating a function) 421.29 389 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(\050see section 6.1.2) 72 375 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(put-apply) 158.32 375 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(\051, or by instantiation and slot assignment \050see section 6.1.2) 198.91 375 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(put-object) 483.22 375 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(\051.) 526.82 375 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(If this last mechanism is used an object is created rather crudely) 72 361 T
+(, instantiated via) 378.16 361 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(allocate) 460.15 361 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(, which) 493.75 361 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+-0.09 (returns an uninitialized instance, and initialized by applying the setters that were dumped with an) 72 347 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(object\325) 72 333 T
+(s class.) 104.66 333 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(For some objects this approach will not produce a well-formed object. For example, an) 72 307 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<object-) 492.6 307 T
+0 0 0 1 0 0 0 K
+1 1 0 0 0 0 1 K
+(table>) 72 293 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( hashes objects within it according to their identity) 98.32 293 T
+(. Since objects are reconstructed on load-) 340.2 293 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(ing a loaded table\325) 72 279 T
+(s contents will have dif) 160.32 279 T
+(ferent identities and consequently the table\325) 271.43 279 T
+(s contents) 480.4 279 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(will not be correctly hashed. T) 72 265 T
+(o allow objects to correct such reconstruction problems, after all) 217.8 265 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(objects have been loaded the generic function) 72 251 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(post-load-cleanup) 294.28 251 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( is applied to each reconstructed) 371.96 251 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(object. Objects can take whatever action is appropriate within their post-load-cleanup methods.) 72 237 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(post-load-cleanup is applied in reverse order of dumping. For example, the post-load-cleanup) 72 223 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+-0.2 (method on) 72 209 P
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+-0.17 (<hashed-collection>) 125.59 209 P
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+-0.2 ( \050a superclass of) 212.82 209 P
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+-0.17 (<object-table>) 292.64 209 P
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+-0.2 ( and other hashed collections\051 is as fol-) 353.8 209 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(lows:) 72 195 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+5 11 Q
+0 1 0.67 0.28 0.72 0 0.05 K
+(de\336ne method post-load-cleanup \050hash-table :: <hashed-collection>\051) 90 170.67 T
+6 12 Q
+(\336) 365.27 170.67 T
+5 11 Q
+(\050\051;) 380.12 170.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(rehash!\050hash-table\051;) 108 157.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(end method) 90 144.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "8" 8
+%%Page: "9" 9
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+[ 1 0.25 1 0.25 0 0.5 0]
+[ 0 1 0.67 0.28 0.72 0 0.05]
+ 9 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(DOSS: a Dylan Object Storage System) 72 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(February 24, 1995) 276.56 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(9) 536 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 14 Q
+(3.4.1  Using put-apply) 72 701.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(The) 72 672.38 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(put-apply) 93.66 672.38 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( mechanism allows one to substitute for a dumped object the value of an arbitrary) 134.25 672.38 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(function call, evaluated by the loader) 72 658.38 T
+(. For example, consider wanting to dump a font which is) 249.3 658.38 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+-0.35 (available from some external font server) 72 644.38 P
+-0.35 (. One would want to avoid dumping the actual font object) 263.87 644.38 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+-0.21 (because a\051 it will take considerable space in the doss \336le, and b\051 it may already be available in the) 72 630.38 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(loading system. One can use the) 72 616.38 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(put-apply) 229.64 616.38 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( mechanism to e.g. arrange to fetch the font from the) 270.23 616.38 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(font server on loading. Given the following plausible de\336nitions:) 72 602.38 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+5 11 Q
+0 1 0.67 0.28 0.72 0 0.05 K
+(de\336ne class <loadable-font> \050<font>\051 ...) 90 576.42 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(slot font-name :: <string>, ...) 108 563.42 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(de\336ne class <font-dumping-policy> \050<basic-doss-policy>\051 end class;) 90 537.42 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(de\336ne method load-font\050name :: <string>\051) 90 511.42 T
+6 12 Q
+(\336) 258.48 511.42 T
+5 11 Q
+( \050f :: <font>\051; ...) 270.32 511.42 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(we could arrange that a font gets dumped as the result of calling) 72 484.12 T
+0 1 0.67 0.28 0.72 0 0.05 K
+5 11 Q
+0 1 0.67 0.28 0.72 0 0.05 K
+(load-font) 382.27 484.12 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( as follows:) 417.37 484.12 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+5 11 Q
+0 1 0.67 0.28 0.72 0 0.05 K
+(de\336ne method put-specially\050font :: <loadable-font>, policy :: <font-policy>, dd :: <doss-dumper>\051) 90 458.17 T
+6 12 Q
+(\336) 474.09 458.17 T
+5 11 Q
+( <boolean>;) 485.93 458.17 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(put-apply\050font, dd, load-font, font.font-name\051;) 108 445.17 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(#t) 108 432.17 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(end method;) 90 419.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(The font will not be dumped to the \336le. In its stead, the name of the) 72 391.88 T
+0 1 0.67 0.28 0.72 0 0.05 K
+5 11 Q
+0 1 0.67 0.28 0.72 0 0.05 K
+(load-font) 398.64 391.88 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( function \050found via) 433.74 391.88 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(variable search\051 is dumped, along with the font\325) 72 377.88 T
+(s name. On loading,) 301.3 377.88 T
+0 1 0.67 0.28 0.72 0 0.05 K
+5 11 Q
+0 1 0.67 0.28 0.72 0 0.05 K
+(load-font) 400.62 377.88 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( will get called with) 435.72 377.88 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(the font\325) 72 363.88 T
+(s name as its ar) 112.33 363.88 T
+(gument, and the value) 185.44 363.88 T
+0 1 0.67 0.28 0.72 0 0.05 K
+5 11 Q
+0 1 0.67 0.28 0.72 0 0.05 K
+(load-font) 294.42 363.88 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( returns will be substituted in pkace of the) 329.52 363.88 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(font in the reconstructed object-graph.) 72 349.88 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 14 Q
+(3.4.2  Using put-variable) 72 316.92 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(The put-variable mechanism allows one to provide names for objects in the loaded system, for) 72 287.62 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+-0.13 (example for objects that may be unavailable in the dumping system, or for objects that need to be) 72 273.62 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(substituted-for \050ef) 72 259.62 T
+(fectively by renaming\051. Extending the previous example, imagine that the) 158.1 259.62 T
+0 1 0.67 0.28 0.72 0 0.05 K
+5 11 Q
+0 1 0.67 0.28 0.72 0 0.05 K
+(load-) 514.72 259.62 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+-0.15 (font) 72 245.62 P
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+-0.18 ( function is unavailable in the dumping system. One can use the put-variable mechanism, with) 87.05 245.62 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(a proxy object for the function to dump a reference to) 72 231.62 T
+0 1 0.67 0.28 0.72 0 0.05 K
+5 11 Q
+0 1 0.67 0.28 0.72 0 0.05 K
+(load-font) 332.27 231.62 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(, even though it is not present:) 367.37 231.62 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+5 11 Q
+0 1 0.67 0.28 0.72 0 0.05 K
+(de\336ne constant $load-font-proxy = vector\050\051; // unique object as proxy\050could use a class of objects\051;) 90 205.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(de\336ne method put-specially\050font :: <loadable-font>, policy :: <font-policy>, dd :: <doss-dumper>\051) 90 179.67 T
+6 12 Q
+(\336) 474.09 179.67 T
+5 11 Q
+( <boolean>;) 485.93 179.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(put-apply\050font, dd, $load-font-proxy) 108 166.67 T
+(, font.font-name\051; // use proxy in place of function) 247.73 166.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(#t) 108 153.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(end method) 90 140.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(de\336ne method put-specially\050proxy == $load-font-proxy) 90 114.67 T
+(, p :: <font-policy>, dd :: <doss-dumper>\051) 304.93 114.67 T
+6 12 Q
+(\336) 470.4 114.67 T
+5 11 Q
+( <boolean>;) 482.24 114.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(put-variable\050proxy) 108 101.67 T
+(, dd, #\322load-font\323, #\323font-module\323, #\323font-library\323\051; // dump proxy as reference to function) 179.52 101.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(#t) 108 88.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(end method;) 90 75.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "9" 9
+%%Page: "10" 10
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+[ 1 0.25 1 0.25 0 0.5 0]
+[ 0 1 0.67 0.28 0.72 0 0.05]
+ 9 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(DOSS: a Dylan Object Storage System) 72 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(February 24, 1995) 276.56 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(10) 532 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 16 Q
+(4.  DOSS Internals) 72 700.33 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 14 Q
+(4.1  Dumping) 72 666.12 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(to be written - its all straight-forwardly grubby stuf) 72 637.91 T
+(f - you don\325) 317.09 637.91 T
+(t want to know about it anyway -) 373.86 637.91 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(alright, already) 72 623.91 T
+(, go look at the code sweet masochistic fool.) 143.87 623.91 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 14 Q
+(4.2  The Dumper/Policy Maker Split) 72 575.03 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(T) 72 546.82 T
+(o make DOSS more \337exible, mechanism has been separated from policy) 78.49 546.82 T
+(. Essentially the split) 425.99 546.82 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+-0.12 (allows a given network of objects to be dumped in two dif) 72 532.82 P
+-0.12 (ferent ways from the same running pro-) 350.1 532.82 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+-0.38 (gram. If policy were implemented by adding methods to dumpers then dif) 72 518.82 P
+-0.38 (ferent policies could not) 422.21 518.82 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(co-exist in the same program.) 72 504.82 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<doss-dumper>) 217.31 504.82 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( provides the mechanism \050the various ways of dump-) 284.98 504.82 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(ing an object\051 and subclasses of) 72 490.82 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<doss-policy>) 227.3 490.82 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( provide policies \050the choice of mechanism\051. There) 287.97 490.82 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(are currently 4 dumping mechanisms, see <doss-dumper> Policy Protocol, section 6.1.2:) 72 476.82 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 F
+(\245) 85.5 455.27 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 F
+(dump an object as a structure, via) 99 455.27 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(put-object) 262.97 455.27 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(.) 306.56 455.27 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 F
+(\245) 85.5 433.73 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 F
+(dump an object as a module variable reference, via) 99 433.73 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(put-reference) 346.26 433.73 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( and) 403.9 433.73 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(put-variable) 427.23 433.73 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(. A module) 478.36 433.73 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(variable reference is a) 99 419.73 T
+(triple of \050) 207.61 419.73 T
+0 1 0 0 1 0 1 K
+3 F
+0 1 0 0 1 0 1 K
+(module variable name) 252.94 419.73 T
+0 0 0 1 0 0 0 K
+0 F
+0 0 0 1 0 0 0 K
+(,) 362.94 419.73 T
+0 1 0 0 1 0 1 K
+3 F
+0 1 0 0 1 0 1 K
+(module name) 368.94 419.73 T
+0 0 0 1 0 0 0 K
+0 F
+0 0 0 1 0 0 0 K
+(,) 435.95 419.73 T
+0 1 0 0 1 0 1 K
+3 F
+0 1 0 0 1 0 1 K
+(library name) 441.95 419.73 T
+0 0 0 1 0 0 0 K
+0 F
+0 0 0 1 0 0 0 K
+(\051, rep-) 505.62 419.73 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(resented by symbols. If) 99 405.73 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(put-reference) 213.98 405.73 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( is used, this triple is looked up using the V) 271.62 405.73 T
+(ariable) 477.96 405.73 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Search Protocol, section 6.4. If) 99 391.73 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(put-variable) 250.31 391.73 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( is used, the client supplies their own values for) 301.44 391.73 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(\050) 99 377.73 T
+0 1 0 0 1 0 1 K
+3 F
+0 1 0 0 1 0 1 K
+(module variable name) 103 377.73 T
+0 0 0 1 0 0 0 K
+0 F
+0 0 0 1 0 0 0 K
+(,) 213 377.73 T
+0 1 0 0 1 0 1 K
+3 F
+0 1 0 0 1 0 1 K
+(module name) 219 377.73 T
+0 0 0 1 0 0 0 K
+0 F
+0 0 0 1 0 0 0 K
+(,) 286.01 377.73 T
+0 1 0 0 1 0 1 K
+3 F
+0 1 0 0 1 0 1 K
+(library name) 292.01 377.73 T
+0 0 0 1 0 0 0 K
+0 F
+0 0 0 1 0 0 0 K
+(\051. A client can alter the encoding of) 355.68 377.73 T
+0 0 0 1 0 0 0 K
+0 1 0 0 1 0 1 K
+3 F
+0 1 0 0 1 0 1 K
+(module variable name) 99 363.73 T
+0 0 0 1 0 0 0 K
+0 F
+0 0 0 1 0 0 0 K
+( via) 209 363.73 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(encode-variable) 229.67 363.73 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(. Each object in the triple is dumped, most proba-) 298.35 363.73 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(bly using the) 99 349.73 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(put-object) 164 349.73 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( mechanism.) 207.6 349.73 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 F
+(\245) 85.5 328.18 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 F
+(dump an object as a function call via) 99 328.18 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(put-apply) 278.3 328.18 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(. A function call is a function and a sequence) 318.89 328.18 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(of arguments) 99 314.18 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 F
+(\245) 85.5 292.64 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 14 Q
+(4.3  The Bytecodes) 72 243.76 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(DOSS uses a bytecoded language to represent object graphs. Each bytecode is followed by an) 72 215.55 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(arbitrary) 72 201.55 T
+(, possibly empty) 112.54 201.55 T
+(, sequence of bytes that encode the information necessary to reconstruct) 190.76 201.55 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+-0.45 (a given object. DOSS bytecodes can be considered in groups, immediate object encodings, unique) 72 187.55 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(object encodings, value object encodings, generic object encodings, and miscellaneous encod-) 72 173.55 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+-0.38 (ings. T) 72 159.55 P
+-0.38 (o provide a compact representation of integers and characters the bytecode space is divided) 104.11 159.55 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(into quarters. Bytecodes 0 to 63 are used for all encodings except integers and characters. Byte-) 72 145.55 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+-0.22 (codes 64 to 127 are used to encode integers, bytecodes 128 to 191 are used for the characters, and) 72 131.55 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(bytecodes 192 to 255 are reserved for future use. Each bytecode or range of bytecodes is kept in) 72 117.55 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(class slots of <doss-io-manager>:) 72 103.55 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "10" 10
+%%Page: "11" 11
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+[ 1 0.25 1 0.25 0 0.5 0]
+[ 0 1 0.67 0.28 0.72 0 0.05]
+ 9 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(DOSS: a Dylan Object Storage System) 72 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(February 24, 1995) 276.56 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(1) 532.3 43.17 T
+(1) 536 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 14 Q
+(4.3.1  unique object encodings) 72 701.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(Dylan integers, characters, \337oats, and symbols are ef) 72 674 T
+(fectively \322unique\323 objects. At the language) 325.06 674 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+-0.28 (level its impossible to have two of any of these objects) 72 660 P
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+-0.23 (=) 334.55 660 P
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+-0.28 ( to each other but not) 339.82 660 P
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+-0.23 (= =) 442.78 660 P
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+-0.28 ( to each other) 455.59 660 P
+-0.28 (. T) 519.07 660 P
+-0.28 (o) 531.28 660 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(reconstruct these objects DOSS can simply compute them.) 72 646 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Since integers are very common, DOSS tries to provide a compact representation for them For) 72 620 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(simplicity) 72 606 T
+(, characters are represented using the same scheme. As mentioned above bytecodes 64) 119.23 606 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+-0.29 (to 127 are used to encode integers, and bytecodes 128 to 191 are used for the characters. The least) 72 592 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(signi\336cant 6 bits of these bytecodes encodes the number of subsequent bytes, in which the inte-) 72 578 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(ger) 72 564 T
+(\325) 87.77 564 T
+(s value, or the character) 91.1 564 T
+(\325) 205.84 564 T
+(s code, is stored as a little-endian two\325) 209.17 564 T
+(s complement value.) 392.48 564 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+-0.16 (The routine) 72 538 P
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+-0.13 (dump-int\050integer :: <integer>, code :: <integer>, dd :: <doss-dumper>\051) 130.33 538 P
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+-0.16 ( does the work. code is) 427.98 538 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(or) 72 524 T
+(\325ed into the byte count) 82.44 524 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(dump-int) 193.43 524 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( computes for integer) 232.01 524 T
+(, so integers are dumped using the integer) 333.84 524 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(start code \05064\051 dump-int\050dd.integer) 72 510 T
+(-start\051. If integer is zero then the bytecode is zero.) 240.4 510 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+5 11 Q
+0 1 0.67 0.28 0.72 0 0.05 K
+(    0-63 conventional codes for references to slot objects, classes, variables etc) 90 459.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(64-127 integer codes, integer follows #bytes encoded in least 6 bits) 90 446.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(128-191 character codes \050same encoding as integers\051) 90 433.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(192-255 reserved \050for other \050tagged\051 immediate objects) 90 420.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(// codes for \050\051 #t & #f) 90 396.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(constant slot empty-list-code :: <integer>, init-value: 0;) 90 383.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(constant slot true-code       :: <integer>, init-value: 1;) 90 370.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(constant slot false-code      :: <integer>, init-value: 2;) 90 357.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(// next encoded integer is 2's complement integer) 90 333.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(constant slot integer-start   :: <integer>, init-value: 64;) 90 320.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(// next encoded integer is ascii code of a character) 90 296.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(constant slot character-start :: <integer>, init-value: 128;) 90 283.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(// next encoded integer is id of loaded object) 90 259.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(constant slot object-id-code  :: <integer>, init-value: 3;) 90 246.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(// slot to be left unbound) 90 222.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(constant slot unbound-code    :: <integer>, init-value: 4;) 90 209.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(// object id followed by object's de\336nition) 90 185.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(constant slot object-code     :: <integer>, init-value: 5;) 90 172.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "11" 11
+%%Page: "12" 12
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+[ 1 0.25 1 0.25 0 0.5 0]
+[ 0 1 0.67 0.28 0.72 0 0.05]
+ 9 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(DOSS: a Dylan Object Storage System) 72 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(February 24, 1995) 276.56 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(12) 532 43.17 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+5 11 Q
+0 1 0.67 0.28 0.72 0 0.05 K
+(  // encodings of 'variable' references) 90 703.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(constant slot class-code      :: <integer>, init-value: 6;) 90 690.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(constant slot keyword-code    :: <integer>, init-value: 7;) 90 677.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(constant slot symbol-code     :: <integer>, init-value: 8;) 90 664.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(constant slot variable-code   :: <integer>, init-value: 9;) 90 651.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(constant slot string-code     :: <integer>, init-value: 10;) 90 638.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(constant slot apply-code      :: <integer>, init-value: 1) 90 625.67 T
+(1;) 298.44 625.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(  // to \336x the circularity of the void element in tables being used as a key in object-ids) 90 600.02 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(constant slot void-code       :: <integer>, init-value: 12;) 90 587.02 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(  // for "value" objects \050symbols strings\051 that need ids.) 90 561.38 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(constant slot val-obj-id-code :: <integer>, init-value: 13;) 90 548.38 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(  // run-length encoding) 90 522.74 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(constant slot repeat-code     :: <integer>, init-value: 14;) 90 509.74 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(  // specials; pair) 90 484.1 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(constant slot pair-code       :: <integer>, init-value: 15;) 90 471.1 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(  // the various \337oat formats) 90 445.45 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(constant slot \337oat-code      :: <integer>, init-value: 16;) 90 432.45 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(constant slot double-code     :: <integer>, init-value: 17;) 90 419.45 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(constant slot extended-code   :: <integer>, init-value: 18;) 90 406.45 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 14 Q
+0 0 0 1 0 0 0 K
+(4.4  Loading) 72 357.81 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(not done \050need load policies?\051) 72 329.5 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 16 Q
+(5.  Bugs, Limitations and Futur) 72 287.19 T
+(e W) 286.42 287.19 T
+(ork) 312.64 287.19 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 14 Q
+(5.1  DOSS and the Emulator) 72 252.88 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+-0.36 (For pragmatic reasons the emulator Dylan system over LispW) 72 224.57 P
+-0.36 (orks does not implement a seamless) 366.81 224.57 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Dylan object model. In particular) 72 210.57 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 F
+(\245) 85.5 188.93 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 F
+(keywords and symbols differ) 99 188.93 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 F
+(\245) 85.5 167.29 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 F
+(certain Dylan objects are represented by underlying CLOS objects, and hence) 99 167.29 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(allocate) 474.91 167.29 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( and) 508.51 167.29 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(specializers of type) 99 153.29 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<class>) 194.64 153.29 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( don\325t work for these classes.) 227.75 153.29 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 F
+(\245) 85.5 131.64 T
+0 0 0 1 0 0 0 K
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<object-table>) 99 131.64 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(s are implemented in terms of a CLOS equivalent) 160.16 131.64 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(T) 72 104 T
+(o cope with these dif) 78.49 104 T
+(ferences DOSS in the emulator uses some extra classes that override rele-) 178.26 104 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(vant behaviour and attempt to make it appear as if \336les produced by the emulator DOSS are the) 72 90 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(same as that produced by a native Dylan system. The extra classes are) 72 76 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<emulator-doss-dumper>) 411.25 76 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(,) 520.02 76 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "12" 12
+%%Page: "13" 13
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+[ 1 0.25 1 0.25 0 0.5 0]
+[ 0 1 0.67 0.28 0.72 0 0.05]
+ 9 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(DOSS: a Dylan Object Storage System) 72 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(February 24, 1995) 276.56 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(13) 532 43.17 T
+0 0 0 1 0 0 0 K
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<emulator-doss-loader>) 72 703 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(, and) 174.76 703 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<emulator-doss-policy>) 201.09 703 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(. Of these, only) 302.85 703 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<emulator-doss-policy>) 379.51 703 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( is relevant) 481.27 703 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(to users since the other two classes are internal to DOSS) 72 689 T
+0 0 0 1 0 0 0 K
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<emulator-doss-policy>) 72 663 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( inherits from) 173.76 663 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<basic-doss-policy>) 242.09 663 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(, and \336xes problems to do with) 328.82 663 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<class>) 480.16 663 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( spe-) 513.27 663 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(cializers not working for the built-in classes) 72 649 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<simple-object-vector>) 285.64 649 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( and) 384.39 649 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<byte-string>) 407.72 649 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(. If you\325re) 464.87 649 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+-0.25 (working in the emulator then you should arrange that your policies inherit from) 72 635 P
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+-0.21 (<emulator-doss-pol-) 453.05 635 P
+0 0 0 1 0 0 0 K
+1 1 0 0 0 0 1 K
+(icy>) 72 621 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(, and any methods you want to add to) 89.81 621 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<basic-doss-policy>) 272.46 621 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(, should be added to) 359.2 621 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<emulator-doss-) 458.52 621 T
+0 0 0 1 0 0 0 K
+1 1 0 0 0 0 1 K
+(policy>) 72 607 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( instead. The curious are directed to section 7.1, Emulator T) 103.34 607 T
+(ables for the grimy details.) 390.11 607 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 14 Q
+(5.2  Miscellaneous pr) 72 559.67 T
+(oblems) 197.75 559.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(Currently there is no support for \337oats, this will be remedied RSN.) 72 533 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(The system relies on slot-descriptors, which do not appear in the DIRM. Hence the handling of) 72 507 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(slot getters & setters may change at some later date.) 72 493 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Currently there is no generic support for closures. Even though closures are \336rst class objects) 72 467 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(DOSS doesn\325) 72 453 T
+(t know how to traverse them or how to store references to their code.) 137.45 453 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+-0.14 (Although theoretically classes should be storable \050i.e. by traversal\051 it hasn\325) 72 427 P
+-0.14 (t been done in practice.) 428.94 427 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Loading an object which, in the loading system, has lost setters will not work. There needs to be) 72 401 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(an interface whereby the loader can know which setters it should apply) 72 387 T
+(.) 412.14 387 T
+0 0 0 1 0 0 0 K
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(post-load-cleanup) 72 361 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( is applied in reverse order of dumping. If this signi\336cantly dif) 149.68 361 T
+(ferent from leaf-) 448.77 361 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(\336rst then it should be changed.) 72 347 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "13" 13
+%%Page: "14" 14
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+[ 1 0.25 1 0.25 0 0.5 0]
+[ 0 1 0.67 0.28 0.72 0 0.05]
+ 9 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(DOSS: a Dylan Object Storage System) 72 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(February 24, 1995) 276.56 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(14) 532 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 16 Q
+(6.  Appendix A - DOSS Refer) 72 700.33 T
+(ence) 271.26 700.33 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 14 Q
+(6.1  <doss-dumper> Pr) 72 667.67 T
+(otocols) 208.26 667.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(6.1.1  <doss-dumper> Client Pr) 72 635.67 T
+(otocol) 258.82 635.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+4 11 Q
+(make) 72 607.67 T
+7 F
+(class) 97.57 607.67 T
+5 F
+( :: subclass\050<doss-dumper>\051) 118.12 607.67 T
+5 8.8 Q
+(1) 232.42 612.07 T
+5 11 Q
+( #key) 236.44 607.67 T
+7 F
+(policy) 260.5 607.67 T
+5 F
+( :: <doss-policy>) 283.56 607.67 T
+7 F
+(stream) 351.75 607.67 T
+5 F
+( :: <writable-positionable-stream>) 379.32 607.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+6 12 Q
+(\336) 108 594.67 T
+7 11 Q
+(dd) 122.35 594.67 T
+5 F
+( :: <doss-dumper>) 132.38 594.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+([Method]) 504 594.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(Instantiates a) 90 575 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<doss-dumper>) 155.99 575 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( with optional) 223.66 575 T
+2 F
+(policy) 293.33 575 T
+0 F
+( and) 322.66 575 T
+2 F
+(str) 345.99 575 T
+(eam) 358.22 575 T
+0 F
+( objects. If) 378.21 575 T
+2 F
+(policy) 432.2 575 T
+0 F
+( is not supplied) 461.52 575 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(it defaults to an instance of) 90 561 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<basic-doss-policy>) 222.65 561 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(. There is no default for) 309.38 561 T
+2 F
+(str) 425.69 561 T
+(eam) 437.92 561 T
+0 F
+(. If supplied,) 457.91 561 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+2 F
+(str) 90 547 T
+(eam) 102.23 547 T
+0 F
+( must be a general instance of) 122.22 547 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<writable-positionable-stream>) 267.85 547 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( and should have an) 401.19 547 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(element-) 499.51 547 T
+0 0 0 1 0 0 0 K
+1 1 0 0 0 0 1 K
+(type:) 90 533 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( of) 111.55 533 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(#\323byte\323) 127.54 533 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(.) 160.13 533 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+4 11 Q
+(store-object) 72 505.67 T
+7 F
+(object) 126.13 505.67 T
+(dd) 152.71 505.67 T
+5 F
+( :: <doss-dumper>) 162.74 505.67 T
+6 12 Q
+(\336) 238.45 505.67 T
+7 11 Q
+(object) 252.8 505.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+5 F
+([Method]) 504 505.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(Causes) 90 486 T
+2 F
+(dd) 127 486 T
+0 F
+( to store a description of) 139 486 T
+2 F
+(object) 258.31 486 T
+0 F
+( in DOSS format on) 287.64 486 T
+2 F
+(dd) 386.64 486 T
+0 F
+(\325) 398.64 486 T
+(s stream, preceded by a) 401.98 486 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(standard DOSS header) 90 472 T
+(. A convenience function equivalent to) 198.65 472 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(put-header\050dd\051; put-object\050dd\051;) 387.61 472 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(policy) 72 444.67 T
+7 F
+(dd) 100.58 444.67 T
+5 F
+( :: <doss-dumper>) 110.61 444.67 T
+6 12 Q
+(\336) 186.32 444.67 T
+7 11 Q
+(policy) 200.68 444.67 T
+5 F
+( :: <doss-policy>) 223.73 444.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+([Method]) 504 444.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(returns) 90 425 T
+2 F
+(dd) 126.32 425 T
+0 F
+(\325) 138.32 425 T
+(s policy object. By default this is an instance of) 141.66 425 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<basic-doss-policy>) 371.98 425 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(.) 458.71 425 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+4 11 Q
+(policy-setter) 72 397.67 T
+7 F
+(policy) 128.14 397.67 T
+5 F
+( :: <doss-policy>) 151.2 397.67 T
+7 F
+(dd) 219.39 397.67 T
+5 F
+( :: <doss-dumper>) 229.42 397.67 T
+6 12 Q
+(\336) 305.13 397.67 T
+7 11 Q
+(policy) 319.49 397.67 T
+5 F
+( :: <doss-policy>) 342.54 397.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+([Method]) 504 397.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(assigns) 90 378 T
+2 F
+(dd) 127.67 378 T
+0 F
+(\325) 139.67 378 T
+(s policy object. Can also be done via the) 143 378 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(policy:) 339.65 378 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( keyword ar) 368.72 378 T
+(gument to) 425.82 378 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(make) 477.15 378 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( above.) 500.22 378 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+4 11 Q
+(stream) 72 350.67 T
+7 F
+(dd) 104.09 350.67 T
+5 F
+( :: <doss-dumper>) 114.12 350.67 T
+6 12 Q
+(\336) 189.83 350.67 T
+7 11 Q
+(stream) 204.18 350.67 T
+5 F
+( :: <writable-positionable-stream>) 231.75 350.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+([Method]) 504 350.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(returns) 90 331 T
+2 F
+(dd) 126.32 331 T
+0 F
+(\325) 138.32 331 T
+(s stream object.) 141.66 331 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+4 11 Q
+(stream-setter) 72 303.67 T
+7 F
+(stream) 131.65 303.67 T
+5 F
+( :: <writable-positionable-stream>) 159.22 303.67 T
+7 F
+(dd) 295.08 303.67 T
+5 F
+( :: <doss-dumper>) 305.11 303.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+6 12 Q
+(\336) 108 290.67 T
+7 11 Q
+(stream) 122.35 290.67 T
+5 F
+( :: <writable-positionable-stream>) 149.92 290.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+([Method]) 504 290.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(assigns) 90 271 T
+2 F
+(dd) 127.67 271 T
+0 F
+(\325) 139.67 271 T
+(s stream object. Can also be done via the) 143 271 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(stream:) 341.64 271 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( keyword to) 374.22 271 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(make) 434.55 271 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( above.) 457.61 271 T
+0 0 0 1 0 0 0 K
+72 87 540 107 C
+0 0 0 1 0 0 0 K
+72 95 204 95 2 L
+0.25 H
+2 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 0 0 1 0 0 0 K
+0 9 612 783 C
+0 0 0 1 0 0 0 K
+0 10 Q
+0 X
+0 0 0 1 0 0 0 K
+(1.  N.B. since each-subclass specializers are not yet implemented the make methods use singleton specializers.) 72 80.33 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "14" 14
+%%Page: "15" 15
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+[ 1 0.25 1 0.25 0 0.5 0]
+[ 0 1 0.67 0.28 0.72 0 0.05]
+ 9 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(DOSS: a Dylan Object Storage System) 72 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(February 24, 1995) 276.56 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(15) 532 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 14 Q
+(6.1.2  <doss-dumper> Policy Pr) 72 701.67 T
+(otocol) 258.82 701.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(This protocol de\336nes the basic object storage mechanisms available in DOSS. Policies choose) 72 674 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(which mechanisms are used for particular objects using this protocol.) 72 660 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+4 11 Q
+(put-reference) 72 633.67 T
+7 F
+(object) 132.15 633.67 T
+(dd) 158.72 633.67 T
+5 F
+(:: <doss-dumper>) 171.26 633.67 T
+6 12 Q
+(\336) 244.47 633.67 T
+7 11 Q
+(object) 258.82 633.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+5 F
+([Method]) 504 633.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(Causes) 90 614 T
+2 F
+(dd) 127 614 T
+0 F
+( to store) 139 614 T
+2 F
+(object) 180.66 614 T
+0 F
+( as a module variable reference on) 209.99 614 T
+2 F
+(dd) 377.59 614 T
+0 F
+(\325) 389.59 614 T
+(s stream. The variable name) 392.93 614 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(used will be that found via the variable search protocol, see section 6.4.) 90 600 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(On loading) 90 572 T
+2 F
+(object) 146.66 572 T
+0 F
+( will be reconstructed as the current value of the module variable in the) 175.99 572 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(loading system.) 90 558 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+4 11 Q
+(put-variable) 72 530.67 T
+7 F
+(object) 125.64 530.67 T
+(dd) 152.21 530.67 T
+5 F
+(:: <doss-dumper>) 164.75 530.67 T
+7 F
+(variable-name) 237.96 530.67 T
+(module-name) 297.61 530.67 T
+(library-name) 355.26 530.67 T
+6 12 Q
+(\336) 407.88 530.67 T
+7 11 Q
+(object) 422.24 530.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+5 F
+([Method]) 504 530.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(Causes) 90 511 T
+2 F
+(dd) 127 511 T
+0 F
+( to store) 139 511 T
+2 F
+(object) 180.66 511 T
+0 F
+( as a module variable reference on) 209.99 511 T
+2 F
+(dd) 377.59 511 T
+0 F
+(\325) 389.59 511 T
+(s stream, using) 392.93 511 T
+7 11 Q
+(variable-name) 467.59 511 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(module-name) 90 497 T
+5 F
+( and) 145.14 497 T
+7 F
+(library-name) 165.21 497 T
+5 F
+( to identify the variable) 215.32 497 T
+0 12 Q
+(. This mechanism allows policy objects to) 305.58 497 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(rename objects, since a dif) 90 483 T
+(ferent name that that found via the variabl search protocol can be) 217.42 483 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(substituted.) 90 469 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(On loading) 90 441 T
+2 F
+(object) 146.66 441 T
+0 F
+( will be reconstructed as the current value of the module variable in the) 175.99 441 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(loading system.) 90 427 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+4 11 Q
+(put-class-description) 72 399.67 T
+7 F
+(class) 165.73 399.67 T
+5 F
+( :: <object>) 186.28 399.67 T
+7 F
+( dd) 230.92 399.67 T
+5 F
+( :: <doss-dumper>) 243.46 399.67 T
+6 12 Q
+(\336) 319.17 399.67 T
+7 11 Q
+(object) 333.52 399.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+5 F
+([Method]) 504 399.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+-0.23 (Causes) 90 380 P
+2 F
+-0.23 (dd) 126.77 380 P
+0 F
+-0.23 ( to store) 138.77 380 P
+2 F
+-0.23 (class) 179.74 380 P
+0 F
+-0.23 ( on) 203.74 380 P
+2 F
+-0.23 (dd) 221.28 380 P
+0 F
+-0.23 (\325) 233.28 380 P
+-0.23 (s stream as a module variable reference, a boolean indicating if) 236.62 380 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+2 F
+(class) 90 366 T
+0 F
+( has repeated slots, a count of the number of slot setters, and a sequence of slot setters.) 114 366 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(The) 90 352 T
+2 F
+(class) 111.66 352 T
+0 F
+( variable is explicitly typed <object> to allow the use of proxy objects, i.e. a proxy) 135.66 352 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(for a class can be dumped in some manner instead of the class itself.) 90 338 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(On loading) 90 310 T
+2 F
+(class) 146.66 310 T
+0 F
+( will be reconstructed as the current value of the module variable in the load-) 170.66 310 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(ing system, and the sequence of setters will be used to assign values to the slots of loaded) 90 296 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(instances of) 90 282 T
+2 F
+(class) 149.99 282 T
+0 F
+(.) 173.99 282 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+4 11 Q
+(put-apply) 72 254.67 T
+7 F
+(object) 115.1 254.67 T
+(dd) 141.67 254.67 T
+5 F
+( :: <doss-dumper>) 151.71 254.67 T
+7 F
+( function) 224.91 254.67 T
+5 F
+( :: <object> #rest) 259.01 254.67 T
+7 F
+(args) 328.72 254.67 T
+6 12 Q
+(\336) 348.77 254.67 T
+7 11 Q
+(object) 363.12 254.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+5 F
+([Method]) 504 254.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(Causes) 90 235 T
+2 F
+(dd) 127 235 T
+0 F
+( to store) 139 235 T
+2 F
+(object) 180.66 235 T
+0 F
+( on) 209.99 235 T
+2 F
+(dd) 227.99 235 T
+0 F
+(\325) 239.99 235 T
+(s stream as the result of evaluating) 243.32 235 T
+2 F
+(function) 412.3 235 T
+0 F
+( with) 451.63 235 T
+2 F
+(ar) 478.97 235 T
+(gs) 489.19 235 T
+0 F
+(. The) 499.86 235 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+2 F
+-0.32 (function) 90 221 P
+0 F
+-0.32 (variable is explicitly typed <object> to allow the use of proxy objects, i.e. a proxy for) 132.01 221 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(a class can be dumped in some manner instead of the class itself.) 90 207 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(On loading) 90 179 T
+2 F
+(object) 146.66 179 T
+0 F
+( will be reconstructed by applying the reconstruction of) 175.99 179 T
+2 F
+(function) 444.95 179 T
+0 F
+( to the) 484.28 179 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(reconstruction of the) 90 165 T
+2 F
+(ar) 192.31 165 T
+(gs) 202.54 165 T
+0 F
+( sequence.) 213.2 165 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "15" 15
+%%Page: "16" 16
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+[ 1 0.25 1 0.25 0 0.5 0]
+[ 0 1 0.67 0.28 0.72 0 0.05]
+ 9 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(DOSS: a Dylan Object Storage System) 72 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(February 24, 1995) 276.56 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(16) 532 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+4 11 Q
+(put-object) 72 703.67 T
+7 F
+(object) 118.1 703.67 T
+(dd) 144.68 703.67 T
+5 F
+( :: <doss-dumper>) 154.71 703.67 T
+6 12 Q
+(\336) 230.42 703.67 T
+7 11 Q
+(object) 244.77 703.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+5 F
+([Method]) 504 703.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+-0.14 (Causes) 90 684 P
+2 F
+-0.14 (dd) 126.85 684 P
+0 F
+-0.14 ( to store) 138.85 684 P
+2 F
+-0.14 (object) 180.08 684 P
+0 F
+-0.14 ( on) 209.41 684 P
+2 F
+-0.14 (dd) 227.12 684 P
+0 F
+-0.14 (\325) 239.12 684 P
+-0.14 (s stream as) 242.45 684 P
+2 F
+-0.14 (object) 297.67 684 P
+0 F
+-0.14 (\325) 327 684 P
+-0.14 (s class followed by each of the) 330.34 684 P
+2 F
+-0.14 (object) 479.62 684 P
+0 F
+-0.14 (\325) 508.95 684 P
+-0.14 (s slot) 512.28 684 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(contents as accessed via) 90 670 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(doss-dumpable-slots) 208.63 670 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(. If) 299.35 670 T
+2 F
+(object) 316.34 670 T
+0 F
+( has repeated slots then this is followed) 345.67 670 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+-0.21 (by a count of) 90 656 P
+2 F
+-0.21 (object) 155.15 656 P
+0 F
+-0.21 (\325) 184.48 656 P
+-0.21 (s repeated slots and the contents of) 187.81 656 P
+2 F
+-0.21 (object) 356.64 656 P
+0 F
+-0.21 (\325) 385.97 656 P
+-0.21 (s repeated slots as accessed via) 389.31 656 P
+0 0 0 1 0 0 0 K
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(doss-repeated-slot-element) 90 642 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(.) 207.79 642 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(On loading) 90 614 T
+2 F
+(object) 146.66 614 T
+0 F
+( will be reconstructed by calling) 175.99 614 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(allocate) 333.3 614 T
+0 0 0 1 0 0 0 K
+0 9.6 Q
+0 0 0 1 0 0 0 K
+(1) 366.89 618.8 T
+0 12 Q
+( on) 371.69 614 T
+2 F
+(object) 389.69 614 T
+0 F
+(\325) 419.02 614 T
+(s class, and then assign-) 422.36 614 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(ing) 90 600 T
+2 F
+(object) 108.34 600 T
+0 F
+(\325) 137.66 600 T
+(s named and repeated slots with the corresponding reconstructions of) 141 600 T
+2 F
+(object) 475.61 600 T
+0 F
+(\325) 504.94 600 T
+(s slot) 508.27 600 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(contents.) 90 586 T
+0 0 0 1 0 0 0 K
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(put-object) 90 558 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( invokes the default mechanism for dumping objects.) 133.59 558 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+4 11 Q
+(put-header) 72 530.67 T
+7 F
+(dd) 121.11 530.67 T
+5 F
+( :: <doss-dumper>) 131.15 530.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+([Method]) 504 530.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+-0.09 (Causes) 90 511 P
+2 F
+-0.09 (dd) 126.9 511 P
+0 F
+-0.09 ( to store a) 138.9 511 P
+1 F
+-0.09 (DOSS) 188.51 511 P
+0 F
+-0.09 ( header on) 219.85 511 P
+2 F
+-0.09 (dd) 272.55 511 P
+0 F
+-0.09 (\325) 284.55 511 P
+-0.09 (s stream which serves to identify the information on) 287.89 511 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(the stream as being in DOSS format. A header is automatically prepended when store-object) 90 497 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(is used to dump an object-graph. However) 90 483 T
+(, if an object-graph is to be dumped via one of the) 293.15 483 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+-0.33 (special mechanisms above \050e.g. put-apply\051 then put-header must be used \336rst to ensure a valid) 90 469 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(header appears on the stream.) 90 455 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 14 Q
+(6.1.3  <doss-dumper> Slot Access Pr) 72 395.67 T
+(otocol) 288.75 395.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+4 11 Q
+(doss-slot-value) 72 367.67 T
+7 F
+(getter) 140.67 367.67 T
+5 F
+( :: <function>) 163.74 367.67 T
+7 F
+(object) 218.41 367.67 T
+(dd) 244.99 367.67 T
+5 F
+(:: <doss-dumper>) 257.53 367.67 T
+6 12 Q
+(\336) 330.73 367.67 T
+7 11 Q
+(slot-contents) 345.08 367.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+5 F
+([Method]) 504 367.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+-0.2 (used by) 90 348 P
+2 F
+-0.2 (dd) 129.6 348 P
+0 F
+-0.2 ( to access the contents of a slot in an object being traversed during dumping. When) 141.6 348 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+2 F
+(object) 90 334 T
+0 F
+( is reconstructed the slot will be assigned the reconstruction of) 119.33 334 T
+2 F
+(slot-contents) 421.62 334 T
+0 F
+( using) 482.95 334 T
+2 F
+(get-) 514.96 334 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(ter) 90 320 T
+0 F
+(\325) 103.78 320 T
+(s corresponding setter) 107.11 320 T
+(. If the slot is to be left unbound on reconstruction) 211.76 320 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(doss-slot-value) 455.08 320 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(should return) 90 306 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(dd.unbound-proxy) 156.66 306 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(.) 235.55 306 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+4 11 Q
+(doss-repeated-slot-element) 72 278.67 T
+7 F
+(object) 192.3 278.67 T
+(index) 218.87 278.67 T
+5 F
+( :: <integer>) 240.43 278.67 T
+7 F
+(dumper) 291.09 278.67 T
+5 F
+( :: <doss-dumper>) 321.67 278.67 T
+6 12 Q
+(\336) 397.38 278.67 T
+7 11 Q
+(slot-contents) 411.73 278.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+5 F
+([Method]) 504 278.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(used by) 90 259 T
+2 F
+(dd) 130 259 T
+0 F
+( to access the contents of a repeated slot in an object being traversed during store.) 142 259 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(When) 90 245 T
+2 F
+(object) 121.66 245 T
+0 F
+( is reconstructed its corresponding repeated slot will be assigned the reconstruc-) 150.98 245 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(tion of) 90 231 T
+2 F
+(slot-contents) 124.67 231 T
+0 F
+( using) 186 231 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(element-setter) 218 231 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(. Unbound repeated slots are not supported.) 279 231 T
+0 9.6 Q
+(2) 487.63 235.8 T
+0 0 0 1 0 0 0 K
+72 102 540 122 C
+0 0 0 1 0 0 0 K
+72 110 204 110 2 L
+0.25 H
+2 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 0 0 1 0 0 0 K
+0 9 612 783 C
+0 0 0 1 0 0 0 K
+0 10 Q
+0 X
+0 0 0 1 0 0 0 K
+(1.) 72 95.33 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(allocate) 84.5 95.33 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( is at a lower level than) 118.09 95.33 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(make) 232.41 95.33 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(, it returns an uninitialized instance.) 255.47 95.33 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 10 Q
+(2.  because there is no way of instantiating an object with an uninitialized repeated slot.) 72 80.33 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "16" 16
+%%Page: "17" 17
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+[ 1 0.25 1 0.25 0 0.5 0]
+[ 0 1 0.67 0.28 0.72 0 0.05]
+ 9 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(DOSS: a Dylan Object Storage System) 72 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(February 24, 1995) 276.56 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(17) 532 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 14 Q
+(6.2  <doss-policy> Pr) 72 701.67 T
+(otocols) 196.6 701.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(6.2.1  <doss-policy> Slot Access Pr) 72 669.67 T
+(otocol) 277.09 669.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+4 11 Q
+(doss-dumpable-slots) 72 641.67 T
+7 F
+(class) 165.23 641.67 T
+5 F
+( :: <class>) 185.77 641.67 T
+7 F
+(policy) 229.4 641.67 T
+5 F
+(:: <doss-policy>) 252.46 641.67 T
+6 F
+(\336) 318.14 641.67 T
+7 F
+(slot-descriptors) 331.5 641.67 T
+5 F
+( :: <sequence>) 392.65 641.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+([Method]) 504 641.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(used by a) 90 622 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<doss-policy>) 138.32 622 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( to select which slots will have their contents dumped. Clients are free) 198.99 622 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(to specialize this method to customize slot dumping.) 90 608 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 14 Q
+(6.2.2  <doss-policy> Dumper Pr) 72 576.67 T
+(otocol) 260.37 576.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+4 11 Q
+(put-specially) 72 548.67 T
+7 F
+(object) 129.65 548.67 T
+(policy) 156.23 548.67 T
+5 F
+( :: <doss-policy>) 179.28 548.67 T
+7 F
+(dd) 247.47 548.67 T
+5 F
+( :: <doss-dumper>) 257.5 548.67 T
+6 12 Q
+(\336) 333.22 548.67 T
+7 11 Q
+(object-dumped?) 347.57 548.67 T
+5 F
+( :: <boolean>) 412.25 548.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+([Method]) 504 548.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(called by a) 90 529 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<doss-dumper>) 144.98 529 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( whenever it encounters a new object in the dumping process. If the) 212.66 529 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(method returns) 90 515 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(#t) 165.32 515 T
+0 0 0 1 0 0 0 K
+2 12 Q
+0 0 0 1 0 0 0 K
+(dd) 176.34 515 T
+0 F
+( assumes) 188.34 515 T
+2 F
+(object) 234.34 515 T
+0 F
+( has been dumped in some special way by) 263.67 515 T
+2 F
+(policy) 467.97 515 T
+0 F
+(. If the) 496.52 515 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(method returns) 90 501 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(#f) 165.32 501 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( the) 173.34 501 T
+2 F
+(dd) 194.01 501 T
+0 F
+( dumps) 206.01 501 T
+2 F
+(object) 244.01 501 T
+0 F
+( using the default traversal mechanism \050see section) 273.34 501 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(6.1.2,) 90 487 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(put-object) 120 487 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(\051.) 163.59 487 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Policies should specialize this method to implement speci\336c storage policy decisions for spe-) 90 459 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+-0 (ci\336c objects. Specializations of) 90 445 P
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+-0 (put-specially) 242.3 445 P
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+-0 ( are expected to use one of the mechanisms in sec-) 297.44 445 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(tion 6.1.2, <doss-dumper> Policy Protocol.) 90 431 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+4 11 Q
+(locate-variable-via-policy) 72 403.67 T
+7 F
+(object) 182.3 403.67 T
+(policy) 208.87 403.67 T
+5 F
+( :: <doss-policy>) 231.93 403.67 T
+6 12 Q
+(\336) 300.12 403.67 T
+7 11 Q
+(variable-name) 314.47 403.67 T
+(module-name) 374.12 403.67 T
+(library-name) 431.77 403.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+5 F
+([Method]) 504 403.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(used by a) 90 384 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<doss-dumper>) 138.32 384 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( to look-up a module variable name for an object being stored via) 206 384 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(put-) 522.94 384 T
+0 0 0 1 0 0 0 K
+1 1 0 0 0 0 1 K
+(reference) 90 370 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( or) 130.61 370 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(put-class-description) 146.61 370 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(. The default method simply calls) 237.83 370 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(locate-variable) 401.49 370 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(, see section) 464.66 370 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(6.4, below) 90 356 T
+(.) 139.55 356 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 14 Q
+(6.3  <doss-loader> Pr) 72 308.67 T
+(otocol) 198.92 308.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+4 11 Q
+(load-doss-stream) 72 281.67 T
+7 F
+(stream-or-path-string) 149.69 281.67 T
+6 12 Q
+(\336) 236.41 281.67 T
+7 11 Q
+(object) 250.76 281.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+5 F
+([Method]) 504 281.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(Simple utility that takes a stream over) 90 262 T
+(, or a string that is the pathname of a \336le containing, an) 271.51 262 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(object encoded in) 90 248 T
+1 F
+(DOSS) 177.65 248 T
+0 F
+( format , builds a) 208.99 248 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<doss-loader>) 293.65 248 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( and returns the object reconstructed) 355.32 248 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(by the loader) 90 234 T
+(. See) 151.99 234 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(fetch-object) 178.32 234 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( below) 229.44 234 T
+(.) 260.98 234 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(load-doss-stream) 266.98 234 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( takes care to correctly close the stream) 342.17 234 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(even in the presence of errors.) 90 220 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+4 11 Q
+(make) 72 192.67 T
+7 F
+(class) 97.57 192.67 T
+5 F
+( == <doss-loader> #key) 118.12 192.67 T
+7 F
+(stream) 215.41 192.67 T
+5 F
+( :: <readable-positionable-stream>) 242.97 192.67 T
+6 F
+( \336) 380.35 192.67 T
+7 F
+(dd) 396.47 192.67 T
+5 F
+( :: <doss-loader>) 406.5 192.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+([Method]) 504 192.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(Instantiates a) 90 173 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<doss-loader>) 155.99 173 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( with an optional) 217.65 173 T
+2 F
+(str) 301.65 173 T
+(eam) 313.88 173 T
+0 F
+( object. There is no default for) 333.87 173 T
+2 F
+(str) 482.51 173 T
+(eam) 494.73 173 T
+0 F
+(. If) 514.73 173 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(supplied,) 90 159 T
+2 F
+(str) 136.67 159 T
+(eam) 148.9 159 T
+0 F
+( must be a general instance of) 168.89 159 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<readable-positionable-stream>) 314.52 159 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( and should have) 450.88 159 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(an) 90 145 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(element-type:) 104.33 145 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( of) 162.97 145 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(#\323byte\323) 178.96 145 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(.) 211.55 145 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "17" 17
+%%Page: "18" 18
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+[ 1 0.25 1 0.25 0 0.5 0]
+[ 0 1 0.67 0.28 0.72 0 0.05]
+ 9 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(DOSS: a Dylan Object Storage System) 72 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(February 24, 1995) 276.56 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(18) 532 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+4 11 Q
+(fetch-object) 72 703.67 T
+5 F
+( dl :: <doss-loader>) 123.12 703.67 T
+6 12 Q
+(\336) 202.85 703.67 T
+7 11 Q
+(object) 217.2 703.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+5 F
+([Method]) 504 703.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(Causes) 90 684 T
+2 F
+(dl) 127 684 T
+0 F
+( to interpret the byte stream in its) 136.33 684 T
+2 F
+(str) 298.32 684 T
+(eam) 310.55 684 T
+0 F
+( object and reconstruct the object encoded) 330.54 684 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+-0.31 (by that byte stream. The byte stream should begin with an appropriate DOSS header \050which is) 90 670 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(supplied by a) 90 656 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<doss-dumper>) 157 656 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(\051.) 224.67 656 T
+2 F
+(dl) 234.66 656 T
+0 F
+( checks version information in the header and complains if it) 244 656 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(smells a rat.) 90 642 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+4 11 Q
+(stream) 72 614.67 T
+7 F
+(dl) 104.09 614.67 T
+5 F
+(:: <doss-loader>) 113.61 614.67 T
+6 12 Q
+(\336) 181.31 614.67 T
+7 11 Q
+(stream) 195.66 614.67 T
+5 F
+( :: <readable-positionable-stream>) 223.23 614.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+([Method]) 504 614.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(returns) 90 595 T
+2 F
+(dl) 126.32 595 T
+0 F
+(\325) 135.66 595 T
+(s stream.) 139 595 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+4 11 Q
+(stream-setter) 72 567.67 T
+7 F
+(stream) 131.65 567.67 T
+5 F
+( :: <readable-positionable-stream>) 159.22 567.67 T
+7 F
+(dl) 299.11 567.67 T
+5 F
+(:: <doss-loader>) 308.63 567.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+([Method]) 504 567.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(assigns) 90 548 T
+2 F
+(dl) 127.67 548 T
+0 F
+(\325) 137 548 T
+(s stream.) 140.34 548 T
+2 F
+(str) 186 548 T
+(eam) 198.23 548 T
+0 F
+( should have an) 218.22 548 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(element-type:) 296.21 548 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( of) 354.85 548 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(#\323byte\323) 370.85 548 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(.) 403.43 548 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 14 Q
+(6.4  V) 72 500.67 T
+(ariable Sear) 105.32 500.67 T
+(ch Pr) 177.78 500.67 T
+(otocol) 209.8 500.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+4 11 Q
+(locate-variable) 72 473.67 T
+7 F
+(object) 137.68 473.67 T
+6 12 Q
+(\336) 164.26 473.67 T
+7 11 Q
+(variable-name) 178.61 473.67 T
+5 F
+( :: <symbol>) 235.75 473.67 T
+7 F
+(module-name) 287.4 473.67 T
+5 F
+( :: <symbol>) 342.54 473.67 T
+7 F
+(library-name) 394.19 473.67 T
+5 F
+( :: <symbol>) 444.3 473.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+([Method]) 504 473.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(used by a) 90 454 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<doss-policy>) 138.32 454 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( to look-up a module variable name for an object being stored via) 198.99 454 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(put-) 515.93 454 T
+0 0 0 1 0 0 0 K
+1 1 0 0 0 0 1 K
+(reference) 90 440 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( or) 130.61 440 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(put-class-description) 146.61 440 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(. Clients should not specialize this method, rather they should) 237.83 440 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(specialize) 90 426 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(encode-variable) 140.32 426 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(.) 209 426 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+4 11 Q
+(module-name) 72 398.67 T
+7 F
+(module) 133.15 398.67 T
+5 F
+( :: <module>) 162.73 398.67 T
+6 12 Q
+(\336) 215.38 398.67 T
+7 11 Q
+(module-name) 229.74 398.67 T
+5 F
+( :: <symbol>) 284.88 398.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+([Method]) 504 398.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(returns) 90 379 T
+2 F
+(module) 126.32 379 T
+0 F
+(\325) 161.65 379 T
+(s name. N.B. in the emulator) 164.99 379 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<module>) 305.98 379 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( is currently called) 348.59 379 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<translator-module>) 440.57 379 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(.) 527.79 379 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+4 11 Q
+-0.03 (encode-variable) 72 351.67 P
+7 F
+-0.03 (object module) 143.17 351.67 P
+5 F
+-0.03 ( :: <module>) 199.29 351.67 P
+7 F
+-0.03 (library-name) 251.88 351.67 P
+5 F
+-0.03 ( :: union\050<symbol>,singleton\050#f\051\051) 301.99 351.67 P
+7 F
+-0.03 (variable-name) 433.77 351.67 P
+5 F
+-0.03 ( :: <symbol>) 490.92 351.67 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+6 12 Q
+(\336) 108 338.67 T
+5 11 Q
+( variable-) 119.84 338.67 T
+7 F
+(encoding module-name) 156.94 338.67 T
+5 F
+( :: <symbol>) 251.2 338.67 T
+7 F
+(library-name) 302.84 338.67 T
+5 F
+( :: <symbol>) 352.96 338.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+([Method]) 504 338.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(used by locate-variable to return an encoding of a module variable referencing object. The) 90 319 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(default method returns three values,) 90 305 T
+2 F
+(variable-name) 265.3 305 T
+0 F
+(,) 335.28 305 T
+2 F
+(module-name) 341.28 305 T
+0 F
+( and) 406.6 305 T
+2 F
+(library-name) 429.92 305 T
+0 F
+(. Clients) 493.25 305 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(can specialize on) 90 291 T
+2 F
+(module) 174.97 291 T
+0 F
+( to provide more compact encodings for module variables, in which) 210.3 291 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(case an alternative value for) 90 277 T
+2 F
+(variable-name) 227.62 277 T
+0 F
+( should be returned along with) 297.6 277 T
+2 F
+(module-name) 446.92 277 T
+0 F
+( and) 512.23 277 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+2 F
+(library-name) 90 263 T
+0 F
+(, e.g. an integer) 153.32 263 T
+(.) 226.64 263 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+4 11 Q
+(variable-value) 72 235.67 T
+7 F
+(variable-encoding) 134.68 235.67 T
+(module) 208.38 235.67 T
+5 F
+( :: union\050<symbol>,<module>\051) 237.96 235.67 T
+7 F
+(library-name) 360.3 235.67 T
+5 F
+( :: <symbol>) 410.41 235.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+([Method]) 504 235.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(used by a) 90 216 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<doss-loader>) 138.32 216 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( to resolve a module variable. The default method requires that) 199.99 216 T
+2 F
+(varia-) 504.6 216 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+-0.19 (ble-encoding) 90 202 P
+0 F
+-0.19 ( is a symbol, and returns the value of the corresponding module variable. Clients) 152.65 202 P
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(can specialize on) 90 188 T
+2 F
+(module) 174.97 188 T
+0 F
+( to decode more compact encodings provided by) 210.3 188 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(encode-variable) 446.26 188 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(. If) 514.94 188 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+2 F
+(variable-encoding) 90 174 T
+0 F
+( is not recognised by such specialised method then they should call) 177.98 174 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(next-) 502.62 174 T
+0 0 0 1 0 0 0 K
+1 1 0 0 0 0 1 K
+(method) 90 160 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( to allow the default method to resolve the reference. N.B. in the emulator) 122.57 160 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<module>) 480.17 160 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( is) 522.78 160 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(currently called) 90 146 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<translator-module>) 167.98 146 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(.) 255.2 146 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "18" 18
+%%Page: "19" 19
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+[ 1 0.25 1 0.25 0 0.5 0]
+[ 0 1 0.67 0.28 0.72 0 0.05]
+ 9 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(DOSS: a Dylan Object Storage System) 72 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(February 24, 1995) 276.56 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(19) 532 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 16 Q
+(7.  Appendix B - Examples) 72 700.33 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 14 Q
+(7.1  Emulator T) 72 663.83 T
+(ables) 165.6 663.83 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 12 Q
+(For ef) 72 633.33 T
+(\336ciency reasons) 100.78 633.33 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<object-table>) 180.76 633.33 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(s in the emulator are hacked to use LispW) 241.92 633.33 T
+(orks\325 underlying) 442.92 633.33 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(CLOS equivalent. However) 72 619.33 T
+(, it is still possible to dump emulator) 205.16 619.33 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<object-table>) 383.52 619.33 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(s as if they were) 444.68 619.33 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(represented as DylanW) 72 605.33 T
+(orks) 183 605.33 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<object-table>) 206.66 605.33 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(s by using the slot access protocols, see section 6.1.3 &) 267.82 605.33 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Section) 72 591.33 T
+(6.2.1 on page) 111 591.33 T
+(15. A standard DylanW) 178.66 591.33 T
+(orks) 291.67 591.33 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+( <object-table>) 312.34 591.33 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( holds the number of elements in) 376 591.33 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(its) 72 577.33 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(tally) 86.34 577.33 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( slot, and its key-value pairs in its) 104.39 577.33 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(elements) 268.72 577.33 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( slot.) 307.82 577.33 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(elements) 334.16 577.33 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( is a vector containing key-value) 373.27 577.33 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(pairs in adjacent slots. Unused slots contain) 72 563.33 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<table>) 284.65 563.33 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(\325) 316.24 563.33 T
+(s void element.) 319.58 563.33 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(In the emulator) 72 533.5 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<object-table>) 148.32 533.5 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( has two extra slots,) 209.48 533.5 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(table-table) 307.47 533.5 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( containing a lisp eql table, and) 352.58 533.5 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(table-) 505.23 533.5 T
+0 0 0 1 0 0 0 K
+1 1 0 0 0 0 1 K
+-0.17 (values) 72 519.5 P
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+-0.21 ( containing a lisp list of values \050for ef) 100.08 519.5 P
+-0.21 (\336cient iteration\051. Further) 278.17 519.5 P
+-0.21 (, no ef) 395.59 519.5 P
+-0.21 (fort is made to keep the) 425.28 519.5 P
+0 0 0 1 0 0 0 K
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(tally) 72 505.5 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( and) 90.05 505.5 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(elements) 113.38 505.5 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( slots up-to-date.) 152.48 505.5 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(The problem is to dump the hacked) 72 475.67 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<object-table>) 244.98 475.67 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( as if it were represented as a standard Dylan-) 306.14 475.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(W) 72 461.67 T
+(orks) 82.37 461.67 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(<object-table>) 106.03 461.67 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+(. The solution is to) 167.19 461.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 F
+(\245) 85.5 437.83 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 F
+(not dump the) 99 437.83 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(table-table) 165.34 437.83 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( and) 210.45 437.83 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(table-value) 233.77 437.83 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( slots) 280.9 437.83 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 F
+(\245) 85.5 414 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 F
+(dump faked-up values for the) 99 414 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(tally) 243.3 414 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( and) 261.35 414 T
+1 1 0 0 0 0 1 K
+4 11 Q
+1 1 0 0 0 0 1 K
+(elements) 284.68 414 T
+0 0 0 1 0 0 0 K
+0 12 Q
+0 0 0 1 0 0 0 K
+( slots) 323.78 414 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(Here\325) 72 384.17 T
+(s the code:) 98.65 384.17 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+5 11 Q
+0 1 0.67 0.28 0.72 0 0.05 K
+(Module:) 90 356 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(emulator-doss) 144 356 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(Synopsis:) 90 343 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(Dylan Object Storage System; Emulator T) 144 343 T
+(able DOSS Support) 310.44 343 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(/* Frig for emulator id tables) 90 315.17 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+-0.28 (<lisp-object-table> has a table-table slot that holds onto a LispW) 90 302.17 P
+-0.28 (orks eq-table. W) 343.59 302.17 P
+-0.28 (e intercept the access of this slot) 408.55 302.17 P
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(to copy across values from the LispW) 90 289.17 T
+(orks table into our vector of elements, etc.) 239.74 289.17 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+-0.12 (First ensure that table-table and table-values are eliminated from the set of dumped slots. \050we don\325t want them to) 90 263.17 P
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(be dumped, they are the CLOS wrinkles we want to smooth out. */) 90 250.17 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(de\336ne method doss-dumpable-slots \050class == <object-table>, policy :: <doss-policy>\051) 90 222.33 T
+6 12 Q
+(\336) 430.93 222.33 T
+5 11 Q
+( slots :: <sequence>;) 442.78 222.33 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(choose\050method \050desc\051) 108 209.33 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(\050desc.slot-getter ~== table-table\051 & \050desc.slot-getter ~== table-values\051) 180 196.33 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(end,) 144 183.33 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(next-method\050\051\051) 144 170.33 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(end method;) 90 157.33 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(/* Next frig access to the tally and elements slots.  For tally we simply return the size. */) 90 129.5 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(de\336ne method doss-slot-value\050getter == tally) 90 101.67 T
+(, obj :: <object-table>, dd :: <doss-dumper>\051) 267.33 101.67 T
+6 12 Q
+(\336) 445.34 101.67 T
+5 11 Q
+( o :: <object>;) 457.19 101.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(obj.size) 108 88.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(end method;) 90 75.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "19" 19
+%%Page: "20" 20
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+[ 1 0.25 1 0.25 0 0.5 0]
+[ 0 1 0.67 0.28 0.72 0 0.05]
+ 9 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(DOSS: a Dylan Object Storage System) 72 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(February 24, 1995) 276.56 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(20) 532 43.17 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+5 11 Q
+0 1 0.67 0.28 0.72 0 0.05 K
+(/* For elements we make a fake elements vector and copy our key-value pairs into it and then return this fake) 90 703.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(vector) 90 690.67 T
+(. */) 114.07 690.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(de\336ne method doss-slot-value\050getter == elements, obj :: <object-table>, dd :: <doss-dumper>\051) 90 677.67 T
+6 12 Q
+(\336) 466.56 677.67 T
+5 11 Q
+( o :: <object>;) 478.41 677.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(// fake up a suitable elements vector) 108 664.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(let i= 0;) 108 651.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(let s = 8;) 108 638.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(while \050s <= \050obj.size * 2\051\051 s := s + s; end; // ensure s a large enough power-of-two) 108 625.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(let fake-elements = make\050<vector>, size: s, \336ll: obj.void-element\051;) 108 612.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(do\050) 108 586.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(method\050key\051 fake-elements[i] := key; fake-elements[i + 1] := obj[key]; i:= i+ 2; end,) 126 586.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(obj.key-sequence\051; // copy the table\325) 126 573.67 T
+(s key-value pairs into the fake elements vector) 270.25 573.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(fake-elements) 108 560.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(end method;) 90 547.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(/* On loading all we need to do is to initialize the table \050which initializes table-table & table-values\051 and copy the) 90 523.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(key-value pairs back into table-table. */) 90 510.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(de\336ne method post-load-cleanup\050obj :: <object-table>\051) 90 486.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(let index = 0;) 108 473.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(let limit = obj.tally * 2;) 108 460.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(let vec   = obj.elements;) 108 447.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(obj.initialize;) 108 421.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(// this creates the underlying CLOS objects in table-table & table-values) 198 421.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(while \050index < limit\051) 108 408.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(obj[vec[index]] := vec[index + 1];) 126 395.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(index := index + 2;) 126 382.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(end;) 108 369.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(obj) 108 343.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(end method;) 90 330.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "20" 20
+%%Page: "21" 21
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+[ 1 0.25 1 0.25 0 0.5 0]
+[ 0 1 0.67 0.28 0.72 0 0.05]
+ 9 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(DOSS: a Dylan Object Storage System) 72 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(February 24, 1995) 276.56 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+(21) 532 43.17 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+1 14 Q
+(7.2  IDVM V) 72 701.67 T
+(ariable Encodings) 147.7 701.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+5 11 Q
+0 1 0.67 0.28 0.72 0 0.05 K
+(Module:) 90 676.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(IDVM-doss) 144 676.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(Language:) 90 663.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(in\336x-dylan) 144 663.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(Synopsis:) 90 650.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(DOSS interface for IDVM \050to provide compact encoding of IDVM code under DOSS\051) 144 650.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(Author:) 90 637.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(Eliot Miranda) 144 637.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(Copyright: \050c\051 1994, The Harlequin Group Limited, All rights reserved.) 90 624.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(de\336ne constant bytecodes-to-opcodes = vector\050) 90 598.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(idvm-return, idvm-return-false, idvm-return-lit, idvm-return-loc,) 126 585.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(idvm-call-with-res, idvm-call-with-res-returning, idvm-call-0, idvm-call-0-returning,) 126 559.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(// etc, etc, for all 128 opcode methods.....) 108 533.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(idvm-mv-bind,) 126 507.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(idvm-process-keys) 126 494.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(\051;) 108 481.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(de\336ne method encode-module-variable \050object :: <function>,) 90 457.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(the-idvm-module == \336nd-translator-module\050#\323idvm\323\051,) 252 444.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(library) 252 431.67 T
+(,) 275.89 431.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(hint\051) 252 418.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(let opcode = \336nd-key\050bytecodes-to-opcodes,curry\050id?,object\051\051;) 108 405.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(if \050opcode\051) 108 379.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(values\050opcode, the-idvm-module.module-name, library\051) 126 366.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(else) 108 353.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(next-method\050\051) 126 340.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(end if) 108 327.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(end) 90 314.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(de\336ne method variable-value \050opcode :: <integer>, the-idvm-module == \336nd-translator-module\050#\323idvm\323\051, library\051) 90 290.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(element\050bytecodes-to-opcodes,opcode,default: #f\051 | next-method\050\051) 108 277.67 T
+0 0 0 1 0 0 0 K
+0 1 0.67 0.28 0.72 0 0.05 K
+(end method;) 90 264.67 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "21" 21
+%%Trailer
+%%BoundingBox: 0 0 612 792
+%%PageOrder: Ascend
+%%Pages: 21
+%%DocumentFonts: Times-Roman
+%%+ Times-Bold
+%%+ Times-Italic
+%%+ Times-BoldItalic
+%%+ Helvetica-Narrow-Bold
+%%+ Helvetica-Narrow
+%%+ Symbol
+%%+ Helvetica-Narrow-Oblique
+%%EOF

@@ -1,0 +1,25 @@
+// Author:    Keith Dennison
+// Copyright: Copyright (c) 1998.  Functional Objects, Inc.  All rights reserved.
+// Version:   $HopeName: D-corba-tests-idl!tree.idl(trunk.2) $
+
+typedef struct Tree {
+  string label;
+  sequence<Tree> children;
+} TreeB;
+
+struct Tree_wrapper {
+  Tree real_tree;
+};
+
+union TreeU switch (boolean) {
+  case FALSE: string label;
+  case TRUE:  sequence<TreeU> children;
+};
+
+interface TreeTest {
+  short depth (in Tree t);
+  Tree  identity (in Tree t);
+  TreeB identityB (in TreeB t);
+  TreeU identityU (in TreeU t);
+  Tree  extract_Tree (in Tree_wrapper t);
+};

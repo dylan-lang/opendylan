@@ -1,0 +1,30 @@
+Library:   interface-builder
+Author:    Andy Armstrong
+Synopsis:  DUIM interface builder
+Copyright: 1995, 1996 Functional Objects, Inc. All rights reserved.
+Version:   0.1
+
+* Disclaimer
+
+This release constitutes a work in progress.  Not everything in the
+code is in its final form.  Where possible, we have flagged "hot"
+items with comments starting with "//---***".
+
+In particular, this example documentation is completely unfinished.
+
+
+* Tutorial
+
+First, load the library 'interface-builder' and then call the function
+test-interface-builder().  To build an interface, use the menu item
+File>New to create a new interface, and then select an object in the
+list and press the add button to add a child to it or press remove to
+remove the object. As a first attempt, try the following sequence:
+
+   File>New
+   Add>Column Layout
+   Add>Text Field
+   Add>Text Field
+   Add>Row Layout
+   Add>Text Field
+   Add>Text Field

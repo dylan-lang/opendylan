@@ -1,0 +1,109 @@
+#!/usr/local/bin/bash
+#      Script: kan
+#      Author: Shri Amit(amit)
+usage=" Usage: $0 -i <Image> -p <Personal Root> -r <Root> -l <Platform> -e"
+# Opts & Flgs: -r: Root of sources, default:
+#                       unix and c back end: /u/dylan/releases/kan
+#                          pentium back end: /u/dylan/releases/pentium-kan
+#              -p: Personal Root, default: none
+#              -i: Image, default: unix: lw+dylan+dfmc-$platform
+#                                    pc: lw+dylan+dfmc-pc-$platform
+#              -l: Platform target for cross compilation, default: hostplatform
+#              -e: Invoke image with pre-loaded dfmc environment.
+#
+#    Synopsis: A platform independent and trouble free way to invoke
+#              the kan dfmc images. Sets up the required env. variables
+#              and executes the appropriate binary image.
+#              Note that any extra arguments specified shall get passed
+#              along to the image.
+######################################################################
+## Application exit status legend ##
+##  1: Personal Root not specified
+##  2: Unsupported host platform
+##  3: Unsupported target platform
+##  4: No env image for target platforms other than pentium pc
+
+## Parse the command line and check incorrect usage ##
+##
+dylanroot="/u/dylan"
+scriptsdir="$dylanroot/admin/scripts"
+root=""
+extra_args=""
+while [ "$#" -ne 0 ]; do
+  case $1 in
+      -r | -root) shift
+                  root="$1" ;;
+        -p | -pr) shift
+	          personal_root="$1" ;;
+        -l | -pl) shift
+	          target_platform="$1" ;;
+     -i | -image) shift
+                  image="$1" ;;
+              -e) env=Yes ;;
+               *) extra_args="$extra_args $1";;
+  esac
+  shift
+done
+
+## Useful to set root explicitly since it is a very ##
+## commonly used variable and name collisions may   ##
+## occur if it gets exported or re-exported in some ##
+## bash environment                                 ##
+##
+env=${env:-No}
+platform=`$scriptsdir/dylan-platform`
+target_platform=${target_platform:-$platform}
+case $root in
+    "") case $target_platform in
+	    pentium) root=$dylanroot/releases/pentium-kan ;;
+                  *) root=$dylanroot/releases/kan ;;
+	esac ;;
+     *) ;;
+esac
+
+case $personal_root in
+   "") echo "$0: Error - A personal root must be specified"
+       exit 1;;
+    *) ;;
+esac
+case $platform in
+    sparc-solaris2 | sparc-sunos4 | alpha-osf3) ;;
+    *) echo "$0 - Error - unsupported host platform: $platform"
+       exit 3 ;;
+esac
+
+case $env in
+    Yes) case $target_platform in
+	    pentium) 
+image=${image:-$root/install/$platform/bin/lw+dylan+dfmc+env-pc-$platform} ;;
+		  *) echo "The dfmc environment loaded image is only available for"
+	             echo "pentium pc targetted image. Please contact the release"
+		     echo "manager if you need the dfmc environment preloaded for "
+		     echo "this platform."
+		     exit 4 ;;
+	 esac ;;
+     No) case $target_platform in
+	    pentium) ;;
+	  $platform) image=${image:-$root/install/$platform/bin/lw+dylan+dfmc-$platform} ;;
+          x86-win32) ;;
+                  *) echo "$0: Error - Unsupported target platform: $target_platform"
+                     exit 2 ;;
+	 esac ;;
+esac
+image=${image:-$root/install/$platform/bin/lw+dylan+dfmc-pc-$platform}
+images_used_file=$root/admin/logs/images-used.log
+echo "The Image being used is: $image" >> $images_used_file
+
+## source dfmc env and then execute the image ##
+##
+echo Setting up the dfmc environment variables
+source $scriptsdir/kan-env.bash -r $root -p $personal_root -l $target_platform
+case $extra_args in
+    "") ;;
+     *) echo The image is being executed with the following arguments:
+        echo "   $extra_args" ;;
+esac
+echo Executing the image, please standby ...
+exec $image $extra_args
+
+#eof

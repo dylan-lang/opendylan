@@ -1,0 +1,24 @@
+:play
+1 + 2;
+3 + 4;
+$0 + $1;
+define class <foo> (<object>)
+  slot a, init-keyword: a:;
+end class <foo>;
+make(<foo>, a: 10);
+$3.a = 10;
+define class <bar> (<foo>)
+  slot b, init-keyword: b:;
+end class <bar>;
+make(<bar>, a: 20, b: 30);
+$5.a = 20;
+$5.b = 30;
+define function foo (x :: <integer>)
+  x + 1
+end;
+foo(5);
+define function foo (x :: <integer>)
+  x + 2
+end;
+foo(5);
+:exit

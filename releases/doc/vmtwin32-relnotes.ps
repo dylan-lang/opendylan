@@ -1,0 +1,5694 @@
+%!PS-Adobe-3.0
+%%BoundingBox: (atend)
+%%Pages: (atend)
+%%PageOrder: (atend)
+%%DocumentFonts: (atend)
+%%Creator: Frame 5.0
+%%DocumentData: Clean7Bit
+%%EndComments
+%%BeginProlog
+%
+% Frame ps_prolog 5.0, for use with Frame 5.0 products
+% This ps_prolog file is Copyright (c) 1986-1995 Frame Technology
+% Corporation.  All rights reserved.  This ps_prolog file may be
+% freely copied and distributed in conjunction with documents created
+% using FrameMaker, FrameMaker/SGML and FrameViewer as long as this 
+% copyright notice is preserved.
+%
+% FrameMaker users specify the proper paper size for each print job in the
+% "Print" dialog's "Printer Paper Size" "Width" and "Height~ fields.  If the
+% printer that the PS file is sent to does not support the requested paper
+% size, or if there is no paper tray of the proper size currently installed, 
+% then the job will not be printed.  The following flag, if set to true, will
+% cause the job to print on the default paper in such cases.
+/FMAllowPaperSizeMismatch            true def
+%
+% Frame products normally print colors as their true color on a color printer
+% or as shades of gray, based on luminance, on a black-and white printer. The
+% following flag, if set to true, forces all non-white colors to print as pure
+% black. This has no effect on bitmap images.
+/FMPrintAllColorsAsBlack             false def
+%
+% Frame products can either set their own line screens or use a printer's 
+% default settings. Three flags below control this separately for no 
+% separations, spot separations and process separations. If a flag
+% is true, then the default printer settings will not be changed. If it is
+% false, Frame products will use their own settings from a table based on
+% the printer's resolution.
+/FMUseDefaultNoSeparationScreen      true  def
+/FMUseDefaultSpotSeparationScreen    true  def
+/FMUseDefaultProcessSeparationScreen false def
+%
+% For any given PostScript printer resolution, Frame products have two sets of 
+% screen angles and frequencies for printing process separations, which are 
+% recomended by Adobe. The following variable chooses the higher frequencies
+% when set to true or the lower frequencies when set to false. This is only
+% effective if the appropriate FMUseDefault...SeparationScreen flag is false.
+/FMUseHighFrequencyScreens true def
+%
+% The following is a set of predefined optimal frequencies and angles for various
+% common dpi settings. This is taken from "Advances in Color Separation Using
+% PostScript Software Technology," from Adobe Systems (3/13/89 P.N. LPS 0043)
+% and corrolated with information which is in various PPD (4.0) files.
+%
+% The "dpiranges" figure is the minimum dots per inch device resolution which
+% can support this setting. The "low" and "high" values are controlled by the
+% setting of the FMUseHighFrequencyScreens flag above. The "TDot" flags control
+% the use of the "Yellow Triple Dot" feature whereby the frequency id divided by
+% three, but the dot function is "trippled" giving a block of 3x3 dots per cell.
+%
+% PatFreq is a compromise pattern frequency for ps Level 2 printers which is close
+% to the ideal WYSIWYG pattern frequency of 9 repetitions/inch but does not beat
+% (too badly) against the screen frequencies of any separations for that DPI.
+/dpiranges   [  2540    2400    1693     1270    1200     635      600      0      ] def
+/CMLowFreqs  [ 100.402  94.8683 89.2289 100.402  94.8683  66.9349  63.2456 47.4342 ] def
+/YLowFreqs   [  95.25   90.0    84.65    95.25   90.0     70.5556  66.6667 50.0    ] def
+/KLowFreqs   [  89.8026 84.8528 79.8088  89.8026 84.8528  74.8355  70.7107 53.033  ] def
+/CLowAngles  [  71.5651 71.5651 71.5651 71.5651  71.5651  71.5651  71.5651 71.5651 ] def
+/MLowAngles  [  18.4349 18.4349 18.4349 18.4349  18.4349  18.4349  18.4349 18.4349 ] def
+/YLowTDot    [  true    true    false    true    true     false    false   false   ] def
+/CMHighFreqs [ 133.87  126.491 133.843  108.503 102.523  100.402   94.8683 63.2456 ] def
+/YHighFreqs  [ 127.0   120.0   126.975  115.455 109.091   95.25    90.0    60.0    ] def
+/KHighFreqs  [ 119.737 113.137 119.713  128.289 121.218   89.8026  84.8528 63.6395 ] def
+/CHighAngles [  71.5651 71.5651 71.5651  70.0169 70.0169  71.5651  71.5651 71.5651 ] def
+/MHighAngles [  18.4349 18.4349 18.4349  19.9831 19.9831  18.4349  18.4349 18.4349 ] def
+/YHighTDot   [  false   false   true     false   false    true     true    false   ] def
+/PatFreq     [	10.5833 10.0     9.4055  10.5833 10.0	  10.5833  10.0	   9.375   ] def
+%
+% PostScript Level 2 printers contain an "Accurate Screens" feature which can
+% improve process separation rendering at the expense of compute time. This 
+% flag is ignored by PostScript Level 1 printers.
+/FMUseAcccurateScreens true def
+%
+% The following PostScript procedure defines the spot function that Frame
+% products will use for process separations. You may un-comment-out one of
+% the alternative functions below, or use your own.
+%
+% Dot function
+/FMSpotFunction {abs exch abs 2 copy add 1 gt 
+		{1 sub dup mul exch 1 sub dup mul add 1 sub }
+		{dup mul exch dup mul add 1 exch sub }ifelse } def
+%
+% Line function
+% /FMSpotFunction { pop } def
+%
+% Elipse function
+% /FMSpotFunction { dup 5 mul 8 div mul exch dup mul exch add 
+%		sqrt 1 exch sub } def
+%
+%
+/FMversion (5.0) def 
+/fMLevel1 /languagelevel where {pop languagelevel} {1} ifelse 2 lt def
+/FMPColor
+	fMLevel1 {
+		false
+		/colorimage where {pop pop true} if
+	} {
+		true
+	} ifelse
+def
+/FrameDict 400 dict def 
+systemdict /errordict known not {/errordict 10 dict def
+		errordict /rangecheck {stop} put} if
+% The readline in PS 23.0 doesn't recognize cr's as nl's on AppleTalk
+FrameDict /tmprangecheck errordict /rangecheck get put 
+errordict /rangecheck {FrameDict /bug true put} put 
+FrameDict /bug false put 
+mark 
+% Some PS machines read past the CR, so keep the following 3 lines together!
+currentfile 5 string readline
+00
+0000000000
+cleartomark 
+errordict /rangecheck FrameDict /tmprangecheck get put 
+FrameDict /bug get { 
+	/readline {
+		/gstring exch def
+		/gfile exch def
+		/gindex 0 def
+		{
+			gfile read pop 
+			dup 10 eq {exit} if 
+			dup 13 eq {exit} if 
+			gstring exch gindex exch put 
+			/gindex gindex 1 add def 
+		} loop
+		pop 
+		gstring 0 gindex getinterval true 
+		} bind def
+	} if
+/FMshowpage /showpage load def
+/FMquit /quit load def
+/FMFAILURE { 
+	dup = flush 
+	FMshowpage 
+	/Helvetica findfont 12 scalefont setfont
+	72 200 moveto show
+	72 220 moveto show
+	FMshowpage 
+	FMquit 
+	} def 
+/FMVERSION {
+	FMversion ne {
+		(Frame product version does not match ps_prolog!  Check installation;)
+		(also check ~/fminit and ./fminit for old versions) FMFAILURE
+		} if
+	} def 
+/FMBADEPSF { 
+	(Adobe's PostScript Language Reference Manual, 2nd Edition, section H.2.4)
+	(says your EPS file is not valid, as it calls X              )
+	dup dup (X) search pop exch pop exch pop length 
+	5 -1 roll 
+	putinterval 
+	FMFAILURE
+	} def
+/fmConcatProcs
+	{
+	/proc2 exch cvlit def/proc1 exch cvlit def/newproc proc1 length proc2 length add array def
+	newproc 0 proc1 putinterval newproc proc1 length proc2 putinterval newproc cvx
+}def
+FrameDict begin [
+	/ALDsave
+	/FMdicttop
+	/FMoptop
+	/FMpointsize
+	/FMsaveobject
+	/b
+	/bitmapsave
+	/blut
+	/bpside
+	/bs
+	/bstring
+	/bwidth
+	/c
+	/cf
+	/cs
+	/cynu
+	/depth
+	/edown
+	/fh
+	/fillvals
+	/fw
+	/fx
+	/fy
+	/g
+	/gfile
+	/gindex
+	/grnt
+	/gryt
+	/gstring
+	/height
+	/hh
+	/i
+	/im
+	/indx
+	/is
+	/k
+	/kk
+	/landscape
+	/lb
+	/len
+	/llx
+	/lly
+	/m
+	/magu
+	/manualfeed
+	/n
+	/offbits
+	/onbits
+	/organgle
+	/orgbangle
+	/orgbfreq
+	/orgbproc
+	/orgbxfer
+	/orgfreq
+	/orggangle
+	/orggfreq
+	/orggproc
+	/orggxfer
+	/orgmatrix
+	/orgproc
+	/orgrangle
+	/orgrfreq
+	/orgrproc
+	/orgrxfer
+	/orgxfer
+	/pagesave
+	/paperheight
+	/papersizedict
+	/paperwidth
+	/pos
+	/pwid
+	/r
+	/rad
+	/redt
+	/sl
+	/str
+	/tran
+	/u
+	/urx
+	/ury
+	/val
+	/width
+	/width
+	/ws
+	/ww
+	/x
+	/x1
+	/x2
+	/xindex
+	/xpoint
+	/xscale
+	/xx
+	/y
+	/y1
+	/y2
+	/yelu
+	/yindex
+	/ypoint
+	/yscale
+	/yy
+] { 0 def } forall
+/FmBD {bind def} bind def
+systemdict /pdfmark known {
+	/fMAcrobat true def
+	
+	/FmPD /pdfmark load def
+	
+	
+	/FmPT /show load def
+	
+	
+	currentdistillerparams /CoreDistVersion get 2000 ge {
+	
+		
+		/FmPD2 /pdfmark load def
+		
+		
+		
+		
+		
+		/FmPA { mark exch /Dest exch 5 3 roll 
+				/View [ /XYZ null 6 -2 roll FmDC exch pop null] /DEST FmPD 
+		}FmBD
+	} {
+		
+		/FmPD2 /cleartomark load def
+		/FmPA {pop pop pop}FmBD
+	} ifelse
+} {
+	
+	/fMAcrobat false def
+	/FmPD /cleartomark load def
+	/FmPD2 /cleartomark load def
+	/FmPT /pop load def
+	/FmPA {pop pop pop}FmBD
+} ifelse
+/FmDC {
+	transform fMDefaultMatrix itransform cvi exch cvi exch
+}FmBD
+/FmBx {
+	dup 3 index lt {3 1 roll exch} if 
+	1 index 4 index lt {4 -1 roll 3 1 roll exch 4 1 roll} if
+}FmBD
+/FMnone 0 def
+/FMcyan 1 def
+/FMmagenta 2 def
+/FMyellow 3 def
+/FMblack 4 def
+/FMcustom 5 def
+/fMNegative false def 
+/FrameSepIs FMnone def 
+/FrameSepBlack 0 def
+/FrameSepYellow 0 def
+/FrameSepMagenta 0 def
+/FrameSepCyan 0 def
+/FrameSepRed 1 def
+/FrameSepGreen 1 def
+/FrameSepBlue 1 def
+/FrameCurGray 1 def
+/FrameCurPat null def
+/FrameCurColors [ 0 0 0 1 0 0 0 ] def 
+/FrameColorEpsilon .001 def	
+/eqepsilon {		
+	sub dup 0 lt {neg} if
+	FrameColorEpsilon le
+} bind def
+/FrameCmpColorsCMYK { 
+	2 copy 0 get exch 0 get eqepsilon {
+		2 copy 1 get exch 1 get eqepsilon {
+			2 copy 2 get exch 2 get eqepsilon {
+				3 get exch 3 get eqepsilon
+			} {pop pop false} ifelse
+		}{pop pop false} ifelse
+	} {pop pop false} ifelse
+} bind def
+/FrameCmpColorsRGB { 
+	2 copy 4 get exch 0 get eqepsilon {
+		2 copy 5 get exch 1 get eqepsilon {
+			6 get exch 2 get eqepsilon
+		}{pop pop false} ifelse
+	} {pop pop false} ifelse
+} bind def
+/RGBtoCMYK { 
+	1 exch sub 
+	3 1 roll 
+	1 exch sub 
+	3 1 roll 
+	1 exch sub 
+	3 1 roll 
+	3 copy 
+	2 copy 
+	le { pop } { exch pop } ifelse 
+	2 copy 
+	le { pop } { exch pop } ifelse 
+	dup dup dup 
+	6 1 roll 
+	4 1 roll 
+	7 1 roll 
+	sub 
+	6 1 roll 
+	sub 
+	5 1 roll 
+	sub 
+	4 1 roll 
+} bind def
+/CMYKtoRGB { 
+	dup dup 4 -1 roll add 						  
+	5 1 roll 3 -1 roll add 						  
+	4 1 roll add 								  
+	1 exch sub dup 0 lt {pop 0} if 3 1 roll 	  
+	1 exch sub dup 0 lt {pop 0} if exch 	      
+	1 exch sub dup 0 lt {pop 0} if exch	  		  
+} bind def
+/FrameSepInit {
+	1.0 RealSetgray
+} bind def
+/FrameSetSepColor { 
+	/FrameSepBlue exch def
+	/FrameSepGreen exch def
+	/FrameSepRed exch def
+	/FrameSepBlack exch def
+	/FrameSepYellow exch def
+	/FrameSepMagenta exch def
+	/FrameSepCyan exch def
+	/FrameSepIs FMcustom def
+	setCurrentScreen	
+} bind def
+/FrameSetCyan {
+	/FrameSepBlue 1.0 def
+	/FrameSepGreen 1.0 def
+	/FrameSepRed 0.0 def
+	/FrameSepBlack 0.0 def
+	/FrameSepYellow 0.0 def
+	/FrameSepMagenta 0.0 def
+	/FrameSepCyan 1.0 def
+	/FrameSepIs FMcyan def
+	setCurrentScreen	
+} bind def
+ 
+/FrameSetMagenta {
+	/FrameSepBlue 1.0 def
+	/FrameSepGreen 0.0 def
+	/FrameSepRed 1.0 def
+	/FrameSepBlack 0.0 def
+	/FrameSepYellow 0.0 def
+	/FrameSepMagenta 1.0 def
+	/FrameSepCyan 0.0 def
+	/FrameSepIs FMmagenta def
+	setCurrentScreen
+} bind def
+ 
+/FrameSetYellow {
+	/FrameSepBlue 0.0 def
+	/FrameSepGreen 1.0 def
+	/FrameSepRed 1.0 def
+	/FrameSepBlack 0.0 def
+	/FrameSepYellow 1.0 def
+	/FrameSepMagenta 0.0 def
+	/FrameSepCyan 0.0 def
+	/FrameSepIs FMyellow def
+	setCurrentScreen
+} bind def
+ 
+/FrameSetBlack {
+	/FrameSepBlue 0.0 def
+	/FrameSepGreen 0.0 def
+	/FrameSepRed 0.0 def
+	/FrameSepBlack 1.0 def
+	/FrameSepYellow 0.0 def
+	/FrameSepMagenta 0.0 def
+	/FrameSepCyan 0.0 def
+	/FrameSepIs FMblack def
+	setCurrentScreen
+} bind def
+ 
+/FrameNoSep { 
+	/FrameSepIs FMnone def
+	setCurrentScreen
+} bind def
+/FrameSetSepColors { 
+	FrameDict begin
+	[ exch 1 add 1 roll ]
+	/FrameSepColors  
+	exch def end
+	} bind def
+/FrameColorInSepListCMYK { 
+	FrameSepColors {  
+       		exch dup 3 -1 roll 
+       		FrameCmpColorsCMYK 
+       		{ pop true exit } if
+    	} forall 
+	dup true ne {pop false} if
+	} bind def
+/FrameColorInSepListRGB { 
+	FrameSepColors {  
+       		exch dup 3 -1 roll 
+       		FrameCmpColorsRGB 
+       		{ pop true exit } if
+    	} forall 
+	dup true ne {pop false} if
+	} bind def
+/RealSetgray /setgray load def
+/RealSetrgbcolor /setrgbcolor load def
+/RealSethsbcolor /sethsbcolor load def
+end 
+/setgray { 
+	FrameDict begin
+	FrameSepIs FMnone eq
+		{ RealSetgray } 
+		{ 
+		FrameSepIs FMblack eq 
+			{ RealSetgray } 
+			{ FrameSepIs FMcustom eq 
+			  FrameSepRed 0 eq and
+			  FrameSepGreen 0 eq and
+			  FrameSepBlue 0 eq and {
+			  	RealSetgray
+			  } {
+				1 RealSetgray pop 
+			  } ifelse
+			} ifelse
+		} ifelse
+	end
+} bind def
+/setrgbcolor { 
+	FrameDict begin
+	FrameSepIs FMnone eq
+	{  RealSetrgbcolor }
+	{
+		3 copy [ 4 1 roll ] 
+		FrameColorInSepListRGB
+		{
+				FrameSepBlue eq exch 
+			 	FrameSepGreen eq and exch 
+			 	FrameSepRed eq and
+			 	{ 0 } { 1 } ifelse
+		}
+		{
+			FMPColor {
+				RealSetrgbcolor
+				currentcmykcolor
+			} {
+				RGBtoCMYK
+			} ifelse
+			FrameSepIs FMblack eq
+			{1.0 exch sub 4 1 roll pop pop pop} {
+			FrameSepIs FMyellow eq
+			{pop 1.0 exch sub 3 1 roll pop pop} {
+			FrameSepIs FMmagenta eq
+			{pop pop 1.0 exch sub exch pop } {
+			FrameSepIs FMcyan eq
+			{pop pop pop 1.0 exch sub } 
+			{pop pop pop pop 1} ifelse } ifelse } ifelse } ifelse 
+		} ifelse
+		RealSetgray
+	} 
+	ifelse
+	end
+} bind def
+/sethsbcolor {
+	FrameDict begin
+	FrameSepIs FMnone eq 
+	{ RealSethsbcolor } 
+	{
+		RealSethsbcolor 
+		currentrgbcolor  
+		setrgbcolor 
+	} 
+	ifelse
+	end
+} bind def
+FrameDict begin
+/setcmykcolor where {
+	pop /RealSetcmykcolor /setcmykcolor load def
+} {
+	/RealSetcmykcolor {
+		4 1 roll
+		3 { 3 index add 0 max 1 min 1 exch sub 3 1 roll} repeat 
+		RealSetrgbcolor pop
+	} bind def
+} ifelse
+userdict /setcmykcolor { 
+		FrameDict begin
+		FrameSepIs FMnone eq
+		{ RealSetcmykcolor } 
+		{
+			4 copy [ 5 1 roll ]
+			FrameColorInSepListCMYK
+			{
+				FrameSepBlack eq exch 
+				FrameSepYellow eq and exch 
+				FrameSepMagenta eq and exch 
+				FrameSepCyan eq and 
+				{ 0 } { 1 } ifelse
+			}
+			{
+				FrameSepIs FMblack eq
+				{1.0 exch sub 4 1 roll pop pop pop} {
+				FrameSepIs FMyellow eq
+				{pop 1.0 exch sub 3 1 roll pop pop} {
+				FrameSepIs FMmagenta eq
+				{pop pop 1.0 exch sub exch pop } {
+				FrameSepIs FMcyan eq
+				{pop pop pop 1.0 exch sub } 
+				{pop pop pop pop 1} ifelse } ifelse } ifelse } ifelse 
+			} ifelse
+			RealSetgray
+		}
+		ifelse
+		end
+	} bind put
+fMLevel1 { 
+	
+	
+	
+	/patScreenDict 7 dict dup begin
+		<0f1e3c78f0e1c387> [ 45  { pop } {exch pop} 		.5   2 sqrt] FmBD
+		<0f87c3e1f0783c1e> [ 135 { pop } {exch pop}			.5   2 sqrt] FmBD
+		<cccccccccccccccc> [ 0   { pop } dup				.5   2	   ] FmBD
+		<ffff0000ffff0000> [ 90  { pop } dup				.5   2	   ] FmBD
+		<8142241818244281> [ 45  { 2 copy lt {exch} if pop}	dup .75  2 sqrt] FmBD
+		<03060c183060c081> [ 45  { pop } {exch pop}			.875 2 sqrt] FmBD
+		<8040201008040201> [ 135 { pop } {exch pop}			.875 2 sqrt] FmBD
+	end def
+} { 
+	
+	/patProcDict 5 dict dup begin
+		<0f1e3c78f0e1c387> { 3 setlinewidth -1 -1 moveto 9 9 lineto stroke 
+											4 -4 moveto 12 4 lineto stroke
+											-4 4 moveto 4 12 lineto stroke} bind def
+		<0f87c3e1f0783c1e> { 3 setlinewidth -1 9 moveto 9 -1 lineto stroke 
+											-4 4 moveto 4 -4 lineto stroke
+											4 12 moveto 12 4 lineto stroke} bind def
+		<8142241818244281> { 1 setlinewidth -1 9 moveto 9 -1 lineto stroke
+											-1 -1 moveto 9 9 lineto stroke } bind def
+		<03060c183060c081> { 1 setlinewidth -1 -1 moveto 9 9 lineto stroke 
+											4 -4 moveto 12 4 lineto stroke
+											-4 4 moveto 4 12 lineto stroke} bind def
+		<8040201008040201> { 1 setlinewidth -1 9 moveto 9 -1 lineto stroke 
+											-4 4 moveto 4 -4 lineto stroke
+											4 12 moveto 12 4 lineto stroke} bind def
+	end def
+	/patDict 15 dict dup begin
+		/PatternType 1 def		
+		/PaintType 2 def		
+		/TilingType 3 def		
+		/BBox [ 0 0 8 8 ] def 	
+		/XStep 8 def			
+		/YStep 8 def			
+		/PaintProc {
+			begin
+			patProcDict bstring known {
+				patProcDict bstring get exec
+			} {
+				8 8 true [1 0 0 -1 0 8] bstring imagemask
+			} ifelse
+			end
+		} bind def
+	end def
+} ifelse
+/combineColor {
+    FrameSepIs FMnone eq
+	{
+		graymode fMLevel1 or not {
+			
+			[/Pattern [/DeviceCMYK]] setcolorspace
+			FrameCurColors 0 4 getinterval aload pop FrameCurPat setcolor
+		} {
+			FrameCurColors 3 get 1.0 ge {
+				FrameCurGray RealSetgray
+			} {
+				fMAcrobat not FMPColor graymode and and {
+					0 1 3 { 
+						FrameCurColors exch get
+						1 FrameCurGray sub mul
+					} for
+					RealSetcmykcolor
+				} {
+					4 1 6 {
+						FrameCurColors exch get
+						graymode {
+							1 exch sub 1 FrameCurGray sub mul 1 exch sub
+						} {
+							1.0 lt {FrameCurGray} {1} ifelse
+						} ifelse
+					} for
+					RealSetrgbcolor
+				} ifelse
+			} ifelse
+		} ifelse
+	} { 
+		FrameCurColors 0 4 getinterval aload
+		FrameColorInSepListCMYK {
+			FrameSepBlack eq exch 
+			FrameSepYellow eq and exch 
+			FrameSepMagenta eq and exch 
+			FrameSepCyan eq and
+			FrameSepIs FMcustom eq and
+			{ FrameCurGray } { 1 } ifelse
+		} {
+			FrameSepIs FMblack eq
+			{FrameCurGray 1.0 exch sub mul 1.0 exch sub 4 1 roll pop pop pop} {
+			FrameSepIs FMyellow eq
+			{pop FrameCurGray 1.0 exch sub mul 1.0 exch sub 3 1 roll pop pop} {
+			FrameSepIs FMmagenta eq
+			{pop pop FrameCurGray 1.0 exch sub mul 1.0 exch sub exch pop } {
+			FrameSepIs FMcyan eq
+			{pop pop pop FrameCurGray 1.0 exch sub mul 1.0 exch sub } 
+			{pop pop pop pop 1} ifelse } ifelse } ifelse } ifelse 
+		} ifelse
+		graymode fMLevel1 or not {
+			
+			[/Pattern [/DeviceGray]] setcolorspace
+			FrameCurPat setcolor
+		} { 
+			graymode not fMLevel1 and {
+				
+				dup 1 lt {pop FrameCurGray} if
+			} if
+			RealSetgray
+		} ifelse
+	} ifelse
+} bind def
+/savematrix {
+	orgmatrix currentmatrix pop
+	} bind def
+/restorematrix {
+	orgmatrix setmatrix
+	} bind def
+/fMDefaultMatrix matrix defaultmatrix def
+/fMatrix2 matrix def
+/dpi    72 0 fMDefaultMatrix dtransform
+    dup mul exch   dup mul add   sqrt def
+	
+/freq dpi dup 72 div round dup 0 eq {pop 1} if 8 mul div def
+/sangle 1 0 fMDefaultMatrix dtransform exch atan def
+	sangle fMatrix2 rotate 
+	fMDefaultMatrix fMatrix2 concatmatrix 
+	dup 0 get /sflipx exch def
+	    3 get /sflipy exch def
+/screenIndex {
+	0 1 dpiranges length 1 sub { dup dpiranges exch get 1 sub dpi le {exit} {pop} ifelse } for
+} bind def
+/getCyanScreen {
+	FMUseHighFrequencyScreens { CHighAngles CMHighFreqs} {CLowAngles CMLowFreqs} ifelse
+		screenIndex dup 3 1 roll get 3 1 roll get /FMSpotFunction load
+} bind def
+/getMagentaScreen {
+	FMUseHighFrequencyScreens { MHighAngles CMHighFreqs } {MLowAngles CMLowFreqs} ifelse
+		screenIndex dup 3 1 roll get 3 1 roll get /FMSpotFunction load
+} bind def
+/getYellowScreen {
+	FMUseHighFrequencyScreens { YHighTDot YHighFreqs} { YLowTDot YLowFreqs } ifelse
+		screenIndex dup 3 1 roll get 3 1 roll get { 3 div
+			{2 { 1 add 2 div 3 mul dup floor sub 2 mul 1 sub exch} repeat
+			FMSpotFunction } } {/FMSpotFunction load } ifelse
+			0.0 exch
+} bind def
+/getBlackScreen  {
+	FMUseHighFrequencyScreens { KHighFreqs } { KLowFreqs } ifelse
+		screenIndex get 45.0 /FMSpotFunction load 
+} bind def
+/getSpotScreen {
+	getBlackScreen
+} bind def
+/getCompositeScreen {
+	getBlackScreen
+} bind def
+/FMSetScreen 
+	fMLevel1 { /setscreen load 
+	}{ {
+		8 dict begin
+		/HalftoneType 1 def
+		/SpotFunction exch def
+		/Angle exch def
+		/Frequency exch def
+		/AccurateScreens FMUseAcccurateScreens def
+		currentdict end sethalftone
+	} bind } ifelse
+def
+/setDefaultScreen {
+	FMPColor {
+		orgrxfer cvx orggxfer cvx orgbxfer cvx orgxfer cvx setcolortransfer
+	}
+	{
+		orgxfer cvx settransfer
+	} ifelse
+	orgfreq organgle orgproc cvx setscreen
+} bind def
+/setCurrentScreen {
+	FrameSepIs FMnone eq {
+		FMUseDefaultNoSeparationScreen {
+			setDefaultScreen
+		} {
+			getCompositeScreen FMSetScreen
+		} ifelse
+	} {
+		FrameSepIs FMcustom eq {
+			FMUseDefaultSpotSeparationScreen {
+				setDefaultScreen
+			} {
+				getSpotScreen FMSetScreen
+			} ifelse
+		} {
+			FMUseDefaultProcessSeparationScreen {
+				setDefaultScreen
+			} {
+				FrameSepIs FMcyan eq {
+					getCyanScreen FMSetScreen
+				} {
+					FrameSepIs FMmagenta eq {
+						getMagentaScreen FMSetScreen
+					} {
+						FrameSepIs FMyellow eq {
+							getYellowScreen FMSetScreen
+						} {
+							getBlackScreen FMSetScreen
+						} ifelse
+					} ifelse
+				} ifelse
+			} ifelse
+		} ifelse
+	} ifelse 
+} bind def
+end
+	
+/FMDOCUMENT { 
+	array /FMfonts exch def 
+	/#copies exch def
+	FrameDict begin
+	0 ne /manualfeed exch def
+	/paperheight exch def
+	/paperwidth exch def
+	0 ne /fMNegative exch def 
+	0 ne /edown exch def 
+	/yscale exch def
+	/xscale exch def
+	fMLevel1 {
+		manualfeed {setmanualfeed} if
+		/FMdicttop countdictstack 1 add def 
+		/FMoptop count def 
+		setpapername 
+		manualfeed {true} {papersize} ifelse 
+		{manualpapersize} {false} ifelse 
+		{desperatepapersize} {false} ifelse 
+		{papersizefailure} if
+		count -1 FMoptop {pop pop} for
+		countdictstack -1 FMdicttop {pop end} for 
+		}
+		{2 dict
+		 dup /PageSize [paperwidth paperheight] put
+		 manualfeed {dup /ManualFeed manualfeed put} if
+		 {setpagedevice} stopped {papersizefailure} if
+		}
+	ifelse 
+	
+	FMPColor {
+		currentcolorscreen
+			cvlit /orgproc exch def
+				  /organgle exch def 
+				  /orgfreq exch def
+			cvlit /orgbproc exch def
+				  /orgbangle exch def 
+				  /orgbfreq exch def
+			cvlit /orggproc exch def
+				  /orggangle exch def 
+				  /orggfreq exch def
+			cvlit /orgrproc exch def
+				  /orgrangle exch def 
+				  /orgrfreq exch def
+			currentcolortransfer 
+			fMNegative {
+				1 1 4 { 
+					pop { 1 exch sub } fmConcatProcs 4 1 roll
+				} for
+				4 copy
+				setcolortransfer
+			} if
+			cvlit /orgxfer exch def
+			cvlit /orgbxfer exch def
+			cvlit /orggxfer exch def
+			cvlit /orgrxfer exch def
+	} {
+		currentscreen 
+			cvlit /orgproc exch def
+				  /organgle exch def 
+				  /orgfreq exch def
+				  
+		currenttransfer 
+		fMNegative {
+			{ 1 exch sub } fmConcatProcs
+			dup settransfer
+		} if 
+		cvlit /orgxfer exch def
+	} ifelse
+	end 
+} def 
+/FMBEGINPAGE { 
+	FrameDict begin 
+	/pagesave save def
+	3.86 setmiterlimit
+	/landscape exch 0 ne def
+	landscape { 
+		90 rotate 0 exch dup /pwid exch def neg translate pop 
+	}{
+		pop /pwid exch def
+	} ifelse
+	edown { [-1 0 0 1 pwid 0] concat } if
+	0 0 moveto paperwidth 0 lineto paperwidth paperheight lineto 
+	0 paperheight lineto 0 0 lineto 1 setgray fill
+	xscale yscale scale
+	/orgmatrix matrix def
+	gsave 
+} def 
+/FMENDPAGE {
+	grestore 
+	pagesave restore
+	end 
+	showpage
+	} def 
+/FMFONTDEFINE { 
+	FrameDict begin
+	findfont 
+	ReEncode 
+	1 index exch 
+	definefont 
+	FMfonts 3 1 roll 
+	put
+	end 
+	} def 
+/FMFILLS {
+	FrameDict begin dup
+	array /fillvals exch def
+	dict /patCache exch def
+	end 
+	} def 
+/FMFILL {
+	FrameDict begin
+	 fillvals 3 1 roll put
+	end 
+	} def 
+/FMNORMALIZEGRAPHICS { 
+	newpath
+	1 setlinewidth
+	0 setlinecap
+	0 0 0 sethsbcolor
+	0 setgray 
+	} bind def
+/FMBEGINEPSF { 
+	end 
+	/FMEPSF save def 
+	/showpage {} def 
+% See Adobe's "PostScript Language Reference Manual, 2nd Edition", page 714.
+% "...the following operators MUST NOT be used in an EPS file:" (emphasis ours)
+	/banddevice {(banddevice) FMBADEPSF} def
+	/clear {(clear) FMBADEPSF} def
+	/cleardictstack {(cleardictstack) FMBADEPSF} def 
+	/copypage {(copypage) FMBADEPSF} def
+	/erasepage {(erasepage) FMBADEPSF} def
+	/exitserver {(exitserver) FMBADEPSF} def
+	/framedevice {(framedevice) FMBADEPSF} def
+	/grestoreall {(grestoreall) FMBADEPSF} def
+	/initclip {(initclip) FMBADEPSF} def
+	/initgraphics {(initgraphics) FMBADEPSF} def
+	/quit {(quit) FMBADEPSF} def
+	/renderbands {(renderbands) FMBADEPSF} def
+	/setglobal {(setglobal) FMBADEPSF} def
+	/setpagedevice {(setpagedevice) FMBADEPSF} def
+	/setshared {(setshared) FMBADEPSF} def
+	/startjob {(startjob) FMBADEPSF} def
+	/lettertray {(lettertray) FMBADEPSF} def
+	/letter {(letter) FMBADEPSF} def
+	/lettersmall {(lettersmall) FMBADEPSF} def
+	/11x17tray {(11x17tray) FMBADEPSF} def
+	/11x17 {(11x17) FMBADEPSF} def
+	/ledgertray {(ledgertray) FMBADEPSF} def
+	/ledger {(ledger) FMBADEPSF} def
+	/legaltray {(legaltray) FMBADEPSF} def
+	/legal {(legal) FMBADEPSF} def
+	/statementtray {(statementtray) FMBADEPSF} def
+	/statement {(statement) FMBADEPSF} def
+	/executivetray {(executivetray) FMBADEPSF} def
+	/executive {(executive) FMBADEPSF} def
+	/a3tray {(a3tray) FMBADEPSF} def
+	/a3 {(a3) FMBADEPSF} def
+	/a4tray {(a4tray) FMBADEPSF} def
+	/a4 {(a4) FMBADEPSF} def
+	/a4small {(a4small) FMBADEPSF} def
+	/b4tray {(b4tray) FMBADEPSF} def
+	/b4 {(b4) FMBADEPSF} def
+	/b5tray {(b5tray) FMBADEPSF} def
+	/b5 {(b5) FMBADEPSF} def
+	FMNORMALIZEGRAPHICS 
+	[/fy /fx /fh /fw /ury /urx /lly /llx] {exch def} forall 
+	fx fw 2 div add fy fh 2 div add  translate
+	rotate
+	fw 2 div neg fh 2 div neg translate
+	fw urx llx sub div fh ury lly sub div scale 
+	llx neg lly neg translate 
+	/FMdicttop countdictstack 1 add def 
+	/FMoptop count def 
+	} bind def
+/FMENDEPSF {
+	count -1 FMoptop {pop pop} for 
+	countdictstack -1 FMdicttop {pop end} for 
+	FMEPSF restore
+	FrameDict begin 
+	} bind def
+FrameDict begin 
+/setmanualfeed {
+%%BeginFeature *ManualFeed True
+	 statusdict /manualfeed true put
+%%EndFeature
+	} bind def
+/max {2 copy lt {exch} if pop} bind def
+/min {2 copy gt {exch} if pop} bind def
+/inch {72 mul} def
+/pagedimen { 
+	paperheight sub abs 16 lt exch 
+	paperwidth sub abs 16 lt and
+	{/papername exch def} {pop} ifelse
+	} bind def
+/setpapername { 
+	/papersizedict 14 dict def 
+	papersizedict begin
+	/papername /unknown def 
+		/Letter 8.5 inch 11.0 inch pagedimen
+		/LetterSmall 7.68 inch 10.16 inch pagedimen
+		/Tabloid 11.0 inch 17.0 inch pagedimen
+		/Ledger 17.0 inch 11.0 inch pagedimen
+		/Legal 8.5 inch 14.0 inch pagedimen
+		/Statement 5.5 inch 8.5 inch pagedimen
+		/Executive 7.5 inch 10.0 inch pagedimen
+		/A3 11.69 inch 16.5 inch pagedimen
+		/A4 8.26 inch 11.69 inch pagedimen
+		/A4Small 7.47 inch 10.85 inch pagedimen
+		/B4 10.125 inch 14.33 inch pagedimen
+		/B5 7.16 inch 10.125 inch pagedimen
+	end
+	} bind def
+/papersize {
+	papersizedict begin
+		/Letter {lettertray letter} def
+		/LetterSmall {lettertray lettersmall} def
+		/Tabloid {11x17tray 11x17} def
+		/Ledger {ledgertray ledger} def
+		/Legal {legaltray legal} def
+		/Statement {statementtray statement} def
+		/Executive {executivetray executive} def
+		/A3 {a3tray a3} def
+		/A4 {a4tray a4} def
+		/A4Small {a4tray a4small} def
+		/B4 {b4tray b4} def
+		/B5 {b5tray b5} def
+		/unknown {unknown} def
+	papersizedict dup papername known {papername} {/unknown} ifelse get
+	end
+	statusdict begin stopped end 
+	} bind def
+/manualpapersize {
+	papersizedict begin
+		/Letter {letter} def
+		/LetterSmall {lettersmall} def
+		/Tabloid {11x17} def
+		/Ledger {ledger} def
+		/Legal {legal} def
+		/Statement {statement} def
+		/Executive {executive} def
+		/A3 {a3} def
+		/A4 {a4} def
+		/A4Small {a4small} def
+		/B4 {b4} def
+		/B5 {b5} def
+		/unknown {unknown} def
+	papersizedict dup papername known {papername} {/unknown} ifelse get
+	end
+	stopped 
+	} bind def
+/desperatepapersize {
+	statusdict /setpageparams known
+		{
+		paperwidth paperheight 0 1 
+		statusdict begin
+		{setpageparams} stopped 
+		end
+		} {true} ifelse 
+	} bind def
+/papersizefailure {
+	FMAllowPaperSizeMismatch not
+		{
+(The requested paper size is not available in any currently-installed tray)
+(Edit the PS file to "FMAllowPaperSizeMismatch true" to use default tray)
+		 FMFAILURE } if
+	} def
+/DiacriticEncoding [
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /space /exclam /quotedbl
+/numbersign /dollar /percent /ampersand /quotesingle /parenleft
+/parenright /asterisk /plus /comma /hyphen /period /slash /zero /one
+/two /three /four /five /six /seven /eight /nine /colon /semicolon
+/less /equal /greater /question /at /A /B /C /D /E /F /G /H /I /J /K
+/L /M /N /O /P /Q /R /S /T /U /V /W /X /Y /Z /bracketleft /backslash
+/bracketright /asciicircum /underscore /grave /a /b /c /d /e /f /g /h
+/i /j /k /l /m /n /o /p /q /r /s /t /u /v /w /x /y /z /braceleft /bar
+/braceright /asciitilde /.notdef /Adieresis /Aring /Ccedilla /Eacute
+/Ntilde /Odieresis /Udieresis /aacute /agrave /acircumflex /adieresis
+/atilde /aring /ccedilla /eacute /egrave /ecircumflex /edieresis
+/iacute /igrave /icircumflex /idieresis /ntilde /oacute /ograve
+/ocircumflex /odieresis /otilde /uacute /ugrave /ucircumflex
+/udieresis /dagger /.notdef /cent /sterling /section /bullet
+/paragraph /germandbls /registered /copyright /trademark /acute
+/dieresis /.notdef /AE /Oslash /.notdef /.notdef /.notdef /.notdef
+/yen /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/ordfeminine /ordmasculine /.notdef /ae /oslash /questiondown
+/exclamdown /logicalnot /.notdef /florin /.notdef /.notdef
+/guillemotleft /guillemotright /ellipsis /.notdef /Agrave /Atilde
+/Otilde /OE /oe /endash /emdash /quotedblleft /quotedblright
+/quoteleft /quoteright /.notdef /.notdef /ydieresis /Ydieresis
+/fraction /currency /guilsinglleft /guilsinglright /fi /fl /daggerdbl
+/periodcentered /quotesinglbase /quotedblbase /perthousand
+/Acircumflex /Ecircumflex /Aacute /Edieresis /Egrave /Iacute
+/Icircumflex /Idieresis /Igrave /Oacute /Ocircumflex /.notdef /Ograve
+/Uacute /Ucircumflex /Ugrave /dotlessi /circumflex /tilde /macron
+/breve /dotaccent /ring /cedilla /hungarumlaut /ogonek /caron
+] def
+/ReEncode { 
+	dup 
+	length 
+	dict begin 
+	{
+	1 index /FID ne 
+		{def} 
+		{pop pop} ifelse 
+	} forall 
+	0 eq {/Encoding DiacriticEncoding def} if 
+	currentdict 
+	end 
+	} bind def
+FMPColor 
+	
+	{
+	/BEGINBITMAPCOLOR { 
+		BITMAPCOLOR} def
+	/BEGINBITMAPCOLORc { 
+		BITMAPCOLORc} def
+	/BEGINBITMAPTRUECOLOR { 
+		BITMAPTRUECOLOR } def
+	/BEGINBITMAPTRUECOLORc { 
+		BITMAPTRUECOLORc } def
+	/BEGINBITMAPCMYK { 
+		BITMAPCMYK } def
+	/BEGINBITMAPCMYKc { 
+		BITMAPCMYKc } def
+	}
+	
+	{
+	/BEGINBITMAPCOLOR { 
+		BITMAPGRAY} def
+	/BEGINBITMAPCOLORc { 
+		BITMAPGRAYc} def
+	/BEGINBITMAPTRUECOLOR { 
+		BITMAPTRUEGRAY } def
+	/BEGINBITMAPTRUECOLORc { 
+		BITMAPTRUEGRAYc } def
+	/BEGINBITMAPCMYK { 
+		BITMAPCMYKGRAY } def
+	/BEGINBITMAPCMYKc { 
+		BITMAPCMYKGRAYc } def
+	}
+ifelse
+/K { 
+	FMPrintAllColorsAsBlack {
+		dup 1 eq 2 index 1 eq and 3 index 1 eq and not
+			{7 {pop} repeat 0 0 0 1 0 0 0} if
+	} if 
+	FrameCurColors astore 
+	pop combineColor
+} bind def
+/graymode true def
+fMLevel1 {
+	/fmGetFlip {
+		fMatrix2 exch get mul 0 lt { -1 } { 1 } ifelse
+	} FmBD
+} if
+/setPatternMode {
+	fMLevel1 {
+		2 index patScreenDict exch known {
+			pop pop
+			patScreenDict exch get aload pop 
+			freq 								
+			mul									
+			5 2 roll							
+			fMatrix2 currentmatrix 1 get 0 ne {
+				3 -1 roll 90 add 3 1 roll 		
+				sflipx 1 fmGetFlip sflipy 2 fmGetFlip neg mul
+			} {  								
+				sflipx 0 fmGetFlip sflipy 3 fmGetFlip mul 
+			} ifelse
+			0 lt {exch pop} {pop} ifelse 		
+			fMNegative { 
+				{neg} fmConcatProcs 			
+			} if
+			bind
+			
+			
+			
+			systemdict /setscreen get exec		
+			/FrameCurGray exch def
+		} {
+			/bwidth  exch def
+			/bpside  exch def
+			/bstring exch def
+			/onbits 0 def  /offbits 0 def
+			freq sangle landscape {90 add} if 
+				{/ypoint exch def
+				 /xpoint exch def
+				 /xindex xpoint 1 add 2 div bpside mul cvi def
+				 /yindex ypoint 1 add 2 div bpside mul cvi def
+				 bstring yindex bwidth mul xindex 8 idiv add get
+				 1 7 xindex 8 mod sub bitshift and 0 ne fMNegative {not} if
+				 {/onbits  onbits  1 add def 1}
+				 {/offbits offbits 1 add def 0}
+				 ifelse
+				}
+				setscreen
+			offbits offbits onbits add div fMNegative {1.0 exch sub} if
+			/FrameCurGray exch def
+		} ifelse
+	} { 
+		pop pop
+		dup patCache exch known {
+			patCache exch get
+		} { 
+			dup
+			patDict /bstring 3 -1 roll put
+			patDict 
+			9 PatFreq screenIndex get div dup matrix scale
+			makepattern
+			dup 
+			patCache 4 -1 roll 3 -1 roll put
+		} ifelse
+		/FrameCurGray 0 def
+		/FrameCurPat exch def
+	} ifelse
+	/graymode false def
+	combineColor
+} bind def
+/setGrayScaleMode {
+	graymode not {
+		/graymode true def
+		fMLevel1 {
+			setCurrentScreen
+		} if
+	} if
+	/FrameCurGray exch def
+	combineColor
+} bind def
+/normalize {
+	transform round exch round exch itransform
+	} bind def
+/dnormalize {
+	dtransform round exch round exch idtransform
+	} bind def
+/lnormalize { 
+	0 dtransform exch cvi 2 idiv 2 mul 1 add exch idtransform pop
+	} bind def
+/H { 
+	lnormalize setlinewidth
+	} bind def
+/Z {
+	setlinecap
+	} bind def
+	
+/PFill {
+	graymode fMLevel1 or not {
+		gsave 1 setgray eofill grestore
+	} if
+} bind def
+/PStroke {
+	graymode fMLevel1 or not {
+		gsave 1 setgray stroke grestore
+	} if
+	stroke
+} bind def
+/X { 
+	fillvals exch get
+	dup type /stringtype eq
+	{8 1 setPatternMode} 
+	{setGrayScaleMode}
+	ifelse
+	} bind def
+/V { 
+	PFill gsave eofill grestore
+	} bind def
+/Vclip {
+	clip
+	} bind def
+/Vstrk {
+	currentlinewidth exch setlinewidth PStroke setlinewidth
+	} bind def
+/N { 
+	PStroke
+	} bind def
+/Nclip {
+	strokepath clip newpath
+	} bind def
+/Nstrk {
+	currentlinewidth exch setlinewidth PStroke setlinewidth
+	} bind def
+/M {newpath moveto} bind def
+/E {lineto} bind def
+/D {curveto} bind def
+/O {closepath} bind def
+/L { 
+ 	/n exch def
+	newpath
+	normalize
+	moveto 
+	2 1 n {pop normalize lineto} for
+	} bind def
+/Y { 
+	L 
+	closepath
+	} bind def
+/R { 
+	/y2 exch def
+	/x2 exch def
+	/y1 exch def
+	/x1 exch def
+	x1 y1
+	x2 y1
+	x2 y2
+	x1 y2
+	4 Y 
+	} bind def
+/rarc 
+	{rad 
+	 arcto
+	} bind def
+/RR { 
+	/rad exch def
+	normalize
+	/y2 exch def
+	/x2 exch def
+	normalize
+	/y1 exch def
+	/x1 exch def
+	mark
+	newpath
+	{
+	x1 y1 rad add moveto
+	x1 y2 x2 y2 rarc
+	x2 y2 x2 y1 rarc
+	x2 y1 x1 y1 rarc
+	x1 y1 x1 y2 rarc
+	closepath
+	} stopped {x1 y1 x2 y2 R} if 
+	cleartomark
+	} bind def
+/RRR { 
+	/rad exch def
+	normalize /y4 exch def /x4 exch def
+	normalize /y3 exch def /x3 exch def
+	normalize /y2 exch def /x2 exch def
+	normalize /y1 exch def /x1 exch def
+	newpath
+	normalize moveto 
+	mark
+	{
+	x2 y2 x3 y3 rarc
+	x3 y3 x4 y4 rarc
+	x4 y4 x1 y1 rarc
+	x1 y1 x2 y2 rarc
+	closepath
+	} stopped
+	 {x1 y1 x2 y2 x3 y3 x4 y4 newpath moveto lineto lineto lineto closepath} if
+	cleartomark
+	} bind def
+/C { 
+	grestore
+	gsave
+	R 
+	clip
+	setCurrentScreen
+} bind def
+/CP { 
+	grestore
+	gsave
+	Y 
+	clip
+	setCurrentScreen
+} bind def
+/F { 
+	FMfonts exch get
+	FMpointsize scalefont
+	setfont
+	} bind def
+/Q { 
+	/FMpointsize exch def
+	F 
+	} bind def
+/T { 
+	moveto show
+	} bind def
+/RF { 
+	rotate
+	0 ne {-1 1 scale} if
+	} bind def
+/TF { 
+	gsave
+	moveto 
+	RF
+	show
+	grestore
+	} bind def
+/P { 
+	moveto
+	0 32 3 2 roll widthshow
+	} bind def
+/PF { 
+	gsave
+	moveto 
+	RF
+	0 32 3 2 roll widthshow
+	grestore
+	} bind def
+/S { 
+	moveto
+	0 exch ashow
+	} bind def
+/SF { 
+	gsave
+	moveto
+	RF
+	0 exch ashow
+	grestore
+	} bind def
+/B { 
+	moveto
+	0 32 4 2 roll 0 exch awidthshow
+	} bind def
+/BF { 
+	gsave
+	moveto
+	RF
+	0 32 4 2 roll 0 exch awidthshow
+	grestore
+	} bind def
+/G { 
+	gsave
+	newpath
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath 
+	PFill fill
+	grestore
+	} bind def
+/Gstrk {
+	savematrix
+    newpath
+    2 index 2 div add exch 3 index 2 div sub exch 
+    normalize 2 index 2 div sub exch 3 index 2 div add exch 
+    translate
+    scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    restorematrix
+    currentlinewidth exch setlinewidth PStroke setlinewidth
+    } bind def
+/Gclip { 
+	newpath
+	savematrix
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath 
+	clip newpath
+	restorematrix
+	} bind def
+/GG { 
+	gsave
+	newpath
+	normalize translate 0.0 0.0 moveto 
+	rotate 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath
+	PFill
+	fill
+	grestore
+	} bind def
+/GGclip { 
+	savematrix
+	newpath
+    normalize translate 0.0 0.0 moveto 
+    rotate 
+    dnormalize scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    closepath
+	clip newpath
+	restorematrix
+	} bind def
+/GGstrk { 
+	savematrix
+    newpath
+    normalize translate 0.0 0.0 moveto 
+    rotate 
+    dnormalize scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    closepath 
+	restorematrix
+    currentlinewidth exch setlinewidth PStroke setlinewidth
+	} bind def
+/A { 
+	gsave
+	savematrix
+	newpath
+	2 index 2 div add exch 3 index 2 div sub exch 
+	normalize 2 index 2 div sub exch 3 index 2 div add exch 
+	translate 
+	scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	restorematrix
+	PStroke
+	grestore
+	} bind def
+/Aclip {
+	newpath
+	savematrix
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath 
+	strokepath clip newpath
+	restorematrix
+} bind def
+/Astrk {
+	Gstrk
+} bind def
+/AA { 
+	gsave
+	savematrix
+	newpath
+	
+	3 index 2 div add exch 4 index 2 div sub exch 
+	
+	normalize 3 index 2 div sub exch 4 index 2 div add exch
+	translate 
+	rotate 
+	scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	restorematrix
+	PStroke
+	grestore
+	} bind def
+/AAclip {
+	savematrix
+	newpath
+    normalize translate 0.0 0.0 moveto 
+    rotate 
+    dnormalize scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    closepath
+	strokepath clip newpath
+	restorematrix
+} bind def
+/AAstrk {
+	GGstrk
+} bind def
+/BEGINPRINTCODE { 
+	/FMdicttop countdictstack 1 add def 
+	/FMoptop count 7 sub def 
+	/FMsaveobject save def
+	userdict begin 
+	/showpage {} def 
+	FMNORMALIZEGRAPHICS 
+	3 index neg 3 index neg translate
+	} bind def
+/ENDPRINTCODE {
+	count -1 FMoptop {pop pop} for 
+	countdictstack -1 FMdicttop {pop end} for 
+	FMsaveobject restore 
+	} bind def
+/gn { 
+	0 
+	{	46 mul 
+		cf read pop 
+		32 sub 
+		dup 46 lt {exit} if 
+		46 sub add 
+		} loop
+	add 
+	} bind def
+/cfs { 
+	/str sl string def 
+	0 1 sl 1 sub {str exch val put} for 
+	str def 
+	} bind def
+/ic [ 
+	0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0223
+	0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0223
+	0
+	{0 hx} {1 hx} {2 hx} {3 hx} {4 hx} {5 hx} {6 hx} {7 hx} {8 hx} {9 hx}
+	{10 hx} {11 hx} {12 hx} {13 hx} {14 hx} {15 hx} {16 hx} {17 hx} {18 hx}
+	{19 hx} {gn hx} {0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12}
+	{13} {14} {15} {16} {17} {18} {19} {gn} {0 wh} {1 wh} {2 wh} {3 wh}
+	{4 wh} {5 wh} {6 wh} {7 wh} {8 wh} {9 wh} {10 wh} {11 wh} {12 wh}
+	{13 wh} {14 wh} {gn wh} {0 bl} {1 bl} {2 bl} {3 bl} {4 bl} {5 bl} {6 bl}
+	{7 bl} {8 bl} {9 bl} {10 bl} {11 bl} {12 bl} {13 bl} {14 bl} {gn bl}
+	{0 fl} {1 fl} {2 fl} {3 fl} {4 fl} {5 fl} {6 fl} {7 fl} {8 fl} {9 fl}
+	{10 fl} {11 fl} {12 fl} {13 fl} {14 fl} {gn fl}
+	] def
+/ms { 
+	/sl exch def 
+	/val 255 def 
+	/ws cfs 
+	/im cfs 
+	/val 0 def 
+	/bs cfs 
+	/cs cfs 
+	} bind def
+400 ms 
+/ip { 
+	is 
+	0 
+	cf cs readline pop 
+	{	ic exch get exec 
+		add 
+		} forall 
+	pop 
+	
+	} bind def
+/rip { 
+	   
+	  
+	  bis ris copy pop 
+      is
+      0
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+	  pop pop 
+	  ris gis copy pop 
+	  dup is exch 
+	  
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+	  pop pop
+	  gis bis copy pop 
+	  dup add is exch 
+	  
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+      pop 
+      
+      } bind def
+/rip4 { 
+	   
+	  
+	  kis cis copy pop 
+      is
+      0
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+	  pop pop 
+	  cis mis copy pop 
+	  dup is exch 
+	  
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+	  pop pop
+	  mis yis copy pop 
+	  dup dup add is exch 
+	  
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+	  pop pop
+	  yis kis copy pop 
+	  3 mul is exch 
+	  
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+      pop 
+      
+      } bind def
+/wh { 
+	/len exch def 
+	/pos exch def 
+	ws 0 len getinterval im pos len getinterval copy pop
+	pos len 
+	} bind def
+/bl { 
+	/len exch def 
+	/pos exch def 
+	bs 0 len getinterval im pos len getinterval copy pop
+	pos len 
+	} bind def
+/s1 1 string def
+/fl { 
+	/len exch def 
+	/pos exch def 
+	/val cf s1 readhexstring pop 0 get def
+	pos 1 pos len add 1 sub {im exch val put} for
+	pos len 
+	} bind def
+/hx { 
+	3 copy getinterval 
+	cf exch readhexstring pop pop 
+	} bind def
+/wbytes { 
+      dup dup
+      8 gt { pop 8 idiv mul }
+      { 8 eq {pop} {1 eq {7 add 8 idiv} {3 add 4 idiv} ifelse} ifelse } ifelse
+	} bind def
+/BEGINBITMAPBWc { 
+	1 {} COMMONBITMAPc
+	} bind def
+/BEGINBITMAPGRAYc { 
+	8 {} COMMONBITMAPc
+	} bind def
+/BEGINBITMAP2BITc { 
+	2 {} COMMONBITMAPc
+	} bind def
+/COMMONBITMAPc { 
+		 
+	/cvtProc exch def
+	/depth exch def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/height exch def /width exch def
+	/lb width depth wbytes def 
+	sl lb lt {lb ms} if 
+	/bitmapsave save def 
+	cvtProc                
+	/is im 0 lb getinterval def 
+	ws 0 lb getinterval is copy pop 
+	/cf currentfile def 
+	width height depth [width 0 0 height neg 0 height] 
+	{ip} image 
+	bitmapsave restore 
+	grestore
+	} bind def
+/BEGINBITMAPBW { 
+	1 {} COMMONBITMAP
+	} bind def
+/BEGINBITMAPGRAY { 
+	8 {} COMMONBITMAP
+	} bind def
+/BEGINBITMAP2BIT { 
+	2 {} COMMONBITMAP
+	} bind def
+/COMMONBITMAP { 
+	/cvtProc exch def
+	/depth exch def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/height exch def /width exch def
+	/bitmapsave save def 
+	cvtProc              
+	/is width depth wbytes string def
+	/cf currentfile def 
+	width height depth [width 0 0 height neg 0 height] 
+	{cf is readhexstring pop} image
+	bitmapsave restore 
+	grestore
+	} bind def
+/ngrayt 256 array def
+/nredt 256 array def
+/nbluet 256 array def
+/ngreent 256 array def
+fMLevel1 {
+/colorsetup {
+	currentcolortransfer
+	/gryt exch def
+	/blut exch def
+	/grnt exch def
+	/redt exch def
+	0 1 255 {
+		/indx exch def
+		/cynu 1 red indx get 255 div sub def
+		/magu 1 green indx get 255 div sub def
+		/yelu 1 blue indx get 255 div sub def
+		/kk cynu magu min yelu min def
+		/u kk currentundercolorremoval exec def
+%		/u 0 def
+		nredt indx 1 0 cynu u sub max sub redt exec put
+		ngreent indx 1 0 magu u sub max sub grnt exec put
+		nbluet indx 1 0 yelu u sub max sub blut exec put
+		ngrayt indx 1 kk currentblackgeneration exec sub gryt exec put
+	} for
+	{255 mul cvi nredt exch get}
+	{255 mul cvi ngreent exch get}
+	{255 mul cvi nbluet exch get}
+	{255 mul cvi ngrayt exch get}
+	setcolortransfer
+	{pop 0} setundercolorremoval
+	{} setblackgeneration
+	} bind def
+}
+{
+/colorSetup2 {
+	[ /Indexed /DeviceRGB 255 
+		{dup red exch get 255 div 
+		 exch dup green exch get 255 div 
+		 exch blue exch get 255 div}
+	] setcolorspace
+} bind def
+} ifelse
+/fakecolorsetup {
+	/tran 256 string def
+	0 1 255 {/indx exch def 
+		tran indx
+		red indx get 77 mul
+		green indx get 151 mul
+		blue indx get 28 mul
+		add add 256 idiv put} for
+	currenttransfer
+	{255 mul cvi tran exch get 255.0 div}
+	exch fmConcatProcs settransfer
+} bind def
+/BITMAPCOLOR { 
+	/depth 8 def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/height exch def /width exch def
+	/bitmapsave save def
+	fMLevel1 {	
+		colorsetup
+		/is width depth wbytes string def
+		/cf currentfile def 
+		width height depth [width 0 0 height neg 0 height] 
+		{cf is readhexstring pop} {is} {is} true 3 colorimage 
+	} {
+		colorSetup2
+		/is width depth wbytes string def
+		/cf currentfile def 
+		7 dict dup begin
+			/ImageType 1 def
+			/Width width def
+			/Height height def
+			/ImageMatrix [width 0 0 height neg 0 height] def
+			/DataSource {cf is readhexstring pop} bind def
+			/BitsPerComponent depth def
+			/Decode [0 255] def
+		end image	
+	} ifelse
+	bitmapsave restore 
+	grestore
+	} bind def
+/BITMAPCOLORc { 
+	/depth 8 def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/height exch def /width exch def
+	/lb width depth wbytes def 
+	sl lb lt {lb ms} if 
+	/bitmapsave save def 
+	fMLevel1 {	
+		colorsetup
+		/is im 0 lb getinterval def 
+		ws 0 lb getinterval is copy pop 
+		/cf currentfile def 
+		width height depth [width 0 0 height neg 0 height] 
+		{ip} {is} {is} true 3 colorimage
+	} {
+		colorSetup2
+		/is im 0 lb getinterval def 
+		ws 0 lb getinterval is copy pop 
+		/cf currentfile def 
+		7 dict dup begin
+			/ImageType 1 def
+			/Width width def
+			/Height height def
+			/ImageMatrix [width 0 0 height neg 0 height] def
+			/DataSource {ip} bind def
+			/BitsPerComponent depth def
+			/Decode [0 255] def
+		end image	
+	} ifelse
+	bitmapsave restore 
+	grestore
+	} bind def
+/BITMAPTRUECOLORc { 
+	/depth 24 def
+        gsave
+ 	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/height exch def /width exch def
+	/lb width depth wbytes def 
+	sl lb lt {lb ms} if 
+	/bitmapsave save def 
+        
+	/is im 0 lb getinterval def	
+	/ris im 0 width getinterval def	
+	/gis im width width getinterval def	
+	/bis im width 2 mul width getinterval def 
+        
+	ws 0 lb getinterval is copy pop 
+	/cf currentfile def 
+	width height 8 [width 0 0 height neg 0 height] 
+	{width rip pop ris} {gis} {bis} true 3 colorimage
+	bitmapsave restore 
+	grestore
+	} bind def
+/BITMAPCMYKc { 
+	/depth 32 def
+        gsave
+ 	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/height exch def /width exch def
+	/lb width depth wbytes def 
+	sl lb lt {lb ms} if 
+	/bitmapsave save def 
+        
+	/is im 0 lb getinterval def	
+	/cis im 0 width getinterval def	
+	/mis im width width getinterval def	
+	/yis im width 2 mul width getinterval def 
+	/kis im width 3 mul width getinterval def 
+        
+	ws 0 lb getinterval is copy pop 
+	/cf currentfile def 
+	width height 8 [width 0 0 height neg 0 height] 
+	{width rip4 pop cis} {mis} {yis} {kis} true 4 colorimage
+	bitmapsave restore 
+	grestore
+	} bind def
+/BITMAPTRUECOLOR { 
+        gsave
+		
+		3 index 2 div add exch	
+		4 index 2 div add exch	
+		translate		
+		rotate			
+		1 index 2 div neg	
+		1 index 2 div neg	
+		translate		
+		scale			
+		/height exch def /width exch def
+        /bitmapsave save def 
+        /is width string def
+        /gis width string def
+        /bis width string def
+        /cf currentfile def 
+        width height 8 [width 0 0 height neg 0 height] 
+        { cf is readhexstring pop } 
+        { cf gis readhexstring pop } 
+        { cf bis readhexstring pop } 
+        true 3 colorimage 
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPCMYK { 
+        gsave
+		
+		3 index 2 div add exch	
+		4 index 2 div add exch	
+		translate		
+		rotate			
+		1 index 2 div neg	
+		1 index 2 div neg	
+		translate		
+		scale			
+		/height exch def /width exch def
+        /bitmapsave save def 
+        /is width string def
+        /mis width string def
+        /yis width string def
+        /kis width string def
+        /cf currentfile def 
+        width height 8 [width 0 0 height neg 0 height] 
+        { cf is readhexstring pop } 
+        { cf mis readhexstring pop } 
+        { cf yis readhexstring pop } 
+        { cf kis readhexstring pop } 
+        true 4 colorimage 
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPTRUEGRAYc { 
+	/depth 24 def
+        gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/height exch def /width exch def
+	/lb width depth wbytes def 
+	sl lb lt {lb ms} if 
+        /bitmapsave save def 
+        
+	/is im 0 lb getinterval def	
+	/ris im 0 width getinterval def	
+	/gis im width width getinterval def	
+	/bis im width 2 mul width getinterval def 
+        ws 0 lb getinterval is copy pop 
+        /cf currentfile def 
+        width height 8 [width 0 0 height neg 0 height] 
+        {width rip pop ris gis bis width gray} image
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPCMYKGRAYc { 
+	/depth 32 def
+        gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/height exch def /width exch def
+	/lb width depth wbytes def 
+	sl lb lt {lb ms} if 
+        /bitmapsave save def 
+        
+	/is im 0 lb getinterval def	
+	/cis im 0 width getinterval def	
+	/mis im width width getinterval def	
+	/yis im width 2 mul width getinterval def 
+	/kis im width 3 mul width getinterval def 
+        ws 0 lb getinterval is copy pop 
+        /cf currentfile def 
+        width height 8 [width 0 0 height neg 0 height] 
+        {width rip pop cis mis yis kis width cgray} image
+        bitmapsave restore 
+        grestore
+        } bind def
+/cgray { 
+        /ww exch def
+        /k exch def
+        /y exch def
+        /m exch def
+        /c exch def
+        0 1 ww 1 sub { /i exch def c i get m i get y i get k i get CMYKtoRGB
+				.144 mul 3 1 roll .587 mul 3 1 roll .299 mul add add
+				c i 3 -1 roll floor cvi put } for
+        c
+ 		} bind def
+/gray { 
+        /ww exch def
+        /b exch def
+        /g exch def
+        /r exch def
+        0 1 ww 1 sub { /i exch def r i get .299 mul g i get .587 mul
+			b i get .114 mul add add r i 3 -1 roll floor cvi put } for
+        r
+        } bind def
+/BITMAPTRUEGRAY { 
+        gsave
+		
+		3 index 2 div add exch	
+		4 index 2 div add exch	
+		translate		
+		rotate			
+		1 index 2 div neg	
+		1 index 2 div neg	
+		translate		
+		scale			
+		/height exch def /width exch def
+        /bitmapsave save def 
+        /is width string def
+        /gis width string def
+        /bis width string def
+        /cf currentfile def 
+        width height 8 [width 0 0 height neg 0 height] 
+        { cf is readhexstring pop 
+          cf gis readhexstring pop 
+          cf bis readhexstring pop width gray}  image
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPCMYKGRAY { 
+        gsave
+		
+		3 index 2 div add exch	
+		4 index 2 div add exch	
+		translate		
+		rotate			
+		1 index 2 div neg	
+		1 index 2 div neg	
+		translate		
+		scale			
+		/height exch def /width exch def
+        /bitmapsave save def 
+        /is width string def
+        /yis width string def
+        /mis width string def
+        /kis width string def
+        /cf currentfile def 
+        width height 8 [width 0 0 height neg 0 height] 
+        { cf is readhexstring pop 
+          cf mis readhexstring pop 
+          cf yis readhexstring pop 
+          cf kis readhexstring pop width cgray}  image
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPGRAY { 
+	8 {fakecolorsetup} COMMONBITMAP
+	} bind def
+/BITMAPGRAYc { 
+	8 {fakecolorsetup} COMMONBITMAPc
+	} bind def
+/ENDBITMAP {
+	} bind def
+end 
+	/ALDmatrix matrix def ALDmatrix currentmatrix pop
+/StartALD {
+	/ALDsave save def
+	 savematrix
+	 ALDmatrix setmatrix
+	} bind def
+/InALD {
+	 restorematrix
+	} bind def
+/DoneALD {
+	 ALDsave restore
+	} bind def
+/I { setdash } bind def
+/J { [] 0 setdash } bind def
+%%EndProlog
+%%BeginSetup
+(5.0) FMVERSION
+1 1 0 0 612 792 0 1 13 FMDOCUMENT
+0 0 /Palatino-Italic FMFONTDEFINE
+1 0 /Palatino-Bold FMFONTDEFINE
+2 0 /Palatino-Roman FMFONTDEFINE
+3 0 /Helvetica-Narrow-Bold FMFONTDEFINE
+4 0 /Courier-Bold FMFONTDEFINE
+5 0 /Helvetica-Bold FMFONTDEFINE
+6 0 /Palatino-BoldItalic FMFONTDEFINE
+32 FMFILLS
+0 0 FMFILL
+1 0.1 FMFILL
+2 0.3 FMFILL
+3 0.5 FMFILL
+4 0.7 FMFILL
+5 0.9 FMFILL
+6 0.97 FMFILL
+7 1 FMFILL
+8 <0f1e3c78f0e1c387> FMFILL
+9 <0f87c3e1f0783c1e> FMFILL
+10 <cccccccccccccccc> FMFILL
+11 <ffff0000ffff0000> FMFILL
+12 <8142241818244281> FMFILL
+13 <03060c183060c081> FMFILL
+14 <8040201008040201> FMFILL
+16 1 FMFILL
+17 0.9 FMFILL
+18 0.7 FMFILL
+19 0.5 FMFILL
+20 0.3 FMFILL
+21 0.1 FMFILL
+22 0.03 FMFILL
+23 0 FMFILL
+24 <f0e1c3870f1e3c78> FMFILL
+25 <f0783c1e0f87c3e1> FMFILL
+26 <3333333333333333> FMFILL
+27 <0000ffff0000ffff> FMFILL
+28 <7ebddbe7e7dbbd7e> FMFILL
+29 <fcf9f3e7cf9f3f7e> FMFILL
+30 <7fbfdfeff7fbfdfe> FMFILL
+%%EndSetup
+%%Page: "1" 1
+%%BeginPaperSize: Letter
+%%EndPaperSize
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+J
+0 0 0 1 0 0 0 K
+108 81 540 117 R
+7 X
+0 0 0 1 0 0 0 K
+V
+0 9 Q
+0 X
+(Revision 2.  July 21, 1996.) 108 100 T
+1 F
+(1) 535.5 100 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+108 513 504 648 R
+7 X
+V
+108 620.45 504 648 C
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+108 620.45 504 648 R
+7 X
+0 0 0 1 0 0 0 K
+V
+108 641.14 270 641.14 2 L
+V
+3 H
+2 Z
+0 X
+N
+108 632.14 270 632.14 2 L
+7 X
+V
+1 H
+0 X
+N
+36 72 576 720 C
+2 30 Q
+0 X
+0 0 0 1 0 0 0 K
+(Dylan VMT) 108 600.45 T
+(ether+W) 262.26 600.45 T
+(in32) 376.62 600.45 T
+(Release Notes) 108 562.45 T
+108 126 486 432 R
+7 X
+V
+2 11 Q
+0 X
+(Revision 2.  July 21, 1996.) 108 424.67 T
+3 16 Q
+(1  Intr) 108 389.33 T
+(oduction) 143.49 389.33 T
+2 11 Q
+(These r) 108 368.67 T
+(elease notes explain:) 143.24 368.67 T
+(\245) 117 348.67 T
+(What the Dylan VMT) 135 348.67 T
+(ether+W) 238.81 348.67 T
+(in32 r) 280.74 348.67 T
+(elease is) 308.24 348.67 T
+(\245) 117 328.67 T
+(Who would want to use the r) 135 328.67 T
+(elease) 276.87 328.67 T
+(\245) 117 308.67 T
+(What featur) 135 308.67 T
+(es the r) 193.04 308.67 T
+(elease pr) 227.87 308.67 T
+(ovides, and what it does not) 270.55 308.67 T
+(\245) 117 288.67 T
+(What kind of Dylan development cycle the r) 135 288.67 T
+(elease supports) 350.6 288.67 T
+(\245) 117 268.67 T
+(Which internal documentation describes the r) 135 268.67 T
+(elease) 356.96 268.67 T
+(\245) 117 248.67 T
+(Whom to r) 135 248.67 T
+(eport newly discover) 187.36 248.67 T
+(ed pr) 289.95 248.67 T
+(oblems and bugs to) 315.44 248.67 T
+(\245) 117 228.67 T
+(Known pr) 135 228.67 T
+(oblems and bugs) 184.48 228.67 T
+(\245) 117 208.67 T
+(How to install the r) 135 208.67 T
+(elease) 229.08 208.67 T
+(\245) 117 188.67 T
+(How to use the r) 135 188.67 T
+(elease, by means of a short example) 215.89 188.67 T
+(\245) 117 168.67 T
+(How to use the r) 135 168.67 T
+(elease alongside other r) 215.89 168.67 T
+(eleases) 330.15 168.67 T
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "1" 1
+%%Page: "2" 2
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+72 675 504 702 R
+7 X
+0 0 0 1 0 0 0 K
+V
+0 9.5 Q
+0 X
+(Dylan VMTether+Win32 Release Notes) 72 695.67 T
+72 81 504 118 R
+7 X
+V
+1 9 Q
+0 X
+(2) 72 101 T
+0 F
+(Revision 2.  July 21, 1996.) 407.99 101 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+126 126 504 648 R
+7 X
+V
+3 16 Q
+0 X
+(2  What is Dylan VMT) 126 637.33 T
+(ether+Win32?) 257.2 637.33 T
+2 11 Q
+(Dylan VMT) 126 616.67 T
+(ether+W) 182.56 616.67 T
+(in32 is a small UNIX-based Dylan development envir) 224.49 616.67 T
+(on-) 483.86 616.67 T
+(ment permitting a mixtur) 126 602.67 T
+(e of static and dynamic appr) 249.71 602.67 T
+(oaches to development.) 387.84 602.67 T
+-0.1 (Dylan VMT) 126 582.67 P
+-0.1 (ether+W) 182.46 582.67 P
+-0.1 (in32 pr) 224.39 582.67 P
+-0.1 (ovides a means of evaluating Dylan code in a W) 258.4 582.67 P
+-0.1 (in-) 490.73 582.67 P
+-0.05 (dows envir) 126 568.67 P
+-0.05 (onment r) 180.49 568.67 P
+-0.05 (emotely fr) 224.72 568.67 P
+-0.05 (om UNIX. Y) 274.38 568.67 P
+-0.05 (ou can enter Dylan code into a spe-) 333.31 568.67 P
+(cial UNIX listener which passes it to W) 126 554.67 T
+(indows wher) 314.92 554.67 T
+(e it is evaluated. The) 378.83 554.67 T
+-0.35 (r) 126 540.67 P
+-0.35 (esults of evaluation ar) 130.15 540.67 P
+-0.35 (e passed back fr) 236.18 540.67 P
+-0.35 (om W) 312.46 540.67 P
+-0.35 (indows to the UNIX listener) 340.98 540.67 P
+-0.35 (. This) 475.45 540.67 P
+(communication takes place acr) 126 526.67 T
+(oss a \324tether) 275.51 526.67 T
+(\325 connecting the UNIX-based) 334.17 526.67 T
+0 F
+-0.35 (r) 126 512.67 P
+-0.35 (emote listener) 130.08 512.67 P
+2 F
+-0.35 ( to a W) 191.15 512.67 P
+-0.35 (indows-based executable containing a Dylan-interpr) 223.84 512.67 P
+-0.35 (eting) 477.03 512.67 P
+(engine. The tether between the two is safely managed by a separate server) 126 498.67 T
+(pr) 126 484.67 T
+(ocess r) 136.76 484.67 T
+(unning on W) 169.25 484.67 T
+(indows.) 232.71 484.67 T
+(Dylan VMT) 126 464.67 T
+(ether+W) 182.56 464.67 T
+(in32 also supports a batch-compilation r) 224.49 464.67 T
+(oute for pr) 419.41 464.67 T
+(oduc-) 471.18 464.67 T
+-0.22 (ing standalone, statically linked native-code applications fr) 126 450.67 P
+-0.22 (om Dylan libraries) 411.15 450.67 P
+(developed in the Dylan emulator) 126 436.67 T
+(.) 286.31 436.67 T
+(The r) 126 416.67 T
+(elease pr) 151.31 416.67 T
+(ovides access to the W) 193.99 416.67 T
+(in32 API via some new Dylan libraries:) 302.18 416.67 T
+4 9.5 Q
+(win32-common) 126 402.67 T
+2 11 Q
+(,) 194.4 402.67 T
+4 9.5 Q
+(win32-kernel) 199.9 402.67 T
+2 11 Q
+(,) 268.3 402.67 T
+4 9.5 Q
+(win32-gdi) 273.8 402.67 T
+2 11 Q
+(,) 325.1 402.67 T
+4 9.5 Q
+(win32-user) 330.6 402.67 T
+2 11 Q
+(,) 386.79 402.67 T
+4 9.5 Q
+(win32-version) 392.29 402.67 T
+2 11 Q
+(, and) 466.39 402.67 T
+4 9.5 Q
+(win32-dialog) 126 388.67 T
+2 11 Q
+(. These libraries pr) 194.4 388.67 T
+(ovide system services, graphics drawing,) 284.31 388.67 T
+(windowing functions, version management, and standar) 126 374.67 T
+(d dialogs. See Chap-) 401.8 374.67 T
+(ter 8 of the) 126 360.67 T
+0 F
+(Guide to Dylan Internal Releases) 180.63 360.67 T
+2 F
+(.) 327.92 360.67 T
+3 16 Q
+(3  Should I use Dylan VMT) 126 325.33 T
+(ether+Win32?) 288.56 325.33 T
+2 11 Q
+(Use Dylan VMT) 126 304.67 T
+(ether+W) 203.8 304.67 T
+(in32 if you want to test code interactively on W) 245.74 304.67 T
+(in-) 474.52 304.67 T
+(dows befor) 126 290.67 T
+(e building a standalone executable fr) 180.48 290.67 T
+(om it. This r) 358.99 290.67 T
+(elease is espe-) 417.65 290.67 T
+(cially useful if your application has characteristics, such as calls to W) 126 276.67 T
+(in32,) 459.5 276.67 T
+(which can only be tested on a W) 126 262.67 T
+(indows machine.) 282.57 262.67 T
+3 16 Q
+(4  What is in Dylan VMT) 126 227.33 T
+(ether+Win32?) 272.51 227.33 T
+2 11 Q
+(Dylan VMT) 126 206.67 T
+(ether+W) 182.56 206.67 T
+(in32 consists of:) 224.49 206.67 T
+(\245) 135 186.67 T
+(A UNIX-based Dylan emulator built on top of LispW) 153 186.67 T
+(orks. It contains a) 410.36 186.67 T
+(full Dylan batch compiler with native-code and C back-ends, and a) 153 172.67 T
+(r) 153 158.67 T
+(emote listener for interactive evaluation and debugging of Dylan code) 157.15 158.67 T
+(on W) 153 144.67 T
+(indows.) 178.55 144.67 T
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "2" 2
+%%Page: "3" 3
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+108 675 540 702 R
+7 X
+0 0 0 1 0 0 0 K
+V
+0 9.5 Q
+0 X
+(5) 333.44 695.67 T
+(What does Dylan VMTether+Win32 not provide?) 347.69 695.67 T
+108 82.17 540 117 R
+7 X
+V
+0 9 Q
+0 X
+(Revision 2.  July 21, 1996.) 108 100 T
+1 F
+(3) 535.5 100 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+108 126 486 648 R
+7 X
+V
+2 11 Q
+0 X
+(\245) 117 640.67 T
+(A special engine for interpr) 135 640.67 T
+(eting encoded Dylan forms sent acr) 268.12 640.67 T
+(oss the) 440.29 640.67 T
+(tether fr) 135 626.67 T
+(om the UNIX-based r) 174.02 626.67 T
+(emote listener to W) 278.03 626.67 T
+(indows. This engine) 372.05 626.67 T
+(interpr) 135 612.67 T
+(ets In-Dylan V) 168.56 612.67 T
+(irtual Machine \050IDVM\051 instr) 238.42 612.67 T
+(uctions, a virtual-) 375.21 612.67 T
+(machine instr) 135 598.67 T
+(uction set into which Dylan code and r) 201.23 598.67 T
+(esults sent acr) 389.35 598.67 T
+(oss) 457.32 598.67 T
+(the tether ar) 135 584.67 T
+(e translated. IDVM code and native code is inter) 193.86 584.67 T
+(operable.) 428.25 584.67 T
+(The IDVM engine is distributed in two ways: \050) 135 566.67 T
+1 F
+(i) 360.75 566.67 T
+2 F
+(\051 as an executable, with) 364.42 566.67 T
+-0.2 (the natively compiled) 135 552.67 P
+4 9.5 Q
+-0.42 (dylan) 242.99 552.67 P
+2 11 Q
+-0.2 ( library linked in, and \050) 271.49 552.67 P
+1 F
+-0.2 (ii) 382.56 552.67 P
+2 F
+-0.2 (\051 as a Dylan library) 389.89 552.67 P
+-0.2 (,) 480.7 552.67 P
+4 9.5 Q
+(idvm-application) 135 538.67 T
+2 11 Q
+(, so that you can compile and link it with other) 226.2 538.67 T
+(natively compiled libraries in addition to) 135 524.67 T
+4 9.5 Q
+(dylan) 336.94 524.67 T
+2 11 Q
+(.) 365.44 524.67 T
+(\245) 117 504.67 T
+(A server pr) 135 504.67 T
+(ogram which manages tethering between the UNIX-based) 189.92 504.67 T
+(r) 135 490.67 T
+(emote listener and the W) 139.15 490.67 T
+(indows-based IDVM engine executable.) 260.2 490.67 T
+(\245) 117 470.67 T
+(A version of the W) 135 470.67 T
+(indows SDK debugger) 225.98 470.67 T
+(, W) 335.66 470.67 T
+(inDBG, extended for use) 351.56 470.67 T
+(with Dylan executables.) 135 456.67 T
+(\245) 117 436.67 T
+(Dylan libraries, including:) 135 436.67 T
+4 9.5 Q
+(dylan) 265.05 436.67 T
+2 11 Q
+(,) 293.55 436.67 T
+4 9.5 Q
+(simple-streams) 299.05 436.67 T
+2 11 Q
+(,) 378.85 436.67 T
+4 9.5 Q
+(simple-print) 384.35 436.67 T
+2 11 Q
+(,) 452.75 436.67 T
+4 9.5 Q
+(sim-) 458.25 436.67 T
+(ple-format) 135 422.67 T
+2 11 Q
+(,) 192 422.67 T
+4 9.5 Q
+(harlequin-extensions) 197.5 422.67 T
+2 11 Q
+(,) 311.5 422.67 T
+4 9.5 Q
+(harlequin-dylan) 317 422.67 T
+2 11 Q
+(,) 402.5 422.67 T
+4 9.5 Q
+(c-ffi) 408 422.67 T
+2 11 Q
+(,) 436.5 422.67 T
+4 9.5 Q
+(win32-) 442 422.67 T
+(common) 135 408.67 T
+2 11 Q
+(,) 169.2 408.67 T
+4 9.5 Q
+(win32-dialog) 174.7 408.67 T
+2 11 Q
+(,) 243.1 408.67 T
+4 9.5 Q
+(win32-gdi) 248.6 408.67 T
+2 11 Q
+(,) 299.9 408.67 T
+4 9.5 Q
+(win32-interface) 305.4 408.67 T
+2 11 Q
+(,) 390.9 408.67 T
+4 9.5 Q
+(win32-kernel) 396.4 408.67 T
+2 11 Q
+(,) 464.8 408.67 T
+4 9.5 Q
+(win32-user) 135 394.67 T
+2 11 Q
+(, and) 191.19 394.67 T
+4 9.5 Q
+(win32-version) 218.06 394.67 T
+2 11 Q
+(.) 292.16 394.67 T
+3 16 Q
+(5  What does Dylan VMT) 108 359.33 T
+(ether+Win32 not pr) 258.88 359.33 T
+(o) 377.84 359.33 T
+(vide?) 385.62 359.33 T
+2 11 Q
+(Dylan VMT) 108 338.67 T
+(ether+W) 164.56 338.67 T
+(in32 lacks:) 206.49 338.67 T
+(\245) 117 318.67 T
+(A native W) 135 318.67 T
+(indows development envir) 189.63 318.67 T
+(onment and compiler) 320.79 318.67 T
+(.) 424.71 318.67 T
+(\245) 117 298.67 T
+(Incr) 135 298.67 T
+(emental compilation at the \336le or de\336nition level.) 154.14 298.67 T
+(Incr) 135 280.67 T
+(emental compilation is possible only at the library level: if a particu-) 154.14 280.67 T
+-0.01 (lar library is changed, you only need to r) 135 266.67 P
+-0.01 (ecompile that library to be able) 332.54 266.67 P
+(to build the application again.) 135 252.67 T
+(\245) 117 232.67 T
+(Dependency tracking of any sort.) 135 232.67 T
+3 16 Q
+(6  What is the Dylan VMT) 108 197.33 T
+(ether+Win32 de) 262.53 197.33 T
+(velopment c) 359.7 197.33 T
+(yc) 436.14 197.33 T
+(le?) 450.5 197.33 T
+2 11 Q
+(Figur) 108 176.67 T
+(e 6.1, page 5, shows the Dylan VMT) 134.21 176.67 T
+(ether+W) 306.96 176.67 T
+(in32 development cycle.) 348.89 176.67 T
+(Ther) 108 162.67 T
+(e ar) 130.56 162.67 T
+(e thr) 148.23 162.67 T
+(ee development phases:) 170.38 162.67 T
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "3" 3
+%%Page: "4" 4
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+72 675 504 702 R
+7 X
+0 0 0 1 0 0 0 K
+V
+0 9.5 Q
+0 X
+(Dylan VMTether+Win32 Release Notes) 72 695.67 T
+72 81 504 118 R
+7 X
+V
+1 9 Q
+0 X
+(4) 72 101 T
+0 F
+(Revision 2.  July 21, 1996.) 407.99 101 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+126 126 504 648 R
+7 X
+V
+1 11 Q
+0 X
+(1.) 135 640.67 T
+2 F
+(Develop and test your application on UNIX in the emulator) 153 640.67 T
+(. Use the) 441.82 640.67 T
+(r) 153 626.67 T
+(emote listener to test and debug W) 157.15 626.67 T
+(indows-speci\336c code, and debug it) 325.96 626.67 T
+(with the r) 153 612.67 T
+(emote listener) 200.27 612.67 T
+(\325s IDVM debugger) 269.61 612.67 T
+(.) 359.14 612.67 T
+1 F
+(2.) 135 592.67 T
+2 F
+(Once you have tested the application to your satisfaction, use the batch) 153 592.67 T
+(compiler to pr) 153 578.67 T
+(oduce native-code object \336les fr) 222.08 578.67 T
+(om each of the applica-) 375.31 578.67 T
+(tion\325s libraries, then on W) 153 564.67 T
+(indows, build a statically linked executable) 277.94 564.67 T
+(fr) 153 550.67 T
+(om them, using a Make\336le generated automatically during compila-) 160.81 550.67 T
+(tion.) 153 536.67 T
+(Y) 153 518.67 T
+(ou can also build your application incr) 159.32 518.67 T
+(ementally) 346.9 518.67 T
+(, linking tested librar-) 393.93 518.67 T
+-0.18 (ies one at a time with the IDVM engine to cr) 153 504.67 P
+-0.18 (eate a new executable. Even-) 365.35 504.67 P
+(tually) 153 490.67 T
+(, all your application\325s libraries will be linked into the executable,) 180.02 490.67 T
+(and you will no longer need to r) 153 476.67 T
+(un any of them acr) 309.66 476.67 T
+(oss the tether) 400.89 476.67 T
+(.) 464.62 476.67 T
+1 F
+(3.) 135 456.67 T
+2 F
+-0.22 (Run the \336nished executable on W) 153 456.67 P
+-0.22 (indows, and debug it if necessary with) 314.79 456.67 P
+(the W) 153 442.67 T
+(inDBG debugger and its extensions for r) 181.4 442.67 T
+(ecognizing and printing) 377.06 442.67 T
+(Dylan names and objects. If you pr) 153 428.67 T
+(efer) 322.1 428.67 T
+(, you can r) 339.83 428.67 T
+(eturn to the emulator) 390.52 428.67 T
+(and debug any br) 153 414.67 T
+(oken libraries ther) 238.94 414.67 T
+(e.) 327.45 414.67 T
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "4" 4
+%%Page: "5" 5
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+108 675 540 702 R
+7 X
+0 0 0 1 0 0 0 K
+V
+0 9.5 Q
+0 X
+(7) 303.07 695.67 T
+(H/W and S/W requirements for Dylan VMTether+Win32) 317.32 695.67 T
+108 82.17 540 117 R
+7 X
+V
+0 9 Q
+0 X
+(Revision 2.  July 21, 1996.) 108 100 T
+1 F
+(5) 535.5 100 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+108 126 486 648 R
+7 X
+V
+108 278.01 486 286 C
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+36 72 576 720 C
+2 11 Q
+0 X
+0 0 0 1 0 0 0 K
+(Figur) 168.62 289.67 T
+(e 6.1  The Dylan VMT) 194.84 289.67 T
+(ether+W) 299.83 289.67 T
+(in32 ar) 341.76 289.67 T
+(chitectur) 374.76 289.67 T
+(e.) 417.36 289.67 T
+3 16 Q
+(7  H/W and S/W requirements f) 108 248.34 T
+(or Dylan VMT) 298.05 248.34 T
+(ether+Win32) 381.12 248.34 T
+2 11 Q
+(T) 108 227.67 T
+(o use Dylan VMT) 113.73 227.67 T
+(ether+W) 198.37 227.67 T
+(in32, you need:) 240.3 227.67 T
+(\245) 117 207.67 T
+(A UNIX machine r) 135 207.67 T
+(unning Solaris 2, SunOS 4, Irix 5, or OSF/1 3.0, and) 226.18 207.67 T
+(the) 135 193.67 T
+4 9.5 Q
+(bash) 153.01 193.67 T
+2 11 Q
+( shell.) 175.81 193.67 T
+(\245) 117 173.67 T
+(An) 135 173.67 T
+0 F
+(x) 152.71 173.67 T
+2 F
+(86-based PC r) 158.21 173.67 T
+(unning W) 225.31 173.67 T
+(indows NT 3.51 or W) 273.61 173.67 T
+(indows \32595) 376.66 173.67 T
+(\245) 117 153.67 T
+(A minimal W) 135 153.67 T
+(indows SDK setup) 200.38 153.67 T
+(\245) 117 133.67 T
+(V) 135 133.67 T
+(isual C++) 142.34 133.67 T
+108 126 486 648 C
+109.66 306 484.34 637 C
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+190.66 523 370.66 621 R
+7 X
+0 0 0 1 0 0 0 K
+V
+0.25 H
+0 Z
+0 X
+N
+7 X
+90 450 18 16.5 424.66 618.5 G
+0 X
+90 450 18 16.5 424.66 618.5 A
+7 X
+90 450 18 16.5 424.66 552.5 G
+0 X
+90 450 18 16.5 424.66 552.5 A
+406.66 552.51 442.66 585.51 R
+7 X
+V
+N
+442.66 618.5 442.66 552.51 2 L
+V
+2 Z
+0 X
+N
+406.66 618.5 406.66 552.51 2 L
+7 X
+V
+0 X
+N
+423.66 541 433.66 593.99 R
+7 X
+V
+4 9.5 Q
+0 X
+(.obj) 0 -270 430.99 541 TF
+2 11 Q
+( \336les) 0 -270 430.99 563.8 TF
+423.66 541 433.66 593.99 R
+280.66 523 370.66 578 R
+0 Z
+N
+289.66 533 370.66 569 R
+7 X
+V
+0 X
+(Batch compiler) 289.66 561.67 T
+(w/ native-code) 289.66 547.67 T
+(back-end) 289.66 533.67 T
+244.66 388 388.66 433 R
+7 X
+V
+0 X
+N
+406.66 334 451.66 361 R
+7 X
+V
+0 X
+N
+415.66 343 447.16 352 R
+7 X
+V
+0 X
+(Link) 415.66 344.67 T
+316.66 433 316.66 388 2 L
+7 X
+V
+2 Z
+0 X
+N
+253.66 397 307.66 424 R
+7 X
+V
+0 X
+(W) 253.66 416.67 T
+(inDBG) 264.05 416.67 T
+(debugger) 253.66 402.67 T
+325.66 397 379.66 424 R
+7 X
+V
+0 X
+(Dylan) 325.66 416.67 T
+(extensions) 325.66 402.67 T
+352.66 350 379.66 359 R
+7 X
+V
+0 X
+(Build) 352.66 351.67 T
+424.66 364.34 426.44 364.34 424.66 361.25 422.87 364.34 4 Y
+0 Z
+N
+424.66 364.34 426.44 364.34 424.66 361.25 422.87 364.34 4 Y
+V
+424.66 536 424.66 364.46 2 L
+7 X
+V
+2 Z
+0 X
+N
+403.32 563 403.32 564.78 406.41 563 403.32 561.22 4 Y
+0 Z
+N
+403.32 563 403.32 564.78 406.41 563 403.32 561.22 4 Y
+V
+370.66 563 403.19 563 2 L
+7 X
+V
+2 Z
+0 X
+N
+280.66 384.66 278.87 384.66 280.66 387.75 282.44 384.66 4 Y
+0 Z
+N
+280.66 384.66 278.87 384.66 280.66 387.75 282.44 384.66 4 Y
+V
+280.66 364.34 282.44 364.34 280.66 361.25 278.87 364.34 4 Y
+N
+280.66 364.34 282.44 364.34 280.66 361.25 278.87 364.34 4 Y
+V
+280.66 384.54 280.66 364.46 2 L
+7 X
+V
+0 X
+N
+J
+96.36 481 524.6 481 2 L
+7 X
+V
+J
+96.36 481 100.24 481 2 L
+2 Z
+0 X
+N
+[7.645 6.165] 7.645 I
+100.24 481 520.72 481 2 L
+N
+J
+520.72 481 524.6 481 2 L
+N
+235.66 605 316.66 614 R
+7 X
+V
+0 X
+(Dylan emulator) 235.66 606.67 T
+J
+433.66 458 487.66 467 R
+7 X
+V
+1 F
+0 X
+(W) 433.66 459.67 T
+(indows) 444.25 459.67 T
+J
+J
+270.01 325 337.51 352 R
+7 X
+V
+2 F
+0 X
+(Running) 270.01 344.67 T
+(application) 270.01 330.67 T
+208.66 316 343.66 361 R
+0 Z
+N
+347 341 347 339.22 343.91 341 347 342.79 4 Y
+N
+347 341 347 339.22 343.91 341 347 342.79 4 Y
+V
+406.66 341 347.12 341 2 L
+2 Z
+N
+433.66 494 487.66 503 R
+7 X
+V
+1 F
+0 X
+(UNIX) 433.66 495.67 T
+J
+J
+190.66 523 258.66 578 R
+0 Z
+N
+199.66 533 244.66 560 R
+7 X
+V
+2 F
+0 X
+(Remote) 199.66 552.67 T
+(listener) 199.66 538.67 T
+J
+J
+118.66 316 181.66 361 R
+7 X
+V
+0 X
+N
+127.66 325 172.66 352 R
+7 X
+V
+0 X
+(Dylan) 127.66 344.67 T
+(server) 127.66 330.67 T
+J
+155.71 364.17 157.4 363.6 154.74 361.24 154.02 364.73 4 Y
+N
+155.71 364.17 157.4 363.6 154.74 361.24 154.02 364.73 4 Y
+V
+J
+207.6 519.83 205.91 520.4 208.58 522.77 209.29 519.27 4 Y
+N
+207.6 519.83 205.91 520.4 208.58 522.77 209.29 519.27 4 Y
+V
+J
+155.75 364.29 207.56 519.72 2 L
+J
+155.75 364.29 156.03 365.12 2 L
+2 Z
+N
+[1.706 4.144] 1.706 I
+156.03 365.12 207.29 518.88 2 L
+N
+J
+207.29 518.88 207.56 519.72 2 L
+N
+J
+226.66 519.66 224.87 519.66 226.66 522.75 228.44 519.66 4 Y
+0 Z
+N
+226.66 519.66 224.87 519.66 226.66 522.75 228.44 519.66 4 Y
+V
+226.66 364.34 228.44 364.34 226.66 361.25 224.87 364.34 4 Y
+N
+226.66 364.34 228.44 364.34 226.66 361.25 224.87 364.34 4 Y
+V
+226.66 519.54 226.66 364.46 2 L
+N
+217.66 325 253.66 352 R
+7 X
+V
+0 X
+(IDVM) 217.66 344.67 T
+(Engine) 217.66 330.67 T
+262.66 361 262.66 316 2 L
+2 Z
+N
+7 X
+90 450 18 16.5 136.66 618.5 G
+0 Z
+0 X
+90 450 18 16.5 136.66 618.5 A
+7 X
+90 450 18 16.5 136.66 552.5 G
+0 X
+90 450 18 16.5 136.66 552.5 A
+118.66 552.51 154.66 585.51 R
+7 X
+V
+N
+154.66 618.5 154.66 552.51 2 L
+V
+2 Z
+0 X
+N
+118.66 618.5 118.66 552.51 2 L
+7 X
+V
+0 X
+N
+126.66 545 136.66 597.99 R
+7 X
+V
+4 9.5 Q
+0 X
+(.doss) 0 -270 133.99 545 TF
+2 11 Q
+( \336les) 0 -270 133.99 573.5 TF
+126.66 545 136.66 597.99 R
+187.32 563 187.32 564.78 190.41 563 187.32 561.22 4 Y
+0 Z
+N
+187.32 563 187.32 564.78 190.41 563 187.32 561.22 4 Y
+V
+158 563 158 561.22 154.91 563 158 564.78 4 Y
+N
+158 563 158 561.22 154.91 563 158 564.78 4 Y
+V
+187.19 563 158.12 563 2 L
+N
+J
+185 341 185 339.22 181.91 341 185 342.78 4 Y
+N
+185 341 185 339.22 181.91 341 185 342.78 4 Y
+V
+J
+205.32 341 205.32 342.78 208.41 341 205.32 339.22 4 Y
+N
+205.32 341 205.32 342.78 208.41 341 205.32 339.22 4 Y
+V
+J
+185.12 341 205.19 341 2 L
+J
+185.12 341 186 341 2 L
+2 Z
+N
+[1.441 3.5] 1.441 I
+186 341 204.32 341 2 L
+N
+J
+204.32 341 205.19 341 2 L
+N
+J
+108 126 486 648 C
+36 72 576 720 C
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "5" 5
+%%Page: "6" 6
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+72 675 504 702 R
+7 X
+0 0 0 1 0 0 0 K
+V
+0 9.5 Q
+0 X
+(Dylan VMTether+Win32 Release Notes) 72 695.67 T
+72 81 504 118 R
+7 X
+V
+1 9 Q
+0 X
+(6) 72 101 T
+0 F
+(Revision 2.  July 21, 1996.) 407.99 101 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+126 126 504 648 R
+7 X
+V
+2 11 Q
+0 X
+(\245) 135 640.67 T
+(Samba-based NFS access to your UNIX account fr) 153 640.67 T
+(om your PC.) 394.76 640.67 T
+3 16 Q
+(8  Whic) 126 605.33 T
+(h documentation describes Dylan VMT) 171.82 605.33 T
+(ether+Win32?) 412.38 605.33 T
+1 11 Q
+(1.) 135 584.67 T
+2 F
+(This document.) 153 584.67 T
+1 F
+(2.) 135 564.67 T
+2 F
+(The following chapters of the Dylan pr) 153 564.67 T
+(oject\325s) 341.56 564.67 T
+0 F
+(Guide to Dylan Internal) 374.35 564.67 T
+(Releases) 153 550.67 T
+2 F
+(:) 189.67 550.67 T
+(Chapter 1, \322Overview\323) 153 530.67 T
+(Chapter 2, \322Building Dylan Applications\323) 153 510.67 T
+(Chapter 3, \322Sour) 153 490.67 T
+(ce Code Management\323) 234.32 490.67 T
+(Chapter 4, \322The Emulator\323) 153 470.67 T
+(Chapter 5, \322The Batch Compiler\323) 153 450.67 T
+(Chapter 6, \322Debugging Dylan Applications with W) 153 430.67 T
+(inDBG\323) 402.13 430.67 T
+(Chapter 7, \322The VMT) 153 410.67 T
+(ether T) 257.01 410.67 T
+(ools\323) 290.36 410.67 T
+(Chapter 8, \322Dylan W) 153 390.67 T
+(in32 API Libraries\323) 254.64 390.67 T
+3 16 Q
+(9  Repor) 126 355.33 T
+(ting pr) 178.75 355.33 T
+(ob) 219.33 355.33 T
+(lems, b) 235.25 355.33 T
+(ugs, and wishes) 280.22 355.33 T
+2 11 Q
+(Pr) 153 328.67 T
+(oblems) 163.79 328.67 T
+(Send e-mail to) 234 328.67 T
+4 9.5 Q
+(dylan-group) 306.56 328.67 T
+2 11 Q
+(.) 369.26 328.67 T
+(Bugs) 153 302.67 T
+(Choose) 234 302.67 T
+5 9.6 Q
+(Dylan > Repor) 272.9 302.67 T
+(t Dylan Bug) 337.91 302.67 T
+2 11 Q
+(; \336ll in and send bug) 391.24 302.67 T
+(form. Include a full backtrace with) 234 288.67 T
+4 9.5 Q
+(bb:;) 404.52 288.67 T
+2 11 Q
+(.) 427.32 288.67 T
+(Doc. pr) 153 262.67 T
+(oblems) 188.66 262.67 T
+(Send e-mail to) 234 262.67 T
+4 9.5 Q
+(dylan-doc) 306.56 262.67 T
+2 11 Q
+(.) 357.86 262.67 T
+(Doc. bugs) 153 236.67 T
+(Choose) 234 236.67 T
+5 9.6 Q
+(Dylan > Repor) 272.9 236.67 T
+(t Doc Bug) 337.91 236.67 T
+2 11 Q
+(; \336ll in and send bug) 383.24 236.67 T
+(form.) 234 222.67 T
+3 16 Q
+(9.1  Compilation en) 126 187.33 T
+(vir) 245.79 187.33 T
+(onments in Dylan VMT) 261.6 187.33 T
+(ether+Win32) 401.54 187.33 T
+2 11 Q
+(In Dylan VMT) 126 166.67 T
+(ether+W) 195.42 166.67 T
+(in32, ther) 237.35 166.67 T
+(e ar) 282.86 166.67 T
+(e thr) 300.53 166.67 T
+(ee compiler envir) 322.68 166.67 T
+(onments available:) 407.18 166.67 T
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "6" 6
+%%Page: "7" 7
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+108 675 540 702 R
+7 X
+0 0 0 1 0 0 0 K
+V
+0 9.5 Q
+0 X
+(10) 374.86 695.67 T
+(Dylan VMTether+Win32 Installation) 393.86 695.67 T
+108 82.17 540 117 R
+7 X
+V
+0 9 Q
+0 X
+(Revision 2.  July 21, 1996.) 108 100 T
+1 F
+(7) 535.5 100 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+108 126 486 648 R
+7 X
+V
+2 11 Q
+0 X
+(Emulator) 135 640.67 T
+-0.25 (Anything you compile fr) 216 640.67 P
+-0.25 (om listener menus is compiled) 335.72 640.67 P
+(in the emulator context, emitting LispW) 216 626.67 T
+(orks fasl \336les.) 409.28 626.67 T
+(Batch compiler) 135 600.67 T
+-0.26 (Anything you compile fr) 216 600.67 P
+-0.26 (om within the) 335.7 600.67 P
+4 9.5 Q
+-0.54 (front-end) 406.11 600.67 P
+2 11 Q
+-0.26 ( mod-) 457.41 600.67 P
+-0.18 (ule in an or) 216 586.67 P
+-0.18 (dinary in\336x listener is compiled in the batch) 270.48 586.67 P
+-0.09 (compiler context, with the W) 216 572.67 P
+-0.09 (in32 object code back-end,) 356.07 572.67 P
+(emitting W) 216 558.67 T
+(in32 object \336les.) 270.22 558.67 T
+(Remote listener) 135 532.67 T
+(Anything you compile in the r) 216 532.67 T
+(emote listener is com-) 363.18 532.67 T
+(piled with the IDVM back-end, emitting DOSS \336les or) 216 518.67 T
+(simply sending compiled code down the tether to be) 216 504.67 T
+(executed by the IDVM engine.) 216 490.67 T
+(It is cr) 108 470.67 T
+(ucial to be awar) 137.8 470.67 T
+(e of the compilation context you ar) 214.73 470.67 T
+(e in. The emulator) 383.55 470.67 T
+(,) 471.27 470.67 T
+(batch compiler and r) 108 456.67 T
+(emote listener compiler envir) 208.71 456.67 T
+(onments ar) 351.2 456.67 T
+(e entir) 405.64 456.67 T
+(ely unr) 436.26 456.67 T
+(e-) 470.78 456.67 T
+(lated.) 108 442.67 T
+3 16 Q
+(10  Dylan VMT) 108 407.33 T
+(ether+Win32 Installation) 196.19 407.33 T
+2 11 Q
+-0.24 (Skip to Section 10.6 on page 1) 108 386.67 P
+-0.24 (1 for a quick installation. Read the pr) 249.52 386.67 P
+-0.24 (eceding sec-) 427.15 386.67 P
+(tions for details of how Dylan VMT) 108 372.67 T
+(ether+W) 279.58 372.67 T
+(in32 installations work.) 321.51 372.67 T
+3 13 Q
+(10.1  Installation scripts) 108 339.33 T
+2 11 Q
+(Most of the Dylan VMT) 108 319.67 T
+(ether+W) 222.4 319.67 T
+(in32 installation pr) 264.33 319.67 T
+(ocedur) 355.64 319.67 T
+(e is automated by) 389.3 319.67 T
+(thr) 108 305.67 T
+(ee scripts:) 122.14 305.67 T
+4 9.5 Q
+(create-personal-dylan) 172.88 305.67 T
+2 11 Q
+( and) 292.58 305.67 T
+4 9.5 Q
+(setup-dylan.sh) 316.7 305.67 T
+2 11 Q
+( on UNIX, and) 396.5 305.67 T
+4 9.5 Q
+(setup-dylan.cmd) 108 291.67 T
+2 11 Q
+( on W) 193.5 291.67 T
+(indows. These scripts cr) 221.8 291.67 T
+(eate dir) 338.3 291.67 T
+(ectory tr) 374.75 291.67 T
+(ees under) 415.44 291.67 T
+-0.26 (your home dir) 108 277.67 P
+-0.26 (ectory in which to do Dylan development, and make some stan-) 177.53 277.67 P
+(dar) 108 263.67 T
+(d envir) 124.37 263.67 T
+(onment variable con\336gurations on UNIX and W) 159.07 263.67 T
+(indows.) 392.83 263.67 T
+(The scripts can be found on UNIX under) 108 243.67 T
+4 9.5 Q
+(~dylan/releases/vmtwin32/admin) 308.45 243.67 T
+2 11 Q
+(.) 479.45 243.67 T
+(They ar) 108 229.67 T
+(e described in full in Section 13 on page 19.) 144.93 229.67 T
+3 13 Q
+(10.2  P) 108 196.33 T
+(er) 141.48 196.33 T
+(sonal sour) 151.41 196.33 T
+(ce area) 205.12 196.33 T
+2 11 Q
+(Y) 108 176.67 T
+(ou need a personal sour) 114.32 176.67 T
+(ce ar) 230.57 176.67 T
+(ea so that you can write your own code or) 253.12 176.67 T
+(shadow standar) 108 162.67 T
+(d libraries \050such as) 185.74 162.67 T
+4 9.5 Q
+(dylan) 279.68 162.67 T
+2 11 Q
+(,) 308.18 162.67 T
+4 9.5 Q
+(simple-streams) 313.68 162.67 T
+2 11 Q
+(, and so on\051 with) 393.48 162.67 T
+(your own versions. The) 108 148.67 T
+4 9.5 Q
+(create-personal-dylan) 225.61 148.67 T
+2 11 Q
+( script pr) 345.31 148.67 T
+(epar) 388.86 148.67 T
+(es an empty) 410.39 148.67 T
+-0.08 (dir) 108 134.67 P
+-0.08 (ectory tr) 122.07 134.67 P
+-0.08 (ee in your UNIX envir) 162.68 134.67 P
+-0.08 (onment for this purpose. The) 270.56 134.67 P
+0 F
+-0.08 (Guide to Dylan) 414.44 134.67 P
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "7" 7
+%%Page: "8" 8
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+72 675 504 702 R
+7 X
+0 0 0 1 0 0 0 K
+V
+0 9.5 Q
+0 X
+(Dylan VMTether+Win32 Release Notes) 72 695.67 T
+72 81 504 118 R
+7 X
+V
+1 9 Q
+0 X
+(8) 72 101 T
+0 F
+(Revision 2.  July 21, 1996.) 407.99 101 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+126 126 504 648 R
+7 X
+V
+0 11 Q
+0 X
+-0.46 (Internal Releases) 126 640.67 P
+2 F
+-0.46 (, Chapter 3, \322Sour) 201.02 640.67 P
+-0.46 (ce Code Management\323, explains many of the) 286.45 640.67 P
+(concepts in this section.) 126 626.67 T
+4 9.5 Q
+(create-personal-dylan) 126 606.67 T
+2 11 Q
+( sets up an empty personal ar) 245.7 606.67 T
+(ea for sour) 388.47 606.67 T
+(ce and com-) 440.2 606.67 T
+(piled code. It cr) 126 592.67 T
+(eates the following dir) 201.21 592.67 T
+(ectories under the personal r) 310.04 592.67 T
+(oot dir) 449.04 592.67 T
+(ec-) 481.45 592.67 T
+(tory passed to it on the command line. Supposing the personal r) 126 578.67 T
+(oot was) 436.96 578.67 T
+4 9.5 Q
+(~/) 477.39 578.67 T
+(dylan/vmtwin32) 126 564.67 T
+2 11 Q
+(, these dir) 205.8 564.67 T
+(ectories would be cr) 253.31 564.67 T
+(eated under it:) 350.9 564.67 T
+4 9.5 Q
+(~/dylan/vmtwin32/registry/) 153 538.67 T
+2 11 Q
+(Personal r) 234 520.67 T
+(egistry dir) 282.93 520.67 T
+(ectory) 333.04 520.67 T
+(. Y) 362.03 520.67 T
+(ou can populate this with) 373.85 520.67 T
+(r) 234 506.67 T
+(egistry entries for libraries you wish to compile for) 238.15 506.67 T
+(W) 234 492.67 T
+(indows, but which ar) 244.4 492.67 T
+(e not r) 347.58 492.67 T
+(egister) 378.48 492.67 T
+(ed in the Dylan) 410.74 492.67 T
+(pr) 234 478.67 T
+(oject\325s equivalent r) 244.76 478.67 T
+(egistry under) 335.88 478.67 T
+4 9.5 Q
+(~dylan) 404.05 478.67 T
+2 11 Q
+(.) 438.25 478.67 T
+4 9.5 Q
+(~/dylan/vmtwin32/platforms/) 153 452.67 T
+2 11 Q
+(Contains a dir) 234 434.67 T
+(ectory for each of the possible tar) 302.63 434.67 T
+(get plat-) 463.26 434.67 T
+(forms for Dylan compilation work:) 234 420.67 T
+4 9.5 Q
+(alpha-osf3) 406.59 420.67 T
+2 11 Q
+(,) 463.59 420.67 T
+4 9.5 Q
+(sgi-) 469.09 420.67 T
+-0.57 (irix5) 234 406.67 P
+2 11 Q
+-0.28 (,) 262.5 406.67 P
+4 9.5 Q
+-0.57 (sparc-solaris2) 267.73 406.67 P
+2 11 Q
+-0.28 (,) 347.52 406.67 P
+4 9.5 Q
+-0.57 (sparc-sunos4) 352.75 406.67 P
+2 11 Q
+-0.28 (, and) 421.15 406.67 P
+4 9.5 Q
+-0.57 (x86-win32) 447.48 406.67 P
+2 11 Q
+-0.28 (.) 498.77 406.67 P
+(Only) 234 392.67 T
+4 9.5 Q
+(x86-win32) 261.11 392.67 T
+2 11 Q
+( is r) 312.42 392.67 T
+(elevant to this r) 329.93 392.67 T
+(elease. Under each) 405.21 392.67 T
+-0.53 (platform dir) 234 378.67 P
+-0.53 (ectory) 292.92 378.67 P
+-0.53 (, ther) 321.9 378.67 P
+-0.53 (e ar) 346.28 378.67 P
+-0.53 (e four mor) 363.42 378.67 P
+-0.53 (e dir) 413.65 378.67 P
+-0.53 (ectories. Only) 435.21 378.67 P
+4 9.5 Q
+(bin) 234 364.67 T
+2 11 Q
+( and) 251.1 364.67 T
+4 9.5 Q
+(lib) 275.22 364.67 T
+2 11 Q
+( ar) 292.32 364.67 T
+(e r) 304.72 364.67 T
+(elevant to this r) 316.89 364.67 T
+(elease:) 392.17 364.67 T
+4 9.5 Q
+(bin) 426.84 364.67 T
+2 11 Q
+( is for stor-) 443.94 364.67 T
+(ing executable pr) 234 350.67 T
+(ograms \050) 317.35 350.67 T
+4 9.5 Q
+(.exe) 360.1 350.67 T
+2 11 Q
+( \336les\051, while) 382.9 350.67 T
+4 9.5 Q
+(lib) 444.6 350.67 T
+2 11 Q
+( is for) 461.7 350.67 T
+(storing compiled softwar) 234 336.67 T
+(e libraries \050) 356.17 336.67 T
+4 9.5 Q
+(.lib) 410.41 336.67 T
+2 11 Q
+( \336les\051.) 433.21 336.67 T
+4 9.5 Q
+(~/dylan/vmtwin32/emulator-registry/) 153 310.67 T
+2 11 Q
+(Personal emulator r) 234 292.67 T
+(egistry dir) 329.93 292.67 T
+(ectory) 380.05 292.67 T
+(. Y) 409.03 292.67 T
+(ou can populate) 420.86 292.67 T
+-0.04 (this with r) 234 278.67 P
+-0.04 (egistry entries for libraries you want to work) 283.79 278.67 P
+-0.38 (with in the emulator) 234 264.67 P
+-0.38 (, but which ar) 331.77 264.67 P
+-0.38 (e not r) 397.64 264.67 P
+-0.38 (egister) 427.79 264.67 P
+-0.38 (ed in the) 460.04 264.67 P
+(Dylan pr) 234 250.67 T
+(oject\325s equivalent r) 277.24 250.67 T
+(egistry under) 368.36 250.67 T
+4 9.5 Q
+(~dylan/) 436.53 250.67 T
+(releases/vmtwin32/registry) 234 236.67 T
+2 11 Q
+(.) 380.98 236.67 T
+4 9.5 Q
+(~/dylan/vmtwin32/lib/) 153 210.67 T
+2 11 Q
+(A default dir) 234 192.67 T
+(ectory for storing your own library) 296.7 192.67 T
+(sour) 234 178.67 T
+(ces. T) 255.45 178.67 T
+(ypically) 281.52 178.67 T
+(, you would put each library in a sep-) 319.13 178.67 T
+(arate subdir) 234 164.67 T
+(ectory of) 292.4 164.67 T
+4 9.5 Q
+(lib) 337.77 164.67 T
+2 11 Q
+(. Y) 354.87 164.67 T
+(ou do not have to put your) 366.7 164.67 T
+(libraries under) 234 150.67 T
+4 9.5 Q
+(lib) 308.68 150.67 T
+2 11 Q
+( if you would rather put them some-) 325.78 150.67 T
+(wher) 234 136.67 T
+(e else: it is pr) 258.99 136.67 T
+(ovided solely for convenience.) 321.82 136.67 T
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "8" 8
+%%Page: "9" 9
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+108 675 540 702 R
+7 X
+0 0 0 1 0 0 0 K
+V
+0 9.5 Q
+0 X
+(10) 374.86 695.67 T
+(Dylan VMTether+Win32 Installation) 393.86 695.67 T
+108 82.17 540 117 R
+7 X
+V
+0 9 Q
+0 X
+(Revision 2.  July 21, 1996.) 108 100 T
+1 F
+(9) 535.5 100 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+108 126 486 648 R
+7 X
+V
+2 11 Q
+0 X
+(T) 108 640.67 T
+(o develop and compile your own libraries, you need to put their sour) 113.73 640.67 T
+(ces in) 449.87 640.67 T
+-0.04 (dir) 108 626.67 P
+-0.04 (ectories under your personal sour) 122.07 626.67 P
+-0.04 (ce ar) 286.07 626.67 P
+-0.04 (ea. Put the sour) 308.58 626.67 P
+-0.04 (ce for each library in) 383.81 626.67 P
+(a dir) 108 612.67 T
+(ectory of its own under) 130.32 612.67 T
+4 9.5 Q
+(lib) 246.35 612.67 T
+2 11 Q
+(. See Figur) 263.45 612.67 T
+(e 10.2 for an example.) 314.22 612.67 T
+108 350.01 486 358 C
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+36 72 576 720 C
+2 11 Q
+0 X
+0 0 0 1 0 0 0 K
+(Figur) 150.55 361.67 T
+(e 10.2  Personal sour) 176.76 361.67 T
+(ce dir) 275.76 361.67 T
+(ectory tr) 302.73 361.67 T
+(ee for thr) 343.42 361.67 T
+(ee libraries.) 387.61 361.67 T
+3 13 Q
+(10.3  T) 108 322.34 T
+(ransparent UNIX \336lesystem access fr) 140.34 322.34 T
+(om Windo) 327.97 322.34 T
+(ws) 379.35 322.34 T
+2 11 Q
+-0.23 (Dylan VMT) 108 302.67 P
+-0.23 (ether+W) 164.33 302.67 P
+-0.23 (in32\325s r) 206.26 302.67 P
+-0.23 (equir) 241.25 302.67 P
+-0.23 (ement that you work on both UNIX and W) 266.66 302.67 P
+-0.23 (in-) 472.73 302.67 P
+(dows systems is potentially quite inconvenient. Having to transfer \336les fr) 108 288.67 T
+(om) 463.67 288.67 T
+(UNIX to W) 108 274.67 T
+(indows in or) 162.23 274.67 T
+(der to build your \336nal executable application would) 223.65 274.67 T
+(be tedious and likely to r) 108 260.67 T
+(esult in the occasional err) 228.65 260.67 T
+(or) 351.87 260.67 T
+(.) 361.41 260.67 T
+(Fortunately) 108 240.67 T
+(, you can use the Samba utility to establish transpar) 163.54 240.67 T
+(ent access to a) 413.42 240.67 T
+(UNIX \336lesystem on W) 108 226.67 T
+(indows. Once established, you do not need to move) 216.93 226.67 T
+(\336les fr) 108 212.67 T
+(om one platform to the other in or) 138.35 212.67 T
+(der to build an application. Dylan) 303.83 212.67 T
+(sour) 108 198.67 T
+(ces, native object \336les, W) 129.45 198.67 T
+(indows libraries, and W) 249.53 198.67 T
+(indows executables can) 365.52 198.67 T
+(all live on UNIX.) 108 184.67 T
+-0.35 (Most UNIX machines at Harlequin r) 108 164.67 P
+-0.35 (un Samba, and allow mounts at a number) 282.67 164.67 P
+-0.43 (of dif) 108 150.67 P
+-0.43 (fer) 133.38 150.67 P
+-0.43 (ent points on their \336lesystems. The dir) 146.46 150.67 P
+-0.43 (ectory) 330.36 150.67 P
+4 9.5 Q
+-0.89 (/u) 362.89 150.67 P
+2 11 Q
+-0.43 (, which should contain) 374.29 150.67 P
+(the dir) 108 136.67 T
+(ectory) 140.08 136.67 T
+4 9.5 Q
+(~dylan) 173.03 136.67 T
+2 11 Q
+( \050) 207.23 136.67 T
+4 9.5 Q
+(/u/dylan) 213.65 136.67 T
+2 11 Q
+(\051 and your home dir) 259.24 136.67 T
+(ectory) 357.09 136.67 T
+(, is normally avail-) 386.08 136.67 T
+0 0 0 1 0 0 0 K
+108 378 486 589 C
+0 0 0 1 0 0 0 K
+4 9 Q
+0 X
+0 0 0 1 0 0 0 K
+(hello-world) 333 478 T
+(my-gui-layer) 252 478 T
+(examples) 198 478 T
+261 517 225 490 2 L
+0.25 H
+2 Z
+N
+279 517 279 490 2 L
+N
+297 517 360 490 2 L
+N
+(~/dylan/vmtwin32) 243 578.17 T
+(lib) 270 529 T
+279 571 279 544 2 L
+N
+261 571 162 544 2 L
+N
+297 571 405 544 2 L
+N
+(platforms) 131.5 529 T
+(registry) 396 529 T
+J
+135 517 117 499 2 L
+J
+135 517 132.26 514.26 2 L
+N
+[6.776 5.465] 6.776 I
+132.26 514.26 119.74 501.74 2 L
+N
+J
+119.74 501.74 117 499 2 L
+N
+J
+144 517 144 499 2 L
+J
+144 517 144 513.12 2 L
+N
+[12.71 10.25] 12.71 I
+144 513.12 144 502.88 2 L
+N
+J
+144 502.88 144 499 2 L
+N
+J
+153 517 171 499 2 L
+J
+153 517 155.74 514.26 2 L
+N
+[6.776 5.465] 6.776 I
+155.74 514.26 168.26 501.74 2 L
+N
+J
+168.26 501.74 171 499 2 L
+N
+J
+405 517 387 499 2 L
+J
+405 517 402.26 514.26 2 L
+N
+[6.776 5.465] 6.776 I
+402.26 514.26 389.74 501.74 2 L
+N
+J
+389.74 501.74 387 499 2 L
+N
+J
+414 517 414 499 2 L
+J
+414 517 414 513.12 2 L
+N
+[12.71 10.25] 12.71 I
+414 513.12 414 502.88 2 L
+N
+J
+414 502.88 414 499 2 L
+N
+J
+423 517 441 499 2 L
+J
+423 517 425.74 514.26 2 L
+N
+[6.776 5.465] 6.776 I
+425.74 514.26 438.26 501.74 2 L
+N
+J
+438.26 501.74 441 499 2 L
+N
+J
+342 463 225 400 2 L
+N
+351 463 315 400 2 L
+N
+369 463 405 400 2 L
+N
+(hello-world-library.dylan) 243 385 T
+(hello.dylan) 387 385 T
+(hello-world.lid) 153 385 T
+J
+207 463 189 445 2 L
+J
+207 463 204.26 460.26 2 L
+N
+[6.776 5.465] 6.776 I
+204.26 460.26 191.74 447.74 2 L
+N
+J
+191.74 447.74 189 445 2 L
+N
+J
+216 463 216 445 2 L
+J
+216 463 216 459.12 2 L
+N
+[12.71 10.25] 12.71 I
+216 459.12 216 448.88 2 L
+N
+J
+216 448.88 216 445 2 L
+N
+J
+225 463 243 445 2 L
+J
+225 463 227.74 460.26 2 L
+N
+[6.776 5.465] 6.776 I
+227.74 460.26 240.26 447.74 2 L
+N
+J
+240.26 447.74 243 445 2 L
+N
+J
+270 463 252 445 2 L
+J
+270 463 267.26 460.26 2 L
+N
+[6.776 5.465] 6.776 I
+267.26 460.26 254.74 447.74 2 L
+N
+J
+254.74 447.74 252 445 2 L
+N
+J
+279 463 279 445 2 L
+J
+279 463 279 459.12 2 L
+N
+[12.71 10.25] 12.71 I
+279 459.12 279 448.88 2 L
+N
+J
+279 448.88 279 445 2 L
+N
+J
+288 463 297 454 2 L
+J
+288 463 290.74 460.26 2 L
+N
+[6.173 4.978] 6.173 I
+290.74 460.26 294.26 456.74 2 L
+N
+J
+294.26 456.74 297 454 2 L
+N
+J
+333 571 495 544 2 L
+J
+333 571 336.82 570.36 2 L
+N
+[7.568 6.103] 7.568 I
+336.82 570.36 491.18 544.64 2 L
+N
+J
+491.18 544.64 495 544 2 L
+N
+0 0 0 1 0 0 0 K
+J
+36 72 576 720 C
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "9" 9
+%%Page: "10" 10
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+72 675 504 702 R
+7 X
+0 0 0 1 0 0 0 K
+V
+0 9.5 Q
+0 X
+(Dylan VMTether+Win32 Release Notes) 72 695.67 T
+72 81 504 118 R
+7 X
+V
+1 9 Q
+0 X
+(10) 72 101 T
+0 F
+(Revision 2.  July 21, 1996.) 407.99 101 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+126 126 504 648 R
+7 X
+V
+2 11 Q
+0 X
+(able as a mount point. W) 126 640.67 T
+(e r) 246.35 640.67 T
+(ecommend that you mount a UNIX \336lesystem at) 258.52 640.67 T
+(this point on your PC. Full instr) 126 626.67 T
+(uctions on how to do this ar) 280.12 626.67 T
+(e given in Section) 415.8 626.67 T
+(10.6.) 126 612.67 T
+3 13 Q
+(10.4  The Dylan em) 126 579.33 T
+(ulator) 221.8 579.33 T
+2 11 Q
+(Y) 126 559.67 T
+(ou need an emulator image to use VMT) 132.32 559.67 T
+(ether+W) 324.07 559.67 T
+(in32. Emulator images for) 366 559.67 T
+-0.12 (VMT) 126 545.67 P
+-0.12 (ether+W) 150.08 545.67 P
+-0.12 (in32 ar) 192.01 545.67 P
+-0.12 (e available pr) 224.89 545.67 P
+-0.12 (e-installed on UNIX machines at all sites, as) 289.84 545.67 P
+4 9.5 Q
+(lw+dylan+vm) 126 531.67 T
+2 11 Q
+( under) 188.7 531.67 T
+4 9 Q
+(~dylan/releases/vmtwin32/platforms/<) 153 511 T
+6 F
+(platform) 347.4 511 T
+4 F
+(>/bin/) 382.9 511 T
+2 11 Q
+(Wher) 126 490.67 T
+(e) 152.82 490.67 T
+4 9.5 Q
+(<) 160.84 490.67 T
+0 11 Q
+(platform) 166.54 490.67 T
+4 9.5 Q
+(>) 204.42 490.67 T
+2 11 Q
+( can be one of:) 210.12 490.67 T
+4 9.5 Q
+(alpha-osf3) 153 464.67 T
+2 11 Q
+(DEC Alpha \050OSF 3.0\051) 234 464.67 T
+4 9.5 Q
+(sparc-solaris2) 153 438.67 T
+2 11 Q
+(Sun Spar) 234 438.67 T
+(c \050Solaris 2\051) 277.59 438.67 T
+4 9.5 Q
+(sparc-sunos4) 153 412.67 T
+2 11 Q
+(Sun Spar) 234 412.67 T
+(c \050SunOS 4\051) 277.59 412.67 T
+4 9.5 Q
+(sgi-irix5) 153 386.67 T
+2 11 Q
+(SGI \050Irix 5\051) 234 386.67 T
+(If an image for the platform you want to use is not available at your site, con-) 126 366.67 T
+(tact Arthor W) 126 352.67 T
+(einstein \050e-mail:) 192.29 352.67 T
+4 9.5 Q
+(rthor) 272.74 352.67 T
+2 11 Q
+(\051.) 301.24 352.67 T
+3 13 Q
+(10.5  The ID) 126 319.33 T
+(VM tools) 184.84 319.33 T
+2 11 Q
+(Y) 126 299.67 T
+(ou need a Dylan server and IDVM engine to use Dylan VMT) 132.32 299.67 T
+(ether+W) 426.04 299.67 T
+(in32.) 467.97 299.67 T
+(The server is used to manage tethers between the emulator) 126 285.67 T
+(\325s r) 413.01 285.67 T
+(emote listener) 427.63 285.67 T
+-0.32 (and r) 126 271.67 P
+-0.32 (emote applications on W) 151.2 271.67 P
+-0.32 (indows. Candidate r) 270.5 271.67 P
+-0.32 (emote applications must be) 369.12 271.67 P
+(statically linked with the IDVM engine, which can interpr) 126 257.67 T
+(et and execute) 406.36 257.67 T
+(instr) 126 243.67 T
+(uctions sent down the tether fr) 148.11 243.67 T
+(om UNIX.) 296.98 243.67 T
+(A server executable, and an executable version of the engine linked with the) 126 223.67 T
+4 9.5 Q
+(dylan) 126 209.67 T
+2 11 Q
+( library) 154.5 209.67 T
+(, ar) 188.82 209.67 T
+(e both available pr) 203.97 209.67 T
+(e-installed on UNIX machines at all sites.) 293.99 209.67 T
+(The server executable is) 126 189.67 T
+4 9.5 Q
+(server.exe) 244.76 189.67 T
+2 11 Q
+( in:) 301.76 189.67 T
+4 9 Q
+(~dylan/releases/vmtwin32/platforms/x86-win32/bin/) 153 169 T
+2 11 Q
+(The default IDVM application executable, containing the IDVM engine, is) 126 148.67 T
+4 9.5 Q
+(idvm-application.exe) 126 134.67 T
+2 11 Q
+( in:) 240 134.67 T
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "10" 10
+%%Page: "11" 11
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+108 675 540 702 R
+7 X
+0 0 0 1 0 0 0 K
+V
+0 9.5 Q
+0 X
+(10) 374.86 695.67 T
+(Dylan VMTether+Win32 Installation) 393.86 695.67 T
+108 82.17 540 117 R
+7 X
+V
+0 9 Q
+0 X
+(Revision 2.  July 21, 1996.) 108 100 T
+1 F
+(1) 531.33 100 T
+(1) 535.5 100 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+108 126 486 648 R
+7 X
+V
+4 F
+0 X
+(~dylan/releases/vmtwin32/platforms/x86-win32/bin/) 135 642 T
+2 11 Q
+(The IDVM application library sour) 108 621.67 T
+(ces ar) 276.93 621.67 T
+(e in:) 304.14 621.67 T
+4 9 Q
+(~dylan/releases/vmtwin32/lib/idvm-application/) 135 601 T
+3 13 Q
+(10.6  Instructions f) 108 569.33 T
+(or installing Dylan VMT) 202 569.33 T
+(ether+Win32) 319.26 569.33 T
+2 11 Q
+(This section pr) 108 549.67 T
+(ovides complete Dylan VMT) 179.28 549.67 T
+(ether+W) 317.96 549.67 T
+(in32 installation instr) 359.89 549.67 T
+(uc-) 462.55 549.67 T
+(tions.) 108 535.67 T
+(On UNIX, in bash:) 108 515.67 T
+1 F
+(1.) 117 495.67 T
+2 F
+(Cr) 135 495.67 T
+(eate a personal r) 146.95 495.67 T
+(oot dir) 226.46 495.67 T
+(ectory) 258.88 495.67 T
+(. For example:) 287.87 495.67 T
+4 9 Q
+(unix> mkdir ~/dylan/vmtwin32) 135 475 T
+1 11 Q
+(2.) 117 454.67 T
+2 F
+(Run the) 135 454.67 T
+4 9.5 Q
+(create-personal-dylan) 176.14 454.67 T
+2 11 Q
+( script, which is in the dir) 295.84 454.67 T
+(ectory) 419.24 454.67 T
+4 9.5 Q
+(~dylan/releases/vmtwin32/admin) 135 440.67 T
+2 11 Q
+(. For example:) 306 440.67 T
+4 9 Q
+(unix> create-personal-dylan ~/dylan/vmtwin32) 135 420 T
+(Creating empty directory tree for dylan in: .../dylan/vmtwin32) 135 409 T
+(unix>) 135 398 T
+1 11 Q
+(3.) 117 377.67 T
+2 F
+(Using) 135 377.67 T
+4 9.5 Q
+(bash) 166.69 377.67 T
+2 11 Q
+( and the command) 189.49 377.67 T
+4 9.5 Q
+(source) 283.31 377.67 T
+2 11 Q
+( to do so, r) 317.51 377.67 T
+(un the) 368.51 377.67 T
+4 9.5 Q
+(dylan-setup.sh) 402.3 377.67 T
+2 11 Q
+-0.42 (script, which is in the dir) 135 363.67 P
+-0.42 (ectory) 253.57 363.67 P
+4 9.5 Q
+-0.86 (~dylan/releases/vmtwin32/admin) 286.11 363.67 P
+2 11 Q
+-0.42 (. Pass) 457.11 363.67 P
+(the script your personal r) 135 349.67 T
+(oot dir) 257.79 349.67 T
+(ectory with the option) 290.21 349.67 T
+4 9.5 Q
+(-pr) 400.85 349.67 T
+2 11 Q
+(, and with) 417.13 349.67 T
+0 F
+(no) 469.12 349.67 T
+2 F
+(trailing slash. For example:) 135 335.67 T
+4 9 Q
+(unix> source dylan-setup.sh -pr ~/dylan/vmtwin32) 135 315 T
+2 11 Q
+(The script sets up UNIX envir) 135 294.67 T
+(onment variables r) 279.86 294.67 T
+(equir) 370.86 294.67 T
+(ed by the emula-) 396.27 294.67 T
+(tor) 135 280.67 T
+(. Y) 148.12 280.67 T
+(ou could add a call to this script in your shell r) 159.95 280.67 T
+(esour) 385.83 280.67 T
+(ce \336le) 412.55 280.67 T
+(\050) 135 266.67 T
+4 9.5 Q
+(.bash_profile) 138.66 266.67 T
+2 11 Q
+( and the like\051 so that you do not need to r) 212.76 266.67 T
+(un it in every) 413.07 266.67 T
+(new shell you start up.) 135 252.67 T
+1 F
+(Note:) 135 232.67 T
+2 F
+( Always r) 162.19 232.67 T
+(un) 209.16 232.67 T
+4 9.5 Q
+(dylan-setup.sh) 224.95 232.67 T
+2 11 Q
+( using the) 304.75 232.67 T
+4 9.5 Q
+(source) 355.27 232.67 T
+2 11 Q
+( shell command, so) 389.47 232.67 T
+-0.08 (that the envir) 135 218.67 P
+-0.08 (onment variables ar) 199.9 218.67 P
+-0.08 (e set in the curr) 296.24 218.67 P
+-0.08 (ent shell. If you r) 370.57 218.67 P
+-0.08 (un the) 452.37 218.67 P
+-0.33 (script dir) 135 204.67 P
+-0.33 (ectly) 178.78 204.67 P
+-0.33 (, the variables ar) 200.61 204.67 P
+-0.33 (e only set in the subshell the script r) 279.49 204.67 P
+-0.33 (uns in.) 451.11 204.67 P
+1 F
+(Note:) 135 184.67 T
+2 F
+( Unfortunately) 162.19 184.67 T
+(, this script works only in the) 232.99 184.67 T
+4 9.5 Q
+(bash) 377.02 184.67 T
+2 11 Q
+( shell at pr) 399.82 184.67 T
+(esent.) 450.65 184.67 T
+(See Section 13.2 on page 19 for mor) 135 164.67 T
+(e on this script.) 305.72 164.67 T
+(On W) 108 144.67 T
+(indows:) 136.19 144.67 T
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "11" 11
+%%Page: "12" 12
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+72 675 504 702 R
+7 X
+0 0 0 1 0 0 0 K
+V
+0 9.5 Q
+0 X
+(Dylan VMTether+Win32 Release Notes) 72 695.67 T
+72 81 504 118 R
+7 X
+V
+1 9 Q
+0 X
+(12) 72 101 T
+0 F
+(Revision 2.  July 21, 1996.) 407.99 101 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+126 126 504 648 R
+7 X
+V
+1 11 Q
+0 X
+(4.) 135 640.67 T
+2 F
+(Start up an MS-DOS pr) 153 640.67 T
+(ompt.) 265.48 640.67 T
+1 F
+(5.) 135 620.67 T
+2 F
+-0 (At the MS-DOS pr) 153 620.67 P
+-0 (ompt, use the Samba networking package to mount a) 242.18 620.67 P
+(UNIX \336lesystem fr) 153 606.67 T
+(om which you can access both your personal r) 244.19 606.67 T
+(oot) 468.7 606.67 T
+(dir) 153 592.67 T
+(ectory and) 167.07 592.67 T
+4 9.5 Q
+(~dylan) 221.4 592.67 T
+2 11 Q
+(. On most Harlequin machines this means your) 255.6 592.67 T
+(mount point should be the dir) 153 578.67 T
+(ectory) 299.2 578.67 T
+4 9.5 Q
+(/u) 332.16 578.67 T
+2 11 Q
+(.) 343.56 578.67 T
+(The UNIX machine must be r) 153 560.67 T
+(unning Samba for you to mount a \336lesys-) 295.48 560.67 T
+(tem fr) 153 546.67 T
+(om it. If you do not know which machines r) 182.13 546.67 T
+(un Samba, br) 395.03 546.67 T
+(owse) 459.12 546.67 T
+(those available under) 153 532.67 T
+5 9.6 Q
+(Disk > Connect Netw) 260.22 532.67 T
+(ork Drive) 355.25 532.67 T
+2 11 Q
+( fr) 396.86 532.67 T
+(om the File Man-) 407.42 532.67 T
+(ager) 153 518.67 T
+(. \050The Sysadmins administrate Samba, so talk to them if you cannot) 173.42 518.67 T
+(\336nd a suitable machine r) 153 504.67 T
+(unning it in your domain.\051) 273.04 504.67 T
+(The syntax for this mounting pr) 153 486.67 T
+(ocedur) 307.79 486.67 T
+(e is:) 341.45 486.67 T
+4 9 Q
+(net use <) 153 466 T
+6 F
+(volume-name) 201.6 466 T
+4 F
+(> <) 256.1 466 T
+6 F
+(machine-and-mount-point) 272.3 466 T
+4 F
+(>) 378.84 466 T
+2 11 Q
+(The volume name is a single letter name, followed by a colon, which is) 153 445.67 T
+(given to the notional \324disk\325 that the mounted \336lesystem pr) 153 431.67 T
+(ovides.) 435.48 431.67 T
+0 F
+(<machine-and-mount-point) 153 417.67 T
+2 F
+(> starts with a double backslash. For example,) 276.58 417.67 T
+4 9 Q
+(C:\134users\134fred> net use w: \134\134bigserver\134u) 153 397 T
+2 11 Q
+(mounts the dir) 153 376.67 T
+(ectory) 224.83 376.67 T
+4 9.5 Q
+(\134u) 257.79 376.67 T
+2 11 Q
+( on the machine) 269.19 376.67 T
+4 9.5 Q
+(bigserver) 349.22 376.67 T
+2 11 Q
+( as volume) 400.52 376.67 T
+4 9.5 Q
+(w:\134) 455.97 376.67 T
+2 11 Q
+(.) 473.07 376.67 T
+(If a volume is alr) 153 358.67 T
+(eady in use, you can unmount it with:) 234.62 358.67 T
+4 9 Q
+(net use <) 153 338 T
+6 F
+(volume-name) 201.6 338 T
+4 F
+(> /delete) 256.1 338 T
+2 11 Q
+(If you intend to build application executables on W) 126 317.67 T
+(indows, you should com-) 374.68 317.67 T
+(plete the next thr) 126 303.67 T
+(ee steps:) 208.51 303.67 T
+1 F
+(6.) 135 283.67 T
+2 F
+(Move to the volume you just mounted. T) 153 283.67 T
+(o do so, type its name at the) 351.05 283.67 T
+(MS-DOS pr) 153 269.67 T
+(ompt and hit r) 209.29 269.67 T
+(eturn. For example:) 279.41 269.67 T
+4 9 Q
+(C:\134users\134fred> w:) 153 249 T
+(W:\134> dir) 153 230 T
+(Volume in drive W is u) 158.4 219 T
+(Volume Serial Number is ...) 158.4 208 T
+(Directory of W:\134) 158.4 189 T
+(01/12/96) 153 170 T
+(02:58p) 207 170 T
+(<DIR>) 277.2 170 T
+(lost+found) 342 170 T
+(01/11/96) 153 159 T
+(...) 207 159 T
+(...) 153 148 T
+(W:\134fred\134dylan\134vmtwin32\134platforms\134x86-win32\134lib>) 153 137 T
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "12" 12
+%%Page: "13" 13
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+108 675 540 702 R
+7 X
+0 0 0 1 0 0 0 K
+V
+0 9.5 Q
+0 X
+(11) 345.02 695.67 T
+(Using Dylan VMTether+Win32: An example) 364.02 695.67 T
+108 82.17 540 117 R
+7 X
+V
+0 9 Q
+0 X
+(Revision 2.  July 21, 1996.) 108 100 T
+1 F
+(13) 531 100 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+108 126 486 648 R
+7 X
+V
+1 11 Q
+0 X
+(7.) 117 640.67 T
+2 F
+-0.19 (Still on W) 135 640.67 P
+-0.19 (indows, r) 181.88 640.67 P
+-0.19 (un the script) 227.62 640.67 P
+4 9.5 Q
+-0.4 (dylan-setup.cmd) 290.87 640.67 P
+2 11 Q
+-0.19 (, which is in the UNIX) 376.37 640.67 P
+(dir) 135 626.67 T
+(ectory) 149.07 626.67 T
+4 9.5 Q
+(~dylan/releases/vmtwin32/admin) 182.02 626.67 T
+2 11 Q
+(. Y) 353.02 626.67 T
+(ou can access this script) 364.85 626.67 T
+-0.35 (dir) 135 612.67 P
+-0.35 (ectly fr) 149.07 612.67 P
+-0.35 (om W) 182.33 612.67 P
+-0.35 (indows now that you have a Samba connection to UNIX.) 210.85 612.67 P
+(Like the similarly named UNIX script,) 135 594.67 T
+4 9.5 Q
+(dylan-setup.cmd) 323.6 594.67 T
+2 11 Q
+( sets up envi-) 409.1 594.67 T
+(r) 135 580.67 T
+(onment variables. These PC envir) 139.15 580.67 T
+(onment variables ar) 302.28 580.67 T
+(e r) 398.78 580.67 T
+(equir) 410.95 580.67 T
+(ed by the) 436.36 580.67 T
+4 9.5 Q
+-0.83 (nmake) 135 566.67 P
+2 11 Q
+-0.4 ( scripts emitted by the batch compiler for building executables and) 163.5 566.67 P
+(installing natively compiled libraries.) 135 552.67 T
+-0.05 (Pass the script your personal r) 135 534.67 P
+-0.05 (oot dir) 281.79 534.67 P
+-0.05 (ectory) 314.16 534.67 P
+-0.05 (. Always start it with a) 343.15 534.67 P
+4 9.5 Q
+-0.09 (\134) 455.67 534.67 P
+2 11 Q
+-0.05 (. For) 461.37 534.67 P
+(example:) 135 520.67 T
+4 9 Q
+(w:\134> dylan\134releases\134vmtwin32\134admin\134dylan-setup.cmd) 135 500 T
+(\134fred\134dylan\134vmtwin32) 378 489 T
+2 11 Q
+(Optionally) 135 468.67 T
+(, you can pass a second ar) 186.25 468.67 T
+(gument to name the Dylan pr) 311.57 468.67 T
+(oject) 455.27 468.67 T
+(r) 135 454.67 T
+(oot dir) 139.15 454.67 T
+(ectory) 171.56 454.67 T
+(,) 200.55 454.67 T
+4 9.5 Q
+(~dylan/releases/vmtwin32) 206.05 454.67 T
+2 11 Q
+( on UNIX. By default, this is) 342.85 454.67 T
+(set up to be) 135 440.67 T
+4 9.5 Q
+(\134dylan\134releases\134vmtwin32) 193.71 440.67 T
+2 11 Q
+( in the curr) 330.51 440.67 T
+(ent volume.) 383.63 440.67 T
+(See Section 13.3 on page 20 for mor) 135 422.67 T
+(e about this script.) 305.72 422.67 T
+1 F
+(8.) 117 402.67 T
+2 F
+-0.21 (If it is not alr) 135 402.67 P
+-0.21 (eady set, set the user envir) 196.04 402.67 P
+-0.21 (onment variable) 323.55 402.67 P
+4 9.5 Q
+-0.43 (%CPU%) 405.33 402.67 P
+2 11 Q
+-0.21 ( to) 433.83 402.67 P
+4 9.5 Q
+-0.43 (i386) 448.51 402.67 P
+2 11 Q
+-0.21 ( in) 471.31 402.67 P
+5 9.6 Q
+(Main > Contr) 135 388.67 T
+(ol P) 193.21 388.67 T
+(anel > System) 210.53 388.67 T
+2 11 Q
+(.) 274.83 388.67 T
+(Y) 108 368.67 T
+(our Dylan VMT) 114.32 368.67 T
+(ether+W) 190.62 368.67 T
+(in32 installation is now complete. T) 232.55 368.67 T
+(o test that it) 403.82 368.67 T
+(works, follow the example in Section 1) 108 354.67 T
+(1.) 294.92 354.67 T
+-0.16 (The next step after installing Dylan VMT) 108 334.67 P
+-0.16 (ether+W) 304.66 334.67 P
+-0.16 (in32 and following the short) 346.6 334.67 P
+(example is to populate your personal r) 108 320.67 T
+(oot dir) 295.86 320.67 T
+(ectory with library sour) 328.27 320.67 T
+(ces, and) 443.33 320.67 T
+(r) 108 306.67 T
+(egister them in your emulator and batch-compiler r) 112.15 306.67 T
+(egistries as appr) 361.89 306.67 T
+(opriate.) 440.74 306.67 T
+-0.34 (See) 108 292.67 P
+0 F
+-0.34 (Guide to Dylan Internal Releases) 126.72 292.67 P
+2 F
+-0.34 (, Chapter 3, \322Sour) 272.63 292.67 P
+-0.34 (ce Code Management\323, to) 358.42 292.67 P
+(\336nd out how to set library sour) 108 278.67 T
+(ces up.) 259.44 278.67 T
+3 16 Q
+(11  Using Dylan VMT) 108 243.33 T
+(ether+Win32: An e) 236.29 243.33 T
+(xample) 350.94 243.33 T
+2 11 Q
+(This example shows how to set up a Dylan library for use with Dylan) 108 222.67 T
+(VMT) 108 208.67 T
+(ether+W) 132.08 208.67 T
+(in32, how to r) 174.01 208.67 T
+(emotely evaluate code fr) 240.93 208.67 T
+(om it acr) 360.21 208.67 T
+(oss the tether) 402.74 208.67 T
+(,) 466.48 208.67 T
+-0.39 (how to cr) 108 194.67 P
+-0.39 (oss-compile it for W) 152.93 194.67 P
+-0.39 (indows, and how to build a W) 249.1 194.67 P
+-0.39 (indows executable) 393.73 194.67 P
+(fr) 108 180.67 T
+(om it.) 115.81 180.67 T
+(On UNIX:) 108 160.67 T
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "13" 13
+%%Page: "14" 14
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+72 675 504 702 R
+7 X
+0 0 0 1 0 0 0 K
+V
+0 9.5 Q
+0 X
+(Dylan VMTether+Win32 Release Notes) 72 695.67 T
+72 81 504 118 R
+7 X
+V
+1 9 Q
+0 X
+(14) 72 101 T
+0 F
+(Revision 2.  July 21, 1996.) 407.99 101 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+126 126 504 648 R
+7 X
+V
+1 11 Q
+0 X
+(1.) 135 640.67 T
+2 F
+(Under your personal r) 153 640.67 T
+(oot dir) 261.79 640.67 T
+(ectory) 294.21 640.67 T
+(, move to the dir) 323.19 640.67 T
+(ectory) 403.06 640.67 T
+4 9.5 Q
+(lib) 436.02 640.67 T
+2 11 Q
+(, and into) 453.12 640.67 T
+(it check out the) 153 626.67 T
+4 9.5 Q
+(hello-world) 229.82 626.67 T
+2 11 Q
+( library fr) 292.52 626.67 T
+(om HOPE. For example:) 338.62 626.67 T
+4 9 Q
+(unix> cd ~/dylan/vmtwin32/lib) 153 606 T
+(unix> hope co -compound D-lib-hello-world -branch D-vmtwin32) 153 595 T
+2 11 Q
+(The) 153 574.67 T
+4 9.5 Q
+(hello-world) 174.16 574.67 T
+2 11 Q
+( example library de\336nes a method) 236.86 574.67 T
+4 9.5 Q
+(say-hello) 405.57 574.67 T
+2 11 Q
+( which) 456.87 574.67 T
+(prints the message \322hello ther) 153 560.67 T
+(e!\323 The library is comprised of the follow-) 298.24 560.67 T
+(ing \336les:) 153 546.67 T
+4 9 Q
+(unix> ls hello-world/) 153 526 T
+(hello-world-library.dylan) 153 515 T
+(hello-world.lid) 153 504 T
+(hello.dylan) 153 493 T
+(unix>) 153 482 T
+2 11 Q
+-0.05 (Though the dir) 153 461.67 P
+-0.05 (ectory) 226.02 461.67 P
+4 9.5 Q
+-0.11 (lib) 258.93 461.67 P
+2 11 Q
+-0.05 ( was chosen above as the dir) 276.03 461.67 P
+-0.05 (ectory in which to) 413.74 461.67 P
+(put the) 153 447.67 T
+4 9.5 Q
+(hello-world) 190.59 447.67 T
+2 11 Q
+( sour) 253.29 447.67 T
+(ces, note that wher) 277.49 447.67 T
+(e you put libraries is) 368.63 447.67 T
+(entir) 153 433.67 T
+(ely your choice. All you have to do is to make sur) 175.6 433.67 T
+(e that the emula-) 415.86 433.67 T
+(tor and native r) 153 419.67 T
+(egistry entries contain the right dir) 228.13 419.67 T
+(ections to your librar-) 396.87 419.67 T
+(ies\325 LID \336les.) 153 405.67 T
+1 F
+(2.) 135 385.67 T
+2 F
+(Cr) 153 385.67 T
+(eate a r) 164.95 385.67 T
+(egistry entry for the) 199.72 385.67 T
+4 9.5 Q
+(hello-world) 299 385.67 T
+2 11 Q
+( library) 361.7 385.67 T
+(. For example:) 396.02 385.67 T
+4 9 Q
+(unix> cat > ~/dylan/vmtwin32/registry/hello-world) 153 365 T
+(abstract://personal-dylan/lib/hello-world/hello-world.lid) 153 354 T
+(^D) 153 343 T
+(unix>) 153 332 T
+2 11 Q
+(\050Her) 153 311.67 T
+(e,) 175.23 311.67 T
+4 9.5 Q
+(^D) 186 311.67 T
+2 11 Q
+( stands for) 197.4 311.67 T
+4 9.5 Q
+(Ctrl-D) 251.2 311.67 T
+2 11 Q
+(.\051) 285.4 311.67 T
+(A r) 153 293.67 T
+(egistry entry is r) 168.46 293.67 T
+(equir) 247.73 293.67 T
+(ed so that the batch compiler and r) 273.14 293.67 T
+(emote lis-) 441.84 293.67 T
+(tener can each \336nd the library sour) 153 279.67 T
+(ces when you ask to compile the) 322.49 279.67 T
+(library) 153 265.67 T
+(. T) 184.57 265.67 T
+(o do UNIX-based, non-r) 195.8 265.67 T
+(emotely-evaluated development work) 312.8 265.67 T
+(on this library) 153 251.67 T
+(, you would also need an emulator r) 220.33 251.67 T
+(egistry entry for it.) 396.15 251.67 T
+1 F
+(3.) 135 231.67 T
+2 F
+(Start up the Dylan VMT) 153 231.67 T
+(ether+W) 269.11 231.67 T
+(in32 emulator image:) 311.04 231.67 T
+4 9 Q
+(unix> $DW_BIN/lw+dylan+vm) 153 211 T
+([) 153 200 T
+6 F
+(messages) 163.8 200 T
+4 F
+( ]) 200.78 200 T
+(CL-USER 1 >) 153 189 T
+2 11 Q
+(The UNIX envir) 153 168.67 T
+(onment variable) 230.89 168.67 T
+4 9.5 Q
+(DW_BIN) 313.08 168.67 T
+2 11 Q
+( was set during the call to) 347.28 168.67 T
+4 9.5 Q
+(dylan-setup.sh) 153 154.67 T
+2 11 Q
+(.) 232.8 154.67 T
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "14" 14
+%%Page: "15" 15
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+108 675 540 702 R
+7 X
+0 0 0 1 0 0 0 K
+V
+0 9.5 Q
+0 X
+(11) 345.02 695.67 T
+(Using Dylan VMTether+Win32: An example) 364.02 695.67 T
+108 82.17 540 117 R
+7 X
+V
+0 9 Q
+0 X
+(Revision 2.  July 21, 1996.) 108 100 T
+1 F
+(15) 531 100 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+108 126 486 648 R
+7 X
+V
+2 11 Q
+0 X
+-0.2 (If you would like to stop the image r) 135 640.67 P
+-0.2 (eading your) 310.67 640.67 P
+4 9.5 Q
+-0.42 (.lispworks) 372.07 640.67 P
+2 11 Q
+-0.2 ( \336le on star-) 429.07 640.67 P
+(tup, pass the following ar) 135 626.67 T
+(guments to the) 258.89 626.67 T
+4 9.5 Q
+(lw+dylan+vm) 334.38 626.67 T
+2 11 Q
+( image:) 397.08 626.67 T
+4 9 Q
+(-init -) 135 606 T
+1 11 Q
+(4.) 117 585.67 T
+2 F
+(Start up the LispW) 135 585.67 T
+(orks envir) 225.73 585.67 T
+(onment:) 274.84 585.67 T
+4 9 Q
+(CL-USER 2 > \050tools:start-lispworks\051) 135 565 T
+([) 135 554 T
+6 F
+(messages) 145.8 554 T
+4 F
+( ]) 182.78 554 T
+1 11 Q
+(5.) 117 533.67 T
+2 F
+(On W) 135 533.67 T
+(indows, start up the Dylan server) 163.19 533.67 T
+(. The server executable is) 325.07 533.67 T
+6 9 Q
+(v) 135 513 T
+4 F
+(:\134dylan\134releases\134vmtwin32\134platforms\134x86-win32\134bin\134server.exe) 140 513 T
+2 11 Q
+(wher) 135 492.67 T
+(e) 159.99 492.67 T
+0 F
+(v) 168.01 492.67 T
+2 F
+( is the Samba volume on which you mounted the UNIX dir) 173.51 492.67 T
+(ec-) 460.12 492.67 T
+(tory) 135 478.67 T
+4 9.5 Q
+(/u) 157.8 478.67 T
+2 11 Q
+(.) 169.2 478.67 T
+1 F
+-0.36 (Note:) 135 460.67 P
+2 F
+-0.36 ( Start the server by double-clicking on it in the File Manager) 162.19 460.67 P
+-0.36 (, rather) 449.02 460.67 P
+(than fr) 135 446.67 T
+(om the MS-DOS command line.) 167.45 446.67 T
+-0.09 (Once started, the server waits for a connection r) 135 428.67 P
+-0.09 (equest fr) 366.05 428.67 P
+-0.09 (om a r) 408.1 428.67 P
+-0.09 (emote lis-) 438.77 428.67 P
+(tener on UNIX.) 135 414.67 T
+1 F
+(6.) 117 394.67 T
+2 F
+(Back in the emulator on UNIX, start up a r) 135 394.67 T
+(emote listener by selecting) 340.56 394.67 T
+5 9.6 Q
+(Dylan > Remote Listener) 135 380.67 T
+2 11 Q
+( fr) 247.3 380.67 T
+(om the podium.) 257.86 380.67 T
+(The echo ar) 135 362.67 T
+(ea pr) 191.12 362.67 T
+(ompts you for a r) 215.4 362.67 T
+(emote host with which to connect.) 299.39 362.67 T
+1 F
+(7.) 117 342.67 T
+2 F
+(Enter your PC\325s network name at the echo ar) 135 342.67 T
+(ea pr) 352.92 342.67 T
+(ompt.) 377.2 342.67 T
+(The echo ar) 135 324.67 T
+(ea now pr) 191.12 324.67 T
+(ompts you for a r) 239.73 324.67 T
+(emote application with which to) 323.73 324.67 T
+(connect. This application should contain an IDVM engine. An appr) 135 310.67 T
+(opri-) 460.96 310.67 T
+(ate application executable,) 135 296.67 T
+4 9.5 Q
+(idvm-application.exe) 266.43 296.67 T
+2 11 Q
+(, is supplied with) 380.43 296.67 T
+(Dylan VMT) 135 282.67 T
+(ether+W) 191.56 282.67 T
+(in32; this is the default application of) 233.49 282.67 T
+(fer) 413.07 282.67 T
+(ed.) 426.15 282.67 T
+1 F
+(8.) 117 262.67 T
+2 F
+-0.19 (Choose the default r) 135 262.67 P
+-0.19 (emote application by hitting Return at the echo ar) 232.81 262.67 P
+-0.19 (ea) 472.67 262.67 P
+(pr) 135 248.67 T
+(ompt.) 145.76 248.67 T
+(The r) 135 230.67 T
+(emote listener starts up now) 160.31 230.67 T
+(.) 297.25 230.67 T
+1 F
+(9.) 117 210.67 T
+2 F
+(Compile the) 135 210.67 T
+4 9.5 Q
+(hello-world) 197.56 210.67 T
+2 11 Q
+( library in the r) 260.26 210.67 T
+(emote listener:) 333.05 210.67 T
+4 9 Q
+(DYLAN 1 ? compile-lib: hello-world;) 135 190 T
+(**COMPILING LIBRARY hello-world ...) 135 171 T
+(read-lid-file hello-world) 135 160 T
+(\311) 135 149 T
+(**LIBRARY hello-world COMPILED) 135 138 T
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "15" 15
+%%Page: "16" 16
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+72 675 504 702 R
+7 X
+0 0 0 1 0 0 0 K
+V
+0 9.5 Q
+0 X
+(Dylan VMTether+Win32 Release Notes) 72 695.67 T
+72 81 504 118 R
+7 X
+V
+1 9 Q
+0 X
+(16) 72 101 T
+0 F
+(Revision 2.  July 21, 1996.) 407.99 101 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+126 126 504 648 R
+7 X
+V
+4 F
+0 X
+(HELLO-WORLD 2 ?) 153 642 T
+2 11 Q
+(Compilation pr) 153 621.67 T
+(oduces) 227.73 621.67 T
+4 9.5 Q
+(.doss) 264.66 621.67 T
+2 11 Q
+( \336les for the library) 293.16 621.67 T
+(. DOSS is a fasl format) 384.79 621.67 T
+(used to encode IDVM instr) 153 607.67 T
+(uctions and r) 284.11 607.67 T
+(esults sent acr) 347.76 607.67 T
+(oss the tether) 415.72 607.67 T
+(.) 479.46 607.67 T
+(When compilation is over) 153 589.67 T
+(, the r) 277.52 589.67 T
+(emote listener enters the) 305.17 589.67 T
+4 9.5 Q
+(hello-world) 426.75 589.67 T
+2 11 Q
+(module automatically:) 153 575.67 T
+4 9 Q
+(HELLO-WORLD 2 ?) 153 555 T
+2 11 Q
+(The next step is to load the compiled library code into the listener) 153 534.67 T
+(.) 470.47 534.67 T
+1 F
+(10.) 135 514.67 T
+2 F
+(Enter the following form in the r) 153 514.67 T
+(emote listener:) 310.78 514.67 T
+4 9 Q
+(HELLO-WORLD 2 ? load-lib: hello-world;) 153 494 T
+(**LOADING LIBRARY hello-world ...) 153 475 T
+(****LOADING FILE hello-world-library.doss ...) 153 464 T
+(#F) 153 453 T
+(****LOADING FILE hello.doss ...) 153 434 T
+(hello there!) 153 415 T
+(**LIBRARY hello-world LOADED) 153 396 T
+(HELLO-WORLD 3 ?) 153 377 T
+2 11 Q
+(As the library is loaded, the) 126 356.67 T
+4 9.5 Q
+(say-hello) 263.06 356.67 T
+2 11 Q
+( method is de\336ned in the IDVM appli-) 314.36 356.67 T
+(cation r) 126 342.67 T
+(unning on W) 162.59 342.67 T
+(indows, and then it is called. The message \322hello ther) 226.04 342.67 T
+(e!\323) 484.77 342.67 T
+(appears in the r) 126 328.67 T
+(emote listener) 201.76 328.67 T
+(.) 269.47 328.67 T
+(Y) 126 308.67 T
+(ou can call) 132.32 308.67 T
+4 9.5 Q
+(say-hello) 186.79 308.67 T
+2 11 Q
+( acr) 238.09 308.67 T
+(oss the tether yourself simply by typing into the) 255.37 308.67 T
+(r) 126 294.67 T
+(emote listener on UNIX. The call is sent down the tether) 130.15 294.67 T
+(, evaluated, and the) 401.52 294.67 T
+(r) 126 280.67 T
+(esults ar) 130.15 280.67 T
+(e r) 170.56 280.67 T
+(eturned to the r) 182.73 280.67 T
+(emote listener) 258.2 280.67 T
+(.) 325.91 280.67 T
+1 F
+(1) 135 260.67 T
+(1.) 140.09 260.67 T
+2 F
+(Enter the following form in the r) 153 260.67 T
+(emote listener:) 310.78 260.67 T
+4 9 Q
+(HELLO-WORLD 3 ? say-hello\050\051;) 153 240 T
+(hello there!) 153 229 T
+(HELLO-WORLD 4 ?) 153 210 T
+2 11 Q
+(If you want to cr) 126 189.67 T
+(eate a standalone version of) 206.41 189.67 T
+4 9.5 Q
+(hello-world) 344.31 189.67 T
+2 11 Q
+(, follow the r) 407.01 189.67 T
+(emain-) 468.66 189.67 T
+(ing instr) 126 175.67 T
+(uctions:) 166.58 175.67 T
+1 F
+(12.) 135 155.67 T
+2 F
+(Back in the Dylan emulator) 153 155.67 T
+(, bring up an in\336x Dylan listener fr) 285.25 155.67 T
+(om the) 453.96 155.67 T
+(podium with) 153 141.67 T
+5 9.6 Q
+(Dylan > In\336x Listener) 219.75 141.67 T
+2 11 Q
+(.) 315.77 141.67 T
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "16" 16
+%%Page: "17" 17
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+108 675 540 702 R
+7 X
+0 0 0 1 0 0 0 K
+V
+0 9.5 Q
+0 X
+(11) 345.02 695.67 T
+(Using Dylan VMTether+Win32: An example) 364.02 695.67 T
+108 82.17 540 117 R
+7 X
+V
+0 9 Q
+0 X
+(Revision 2.  July 21, 1996.) 108 100 T
+1 F
+(17) 531 100 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+108 126 486 648 R
+7 X
+V
+1 11 Q
+0 X
+(13.) 117 640.67 T
+2 F
+(In the in\336x listener) 135 640.67 T
+(, enter the) 225.67 640.67 T
+4 9.5 Q
+(front-end) 276.8 640.67 T
+2 11 Q
+( module so that you can access) 328.1 640.67 T
+(the batch compiler) 135 626.67 T
+(.) 224.63 626.67 T
+4 9 Q
+(DYLANWORKS-USER 1 ? in: front-end;) 135 606 T
+(Now in the FRONT-END module) 135 595 T
+(FRONT-END 2 ?) 135 576 T
+1 11 Q
+(14.) 117 555.67 T
+2 F
+(Run the) 135 555.67 T
+4 9.5 Q
+(hello-world) 176.14 555.67 T
+2 11 Q
+( library thr) 238.84 555.67 T
+(ough the batch compiler:) 291.27 555.67 T
+4 9 Q
+(FRONT-END 2 ? trans\050#"hello-world"\051;) 135 535 T
+([) 135 524 T
+6 F
+(output) 145.8 524 T
+4 F
+( ]) 172.82 524 T
+(FRONT-END 3 ?) 135 505 T
+1 11 Q
+(15.) 117 484.67 T
+2 F
+(On W) 135 484.67 T
+(indows, move to the subdir) 163.19 484.67 T
+(ectory of your personal r) 296.61 484.67 T
+(oot dir) 416.73 484.67 T
+(ectory) 449.15 484.67 T
+(which you put) 135 470.67 T
+4 9.5 Q
+(hello-world) 208.9 470.67 T
+2 11 Q
+( in, and build the executable version of) 271.6 470.67 T
+4 9.5 Q
+(hello-world) 135 456.67 T
+2 11 Q
+( using) 197.7 456.67 T
+4 9.5 Q
+(nmake) 230.22 456.67 T
+2 11 Q
+(. \050A suitable) 258.72 456.67 T
+4 9.5 Q
+(makefile) 320.07 456.67 T
+2 11 Q
+( was emitted during) 365.67 456.67 T
+(compilation in step 14.\051) 135 442.67 T
+4 9 Q
+(W:\134> cd fred\134dylan\134vmtwin32\134lib\134hello-world) 135 422 T
+(W:\134fred\134dylan\134vmtwin32\134lib\134hello-world> nmake hello-world.lib) 135 411 T
+([) 135 400 T
+6 F
+(output) 145.8 400 T
+4 F
+( ]) 172.82 400 T
+(W:\134fred\134dylan\134vmtwin32\134lib\134hello-world> nmake hello-world.exe) 135 389 T
+([) 135 378 T
+6 F
+(output) 145.8 378 T
+4 F
+( ]) 172.82 378 T
+(W:\134fred\134dylan\134vmtwin32\134lib\134hello-world>) 135 367 T
+1 11 Q
+(16.) 117 346.67 T
+2 F
+(Now r) 135 346.67 T
+(un the executable \336le:) 166.33 346.67 T
+4 9 Q
+(W:\134fred\134dylan\134vmtwin32\134lib\134hello-world> hello-world.exe) 135 326 T
+(hello there!) 135 315 T
+(W:\134fred\134dylan\134vmtwin32\134lib\134hello-world>) 135 296 T
+2 11 Q
+(The \336rst) 108 275.67 T
+4 9.5 Q
+(nmake) 151.16 275.67 T
+2 11 Q
+( call built a library \336le) 179.66 275.67 T
+4 9.5 Q
+(hello-world.lib) 289.07 275.67 T
+2 11 Q
+(, then the second) 374.57 275.67 T
+(linked it in with the other libraries it depends upon to form an executable) 108 261.67 T
+4 9.5 Q
+(hello-world.exe) 108 247.67 T
+2 11 Q
+(. It also installs) 193.5 247.67 T
+4 9.5 Q
+(hello-world.lib) 268.33 247.67 T
+2 11 Q
+( in) 353.83 247.67 T
+4 9.5 Q
+(%DW_PERSONAL_LIB%) 368.94 247.67 T
+2 11 Q
+(,) 465.84 247.67 T
+(fr) 108 233.67 T
+(om wher) 115.81 233.67 T
+(e futur) 159.27 233.67 T
+(e application builds can access it.) 191.95 233.67 T
+(Y) 108 213.67 T
+(ou can check up on the installation of) 114.32 213.67 T
+4 9.5 Q
+(hello-world.lib) 298.33 213.67 T
+2 11 Q
+( as follows:) 383.83 213.67 T
+4 9 Q
+(W:\134fred\134dylan\134vmtwin32\134lib\134hello-world> cd %DW_PERSONAL_LIB%) 135 193 T
+(W:\134fred\134dylan\134vmtwin32\134platforms\134x86-win32\134lib> dir) 135 174 T
+(Volume in drive W is u) 140.4 163 T
+(Volume Serial Number is ...) 140.4 152 T
+(Directory of W:\134fred\134dylan\134vmtwin32\134platforms\134x86-win32\134lib) 140.4 133 T
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "17" 17
+%%Page: "18" 18
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+72 675 504 702 R
+7 X
+0 0 0 1 0 0 0 K
+V
+0 9.5 Q
+0 X
+(Dylan VMTether+Win32 Release Notes) 72 695.67 T
+72 81 504 118 R
+7 X
+V
+1 9 Q
+0 X
+(18) 72 101 T
+0 F
+(Revision 2.  July 21, 1996.) 407.99 101 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+126 126 504 648 R
+7 X
+V
+4 F
+0 X
+(03/25/96) 153 642 T
+(04:00p) 207 642 T
+(<DIR>) 277.2 642 T
+(.) 342 642 T
+(02/06/96) 153 631 T
+(09:51p) 207 631 T
+(<DIR>) 277.2 631 T
+(..) 342 631 T
+(03/22/96) 153 620 T
+(05:38p) 207 620 T
+(4,722 hello-world.lib) 309.6 620 T
+(\311) 153 609 T
+(W:\134fred\134dylan\134vmtwin32\134platforms\134x86-win32\134lib>) 153 590 T
+3 16 Q
+(12  Kno) 126 556.33 T
+(wn pr) 173.22 556.33 T
+(ob) 207.97 556.33 T
+(lems and b) 223.89 556.33 T
+(ugs) 292.19 556.33 T
+3 13 Q
+(12.1  Em) 126 522.33 T
+(ulator) 169.07 522.33 T
+2 11 Q
+(\245) 135 502.67 T
+(Y) 153 502.67 T
+(ou cannot use the FFI under the emulator) 159.32 502.67 T
+(.) 359.82 502.67 T
+(\245) 135 482.67 T
+(The) 153 482.67 T
+4 9.5 Q
+(trace:) 174.16 482.67 T
+2 11 Q
+( and) 208.36 482.67 T
+4 9.5 Q
+(breakpoint:) 232.49 482.67 T
+2 11 Q
+( listener commands br) 295.19 482.67 T
+(eak when applied) 403.21 482.67 T
+(only to methods accepting particular types. When no type r) 153 468.67 T
+(estrictions) 441.89 468.67 T
+(ar) 153 454.67 T
+(e enfor) 162.65 454.67 T
+(ced, and an entir) 196.15 454.67 T
+(e generic function is being traced or having a) 277.16 454.67 T
+(br) 153 440.67 T
+(eakpoint set on it, these commands work \336ne.) 163.23 440.67 T
+(\245) 135 420.67 T
+(Region compilation does not work perfectly) 153 420.67 T
+(. T) 365.42 420.67 T
+(ry to end your r) 376.67 420.67 T
+(egion) 453.37 420.67 T
+(selection on a blank line: you will sometimes get sever) 153 406.67 T
+(e-sounding err) 416.42 406.67 T
+(or) 488.01 406.67 T
+(r) 153 392.67 T
+(eports during r) 157.15 392.67 T
+(egion compilation which ar) 230.69 392.67 T
+(e simply the r) 363.96 392.67 T
+(esult of select-) 430.39 392.67 T
+(ing a r) 153 378.67 T
+(egion which ends on the same line as a piece of code.) 183.87 378.67 T
+3 13 Q
+(12.2  Batc) 126 345.33 T
+(h compiler) 175.69 345.33 T
+2 11 Q
+(\245) 135 325.67 T
+(The batch compiler can become corr) 153 325.67 T
+(upted in the course of or) 328.35 325.67 T
+(dinary) 447.4 325.67 T
+(work, if, for example, compilation of a library fails. Unfortunately the) 153 311.67 T
+(only solution at pr) 153 297.67 T
+(esent is to r) 242.52 297.67 T
+(estart the image.) 297.56 297.67 T
+(\245) 135 277.67 T
+(If you move a name fr) 153 277.67 T
+(om module to another) 260.27 277.67 T
+(, you must r) 368.07 277.67 T
+(estart the emu-) 426.57 277.67 T
+(lator image.) 153 263.67 T
+(\245) 135 243.67 T
+(The batch compiler ignor) 153 243.67 T
+(es \321 silently \321 the) 275.22 243.67 T
+4 9.5 Q
+(create:) 371.8 243.67 T
+2 11 Q
+( clause in module) 411.7 243.67 T
+(de\336nitions.) 153 229.67 T
+(\245) 135 209.67 T
+(T) 153 209.67 T
+(o be able to use Dylan C FFI types fr) 158.73 209.67 T
+(om a library that was compiled in) 334.58 209.67 T
+(a pr) 153 195.67 T
+(evious session, do this:) 172.01 195.67 T
+4 9 Q
+(trans\050#") 153 175 T
+6 F
+(library-name) 196.2 175 T
+4 F
+(", emit?: #f, dump-library?: #f\051;) 249.04 175 T
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "18" 18
+%%Page: "19" 19
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+108 675 540 702 R
+7 X
+0 0 0 1 0 0 0 K
+V
+0 9.5 Q
+0 X
+(13) 416.15 695.67 T
+(Installation script reference) 435.15 695.67 T
+108 82.17 540 117 R
+7 X
+V
+0 9 Q
+0 X
+(Revision 2.  July 21, 1996.) 108 100 T
+1 F
+(19) 531 100 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+108 126 486 648 R
+7 X
+V
+3 13 Q
+0 X
+(12.3  Remote listener) 108 639.33 T
+2 11 Q
+(\245) 117 619.67 T
+(The r) 135 619.67 T
+(emote listener command) 160.31 619.67 T
+4 9.5 Q
+(break:) 283.28 619.67 T
+2 11 Q
+( allows you set br) 317.48 619.67 T
+(eakpoints on) 402.73 619.67 T
+(generic function methods specializing on particular classes. It will not) 135 605.67 T
+(complain if you attempt to set a br) 135 591.67 T
+(eakpoint on a method for which a) 302.08 591.67 T
+(generic function exists but for which no de\336ned method specializes on) 135 577.67 T
+(the given class.) 135 563.67 T
+3 16 Q
+(13  Installation script ref) 108 528.33 T
+(erence) 258.83 528.33 T
+3 13 Q
+(13.1  CREA) 108 494.33 T
+(TE-PERSONAL-D) 163.93 494.33 T
+(YLAN) 250.84 494.33 T
+4 9 Q
+(create-personal-dylan) 108 466 T
+6 F
+(personal-r) 226.8 466 T
+(oot-dir) 268.15 466 T
+0 11 Q
+(Installation script) 406.67 464.67 T
+2 F
+(The) 135 442.67 T
+4 9.5 Q
+(create-personal-dylan) 156.16 442.67 T
+2 11 Q
+( script sets up a personal Dylan ar) 275.86 442.67 T
+(ea in the) 440.71 442.67 T
+(dir) 135 428.67 T
+(ectory) 149.07 428.67 T
+0 F
+(personal-r) 182.02 428.67 T
+(oot-dir) 227.05 428.67 T
+2 F
+(, usually a subdir) 256.17 428.67 T
+(ectory of your UNIX home) 340.06 428.67 T
+(dir) 135 414.67 T
+(ectory) 149.07 414.67 T
+(. This r) 178.05 414.67 T
+(oot dir) 211.46 414.67 T
+(ectory is an empty dir) 243.88 414.67 T
+(ectory str) 350.21 414.67 T
+(uctur) 395.68 414.67 T
+(e to be \336lled) 421.56 414.67 T
+-0.27 (with personal r) 135 400.67 P
+-0.27 (egistries and sour) 208.47 400.67 P
+-0.27 (ces. See \322Personal sour) 293.81 400.67 P
+-0.27 (ce ar) 404.11 400.67 P
+-0.27 (ea\323 on page) 426.39 400.67 P
+(7 for mor) 135 386.67 T
+(e information on the purpose of this dir) 179.88 386.67 T
+(ectory str) 371.82 386.67 T
+(uctur) 417.28 386.67 T
+(e.) 443.17 386.67 T
+4 9.5 Q
+(create-personal-dylan) 135 366.67 T
+2 11 Q
+( takes one r) 254.7 366.67 T
+(equir) 309.91 366.67 T
+(ed ar) 335.32 366.67 T
+(gument,) 359.71 366.67 T
+0 F
+(personal-r) 402.92 366.67 T
+(oot-dir) 447.95 366.67 T
+2 F
+(,) 477.07 366.67 T
+(and no optional ar) 135 352.67 T
+(guments.) 224.44 352.67 T
+3 13 Q
+(13.2  D) 108 319.33 T
+(YLAN-SETUP) 141.64 319.33 T
+(.SH) 208.49 319.33 T
+4 9 Q
+(dylan-setup.sh [ -pr) 108 291 T
+6 F
+(personal-r) 221.4 291 T
+(oot-dir) 262.75 291 T
+4 F
+( ] [ -r) 291.26 291 T
+6 F
+(dylan-r) 334.46 291 T
+(oot-dir) 364.31 291 T
+4 F
+( ]) 392.82 291 T
+0 11 Q
+(Installation script) 406.67 289.67 T
+2 F
+(The) 135 267.67 T
+4 9.5 Q
+(dylan-setup.sh) 156.16 267.67 T
+2 11 Q
+( script con\336gur) 235.96 267.67 T
+(es your UNIX envir) 309.6 267.67 T
+(onment for) 404.86 267.67 T
+-0 (Dylan application development. Y) 135 253.67 P
+-0 (ou should r) 301.02 253.67 P
+-0 (un this in) 357.03 253.67 P
+4 9.5 Q
+-0 (bash) 405.77 253.67 P
+2 11 Q
+-0 ( befor) 428.57 253.67 P
+-0 (e you) 456.48 253.67 P
+(start the emulator) 135 239.67 T
+(. Consider adding a call to this script in your) 220.88 239.67 T
+4 9.5 Q
+(.bash_profile) 135 225.67 T
+2 11 Q
+(.) 209.1 225.67 T
+(Remember to r) 135 205.67 T
+(un the script by passing it as an ar) 207.36 205.67 T
+(gument to the) 372.8 205.67 T
+4 9.5 Q
+(source) 443.62 205.67 T
+2 11 Q
+(command, so that the envir) 135 191.67 T
+(onment variables ar) 267.92 191.67 T
+(e set in the par) 364.43 191.67 T
+(ent shell,) 435.33 191.67 T
+(and not just in a subshell, as would be invoked by r) 135 177.67 T
+(unning the script) 384.93 177.67 T
+(dir) 135 163.67 T
+(ectly) 149.07 163.67 T
+(.) 170.9 163.67 T
+(The script takes two optional ar) 135 143.67 T
+(guments.) 288.52 143.67 T
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "19" 19
+%%Page: "20" 20
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+72 675 504 702 R
+7 X
+0 0 0 1 0 0 0 K
+V
+0 9.5 Q
+0 X
+(Dylan VMTether+Win32 Release Notes) 72 695.67 T
+72 81 504 118 R
+7 X
+V
+1 9 Q
+0 X
+(20) 72 101 T
+0 F
+(Revision 2.  July 21, 1996.) 407.99 101 T
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+126 126 504 648 R
+7 X
+V
+4 9.5 Q
+0 X
+(-pr) 153 640.67 T
+2 11 Q
+(The r) 234 640.67 T
+(oot of your personal sour) 259.31 640.67 T
+(ce tr) 382.13 640.67 T
+(ee. This should be) 402.76 640.67 T
+(the same as the dir) 234 626.67 T
+(ectory you passed to the) 324.89 626.67 T
+4 9.5 Q
+(create-) 445.88 626.67 T
+(personal-dylan) 234 612.67 T
+2 11 Q
+( script. Defaults to the value passed to) 313.8 612.67 T
+4 9.5 Q
+(-r) 234 598.67 T
+2 11 Q
+(. Do not terminate this dir) 244.59 598.67 T
+(ectory with a) 370.39 598.67 T
+4 9.5 Q
+(/) 436.71 598.67 T
+2 11 Q
+(.) 442.41 598.67 T
+4 9.5 Q
+(-r) 153 572.67 T
+2 11 Q
+(The home of the Dylan pr) 234 572.67 T
+(oject libraries, sour) 358.97 572.67 T
+(ces, and) 450.8 572.67 T
+-0.56 (executables. Defaults to) 234 558.67 P
+4 9.5 Q
+-1.17 (~dylan/releases/vmtwin32) 349.97 558.67 P
+2 11 Q
+-0.56 (. In) 486.77 558.67 P
+(most or) 234 544.67 T
+(dinary uses of the Dylan VMT) 270.87 544.67 T
+(ether+W) 416.88 544.67 T
+(in32) 458.81 544.67 T
+(r) 234 530.67 T
+(elease, you should not need to pass a value for this) 238.15 530.67 T
+(option. The only r) 234 516.67 T
+(eason to change the default is if you) 321.1 516.67 T
+(ar) 234 502.67 T
+(e shadowing the entir) 243.65 502.67 T
+(e Dylan pr) 349.21 502.67 T
+(oject\325s code. Do not-) 400.47 502.67 T
+(terminate this dir) 234 488.67 T
+(ectory name with a) 318.29 488.67 T
+4 9.5 Q
+(/) 414.25 488.67 T
+2 11 Q
+(.) 419.95 488.67 T
+3 13 Q
+(13.3  D) 126 455.33 T
+(YLAN-SETUP) 159.64 455.33 T
+(.CMD) 226.49 455.33 T
+4 9 Q
+(dylan-setup.cmd) 126 427 T
+6 F
+(personal-r) 212.4 427 T
+(oot-dir) 253.75 427 T
+4 F
+( [) 282.26 427 T
+6 F
+(dylan-r) 298.46 427 T
+(oot-dir) 328.31 427 T
+4 F
+( ]) 356.82 427 T
+0 11 Q
+(Installation script) 424.67 425.67 T
+2 F
+(The) 153 403.67 T
+4 9.5 Q
+(dylan-setup.cmd) 174.16 403.67 T
+2 11 Q
+( script con\336gur) 259.66 403.67 T
+(es your PC envir) 333.3 403.67 T
+(onment for Dylan) 414.26 403.67 T
+(application building. Y) 153 389.67 T
+(ou should r) 263.84 389.67 T
+(un this befor) 319.86 389.67 T
+(e making or r) 381.42 389.67 T
+(unning) 446.59 389.67 T
+(applications on W) 153 375.67 T
+(indows.) 240.67 375.67 T
+(The script takes one mandatory ar) 153 355.67 T
+(gument and a second optional ar) 318.8 355.67 T
+(gu-) 478.5 355.67 T
+(ment.) 153 341.67 T
+(The \336rst ar) 153 321.67 T
+(gument is the r) 205.81 321.67 T
+(oot of your personal sour) 279.05 321.67 T
+(ce tr) 401.86 321.67 T
+(ee. This must be) 422.5 321.67 T
+(the dir) 153 307.67 T
+(ectory you passed to the) 185.08 307.67 T
+4 9.5 Q
+(create-personal-dylan) 306.07 307.67 T
+2 11 Q
+( script. The sec-) 425.77 307.67 T
+(ond, optional, ar) 153 293.67 T
+(gument should be the home of the Dylan pr) 233.29 293.67 T
+(oject librar-) 446.05 293.67 T
+(ies, sour) 153 279.67 T
+(ces, and executables for the Dylan VMT) 193.08 279.67 T
+(ether+W) 384.89 279.67 T
+(in32 r) 426.82 279.67 T
+(elease.) 454.32 279.67 T
+(This defaults to the UNIX dir) 153 265.67 T
+(ectory) 294.66 265.67 T
+4 9.5 Q
+(~dylan/releases/vmtwin32) 327.61 265.67 T
+2 11 Q
+(, speci-) 464.41 265.67 T
+(\336ed on the PC as) 153 251.67 T
+4 9.5 Q
+(dylan\134releases\134vmtwin32) 237.67 251.67 T
+2 11 Q
+(.) 368.77 251.67 T
+(In most or) 153 231.67 T
+(dinary uses of Dylan VMT) 202.73 231.67 T
+(ether+W) 330.73 231.67 T
+(in32, you should not need) 372.66 231.67 T
+(to pass a value for this second option. The only r) 153 217.67 T
+(eason to change the) 388.51 217.67 T
+(default is if you ar) 153 203.67 T
+(e shadowing the entir) 241.7 203.67 T
+(e Dylan pr) 347.27 203.67 T
+(oject\325s code, or if you) 398.53 203.67 T
+(ar) 153 189.67 T
+(e r) 162.65 189.67 T
+(unning the script fr) 174.92 189.67 T
+(om a volume other than that in which) 268.69 189.67 T
+4 9.5 Q
+(~dylan/) 455.18 189.67 T
+(releases/vmtwin32) 153 175.67 T
+2 11 Q
+( is mounted.) 249.9 175.67 T
+0 0 0 1 0 0 0 K
+FMENDPAGE
+%%EndPage: "20" 20
+%%Trailer
+%%BoundingBox: 0 0 612 792
+%%PageOrder: Ascend
+%%Pages: 20
+%%DocumentFonts: Palatino-Italic
+%%+ Palatino-Bold
+%%+ Palatino-Roman
+%%+ Helvetica-Narrow-Bold
+%%+ Courier-Bold
+%%+ Helvetica-Bold
+%%+ Palatino-BoldItalic
+%%EOF

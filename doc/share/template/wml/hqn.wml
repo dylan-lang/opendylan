@@ -1,0 +1,488 @@
+
+#-----------------------------------------------------------------------
+# WebMaker, a FrameMaker to WWW converter
+# 
+# Copyright (C) 1995 by The Harlequin Group Limited
+#-----------------------------------------------------------------------
+
+# THIS FILE CANNOT BE USED WITH VERSIONS OF WEBMAKER PRIOR TO 2.2
+
+# INCLUDED STANDARD LIBRARY FILES
+
+INCLUDE <nodesBTI.wml>
+INCLUDE <headings.wml>
+INCLUDE <normals.wml>
+INCLUDE <lists.wml>
+
+
+# PARAGRAPH RULES
+
+# TITLE AND COPYRIGHT PAGE RULES
+
+PARAGRAPH "Booktitle" TYPE Normal { USES "FMDocumentTitle" } 
+
+PARAGRAPH "Copyrighttext" TYPE Normal { USES "SimpleBody" } 
+PARAGRAPH "Copyrighttext-small" TYPE Normal { USES "SimpleBody" } 
+PARAGRAPH "Copyright-title" TYPE Heading { USES "L1H1-NodeTop" } 
+
+PARAGRAPH "Subtitle" TYPE Normal { USES "SimpleBody" } 
+PARAGRAPH "Edition" TYPE Normal { USES "SimpleBody" } 
+PARAGRAPH "Exec-summary" TYPE Normal { USES "SimpleBody" } 
+
+PARAGRAPH "MarketTitle" TYPE Heading { USES "L2H1-NodeLower" } 
+PARAGRAPH "Pubcities" TYPE Normal { USES "SimpleBody" } 
+PARAGRAPH "company-name" TYPE Normal { USES "SimpleBody" } 
+
+# TOC AND INDEX RULES
+
+PARAGRAPH "WWW-TOC" TYPE Heading { USES "ExtTOCHeading-TocNode" } 
+PARAGRAPH "XIndex" TYPE Heading { USES "IndexHeadingL-IndexNodeL" } 
+
+# DOCUMENT HEADING RULES
+
+PARAGRAPH "Preface" TYPE Heading { USES "L1H1-NodeTop" } 
+PARAGRAPH "Chapter" TYPE Heading { USES "L1H1-NodeTop" } 
+PARAGRAPH "Appendix" TYPE Heading { USES "L1H1-NodeTop" } 
+PARAGRAPH "Glossary" TYPE Heading { USES "L1H1-NodeTop" } 
+
+# BODY HEADING RULES
+
+PARAGRAPH "1Heading" TYPE Heading { USES "L2H1-NodeLower" } 
+PARAGRAPH "2Heading" TYPE Heading { USES "L3H1-NodeLower" } 
+PARAGRAPH "3Heading" TYPE Heading { USES "L4H1-NodeLower" } 
+PARAGRAPH "Contents" TYPE Normal { USES "SimpleBody" } 
+
+# APPENDIX HEADING RULES
+
+PARAGRAPH "1Heading-App" TYPE Heading { USES "L2H1-NodeLower" } 
+PARAGRAPH "2Heading-App" TYPE Heading { USES "L3H1-NodeLower" } 
+PARAGRAPH "3Heading-App" TYPE Heading { USES "L4H1-NodeLower" } 
+
+PARAGRAPH "App-1Heading" TYPE Heading { USES "L2H1-NodeLower" } 
+PARAGRAPH "App-2Heading" TYPE Heading { USES "L3H1-NodeLower" } 
+
+# BODY RULES
+
+PARAGRAPH "Body" TYPE Normal { USES "SimpleBody" } 
+PARAGRAPH "Body-small" TYPE Normal { USES "SimpleBody" } 
+PARAGRAPH "Body-Center" TYPE Normal { USES "SimpleBody" } 
+PARAGRAPH "Body-Indent" TYPE Normal { USES "L1PlainItem" } 
+PARAGRAPH "Body-Next" TYPE Normal { USES "SimpleBody" } 
+
+# BULLET RULES
+
+PARAGRAPH "Bullet" TYPE List { USES "L1BulletItem" } 
+PARAGRAPH "Bullet-C" TYPE Normal { USES "L1PlainItem" } 
+PARAGRAPH "Bullet-Indented" TYPE List { USES "L2BulletItem" } 
+PARAGRAPH "Check" TYPE List { USES "L1BulletItem" } 
+
+# DESCRIPTION ITEM RULES
+
+PARAGRAPH "Description" TYPE List { USES "L1GlossaryItem-1" } 
+PARAGRAPH "Description-C" TYPE Normal { USES "L1PlainItem" } 
+PARAGRAPH "Description-Item" TYPE List { USES "L1GlossaryItem-1" } 
+
+# FIGURE AND TABLE RULES
+
+PARAGRAPH "Callout" TYPE Normal { USES "SimpleBody" } 
+PARAGRAPH "Figure" TYPE Normal { USES "Default" } 
+
+PARAGRAPH "CellBody" TYPE Normal { USES "SimpleBody" } 
+PARAGRAPH "CellBody-small" TYPE Normal { USES "SimpleBody" } 
+PARAGRAPH "CellHeading" TYPE Normal { USES "SimpleBody" } 
+PARAGRAPH "CellHeadingLeft" TYPE Normal { USES "SimpleBody" } 
+PARAGRAPH "Table" TYPE Normal { USES "Default" } 
+
+# GLOSSARY ITEM RULES
+
+PARAGRAPH "Glossary-entry" TYPE Heading { USES "L3H1" } 
+PARAGRAPH "Glossary-definition" TYPE Normal { USES "SimpleBody" } 
+
+# STEP RULES
+
+PARAGRAPH "Step-C" TYPE Normal { USES "L1PlainItem" } 
+PARAGRAPH "Step" TYPE Normal { USES "L1AutonumberItem" } 
+PARAGRAPH "Step-1" TYPE Normal { USES "L1AutonumberItem" } 
+PARAGRAPH "Step-1-Indented" TYPE Normal { USES "L2AutonumberItem" } 
+PARAGRAPH "Step-Indented" TYPE Normal { USES "L2AutonumberItem" } 
+
+# CODE RULES
+
+PARAGRAPH "Code-first" TYPE Normal { USES "PreformattedText" } 
+PARAGRAPH "Code-body" TYPE Normal { USES "PreformattedText" } 
+
+# To make extra space between chunks of code
+PARAGRAPH "Code-last" TYPE Normal
+{
+  CONTEXT Preformatted
+  ACTIONS
+  {
+    write(*,text());
+    write(*,paragraph(""));
+  }
+} 
+
+PARAGRAPH "Code-line" TYPE Normal { USES "Code-last" } 
+
+# Signature paragraphs are used after in-line-interfaces, and are
+# identical to Code-line except that they are set to Keep with Next
+# for the purposes of the Frame sources.
+
+PARAGRAPH "Signature" TYPE Normal { USES "Code-last" } 
+
+PARAGRAPH "Code-end" TYPE List { USES "L1GlossaryItem-1" }
+
+# The following rules deal with paragraph fonts in the RCode-* family
+# (including the RSignature paragraph, which is a little redundant
+# now, but which we'll keep hanging around for the sake of backwards
+# compatibility. 
+
+# These rules are a bit of a cheat. They throw out all WebMaker's
+# tools for using preformatted text, and write the HTML tags directly
+# themselves. This is to ensure that RCode-* paragraphs are presented
+# in a definition list, so that they are indented with respect to
+# normal paragraphs. This means that they are displayed at the same
+# indent level as RBody and friends, and don't look ghastly.
+
+# Note also that it means that each "block" of code is actully
+# contained in its own definition list. The output has been tested in
+# the latest versions of both Netscape and Internet Explorer, and the
+# additional inter-paragraph spacing incurred (if any) is not
+# significant. 
+
+# Note that there is scope here for writing multiple levels of
+# definition list tags, should we decide we want code paragraphs to be
+# indented with respect to their parent body paragraphs (i.e. if we
+# decide we want the levels of indentation to match the Frane
+# templates more precisely. In addition, the same idea could be
+# applied to normal Code-* paragraphs as well, though we won't bother
+# with this for now.
+
+# This is used by RCode-first paragraphs
+# It starts off the definition list and the preformatted text.
+
+PARAGRAPH "MCode-first" TYPE Normal
+{
+  ACTIONS
+  {
+    write(*,"<DL><DD><PRE>",text());
+  }
+}
+
+# This is used by RCode-body paragraphs
+# Note that this mapping is in effect a no-op, in that it just writes
+# out the text of the paragraph. The upshot of this is that if you
+# don't sandwich RCode-bidy paragraphs between RCode-first and
+# RCode-last, then they won't be mapped correctly. This isn't a great
+# pain, though, because you should be applying the formats correctly
+# in the first place anyway.
+
+PARAGRAPH "MCode-body" TYPE Normal
+{
+  ACTIONS
+  {
+    write(*,text());
+  }
+}
+
+# This is used by RCode-last paragraphs
+# It closes off the definition list and the preformatted text
+
+PARAGRAPH "MCode-last" TYPE Normal
+{
+  ACTIONS
+  {
+    write(*,text(),"</PRE></DL>");
+  }
+}
+
+# This is used by RCode-line and RSignature paragraphs
+# It includes the complete tag set for the definition list and the
+# preformatted text, including closing tags. 
+
+PARAGRAPH "MCode-line" TYPE Normal
+{
+  ACTIONS
+  { # write(*,"<pre>");
+    write(*,"<dl><dd><pre>",text(),"</pre></dl>");
+#    write(*,"</pre>");
+      }
+}
+
+# To make Interface bold and not start a new paragraph
+# Note that we don't use this primary rule, but it's here
+# in case we want to start using it later
+PARAGRAPH "Interface-same-line" TYPE Normal
+{
+  ACTIONS
+  {
+     write(*,strong(text()));
+  }
+} 
+
+# To make Interface-type italic and concatenated with Interface to
+#  make a single line
+# Note that we don't use this primary rule, but it's here
+# in case we want to start using it later
+PARAGRAPH "Interface-type-same-line" TYPE Normal
+{
+  ACTIONS
+   {
+      write(*,paragraph(variable(text())));
+   }
+} 
+
+PARAGRAPH "Interface-type-list-same-line" TYPE List
+{
+  ACTIONS
+   {
+      write(*,paragraph(variable(text())));
+   }
+} 
+
+# This tag is for REntryHeads, which we want to appear as H3
+# but not be treated like WebMaker's headings, which appear in
+# the local and global TOCs
+PARAGRAPH "Head3NoTOC" TYPE Normal
+{
+  ACTIONS
+  { 
+    write(*,"<H3>",text(),"</H3>");
+   }
+}
+
+
+PARAGRAPH "In-line-interface" TYPE Heading { USES "Interface-same-line" } 
+PARAGRAPH "In-line-interface-type" TYPE List { USES "Italic-Body" } 
+PARAGRAPH "Interface" TYPE Heading { USES "L3H2-NodeLower" } 
+PARAGRAPH "Interface-type" TYPE List { USES "Italic-Body" } 
+
+
+# Italic-Body is just like SimpleBody, except that it is Italic
+PARAGRAPH "Italic-Body" TYPE Normal
+{
+  ACTIONS
+  {
+    write(*,paragraph(italic(text())));
+  }
+}
+
+# OTHER PRIMARY RULES
+
+# Level 2 in the hierarchy.
+# Term and definition are plain text.
+PARAGRAPH "L2GlossaryItem-1" TYPE List
+	{
+  LEVEL 2
+  KIND Glossary
+  ACTIONS
+  {
+     write(*,concatenate(
+                 glossterm(text(current,1,1)),
+                 glossdescription(paragraph(text(current,2,*)))));
+  }
+} 
+
+# Level 1 in the hierarchy.
+# Term and definition are plain text.
+# No <P> is used to separate the <DL>s
+PARAGRAPH "L1GlossaryItem-nopara" TYPE List
+	{
+  LEVEL 1
+  KIND Glossary
+  ACTIONS
+  {
+     write(*,concatenate(
+		 paragraph(" ", class:"space-above-term" ),
+                 glossterm(text(current,1,1)),
+                 glossdescription(text(current,2,*))));
+  }
+} 
+
+# Level 3 in the hierarchy.
+# Term and definition are plain text.
+PARAGRAPH "L3GlossaryItem-1" TYPE List
+{
+  LEVEL 3
+  KIND Glossary
+  ACTIONS
+  {
+     write(*,concatenate(
+                 glossterm(text(current,1,1)),
+                 glossdescription(paragraph(text(current,2,*)))));
+  }
+} 
+
+
+# PRIMARY RULES FOR HQN-CHAPTER-REF.DOC 
+
+# Body-Code-Font specifies a simple body paragraph in Code font.
+# This was originally written specifically for use by RSignature, but
+# is no longer needed since the addition of the MCode-* family of
+# mappings. However, we'll keep it around in case it's ever useful for
+# anything else.
+
+PARAGRAPH "Body-Code-Font" TYPE Normal
+{
+  INLIST
+  ACTIONS
+  {
+    write(*,paragraph(code(text())));
+  }
+} 
+
+
+# Term is italic; definition is plain text.
+PARAGRAPH "L1GlossaryItem-italic" TYPE List
+{
+  LEVEL 1
+  KIND Glossary
+  ACTIONS
+  {
+     write(*,concatenate(
+                 glossterm(italic(text(current,1,1))),
+                 glossdescription(paragraph(text(current,2,*)))));
+  }
+} 
+
+
+# USES RULES FOR HQN-CHAPTER-REF.DOC 
+
+PARAGRAPH "REntry" TYPE Heading { USES "L3H1-NodeLower" } 
+PARAGRAPH "REntry-head" TYPE List {  USES "Head3NoTOC" } 
+PARAGRAPH "REntry-type" TYPE List { USES "Italic-Body" } 
+PARAGRAPH "REntry2" TYPE Heading { USES "L4H1-NodeLower" }
+PARAGRAPH "RBody" TYPE Normal { USES "Default" } 
+PARAGRAPH "RBody-Next" TYPE Normal { USES "Default" } 
+PARAGRAPH "RBullet" TYPE List { USES "L1BulletItem" } 
+PARAGRAPH "RBullet-C" TYPE Normal { USES "InListSimple" } 
+PARAGRAPH "RCode-body" TYPE Normal { USES "MCode-body" } 
+PARAGRAPH "RCode-first" TYPE Normal { USES "MCode-first" } 
+PARAGRAPH "RCode-line" TYPE Normal { USES "MCode-line" }
+PARAGRAPH "RCode-last" TYPE Normal { USES "MCode-last" } 
+PARAGRAPH "RStep" TYPE Normal { USES "L1AutonumberItem" } 
+PARAGRAPH "RStep-1" TYPE Normal { USES "L1AutonumberItem" } 
+PARAGRAPH "RStep-C" TYPE Normal { USES "InListSimple" } 
+PARAGRAPH "RDescription" TYPE List { USES "L1GlossaryItem-nopara" } 
+PARAGRAPH "RDescription-Item" TYPE List { USES "L1GlossaryItem-nopara" } 
+PARAGRAPH "RDescription-C" TYPE Normal { USES "InListSimple" } 
+PARAGRAPH "RSignature" TYPE Normal { USES "MCode-line" }
+
+
+# CHARACTER FORMATS
+
+CHARACTER { TAG "Body"           MAP Emphasise } 
+CHARACTER { TAG "Bold"           MAP Bold } 
+CHARACTER { TAG "Button"         MAP Bold } 
+CHARACTER { TAG "Callout"        MAP Bold } 
+
+CHARACTER { TAG "Code"           MAP Code } 
+CHARACTER { TAG "Default"        MAP Emphasise } 
+CHARACTER { TAG "Emphasis"       MAP Emphasise } 
+CHARACTER { TAG "Italic"         MAP Italic } 
+
+CHARACTER { TAG "Literal"        MAP TELETYPE } 
+CHARACTER { TAG "Menu"           MAP SAMPLE } 
+CHARACTER { TAG "Subtitle-small" MAP Emphasise } 
+
+CHARACTER { TAG "Symbol"         MAP Emphasise } 
+CHARACTER { TAG "Variable"       MAP Italic } 
+CHARACTER { TAG "Superscript"    MAP Superscript } 
+CHARACTER { TAG "Subscript"      MAP Subscript } 
+
+
+# UNUSED OR IGNORED STUFF
+
+# Paragraph formats IGNORED
+
+PARAGRAPH "1Heading-TopTOC" TYPE Normal { USES "Ignore" } 
+PARAGRAPH "1HeadingTOC" TYPE Normal { USES "Ignore" } 
+PARAGRAPH "1headingTOC" TYPE Normal { USES "Ignore" } 
+PARAGRAPH "2HeadingTOC" TYPE Normal { USES "Ignore" } 
+PARAGRAPH "3HeadingTOC" TYPE Normal { USES "Ignore" } 
+PARAGRAPH "1heading-AppTOC" TYPE Normal { USES "Ignore" } 
+PARAGRAPH "2Heading-AppTOC" TYPE Normal { USES "Ignore" } 
+PARAGRAPH "3Heading-AppTOC" TYPE Normal { USES "Ignore" } 
+
+PARAGRAPH "ActiveTOC" TYPE Normal { USES "Ignore" } 
+PARAGRAPH "Appendix-Number" TYPE Normal { USES "Ignore" } 
+PARAGRAPH "AppendixTOC" TYPE Normal { USES "Ignore" } 
+PARAGRAPH "Chapter-Number" TYPE Normal { USES "Ignore" } 
+PARAGRAPH "ChapterTOC" TYPE Normal { USES "Ignore" } 
+
+PARAGRAPH "GlossaryTOC" TYPE Normal { USES "Ignore" } 
+PARAGRAPH "GroupTitlesIX" TYPE Normal { USES "Ignore" } 
+PARAGRAPH "IndexIX" TYPE Normal { USES "Ignore" } 
+PARAGRAPH "Level1IX" TYPE Normal { USES "Ignore" } 
+PARAGRAPH "Level2IX" TYPE Normal { USES "Ignore" } 
+
+PARAGRAPH "Level3IX" TYPE Normal { USES "Ignore" } 
+PARAGRAPH "MajorPartTOC" TYPE Normal { USES "Ignore" } 
+PARAGRAPH "PrefaceTOC" TYPE Normal { USES "Ignore" } 
+PARAGRAPH "RightFooter" TYPE Normal { USES "Ignore" } 
+PARAGRAPH "TOCTitle" TYPE Normal { USES "Ignore" } 
+
+PARAGRAPH "TitleTOC" TYPE Normal { USES "Ignore" } 
+PARAGRAPH "XChapterFooter" TYPE Normal { USES "Ignore" } 
+PARAGRAPH "XHead-chap" TYPE Normal { USES "Ignore" } 
+PARAGRAPH "XHeader" TYPE Normal { USES "Ignore" } 
+PARAGRAPH "XIndexTOC" TYPE Normal { USES "Ignore" } 
+
+PARAGRAPH "XLeftFooter" TYPE Normal { USES "Ignore" } 
+PARAGRAPH "XRightFooter" TYPE Normal { USES "Ignore" } 
+
+# Random paragraph formats not in current templates (3/96)
+
+PARAGRAPH "*Codebody" TYPE Normal { USES "SimpleBody" } 
+PARAGRAPH "1Step" TYPE Normal { USES "Default" } 
+PARAGRAPH "ActiveIX" TYPE Normal { USES "SimpleBody" } 
+PARAGRAPH "Author" TYPE Normal { USES "SimpleBody" } 
+PARAGRAPH "Body-across" TYPE Normal { USES "SimpleBody" } 
+
+PARAGRAPH "Body-indent" TYPE Normal { USES "SimpleBody" }
+PARAGRAPH "CBullet" TYPE Normal { USES "SimpleBody" } 
+PARAGRAPH "CDescription" TYPE Normal { USES "SimpleBody" } 
+PARAGRAPH "CStep" TYPE Normal { USES "SimpleBody" } 
+PARAGRAPH "Code" TYPE Normal { USES "SimpleBody" } 
+
+PARAGRAPH "Code-Indented" TYPE Normal { USES "SimpleBody" } 
+PARAGRAPH "Code-cell" TYPE Normal { USES "SimpleBody" } 
+PARAGRAPH "Description-Left" TYPE Heading { USES "L4H3HR" } 
+PARAGRAPH "FigureLOF" TYPE Normal { USES "SimpleBody" } 
+PARAGRAPH "IgnoreCharsIX" TYPE Normal { USES "SimpleBody" } 
+
+PARAGRAPH "Interface&Type" TYPE Heading { USES "L3H1-NodeLower" } 
+PARAGRAPH "Interface-2" TYPE Heading { USES "L4H1-NodeLower" } 
+PARAGRAPH "Key-table" TYPE Normal { USES "SimpleBody" } 
+PARAGRAPH "Key-title" TYPE Normal { USES "SimpleBody" } 
+PARAGRAPH "Like-an-entry" TYPE Normal { USES "SimpleBody" } 
+
+PARAGRAPH "Margin-note" TYPE Normal { USES "SimpleBody" } 
+PARAGRAPH "Off" TYPE Normal { USES "SimpleBody" } 
+PARAGRAPH "On" TYPE Normal { USES "SimpleBody" } 
+PARAGRAPH "Paragraph" TYPE Normal { USES "SimpleBody" } 
+PARAGRAPH "Pref-Heading" TYPE Heading { USES "L2H1-NodeLower" } 
+
+PARAGRAPH "SeparatorsIX" TYPE Normal { USES "SimpleBody" } 
+PARAGRAPH "SortOrderIX" TYPE Normal { USES "SimpleBody" } 
+PARAGRAPH "SortSpecIX" TYPE Normal { USES "SimpleBody" } 
+PARAGRAPH "SpecIX" TYPE Normal { USES "SimpleBody" } 
+
+PARAGRAPH "TableLOT" TYPE Normal { USES "SimpleBody" } 
+PARAGRAPH "Title" TYPE Normal { USES "SimpleBody" } 
+PARAGRAPH "TitleBody" TYPE Normal { USES "SimpleBody" } 
+PARAGRAPH "XAbove2LineTitle" TYPE Normal { USES "SimpleBody" } 
+
+# Random character formats
+
+CHARACTER { TAG "Chapter #" MAP Emphasise } 
+CHARACTER { TAG "Chapter #TOC" MAP Emphasise } 
+CHARACTER { TAG "EquationVariables" MAP Emphasise } 
+
+CHARACTER { TAG "Issue" MAP Emphasise } 
+CHARACTER { TAG "MenuItem" MAP Emphasise } 
+CHARACTER { TAG "Page#TOC" MAP Emphasise } 
+
+CHARACTER { TAG "XNum-chap" MAP Emphasise } 
+CHARACTER { TAG "XText-Chap" MAP Emphasise } 
+CHARACTER { TAG "XWhite" MAP Emphasise } 

@@ -1,0 +1,50 @@
+<HTML>
+
+<HEAD>
+	<TITLE>Functional Developer Example: hello-world</TITLE>
+	<LINK REL="stylesheet" TYPE="text/css" HREF="../../examples.css">
+</HEAD>
+
+<BODY>
+
+<H2>Hello World Example Project</H2>
+
+<HR ALIGN="CENTER">
+
+<P>This is the canonical first application. It displays a
+greeting on the standard output and then exits.</P>
+
+<P>This application consists of the following parts:</P>
+
+<BLOCKQUOTE>
+<DL>
+  <DT><CODE>hello-world-library.dylan</CODE></DT>
+  <DD>Library and module definitions.</DD>
+  <P>
+  <DT><CODE>hello.dylan</CODE></DT>
+  <DD>Program implementation.</DD>
+  <P>
+  <DT><CODE>README.html</CODE></DT>
+  <DD>This file.</DD>
+</DL>
+</BLOCKQUOTE>
+
+<P>Things to notice about this application:</P>
+
+<UL>
+  <LI>The library and module definitions are in the <CODE>dylan-user</CODE> module.
+  <P>
+  <LI>The program implementation is in the newly defined <CODE>hello-world</CODE> module.
+  <P>
+  <LI>Dylan programs don't have a standard entry point like the
+  &quot;main&quot; function in C or Java. Instead, 
+  top-level forms are evaluated in order as the EXE/DLL is
+  loaded. The last form in hello-world.dylan is a call to 
+  <CODE>say-hello()</CODE>, which invokes the <CODE>say-hello</CODE> method.
+  <P>
+</UL>
+
+
+</BODY>
+
+</HTML>

@@ -1,0 +1,7 @@
+select
+select ( %e%(XtargetX) by XtestX )
+  XexprX, =>
+    XbodyX ;
+  otherwise =>
+    XbodyX ;
+end select;

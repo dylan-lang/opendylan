@@ -1,0 +1,58 @@
+
+#  Dylan libraries for interfacing with the Win32 API (Microsoft Windows)
+#
+#  This file controls the generation of source files that are created
+#  automatically by adapting information from the Microsoft header files.
+
+# Copyright 1996, 1997, 1998 Functional Objects, Inc.  All rights reserved.
+
+# $HopeName: D-lib-win32-dialog!make-sources(trunk.5) $
+
+WIN32-DIALOG=commdlg.dylan dlgs.dylan cderr.dylan library.dylan
+
+all: $(WIN32-DIALOG)
+
+dialog: $(WIN32-DIALOG)
+
+COMDIR=../win32-common
+
+include $(COMDIR)/sources.mak
+
+
+library.dylan: library.src commdlg.exp dlgs.exp cderr.exp
+
+commdlg.dylan: $(MSH)commdlg.h $(WINPAT) $(PATTERNS) make-sources \
+		$(COMDIR)/obsolete-names.text inherited-slots.pat
+	$(GEMA) -f $(WINPAT) -f $(PATTERNS) $(FULL-OPTIONS) \
+		-f inherited-slots.pat \
+		-p 'bad-struct:tag\J<K>\JW=$$0@end' \
+		-p 'bad-struct:_\J<K>\JW=$$0@end' \
+		-f $(COMDIR)/modcopyr.pat  -module Win32-dialog \
+		$(MSH)commdlg.h $@
+
+# This notes which slot accessors should not be exported here because the
+# name is inherited from another module:
+inherited-slots.pat: library.src
+	$(GEMA) -match -idchars '_-$$<>@%&*+=/?' \
+	  -p '\Iexport\:\W\{<exports>\}=$$1' \
+	  -p 'exports:<I>-value-setter\I=export-slot\:\\C$$1\=\$$0-value\@end\n;<I>=;?=' \
+	  -in library.src -out $@
+
+dlgs.dylan: $(MSH)dlgs.h $(WINPAT) $(PATTERNS) make-sources
+	$(GEMA) -f $(WINPAT) -f $(PATTERNS) \
+		-p 'bad-struct:tagCRGB=$0@end' \
+		-f $(COMDIR)/modcopyr.pat  -module Win32-dialog \
+		$(MSH)dlgs.h $@
+
+cderr.dylan: $(MSH)cderr.h $(WINPAT) $(PATTERNS)
+	$(GEMA) -f $(WINPAT) -f $(PATTERNS) \
+		-f $(COMDIR)/modcopyr.pat  -module Win32-dialog \
+		$(MSH)cderr.h $@
+
+TAGS: $(WIN32-DIALOG) preface.dylan
+	dtags $(WIN32-DIALOG) preface.dylan
+
+tags: TAGS
+
+clean:
+	rm -f $(WIN32-DIALOG) *.bak *.exp inherited-slots.pat TAGS

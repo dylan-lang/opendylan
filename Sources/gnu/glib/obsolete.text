@@ -1,0 +1,34 @@
+
+// This file lists names that are described as being obsolete in the
+// GTK header files.
+
+// in glib.h
+G_GNUC_FUNCTION
+G_GNUC_PRETTY_FUNCTION
+G_LOG_DOMAIN
+G_MINFLOAT	
+G_MAXFLOAT	
+G_MINDOUBLE	
+G_MAXDOUBLE	
+G_MINSHORT	
+G_MAXSHORT	
+G_MININT	
+G_MAXINT	
+G_MINLONG
+G_MAXLONG
+gint64
+GAllocator
+GCache
+GCond
+GData
+GHashTable
+GMainLoop
+GMemChunk
+GModule
+GMutex
+GPrivate
+GRelation
+GStringChunk
+GTimer
+GTree
+G_HOOK_DEFERRED_DESTROY

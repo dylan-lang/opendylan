@@ -1,0 +1,26 @@
+#!/bin/sh
+#
+# Crude hack to perform a preliminary translation from C to Dylan.  
+# This is just a lexical and syntactical conversion, not a semantic
+# conversion, so a lot of manual editing of the result will still be
+# needed, but this is a useful first step to automate handling of many of
+# the routine details.  Note that "%" is used in the output to flag
+# constructs that are known to need manual attention.  C constructs that
+# are not recognized are passed through unchanged.
+#
+# Typical usage:
+#	c-to-dylan *.c
+#
+# This says that for each .c file, a corresponding .dylan file will be
+# generated in the current directory.
+#
+# Optional arguments (before the C file names):
+#   -module <name>    -- specify module name for the Dylan file header.
+#   -odir <dir>       -- specify destination directory (default ".").
+#   -out <filepath>   -- explicit output file pathname
+#
+# Documentation for the "gema" utility can be found at URL:
+#	http://webhost.harlequin.com/~gray/gema-intro.html
+
+/u/dylan/local/gema -f /u/dylan/tools/gema/examples/c2dyl.dat \
+	-odir .  -otyp .dylan  "$@"

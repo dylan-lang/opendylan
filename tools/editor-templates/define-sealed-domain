@@ -1,0 +1,4 @@
+define sealed domain
+// ---*** also "_define_domain_" ?
+define sealed domain %e%(Xgeneric-nameX) 
+    (<XtypeX>, );

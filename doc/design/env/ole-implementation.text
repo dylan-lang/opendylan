@@ -1,0 +1,124 @@
+
+Title:  OLE interface for Dylan -- implementation approach
+
+Author: David N. Gray  <gray>
+
+Date:	June  8, 1995 - original version.
+        July 11, 1995 - latest revision.
+
+Status: This describes what I am currently implementing, although it is
+	still a preliminary proposal and subject to change.
+
+--------------
+
+Here's my first cut at what looks like a workable scheme for implementing
+OLE objects in Dylan.  (Note that a companion document describes the user's
+viewpoint.) 
+
+Background: an OLE ``interface'' is implemented by a structure containing a
+pointer to a method table, followed by any local data, which is used only
+from the methods.
+
+Now, for such an object to be implemented in Dylan, there needs to be
+a C-FFI structure that points to a method table where each method is
+implemented by the Dylan `C-callable-wrapper' macro to call the
+corresponding Dylan generic function.  The structure also needs to include
+a handle to find the corresponding Dylan object.
+
+Then the Dylan interface class is implemented as a subclass of an FFI
+wrapper class for the pointer to the C structure.
+
+So when a Dylan object is passed to a C function, what it actually gets is
+a pointer to the structure with the method table and handle.  If this
+pointer is passed back to the Dylan side, it can be mapped back to the
+original Dylan object.
+
+Four cases of function calls to be considered:
+
+ 1. C-implemented class calls a method in another C-implemented class.
+    Continues to work as it always has.
+
+ 2. Dylan-implemented class calls a method in another Dylan-implemented class.
+    Uses normal Dylan generic function dispatch.
+
+ 3. C-implemented class calls a method in a Dylan-implemented class.
+    What C sees is a structure containing a method table and a handle for
+    the Dylan class.  The caller invokes the function from the method
+    table, passing the structure pointer as an argument.  The method is
+    implemented as a Dylan wrapper which converts the handle to the
+    corresponding Dylan object and then calls the corresponding generic
+    function on it.
+
+ 4. Dylan-implemented class calls a method in a C-implemented class.  
+    A generic function is called which dispatches to a method specialized
+    on a C proxy object, which is actually an FFI wrapper function that
+    calls a C function which calls the corresponding method from the
+    structure's method table.  (It would probably be possible to use the
+    FFI to locate and call the proper method without using an intermediate
+    C function, but it would probably be slower, and it would be
+    considerably more complicated because the method table layouts would
+    have to be translated from C to the Dylan FFI.)
+
+So on the Dylan side, the library needs to define a wrapper function for
+each direction for each method name.  The library needs to include a C file
+which implements the method table for each interface class and the
+Dylan-to-C interface function for each method.
+The C file is actually fairly simple; for example, a method table looks
+like:
+
+  struct IUnknownVtbl 
+  IUnknown_DW_vtbl = { DW_QueryInterface, DW_AddRef, DW_Release };
+
+and a typical function is:
+
+  ULONG C_AddRef( IUnknown * p )
+  {
+    return p->lpVtbl->AddRef(p);
+  }
+
+The method table layouts are defined by the structures in the Microsoft OLE
+header files.
+
+Once the basic infrastructure is implemented, including the <IUnknown>
+class, it looks like most of the code for the other interfaces can be
+generated mechanically from the C header files.  The exceptions would
+involve cases where it is desirable to change data types or argument
+passing to be more natural for Dylan.  I'm hoping that such mechanical
+generation of the code from the Microsoft headers can significantly limit
+the amount of testing needed.
+
+In case there is any worry about using separate mechanisms for method
+dispatch on the C and Dylan sides, I might point out that OLE does not
+support any method inheritance on the C side, so there isn't any room for
+anything sneaky to happen there.  And for a class implemented in Dylan, the
+C side method dispatch simply forwards to the Dylan generic function
+dispatch, so it isn't going to miss anything there.
+
+As for how to do the automatic generation of the interface declarations, it
+seems that Collage will not be suitable because of a couple of unusual
+requirements here:
+ * We need not just wrappers for functions, but rather we need to create
+   functions based on a function type appearing in a method table struct in
+   the C header.
+ * In order to automatically recognize `output' parameters, we want to take
+   advantage of the ``/* [out] */'' comments preceding such arguments in
+   the C headers (presumably reflecting an original IDL declaration).  It
+   doesn't seem reasonable for Collage to recognize this special case hack.
+So the approach I'm taking is to define a set of transformation patterns
+for a public domain text processing utility called "gema".  Since there are
+only a few specific files that need to be processed and they follow fairly
+regular patterns, this is not a difficult task.
+
+Collage may yet be useful for handling additional declarations such as
+constants and auxiliary functions.
+
+--
+
+I was at first thinking of implementing the error code type (HRESULT and
+SCODE, which are actually the same) as a Dylan class encapsulating the
+integer code value.  But after an e-mail discussion with Paul Haahr, it
+seems that would incur more overhead than would be worthwhile.  So error
+codes will continue to be represented as integers.  Paul Wieneke had
+suggested that errors should be translated to Dylan exceptions, but I think
+that would be better left to a higher-level interface.
+

@@ -1,0 +1,9 @@
+pushd $FUNCTIONAL_DEVELOPER_USER_BUILD/$1
+
+assemble
+
+gcc-so $1
+
+install-so $1
+
+popd

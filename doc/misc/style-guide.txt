@@ -1,0 +1,456 @@
+
+Dylan Coding Style
+
+This document describes the coding style that the Dylan group recommends.
+Not everyone likes every point expressed here, but for the most part, people
+either agree or don't care enough to dispute any points.  You don't have to
+follow this guide religiously; obviously, many situations occur where you
+may want to make an individual stylistic judgement as to how to write a
+particular piece of code.
+
+-----
+One overriding rule: when modifying other programmers' code, you should make
+a good-faith effort to keep to their style.  Do not gratuitously restyle the
+code to suit your fancy.  If you feel it is necessary, you can modify the
+code for what might be considered style-only reasons; for example, adding
+helpful comments or adding begin-words to "end" tokens (such as "end if")
+within code fragments you found hard to understand or visually scan.  For
+examples of style points that fall under this "overriding" rule, see the use
+of semicolons at the end of statements and adding begin-words to "end"
+tokens.
+
+-----
+An "indent level" is two spaces.
+
+-----
+Break long function headers in any of three places, using whichever suits
+the situation and the individual programmer:
+   1] After the function's name and before the open paren of the parameters
+      specification. 
+   2] Inside the parameter parenthesis after a comma.
+   3] After the parameter parenthesis and before the "=>" of the return
+      values declarations.  See next style item for variations.
+
+Breaking in cases 1] or 3], the new lines should be indented two indent
+levels (four spaces) as "special args".  Breaking in case 2], the lines
+should be indented just inside the open paren of the parameter parenthesis
+(that is, one column beyond the column of the open paren).  See note above
+for exception for keyword parameters numbered 2..N.
+
+Examples:
+
+   define method element-setter
+       (new-value, list :: <list>, key :: <small-integer>) => (new-value)
+     ...;
+   end method;
+
+   define method element-setter
+       (new-value, list :: <list>, key :: <small-integer>)
+       => (new-value)
+     ...;
+   end method;
+
+   define method element-setter
+       (new-value, list :: <list>, key :: <small-integer>)
+    => (new-value)
+     ...;
+   end method;
+
+   define method element-setter (new-value, list :: <list>,
+                                 key :: <small-integer>)
+       => (new-value)
+     ...;
+   end method;
+
+-----
+If a function header consumes two or more lines, then indent the return
+value declarations in one of two ways:
+   1] Indented two indent levels (as a special arg would have been in a
+      Common Lisp indenter), which is four spaces.  This is the same
+      indentation used when breaking a long function header line before the
+      parameter specification; that is, the open paren is on the next line
+      and indented four spaces (two indent levels).  Examples:
+         define method my-supper-long-method-name
+	     (arg1 :: <type1>, arg2 :: <type2>, ...)
+	     => (mumble :: <object>)
+      or
+         define method my-supper-long-method-name (arg-one)
+	     => (mumble :: <object>)
+   2] Indented one space so that the result values decls (that is, the names
+      and types) line up with the four space indentation described in 1]
+      above:
+         define method my-supper-long-method-name
+	     (arg1 :: <type1>, arg2 :: <type2>, ...)
+	  => (mumble :: <object>)
+      or
+         define method my-supper-long-method-name (arg-one)
+	  => (mumble :: <object>)
+
+Either way, the point is that the return values are indented specially
+relative to the body of code to follow.
+
+-----
+When parameter declarations include #key, and the line needs to wrap, place
+#key on a new line.  Indent the #key one space under the open paren of the
+parameter declarations, and vertically line up the keyword arg names under
+the beginning of the first keyword arg:
+   define method mumble-mumble-foo (first :: <woozle>, second :: <woozle>,
+                                    #key wombat :: <zax>,
+				         muskrat :: <zax>)
+
+It is not necessary to attempt to horizontally format the lines so that the
+double colons, types, or whatever line up in columns.  Some people find this
+sort of formatting quite irritating.
+
+-----
+When defining a function, put a space in the function header between the
+name and the parameters parenthesis.  When calling a function, leave the
+space out so that the open paren immediately follows the function's name
+(see more below).
+
+-----
+Function headers ('define method' and 'define function') should never have a
+closing semicolon.  If you specify a single return value, then use the
+parenthesis form:
+
+   define method whopper (x :: <integer>, y :: <integer>)
+     ...;
+   end method;
+
+   define method max (x :: <integer>, y :: <integer>) => (max :: <integer>)
+     ...;
+   end method;.
+   
+-----
+Lines should not exceed 79 columns in length.  This keeps code viewable when
+dialed up, when shipping around in mail, etc.
+
+-----
+Using /* ... */
+
+If you use /* ... */ comments, in general they should only be used at the
+beginning of a file or the beginning of a logical page so that their use is
+highly localized.  This prevents them from showing up surprisingly in random
+places throughout a file of code; that is, if /*...*/ comments occur in code
+and spawn several lines of code, the commented out code may not be obviously
+commented out.
+
+Using /*...*/ comments should go away once development environments have a
+means for linking general commentary to logical units of code.
+
+Using /*...*/ to temporarily exclude code fragments while developing is
+fine.
+
+-----
+Name slots so that their names are meaningful in the context in which they
+are used.  If the names are only used within the scope of the module, then
+name them (with respect to uniqueness and being self-documenting) as well as
+any function you would define; be careful of short names that may clash with
+likely local variable names.  If you are exporting slot names, name the
+slots as well as you would any good interface name.
+
+-----
+Name types using the same angle bracket convention used for classes.
+
+-----
+Use dot syntax for invoking a function that can take one argument only when
+the function is a logical "property access" (even if computed).  That is, if
+the function has a documented "side-effect", sounds like an "action", etc.,
+then it is probably inappropriate to use dot notation to invoke it.  For
+example, "foo.size" is fine, but foo.format or foo.close are not fine.
+
+-----
+Use keyword syntax only for keyword arguments.  For example:
+   make(<file-stream>, direction: #"input");
+It is reasonable to use keyword syntax to specify a received keyword, for
+example, in a slot specification or in a parameter list:
+   slot point-x, init-keyword: x:;
+
+-----
+You may use begin-words following "end" tokens (for example, "end if", "end
+for", etc.) every where you want to.  You should not add begin-words to
+"end" tokens everywhere you feel like it in someone else's code.
+
+If you do not add begin-words following "end" tokens everywhere, you should
+be sensitive to code fragments that are hard to read and add begin-words
+"necessary" for readability.  That is, another person should be able to
+easily scan the code visually and determine which "end"s match which
+begin-words.
+
+This style point is a bit of a religious issue.  You should be particularly
+careful to edit another person's code in the same style that person used.
+This is generally a good practice anyway.
+
+-----
+Semicolons at the ends of statements (two styles)
+
+This is a bit of a religious issue.
+
+Style 1:
+   Use a semicolon at the end of every statement, except in one situation.
+   When entering a single-line statement, if it could be entered with no
+   internal semicolons (that is, there is only one semicolon, which is at
+   the end of the statement), that is the preferred style:
+      if (my < test) result else mumble(x,y) end;
+
+   If a statement could be entered on a single-line such that it would
+   require an internal semicolon must be broken over multiple lines:
+      if (my < test)
+	clean-up(x, y);
+	result;
+      else
+	mumble(x,y);
+      end;
+
+Style 2:
+   Some programmers forgo using a semicolon on the last expression of a
+   block only when the value is significant.  They claim the benefit is
+   making the code maintainer think a little bit about adding a statement to
+   the end of the block whose value is meaningful.
+
+-----
+Avoid creating right-heavy, lengthy code segments.  "Fill" the lines of code
+if possible.  For example,
+
+   define method yukyukyukyukyukyukyuk (really-big-argument-name :: <woozit>,
+				        like-totally :: <weighting>,
+				        elephant-talk? :: <boolean>)
+     ...;
+   end method yukyukyukyukyukyukyuk;
+
+would probably look better as:
+
+   define method yukyukyukyukyukyukyuk
+       (really-big-argument-name :: <woozit>, like-totally :: <weighting>,
+        elephant-talk? :: <boolean>)
+     ...;
+   end method yukyukyukyukyukyukyuk;
+
+-----
+Wrapping arithmetic/boolean expressions
+
+Wrap long expressions before operators and indent the operators with one
+extra indent level from the beginning of the expression.
+
+Note, assignments are considered to be "statements", and the "expression"
+that wraps is the code on the right-hand side of the assignment operator.
+Therefore, the first two examples below are considered to be better style
+than the third:
+   my-local := big-computation(arg1, arg2)
+		 + another-hairy-long-calculation(arg3, arg4, arg5)
+   my-local := (big-computation(arg1, arg2)
+		  + another-hairy-long-calculation(arg3, arg4, arg5))
+   my-local := big-computation(arg1, arg2)
+     + another-hairy-long-calculation(arg3, arg4, arg5)
+Another example:
+   supercalifragilisticexpealidocious 
+     | spoon-full-of-sugar
+     | chimney-number
+
+-----
+The basic style of a function call is its name, followed immediately by the
+open paren of the arg list, followed immediately by the first argument
+expression, and arguments separated by a command and single space:
+   basic-fun-call(one-arg, (another + another), the-last);
+
+If you have to break a line in the middle of the function call expression,
+do that in one of the following ways:
+
+   redirect-computations!(old-c, new-c, previous-computations,
+                          next-computations, more-more-more);
+
+or
+
+   redirect-computations!
+     (old-c, new-c, previous-computations, next-computations,
+      more-more-more);
+
+-----
+If-then-else
+
+There are two forms considered to be good style:
+   if (expr)
+     statements ...;
+   else
+     statements ...;
+   end;
+and
+   if (expr) x else (x + y) end;
+
+For a description of the latter style, see above the style point for
+semicolons at the end of statements.
+
+-----
+Let statements
+
+Keep let statements flush with the sequence of code in which they appear.
+Do not indent code after a let statement in an attempt to visually indicate
+the let's scope:
+   let x = xxxxx;
+   let y = yyyyy;
+   inc!(x, z);
+   let z = f!(x, y);
+   z + z;
+
+If a let statement wraps, you put the equal sign on a new line and indent it
+one extra indent level:
+   let superfragilisticespealidoscious
+     = spoon-full-of-sugar + the-big-production-number;
+
+-----
+If any single branch of a case statement consumes more than one line, then
+you should break every branch after the "=>":
+   case
+     test1 =>
+       statement1;
+       statement2;
+     test2 =>
+       statement1;
+       statement2;
+   end;
+In practice, there are common exceptions to this recommendation.
+
+For very brief branch expressions, keeping the test and consequent on one
+line is also considered to be good style:
+   case
+     test1 => expression1;
+     test2 => expression2;
+   end;
+
+-----
+You should not use #t for 'otherwise' in case statements.
+
+-----
+Example macro formatting (no text available that explains the style):
+
+   define macro collecting
+     { collecting () ?body end }
+       => { collecting (_collector)
+	      ?body;
+	      collected(_collector)
+	    end }
+     { collecting (as ?expression) ?body end }
+       => { collecting (_collector as ?expression)
+	      ?body;
+	      collected(_collector)
+	    end }
+     { collecting (?vars) ?body end }
+        => { ?vars;
+	     ?body }
+   vars:
+     { ?var, ... }
+       => { ?var; ... }
+     { }
+       => { }
+   end macro;
+
+-----
+Breaking assignment across multiple lines.
+
+If the left side of the assignment is a long epression, it might be better
+to break the line before the assignment operator rather than following the
+"arithmetic/boolean expressions" style point above.  For example,
+
+   superfragilisticespealidoscious.cast.lead-singers
+     := select-from-local-talent(*current-location*);
+
+-----
+'Define variable' and 'define constant' should be broken across two lines as
+follows:
+
+   define variable *environmental-hazards*
+     = map(get-hazards, *local-substances*);
+
+-----
+In general, for loop clauses should each have their own line:
+   for (ele1 in matrix1,
+        ele2 in matrix2,
+	count = 0 then (count + 1))
+     ...
+   end;
+
+Sometimes for very brief for clauses, it is okay to condense the clauses:
+   for (ele1 in matrix1, ele2 in matrix2)
+     ...
+   end;
+
+-----
+When an =/then for clause consumes more than one line, you should wrap
+before the '=' and before the 'then'.  Both the '=' and the 'then' should be
+indented one extra indent level:
+
+         // Better.
+	 //
+         ... nested levels ...
+	                  for (some-index
+			         = initialization-expression(x, y, z)
+				 then stepper(u, v, w))
+			    stuff(some-index);
+			  end;
+
+         // Less nice for immediately seeing the components of the clause.
+	 //
+         ... nested levels ...
+	                  for (some-index = initialization-expression(x, y, z)
+				 then stepper(u, v, w))
+			    stuff(some-index);
+			  end;
+
+-----
+Example local method formatting (no text available that explains the style):
+
+   method (y)
+     local method trim-whitespace (x) 
+	     ...
+	   end method,
+	   method add-stuff (x)
+	     ...
+	   end method;
+     trim-whitespace(add-stuff(y))
+   end method;
+
+Tight for space:
+
+   method (y)
+     local
+       method trim-whitespace (x) 
+       ...
+       end method,
+       method add-stuff (x)
+       ...
+       end method;
+     trim-whitespace(add-stuff(y))
+   end method;
+
+-----
+Use 'define function' for functions that are neither meant to be methods
+that might be added to a generic function, nor generic functions to which
+methods may be added.
+
+-----
+When a class definition's header cannot fit on one line, break the line
+analogously to functions:
+
+   define class <z> (<one-long-name>, <followed-by-another>,
+                     <to-be-topped-by-this-one>)
+     ...
+   end class;
+
+or
+
+   define class <z>
+       (<one-long-name>, <followed-by-another>, <to-be-topped-by-this-one>)
+     ...
+   end class;
+
+-----
+When a slot description wraps to a new line in a "define class" form, the
+extra lines should be indented one extra indent level:
+
+   define class <entry-state> (<temporary>)
+     slot name, init-keyword: name:;
+     slot me-block, init-keyword: block:;
+     slot exits :: <stretchy-vector>, 
+       = curry(make, <stretchy-vector>),
+       init-keyword: exits:;
+   end class;

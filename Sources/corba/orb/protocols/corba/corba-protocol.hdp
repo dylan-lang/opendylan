@@ -1,0 +1,23 @@
+comment:	This file is generated, please don't edit
+format-version:	2
+library:	corba-protocol
+files:	corba-protocol-library
+	built-in-classes
+	typecode
+	runtime-classes
+	any
+	orb
+	dynamic-invocation-interface
+	dynamic-skeleton-interface
+	name-service
+	exceptions
+	conditions
+subprojects:	..\..\dylan\corba-dylan.hdp
+base-address:	0x63D80000
+Library-Pack:   CORBA
+debug-arguments:	-debug
+major-version: 2
+minor-version: 1
+compilation-mode:	tight
+target-type:	dll
+comment:	additional keywords

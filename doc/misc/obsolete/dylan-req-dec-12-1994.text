@@ -1,0 +1,47 @@
+Dylan Requirements
+December 12, 1994
+
+Overall Goals: 	Quality, Minimize redesign, Minimize rewrites across revs.
+
+			R0				R1			R2
+Platform		Windows/486/Pentium		Windows/*		Windows/*, UNIX
+UI Substrate		Win32 API			Win32 API/MFC		Win32API/MFC/MOTIF
+FFI			C				C/C++			C/C++
+UI Look and Feel	Windows Badge			Windows Badge		Windows Badge
+			OLE2 Savvy			OLE2 Savvy		OLE2 Savvy
+							DUIM	(internal)	UNIX  IAC Compliant
+										DUIM
+
+Libraries
+
+Tools			Compiler
+			Debugger
+			Editor
+			Interface to C GUI Builder
+			Profiling
+			Memory Management
+			Delivery (DLL, .EXE)		1 user Source Control	Simple groupware
+			Browsers
+
+Architecture		Single User
+			Open when possible
+
+Staff Objectives	All staff will acquire significantly increased
+			windows (Win32API, OLE) and Dylan
+			programming skills.
+
+R0 is less than or equal to Release 0
+
+Tentative Schedule:
+Compiler Alpha	June 1995
+Compiler Beta		Sept. 1995
+Compiler FCS		January 1996
+Release 0 Dylanworks	Somewhere between compiler Alpha and compiler Beta
+
+Implementation Issues:
+Win16 <-> Win32 communications
+Producing OLE2 applications
+OLE2 Development environment
+Tool development time vs. OLE2 compliance
+PFE
+

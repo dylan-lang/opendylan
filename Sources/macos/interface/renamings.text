@@ -1,0 +1,5 @@
+
+// This file lists names that have to be renamed from the standard MacOS header files.
+
+Boolean=MacBoolean
+MacPtInRect=PtInRect

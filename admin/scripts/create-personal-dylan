@@ -1,0 +1,71 @@
+#!/usr/local/bin/perl
+#       Script: create-personal-dylan
+#       Author: Arthor Wienstien(rthor)
+$usage=" Usage: create-personal-dylan <RootDir>";
+#  Opts & Args: <RootDir>: name of the root directory, default: "dylan"
+#     Synopsis: A script to create the directory structure
+#               required to use the dfmc compiler. This
+#               is both unix and DOS compatible (assuming you
+#               have a version of perl installed).
+#############################################################
+
+$ROOT = "dylan";
+@SUBDIRS = ("install", "registry", "lib", "build", "databases") ; 
+@PLATFORMS = ("alpha-osf3", "sparc-solaris2", "sparc-sunos4", "x86-win32", "mips-irix5") ;
+@PLTFRM_SUBDIRS = ("lib", "bin") ;
+@REGISTRY_SUBDIRS = ("generic", "emulator", @PLATFORMS) ;
+
+if ($ARGV[0]) {
+    $ROOT = $ARGV[0];
+    unless (chdir $ROOT) {
+	mkdir ($ROOT,0777) || die "Can't make directory $root\n";
+	chdir $ROOT;
+    }
+} else {		       
+    print "You did not specify a root directory.\n";
+    print "Build one called dylan here?\n?> ";
+    $answer = <STDIN>;
+    if ($answer =~ /y|yes/) {
+	mkdir($ROOT,0777) || die "Can't make $ROOT here.\n" ;
+	(chdir $ROOT);
+    } else {		       
+	die || "Ok, goodbye\n";
+    }
+}
+
+$ROOT = `pwd`;				
+chop($ROOT);
+foreach $sd (@SUBDIRS) {
+    print "making $sd in $ROOT\n";
+    mkdir ($sd,0777) || die "Can't create $sd in $ROOT.\n";
+}				
+chdir install;
+$here = `pwd`;
+chop($here);
+
+foreach $dir (@PLATFORMS) {	
+    print "making $dir in $here\n";
+    mkdir ($dir,0777);
+    foreach $subdir (@PLTFRM_SUBDIRS) {	
+	print "making $subdir in $here/$dir\n";
+	mkdir ("${dir}/${subdir}",0777); 
+    }
+}			      
+
+chdir $ROOT;
+chdir build;
+
+foreach $dir (@PLATFORMS) {
+    $here = `pwd`;
+    mkdir ($dir,0777) || die "Can't make $dir in $here.\n";
+}
+	
+chdir $ROOT;
+chdir registry;
+
+foreach $dir (@REGISTRY_SUBDIRS) {	
+    $here = `pwd`;
+    mkdir ($dir,0777) || die "Can't make $dir in $here.\n";
+}
+
+# eof

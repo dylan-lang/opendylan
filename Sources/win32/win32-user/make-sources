@@ -1,0 +1,35 @@
+
+#  Dylan libraries for interfacing with the Win32 API (Microsoft Windows)
+#
+#  This file controls the generation of source files that are created
+#  automatically by adapting information from the Microsoft header files.
+
+# $Header: /scm/cvs/fundev/Sources/win32/win32-user/make-sources,v 1.1 2004/03/12 00:10:30 cgay Exp $
+
+WIN32-USER=winuser.dylan library.dylan
+
+all: $(WIN32-USER)
+
+user: $(WIN32-USER)
+
+COMDIR=../win32-common
+
+include $(COMDIR)/sources.mak
+
+library.dylan: library.src winuser.exp
+
+winuser.dylan: $(MSH)winuser.h $(WINPAT) $(PATTERNS) $(COMSLOT) $(OPTDEP) \
+		make-sources userpat.pat
+	$(GEMA) -f userpat.pat \
+		-f $(WINPAT) -f $(PATTERNS) -f $(COMSLOT) \
+		-omit CreateWindowExA  -f $(COMDIR)/modcopyr.pat \
+		-p 'relevant-constant:DC_CAPTION\I=@fail;DC_NC\I=@fail' \
+		$(OPTIONS)  -module Win32-User  -exports winuser.exp \
+		$(MSH)winuser.h $@
+
+# Note: `CreateWindowEx' is omitted above because handled specially
+#	in "moreuser.dylan".  DC_CAPTION and DC_NC are bogus macros -- 
+#       undocumented and reference undefined names.
+
+clean:
+	rm -f $(WIN32-USER) *.bak win*.exp

@@ -1,0 +1,57 @@
+#
+#	Dylan Windows example program --
+#	After compiling the Dylan source to C, build the program image by:
+#
+#		nmake -f NMakef 
+#
+# $Header: /scm/cvs/fundev/Sources/app/windows-resource-example/NMakef,v 1.1 2004/03/12 00:05:24 cgay Exp $
+
+all: example.exe
+
+#
+
+!include <ntwin32.mak>
+
+LINKER            = cc
+MAIN              = main.obj
+BINDIR            = $(DW_BIN)
+LIBDIR            = $(DW_LIB)
+INCDIR            = $(DW_INCLUDE)
+PBINDIR           = $(DW_PERSONAL_BIN)
+PLIBDIR           = $(DW_PERSONAL_LIB)
+PINCDIR           = $(DW_PERSONAL_INCLUDE)
+GCLIB             = $(LIBDIR)\gc.lib
+RTLIB             = $(LIBDIR)\c-run-time.lib
+CFLAGS            = -I$(PINCDIR) -I$(INCDIR) $(cvars) $(cvarsmt) $(cdebug) $(PLATFORM_CFLAGS)
+
+LIB               = $(PLIBDIR);$(LIBDIR);$(LIB)
+LIBS              = resource-database.lib WIN32-KERNEL.lib WIN32-GDI.lib WIN32-USER.lib WIN32-COMMON.lib DYLAN.lib C-FFI.lib SIMPLE-FORMAT.lib SIMPLE-PRINT.lib SIMPLE-STREAMS.lib functional-dylan.lib functional-extensions.lib $(RTLIB) $(GCLIB)
+
+RSC=rc.exe
+RSC_PROJ=/l 0x409 /fo"example.res" /d "_DEBUG"
+
+OBJS =  library.obj dispatcher.obj example-support.obj resdecl.obj example.obj _windows-ffi-example.obj 
+
+example.lib: $(OBJS)
+	$(implib) -out:$@ $(OBJS)
+
+example.res :  example.rc
+	$(RSC) $(RSC_PROJ)  example.rc
+
+example.exe: example.lib $(MAIN) example.res
+	$(link) $(lflags) /debug:full /force $(guiflags) -out:$@ $(MAIN) example.res example.lib $(LIBS) $(guilibsmt)
+
+install-application: example.exe
+	(pushd $(PBINDIR) & del /f /q example.exe & popd)
+	for %%F in (example.exe) do copy %%F $(PBINDIR)
+
+install: install-library
+
+clean:
+	del /f /q *.obj *.lib *.dll example.exe
+
+clean-all:
+	del /f /q *.obj *.lib *.dll *.c *.h example.exe
+
+print:
+	print library.dylan resdecl.dylan example.dylan 

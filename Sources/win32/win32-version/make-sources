@@ -1,0 +1,31 @@
+
+#  Dylan libraries for interfacing with the Win32 API (Microsoft Windows)
+#
+#  This file controls the generation of source files that are created
+#  automatically by adapting information from the Microsoft header files.
+
+# Copyright 1996 Functional Objects, Inc.  All rights reserved.
+
+# $Header: /scm/cvs/fundev/Sources/win32/win32-version/make-sources,v 1.1 2004/03/12 00:10:31 cgay Exp $
+
+WIN32-VERSION=winver.dylan library.dylan
+
+all: $(WIN32-VERSION)
+
+version: $(WIN32-VERSION)
+
+COMDIR=../win32-common
+
+include $(COMDIR)/sources.mak
+
+library.dylan: library.src winver.exp
+
+winver.dylan: $(MSH)winver.h $(WINPAT) $(PATTERNS) \
+		$(COMDIR)/obsolete-names.text make-sources
+	$(GEMA) -f $(WINPAT) -f $(PATTERNS) $(FULL-OPTIONS) \
+		-omit VS_FILE_INFO \
+		-f $(COMDIR)/modcopyr.pat  -module Win32-version \
+		$(MSH)winver.h $@
+
+clean:
+	rm -f $(WIN32-VERSION) *.bak win*.exp

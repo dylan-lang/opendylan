@@ -1,0 +1,241 @@
+<library-pack name="Core" title="Core" number="1">
+  <description>The core libraries needed by most Dylan applications</description>
+  <copyright>Copyright (c) 1995-2001 Functional Objects, Inc. All rights reserved.</copyright>
+  <company>Functional Developer</company>
+  <libraries>
+    <library name="dylan" title="Dylan">
+      <description>Dylan language library</description>
+      <sources location="dylan">
+	<project platform="x86-win32">dylan-win32.lid</project>
+	<project>dylan.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+	<binary file="DxDYLAN.dll"/>
+	<lib file="DxDYLAN.lib"/>
+      </release>
+    </library>  
+    <library name="common-dylan" title="Common Dylan">
+      <description>Common Dylan language extensions</description>
+      <sources location="common-dylan">
+	<project platform="x86-win32">win32-common-dylan.lid</project>
+	<project>common-dylan.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+	<binary file="DxCMNDYL.dll"/>
+	<lib file="DxCMNDYL.lib"/>
+      </release>
+    </library>
+    <library name="functional-dylan" title="Functional Dylan">
+      <sources location="functional-dylan">
+	<project platform="x86-win32">functional-dylan-win32.lid</project>
+	<project>functional-dylan.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+	<binary file="DxFUNDYL.dll"/>
+	<lib file="DxFUNDYL.lib"/>
+      </release>
+    </library>
+    <library name="c-ffi" title="C FFI">
+      <description>A Foreign Function Interface to C</description>
+      <sources location="lib/c-ffi">
+	<project platform="x86-win32">win32-c-ffi.lid</project>
+	<project>c-ffi.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+        <binary file="DxCFFI.dll"/>
+        <lib file="DxCFFI.lib"/>
+      </release>
+    </library>
+    <library name="big-integers" title="Big Integers">
+      <description>Double precision integers</description>
+      <sources location="lib/big-integers">
+	<project platform="x86-win32">big-integers-win32.lid</project>
+	<project>big-integers.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+        <binary file="DxBIGINT.dll"/>
+        <lib file="DxBIGINT.lib"/>
+      </release>
+    </library>
+    <library name="generic-arithmetic" title="Generic Arithmetic">
+      <description>Abstract arithmetic specification</description>
+      <sources location="lib/generic-arithmetic">
+	<project platform="x86-win32">generic-arithmetic-win32.lid</project>
+	<project>generic-arithmetic.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+        <binary file="DxGARITH.dll"/>
+        <lib file="DxGARITH.lib"/>
+      </release>
+    </library>
+    <library name="channels" title="Channels">
+      <sources location="lib/channels">
+	<project platform="x86-win32">channels-win32.lid</project>
+	<project>channels.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+        <binary file="DxCHNNLS.dll"/>
+        <lib file="DxCHNNLS.lib"/>
+      </release>
+    </library>
+    <library name="commands" title="Commands">
+      <sources location="lib/commands">
+	<project platform="x86-win32">commands-win32.lid</project>
+	<project>commands.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+        <binary file="DxCOMMND.dll"/>
+        <lib file="DxCOMMND.lib"/>
+      </release>
+    </library>
+    <library name="system" title="System">
+      <description>Native system interface libraries</description>
+      <sources location="system">
+	<project platform="x86-win32">x86-win32-system.lid</project>
+	<project>system.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+	<binary file="DxSYSTEM.dll"/>
+	<lib file="DxSYSTEM.lib"/>
+      </release>
+    </library>
+    <library name="io" title="I/O">
+      <description>Input/Output libraries</description>
+      <sources location="io">
+	<project platform="x86-win32">win32-io.lid</project>
+	<project>io.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+	<binary file="DxIO.dll"/>
+	<lib file="DxIO.lib"/>
+      </release>
+    </library>
+    <library name="collections" title="Collections">
+      <description>Collection extensions</description>
+      <sources location="collections">
+	<project platform="x86-win32">collections-win32.lid</project>
+	<project>collections.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+	<binary file="DxCOLLNS.dll"/>
+	<lib file="DxCOLLNS.lib"/>
+      </release>
+    </library>
+  </libraries>
+  <examples>
+    <library name="hello-world" title="Hello World">
+      <category>Getting Started</category>
+      <description>The canonical first application</description>
+      <sources location="console/hello-world">
+	<project>hello-world.hdp</project>
+      </sources>
+    </library>
+    <library name="towers-of-hanoi" title="Towers of Hanoi">
+      <category>Getting Started</category>
+      <description>A very simple Towers of Hanoi implementation</description>
+      <sources location="console/towers-of-hanoi">
+	<project>hanoi.hdp</project>
+      </sources>
+    </library>
+    <library name="factorial-small" title="Factorial">
+      <category>Getting Started</category>
+      <description>A factorial implementation using regular integers</description>
+      <sources location="console/factorial">
+	<project>factorial-small.hdp</project>
+      </sources>
+    </library>
+    <library name="factorial-big" title="Factorial (using big integers)">
+      <category>Getting Started</category>
+      <description>A factorial implementation using big integers</description>
+      <sources location="console/factorial">
+	<project>factorial-big.hdp</project>
+      </sources>
+    </library>
+    <library name="airport" title="Airport">
+      <category>Documentation/Dylan Programming</category>
+      <description>The airport example from "Dylan Programming"</description>
+      <sources location="documentation/airport">
+	<project>airport-test.hdp</project>
+      </sources>
+    </library>
+  </examples>
+  <test-suites>
+    <library name="dylan-test-suite" title="Dylan test suite">
+      <category>Dylan</category>
+      <description>A test suite for the Dylan library</description>
+      <sources location="qa/dylan-test-suite">
+	<project>dylan-test-suite.lid</project>
+      </sources>
+    </library>
+    <library name="dylan-test-suite-app" title="Dylan test suite application">
+      <category>Dylan</category>
+      <description>The standalone version of the Dylan test suite</description>
+      <sources location="qa/test-apps/dylan-test-suite-app">
+	<project>dylan-test-suite-app.lid</project>
+      </sources>
+    </library>
+    <library name="common-dylan-test-suite" title="Common Dylan test suite">
+      <category>Common Dylan</category>
+      <description>A test suite for the Common Extensions library</description>
+      <sources location="common-dylan/tests">
+	<project>common-dylan-test-suite.lid</project>
+      </sources>
+    </library>
+    <library name="common-dylan-test-suite-app" title="Common Dylan test suite application">
+      <category>Common Dylan</category>
+      <description>A test suite for the Common Dylan library</description>
+      <sources location="qa/test-apps/common-dylan-test-suite-app">
+	<project>common-dylan-test-suite-app.lid</project>
+      </sources>
+    </library>
+    <library name="functional-dylan-test-suite" title="Functional Dylan test suite">
+      <category>Core</category>
+      <description>A test suite for the Functional Dylan library</description>
+      <sources location="functional-dylan/tests">
+	<project>functional-dylan-test-suite.lid</project>
+      </sources>
+    </library>
+    <library name="functional-dylan-test-suite-app" title="Functional Dylan test suite application">
+      <category>Functional Dylan</category>
+      <description>A test suite for the Functional Dylan library</description>
+      <sources location="qa/test-apps/functional-dylan-test-suite-app">
+	<project>functional-dylan-test-suite-app.lid</project>
+      </sources>
+    </library>
+    <library name="collections-test-suite" title="Collections test suite">
+      <category>Collections</category>
+      <description>A test suite for the Collections library</description>
+      <sources location="collections/tests">
+	<project>collections-test-suite.lid</project>
+      </sources>
+    </library>
+    <library name="system-test-suite" title="System library test suite">
+      <category>System</category>
+      <description>A test suite for the System library</description>
+      <sources location="system/tests">
+	<project>system-test-suite.lid</project>
+      </sources>
+    </library>
+    <library name="io-test-suite" title="I/O test suite">
+      <category>IO</category>
+      <description>A test suite for the I/O library</description>
+      <sources location="io/tests">
+	<project>io-test-suite.lid</project>
+      </sources>
+    </library>
+    <library name="libraries-test-suite" title="Core Libraries test suite">
+      <category>Core</category>
+      <description>A test suite for the core libraries</description>
+      <sources location="qa/test-suites/libraries-test-suite">
+	<project>libraries-test-suite.lid</project>
+      </sources>
+    </library>
+    <library name="libraries-test-suite-app" title="Core Libraries test application">
+      <category>Core</category>
+      <description>A test suite application for the Core libraries</description>
+      <sources location="qa/test-apps/libraries-test-suite">
+	<project>libraries-test-suite-app.lid</project>
+      </sources>
+    </library>
+  </test-suites>
+</library-pack>

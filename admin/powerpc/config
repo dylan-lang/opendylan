@@ -1,0 +1,56 @@
+
+#   Usage:    config -r release-root -c compiler-root -b personal-root -s sources-root
+
+#   Example:  Build a Gen4 compiler using a Gen3 compiler
+#            config -rc /home/nosa/dylan/linux/b3 -b /home/nosa/dylan/linux/b4 -s /home/nosa/dylan/linux
+
+
+export FUNCTIONAL_DEVELOPER_SYSTEM_DEVELOPER="yes"
+
+while [ "$#" -ne 0 ]; do
+  case $1 in
+
+   -r) export FUNCTIONAL_DEVELOPER_RELEASE="$2"
+       export LD_LIBRARY_PATH=$FUNCTIONAL_DEVELOPER_RELEASE/bin:$LD_LIBRARY_PATH ;;
+
+   -b) export FUNCTIONAL_DEVELOPER_USER_BUILD="$2/build"
+       export FUNCTIONAL_DEVELOPER_USER_INSTALL="$2"
+       cd $2 ;;
+
+   -s) export FUNCTIONAL_DEVELOPER_USER_SOURCES="$2/sources"
+       export FUNCTIONAL_DEVELOPER_USER_REGISTRIES="$2/sources/registry" ;;
+
+   -c) export dylan_compile="$2/bin/basic-powerpc-dw"
+       export dylan_compile_options="/save /messages:internal /nocombine /assemble:elf /elf"
+       export build="$2/bin/build" ;;
+
+   -rc) export dylan_compile="$2/bin/basic-powerpc-dw"
+        export dylan_compile_options="/save /messages:internal /nocombine /assemble:elf /elf"
+        export build="$2/bin/build"
+	export FUNCTIONAL_DEVELOPER_RELEASE="$2"
+        export LD_LIBRARY_PATH=$FUNCTIONAL_DEVELOPER_RELEASE/bin:$LD_LIBRARY_PATH ;;
+
+   -rs) export FUNCTIONAL_DEVELOPER_RELEASE="$2"
+        export LD_LIBRARY_PATH="$FUNCTIONAL_DEVELOPER_RELEASE/bin:$LD_LIBRARY_PATH"
+        export FUNCTIONAL_DEVELOPER_USER_SOURCES="$2/sources"
+        export FUNCTIONAL_DEVELOPER_USER_REGISTRIES="$2/sources/registry" ;;
+
+   -rcs) export dylan_compile=$2/bin/basic-powerpc-dw
+         export dylan_compile_options="/save /messages:internal /nocombine /assemble:elf /elf"
+         export build="$2/bin/build"
+         export FUNCTIONAL_DEVELOPER_RELEASE=$2
+         export LD_LIBRARY_PATH=$FUNCTIONAL_DEVELOPER_RELEASE/bin:$LD_LIBRARY_PATH
+         export FUNCTIONAL_DEVELOPER_USER_SOURCES="$2/sources"
+         export FUNCTIONAL_DEVELOPER_USER_REGISTRIES="$2/sources/registry" ;;
+
+     *) echo Invalid command line option -  $option
+        exit ;;
+  esac
+  shift
+  shift
+done
+
+echo Settings...
+printenv | grep FUNCTIONAL_DEVELOPER
+printenv | grep dylan_compile
+printenv | grep LD_LIBRARY_PATH

@@ -1,0 +1,55 @@
+
+# Do:
+#	make -f make-sources
+# to create the Dylan FFI declarations from the Microsoft header files.
+
+# Copyright: 1997 Functional Objects, Inc.  All rights reserved.
+
+
+WINCMNDIR=..\..\win32\win32-common
+WINDLGDIR=..\..\win32\win32-dialog
+COMDIR=..\com
+MSH=..\..\win32\microsoft-headers
+
+GEMA=gema
+
+PATTERNS=$(WINCMNDIR)\patterns.pat
+OLEPAT=$(COMDIR)\ole.pat
+
+DYLAN_FILES=oledlg.dylan library.dylan
+
+all: $(DYLAN_FILES)
+
+
+oledlg.dylan: $(MSH)\oledlg.h $(PATTERNS) $(OLEPAT) \
+		duplicate-slots.pat special.pat make-sources
+	$(GEMA) -f $(PATTERNS) -f $(OLEPAT) \
+		-f $(WINCMNDIR)\modcopyr.pat  -module Ole-Dialogs \
+		-f duplicate-slots.pat -f special.pat \
+		-in $(MSH)\oledlg.h -out $@
+
+# Note: we are not processing "dlgs.h" here because it is already 
+#	handled in the `win32-dialog' library.  It may not be needed anyway.
+
+library.dylan: library.src  $(WINCMNDIR)\include.pat oledlg.exp
+	$(GEMA) -f $(WINCMNDIR)\include.pat library.src $@
+
+# Can't re-export slots that were exported from used libraries.
+duplicate-slots.pat: $(WINDLGDIR)\library.dylan \
+		$(WINCMNDIR)\comlib.dylan $(COMDIR)\library.dylan
+	$(GEMA) -match -idchars '_-$$<>@%&*+=/?' \
+	  -p '<I>-value-setter\I=export-slot\:\\C$$1\=\$$0-value\@end\n;<I>=' \
+	  -out - $(WINCMNDIR)\comlib.dylan $(COMDIR)\library.dylan \
+	  $(WINDLGDIR)\library.dylan | sort -u > $@
+
+
+#    ---------------
+
+# tags for Emacs Meta-.
+
+DTAGS=/u/dylan/tools/gnuemacs/dtags
+
+TAGS: $(DYLAN_FILES) extra.dylan
+	$(DTAGS) $(DYLAN_FILES) extra.dylan
+
+tags: TAGS

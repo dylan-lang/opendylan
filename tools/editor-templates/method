@@ -1,0 +1,13 @@
+method
+// ---*** Will following conflict with "define method"?
+method %e%(Xmethod-nameX)
+    (XnameX :: <XtypeX>,
+     XnameX == XexprX,
+     #next XnameX,
+     #rest XnameX,
+     #key XkeyX: XkeyX = XexprX,
+     #all-keys)
+ => (XnameX,
+     #rest XnameX)
+  XbodyX;
+end method;

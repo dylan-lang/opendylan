@@ -1,0 +1,367 @@
+[
+  uuid (10bab960-1c4d-11d0-a8f4-00aa006b0423),
+  version (1.0),
+  pointer_default(ref)
+]
+interface rnub
+{
+import "nub-core-types.h";
+
+RNUB rnub_create_and_debug_process
+  (handle_t nub,
+   [in] NUBINT command_size,
+   [in] NUBINT arg_size,
+   [in, size_is(command_size)] char *command, 
+   [in, size_is(arg_size)] char *arguments,
+   [in] NUBINT path_count,
+   [in] NUBINT lib_count,
+   [in] NUBINT working_dir_size,
+   [in, size_is(working_dir_size)] char *working_dir, 
+   [in] NUBINT create_shell);
+RNUB rnub_debug_active_process
+  (handle_t nub,
+   [in] NUBINT process_name_length,
+   [in, size_is(process_name_length)] char *process_name,
+   [in] NUBINT process_id_length,
+   [in, size_is(process_id_length)] char *process_id,
+   [in] unsigned long actual_process_id,
+   [in] NUBINT path_count,
+   [in] NUBINT jit_info_size,
+   [in, size_is(jit_info_size)] char *jit_info);
+
+NUBINT rnub_remote_value_byte_size
+  (handle_t nub);
+NUBINT rnub_get_process_page_fault_count 
+  (handle_t nub);
+NUBINT rnub_thread_os_priority 
+  (handle_t nub, [in] RNUBTHREAD nubthread);
+NUBINT rnub_get_thread_cpu_time 
+  (handle_t nub, [in] RNUBTHREAD nubthread);
+
+RTARGET_ADDRESS rnub_get_library_base_address
+  (handle_t nub, [in] RNUBLIBRARY dll);
+void rnub_get_library_version 
+  (handle_t nub, [in] RNUBLIBRARY dll, [out] NUBINT *maj, [out] NUBINT *min);
+NUBINT rnub_get_library_filename_length
+  (handle_t nub, [in] RNUBLIBRARY dll);
+void rnub_get_library_filename
+  (handle_t nub, [in] RNUBLIBRARY dll, [in] NUBINT sz,
+   [in, out, size_is(sz)] char *buf);
+NUBINT rnub_get_library_undecorated_name_length
+  (handle_t nub, [in] RNUBLIBRARY dll);
+void rnub_get_library_undecorated_name
+  (handle_t nub, [in] RNUBLIBRARY dll, [in] NUBINT sz,
+   [in, out, size_is(sz)] char *buf);
+
+NUBINT rnub_get_register_name_length
+  (handle_t nub, [in] NUB_INDEX reg);
+void rnub_get_register_name
+  (handle_t nub, [in] NUB_INDEX reg, [in] NUBINT sz,
+   [in, out, size_is(sz)] char *buf);
+NUBINT rnub_get_register_enumeration_code
+  (handle_t nub,  [in] NUB_INDEX reg);
+void rnub_all_registers
+  (handle_t nub, [out] NUBINT *first, [out] NUBINT *last);
+void rnub_general_registers
+  (handle_t nub, [out] NUBINT *first, [out] NUBINT *last);
+void rnub_special_registers
+  (handle_t nub, [out] NUBINT *first, [out] NUBINT *last);
+void rnub_floating_registers
+  (handle_t nub, [out] NUBINT *first, [out] NUBINT *last);
+
+NUBINT rnub_page_read_permission
+  (handle_t nub, [in] RTARGET_ADDRESS address);
+NUBINT rnub_page_write_permission
+  (handle_t nub, [in] RTARGET_ADDRESS address);
+
+NUBINT rnub_page_relative_address
+  (handle_t nub, [in] RTARGET_ADDRESS address, [out] NUBINT *offset);
+NUBINT rnub_virtual_page_size
+  (handle_t nub);
+
+RTARGET_ADDRESS rnub_read_value_from_process_memory
+   (handle_t nub, [in] RTARGET_ADDRESS address, [out] NUB_ERROR *status);
+void rnub_write_value_to_process_memory
+   (handle_t nub, [in] RTARGET_ADDRESS address, [in] RTARGET_ADDRESS val,
+    [out] NUBINT *status);
+
+RTARGET_ADDRESS rnub_calculate_stack_address
+  (handle_t nub, [in] RNUBTHREAD nubthread, [in] NUBINT offset);
+
+void rnub_target_address_to_string
+  (handle_t nub, [in] RTARGET_ADDRESS x, [in] NUBINT sz,
+   [in, out, size_is(sz)] char *buffer, [in] NUBINT radix, [in] NUBINT pad,
+   [out] NUBINT *truncated);
+RTARGET_ADDRESS rnub_string_to_target_address
+  (handle_t nub, [in] NUBINT sz, [in, size_is(sz)] char *buffer, 
+   [in] NUBINT radix,
+   [out] NUBINT *overflow);
+
+FLOAT rnub_read_single_float_from_process_memory
+  (handle_t nub, [in] RTARGET_ADDRESS address, [out] NUB_ERROR *status);
+void rnub_write_single_float_to_process_memory
+  (handle_t nub, [in] RTARGET_ADDRESS address, [in] FLOAT value,
+   [out] NUB_ERROR *status);
+DOUBLE rnub_read_double_float_from_process_memory
+  (handle_t nub, [in] RTARGET_ADDRESS address, [out] NUB_ERROR *status);
+void rnub_write_double_float_to_process_memory
+  (handle_t nub, [in] RTARGET_ADDRESS address, [in] DOUBLE value,
+   [out] NUB_ERROR *status);
+void rnub_read_byte_string_from_process_memory
+  (handle_t nub, [in] RTARGET_ADDRESS address, [in] NUBINT sz,
+   [out, size_is(sz)] char *buffer, [out] NUB_ERROR *status);
+void rnub_write_byte_string_to_process_memory
+  (handle_t nub, [in] RTARGET_ADDRESS address, [in] NUBINT sz,
+   [in, size_is(sz)] char *buffer, [out] NUB_ERROR *status);
+
+RTARGET_ADDRESS rnub_read_value_from_process_register_in_stack_frame
+  (handle_t nub, [in] RNUBTHREAD nubthread, [in] NUB_INDEX reg,
+   [in] NUB_INDEX frame_index, [out] NUB_ERROR *status);
+
+RTARGET_ADDRESS rnub_read_value_from_process_register
+  (handle_t nub, [in] RNUBTHREAD nubthread, [in] NUB_INDEX reg,
+   [out] NUB_ERROR *status);
+void rnub_write_value_to_process_register
+  (handle_t nub, [in] RNUBTHREAD nubthread, [in] NUB_INDEX reg,
+   [in] RTARGET_ADDRESS value, [out] NUB_ERROR *status);
+FLOAT rnub_read_single_float_from_process_register
+  (handle_t nub, [in] RNUBTHREAD nubthread, [in] NUB_INDEX reg,
+   [out] NUB_ERROR *status);
+void rnub_write_single_float_to_process_register
+  (handle_t nub, [in] RNUBTHREAD nubthread, [in] NUB_INDEX reg,
+   [in] FLOAT value, [out] NUB_ERROR *status);
+DOUBLE rnub_read_double_float_from_process_register
+  (handle_t nub, [in] RNUBTHREAD nubthread, [in] NUB_INDEX reg,
+   [out] NUB_ERROR *status);
+void rnub_write_double_float_to_process_register
+  (handle_t nub, [in] RNUBTHREAD nubthread, [in] NUB_INDEX reg,
+   [in] DOUBLE value, [out] NUB_ERROR *status);
+
+void rnub_application_restart
+  (handle_t nub);
+void rnub_application_stop
+  (handle_t nub);
+void rnub_application_continue
+  (handle_t nub);
+void rnub_application_continue_unhandled
+  (handle_t nub);
+void rnub_application_step
+  (handle_t nub, [in] NUBINT n);
+void rnub_application_step_over
+  (handle_t nub, [in] NUBINT n);
+void rnub_application_step_out
+  (handle_t nub);
+
+NUB_ERROR rnub_set_stepping_control_on_thread
+  (handle_t nub, [in] RNUBTHREAD nubthread,
+   [in] RTARGET_ADDRESS fp, [in] RTARGET_ADDRESS calling_fp,
+   [in] NUBINT location_count, 
+   [in, size_is(location_count)] RTARGET_ADDRESS *locs,
+   [in] NUBINT operation);
+void rnub_clear_stepping_control_on_thread
+  (handle_t nub, [in] RNUBTHREAD nubthread);
+
+void rnub_thread_stop
+  (handle_t nub, [in] RNUBTHREAD nubthread);
+void rnub_thread_continue
+  (handle_t nub, [in] RNUBTHREAD nubthread);
+NUB_ERROR rnub_kill_application
+  (handle_t nub);
+void rnub_close_application
+  (handle_t nub);
+void rnub_close_remote_tether
+  (handle_t nub);
+
+RTARGET_ADDRESS rnub_setup_function_call
+  (handle_t nub, [in] RNUBTHREAD nubthread, [in] RTARGET_ADDRESS func,
+   [in] NUBINT arg_count, [in, size_is(arg_count)] RTARGET_ADDRESS *args,
+   [out] RNUBHANDLE *cx_handle);
+RTARGET_ADDRESS rnub_remote_call_spy
+  (handle_t nub, [in] RNUBTHREAD nubthread, [in] RTARGET_ADDRESS func,
+   [in] NUBINT arg_count, [in, size_is(arg_count)] RTARGET_ADDRESS *args,
+   [out] NUB_ERROR *status);
+RTARGET_ADDRESS rnub_get_function_result
+  (handle_t nub, [in] RNUBTHREAD nubthread);
+void rnub_restore_context
+  (handle_t nub, [in] RNUBTHREAD nubthread, [in] RNUBHANDLE context);
+
+NUB_ERROR rnub_set_breakpoint
+  (handle_t nub, [in] RTARGET_ADDRESS address);
+NUB_ERROR rnub_clear_breakpoint
+  (handle_t nub, [in] RTARGET_ADDRESS address);
+NUBINT rnub_query_breakpoint
+  (handle_t nub, [in] RTARGET_ADDRESS address);
+
+void rnub_wait_for_stop_reason_with_timeout
+  (handle_t nub, [in] NUBINT timeout, [out] NUBINT *code);
+void rnub_profile_wait_for_stop_reason_with_timeout
+  (handle_t nub, [in] NUBINT timeout, [in] NUBINT profiling_interval,
+   [out] NUBINT *code);
+void rnub_inform_profiling_started
+  (handle_t nub);
+void rnub_inform_profiling_stopped
+  (handle_t nub);
+NUBINT rnub_can_receive_first_chance
+  (handle_t nub, [in] NUBINT ecode);
+void rnub_set_first_chance
+  (handle_t nub, [in] NUBINT ecode);
+void rnub_unset_first_chance
+  (handle_t nub, [in] NUBINT ecode);
+NUBINT rnub_thread_stop_information
+  (handle_t nub, [in] RNUBTHREAD nubthread,
+   [out] NUBINT *fchance, [out] NUBINT *fstart,
+   [out] RTARGET_ADDRESS *ret_addr);
+void rnub_wait_for_stop_reason_no_timeout
+  (handle_t nub, [out] NUBINT *ecode);
+void rnub_profile_wait_for_stop_reason_no_timeout
+  (handle_t nub, [in] NUBINT profile_interval, [out] NUBINT *ecode);
+RNUB rnub_stop_reason_process
+  (handle_t nub);
+RNUBTHREAD rnub_stop_reason_thread
+  (handle_t nub);
+NUBINT rnub_first_hard_coded_breakpoint
+  (handle_t nub);
+NUBINT rnub_stop_reason_process_exit_code
+  (handle_t nub);
+NUBINT rnub_stop_reason_thread_exit_code
+  (handle_t nub);
+RNUBLIBRARY rnub_stop_reason_library
+  (handle_t nub);
+NUBINT rnub_stop_reason_violation_op
+  (handle_t nub);
+NUBINT rnub_exception_first_chance
+  (handle_t nub);
+RTARGET_ADDRESS rnub_stop_reason_violation_address
+  (handle_t nub);
+RTARGET_ADDRESS rnub_stop_reason_exception_address
+  (handle_t nub);
+RTARGET_ADDRESS rnub_stop_reason_debug_string_address
+  (handle_t nub);
+NUBINT rnub_stop_reason_debug_string_length
+  (handle_t nub);
+NUBINT rnub_stop_reason_debug_string_is_unicode
+  (handle_t nub);
+
+NUBINT rnub_initialize_stack_vectors
+  (handle_t nub, [in] RNUBTHREAD nubthread);
+void rnub_read_stack_vectors
+  (handle_t nub, [in] RNUBTHREAD nubthread, [in] NUBINT frame_count,
+   [in, out, size_is(frame_count)] RTARGET_ADDRESS *frame_pointers,
+   [in, out, size_is(frame_count)] RTARGET_ADDRESS *instruction_pointers,
+   [in, out, size_is(frame_count)] RTARGET_ADDRESS *return_addresses);
+void rnub_all_frame_lexicals
+  (handle_t nub, [in] RTARGET_ADDRESS frame, [in] RTARGET_ADDRESS ip,
+   [out] NUB_INDEX *first, [out] NUB_INDEX *last,
+   [out] RNUBHANDLE *table);
+void rnub_register_interactive_code_segment
+  (handle_t nub, [in] RTARGET_ADDRESS lo, [in] RTARGET_ADDRESS hi);
+NUBINT rnub_get_lexical_variable_name_length
+  (handle_t nub, [in] RNUBHANDLE table, [in] NUB_INDEX variable);
+void rnub_get_lexical_variable_name
+  (handle_t nub, [in] RNUBHANDLE table, [in] NUB_INDEX variable,
+   [in] NUBINT sz, [in, out, size_is(sz)] char *buffer);
+RTARGET_ADDRESS rnub_lexical_variable_address
+  (handle_t nub, [in] RTARGET_ADDRESS fp,
+   [in] RNUBHANDLE table, [in] NUB_INDEX variable,
+   [out] NUBINT *in_reg, [out] NUB_INDEX *hireg, [out] NUB_INDEX *loreg,
+   [out] NUBINT *arg);
+
+NUBINT rnub_lookup_symbol_name_length
+  (handle_t nub, [in] RNUBHANDLE table, [in] NUB_INDEX sym);
+void rnub_lookup_symbol_name
+  (handle_t nub, [in] RNUBHANDLE table, [in] NUB_INDEX sym,
+   [in] NUBINT sz, [in, out, size_is(sz)] char *buffer);
+RTARGET_ADDRESS rnub_lookup_symbol_address
+  (handle_t nub, [in] RNUBHANDLE table, [in] NUB_INDEX sym);
+RTARGET_ADDRESS rnub_lookup_function_debug_start
+  (handle_t nub, [in] RNUBHANDLE table, [in] NUB_INDEX sym);
+RTARGET_ADDRESS rnub_lookup_function_debug_end
+  (handle_t nub, [in] RNUBHANDLE table, [in] NUB_INDEX sym);
+NUBINT rnub_lookup_symbol_language
+  (handle_t nub, [in] RNUBHANDLE table, [in] NUB_INDEX sym);
+RTARGET_ADDRESS rnub_lookup_function_end
+  (handle_t nub, [in] RNUBHANDLE table, [in] NUB_INDEX sym);
+NUBINT rnub_symbol_is_function
+  (handle_t nub, [in] RNUBHANDLE table, [in] NUB_INDEX sym);
+NUBINT rnub_nearest_symbols
+  (handle_t nub, [in] RTARGET_ADDRESS address,
+   [out] RNUBLIBRARY *lib, [out] RNUBHANDLE *table);
+NUBINT rnub_closest_symbol
+  (handle_t nub, [in] RTARGET_ADDRESS address,
+   [out] RNUBLIBRARY *lib,
+   [out] RTARGET_ADDRESS *actual_address,
+   [out] NUBINT *offset,
+   [out] NUBINT *name_length,
+   [out] NUBINT *type,
+   [out] NUBINT *is_function,
+   [out] RTARGET_ADDRESS *debug_start,
+   [out] RTARGET_ADDRESS *debug_end,
+   [out] NUBINT *language,
+   [out] RTARGET_ADDRESS *final_address_of_definition);
+void rnub_function_bounding_addresses
+  (handle_t nub, [in] RTARGET_ADDRESS address,
+   [out] RTARGET_ADDRESS *lower, [out] RTARGET_ADDRESS *upper);
+void rnub_closest_symbol_name
+  (handle_t nub, [in] NUBINT sz,
+   [in, out, size_is(sz)] char *buffer);
+NUBINT rnub_find_symbol_in_library
+  (handle_t nub, [in] RNUBLIBRARY nublibrary, [in] NUBINT sz,
+   [in, size_is(sz)] char *name, 
+   [out] RTARGET_ADDRESS *address,
+   [out] NUBINT *type,
+   [out] NUBINT *is_function,
+   [out] RTARGET_ADDRESS *debug_start,
+   [out] RTARGET_ADDRESS *debug_end,
+   [out] NUBINT *symbol_language,
+   [out] RTARGET_ADDRESS *final_address_of_definition);
+void rnub_dispose_lookups
+  (handle_t nub, [in] RNUBHANDLE lookups);
+
+RTARGET_ADDRESS rnub_resolve_source_location
+  (handle_t nub, [in] RNUBLIBRARY nublibrary, [in, string] char *filename,
+   [in] NUBINT line_number, [in] NUBINT column_number,
+   [out] NUBINT *valid, [out] NUBINT *path, [out] RNUBHANDLE *search,
+   [out] NUBINT *exact);
+RNUBHANDLE rnub_fetch_source_locations
+  (handle_t nub, 
+   [in] RTARGET_ADDRESS start_loc, [in] RTARGET_ADDRESS end_loc);
+NUBINT rnub_source_location_address
+  (handle_t nub, [in] RNUBHANDLE table, [in] NUB_INDEX index);
+NUBINT rnub_source_location_linenumber
+  (handle_t nub, [in] RNUBHANDLE table, [in] NUB_INDEX index);
+NUBINT rnub_source_location_filename_length
+  (handle_t nub, [in] RNUBHANDLE table);
+void rnub_source_location_filename
+  (handle_t nub, [in] RNUBHANDLE table,
+   [in] NUBINT sz,
+   [in, out, size_is(sz)] char *buffer);
+NUBINT rnub_number_of_source_locations
+  (handle_t nub, [in] RNUBHANDLE table);
+void rnub_dispose_source_locations
+  (handle_t nub, [in] RNUBHANDLE table);
+
+void rnub_interpret_instruction_at_current_location
+  (handle_t nub, [in] RNUBTHREAD nubthread,
+   [out] NUBINT *flow, [out] RTARGET_ADDRESS *destination,
+   [out] NUBINT *instruction_size);
+
+RTARGET_ADDRESS rnub_dylan_calculate_step_into
+  (handle_t nub, [in] RNUBTHREAD nubthread,
+   [out] NUBINT *function_register_live, [out] NUBINT *ok);
+RTARGET_ADDRESS rnub_dylan_thread_environment_block_address
+  (handle_t nub, [in] RNUBTHREAD thread, [out] NUBINT *valid);
+NUBINT rnub_dylan_thread_mv_buffer_live
+  (handle_t nub, [in] RNUBTHREAD thread);
+NUBINT rnub_older_stack_frame
+  (handle_t nub,
+   [in] RTARGET_ADDRESS this_one, [in] RTARGET_ADDRESS than_this_one);
+RTARGET_ADDRESS rnub_dylan_current_function
+  (handle_t nub, [in] RNUBTHREAD nubthread);
+
+NUBINT rnub_perform_absolute_relocation
+  (handle_t nub, 
+   [in] RTARGET_ADDRESS address, [in] RTARGET_ADDRESS destination);
+NUBINT rnub_perform_relative_relocation
+  (handle_t nub, 
+   [in] RTARGET_ADDRESS address, [in] RTARGET_ADDRESS destination);
+}

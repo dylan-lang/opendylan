@@ -1,0 +1,3 @@
+TASKBAROK      ICON DISCARDABLE "taskbar-ok.ico"
+TASKBARWARNING ICON DISCARDABLE "taskbar-warning.ico"
+TASKBARERROR   ICON DISCARDABLE "taskbar-error.ico"

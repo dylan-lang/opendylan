@@ -1,0 +1,4 @@
+This directory contains an XML parser that is built on top of both
+Expat and DOM.  The main exported interfaces are 'parse-XML-from-stream'
+and 'print-XML-to-stream'.
+

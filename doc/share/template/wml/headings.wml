@@ -1,0 +1,630 @@
+#-----------------------------------------------------------------------
+# WebMaker, a FrameMaker to WWW converter
+# 
+# Copyright (C) 1995 by The Harlequin Group Limited
+#-----------------------------------------------------------------------
+
+#-----------------------------------------------------------------------
+#
+# Contains definition of:
+#
+#
+#     External table of contents and index Node triggering heading
+#     rules. To use any of these rules use EITHER of the TI node
+#     library wml files:  nodesTI.wml OR nodesBTI.wml.
+#
+#          PARAGRAPH      ExtTOCHeading-TocNode
+#          PARAGRAPH      IndexHeadingS-IndexNodeS
+#          PARAGRAPH      IndexHeadingL-IndexNodeL
+#          PARAGRAPH      IndexHeadingN-IndexNodeN
+#          PARAGRAPH      IndexHeading-IndexNode
+#
+#     Node triggering heading rules. To use any of these rules use
+#     ONE of the node library wml files: nodes.wml, notesTI.wml,
+#     nodesB.wml OR nodesBTI.wml.
+#
+#          PARAGRAPH      L1H1HR-NodeTop
+#          PARAGRAPH      L1H1-NodeTop
+#          PARAGRAPH      L2H1HR-NodeLower
+#          PARAGRAPH      L2H1-NodeLower
+#          PARAGRAPH      L2H2-NodeLower
+#          PARAGRAPH      L3H1HR-NodeLower
+#          PARAGRAPH      L3H1-NodeLower
+#          PARAGRAPH      L3H2-NodeLower
+#          PARAGRAPH      L3H3-NodeLower
+#          PARAGRAPH      L4H1HR-NodeLower
+#          PARAGRAPH      L4H1-NodeLower
+#          PARAGRAPH      L4H2-NodeLower
+#          PARAGRAPH      L4H3-NodeLower
+#          PARAGRAPH      L4H4-NodeLower
+#
+#     Heading rules:
+#
+#          PARAGRAPH      L1H1
+#          PARAGRAPH      L1H1HR
+#          PARAGRAPH      L2H1
+#          PARAGRAPH      L2H1HR
+#          PARAGRAPH      L2H2
+#          PARAGRAPH      L2H2HR
+#          PARAGRAPH      L3H1
+#          PARAGRAPH      L3H1HR
+#          PARAGRAPH      L3H2
+#          PARAGRAPH      L3H2HR
+#          PARAGRAPH      L3H3
+#          PARAGRAPH      L3H3HR
+#          PARAGRAPH      L4H1
+#          PARAGRAPH      L4H1HR
+#          PARAGRAPH      L4H2
+#          PARAGRAPH      L4H2HR
+#          PARAGRAPH      L4H3
+#          PARAGRAPH      L4H3HR
+#          PARAGRAPH      L4H4
+#          PARAGRAPH      L4H4HR
+
+
+#---------------------------------------------------------------------
+#
+# External table of contents and index node-triggering heading
+# rules. To use any of these rules use EITHER of the TI node
+# library wml files:  nodesTI.wml OR nodesBTI.wml.
+#
+#---------------------------------------------------------------------
+
+# Level 1 in the hierarchy.
+# Heading 1 display size.
+# HR horizontal rule.
+# External table of contents node. This rule should be used only once
+# for a document or book to produce a table of contents node. A tag
+# mapped to this rule, such as WWW-TOC, should appear only once in the
+# FrameMaker document or book.
+# Include nodesTI.wml or nodesBTI.wml from the library to create a table
+# of contents.
+PARAGRAPH "ExtTOCHeading-TocNode" TYPE Heading
+{
+  LEVEL 1
+  FILENAMEKEY TOC
+  NEWNODE TOCNode
+  ACTIONS
+  {
+    write(*,heading(1,text()));
+    write(*,hrule());
+  }
+}
+
+# Level 1 in the hierarchy.
+# Heading 1 display size.
+# Index node, simple. Index entries are sorted alphabetically and
+# displayed without headers dividing the entries into sections.
+# Only one index rule should be used for a document or book to produce
+# an index node or nodes. A tag mapped to this rule, such as WWW-IX,
+# should appear only once in the FrameMaker document or book.
+# Include nodesTI.wml or nodesBTI.wml from the library to create an
+# index.
+PARAGRAPH "IndexHeadingS-IndexNodeS" TYPE Heading
+{
+  LEVEL 1
+  FILENAMEKEY INDEX
+  NEWNODE IndexNodeS
+  ACTIONS
+  {
+    write(*,heading(1,text()));
+    write(*,hrule());
+  }
+}
+
+# Level 1 in the hierarchy.
+# Heading 1 display size.
+# Index node, letter. Index entries are sorted alphabetically and
+# displayed with headers dividing the entries into sections for each
+# letter.
+# Only one index rule should be used for a document or book to produce
+# an index node or nodes. A tag mapped to this rule, such as WWW-IX,
+# should appear only once in the FrameMaker document or book.
+# Include nodesTI.wml or nodesBTI.wml from the library to create an
+# index.
+PARAGRAPH "IndexHeadingL-IndexNodeL" TYPE Heading
+{
+  LEVEL 1
+  FILENAMEKEY INDEX
+  NEWNODE IndexNodeL
+  ACTIONS
+  {
+    write(*,heading(1,text()));
+    write(*,hrule());
+  }
+}
+
+# Level 1 in the hierarchy.
+# Heading 1 display size.
+# Index node, multiple nodes. Index entries are sorted alphabetically
+# and displayed with a separate node for each letter section.
+# Only one index rule should be used for a document or book to produce
+# an index node or nodes. A tag mapped to this rule, such as WWW-IX,
+# should appear only once in the FrameMaker document or book.
+# Include nodesTI.wml or nodesBTI.wml from the library to create an
+# index.
+PARAGRAPH "IndexHeadingN-IndexNodeN" TYPE Heading
+{
+  LEVEL 1
+  FILENAMEKEY INDEX
+  NEWNODE IndexNodeN
+  ACTIONS
+  {
+    write(*,heading(1,text()));
+    write(*,hrule());
+  }
+}
+
+# Level 1 in the hierarchy.
+# Heading 1 display size.
+# Index node, letter. Index entries are sorted alphabetically and
+# displayed with headers dividing the entries into sections for each
+# letter.
+# Identical to IndexHeadingL-IndexNodeL; provided for compatibility.
+# Only one index rule should be used for a document or book to produce
+# an index node or nodes. A tag mapped to this rule, such as WWW-IX,
+# should appear only once in the FrameMaker document or book.
+# Include nodesTI.wml or nodesBTI.wml from the library to create an
+# index.
+PARAGRAPH "IndexHeading-IndexNode" TYPE Heading
+{
+  LEVEL 1
+  FILENAMEKEY INDEX
+  NEWNODE IndexNode
+  ACTIONS
+  {
+    write(*,heading(1,text()));
+    write(*,hrule());
+  }
+}
+
+#------------------------------------------------------------------------
+#
+# Node triggering headings. May be used with any of  the node packages
+# nodes.wml, nodesTI.wml, nodesB.wml or nodesBTI.wml.
+#
+
+# Level 1 in the hierarchy.
+# Heading 1 display size.
+# HR horizontal rule.
+# Top level node with navigation to next, previous, and top. 
+PARAGRAPH "L1H1HR-NodeTop" TYPE Heading
+{
+  LEVEL 1
+  NEWNODE LevelOne
+  ACTIONS
+  {
+    write(*,heading(1,concatenate(number()," ",text())));
+    write(*,hrule());
+  }
+}
+
+# Level 1 in the hierarchy.
+# Heading 1 display size.
+# Top level node with navigation to next, previous, and top. 
+PARAGRAPH "L1H1-NodeTop" TYPE Heading
+{
+  LEVEL 1
+  NEWNODE LevelOne
+  ACTIONS
+  {
+    write(*,heading(1,concatenate(number()," ",text())));
+  }
+}
+
+# Level 2 in the hierarchy.
+# Heading 1 display size.
+# HR horizontal rule.
+# Lower level node with navigation to next, previous, top, and up. 
+PARAGRAPH "L2H1HR-NodeLower" TYPE Heading
+{
+  LEVEL 2
+  NEWNODE LevelTwo
+  ACTIONS
+  {
+    write(*,heading(1,concatenate(number()," ",text())));
+    write(*,hrule());
+  }
+}
+
+# Level 2 in the hierarchy.
+# Heading 1 display size.
+# Lower level node with navigation to next, previous, top, and up. 
+PARAGRAPH "L2H1-NodeLower" TYPE Heading
+{
+  LEVEL 2
+  NEWNODE LevelTwo
+  ACTIONS
+  {
+    write(*,heading(1,concatenate(number()," ",text())));
+  }
+}
+
+# Level 2 in the hierarchy.
+# Heading 2 display size.
+# Lower level node with navigation to next, previous, top, and up. 
+PARAGRAPH "L2H2-NodeLower" TYPE Heading
+{
+  LEVEL 2
+  NEWNODE LevelTwo
+  ACTIONS
+  {
+    write(*,heading(2,concatenate(number()," ",text())));
+  }
+}
+
+# Level 3 in the hierarchy.
+# Heading 1 display size.
+# HR horizontal rule.
+# Lower level node with navigation to next, previous, top, and up. 
+PARAGRAPH "L3H1HR-NodeLower" TYPE Heading
+{
+  LEVEL 3
+  NEWNODE LevelTwo
+  ACTIONS
+  {
+    write(*,heading(1,concatenate(number()," ",text())));
+    write(*,hrule());
+  }
+}
+
+# Level 3 in the hierarchy.
+# Heading 1 display size.
+# Lower level node with navigation to next, previous, top, and up. 
+PARAGRAPH "L3H1-NodeLower" TYPE Heading
+{
+  LEVEL 3
+  NEWNODE LevelTwo
+  ACTIONS
+  {
+    write(*,heading(1,concatenate(number()," ",text())));
+  }
+}
+
+# Level 3 in the hierarchy.
+# Heading 2 display size.
+# Lower level node with navigation to next, previous, top, and up. 
+PARAGRAPH "L3H2-NodeLower" TYPE Heading
+{
+  LEVEL 3
+  NEWNODE LevelTwo
+  ACTIONS
+  {
+    write(*,heading(2,concatenate(number()," ",text())));
+  }
+}
+
+# Level 3 in the hierarchy.
+# Heading 3 display size.
+# Lower level node with navigation to next, previous, top, and up. 
+PARAGRAPH "L3H3-NodeLower" TYPE Heading
+{
+  LEVEL 3
+  NEWNODE LevelTwo
+  ACTIONS
+  {
+    write(*,heading(3,concatenate(number()," ",text())));
+  }
+}
+
+# Level 4 in the hierarchy.
+# Heading 1 display size.
+# HR horizontal rule.
+# Lower level node with navigation to next, previous, top, and up. 
+PARAGRAPH "L4H1HR-NodeLower" TYPE Heading
+{
+  LEVEL 4
+  NEWNODE LevelTwo
+  ACTIONS
+  {
+    write(*,heading(1,concatenate(number()," ",text())));
+    write(*,hrule());
+  }
+}
+
+# Level 4 in the hierarchy.
+# Heading 1 display size.
+# Lower level node with navigation to next, previous, top, and up. 
+PARAGRAPH "L4H1-NodeLower" TYPE Heading
+{
+  LEVEL 4
+  NEWNODE LevelTwo
+  ACTIONS
+  {
+    write(*,heading(1,concatenate(number()," ",text())));
+  }
+}
+
+# Level 4 in the hierarchy.
+# Heading 2 display size.
+# Lower level node with navigation to next, previous, top, and up. 
+PARAGRAPH "L4H2-NodeLower" TYPE Heading
+{
+  LEVEL 4
+  NEWNODE LevelTwo
+  ACTIONS
+  {
+    write(*,heading(2,concatenate(number()," ",text())));
+  }
+}
+
+# Level 4 in the hierarchy.
+# Heading 3 display size.
+# Lower level node with navigation to next, previous, top, and up. 
+PARAGRAPH "L4H3-NodeLower" TYPE Heading
+{
+  LEVEL 4
+  NEWNODE LevelTwo
+  ACTIONS
+  {
+    write(*,heading(3,concatenate(number()," ",text())));
+  }
+}
+
+# Level 4 in the hierarchy.
+# Heading 4 display size.
+# Lower level node with navigation to next, previous, top, and up. 
+PARAGRAPH "L4H4-NodeLower" TYPE Heading
+{
+  LEVEL 4
+  NEWNODE LevelTwo
+  ACTIONS
+  {
+    write(*,heading(4,concatenate(number()," ",text())));
+  }
+}
+
+
+#---------------------------------------------------------------------
+#
+# Headings of Level 1 that do not trigger a node 
+#
+
+# Level 1 in the hierarchy.
+# Heading 1 display size.
+PARAGRAPH "L1H1" TYPE Heading
+{
+  LEVEL 1
+  ACTIONS
+  {
+    write(*,heading(1,concatenate(number()," ",text())));
+  }
+}
+
+# Level 1 in the hierarchy.
+# Heading 1 display size.
+# HR horizontal rule.
+PARAGRAPH "L1H1HR" TYPE Heading
+{
+  LEVEL 1
+  ACTIONS
+  {
+    write(*,heading(1,concatenate(number()," ",text())));
+    write(*,hrule());
+  }
+}
+
+
+#---------------------------------------------------------------------
+#
+# Headings of Level 2 that do not trigger a node
+#
+
+# Level 2 in the hierarchy.
+# Heading 1 display size.
+PARAGRAPH "L2H1" TYPE Heading
+{
+  LEVEL 2
+  ACTIONS
+  {
+    write(*,heading(1,concatenate(number()," ",text())));
+  }
+}
+
+# Level 2 in the hierarchy.
+# Heading 1 display size.
+# HR horizontal rule.
+PARAGRAPH "L2H1HR" TYPE Heading
+{
+  LEVEL 2  ACTIONS
+  {
+    write(*,heading(1,concatenate(number()," ",text())));
+    write(*,hrule());
+  }
+}
+
+# Level 2 in the hierarchy.
+# Heading 2 display size.
+PARAGRAPH "L2H2" TYPE Heading
+{
+  LEVEL 2
+  ACTIONS
+  {
+    write(*,heading(2,concatenate(number()," ",text())));
+  }
+}
+
+# Level 2 in the hierarchy.
+# Heading 2 display size.
+# HR horizontal rule.
+PARAGRAPH "L2H2HR" TYPE Heading
+{
+  LEVEL 2
+  ACTIONS
+  {
+    write(*,heading(2,concatenate(number()," ",text())));
+    write(*,hrule());
+  }
+}
+
+#---------------------------------------------------------------------
+#
+# Headings of Level 3 that do not trigger a node
+#
+
+# Level 3 in the hierarchy.
+# Heading 1 display size.
+PARAGRAPH "L3H1" TYPE Heading
+{
+  LEVEL 3
+  ACTIONS
+  {
+    write(*,heading(1,concatenate(number()," ",text())));
+  }
+}
+
+# Level 3 in the hierarchy.
+# Heading 1 display size.
+# HR horizontal rule.
+PARAGRAPH "L3H1HR" TYPE Heading
+{
+  LEVEL 3  ACTIONS
+  {
+    write(*,heading(1,concatenate(number()," ",text())));
+    write(*,hrule());
+  }
+}
+
+# Level 3 in the hierarchy.
+# Heading 2 display size.
+PARAGRAPH "L3H2" TYPE Heading
+{
+  LEVEL 3
+  ACTIONS
+  {
+    write(*,heading(2,concatenate(number()," ",text())));
+  }
+}
+
+# Level 3 in the hierarchy.
+# Heading 2 display size.
+# HR horizontal rule.
+PARAGRAPH "L3H2HR" TYPE Heading
+{
+  LEVEL 3  ACTIONS
+  {
+    write(*,heading(2,concatenate(number()," ",text())));
+    write(*,hrule());
+  }
+}
+
+# Level 3 in the hierarchy.
+# Heading 3 display size.
+PARAGRAPH "L3H3" TYPE Heading
+{
+  LEVEL 3
+  ACTIONS
+  {
+    write(*,heading(3,concatenate(number()," ",text())));
+  }
+}
+
+# Level 3 in the hierarchy.
+# Heading 3 display size.
+# HR horizontal rule.
+PARAGRAPH "L3H3HR" TYPE Heading
+{
+  LEVEL 3  ACTIONS
+  {
+    write(*,heading(3,concatenate(number()," ",text())));
+    write(*,hrule());
+  }
+}
+
+
+#---------------------------------------------------------------------
+#
+# Headings of Level 4 that do not trigger a node
+#
+
+# Level 4 in the hierarchy.
+# Heading 1 display size.
+PARAGRAPH "L4H1" TYPE Heading
+{
+  LEVEL 4
+  ACTIONS
+  {
+    write(*,heading(1,concatenate(number()," ",text())));
+  }
+}
+
+# Level 4 in the hierarchy.
+# Heading 1 display size.
+# HR horizontal rule.
+PARAGRAPH "L4H1HR" TYPE Heading
+{
+  LEVEL 4  ACTIONS
+  {
+    write(*,heading(1,concatenate(number()," ",text())));
+    write(*,hrule());
+  }
+}
+
+# Level 4 in the hierarchy.
+# Heading 2 display size.
+PARAGRAPH "L4H2" TYPE Heading
+{
+  LEVEL 4
+  ACTIONS
+  {
+    write(*,heading(2,concatenate(number()," ",text())));
+  }
+}
+
+# Level 4 in the hierarchy.
+# Heading 2 display size.
+# HR horizontal rule.
+PARAGRAPH "L4H2HR" TYPE Heading
+{
+  LEVEL 4  ACTIONS
+  {
+    write(*,heading(2,concatenate(number()," ",text())));
+    write(*,hrule());
+  }
+}
+
+# Level 4 in the hierarchy.
+# Heading 3 display size.
+PARAGRAPH "L4H3" TYPE Heading
+{
+  LEVEL 4
+  ACTIONS
+  {
+    write(*,heading(3,concatenate(number()," ",text())));
+  }
+}
+
+# Level 4 in the hierarchy.
+# Heading 3 display size.
+# HR horizontal rule.
+PARAGRAPH "L4H3HR" TYPE Heading
+{
+  LEVEL 4  ACTIONS
+  {
+    write(*,heading(3,concatenate(number()," ",text())));
+    write(*,hrule());
+  }
+}
+
+# Level 4 in the hierarchy.
+# Heading 4 display size.
+PARAGRAPH "L4H4" TYPE Heading
+{
+  LEVEL 4
+  ACTIONS
+  {
+    write(*,heading(4,concatenate(number()," ",text())));
+  }
+}
+
+# Level 4 in the hierarchy.
+# Heading 4 display size.
+# HR horizontal rule.
+PARAGRAPH "L4H4HR" TYPE Heading
+{
+  LEVEL 4  ACTIONS
+  {
+    write(*,heading(4,concatenate(number()," ",text())));
+    write(*,hrule());
+  }
+}

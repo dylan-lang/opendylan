@@ -1,0 +1,58 @@
+// Author:    Keith Dennison
+// Copyright: Copyright 1998, Functional Objects, Inc.  All rights reserved.
+// Version:   $HopeName: D-corba-tests-idl!pseudo-objects.idl(trunk.2) $
+
+#ifdef ORBIXWEB
+#include <orb.idl>
+#endif
+
+interface TestObjectA {
+  attribute long id;
+  attribute string ior;
+  void destroy ();
+};
+
+interface TestObjectX {
+};
+
+interface TestObjectB : TestObjectA{
+};
+
+interface TestObjectC : TestObjectA, TestObjectX {
+};
+
+interface TestObjectD : TestObjectB, TestObjectC {
+};
+
+
+interface PseudoObjectsTest {
+
+  TestObjectX TestObjectX_factory (in long id);
+  TestObjectA TestObjectA_factory (in long id);
+  TestObjectB TestObjectB_factory (in long id);
+  TestObjectC TestObjectC_factory (in long id);
+  TestObjectD TestObjectD_factory (in long id);
+
+  TestObjectX TestObjectX_nil_factory ();
+
+  Object identity (in Object x);
+
+//  attribute NamedValue namedvalue_attribute;
+  attribute Object object_attribute;
+//  attribute Principal principal_attribute;
+  attribute TypeCode typecode_attribute;
+
+  exception failure {
+  };
+
+//  void check_namedvalue_attribute () raises (failure);
+  void check_object_attribute (in string ior) raises (failure);
+//  void check_principal_attribute () raises (failure);
+  void check_typecode_attribute () raises (failure);
+
+//  NamedValue namedvalue_operation (in NamedValue one, inout NamedValue two, out NamedValue three);
+  Object object_operation (in Object one, inout Object two, out Object three);
+//  Principal principal_operation (in Principal one, inout Principal two, out Principal three);
+  TypeCode typecode_operation (in TypeCode one, inout TypeCode two, out TypeCode three);
+
+};

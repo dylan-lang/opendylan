@@ -1,0 +1,124 @@
+#!/usr/local/bin/bash
+#      Script: build-env
+#      Author: Shri Amit(amit)
+usage=" Usage: $0 -i <Image> -r <Root> -t <Target> -m <Usernames> -l <LogFile> -ne"
+# Opts & Flgs: -i: Source image, default: lw+dylan-$platform
+#              -r: Source root, default: /u/dylan
+#              -t: Target image, default: lw+dylan+env-$platform.$suffix
+#              -l: Logfile, default: build-env-log-$host-$platform.$suffix
+#              -m: Sends mail upon completion. (eg: -m foo,bar,foobar)
+#              -e: Flag, sends mail to usernames ONLY if an error occurs
+#              -n: Flag, disables testing of image, default: enabled
+#    Synopsis: . Loads the env libraries into <Image>, save to <Target>. 
+#              . If -m option has arg(s), sends mail upon completion.
+#              . If -e flag is enabled, sends mail only upon error
+#              . Restores link in $localdir,deletes old images,logs
+###################################################################
+## Application exit status legend ##
+##  0: Build successful
+##  1: Invalid command line argument
+##  2: The build exited abnormally from within lispworks
+##  3: The image test failed
+
+## Parse the options & flags on the command line ##
+while getopts i:r:t:m:l:ne option
+do case $option in
+     i) image=$OPTARG;;
+     r) root=$OPTARG;;
+     t) target=$OPTARG;;
+     m) usernames=$OPTARG;;
+     l) logfile=$OPTARG;;
+     e) error_only=Yes;;
+     n) test_image=No;;
+    \?) echo $usage
+        exit 1;;
+   esac
+done
+shift `expr $OPTIND - 1`
+
+source /u/dylan/tools/admin/env.bash
+
+## Assign defaults to options & flags ##
+##
+image=${image:-$localdir/lw+dylan-$platform}
+root=${root:-$dylandir}
+target=${target:-$localdir/lw+dylan+env-$platform.$suffix}
+logfile=${logfile:-$logsdir/build-env-log-$host-$platform.$suffix}
+usernames=${usernames:-unspecified}
+error_only=${error_only:-No}
+test_image=${test_image:-Yes}
+
+## Export this variable to ensure new registry libs get read ##
+## from the correct root sources                             ##
+##
+TRUNK_SYSTEM_ROOT="$root/"; export $TRUNK_SYSTEM_ROOT
+
+## Everything from here goes to the logfile ##
+## Prompt the options                       ##
+##
+{
+    echo "Starting at: `date`"
+    echo "Running $0 with options:"
+    echo "             The root is: $TRUNK_SYSTEM_ROOT"
+    echo "     The source image is: $image"
+    echo "     The target image is: $target"
+    echo "            Send mail to: $usernames"
+    echo "Send mail on error only?: $error_only"
+    echo "         Test the image?: $test_image"
+    echo "          The logfile is: $logfile"
+    echo
+
+
+## Build the image ##
+##
+$image -init - <<SCRIPT
+(load "$admindir/load-env.lisp")
+(format t "~&Saving environment image in ~a~%" "$target")
+(user::save-emulator-image "$target")
+(bye)
+SCRIPT
+    status=$?
+    echo "Ending at: `date`"
+    subject="Report for environment build on $host-$platform"
+    if [ "$status" != 0 ]; then
+	message="The env build exited with an exit status $status"
+	case $usernames in
+	   unspecified) echo $message;;
+	   *) send-mail "$message" "$usernames" "$logfile" "$subject" ;;
+	esac
+	exit 2;
+    else
+	echo The environment build completed successfully.
+	if [ "$test_image" = "Yes" ]; then
+	    echo Testing the image now...
+	    $qadir/admin/compile-in-emulator -i $target -l duim-test-suite -c 'perform-suite(duim-suite)'
+	    teststatus=$?
+	    if [ $teststatus != 0 ]; then
+		message="The env test exited with an exit status $status"
+		case $usernames in
+		    unspecified) echo $message;;
+		    *) send-mail "$message" "$usernames" "$logfile" "$subject" ;;
+		esac
+		exit 3;
+	    fi
+        else
+	    echo Skipping the image test
+	fi
+	message="The env build completed successfully"
+	if [ "$usernames" != "unspecified" -a "$error_only" = "No" ]; then
+	    send-mail "$message" "$usernames" "$logfile" "$subject"
+	else
+	    echo $message
+	fi
+	if test -f $target; then
+	    $admindir/remove-old-files $localdir/lw+dylan+env-$platform $imagestokeep
+	    rm -f $localdir/lw+dylan+env-$platform
+	    ln -s $localdir/lw+dylan+env-$platform.$suffix $localdir/lw+dylan+env-$platform
+	    $admindir/remove-old-files $logsdir/build-env-log-$host-$platform $logstokeep
+        fi
+    fi
+
+} 2>&1 | tee $logfile
+
+exit 0
+#eof

@@ -1,0 +1,45 @@
+<HTML>
+
+<HEAD>
+	<TITLE>Windows FFI Example Project</TITLE>
+	<LINK REL="stylesheet" TYPE="text/css" HREF="../../examples.css">
+</HEAD>
+
+<BODY>
+
+<H2>Windows FFI Example Project</H2>
+
+<HR ALIGN="CENTER">
+
+<P>This project contains a simple example program that
+demonstrates how a Microsoft Windows application can be written
+in Dylan by using the Dylan libraries that provide a Foreign
+Function Interface to the Windows API.
+
+<P>Note that because this example contains resources it requires
+the Windows resource compiler, rc.exe and associated files, in
+order to compile successfully.  The resource compiler is
+available for download from the Microsoft website as part of the
+"Microsoft Platform SDK build environment".  At the time of this
+writing the URL is <a href="http://msdn.microsoft.com/developer/sdk/sdktools.asp">
+http://msdn.microsoft.com/developer/sdk/sdktools.asp</a>.</P>
+
+<P>The entire program is in the file "example.dylan", but it also
+uses a few additional files for defining resources used.  The
+program simply displays a window that includes examples of
+drawing text, shapes, and lines, and has a menu bar from which an
+"About" box can be displayed from the "Help" menu and the program
+can be exited from the "File" menu. While the program doesn't do
+much, it does illustrate the essential structure of a Windows
+program and should be useful as a starting point for writing real
+applications.</P>
+
+<P>Note that many of the menu items are not intended to work; they are
+just there for illustrative purposes.  In particular, the "Contents"
+and "Search for Help On..." menu items invoke the standard Windows
+Help facility (WinHelp) to look for a file called EXAMPLE.HLP which
+is not provided with the example.</P>
+
+</BODY>
+
+</HTML>

@@ -1,0 +1,104 @@
+; -*- outline -*-
+
+* Intro to OLE Automation in HD, Part 1
+
+
+** [1h] Presentatiom
+
+o  What is OLE Automation?
+  o  Client("controller")/server model, communicating via interfaces
+    o  Separate or same processes, usually on the same machine
+    o  No transparency of location as in CORBA, to my knowledge
+  o  Will discuss mainly client side, for CaseCall, server detail later
+  o  There's locale provision but it's simple so I won't detail it here.
+  o  We provide higher-level API for most-used stuff, but also low-
+     level access via C-FFI.  I won't cover the latter here.
+
+o  Main components of the model
+  o  Type library describes the server's interfaces
+  o  Servers are represented as CoClasses, acessed by CLSID (/RegServer)
+  o  Servers provide 1 or more (dispatch) interfaces, accessed by IID
+  o  Interfaces have properties and (dispatch) methods, accessed by DISPID
+  o  All these IDs are GUIDs/UUIDs, which are unique 128-bit numbers.
+
+o  Using a CoClass
+  o  Startup and cleanup (OLE-Automation and per-class)
+  o  CREATE-DISPATCH, returning the default interface
+     o  Multiple calls may get different interface instances for same
+        CLSID, depending on the server implementation.
+
+o  Using Interfaces
+  o  Accessing alternate interfaces (QueryInterface)
+  o  Release (for *all* interfaces)
+
+o  Using properties and methods
+  o  Access via DISPID, implicitly (simple, for single accesses)
+     or expicitly (more efficient for multiple-access)
+  o  Properties are read, write or both.  Can have genuine constants.
+  o  Methods take several arguments and return 0 or 1 values.
+  o  Methods can also take named (like Dylan #key) and variable (#rest)
+     args but we don't support that at a high level, so I'll skip that!
+  o  Can only access from thread where dispinterface was obtained!
+    o  BUG?  COM error if you don't initialize OLE per-thread, yet our
+       implementation keeps a thread-global count of calls to OLE-Iniitalize
+       so that it only works for the first thread which calls it!
+
+o  Datatypes
+   o  Online doc sections 4.8, 4.6.5
+
+o  Error handling
+   o  Extra result value
+   o  At a higher level, conditions are signalled
+
+o  Memory management
+   o  Don't forget to Release things
+   o  Normally have to destroy <BSTR>s and <ole-array>s passed back to you
+
+o  Servers
+   o  More dispinfo, more work needed on implementation
+   o  Define methods; have to copy arguments if you want to retain them
+   o  Class factory and coclass-type-info
+   o  Registration
+   o  In-process servers
+
+o  Remote Automation
+  o  Can be done purely at the OS/installer level, by upgrading some
+     Windows system DLLs and setting up a Remote Automation Manager app --
+     see MSDN library.
+
+
+** [2h] Practical
+
+o  Extend ODBC+DUIM example to have DB in server (provided by me)
+  o  Task is to hook up the existing DUIM code to an OLEAut client, whose
+     interface you have to write (given an English description -- I'll
+     check the result).  Pass the database-data as an opaque <sequence>.
+    o  1: Write Client-side (starting from Select Viewer example from the
+       ODBC topic, and given the "select-viewer-server" project pre-
+       compiled):
+       remove file "sql-odbc-back-end.dylan", add CLSID and global variable
+       to point to server; setup and shutdown OLE in thread you will use for
+       later OLE work (limitation due to bug); replace calls to DB functions
+       with "call-simple-method"; fix import conflicts; note that you can
+       only access the interface in the same thread in which you acquired it
+       -- use created/destroyed events, and only one viewer, or have
+       separate "query" thread.  [Note: In 1.1, the main thread always calls
+       OLE-Initialize (during initialization of the OLE-AUTOMATION library),
+       so you have to make that your query thread.]
+    o  2: Rewrite server-side (starting from OLE Automation server example
+       included with Harlequin Dylan):
+       get a new CLSID by running create-id; replace <disp-type-info> and
+       COM-interface with a dispatch-interface; rename the window class
+       and server registration info; fiddle the argument and return types
+       to match Automation limits (use <sequence> for structures) --
+       remember to add "this" as first arg and return status as first
+       result; use <string>, not <byte-string>, as you'll get <BSTR>s --
+       coerce internally if required.
+      o  Play with REGCLS-SINGLEUSE vs. REGCLS-MULTIPLEUSE
+  o  Extra 1: Write a DESTROY-RECURSIVELY function to DESTROY "(vectors
+     of)^n things which may or may not need to be DESTROYed".
+  o  Extra 2: Make the <database-data> class into a separate interface
+     (of the same CoClass), and rewrite other methods etc. to match.
+  o  Extra 3: Make database name settable in the above class, and rewrite
+     the client to take advantage of this.
+

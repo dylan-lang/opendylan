@@ -1,0 +1,27 @@
+;;;
+;;; HOW TO BUILD "PARSER.DYLAN" and PARSER-EMULATOR.DYLAN" FROM "PARSER.INPUT"
+;;;
+;;; The files "parser.dylan" and "parser-emulator.dylan" are built
+;;; manually from "parser.input" as follows. 
+;;; (Modify the directories when doing this in your own private sandbox.)
+
+;;; Compile and load "~dylan/sources/dfmc/reader/parsergen.lisp" into emulator:
+
+(compile-file "<main-sources>/sources/dfmc/reader/parsergen"
+              :output-file "<sandbox>/sources/lib/scepter/front-end/"
+              :load t)
+
+;;; Then compile the grammar file into prefix Dylan:
+
+(parsergen::compile-grammar-file-for-emulator
+  "<sandbox>/sources/lib/scepter/front-end/parser.input"
+  "<sandbox>/sources/lib/scepter/front-end/parser-emulator.dylan")
+
+(parsergen::compile-grammar-file-for-native
+  "<sandbox>/sources/lib/scepter/front-end/parser.input"
+  "<sandbox>/sources/lib/scepter/front-end/parser.dylan")
+
+;;; The output of this parser generator is Dylan code that is controlled
+;;; by the library "parser-runtime" which is also used by the DFMC compiler.
+
+

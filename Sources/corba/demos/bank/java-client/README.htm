@@ -1,0 +1,79 @@
+<HTML>
+<HEAD>
+<TITLE>Java Bank Client</TITLE> 
+</HEAD>
+
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<H1>Java Bank Client</H1>
+
+<HR>
+
+<P>
+This is a Java version of the Dylan bank demo client to show how the
+two languages interoperate.
+
+<P>The client program is composed of the following parts:
+
+<DL>
+<DT><A HREF="AccountManager.java">AccountManager.java</A><DD>Java client GUI and CORBA initialization
+<DT><A HREF="AccountDialog.java">AccountDialog.java</A><DD>subsidiary prompt dialog for Java client
+<DT><A HREF="AccountLogo.java">AccountLogo.java</A><DD>subsidiary animated graphic logo
+<DT><A HREF="README.htm">README.htm</A><DD>this file
+</DL>
+
+<P>See the <A HREF="../README.htm">README</A> accompanying the Dylan
+version of this demo for Dylan server configuration information.
+
+<P>
+
+<HR>
+
+<H2>Java Requirements</H2>
+
+<H3>JDK</H3>
+
+<P>This demo has been tested with JDK 1.1.6.
+
+<H3>Java ORB</H3>
+
+<P>This demo has been tested with OrbixWeb 3.0 Pro (patch 4).
+
+<P>It also currently requires a NameService.
+
+<P>
+
+<HR>
+
+<H2>Building and Testing the Application</H2>
+
+<P>The following instructions are written in terms of OrbixWeb 3.0 Pro
+and JDK 1.1.6. For different versions of the JDK and/or different Java
+ORBs, adjust the operations accordingly.
+
+<P>First you need to compile the IDL into Java stubs:
+
+<PRE>
+	cd &ltinstalldir&gt\examples\corba\bank\java-client
+	idl -jc ..\bank\bank.idl
+</PRE>
+
+<P>Then you need to compile all the resulting Java.
+
+<PRE>
+	set CLASSPATH=.\java_output;e:\program files\iona\orbixweb3.0\classes;e:\program files\jdk1.1.6\lib\classes.zip
+	"e:\program files\jdk1.1.6\bin\javac"  -d "e:\program files\iona\orbixweb3.0\classes" AccountManager.java AccountDialog.java AccountLogo.java
+</PRE>
+
+<P>Finally you need to load the compiled Java into a JavaVM.
+
+<PRE>
+	"e:\program files\jdk1.1.6\bin\java" BankingDemo.AccountManager
+</PRE>
+
+<P>
+
+<HR>
+
+</BODY>
+</HTML>
+

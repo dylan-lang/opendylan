@@ -1,0 +1,216 @@
+
+			-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+			ONLINE DOCUMENTATION INTERFACE
+			-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+
+* INTRODUCTION
+
+So I read various stuff on Microsoft Windows online help and looked
+around for whatever stuff existed in DUIM or in the environment.
+See the reading list at the bottom of this document.
+
+* DESIGN AND IMPLEMENTATION
+
+** DUIM FRONT-END
+
+*** EXECUTE-COMMAND
+
+Basically, there is one basic entry point for controlling the help
+viewer called EXECUTE-COMMAND. It is a standard DUIM gf and it has the
+following signature in this case:
+
+	EXECUTE-COMMAND ( COMMAND :: <HELP-COMMAND>, FRAME :: <FRAME> )
+
+COMMAND is some object that represents what you want the help viewer
+to do. It can have various bits of state according to the type of the
+command including:
+
+	HELP-CONTEXT		a symbol representing the topic
+	HELP-SOURCE		the source of the help (a file, plus ...)
+	HELP-SECONDARY-WINDOW	the name of a secondary window
+	HELP-PANE		a pane within the owner application
+	HELP-POPUP?		controls use of popup instead of full window
+	HELP-KEYWORD		an arbitrary string to lookup help for
+	HELP-MACRO		a help macro to run
+	HELP-WINDOW-RECTANGLE	a place and size for the help window
+
+*** <HELP-COMMAND>
+
+Here are the command classes with the inheritance given by the
+indentation.
+
+	<HELP-COMMAND>			top class
+	  <HELP-ON-SUBJECT>		help on something
+	    <HELP-ON-HELP>		meta help
+	    <HELP-ON-VERSION>		about box
+	      <HELP-FROM-SOURCE>	help on something from a source
+	        <HELP-ON-TOPICS>	show topics page
+	        <HELP-ON-INDEX>		show index page
+	        <HELP-ON-CONTENTS>	show contents page
+	        <HELP-ON-PANE>		help on something indicated by pane
+	          <HELP-ON-CONTEXT>	help on topic id
+	          <HELP-ON-KEYWORD>	help on arbitrary string
+	        <HELP-RUN-MACRO>	run help macro
+	        <HELP-REPOSITION>	reshape help window
+	  <HELP-QUIT>			tell help we're done
+
+*** INITIALIZE-HELP{-PANE}
+
+The first thing that happens to a help command object after the user
+causes it to be executed is that it is further initialized.
+
+First, the associated PANE, if any, is determined. This can involve
+further interaction with the user if the UI goes into a special mode
+to enable the selection of the pane. Or the PANE can be the currently
+selected pane in the UI. Or the pane can even be fixed into the
+command.
+
+Second, after the PANE is initialized, some slots are
+initialized. Depending on the class of the command, these could be the
+CONTEXT, SOURCE, or KEYWORD:
+
+	CONTEXT: is a symbolic topic name
+
+	SOURCE: is a help file source (eg a file, plus ...)
+
+	KEYWORD: is any old string that you want to search for help on
+
+The setting of these slots can depend on the PANE. The default procedure
+is that PANE and its chain of parent sheets are searched for non-empty
+values.
+
+*** <HELP-CONTEXT>s and <HELP-SOURCES>s
+
+In order to attach topic ids and stuff to UI elements, I created some
+classes that can be mixed into other DUIM things. The state is kept off
+to one side in tables to reduce the bloat on every DUIM object.
+
+I wrote some code that is meant to search upwards through the DUIM
+parent hierarchy for some selected UI element to one which has its
+context or whatever set. 
+
+SWM has suggested merging the structure of these mixins directly into
+sheets, but this hasn't happened yet. Now I think that it has
+happened, but SWM hasn't checked it in yet.
+
+*** HELP-TOPIC-ID
+
+A function that converts symbolic contexts into eg the numbers that
+WinHelp wants or the URLs that HTML Help wants, using the mapping
+defined by the help source.
+
+*** DEFINE HELP-SOURCE
+
+A macro that associates a symbolic name with a help file, together
+with a mapping between the symbolic context names and the help topic
+ids required by the help system.
+
+*** EXAMPLES
+
+So some DUIM command manufacturing code might build a command-table or
+menu using the following kinds of command objects:
+
+	make(<help-on-help>)
+	make(<help-on-context>, pane: by-gesture:, popup?: #t)
+	make(<help-on-keyword>, pane: by-focus:)
+	make(<help-on-version>)
+
+	define help-source helpmate ("c:\hqbin\dylanworks\helpmate.hlp")
+	  foo: => 1;
+	  bar: => 2;
+	end help-source;
+
+** WIN32 BACK-END
+
+The Win32 back-end for controlling both WinHelp and HTML Help came out
+more elegantly than I was expecting.
+
+*** DISPLAY-HELP
+
+DISPLAY-HELP is the entry point to the back end. It receives the help
+command that has been thoroughly initialized. DISPLAY-HELP methods are
+specialized on DUIM frame-managers.
+
+In the case of the Win32 back-end it builds some arguments using
+HELP-PATH, HELP-ID, and HELP-DATA; and then calls the
+appropriate Win32 function: either WinHelp or HtmlHelp.
+
+The choice between WinHelp and HTML Help is made by a simple
+configuration variable *WIN32-HELP-BACK-END*, and the functions for
+building the arguments also discriminate on the value.
+
+*** HELP-PATH
+
+WinHelp and HtmlHelp want some pointer to chars representing the path
+of the help file. I go to the trouble of modelling the brain damaged
+protocol of concatenting a logically separate piece of information
+(whether to use a primary or secondary help window) onto this
+argument.
+
+The C-FFI takes care of converting the Dylan string to Char*.
+
+*** HELP-ID
+
+This function just converts the various help command classes to the
+underlying numeric codes for the various commands. 
+
+*** HELP-DATA
+
+This fills in the fourth value depending on the command. The tricky
+part here is that the fourth value can vary a lot and either there
+needs to be several C-FFI declarations or, as I have left it, the code
+needs to explicitly convert the data to the raw addresses that are
+sometimes required.
+
+* ASSUMPTIONS AND OUTSTANDING WORK
+
+*** FIND-PANE-BY-GESTURE
+
+Some function for finding a UI pane by going into a special mode so the
+user can select it. Hopefully, one that allows the help interface to
+provide a status bar prompt and a cursor.
+
+*** OLE
+
+Other OLE containers, and servers need to be notified when a UI goes
+into the special mode for selecting the pane that you want help on.
+
+*** BUILD-REPOSITION-STRUCTURE
+
+Some function that converts between DUIM's and WinHelp's idea of
+describing a box.
+
+** ASSISTANCE FOR DOCUMENTORS
+
+Whosoever does this work ought to consider how documentors will want to
+drive the UI while composing their help and manuals.
+
+It would be handy if there was some mode that the documentor could put
+the help UI into, so that it eg displayed the topic code instead of
+actually trying to drive WinHelp.
+
+** ASSISTANCE FOR QA
+
+It would be handy if we could generate a dummy help file directly from
+(some of) the source code in some way. Eg I envisage generating an RTF
+file containing a page for each topic id, themselves containing only
+the symbolic context name as text. Plus some contents and index pages,
+of course.
+
+* BIBLIOGRAPHY
+
+Subject			Place
+-------			-----
+
+Win95 style guidelines	MSDN CDROM Library, October 96, Disk 1 (*)
+Win32 SDK		MSDN CDROM Library, October 96, Disk 1 (*)
+MFC			MSDN CDROM Library, October 96, Disk 1 (*)
+OLE			MSDN CDROM Library, October 96, Disk 1 (*)
+Dylan-Win32		mg -inRP "*.dylan" "help" ~dylan/lib/win32-*
+DUIM			mg -inRP "*.dylan" "help" ~dylan/duim
+Environment		mg -inRP "*.dylan" "help" ~dylan/environment
+HTML Help		http://www.microsoft.com/workshop/author/htmlhelp/
+Net Help		http://home.netscape.com/eng/help/
+
+(*) I searched this CDROM in such a variety of ways I can't remember them all now.

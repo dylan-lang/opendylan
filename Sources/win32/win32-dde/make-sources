@@ -1,0 +1,66 @@
+
+#  Dylan libraries for interfacing with the Win32 API (Microsoft Windows)
+#
+#  This file controls the generation of source files that are created
+#  automatically by adapting information from the Microsoft header files.
+
+# Copyright: 1997, 1998 Functional Objects, Inc.  All rights reserved.
+
+# $HopeName$
+# $Date: 2004/03/12 00:10:24 $
+
+
+WIN32-DDE=dde.dylan ddeml.dylan security.dylan library.dylan
+
+all: $(WIN32-DDE)
+
+dde: $(WIN32-DDE)
+
+COMDIR=../win32-common
+
+include $(COMDIR)/sources.mak
+
+library.dylan: library.src dde.exp ddeml.exp security.exp
+
+dde.dylan: $(MSH)dde.h $(WINPAT) $(PATTERNS) after.pat \
+		$(COMDIR)/obsolete-names.text inherited-slots.pat make-sources
+	$(GEMA) -f $(WINPAT)  -f $(PATTERNS)  $(FULL-OPTIONS) \
+		-f $(COMDIR)/modcopyr.pat  -f after.pat \
+		-f inherited-slots.pat  -module Win32-DDE \
+		-omit DDEUP -omit DDELN -omit DdeSetQualityOfService \
+		-out $@  -in $(MSH)dde.h
+
+# Note: re "-omit" options above, DDEUP and DDELN are obsolete;
+#	 DdeSetQualityOfService is for NT only, not Windows 95.
+
+ddeml.dylan: $(MSH)ddeml.h $(WINPAT) $(PATTERNS) after.pat \
+		$(COMDIR)/obsolete-names.text $(COMDIR)/callback.pat \
+		inherited-slots.pat make-sources
+	$(GEMA) -f $(WINPAT)  -f $(COMDIR)/wincom.pat \
+		-f $(PATTERNS)  $(FULL-OPTIONS)  -f $(COMDIR)/callback.pat \
+		-f $(COMDIR)/modcopyr.pat  -f after.pat \
+		-f inherited-slots.pat  -module Win32-DDE  -D NODDEMLSPY \
+		-out $@  -in $(MSH)ddeml.h
+
+security.dylan: $(MSH)winnt.h $(WINPAT) $(PATTERNS) make-sources
+	$(GEMA) -f $(WINPAT)  -f $(PATTERNS)  -f $(COMDIR)/modcopyr.pat \
+		-only /dev/null -add SECURITY_QUALITY_OF_SERVICE \
+		-add SECURITY_IMPERSONATION_LEVEL \
+		-add SECURITY_CONTEXT_TRACKING_MODE \
+		-D VOID  -D _TCHAR_DEFINED -f inherited-slots.pat \
+		-p 'typedef\ SHORT\ \*PSHORT\;<U>\/\/\/\/=' \
+		-p '\N\#if defined(MIDL_PASS)*\n<matchcond><elsepart>=' \
+		-p 'typedef\ union\ _IMAGE_AUX_SYMBOL\W\{<matchparen>\}*\;=' \
+		-exports security.exp  -module Win32-DDE \
+		-out $@  -in $(MSH)winnt.h
+
+# This notes which slot accessors should not be exported here because the
+# name is inherited from another module:
+inherited-slots.pat: library.src
+	$(GEMA) -match  -idchars '_-$$<>@%&*+=/?' \
+	  -p '\Iexport\:\W\{<exports>\}=$$1' \
+	  -p 'exports:<I>-value-setter\I=export-slot\:\\C$$1\=\$$0-value\@end\n;<I>=;?=' \
+	  -in library.src  -out $@
+
+clean:
+	rm -f $(WIN32-DDE) *.bak dde*.exp

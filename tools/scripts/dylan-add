@@ -1,0 +1,83 @@
+#!/bin/sh 
+#
+# Scriptname: dylan-add
+# Purpose: This script has exactly 2 uses:
+#	    1. Adds the -compound argument to -parent argument
+#              when no files are listed as arguments OR
+#           2. Adds listed files to -parent argument
+#           
+#           NOTE: the argument -compound is only used if you
+#           want to add that to -parent. I found these names a
+#           little confusing (either use parent-child or
+#           compound-subcompound), but did not change the
+#           interface as to trigger any problems somewhere.
+#
+# Last modified: Sep 10 1996 by amit. Added capability to create
+#           compound and checkin files under that directory and
+#           also changed the exiting code...esp the "-parent"
+#           option for HOPE add command - such an option does
+#           not exist.
+################################################################
+
+script=`basename $0`
+scriptsdir="/u/dylan/tools/scripts"
+
+compound=""
+directory=""
+hope_options=""
+eval_command="eval"
+
+# This quoting hackery is an attempt to preserve grouping
+
+while [ $# -gt 0 ]; do
+  case $1 in
+    -c | -comp | -compound) 
+      compound=$2; shift 2
+      ;;
+    -d | -dir | -directory)
+      directory=$2; shift 2
+      ;;
+    -p | -par | -parent)
+      parent=$2; shift 2
+      ;;
+    -claim | -reason | -rea | -ci-reason | -working-file | -version | -branch)
+      hope_options="$hope_options $1 \"$2\""; shift 2
+      ;;
+    -*)
+      echo "$script: unrecognised option $1"
+      exit 1
+      ;;
+    *)        
+      break
+      ;;
+  esac
+done
+
+files=$*
+
+if [ "$files" = "" ]; then
+  if [ "$compound" = "" ]; then
+    compound=`$scriptsdir/dylan-local-compound`
+  fi
+  if [ "$directory" = "" ]; then
+    echo "$script: error - The argument -directory is needed for a new compound"
+    exit 1
+  fi
+  $eval_command "$scriptsdir/dylan-hope create -c $compound -directory $directory"
+  $eval_command "$scriptsdir/dylan-hope add -c $parent -subc $compound $hope_options"
+else
+ for file in $files; do
+  name=`basename $file`
+  dir=`dirname $file`
+  (cd $dir
+   if [ "$parent" = "" ]; then
+     parent=`$scriptsdirdylan-local-compound`
+   fi
+   if [ "$parent" = "" ]; then
+     echo "$script: error - no parent found for $file"
+   fi
+   $eval_command "$scriptsdir/dylan-hope add -c $parent -unit $name $hope_options" 
+  )
+ done
+fi
+## eof

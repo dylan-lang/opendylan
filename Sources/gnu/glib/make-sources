@@ -1,0 +1,57 @@
+
+#  Dylan libraries for interfacing with GTK.
+#
+#  This file controls the generation of source files that are created
+#  automatically by adapting information from the GTK C header files.
+
+# Copyright (C) 1998 Functional Objects, Inc. All rights reserved.
+
+
+GLIB=acconfig.dylan config.dylan glib.dylan glibconfig.dylan \
+     gmodule.dylan gmoduleconf.dylan library.dylan $(COMSLOTS)
+GLIBTOD=$(XTOD) -module glib
+
+all: $(GLIB)
+
+include sources.mak
+
+
+library.dylan: library.src acconfig.dylan config.dylan glib.dylan \
+               glibconfig.dylan gmodule.dylan gmoduleconf.dylan
+  
+dependencies: $(PATTERN-DEP) make-sources obsolete.text
+  
+acconfig.dylan: $(GLIBHDIR)/acconfig.h dependencies
+	$(GLIBTOD) $(GLIBHDIR)/acconfig.h $@
+
+glib.dylan: $(GLIBHDIR)/glib.h dependencies
+	$(GLIBTOD) $(GLIBHDIR)/glib.h $@
+
+config.dylan: $(GLIBHDIR)/config.h dependencies
+	$(GLIBTOD) $(GLIBHDIR)/config.h $@
+
+glibconfig.dylan: $(GLIBHDIR)/glibconfig.h dependencies
+	$(GLIBTOD) $(GLIBHDIR)/glibconfig.h $@
+
+gmodule.dylan: $(GLIBHDIR)/glibconfig.h dependencies
+	$(GLIBTOD) $(GLIBHDIR)/gmodule/gmodule.h $@
+
+gmoduleconf.dylan: $(GLIBHDIR)/gmodule/gmoduleconf.h dependencies
+	$(GLIBTOD) $(GLIBHDIR)/gmodule/gmoduleconf.h $@
+
+test.dylan: $(GLIBHDIR)/test.h dependencies
+	$(GLIBTOD) $(GLIBHDIR)/test.h $@
+
+# remove all generated files
+clean:
+	rm -f $(GLIB) *.bak *.exp
+
+# remove internal temporary files
+tidy:
+	rm -f *.bak *.exp
+
+DTAGS=/u/dylan/tools/gnuemacs/dtags
+TAGS: $(GLIB) special.dylan
+	$(DTAGS) special.dylan $(GLIB)
+
+tags: TAGS

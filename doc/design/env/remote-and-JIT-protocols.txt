@@ -1,0 +1,275 @@
+Document:      remote-and-JIT-protocols.txt
+Synopsis:      Environment protocols that support remote and Just In Time
+               debugging.
+Author:        Paul Howard.
+Copyright:     (c) 1998 Functional Objects, Inc.
+               All Rights Reserved.
+
+
+1. This Document.
+-----------------
+
+This document describes the environment protocols that were introduced
+to support debugging on remote machines, and attachment of the debugger
+to running processes, including just-in-time (JIT) attachments.
+
+The bindings described in this document are exported from the
+ENVIRONMENT-PROTOCOLS module of the ENVIRONMENT-PROTOCOLS library.
+
+The front-end implementations of these protocols are in:
+
+  D-environment-protocols!machines.dylan
+  D-environment-protocols!processes.dylan
+
+The back-end implementations are in:
+
+  D-environment-dfmc-application!machines.dylan
+  D-environment-dfmc-application!processes.dylan
+
+
+
+2. Machines and Remote Debugging Connections.
+----------------------------------------------
+
+<MACHINE>
+
+  A subclass of <OBJECT>, which abstractly describes
+  a machine on which target applications can run.
+
+  This class is instantiable. It has two required init-keyword
+  arguments :-
+
+  NETWORK-ADDRESS:
+    Must be an instance of <STRING>.
+    This value will be used by the underlying implementation as a
+    means of identifying the target machine on the network. 
+
+  PASSWORD:
+    Must be an instance of <STRING>.
+    If the debug server is running on the remote machine specified by
+    the NETWORK-ADDRESS keyword, the password supplied in this argument
+    must precisely match that which is being stored on the server.
+    
+
+  Callers of MAKE on this class should be prepared to handle conditions
+  of these types:
+
+     <REMOTE-CONNECTION-FAILED-ERROR>
+     <REMOTE-CONNECTION-PASSWORD-MISMATCH-ERROR>
+
+
+MACHINE-HOSTNAME (m :: <MACHINE>) => (<STRING>)
+
+  Returns the hostname of the machine, as determined
+  by the operating system running thereon.
+
+
+MACHINE-NETWORK-ADDRESS (m :: <MACHINE>) => (<STRING>)  
+
+  Returns the network address of the machine, where such can be
+  determined.
+
+  Status note: This is currently not computable by the tether, so this
+               function just returns whatever network address was 
+               supplied to MAKE when M was instantiated. 
+
+
+ENVIRONMENT-HOST-MACHINE () => (<MACHINE>)
+
+  Returns a <MACHINE> that represents the local host,
+  ie. that on which the environment itself is running. This function
+  is guaranteed to always succeed, and to return the same
+  interned object on each call.
+
+
+DO-MACHINE-CONNECTIONS (f :: <FUNCTION>, 
+                        #key include-local?) => ()
+
+  Iterates a function over all machine connections that are open
+  within the current environment session. The signature of the
+  supplied function should be:
+
+       (m :: <MACHINE>) => ()
+
+  The "include-local?" keyword argument, defaulting to #t, determines
+  whether the local machine is included in the iteration.
+
+
+CLOSE-CONNECTION-TO-MACHINE (m :: <MACHINE>) => ()
+
+  Closes an open debugger connection.
+
+  The environment should close all open connections before
+  shutting down as follows:
+
+      DO-MACHINE-CONNECTIONS(CLOSE-CONNECTION-TO-MACHINE,
+                             INCLUDE-LOCAL?: #f);
+
+
+<REMOTE-DEBUG-CONNECTION-ERROR>
+
+  An abstract subclass of <ERROR>. This is the parent class of all
+  errors that have to do with remote debugging connections.
+
+
+<REMOTE-CONNECTION-CLOSED-ERROR>
+
+  A subclass of <REMOTE-DEBUG-CONNECTION-ERROR>.
+
+  An attempt was made to use a <MACHINE> _after_ it has been
+  closed via CLOSE-CONNECTION-TO-MACHINE.
+
+  Accessors: FAILED-CONNECTION => <MACHINE>.
+
+
+<ATTEMPTED-TO-CLOSE-LOCAL-CONNECTION>
+
+  A subclass of <REMOTE-DEBUG-CONNECTION-ERROR>.
+
+  It is not permitted to call CLOSE-CONNECTION-TO-MACHINE with the
+  <MACHINE> that represents the local machine. Attempting
+  to do so will result in this error being signalled.
+
+  Accessors: None.
+
+
+<REMOTE-CONNECTION-FAILED-ERROR>
+
+  A subclass of <REMOTE-DEBUG-CONNECTION-ERROR>.
+
+  This can be signalled whenever MAKE is called on <MACHINE>,
+  and the implementation is unable to actually obtain the 
+  connection.
+
+  Accessor: FAILED-NETWORK-ADDRESS => <STRING>.
+            (This will be whatever was passed in to MAKE).
+
+
+<REMOTE-CONNECTION-PASSWORD-MISMATCH-ERROR>
+
+  A subclass of <REMOTE-DEBUG-CONNECTION-ERROR>.
+
+  This will be signalled when MAKE is called on <MACHINE>, but the
+  PASSWORD argument does not match the password being stored by the
+  remote server.
+
+  Accessor: FAILED-PASSWORD => <STRING>.
+            (This will be whatever was passed in to MAKE).
+
+
+3. Running Process, and Attachment.
+-----------------------------------
+
+<PROCESS>
+
+  An abstract, uninstantiable subclass of <OBJECT>. Abstractly describes a 
+  running process on a target machine.
+
+
+PROCESS-EXECUTABLE-FILE (p :: <PROCESS>) => <STRING>
+
+  Returns the name of the executable file associated with
+  the process.
+
+  (Hopefully, this will contain full path qualifications, but
+  it might be unwise to rely on that).
+
+
+PROCESS-ID (p :: <PROCESS>) => <STRING>
+
+  Returns the identifier assigned to the process by the
+  underlying OS. This is typed as a <STRING>, since this seems
+  like the most platform-independant representation, and is the
+  one that the runtime manager currently adopts. 
+
+
+PROCESS-HOST-MACHINE (p :: <PROCESS>) => (<MACHINE>)
+
+  Returns the instance of <MACHINE> corresponding to the machine on
+  which the process is running.
+
+
+LOOKUP-PROCESS-BY-ID 
+    (id :: <STRING>, #key machine:) => <PROCESS>/#f
+
+
+  Given an operating-system-level process identifier, attempts
+  to search a given machine for a <PROCESS> whose ID
+  corresponds to it.
+
+  It is expected that this function will be used when HD is launched
+  automatically in Just-In-Time mode. In this case, the ID
+  will probably have been supplied by the operating system itself,
+  so it should be "well formed". However, it's also possible that
+  this function could be used to process user-input.
+
+  If 'machine:' is supplied, it should be a <MACHINE>.
+  The default value for the keyword is
+  ENVIRONMENT-HOST-MACHINE().
+
+
+PROCESS-DEBUGGABLE? (p :: <PROCESS>) => (<BOOLEAN>)
+
+  Returns #f if the process is known not to be debuggable.
+  That is, a processes that the debugger should not attempt
+  to attach to, because such attachment is certain to fail.
+
+  If there is no such certainty, the function will return #t.
+  However, this is no guarantee that attachment will succeed.
+
+
+DO-ACTIVE-PROCESSES (f :: <FUNCTION>, #key machine:) => ()
+
+  Iterates over running processes.
+
+  The supplied function is expected to have the signature:
+
+         (<PROCESS>) => ()
+
+  and will be called with each process known to be running
+  on the machine. (See Note).
+
+  If 'machine:' is supplied, it should be a <MACHINE>.
+  The default value for the keyword is
+  ENVIRONMENT-HOST-MACHINE().
+
+  Note: The underlying implementation will undertake to snapshot
+        the set of running processes at call time, and then
+        iterate over the set of processes in the snapshot.
+        Processes can therefore be created and destroyed
+        during the execution of this function, but such events
+        will be ignored. A dynamically updating process browser
+        (such as the task manager on NT) could conceivably be
+        implemented by spawning a thread that calls this
+        function periodically, notifying changes to another
+        thread that manages the browser. I hope to be able to
+        guarantee that <PROCESS>s are interned, much like
+        <THREAD-OBJECT>s, such that a particular running process
+        is always described by exactly one instance of <PROCESS>,
+        thus allowing \== to be used to compare them.
+
+
+ATTACH-LIVE-APPLICATION 
+   (app :: <APPLICATION>, proc :: <PROCESS>,
+    #key system-data)
+    => (app :: <APPLICATION>)
+
+  Called in the same contexts as RUN-APPLICATION, but where
+  the objective is to snare a running process, rather than
+  launch a new one.
+
+  It's possible that NOTE-RUN-APPLICATION-FAILED could be
+  called if the attachment fails. (The name may seem 
+  inappropriate, but there seems to be little point in
+  inventing a whole new protocol that does all the same
+  things but has a different name).
+
+
+Modifications to existing protocols.
+------------------------------------
+
+The RUN-APPLICATION protocol takes an additional 'machine:'
+keyword, defaulting to ENVIRONMENT-HOST-MACHINE(). Supplying
+a different <MACHINE> is all that is needed to 
+debug the application remotely.
+

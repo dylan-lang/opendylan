@@ -1,0 +1,21 @@
+comment:	This file is generated, please don't edit
+format-version:	2
+subprojects:	..\..\core\scepter-core.hdp
+	..\..\abstract-syntax-tree\scepter-ast.hdp
+minor-version:	1
+files:	scepter-file-front-end-library
+	scepter-file-front-end-module
+	error
+	interface-header
+	temporary-declarator
+	actions
+	parser-state
+	idl-lexer
+	idl-parser
+	front-end
+other-files:	parser.spec
+major-version:	2
+base-address:	0x63FE0000
+library:	scepter-file-front-end
+compilation-mode:	tight
+target-type:	dll

@@ -1,0 +1,41 @@
+Module:    dylan-user	%comment -*- Mode: Dylan -*-
+Synopsis:  This is a Dylan library to act as an interface to the 
+	   OLE common dialogs library (OLEDLG.H and OLEDLG.DLL).
+Copyright: Copyright (c) 1997-2000 Functional Objects, Inc. All rights reserved.
+
+%comment  This file, "library.src", is expanded to produce "library.dylan". 
+
+%comment $HopeName$
+
+define library Ole-Dialogs
+  use Dylan;
+  use C-FFI;
+  use Win32-common;
+  use Win32-dialog;
+  use COM;
+  export Ole-Dialogs;
+end;
+
+define module Ole-Dialogs
+  use Dylan;
+  use C-FFI;
+  use Win32-common,
+    // slot accessors used in both libraries:
+    export: { fLink-value, fLink-value-setter };
+  use COM, // need:  <LPOLEOBJECT>, <CLSID>, <REFCLSID>, <FORMATETC>,
+	   //	     <LPDATAOBJECT>, <Interface>
+    export: { cbStruct-value, cbStruct-value-setter,
+	     clsid-value, clsid-value-setter, iid-value, iid-value-setter };
+  use COM-internal; // need: <C-HRESULT>
+  use Win32-dialog,
+    // slot accessors used in both libraries:
+    export: { lpfnHook-value, lpfnHook-value-setter, 
+	     lCustData-value, lCustData-value-setter,
+	     hWndOwner-value, hWndOwner-value-setter,
+	     lpOFN-value, lpOFN-value-setter };
+
+%include oledlg.exp
+
+  // from "extra.dylan":
+  export $IDD-SERVERNOTREG, $IDD-LINKTYPECHANGED;
+end;

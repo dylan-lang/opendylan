@@ -1,0 +1,11 @@
+module pente {
+
+  interface player {
+
+    void new_game (in player other);
+
+    void play_piece (in unsigned short i, in unsigned short j);
+
+  };
+
+};

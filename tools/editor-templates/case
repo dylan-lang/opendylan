@@ -1,0 +1,7 @@
+case
+case
+  %e%(XtestX) =>
+    XbodyX ;
+  otherwise =>
+    XbodyX ;
+end case;

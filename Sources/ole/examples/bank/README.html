@@ -1,0 +1,55 @@
+<HTML>
+<HEAD>
+	<TITLE>Functional Developer Example: OLE Bank Client/Server</TITLE>
+	<LINK REL="stylesheet" TYPE="text/css" HREF="../../examples.css">
+</HEAD>
+
+<BODY>
+
+<H2>OLE Bank Client/Server</H2>
+
+<HR ALIGN="CENTER">
+
+
+<P>
+This is a simple example illustrating the use of custom COM interfaces
+to provide the infrastructure of a banking application. This
+application is a typical example of a three-tier application
+architecture comprising a database access layer, a business logic
+layer, and a user interface layer. The application has three components:
+<UL>
+<LI>A database that provides persistent storage for the accounts managed by the bank.
+<LI>A server that represents the bank and provides an object-oriented interface to its accounts.
+<LI>A client that provides a graphical user interface to the bank.
+</UL>
+
+<P>The <em>database</em> layer consists of a Microsoft Access(tm) relational database.
+The server communicates with the database using Functional Developer's <b>sql-odbc</b> library.</P>
+
+<P> The <em>server</em> provides a single COM object that represents
+the bank, and a collection of COM objects representing accounts.  The
+bank object has operations for opening, closing, and retrieving
+accounts from the database.  An account has operations for querying
+and updating its balance.  The server uses Functional Developer's
+<b>OLE-Automation</b> library to implement dual interfaces for all its
+objects, allowing use with both vtable and dispatch interface
+clients.</P>
+
+<P> The <em>client</em> contacts the server and presents the user with
+a graphical interface to the bank.  Menus are provided to allow the
+user to request operations on the bank and selected accounts.  The
+client passes the requests on to the server and provides a local
+view of account information obtained from the server.  The
+client provided here implements vtable access to the server via
+Functional Developer's <b>COM</b> library. The user interface is implemented
+using the Functional Developer <b>DUIM</b> library.</P>
+
+<P>To try out this application, first see the <A
+HREF="Server/README.html">Server README</A> file for instructions on
+how to build and configure the server and database layers, and then see
+the <A HREF="Client/README.html">Client README</A> file for
+instructions on building the client.</P>
+
+</BODY>
+
+</HTML>

@@ -1,0 +1,17 @@
+#/bin/csh
+
+cd /home/nosa/dylan/build/dylan
+
+# foreach file (*.s)
+#  as-dylan -L -d -o $file.o $file
+# end
+
+
+# gcc -shared -o dylan.so -L$FUNCTIONAL_DEVELOPER_USER_INSTALL/lib -L$FUNCTIONAL_DEVELOPER_RELEASE/lib -L/usr/lib -L/usr/X11R6/lib -L/usr/X11/lib -L/lib -L/usr/X11R6/lib/xrt/lib  *.o $FUNCTIONAL_DEVELOPER_USER_INSTALL/lib/runtime/*.o -lgc
+
+# gcc -o dylan  -L$FUNCTIONAL_DEVELOPER_USER_INSTALL/lib -L$FUNCTIONAL_DEVELOPER_RELEASE/lib -L/usr/lib -L/usr/X11R6/lib -L/usr/X11/lib -L/lib -L/usr/X11R6/lib/xrt/lib  *.o $FUNCTIONAL_DEVELOPER_USER_INSTALL/lib/runtime/*.o -lgc
+
+# install-so dylan
+
+ar -q dylan.a *.o
+

@@ -1,0 +1,35 @@
+set-write-databases? true
+compile -force-parse duim-utilities
+save -export-only duim-utilities
+close duim-utilities
+compile -force-parse duim-geometry
+save -export-only duim-geometry
+close duim-geometry
+compile -force-parse duim-dcs
+save -export-only duim-dcs
+close duim-dcs
+compile -force-parse duim-silica
+save -export-only duim-silica
+close duim-silica
+compile -force-parse duim-graphics
+save -export-only duim-graphics
+close duim-graphics
+compile -force-parse duim-layouts
+save -export-only duim-layouts
+close duim-layouts
+compile -force-parse duim-gadgets
+save -export-only duim-gadgets
+close duim-gadgets
+compile -force-parse duim-frames
+save -export-only duim-frames
+close duim-frames
+compile -force-parse duim-core
+save -export-only duim-core
+close duim-core
+compile -force-parse duim-extended-geometry
+save -export-only duim-extended-geometry
+close duim-extended-geometry
+compile -force-parse duim-gadget-panes
+save -export-only duim-gadget-panes
+close duim-gadget-panes
+exit

@@ -1,0 +1,62 @@
+
+! Load these patterns before "c2dyl.dat" for converting C++ to Dylan.
+
+! Doesn't yet handle method bodies defined within a class definition.
+
+! Last revised 4/15/96
+
+@set-switch{t;1}@set-switch{w;1}
+
+\I<type>\G\W<I>\:\:<I>(<parms>)\G<space>\{<body>\}=\
+	\ndefine method @rid{$3}(this \:\: \<$2\>@comma{$4}) \
+	\=\> @rtntype{$1}\;$5\
+	\n\ block(return)\n\t$6\N\ end block\;\nend method @rid{$3}\;
+
+<I>\:\:$1(<parms>)\G<space>\{<body>\}=\
+	\ndefine method initialize (this \:\: \<$1\>@comma{$2}) \
+	\=\> ()\;\n\ \ next-method()\;$3\n\t$4\Nend method initialize\;
+
+<I>\:\:\~$1(<parms>)\G<space>\{<body>\}=\
+	\ndefine method %destructor (this \:\: \<$1\>@comma{$2}) \
+	\=\> ()\;\n\ \ next-method()\;$3\n\t$4\Nend method %destructor\;
+
+class <I>\;\W=
+
+class <I><space><base-classes>\{<fields>\}<space>*\;=\
+	@set{sclass;\<$1\>}\
+	define class ${sclass} ( $3 )$2\N$4\Nend class ${sclass}\;$5\
+	\N@sdefs{*}\N
+
+base-classes:\A\W\Z=\<object\>
+base-classes:\:=
+base-classes:public=
+base-classes:private=\/\* $0 \*\/ ;
+base-classes:\S=
+base-classes:\,=\,\s
+base-classes:<I>=\<$1\>
+
+fields:public\:=\/\* $0 \*\/ ;
+fields:private\:=\/\* $0 \*\/ ;
+fields:\{<match-paren>\}=$0
+match-paren:\{#\}=$0
+
+comma:\A\W\Z=
+comma:<s>*=,$1\S*
+
+type:STDMETHODIMP_(<type>)=$1@end
+
+statement:<I> <I>(<argument-expression-list>)\G\;=\
+	let @rid{$2} \:\: \<$1\> \= make(\<$1\>@comma{$3})\;
+
+<primary-expression>:<I>\:\:<I>=\I$1\/$2@end
+
+unary-expression:new <I>()=make(\<$1\>)@end
+unary-expression:new <I>(<argument-expression-list>)=make(\<$1\>, $2)@end
+unary-expression:new <I>=make(\<$1\>)@end
+statement:delete <I>\;=\/\* delete @rid{$1}\; \*\/@end
+type:new=@fail
+type:this=@fail
+
+! this->foo(bar) => foo(this,bar)
+<postfix-expression>:<I>\-\J\><I>(<argument-expression-list>)=\
+	@rid{$2}(@rid{$1}@comma{$3})@end

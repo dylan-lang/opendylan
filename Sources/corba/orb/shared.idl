@@ -1,0 +1,5 @@
+
+module CORBA {
+	typedef string Identifier;
+	typedef string RepositoryId;
+};

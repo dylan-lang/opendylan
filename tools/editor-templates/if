@@ -1,0 +1,8 @@
+if
+if ( %e%(XtestX) )
+    XbodyX ;
+  elseif ( XtestX )
+    XbodyX ;
+  else
+    XbodyX ;
+end if;

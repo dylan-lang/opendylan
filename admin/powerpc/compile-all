@@ -1,0 +1,9 @@
+compile-apps
+
+repeat compile standard-io format-out io table-extensions bit-vector bit-set set plists collectors collections source-records file-source-records release-info internal-release-info generic-arithmetic big-integers binary-manager binary-builder coff-manager coff-builder build-system elf-linker powerpc-elf-linker ccl-linker linker-support gnu-linker build-system
+
+compile-app build
+
+repeat compile command-shell walker dfmc-mangling variable-search dood dfmc-common dfmc-conditions parser-run-time dfmc-reader dfmc-macro-expander dfmc-namespace dfmc-definitions dfmc-modeling dfmc-flow-graph dfmc-core dfmc-typist dfmc-conversion dfmc-c-ffi dfmc-back-end-protocol dfmc-back-end dfmc-linker dfmc-optimization memory-manager dfmc-management dfmc-browser-support tools-interface projects registry-projects user-projects harp-cg-back-end harp dfmc-harp-browser-support disasm mnemonic-assembler native-harp dfmc-execution dfmc-harp-cg dfmc-harp-cg-linker binary-outputter gnu-outputter harp-coff powerpc-harp dfmc-powerpc-harp-cg dfmc-debug-back-end metering dfmc-powerpc-file-compiler powerpc-dfmc-shell dispatch-profiler c-ffi licensing basic-release-info
+
+compile-app basic-powerpc-dw

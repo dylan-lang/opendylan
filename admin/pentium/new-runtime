@@ -1,0 +1,9 @@
+pushd /home/nosa/dylan/sources/lib
+rm pentium-run-time.tar
+unarchive pentium-run-time
+cd pentium-run-time
+
+make install
+staticdump runtime.o
+
+popd

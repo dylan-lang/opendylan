@@ -1,0 +1,75 @@
+#!/usr/bin/sh
+# usage 
+#  create-backups [ -c ] files ...
+#  moves FILES to ./backups/file.BU1
+# (creating the dir if need be) 
+# if 1st arg is -c then it also copied the backup back to the 
+# original filename. 
+# if ./backups/file.BU1 exists it is compared to the file.
+# if they are identical then no backup is made. If not it's moved to 
+# ./backups/file.BU2
+#
+# if a zero length file is encounter the script bails out.
+###############################################################
+
+# date=`date +%m%d%y`
+
+here=`dirname $0`
+bu_dir=backups
+
+
+if [ "$1" = "-c" ]
+then
+   copy=yes
+   shift
+fi
+
+for arg
+do
+  # check to see if file is not zero length
+  if [ -s $arg ]
+ 	then
+		echo backing up $arg
+	else
+		echo $arg is zero length - backup aborted
+		exit 1
+  fi	
+ 
+  cd `dirname $arg`
+  the_file=`basename $arg`
+
+  # create the backup dir if not there yet.
+  if [ ! -d $bu_dir ]
+  then
+     mkdir $bu_dir
+  fi	
+
+  if [ -f $bu_dir/$the_file.BU1 ]
+  then
+	cmp -s $the_file $bu_dir/$the_file.BU1
+	if  [ $? = 0 ]
+	   then	
+	   echo $bu_dir/$the_file is already backed up.
+	   else
+     	   mv $bu_dir/$the_file.BU1 $bu_dir/$the_file.BU2
+	   echo moving $the_file to $bu_dir/$the_file.BU1
+  	   mv $arg $bu_dir/$the_file.BU1
+  	   if [ "$copy" = "yes" ]
+  	     	then
+     		echo copying $bu_dir/$the_file.BU1 back to $the_file
+     		cp $bu_dir/$the_file.BU1 $the_file
+  	   fi
+	fi
+   else
+   	echo moving $the_file to $bu_dir/$the_file.BU1
+   	mv $arg $bu_dir/$the_file.BU1
+   	if [ "$copy" = "yes" ]
+     		then
+		echo copying $bu_dir/$the_file.BU1 back to $the_file
+		cp $bu_dir/$the_file.BU1 $the_file
+   	fi	
+   fi	
+done
+
+
+

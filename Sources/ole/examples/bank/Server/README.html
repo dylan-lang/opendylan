@@ -1,0 +1,157 @@
+<HTML>
+<HEAD>
+	<TITLE>Functional Developer Example: OLE Bank-Server</TITLE>
+	<LINK REL="stylesheet" TYPE="text/css" HREF="../../../examples.css">
+</HEAD>
+
+<BODY>
+
+<H2>OLE Bank-Server</H2>
+
+<HR ALIGN="CENTER">
+
+<P>This project contains an example program that demonstrates the use of
+dual COM interfaces and database access in Functional Developer.  It is the
+server part of the <A HREF="../README.html">OLE Bank Client/Server
+example</A>.  It uses the macros and utility functions provided by the
+<b>OLE-Automation</b> library, rather than the low-level Windows OLE
+API, to define and implement its objects.  It uses the
+<b>sql-odbc</b> library to communicate with the database.  And it uses
+the <b>DUIM</b> library to provide a simple user interface.</P>
+
+<P>The <b>OLE-Automation</b> and <b>sql-odbc</b> libraries are documented in the Functional Developer
+"OLE, COM, ActiveX and DBMS" reference manual.</P>
+
+<H3>ODBC requirements</H3>
+
+<P>In order to run this example, you need to have ODBC version 3.0 (or
+higher) and an ODBC driver for Microsoft Access installed on the
+machine hosting the server application. You do not need a copy of
+Microsoft Access.</P>
+
+<P>Both ODBC 3.x and the Microsoft Access driver are available free
+for download from the <A
+HREF="http://www.microsoft.com/data/">Microsoft Universal Data Access
+web site</A>.</P>
+
+<P>From the Downloads section, download the Microsoft Data Access
+Components, version 1.5c or higher, for your Windows platform. You do
+not need to download the full 6.4MB file -- mdacfull.exe, the MDAC
+1.5c redistribution setup file, is only 3.4MB and contains everything
+you need.</P>
+
+<P>This file installs ODBC 3.x and the Microsoft Access Driver,
+amongst other things.</P>
+
+<P>This information may change in the future.</P>
+
+<H3>Registering the Database with ODBC</H3>
+
+<P>This example includes a sample bank database, <em>bankDB.mdb</em>, in
+the project directory (typically in <em>C:\Program
+Files\Functional Objects\Dylan\Examples\ole\bank\server</em>).  Before we
+can access this database using ODBC, we need to register it under a
+<i>data source name</i> in the ODBC control panel. This installation
+step also tells ODBC which driver to use when connecting to the
+database.
+
+<ol>
+<li> First, make sure the database is writable: find the
+<em>bankDB.mdb</em> file in an Explorer window, right-click on it, select <b>Properties</b> from the pop-up menu, and clear the <b>Readonly</b> attribute if it is checked.
+<li> Open the ODBC control panel.
+<li> Select the <b>User DSN</b> tab.
+<li> Click <b>Add</b>...
+<li> Select <b>Microsoft Access Driver</b> from the list of available drivers.
+<li> Click <b>Finish</b>.
+<li> In the <b>Microsoft Access 97 setup</b> dialog, enter the <b>Data Source Name</b> as "bankDB".
+<li> Click <b>Select</b> to bring up a file dialog. Browse until you locate the <em>bankDB.mdb</em> file.
+<li> Select <em>bankDB.mbd</em> from the list of available database files.
+<li> Click <b>OK</b> to close the file dialog.
+<li> Click <b>OK</b> to close the <b>Microsoft Access 97 Setup</b> dialog.
+<li> Click <b>OK</b> to close the control panel.
+</ol>
+
+<H3>Server registration and invocation</H3>
+
+<P>To build the server, open the <b>bank-server</b> project and press
+the "Build" button in the Project window.</P>
+
+<P>This project can be built in either of two configurations.  It can
+be built as an EXE file which can then be used as a local server, or
+it can be built as a DLL file which can then be used as an in-process
+server.  The default is to build an EXE file.  Use the "Target file"
+entry in the "Link" tab of the "Project &gt; Settings..." dialog to
+switch between these two options.</P>
+
+<P>In either case, in order for the server to work when started from a client program,
+all of the libraries used by the server need to either be in the same
+directory as the server executable, or else in a directory which is in
+the system PATH (not the individual user's PATH on NT). The simplest
+way to accomplish this is to use the "Project &gt; Build Release"
+command to create a release directory. If you wish, you can move that
+directory to any location you want, but you must do so before you
+attempt to register the server.</P>
+
+<P>Before you can use the server, you must register it and create its
+type library.  How to do this depends on whether you have built a local
+(EXE) server or an in-process (DLL) server.</P>
+
+<P>To register a local server, run it from a DOS command prompt
+like this:<P>
+
+  <blockquote><code>bank-server.exe /regserver</code></blockquote>
+
+<P>This will make the type library, create the necessary entries in
+the Windows System Registry, and then terminate without creating any
+windows. The full pathname of the server is recorded, so you must
+unregister the server before you move or delete it.  You can
+unregister it by doing:</P>
+
+  <blockquote><code>bank-server.exe /unregserver</code></blockquote>
+
+<P>To register an in-process server, use the <code>regsvr32</code> command
+line utility like this:</P>
+
+ <blockquote><code>regsvr32 bank-server.dll</code></blockquote>
+
+<P>(The complete pathname will need to be given if the file is in a
+different directory that is not in the PATH.)  This will cause the
+appropriate entries to be made in the Windows System Registry. (For
+use in a batch script, the "<code>/s</code>" option may be used to suppress the
+dialog box reporting completion.) The full pathname of the server
+is recorded, so you must unregister the server before you move or delete it.
+You can unregister it by doing:</P>
+
+ <blockquote><code>regsvr32 /u bank-server.dll</code></blockquote>
+
+<P>This invokes the server to unregister itself, so won't work
+if the server has been deleted first.</P>
+
+<P>After registering the server, you can run the <b>bank-client</b>
+example project to test it, as described in the <A
+HREF="../Client/README.html">client README</A> file.</P>
+
+<H3>Program Internals</H3>
+
+<P>The server application is composed of the following parts:
+<DL>
+<DT><em>server-library.dylan</em>
+   <DD>library and module definitions.
+<DT><em>server.dylan</em>
+   <DD>server implementation
+<DT><em>database.dylan</em>
+   <DD>database support
+<DT><em>server-frame.dylan</em>
+   <DD>local server GUI
+<DT><em>server-main.dylan</em>
+   <DD>server initialization and main entry points.
+<DT><em>project bank-interface</em>
+   <DD>A subproject containing the definitions of all the COM interfaces
+   used in this example.  It is a separate project so that it can be shared
+   with clients written in Dylan.
+</DL>
+</P>
+
+</BODY>
+
+</HTML>

@@ -1,0 +1,237 @@
+<!doctype html public "-//W3C//DTD HTML 3.2//EN">
+<!--#config errmsg="There has been an error.  Please notify webmaster@functionalobjects.com" -->
+<?php $current_part = "resources";
+   $current_sub = "white-paper";
+   $title = "Functional Objects, Inc.";
+   $description = "A description of the general structure and specific features of the Dylan programming language.";
+   require "../config.php3";
+?>
+
+<?php include $top_inc ?>
+
+<H1>Dylan Language White Paper</H1>
+<EM><P>Version 1.01; 20 January 1998, modified October 1, 1999</P>
+</EM><P>This white paper describes the general structure and specific features of the Dylan programming language. Rather than being a tutorial, the paper provides an overview of the language and rationale for some aspects of the design.</P>
+<P>Feedback on the current contents and proposed extensions is welcome. Comments can be sent to <A HREF="mailto:dylan-support@functionalobjects.com">dylan-support@functionalobjects.com</A>.</P>
+<H2>Background</H2>
+<P>The Dylan programming language was originally developed at Apple Computer, in cooperation with researchers from Harlequin Group plc, Carnegie Mellon University, and elsewhere. These groups saw the need for a new language, one which combined the efficiency of C++ with the simplicity of Smalltalk. They felt that such a language---with native compilation, automatic memory management, and a range of other carefully designed features---would enable a new generation of software development.</P>
+<P>Unfortunately, Apple fell on hard times just as its design and initial implementation of Dylan were being completed. Apple shipped one version of their Dylan IDE prototype in 1995, and this version was enthusiastically received by developers. Shortly after the release, though, Apple abandoned their Dylan effort during an overall reduction in research and development.</P>
+<P>The end of Dylan at Apple did not, however, mark the end of Dylan. Language development continued at Harlequin, which had begun work on a version for the Wintel platforms. The first version of Harlequin Dylan was released in July 1998. In 1999, Harlequin fell on hard times, and decided to spin off its Dylan assets in order to concentrate its own efforts in other areas.  Functional Objects, Inc. was thus formed to take Dylan development to the next level.</P>
+<H2>Design Goals</H2>
+<P>From the outset, Dylan was designed to be a general purpose, fully object-oriented language for use in systems, application and component programming. The language was designed to be both simple and powerful, internally consistent and feature rich.</P>
+<P>Dylan is both a high-level and a low-level language. It is high-level in that programs are easy to write, easy to read, and easy to extend. The language provides type safety and garbage collection, and is thoroughly object-oriented. At the same time, Dylan is low-level in that it can access native platform APIs, it can be compiled efficiently and it can therefore be used for the full range of programming tasks.</P>
+<P>Beyond all else, Dylan was designed to help programmers create efficient abstractions. An efficient abstraction is one that allows programmers to think about their programs efficiently and that simultaneously allows the compiler to generate efficient compiled code. Dylan shows that you don't need to sacrifice clean code in the name of performance.</P>
+<P>It is Dylan's ability to support efficient abstractions that most distinguishes it from other languages. This support makes Dylan programs substantially easier to write, maintain, and extend, without sacrificing performance.</P>
+<H2>Fully Generalized</H2>
+<P>Dylan avoids special cases and artificial constructs. Instead, it provides clean general mechanisms that can be used for a variety of purposes. This approach makes the language easier to learn, and ultimately more powerful.</P>
+<P>The following list shows some of the areas in which Dylan provides a general mechanism that can be used to mimic the special cases of other languages, but that can also support other uses:</P>
+
+<UL>
+<LI>Many other languages support only single inheritance. Dylan supports multiple inheritance, but without sacrificing the efficiency of single inheritance when it is important. </LI>
+<LI>Most other object-oriented languages dispatch only on the type of one argument (i.e. the receiver, sometimes known as <I>this</I>). Dylan can dispatch on the type of one argument, or more than one argument. </LI>
+<LI>Where Java and C++ support public, private, and protected variables, Dylan allows the creation of multiple interfaces, each containing exactly those objects determined to be appropriate for a given client. </LI>
+<LI>In many other languages, classes are the unit of encapsulation. In Dylan, classes can be written to follow encapsulation boundaries or, alternatively, encapsulation boundaries can cut across class lines. The latter course often allows more natural implementation sharing and more precise information hiding. </LI>
+<LI>In some other object-oriented languages, procedural programming is deprecated, forcing programmers to use constructs that are artificially object-oriented, and therefore awkward. Dylan integrates object-oriented and procedural programming, allowing programmers to use the best tool for the job, all within a unified framework. </LI>
+<LI>In many other languages, some data are objects and others are not. In Dylan, all data are objects and fully participate in the object system. </LI></UL>
+
+<H2>The Dylan Object System</H2>
+<P>When we say that Dylan is a fully object-oriented language, we mean that all data is represented as instances, and all instances are treated equally. The same method dispatch mechanism is applicable to all instances---including classes, functions, and numbers---and all instances can be stored in variables, passed as function arguments, and returned as function results. In contrast, many other languages have some data types that must be handled as special cases or be cast to object types before they can participate in the object system. </P>
+<P>While it is thoroughly object-oriented, Dylan's approach to objects differs from that of most other object-oriented languages. Dylan is not a class-centric language. Programs are not written inside classes, methods are not stored inside classes, and slots (instance variables) are not referenced as variables scoped inside instances.</P>
+<P>Instead, Dylan provides object-orientation within a clean lexically scoped framework. Programs are written in modules. Classes and generic functions appear as named constants in these modules. Methods are stored in generic functions, and method dispatch occurs when a generic function is called. Slots are accessed abstractly through methods in generic functions.</P>
+<P>A module may contain many class definitions and many generic function definitions, and these two kinds of objects are both named at top level in the module.</P>
+<P>This approach gives the programmer complete control over program structure. Programmers are not forced to artificially associate functions with a single class when it is not appropriate to do so. Encapsulation boundaries are not forced to follow class boundaries. Closely related classes can share private interfaces in a single implementation module, or conversely, the implementation of a class may be split across modules. In general, information can be appropriately shared or hidden within a complex implementation, without externally imposed structural constraints.</P>
+<H2>Modules</H2>
+<P>Dylan programs are constructed in namespaces called modules. A module is simply a compile time mapping from names to values (objects) or value-locations (variables). As described above, these values include the classes, functions, and other instances that form the substance of a Dylan program.</P>
+<P>A module may export names, and thereby export the objects they indicate, and it may import names from other modules. Imported names may be reexported. Because the names are nothing more than compile time mappings, Dylan can support flexible compile time renaming to prevent any possibility of irreconcilable name clashes, even when using modules for which the programmer does not have source code. </P>
+<P>A module may contain zero or more class definitions, zero or more function definitions, and other object definitions. Reduced to the idiom enforced by other languages, a module would contain a single class definition and all the methods associated with that class. Most Dylan programmers do not, however, choose to program in this idiom because they find it an unnatural way to decompose problems. It practice, it is more common to use modules that import many objects (including classes and functions) from other modules, implement several new objects, and then export an interface consisting of some of those newly created objects and perhaps some of the imported objects.</P>
+<P>Programmers have complete control over the selection of names to be exported from a module. Because classes and functions are accessed through names, this translates to complete control over the interface that is visible to clients of the module.</P>
+<P>By importing and selectively re-exporting names, modules can effectively provide multiple interfaces to a given implementation. Each interface can include an arbitrary set of exported names. This lets the programmer give clients access to the functionality that is precisely appropriate for their use. For example, one interface could be used by subclassers, another for clients who wish to survive version changes, and another for clients who are willing to sacrifice compatibility over version changes in exchange for access to power-user features.</P>
+<P>The access control provided by the Dylan module system can be used to mimic the access control provided by Java and C++. The latter languages give you three special cases to handle common needs: public (full outside access), private (no outside access), and protected (outside access only by subclassers). While Dylan modules can be used to support this factoring strategy, it can also be used to support other factoring strategies.</P>
+<H2>Classes</H2>
+<P>Classes define the structure of Dylan instances and categorize instances by type. Dylan classes are not scopes for names nor are they containers of methods.</P>
+<P>Dylan classes describe their instances. They describe the storage each instance provides, how that storage is initialized, and where the instance lies in the type hierarchy. The behavior of instances is specified by methods, and access to objects (including classes and generic functions) is controlled by the module system. By keeping these areas orthogonal, Dylan allows programs to be structured very precisely.</P>
+<P>The following example defines a new class with one direct superclass and two slots.</P>
+<TT><P>&nbsp;&nbsp;define class &lt;window&gt; (&lt;view&gt;)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;slot title :: &lt;string&gt; = "untitled", init-keyword: title:;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;slot position :: &lt;point&gt;, init-keyword: position:;<BR>
+&nbsp;&nbsp;end class &lt;window&gt;;</P>
+</TT><P>This example defines a new class, <TT>&lt;window&gt;</TT>, which inherits from the class <TT>&lt;view&gt;</TT>. By convention, angle brackets are placed around class names to make classes more visually distinct in source code, and to reduce accidental name collisions. The angle brackets are part of the name of the class, and are not special syntax.</P>
+<P>The <TT>title</TT> slot is constrained to hold values of type <TT>&lt;string&gt;</TT>. The initial value of this slot can be specified by the <TT>title:</TT> keyword argument when a fresh instance is created. If the keyword argument is not specified, the slot is initialized to the default value <TT>"untitled"</TT>.</P>
+<P>The <TT>position</TT> slot is constrained to hold values of type <TT>&lt;point&gt;</TT>. The initial value of this slot can be specified by the <TT>position:</TT> keyword argument; otherwise there is no default initial value and the slot will remain uninitialized until it is explicitly set. Attempting to retrieve the value of an uninitialized slot signals an error. This behavior eliminates the possibility of confusing a system-supplied default value with a valid value in a partially initialized instance. Slots only have a default value when they are so defined.</P>
+<P>(While it is somewhat unrealistic not to specify a default initial value for a window position, there are many cases where a meaningful initial value cannot be computed until after the instance is created. It is in those cases where it is especially important that programs not accidentally use a bogus default value.)</P>
+<P>The class defined above will be stored as the value of the module constant <TT>&lt;window&gt;</TT>. If the module exports the name <TT>&lt;window&gt;</TT>, clients of the module will have access to the class. Otherwise, clients will not have access to the class. Similarly, the slot accessors (getters and setters) will be stored as the values of the module constants <TT>title</TT>, <TT>title-setter</TT>, <TT>position</TT>, and <TT>position-setter</TT>. Clients of the module will have the ability to get and set the values of the slots only to the extent these names are exported.</P>
+<P>The syntax for using slot accessors is described in a separate section.</P>
+<H2>Functions</H2>
+<P>Dylan includes two kinds of functions: methods and generic functions. Both of these kinds of functions may be called directly. More commonly, methods are collected in generic functions. When a generic function is called, it compares its arguments to the methods it contains, chooses the best match, and then invokes that method. This dispatch will be performed at compile time or run time, depending on the compile time information available. Generic functions contain no code of their own; they only contain methods. </P>
+<P>The following example defines two methods on the <TT>contents</TT> generic function:</P>
+<TT><P>&nbsp;&nbsp;define method contents (w :: &lt;window&gt;)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;bitmap(w); // return the window's bitmap<BR>
+&nbsp;&nbsp;end method contents;</P>
+<P>&nbsp;&nbsp;define method contents (b :: &lt;cracker-jack-box&gt;)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;toy-surprise(b); // return a toy surprise<BR>
+&nbsp;&nbsp;end method contents;</P>
+</TT><P>Once these methods have been defined, the <TT>contents</TT> function can be called:</P>
+<TT><P>&nbsp;&nbsp;contents(some-object)</P>
+</TT><P>If <TT>some-object</TT> is an instance of <TT>&lt;window&gt;</TT>, the first method will be invoked. If it is an instance of <TT>&lt;cracker-jack-box&gt;</TT>, the second method will be invoked. </P>
+<P>An alternative syntax is provided for calling functions of one argument:</P>
+<TT><P>&nbsp;&nbsp;some-object.contents</P>
+</TT><P>This call is semantically equivalent to the previous one. They differ only in syntax. In both cases, the generic function <TT>contents</TT> is called with the argument <TT>some-object</TT>, and the type of that argument is used to select the appropriate method. Some programmers prefer the dot syntax when calling a function that conceptually retrieves or sets a property of an object. </P>
+<P>To set the <TT>contents</TT> of an object, one could use any of the following expressions. All are equivalent, and all depend on the existence of an appropriate method definition for <TT>contents-setter</TT>. (Note that the first form would not generally be used directly. It is shown here to illustrate the underlying expression for which the other two provide convenient syntax.)</P>
+<TT><P>&nbsp;&nbsp;contents-setter(new-contents, some-object)<BR>
+&nbsp;&nbsp;contents(some-object) := new-contents<BR>
+&nbsp;&nbsp;some-object.contents := new-contents</P>
+</TT><H2>Multimethods</H2>
+<P>The generic function <TT>contents</TT> accepts only one argument, so it is the type of that argument that determines the method to be invoked. When a generic function accepts more than one argument, any number of the arguments can be used to affect the dispatch. If the available methods differ only in the type of one argument, the semantics are the same as in languages with an implicit receiver, such as C++ and Java. However, there are many cases where dispatching on the types of multiple arguments can be very useful.</P>
+<P>For example, the <TT>contents-setter</TT> method for windows might be defined as follows:</P>
+<TT><P>&nbsp;&nbsp;define method contents-setter (new-value :: &lt;bitmap&gt;, w :: &lt;window&gt;)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;w.bitmap := new-value;<BR>
+&nbsp;&nbsp;end method contents-setter;</P>
+</TT><P>Note that the <I>new-value</I> argument is specified to have the type <TT>&lt;bitmap&gt;</TT>, perhaps because this is the type required by the <TT>bitmap-setter</TT> function, or perhaps because at the time the method was written, bitmaps were the only type of graphic object available.</P>
+<P>But what if we want <TT>contents-setter</TT> to be more general than <TT>bitmap-setter</TT>? What if we have recently gotten a gif library with a <TT>gif-to-bitmap</TT> function, and we want <TT>contents-setter</TT> to support gif images?</P>
+<P>In other languages, this might be done by editing the original definition of <TT>contents-setter</TT>, and including conditionals to handle the different types of <I>new-value</I>. In Dylan, the same result can be accomplished without editing the source code of the original method, and without using explicit (non-object-oriented) conditionals. We do this by adding another method to <TT>contents-setter</TT>.</P>
+<TT><P>&nbsp;&nbsp;define method contents-setter (new-value :: &lt;gif-image&gt;, w :: &lt;window&gt;)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;w.contents := gif-to-bitmap(new-value);<BR>
+&nbsp;&nbsp;end method contents-setter;</P>
+</TT><P>Now if <TT>contents-setter </TT>is called with a gif image and a window, the gif image is converted to a bitmap, and <TT>contents-setter </TT>is reinvoked with the new values. The complete call chain would be</P>
+<TT><P>&nbsp;&nbsp;&nbsp;&nbsp;contents-setter</TT> generic function<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dispatches to <TT>contents-setter(&lt;gif-image&gt; &lt;window&gt;)</TT> method<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;converts <I>new-value</I> from a gif to a bitmap<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and then calls <TT>contents-setter</TT> generic function again<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dispatches to <TT>contents-setter(&lt;bitmap&gt; &lt;window&gt;)</TT> method </P>
+<P>This type of coercion is a typical example of how multimethods can be used to factor common programming problems very naturally. The example also shows how protocols can be extended to support new classes, without editing the source code of the original protocol. </P>
+<H2>Implications of Generic Functions</H2>
+<P>It should be clear by now that Dylan methods do not have an implicit <I>this</I> parameter. All the parameters are explicit, and all are equally important in determining the outcome of method dispatch.</P>
+<P>A related fact is that method definitions are not placed within the text of class definitions. They are simply defined in modules, alongside other object definitions. This means that new protocols can be defined on existing classes without modifying the source code of those classes. For example, a programmer creating a WYSIWYG interface designer could set up event handlers and define new generic functions on the standard widget classes, thereby supporting live editing of the properties of the widgets. This could be done without modifying the source code for the underlying widget library. The widget classes would thus be extended without being modified internally.</P>
+<P>Finally, as noted above, generic functions are objects just like any other. The method definitions shown above first ensure that the module constants <TT>contents</TT> and <TT>contents-setter</TT> exist, and that they contain the appropriate generic functions. The definitions then add the specified methods to those generic functions. The programmer can expose the generic functions (and hence the methods) to clients by exporting the names <TT>contents</TT> and/or <TT>contents-setter</TT>, or the programmer can keep them hidden by not exporting the names.</P>
+<P>Other features of Dylan functions are described in later sections of this document.</P>
+<H2>Slots</H2>
+<P>When a class is defined, methods are automatically defined to access slots in instances of the class. The slots are then accessed by making standard function calls to the generic functions containing these methods.</P>
+<P>There is no distinguished view of slots from "inside" a class. Slots are accessed the same way by implementers and clients: always through a standard function call.</P>
+<P>For example, the position and the contents of a window class would be accessed the same way.</P>
+<TT><P>&nbsp;&nbsp;position(my-window)</TT> or<TT> my-window.position<BR>
+&nbsp;&nbsp;contents(my-window)</TT> or<TT> my-window.contents</TT> </P>
+<P>It is an implementation detail that one of these methods is implemented as a slot while the other is a more complex method. This fact about the implementation is hidden from code which uses <TT>contents</TT> and <TT>position</TT>. The hiding allows the implementations to be changed during the development or revision process without requiring changes to clients or to other parts of the implementation of the <TT>&lt;window&gt;</TT> class. The only things that need to change are the slot portion of the class definition and the single method definition.</P>
+<P>A single generic function may contain both slot accessors and other method definitions. For example, while <TT>&lt;window&gt;</TT> implements <TT>position</TT> as a slot, another class could define an explicit method on <TT>position</TT>, and this method could perform any calculation required to compute the appropriate result.</P>
+<P>When a slot is defined, both the getter and setter methods are defined. Each has its own name, and each can be exported independently. In Java, it is common to keep instance variables private and provide public access to them through methods which provide a more abstract interface. In Dylan, this extra step is not needed. The basic slot access mechanisms are already abstract, and provide sufficient abstraction and access control.</P>
+<P>It is important to note that while slot accessors have the syntax and semantics of function calls, they are not compiled as function calls. The Dylan compiler can often detect the nature of the operation at compile time and create an in-line slot access, just as it would if the slot were accessed using special syntax.</P>
+<H2>Macros</H2>
+<P>Dylan supports a hygienic pattern-template based macro system. Rather than performing text-to-text transformation, the macro system manipulates syntactic patterns. This approach has several advantages. It allows programmers to construct many standard Dylan forms, including definitions and statements, and it guarantees that macro calls will maintain the syntactic flavor of the language. It also avoids the accidental name clashes and name captures typical in simpler macro systems, regardless of where the macro is written and where it is used.</P>
+<P>Macros are commonly used to customize the language so that it directly and declaratively expresses the structure of the problem domain for a given project. For example, it is quite common to create additional defining forms (e.g. <TT>define graphics-frame</TT>) to extend the built in set of defining forms (e.g. <TT>define class</TT>, <TT>define method</TT>, etc.).</P>
+<P>Macros are a powerful tool for hiding complexity, creating layered systems, and ensuring full compliance with protocols. Macros can also be used to divide a project among system architects (those who define the macros) and system programmers (those who use the macros).</P>
+<P>For example, the following macro ensures that COM objects used by a Dylan program have their reference counts appropriately incremented and decremented, even in the presence of errors.</P>
+<TT><P>&nbsp;&nbsp;define macro with-interface<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;{<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with-interface (?variable-name:name = ?interface:expression)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;?block-body:body<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;}=&gt; {<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;let ?variable-name = ?interface;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;block ()<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Increment(?variable-name);<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;?block-body;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cleanup // the cleanup clause is guaranteed to run<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Decrement(?variable-name); // regardless of how the body terminates.<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end block;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;}<BR>
+&nbsp;&nbsp;end macro with-interface;</P>
+</TT><P>A call to this macro would take the following form:</P>
+<TT><P>&nbsp;&nbsp;with-interface (request = sc.IScriptingContext-Request)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;// Code using request goes in here.<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;do-something (request)<BR>
+&nbsp;&nbsp;end with-interface;</P>
+</TT><P>The call would expand to the following Dylan code:</P>
+<TT><P>&nbsp;&nbsp;let request = sc.IScriptingContext-Request;<BR>
+&nbsp;&nbsp;block ()<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;Increment(request);<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;// Code using request code in here.<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;do-something (request);<BR>
+&nbsp;&nbsp;cleanup<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;Release(request);<BR>
+&nbsp;&nbsp;end block;</P>
+</TT><H2>Sealing</H2>
+<P>Sealing is the term used to describe a number of facilities in Dylan that allow a programmer to describe more precisely the manner in which they will be using a class, method, or generic function. In particular, they describe whether a class can be given additional subclasses, how the class can be used in multiple inheritance, and whether methods can be overridden. These descriptions increase code readability, enforce programmer intent, and assist in the production of more efficient object code.</P>
+<P>The simplest example of sealing is the sealed class directive. A sealed class cannot be given any subclasses beyond those in the library containing the class's definition. In other words, a sealed class may have subclasses, but all of its subclasses will be in the same library, will be known at compile time, and will also be sealed. This is in contrast to an open class, which can be subclassed in client libraries.</P>
+<P>(In comparison, final classes in Java cannot have any subclasses. The utility of subclassing a sealed class is illustrated by an abstract superclass with several concrete subclasses. All these classes can be sealed and exported. The abstract superclass may be used for type declarations and dispatching while the concrete subclasses are used for implementation. Although the abstract superclass has been exported, the programmer and compiler do not need to worry about it being further subclassed.)</P>
+<P>A less restrictive form of class sealing is the primary class declaration. Primary classes cannot be used as mixins with other primary classes, and the subclasses of a primary class are primary. This effectively creates a single inheritance chain among primary classes, ensuring that a slot defined by a primary class can always appear at the same location in all instances of the class and its subclasses. (Because a class will never have multiple primary superclasses, there will never be contention for whose slots should appear first. Slots are simply added in the order in which the classes are defined.) Combined with other type inference information, primary classes allow the slot access to be compiled as a simple indexed load instruction, rather than the more complex table lookup that would otherwise be required. In this way, primary classes allow Dylan to support multiple inheritance in general while retaining the efficiency of single inheritance when the full power of multiple inheritance is not needed.</P>
+<P>Finally, generic functions can be sealed for portions of the type hierarchy. This prevents overriding the methods that are applicable to those types. No method can be added to the generic function that would be more specific than the existing methods. Important special cases include individual sealed methods and sealed slots.</P>
+<P>(The relationship between sealed generic functions and Java's final methods is analogous to the relationship between sealed and final classes. In both cases, Java lets you fix leaves of a tree, where Dylan lets you fix both branches and leaves.)</P>
+<P>Taken together, these sealing declarations often allow object dispatch to be performed at compile time rather than run time. Thus, Dylan can recapture much of the efficiency of a static procedural language while preserving the semantic clarity of a purely object-oriented dynamic language. Equally important is that sealing increases program predictability by enforcing restrictions on how objects can be used.</P>
+<H2>Exception Handling</H2>
+<P>Dylan provides a signaling exception system that is object-based and supports both termination and recovery.</P>
+<P>When an error or other exceptional situation is discovered, it is signaled by the code that made the discovery. Dynamically installed handlers of the appropriate type have the opportunity to address (handle) the exception. If all decline, the exception is handled by a default handler, usually a debugger or fatal error message.</P>
+<P>Exceptions are objects, instances of the <TT>&lt;exception&gt;</TT> class and its subclasses. Handlers are methods. The matching of exceptions to handlers follows the same rules as in normal method dispatch, except that instead of searching for applicable methods in a generic function, the search is performed on the call stack. The prioritization of applicable methods also differs. In generic functions, the method which most closely matches the argument types is given priority. In the exception system, the handler that was most recently installed is given priority.</P>
+<P>Because exceptions are objects, they can be given slots to hold additional information about the error, and they can be given methods to support additional behavior, such as formatting the text of an error message.</P>
+<P>Handlers are located, prioritized, and called without unwinding the stack. This gives the handler access to the full dynamic state of the program at the point at which the exception occurred. It also gives the handler the choice of resuming execution after repairing the problem or aborting execution by performing a non-local exit to the point at which it was installed.</P>
+<P>The Dylan exception system is not <I>checked</I> in the Java sense of the term. While all exceptions are guaranteed to be noticed (either by an installed handler, or by a default handler), functions do not need to declare every exception they might signal directly or indirectly. This means that unlike in Java, condition handling in Dylan cannot generally be analyzed at compile time. In return, there is a great deal less bookkeeping required when using functions which signal exceptions.</P>
+<H2>Optional Arguments</H2>
+<P>In addition to receiving required arguments, Dylan functions can receive two kinds of optional arguments: keyword arguments and rest arguments.</P>
+<P>Keyword arguments are used to specify optional arguments by name. If a particular keyword argument is not supplied in a function call, it will be set to a specified default value. If a function accepts more than one keyword argument, the keyword arguments may be supplied in any order and in any combination.</P>
+<TT><P>&nbsp;&nbsp;define method get-sundae (#key flavor = $vanilla,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;topping = $whipped-cream,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mixins = $marshmallows)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;// code to make and deliver a sundae goes here<BR>
+&nbsp;&nbsp;end method get-sundae;</P>
+<P>&nbsp;&nbsp;// just use the defaults<BR>
+&nbsp;&nbsp;get-sundae()</P>
+<P>&nbsp;&nbsp;// chocolate ice cream, no mixins, default topping<BR>
+&nbsp;&nbsp;get-sundae(flavor: $chocolate, mixins: #f)</P>
+<P>&nbsp;&nbsp;// coffee ice cream, almonds, no topping<BR>
+&nbsp;&nbsp;get-sundae(mixins: $almond, flavor: $coffee, topping: #f)</P>
+</TT><P>In addition to their other uses, keyword arguments are very handy for initializing new instances. Class definitions can automatically generate keyword arguments to initialize slots in new instances. For example, given the definition of <TT>&lt;window&gt;</TT> shown above, a new window could be created using any of the following calls. These calls are all supported by the class definition. No additional constructors need to be defined.</P>
+<TT><P>&nbsp;&nbsp;make(&lt;window&gt;)<BR>
+&nbsp;&nbsp;make(&lt;window&gt;, title: "New")<BR>
+&nbsp;&nbsp;make(&lt;window&gt;, position: point(0, 0))<BR>
+&nbsp;&nbsp;make(&lt;window&gt;, position: point(0, 0), title: "New")<BR>
+&nbsp;&nbsp;make(&lt;window&gt;, title: "New", position: point(0, 0))</P>
+</TT><P>Rest arguments are used to collect any number of additional arguments after the required arguments have been supplied; the additional arguments are stored in a collection which is passed as the value of the rest argument. If no additional arguments are supplied, the collection is initially empty.</P>
+<P>For example, the following function could be used to close several windows at once:</P>
+<TT><P>&nbsp;&nbsp;define method close-several (#rest windows)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;for (w in windows)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;close(w);<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;end for;<BR>
+&nbsp;&nbsp;end method close-several;</P>
+</TT><H2>Multiple Values</H2>
+<P>Just as a function can accept multiple arguments when it is called, Dylan functions and other expressions can return multiple values. For example, the Dylan function <TT>truncate/</TT> performs integer division, returning both the quotient and remainder.</P>
+<TT><P>&nbsp;&nbsp;truncate/(105, 25) =&gt; 4, 5</P>
+</TT><P>Multiple values are useful when a single computation naturally produces multiple useful results. Rather than performing the same computation multiple times or allocating storage for the results, the results can all be returned directly.</P>
+<H2>First Class Functions</H2>
+<P>Functions, including methods and generic functions, are first class objects. This means that they can be passed as arguments to other functions, stored in variables, collections and slots, and returned as the results of expressions.</P>
+<P>An alternative definition of <TT>close-several</TT> provides a good example of the use of a functional argument.</P>
+<TT><P>&nbsp;&nbsp;define method close-several (#rest windows)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;do(close, windows);<BR>
+&nbsp;&nbsp;end method close-several;</P>
+</TT><P>The function <TT>do</TT> takes two arguments: a function and a collection. It then applies the function to each element of the collection. This achieves the same behavior as that of the previous definition, which used a loop. But the new version is shorter, and some would argue easier to understand.</P>
+<P>Another example of functional arguments is the function <TT>choose</TT>, which takes a predicate function as its first argument, and a collection as its second argument. It returns a new collection containing only those elements of the argument collection that pass the predicate.</P>
+<TT><P>&nbsp;&nbsp;choose(even?, #(1, 2, 3, 4, 5, 6, 7, 8, 9));<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;=&gt; #(2, 4, 6, 8)</P>
+</TT><P>Again, this code could be written a loop which explicitly tested each element and collected the result by hand, but such a loop would be far more complicated to write and to read than the simple call to <TT>choose</TT>.</P>
+<H2>Additional Topics</H2>
+<P>The following additional topics are being considered for future drafts of this white paper.</P>
+
+<UL>
+<LI>Syntax </LI>
+<LI>Initialization protocol </LI>
+<LI>Delegated Instantiation </LI>
+<LI>Multiple inheritance </LI>
+<LI>Constant slots </LI>
+<LI>Inherited slots </LI>
+<LI>Loose typing </LI>
+<LI>First-class types </LI>
+<LI>Non-class types (i.e. union types, singletons, subclass types, limited types) </LI>
+<LI>Unbound slots compared to the use of null </LI>
+<LI>More muli-method examples </LI>
+<LI>Closures </LI>
+<LI>Function composition </LI>
+<LI>Function application </LI>
+<LI>Tail-call optimization </LI>
+<LI>Collections </LI>
+<LI>Iteration protocol </LI>
+<LI>Subclassing <TT>&lt;number&gt;</TT> </LI>
+<LI>Optimizing numeric operations </LI>
+<LI>Control constructs and looping </LI>
+<LI>First class non-local transfers </LI>
+<LI>Protected regions</LI></UL>
+
+<P>&nbsp;</P>
+
+<?php include $bottom_inc ?>

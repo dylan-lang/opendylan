@@ -1,0 +1,5 @@
+pushd $FUNCTIONAL_DEVELOPER_USER_SOURCES/lib/run-time/powerpc-linux
+
+make install
+
+popd

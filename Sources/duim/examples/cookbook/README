@@ -1,0 +1,12 @@
+Library:   duim-examples
+Author:    Andy Armstrong
+Synopsis:  DUIM cookbook examples
+Copyright: 1995, 1996 Functional Objects, Inc. All rights reserved.
+
+DUIM Examples
+
+* Running the DUIM examples
+
+Just call:
+
+  DUIM-EXAMPLES > start-examples();

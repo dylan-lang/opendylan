@@ -1,0 +1,40 @@
+
+#  Dylan libraries for interfacing with the Win32 API (Microsoft Windows)
+#
+#  This file controls the generation of source files that are created
+#  automatically by adapting information from the Microsoft header files.
+
+# Copyright: 1998 Functional Objects, Inc.  All rights reserved.
+
+# $HopeName: D-win32-shell!make-sources(trunk.1) $
+
+WIN32-SHELL=shellapi.dylan library.dylan
+
+all: $(WIN32-SHELL)
+
+shell: $(WIN32-SHELL)
+
+COMDIR=../win32-common
+
+include $(COMDIR)/sources.mak
+
+library.dylan: library.src shellapi.exp
+
+shellapi.dylan: $(MSH)shellapi.h $(WINPAT) $(PATTERNS) before.pat \
+		$(COMDIR)/obsolete-names.text make-sources special.pat \
+		inherited-slots.pat
+	$(GEMA) -f before.pat -f $(WINPAT) -f $(PATTERNS) $(FULL-OPTIONS) \
+		-f inherited-slots.pat \
+		-f $(COMDIR)/modcopyr.pat  -module Win32-shell \
+		-f special.pat  $(MSH)shellapi.h $@
+
+# This notes which slot accessors should not be exported here because the
+# name is inherited from another module:
+inherited-slots.pat: library.src
+	$(GEMA) -match -idchars '_-$$<>@%&*+=/?' \
+	  -p '\Iexport\:\W\{<exports>\}=$$1' \
+	  -p 'exports:<I>-value-setter\I=export-slot\:\\C$$1\=\$$0-value\@end\n;<I>=;?=' \
+	  -in library.src -out $@
+
+clean:
+	rm -f $(WIN32-SHELL) *.bak win*.exp

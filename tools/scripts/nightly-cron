@@ -1,0 +1,1 @@
+00 3 * * * /u/dylan/.script/nightly | tee /u/dylan/.script/nightly.log

@@ -1,0 +1,287 @@
+DEBUGGER MANAGER ISSUES
+-----------------------
+
+To aid the specification of the Debugger Manager, this document lists
+current issues that are under consideration. Issues might be minor
+pending implementation changes, proposals for changes to APIs, 
+questions on efficiency of the implementation, or hints at yawning gaps 
+in the design.
+
+This document will be maintained by Paul Howard (phoward), who should 
+be approached regarding additions/alterations/deletions.
+
+Every issue is numbered, for ease of referring to them in email
+messages. These numbers will not be re-used when issues are deleted.
+Who knows how high we'll go...
+
+
+The Current List of Issues:-
+----------------------------
+
+ISSUE 1:Respecify (and re-implement) stop-application, kill-application and
+        restart-application. [DONE]
+
+Define that these can be called on any UI client thread at any time, with
+the application in any state. Their actions will take place as soon as 
+the DM's application manager loop is next in a position to effect them.
+(For example, for kill-application, this will not occur immediately if
+some thread is in the middle of executing a ready-to-continue callback.
+The DM will wait for this callback to complete, and then kill the app).
+
+
+ISSUE 2:Making <tracepoint> cope with tail jumps and non-local exits. [OPEN]
+
+Callbacks on <return-tracepoint> instances have access to their
+corresponding <entry-tracepoint> instance. Tail jumps and non-local
+exits might be capable of invalidating this correlation. The DM somehow
+needs to find out when such invalidation has occurred, and take
+some appropriate action. Such action might include automatically
+deregistering <return-tracepoint> instances.
+
+
+ISSUE 3:Stack frame modeling across debugger transactions. [OPEN]
+
+It is quite likely that a portion of the stack will survive a period of
+entering the "running" state. The DM needs to specify (and implement!)
+a more "incremental" approach to its model of the stack. The DM should
+be able to maintain ID between instances of <application-stack-frame>
+that have survived from one debugger transaction to another, as well as
+retain as much cached information as possible. Quite a lot of thought
+is needed, though, in order to define precisely those guarantees that the
+DM can make about stack frames.
+
+DM5:
+I still haven't committed to preserving ID on stack-frame instances
+between transactions. This issue is largely implementational, though
+continual reconstruction of the stack might have performance implications.
+
+
+ISSUE 4:Unhandled conditions in the runtime. [Added in DM5 Design for review]
+
+When the runtime invokes the debugger as the result of an unhandled Dylan
+condition, the DM needs to be able to present a view of this condition
+(as, for example, a <remote-value> or a low-level proxy <remote-object>).
+High-level APIs for obtaining this need to be designed into the DM.
+
+DM5:
+We have attempted to resolve this issue in DM5.
+
+
+ISSUE 5:The access-path module needs exporting from DM.
+
+It is not intended that debugging-tool builders explicitly use the
+access-path library. The DM therefore needs to re-export all access-path
+functionality that is of use to DM clients. We need to decide
+exactly which definitions these are.
+
+We should defer this decision until the DM design is complete.
+
+DM5:
+Currently exports the entire access-path name set. We still aim to
+restrict this export as the DM design solidifies.
+
+
+ISSUE 6:DM's interface to the compiler and project database.
+
+The DM needs an interface to the compiler and derived DB for (at least)
+the following purposes:
+
+      - Name mangling (currently "hacked" in the DM implementation)
+
+      - Obtaining source-based maps of lexical scopes that the DM
+        can measure against its view of live lexicals.
+
+      - Checking up on interactor transactions that have changed
+        the addresses of certain symbols, therefore invalidating the
+        debug info.
+
+DM5:
+Many aspects of this are implementational, and don't effect higher levels
+to any great extent. The issue is really now one of: how should the DM
+present model objects to clients, and this seems to be nearing resolution
+in current mail threads. Hopefully, I'll be able to release a more
+solid DM5 (DM5.1, maybe) with these issues partially resolved.
+
+I'm also waiting for the compiler's APIs for debugging info.
+
+
+ISSUE 7:Exception Handling [OPEN]
+
+The access path now has two continue functions: 'continue' and
+'continue_unhandled'. Since continuation of the app is something that
+occurs implicitly at the end of a debugger transaction, the DM has
+to decide which of these two functions to call. The DM should
+probably provide a function that can be called _during_ a debugger
+transaction, along the lines of:
+
+DM5:
+This might be a non-issue. The DM should be able to decide implicitly,
+given the exception type and whether it is first/second chance.
+
+
+ISSUE 8:Tracepoint Addresses (for entry/exit tracing).
+
+The DM design is not explicit about the addresses on which 
+<entry-tracepoint> instances can be registered. There needs to be
+a restriction, however, that entry tracepoints may only be set at the
+beginnings of functions. And this means the very first byte. This is
+because the DM needs to assume that the function has not yet set up
+its stack frame, and that the address at the top of the stack is
+the return-address on which the <return-tracepoint> must be set.
+
+This may seem quite severe, but it really isn't. For example, the
+address of a <remote-symbol> will be quite legal (as long as the
+<remote-symbol> is a function), as will any address obtained via a
+call to dylan-method-iep. FWIW, the console debugger only ever uses
+remote-symbol-address and dylan-method-iep when setting tracepoints.
+
+I've now improved the implementation of tracing and stack-backtraces
+so that frames do not 'vanish' due to the app stopping within a
+function prolog.
+
+DM5:
+I think this issue is implementational, and need not concern DM clients.
+
+
+ISSUE 9:Locators [Done. Closed. Forgotten.]
+
+All references to locators are going to be dropped from the DM and
+access-path libraries.
+
+
+ISSUE 10:Obtaining Source Locations
+
+The DM currently provides 'call-frame-source-locations'. We need APIs to
+gather source locations for a <remote-symbol> (given that it is a
+function symbol) rather than a stack frame description. We also need an
+API to obtain the current closest source location for a <call-frame>.
+
+I think that it's now more a case of finding a higher level description
+of the function, such as a compiler model object, and querying the
+compiler for its source locations.
+
+DM5:
+The idea of this was so that source locations could be used by a DM
+client to implement stepping. The DM is now going to implement stepping
+directly, so such sequences of source locations are not necessary.
+The DM really only needs to provide the current location for a stack
+frame (or at least the nearest, with the ability to align to a known
+location if required). This also touches on the "model object" issue.
+
+
+ISSUE 11:Lightweight Info about Lexicals [ADDED TO DM5 FOR REVIEW]
+
+It may be desirable, from a performance point of view, to obtain brief
+information the existance of lexical variables, without getting their
+names and addresses over the tether.
+
+I've added an API for this, but it isn't implemented yet. It will need
+direct debug nub support. 
+
+
+ISSUE 12:Source-location stepping. [Added to DM5 design for review]
+
+The provision of breakpoint functionality and source-locator lookup is
+probably not enough to implement source-level stepping in the UI. The
+DM will need to provide explicit stepping operations, in order to detect
+calls and non-local exits. It's possible that lower-levels of the
+architecture may also need to be extended to support this properly.
+
+
+ISSUE 13: Application Thread Synchronization during debugging.
+
+This one's hard to put into words. I'll use an example Tony described
+to me...
+
+Suppose we have debugger panels open on Thread A and Thread B, and we
+are source-level stepping through both of them. If thread A performs
+a step, thread B will also execute some code and its source location
+may change. We might want to think carefully of the UI consequences
+of this.
+
+DM5:
+I think that the DM provides enough for the UI to get this to work.
+Somebody should follow-up this issue if they don't believe this to be
+the case.
+
+
+ISSUE 14: Some Required Runtime Protocols.
+          (To be resolved within compiler/runtime group) [OPEN]
+
+   -  A protocol for debug-message.
+      We'll need to be able to detect when a breakpoint is due to
+      a debug-message. On encountering this, we need to a protocol
+      for locating the format string and the vector of format args.
+
+   -  A protocol for conditions.
+      We'll need to be able to detect when a breakpoint is due to
+      a DYLAN invocation of the debugger (ie primitive_break or
+      primitive_invoke_debugger). On encountering this, we need a
+      protocol for getting the condition object. The runtime could,
+      for example, arrange for it to be in a register.
+
+   -  NLX
+      The runtime needs to tell us where to place a breakpoint in
+      order to catch a route through a non-local exit. This might be
+      as simple as knowing the name of the function that does an
+      NLX-step in order to register a breakpoint on it.
+
+
+ISSUE 15: Integration.
+
+The DM design needs to be integrated (but not coupled!!) with the compilerDB
+and environment APIs. This may be as simple as packaging low-level data
+as compiler model objects and assuming that the environment can perform
+any subsequent operations. (This seems to be the current view).
+
+DM5:
+DM5 makes some half-hearted attempts, but there's still quite a way to go
+on this.
+
+
+ISSUE 16: Some Required Compiler Protocols.
+          (To be resolved within the compiler/runtime group) [OPEN]
+
+   -  A protocol for source locators.
+      Given the compiler model of any lambda, we need to obtain a
+      sequence of recorded source locations. These should include
+      PC offsets from the lambda's entry point.
+
+   -  Demangling.
+      There's a complex issue here. At the basic level, we need to be
+      able to exchange mangled names for compiler model objects. However,
+      we need a little more than this. Suppose the debugger calculates
+      that the function for a particular PC is called:
+
+              KthingybobYmy_moduleVmy_libraryM01MI
+
+      This is _not_ the mangled name of a method _object_, it is the
+      mangled name for the entry point. The compiler would need to
+      "demangle off" various parts of the name in order to find
+      salient model objects. (Also the generic function, for example,
+      whose name would be KthingybobYmy_moduleVmy_library). I can
+      propose the kinds of APIs that I'd like to get my hands on, but
+      the compiler people might have a better idea of 
+
+   -  Scoped variables.
+      Having given us the a source locator within a modelled lambda, the
+      compiler also needs to tell us which lexical variables are
+      in scope, and how their names were mangled. The DM can then
+      compare this information against the access-path's view of live
+      lexicals.
+
+
+ISSUE 17: Closure Variables. [OPEN]
+
+This is probably an issue internal to the DM. We need to be able to get
+closed-over variables somehow, and include them as the live lexicals for
+a frame.
+
+
+ISSUE 18: Thread-Local Variables. [OPEN]
+
+Again, this is probably internal to the DM. When the thread-local storage
+model is solidified, the debugger will need some (probably quite low-level)
+support for going after the values of thread-local variables. We might also
+think about how to store their debug info in CodeView, or maybe the 
+compiler DB.

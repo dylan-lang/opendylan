@@ -1,0 +1,36 @@
+
+#  Dylan libraries for interfacing with the Win32 API (Microsoft Windows)
+#
+#  This file controls the generation of source files that are created
+#  automatically by adapting information from the Microsoft header files.
+
+# Copyright: 1996, 1998 Functional Objects, Inc.  All rights reserved.
+
+# $HopeName$
+# $Date: 2004/03/12 00:10:25 $
+
+
+WIN32-GDI=wingdi.dylan library.dylan
+
+all: $(WIN32-GDI)
+
+gdi: $(WIN32-GDI)
+
+COMDIR=../win32-common
+
+include $(COMDIR)/sources.mak
+
+library.dylan: library.src wingdi.exp
+
+wingdi.dylan: $(MSH)wingdi.h $(WINPAT) $(PATTERNS) $(COMSLOT) $(OPTDEP) \
+		moregdi.pat
+	$(GEMA) -f $(WINPAT) -f $(PATTERNS) -f $(COMSLOT) \
+		$(OPTIONS)  -f $(COMDIR)/modcopyr.pat  -module Win32-GDI \
+		-f moregdi.pat  -exports wingdi.exp \
+		$(MSH)wingdi.h $@
+
+wingdi.exp: wingdi.dylan
+	touch $@
+
+clean:
+	rm -f $(WIN32-GDI) *.bak win*.exp

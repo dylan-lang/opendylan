@@ -1,0 +1,54 @@
+<library-pack name="Testworks" title="Testworks">
+  <description>A simple Dylan unit testing framework</description>
+  <copyright>Copyright (c) 1995-2001 Functional Objects, Inc. All rights reserved.</copyright>
+  <company>Functional Developer</company>
+  <libraries>
+    <library name="testworks" title="Testworks">
+      <sources location="qa/testworks/">
+	<project platform="x86-win32">win32-testworks.lid</project>
+	<project>testworks.lid</project>
+      </sources>
+      <documentation location="Documentation/testworks/index.htm"/>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+	<binary file="DxTSTWKS.dll"/>
+	<lib file="DxTSTWKS.lib"/>
+      </release>
+    </library>
+    <library name="testworks-specs" title="Testworks Specifications">
+      <sources location="qa/testworks-specs">
+	<project platform="x86-win32">win32-testworks-specs.lid</project>
+	<project>testworks-specs.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+	<binary file="DxTSTSPC.dll"/>
+	<lib file="DxTSTSPC.lib"/>
+      </release>
+    </library>
+    <library name="gui-testworks" title="GUI Testworks">
+      <requires>duim</requires>
+      <sources location="qa/gui-testworks">
+	<project platform="x86-win32">gui-testworks.lid</project>
+	<project>gui-testworks.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+	<binary file="DxGUITST.dll"/>
+      </release>
+    </library>
+  </libraries>
+  <test-suites>
+    <library name="testworks-test-suite" title="Testworks test suite">
+      <category>TestWorks</category>
+      <sources location="qa/testworks/tests">
+        <project>testworks-test-suite.lid</project>
+      </sources>
+      <description>The Testworks test suite</description>
+    </library>
+    <library name="testworks-test-suite-app" title="Testworks test suite application">
+      <category>TestWorks</category>
+      <sources location="qa/test-apps/testworks-test-suite">
+        <project>testworks-test-suite-app.lid</project>
+      </sources>
+      <description>The standalone version of the Testworks test suite</description>
+    </library>
+  </test-suites>
+</library-pack>

@@ -1,0 +1,33 @@
+// Author:    Keith Dennison
+// Copyright: Copyright 1998, Functional Objects, Inc.  All rights reserved.
+// Version:   $HopeName$
+
+module M1 {
+  struct T1 { long a; };
+  struct T2 { long b; };
+  #pragma ID T2 "DCE:d62207:3"
+};
+
+#pragma prefix "P1"
+
+module M2 {
+  module M3 {
+    #pragma prefix "P2"
+    struct T3 { long c; };
+  };
+
+  struct T4 { long d; };
+#pragma version T4 2.4
+};
+
+module M4 {
+  #pragma prefix "P1/M2"
+  module M3 {
+    #pragma prefix "P2"
+    struct T3 { long c; };
+  };
+  #pragma version M3::T3 1.1
+
+  struct T4 { long d; };
+  #pragma version ::M4::T4 2.5
+};

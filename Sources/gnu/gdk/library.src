@@ -1,0 +1,46 @@
+Module:    Dylan-user	%comment -*- Mode: Dylan -*-
+Synopsis:  FFI declarations translated from GTK header files.
+%comment   This file is a template that is expanded to produce "library.dylan".
+Copyright: (c) 1999 Functional Objects, Inc.  All rights reserved.
+
+
+define library GDK
+  use functional-dylan;
+  use C-FFI;
+  use Machine-Word;
+  use GLib;
+  export GDK;
+end library GDK;
+
+define module GDK
+  use functional-dylan;
+  use C-FFI,
+    export: {null-pointer, null-pointer?, pointer-address,
+	     pointer-value, pointer-value-setter, size-of,
+	     <C-void*>, <C-pointer>, <C-string>, <C-unicode-string>,
+	     <C-string*>, <C-unicode-string*>,
+	     pointer-cast, destroy,
+	     pointer-value-address, c-type-cast,
+	     c-callable-wrapper-definer, 
+	     \with-c-string, \with-stack-structure } ;
+  use Machine-Integer-User, 
+    export: {%logior, %logand};
+  use Glib,
+    /* have to export here names that are used as structure accessors in
+       both modules. */
+    export: { data-value, data-value-setter,
+              flags-value, flags-value-setter,
+              key-value, key-value-setter,
+              parent-value, parent-value-setter,
+              ref-count-value, ref-count-value-setter,
+              user-data-value, user-data-value-setter };
+
+%include gdk.exp
+%include gdki18n.exp
+%include gdkkeysyms.exp
+%include gdkrgb.exp
+%include gdkcursors.exp
+%include gdkinput.exp
+%include gdktypes.exp
+
+end module GDK;

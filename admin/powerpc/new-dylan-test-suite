@@ -1,0 +1,27 @@
+new-dylan
+
+new-so transcendentals
+
+new-so threads
+
+new-so functional-dylan
+
+new-so byte-vector
+
+new-so machine-word
+
+new-so functional-extensions
+
+new-so common-extensions
+
+new-so common-dylan
+
+new-so testworks
+
+new-so testworks-specs
+
+new-so dylan-test-suite
+
+new-exe dylan-test-suite-app
+
+link-dylan-test-suite

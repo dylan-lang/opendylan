@@ -1,0 +1,172 @@
+		       The Profiler Manager API
+		       ========================
+
+		      Version 3 (7 February 1997)
+
+
+The Profiler Manager is used to collect profiling data from a
+running application. It allows a client to control when profiling
+information is to be collected and some limited control over what data
+is collected. The profiler manager API is closely associated with the
+Debugger Manager and is exported from the debugger-manager module in
+the debugger-manager library.
+
+
+1. Controlling the Profiler Manager
+===================================
+
+Profiling is started by a call to start-profiling and is stopped by a
+call to stop-profiling, or when the target application exits. Profiling
+may be turned on and off any number of times and does not have to be
+in the same state when the application exits as it was when the
+application started.
+
+The Profiler Manager gathers data by stopping the application at
+regular intervals and taking a "snapshot" of each thread's stack. It's
+possible to specify the interval between application stops and which
+threads you are interested in profiling. The volume of data collected
+can be further reduced by specifying a maximum stack depth to which
+stacks are examined during snapshots.
+
+The profiler manager maintains a complete history of the snapshots it
+has collected, but allows this to be reset by a client library. The
+profiler manager returns all the data in its history to the client on
+request.
+
+
+control-profiling debug-target #key reset?, interval, stack-depth, threads
+    => ()
+
+  Can be called at any time during a debugger transaction irrespective
+  of whether profiling is on or not. It may also be called before the
+  target application is running.
+
+  reset?
+      If supplied with a boolean value of #t tells the profiler
+      manager to reset its history i.e. throw away all the data it has
+      collected so far. The default value is #f.
+
+  interval
+      Specifies the regular interval in millisecs after which the
+      application will be stopped and data collected. There is no
+      guarantee that the application will be stopped precisely on this
+      interval, but it will not be stopped before the interval is
+      up. Not all threads will necessarily have had the same amount of
+      cpu-time during the interval, so the profiler provides a weight
+      for each thread based on the amount of cpu-time it has
+      had. [Need to decide on a default value for interval]
+
+  stack-depth
+      The maximum depth to which the profiler should trace stack
+      frames. Stacks deeper than this are still traced, but only to
+      the depth specified. The limit applies for each snapshot taken
+      and to all threads which are being profiled. #f (the default)
+      indicates no limit and the entire stack is traced.
+
+  threads
+      A collection of <remote-thread> objects which restricts the
+      profiler to collecting data from the specified thread(s). #f
+      (the default) indicates that data is to be collected from all
+      threads. If one of the threads being profiled exits, the
+      profiler manager stops collecting data for the thread, but keeps
+      whatever data it has collected for it since the last reset in
+      its history.
+
+
+start-profiling debug-target #key reset?, interval, stack-depth, thread => ()
+
+  Turns on profiling for the target application. If supplied, the
+  keyword arguments override the properties set by any earlier
+  control-profiling call. In effect control-profiling is called with
+  the keyword arguments before profiling is switched on.
+
+
+stop-profiling debug-target => ()
+
+  Stops the profiling of the target application. This may only be
+  called during a debugger transaction.
+
+
+profile-data debug-target => thread-profile-sequence
+
+  Returns all the profiling data collected since the last reset. See
+  the next section for a description of the  structure of the returned
+  data. 
+
+
+
+2. Extracting the data
+======================
+
+The data returned by the profiler comprises a series of snapshots
+for each thread that was profiled. During a snapshot, the profiler
+manager steps through the function call frames on the stack (to a
+maximum depth if one has been specified) collecting an instruction
+pointer for each frame. The instruction pointer is the address of the
+next instruction to execute for the frame.
+
+
+<profile-snapshot>
+
+  A subclass of <object>, this describes the data collected from a
+  thread during a "snapshot". It includes the sequence of instruction
+  pointers associated with the stack frames on the thread's stack at
+  the time of the snapshot (to a maximum depth, if one was specified)
+  and a weight for this data. 
+
+
+<profile-snapshot-sequence>
+
+  A subtype of <sequence> which contains a series of <snapshot>
+  objects in the order in which they were taken.
+
+
+<thread-profile>
+
+  Includes a <snapshot-seqence> for the thread and an indication of
+  which thread the data was collected from. This is a subclass of
+  <object>.
+
+
+<thread-profile-sequence>
+
+  A subtype of <sequence>, this is the type of the profiling data
+  returned by the profiler manager. It contains a series of
+  <thread-profile> objects, one for each thread that was profiled.
+
+
+
+remote-thread thread-profile => remote-thread
+
+  Returns the <remote-thread> object associated with the thread from
+  which the data was collected.
+
+
+profile-snapshot-sequence thread-profile => profile-snapshot-sequence
+
+  Returns the snapshot sequence associated with the thread profile.
+
+
+
+weight profile-snapshot => integer
+
+  Returns an <integer> weight for the data. Since the profiler cannot
+  guarantee that each thread's snapshot will occur at precise regular
+  intervals, the profiler associates a weight with each thread
+  snapshot based on the amount of cpu time the thread has used since
+  the last snapshot. The weight is specified to be in the same units
+  of measurement as the profile-interval (i.e. millisecs). One reason
+  for specifying it like this is that we could (theoretically) also
+  build an allocation profiler which returns the same data struture as
+  this time profiler. In that case the weight would be in allocation
+  units (e.g. bytes) rather than time units.
+
+
+instruction-pointers profile-snapshot => instruction-pointers
+
+  Returns a sequence of instruction pointers associated with each
+  stack frame on the thread's stack. Each instruction pointer is the
+  address of the next instruction to execute for the frame as a
+  <remote-value>. The instruction pointers are ordered with those from
+  the most recently created stack frames (top of stack) appearing
+  first.

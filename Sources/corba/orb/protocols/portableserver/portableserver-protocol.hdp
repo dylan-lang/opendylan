@@ -1,0 +1,14 @@
+comment:	This file is generated, please don't edit
+format-version:	2
+library:	portableserver-protocol
+files:	portableserver-protocol-library
+	portableserver-protocol
+subprojects:	..\..\dylan\corba-dylan.hdp
+	..\corba\corba-protocol.hdp
+Library-Pack:   CORBA
+base-address:	0x63FC0000
+major-version: 2
+minor-version: 1
+compilation-mode:	tight
+target-type:	dll
+comment:	additional keywords

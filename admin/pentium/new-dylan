@@ -1,0 +1,9 @@
+pushd /home/nosa/dylan/build
+rm dylan.tar
+unarchive dylan
+cd dylan
+
+assemble
+link-dylan
+
+popd

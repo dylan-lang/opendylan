@@ -1,0 +1,44 @@
+Module:    Dylan-user	%comment -*- Mode: Dylan -*-
+Synopsis:  This is a Dylan library to act as an interface to OLE2.  
+	   This enables Dylan programs to use OLE
+	   in a manner very similar to usage from C++ without MFC.
+Author:    David N. Gray
+Copyright: Copyright (c) 1996-2000 Functional Objects, Inc. All rights reserved.
+
+%comment $HopeName: D-lib-ole!library.src(trunk.5) $
+
+%comment  This file is expanded by "include.pat" to create the real Dylan file.
+
+define library OLE
+  use Functional-Dylan;
+  use C-FFI;
+  use COM;
+  use Win32-common;
+  use Win32-GDI;
+  use Win32-User;
+  export OLE;
+end;
+
+define module OLE
+  use Functional-Dylan;
+  use C-FFI;
+  use Machine-Words, import: { \%+ };
+  use COM, export: all;
+  use COM-internal;
+  use Win32-common;
+  use Win32-GDI, import: { <LOGPALETTE>, <LPLOGPALETTE> };
+  use Win32-User, import: { <LPMSG>, <LPHWND> };
+	
+  // This module includes the following interfaces:
+%include ole-intf.exp
+
+  // misc. stuff in "ole.dylan":
+  export <HOLEMENU>;
+  export <LPHGLOBAL>;
+
+  // misc. stuff from "ole-misc.dylan":
+%include omisc.exp
+
+  // status and error codes from "winerror.h":
+%include ole-err.exp
+end;

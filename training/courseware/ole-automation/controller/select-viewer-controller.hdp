@@ -1,0 +1,14 @@
+comment:	This file is generated, please don't edit
+library:	select-viewer-controller
+files:	library
+	thread-utilities
+	odbc-select-viewer
+	start
+base-address:	0x64FE0000
+start-function:	main-program
+linker-options:	$(guilflags)
+major-version:	0
+minor-version:	0
+compilation-mode:	tight
+target-type:	executable
+

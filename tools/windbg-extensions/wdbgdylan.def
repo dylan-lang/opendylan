@@ -1,0 +1,15 @@
+LIBRARY WDBGDYLAN
+
+DESCRIPTION 'WinDbg Dylan Extensions'
+
+EXPORTS
+    mangle
+    demangle
+    length
+    depth
+    library
+    module
+    print
+    describe
+    where
+

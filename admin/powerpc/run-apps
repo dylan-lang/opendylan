@@ -1,0 +1,2 @@
+repeat run-app cmu-test-suite dylan-test-suite-app testworks-test-suite-app functional-extensions-test-suite-app streams-test-suite-app print-test-suite-app format-test-suite-app
+

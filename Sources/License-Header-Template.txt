@@ -1,0 +1,5 @@
+Copyright:    Original Code is Copyright (c) YYYY Functional Objects, Inc.
+              All rights reserved.
+License:      Functional Objects Library Public License Version 1.0
+Dual License: GNU Lesser General Public License
+Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND

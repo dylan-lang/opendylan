@@ -1,0 +1,35 @@
+# Filename: dylan-cron-jobs.txt
+#   Author: Shri Amit(amit)
+#
+# Synopsis: The following file is parsed by schedule-cron
+#           script to determine the cron jobs to be submitted.
+#           These entries must be in the format:
+#             hostname  cron entry
+#           Note that entries for each site must contain an
+#           entry for instigate builds for the nightly builds
+#           to happen.
+# Revision: By: amit. On: Dec 05 1996. Rea: New file to replace
+#           the old site specific dylan-cron-jobs.<site>
+############################################################
+Site: functionalobjects.com
+oroboros 00 1 * * * /u/dylan/admin/builds/instigate-build
+
+Site: long.harlequin.co.uk
+casper 00 1 * * * /u/dylan/admin/builds/instigate-build
+
+# This site is being shutdown by The Powers That Be ...
+# Site: seattle.functionalobjects.com
+# skookum 00 1 * * * /u/dylan/admin/builds/instigate-build
+
+# This site has been shutdown by The Powers That Be ...
+# Site: menlo.functionalobjects.com
+# meteor 00 0 * * * /u/dylan/admin/builds/instigate-build
+
+Site: ed.harlequin.co.uk
+lordosis 00 1 * * * /u/dylan/admin/builds/instigate-build
+
+# There are no active Dylan developers at this site ...
+# Site: cam.harlequin.co.uk
+# ventral 00 1 * * * /u/dylan/admin/builds/instigate-build
+
+#eof

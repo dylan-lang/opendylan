@@ -1,0 +1,19 @@
+// grid.idl
+
+// IDL defintion of a 2-D grid (in row major order):
+
+interface grid {
+	attribute short height;  // height of the grid
+	attribute short width;   // width of the grid
+
+	// IDL operations
+
+	// set the element [n,m] of the grid, to value:
+	void set(in short n, in short m, in long value);
+
+	// return element [n,m] of the grid:
+	long get(in short n, in short m);
+
+        short context_get_width() context ("Extra");
+};
+

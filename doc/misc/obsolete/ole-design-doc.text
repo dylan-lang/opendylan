@@ -1,0 +1,169 @@
+Abstract:
+
+  This is the design document for OLE2 integration effort for R0 of Dylanworks.
+  This document will not deal with related issues such as OLE/DUIM integration.
+
+  The Dylan to OLE2 binding for R0 will be designed around a straight-forward
+  conversion of the FFI for the OLE2 C prototypes.  This should really just be
+  an extension of the Win32 interface and the two should be stylistically
+  consistant especially wrt name and type mapping conventions.
+
+  The intent is to provide an API which would be familiar to someone with
+  experience with the C/OLE binding.
+
+What the User Sees:
+
+  At the user level, certain accomodations may be made to make the binding more
+  idiomatic wrt Dylan.  A good analogy might be the types of differences between
+  CLX and Xlib.  For example, simple structs passed into C may appear as
+  keywords in the corresponding exported functions.  Also, alien-pointer types
+  will probably be hidden from the user although they will be used extensively
+  in the implementation.
+
+  We will also provide macros for defining interfaces but it isn't clear to me
+  how or whether to reconcile interfaces and Dylan classes.  We need a MOP here.
+  Actually the problem isn't with making interfaces classes, but rather the fact
+  that Dylan method dispatch is nothing like the VTBL mechanism used by OLE in
+  C.  My hunch is that we will wind up with DEFINE INTERFACE and DEFINE
+  INTERFACE METHOD macros that do all the necessary FFI hair like load the
+  virtual tables.  I'll write some examples when this is a little clearer to me,
+  probably after I get a Dylan to poke at.
+
+  The error codes returned by the various OLE method/functions should be handled
+  as exceptions when appropiate.
+
+OLE Roles:
+
+  Dylan needs to address four different roles to be a 1st class OLE citizen.
+  It needs to
+
+    - function as a container of static OLE objects,
+    - be a server of static OLE objects,
+    - be able to expose OLE Automation objects,
+  and
+    - act as an OLE Automation controller.
+
+  Most of this functionality should able to be accomplished through use of the
+  OLE FFI.  There may be Windows conventions however to which Dylan must 
+  adhere.  For example, to provide OLE server functionality, Dylan "apps" will
+  need to provide an entry point through "WinMain" with the proper OLE
+  initializations.
+
+  I should also note that because it is a dynamic language, Dylan should be a
+  "natural" as an automation controller.
+
+C Interoperability:
+
+  An important goal for this OLE integration is interoperability with C code,
+  but it will require special care by the user if they are going to mix
+  structures defined in C and Dylan and mix C interface implementations with
+  Dylan callbacks.
+
+  The basic mechanism used by OLE is really quite simple.  An interface is
+  simply defined as a table of functions determined by the OLE protocol.  They
+  manner in which these interfaces are encapsulated in other objects however is
+  completely up to the user.  In addition there are common reference counters,
+  pointers and flags need to be maintained consistantly across the C/Dylan
+  frontier.  A C programmer wishing to use interfaces defined by Dylan would
+  have to know the implementation details.  A Dylan programmer wishing to use
+  existing C/OLE code may have to forego the higher level Dylan OLE constructs
+  and use the FFI directly.
+
+  Note that none of the preceding paragraph is of concern to interprocess 
+  communication with C programs.  That's the point of OLE in fact.
+
+  I believe that any name mapping from C to Dylan should be done so that
+  recreate the "C" name for an OLE entity from the Dylan is completely trivial
+  and clearly documented.  Allowable cases might be subtituting dashes for
+  underscores or using dashes to separate words.  I feel we are compelled to
+  preserve braindamage because we aren't completely documenting OLE ourselves.
+  Thus if we rename "STGM_READ" to "storage-mode-read-access-flag" the user
+  won't be able to look it up directly in the standard OLE references.
+
+OLE Controls:
+
+  Controls are an additional set of OLE interfaces in addition to which there
+  are a set of "MFC Classes that encapsulate OLE specifics".  While this are an
+  important extension to OLE, I still recommend we consider OLE controls as
+  "extra credit" for R0, given the magnitude of OLE 2.0,
+
+
+C++ Interoperability:
+
+  While not a goal of the R0 release, we should track C++ issues here.
+
+  First of all there is a minor syntax problem.  The C++ version of the
+  interfaces all use the implicit "this" whereas the C versions must pass the
+  instance as an argument.  The latter is actually more compatible with Dylan's
+  multimethod calling convention.   We probably won't accomodate the C++
+  syntax.
+
+  Will we need to redo the OLE/FFI interface when we get C++ up and running?
+  While this should be transparent from Dylan's POV, there may be
+  interoperability problems if the user is linking C++ OLE code which use
+  interfaces which are defined in C for Dylan.  Thus if the user writes C code
+  base on implementation conventions, even if they are standard conventions in
+  the C OLE world (under documented as it is), and we change the implementation
+  of OLE in Dylan, their code will no longer work.  Someone trying to merge C
+  OLE code and C++ OLE code would have a similar problem.
+
+  This doesn't leave us with very nice options.  We either ban the co-mingling
+  of C and Dylan OLE code, at least for R0.  Or we impose a source-level 
+  incompatibility on OLE C code if we rewrite the Dylan OLE interfaces in C++.
+  Or we maintain both C an C++ interfaces.  
+
+
+Implementation Strategy:
+
+  At this writing, it looks as though the general plan is to begin coding and
+  testing the interface in Mindy/Melange.  When the DW FFI is stabile, I'll stop
+  working on Mindy, port the work done to that point, then continue writing the
+  rest of the interface.
+
+  While a lot of the OLE interface may written en masse by machine conversion, I
+  will probably test and fine-tune the API in the order items are presented in
+  the Microsoft OLE2 reference.  The sections are grouped by functionality with
+  the more general interfaces described first.  There is also a natural breaking
+  point at the Automation functionality should we (God forbid) need a fallback.
+  This order is...
+
+    - Component Object Interfaces and Functions
+
+    - Data Transfer Caching Interfaces and Functions
+
+    - Linking Interfaces and Functions
+
+    - Persistant Storage Interfaces and Functions
+
+    - In-Place Interfaces and Functions
+
+    - Drag and Drop Interfaces and Functions
+
+  (Automation)
+
+    - Dispatch Interfaces and Functions
+
+    - Data Manipulation Functions
+
+    - Type Description Interfaces and Functions
+
+    - Type Building Interfaces and Functions
+
+
+Testing:
+
+It will be difficult to guarantee comprehensive, automated tests initially
+because the OLE 2 API is so big.  It is also going to be difficult becuase of
+the interprocess nature of OLE.  Having DUIM as a client of the OLE substrate
+will help a lot.
+
+We need to make sure we have the right combinatorics wrt language 
+interoperability in different processes.  That is, we need write OLE servers,
+containers and controllers in Dylan, C, C++ and Basic and be able to mix
+them without regard to the language of implementation.  To do this we
+should need to write only the Dylan components from scratch using exisisting
+example for the other languages.
+
+
+
+

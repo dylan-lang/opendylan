@@ -1,0 +1,431 @@
+User model of interactive development in DW aka connection model
+================================================================
+
+Version 1, 3/8/96 Roman Budzianowski
+Version 2, 4/9/96 Roman Budzianowski
+		Incorporated comments by tony, cfry, chiles.
+Version 3, 4/19/96 Roman Budzianowski
+		Rewrite/reorganization
+Version 4, 4/26/96 Roman Budzianowski
+		More tony's comments
+
+[ The issues covered in this document clearly overlap with those in
+the Project Manager document and Debugger document. Further work on
+this document has to wait until I see those documents. There are also
+issues related to compilation and interactive redefinitions - I am not
+sure if they are spelled out anywhere. ]
+
+In most traditional interactive Lisp development environments the
+application runs in the same address space as the environment. Dylan
+offers a different model of development and debugging, closer to the C
+world model, where the application always runs in a separate address
+space and the environment connects to it through a tether for the
+purposes of debugging. Additionally DW will support interactive
+development style. Static languages like C usually don't offer an
+incremental style of development.
+
+The purpose of this document is to present a user model of interactive
+development in the tethered architecture.
+
+Kansas limitations
+------------------
+
+I am assuming that for Kansas we are not going to support either
+source code versioning or groupware. Consequently the terms like
+Project don't imply that we support groupware. Any groupware would
+have to be supported outside of DW (through RCS-like tools). We might
+support some hooks, but this writup doesn't assume so. This is a
+single user tool.
+
+Also, we don't support any configuration management mechanism in
+Kansas. 
+
+However, it is assumed that the model of development presented here
+doesn't conflict with any third part tools or future extensions of
+DW. 
+
+General development/ connection model
+-------------------------------------
+
+The user may interact with DW either standalone or while connected to an
+application. The environment starts off in the standalone state. The
+connection happens upon explicit request from the user - the
+environment arranges for the application to be linked based on
+project's description, spawned and connected to the environment. The
+environment cannot connect to an already running application. The
+interactions while connected will be referred to as interactive
+session.
+
+The user can write code and compile it in standalone mode. During
+interactive sessions the user can write code, compile it, run it and
+debug it. The ability to interactively modify the running application
+requires low optimization, "loose" compilation mode. Optimized
+libraries may allow only limited dynamic modifications.
+
+Starting an interactive session may involve recompilation and linking
+of a library(s) into a new DLL. Since versioned Compiler Database is
+not supported the user cannot opt for using the previously built DLL
+since it might be out of synch with the project databases.
+
+More details will be provided in the Project Manager document.
+
+Model of the Compiler Database and Canonical Source Database
+-----------------------------------------------------------
+
+Both databases have layered architecture: the persistent layer and the
+interactive layer. However, the databases present only one view at a
+time to the user. During the interactive session the persistent layer
+is shadowed by the interactive layer. Upon disconnection the
+persistent layer may be updated to reflect persistent changes and the
+interactive layer is discarded. The user can see only the persistent
+layer.
+
+Model of source management
+--------------------------
+
+As mentioned above there is no versioning or groupware support in this
+model. 
+
+Source records are created in editor buffers. If the record is saved
+it becomes part of the Project Source. Until a record is saved it is
+maintained as part of the Workspace Source. Workspace Source is
+checkpointed and persistently saved as part of the user Workspace.
+
+Note, that even though we don't support groupware explicitly, the
+notions of Project Source and Workspace Source help to interface with
+third party versioning and groupware tools. The Project Source is
+intended to contain source which constitutes the application when
+delivered while Workspace Source is a private debugging and/or
+instrumentation and/or tentative code. If working in a group
+environment a developer would check the Project Pources into the
+common area using the third party tools.
+
+Compiling a source record updates the Canonical Source and Compiler
+Database. Both Canonical Source and Compiler Database have layered
+architecture - with interactive layer keeping track of compilations
+during interactive sessions (while connected to the Application
+Runtime). 
+
+When Project Source records are compiled, both standalone and
+interactively, persistent layers of Canonical Source DB and Compiler
+DB are updated. When a Workspace Source record or ephemeral record
+(like one in a command line listener) are compiled, only an
+interactive layers of the databases are updated.
+
+When an interactive session ends (i.e. upon disconnection) the
+interactive layers are discarded.
+
+The above description reflects the user model, not the underlying
+mechanism. In particular, during interactive session all changes might
+be kept in the interactive layer and the persistent layer would be
+updated if necessary upon disconnection.
+
+Compilation Model
+-----------------
+
+Dylan language definition specifies that the unit of compilation is a
+Dylan library. Consequently, compiling a source record is semantically
+equivalent to the compilation of the entire library.
+
+In standalone mode, the compiler will use the Compiler Database and a
+dependency tracking mechanism to recompile only parts of the
+library. The user may request the full batch compile of a library
+(e.g. to achieve better optimization).
+
+The Project Source of a Dylan library is defined by the set of active
+source records in the Project Source Database. Inactive records are
+not considered part of the library.
+
+Before spawning the application runtime, the project DLL (*) is
+synchronised with the Compiler Database (and Canonical Source), which
+may involve a new build of the project. The DLL might have gotten out
+of synch due to new source records added to the Project Source and
+compiled since last build.
+
+When the application runtime is started all active Project Source
+records have beed compiled and are reflected in the Runtime. 
+All code entered by the user and compiled during interactive session 
+is shipped over the tether and dynamically linked with the Application
+runtime. Entering a source record through a command line listener
+implicitly causes compilation. The user has to explicitly request
+compilation of new or modified editor buffers.
+
+There are certain limitations on the type of redefinitions allowed
+during interactive session (c.f. other documents) - in each case the
+user will be warned.
+
+The Compiler Database and the Canonical Source always reflect the
+current state of the application runtime during interactive
+session. However, only compilations of new or modified Project Source
+records are stored in the persistent layers of the Compiler DB and
+Canonical Source DB. Compilations of ephemeral source records and
+Workspace source records are discarded upon disconnection.
+
+
+Starting an interactive session
+-------------------------------
+
+The DLL which constitutes the project is synchronised with the active
+Project sources, which may require a new build. The application
+runtime is linked according to the Project definition. If necessary
+the used DLLs are synchronized with their project sources.
+
+Note: more information in the Project Manager document.
+
+The linked image is spawned and the environment connects to it through
+the tether. It is not possible to connect to a running application.
+
+The initialization code starts executing in the main thread. 
+
+Note that at this point there are only main thread and possibly some
+application threads running. There are no interactors open on any
+threads in the application.
+
+The user may stop the application at any time which will suspend
+all the threads in the runtime. If the user established a breakpoint
+in his code, the application will be stoped and a interactor/debugger
+open on the thread which had the breakpoint.
+
+Interacting with threads in the application
+-------------------------------------------
+
+[See Debugger document for more information]
+
+A thread in the application may be in one of the following states:
+
+1. Suspended by the environment
+2. Blocked, waiting for synchronisation
+3. Stopped (suspended by the application)
+4. Running (able to run)
+
+The user may be able to interact with a thread when it is suspended by
+the environment. The environment may suspend a thread either beacuse
+of direct user request (Interrupt), or in response to unhandled error
+condition, or when a breakpoint is encountered.
+
+Ability to interact with a suspended thread depends on the code
+location. We will clasify code locations in two dimensional space: 
+
+1. A code location may be Known or Unknown. A Known location
+corresponds to a known place in the source code. These known points
+are recorded by the compiler in order to support source code stepping.
+
+2. A code location may be Interactive or Non-interactive. Known
+locations may be either Interactive of Non-interactive. All Unknown
+
+Only Interactive locations allow for evaluation of expressions in
+their dynamic and lexical environments. Examples of interactive
+locations are: 
+ * The dynamic GF dispatcher
+ * Entry points for non-optimized calls to a functions (e.g. an XEP)
+ * The "unhandled condition" handler
+
+The user my find himself in an Interactive location in the following
+situations:
+
+1. The developer requested an interrupt
+
+2. The program signalled an unhandled condition
+
+3. The developer stumbled onto an interactive point during single stepping,
+or at a breakpoint
+
+In particular it is not guaranteed that any breakpoint location or
+a function or expression which was single steped into will be
+interactive. The interactor will deactivate the evaluation interface
+in this case.
+
+Debugging Model
+---------------
+
+The user may open a debugger/interactor on any suspended thread. If a
+thread signals a condition or encounters a breakepoint the environment
+will start a debugger/interactor on this thread.
+
+The debugger interactor will show the stack trace, allow the user to
+walk the stack, see the local variables and evaluate expressions in
+the dynamic context of the top stack frame and lexical environment of
+the selected stack frame.
+
+The ability to evaluate expressions in the debugger will depend on the
+code location of the suspended thread. When the location is
+Interactive the environment will start a control loop with an abort
+handler.
+
+There can only be one interactor associated with a thread. 
+
+Evaluation Threads 
+------------------
+
+The user may request a fresh thread for the purposes of evaluationg
+expressions. The environment will start a new thread in the
+Application Runtime on behalf of the user. The thread will "run" a
+control loop with an abort handler. A new interactor/listener will be
+open for interactions with this thread. The interactor will also
+support debugging if the thread is suspended in a debugging context. 
+
+Executing expressions in the Interactor
+---------------------------------------
+
+The user may evaluate expressions in the context of a thread suspended
+in an Interactive location. This can correspond to the initial context
+of an evaluation thread or to listed above contexts of any thread.
+
+The evaluation context consists of the current dynamic environment of
+the suspended thread and of the lexical environment of the selected
+function frame.
+
+The interactor sessions may be logged on request.
+
+Compiler Namespace and the interactors
+--------------------------------------
+
+The compiler namespace, by default, is derived from the library/module
+lexical context of the selected function stack frame. The user may
+access variables in other namespaces by explicitly qualifying them (see
+naming conventions document). The user may also set the compiler
+namespace explictly. In this case the namespace is NOT modified when the
+lexical context changes and the lexical environment for the purposes
+of evaluation/compilation is constructed by shadowing the selected
+namespace by the local variables bindings. Note that this may result
+in unexpected behavior.
+
+Shutting down the Runtime
+----------------------------
+
+When the user shuts down the Application Runtime the following
+happens. The Compiler database and the Canonical Source it is pointing
+to is reversed to the state from before starting the Remote
+Application, except for the modified, saved and compiled Project
+Source records and new project source records if created and
+compiled. 
+
+Terms
+=====
+
+Project Source - the official source code for the project saved and
+maintained in a Source DB. Note that at any given time the project DLL
+and Compiler Database may be out of sync with Project Source Code.
+Project Source is used in the build process.
+
+Canonical Source - Source code that has been seen by the compiler and
+reflected in the Compiler Database. Rebuilding the project causes the
+Canonical source to be updated, i.e. synced with the Project Source.
+During an interactive session the Canonical Source is updated to
+include new definitions compiled by the user and is reflected in the
+application runtime.
+
+Workspace Source - source which is not saved in the Project Source. It
+may include a new definition or an unsaved modification of a Project
+Source record. A source record may belong either to the Project Source
+or Workspace source if not saved in the Project Source. 
+
+Ephemeral Source - code entered by the user into an interactor during
+interactive session. It is compiled and reflected in the Compiler
+Database and the Application Runtime, but not saved persistently.
+
+Inactive Source - a Project Source record marked as inactive
+(commented out). It is not considered part of Project Source for
+compilation parposes, even though it is maintained persistently as
+part of the Project Source DB.
+
+Compiler Database - aka Derived DB; database containing the results of
+compilation.
+
+Application Runtime - an executing application spawned by the
+environment to which the environment is connected through a tether.
+
+Application - program under development; at any given point the
+Runtime represents an application being developed; it consists of a
+number of Dylan and non-Dylan DLLs. A minimal application consists of
+a DLL representing the dylan library and another DLL with user defined
+library. The form of delivery of an application might be either an EXE
+or DLL. 
+
+Interactive Session - this term refers to user interactions with the
+environment while connected trough a tether to an Application Runtime.
+
+standalone Session - this term refers to user interactions with the
+environment while not connected to an Application Runtime.
+
+Thread State - a thread may be Running, Suspended by the environment
+or Stopped. 
+
+Main Thread - Each application has a main thread created by the
+operating system; execution of the initialization code begins in this
+thread. The initial entry point is executed in the main thread.
+
+Application thread - a thread spawned by the user code on the user's
+init function. This includes a user code entered interactively. 
+
+Evaluation thread - thread spawned on behalf of the Environment in the
+application address space for the purpose of creating a global
+execution environment and for running a system evaluation loop with an
+abort handler.
+
+Tether - a software subsystem through which the environment is
+connected to the Runtime. 
+
+Incremental Compilation - a feature of the compiler which allows it to
+recompile only parts of a Dylan library based on some dependency
+analysis, even though semantically it is equivalent to recompilation
+of the whole library as the language definition requires.
+
+Interactive Compilation - compilation of a source record while
+connected to an Application Runtime which results in updating the the
+Application Runtime.
+
+Standalone Compilation - compilation of a Project Source record while
+not connected to the runtime resulting in updated Compiler Database or
+errors. The compilation may be actually incremental if the compiler is
+capable of it. ****
+
+Batch Compilation - recompilation of all active Project Sources which
+produces new Compiler Database (it is semantically equivalent to
+standalone compilation).
+
+Build - Emitting a DLL or EXE based on the results of standalone or
+Batch Compilation of the Project Source. At this point the Project
+Source, the Compiler Database, the Canonical Source and the DLL are
+all in sync.
+
+Library Initialization - A process of executing the top level
+executable expressions in the library. Declarations are not considered
+executable.(*) 
+
+[* Why aren't declarations considered executable? How do they get
+executed, then? During compile time ? Do we need to distinguish
+declarations from code that is executed in runtime ?]
+
+Library Entry Point - A library may have a distinguished entry point
+specified by the user. It is executed after Library Initialization.
+
+Compilation Namespace - library/module pair reflecting global lexical
+context. It is determined from the selected function frame or it is
+explicitly set by the user.
+
+Dynamic Environment - The set of active cleanups, the active handlers
+and restarts, and the current fluid binding state.
+
+Lexical environment - compilation namespace shadowed by the set of
+local lexical bindings in a function (or block) context. 
+
+Execution Context - consists of a thread, a dynamic environment and a
+lexical environment. The dynamic environment is always the one most
+recently established. The lexical environment is determined based on
+the selected stack frame (function context) and the compilation
+namespace.
+
+Global Execution Context - Execution context with Global Dynamic
+Environment and Global lexical environment (i.e. compilation
+namespace). The compilation namespace is selected by the user while
+starting a new interactor.
+
+Interactor - an interface for interacting with a thread in the
+Application Runtime for the purpose of evaluating expressions,
+inspecting the stack trace and stepping through the code.
+
+Workspace - the state of an user interactions with the environment
+consisting of a project, Workspace Source, etc. The workspace is saved
+and checkpointed. 
+

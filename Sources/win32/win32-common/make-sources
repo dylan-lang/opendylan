@@ -1,0 +1,43 @@
+
+#  Dylan libraries for interfacing with the Win32 API (Microsoft Windows)
+#
+#  This file controls the generation of source files that are created
+#  automatically by adapting information from the Microsoft header files.
+
+# Copyright: 1996, 1998 Functional Objects, Inc.  All rights reserved.
+
+# $HopeName: !make-sources(D-kan.2) $
+
+
+WIN32_COMMON=windef.dylan winerror.dylan comlib.dylan
+
+all: $(WIN32_COMMON)
+
+common: $(WIN32_COMMON)
+
+COMDIR=.
+
+include sources.mak
+
+
+comlib.dylan: comlib.src windef.exp winnt.exp winerror.exp 
+
+windef.dylan: $(MSH)\windef.h $(MSH)\winnt.h $(WINPAT) $(PATTERNS) \
+		wincom.pat make-sources
+	$(GEMA) -f wincom.pat -f $(WINPAT) -f $(PATTERNS)  $(FULL_OPTIONS) \
+		-omit HMODULE -omit HCURSOR -omit HGDIOBJ -omit HANDLE \
+		-omit PLARGE_INTEGER -omit PULARGE_INTEGER -omit USN \
+		-omit _RECTL -omit LPCRECTL -omit pascal -omit PASCAL \
+		-omit PLONGLONG -omit PDWORDLONG -omit POINTER_64_INT \
+		-f modcopyr.pat  -module win32-common  $(MSH)\windef.h $@
+
+# Note: `USN' is only used in BackOffice.  The other "-omit" options above
+# are to avoid duplicating definitions in "first.dylan" or "moretype.dylan"
+# or to exclude unwanted junk.
+
+winerror.dylan: $(MSH)\winerror.h $(WINPAT) $(PATTERNS) wincom.pat
+	$(GEMA) -f wincom.pat -f $(WINPAT) -f $(PATTERNS) \
+		-f modcopyr.pat  -module win32-common  $(MSH)\winerror.h $@
+
+clean:
+	rm -f $(WIN32_COMMON) *.bak win*.exp

@@ -1,0 +1,76 @@
+<HTML>
+<HEAD>
+	<TITLE>Functional Developer Example: ocx-scribble</TITLE>
+	<LINK REL="stylesheet" TYPE="text/css" HREF="../../examples.css">
+</HEAD>
+
+<BODY>
+
+<H2>ocx-scribble library</H2>
+
+<HR ALIGN="CENTER">
+
+<P>This project contains an example that demonstrates a program written
+using DUIM which can be used as an OLE Control (also known as an OCX or
+ActiveX Control).</P>
+
+<P>This example uses the <b>DUIM-OLE-Control</b> library which is
+documented in the Functional Developer "OLE, COM, ActiveX and DBMS"
+reference manual.</P>
+
+
+<P>This is a simple drawing program, where the user can do arbitrary
+free-hand line drawing by dragging the mouse.  The file
+<em>scribble.dylan</em> has only a couple of modifications from the
+original non-OLE version (in the DUIM example <b>scribble</b> in
+<em>Examples\duim\scribble\</em>): the scribble frame inherits from
+<code>&lt;ocx-frame&gt;</code> instead of
+<code>&lt;simple-frame&gt;</code>, and a couple of calls to
+<code>note-embedded-data-changed</code> have been inserted.  The file
+<em>storage.dylan</em> implements persistent storage and the file
+<em>run.dylan</em> adds some additional support for use as an OLE
+Control.  This control defines one read-only property, which is the
+number of lines drawn, and one method, which erases the drawing.</P>
+
+<P>Building this library produces a file named <em>ocx-scribble.dll</em>.
+You might want to manually rename it to <em>scribble.ocx</em>.</P>
+
+<P>In order for the control to work when invoked from a container
+program, all of the libraries used by your control need to either be in
+the same directory as the control DLL file, or else in a directory which
+is in the system PATH (not the individual user's PATH on NT). The
+simplest way to accomplish this is to use the "Project &gt; Build
+Release" command to create a release directory. If you wish, you can
+move that directory to any location you want, but you must do so
+before you attempt to register the control.</P>
+
+<P>To register the control, use the <code>regsvr32</code> command line
+utility like this:</P>
+
+  <blockquote><code>regsvr32 scribble.ocx</code></blockquote>
+
+<P>(The complete pathname will need to be given if the file is in a
+different directory that is not in the PATH.)  This will cause the
+appropriate entries to be made in the Windows System Registry.  (For
+use in a batch script, the "<code>/s</code>" option may be used to
+suppress the dialog box reporting completion.)  The full pathname of
+the control is recorded, so you must unregister the control before you
+move or delete it.  You can unregister it by doing:</P>
+
+<BLOCKQUOTE><CODE>regsvr32 /u scribble.ocx</CODE></BLOCKQUOTE>
+
+<P>This invokes the control to unregister itself, so won't work
+if the control has been deleted first.</P>
+
+<P>Now you should be able to insert the object into any OLE Control container
+program.  For example, there is a "Test Container" application included
+with Visual C++ which can be used.  It can also be embedded in an OLE
+document container, such as WordPad, but the properties will not be
+accessible.  In the "Insert object" dialog, this program will be identified
+as "Dylan DUIM OCX Scribble", which comes from the <code>documentation</code>
+option in the <code>define coclass</code> form in file <em>run.dylan</em>.</P>
+
+
+</BODY>
+
+</HTML>

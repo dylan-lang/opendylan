@@ -1,0 +1,11 @@
+
+! The following are to imitate features of LaTeX2HTML by Nikos Drakos:
+
+\\htmladdnormallink\W\{#\}\W\{\W<P>\W\}=\<A HREF\="$2"\>$1\</A\>
+\\htmladdnormallinkfoot\W\{#\}\W\{\W<P>\W\}=\<A HREF\="$2"\>$1\</A\>
+\\htmladdimg\W\{\W<P>\W\}=\<A IMG\="$1"\>$1\</A\>
+\\begin\W\{rawhtml\}*\\end\W\{rawhtml\}=*
+\\begin\W\{latexonly\}*\\end\W\{latexonly\}=;
+\\begin\W\{htmlonly\}=;
+\\end\W\{htmlonly\}=;
+

@@ -1,0 +1,15 @@
+pushd /home/nosa/dylan/build
+
+
+while [ "$#" -ne 0 ]; do
+
+  rm $1.tar
+  unarchive $1
+
+# link $1
+  shift
+
+done
+
+
+popd

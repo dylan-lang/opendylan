@@ -1,0 +1,52 @@
+
+// This file lists names that are described as being obsolete in the
+// X and Motif header files.
+
+// in Intrinsic.h
+XtDestroyGC
+XtConverter
+XtPeekEvent
+XtStringConversionWarning
+XtAppAddConverter
+XtAddConverter
+XtConvert
+XtDirectConvert
+XtAddActions
+XtProcessEvent
+XtMainLoop
+XtAddTimeOut
+XtAddInput
+XtNextEvent
+XtPending
+XtCreateApplicationShell
+XtInitialize
+XtSetErrorMsgHandler
+XtSetWarningMsgHandler
+XtErrorMsg
+XtWarningMsg
+XtSetErrorHandler
+XtSetWarningHandler
+XtError
+XtWarning
+XtGetErrorDatabase
+XtGetErrorDatabaseText
+XtAddWorkProc
+XtDestroyGC
+XtSetSelectionTimeout
+XtGetSelectionTimeout
+
+// in Xutil.h
+PAllHints
+DontCareState
+ZoomState
+InactiveState
+
+// in Xm.h
+FMT8BIT
+FMT16BIT
+
+// in various Motif headers
+_XmCascadeButtonWidgetRec
+_XmDialogShellWidgetRec
+_XmMenuShellWidgetRec
+_XmRowColumnWidgetRec

@@ -1,0 +1,328 @@
+    Implementation Overview of Thread Portability Layer for Win32
+    =============================================================
+
+
+Threads
+-------
+
+primitive-initialize-current-thread:
+Use GetCurrentThread to get a handle on the current thread. However
+this handle turns out to be a special value which can only be used by
+the calling thread. To get a handle which can be used by other threads
+to refer to this one we need to duplicate the handle. We store this in
+thread local storage so we can get it back easily. Also, we put it in
+one of the Dylan <thread> object slots so that thread-join-single and
+thread-join-multiple can get the handles of the thread objects they
+are given. Finally we need to allocate memory for the Dylan thread
+variables and initialise the variables to their default values. See
+the section on Thread Variables for a description of how Dylan thread
+variables are implemented.
+
+
+primitive-make-thread:
+Basically maps onto the function CreateThread(...). The new thread
+starts by executing a trampoline function which calls
+primitive-initialize-current-thread, then the dylan function, and
+tidies up after the dylan function returns.
+
+
+primitive-destroy-thread:
+Just calls CloseHandle() on the duplicate handle we created.
+
+primitive-thread-join-single:
+Maps to WaitForSingleObject(threadHandle, INFINFITE);
+
+primitive-thread-join-multiple:
+This primitive is passed a <simple-object-vector> of <thread> objects
+to wait for. These have to be mapped to windows thread handles so
+they can be used in a call to WaitForMultipleObjects.
+
+primitive-thread-yield:
+Maps to Sleep(0) which gives up the remainder of the thread's time
+slice.
+
+primitive-current-thread:
+Return thread handle kept in thread local storage.
+
+primitive-sleep:
+Maps to Sleep(time).
+
+
+
+Simple locks
+------------
+
+Each simple lock has the following fields:
+  owner      : Handle on thread
+  lock_count : integer
+  semaphore  : windows semaphore object
+
+The idea is to keep a count of the number of threads which have
+requested the lock. The lock count is set to -1 to indicate that there
+are no claims on the lock, and incremented by one each time a thread
+tries to claim the lock.  If the increment results in the count going
+to zero, then the thread knows no-one else had the lock and it can
+take ownership by setting the owner field. If the lock has already
+been claimed by someone else the thread waits on the semaphore object.
+
+When a thread releases the lock, it decrements the lock count. If the
+count indicates there are other threads waiting for the lock it
+releases the semaphore so that one of the waiting threads can get the
+lock.
+
+Using the InterlockedIncrement and InterlockedDecrement operations on
+lock_count prevents more than one thread from accessing the variable
+at a time, and we can tell when the result of the operation is zero,
+or greater than zero by the return value.
+
+primitive-make-simple-lock:
+1. allocate storage for data stucture
+2. make sure lock_count is initialised to -1, and owner to 0.
+3. create windows semaphore
+
+primitive-destroy-simple-lock:
+1. Close the handle on the semaphore
+2. Free allocated storage
+
+primitive-wait-for-simple-lock:
+1. if (owner == current_thread)
+      // error - thread already owns the lock
+2. if (InterlockedIncrement(lock_count) == 0)    // lock_count incremented from -1 to 0?
+      // we got the lock
+      owner = current_thread;
+    else
+      // someone else has the lock.
+      WaitForSingleObject(semaphore);
+      owner = current_thread;
+
+primitive-release-simple-lock:
+1. if (owner != current_thread)
+     // error - don't own the lock
+2. decRes = InterlockDecrement(lock_count);
+3. owner = 0;
+4. if (decRes >= 0)    // there are threads waiting on the lock
+      release semaphore
+
+prmitive-owned-simple-lock:
+  1. return ( owner == current_thread )
+
+
+
+Recursive locks
+---------------
+
+These are represented the same way as simple locks, but with an
+extra field (initialized to zero) which counts the number of times the
+owning thread has claimed the lock. Each time the thread releases the
+lock, the count is decremented. Only when the count returns to zero is
+the lock made available for other threads to claim (by decrementing
+the lock_count, and if necessary releasing the semaphore).
+
+primitive-make-recursive-lock:
+1. allocate storage for data stucture.
+2. make sure lock_count is initialised to -1, owner to 0 and
+   recursive_count to 0.
+3. create windows semaphore
+
+primitive-destroy-recursive-lock:
+1. Close the handle on the semaphore
+2. Free allocated storage
+
+primitive-wait-for-recursive-lock:
+1. if (InterlockedIncrement(lock_count) == 0)    // lock_count incremented from -1 to 0?
+      // we got the lock
+      owner = current_thread;
+      recursive_count = 1;
+    else
+      if (owner == current_thread)
+        // thread is claiming lock recursively
+        recursive_count++;
+      else
+        // someone else has the lock.
+        WaitForSingleObject(semaphore);
+        owner = current_thread;
+        recursive_count = 1;
+
+primitive-release-recursive-lock:
+1. if (owner != current_thread)
+     // error - don't own the lock
+2. recursive_count--
+3. if (recursive_count != 0)
+      // still retain the lock. Just update the lock_count
+      InterlockedDecrement(lock_count);
+    else
+      // Give up lock
+      decRes = InterlockDecrement(lock_count);
+      owner = 0;
+      if (decRes >= 0)    // there are threads waiting on the lock
+        release semaphore
+
+prmitive-owned-recursive-lock:
+  1. return ( owner == current_thread )
+
+
+
+Semaphores
+----------
+
+The primitives for semaphores map onto the win32 semaphore functions
+as shown in the table below:
+
+   ------------------------------------------------------------------
+  |       primitive          |         Windows function              |
+  |--------------------------+---------------------------------------|
+  | wait-for-semaphore       | WaitForSingleObject(handle, INFINITE) |
+  | wait-for-semaphore-timed | WaitForSingleObject(handle, timeout)  |
+  | release-semaphore        | ReleaseSemaphore(handle)              |
+  | make-semaphore           | handle = CreateSemaphore(...)         |
+  | destroy-semaphore        | CloseHandle(handle)                   |
+   ------------------------------------------------------------------
+
+
+
+Implementing notifications using single-spin locks
+--------------------------------------------------
+
+Each notification is represented by a structure which has the fields:
+  notifier      : manual reset event
+  anti-notifier : manual reset event
+  target        : integer with values        -1 => release-all
+                                              0 => unclaimed release
+                                              1 => claimed release
+  count         : integer // count of threads waiting for the notification
+
+
+Strategy:
+
+Use two manual reset events which are always kept
+out-of-phase. (anti-notifier is initialized in the signalled
+state). The anti-notifier is used to block calls to wait-for and
+release when a previous wait-for is in the middle of processing a
+previous release.
+
+Release and release-all first check that a previous wait-for is not in
+the middle of processing a previous release (by waiting for the
+anti-notifier). Then they check that there is at least one thread
+waiting to be released before setting the target flag to indicate the
+type of the release. Finally they each unset the anti-notifier and signal
+(not pulse) the notifier event.
+
+wait-for on a notification first checks that a previous wait-for is
+not in the middle of processing a previous release (by waiting for the
+anti-notifier). Next it increments the count, to indicate it's
+interest in receiving events. It then gives up the lock and starts
+waiting for the notifier event. These 2 operations do not have to be
+performed atomically, because there is no possibility of the notifier
+event being cleared before the wait-for sees it, unless another thread
+happens to successfully wait-for a release (in which case the notifier
+event was irrelevant anyway).
+
+Once wait-for has received the notifier event, it looks at the target to
+determine the type of release. If it was a release which was seen first by
+another thread (target == 1), then it loops back to wait for another event.
+Otherwise it was a valid wake-up, so it:
+  1. decrements the count
+  2. UNLESS (it was a release-all and the count is still non-zero)
+       resets the notifier and signals the anti-notifier
+  3. claims the lock. 
+
+
+primitive-wait-for-notification:
+  1. WaitForSingleObject(anti-notifier)
+  2. InterlockedIncrement(&count)  // (Maybe we don't need the interlock, 
+                                   // 'cos we still own the lock ??)
+  3. reset simple-lock 
+  4. WaitForSingleObject(notifier)
+  5. tmp1 = InterlockedCompareExchange(&target, 1, 0)
+  6. IF (tmp1 == 1) 
+       GOTO 4    // another thread received a release
+     ELSE
+       // We were notified - either as a release-all or by
+       // being the first to see a release
+  7. tmp2 = InterlockedDecrement(&count)
+  8. UNLESS ( (tmp1 == -1) && (tmp2 > 0) )  
+        // we know it's not a release-all with more threads to be woken up
+        ResetEvent(notifier)
+        SetEvent(anti-notifier)
+  9. Claim simple-lock (NB we already own local_lock, so careful with this)
+
+
+primitive-release-notification:
+  1. wait for anti-notifier
+  2. IF (count > 0)
+       target = 0
+       ResetEvent(anti-notifier)
+       SetEvent(notifier)
+
+
+primitive-release-all-notification:
+  1. wait for anti-notifier
+  2. IF (count > 0)
+       target = -1
+       ResetEvent(anti-notifier)
+       SetEvent(notifier)
+
+
+NT / Windows 95 considerations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The operation 'InterlockedCompareExchange' is not available on Windows
+95, but is essential to the design above. However, it can be
+implemented by hand - it will have to be written in assembler. For
+efficiency reasons, it may make sense to re-implement
+'InterlockedIncrement' and 'InterlockedDecrement' too.
+
+
+
+Thread variables
+----------------
+
+The problems:
+
+Thread variable allocations (corresponding to definitions) can be
+interleaved with thread creation. Also the number of thread variables
+is not statically determinable.
+
+The semantics:
+
+Whenever a thread variable is allocated, it's initial value must be
+given to all threads which are in existence. Whenever a new thread is
+created it must assume all the default initial values known so far.
+
+A solution:
+
+We use a single windows thread-local key to store a vector of all the
+Dylan thread local variables. The windows runtime system will maintain
+indexes into this vector - and will return these to Dylan as the
+thread-local variable handles.
+
+A vector will be maintained of the default initial values, as well as
+having a private vector for every thread. 
+
+On thread creation, the function passed to CreateThread will:
+  1. Allocate a new vector of thread-local storage
+  2. Initialize it with a copy of the values in the default vector
+  3. Under control of the lock THREADVECTORLOCK, insert this new
+     vector into a linked list of all the currently active thread
+     vectors. 
+  4. Call the Dylan function
+  5. Under the control of THREADVECTORLOCK, remove the vector from
+     the list.
+  6. Free the vector
+
+On allocation of a new thread variable:-
+
+  1. Increment the current index into the vector (global variable
+     vec_index) 
+  2. Initialize the default vector at index vec_index with the initial
+     value. 
+  3. Under control of THREADVECTORLOCK, iterate over all the thread
+     vectors in the list, and initialize the element at index vec_index
+     with the initial value
+
+What to do when we overflow the variable vector:-
+
+For now, we assume that we don't. We can allocate each vector as a
+suitably big size (e.g. 1024), and assume that we won't ever have that
+many fluid variables. This is a short term solution, but it
+does make life a lot simpler.

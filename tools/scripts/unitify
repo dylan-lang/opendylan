@@ -1,0 +1,12 @@
+#!/usr/local/bin/bash
+
+first=1
+for file in $*; do
+  if [ $first = 1 ]; then
+    first=0
+  else
+    command="$command -and"
+  fi
+  command="$command -unit $file"
+done
+echo $command

@@ -1,0 +1,116 @@
+
+#  Dylan library for interfacing with Microsoft OLE Automation
+#
+#  This file controls the generation of source files that are created
+#  automatically by adapting information from the Microsoft header files.
+#
+#  To create the Dylan FFI files:
+#	make -f make-sources
+
+# Copyright: 1996, 1997, 1998 Functional Objects, Inc.  All rights reserved.
+# $HopeName: D-lib-ole-automation!make-sources(trunk.4) $
+# $Date: 2004/03/12 00:09:46 $
+
+
+# files automatically generated from the C++ headers:
+DYLAN_FILES=library.dylan auto-err.dylan auto-intf.dylan amisc.dylan
+C_FILES=c-auto.c
+
+# text processing utility:
+GEMA=gema
+
+# directory for files common to the various Win32 libraries:
+WIN32COMMON=..\..\win32\win32-common
+
+# directory for the COM library:
+COMDIR=..\com
+
+# directory containing the header files from the Microsoft Win32 SDK:
+MSTOOLS_H=..\..\win32\microsoft-headers
+
+PATTERNS=$(WIN32COMMON)\patterns.pat
+OLEPAT=$(COMDIR)\ole.pat
+
+AUTO: $(DYLAN_FILES) $(C_FILES)
+
+all: AUTO
+
+#    ---------------
+
+#    error codes
+
+auto-err.dylan: $(MSTOOLS_H)\winerror.h auto-err.pat
+	$(GEMA) -f auto-err.pat  -f $(COMDIR)\exports.pat \
+		-exports auto-err.exp  -f $(WIN32COMMON)\copyright.pat \
+		-in $(MSTOOLS_H)\winerror.h   -out $@ 
+
+auto-err.exp: auto-err.dylan
+	touch $@
+
+#    library and module declarations
+
+library.dylan: library.src $(WIN32COMMON)\include.pat \
+		auto-err.exp auto-intf.exp amisc.exp
+	$(GEMA) -f $(WIN32COMMON)\include.pat library.src $@
+
+#    interface declarations
+
+c-auto.c: $(COMDIR)\cinterf.pat $(MSTOOLS_H)\oaidl.h $(COMDIR)\unknwn.vtb \
+		$(COMDIR)\interfaces.pat
+	$(GEMA) -f $(COMDIR)\cinterf.pat  -insert auto-aux.c  \
+		-f $(WIN32COMMON)\copyright.pat -f $(COMDIR)\unknwn.vtb \
+		-prolog '#include <objbase.h>' \
+		-in $(MSTOOLS_H)\oaidl.h  -out $@
+
+auto-intf.dylan: $(COMDIR)\dinterf.pat $(MSTOOLS_H)\oleauto.h \
+		$(COMDIR)\interfaces.pat \
+		$(MSTOOLS_H)\oaidl.h $(COMDIR)\objidl.vtb make-sources
+	$(GEMA) -f $(COMDIR)\dinterf.pat  -exports auto-intf.exp \
+		-f $(WIN32COMMON)\copyright.pat  -module OLE-Automation \
+		-p 'output-type:\<EXCEPINFO\>=@fail' \
+		-p 'output-type:\<VARIANT\>=@fail' \
+		-p 'output-type:\<BINDPTR\>=@fail' \
+		-p 'scalar:\JDESCKIND=$$0@end' \
+		-p 'scalar:\JTYPEKIND=$$0@end' \
+		-p 'drefouttype:\<LPUINT\>=\ \:\:\ \<integer\>' \
+		-p 'drefouttype:\C\<LPINT\>=\ \:\:\ \<integer\>' \
+		-out $@  $(MSTOOLS_H)\oleauto.h $(MSTOOLS_H)\oaidl.h
+
+$(COMDIR)\unknwn.vtb:
+	( cd $(COMDIR) ; $(MAKE) -f make-sources unknwn.vtb )
+
+# exported symbols written as a side-effect of OLE conversion:
+auto-intf.exp: auto-intf.dylan
+	touch $@
+
+#    miscellaneous functions, structures, and constants
+
+amisc.dylan: auto-misc.dylan $(COMDIR)\collage.pat $(OLEPAT) $(PATTERNS) \
+	   auto.pat $(MSTOOLS_H)\oleauto.h $(MSTOOLS_H)\oaidl.h make-sources
+	$(GEMA) -f auto.pat  -f $(PATTERNS)  -f $(COMDIR)\collage.pat \
+		-f $(OLEPAT)  -idir $(MSTOOLS_H) \
+		-p 'export-slot:u=u-value@end' \
+		-p 'export-slot:vt=vt-value@end' \
+		-out $@  -exports amisc.exp  -input auto-misc.dylan
+
+amisc.exp: amisc.dylan
+	touch $@
+
+#    ---------------
+
+# tags for Emacs Meta-.
+
+DTAGS=/u/dylan/tools/gnuemacs/dtags
+SOURCE_FILES=variant.dylan
+
+TAGS: $(DYLAN_FILES) $(SOURCE_FILES)
+	$(DTAGS) $(SOURCE_FILES) $(DYLAN_FILES)
+
+tags: TAGS
+
+
+#    ---------------
+
+clean:
+	rm -f $(DYLAN_FILES) $(C_FILES) *.bak *.exp *.vtb c-auto.h
+

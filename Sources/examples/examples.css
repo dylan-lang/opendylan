@@ -1,0 +1,23 @@
+body { 
+  margin-left: 4%; 
+  margin-right: 4%; 
+/*  font-family: Trebuchet, Arial, sans-serif; */
+  background: #FFFFFF;
+  foreground: #000000
+}
+
+h1, h2, h3, h4 { font-family: sans-serif }
+
+h1, h2 { color: #990066 }
+h3     { color: black }
+pre    { color: black }
+pre    { font-family: monospace }
+/*em   { font-style: italic; font-weight: bold } */
+strong { text-transform: uppercase; font-weight: bold }
+/* td  { background: #FFBFBF } */
+th     { background: #A0A0A4 } 
+caption { text-decoration: underline; margin-top: 1em }
+p.splash { color: #990066}
+p.banner { margin-left: -4% }
+p.pink {color:#990066}
+

@@ -1,0 +1,206 @@
+<library-pack name="Environment" title="IDE">
+  <description>The Functional Developer IDE</description>
+  <copyright>Copyright (c) 1995-2001 Functional Objects, Inc. All rights reserved.</copyright>
+  <company>Functional Developer</company>
+  <libraries>
+    <library name="environment-commands">
+      <sources location="environment/commands">
+	<project>environment-commands.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+	<binary file="environment-commands.dll">
+	  <merge>dfmc-environment-projects</merge>
+	  <merge>dfmc-environment-database</merge>
+	  <merge>source-control-manager</merge>
+	  <merge>environment-manager</merge>
+	  <merge>environment-reports</merge>
+	  <merge>environment-protocols</merge>
+	</binary>
+      </release>
+    </library>
+    <library name="dfmc-environment-projects">
+      <sources location="environment/dfmc/projects">
+	<project>dfmc-environment-projects.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="dfmc-environment-database">
+      <sources location="environment/dfmc/database">
+	<project>dfmc-environment-database.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="source-control-manager">
+      <sources location="environment/source-control">
+	<project>source-control-manager.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="environment-manager">
+      <sources location="environment/manager">
+	<project>environment-manager</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="environment-reports">
+      <sources location="environment/reports">
+	<project>environment-reports</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="environment-protocols">
+      <sources location="environment/protocols">
+	<project>environment-protocols.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="environment-application-commands">
+      <sources location="environment/commands/application">
+	<project>environment-application-commands.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+	<binary file="environment-application-commands.dll">
+	  <merge>dfmc-environment</merge>
+	  <merge>dfmc-environment-application</merge>
+	  <merge>target-application</merge>
+	</binary>
+      </release>
+    </library>
+    <library name="dfmc-environment">
+      <sources location="environment/dfmc">
+	<project>dfmc-environment.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="dfmc-environment-application">
+      <sources location="environment/dfmc/application">
+	<project>dfmc-environment-application.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="target-application">
+      <sources location="environment/target-application">
+	<project>target-application.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="dylan-environment">
+      <sources location="environment/win32">
+	<project target="win32">dylan-environment.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+	<binary file="dylan-environment.dll">
+	  <merge>editor-manager</merge>
+	  <merge>editor-deuce-backend</merge>
+	  <merge>environment-framework</merge>
+	  <merge>environment-tools</merge>
+	  <merge>environment-property-pages</merge>
+	  <merge>environment-deuce</merge>
+	  <merge>environment-debugger</merge>
+	  <merge>environment-server</merge>
+	  <merge>environment-dde-server</merge>
+	  <merge>environment-server-parsers</merge>
+	</binary>
+      </release>
+    </library>
+    <library name="editor-manager">
+      <sources location="environment/editor">
+	<project>editor-manager.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="editor-deuce-backend">
+      <sources location="environment/editor/backends/deuce">
+	<project>editor-deuce-backend.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="environment-framework">
+      <sources location="environment/framework">
+	<project>environment-framework.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="environment-tools">
+      <sources location="environment/tools">
+	<project>environment-tools</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="environment-property-pages">
+      <sources location="environment/property-pages">
+	<project>environment-property-pages.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="environment-deuce">
+      <sources location="environment/deuce">
+	<project>environment-deuce.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="environment-debugger">
+      <sources location="environment/debugger">
+	<project>environment-debugger.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="environment-server">
+      <sources location="environment/server">
+	<project>environment-server.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="environment-dde-server">
+      <sources location="environment/server/dde">
+	<project>environment-dde-server.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="environment-server-parsers">
+      <sources location="environment/server/parsers">
+	<project>environment-server-parsers.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="source-control-vss-backend">
+      <sources location="environment/source-control/backends/vss">
+	<project>source-control-vss-backend.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+	<binary file="source-control-vss-backend.dll">
+	  <merge>sourcesafetypelib</merge>
+	</binary>
+      </release>
+    </library>
+    <library name="sourcesafetypelib">
+      <sources location="environment/source-control/backends/vss/SourceSafeTypeLib">
+	<project>SourceSafeTypeLib.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="debugger-manager">
+      <sources location="runtime-manager/debugger-manager">
+	<project>debugger-manager.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32">
+	<binary file="debugger-manager.dll">
+	  <merge>tether-downloader</merge>
+	  <merge>interactive-symbol-table</merge>
+	</binary>
+      </release>
+    </library>
+    <library name="tether-downloader">
+      <sources location="runtime-manager/tether-downloader">
+        <project>tether-downloader.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+    <library name="interactive-symbol-table">
+      <sources location="runtime-manager/interactive-symbol-table">
+        <project>interactive-symbol-table.lid</project>
+      </sources>
+      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
+    </library>
+  </libraries>
+</library-pack>

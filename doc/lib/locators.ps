@@ -1,0 +1,4649 @@
+%!PS-Adobe-3.0
+%%BoundingBox: (atend)
+%%Pages: (atend)
+%%PageOrder: (atend)
+%%DocumentFonts: (atend)
+%%Creator: Frame 4.0
+%%DocumentData: Clean7Bit
+%%EndComments
+%%BeginProlog
+%
+% Frame ps_prolog 4.0, for use with Frame 4.0 products
+% This ps_prolog file is Copyright (c) 1986-1993 Frame Technology
+% Corporation.  All rights reserved.  This ps_prolog file may be
+% freely copied and distributed in conjunction with documents created
+% using FrameMaker, FrameBuilder and FrameViewer as long as this 
+% copyright notice is preserved.
+%
+% Frame products normally print colors as their true color on a color printer
+% or as shades of gray, based on luminance, on a black-and white printer. The
+% following flag, if set to True, forces all non-white colors to print as pure
+% black. This has no effect on bitmap images.
+/FMPrintAllColorsAsBlack             false def
+%
+% Frame products can either set their own line screens or use a printer's 
+% default settings. Three flags below control this separately for no 
+% separations, spot separations and process separations. If a flag
+% is true, then the default printer settings will not be changed. If it is
+% false, Frame products will use their own settings from a table based on
+% the printer's resolution.
+/FMUseDefaultNoSeparationScreen      true  def
+/FMUseDefaultSpotSeparationScreen    true  def
+/FMUseDefaultProcessSeparationScreen false def
+%
+% For any given PostScript printer resolution, Frame products have two sets of 
+% screen angles and frequencies for printing process separations, which are 
+% recomended by Adobe. The following variable chooses the higher frequencies
+% when set to true or the lower frequencies when set to false. This is only
+% effective if the appropriate FMUseDefault...SeparationScreen flag is false.
+/FMUseHighFrequencyScreens true def
+%
+% PostScript Level 2 printers contain an "Accurate Screens" feature which can
+% improve process separation rendering at the expense of compute time. This 
+% flag is ignored by PostScript Level 1 printers.
+/FMUseAcccurateScreens true def
+%
+% The following PostScript procedure defines the spot function that Frame
+% products will use for process separations. You may un-comment-out one of
+% the alternative functions below, or use your own.
+%
+% Dot function
+/FMSpotFunction {abs exch abs 2 copy add 1 gt 
+		{1 sub dup mul exch 1 sub dup mul add 1 sub }
+		{dup mul exch dup mul add 1 exch sub }ifelse } def
+%
+% Line function
+% /FMSpotFunction { pop } def
+%
+% Elipse function
+% /FMSpotFunction { dup 5 mul 8 div mul exch dup mul exch add 
+%		sqrt 1 exch sub } def
+%
+%
+/FMversion (4.0) def 
+/FMLevel1 /languagelevel where {pop languagelevel} {1} ifelse 2 lt def
+/FMPColor
+	FMLevel1 {
+		false
+		/colorimage where {pop pop true} if
+	} {
+		true
+	} ifelse
+def
+/FrameDict 400 dict def 
+systemdict /errordict known not {/errordict 10 dict def
+		errordict /rangecheck {stop} put} if
+% The readline in PS 23.0 doesn't recognize cr's as nl's on AppleTalk
+FrameDict /tmprangecheck errordict /rangecheck get put 
+errordict /rangecheck {FrameDict /bug true put} put 
+FrameDict /bug false put 
+mark 
+% Some PS machines read past the CR, so keep the following 3 lines together!
+currentfile 5 string readline
+00
+0000000000
+cleartomark 
+errordict /rangecheck FrameDict /tmprangecheck get put 
+FrameDict /bug get { 
+	/readline {
+		/gstring exch def
+		/gfile exch def
+		/gindex 0 def
+		{
+			gfile read pop 
+			dup 10 eq {exit} if 
+			dup 13 eq {exit} if 
+			gstring exch gindex exch put 
+			/gindex gindex 1 add def 
+		} loop
+		pop 
+		gstring 0 gindex getinterval true 
+		} bind def
+	} if
+/FMshowpage /showpage load def
+/FMquit /quit load def
+/FMFAILURE { 
+	dup = flush 
+	FMshowpage 
+	/Helvetica findfont 12 scalefont setfont
+	72 200 moveto
+	show FMshowpage 
+	FMquit 
+	} def 
+/FMVERSION {
+	FMversion ne {
+		(Frame product version does not match ps_prolog!) FMFAILURE
+		} if
+	} def 
+/FMBADEPSF { 
+	(PostScript Lang. Ref. Man., 2nd Ed., H.2.4 says EPS must not call X              )
+	dup dup (X) search pop exch pop exch pop length 
+	4 -1 roll 
+	putinterval 
+	FMFAILURE
+	} def
+/FMLOCAL {
+	FrameDict begin
+	0 def 
+	end 
+	} def 
+/concatprocs
+	{
+	/proc2 exch cvlit def/proc1 exch cvlit def/newproc proc1 length proc2 length add array def
+	newproc 0 proc1 putinterval newproc proc1 length proc2 putinterval newproc cvx
+}def
+FrameDict begin 
+/FMnone 0 def
+/FMcyan 1 def
+/FMmagenta 2 def
+/FMyellow 3 def
+/FMblack 4 def
+/FMcustom 5 def
+/FrameNegative false def 
+/FrameSepIs FMnone def 
+/FrameSepBlack 0 def
+/FrameSepYellow 0 def
+/FrameSepMagenta 0 def
+/FrameSepCyan 0 def
+/FrameSepRed 1 def
+/FrameSepGreen 1 def
+/FrameSepBlue 1 def
+/FrameCurGray 1 def
+/FrameCurPat null def
+/FrameCurColors [ 0 0 0 1 0 0 0 ] def 
+/FrameColorEpsilon .001 def	
+/eqepsilon {		
+	sub dup 0 lt {neg} if
+	FrameColorEpsilon le
+} bind def
+/FrameCmpColorsCMYK { 
+	2 copy 0 get exch 0 get eqepsilon {
+		2 copy 1 get exch 1 get eqepsilon {
+			2 copy 2 get exch 2 get eqepsilon {
+				3 get exch 3 get eqepsilon
+			} {pop pop false} ifelse
+		}{pop pop false} ifelse
+	} {pop pop false} ifelse
+} bind def
+/FrameCmpColorsRGB { 
+	2 copy 4 get exch 0 get eqepsilon {
+		2 copy 5 get exch 1 get eqepsilon {
+			6 get exch 2 get eqepsilon
+		}{pop pop false} ifelse
+	} {pop pop false} ifelse
+} bind def
+/RGBtoCMYK { 
+	1 exch sub 
+	3 1 roll 
+	1 exch sub 
+	3 1 roll 
+	1 exch sub 
+	3 1 roll 
+	3 copy 
+	2 copy 
+	le { pop } { exch pop } ifelse 
+	2 copy 
+	le { pop } { exch pop } ifelse 
+	dup dup dup 
+	6 1 roll 
+	4 1 roll 
+	7 1 roll 
+	sub 
+	6 1 roll 
+	sub 
+	5 1 roll 
+	sub 
+	4 1 roll 
+} bind def
+/CMYKtoRGB { 
+	dup dup 4 -1 roll add 						  
+	5 1 roll 3 -1 roll add 						  
+	4 1 roll add 								  
+	1 exch sub dup 0 lt {pop 0} if 3 1 roll 	  
+	1 exch sub dup 0 lt {pop 0} if exch 	      
+	1 exch sub dup 0 lt {pop 0} if exch	  		  
+} bind def
+/FrameSepInit {
+	1.0 RealSetgray
+} bind def
+/FrameSetSepColor { 
+	/FrameSepBlue exch def
+	/FrameSepGreen exch def
+	/FrameSepRed exch def
+	/FrameSepBlack exch def
+	/FrameSepYellow exch def
+	/FrameSepMagenta exch def
+	/FrameSepCyan exch def
+	/FrameSepIs FMcustom def
+	setCurrentScreen	
+} bind def
+/FrameSetCyan {
+	/FrameSepBlue 1.0 def
+	/FrameSepGreen 1.0 def
+	/FrameSepRed 0.0 def
+	/FrameSepBlack 0.0 def
+	/FrameSepYellow 0.0 def
+	/FrameSepMagenta 0.0 def
+	/FrameSepCyan 1.0 def
+	/FrameSepIs FMcyan def
+	setCurrentScreen	
+} bind def
+ 
+/FrameSetMagenta {
+	/FrameSepBlue 1.0 def
+	/FrameSepGreen 0.0 def
+	/FrameSepRed 1.0 def
+	/FrameSepBlack 0.0 def
+	/FrameSepYellow 0.0 def
+	/FrameSepMagenta 1.0 def
+	/FrameSepCyan 0.0 def
+	/FrameSepIs FMmagenta def
+	setCurrentScreen
+} bind def
+ 
+/FrameSetYellow {
+	/FrameSepBlue 0.0 def
+	/FrameSepGreen 1.0 def
+	/FrameSepRed 1.0 def
+	/FrameSepBlack 0.0 def
+	/FrameSepYellow 1.0 def
+	/FrameSepMagenta 0.0 def
+	/FrameSepCyan 0.0 def
+	/FrameSepIs FMyellow def
+	setCurrentScreen
+} bind def
+ 
+/FrameSetBlack {
+	/FrameSepBlue 0.0 def
+	/FrameSepGreen 0.0 def
+	/FrameSepRed 0.0 def
+	/FrameSepBlack 1.0 def
+	/FrameSepYellow 0.0 def
+	/FrameSepMagenta 0.0 def
+	/FrameSepCyan 0.0 def
+	/FrameSepIs FMblack def
+	setCurrentScreen
+} bind def
+ 
+/FrameNoSep { 
+	/FrameSepIs FMnone def
+	setCurrentScreen
+} bind def
+/FrameSetSepColors { 
+	FrameDict begin
+	[ exch 1 add 1 roll ]
+	/FrameSepColors  
+	exch def end
+	} bind def
+/FrameColorInSepListCMYK { 
+	FrameSepColors {  
+       		exch dup 3 -1 roll 
+       		FrameCmpColorsCMYK 
+       		{ pop true exit } if
+    	} forall 
+	dup true ne {pop false} if
+	} bind def
+/FrameColorInSepListRGB { 
+	FrameSepColors {  
+       		exch dup 3 -1 roll 
+       		FrameCmpColorsRGB 
+       		{ pop true exit } if
+    	} forall 
+	dup true ne {pop false} if
+	} bind def
+/RealSetgray /setgray load def
+/RealSetrgbcolor /setrgbcolor load def
+/RealSethsbcolor /sethsbcolor load def
+end 
+/setgray { 
+	FrameDict begin
+	FrameSepIs FMnone eq
+		{ RealSetgray } 
+		{ 
+		FrameSepIs FMblack eq 
+			{ RealSetgray } 
+			{ FrameSepIs FMcustom eq 
+			  FrameSepRed 0 eq and
+			  FrameSepGreen 0 eq and
+			  FrameSepBlue 0 eq and {
+			  	RealSetgray
+			  } {
+				1 RealSetgray pop 
+			  } ifelse
+			} ifelse
+		} ifelse
+	end
+} bind def
+/setrgbcolor { 
+	FrameDict begin
+	FrameSepIs FMnone eq
+	{  RealSetrgbcolor }
+	{
+		3 copy [ 4 1 roll ] 
+		FrameColorInSepListRGB
+		{
+				FrameSepBlue eq exch 
+			 	FrameSepGreen eq and exch 
+			 	FrameSepRed eq and
+			 	{ 0 } { 1 } ifelse
+		}
+		{
+			FMPColor {
+				RealSetrgbcolor
+				currentcmykcolor
+			} {
+				RGBtoCMYK
+			} ifelse
+			FrameSepIs FMblack eq
+			{1.0 exch sub 4 1 roll pop pop pop} {
+			FrameSepIs FMyellow eq
+			{pop 1.0 exch sub 3 1 roll pop pop} {
+			FrameSepIs FMmagenta eq
+			{pop pop 1.0 exch sub exch pop } {
+			FrameSepIs FMcyan eq
+			{pop pop pop 1.0 exch sub } 
+			{pop pop pop pop 1} ifelse } ifelse } ifelse } ifelse 
+		} ifelse
+		RealSetgray
+	} 
+	ifelse
+	end
+} bind def
+/sethsbcolor {
+	FrameDict begin
+	FrameSepIs FMnone eq 
+	{ RealSethsbcolor } 
+	{
+		RealSethsbcolor 
+		currentrgbcolor  
+		setrgbcolor 
+	} 
+	ifelse
+	end
+} bind def
+FrameDict begin
+/setcmykcolor where {
+	pop /RealSetcmykcolor /setcmykcolor load def
+} {
+	/RealSetcmykcolor {
+		4 1 roll
+		3 { 3 index add 0 max 1 min 1 exch sub 3 1 roll} repeat 
+		setrgbcolor pop
+	} bind def
+} ifelse
+userdict /setcmykcolor { 
+		FrameDict begin
+		FrameSepIs FMnone eq
+		{ RealSetcmykcolor } 
+		{
+			4 copy [ 5 1 roll ]
+			FrameColorInSepListCMYK
+			{
+				FrameSepBlack eq exch 
+				FrameSepYellow eq and exch 
+				FrameSepMagenta eq and exch 
+				FrameSepCyan eq and 
+				{ 0 } { 1 } ifelse
+			}
+			{
+				FrameSepIs FMblack eq
+				{1.0 exch sub 4 1 roll pop pop pop} {
+				FrameSepIs FMyellow eq
+				{pop 1.0 exch sub 3 1 roll pop pop} {
+				FrameSepIs FMmagenta eq
+				{pop pop 1.0 exch sub exch pop } {
+				FrameSepIs FMcyan eq
+				{pop pop pop 1.0 exch sub } 
+				{pop pop pop pop 1} ifelse } ifelse } ifelse } ifelse 
+			} ifelse
+			RealSetgray
+		}
+		ifelse
+		end
+	} bind put
+FMLevel1 not { 
+	
+	/patProcDict 5 dict dup begin
+		<0f1e3c78f0e1c387> { 3 setlinewidth -1 -1 moveto 9 9 lineto stroke 
+											4 -4 moveto 12 4 lineto stroke
+											-4 4 moveto 4 12 lineto stroke} bind def
+		<0f87c3e1f0783c1e> { 3 setlinewidth -1 9 moveto 9 -1 lineto stroke 
+											-4 4 moveto 4 -4 lineto stroke
+											4 12 moveto 12 4 lineto stroke} bind def
+		<8142241818244281> { 1 setlinewidth -1 9 moveto 9 -1 lineto stroke
+											-1 -1 moveto 9 9 lineto stroke } bind def
+		<03060c183060c081> { 1 setlinewidth -1 -1 moveto 9 9 lineto stroke 
+											4 -4 moveto 12 4 lineto stroke
+											-4 4 moveto 4 12 lineto stroke} bind def
+		<8040201008040201> { 1 setlinewidth -1 9 moveto 9 -1 lineto stroke 
+											-4 4 moveto 4 -4 lineto stroke
+											4 12 moveto 12 4 lineto stroke} bind def
+	end def
+	/patDict 15 dict dup begin
+		/PatternType 1 def		
+		/PaintType 2 def		
+		/TilingType 3 def		
+		/BBox [ 0 0 8 8 ] def 	
+		/XStep 8 def			
+		/YStep 8 def			
+		/PaintProc {
+			begin
+			patProcDict bstring known {
+				patProcDict bstring get exec
+			} {
+				8 8 true [1 0 0 -1 0 8] bstring imagemask
+			} ifelse
+			end
+		} bind def
+	end def
+} if
+/combineColor {
+    FrameSepIs FMnone eq
+	{
+		graymode FMLevel1 or not {
+			
+			[/Pattern [/DeviceCMYK]] setcolorspace
+			FrameCurColors 0 4 getinterval aload pop FrameCurPat setcolor
+		} {
+			FrameCurColors 3 get 1.0 ge {
+				FrameCurGray RealSetgray
+			} {
+				FMPColor graymode and {
+					0 1 3 { 
+						FrameCurColors exch get
+						1 FrameCurGray sub mul
+					} for
+					RealSetcmykcolor
+				} {
+					4 1 6 {
+						FrameCurColors exch get
+						graymode {
+							1 exch sub 1 FrameCurGray sub mul 1 exch sub
+						} {
+							1.0 lt {FrameCurGray} {1} ifelse
+						} ifelse
+					} for
+					RealSetrgbcolor
+				} ifelse
+			} ifelse
+		} ifelse
+	} { 
+		FrameCurColors 0 4 getinterval aload
+		FrameColorInSepListCMYK {
+			FrameSepBlack eq exch 
+			FrameSepYellow eq and exch 
+			FrameSepMagenta eq and exch 
+			FrameSepCyan eq and
+			FrameSepIs FMcustom eq and
+			{ FrameCurGray } { 1 } ifelse
+		} {
+			FrameSepIs FMblack eq
+			{FrameCurGray 1.0 exch sub mul 1.0 exch sub 4 1 roll pop pop pop} {
+			FrameSepIs FMyellow eq
+			{pop FrameCurGray 1.0 exch sub mul 1.0 exch sub 3 1 roll pop pop} {
+			FrameSepIs FMmagenta eq
+			{pop pop FrameCurGray 1.0 exch sub mul 1.0 exch sub exch pop } {
+			FrameSepIs FMcyan eq
+			{pop pop pop FrameCurGray 1.0 exch sub mul 1.0 exch sub } 
+			{pop pop pop pop 1} ifelse } ifelse } ifelse } ifelse 
+		} ifelse
+		graymode FMLevel1 or not {
+			
+			[/Pattern [/DeviceGray]] setcolorspace
+			FrameCurPat setcolor
+		} { 
+			graymode not FMLevel1 and {
+				
+				dup 1 lt {pop FrameCurGray} if
+			} if
+			RealSetgray
+		} ifelse
+	} ifelse
+} bind def
+/savematrix {
+	orgmatrix currentmatrix pop
+	} bind def
+/restorematrix {
+	orgmatrix setmatrix
+	} bind def
+/dmatrix matrix def
+/dpi    72 0 dmatrix defaultmatrix dtransform
+    dup mul exch   dup mul add   sqrt def
+	
+/freq dpi dup 72 div round dup 0 eq {pop 1} if 8 mul div def
+/sangle 1 0 dmatrix defaultmatrix dtransform exch atan def
+/dpiranges   [  2540    2400    1693     1270    1200     635      600      0      ] def
+/CMLowFreqs  [ 100.402  94.8683 89.2289 100.402  94.8683  66.9349  63.2456 47.4342 ] def
+/YLowFreqs   [  95.25   90.0    84.65    95.25   90.0     70.5556  66.6667 50.0    ] def
+/KLowFreqs   [  89.8026 84.8528 79.8088  89.8026 84.8528  74.8355  70.7107 53.033  ] def
+/CLowAngles  [  71.5651 71.5651 71.5651 71.5651  71.5651  71.5651  71.5651 71.5651 ] def
+/MLowAngles  [  18.4349 18.4349 18.4349 18.4349  18.4349  18.4349  18.4349 18.4349 ] def
+/YLowTDot    [  true    true    false    true    true     false    false   false   ] def
+/CMHighFreqs [ 133.87  126.491 133.843  108.503 102.523  100.402   94.8683 63.2456 ] def
+/YHighFreqs  [ 127.0   120.0   126.975  115.455 109.091   95.25    90.0    60.0    ] def
+/KHighFreqs  [ 119.737 113.137 119.713  128.289 121.218   89.8026  84.8528 63.6395 ] def
+/CHighAngles [  71.5651 71.5651 71.5651  70.0169 70.0169  71.5651  71.5651 71.5651 ] def
+/MHighAngles [  18.4349 18.4349 18.4349  19.9831 19.9831  18.4349  18.4349 18.4349 ] def
+/YHighTDot   [  false   false   true     false   false    true     true    false   ] def
+/PatFreq     [	10.5833 10.0     9.4055  10.5833 10.0	  10.5833  10.0	   9.375   ] def
+/screenIndex {
+	0 1 dpiranges length 1 sub { dup dpiranges exch get 1 sub dpi le {exit} {pop} ifelse } for
+} bind def
+/getCyanScreen {
+	FMUseHighFrequencyScreens { CHighAngles CMHighFreqs} {CLowAngles CMLowFreqs} ifelse
+		screenIndex dup 3 1 roll get 3 1 roll get /FMSpotFunction load
+} bind def
+/getMagentaScreen {
+	FMUseHighFrequencyScreens { MHighAngles CMHighFreqs } {MLowAngles CMLowFreqs} ifelse
+		screenIndex dup 3 1 roll get 3 1 roll get /FMSpotFunction load
+} bind def
+/getYellowScreen {
+	FMUseHighFrequencyScreens { YHighTDot YHighFreqs} { YLowTDot YLowFreqs } ifelse
+		screenIndex dup 3 1 roll get 3 1 roll get { 3 div
+			{2 { 1 add 2 div 3 mul dup floor sub 2 mul 1 sub exch} repeat
+			FMSpotFunction } } {/FMSpotFunction load } ifelse
+			0.0 exch
+} bind def
+/getBlackScreen  {
+	FMUseHighFrequencyScreens { KHighFreqs } { KLowFreqs } ifelse
+		screenIndex get 45.0 /FMSpotFunction load 
+} bind def
+/getSpotScreen {
+	getBlackScreen
+} bind def
+/getCompositeScreen {
+	getBlackScreen
+} bind def
+/FMSetScreen 
+	FMLevel1 { /setscreen load 
+	}{ {
+		8 dict begin
+		/HalftoneType 1 def
+		/SpotFunction exch def
+		/Angle exch def
+		/Frequency exch def
+		/AccurateScreens FMUseAcccurateScreens def
+		currentdict end sethalftone
+	} bind } ifelse
+def
+/setDefaultScreen {
+	FMPColor {
+		orgrxfer cvx orggxfer cvx orgbxfer cvx orgxfer cvx setcolortransfer
+	}
+	{
+		orgxfer cvx settransfer
+	} ifelse
+	orgfreq organgle orgproc cvx setscreen
+} bind def
+/setCurrentScreen {
+	FrameSepIs FMnone eq {
+		FMUseDefaultNoSeparationScreen {
+			setDefaultScreen
+		} {
+			getCompositeScreen FMSetScreen
+		} ifelse
+	} {
+		FrameSepIs FMcustom eq {
+			FMUseDefaultSpotSeparationScreen {
+				setDefaultScreen
+			} {
+				getSpotScreen FMSetScreen
+			} ifelse
+		} {
+			FMUseDefaultProcessSeparationScreen {
+				setDefaultScreen
+			} {
+				FrameSepIs FMcyan eq {
+					getCyanScreen FMSetScreen
+				} {
+					FrameSepIs FMmagenta eq {
+						getMagentaScreen FMSetScreen
+					} {
+						FrameSepIs FMyellow eq {
+							getYellowScreen FMSetScreen
+						} {
+							getBlackScreen FMSetScreen
+						} ifelse
+					} ifelse
+				} ifelse
+			} ifelse
+		} ifelse
+	} ifelse 
+} bind def
+end
+	/gstring FMLOCAL
+	/gfile FMLOCAL
+	/gindex FMLOCAL
+	/orgrxfer FMLOCAL
+	/orggxfer FMLOCAL
+	/orgbxfer FMLOCAL
+	/orgxfer FMLOCAL
+	/orgproc FMLOCAL
+	/orgrproc FMLOCAL
+	/orggproc FMLOCAL
+	/orgbproc FMLOCAL
+	/organgle FMLOCAL
+	/orgrangle FMLOCAL
+	/orggangle FMLOCAL
+	/orgbangle FMLOCAL
+	/orgfreq FMLOCAL
+	/orgrfreq FMLOCAL
+	/orggfreq FMLOCAL
+	/orgbfreq FMLOCAL
+	/yscale FMLOCAL
+	/xscale FMLOCAL
+	/edown FMLOCAL
+	/manualfeed FMLOCAL
+	/paperheight FMLOCAL
+	/paperwidth FMLOCAL
+/FMDOCUMENT { 
+	array /FMfonts exch def 
+	/#copies exch def
+	FrameDict begin
+	0 ne /manualfeed exch def
+	/paperheight exch def
+	/paperwidth exch def
+	0 ne /FrameNegative exch def 
+	0 ne /edown exch def 
+	/yscale exch def
+	/xscale exch def
+	FMLevel1 {
+		manualfeed {setmanualfeed} if
+		/FMdicttop countdictstack 1 add def 
+		/FMoptop count def 
+		setpapername 
+		manualfeed {true} {papersize} ifelse 
+		{manualpapersize} {false} ifelse 
+		{desperatepapersize} {false} ifelse 
+		{ (Can't select requested paper size for Frame print job!) FMFAILURE } if
+		count -1 FMoptop {pop pop} for
+		countdictstack -1 FMdicttop {pop end} for 
+		}
+		{{1 dict dup /PageSize [paperwidth paperheight]put setpagedevice}stopped
+		{ (Can't select requested paper size for Frame print job!) FMFAILURE } if
+		 {1 dict dup /ManualFeed manualfeed put setpagedevice } stopped pop }
+	ifelse 
+	
+	FMPColor {
+		currentcolorscreen
+			cvlit /orgproc exch def
+				  /organgle exch def 
+				  /orgfreq exch def
+			cvlit /orgbproc exch def
+				  /orgbangle exch def 
+				  /orgbfreq exch def
+			cvlit /orggproc exch def
+				  /orggangle exch def 
+				  /orggfreq exch def
+			cvlit /orgrproc exch def
+				  /orgrangle exch def 
+				  /orgrfreq exch def
+			currentcolortransfer 
+			FrameNegative {
+				1 1 4 { 
+					pop { 1 exch sub } concatprocs 4 1 roll
+				} for
+				4 copy
+				setcolortransfer
+			} if
+			cvlit /orgxfer exch def
+			cvlit /orgbxfer exch def
+			cvlit /orggxfer exch def
+			cvlit /orgrxfer exch def
+	} {
+		currentscreen 
+			cvlit /orgproc exch def
+				  /organgle exch def 
+				  /orgfreq exch def
+				  
+		currenttransfer 
+		FrameNegative {
+			{ 1 exch sub } concatprocs
+			dup settransfer
+		} if 
+		cvlit /orgxfer exch def
+	} ifelse
+	end 
+} def 
+/pagesave FMLOCAL
+/orgmatrix FMLOCAL
+/landscape FMLOCAL
+/pwid FMLOCAL
+/FMBEGINPAGE { 
+	FrameDict begin 
+	/pagesave save def
+	3.86 setmiterlimit
+	/landscape exch 0 ne def
+	landscape { 
+		90 rotate 0 exch dup /pwid exch def neg translate pop 
+	}{
+		pop /pwid exch def
+	} ifelse
+	edown { [-1 0 0 1 pwid 0] concat } if
+	0 0 moveto paperwidth 0 lineto paperwidth paperheight lineto 
+	0 paperheight lineto 0 0 lineto 1 setgray fill
+	xscale yscale scale
+	/orgmatrix matrix def
+	gsave 
+} def 
+/FMENDPAGE {
+	grestore 
+	pagesave restore
+	end 
+	showpage
+	} def 
+/FMFONTDEFINE { 
+	FrameDict begin
+	findfont 
+	ReEncode 
+	1 index exch 
+	definefont 
+	FMfonts 3 1 roll 
+	put
+	end 
+	} def 
+/FMFILLS {
+	FrameDict begin dup
+	array /fillvals exch def
+	dict /patCache exch def
+	end 
+	} def 
+/FMFILL {
+	FrameDict begin
+	 fillvals 3 1 roll put
+	end 
+	} def 
+/FMNORMALIZEGRAPHICS { 
+	newpath
+	0.0 0.0 moveto
+	1 setlinewidth
+	0 setlinecap
+	0 0 0 sethsbcolor
+	0 setgray 
+	} bind def
+	/fx FMLOCAL
+	/fy FMLOCAL
+	/fh FMLOCAL
+	/fw FMLOCAL
+	/llx FMLOCAL
+	/lly FMLOCAL
+	/urx FMLOCAL
+	/ury FMLOCAL
+/FMBEGINEPSF { 
+	end 
+	/FMEPSF save def 
+	/showpage {} def 
+% See Adobe's "PostScript Language Reference Manual, 2nd Edition", page 714.
+% "...the following operators MUST NOT be used in an EPS file:" (emphasis ours)
+	/banddevice {(banddevice) FMBADEPSF} def
+	/clear {(clear) FMBADEPSF} def
+	/cleardictstack {(cleardictstack) FMBADEPSF} def 
+	/copypage {(copypage) FMBADEPSF} def
+	/erasepage {(erasepage) FMBADEPSF} def
+	/exitserver {(exitserver) FMBADEPSF} def
+	/framedevice {(framedevice) FMBADEPSF} def
+	/grestoreall {(grestoreall) FMBADEPSF} def
+	/initclip {(initclip) FMBADEPSF} def
+	/initgraphics {(initgraphics) FMBADEPSF} def
+	/initmatrix {(initmatrix) FMBADEPSF} def
+	/quit {(quit) FMBADEPSF} def
+	/renderbands {(renderbands) FMBADEPSF} def
+	/setglobal {(setglobal) FMBADEPSF} def
+	/setpagedevice {(setpagedevice) FMBADEPSF} def
+	/setshared {(setshared) FMBADEPSF} def
+	/startjob {(startjob) FMBADEPSF} def
+	/lettertray {(lettertray) FMBADEPSF} def
+	/letter {(letter) FMBADEPSF} def
+	/lettersmall {(lettersmall) FMBADEPSF} def
+	/11x17tray {(11x17tray) FMBADEPSF} def
+	/11x17 {(11x17) FMBADEPSF} def
+	/ledgertray {(ledgertray) FMBADEPSF} def
+	/ledger {(ledger) FMBADEPSF} def
+	/legaltray {(legaltray) FMBADEPSF} def
+	/legal {(legal) FMBADEPSF} def
+	/statementtray {(statementtray) FMBADEPSF} def
+	/statement {(statement) FMBADEPSF} def
+	/executivetray {(executivetray) FMBADEPSF} def
+	/executive {(executive) FMBADEPSF} def
+	/a3tray {(a3tray) FMBADEPSF} def
+	/a3 {(a3) FMBADEPSF} def
+	/a4tray {(a4tray) FMBADEPSF} def
+	/a4 {(a4) FMBADEPSF} def
+	/a4small {(a4small) FMBADEPSF} def
+	/b4tray {(b4tray) FMBADEPSF} def
+	/b4 {(b4) FMBADEPSF} def
+	/b5tray {(b5tray) FMBADEPSF} def
+	/b5 {(b5) FMBADEPSF} def
+	FMNORMALIZEGRAPHICS 
+	[/fy /fx /fh /fw /ury /urx /lly /llx] {exch def} forall 
+	fx fw 2 div add fy fh 2 div add  translate
+	rotate
+	fw 2 div neg fh 2 div neg translate
+	fw urx llx sub div fh ury lly sub div scale 
+	llx neg lly neg translate 
+	/FMdicttop countdictstack 1 add def 
+	/FMoptop count def 
+	} bind def
+/FMENDEPSF {
+	count -1 FMoptop {pop pop} for 
+	countdictstack -1 FMdicttop {pop end} for 
+	FMEPSF restore
+	FrameDict begin 
+	} bind def
+FrameDict begin 
+/setmanualfeed {
+%%BeginFeature *ManualFeed True
+	 statusdict /manualfeed true put
+%%EndFeature
+	} bind def
+/max {2 copy lt {exch} if pop} bind def
+/min {2 copy gt {exch} if pop} bind def
+/inch {72 mul} def
+/pagedimen { 
+	paperheight sub abs 16 lt exch 
+	paperwidth sub abs 16 lt and
+	{/papername exch def} {pop} ifelse
+	} bind def
+	/papersizedict FMLOCAL
+/setpapername { 
+	/papersizedict 14 dict def 
+	papersizedict begin
+	/papername /unknown def 
+		/Letter 8.5 inch 11.0 inch pagedimen
+		/LetterSmall 7.68 inch 10.16 inch pagedimen
+		/Tabloid 11.0 inch 17.0 inch pagedimen
+		/Ledger 17.0 inch 11.0 inch pagedimen
+		/Legal 8.5 inch 14.0 inch pagedimen
+		/Statement 5.5 inch 8.5 inch pagedimen
+		/Executive 7.5 inch 10.0 inch pagedimen
+		/A3 11.69 inch 16.5 inch pagedimen
+		/A4 8.26 inch 11.69 inch pagedimen
+		/A4Small 7.47 inch 10.85 inch pagedimen
+		/B4 10.125 inch 14.33 inch pagedimen
+		/B5 7.16 inch 10.125 inch pagedimen
+	end
+	} bind def
+/papersize {
+	papersizedict begin
+		/Letter {lettertray letter} def
+		/LetterSmall {lettertray lettersmall} def
+		/Tabloid {11x17tray 11x17} def
+		/Ledger {ledgertray ledger} def
+		/Legal {legaltray legal} def
+		/Statement {statementtray statement} def
+		/Executive {executivetray executive} def
+		/A3 {a3tray a3} def
+		/A4 {a4tray a4} def
+		/A4Small {a4tray a4small} def
+		/B4 {b4tray b4} def
+		/B5 {b5tray b5} def
+		/unknown {unknown} def
+	papersizedict dup papername known {papername} {/unknown} ifelse get
+	end
+	statusdict begin stopped end 
+	} bind def
+/manualpapersize {
+	papersizedict begin
+		/Letter {letter} def
+		/LetterSmall {lettersmall} def
+		/Tabloid {11x17} def
+		/Ledger {ledger} def
+		/Legal {legal} def
+		/Statement {statement} def
+		/Executive {executive} def
+		/A3 {a3} def
+		/A4 {a4} def
+		/A4Small {a4small} def
+		/B4 {b4} def
+		/B5 {b5} def
+		/unknown {unknown} def
+	papersizedict dup papername known {papername} {/unknown} ifelse get
+	end
+	stopped 
+	} bind def
+/desperatepapersize {
+	statusdict /setpageparams known
+		{
+		paperwidth paperheight 0 1 
+		statusdict begin
+		{setpageparams} stopped 
+		end
+		} {true} ifelse 
+	} bind def
+/DiacriticEncoding [
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /space /exclam /quotedbl
+/numbersign /dollar /percent /ampersand /quotesingle /parenleft
+/parenright /asterisk /plus /comma /hyphen /period /slash /zero /one
+/two /three /four /five /six /seven /eight /nine /colon /semicolon
+/less /equal /greater /question /at /A /B /C /D /E /F /G /H /I /J /K
+/L /M /N /O /P /Q /R /S /T /U /V /W /X /Y /Z /bracketleft /backslash
+/bracketright /asciicircum /underscore /grave /a /b /c /d /e /f /g /h
+/i /j /k /l /m /n /o /p /q /r /s /t /u /v /w /x /y /z /braceleft /bar
+/braceright /asciitilde /.notdef /Adieresis /Aring /Ccedilla /Eacute
+/Ntilde /Odieresis /Udieresis /aacute /agrave /acircumflex /adieresis
+/atilde /aring /ccedilla /eacute /egrave /ecircumflex /edieresis
+/iacute /igrave /icircumflex /idieresis /ntilde /oacute /ograve
+/ocircumflex /odieresis /otilde /uacute /ugrave /ucircumflex
+/udieresis /dagger /.notdef /cent /sterling /section /bullet
+/paragraph /germandbls /registered /copyright /trademark /acute
+/dieresis /.notdef /AE /Oslash /.notdef /.notdef /.notdef /.notdef
+/yen /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/ordfeminine /ordmasculine /.notdef /ae /oslash /questiondown
+/exclamdown /logicalnot /.notdef /florin /.notdef /.notdef
+/guillemotleft /guillemotright /ellipsis /.notdef /Agrave /Atilde
+/Otilde /OE /oe /endash /emdash /quotedblleft /quotedblright
+/quoteleft /quoteright /.notdef /.notdef /ydieresis /Ydieresis
+/fraction /currency /guilsinglleft /guilsinglright /fi /fl /daggerdbl
+/periodcentered /quotesinglbase /quotedblbase /perthousand
+/Acircumflex /Ecircumflex /Aacute /Edieresis /Egrave /Iacute
+/Icircumflex /Idieresis /Igrave /Oacute /Ocircumflex /.notdef /Ograve
+/Uacute /Ucircumflex /Ugrave /dotlessi /circumflex /tilde /macron
+/breve /dotaccent /ring /cedilla /hungarumlaut /ogonek /caron
+] def
+/ReEncode { 
+	dup 
+	length 
+	dict begin 
+	{
+	1 index /FID ne 
+		{def} 
+		{pop pop} ifelse 
+	} forall 
+	0 eq {/Encoding DiacriticEncoding def} if 
+	currentdict 
+	end 
+	} bind def
+FMPColor 
+	
+	{
+	/BEGINBITMAPCOLOR { 
+		BITMAPCOLOR} def
+	/BEGINBITMAPCOLORc { 
+		BITMAPCOLORc} def
+	/BEGINBITMAPTRUECOLOR { 
+		BITMAPTRUECOLOR } def
+	/BEGINBITMAPTRUECOLORc { 
+		BITMAPTRUECOLORc } def
+	}
+	
+	{
+	/BEGINBITMAPCOLOR { 
+		BITMAPGRAY} def
+	/BEGINBITMAPCOLORc { 
+		BITMAPGRAYc} def
+	/BEGINBITMAPTRUECOLOR { 
+		BITMAPTRUEGRAY } def
+	/BEGINBITMAPTRUECOLORc { 
+		BITMAPTRUEGRAYc } def
+	}
+ifelse
+/K { 
+	FMPrintAllColorsAsBlack {
+		dup 1 eq 2 index 1 eq and 3 index 1 eq and not
+			{7 {pop} repeat 0 0 0 1 0 0 0} if
+	} if 
+	FrameCurColors astore 
+	pop combineColor
+} bind def
+/graymode true def
+	/bwidth FMLOCAL
+	/bpside FMLOCAL
+	/bstring FMLOCAL
+	/onbits FMLOCAL
+	/offbits FMLOCAL
+	/xindex FMLOCAL
+	/yindex FMLOCAL
+	/x FMLOCAL
+	/y FMLOCAL
+/setPatternMode {
+	FMLevel1 {
+		/bwidth  exch def
+		/bpside  exch def
+		/bstring exch def
+		/onbits 0 def  /offbits 0 def
+		freq sangle landscape {90 add} if 
+			{/y exch def
+			 /x exch def
+			 /xindex x 1 add 2 div bpside mul cvi def
+			 /yindex y 1 add 2 div bpside mul cvi def
+			 bstring yindex bwidth mul xindex 8 idiv add get
+			 1 7 xindex 8 mod sub bitshift and 0 ne FrameNegative {not} if
+			 {/onbits  onbits  1 add def 1}
+			 {/offbits offbits 1 add def 0}
+			 ifelse
+			}
+			setscreen
+		offbits offbits onbits add div FrameNegative {1.0 exch sub} if
+		/FrameCurGray exch def
+	} { 
+		pop pop
+		dup patCache exch known {
+			patCache exch get
+		} { 
+			dup
+			patDict /bstring 3 -1 roll put
+			patDict 
+			9 PatFreq screenIndex get div dup matrix scale
+			makepattern
+			dup 
+			patCache 4 -1 roll 3 -1 roll put
+		} ifelse
+		/FrameCurGray 0 def
+		/FrameCurPat exch def
+	} ifelse
+	/graymode false def
+	combineColor
+} bind def
+/setGrayScaleMode {
+	graymode not {
+		/graymode true def
+		FMLevel1 {
+			setCurrentScreen
+		} if
+	} if
+	/FrameCurGray exch def
+	combineColor
+} bind def
+/normalize {
+	transform round exch round exch itransform
+	} bind def
+/dnormalize {
+	dtransform round exch round exch idtransform
+	} bind def
+/lnormalize { 
+	0 dtransform exch cvi 2 idiv 2 mul 1 add exch idtransform pop
+	} bind def
+/H { 
+	lnormalize setlinewidth
+	} bind def
+/Z {
+	setlinecap
+	} bind def
+	
+/PFill {
+	graymode FMLevel1 or not {
+		gsave 1 setgray eofill grestore
+	} if
+} bind def
+/PStroke {
+	graymode FMLevel1 or not {
+		gsave 1 setgray stroke grestore
+	} if
+	stroke
+} bind def
+	/fillvals FMLOCAL
+/X { 
+	fillvals exch get
+	dup type /stringtype eq
+	{8 1 setPatternMode} 
+	{setGrayScaleMode}
+	ifelse
+	} bind def
+/V { 
+	PFill gsave eofill grestore
+	} bind def
+/Vclip {
+	clip
+	} bind def
+/Vstrk {
+	currentlinewidth exch setlinewidth PStroke setlinewidth
+	} bind def
+/N { 
+	PStroke
+	} bind def
+/Nclip {
+	strokepath clip newpath
+	} bind def
+/Nstrk {
+	currentlinewidth exch setlinewidth PStroke setlinewidth
+	} bind def
+/M {newpath moveto} bind def
+/E {lineto} bind def
+/D {curveto} bind def
+/O {closepath} bind def
+	/n FMLOCAL
+/L { 
+ 	/n exch def
+	newpath
+	normalize
+	moveto 
+	2 1 n {pop normalize lineto} for
+	} bind def
+/Y { 
+	L 
+	closepath
+	} bind def
+	/x1 FMLOCAL
+	/x2 FMLOCAL
+	/y1 FMLOCAL
+	/y2 FMLOCAL
+/R { 
+	/y2 exch def
+	/x2 exch def
+	/y1 exch def
+	/x1 exch def
+	x1 y1
+	x2 y1
+	x2 y2
+	x1 y2
+	4 Y 
+	} bind def
+	/rad FMLOCAL
+/rarc 
+	{rad 
+	 arcto
+	} bind def
+/RR { 
+	/rad exch def
+	normalize
+	/y2 exch def
+	/x2 exch def
+	normalize
+	/y1 exch def
+	/x1 exch def
+	mark
+	newpath
+	{
+	x1 y1 rad add moveto
+	x1 y2 x2 y2 rarc
+	x2 y2 x2 y1 rarc
+	x2 y1 x1 y1 rarc
+	x1 y1 x1 y2 rarc
+	closepath
+	} stopped {x1 y1 x2 y2 R} if 
+	cleartomark
+	} bind def
+/RRR { 
+	/rad exch def
+	normalize /y4 exch def /x4 exch def
+	normalize /y3 exch def /x3 exch def
+	normalize /y2 exch def /x2 exch def
+	normalize /y1 exch def /x1 exch def
+	newpath
+	normalize moveto 
+	mark
+	{
+	x2 y2 x3 y3 rarc
+	x3 y3 x4 y4 rarc
+	x4 y4 x1 y1 rarc
+	x1 y1 x2 y2 rarc
+	closepath
+	} stopped
+	 {x1 y1 x2 y2 x3 y3 x4 y4 newpath moveto lineto lineto lineto closepath} if
+	cleartomark
+	} bind def
+/C { 
+	grestore
+	gsave
+	R 
+	clip
+	setCurrentScreen
+} bind def
+/CP { 
+	grestore
+	gsave
+	Y 
+	clip
+	setCurrentScreen
+} bind def
+	/FMpointsize FMLOCAL
+/F { 
+	FMfonts exch get
+	FMpointsize scalefont
+	setfont
+	} bind def
+/Q { 
+	/FMpointsize exch def
+	F 
+	} bind def
+/T { 
+	moveto show
+	} bind def
+/RF { 
+	rotate
+	0 ne {-1 1 scale} if
+	} bind def
+/TF { 
+	gsave
+	moveto 
+	RF
+	show
+	grestore
+	} bind def
+/P { 
+	moveto
+	0 32 3 2 roll widthshow
+	} bind def
+/PF { 
+	gsave
+	moveto 
+	RF
+	0 32 3 2 roll widthshow
+	grestore
+	} bind def
+/S { 
+	moveto
+	0 exch ashow
+	} bind def
+/SF { 
+	gsave
+	moveto
+	RF
+	0 exch ashow
+	grestore
+	} bind def
+/B { 
+	moveto
+	0 32 4 2 roll 0 exch awidthshow
+	} bind def
+/BF { 
+	gsave
+	moveto
+	RF
+	0 32 4 2 roll 0 exch awidthshow
+	grestore
+	} bind def
+/G { 
+	gsave
+	newpath
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath 
+	PFill fill
+	grestore
+	} bind def
+/Gstrk {
+	savematrix
+    newpath
+    2 index 2 div add exch 3 index 2 div sub exch 
+    normalize 2 index 2 div sub exch 3 index 2 div add exch 
+    translate
+    scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    restorematrix
+    currentlinewidth exch setlinewidth PStroke setlinewidth
+    } bind def
+/Gclip { 
+	newpath
+	savematrix
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath 
+	clip newpath
+	restorematrix
+	} bind def
+/GG { 
+	gsave
+	newpath
+	normalize translate 0.0 0.0 moveto 
+	rotate 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath
+	PFill
+	fill
+	grestore
+	} bind def
+/GGclip { 
+	savematrix
+	newpath
+    normalize translate 0.0 0.0 moveto 
+    rotate 
+    dnormalize scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    closepath
+	clip newpath
+	restorematrix
+	} bind def
+/GGstrk { 
+	savematrix
+    newpath
+    normalize translate 0.0 0.0 moveto 
+    rotate 
+    dnormalize scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    closepath 
+	restorematrix
+    currentlinewidth exch setlinewidth PStroke setlinewidth
+	} bind def
+/A { 
+	gsave
+	savematrix
+	newpath
+	2 index 2 div add exch 3 index 2 div sub exch 
+	normalize 2 index 2 div sub exch 3 index 2 div add exch 
+	translate 
+	scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	restorematrix
+	PStroke
+	grestore
+	} bind def
+/Aclip {
+	newpath
+	savematrix
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath 
+	strokepath clip newpath
+	restorematrix
+} bind def
+/Astrk {
+	Gstrk
+} bind def
+/AA { 
+	gsave
+	savematrix
+	newpath
+	
+	3 index 2 div add exch 4 index 2 div sub exch 
+	
+	normalize 3 index 2 div sub exch 4 index 2 div add exch
+	translate 
+	rotate 
+	scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	restorematrix
+	PStroke
+	grestore
+	} bind def
+/AAclip {
+	savematrix
+	newpath
+    normalize translate 0.0 0.0 moveto 
+    rotate 
+    dnormalize scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    closepath
+	strokepath clip newpath
+	restorematrix
+} bind def
+/AAstrk {
+	GGstrk
+} bind def
+	/x FMLOCAL
+	/y FMLOCAL
+	/w FMLOCAL
+	/h FMLOCAL
+	/xx FMLOCAL
+	/yy FMLOCAL
+	/ww FMLOCAL
+	/hh FMLOCAL
+	/FMsaveobject FMLOCAL
+	/FMoptop FMLOCAL
+	/FMdicttop FMLOCAL
+/BEGINPRINTCODE { 
+	/FMdicttop countdictstack 1 add def 
+	/FMoptop count 7 sub def 
+	/FMsaveobject save def
+	userdict begin 
+	/showpage {} def 
+	FMNORMALIZEGRAPHICS 
+	3 index neg 3 index neg translate
+	} bind def
+/ENDPRINTCODE {
+	count -1 FMoptop {pop pop} for 
+	countdictstack -1 FMdicttop {pop end} for 
+	FMsaveobject restore 
+	} bind def
+/gn { 
+	0 
+	{	46 mul 
+		cf read pop 
+		32 sub 
+		dup 46 lt {exit} if 
+		46 sub add 
+		} loop
+	add 
+	} bind def
+	/str FMLOCAL
+/cfs { 
+	/str sl string def 
+	0 1 sl 1 sub {str exch val put} for 
+	str def 
+	} bind def
+/ic [ 
+	0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0223
+	0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0223
+	0
+	{0 hx} {1 hx} {2 hx} {3 hx} {4 hx} {5 hx} {6 hx} {7 hx} {8 hx} {9 hx}
+	{10 hx} {11 hx} {12 hx} {13 hx} {14 hx} {15 hx} {16 hx} {17 hx} {18 hx}
+	{19 hx} {gn hx} {0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12}
+	{13} {14} {15} {16} {17} {18} {19} {gn} {0 wh} {1 wh} {2 wh} {3 wh}
+	{4 wh} {5 wh} {6 wh} {7 wh} {8 wh} {9 wh} {10 wh} {11 wh} {12 wh}
+	{13 wh} {14 wh} {gn wh} {0 bl} {1 bl} {2 bl} {3 bl} {4 bl} {5 bl} {6 bl}
+	{7 bl} {8 bl} {9 bl} {10 bl} {11 bl} {12 bl} {13 bl} {14 bl} {gn bl}
+	{0 fl} {1 fl} {2 fl} {3 fl} {4 fl} {5 fl} {6 fl} {7 fl} {8 fl} {9 fl}
+	{10 fl} {11 fl} {12 fl} {13 fl} {14 fl} {gn fl}
+	] def
+	/sl FMLOCAL
+	/val FMLOCAL
+	/ws FMLOCAL
+	/im FMLOCAL
+	/bs FMLOCAL
+	/cs FMLOCAL
+	/len FMLOCAL
+	/pos FMLOCAL
+/ms { 
+	/sl exch def 
+	/val 255 def 
+	/ws cfs 
+	/im cfs 
+	/val 0 def 
+	/bs cfs 
+	/cs cfs 
+	} bind def
+400 ms 
+/ip { 
+	is 
+	0 
+	cf cs readline pop 
+	{	ic exch get exec 
+		add 
+		} forall 
+	pop 
+	
+	} bind def
+/rip { 
+	   
+	  
+	  bis ris copy pop 
+      is
+      0
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+	  pop pop 
+	  ris gis copy pop 
+	  dup is exch 
+	  
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+	  pop pop
+	  gis bis copy pop 
+	  dup add is exch 
+	  
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+      pop 
+      
+      } bind def
+/wh { 
+	/len exch def 
+	/pos exch def 
+	ws 0 len getinterval im pos len getinterval copy pop
+	pos len 
+	} bind def
+/bl { 
+	/len exch def 
+	/pos exch def 
+	bs 0 len getinterval im pos len getinterval copy pop
+	pos len 
+	} bind def
+/s1 1 string def
+/fl { 
+	/len exch def 
+	/pos exch def 
+	/val cf s1 readhexstring pop 0 get def
+	pos 1 pos len add 1 sub {im exch val put} for
+	pos len 
+	} bind def
+/hx { 
+	3 copy getinterval 
+	cf exch readhexstring pop pop 
+	} bind def
+	/h FMLOCAL
+	/w FMLOCAL
+	/d FMLOCAL
+	/lb FMLOCAL
+	/bitmapsave FMLOCAL
+	/is FMLOCAL
+	/cf FMLOCAL
+/wbytes { 
+      dup dup
+      24 eq { pop pop 3 mul }
+      { 8 eq {pop} {1 eq {7 add 8 idiv} {3 add 4 idiv} ifelse} ifelse } ifelse
+	} bind def
+/BEGINBITMAPBWc { 
+	1 {} COMMONBITMAPc
+	} bind def
+/BEGINBITMAPGRAYc { 
+	8 {} COMMONBITMAPc
+	} bind def
+/BEGINBITMAP2BITc { 
+	2 {} COMMONBITMAPc
+	} bind def
+/COMMONBITMAPc { 
+		 
+	/r exch def
+	/d exch def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+	/bitmapsave save def 
+	r                    
+	/is im 0 lb getinterval def 
+	ws 0 lb getinterval is copy pop 
+	/cf currentfile def 
+	w h d [w 0 0 h neg 0 h] 
+	{ip} image 
+	bitmapsave restore 
+	grestore
+	} bind def
+/BEGINBITMAPBW { 
+	1 {} COMMONBITMAP
+	} bind def
+/BEGINBITMAPGRAY { 
+	8 {} COMMONBITMAP
+	} bind def
+/BEGINBITMAP2BIT { 
+	2 {} COMMONBITMAP
+	} bind def
+/COMMONBITMAP { 
+	/r exch def
+	/d exch def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/bitmapsave save def 
+	r                    
+	/is w d wbytes string def
+	/cf currentfile def 
+	w h d [w 0 0 h neg 0 h] 
+	{cf is readhexstring pop} image
+	bitmapsave restore 
+	grestore
+	} bind def
+/ngrayt 256 array def
+/nredt 256 array def
+/nbluet 256 array def
+/ngreent 256 array def
+	/gryt FMLOCAL
+	/blut FMLOCAL
+	/grnt FMLOCAL
+	/redt FMLOCAL
+	/indx FMLOCAL
+	/cynu FMLOCAL
+	/magu FMLOCAL
+	/yelu FMLOCAL
+	/k FMLOCAL
+	/u FMLOCAL
+FMLevel1 {
+/colorsetup {
+	currentcolortransfer
+	/gryt exch def
+	/blut exch def
+	/grnt exch def
+	/redt exch def
+	0 1 255 {
+		/indx exch def
+		/cynu 1 red indx get 255 div sub def
+		/magu 1 green indx get 255 div sub def
+		/yelu 1 blue indx get 255 div sub def
+		/k cynu magu min yelu min def
+		/u k currentundercolorremoval exec def
+%		/u 0 def
+		nredt indx 1 0 cynu u sub max sub redt exec put
+		ngreent indx 1 0 magu u sub max sub grnt exec put
+		nbluet indx 1 0 yelu u sub max sub blut exec put
+		ngrayt indx 1 k currentblackgeneration exec sub gryt exec put
+	} for
+	{255 mul cvi nredt exch get}
+	{255 mul cvi ngreent exch get}
+	{255 mul cvi nbluet exch get}
+	{255 mul cvi ngrayt exch get}
+	setcolortransfer
+	{pop 0} setundercolorremoval
+	{} setblackgeneration
+	} bind def
+}
+{
+/colorSetup2 {
+	[ /Indexed /DeviceRGB 255 
+		{dup red exch get 255 div 
+		 exch dup green exch get 255 div 
+		 exch blue exch get 255 div}
+	] setcolorspace
+} bind def
+} ifelse
+	/tran FMLOCAL
+/fakecolorsetup {
+	/tran 256 string def
+	0 1 255 {/indx exch def 
+		tran indx
+		red indx get 77 mul
+		green indx get 151 mul
+		blue indx get 28 mul
+		add add 256 idiv put} for
+	currenttransfer
+	{255 mul cvi tran exch get 255.0 div}
+	exch concatprocs settransfer
+} bind def
+/BITMAPCOLOR { 
+	/d 8 def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/bitmapsave save def
+	FMLevel1 {	
+		colorsetup
+		/is w d wbytes string def
+		/cf currentfile def 
+		w h d [w 0 0 h neg 0 h] 
+		{cf is readhexstring pop} {is} {is} true 3 colorimage 
+	} {
+		colorSetup2
+		/is w d wbytes string def
+		/cf currentfile def 
+		7 dict dup begin
+			/ImageType 1 def
+			/Width w def
+			/Height h def
+			/ImageMatrix [w 0 0 h neg 0 h] def
+			/DataSource {cf is readhexstring pop} bind def
+			/BitsPerComponent d def
+			/Decode [0 255] def
+		end image	
+	} ifelse
+	bitmapsave restore 
+	grestore
+	} bind def
+/BITMAPCOLORc { 
+	/d 8 def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+	/bitmapsave save def 
+	FMLevel1 {	
+		colorsetup
+		/is im 0 lb getinterval def 
+		ws 0 lb getinterval is copy pop 
+		/cf currentfile def 
+		w h d [w 0 0 h neg 0 h] 
+		{ip} {is} {is} true 3 colorimage
+	} {
+		colorSetup2
+		/is im 0 lb getinterval def 
+		ws 0 lb getinterval is copy pop 
+		/cf currentfile def 
+		7 dict dup begin
+			/ImageType 1 def
+			/Width w def
+			/Height h def
+			/ImageMatrix [w 0 0 h neg 0 h] def
+			/DataSource {ip} bind def
+			/BitsPerComponent d def
+			/Decode [0 255] def
+		end image	
+	} ifelse
+	bitmapsave restore 
+	grestore
+	} bind def
+/BITMAPTRUECOLORc { 
+	/d 24 def
+        gsave
+ 	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+        /bitmapsave save def 
+        
+	/is im 0 lb getinterval def	
+	/ris im 0 w getinterval def	
+	/gis im w w getinterval def	
+	/bis im w 2 mul w getinterval def 
+        
+        ws 0 lb getinterval is copy pop 
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        {w rip pop ris} {gis} {bis} true 3 colorimage
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPTRUECOLOR { 
+        gsave
+		
+		3 index 2 div add exch	
+		4 index 2 div add exch	
+		translate		
+		rotate			
+		1 index 2 div neg	
+		1 index 2 div neg	
+		translate		
+		scale			
+		/h exch def /w exch def
+        /bitmapsave save def 
+        /is w string def
+        /gis w string def
+        /bis w string def
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        { cf is readhexstring pop } 
+        { cf gis readhexstring pop } 
+        { cf bis readhexstring pop } 
+        true 3 colorimage 
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPTRUEGRAYc { 
+	/d 24 def
+        gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+        /bitmapsave save def 
+        
+	/is im 0 lb getinterval def	
+	/ris im 0 w getinterval def	
+	/gis im w w getinterval def	
+	/bis im w 2 mul w getinterval def 
+        ws 0 lb getinterval is copy pop 
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        {w rip pop ris gis bis w gray} image
+        bitmapsave restore 
+        grestore
+        } bind def
+/ww FMLOCAL
+/r FMLOCAL
+/g FMLOCAL
+/b FMLOCAL
+/i FMLOCAL
+/gray { 
+        /ww exch def
+        /b exch def
+        /g exch def
+        /r exch def
+        0 1 ww 1 sub { /i exch def r i get .299 mul g i get .587 mul
+			b i get .114 mul add add r i 3 -1 roll floor cvi put } for
+        r
+        } bind def
+/BITMAPTRUEGRAY { 
+        gsave
+		
+		3 index 2 div add exch	
+		4 index 2 div add exch	
+		translate		
+		rotate			
+		1 index 2 div neg	
+		1 index 2 div neg	
+		translate		
+		scale			
+		/h exch def /w exch def
+        /bitmapsave save def 
+        /is w string def
+        /gis w string def
+        /bis w string def
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        { cf is readhexstring pop 
+          cf gis readhexstring pop 
+          cf bis readhexstring pop w gray}  image
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPGRAY { 
+	8 {fakecolorsetup} COMMONBITMAP
+	} bind def
+/BITMAPGRAYc { 
+	8 {fakecolorsetup} COMMONBITMAPc
+	} bind def
+/ENDBITMAP {
+	} bind def
+end 
+	/ALDsave FMLOCAL
+	/ALDmatrix matrix def ALDmatrix currentmatrix pop
+/StartALD {
+	/ALDsave save def
+	 savematrix
+	 ALDmatrix setmatrix
+	} bind def
+/InALD {
+	 restorematrix
+	} bind def
+/DoneALD {
+	 ALDsave restore
+	} bind def
+/I { setdash } bind def
+/J { [] 0 setdash } bind def
+%%EndProlog
+%%BeginSetup
+(4.0) FMVERSION
+1 1 0 0 612 792 0 1 14 FMDOCUMENT
+0 0 /Times-Roman FMFONTDEFINE
+1 0 /Times-Bold FMFONTDEFINE
+2 0 /Times-Italic FMFONTDEFINE
+3 0 /Courier FMFONTDEFINE
+4 1 /Symbol FMFONTDEFINE
+5 0 /Times-BoldItalic FMFONTDEFINE
+32 FMFILLS
+0 0 FMFILL
+1 0.1 FMFILL
+2 0.3 FMFILL
+3 0.5 FMFILL
+4 0.7 FMFILL
+5 0.9 FMFILL
+6 0.97 FMFILL
+7 1 FMFILL
+8 <0f1e3c78f0e1c387> FMFILL
+9 <0f87c3e1f0783c1e> FMFILL
+10 <cccccccccccccccc> FMFILL
+11 <ffff0000ffff0000> FMFILL
+12 <8142241818244281> FMFILL
+13 <03060c183060c081> FMFILL
+14 <8040201008040201> FMFILL
+16 1 FMFILL
+17 0.9 FMFILL
+18 0.7 FMFILL
+19 0.5 FMFILL
+20 0.3 FMFILL
+21 0.1 FMFILL
+22 0.03 FMFILL
+23 0 FMFILL
+24 <f0e1c3870f1e3c78> FMFILL
+25 <f0783c1e0f87c3e1> FMFILL
+26 <3333333333333333> FMFILL
+27 <0000ffff0000ffff> FMFILL
+28 <7ebddbe7e7dbbd7e> FMFILL
+29 <fcf9f3e7cf9f3f7e> FMFILL
+30 <7fbfdfeff7fbfdfe> FMFILL
+%%EndSetup
+%%Page: "1" 1
+%%BeginPaperSize: Letter
+%%EndPaperSize
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+J
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Dylan Resource Locators) 72 42.62 T
+(August 17, 1995) 279.44 42.62 T
+(1) 536 42.62 T
+0 24 Q
+(Dylan Resource Locators) 184.03 704 T
+(Library Proposal) 225.01 655 T
+1 12 Q
+(T) 219.13 614 T
+(im McNerney with Scott McKay) 226.91 614 T
+(Harlequin, Inc.) 266.83 597 T
+1 16 Q
+(1.  Intr) 72 553.33 T
+(oduction) 119.26 553.33 T
+0 12 Q
+-0.33 (The purpose of the Dylan Locators Library is to provide Dylan programs with a portable, \337exible,) 72 525 P
+(and uniform facility for manipulating the \322addresses\323 of \336les, databases, and other network) 72 511 T
+(resources from a variety of platforms.) 72 497 T
+(For programs which must be ported across operating systems and for programs which need to be) 72 470 T
+(installed on many machines, code that explicitly names external resources \050such as \336les and) 72 456 T
+(peripheral devices\051 can be a barrier to portability) 72 442 T
+(.) 305.48 442 T
+(This library addresses these issues in two ways:) 72 415 T
+1 F
+(\245) 85.5 394 T
+0 F
+(It provides a portable and reliable means of parsing file names and World-Wide Web Uni-) 99 394 T
+(form Resource Locators \050URLs\051 and manipulating them as though they were structured) 99 380 T
+(objects.) 99 366 T
+1 F
+(\245) 85.5 345 T
+0 F
+(It provides a portable, operating system-independent, \322abstract\323 file system which can be) 99 345 T
+(configured to map onto one or more physical file systems.) 99 331 T
+(This library does not address the issue of locating resources which are linked into a program or) 72 304 T
+(which are accessible using operating system-speci\336c APIs. For example, Apple\325) 72 290 T
+(s MacOS pro-) 456.94 290 T
+-0.29 (vides an elaborate scheme for naming and referencing fonts, bitmaps, menus, and so forth. This is) 72 276 P
+(beyond the scope of this library) 72 262 T
+(. This library also does not address issues of accessing \336le con-) 222.86 262 T
+(tents or operating on \336le systems. This functionality is provided by the Dylan Streams Library) 72 248 T
+(and the Dylan File System Library) 72 234 T
+(.) 237.54 234 T
+(The macros, classes, and functions de\336ned in this document are exported from the) 72 207 T
+1 F
+(locators) 469.6 207 T
+0 F
+( mod-) 510.25 207 T
+(ule of the) 72 193 T
+1 F
+(locators) 120.32 193 T
+0 F
+(library under the names used here.) 163.98 193 T
+1 16 Q
+(2.  Concepts) 72 151.33 T
+0 12 Q
+(A) 72 123 T
+2 F
+(r) 83.66 123 T
+(esour) 87.89 123 T
+(ce) 114.11 123 T
+0 F
+( is an addressable container for information. T) 124.76 123 T
+(raditionally the) 346.3 123 T
+2 F
+(\336le) 422.29 123 T
+0 F
+( has been the most) 436.96 123 T
+-0.35 (ubiquitous kind of resource. A) 72 109 P
+2 F
+-0.35 (\336le system) 219.57 109 P
+0 F
+-0.35 ( is the structure imposed on a mass storage device which) 268.88 109 P
+(allows \336les to be reliably stored and retrieved using addresses called) 72 95 T
+2 F
+(\336le names) 403.61 95 T
+0 F
+(. A \336le name is a) 451.93 95 T
+(kind of) 72 81 T
+2 F
+(r) 109.33 81 T
+(esour) 113.56 81 T
+(ce locator) 139.78 81 T
+0 F
+( \050\322locator\323 for short\051. A WWW URL is another kind of kind of resource) 188.1 81 T
+(locator) 72 67 T
+(. Resource locators which are represented as strings are called) 104.66 67 T
+2 F
+(locator strings) 404.9 67 T
+0 F
+(.) 475.25 67 T
+FMENDPAGE
+%%EndPage: "1" 1
+%%Page: "2" 2
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Library Proposal) 72 42.62 T
+(August 17, 1995) 279.44 42.62 T
+(2) 536 42.62 T
+0 12 Q
+(Most importantly) 72 712 T
+(, a Dylan resource locator provides an abstraction for manipulating its) 154.9 712 T
+2 F
+(compo-) 493.5 712 T
+(nents) 72 698 T
+0 F
+( \050which are like Dylan \322slots\323\051, and for) 97.33 698 T
+2 F
+(mer) 287.62 698 T
+(ging) 305.83 698 T
+0 F
+( it with other resource locators to yield a) 327.17 698 T
+(new) 72 684 T
+(, more speci\336c, more complete locator) 91.21 684 T
+(.) 274.85 684 T
+-0.09 (Some resource locators have no corresponding or unambiguous string representation. There are a) 72 658 P
+(number of ways this can arise:) 72 644 T
+1 F
+(\245) 85.5 624 T
+0 F
+(Sometimes it is convenient to manipulate fragments of resource locators, for example the) 99 624 T
+(user name and password portion of a URL in isolation. These are called) 99 610 T
+2 F
+(incomplete loca-) 446.27 610 T
+(tors) 99 596 T
+0 F
+(.) 117.67 596 T
+1 F
+(\245) 85.5 576 T
+0 F
+-0.38 (Some resource locators, instead of having missing components, contain) 99 576 P
+2 F
+-0.38 (wildcar) 441.91 576 P
+-0.38 (ds) 478.14 576 P
+0 F
+-0.38 ( for which) 488.81 576 P
+(no syntax exists. These are called) 99 562 T
+2 F
+(wild locators) 262.63 562 T
+0 F
+(.) 325.64 562 T
+1 F
+(\245) 85.5 542 T
+0 F
+-0.38 (A few operating systems support file names but discourage their use, recommending instead) 99 542 P
+(that files be located using a data structure which uniquely identify file system objects inde-) 99 528 T
+(pendent of their names, or the uniqueness thereof \050for example, MacOS FSSpec\051. These) 99 514 T
+-0.07 (locators contain) 99 500 P
+-0.07 (pointers) 178.18 500 P
+-0.07 (,) 216.85 500 P
+-0.07 (handles) 222.78 500 P
+-0.07 (, or indices into OS tables. We call these) 259.44 500 P
+2 F
+-0.07 (opaque locators) 456.47 500 P
+0 F
+-0.07 (.) 534.07 500 P
+1 F
+(\245) 85.5 480 T
+0 F
+-0.16 (Lastly, this library allows file names which are not represented in the local file name syntax) 99 480 P
+(to be created and manipulated. These cannot be simply represented as strings, because it is) 99 466 T
+(important to preserve information about which syntax they are in. These are called) 99 452 T
+2 F
+(for) 498.25 452 T
+(eign) 511.81 452 T
+(\336le locators) 99 438 T
+0 F
+(.) 156 438 T
+(Implementations are free to represent resource locators that can be represented as strings using) 72 412 T
+(alternate data structures which are subclasses of) 72 398 T
+1 F
+(<locator>) 304.93 398 T
+0 F
+(. W) 354.6 398 T
+(e call these simply) 370.97 398 T
+(,) 459.18 398 T
+2 F
+(locators) 465.18 398 T
+0 F
+(.) 504.52 398 T
+1 16 Q
+(3.  T) 72 357.33 T
+(ypes of Resour) 101.49 357.33 T
+(ce Locators) 201.63 357.33 T
+1 14 Q
+(3.1  File Names) 72 322.67 T
+2 12 Q
+(File systems) 72 296 T
+0 F
+( provide one way of or) 130.99 296 T
+(ganizing resources into aggregate) 239.75 296 T
+2 F
+(dir) 403.7 296 T
+(ectories) 417.26 296 T
+0 F
+( and atomic) 455.26 296 T
+2 F
+(\336les) 514.25 296 T
+0 F
+(.) 533.58 296 T
+2 F
+-0.22 (File names) 72 282 P
+0 F
+-0.22 ( provide a way of locating these resources. Many operating systems also allow) 124.78 282 P
+2 F
+-0.22 (devices) 501.9 282 P
+0 F
+(to be located using \336le names, for example,) 72 268 T
+3 F
+(/dev/tty) 283.97 268 T
+0 F
+( on Unix.) 341.57 268 T
+-0.36 (The syntax of local \336le names will vary from one host operating system to another) 72 242 P
+-0.36 (, but for a given) 462.47 242 P
+(operating system, the syntax is required to be consistent across implementations. The local \336le) 72 228 T
+(name syntax for popular operating systems is speci\336ed below) 72 214 T
+(.) 366.52 214 T
+(Posix) 108 194 T
+3 10 Q
+(/usr/local/bin/emacs) 252 194 T
+0 12 Q
+(MacOS) 108 178 T
+3 10 Q
+(Mac HD1:applications:gnu:emacs) 252 178 T
+0 12 Q
+(MS-DOS) 108 162 T
+3 10 Q
+(C:\134APPS\134GNU\134EMACS.EXE) 252 162 T
+0 12 Q
+(Microsoft UNC) 108 146 T
+3 10 Q
+(\134\134alphamax\134cdevice\134apps\134gnu\134emacs) 252 146 T
+FMENDPAGE
+%%EndPage: "2" 2
+%%Page: "3" 3
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Library Proposal) 72 42.62 T
+(August 17, 1995) 279.44 42.62 T
+(3) 536 42.62 T
+1 14 Q
+(3.2  Uniform Resour) 72 710.67 T
+(ce Locators) 193.84 710.67 T
+1 11.2 Q
+(1) 262.65 716.27 T
+0 12 Q
+-0.27 (Uniform Resource Locators \050URLs\051, developed by the) 72 683.53 P
+-0.27 (W) 334.71 683.53 P
+-0.27 (orld-W) 345.08 683.53 P
+-0.27 (ide W) 379.25 683.53 P
+-0.27 (eb \050WWW\051 initiative, of) 407.01 683.53 P
+-0.27 (fer) 523.95 683.53 P
+-0.11 (a standardized syntax for naming resources on the Internet. A URL denotes both the location of a) 72 669.53 P
+(resource and a) 72 655.53 T
+2 F
+(scheme) 144.3 655.53 T
+0 F
+( for accessing it. For example:) 179.62 655.53 T
+3 10 Q
+(http://www-swiss.ai.mit.edu/6095) 108 636.39 T
+0 12 Q
+(where the scheme) 72 610.59 T
+3 F
+(http) 160.97 610.59 T
+0 F
+( stands for HyperT) 189.77 610.59 T
+(ext T) 279.24 610.59 T
+(ransfer Protocol.) 303.82 610.59 T
+(One interesting provision of URLs includes the ability to create and send a piece of outgoing) 72 584.12 T
+(email \050) 72 570.12 T
+3 F
+(mailto:) 105.66 570.12 T
+0 F
+(\051. For example:) 156.06 570.12 T
+3 10 Q
+(with-open-file \050"url:mailto:tim@harlequin.com",) 108 550.98 T
+(direction: #"write"\051) 204 538.51 T
+0 F
+(\311) 120 526.04 T
+3 F
+(end;) 108 513.57 T
+1 14 Q
+(3.3  Abstract Locators) 72 480.43 T
+0 12 Q
+(One problem with using the local \336le system as a repository for resources and using literal \336le) 72 453.29 T
+(names to name them, is that \336le systems vary widely in their con\336guration from machine to) 72 439.29 T
+(machine, and syntax of \336le names varies widely from operating system to operating system.) 72 425.29 T
+(The Dylan Resource Locator library of) 72 398.82 T
+(fers) 258.73 398.82 T
+2 F
+(abstract locators) 279.72 398.82 T
+0 F
+( to address this issue. The syntax of) 361.39 398.82 T
+(an abstract locator is like the syntax for a URL, using the scheme) 72 384.82 T
+3 F
+(abstract) 387.95 384.82 T
+0 F
+(, for example) 445.55 384.82 T
+(,) 509.2 384.82 T
+3 F
+(abstract://gnu/emacs) 72 370.82 T
+0 F
+(. Abstract locators under) 216 370.82 T
+(go an implicit translation step before they) 333.76 370.82 T
+(are used to locate a resource. The translated locator is called a) 72 356.82 T
+2 F
+(physical locator) 372.24 356.82 T
+0 F
+(.) 449.24 356.82 T
+(In the following example, we have one \336le system that looks like this:) 72 330.35 T
+3 10 Q
+(/usr/local/bin/) 108 311.22 T
+(emacs) 120 299.22 T
+(latex) 120 287.22 T
+0 F
+(\311) 120 275.22 T
+0 12 Q
+(and another \336le system that looks like this:) 72 249.41 T
+3 10 Q
+(c:\134emacs\134) 108 230.28 T
+(emacs.exe) 132 218.28 T
+0 F
+(\311) 132 206.28 T
+3 F
+(c:\134tex\134) 108 194.28 T
+(latex.exe) 132 182.28 T
+0 F
+(\311) 132 170.28 T
+0 12 Q
+(W) 72 144.47 T
+(e might want to treat this uniformly using an) 82.37 144.47 T
+2 F
+(abstract) 299.36 144.47 T
+0 F
+( \336le system, which looks like this:) 338.7 144.47 T
+3 10 Q
+(//emacs/bin/) 108 125.33 T
+(emacs) 120 113.33 T
+72 90 540 110 C
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+72 98 204 98 2 L
+0.25 H
+2 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 0 612 792 C
+0 10 Q
+0 X
+0 0 0 1 0 0 0 K
+(1.  In this document we are careful to make the distinction between resource locators and locator strings. Unfortu-) 81 83.33 T
+(nately) 81 71.33 T
+(, the term Uniform Resource Locator does not follow this convention, because it is by de\336nition a string.) 104.79 71.33 T
+FMENDPAGE
+%%EndPage: "3" 3
+%%Page: "4" 4
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Library Proposal) 72 42.62 T
+(August 17, 1995) 279.44 42.62 T
+(4) 536 42.62 T
+0 10 Q
+(\311) 120 713.33 T
+3 F
+(//tex/bin/) 108 701.33 T
+(latex) 120 689.33 T
+0 F
+(\311) 120 677.33 T
+0 12 Q
+(This way we can name the) 72 648.79 T
+3 F
+(emacs) 202.63 648.79 T
+0 F
+( or the) 238.63 648.79 T
+3 F
+(latex) 272.29 648.79 T
+0 F
+( executable as) 308.29 648.79 T
+3 10 Q
+(abstract://gnu/emacs/bin/emacs) 108 626.91 T
+0 12 Q
+(or as) 72 598.36 T
+3 10 Q
+(abstract://tex/bin/latex) 108 576.48 T
+0 12 Q
+(respectively) 72 547.93 T
+(, regardless of how the physical \336le system is con\336gured.) 129.2 547.93 T
+(For purposes of these examples, we will specify the mapping from the abstract \336le system to the) 72 518.71 T
+(physical \336le system using a pattern language.) 72 504.71 T
+(For example 1, the mapping might be as follows:) 72 475.5 T
+3 10 Q
+(abstract://emacs/bin/emacs) 108 453.62 T
+4 12 Q
+(\336) 270 453.62 T
+3 10 Q
+( /usr/local/bin/emacs) 281.84 453.62 T
+(abstract://emacs/**) 108 441.62 T
+4 12 Q
+(\336) 270 441.62 T
+3 10 Q
+( /usr/local/lib/emacs/**) 281.84 441.62 T
+(abstract://tex/bin/*) 108 429.62 T
+4 12 Q
+(\336) 270 429.62 T
+3 10 Q
+( /usr/local/bin/tex/*) 281.84 429.62 T
+(abstract://tex/**) 108 417.62 T
+4 12 Q
+(\336) 270 417.62 T
+3 10 Q
+( /usr/local/lib/tex/**) 281.84 417.62 T
+0 12 Q
+(For example 2, the mapping might be as follows:) 72 389.07 T
+3 10 Q
+(abstract://emacs/bin/emacs) 108 367.19 T
+4 12 Q
+(\336) 270 367.19 T
+3 10 Q
+( c:\134emacs\134emacs.exe) 281.84 367.19 T
+(abstract://emacs/**) 108 355.19 T
+4 12 Q
+(\336) 270 355.19 T
+3 10 Q
+( c:\134emacs\134**) 281.84 355.19 T
+(abstract://tex/bin/*) 108 343.19 T
+4 12 Q
+(\336) 270 343.19 T
+3 10 Q
+( c:\134tex\134*.exe) 281.84 343.19 T
+(abstract://tex/**) 108 331.19 T
+4 12 Q
+(\336) 270 331.19 T
+3 10 Q
+( c:\134tex\134**) 281.84 331.19 T
+0 12 Q
+(Note that these example mappings were carefully contrived to be reversible. However) 72 302.64 T
+(, this need) 484.08 302.64 T
+(not be the case; more than one abstract locator can map to the same physical locator) 72 288.64 T
+(.) 474.25 288.64 T
+1 14 Q
+(3.4  File T) 72 252.09 T
+(ypes) 130.86 252.09 T
+0 12 Q
+(Many \336le systems represent the \322type\323 of a \336le as part of its name. T) 72 222.21 T
+(raditionally) 401.86 222.21 T
+(, the) 456.41 222.21 T
+2 F
+(\336le type) 480.07 222.21 T
+0 F
+(appears after a \322.\323 character \050for example, in MS-DOS the \336le type of) 72 208.21 T
+3 F
+(emacs.exe) 409.56 208.21 T
+0 F
+( is ") 474.36 208.21 T
+3 F
+(exe) 493.26 208.21 T
+0 F
+(",) 514.86 208.21 T
+(which means it is an \322executable \336le\323\051.) 72 194.21 T
+(File systems have dif) 72 165 T
+(fering conventions for naming \336le types. Some \336le systems \050such as MS-) 173.45 165 T
+-0.29 (DOS\051 structure the \336le name into two \336elds, one which we will call the) 72 151 P
+2 F
+-0.29 (base) 412.94 151 P
+0 F
+-0.29 (, and the other) 434.94 151 P
+-0.29 (, which) 502.25 151 P
+(is the \336le) 72 137 T
+2 F
+(type) 119 137 T
+0 F
+(. Other \336le systems \050such as Unix\051 do not provide separate \336elds, relying instead) 139 137 T
+(only on conventions for encoding the \336le type as part of the name. For our purposes, this can be) 72 123 T
+-0.19 (problematic because we would like to be able to model \336le names as composed of separate \336elds,) 72 109 P
+-0.14 (like in MS-DOS. In some \336le systems \050such as MacOS\051 the \336le type is not part of the name at all,) 72 95 P
+(but is instead stored as a separate \336le attribute, much like the \336le size or creation date. \050Note that) 72 81 T
+(this is problematic from a portability standpoint.\051) 72 67 T
+FMENDPAGE
+%%EndPage: "4" 4
+%%Page: "5" 5
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Library Proposal) 72 42.62 T
+(August 17, 1995) 279.44 42.62 T
+(5) 536 42.62 T
+0 12 Q
+(For example, the Unix \336le name) 72 712 T
+3 F
+(emacs) 230.32 712 T
+0 F
+( typically names an executable \336le but it is not apparent) 266.32 712 T
+-0.21 (from the \336le name what the type of the \336le is. The Unix \336le name) 72 698 P
+3 F
+-0.5 (.emacs) 386.85 698 P
+0 F
+-0.21 ( typically names a text) 430.05 698 P
+(\336le, but again, the \336le type is not apparent in the \336le name.) 72 684 T
+(W) 72 657.23 T
+(e introduce the concept of) 82.37 657.23 T
+2 F
+(abstract \336le types) 210 657.23 T
+0 F
+( in an ef) 294.66 657.23 T
+(fort to reconcile dif) 333.43 657.23 T
+(ferences between \336le) 426.19 657.23 T
+(systems. Abstract \336le types are represented as Dylan symbols. For example:) 72 643.23 T
+1 F
+(#"text") 108 623.8 T
+(#"dylan") 108 611.8 T
+(#"object") 108 599.8 T
+(#"postscript") 108 587.8 T
+0 F
+(Whenever possible, Dylan resource locators represent their \336le type internally as an abstract \336le) 72 561.71 T
+(type. For example:) 72 547.71 T
+3 10 Q
+(locator-type\050as\050<locator>, "thesis.ps"\051\051;) 108 528.28 T
+4 12 Q
+(\336) 108 515.51 T
+3 10 Q
+( #"postscript") 119.84 515.51 T
+0 12 Q
+(When a resource locator is coerced into a locator string, the appropriate) 72 489.41 T
+2 F
+(\336le type string) 418.24 489.41 T
+0 F
+( is chosen) 486.9 489.41 T
+(according to the \336le system type of the resource locator) 72 475.41 T
+(. For example:) 337.62 475.41 T
+3 10 Q
+(as\050<string>, make\050<locator>, base: "thesis",) 108 455.98 T
+(                             type: #"postscript"\051\051;) 108 443.22 T
+4 12 Q
+(\336) 108 430.45 T
+3 10 Q
+( "thesis.ps") 119.84 430.45 T
+0 12 Q
+-0.29 (The bene\336ts of abstract \336le types become apparent when working with \336le names from more than) 72 404.35 P
+-0.37 (one type of \336le system \050for example,  network \336le copying utilities\051, and especially when working) 72 390.35 P
+(with abstract locators. For example:) 72 376.35 T
+3 10 Q
+(as\050<string>,) 108 356.92 T
+(as\050<physical-locator>,) 126 344.92 T
+(as\050<locator>,) 144 332.92 T
+("abstract://home-dir/thesis.postscript"\051\051\051;) 162 320.92 T
+4 12 Q
+(\336) 108 308.16 T
+3 10 Q
+( "/usr/users/tim/thesis.ps") 119.84 308.16 T
+1 16 Q
+(4.  Locator Components) 72 267.39 T
+0 12 Q
+(T) 72 239.29 T
+(o provide a consistent API that allows programs to work the same way with dif) 78.49 239.29 T
+(ferent types of) 458.23 239.29 T
+(resource locators, locators behave as though they always have the following components:) 72 225.29 T
+1 14 Q
+(4.1  Structur) 72 191.2 T
+(ed Components) 147.57 191.2 T
+1 12 Q
+(scheme) 108 163.77 T
+0 F
+(This corresponds to a URL access) 207 163.77 T
+2 F
+(scheme) 373.63 163.77 T
+0 F
+(, for example,) 408.95 163.77 T
+1 F
+(#"http") 478.6 163.77 T
+0 F
+( or) 519.25 163.77 T
+1 F
+-0.19 (#"mailto") 207 149.77 P
+0 F
+-0.19 (.) 258.98 149.77 P
+1 F
+-0.19 (#"abstract") 264.79 149.77 P
+0 F
+-0.19 ( indicates that the locator is a Dylan abstract) 326.1 149.77 P
+-0.16 (locator.) 207 135.77 P
+1 F
+-0.16 (#"native") 246.16 135.77 P
+0 F
+-0.16 ( indicates that the locator refers to a) 296.82 135.77 P
+2 F
+-0.16 (native locator) 470.16 135.77 P
+0 F
+-0.16 (.) 537 135.77 P
+1 F
+(host) 108 109 T
+0 F
+-0.37 (This is the name of the server on which the resource resides. A host is) 207 109 P
+(a) 207 95 T
+2 F
+(hierar) 215.33 95 T
+(chical component) 244.88 95 T
+0 F
+( which, like a directory component, can be) 329.87 95 T
+2 F
+-0.68 (absolute) 207 81 P
+0 F
+-0.68 ( \050for example,) 247.67 81 P
+3 F
+-1.64 (hilly.harlequin.com) 316.26 81 P
+0 F
+-0.68 ( or 198.3.232.58\051,) 453.06 81 P
+(or) 207 67 T
+2 F
+(r) 220 67 T
+(elative) 224.22 67 T
+0 F
+( \050for example,) 256.21 67 T
+3 F
+(hilly) 326.86 67 T
+0 F
+(\051.) 362.86 67 T
+FMENDPAGE
+%%EndPage: "5" 5
+%%Page: "6" 6
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Library Proposal) 72 42.62 T
+(August 17, 1995) 279.44 42.62 T
+(6) 536 42.62 T
+1 12 Q
+(port) 108 712 T
+0 F
+(In a URL, a scheme\325s default) 207 712 T
+2 F
+(port) 350.63 712 T
+0 F
+( component can be overridden by) 370.63 712 T
+(explicit mention.) 207 698 T
+1 F
+(user-id) 108 671.91 T
+0 F
+-0.76 (Some schemes \050for example,) 207 671.91 P
+3 F
+-1.83 (ftp:) 345.59 671.91 P
+0 F
+-0.76 (\051 require the specification of a) 374.39 671.91 P
+2 F
+-0.76 (user) 517.1 671.91 P
+0 F
+(and) 207 657.91 T
+2 F
+(passwor) 227.33 657.91 T
+(d) 266.89 657.91 T
+0 F
+( to access certain files) 272.89 657.91 T
+1 F
+(password) 108 631.82 T
+0 F
+(When the) 207 631.82 T
+2 F
+(user) 256.32 631.82 T
+0 F
+( component is specified, a) 276.98 631.82 T
+2 F
+(passwor) 404.96 631.82 T
+(d) 444.53 631.82 T
+0 F
+( must typically be) 450.53 631.82 T
+-0.22 (specified as well. Note that this password is stored and transmitted as) 207 617.82 P
+2 F
+(plain text) 207 603.82 T
+0 F
+(.) 252 603.82 T
+1 F
+(device) 108 577.73 T
+0 F
+-0.75 (This corresponds to the) 207 577.73 P
+2 F
+-0.75 (device) 319.34 577.73 P
+0 F
+-0.75 (or) 352.24 577.73 P
+2 F
+-0.75 (volume) 364.49 577.73 P
+0 F
+-0.75 ( concept in many file systems) 399.15 577.73 P
+(\050for example, Microsoft) 207 563.73 T
+3 F
+(C:) 324.97 563.73 T
+0 F
+( or MacOS) 339.37 563.73 T
+3 F
+(Hard Disk) 395.03 563.73 T
+0 F
+(\051) 459.83 563.73 T
+1 F
+(directory) 108 537.64 T
+0 F
+-0.38 (This corresponds to the standard) 207 537.64 P
+2 F
+-0.38 (dir) 364.07 537.64 P
+-0.38 (ectory) 377.63 537.64 P
+0 F
+-0.38 ( concept in hierarchical file) 407.62 537.64 P
+(systems \050for example, the) 207 523.64 T
+3 F
+(/usr/local/bin) 333.31 523.64 T
+0 F
+( portion of) 434.11 523.64 T
+3 F
+-3.07 (/usr/local/bin/bison) 207 509.64 P
+0 F
+-1.28 (\051. A directory is a hierarchial component) 351 509.64 P
+(\050explained below\051.) 207 495.64 T
+1 F
+(base) 108 469.55 T
+0 F
+(This non-standard term was chose to avoid confusion with the term) 207 469.55 T
+-0.75 (\322file name.\323 It refers to the name of a group of files that can be thought) 207 455.55 P
+(of as conceptually related. For example, files containing the source) 207 441.55 T
+-0.83 (and object code will typically share the same) 207 427.55 P
+2 F
+-0.83 (base) 419 427.55 P
+0 F
+-0.83 (. For some operating) 440.99 427.55 P
+(systems such as Unix, the base is a) 207 413.55 T
+2 F
+(derived component) 377.32 413.55 T
+0 F
+(, since Unix) 468.96 413.55 T
+(does not have a model of both file name and file type.) 207 399.55 T
+1 F
+(type) 108 373.45 T
+0 F
+(This corresponds to the) 207 373.45 T
+2 F
+(file type) 322.32 373.45 T
+0 F
+( or) 360.65 373.45 T
+2 F
+(extension) 376.64 373.45 T
+0 F
+( concept in many file) 421.97 373.45 T
+(systems. This indicates what kind of file this is. Files with the same) 207 359.45 T
+-0.44 (name but different type are usually related in some specific way, such) 207 345.45 P
+(as one being a source file, another the compiled form of that source,) 207 331.45 T
+(and a third the listing of error messages from the compiler. Note the) 207 317.45 T
+(distinction that, in the Dylan Locators Library, a) 207 303.45 T
+2 F
+(type) 442.31 303.45 T
+0 F
+( is a structured) 462.3 303.45 T
+(object, but an) 207 289.45 T
+2 F
+(extension) 274.99 289.45 T
+0 F
+( is a string. For some operating systems such) 320.32 289.45 T
+-0.07 (as Unix, the type is a derived component, since Unix does not have a) 207 275.46 P
+(model of both file name and file type.) 207 261.46 T
+1 F
+(version) 108 235.36 T
+0 F
+-0.61 (This corresponds to the concept of a version in a versioned file system) 207 235.36 P
+-0.07 (or a source control system. A version is a special type of hierarchical) 207 221.36 P
+(component which is described below.) 207 207.36 T
+1 F
+(search-keys) 108 181.27 T
+0 F
+(A number URL schemes \050for example,) 207 181.27 T
+3 F
+(http:) 396.62 181.27 T
+0 F
+(,) 432.62 181.27 T
+3 F
+(prospero:) 438.62 181.27 T
+0 F
+(,) 503.42 181.27 T
+3 F
+-0.93 (gopher:) 207 167.27 P
+0 F
+-0.39 (, and) 257.4 167.27 P
+3 F
+-0.93 (wais:) 282.95 167.27 P
+0 F
+-0.39 (\051 provide for a search string as part of the path.) 318.95 167.27 P
+1 F
+(transfer-type) 108 141.18 T
+0 F
+(Corresponds to FTP transfer-type.) 207 141.18 T
+1 14 Q
+(4.2  String-based Components) 72 107.76 T
+0 12 Q
+(Many programmers do not need the power or \337exibility of structured components, and prefer to) 72 81 T
+(view locators as strings.) 72 67 T
+FMENDPAGE
+%%EndPage: "6" 6
+%%Page: "7" 7
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Library Proposal) 72 42.62 T
+(August 17, 1995) 279.44 42.62 T
+(7) 536 42.62 T
+1 12 Q
+(prefix) 108 712 T
+0 F
+(This includes everything before the name. For a UNIX, this is the) 207 712 T
+-0.93 (directory, for a URL, this includes the) 207 698 P
+2 F
+-0.93 (scheme) 386.13 698 P
+0 F
+-0.93 (,) 421.45 698 P
+2 F
+-0.93 (host) 426.52 698 P
+0 F
+-0.93 (, and) 446.52 698 P
+2 F
+-0.93 (dir) 470.99 698 P
+-0.93 (ectory) 484.55 698 P
+0 F
+-0.93 ( \050e.g.) 514.54 698 P
+3 F
+("http://www.ada.org/") 207 684 T
+0 F
+(\051.) 358.2 684 T
+1 F
+(name) 108 658 T
+0 F
+(This corresponds to the UNIX and URL notion of a file name \050e.g.) 207 658 T
+3 F
+-1.61 ("toothpaste.html") 207 644 P
+0 F
+-0.67 (\051. This includes both the) 329.4 644 P
+2 F
+-0.67 (base) 445.37 644 P
+0 F
+-0.67 ( and) 467.36 644 P
+2 F
+-0.67 (extension) 489.35 644 P
+0 F
+-0.67 (.) 534.67 644 P
+1 F
+(suffix) 108 618 T
+0 F
+-0.86 (This includes everything after the \336le name. In a versioned \336le system,) 207 618 P
+-0.31 (this includes the) 207 604 P
+2 F
+-0.31 (version) 287.08 604 P
+0 F
+-0.31 (, in a URL, this includes a range of \336elds like) 322.4 604 P
+2 F
+(sear) 207 590 T
+(ch-keys) 227.22 590 T
+0 F
+( or FTP) 263.2 590 T
+2 F
+(transfer) 302.87 590 T
+(-type) 340.63 590 T
+0 F
+( \050e.g.) 364.62 590 T
+3 F
+("?colgate") 391.94 590 T
+0 F
+(\051.) 463.94 590 T
+1 F
+(Issue) 72 564 T
+0 F
+(: Should the version be moved from the suf) 98 564 T
+(\336x component to the name component?) 305.77 564 T
+(T) 72 538 T
+(ogether the) 78.49 538 T
+2 F
+(pr) 135.14 538 T
+(e\336x) 145.37 538 T
+0 F
+(,) 162.02 538 T
+2 F
+(name) 168.02 538 T
+0 F
+(, and) 194.02 538 T
+2 F
+(suf\336x) 220.34 538 T
+0 F
+( completely specify most locators. Exceptions include cases) 245.68 538 T
+(where the locators cannot be represented as a string.) 72 524 T
+1 F
+(extension) 108 498 T
+0 F
+-0.53 (This corresponds to the file) 207 498 P
+2 F
+-0.53 (type) 338.65 498 P
+0 F
+-0.53 ( described above, but will always be a) 358.64 498 P
+(string. For example, the type of the locator component of) 207 484 T
+3 F
+-2.06 (/usr/fred/gadget.dylan) 207 470 P
+0 F
+-0.86 ( is the type path of the single element) 365.4 470 P
+1 F
+(#"dylan") 207 456 T
+0 F
+(, but the extension is the string) 255 456 T
+3 F
+(".dylan") 405 456 T
+0 F
+(.) 462.6 456 T
+1 14 Q
+(4.3  Locator Component V) 72 422.67 T
+(alues) 229.75 422.67 T
+0 12 Q
+(Not all of the components of a pathname need to be speci\336ed. If a component of a pathname is) 72 396 T
+(missing, its value is) 72 382 T
+1 F
+(#f) 169.68 382 T
+0 F
+(.) 179.68 382 T
+(Each component in a pathname is typically one of the following \050with some exceptions that will) 72 356 T
+(be described below\051:) 72 342 T
+2 F
+(a string) 108 316 T
+0 F
+(This is a) 207 316 T
+2 F
+(literal) 250.67 316 T
+(component) 283.01 316 T
+0 F
+(.) 335.66 316 T
+( It is considered to be fully specified.) 338.66 316 T
+1 F
+(#f) 108 290 T
+0 F
+(This is a) 207 290 T
+2 F
+(missing) 250.67 290 T
+(component) 290.34 290 T
+0 F
+(.) 343 290 T
+( It is considered to be unspecified.) 346 290 T
+1 F
+(#"wild") 108 264 T
+0 F
+-0.02 (This is a) 207 264 P
+2 F
+-0.02 (wildcard) 250.6 264 P
+-0.02 (component) 296.24 264 P
+0 F
+-0.02 (.) 348.9 264 P
+-0.02 ( It is useful only when the pathname is) 351.9 264 P
+(being used with the functions) 207 250 T
+1 F
+(wildcard-match?) 351.32 250 T
+0 F
+( and) 438.65 250 T
+1 F
+( \336nd-matching-) 458.98 250 T
+-0.07 (\336les) 207 236 P
+0 F
+-0.07 (, where it means that the pathname component matches anything.) 227 236 P
+(The) 72 210 T
+2 F
+(dir) 93.66 210 T
+(ectory) 107.22 210 T
+0 F
+( and) 137.21 210 T
+2 F
+(version) 160.54 210 T
+0 F
+( components are exceptions to these rules in that they may never be) 195.86 210 T
+(strings. Although the values) 72 196 T
+1 F
+(#f) 209.66 196 T
+0 F
+( and) 219.66 196 T
+1 F
+(#"wild") 242.99 196 T
+0 F
+( are allowed with their usual meanings, typically a) 284.32 196 T
+-0.06 (directory component will be a directory path \050described below\051. A version may also be a positive) 72 182 P
+(integer) 72 168 T
+(, or the keywords) 104.84 168 T
+1 F
+(#"newest") 191.16 168 T
+0 F
+( \050meaning the newest possible version\051 or) 245.14 168 T
+1 F
+(#"oldest") 448.1 168 T
+0 F
+( \050mean-) 497.42 168 T
+-0.41 (ing the oldest possible version\051. In the future, version components may be extended to model such) 72 154 P
+(things as branch names in source version control systems.) 72 140 T
+FMENDPAGE
+%%EndPage: "7" 7
+%%Page: "8" 8
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Library Proposal) 72 42.62 T
+(August 17, 1995) 279.44 42.62 T
+(8) 536 42.62 T
+1 16 Q
+(5.  Locator Classes) 72 709.33 T
+1 12 Q
+(<locator>) 72 674.73 T
+0 F
+([Abstract instantiable class]) 406.69 674.73 T
+(This is the base class for all locators. This is the usual locator class for coercion \050using) 90 647.47 T
+1 F
+(as) 507.94 647.47 T
+0 F
+(\051 or) 518.6 647.47 T
+(instantiation \050using) 90 633.47 T
+1 F
+(make) 185.34 633.47 T
+0 F
+(\051 of new locators. Situations where this class is not appropriate are) 213.34 633.47 T
+(ones where there is not enough information provided to select the appropriate concrete class.) 90 619.47 T
+-0.16 (For example, it is not appropriate to coerce a string representing a portion of a URL without a) 90 605.47 P
+2 F
+(scheme) 90 591.47 T
+0 F
+(, such as) 125.32 591.47 T
+3 F
+(as\050<locator>, "toothpaste.html"\051) 169.31 591.47 T
+0 F
+( from the example above,) 399.71 591.47 T
+(because this would likely result in the instantiation of a) 90 577.47 T
+2 F
+(native locator) 357.98 577.47 T
+0 F
+( instead of the desired) 424.98 577.47 T
+(URL locator class.) 90 563.47 T
+1 F
+(<file-locator>) 72 530.2 T
+0 F
+([Abstract class]) 465.02 530.2 T
+-0.29 (A) 90 502.93 P
+2 F
+-0.29 (\336le locator) 101.38 502.93 P
+0 F
+-0.29 ( is a locator which refers to a) 153.42 502.93 P
+2 F
+-0.29 (\336le) 293.09 502.93 P
+0 F
+-0.29 ( as distinct from a) 307.76 502.93 P
+2 F
+-0.29 (dir) 395.32 502.93 P
+-0.29 (ectory) 408.88 502.93 P
+0 F
+-0.29 (. This is important in) 438.09 502.93 P
+-0.01 (\336le systems which can view a directory as either a \336le or a directory) 90 488.93 P
+-0.01 (. This locator class is use-) 416.05 488.93 P
+(ful for coercing a directory locator into a form where it can be manipulated as a \336le.) 90 474.93 T
+1 F
+(<directory-locator>) 72 441.67 T
+0 F
+([Abstract class]) 465.02 441.67 T
+(A) 90 414.4 T
+2 F
+(dir) 101.66 414.4 T
+(ectory locator) 115.22 414.4 T
+0 F
+( is a locator that refers to a) 182.88 414.4 T
+2 F
+(dir) 313.51 414.4 T
+(ectory) 327.07 414.4 T
+0 F
+(as distinct from a) 360.06 414.4 T
+2 F
+(\336le) 446.05 414.4 T
+0 F
+(. This is impor-) 460.72 414.4 T
+-0.13 (tant in \336le systems which can view a directory as either a \336le or a directory) 90 400.4 P
+-0.13 (. This locator class) 447.53 400.4 P
+-0.22 (is useful for coercing a \336le locator into a form where it can be manipulated as a directory \050e.g.) 90 386.4 P
+(for constructing a locator to a \336le in a directory\051.) 90 372.4 T
+1 F
+(<abstract-locator>) 72 339.13 T
+0 F
+([Instantiable class]) 449.69 339.13 T
+1 F
+(Issue) 72 311.87 T
+0 F
+(: Fill this in \050equivalent to CL) 98 311.87 T
+1 F
+(logical-pathname) 244.36 311.87 T
+0 F
+( type\051.) 333.02 311.87 T
+1 14 Q
+(5.1  Physical Locators) 72 277.27 T
+1 12 Q
+(<physical-locator>) 72 243.33 T
+0 F
+([Abstract class]) 465.02 243.33 T
+(A) 90 216.07 T
+2 F
+(physical locator) 101.66 216.07 T
+0 F
+( is a locator which refers to an object \050such as a \336le or directory\051 in a phys-) 179.33 216.07 T
+-0.26 (ical \336le system. This locator class is useful for coercing an abstract locator into its correspond-) 90 202.07 P
+(ing physical counterpart.) 90 188.07 T
+1 F
+(<URL-locator>) 72 154.8 T
+0 F
+([Abstract instantiable class]) 406.69 154.8 T
+(A subclass of) 90 127.53 T
+1 F
+(<physical-locator>) 157.66 127.53 T
+0 F
+(, and the superclass of all URL locator classes.) 253.33 127.53 T
+1 F
+(<MacOS-locator>) 72 94.27 T
+0 F
+([Abstract instantiable class]) 406.69 94.27 T
+(A subclass of) 90 67 T
+1 F
+(<physical-locator>) 157.66 67 T
+0 F
+(, a MacOS locator refers to \336les in a MacOS \336le system.) 253.33 67 T
+FMENDPAGE
+%%EndPage: "8" 8
+%%Page: "9" 9
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Library Proposal) 72 42.62 T
+(August 17, 1995) 279.44 42.62 T
+(9) 536 42.62 T
+1 12 Q
+(<posix-locator>) 72 712 T
+0 F
+([Abstract instantiable class]) 406.69 712 T
+(A subclass of) 90 685.67 T
+1 F
+(<physical-locator>) 157.66 685.67 T
+0 F
+(, a Posix locator refers to \336les in a Posix-compliant \336le sys-) 253.33 685.67 T
+(tem.) 90 671.67 T
+1 F
+(<microsoft-locator>) 72 639.33 T
+0 F
+([Abstract instantiable class]) 406.69 639.33 T
+(A subclass of) 90 613 T
+1 F
+(<physical-locator>) 157.66 613 T
+0 F
+(, a Microsoft locator refers to \336les in a MS-DOS or W) 253.33 613 T
+(in-) 512.81 613 T
+(dows \32495, or W) 90 599 T
+(indows NT \336le system.) 164.17 599 T
+1 14 Q
+(5.2  Native Locators) 72 565.33 T
+1 12 Q
+(<native-locator>) 72 532.33 T
+0 F
+([Constant]) 489.34 532.33 T
+(For any given Dylan implementation, this constant is bound to the locator class that corre-) 90 506 T
+(sponds to the locators recognized natively by the underlying platform. T) 90 492 T
+(ypically this will be) 436.12 492 T
+(bound to) 90 478 T
+1 F
+(<MacOS-locator>) 135.34 478 T
+0 F
+(,) 227.66 478 T
+1 F
+(<posix-locator>) 233.66 478 T
+0 F
+(, or) 314 478 T
+1 F
+(<microsoft-locator>) 333 478 T
+0 F
+(, but it may assume) 435.31 478 T
+(other values as appropriate.) 90 464 T
+1 16 Q
+(6.  Cr) 72 423 T
+(eating Locators) 110.37 423 T
+1 14 Q
+(6.1  Coer) 72 388 T
+(cion using the Dylan \324as\325 Operator) 125.79 388 T
+0 12 Q
+-0.43 (The standard Dylan coercion operator) 72 361 P
+1 F
+-0.43 (as) 254.78 361 P
+0 F
+-0.43 ( is used to parse locator strings into locators. This parsing) 265.45 361 P
+(is somewhat more complex than might be expected because, in addition to parsing local \336le) 72 347 T
+-0.08 (names, it needs to be able to recognize both WWW URLs and) 72 333 P
+2 F
+-0.08 (abstract locator strings) 372.7 333 P
+0 F
+-0.08 ( \050the string) 485.23 333 P
+(equivalent of abstract locators\051. T) 72 319 T
+(o this end, the parser has a syntax precedence order which, by) 232.79 319 T
+(default, is as follows:) 72 305 T
+(1.) 84.85 284.67 T
+(URL strings) 99 284.67 T
+(2.) 85.5 264.33 T
+(Abstract locator string) 99 264.33 T
+(3.) 85.5 244 T
+(Native \336le name strings) 99 244 T
+-0.06 (That is, the parser \336rst attempts to parse a locator string as a URL. If that fails, it then attempts to) 72 217.67 P
+-0.27 (parse it as an abstract locator string. Failing that, it attempts to parse it as a \336le name using the \336le) 72 203.67 P
+-0.2 (name syntax of the native \336le system, which will vary between Dylan implementations. Note that) 72 189.67 P
+(implementations are free to try to parse other sorts of name strings, but this is not required.) 72 175.67 T
+(Locators can be \322unparsed\323 into locator strings via the) 72 149.33 T
+1 F
+(as) 336.28 149.33 T
+0 F
+( operator) 346.94 149.33 T
+(.) 389.27 149.33 T
+1 F
+(As <string>) 395.27 149.33 T
+0 F
+(will select the) 458.28 149.33 T
+(most space ef) 72 135.33 T
+(\336cient class of string which can represent the result, and then perform the coercion.) 137.1 135.33 T
+-0.01 (Except in rare cases, coercing a locator to a locator string and then back to a locator will result in) 72 109 P
+(a locator which is functionally equivalent to the original; note that there is no guarantee that the) 72 95 T
+(original locator and result locators will be the identical object. That is, the two locators will usu-) 72 81 T
+(ally be) 72 67 T
+1 F
+(\134=) 107.33 67 T
+0 F
+(, but will probably not be) 117.5 67 T
+1 F
+(\134==) 241.84 67 T
+0 F
+(.) 258.85 67 T
+FMENDPAGE
+%%EndPage: "9" 9
+%%Page: "10" 10
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Library Proposal) 72 42.62 T
+(August 17, 1995) 279.44 42.62 T
+(10) 532 42.62 T
+0 12 Q
+(Not all resource locators can be represented as a locator string. For example, some operating sys-) 72 712 T
+-0.28 (tems do not allow a \336le name with a null) 72 698 P
+2 F
+-0.28 (base name) 267.83 698 P
+0 F
+-0.28 ( and a non-null) 318.53 698 P
+2 F
+-0.28 (\336le type) 392.72 698 P
+0 F
+-0.28 (. Others disallow a \336le) 430.09 698 P
+(name consisting solely of a) 72 684 T
+2 F
+(\336le version) 205.66 684 T
+0 F
+(.) 258.65 684 T
+1 F
+(as <locator>) 72 650.24 T
+2 F
+(string) 138.34 650.24 T
+4 F
+(\336) 169.34 650.24 T
+2 F
+(<locator>) 184.19 650.24 T
+0 F
+([Method]) 494.68 650.24 T
+(Parses the locator string, and returns an object that is a subclass of) 90 622.48 T
+1 F
+(<locator>) 410.62 622.48 T
+0 F
+( that represents) 460.28 622.48 T
+(the parsed locator string.) 90 608.48 T
+1 F
+(as) 72 574.71 T
+2 F
+(locator-class string) 85.67 574.71 T
+4 F
+(\336) 182.34 574.71 T
+2 F
+(<locator>) 197.18 574.71 T
+0 F
+([G.F. Method]) 470.34 574.71 T
+(Parses the locator string as a concrete locator class, and returns the object that represents the) 90 546.95 T
+(locator string. For example,) 90 532.95 T
+3 10 Q
+(as\050<posix-locator>, "/usr/local/bin/emacs"\051) 108 512.52 T
+1 12 Q
+(as <file-locator>) 72 479.43 T
+2 F
+(string) 158.33 479.43 T
+4 F
+(\336) 189.34 479.43 T
+2 F
+( <locator>) 201.18 479.43 T
+0 F
+([G.F. Method]) 470.34 479.43 T
+1 F
+(Issue) 72 451.67 T
+0 F
+(: Fill this in \050equivalent to MIT Scheme) 98 451.67 T
+1 F
+(\336le-pathname) 292.01 451.67 T
+0 F
+(\051.) 362.68 451.67 T
+(For example) 90 423.9 T
+3 10 Q
+(as\050<file-locator>, as\050<posix-locator>, "/usr/bin/"\051\051) 108 403.48 T
+4 12 Q
+(=) 108 389.71 T
+3 10 Q
+(as\050<locator>, "/usr/bin"\051) 117.59 389.71 T
+4 12 Q
+(\336) 270.59 389.71 T
+3 10 Q
+(#t) 285.43 389.71 T
+1 12 Q
+(as <directory-locator>) 72 356.62 T
+2 F
+(string) 189.65 356.62 T
+4 F
+(\336) 220.66 356.62 T
+2 F
+(<locator>) 235.5 356.62 T
+0 F
+([G.F. Method]) 470.34 356.62 T
+1 F
+(Issue) 72 328.86 T
+0 F
+(: Fill this in \050equivalent to MIT Scheme) 98 328.86 T
+1 F
+(dir) 292.01 328.86 T
+(ectory-pathname) 307.13 328.86 T
+0 F
+(\051.) 394.44 328.86 T
+(For example) 90 301.1 T
+3 10 Q
+(as\050<directory-locator>, as\050<posix-locator>, "/usr/bin"\051\051) 108 280.67 T
+4 12 Q
+(=) 108 266.91 T
+3 10 Q
+(as\050<locator>, "/usr/bin/"\051) 117.59 266.91 T
+4 12 Q
+(\336) 276.59 266.91 T
+3 10 Q
+(#t) 291.43 266.91 T
+1 12 Q
+(as <string>) 72 233.81 T
+2 F
+(locator) 132.35 233.81 T
+4 F
+(\336) 170.02 233.81 T
+2 F
+(<string>) 184.86 233.81 T
+0 F
+([G.F. Method]) 470.34 233.81 T
+(Returns the full form of locator as a string.) 90 206.05 T
+1 14 Q
+(6.2  Instantiation using the Dylan \324make\325 Operator) 72 170.95 T
+0 12 Q
+(The following are the basic functions used to create locators.) 72 142.52 T
+1 F
+(make <locator>) 72 108.76 T
+0 F
+( #key) 152.66 108.76 T
+2 F
+(host device directory base type version) 181.99 108.76 T
+4 F
+(\336) 371.95 108.76 T
+2 F
+(<locator>) 386.8 108.76 T
+0 F
+([G.F. Method]) 470.34 108.76 T
+(Creates and returns a new locator whose components are \336lled in from the keyword ar) 90 81 T
+(gu-) 503.69 81 T
+(ments. This will return an object that is a subclass of) 90 67 T
+1 F
+(<locator>) 345.31 67 T
+0 F
+(.) 394.98 67 T
+FMENDPAGE
+%%EndPage: "10" 10
+%%Page: "11" 11
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Library Proposal) 72 42.62 T
+(August 17, 1995) 279.44 42.62 T
+(1) 532.3 42.62 T
+(1) 536 42.62 T
+1 12 Q
+(make <abstract-locator>) 72 712 T
+0 F
+( #key) 198.65 712 T
+2 F
+(host directory base type version) 227.98 712 T
+4 F
+(\336) 384.29 712 T
+2 F
+(<abstract-locator>) 399.13 712 T
+0 F
+-3 ([G.F.) 514.67 712 P
+(Method]) 72 698 T
+(Creates and returns a new abstract locator whose components are \336lled in from the keyword) 90 669.93 T
+(ar) 90 655.93 T
+(guments. This will return an object that is an) 99.11 655.93 T
+1 F
+(<abstract-locator>) 316.43 655.93 T
+0 F
+(.) 412.08 655.93 T
+1 F
+-0.66 (make <URL-locator>) 72 621.87 P
+0 F
+-0.66 ( #key) 181.33 621.87 P
+2 F
+-0.66 (scheme host port user-id password device directory base type version) 209.33 621.87 P
+(fragment-id) 72 607.87 T
+4 F
+(\336) 131.66 607.87 T
+2 F
+(<URL-locator>) 146.51 607.87 T
+0 F
+([G.F. Method]) 470.34 607.87 T
+(Creates and returns a new URL locator whose components are \336lled in from the keyword) 90 579.8 T
+(ar) 90 565.8 T
+(guments. This will return an object that is a a subclass of) 99.11 565.8 T
+1 F
+(<URL-locator>) 374.75 565.8 T
+0 F
+(.) 453.74 565.8 T
+1 16 Q
+(7.  Path Classes) 72 523.07 T
+1 12 Q
+(Issue) 72 493.67 T
+0 F
+(: Describe what a path is in general.) 98 493.67 T
+1 F
+(<path>) 72 459.6 T
+0 F
+([Abstract class]) 465.02 459.6 T
+-0.35 (A) 90 431.53 P
+2 F
+-0.35 (path) 101.32 431.53 P
+0 F
+-0.35 ( is a typed sequence. This means that a path can carry extra information that a sequence) 122.65 431.53 P
+(cannot. For example it is important to be able to distinguish between absolute and relative) 90 417.53 T
+(paths for mer) 90 403.53 T
+(ging purposes.) 153.77 403.53 T
+1 F
+(<path>) 90 375.47 T
+0 F
+( is the superclass of all the path classes.) 127.02 375.47 T
+1 F
+(<host-path>) 72 341.4 T
+0 F
+([Instantiable class]) 449.69 341.4 T
+(A host path is a structured representation of an IP address or host name. For example) 90 313.33 T
+-0.45 (18.181.0.21 or) 90 299.33 P
+3 F
+-1.09 (www.mit.edu) 162.09 299.33 P
+0 F
+-0.45 (. Host paths can be either relative or absolute \050but we have had) 241.29 299.33 P
+-0.03 (problems with mer) 90 285.33 P
+-0.03 (ging and it may be nontrivial to determine when a host name is fully speci-) 180.39 285.33 P
+(\336ed\051.) 90 271.33 T
+1 F
+(<type-path>) 72 237.27 T
+0 F
+([Instantiable class]) 449.69 237.27 T
+(For a number of reasons, it is useful to represent \336le types as structured objects which them-) 90 209.2 T
+(selves are typed.) 90 195.2 T
+1 F
+(\245) 99 173.13 T
+0 F
+-0.1 (It is becoming more common to see composite types \050e.g.) 108 173.13 P
+3 F
+-0.24 (.ps.tar.Z) 386.96 173.13 P
+0 F
+-0.1 (\051 appearing in file) 451.76 173.13 P
+(names.) 108 159.13 T
+1 F
+(\245) 99 137.07 T
+0 F
+(File types are frequently represented by different abbreviations on different file systems) 108 137.07 T
+(\050e.g.) 108 123.07 T
+3 F
+(.TXT) 132.32 123.07 T
+0 F
+( in MS-DOS vs.) 161.12 123.07 T
+3 F
+(.text) 241.46 123.07 T
+0 F
+( in UNIX\051. When converting file names from one file) 277.46 123.07 T
+(system to another, it is helpful to know where it came from.) 108 109.07 T
+(The implementation does not currently make much use of type paths, but this is reserved for) 90 81 T
+(future extensions.) 90 67 T
+FMENDPAGE
+%%EndPage: "11" 11
+%%Page: "12" 12
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Library Proposal) 72 42.62 T
+(August 17, 1995) 279.44 42.62 T
+(12) 532 42.62 T
+1 12 Q
+(<absolute-directory-path>) 72 712 T
+0 F
+([Abstract instantiable class]) 406.69 712 T
+(This is a \322rooted\323 directory path such as) 90 685.38 T
+3 F
+(/etc/aliases) 108 666.09 T
+1 F
+(<relative-directory-path>) 72 634.14 T
+0 F
+([Abstract instantiable class]) 406.69 634.14 T
+(This is a relative directory path such as) 90 607.52 T
+3 F
+(bin/68K/gc.o) 108 588.24 T
+0 F
+(This sort of directory path can be mer) 90 562.29 T
+(ged against another directory path yielding a more) 270.74 562.29 T
+(detailed or fully speci\336ed path.) 90 548.29 T
+1 14 Q
+(7.1  Cr) 72 514.33 T
+(eating Paths) 112.57 514.33 T
+1 12 Q
+(make) 72 481.05 T
+2 F
+(path-class) 103 481.05 T
+0 F
+( #key) 152.33 481.05 T
+2 F
+(elements) 181.66 481.05 T
+4 F
+(\336) 226.64 481.05 T
+2 F
+(<path>) 241.49 481.05 T
+0 F
+([G.F. Method]) 470.34 481.05 T
+1 F
+(Issue) 72 454.43 T
+0 F
+(: Fill this in.) 98 454.43 T
+1 F
+(as) 72 421.81 T
+2 F
+( path-class sequence) 82.67 421.81 T
+4 F
+(\336) 184.98 421.81 T
+2 F
+(<path>) 199.82 421.81 T
+0 F
+([G.F. Method]) 470.34 421.81 T
+1 F
+(Issue) 72 395.19 T
+0 F
+(: Fill this in.) 98 395.19 T
+1 F
+(as <string>) 72 362.57 T
+2 F
+(path) 132.35 362.57 T
+4 F
+(\336) 156.68 362.57 T
+2 F
+(<string>) 171.53 362.57 T
+0 F
+([G.F. Method]) 470.34 362.57 T
+1 F
+(Issue) 72 335.95 T
+0 F
+(: Fill this in.) 98 335.95 T
+1 16 Q
+(8.  Locator Component Accessors) 72 294.67 T
+1 14 Q
+(8.1  Structur) 72 259.38 T
+(ed Component Accessors) 147.57 259.38 T
+1 12 Q
+(locator-scheme) 72 226.09 T
+2 F
+(locator) 152.3 226.09 T
+4 F
+( \336) 186.97 226.09 T
+2 F
+(<keywor) 204.82 226.09 T
+(d>) 247.13 226.09 T
+0 F
+([Generic function]) 451.03 226.09 T
+(Returns the) 90 199.48 T
+2 F
+(scheme) 148 199.48 T
+0 F
+( component of the locator) 183.31 199.48 T
+(, or) 306.14 199.48 T
+1 F
+(#f) 325.14 199.48 T
+0 F
+( if this component is not speci\336ed in the) 335.14 199.48 T
+(locator) 90 185.48 T
+(.) 122.66 185.48 T
+1 F
+(locator-host) 72 152.86 T
+2 F
+(locator) 136.32 152.86 T
+4 F
+( \336) 171 152.86 T
+2 F
+(<host-path>) 188.84 152.86 T
+0 F
+([Generic function]) 451.03 152.86 T
+(Returns the) 90 126.24 T
+2 F
+(host) 148 126.24 T
+0 F
+( component of the locator) 168 126.24 T
+(, or) 290.83 126.24 T
+1 F
+(#f) 309.83 126.24 T
+0 F
+( if this component is not speci\336ed.) 319.82 126.24 T
+1 F
+(locator-port) 72 93.62 T
+2 F
+(locator) 136.98 93.62 T
+4 F
+( \336) 171.65 93.62 T
+2 F
+(<number>) 189.49 93.62 T
+0 F
+([Generic function]) 451.03 93.62 T
+(Returns the) 90 67 T
+2 F
+(port) 148 67 T
+0 F
+( component of a URL locator) 168 67 T
+(, or) 308.5 67 T
+1 F
+(#f) 327.49 67 T
+0 F
+( if this component is not speci\336ed.) 337.49 67 T
+52 450.43 54 462.43 R
+V
+52 391.19 54 403.19 R
+V
+52 331.95 54 343.95 R
+V
+FMENDPAGE
+%%EndPage: "12" 12
+%%Page: "13" 13
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Library Proposal) 72 42.62 T
+(August 17, 1995) 279.44 42.62 T
+(13) 532 42.62 T
+1 12 Q
+(locator-user-id) 72 712 T
+2 F
+(locator) 150.98 712 T
+4 F
+( \336) 185.65 712 T
+2 F
+(<string>) 203.5 712 T
+0 F
+([Generic function]) 451.03 712 T
+(Returns the) 90 685.77 T
+2 F
+(user) 148 685.77 T
+(-id) 168.42 685.77 T
+0 F
+( component of a URL locator) 181.75 685.77 T
+(, or) 322.25 685.77 T
+1 F
+(#f) 341.24 685.77 T
+0 F
+( if this component is not speci\336ed.) 351.24 685.77 T
+1 F
+(locator-password) 72 653.54 T
+2 F
+(locator) 163.66 653.54 T
+4 F
+( \336) 198.32 653.54 T
+2 F
+(<string>) 216.17 653.54 T
+0 F
+([Generic function]) 451.03 653.54 T
+(Returns the) 90 627.32 T
+2 F
+(passwor) 148 627.32 T
+(d) 187.56 627.32 T
+0 F
+( component of a URL locator) 193.56 627.32 T
+(, or) 334.06 627.32 T
+1 F
+(#f) 353.05 627.32 T
+0 F
+( if this component is not speci\336ed.) 363.05 627.32 T
+1 F
+(locator-volume) 72 595.09 T
+2 F
+(locator) 152.32 595.09 T
+4 F
+( \336) 186.98 595.09 T
+2 F
+(<string>) 204.83 595.09 T
+0 F
+([Generic function]) 451.03 595.09 T
+(Returns the) 90 568.86 T
+2 F
+(volume) 148 568.86 T
+0 F
+( component of the locator) 182.65 568.86 T
+(, or) 305.48 568.86 T
+1 F
+(#f) 324.48 568.86 T
+0 F
+( if this component is not speci\336ed.) 334.48 568.86 T
+1 F
+(locator-directory) 72 536.64 T
+2 F
+(locator) 162.3 536.64 T
+4 F
+( \336) 196.97 536.64 T
+2 F
+(<directory-path>) 214.81 536.64 T
+0 F
+([Generic function]) 451.03 536.64 T
+(Returns the) 90 510.41 T
+2 F
+(dir) 148 510.41 T
+(ectory) 161.56 510.41 T
+0 F
+( component of the locator) 191.54 510.41 T
+(, or) 314.38 510.41 T
+1 F
+(#f) 333.37 510.41 T
+0 F
+( if this component is not speci\336ed.) 343.37 510.41 T
+1 F
+(locator-base) 72 478.18 T
+2 F
+(locator) 137.65 478.18 T
+4 F
+( \336) 172.32 478.18 T
+2 F
+(<string>) 190.16 478.18 T
+0 F
+([Generic function]) 451.03 478.18 T
+(Returns the) 90 451.95 T
+2 F
+(base) 148 451.95 T
+0 F
+( component of the locator) 169.99 451.95 T
+(, or) 292.82 451.95 T
+1 F
+(#f) 311.82 451.95 T
+0 F
+( if this component is not speci\336ed.) 321.82 451.95 T
+1 F
+(locator-type) 72 419.73 T
+2 F
+(locator) 136.98 419.73 T
+4 F
+( \336) 171.65 419.73 T
+2 F
+(<type-path>) 189.49 419.73 T
+0 F
+([Generic function]) 451.03 419.73 T
+(Returns the) 90 393.5 T
+2 F
+(type) 148 393.5 T
+0 F
+( component of the locator) 167.99 393.5 T
+(, or) 290.82 393.5 T
+1 F
+(#f) 309.82 393.5 T
+0 F
+( if this component is not speci\336ed.) 319.81 393.5 T
+1 F
+(locator-version) 72 361.27 T
+2 F
+(locator) 152.32 361.27 T
+4 F
+( \336) 186.98 361.27 T
+2 F
+(union\050<number>,<keyword>\051) 204.83 361.27 T
+0 F
+([Generic function]) 451.03 361.27 T
+(Returns the) 90 335.05 T
+2 F
+(version) 148 335.05 T
+0 F
+( component of the locator) 183.32 335.05 T
+(, or) 306.16 335.05 T
+1 F
+(#f) 325.15 335.05 T
+0 F
+( if this component is not speci\336ed.) 335.15 335.05 T
+1 F
+(locator-search-keys) 72 302.82 T
+2 F
+(locator) 174.97 302.82 T
+4 F
+( \336) 209.64 302.82 T
+2 F
+(<string>) 227.48 302.82 T
+0 F
+([Generic function]) 451.03 302.82 T
+(Returns the) 90 276.59 T
+2 F
+(sear) 148 276.59 T
+(ch-keys) 168.22 276.59 T
+0 F
+( component of a URL locator) 204.19 276.59 T
+(, or) 344.69 276.59 T
+1 F
+(#f) 363.68 276.59 T
+0 F
+( if this component is not speci\336ed.) 373.68 276.59 T
+1 F
+(locator-transfer-type) 72 244.36 T
+2 F
+(locator) 182.29 244.36 T
+4 F
+( \336) 216.96 244.36 T
+2 F
+(<ftp-transfer-type>) 234.8 244.36 T
+0 F
+([Generic function]) 451.03 244.36 T
+-0.28 (Returns the) 90 218.14 P
+2 F
+-0.28 (transfer) 147.43 218.14 P
+-0.28 (-type) 185.2 218.14 P
+0 F
+-0.28 ( component of a URL locator) 209.18 218.14 P
+-0.28 (, or) 348.27 218.14 P
+1 F
+-0.28 (#f) 366.7 218.14 P
+0 F
+-0.28 ( if this component is not speci\336ed.) 376.69 218.14 P
+1 14 Q
+(8.2  String-Oriented Component Accessors) 72 184.58 T
+1 12 Q
+(locator-prefix) 72 151.68 T
+2 F
+(locator) 145.64 151.68 T
+4 F
+( \336) 180.31 151.68 T
+2 F
+(<string>) 198.16 151.68 T
+0 F
+([Generic function]) 451.03 151.68 T
+(Returns the) 90 125.46 T
+2 F
+(pr) 148 125.46 T
+(e\336x) 158.22 125.46 T
+0 F
+( component of the locator) 174.88 125.46 T
+(.) 297.53 125.46 T
+1 F
+(locator-name) 72 93.23 T
+2 F
+(locator) 142.98 93.23 T
+4 F
+( \336) 177.65 93.23 T
+2 F
+(<string>) 195.49 93.23 T
+0 F
+([Generic function]) 451.03 93.23 T
+(Returns the) 90 67 T
+2 F
+(name) 148 67 T
+0 F
+( component of the locator) 173.99 67 T
+(.) 296.64 67 T
+FMENDPAGE
+%%EndPage: "13" 13
+%%Page: "14" 14
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Library Proposal) 72 42.62 T
+(August 17, 1995) 279.44 42.62 T
+(14) 532 42.62 T
+1 12 Q
+(locator-suffix) 72 712 T
+2 F
+(locator) 143.65 712 T
+4 F
+( \336) 178.32 712 T
+2 F
+(<string>) 196.16 712 T
+0 F
+([Generic function]) 451.03 712 T
+(Returns the) 90 685.55 T
+2 F
+(suf\336ix) 148 685.55 T
+0 F
+( component of the locator) 176.66 685.55 T
+(.) 299.32 685.55 T
+1 F
+(locator-extension) 72 653.1 T
+2 F
+(locator) 162.98 653.1 T
+4 F
+( \336) 197.65 653.1 T
+2 F
+(<string>) 215.5 653.1 T
+0 F
+([Generic function]) 451.03 653.1 T
+(Returns the) 90 626.65 T
+2 F
+(type) 148 626.65 T
+0 F
+( component of the locator represented as a string.) 167.99 626.65 T
+1 16 Q
+(9.  Functions on Locators) 72 585.53 T
+1 14 Q
+(9.1  Merging Operations) 72 550.42 T
+1 12 Q
+(merge-locators) 72 517.3 T
+2 F
+(locator defaults-locator) 151.63 517.3 T
+4 F
+( \336) 265.97 517.3 T
+2 F
+(<locator>) 283.81 517.3 T
+0 F
+([Generic function]) 451.03 517.3 T
+(Creates a result locator by \336lling in all of the unspeci\336ed \050that is,) 90 490.85 T
+1 F
+(#f) 404.64 490.85 T
+0 F
+(\051 components in) 414.64 490.85 T
+2 F
+(locator) 494.96 490.85 T
+0 F
+(with the corresponding components from) 90 476.85 T
+2 F
+(defaults-locators) 290.98 476.85 T
+0 F
+(, and returns the result.) 372.31 476.85 T
+1 F
+(override-locator) 72 444.4 T
+2 F
+(locator) 158.3 444.4 T
+0 F
+( #key #all-keys) 192.97 444.4 T
+4 F
+( \336) 266.29 444.4 T
+2 F
+(<locator>) 284.14 444.4 T
+0 F
+([Generic function]) 451.03 444.4 T
+-0.11 (Returns a locator whose components are the same as they are for) 90 417.95 P
+2 F
+-0.11 (locator) 402.61 417.95 P
+0 F
+-0.11 (, except that the com-) 436.79 417.95 P
+-0.17 (ponents speci\336ed by the keyword ar) 90 403.95 P
+-0.17 (guments are unconditionally \336lled in from the ar) 261.91 403.95 P
+-0.17 (guments.) 493.5 403.95 P
+(For example,) 90 389.95 T
+3 10 Q
+(as\050<string>,) 108 370.83 T
+(   override-locator\050as\050<posix-locator>, "/usr/local/bin/emacs"\051,) 108 358.38 T
+(                    name: ".login"\051\051;) 108 345.93 T
+0 12 Q
+(will return the string) 90 320.15 T
+3 10 Q
+("/usr/local/bin/.login") 194.33 320.15 T
+0 F
+(.) 332.33 320.15 T
+1 12 Q
+(default-locator) 72 287.7 T
+2 F
+(locator) 150.98 287.7 T
+0 F
+( #key #all-keys) 185.65 287.7 T
+4 F
+( \336) 258.97 287.7 T
+2 F
+(<locator>) 276.82 287.7 T
+0 F
+([Generic function]) 451.03 287.7 T
+1 F
+(Issue) 72 261.25 T
+0 F
+(: Fill this in \050similar to CL) 98 261.25 T
+1 F
+(pathname-default) 227.7 261.25 T
+5 F
+(-) 319.03 261.25 T
+2 F
+(component) 323.03 261.25 T
+0 F
+(, for all values of) 375.68 261.25 T
+2 F
+(component) 460.33 261.25 T
+0 F
+(\051.) 512.99 261.25 T
+1 14 Q
+(9.2  Pr) 72 227.47 T
+(edicates) 111.02 227.47 T
+1 12 Q
+(\134=) 72 194.35 T
+2 F
+(locator1 locator2) 85.18 194.35 T
+4 F
+( \336) 171 194.35 T
+2 F
+(<boolean>) 188.84 194.35 T
+0 F
+([G.F. Method]) 470.34 194.35 T
+(Returns) 90 167.9 T
+1 F
+(#t) 130.33 167.9 T
+0 F
+( if all of the components of) 140.33 167.9 T
+2 F
+(locator1) 273.31 167.9 T
+0 F
+( and) 313.98 167.9 T
+2 F
+(locator2) 337.31 167.9 T
+0 F
+( are) 377.98 167.9 T
+1 F
+(\134=) 398.63 167.9 T
+0 F
+(, otherwise returns) 408.8 167.9 T
+1 F
+(#f) 500.78 167.9 T
+0 F
+(.) 510.78 167.9 T
+1 F
+(locators-match?) 72 135.45 T
+2 F
+(locator pattern-locator) 157.64 135.45 T
+4 F
+( \336) 268.64 135.45 T
+2 F
+(<boolean>) 286.49 135.45 T
+0 F
+([Generic function]) 451.03 135.45 T
+(Returns #t if) 90 109 T
+2 F
+(locator) 153 109 T
+0 F
+( matches) 187.67 109 T
+2 F
+(pattern-locator) 232.99 109 T
+0 F
+(. If) 305.66 109 T
+2 F
+(pattern-locator) 322.66 109 T
+0 F
+( is not a wild locator) 395.99 109 T
+(,) 493.84 109 T
+1 F
+(loca-) 499.84 109 T
+-0.04 (tors-match?) 90 95 P
+0 F
+-0.04 ( is equivalent to) 151.98 95 P
+1 F
+-0.04 (\134=) 231.14 95 P
+0 F
+-0.04 (. When) 241.32 95 P
+2 F
+-0.04 (pattern-locator) 278.89 95 P
+0 F
+-0.04 ( is a wild locator) 352.22 95 P
+-0.04 (, the matching is done) 431.56 95 P
+(on a component by component basis. T) 90 81 T
+(wo components match when they are either) 277.48 81 T
+1 F
+(\134=) 489.1 81 T
+0 F
+(, or the) 499.27 81 T
+(component from) 90 67 T
+2 F
+(pattern-locator) 172.66 67 T
+0 F
+( is) 245.99 67 T
+1 F
+(#"wild") 259.99 67 T
+0 F
+(.) 301.32 67 T
+52 257.25 54 269.25 R
+V
+FMENDPAGE
+%%EndPage: "14" 14
+%%Page: "15" 15
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Library Proposal) 72 42.62 T
+(August 17, 1995) 279.44 42.62 T
+(15) 532 42.62 T
+1 12 Q
+(absolute-locator?) 72 712 T
+2 F
+(locator) 163.66 712 T
+4 F
+( \336) 198.32 712 T
+2 F
+(<boolean>) 216.17 712 T
+0 F
+([Generic function]) 451.03 712 T
+(Returns) 90 685.06 T
+1 F
+(#t) 130.33 685.06 T
+0 F
+( if the directory component is an absolute directory path, otherwise returns) 140.33 685.06 T
+1 F
+(#f) 501.26 685.06 T
+0 F
+(.) 511.26 685.06 T
+1 F
+(relative-locator?) 72 652.11 T
+2 F
+(locator) 159.64 652.11 T
+4 F
+( \336) 194.3 652.11 T
+2 F
+(<boolean>) 212.15 652.11 T
+0 F
+([Generic function]) 451.03 652.11 T
+(Returns) 90 625.17 T
+1 F
+(#t) 130.33 625.17 T
+0 F
+( if the directory component is a relative directory path, otherwise returns) 140.33 625.17 T
+1 F
+(#f) 491.26 625.17 T
+0 F
+(.) 501.25 625.17 T
+1 F
+(wild-locator?) 72 592.22 T
+2 F
+(locator) 142.99 592.22 T
+4 F
+( \336) 177.66 592.22 T
+2 F
+(<boolean>) 195.5 592.22 T
+0 F
+([Generic function]) 451.03 592.22 T
+(Returns) 90 565.28 T
+1 F
+(#t) 130.33 565.28 T
+0 F
+( if there are any wild components in the locator) 140.33 565.28 T
+(, otherwise returns) 366.8 565.28 T
+1 F
+(#f) 458.78 565.28 T
+0 F
+(.) 468.78 565.28 T
+1 F
+(complete-locator?) 72 532.33 T
+2 F
+(locator) 166.97 532.33 T
+4 F
+( \336) 201.64 532.33 T
+2 F
+(<boolean>) 219.48 532.33 T
+0 F
+([Generic function]) 451.03 532.33 T
+(Returns) 90 505.39 T
+1 F
+(#t) 130.33 505.39 T
+0 F
+( if there are no missing or unspeci\336ed components in the locator \050that is, compo-) 140.33 505.39 T
+(nents whose value is) 90 491.39 T
+1 F
+(#f) 191.99 491.39 T
+0 F
+(\051, otherwise returns) 201.98 491.39 T
+1 F
+(#f) 297.96 491.39 T
+0 F
+(.) 307.96 491.39 T
+1 14 Q
+(9.3  Miscellaneous Operators) 72 457.11 T
+1 12 Q
+(simplify-locator) 72 423.5 T
+2 F
+(locator) 156.32 423.5 T
+4 F
+(\336) 193.99 423.5 T
+2 F
+(<locator>) 208.84 423.5 T
+0 F
+([Generic function]) 451.03 423.5 T
+-0.1 (Returns a locator which is semantically equivalent to the \336rst, but which is expressed in more) 90 396.56 P
+(concise terms. For example:) 90 382.56 T
+3 10 Q
+(as\050<string>, simplify-locator\050as\050<locator>, "/usr/./bin"\051\051\051;) 108 362.95 T
+4 12 Q
+(\336) 108 350.95 T
+3 10 Q
+( "/usr/./bin") 119.84 350.95 T
+0 12 Q
+(For \336le systems which have symbolic links, very little additional simpli\336cation can be per-) 90 324.67 T
+(formed, because) 90 310.67 T
+3 F
+(/usr/users/tim/../ftp) 171.64 310.67 T
+0 F
+( and) 322.84 310.67 T
+3 F
+(/usr/users/ftp) 346.16 310.67 T
+0 F
+( may not address) 446.96 310.67 T
+(the same \336le.) 90 296.67 T
+1 F
+(abbreviate-locator) 72 263.72 T
+2 F
+(locator defaults-locator) 169.64 263.72 T
+4 F
+( \336) 283.98 263.72 T
+2 F
+(<locator>) 301.82 263.72 T
+0 F
+([Generic function]) 451.03 263.72 T
+-0.09 (Returns a possibly shorter locator) 90 236.78 P
+-0.09 (,) 250.48 236.78 P
+2 F
+-0.09 (r) 256.39 236.78 P
+-0.09 (esult-locator) 260.61 236.78 P
+0 F
+-0.09 (, that has just enough components \336lled in so) 321.47 236.78 P
+(that the result of) 90 222.78 T
+1 F
+(merge-locators) 171.32 222.78 T
+0 F
+(\050) 247.96 222.78 T
+2 F
+(r) 251.95 222.78 T
+(esult-locator) 256.18 222.78 T
+0 F
+(,) 317.03 222.78 T
+2 F
+(defaults-locator) 323.03 222.78 T
+0 F
+(\051 is) 399.7 222.78 T
+2 F
+(locator) 417.7 222.78 T
+0 F
+(.) 451.7 222.78 T
+1 F
+(Issue) 72 195.83 T
+0 F
+(: This needs an example.) 98 195.83 T
+1 F
+(translate-locator) 72 162.89 T
+2 F
+(locator from-locator-pattern to-locator-pattern) 160.31 162.89 T
+0 F
+([Generic function]) 451.03 162.89 T
+4 F
+( \336) 171 148.89 T
+2 F
+(<locator>) 188.84 148.89 T
+0 F
+-0.25 (T) 90 121.95 P
+-0.25 (ranslates) 96.91 121.95 P
+2 F
+-0.25 (locator) 141.65 121.95 P
+0 F
+-0.25 (, which must match) 175.84 121.95 P
+2 F
+-0.25 (fr) 271.84 121.95 P
+-0.25 (om-locator) 279.4 121.95 P
+-0.25 (-pattern) 332.49 121.95 P
+0 F
+-0.25 (, into a new result locator) 371.15 121.95 P
+-0.25 (, which is) 491.41 121.95 P
+(constructed so as to match) 90 107.95 T
+2 F
+(to-locator) 219.65 107.95 T
+(-pattern) 267.41 107.95 T
+0 F
+(, and returns the result.) 306.07 107.95 T
+(The result locator is a copy of) 90 81 T
+2 F
+(to-locator-pattern) 236.3 81 T
+0 F
+( with each missing \050that is,) 322.97 81 T
+1 F
+(#f) 454.63 81 T
+0 F
+(\051 or wild com-) 464.63 81 T
+(ponent replaced by the corresponding component from) 90 67 T
+2 F
+(locator) 356.28 67 T
+0 F
+(.) 390.29 67 T
+FMENDPAGE
+%%EndPage: "15" 15
+%%Page: "16" 16
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Library Proposal) 72 42.62 T
+(August 17, 1995) 279.44 42.62 T
+(16) 532 42.62 T
+1 12 Q
+(Issue) 72 712 T
+0 F
+(: This needs an example.) 98 712 T
+1 16 Q
+(10.  Abstract Locator T) 72 669.29 T
+(ranslations) 231.23 669.29 T
+1 12 Q
+(add-abstract-host) 72 633.91 T
+2 F
+(host translations) 165.66 633.91 T
+0 F
+([Generic function]) 451.03 633.91 T
+1 F
+(Issue) 72 605.86 T
+0 F
+(: Fill this in \050equivalent to CL) 98 605.86 T
+1 F
+(\050setf logical-pathname-translations\051) 244.36 605.86 T
+0 F
+(\051.) 426.67 605.86 T
+1 F
+(remove-abstract-host) 72 571.81 T
+2 F
+(host) 184.3 571.81 T
+0 F
+([Generic function]) 451.03 571.81 T
+1 F
+(Issue) 72 543.76 T
+0 F
+(: Fill this in \050equivalent to CL) 98 543.76 T
+1 F
+(\050setf logical-pathname-translations\051) 244.36 543.76 T
+0 F
+(\051.) 426.67 543.76 T
+1 F
+(as <physical-locator>) 72 509.71 T
+2 F
+(abstract-locator) 184.34 509.71 T
+4 F
+(\336) 265.34 509.71 T
+2 F
+(<physical-locator>) 280.19 509.71 T
+0 F
+([G.F. Method]) 470.34 509.71 T
+(T) 90 481.67 T
+(ranslates the abstract locator to its corresponding physical locator) 96.91 481.67 T
+(.) 410.2 481.67 T
+(Note that most user programs should use this only rarely) 90 453.62 T
+(. The translation from abstract to) 360.86 453.62 T
+(physical locators will usually be done in other Dylan libraries, such as the streams library) 90 439.62 T
+(. In) 518.16 439.62 T
+(particular) 90 425.62 T
+(, users should avoid translating an abstract locator to a physical locator for the pur-) 135.5 425.62 T
+(pose of operating on the components of the physical locator) 90 411.62 T
+(.) 376.3 411.62 T
+1 16 Q
+(1) 72 368.9 T
+(1.  Locator) 79.12 368.9 T
+(-Related Conditions) 152.74 368.9 T
+1 12 Q
+(Issue) 72 339.52 T
+0 F
+(: These should be named) 98 339.52 T
+1 F
+(<locator) 220.32 339.52 T
+(-parse-err) 262.7 339.52 T
+(or>) 314.46 339.52 T
+0 F
+(,) 332.63 339.52 T
+1 F
+(<locator) 338.63 339.52 T
+(-print-err) 381.01 339.52 T
+(or>) 430.78 339.52 T
+0 F
+(, and so on.) 448.94 339.52 T
+(Erring Method\050s\051) 108 311.48 T
+(Condition Class) 252 311.48 T
+1 F
+(as <locator>) 108 283.43 T
+4 F
+(\336) 252 283.43 T
+1 F
+(<cannot-parse-string-into-locator>) 266.84 283.43 T
+(as <string>) 108 255.38 T
+4 F
+(\336) 252 255.38 T
+1 F
+(<cannot-r) 266.84 255.38 T
+(epr) 317.46 255.38 T
+(esent-locator) 334.57 255.38 T
+(-as-string>) 400.1 255.38 T
+(as <abstract-locator>) 108 227.33 T
+4 F
+(\336) 252 227.33 T
+1 F
+(<cannot-back-translate-to-abtract-locator>) 266.84 227.33 T
+(translate-locator) 108 199.29 T
+4 F
+(\336) 252 199.29 T
+1 F
+(<cannot-translate-to-physical-locator>) 266.84 199.29 T
+(as <physical-locator>) 108 183.24 T
+(make <locator>) 108 155.19 T
+4 F
+(\336) 252 155.19 T
+1 F
+(<cannot-instantiate-locator>) 266.84 155.19 T
+(merge-locator) 108 127.14 T
+4 F
+(\336) 252 127.14 T
+1 F
+(<cannot-merge-locators>) 266.84 127.14 T
+(override-locator) 108 111.09 T
+(default-locator) 108 95.05 T
+52 601.86 54 613.86 R
+V
+52 539.76 54 551.76 R
+V
+FMENDPAGE
+%%EndPage: "16" 16
+%%Page: "17" 17
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(Library Proposal) 72 42.62 T
+(August 17, 1995) 279.44 42.62 T
+(17) 532 42.62 T
+1 16 Q
+(12.  Acknowledgments) 72 709.33 T
+0 12 Q
+(Many thanks to everyone at Harlequin and elsewhere for their contribution to this proposal \050in) 72 682 T
+(alphabetical order\051: Judy Anderson, Jonathan Bachrach, Dave Berry) 72 668 T
+(, Duke Briscoe, Roman Bud-) 398.8 668 T
+(zianowsky) 72 654 T
+(, John Dunning, Chris Fry) 122.54 654 T
+(, Chris Hanson \050MIT\051, Andy Latto, Eliot Miranda \050Xerox\051,) 247.1 654 T
+(Kent Pitman, and Andrew Shalit \050Apple\051.) 72 640 T
+(Thanks also to T) 72 614 T
+(im Berners-Lee and the CERN W) 151.91 614 T
+(orld W) 313.25 614 T
+(ide W) 346.43 614 T
+(eb Initiative for developing Uni-) 374.46 614 T
+-0.11 (form Resource Locators \050URLs\051, the addressing scheme which literally links \322the W) 72 600 P
+-0.11 (eb\323 together) 475.73 600 P
+-0.11 (,) 534.11 600 P
+(and which inspired the syntactic framework for Dylan Locators.) 72 586 T
+-0.35 (It is a rare opportunity to be able to design a library such as this from the ground up, but the Dylan) 72 560 P
+-0.23 (Locators Library was not designed in a vacuum. The pathname libraries of MIT Scheme, Symbol-) 72 546 P
+-0.27 (ics Genera) 72 532 P
+0 9.6 Q
+-0.22 (\250) 122.71 536.8 P
+0 12 Q
+-0.27 (, Standard ML of New Jersey) 130 532 P
+-0.27 (, Modula3, Common Lisp, and Coral Software\325) 269.18 532 P
+-0.27 (s \322Pearl\323) 494.55 532 P
+(Lisp \050and unusually tasteful quasi-subset of Common Lisp\051 were studied in detail to arrive at the) 72 518 T
+(\336nal design of this library) 72 504 T
+(.) 195.22 504 T
+1 16 Q
+(13.  Open Issues) 72 463.33 T
+0 12 Q
+(Should mer) 72 436 T
+(ging a relative host with respect to an absolute one will result in an absolute host?) 127.45 436 T
+-0.18 (Similarly mer) 72 410 P
+-0.18 (ging type paths doesn\325) 137.94 410 P
+-0.18 (t work by default. Usually one wants overriding behavior not) 245.51 410 P
+(augmenting behavior for \336le types.) 72 396 T
+(What \322pattern language\323 are we going to use for abstract locator mappings? Tim has done it, but) 72 370 T
+(we need to describe it.) 72 356 T
+(What about issues of the case of string components? It looks like we are simply preserving the) 72 330 T
+(string\325s case. Is this true even for abstract locators?) 72 316 T
+(Opaque locators. Do we want to deal with this at all? The MacOS is an important platform, and) 72 290 T
+(Apple discourages string-based \322pathnames\323.) 72 276 T
+-0 (~ expansion and representation \050note that \322late binding\323 is desirable so we wouldn\325t want to do a) 72 250 P
+(user-ID lookup at locator instantiation time\051) 72 236 T
+FMENDPAGE
+%%EndPage: "17" 17
+%%Trailer
+%%BoundingBox: 0 0 612 792
+%%PageOrder: Ascend
+%%Pages: 17
+%%DocumentFonts: Times-Roman
+%%+ Times-Bold
+%%+ Times-Italic
+%%+ Courier
+%%+ Symbol
+%%+ Times-BoldItalic
+%%EOF

@@ -1,0 +1,7 @@
+
+TMPF=/home/nosa/temp/file
+for i in $*
+do
+    sed 's///' $i > $TMPF
+    cp -fp $TMPF $i
+done

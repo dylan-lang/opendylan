@@ -1,0 +1,28 @@
+// Additional names from "winbase.h" to be excluded.
+// $HopeName$
+// $Date: 2004/03/12 00:10:26 $
+
+
+// Declared but not defined or documented:
+MapViewOfFileVlm
+UnmapViewOfFileVlm
+IsTokenRestricted
+QueryRecoveryAgents
+RECOVERY_AGENT_INFORMATION
+LPRECOVERY_AGENT_INFORMATION
+
+// New in NT 5.0 and Windows 98:
+GetDevicePowerState
+RequestWakeupLatency
+
+// New in NT 5.0 only:
+CloseRaw
+WriteRaw
+ReadRaw
+OpenRaw
+CREATE_FOR_IMPORT
+CREATE_FOR_DIR
+DecryptFile
+EncryptFile
+GetLongPathName
+

@@ -1,0 +1,13 @@
+for
+for (
+    %eXvarX = XexprX then XexprX,
+    XvarX in XcollectionX,
+    XvarX from XexprX
+      to / above / below XexprX
+      by XexprX
+    until: / while: XexprX
+    )
+  XbodyX ;
+finally
+  XbodyX ;
+end for;

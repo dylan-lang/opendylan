@@ -1,0 +1,10 @@
+compile -force-parse win32-duim
+save -export-only win32-duim
+close win32-duim
+compile -force-parse duim
+save -export-only duim
+close duim
+compile -force-parse duim-user
+save -export-only duim-user
+close duim-user
+exit

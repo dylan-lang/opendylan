@@ -1,0 +1,115 @@
+// Author:    Keith Dennison
+// Copyright: Copyright 1998, Functional Objects, Inc.  All rights reserved.
+// Version:   $HopeName: D-corba-tests-idl!sequence.idl(trunk.3) $
+
+#ifdef ORBIXWEB
+
+struct Structure {
+  string  name;
+  octet   info;
+};
+
+interface TestObject {
+  attribute long id;
+  attribute string ior;
+};
+
+interface SequenceTest {
+
+  exception failure {
+    short index;
+  };
+  typedef sequence<short> sequence_short;
+  typedef sequence<Structure> sequence_Structure;
+  typedef sequence<TestObject> sequence_TestObject;
+
+  
+  // UNBOUNDED SEQUENCES
+
+  attribute sequence_short attribute_short_seq;
+  void check_attribute_short_seq () raises (failure);
+  void in_parameter_short_seq (in sequence_short seq) raises (failure);
+  void inout_parameter_short_seq (inout sequence_short seq) raises (failure);
+  void out_parameter_short_seq (out sequence_short seq);
+  sequence_short result_short_seq ();
+
+  attribute sequence_Structure attribute_struct_seq;
+  void check_attribute_struct_seq () raises (failure);
+  void in_parameter_struct_seq (in sequence_Structure seq) raises (failure);
+  void inout_parameter_struct_seq (inout sequence_Structure seq) raises (failure);
+  void out_parameter_struct_seq (out sequence_Structure seq);
+  sequence_Structure result_struct_seq ();
+
+  TestObject TestObject_factory (in long id);
+  attribute sequence_TestObject attribute_object_seq;
+  void check_attribute_object_seq () raises (failure);
+  void in_parameter_object_seq (in sequence_TestObject seq) raises (failure);
+  void inout_parameter_object_seq (inout sequence_TestObject seq) raises (failure);
+  void out_parameter_object_seq (out sequence_TestObject seq);
+  sequence_TestObject result_object_seq ();
+
+
+  // BOUNDED SEQUENCES
+  typedef sequence<char,20> BoundedString;
+  void set_short_name(in BoundedString name) raises(failure);
+  void set_long_name(in BoundedString name);
+  BoundedString get_short_name ();
+  BoundedString get_long_name ();
+  short get_name (out BoundedString name);
+  void reverse_name (inout BoundedString name);
+};
+
+#else
+
+struct Structure {
+  string  name;
+  octet   info;
+};
+
+interface TestObject {
+  attribute long id;
+  attribute string ior;
+};
+
+interface SequenceTest {
+
+  exception failure {
+    short index;
+  };
+
+  // UNBOUNDED SEQUENCES
+
+  attribute sequence<short> attribute_short_seq;
+  void check_attribute_short_seq () raises (failure);
+  void in_parameter_short_seq (in sequence<short> seq) raises (failure);
+  void inout_parameter_short_seq (inout sequence<short> seq) raises (failure);
+  void out_parameter_short_seq (out sequence<short> seq);
+  sequence<short> result_short_seq ();
+
+  attribute sequence<Structure> attribute_struct_seq;
+  void check_attribute_struct_seq () raises (failure);
+  void in_parameter_struct_seq (in sequence<Structure> seq) raises (failure);
+  void inout_parameter_struct_seq (inout sequence<Structure> seq) raises (failure);
+  void out_parameter_struct_seq (out sequence<Structure> seq);
+  sequence<Structure> result_struct_seq ();
+
+  TestObject TestObject_factory (in long id);
+  attribute sequence<TestObject> attribute_object_seq;
+  void check_attribute_object_seq () raises (failure);
+  void in_parameter_object_seq (in sequence<TestObject> seq) raises (failure);
+  void inout_parameter_object_seq (inout sequence<TestObject> seq) raises (failure);
+  void out_parameter_object_seq (out sequence<TestObject> seq);
+  sequence<TestObject> result_object_seq ();
+
+
+  // BOUNDED SEQUENCES
+  typedef sequence<char,20> BoundedString;
+  void set_short_name(in BoundedString name) raises(failure);  
+  void set_long_name(in BoundedString name);
+  BoundedString get_short_name ();
+  BoundedString get_long_name ();
+  short get_name (out BoundedString name);
+  void reverse_name (inout BoundedString name);
+};
+
+#endif

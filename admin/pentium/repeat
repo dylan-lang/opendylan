@@ -1,0 +1,10 @@
+
+command_to_run=$1
+shift
+
+while [ "$#" -ne 0 ]; do
+
+  $command_to_run $1
+  shift
+
+done

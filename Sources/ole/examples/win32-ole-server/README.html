@@ -1,0 +1,178 @@
+<HTML>
+<HEAD>
+	<TITLE>Functional Developer Example: win32-ole-server</TITLE>
+	<LINK REL="stylesheet" TYPE="text/css" HREF="../../examples.css">
+</HEAD>
+
+<BODY>
+
+<H2>win32-ole-server library</H2>
+
+<HR ALIGN="CENTER">
+
+
+<P>This project contains an example program which demonstrates the
+use of the <b>OLE-Server</b> library to create a graphical object
+that can be embedded in compound documents.</P>
+
+<P>The <b>OLE-Server</b> library is documented in the Functional Developer
+"OLE, COM, ActiveX and DBMS" reference manual.</P>
+
+<P>This example provides the same functionality as the C++ program in
+directory "\MSTOOLS\samples\ole\simpsvr\" from the Microsoft Win32 SDK
+of July 1995. The "README.TXT" file there describes it as: </P>
+
+ <BLOCKQUOTE>
+ This sample is the simplest OLE 2.0 object that can be
+ written and still support the visual editing feature. The object that
+ this server supports is a colored square with a black
+ border.
+ </BLOCKQUOTE>
+
+<P>The direct translation of the C++ program into Dylan is available
+as the example called <b>sample-ole-server</b> under the "Low-level
+OLE" examples. The version in this project is written in a more
+natural Dylan style than <b>sample-ole-server</b> and uses the server
+framework provided by the <b>OLE-server</b> library to greatly
+simplify the program.</P>
+
+<H3>Project configuration</H3>
+
+<P>This project can be built in either of two configurations. It can
+be built as an EXE file which can then be used as a local server, or
+it can be built as a DLL file which can then be used as an in-process
+server. The default is to build an EXE file. Use the "Target file"
+entry in the "Link" tab of the "Project &gt; Settings..." dialog to
+switch between these two options.</P>
+
+<P>In either case, in order for the server to work when invoked from a client
+program, all of the libraries used by your server need to either be in the
+same directory as the server file, or else in a directory which is in the
+system PATH (not the individual user's PATH on NT). The simplest way to
+accomplish this is to use the "Project &gt; Build Release" command to create a
+release directory. If you wish, you can move that directory to any location
+you want, but you must do so before you attempt to register the server.
+</P>
+
+<H3>Local server (EXE) registration</H3>
+
+<P>After the project has been built, you will have a program
+which you can execute.  By itself, it doesn't do much very interesting
+-- just draws a square whose color you can select from a menu.</P>
+
+<P>The really interesting thing is using the program as an embedded
+object. To do that, you must first register it with the operating system.
+You can do this by running the program (from the release directory) from
+a DOS command prompt like this:</P>
+
+    <blockquote><code>win32-ole-server.exe /regserver</code></blockquote>
+
+<P>This will create the necessary entries in the Windows System Registry and
+then terminate without creating any windows. The full pathname of the server
+is recorded, so you must unregister the server before you move or delete it.
+You can unregister it by doing:
+  <blockquote><code>sample-automation-server.exe /unregserver</code></blockquote>
+
+<P>The server is registered with the title "Dylan simple local OLE
+Server" which comes from from the call to
+<CODE>register-ole-server</CODE> in <em>appexe.dylan</em>.</P>
+
+<H3>In-process server (DLL) registration</H3>
+
+<P>To register an in-process server, use the <code>regsvr32</code> command line
+utility like this:</P>
+
+  <blockquote><code>regsvr32 win32-ole-server.dll</code></blockquote>
+
+<P>(The complete pathname will need to be given if the file is in a
+different directory that is not in the PATH.)  This will cause the
+appropriate entries to be made in the Windows System Registry. (For
+use in a batch script, the "<code>/s</code>" option may be used to suppress the
+dialog box reporting completion.) The full pathname of the server
+is recorded, so you must unregister the server before you move or delete it.
+You can unregister it by doing:</P>
+
+<BLOCKQUOTE><CODE>regsvr32 /u win32-ole-server.dll</CODE></BLOCKQUOTE>
+
+<P>This invokes the server to unregister itself, so won't work
+if the server has been deleted first.</P>
+
+<P>The server is registered with the title "Dylan simple in-process OLE
+Server" which comes from from the call to
+<CODE>initialize-ole-server</CODE> in <em>appdll.dylan</em>. The EXE and DLL
+versions have different class ID numbers so that they can both be
+installed at the same time.</P>
+
+<H3>Program execution</H3>
+
+<P>You can use any OLE container program, such as Microsoft Word or
+WordPad, or the sample container application <code>simpcntr</code> in
+the SDK (or its Dylan equivalent in the
+<code>sample-ole-container</code> example), to choose the server from
+the "Insert Object" command of the "Edit" menu or, for Word or
+WordPad, the "Object..." command of the "Insert" menu. The program
+will then be invoked to draw its picture which will then appear in the
+compound document.</P>
+
+<P>Most containers use in-place activation, in which the picture is
+drawn directly in the window of the container program, and the menu
+for changing the color is added to the container's menu bar. Clicking
+once outside the picture de-activates it, and double-clicking on the
+picture re-activates it.</P>
+
+<P>A local server can also be activated out-of-place, running in its
+own top-level window while active, and the picture will be copied into
+the document when the window is closed. To do this from Word or
+WordPad, select the drawing (by clicking once while not active) and
+then invoke the menu item "Edit" &gt; "Dylan OLE Server Object" &gt;
+"Open". </P>
+
+<H3>Program internals</H3>
+
+<P>The program consists of the following files:</P>
+
+<dl>
+  <dt> <em>library.dylan</em>
+    <dd> The library and module definitions for this project.
+
+  <dt> <em>app.dylan</em>
+    <dd> The application class <code>&lt;simple-server-app&gt;</code> and
+    application methods.  This manages the application and document windows.
+
+  <dt> <em>appobj.dylan</em>
+    <dd> The OLE object class <code>&lt;simple-server&gt;</code> and OLE
+    server methods.  This implements the OLE-specific functionality.  The
+    actual drawing of the picture is done by
+    <code>ole-part-draw</code>.  Persistence is implemented by
+    <code>ole-part-save-to-storage</code> and
+    <code>ole-part-load-from-storage</code>.  Server menu installation is done
+    in <code>ole-part-insert-menus</code>.
+    
+  <dt> <em>program.dylan</em>
+    <dd> The callback procedures for handling window events.
+
+  <dt> <em>appdll.dylan</em>
+    <dd> In-process server support: The macro <code>initialize-ole-server
+    </code> is used to declare the information needed for registering the
+    server and automatically creating a class factory when requested by a
+    client. There is no event loop in this case because that will be provided
+    by the client (container) program. The main window is created in the
+    server's <CODE>initialize</CODE> method, which will be called when/if
+    server creation is requested by the container.
+
+  <dt> <em>appexe.dylan</em>
+
+    <dd> Local server support.  The function <code>main-program</code> is
+    invoked to start the program.  If invoked in the in-process case, it does
+    nothing, as explained above.  If invoked for self-registration, it
+    registers and returns.  If invoked as a server, it creates a class factory
+    object, which the container application will use to request creation of
+    server objects.  The program then enters a Windows event loop.
+
+</dl>
+
+
+
+</BODY>
+
+</HTML>

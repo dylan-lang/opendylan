@@ -1,0 +1,96 @@
+#!/usr/local/bin/bash
+#      Script: compile-in-emulator
+#      Author: Shri Amit(amit)
+usage=" Usage: $0 -i <Image> -r <Root> -l <Lib> -c <Command> -f <logfile>"
+# Opts & Flgs: -i: Source image, default: lw+dylan-$platform
+#              -r: <Root>, the emulator TRUNK_SYSTEM_ROOT, default: /u/dylan
+#              -l: Lib to compile, required argument
+#              -c: Command to execute after compilation, default: none
+#              -f: Logfile, default: $logsdir/$0-<Lib>-log.$suffix
+#    Synopsis: . Compiles <Lib> in <Image>
+#	       . Invokes <Command> after compilation is completed
+#	       . Stores output to <Logfile>
+#
+# Known problems:
+#
+# Sometimes bash tries to expand the command line, for example
+# the command: ./compile-in-emulator -l testworks-test-suite \
+#              >>  -c perform-suite(testworks-test-suite)
+# invokes the following bash error: 
+#   bash: syntax error near unexpected token `perform-suite(t'
+# An easy way to fix that is to put strong quotes '' or soft quotes
+# "" around the command so that bash does not try to expand it in
+# anyway.
+######################################################################
+## Application exit status legend ##
+##  0: Compilation successful
+##  1: Invalid command line argument
+##  2: Library name not specified
+
+## Parse the options & flags on the command line ##
+while getopts i:r:l:c:f: option
+do case $option in
+     i) image=$OPTARG;;
+     r) root=$OPTARG;;
+     l) lib=$OPTARG;;
+     c) cmd=$OPTARG;;
+     f) logfile=$OPTARG;;
+    \?) echo $usage
+        exit 1;;
+   esac
+done
+shift `expr $OPTIND - 1`
+
+source /u/dylan/sources/qa/admin/env.bash
+
+## Assign defaults to options & flags ##
+##
+image=${image:-$localdir/lw+dylan-$platform}
+lib=${lib:-unspecified}
+root=${root:-$dylandir}
+logfile=${logfile:-$logsdir/compile-in-emulator-$lib-$platform-log.$suffix}
+
+## Export the emulator system root ##
+##
+TRUNK_SYSTEM_ROOT="$root/"; export TRUNK_SYSTEM_ROOT
+
+## Check to see if lib has been specified ##
+##
+case $lib in
+   unspecified) echo The library name must be specified
+                exit 2;;
+   *) ;;
+esac
+
+## Everything from here goes to the logfile ##
+## Prompt the options                       ##
+##
+{
+    echo "Starting at: `date`"
+    echo "Running $0 with options:"
+    echo "  The system root is: $TRUNK_SYSTEM_ROOT"
+    echo " The source image is: $image"
+    echo "      The library is: $lib"
+    echo "      The command is: $cmd"
+    echo "      The logfile is: $logfile"
+    echo
+
+$image -init - <<EOC
+(dylan:tty-infix-dylan-listen)
+import-cl-functions(system(bye)(as: bye));
+require: $lib;
+in: $lib;
+$cmd;
+bye:;
+(bye 0)
+EOC
+    $toolsdir/admin/remove-old-files $logsdir/compile-in-emulator-log-$lib-$platform $logstokeep
+
+echo $0 successful
+echo "Ending at `date`"
+echo
+
+} 2>&1 | tee $logfile
+
+exit 0
+#eof

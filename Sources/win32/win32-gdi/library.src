@@ -1,0 +1,59 @@
+Module:    Dylan-user	%comment -*- Mode: Dylan -*-
+Synopsis:  Win32 API for "Graphics Device Interface" - 
+	   drawing graphics and text and printing, 
+	   corresponding to "WINGDI.H" and "GDI32.DLL".
+Copyright: Copyright (c) 1996-2000 Functional Objects, Inc. All rights reserved.
+
+%comment $HopeName: D-lib-win32-gdi!library.src(trunk.8) $
+
+define library Win32-GDI
+  use Dylan;
+  use C-FFI;
+  use Win32-common;
+
+  export Win32-GDI;
+end;
+
+
+define module Win32-GDI
+  use Dylan;
+  use C-FFI;
+  use Win32-common,
+    /* have to export here names that are used as structure accessors in
+       both modules. */
+    export: { x-value, y-value, x-value-setter, y-value-setter,
+	     cbData-value, cbData-value-setter,
+	     dwSize-value, dwSize-value-setter,
+	     wFlags-value, wFlags-value-setter, Buffer-value,
+	     u-value, u-value-setter, wSecond-value, wSecond-value-setter,
+	 /* the following are defined in both "windef.h" and "wingdi.h" */
+	     $DM-UPDATE, $DM-COPY, $DM-PROMPT, $DM-MODIFY,
+	     $DC-FIELDS, $DC-PAPERS, $DC-PAPERSIZE, $DC-MINEXTENT,
+	     $DC-MAXEXTENT, $DC-BINS, $DC-DUPLEX, $DC-SIZE, $DC-EXTRA,
+	     $DC-VERSION, $DC-DRIVER, $DC-BINNAMES, $DC-ENUMRESOLUTIONS,
+	     $DC-FILEDEPENDENCIES, $DC-TRUETYPE, $DC-PAPERNAMES,
+	     $DC-ORIENTATION, $DC-COPIES,
+	 /* and export some other names for users of GDI functions */
+	     <C-void*>, <HANDLE>, <HBITMAP>, <HBRUSH>, <HCOLORSPACE>,
+	     <HDC>, <HENHMETAFILE>, <HFONT>, <HGDIOBJ>, <HGLOBAL>,
+	     <HMETAFILE>, <HPALETTE>, <HPEN>, <HRGN>, <LPCSTR>, <LPPOINT>,
+	     <LPRECT>, <LPSIZE>, <LPSTR>, <LPVOID>,
+	     pointer-address, pointer-cast,
+	     left-value, right-value, top-value, bottom-value,
+	     cx-value, cy-value, cx-value-setter, cy-value-setter,
+	     TEXT, null-handle, null-handle?,
+	     $NULL-HANDLE, $NULL-RECT, $NULL-POINT, $NULL-VOID,
+	     $NULL-string, $NULL-HDC
+	    } ;
+
+%include wingdi.exp
+
+  // defined in "moregdi.dylan":
+  export RGB, PALETTERGB, PALETTEINDEX, GetRValue, GetGValue, GetBValue;
+  export TextOutW, GetTextExtentPoint32W;
+
+  // shared accessors declared in "pregdi.dylan":
+  export lStructSize-value, dwType-value,
+    lStructSize-value-setter, dwType-value-setter;
+
+end module Win32-GDI;
