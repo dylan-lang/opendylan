@@ -249,8 +249,8 @@ static mps_message_type_t finalization_type;
 #define genCOUNT 3
 
 static mps_gen_param_s gc_gen_param[genCOUNT] = {
-  { 128, 0.85 },
-  { 2 * 1024, 0.45 },
+  { 2 * 1024, 0.85 },
+  { 16 * 1024, 0.45 },
   { MAXIMUM_HEAP_SIZE/1024 - 3 * 1024, 0.25 }
 };
 
