@@ -132,7 +132,7 @@ define function read-environment-path
 end;
 
 define function user-root-path()
- => (path :: false-or(<locator>));
+ => (path :: false-or(<directory-locator>));
   let path = read-environment-variable("FUNCTIONAL_DEVELOPER_USER_ROOT");
   path & as(<directory-locator>, path)
 end;
