@@ -12,6 +12,7 @@ define module task-list
   use operating-system;
   use streams;
   use standard-io;
+  use file-system;
   use print;
   use format-out;
   use format;

@@ -8,9 +8,11 @@ Dual-license: GNU Lesser General Public License
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module task-list
+  use functional-dylan;
   use operating-system;
   use streams;
   use standard-io;
+  use file-system;
   use print;
   use format-out;
   use format;
@@ -19,7 +21,6 @@ define module task-list
   use table-extensions;
   use machine-words;
   use finalization;
-  use functional-dylan;
   use simple-random;
 
   // Add binding exports here.
