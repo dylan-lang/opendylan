@@ -119,7 +119,7 @@ define function read-environment-path
     let root-path = user-root-path();
     if (root-path)
       if (default)
-        path := subdirectory-locator(user-root-path, default);
+        path := subdirectory-locator(root-path, default);
       else
         root-path
       end;
