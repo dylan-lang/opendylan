@@ -263,6 +263,12 @@ static MMAllocHandler misc_handler = defaultHandler;
 
 /* Thread Local Variables, accessed via the GC-TEB*/
 
+#ifdef X86_LINUX_PLATFORM
+// On Linux, use the thread-local storage provided by the system to
+// hold the TEB pointer
+__thread void* teb;
+#endif
+
 typedef struct gc_teb_s {       /* GC Thread Environment block descriptor */
   mps_bool_t gc_teb_inside_tramp;  /* the HARP runtime assumes offset 0 for this */
   mps_ap_t   gc_teb_main_ap;       /* the HARP runtime assumes offset 1 for this */
@@ -590,49 +596,13 @@ void zero_allocation_counter(gc_teb_t gc_teb)
 }
 
 
-#ifdef LINUX_PLATFORM
-/* TEMPORARY - while booting the compiler */
-void *Pthread_local_storage_for_gc[10];
-void *Pthread_local_storage[100];
-#endif
-
-#if defined(X86_LINUX_PLATFORM)
-extern BOOL Pthread_library_uses_segment_registerQ;
-#endif
-
 __inline 
  gc_teb_t current_gc_teb()
 { 
   gc_teb_t gc_teb;
 #if defined(X86_LINUX_PLATFORM)
 
-  if (Pthread_library_uses_segment_registerQ)
-    __asm__
-      (
-       "movl %%gs:%c1,%%ecx\n\t"
-       "movl   %%ecx,%0\n\t" /* the TEB */
-
-       // output operands
-       : "=g" (gc_teb)
-       // input operands
-       : "i" (4 * 15)
-       // clobbered machine registers
-       : "cx"
-       );
-  else
-    __asm__
-      (
-        "movl   %%esp, %%ecx\n\t"
-        "orl    $0x1fffff, %%ecx\n\t"         /* the top of stack */
-        "movl   0xffffff01(%%ecx), %%ecx\n\t"  /* offset -255; intermediate mov to avoid too many memory references */
-        "movl   %%ecx,%0\n\t" /* the TEB */
-  
-        // output operands
-        : "=g" (gc_teb)
-        : // no input operands
-        // clobbered machine registers
-        : "cx"
-      );
+  gc_teb = teb;
 
 #elif defined(PPC_LINUX_PLATFORM)
   __asm__
@@ -2525,43 +2495,7 @@ BOOL WINAPI DylanBreakControlHandler(DWORD dwCtrlType)
 RUN_TIME_API
 void check_runtime_thread_library_uses_segment_register() {
 
-  char *value = getenv("THREAD_LIBRARY_USES_SEGMENT_REGISTER");
-  if ((value == NULL) || (strlen(value) == 0))
-    {
-      void *gs = NULL;
-      __asm__
-        (
-         "movl %%gs,%0\n\t"
-
-         // output operands
-         : "=g" (gs)
-         );
-      //fprintf(stderr,"(gs=%d) \n",gs);
-      if (gs != NULL)
-        {
-          void *tid = (void *)pthread_self();
-          void *tid2 = NULL;
-          __asm__
-            (
-             "movl %%gs:0x50,%0\n\t"
-
-             // output operands
-             : "=g" (tid2)
-             );
-          //fprintf(stderr,"(tid=%d) \n",tid);
-          //fprintf(stderr,"(tid2=%d) \n",tid2);
-          if (tid == tid2)
-            Pthread_library_uses_segment_registerQ = TRUE;
-        }
-    }
-  else
-    {
-      if (strcmp(value, "TRUE") == 0)
-        {
-          //fputs("value is TRUE", stderr);
-          Pthread_library_uses_segment_registerQ = TRUE;
-        }
-    }
+  // XXX track down caller and eliminate
 
   return;
 }

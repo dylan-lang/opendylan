@@ -321,6 +321,14 @@ define method output-code-label
   (outputter, item, increment, attr: "@l");
 end method;
 
+define method output-code-label
+    (outputter :: <harp-gnu-outputter>,
+     item :: <labelled-absolute-thread-constant>,
+     increment :: <integer>) => ()
+  output-code-label-internal
+  (outputter, item, increment, attr: "@ntpoff");
+end method;
+
 
 define method output-code-label
     (outputter :: <harp-gnu-outputter>,

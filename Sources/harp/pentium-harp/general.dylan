@@ -414,10 +414,16 @@ define method indirect-runtime-reference
        const-offset: 0);
 end method;
 
+define method thread-local-runtime-reference
+(name :: <byte-string>) => (c :: <constant-reference>)
+  make(<i-thread-constant-reference>, 
+       refers-to: name,
+       const-offset: 0);
+end method;
+    
+
 define method output-implicit-externals
     (backend :: <pentium-linux-back-end>, outputter :: <harp-outputter>)
   output-external(backend, outputter, remove-optionals-runtime);
-  output-external(backend, outputter, segment-register-load-instruction-offset);
-  output-external(backend, outputter, segment-register-store-instruction-offset);
   output-external(backend, outputter, dylan-integer-overflow-handler);
 end method;

@@ -53,6 +53,9 @@ end class;
 define abstract open class <indirect-constant-reference> (<constant-reference>)
 end class;
 
+define abstract open class <thread-constant-reference> (<constant-reference>)
+end class;
+
 define abstract open class <imported-constant-reference> (<constant-reference>)
 end class;
 
@@ -118,7 +121,9 @@ define class <i-indirect-constant-reference-imported>
       (<i-indirect-constant-reference>, <imported-constant-reference>) 
 end class;
 
-
+define class <i-thread-constant-reference> 
+    (<i-address-constant-reference>, <thread-constant-reference>)
+end class;
 
 define class <interactor-indirect-constant-reference>
       (<i-indirect-constant-reference>, <interactor-constant-reference>) 
@@ -309,6 +314,8 @@ end class;
 define class <labelled-absolute-constant-low> (<labelled-absolute-constant>)
 end class;
 
+define class <labelled-absolute-thread-constant> (<labelled-absolute-constant>)
+end class;
 
 /// And a subclass for relative constants.
 

@@ -3099,7 +3099,7 @@ End scope at 50
 
 +++ Live variable scopes for primitive_type_check_values +++
 Start scope at 3 with frame for no variables
-End scope at 388
+End scope at 278
 
 +++ No Source Code Locators for primitive_type_check_values +++
 
@@ -3223,7 +3223,7 @@ End scope at 388
 
 +++ Live variable scopes for primitive_type_check_rest_values +++
 Start scope at 3 with frame for no variables
-End scope at 248
+End scope at 139
 
 +++ No Source Code Locators for primitive_type_check_rest_values +++
 
@@ -4000,8 +4000,8 @@ End scope at 248
 +++ ending code for primitive_heap_vector_remaining_values +++
 
 +++ Live variable scopes for primitive_heap_vector_remaining_values +++
-Start scope at 183 with frame for no variables
-End scope at 211
+Start scope at 81 with frame for no variables
+End scope at 109
 
 +++ No Source Code Locators for primitive_heap_vector_remaining_values +++
 
@@ -5060,7 +5060,7 @@ End scope at 50
 
 +++ Live variable scopes for call_dylan_function_returning_all_values +++
 Start scope at 7 with frame for no variables
-End scope at 131
+End scope at 71
 
 +++ No Source Code Locators for call_dylan_function_returning_all_values +++
 
@@ -5165,7 +5165,7 @@ End scope at 36
 
 +++ Live variable scopes for get_tlv_vector +++
 Start scope at 4 with frame for no variables
-End scope at 65
+End scope at 13
 
 +++ No Source Code Locators for get_tlv_vector +++
 
@@ -5201,7 +5201,7 @@ End scope at 65
 
 +++ Live variable scopes for set_tlv_vector +++
 Start scope at 4 with frame for no variables
-End scope at 66
+End scope at 16
 
 +++ No Source Code Locators for set_tlv_vector +++
 
@@ -5236,7 +5236,7 @@ End scope at 66
 
 +++ Live variable scopes for get_current_thread +++
 Start scope at 4 with frame for no variables
-End scope at 65
+End scope at 13
 
 +++ No Source Code Locators for get_current_thread +++
 
@@ -5272,7 +5272,7 @@ End scope at 65
 
 +++ Live variable scopes for set_current_thread +++
 Start scope at 4 with frame for no variables
-End scope at 66
+End scope at 16
 
 +++ No Source Code Locators for set_current_thread +++
 
@@ -5307,7 +5307,7 @@ End scope at 66
 
 +++ Live variable scopes for get_current_thread_handle +++
 Start scope at 4 with frame for no variables
-End scope at 65
+End scope at 13
 
 +++ No Source Code Locators for get_current_thread_handle +++
 
@@ -5343,7 +5343,7 @@ End scope at 65
 
 +++ Live variable scopes for set_current_thread_handle +++
 Start scope at 4 with frame for no variables
-End scope at 66
+End scope at 16
 
 +++ No Source Code Locators for set_current_thread_handle +++
 
@@ -5493,7 +5493,7 @@ End scope at 12
 
 +++ Live variable scopes for spy_read_thread_variable_at_offset +++
 Start scope at 4 with frame for no variables
-End scope at 71
+End scope at 19
 
 +++ No Source Code Locators for spy_read_thread_variable_at_offset +++
 

@@ -412,8 +412,6 @@ define method segment-prefix
 end method;
 
 
-// Temporary: the TLB is currently stored in the Windows TIB at offset #x14
-// (reserved for application use as pvArbitrary).
 
 
 define method op--store-thread-local
@@ -448,151 +446,29 @@ define method op--tlb-base-register
   op--load-thread-local(be, dest, /* dummy */ 0);
 end method;
 
-/*
+define constant $teb = 
+    thread-local-runtime-reference("teb");
+
 define method op--store-thread-local
     (be :: <pentium-linux-back-end>, data, offset :: <integer>) => ()
   emit(be, gs.segment-prefix);
   harp-out(be)
-    st(be, data, 0, #x3c);
+    st(be, data, $teb, 0 /*ignore offset for Linux */);
   end harp-out;
 end method;
 
 define method op--load-thread-local
     (be :: <pentium-linux-back-end>, dest :: <real-register>, offset :: <integer>) => ()
-
-//     57c:       65 8b 0d 3c 00 00 00    mov    %gs:0x3c,%ecx
-//     583:       89 ce                   mov    %ecx,%esi
-
   emit(be, gs.segment-prefix);
   harp-out(be)
-    ld(be, dest, 0, #x3c);
+    ld(be, dest, $teb, 0 /*ignore offset for Linux */);
   end harp-out;
-end method;
-*/
-
-///  Some versions of LinuxThreads have aligned 2MB stacks.
-///  Use a position at a fixed offset from the bottom of stack to 
-///  store the TEB while running Dylan code.
-
-define constant $linux-stack-bot-mask = (2 * 1024 * 1024) - 1;
-define constant $linux-teb-stack-bot-offset = 1 - 256; /* hope this is safe */
-
-/*
-define method op--store-thread-local
-    (be :: <pentium-linux-back-end>, data, offset :: <integer>) => ()
-  let temp = reg--tmp2;
-  harp-out(be)
-    or(be, temp, reg--stack, $linux-stack-bot-mask);
-    st(be, data, temp, $linux-teb-stack-bot-offset);
-  end harp-out;
-end method;
-
-define method op--load-thread-local
-    (be :: <pentium-linux-back-end>, dest :: <real-register>, offset :: <integer>) => ()
-  harp-out(be)
-    or(be, dest, reg--stack, $linux-stack-bot-mask);
-    ld(be, dest, dest, $linux-teb-stack-bot-offset);
-  end harp-out;
-end method;
-*/
-
-///  Support both versions of LinuxThreads (gs segment register, aligned 2MB stacks).
-///  Generate code to dispatch at runtime to the appropriate inlined block of machine code.
-
-define constant segment-register-load-instruction-offset = 
-    indirect-runtime-reference("Psegment_register_load_instruction_offset");
-
-define constant segment-register-store-instruction-offset = 
-    indirect-runtime-reference("Psegment_register_store_instruction_offset");
-
-define method op--store-thread-local
-    (be :: <pentium-linux-back-end>, data, offset :: <integer>) => ()
-  unless (data == reg--tmp1)
-    harp-out (be)
-      move(be, reg--tmp1, data)
-    end;
-  end;
-  let temp = reg--tmp2;
-  emit(be, call, 0, 0, 0, 0);                                         // call $+0
-  harp-out(be)
-    ld(be, temp, reg--stack, 0);                                      // 3; mov    (%esp,1),%ecx
-    add(be, temp, temp, 3 + 3 + 6 + 2);                               // 3; add    $0x0e,%ecx
-    add(be, temp, temp, segment-register-store-instruction-offset);   // 6; add    Psegment_register_store_instruction_offset,%ecx
-  end harp-out;
-
-  jump-to-register(be, temp);                                         // 2; jmp    *%ecx
-
-  harp-out(be)
-    move(be, temp, reg--stack);                                       // 2; mov    %esp,%ecx
-    or(be, temp, temp, $linux-stack-bot-mask);                        // 6; or     $0x1fffff,%ecx
-    st(be, reg--tmp1, temp, $linux-teb-stack-bot-offset);             // 6; mov    %esi,0xffffff01(%ecx)
-
-    ld(be, temp, reg--stack, 0);                                      // 3; mov    (%esp,1),%ecx
-    add(be, temp, temp, 3 + 3 + 6 + 2 + 2 + 6 + 6 + 3 + 3 + 2 + 7);   // 3; add    $0x2b,%ecx
-  end harp-out;
-
-  jump-to-register(be, temp);                                         // 2; jmp    *%ecx
-
-  emit(be, gs.segment-prefix);
-  harp-out(be)
-    st(be, reg--tmp1, 0, #x3c);                                       // 7; mov    %esi,%gs:0x3c
-
-    add(be, reg--stack, reg--stack, 4);                               // return
-  end harp-out;
-end method;
-
-define method op--load-thread-local
-    (be :: <pentium-linux-back-end>, dest :: <real-register>, offset :: <integer>) => ()
-  unless (dest == reg--tmp1)
-	// preserve reg--tmp1; parts of runtime (e.g. primitive_build_bind_exit_frame) requires it.
-    harp-out (be)
-      push(be, reg--tmp1)
-    end;
-  end;
-  emit(be, call, 0, 0, 0, 0);                                                            // call $+0
-  harp-out(be)
-    ld(be, reg--tmp1, reg--stack, 0);                                                    // 3; mov    (%esp,1),%esi
-    add(be, reg--tmp1, reg--tmp1, 3 + 3 + 6 + 2);                                        // 3; add    $0x0e,%esi
-    add(be, reg--tmp1, reg--tmp1, segment-register-load-instruction-offset);             // 6; add    Psegment_register_load_instruction_offset,%esi
-  end harp-out;
-
-  jump-to-register(be, reg--tmp1);                                                       // 2; jmp    *%esi
-
-  harp-out(be)
-    move(be, reg--tmp1, reg--stack);                                                     // 2; mov    %esp,%esi
-    or(be, reg--tmp1, reg--tmp1, $linux-stack-bot-mask);                                 // 6; or     $0x1fffff,%esi
-    ld(be, reg--tmp1, reg--tmp1, $linux-teb-stack-bot-offset);                           // 6; mov    0xffffff01(%esi),%esi
-    push(be, reg--tmp1);                                                                 // 1; push   %esi
-
-    ld(be, reg--tmp1, reg--stack, 4);                                                    // 4; mov    0x4(%esp,1),%esi
-    add(be, reg--tmp1, reg--tmp1, 3 + 3 + 6 + 2 + 2 + 6 + 6 + 1 + 4 + 3 + 2 + 7 + 1);    // 3; add    $0x2e,%esi
-  end harp-out;
-
-  jump-to-register(be, reg--tmp1);                                                       // 2; jmp    *%esi
-
-  emit(be, gs.segment-prefix);
-  harp-out(be)
-    ld(be, reg--tmp1, 0, #x3c);                                                          // 7; mov    %gs:0x3c,%esi
-    push(be, reg--tmp1);                                                                 // 1; push   %esi
-
-    ld(be, dest, reg--stack, 0);
-    add(be, reg--stack, reg--stack, 8);                                                  // return
-  end harp-out;
-  unless (dest == reg--tmp1)
-	// preserve reg--tmp1; parts of runtime (e.g. primitive_build_bind_exit_frame) requires it.
-    harp-out (be)
-      pop(be, reg--tmp1)
-    end;
-  end;
-end method;
-
-define method jump-to-register(be :: <pentium-linux-back-end>, dest :: <real-register>) => ()
-  emit(be, grp5);
-  emit-reg-direct(be, dest, #b100000);
 end method;
 
 /// Now the templates
 
+// Temporary: the TLB is currently stored in the Windows TIB at offset #x14
+// (reserved for application use as pvArbitrary).
 
 with-ops-in pentium-instructions (get-teb, set-teb) info := #x14 end;
 with-ops-in pentium-instructions (get-seh, set-seh) info := 0 end;

@@ -177,6 +177,8 @@ define method emit-constant-ref
     case
       high? => <labelled-absolute-constant-high>;
       low? => <labelled-absolute-constant-low>;
+      instance?(constant-ref, <i-thread-constant-reference>) 
+        => <labelled-absolute-thread-constant>;
       otherwise => <labelled-absolute-constant>;
     end;
   let label 
