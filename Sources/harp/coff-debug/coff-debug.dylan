@@ -27,5 +27,5 @@ end method;
 
 
 define method write-coff-file (file :: <stream>, data :: <coff-file>) => ()
-  write-coff(file, data);
+  write-binary(file, data);
 end method;

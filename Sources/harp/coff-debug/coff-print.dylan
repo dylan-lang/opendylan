@@ -353,7 +353,7 @@ end method;
 
 define method print-exports
      (stream :: <stream>, coff-file :: <coff-file>) => ()
-  let exports-section = coff-table-member?(coff-file.sections, ".drectve");
+  let exports-section = binary-table-member?(coff-file.sections, ".drectve");
   if (exports-section)
     local method convert (x)
             let ch = as(<character>, x);
@@ -371,7 +371,7 @@ end method;
 
 define method print-fixups
      (stream :: <stream>, coff-file :: <coff-file>, print-offsets? :: <boolean>) => ()
-  let fixups-section = coff-table-member?(coff-file.sections, ".dyfix$m");
+  let fixups-section = binary-table-member?(coff-file.sections, ".dyfix$m");
   if (fixups-section)
     format(stream, "\nFixup info:");
     let data = fixups-section.section-data;
@@ -467,7 +467,7 @@ end method;
 
 define method print-debug-info
      (stream :: <stream>, coff-file :: <coff-file>) => ()
-  let debug-section = coff-table-member?(coff-file.sections, ".debug$S");
+  let debug-section = binary-table-member?(coff-file.sections, ".debug$S");
   if (debug-section)
     format(stream, "\nSymbol Debug info: ");
     let data = debug-section.section-data;

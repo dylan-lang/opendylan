@@ -84,7 +84,7 @@ define method read-coff-sections
     stream.stream-position := file-pos;
     let section = read-a-coff-section(stream, coff-file);
     let name = section.section-name.string-data;
-    coff-element-add!(coff-file.sections, name, section);
+    binary-element-add!(coff-file.sections, name, section);
   end for;
 end method;
 
@@ -194,7 +194,7 @@ define method read-a-normal-symbol
          type:          read-short(stream, coff-file),
          storage-class: read-byte(stream),
          aux-symbols:   make(<stretchy-vector>));
-  coff-element-add!(coff-file.symbols, name.string-data, symbol);
+  binary-element-add!(coff-file.symbols, name.string-data, symbol);
   let aux-num = read-byte(stream);
   values(symbol, aux-num, section);
 end method;
@@ -286,7 +286,7 @@ define method add-auxiliary-symbol
     (coff-file :: <coff-file>, symbol :: <coff-symbol>, 
      aux :: <coff-auxiliary-symbol>) 
  => ()
-  coff-element-add!(coff-file.symbols, "dummy-name", aux);
+  binary-element-add!(coff-file.symbols, "dummy-name", aux);
   add!(symbol.aux-symbols, aux);
 end method;
 
