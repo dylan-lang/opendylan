@@ -2458,6 +2458,16 @@ define method dylan-object-class
       end unless;
       immediate? := #t;
 
+    $dylan-tag-boolean =>
+      let sod = application.static-object-directory;
+      if (sod.booleans-tagged?)
+        unless (browsable-only?)
+          class-instance :=
+            lookup-static-object(application, "<boolean>", "dylan");
+        end unless;
+        immediate? := #t;
+      end if;
+      
     $dylan-tag-pointer =>
       let (wrapper-instance, ok?) = 
         read-instance-header(application, instance);
