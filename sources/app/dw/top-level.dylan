@@ -507,8 +507,8 @@ define function do-set-personal-root (personal-directory)
   os/environment-variable("FUNCTIONAL_DEVELOPER_USER_ROOT")       := personal-directory;
   os/environment-variable("FUNCTIONAL_DEVELOPER_USER_BUILD")      := subdirectory("build");
   os/environment-variable("FUNCTIONAL_DEVELOPER_USER_INSTALL")    := personal-directory;
-  os/environment-variable("FUNCTIONAL_DEVELOPER_USER_SOURCES")    := subdirectory("Sources");
-  os/environment-variable("FUNCTIONAL_DEVELOPER_USER_REGISTRIES") := subdirectory("Sources", 
+  os/environment-variable("FUNCTIONAL_DEVELOPER_USER_SOURCES")    := subdirectory("sources");
+  os/environment-variable("FUNCTIONAL_DEVELOPER_USER_REGISTRIES") := subdirectory("sources", 
 										  "registry");
 end function;
 
@@ -545,8 +545,8 @@ define function do-set-system-root (system-directory)
   os/environment-variable("FUNCTIONAL_DEVELOPER_RELEASE_ROOT")       := system-directory;
   os/environment-variable("FUNCTIONAL_DEVELOPER_RELEASE_BUILD")      := subdirectory("build");
   os/environment-variable("FUNCTIONAL_DEVELOPER_RELEASE_INSTALL")    := system-directory;
-  os/environment-variable("FUNCTIONAL_DEVELOPER_RELEASE_SOURCES")    := subdirectory("Sources");
-  os/environment-variable("FUNCTIONAL_DEVELOPER_RELEASE_REGISTRIES") := subdirectory("Sources",
+  os/environment-variable("FUNCTIONAL_DEVELOPER_RELEASE_SOURCES")    := subdirectory("sources");
+  os/environment-variable("FUNCTIONAL_DEVELOPER_RELEASE_REGISTRIES") := subdirectory("sources",
 										     "registry");
 end function;
 

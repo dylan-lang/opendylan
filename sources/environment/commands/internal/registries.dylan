@@ -90,15 +90,15 @@ define constant $personal-directories
   = #(#("FUNCTIONAL_DEVELOPER_USER_ROOT"),
       #("FUNCTIONAL_DEVELOPER_USER_BUILD",      "build"),
       #("FUNCTIONAL_DEVELOPER_USER_INSTALL"),
-      #("FUNCTIONAL_DEVELOPER_USER_SOURCES",    "Sources"),
-      #("FUNCTIONAL_DEVELOPER_USER_REGISTRIES", "Sources", "registry"));
+      #("FUNCTIONAL_DEVELOPER_USER_SOURCES",    "sources"),
+      #("FUNCTIONAL_DEVELOPER_USER_REGISTRIES", "sources", "registry"));
 
 define constant $system-directories
   = #(#("FUNCTIONAL_DEVELOPER_RELEASE_ROOT"),
       #("FUNCTIONAL_DEVELOPER_RELEASE_BUILD",      "build"),
       #("FUNCTIONAL_DEVELOPER_RELEASE_INSTALL"),
-      #("FUNCTIONAL_DEVELOPER_RELEASE_SOURCES",    "Sources"),
-      #("FUNCTIONAL_DEVELOPER_RELEASE_REGISTRIES", "Sources", "registry"));
+      #("FUNCTIONAL_DEVELOPER_RELEASE_SOURCES",    "sources"),
+      #("FUNCTIONAL_DEVELOPER_RELEASE_REGISTRIES", "sources", "registry"));
 
 define method maybe-set-roots
     (context :: <server-context>,
