@@ -189,6 +189,18 @@ void simple_error (char* message)
   report_runtime_error("\nDylan runtime error: ", message);
 }
 
+#define unused(param)   ((void)param)
+
+mps_bool_t dylan_check(mps_addr_t addr)
+{
+  assert(addr != 0);
+  assert(((mps_word_t)addr & (ALIGN-1)) == 0);
+  assert(dylan_wrapper_check((mps_word_t *)((mps_word_t *)addr)[0]));
+  /* .assert.unused: Asserts throw away their conditions */
+  /* in hot varieties, so UNUSED is needed. */
+  unused(addr);
+  return 1;
+}
 
 
 /* Default Error Handler
@@ -230,10 +242,13 @@ static mps_pool_t main_pool, weak_table_pool, wrapper_pool, misc_pool, leaf_pool
 static mps_message_type_t finalization_type;
 #endif
 
-#define genCOUNT 2
+#define genCOUNT 3
 
 static mps_gen_param_s gc_gen_param[genCOUNT] = {
-  { 128, 0.85 }, { 192, 0.45 } };
+  { 128, 0.85 },
+  { 2 * 1024, 0.45 },
+  { MAXIMUM_HEAP_SIZE/1024 - 3 * 1024, 0.25 }
+};
 
 static MMAllocHandler main_handler = defaultHandler;
 static MMAllocHandler weak_awl_handler = defaultHandler;
@@ -1240,6 +1255,7 @@ int MMCommitWrapper(void *p, size_t size, gc_teb_t gc_teb)
 
   assert(gc_teb->gc_teb_inside_tramp);
   assert(dylan_check(p));
+  assert(dylan_wrapper_check(p));
 
   res = mps_root_create_fmt(&root, arena, MPS_RANK_EXACT,
                              (mps_rm_t)0, fmt_A->scan, p, (char *)p + size);
@@ -2061,6 +2077,9 @@ void *primitive_copy_r(size_t size,
     object = MMReserveObject(size, wrapper, gc_teb);
     memcpy(object, template, rep_size_slot << 2);
     object[rep_size_slot] = (void*)((rep_size << 2) + 1);
+    /* ### kludge to prevent committing uninitialized memory */
+    fill_dylan_object_mem((void **)(object + rep_size_slot + 1),
+			  NULL, rep_size);
   }
   while(!MMCommitObject(object, size, gc_teb));
   
@@ -2561,7 +2580,7 @@ MMError dylan_init_memory_manager()
   res = mps_arena_create(&arena, mps_arena_class_vm(), (size_t)max_heap_size);
   if(res) { init_error("create arena"); return(res); }
 
-  res = mps_chain_create(&chain, arena, 2, gc_gen_param);
+  res = mps_chain_create(&chain, arena, genCOUNT, gc_gen_param);
   if(res) { init_error("create chain"); return(res); }
 
   fmt_A = dylan_fmt_A();    
