@@ -324,18 +324,18 @@ define method link-target-executable
 		    exports?      => #["exports"];
 		    type == "dll" =>
 		      case
-			unify?    => #["unify-all", "dll"];
+			unify?    => #["unify-dll"];
 			otherwise => #["dll"];
 		      end;
 		    otherwise     =>
 		      case
-			unify?    => #["unify-all", "exe"];
+			unify?    => #["unify-exe"];
 			otherwise => #["exe"];
 		      end;
 		  end);
   build-system(build-options,
 	       directory:          as(<string>, build-directory),
-	       linker:             linker,
+	       build-script:       build-script,
                // progress-callback:  progress-callback,
 	       project-build-info: curry(project-build-info, workspace))
 end method link-target-executable;

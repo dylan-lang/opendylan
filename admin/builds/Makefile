@@ -225,7 +225,6 @@ IO_TESTS_SOURCE = $(IO_DIRECTORY)\tests
 LICENSING_SOURCE = $(LIB_DIRECTORY)\licensing
 LIFE_SOURCE = $(DUIM_EXAMPLES_SOURCE)\life
 LIFE_INSTALL_DIRECTORY = $(DUIM_EXAMPLES_INSTALL_DIRECTORY)\life
-LINKER_SUPPORT_SOURCE = $(LIB_DIRECTORY)\linker-support
 MAP_STATISTICS_SOURCE = $(TOOLS_DIRECTORY)\map-statistics
 MEMORY_MANAGER_SOURCE = $(LIB_DIRECTORY)\memory-manager
 METERING_SOURCE = $(LIB_DIRECTORY)\metering
@@ -396,7 +395,6 @@ MINIMAL_WIN32_ENVIRONMENT = $(INSTALL_BIN_DIRECTORY)\minimal-win32-environment.e
 MINIMAL_GTK_ENVIRONMENT = $(INSTALL_BIN_DIRECTORY)\minimal-gtk-environment.exe
 MINIMAL_PENTIUM_DW = $(INSTALL_BIN_DIRECTORY)\minimal-pentium-dw.exe
 BATCH_DEBUG = $(INSTALL_BIN_DIRECTORY)\batch-debug.exe
-BUILD = $(INSTALL_BIN_DIRECTORY)\build.exe
 CONSOLE_COMPILER = $(INSTALL_BIN_DIRECTORY)\console-compiler.exe
 CONSOLE_ENVIRONMENT = $(INSTALL_BIN_DIRECTORY)\console-environment.exe
 CREATE_ID = $(INSTALL_BIN_DIRECTORY)\create-id.exe
@@ -569,7 +567,6 @@ DFMC_PENTIUM_FILE_COMPILER = $(INSTALL_BIN_DIRECTORY)\dfmc-pentium-file-compiler
 DFMC_PENTIUM_HARP_CG = $(INSTALL_BIN_DIRECTORY)\dfmc-pentium-harp-cg.dll
 DFMC_SHELL = $(INSTALL_BIN_DIRECTORY)\dfmc-shell.dll
 FILE_SOURCE_RECORDS = $(INSTALL_BIN_DIRECTORY)\file-source-records.dll
-GNU_LINKER = $(INSTALL_BIN_DIRECTORY)\gnu-linker.dll
 ELF_LINKER = $(INSTALL_BIN_DIRECTORY)\elf-linker.dll
 HD2C_DFMC_SHELL = $(INSTALL_BIN_DIRECTORY)\hd2c-dfmc-shell.dll
 INTERPRETER_DFMC_SHELL = $(INSTALL_BIN_DIRECTORY)\interpreter-dfmc-shell.dll
@@ -807,7 +804,6 @@ dfmc-pentium-harp-cg: $(DFMC_PENTIUM_HARP_CG)
 dfmc-shell: $(DFMC_SHELL)
 dood: $(DOOD)
 file-source-records: $(FILE_SOURCE_RECORDS)
-gnu-linker: $(GNU_LINKER)
 elf-linker: $(ELF_LINKER)
 hd2c-dfmc-shell: $(HD2C_DFMC_SHELL)
 interpreter-dfmc-shell: $(INTERPRETER_DFMC_SHELL)
@@ -840,7 +836,6 @@ simple-downloader: $(SIMPLE_DOWNLOADER)
 target-application: $(TARGET_APPLICATION)
 
 batch-debug: $(BATCH_DEBUG)
-build: $(BUILD)
 console-debugger: devel-dbg-ui
 create-id: $(CREATE_ID)
 devel-dbg-ui: $(DEVEL_DBG_UI)
@@ -854,7 +849,7 @@ pentium-dw: $(PENTIUM_DW)
 test-report: $(TEST_REPORT)
 
 project-manager-libraries: tools-interface user-projects
-core-compiler-libraries: file-source-records release-info dood metering binary-manager coff-manager binary-builder coff-builder build-system gnu-linker elf-linker ccl-linker parser-run-time dfmc-management dfmc-browser-support project-manager-libraries dfmc-execution dfmc-debug-back-end licensing
+core-compiler-libraries: file-source-records release-info dood metering binary-manager coff-manager binary-builder coff-builder build-system parser-run-time dfmc-management dfmc-browser-support project-manager-libraries dfmc-execution dfmc-debug-back-end licensing
 pentium-compiler-libraries: core-compiler-libraries disasm dfmc-pentium-harp-cg dfmc-pentium-file-compiler
 c-compiler-libraries: core-compiler-libraries dfmc-c-file-compiler
 pentium-dw-libraries: pentium-compiler-libraries command-shell dfmc-shell dispatch-profiler
@@ -1220,7 +1215,7 @@ internal-environment: console-environment win32-environment with-splash-screen
 internal-libraries: enhanced-libraries midi
 internal-example-projects: enhanced-example-projects
 install-internal-examples: install-enhanced-examples install-midi-examples
-internal-only-tools: build testworks-libraries test-report debugger map-statistics parser-compiler hd2c interpreter
+internal-only-tools: testworks-libraries test-report debugger map-statistics parser-compiler # hd2c interpreter
 internal-tools: enhanced-tools internal-only-tools
 internal-release: internal-release-info console-compiler compiler internal-environment internal-libraries internal-tools install-runtime-dlls install-internal-examples
 
@@ -1587,11 +1582,6 @@ checkout-licensing:
   $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
   $(CHECKOUT) licensing fundev/Sources/lib/licensing $(LICENSING_SOURCE)
 
-checkout-linker-support:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) linker-support fundev/Sources/lib/linker-support $(LINKER_SUPPORT_SOURCE)
-
 checkout-map-statistics:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(TOOLS_DIRECTORY)
@@ -1810,7 +1800,7 @@ checkout-with-splash-screen:
   $(ENSURE_DIRECTORY) $(APP_DIRECTORY)
   $(CHECKOUT) with-splash-screen fundev/Sources/app/with-splash-screen $(WITH_SPLASH_SCREEN_SOURCE)
 
-checkout-compiler: checkout-user-libraries checkout-internal-libraries checkout-release-info checkout-dfmc checkout-licensing checkout-variable-search checkout-walker checkout-metering checkout-motley checkout-project-manager checkout-source-records checkout-ppml checkout-parser-run-time checkout-memory-manager checkout-harp checkout-build-system checkout-linker-support checkout-dood checkout-dw checkout-command-shell
+checkout-compiler: checkout-user-libraries checkout-internal-libraries checkout-release-info checkout-dfmc checkout-licensing checkout-variable-search checkout-walker checkout-metering checkout-motley checkout-project-manager checkout-source-records checkout-ppml checkout-parser-run-time checkout-memory-manager checkout-harp checkout-build-system checkout-dood checkout-dw checkout-command-shell
 
 checkout-testworks-libraries: checkout-testworks checkout-testworks-specs checkout-gui-testworks
 
@@ -2348,13 +2338,6 @@ $(BINARY_BUILDER):
   $(ENSURE_REGISTRY_ENTRY) binary-builder generic
   $(BUILD_LIBRARY) binary-builder
 
-$(CCL_LINKER):
-  $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
-  $(ENSURE_LIBRARY) build-system
-  $(ENSURE_SOURCES) linker-support $(LINKER_SUPPORT_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) ccl-linker generic
-  $(BUILD_LIBRARY) ccl-linker
-
 $(COFF_BUILDER):
   $(ENSURE_RUNTIME_LIBRARY) $(IO_DLL) io
   $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
@@ -2531,22 +2514,6 @@ $(FILE_SOURCE_RECORDS):
   $(ENSURE_REGISTRY_ENTRY) file-source-records generic
   $(BUILD_LIBRARY) file-source-records
 
-$(GNU_LINKER):
-  $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
-  $(ENSURE_LIBRARY) build-system
-  $(ENSURE_SOURCES) linker-support $(LINKER_SUPPORT_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) linker-support generic
-  $(ENSURE_REGISTRY_ENTRY) gnu-linker generic
-  $(BUILD_LIBRARY) gnu-linker
-
-$(ELF_LINKER):
-  $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
-  $(ENSURE_LIBRARY) build-system
-  $(ENSURE_SOURCES) linker-support $(LINKER_SUPPORT_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) linker-support generic
-  $(ENSURE_REGISTRY_ENTRY) elf-linker generic
-  $(BUILD_LIBRARY) elf-linker
-
 $(INTERNAL_RELEASE_INFO):
   $(ENSURE_LIBRARY) release-info
   $(ENSURE_SOURCES) release-info $(RELEASE_INFO_SOURCE)
@@ -2687,8 +2654,6 @@ $(ENVIRONMENT_COMMANDS):
   $(ENSURE_LIBRARY) user-projects
   $(ENSURE_LIBRARY) dfmc-pentium-harp-cg
   $(ENSURE_LIBRARY) dfmc-debug-back-end
-  $(ENSURE_LIBRARY) gnu-linker
-  $(ENSURE_LIBRARY) elf-linker
   $(ENSURE_SOURCES) environment $(ENVIRONMENT_SOURCE)
   $(ENSURE_REGISTRY_ENTRY) environment-protocols generic
   $(ENSURE_REGISTRY_ENTRY) environment-reports generic
@@ -2978,16 +2943,6 @@ $(DEBUGGER_SERVER):
 # Applications
 #
 
-$(BUILD):
-  $(ENSURE_LIBRARY) build-system
-  $(ENSURE_LIBRARY) gnu-linker
-  $(ENSURE_LIBRARY) elf-linker
-  $(ENSURE_LIBRARY) ccl-linker
-  $(ENSURE_LIBRARY) internal-release-info
-  $(ENSURE_SOURCES) build-system $(BUILD_SYSTEM_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) build generic
-  $(BUILD_APPLICATION) build
-
 $(BATCH_DEBUG):
   $(ENSURE_APPLICATION) devel-dbg-ui
   $(ENSURE_LIBRARY) internal-release-info
@@ -3046,8 +3001,6 @@ $(PENTIUM_DW):
   $(ENSURE_LIBRARY) dfmc-pentium-file-compiler
   $(ENSURE_LIBRARY) motley
   $(ENSURE_LIBRARY) tool-scepter
-  $(ENSURE_LIBRARY) gnu-linker
-  $(ENSURE_LIBRARY) elf-linker
   $(ENSURE_LIBRARY) internal-release-info
   $(ENSURE_LIBRARY) licensing
   $(ENSURE_LIBRARY) dfmc-shell
@@ -3098,8 +3051,6 @@ $(PARSER_COMPILER):
 
 $(MINIMAL_PENTIUM_DW):
   $(ENSURE_LIBRARY) dfmc-pentium-file-compiler
-  $(ENSURE_LIBRARY) gnu-linker
-  $(ENSURE_LIBRARY) elf-linker
   $(ENSURE_LIBRARY) internal-release-info
   $(ENSURE_LIBRARY) licensing
   $(ENSURE_LIBRARY) dfmc-shell
@@ -3241,8 +3192,6 @@ $(BASIC_RELEASE_INFO):
 
 $(BASIC_PENTIUM_DW):
   $(ENSURE_LIBRARY) dfmc-pentium-file-compiler
-  $(ENSURE_LIBRARY) gnu-linker
-  $(ENSURE_LIBRARY) elf-linker
   $(ENSURE_LIBRARY) basic-release-info
   $(ENSURE_LIBRARY) licensing
   $(ENSURE_LIBRARY) dfmc-shell
@@ -3302,8 +3251,6 @@ $(ENHANCED_PENTIUM_DW):
   $(ENSURE_LIBRARY) dfmc-pentium-file-compiler
   $(ENSURE_LIBRARY) motley
   $(ENSURE_LIBRARY) tool-scepter
-  $(ENSURE_LIBRARY) gnu-linker
-  $(ENSURE_LIBRARY) elf-linker
   $(ENSURE_LIBRARY) enhanced-release-info
   $(ENSURE_LIBRARY) licensing
   $(ENSURE_LIBRARY) dfmc-shell

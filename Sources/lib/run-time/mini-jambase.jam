@@ -1,0 +1,287 @@
+# The following rules and actions are modified versions of rules
+# included in the Jam 2.5 Jambase file.
+#
+# /+\
+# +\	Copyright 1993-2002 Christopher Seiwald and Perforce Software, Inc.
+# \+/
+#
+#
+# License is hereby granted to use this software and distribute it
+# freely, as long as this copyright notice is retained and modifications 
+# are clearly marked.
+#
+# ALL WARRANTIES ARE HEREBY DISCLAIMED.
+#
+
+#
+# Initialize variables
+#
+
+#
+# General defaults; a lot like UNIX
+#
+	AR		?= ar ru ;
+	CC		?= cc ;
+	CP		?= cp -f ;
+	DOT		?= . ;
+	DOTDOT		?= .. ;
+	FILEMODE	?= 644 ;
+	MKDIR		?= mkdir ;
+	RM		?= rm -f ;
+
+	NOARSCAN	?= true ;
+	NOARUPDATE	?= true ;
+
+#
+# Rules
+#
+
+rule Cc
+{
+	Depends $(<) : $(>) ;
+
+	# If the compiler's -o flag doesn't work, relocate the .o
+
+	if $(RELOCATE)
+	{
+	    CcMv $(<) : $(>) ;
+	}
+
+	# Just to clarify here: this sets the per-target CCFLAGS to
+	# be the current value of (global) CCFLAGS and SUBDIRCCFLAGS.
+	# CCHDRS and CCDEFS must be reformatted each time for some
+	# compiles (VMS, NT) that malign multiple -D or -I flags.
+
+	CCFLAGS on $(<) += $(CCFLAGS) $(SUBDIRCCFLAGS) $(OPTIM) ;
+
+	CCHDRS on $(<) = [ on $(<) FIncludes $(HDRS) ] ;
+	CCDEFS on $(<) = [ on $(<) FDefines $(DEFINES) ] ;
+}
+
+rule Chmod
+{
+	if $(CHMOD) { Chmod1 $(<) ; }
+}
+
+rule File
+{
+	Depends files : $(<) ;
+	Depends $(<) : $(>) ;
+	SEARCH on $(>) = $(SEARCH_SOURCE) ;
+	MODE on $(<) = $(FILEMODE) ;
+	Chmod $(<) ;
+}
+
+rule LibraryFromObjects
+{
+	local _i _l _s ;
+
+	# Add grist to file names
+
+	_s = [ FGristFiles $(>) ] ;
+	_l = $(<:S=$(SUFLIB)) ;
+
+	# library depends on its member objects
+
+	if $(KEEPOBJS)
+	{
+	    Depends obj : $(_s) ;
+	}
+	else
+	{
+	    Depends lib : $(_l) ;
+	}
+
+	# Set LOCATE for the library and its contents.  The bound
+	# value shows up as $(NEEDLIBS) on the Link actions.
+	# For compatibility, we only do this if the library doesn't
+	# already have a path.
+
+	if ! $(_l:D)
+	{
+	    MakeLocate $(_l) $(_l)($(_s:BS)) : $(LOCATE_TARGET) ;
+	}
+
+	if $(NOARSCAN) 
+	{ 
+	    # If we can't scan the library to timestamp its contents,
+	    # we have to just make the library depend directly on the
+	    # on-disk object files.  
+
+	    Depends $(_l) : $(_s) ;
+	}
+	else
+	{
+	    # If we can scan the library, we make the library depend
+	    # on its members and each member depend on the on-disk
+	    # object file.
+
+	    Depends $(_l) : $(_l)($(_s:BS)) ;
+
+	    for _i in $(_s)
+	    {
+		Depends $(_l)($(_i:BS)) : $(_i) ;
+	    }
+	}
+
+	Clean clean : $(_l) ;
+
+	if $(CRELIB) { CreLib $(_l) : $(_s[1]) ; }
+
+	Archive $(_l) : $(_s) ;
+
+	if $(RANLIB) { Ranlib $(_l) ; }
+
+	# If we can't scan the library, we have to leave the .o's around.
+
+	if ! ( $(NOARSCAN) || $(NOARUPDATE) ) { RmTemps $(_l) : $(_s) ; }
+}
+
+rule MakeLocate
+{
+	# MakeLocate targets : directory ;
+
+	# Sets special variable LOCATE on targets, and arranges
+	# with MkDir to create target directory.
+
+	# Note we grist the directory name with 'dir',
+	# so that directory path components and other
+	# targets don't conflict.
+
+	if $(>)
+	{
+	    LOCATE on $(<) = $(>) ;
+	    Depends $(<) : $(>[1]:G=dir) ;
+	    MkDir $(>[1]:G=dir) ;
+	}
+}
+
+rule MkDir
+{
+	# MkDir directory ;
+
+	# Make a directory and all its parent directories.
+
+	# Ignore timestamps on directories: we only care if they 
+	# exist.
+
+	NoUpdate $(<) ;
+
+	# Don't create . or any directory already created.
+
+	if $(<:G=) != $(DOT) && ! $($(<)-mkdir) 
+	{
+	    # Cheesy gate to prevent multiple invocations on same dir
+	    # Arrange for jam dirs
+	    # MkDir1 has the actions 
+
+	    $(<)-mkdir = true ;
+	    Depends dirs : $(<) ;
+	    MkDir1 $(<) ;
+
+	    # Recursively make parent directories.
+	    # $(<:P) = $(<)'s parent, & we recurse until root
+
+	    local s = $(<:P) ;
+
+	    # Don't try to create A: or A:\ on windows
+
+	    if $(NT)
+	    {
+	        switch $(s)
+		{
+		case *:     : s = ;
+		case *:\\\\ : s = ;
+		}
+	    }
+
+	    if $(s) = $(<)
+	    {
+		# The parent is the same as the dir.
+		# We're at the root, which some OS's can't stat, so we mark
+		# it as NotFile.
+
+	        NotFile $(s) ;
+	    }
+	    else if $(s:G=)
+	    {
+		# There's a parent; recurse.
+
+		Depends $(<) : $(s) ;
+		MkDir $(s) ;
+	    }
+	}
+}
+
+rule RmTemps
+{
+	Temporary $(>) ;
+}
+
+#
+# Utility rules; no side effects on these
+#
+rule FGristFiles 
+{
+	return $(<:G=$(SOURCE_GRIST:E)) ;
+}
+
+#
+# Operating system specific utility rules
+# First, the (generic) UNIX versions
+#
+
+rule FDefines { return -D$(<) ; }
+rule FIncludes { return -I$(<) ; }
+
+#
+# Actions
+#
+
+actions Cc
+{
+	$(CC) -c -o "$(<)" $(CCFLAGS) $(CCDEFS) $(CCHDRS) "$(>)"
+}
+
+actions Chmod1
+{
+	$(CHMOD) $(MODE) "$(<)"
+}
+
+actions piecemeal together existing Clean
+{
+	$(RM) "$(>)"
+}
+
+actions File
+{
+	$(CP) "$(>)" "$(<)"
+}
+
+actions MkDir1
+{
+	$(MKDIR) "$(<)"
+}
+
+actions together Ranlib
+{
+	$(RANLIB) "$(<)"
+}
+
+actions quietly updated piecemeal together RmTemps
+{
+	$(RM) "$(>)"
+}
+
+#
+# NOARUPDATE - can't update an archive
+#
+
+if $(NOARUPDATE)
+{
+	actions Archive
+	{
+	$(AR) "$(<)" "$(>)"
+	}
+}
+

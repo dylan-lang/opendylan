@@ -233,22 +233,6 @@
       </sources>
       <release product="Functional Developer" version="2.1" platform="x86-win32"/>
     </library>
-    <library name="gnu-linker">
-      <sources location="lib/linker-support">
-	<project>gnu-linker.lid</project>
-      </sources>
-      <release product="Functional Developer" version="2.1" platform="x86-win32">
-	<binary file="gnu-linker.dll">
-	  <merge>linker-support</merge>
-	</binary>
-      </release>
-    </library>
-    <library name="linker-support">
-      <sources location="lib/linker-support">
-	<project>linker-support.lid</project>
-      </sources>
-      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
-    </library>
     <library name="user-projects">
       <sources location="project-manager/user-projects">
 	<project>user-projects.lid</project>

@@ -13,7 +13,6 @@ define library dfmc-environment-database
   use dfmc-browser-support;
   use user-projects;
   use dfmc-conditions;	//---*** for the warning classes
-  use build-system;	//---*** for the merged DLL name
 
   export dfmc-environment-database;
 end library dfmc-environment-database;

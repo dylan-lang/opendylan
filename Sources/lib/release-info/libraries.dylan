@@ -358,30 +358,56 @@ define method interpret-library-binary-xml
 			     select-nodes(node, "merge")))
 end method interpret-library-binary-xml;
 
-define method library-pack-xml-locator
-    (name :: <string>) => (locator :: <file-locator>)
-  let xml-directory = subdirectory-locator(release-library-packs-directory(), name);
-  make(<file-locator>,
-       //---*** UNIX/Linux filesystem is case sensitive; we need to clean this up!
-       base: as-lowercase(name),
-       extension: $library-pack-extension,
-       directory: xml-directory)
-end method library-pack-xml-locator;
-
-//---*** Should really find these automatically
 // Install the default library packs
-define variable *default-library-packs*
-  = select ($os-name)
-      #"win32" =>
-	#["Compiler", "Environment", "Core", "GUI", "Win32", "DOOD", "Deuce", "OLE",
-	  "Network", "ODBC", "CORBA", "Scepter", "MSLinker", "MIDI", "TestWorks"];
-      otherwise =>
-	#[]
-    end;
-for (library-pack :: <string> in *default-library-packs*)
-  read-library-pack(library-pack-xml-locator(library-pack))
-end;
+if (file-exists?(release-library-packs-directory()))
+  do-directory(method(directory :: <directory-locator>, name :: <string>, type)
+                   if (type == #"directory")
+                     let xml-directory
+                       = subdirectory-locator(directory, name);
+                     let xml-locator
+                       = make(<file-locator>,
+                              //---*** UNIX/Linux filesystem is case sensitive;
+                              //       we need to clean this up!
+                              base: as-lowercase(name),
+                              extension: $library-pack-extension,
+                              directory: xml-directory);
+                     if (file-exists?(xml-locator))
+                       read-library-pack(xml-locator);
+                     end if;
+                   end if;
+               end,
+               release-library-packs-directory());
+end if;
 
+
+/// Merged library DLL information
+
+define method merged-project-name
+    (library :: <symbol>) => (merged-library :: <symbol>)
+  let info = find-library-info(library);
+  let merge-parent = info & info.info-merge-parent;
+  if (merge-parent)
+    merge-parent.info-name
+  else
+    library
+  end
+end method merged-project-name;
+
+define method merged-project-libraries
+    (library :: <symbol>)
+ => (parent :: <symbol>, libraries :: <sequence>)
+  let library-info = find-library-info(library);
+  let parent-info =
+    if (library-info) library-info.info-merge-parent | library-info end;
+  let parent-binary-info = parent-info & parent-info.info-binary;
+  let parent = if (parent-info) parent-info.info-name else library end;
+  values(parent,
+	 if (parent-binary-info)
+           map(info-name, parent-binary-info.info-merged-libraries);
+	 else
+	   #[]
+	 end)
+end method merged-project-libraries;
 
 
 /// Library category handling

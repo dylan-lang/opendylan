@@ -39,8 +39,11 @@ $(LIBDEST)/libmpsplan.a: mpsplan.a
 $(LIBDEST)/libmmdw.a: mmdw.a
 	cp -fp mmdw.a $(LIBDEST)/libmmdw.a
 
-$(BINDEST)/elf-linker.script: elf-linker.script
-	cp -fp elf-linker.script $(BINDEST)
+$(LIBDEST)/x86-linux-build.jam: x86-linux-build.jam
+	cp -fp x86-linux-build.jam $(LIBDEST)
+
+$(LIBDEST)/mini-jambase.jam: ../mini-jambase.jam
+	cp -fp ../mini-jambase.jam $(LIBDEST)
 
 $(LIBDEST)/dylan-elf-dll.script: dylan-elf-dll.script
 	cp -fp dylan-elf-dll.script $(LIBDEST)
@@ -48,7 +51,8 @@ $(LIBDEST)/dylan-elf-dll.script: dylan-elf-dll.script
 $(LIBDEST)/dylan-elf-exe.script: dylan-elf-exe.script
 	cp -fp dylan-elf-exe.script $(LIBDEST)
 
-install-build: $(LIBDEST)/libmmdw.a $(LIBDEST)/libmpsplan.a $(BINDEST)/elf-linker.script \
+install-build: $(LIBDEST)/libmmdw.a $(LIBDEST)/libmpsplan.a \
+	       $(LIBDEST)/x86-linux-build.jam $(LIBDEST)/mini-jambase.jam \
                $(LIBDEST)/dylan-elf-dll.script $(LIBDEST)/dylan-elf-exe.script \
                collector.c
 

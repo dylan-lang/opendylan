@@ -29,7 +29,6 @@ define module dfmc-projects
   use memory-manager;
   use build-system;
   use release-info;
-  use path-utilities;
 
   use dood,
     import: { \with-walk-progress };

@@ -38,8 +38,8 @@ define abstract class <basic-main-command> (<basic-command>)
     init-keyword: clean?:;
   constant slot %release?       :: <boolean> = #f,
     init-keyword: release?:;
-  constant slot %linker :: false-or(<symbol>) = #f,
-    init-keyword: linker:;
+  constant slot %build-script :: false-or(<file-locator>) = #f,
+    init-keyword: build-script:;
   constant slot %target :: false-or(<symbol>) = #f,
     init-keyword: target:;
   constant slot %force? :: <boolean> = #f,
@@ -48,10 +48,6 @@ define abstract class <basic-main-command> (<basic-command>)
     init-keyword: unify?:;
   constant slot %not-recursive? :: <boolean> = #f,
     init-keyword: not-recursive?:;
-  constant slot %microsoft? :: <boolean> = #f,
-    init-keyword: microsoft?:;
-  constant slot %gnu? :: <boolean> = #f,
-    init-keyword: gnu?:;
   constant slot %save? :: <boolean> = #t,
     init-keyword: save?:;
   constant slot %link-dll? :: <boolean> = #f,
@@ -97,8 +93,7 @@ define method execute-main-command
     run(<open-project-command>, file: filename)
   end;
   let dw-options?
-    = command.%link-dll?  | command.%link-exe? 
-    | command.%microsoft? | command.%gnu?;
+    = command.%link-dll?  | command.%link-exe?;
   let build? = command.%build? | dw-options?;
   if (build? | command.%compile?)
     run(<build-project-command>, 
@@ -109,12 +104,6 @@ define method execute-main-command
 	subprojects: command.%subprojects? & ~command.%not-recursive?)
   end;
   if (build? | command.%link?)
-    let linker 
-      = command.%linker
-          | case
-	      command.%microsoft? => #"microsoft";
-	      command.%gnu?       => #"gnu";
-	    end;
     let target
       = command.%target
           | case
@@ -122,7 +111,7 @@ define method execute-main-command
 	      command.%link-exe? => #"executable";
 	    end;
     run(<link-project-command>, 
-	linker:      linker,
+	build-script: command.%build-script,
 	target:      target,
 	force?:      command.%force? | command.%clean?,
 	subprojects: command.%subprojects? & ~command.%not-recursive?,

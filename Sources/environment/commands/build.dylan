@@ -25,7 +25,6 @@ define method show-property
     (context :: <environment-context>, property :: <compilation-mode-property>)
  => ()
   let project = context.context-project;
-  let linker = context.context-project-context.context-linker;
   message(context, "Compilation mode: %s",
 	  select (project.project-compilation-mode)
 	    #"loose"  => "development [Interactive development mode]";
@@ -52,53 +51,42 @@ define method set-property
 end method set-property;
 
 
-// Linker
+// Build script
 
-define class <linker-property> (<environment-property>)
-end class <linker-property>;
+define class <build-script-property> (<environment-property>)
+end class <build-script-property>;
 
-define command-property linker => <linker-property>
-  (summary:       "Current linker",
-   documentation: "The currently active linker.",
-   type:          <symbol>,
+define command-property build-script => <build-script-property>
+  (summary:       "Current build script",
+   documentation: "The currently active build script.",
+   type:          <file-locator>,
    persistent?:   #t)
-end command-property linker;
+end command-property build-script;
 
 define method show-property
-    (context :: <environment-context>, property :: <linker-property>)
+    (context :: <environment-context>, property :: <build-script-property>)
  => ()
   let project-context = context.context-project-context;
-  let linker
+  let build-script
     = if (project-context)
-	project-context.context-linker
+	project-context.context-build-script
       else
-	default-linker()
+	default-build-script()
       end;
-  message(context, "Linker: %s",
-	  select (linker)
-	    #"microsoft" => "microsoft [Microsoft(TM) linker]";
-	    #"gnu"       => "gnu       [GNU linker]";
-	    otherwise    => format-to-string("Unknown linker %s", linker);
-	  end)
+  message(context, "Build script: %s", build-script);
 end method show-property;
 
 define method set-property
-    (context :: <environment-context>, property :: <linker-property>, 
-     linker :: <symbol>,
+    (context :: <environment-context>, property :: <build-script-property>, 
+     build-script :: <file-locator>,
      #key save?)
  => ()
-  select (linker)
-    #"microsoft", #"gnu" =>
-      #f;
-    otherwise =>
-      set-error("Unrecognised linker: %s", linker)
-  end;
   let project-context = context.context-project-context;
   if (project-context)
-    project-context.context-linker := linker
+    project-context.context-build-script := build-script;
   end;
   if (save?)
-    default-linker() := linker
+    default-build-script() := build-script;
   end
 end method set-property;
 
@@ -108,8 +96,8 @@ end method set-property;
 define class <abstract-link-command> (<project-command>)
   constant slot %project :: false-or(<project-object>) = #f,
     init-keyword: project:;
-  constant slot %linker :: false-or(<symbol>) = #f,
-    init-keyword: linker:;
+  constant slot %build-script :: false-or(<file-locator>) = #f,
+    init-keyword: build-script:;
   constant slot %target :: false-or(<symbol>) = #f,
     init-keyword: target:;
   constant slot %force? :: <boolean> = #f,
@@ -143,7 +131,7 @@ define command-line build => <build-project-command>
   flag link          = "link the executable [link by default]";
   flag release       = "build a standalone release [off by default]";
   flag subprojects   = "build subprojects as well if necessary [on by default]";
-  keyword linker :: <symbol> = "the linker to use";
+  keyword build-script :: <file-locator> = "the (Jam) build script to use";
   keyword target :: <symbol> = "the target [dll or exe]";
   flag force         = "force relink the executable [off by default]";
   flag unify         = "combine the libraries into a single executable [off by default]";
@@ -168,10 +156,11 @@ define method do-execute-command
 	   error-handler:        curry(compiler-condition-handler, context)))
       if (command.%link?)
 	let project-context = context.context-project-context;
-	let linker = command.%linker | project-context.context-linker;
+	let build-script
+          = command.%build-script | project-context.context-build-script;
 	link-project
 	  (project,
-	   linker:               linker,
+	   build-script:         build-script,
 	   target:               command.%target,
 	   release?:             command.%release?,
 	   force?:               command.%force?,
@@ -286,7 +275,7 @@ define command-line link => <link-project-command>
     (summary:       "links a project's executable",
      documentation: "Links the executable for a project.")
   optional project :: <project-object> = "the project to link";
-  keyword linker :: <symbol> = "the linker to use";
+  keyword build-script :: <file-locator> = "the (Jam) build script to use";
   keyword target :: <symbol> = "the target [dll or exe]";
   flag force       = "force relink the executable [off by default]";
   flag subprojects = "link subprojects as well if necessary [on by default]";
@@ -298,10 +287,11 @@ define method do-execute-command
  => ()
   let project-context = context.context-project-context;
   let project = command.%project | context.context-project;
-  let linker = command.%linker | project-context.context-linker;
+  let build-script
+    = command.%build-script | project-context.context-build-script;
   let messages = if (release-internal?()) #"internal" else #"external" end;
   link-project(project,
-	       linker:               linker,
+	       build-script:         build-script,
 	       target:               command.%target,
 	       force?:               command.%force?,
 	       process-subprojects?: command.%subprojects?,
@@ -362,7 +352,7 @@ define command-group build
     (summary: "project building commands",
      documentation: "Commands to drive project building.")
   property compilation-mode;
-  property linker;
+  property build-script;
   command  build;
   command  link;
   command  remove-build-products;

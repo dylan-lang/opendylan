@@ -131,7 +131,7 @@ define module projects
 	    },
     export: all;
   use build-system,
-    import: { default-linker, default-linker-setter },
+    import: { default-build-script, default-build-script-setter },
     export: all;
 end module;
 

@@ -33,11 +33,6 @@ define library basic-pentium-dw
   use dfmc-debug-back-end;
   use dfmc-pentium-file-compiler;
 
-  // Load the GNU linker
-  use gnu-linker;
-  // Load the ELF linker
-  use elf-linker;
-
   use dfmc-shell;
 
   export dw;

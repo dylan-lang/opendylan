@@ -35,8 +35,7 @@ define module registry-projects-internal
   use format-out;
   use operating-system, rename: {load-library => os/load-library};
   use file-system;
-  use build-system, exclude: {default-linker, default-linker-setter};
-  use path-utilities;
+  use build-system, exclude: {default-build-script, default-build-script-setter};
 
   use file-source-records;
   use dfmc-project-compilation;

@@ -30,9 +30,6 @@ define library interpreter-dfmc-shell
   use dfmc-debug-back-end;
   use dfmc-interpreter-file-compiler;
 
-  // Load the C Compiler & Linker linker
-  // use ccl-linker;
-
   use command-shell;
 
   export dfmc-shell;

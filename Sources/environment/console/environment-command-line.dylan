@@ -95,7 +95,7 @@ define command-line main => <main-command>
   optional project :: <file-locator>  = "the project to be built";
   keyword  arguments :: <string> = "arguments for the project's application";
 
-  keyword linker :: <symbol> = "the linker to use";
+  keyword build-script :: <file-locator> = "the (Jam) build script to use";
   keyword target :: <symbol> = "the target";
 
   flag help          = "show this help summary";
@@ -133,7 +133,7 @@ define command-line internal-main => <internal-main-command>
   optional project :: <file-locator> = "the project to be built";
   keyword  arguments :: <string> = "arguments for the project's application";
 
-  keyword linker :: <symbol> = "the linker to use";
+  keyword build-script :: <file-locator> = "the (Jam) build script to use";
   keyword target :: <symbol> = "the type of executable to generate";
   keyword debug-info :: <symbol>  = "control the debug info generated";
 
@@ -165,8 +165,6 @@ define command-line internal-main => <internal-main-command>
 
   // Backwards-compatibility options for pentium-dw users
   flag not-recursive    = "don't build subprojects as well";
-  flag microsoft        = "use the Microsoft linker";
-  flag gnu              = "use the GNU linker";
   flag save             = "save compiler databases";
   flag link-dll         = "link as a DLL";
   flag link-exe         = "link as an EXE";

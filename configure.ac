@@ -1,6 +1,12 @@
 AC_INIT([Functional Developer], [2.1 alpha 4])
 AC_PREREQ(2.50)
 
+#---------------------
+# Make srcdir absolute
+#---------------------
+
+srcdir=`(cd $srcdir; pwd)`
+
 AC_DEFUN(FD_PLATFORM,[
 case $1 in
 i*86-pc-linux-gnu*) $2=x86-linux ;;
@@ -41,6 +47,7 @@ done
 AC_PATH_PROG(FDCOMPILE, fdcompile, no)
 test "$FDCOMPILE" = no && AC_MSG_ERROR([
 fdcompile is required to bootstrap Functional Devleloper])
+FDCOMPILE="$FDCOMPILE -save"
 AC_SUBST(FDCOMPILE)
 
 # TODO: figure out the bootstrap type given the fdcompile version

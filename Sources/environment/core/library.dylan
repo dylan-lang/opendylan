@@ -18,6 +18,4 @@ define library environment-core
   use dfmc-pentium-harp-cg;		// Pentium backend
   use dfmc-harp-browser-support;	// Harp browsing support
   use dfmc-debug-back-end;		// Compiler print methods
-  use gnu-linker;			// GNU linking
-  use elf-linker;                       // ELF linking
 end library environment-core;

@@ -41,7 +41,6 @@ define module user-projects
   use date;
   use build-system;
   use release-info;
-  use path-utilities;
   use print;
   use projects;
   use projects-implementation;

@@ -1,0 +1,160 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" []>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Jam-based Build System</title>
+  </head>
+  <body>
+    <h1>Jam-based Build System</h1>
+    <p>This document describes the Jam-based build system for Functional Develoer.</p>
+    <h2>Introduction</h2>
+    <p>The purpose of the Functional Developer <code>build-system</code> is to coördinate the final stages in the building of a Dylan library project. The Functional Developer compiler takes a Dylan library in the form of Dylan source files, and directly generates x86 or PPC machine language object files (in either COFF or ELF format, depending on the target platform). These object files need to be linked together to construct either an executable object file, or a loadable dynamically-linked library (also called a shared library). This link needs to performed by an external tool such as the Microsoft or GNU linker. The <code>build-system</code> component, controlled by a user-specified script file, directs the execution of these external tools.</p>
+    <h2>Why Jam-based?</h2>
+    <p>Use of the Jam scripting language increases the flexibility of Functional Developer for users, and makes it more maintainable by removing hard-coded assumptions spread throughout various layers of the compiler. Previous versions of the Functional Developer <code>build-system</code> component permitted users to choose either the Microsoft or GNU Binutils linker on the Win32 platform, and always used the GNU Binutils ELF linker on Linux platforms. New versions of these tools require modifications that go beyond the current flexibility of the <code>build-system</code> component, as will new Functional Developer target platforms.</p>
+    <p>Though the logic of <code>build-system</code> (and a former companion library, <code>linker-support</code>) was hard-coded, it did allow a limited amount of parameterization using <q>script</q> files. A typical parameterization, from the Microsoft linker script, looked like this::</p>
+    <pre>#
+linkdll
+link /NODEFAULTLIB /INCREMENTAL:NO /PDB:NONE /NOLOGO /ENTRY:$(mangled-dllname)Dll@12 -debug:full -debugtype:cv /nologo /dll /out:$(full-dll-name) kernel32.lib @$(dllname).link $(objects) $(c-libs) /base:$(base) /version:$(image-version) $(linkopts)
+</pre>
+    <p>Though these script files were poorly documented and insufficiently flexible, they did inspire the introduction of a <q>real</q> scripting language to direct the final stages of compilation in Functional Developer.</p>
+    <p><a href="http://www.perforce.com/jam/jam.html">Jam</a> is a build tool designed by Christopher Seiwald, founder of <a href="http://www.perforce.com/">Perforce Software</a>. It is similar in some ways to <code>make</code>, the traditional Unix build tool. However, instead of using only simple declarative rules to define build targets and the dependencies between them, Jam contains a full scripting language, allowing build script authors to define high-level build instructions that match particular applications. The Jam program also includes Jambase, a library of rules (functions) for building executables and libraries from C, C++, and Fortran sources.</p>
+    <p>The original Jam tool is a standalone program written in C and <acronym>YACC</acronym>. Peter Housel re-implemented the Jam language interpreter and build logic as a reusable Dylan library for use in the Functional Developer <code>build-system</code>.</p>
+    <h2>Choosing Build Scripts</h2>
+    <p>Normally you can simply use the build script supplied with Functional Developer that corresponds to the external linker you will be using. The supplied build scripts include the following:</p>
+    <dl>
+      <dt>
+        <code>x86-win32-vc6-build.jam</code>
+      </dt>
+      <dd>Build script for Microsoft Visual C++ 6.0.</dd>
+      <dt>
+        <code>x86-win32-vc7-build.jam</code>
+      </dt>
+      <dd>Build script for Microsoft Visual C++ .NET.</dd>
+      <dt>
+        <code>x86-win32-mingw-build.jam</code>
+      </dt>
+      <dd>Build script for <a href="http://www.mingw.org/">MinGW</a> gcc.</dd>
+      <dt>
+        <code>x86-linux-build.jam</code>
+      </dt>
+      <dd>Build script for x86 Linux systems using gcc.</dd>
+    </dl>
+    <p>The default build script is <code><i>platform-name</i>-build.jam</code>. You can select a different build script from the Link page of the Environment Options dialog in the IDE, or using the <code>-build-script</code> option on the console compiler or console environment command-line.</p>
+    <p>Build scripts are written using the Jam script language, as described in the <a href="http://public.perforce.com/public/jam/src/Jam.html">Jam manual page</a>. Most Functional Developer build scripts <code>include</code> the <code>mini-jambase.jam</code> file, which contains excerpts from the <a href="http://public.perforce.com/public/jam/src/Jambase">
+        <code>Jambase</code>
+      </a> file included with Perforce Jam and described in the <a href="http://public.perforce.com/public/jam/src/Jambase.html">Jambase Reference</a>. They can also make use of additional built-in rules defined by the Functional Developer build system, as described <a href="#builtins">below</a>.</p>
+    <h2>How the Compiler Uses the Build System</h2>
+    <p>When you compile a library, the Functional Developer compiler constructs a new <code>build</code> directory and places the generated object files in it. It also constructs a text file called <code>dylanmakefile.mkf</code> to be read by the build system. This file contains information imported from the original LID or HDP project file, as well as information generated during compilation. Here is a sample <code>dylanmakefile.mkf</code>, in this case the one generated for the <code>build-system</code> component itself:</p>
+    <pre>comment:        This build file is generated, please don&apos;t edit
+library:        build-system
+base-address:   0x63F20000
+major-version:  0
+minor-version:  0
+library-pack:   0
+compilation-mode:       tight
+target-type:    executable
+files:  library
+        paths
+        variables
+        build
+        jam-build
+used-projects:  functional-dylan
+        dummy
+        ..\functional-dylan\
+        io
+        dummy
+        ..\io\
+        system
+        dummy
+        ..\system\
+        file-source-records
+        dummy
+        ..\file-source-records\
+        release-info
+        dummy
+        ..\release-info\
+        dfmc-mangling
+        dummy
+        ..\dfmc-mangling\
+        jam
+        dummy
+        ..\jam\
+all-c-libraries: advapi32.lib
+        shell32.lib
+</pre>
+    <p>External files are used to communicate with the build system in order for the information to persist between invocations of the compiler. On the Win32 platform, <code>dylanmakefile.mkf</code> files are also copied into the <code>lib</code> directory on installation so that other libraries can link against the actual DLL (whose name might not be identical to the library name).</p>
+    <p>When Functional Developer needs to link a project, it calls the <code>build-system</code>, passing the name of the build directory and a list of targets to be built. The build system reads the <code>dylanmakefile.mkf</code> file and builds the targets accordingly.</p>
+    <p>The Functional Developer compiler&apos;s project manager expects the build script to define the following pseudo (<code>NotFile</code>) targets:</p>
+    <dl>
+      <dt>
+        <code>exports</code>
+      </dt>
+      <dd>Describe exports.</dd>
+      <dt>
+        <code>unify-dll</code>
+      </dt>
+      <dd>Describe unify-dll.</dd>
+      <dt>
+        <code>dll</code>
+      </dt>
+      <dd>Link the project as a dynamically-linked library.</dd>
+      <dt>
+        <code>unify-exe</code>
+      </dt>
+      <dd>Describe unify-exe.</dd>
+      <dt>
+        <code>exe</code>
+      </dt>
+      <dd>Link the project as an executable program.</dd>
+      <dt>
+        <code>release</code>
+      </dt>
+      <dd>Describe release.</dd>
+      <dt>
+        <code>clean-all</code>
+      </dt>
+      <dd>Remove build products in the top-level project, and in all of the non-system libraries that it uses.</dd>
+      <dt>
+        <code>clean</code>
+      </dt>
+      <dd>Remove build products in the top-level project.</dd>
+    </dl>
+    <h2>
+      <a name="autorules">Automatically-invoked Jam Rules</a>
+    </h2>
+    <p>When the build system reads a <code>dylanmakefile.mkf</code> file, it invokes several of the Jam rules (functions) defined in the user&apos;s build script. These rules in turn register the necessary targets and their dependencies with the Jam build mechanism.</p>
+    <p>All of the rules described below take <i>image</i> as their first parameter; this is a list whose first element is the library name (from the <code>Library:</code> keyword of the <code>.mkf</code> file) and whose optional second component is the base name of the executable or shared library (from the <code>Executable:</code> keyword of the <code>.mkf</code> file).</p>
+    <h3>DylanLibrary <i>image</i> : <i>version</i> ;</h3>
+    <p>Link a Dylan library as a shared library or executable image. This is always the first rule invoked for a given library, and it is usually charged with establishing the library target and setting global and target-specific variables.</p>
+    <p>The <i>version</i> argument normally contains two components, the first obtained from the <code>Major-version:</code> keyword of the <code>.mkf</code> file, and the second from the <code>Minor-version:</code> keyword.</p>
+    <h3>DylanLibraryLinkerOptions <i>image</i> : <i>options</i> ;</h3>
+    <p>Add the given options to the link command line of the shared library and executable images. The link options provided in the <code>Linker-options:</code> keyword of the <code>.mkf</code> file are expanded using the usual Jam variable expansion rules before being passed to this rule. (This allows <code>Linker-options:</code> keywords in LID and HDP files to refer to platform-specific variables such as <code>$(guilflags)</code>).</p>
+    <h3>DylanLibraryBaseAddress <i>image</i> : <i>address</i> ;</h3>
+    <p>Set the base address of the shared library. The compiler-computed base addresses are probably only usable on the Win32 platform.</p>
+    <h3>DylanLibraryCLibraries <i>image</i> : <i>libraries</i> ;</h3>
+    <p>Link C (or other externally-derived) libraries into the shared library. The link options provided in the <code>C-libraries:</code> keyword of the <code>.mkf</code> file are expanded using the usual Jam variable expansion rules before being passed to this rule.</p>
+    <h3>DylanLibraryCObjects <i>image</i> : <i>objects</i> ;</h3>
+    <p>Link C (or other externally-derived) object files into the shared library.</p>
+    <h3>DylanLibraryCSources <i>image</i> : <i>sources</i> ;</h3>
+    <p>Link C source files into the shared library.</p>
+    <h3>DylanLibraryCHeaders <i>image</i> : <i>headers</i> ;</h3>
+    <p>This rule normally does nothing. The <code>C-header-files:</code> HDP/LID file is normally used to ensure that files of various sorts (not just C header files) are copied into the build directory.</p>
+    <h3>DylanLibraryRCFiles <i>image</i> : <i>rcfiles</i> ;</h3>
+    <p>Link Win32 resource files into the shared library and executable.</p>
+    <h3>DylanLibraryJamIncludes <i>image</i> : <i>includes</i> ;</h3>
+    <p>Not yet implemented.</p>
+    <h3>DylanLibraryUses <i>image</i> : <i>library</i> : <i>dir</i> ;</h3>
+    <p>Link other Dylan libraries into the shared library. The <i>library</i> argument gives the name of the other library, and the <i>dir</i> argument gives the name of the other library&apos;s build directory. If <i>dir</i> is <code>system</code>, then the library is an installed system library.</p>
+    <h2>
+      <a name="builtins">Additional Built-In Jam Rules</a>
+    </h2>
+    <p>The build system defines the following additional built-in rules.</p>
+    <h3>IncludeMKF <i>includes</i> ;</h3>
+    <p>Read each of the given <code>.mkf</code> files and invoke Jam rules as described <a href="#autorules">above</a>.</p>
+    <h3>DFMCMangle <i>name</i> ;</h3>
+    <p>Mangle the given <i>name</i> according to the Functional Dylan compiler&apos;s mangling rules. If <i>name</i> has a single component, it is considered to be a <q>raw</q> name; if there are three components they correspond to the variable-name, module-name, and library-name respectively.</p>
+    <h2>Editing Jam Files</h2>
+    <p>An Emacs major mode for Jam files can be found <a href="http://www.tenfoot.dsl.pipex.com/emacs/jam-mode.el">here</a>.</p>
+  </body>
+</html>
+

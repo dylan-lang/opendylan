@@ -18,7 +18,8 @@ end library;
 define module dfmc-harp-cg-linker
   use functional-dylan;
   use machine-word-lowlevel,
-    import: { machine-word-unsigned-shift-left, machine-word-unsigned-shift-right };
+    import: { machine-word-unsigned-shift-left,
+              machine-word-unsigned-shift-right };
 
   use dfmc-harp-cg;
   use dfmc-linker;

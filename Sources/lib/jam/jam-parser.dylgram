@@ -1,0 +1,190 @@
+Module:       jam-internals
+Author:       Peter S. Housel
+Copyright:    Original Code is Copyright 2004 Gwydion Dylan Maintainers
+              All rights reserved.
+License:      Functional Objects Library Public License Version 1.0
+Dual-license: GNU Lesser General Public License
+Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
+
+define parser jam-parser
+
+start:
+  run EOF => #f;;
+
+run:
+  => #f;;
+  statements => *jam-toplevel-statements* := arg$1;;
+
+_block:
+  => #();;
+  statements => arg$1;;
+
+statements:
+  statement => list(arg$1);;
+  statement statements => pair(arg$1, arg$2);;
+  %LOCAL list %SEMIC _block
+    => list(make(<jam-block-statement>,
+                 local-vars: arg$2, statements: arg$4));;
+  %LOCAL list %EQUALS list %SEMIC _block
+    => list(make(<jam-block-statement>,
+                 local-vars: arg$2, local-values: arg$4, statements: arg$6));;
+
+statement:
+  %LBRACE _block %RBRACE
+    => make(<jam-block-statement>, statements: arg$2);;
+  %INCLUDE list %SEMIC
+    => make(<jam-include-statement>, list: arg$2);;
+  arg lol %SEMIC
+    => make(<jam-invocation-statement>, rulename: arg$1, fields: arg$2);;
+  arg assign list %SEMIC
+    => make(<jam-assignment-statement>,
+            variable: arg$1, kind: arg$2, values: arg$3);;
+  arg %ON list assign list %SEMIC
+    => make(<jam-on-assignment-statement>,
+            variable: arg$1, targets: arg$3, kind: arg$4, values: arg$5);;
+  %BREAK list %SEMIC
+    => make(<jam-break-statement>, values: arg$2);;
+  %CONTINUE list %SEMIC
+    => make(<jam-continue-statement>, values: arg$2);;
+  %RETURN list %SEMIC
+    => make(<jam-return-statement>, values: arg$2);;
+  %FOR %ARG %IN list %LBRACE _block %RBRACE
+    => make(<jam-for-statement>,
+            var: arg$2, values: arg$4, statements: arg$6);;
+  %SWITCH list %LBRACE cases %RBRACE
+    => make(<jam-switch-statement>, values: arg$2, cases: arg$4);;
+  %IF expr %LBRACE _block %RBRACE
+    => make(<jam-if-statement>, condition: arg$2, statements: arg$4);;
+  %IF expr %LBRACE _block %RBRACE %ELSE statement
+    => make(<jam-if-statement>,
+            condition: arg$2, statements: arg$4, else: arg$7);;
+  %WHILE expr %LBRACE _block %RBRACE
+    => make(<jam-while-statement>, condition: arg$2, statements: arg$4);;
+  %ON arg statement
+    => make(<jam-on-statement>, targets: arg$2, statement: arg$3);;
+  %RULE %ARG params %LBRACE _block %RBRACE
+    => make(<jam-ruledef-statement>,
+            name: arg$2, params: arg$3, statements: arg$5);;
+  %ACTIONS eflags %ARG bindlist
+    %LBRACE lexer-string %STRING lexer-normal %RBRACE
+    => make(<jam-actiondef-statement>,
+            name: arg$3, flags: arg$2, bindlist: arg$4, commands: arg$7);;
+
+lexer-string:
+   => *jam-input-state*.jam-input-mode := #"string";;
+
+lexer-normal:
+   => *jam-input-state*.jam-input-mode := #"normal";;
+
+assign:
+  %EQUALS => #"=";;
+  %PLUS-EQUALS => #"+=";;
+  %QUESTION-EQUALS => #"?=";;
+  %DEFAULT %EQUALS => #"?=";;
+
+expr:
+  expr4 => arg$1;;
+  expr %BAR expr4
+    => make(<jam-or-expression>, left: arg$1, right: arg$3);;
+  expr %BARBAR expr4
+    => make(<jam-or-expression>, left: arg$1, right: arg$3);;
+
+expr4:
+  expr3 => arg$1;;
+  expr4 %AMPER expr3
+    => make(<jam-and-expression>, left: arg$1, right: arg$3);;
+  expr4 %AMPERAMPER expr3
+    => make(<jam-and-expression>, left: arg$1, right: arg$3);;
+
+expr3:
+  expr2 => arg$1;;
+  expr3 %EQUALS expr2
+    => make(<jam-eq-expression>, left: arg$1, right: arg$3);;
+  expr3 %BANG-EQUALS expr2
+    => make(<jam-ne-expression>, left: arg$1, right: arg$3);;
+
+expr2:
+  expr1 => arg$1;;
+  expr2 %LANGLE expr1
+    => make(<jam-lt-expression>, left: arg$1, right: arg$3);;
+  expr2 %LANGLE-EQUALS expr1
+    => make(<jam-le-expression>, left: arg$1, right: arg$3);;
+  expr2 %RANGLE expr1
+    => make(<jam-gt-expression>, left: arg$1, right: arg$3);;
+  expr2 %RANGLE-EQUALS expr1
+    => make(<jam-ge-expression>, left: arg$1, right: arg$3);;
+
+expr1:
+  expr0 => arg$1;;
+  %BANG expr1 => make(<jam-not-expression>, left: arg$2);;
+
+expr0:
+  arg %IN list => make(<jam-leaf-expression>, argument: arg$1, list: arg$3);;
+  arg => make(<jam-leaf-expression>, argument: arg$1);;
+  %LPAREN expr %RPAREN => arg$2;;
+
+cases:
+  => make(<stretchy-vector>);;
+  cases _case => add!(arg$1, arg$2);;
+
+_case:
+  %CASE %ARG %COLON _block
+    => make(<jam-case>,
+            pattern: arg$2,
+            match-function: glob-match-function(arg$2),
+            statements: arg$4);;
+
+params:
+  => #();;
+  %ARG %COLON params => pair(arg$1, arg$3);;
+  %ARG => list(arg$1);;
+
+lol:
+  list => list(arg$1);;
+  list %COLON lol => pair(arg$1, arg$3);;
+
+list:
+  listp
+    => begin
+         *jam-input-state*.jam-input-mode := #"normal";
+         arg$1;
+       end;;
+
+listp:
+  => begin
+       *jam-input-state*.jam-input-mode := #"punctuation";
+       make(<stretchy-vector>);
+     end;;
+  listp arg => add!(arg$1, arg$2);;
+
+arg:
+  %ARG => arg$1;;
+  %LBRACKET lexer-normal func %RBRACKET => arg$3;;
+
+func:
+  arg lol
+    => make(<jam-invocation-statement>, rulename: arg$1, fields: arg$2);;
+  %ON arg arg lol
+    => make(<jam-on-statement>,
+            targets: arg$2,
+            statement: make(<jam-invocation-statement>,
+                            rulename: arg$3, fields: arg$4));;
+  %ON arg %RETURN list
+    => make(<jam-on-statement>,
+            targets: arg$2,
+            statement: make(<jam-return-statement>, values: arg$4));;
+
+eflags:
+  => #();;
+  eflags %UPDATED => pair(updated?:, pair(#t, arg$1));;
+  eflags %TOGETHER => pair(together?:, pair(#t, arg$1));;
+  eflags %IGNORE => pair(ignore?:, pair(#t, arg$1));;
+  eflags %QUIETLY => pair(quietly?:, pair(#t, arg$1));;
+  eflags %PIECEMEAL => pair(piecemeal?:, pair(#t, arg$1));;
+  eflags %EXISTING => pair(existing?:, pair(#t, arg$1));;
+  eflags %MAXLINE %ARG => pair(maxline:, pair(arg$3, arg$1));;
+
+bindlist:
+  => #f;;
+  %BIND list => arg$2;;
+end parser;

@@ -44,8 +44,6 @@ define module dfmc-environment-database
   use dfmc-conditions,
     import: { <program-error>,
 	      <serious-program-warning> };
-  use build-system,
-    import: { merged-project-name };
 
   export <dfmc-database>;
 

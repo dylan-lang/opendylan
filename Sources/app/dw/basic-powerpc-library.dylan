@@ -33,11 +33,6 @@ define library basic-powerpc-dw
   use dfmc-debug-back-end;
   use dfmc-powerpc-file-compiler;
 
-  // Load the GNU linker
-  use gnu-linker;
-  // Load the ELF linker
-  use powerpc-elf-linker;
-
   use powerpc-dfmc-shell;
 
   export dw;

@@ -119,8 +119,8 @@ define class <project-context> (<server-context>)
     required-init-keyword: project:;
   slot context-module :: false-or(<module-object>) = #f,
     init-keyword: module:;
-  slot context-linker :: <symbol> = default-linker(),
-    init-keyword: linker:;
+  slot context-build-script :: <file-locator> = default-build-script(),
+    init-keyword: build-script:;
   slot context-properties :: <list> = #();
   // slot context-last-heading :: false-or(<string>) = #f;
   slot context-last-item-label :: false-or(<string>) = #f;

@@ -7,74 +7,94 @@ Dual-license: GNU Lesser General Public License
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
-
 /// VARIABLES
 
 
 define method runtime-module-binding-type?
-      (binding :: <module-binding>) => (binding-type)
+    (binding :: <module-binding>)
+ => (binding-type);
   unless (constant?(binding))
     let binding-type = binding.binding-type-model-object;
     let declared? = binding-type ~== dylan-value(#"<object>");
     if (declared?)
-      if (binding-type) binding-type
+      if (binding-type)
+        binding-type
       else
 	unsupplied()
       end if
     end if
-  end unless;
+  end unless
 end method;
 
 define method emit-forward
-    (back-end :: <harp-back-end>, stream, o :: <module-binding>) => ()
- let name = emit-reference(back-end, stream, o);
- let export? = model-externally-visible?(o);
- emit-public(back-end, stream, o, name: name, export?: export?);
- let binding-type = o.runtime-module-binding-type?;
- if (binding-type)
-   emit-public(back-end, stream, unsupplied(),
-	       name: concatenate(name, $runtime-module-binding-type-marker),
-	       export?: export?);
- end if;
+    (back-end :: <harp-back-end>, stream, o :: <module-binding>)
+ => ();
+  let name = emit-reference(back-end, stream, o);
+  let export? = model-externally-visible?(o);
+  emit-public(back-end, stream, o, name: name, export?: export?);
+  let binding-type = o.runtime-module-binding-type?;
+  if (binding-type)
+    emit-public(back-end, stream, unsupplied(),
+                name: concatenate(name, $runtime-module-binding-type-marker),
+                export?: export?);
+  end if;
 end method;
 
 define method emit-forward
-    (back-end :: <harp-back-end>, stream, o :: <&mep>) => ()
+    (back-end :: <harp-back-end>, stream, o :: <&mep>)
+ => ();
   emit-extern(back-end, stream, emit-reference(back-end, stream, o), o, #f);
 end method;
 
 // CLASSES
 
-define method emit-forward (back-end :: <harp-back-end>, stream, o :: <&class>) => ()
+define method emit-forward
+    (back-end :: <harp-back-end>, stream, o :: <&class>)
+ => ();
   emit-public(back-end, stream, o,
-	      export?: model-externally-visible?(o) & model-externally-visible??(o));
+              export?:
+                model-externally-visible?(o)
+                  & model-externally-visible??(o));
 end method;
 
-define method emit-forward (back-end :: <harp-back-end>, stream, o :: <&mm-wrapper>) => ()
+define method emit-forward
+    (back-end :: <harp-back-end>, stream, o :: <&mm-wrapper>)
+ => ();
   emit-public(back-end, stream, o, export?: #f);
 end method;
 
-define method emit-forward (back-end :: <harp-back-end>, stream, o :: <&slot-descriptor>) => ()
+define method emit-forward
+    (back-end :: <harp-back-end>, stream, o :: <&slot-descriptor>)
+ => ();
   emit-public(back-end, stream, o);
 end method;
 
-define inline function emit-external-ep(back-end :: <harp-back-end>, stream, o)
+define inline function emit-external-ep
+    (back-end :: <harp-back-end>, stream, o)
+ => ();
   emit-extern(back-end, stream, emit-reference(back-end, stream, o), o, #f);
 end function;
 
-define method emit-forward (back-end :: <harp-back-end>, stream, o :: <&singular-terminal-engine-node>) => ()
+define method emit-forward
+    (back-end :: <harp-back-end>, stream,
+     o :: <&singular-terminal-engine-node>)
+ => ();
   // We have to fudge the externalness of these odd objects.
   model-externally-visible?(o) := #t;
   emit-public(back-end, stream, o);
   emit-external-ep(back-end, stream, o.^engine-node-entry-point);
 end method;
 
-define method emit-forward (back-end :: <harp-back-end>, stream, o :: <&engine-node>) => ()
+define method emit-forward
+    (back-end :: <harp-back-end>, stream,
+     o :: <&engine-node>)
+ => ();
   emit-external-ep(back-end, stream, o.^engine-node-entry-point);
 end method;
 
 define method emit-forward
-    (back-end :: <harp-back-end>, stream, o :: <&generic-function>) => ()
+    (back-end :: <harp-back-end>, stream, o :: <&generic-function>)
+ => ();
   if (o.model-has-definition?)
     let name :: <byte-string> = emit-name(back-end, stream, o);
     let export? = model-externally-visible?(o);
@@ -89,87 +109,119 @@ define method emit-forward
   emit-external-ep(back-end, stream, o.^xep);
 end method;
 
-define method emit-forward (back-end :: <harp-back-end>, stream, o :: <&domain>) => ()
+define method emit-forward
+    (back-end :: <harp-back-end>, stream, o :: <&domain>)
+ => ();
   emit-public(back-end, stream, o);
 end method;
 
-define method emit-forward (back-end :: <harp-back-end>, stream, o :: <&namespace>) => ()
+define method emit-forward
+    (back-end :: <harp-back-end>, stream, o :: <&namespace>)
+ => ();
   emit-public(back-end, stream, o);
 end method;
 
 
-define method emit-forward (back-end :: <harp-back-end>, stream, o :: <&method>) => ()
+define method emit-forward
+    (back-end :: <harp-back-end>, stream, o :: <&method>)
+ => ();
   if (o.model-has-definition?)
     emit-public(back-end, stream, o,
-		export?: model-externally-visible?(o) & model-externally-visible??(o),
-		derived-model-object:
-                  (instance?(o, <&lambda>) & make-derived-model-object(o.^iep, $iep-suffix)));
+		export?:
+                  model-externally-visible?(o) & model-externally-visible??(o),
+                derived-model-object:
+                  (instance?(o, <&lambda>)
+                     & make-derived-model-object(o.^iep, $iep-suffix)));
   end if;
   emit-external-ep(back-end, stream, o.^xep);
 end method;
 
-define method emit-forward (back-end :: <harp-back-end>, stream, o :: <&keyword-method>) => ()
+define method emit-forward
+    (back-end :: <harp-back-end>, stream, o :: <&keyword-method>)
+ => ();
   next-method();
   emit-external-ep(back-end, stream, o.^mep);
 end method;
 
-define method emit-forward(back-end :: <harp-back-end>, stream, o :: <&bottom-type>) => ()
+define method emit-forward
+    (back-end :: <harp-back-end>, stream, o :: <&bottom-type>)
+ => ();
   emit-public(back-end, stream, o);
 end method emit-forward;
 
-define method emit-forward(back-end :: <harp-back-end>, stream, o :: <boolean>) => ()
+define method emit-forward
+    (back-end :: <harp-back-end>, stream, o :: <boolean>)
+ => ();
   emit-public(back-end, stream, o);
 end method emit-forward;
 
-define method emit-forward(back-end :: <harp-back-end>, stream, o :: <mapped-unbound>) => ()
+define method emit-forward
+    (back-end :: <harp-back-end>, stream, o :: <mapped-unbound>)
+ => ();
   emit-public(back-end, stream, o);
 end method emit-forward;
 
-define method emit-forward(back-end :: <harp-back-end>, stream, o == #()) => ()
+define method emit-forward
+    (back-end :: <harp-back-end>, stream, o == #())
+ => ();
   emit-public(back-end, stream, o);
 end method emit-forward;
 
-define method emit-forward(back-end :: <harp-back-end>, stream, o :: <vector>) => ()
+define method emit-forward
+    (back-end :: <harp-back-end>, stream, o :: <vector>)
+ => ();
   if (o.model-has-definition?)
     emit-public(back-end, stream, o);
   end if;
 end method emit-forward;
 
-define method emit-forward(back-end :: <harp-back-end>, stream, o :: <string>) => ()
+define method emit-forward
+    (back-end :: <harp-back-end>, stream, o :: <string>)
+ => ();
   if (o = "")
     emit-public(back-end, stream, o);
   end if;
 end method emit-forward;
 
 define method emit-uninterned-symbol
-    (back-end :: <harp-back-end>, stream, o :: <uninterned-symbol>) => (name, model-object)
+    (back-end :: <harp-back-end>, stream, o :: <uninterned-symbol>)
+ => (name, model-object);
   let symbol :: <symbol> = as(<symbol>, o.symbol-name);
   if (o.model-has-definition?)
     values($dummy-name, symbol)
   else
     values(emit-reference(back-end, stream, symbol),
-	   unsupplied())
+           unsupplied())
   end if
 end method;
 
-define method emit-forward(back-end :: <harp-back-end>, stream, o :: <uninterned-symbol>) => ()
+define method emit-forward
+    (back-end :: <harp-back-end>, stream, o :: <uninterned-symbol>)
+ => ();
   if (o.model-has-definition?)
     emit-public(back-end, stream, o);
   end if;
 end method emit-forward;
 
-define method emit-forward(back-end :: <harp-back-end>, stream, o :: <model-properties>) => ()
+define method emit-forward
+    (back-end :: <harp-back-end>, stream, o :: <model-properties>)
+ => ();
   if (instance?(o.model-definition, <constant-definition>))
     emit-public(back-end, stream, o);
   end if;
 end method emit-forward;
 
 define method emit-forward
-    (back-end :: <harp-back-end>, stream, o) => ()
+    (back-end :: <harp-back-end>, stream, o)
+ => ();
+  // do nothing
 end method;
 
 define method emit-extern/import
-    (back-end :: <harp-back-end>, stream, o :: <module-binding>, import? :: <boolean>) => ()
+    (back-end :: <harp-back-end>, stream,
+     o :: <module-binding>,
+     import? :: <boolean>)
+ => ();
  let name = emit-reference(back-end, stream, o);
  let model-library = model-library-description(o);
  emit-extern(back-end, stream, name, o, import?, model-library: model-library);
@@ -182,18 +234,18 @@ define method emit-extern/import
 end method;
 
 define method emit-extern/import
-    (back-end :: <harp-back-end>, stream, o, import? :: <boolean>) => ()
+    (back-end :: <harp-back-end>, stream, o, import? :: <boolean>)
+ => ();
   unless (o.direct-object?)
     let name = emit-name(back-end, stream, o);
     emit-extern(back-end, stream, name, o, import?,
-		really-import?: import? & model-externally-visible??(o));
+                really-import?: import? & model-externally-visible??(o));
   end unless;
 end method;
 
 
-// 
 // Override external visibility of model-objects here
-
+//
 // This can happen in the following cases:
 // 
 // - model-objects (functions & classes) derived from their bindings
@@ -207,79 +259,80 @@ end method;
 // from their imported parents
 // 
 
-define inline function model-externally-visible??(o)
+define inline function model-externally-visible?? (o)
  => (external? :: <boolean>)
   ~ model-internal-only?(o);
 end;
 
-define method model-internal-only?(o)
+define method model-internal-only? (o)
   #f
 end method;
 
-define method model-internal-only?
-    (o :: <&iep>)
+define method model-internal-only? (o :: <&iep>)
   let f = o.function;
-  instance?(f, <&lambda>) & f.lambda-runtime-function?;
+  instance?(f, <&lambda>)
+    & f.lambda-runtime-function?
 end method;
 
-define method model-internal-only?(o :: <&mm-wrapper>)
+define method model-internal-only? (o :: <&mm-wrapper>)
   #t
 end method;
 
-define method model-internal-only?(o :: <&class>)
-  binding-internal-only?(o);
+define method model-internal-only? (o :: <&class>)
+  binding-internal-only?(o)
 end method;
 
-define method model-internal-only?(o :: <&generic-function>)
-  binding-internal-only?(o);
+define method model-internal-only? (o :: <&generic-function>)
+  binding-internal-only?(o)
 end method;
 
-define inline function binding-internal-only?(o)
-  model-variable-binding(o);
+define inline function binding-internal-only? (o)
+  model-variable-binding(o)
 end;
 
-define method model-internal-only?(o :: <&initializer-method>)
+define method model-internal-only? (o :: <&initializer-method>)
   #t
 end method;
 
-define method model-internal-only?(o :: <&method>)
+define method model-internal-only? (o :: <&method>)
   let defn = o.model-definition;
-  if (defn & form-compile-stage-only?(defn)) #f
+  if (defn & form-compile-stage-only?(defn))
+    #f
   elseif (instance?(defn, <method-definition>))
+    let gf :: <module-binding> = form-variable-binding(defn);
+    let gf-model = binding-model-or-hollow-object(gf);
 
-  let gf :: <module-binding> = form-variable-binding(defn);
-  let gf-model = binding-model-or-hollow-object(gf);
+    if (instance?(gf-model, <&generic-function>))
+      // Goal reduction: only methods statically added in the
+      // defining library of their generic are handled here
+      let generic-library = home-library(binding-home(gf));
+      let method-library = language-definition(form-library(defn));
 
-  if (instance?(gf-model, <&generic-function>))
-
-    // Goal reduction: only methods statically added in the
-    // defining library of their generic are handled here
-
-    let generic-library = home-library(binding-home(gf));
-    let method-library = language-definition(form-library(defn));
-
-    if (generic-library == method-library)
-      let num :: <integer> = method-number(defn);
-      if (num.generic-method-offset?)
-	values(gf-model, num);
-      else #f
-      end;
-    else #f
-    end;
-
-  // otherwise attempt to use their bindings
+      if (generic-library == method-library)
+        let num :: <integer> = method-number(defn);
+        if (num.generic-method-offset?)
+          values(gf-model, num)
+        else
+          #f
+        end;
+      else
+        #f
+      end
+    else
+      // otherwise attempt to use their bindings
+      let internal? = binding-internal-only?(o);
+      values(internal?, #f)
+    end
   else
     let internal? = binding-internal-only?(o);
     values(internal?, #f)
-  end;
-  else
-    let internal? = binding-internal-only?(o);
-    values(internal?, #f)
-  end;
+  end
 end method;
 
 define method emit-extern/import
-    (back-end :: <harp-back-end>, stream, o :: <&c-function>, import? :: <boolean>) => ()
+    (back-end :: <harp-back-end>, stream,
+     o :: <&c-function>, import? :: <boolean>)
+ => ()
   if (o.binding-name)
     let name = emit-name(back-end, stream, o);
     emit-extern(back-end, stream, name, unsupplied(), import?);
@@ -287,14 +340,17 @@ define method emit-extern/import
 end method;
 
 define method emit-extern/import
-    (back-end :: <harp-back-end>, stream, v :: <&c-variable>, import? :: <boolean>) => ()
+    (back-end :: <harp-back-end>, stream,
+     v :: <&c-variable>, import? :: <boolean>)
+ => ();
   let name = c-name(back-end, v.name);
-    
   emit-extern(back-end, stream, name, v, v.dll-import?);
 end method;
 
 define method emit-extern/import
-    (back-end :: <harp-back-end>, stream, o :: <&raw-aggregate-type>, import? :: <boolean>) => ()
+    (back-end :: <harp-back-end>, stream,
+     o :: <&raw-aggregate-type>, import? :: <boolean>)
+ => ();
   // do nothing
 end;
 
@@ -310,13 +366,13 @@ define method emit-definition
 end method;
 
 define method emit-definition
-    (back-end :: <harp-back-end>, stream, o :: <&iep>) => ()
-
+    (back-end :: <harp-back-end>, stream, o :: <&iep>)
+ => ();
   if (o.code)
     if (*stream-outputters?*)
       emit-comment(stream, "%=", o.function);
     end if;
-    for(c in o.code)
+    for (c in o.code)
       let externals = c.lambda-externals;
       output-compiled-lambda(back-end, stream, c, debug-info?: *debug-info?*);
       cache-imports-in-lambda(back-end, externals);
@@ -327,37 +383,38 @@ define method emit-definition
   else
     error("Code Generation must precede Linking");
   end if;
-
 end method;
 
 define method emit-init-code-definition
-    (back-end :: <harp-back-end>, stream, name) => ()
+    (back-end :: <harp-back-end>, stream, name)
+ => ();
+  local
+    method emit-compiled-lambda (lambda, #key model-object = unsupplied())
+      let externals = lambda.lambda-externals;
+      output-compiled-lambda(back-end, stream,
+                             lambda,
+                             section: #"init-code",
+                             debug-info?: *debug-info?*,
+                             model-object: model-object);
+      cache-imports-in-lambda(back-end, externals);
+    end method;
 
-    local method emit-compiled-lambda(lambda, #key model-object = unsupplied())
-            let externals = lambda.lambda-externals;
-	    output-compiled-lambda(back-end, stream,
-				   lambda,
-				   section: #"init-code",
-				   debug-info?: *debug-info?*,
-				   model-object: model-object);
-	    cache-imports-in-lambda(back-end, externals);
-	  end method;
-
-    dynamic-bind (*emitting-init-code?* = #t)
-
+  dynamic-bind (*emitting-init-code?* = #t)
     emit-comment(stream, "SYSTEM INIT CODE");
-
     let system-name = concatenate(name, $system-init-code-tag);
     let system-lambda = emitted-name(as(<symbol>, system-name));
     let system-init-code = *current-heap*.heap-root-system-init-code;
     if (#t)
       let fixups-name = format-to-string("%s_fixups", system-name);
-      emit-compiled-lambda(emitted-name(as(<symbol>, concatenate(fixups-name, "_code"))),
-			   model-object: emitted-name(as(<symbol>, fixups-name)));
+      emit-compiled-lambda(emitted-name(as(<symbol>,
+                                           concatenate(fixups-name, "_code"))),
+                           model-object:
+                             emitted-name(as(<symbol>, fixups-name)));
       for (o in system-init-code, count from 0)
-	let init-name = format-to-string("%s_%d", system-name, count);
-	emit-compiled-lambda(o.^iep.code,
-			     model-object: emitted-name(as(<symbol>, init-name)));
+        let init-name = format-to-string("%s_%d", system-name, count);
+        emit-compiled-lambda(o.^iep.code,
+                             model-object:
+                               emitted-name(as(<symbol>, init-name)));
       end for;
       emit-compiled-lambda(system-lambda);
     else
@@ -365,50 +422,55 @@ define method emit-init-code-definition
     end if;
 
     emit-comment(stream, "USER INIT CODE");
-
     let user-name = concatenate(name, $user-init-code-tag);
     let user-lambda = emitted-name(as(<symbol>, user-name));
     let user-init-code = *current-heap*.heap-root-init-code;
     if (#t)
       for (o in user-init-code, count from 0)
-	let init-name = format-to-string("%s_%d", user-name, count);
+        let init-name = format-to-string("%s_%d", user-name, count);
 	emit-compiled-lambda(o.^iep.code,
-			     model-object: emitted-name(as(<symbol>, init-name)));
+			     model-object:
+                               emitted-name(as(<symbol>, init-name)));
       end for;
       emit-compiled-lambda(user-lambda);
     else
       emit-compiled-lambda(user-lambda);
     end if;
-
-    end dynamic-bind;
-
+  end dynamic-bind;
 end method;
 
 define method emit-definition
-    (back-end :: <harp-back-end>, stream, o :: <&kernel-ep>) => ()
+    (back-end :: <harp-back-end>, stream, o :: <&kernel-ep>)
+ => ();
+  // do nothing
 end method;
 
 define method emit-definition
-    (back-end :: <harp-back-end>, stream, o :: <&mep>) => ()
+    (back-end :: <harp-back-end>, stream, o :: <&mep>)
+ => ();
+  // do nothing
 end method;
 
 define method emit-definition
-    (back-end :: <harp-back-end>, stream, o :: <runtime-object>) => ()
+    (back-end :: <harp-back-end>, stream, o :: <runtime-object>)
+ => ();
+  // do nothing
 end method;
 
 define method emit-definition // !@#$ need unifying type
-    (back-end :: <harp-back-end>, stream, o) => ()
+    (back-end :: <harp-back-end>, stream, o)
+ => ();
   // Direct objects are always emitted in full at point of reference and
   // are never referred to by name, hence no need for a forward declaration.
   unless (o.direct-object?)
     let (name, model-object) =
       select(o by instance?)
-	<uninterned-symbol> =>
-	  emit-uninterned-symbol(back-end, stream, o);
-	otherwise =>
-	  values($dummy-name, apropo-model-object(o));
+        <uninterned-symbol> =>
+          emit-uninterned-symbol(back-end, stream, o);
+        otherwise =>
+          values($dummy-name, apropo-model-object(o));
       end select;
-
+    
     output-definition(back-end,
                       stream,
                       name,
@@ -418,7 +480,6 @@ define method emit-definition // !@#$ need unifying type
     emit-object(back-end, stream, o);
 
     emit-data-footer(back-end, stream, name, model-object: model-object);
-                      
   end unless;
 end method;
 
@@ -438,8 +499,8 @@ define method section-for-definition (o :: <object>) => (section :: <symbol>)
 end method;
 
 define method emit-definition
-    (back-end :: <harp-back-end>, stream, o :: <&generic-function>) => ()
-
+    (back-end :: <harp-back-end>, stream, o :: <&generic-function>)
+ => ();
   // let req-size =
   //   spec-argument-number-required(signature-spec(o));
 
@@ -454,19 +515,16 @@ define method emit-definition
   emit-data-footer(back-end, stream, $dummy-name, model-object: o);
 
   if (emit-generic-methods-list?(o))
-
-  let name = emit-generic-methods-name(back-end, stream, o);
-  output-definition(back-end,
-		    stream,
-		    name,
-		    section: #"variables");
-
-  emit-data-item(back-end, stream, o.^generic-function-methods);
-
-  emit-data-footer(back-end, stream, name);
-
-  end;
-
+    let name = emit-generic-methods-name(back-end, stream, o);
+    output-definition(back-end,
+                      stream,
+                      name,
+                      section: #"variables");
+    
+    emit-data-item(back-end, stream, o.^generic-function-methods);
+    
+    emit-data-footer(back-end, stream, name);
+  end if;
 end method;
 
 
@@ -483,7 +541,7 @@ end method;
 define method emit-generic-methods-list?
     (o :: <&generic-function>,
      #key export?)
- => (emit?)
+ => (emit?);
   let export? = export? | model-externally-visible?(o);
   export?
     & ~ o.^generic-function-sealed?
@@ -494,49 +552,47 @@ define constant $generic-methods-suffix    = "GFML";
 
 define method emit-generic-methods-name
     (back-end :: <harp-back-end>, stream, o :: <&generic-function>)
- => (name :: <string>)
-    concatenate-as(<byte-string>,
-		   emit-name(back-end, stream, o),
-		   $generic-methods-suffix);
+ => (name :: <string>);
+  concatenate-as(<byte-string>,
+                 emit-name(back-end, stream, o),
+                 $generic-methods-suffix)
 end method;
 
 define method emit-generic-methods-name
     (back-end :: <harp-back-end>, stream, name :: <byte-string>)
- => (name :: <string>)
+ => (name :: <string>);
     concatenate-as(<byte-string>,
 		   name,
 		   $generic-methods-suffix);
 end method;
 
 define method emit-definition
-    (back-end :: <harp-back-end>, stream, o :: <&method>) => ()
-
-    output-definition(back-end,
-		      stream,
-		      $dummy-name,
-		      model-object: o,
-                      section:
-			if (instance?(o, <&closure-method-mixin>)
+    (back-end :: <harp-back-end>, stream, o :: <&method>)
+ => ();
+  output-definition(back-end,
+                    stream,
+                    $dummy-name,
+                    model-object: o,
+                    section:
+                      if (instance?(o, <&closure-method-mixin>)
                             & method-top-level?(o))
-			  // special top-level closures are not cloned;
-                          // they are mutated by traceable signatures
-			  #"objects"
-			else
-			  #"untraced-objects"
-			end if);
-
-    emit-object(back-end, stream, o);
-
-    emit-data-footer(back-end, stream, $dummy-name, model-object: o);
+                        // special top-level closures are not cloned;
+                        // they are mutated by traceable signatures
+                        #"objects"
+                      else
+                        #"untraced-objects"
+                      end if);
+  emit-object(back-end, stream, o);
+  emit-data-footer(back-end, stream, $dummy-name, model-object: o);
 end method;
 
 define method emit-definition
-    (back-end :: <harp-back-end>, stream, o :: <&raw-aggregate-type>) => ()
+    (back-end :: <harp-back-end>, stream, o :: <&raw-aggregate-type>)
+ => ();
   // do nothing
 end;
 
 /*
-
  Alternative, expensive contiguous list dumping of generic function
  methods list at the level of the back-end instead of the Heaper
 
@@ -567,8 +623,8 @@ end method;
 // INDIRECTION DEFINITIONS
 
 define method emit-indirection-definition
-    (back-end :: <harp-back-end>, stream, o :: <object>) => ()
-
+    (back-end :: <harp-back-end>, stream, o :: <object>)
+ => ();
   let local-symbol = element(heap-symbols(*current-heap*), o, default: #f);
 
   if (symbol-emitted?(local-symbol))
@@ -580,12 +636,11 @@ define method emit-indirection-definition
     emit-data-item(back-end, stream, local-symbol.cg-uninterned-symbol);
     emit-data-footer(back-end, stream, indirection);
   end if;
-
 end method;
 
 define sideways method emit-object 
-    (back-end :: <harp-back-end>, stream, o :: <module-binding>) => (object)
-
+    (back-end :: <harp-back-end>, stream, o :: <module-binding>)
+ => (object);
   output-definition(back-end, stream,
 		    $dummy-name,
 		    model-object: o,
@@ -615,33 +670,37 @@ define sideways method emit-object
 end method;
 
 define sideways method emit-object
-    (back-end :: <harp-back-end>, stream, o :: <string>) => (object)
-      let class-wrapper = ^class-mm-wrapper(&object-class(o));
-      emit-data-item(back-end, stream, class-wrapper);
-      emit-data-item(back-end, stream, o.size);
-      unless (o.empty?)
-        output-data-byte(back-end, stream, o);
-      end unless;
-      output-data-byte(back-end, stream, 0);
+    (back-end :: <harp-back-end>, stream, o :: <string>)
+ => (object);
+  let class-wrapper = ^class-mm-wrapper(&object-class(o));
+  emit-data-item(back-end, stream, class-wrapper);
+  emit-data-item(back-end, stream, o.size);
+  unless (o.empty?)
+    output-data-byte(back-end, stream, o);
+  end unless;
+  output-data-byte(back-end, stream, 0)
 end method emit-object;
 
 define sideways method emit-object // !@#$ NEED UNIFYING TYPE
-    (back-end :: <harp-back-end>, stream, o :: <object>) => (object)
-      let class = &object-class(o);
-      let wrapper = ^class-mm-wrapper(class);
-      emit-data-item(back-end, stream, wrapper);
-      emit-line-comment(stream, "wrapper");
-      for (slotd in ^instance-slot-descriptors(class))
-        emit-object-slot(back-end, stream, class, slotd, o);
-      end;
-    let rpt = ^repeated-slot-descriptor(class);
-    if (rpt)
-      emit-object-slot(back-end, stream, class, rpt, o);
-    end if;
+    (back-end :: <harp-back-end>, stream, o :: <object>)
+ => (object);
+  let class = &object-class(o);
+  let wrapper = ^class-mm-wrapper(class);
+  emit-data-item(back-end, stream, wrapper);
+  emit-line-comment(stream, "wrapper");
+  for (slotd in ^instance-slot-descriptors(class))
+    emit-object-slot(back-end, stream, class, slotd, o);
+  end;
+  let rpt = ^repeated-slot-descriptor(class);
+  if (rpt)
+    emit-object-slot(back-end, stream, class, rpt, o);
+  end if;
 end method;
 
 define method emit-object-slot
-    (back-end :: <harp-back-end>, stream, class, slotd :: <&any-instance-slot-descriptor>, o) => ()
+    (back-end :: <harp-back-end>, stream, class,
+     slotd :: <&any-instance-slot-descriptor>, o)
+ => ();
   let the-slot = ^slot-value(o, slotd);
   // just use the iep model for mep models
   let the-slot = 
@@ -652,53 +711,50 @@ define method emit-object-slot
 	  the-slot
 	else
 	  o.^iep
-	end if;
-      otherwise => the-slot;
-      end select;
+        end if;
+      otherwise =>
+        the-slot;
+    end select;
 
   emit-slot(back-end, stream, the-slot,
             if (*stream-outputters?*) struct-field-name(class, slotd, 0)
             else #f
             end if);
-
 end method;
 
 define method emit-object-slot
     (back-end :: <harp-back-end>, stream, 
-     class, slotd :: <&repeated-slot-descriptor>, o) => ()
-  let size = ^slot-value(o, ^size-slot-descriptor(slotd));
+     class,
+     slotd :: <&repeated-slot-descriptor>,
+     o)
+ => ();
+  let repeated-size = ^slot-value(o, ^size-slot-descriptor(slotd));
 
   if (slotd.^slot-type == dylan-value(#"<byte-character>"))
-    for (i from 0 below size)
-
+    for (i from 0 below repeated-size)
       emit-raw-data-item(back-end, stream,
-			 format-to-string("%s", ^repeated-slot-value(o, slotd, i)));
-
+                         format-to-string("%s",
+                                          ^repeated-slot-value(o, slotd, i)));
     end;
   else
-    for (i from 0 below size)
-
+    for (i from 0 below repeated-size)
       let value = ^repeated-slot-value(o, slotd, i);
-
       emit-data-item(back-end, stream, value);
 
       if (*stream-outputters?*)
-	emit-line-comment(stream,
-			  " %s[%d] ", 
-			  struct-field-name(class, slotd, i),
-			  i);
+        emit-line-comment(stream,
+                          " %s[%d] ", 
+                          struct-field-name(class, slotd, i),
+                          i);
       end if;
     end;
   end if;
 end method;
 
-
 define function emit-slot(back-end :: <harp-back-end>, stream, o, field-name)
-
   emit-data-item(back-end, stream, o);
 
   if (*stream-outputters?*)
     emit-line-comment(stream, " %s ", field-name);
   end if;
-
 end function emit-slot;

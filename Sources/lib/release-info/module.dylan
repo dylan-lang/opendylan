@@ -90,6 +90,10 @@ define module release-info
          library-pack-number,
          library-pack-required?;
 
+  // Merged library DLL information
+  export merged-project-name,
+         merged-project-libraries;
+
   // Library category information
   export <library-category-info>,
          installed-library-categories;

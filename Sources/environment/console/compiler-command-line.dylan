@@ -19,7 +19,7 @@ define command-line main => <main-command>
      documentation: "Command-line version of Functional Developer.")
   optional project :: <file-locator>  = "the project to be built";
 
-  keyword linker :: <symbol> = "the linker to use";
+  keyword build-script :: <file-locator> = "the (Jam) build script to use";
   keyword target :: <symbol> = "the target";
 
   flag help        = "show this help summary";
@@ -50,7 +50,7 @@ define command-line internal-main => <internal-main-command>
      documentation: "Command-line version of Functional Developer.")
   optional project :: <file-locator> = "the project to be built";
 
-  keyword linker :: <symbol> = "the linker to use";
+  keyword build-script :: <file-locator> = "the (Jam) build script to use";
   keyword target :: <symbol> = "the type of executable to generate";
   keyword debug-info :: <symbol>  = "control the debug info generated";
 

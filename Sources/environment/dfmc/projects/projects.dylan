@@ -538,7 +538,7 @@ end method link-project-progress;
 define sealed method link-project
     (project-object :: <dfmc-project-object>,
      #key progress-callback, error-handler, process-subprojects? = #t,
-          linker, target, force?, unify?, release?, messages)
+          build-script, target, force?, unify?, release?, messages)
  => ()
   ignore(progress-callback, messages);
   let project = project-object.ensure-project-proxy;
@@ -559,7 +559,7 @@ define sealed method link-project
 		     extent:      extent,
 		     mode:        if (unify?) #"combine" end,
 		     target-type: target,
-		     linker:      linker | default-linker(),
+		     build-script: build-script | default-build-script(),
 		     release?:    release?)
       end
     cleanup
@@ -568,15 +568,15 @@ define sealed method link-project
   end
 end method link-project;
 
-define sealed sideways method env/default-linker
-    () => (linker :: <symbol>)
-  default-linker()
-end method env/default-linker;
+define sealed sideways method env/default-build-script
+    () => (build-script :: <file-locator>)
+  default-build-script()
+end method env/default-build-script;
 
-define sealed sideways method env/default-linker-setter
-    (linker :: <symbol>) => (linker :: <symbol>)
-  default-linker() := linker
-end method env/default-linker-setter;
+define sealed sideways method env/default-build-script-setter
+    (build-script :: <file-locator>) => (build-script :: <file-locator>);
+  default-build-script() := build-script
+end method env/default-build-script-setter;
 
 define sealed method env/close-project
     (project-object :: <dfmc-project-object>) => ()

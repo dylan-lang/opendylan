@@ -51,13 +51,14 @@ exit 0;
 sub build_library {
     my ($library) = @_;
 
-    return 1 if exists $built{$library};
+    return $built{$library} if exists $built{$library};
 
     open(REGISTRY, '<', "$user_registries/$platform_name/$library")
 	|| open(REGISTRY, '<', "$user_registries/generic/$library")
-	|| return undef;
+	|| return 0;
     my $line = <REGISTRY>;
     close(REGISTRY);
+
 
     # abstract://dylan/environment/console/minimal-console-compiler.lid
     $line =~ s|^abstract://dylan/||;
@@ -111,7 +112,7 @@ sub build_library {
 
     print "Building $library... ";
 
-    my $command = "$compiler -nologo -save -build";
+    my $command = $compiler;
     $command .= " -debugger" if($debugger);
     $command .= " $library";
 
@@ -126,7 +127,7 @@ sub build_library {
 	print "\n";
 	if(defined $build_logs && !$debugger) {
 	    print STDERR
-		"fdmake: compile failed, see ",
+		"fdmake: compile failed ($?), see ",
 		"$build_logs/compile-$library.txt\n";
 	}
 	else {
@@ -134,7 +135,7 @@ sub build_library {
 	}
 	exit 1;
     }
-    $built{$library} = 1;
+    $built{$library} = 2;
 
     if(defined $build_logs && !$debugger) {
 	my $warnings = 0;

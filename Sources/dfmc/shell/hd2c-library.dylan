@@ -30,9 +30,6 @@ define library hd2c-dfmc-shell
   use dfmc-debug-back-end;
   use dfmc-c-file-compiler;
 
-  // Load the C Compiler & Linker linker
-  use ccl-linker;
-
   use command-shell;
 
   export dfmc-shell;

@@ -158,7 +158,6 @@ define module projects-protocol-internals
 
   use release-info;
   use build-system;
-  use path-utilities;
   use source-records;
   use file-source-records;
 

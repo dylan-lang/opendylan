@@ -116,7 +116,7 @@ end method remove-project-build-products;
 define sealed method link-project
     (project-object :: <exe-project>,
      #key progress-callback, error-handler, process-subprojects?,
-          linker, target, force?, unify?, release?, messages)
+          build-script, target, force?, unify?, release?, messages)
  => ()
   error("You cannot link an executable-only project!")
 end method link-project;

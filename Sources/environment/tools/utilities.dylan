@@ -259,6 +259,7 @@ define lazy-table $file-type-filters
       #"tool-spec"     => #["Functional Developer Tool Specifications", "*.spec"],
       #"executable"    => #["Programs",        "*.exe"],
       #"resource"      => #["Resource Files",  "*.rc"],
+      #"build-script"  => #["Jam build scripts", "*.jam"],
       #"text"          => #["Text Files",      "*.txt",
                                                "*.text"],
       #"c"             => #["C Source Files",  "*.c",

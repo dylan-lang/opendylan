@@ -1,1 +1,0 @@
-ole32.lib uuid.lib oleaut32.lib $(guilibsmt)

@@ -482,7 +482,7 @@ define module environment-protocols
          parse-project-source,
          build-project,
          remove-project-build-products,
-         default-linker, default-linker-setter,
+         default-build-script, default-build-script-setter,
          link-project,
          note-user-project-opened;
 

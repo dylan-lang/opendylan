@@ -24,9 +24,10 @@ define module dfmc-shell
   use variable-search;
   use dood;
   use build-system,
-    import: { system-registry-path, user-registry-path, user-build-path, user-install-path, default-linker,
+    import: { system-registry-path,
+              user-registry-path, user-build-path, user-install-path,
+              default-build-script,
 	      $override-default-linker, $override-default-dll-policy };
-  use path-utilities;
   use projects, rename: { link-library => projects/link-library };
   use projects-implementation;
   use registry-projects;

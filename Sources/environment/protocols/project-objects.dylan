@@ -348,13 +348,13 @@ define open generic link-project
      #key progress-callback, 
           error-handler, 
           process-subprojects?,
-          linker, target, force?, unify?, release?, messages)
+          build-script, target, force?, unify?, release?, messages)
  => ();
 
-define open generic default-linker
-    () => (linker :: <symbol>);
-define open generic default-linker-setter 
-    (linker :: <symbol>) => (linker :: <symbol>);
+define open generic default-build-script
+    () => (build-script :: <file-locator>);
+define open generic default-build-script-setter 
+    (build-script :: <file-locator>) => (build-script :: <file-locator>);
 
 
 /// Source records

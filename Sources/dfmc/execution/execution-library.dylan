@@ -9,7 +9,7 @@ define library dfmc-execution
   use functional-dylan;
   use variable-search;
   use system;
-  use build-system;
+  use release-info;
   use dfmc-core;
   use dfmc-back-end;
   use dfmc-optimization;
@@ -46,7 +46,7 @@ define module dfmc-runtime-execution
   use dylan-hygiene-glitches;
   use dylan-primitives;
   use operating-system;
-  use build-system;
+  use release-info;
   use threads;
   use variable-search;
   use dfmc-core,

@@ -20,8 +20,6 @@ define library dfmc-environment-projects
   use dfmc-pentium-harp-cg;		// Pentium backend
   use dfmc-harp-browser-support;	// Harp browsing support
   use dfmc-debug-back-end;		// Compiler print methods
-  use gnu-linker;			// GNU linking
-  use elf-linker;                       // ELF linking
 
   use dfmc-environment-database;
 
@@ -39,8 +37,8 @@ define module dfmc-environment-projects
 	      open-project => env/open-project,
               save-project =>  env/save-project,
               save-project-database =>  env/save-project-database,
-	      default-linker => env/default-linker,
-	      default-linker-setter => env/default-linker-setter,
+	      default-build-script => env/default-build-script,
+	      default-build-script-setter => env/default-build-script-setter,
               project-compilation-mode => env/project-compilation-mode,
               project-compilation-mode-setter => env/project-compilation-mode-setter,
               project-target-type => env/project-target-type,
@@ -69,8 +67,7 @@ define module dfmc-environment-projects
   use dfmc-progress-reports,
     import: { internal-reporting-setter };
   use build-system,
-    import: { $personal-bin, $personal-bin-as-string,
-	      system-release-path };
+    import: { $personal-bin, system-release-path };
 
   export <native-project-object>,
          <dfmc-project-object>;

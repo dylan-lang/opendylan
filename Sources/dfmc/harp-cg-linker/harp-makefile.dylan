@@ -179,17 +179,6 @@ define sideways method emit-target-makefile
 
   if (*emit-makefile?*)
     emit-makefile();
-  else
-    emit-build-script(back-end,
-		      t, lib-desc, units,
-		      executable: executable,
-		      base-address: base-address,
-		      linker-options: linker-options,
-		      c-source-files: c-source-files,
-		      c-header-files: c-header-files,
-		      c-object-files: c-object-files,
-		      rc-files: rc-files,
-		      c-libraries: c-libraries);
   end if;  
 end method emit-target-makefile;
 

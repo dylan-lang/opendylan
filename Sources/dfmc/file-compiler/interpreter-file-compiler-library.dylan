@@ -69,7 +69,6 @@ define module dfmc-debug
   use file-source-records;
   use source-records-implementation;
   // use build-system, rename: { <linker> => build/<linker> };
-  // use path-utilities;
 
   export
     unify-project,

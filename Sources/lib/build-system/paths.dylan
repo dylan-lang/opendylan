@@ -17,8 +17,7 @@ define method read-environment-variable
   if (value | ~required?)
     value
   else
-    build-error("Required Environment Variable %s is not set",
-                variable);
+    error("Required Environment Variable %s is not set", variable);
   end if;
 end method;
 
@@ -35,7 +34,8 @@ end;
 
 define function system-registry-path()
  => (path :: false-or(<sequence>));
-  let path = read-environment-variable("FUNCTIONAL_DEVELOPER_RELEASE_REGISTRIES");
+  let path
+    = read-environment-variable("FUNCTIONAL_DEVELOPER_RELEASE_REGISTRIES");
   path &
     map(method(p) as(<directory-locator>, p) end,
 	tokenize-environment-variable(path))
@@ -60,11 +60,9 @@ end;
 define function application-filename-path
     ()
  => (path :: <directory-locator>)
-  //---*** andrewa: ultimately this should return a locator
   let exe = application-filename();
   unless (exe)
-    build-error("Cannot locate %s release directory",
-		release-product-name())
+    error("Cannot locate %s release directory", release-product-name())
   end;
   let exe-directory = locator-directory(as(<file-locator>, exe));
   locator-directory(exe-directory)
@@ -108,8 +106,8 @@ define function user-projects-path
     begin
       let path = environment-variable("FUNCTIONAL_DEVELOPER_USER_PROJECTS");
       path &
-	map(method(p) as(<directory-locator>, p) end,
-	    tokenize-environment-variable(path))
+        map(method(p) as(<directory-locator>, p) end,
+            tokenize-environment-variable(path))
     end
 end;
 

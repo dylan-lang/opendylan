@@ -14,10 +14,6 @@ define constant <environment-start-action>
            #"start-dialog", // Show startup options dialog
            #"open-file");   // Open a file (shows Open dialog)
 
-define constant <environment-linker-option>
-  = one-of(#"microsoft", // Microsoft linker
-           #"gnu");      // GNU linker
-
 define settings <environment-settings> (<functional-developer-user-settings>)
   key-name "Environment";
   slot start-action             :: <symbol>  = #"start-dialog";
@@ -185,8 +181,8 @@ define pane <environment-general-options-page> ()
 end pane <environment-general-options-page>;
 
 define pane <environment-build-options-page> ()
-  sealed slot %linker :: <environment-linker-option>,
-    required-init-keyword: linker:;
+  sealed slot %build-script :: <file-locator>,
+    required-init-keyword: build-script:;
   sealed slot %copy-sources? :: <boolean>,
     required-init-keyword: copy-sources?:;
   sealed slot %save-databases? :: <boolean>,
@@ -195,17 +191,39 @@ define pane <environment-build-options-page> ()
     required-init-keyword: link-mode:;
   sealed slot %upgrade-warnings? :: <boolean>,
     required-init-keyword: upgrade-warnings?:;
-  pane %linker-pane (pane)
-    make(<radio-box>,
-         orientation: #"vertical",
-         items: #[#["&Microsoft linker", #"microsoft"],
-                  #["&GNU linker",       #"gnu"]],
-         value: pane.%linker,
-         label-key: first,
-         value-key: second,
-         value-changed-callback: method (box)
-                                   pane.%linker := gadget-value(box)
-                                 end);
+
+  pane %build-script-field (pane)
+    make(<text-field>,
+         text: as(<string>, pane.%build-script),
+         value-changed-callback:
+           method (field)
+             pane.%build-script := as(<file-locator>, gadget-value(field));
+           end);
+
+  pane %build-script-browse-button (pane)
+    make(<button>,
+	 label: "Browse...",
+	 activate-callback: 
+	   method (gadget)
+	     let filename
+	       = environment-choose-file
+	           (title:  "Open",
+		    owner:   sheet-frame(pane),
+		    default: pane.%build-script,
+		    filters: #[#"build-script", #"all"]);
+	     if (filename)
+	       pane.%build-script := filename;
+	       gadget-text(pane.%build-script-field-pane)
+                 := as(<string>, filename);
+	     end
+	   end);
+
+  pane %build-script-pane (pane)
+    horizontally (spacing: 4)
+      pane.%build-script-field;
+      pane.%build-script-browse-button;
+    end;
+    
   /* ---*** Removed for 2.0 Beta 1 -- put it back in later
   pane %copy-sources-pane (pane)
     make(<check-button>,
@@ -266,9 +284,9 @@ define pane <environment-build-options-page> ()
                     pane.%upgrade-warnings-pane;
                   end);
       make(<group-box>,
-	   label: "Link object files using",
+	   label: "Build script",
 	   max-width: $fill,
-	   child: pane.%linker-pane);
+	   child: pane.%build-script-pane);
     end vertically;
 end pane <environment-build-options-page>;
 
@@ -330,7 +348,7 @@ define method frame-edit-options (frame :: <environment-frame>) => ()
       = make(<environment-build-options-page>,
 	     save-databases?:   environment-default-save-databases(),
 	     copy-sources?:     environment-default-copy-sources(),
-             linker:            default-linker(),
+             build-script:      default-build-script(),
 	     link-mode:         environment-default-link-mode(),
 	     upgrade-warnings?: environment-default-upgrade-warnings());
     let windows-page
@@ -357,7 +375,7 @@ define method frame-edit-options (frame :: <environment-frame>) => ()
 	    settings.auto-raise-all-frames    := windows-page.%raise-frames;
 	    settings.auto-lower-all-frames    := windows-page.%lower-frames;
 
-            default-linker() := build-page.%linker;
+            default-build-script() := build-page.%build-script;
           end method update-environment-options;
     let dialog
       = make(<property-frame>,
