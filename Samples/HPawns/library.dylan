@@ -5,16 +5,11 @@ Synopsis:  A try to port Pawns from Mindy to Harlequin's Dylan
 Copyright: (C) Enrico Colombini, freely redistributable
 
 define library hpawns
-  use operating-system;
-  use streams;
-  use standard-io;
-  use print;
-  use format-out;
-  use format;
-  use threads;
-  use table-extensions;
-  use machine-word;
-  use harlequin-dylan;
+  use system;
+  use io;
+  use common-dylan;
+  use collections;
+  use functional-dylan;
 
   // Add any more module exports here.
   export hpawns;
