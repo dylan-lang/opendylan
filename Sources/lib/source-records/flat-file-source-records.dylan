@@ -166,7 +166,7 @@ define method file-source-record-ids (c  == <flat-file-source-record>,
   exception (error :: <file-system-error>)
     signal(make(<source-record-missing>,
 		source-record: location,
-		format-string: "File %s doesn't exist or cannot be open.",
+		format-string: "File %s does not exist or cannot be opened.",
 		format-arguments: list(location)));
   end;
 
