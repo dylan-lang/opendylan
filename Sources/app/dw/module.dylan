@@ -30,7 +30,6 @@ define module dw
   use lid-projects;
   use user-projects;
   use release-info;
-  use licensing;
   use dfmc-common;
   use memory-manager;
   use dfmc-namespace;

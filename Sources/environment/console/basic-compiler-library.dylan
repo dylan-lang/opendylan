@@ -14,7 +14,6 @@ define library basic-console-compiler
   use commands;
 
   use basic-release-info;
-  use licensing;
 
   use environment-protocols;
   use environment-commands;

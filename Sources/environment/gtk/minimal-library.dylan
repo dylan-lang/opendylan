@@ -12,7 +12,6 @@ define library minimal-gtk-environment
   use system;
 
   use internal-release-info;
-  use licensing;
 
   use c-ffi;
   use gtk;

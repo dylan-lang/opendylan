@@ -13,7 +13,6 @@ define library interpreter
   use io;
 
   use internal-release-info;
-  use licensing;
 
   use memory-manager;
   use dood;

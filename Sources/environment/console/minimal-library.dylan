@@ -15,7 +15,6 @@ define library minimal-console-environment
 
   use internal-release-info;
   use build-system;
-  use licensing;
 
   use environment-protocols;
   use environment-commands;

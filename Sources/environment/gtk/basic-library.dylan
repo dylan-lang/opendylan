@@ -12,7 +12,6 @@ define library basic-gtk-environment
   use system;
 
   use basic-release-info;
-  use licensing;
 
   use c-ffi;
   use gtk;

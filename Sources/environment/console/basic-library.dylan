@@ -15,7 +15,6 @@ define library basic-console-environment
 
   use basic-release-info;
   use build-system;
-  use licensing;
 
   use environment-protocols;
   use environment-commands;

@@ -25,7 +25,6 @@ define module console-environment
 
   use build-system,
     import: { configure-build-system };
-  use licensing;
 
   use environment-protocols,
     exclude: { application-filename,

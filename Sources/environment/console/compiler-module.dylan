@@ -21,8 +21,6 @@ define module console-environment
   use commands;
   use command-lines;
 
-  use licensing;
-
   use environment-protocols,
     exclude: { application-arguments,
                application-filename };

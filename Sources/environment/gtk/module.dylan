@@ -20,8 +20,6 @@ define module gtk-environment
     import: { file-exists?,
               working-directory };
 
-  use licensing;
-
   use c-ffi;
   use gtk;
 

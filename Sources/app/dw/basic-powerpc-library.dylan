@@ -13,7 +13,6 @@ define library basic-powerpc-dw
   use io;
 
   use basic-release-info;
-  use licensing;
 
   use memory-manager;
   use dood;

@@ -20,8 +20,6 @@ define module win32-environment
     import: { file-exists?,
               working-directory };
 
-  use licensing;
-
   use c-ffi;
   use win32-common,
     rename: { <point> => w/<point> };

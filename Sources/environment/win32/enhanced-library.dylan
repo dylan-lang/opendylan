@@ -12,7 +12,6 @@ define library enhanced-win32-environment
   use system;
 
   use enhanced-release-info;
-  use licensing;
 
   use c-ffi;
   use win32-common;

@@ -12,7 +12,6 @@ define library minimal-win32-environment
   use system;
 
   use internal-release-info;
-  use licensing;
 
   use c-ffi;
   use win32-common;

@@ -12,7 +12,6 @@ define library enhanced-gtk-environment
   use system;
 
   use enhanced-release-info;
-  use licensing;
 
   use c-ffi;
   use gtk;

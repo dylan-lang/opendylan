@@ -15,7 +15,6 @@ define library enhanced-console-environment
 
   use enhanced-release-info;
   use build-system;
-  use licensing;
 
   use environment-protocols;
   use environment-commands;

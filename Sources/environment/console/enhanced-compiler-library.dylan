@@ -14,7 +14,6 @@ define library enhanced-console-compiler
   use commands;
 
   use enhanced-release-info;
-  use licensing;
 
   use environment-protocols;
   use environment-commands;
