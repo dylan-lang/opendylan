@@ -147,9 +147,6 @@ sub build_library {
 		$warnings += $1;
 		$serious_warnings += $2;
 		$errors += $3;
-	    } elsif(m|There were (\d+) warnings, (\d+) serious warnings|) {
-		$warnings += $1;
-		$serious_warnings += $2;
 	    }
 	}
 	close(LOGFILE);
