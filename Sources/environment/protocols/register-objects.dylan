@@ -128,7 +128,6 @@ end method;
 ///// LOOKUP-REGISTER-BY-NAME
 //    Synopsis: Tries to find a register object corresponding to a given
 //              name.
-++ Sources/runtime-manager/debugger-manager/print-inspect.dylan	16 Apr 2004 20:15:00 -0000
 //      server      - The dispatching context.
 //      name        - The candidate register name.
 //    Outputs:
