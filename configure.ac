@@ -56,8 +56,8 @@ bootstrap_target=3-stage-bootstrap
 AC_SUBST(bootstrap_target)
 
 AC_ARG_WITH(mps,
-            AC_HELP_STRING([--with-mps=PATH
-                            Path to MPS location.]))
+            AC_HELP_STRING([--with-mps=PATH],
+                            [Path to MPS location.]))
 AC_SUBST(with_mps)
 
 AC_MSG_CHECKING(for Library Packs to include)
