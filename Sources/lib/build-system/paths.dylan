@@ -38,7 +38,7 @@ define function system-registry-path()
     = read-environment-variable("FUNCTIONAL_DEVELOPER_RELEASE_REGISTRIES");
   path &
     map(method(p) as(<directory-locator>, p) end,
-	tokenize-environment-variable(path))
+        tokenize-environment-variable(path))
 end;
 
 define function system-release-path()
@@ -74,9 +74,9 @@ define function user-registry-path
   let path = read-environment-variable("FUNCTIONAL_DEVELOPER_USER_REGISTRIES");
   path 
     & map(method (p :: <string>)
-	    as(<directory-locator>, p)
-	  end,
-	  tokenize-environment-variable(path))
+            as(<directory-locator>, p)
+          end,
+          tokenize-environment-variable(path))
 end;
 
 define function user-install-path
@@ -95,7 +95,7 @@ define variable *user-projects-path* = #f;
 define function user-projects-path-setter
     (paths :: <sequence>)
   *user-projects-path* := map(method(p) as(<directory-locator>, p) end,
-			      paths)
+                              paths)
 end;
 
 define function user-projects-path
