@@ -1,6 +1,6 @@
 Module:    environment-internal-commands
 Synopsis:  The internal-only commands provided by the environment
-Author:	   Andy Armstrong
+Author:    Andy Armstrong
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      Functional Objects Library Public License Version 1.0
@@ -24,7 +24,7 @@ define method show-property
     (context :: <environment-context>, property :: <personal-root-property>)
  => ()
   message(context, "Personal root: %s",
-	  environment-variable("FUNCTIONAL_DEVELOPER_USER_ROOT"))
+          environment-variable("FUNCTIONAL_DEVELOPER_USER_ROOT"))
 end method show-property;
 
 define method set-property
@@ -51,7 +51,7 @@ define method show-property
     (context :: <environment-context>, property :: <system-root-property>)
  => ()
   message(context, "System root: %s",
-	  environment-variable("FUNCTIONAL_DEVELOPER_USER_ROOT"))
+          environment-variable("FUNCTIONAL_DEVELOPER_USER_ROOT"))
 end method show-property;
 
 define method set-property
@@ -106,11 +106,11 @@ define method maybe-set-roots
           system-root :: false-or(<directory-locator>))
  => ()
   local method set-variable
-	    (variable :: <string>, directory :: <directory-locator>, 
-	     subdirectories :: <sequence>)
-	  let subdirectory = apply(subdirectory-locator, directory, subdirectories);
-	  environment-variable(variable) := as(<string>, subdirectory)
-	end method set-variable;
+            (variable :: <string>, directory :: <directory-locator>, 
+             subdirectories :: <sequence>)
+          let subdirectory = apply(subdirectory-locator, directory, subdirectories);
+          environment-variable(variable) := as(<string>, subdirectory)
+        end method set-variable;
   if (personal-root)
     for (directory-info :: <list> in $personal-directories)
       let variable       = directory-info.head;
