@@ -45,6 +45,22 @@ define method jam-target-build
         
         // recursively bind dependencies
         do(curry(bind-aux, time-target), target.target-depends);
+        let seen = make(<object-set>);
+        for(depend in target.target-depends)
+          bind-aux(time-target, depend);
+        end for;
+        add!(seen, target);
+
+        for (invocation in target.target-action-invocations)
+          for (target in invocation.action-invocation-targets)
+            unless (member?(target, seen))
+              for(depend in target.target-depends)
+                bind-aux(time-target, depend)
+              end for;
+              add!(seen, target);
+            end unless;
+          end for;
+        end for;
         
         // bind includes target
         if (target.target-includes-target)
@@ -197,6 +213,10 @@ define method jam-target-build
         
         target.target-build-progress := #"active";
 
+        unless (target.target-build-status > $build-status-init)
+          error("target %s was never bound", target.target-name);
+        end;
+        
         if (target.target-build-status > $build-status-stable)
           with-jam-target(jam, target)
             for (invocation in target.target-action-invocations)
