@@ -51,7 +51,7 @@ define method show-property
     (context :: <environment-context>, property :: <system-root-property>)
  => ()
   message(context, "System root: %s",
-          environment-variable("FUNCTIONAL_DEVELOPER_USER_ROOT"))
+          environment-variable("FUNCTIONAL_DEVELOPER_RELEASE_ROOT"))
 end method show-property;
 
 define method set-property
