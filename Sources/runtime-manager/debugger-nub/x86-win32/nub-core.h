@@ -7,12 +7,13 @@
 /* ****************************************************************** ** */
 
 #include <windows.h>
-#include "IMAGEHLP.H"
+#include "dbghelp.H"
 #include "coff-extract.h"
 #include "cv-extract.h"
 #include "cv-types.h"
+#include "dia-types.h"
 
-// Newer version of IMAGEHLP.H has deprecated some structure members we use.
+// Newer versions of DbgHelp.h has deprecated some structure members we use.
 
 #if defined(DBHLP_DEPRECIATED) || defined(DBHLP_DEPRECATED)
 #define CodeViewSymbols ReservedCodeViewSymbols
@@ -551,7 +552,7 @@ typedef struct _DBGLIBRARY {
   CV_HEADER               *SymbolPointer;
   BYTE                     DebugType;
   BOOL                     SymbolHandlerWorking;
-  IMAGEHLP_MODULE          ImagehlpModuleStruct;
+  IMAGEHLP_MODULE64        ImagehlpModuleStruct;
   char                     DefaultImageName[256];
   BOOL                     Valid;
   LPDBGLIBRARY             Next;
@@ -578,18 +579,14 @@ typedef struct _REGISTER_DESCRIPTOR {
 
 typedef struct _DBGPROCESS *LPDBGPROCESS;
 
-// EXT_IMAGEHLP_SYMBOL
-// This is the same as the Win32-defined IMAGEHLP_SYMBOL, but contains
+// EXT_SYMBOL_INFO
+// This is the same as the Win32-defined SYMBOL_INFO, but contains
 // more space for name information.
 
-typedef struct _EXT_IMAGEHLP_SYMBOL {
-  DWORD          SizeOfStruct;
-  DWORD          Address;
-  DWORD          Size;
-  DWORD          Flags;
-  DWORD          MaxNameLength;
-  char           Name[256];
-} EXT_IMAGEHLP_SYMBOL;
+typedef struct _EXT_SYMBOL_INFO {
+  SYMBOL_INFO    Info;
+  char           XName[256];
+} EXT_SYMBOL_INFO;
 
 
 // DBGPROCESS
@@ -628,9 +625,9 @@ typedef struct _DBGPROCESS {
   PROCESS_INFORMATION        ProcessInfoContainer;
   BOOL                       SymbolHandlerWorking;
   INTERACTIVE_CODE_SEGMENTS  InteractiveCodeSegments;
-  EXT_IMAGEHLP_SYMBOL        SymbolBuffer;
-  EXT_IMAGEHLP_SYMBOL        SymbolAheadBuffer;
-  EXT_IMAGEHLP_SYMBOL        SymbolBehindBuffer;
+  EXT_SYMBOL_INFO            SymbolBuffer;
+  EXT_SYMBOL_INFO            SymbolAheadBuffer;
+  EXT_SYMBOL_INFO            SymbolBehindBuffer;
   BOOL                       SymbolBufferValid;
   BOOL                       SymbolAheadBufferValid;
   BOOL                       SymbolBehindBufferValid;

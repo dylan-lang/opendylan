@@ -264,7 +264,7 @@ void pull_image_information (LPDBGLIBRARY module)
 
   // There is a special case where the COFF symbol table was already
   // embedded in the structure returned by MapDebugInformation (in
-  // IMAGEHLP). If this is true, then the module's DebugType field will
+  // DbgHelp). If this is true, then the module's DebugType field will
   // already hold the value COFF_IMAGE, and we must do nothing here.
 
   if (module->DebugType == COFF_IMAGE) {

@@ -49,7 +49,7 @@ LOBJS       = $(COBJS) server.obj server_locals.obj proxy.obj lproxy.obj
 
 SOBJS        = server_locals.obj process_walker.obj server_remote.obj server_main.obj transport_protocols.obj nubserve_s.obj
 
-CLIBS        = IMAGEHLP.LIB
+CLIBS        = DBGHELP.LIB
 
 RLIBS        = $(CLIBS) rdevnub.lib
 LLIBS        = $(CLIBS) devnub.lib

@@ -551,22 +551,26 @@ void ensure_debug_information_for_library
     create_library_debug_map(process, module);
     pull_image_information(module);
 
-    // Call IMAGEHLP to load up the module if the symbol handler is working.
+    // Call DbgHelp to load up the module if the symbol handler is working.
 
-    if ((process->SymbolHandlerWorking) && (module->DebugType == NONE)) {
-      module->SymbolHandlerWorking =
-        SymLoadModule(process->ProcessHandle,
-                      module->ImageInformation.ImageFileHandle,
-                      NULL,  // ?
-                      NULL,
-                      (DWORD) module->ImageInformation.ImageBase,
-                      0);
-      module->ImagehlpModuleStruct.SizeOfStruct =
-          sizeof(IMAGEHLP_MODULE);
+    if ((process->SymbolHandlerWorking)
+	&& (module->DebugType == NONE || module->DebugType == CODEVIEW_PDB)) {
+      DWORD64 base =
+        SymLoadModule64(process->ProcessHandle,
+			module->ImageInformation.ImageFileHandle,
+			module->DefaultImageName,
+			NULL,
+			(DWORD64) module->ImageInformation.ImageBase,
+			0);
+      if (base != 0)
+	module->SymbolHandlerWorking = 1;
+
+      memset(&(module->ImagehlpModuleStruct), 0, sizeof(IMAGEHLP_MODULE64));
+      module->ImagehlpModuleStruct.SizeOfStruct = sizeof(IMAGEHLP_MODULE64);
       if (module->SymbolHandlerWorking) {
-        SymGetModuleInfo(process->ProcessHandle,
-                         (DWORD) module->ImageInformation.ImageBase,
-                         &(module->ImagehlpModuleStruct));
+	SymGetModuleInfo64(process->ProcessHandle,
+			   (DWORD64) module->ImageInformation.ImageBase,
+			   &(module->ImagehlpModuleStruct));
       }
     }
   }
@@ -615,7 +619,9 @@ void housekeep_for_stop_reason
 
     push_debug_event(process, made_up_event);
 
-    // Initialize IMAGEHLP's symbol handler for this process.
+    // Initialize DbgHelp's symbol handler for this process.
+
+    SymSetOptions(SYMOPT_UNDNAME | SYMOPT_DEFERRED_LOADS);
 
     process->SymbolHandlerWorking =
       SymInitialize(process->ProcessHandle, NULL, FALSE);

@@ -192,10 +192,14 @@ BOOL codeview_present_in_pdb (PIMAGE_DEBUG_INFORMATION info)
     return (FALSE);
  
   // Informal strategy here. The generated signature always seems to
-  // be "NB10" when a pdb has been used.
+  // be "NB10" when a pdb has been used, except that the Visual Studio .NET
+  // linker uses the signature "RSDS".
 
   if ((sig[0] == 'N') && (sig[1] == 'B') &&
        (sig[2] == '1') && (sig[3] == '0'))
+    return (TRUE);
+  else if ((sig[0] == 'R') && (sig[1] == 'S') &&
+       (sig[2] == 'D') && (sig[3] == 'S'))
     return (TRUE);
   else
     return (FALSE);
@@ -2347,6 +2351,8 @@ CV_HEADER *get_cv_sym_from_debug_map
     module->Subsection = subsection;
     return (this_header);
   }
+
+  return NULL;
 }
 
 
@@ -3486,12 +3492,12 @@ void release_library_debug_map (LPDBGPROCESS process, LPDBGLIBRARY module)
   if (module->SymbolFile != NULL)
     CloseHandle(module->SymbolFile);
 
-  // If IMAGEHLP has loaded up any symbols for us in this module. Unload
+  // If DbgHelp has loaded up any symbols for us in this module. Unload
   // them now.
 
   if (module->SymbolHandlerWorking) {
-    SymUnloadModule(process->ProcessHandle,
-                    module->ImageInformation.ImageBase);
+    SymUnloadModule64(process->ProcessHandle,
+		      (DWORD64) module->ImageInformation.ImageBase);
     module->SymbolHandlerWorking = FALSE;
   }
 }

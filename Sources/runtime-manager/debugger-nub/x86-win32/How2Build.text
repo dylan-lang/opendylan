@@ -36,10 +36,8 @@ In future we might be a little cleaner about this and allow an environment
 variable to specify where the build output goes.
 
 You do, however, need to set an environment variable called IMAGEHLPDIR.
-This should hold full path to the file IMAGEHLP.LIB, which is required
-by the debugger nub. Windows NT 4.00 provides IMAGEHLP.LIB in
-the MSTOOLS\lib directory on your system drive. (You need to have the
-necessary SDKs installed).
+This should hold full path to the file DBGHELP.LIB, which is required
+by the debugger nub. The DBGHELP.LIB is provided with the Microsoft SDK.
 
 Example:
 

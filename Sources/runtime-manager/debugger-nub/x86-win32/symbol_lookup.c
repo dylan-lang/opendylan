@@ -37,6 +37,21 @@ void add_boundary_cache
 // Adds a pair of function boundaries enclosing "addr" to the specified
 // cache.
 
+BOOL CALLBACK nub_enumerate_symbol_callback
+  (PSYMBOL_INFO pSymInfo,
+   ULONG        SymbolSize,
+   PVOID        UserContext)
+{
+  LPDBGPROCESS      process = (LPDBGPROCESS) UserContext;
+
+  process->SymbolBuffer.Info = *pSymInfo;
+  strcpy(process->SymbolBuffer.Info.Name, pSymInfo->Name);
+  
+  process->SymbolBufferValid = TRUE;
+
+  return FALSE;			// Don't continue enumerating
+}
+
 
 NUBINT
   nub_closest_symbol
@@ -56,7 +71,6 @@ NUBINT
 {
   LPDBGPROCESS      process = (LPDBGPROCESS) nub;
   BOOL              status;
-  DWORD             dw_disp;
   LPDBGLIBRARY      module 
                       = library_descriptor_from_address (process,
                                                          (DWORD) location);
@@ -98,46 +112,47 @@ NUBINT
     break;
 
   default:
-    // If the symbol handler is working, try to use IMAGEHLP to lookup the
+    // If the symbol handler is working, try to use DbgHelp to lookup the
     // symbol.
 
-    process->SymbolBuffer.SizeOfStruct = sizeof(EXT_IMAGEHLP_SYMBOL);
-    process->SymbolBuffer.MaxNameLength = 256;
+    process->SymbolBufferValid = FALSE;
 
     status =
-      SymGetSymFromAddr(process->ProcessHandle,
-                        (DWORD) location,
-                        &dw_disp,
-                        (IMAGEHLP_SYMBOL*) &(process->SymbolBuffer));
-    if (status) {
+      SymEnumSymbolsForAddr(process->ProcessHandle,
+			    (DWORD64) location,
+			    nub_enumerate_symbol_callback,
+			    process);
+    if (status && process->SymbolBufferValid) {
       BYTE    i = 0;
       //printf("Located the symbol: ");
-      while(process->SymbolBuffer.Name[i] != '\0') {
+      while(process->SymbolBuffer.Info.Name[i] != '\0') {
         //printf("%c", process->SymbolBuffer.Name[i]);
         i++;
       }
       //printf("\n");
-      process->SymbolBufferValid = TRUE;
-      (*actual_address) = (TARGET_ADDRESS) process->SymbolBuffer.Address;
-      (*offset) = (NUBINT) dw_disp;
+      (*actual_address) = (TARGET_ADDRESS) process->SymbolBuffer.Info.Address;
+      (*offset)
+	= (NUBINT) ((DWORD64) location - process->SymbolBuffer.Info.Address);
       // TODO: Something better here.
-      // When using IMAGEHLP's symbol handler, we have no real way to
+      // When using DbgHelp's symbol handler, we have no real way to
       // identify the programming language that defined the symbol.
       // This is a slight hack.
       if ((i > 0) &&
-          (process->SymbolBuffer.Name[0] == 'K') &&
-          (process->SymbolBuffer.Name[i - 1] == 'I'))
+          (process->SymbolBuffer.Info.Name[0] == 'K') &&
+          (process->SymbolBuffer.Info.Name[i - 1] == 'I'))
         (*language) = DYLAN_LANGUAGE;
       else
         (*language) = C_LANGUAGE;
       (*debug_start) = (*actual_address);
       (*debug_end) = 
         (TARGET_ADDRESS) 
-          (process->SymbolBuffer.Address + process->SymbolBuffer.Size);
+          (process->SymbolBuffer.Info.Address
+	   + process->SymbolBuffer.Info.Size);
       (*final) = (*debug_end);
       (*library) = (NUBLIBRARY) module;
       (*name_length) = (NUBINT) i;
-      process->NameCache = process->SymbolBuffer.Name;
+      (*is_function) = (process->SymbolBuffer.Info.Tag == SymTagFunction);
+      process->NameCache = process->SymbolBuffer.Info.Name;
       return ((NUBINT) 1);
     }
     else {
@@ -206,7 +221,7 @@ NUBINT nub_find_symbol_in_library
     break;
 
   default:
-    // If the symbol handler is working, try to use IMAGEHLP to lookup the
+    // If the symbol handler is working, try to use DbgHelp to lookup the
     // symbol.
 
     if (!(module->SymbolHandlerWorking))
@@ -231,18 +246,18 @@ NUBINT nub_find_symbol_in_library
 
     // Fill in the symbol buffer information.
 
-    process->SymbolBuffer.SizeOfStruct = sizeof(EXT_IMAGEHLP_SYMBOL);
-    process->SymbolBuffer.MaxNameLength = 256;
+    process->SymbolBufferValid = FALSE;
 
     status =
-      SymGetSymFromName(process->ProcessHandle,
-                        (LPSTR) extended_name,
-                        (IMAGEHLP_SYMBOL*) &(process->SymbolBuffer));
-    if (status) {
-      process->SymbolBufferValid = TRUE;
-      (*address) = (TARGET_ADDRESS) process->SymbolBuffer.Address;
+      SymEnumSymbols(process->ProcessHandle,
+		     module->ImageInformation.ImageBase,
+		     extended_name,
+		     nub_enumerate_symbol_callback,
+		     process);
+    if (status && process->SymbolBufferValid) {
+      (*address) = (TARGET_ADDRESS) process->SymbolBuffer.Info.Address;
       // TODO: Something better here.
-      // When using IMAGEHLP's symbol handler, we have no real way to
+      // When using DbgHelp's symbol handler, we have no real way to
       // identify the programming language that defined the symbol.
       // This is a slight hack.
       if ((name[0] == 'K') && (name[name_length - 1] == 'I'))
@@ -252,9 +267,10 @@ NUBINT nub_find_symbol_in_library
       (*debug_start) = (*address);
       (*debug_end) = 
         (TARGET_ADDRESS) 
-          (process->SymbolBuffer.Address + process->SymbolBuffer.Size);
+          (process->SymbolBuffer.Info.Address + process->SymbolBuffer.Info.Size);
       (*last_address) = (*debug_end);
-      process->NameCache = process->SymbolBuffer.Name;
+      (*is_function) = (process->SymbolBuffer.Info.Tag == SymTagFunction);
+      process->NameCache = process->SymbolBuffer.Info.Name;
       return ((NUBINT) 1);
     }
     else {
@@ -426,17 +442,13 @@ void nub_function_bounding_addresses
 {
   LPDBGPROCESS      process = (LPDBGPROCESS) nub;
   DWORD             dwAd = (DWORD) addr;
-  DWORD             dwHi, dwLo, dwDisp;
+  DWORD             dwHi, dwLo;
   LPDBGLIBRARY      module 
                       = library_descriptor_from_address (process,
                                                          (DWORD) addr);
-  EXT_IMAGEHLP_SYMBOL    symbol;
   BOOL                   status = FALSE;
 
   ensure_debug_information_for_library(process, module);
-
-  symbol.SizeOfStruct = sizeof(EXT_IMAGEHLP_SYMBOL);
-  symbol.MaxNameLength = 256;
 
   // The first place to look is the cache.
 
@@ -450,20 +462,24 @@ void nub_function_bounding_addresses
   // symbol, and hence its range.
 
   if (process->SymbolHandlerWorking) {
-    status = SymGetSymFromAddr(process->ProcessHandle,
-                               (DWORD) addr,
-                               &dwDisp,
-                               (IMAGEHLP_SYMBOL*) &symbol);
+    process->SymbolBufferValid = FALSE;
+
+    status =
+      SymEnumSymbolsForAddr(process->ProcessHandle,
+			    (DWORD64) addr,
+			    nub_enumerate_symbol_callback,
+			    process);
   }
 
   if (status) {
-    // IMAGEHLP found the symbol, so unpick the details.
-    (*lower) = (TARGET_ADDRESS) symbol.Address;
-    (*upper) = (TARGET_ADDRESS) (symbol.Address + symbol.Size - 1);
+    // DbgHelp found the symbol, so unpick the details.
+    (*lower) = (TARGET_ADDRESS) process->SymbolBuffer.Info.Address;
+    (*upper)
+      = (TARGET_ADDRESS) (process->SymbolBuffer.Info.Address
+			  + process->SymbolBuffer.Info.Size - 1);
   }
   else {
-
-    // IMAGEHLP did not come through for us, so defer to bruteforce
+    // DbgHelp did not come through for us, so defer to bruteforce
     // methods.
 
     module = library_descriptor_from_address (process, (DWORD) addr);

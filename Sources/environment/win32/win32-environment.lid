@@ -10,7 +10,7 @@ Major-Version: 2
 Minor-Version: 1
 Linker-Options: $(guilflags)
 C-Libraries:    devnub.lib
-	        imagehlp.lib
+	        dbghelp.lib
 Comment:	'C-Header-Files' is a kludge to get the bitmaps linked in
 RC-Files:	bitmaps.rc
 C-Header-Files: bitmaps/about.bmp
