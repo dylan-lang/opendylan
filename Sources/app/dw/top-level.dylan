@@ -1096,14 +1096,6 @@ end method default-handler;
 define function dw()
   *initializing?* := #f;
   block()
-    validate-license(#t)
-  exception (c :: <license-validation-failure>)
-    format(*standard-error*, "%s\nPlease contact %s for assistance.\n",
-	   c, release-support-address());
-    sleep(2);			// Give the user a few moments to see it...
-    os/exit-application($compiler-error-return-code)
-  end block;
-  block()
     apply(run-dw, os/application-arguments());
   exception(<end-of-stream-error>)
     format-out("Done\n");
