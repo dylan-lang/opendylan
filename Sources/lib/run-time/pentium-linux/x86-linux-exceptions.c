@@ -56,12 +56,12 @@ static void EstablishDylanExceptionHandlers (struct sigaction * oldFPEHandler,
 
   sigset_t set, oldset;
 
-#if 0
   newFPEHandler.sa_handler = oldFPEHandler->sa_handler;
   sigemptyset(&newFPEHandler.sa_mask);
   newFPEHandler.sa_flags = 0;
   sigaction(SIGFPE, &newFPEHandler, oldFPEHandler);
 
+#if 0
   newSEGVHandler.sa_handler = oldSEGVHandler->sa_handler;
   sigemptyset(&newSEGVHandler.sa_mask);
   newSEGVHandler.sa_flags = 0;
@@ -76,8 +76,8 @@ static void EstablishDylanExceptionHandlers (struct sigaction * oldFPEHandler,
 static void RemoveDylanExceptionHandlers (struct sigaction * oldFPEHandler,
 					  struct sigaction * oldSEGVHandler)
 {
-#if 0
   sigaction(SIGFPE, oldFPEHandler, NULL);
+#if 0
   sigaction(SIGSEGV, oldSEGVHandler, NULL);
 #endif
 }

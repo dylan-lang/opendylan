@@ -15,9 +15,9 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 /// There's no set overflow flag either ... Not sure I can believe this as the
 /// book contradicts itself.
 
-define constant bvs-x = #x70;
-
-define constant bov-x = #x72;
+define constant bvs-x = #x70; // JO, Jump if no overflow
+define constant bno-x = #x71; // JNO, Jump if no overflow
+define constant bov-x = #x72; // JB, Jump if below (carry flag set)
 
 
 with-ops-in pentium-instructions (addv, subv)
@@ -184,10 +184,7 @@ define pentium-template (asl-trap)
     // and comparing the results with hi
     emit(be, cdq); // 64bit sign-extend EAX into EDX again
     call-local(cmp2, be, edx, hi);
-    // jump over the trap instruction if there's no overflow
-    emit(be, beq-x);
-    emit(be, 2); // 2 byte instruction
-    trap-always(be);
+    trap-if-not-equal(be);
 end pentium-template;
 
 
@@ -211,14 +208,47 @@ with-ops-in pentium-instructions (asl-trap)
               end pentium-method;
 end with-ops-in;
 
+define constant dylan-integer-overflow-handler =
+  make(<constant-reference>, 
+       refers-to: "dylan_integer_overflow_handler",
+       address-mode: #"address");
 
+define method trap-if-not-equal (be :: <pentium-back-end>) => ()
+// jump over the trap instruction if there's no overflow
+  emit(be, beq-x);  // branch if no overflow
+  emit(be, 2); // 2 byte instruction
+  trap-always(be);
+end method;
 
 define method trap-on-overflow (be :: <pentium-back-end>) => ()
+  // INTO instruction, calls INT 4 on overflow
   emit(be, #xce);
 end method;
 
-
 define method trap-always (be :: <pentium-back-end>) => ()
+  // just manually call INT 4
   emit(be, #xcd);
   emit(be, 4);
+end method trap-always;
+
+// Linux doesn't use INT 4, but instead directly branches to the
+// overflow handler
+define method trap-if-not-equal (be :: <pentium-linux-back-end>) => ()
+// jump over the trap instruction if there's no overflow
+  emit(be, beq-x);  // branch if no overflow
+  emit(be, 5); // 5 byte instruction
+  trap-always(be);
 end method;
+
+define method trap-on-overflow (be :: <pentium-linux-back-end>) => ()
+// jump over the trap instruction if there's no overflow
+  emit(be, bno-x);  // branch if no overflow
+  emit(be, 5); // 5 byte instruction
+  trap-always(be);
+end method;
+
+define method trap-always (be :: <pentium-linux-back-end>) => ()
+  emit(be, call); // CALL
+  emit-constant-ref-relative
+    (be, dylan-integer-overflow-handler);
+end method trap-always;

@@ -419,4 +419,5 @@ define method output-implicit-externals
   output-external(backend, outputter, remove-optionals-runtime);
   output-external(backend, outputter, segment-register-load-instruction-offset);
   output-external(backend, outputter, segment-register-store-instruction-offset);
+  output-external(backend, outputter, dylan-integer-overflow-handler);
 end method;
