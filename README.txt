@@ -23,11 +23,11 @@ HOW TO BUILD ON WINDOWS
 First build the garbage collector.  See the section on BUILDING THE MPS.
 
 The main build script for FunDev on Windows is
-Dylan/admin/builds/build-release.bat.  See that file for additional notes and a
-list of prerequisites.  Notably, to do the initial build you will need the
-"hacker" edition of Functional Developer installed.  (This should be available
-from www.functionalobjects.com by the time you read this.)  You will also need
-VC++ 6.0.
+fundev/admin/builds/build-release.bat.  See that file for additional
+notes and a list of prerequisites.  Notably, to do the initial build
+you will need the "hacker" edition of Functional Developer installed.
+(This should be available from www.functionalobjects.com by the time
+you read this.)  You will also need VC++ 6.0.
 
 [TODO: verify details here]
 
@@ -47,7 +47,7 @@ built.
 
 You might think it would be possible to build on Linux using the Linux alpha
 version of FunDev as the bootstrap compiler but unfortunately the Linux alpha
-expired on January 1, 2004.  Fortunately, there may be a way to get around
+expired on January 1, 2004.  Fortunately, there is a way to get around
 that: http://www.logix.cz/michal/devel/faketime/
 
 Once the initial bootstrap process is figured out, a set of makefiles should be
@@ -70,14 +70,14 @@ http://www.ravenbrook.com/project/mps/ and extract it to some directory.  cd to
 the 'code' subdirectory in the MPS sources and build the mmdw.lib target.
 
   Windows:  nmake /k /f w3i3mv.nmk mmdw.lib
-  Linux:    make -f lii4gc.gmk mmdw.lib
+  Linux:    make -f lii4gc.gmk mmdw.a
 
 The actual makefile you use may differ depending on your platform.  The main
 point to notice here is that you don't just build the default target, as
 described in the MPS documentation.  You must build mmdw.lib instead.
 
 Copy mmdw.lib [TODO: which version?] into the FunDev source tree in
-Dylan/Sources/lib/run-time/pentium-win32/.  This will be picked up by the
+fundev/Sources/lib/run-time/pentium-win32/.  This will be picked up by the
 FunDev build scripts.
 
   [TODO: verify that this is sufficient.]
