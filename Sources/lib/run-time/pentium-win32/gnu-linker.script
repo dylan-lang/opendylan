@@ -1,3 +1,34 @@
+# $(dllname)            Library name
+# $(exename)            Name (from Library: or Executable:)
+# $(mangled-dllname)    Mangled library name
+# $(mangled-exename)    Mangled library name
+# $(full-dll-name)      Name (from Library: or Executable:) w/suffix ".dll"
+# $(full-exe-name)      Name (from Library: or Executable:) w/suffix ".exe"
+# $(full-lib-name)      Name (from Library: or Executable:) w/suffix ".lib"
+# $(script)             Pathname to gnu linker script
+# $(personal-lib)       $FUNCTIONAL_DEVELOPER_USER_INSTALL/lib
+# $(system-lib)         $FUNCTIONAL_DEVELOPER_RELEASE_INSTALL/lib
+# $(dylan-imp7)		dylanimp7.o
+# $(libraries)          Set below
+# $(dllobjs)            Object files:
+#                         import fixups (except when linking Dylan itself)
+#                         LID files: keyword
+#                         LID c-object-files: keyword
+#                         LID c-source-files: keyword
+# $(dylan-support)      Path to dylan-support.obj
+# $(dlllibs)            -lxxx for each library in MKF used-libraries: keyword
+# $(c-libs)             Contents of LID all-c-libraries: and rtlibs: keywords
+#                         (all-c-libraries: is variable-expanded)
+# $(base)               From HDP base-address: keyword
+# $(entry-point)	Mangled library name, with Exe0 appended
+# $(exports)		Library name w/extension ".exp", or list of .exp files
+#			  for libraries being unified
+# $(optimization)	"/OPT:REF" for Dylan library, empty otherwise
+# $(linkopts)           Variable-expanded from LID linker-options: keyword
+# $(image-version)      major.minor, from LID major-version: and minor-version:
+# $(libcmt)             C library, multithreaded: set below
+# $(gnulibs)
+#
 linkdll
 ld-new --base-file $(dllname).base -T $(script) --dll -o $(full-dll-name) --traditional-format $(dylan-imp7) $(dllname)imp7.o $(dlllibs) $(dllobjs) $(dylan-support) -L$(gnulibs) $(c-libs) -lkernel32 $(linkopts) --image-base $(base) -e _$(mangled-dllname)Dll@12
 make-reloc $(dllname).base $(dllname).reloc

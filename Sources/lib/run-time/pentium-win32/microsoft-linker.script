@@ -1,3 +1,30 @@
+# $(dllname)            Library name
+# $(exename)            Name (from Library: or Executable:)
+# $(mangled-dllname)    Mangled library name
+# $(mangled-exename)    Mangled library name
+# $(full-dll-name)      Name (from Library: or Executable:) w/suffix ".dll"
+# $(full-exe-name)      Name (from Library: or Executable:) w/suffix ".exe"
+# $(full-lib-name)      Name (from Library: or Executable:) w/suffix ".lib"
+# $(personal-lib)       $FUNCTIONAL_DEVELOPER_USER_INSTALL/lib
+# $(system-lib)         $FUNCTIONAL_DEVELOPER_RELEASE_INSTALL/lib
+# $(libraries)          Set below
+# $(objects)            Object files:
+#                         import fixups (except when linking Dylan itself)
+#                         LID files: keyword
+#                         LID c-object-files: keyword
+#                         LID c-source-files: keyword
+# $(dylan-support)      "*.o $(libgc) -lpthread -lc" when linking Dylan itself
+# $(c-libs)             Contents of LID all-c-libraries: and rtlibs: keywords
+#                         (all-c-libraries: is variable-expanded)
+# $(base)               From HDP base-address: keyword
+# $(entry-point)	Mangled library name, with Exe0 appended
+# $(exports)		Library name w/extension ".exp", or list of .exp files
+#			  for libraries being unified
+# $(optimization)	"/OPT:REF" for Dylan library, empty otherwise
+# $(linkopts)           Variable-expanded from LID linker-options: keyword
+# $(image-version)      major.minor, from LID major-version: and minor-version:
+# $(libcmt)             C library, multithreaded: set below
+#
 linkdll
 link /NODEFAULTLIB /INCREMENTAL:NO /PDB:NONE /NOLOGO /ENTRY:$(mangled-dllname)Dll@12 -debug:full -debugtype:cv /nologo /dll /out:$(full-dll-name) kernel32.lib @$(dllname).link $(objects) $(c-libs) /base:$(base) /version:$(image-version) $(linkopts)
 
