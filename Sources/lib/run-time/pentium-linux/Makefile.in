@@ -3,7 +3,7 @@
 LIBDEST          = $(FUNCTIONAL_DEVELOPER_USER_INSTALL)/lib
 BINDEST          = $(FUNCTIONAL_DEVELOPER_USER_INSTALL)/bin
 
-MPS              = /home/andreas/mps-kit-1.100.1
+MPS              = @with_mps@
 MPS_PLATFORM     = lii4gc
 MPS_VARIANT      = hi
 MPS_LIB          = $(MPS)/code/$(MPS_PLATFORM)/$(MPS_VARIANT)

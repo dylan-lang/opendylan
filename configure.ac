@@ -44,15 +44,21 @@ $module is required to build Functional Developer])
   AC_MSG_RESULT(yes)
 done
 
-AC_PATH_PROG(FDCOMPILE, fdcompile, no)
+AC_CHECK_PROGS(FDCOMPILE, fdcompile minimal-console-compiler, no)
 test "$FDCOMPILE" = no && AC_MSG_ERROR([
-fdcompile is required to bootstrap Functional Devleloper])
-FDCOMPILE="$FDCOMPILE -save"
+fdcompile or minimal-console-compiler is required to bootstrap Functional Developer])
+test "$FDCOMPILE" = fdcompile && FDCOMPILE="$FDCOMPILE -save"
+test "$FDCOMPILE" = minimal-console-compiler && FDCOMPILE="$FDCOMPILE -build"
 AC_SUBST(FDCOMPILE)
 
 # TODO: figure out the bootstrap type given the fdcompile version
 bootstrap_target=3-stage-bootstrap
 AC_SUBST(bootstrap_target)
+
+AC_ARG_WITH(mps,
+            AC_HELP_STRING([--with-mps=PATH
+                            Path to MPS location.]))
+AC_SUBST(with_mps)
 
 AC_MSG_CHECKING(for Library Packs to include)
 LIBRARY_PACKS=Core
@@ -71,6 +77,7 @@ AC_ARG_ENABLE(dood,
 AC_MSG_RESULT($LIBRARY_PACKS)
 AC_SUBST(LIBRARY_PACKS)
 
-AC_CONFIG_FILES([Makefile])
+# for now, replace mps only in pentium-linux
+AC_CONFIG_FILES(Makefile Sources/lib/run-time/pentium-linux/Makefile)
 
 AC_OUTPUT
