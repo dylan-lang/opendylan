@@ -88,14 +88,14 @@ end method show-property;
 
 define constant $personal-directories
   = #(#("FUNCTIONAL_DEVELOPER_USER_ROOT"),
-      #("FUNCTIONAL_DEVELOPER_USER_BUILD",      "Build"),
+      #("FUNCTIONAL_DEVELOPER_USER_BUILD",      "build"),
       #("FUNCTIONAL_DEVELOPER_USER_INSTALL"),
       #("FUNCTIONAL_DEVELOPER_USER_SOURCES",    "Sources"),
       #("FUNCTIONAL_DEVELOPER_USER_REGISTRIES", "Sources", "registry"));
 
 define constant $system-directories
   = #(#("FUNCTIONAL_DEVELOPER_RELEASE_ROOT"),
-      #("FUNCTIONAL_DEVELOPER_RELEASE_BUILD",      "Build"),
+      #("FUNCTIONAL_DEVELOPER_RELEASE_BUILD",      "build"),
       #("FUNCTIONAL_DEVELOPER_RELEASE_INSTALL"),
       #("FUNCTIONAL_DEVELOPER_RELEASE_SOURCES",    "Sources"),
       #("FUNCTIONAL_DEVELOPER_RELEASE_REGISTRIES", "Sources", "registry"));
