@@ -1299,514 +1299,514 @@ clean-all:
 
 checkout-benchmarks:
   $(ENSURE_RELEASE_AREA)
-  $(CHECKOUT) benchmarks Dylan/Sources/benchmarks $(BENCHMARKS_DIRECTORY)
+  $(CHECKOUT) benchmarks fundev/Sources/benchmarks $(BENCHMARKS_DIRECTORY)
 
 checkout-big-integers:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) generic-arithmetic Dylan/Sources/lib/generic-arithmetic $(GENERIC_ARITHMETIC_SOURCE)
-  $(CHECKOUT) big-integers Dylan/Sources/lib/big-integers $(BIG_INTEGERS_SOURCE)
+  $(CHECKOUT) generic-arithmetic fundev/Sources/lib/generic-arithmetic $(GENERIC_ARITHMETIC_SOURCE)
+  $(CHECKOUT) big-integers fundev/Sources/lib/big-integers $(BIG_INTEGERS_SOURCE)
 
 checkout-install-bin:
   $(ENSURE_DIRECTORY) $(INSTALL_BIN_SOURCE)\..
-  $(CHECKOUT) install-x86-win32-bin Dylan/install/x86-win32/bin $(INSTALL_BIN_SOURCE)
+  $(CHECKOUT) install-x86-win32-bin fundev/install/x86-win32/bin $(INSTALL_BIN_SOURCE)
 
 checkout-build-x86-win32:
   $(ENSURE_DIRECTORY) $(BUILD_DIRECTORY)
-  $(CHECKOUT) build-x86-win32 Dylan/build/x86-win32 $(BUILD_X86_WIN32_SOURCE)
+  $(CHECKOUT) build-x86-win32 fundev/build/x86-win32 $(BUILD_X86_WIN32_SOURCE)
 
 checkout-build-system:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) build-system Dylan/Sources/lib/build-system $(BUILD_SYSTEM_SOURCE)
+  $(CHECKOUT) build-system fundev/Sources/lib/build-system $(BUILD_SYSTEM_SOURCE)
 
 checkout-c-ffi:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) c-ffi Dylan/Sources/lib/c-ffi $(C_FFI_SOURCE)
+  $(CHECKOUT) c-ffi fundev/Sources/lib/c-ffi $(C_FFI_SOURCE)
 
 checkout-c-lexer:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) c-lexer Dylan/Sources/lib/c-lexer $(C_LEXER_SOURCE)
+  $(CHECKOUT) c-lexer fundev/Sources/lib/c-lexer $(C_LEXER_SOURCE)
 
 checkout-channels:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) channels Dylan/Sources/lib/channels $(CHANNELS_SOURCE)
+  $(CHECKOUT) channels fundev/Sources/lib/channels $(CHANNELS_SOURCE)
 
 checkout-channels-tests:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(CHANNELS_SOURCE)
-  $(CHECKOUT) channels-tests Dylan/Sources/lib/channels/tests $(CHANNELS_TESTS_SOURCE)
+  $(CHECKOUT) channels-tests fundev/Sources/lib/channels/tests $(CHANNELS_TESTS_SOURCE)
 
 checkout-collections:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(SOURCES_DIRECTORY)
-  $(CHECKOUT) collections Dylan/Sources/collections $(COLLECTIONS_DIRECTORY)
+  $(CHECKOUT) collections fundev/Sources/collections $(COLLECTIONS_DIRECTORY)
 
 checkout-collections-tests-suite:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(COLLECTIONS_DIRECTORY)
-  $(CHECKOUT) collections-tests Dylan/Sources/collections/tests $(COLLECTIONS_TESTS_SOURCE)
+  $(CHECKOUT) collections-tests fundev/Sources/collections/tests $(COLLECTIONS_TESTS_SOURCE)
 
 checkout-command-shell:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) command-shell Dylan/Sources/lib/command-shell $(COMMAND_SHELL_SOURCE)
+  $(CHECKOUT) command-shell fundev/Sources/lib/command-shell $(COMMAND_SHELL_SOURCE)
 
 checkout-commands:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) commands Dylan/Sources/lib/commands $(COMMANDS_SOURCE)
+  $(CHECKOUT) commands fundev/Sources/lib/commands $(COMMANDS_SOURCE)
 
 checkout-common-dylan:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(SOURCES_DIRECTORY)
-  $(CHECKOUT) common-dylan Dylan/Sources/common-dylan $(COMMON_DYLAN_SOURCE)
+  $(CHECKOUT) common-dylan fundev/Sources/common-dylan $(COMMON_DYLAN_SOURCE)
 
 checkout-common-dylan-test-suite:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(COMMON_DYLAN_SOURCE)
-  $(CHECKOUT) common-dylan-tests Dylan/Sources/common-dylan/tests $(COMMON_DYLAN_TESTS_SOURCE)
+  $(CHECKOUT) common-dylan-tests fundev/Sources/common-dylan/tests $(COMMON_DYLAN_TESTS_SOURCE)
 
 checkout-corba:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(SOURCES_DIRECTORY)
-  $(CHECKOUT) corba Dylan/Sources/corba $(CORBA_DIRECTORY)
+  $(CHECKOUT) corba fundev/Sources/corba $(CORBA_DIRECTORY)
   $(ENSURE_WRITEABLE_HDP_FILES) $(CORBA_DIRECTORY)
 
 checkout-corba-demos:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(CORBA_DIRECTORY)
-  $(CHECKOUT) corba-demos Dylan/Sources/corba/demos $(CORBA_DEMOS_SOURCE)
+  $(CHECKOUT) corba-demos fundev/Sources/corba/demos $(CORBA_DEMOS_SOURCE)
   $(ENSURE_WRITEABLE_HDP_FILES) $(CORBA_DEMOS_SOURCE)
 
 checkout-corba-tests:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(CORBA_DIRECTORY)
-  $(CHECKOUT) corba-tests Dylan/Sources/corba/tests $(CORBA_TESTS_SOURCE)
+  $(CHECKOUT) corba-tests fundev/Sources/corba/tests $(CORBA_TESTS_SOURCE)
   $(ENSURE_WRITEABLE_HDP_FILES) $(CORBA_TESTS_SOURCE)
 
 checkout-create-id:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(APP_DIRECTORY)
-  $(CHECKOUT) create-id Dylan/Sources/app/create-id $(CREATE_ID_SOURCE)
+  $(CHECKOUT) create-id fundev/Sources/app/create-id $(CREATE_ID_SOURCE)
 
 checkout-cmu-test-suite:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(CMU_SOURCE)
-  $(CHECKOUT) cmu-test-suite Dylan/Sources/partners/cmu/cmu-test-suite $(CMU_TEST_SUITE_SOURCE)
+  $(CHECKOUT) cmu-test-suite fundev/Sources/partners/cmu/cmu-test-suite $(CMU_TEST_SUITE_SOURCE)
 
 checkout-console-examples:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(EXAMPLES_DIRECTORY)
-  $(CHECKOUT) console-examples Dylan/Sources/examples/console $(CONSOLE_EXAMPLES_SOURCE)
+  $(CHECKOUT) console-examples fundev/Sources/examples/console $(CONSOLE_EXAMPLES_SOURCE)
 
 checkout-database-stress-tool:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(DATABASES_SOURCE)
-  $(CHECKOUT) database-stress-tool Dylan/Sources/databases/tests/stress-tool $(DATABASE_STRESS_TOOL_SOURCE)
+  $(CHECKOUT) database-stress-tool fundev/Sources/databases/tests/stress-tool $(DATABASE_STRESS_TOOL_SOURCE)
 
 checkout-database-viewer:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(DATABASE_EXAMPLES_DIRECTORY)
-  $(CHECKOUT) database-viewer Dylan/Sources/examples/odbc/database-viewer $(DATABASE_VIEWER_SOURCE)
+  $(CHECKOUT) database-viewer fundev/Sources/examples/odbc/database-viewer $(DATABASE_VIEWER_SOURCE)
 
 checkout-databases:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(SOURCES_DIRECTORY)
-  $(CHECKOUT) databases Dylan/Sources/databases $(DATABASES_SOURCE)
+  $(CHECKOUT) databases fundev/Sources/databases $(DATABASES_SOURCE)
 
 checkout-deuce:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(SOURCES_DIRECTORY)
-  $(CHECKOUT) deuce Dylan/Sources/deuce $(DEUCE_SOURCE)
+  $(CHECKOUT) deuce fundev/Sources/deuce $(DEUCE_SOURCE)
 
 checkout-deuce-tests:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(DEUCE_SOURCE)
-  $(CHECKOUT) deuce-tests Dylan/Sources/deuce/tests $(DEUCE_TESTS_SOURCE)
+  $(CHECKOUT) deuce-tests fundev/Sources/deuce/tests $(DEUCE_TESTS_SOURCE)
 
 checkout-dfmc:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(SOURCES_DIRECTORY)
-  $(CHECKOUT) dfmc Dylan/Sources/dfmc $(DFMC_SOURCE)
+  $(CHECKOUT) dfmc fundev/Sources/dfmc $(DFMC_SOURCE)
 
 checkout-disasm:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) disasm Dylan/Sources/lib/disasm $(DISASM_SOURCE)
+  $(CHECKOUT) disasm fundev/Sources/lib/disasm $(DISASM_SOURCE)
 
 checkout-dispatch-profiler:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) dispatch-profiler Dylan/Sources/lib/dispatch-profiler $(DISPATCH_PROFILER_SOURCE)
+  $(CHECKOUT) dispatch-profiler fundev/Sources/lib/dispatch-profiler $(DISPATCH_PROFILER_SOURCE)
 
 checkout-dll-wrap:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(APP_DIRECTORY)
-  $(CHECKOUT) dll-wrap Dylan/Sources/app/dll-wrap $(DLL_WRAP_SOURCE)
+  $(CHECKOUT) dll-wrap fundev/Sources/app/dll-wrap $(DLL_WRAP_SOURCE)
 
 checkout-dood:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) dood Dylan/Sources/lib/dood $(DOOD_SOURCE)
+  $(CHECKOUT) dood fundev/Sources/lib/dood $(DOOD_SOURCE)
 
 checkout-doc-examples:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(EXAMPLES_DIRECTORY)
-  $(CHECKOUT) documentation-examples Dylan/Sources/examples/documentation $(DOCUMENTATION_EXAMPLES_SOURCE)
+  $(CHECKOUT) documentation-examples fundev/Sources/examples/documentation $(DOCUMENTATION_EXAMPLES_SOURCE)
 
 checkout-documentation-examples: checkout-doc-examples
 
 checkout-duim:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(SOURCES_DIRECTORY)
-  $(CHECKOUT) duim Dylan/Sources/duim $(DUIM_DIRECTORY)
+  $(CHECKOUT) duim fundev/Sources/duim $(DUIM_DIRECTORY)
 
 checkout-duim-examples:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(DUIM_DIRECTORY)
-  $(CHECKOUT) duim-examples Dylan/Sources/duim/examples $(DUIM_EXAMPLES_SOURCE)
+  $(CHECKOUT) duim-examples fundev/Sources/duim/examples $(DUIM_EXAMPLES_SOURCE)
 
 checkout-duim-gl-demo:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(APP_DIRECTORY)
-  $(CHECKOUT) duim-gl-demo Dylan/Sources/app/duim-gl-demo $(DUIM_GL_DEMO_SOURCE)
+  $(CHECKOUT) duim-gl-demo fundev/Sources/app/duim-gl-demo $(DUIM_GL_DEMO_SOURCE)
 
 checkout-duim-tests:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(DUIM_DIRECTORY)
-  $(CHECKOUT) duim-tests Dylan/Sources/duim/tests $(DUIM_TESTS_SOURCE)
+  $(CHECKOUT) duim-tests fundev/Sources/duim/tests $(DUIM_TESTS_SOURCE)
 
 checkout-dw:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(APP_DIRECTORY)
-  $(CHECKOUT) dw Dylan/Sources/app/dw $(DW_SOURCE)
+  $(CHECKOUT) dw fundev/Sources/app/dw $(DW_SOURCE)
 
 checkout-dylan:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(SOURCES_DIRECTORY)
-  $(CHECKOUT) dylan Dylan/Sources/dylan $(DYLAN_SOURCE)
+  $(CHECKOUT) dylan fundev/Sources/dylan $(DYLAN_SOURCE)
 
 checkout-dylan-playground:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(APP_DIRECTORY)
-  $(CHECKOUT) dylan-playground Dylan/Sources/app/dylan-playground $(DYLAN_PLAYGROUND_SOURCE)
+  $(CHECKOUT) dylan-playground fundev/Sources/app/dylan-playground $(DYLAN_PLAYGROUND_SOURCE)
 
 checkout-dylan-test-suite:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(QA_DIRECTORY)
-  $(CHECKOUT) dylan-test-suite Dylan/Sources/dylan/tests $(DYLAN_TEST_SUITE_SOURCE)
+  $(CHECKOUT) dylan-test-suite fundev/Sources/dylan/tests $(DYLAN_TEST_SUITE_SOURCE)
 
 checkout-environment:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(SOURCES_DIRECTORY)
-  $(CHECKOUT) environment Dylan/Sources/environment $(ENVIRONMENT_SOURCE)
+  $(CHECKOUT) environment fundev/Sources/environment $(ENVIRONMENT_SOURCE)
 
 checkout-environment-tests:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(ENVIRONMENT_SOURCE)
-  $(CHECKOUT) environment-tests Dylan/Sources/environment/tests $(ENVIRONMENT_TESTS_SOURCE)
+  $(CHECKOUT) environment-tests fundev/Sources/environment/tests $(ENVIRONMENT_TESTS_SOURCE)
 
 checkout-examples-css:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(EXAMPLES_DIRECTORY)
-  $(CHECKOUT) examples-css Dylan/Sources/examples $(EXAMPLES_DIRECTORY) examples.css
+  $(CHECKOUT) examples-css fundev/Sources/examples $(EXAMPLES_DIRECTORY) examples.css
 
 checkout-factorial:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(APP_DIRECTORY)
-  $(CHECKOUT) factorial Dylan/Sources/app/factorial $(FACTORIAL_SOURCE)
+  $(CHECKOUT) factorial fundev/Sources/app/factorial $(FACTORIAL_SOURCE)
 
 checkout-flying-squares:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(APP_DIRECTORY)
-  $(CHECKOUT) flying-squares Dylan/Sources/app/flying-squares $(FLYING_SQUARES_SOURCE)
+  $(CHECKOUT) flying-squares fundev/Sources/app/flying-squares $(FLYING_SQUARES_SOURCE)
 
 checkout-gnu:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(SOURCES_DIRECTORY)
-  $(CHECKOUT) gnu Dylan/Sources/gnu $(GNU_DIRECTORY)
+  $(CHECKOUT) gnu fundev/Sources/gnu $(GNU_DIRECTORY)
 
 checkout-grammar-compiler:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) grammar-compiler Dylan/Sources/lib/grammar-compiler $(GRAMMAR_COMPILER_SOURCE)
+  $(CHECKOUT) grammar-compiler fundev/Sources/lib/grammar-compiler $(GRAMMAR_COMPILER_SOURCE)
 
 checkout-gui-testworks:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(QA_DIRECTORY)
-  $(CHECKOUT) gui-testworks Dylan/Sources/qa/gui-testworks $(GUI_TESTWORKS_SOURCE)
+  $(CHECKOUT) gui-testworks fundev/Sources/qa/gui-testworks $(GUI_TESTWORKS_SOURCE)
 
 checkout-functional-dylan:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(SOURCES_DIRECTORY)
-  $(CHECKOUT) functional-dylan Dylan/Sources/functional-dylan $(FUNCTIONAL_DYLAN_SOURCE)
+  $(CHECKOUT) functional-dylan fundev/Sources/functional-dylan $(FUNCTIONAL_DYLAN_SOURCE)
 
 checkout-functional-dylan-test-suite:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(FUNCTIONAL_DYLAN_SOURCE)
-  $(CHECKOUT) functional-dylan-tests Dylan/Sources/functional-dylan/tests $(FUNCTIONAL_DYLAN_TESTS_SOURCE)
+  $(CHECKOUT) functional-dylan-tests fundev/Sources/functional-dylan/tests $(FUNCTIONAL_DYLAN_TESTS_SOURCE)
 
 checkout-harp:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(SOURCES_DIRECTORY)
-  $(CHECKOUT) harp Dylan/Sources/harp $(HARP_SOURCE)
+  $(CHECKOUT) harp fundev/Sources/harp $(HARP_SOURCE)
 
 checkout-hello-world:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(APP_DIRECTORY)
-  $(CHECKOUT) hello-world Dylan/Sources/app/hello-world $(HELLO_WORLD_SOURCE)
+  $(CHECKOUT) hello-world fundev/Sources/app/hello-world $(HELLO_WORLD_SOURCE)
 
 checkout-install-lib:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(INSTALL_LIB_SOURCE)\..
-  $(CHECKOUT) install-x86-win32-lib Dylan/install/x86-win32/lib $(INSTALL_LIB_SOURCE)
+  $(CHECKOUT) install-x86-win32-lib fundev/install/x86-win32/lib $(INSTALL_LIB_SOURCE)
 
 checkout-io:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(SOURCES_DIRECTORY)
-  $(CHECKOUT) io Dylan/Sources/io $(IO_DIRECTORY)
+  $(CHECKOUT) io fundev/Sources/io $(IO_DIRECTORY)
 
 checkout-io-test-suite:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(IO_DIRECTORY)
-  $(CHECKOUT) io-tests Dylan/Sources/io/tests $(IO_TESTS_SOURCE)
+  $(CHECKOUT) io-tests fundev/Sources/io/tests $(IO_TESTS_SOURCE)
 
 checkout-library-packs:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(SOURCES_DIRECTORY)
-  $(CHECKOUT) library-packs Dylan/Sources/Library-Packs $(LIBRARY_PACKS_DIRECTORY)
+  $(CHECKOUT) library-packs fundev/Sources/Library-Packs $(LIBRARY_PACKS_DIRECTORY)
 
 checkout-licensing:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) licensing Dylan/Sources/lib/licensing $(LICENSING_SOURCE)
+  $(CHECKOUT) licensing fundev/Sources/lib/licensing $(LICENSING_SOURCE)
 
 checkout-linker-support:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) linker-support Dylan/Sources/lib/linker-support $(LINKER_SUPPORT_SOURCE)
+  $(CHECKOUT) linker-support fundev/Sources/lib/linker-support $(LINKER_SUPPORT_SOURCE)
 
 checkout-map-statistics:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(TOOLS_DIRECTORY)
-  $(CHECKOUT) map-statistics Dylan/Sources/tools/map-statistics $(MAP_STATISTICS_SOURCE)
+  $(CHECKOUT) map-statistics fundev/Sources/tools/map-statistics $(MAP_STATISTICS_SOURCE)
 
 checkout-memory-manager:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) memory-manager Dylan/Sources/lib/memory-manager $(MEMORY_MANAGER_SOURCE)
+  $(CHECKOUT) memory-manager fundev/Sources/lib/memory-manager $(MEMORY_MANAGER_SOURCE)
 
 checkout-metering:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) metering Dylan/Sources/lib/metering $(METERING_SOURCE)
+  $(CHECKOUT) metering fundev/Sources/lib/metering $(METERING_SOURCE)
 
 checkout-midi:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) midi Dylan/Sources/lib/midi $(MIDI_SOURCE)
+  $(CHECKOUT) midi fundev/Sources/lib/midi $(MIDI_SOURCE)
 
 checkout-motley:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) motley Dylan/Sources/lib/motley $(MOTLEY_SOURCE)
+  $(CHECKOUT) motley fundev/Sources/lib/motley $(MOTLEY_SOURCE)
 
 checkout-naming-service:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(CORBA_SERVICES_DIRECTORY)
-  $(CHECKOUT) corba-naming-service Dylan/Sources/corba/services/naming $(NAMING_SERVICE_SOURCE)
+  $(CHECKOUT) corba-naming-service fundev/Sources/corba/services/naming $(NAMING_SERVICE_SOURCE)
 
 checkout-network:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(SOURCES_DIRECTORY)
-  $(CHECKOUT) network Dylan/Sources/network $(NETWORK_DIRECTORY)
+  $(CHECKOUT) network fundev/Sources/network $(NETWORK_DIRECTORY)
 
 checkout-network-examples:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(NETWORK_DIRECTORY)
-  $(CHECKOUT) network-examples Dylan/Sources/network/examples $(NETWORK_EXAMPLES_SOURCE)
+  $(CHECKOUT) network-examples fundev/Sources/network/examples $(NETWORK_EXAMPLES_SOURCE)
 
 checkout-ole:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(SOURCES_DIRECTORY)
-  $(CHECKOUT) ole Dylan/Sources/ole $(OLE_DIRECTORY)
+  $(CHECKOUT) ole fundev/Sources/ole $(OLE_DIRECTORY)
 
 checkout-ole-automation-tests:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(OLE_AUTOMATION_SOURCE)
-  $(CHECKOUT) ole-automation-tests Dylan/Sources/ole/ole-automation/tests $(OLE_AUTOMATION_TESTS_SOURCE)
+  $(CHECKOUT) ole-automation-tests fundev/Sources/ole/ole-automation/tests $(OLE_AUTOMATION_TESTS_SOURCE)
 
 checkout-ole-examples:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(OLE_DIRECTORY)
-  $(CHECKOUT) ole-examples Dylan/Sources/ole/examples $(OLE_EXAMPLES_DIRECTORY)
+  $(CHECKOUT) ole-examples fundev/Sources/ole/examples $(OLE_EXAMPLES_DIRECTORY)
 
 checkout-orb:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(CORBA_DIRECTORY)
-  $(CHECKOUT) orb Dylan/Sources/corba/orb $(ORB_SOURCE)
+  $(CHECKOUT) orb fundev/Sources/corba/orb $(ORB_SOURCE)
   $(ENSURE_WRITEABLE_HDP_FILES) $(ORB_SOURCE)
 
 checkout-parser-generator:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) parser-generator Dylan/Sources/lib/parser-generator $(PARSER_GENERATOR_SOURCE)
+  $(CHECKOUT) parser-generator fundev/Sources/lib/parser-generator $(PARSER_GENERATOR_SOURCE)
 
 checkout-parser-compiler:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(APP_DIRECTORY)
-  $(CHECKOUT) parser-compiler Dylan/Sources/app/parser-compiler $(PARSER_COMPILER_SOURCE)
+  $(CHECKOUT) parser-compiler fundev/Sources/app/parser-compiler $(PARSER_COMPILER_SOURCE)
 
 checkout-parser-run-time:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) parser-run-time Dylan/Sources/lib/parser-run-time $(PARSER_RUN_TIME_SOURCE)
+  $(CHECKOUT) parser-run-time fundev/Sources/lib/parser-run-time $(PARSER_RUN_TIME_SOURCE)
 
 checkout-pentium-run-time:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) run-time Dylan/Sources/lib/run-time $(RUN_TIME_SOURCE)
-  $(CHECKOUT) pentium-run-time Dylan/Sources/lib/run-time/pentium-win32 $(PENTIUM_RUN_TIME_SOURCE)
+  $(CHECKOUT) run-time fundev/Sources/lib/run-time $(RUN_TIME_SOURCE)
+  $(CHECKOUT) pentium-run-time fundev/Sources/lib/run-time/pentium-win32 $(PENTIUM_RUN_TIME_SOURCE)
 
 checkout-plonker:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(APP_DIRECTORY)
-  $(CHECKOUT) plonker Dylan/Sources/app/plonker $(PLONKER_SOURCE)
+  $(CHECKOUT) plonker fundev/Sources/app/plonker $(PLONKER_SOURCE)
 
 checkout-ppml:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) ppml Dylan/Sources/lib/ppml $(PPML_SOURCE)
+  $(CHECKOUT) ppml fundev/Sources/lib/ppml $(PPML_SOURCE)
 
 checkout-project-manager:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(SOURCES_DIRECTORY)
-  $(CHECKOUT) project-manager Dylan/Sources/project-manager $(PROJECT_MANAGER_SOURCE)
+  $(CHECKOUT) project-manager fundev/Sources/project-manager $(PROJECT_MANAGER_SOURCE)
 
 checkout-qa-scripts:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(QA_DIRECTORY)
-  $(CHECKOUT) qa-scripts Dylan/Sources/qa/scripts $(QA_SCRIPTS_SOURCE)
+  $(CHECKOUT) qa-scripts fundev/Sources/qa/scripts $(QA_SCRIPTS_SOURCE)
 
 checkout-release-info:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) release-info Dylan/Sources/lib/release-info $(RELEASE_INFO_SOURCE)
+  $(CHECKOUT) release-info fundev/Sources/lib/release-info $(RELEASE_INFO_SOURCE)
 
 checkout-runtime-manager:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(SOURCES_DIRECTORY)
-  $(CHECKOUT) runtime-manager Dylan/Sources/runtime-manager $(RUNTIME_MANAGER_SOURCE)
+  $(CHECKOUT) runtime-manager fundev/Sources/runtime-manager $(RUNTIME_MANAGER_SOURCE)
 
 checkout-scepter:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(CORBA_DIRECTORY)
-  $(CHECKOUT) scepter Dylan/Sources/corba/scepter $(SCEPTER_SOURCE)
+  $(CHECKOUT) scepter fundev/Sources/corba/scepter $(SCEPTER_SOURCE)
   $(ENSURE_WRITEABLE_HDP_FILES) $(SCEPTER_SOURCE)
 
 checkout-source-records:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) source-records Dylan/Sources/lib/source-records $(SOURCE_RECORDS_SOURCE)
+  $(CHECKOUT) source-records fundev/Sources/lib/source-records $(SOURCE_RECORDS_SOURCE)
 
 checkout-system:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(SOURCES_DIRECTORY)
-  $(CHECKOUT) system Dylan/Sources/system $(SYSTEM_DIRECTORY)
+  $(CHECKOUT) system fundev/Sources/system $(SYSTEM_DIRECTORY)
 
 checkout-system-test-suite:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(SYSTEM_DIRECTORY)
-  $(CHECKOUT) system-tests Dylan/Sources/system/tests $(SYSTEM_TESTS_SOURCE)
+  $(CHECKOUT) system-tests fundev/Sources/system/tests $(SYSTEM_TESTS_SOURCE)
 
 checkout-t-lists:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) t-lists Dylan/Sources/lib/t-lists $(T_LISTS_SOURCE)
+  $(CHECKOUT) t-lists fundev/Sources/lib/t-lists $(T_LISTS_SOURCE)
 
 checkout-templates:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(TOOLS_DIRECTORY)
-  $(CHECKOUT) templates Dylan/Sources/tools/templates $(TEMPLATES_SOURCE)
+  $(CHECKOUT) templates fundev/Sources/tools/templates $(TEMPLATES_SOURCE)
 
 checkout-test-apps:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(QA_DIRECTORY)
-  $(CHECKOUT) test-apps Dylan/Sources/qa/test-apps $(TEST_APPS_SOURCE)
+  $(CHECKOUT) test-apps fundev/Sources/qa/test-apps $(TEST_APPS_SOURCE)
 
 checkout-test-report:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(QA_DIRECTORY)
-  $(CHECKOUT) test-report Dylan/Sources/qa/test-report $(TEST_REPORT_SOURCE)
+  $(CHECKOUT) test-report fundev/Sources/qa/test-report $(TEST_REPORT_SOURCE)
 
 checkout-test-suites:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(QA_DIRECTORY)
-  $(CHECKOUT) test-suites Dylan/Sources/qa/test-suites $(TEST_SUITES_SOURCE)
+  $(CHECKOUT) test-suites fundev/Sources/qa/test-suites $(TEST_SUITES_SOURCE)
 
 checkout-testworks:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(QA_DIRECTORY)
-  $(CHECKOUT) testworks Dylan/Sources/qa/testworks $(TESTWORKS_SOURCE)
+  $(CHECKOUT) testworks fundev/Sources/qa/testworks $(TESTWORKS_SOURCE)
 
 checkout-testworks-specs:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(QA_DIRECTORY)
-  $(CHECKOUT) testworks-specs Dylan/Sources/qa/testworks-specs $(TESTWORKS_SPECS_SOURCE)
+  $(CHECKOUT) testworks-specs fundev/Sources/qa/testworks-specs $(TESTWORKS_SPECS_SOURCE)
 
 checkout-testworks-test-suite:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(TESTWORKS_SOURCE)
-  $(CHECKOUT) testworks-tests Dylan/Sources/qa/testworks/tests $(TESTWORKS_TESTS_SOURCE)
+  $(CHECKOUT) testworks-tests fundev/Sources/qa/testworks/tests $(TESTWORKS_TESTS_SOURCE)
   
 checkout-variable-search:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) variable-search Dylan/Sources/lib/variable-search $(VARIABLE_SEARCH_SOURCE)
+  $(CHECKOUT) variable-search fundev/Sources/lib/variable-search $(VARIABLE_SEARCH_SOURCE)
 
 checkout-walker:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) walker Dylan/Sources/lib/walker $(WALKER_SOURCE)
+  $(CHECKOUT) walker fundev/Sources/lib/walker $(WALKER_SOURCE)
 
 checkout-warnings-test-suite:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(QA_DIRECTORY)
-  $(CHECKOUT) warnings-test-suite Dylan/Sources/qa/warnings-test-suite $(WARNINGS_TEST_SUITE_SOURCE)
+  $(CHECKOUT) warnings-test-suite fundev/Sources/qa/warnings-test-suite $(WARNINGS_TEST_SUITE_SOURCE)
 
 checkout-windows-ffi-example:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(APP_DIRECTORY)
-  $(CHECKOUT) windows-ffi-example Dylan/Sources/app/windows-ffi-example $(WINDOWS_FFI_EXAMPLE_SOURCE)
+  $(CHECKOUT) windows-ffi-example fundev/Sources/app/windows-ffi-example $(WINDOWS_FFI_EXAMPLE_SOURCE)
 
 checkout-windows-gadgets-example:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(APP_DIRECTORY)
-  $(CHECKOUT) windows-gadgets-example Dylan/Sources/app/windows-gadgets-example $(WINDOWS_GADGETS_EXAMPLE_SOURCE)
+  $(CHECKOUT) windows-gadgets-example fundev/Sources/app/windows-gadgets-example $(WINDOWS_GADGETS_EXAMPLE_SOURCE)
 
 checkout-windows-resource-example:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(APP_DIRECTORY)
-  $(CHECKOUT) windows-resource-example Dylan/Sources/app/windows-resource-example $(WINDOWS_RESOURCE_EXAMPLE_SOURCE)
+  $(CHECKOUT) windows-resource-example fundev/Sources/app/windows-resource-example $(WINDOWS_RESOURCE_EXAMPLE_SOURCE)
 
 checkout-win32:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(SOURCES_DIRECTORY)
-  $(CHECKOUT) win32 Dylan/Sources/win32 $(WIN32_DIRECTORY)
+  $(CHECKOUT) win32 fundev/Sources/win32 $(WIN32_DIRECTORY)
 
 checkout-win32-tests:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(WIN32_DIRECTORY)
-  $(CHECKOUT) win32-tests Dylan/Sources/win32/tests $(WIN32_TESTS_SOURCE)
+  $(CHECKOUT) win32-tests fundev/Sources/win32/tests $(WIN32_TESTS_SOURCE)
 
 checkout-with-splash-screen:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(APP_DIRECTORY)
-  $(CHECKOUT) with-splash-screen Dylan/Sources/app/with-splash-screen $(WITH_SPLASH_SCREEN_SOURCE)
+  $(CHECKOUT) with-splash-screen fundev/Sources/app/with-splash-screen $(WITH_SPLASH_SCREEN_SOURCE)
 
 checkout-compiler: checkout-user-libraries checkout-internal-libraries checkout-release-info checkout-dfmc checkout-licensing checkout-variable-search checkout-walker checkout-metering checkout-motley checkout-project-manager checkout-source-records checkout-ppml checkout-parser-run-time checkout-memory-manager checkout-harp checkout-build-system checkout-linker-support checkout-dood checkout-dw checkout-command-shell
 

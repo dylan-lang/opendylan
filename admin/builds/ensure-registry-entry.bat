@@ -19,7 +19,7 @@ set CVS_BRANCH_ARG=-r %DYLAN_CVS_BRANCH%
 if exist "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\%REGISTRY%\%LIBRARY%" goto DONE
 echo Checking out registry entry for %LIBRARY%
 pushd %FUNCTIONAL_DEVELOPER_USER_REGISTRIES%
-cvs -q -r checkout -d %REGISTRY% %CVS_BRANCH_ARG% Dylan/Sources/registry/%REGISTRY%/%LIBRARY% > %LOG%
+cvs -q -r checkout -d %REGISTRY% %CVS_BRANCH_ARG% fundev/Sources/registry/%REGISTRY%/%LIBRARY% > %LOG%
 set saved_ERRORLEVEL=%ERRORLEVEL%
 popd
 if %saved_ERRORLEVEL% NEQ 0 goto checkout_error
