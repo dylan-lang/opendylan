@@ -51,7 +51,7 @@ define method progress-report(add-done-time :: <float>, #key abort-safe? = #t)
   if(*progress-library*)
     *current-progress* := *current-progress* + add-done-time;
     library-progress-report(*progress-library*, *current-progress*, 
-			    abort-safe?: abort-safe?)
+                            abort-safe?: abort-safe?)
   end;
 end;
 
@@ -64,7 +64,7 @@ define method current-progress(done-time :: <float>, #key abort-safe? = #t)
        done-time);
     *current-progress* := done-time;
     library-progress-report(*progress-library*, *current-progress*, 
-			    abort-safe?: abort-safe?)
+                            abort-safe?: abort-safe?)
   end;
 end;
 
@@ -77,12 +77,12 @@ define method source-record-progress-report(#key abort-safe? = #t)
   if(*progress-library*)
     *current-progress* := *current-progress* + *source-record-increment*;
     library-progress-report(*progress-library*, *current-progress*, 
-			    abort-safe?: abort-safe?);
+                            abort-safe?: abort-safe?);
   end;
 end;
 
 define method source-record-progress-text(format-text :: <string>,
-					  #rest args); 
+                                          #rest args); 
   apply(progress-report-text, format-text, args)
 end;
 
@@ -91,20 +91,20 @@ define sideways method report-condition (condition :: <condition>) => ()
 end method;
 
 define open generic library-progress-text(context,
-					  #rest args);
+                                          #rest args);
 
 define open generic library-stage-text(context,
-				       #rest args);
+                                       #rest args);
 
 define open generic internal-progress-text(context,
-					   #rest args);
+                                           #rest args);
 
 define open generic library-progress-report(context,
-					    sofar :: <float>,
-					    #key abort-safe? = #t);
+                                            sofar :: <float>,
+                                            #key abort-safe? = #t);
 
 define open generic library-condition-report(context, 
-					     condition :: <condition>);
+                                             condition :: <condition>);
 
 // this macro is called by clients to reset the progress
 // we cannot synchronize in case of recursive invocations
@@ -121,14 +121,14 @@ define function do-with-library-progress
     (function :: <function>, library :: <project-library-description>,
      increment :: <float>)
   dynamic-bind (*library-increment* = increment,
-		*progress-library* = library,
-		*previous-progress* = *current-progress*)
+                *progress-library* = library,
+                *previous-progress* = *current-progress*)
     progress-debug-message("library increment: %s %=", 
-			   library, *library-increment*);
+                           library, *library-increment*);
     progress-report(0.0); // manually report current progress
     function();
     progress-debug-message("Synchronizing progress for library %s", 
-			   library.library-description-project);
+                           library.library-description-project);
     current-progress(*previous-progress* + *library-increment*);
   end dynamic-bind;
 end function do-with-library-progress;
@@ -150,30 +150,30 @@ define function do-with-stage-progress
       0
     end;
   dynamic-bind (*stage-text-prefix* = stage, 
-		*previous-progress* = *current-progress*,
-		*source-record-increment* = if(number-of-records > 0)
-					      library-stage-increment /
-						number-of-records
-					    else
-					      0.0
-					    end)
+                *previous-progress* = *current-progress*,
+                *source-record-increment* = if(number-of-records > 0)
+                                              library-stage-increment /
+                                                number-of-records
+                                            else
+                                              0.0
+                                            end)
     block ()
       if(library)
-	library-stage-text(library, stage);
-	progress-line("%s %=", stage, library.library-description-project);
-	progress-debug-message("library stage increment: %=", 
-			       library-stage-increment);
-	progress-debug-message("source record increment: %=", 
-			       *source-record-increment*);
+        library-stage-text(library, stage);
+        progress-line("%s %=", stage, library.library-description-project);
+        progress-debug-message("library stage increment: %=", 
+                               library-stage-increment);
+        progress-debug-message("source record increment: %=", 
+                               *source-record-increment*);
       end;
       function();
     cleanup
       if(library)
-	progress-debug-message("###Stage %s completed, previous progress = %=", 
-			       stage, *previous-progress*);
-	progress-debug-message("Synchronizing stage progress for %s", 
-			       library.library-description-project);
-	current-progress(*previous-progress* + library-stage-increment);
+        progress-debug-message("###Stage %s completed, previous progress = %=", 
+                               stage, *previous-progress*);
+        progress-debug-message("Synchronizing stage progress for %s", 
+                               library.library-description-project);
+        current-progress(*previous-progress* + library-stage-increment);
       end;
     end block;
   end dynamic-bind;
@@ -182,11 +182,11 @@ end function do-with-stage-progress;
 // this macro is called by the compiler before each stage
 define macro with-stage-progress
   { with-stage-progress (?text-prefix:expression, 
-			 ?stage-increment:expression) 
+                         ?stage-increment:expression) 
       ?:body 
     end }
     => { do-with-stage-progress
-	  (method () ?body end, ?text-prefix, ?stage-increment) }
+          (method () ?body end, ?text-prefix, ?stage-increment) }
 end macro with-stage-progress;
 
 // the constants below should add up to 1.00
