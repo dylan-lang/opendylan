@@ -133,7 +133,12 @@ define function make-mm-wrapper
   let wrapper :: <mm-wrapper> = system-allocate-wrapper();
   wrapper.mm-wrapper-implementation-class := implementation-class;
   wrapper.mm-wrapper-fixed-part := integer-as-raw(fixed-part-header);
-  wrapper.mm-wrapper-variable-part := integer-as-raw(variable-part-header);
+  wrapper.mm-wrapper-variable-part // store version 2 in high byte
+    := primitive-machine-word-bit-field-deposit
+         (integer-as-raw(2),
+          integer-as-raw($machine-word-size - 8),
+          integer-as-raw(8),
+          integer-as-raw(variable-part-header));
   // wrapper.mm-wrapper-number-patterns := 0;
   wrapper
 end function;

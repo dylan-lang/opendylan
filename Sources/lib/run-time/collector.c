@@ -1259,7 +1259,9 @@ int MMCommitWrapper(void *p, size_t size, gc_teb_t gc_teb)
 
   assert(gc_teb->gc_teb_inside_tramp);
   assert(dylan_check(p));
-  assert(dylan_wrapper_check(p));
+  // there used to be a call to dylan_wrapper_check(p) here, but
+  // the wrapper isn't properly initialized until after allocation.
+  // So the check will always fail.
 
   res = mps_root_create_fmt(&root, arena, MPS_RANK_EXACT,
                              (mps_rm_t)0, fmt_A->scan, p, (char *)p + size);
