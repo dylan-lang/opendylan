@@ -280,6 +280,7 @@ define sealed method handle-event
 	  // not to confuse matters during gesture matching
 	  let state   = if (char) logand(modifiers, lognot(deuce/$shift-key))
 			else modifiers end;
+          
 	  let gesture = vector(char | keysym, state);
 	  let command = find-command(comtab, gesture);
 	  case
@@ -419,5 +420,7 @@ define function make-deuce-modifiers
   when (logand(modifier-state, $shift-key) ~= 0)
     modifiers := logior(modifiers, deuce/$shift-key)
   end;
+  // we gratitiously ignore Hyper, AltGr, CapsLock
+  modifiers := logand(modifiers, #xf);
   modifiers
 end function make-deuce-modifiers;
