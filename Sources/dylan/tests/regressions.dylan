@@ -9,26 +9,26 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // Try to keep the tests in order by bug number.
 
-define test bug-4247 ()
-  check-no-errors("as(<float>, 60962186)", as(<float>, 60962186));
+define test bug-5800 ()
+  check-no-errors("as(<float>, 609217886)", as(<float>, 609217886));
   // Throw these two in for good measure...
   check-no-errors("as(<float>, $maximum-integer)", as(<float>, $maximum-integer));
   check-no-errors("as(<float>, $minimum-integer)", as(<float>, $minimum-integer));
-end test bug-4247;
+end test bug-5800;
 
-define test bug-4027 ()
+define test bug-5580 ()
   check-no-errors("iteration over a floating point range",
 		  for (i in range(from: 0.0, to: 1.0, by: 0.1)) end);
-end test bug-4027;
+end test bug-5580;
 
-define test bug-3772 ()
+define test bug-5325 ()
   check-no-errors("add!(a-range, a-value) doesn't err",
                   add!(range(from: 1, to: 5), 0));
-end test bug-3772;
+end test bug-5325;
 
-// I guess this and bug-3505 are really about the same thing...
+// I guess this and bug-5058 are really about the same thing...
 //
-define test bug-3728 ()
+define test bug-5281 ()
   // Dimensions differ so call to make should err.
   check-condition("make limited array with incorrect dimensions",
                   <error>,
@@ -40,39 +40,39 @@ define test bug-3728 ()
 		let t2 = limited(<array>, of: <integer>, dimensions: #[3, 3]);
                 instance?(make(t1, dimensions: #[2, 2], fill: 1), t2);
               end);
-end test bug-3728;
+end test bug-5281;
 
-define test bug-3694 ()
+define test bug-5247 ()
   check-true("member? always returns a <boolean>?",
              member?(1, #(1,2,3), test: max));
-end test bug-3694;
+end test bug-5247;
 
-// I guess this and bug-3728 are really about the same thing...
+// I guess this and bug-5281 are really about the same thing...
 //
-define test bug-3505 ()
+define test bug-5058 ()
   check-equal("size of limited vectors",
                begin
                  let <v3> = limited(<vector>, of: <single-float>, size: 3, fill: 0.0);
                  size(make(<v3>))
                end,
                3);
-end test bug-3505;
+end test bug-5058;
 
-define test bug-3483 ()
+define test bug-5036 ()
   check-equal("subsequence-position handles the count: keyword correctly",
               subsequence-position("abc", "", count: 2),
               1);
-end test bug-3483;
+end test bug-5036;
 
-define class <bug-3423> (<array>) end;
+define class <bug-4976> (<array>) end;
 
-define method dimensions (cb :: <bug-3423>) => (dims :: <vector>)
+define method dimensions (cb :: <bug-4976>) => (dims :: <vector>)
   #[8,8]
 end;
 
-define test bug-3423 ()
-  check-equal("size method on <array> works", size(make(<bug-3423>)), 64);
-end test bug-3423;
+define test bug-4976 ()
+  check-equal("size method on <array> works", size(make(<bug-4976>)), 64);
+end test bug-4976;
 
 define test bug-2766 ()
   check-no-errors("bug 2766",
@@ -86,7 +86,7 @@ define test bug-2766 ()
                   end);
 end test bug-2766;
 
-define test bug-1321 ()
+define test bug-2828 ()
   check-true("<sequence> is a superclass of <stretchy-sequence>",
              block ()
                member?(<sequence>, all-superclasses(<stretchy-sequence>))
@@ -103,9 +103,9 @@ define test bug-1321 ()
                  #f
                end block
              end block);
-end test bug-1321;
+end test bug-2828;
 
-define test bug-706 ()
+define test bug-2263 ()
   check-no-errors("condition-format-{string,arguments} apply to <simple-restart>",
                   begin
                     let restart = make(<simple-restart>,
@@ -113,16 +113,16 @@ define test bug-706 ()
                     condition-format-string(restart);
                     condition-format-arguments(restart);
                   end);
-end test bug-706;
+end test bug-2263;
 
-// Not quite sure if this adequately tests bug 655.
+// Not quite sure if this adequately tests bug 2212.
 //
-define test bug-655 ()
+define test bug-2212 ()
   check-no-errors("limited(<table>, of: foo)",
                   limited(<table>, of: make(<class>)));
-end test bug-655;
+end test bug-2212;
 
-define test bug-621 ()
+define test bug-2178 ()
   check-true("concatenate-as(<deque>, ...)",
              begin
                let d1 = make(<deque>, size: 2, fill: 0);
@@ -131,20 +131,20 @@ define test bug-621 ()
                size(d3) = 4
                & pop(d3) = 0 & pop(d3) = 0 & pop(d3) = 1 & pop(d3) = 1
              end);
-end test bug-621;
+end test bug-2178;
                    
 define suite dylan-regressions ()
-  test bug-4247;
-  test bug-4027;
-  test bug-3772;
-  test bug-3728;
-  test bug-3694;
-  test bug-3505;
-  test bug-3483;
-  test bug-3423;
-  test bug-1321;
-  test bug-706;
-  test bug-655;
-  test bug-621;
+  test bug-5800;
+  test bug-5580;
+  test bug-5325;
+  test bug-5281;
+  test bug-5247;
+  test bug-5058;
+  test bug-5036;
+  test bug-4976;
+  test bug-2828;
+  test bug-2263;
+  test bug-2212;
+  test bug-2178;
 end suite dylan-regressions;
 

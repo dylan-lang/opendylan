@@ -7,11 +7,11 @@ License:      Functional Objects Library Public License Version 1.0
 Dual-license: GNU Lesser General Public License
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define test bug-1722 ()
+define test bug-3276 ()
   check-equal("as(<locator>, \"\\\") produces a directory, not a UNC locator",
 	      as(<string>, as(<microsoft-directory-locator>, "\\")),
 	      "\\")
-end test bug-1722;
+end test bug-3276;
 
 define test url-parsing-bug ()
   let url = "http://localhost:7020/foo";
@@ -27,6 +27,6 @@ define test url-parsing-bug ()
 end test url-parsing-bug;
 
 define suite system-regressions ()
-  test bug-1722;
+  test bug-3276;
   test url-parsing-bug;
 end suite system-regressions;
