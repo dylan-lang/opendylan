@@ -74,6 +74,7 @@ http://www.ravenbrook.com/project/mps/ and extract it to some directory.  cd to
 the 'code' subdirectory in the MPS sources and build the mmdw.lib target.
 
   Windows:  nmake /k /f w3i3mv.nmk mmdw.lib
+            copy *.h w3i3mv/ti/mmdw.a %FUNDEV%/Sources/lib/run-time/pentium-win32/
   Linux:    make -f lii4gc.gmk mmdw.a
             cp *.h lii4gc/ti/mmdw.a $FUNDEV/Sources/lib/run-time/pentium-linux/
             [if you don't have a lii4gc/ti directory, choose a different ?i directory.]
