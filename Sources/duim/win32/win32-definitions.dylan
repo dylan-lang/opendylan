@@ -765,6 +765,7 @@ define inline-only constant $WM-RBUTTONDBLCLK           = #x0206;
 define inline-only constant $WM-RBUTTONDOWN             = #x0204;
 define inline-only constant $WM-RBUTTONUP               = #x0205;
 define inline-only constant $WM-SETCURSOR               = #x0020;
+define inline-only constant $WM-MOUSEWHEEL		= #x020A;
 define inline-only constant $WM-SETFOCUS                = #x0007;
 define inline-only constant $WM-SETFONT                 = #x0030;
 define inline-only constant $WM-SETICON                 = #x0080;

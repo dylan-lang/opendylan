@@ -292,6 +292,8 @@ define method handle-message
 			  wParam, lParam);
 	  $WM-HSCROLL, $WM-VSCROLL =>
 	    handle-wm-scroll(sheet, wParam, lParam);
+          $WM-MOUSEWHEEL =>
+            handle-wm-mousewheel(sheet, wParam, lParam);
 	  $WM-SIZE =>
 	    let frame = instance?(sheet, <top-level-sheet>) & sheet-frame(sheet);
 	    when (frame)
@@ -559,6 +561,14 @@ define sealed method handle-wm-scroll
     #f
   end;
 end method handle-wm-scroll;
+    
+define sealed method handle-wm-mousewheel
+    (sheet :: <sheet>, wParam :: <wparam-type>, lParam :: <lparam-type>)
+ => (handled? :: <boolean>)
+  let distance = HIWORD(wParam);
+  // figure out where to send mousewheel events
+  #f
+end method handle-wm-mousewheel;
     
 define method handle-command
     (sheet :: <sheet>, mirror :: <win32-mirror>,
