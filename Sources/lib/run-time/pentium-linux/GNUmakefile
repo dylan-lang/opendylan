@@ -3,11 +3,16 @@
 LIBDEST          = $(FUNCTIONAL_DEVELOPER_USER_INSTALL)/lib
 BINDEST          = $(FUNCTIONAL_DEVELOPER_USER_INSTALL)/bin
 
+MPS              = /home/andreas/mps-kit-1.100.1
+MPS_PLATFORM     = lii4gc
+MPS_VARIANT      = hi
+MPS_LIB          = $(MPS)/code/$(MPS_PLATFORM)/$(MPS_VARIANT)
+
 EXPIRATION = -1
 
 AS = as -L -o
 AR = ar -q
-CFLAGS = -DGC_LINUX_THREADS=1 -D_REENTRANT=1 -O -g -DEXPIRATION=$(EXPIRATION) -I/home/housel/src/mps-kit/code
+CFLAGS = -DGC_LINUX_THREADS=1 -D_REENTRANT=1 -O -g -DEXPIRATION=$(EXPIRATION) -I$(MPS)/code
 
 OBJS	 = x86-linux-collector.o runtime.o x86-linux-threads-primitives.o linux-spy-interfaces.o linux-support.o
 
@@ -33,11 +38,11 @@ runtime.o:	runtime.s
 #$(LIBDEST)/libgc.a: gc.a
 #	cp -fp gc.a $(LIBDEST)/libgc.a
 #
-$(LIBDEST)/libmpsplan.a: mpsplan.a
-	cp -fp mpsplan.a $(LIBDEST)/libmpsplan.a
+$(LIBDEST)/libmpsplan.a: $(MPS_LIB)/mpsplan.a
+	cp -fp $(MPS_LIB)/mpsplan.a $(LIBDEST)/libmpsplan.a
 
-$(LIBDEST)/libmmdw.a: mmdw.a
-	cp -fp mmdw.a $(LIBDEST)/libmmdw.a
+$(LIBDEST)/libmmdw.a: $(MPS_LIB)/mmdw.a
+	cp -fp $(MPS_LIB)/mmdw.a $(LIBDEST)/libmmdw.a
 
 $(LIBDEST)/x86-linux-build.jam: x86-linux-build.jam
 	cp -fp x86-linux-build.jam $(LIBDEST)
