@@ -588,6 +588,7 @@ DISPATCH_PROFILER = $(INSTALL_BIN_DIRECTORY)\dispatch-profiler.dll
 INTERACTIVE_DOWNLOADER = $(INSTALL_BIN_DIRECTORY)\interactive-downloader.dll
 SIMPLE_DOWNLOADER = $(INSTALL_BIN_DIRECTORY)\simple-downloader.dll
 WDBGDYLAN = $(INSTALL_BIN_DIRECTORY)\wdbgdylan.dll
+DBGHELP = $(INSTALL_BIN_DIRECTORY)\dbghelp.dll
 
 DYLAN_ENVIRONMENT = $(INSTALL_BIN_DIRECTORY)\dylan-environment.dll
 ENVIRONMENT_APPLICATION_COMMANDS = $(INSTALL_BIN_DIRECTORY)\environment-application-commands.dll
@@ -1029,6 +1030,7 @@ install-bug-report-template: $(BUG_REPORT_TEMPLATE)
 
 install-templates: install-source-templates install-bug-report-template
 install-wdbgdylan: $(WDBGDYLAN)
+install-dbghelp: $(DBGHELP)
 
 install-examples-css: $(EXAMPLES_CSS_INSTALL_FILE)
 install-hello-world: $(HELLO_WORLD_INSTALL_DIRECTORY)
@@ -2631,7 +2633,7 @@ $(DISPATCH_PROFILER):
   $(ENSURE_REGISTRY_ENTRY) dispatch-profiler generic
   $(BUILD_LIBRARY) dispatch-profiler
 
-$(DEBUGGER_MANAGER): debugger-nub
+$(DEBUGGER_MANAGER): debugger-nub install-dbghelp
   $(ENSURE_RUNTIME_LIBRARY) $(FUNCTIONAL_DYLAN_DLL) functional-dylan
   $(ENSURE_RUNTIME_LIBRARY) $(IO_DLL) io
   $(ENSURE_SOURCES) runtime-manager $(RUNTIME_MANAGER_SOURCE)
@@ -3877,6 +3879,11 @@ $(WDBGDYLAN):
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_SOURCES) install-bin $(INSTALL_BIN_SOURCE)
   $(COPY) $(INSTALL_BIN_SOURCE)\wdbgdylan.dll $(INSTALL_BIN_DIRECTORY)
+
+$(DBGHELP):
+  $(ENSURE_RELEASE_AREA)
+  $(ENSURE_SOURCES) install-bin $(INSTALL_BIN_SOURCE)
+  $(COPY) $(INSTALL_BIN_SOURCE)\dbghelp.dll $(INSTALL_BIN_DIRECTORY)
 
 $(BUG_REPORT_TEMPLATE):
   $(ENSURE_SOURCES) templates $(TEMPLATES_SOURCE)
