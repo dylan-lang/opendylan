@@ -1,0 +1,6 @@
+1. Download and install NSIS from nsis.sourceforge.net
+2. Run NSIS compiler
+3. Put the desired directory structure under src/
+4. Compile fundev.nsi
+5. The installer is output to fundev21a4.exe
+6. (partial) List of known bugs/todos is at the top of fundev.nsi 
