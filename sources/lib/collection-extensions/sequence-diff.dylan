@@ -1,15 +1,10 @@
 module: Sequence-diff
 author: Nick Kramer (nkramer@cs.cmu.edu)
-RCS-header: $Header: /scm/cvs/fundev/Sources/lib/collection-extensions/sequence-diff.dylan,v 1.1 2004/03/12 00:08:43 cgay Exp $
-Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
-              All rights reserved.
-License:      Functional Objects Library Public License Version 1.0
-Dual-license: GNU Lesser General Public License
-Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 //======================================================================
 //
 // Copyright (c) 1995, 1996, 1997  Carnegie Mellon University
+// Copyright (c) 1998, 1999, 2000  Gwydion Dylan Maintainers
 // All rights reserved.
 // 
 // Use and copying of this software and preparation of derivative
@@ -21,14 +16,15 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // 2. Documentation (paper or online) accompanying any system that
 //    incorporates this software, or any part of it, must acknowledge
 //    the contribution of the Gwydion Project at Carnegie Mellon
-//    University.
+//    University, and the Gwydion Dylan Maintainers.
 // 
 // This software is made available "as is".  Neither the authors nor
 // Carnegie Mellon University make any warranty about the software,
 // its performance, or its conformity to any specification.
 // 
-// Bug reports, questions, comments, and suggestions should be sent by
-// E-mail to the Internet address "gwydion-bugs@cs.cmu.edu".
+// Bug reports should be sent to <gd-bugs@gwydiondylan.org>; questions,
+// comments and suggestions are welcome at <gd-hackers@gwydiondylan.org>.
+// Also, see http://www.gwydiondylan.org/ for updates and documentation. 
 //
 //======================================================================
 
@@ -58,7 +54,7 @@ end class <insert-entry>;
 define class <delete-entry> (<script-entry>)
 end class <delete-entry>;
 
-// Returns themin(index such that seq1[index + 1] ~= seq2[index + 1]
+// Returns the min(index such that seq1[index + 1] ~= seq2[index + 1]
 // -1 if seq1[0] ~= seq2[0]
 //
 define method last-common-elt (seq1 :: <sequence>, seq2 :: <sequence>) 
@@ -185,3 +181,4 @@ define method sequence-diff
     (s1 :: <sequence>, s2 :: <sequence>) => script :: <script>;
   merge-dups(internal-diff(s1, s2));
 end method sequence-diff;
+

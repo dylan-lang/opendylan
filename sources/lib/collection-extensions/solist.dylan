@@ -1,20 +1,15 @@
 module: 	self-organizing-list
-rcs-header:	$Header: /scm/cvs/fundev/Sources/lib/collection-extensions/solist.dylan,v 1.1 2004/03/12 00:08:43 cgay Exp $
 author: 	Robert Stockton (rgs@cs.cmu.edu)
 synopsis:	Provides "self-organizing lists".  These explicit key
 		collections provide roughly the semantics of hash tables, but
 		use a probabilistic implementation which provides O(n) worst
 		case performance but can provide very fast constant time
 		access in the best case.
-Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
-              All rights reserved.
-License:      Functional Objects Library Public License Version 1.0
-Dual-license: GNU Lesser General Public License
-Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 //======================================================================
 //
 // Copyright (c) 1994  Carnegie Mellon University
+// Copyright (c) 1998, 1999, 2000  Gwydion Dylan Maintainers
 // All rights reserved.
 // 
 // Use and copying of this software and preparation of derivative
@@ -26,14 +21,15 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // 2. Documentation (paper or online) accompanying any system that
 //    incorporates this software, or any part of it, must acknowledge
 //    the contribution of the Gwydion Project at Carnegie Mellon
-//    University.
+//    University, and the Gwydion Dylan Maintainers.
 // 
 // This software is made available "as is".  Neither the authors nor
 // Carnegie Mellon University make any warranty about the software,
 // its performance, or its conformity to any specification.
 // 
-// Bug reports, questions, comments, and suggestions should be sent by
-// E-mail to the Internet address "gwydion-bugs@cs.cmu.edu".
+// Bug reports should be sent to <gd-bugs@gwydiondylan.org>; questions,
+// comments and suggestions are welcome at <gd-hackers@gwydiondylan.org>.
+// Also, see http://www.gwydiondylan.org/ for updates and documentation. 
 //
 //======================================================================
 
@@ -70,42 +66,42 @@ end class;
 define sealed domain make (singleton(<self-organizing-list>));
 define sealed domain initialize (<self-organizing-list>);
 
-define inline method sol-fip-next-state
+define inline function sol-fip-next-state
     (list :: <self-organizing-list>, state :: <list>) 
     => (result :: <list>);
   tail(state);
-end method;
+end function;
 
-define inline method sol-fip-finished-state?
+define inline function sol-fip-finished-state?
     (list :: <self-organizing-list>, state :: <list>, limit)
     => result :: <boolean>;
   state == #();
-end method;
+end function;
 
-define inline method sol-fip-current-key
+define inline function sol-fip-current-key
     (list :: <self-organizing-list>, state :: <list>) 
     => (result :: <object>);
   head(head(state));
-end method;
+end function;
 
 
-define inline method sol-fip-current-element
+define inline function sol-fip-current-element
     (list :: <self-organizing-list>, state :: <list>) 
     => (result :: <object>);
   tail(head(state));
-end method;
+end function;
 
-define inline method sol-fip-current-element-setter
+define inline function sol-fip-current-element-setter
     (value :: <object>, list :: <self-organizing-list>, state :: <list>) 
     => (result :: <object>);
   tail(head(state)) := value;
-end method;
+end function;
 
-define inline method sol-fip-copy-state
+define inline function sol-fip-copy-state
     (list :: <self-organizing-list>, state :: <list>) 
     => (result :: <list>);
   state;
-end method;
+end function;
 
 define sealed inline method forward-iteration-protocol
     (table :: <self-organizing-list>)
@@ -128,20 +124,19 @@ define constant sol-no-default = pair(#f, #f);
 // for which test(elem, key) is true, and then return the pair which
 // *precedes* that element (or #() if not found)
 //
-define constant elem-search
-  = method (prev :: <list>, test :: <function>, key)
-      let list = prev.tail;
-      if (list == #())
-	#();
-      else
-	let elem = list.head;
-	if (test(elem.head, key))
-	  prev;
-	else
-	  elem-search(list, test, key);
-	end if;
-      end if;
-    end method;
+define function elem-search (prev :: <list>, test :: <function>, key)
+  let list = prev.tail;
+  if (list == #())
+    #();
+  else
+    let elem = list.head;
+    if (test(elem.head, key))
+      prev;
+    else
+      elem-search(list, test, key);
+    end if;
+  end if;
+end function elem-search;
 
 define method element(table :: <self-organizing-list>, key :: <object>,
 		      #key default: default = sol-no-default)

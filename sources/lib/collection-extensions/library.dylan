@@ -1,14 +1,9 @@
 module:		dylan-user
-rcs-header:	$Header: /scm/cvs/fundev/Sources/lib/collection-extensions/library.dylan,v 1.1 2004/03/12 00:08:43 cgay Exp $
-Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
-              All rights reserved.
-License:      Functional Objects Library Public License Version 1.0
-Dual-license: GNU Lesser General Public License
-Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 //======================================================================
 //
 // Copyright (c) 1994  Carnegie Mellon University
+// Copyright (c) 1998, 1999, 2000  Gwydion Dylan Maintainers
 // All rights reserved.
 // 
 // Use and copying of this software and preparation of derivative
@@ -20,14 +15,15 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // 2. Documentation (paper or online) accompanying any system that
 //    incorporates this software, or any part of it, must acknowledge
 //    the contribution of the Gwydion Project at Carnegie Mellon
-//    University.
+//    University, and the Gwydion Dylan Maintainers.
 // 
 // This software is made available "as is".  Neither the authors nor
 // Carnegie Mellon University make any warranty about the software,
 // its performance, or its conformity to any specification.
 // 
-// Bug reports, questions, comments, and suggestions should be sent by
-// E-mail to the Internet address "gwydion-bugs@cs.cmu.edu".
+// Bug reports should be sent to <gd-bugs@gwydiondylan.org>; questions,
+// comments and suggestions are welcome at <gd-hackers@gwydiondylan.org>.
+// Also, see http://www.gwydiondylan.org/ for updates and documentation. 
 //
 //======================================================================
 
@@ -42,6 +38,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define library collection-extensions
   use dylan;
   export heap, self-organizing-list, vector-search, subseq, sequence-diff;
+  export SDE-vector;
+  export collection-utilities, sequence-utilities;
 end library collection-extensions;
 
 define module self-organizing-list
@@ -86,3 +84,23 @@ define module sequence-diff
     <script-entry>, <insert-entry>, <delete-entry>, 
     element-count, source-index, dest-index;
 end module sequence-diff;
+
+define module collection-utilities
+  use dylan;
+  export singleton?, key-exists?;
+end module collection-utilities;
+
+define module sequence-utilities
+  use dylan;
+  export push!, pop!;
+  export pair?, null?, list?;
+  export xpair, tabulate, list*, take, drop, last-pair;
+  export reverse-append, unfold, unfold/tail;
+  export foldl, foldr, pair-foldl, pair-foldr;
+  export reduce-l, reduce-r, heads, tails;
+  export concatenate-map, pair-do, choose-map;
+  export partition, assoc, apair, alist-copy, alist-delete;
+  export satisfies, index, find, find-tail, precedes?;
+  export split-at;
+end module sequence-utilities;
+

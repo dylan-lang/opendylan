@@ -1,20 +1,15 @@
 module:       subseq
-rcs-header:   $Header: /scm/cvs/fundev/Sources/lib/collection-extensions/subseq.dylan,v 1.1 2004/03/12 00:08:44 cgay Exp $
 Author:       Robert Stockton (rgs@cs.cmu.edu)
 synopsis:     Provides "subsequences", which represent an aliased reference to
               some part of an existing sequence.  These are analogous to
               slices (in Ada or Perl) or displaced arrays (in Common Lisp).
               Subsequences are themselves subclasses of <sequence>, and can
               therefore be passed any <collection> or <sequence> operation.
-Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
-              All rights reserved.
-License:      Functional Objects Library Public License Version 1.0
-Dual-license: GNU Lesser General Public License
-Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 //======================================================================
 //
 // Copyright (c) 1994  Carnegie Mellon University
+// Copyright (c) 1998, 1999, 2000  Gwydion Dylan Maintainers
 // All rights reserved.
 // 
 // Use and copying of this software and preparation of derivative
@@ -26,14 +21,15 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // 2. Documentation (paper or online) accompanying any system that
 //    incorporates this software, or any part of it, must acknowledge
 //    the contribution of the Gwydion Project at Carnegie Mellon
-//    University.
+//    University, and the Gwydion Dylan Maintainers.
 // 
 // This software is made available "as is".  Neither the authors nor
 // Carnegie Mellon University make any warranty about the software,
 // its performance, or its conformity to any specification.
 // 
-// Bug reports, questions, comments, and suggestions should be sent by
-// E-mail to the Internet address "gwydion-bugs@cs.cmu.edu".
+// Bug reports should be sent to <gd-bugs@gwydiondylan.org>; questions,
+// comments and suggestions are welcome at <gd-hackers@gwydiondylan.org>.
+// Also, see http://www.gwydiondylan.org/ for updates and documentation. 
 //
 //======================================================================
 
@@ -85,13 +81,13 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //============================================================================
 
 define abstract class <subsequence> (<sequence>)
-   constant slot source           :: <sequence>,
+   constant slot source :: <sequence>,
      required-init-keyword: source: ;
-   constant slot start-index      :: <integer>, 
+   constant slot start-index :: <integer>,
      required-init-keyword: start: ;
    // end-index is simply an upper bound, except in the case of
    // <vector-subsequence>s. 
-   constant slot end-index        :: <integer>, 
+   constant slot end-index :: <integer>,
      required-init-keyword: end: ;
 end class <subsequence>;
 
@@ -111,15 +107,15 @@ define method type-for-copy (seq :: <subsequence>) => type :: <type>;
 end method type-for-copy;
 
 define class <generic-subsequence> (<subsequence>)
-   constant slot init-state, required-init-keyword: init:;
-   constant slot limit, required-init-keyword: limit:;
-   constant slot next-state, required-init-keyword: next:;
-   constant slot finished-state?, required-init-keyword: done:;
-   constant slot current-elem, required-init-keyword: elem:;
-   constant slot current-elem-sttr, required-init-keyword: elem-setter:;
-   constant slot copy-state, required-init-keyword: copy:;
+  constant slot init-state, required-init-keyword: init:;
+  constant slot limit, required-init-keyword: limit:;
+  constant slot next-state, required-init-keyword: next:;
+  constant slot finished-state?, required-init-keyword: done:;
+  constant slot current-elem, required-init-keyword: elem:;
+  constant slot current-elem-sttr, required-init-keyword: elem-setter:;
+  constant slot copy-state, required-init-keyword: copy:;
 end class;
-
+ 
 define method subsequence(seq :: <sequence>,
 			  #key start: first = 0,
 			       end: last) => (result ::
@@ -159,31 +155,31 @@ define method subsequence(seq :: <generic-subsequence>,
 	copy: seq.copy-state);
 end method subsequence;
 
-define constant gs-fip-next-state =
-  method (c, s)
-    head(s) := c.next-state(c.source, head(s));
-    tail(s) := tail(s) + 1;
-    s;
-  end method;
+define inline function gs-fip-next-state (c :: <generic-subsequence>, s)
+  head(s) := c.next-state(c.source, head(s));
+  tail(s) := tail(s) + 1;
+  s;
+end function;
 
-define constant gs-fip-done? =
-  method (c, s, l)
-    c.finished-state?(c.source, head(s), l) | tail(s) >= c.end-index;
-  end method;
+define inline function gs-fip-done? (c :: <generic-subsequence>, s, l)
+  c.finished-state?(c.source, head(s), l) | tail(s) >= c.end-index;
+end function;
 
-define constant gs-fip-current-key =
-  method (c, s) tail(s) - c.start-index end method;
+define inline function gs-fip-current-key (c :: <generic-subsequence>, s)
+  tail(s) - c.start-index;
+end function;
 
-define constant gs-fip-current-element =
-  method (c, s) c.current-elem(c.source, head(s)) end method;
+define inline function gs-fip-current-element (c :: <generic-subsequence>, s)
+  c.current-elem(c.source, head(s));
+end function;
 
-define constant gs-fip-current-element-setter =
-  method (v, c, s)
-    c.current-elem-sttr(v, c.source, head(s));
-  end method;
+define inline function gs-fip-current-element-setter (v, c :: <generic-subsequence>, s)
+  c.current-elem-sttr(v, c.source, head(s));
+end function;
 
-define constant gs-fip-copy-state =
-  method (c, s) pair(c.copy-state(head(s)), tail(s)) end method;
+define inline function gs-fip-copy-state (c :: <generic-subsequence>, s)
+  pair(c.copy-state(head(s)), tail(s));
+end function;
 
 define method forward-iteration-protocol (seq :: <generic-subsequence>)
  => (initial-state :: <object>, limit :: <object>, next-state :: <function>,
@@ -219,35 +215,36 @@ define method subsequence(seq :: <vector>,
   end if;
 end method subsequence;
 
-define constant vs-fip-next-element =
-  method (c :: <subsequence>, s :: <integer>) => (result :: <integer>);
-    s + 1;
-  end method;
+define inline function vs-fip-next-element 
+    (c :: <subsequence>, s :: <integer>) => (result :: <integer>);
+  s + 1;
+end function;
 
-define constant vs-fip-done? =
-  method (c :: <subsequence>, s :: <integer>, l :: <integer>)
-    s >= l;
-  end method;
+define inline function vs-fip-done? 
+    (c :: <subsequence>, s :: <integer>, l :: <integer>)
+ => (done :: <boolean>);
+  s >= l;
+end function;
 
-define constant vs-fip-current-key =
-  method (c :: <subsequence>, s :: <integer>) => (result :: <integer>);
-    s - c.start-index;
-  end method;
+define inline function vs-fip-current-key 
+    (c :: <subsequence>, s :: <integer>) => (result :: <integer>);
+  s - c.start-index;
+end function;
 
-define constant vs-fip-current-element =
-  method (c :: <subsequence>, s :: <integer>)
-    c.source[s];
-  end method;
+define inline function vs-fip-current-element
+    (c :: <subsequence>, s :: <integer>) => (result :: <object>);
+  c.source[s];
+end function;
 
-define constant vs-fip-current-element-setter =
-  method (e, c :: <subsequence>, s :: <integer>)
-    c.source[s] := e;
-  end method;
+define inline function vs-fip-current-element-setter
+    (e, c :: <subsequence>, s :: <integer>) => (result :: <object>)
+  c.source[s] := e;
+end function;
 
-define constant vs-fip-copy-state =
-  method (c :: <subsequence>, s :: <integer>) => (result :: <integer>);
-    s;
-  end method;
+define inline function vs-fip-copy-state
+    (c :: <subsequence>, s :: <integer>) => (result :: <integer>);
+  s;
+end function;
 
 define method forward-iteration-protocol (seq :: <subsequence>)
  => (initial-state :: <object>, limit :: <object>, next-state :: <function>,
@@ -324,3 +321,4 @@ define method subsequence(seq :: <string>,
     make(<string-subsequence>, source: seq, start: first, end: subseq-last);
   end if;
 end method subsequence;
+
