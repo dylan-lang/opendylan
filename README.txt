@@ -69,6 +69,8 @@ the 'code' subdirectory in the MPS sources and build the mmdw.lib target.
 
   Windows:  nmake /k /f w3i3mv.nmk mmdw.lib
   Linux:    make -f lii4gc.gmk mmdw.a
+            cp *.h lii4gc/ti/mmdw.a $FUNDEV/Sources/lib/run-time/pentium-linux/
+            [if you don't have a lii4gc/ti directory, choose a different ?i directory.]
 
 The actual makefile you use may differ depending on your platform.  The main
 point to notice here is that you don't just build the default target, as
