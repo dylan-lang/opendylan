@@ -1,4 +1,4 @@
-AC_INIT(Sources/dylan/dylan.lid)
+AC_INIT([Functional Developer], [2.1 alpha 4])
 AC_PREREQ(2.50)
 
 AC_DEFUN(FD_PLATFORM,[
@@ -21,6 +21,9 @@ AC_SUBST(fd_host)
 AC_CANONICAL_TARGET
 FD_PLATFORM($target,fd_target)
 AC_SUBST(fd_target)
+
+AC_PROG_INSTALL
+AC_PROG_LN_S
 
 AC_PATH_PROG(PERL, perl, no)
 test "$PERL" = no && AC_MSG_ERROR([
@@ -47,15 +50,15 @@ AC_SUBST(bootstrap_target)
 AC_MSG_CHECKING(for Library Packs to include)
 LIBRARY_PACKS=Core
 AC_ARG_ENABLE(network,
-	      AC_HELP_STRING([--without-network],
+	      AC_HELP_STRING([--disable-network],
 	                     [Do not build the basic networking library]),
 	      ,LIBRARY_PACKS="$LIBRARY_PACKS Network")
 AC_ARG_ENABLE(testworks,
-	      AC_HELP_STRING([--out-testworks],
+	      AC_HELP_STRING([--enable-testworks],
 	                     [Build the unit test framework library]),
 	      LIBRARY_PACKS="$LIBRARY_PACKS TestWorks")
 AC_ARG_ENABLE(dood,
-	      AC_HELP_STRING([--with-dood],
+	      AC_HELP_STRING([--enable-dood],
 	                     [Build the DOOD persistent storage library]),
 	      LIBRARY_PACKS="$LIBRARY_PACKS DOOD")
 AC_MSG_RESULT($LIBRARY_PACKS)
