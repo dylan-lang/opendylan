@@ -16,7 +16,7 @@ define constant $release-version-type = #"1.1";
 define constant $release-beta?        = #f;
 
 define constant $release-copyright
-  = "Copyright (c) 1997-2001, Functional Objects, Inc. "
+  = "Copyright (c) 1997-2004, Functional Objects, Inc. "
     "All rights reserved.";
 
 
