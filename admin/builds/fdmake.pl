@@ -52,8 +52,6 @@ sub build_library {
     my ($library) = @_;
 
     return 1 if exists $built{$library};
-    return 1 if -f "$user_root/lib/lib${library}.so";
-    return 1 if -f "$user_root/bin/$library";
 
     open(REGISTRY, '<', "$user_registries/$platform_name/$library")
 	|| open(REGISTRY, '<', "$user_registries/generic/$library")
@@ -72,9 +70,33 @@ sub build_library {
     
     &scan_lidfile($lidfile, $header, $dir);
 
+    my $needs_rebuild = !-f "$user_root/lib/lib${library}.so";
+
     if(defined $deps{$library}) {
 	foreach my $dep (@{$deps{$library}}) {
-	    &build_library($dep);
+	    if(&build_library($dep) > 1) {
+		$needs_rebuild = 1;
+	    }
+	}
+    }
+
+    if(!$needs_rebuild) {
+	my $libdate = (stat "$user_root/lib/lib${library}.so")[9];
+	foreach my $source (split /\s+/, $$header{'files'}) {
+	    unless($source =~ /\.dylan$/) {
+		$source = "$source.dylan";
+	    }
+	    $source = File::Spec->catfile($dir, $source);
+	    my $srcdate = (stat $source)[9]
+		|| die "Library $library source file '$source' does not exist";
+	    if($srcdate > $libdate) {
+		print "$source causes rebuild of $library\n";
+		$needs_rebuild = 1;
+	    }
+	}
+	if(!$needs_rebuild) {
+	    $built{$library} = 1;
+	    return 1;
 	}
     }
 
@@ -136,7 +158,7 @@ sub build_library {
 	print "\n";
     }
 
-    return 1;
+    return 2;
 }
 
 # invoke_tool($library, $dir, $spec)
@@ -407,14 +429,15 @@ sub parse_lid_file {
 
     my $contents = &parse_header(\*LIDFILE, $lidfile);
 
-    # Read filenames
-    while (<LIDFILE>) {
-        $lidfile_line = $lidfile_line + 1;
-
-	s/\r//g;		# Get rid of cross carriage returns
-	chop;			# kill newline
-	$$contents{'files'} .= " $_";
-    }
+    
+#   # Read filenames
+#     while (<LIDFILE>) {
+#         $lidfile_line = $lidfile_line + 1;
+#
+# 	s/\r//g;		# Get rid of cross carriage returns
+# 	chop;			# kill newline
+# 	$$contents{'files'} .= " $_";
+#     }
     close(LIDFILE);
 
     if(defined $$contents{'files'}) {
