@@ -46,7 +46,8 @@ of now:
 
 or
 
-* Unpack latest snapshot from http://www.gwydiondylan.org/~andreas/
+* Unpack latest snapshot from
+   ftp://ftp.fu-berlin.de/unix/languages/dylan/fd-binaries/linux/
 
 
 svn co svn+ssh://anonsvn@anonsvn.gwydiondylan.org/scm/svn/dylan/trunk/fundev fundev
