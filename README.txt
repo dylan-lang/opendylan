@@ -48,9 +48,7 @@ cvs co fundev
 export SRCDIR=`pwd`/fundev        # must be absolute path!
 export BUILDDIR=<your build dir>
 cd $SRCDIR
-autoconf
-automake -a
-libtoolize -c
+./autogen.sh
 
 sudo cp Sources/lib/run-time/pentium-linux/dylan-elf-*.script /usr/local/lib/functional-developer/lib
 
