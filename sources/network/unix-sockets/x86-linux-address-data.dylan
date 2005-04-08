@@ -170,10 +170,25 @@ end C-union;
 define constant $IF-NAMESIZE = 16; 
 
 define C-struct <ifreq>
-  array slot ifr-name :: <C-char>, length: $IF-NAMESIZE;
+  array slot %ifr-name :: <C-char>, length: $IF-NAMESIZE;
   slot ifr-ifru :: <ifr-ifru>;
   pointer-type-name: <ifreq*>;
 end C-struct;
+
+define method ifr-name (ifreq :: <ifreq*>)
+ => (name :: <string>);
+  error("not implemented");
+end method ifr-name;
+
+define method ifr-name-setter (name :: <string>, ifreq :: <ifreq*>)
+ => ()
+  for(c in name,
+      i from 0 below $IF-NAMESIZE - 1)
+    %ifr-name(ifreq, i) := as(<integer>, c);
+  finally
+    %ifr-name(ifreq, i + 1) := 0;
+  end for;
+end method ifr-name-setter;
 
 define method ifr-ifindex (ifreq :: <ifreq*>)
  => (interface-index :: <integer>)
