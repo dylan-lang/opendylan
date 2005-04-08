@@ -146,14 +146,58 @@ end C-function;
 
 /// from net/if.h
 
+define constant $IFF-UP          =    #x1;
+define constant $IFF-BROADCAST   =    #x2;
+define constant $IFF-DEBUG       =    #x4;
+define constant $IFF-LOOPBACK    =    #x8;
+define constant $IFF-POINTOPOINT =   #x10;
+define constant $IFF-NOTRAILERS  =   #x20;
+define constant $IFF-RUNNING     =   #x40;
+define constant $IFF-NOARP       =   #x80;
+define constant $IFF-PROMISC     =  #x100;
+define constant $IFF-ALLMULTI    =  #x200;
+define constant $IFF-MASTER      =  #x400;
+define constant $IFF-SLAVE       =  #x800;
+define constant $IFF-MULTICAST   = #x1000;
+define constant $IFF-PORTSEL     = #x2000;
+define constant $IFF-AUTOMEDIA   = #x4000;
+
+define C-union <ifr-ifru>
+  slot ifru-flags :: <C-short>;
+  slot ifru-ivalue :: <C-int>;
+end C-union;
+
 define constant $IF-NAMESIZE = 16; 
 
 define C-struct <ifreq>
   array slot ifr-name :: <C-char>, length: $IF-NAMESIZE;
-  slot ifr-ifindex :: <C-int>;
+  slot ifr-ifru :: <ifr-ifru>;
   pointer-type-name: <ifreq*>;
-end C-structure;
+end C-struct;
+
+define method ifr-ifindex (ifreq :: <ifreq*>)
+ => (interface-index :: <integer>)
+  ifreq.ifr-ifru.ifru-ivalue
+end method ifr-ifindex;
+
+define method ifr-ifindex-setter (value :: <integer>, ifreq :: <ifreq*>)
+ => (interface-index :: <integer>)
+  ifreq.ifr-ifru.ifru-ivalue := value
+end method ifr-ifindex-setter;
+
+define method ifr-flags (ifreq :: <ifreq*>)
+ => (interface-index :: <integer>)
+  ifreq.ifr-ifru.ifru-flags
+end method ifr-flags;
+
+define method ifr-flags-setter (value :: <integer>, ifreq :: <ifreq*>)
+ => (interface-index :: <integer>)
+  ifreq.ifr-ifru.ifru-flags := value
+end method ifr-flags-setter;
+
 
 define constant $SIOCGIFINDEX = #x8933;
+define constant $SIOCGIFFLAGS = #x8913;
+define constant $SIOCSIFFLAGS = #x8914;
 
 // eof

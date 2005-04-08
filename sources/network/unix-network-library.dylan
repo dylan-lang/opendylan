@@ -136,7 +136,25 @@ define module unix-sockets
     <ifreq>, <ifreq*>,
       ifr-name, ifr-name-setter,
       ifr-ifindex, ifr-ifindex-setter,
-      $IF-NAMESIZE, $SIOCGIFINDEX;
+      ifr-flags, ifr-flags-setter,
+      $IF-NAMESIZE, $SIOCGIFINDEX,
+      $SIOCGIFFLAGS, $SIOCSIFFLAGS,
+      $IFF-UP,
+      $IFF-BROADCAST,
+      $IFF-DEBUG,
+      $IFF-LOOPBACK,
+      $IFF-POINTOPOINT,
+      $IFF-NOTRAILERS,
+      $IFF-RUNNING,
+      $IFF-NOARP,   
+      $IFF-PROMISC,
+      $IFF-ALLMULTI,
+      $IFF-MASTER,
+      $IFF-SLAVE,
+      $IFF-MULTICAST,
+      $IFF-PORTSEL,
+      $IFF-AUTOMEDIA;
+
   export
     endhostent, gethostbyaddr, gethostbyname, gethostent, sethostent,
     endnetent, getnetbyaddr, getnetbyname, getnetent, setnetent,
