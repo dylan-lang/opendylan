@@ -186,7 +186,7 @@ define method ifr-name-setter (name :: <string>, ifreq :: <ifreq*>)
       i from 0 below $IF-NAMESIZE - 1)
     %ifr-name(ifreq, i) := as(<integer>, c);
   finally
-    %ifr-name(ifreq, i + 1) := 0;
+    %ifr-name(ifreq, i) := 0;
   end for;
 end method ifr-name-setter;
 
