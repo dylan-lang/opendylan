@@ -221,7 +221,7 @@ define method write-definition-contents
   let project = report.report-project;
   let names = namespace-sorted-names(project, library);
   for (name :: <module-name-object> in names)
-	let module = name-value(project, name);
+    let module = name-value(project, name);
     report.report-children :=
       add!(report.report-children,
 	   make(<module-report>,
@@ -266,21 +266,23 @@ define method write-definition-body
   let names = namespace-sorted-names(project, module);
   for (name :: <binding-name-object> in names)
     let definition = name-value(project, name);
-    if (report.report-multi-file?)
-      let filename = report-object-filename(report, definition);
-      with-open-file (stream = filename, direction: #"output")
-	let stream
-	  = make(stream-class-for-report(report.report-format),
-		 inner-stream: stream);
-	with-html-rubric (istream = stream.inner-stream, // ---*** push this down into HTML method
-			  format-to-string("%s %s",
-                                           definition-name(report, definition),
-                                           definition-kind(definition)))
-	  write-definition-report(stream, report, definition)
-	end with-html-rubric;
-      end with-open-file;
-    else
-      write-definition-report(stream, report, definition);
+    if (instance?(definition, <definition-object>))
+      if (report.report-multi-file?)
+        let filename = report-object-filename(report, definition);
+        with-open-file (stream = filename, direction: #"output")
+          let stream
+          = make(stream-class-for-report(report.report-format),
+                 inner-stream: stream);
+          with-html-rubric (istream = stream.inner-stream, // ---*** push this down into HTML method
+                            format-to-string("%s %s",
+                                             definition-name(report, definition),
+                                             definition-kind(definition)))
+            write-definition-report(stream, report, definition)
+          end with-html-rubric;
+        end with-open-file;
+      else
+        write-definition-report(stream, report, definition);
+      end if;
     end if;
   end for;
 end method write-definition-body;
@@ -821,14 +823,16 @@ define method write-definition-contents
     write-html(stream, #"ul", '\n');
     for (name :: <binding-name-object> in names)
       let definition = name-value(project, name);
-      let title = definition-name(report, definition);
-      let filename = report-object-filename(report, definition);
-      write-html(stream,
-		 #"li",
-		 make(<html-reference>, name: format-to-string("%s#%s", filename, title)),
-		 title,
-		 #"/a",
-		 '\n');
+      if (instance?(definition, <definition-object>))
+        let title = definition-name(report, definition);
+        let filename = report-object-filename(report, definition);
+        write-html(stream,
+                   #"li",
+                   make(<html-reference>, name: format-to-string("%s#%s", filename, title)),
+                   title,
+                   #"/a",
+                   '\n');
+      end if;
     end for;
   end if;
 end method write-definition-contents;
