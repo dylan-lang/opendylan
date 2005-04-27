@@ -102,7 +102,7 @@ Bootstrap.2:
 Bootstrap.2/bin/minimal-console-compiler: stage-1-bootstrap
 	@echo Building stage 2 bootstrap...
 	FUNCTIONAL_DEVELOPER_USER_INSTALL=$(abs_builddir)/Bootstrap.2 \
-	  $(MAKE) -C $(abs_srcdir)/sources/lib/run-time/pentium-linux install
+	  $(MAKE) -C sources/lib/run-time/pentium-linux install
 	@FUNCTIONAL_DEVELOPER_PLATFORM_NAME=$(fd_build) \
 	  FUNCTIONAL_DEVELOPER_RELEASE_ROOT=$(abs_builddir)/Bootstrap.2 \
 	  FUNCTIONAL_DEVELOPER_RELEASE_INSTALL=$(abs_builddir)/Bootstrap.2 \
@@ -128,7 +128,7 @@ Bootstrap.3:
 Bootstrap.3/bin/minimal-console-compiler: stage-2-bootstrap
 	@echo Building stage 3 bootstrap...
 	FUNCTIONAL_DEVELOPER_USER_INSTALL=$(abs_builddir)/Bootstrap.3 \
-	  $(MAKE) -C $(abs_srcdir)/sources/lib/run-time/pentium-linux install
+	  $(MAKE) -C sources/lib/run-time/pentium-linux install
 	@FUNCTIONAL_DEVELOPER_PLATFORM_NAME=$(fd_build) \
 	  FUNCTIONAL_DEVELOPER_RELEASE_ROOT=$(abs_builddir)/Bootstrap.2 \
 	  FUNCTIONAL_DEVELOPER_BUILD_LOGS=$(abs_builddir)/Bootstrap.3/logs \
@@ -164,7 +164,7 @@ FINAL_LIBRARIES = \
 final-bootstrap: Bootstrap.final
 	@echo Building final stage bootstrap...
 	FUNCTIONAL_DEVELOPER_USER_INSTALL=$(abs_builddir)/Bootstrap.final \
-	  $(MAKE) -C $(abs_srcdir)/sources/lib/run-time/pentium-linux install
+	  $(MAKE) -C sources/lib/run-time/pentium-linux install
 	@$(FINAL_ENV) $(fdmake) --compiler="$(FDCOMPILE)" \
 		$(FINAL_LIBRARIES) --library-packs="$(LIBRARY_PACKS)"
 
@@ -197,6 +197,3 @@ installdirs:
 Makefile:  $(srcdir)/Makefile.in  config.status
 	CONFIG_HEADERS= CONFIG_LINKS= \
 	  CONFIG_FILES=./$@ $(SHELL) ./config.status
-
-
-

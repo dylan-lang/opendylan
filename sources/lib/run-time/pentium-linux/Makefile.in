@@ -1,39 +1,54 @@
 # Build runtime library for Dylan under X86 Linux
 
-LIBDEST          = $(FUNCTIONAL_DEVELOPER_USER_INSTALL)/lib
-BINDEST          = $(FUNCTIONAL_DEVELOPER_USER_INSTALL)/bin
+srcdir		= @srcdir@
+top_srcdir	= @top_srcdir@
+top_builddir	= @top_builddir@
 
-MPS              = @with_mps@
-MPS_PLATFORM     = lii4gc
-MPS_VARIANT      = hi
-MPS_LIB          = $(MPS)/code/$(MPS_PLATFORM)/$(MPS_VARIANT)
+runtime_srcdir	= $(top_srcdir)/sources/lib/run-time
 
-EXPIRATION = -1
+subdir		= sources/lib/run-time/pentium-linux
 
-AS = as -L -o
+VPATH		= $(srcdir)
+
+LIBDEST         = $(FUNCTIONAL_DEVELOPER_USER_INSTALL)/lib
+BINDEST         = $(FUNCTIONAL_DEVELOPER_USER_INSTALL)/bin
+
+MPS             = @with_mps@
+MPS_PLATFORM    = lii4gc
+MPS_VARIANT     = hi
+MPS_LIB         = $(MPS)/code/$(MPS_PLATFORM)/$(MPS_VARIANT)
+
+EXPIRATION	= -1
+
+AS = as -L
 AR = ar -q
-CFLAGS = -DGC_LINUX_THREADS=1 -D_REENTRANT=1 -O -g -DEXPIRATION=$(EXPIRATION) -I$(MPS)/code
 
-OBJS	 = x86-linux-collector.o runtime.o x86-linux-threads-primitives.o linux-spy-interfaces.o linux-support.o
+CFLAGS		= -DGC_LINUX_THREADS=1 -D_REENTRANT=1 \
+		  -O -g -DEXPIRATION=$(EXPIRATION) \
+		  -I$(MPS)/code -I$(srcdir) -I$(runtime_srcdir)
+
+OBJS		= x86-linux-collector.o \
+		  runtime.o \
+		  x86-linux-threads-primitives.o \
+		  linux-spy-interfaces.o \
+		  linux-support.o
 
 RUNTIMELIBDEST	 = $(LIBDEST)/runtime/
 
-# Install shared runtime sources
+all:	$(OBJS)
 
-collector.c: ../collector.c
-	cp -fp ../*.c . ; \
-	cp -fp ../*.h .
+x86-linux-collector.o:       $(runtime_srcdir)/collector.c
 
-x86-linux-collector.o:       collector.c
+x86-linux-threads-primitives.o:  $(runtime_srcdir)/linux-threads-primitives.c
 
-x86-linux-threads-primitives.o:  linux-threads-primitives.c
+linux-spy-interfaces.o: $(runtime_srcdir)/linux-spy-interfaces.c
+	$(CC) $(CFLAGS) -c -o $@ $<
 
-linux-spy-interfaces.o: linux-spy-interfaces.c
+linux-support.o: $(runtime_srcdir)/linux-support.c
+	$(CC) $(CFLAGS) -c -o $@ $<
 
-linux-support.o: linux-support.c
-
-runtime.o:	runtime.s
-	$(AS) runtime.o runtime.s
+runtime.o:	$(srcdir)/runtime.s
+	$(AS) -o runtime.o $(srcdir)/runtime.s
 
 #$(LIBDEST)/libgc.a: gc.a
 #	cp -fp gc.a $(LIBDEST)/libgc.a
@@ -44,22 +59,21 @@ $(LIBDEST)/libmpsplan.a: $(MPS_LIB)/mpsplan.a
 $(LIBDEST)/libmmdw.a: $(MPS_LIB)/mmdw.a
 	cp -fp $(MPS_LIB)/mmdw.a $(LIBDEST)/libmmdw.a
 
-$(LIBDEST)/x86-linux-build.jam: x86-linux-build.jam
-	cp -fp x86-linux-build.jam $(LIBDEST)
+$(LIBDEST)/x86-linux-build.jam: $(srcdir)/x86-linux-build.jam
+	cp -fp $(srcdir)/x86-linux-build.jam $(LIBDEST)
 
-$(LIBDEST)/mini-jambase.jam: ../mini-jambase.jam
-	cp -fp ../mini-jambase.jam $(LIBDEST)
+$(LIBDEST)/mini-jambase.jam: $(runtime_srcdir)/mini-jambase.jam
+	cp -fp $(runtime_srcdir)/mini-jambase.jam $(LIBDEST)
 
-$(LIBDEST)/dylan-elf-dll.script: dylan-elf-dll.script
-	cp -fp dylan-elf-dll.script $(LIBDEST)
+$(LIBDEST)/dylan-elf-dll.script: $(srcdir)/dylan-elf-dll.script
+	cp -fp $(srcdir)/dylan-elf-dll.script $(LIBDEST)
 
-$(LIBDEST)/dylan-elf-exe.script: dylan-elf-exe.script
-	cp -fp dylan-elf-exe.script $(LIBDEST)
+$(LIBDEST)/dylan-elf-exe.script: $(srcdir)/dylan-elf-exe.script
+	cp -fp $(srcdir)/dylan-elf-exe.script $(LIBDEST)
 
 install-build: $(LIBDEST)/libmmdw.a $(LIBDEST)/libmpsplan.a \
 	       $(LIBDEST)/x86-linux-build.jam $(LIBDEST)/mini-jambase.jam \
-               $(LIBDEST)/dylan-elf-dll.script $(LIBDEST)/dylan-elf-exe.script \
-               collector.c
+               $(LIBDEST)/dylan-elf-dll.script $(LIBDEST)/dylan-elf-exe.script
 
 install-runtime: $(OBJS)
 	cp -fp $(OBJS) $(RUNTIMELIBDEST)
@@ -67,5 +81,7 @@ install-runtime: $(OBJS)
 install: install-runtime install-build
 
 clean:
-	rm -f *.o ; \
-	rm -f collector.c
+	rm -f *.o
+
+Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
+	cd $(top_builddir) && ./config.status $(subdir)/Makefile
