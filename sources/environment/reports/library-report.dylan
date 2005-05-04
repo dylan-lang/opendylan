@@ -115,7 +115,9 @@ end method compute-contents-file;
 define class <report-stream> (<wrapper-stream>)
 end class <report-stream>;
 
-define constant <argument-direction> = one-of(#"input", #"output");
+define constant <argument-kind>
+  = one-of(#"input", #"input-rest", #"input-keyword",
+           #"output", #"output-rest");
 
 define generic write-definition-report (stream :: <report-stream>, report :: <namespace-report>, object :: false-or(<definition-object>)) => ();
 define generic write-definition-header (stream :: <report-stream>, report :: <namespace-report>, definition :: <definition-object>)  => ();
@@ -137,9 +139,9 @@ define generic write-operations (stream :: <report-stream>, report :: <namespace
 define generic write-function-signature (stream :: <report-stream>, report :: <namespace-report>, function :: <function-object>) => ();
 define generic write-function-arguments (stream :: <report-stream>, report :: <namespace-report>, function :: <function-object>) => ();
 define generic write-function-values (stream :: <report-stream>, report :: <namespace-report>, function :: <function-object>) => ();
-define generic write-function-parameter (stream :: <report-stream>, report :: <namespace-report>, function :: <parameter>, #key direction :: <argument-direction> = #"input") => ();
-define generic write-function-parameters-header (stream :: <report-stream>, report :: <namespace-report>, function :: <function-object>, #key direction :: <argument-direction> = #"input") => ();
-define generic write-function-parameters-footer (stream :: <report-stream>, report :: <namespace-report>, function :: <function-object>, #key direction :: <argument-direction> = #"input") => ();
+define generic write-function-parameter (stream :: <report-stream>, report :: <namespace-report>, function :: <parameter>, #key kind :: <argument-kind> = #"input") => ();
+define generic write-function-parameters-header (stream :: <report-stream>, report :: <namespace-report>, function :: <function-object>, #key kind :: <argument-kind> = #"input") => ();
+define generic write-function-parameters-footer (stream :: <report-stream>, report :: <namespace-report>, function :: <function-object>, #key kind :: <argument-kind> = #"input") => ();
 define generic write-see-also (stream :: <report-stream>, report :: <namespace-report>, definition :: <definition-object>) => ();
 
 /// <REPORT-STREAM> Default Methods
@@ -427,7 +429,6 @@ define method write-function-signature
  => ()
   let project = report.report-project;
   let module = report.report-namespace;
-  let <object>-class = find-environment-object(project, $<object>-id);
   let (required, rest, key, all-keys?, next, required-values, rest-value)
     = function-parameters(project, function);
   write-function-name(stream, report, function);
@@ -498,7 +499,6 @@ define method write-function-arguments
  => ()
   let project = report.report-project;
   let module = report.report-namespace;
-  let <object>-class = find-environment-object(project, $<object>-id);
   let (required, rest, key, all-keys?, next, required-values, rest-value)
     = function-parameters(project, function);
   local method do-parameter (parameter :: <parameter>) => ()
@@ -522,36 +522,35 @@ define method write-function-values
  => ()
   let project = report.report-project;
   let module = report.report-namespace;
-  let <object>-class = find-environment-object(project, $<object>-id);
   let (required, rest, key, all-keys?, next, required-values, rest-value)
     = function-parameters(project, function);
   local method do-parameter (parameter :: <parameter>) => ()
-	  write-function-parameter(stream, report, parameter, direction: #"output");
+	  write-function-parameter(stream, report, parameter, kind: #"output");
 	end method do-parameter;
   local method do-parameters (parameters :: <parameters>) => ()
 	  do(do-parameter, parameters)
         end method do-parameters;
-  write-function-parameters-header(stream, report, function, direction: #"output");
+  write-function-parameters-header(stream, report, function, kind: #"output");
   do-parameters(required-values);
   rest-value & do-parameter(rest-value);
-  write-function-parameters-footer(stream, report, function, direction: #"output");
+  write-function-parameters-footer(stream, report, function, kind: #"output");
 end method write-function-values;
 
 define method write-function-parameter
     (stream :: <report-stream>, report :: <module-report>,
-     function :: <parameter>, #key direction :: <argument-direction> = #"input")
+     function :: <parameter>, #key kind :: <argument-kind> = #"input")
  => ()
 end method write-function-parameter;
 
 define method write-function-parameters-header
     (stream :: <report-stream>, report :: <module-report>,
-     function :: <function-object>, #key direction :: <argument-direction> = #"input")
+     function :: <function-object>, #key kind :: <argument-kind> = #"input")
  => ()
 end method write-function-parameters-header;
 
 define method write-function-parameters-footer
     (stream :: <report-stream>, report :: <module-report>,
-     function :: <function-object>, #key direction :: <argument-direction> = #"input")
+     function :: <function-object>, #key kind :: <argument-kind> = #"input")
  => ()
 end method write-function-parameters-footer;
 
@@ -633,7 +632,7 @@ end method write-function-name;
 
 define method write-function-parameter
     (stream :: <text-report-stream>, report :: <module-report>,
-     parameter :: <parameter>, #key direction :: <argument-direction> = #"input")
+     parameter :: <parameter>, #key kind :: <argument-kind> = #"input")
  => ()
   let project = report.report-project;
   let module = report.report-namespace;
@@ -758,7 +757,7 @@ end method write-function-name;
 
 define method write-function-parameter
     (stream :: <html-report-stream>, report :: <module-report>,
-     parameter :: <parameter>, #key direction :: <argument-direction> = #"input")
+     parameter :: <parameter>, #key kind :: <argument-kind> = #"input")
  => ()
   let project = report.report-project;
   let module = report.report-namespace;
@@ -776,14 +775,14 @@ end method write-function-parameter;
 
 define method write-function-parameters-header
     (stream :: <html-report-stream>, report :: <module-report>,
-     function :: <function-object>, #key direction :: <argument-direction> = #"input")
+     function :: <function-object>, #key kind :: <argument-kind> = #"input")
  => ()
   write-html(stream, #"ul", '\n');
 end method write-function-parameters-header;
 
 define method write-function-parameters-footer
     (stream :: <html-report-stream>, report :: <module-report>,
-     function :: <function-object>, #key direction :: <argument-direction> = #"input")
+     function :: <function-object>, #key kind :: <argument-kind> = #"input")
  => ()
   write-html(stream, #"/ul", '\n')
 end method write-function-parameters-footer;
@@ -1029,11 +1028,59 @@ define method write-function-signature
  => ()
 end method write-function-signature;
 
+define method write-function-arguments
+    (stream :: <xml-report-stream>, report :: <module-report>, 
+     function :: <function-object>)
+ => ()
+  let project = report.report-project;
+  let module = report.report-namespace;
+  let (required, rest, key, all-keys?, next, required-values, rest-value)
+    = function-parameters(project, function);
+  local method do-parameter
+            (parameter :: <parameter>, kind :: <argument-kind>) => ()
+	  write-function-parameter(stream, report, parameter, kind: kind)
+	end method do-parameter;
+  local method do-parameters
+            (parameters :: <parameters>, kind :: <argument-kind>) => ()
+	  do(rcurry(do-parameter, kind), parameters)
+        end method do-parameters;
+  write-function-parameters-header(stream, report, function);
+  do-parameters(required, #"input");
+  rest & do-parameter(rest, #"input-rest");
+  if (key & size(key) > 0)
+    do-parameters(key, #"input-keyword")
+  end;
+  if(all-keys?) format(stream, "      <all-keys/>\n") end;
+  write-function-parameters-footer(stream, report, function);
+end method write-function-arguments;
+
+define method write-function-values
+    (stream :: <xml-report-stream>, report :: <module-report>, 
+     function :: <function-object>)
+ => ()
+  let project = report.report-project;
+  let module = report.report-namespace;
+  let (required, rest, key, all-keys?, next, required-values, rest-value)
+    = function-parameters(project, function);
+  local method do-parameter
+            (parameter :: <parameter>, kind :: <argument-kind>) => ();
+          write-function-parameter(stream, report, parameter, kind: kind);
+	end method do-parameter;
+  local method do-parameters
+            (parameters :: <parameters>, kind :: <argument-kind>) => ()
+	  do(rcurry(do-parameter, kind), parameters)
+        end method do-parameters;
+  write-function-parameters-header(stream, report, function, kind: #"output");
+  do-parameters(required-values, #"output");
+  rest-value & do-parameter(rest-value, #"output-rest");
+  write-function-parameters-footer(stream, report, function, kind: #"output");
+end method write-function-values;
+
 define method write-function-parameters-header
     (stream :: <xml-report-stream>, report :: <module-report>,
-     function :: <function-object>, #key direction :: <argument-direction> = #"input")
+     function :: <function-object>, #key kind :: <argument-kind> = #"input")
  => ()
-  select (direction)
+  select (kind)
     #"input" => format(stream, "    <ins>\n");
     #"output" => format(stream, "    <outs>\n");
   end select;
@@ -1041,9 +1088,9 @@ end method write-function-parameters-header;
 
 define method write-function-parameters-footer
     (stream :: <xml-report-stream>, report :: <module-report>,
-     function :: <function-object>, #key direction :: <argument-direction> = #"input")
+     function :: <function-object>, #key kind :: <argument-kind> = #"input")
  => ()
-  select (direction)
+  select (kind)
     #"input" => format(stream, "    </ins>\n");
     #"output" => format(stream, "    </outs>\n");
   end select;
@@ -1051,24 +1098,32 @@ end method write-function-parameters-footer;
 
 define method write-function-parameter
     (stream :: <xml-report-stream>, report :: <module-report>,
-     parameter :: <parameter>, #key direction :: <argument-direction> = #"input")
+     parameter :: <parameter>, #key kind :: <argument-kind> = #"input")
  => ()
   let project = report.report-project;
   let module = report.report-namespace;
   let type = parameter.parameter-type;
+  let tag
+    = select(kind)
+        #"input" => "in";
+        #"input-rest" => "rest-in";
+        #"input-keyword" => "keyword-in";
+        #"output" => "out";
+        #"output-rest" => "rest-out"
+      end select;
   format(stream,
-	 "      %s\n"
+	 "      <%s>\n"
 	 "        <name>%s</name>\n"
 	   "        <type><![CDATA[%s]]></type>\n"
 	   "        <description></description>\n"
-	   "      %s\n",
-	 if (direction = #"output") "<out>" else "<in>" end if,
+	   "      </%s>\n",
+         tag,
          (if (instance?(parameter, <optional-parameter>))
             parameter.parameter-keyword
           end
           | parameter.parameter-name),
 	 definition-name(report, type),
-	 if (direction = #"output") "</out>" else "</in>" end if);
+         tag);
 end method write-function-parameter;
 
 define method write-description

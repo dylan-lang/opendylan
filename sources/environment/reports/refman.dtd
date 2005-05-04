@@ -17,13 +17,17 @@
 <!ELEMENT keyword (name,type,description)>
 
 <!ELEMENT in (name,type,description)>
-<!ELEMENT ins (in)*>
+<!ELEMENT rest-in (name,type,description)>
+<!ELEMENT keyword-in (name,type,description)>
+<!ELEMENT all-keys EMPTY>
+<!ELEMENT ins ((in)*, (rest-in)?, (keyword-in)*, (all-keys)?)>
 
 <!ELEMENT raises (type)+>
 <!ELEMENT raisedby (#PCDATA)*>
 
 <!ELEMENT out (name,type,description)>
-<!ELEMENT outs (out)*>
+<!ELEMENT rest-out (name,type,description)>
+<!ELEMENT outs ((out)*, (rest-out)?)>
 
 <!ELEMENT see (#PCDATA)*>
 <!ELEMENT seealso (see)*>
