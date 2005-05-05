@@ -913,6 +913,15 @@ define method write-definition-header
   format(stream, "    <modifiers>%s</modifiers>\n", class-modifiers(report.report-project, class));
 end method write-definition-header;
 
+define method write-definition-header
+    (stream :: <xml-report-stream>, report :: <namespace-report>, 
+     function :: <generic-function-object>)
+ => ()
+  next-method();
+  format(stream, "    <modifiers>%s</modifiers>\n",
+         generic-function-modifiers(report.report-project, function));
+end method write-definition-header;
+
 define method write-definition-footer
     (stream :: <xml-report-stream>, report :: <namespace-report>, 
      definition :: <definition-object>)
@@ -1274,6 +1283,11 @@ define method definition-kind (object :: <function-object>)
   "Function"
 end method definition-kind;
 
+define method definition-kind (object :: <generic-function-object>)
+ => (description :: <string>)
+  "Generic"
+end method definition-kind;
+
 define method definition-kind (object :: <class-object>)
  => (description :: <string>)
   "Class"
@@ -1290,17 +1304,10 @@ define method definition-kind (object :: <module-object>)
 end method definition-kind;
 
 define method definition-type-description
-    (project :: <project-object>, function :: <function-object>)
+    (project :: <project-object>, function :: <generic-function-object>)
  => (description :: <string>)
-  let generic? = instance?(function, <generic-function-object>);
-  let modifiers = definition-modifiers(project, function);
-  let open? = generic? & member?(#"open", modifiers);
-  with-output-to-string (stream)
-    if (open?)
-      write(stream, "Open Generic");
-    end if;
-    write(stream, definition-kind(function));
-  end with-output-to-string;
+    concatenate(generic-function-modifiers(project, function),
+		definition-kind(function))
 end method definition-type-description;
 
 define method definition-type-description
@@ -1325,3 +1332,15 @@ define method class-modifiers
     instantiable? & write(stream, "Instantiable ");
   end
 end method class-modifiers;
+
+define method generic-function-modifiers
+    (project :: <project-object>, function :: <generic-function-object>)
+  => (modifiers :: <string>)
+  let modifiers = definition-modifiers(project, function);
+  let open?     = member?(#"open", modifiers);
+  let dynamic?  = member?(#"dynamic", modifiers);
+  with-output-to-string (stream)
+    open?         & write(stream, "Open ");
+    dynamic?      & write(stream, "Dynamic ");
+  end  
+end method generic-function-modifiers;

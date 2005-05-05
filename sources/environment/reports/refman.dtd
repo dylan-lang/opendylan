@@ -5,13 +5,14 @@
 <!ELEMENT type (#PCDATA)*>
 <!ELEMENT description (p)*>
 
-<!ELEMENT organisation (#PCDATA)*>
+<!ELEMENT organization (#PCDATA)*>
 <!ELEMENT title (#PCDATA)*>
 <!ELEMENT version (#PCDATA)*>
 <!ELEMENT copyright (#PCDATA)*>
-<!ELEMENT head (title,organisation,copyright,version)>
+<!ELEMENT head (title,organization,copyright,version)>
 
 <!ELEMENT modifiers (#PCDATA)*>
+
 <!ELEMENT superclasses (#PCDATA)*>
 <!ELEMENT keywords (keyword)*>
 <!ELEMENT keyword (name,type,description)>
@@ -35,6 +36,7 @@
 <!ELEMENT value (#PCDATA)*>
 
 <!ELEMENT functiondef (ins,outs,raises?)>
+<!ELEMENT genericdef (modifiers?,ins,outs,raises?)>
 <!ELEMENT variabledef (type,value)>
 <!ELEMENT constantdef (type,value)>
 <!ELEMENT classdef (modifiers,superclasses,keywords?)>
@@ -42,7 +44,7 @@
 <!ELEMENT exceptiondef (raisedby)>
 <!ELEMENT macrodef (#PCDATA)*>
 
-<!ELEMENT entry (name,(functiondef|variabledef|constantdef|classdef|typedef|exceptiondef|macrodef),description,seealso?)>
+<!ELEMENT entry (name,(functiondef|genericdef|variabledef|constantdef|classdef|typedef|exceptiondef|macrodef),description,seealso?)>
 
 <!ELEMENT module (name, entry*)>
 
