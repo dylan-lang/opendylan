@@ -9,7 +9,7 @@ synopsis:     Provides "subsequences", which represent an aliased reference to
 //======================================================================
 //
 // Copyright (c) 1994  Carnegie Mellon University
-// Copyright (c) 1998, 1999, 2000  Gwydion Dylan Maintainers
+// Copyright (c) 1998 - 2004  Gwydion Dylan Maintainers
 // All rights reserved.
 // 
 // Use and copying of this software and preparation of derivative
@@ -80,6 +80,24 @@ synopsis:     Provides "subsequences", which represent an aliased reference to
 //     accessed at least once.  
 //============================================================================
 
+// Notes while reviewing the code ( -- andreas, 20050531)
+//
+// * Start and end are insufficiently checked.  It is quite easy to generate
+//   a subsequence of negative size by subsequence(foo, start: 5, end: 3).
+// * Also, passing a negative start gives access to data outside the
+//   subsequence the user is allowed to see.
+// * The semantics of omitting the sequence end isn't well-defined,
+//   especially given stretchy source sequences.
+// * The good news: the above problems are not exploitable because everything
+//   is bounds-checked twice.
+// * The bad news: the performance leaves to be desired because everything
+//   is bounds-checked twice.
+// * Design decision: signal bounds error at subsequence creation time vs.
+//   element access time. The latter is more dynamic, the former gives
+//   better performance.
+// * Feature wish: Read-only subsequences.
+
+
 define abstract class <subsequence> (<sequence>)
    constant slot source :: <sequence>,
      required-init-keyword: source: ;
@@ -120,8 +138,7 @@ define method subsequence(seq :: <sequence>,
 			  #key start: first = 0,
 			       end: last) => (result ::
 						<generic-subsequence>);
-  let sz = size(seq);
-  let subseq-last = if (last & last < sz) last else sz end if;
+  let subseq-last = if (last) last else max(first, seq.size) end if;
   let (init, limit, next, done?,
        key, elem, elem-setter, copy) = forward-iteration-protocol(seq);
   let state = for (i from 0 below first,
@@ -206,8 +223,7 @@ end method;
 define method subsequence(seq :: <vector>,
 			  #key start: first = 0,
 			       end: last) => (result :: <vector-subsequence>);
-   let seq-size = size(seq);
-   let subseq-last = if (last) min(last, seq-size) else seq-size end;
+  let subseq-last = if (last) last else max(first, seq.size) end if;
   if (instance?(seq, <string>)) 
     make(<vs-subsequence>, source: seq, start: first, end: subseq-last);
   else
@@ -256,14 +272,14 @@ define method forward-iteration-protocol (seq :: <subsequence>)
 	  vs-fip-current-element-setter, vs-fip-copy-state);
 end method forward-iteration-protocol;
 
-define method size(c :: <vector-subsequence>) => (result :: <integer>);
+define inline method size(c :: <vector-subsequence>) => (result :: <integer>);
    c.end-index - c.start-index;
 end method size;
 
 define method aref(c :: <vector-subsequence>,
 		   #rest rest) => (result :: <object>);
    let index = rest[0];
-   if ((index < 0) | (index >= c.end-index - c.start-index))
+   if ((index < 0) | (index >= c.size))
       signal("index out of bounds");
    else
       aref(c.source, index + c.start-index);
@@ -273,7 +289,7 @@ end method;
 define method aref-setter(value, c :: <vector-subsequence>,
 			  #rest rest) => (result :: <object>);
    let index = rest[0];
-   if ((index < 0) | (index >= c.end-index - c.start-index))
+   if ((index < 0) | (index >= c.size))
       signal("index out of bounds");
    else
       aref(c.source, index + c.start-index) := value;
@@ -288,22 +304,21 @@ define constant subseq-no-default = pair(#f, #f);
 
 define method element(seq :: <vector-subsequence>, key :: <integer>,
 		      #key default = subseq-no-default) => elt :: <object>;
-  let index = seq.start-index + key;
   case 
-    key < 0 | index >= seq.end-index =>
+    key < 0 | index >= seq.size =>
       if (default == subseq-no-default)
 	error("No such element in %=: %=", seq, key);
       else
 	default
       end if;
-    otherwise => seq.source[index];
+    otherwise => seq.source[key + seq.start-index];
   end case;
 end method element;
 
 define method element-setter(value, seq :: <vector-subsequence>,
 			     key :: <integer>) => (result :: <object>);
    case 
-      key < 0 | key >= seq.end-index - seq.start-index =>
+      key < 0 | key >= seq.size =>
          error("No such element in %=: %=", seq, key);
       otherwise => seq.source[key + seq.start-index] := value;
    end case;
@@ -312,8 +327,7 @@ end method element-setter;
 define method subsequence(seq :: <string>,
 			  #key start: first = 0,
 			       end: last) => (result :: <string-subsequence>);
-  let seq-size = size(seq);
-  let subseq-last = if (last) min(last, seq-size) else seq-size end;
+  let subseq-last = if (last) last else max(start, seq.size) end;
   
   if (instance?(seq, <vector>)) 
     make(<vs-subsequence>, source: seq, start: first, end: subseq-last);
