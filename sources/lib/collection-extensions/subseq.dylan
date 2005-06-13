@@ -305,7 +305,7 @@ define constant subseq-no-default = pair(#f, #f);
 define method element(seq :: <vector-subsequence>, key :: <integer>,
 		      #key default = subseq-no-default) => elt :: <object>;
   case 
-    key < 0 | index >= seq.size =>
+    key < 0 | key >= seq.size =>
       if (default == subseq-no-default)
 	error("No such element in %=: %=", seq, key);
       else
