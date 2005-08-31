@@ -780,6 +780,17 @@ define method accessor-shutdown
   end if;
 end method;    
 
+define method accessor-input-available?
+    (the-descriptor :: <accessor-socket-descriptor>) => (input? :: <boolean>);
+/* unimplemented for Win32
+  with-stack-structure(pollfds :: <pollfd*>)
+    pollfds.pollfd-fd := the-descriptor;
+    pollfds.pollfd-events := $POLLIN;
+    pollfds.pollfd-revents := 0;
+    poll(pollfds, 1, 0)
+  end > 0 */
+  #t
+end method accessor-input-available?;
 
 define method accessor-close-socket
     (the-descriptor :: <accessor-socket-descriptor>) => ();

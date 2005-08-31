@@ -174,13 +174,21 @@ define method stream-at-end?
   end if
 end method stream-at-end?;
 
-/* This needs non-blocking sockets
 define method stream-input-available?
     (stream :: <buffered-socket>) => (available? :: <boolean>)
-  stream-direction(stream) ~= #"output"
-
+  if ((~ stream.accessor.connection-closed?)
+        & ((stream-direction(stream) == #"input")
+             | (stream-direction(stream) == #"input-output")))
+    let buffer = stream.stream-input-buffer;
+    if (buffer & buffer.buffer-next < buffer.buffer-end)
+      #t
+    else
+      accessor-input-available?(stream.accessor.socket-descriptor)
+    end if;
+  else
+    #f
+  end
 end method stream-input-available?;
-*/
 
 define method do-force-output-buffers
     (stream :: <buffered-socket>) => ()

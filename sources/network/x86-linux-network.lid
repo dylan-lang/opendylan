@@ -11,6 +11,7 @@ Files:  unix-network-library
         unix-sockets/x86-linux-address-data
         unix-sockets/address-interfaces
         unix-sockets/errno
+        unix-sockets/poll
 	sockets/socket-conditions
 	sockets/unix-socket-accessor
 	sockets/internet-address

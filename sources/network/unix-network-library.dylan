@@ -185,6 +185,13 @@ define module unix-sockets
     $ETIMEDOUT, $ECONNREFUSED, $EHOSTDOWN, $EHOSTUNREACH, $EALREADY,
     $EINPROGRESS, $ESTALE, $EUCLEAN, $ENOTNAM, $ENAVAIL, $EISNAM,
     $EREMOTEIO, $EDQUOT, $ENOMEDIUM, $EMEDIUMTYPE, $ECANCELED;
+
+  export
+    poll,
+    <pollfd>, <pollfd*>,
+    pollfd-fd, pollfd-events, pollfd-revents,
+    pollfd-fd-setter, pollfd-events-setter, pollfd-revents-setter,
+    $POLLIN, $POLLPRI, $POLLOUT, $POLLERR, $POLLHUP, $POLLNVAL;
 end module unix-sockets;
 
 
