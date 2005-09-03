@@ -50,7 +50,7 @@ or
    ftp://ftp.fu-berlin.de/unix/languages/dylan/fd-binaries/linux/
 
 
-svn co svn+ssh://anonsvn@anonsvn.gwydiondylan.org/scm/svn/dylan/trunk/fundev fundev
+svn co svn://anonsvn.gwydiondylan.org/scm/svn/dylan/trunk/fundev fundev
 export SRCDIR=`pwd`/fundev        # must be absolute path!
 export BUILDDIR=<your build dir>
 
@@ -87,24 +87,27 @@ the 'code' subdirectory in the MPS sources and build the mmdw.lib target.
   Windows:  nmake /k /f w3i3mv.nmk mmdw.lib
             copy *.h w3i3mv/ci/mmdw.lib %FUNDEV%/sources/lib/run-time/pentium-win32/
   Linux:    make -f lii4gc.gmk mmdw.a mpsplan.a
-            cp lii4gc/ci/mmdw.a lii4gc/ci/mpsplan.a $FUNDEV/sources/lib/run-time/pentium-linux/
-            [if you don't have a lii4gc/ci directory, choose a different ?i directory.]
 
 The actual makefile you use may differ depending on your platform.
 The main point to notice here is that you don't just build the default
 target, as described in the MPS documentation.  You must build
 mmdw.lib or mmdw.a instead.
 
-Copy mmdw.lib or mmdw.a and mpsplan.a into the FunDev source tree in
-fundev/sources/lib/run-time/pentium-win32/ or pentium-linux,
-respectively.  This will be picked up by the FunDev build scripts.
+Copy mmdw.lib into the FunDev source tree in
+fundev/sources/lib/run-time/pentium-win32/ respectively.
+This will be picked up by the FunDev build scripts.
 
-There are to caveats here.  Number one: the above instructions make
-you use the ci, "cool internal" variant of the MPS.  This one does
-quite a lot of sanity checks all over, which heavily impacts
-performance, up to a factor of three in total application runtime.  If
-you're looking for performance figures, use the hi, "hot internal", or
+There are two caveats here.
+Number one: the above instructions make you use the ci, "cool internal"
+variant of the MPS on Windows. On Linux, MPS_VARIANT=hi is specified in
+fundev/sources/lib/run-time/pentium-linux/Makefile.in
+The ci variant does quite a lot of sanity checks all over, which heavily
+impacts performance, up to a factor of three in total application runtime.
+If you're looking for performance figures, use the hi, "hot internal", or
 even wi, "white-hot internal" releases.
+
+== Hannes, 3. Sep 2005:
+  Is this still a problem? I thought we fixed threading on Linux ==
 
 Caveat number two is that the Linux port is still a little weak.  In
 particular, there are problems with NPTL, the new generation POSIX
