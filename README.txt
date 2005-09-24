@@ -106,14 +106,4 @@ impacts performance, up to a factor of three in total application runtime.
 If you're looking for performance figures, use the hi, "hot internal", or
 even wi, "white-hot internal" releases.
 
-== Hannes, 3. Sep 2005:
-  Is this still a problem? I thought we fixed threading on Linux ==
-
-Caveat number two is that the Linux port is still a little weak.  In
-particular, there are problems with NPTL, the new generation POSIX
-thread support.  If you see any crashes when trying to use threads
-(try app/gctest to make sure), you can force a switch to the old
-threading model with
-
-  export LD_ASSUME_KERNEL=2.4.1
-
+Number two: glibc >=2.3 and linux kernel >= 2.6 required
