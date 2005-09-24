@@ -8,16 +8,17 @@ Dual-license: GNU Lesser General Public License
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Release constants
-define constant $release-product-name     = "Functional Developer";
-define constant $release-trademarked-name = "Functional Developer(tm)";
+define constant $release-product-name     = "Open Dylan";
+define constant $release-trademarked-name = "Open Dylan";
 define constant $release-edition          = "Basic Edition";
 define constant $release-edition-type     = #"basic";
-define constant $release-version          = "Version 2.1 [Alpha 4]";
-define constant $release-version-type     = #"2.1";
+define constant $release-version          = "Version 1.0 [Beta 1]";
+define constant $release-version-type     = #"1.0";
 define constant $release-beta?            = #t;
 
 define constant $release-copyright
-  = "Copyright (c) 1997-2004, Functional Objects, Inc. "
+  = "Copyright (c) 1997-2004, Functional Objects, Inc.\n"
+    "Portions Copyright (c) 2004-2005, Dylan Hackers\n"
     "All rights reserved.";
 
 

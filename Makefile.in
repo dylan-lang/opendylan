@@ -144,29 +144,29 @@ Bootstrap.final:
 	mkdir Bootstrap.final
 	mkdir Bootstrap.final/build 
 	mkdir Bootstrap.final/logs
-	mkdir Bootstrap.final/bin
-	mkdir Bootstrap.final/lib
-	mkdir Bootstrap.final/lib/runtime
+	-mkdir $(prefix)
+	-mkdir $(prefix)/bin
+	-mkdir $(prefix)/lib
+	-mkdir $(prefix)/lib/runtime
 
 FINAL_ENV = \
 	FUNCTIONAL_DEVELOPER_PLATFORM_NAME=$(fd_build) \
 	FUNCTIONAL_DEVELOPER_BUILD_LOGS=$(abs_builddir)/Bootstrap.final/logs \
 	FUNCTIONAL_DEVELOPER_USER_ROOT=$(abs_builddir)/Bootstrap.final \
-	FUNCTIONAL_DEVELOPER_USER_INSTALL=$(abs_builddir)/Bootstrap.final \
+	FUNCTIONAL_DEVELOPER_USER_INSTALL=$(prefix) \
 	FUNCTIONAL_DEVELOPER_USER_REGISTRIES=$(abs_srcdir)/sources/registry \
 	FUNCTIONAL_DEVELOPER_USER_SOURCES=$(abs_srcdir)/sources \
 	FUNCTIONAL_DEVELOPER_USER_BUILD=$(abs_builddir)/Bootstrap.final/build
 
 FINAL_LIBRARIES = \
-	minimal-console-compiler \
-	minimal-pentium-dw
+	minimal-console-compiler
 
 final-bootstrap: Bootstrap.final
 	@echo Building final stage bootstrap...
-	FUNCTIONAL_DEVELOPER_USER_INSTALL=$(abs_builddir)/Bootstrap.final \
+	FUNCTIONAL_DEVELOPER_USER_INSTALL=$(prefix) \
 	  $(MAKE) -C sources/lib/run-time/pentium-linux install
-	@$(FINAL_ENV) $(fdmake) --compiler="$(FDCOMPILE)" \
-		$(FINAL_LIBRARIES) --library-packs="$(LIBRARY_PACKS)"
+	@$(FINAL_ENV) $(FDCOMPILE) \
+		$(FINAL_LIBRARIES)
 
 install: all
 
