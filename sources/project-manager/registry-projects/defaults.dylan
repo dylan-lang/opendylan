@@ -69,7 +69,7 @@ define function find-registries-internal
 	debug-message("Making system registries for %s",
 		      as(<string>, path));
 	let (platform-registry, generic-registry) 
-	  = make-registry-from-path(path, platform);
+	  = make-registry-from-path(path, platform, personal?: #t);
 	platform-system-registries
 	  := add!(platform-system-registries, platform-registry);
 	generic-system-registries

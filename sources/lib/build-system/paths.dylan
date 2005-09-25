@@ -134,5 +134,5 @@ end;
 define function user-root-path()
  => (path :: false-or(<directory-locator>));
   let path = read-environment-variable("FUNCTIONAL_DEVELOPER_USER_ROOT");
-  path & as(<directory-locator>, path)
+  as(<directory-locator>, path | home-directory())
 end;

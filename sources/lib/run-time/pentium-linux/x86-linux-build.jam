@@ -42,7 +42,7 @@ RTOBJS ?= runtime.o
 	  linux-spy-interfaces.o
 	  linux-support.o ;
 
-rtlibs ?= $(LIBDIR)/runtime/$(RTOBJS) -lmmdw -lmpsplan -lpthread -ldl ;
+rtlibs ?= $(SYSTEM_LIBDIR)/runtime/$(RTOBJS) -lmmdw -lmpsplan -lpthread -ldl ;
 
 guilflags ?= ;
 
