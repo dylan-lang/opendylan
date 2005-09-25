@@ -119,5 +119,6 @@ define function link-library-with-options
 			    otherwise => project-target-type(project);
 			  end case,
 			extent: extent,
-			mode:   combine? & #"combine");
+			mode:   combine? & #"combine",
+                        progress-callback: ignore);
 end function link-library-with-options;
