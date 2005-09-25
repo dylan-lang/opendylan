@@ -312,9 +312,9 @@ define class <remove-build-products-command> (<project-command>)
 end class <remove-build-products-command>;
 
 define command-line remove-build-products => <remove-build-products-command>
-    (summary:       "links a project's executable",
-     documentation: "Links the executable for a project.")
-  optional project :: <project-object> = "the project to link";
+    (summary:       "remove the project's build products",
+     documentation: "Removes the build products for a project.")
+  optional project :: <project-object> = "the project";
   flag subprojects = "remove the build products for subprojects as well [off by default]";
 end command-line remove-build-products;
 
