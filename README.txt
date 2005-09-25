@@ -30,7 +30,7 @@ The main build script for Open Dylan on Windows is
 fundev/admin/builds/build-release.bat.  See that file for additional
 notes and a list of prerequisites.  Notably, to do the initial build
 you will need Open Dylan installed.  (This should be available from
-www.opendylan.com by the time you read this.)  You will also need VC++
+www.opendylan.org by the time you read this.)  You will also need VC++
 6.0.
 
 [TODO: verify details here]
