@@ -9,6 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library environment-test-suite
   use environment-protocols;
+  use internal-release-info;
   //---*** andrewa: this needs a DUIM backend to work
   // use environment-framework;
   //---*** andrewa: the editor tests aren't automatic

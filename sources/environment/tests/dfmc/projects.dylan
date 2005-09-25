@@ -42,27 +42,28 @@ define variable *test-library* :: false-or(<project-object>) = #f;
 
 define function root-directory
     () => (directory :: false-or(<string>))
-  let filename = application-filename();
-  if (filename)
-    let locator = as(<file-locator>, filename);
-    let bin-directory = locator.locator-directory;
-    let release-locator = locator.locator-directory;
-    as(<string>, release-locator)
-  end
+  // FIXME.
+  // The original version was trying to do something clever.
+  // Since that didn't work I've replaced it with the simplest
+  // thing that works for me. --tc
+  environment-variable("FUNCTIONAL_DEVELOPER_USER_SOURCES")
+    | "C:\\fundev\\sources";
 end function root-directory;
 
 define function test-project-location
     (name :: <string>) => (location :: <locator>)
   let directory = root-directory();
-  as(<file-locator>,
-     format-to-string
-       ("%s/sources/environment/tests/%s/%s.hdp",
-	directory,
-	select (name by \=)
-	  "environment-test-application" => "test-application";
-	  "environment-test-library"     => "test-library";
-	end,
-	name))
+  let location-name 
+    = format-to-string
+        ("%s/environment/tests/%s/%s.hdp",
+         directory,
+         select (name by \=)
+           "environment-test-application" => "test-application";
+           "environment-test-library"     => "test-library";
+         end,
+         name);
+  // format-out("project-location: %=\n", location-name);
+  as(<file-locator>, location-name);
 end function test-project-location;
 
 define function open-test-projects () => ()

@@ -139,6 +139,7 @@ set EXT=dll
 shift
 goto PARAM_LOOP
 
+REM Need this line to make the shell recognize the SET_EXE label
 :SET_EXE
 set EXE=yes
 set EXT=exe

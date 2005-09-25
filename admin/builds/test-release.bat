@@ -120,6 +120,7 @@ shift
 shift
 goto PARAM_LOOP
 
+REM Need this line to make Windows recognize the SET_TEST_TARGET label. 
 :SET_TEST_TARGET
 If "%2%"=="" GOTO NO_ARG
 set TEST_TARGET=%2%
