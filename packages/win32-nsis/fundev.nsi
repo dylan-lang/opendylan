@@ -7,22 +7,23 @@
 #  - replace rmdir /r with smth more intelligent ///warning messagebox added, still ugly
 #  - restore previous file associations
 
-;Functional Developer 2.1 Alpha 4 Install Script
+;Open Dylan 1.0 Beta 1 Install Script
 ;Originally written by Denis Mashkevich (oudeis)
+;Changes by Matthias Hölzl (tc)
 
 !include "path.nsh"
 
 ;--------------------------------
 ;Application defines
-!define APPNAME "Functional Developer" ;Define your own software name here
-!define APPNAMEANDVERSION "${APPNAME} 2.1" ;Define your own software version here
+!define APPNAME "Open Dylan" ;Define your own software name here
+!define APPNAMEANDVERSION "${APPNAME} 1.0 Beta 1" ;Define your own software version here
 
 ;-------------------------------------
 ;helper defines
-!define REGISTRY_KEY "Software\Functional Objects\${APPNAME}"
+!define REGISTRY_KEY "Software\${APPNAME}"
 
 !ifndef OUTFILE
-!define OUTFILE "fundev-win32.exe"
+!define OUTFILE "opendylan-win32.exe"
 !endif
 
 ;--------------------------------
@@ -31,7 +32,7 @@
 
 !define MUI_ABORTWARNING
 !define MUI_FINISHPAGE_RUN "$INSTDIR\bin\with-splash-screen.exe"
-!define MUI_FINISHPAGE_RUN_PARAMETERS "/k 2.1 /v $\"Version 2.1$\" /e $\"Internal Edition$\" win32-environment.exe"
+!define MUI_FINISHPAGE_RUN_PARAMETERS "/k 1.0 /v $\"Version 1.0 Beta 1$\" /e $\"Internal Edition$\" win32-environment.exe"
 !define MUI_FINISHPAGE_RUN_CHECKED
 
 !define MUI_HEADERIMAGE
@@ -40,7 +41,7 @@
 
 ;;;; Install properties
 !insertmacro MUI_PAGE_WELCOME
-!insertmacro MUI_PAGE_LICENSE "..\..\License.txt"
+!insertmacro MUI_PAGE_LICENSE "License.txt"
 !insertmacro MUI_PAGE_COMPONENTS
 !insertmacro MUI_PAGE_DIRECTORY
 Page custom ChooseBuildScript
@@ -74,10 +75,10 @@ FunctionEnd
 
 OutFile "${OUTFILE}"
 Name "${APPNAMEANDVERSION}"
-InstallDir "$PROGRAMFILES\Functional Objects\${APPNAME}"
+InstallDir "$PROGRAMFILES\${APPNAME}"
 InstallDirRegKey HKEY_LOCAL_MACHINE "${REGISTRY_KEY}\Install" "Install_Dir"
-BrandingText "Functional Developer - www.functionalobjects.com, www.gwydiondylan.org"
-LicenseData "..\..\License.txt"
+BrandingText "Open Dylan - www.opendylan.org, www.functionalobjects.com"
+LicenseData "License.txt"
 ShowInstDetails show
 
 ;;;; Install Types
@@ -86,25 +87,25 @@ InstType Full
 
 ;;;; Installer Sections
 
-Section "${APPNAME} Core" SecFundevCore
+Section "${APPNAME} Core" SecOpendylanCore
   SectionIn 1 2 RO
 
   SetOutPath "$INSTDIR\"
-  File /r ..\..\bin
-  File /r ..\..\lib
-  File /r ..\..\databases
-  File /r ..\..\Templates
-  File /r ..\..\Examples
-  File /r       Sources
+  File /r D:\r1\bin
+  File /r D:\r1\lib
+  File /r D:\r1\logs
+  File /r D:\r1\databases
+  File /r D:\r1\Templates
+  File /r D:\r1\Examples
+  File /r D:\r1\sources
 
-  WriteRegStr HKEY_LOCAL_MACHINE "${REGISTRY_KEY}\2.0" "Library-Packs" "0xffff"
-  WriteRegStr HKEY_LOCAL_MACHINE "${REGISTRY_KEY}\2.0" "Console-Tools" "Yes"
+  CopyFiles "$PROGRAMFILES\Debugging Tools for Windows\dbghelp.dll" "$INSTDIR\bin"
 
-  WriteRegStr HKEY_LOCAL_MACHINE "${REGISTRY_KEY}\2.1" "Library-Packs" "0xffff"
-  WriteRegStr HKEY_LOCAL_MACHINE "${REGISTRY_KEY}\2.1" "Console-Tools" "Yes"
+  WriteRegStr HKEY_LOCAL_MACHINE "${REGISTRY_KEY}\1.0" "Library-Packs" "0xffff"
+  WriteRegStr HKEY_LOCAL_MACHINE "${REGISTRY_KEY}\1.0" "Console-Tools" "Yes"
 
   WriteRegStr HKEY_LOCAL_MACHINE "${REGISTRY_KEY}\License" "User" \
-              "FunDev Hacker"
+              "Opendylan Hacker"
   WriteRegStr HKEY_LOCAL_MACHINE "${REGISTRY_KEY}\License" "Expiration" "0000"
   WriteRegStr HKEY_LOCAL_MACHINE "${REGISTRY_KEY}\License" "Serial" \
               "FDTNG-0200"
@@ -131,12 +132,12 @@ Section "${APPNAME} Core" SecFundevCore
   StrCmp $3 "1" "" +2
     StrCpy $R0 "x86-win32-pellesc-build.jam"
 
-  WriteRegStr HKCU "${REGISTRY_KEY}\2.1\Build-System" "build-script" \
+  WriteRegStr HKCU "${REGISTRY_KEY}\1.0\Build-System" "build-script" \
               "$INSTDIR\lib\$R0"
 	
   ;Write the uninstall keys for Windows
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\FunDev" "DisplayName" "${APPNAMEANDVERSION} (remove only)"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\FunDev" "UninstallString" '"$INSTDIR\uninstall.exe"'
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Opendylan" "DisplayName" "${APPNAMEANDVERSION} (remove only)"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Opendylan" "UninstallString" '"$INSTDIR\uninstall.exe"'
 	
   WriteUninstaller "uninstall.exe"
 SectionEnd
@@ -147,7 +148,7 @@ Section "Associate .ddb files" SecAssocDDB
 	
   WriteRegStr HKEY_CLASSES_ROOT ".ddb" "" "Developer.Database.File"
   WriteRegStr HKEY_CLASSES_ROOT "Developer.Database.File" "" \
-              "Functional Developer Compiler Database"
+              "Open Dylan Compiler Database"
   WriteRegStr HKEY_CLASSES_ROOT "Developer.Database.File\DefaultIcon" "" \
               "$INSTDIR\\bin\\win32-environment.exe,3"
 
@@ -159,10 +160,10 @@ Section "Associate .hdp files" SecAssocHDP
 	
   WriteRegStr HKEY_CLASSES_ROOT ".hdp" "" "Developer.Project.File"
   WriteRegStr HKEY_CLASSES_ROOT "Developer.Project.File" "" \
-              "Functional Developer Project"
+              "Open Dylan Project"
   WriteRegStr HKEY_CLASSES_ROOT "Developer.Project.File\DefaultIcon" "" \
               "$INSTDIR\\bin\\win32-environment.exe,2"
-  WriteRegStr HKEY_CLASSES_ROOT "Developer.Project.File\shell\open\command" "" "$INSTDIR\\bin\\with-splash-screen.exe /k 2.1 /v $\"Version 2.1$\" /e $\"Internal Edition$\" win32-environment.exe $\"%1$\""
+  WriteRegStr HKEY_CLASSES_ROOT "Developer.Project.File\shell\open\command" "" "$INSTDIR\\bin\\with-splash-screen.exe /k 1.0 /v $\"Version 1.0 Beta 1$\" /e $\"Internal Edition$\" win32-environment.exe $\"%1$\""
   WriteRegStr HKEY_CLASSES_ROOT "Developer.Project.File\shell\open\ddeexec" "" "[OpenFile($\"%1$\")]"
   WriteRegStr HKEY_CLASSES_ROOT "Developer.Project.File\shell\open\ddeexec\Application" "" "FunctionalDeveloper"
   WriteRegStr HKEY_CLASSES_ROOT "Developer.Project.File\shell\open\ddeexec\ifexec" "" "[]"
@@ -177,11 +178,11 @@ Section "Associate .spec files" SecAssocSPEC
   WriteRegStr HKEY_CLASSES_ROOT ".spec" "" "Developer.ToolSpec.File"
   WriteRegStr HKEY_CLASSES_ROOT ".spec" "Content Type" "text/plain"
   WriteRegStr HKEY_CLASSES_ROOT "Developer.ToolSpec.File" "" \
-              "Functional Developer Tool Specification"
+              "Open Dylan Tool Specification"
   WriteRegStr HKEY_CLASSES_ROOT "Developer.ToolSpec.File" "AlwaysShowExt" ""
   WriteRegStr HKEY_CLASSES_ROOT "Developer.ToolSpec.File\DefaultIcon" "" \
               "$INSTDIR\\bin\\win32-environment.exe,5"
-  WriteRegStr HKEY_CLASSES_ROOT "Developer.ToolSpec.File\shell\open\command" "" "$INSTDIR\\bin\\with-splash-screen.exe /k 2.1 /v $\"Version 2.1$\" /e $\"Internal Edition$\" win32-environment.exe $\"%1$\""
+  WriteRegStr HKEY_CLASSES_ROOT "Developer.ToolSpec.File\shell\open\command" "" "$INSTDIR\\bin\\with-splash-screen.exe /k 1.0 /v $\"Version 1.0 Beta 1$\" /e $\"Internal Edition$\" win32-environment.exe $\"%1$\""
   WriteRegStr HKEY_CLASSES_ROOT "Developer.ToolSpec.File\shell\open\ddeexec" "" "[OpenFile($\"%1$\")]"
   WriteRegStr HKEY_CLASSES_ROOT "Developer.ToolSpec.File\shell\open\ddeexec\Application" "" "FunctionalDeveloper"
   WriteRegStr HKEY_CLASSES_ROOT "Developer.ToolSpec.File\shell\open\ddeexec\ifexec" "" "[]"
@@ -198,7 +199,7 @@ Section "Associate .lid files" SecAssocLID
   WriteRegStr HKEY_CLASSES_ROOT "Dylan.LID.File" "" "Dylan Library Interchange Description"
   WriteRegStr HKEY_CLASSES_ROOT "Dylan.LID.File" "AlwaysShowExt" ""
   WriteRegStr HKEY_CLASSES_ROOT "Dylan.LID.File\DefaultIcon" "" "$INSTDIR\\bin\\win32-environment.exe,4"
-  WriteRegStr HKEY_CLASSES_ROOT "Dylan.LID.File\shell\open\command" "" "$INSTDIR\\bin\\with-splash-screen.exe /k 2.1 /v $\"Version 2.1$\" /e $\"Internal Edition$\" win32-environment.exe $\"%1$\""
+  WriteRegStr HKEY_CLASSES_ROOT "Dylan.LID.File\shell\open\command" "" "$INSTDIR\\bin\\with-splash-screen.exe /k 1.0 /v $\"Version 1.0 Beta 1$\" /e $\"Internal Edition$\" win32-environment.exe $\"%1$\""
   WriteRegStr HKEY_CLASSES_ROOT "Dylan.LID.File\shell\open\ddeexec" "" "[OpenFile($\"%1$\")]"
   WriteRegStr HKEY_CLASSES_ROOT "Dylan.LID.File\shell\open\ddeexec\Application" "" "FunctionalDeveloper"
   WriteRegStr HKEY_CLASSES_ROOT "Dylan.LID.File\shell\open\ddeexec\ifexec" "" "[]"
@@ -217,7 +218,7 @@ Section "Associate .dyl, .dylan files" SecAssocDYLAN
   WriteRegStr HKEY_CLASSES_ROOT "Dylan.Source.File" "" "Dylan Source File"
   WriteRegStr HKEY_CLASSES_ROOT "Dylan.Source.File" "AlwaysShowExt" ""
   WriteRegStr HKEY_CLASSES_ROOT "Dylan.Source.File\DefaultIcon" "" "$INSTDIR\\bin\\win32-environment.exe,1"
-  WriteRegStr HKEY_CLASSES_ROOT "Dylan.Source.File\shell\open\command" "" "$INSTDIR\\bin\\with-splash-screen.exe /k 2.1 /v $\"Version 2.1$\" /e $\"Internal Edition$\" win32-environment.exe $\"%1$\""
+  WriteRegStr HKEY_CLASSES_ROOT "Dylan.Source.File\shell\open\command" "" "$INSTDIR\\bin\\with-splash-screen.exe /k 1.0 /v $\"Version 1.0 Beta 1$\" /e $\"Internal Edition$\" win32-environment.exe $\"%1$\""
   WriteRegStr HKEY_CLASSES_ROOT "Dylan.Source.File\shell\open\ddeexec" "" "[OpenFile($\"%1$\")]"
   WriteRegStr HKEY_CLASSES_ROOT "Dylan.Source.File\shell\open\ddeexec\Application" "" "FunctionalDeveloper"
   WriteRegStr HKEY_CLASSES_ROOT "Dylan.Source.File\shell\open\ddeexec\ifexec" "" "[]"
@@ -298,40 +299,40 @@ SectionEnd
 Section "Start Menu Shortcuts" SecStartMenuShortcuts
   SectionIn 1 2
   
-  CreateDirectory "$SMPROGRAMS\Functional Objects\Functional Developer"
-  CreateShortCut "$SMPROGRAMS\Functional Objects\Functional Developer\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
-  Delete "$SMPROGRAMS\Functional Objects\Functional Developer\${APPNAMEANDVERSION}.lnk" ; Delete older link if exists
-  CreateShortCut "$SMPROGRAMS\Functional Objects\Functional Developer\${APPNAMEANDVERSION}.lnk" "$\"$INSTDIR\bin\with-splash-screen.exe$\"" "/k 2.1 /v $\"Version 2.1$\"  /e $\"Internal Edition$\"  win32-environment.exe" "$INSTDIR\bin\win32-environment.exe" 0
+  CreateDirectory "$SMPROGRAMS\Open Dylan"
+  CreateShortCut "$SMPROGRAMS\Open Dylan\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
+  Delete "$SMPROGRAMS\Open Dylan\${APPNAMEANDVERSION}.lnk" ; Delete older link if exists
+  CreateShortCut "$SMPROGRAMS\Open Dylan\${APPNAMEANDVERSION}.lnk" "$\"$INSTDIR\bin\with-splash-screen.exe$\"" "/k 1.0 /v $\"Version 1.0 Beta 1$\"  /e $\"Internal Edition$\"  win32-environment.exe" "$INSTDIR\bin\win32-environment.exe" 0
 SectionEnd
 
 Section "Desktop Shortcut" SecDesktopShortcut
   SectionIn 1 2
   ; For past users, cleanup previous icon if still on desktop
   Delete "$DESKTOP\${APPNAMEANDVERSION}.lnk"
-  CreateShortCut "$DESKTOP\${APPNAMEANDVERSION}.lnk" "$\"$INSTDIR\bin\with-splash-screen.exe$\"" "/k 2.1 /v $\"Version 2.1$\"  /e $\"Internal Edition$\"  win32-environment.exe" "$INSTDIR\bin\win32-environment.exe" 0
+  CreateShortCut "$DESKTOP\${APPNAMEANDVERSION}.lnk" "$\"$INSTDIR\bin\with-splash-screen.exe$\"" "/k 1.0 /v $\"Version 1.0 Beta 1$\"  /e $\"Internal Edition$\"  win32-environment.exe" "$INSTDIR\bin\win32-environment.exe" 0
 SectionEnd
 
 Section "Quick Launch Shortcut" SecQuickLaunchShortcut
   SectionIn 2
 
   Delete "$QUICKLAUNCH\${APPNAMEANDVERSION}.lnk"
-  CreateShortCut "$QUICKLAUNCH\${APPNAMEANDVERSION}.lnk" "$\"$INSTDIR\bin\with-splash-screen.exe$\"" "/k 2.1 /v $\"Version 2.1$\"  /e $\"Internal Edition$\"  win32-environment.exe" "$INSTDIR\bin\win32-environment.exe" 0
+  CreateShortCut "$QUICKLAUNCH\${APPNAMEANDVERSION}.lnk" "$\"$INSTDIR\bin\with-splash-screen.exe$\"" "/k 1.0 /v $\"Version 1.0 Beta 1$\"  /e $\"Internal Edition$\"  win32-environment.exe" "$INSTDIR\bin\win32-environment.exe" 0
 SectionEnd
 
 ;;;; Component Section Descriptions
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecFundevCore} \
+  !insertmacro MUI_DESCRIPTION_TEXT ${SecOpendylanCore} \
                "${APPNAME} core files (required)"
   !insertmacro MUI_DESCRIPTION_TEXT ${SecRedistributable} \
                "Copy redistributable files to separate folder. It is possible to run make-redistributable.bat later to do this."
   !insertmacro MUI_DESCRIPTION_TEXT ${SecModifyPath} \
                "Add $INSTDIR\bin to path."
   !insertmacro MUI_DESCRIPTION_TEXT ${SecAssocDDB} \
-               "Associate .ddb files (Functional Developer Compiler Database) with ${APPNAME}."
+               "Associate .ddb files (Open Dylan Compiler Database) with ${APPNAME}."
   !insertmacro MUI_DESCRIPTION_TEXT ${SecAssocHDP} \
-               "Associate .hdp files (Functional Developer Project) with ${APPNAME}."
+               "Associate .hdp files (Open Dylan Project) with ${APPNAME}."
   !insertmacro MUI_DESCRIPTION_TEXT ${SecAssocSPEC} \
-               "Associate .spec files (Functional Developer Tool Specification) with ${APPNAME}."
+               "Associate .spec files (Open Dylan Tool Specification) with ${APPNAME}."
   !insertmacro MUI_DESCRIPTION_TEXT ${SecAssocLID} \
                "Associate .lid files (Dylan Library Interchange Description) with ${APPNAME}."
   !insertmacro MUI_DESCRIPTION_TEXT ${SecAssocDYLAN} \
@@ -351,7 +352,7 @@ Section "Uninstall"
   RMDir /r "$INSTDIR" 
 
   ; Delete start menu stuff
-  RMDir /r "$SMPROGRAMS\Functional Objects"
+  RMDir /r "$SMPROGRAMS"
 
   ; Delete desktop icons...
   Delete "$DESKTOP\${APPNAMEANDVERSION}.lnk"
@@ -382,10 +383,10 @@ Section "Uninstall"
   
   DeleteRegKey HKEY_CLASSES_ROOT "Dylan.Source.File" 
 
-  DeleteRegKey HKEY_LOCAL_MACHINE "Software\Functional Objects\Functional Developer" 
+  DeleteRegKey HKEY_LOCAL_MACHINE "Software\Open Dylan" 
   
   ;Delete the uninstall keys for Windows
-  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\FunDev" 
+  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Opendylan" 
   
   ;Remove bin dir from path
   Push "$INSTDIR\\bin"
