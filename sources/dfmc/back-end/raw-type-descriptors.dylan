@@ -168,7 +168,7 @@ define raw-type-descriptors (back-end :: <back-end>)
 
   raw-boolean,                       "DBOOL",   1, 1;
   raw-byte-character,                "DBCHR",   1, 1;
-  raw-unicode-character,             "DUCHR",   2, 2;
+  raw-unicode-character,             "DWORD",   w, w;
   raw-byte,                          "DBYTE",   1, 1;
   raw-double-byte,                   "DDBYTE",  2, 2;
   raw-integer,                       "DSINT",   w, w;

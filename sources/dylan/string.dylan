@@ -98,12 +98,31 @@ define macro shared-string-definer
 	   end if
 	 end method element-setter;
 
+         // Make element-setter work between different character types. 
+         // --tc
+         define inline sealed method element-setter
+             (new-value :: <character>,
+              string :: "<" ## ?name ## "-string>", index :: <integer>)
+          => (character :: "<" ## ?name ## "-character>")
+           string[index] := as("<" ## ?name ## "-character>", new-value);
+         end method element-setter;
+
 	 define inline sealed method element-no-bounds-check-setter 
 	     (new-value :: "<" ## ?name ## "-character>", 
 	      string :: "<" ## ?name ## "-string>", index :: <integer>)
 		 => (character :: "<" ## ?name ## "-character>")
 	   string-element(string, index) := new-value
 	 end method element-no-bounds-check-setter;
+
+         // Make element-setter work between different character types. 
+         // --tc
+         define inline sealed method element-no-bounds-check-setter
+             (new-value :: <character>,
+              string :: "<" ## ?name ## "-string>", index :: <integer>)
+          => (character :: "<" ## ?name ## "-character>")
+           string-element(string, index)
+             := as("<" ## ?name ## "-character>", new-value);
+         end method element-no-bounds-check-setter;
 
 	 define sealed inline method type-for-copy
 	     (object :: "<" ## ?name ## "-string>") => (c :: <class>)
