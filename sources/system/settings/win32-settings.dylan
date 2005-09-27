@@ -470,6 +470,8 @@ define inline-only constant $WRITING-SAM
   = as(<LONG>, logior($KEY-QUERY-VALUE, $KEY-SET-VALUE,
                       $KEY-CREATE-SUB-KEY, $KEY-ENUMERATE-SUB-KEYS));
 
+define variable *settings-default-class* = "Open Dylan";
+
 define sealed method initialize-settings
     (settings :: <settings>, for-writing? :: <boolean>) => ()
   local method open ()
@@ -478,7 +480,7 @@ define sealed method initialize-settings
 	  let hKey    = settings-key-handle(parent);
 	  if (hKey)
 	    let key   = settings-key-name(settings);
-	    let class = "Functional Objects";	//--- is this safe?
+	    let class = *settings-default-class*;
 	    let (phkResult, result)
 	      = if (for-writing?)
 		  RegCreateKeyEx(hKey, key, class, $REG-OPTION-NON-VOLATILE, $WRITING-SAM)

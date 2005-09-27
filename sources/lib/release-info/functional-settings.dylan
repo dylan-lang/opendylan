@@ -9,96 +9,107 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Functional Objects settings
 
-define settings <functional-objects-local-settings>
+// General Open Dylan settings are those settings pertaining to all
+// software maintained to the Dylan Hackers, not specifically to
+// the Open Dylan compiler.  Maybe they should be called something
+// like <dylan-hackers-settings>? --tc
+
+define settings <general-open-dylan-local-settings>
     (<local-software-settings>)
-  key-name "Functional Objects";
-end settings <functional-objects-local-settings>;
+  key-name "Open Dylan";
+end settings <general-open-dylan-local-settings>;
 
-define settings <unversioned-functional-developer-local-settings>
-    (<functional-objects-local-settings>)
-  key-name "Functional Developer";
-end settings <unversioned-functional-developer-local-settings>;
+define settings <unversioned-open-dylan-local-settings>
+    (<general-open-dylan-local-settings>)
+  key-name "Open Dylan";
+end settings <unversioned-open-dylan-local-settings>;
 
-define settings <functional-developer-local-settings-1-0>
-    (<unversioned-functional-developer-local-settings>)
+define settings <open-dylan-local-settings-1-0>
+    (<unversioned-open-dylan-local-settings>)
   key-name "1.0";
-end settings <functional-developer-local-settings-1-0>;
-
-define settings <functional-developer-local-settings-1-1>
-    (<unversioned-functional-developer-local-settings>)
-  key-name "1.1";
+  slot service-pack :: <integer> = 0;
   slot library-packs :: <machine-word> = as(<machine-word>, 0);
-end settings <functional-developer-local-settings-1-1>;
+  slot console-tools :: <boolean> = #f;
+end settings <open-dylan-local-settings-1-0>;
 
-define settings <functional-developer-local-settings-1-2>
-    (<unversioned-functional-developer-local-settings>)
+define settings <open-dylan-local-settings-1-1>
+    (<unversioned-open-dylan-local-settings>)
+  key-name "1.1";
+  slot service-pack :: <integer> = 0;
+  slot library-packs :: <machine-word> = as(<machine-word>, 0);
+  slot console-tools :: <boolean> = #f;
+end settings <open-dylan-local-settings-1-1>;
+
+define settings <open-dylan-local-settings-1-2>
+    (<unversioned-open-dylan-local-settings>)
   key-name "1.2";
   slot service-pack :: <integer> = 0;
   slot library-packs :: <machine-word> = as(<machine-word>, 0);
-end settings <functional-developer-local-settings-1-2>;
+  slot console-tools :: <boolean> = #f;
+end settings <open-dylan-local-settings-1-2>;
 
-define settings <functional-developer-local-settings-2-0>
-    (<unversioned-functional-developer-local-settings>)
+define settings <open-dylan-local-settings-2-0>
+    (<unversioned-open-dylan-local-settings>)
   key-name "2.0";
   slot service-pack :: <integer> = 0;
   slot library-packs :: <machine-word> = as(<machine-word>, 0);
   slot console-tools :: <boolean> = #f;
-end settings <functional-developer-local-settings-2-0>;
+end settings <open-dylan-local-settings-2-0>;
 
-define settings <functional-developer-local-settings-2-1>
-    (<unversioned-functional-developer-local-settings>)
+define settings <open-dylan-local-settings-2-1>
+    (<unversioned-open-dylan-local-settings>)
   key-name "2.1";
   slot service-pack :: <integer> = 0;
   slot library-packs :: <machine-word> = as(<machine-word>, 0);
   slot console-tools :: <boolean> = #f;
-end settings <functional-developer-local-settings-2-1>;
+end settings <open-dylan-local-settings-2-1>;
 
-define constant <functional-developer-local-settings>
-  = <functional-developer-local-settings-2-1>;
+define constant <open-dylan-local-settings>
+  = <open-dylan-local-settings-1-0>;
 
 
-define settings <functional-objects-user-settings>
+define settings <general-open-dylan-user-settings>
     (<current-user-software-settings>)
-  key-name "Functional Objects";
-end settings <functional-objects-user-settings>;
+  key-name "Open Dylan";
+end settings <general-open-dylan-user-settings>;
 
-define settings <unversioned-functional-developer-user-settings>
-    (<functional-objects-user-settings>)
-  key-name "Functional Developer";
-end settings <unversioned-functional-developer-user-settings>;
+define settings <unversioned-open-dylan-user-settings>
+    (<general-open-dylan-user-settings>)
+  key-name "Open Dylan";
+end settings <unversioned-open-dylan-user-settings>;
 
-define settings <functional-developer-user-settings-1-0>
-    (<unversioned-functional-developer-user-settings>)
+define settings <open-dylan-user-settings-1-0>
+    (<unversioned-open-dylan-user-settings>)
   key-name "1.0";
-end settings <functional-developer-user-settings-1-0>;
+end settings <open-dylan-user-settings-1-0>;
 
-define settings <functional-developer-user-settings-1-1>
-    (<unversioned-functional-developer-user-settings>)
+define settings <open-dylan-user-settings-1-1>
+    (<unversioned-open-dylan-user-settings>)
   key-name "1.1";
-end settings <functional-developer-user-settings-1-1>;
+end settings <open-dylan-user-settings-1-1>;
 
-define settings <functional-developer-user-settings-1-2>
-    (<unversioned-functional-developer-user-settings>)
+define settings <open-dylan-user-settings-1-2>
+    (<unversioned-open-dylan-user-settings>)
   key-name "1.2";
-end settings <functional-developer-user-settings-1-2>;
+end settings <open-dylan-user-settings-1-2>;
 
-define settings <functional-developer-user-settings-2-0>
-    (<unversioned-functional-developer-user-settings>)
+define settings <open-dylan-user-settings-2-0>
+    (<unversioned-open-dylan-user-settings>)
   key-name "2.0";
-end settings <functional-developer-user-settings-2-0>;
+end settings <open-dylan-user-settings-2-0>;
 
-define settings <functional-developer-user-settings-2-1>
-    (<unversioned-functional-developer-user-settings>)
+define settings <open-dylan-user-settings-2-1>
+    (<unversioned-open-dylan-user-settings>)
   key-name "2.1";
-end settings <functional-developer-user-settings-2-1>;
+end settings <open-dylan-user-settings-2-1>;
 
-define constant <functional-developer-user-settings>
-  = <functional-developer-user-settings-2-1>;
+define constant <open-dylan-user-settings>
+  = <open-dylan-user-settings-1-0>;
 
 
 /// Library and service pack settings
 
-define constant $local-settings = make(<functional-developer-local-settings>);
+define constant $local-settings = make(<open-dylan-local-settings>);
 
 define variable *library-packs-override* = #"unknown";
 

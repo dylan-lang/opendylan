@@ -14,7 +14,7 @@ define constant <environment-start-action>
            #"start-dialog", // Show startup options dialog
            #"open-file");   // Open a file (shows Open dialog)
 
-define settings <environment-settings> (<functional-developer-user-settings>)
+define settings <environment-settings> (<open-dylan-user-settings>)
   key-name "Environment";
   slot start-action             :: <symbol>  = #"start-dialog";
   slot start-dialog-action      :: <symbol>  = #"example";

@@ -1,45 +1,54 @@
-# todo:
-# - check copyrights throughout
-# - add splash screen?
-# - add warning about nonempty install dir 
-# - check there's warning on overwrite
-# - uninstaller:
-#  - replace rmdir /r with smth more intelligent ///warning messagebox added, still ugly
-#  - restore previous file associations
+;;; todo:
+;;; - check copyrights throughout
+;;; - add splash screen?
+;;; - add warning about nonempty install dir 
+;;; - check there's warning on overwrite
+;;; - uninstaller:
+;;; - replace rmdir /r with smth more intelligent ///warning messagebox added, still ugly
+;;; - restore previous file associations
+;;; - way too many hard coded paths/version number in the registry entries
+;;; - is there a way to ensure consistency between the data here and the one in the
+;;;   Open Dylan sources?
 
-;Open Dylan 1.0 Beta 1 Install Script
-;Originally written by Denis Mashkevich (oudeis)
-;Changes by Matthias Hölzl (tc)
+;;; Open Dylan 1.0 Beta 1 Install Script
+;;; Originally written by Denis Mashkevich (oudeis)
+;;; Changes by Matthias Hölzl (tc)
 
 !include "path.nsh"
 
-;--------------------------------
-;Application defines
-!define APPNAME "Open Dylan" ;Define your own software name here
-!define APPNAMEANDVERSION "${APPNAME} 1.0 Beta 1" ;Define your own software version here
+;;;--------------------------------
+;;; Application defines
+;;;
+!define APPNAME "Open Dylan" ; Define your own software name here
+!define APPNAMEANDVERSION "${APPNAME} 1.0 Beta 1" ; Define your own software version here
 
-;-------------------------------------
-;helper defines
-!define REGISTRY_KEY "Software\${APPNAME}"
+;;;-------------------------------------
+;;; Helper defines
+;;;
+!define REGISTRY_KEY "Software\Open Dylan\${APPNAME}"
 
 !ifndef OUTFILE
 !define OUTFILE "opendylan-win32.exe"
 !endif
 
-;--------------------------------
-;Configuration
+;;;--------------------------------
+;;; Configuration
+;;;
 !include "MUI.nsh"
 
 !define MUI_ABORTWARNING
 !define MUI_FINISHPAGE_RUN "$INSTDIR\bin\with-splash-screen.exe"
-!define MUI_FINISHPAGE_RUN_PARAMETERS "/k 1.0 /v $\"Version 1.0 Beta 1$\" /e $\"Internal Edition$\" win32-environment.exe"
+!define MUI_FINISHPAGE_RUN_PARAMETERS \
+          "/k 1.0 /v $\"Version 1.0 Beta 1$\" /e $\"Internal Edition$\" win32-environment.exe"
 !define MUI_FINISHPAGE_RUN_CHECKED
 
 !define MUI_HEADERIMAGE
 !define MUI_HEADERIMAGE_BITMAP "header.bmp"
 !define MUI_WELCOMEFINISHPAGE_BITMAP "welcome.bmp"
 
-;;;; Install properties
+;;;--------------------------------
+;;; Install properties
+;;;
 !insertmacro MUI_PAGE_WELCOME
 !insertmacro MUI_PAGE_LICENSE "License.txt"
 !insertmacro MUI_PAGE_COMPONENTS
@@ -48,19 +57,24 @@ Page custom ChooseBuildScript
 !insertmacro MUI_PAGE_INSTFILES
 !insertmacro MUI_PAGE_FINISH
 
-;;;; Uninstall properties
+;;;--------------------------------
+;;; Uninstall properties
+;;;
 !insertmacro MUI_UNPAGE_CONFIRM
 !insertmacro MUI_UNPAGE_INSTFILES
 
-;;;; Language
+;;;--------------------------------
+;;; Language
+;;;
 !insertmacro MUI_LANGUAGE "English"
 !insertmacro MUI_RESERVEFILE_LANGDLL
 
 ReserveFile "choose-build-script.ini"
 !insertmacro MUI_RESERVEFILE_INSTALLOPTIONS
 
-;;;; Install functions
-
+;;;--------------------------------
+;;; Install functions
+;;;
 Function .onInit
   !insertmacro MUI_INSTALLOPTIONS_EXTRACT "choose-build-script.ini"
 FunctionEnd
@@ -71,8 +85,9 @@ Function ChooseBuildScript
   !insertmacro MUI_INSTALLOPTIONS_DISPLAY "choose-build-script.ini"
 FunctionEnd
 
-;;;; General Settings
-
+;;;--------------------------------
+;;; General Settings
+;;;
 OutFile "${OUTFILE}"
 Name "${APPNAMEANDVERSION}"
 InstallDir "$PROGRAMFILES\${APPNAME}"
@@ -81,38 +96,42 @@ BrandingText "Open Dylan - www.opendylan.org, www.functionalobjects.com"
 LicenseData "License.txt"
 ShowInstDetails show
 
-;;;; Install Types
+;;;--------------------------------
+;;; Install Types
+;;;
 InstType Typical
 InstType Full
 
-;;;; Installer Sections
-
+;;;--------------------------------
+;;; Installer Sections
+;;;
 Section "${APPNAME} Core" SecOpendylanCore
   SectionIn 1 2 RO
 
   SetOutPath "$INSTDIR\"
   File /r D:\r1\bin
   File /r D:\r1\lib
-  File /r D:\r1\logs
+  File D:\r1\logs\compiler-data.out
   File /r D:\r1\databases
   File /r D:\r1\Templates
   File /r D:\r1\Examples
   File /r D:\r1\sources
 
-  CopyFiles "$PROGRAMFILES\Debugging Tools for Windows\dbghelp.dll" "$INSTDIR\bin"
+  SetOutPath "$INSTDIR\bin\"
+  File "C:\Programme\Debugging Tools for Windows\dbghelp.dll"
 
   WriteRegStr HKEY_LOCAL_MACHINE "${REGISTRY_KEY}\1.0" "Library-Packs" "0xffff"
   WriteRegStr HKEY_LOCAL_MACHINE "${REGISTRY_KEY}\1.0" "Console-Tools" "Yes"
 
   WriteRegStr HKEY_LOCAL_MACHINE "${REGISTRY_KEY}\License" "User" \
-              "Opendylan Hacker"
+              "Open Dylan Hacker"
   WriteRegStr HKEY_LOCAL_MACHINE "${REGISTRY_KEY}\License" "Expiration" "0000"
   WriteRegStr HKEY_LOCAL_MACHINE "${REGISTRY_KEY}\License" "Serial" \
               "FDTNG-0200"
   WriteRegStr HKEY_LOCAL_MACHINE "${REGISTRY_KEY}\License" "Data" \
               "74c1e46d0134432c7e8f17e2c38897c367f082a6"
 
-  ;Read the build script selection
+  ;; Read the build script selection
   !insertmacro MUI_INSTALLOPTIONS_READ $0 "choose-build-script.ini" \
                                           "Field 2" "State"
   !insertmacro MUI_INSTALLOPTIONS_READ $1 "choose-build-script.ini" \
@@ -122,7 +141,7 @@ Section "${APPNAME} Core" SecOpendylanCore
   !insertmacro MUI_INSTALLOPTIONS_READ $3 "choose-build-script.ini" \
                                           "Field 5" "State"
   
-  ;Display a messagebox if check box was checked
+  ;; Display a messagebox if check box was checked
   StrCmp $0 "1" "" +2
     StrCpy $R0 "x86-win32-vc6-build.jam"
   StrCmp $1 "1" "" +2
@@ -135,13 +154,23 @@ Section "${APPNAME} Core" SecOpendylanCore
   WriteRegStr HKCU "${REGISTRY_KEY}\1.0\Build-System" "build-script" \
               "$INSTDIR\lib\$R0"
 	
-  ;Write the uninstall keys for Windows
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Opendylan" "DisplayName" "${APPNAMEANDVERSION} (remove only)"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Opendylan" "UninstallString" '"$INSTDIR\uninstall.exe"'
+  ;; Write the uninstall keys for Windows
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Open Dylan" "DisplayName" "${APPNAMEANDVERSION} (remove only)"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Open Dylan" "UninstallString" '"$INSTDIR\uninstall.exe"'
 	
   WriteUninstaller "uninstall.exe"
 SectionEnd
 
+Section "Install Documentation" SecDoc
+  SectionIn 1 2
+
+  CreateDirectory "$INSTDIR\Documentation"
+  SetOutPath "$INSTDIR\Documentation\"
+  File "..\..\..\documentation\fundev\product\htmlhelp\opendylan.chm"
+
+  WriteRegStr HKLM "${REGISTRY_KEY}\1.0\OnlineHelp" "DocPath" "$INSTDIR\Documentation\opendylan.chm"
+  WriteRegStr HKLM "${REGISTRY_KEY}\1.0\OnlineHelp" "DocType" "HTMLHelp"
+SectionEnd
   
 Section "Associate .ddb files" SecAssocDDB
   SectionIn 1 2
@@ -307,7 +336,7 @@ SectionEnd
 
 Section "Desktop Shortcut" SecDesktopShortcut
   SectionIn 1 2
-  ; For past users, cleanup previous icon if still on desktop
+  ;; For past users, cleanup previous icon if still on desktop
   Delete "$DESKTOP\${APPNAMEANDVERSION}.lnk"
   CreateShortCut "$DESKTOP\${APPNAMEANDVERSION}.lnk" "$\"$INSTDIR\bin\with-splash-screen.exe$\"" "/k 1.0 /v $\"Version 1.0 Beta 1$\"  /e $\"Internal Edition$\"  win32-environment.exe" "$INSTDIR\bin\win32-environment.exe" 0
 SectionEnd
@@ -319,10 +348,14 @@ Section "Quick Launch Shortcut" SecQuickLaunchShortcut
   CreateShortCut "$QUICKLAUNCH\${APPNAMEANDVERSION}.lnk" "$\"$INSTDIR\bin\with-splash-screen.exe$\"" "/k 1.0 /v $\"Version 1.0 Beta 1$\"  /e $\"Internal Edition$\"  win32-environment.exe" "$INSTDIR\bin\win32-environment.exe" 0
 SectionEnd
 
-;;;; Component Section Descriptions
+;;;--------------------------------
+;;; Component Section Descriptions
+;;;
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
   !insertmacro MUI_DESCRIPTION_TEXT ${SecOpendylanCore} \
                "${APPNAME} core files (required)"
+  !insertmacro MUI_DESCRIPTION_TEXT ${SecDoc} \
+               "Install the documentation.."
   !insertmacro MUI_DESCRIPTION_TEXT ${SecRedistributable} \
                "Copy redistributable files to separate folder. It is possible to run make-redistributable.bat later to do this."
   !insertmacro MUI_DESCRIPTION_TEXT ${SecModifyPath} \
@@ -345,55 +378,46 @@ SectionEnd
                "Create Quick Launch shortcut"
 !insertmacro MUI_FUNCTION_DESCRIPTION_END
  
-;;;; Uninstaller Section
+;;;--------------------------------
+;;; Uninstaller Section
+;;;
 Section "Uninstall"
 
   MessageBox MB_YESNO|MB_ICONEXCLAMATION "Warning: If you continue, the entire installation directory ($INSTDIR) will be deleted.$\nIf you have made any changes to the contents of the directory that you would like to preserve, please back them up before proceeding.$\nAre you sure you want to continue?" IDNO cancel
   RMDir /r "$INSTDIR" 
 
-  ; Delete start menu stuff
+  ;; Delete start menu stuff
   RMDir /r "$SMPROGRAMS"
 
-  ; Delete desktop icons...
+  ;; Delete desktop icons...
   Delete "$DESKTOP\${APPNAMEANDVERSION}.lnk"
 	
-  ; Delete quicklaunch icon
+  ;; Delete quicklaunch icon
   Delete "$QUICKLAUNCH\${APPNAMEANDVERSION}.lnk"
 
-  ;;; registry stuff
+  ;; Registry stuff
   DeleteRegKey HKEY_CLASSES_ROOT ".ddb" 
- 
   DeleteRegKey HKEY_CLASSES_ROOT ".dyl" 
-
   DeleteRegKey HKEY_CLASSES_ROOT ".dylan" 
-  
   DeleteRegKey HKEY_CLASSES_ROOT ".hdp" 
-
   DeleteRegKey HKEY_CLASSES_ROOT ".lid" 
-  
   DeleteRegKey HKEY_CLASSES_ROOT ".spec" 
-  
   DeleteRegKey HKEY_CLASSES_ROOT "Developer.Database.File" 
-
   DeleteRegKey HKEY_CLASSES_ROOT "Developer.Project.File" 
-  
   DeleteRegKey HKEY_CLASSES_ROOT "Developer.ToolSpec.File" 
-  
   DeleteRegKey HKEY_CLASSES_ROOT "Dylan.LID.File" 
-  
   DeleteRegKey HKEY_CLASSES_ROOT "Dylan.Source.File" 
-
   DeleteRegKey HKEY_LOCAL_MACHINE "Software\Open Dylan" 
   
-  ;Delete the uninstall keys for Windows
-  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Opendylan" 
+  ;; Delete the uninstall keys for Windows
+  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Open Dylan" 
   
-  ;Remove bin dir from path
+  ;; Remove bin dir from path
   Push "$INSTDIR\\bin"
   Call un.RemoveFromPath
 
 cancel:
 SectionEnd
 
-;;;; eof
+;;; eof
 

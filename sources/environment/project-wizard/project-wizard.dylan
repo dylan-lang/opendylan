@@ -75,7 +75,7 @@ end function;
 /// ----------------------------------------------------------------------
 /// PROJECT-WIZARD PERSISTENT OPTIONS
 
-define settings <project-wizard-settings> (<functional-developer-user-settings>)
+define settings <project-wizard-settings> (<open-dylan-user-settings>)
   key-name "Wizard";
   slot default-location :: <string> = "";
   slot default-start-function :: <string> = "main";

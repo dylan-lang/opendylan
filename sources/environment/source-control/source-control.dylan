@@ -51,7 +51,7 @@ define method unregister-source-control-class
 end method unregister-source-control-class;
 
 
-define settings <source-control-user-settings> (<functional-developer-user-settings>)
+define settings <source-control-user-settings> (<open-dylan-user-settings>)
   key-name "Source Control";
   slot default-sccs :: <symbol> = #"none";
 end settings <source-control-user-settings>;

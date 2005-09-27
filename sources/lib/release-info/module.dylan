@@ -33,6 +33,8 @@ define module release-info
 
   // Disk layout information
   create release-directory,
+	 release-subdirectory,
+	 release-file,
          release-runtime-directory,
          release-examples-directory,
          release-sources-directory,
@@ -134,22 +136,22 @@ define module release-info
   */
 
   // Settings
-  create <functional-objects-local-settings>,
-	 <functional-objects-user-settings>,
-	 <unversioned-functional-developer-local-settings>,
-         <unversioned-functional-developer-user-settings>,
-         <functional-developer-local-settings-1-0>,
-         <functional-developer-local-settings-1-1>,
-         <functional-developer-local-settings-1-2>,
-         <functional-developer-local-settings-2-0>,
-         <functional-developer-local-settings-2-1>,
-	 <functional-developer-local-settings>,
-	 <functional-developer-user-settings-1-0>,
-	 <functional-developer-user-settings-1-1>,
-	 <functional-developer-user-settings-1-2>,
-	 <functional-developer-user-settings-2-0>,
-	 <functional-developer-user-settings-2-1>,
-	 <functional-developer-user-settings>;
+  create <general-open-dylan-local-settings>,
+	 <general-open-dylan-user-settings>,
+	 <unversioned-open-dylan-local-settings>,
+         <unversioned-open-dylan-user-settings>,
+         <open-dylan-local-settings-1-0>,
+         <open-dylan-local-settings-1-1>,
+         <open-dylan-local-settings-1-2>,
+         <open-dylan-local-settings-2-0>,
+         <open-dylan-local-settings-2-1>,
+	 <open-dylan-local-settings>,
+	 <open-dylan-user-settings-1-0>,
+	 <open-dylan-user-settings-1-1>,
+	 <open-dylan-user-settings-1-2>,
+	 <open-dylan-user-settings-2-0>,
+	 <open-dylan-user-settings-2-1>,
+	 <open-dylan-user-settings>;
 end module release-info;
 
 // BOOTSTRAP: required until everyone is bootstrapped to 2.1a1

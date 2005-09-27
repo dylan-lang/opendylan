@@ -12,10 +12,9 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define constant $release-full-copyright =
 "Original Code is Copyright 1995-2004 Functional Objects, Inc.\n"
 "All rights reserved.\n"
-"Portions Copyright 2004 Gwydion Dylan Maintainers.\n"
-"Functional Developer is a trademark of Functional Objects, Inc.\n"
+"Portions Copyright 2004,2005 Dylan Hackers.\n"
 "\n"
-"The software programs and libraries that make up Functional Developer\n"
+"The software programs and libraries that make up Open Dylan\n"
 "are subject to the Functional Objects Library Public License Version\n"
 "1.0 (the \"License\"); you may not use this software except in\n"
 "compliance with the License. \n"
@@ -39,10 +38,10 @@ define constant $release-full-copyright =
 "the License or the GNU Lesser General Public License.\n";
 
 define constant $release-support-address 
-  = "gd-bugs@gwydiondylan.org";
+  = "bugs@opendylan.org";
 
 define constant $release-web-address
-  = "http://www.functionalobjects.com/products";
+  = "http://www.opendylan.org/index.phtml";
 
 define constant $bug-report-template-filename = "bug-report.txt";
 define constant $license-agreement-filename   = "License.txt";

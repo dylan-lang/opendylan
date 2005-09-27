@@ -25,8 +25,8 @@ define command-table *help-command-table* (*global-command-table*)
     accelerator: make-keyboard-gesture(#"f1"),	// ---*** F1 really be context sensitive help
     documentation: "Opens Help.";
   // Comment out these until there is some content for them to work on
-//  menu-item "What's This?" = (<help-on-context>, pane: #"by-focus"),
-//    documentation: "Displays help about the current context.";
-//  menu-item "Search..."    = (<help-on-keyword>, pane: #"by-focus"),
-//    documentation: "Displays help about the selected text.";
+  // menu-item "What's This?" = (<help-on-context>, pane: #"by-focus"),
+  //   documentation: "Displays help about the current context.";
+  // menu-item "Search..."    = (<help-on-keyword>, pane: #"by-focus"),
+  //   documentation: "Displays help about the selected text.";
 end command-table *help-command-table*;

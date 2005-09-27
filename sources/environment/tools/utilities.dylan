@@ -536,7 +536,7 @@ define command-table *window-settings-command-table* (*global-command-table*)
     documentation: "Saves the windows default size and position.";
 end command-table *window-settings-command-table*;
 
-define settings <windows-settings> (<functional-developer-user-settings>)
+define settings <windows-settings> (<open-dylan-user-settings>)
   key-name "Windows"
 end settings <windows-settings>;
 

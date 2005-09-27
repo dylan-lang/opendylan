@@ -7,7 +7,7 @@ License:      Functional Objects Library Public License Version 1.0
 Dual-license: GNU Lesser General Public License
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define settings <licensing-settings> (<unversioned-functional-developer-local-settings>)
+define settings <licensing-settings> (<unversioned-open-dylan-local-settings>)
   key-name "License";
   slot data :: <string> = "None";
   slot serial :: <string> = "HDeee-rrrr";
@@ -30,7 +30,7 @@ define constant $library-pack-licensing-settings = make(<library-pack-licensing-
 // The standard evaluation period is hereby set at 30 days ...
 define constant $evaluation-period = 30;
 
-define settings <current-version-settings> (<unversioned-functional-developer-local-settings>)
+define settings <current-version-settings> (<unversioned-open-dylan-local-settings>)
   key-name "CurrentVersion";
   slot edition :: <string> = "0";
   slot version :: <string> = "Unknown";

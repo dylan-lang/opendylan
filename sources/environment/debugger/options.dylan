@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// <DEBUGGER-SETTINGS>
 
-define settings <debugger-settings> (<functional-developer-user-settings>)
+define settings <debugger-settings> (<open-dylan-user-settings>)
   key-name "Debugger";
   slot one-debugger-per-thread    :: <boolean> = #f;
   slot notifier-dialog            :: <boolean> = #t;

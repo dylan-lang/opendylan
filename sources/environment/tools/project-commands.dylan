@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Project persistence
 
-define settings <project-history> (<functional-developer-user-settings>)
+define settings <project-history> (<open-dylan-user-settings>)
   key-name "Projects";
   slot project1 :: <string> = "";
   slot project2 :: <string> = "";
@@ -107,7 +107,7 @@ tune-in($project-channel,
 
 /// File persistence
 
-define settings <file-history> (<functional-developer-user-settings>)
+define settings <file-history> (<open-dylan-user-settings>)
   key-name "Files";
   slot file1 :: <string> = "";
   slot file2 :: <string> = "";

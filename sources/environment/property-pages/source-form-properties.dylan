@@ -53,7 +53,7 @@ end method source-record-file-name;
 
 /// Warnings page
 
-define settings <property-pages-settings> (<functional-developer-user-settings>)
+define settings <property-pages-settings> (<open-dylan-user-settings>)
   key-name "Property Pages";
 end settings <property-pages-settings>;
 

@@ -10,7 +10,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define constant $dylanmakefile  = "dylanmakefile.mkf";
 define constant $build-log-file = "build.log";
 
-define settings <build-system-settings> (<functional-developer-user-settings>)
+define settings <build-system-settings> (<open-dylan-user-settings>)
   key-name "Build-System";
   slot build-script :: <string>
     = as(<string>,

@@ -243,35 +243,35 @@ define method corba/orb/resolve-initial-references (orb :: <orb>,
   do-resolve-initial-service(orb, as(<symbol>, objectid))
 end method;
 
-define settings <functional-objects-user-settings> (<current-user-software-settings>)
+define settings <general-open-dylan-user-settings> (<current-user-software-settings>)
   key-name "Functional Objects";
 end settings;
 
-define settings <functional-developer-orb-settings> (<functional-objects-user-settings>)
+define settings <open-dylan-orb-settings> (<general-open-dylan-user-settings>)
   key-name "Functional Developer ORB";
 end settings;
 
-define settings <functional-developer-orb-settings-1-0> (<functional-developer-orb-settings>)
+define settings <open-dylan-orb-settings-1-0> (<open-dylan-orb-settings>)
   key-name "1.0";
 end settings;
 
-define settings <functional-developer-orb-settings-1-1> (<functional-developer-orb-settings>)
+define settings <open-dylan-orb-settings-1-1> (<open-dylan-orb-settings>)
   key-name "1.1";
 end settings;
 
-define settings <functional-developer-orb-settings-2-0> (<functional-developer-orb-settings>)
+define settings <open-dylan-orb-settings-2-0> (<open-dylan-orb-settings>)
   key-name "2.0";
 end settings;
 
-define constant <current-functional-developer-orb-settings> = <functional-developer-orb-settings-2-0>;
+define constant <current-functional-developer-orb-settings> = <open-dylan-orb-settings-2-0>;
 
-define settings <functional-developer-interface-repository-settings> (<current-functional-developer-orb-settings>)
+define settings <open-dylan-interface-repository-settings> (<current-functional-developer-orb-settings>)
   key-name "InterfaceRepository";
   slot interface-repository-ior-string :: <string>;
   slot interface-repository-ior-file :: <string>;
 end settings;
 
-define constant $interface-repository-settings = make(<functional-developer-interface-repository-settings>);
+define constant $interface-repository-settings = make(<open-dylan-interface-repository-settings>);
 
 define initial-service InterfaceRepository (orb)
   let ior-string = interface-repository-ior-string($interface-repository-settings);
@@ -285,13 +285,13 @@ define initial-service InterfaceRepository (orb)
   end if;
 end initial-service;
 
-define settings <functional-developer-name-service-settings> (<current-functional-developer-orb-settings>)
+define settings <open-dylan-name-service-settings> (<current-functional-developer-orb-settings>)
   key-name "NameService";
   slot name-service-ior-string :: <string>;
   slot name-service-ior-file :: <string>;
 end settings;
 
-define constant $name-service-settings = make(<functional-developer-name-service-settings>);
+define constant $name-service-settings = make(<open-dylan-name-service-settings>);
 
 define initial-service NameService (orb)
   let ior-string = name-service-ior-string($name-service-settings);

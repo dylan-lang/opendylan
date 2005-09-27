@@ -25,7 +25,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define variable *hInst* // current instance
     :: <HINSTANCE> = null-handle(<HINSTANCE>);
 define constant $szAppName :: <string> = TEXT("HDSplashScreen");
-define constant $szTitle :: <string> = TEXT("Functional Developer");
+define constant $szTitle :: <string> = TEXT("Open Dylan");
 define callback WndProc :: <WNDPROC> = main-window-function;
 
 define method init-application (hInstance :: <HINSTANCE>) => (ok :: <boolean>)
@@ -321,8 +321,8 @@ define function update-version (key :: <byte-string>)
   block ()
     with-open-registry-path (fd-key = $HKEY-LOCAL-MACHINE, 
                                       "Software",
-                                      "Functional Objects",
-                                      "Functional Developer",
+                                      "Open Dylan",
+                                      "Open Dylan",
                                       key)
       let service-pack-string :: <byte-string> = read-registry-string(fd-key, "Service-Pack");
       let service-pack :: <integer> = string-to-integer(service-pack-string, default: 0);

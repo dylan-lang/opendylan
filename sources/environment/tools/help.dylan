@@ -15,7 +15,11 @@ define constant $registered-character = '\<ae>';
 define constant $trademark-character  = '\<99>';
 
 //--- This should probably be in the release-info library
-define constant $help-file = "fd.chm";
+
+define variable *help-file*
+  = release-file("Documentation/opendylan.chm");
+define variable *help-file-string*
+  = as(<string>, *help-file*);
 
 define constant $beta-release-text
   = #["This is a beta release of Functional Developer. Please submit bugs",
@@ -332,14 +336,14 @@ define method do-execute-command
 end method do-execute-command;
 
 /// NB This filename is agreed with the doc team and will be found in the OS Help directory.
-define help-source functional-dylan
-  $help-file
+define help-source open-dylan
+  *help-file-string*
 end help-source;
 
 define method frame-help-source
     (frame :: <environment-frame>, command :: <help-command>)
  => (source :: <symbol>)
-  #"functional-dylan"
+  #"open-dylan"
 end method frame-help-source;
 
 
@@ -558,10 +562,10 @@ end method help-credits;
 /// Web site command tables
 
 define constant $purchase-web-page
-  = format-to-string("%s/%s", release-web-address(), "buylicense.phtml");
+  = format-to-string("%s/%s", release-web-address(), "index.phtml");
 
 define constant $download-doc-page
-  = format-to-string("%s/%s#%s", release-web-address(), "fundev.phtml", "pkg_doc");
+  = format-to-string("%s/%s", release-web-address(), "documentation.phtml");
 
 define function frame-open-dylan-web-page
     (frame :: <frame>, #key page = release-web-address()) => ()
@@ -790,7 +794,7 @@ end function do-register-product;
 
 /// Help command table
 
-define settings <documentation-settings> (<functional-developer-local-settings>)
+define settings <documentation-settings> (<open-dylan-local-settings>)
   key-name "OnlineHelp";
   slot doctype :: <symbol> = #"None";
   slot docpath :: <string> = "";
@@ -866,7 +870,7 @@ end method show-documentation;
 
 //---*** The release-info backend isn't available during initialization... :-(
 //define constant $help-about-title = format-to-string("About %s", release-product-name());
-define constant $help-about-title = "About Functional Developer";
+define constant $help-about-title = "About Open Dylan";
 
 //---*** Not yet implemented
 /*
@@ -876,6 +880,8 @@ define command-table *environment-tutorial-command-table* (*global-command-table
 end command-table *environment-tutorial-command-table*;
 */
 
+// Nope, not for the open-source version --tc
+/*
 define command-table *environment-web-links-command-table* (*global-command-table*)
 end command-table *environment-web-links-command-table*;
 
@@ -892,6 +898,7 @@ add-command-table-menu-item
 	       let frame = sheet-frame(menu-box);
 	       frame-register-developer(frame)
              end);
+*/
 
 define command-table *environment-help-about-command-table* (*global-command-table*)
   menu-item $help-about-title = <help-on-version>,
@@ -901,7 +908,8 @@ end command-table *environment-help-about-command-table*;
 define command-table *environment-specific-help-command-table* (*global-command-table*)
   //---*** Not yet implemented!
   // include *environment-tutorial-command-table*;
-  include *environment-web-links-command-table*;
+  // We don't have any Web links at the moment. --tc
+  // include *environment-web-links-command-table*;
   include *environment-help-about-command-table*;
 end command-table *environment-specific-help-command-table*;
 

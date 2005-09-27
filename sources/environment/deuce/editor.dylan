@@ -993,7 +993,7 @@ end method frame-hardcopy-document;
 
 /// Policy persistence
 
-define settings <dylan-editor-settings> (<functional-developer-user-settings>)
+define settings <dylan-editor-settings> (<open-dylan-user-settings>)
   key-name "Editor";
   slot default-x :: <integer>;
   slot default-y :: <integer>;

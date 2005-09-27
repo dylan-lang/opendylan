@@ -1300,7 +1300,7 @@ end method make-environment-status-bar;
 
 define constant $search-string-count = 10;
 
-define settings <search-settings> (<functional-developer-user-settings>)
+define settings <search-settings> (<open-dylan-user-settings>)
   key-name "Search";
   slot search-batch?      :: <boolean> = #f;
   slot search-wrap?       :: <boolean> = #f;
