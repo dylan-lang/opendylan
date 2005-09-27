@@ -110,33 +110,12 @@ define function project-build-locations
  => (builds-locator   :: false-or(<directory-locator>), 
      database-locator :: <directory-locator>,
      profile-locator  :: <directory-locator>)
-  // XXX what if the registry is in the root directory ?
-  let registry-root = project.project-registry.registry-root;
-  let library-root  = registry-root.locator-directory;
-  let personal? = project.project-personal-library?;
-  let personal-build = user-build-path(); 
-
-  let builds-locator = if (personal?)
-			 if (personal-build)
-			   personal-build
-			 else
-			   subdirectory-locator(library-root, "build");
-			 end;
-		       else 
-			 #f
-		       end;
-
-  let install-locator = if (personal?) 
-			  user-install-path() | library-root
-			else 
-			  system-install-path() |
-			    system-release-path() |
-			    library-root
-			end;
+  let builds-locator = user-build-path();
+  let install-locator = user-install-path();
 
   let database-locator = subdirectory-locator(install-locator, "databases");
   let profile-locator  = subdirectory-locator(install-locator, "profiles");
-  builds-locator & ensure-directories-exist(builds-locator);
+  ensure-directories-exist(builds-locator);
   ensure-directories-exist(database-locator);
   ensure-directories-exist(profile-locator);
   values(builds-locator, database-locator, profile-locator);
