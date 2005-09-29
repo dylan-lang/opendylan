@@ -86,8 +86,8 @@ target, as described in the MPS documentation.  You must build
 mmdw.lib or mmdw.a instead.
 
 Copy mmdw.lib into the Open Dylan source tree in
-fundev/sources/lib/run-time/pentium-win32/ respectively.  This will be
-picked up by the Open Dylan build scripts.
+fundev/sources/lib/run-time/pentium-win32/.  This will be picked up by
+the Open Dylan build scripts.
 
 There are two caveats here.  Number one: the above instructions make
 you use the ci, "cool internal" variant of the MPS on Windows. On
