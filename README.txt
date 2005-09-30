@@ -1,6 +1,6 @@
 Welcome to Open Dylan!
 
-Open Dylan is the open source releas of Functional Developer.
+Open Dylan is the open source release of Functional Developer.
 
 This file is intended to give you a basic hint as to how to start
 hacking on Open Dylan and what is and is not included in the Open
