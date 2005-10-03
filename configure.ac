@@ -1,4 +1,4 @@
-AC_INIT([Functional Developer], [2.1 alpha 4])
+AC_INIT([Open Dylan], [1.0 beta 1])
 AC_PREREQ(2.50)
 
 #---------------------
@@ -33,22 +33,23 @@ AC_PROG_LN_S
 
 AC_PATH_PROG(PERL, perl, no)
 test "$PERL" = no && AC_MSG_ERROR([
-perl is required to build Functional Developer])
+perl is required to build Open Dylan])
 AC_SUBST(PERL)
 
 PERL_MODULES="File::Spec Getopt::Long XML::Parser"
 for module in $PERL_MODULES; do
   AC_MSG_CHECKING(for Perl module $module)
   $PERL -M$module -e 'exit 0' || AC_MSG_ERROR([
-$module is required to build Functional Developer])
+$module is required to build Open Dylan])
   AC_MSG_RESULT(yes)
 done
 
-AC_CHECK_PROGS(FDCOMPILE, fdcompile minimal-console-compiler, no)
+AC_CHECK_PROGS(FDCOMPILE, opendylan fdcompile minimal-console-compiler, no)
 test "$FDCOMPILE" = no && AC_MSG_ERROR([
-fdcompile or minimal-console-compiler is required to bootstrap Functional Developer])
+opendylan, fdcompile or minimal-console-compiler is required to bootstrap Open Dylan])
 test "$FDCOMPILE" = fdcompile && FDCOMPILE="$FDCOMPILE -save"
 test "$FDCOMPILE" = minimal-console-compiler && FDCOMPILE="$FDCOMPILE -build"
+test "$FDCOMPILE" = opendylan && FDCOMPILE="$FDCOMPILE -build"
 AC_SUBST(FDCOMPILE)
 
 # TODO: figure out the bootstrap type given the fdcompile version
