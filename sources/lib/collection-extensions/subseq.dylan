@@ -327,7 +327,7 @@ end method element-setter;
 define method subsequence(seq :: <string>,
 			  #key start: first = 0,
 			       end: last) => (result :: <string-subsequence>);
-  let subseq-last = if (last) last else max(start, seq.size) end;
+  let subseq-last = if (last) last else max(first, seq.size) end;
   
   if (instance?(seq, <vector>)) 
     make(<vs-subsequence>, source: seq, start: first, end: subseq-last);
