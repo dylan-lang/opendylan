@@ -753,7 +753,23 @@ define method write-line
     local method write-elts (elts :: <string>, i :: <integer>, e :: <integer>)
 	    iterate loop (i :: <integer> = i, sb :: false-or(<buffer>) = sb)
 	      if (sb & i < e)
-		let sb :: <buffer> = sb; // HACK: TYPE ONLY
+                /* ---*** There used to be a line here:
+
+                let sb :: <buffer> = sb; // HACK: TYPE ONLY
+
+                This was obviously intended to nail down the type of sb.
+                Now for some reason this led to a type estimate of "<bottom>"
+                in the call to coerce-from-sequence further down. Furthermore,
+                type inference should find out that sb is not #f all on itself,
+                because it is used in the condition of the if.
+
+                I suspect type inference for if statements and their condition
+                variables to be broken.  Needs to be researched and fixed.  I'm
+                taking out the quoted line to get rid of a serious warning that
+                might scare users.
+
+                -- Andreas Bogk, Oct 2005 */
+                  
 		let bi :: <buffer-index> = sb.buffer-next;
 		let bufsiz :: <buffer-index> = sb.buffer-size;
 		if (bi >= bufsiz)
