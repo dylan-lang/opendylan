@@ -26,8 +26,8 @@ define module Xlib
 	     pointer-cast, destroy,
 	     pointer-value-address, c-type-cast,
 	     c-callable-wrapper-definer, 
-	     \with-c-string, \with-stack-structure } ;
-  use machine-words
+	     \with-c-string, \with-stack-structure };
+  use machine-words,
     export: {%logior, %logand};
 
 
