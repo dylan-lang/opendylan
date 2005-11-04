@@ -5,7 +5,7 @@
 # or:
 #   x-to-dylan -module x -odir . *.h
 #
-/u/dylan/local/gema -f ../glib/patterns.pat \
-	-f ../glib/modcopyr.pat -exclude obsolete.text \
+gema -f ../glib/patterns.pat \
+        -f ../glib/modcopyr.pat -exclude obsolete.text \
         -rename renamings.text \
-	-otyp .dylan   "$@"
+        -otyp .dylan   "$@"

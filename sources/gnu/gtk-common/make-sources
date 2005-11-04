@@ -117,7 +117,7 @@ clean:
 tidy:
 	rm -f *.bak *.exp
 
-DTAGS=/u/dylan/tools/gnuemacs/dtags
+DTAGS=../../../tools/gnuemacs/dtags
 TAGS: $(GLIB) special.dylan
 	$(DTAGS) special.dylan $(GLIB)
 
