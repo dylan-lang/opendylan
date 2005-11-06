@@ -66,7 +66,9 @@ struct _GtkRuler
   GdkPixmap *backing_store;
   GdkGC *non_gr_exp_gc;
   GtkRulerMetric *metric;
-  gint xsrc, ysrc;
+  /* %%% DYLAN-HACK %%% */
+  gint xsrc;
+  gint ysrc;
   gint slider_size;
 
   /* The upper limit of the ruler (in points) */

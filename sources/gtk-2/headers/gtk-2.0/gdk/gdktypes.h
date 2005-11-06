@@ -135,7 +135,8 @@ typedef enum
    * be used for "virtual modifiers". Bit 29 is used internally.
    */
   GDK_RELEASE_MASK  = 1 << 30,
-  GDK_MODIFIER_MASK = GDK_RELEASE_MASK | 0x1fff
+  /* %%% DYLAN-HACK %%% */
+  GDK_MODIFIER_MASK = (GDK_RELEASE_MASK | 0x1fff)
 } GdkModifierType;
 
 typedef enum

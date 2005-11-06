@@ -272,7 +272,9 @@ struct _GdkEventMotion
   guint state;
   gint16 is_hint;
   GdkDevice *device;
-  gdouble x_root, y_root;
+  /* %%% DYLAN-HACK %%% */
+  gdouble x_root;
+  gdouble y_root;
 };
 
 struct _GdkEventButton
@@ -287,7 +289,9 @@ struct _GdkEventButton
   guint state;
   guint button;
   GdkDevice *device;
-  gdouble x_root, y_root;
+  /* %%% DYLAN-HACK %%% */
+  gdouble x_root;
+  gdouble y_root;
 };
 
 struct _GdkEventScroll
@@ -301,7 +305,9 @@ struct _GdkEventScroll
   guint state;
   GdkScrollDirection direction;
   GdkDevice *device;
-  gdouble x_root, y_root;
+  /* %%% DYLAN-HACK %%% */
+  gdouble x_root;
+  gdouble y_root;
 };
 
 struct _GdkEventKey
@@ -348,7 +354,9 @@ struct _GdkEventConfigure
   GdkEventType type;
   GdkWindow *window;
   gint8 send_event;
-  gint x, y;
+  /* %%% DYLAN-HACK %%% */
+  gint x;
+  gint y;
   gint width;
   gint height;
 };
@@ -440,7 +448,9 @@ struct _GdkEventDND {
   GdkDragContext *context;
 
   guint32 time;
-  gshort x_root, y_root;
+  /* %%% DYLAN-HACK %%% */
+  gshort x_root;
+  gshort y_root;
 };
 
 union _GdkEvent

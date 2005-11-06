@@ -186,7 +186,13 @@ struct _GdkDrawableClass
 
 struct _GdkTrapezoid
 {
-  double y1, x11, x21, y2, x12, x22;
+  /* %%% DYLAN-HACK %%% */
+  double y1;
+  double x11;
+  double x21;
+  double y2;
+  double x12;
+  double x22;
 };
 
 GType           gdk_drawable_get_type     (void) G_GNUC_CONST;

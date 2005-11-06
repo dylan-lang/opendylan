@@ -60,7 +60,8 @@ extern "C" {
 
 /* Initialization, exit and events
  */
-#define	  GDK_PRIORITY_EVENTS		(G_PRIORITY_DEFAULT)
+/* %%% DYLAN-HACK %%% */
+/* #define	  GDK_PRIORITY_EVENTS		(G_PRIORITY_DEFAULT) */
 void 	  gdk_parse_args	   	(gint	   	*argc,
 					 gchar        ***argv);
 void 	  gdk_init		   	(gint	   	*argc,

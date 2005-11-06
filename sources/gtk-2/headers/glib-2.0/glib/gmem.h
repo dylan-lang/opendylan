@@ -36,11 +36,12 @@ typedef struct _GMemChunk  GMemChunk;
 typedef struct _GMemVTable GMemVTable;
 
 
-#if GLIB_SIZEOF_VOID_P > GLIB_SIZEOF_LONG
-#  define G_MEM_ALIGN	GLIB_SIZEOF_VOID_P
-#else	/* GLIB_SIZEOF_VOID_P <= GLIB_SIZEOF_LONG */
-#  define G_MEM_ALIGN	GLIB_SIZEOF_LONG
-#endif	/* GLIB_SIZEOF_VOID_P <= GLIB_SIZEOF_LONG */
+/* %%% DYLAN-HACK %%% */
+/* #if GLIB_SIZEOF_VOID_P > GLIB_SIZEOF_LONG */
+/* #  define G_MEM_ALIGN	GLIB_SIZEOF_VOID_P */
+/* #else	/\* GLIB_SIZEOF_VOID_P <= GLIB_SIZEOF_LONG *\/ */
+/* #  define G_MEM_ALIGN	GLIB_SIZEOF_LONG */
+/* #endif	/\* GLIB_SIZEOF_VOID_P <= GLIB_SIZEOF_LONG *\/ */
 
 
 /* Memory allocation functions

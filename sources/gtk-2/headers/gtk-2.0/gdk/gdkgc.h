@@ -181,7 +181,8 @@ struct _GdkGCClass
 			  GdkGCValuesMask mask);
   void (*set_dashes)     (GdkGC          *gc,
 			  gint	          dash_offset,
-			  gint8           dash_list[],
+                          /* %%% DYLAN-HACK %%% */
+			  gint8           *dash_list,
 			  gint            n);
   
   /* Padding for future expansion */
@@ -247,7 +248,8 @@ void   gdk_gc_set_line_attributes (GdkGC	    *gc,
 				   GdkJoinStyle	     join_style);
 void   gdk_gc_set_dashes          (GdkGC            *gc,
 				   gint	             dash_offset,
-				   gint8             dash_list[],
+                                   /* %%% DYLAN-HACK %%% */
+				   gint8            *dash_list,
 				   gint              n);
 void   gdk_gc_offset              (GdkGC            *gc,
 				   gint              x_offset,

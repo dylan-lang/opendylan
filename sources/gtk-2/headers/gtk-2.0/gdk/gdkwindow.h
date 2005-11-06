@@ -173,7 +173,9 @@ struct _GdkWindowAttr
 {
   gchar *title;
   gint event_mask;
-  gint x, y;
+  /* %%% DYLAN-HACK %%% */
+  gint x;
+  gint y;
   gint width;
   gint height;
   GdkWindowClass wclass;

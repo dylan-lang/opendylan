@@ -68,8 +68,10 @@ struct _GtkHandleBox
   
   /* Variables used during a drag
    */
-  gint deskoff_x, deskoff_y; /* Offset between root relative coordinates
-			      * and deskrelative coordinates */
+  /* %%% DYLAN-HACK %%% */
+  gint deskoff_x;         /* Offset between root relative coordinates */
+  gint deskoff_y;         /* and deskrelative coordinates */
+
   GtkAllocation   attach_allocation;
   GtkAllocation   float_allocation;
 };

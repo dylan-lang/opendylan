@@ -110,7 +110,8 @@ union	_GTokenValue
   gulong	v_binary;
   gulong	v_octal;
   gulong	v_int;
-  guint64       v_int64;
+  /* %%% DYLAN-HACK %%% */
+  /*   guint64       v_int64; */
   gdouble	v_float;
   gulong	v_hex;
   gchar		*v_string;

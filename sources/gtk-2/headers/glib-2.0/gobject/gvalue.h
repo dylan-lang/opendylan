@@ -40,24 +40,25 @@ G_BEGIN_DECLS
 /* --- typedefs & structures --- */
 typedef void (*GValueTransform) (const GValue *src_value,
 				 GValue       *dest_value);
-struct _GValue
-{
-  /*< private >*/
-  GType		g_type;
+/* %%% DYLAN-HACK %%% */
+/* struct _GValue */
+/* { */
+/*   /\*< private >*\/ */
+/*   GType		g_type; */
 
-  /* public for GTypeValueTable methods */
-  union {
-    gint	v_int;
-    guint	v_uint;
-    glong	v_long;
-    gulong	v_ulong;
-    gint64      v_int64;
-    guint64     v_uint64;
-    gfloat	v_float;
-    gdouble	v_double;
-    gpointer	v_pointer;
-  } data[2];
-};
+/*   /\* public for GTypeValueTable methods *\/ */
+/*   union { */
+/*     gint	v_int; */
+/*     guint	v_uint; */
+/*     glong	v_long; */
+/*     gulong	v_ulong; */
+/*     gint64      v_int64; */
+/*     guint64     v_uint64; */
+/*     gfloat	v_float; */
+/*     gdouble	v_double; */
+/*     gpointer	v_pointer; */
+/*   } data[2]; */
+/* }; */
 
 
 /* --- prototypes --- */

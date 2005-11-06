@@ -71,7 +71,8 @@ typedef enum
   G_SIGNAL_MATCH_UNBLOCKED = 1 << 5
 } GSignalMatchType;
 #define G_SIGNAL_MATCH_MASK  0x3f
-#define	G_SIGNAL_TYPE_STATIC_SCOPE (G_TYPE_FLAG_RESERVED_ID_BIT)
+/* %%% DYLAN-HACK %%% */
+/* #define	G_SIGNAL_TYPE_STATIC_SCOPE (G_TYPE_FLAG_RESERVED_ID_BIT) */
 
 
 /* --- signal information --- */

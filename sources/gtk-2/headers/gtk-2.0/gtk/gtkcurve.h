@@ -76,7 +76,8 @@ struct _GtkCurve
 
   /* control points: */
   gint num_ctlpoints;           /* number of control points */
-  gfloat (*ctlpoint)[2];        /* array of control points */
+  /* %%% DYLAN-HACK %%% */
+  gfloat *ctlpoint;            /* array of control points */
 };
 
 struct _GtkCurveClass
@@ -100,10 +101,11 @@ void		gtk_curve_set_gamma	(GtkCurve *curve, gfloat gamma_);
 void		gtk_curve_set_range	(GtkCurve *curve,
 					 gfloat min_x, gfloat max_x,
 					 gfloat min_y, gfloat max_y);
+/* %%% DYLAN-HACK %%% */
 void		gtk_curve_get_vector	(GtkCurve *curve,
-					 int veclen, gfloat vector[]);
+					 int veclen, gfloat *vector);
 void		gtk_curve_set_vector	(GtkCurve *curve,
-					 int veclen, gfloat vector[]);
+					 int veclen, gfloat *vector);
 void		gtk_curve_set_curve_type (GtkCurve *curve, GtkCurveType type);
 
 

@@ -144,135 +144,136 @@ typedef const gchar *   (*GTranslateFunc)       (const gchar   *str,
 
 /* Arch specific stuff for speed
  */
-#if defined (__GNUC__) && (__GNUC__ >= 2) && defined (__OPTIMIZE__)
-#  if defined (__i386__)
-#    define GUINT16_SWAP_LE_BE_IA32(val) \
-       (__extension__						\
-	({ register guint16 __v, __x = ((guint16) (val));	\
-	   if (__builtin_constant_p (__x))			\
-	     __v = GUINT16_SWAP_LE_BE_CONSTANT (__x);		\
-	   else							\
-	     __asm__ ("rorw $8, %w0"				\
-		      : "=r" (__v)				\
-		      : "0" (__x)				\
-		      : "cc");					\
-	    __v; }))
-#    if !defined (__i486__) && !defined (__i586__) \
-	&& !defined (__pentium__) && !defined (__i686__) \
-	&& !defined (__pentiumpro__) && !defined (__pentium4__)
-#       define GUINT32_SWAP_LE_BE_IA32(val) \
-	  (__extension__					\
-	   ({ register guint32 __v, __x = ((guint32) (val));	\
-	      if (__builtin_constant_p (__x))			\
-		__v = GUINT32_SWAP_LE_BE_CONSTANT (__x);	\
-	      else						\
-		__asm__ ("rorw $8, %w0\n\t"			\
-			 "rorl $16, %0\n\t"			\
-			 "rorw $8, %w0"				\
-			 : "=r" (__v)				\
-			 : "0" (__x)				\
-			 : "cc");				\
-	      __v; }))
-#    else /* 486 and higher has bswap */
-#       define GUINT32_SWAP_LE_BE_IA32(val) \
-	  (__extension__					\
-	   ({ register guint32 __v, __x = ((guint32) (val));	\
-	      if (__builtin_constant_p (__x))			\
-		__v = GUINT32_SWAP_LE_BE_CONSTANT (__x);	\
-	      else						\
-		__asm__ ("bswap %0"				\
-			 : "=r" (__v)				\
-			 : "0" (__x));				\
-	      __v; }))
-#    endif /* processor specific 32-bit stuff */
-#    define GUINT64_SWAP_LE_BE_IA32(val) \
-       (__extension__							\
-	({ union { guint64 __ll;					\
-		   guint32 __l[2]; } __w, __r;				\
-	   __w.__ll = ((guint64) (val));				\
-	   if (__builtin_constant_p (__w.__ll))				\
-	     __r.__ll = GUINT64_SWAP_LE_BE_CONSTANT (__w.__ll);		\
-	   else								\
-	     {								\
-	       __r.__l[0] = GUINT32_SWAP_LE_BE (__w.__l[1]);		\
-	       __r.__l[1] = GUINT32_SWAP_LE_BE (__w.__l[0]);		\
-	     }								\
-	   __r.__ll; }))
-     /* Possibly just use the constant version and let gcc figure it out? */
-#    define GUINT16_SWAP_LE_BE(val) (GUINT16_SWAP_LE_BE_IA32 (val))
-#    define GUINT32_SWAP_LE_BE(val) (GUINT32_SWAP_LE_BE_IA32 (val))
-#    define GUINT64_SWAP_LE_BE(val) (GUINT64_SWAP_LE_BE_IA32 (val))
-#  elif defined (__ia64__)
-#    define GUINT16_SWAP_LE_BE_IA64(val) \
-       (__extension__						\
-	({ register guint16 __v, __x = ((guint16) (val));	\
-	   if (__builtin_constant_p (__x))			\
-	     __v = GUINT16_SWAP_LE_BE_CONSTANT (__x);		\
-	   else							\
-	     __asm__ __volatile__ ("shl %0 = %1, 48 ;;"		\
-				   "mux1 %0 = %0, @rev ;;"	\
-				    : "=r" (__v)		\
-				    : "r" (__x));		\
-	    __v; }))
-#    define GUINT32_SWAP_LE_BE_IA64(val) \
-       (__extension__						\
-	 ({ register guint32 __v, __x = ((guint32) (val));	\
-	    if (__builtin_constant_p (__x))			\
-	      __v = GUINT32_SWAP_LE_BE_CONSTANT (__x);		\
-	    else						\
-	     __asm__ __volatile__ ("shl %0 = %1, 32 ;;"		\
-				   "mux1 %0 = %0, @rev ;;"	\
-				    : "=r" (__v)		\
-				    : "r" (__x));		\
-	    __v; }))
-#    define GUINT64_SWAP_LE_BE_IA64(val) \
-       (__extension__						\
-	({ register guint64 __v, __x = ((guint64) (val));	\
-	   if (__builtin_constant_p (__x))			\
-	     __v = GUINT64_SWAP_LE_BE_CONSTANT (__x);		\
-	   else							\
-	     __asm__ __volatile__ ("mux1 %0 = %1, @rev ;;"	\
-				   : "=r" (__v)			\
-				   : "r" (__x));		\
-	   __v; }))
-#    define GUINT16_SWAP_LE_BE(val) (GUINT16_SWAP_LE_BE_IA64 (val))
-#    define GUINT32_SWAP_LE_BE(val) (GUINT32_SWAP_LE_BE_IA64 (val))
-#    define GUINT64_SWAP_LE_BE(val) (GUINT64_SWAP_LE_BE_IA64 (val))
-#  elif defined (__x86_64__)
-#    define GUINT32_SWAP_LE_BE_X86_64(val) \
-       (__extension__						\
-	 ({ register guint32 __v, __x = ((guint32) (val));	\
-	    if (__builtin_constant_p (__x))			\
-	      __v = GUINT32_SWAP_LE_BE_CONSTANT (__x);		\
-	    else						\
-	     __asm__ ("bswapl %0"				\
-		      : "=r" (__v)				\
-		      : "0" (__x));				\
-	    __v; }))
-#    define GUINT64_SWAP_LE_BE_X86_64(val) \
-       (__extension__						\
-	({ register guint64 __v, __x = ((guint64) (val));	\
-	   if (__builtin_constant_p (__x))			\
-	     __v = GUINT64_SWAP_LE_BE_CONSTANT (__x);		\
-	   else							\
-	     __asm__ ("bswapq %0"				\
-		      : "=r" (__v)				\
-		      : "0" (__x));				\
-	   __v; }))
-     /* gcc seems to figure out optimal code for this on its own */
-#    define GUINT16_SWAP_LE_BE(val) (GUINT16_SWAP_LE_BE_CONSTANT (val))
-#    define GUINT32_SWAP_LE_BE(val) (GUINT32_SWAP_LE_BE_X86_64 (val))
-#    define GUINT64_SWAP_LE_BE(val) (GUINT64_SWAP_LE_BE_X86_64 (val))
-#  else /* generic gcc */
-#    define GUINT16_SWAP_LE_BE(val) (GUINT16_SWAP_LE_BE_CONSTANT (val))
-#    define GUINT32_SWAP_LE_BE(val) (GUINT32_SWAP_LE_BE_CONSTANT (val))
-#    define GUINT64_SWAP_LE_BE(val) (GUINT64_SWAP_LE_BE_CONSTANT (val))
-#  endif
-#else /* generic */
-#  define GUINT16_SWAP_LE_BE(val) (GUINT16_SWAP_LE_BE_CONSTANT (val))
-#  define GUINT32_SWAP_LE_BE(val) (GUINT32_SWAP_LE_BE_CONSTANT (val))
-#  define GUINT64_SWAP_LE_BE(val) (GUINT64_SWAP_LE_BE_CONSTANT (val))
-#endif /* generic */
+/* %%% DYLAN-HACK %%% */
+/* #if defined (__GNUC__) && (__GNUC__ >= 2) && defined (__OPTIMIZE__) */
+/* #  if defined (__i386__) */
+/* #    define GUINT16_SWAP_LE_BE_IA32(val) \ */
+/*        (__extension__						\ */
+/* 	({ register guint16 __v, __x = ((guint16) (val));	\ */
+/* 	   if (__builtin_constant_p (__x))			\ */
+/* 	     __v = GUINT16_SWAP_LE_BE_CONSTANT (__x);		\ */
+/* 	   else							\ */
+/* 	     __asm__ ("rorw $8, %w0"				\ */
+/* 		      : "=r" (__v)				\ */
+/* 		      : "0" (__x)				\ */
+/* 		      : "cc");					\ */
+/* 	    __v; })) */
+/* #    if !defined (__i486__) && !defined (__i586__) \ */
+/* 	&& !defined (__pentium__) && !defined (__i686__) \ */
+/* 	&& !defined (__pentiumpro__) && !defined (__pentium4__) */
+/* #       define GUINT32_SWAP_LE_BE_IA32(val) \ */
+/* 	  (__extension__					\ */
+/* 	   ({ register guint32 __v, __x = ((guint32) (val));	\ */
+/* 	      if (__builtin_constant_p (__x))			\ */
+/* 		__v = GUINT32_SWAP_LE_BE_CONSTANT (__x);	\ */
+/* 	      else						\ */
+/* 		__asm__ ("rorw $8, %w0\n\t"			\ */
+/* 			 "rorl $16, %0\n\t"			\ */
+/* 			 "rorw $8, %w0"				\ */
+/* 			 : "=r" (__v)				\ */
+/* 			 : "0" (__x)				\ */
+/* 			 : "cc");				\ */
+/* 	      __v; })) */
+/* #    else /\* 486 and higher has bswap *\/ */
+/* #       define GUINT32_SWAP_LE_BE_IA32(val) \ */
+/* 	  (__extension__					\ */
+/* 	   ({ register guint32 __v, __x = ((guint32) (val));	\ */
+/* 	      if (__builtin_constant_p (__x))			\ */
+/* 		__v = GUINT32_SWAP_LE_BE_CONSTANT (__x);	\ */
+/* 	      else						\ */
+/* 		__asm__ ("bswap %0"				\ */
+/* 			 : "=r" (__v)				\ */
+/* 			 : "0" (__x));				\ */
+/* 	      __v; })) */
+/* #    endif /\* processor specific 32-bit stuff *\/ */
+/* #    define GUINT64_SWAP_LE_BE_IA32(val) \ */
+/*        (__extension__							\ */
+/* 	({ union { guint64 __ll;					\ */
+/* 		   guint32 __l[2]; } __w, __r;				\ */
+/* 	   __w.__ll = ((guint64) (val));				\ */
+/* 	   if (__builtin_constant_p (__w.__ll))				\ */
+/* 	     __r.__ll = GUINT64_SWAP_LE_BE_CONSTANT (__w.__ll);		\ */
+/* 	   else								\ */
+/* 	     {								\ */
+/* 	       __r.__l[0] = GUINT32_SWAP_LE_BE (__w.__l[1]);		\ */
+/* 	       __r.__l[1] = GUINT32_SWAP_LE_BE (__w.__l[0]);		\ */
+/* 	     }								\ */
+/* 	   __r.__ll; })) */
+/*      /\* Possibly just use the constant version and let gcc figure it out? *\/ */
+/* #    define GUINT16_SWAP_LE_BE(val) (GUINT16_SWAP_LE_BE_IA32 (val)) */
+/* #    define GUINT32_SWAP_LE_BE(val) (GUINT32_SWAP_LE_BE_IA32 (val)) */
+/* #    define GUINT64_SWAP_LE_BE(val) (GUINT64_SWAP_LE_BE_IA32 (val)) */
+/* #  elif defined (__ia64__) */
+/* #    define GUINT16_SWAP_LE_BE_IA64(val) \ */
+/*        (__extension__						\ */
+/* 	({ register guint16 __v, __x = ((guint16) (val));	\ */
+/* 	   if (__builtin_constant_p (__x))			\ */
+/* 	     __v = GUINT16_SWAP_LE_BE_CONSTANT (__x);		\ */
+/* 	   else							\ */
+/* 	     __asm__ __volatile__ ("shl %0 = %1, 48 ;;"		\ */
+/* 				   "mux1 %0 = %0, @rev ;;"	\ */
+/* 				    : "=r" (__v)		\ */
+/* 				    : "r" (__x));		\ */
+/* 	    __v; })) */
+/* #    define GUINT32_SWAP_LE_BE_IA64(val) \ */
+/*        (__extension__						\ */
+/* 	 ({ register guint32 __v, __x = ((guint32) (val));	\ */
+/* 	    if (__builtin_constant_p (__x))			\ */
+/* 	      __v = GUINT32_SWAP_LE_BE_CONSTANT (__x);		\ */
+/* 	    else						\ */
+/* 	     __asm__ __volatile__ ("shl %0 = %1, 32 ;;"		\ */
+/* 				   "mux1 %0 = %0, @rev ;;"	\ */
+/* 				    : "=r" (__v)		\ */
+/* 				    : "r" (__x));		\ */
+/* 	    __v; })) */
+/* #    define GUINT64_SWAP_LE_BE_IA64(val) \ */
+/*        (__extension__						\ */
+/* 	({ register guint64 __v, __x = ((guint64) (val));	\ */
+/* 	   if (__builtin_constant_p (__x))			\ */
+/* 	     __v = GUINT64_SWAP_LE_BE_CONSTANT (__x);		\ */
+/* 	   else							\ */
+/* 	     __asm__ __volatile__ ("mux1 %0 = %1, @rev ;;"	\ */
+/* 				   : "=r" (__v)			\ */
+/* 				   : "r" (__x));		\ */
+/* 	   __v; })) */
+/* #    define GUINT16_SWAP_LE_BE(val) (GUINT16_SWAP_LE_BE_IA64 (val)) */
+/* #    define GUINT32_SWAP_LE_BE(val) (GUINT32_SWAP_LE_BE_IA64 (val)) */
+/* #    define GUINT64_SWAP_LE_BE(val) (GUINT64_SWAP_LE_BE_IA64 (val)) */
+/* #  elif defined (__x86_64__) */
+/* #    define GUINT32_SWAP_LE_BE_X86_64(val) \ */
+/*        (__extension__						\ */
+/* 	 ({ register guint32 __v, __x = ((guint32) (val));	\ */
+/* 	    if (__builtin_constant_p (__x))			\ */
+/* 	      __v = GUINT32_SWAP_LE_BE_CONSTANT (__x);		\ */
+/* 	    else						\ */
+/* 	     __asm__ ("bswapl %0"				\ */
+/* 		      : "=r" (__v)				\ */
+/* 		      : "0" (__x));				\ */
+/* 	    __v; })) */
+/* #    define GUINT64_SWAP_LE_BE_X86_64(val) \ */
+/*        (__extension__						\ */
+/* 	({ register guint64 __v, __x = ((guint64) (val));	\ */
+/* 	   if (__builtin_constant_p (__x))			\ */
+/* 	     __v = GUINT64_SWAP_LE_BE_CONSTANT (__x);		\ */
+/* 	   else							\ */
+/* 	     __asm__ ("bswapq %0"				\ */
+/* 		      : "=r" (__v)				\ */
+/* 		      : "0" (__x));				\ */
+/* 	   __v; })) */
+/*      /\* gcc seems to figure out optimal code for this on its own *\/ */
+/* #    define GUINT16_SWAP_LE_BE(val) (GUINT16_SWAP_LE_BE_CONSTANT (val)) */
+/* #    define GUINT32_SWAP_LE_BE(val) (GUINT32_SWAP_LE_BE_X86_64 (val)) */
+/* #    define GUINT64_SWAP_LE_BE(val) (GUINT64_SWAP_LE_BE_X86_64 (val)) */
+/* #  else /\* generic gcc *\/ */
+/* #    define GUINT16_SWAP_LE_BE(val) (GUINT16_SWAP_LE_BE_CONSTANT (val)) */
+/* #    define GUINT32_SWAP_LE_BE(val) (GUINT32_SWAP_LE_BE_CONSTANT (val)) */
+/* #    define GUINT64_SWAP_LE_BE(val) (GUINT64_SWAP_LE_BE_CONSTANT (val)) */
+/* #  endif */
+/* #else /\* generic *\/ */
+/* #  define GUINT16_SWAP_LE_BE(val) (GUINT16_SWAP_LE_BE_CONSTANT (val)) */
+/* #  define GUINT32_SWAP_LE_BE(val) (GUINT32_SWAP_LE_BE_CONSTANT (val)) */
+/* #  define GUINT64_SWAP_LE_BE(val) (GUINT64_SWAP_LE_BE_CONSTANT (val)) */
+/* #endif /\* generic *\/ */
 
 #define GUINT16_SWAP_LE_PDP(val)	((guint16) (val))
 #define GUINT16_SWAP_BE_PDP(val)	(GUINT16_SWAP_LE_BE (val))
@@ -335,55 +336,57 @@ typedef const gchar *   (*GTranslateFunc)       (const gchar   *str,
  * B0--------------->B1---------->B2--->B3---->  B4->B5->B6->B7->
  */
 /* subtract from biased_exponent to form base2 exponent (normal numbers) */
-typedef union  _GDoubleIEEE754	GDoubleIEEE754;
-typedef union  _GFloatIEEE754	GFloatIEEE754;
+/* %%% DYLAN-HACK %%% */
+/* typedef union  _GDoubleIEEE754	GDoubleIEEE754; */
+/* typedef union  _GFloatIEEE754	GFloatIEEE754; */
 #define G_IEEE754_FLOAT_BIAS	(127)
 #define G_IEEE754_DOUBLE_BIAS	(1023)
 /* multiply with base2 exponent to get base10 exponent (normal numbers) */
 #define G_LOG_2_BASE_10		(0.30102999566398119521)
-#if G_BYTE_ORDER == G_LITTLE_ENDIAN
-union _GFloatIEEE754
-{
-  gfloat v_float;
-  struct {
-    guint mantissa : 23;
-    guint biased_exponent : 8;
-    guint sign : 1;
-  } mpn;
-};
-union _GDoubleIEEE754
-{
-  gdouble v_double;
-  struct {
-    guint mantissa_low : 32;
-    guint mantissa_high : 20;
-    guint biased_exponent : 11;
-    guint sign : 1;
-  } mpn;
-};
-#elif G_BYTE_ORDER == G_BIG_ENDIAN
-union _GFloatIEEE754
-{
-  gfloat v_float;
-  struct {
-    guint sign : 1;
-    guint biased_exponent : 8;
-    guint mantissa : 23;
-  } mpn;
-};
-union _GDoubleIEEE754
-{
-  gdouble v_double;
-  struct {
-    guint sign : 1;
-    guint biased_exponent : 11;
-    guint mantissa_high : 20;
-    guint mantissa_low : 32;
-  } mpn;
-};
-#else /* !G_LITTLE_ENDIAN && !G_BIG_ENDIAN */
-#error unknown ENDIAN type
-#endif /* !G_LITTLE_ENDIAN && !G_BIG_ENDIAN */
+/* %%% DYLAN-HACK %%% */
+/* #if G_BYTE_ORDER == G_LITTLE_ENDIAN */
+/* union _GFloatIEEE754 */
+/* { */
+/*   gfloat v_float; */
+/*   struct { */
+/*     guint mantissa : 23; */
+/*     guint biased_exponent : 8; */
+/*     guint sign : 1; */
+/*   } mpn; */
+/* }; */
+/* union _GDoubleIEEE754 */
+/* { */
+/*   gdouble v_double; */
+/*   struct { */
+/*     guint mantissa_low : 32; */
+/*     guint mantissa_high : 20; */
+/*     guint biased_exponent : 11; */
+/*     guint sign : 1; */
+/*   } mpn; */
+/* }; */
+/* #elif G_BYTE_ORDER == G_BIG_ENDIAN */
+/* union _GFloatIEEE754 */
+/* { */
+/*   gfloat v_float; */
+/*   struct { */
+/*     guint sign : 1; */
+/*     guint biased_exponent : 8; */
+/*     guint mantissa : 23; */
+/*   } mpn; */
+/* }; */
+/* union _GDoubleIEEE754 */
+/* { */
+/*   gdouble v_double; */
+/*   struct { */
+/*     guint sign : 1; */
+/*     guint biased_exponent : 11; */
+/*     guint mantissa_high : 20; */
+/*     guint mantissa_low : 32; */
+/*   } mpn; */
+/* }; */
+/* #else /\* !G_LITTLE_ENDIAN && !G_BIG_ENDIAN *\/ */
+/* #error unknown ENDIAN type */
+/* #endif /\* !G_LITTLE_ENDIAN && !G_BIG_ENDIAN *\/ */
 
 typedef struct _GTimeVal                GTimeVal;
 
