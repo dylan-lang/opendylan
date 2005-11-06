@@ -26,7 +26,7 @@ define module GTK-2
 
   // Names from special.dylan:
   export <GtkIMContextInfo***>;
-///   export initialize-gtk;
+  export initialize-gtk;
 ///   export \gtk-type-cast-function-definer;
 ///          \GTK-OBJECT, \GTK-CONTAINER,
 ///          \GTK-BOX, \GTK-WIDGET;

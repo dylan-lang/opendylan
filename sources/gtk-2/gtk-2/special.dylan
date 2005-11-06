@@ -51,7 +51,6 @@ define opaque-structure <_GtkRadioActionPrivate>;
 define opaque-structure <_GtkRangeLayout>;
 define opaque-structure <_GtkRangeStepTimer>;
 define opaque-structure <_GtkRcContext>;
-define opaque-structure <_GtkSelectionData>;
 define opaque-structure <_GtkSeparatorToolItemPrivate>;
 define opaque-structure <_GtkSettingsPropertyValue>;
 define opaque-structure <_GtkTextBTree>;
