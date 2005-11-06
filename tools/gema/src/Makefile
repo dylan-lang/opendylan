@@ -14,7 +14,7 @@ INSTALLDIR = /usr/local
 all: gcc
 
 gcc:
-	${MAKE} CC=gcc CCFLAGS="-ansi -Wall -O2 -DNDEBUG" gema
+	${MAKE} CC=gcc CCFLAGS="-Wall -O2 -DNDEBUG" gema
 
 lcc:
 	${MAKE} CC=lcc CCFLAGS="-XG -O -Xa -DNDEBUG" gema
