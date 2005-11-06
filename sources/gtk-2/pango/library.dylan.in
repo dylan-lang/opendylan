@@ -1,0 +1,21 @@
+Module:     Dylan-User
+Synopsis:   Declarations translated from Pango 1.0 header files.
+Copyright:  Copyright (C) 2005  Daniel Brockman
+
+define library Pango
+  use Functional-Dylan;
+  use C-FFI;
+  use GLib-2, export: { C-FFI-Utilities };
+  use GObject-2;
+  export Pango;
+end library Pango;
+
+define module Pango
+  use Functional-Dylan;
+  use C-FFI;
+  use GLib-2;
+  use GObject-2;
+
+@EXPORTS@
+
+end module Pango;

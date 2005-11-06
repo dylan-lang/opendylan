@@ -1,0 +1,21 @@
+Module:     Dylan-User
+Synopsis:   Declarations translated from GDK-Pixbuf 2.0 header files.
+Copyright:  Copyright (C) 2005  Daniel Brockman
+
+define library GDK-Pixbuf-2
+  use Functional-Dylan;
+  use C-FFI;
+  use GLib-2, export: { C-FFI-Utilities };
+  use GObject-2;
+  export GDK-Pixbuf-2;
+end library GDK-Pixbuf-2;
+
+define module GDK-Pixbuf-2
+  use Functional-Dylan;
+  use C-FFI;
+  use GLib-2;
+  use GObject-2;
+
+@EXPORTS@
+
+end module GDK-Pixbuf-2;

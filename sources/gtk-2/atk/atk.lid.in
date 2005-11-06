@@ -1,0 +1,13 @@
+Library:       ATK
+Synopsis:      Declarations translated from ATK 1.0 header files.
+Target-type:   DLL
+Files:	       library
+               special
+               @FILES@
+C-Libraries:   -latk-1.0 -lgobject-2.0 -lgmodule-2.0 -ldl -lglib-2.0
+Copyright:     Copyright (C) 2005  Daniel Brockman
+License:       Functional Objects Library Public License Version 1.0
+Dual-License:  GNU Lesser General Public License
+Warranty:      Distributed WITHOUT WARRANTY OF ANY KIND
+Other-Files:   Open-Source-License.txt
+

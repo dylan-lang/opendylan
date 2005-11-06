@@ -1,0 +1,14 @@
+// This file lists GDK 2.0 names that we don't want to
+// include in this Dylan wrapper library.
+
+// These are just duplicates of GDK_Thorn and GDK_Eth.
+GDK_THORN
+GDK_ETH
+
+// These are weird, so we do them manually.
+_GdkAtom
+GdkAtom
+
+// This one has function pointer arguments --- which our
+// Gema script can't cope with --- so we define it manually.
+gdk_window_invalidate_maybe_recurse

@@ -1,0 +1,35 @@
+// This file lists GLib 2.0 names that we don't want to
+// include in this Dylan wrapper library.
+
+// in gtypes.h
+G_MININT64
+G_MAXINT64
+G_MAXUINT64
+gint64
+guint64
+G_MAXUINT32                     // needs 0xFFFFFFFF
+
+G_MINFLOAT
+G_MAXFLOAT
+G_MINDOUBLE
+G_MAXDOUBLE
+G_MINSHORT
+G_MAXSHORT
+G_MAXUSHORT
+G_MININT
+G_MAXINT
+G_MAXUINT
+G_MINLONG
+G_MAXLONG
+G_MAXULONG
+G_MAXSIZE
+
+// in glibconfig.h
+G_VA_COPY
+
+// in giochannel.h
+g_io_channel_seek_position      // needs gint64
+
+// in gconvert.h
+_GIConv                         // weird definition, so
+GIConv                          // we define it manually

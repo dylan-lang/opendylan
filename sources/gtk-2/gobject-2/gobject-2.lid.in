@@ -1,0 +1,14 @@
+Library:       GObject-2
+Synopsis:      Declarations translated from GObject 2.0 header files.
+Target-Type:   DLL
+Files:         library
+               special
+               @FILES@
+C-Libraries:   -lgobject-2.0 -lglib-2.0
+Copyright:     Copyright (C) 1999  Functional Objects, Inc.
+               Copyright (C) 2005  Daniel Brockman
+License:       Functional Objects Library Public License Version 1.0
+Dual-License:  GNU Lesser General Public License
+Warranty:      Distributed WITHOUT WARRANTY OF ANY KIND
+Other-Files:   Open-Source-License.txt
+

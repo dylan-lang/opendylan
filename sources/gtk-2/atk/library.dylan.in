@@ -1,0 +1,21 @@
+Module:     Dylan-User
+Synopsis:   Declarations translated from ATK 1.0 header files.
+Copyright:  Copyright (C) 2005  Daniel Brockman
+
+define library ATK
+  use Functional-Dylan;
+  use C-FFI;
+  use GLib-2, export: { C-FFI-Utilities };
+  use GObject-2;
+  export ATK;
+end library ATK;
+
+define module ATK
+  use Functional-Dylan;
+  use C-FFI;
+  use GLib-2;
+  use GObject-2;
+
+@EXPORTS@
+
+end module ATK;

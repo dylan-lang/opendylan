@@ -1,0 +1,14 @@
+Library:       GLib-2
+Synopsis:      Declarations translated from GLib 2.0 header files.
+Target-Type:   DLL
+Files:         library
+               special
+               @FILES@
+C-Libraries:   -lglib-2.0 -Wl,--export-dynamic -ldl
+               -lgmodule-2.0 -pthread -lgthread-2.0
+Copyright:     Copyright (C) 2005  Daniel Brockman
+License:       Functional Objects Library Public License Version 1.0
+Dual-License:  GNU Lesser General Public License
+Warranty:      Distributed WITHOUT WARRANTY OF ANY KIND
+Other-Files:   Open-Source-License.txt
+

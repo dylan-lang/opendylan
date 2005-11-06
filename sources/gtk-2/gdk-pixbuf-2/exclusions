@@ -1,0 +1,3 @@
+// This file lists GDK-Pixbuf 2.0 names that we don't want to
+// include in this Dylan wrapper library.
+
