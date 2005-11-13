@@ -11,6 +11,8 @@ define class <jam-state> (<object>)
   constant slot %jam-rules :: <string-table> = make(<string-table>);
   constant slot %jam-actions :: <string-table> = make(<string-table>);
   constant slot %jam-targets :: <string-table> = make(<string-table>);
+  constant slot %jam-random :: <random> = make(<random>);
+  constant slot %jam-temporary-files :: <deque> = make(<deque>);
 end class;
 
 define method jam-state-copy(jam :: <jam-state>) => (jam :: <jam-state>);
@@ -60,6 +62,44 @@ define method jam-rule-setter
   element(jam.%jam-rules, name) := value;
 end method;
 
+define constant $temporary-file-range :: <integer> = 36 ^ 5;
+
+define method jam-new-temporary-file
+    (jam :: <jam-state>)
+ => (stream :: <file-stream>, locator :: <file-locator>);
+  let directory :: false-or(<directory-locator>) = temp-directory();
+  block (return)
+    while (#t)
+      block (again)
+        let filename
+          = concatenate("jam",
+                        integer-to-string(random($temporary-file-range,
+                                                 random: jam.%jam-random),
+                                          base: 36, size: 5),
+                        ".tmp");
+        let locator
+          = make(<file-locator>, name: filename, directory: directory);
+        let stream
+          = make(<file-stream>,
+                 locator: locator, direction: #"output",
+                 if-exists: #"signal");
+        push-last(jam.%jam-temporary-files, locator);
+        return(stream, locator);
+      exception (e :: <file-exists-error>)
+        again();
+      end block;
+    end while;
+  end block;
+end method;
+
+define method jam-clean-temporary-files
+    (jam :: <jam-state>)
+ => ();
+  while (~empty?(jam.%jam-temporary-files))
+    delete-file(pop(jam.%jam-temporary-files));
+  end while;
+end method;
+  
 // initialize
 //
 // Install the built-in rule function definitions

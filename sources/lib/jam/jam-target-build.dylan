@@ -298,6 +298,9 @@ define method jam-target-build
                                     minimize?: #t,
                                     activate?: #f);
 
+                // clean up temporary files
+                jam-clean-temporary-files(jam);
+
                 //---*** need to verify targets were really built
                 //       and (possibly) reset the modification date
                 for (target in targets)

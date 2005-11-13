@@ -77,6 +77,7 @@ define module jam-internals
   use streams;
   use file-system;
   use locators;
+  use simple-random;
   use date;
   use machine-words;
   use byte-vector;

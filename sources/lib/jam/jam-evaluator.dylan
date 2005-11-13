@@ -120,10 +120,10 @@ define method jam-expand-arg-product
             if (c == ':' & member?(i, var-markers))
               let var-name = copy-sequence(var, end: i);
               let contents = jam-variable(jam, var-name, default: #f);
-              return(jam-expand-arg-colon(contents, var, i + 1));
+              return(jam-expand-arg-colon(jam, contents, var, i + 1));
             elseif (c == '[' & member?(i, var-markers))
               let var-name = copy-sequence(var, end: i);
-              return(jam-expand-arg-bracket(jam-variable(jam, var-name),
+              return(jam-expand-arg-bracket(jam, jam-variable(jam, var-name),
                                             var, i + 1));
             end if;
           end for;
@@ -151,7 +151,10 @@ end method;
 // Modify the variable expansion using one of the available modifier letters.
 //
 define function jam-expand-arg-colon
-    (contents :: false-or(<sequence>), variable :: <byte-string>, i :: <integer>)
+    (jam :: <jam-state>,
+     contents :: false-or(<sequence>),
+     variable :: <byte-string>,
+     i :: <integer>)
  => (result :: <sequence>);
   let variable-size :: <integer> = variable.size;
   if (i < variable-size)
@@ -183,6 +186,18 @@ define function jam-expand-arg-colon
       finally
         vector(result)
       end for
+    elseif (modifier == '@')
+      let (stream :: <file-stream>, locator :: <file-locator>)
+        = jam-new-temporary-file(jam);
+      block ()
+        for (component in contents)
+          write(stream, component);
+          new-line(stream);
+        end for;
+      cleanup
+        close(stream);
+      end;
+      vector(as(<byte-string>, locator))
     else
       let func =
         select (modifier)
@@ -293,7 +308,7 @@ define function jam-expand-arg-colon
           // L - Lowercased expansion
           'L' =>
             as-lowercase;
-          
+
           otherwise =>
             error("unknown variable modifier '%c' in '%s'",
                   modifier, variable);
@@ -302,7 +317,7 @@ define function jam-expand-arg-colon
       if (replace?)
         contents
       else
-        jam-expand-arg-colon(contents, variable, i + 1)
+        jam-expand-arg-colon(jam, contents, variable, i + 1)
       end if
     end if
   else
@@ -315,7 +330,10 @@ end function;
 // Extract a range of values from a variable expansion
 //
 define function jam-expand-arg-bracket
-    (contents :: <sequence>, variable :: <byte-string>, start :: <integer>)
+    (jam :: <jam-state>,
+     contents :: <sequence>,
+     variable :: <byte-string>,
+     start :: <integer>)
  => (result :: <sequence>);
   let variable-size :: <integer> = variable.size;
   if (start < variable-size)
@@ -327,7 +345,7 @@ define function jam-expand-arg-bracket
     elseif (variable[after-n] == ']')
       let result = vector(contents[n - 1]);
       if (after-n + 1 < variable-size & variable[after-n + 1] == ':')
-        jam-expand-arg-colon(result, variable, after-n + 2)
+        jam-expand-arg-colon(jam, result, variable, after-n + 2)
       else
         result
       end if
@@ -335,7 +353,7 @@ define function jam-expand-arg-bracket
       if (after-n + 1 < variable-size & variable[after-n + 1] == ']')
         let result = copy-sequence(contents, start: n - 1);
         if (after-n + 2 < variable-size & variable[after-n + 2] == ':')
-          jam-expand-arg-colon(result, variable, after-n + 3)
+          jam-expand-arg-colon(jam, result, variable, after-n + 3)
         else
           result
         end if
@@ -351,7 +369,7 @@ define function jam-expand-arg-bracket
         if (after-m + 1 < variable-size
               & variable[after-m] == ']'
               & variable[after-m + 1] == ':')
-          jam-expand-arg-colon(result, variable, after-m + 2)
+          jam-expand-arg-colon(jam, result, variable, after-m + 2)
         else
           result
         end if
