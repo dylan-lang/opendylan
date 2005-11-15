@@ -98,8 +98,6 @@ define macro shared-string-definer
 	   end if
 	 end method element-setter;
 
-         // Make element-setter work between different character types. 
-         // --tc
          define inline sealed method element-setter
              (new-value :: <character>,
               string :: "<" ## ?name ## "-string>", index :: <integer>)
@@ -114,8 +112,6 @@ define macro shared-string-definer
 	   string-element(string, index) := new-value
 	 end method element-no-bounds-check-setter;
 
-         // Make element-setter work between different character types. 
-         // --tc
          define inline sealed method element-no-bounds-check-setter
              (new-value :: <character>,
               string :: "<" ## ?name ## "-string>", index :: <integer>)
@@ -155,9 +151,9 @@ define macro shared-string-definer
 	 end function;
 
 	 define inline function ?name ## "-string-current-element-setter"
-	     (new-value :: "<" ## ?name ## "-character>", string :: "<" ## ?name ## "-string>", 
+	     (new-value :: <character>, string :: "<" ## ?name ## "-string>", 
 	      state :: <integer>)
-	   string-element(string, state) := new-value
+	   string-element(string, state) := as("<" ## ?name ## "-character>", new-value);
 	 end function;
 
 	 define sealed inline method forward-iteration-protocol 
