@@ -211,6 +211,8 @@ end method forward-iteration-protocol;
 define class <vector-subsequence> (<subsequence>, <vector>) end class;
 define class <string-subsequence> (<subsequence>, <string>) end class;
 
+define class <byte-vector-subsequence> (<vector-subsequence>) end class;
+
 // <vs-subsequence> is used for source sequences which are both <vector>s and
 // <string>s.  The only such predefined class is <byte-string>.
 define class <vs-subsequence> (<string-subsequence>, <vector-subsequence>) end;
@@ -230,6 +232,25 @@ define method subsequence(seq :: <vector>,
     make(<vector-subsequence>, source: seq, start: first, end: subseq-last);
   end if;
 end method subsequence;
+
+define method subsequence(seq :: <byte-vector>,
+			  #key start: first = 0,
+			       end: last) => (result :: <byte-vector-subsequence>);
+  let subseq-last = if (last) last else max(first, seq.size) end if;
+  make(<byte-vector-subsequence>, source: seq, start: first, end: subseq-last);
+end method subsequence;
+
+define sealed domain subsequence (<byte-vector-subsequence>);
+
+define method subsequence(seq :: <byte-vector-subsequence>,
+                          #key start: first = 0,
+                          end: last) => (result :: <byte-vector-subsequence>);
+  let subseq-last = if (last) last else max(first, seq.size) end if;
+  make(<byte-vector-subsequence>,
+       source: seq.source,
+       start: first + seq.start-index,
+       end: subseq-last + seq.start-index);
+end;
 
 define inline function vs-fip-next-element 
     (c :: <subsequence>, s :: <integer>) => (result :: <integer>);
@@ -257,6 +278,16 @@ define inline function vs-fip-current-element-setter
   c.source[s] := e;
 end function;
 
+define inline function byte-vector-fip-current-element
+    (c :: <byte-vector-subsequence>, s :: <integer>) => (result :: <byte>);
+  c.source[s];
+end function;
+
+define inline function byte-vector-fip-current-element-setter
+    (e :: <byte>, c :: <byte-vector-subsequence>, s :: <integer>) => (result :: <byte>)
+  c.source[s] := e;
+end function;
+
 define inline function vs-fip-copy-state
     (c :: <subsequence>, s :: <integer>) => (result :: <integer>);
   s;
@@ -270,6 +301,16 @@ define method forward-iteration-protocol (seq :: <subsequence>)
    values(seq.start-index, seq.end-index, vs-fip-next-element, vs-fip-done?,
 	  vs-fip-current-key, vs-fip-current-element,
 	  vs-fip-current-element-setter, vs-fip-copy-state);
+end method forward-iteration-protocol;
+
+define inline method forward-iteration-protocol (seq :: <byte-vector-subsequence>)
+ => (initial-state :: <object>, limit :: <object>, next-state :: <function>,
+     finished-state? :: <function>, current-key :: <function>,
+     current-element :: <function>, current-element-setter :: <function>,
+     copy-state :: <function>);
+   values(seq.start-index, seq.end-index, vs-fip-next-element, vs-fip-done?,
+	  vs-fip-current-key, byte-vector-fip-current-element,
+	  byte-vector-fip-current-element-setter, vs-fip-copy-state);
 end method forward-iteration-protocol;
 
 define inline method size(c :: <vector-subsequence>) => (result :: <integer>);
@@ -286,6 +327,9 @@ define method aref(c :: <vector-subsequence>,
    end if;
 end method;
 
+define sealed copy-down-method aref
+    (c :: <byte-vector-subsequence>, #rest rest) => (result :: <byte>);
+
 define method aref-setter(value, c :: <vector-subsequence>,
 			  #rest rest) => (result :: <object>);
    let index = rest[0];
@@ -295,6 +339,10 @@ define method aref-setter(value, c :: <vector-subsequence>,
       aref(c.source, index + c.start-index) := value;
    end if;
 end method;
+
+define sealed copy-down-method aref-setter
+    (value :: <byte>, c :: <byte-vector-subsequence>, #rest rest)
+ => (result :: <byte>);
 
 define method dimensions(c :: <vector-subsequence>) => (result :: <vector>);
    vector(c.end-index - c.start-index);
@@ -315,6 +363,10 @@ define method element(seq :: <vector-subsequence>, key :: <integer>,
   end case;
 end method element;
 
+define sealed copy-down-method element
+    (seq :: <byte-vector-subsequence>, key :: <integer>, #key default = subseq-no-default)
+ => elt :: <byte>;
+
 define method element-setter(value, seq :: <vector-subsequence>,
 			     key :: <integer>) => (result :: <object>);
    case 
@@ -323,6 +375,10 @@ define method element-setter(value, seq :: <vector-subsequence>,
       otherwise => seq.source[key + seq.start-index] := value;
    end case;
 end method element-setter;
+
+define sealed copy-down-method element-setter
+    (value :: <byte>, seq :: <byte-vector-subsequence>, key :: <integer>)
+ => (result :: <byte>);
 
 define method subsequence(seq :: <string>,
 			  #key start: first = 0,

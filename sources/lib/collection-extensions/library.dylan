@@ -37,6 +37,7 @@ module:		dylan-user
 
 define library collection-extensions
   use dylan;
+  use common-dylan, import: { byte-vector };
   export heap, self-organizing-list, vector-search, subseq, sequence-diff;
   export SDE-vector;
   export collection-utilities, sequence-utilities;
@@ -50,7 +51,9 @@ end module self-organizing-list;
 
 define module subseq
   use dylan;
-  export subsequence, <subsequence>;
+  use byte-vector;
+  use dylan-extensions, import: { \copy-down-method-definer };
+  export subsequence, <subsequence>, <byte-vector-subsequence>;
 end module subseq;  
 
 define module vector-search
