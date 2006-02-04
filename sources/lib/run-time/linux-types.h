@@ -27,18 +27,36 @@ typedef int64_t              _int64;
 
 /* Critical section macros */
 
+#ifdef PTHREAD_RECURSIVE_MUTEX_INITIALIZER_NP
 #define define_CRITICAL_SECTION(lock) \
   pthread_mutex_t lock = PTHREAD_RECURSIVE_MUTEX_INITIALIZER_NP
+#else
+#define define_CRITICAL_SECTION(lock) \
+  pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER
+#endif
+
 #define extern_CRITICAL_SECTION(lock) \
   extern pthread_mutex_t lock
+#ifdef PTHREAD_MUTEX_RECURSIVE_NP
 #define initialize_CRITICAL_SECTION(mutex) \
   do { \
     pthread_mutexattr_t _attr; \
     pthread_mutexattr_init(&_attr); \
     pthread_mutexattr_setkind_np(&_attr, PTHREAD_MUTEX_RECURSIVE_NP); \
+    pthread_mutexattr_setkind_np(&_attr, PTHREAD_MUTEX_RECURSIVE); \
     pthread_mutex_init((mutex), &_attr); \
     pthread_mutexattr_destroy(&_attr); \
   } while(0)
+#else
+#define initialize_CRITICAL_SECTION(mutex) \
+  do { \
+    pthread_mutexattr_t _attr; \
+    pthread_mutexattr_init(&_attr); \
+    pthread_mutexattr_setkind_np(&_attr, PTHREAD_MUTEX_RECURSIVE); \
+    pthread_mutex_init((mutex), &_attr); \
+    pthread_mutexattr_destroy(&_attr); \
+  } while(0)
+#endif
 
 #define enter_CRITICAL_SECTION(lock)      pthread_mutex_lock(lock)
 #define leave_CRITICAL_SECTION(lock)      pthread_mutex_unlock(lock)

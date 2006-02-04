@@ -2,7 +2,11 @@
 
 #include <time.h>
 #include <stdio.h>
+#ifndef FREEBSD 
 #include <malloc.h>
+#else
+#include <stdlib.h>
+#endif
 #include <sys/time.h>
 #include <sys/resource.h>
 
