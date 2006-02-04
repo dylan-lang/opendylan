@@ -21,10 +21,10 @@ define constant $platform-name
 define macro system-offset-value
   { system-offset-value () ?default-offset:expression end }
     =>  { ?default-offset }
-  {  system-offset-value (?machine:name ?offset:expression, ?offsets:*) 
+  {  system-offset-value (?platform:name ?offset:expression, ?offsets:*) 
                          ?default-offset:expression
      end }
-    => { (if ($machine-name = ?#"machine") ?offset
+    => { (if ($platform-name = ?#"platform") ?offset
 	  else system-offset-value (?offsets) ?default-offset end
 	 end);
 	}

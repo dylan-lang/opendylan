@@ -44,14 +44,14 @@ define constant $EINVAL  = 22;
 
 /// From <sys/stat.h> ...
 
-define system-offset stat-size (alpha 10, x86 22, ppc 22) 18;
-define system-offset st-mode (x86 4, ppc 4) 2;
-define system-offset st-uid (x86 6, ppc 6) 4;
-define system-offset st-gid (x86 7, ppc 7) 5;
-define system-offset st-size (alpha 4, x86 11, ppc 11) 7;
-define system-offset st-atime (alpha 10, x86 14, ppc 14) 8;
-define system-offset st-mtime (alpha 12, x86 16, ppc 16) 10;
-define system-offset st-ctime (alpha 14, x86 18, ppc 18) 12;
+define system-offset stat-size (alpha-linux 10, x86-linux 22, ppc-linux 22, x86-freebsd 96) 18;
+define system-offset st-mode (x86-linux 4, ppc-linux 4, x86-freebsd 8) 2;
+define system-offset st-uid (x86-linux 6, ppc-linux 6, x86-freebsd 12) 4;
+define system-offset st-gid (x86-linux 7, ppc-linux 7, x86-freebsd 16) 5;
+define system-offset st-size (alpha-linux 4, x86-linux 11, ppc-linux 11, x86-freebsd 48) 7;
+define system-offset st-atime (alpha-linux 10, x86-linux 14, ppc-linux 14, x86-freebsd 24) 8;
+define system-offset st-mtime (alpha-linux 12, x86-linux 16, ppc-linux 16, x86-freebsd 32) 10;
+define system-offset st-ctime (alpha-linux 14, x86-linux 18, ppc-linux 18, x86-freebsd 40) 12;
 
 define constant $STAT_SIZE = 
   $stat-size-offset * raw-as-integer(primitive-word-size());
@@ -140,7 +140,7 @@ end function st-ctime;
 /// From <pwd.h> ...
 
 define system-offset passwd-name () 0;
-define system-offset passwd-dir (alpha 4) 5;
+define system-offset passwd-dir (alpha-linux 4, x86-freebsd 28) 5;
 
 define inline-only function passwd-name (passwd :: <machine-word>) => (name :: <byte-string>)
   primitive-raw-as-string
@@ -173,7 +173,7 @@ end function group-name;
 
 /// From <dirent.h> ...
 
-define system-offset dirent-name (x86 11, ppc 11) 8;
+define system-offset dirent-name (x86-linux 11, ppc-linux 11, x86-freebsd 8) 8;
 
 define inline-only function dirent-name (dirent :: <machine-word>) => (name :: <byte-string>)
   primitive-raw-as-string
