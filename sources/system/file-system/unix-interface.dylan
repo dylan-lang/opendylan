@@ -165,12 +165,14 @@ define constant $o_creat
       #"linux"              =>   64;
       #"Solaris2", #"IRIX5" =>  256;
       #"SunOS4", #"OSF3"    =>  512;
+      #"freebsd"            => #x200;
     end;
 
 define constant $o_trunc
   = select ($os-name)
       #"Solaris2", #"IRIX5",  #"linux" =>  512;
       #"SunOS4", #"OSF3"               => 1024;
+      #"freebsd"                       => #x400;
     end;
 
 define constant $o_sync
@@ -179,6 +181,7 @@ define constant $o_sync
       #"linux"              =>  4096;
       #"SunOS4"             =>  8192;
       #"OSF3"               => 16384;
+      #"freebsd"            => #x80;
     end;
 
 // standard unix error definitions
