@@ -42,7 +42,7 @@ RTOBJS ?= runtime.o
 	  linux-spy-interfaces.o
 	  linux-support.o ;
 
-rtlibs ?= $(LIBDIR)/runtime/$(RTOBJS) -lmmdw -lmpsplan -lpthread -ldl ;
+rtlibs ?= $(LIBDIR)/runtime/$(RTOBJS) -lmmdw -lmpsplan -lpthread ;
 
 guilflags ?= ;
 
@@ -327,7 +327,7 @@ rule LinkEXE {
 }
 
 actions LinkEXE bind NEEDLIBS {
-  $(CC) -o $(<) -T $(LINKSCRIPTEXE) -Wl,-rpath,"$(LIBPATH:J=:)" $(LINKFLAGS) $(>) -L"$(LIBPATH)" $(NEEDLIBS) $(LINKLIBS)
+  $(CC) -o $(<) -T $(LINKSCRIPTEXE) -Wl,-rpath,"$(LIBPATH:J=:)" $(LINKFLAGS) $(>) -L"$(LIBPATH)" $(NEEDLIBS) $(LINKLIBS) -lpthread
 }
 
 #

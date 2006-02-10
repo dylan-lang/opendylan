@@ -41,7 +41,7 @@ libraries
 
 
 libcmt
--lpthread -ldl -lc
+-lpthread -lc
 
 libgc
 -lmmdw
