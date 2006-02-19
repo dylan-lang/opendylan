@@ -44,8 +44,8 @@ define constant $EINVAL  = 22;
 
 /// From <sys/stat.h> ...
 
-define system-offset stat-size (alpha-linux 10, x86-linux 22, ppc-linux 22, x86-freebsd 96) 18;
-define system-offset st-mode (x86-linux 4, ppc-linux 4, x86-freebsd 2) 6;
+define system-offset stat-size (alpha-linux 10, x86-linux 22, ppc-linux 22, x86-freebsd 24) 18;
+define system-offset st-mode (x86-linux 4, ppc-linux 4, x86-freebsd 2) 2;
 define system-offset st-uid (x86-linux 6, ppc-linux 6, x86-freebsd 3) 4;
 define system-offset st-gid (x86-linux 7, ppc-linux 7, x86-freebsd 4) 5;
 define system-offset st-size (alpha-linux 4, x86-linux 11, ppc-linux 11, x86-freebsd 12) 7;
