@@ -45,13 +45,13 @@ define constant $EINVAL  = 22;
 /// From <sys/stat.h> ...
 
 define system-offset stat-size (alpha-linux 10, x86-linux 22, ppc-linux 22, x86-freebsd 96) 18;
-define system-offset st-mode (x86-linux 4, ppc-linux 4, x86-freebsd 8) 2;
-define system-offset st-uid (x86-linux 6, ppc-linux 6, x86-freebsd 12) 4;
-define system-offset st-gid (x86-linux 7, ppc-linux 7, x86-freebsd 16) 5;
-define system-offset st-size (alpha-linux 4, x86-linux 11, ppc-linux 11, x86-freebsd 48) 7;
-define system-offset st-atime (alpha-linux 10, x86-linux 14, ppc-linux 14, x86-freebsd 24) 8;
-define system-offset st-mtime (alpha-linux 12, x86-linux 16, ppc-linux 16, x86-freebsd 32) 10;
-define system-offset st-ctime (alpha-linux 14, x86-linux 18, ppc-linux 18, x86-freebsd 40) 12;
+define system-offset st-mode (x86-linux 4, ppc-linux 4, x86-freebsd 2) 6;
+define system-offset st-uid (x86-linux 6, ppc-linux 6, x86-freebsd 3) 4;
+define system-offset st-gid (x86-linux 7, ppc-linux 7, x86-freebsd 4) 5;
+define system-offset st-size (alpha-linux 4, x86-linux 11, ppc-linux 11, x86-freebsd 12) 7;
+define system-offset st-atime (alpha-linux 10, x86-linux 14, ppc-linux 14, x86-freebsd 6) 8;
+define system-offset st-mtime (alpha-linux 12, x86-linux 16, ppc-linux 16, x86-freebsd 8) 10;
+define system-offset st-ctime (alpha-linux 14, x86-linux 18, ppc-linux 18, x86-freebsd 10) 12;
 
 define constant $STAT_SIZE = 
   $stat-size-offset * raw-as-integer(primitive-word-size());
