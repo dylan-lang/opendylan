@@ -249,11 +249,21 @@ define method accessor-write-from
   let bufv = as(<vector>, buffer);
   // N.B. No checking for sufficient length, e.g.
   // if (offset + count > buffer.size) error "Argh!!" end;
-  let nwritten = unix-write(stream.file-descriptor, bufv, offset, count);
-  if (nwritten < 0)
-    unix-error("write")
-  end if;
-  values(nwritten, buffer)
+  let total-written = 0;
+  local method try-writing ()
+          let nwritten = unix-write(stream.file-descriptor,
+                                    bufv, offset, count);
+          total-written := total-written + nwritten;
+          if (nwritten < 0)
+            unix-error("write")
+          elseif (nwritten < count)
+            count := count - nwritten;
+            offset := offset + nwritten;
+            try-writing();
+          end if;
+        end;
+  try-writing();
+  values(total-written, buffer)
 end method accessor-write-from;
 
 define method accessor-force-output
