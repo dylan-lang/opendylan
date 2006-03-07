@@ -590,7 +590,8 @@ define function %remove-method (g :: <generic-function>, m :: <method>)
 end function;
 
 
-
+// this is the function definition that causes the "live on entry to lambda"
+// serious warning.
 define function %remove-method-from-library (g :: <generic-function>, frob, lib, 
 					     check-sealing?, test :: <function>)
  => (removed? :: false-or(<method>));

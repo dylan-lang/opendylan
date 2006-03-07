@@ -464,6 +464,8 @@ end;
 define method extract-lambda (lambda :: <&lambda>) => ()
   // splice lambda out of the outer lambda
   // must be known to have no free lexical references
+  // XXX: might violation of this precondition lead to the
+  // mysterious "are live on entry to lambda" errors?
   let env = environment(lambda);
   let outer-env = lambda-environment(outer(env));
   let outer-outer-env = outer(outer-env);
