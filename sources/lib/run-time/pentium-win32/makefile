@@ -78,7 +78,9 @@ SYMBOLICPLINTH	 = mpsplan.lib
 PLINTHOBJS       = plinth.obj mpsiowin32.obj
 DYLANPLINTH      = dylan-plinth.lib
 
-VCINSTALLDIR	 = C:\Progra~1\Micros~4
+# VCINSTALLDIR	 = C:\apps\ms\VC98
+# Now we use MSVCDIR instead, which is set through VCVAR32.BAT of VC++ Studio
+
 
 # Install shared runtime sources
 
@@ -95,7 +97,7 @@ $(MINCRT):
 #$(MINCRT): $(MINCRTOBJS)
 #	$(LINKLIB)$(MINCRT) $(MINCRTOBJS)
 $(MINCRT): 
-	copy $(VCINSTALLDIR)\vc98\lib\libcmt.lib $(MINCRT)
+	copy $(MSVCDIR)\lib\libcmt.lib $(MINCRT)
 	lib /remove:build\intel\mt_obj\crt0.obj $(MINCRT)
 	lib /remove:build\intel\mt_obj\wwcrt0.obj $(MINCRT)
 !endif
@@ -181,7 +183,7 @@ install-mincrt: $(MINCRT)
 !endif
 
 
-install-mmdw: $(RELEASEMMDW)
+install-mmdw: 
 	if exist $(MMDWDEST) del /q /f $(MMDWDEST)
 	copy $(RELEASEMMDW) $(MMDWDEST)
 
