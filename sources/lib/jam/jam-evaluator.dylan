@@ -309,6 +309,10 @@ define function jam-expand-arg-colon
           'L' =>
             as-lowercase;
 
+          // Q - Quote argument
+          'Q' =>
+            quote-argument;
+
           otherwise =>
             error("unknown variable modifier '%c' in '%s'",
                   modifier, variable);

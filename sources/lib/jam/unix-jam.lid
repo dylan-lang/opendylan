@@ -9,6 +9,7 @@ Files:        library
 	      jam-header-scan
               jam-ir
               jam-evaluator
+	      jam-quote-unix
               jam-parser
               jam-reader
               jam-regular-expression
