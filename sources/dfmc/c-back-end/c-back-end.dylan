@@ -15,6 +15,8 @@ define class <c-back-end> (<back-end>)
 			  size: $initial-string-stream-contents-size));
 end;
 
+register-back-end(<c-back-end>, #"c", #f, #f);
+
 define method initialize (back-end :: <c-back-end>, #key, #all-keys) => ()
   next-method();
   stream-contents(back-end.lambda-stream, clear-contents?: #t);
@@ -24,10 +26,6 @@ define method back-end-record-repeated-object-sizes?
     (back-end :: <c-back-end>) => (well? :: <boolean>)
   #t
 end method;
-
-define variable *c-back-end* = make (<c-back-end>);
-
-default-back-end() := *c-back-end*; // !@#$ hack
 
 define constant $xep-string             = "xep";
 define constant $rest-xep-string        = "rest_xep";

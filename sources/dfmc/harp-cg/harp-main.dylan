@@ -2513,7 +2513,7 @@ end method;
 
 define sideways method model-object-as-string(object :: <symbol>) => (name :: <string>)
   if (object.model-has-definition?)
-    emit-name(*harp-back-end*, #f, object)
+    emit-name(current-back-end(), #f, object)
   else
     let local-symbol = element(heap-symbols(*current-heap*), object, default: #f);
     local-symbol.cg-symbol-name
@@ -2525,23 +2525,23 @@ define method model-object-as-string(object :: <runtime-object>) => (name :: <st
 end method;
 
 define method model-object-as-string(object :: <c-runtime-object>) => (name :: <string>)
-  c-name(*harp-back-end*, object.runtime-object-name)
+  c-name(current-back-end(), object.runtime-object-name)
 end method;
 
 define sideways method model-object-as-string(object :: <module-binding>) => (name :: <string>)
-  emit-module-name(*harp-back-end*, #f, object)
+  emit-module-name(current-back-end(), #f, object)
 end method;
 
 define sideways method model-object-as-string(object :: <&kernel-ep>) => (name :: <string>)
-  emit-reference(*harp-back-end*, #f, object)
+  emit-reference(current-back-end(), #f, object)
 end method;
 
 define sideways method model-object-as-string(object :: <&mep>) => (name :: <string>)
-  emit-reference(*harp-back-end*, #f, object)
+  emit-reference(current-back-end(), #f, object)
 end method;
 
 define sideways method model-object-as-string(object) => (name :: <string>)
-  emit-name(*harp-back-end*, #f, object);
+  emit-name(current-back-end(), #f, object);
 end method;
 
 define sideways method model-object-as-string(object :: <interactor-binding>) => (name :: <string>)
@@ -3134,9 +3134,9 @@ end method emit-result-assignment;
 define function runtime-reference(object) => (reference)
   select(object by instance?)
     <runtime-object> =>
-      register-extern(*harp-back-end*, object);
+      register-extern(current-back-end(), object);
     <constant-reference> =>
-      register-extern(*harp-back-end*, object);
+      register-extern(current-back-end(), object);
       object;
     otherwise => object;
   end select;

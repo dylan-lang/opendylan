@@ -8,11 +8,11 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define method harp-local-mangle (name)
-  local-mangle(*harp-back-end*, name);
+  local-mangle(current-back-end(), name);
 end method;
 
 define method harp-raw-mangle (name)
-  raw-mangle(*harp-back-end*, name);
+  raw-mangle(current-back-end(), name);
 end method;
 
 /// STRUCT MANGLING

@@ -35,7 +35,4 @@ define module dfmc-native-harp-cg
  use dfmc-harp-cg-linker;
  use native-rtg, import: { output-data, output-glue, output-functions };
 
- export
-    current-native-back-end, current-native-back-end-setter;
-
 end module dfmc-native-harp-cg;

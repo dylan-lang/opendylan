@@ -6,27 +6,6 @@ License:      Functional Objects Library Public License Version 1.0
 Dual-license: GNU Lesser General Public License
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-
-define variable *native-back-end* = #f;
-
-
-define method current-native-back-end()
-  *native-back-end*
-end method;
-
-// Switch a native-back-end dynamically, e.g. from
-// Windows to Linux
-
-define method current-native-back-end-setter
-    (back-end-class :: subclass(<harp-native-back-end>))
-
-  *native-back-end* := make(back-end-class);
-  default-back-end() := *native-back-end*;
-  *harp-back-end* := *native-back-end*;
-
-end method;
-
-
 define sideways method estimate-harp-virtual-registers-size
     (backend :: <harp-native-back-end>, o :: <&iep>) => (size :: <integer>)
   round(1.3 * number-temporaries(o.function));

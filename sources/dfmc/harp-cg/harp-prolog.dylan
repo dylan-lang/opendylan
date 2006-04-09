@@ -231,9 +231,9 @@ end method tail-call-walk;
 
 define method tail-call-walk(c :: <function-call>, last, ct) => (count :: <integer>)
   let ct =
-    if (tail-call?(*harp-back-end*, c))
+    if (tail-call?(current-back-end(), c))
       *tail-calls* := pair(c, *tail-calls*);
-      max(number-of-stack-allocated-slots(*harp-back-end*, c),
+      max(number-of-stack-allocated-slots(current-back-end(), c),
   	  ct);
     else
       ct;

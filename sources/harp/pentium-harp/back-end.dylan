@@ -17,8 +17,12 @@ end;
 define class <pentium-windows-back-end> (<pentium-back-end>)
 end;
 
-define class <pentium-linux-back-end> (<pentium-back-end>, <native-linux-back-end>)
+register-back-end(<pentium-windows-back-end>, #"harp", #"x86", #"win32");
+
+Define class <pentium-linux-back-end> (<pentium-back-end>, <native-linux-back-end>)
 end;
+
+register-back-end(<pentium-linux-back-end>, #"harp", #"x86", #"linux");
 
 
 define method initialize

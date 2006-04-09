@@ -17,8 +17,12 @@ end;
 define class <powerpc-macos-back-end> (<powerpc-back-end>)
 end;
 
+register-back-end(<powerpc-macos-back-end>, #"harp", #"ppc", #"macos");
+
 define class <powerpc-linux-back-end> (<powerpc-back-end>, <native-linux-back-end>)
 end;
+
+register-back-end(<powerpc-linux-back-end>, #"harp", #"ppc", #"linux");
 
 
 define method initialize

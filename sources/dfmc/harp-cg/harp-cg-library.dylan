@@ -226,7 +226,6 @@ define module dfmc-harp-cg
 
     harp-local-mangle, harp-raw-mangle, harp-dylan-mangle,
 
-    *harp-back-end*,
     *harp-outputter*,
     *emitting-data?*,
     *emitting-init-code?*,

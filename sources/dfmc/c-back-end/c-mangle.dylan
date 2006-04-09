@@ -7,15 +7,15 @@ Dual-license: GNU Lesser General Public License
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define method c-global-mangle (name)
-  global-mangle(*c-back-end*, name);
+  global-mangle(current-back-end(), name);
 end method;
 
 define method c-local-mangle (name)
-  local-mangle(*c-back-end*, name);
+  local-mangle(current-back-end(), name);
 end method;
 
 define method c-raw-mangle (name)
-  raw-mangle(*c-back-end*, name);
+  raw-mangle(current-back-end(), name);
 end method;
 
 define method c-type-name (o :: <&class>)

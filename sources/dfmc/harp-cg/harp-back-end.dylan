@@ -24,15 +24,15 @@ define method open-emit-output
   let main-outputter =
     case
       download? =>
-	make-harp-outputter(*harp-back-end*, filename, print-harp?: harp-output?,
+	make-harp-outputter(current-back-end(), filename, print-harp?: harp-output?,
 			    type: #"downloader");
       otherwise =>
 	select (assembler-output?)
 	  #"gnu-outputter", #"linux-outputter" =>
-	    make-harp-outputter(*harp-back-end*, filename, print-harp?: harp-output?,
+	    make-harp-outputter(current-back-end(), filename, print-harp?: harp-output?,
 				type: assembler-output?);
 	  otherwise =>
-	    make-harp-outputter(*harp-back-end*, filename, print-harp?: harp-output?);
+	    make-harp-outputter(current-back-end(), filename, print-harp?: harp-output?);
 	end select
     end case;
   let outputter = 
@@ -42,7 +42,7 @@ define method open-emit-output
 	otherwise =>
 	  multiplex-outputters
 	    (main-outputter,
-	     make-harp-outputter(*harp-back-end*,
+	     make-harp-outputter(current-back-end(),
 				 filename, type: assembler-output?));
       end select;
     else main-outputter;
@@ -111,15 +111,11 @@ end method;
 
 define class <dummy-harp-back-end> (<harp-back-end>) end;
 
-define variable *harp-back-end* = make(<dummy-harp-back-end>);
-
-default-back-end() := *harp-back-end*;
-
 define thread variable *harp-outputter* = #f;
 
 define thread variable *stream-outputters?* = #f;
 
-open-emit-output(*harp-back-end*, #f);
+open-emit-output(current-back-end(), #f);
 
 define thread variable *emitting-data?* = #t;
 
@@ -211,21 +207,21 @@ define constant make-runtime-reference =
   method (reference :: <string>) => (runtime-reference :: <constant-reference>)
     let runtime-object :: <dood-runtime-object> =  make(<dood-runtime-object>, name: reference);
     $runtime-objects[reference] := runtime-object;
-    ins--constant-ref(*harp-back-end*, runtime-object);
+    ins--constant-ref(current-back-end(), runtime-object);
   end method;
 
 define constant make-local-runtime-reference =
   method (reference :: <string>) => (runtime-reference :: <constant-reference>)
     let runtime-object :: <dood-runtime-object> =  make(<local-runtime-object>, name: reference);
     $runtime-objects[reference] := runtime-object;
-    ins--constant-ref(*harp-back-end*, runtime-object);
+    ins--constant-ref(current-back-end(), runtime-object);
   end method;
 
 define constant make-c-runtime-reference =
   method (reference :: <string>) => (runtime-reference :: <constant-reference>)
     let runtime-object :: <dood-runtime-object> =  make(<c-runtime-object>, name: reference);
     $runtime-objects[reference] := runtime-object;
-    ins--constant-ref(*harp-back-end*, runtime-object);
+    ins--constant-ref(current-back-end(), runtime-object);
   end method;
 
 

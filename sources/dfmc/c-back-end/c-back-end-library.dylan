@@ -31,7 +31,6 @@ define module dfmc-c-back-end
   export
     // *** emit-all,
     <c-back-end>,
-    *c-back-end*,
     emit-struct-name,
     emit-struct-definer-name,
     emit-repeated-struct-definer-name,

@@ -7,8 +7,3 @@ Dual-license: GNU Lesser General Public License
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
-current-native-back-end() := select ($os-name)
-			       #"win32"  => <pentium-back-end>;
-			       #"linux"  => <pentium-linux-back-end>;
-			       otherwise => <pentium-back-end>;
-			     end;

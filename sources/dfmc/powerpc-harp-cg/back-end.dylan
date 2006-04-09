@@ -7,8 +7,6 @@ Dual-license: GNU Lesser General Public License
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
-current-native-back-end() := <powerpc-back-end>;
-
 define sideways method op--cleanup-preserve-state-entry
     (back-end :: <powerpc-back-end>) => ()
   ins--save-return-address(back-end, #f)

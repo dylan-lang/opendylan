@@ -346,7 +346,7 @@ end method emit-user-init-code;
 
 define method emit-comment(stream, comment :: <string>, #rest args) => ()
   if (*stream-outputters?*)
-    output-comment(*harp-back-end*,
+    output-comment(current-back-end(),
                    stream,
                    if (args.empty?)
                      comment;
@@ -358,7 +358,7 @@ end method emit-comment;
 
 define method emit-line-comment(stream, comment :: <string>, #rest args) => ()
   if (*stream-outputters?*)
-    output-line-comment(*harp-back-end*,
+    output-line-comment(current-back-end(),
                         stream,
                         if (args.empty?)
                           comment;
@@ -888,7 +888,7 @@ define method apropo-model-object (o :: <&c-function>) => (o);
     error("Harp Code Generator: "
             "Cannot determine appropriate model object for %=", o);
   end if;
-  emit-name(*harp-back-end*, #f, o)
+  emit-name(current-back-end(), #f, o)
 end method;
 
 define method apropo-model-object (o :: <&iep>) => (o);
@@ -898,7 +898,7 @@ define method apropo-model-object (o :: <&iep>) => (o);
       error("Harp Code Generator: "
               "Cannot determine appropriate model object for %=", o);
     end if;
-    emit-name(*harp-back-end*, #f, o)
+    emit-name(current-back-end(), #f, o)
   else
     o
   end if

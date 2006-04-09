@@ -17,3 +17,46 @@ end class;
 
 define abstract open class <local-variable> (<object>) 
 end class;
+
+define constant $back-end-registry = make(<stretchy-vector>);
+
+define class <back-end-registry-entry> (<object>)
+  constant slot back-end-class :: <class>,
+    required-init-keyword: back-end-class:;
+  constant slot back-end-type :: <symbol>,
+    required-init-keyword: back-end-type:;
+  constant slot target-architecture :: false-or(<symbol>),
+    required-init-keyword: target-architecture:;
+  constant slot target-os :: false-or(<symbol>),
+    required-init-keyword: target-os:;
+end;
+
+define function register-back-end (class :: <class>,
+                                   type :: <symbol>,
+                                   architecture :: false-or(<symbol>),
+                                   os :: false-or(<symbol>)) => ();
+  add!($back-end-registry,
+       make(<back-end-registry-entry>,
+            back-end-class: class,
+            back-end-type: type,
+            target-architecture: architecture,
+            target-os: os));
+  if (type = #"harp"
+        & architecture = $machine-name
+        & os = $os-name)
+    default-back-end() := make(class)
+  end;
+end;
+
+define function find-back-end (type :: <symbol>,
+                               architecture :: <symbol>,
+                               os :: <symbol>) => (class :: <class>);
+  choose(method (x)
+           x.back-end-type == type 
+             & x.target-architecture == architecture
+             & x.target-os == os
+         end, $back-end-registry)
+end;
+  
+  
+            

@@ -638,7 +638,7 @@ end function;
 define method stack-allocate-vector-for-tail-call?(c :: <stack-vector>)
 
   any?(method(c :: <computation>)
-         tail-call-optimizable?(*harp-back-end*, c)
+         tail-call-optimizable?(current-back-end(), c)
        end method,
        c.temporary.users);
 

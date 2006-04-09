@@ -8,13 +8,17 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library dfmc-back-end-protocol
   use functional-dylan;
+  use system;
   use dfmc-mangling;
+  use dfmc-common;
   export dfmc-back-end-protocol;
 end library;
 
 define module dfmc-back-end-protocol
   use functional-dylan;
+  use operating-system, import: { $os-name, $machine-name };
   use dfmc-mangling, export: all;
+  use dfmc-common, import: { default-back-end-setter };
 
   export 
     <back-end>,
@@ -23,7 +27,10 @@ define module dfmc-back-end-protocol
     <lambda-compiled-data>,
 
     mangler,
-    raw-mangle
+    raw-mangle,
+
+    register-back-end,
+    find-back-end
 
     ;
 end module;
