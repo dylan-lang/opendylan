@@ -14,6 +14,13 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define class <powerpc-back-end> (<harp-risc-back-end>)
 end;
 
+define method initialize
+   (obj :: <powerpc-back-end>, #key) => (new :: <powerpc-back-end>)
+  next-method();
+  obj.registers := powerpc-registers;
+  obj;
+end;
+
 define class <powerpc-macos-back-end> (<powerpc-back-end>)
 end;
 
@@ -25,9 +32,3 @@ end;
 register-back-end(<powerpc-linux-back-end>, #"harp", #"ppc", #"linux");
 
 
-define method initialize
-   (obj :: <powerpc-back-end>, #key) => (new :: <powerpc-back-end>)
-  next-method();
-  obj.registers := powerpc-registers;
-  obj;
-end;

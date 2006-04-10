@@ -2,8 +2,8 @@ library: pentium-harp
 files:	 library
 	 module
 	 pentium-macros
-	 back-end
 	 registers
+	 back-end
 	 instructions
 	 codefrag
 	 general

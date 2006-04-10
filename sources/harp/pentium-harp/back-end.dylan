@@ -14,6 +14,13 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define class <pentium-back-end> (<harp-cisc-back-end>)
 end;
 
+define method initialize
+   (obj :: <pentium-back-end>, #key) => (new :: <pentium-back-end>)
+  next-method();
+  obj.registers := pentium-registers;
+  obj;
+end;
+
 define class <pentium-windows-back-end> (<pentium-back-end>)
 end;
 
@@ -23,11 +30,3 @@ Define class <pentium-linux-back-end> (<pentium-back-end>, <native-linux-back-en
 end;
 
 register-back-end(<pentium-linux-back-end>, #"harp", #"x86", #"linux");
-
-
-define method initialize
-   (obj :: <pentium-back-end>, #key) => (new :: <pentium-back-end>)
-  next-method();
-  obj.registers := pentium-registers;
-  obj;
-end;

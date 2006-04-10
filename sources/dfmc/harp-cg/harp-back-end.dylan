@@ -115,7 +115,8 @@ define thread variable *harp-outputter* = #f;
 
 define thread variable *stream-outputters?* = #f;
 
-open-emit-output(current-back-end(), #f);
+// XXX I have no idea why this is there
+open-emit-output(make(<dummy-harp-back-end>, #f);
 
 define thread variable *emitting-data?* = #t;
 

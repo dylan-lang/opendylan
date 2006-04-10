@@ -2,8 +2,8 @@ library: powerpc-harp
 files:	 library
 	 module
 	 macros
-	 back-end
 	 register-model
+	 back-end
 	 instructions
 	 opcodes
 	 general
