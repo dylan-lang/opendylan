@@ -109,14 +109,9 @@ define method make-imported-constant-reference
 end method;
 
 
-define class <dummy-harp-back-end> (<harp-back-end>) end;
-
 define thread variable *harp-outputter* = #f;
 
 define thread variable *stream-outputters?* = #f;
-
-// XXX I have no idea why this is there
-open-emit-output(make(<dummy-harp-back-end>, #f);
 
 define thread variable *emitting-data?* = #t;
 
