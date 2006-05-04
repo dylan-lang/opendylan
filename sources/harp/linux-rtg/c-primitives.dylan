@@ -8,13 +8,13 @@ Dual-license: GNU Lesser General Public License
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
-define linux-runtime-primitive spy-exit-application
+define unix-runtime-primitive spy-exit-application
   // On exit: entire process is terminated
   op--call-c(be, ExitProcess-ref, 0);
   ins--rts(be);
-end linux-runtime-primitive;
+end unix-runtime-primitive;
 
-define linux-runtime-primitive spy-fixup-imported-dylan-data
+define unix-runtime-primitive spy-fixup-imported-dylan-data
   // On entry:
   //   fixup-start, fixup-end
   // On exit:
@@ -22,9 +22,9 @@ define linux-runtime-primitive spy-fixup-imported-dylan-data
 
   ins--rts(be);
 
-end linux-runtime-primitive;
+end unix-runtime-primitive;
 
-define linux-runtime-primitive spy-fixup-unimported-dylan-data
+define unix-runtime-primitive spy-fixup-unimported-dylan-data
   // On entry:
   //   fixup-start, fixup-end
   // On exit:
@@ -32,4 +32,4 @@ define linux-runtime-primitive spy-fixup-unimported-dylan-data
 
   ins--rts(be);
 
-end linux-runtime-primitive;
+end unix-runtime-primitive;

@@ -7,7 +7,7 @@ module: unix-sockets
 
 define inline-only C-function errno-location
   result val :: <C-int*>;
-  c-name: "__errno_location";
+  c-name: $errno-location;
 end C-function;
 
 define function errno() => (error-number :: <integer>)

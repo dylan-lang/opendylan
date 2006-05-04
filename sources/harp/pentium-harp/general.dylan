@@ -423,7 +423,7 @@ end method;
     
 
 define method output-implicit-externals
-    (backend :: <pentium-linux-back-end>, outputter :: <harp-outputter>)
+    (backend :: <pentium-unix-back-end>, outputter :: <harp-outputter>)
   output-external(backend, outputter, remove-optionals-runtime);
   output-external(backend, outputter, dylan-integer-overflow-handler);
 end method;

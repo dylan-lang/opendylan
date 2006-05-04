@@ -9,6 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library io
   use functional-dylan;
+  use unix-portability;
   export
     streams,
     streams-internals,
@@ -295,6 +296,7 @@ end module format-out;
 define module io-internals
   use functional-dylan,
     exclude: { format-to-string };
+  use unix-portability;
   use dylan-direct-c-ffi;
   use streams-internals;
   use format-internals;

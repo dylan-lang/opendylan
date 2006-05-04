@@ -108,7 +108,7 @@ define inline-only function ensure-application-name-filename-and-arguments () =>
     end;
     //
     let exe-path
-      = concatenate("/proc/", integer-to-string(pid), "/exe");
+      = concatenate("/proc/", integer-to-string(pid), "/", $proc-path);
     let buffer = make(<byte-string>, size: 8192, fill: '\0');
     let count
       = raw-as-integer(%call-c-function ("readlink")

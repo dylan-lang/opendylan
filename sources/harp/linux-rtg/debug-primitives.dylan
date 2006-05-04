@@ -9,5 +9,5 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define sideways method op--output-debug-string
-    (be :: <native-linux-back-end>, string :: <register>) => ()
+    (be :: <native-unix-back-end>, string :: <register>) => ()
 end method;

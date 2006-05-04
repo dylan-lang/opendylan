@@ -19,7 +19,7 @@ define c-fun runtime-external check-runtime-expiration
 
 
 define sideways method op--create-TEB-tlv-index 
-    (be :: <native-linux-back-end>) => ()
+    (be :: <native-unix-back-end>) => ()
   with-harp (be)
     tag done;
     c-result c-result;
@@ -29,7 +29,7 @@ define sideways method op--create-TEB-tlv-index
 end method;
 
 define sideways method op--get-teb-tlv
-    (be :: <native-linux-back-end>, dest :: <register>) => ()
+    (be :: <native-unix-back-end>, dest :: <register>) => ()
   with-harp (be)
     c-result c-result;
     op--call-c(be, tlv-get-value, TEB-tlv-index);
@@ -38,34 +38,34 @@ define sideways method op--get-teb-tlv
 end method;
 
 define sideways method op--set-teb-tlv
-    (be :: <native-linux-back-end>, val) => ()
+    (be :: <native-unix-back-end>, val) => ()
   with-harp (be)
     op--call-c(be, tlv-set-value, TEB-tlv-index, val);
   end with-harp;
 end method;
 
 define sideways method op--free-teb-tlv
-    (be :: <native-linux-back-end>) => ()
+    (be :: <native-unix-back-end>) => ()
   with-harp (be)
     op--call-c(be, tlv-destroy-key, TEB-tlv-index);
   end with-harp;
 end method;
 
 
-define sideways method op--get-module-handle(be :: <native-linux-back-end>) => ()
+define sideways method op--get-module-handle(be :: <native-unix-back-end>) => ()
 end method;
 
 
 
-define no-export linux-API-runtime-primitive dylan-thread-trampoline
+define no-export unix-API-runtime-primitive dylan-thread-trampoline
   ("dylan_thread_trampoline")
   op--dylan-thread-trampoline(be, #f);
-end linux-API-runtime-primitive;
+end unix-API-runtime-primitive;
 
 
 
 
-define shared init no-public linux-API-runtime-primitive dylan-shared-object-entry
+define shared init no-public unix-API-runtime-primitive dylan-shared-object-entry
   ("DylanSOEntry")
   c-result c-result;
   
@@ -94,14 +94,14 @@ define shared init no-public linux-API-runtime-primitive dylan-shared-object-ent
   ins--move(be, c-result, 0);
   ins--rts-and-drop(be, 0);
 
-end linux-API-runtime-primitive;
+end unix-API-runtime-primitive;
 
-define open generic op--initialize-thread-instructions (be :: <native-linux-back-end>) => ();
+define open generic op--initialize-thread-instructions (be :: <native-unix-back-end>) => ();
 
-define sideways method op--initialize-thread-instructions (be :: <native-linux-back-end>) => ()
+define sideways method op--initialize-thread-instructions (be :: <native-unix-back-end>) => ()
 end method;
 
-define shared init no-public linux-API-runtime-primitive dylan-shared-object-exit
+define shared init no-public unix-API-runtime-primitive dylan-shared-object-exit
   ("DylanSOExit")
   c-result c-result;
   
@@ -117,10 +117,10 @@ define shared init no-public linux-API-runtime-primitive dylan-shared-object-exi
   ins--move(be, c-result, 0);
   ins--rts-and-drop(be, 0);
 
-end linux-API-runtime-primitive;
+end unix-API-runtime-primitive;
 
 
-define sideways method op--init-dylan-data (be :: <native-linux-back-end>) => ()
+define sideways method op--init-dylan-data (be :: <native-unix-back-end>) => ()
   with-harp (be)
     let data-start  = ins--constant-ref(be, $data-start-symbol);
     let data-end    = ins--constant-ref(be, $data-end-symbol);

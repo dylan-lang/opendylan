@@ -233,21 +233,21 @@ end method trap-always;
 
 // Linux doesn't use INT 4, but instead directly branches to the
 // overflow handler
-define method trap-if-not-equal (be :: <pentium-linux-back-end>) => ()
+define method trap-if-not-equal (be :: <pentium-unix-back-end>) => ()
 // jump over the trap instruction if there's no overflow
   emit(be, beq-x);  // branch if no overflow
   emit(be, 5); // 5 byte instruction
   trap-always(be);
 end method;
 
-define method trap-on-overflow (be :: <pentium-linux-back-end>) => ()
+define method trap-on-overflow (be :: <pentium-unix-back-end>) => ()
 // jump over the trap instruction if there's no overflow
   emit(be, bno-x);  // branch if no overflow
   emit(be, 5); // 5 byte instruction
   trap-always(be);
 end method;
 
-define method trap-always (be :: <pentium-linux-back-end>) => ()
+define method trap-always (be :: <pentium-unix-back-end>) => ()
   emit(be, call); // CALL
   emit-constant-ref-relative
     (be, dylan-integer-overflow-handler);

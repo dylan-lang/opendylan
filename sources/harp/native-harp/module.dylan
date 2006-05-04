@@ -24,7 +24,9 @@ define module native-back-end
     <harp-native-back-end>,
     <harp-risc-back-end>,
     <harp-cisc-back-end>,
-    <native-linux-back-end>;
+    <native-unix-back-end>,
+    <native-linux-back-end>,
+    <native-freebsd-back-end>;
 end module;
 
 

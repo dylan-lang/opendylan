@@ -11,7 +11,9 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module pentium-linux-rtg
   use functional-dylan;
-  use pentium-harp, export: { <pentium-linux-back-end> };
+  use pentium-harp, export: { <pentium-unix-back-end>,
+                              <pentium-linux-back-end>,
+                              <pentium-freebsd-back-end> };
   use native-rtg, export: { create-dylan-runtime };
   use linux-rtg;
   use pentium-rtg;

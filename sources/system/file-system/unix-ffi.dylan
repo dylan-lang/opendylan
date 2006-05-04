@@ -186,17 +186,11 @@ end function dirent-name;
 /// Error handling
 
 define function unix-last-error () => (errno :: <integer>)
-  raw-as-integer
-    (primitive-c-signed-int-at
-      (%call-c-function ("__errno_location") () => (errnop :: <raw-pointer>) () end,
-       integer-as-raw(0), integer-as-raw(0)))
+  raw-as-integer(unix-errno())
 end function unix-last-error;
 
 define function unix-last-error-setter (errno :: <integer>) => (errno :: <integer>)
-  primitive-c-signed-int-at
-    (%call-c-function ("__errno_location") () => (errnop :: <raw-pointer>) () end,
-     integer-as-raw(0), integer-as-raw(0))
-    := integer-as-raw(errno);
+  unix-errno() := integer-as-raw(errno);
   errno
 end function unix-last-error-setter;
 

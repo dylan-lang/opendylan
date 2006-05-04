@@ -17,7 +17,7 @@ define method emit-jumps-symbolically?(be :: <pentium-back-end>) => (b :: <boole
   #t;
 end;
 
-define method emit-jumps-symbolically?(be :: <pentium-linux-back-end>) => (b :: <boolean>)
+define method emit-jumps-symbolically?(be :: <pentium-unix-back-end>) => (b :: <boolean>)
   #f;
 end;
 

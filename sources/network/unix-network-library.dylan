@@ -10,6 +10,7 @@ define library network
   use functional-dylan;
   use C-FFI;
   use IO;
+  use unix-portability;
   export unix-sockets,
          sockets;
 end;
@@ -19,6 +20,7 @@ define module unix-sockets
   use functional-dylan,
     exclude: { close };
   use C-FFI;
+  use unix-portability;
 
   // Misc
   export

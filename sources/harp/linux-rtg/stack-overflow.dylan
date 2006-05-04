@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 
-define linux-runtime-primitive dylan-stack-overflow-handler
+define unix-runtime-primitive dylan-stack-overflow-handler
   // On entry:
   //   base-address  - the address of the page to re-protect for guarding
   //   page-size     - size of page to re-protect
@@ -37,7 +37,7 @@ define linux-runtime-primitive dylan-stack-overflow-handler
   op--unwind-protect(be, protected-op, cleanup-op);
   // Control should never get here - but code the tail anyway
   ins--rts(be);
-end linux-runtime-primitive;
+end unix-runtime-primitive;
 
 
 

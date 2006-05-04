@@ -264,32 +264,32 @@ define c-runtime-reference primitive-wait-for-recursive-lock-timed;
 define c-runtime-reference primitive-release-recursive-lock;
 
 
-define sideways method op--wait-for-simple-lock(back-end :: <native-linux-back-end>, result, lock, #key zmilsecs) => ()
+define sideways method op--wait-for-simple-lock(back-end :: <native-unix-back-end>, result, lock, #key zmilsecs) => ()
   call-c-primitive(back-end, result, $primitive-wait-for-simple-lock, lock);
 end method op--wait-for-simple-lock;
 
 
-define sideways method op--wait-for-simple-lock-timed(back-end :: <native-linux-back-end>, result, lock, zmilsecs) => ()
+define sideways method op--wait-for-simple-lock-timed(back-end :: <native-unix-back-end>, result, lock, zmilsecs) => ()
   call-c-primitive(back-end, result, $primitive-wait-for-simple-lock-timed, lock, zmilsecs);
 end method op--wait-for-simple-lock-timed;
 
 
-define sideways method op--release-simple-lock(back-end :: <native-linux-back-end>, result, lock) => ()
+define sideways method op--release-simple-lock(back-end :: <native-unix-back-end>, result, lock) => ()
   call-c-primitive(back-end, result, $primitive-release-simple-lock, lock);
 end method op--release-simple-lock;
 
 
-define sideways method op--wait-for-recursive-lock(back-end :: <native-linux-back-end>, result, lock, #key zmilsecs) => ()
+define sideways method op--wait-for-recursive-lock(back-end :: <native-unix-back-end>, result, lock, #key zmilsecs) => ()
   call-c-primitive(back-end, result, $primitive-wait-for-recursive-lock, lock);
 end method op--wait-for-recursive-lock;
 
 
-define sideways method op--wait-for-recursive-lock-timed(back-end :: <native-linux-back-end>, result, lock, zmilsecs) => ()
+define sideways method op--wait-for-recursive-lock-timed(back-end :: <native-unix-back-end>, result, lock, zmilsecs) => ()
   call-c-primitive(back-end, result, $primitive-wait-for-recursive-lock-timed, lock, zmilsecs);
 end method op--wait-for-recursive-lock-timed;
 
 
-define sideways method op--release-recursive-lock(back-end :: <native-linux-back-end>, result, lock) => ()
+define sideways method op--release-recursive-lock(back-end :: <native-unix-back-end>, result, lock) => ()
   call-c-primitive(back-end, result, $primitive-release-recursive-lock, lock);
 end method op--release-recursive-lock;
 

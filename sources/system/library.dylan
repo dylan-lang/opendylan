@@ -10,6 +10,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define library system
   use functional-dylan;
   use io;
+  use unix-portability;
   export
     operating-system,
     date,
@@ -350,6 +351,7 @@ define module system-internals
   use threads;
   use simple-format;
   use streams-internals;
+  use unix-portability;
   use operating-system, export: all;
   use date, export: all;
   use locators-internals, export: all;

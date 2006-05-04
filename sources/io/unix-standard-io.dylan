@@ -75,10 +75,7 @@ define function get-unix-error (errno :: <integer>) => (message :: <string>)
 end function get-unix-error;
 
 define function unix-errno-value () => (errno :: <integer>)
-  raw-as-integer
-    (primitive-c-signed-int-at
-      (%call-c-function ("__errno_location") () => (errnop :: <raw-pointer>) () end,
-       integer-as-raw(0), integer-as-raw(0)))
+  unix-errno()
 end function unix-errno-value;
 
 define function unix-error (syscall :: <string>, #key errno = #f) => ()

@@ -31,7 +31,9 @@ define module dfmc-pentium-harp-cg
 
  use pentium-harp,
     export: { <pentium-back-end>,
-	      <pentium-linux-back-end> };
+              <pentium-unix-back-end>,
+	      <pentium-linux-back-end>,
+              <pentium-freebsd-back-end> };
  use dfmc-harp-cg, export: {*trace-harp?*};
  use dfmc-native-harp-cg,
     export: { current-native-back-end, current-native-back-end-setter };

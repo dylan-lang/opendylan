@@ -1,0 +1,22 @@
+module: unix-portability
+author: Hannes Mehnert <hannes@mehnert.org>
+
+define function unix-lseek (fd :: <integer>, position :: <integer>, mode :: <integer>) => (position :: <integer>)
+raw-as-integer(
+  %call-c-function ("lseek")
+    (fd :: <raw-c-unsigned-int>, position :: <raw-c-unsigned-long>, 
+     mode :: <raw-c-unsigned-int>) 
+   => (result :: <raw-c-signed-int>)
+    (integer-as-raw(fd), integer-as-raw(position), integer-as-raw(mode))
+  end)
+end;
+
+define function unix-errno () => (res :: <raw-c-signed-int>)
+ primitive-c-signed-int-at(
+  %call-c-function ("__errno_location") () => (errnop :: <raw-pointer>) () end,
+   integer-as-raw(0), integer-as-raw(0))
+end;
+
+define constant $proc-path = "exe";
+
+define constant $errno-location = "__errno_location";

@@ -18,6 +18,7 @@ define method open-emit-output
     assembler-output? := select ($os-name)
 			   #"win32"  => #f;
 			   #"linux" => #"linux-outputter";
+			   #"freebsd" => #"linux-outputter";
 			   otherwise => #f;
 			 end;
   end;

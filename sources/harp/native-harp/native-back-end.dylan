@@ -38,7 +38,13 @@ define sideways method big-endian?
   #t
 end;
 
+define abstract open class <native-unix-back-end> (<harp-native-back-end>)
+end;
+
 // All Linux back-ends should multiply inherit this class.
 
-define abstract open class <native-linux-back-end> (<harp-native-back-end>)
+define abstract open class <native-linux-back-end> (<native-unix-back-end>)
+end;
+
+define abstract open class <native-freebsd-back-end> (<native-unix-back-end>)
 end;

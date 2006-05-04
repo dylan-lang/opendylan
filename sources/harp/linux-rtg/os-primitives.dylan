@@ -13,14 +13,14 @@ define c-fun runtime-external c-primitive-start-timer-ref = "c_primitive_start_t
 define c-fun runtime-external c-primitive-stop-timer-ref = "c_primitive_stop_timer";
 
 
-define linux-runtime-primitive start-timer
+define unix-runtime-primitive start-timer
 
   op--call-c(be, c-primitive-start-timer-ref);
   ins--rts-and-drop(be, 0);
 
-end linux-runtime-primitive;
+end unix-runtime-primitive;
 
-define linux-runtime-primitive stop-timer
+define unix-runtime-primitive stop-timer
   // On entry:
   //    
   // On exit:
@@ -29,12 +29,12 @@ define linux-runtime-primitive stop-timer
   op--call-c(be, c-primitive-stop-timer-ref);
   ins--rts-and-drop(be, 0);
 
-end linux-runtime-primitive;
+end unix-runtime-primitive;
 
 
 define c-fun runtime-external ExitProcess-ref    = "exit";
 
-define used-by-client linux-runtime-primitive exit-application
+define used-by-client unix-runtime-primitive exit-application
   // On entry: raw-int-status
   //    
   // On exit: entire process is terminated
@@ -42,12 +42,12 @@ define used-by-client linux-runtime-primitive exit-application
 
   op--call-c(be, ExitProcess-ref, status);
   ins--rts-and-drop(be, 0);
-end linux-runtime-primitive;
+end unix-runtime-primitive;
 
 
 define c-fun runtime-external system-ref   = "system";
 
-define linux-runtime-primitive run-application
+define unix-runtime-primitive run-application
   // On entry: c-string-command-line
   //    
   // On exit: raw-integer-status
@@ -55,5 +55,5 @@ define linux-runtime-primitive run-application
 
   op--call-c(be, system-ref, command);
   ins--rts-and-drop(be, 0);
-end linux-runtime-primitive;
+end unix-runtime-primitive;
 

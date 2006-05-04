@@ -88,14 +88,7 @@ end function unix-write;
 define function unix-lseek
     (fd :: <integer>, position :: <integer>, mode :: <integer>) => (position :: <integer>)
   with-interrupt-repeat
-    raw-as-integer
-      (%call-c-function ("lseek")
-           (fd :: <raw-c-unsigned-int>, position :: <raw-c-unsigned-long>, 
-            mode :: <raw-c-unsigned-int>) 
-        => (result :: <raw-c-signed-int>)
-         (integer-as-raw(fd), 
-	  integer-as-raw(position), integer-as-raw(mode))
-       end)
+    unix-lseek(fd, posittion, mode)
   end
 end function unix-lseek;
 
@@ -111,10 +104,7 @@ define function get-unix-error (errno :: <integer>) => (message :: <string>)
 end function get-unix-error;
 
 define function unix-errno-value () => (errno :: <integer>)
-  raw-as-integer
-    (primitive-c-signed-int-at
-      (%call-c-function ("__errno_location") () => (errnop :: <raw-pointer>) () end,
-       integer-as-raw(0), integer-as-raw(0)))
+  raw-as-integer(errno())
 end function unix-errno-value;
 
 

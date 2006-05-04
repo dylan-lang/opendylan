@@ -33,7 +33,9 @@ define module pentium-harp
 
     <pentium-back-end>,
     <pentium-windows-back-end>,
+    <pentium-unix-back-end>,
     <pentium-linux-back-end>,
+    <pentium-freebsd-back-end>,
     ins--st-index, ins--stb-index, ins--sth-index,
     ins--st-index-scaled, ins--sth-index-scaled, 
     ins--fst-index, ins--dst-index,

@@ -26,7 +26,17 @@ end;
 
 register-back-end(<pentium-windows-back-end>, #"harp", #"x86", #"win32");
 
-Define class <pentium-linux-back-end> (<pentium-back-end>, <native-linux-back-end>)
+define class <pentium-unix-back-end> (<pentium-back-end>)
+end;
+
+define class <pentium-linux-back-end>
+ (<pentium-unix-back-end>, <native-linux-back-end>)
 end;
 
 register-back-end(<pentium-linux-back-end>, #"harp", #"x86", #"linux");
+
+define class <pentium-freebsd-back-end>
+ (<pentium-unix-back-end>, <native-freebsd-back-end>)
+end;
+
+register-back-end(<pentium-freebsd-back-end>, #"harp", #"x86", #"freebsd");

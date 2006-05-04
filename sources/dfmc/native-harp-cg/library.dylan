@@ -30,7 +30,9 @@ define module dfmc-native-harp-cg
 
  use native-harp,
     export: { <harp-native-back-end>,
-	      <native-linux-back-end> };
+              <native-unix-back-end>,
+	      <native-linux-back-end>,
+              <native-freebsd-back-end> };
  use dfmc-harp-cg, export: {*trace-harp?*};
  use dfmc-harp-cg-linker;
  use native-rtg, import: { output-data, output-glue, output-functions };

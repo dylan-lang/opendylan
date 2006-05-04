@@ -437,12 +437,10 @@ end method;
 
 
 /// Linux TEB support:
-///  Some versions of LinuxThreads store the pthread descriptor in the gs segment register.
-///  Use an unused fixed offset in pthread descriptor to store the TEB
-///  while running Dylan code.
+/// We use Linux' TLV support here.
 
 define method op--tlb-base-register 
-    (be :: <pentium-linux-back-end>, dest :: <real-register>) => ()
+    (be :: <pentium-unix-back-end>, dest :: <real-register>) => ()
   op--load-thread-local(be, dest, /* dummy */ 0);
 end method;
 
@@ -464,6 +462,29 @@ define method op--load-thread-local
     ld(be, dest, $teb, 0 /*ignore offset for Linux */);
   end harp-out;
 end method;
+
+define method op--store-thread-local
+    (be :: <pentium-freebsd-back-end>, data, offset :: <integer>) => ()
+  harp-out(be)
+    push(be, reg--tmp2);
+  end harp-out;
+  emit(be, gs.segment-prefix);
+  harp-out(be)
+    ld(be, reg--tmp2, 0, 0);
+    st(be, data, $teb, reg--tmp2);
+    pop(be, reg--tmp2);
+  end harp-out;
+end method;
+
+define method op--load-thread-local
+    (be :: <pentium-freebsd-back-end>, dest :: <real-register>, offset :: <integer>) => ()
+  emit(be, gs.segment-prefix);
+  harp-out(be)
+    ld(be, dest, 0, 0);
+    ld(be, dest, $teb, dest);
+  end harp-out;
+end method;
+
 
 /// Now the templates
 

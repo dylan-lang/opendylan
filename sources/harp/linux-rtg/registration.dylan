@@ -8,13 +8,13 @@ Dual-license: GNU Lesser General Public License
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
-define macro linux-runtime-primitive-definer
-  { define ?adjectives:* linux-runtime-primitive ?:name 
+define macro unix-runtime-primitive-definer
+  { define ?adjectives:* unix-runtime-primitive ?:name 
       ?body:*
     end }
     => {
          define sideways method "genop--" ## ?name
-           (?=be :: <native-linux-back-end>) => ()
+           (?=be :: <native-unix-back-end>) => ()
            with-harp (?=be)
              ?body
            end with-harp;
@@ -23,8 +23,8 @@ define macro linux-runtime-primitive-definer
 end macro;
 
 
-define macro linux-API-runtime-primitive-definer
-  { define ?adjectives:* linux-API-runtime-primitive ?:name 
+define macro unix-API-runtime-primitive-definer
+  { define ?adjectives:* unix-API-runtime-primitive ?:name 
         (?linux-name:expression)
       ?body:*
     end }
