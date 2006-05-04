@@ -203,21 +203,21 @@ define constant make-runtime-reference =
   method (reference :: <string>) => (runtime-reference :: <constant-reference>)
     let runtime-object :: <dood-runtime-object> =  make(<dood-runtime-object>, name: reference);
     $runtime-objects[reference] := runtime-object;
-    ins--constant-ref(current-back-end(), runtime-object);
+    ins--constant-ref(current-back-end() | $dummy-harp-back-end, runtime-object);
   end method;
 
 define constant make-local-runtime-reference =
   method (reference :: <string>) => (runtime-reference :: <constant-reference>)
     let runtime-object :: <dood-runtime-object> =  make(<local-runtime-object>, name: reference);
     $runtime-objects[reference] := runtime-object;
-    ins--constant-ref(current-back-end(), runtime-object);
+    ins--constant-ref(current-back-end() | $dummy-harp-back-end, runtime-object);
   end method;
 
 define constant make-c-runtime-reference =
   method (reference :: <string>) => (runtime-reference :: <constant-reference>)
     let runtime-object :: <dood-runtime-object> =  make(<c-runtime-object>, name: reference);
     $runtime-objects[reference] := runtime-object;
-    ins--constant-ref(current-back-end(), runtime-object);
+    ins--constant-ref(current-back-end() | $dummy-harp-back-end, runtime-object);
   end method;
 
 

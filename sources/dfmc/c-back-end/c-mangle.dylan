@@ -6,16 +6,18 @@ License:      Functional Objects Library Public License Version 1.0
 Dual-license: GNU Lesser General Public License
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
+define constant $dummy-c-back-end = make(<c-back-end>);
+
 define method c-global-mangle (name)
-  global-mangle(current-back-end(), name);
+  global-mangle(current-back-end() | $dummy-c-back-end, name);
 end method;
 
 define method c-local-mangle (name)
-  local-mangle(current-back-end(), name);
+  local-mangle(current-back-end() | $dummy-c-back-end, name);
 end method;
 
 define method c-raw-mangle (name)
-  raw-mangle(current-back-end(), name);
+  raw-mangle(current-back-end() | $dummy-c-back-end, name);
 end method;
 
 define method c-type-name (o :: <&class>)

@@ -1,7 +1,7 @@
 library: dfmc-harp-cg
 files:   harp-cg-library
-         harp-macros
          harp-mangle
+         harp-macros
          harp-back-end
          harp-emit
          harp-main

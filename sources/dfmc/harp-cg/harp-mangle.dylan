@@ -6,13 +6,17 @@ License:      Functional Objects Library Public License Version 1.0
 Dual-license: GNU Lesser General Public License
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
+define class <dummy-harp-back-end> (<harp-back-end>)
+end;
+
+define constant $dummy-harp-back-end = make(<dummy-harp-back-end>);
 
 define method harp-local-mangle (name)
-  local-mangle(current-back-end(), name);
+  local-mangle(current-back-end() | $dummy-harp-back-end, name);
 end method;
 
 define method harp-raw-mangle (name)
-  raw-mangle(current-back-end(), name);
+  raw-mangle(current-back-end() | $dummy-harp-back-end, name);
 end method;
 
 /// STRUCT MANGLING
