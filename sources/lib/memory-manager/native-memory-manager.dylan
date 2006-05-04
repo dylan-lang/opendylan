@@ -6,7 +6,12 @@ Dual-license: GNU Lesser General Public License
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define method room () 
-  values(raw-as-integer(primitive-mps-committed()), 0)
+  block()
+    values(raw-as-integer(primitive-mps-committed()), 0)
+  exception (e :: <arithmetic-error>)
+    // yes, it's an ugly workaround, and I demand real integers in Dylan
+    values($maximum-integer, 0)
+  end
 end method;
 
 define method collect-garbage (#key print-stats?)
