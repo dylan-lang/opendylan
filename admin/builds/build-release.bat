@@ -60,7 +60,7 @@ echo -   - You must have the Hacker Edition installed.
 echo -   - You should remove <hacker-edition>\bin\projects.txt
 echo -   - If you didn't install the Hacker Edition in the standard location
 echo -     you should use the /dylan argument to specify its location.
-echo -   - It's a good idea to also set FUNCTIONAL_DEVELOPER_DEFAULT_ROOT to
+echo -   - It's a good idea to also set OPEN_DYLAN_DEFAULT_ROOT to
 echo -     the same value passed as the /dylan argument.
 echo -   - You must set the CVSROOT environment variable appropriately.
 echo -   - Some options cause perl scripts to be invoked.  Have perl on your PATH.
@@ -103,10 +103,10 @@ if "%1"=="?" GOTO PRINT_USAGE
 if "%1"=="/?" GOTO PRINT_USAGE
 
 set ERROR_MESSAGE=
-if "%FUNCTIONAL_DEVELOPER_DEFAULT_ROOT%"=="" set FUNCTIONAL_DEVELOPER_DEFAULT_ROOT=C:\Program Files\Functional Objects\Functional Developer
-set OLD_RELEASE_ROOT=%FUNCTIONAL_DEVELOPER_DEFAULT_ROOT%
-set FUNCTIONAL_DEVELOPER_USER_SOURCES=
-set SAVED_FUNCTIONAL_DEVELOPER_LIBRARY_PACKS=%FUNCTIONAL_DEVELOPER_LIBRARY_PACKS%
+if "%OPEN_DYLAN_DEFAULT_ROOT%"=="" set OPEN_DYLAN_DEFAULT_ROOT=C:\Program Files\Functional Objects\Functional Developer
+set OLD_RELEASE_ROOT=%OPEN_DYLAN_DEFAULT_ROOT%
+set OPEN_DYLAN_USER_SOURCES=
+set SAVED_OPEN_DYLAN_LIBRARY_PACKS=%OPEN_DYLAN_LIBRARY_PACKS%
 set GENERATIONS=3
 set CVS_BRANCH=trunk
 set BOOTSTRAP_TARGET=
@@ -135,7 +135,7 @@ set USE_FULL_C_RUNTIME=no
 set RUNTIME_EXPIRATION=none
 set VERBOSE=no
 
-set FUNCTIONAL_DEVELOPER_USER_SOURCES=
+set OPEN_DYLAN_USER_SOURCES=
 
 REM //
 REM // The first argument is the release directory
@@ -258,7 +258,7 @@ goto PARAM_LOOP
 
 :SET_SOURCES
 if "%2"=="" GOTO NO_ARG
-set FUNCTIONAL_DEVELOPER_USER_SOURCES=%2
+set OPEN_DYLAN_USER_SOURCES=%2
 shift
 shift
 goto PARAM_LOOP
@@ -395,8 +395,8 @@ REM //
 
 :PARAM_DONE
 call :fixup_PATHS "%OLD_RELEASE_ROOT%"
-if "%FUNCTIONAL_DEVELOPER_USER_SOURCES%"=="" set FUNCTIONAL_DEVELOPER_USER_SOURCES=%NEW_RELEASE_ROOT%\Sources
-set FUNCTIONAL_DEVELOPER_USER_REGISTRIES=%FUNCTIONAL_DEVELOPER_USER_SOURCES%\registry
+if "%OPEN_DYLAN_USER_SOURCES%"=="" set OPEN_DYLAN_USER_SOURCES=%NEW_RELEASE_ROOT%\Sources
+set OPEN_DYLAN_USER_REGISTRIES=%OPEN_DYLAN_USER_SOURCES%\registry
 if "%USE_ENVIRONMENT%"=="no" goto setup_dw_default_build_options
 goto setup_environment_default_build_options
 
@@ -428,9 +428,9 @@ REM //
 :SETUP_DEFAULT_RELEASE_OPTIONS
 if "%VERBOSE%"=="yes" set MAKE=nmake /d /nologo
 if "%VERBOSE%"=="no"  set MAKE=nmake /s /nologo
-set FUNCTIONAL_DEVELOPER_RELEASE_SOURCES=%OLD_RELEASE_ROOT%\Sources
-set FUNCTIONAL_DEVELOPER_RELEASE_REGISTRIES=%FUNCTIONAL_DEVELOPER_RELEASE_SOURCES%\registry
-set FUNCTIONAL_DEVELOPER_PLATFORM_NAME=x86-win32
+set OPEN_DYLAN_RELEASE_SOURCES=%OLD_RELEASE_ROOT%\Sources
+set OPEN_DYLAN_RELEASE_REGISTRIES=%OPEN_DYLAN_RELEASE_SOURCES%\registry
+set OPEN_DYLAN_PLATFORM_NAME=x86-win32
 
 REM // Pentium runtime build options
 set PENTIUM_RUNTIME_OPTIONS=
@@ -470,7 +470,7 @@ set QUOTED_OPTIONS=OPTIONS="%OPTIONS%"
 :SKIP_SHOW_FAILURE_LOG_OPTION
 set COMMON_BUILD_OPTIONS= -branch %CVS_BRANCH% -nopath
 set BUILD_OPTIONS=-p %NEW_RELEASE_ROOT% -s %OLD_RELEASE_ROOT% %COMMON_BUILD_OPTIONS%
-if not "%FUNCTIONAL_DEVELOPER_USER_SOURCES%"=="" set BUILD_OPTIONS=%BUILD_OPTIONS% -sources %FUNCTIONAL_DEVELOPER_USER_SOURCES%
+if not "%OPEN_DYLAN_USER_SOURCES%"=="" set BUILD_OPTIONS=%BUILD_OPTIONS% -sources %OPEN_DYLAN_USER_SOURCES%
 if "%USE_ENVIRONMENT%"=="yes" set BUILD_OPTIONS=%BUILD_OPTIONS% -environment
 
 REM // Source sanitizing options
@@ -498,124 +498,124 @@ REM //
 if "%GENERATIONS%"=="1" goto build_release
 
 :MAYBE_CREATE_BOOTSTRAP_REGISTRY
-set USER_REGISTRY=%FUNCTIONAL_DEVELOPER_USER_SOURCES%\registry
-set FUNCTIONAL_DEVELOPER_USER_REGISTRIES=%FUNCTIONAL_DEVELOPER_USER_SOURCES%\bootstrap1-registry
-if exist "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%" goto build_bootstrap
+set USER_REGISTRY=%OPEN_DYLAN_USER_SOURCES%\registry
+set OPEN_DYLAN_USER_REGISTRIES=%OPEN_DYLAN_USER_SOURCES%\bootstrap1-registry
+if exist "%OPEN_DYLAN_USER_REGISTRIES%" goto build_bootstrap
 if not exist "%USER_REGISTRY%" goto build_bootstrap
 
 :CREATE_BOOTSTRAP_REGISTRY
 echo Creating bootstrap registry
-call ensure-directory %FUNCTIONAL_DEVELOPER_USER_REGISTRIES%
-xcopy /E /I %USER_REGISTRY%\generic %FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic >nul
-xcopy /E /I %USER_REGISTRY%\x86-win32 %FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32 >nul
+call ensure-directory %OPEN_DYLAN_USER_REGISTRIES%
+xcopy /E /I %USER_REGISTRY%\generic %OPEN_DYLAN_USER_REGISTRIES%\generic >nul
+xcopy /E /I %USER_REGISTRY%\x86-win32 %OPEN_DYLAN_USER_REGISTRIES%\x86-win32 >nul
 
 echo Removing runtime registry entries
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\dylan" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\dylan" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\functional-extensions" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\functional-extensions" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\machine-word" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\machine-word" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\byte-vector" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\byte-vector" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\threads" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\threads" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\transcendentals" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\transcendentals" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\functional-dylan" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\functional-dylan" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\common-extensions" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\common-extensions" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\common-dylan" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\common-dylan" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\c-ffi" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\c-ffi" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\bit-vector" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\bit-vector" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\bit-set" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\bit-set" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\collectors" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\collectors" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\plists" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\plists" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\set" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\set" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\table-extensions" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\table-extensions" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\collections" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\collections" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\streams" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\streams" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\standard-io" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\standard-io" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\print" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\print" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\format" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\format" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\format-out" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\format-out" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\io" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\io" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\date" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\date" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\file-system" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\file-system" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\operating-system" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\operating-system" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\locators" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\locators" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\settings" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\settings" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\system" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\system" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\generic-arithmetic" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\generic-arithmetic" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\big-integers" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\big-integers" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\duim-utilities" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\duim-utilities" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\duim-geometry" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\duim-geometry" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\duim-dcs" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\duim-dcs" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\duim-sheets" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\duim-sheets" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\duim-graphics" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\duim-graphics" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\duim-layouts" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\duim-layouts" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\duim-gadgets" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\duim-gadgets" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\duim-frames" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\duim-frames" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\duim-core" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\duim-core" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\duim-extended-geometry" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\duim-extended-geometry" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\duim-gadget-panes" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\duim-gadget-panes" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\win32-duim" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\win32-duim" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\duim" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\duim" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\channels" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\channels" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\commands" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\commands" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\winsock2" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\winsock2" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\sockets" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\sockets" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\network" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\network" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\win32-common" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\win32-common" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\win32-controls" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\win32-controls" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\win32-dde" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\win32-dde" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\win32-dialog" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\win32-dialog" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\win32-gdi" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\win32-gdi" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\win32-html-help" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\win32-html-help" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\win32-kernel" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\win32-kernel" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\win32-registry" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\win32-registry" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\win32-resources" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\win32-resources" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\win32-rich-edit" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\win32-rich-edit" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\win32-shell" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\win32-shell" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\win32-user" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\win32-user" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\win32-version" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\win32-version" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\win32-gl" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\win32-gl" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\win32-glu" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\win32-glu" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\win32-multimedia" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\win32-multimedia" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\midi" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\midi" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\deuce" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\deuce" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\duim-deuce" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\duim-deuce" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\com" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\com" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\ole" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\ole" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\ole-server" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\ole-server" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\win32-automation" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\win32-automation" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\ole-automation" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\ole-automation" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\ole-container" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\ole-container" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\ole-controls" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\ole-controls" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\ole-control-framework" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\ole-control-framework" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\ole-dialogs" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\ole-dialogs" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\duim-ole-container" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\duim-ole-container" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\duim-ole-control" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\duim-ole-control" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\duim-ole-server" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\duim-ole-server" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\sql" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\sql" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\odbc-ffi" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\odbc-ffi" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\sql-odbc" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\sql-odbc" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\corba-dylan" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\corba-dylan" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\corba-protocol" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\corba-protocol" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\dylan-orb" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\dylan-orb" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\iop-protocol" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\iop-protocol" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\ir-protocol" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\ir-protocol" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\ir-stubs" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\ir-stubs" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\orb-connections" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\orb-connections" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\orb-core" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\orb-core" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\orb-iiop" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\orb-iiop" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\orb-ir" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\orb-ir" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\orb-poa" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\orb-poa" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\orb-streams" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\orb-streams" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\orb-utilities" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\orb-utilities" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\portableserver-protocol" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\portableserver-protocol" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\naming-protocol" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\naming-protocol" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\naming-stubs" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\naming-stubs" 2>nul
-del "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\naming-client" "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\naming-client" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\dylan" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\dylan" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\functional-extensions" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\functional-extensions" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\machine-word" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\machine-word" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\byte-vector" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\byte-vector" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\threads" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\threads" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\transcendentals" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\transcendentals" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\functional-dylan" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\functional-dylan" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\common-extensions" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\common-extensions" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\common-dylan" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\common-dylan" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\c-ffi" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\c-ffi" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\bit-vector" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\bit-vector" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\bit-set" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\bit-set" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\collectors" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\collectors" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\plists" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\plists" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\set" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\set" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\table-extensions" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\table-extensions" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\collections" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\collections" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\streams" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\streams" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\standard-io" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\standard-io" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\print" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\print" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\format" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\format" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\format-out" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\format-out" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\io" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\io" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\date" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\date" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\file-system" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\file-system" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\operating-system" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\operating-system" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\locators" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\locators" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\settings" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\settings" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\system" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\system" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\generic-arithmetic" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\generic-arithmetic" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\big-integers" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\big-integers" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\duim-utilities" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\duim-utilities" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\duim-geometry" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\duim-geometry" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\duim-dcs" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\duim-dcs" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\duim-sheets" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\duim-sheets" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\duim-graphics" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\duim-graphics" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\duim-layouts" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\duim-layouts" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\duim-gadgets" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\duim-gadgets" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\duim-frames" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\duim-frames" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\duim-core" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\duim-core" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\duim-extended-geometry" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\duim-extended-geometry" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\duim-gadget-panes" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\duim-gadget-panes" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\win32-duim" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\win32-duim" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\duim" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\duim" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\channels" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\channels" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\commands" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\commands" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\winsock2" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\winsock2" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\sockets" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\sockets" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\network" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\network" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\win32-common" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\win32-common" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\win32-controls" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\win32-controls" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\win32-dde" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\win32-dde" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\win32-dialog" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\win32-dialog" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\win32-gdi" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\win32-gdi" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\win32-html-help" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\win32-html-help" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\win32-kernel" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\win32-kernel" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\win32-registry" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\win32-registry" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\win32-resources" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\win32-resources" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\win32-rich-edit" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\win32-rich-edit" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\win32-shell" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\win32-shell" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\win32-user" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\win32-user" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\win32-version" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\win32-version" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\win32-gl" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\win32-gl" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\win32-glu" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\win32-glu" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\win32-multimedia" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\win32-multimedia" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\midi" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\midi" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\deuce" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\deuce" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\duim-deuce" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\duim-deuce" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\com" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\com" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\ole" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\ole" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\ole-server" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\ole-server" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\win32-automation" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\win32-automation" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\ole-automation" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\ole-automation" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\ole-container" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\ole-container" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\ole-controls" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\ole-controls" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\ole-control-framework" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\ole-control-framework" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\ole-dialogs" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\ole-dialogs" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\duim-ole-container" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\duim-ole-container" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\duim-ole-control" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\duim-ole-control" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\duim-ole-server" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\duim-ole-server" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\sql" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\sql" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\odbc-ffi" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\odbc-ffi" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\sql-odbc" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\sql-odbc" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\corba-dylan" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\corba-dylan" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\corba-protocol" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\corba-protocol" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\dylan-orb" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\dylan-orb" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\iop-protocol" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\iop-protocol" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\ir-protocol" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\ir-protocol" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\ir-stubs" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\ir-stubs" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\orb-connections" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\orb-connections" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\orb-core" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\orb-core" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\orb-iiop" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\orb-iiop" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\orb-ir" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\orb-ir" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\orb-poa" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\orb-poa" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\orb-streams" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\orb-streams" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\orb-utilities" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\orb-utilities" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\portableserver-protocol" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\portableserver-protocol" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\naming-protocol" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\naming-protocol" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\naming-stubs" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\naming-stubs" 2>nul
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\naming-client" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\naming-client" 2>nul
 
 :BUILD_BOOTSTRAP
 echo --------------------------------------------------
 call set-build-variables %BUILD_OPTIONS% -generation 1
-set FUNCTIONAL_DEVELOPER_RELEASE_BUILD=ignore
-set FUNCTIONAL_DEVELOPER_LIBRARY_PACKS=0xFFFF
+set OPEN_DYLAN_RELEASE_BUILD=ignore
+set OPEN_DYLAN_LIBRARY_PACKS=0xFFFF
 set BOOTSTRAP_COMPILER_FILENAME=%COMPILER_FILENAME%
 set BOOTSTRAP_COMPILER_TARGET=%COMPILER_TARGET%
 if "%TIMINGS_ROOT%"=="" set TIMINGS_ROOT=%BOOTSTRAP_ROOT%
@@ -628,7 +628,7 @@ set BOOTSTRAP_COMPILER_FILENAME=%FINAL_COMPILER_FILENAME%
 set BOOTSTRAP_COMPILER_TARGET=%FINAL_COMPILER_TARGET%
 
 :ENSURE_BOOTSTRAP_COMPILER
-if exist "%FUNCTIONAL_DEVELOPER_USER_INSTALL%\bin\%BOOTSTRAP_COMPILER_FILENAME%" goto cont1
+if exist "%OPEN_DYLAN_USER_INSTALL%\bin\%BOOTSTRAP_COMPILER_FILENAME%" goto cont1
 echo Generation 1 build starting at:
 call date /t
 call time /t
@@ -642,91 +642,91 @@ if %ERRORLEVEL% NEQ 0 goto build_error
 %MAKE% %QUOTED_OPTIONS% %QUOTED_PENTIUM_RUNTIME_OPTIONS% %BOOTSTRAP_COMPILER_TARGET%
 if %ERRORLEVEL% NEQ 0 goto build_error
 if "%WARNINGS%"=="yes" call show-build-warnings %WARNINGS_OPTIONS%
-if "%TIMINGS%"=="yes" call generate-compiler-timings %FUNCTIONAL_DEVELOPER_BUILD_LOGS%
+if "%TIMINGS%"=="yes" call generate-compiler-timings %OPEN_DYLAN_BUILD_LOGS%
 if "%CLEANUP%"=="no" goto CONT1
-call remove-directory %FUNCTIONAL_DEVELOPER_USER_BUILD%
-call remove-directory %FUNCTIONAL_DEVELOPER_USER_INSTALL%\lib
-call remove-directory %FUNCTIONAL_DEVELOPER_USER_INSTALL%\databases
-call remove-directory %FUNCTIONAL_DEVELOPER_USER_REGISTRIES%
+call remove-directory %OPEN_DYLAN_USER_BUILD%
+call remove-directory %OPEN_DYLAN_USER_INSTALL%\lib
+call remove-directory %OPEN_DYLAN_USER_INSTALL%\databases
+call remove-directory %OPEN_DYLAN_USER_REGISTRIES%
 :CONT1
-set FUNCTIONAL_DEVELOPER_RELEASE_BUILD=
+set OPEN_DYLAN_RELEASE_BUILD=
 echo Generation 1 build completed at:
 call date /t
 call time /t
 
 :MAYBE_COPY_OLD_MANGLER
 REM This enables compiler-bootstrapping with new mangler scheme
-if exist "%DYLAN_RELEASE_ROOT%\bin\old-dfmc-mangling.dll" copy %DYLAN_RELEASE_ROOT%\bin\old-dfmc-mangling.dll %FUNCTIONAL_DEVELOPER_USER_INSTALL%\bin >nul
-if exist "%DYLAN_RELEASE_ROOT%\bin\old-dfmc-mangling.dll" copy %DYLAN_RELEASE_ROOT%\bin\variable-search.dll %FUNCTIONAL_DEVELOPER_USER_INSTALL%\bin >nul
+if exist "%DYLAN_RELEASE_ROOT%\bin\old-dfmc-mangling.dll" copy %DYLAN_RELEASE_ROOT%\bin\old-dfmc-mangling.dll %OPEN_DYLAN_USER_INSTALL%\bin >nul
+if exist "%DYLAN_RELEASE_ROOT%\bin\old-dfmc-mangling.dll" copy %DYLAN_RELEASE_ROOT%\bin\variable-search.dll %OPEN_DYLAN_USER_INSTALL%\bin >nul
 
 :MAYBE_COPY_OLD_VARIABLE_SEARCH
 REM This enables compiler-bootstrapping with new variable-searching
-if exist "%DYLAN_RELEASE_ROOT%\bin\old-variable-search.dll" copy %DYLAN_RELEASE_ROOT%\bin\old-variable-search.dll %FUNCTIONAL_DEVELOPER_USER_INSTALL%\bin\variable-search.dll >nul
+if exist "%DYLAN_RELEASE_ROOT%\bin\old-variable-search.dll" copy %DYLAN_RELEASE_ROOT%\bin\old-variable-search.dll %OPEN_DYLAN_USER_INSTALL%\bin\variable-search.dll >nul
 
-if exist "%FUNCTIONAL_DEVELOPER_USER_INSTALL%\bin\%OLD_RUNTIME_PREFIX%fundyl.dll" goto maybe_copy_bootstrap_registry
-if exist "%FUNCTIONAL_DEVELOPER_USER_INSTALL%\bin\%RUNTIME_PREFIX%fundyl.dll" goto maybe_copy_bootstrap_registry
+if exist "%OPEN_DYLAN_USER_INSTALL%\bin\%OLD_RUNTIME_PREFIX%fundyl.dll" goto maybe_copy_bootstrap_registry
+if exist "%OPEN_DYLAN_USER_INSTALL%\bin\%RUNTIME_PREFIX%fundyl.dll" goto maybe_copy_bootstrap_registry
 echo Installing DLLs from old release %DYLAN_RELEASE_ROOT%
-copy %DYLAN_RELEASE_ROOT%\bin\equal-table.dll %FUNCTIONAL_DEVELOPER_USER_INSTALL%\bin 1>nul 2>nul
+copy %DYLAN_RELEASE_ROOT%\bin\equal-table.dll %OPEN_DYLAN_USER_INSTALL%\bin 1>nul 2>nul
 
 REM // Copy redistributable libraries (including those from a previous version)
 REM // Be careful not to wipe out redistributable libraries
 set OLD_LIBRARIES=bin
 if exist "%DYLAN_RELEASE_ROOT%\Redistributable" set OLD_LIBRARIES=Redistributable
-call ensure-directory %FUNCTIONAL_DEVELOPER_USER_INSTALL%\Bin\temp
-move %FUNCTIONAL_DEVELOPER_USER_INSTALL%\Bin\%RUNTIME_PREFIX%*.dll %FUNCTIONAL_DEVELOPER_USER_INSTALL%\Bin\temp >nul
-copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\%OLD_RUNTIME_PREFIX%*.dll %FUNCTIONAL_DEVELOPER_USER_INSTALL%\Bin 1>nul 2>nul
-copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\%RUNTIME_PREFIX%*.dll %FUNCTIONAL_DEVELOPER_USER_INSTALL%\Bin 1>nul 2>nul
-copy %FUNCTIONAL_DEVELOPER_USER_INSTALL%\Bin\temp\*.dll %FUNCTIONAL_DEVELOPER_USER_INSTALL%\Bin >nul
-REM call remove-directory %FUNCTIONAL_DEVELOPER_USER_INSTALL%\Bin\temp
+call ensure-directory %OPEN_DYLAN_USER_INSTALL%\Bin\temp
+move %OPEN_DYLAN_USER_INSTALL%\Bin\%RUNTIME_PREFIX%*.dll %OPEN_DYLAN_USER_INSTALL%\Bin\temp >nul
+copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\%OLD_RUNTIME_PREFIX%*.dll %OPEN_DYLAN_USER_INSTALL%\Bin 1>nul 2>nul
+copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\%RUNTIME_PREFIX%*.dll %OPEN_DYLAN_USER_INSTALL%\Bin 1>nul 2>nul
+copy %OPEN_DYLAN_USER_INSTALL%\Bin\temp\*.dll %OPEN_DYLAN_USER_INSTALL%\Bin >nul
+REM call remove-directory %OPEN_DYLAN_USER_INSTALL%\Bin\temp
 
 REM // These DLLs might exist if DLL merging didn't take place
-copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\dylan.dll %FUNCTIONAL_DEVELOPER_USER_INSTALL%\bin >nul
-copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\functional-extensions.dll %FUNCTIONAL_DEVELOPER_USER_INSTALL%\bin >nul
-copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\machine-word.dll %FUNCTIONAL_DEVELOPER_USER_INSTALL%\bin >nul
-copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\byte-vector.dll %FUNCTIONAL_DEVELOPER_USER_INSTALL%\bin >nul
-copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\threads.dll %FUNCTIONAL_DEVELOPER_USER_INSTALL%\bin >nul
-copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\transcendentals.dll %FUNCTIONAL_DEVELOPER_USER_INSTALL%\bin >nul
+copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\dylan.dll %OPEN_DYLAN_USER_INSTALL%\bin >nul
+copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\functional-extensions.dll %OPEN_DYLAN_USER_INSTALL%\bin >nul
+copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\machine-word.dll %OPEN_DYLAN_USER_INSTALL%\bin >nul
+copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\byte-vector.dll %OPEN_DYLAN_USER_INSTALL%\bin >nul
+copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\threads.dll %OPEN_DYLAN_USER_INSTALL%\bin >nul
+copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\transcendentals.dll %OPEN_DYLAN_USER_INSTALL%\bin >nul
 
-copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\bit-vector.dll %FUNCTIONAL_DEVELOPER_USER_INSTALL%\bin >nul
-copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\bit-set.dll %FUNCTIONAL_DEVELOPER_USER_INSTALL%\bin >nul
-copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\collectors.dll %FUNCTIONAL_DEVELOPER_USER_INSTALL%\bin >nul
-copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\plists.dll %FUNCTIONAL_DEVELOPER_USER_INSTALL%\bin >nul
-copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\set.dll %FUNCTIONAL_DEVELOPER_USER_INSTALL%\bin >nul
-copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\table-extensions.dll %FUNCTIONAL_DEVELOPER_USER_INSTALL%\bin >nul
+copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\bit-vector.dll %OPEN_DYLAN_USER_INSTALL%\bin >nul
+copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\bit-set.dll %OPEN_DYLAN_USER_INSTALL%\bin >nul
+copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\collectors.dll %OPEN_DYLAN_USER_INSTALL%\bin >nul
+copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\plists.dll %OPEN_DYLAN_USER_INSTALL%\bin >nul
+copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\set.dll %OPEN_DYLAN_USER_INSTALL%\bin >nul
+copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\table-extensions.dll %OPEN_DYLAN_USER_INSTALL%\bin >nul
 
-copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\streams.dll %FUNCTIONAL_DEVELOPER_USER_INSTALL%\bin >nul
-copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\print.dll %FUNCTIONAL_DEVELOPER_USER_INSTALL%\bin >nul
-copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\standard-io.dll %FUNCTIONAL_DEVELOPER_USER_INSTALL%\bin >nul
-copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\format.dll %FUNCTIONAL_DEVELOPER_USER_INSTALL%\bin >nul
-copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\format-out.dll %FUNCTIONAL_DEVELOPER_USER_INSTALL%\bin >nul
+copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\streams.dll %OPEN_DYLAN_USER_INSTALL%\bin >nul
+copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\print.dll %OPEN_DYLAN_USER_INSTALL%\bin >nul
+copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\standard-io.dll %OPEN_DYLAN_USER_INSTALL%\bin >nul
+copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\format.dll %OPEN_DYLAN_USER_INSTALL%\bin >nul
+copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\format-out.dll %OPEN_DYLAN_USER_INSTALL%\bin >nul
 
-copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\date.dll %FUNCTIONAL_DEVELOPER_USER_INSTALL%\bin >nul
-copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\file-system.dll %FUNCTIONAL_DEVELOPER_USER_INSTALL%\bin >nul
-copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\locators.dll %FUNCTIONAL_DEVELOPER_USER_INSTALL%\bin >nul
-copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\operating-system.dll %FUNCTIONAL_DEVELOPER_USER_INSTALL%\bin >nul
-copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\settings.dll %FUNCTIONAL_DEVELOPER_USER_INSTALL%\bin >nul
+copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\date.dll %OPEN_DYLAN_USER_INSTALL%\bin >nul
+copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\file-system.dll %OPEN_DYLAN_USER_INSTALL%\bin >nul
+copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\locators.dll %OPEN_DYLAN_USER_INSTALL%\bin >nul
+copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\operating-system.dll %OPEN_DYLAN_USER_INSTALL%\bin >nul
+copy %DYLAN_RELEASE_ROOT%\%OLD_LIBRARIES%\settings.dll %OPEN_DYLAN_USER_INSTALL%\bin >nul
 
 :MAYBE_COPY_BOOTSTRAP_REGISTRY
 if exist "%USER_REGISTRY%" goto finish_bootstrap
-if not exist "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%" goto finish_bootstrap
+if not exist "%OPEN_DYLAN_USER_REGISTRIES%" goto finish_bootstrap
 echo Copying bootstrap registry entries to main registry
 call ensure-directory %USER_REGISTRY%
 call ensure-directory %USER_REGISTRY%\generic
 call ensure-directory %USER_REGISTRY%\x86-win32
-copy %FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\*.* %USER_REGISTRY%\generic >nul
-xcopy /E /I %FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\generic\CVS %USER_REGISTRY%\generic\CVS >nul
-copy %FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\*.* %USER_REGISTRY%\x86-win32 >nul
-xcopy /E /I %FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\x86-win32\CVS %USER_REGISTRY%\x86-win32\CVS >nul
+copy %OPEN_DYLAN_USER_REGISTRIES%\generic\*.* %USER_REGISTRY%\generic >nul
+xcopy /E /I %OPEN_DYLAN_USER_REGISTRIES%\generic\CVS %USER_REGISTRY%\generic\CVS >nul
+copy %OPEN_DYLAN_USER_REGISTRIES%\x86-win32\*.* %USER_REGISTRY%\x86-win32 >nul
+xcopy /E /I %OPEN_DYLAN_USER_REGISTRIES%\x86-win32\CVS %USER_REGISTRY%\x86-win32\CVS >nul
 
 :FINISH_BOOTSTRAP
-set FUNCTIONAL_DEVELOPER_USER_REGISTRIES=%USER_REGISTRY%
+set OPEN_DYLAN_USER_REGISTRIES=%USER_REGISTRY%
 set /a GENERATION=2
 
 :BUILD_NEXT_GENERATION
 if "%GENERATION%"=="%GENERATIONS%" goto build_release
 echo --------------------------------------------------
 call set-build-variables %BUILD_OPTIONS% -generation %GENERATION%
-set FUNCTIONAL_DEVELOPER_LIBRARY_PACKS=0xFFFF
+set OPEN_DYLAN_LIBRARY_PACKS=0xFFFF
 set /a NEXT_GENERATION=%GENERATION%
 set /a NEXT_GENERATION+=1
 set /a NEXT_BUT_ONE_GENERATION=%NEXT_GENERATION%
@@ -742,7 +742,7 @@ set BOOTSTRAP_COMPILER_FILENAME=%FINAL_COMPILER_FILENAME%
 set BOOTSTRAP_COMPILER_TARGET=%FINAL_COMPILER_TARGET%
 
 :ENSURE_NEXT_GENERATION
-if exist "%FUNCTIONAL_DEVELOPER_USER_INSTALL%\bin\%BOOTSTRAP_COMPILER_FILENAME%" goto cont_next
+if exist "%OPEN_DYLAN_USER_INSTALL%\bin\%BOOTSTRAP_COMPILER_FILENAME%" goto cont_next
 echo Generation %GENERATION% build starting at:
 call date /t
 call time /t
@@ -750,11 +750,11 @@ call ensure-release-area
 %MAKE% %QUOTED_OPTIONS% %QUOTED_PENTIUM_RUNTIME_OPTIONS% %BOOTSTRAP_COMPILER_TARGET%
 if %ERRORLEVEL% NEQ 0 goto build_error
 if "%WARNINGS%"=="yes" call show-build-warnings %WARNINGS_OPTIONS%
-if "%TIMINGS%"=="yes" call generate-compiler-timings %FUNCTIONAL_DEVELOPER_BUILD_LOGS%
+if "%TIMINGS%"=="yes" call generate-compiler-timings %OPEN_DYLAN_BUILD_LOGS%
 if "%CLEANUP%"=="no" goto CONT_NEXT
-call remove-directory %FUNCTIONAL_DEVELOPER_USER_BUILD%
-call remove-directory %FUNCTIONAL_DEVELOPER_USER_INSTALL%\lib
-call remove-directory %FUNCTIONAL_DEVELOPER_USER_INSTALL%\databases
+call remove-directory %OPEN_DYLAN_USER_BUILD%
+call remove-directory %OPEN_DYLAN_USER_INSTALL%\lib
+call remove-directory %OPEN_DYLAN_USER_INSTALL%\databases
 
 :CONT_NEXT
 echo Generation %GENERATION% build completed at:
@@ -786,7 +786,7 @@ set QUOTED_RUNTIME_OPTIONS=RUNTIME_OPTIONS="/build-counts ignore"
 :START_BUILD
 echo --------------------------------------------------
 call set-build-variables %BUILD_OPTIONS% -final-generation %GENERATIONS%
-set FUNCTIONAL_DEVELOPER_LIBRARY_PACKS=0xFFFF
+set OPEN_DYLAN_LIBRARY_PACKS=0xFFFF
 echo Final generation build starting at:
 call date /t
 call time /t
@@ -794,18 +794,18 @@ call ensure-release-area
 %MAKE% %QUOTED_OPTIONS% %QUOTED_PENTIUM_RUNTIME_OPTIONS% %QUOTED_RUNTIME_OPTIONS% %QUOTED_CHECKOUT_OPTIONS% %RELEASE_TARGET%
 if %ERRORLEVEL% NEQ 0 goto build_error
 if "%WARNINGS%"=="yes" call show-build-warnings %WARNINGS_OPTIONS%
-if "%TIMINGS%"=="yes" call generate-compiler-timings %FUNCTIONAL_DEVELOPER_BUILD_LOGS%
+if "%TIMINGS%"=="yes" call generate-compiler-timings %OPEN_DYLAN_BUILD_LOGS%
 echo Build of %RELEASE_TARGET% completed at:
 call date /t
 call time /t
 if "%TIMINGS_ROOT%"=="/ORR" set TIMINGS_ROOT=%OLD_RELEASE_ROOT%
-if "%COMPARE_TIMINGS%"=="yes" call compare-timings %TIMINGS_ROOT%\logs %FUNCTIONAL_DEVELOPER_BUILD_LOGS%
-set PATH=%FUNCTIONAL_DEVELOPER_USER_INSTALL%\bin;%PATH%
-set FUNCTIONAL_DEVELOPER_LIBRARY_PACKS=%SAVED_FUNCTIONAL_DEVELOPER_LIBRARY_PACKS%
+if "%COMPARE_TIMINGS%"=="yes" call compare-timings %TIMINGS_ROOT%\logs %OPEN_DYLAN_BUILD_LOGS%
+set PATH=%OPEN_DYLAN_USER_INSTALL%\bin;%PATH%
+set OPEN_DYLAN_LIBRARY_PACKS=%SAVED_OPEN_DYLAN_LIBRARY_PACKS%
 
 :TEST_BUILD
 if "%TEST%"=="no" goto end
-call test-release %NEW_RELEASE_ROOT% -dylan %OLD_RELEASE_ROOT% -target test-%RELEASE_TARGET% -sources %FUNCTIONAL_DEVELOPER_USER_SOURCES%
+call test-release %NEW_RELEASE_ROOT% -dylan %OLD_RELEASE_ROOT% -target test-%RELEASE_TARGET% -sources %OPEN_DYLAN_USER_SOURCES%
 goto end
 
 :fixup_PATHS
@@ -838,7 +838,7 @@ call time /t
 goto generate_error
 
 :GENERATE_ERROR
-set FUNCTIONAL_DEVELOPER_LIBRARY_PACKS=%SAVED_FUNCTIONAL_DEVELOPER_LIBRARY_PACKS%
+set OPEN_DYLAN_LIBRARY_PACKS=%SAVED_OPEN_DYLAN_LIBRARY_PACKS%
 bogus-command-to-cause-an-error-exit 2>nul
 
 :END

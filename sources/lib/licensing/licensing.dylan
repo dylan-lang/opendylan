@@ -322,7 +322,7 @@ define function validate-license (console-tools? :: <boolean>) => ()
   if (console-tools?)
     // If the developer has overriden Library Pack license checks, we'll disable
     // the console tools check as well ...
-    unless (environment-variable("FUNCTIONAL_DEVELOPER_LIBRARY_PACKS"))
+    unless (environment-variable("OPEN_DYLAN_LIBRARY_PACKS"))
       // We'll use the Library Pack settings variables because it's an easy thing to do...
       $library-pack-licensing-settings.settings-key-name := "ConsoleTools";
       $library-pack-installed-settings.settings-key-name := "ConsoleTools";
@@ -407,7 +407,7 @@ define function unregistered-products () => (products :: <sequence>)
   if (release-contains-console-tools?())
     // If the developer has overriden Library Pack license checks, we'll disable
     // the console tools check as well ...
-    unless (environment-variable("FUNCTIONAL_DEVELOPER_LIBRARY_PACKS"))
+    unless (environment-variable("OPEN_DYLAN_LIBRARY_PACKS"))
       // We'll use the Library Pack settings variables because it's an easy thing to do...
       $library-pack-licensing-settings.settings-key-name := "ConsoleTools";
       $library-pack-installed-settings.settings-key-name := "ConsoleTools";

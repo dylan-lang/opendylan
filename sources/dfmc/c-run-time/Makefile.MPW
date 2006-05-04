@@ -11,12 +11,12 @@
 #   6) Build the runtime as a shared library by using the 'install-shared' (or 'install') target.
 #
 
-FUNCTIONAL_DEVELOPER_RELEASE_BIN     = {FUNCTIONAL_DEVELOPER_RELEASE_INSTALL}Bin:
-FUNCTIONAL_DEVELOPER_RELEASE_INCLUDE = {FUNCTIONAL_DEVELOPER_RELEASE_INSTALL}Include:
-FUNCTIONAL_DEVELOPER_RELEASE_LIB     = {FUNCTIONAL_DEVELOPER_RELEASE_INSTALL}Lib:
-FUNCTIONAL_DEVELOPER_USER_BIN     = {FUNCTIONAL_DEVELOPER_USER_INSTALL}Bin:
-FUNCTIONAL_DEVELOPER_USER_INCLUDE = {FUNCTIONAL_DEVELOPER_USER_INSTALL}Include:
-FUNCTIONAL_DEVELOPER_USER_LIB     = {FUNCTIONAL_DEVELOPER_USER_INSTALL}Lib:
+OPEN_DYLAN_RELEASE_BIN     = {OPEN_DYLAN_RELEASE_INSTALL}Bin:
+OPEN_DYLAN_RELEASE_INCLUDE = {OPEN_DYLAN_RELEASE_INSTALL}Include:
+OPEN_DYLAN_RELEASE_LIB     = {OPEN_DYLAN_RELEASE_INSTALL}Lib:
+OPEN_DYLAN_USER_BIN     = {OPEN_DYLAN_USER_INSTALL}Bin:
+OPEN_DYLAN_USER_INCLUDE = {OPEN_DYLAN_USER_INSTALL}Include:
+OPEN_DYLAN_USER_LIB     = {OPEN_DYLAN_USER_INSTALL}Lib:
 
 INSTALLOBJ = Echo
 INSTALLLIB = Duplicate -y
@@ -29,11 +29,11 @@ CREATE = Echo >
 #
 
 LINKLIB   = MWLinkPPC -xm library -sym fullpath -o
-LINKSTUB  = MWLinkPPC -xm stublibrary -c ' SPM' -t 'buts' -fragname DylanRuntime -@export DylanRuntimeLib.exp -L"{FUNCTIONAL_DEVELOPER_USER_LIB}" -L"{FUNCTIONAL_DEVELOPER_RELEASE_LIB}" -L"{MWPPCLibraries}" -L"{SharedLibraries}" -warn -o
-LINKSHLIB = MWLinkPPC -xm sharedlibrary -c 'lyDH' -t 'blhs' -fragname DylanRuntime -@export DylanRuntimeLib.exp -L"{FUNCTIONAL_DEVELOPER_USER_LIB}" -L"{FUNCTIONAL_DEVELOPER_RELEASE_LIB}" -L"{MWPPCLibraries}" -L"{SharedLibraries}" -sym fullpath -warn -o
+LINKSTUB  = MWLinkPPC -xm stublibrary -c ' SPM' -t 'buts' -fragname DylanRuntime -@export DylanRuntimeLib.exp -L"{OPEN_DYLAN_USER_LIB}" -L"{OPEN_DYLAN_RELEASE_LIB}" -L"{MWPPCLibraries}" -L"{SharedLibraries}" -warn -o
+LINKSHLIB = MWLinkPPC -xm sharedlibrary -c 'lyDH' -t 'blhs' -fragname DylanRuntime -@export DylanRuntimeLib.exp -L"{OPEN_DYLAN_USER_LIB}" -L"{OPEN_DYLAN_RELEASE_LIB}" -L"{MWPPCLibraries}" -L"{SharedLibraries}" -sym fullpath -warn -o
 
 CC = MWCPPC
-CFLAGS = -sym full -I"{FUNCTIONAL_DEVELOPER_RELEASE_INCLUDE}" -w nounusedarg,noimplicitconv,noemptydecl -nomapcr {FUNCTIONAL_DEVELOPER_C_FLAGS}
+CFLAGS = -sym full -I"{OPEN_DYLAN_RELEASE_INCLUDE}" -w nounusedarg,noimplicitconv,noemptydecl -nomapcr {OPEN_DYLAN_C_FLAGS}
 RC = Rez
 RFLAGS = 
 
@@ -46,18 +46,18 @@ RTLIBS  = -ldylanLib -lBoehmGCLib -l"MSL C.PPC.DLL" -l"MSL ShLibRuntime.Lib" -l"
 	{CC} {CFLAGS} {DepDir}{Default}.c -o {TargDir}{Default}.o
 
 install-basics Ä
-	if `Exists "{FUNCTIONAL_DEVELOPER_USER_LIB}{LIBFILE}"`
-		SetFile -a l "{FUNCTIONAL_DEVELOPER_USER_LIB}{LIBFILE}"
+	if `Exists "{OPEN_DYLAN_USER_LIB}{LIBFILE}"`
+		SetFile -a l "{OPEN_DYLAN_USER_LIB}{LIBFILE}"
 	end
-	{INSTALLLIB} {LIBFILE}.stub "{FUNCTIONAL_DEVELOPER_USER_LIB}{LIBFILE}"
-	if `Exists "{FUNCTIONAL_DEVELOPER_USER_INCLUDE}run-time.h"`
-		SetFile -a l "{FUNCTIONAL_DEVELOPER_USER_INCLUDE}run-time.h"
+	{INSTALLLIB} {LIBFILE}.stub "{OPEN_DYLAN_USER_LIB}{LIBFILE}"
+	if `Exists "{OPEN_DYLAN_USER_INCLUDE}run-time.h"`
+		SetFile -a l "{OPEN_DYLAN_USER_INCLUDE}run-time.h"
 	end
-	{INSTALLLIB} run-time.h "{FUNCTIONAL_DEVELOPER_USER_INCLUDE}"
-	# if `Exists "{FUNCTIONAL_DEVELOPER_USER_BIN}ccl-linker.script"`
-	#	SetFile -a l "{FUNCTIONAL_DEVELOPER_USER_BIN}ccl-linker.script"
+	{INSTALLLIB} run-time.h "{OPEN_DYLAN_USER_INCLUDE}"
+	# if `Exists "{OPEN_DYLAN_USER_BIN}ccl-linker.script"`
+	#	SetFile -a l "{OPEN_DYLAN_USER_BIN}ccl-linker.script"
 	# end
-	# {INSTALLLIB} mpw-ccl-linker.script "{FUNCTIONAL_DEVELOPER_USER_BIN}"ccl-linker.script
+	# {INSTALLLIB} mpw-ccl-linker.script "{OPEN_DYLAN_USER_BIN}"ccl-linker.script
 
 static Ä {OBJS}
 	{LINKLIB} {LIBFILE}.stub {OBJS}
@@ -71,14 +71,14 @@ shared Ä {OBJS}
 	{LINKSHLIB} {LIBFILE} {OBJS} {RTLIBS}
 
 install-shared Ä shared install-basics
-	if `Exists "{FUNCTIONAL_DEVELOPER_USER_BIN}{LIBFILE}"`
-		SetFile -a l "{FUNCTIONAL_DEVELOPER_USER_BIN}{LIBFILE}"
+	if `Exists "{OPEN_DYLAN_USER_BIN}{LIBFILE}"`
+		SetFile -a l "{OPEN_DYLAN_USER_BIN}{LIBFILE}"
 	end
-	{INSTALLLIB} {LIBFILE} "{FUNCTIONAL_DEVELOPER_USER_BIN}"
-	if `Exists "{FUNCTIONAL_DEVELOPER_USER_BIN}{LIBFILE}.xSYM"`
-		SetFile -a l "{FUNCTIONAL_DEVELOPER_USER_BIN}{LIBFILE}.xSYM"
+	{INSTALLLIB} {LIBFILE} "{OPEN_DYLAN_USER_BIN}"
+	if `Exists "{OPEN_DYLAN_USER_BIN}{LIBFILE}.xSYM"`
+		SetFile -a l "{OPEN_DYLAN_USER_BIN}{LIBFILE}.xSYM"
 	end
-	{INSTALLLIB} {LIBFILE}.xSYM "{FUNCTIONAL_DEVELOPER_USER_BIN}"
+	{INSTALLLIB} {LIBFILE}.xSYM "{OPEN_DYLAN_USER_BIN}"
 
 install Ä install-shared
 

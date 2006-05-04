@@ -7,16 +7,16 @@ use XML::Parser;
 
 my $lidfile_line;
 
-my $platform_name = $ENV{'FUNCTIONAL_DEVELOPER_PLATFORM_NAME'};
+my $platform_name = $ENV{'OPEN_DYLAN_PLATFORM_NAME'};
 
-my $user_root = $ENV{'FUNCTIONAL_DEVELOPER_USER_ROOT'};
-my $user_build = $ENV{'FUNCTIONAL_DEVELOPER_USER_BUILD'};
-my $user_install = $ENV{'FUNCTIONAL_DEVELOPER_USER_INSTALL'};
-my $user_projects = $ENV{'FUNCTIONAL_DEVELOPER_USER_PROJECTS'};
-my $user_registries = $ENV{'FUNCTIONAL_DEVELOPER_USER_REGISTRIES'};
-my $user_sources = $ENV{'FUNCTIONAL_DEVELOPER_USER_SOURCES'};
+my $user_root = $ENV{'OPEN_DYLAN_USER_ROOT'};
+my $user_build = $ENV{'OPEN_DYLAN_USER_BUILD'};
+my $user_install = $ENV{'OPEN_DYLAN_USER_INSTALL'};
+my $user_projects = $ENV{'OPEN_DYLAN_USER_PROJECTS'};
+my $user_registries = $ENV{'OPEN_DYLAN_USER_REGISTRIES'};
+my $user_sources = $ENV{'OPEN_DYLAN_USER_SOURCES'};
 
-my $build_logs = $ENV{'FUNCTIONAL_DEVELOPER_BUILD_LOGS'};
+my $build_logs = $ENV{'OPEN_DYLAN_BUILD_LOGS'};
 
 my $verbose;
 my $debugger;

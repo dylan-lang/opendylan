@@ -3,10 +3,10 @@ setlocal
 
 set LIBRARY=%1%
 set REGISTRY=%2%
-set LOG=%FUNCTIONAL_DEVELOPER_CVS_LOGS%\checkout-%LIBRARY%-registry-entry.log
+set LOG=%OPEN_DYLAN_CVS_LOGS%\checkout-%LIBRARY%-registry-entry.log
 
-if exist "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%" goto set_BRANCH
-mkdir %FUNCTIONAL_DEVELOPER_USER_REGISTRIES%
+if exist "%OPEN_DYLAN_USER_REGISTRIES%" goto set_BRANCH
+mkdir %OPEN_DYLAN_USER_REGISTRIES%
 if %ERRORLEVEL% NEQ 0 goto generate_error
 
 :set_BRANCH
@@ -16,9 +16,9 @@ if "%DYLAN_CVS_BRANCH%"=="trunk" goto checkout
 set CVS_BRANCH_ARG=-r %DYLAN_CVS_BRANCH%
 
 :CHECKOUT
-if exist "%FUNCTIONAL_DEVELOPER_USER_REGISTRIES%\%REGISTRY%\%LIBRARY%" goto DONE
+if exist "%OPEN_DYLAN_USER_REGISTRIES%\%REGISTRY%\%LIBRARY%" goto DONE
 echo Checking out registry entry for %LIBRARY%
-pushd %FUNCTIONAL_DEVELOPER_USER_REGISTRIES%
+pushd %OPEN_DYLAN_USER_REGISTRIES%
 cvs -q -r checkout -d %REGISTRY% %CVS_BRANCH_ARG% fundev/Sources/registry/%REGISTRY%/%LIBRARY% > %LOG%
 set saved_ERRORLEVEL=%ERRORLEVEL%
 popd

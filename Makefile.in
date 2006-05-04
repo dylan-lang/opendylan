@@ -20,15 +20,15 @@ all:	@bootstrap_target@
 1-stage-bootstrap: final-bootstrap
 
 2-stage-bootstrap: stage-1-bootstrap
-	FUNCTIONAL_DEVELOPER_RELEASE_ROOT=$(abs_builddir)/Bootstrap.1 \
+	OPEN_DYLAN_RELEASE_ROOT=$(abs_builddir)/Bootstrap.1 \
 	  $(MAKE) FDCOMPILE="$(abs_builddir)/Bootstrap.1/bin/minimal-console-compiler -build -save" final-bootstrap
 
 3-stage-bootstrap: stage-1-bootstrap stage-2-bootstrap
-	FUNCTIONAL_DEVELOPER_RELEASE_ROOT=$(abs_builddir)/Bootstrap.2 \
+	OPEN_DYLAN_RELEASE_ROOT=$(abs_builddir)/Bootstrap.2 \
 	  $(MAKE) FDCOMPILE="$(abs_builddir)/Bootstrap.2/bin/minimal-console-compiler -build -save" final-bootstrap
 
 4-stage-bootstrap: stage-1-bootstrap stage-2-bootstrap stage-3-bootstrap
-	FUNCTIONAL_DEVELOPER_RELEASE_ROOT=$(abs_builddir)/Bootstrap.3 \
+	OPEN_DYLAN_RELEASE_ROOT=$(abs_builddir)/Bootstrap.3 \
 	  $(MAKE) FDCOMPILE="$(abs_builddir)/Bootstrap.3/bin/minimal-console-compiler -build -save" final-bootstrap
 
 stage-1-bootstrap: \
@@ -80,13 +80,13 @@ $(BOOTSTRAP1_REGISTRY):
 
 Bootstrap.1/bin/minimal-console-compiler:
 	@echo Building stage 1 bootstrap...
-	@FUNCTIONAL_DEVELOPER_PLATFORM_NAME=$(fd_build) \
-	  FUNCTIONAL_DEVELOPER_BUILD_LOGS=$(abs_builddir)/Bootstrap.1/logs \
-	  FUNCTIONAL_DEVELOPER_USER_ROOT=$(abs_builddir)/Bootstrap.1 \
-	  FUNCTIONAL_DEVELOPER_USER_INSTALL=$(abs_builddir)/Bootstrap.1 \
-	  FUNCTIONAL_DEVELOPER_USER_REGISTRIES=$(BOOTSTRAP1_REGISTRY) \
-	  FUNCTIONAL_DEVELOPER_USER_SOURCES=$(abs_srcdir)/sources \
-	  FUNCTIONAL_DEVELOPER_USER_BUILD=$(abs_builddir)/Bootstrap.1/build \
+	@OPEN_DYLAN_PLATFORM_NAME=$(fd_build) \
+	  OPEN_DYLAN_BUILD_LOGS=$(abs_builddir)/Bootstrap.1/logs \
+	  OPEN_DYLAN_USER_ROOT=$(abs_builddir)/Bootstrap.1 \
+	  OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.1 \
+	  OPEN_DYLAN_USER_REGISTRIES=$(BOOTSTRAP1_REGISTRY) \
+	  OPEN_DYLAN_USER_SOURCES=$(abs_srcdir)/sources \
+	  OPEN_DYLAN_USER_BUILD=$(abs_builddir)/Bootstrap.1/build \
 	  $(fdmake) --compiler="$(FDCOMPILE)" minimal-console-compiler
 
 stage-2-bootstrap: Bootstrap.2 Bootstrap.2/bin/minimal-console-compiler
@@ -101,17 +101,17 @@ Bootstrap.2:
 
 Bootstrap.2/bin/minimal-console-compiler: stage-1-bootstrap
 	@echo Building stage 2 bootstrap...
-	FUNCTIONAL_DEVELOPER_USER_INSTALL=$(abs_builddir)/Bootstrap.2 \
+	OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.2 \
 	  $(MAKE) -C sources/lib/run-time/pentium-linux install
-	@FUNCTIONAL_DEVELOPER_PLATFORM_NAME=$(fd_build) \
-	  FUNCTIONAL_DEVELOPER_RELEASE_ROOT=$(abs_builddir)/Bootstrap.2 \
-	  FUNCTIONAL_DEVELOPER_RELEASE_INSTALL=$(abs_builddir)/Bootstrap.2 \
-	  FUNCTIONAL_DEVELOPER_BUILD_LOGS=$(abs_builddir)/Bootstrap.2/logs \
-	  FUNCTIONAL_DEVELOPER_USER_ROOT=$(abs_builddir)/Bootstrap.2 \
-	  FUNCTIONAL_DEVELOPER_USER_INSTALL=$(abs_builddir)/Bootstrap.2 \
-	  FUNCTIONAL_DEVELOPER_USER_REGISTRIES=$(abs_srcdir)/sources/registry \
-	  FUNCTIONAL_DEVELOPER_USER_SOURCES=$(abs_srcdir)/sources \
-	  FUNCTIONAL_DEVELOPER_USER_BUILD=$(abs_builddir)/Bootstrap.2/build \
+	@OPEN_DYLAN_PLATFORM_NAME=$(fd_build) \
+	  OPEN_DYLAN_RELEASE_ROOT=$(abs_builddir)/Bootstrap.2 \
+	  OPEN_DYLAN_RELEASE_INSTALL=$(abs_builddir)/Bootstrap.2 \
+	  OPEN_DYLAN_BUILD_LOGS=$(abs_builddir)/Bootstrap.2/logs \
+	  OPEN_DYLAN_USER_ROOT=$(abs_builddir)/Bootstrap.2 \
+	  OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.2 \
+	  OPEN_DYLAN_USER_REGISTRIES=$(abs_srcdir)/sources/registry \
+	  OPEN_DYLAN_USER_SOURCES=$(abs_srcdir)/sources \
+	  OPEN_DYLAN_USER_BUILD=$(abs_builddir)/Bootstrap.2/build \
 	  $(fdmake) --compiler="Bootstrap.1/bin/minimal-console-compiler -build -save" \
 		    minimal-console-compiler
 
@@ -127,16 +127,16 @@ Bootstrap.3:
 
 Bootstrap.3/bin/minimal-console-compiler: stage-2-bootstrap
 	@echo Building stage 3 bootstrap...
-	FUNCTIONAL_DEVELOPER_USER_INSTALL=$(abs_builddir)/Bootstrap.3 \
+	OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.3 \
 	  $(MAKE) -C sources/lib/run-time/pentium-linux install
-	@FUNCTIONAL_DEVELOPER_PLATFORM_NAME=$(fd_build) \
-	  FUNCTIONAL_DEVELOPER_RELEASE_ROOT=$(abs_builddir)/Bootstrap.2 \
-	  FUNCTIONAL_DEVELOPER_BUILD_LOGS=$(abs_builddir)/Bootstrap.3/logs \
-	  FUNCTIONAL_DEVELOPER_USER_ROOT=$(abs_builddir)/Bootstrap.3 \
-	  FUNCTIONAL_DEVELOPER_USER_INSTALL=$(abs_builddir)/Bootstrap.3 \
-	  FUNCTIONAL_DEVELOPER_USER_REGISTRIES=$(abs_srcdir)/sources/registry \
-	  FUNCTIONAL_DEVELOPER_USER_SOURCES=$(abs_srcdir)/sources \
-	  FUNCTIONAL_DEVELOPER_USER_BUILD=$(abs_builddir)/Bootstrap.3/build \
+	@OPEN_DYLAN_PLATFORM_NAME=$(fd_build) \
+	  OPEN_DYLAN_RELEASE_ROOT=$(abs_builddir)/Bootstrap.2 \
+	  OPEN_DYLAN_BUILD_LOGS=$(abs_builddir)/Bootstrap.3/logs \
+	  OPEN_DYLAN_USER_ROOT=$(abs_builddir)/Bootstrap.3 \
+	  OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.3 \
+	  OPEN_DYLAN_USER_REGISTRIES=$(abs_srcdir)/sources/registry \
+	  OPEN_DYLAN_USER_SOURCES=$(abs_srcdir)/sources \
+	  OPEN_DYLAN_USER_BUILD=$(abs_builddir)/Bootstrap.3/build \
 	  $(fdmake) --compiler="Bootstrap.2/bin/minimal-console-compiler -build -save" \
 		    minimal-console-compiler
 
@@ -150,20 +150,20 @@ Bootstrap.final:
 	-mkdir $(prefix)/lib/runtime
 
 FINAL_ENV = \
-	FUNCTIONAL_DEVELOPER_PLATFORM_NAME=$(fd_build) \
-	FUNCTIONAL_DEVELOPER_BUILD_LOGS=$(abs_builddir)/Bootstrap.final/logs \
-	FUNCTIONAL_DEVELOPER_USER_ROOT=$(abs_builddir)/Bootstrap.final \
-	FUNCTIONAL_DEVELOPER_USER_INSTALL=$(prefix) \
-	FUNCTIONAL_DEVELOPER_USER_REGISTRIES=$(abs_srcdir)/sources/registry \
-	FUNCTIONAL_DEVELOPER_USER_SOURCES=$(abs_srcdir)/sources \
-	FUNCTIONAL_DEVELOPER_USER_BUILD=$(abs_builddir)/Bootstrap.final/build
+	OPEN_DYLAN_PLATFORM_NAME=$(fd_build) \
+	OPEN_DYLAN_BUILD_LOGS=$(abs_builddir)/Bootstrap.final/logs \
+	OPEN_DYLAN_USER_ROOT=$(abs_builddir)/Bootstrap.final \
+	OPEN_DYLAN_USER_INSTALL=$(prefix) \
+	OPEN_DYLAN_USER_REGISTRIES=$(abs_srcdir)/sources/registry \
+	OPEN_DYLAN_USER_SOURCES=$(abs_srcdir)/sources \
+	OPEN_DYLAN_USER_BUILD=$(abs_builddir)/Bootstrap.final/build
 
 FINAL_LIBRARIES = \
 	minimal-console-compiler
 
 final-bootstrap: Bootstrap.final
 	@echo Building final stage bootstrap...
-	FUNCTIONAL_DEVELOPER_USER_INSTALL=$(prefix) \
+	OPEN_DYLAN_USER_INSTALL=$(prefix) \
 	  $(MAKE) -C sources/lib/run-time/pentium-linux install
 	@$(FINAL_ENV) $(FDCOMPILE) \
 		$(FINAL_LIBRARIES)

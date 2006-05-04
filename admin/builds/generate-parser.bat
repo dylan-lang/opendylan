@@ -73,7 +73,7 @@ set COMPILER=C:\Program Files\Functional Objects\Functional Developer\Bin\parser
 
 :COMPILER_FOUND
 
-set LOG=%FUNCTIONAL_DEVELOPER_BUILD_LOGS%\generate-%DYLAN_FILE%.log
+set LOG=%OPEN_DYLAN_BUILD_LOGS%\generate-%DYLAN_FILE%.log
 set OPERATION=Generating parser for %GRAMMAR_FILE%
 set COMPILER_OPTIONS=%GRAMMAR_FILE% %DYLAN_DIRECTORY%\%DYLAN_FILE%.dylan
 
@@ -124,7 +124,7 @@ echo [see log %LOG%]
 goto generate_error
 
 :DEBUG_FAILURE
-set LOG=%FUNCTIONAL_DEVELOPER_BUILD_LOGS%\debug-generate-%IDL%.log
+set LOG=%OPEN_DYLAN_BUILD_LOGS%\debug-generate-%IDL%.log
 echo %OPERATION% again under debugger
 call %DEBUGGER% %COMPILER% %COMPILER_OPTIONS% /debugger > %LOG%
 if "%SHOW_FAILURE_LOG%"=="yes" goto verbose_build_error

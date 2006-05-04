@@ -2577,12 +2577,12 @@ MMError dylan_init_memory_manager()
 #ifdef _WIN32
     char specbuf[32768];
     const char *spec = NULL;
-    if(GetEnvironmentVariableA("FUNCTIONAL_DEVELOPER_MPS_HEAP", specbuf,
+    if(GetEnvironmentVariableA("OPEN_DYLAN_MPS_HEAP", specbuf,
 			       sizeof specbuf) != 0) {
       spec = specbuf;
     }
 #else
-    const char *spec = getenv("FUNCTIONAL_DEVELOPER_MPS_HEAP");
+    const char *spec = getenv("OPEN_DYLAN_MPS_HEAP");
 #endif
 
     res = mps_arena_create(&arena, mps_arena_class_vm(), max_heap_size);
@@ -2591,7 +2591,7 @@ MMError dylan_init_memory_manager()
     if(spec) {
       params = get_gen_params(spec, &gen_count, &max_heap_size);
       if(!params)
-	init_error("parse FUNCTIONAL_DEVELOPER_MPS_HEAP format");
+	init_error("parse OPEN_DYLAN_MPS_HEAP format");
     }
 
     if(params) {

@@ -71,16 +71,16 @@ if not "%LIBRARY%"=="%LIBRARY_TARGET%" echo  [dll %LIBRARY_TARGET%.dll]
 if not "%LIBRARY_TARGET%"=="%OLD_LIBRARY_TARGET%" echo  [old dll %OLD_LIBRARY_TARGET%.dll]
 
 :CONT2
-if "%FUNCTIONAL_DEVELOPER_RELEASE_INSTALL%"=="%FUNCTIONAL_DEVELOPER_USER_INSTALL%" goto ensure_library
+if "%OPEN_DYLAN_RELEASE_INSTALL%"=="%OPEN_DYLAN_USER_INSTALL%" goto ensure_library
 if exist "%WINDIR%\%LIBRARY_TARGET%" goto end
 
 :ENSURE_LIBRARY
 
-if exist "%FUNCTIONAL_DEVELOPER_RELEASE_INSTALL%\bin\%LIBRARY_TARGET%.dll" goto end
-if exist "%FUNCTIONAL_DEVELOPER_RELEASE_INSTALL%\bin\%OLD_LIBRARY_TARGET%.dll" goto found_old_target
-if exist "%FUNCTIONAL_DEVELOPER_USER_INSTALL%\bin\%LIBRARY_TARGET%.dll" goto end
-if exist "%FUNCTIONAL_DEVELOPER_USER_BUILD%\%LIBRARY%\dylanmakefile.mkf" goto link
-if exist "%FUNCTIONAL_DEVELOPER_RELEASE_ROOT%\Build\%LIBRARY%\dylanmakefile.mkf" goto system_link
+if exist "%OPEN_DYLAN_RELEASE_INSTALL%\bin\%LIBRARY_TARGET%.dll" goto end
+if exist "%OPEN_DYLAN_RELEASE_INSTALL%\bin\%OLD_LIBRARY_TARGET%.dll" goto found_old_target
+if exist "%OPEN_DYLAN_USER_INSTALL%\bin\%LIBRARY_TARGET%.dll" goto end
+if exist "%OPEN_DYLAN_USER_BUILD%\%LIBRARY%\dylanmakefile.mkf" goto link
+if exist "%OPEN_DYLAN_RELEASE_ROOT%\Build\%LIBRARY%\dylanmakefile.mkf" goto system_link
 
 if "%QUIET%" == "yes" set NMAKE_OPTIONS=/s /nologo
 if "%QUIET%" == "no" set NMAKE_OPTIONS=/d /nologo

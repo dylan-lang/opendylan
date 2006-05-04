@@ -51,14 +51,14 @@ end method c-compiler-command-line;
 define method c-compiler-command-line
     (platform == #"x86-win32", ld, c-file) => (command :: <byte-string>)
   let include 
-    = environment-variable("FUNCTIONAL_DEVELOPER_RELEASE_INCLUDE")
+    = environment-variable("OPEN_DYLAN_RELEASE_INCLUDE")
       | begin
-	  let install = environment-variable("FUNCTIONAL_DEVELOPER_RELEASE_INSTALL");
+	  let install = environment-variable("OPEN_DYLAN_RELEASE_INSTALL");
 	  install
 	    & as(<string>,
 		 subdirectory-locator(as(<directory-locator>, install), "include"))
 	end;
-  let c-flags = environment-variable("FUNCTIONAL_DEVELOPER_C_FLAGS");
+  let c-flags = environment-variable("OPEN_DYLAN_C_FLAGS");
   let object-file = backend-object-file-name(makefile-target-using-os-name(#"win32"), c-file);
   let command = "cl /c /DCRTAPI1=_cdecl /DCRTAPI2=_cdecl /nologo /D_X86_=1 "
                 "/D_WIN32_IE=0x0300 /DWINVER=0x0400 /DWIN32 /D_WIN32 /D_MT /MT /Z7 /Od /W2 ";

@@ -6,7 +6,7 @@ cd /home/nosa/dylan/build/$1
 
 # Cannot do this -- must supply dependencies e.g. -ldylan
 
-# gcc -o $1 -L$FUNCTIONAL_DEVELOPER_USER_INSTALL/lib -L$FUNCTIONAL_DEVELOPER_RELEASE/lib -L/usr/lib -L/usr/X11R6/lib -L/usr/X11/lib -L/lib -L/usr/X11R6/lib/xrt/lib $FUNCTIONAL_DEVELOPER_USER_INSTALL/lib/dylan-support.o *.o 
+# gcc -o $1 -L$OPEN_DYLAN_USER_INSTALL/lib -L$OPEN_DYLAN_RELEASE/lib -L/usr/lib -L/usr/X11R6/lib -L/usr/X11/lib -L/lib -L/usr/X11R6/lib/xrt/lib $OPEN_DYLAN_USER_INSTALL/lib/dylan-support.o *.o 
 
-gcc -o $1 -L$FUNCTIONAL_DEVELOPER_USER_INSTALL/lib -L$FUNCTIONAL_DEVELOPER_RELEASE/lib -L/usr/lib -L/usr/X11R6/lib -L/usr/X11/lib -L/lib -L/usr/X11R6/lib/xrt/lib $FUNCTIONAL_DEVELOPER_USER_INSTALL/lib/dylan-support.o *.o -ldylan -lfunctional-extensions -lmachine-word -lbyte-vector -lfunctional-dylan -lthreads -ltranscendentals -lcommon-extensions -lcommon-dylan -ltestworks -ltestworks-specs -ldylan-test-suite -lsystem -lstreams -lstreams-test-suite -lprint -lprint-test-suite -lfunctional-extensions-test-suite -lformat -lformat-test-suite -ltestworks-test-suite -ldate -lfile-system -llocators -loperating-system -lsettings -lm 
+gcc -o $1 -L$OPEN_DYLAN_USER_INSTALL/lib -L$OPEN_DYLAN_RELEASE/lib -L/usr/lib -L/usr/X11R6/lib -L/usr/X11/lib -L/lib -L/usr/X11R6/lib/xrt/lib $OPEN_DYLAN_USER_INSTALL/lib/dylan-support.o *.o -ldylan -lfunctional-extensions -lmachine-word -lbyte-vector -lfunctional-dylan -lthreads -ltranscendentals -lcommon-extensions -lcommon-dylan -ltestworks -ltestworks-specs -ldylan-test-suite -lsystem -lstreams -lstreams-test-suite -lprint -lprint-test-suite -lfunctional-extensions-test-suite -lformat -lformat-test-suite -ltestworks-test-suite -ldate -lfile-system -llocators -loperating-system -lsettings -lm 
 

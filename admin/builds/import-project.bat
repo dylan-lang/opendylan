@@ -10,7 +10,7 @@ set EXE=no
 set EXT=
 set MODE=tight
 set QUIET=yes
-if "%FUNCTIONAL_DEVELOPER_DEFAULT_ROOT%"=="" set FUNCTIONAL_DEVELOPER_DEFAULT_ROOT=C:\Program Files\Functional Objects\Functional Developer
+if "%OPEN_DYLAN_DEFAULT_ROOT%"=="" set OPEN_DYLAN_DEFAULT_ROOT=C:\Program Files\Functional Objects\Functional Developer
 
 REM //
 REM // Loop through the command line arguments //
@@ -101,19 +101,19 @@ set DYLAN_RELEASE_COMPILER=%DYLAN_RELEASE_ROOT%\bin\dylan-compile.exe
 if exist "%DYLAN_RELEASE_COMPILER%" goto compiler_found
 REM // Try what we just built
 REM //
-set DYLAN_RELEASE_COMPILER=%FUNCTIONAL_DEVELOPER_RELEASE_ROOT%\bin\pentium-dw.exe
+set DYLAN_RELEASE_COMPILER=%OPEN_DYLAN_RELEASE_ROOT%\bin\pentium-dw.exe
 if exist "%DYLAN_RELEASE_COMPILER%" goto compiler_found
-set DYLAN_RELEASE_COMPILER=%FUNCTIONAL_DEVELOPER_RELEASE_ROOT%\bin\basic-pentium-dw.exe
+set DYLAN_RELEASE_COMPILER=%OPEN_DYLAN_RELEASE_ROOT%\bin\basic-pentium-dw.exe
 if exist "%DYLAN_RELEASE_COMPILER%" goto compiler_found
-set DYLAN_RELEASE_COMPILER=%FUNCTIONAL_DEVELOPER_RELEASE_ROOT%\bin\personal-pentium-dw.exe
+set DYLAN_RELEASE_COMPILER=%OPEN_DYLAN_RELEASE_ROOT%\bin\personal-pentium-dw.exe
 if exist "%DYLAN_RELEASE_COMPILER%" goto compiler_found
-set DYLAN_RELEASE_COMPILER=%FUNCTIONAL_DEVELOPER_RELEASE_ROOT%\bin\fdbc.exe
+set DYLAN_RELEASE_COMPILER=%OPEN_DYLAN_RELEASE_ROOT%\bin\fdbc.exe
 if exist "%DYLAN_RELEASE_COMPILER%" goto compiler_found
-set DYLAN_RELEASE_COMPILER=%FUNCTIONAL_DEVELOPER_RELEASE_ROOT%\bin\dylan-compile.exe
+set DYLAN_RELEASE_COMPILER=%OPEN_DYLAN_RELEASE_ROOT%\bin\dylan-compile.exe
 if exist "%DYLAN_RELEASE_COMPILER%" goto compiler_found
 REM //... finally hope that we can find it on the path.
 REM //
-set DYLAN_RELEASE_COMPILER=%FUNCTIONAL_DEVELOPER_DEFAULT_ROOT%\bin\fdbc.exe
+set DYLAN_RELEASE_COMPILER=%OPEN_DYLAN_DEFAULT_ROOT%\bin\fdbc.exe
 if exist "%DYLAN_RELEASE_COMPILER%" goto compiler_found
 set DYLAN_RELEASE_COMPILER=fdbc.exe
 
@@ -128,13 +128,13 @@ set DEBUGGER_OPTIONS=-debugger
 set DEBUGGER_OPERATION=under debugger
 set DEBUGGER=%DYLAN_RELEASE_ROOT%\bin\batch-debug.exe
 if exist "%DEBUGGER%" goto start_import
-set DEBUGGER=%FUNCTIONAL_DEVELOPER_DEFAULT_ROOT%\bin\batch-debug.exe
+set DEBUGGER=%OPEN_DYLAN_DEFAULT_ROOT%\bin\batch-debug.exe
 if exist "%DEBUGGER%" goto start_import
 set DEBUGGER=batch-debug
 
 :START_IMPORT
 call :fixup_PATHS "%DEBUGGER%"
-set LOG=%FUNCTIONAL_DEVELOPER_BUILD_LOGS%\import-%PROJECT%.log
+set LOG=%OPEN_DYLAN_BUILD_LOGS%\import-%PROJECT%.log
 set COMPILER_OPTIONS=/%MODE%
 set LID_PATHNAME=%DIRECTORY%\%LID%.lid
 set INCORRECT_HDP_PATHNAME=%DIRECTORY%\%LID%.hdp
@@ -143,13 +143,13 @@ set HDP_PATHNAME=%PROJECT%.hdp
 if "%DLL%"=="yes" set COMPILER_OPTIONS=/dll %COMPILER_OPTIONS% 
 if "%DLL%"=="no" set COMPILER_OPTIONS=/exe %COMPILER_OPTIONS%
 
-REM // Locally unbind the FUNCTIONAL_DEVELOPER_USER settings so that these
+REM // Locally unbind the OPEN_DYLAN_USER settings so that these
 REM // projects are built as if by a user.
-set FUNCTIONAL_DEVELOPER_USER_PROJECTS=
-set FUNCTIONAL_DEVELOPER_USER_REGISTRIES=
-set FUNCTIONAL_DEVELOPER_USER_BUILD=
-set FUNCTIONAL_DEVELOPER_USER_INSTALL=
-set FUNCTIONAL_DEVELOPER_USER_ROOT=
+set OPEN_DYLAN_USER_PROJECTS=
+set OPEN_DYLAN_USER_REGISTRIES=
+set OPEN_DYLAN_USER_BUILD=
+set OPEN_DYLAN_USER_INSTALL=
+set OPEN_DYLAN_USER_ROOT=
 
 echo Importing %PROJECT% %DEBUGGER_OPERATION%
 if "%QUIET%"=="yes" goto start_quiet_import

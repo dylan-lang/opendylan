@@ -24,7 +24,7 @@ define method show-property
     (context :: <environment-context>, property :: <personal-root-property>)
  => ()
   message(context, "Personal root: %s",
-          environment-variable("FUNCTIONAL_DEVELOPER_USER_ROOT"))
+          environment-variable("OPEN_DYLAN_USER_ROOT"))
 end method show-property;
 
 define method set-property
@@ -51,7 +51,7 @@ define method show-property
     (context :: <environment-context>, property :: <system-root-property>)
  => ()
   message(context, "System root: %s",
-          environment-variable("FUNCTIONAL_DEVELOPER_RELEASE_ROOT"))
+          environment-variable("OPEN_DYLAN_RELEASE_ROOT"))
 end method show-property;
 
 define method set-property
@@ -87,18 +87,18 @@ end method show-property;
 /// Utilities
 
 define constant $personal-directories
-  = #(#("FUNCTIONAL_DEVELOPER_USER_ROOT"),
-      #("FUNCTIONAL_DEVELOPER_USER_BUILD",      "build"),
-      #("FUNCTIONAL_DEVELOPER_USER_INSTALL"),
-      #("FUNCTIONAL_DEVELOPER_USER_SOURCES",    "sources"),
-      #("FUNCTIONAL_DEVELOPER_USER_REGISTRIES", "sources", "registry"));
+  = #(#("OPEN_DYLAN_USER_ROOT"),
+      #("OPEN_DYLAN_USER_BUILD",      "build"),
+      #("OPEN_DYLAN_USER_INSTALL"),
+      #("OPEN_DYLAN_USER_SOURCES",    "sources"),
+      #("OPEN_DYLAN_USER_REGISTRIES", "sources", "registry"));
 
 define constant $system-directories
-  = #(#("FUNCTIONAL_DEVELOPER_RELEASE_ROOT"),
-      #("FUNCTIONAL_DEVELOPER_RELEASE_BUILD",      "build"),
-      #("FUNCTIONAL_DEVELOPER_RELEASE_INSTALL"),
-      #("FUNCTIONAL_DEVELOPER_RELEASE_SOURCES",    "sources"),
-      #("FUNCTIONAL_DEVELOPER_RELEASE_REGISTRIES", "sources", "registry"));
+  = #(#("OPEN_DYLAN_RELEASE_ROOT"),
+      #("OPEN_DYLAN_RELEASE_BUILD",      "build"),
+      #("OPEN_DYLAN_RELEASE_INSTALL"),
+      #("OPEN_DYLAN_RELEASE_SOURCES",    "sources"),
+      #("OPEN_DYLAN_RELEASE_REGISTRIES", "sources", "registry"));
 
 define method maybe-set-roots
     (context :: <server-context>,

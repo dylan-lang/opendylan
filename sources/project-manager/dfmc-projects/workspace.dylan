@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Useful constants
 
-define constant $platform-variable = "FUNCTIONAL_DEVELOPER_PLATFORM_NAME";
+define constant $platform-variable = "OPEN_DYLAN_PLATFORM_NAME";
 define constant $default-platform  = $platform-name;
 
 define constant <debug-target>   = <object>;

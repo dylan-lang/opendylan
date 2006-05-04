@@ -132,7 +132,7 @@ define method emit-lib-install-commands
 		      "{INSTALLLIB} %s %s",
 		      makefile-pathname(t, makefile-variable-ref(t, "LIBFILE")),
 		      makefile-pathname
-			(t, makefile-variable-ref(t, "FUNCTIONAL_DEVELOPER_USER_LIB"))))
+			(t, makefile-variable-ref(t, "OPEN_DYLAN_USER_LIB"))))
 end method emit-lib-install-commands;
 
 define method emit-lib-install-commands
@@ -146,9 +146,9 @@ define method emit-lib-install-commands
   let shlib-destination
     = makefile-pathname(t,
 			if (lib-desc & personal-library?(lib-desc))
-			  makefile-variable-ref(t, "FUNCTIONAL_DEVELOPER_USER_BIN")
+			  makefile-variable-ref(t, "OPEN_DYLAN_USER_BIN")
 			else
-			  makefile-variable-ref(t, "FUNCTIONAL_DEVELOPER_RELEASE_BIN")
+			  makefile-variable-ref(t, "OPEN_DYLAN_RELEASE_BIN")
 			end if,
 			library-unit-name(t, target));
   let xsym-source
@@ -156,9 +156,9 @@ define method emit-lib-install-commands
   let xsym-destination
     = makefile-pathname(t,
 			if (lib-desc & personal-library?(lib-desc))
-			  makefile-variable-ref(t, "FUNCTIONAL_DEVELOPER_USER_BIN")
+			  makefile-variable-ref(t, "OPEN_DYLAN_USER_BIN")
 			else
-			  makefile-variable-ref(t, "FUNCTIONAL_DEVELOPER_RELEASE_BIN")
+			  makefile-variable-ref(t, "OPEN_DYLAN_RELEASE_BIN")
 			end if,
 			concatenate(library-unit-name(t, target), ".xSYM"));
   emit-makefile-rule
@@ -211,7 +211,7 @@ define method emit-app-install-commands (t :: <makefile-target>, stream, target)
 		      "{INSTALLLIB} %s %s",
 		      makefile-pathname(t, makefile-variable-ref(t, "APP")),
 		      makefile-pathname
-			(t, makefile-variable-ref(t, "FUNCTIONAL_DEVELOPER_USER_BIN"))))
+			(t, makefile-variable-ref(t, "OPEN_DYLAN_USER_BIN"))))
 end method emit-app-install-commands;
 
 define method emit-app-install-commands (t :: <MPW-makefile-target>, stream, target)
@@ -219,7 +219,7 @@ define method emit-app-install-commands (t :: <MPW-makefile-target>, stream, tar
     = makefile-pathname(t, concatenate(executable-unit(t, target), ".xSYM"));
   let xsym-destination
     = makefile-pathname(t,
-			makefile-variable-ref(t, "FUNCTIONAL_DEVELOPER_USER_BIN"),
+			makefile-variable-ref(t, "OPEN_DYLAN_USER_BIN"),
 			concatenate(executable-unit(t, target), ".xSYM"));
   emit-makefile-rule
     (t, stream, "install-app", #("app"), 
@@ -228,7 +228,7 @@ define method emit-app-install-commands (t :: <MPW-makefile-target>, stream, tar
 		      "{INSTALLLIB} %s %s",
 		      makefile-pathname(t, makefile-variable-ref(t, "APP")),
 		      makefile-pathname
-			(t, makefile-variable-ref(t, "FUNCTIONAL_DEVELOPER_USER_BIN"))),
+			(t, makefile-variable-ref(t, "OPEN_DYLAN_USER_BIN"))),
      makefile-command(t, "{UNINSTALL} %s", xsym-destination),
      makefile-command(t, "{INSTALLLIB} %s %s", xsym-source, xsym-destination))
 end method emit-app-install-commands;
@@ -346,7 +346,7 @@ define sideways method emit-target-makefile (back-end :: <c-back-end>,
     // In particular, these rules build into PERSONAL_LIB but delete from SYSTEM_LIB.
     let installed-libfile
       = makefile-pathname(t,
-			  makefile-variable-ref(t, "FUNCTIONAL_DEVELOPER_USER_LIB"),
+			  makefile-variable-ref(t, "OPEN_DYLAN_USER_LIB"),
 			  makefile-variable-ref(t, "LIBFILE"));
     emit-lib-install-commands(t, stream, installed-libfile, lib-desc, target);
     emit-makefile-separator(stream);

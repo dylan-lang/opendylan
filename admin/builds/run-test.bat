@@ -18,7 +18,7 @@ shift
 
 :SETUP_REQUIRED_ARGUMENTS
 set TEST_APP=%1%
-set TEST_FULL_NAME=%FUNCTIONAL_DEVELOPER_USER_INSTALL%\bin\%TEST_APP%.exe
+set TEST_FULL_NAME=%OPEN_DYLAN_USER_INSTALL%\bin\%TEST_APP%.exe
 set TEST_NAME=%2%
 set FORMATTED=%3%
 shift
@@ -45,22 +45,22 @@ goto find_test_report
 
 :FIND_TEST_REPORT
 call ensure-application test-report
-set TEST_REPORT=%FUNCTIONAL_DEVELOPER_USER_INSTALL%\bin\test-report.exe
+set TEST_REPORT=%OPEN_DYLAN_USER_INSTALL%\bin\test-report.exe
 if exist "%TEST_REPORT%" goto setup_variables
 set TEST_REPORT=%DYLAN_RELEASE_ROOT%\bin\test-report.exe
 if not exist "%TEST_REPORT%" goto no_test_report
 
 :SETUP_VARIABLES
 set LOG_NAME=test-%TEST_NAME%.log
-set LOG=%FUNCTIONAL_DEVELOPER_BUILD_LOGS%\%LOG_NAME%
+set LOG=%OPEN_DYLAN_BUILD_LOGS%\%LOG_NAME%
 set OLD_LOG_DIRECTORY=%OLD_RELEASE_ROOT%\qa\logs
 set OLD_LOG=%OLD_LOG_DIRECTORY%\%LOG_NAME%
-set REPORT_LOG=%FUNCTIONAL_DEVELOPER_BUILD_LOGS%\diff-%TEST_NAME%.log
+set REPORT_LOG=%OPEN_DYLAN_BUILD_LOGS%\diff-%TEST_NAME%.log
 
 :FIND_DEBUGGER
 set DEBUGGER=
 if "%DEBUG%"=="no" goto run_test
-set DEBUGGER=%FUNCTIONAL_DEVELOPER_RELEASE_ROOT%\bin\batch-debug.exe
+set DEBUGGER=%OPEN_DYLAN_RELEASE_ROOT%\bin\batch-debug.exe
 if exist "%DEBUGGER%" goto run_test
 set DEBUGGER=C:\Program Files\Functional Objects\Functional Developer\bin\batch-debug.exe
 if exist "%DEBUGGER%" goto run_test
@@ -71,7 +71,7 @@ call :fixup_PATHS "%DEBUGGER%"
 if not exist "%TEST_FULL_NAME%" goto no_app
 
 echo Testing %TEST_NAME% %DEBUGGER_OPERATION%
-set PATH=%FUNCTIONAL_DEVELOPER_RELEASE_ROOT%\Redistributable;%FUNCTIONAL_DEVELOPER_RELEASE_ROOT%\Bin;%PATH%
+set PATH=%OPEN_DYLAN_RELEASE_ROOT%\Redistributable;%OPEN_DYLAN_RELEASE_ROOT%\Bin;%PATH%
 if "%QUIET%"=="no" echo Path=%PATH%
 if "%QUIET%"=="no" echo Running: %DEBUGGER% %TEST_FULL_NAME% -progress -report log %COMMAND_ARGS%
 %DEBUGGER% %TEST_FULL_NAME% -progress -report log %COMMAND_ARGS% > %LOG%

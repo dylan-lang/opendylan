@@ -15,9 +15,9 @@ goto process_options
 set LIBRARY=%1%
 
 :ENSURE_APPLICATION
-if exist "%FUNCTIONAL_DEVELOPER_RELEASE_INSTALL%\bin\%LIBRARY%.exe" goto end
-if exist "%FUNCTIONAL_DEVELOPER_USER_INSTALL%\bin\%LIBRARY%.exe" goto end
-if exist "%FUNCTIONAL_DEVELOPER_USER_BUILD%\%LIBRARY%\dylanmakefile.mkf" goto link
+if exist "%OPEN_DYLAN_RELEASE_INSTALL%\bin\%LIBRARY%.exe" goto end
+if exist "%OPEN_DYLAN_USER_INSTALL%\bin\%LIBRARY%.exe" goto end
+if exist "%OPEN_DYLAN_USER_BUILD%\%LIBRARY%\dylanmakefile.mkf" goto link
 nmake %NMAKE_OPTIONS% OPTIONS="%OPTIONS%" %LIBRARY%
 if %ERRORLEVEL% NEQ 0 goto generateerror
 goto end

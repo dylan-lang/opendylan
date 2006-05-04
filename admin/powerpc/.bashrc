@@ -27,9 +27,9 @@ alias restore-reg="source /home/nosa/dylan/admin/restore-reg"
 export PATH=".:/usr/ucb:/bin:/usr/bin:/usr/local/bin:/usr/openwin/bin:/usr/dt/bin:/usr/sbin:/etc:/usr/new:/usr/bin/X11:/usr/local/frame/bin:/usr/local/TeX/bin:/usr/lib:/usr/etc:/home/nosa/scripts:/u/dylan/tools/scripts:/home/nosa/hope:/home/nosa/dylan/admin"
 
 
-unset FUNCTIONAL_DEVELOPER_RELEASE_INSTALL
-unset FUNCTIONAL_DEVELOPER_RELEASE_REGISTRIES
-unset FUNCTIONAL_DEVELOPER_PROJECTS_BUILD
-unset FUNCTIONAL_DEVELOPER_PROJECTS_INSTALL
-unset FUNCTIONAL_DEVELOPER_USER_ROOT
-unset FUNCTIONAL_DEVELOPER_PLATFORM_NAME
+unset OPEN_DYLAN_RELEASE_INSTALL
+unset OPEN_DYLAN_RELEASE_REGISTRIES
+unset OPEN_DYLAN_PROJECTS_BUILD
+unset OPEN_DYLAN_PROJECTS_INSTALL
+unset OPEN_DYLAN_USER_ROOT
+unset OPEN_DYLAN_PLATFORM_NAME

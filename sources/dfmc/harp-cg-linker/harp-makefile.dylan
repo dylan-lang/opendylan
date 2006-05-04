@@ -132,16 +132,16 @@ define sideways method emit-target-makefile
       // NOTE -- This creates inconsistent Makefiles if the library is a system library.
       // In particular, these rules build into PERSONAL_LIB but delete from SYSTEM_LIB.
       emit-makefile-rule
-        (t, stream, "$(FUNCTIONAL_DEVELOPER_USER_LIB)/$(LIBFILE)",
+        (t, stream, "$(OPEN_DYLAN_USER_LIB)/$(LIBFILE)",
          list("$(LIBFILE)"),
          format-to-string
            ("$(UNINSTALL) %s", library-unit-ref(t, lib-desc, target)),
-         "$(INSTALLLIB) $(LIBFILE) $(FUNCTIONAL_DEVELOPER_USER_LIB)");
+         "$(INSTALLLIB) $(LIBFILE) $(OPEN_DYLAN_USER_LIB)");
       emit-makefile-separator(stream);
       emit-makefile-rule
         (t, stream, "install", 
          concatenate(directly-used-library-names,
-		     #("$(FUNCTIONAL_DEVELOPER_USER_LIB)/$(LIBFILE)")));
+		     #("$(OPEN_DYLAN_USER_LIB)/$(LIBFILE)")));
       emit-makefile-separator(stream);
       emit-makefile-rule
         (t, stream, "app", list("install", exe));
@@ -150,7 +150,7 @@ define sideways method emit-target-makefile
         (t, stream, "install-app", #("app"), 
          format-to-string
            ("$(UNINSTALL) %s", executable-unit-ref(t, target)),
-         "$(INSTALLLIB) $(APP) $(FUNCTIONAL_DEVELOPER_USER_BIN)");
+         "$(INSTALLLIB) $(APP) $(OPEN_DYLAN_USER_BIN)");
       emit-makefile-separator(stream);
       emit-makefile-rule
         (t, stream, "clean", #(), 

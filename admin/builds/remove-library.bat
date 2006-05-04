@@ -13,9 +13,9 @@ echo Removing %LIBRARY%
 goto remove_library
 
 :REMOVE_LIBRARY
-call remove-directory %FUNCTIONAL_DEVELOPER_USER_BUILD%\%LIBRARY%
-call remove-file %FUNCTIONAL_DEVELOPER_USER_INSTALL%\databases\%LIBRARY%.ddb
-call remove-file %FUNCTIONAL_DEVELOPER_USER_INSTALL%\lib\%LIBRARY%.mkf
-call remove-file %FUNCTIONAL_DEVELOPER_USER_INSTALL%\lib\%LIBRARY_TARGET%.lib
-call remove-file %FUNCTIONAL_DEVELOPER_USER_INSTALL%\lib\%LIBRARY_TARGET%.defs
-call remove-file %FUNCTIONAL_DEVELOPER_USER_INSTALL%\bin\%LIBRARY_TARGET%.dll
+call remove-directory %OPEN_DYLAN_USER_BUILD%\%LIBRARY%
+call remove-file %OPEN_DYLAN_USER_INSTALL%\databases\%LIBRARY%.ddb
+call remove-file %OPEN_DYLAN_USER_INSTALL%\lib\%LIBRARY%.mkf
+call remove-file %OPEN_DYLAN_USER_INSTALL%\lib\%LIBRARY_TARGET%.lib
+call remove-file %OPEN_DYLAN_USER_INSTALL%\lib\%LIBRARY_TARGET%.defs
+call remove-file %OPEN_DYLAN_USER_INSTALL%\bin\%LIBRARY_TARGET%.dll

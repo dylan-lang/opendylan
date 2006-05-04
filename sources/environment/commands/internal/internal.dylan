@@ -76,7 +76,7 @@ define method show-property
     (context :: <environment-context>, property :: <patching-property>)
  => ()
   message(context, "Patching: %s",
-	  if (environment-variable("FUNCTIONAL_DEVELOPER_SYSTEM_DEVELOPER") = "yes") "on" else "off" end)
+	  if (environment-variable("OPEN_DYLAN_SYSTEM_DEVELOPER") = "yes") "on" else "off" end)
 end method show-property;
 
 define method set-property
@@ -84,7 +84,7 @@ define method set-property
      patching? :: <boolean>,
      #key save?)
  => ()
-  environment-variable("FUNCTIONAL_DEVELOPER_SYSTEM_DEVELOPER") := if (patching?) "yes" else "" end;
+  environment-variable("OPEN_DYLAN_SYSTEM_DEVELOPER") := if (patching?) "yes" else "" end;
 end method set-property;
 
 

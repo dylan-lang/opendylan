@@ -1,4 +1,4 @@
-pushd $FUNCTIONAL_DEVELOPER_USER_BUILD
+pushd $OPEN_DYLAN_USER_BUILD
 
 rm */*.o
 rm cmu-test-suite/cmu-test-suite

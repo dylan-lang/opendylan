@@ -1,9 +1,9 @@
-pushd $FUNCTIONAL_DEVELOPER_USER_INSTALL
+pushd $OPEN_DYLAN_USER_INSTALL
 
 rm -rf build
 rm -rf lib
 rm -rf databases
 
-new-build-area $FUNCTIONAL_DEVELOPER_USER_INSTALL
+new-build-area $OPEN_DYLAN_USER_INSTALL
 
 popd

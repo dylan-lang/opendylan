@@ -273,7 +273,7 @@ end function release-examples-directory;
 define function release-sources-directory
     () => (directory :: <directory-locator>)
   let user-directory
-    = environment-variable("FUNCTIONAL_DEVELOPER_USER_SOURCES");
+    = environment-variable("OPEN_DYLAN_USER_SOURCES");
   if (user-directory)
     as(<directory-locator>, user-directory)
   else

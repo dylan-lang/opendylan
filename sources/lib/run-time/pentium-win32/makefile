@@ -12,9 +12,9 @@ INCLUDEDEST      = $(BuildArea)\include
 LIBDEST          = $(BuildArea)\lib
 BINDEST          = $(BuildArea)\bin
 !else
-INCLUDEDEST      = $(FUNCTIONAL_DEVELOPER_USER_INSTALL)\include
-LIBDEST          = $(FUNCTIONAL_DEVELOPER_USER_INSTALL)\lib
-BINDEST          = $(FUNCTIONAL_DEVELOPER_USER_INSTALL)\bin
+INCLUDEDEST      = $(OPEN_DYLAN_USER_INSTALL)\include
+LIBDEST          = $(OPEN_DYLAN_USER_INSTALL)\lib
+BINDEST          = $(OPEN_DYLAN_USER_INSTALL)\bin
 !endif
 
 !include <win32.mak>
@@ -42,7 +42,7 @@ MPSKIT	 = C:\fundev\mps-kit\code
 
 CC	 = $(cc)
 LINKLIB	 = $(implib) /nologo /out:
-CFLAGS	 = $(cflags) $(cvarsmt) $(cdebug) /I$(INCLUDEDEST) /I$(MPSKIT) $(FUNCTIONAL_DEVELOPER_C_FLAGS) $(mmtuneflags) /DEXPIRATION=$(EXPIRATION)
+CFLAGS	 = $(cflags) $(cvarsmt) $(cdebug) /I$(INCLUDEDEST) /I$(MPSKIT) $(OPEN_DYLAN_C_FLAGS) $(mmtuneflags) /DEXPIRATION=$(EXPIRATION)
 HEAPOBJS = heap-display.obj heap-utils.obj heap-trail.obj heap-order1.obj heap-order2.obj heap-table.obj
 OBJS	 = collector.obj $(HEAPOBJS) runtime.obj win32-threads-primitives.obj spy-interfaces.obj expiration.obj
 LIBFILE	 = pentium-run-time.lib

@@ -46,7 +46,7 @@ define function root-directory
   // The original version was trying to do something clever.
   // Since that didn't work I've replaced it with the simplest
   // thing that works for me. --tc
-  environment-variable("FUNCTIONAL_DEVELOPER_USER_SOURCES")
+  environment-variable("OPEN_DYLAN_USER_SOURCES")
     | "C:\\fundev\\sources";
 end function root-directory;
 

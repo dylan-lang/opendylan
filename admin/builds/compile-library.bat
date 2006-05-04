@@ -218,7 +218,7 @@ goto setup_compile
 
 if "%MAYBE%"=="no" goto setup_compile
 
-if exist "%FUNCTIONAL_DEVELOPER_USER_INSTALL%\bin\%LIBRARY_TARGET%.%EXT%" goto success 
+if exist "%OPEN_DYLAN_USER_INSTALL%\bin\%LIBRARY_TARGET%.%EXT%" goto success 
 
 :SETUP_COMPILE
 
@@ -227,7 +227,7 @@ call find-compiler
 
 :COMPILER_FOUND
 
-set LOG=%FUNCTIONAL_DEVELOPER_BUILD_LOGS%\compile-%LIBRARY%.log
+set LOG=%OPEN_DYLAN_BUILD_LOGS%\compile-%LIBRARY%.log
 set BUILD=%DYLAN_RELEASE_ROOT%\bin\build
 set OPERATION=Building
 set COMPILER_OPTIONS=/messages:internal
@@ -242,7 +242,7 @@ if "%GNU%"=="no" set COMPILER_OPTIONS=/microsoft %COMPILER_OPTIONS%
 if "%EXPORTS%"=="yes" set COMPILER_OPTIONS=/gnu-exports %COMPILER_OPTIONS%
 if "%DEBUG%"=="min" set COMPILER_OPTIONS=/debug:min %COMPILER_OPTIONS%
 if "%DEBUG%"=="no" set COMPILER_OPTIONS=/debug:none %COMPILER_OPTIONS%
-if "%BUILD_COUNTS%"=="ignore" set FUNCTIONAL_DEVELOPER_MAJOR_MINOR_CHECKS_ONLY=yes
+if "%BUILD_COUNTS%"=="ignore" set OPEN_DYLAN_MAJOR_MINOR_CHECKS_ONLY=yes
 
 :FIND_DEBUGGER
 set DEBUGGER=%DYLAN_RELEASE_ROOT%\bin\batch-debug.exe
@@ -298,7 +298,7 @@ echo [see log %LOG%]
 goto generate_error
 
 :DEBUG_FAILURE
-set LOG=%FUNCTIONAL_DEVELOPER_BUILD_LOGS%\debug-compile-%LIBRARY%.log
+set LOG=%OPEN_DYLAN_BUILD_LOGS%\debug-compile-%LIBRARY%.log
 echo %OPERATION% %LIBRARY% again under debugger
 call %DEBUGGER% %DYLAN_RELEASE_COMPILER% %COMPILER_OPTIONS% /debugger %PROJECT% > %LOG%
 if "%SHOW_FAILURE_LOG%"=="yes" goto verbose_build_error

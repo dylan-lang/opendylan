@@ -410,12 +410,12 @@ end;
 define sideways method set-default-platform-info (c :: subclass(<project>),
 					processor, operating-system)
   let platform = platform-namestring(processor, operating-system);
-  environment-variable("FUNCTIONAL_DEVELOPER_PLATFORM_NAME") := platform
+  environment-variable("OPEN_DYLAN_PLATFORM_NAME") := platform
 end method;
 
 define sideways method default-platform-info 
     (c :: subclass(<project>)) => (processor-name, os-name)
-  let platform = environment-variable("FUNCTIONAL_DEVELOPER_PLATFORM_NAME");
+  let platform = environment-variable("OPEN_DYLAN_PLATFORM_NAME");
   unless (platform) platform := $platform-name end;
   platform-namestring-info(platform)
 end method;

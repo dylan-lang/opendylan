@@ -1,11 +1,11 @@
 # $(dllname)            library name (lowercased)
 # $(script)             Pathname to gnu linker script
-# $(rpath)              $FUNCTIONAL_DEVELOPER_RPATH
+# $(rpath)              $OPEN_DYLAN_RPATH
 # $(full-dll-name)      Name (from Library: or Executable:) w/suffix ".so"
 # $(full-exe-name)      Name (from Library: or Executable:)
 # $(entry-point)        Mangled library name, with "Exe0" appended
-# $(personal-lib)       $FUNCTIONAL_DEVELOPER_USER_INSTALL/lib
-# $(system-lib)         $FUNCTIONAL_DEVELOPER_RELEASE_INSTALL/lib
+# $(personal-lib)       $OPEN_DYLAN_USER_INSTALL/lib
+# $(system-lib)         $OPEN_DYLAN_RELEASE_INSTALL/lib
 # $(libraries)          Set below
 # $(dllobjs)            Object files:
 #                         _glue.o (linkdll) or _main.o (linkexe)

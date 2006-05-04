@@ -1,8 +1,8 @@
-pushd $FUNCTIONAL_DEVELOPER_USER_BUILD/dylan
+pushd $OPEN_DYLAN_USER_BUILD/dylan
 
 assemble
 
-gcc -shared -o dylan.so -L$FUNCTIONAL_DEVELOPER_USER_INSTALL/lib -L$FUNCTIONAL_DEVELOPER_RELEASE/lib -L/usr/lib -L/usr/X11R6/lib -L/usr/X11/lib -L/lib -L/usr/X11R6/lib/xrt/lib  *.o $FUNCTIONAL_DEVELOPER_USER_INSTALL/lib/runtime/*.o -lgc
+gcc -shared -o dylan.so -L$OPEN_DYLAN_USER_INSTALL/lib -L$OPEN_DYLAN_RELEASE/lib -L/usr/lib -L/usr/X11R6/lib -L/usr/X11/lib -L/lib -L/usr/X11R6/lib/xrt/lib  *.o $OPEN_DYLAN_USER_INSTALL/lib/runtime/*.o -lgc
 
 install-so dylan
 

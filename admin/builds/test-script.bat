@@ -3,16 +3,16 @@
 setlocal
 
 set SCRIPT=%1
-set SCRIPTS_DIRECTORY=%FUNCTIONAL_DEVELOPER_USER_SOURCES%\qa\scripts
+set SCRIPTS_DIRECTORY=%OPEN_DYLAN_USER_SOURCES%\qa\scripts
 set SCRIPT_FILE=%SCRIPTS_DIRECTORY%\%SCRIPT%
 set LOG_NAME=test-%SCRIPT%.log
-set LOG=%FUNCTIONAL_DEVELOPER_BUILD_LOGS%\%LOG_NAME%
+set LOG=%OPEN_DYLAN_BUILD_LOGS%\%LOG_NAME%
 
-set CONSOLE_DYLAN=%FUNCTIONAL_DEVELOPER_USER_ROOT%\bin\basic-console-environment.exe
+set CONSOLE_DYLAN=%OPEN_DYLAN_USER_ROOT%\bin\basic-console-environment.exe
 if exist "%CONSOLE_DYLAN%" goto console_dylan_found
-set CONSOLE_DYLAN=%FUNCTIONAL_DEVELOPER_USER_ROOT%\bin\console-environment.exe
+set CONSOLE_DYLAN=%OPEN_DYLAN_USER_ROOT%\bin\console-environment.exe
 if exist "%CONSOLE_DYLAN%" goto console_dylan_found
-set CONSOLE_DYLAN=%FUNCTIONAL_DEVELOPER_USER_ROOT%\bin\console-dylan.exe
+set CONSOLE_DYLAN=%OPEN_DYLAN_USER_ROOT%\bin\console-dylan.exe
 if exist "%CONSOLE_DYLAN%" goto console_dylan_found
 set CONSOLE_DYLAN=%DYLAN_RELEASE_ROOT%\bin\basic-console-environment.exe
 if exist "%CONSOLE_DYLAN%" goto console_dylan_found

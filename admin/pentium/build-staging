@@ -3,10 +3,10 @@
 function import ()
 {
   echo Importing $1 ...
-  LID=$FUNCTIONAL_DEVELOPER_USER_SOURCES/$1.lid
-  FUNCTIONAL_DEVELOPER_USER_INSTALL= \
-  FUNCTIONAL_DEVELOPER_USER_BUILD= \
-  FUNCTIONAL_DEVELOPER_USER_REGISTRIES= \
+  LID=$OPEN_DYLAN_USER_SOURCES/$1.lid
+  OPEN_DYLAN_USER_INSTALL= \
+  OPEN_DYLAN_USER_BUILD= \
+  OPEN_DYLAN_USER_REGISTRIES= \
     $dylan_compile -loose -nocompile -nolink $LID
   [ $? = 0 ] || { echo "Import failed" ; exit -1; }
 }
@@ -14,12 +14,12 @@ function import ()
 function set_rpath ()
 {
   echo Setting RPATH of $2 "(nee, $1)" ...
-  cp -p $FUNCTIONAL_DEVELOPER_USER_INSTALL/bin/$1 $FUNCTIONAL_DEVELOPER_USER_INSTALL/bin/$1.1
-  FUNCTIONAL_DEVELOPER_RPATH=/usr/local/lib/functional-developer/bin:/usr/local/lib/functional-developer/lib \
+  cp -p $OPEN_DYLAN_USER_INSTALL/bin/$1 $OPEN_DYLAN_USER_INSTALL/bin/$1.1
+  OPEN_DYLAN_RPATH=/usr/local/lib/functional-developer/bin:/usr/local/lib/functional-developer/lib \
     $build elf link $1.exe
   [ $? = 0 ] || { echo "Setting RPATH failed" ; exit -1; }
-  mv $FUNCTIONAL_DEVELOPER_USER_INSTALL/bin/$1 $STAGING/bin/$2
-  mv $FUNCTIONAL_DEVELOPER_USER_INSTALL/bin/$1.1 $FUNCTIONAL_DEVELOPER_USER_INSTALL/bin/$1
+  mv $OPEN_DYLAN_USER_INSTALL/bin/$1 $STAGING/bin/$2
+  mv $OPEN_DYLAN_USER_INSTALL/bin/$1.1 $OPEN_DYLAN_USER_INSTALL/bin/$1
 }
 
 [ $# = 2 ] || { echo "Usage: $0 VERSION RELEASE"; exit -1; }
@@ -31,9 +31,9 @@ import app/factorial/factorial-small
 import app/factorial/factorial-big
 import app/hello-world/hello-world
 
-[ -d $FUNCTIONAL_DEVELOPER_USER_INSTALL/staging ] || mkdir $FUNCTIONAL_DEVELOPER_USER_INSTALL/staging
+[ -d $OPEN_DYLAN_USER_INSTALL/staging ] || mkdir $OPEN_DYLAN_USER_INSTALL/staging
 
-STAGING=$FUNCTIONAL_DEVELOPER_USER_INSTALL/staging/functional-developer-$VERSION
+STAGING=$OPEN_DYLAN_USER_INSTALL/staging/functional-developer-$VERSION
 
 [ -d $STAGING ] && rm -rf $STAGING
 
@@ -49,13 +49,13 @@ for f in GNUmakefile LICENSE README; do cp -p $f $STAGING/; done
 set_rpath basic-console-compiler xfdcompile
 set_rpath basic-pentium-dw       fdcompile
 
-cp -p $FUNCTIONAL_DEVELOPER_USER_INSTALL/lib/*.so $STAGING/bin/
-cp -p $FUNCTIONAL_DEVELOPER_USER_INSTALL/bin/elf-linker.script $STAGING/bin/
+cp -p $OPEN_DYLAN_USER_INSTALL/lib/*.so $STAGING/bin/
+cp -p $OPEN_DYLAN_USER_INSTALL/bin/elf-linker.script $STAGING/bin/
 for lib in build internal-release-info;
   do [ -f $STAGING/bin/lib$lib.so ] && rm -f $STAGING/bin/lib$lib.so; done
  
-cp -p $FUNCTIONAL_DEVELOPER_USER_INSTALL/lib/dylan-elf-dll.script $STAGING/lib/
-cp -p $FUNCTIONAL_DEVELOPER_USER_INSTALL/lib/dylan-elf-exe.script $STAGING/lib/
+cp -p $OPEN_DYLAN_USER_INSTALL/lib/dylan-elf-dll.script $STAGING/lib/
+cp -p $OPEN_DYLAN_USER_INSTALL/lib/dylan-elf-exe.script $STAGING/lib/
 
 for lib in dylan common-dylan functional-dylan collections io system \
            generic-arithmetic big-integers c-ffi network testworks testworks-specs; \
@@ -63,7 +63,7 @@ for lib in dylan common-dylan functional-dylan collections io system \
 
 for lib in dylan common-dylan functional-dylan collections io system \
            generic-arithmetic big-integers c-ffi network testworks testworks-specs; \
-  do cp -p $FUNCTIONAL_DEVELOPER_USER_INSTALL/databases/$lib.ddb $STAGING/databases/; done
+  do cp -p $OPEN_DYLAN_USER_INSTALL/databases/$lib.ddb $STAGING/databases/; done
 
 mkdir $STAGING/Sources/registry
 mkdir $STAGING/Sources/registry/generic
@@ -71,34 +71,34 @@ mkdir $STAGING/Sources/registry/x86-linux
 
 for lib in functional-dylan collections \
            generic-arithmetic big-integers testworks testworks-specs; \
-  do cp -p $FUNCTIONAL_DEVELOPER_USER_SOURCES/registry/generic/$lib $STAGING/Sources/registry/generic/; done
+  do cp -p $OPEN_DYLAN_USER_SOURCES/registry/generic/$lib $STAGING/Sources/registry/generic/; done
 
 for lib in common-dylan io system c-ffi network; \
-  do cp -p $FUNCTIONAL_DEVELOPER_USER_SOURCES/registry/x86-linux/$lib $STAGING/Sources/registry/x86-linux/; done
+  do cp -p $OPEN_DYLAN_USER_SOURCES/registry/x86-linux/$lib $STAGING/Sources/registry/x86-linux/; done
 
 for lib in common-dylan functional-dylan collections io system network; \
-  do cp -a $FUNCTIONAL_DEVELOPER_USER_SOURCES/$lib/ $STAGING/Sources/$lib/; done
+  do cp -a $OPEN_DYLAN_USER_SOURCES/$lib/ $STAGING/Sources/$lib/; done
 
 for lib in examples http-client nntp-client pop-client smtp-client; \
   do rm -rf $STAGING/Sources/network/$lib; done
 
 mkdir $STAGING/Sources/lib
 for lib in generic-arithmetic big-integers c-ffi; \
-  do cp -a $FUNCTIONAL_DEVELOPER_USER_SOURCES/lib/$lib $STAGING/Sources/lib/$lib/; done
+  do cp -a $OPEN_DYLAN_USER_SOURCES/lib/$lib $STAGING/Sources/lib/$lib/; done
 
 rm -rf $STAGING/Sources/lib/c-ffi/test
 
 mkdir $STAGING/Sources/qa
 for lib in testworks testworks-specs; \
-  do cp -a $FUNCTIONAL_DEVELOPER_USER_SOURCES/qa/$lib/ $STAGING/Sources/qa/$lib/; done
+  do cp -a $OPEN_DYLAN_USER_SOURCES/qa/$lib/ $STAGING/Sources/qa/$lib/; done
 
 mkdir $STAGING/Sources/qa/test-apps
-cp -a $FUNCTIONAL_DEVELOPER_USER_SOURCES/qa/test-apps/libraries-test-suite/ $STAGING/Sources/qa/test-apps/libraries-test-suite/
+cp -a $OPEN_DYLAN_USER_SOURCES/qa/test-apps/libraries-test-suite/ $STAGING/Sources/qa/test-apps/libraries-test-suite/
 mkdir $STAGING/Sources/qa/test-suites
-cp -a $FUNCTIONAL_DEVELOPER_USER_SOURCES/qa/test-suites/libraries-test-suite/ $STAGING/Sources/qa/test-suites/libraries-test-suite/
+cp -a $OPEN_DYLAN_USER_SOURCES/qa/test-suites/libraries-test-suite/ $STAGING/Sources/qa/test-suites/libraries-test-suite/
 
 mkdir $STAGING/Sources/dylan
-cp -a $FUNCTIONAL_DEVELOPER_USER_SOURCES/dylan/tests $STAGING/Sources/dylan/tests/
+cp -a $OPEN_DYLAN_USER_SOURCES/dylan/tests $STAGING/Sources/dylan/tests/
 
 pushd $STAGING/Sources
 find . -name 'CVS' -depth -exec rm -rf {} \;
@@ -111,18 +111,18 @@ rm -f system/file-system/native-macintosh-locators.dylan
 popd
 
 pushd $STAGING/Examples
-cp -a $FUNCTIONAL_DEVELOPER_USER_SOURCES/examples/documentation/airport/ airport/
-cp -a $FUNCTIONAL_DEVELOPER_USER_SOURCES/examples/console/towers-of-hanoi/ towers-of-hanoi
-cp -a $FUNCTIONAL_DEVELOPER_USER_SOURCES/app/factorial/ factorial/
-cp -a $FUNCTIONAL_DEVELOPER_USER_SOURCES/app/hello-world/ hello-world/
-cp -a $FUNCTIONAL_DEVELOPER_USER_SOURCES/network/examples network/
+cp -a $OPEN_DYLAN_USER_SOURCES/examples/documentation/airport/ airport/
+cp -a $OPEN_DYLAN_USER_SOURCES/examples/console/towers-of-hanoi/ towers-of-hanoi
+cp -a $OPEN_DYLAN_USER_SOURCES/app/factorial/ factorial/
+cp -a $OPEN_DYLAN_USER_SOURCES/app/hello-world/ hello-world/
+cp -a $OPEN_DYLAN_USER_SOURCES/network/examples network/
 find . -name 'CVS' -depth -exec rm -rf {} \;
 find . -name '*-build' -depth -exec rm -rf {} \;
 find . -name '*.lid' -exec rm -f {} \;
 find . -name 'README.html' -exec rm -f {} \;
 popd
 
-pushd $FUNCTIONAL_DEVELOPER_USER_INSTALL/staging
+pushd $OPEN_DYLAN_USER_INSTALL/staging
 echo tar cfz functional-developer-$VERSION-$RELEASE.tgz functional-developer-$VERSION/
 tar cfz functional-developer-$VERSION-$RELEASE.tgz functional-developer-$VERSION/
 popd

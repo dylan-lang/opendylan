@@ -58,7 +58,7 @@ If "%1%"=="?" GOTO PRINT_USAGE
 If "%1%"=="/?" GOTO PRINT_USAGE
 set ERROR_MESSAGE=
 set OLD_RELEASE_ROOT=C:\Program Files\Functional Objects\Functional Developer
-set FUNCTIONAL_DEVELOPER_USER_SOURCES=
+set OPEN_DYLAN_USER_SOURCES=
 set CVS_BRANCH=trunk
 set TEST_TARGET=test-basic-internal-release
 set CLEANUP=
@@ -130,7 +130,7 @@ goto PARAM_LOOP
 
 :SET_SOURCES
 If "%2%"=="" GOTO NO_ARG
-set FUNCTIONAL_DEVELOPER_USER_SOURCES=%2%
+set OPEN_DYLAN_USER_SOURCES=%2%
 shift
 shift
 goto PARAM_LOOP
@@ -174,7 +174,7 @@ REM //
 call :fixup_PATHS "%OLD_RELEASE_ROOT%"
 
 REM // Option defaulting
-if "%FUNCTIONAL_DEVELOPER_USER_SOURCES%"=="" set FUNCTIONAL_DEVELOPER_USER_SOURCES=%RELEASE_ROOT%\Sources
+if "%OPEN_DYLAN_USER_SOURCES%"=="" set OPEN_DYLAN_USER_SOURCES=%RELEASE_ROOT%\Sources
 set QA_RELEASE_ROOT=%RELEASE_ROOT%\QA
 
 REM // Build options
@@ -185,7 +185,7 @@ set OPTIONS=/debugger
 set QUOTED_OPTIONS=OPTIONS=%OPTIONS%
 
 :SKIP_DEBUGGER_OPTION
-set BUILD_OPTIONS=-p %QA_RELEASE_ROOT% -s %RELEASE_ROOT% %COMMON_BUILD_OPTIONS% -sources %FUNCTIONAL_DEVELOPER_USER_SOURCES% -branch %CVS_BRANCH% -nopath -environment
+set BUILD_OPTIONS=-p %QA_RELEASE_ROOT% -s %RELEASE_ROOT% %COMMON_BUILD_OPTIONS% -sources %OPEN_DYLAN_USER_SOURCES% -branch %CVS_BRANCH% -nopath -environment
 
 :TEST_RELEASE
 echo --------------------------------------------------

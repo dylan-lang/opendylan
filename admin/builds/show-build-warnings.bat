@@ -76,7 +76,7 @@ if "%ERRORLEVEL%"=="9009" echo PERL.EXE not found
 goto end
 
 :SHOW_ALL_WARNINGS
-perl find-warnings.pl %OPTIONS% %FUNCTIONAL_DEVELOPER_BUILD_LOGS%\compile-*.log
+perl find-warnings.pl %OPTIONS% %OPEN_DYLAN_BUILD_LOGS%\compile-*.log
 if "%ERRORLEVEL%"=="9009" echo PERL.EXE not found
 goto end
 

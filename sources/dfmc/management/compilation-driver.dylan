@@ -244,10 +244,10 @@ define method finish-method-model-forms (form :: <generic-definition>,
 end method;
 
 define constant $system-developer-environment-variable-name
-  = "FUNCTIONAL_DEVELOPER_SYSTEM_DEVELOPER";
+  = "OPEN_DYLAN_SYSTEM_DEVELOPER";
 
 define constant $major-minor-checks-only-environment-variable-name
-  = "FUNCTIONAL_DEVELOPER_MAJOR_MINOR_CHECKS_ONLY";
+  = "OPEN_DYLAN_MAJOR_MINOR_CHECKS_ONLY";
 
 define function library-description-build-count
     (ld :: <project-library-description>) => (build-count :: <integer>)

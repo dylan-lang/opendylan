@@ -28,7 +28,7 @@ if "%DYLAN_CVS_BRANCH%"=="trunk" goto checkout
 set CVS_BRANCH_ARG=-r %DYLAN_CVS_BRANCH%
 
 :CHECKOUT
-set LOG=%FUNCTIONAL_DEVELOPER_CVS_LOGS%\checkout-%NAME%.log
+set LOG=%OPEN_DYLAN_CVS_LOGS%\checkout-%NAME%.log
 
 if "%UNIT%"=="" goto checkout_TREE
 pushd %PARENT%

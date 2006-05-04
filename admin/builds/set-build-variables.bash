@@ -97,14 +97,14 @@ export TRUNK_SYSTEM_ROOT="$root/"
 ## Export the release variables
 ##
 
-export FUNCTIONAL_DEVELOPER_PLATFORM_NAME=$platform_name
-export FUNCTIONAL_DEVELOPER_RELEASE="$root/"
-export FUNCTIONAL_DEVELOPER_RELEASE_REGISTRIES="$FUNCTIONAL_DEVELOPER_RELEASE/sources/registry/"
+export OPEN_DYLAN_PLATFORM_NAME=$platform_name
+export OPEN_DYLAN_RELEASE="$root/"
+export OPEN_DYLAN_RELEASE_REGISTRIES="$OPEN_DYLAN_RELEASE/sources/registry/"
 case $target_platform in
     x86-win32 | sparc-solaris2 | sparc-sunos4 | alpha-osf3)
-        export FUNCTIONAL_DEVELOPER_RELEASE_INSTALL=$FUNCTIONAL_DEVELOPER_RELEASE/platforms/$platform_name ;;
+        export OPEN_DYLAN_RELEASE_INSTALL=$OPEN_DYLAN_RELEASE/platforms/$platform_name ;;
     pentium)
-        export FUNCTIONAL_DEVELOPER_RELEASE_INSTALL=$FUNCTIONAL_DEVELOPER_RELEASE ;;
+        export OPEN_DYLAN_RELEASE_INSTALL=$OPEN_DYLAN_RELEASE ;;
     *) echo "$0 - Error - unsupported target platform $target_platform"
        exit 3 ;;
 esac
@@ -122,37 +122,37 @@ case $target_platform in
     *) echo "$0 - Error - unsupported target platform $target_platform"
        exit 3 ;;
 esac
-export FUNCTIONAL_DEVELOPER_USER_ROOT="$personal_root/"
-export FUNCTIONAL_DEVELOPER_USER_REGISTRIES=$sources_directory/registry
-export FUNCTIONAL_DEVELOPER_USER_BUILD=$build_directory
-export FUNCTIONAL_DEVELOPER_USER_INSTALL=$install_directory
+export OPEN_DYLAN_USER_ROOT="$personal_root/"
+export OPEN_DYLAN_USER_REGISTRIES=$sources_directory/registry
+export OPEN_DYLAN_USER_BUILD=$build_directory
+export OPEN_DYLAN_USER_INSTALL=$install_directory
 
 ## Other build settings
 ##
-export FUNCTIONAL_DEVELOPER_C_FLAGS="-g -O"
-LD_LIBRARY_PATH=$FUNCTIONAL_DEVELOPER_USER_INSTALL/lib:$FUNCTIONAL_DEVELOPER_RELEASE_INSTALL/lib:$LD_LIBRARY_PATH
+export OPEN_DYLAN_C_FLAGS="-g -O"
+LD_LIBRARY_PATH=$OPEN_DYLAN_USER_INSTALL/lib:$OPEN_DYLAN_RELEASE_INSTALL/lib:$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH
 export TMPDIR=/usr/tmp
 
 ## Setup vars for linking ##
 ##
 case $linking_type in
- dynamic) case $FUNCTIONAL_DEVELOPER_PLATFORM_NAME in
-	   alpha-osf3) export FUNCTIONAL_DEVELOPER_LIB_SUFFIX="so"
-		       export FUNCTIONAL_DEVELOPER_LD="ld -shared"
-		       export FUNCTIONAL_DEVELOPER_LINKLIB_FLAGS="-expect_unresolved '*'" ;;
-           sparc-solaris2) export FUNCTIONAL_DEVELOPER_LIB_SUFFIX="so"
-                           export FUNCTIONAL_DEVELOPER_LD="ld -G" ;;
-           *) export FUNCTIONAL_DEVELOPER_LIB_SUFFIX="a"
-              export FUNCTIONAL_DEVELOPER_LD="ld -r" ;;
+ dynamic) case $OPEN_DYLAN_PLATFORM_NAME in
+	   alpha-osf3) export OPEN_DYLAN_LIB_SUFFIX="so"
+		       export OPEN_DYLAN_LD="ld -shared"
+		       export OPEN_DYLAN_LINKLIB_FLAGS="-expect_unresolved '*'" ;;
+           sparc-solaris2) export OPEN_DYLAN_LIB_SUFFIX="so"
+                           export OPEN_DYLAN_LD="ld -G" ;;
+           *) export OPEN_DYLAN_LIB_SUFFIX="a"
+              export OPEN_DYLAN_LD="ld -r" ;;
 	  esac ;;
- static) export FUNCTIONAL_DEVELOPER_LIB_SUFFIX="a"
-         export FUNCTIONAL_DEVELOPER_LD="ld -r" ;;
+ static) export OPEN_DYLAN_LIB_SUFFIX="a"
+         export OPEN_DYLAN_LD="ld -r" ;;
 esac
 
 ## *** Remove these old names when the project manager is updated
-export FUNCTIONAL_DEVELOPER_PROJECTS_BUILD=$FUNCTIONAL_DEVELOPER_USER_BUILD
-export FUNCTIONAL_DEVELOPER_PROJECTS_INSTALL=$FUNCTIONAL_DEVELOPER_USER_INSTALL
+export OPEN_DYLAN_PROJECTS_BUILD=$OPEN_DYLAN_USER_BUILD
+export OPEN_DYLAN_PROJECTS_INSTALL=$OPEN_DYLAN_USER_INSTALL
 
 echo "-----------------------------------------------------------------------"
 echo "                         Environment Settings                          "

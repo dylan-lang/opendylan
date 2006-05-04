@@ -146,11 +146,11 @@ set COMPILER=%DYLAN_RELEASE_ROOT%\bin\console-scepter.exe
 if exist "%COMPILER%" goto compiler_found
 set COMPILER=%OLD_RELEASE_ROOT%\bin\console-scepter.exe
 if exist "%COMPILER%" goto compiler_found
-set COMPILER=%FUNCTIONAL_DEVELOPER_DEFAULT_ROOT%\Bin\console-scepter.exe
+set COMPILER=%OPEN_DYLAN_DEFAULT_ROOT%\Bin\console-scepter.exe
 
 :COMPILER_FOUND
 
-set LOG=%FUNCTIONAL_DEVELOPER_BUILD_LOGS%\generate-%IDL%.log
+set LOG=%OPEN_DYLAN_BUILD_LOGS%\generate-%IDL%.log
 set OPERATION=Generating IDL bindings for %IDL%.idl
 set COMPILER_OPTIONS=/language:dylan /clean
 if "%PROTOCOL%"=="yes" set COMPILER_OPTIONS=%COMPILER_OPTIONS% /protocol
@@ -212,7 +212,7 @@ echo [see log %LOG%]
 goto generate_error
 
 :DEBUG_FAILURE
-set LOG=%FUNCTIONAL_DEVELOPER_BUILD_LOGS%\debug-generate-%IDL%.log
+set LOG=%OPEN_DYLAN_BUILD_LOGS%\debug-generate-%IDL%.log
 echo %OPERATION% again under debugger
 call %DEBUGGER% %COMPILER% %COMPILER_OPTIONS% /debugger > %LOG%
 if "%SHOW_FAILURE_LOG%"=="yes" goto verbose_build_error

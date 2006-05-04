@@ -14,33 +14,33 @@ function find_compiler ()
   export dylan_compile dylan_compile_options build
 }
 
-export FUNCTIONAL_DEVELOPER_SYSTEM_DEVELOPER="yes"
+export OPEN_DYLAN_SYSTEM_DEVELOPER="yes"
 
 while [ "$#" -ne 0 ]; do
   case $1 in
 
-   -r) export FUNCTIONAL_DEVELOPER_RELEASE="$2" ;;
+   -r) export OPEN_DYLAN_RELEASE="$2" ;;
 
-   -b) export FUNCTIONAL_DEVELOPER_USER_BUILD="$2/build"
-       export FUNCTIONAL_DEVELOPER_USER_INSTALL="$2"
+   -b) export OPEN_DYLAN_USER_BUILD="$2/build"
+       export OPEN_DYLAN_USER_INSTALL="$2"
        cd $2 ;;
 
-   -s) export FUNCTIONAL_DEVELOPER_USER_SOURCES="$2/sources"
-       export FUNCTIONAL_DEVELOPER_USER_REGISTRIES="$2/sources/registry" ;;
+   -s) export OPEN_DYLAN_USER_SOURCES="$2/sources"
+       export OPEN_DYLAN_USER_REGISTRIES="$2/sources/registry" ;;
 
    -c) find_compiler $2 ;;
 
    -rc) find_compiler $2
-	export FUNCTIONAL_DEVELOPER_RELEASE="$2" ;;
+	export OPEN_DYLAN_RELEASE="$2" ;;
 
-   -rs) export FUNCTIONAL_DEVELOPER_RELEASE="$2"
-        export FUNCTIONAL_DEVELOPER_USER_SOURCES="$2/sources"
-        export FUNCTIONAL_DEVELOPER_USER_REGISTRIES="$2/sources/registry" ;;
+   -rs) export OPEN_DYLAN_RELEASE="$2"
+        export OPEN_DYLAN_USER_SOURCES="$2/sources"
+        export OPEN_DYLAN_USER_REGISTRIES="$2/sources/registry" ;;
 
    -rcs) find_compiler $2
-         export FUNCTIONAL_DEVELOPER_RELEASE=$2
-         export FUNCTIONAL_DEVELOPER_USER_SOURCES="$2/sources"
-         export FUNCTIONAL_DEVELOPER_USER_REGISTRIES="$2/sources/registry" ;;
+         export OPEN_DYLAN_RELEASE=$2
+         export OPEN_DYLAN_USER_SOURCES="$2/sources"
+         export OPEN_DYLAN_USER_REGISTRIES="$2/sources/registry" ;;
 
      *) echo Invalid command line option -  $option
         exit ;;
@@ -50,5 +50,5 @@ while [ "$#" -ne 0 ]; do
 done
 
 echo Settings...
-printenv | grep FUNCTIONAL_DEVELOPER
+printenv | grep OPEN_DYLAN
 printenv | grep dylan_compile

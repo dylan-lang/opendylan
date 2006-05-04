@@ -115,7 +115,7 @@ define variable *library-packs-override* = #"unknown";
 
 define function raw-encoded-library-packs () => (encoded-packs :: <machine-word>)
   if (*library-packs-override* = #"unknown")
-    let raw-override = environment-variable("FUNCTIONAL_DEVELOPER_LIBRARY_PACKS");
+    let raw-override = environment-variable("OPEN_DYLAN_LIBRARY_PACKS");
     if (raw-override)
       *library-packs-override* := string-to-machine-word(raw-override)
     else

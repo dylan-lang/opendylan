@@ -20,8 +20,8 @@ CFLAGS      =  /DDEBUGGING $(cflags) $(cdebug) $(PLATFORM_CFLAGS)
 CFLAGS      = $(cflags) $(cdebug) $(PLATFORM_CFLAGS)
 !endif
 
-NUB_INSTALL_AREA = $(FUNCTIONAL_DEVELOPER_USER_INSTALL)\lib
-NUB_EXE_INSTALL_AREA = $(FUNCTIONAL_DEVELOPER_USER_INSTALL)\bin
+NUB_INSTALL_AREA = $(OPEN_DYLAN_USER_INSTALL)\lib
+NUB_EXE_INSTALL_AREA = $(OPEN_DYLAN_USER_INSTALL)\bin
 
 # Common object files.
 # These make up builds of both the local and remote debugger nubs.

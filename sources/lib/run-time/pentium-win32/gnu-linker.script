@@ -6,8 +6,8 @@
 # $(full-exe-name)      Name (from Library: or Executable:) w/suffix ".exe"
 # $(full-lib-name)      Name (from Library: or Executable:) w/suffix ".lib"
 # $(script)             Pathname to gnu linker script
-# $(personal-lib)       $FUNCTIONAL_DEVELOPER_USER_INSTALL/lib
-# $(system-lib)         $FUNCTIONAL_DEVELOPER_RELEASE_INSTALL/lib
+# $(personal-lib)       $OPEN_DYLAN_USER_INSTALL/lib
+# $(system-lib)         $OPEN_DYLAN_RELEASE_INSTALL/lib
 # $(dylan-imp7)		dylanimp7.o
 # $(libraries)          Set below
 # $(dllobjs)            Object files:

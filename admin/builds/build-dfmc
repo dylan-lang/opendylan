@@ -94,13 +94,13 @@ PATH=.:/usr/etc:/usr/local/bin:/usr/local/new/bin:/usr/ucb:/usr/bsd:/usr/bin/bsd
 source $env_script -r $personal_dylan_root -pr $personal_dylan_root
 
 ## Useful locations
-sources_directory=$FUNCTIONAL_DEVELOPER_USER_ROOT/sources
+sources_directory=$OPEN_DYLAN_USER_ROOT/sources
 emulator_registry=${emulator_registry:-$sources_directory/registry/emulator}
 generic_registry=${generic_registry:-$sources_directory/registry/generic}
-build_directory=$FUNCTIONAL_DEVELOPER_USER_BUILD
-bin_directory=$FUNCTIONAL_DEVELOPER_USER_INSTALL/bin
-include_directory=$FUNCTIONAL_DEVELOPER_USER_INSTALL/include
-lib_directory=$FUNCTIONAL_DEVELOPER_USER_INSTALL/lib
+build_directory=$OPEN_DYLAN_USER_BUILD
+bin_directory=$OPEN_DYLAN_USER_INSTALL/bin
+include_directory=$OPEN_DYLAN_USER_INSTALL/include
+lib_directory=$OPEN_DYLAN_USER_INSTALL/lib
 
 ## Words for printing out in the preamble.
 case $tags in
@@ -284,10 +284,10 @@ function rip-out-run-time(){
   echo ""
   echo "Ripping out *.o & lib files for C run-time from $sources_directory/dfmc/c-run-time/..."
   rm -f $sources_directory/dfmc/c-run-time/*.o
-  rm -f $sources_directory/dfmc/c-run-time/lib_run-time.$FUNCTIONAL_DEVELOPER_LIB_SUFFIX
+  rm -f $sources_directory/dfmc/c-run-time/lib_run-time.$OPEN_DYLAN_LIB_SUFFIX
   
   echo "Ripping out old lib for C run-time from $lib_directory..."
-  rm -f $lib_directory/lib_run-time.$FUNCTIONAL_DEVELOPER_LIB_SUFFIX
+  rm -f $lib_directory/lib_run-time.$OPEN_DYLAN_LIB_SUFFIX
 
   echo "Ripping out old include for C run-time from $include_directory..."
   rm -f $include_directory/run-time.h
@@ -300,8 +300,8 @@ function rip-out-compilation-products(){
   echo "Ripping out old builds in $build_directory/$1/*..."
   rm -fr $build_directory/$1
 
-  echo "Ripping out old lib $lib_directory/lib_$1.$FUNCTIONAL_DEVELOPER_LIB_SUFFIX..."
-  rm -f $lib_directory/lib_$1.$FUNCTIONAL_DEVELOPER_LIB_SUFFIX
+  echo "Ripping out old lib $lib_directory/lib_$1.$OPEN_DYLAN_LIB_SUFFIX..."
+  rm -f $lib_directory/lib_$1.$OPEN_DYLAN_LIB_SUFFIX
 
   echo "Ripping out old application $bin_directory/$1..."
   rm -f $bin_directory/$1
@@ -391,12 +391,12 @@ if test $skip_build -eq 0; then
     echo "* Boehm GC library checkout *"
     echo "*****************************"
     pushd $lib_directory
-    hope co -comp D-install-$machine-lib -unit lib_gc.$FUNCTIONAL_DEVELOPER_LIB_SUFFIX -branch $branch -writ skip -extra delete -miss create
+    hope co -comp D-install-$machine-lib -unit lib_gc.$OPEN_DYLAN_LIB_SUFFIX -branch $branch -writ skip -extra delete -miss create
     if test $machine=sparc-sunos4; then
       ## Magic RThor & Jonathan say we gotta do on SunOS.  NB: gets a warning about no symbol table.
-      chmod u+w $lib_directory/lib_gc.$FUNCTIONAL_DEVELOPER_LIB_SUFFIX # make it writeable
-      ranlib $lib_directory/lib_gc.$FUNCTIONAL_DEVELOPER_LIB_SUFFIX    # update table of contents
-      chmod u-w $lib_directory/lib_gc.$FUNCTIONAL_DEVELOPER_LIB_SUFFIX # make it unwriteable
+      chmod u+w $lib_directory/lib_gc.$OPEN_DYLAN_LIB_SUFFIX # make it writeable
+      ranlib $lib_directory/lib_gc.$OPEN_DYLAN_LIB_SUFFIX    # update table of contents
+      chmod u-w $lib_directory/lib_gc.$OPEN_DYLAN_LIB_SUFFIX # make it unwriteable
     fi
     popd
   fi

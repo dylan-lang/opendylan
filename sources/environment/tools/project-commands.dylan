@@ -384,7 +384,7 @@ define function open-lid-projects?
     () => (open? :: <boolean>)
   //--- Only support this if the user is using user registries
   let using-registries?
-    = environment-variable("FUNCTIONAL_DEVELOPER_USER_REGISTRIES");
+    = environment-variable("OPEN_DYLAN_USER_REGISTRIES");
   using-registries?
     & *open-lid-projects?*
 end function open-lid-projects?;

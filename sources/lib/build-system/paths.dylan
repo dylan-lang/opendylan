@@ -24,7 +24,7 @@ end method;
 
 define function system-install-path()
  => (path :: false-or(<locator>));
-  let path = read-environment-variable("FUNCTIONAL_DEVELOPER_RELEASE_INSTALL");
+  let path = read-environment-variable("OPEN_DYLAN_RELEASE_INSTALL");
   if (path)
     let directory = as(<directory-locator>, path);
     ensure-directories-exist(directory);
@@ -35,7 +35,7 @@ end;
 define function system-registry-path()
  => (path :: false-or(<sequence>));
   let path
-    = read-environment-variable("FUNCTIONAL_DEVELOPER_RELEASE_REGISTRIES");
+    = read-environment-variable("OPEN_DYLAN_RELEASE_REGISTRIES");
   path &
     map(method(p) as(<directory-locator>, p) end,
         tokenize-environment-variable(path))
@@ -43,7 +43,7 @@ end;
 
 define function system-release-path()
  => (path :: false-or(<locator>))
-  let path = read-environment-variable("FUNCTIONAL_DEVELOPER_RELEASE");
+  let path = read-environment-variable("OPEN_DYLAN_RELEASE");
   if (path)
     as(<directory-locator>, path)
   else
@@ -53,7 +53,7 @@ end;
 
 define function system-build-path()
  => (path :: false-or(<locator>))
-  let path = read-environment-variable("FUNCTIONAL_DEVELOPER_RELEASE_BUILD");
+  let path = read-environment-variable("OPEN_DYLAN_RELEASE_BUILD");
   path & as(<directory-locator>, path)
 end;
 
@@ -71,7 +71,7 @@ end;
 define function user-registry-path
     ()
  => (path :: false-or(<sequence>));
-  let path = read-environment-variable("FUNCTIONAL_DEVELOPER_USER_REGISTRIES");
+  let path = read-environment-variable("OPEN_DYLAN_USER_REGISTRIES");
   path 
     & map(method (p :: <string>)
             as(<directory-locator>, p)
@@ -82,7 +82,7 @@ end;
 define function user-install-path
     ()
  => (path :: <directory-locator>)
-  read-environment-path("FUNCTIONAL_DEVELOPER_USER_INSTALL");
+  read-environment-path("OPEN_DYLAN_USER_INSTALL");
 end;
 
 define variable *user-projects-path* = #f;
@@ -99,7 +99,7 @@ define function user-projects-path
   *user-projects-path*
     |
     begin
-      let path = environment-variable("FUNCTIONAL_DEVELOPER_USER_PROJECTS");
+      let path = environment-variable("OPEN_DYLAN_USER_PROJECTS");
       path &
         map(method(p) as(<directory-locator>, p) end,
             tokenize-environment-variable(path))
@@ -108,7 +108,7 @@ end;
 
 define function user-build-path()
  => (path :: <locator>);
-  read-environment-path("FUNCTIONAL_DEVELOPER_USER_BUILD", default: "build");
+  read-environment-path("OPEN_DYLAN_USER_BUILD", default: "build");
 end;
 
 define function read-environment-path
@@ -131,6 +131,6 @@ end;
 
 define function user-root-path()
  => (path :: <directory-locator>);
-  let path = read-environment-variable("FUNCTIONAL_DEVELOPER_USER_ROOT");
+  let path = read-environment-variable("OPEN_DYLAN_USER_ROOT");
   as(<directory-locator>, path | home-directory())
 end;

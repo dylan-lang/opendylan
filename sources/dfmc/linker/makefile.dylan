@@ -119,9 +119,9 @@ end method runtime-unit-link-ref;
 
 define method library-unit-directory (t, lib :: false-or(<library-description>))
   if (lib & personal-library?(lib))
-    makefile-variable-ref(t, "FUNCTIONAL_DEVELOPER_USER_LIB")
+    makefile-variable-ref(t, "OPEN_DYLAN_USER_LIB")
   else
-    makefile-variable-ref(t, "FUNCTIONAL_DEVELOPER_RELEASE_LIB")
+    makefile-variable-ref(t, "OPEN_DYLAN_RELEASE_LIB")
   end if;
 end method;
 
@@ -137,7 +137,7 @@ end method;
 
 define method executable-unit-ref (t, unit)
   makefile-pathname(t,
-		    makefile-variable-ref(t, "FUNCTIONAL_DEVELOPER_USER_BIN"),
+		    makefile-variable-ref(t, "OPEN_DYLAN_USER_BIN"),
 		    executable-unit(t, unit));
 end method;
 
@@ -170,16 +170,16 @@ define method makefile-pathname (t :: <unix-makefile-target>, #rest components)
 end method makefile-pathname;
 
 define method library-suffix (t :: <unix-makefile-target>) 
-  "$(FUNCTIONAL_DEVELOPER_LIB_SUFFIX)"
+  "$(OPEN_DYLAN_LIB_SUFFIX)"
 end method;
 
 define method makefile-program-setups (t :: <unix-makefile-target>) 
-  list("FUNCTIONAL_DEVELOPER_RELEASE_BIN=$(FUNCTIONAL_DEVELOPER_RELEASE_INSTALL)/bin",
-       "FUNCTIONAL_DEVELOPER_RELEASE_INCLUDE=$(FUNCTIONAL_DEVELOPER_RELEASE_INSTALL)/include",
-       "FUNCTIONAL_DEVELOPER_RELEASE_LIB=$(FUNCTIONAL_DEVELOPER_RELEASE_INSTALL)/lib",
-       "FUNCTIONAL_DEVELOPER_USER_BIN=$(FUNCTIONAL_DEVELOPER_USER_INSTALL)/bin",
-       "FUNCTIONAL_DEVELOPER_USER_INCLUDE=$(FUNCTIONAL_DEVELOPER_USER_INSTALL)/include",
-       "FUNCTIONAL_DEVELOPER_USER_LIB=$(FUNCTIONAL_DEVELOPER_USER_INSTALL)/lib",
+  list("OPEN_DYLAN_RELEASE_BIN=$(OPEN_DYLAN_RELEASE_INSTALL)/bin",
+       "OPEN_DYLAN_RELEASE_INCLUDE=$(OPEN_DYLAN_RELEASE_INSTALL)/include",
+       "OPEN_DYLAN_RELEASE_LIB=$(OPEN_DYLAN_RELEASE_INSTALL)/lib",
+       "OPEN_DYLAN_USER_BIN=$(OPEN_DYLAN_USER_INSTALL)/bin",
+       "OPEN_DYLAN_USER_INCLUDE=$(OPEN_DYLAN_USER_INSTALL)/include",
+       "OPEN_DYLAN_USER_LIB=$(OPEN_DYLAN_USER_INSTALL)/lib",
        "",
        "CC = gcc",
        "MKDIR = mkdir",
@@ -187,9 +187,9 @@ define method makefile-program-setups (t :: <unix-makefile-target>)
        "INSTALLOBJ = @ exit 0; ",
        "INSTALLLIB = cp -p",
        "UNINSTALL = rm -f",
-       "LINKAPP = gcc $(FUNCTIONAL_DEVELOPER_LINKAPP_FLAGS) -L$(FUNCTIONAL_DEVELOPER_USER_LIB) -L$(FUNCTIONAL_DEVELOPER_RELEASE_LIB) -o",
-       "LINKLIB = $(FUNCTIONAL_DEVELOPER_LD) $(FUNCTIONAL_DEVELOPER_LINKLIB_FLAGS) -L$(FUNCTIONAL_DEVELOPER_USER_LIB) -L$(FUNCTIONAL_DEVELOPER_RELEASE_LIB) -o",
-       "CFLAGS = $(FUNCTIONAL_DEVELOPER_C_FLAGS) -I$(FUNCTIONAL_DEVELOPER_RELEASE_INCLUDE)");
+       "LINKAPP = gcc $(OPEN_DYLAN_LINKAPP_FLAGS) -L$(OPEN_DYLAN_USER_LIB) -L$(OPEN_DYLAN_RELEASE_LIB) -o",
+       "LINKLIB = $(OPEN_DYLAN_LD) $(OPEN_DYLAN_LINKLIB_FLAGS) -L$(OPEN_DYLAN_USER_LIB) -L$(OPEN_DYLAN_RELEASE_LIB) -o",
+       "CFLAGS = $(OPEN_DYLAN_C_FLAGS) -I$(OPEN_DYLAN_RELEASE_INCLUDE)");
 end method;
 
 define method object-unit-name (t :: <unix-makefile-target>, unit)
@@ -254,12 +254,12 @@ define method executable-suffix (t :: <win32-makefile-target>) "exe" end;
 define method link-target-separator (t :: <win32-makefile-target>) "" end;
 
 define method makefile-program-setups (t :: <win32-makefile-target>) 
-  list("FUNCTIONAL_DEVELOPER_RELEASE_BIN=$(FUNCTIONAL_DEVELOPER_RELEASE_INSTALL)\\bin",
-       "FUNCTIONAL_DEVELOPER_RELEASE_INCLUDE=$(FUNCTIONAL_DEVELOPER_RELEASE_INSTALL)\\include",
-       "FUNCTIONAL_DEVELOPER_RELEASE_LIB=$(FUNCTIONAL_DEVELOPER_RELEASE_INSTALL)\\lib",
-       "FUNCTIONAL_DEVELOPER_USER_BIN=$(FUNCTIONAL_DEVELOPER_USER_INSTALL)\\bin",
-       "FUNCTIONAL_DEVELOPER_USER_INCLUDE=$(FUNCTIONAL_DEVELOPER_USER_INSTALL)\\include",
-       "FUNCTIONAL_DEVELOPER_USER_LIB=$(FUNCTIONAL_DEVELOPER_USER_INSTALL)\\lib",
+  list("OPEN_DYLAN_RELEASE_BIN=$(OPEN_DYLAN_RELEASE_INSTALL)\\bin",
+       "OPEN_DYLAN_RELEASE_INCLUDE=$(OPEN_DYLAN_RELEASE_INSTALL)\\include",
+       "OPEN_DYLAN_RELEASE_LIB=$(OPEN_DYLAN_RELEASE_INSTALL)\\lib",
+       "OPEN_DYLAN_USER_BIN=$(OPEN_DYLAN_USER_INSTALL)\\bin",
+       "OPEN_DYLAN_USER_INCLUDE=$(OPEN_DYLAN_USER_INSTALL)\\include",
+       "OPEN_DYLAN_USER_LIB=$(OPEN_DYLAN_USER_INSTALL)\\lib",
        "",
        "APPVER = 4.0",
        "TARGETOS = BOTH",
@@ -272,13 +272,13 @@ define method makefile-program-setups (t :: <win32-makefile-target>)
        "MKDIR = mkdir",
        "CREATE = touch",
        "",
-       "LIB = $(FUNCTIONAL_DEVELOPER_USER_LIB);$(FUNCTIONAL_DEVELOPER_RELEASE_LIB);$(LIB)",
+       "LIB = $(OPEN_DYLAN_USER_LIB);$(OPEN_DYLAN_RELEASE_LIB);$(LIB)",
        "LINKLIB = $(implib) /nologo /out:",
        "LINKAPP = $(link) $(conlflags) $(ldebug) $(conlibsmt) /nologo /out:",
        "",
        // W2 suppresses the warnings about unused labels and local variables.
        // It will, however, generate a warning for each file that /W2 overrides /W3.  (Sigh)
-       "CFLAGS = $(cflags) $(cvarsmt) $(cdebug) /W2 /I$(FUNCTIONAL_DEVELOPER_RELEASE_INCLUDE) $(FUNCTIONAL_DEVELOPER_C_FLAGS)",
+       "CFLAGS = $(cflags) $(cvarsmt) $(cdebug) /W2 /I$(OPEN_DYLAN_RELEASE_INCLUDE) $(OPEN_DYLAN_C_FLAGS)",
        "RFLAGS = $(rcflags) $(rcvars)"
        );
 end method;
@@ -362,7 +362,7 @@ end method runtime-unit-link-ref;
 
 // Macintosh pathnames frequently contain spaces so we need to quote them appropriately.
 // Further, the MPW convention is to include the trailing directory delimiter (:) in the
-// value of variables corresponding to directories (e.g., FUNCTIONAL_DEVELOPER_USER_LIB) so
+// value of variables corresponding to directories (e.g., OPEN_DYLAN_USER_LIB) so
 // we can't unconditionally add the delimiter after each component.  (SIGH)
 define method makefile-pathname (t :: <MPW-makefile-target>, #rest components)
   let almost
@@ -392,12 +392,12 @@ define method executable-unit (t :: <MPW-makefile-target>, unit)
 end method executable-unit;
 
 define method makefile-program-setups (t :: <MPW-makefile-target>) 
-  list("FUNCTIONAL_DEVELOPER_RELEASE_BIN     = {FUNCTIONAL_DEVELOPER_RELEASE_INSTALL}Bin:",
-       "FUNCTIONAL_DEVELOPER_RELEASE_INCLUDE = {FUNCTIONAL_DEVELOPER_RELEASE_INSTALL}Include:",
-       "FUNCTIONAL_DEVELOPER_RELEASE_LIB     = {FUNCTIONAL_DEVELOPER_RELEASE_INSTALL}Lib:",
-       "FUNCTIONAL_DEVELOPER_USER_BIN     = {FUNCTIONAL_DEVELOPER_USER_INSTALL}Bin:",
-       "FUNCTIONAL_DEVELOPER_USER_INCLUDE = {FUNCTIONAL_DEVELOPER_USER_INSTALL}Include:",
-       "FUNCTIONAL_DEVELOPER_USER_LIB     = {FUNCTIONAL_DEVELOPER_USER_INSTALL}Lib:",
+  list("OPEN_DYLAN_RELEASE_BIN     = {OPEN_DYLAN_RELEASE_INSTALL}Bin:",
+       "OPEN_DYLAN_RELEASE_INCLUDE = {OPEN_DYLAN_RELEASE_INSTALL}Include:",
+       "OPEN_DYLAN_RELEASE_LIB     = {OPEN_DYLAN_RELEASE_INSTALL}Lib:",
+       "OPEN_DYLAN_USER_BIN     = {OPEN_DYLAN_USER_INSTALL}Bin:",
+       "OPEN_DYLAN_USER_INCLUDE = {OPEN_DYLAN_USER_INSTALL}Include:",
+       "OPEN_DYLAN_USER_LIB     = {OPEN_DYLAN_USER_INSTALL}Lib:",
        "",
        "INSTALLOBJ = Echo Built",	//---*** NOTE: Can we do something that's silent???
        "INSTALLLIB = Duplicate -y",
@@ -409,17 +409,17 @@ define method makefile-program-setups (t :: <MPW-makefile-target>)
        //---*** NOTE: reverse the value of the file type (-t) and creator (-c) options!
        "LINKSTUB = MWLinkPPC -xm stublibrary   -t 'buts' -c ' SPM'"
 	 " -fragname {LIBNAME} -@export {LIBNAME}.exp"
-	 " -L\"{FUNCTIONAL_DEVELOPER_USER_LIB}\" -L\"{FUNCTIONAL_DEVELOPER_RELEASE_LIB}\""
+	 " -L\"{OPEN_DYLAN_USER_LIB}\" -L\"{OPEN_DYLAN_RELEASE_LIB}\""
 	 " -L\"{MWPPCLibraries}\" -L\"{SharedLibraries}\""
 	 " -warn -o",
        "LINKLIB  = MWLinkPPC -xm sharedlibrary -t 'blhs' -c 'lyDH'"
 	 " -fragname {LIBNAME} -@export {LIBNAME}.exp -sym fullpath"
-	 " -L\"{FUNCTIONAL_DEVELOPER_USER_LIB}\" -L\"{FUNCTIONAL_DEVELOPER_RELEASE_LIB}\""
+	 " -L\"{OPEN_DYLAN_USER_LIB}\" -L\"{OPEN_DYLAN_RELEASE_LIB}\""
 	 " -L\"{MWPPCLibraries}\" -L\"{SharedLibraries}\""
 	 " -warn -o",
        "LINKAPP  = MWLinkPPC -xm application -sym fullpath"
 	 " -stacksize 128 -sizemin 8192 -sizemax 8192"
-	 " -L\"{FUNCTIONAL_DEVELOPER_USER_LIB}\" -L\"{FUNCTIONAL_DEVELOPER_RELEASE_LIB}\""
+	 " -L\"{OPEN_DYLAN_USER_LIB}\" -L\"{OPEN_DYLAN_RELEASE_LIB}\""
 	 " -L\"{MWPPCLibraries}\" -L\"{SharedLibraries}\""
 	 " -warn -o",
        "libcmt = -l\"MSL C.PPC.DLL\"",
@@ -428,8 +428,8 @@ define method makefile-program-setups (t :: <MPW-makefile-target>)
        "GCDATAEND   = ",
        "",
        "CC = MWCPPC",
-       "CFLAGS = -sym full -I\"{FUNCTIONAL_DEVELOPER_RELEASE_INCLUDE}\""
-	 " -w nounusedarg,noimplicitconv,noemptydecl -nomapcr {FUNCTIONAL_DEVELOPER_C_FLAGS}",
+       "CFLAGS = -sym full -I\"{OPEN_DYLAN_RELEASE_INCLUDE}\""
+	 " -w nounusedarg,noimplicitconv,noemptydecl -nomapcr {OPEN_DYLAN_C_FLAGS}",
        "RC = Rez",
        "RFLAGS = "
        );

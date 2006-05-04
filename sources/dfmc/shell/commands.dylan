@@ -1015,7 +1015,7 @@ define dylan-shell-command
   hidden? #t
   let (processor, os) = default-platform-info(*default-project-class*);
   when (registry-path)
-    os/environment-variable("FUNCTIONAL_DEVELOPER_USER_REGISTRIES") := registry-path;
+    os/environment-variable("OPEN_DYLAN_USER_REGISTRIES") := registry-path;
   end;
   let registries = find-registries(processor, os);
   for(r in registries)

@@ -504,11 +504,11 @@ define function do-set-personal-root (personal-directory)
 	  let subdirectory = apply(subdirectory-locator, locator, subdirectories);
 	  as(<string>, subdirectory)
 	end method subdirectory;
-  os/environment-variable("FUNCTIONAL_DEVELOPER_USER_ROOT")       := personal-directory;
-  os/environment-variable("FUNCTIONAL_DEVELOPER_USER_BUILD")      := subdirectory("build");
-  os/environment-variable("FUNCTIONAL_DEVELOPER_USER_INSTALL")    := personal-directory;
-  os/environment-variable("FUNCTIONAL_DEVELOPER_USER_SOURCES")    := subdirectory("sources");
-  os/environment-variable("FUNCTIONAL_DEVELOPER_USER_REGISTRIES") := subdirectory("sources", 
+  os/environment-variable("OPEN_DYLAN_USER_ROOT")       := personal-directory;
+  os/environment-variable("OPEN_DYLAN_USER_BUILD")      := subdirectory("build");
+  os/environment-variable("OPEN_DYLAN_USER_INSTALL")    := personal-directory;
+  os/environment-variable("OPEN_DYLAN_USER_SOURCES")    := subdirectory("sources");
+  os/environment-variable("OPEN_DYLAN_USER_REGISTRIES") := subdirectory("sources", 
 										  "registry");
 end function;
 
@@ -530,8 +530,8 @@ define shell-command
   "\n"
   hidden? #t
   let personal-directory
-    = os/environment-variable("FUNCTIONAL_DEVELOPER_USER_ROOT");
-  format-out("FUNCTIONAL_DEVELOPER_USER_ROOT = %=\n", personal-directory);
+    = os/environment-variable("OPEN_DYLAN_USER_ROOT");
+  format-out("OPEN_DYLAN_USER_ROOT = %=\n", personal-directory);
 end;
 
 define command-argument system-directory;
@@ -542,11 +542,11 @@ define function do-set-system-root (system-directory)
 	  let subdirectory = apply(subdirectory-locator, locator, subdirectories);
 	  as(<string>, subdirectory)
 	end method subdirectory;
-  os/environment-variable("FUNCTIONAL_DEVELOPER_RELEASE_ROOT")       := system-directory;
-  os/environment-variable("FUNCTIONAL_DEVELOPER_RELEASE_BUILD")      := subdirectory("build");
-  os/environment-variable("FUNCTIONAL_DEVELOPER_RELEASE_INSTALL")    := system-directory;
-  os/environment-variable("FUNCTIONAL_DEVELOPER_RELEASE_SOURCES")    := subdirectory("sources");
-  os/environment-variable("FUNCTIONAL_DEVELOPER_RELEASE_REGISTRIES") := subdirectory("sources",
+  os/environment-variable("OPEN_DYLAN_RELEASE_ROOT")       := system-directory;
+  os/environment-variable("OPEN_DYLAN_RELEASE_BUILD")      := subdirectory("build");
+  os/environment-variable("OPEN_DYLAN_RELEASE_INSTALL")    := system-directory;
+  os/environment-variable("OPEN_DYLAN_RELEASE_SOURCES")    := subdirectory("sources");
+  os/environment-variable("OPEN_DYLAN_RELEASE_REGISTRIES") := subdirectory("sources",
 										     "registry");
 end function;
 
@@ -568,8 +568,8 @@ define shell-command
   "\n"
   hidden? #t
   let system-directory
-    = os/environment-variable("FUNCTIONAL_DEVELOPER_RELEASE_ROOT");
-  format-out("FUNCTIONAL_DEVELOPER_RELEASE_ROOT = %=\n", system-directory);
+    = os/environment-variable("OPEN_DYLAN_RELEASE_ROOT");
+  format-out("OPEN_DYLAN_RELEASE_ROOT = %=\n", system-directory);
 end;
 
 define shell-command
@@ -586,28 +586,28 @@ end;
 define command-argument target-platform;
 
 define function do-set-target-platform (target-platform)
-  let system-root = os/environment-variable("FUNCTIONAL_DEVELOPER_RELEASE_ROOT");
-  let user-root = os/environment-variable("FUNCTIONAL_DEVELOPER_USER_ROOT");
+  let system-root = os/environment-variable("OPEN_DYLAN_RELEASE_ROOT");
+  let user-root = os/environment-variable("OPEN_DYLAN_USER_ROOT");
   if (system-root & user-root)
     local method subdirectory (directory, #rest subdirectories)
 	    let subdirectory = apply(subdirectory-locator, 
 				     as(<directory-locator>, directory), subdirectories);
 	    as(<string>, subdirectory)
 	  end method subdirectory;
-    os/environment-variable("FUNCTIONAL_DEVELOPER_RELEASE_INSTALL")
+    os/environment-variable("OPEN_DYLAN_RELEASE_INSTALL")
       := subdirectory(system-root, target-platform);
-    os/environment-variable("FUNCTIONAL_DEVELOPER_USER_INSTALL")
+    os/environment-variable("OPEN_DYLAN_USER_INSTALL")
       := subdirectory(user-root, target-platform);
-    os/environment-variable("FUNCTIONAL_DEVELOPER_USER_BUILD")
+    os/environment-variable("OPEN_DYLAN_USER_BUILD")
       := subdirectory(user-root, target-platform, "build");
     close-all-projects();	//---*** NOTE: THIS IS OVERKILL, I think!
     target-platform-name() := target-platform;
     #t
   elseif (user-root)
-    format-out("FUNCTIONAL_DEVELOPER_RELEASE_ROOT must be set to change platforms.\n");
+    format-out("OPEN_DYLAN_RELEASE_ROOT must be set to change platforms.\n");
     #f
   else
-    format-out("FUNCTIONAL_DEVELOPER_USER_ROOT must be set to change platforms.\n");
+    format-out("OPEN_DYLAN_USER_ROOT must be set to change platforms.\n");
     #f
   end
 end function do-set-target-platform;
@@ -627,7 +627,7 @@ define shell-command
   documentation "prints the target platform\n"
                 "\n"
   hidden? #t
-  format-out("FUNCTIONAL_DEVELOPER_PLATFORM_NAME = %=\n", target-platform-name());
+  format-out("OPEN_DYLAN_PLATFORM_NAME = %=\n", target-platform-name());
 end;
 
 

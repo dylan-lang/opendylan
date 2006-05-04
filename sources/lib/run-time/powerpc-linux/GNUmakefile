@@ -1,8 +1,8 @@
 # Build runtime library for Dylan under PPC Linux
 
 
-LIBDEST          = $(FUNCTIONAL_DEVELOPER_USER_INSTALL)/lib
-BINDEST          = $(FUNCTIONAL_DEVELOPER_USER_INSTALL)/bin
+LIBDEST          = $(OPEN_DYLAN_USER_INSTALL)/lib
+BINDEST          = $(OPEN_DYLAN_USER_INSTALL)/bin
 
 EXPIRATION = -1
 
