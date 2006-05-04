@@ -24,6 +24,6 @@ define library emulator-environment
   use environment-tools;
   use environment-deuce;
 
-  use emulator-release-info;
+  use release-info;
   use emulator-environment-backend;
 end library emulator-environment;

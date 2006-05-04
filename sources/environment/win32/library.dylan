@@ -11,7 +11,7 @@ define library win32-environment
   use functional-dylan;
   use system;
 
-  use internal-release-info;
+  use release-info;
 
   use c-ffi;
   use win32-common;

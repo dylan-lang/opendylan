@@ -13,7 +13,7 @@ define library basic-console-compiler
   use io;
   use commands;
 
-  use basic-release-info;
+  use release-info;
 
   use environment-protocols;
   use environment-commands;

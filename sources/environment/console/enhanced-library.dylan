@@ -13,7 +13,7 @@ define library enhanced-console-environment
   use io;
   use commands;
 
-  use enhanced-release-info;
+  use release-info;
   use build-system;
 
   use environment-protocols;

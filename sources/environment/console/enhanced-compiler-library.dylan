@@ -13,7 +13,7 @@ define library enhanced-console-compiler
   use io;
   use commands;
 
-  use enhanced-release-info;
+  use release-info;
 
   use environment-protocols;
   use environment-commands;

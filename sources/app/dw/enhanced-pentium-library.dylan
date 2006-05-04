@@ -12,7 +12,7 @@ define library enhanced-pentium-dw
   use system;
   use io;
 
-  use enhanced-release-info;
+  use release-info;
 
   use memory-manager;
   use dood;

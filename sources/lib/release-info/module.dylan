@@ -14,7 +14,6 @@ define module release-info
          <described-release-info>,
          release-name,
          release-product-name,
-         release-trademarked-name,
          release-beta?,
          release-internal?,
          release-edition,

@@ -12,7 +12,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define constant $release-full-copyright =
 "Original Code is Copyright 1995-2004 Functional Objects, Inc.\n"
 "All rights reserved.\n"
-"Portions Copyright 2004,2005 Dylan Hackers.\n"
+"Portions Copyright 2004-2006 Dylan Hackers.\n"
 "\n"
 "The software programs and libraries that make up Open Dylan\n"
 "are subject to the Functional Objects Library Public License Version\n"
@@ -47,19 +47,53 @@ define constant $bug-report-template-filename = "bug-report.txt";
 define constant $license-agreement-filename   = "License.txt";
 
 
+/// Release constants
+define constant $release-product-name     = "Open Dylan";
+define constant $release-edition          = "Hacker Edition";
+define constant $release-edition-type     = #"internal";
+define constant $release-version          = "Version 1.0 [Beta 1]";
+define constant $release-version-type     = #"1.0";
+define constant $release-beta?            = #t;
+
+define constant $release-copyright
+  = "Copyright (c) 1997-2004, Functional Objects, Inc.\n"
+    "Portions Copyright (c) 2004-2006, Dylan Hackers\n"
+    "All rights reserved.";
+
+
 /// Release info querying functions
+define method release-product-name () => (name :: <string>)
+  $release-product-name
+end method release-product-name;
 
-define open generic release-product-name () => (name :: <string>);
-define open generic release-trademarked-name () => (name :: <string>);
-define open generic release-edition () => (edition :: <string>);
-define open generic release-edition-type () => (edition :: <symbol>);
-define open generic release-beta? () => (beta? :: <boolean>);
-define open generic release-version () => (version :: <string>);
-define open generic release-version-type () => (version :: <symbol>);
-define open generic release-copyright () => (copyright :: <string>);
+define method release-edition () => (edition :: <string>)
+  $release-edition
+end method release-edition;
 
+define method release-edition-type () => (edition :: <symbol>)
+  $release-edition-type
+end method release-edition-type;
+
+define method release-version () => (version :: <string>)
+  release-full-version($release-version)
+end method release-version;
+
+define method release-version-type () => (version :: <symbol>)
+  $release-version-type
+end method release-version-type;
+
+define method release-beta? () => (beta? :: <boolean>)
+  $release-beta?
+end method release-beta?;
+
+define method release-copyright () => (copyright :: <string>)
+  $release-copyright
+end method release-copyright;
+
+
+/// Implementations
 define sideways method release-name () => (name :: <string>)
-  format-to-string("%s %s", release-trademarked-name(), release-edition())
+  format-to-string("%s", release-edition())
 end method release-name;
 
 define function release-full-name

@@ -12,7 +12,7 @@ define library minimal-pentium-dw
   use system;
   use io;
 
-  use internal-release-info;
+  use release-info;
 
   use memory-manager;
   use dood;

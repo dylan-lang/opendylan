@@ -13,7 +13,7 @@ define library minimal-console-environment
   use io;
   use commands;
 
-  use internal-release-info;
+  use release-info;
   use build-system;
 
   use environment-protocols;

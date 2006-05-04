@@ -13,7 +13,7 @@ define library enhanced-batch-debug
   use c-ffi;
   use system;
   use io;
-  use enhanced-release-info;
+  use release-info;
   use access-path;
   // Plug-in for Remote Debugging
   use remote-access-path;

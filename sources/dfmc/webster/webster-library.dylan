@@ -16,7 +16,7 @@ define library webster
   use dfmc-c-linker;
   use registry-projects;
   use dfmc-c-ffi;
-  use emulator-release-info;
+  use release-info;
 
   // For now, make debugging stuff available..
   use dfmc-c-file-compiler, import: { dfmc-debug };

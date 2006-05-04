@@ -26,7 +26,7 @@ define library mm-debugger
   use registry-projects;
   use source-records;
   use user-projects;
-  use internal-release-info;
+  use release-info;
   use dfmc-browser-support;
   use dfmc-harp-browser-support;
   use dfmc-pentium-file-compiler;

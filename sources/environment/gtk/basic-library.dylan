@@ -11,7 +11,7 @@ define library basic-gtk-environment
   use functional-dylan;
   use system;
 
-  use basic-release-info;
+  use release-info;
 
   use c-ffi;
   use gtk;

@@ -13,7 +13,7 @@ define library basic-console-environment
   use io;
   use commands;
 
-  use basic-release-info;
+  use release-info;
   use build-system;
 
   use environment-protocols;

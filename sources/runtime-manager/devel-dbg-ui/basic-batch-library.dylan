@@ -13,7 +13,7 @@ define library basic-batch-debug
   use c-ffi;
   use system;
   use io;
-  use basic-release-info;
+  use release-info;
   use access-path;
   use debugger-manager;
   use collections;
@@ -27,7 +27,7 @@ define library basic-batch-debug
   use registry-projects;
   use source-records;
   use user-projects;
-  use basic-release-info;
+  use release-info;
   use dfmc-browser-support;
   use dfmc-harp-browser-support;
   use dfmc-pentium-file-compiler;

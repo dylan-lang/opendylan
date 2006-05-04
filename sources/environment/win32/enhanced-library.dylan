@@ -11,7 +11,7 @@ define library enhanced-win32-environment
   use functional-dylan;
   use system;
 
-  use enhanced-release-info;
+  use release-info;
 
   use c-ffi;
   use win32-common;
