@@ -565,9 +565,41 @@ end method handle-wm-scroll;
 define sealed method handle-wm-mousewheel
     (sheet :: <sheet>, wParam :: <wparam-type>, lParam :: <lparam-type>)
  => (handled? :: <boolean>)
-  let distance = HIWORD(wParam);
-  // figure out where to send mousewheel events
-  #f
+  warn("Ignored WM_MOUSEWHEEL event for non-scrolling window %s",
+       sheet);
+end method handle-wm-mousewheel;
+    
+/* This implementation has several bugs:
+
+   * HIWORD is supposed to return a signed value, not an unsigned value
+   * It should query SPI_GETWHEELSCROLLLINES to figure out how many lines
+     to scroll
+   * It should use the GET_WHEEL_DELTA_PARAM macro to compute number of increments
+   * It should support freely-rotating wheels
+   * It should scroll three lines at once, not line per line
+
+At the moment, we scroll three lines per event we get, and forget about the proper
+computation. FIXME. 
+
+--andreas, 20060504 */
+define sealed method handle-wm-mousewheel
+    (sheet :: <scrolling-sheet-mixin>, wParam :: <wparam-type>, lParam :: <lparam-type>)
+ => (handled? :: <boolean>)
+  if (sheet.sheet-vertical-scroll-bar)
+    let distance = HIWORD(wParam);
+    if (distance > 32768)
+      scroll-down-line(sheet.sheet-vertical-scroll-bar);
+      scroll-down-line(sheet.sheet-vertical-scroll-bar);
+      scroll-down-line(sheet.sheet-vertical-scroll-bar);
+    else
+      scroll-up-line(sheet.sheet-vertical-scroll-bar);
+      scroll-up-line(sheet.sheet-vertical-scroll-bar);
+      scroll-up-line(sheet.sheet-vertical-scroll-bar);
+    end;
+    #t
+  else
+    #f
+  end
 end method handle-wm-mousewheel;
     
 define method handle-command

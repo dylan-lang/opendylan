@@ -274,7 +274,8 @@ define sealed method initialize-scrolling
   gadget-value-changing-callback(vscroll) := scroll-window-vertically;
   gadget-client(vscroll) := window;
   // Now make DUIM think that the scroll bar is just plain gone
-  sheet-vertical-scroll-bar(viewport) := #f
+  // WTF??
+  // sheet-vertical-scroll-bar(viewport) := #f
 end method initialize-scrolling;
 
 define method sheet-scrolls-vertically?
