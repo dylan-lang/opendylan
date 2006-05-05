@@ -346,7 +346,8 @@ define method make-text-style-from-font-components
 	  $FF-SWISS      => #"sans-serif";
 	  $FF-SCRIPT     => #"script";
 	  $FF-DECORATIVE => #"decorative";
-	  otherwise =>
+	  otherwise => #"fix";
+/*
 	    let handle
 	      = case
 		  hFont   => hFont;
@@ -354,6 +355,7 @@ define method make-text-style-from-font-components
 		end;
 	    // No family match, so return a device font
 	    return(make-device-font(_port, make(<win32-font>, handle: handle)));
+*/
 	end;
     let face-name = if (empty?(lfFaceName)) #f else lfFaceName end;
     let weight
