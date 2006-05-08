@@ -1,0 +1,22 @@
+<!-- Document type for Dylan Library Pack specification files -->
+
+<!ELEMENT library-pack	(description?, author?, copyright?, company?,
+                         libraries?, examples?, test-suites?)>
+<!ATTLIST library-pack	name	CDATA	#REQUIRED
+			title	CDATA	#REQUIRED
+			number	NMTOKEN	#IMPLIED>
+
+<!ELEMENT description	(#PCDATA)*>
+<!ELEMENT copyright	(#PCDATA)*>
+<!ELEMENT company	(#PCDATA)*>
+
+<!ELEMENT libraries	(library+)>
+<!ELEMENT examples	(library+)>
+<!ELEMENT test-suites	(library+)>
+
+<!ELEMENT library	(category*, description?, sources?, release*)>
+<!ATTLIST library	name	CDATA	#REQUIRED
+			title	CDATA	#IMPLIED>
+
+<!ELEMENT category	(#PCDATA)*>
+
