@@ -42,13 +42,13 @@ MPSKIT	 = C:\fundev\mps-kit\code
 
 CC	 = $(cc)
 LINKLIB	 = $(implib) /nologo /out:
-CFLAGS	 = $(cflags) $(cvarsmt) $(cdebug) /I$(INCLUDEDEST) /I$(MPSKIT) $(OPEN_DYLAN_C_FLAGS) $(mmtuneflags) /DEXPIRATION=$(EXPIRATION)
+CFLAGS	 = $(cflags) $(cvarsmt) $(cdebug) /I$(INCLUDEDEST) /I. /I.. /I$(MPSKIT) $(OPEN_DYLAN_C_FLAGS) $(mmtuneflags) /DEXPIRATION=$(EXPIRATION)
 HEAPOBJS = heap-display.obj heap-utils.obj heap-trail.obj heap-order1.obj heap-order2.obj heap-table.obj
 OBJS	 = collector.obj $(HEAPOBJS) runtime.obj win32-threads-primitives.obj spy-interfaces.obj expiration.obj
 LIBFILE	 = pentium-run-time.lib
 USEROBJ	 = dylan-support.obj
 USERLIB	 = dylan-support.lib
-MINCRT   = mincrt.lib
+MINCRT   = minvcrt.lib
 
 RUNTIMELIBDEST	 = $(LIBDEST)\pentium-run-time.lib
 MMDWDEST	 = $(LIBDEST)\mmdw.lib
@@ -78,30 +78,25 @@ SYMBOLICPLINTH	 = mpsplan.lib
 PLINTHOBJS       = plinth.obj mpsiowin32.obj
 DYLANPLINTH      = dylan-plinth.lib
 
-# VCINSTALLDIR	 = C:\apps\ms\VC98
-# Now we use MSVCDIR instead, which is set through VCVAR32.BAT of VC++ Studio
+collector.obj: ..\collector.c
+	$(CC) $(CFLAGS) /c ..\collector.c
 
+no-weakness-collector.obj: ..\no-weakness-collector.c ..\collector.c
+	$(CC) $(CFLAGS) /c ..\no-weakness-collector.c
 
-# Install shared runtime sources
-
-collector.c: ..\collector.c
-	copy ..\*.c .
-	copy ..\*.h .
-
-no-weakness-collector.obj: collector.c
-boehm-collector.obj:       collector.c
+boehm-collector.obj:	..\boehm-collector.c ..\collector.c
+	$(CC) $(CFLAGS) /c ..\boehm-collector.c
 
 !if defined(fullcrt)
 $(MINCRT): 
 !else
-#$(MINCRT): $(MINCRTOBJS)
-#	$(LINKLIB)$(MINCRT) $(MINCRTOBJS)
-$(MINCRT): 
-	copy $(MSVCDIR)\lib\libcmt.lib $(MINCRT)
-	lib /remove:build\intel\mt_obj\crt0.obj $(MINCRT)
-	lib /remove:build\intel\mt_obj\wwcrt0.obj $(MINCRT)
+$(MINCRT): minvcrt.def rtsyms.obj
+	$(LINKLIB)$(MINCRT) /def:minvcrt.def /machine:ix86
+	$(LINKLIB)$(MINCRT) $(MINCRT) rtsyms.obj
 !endif
 
+rtsyms.obj: rtsyms.s
+	as -n -o rtsyms.obj rtsyms.s
 
 $(DYLANPLINTH): $(PLINTHOBJS)
 	$(LINKLIB)$(DYLANPLINTH) $(PLINTHOBJS)
@@ -121,7 +116,7 @@ $(BOEHMLIBFILE): $(BOEHMOBJS)
 $(USERLIB): $(USEROBJ)
 	$(LINKLIB)$(USERLIB) $(USEROBJ)
 
-ensure-dirs: collector.c
+ensure-dirs:
 	if not exist $(LIBDEST) mkdir $(LIBDEST)
 	if not exist $(BINDEST) mkdir $(BINDEST)
 
@@ -231,7 +226,6 @@ install: ensure-dirs install-stripped install-build
 clean:
 	pushd . & (del /f /q *collector.obj $(HEAPOBJS) win32-threads-primitives.obj spy-interfaces.obj expiration.obj) & popd
         pushd . & (del /f /q *pentium-run-time.lib $(USERLIB)) & popd
-        pushd . & (del /f /q $(MINCRT) fltused.obj assert.obj) & popd
+        pushd . & (del /f /q $(MINCRT) rtsyms.obj) & popd
         pushd . & (del /f /q $(DYLANPLINTH) $(PLINTHOBJS)) & popd
-        pushd . & (del /f /q collector.c) & popd
 

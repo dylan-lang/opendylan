@@ -2575,7 +2575,7 @@ MMError dylan_init_memory_manager()
     mps_gen_param_s *params = NULL;
 
 #ifdef _WIN32
-    char specbuf[32768];
+    char specbuf[2048];
     const char *spec = NULL;
     if(GetEnvironmentVariableA("OPEN_DYLAN_MPS_HEAP", specbuf,
 			       sizeof specbuf) != 0) {

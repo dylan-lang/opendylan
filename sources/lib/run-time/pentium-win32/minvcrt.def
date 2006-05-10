@@ -1,0 +1,9 @@
+LIBRARY MSVCRT.dll
+EXPORTS
+	_except_handler3
+	_ftol
+	free
+	realloc
+	strtod
+	strtoul
+	clock
