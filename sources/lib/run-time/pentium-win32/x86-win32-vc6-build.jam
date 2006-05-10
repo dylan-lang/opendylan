@@ -47,8 +47,8 @@ LINKFLAGS ?= /NODEFAULTLIB
 
 # External libraries linked with the dylan library
 # (via the Linker-Options: keyword in Sources/dylan/dylan.lid)
-rtlibs  ?= kernel32.lib mincrt.lib pentium-run-time.lib
-	   mmdw.lib mpsplinth.lib ;
+rtlibs  ?= kernel32.lib pentium-run-time.lib mmdw.lib mpsplinth.lib 
+           minvcrt.lib ;
 
 # External libraries linked with libraries other than the dylan library
 # (via the DylanLibrary function defined below)
@@ -392,7 +392,7 @@ rule LinkDLL {
 }
 
 actions together LinkDLL bind NEEDLIBS {
-  $(LINK) /DLL /OUT:"$(<[1])" /IMPLIB:"$(<[2])" $(LINKFLAGS) /BASE:$(BASE) /VERSION:$(VERSION) /ENTRY:$(ENTRY) "$(>)" /LIBPATH:"$(LIBPATH)" "$(NEEDLIBS)" $(LINKLIBS)
+  $(LINK) /DLL /OUT:"$(<[1])" /IMPLIB:"$(<[2])" $(LINKFLAGS) /BASE:$(BASE) /VERSION:$(VERSION) /ENTRY:$(ENTRY) @"$(>:Q@)" /LIBPATH:"$(LIBPATH)" @"$(NEEDLIBS:Q@)" $(LINKLIBS)
 }
 
 rule LinkEXE {
@@ -400,7 +400,7 @@ rule LinkEXE {
 }
 
 actions together LinkEXE bind NEEDLIBS {
-  $(LINK) /RELEASE /OUT:"$(<)" /SUBSYSTEM:CONSOLE,4.0 $(LINKFLAGS) /VERSION:$(VERSION) /ENTRY:$(ENTRY) "$(>)" /LIBPATH:"$(LIBPATH)" "$(NEEDLIBS)" "$(LINKLIBS)"
+  $(LINK) /RELEASE /OUT:"$(<)" /SUBSYSTEM:CONSOLE,4.0 $(LINKFLAGS) /VERSION:$(VERSION) /ENTRY:$(ENTRY) @"$(>:Q@)" /LIBPATH:"$(LIBPATH)" @"$(NEEDLIBS:Q@)" "$(LINKLIBS)"
 }
 
 rule RC {
