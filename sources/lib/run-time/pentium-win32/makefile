@@ -53,7 +53,7 @@ MINCRT   = minvcrt.lib
 RUNTIMELIBDEST	 = $(LIBDEST)\pentium-run-time.lib
 MMDWDEST	 = $(LIBDEST)\mmdw.lib
 PLINTHDEST	 = $(LIBDEST)\mpsplinth.lib
-MINCRTDEST	 = $(LIBDEST)\mincrt.lib
+MINCRTDEST	 = $(LIBDEST)\minvcrt.lib
 BOEHMGCDEST	 = $(BINDEST)\gc.dll
 
 BUFFOBJS	 = buffalo-collector.obj $(HEAPOBJS) runtime.obj win32-threads-primitives.obj spy-interfaces.obj

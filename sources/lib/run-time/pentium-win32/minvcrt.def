@@ -2,6 +2,9 @@ LIBRARY MSVCRT.dll
 EXPORTS
 	_except_handler3
 	_ftol
+	strcpy
+	memcpy
+	memset
 	free
 	realloc
 	strtod
