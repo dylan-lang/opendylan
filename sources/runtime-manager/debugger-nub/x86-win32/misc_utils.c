@@ -688,11 +688,9 @@ void housekeep_for_stop_reason
 
 __int64 FileTimeToQuadWord (PFILETIME pFileTime)
 {
-  __int64 qw;
-  qw = pFileTime->dwHighDateTime;
-  qw <<= 32;
-  qw |= pFileTime->dwLowDateTime;
-  return(qw);
+  ULARGE_INTEGER qw;
+  memcpy(&qw, pFileTime, sizeof qw);
+  return qw.QuadPart;
 }
 
 
@@ -710,13 +708,13 @@ int get_os_thread_cpu_time_accurate
    LPDBGTHREAD           thread)
 {
   FILETIME CreationTime, ExitTime, KernelTime, UserTime;
-  __int64 utime, ktime;
+  double utime, ktime;
   int milliseconds;
 
   GetThreadTimes (thread->ThreadHandle, &CreationTime, &ExitTime,
                   &KernelTime, &UserTime);
-  ktime = FileTimeToQuadWord(&KernelTime) / 10000;
-  utime = FileTimeToQuadWord(&UserTime) / 10000;
+  ktime = (double) FileTimeToQuadWord(&KernelTime) / 10000.0;
+  utime = (double) FileTimeToQuadWord(&UserTime) / 10000.0;
   milliseconds = (int)ktime + (int)utime;
   return (milliseconds);
 }
@@ -727,7 +725,7 @@ int get_os_wall_clock_time (LPDBGPROCESS process)
   int        milliseconds;
 
   GetSystemTimeAsFileTime(&CurrentTime);
-  milliseconds = (int)(FileTimeToQuadWord(&CurrentTime) / 10000);
+  milliseconds = (int)((double)FileTimeToQuadWord(&CurrentTime) / 10000.0);
   return(milliseconds);
 }
 
