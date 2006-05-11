@@ -15,6 +15,6 @@ other-files:	remote-nub.spec
 RC-Files:	..\debugger-server.rc
 C-Header-Files: ..\debugger-server.ico
 C-libraries: devnub.lib
-             mincrt.lib
+             minvcrt.lib
              dbghelp.lib
 comment:	additional keywords

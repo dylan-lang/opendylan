@@ -20,7 +20,7 @@ files:       library
              profile
              access-path-callbacks
 C-libraries: devnub.lib
-             mincrt.lib
+             minvcrt.lib
              dbghelp.LIB
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
