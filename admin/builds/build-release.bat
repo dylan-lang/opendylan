@@ -22,7 +22,7 @@ echo -     /strip-runtime
 echo -       Strips out debug information from the runtime DLLs [default: no]
 echo -     /dylan
 echo -       Specifies the directory to build from (previous release)
-echo -       [default: C:\Program Files\Functional Objects\Functional Developer]
+echo -       [default: C:\Program Files\Open Dylan]
 echo -     /sources
 echo -       Specifies the location of the sources [default: under release]
 echo -     /branch
@@ -103,7 +103,7 @@ if "%1"=="?" GOTO PRINT_USAGE
 if "%1"=="/?" GOTO PRINT_USAGE
 
 set ERROR_MESSAGE=
-if "%OPEN_DYLAN_DEFAULT_ROOT%"=="" set OPEN_DYLAN_DEFAULT_ROOT=C:\Program Files\Functional Objects\Functional Developer
+if "%OPEN_DYLAN_DEFAULT_ROOT%"=="" set OPEN_DYLAN_DEFAULT_ROOT=C:\Program Files\Open Dylan
 set OLD_RELEASE_ROOT=%OPEN_DYLAN_DEFAULT_ROOT%
 set OPEN_DYLAN_USER_SOURCES=
 set SAVED_OPEN_DYLAN_LIBRARY_PACKS=%OPEN_DYLAN_LIBRARY_PACKS%

@@ -119,7 +119,7 @@ set ERROR_MESSAGE=
 set BACK_END=pentium
 set GENERATION=
 set FINAL_GENERATION=
-if "%OPEN_DYLAN_DEFAULT_ROOT%"=="" set OPEN_DYLAN_DEFAULT_ROOT=C:\Program Files\Functional Objects\Functional Developer
+if "%OPEN_DYLAN_DEFAULT_ROOT%"=="" set OPEN_DYLAN_DEFAULT_ROOT=C:\Program Files\Open Dylan
 set DYLAN_CVS_BRANCH=
 set DYLAN_RELEASE_ROOT=
 set NOPATH=

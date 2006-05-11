@@ -602,7 +602,6 @@ ENVIRONMENT_TOOLS = $(INSTALL_BIN_DIRECTORY)\environment-tools.dll
 BASIC_ENVIRONMENT_PROJECT_WIZARD = $(INSTALL_BIN_DIRECTORY)\basic-environment-project-wizard.dll
 TARGET_APPLICATION = $(INSTALL_BIN_DIRECTORY)\target-application.dll
 
-INTERNAL_RELEASE_INFO = $(INSTALL_BIN_DIRECTORY)\internal-release-info.dll
 INTERACTIVE_COMPILER = $(INSTALL_BIN_DIRECTORY)\interactive-compiler.exe
 
 BASIC_RELEASE_INFO = $(INSTALL_BIN_DIRECTORY)\basic-release-info.dll
@@ -1200,13 +1199,13 @@ enhanced-examples: basic-examples ole-examples duim-ole-examples network-example
 enhanced-tools: basic-tools create-id console-scepter naming-service remote-debugger
 enhanced-release: enhanced-release-info enhanced-console-compiler enhanced-compiler enhanced-environment enhanced-libraries enhanced-tools install-runtime-dlls install-enhanced-examples
 
-internal-release-info: $(INTERNAL_RELEASE_INFO)
-compiler: pentium-dw-libraries internal-release-info motley t-lists c-lexer console-scepter-libraries pentium-dw
-hd2c: c-compiler-libraries command-shell hd2c-dfmc-shell dispatch-profiler internal-release-info dw
+release-info: $(RELEASE_INFO)
+compiler: pentium-dw-libraries release-info motley t-lists c-lexer console-scepter-libraries pentium-dw
+hd2c: c-compiler-libraries command-shell hd2c-dfmc-shell dispatch-profiler release-info dw
 internal-compiler: compiler
 interactive-compiler: $(INTERACTIVE_COMPILER)
 console-compiler-exe: $(CONSOLE_COMPILER)
-console-compiler: console-compiler-libraries internal-release-info environment-internal-commands motley t-lists c-lexer console-scepter-libraries console-compiler-exe
+console-compiler: console-compiler-libraries release-info environment-internal-commands motley t-lists c-lexer console-scepter-libraries console-compiler-exe
 console-environment: $(CONSOLE_ENVIRONMENT)
 win32-environment: $(WIN32_ENVIRONMENT)
 gtk-environment: $(GTK_ENVIRONMENT)
@@ -1217,21 +1216,21 @@ internal-example-projects: enhanced-example-projects
 install-internal-examples: install-enhanced-examples install-midi-examples
 internal-only-tools: testworks-libraries test-report debugger map-statistics parser-compiler # hd2c interpreter
 internal-tools: enhanced-tools internal-only-tools
-internal-release: internal-release-info console-compiler compiler internal-environment internal-libraries internal-tools install-runtime-dlls install-internal-examples
+internal-release: release-info console-compiler compiler internal-environment internal-libraries internal-tools install-runtime-dlls install-internal-examples
 
 reinstall-internal-examples:
   $(REMOVE_DIRECTORY) $(EXAMPLES_INSTALL_DIRECTORY)
   $(MAKE) install-internal-examples
 
 minimal-pentium-dw: $(MINIMAL_PENTIUM_DW)
-minimal-compiler: pentium-dw-libraries internal-release-info minimal-pentium-dw
+minimal-compiler: pentium-dw-libraries release-info minimal-pentium-dw
 minimal-console-compiler-exe: $(MINIMAL_CONSOLE_COMPILER)
-minimal-console-compiler: console-compiler-libraries internal-release-info environment-internal-commands minimal-console-compiler-exe
+minimal-console-compiler: console-compiler-libraries release-info environment-internal-commands minimal-console-compiler-exe
 minimal-console-environment: $(MINIMAL_CONSOLE_ENVIRONMENT)
 minimal-win32-environment: $(MINIMAL_WIN32_ENVIRONMENT)
 minimal-gtk-environment: $(MINIMAL_GTK_ENVIRONMENT)
 minimal-internal-environment: minimal-console-environment minimal-win32-environment with-splash-screen
-minimal-internal-release: internal-release-info minimal-console-compiler minimal-compiler minimal-internal-environment basic-libraries basic-tools internal-only-tools install-runtime-dlls install-basic-examples
+minimal-internal-release: release-info minimal-console-compiler minimal-compiler minimal-internal-environment basic-libraries basic-tools internal-only-tools install-runtime-dlls install-basic-examples
 
 releases: internal-release basic-release enhanced-release
 
@@ -2514,12 +2513,6 @@ $(FILE_SOURCE_RECORDS):
   $(ENSURE_REGISTRY_ENTRY) file-source-records generic
   $(BUILD_LIBRARY) file-source-records
 
-$(INTERNAL_RELEASE_INFO):
-  $(ENSURE_LIBRARY) release-info
-  $(ENSURE_SOURCES) release-info $(RELEASE_INFO_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) internal-release-info generic
-  $(BUILD_LIBRARY) internal-release-info
-
 $(LICENSING):
   $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
   $(ENSURE_RUNTIME_LIBRARY) $(C_FFI_DLL) c-ffi
@@ -2945,7 +2938,7 @@ $(DEBUGGER_SERVER):
 
 $(BATCH_DEBUG):
   $(ENSURE_APPLICATION) devel-dbg-ui
-  $(ENSURE_LIBRARY) internal-release-info
+  $(ENSURE_LIBRARY) release-info
   $(ENSURE_LIBRARY) remote-access-path
   $(ENSURE_REGISTRY_ENTRY) batch-debug generic
   $(BUILD_APPLICATION) batch-debug
@@ -2965,7 +2958,7 @@ $(DEVEL_DBG_UI):
   $(ENSURE_LIBRARY) coff-debug
   $(ENSURE_LIBRARY) disasm
   $(ENSURE_LIBRARY) simple-downloader
-  $(ENSURE_LIBRARY) internal-release-info
+  $(ENSURE_LIBRARY) release-info
   $(ENSURE_LIBRARY) remote-access-path
   $(ENSURE_REGISTRY_ENTRY) devel-dbg-ui generic
   $(BUILD_APPLICATION) devel-dbg-ui
@@ -3001,7 +2994,7 @@ $(PENTIUM_DW):
   $(ENSURE_LIBRARY) dfmc-pentium-file-compiler
   $(ENSURE_LIBRARY) motley
   $(ENSURE_LIBRARY) tool-scepter
-  $(ENSURE_LIBRARY) internal-release-info
+  $(ENSURE_LIBRARY) release-info
   $(ENSURE_LIBRARY) licensing
   $(ENSURE_LIBRARY) dfmc-shell
   $(ENSURE_LIBRARY) dispatch-profiler
@@ -3011,7 +3004,7 @@ $(PENTIUM_DW):
 
 $(DW):
   $(ENSURE_LIBRARY) dfmc-c-file-compiler
-  $(ENSURE_LIBRARY) internal-release-info
+  $(ENSURE_LIBRARY) release-info
   $(ENSURE_LIBRARY) licensing
   $(ENSURE_LIBRARY) hd2c-dfmc-shell
   $(ENSURE_LIBRARY) dispatch-profiler
@@ -3021,7 +3014,7 @@ $(DW):
 
 $(INTERPRETER):
   $(ENSURE_LIBRARY) dfmc-interpreter-file-compiler
-  $(ENSURE_LIBRARY) internal-release-info
+  $(ENSURE_LIBRARY) release-info
   $(ENSURE_LIBRARY) licensing
   $(ENSURE_LIBRARY) interpreter-dfmc-shell
   $(ENSURE_LIBRARY) dispatch-profiler
@@ -3051,7 +3044,7 @@ $(PARSER_COMPILER):
 
 $(MINIMAL_PENTIUM_DW):
   $(ENSURE_LIBRARY) dfmc-pentium-file-compiler
-  $(ENSURE_LIBRARY) internal-release-info
+  $(ENSURE_LIBRARY) release-info
   $(ENSURE_LIBRARY) licensing
   $(ENSURE_LIBRARY) dfmc-shell
   $(ENSURE_LIBRARY) dispatch-profiler
@@ -3062,7 +3055,7 @@ $(MINIMAL_PENTIUM_DW):
 $(MINIMAL_CONSOLE_COMPILER):
   $(ENSURE_LIBRARY) environment-commands
   $(ENSURE_LIBRARY) environment-internal-commands
-  $(ENSURE_LIBRARY) internal-release-info
+  $(ENSURE_LIBRARY) release-info
   $(ENSURE_LIBRARY) licensing
   $(ENSURE_REGISTRY_ENTRY) minimal-console-compiler generic
   $(BUILD_APPLICATION) minimal-console-compiler
@@ -3070,7 +3063,7 @@ $(MINIMAL_CONSOLE_COMPILER):
 $(MINIMAL_CONSOLE_ENVIRONMENT):
   $(ENSURE_LIBRARY) environment-application-commands
   $(ENSURE_LIBRARY) environment-internal-commands
-  $(ENSURE_LIBRARY) internal-release-info
+  $(ENSURE_LIBRARY) release-info
   $(ENSURE_LIBRARY) licensing
   $(ENSURE_REGISTRY_ENTRY) minimal-console-environment generic
   $(BUILD_APPLICATION) minimal-console-environment
@@ -3081,7 +3074,7 @@ $(MINIMAL_WIN32_ENVIRONMENT):
   $(ENSURE_LIBRARY) environment-profiler
   $(ENSURE_LIBRARY) basic-environment-project-wizard
   $(ENSURE_LIBRARY) environment-internal-commands
-  $(ENSURE_LIBRARY) internal-release-info
+  $(ENSURE_LIBRARY) release-info
   $(ENSURE_LIBRARY) licensing
   $(ENSURE_REGISTRY_ENTRY) source-control-hope-backend generic
   $(ENSURE_REGISTRY_ENTRY) minimal-win32-environment x86-win32
@@ -3094,7 +3087,7 @@ $(MINIMAL_GTK_ENVIRONMENT):
   $(ENSURE_LIBRARY) environment-profiler
   $(ENSURE_LIBRARY) basic-environment-project-wizard
   $(ENSURE_LIBRARY) environment-internal-commands
-  $(ENSURE_LIBRARY) internal-release-info
+  $(ENSURE_LIBRARY) release-info
   $(ENSURE_LIBRARY) licensing
   $(ENSURE_REGISTRY_ENTRY) source-control-hope-backend generic
   $(ENSURE_REGISTRY_ENTRY) minimal-gtk-environment x86-win32
@@ -3105,7 +3098,7 @@ $(CONSOLE_COMPILER):
   $(ENSURE_LIBRARY) environment-internal-commands
   $(ENSURE_LIBRARY) motley
   $(ENSURE_LIBRARY) tool-scepter
-  $(ENSURE_LIBRARY) internal-release-info
+  $(ENSURE_LIBRARY) release-info
   $(ENSURE_LIBRARY) licensing
   $(ENSURE_REGISTRY_ENTRY) console-compiler generic
   $(BUILD_APPLICATION) console-compiler
@@ -3116,7 +3109,7 @@ $(CONSOLE_ENVIRONMENT):
   $(ENSURE_LIBRARY) motley
   $(ENSURE_LIBRARY) tool-scepter
   $(ENSURE_LIBRARY) remote-access-path
-  $(ENSURE_LIBRARY) internal-release-info
+  $(ENSURE_LIBRARY) release-info
   $(ENSURE_LIBRARY) licensing
   $(ENSURE_REGISTRY_ENTRY) console-environment generic
   $(BUILD_APPLICATION) console-environment
@@ -3131,7 +3124,7 @@ $(WIN32_ENVIRONMENT):
   $(ENSURE_LIBRARY) tool-scepter
   $(ENSURE_LIBRARY) remote-access-path
   $(ENSURE_LIBRARY) tool-parser-generator
-  $(ENSURE_LIBRARY) internal-release-info
+  $(ENSURE_LIBRARY) release-info
   $(ENSURE_LIBRARY) licensing
   $(ENSURE_REGISTRY_ENTRY) SourceSafeTypeLib x86-win32
   $(ENSURE_REGISTRY_ENTRY) source-control-vss-backend x86-win32
@@ -3150,7 +3143,7 @@ $(GTK_ENVIRONMENT):
   $(ENSURE_LIBRARY) tool-scepter
   $(ENSURE_LIBRARY) remote-access-path
   $(ENSURE_LIBRARY) tool-parser-generator
-  $(ENSURE_LIBRARY) internal-release-info
+  $(ENSURE_LIBRARY) release-info
   $(ENSURE_LIBRARY) licensing
   $(ENSURE_REGISTRY_ENTRY) SourceSafeTypeLib x86-win32
   $(ENSURE_REGISTRY_ENTRY) source-control-vss-backend x86-win32
