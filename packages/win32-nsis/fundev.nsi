@@ -1,26 +1,27 @@
-;;; todo:
+;;; TODO:
 ;;; - check copyrights throughout
 ;;; - add splash screen?
 ;;; - add warning about nonempty install dir 
-;;; - check there's warning on overwrite
+;;; - check that there is a warning on overwrite
 ;;; - uninstaller:
-;;; - replace rmdir /r with smth more intelligent ///warning messagebox added, still ugly
-;;; - restore previous file associations
-;;; - way too many hard coded paths/version number in the registry entries
-;;; - is there a way to ensure consistency between the data here and the one in the
-;;;   Open Dylan sources?
-
-;;; Open Dylan 1.0 Beta 1 Install Script
+;;;   - replace rmdir /r with smth more intelligent;
+;;;     a warning messagebox was added, but it is still ugly
+;;;   - restore previous file associations
+;;;   - way too many hard coded paths/version numbers in the registry entries
+;;; - Is there a way to ensure consistency between the data here and
+;;;   what's in the Open Dylan sources?
+;;;
+;;; Open Dylan Install Script
 ;;; Originally written by Denis Mashkevich (oudeis)
-;;; Changes by Matthias Hölzl (tc)
 
 !include "path.nsh"
 
 ;;;--------------------------------
 ;;; Application defines
 ;;;
-!define APPNAME "Open Dylan" ; Define your own software name here
-!define APPNAMEANDVERSION "${APPNAME} 1.0 Beta 1" ; Define your own software version here
+!define APPNAME "Open Dylan"
+!define APPVERSION "1.0 Beta 2"
+!define APPNAMEANDVERSION "${APPNAME} ${APPVERSION}"
 
 ;;;-------------------------------------
 ;;; Helper defines
@@ -39,7 +40,7 @@
 !define MUI_ABORTWARNING
 !define MUI_FINISHPAGE_RUN "$INSTDIR\bin\with-splash-screen.exe"
 !define MUI_FINISHPAGE_RUN_PARAMETERS \
-          "/k 1.0 /v $\"Version 1.0 Beta 1$\" /e $\"Internal Edition$\" win32-environment.exe"
+          "/k 1.0 /v $\"Version ${APPVERSION}$\" win32-environment.exe"
 !define MUI_FINISHPAGE_RUN_CHECKED
 
 !define MUI_HEADERIMAGE
@@ -50,7 +51,7 @@
 ;;; Install properties
 ;;;
 !insertmacro MUI_PAGE_WELCOME
-!insertmacro MUI_PAGE_LICENSE "License.txt"
+!insertmacro MUI_PAGE_LICENSE "..\..\License.txt"
 !insertmacro MUI_PAGE_COMPONENTS
 !insertmacro MUI_PAGE_DIRECTORY
 Page custom ChooseBuildScript
@@ -92,8 +93,8 @@ OutFile "${OUTFILE}"
 Name "${APPNAMEANDVERSION}"
 InstallDir "$PROGRAMFILES\${APPNAME}"
 InstallDirRegKey HKEY_LOCAL_MACHINE "${REGISTRY_KEY}\Install" "Install_Dir"
-BrandingText "Open Dylan - www.opendylan.org, www.functionalobjects.com"
-LicenseData "License.txt"
+BrandingText "Open Dylan - www.opendylan.org"
+LicenseData "..\..\License.txt"
 ShowInstDetails show
 
 ;;;--------------------------------
@@ -109,16 +110,12 @@ Section "${APPNAME} Core" SecOpendylanCore
   SectionIn 1 2 RO
 
   SetOutPath "$INSTDIR\"
-  File /r D:\r1\bin
-  File /r D:\r1\lib
-  File D:\r1\logs\compiler-data.out
-  File /r D:\r1\databases
-  File /r D:\r1\Templates
-  File /r D:\r1\Examples
-  File /r D:\r1\sources
-
-  SetOutPath "$INSTDIR\bin\"
-  File "C:\Programme\Debugging Tools for Windows\dbghelp.dll"
+  File /r bin
+  File /r lib
+  File /r databases
+  File /r Templates
+  File /r Examples
+  File /r sources
 
   WriteRegStr HKEY_LOCAL_MACHINE "${REGISTRY_KEY}\1.0" "Library-Packs" "0xffff"
   WriteRegStr HKEY_LOCAL_MACHINE "${REGISTRY_KEY}\1.0" "Console-Tools" "Yes"
@@ -166,7 +163,7 @@ Section "Install Documentation" SecDoc
 
   CreateDirectory "$INSTDIR\Documentation"
   SetOutPath "$INSTDIR\Documentation\"
-  File "..\..\..\documentation\fundev\product\htmlhelp\opendylan.chm"
+  File "..\..\..\documentation\opendylan\product\htmlhelp\opendylan.chm"
 
   WriteRegStr HKLM "${REGISTRY_KEY}\1.0\OnlineHelp" "DocPath" "$INSTDIR\Documentation\opendylan.chm"
   WriteRegStr HKLM "${REGISTRY_KEY}\1.0\OnlineHelp" "DocType" "HTMLHelp"
@@ -192,7 +189,7 @@ Section "Associate .hdp files" SecAssocHDP
               "Open Dylan Project"
   WriteRegStr HKEY_CLASSES_ROOT "Developer.Project.File\DefaultIcon" "" \
               "$INSTDIR\\bin\\win32-environment.exe,2"
-  WriteRegStr HKEY_CLASSES_ROOT "Developer.Project.File\shell\open\command" "" "$INSTDIR\\bin\\with-splash-screen.exe /k 1.0 /v $\"Version 1.0 Beta 1$\" /e $\"Internal Edition$\" win32-environment.exe $\"%1$\""
+  WriteRegStr HKEY_CLASSES_ROOT "Developer.Project.File\shell\open\command" "" "$INSTDIR\\bin\\with-splash-screen.exe /k 1.0 /v $\"Version ${APPVERSION}$\" win32-environment.exe $\"%1$\""
   WriteRegStr HKEY_CLASSES_ROOT "Developer.Project.File\shell\open\ddeexec" "" "[OpenFile($\"%1$\")]"
   WriteRegStr HKEY_CLASSES_ROOT "Developer.Project.File\shell\open\ddeexec\Application" "" "FunctionalDeveloper"
   WriteRegStr HKEY_CLASSES_ROOT "Developer.Project.File\shell\open\ddeexec\ifexec" "" "[]"
@@ -211,7 +208,7 @@ Section "Associate .spec files" SecAssocSPEC
   WriteRegStr HKEY_CLASSES_ROOT "Developer.ToolSpec.File" "AlwaysShowExt" ""
   WriteRegStr HKEY_CLASSES_ROOT "Developer.ToolSpec.File\DefaultIcon" "" \
               "$INSTDIR\\bin\\win32-environment.exe,5"
-  WriteRegStr HKEY_CLASSES_ROOT "Developer.ToolSpec.File\shell\open\command" "" "$INSTDIR\\bin\\with-splash-screen.exe /k 1.0 /v $\"Version 1.0 Beta 1$\" /e $\"Internal Edition$\" win32-environment.exe $\"%1$\""
+  WriteRegStr HKEY_CLASSES_ROOT "Developer.ToolSpec.File\shell\open\command" "" "$INSTDIR\\bin\\with-splash-screen.exe /k 1.0 /v $\"Version ${APPVERSION}$\" win32-environment.exe $\"%1$\""
   WriteRegStr HKEY_CLASSES_ROOT "Developer.ToolSpec.File\shell\open\ddeexec" "" "[OpenFile($\"%1$\")]"
   WriteRegStr HKEY_CLASSES_ROOT "Developer.ToolSpec.File\shell\open\ddeexec\Application" "" "FunctionalDeveloper"
   WriteRegStr HKEY_CLASSES_ROOT "Developer.ToolSpec.File\shell\open\ddeexec\ifexec" "" "[]"
@@ -228,7 +225,7 @@ Section "Associate .lid files" SecAssocLID
   WriteRegStr HKEY_CLASSES_ROOT "Dylan.LID.File" "" "Dylan Library Interchange Description"
   WriteRegStr HKEY_CLASSES_ROOT "Dylan.LID.File" "AlwaysShowExt" ""
   WriteRegStr HKEY_CLASSES_ROOT "Dylan.LID.File\DefaultIcon" "" "$INSTDIR\\bin\\win32-environment.exe,4"
-  WriteRegStr HKEY_CLASSES_ROOT "Dylan.LID.File\shell\open\command" "" "$INSTDIR\\bin\\with-splash-screen.exe /k 1.0 /v $\"Version 1.0 Beta 1$\" /e $\"Internal Edition$\" win32-environment.exe $\"%1$\""
+  WriteRegStr HKEY_CLASSES_ROOT "Dylan.LID.File\shell\open\command" "" "$INSTDIR\\bin\\with-splash-screen.exe /k 1.0 /v $\"Version ${APPVERSION}$\" win32-environment.exe $\"%1$\""
   WriteRegStr HKEY_CLASSES_ROOT "Dylan.LID.File\shell\open\ddeexec" "" "[OpenFile($\"%1$\")]"
   WriteRegStr HKEY_CLASSES_ROOT "Dylan.LID.File\shell\open\ddeexec\Application" "" "FunctionalDeveloper"
   WriteRegStr HKEY_CLASSES_ROOT "Dylan.LID.File\shell\open\ddeexec\ifexec" "" "[]"
@@ -247,7 +244,7 @@ Section "Associate .dyl, .dylan files" SecAssocDYLAN
   WriteRegStr HKEY_CLASSES_ROOT "Dylan.Source.File" "" "Dylan Source File"
   WriteRegStr HKEY_CLASSES_ROOT "Dylan.Source.File" "AlwaysShowExt" ""
   WriteRegStr HKEY_CLASSES_ROOT "Dylan.Source.File\DefaultIcon" "" "$INSTDIR\\bin\\win32-environment.exe,1"
-  WriteRegStr HKEY_CLASSES_ROOT "Dylan.Source.File\shell\open\command" "" "$INSTDIR\\bin\\with-splash-screen.exe /k 1.0 /v $\"Version 1.0 Beta 1$\" /e $\"Internal Edition$\" win32-environment.exe $\"%1$\""
+  WriteRegStr HKEY_CLASSES_ROOT "Dylan.Source.File\shell\open\command" "" "$INSTDIR\\bin\\with-splash-screen.exe /k 1.0 /v $\"Version ${APPVERSION}$\" win32-environment.exe $\"%1$\""
   WriteRegStr HKEY_CLASSES_ROOT "Dylan.Source.File\shell\open\ddeexec" "" "[OpenFile($\"%1$\")]"
   WriteRegStr HKEY_CLASSES_ROOT "Dylan.Source.File\shell\open\ddeexec\Application" "" "FunctionalDeveloper"
   WriteRegStr HKEY_CLASSES_ROOT "Dylan.Source.File\shell\open\ddeexec\ifexec" "" "[]"
@@ -331,21 +328,21 @@ Section "Start Menu Shortcuts" SecStartMenuShortcuts
   CreateDirectory "$SMPROGRAMS\Open Dylan"
   CreateShortCut "$SMPROGRAMS\Open Dylan\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
   Delete "$SMPROGRAMS\Open Dylan\${APPNAMEANDVERSION}.lnk" ; Delete older link if exists
-  CreateShortCut "$SMPROGRAMS\Open Dylan\${APPNAMEANDVERSION}.lnk" "$\"$INSTDIR\bin\with-splash-screen.exe$\"" "/k 1.0 /v $\"Version 1.0 Beta 1$\"  /e $\"Internal Edition$\"  win32-environment.exe" "$INSTDIR\bin\win32-environment.exe" 0
+  CreateShortCut "$SMPROGRAMS\Open Dylan\${APPNAMEANDVERSION}.lnk" "$\"$INSTDIR\bin\with-splash-screen.exe$\"" "/k 1.0 /v $\"Version ${APPVERSION}$\" win32-environment.exe" "$INSTDIR\bin\win32-environment.exe" 0
 SectionEnd
 
 Section "Desktop Shortcut" SecDesktopShortcut
   SectionIn 1 2
   ;; For past users, cleanup previous icon if still on desktop
   Delete "$DESKTOP\${APPNAMEANDVERSION}.lnk"
-  CreateShortCut "$DESKTOP\${APPNAMEANDVERSION}.lnk" "$\"$INSTDIR\bin\with-splash-screen.exe$\"" "/k 1.0 /v $\"Version 1.0 Beta 1$\"  /e $\"Internal Edition$\"  win32-environment.exe" "$INSTDIR\bin\win32-environment.exe" 0
+  CreateShortCut "$DESKTOP\${APPNAMEANDVERSION}.lnk" "$\"$INSTDIR\bin\with-splash-screen.exe$\"" "/k 1.0 /v $\"Version ${APPVERSION}$\" win32-environment.exe" "$INSTDIR\bin\win32-environment.exe" 0
 SectionEnd
 
 Section "Quick Launch Shortcut" SecQuickLaunchShortcut
   SectionIn 2
 
   Delete "$QUICKLAUNCH\${APPNAMEANDVERSION}.lnk"
-  CreateShortCut "$QUICKLAUNCH\${APPNAMEANDVERSION}.lnk" "$\"$INSTDIR\bin\with-splash-screen.exe$\"" "/k 1.0 /v $\"Version 1.0 Beta 1$\"  /e $\"Internal Edition$\"  win32-environment.exe" "$INSTDIR\bin\win32-environment.exe" 0
+  CreateShortCut "$QUICKLAUNCH\${APPNAMEANDVERSION}.lnk" "$\"$INSTDIR\bin\with-splash-screen.exe$\"" "/k 1.0 /v $\"Version ${APPVERSION}$\" win32-environment.exe" "$INSTDIR\bin\win32-environment.exe" 0
 SectionEnd
 
 ;;;--------------------------------
