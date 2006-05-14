@@ -392,7 +392,7 @@ rule LinkDLL {
 }
 
 actions together LinkDLL bind NEEDLIBS {
-  $(LINK) /DLL /OUT:"$(<[1])" /IMPLIB:"$(<[2])" $(LINKFLAGS) /BASE:$(BASE) /VERSION:$(VERSION) /ENTRY:$(ENTRY) @"$(>:Q@)" /LIBPATH:"$(LIBPATH)" @"$(NEEDLIBS:Q@)" $(LINKLIBS)
+  $(LINK) /DLL /OUT:"$(<[1])" /IMPLIB:"$(<[2])" /LIBPATH:"$(LIBPATH)" $(LINKFLAGS) /BASE:$(BASE) /VERSION:$(VERSION) /ENTRY:$(ENTRY) @"$(>:Q@)" @"$(NEEDLIBS:Q@)" $(LINKLIBS)
 }
 
 rule LinkEXE {
@@ -400,7 +400,7 @@ rule LinkEXE {
 }
 
 actions together LinkEXE bind NEEDLIBS {
-  $(LINK) /RELEASE /OUT:"$(<)" /SUBSYSTEM:CONSOLE,4.0 $(LINKFLAGS) /VERSION:$(VERSION) /ENTRY:$(ENTRY) @"$(>:Q@)" /LIBPATH:"$(LIBPATH)" @"$(NEEDLIBS:Q@)" "$(LINKLIBS)"
+  $(LINK) /RELEASE /OUT:"$(<)" /SUBSYSTEM:CONSOLE,4.0 /LIBPATH:"$(LIBPATH)" $(LINKFLAGS) /VERSION:$(VERSION) /ENTRY:$(ENTRY) @"$(>:Q@)" @"$(NEEDLIBS:Q@)" "$(LINKLIBS)"
 }
 
 rule RC {
