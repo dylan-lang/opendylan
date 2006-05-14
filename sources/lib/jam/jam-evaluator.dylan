@@ -187,17 +187,21 @@ define function jam-expand-arg-colon
         vector(result)
       end for
     elseif (modifier == '@')
-      let (stream :: <file-stream>, locator :: <file-locator>)
-        = jam-new-temporary-file(jam);
-      block ()
-        for (component in contents)
-          write(stream, component);
-          new-line(stream);
-        end for;
-      cleanup
-        close(stream);
-      end;
-      vector(as(<byte-string>, locator))
+      if (empty?(contents))
+        #[]
+      else
+        let (stream :: <file-stream>, locator :: <file-locator>)
+          = jam-new-temporary-file(jam);
+        block ()
+          for (component in contents)
+            write(stream, component);
+            new-line(stream);
+          end for;
+        cleanup
+          close(stream);
+        end;
+        vector(as(<byte-string>, locator))
+      end if
     else
       let func =
         select (modifier)
