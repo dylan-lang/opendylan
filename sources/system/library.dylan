@@ -351,7 +351,7 @@ define module system-internals
   use threads;
   use simple-format;
   use streams-internals;
-  use unix-portability;
+  use unix-portability, rename: { unix-lseek => unwrapped-unix-lseek };
   use operating-system, export: all;
   use date, export: all;
   use locators-internals, export: all;

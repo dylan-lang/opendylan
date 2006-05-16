@@ -189,11 +189,6 @@ define function unix-last-error () => (errno :: <integer>)
   raw-as-integer(unix-errno())
 end function unix-last-error;
 
-define function unix-last-error-setter (errno :: <integer>) => (errno :: <integer>)
-  unix-errno() := integer-as-raw(errno);
-  errno
-end function unix-last-error-setter;
-
 define function unix-last-error-message () => (message :: <string>)
   let message :: <byte-string>
     = primitive-raw-as-string

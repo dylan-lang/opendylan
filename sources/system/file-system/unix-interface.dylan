@@ -88,7 +88,7 @@ end function unix-write;
 define function unix-lseek
     (fd :: <integer>, position :: <integer>, mode :: <integer>) => (position :: <integer>)
   with-interrupt-repeat
-    unix-lseek(fd, posittion, mode)
+    unwrapped-unix-lseek(fd, position, mode)
   end
 end function unix-lseek;
 
@@ -104,7 +104,7 @@ define function get-unix-error (errno :: <integer>) => (message :: <string>)
 end function get-unix-error;
 
 define function unix-errno-value () => (errno :: <integer>)
-  raw-as-integer(errno())
+  raw-as-integer(unix-errno())
 end function unix-errno-value;
 
 

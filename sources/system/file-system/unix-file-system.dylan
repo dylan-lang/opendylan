@@ -477,7 +477,6 @@ define function %do-directory
 	   integer-as-raw($INVALID_DIRECTORY_FD)))
       unix-file-error("start listing of", "%s", directory)
     end;
-    unix-last-error() := 0;
     let dirent = primitive-wrap-machine-word
                    (primitive-cast-pointer-as-raw
 		      (%call-c-function ("readdir")
@@ -498,7 +497,6 @@ define function %do-directory
 	  filename,
 	  type)
       end;
-      unix-last-error() := 0;
       dirent := primitive-wrap-machine-word
 	          (primitive-cast-pointer-as-raw
 		     (%call-c-function ("readdir")
@@ -507,9 +505,13 @@ define function %do-directory
 			   (primitive-unwrap-machine-word(directory-fd)))
 		      end));
     end;
-    if (unix-last-error() ~= 0)
+/*
+    if (primitive-machine-word-equal?
+	     (primitive-unwrap-machine-word(dirent),
+	      integer-as-raw($NO_MORE_DIRENTRIES)) & (unix-last-error() ~= 0))
       unix-file-error("continue listing of", "%s", directory)
     end;
+*/
   cleanup
     if (primitive-machine-word-not-equal?
 	  (primitive-unwrap-machine-word(directory-fd),
