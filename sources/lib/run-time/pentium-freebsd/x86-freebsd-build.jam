@@ -218,8 +218,22 @@ rule DylanLibraryCSources image : sources {
   #Echo DylanLibraryCSources $(image) ":" $(sources) ;
 
   # Link C source files into the shared library.
+  if ! $(SYSTEM) {
+    local _dll = [ FDLLName $(image) ] ;
+    local _exe = [ FEXEName $(image) ] ;
 
-  Exit DylanLibraryCSources $(image) is not yet implemented ;
+    local _i ;
+    for _i in [ FGristFiles $(sources) ] {
+      SEARCH on $(_i) = $(SEARCH_SOURCE) ;
+      local _obj = [ FGristFiles $(_i:S=$(SUFOBJ)) ] ;
+      MakeLocate $(_obj) : $(LOCATE_TARGET) ;
+      
+      Cc $(_obj) : $(_i) ;
+      
+      LinkDLL $(_dll) : $(_obj) ;
+      LinkEXE $(_exe) : $(_obj) ;
+    }
+  }
 }
 
 rule DylanLibraryCHeaders image : headers {
