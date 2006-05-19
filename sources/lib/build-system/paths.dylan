@@ -138,6 +138,6 @@ define function user-root-path()
       as(<directory-locator>, read-environment-variable("APPDATA"))
     else
       home-directory()
-    end, "Open Dylan");
+    end, "Open-Dylan");
   (path & as(<directory-locator>, path)) | default;
 end;

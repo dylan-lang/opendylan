@@ -51,7 +51,7 @@ define constant $license-agreement-filename   = "License.txt";
 define constant $release-product-name     = "Open Dylan";
 define constant $release-edition          = "Hacker Edition";
 define constant $release-edition-type     = #"internal";
-define constant $release-version          = "Version 1.0 [Beta 1]";
+define constant $release-version          = "Version 1.0 [Beta 2]";
 define constant $release-version-type     = #"1.0";
 define constant $release-beta?            = #t;
 
