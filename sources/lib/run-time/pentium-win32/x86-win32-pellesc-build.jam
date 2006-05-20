@@ -3,7 +3,7 @@
 #
 
 CC      ?= pocc ;
-CCFLAGS ?= -DWIN32 -D_WIN32 -D_MT -D_DLL -MD ;
+CCFLAGS ?= -DWIN32 -D_WIN32 -D_MT -D_DLL -MD -Ze ;
 RC      ?= porc ;
 LINK    ?= polink ;
 
