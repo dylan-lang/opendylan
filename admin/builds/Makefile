@@ -222,7 +222,6 @@ INTERFACE_BUILDER_INSTALL_DIRECTORY = $(DUIM_EXAMPLES_INSTALL_DIRECTORY)\interfa
 INSTALL_LIB_SOURCE = $(INSTALL_SOURCE)\x86-win32\lib
 INSTALL_BIN_SOURCE = $(INSTALL_SOURCE)\x86-win32\bin
 IO_TESTS_SOURCE = $(IO_DIRECTORY)\tests
-LICENSING_SOURCE = $(LIB_DIRECTORY)\licensing
 LIFE_SOURCE = $(DUIM_EXAMPLES_SOURCE)\life
 LIFE_INSTALL_DIRECTORY = $(DUIM_EXAMPLES_INSTALL_DIRECTORY)\life
 MAP_STATISTICS_SOURCE = $(TOOLS_DIRECTORY)\map-statistics
@@ -570,7 +569,6 @@ FILE_SOURCE_RECORDS = $(INSTALL_BIN_DIRECTORY)\file-source-records.dll
 ELF_LINKER = $(INSTALL_BIN_DIRECTORY)\elf-linker.dll
 HD2C_DFMC_SHELL = $(INSTALL_BIN_DIRECTORY)\hd2c-dfmc-shell.dll
 INTERPRETER_DFMC_SHELL = $(INSTALL_BIN_DIRECTORY)\interpreter-dfmc-shell.dll
-LICENSING = $(INSTALL_BIN_DIRECTORY)\licensing.dll
 METERING = $(INSTALL_BIN_DIRECTORY)\metering.dll
 MOTLEY = $(INSTALL_BIN_DIRECTORY)\motley.dll
 RELEASE_INFO = $(INSTALL_BIN_DIRECTORY)\release-info.dll
@@ -806,7 +804,6 @@ file-source-records: $(FILE_SOURCE_RECORDS)
 elf-linker: $(ELF_LINKER)
 hd2c-dfmc-shell: $(HD2C_DFMC_SHELL)
 interpreter-dfmc-shell: $(INTERPRETER_DFMC_SHELL)
-licensing: $(LICENSING)
 metering: $(METERING)
 motley: $(MOTLEY)
 release-info: $(RELEASE_INFO)
@@ -848,7 +845,7 @@ pentium-dw: $(PENTIUM_DW)
 test-report: $(TEST_REPORT)
 
 project-manager-libraries: tools-interface user-projects
-core-compiler-libraries: file-source-records release-info dood metering binary-manager coff-manager binary-builder coff-builder build-system parser-run-time dfmc-management dfmc-browser-support project-manager-libraries dfmc-execution dfmc-debug-back-end licensing
+core-compiler-libraries: file-source-records release-info dood metering binary-manager coff-manager binary-builder coff-builder build-system parser-run-time dfmc-management dfmc-browser-support project-manager-libraries dfmc-execution dfmc-debug-back-end
 pentium-compiler-libraries: core-compiler-libraries disasm dfmc-pentium-harp-cg dfmc-pentium-file-compiler
 c-compiler-libraries: core-compiler-libraries dfmc-c-file-compiler
 pentium-dw-libraries: pentium-compiler-libraries command-shell dfmc-shell dispatch-profiler
@@ -1576,11 +1573,6 @@ checkout-library-packs:
   $(ENSURE_DIRECTORY) $(SOURCES_DIRECTORY)
   $(CHECKOUT) library-packs fundev/Sources/Library-Packs $(LIBRARY_PACKS_DIRECTORY)
 
-checkout-licensing:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) licensing fundev/Sources/lib/licensing $(LICENSING_SOURCE)
-
 checkout-map-statistics:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(TOOLS_DIRECTORY)
@@ -1799,7 +1791,7 @@ checkout-with-splash-screen:
   $(ENSURE_DIRECTORY) $(APP_DIRECTORY)
   $(CHECKOUT) with-splash-screen fundev/Sources/app/with-splash-screen $(WITH_SPLASH_SCREEN_SOURCE)
 
-checkout-compiler: checkout-user-libraries checkout-internal-libraries checkout-release-info checkout-dfmc checkout-licensing checkout-variable-search checkout-walker checkout-metering checkout-motley checkout-project-manager checkout-source-records checkout-ppml checkout-parser-run-time checkout-memory-manager checkout-harp checkout-build-system checkout-dood checkout-dw checkout-command-shell
+checkout-compiler: checkout-user-libraries checkout-internal-libraries checkout-release-info checkout-dfmc checkout-variable-search checkout-walker checkout-metering checkout-motley checkout-project-manager checkout-source-records checkout-ppml checkout-parser-run-time checkout-memory-manager checkout-harp checkout-build-system checkout-dood checkout-dw checkout-command-shell
 
 checkout-testworks-libraries: checkout-testworks checkout-testworks-specs checkout-gui-testworks
 
@@ -2513,14 +2505,6 @@ $(FILE_SOURCE_RECORDS):
   $(ENSURE_REGISTRY_ENTRY) file-source-records generic
   $(BUILD_LIBRARY) file-source-records
 
-$(LICENSING):
-  $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
-  $(ENSURE_RUNTIME_LIBRARY) $(C_FFI_DLL) c-ffi
-  $(ENSURE_LIBRARY) release-info
-  $(ENSURE_SOURCES) licensing $(LICENSING_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) licensing x86-win32
-  $(BUILD_LIBRARY) licensing
-
 $(METERING):
   $(ENSURE_RUNTIME_LIBRARY) $(FUNCTIONAL_DYLAN_DLL) functional-dylan
   $(ENSURE_SOURCES) metering $(METERING_SOURCE)
@@ -2995,7 +2979,6 @@ $(PENTIUM_DW):
   $(ENSURE_LIBRARY) motley
   $(ENSURE_LIBRARY) tool-scepter
   $(ENSURE_LIBRARY) release-info
-  $(ENSURE_LIBRARY) licensing
   $(ENSURE_LIBRARY) dfmc-shell
   $(ENSURE_LIBRARY) dispatch-profiler
   $(ENSURE_SOURCES) dw $(DW_SOURCE)
@@ -3005,7 +2988,6 @@ $(PENTIUM_DW):
 $(DW):
   $(ENSURE_LIBRARY) dfmc-c-file-compiler
   $(ENSURE_LIBRARY) release-info
-  $(ENSURE_LIBRARY) licensing
   $(ENSURE_LIBRARY) hd2c-dfmc-shell
   $(ENSURE_LIBRARY) dispatch-profiler
   $(ENSURE_SOURCES) dw $(DW_SOURCE)
@@ -3015,7 +2997,6 @@ $(DW):
 $(INTERPRETER):
   $(ENSURE_LIBRARY) dfmc-interpreter-file-compiler
   $(ENSURE_LIBRARY) release-info
-  $(ENSURE_LIBRARY) licensing
   $(ENSURE_LIBRARY) interpreter-dfmc-shell
   $(ENSURE_LIBRARY) dispatch-profiler
   $(ENSURE_SOURCES) dw $(DW_SOURCE)
@@ -3045,7 +3026,6 @@ $(PARSER_COMPILER):
 $(MINIMAL_PENTIUM_DW):
   $(ENSURE_LIBRARY) dfmc-pentium-file-compiler
   $(ENSURE_LIBRARY) release-info
-  $(ENSURE_LIBRARY) licensing
   $(ENSURE_LIBRARY) dfmc-shell
   $(ENSURE_LIBRARY) dispatch-profiler
   $(ENSURE_SOURCES) dw $(DW_SOURCE)
@@ -3056,7 +3036,6 @@ $(MINIMAL_CONSOLE_COMPILER):
   $(ENSURE_LIBRARY) environment-commands
   $(ENSURE_LIBRARY) environment-internal-commands
   $(ENSURE_LIBRARY) release-info
-  $(ENSURE_LIBRARY) licensing
   $(ENSURE_REGISTRY_ENTRY) minimal-console-compiler generic
   $(BUILD_APPLICATION) minimal-console-compiler
 
@@ -3064,7 +3043,6 @@ $(MINIMAL_CONSOLE_ENVIRONMENT):
   $(ENSURE_LIBRARY) environment-application-commands
   $(ENSURE_LIBRARY) environment-internal-commands
   $(ENSURE_LIBRARY) release-info
-  $(ENSURE_LIBRARY) licensing
   $(ENSURE_REGISTRY_ENTRY) minimal-console-environment generic
   $(BUILD_APPLICATION) minimal-console-environment
 
@@ -3075,7 +3053,6 @@ $(MINIMAL_WIN32_ENVIRONMENT):
   $(ENSURE_LIBRARY) basic-environment-project-wizard
   $(ENSURE_LIBRARY) environment-internal-commands
   $(ENSURE_LIBRARY) release-info
-  $(ENSURE_LIBRARY) licensing
   $(ENSURE_REGISTRY_ENTRY) source-control-hope-backend generic
   $(ENSURE_REGISTRY_ENTRY) minimal-win32-environment x86-win32
   $(BUILD_APPLICATION) minimal-win32-environment
@@ -3088,7 +3065,6 @@ $(MINIMAL_GTK_ENVIRONMENT):
   $(ENSURE_LIBRARY) basic-environment-project-wizard
   $(ENSURE_LIBRARY) environment-internal-commands
   $(ENSURE_LIBRARY) release-info
-  $(ENSURE_LIBRARY) licensing
   $(ENSURE_REGISTRY_ENTRY) source-control-hope-backend generic
   $(ENSURE_REGISTRY_ENTRY) minimal-gtk-environment x86-win32
   $(BUILD_APPLICATION) minimal-gtk-environment
@@ -3099,7 +3075,6 @@ $(CONSOLE_COMPILER):
   $(ENSURE_LIBRARY) motley
   $(ENSURE_LIBRARY) tool-scepter
   $(ENSURE_LIBRARY) release-info
-  $(ENSURE_LIBRARY) licensing
   $(ENSURE_REGISTRY_ENTRY) console-compiler generic
   $(BUILD_APPLICATION) console-compiler
 
@@ -3110,7 +3085,6 @@ $(CONSOLE_ENVIRONMENT):
   $(ENSURE_LIBRARY) tool-scepter
   $(ENSURE_LIBRARY) remote-access-path
   $(ENSURE_LIBRARY) release-info
-  $(ENSURE_LIBRARY) licensing
   $(ENSURE_REGISTRY_ENTRY) console-environment generic
   $(BUILD_APPLICATION) console-environment
 
@@ -3125,7 +3099,6 @@ $(WIN32_ENVIRONMENT):
   $(ENSURE_LIBRARY) remote-access-path
   $(ENSURE_LIBRARY) tool-parser-generator
   $(ENSURE_LIBRARY) release-info
-  $(ENSURE_LIBRARY) licensing
   $(ENSURE_REGISTRY_ENTRY) SourceSafeTypeLib x86-win32
   $(ENSURE_REGISTRY_ENTRY) source-control-vss-backend x86-win32
   $(ENSURE_REGISTRY_ENTRY) source-control-hope-backend generic
@@ -3144,7 +3117,6 @@ $(GTK_ENVIRONMENT):
   $(ENSURE_LIBRARY) remote-access-path
   $(ENSURE_LIBRARY) tool-parser-generator
   $(ENSURE_LIBRARY) release-info
-  $(ENSURE_LIBRARY) licensing
   $(ENSURE_REGISTRY_ENTRY) SourceSafeTypeLib x86-win32
   $(ENSURE_REGISTRY_ENTRY) source-control-vss-backend x86-win32
   $(ENSURE_REGISTRY_ENTRY) source-control-hope-backend generic
@@ -3186,7 +3158,6 @@ $(BASIC_RELEASE_INFO):
 $(BASIC_PENTIUM_DW):
   $(ENSURE_LIBRARY) dfmc-pentium-file-compiler
   $(ENSURE_LIBRARY) basic-release-info
-  $(ENSURE_LIBRARY) licensing
   $(ENSURE_LIBRARY) dfmc-shell
   $(ENSURE_LIBRARY) dispatch-profiler
   $(ENSURE_SOURCES) dw $(DW_SOURCE)
@@ -3196,14 +3167,12 @@ $(BASIC_PENTIUM_DW):
 $(BASIC_CONSOLE_COMPILER):
   $(ENSURE_LIBRARY) environment-commands
   $(ENSURE_LIBRARY) basic-release-info
-  $(ENSURE_LIBRARY) licensing
   $(ENSURE_REGISTRY_ENTRY) basic-console-compiler generic
   $(BUILD_APPLICATION) basic-console-compiler
 
 $(BASIC_CONSOLE_ENVIRONMENT):
   $(ENSURE_LIBRARY) environment-application-commands
   $(ENSURE_LIBRARY) basic-release-info
-  $(ENSURE_LIBRARY) licensing
   $(ENSURE_REGISTRY_ENTRY) basic-console-environment generic
   $(BUILD_APPLICATION) basic-console-environment
 
@@ -3212,7 +3181,6 @@ $(BASIC_WIN32_ENVIRONMENT):
   $(ENSURE_LIBRARY) dylan-environment
   $(ENSURE_LIBRARY) basic-environment-project-wizard
   $(ENSURE_LIBRARY) basic-release-info
-  $(ENSURE_LIBRARY) licensing
   $(ENSURE_REGISTRY_ENTRY) basic-win32-environment x86-win32
   $(BUILD_APPLICATION) basic-win32-environment
 
@@ -3222,7 +3190,6 @@ $(BASIC_GTK_ENVIRONMENT):
   $(ENSURE_LIBRARY) dylan-environment
   $(ENSURE_LIBRARY) basic-environment-project-wizard
   $(ENSURE_LIBRARY) basic-release-info
-  $(ENSURE_LIBRARY) licensing
   $(ENSURE_REGISTRY_ENTRY) basic-gtk-environment x86-win32
   $(BUILD_APPLICATION) basic-gtk-environment
 
@@ -3245,7 +3212,6 @@ $(ENHANCED_PENTIUM_DW):
   $(ENSURE_LIBRARY) motley
   $(ENSURE_LIBRARY) tool-scepter
   $(ENSURE_LIBRARY) enhanced-release-info
-  $(ENSURE_LIBRARY) licensing
   $(ENSURE_LIBRARY) dfmc-shell
   $(ENSURE_LIBRARY) dispatch-profiler
   $(ENSURE_SOURCES) dw $(DW_SOURCE)
@@ -3257,7 +3223,6 @@ $(ENHANCED_CONSOLE_COMPILER):
   $(ENSURE_LIBRARY) enhanced-release-info
   $(ENSURE_LIBRARY) motley
   $(ENSURE_LIBRARY) tool-scepter
-  $(ENSURE_LIBRARY) licensing
   $(ENSURE_REGISTRY_ENTRY) enhanced-console-compiler generic
   $(BUILD_APPLICATION) enhanced-console-compiler
 
@@ -3267,7 +3232,6 @@ $(ENHANCED_CONSOLE_ENVIRONMENT):
   $(ENSURE_LIBRARY) motley
   $(ENSURE_LIBRARY) tool-scepter
   $(ENSURE_LIBRARY) remote-access-path
-  $(ENSURE_LIBRARY) licensing
   $(ENSURE_REGISTRY_ENTRY) enhanced-console-environment generic
   $(BUILD_APPLICATION) enhanced-console-environment
 
@@ -3280,7 +3244,6 @@ $(ENHANCED_WIN32_ENVIRONMENT):
   $(ENSURE_LIBRARY) tool-scepter
   $(ENSURE_LIBRARY) remote-access-path
   $(ENSURE_LIBRARY) enhanced-release-info
-  $(ENSURE_LIBRARY) licensing
   $(ENSURE_REGISTRY_ENTRY) SourceSafeTypeLib x86-win32
   $(ENSURE_REGISTRY_ENTRY) source-control-vss-backend x86-win32
   $(ENSURE_REGISTRY_ENTRY) enhanced-win32-environment x86-win32
@@ -3296,7 +3259,6 @@ $(ENHANCED_GTK_ENVIRONMENT):
   $(ENSURE_LIBRARY) tool-scepter
   $(ENSURE_LIBRARY) remote-access-path
   $(ENSURE_LIBRARY) enhanced-release-info
-  $(ENSURE_LIBRARY) licensing
   $(ENSURE_REGISTRY_ENTRY) SourceSafeTypeLib x86-win32
   $(ENSURE_REGISTRY_ENTRY) source-control-vss-backend x86-win32
   $(ENSURE_REGISTRY_ENTRY) enhanced-gtk-environment x86-win32

@@ -10,7 +10,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define library environment-reports
   use functional-dylan;
   use system;
-  use licensing;
 
   use environment-protocols;
   use environment-manager;

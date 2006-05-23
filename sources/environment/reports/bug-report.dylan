@@ -127,7 +127,6 @@ define method write-bug-report-section
 	    (title :: <string>, value :: <string>)
 	  add!(properties, pair(title, value))
 	end method record-property;
-  let (serial-number, evaluation?, expiration, user, organization) = license-info();
   let os-variant
     = select ($os-variant)
 	#"winxp"   => "Windows XP";
@@ -138,12 +137,10 @@ define method write-bug-report-section
 	#"winme"   => "Windows ME";
 	#"win3.1"  => "Windows 3.1"
       end;
-  let edition-name = format-to-string("%s %s", release-product-name(), release-edition());
-  user & record-property("User", user);
-  organization & record-property("Organization", organization);
+  let edition-name
+    = format-to-string("%s %s", release-product-name(), release-edition());
   record-property("Software edition", edition-name);
   record-property("Software version", release-version());
-  record-property("Serial number", serial-number);
   record-property("Operating system", 
 		  format-to-string("%s %s", 
 				   os-variant, $os-version));
@@ -428,7 +425,6 @@ define method write-html-bug-report-section
 	    (title :: <string>, value :: <string>)
 	  add!(properties, pair(title, value))
 	end method record-property;
-  let (serial-number, evaluation?, expiration, user, organization) = license-info();
   let os-variant
     = select ($os-variant)
 	#"winxp"   => "Windows XP";
@@ -439,12 +435,10 @@ define method write-html-bug-report-section
 	#"winme"   => "Windows ME";
 	#"win3.1"  => "Windows 3.1"
       end;
-  let edition-name = format-to-string("%s %s", release-product-name(), release-edition());
-  user & record-property("User", user);
-  organization & record-property("Organization", organization);
+  let edition-name
+    = format-to-string("%s %s", release-product-name(), release-edition());
   record-property("Software edition", edition-name);
   record-property("Software version", release-version());
-  record-property("Serial number", serial-number);
   record-property("Operating system", 
 		  format-to-string("%s %s", 
 				   os-variant, $os-version));

@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Constants
 
-define constant $bullet-character     = '\<95>';
+//define constant $bullet-character     = '\<95>';
 define constant $copyright-character  = '\<a9>';
 define constant $registered-character = '\<ae>';
 define constant $trademark-character  = '\<99>';
@@ -21,53 +21,27 @@ define variable *help-file*
 define variable *help-file-string*
   = as(<string>, *help-file*);
 
-define constant $beta-release-text
-  = #["This is a beta release of Functional Developer. Please submit bugs",
-      "to support@functionalobjects.com.",
-      "",
-      "Note that distribution of software created with any beta version",
-      "of Functional Developer is prohibited."];
-
-define constant $extra-features-text
-  = #["Upgrade to Functional Developer(tm)",
-      "Professional or Enterprise Edition",
-      "for these additional features:"];
-//  = #["If you like Functional Developer Personal Edition,",
-//      "upgrade to Professional or Enterprise",
-//      "for these additional features:"];
-
-define constant $extra-features-info
-  = #["COM/OLE/ActiveX Support",
-      "ODBC Connectivity",
-      "C Library Interoperability",
-      "CORBA Distributed Objects (Enterprise Edition)",
-      "Cross-Network Debugging (Enterprise Edition)",
-      "60-Day Free Getting Started Support",
-      "Printed Documentation"];
-
-define constant $purchasing-text
-  = #["Shop on-line at the Function Developer Website or call our",
-      "24-hour sales line now!"];
-
-define constant $telesales-numbers
-  = #["1 888 884 8871 (US: toll free)",
-      "1 617 374 2521 (US: Boston)",
-      "44 (0)1223 873883 (UK: Cambridge)"];
+// define constant $beta-release-text
+//   = #["This is a beta release of Functional Developer. Please submit bugs",
+//       "to support@functionalobjects.com.",
+//       "",
+//       "Note that distribution of software created with any beta version",
+//       "of Functional Developer is prohibited."];
 
 define constant $license-font
   = make(<text-style>, 
 	 family: #"fix");
   
-define constant $about-box-font
-  = make(<text-style>, 
-	 family: #"sans-serif", 
-	 size:   #"large");
+// define constant $about-box-font
+//   = make(<text-style>, 
+// 	 family: #"sans-serif", 
+// 	 size:   #"large");
 
-define constant $about-box-title-font
-  = make(<text-style>, 
-	 family: #"sans-serif",
-	 size:   #"huge",
-	 weight: #"bold");
+// define constant $about-box-title-font
+//   = make(<text-style>, 
+// 	 family: #"sans-serif",
+// 	 size:   #"huge",
+// 	 weight: #"bold");
 
 define constant $about-box-copyright-font
   = make(<text-style>, 
@@ -156,29 +130,6 @@ end function license-agreement-text;
 
 /// About Box
 
-define function split-string
-    (string :: <byte-string>, character :: <byte-character>)
- => (strings :: <sequence>)
-  let results = make(<stretchy-vector>);
-  let old-position :: <integer> = 0;
-  let new-position :: <integer> = 0;
-  let string-size :: <integer> = string.size;
-  while (new-position < string-size)
-    when (string[new-position] = character)
-      add!(results, copy-sequence(string, start: old-position, end: new-position));
-      while (new-position < string-size - 1 & string[new-position + 1] = ' ')
-        new-position := new-position + 1
-      end;
-      old-position := new-position + 1;
-    end;
-    new-position := new-position + 1;
-  end;
-  if (old-position < string-size - 1)
-    add!(results, copy-sequence(string, start: old-position))
-  end;
-  results
-end function split-string;
-
 define function use-copyright-symbols
     (string :: <byte-string>) => (new-string :: <byte-string>)
   let string-size = string.size;
@@ -220,42 +171,11 @@ define function use-copyright-symbols
   copy-sequence(new-string, end: pos)
 end function use-copyright-symbols;
 
-define function edition-info-text
-    () => (text :: <sequence>)
-  let name = use-copyright-symbols(release-name());
-  let version = use-copyright-symbols(release-version());
-  let copyright
-    = map(use-copyright-symbols, split-string(release-copyright(), '.'));
-  let entries = concatenate(vector(name, version), copyright);
-  let user-info-entries = user-info-text();
-  concatenate(remove(entries, #f),
-	      if (empty?(user-info-entries))
-		#[]
-	      else
-		vector("")
-	      end,
-	      user-info-entries)
-end function edition-info-text;
-
 define function about-box-info-text
     () => (text :: <sequence>)
   let version = use-copyright-symbols(release-version());
-  concatenate(vector(version), 
-	      user-info-text())
+  vector(version)
 end function about-box-info-text;
-
-define function user-info-text
-    () => (text :: <sequence>)
-  let (serial-number, evaluation?, expiration, user, company) = license-info();
-  ignore(expiration);
-  let entries
-    = vector(unless (release-free-edition?() | evaluation?)
-	       format-to-string("Serial #%s", serial-number)
-	     end,
-	     user,
-	     company);
-  remove(entries, #f)
-end function user-info-text;
 
 define frame <about-box> (<dialog-frame>)
   pane splash-screen-pane (frame)
@@ -264,12 +184,6 @@ define frame <about-box> (<dialog-frame>)
     make-labels-layout
       (about-box-info-text(),
        text-style: $about-box-copyright-font);
-  pane register-button (frame)
-    make(<button>, 
-	 label: "&Register",
-	 activate-callback: method (button)
-			      frame-register-developer(sheet-frame(button))
-			    end);
   pane license-agreement-button (frame)
     make(<button>, 
 	 label: "&License Terms",
@@ -286,7 +200,6 @@ define frame <about-box> (<dialog-frame>)
 	 activate-callback: exit-dialog);
   pane exit-buttons (frame)
     horizontally (x-spacing: 8, equalize-widths?: #t)
-      frame.register-button;
       frame.license-agreement-button;
       frame.ok-button
     end;
@@ -324,9 +237,6 @@ define method frame-show-about-box
   with-frame-manager (frame-manager(frame))
     let about-box = make(<about-box>, owner: frame);
     start-dialog(about-box);
-    if (show-upgrade-box?())
-      frame-show-upgrade-box(frame)
-    end
   end
 end method frame-show-about-box;
 
@@ -345,170 +255,6 @@ define method frame-help-source
  => (source :: <symbol>)
   #"open-dylan"
 end method frame-help-source;
-
-
-/// Beta-Release box
-
-define frame <beta-release-box> (<dialog-frame>)
-  pane beta-release-name (frame)
-    make(<label>,
-	 label: use-copyright-symbols(release-name()),
-	 text-style: $about-box-title-font);
-  pane beta-release-text (frame)
-    make-labels-layout(map(use-copyright-symbols, $beta-release-text),
-		       text-style: $about-box-font);
-  pane beta-release-box-image-pane (frame)
-    make(<label>, label: $about-box-bitmap, text-style: $about-box-font);
-  pane ok-button (frame)
-    make(<button>, 
-	 label: "OK",
-	 width: 70, min-width: 70, fixed-width?: #t,
-	 activate-callback: exit-dialog,
-	 default?: #t);
-  pane exit-buttons (frame)
-    horizontally (x-spacing: 8, equalize-widths?: #t)
-      frame.ok-button
-    end;
-  layout (frame)
-    horizontally (x-spacing: 8)
-      frame.beta-release-box-image-pane;
-      vertically (y-spacing: 8)
-        frame.beta-release-name;
-        frame.beta-release-text;
-        make(<null-pane>, max-height: $fill, height: 1);
-        horizontally (max-width: $fill)
-          make(<null-pane>, max-width: $fill, height: 1);
-          frame.exit-buttons
-        end
-      end
-    end;
-  input-focus (frame)
-    frame.ok-button;
-  keyword title: = "Functional Developer Beta";
-  keyword exit-buttons?: = #f;
-  keyword center?: = #t;
-  //--- This would be a good idea if DUIM didn't screw it up!
-  // keyword fixed-width?:  = #t;
-  // keyword fixed-height?: = #t;
-end frame <beta-release-box>;
-
-define method initialize
-    (frame :: <beta-release-box>, #key) => ()
-  next-method();
-  frame-default-button(frame) := frame.ok-button
-end method initialize;
-
-define method frame-show-beta-release-box
-    (frame :: <environment-frame>) => ()
-  with-frame-manager (frame-manager(frame))
-    let frame = make(<beta-release-box>, owner: frame);
-    start-dialog(frame)
-  end
-end method frame-show-beta-release-box;
-
-
-/// Upgrade box
-
-define frame <upgrade-box> (<dialog-frame>)
-  pane edition-info (frame)
-    make-labels-layout
-      (edition-info-text(),
-       text-style: $about-box-copyright-font);
-  pane extra-features-text (frame)
-    make-labels-layout(map(use-copyright-symbols, $extra-features-text),
-		       text-style: $about-box-title-font);
-  pane extra-features-info (frame)
-    make-labels-layout(map(use-copyright-symbols, $extra-features-info),
-		       prefix: format-to-string("%c ", $bullet-character),
-		       text-style: $about-box-font);
-  pane dylan-web-site-link (frame)
-    make(<active-label>, 
-	 foreground: $blue,
-	 text-style: $about-box-font,
-	 underline?: #t,
-	 label: "Functional Developer Web Site",
-	 activate-callback: method (label)
-			      frame-open-dylan-web-page(sheet-frame(label))
-			    end);
-  pane purchasing-text (frame)
-    make-labels-layout($purchasing-text, text-style: $about-box-font);
-  pane telesales-info (frame)
-    make-labels-layout($telesales-numbers, 
-		       text-style: $about-box-font);
-  pane upgrade-box-image-pane (frame)
-    make(<label>, label: $about-box-bitmap, text-style: $about-box-font);
-  pane purchase-button (frame)
-    make(<button>,
-	 label: "&Purchase",
-	 activate-callback: method (button)
-			      let dialog = sheet-frame(button);
-			      frame-purchase-dylan(dialog)
-			    end);
-  pane ok-button (frame)
-    make(<button>, 
-	 label: "OK",
-	 activate-callback: exit-dialog,
-	 default?: #t);
-  pane exit-buttons (frame)
-    horizontally (x-spacing: 8, equalize-widths?: #t)
-      frame.purchase-button;
-      frame.ok-button
-    end;
-  pane basic-text-layout (frame)
-    vertically (y-spacing: 16)
-      vertically (y-spacing: 4)
-	frame.extra-features-text;
-        horizontally ()
-          make(<null-pane>, width: 32, height: 1);
-          frame.extra-features-info
-        end;
-	frame.purchasing-text;
-        horizontally ()
-          make(<null-pane>, width: 32, height: 1);
-          vertically (y-spacing: 4)
-            frame.dylan-web-site-link;
-	    frame.telesales-info
-          end
-	end
-      end
-    end;
-  layout (frame)
-    horizontally (x-spacing: 8)
-      vertically (y-spacing: 8)
-        frame.upgrade-box-image-pane;
-        horizontally (y-alignment: #"bottom", max-height: $fill)
-          frame.edition-info
-        end
-      end;
-      vertically (y-spacing: 8, x-alignment: #"right", max-width: $fill)
-        frame.basic-text-layout;
-        make(<null-pane>, max-height: $fill, height: 1);
-        frame.exit-buttons
-      end
-    end;
-  input-focus (frame)
-    frame.ok-button;
-  keyword title: = "Upgrade Functional Developer";
-  keyword exit-buttons?: = #f;
-  keyword center?: = #t;
-  //--- This would be a good idea if DUIM didn't screw it up!
-  // keyword fixed-width?:  = #t;
-  // keyword fixed-height?: = #t;
-end frame <upgrade-box>;
-
-define method initialize
-    (frame :: <upgrade-box>, #key) => ()
-  next-method();
-  frame-default-button(frame) := frame.ok-button
-end method initialize;
-
-define method frame-show-upgrade-box
-    (frame :: <environment-frame>) => ()
-  with-frame-manager (frame-manager(frame))
-    let frame = make(<upgrade-box>, owner: frame);
-    start-dialog(frame)
-  end
-end method frame-show-upgrade-box;
 
 
 /// HELP-CREDITS
@@ -561,9 +307,6 @@ end method help-credits;
 
 /// Web site command tables
 
-define constant $purchase-web-page
-  = format-to-string("%s/%s", release-web-address(), "index.phtml");
-
 define constant $download-doc-page
   = format-to-string("%s/%s", release-web-address(), "documentation.phtml");
 
@@ -572,224 +315,6 @@ define function frame-open-dylan-web-page
   let location = as(<url>, page);
   frame-open-object(frame, location)
 end function frame-open-dylan-web-page;
-
-define function frame-purchase-dylan
-    (frame :: <frame>) => ()
-  frame-open-dylan-web-page(frame, page: $purchase-web-page)
-end function frame-purchase-dylan;
-
-
-/// Registration
-
-define function frame-register-developer
-    (frame :: false-or(<frame>),
-     #key title = "Register Functional Developer",
-          owner = frame)
- => (success? :: <boolean>)
-  let products = unregistered-products();
-  if (empty?(products))
-    if (environment-question
-	  (format-to-string
-	     ("All %s packages on this system have been registered.\n"
-		"Do you wish to purchase additional products from our web site?",
-	      release-product-name()),
-	   owner: owner,
-	   exit-style: #"yes-no"))
-      //---*** TODO: Should ensure that frame isn't #f here somehow!
-      frame-purchase-dylan(owner | current-frame())
-    end;
-    #t
-  else
-    let products
-      = map(method(product)
-		let name = select (product)
-			     #"IDE" =>
-			       format-to-string("%s %s", release-product-name(),
-						         release-edition());
-			     #"console-tools" =>
-			       "Console-Based Developer Tools";
-			     otherwise =>
-			       library-pack-full-name(product);
-			   end;
-		vector(name, product)
-	    end,
-	    products);
-    do-register-developer-dialog(frame, products, title: title, owner: owner)
-  end
-end function frame-register-developer;
-
-define function do-register-developer-dialog
-    (frame :: false-or(<frame>),
-     products :: <sequence>,
-     #key title = "Register Functional Developer",
-          owner = frame)
- => (success? :: <boolean>)
-  let framem = if (owner)
-                 frame-manager(owner)
-               else
-                 find-frame-manager()
-	       end;
-  with-frame-manager (framem)
-    let link-button
-      = make(<push-button>,
-             label: "Purchase",
-             activate-callback:
-               method (gadget)
-		 frame-purchase-dylan(sheet-frame(gadget))
-	       end method);
-    let products-list
-      = make(<option-box>,
-             items: products,
-	     label-key: first,
-	     value-key: second);
-    let serial-number
-      = make(<text-field>, min-width: 250, max-width: 250);
-    let license-number
-      = make(<text-field>, min-width: 250, max-width: 250);
-    let group-box-1
-      = grouping ("Purchase Licenses", max-width: $fill)
-          horizontally (spacing: 4, y-alignment: #"center")
-            vertically ()
-              make(<label>, 
-                   label: "If you need to purchase licenses for Functional Objects"
-                            " products, please press this button.",
-                   multi-line?: #t,
-                   min-width: 250,
-                   max-width: 250);
-            end;
-            link-button;
-          end
-        end;
-    let group-box-2
-      = grouping ("Register Products", max-width: $fill)
-          vertically (spacing: 8)
-            vertically (spacing: -2)
-              make(<label>,
-		   label: "To register a product, enter the serial number and license key");
-              make(<label>,
-		   label: "exactly as given to you by Functional Objects.  Use the 'Apply'");
-              make(<label>,
-		   label: "button to register multiple products.");
-            end;
-            make(<table-layout>,
-                 columns: 2,
-                 x-alignment: #(#"right", #"left"),
-  	         y-spacing: 4,
-                 y-alignment: #"center",
-                 children:
-                   vector(make(<label>, label: "Select Product:"),
-                          products-list,
-                          make(<label>, label: "Serial number:"),
-                          serial-number,
-                          make(<label>, label: "License key:"),
-                          license-number))
-            end
-        end;
-    let exit-button
-      = make(<push-button>,
-             label: "OK",
-             activate-callback:
-               method (gadget)
-                 let dialog = sheet-frame(gadget);
-                 if (do-register-product(dialog, products-list, serial-number, license-number))
-                   exit-dialog(dialog)
-                 end;
-               end);
-    let cancel-button
-      = make(<push-button>,
-             label: "Cancel",
-             activate-callback: cancel-dialog);
-    let apply-button
-      = make(<push-button>,
-             label: "Apply",
-             activate-callback:
-               method (gadget)
-                 let dialog = sheet-frame(gadget);
-                 do-register-product(dialog, products-list, serial-number, license-number);
-                 if (empty?(gadget-items(products-list)))
-                   exit-dialog(dialog)
-                 end;
-               end method);
-    let layout
-      = make(<column-layout>,
-             x-alignment: #"right",
-             y-spacing: 10,
-             children:
-               vector(vertically (spacing: 10, max-width: $fill)
-                        group-box-1;
-                        group-box-2;
-                      end,
-                      make(<row-layout>,
-                           x-alignment: #"right",
-                           x-spacing: 4, equalize-widths?: #t,
-                           children: vector(exit-button, cancel-button, apply-button))));
-    
-    let dialog
-      = make(<dialog-frame>,
-             title: title,
-             layout: layout,
-             exit-buttons?: #f,
-             exit-button:   exit-button,
-             cancel-button: cancel-button,
-             mode: #"modal",
-             owner: frame,
-             width: 360,
-             fixed-width?: #t,
-             fixed-height?: #t);
-    let success? = start-dialog(dialog);
-    if (success?)
-      #t
-    end
-  end;
-end function do-register-developer-dialog;
-
-/// All the extra arguments are needed because we've built the dialog by hand ...
-define function do-register-product
-    (frame :: <frame>, products-list :: <option-box>,
-     serial-number :: <text-field>, license-number :: <text-field>)
- => (success? :: <boolean>)
-  let product = gadget-value(products-list);
-  let serial = gadget-value(serial-number);
-  let key = gadget-value(license-number);
-  if (size(serial) ~= size("FDeee-vvvv-nnnnnnnnnnnn"))
-    environment-error-message("Malformed serial number; "
-				"please correct your errors and try again.",
-			      owner: frame);
-    #f
-  elseif (size(key) ~= size("aaaabbbbccccxxxx"))
-    environment-error-message("Malformed license key; "
-				"please correct your errors and try again.",
-			      owner: frame);
-    #f
-  else
-    let success?
-      = block()
-	  register-product(product, serial, key)
-	exception (c :: <license-validation-failure>)
-	  environment-error-message(format-to-string
-				      ("%s\nPlease correct your errors and try again.",
-				       c),
-				    owner: frame);
-	  #f
-	end;
-    if (success?)
-      let old-products = gadget-items(products-list);
-      let new-products = make(<vector>, size: size(old-products) - 1);
-      unless (zero?(size(new-products)))
-	let j :: <integer> = 0;
-	for (i from 0 below size(old-products))
-	  unless (product = second(old-products[i]))
-	    new-products[j] := old-products[i];
-	    j := j + 1
-	  end;
-	end;
-	gadget-value(products-list) := second(new-products[0]);
-      end;
-      gadget-items(products-list) := new-products;
-    end;
-    success?
-  end
-end function do-register-product;
 
 
 /// Help command table

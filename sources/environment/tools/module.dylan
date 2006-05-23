@@ -37,8 +37,6 @@ define module environment-tools
   use environment-framework;
   use environment-server;
 
-  use licensing;
-
   // Some useful constants
   export $n/a,
          $unknown,
@@ -479,9 +477,6 @@ define module environment-tools
 	 $debugger-window-small-icon,
 	 $describer-window-small-icon,
          $find-window-small-icon;
-
-  // Doesn't seem to fit anywhere else ...
-  export frame-register-developer;
 
   export <frame-module-gadget-mixin>,
          frame-available-modules,

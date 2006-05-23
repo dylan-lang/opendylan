@@ -21,7 +21,5 @@ define library environment-tools
   use deuce;
   use duim-deuce;	// We need to use duim-deuce to share its images
 
-  use licensing;	// We use this for the about box information
-
   export environment-tools;
 end library environment-tools;

@@ -12,8 +12,6 @@ define module environment-reports
     exclude: { info-name };
   use environment-protocols;
   use environment-manager;
-  use licensing, 
-    import: { license-info };
 
   // Report protocols
   export <report>,

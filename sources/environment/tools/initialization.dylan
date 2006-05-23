@@ -65,8 +65,6 @@ end method start-environment;
 define method handle-environment-startup
     (frame :: <environment-frame>) => ()
   broadcast($environment-channel, make(<environment-started-message>));
-  show-beta-release-box?() & frame-show-beta-release-box(frame);
-  show-upgrade-box?()      & frame-show-upgrade-box(frame);
   let (process, id) = just-in-time-debugging-arguments();
   let filename = *startup-open-file*;
   case
@@ -120,19 +118,6 @@ define function six-months-after-build?
   date >= six-month-date
 end function six-months-after-build?;
 */
-
-///---*** Should we make this harder to hack? It hardly seems worth it...
-///---*** NOTE: As both the Basic and Enhanced editions will cost money,
-///---*** it no longer seems right to ask the user for more money all the time.
-define method show-upgrade-box?
-    () => (show? :: <boolean>)
-  #f
-end method show-upgrade-box?;
-
-define method show-beta-release-box?
-    () => (show? :: <boolean>)
-  release-beta?() & ~release-internal?()
-end method show-beta-release-box?;
 
 /// Project browser startup
 
