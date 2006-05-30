@@ -84,7 +84,16 @@ define method internal-diff (seq1 :: <sequence>, seq2 :: <sequence>)
     if (lower > upper)   // sequences are identical
       return(#());
     end if;
-
+    if (lower = 1 & upper = 1)
+      return(list(make(<insert-entry>,
+                       source-index: row,
+                       dest-index: row,
+                       count: seq2.size - row)));
+    elseif (lower = -1 & upper = -1)
+      return(list(make(<delete-entry>,
+                       dest-index: row,
+                       count: seq1.size - row)))
+    end;
     // For each diagonal k, last-distance[k] is the last row that
     // contains the desired distance.
     //
