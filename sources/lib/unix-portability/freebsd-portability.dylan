@@ -19,4 +19,4 @@ end;
 
 define constant $proc-path = "file";
 
-define constant $errno-location = "__errno";
+define constant $errno-location = "__error";

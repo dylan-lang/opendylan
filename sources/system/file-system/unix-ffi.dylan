@@ -140,7 +140,7 @@ end function st-ctime;
 /// From <pwd.h> ...
 
 define system-offset passwd-name () 0;
-define system-offset passwd-dir (alpha-linux 4, x86-freebsd 28) 5;
+define system-offset passwd-dir (alpha-linux 4, x86-freebsd 7) 5;
 
 define inline-only function passwd-name (passwd :: <machine-word>) => (name :: <byte-string>)
   primitive-raw-as-string
