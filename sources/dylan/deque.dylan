@@ -394,7 +394,7 @@ define sealed method reverse! (deque :: <object-deque>) => (result :: <deque>)
   let rep = deque.representation;
   let rep-first-index = rep.first-index;
   let rep-last-index = rep.last-index;
-  let stopping-index = floor/(rep-first-index + rep-last-index, 2);
+  let stopping-index = ceiling/(rep-first-index + rep-last-index, 2);
   for (i :: <integer> from rep-first-index below stopping-index,
        j :: <integer> from rep-last-index by -1)
     let tmp = island-deque-element(rep, i);
