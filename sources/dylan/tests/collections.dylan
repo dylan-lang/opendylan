@@ -23,7 +23,8 @@ define method test-collection-class
   if (instantiable?)
     test-collection-of-size(format-to-string("Empty %s", name), class, 0);
     test-collection-of-size(format-to-string("One item %s", name), class, 1);
-    test-collection-of-size(format-to-string("Multiple item %s", name), class, 5);
+    test-collection-of-size(format-to-string("Even size %s", name), class, 4);
+    test-collection-of-size(format-to-string("Odd size %s", name), class, 5);
   end
 end method test-collection-class;
 
