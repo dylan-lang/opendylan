@@ -37,6 +37,12 @@ void add_boundary_cache
 // Adds a pair of function boundaries enclosing "addr" to the specified
 // cache.
 
+char out[1024];
+
+#define debug_me(x, y) \
+  sprintf(out, x, y); \
+  debugger_message(out, 0, 0);
+
 BOOL CALLBACK nub_enumerate_symbol_callback
   (PSYMBOL_INFO pSymInfo,
    ULONG        SymbolSize,
@@ -45,11 +51,13 @@ BOOL CALLBACK nub_enumerate_symbol_callback
   LPDBGPROCESS      process = (LPDBGPROCESS) UserContext;
 
   process->SymbolBuffer.Info = *pSymInfo;
-  strcpy(process->SymbolBuffer.Info.Name, pSymInfo->Name);
+//  strcpy(process->SymbolBuffer.Info.Name, pSymInfo->Name);
   
   process->SymbolBufferValid = TRUE;
 
-  return FALSE;			// Don't continue enumerating
+  debug_me("Found symbol: %s", pSymInfo->Name);
+
+  return TRUE;
 }
 
 
@@ -71,10 +79,13 @@ NUBINT
 {
   LPDBGPROCESS      process = (LPDBGPROCESS) nub;
   BOOL              status;
+  DWORD64           dw_disp;
   LPDBGLIBRARY      module 
                       = library_descriptor_from_address (process,
                                                          (DWORD) location);
 
+
+  debug_me("nub_closest_symbol for address 0x%x", location);
 
   ensure_debug_information_for_library(process, module);
 
@@ -115,28 +126,28 @@ NUBINT
     // If the symbol handler is working, try to use DbgHelp to lookup the
     // symbol.
 
-    process->SymbolBufferValid = FALSE;
+    process->SymbolBuffer.Info.MaxNameLen = 256;
+
+    debug_me("Searching symbol", 0);
 
     status =
-      SymEnumSymbolsForAddr(process->ProcessHandle,
-			    (DWORD64) location,
-			    nub_enumerate_symbol_callback,
-			    process);
-    if (status && process->SymbolBufferValid) {
+      SymFromAddr(process->ProcessHandle,
+	         (DWORD64) location,
+                 &dw_disp,
+                 (SYMBOL_INFO*) &(process->SymbolBuffer.Info));
+    if (status) {
       BYTE    i = 0;
+      debug_me("Located a symbol: %s", process->SymbolBuffer.Info.Name);
       //printf("Located the symbol: ");
-      while(process->SymbolBuffer.Info.Name[i] != '\0') {
-        //printf("%c", process->SymbolBuffer.Name[i]);
-        i++;
-      }
-      //printf("\n");
       (*actual_address) = (TARGET_ADDRESS) process->SymbolBuffer.Info.Address;
       (*offset)
-	= (NUBINT) ((DWORD64) location - process->SymbolBuffer.Info.Address);
+	= (NUBINT) dw_disp;
       // TODO: Something better here.
       // When using DbgHelp's symbol handler, we have no real way to
       // identify the programming language that defined the symbol.
       // This is a slight hack.
+      // In fact, there's a corresponding function in the high-level code...
+      i = strlen(process->SymbolBuffer.Info.Name);
       if ((i > 0) &&
           (process->SymbolBuffer.Info.Name[0] == 'K') &&
           (process->SymbolBuffer.Info.Name[i - 1] == 'I'))
@@ -156,6 +167,11 @@ NUBINT
       return ((NUBINT) 1);
     }
     else {
+      if (status) {
+        debug_me("no symbol found for addr\n",0 );
+      } else {
+	debug_me("Error %x\n", GetLastError());
+      }
       return((NUBINT) 0);
     }
   }
@@ -168,6 +184,9 @@ void nub_closest_symbol_name
   int              limit = (int) buf_size;
   char             *name = process->NameCache;
   int              i = 0;
+
+  debug_me("nub_closest_symbol_name",0);
+
   while (i < limit) {
     buf[i] = name[i];
     i++;
@@ -193,6 +212,8 @@ NUBINT nub_find_symbol_in_library
   char              extended_name[300];
   int               i = 0;
   int               j = 0;
+
+  debug_me("nub_find_symbol_in_library",0);
 
   ensure_debug_information_for_library(process, module);
 
@@ -248,6 +269,8 @@ NUBINT nub_find_symbol_in_library
 
     process->SymbolBufferValid = FALSE;
 
+    debug_me("Enumerating symbols for %s", extended_name);
+
     status =
       SymEnumSymbols(process->ProcessHandle,
 		     module->ImageInformation.ImageBase,
@@ -260,7 +283,7 @@ NUBINT nub_find_symbol_in_library
       // When using DbgHelp's symbol handler, we have no real way to
       // identify the programming language that defined the symbol.
       // This is a slight hack.
-      if ((name[0] == 'K') && (name[name_length - 1] == 'I'))
+      if ((name[0] == 'K')  && (name[name_length - 1] == 'I'))
         (*language) = DYLAN_LANGUAGE;
       else
         (*language) = C_LANGUAGE;
@@ -291,6 +314,8 @@ void nub_do_static_symbols
   LPDBGLIBRARY      module = (LPDBGLIBRARY) library;
   LOOKUP_TABLE      *table;
   DWORD             dwFirst, dwLast;
+
+  debug_me("nub_do_static_symbols",0);
 
   switch (module->DebugType) {
 
@@ -331,6 +356,8 @@ void nub_do_global_symbols
   LOOKUP_TABLE      *table;
   DWORD             dwFirst, dwLast;
 
+  debug_me("nub_do_global_symbols",0);
+
   switch (module->DebugType) {
 
   case CODEVIEW_IMAGE:
@@ -369,6 +396,8 @@ void nub_do_exported_symbols
   LPDBGLIBRARY      module = (LPDBGLIBRARY) library;
   LOOKUP_TABLE      *table;
   DWORD             dwFirst, dwLast;
+
+  debug_me("nub_do_exported_symbols",0);
 
   switch (module->DebugType) {
 
@@ -409,6 +438,8 @@ NUBINT nub_nearest_symbols
                                                          (DWORD) addr);
   LOOKUP_TABLE      *table;
 
+  debug_me("nub_nearest_symbols",0);
+
   if (module == NULL) {
     (*lookups) = NULL;
     return ((NUBINT) 0);
@@ -448,6 +479,8 @@ void nub_function_bounding_addresses
                                                          (DWORD) addr);
   BOOL                   status = FALSE;
 
+  debug_me("nub_function_bounding_addresses",0);
+
   ensure_debug_information_for_library(process, module);
 
   // The first place to look is the cache.
@@ -481,6 +514,8 @@ void nub_function_bounding_addresses
   else {
     // DbgHelp did not come through for us, so defer to bruteforce
     // methods.
+
+    debugger_message("Tried to lookup symbols for %= and failed!\n", addr, 0);
 
     module = library_descriptor_from_address (process, (DWORD) addr);
 
@@ -518,6 +553,9 @@ NUBINT nub_get_lexical_variable_name_length
   SYMBOL_LOOKUP_ENTRY *sym = find_entry ((LOOKUP_TABLE*) table,
                                          (DWORD) index);
 
+  debug_me("nub_lexical_variable_name_length",0);
+
+
   switch (sym->LookupType) {
 
   case MAPPED_CODEVIEW_SYMBOL:
@@ -544,6 +582,8 @@ NUBINT nub_lookup_symbol_name_length
 
   SYMBOL_LOOKUP_ENTRY *sym = find_entry ((LOOKUP_TABLE*) table,
                                          (DWORD) index);
+  debug_me("nub_lookup_symbol_name_length",0);
+
 
   switch (sym->LookupType) {
 
@@ -570,6 +610,8 @@ NUBINT nub_lookup_symbol_language_code
 {
   SYMBOL_LOOKUP_ENTRY *sym = find_entry ((LOOKUP_TABLE*) table,
                                          (DWORD) index);
+  debug_me("nub_lookup_symbol_language_code",0);
+
   return ((NUBINT) (sym->LanguageCode));
 }
 
@@ -581,9 +623,10 @@ void nub_get_lexical_variable_name
    NUBINT buf_size, 
    char *buf)
 {
-
   SYMBOL_LOOKUP_ENTRY *sym = find_entry ((LOOKUP_TABLE*) table,
                                          (DWORD) index);
+  debug_me("nub_get_lexical_variable_name",0);
+
 
   switch (sym->LookupType) {
 
@@ -607,6 +650,8 @@ char *nub_get_lexical_variable_name_fast
 {
   SYMBOL_LOOKUP_ENTRY *sym = find_entry ((LOOKUP_TABLE*) table,
                                          (DWORD) index);
+
+  debug_me("nub_get_lexical_variable_name_fast",0);
 
   switch (sym->LookupType) {
 
@@ -633,6 +678,8 @@ void nub_lookup_symbol_name
 {
   SYMBOL_LOOKUP_ENTRY *sym = find_entry ((LOOKUP_TABLE*) table,
                                          (DWORD) index);
+  debug_me("nub_lookup_symbol_name",0);
+
   switch (sym->LookupType) {
 
   case MAPPED_CODEVIEW_SYMBOL:
@@ -655,6 +702,8 @@ char* nub_lookup_symbol_name_fast
 
   SYMBOL_LOOKUP_ENTRY *sym = find_entry ((LOOKUP_TABLE*) table,
                                          (DWORD) index);
+  debug_me("nub_lookup_symbol_name_fast",0);
+
 
   switch (sym->LookupType) {
 
@@ -688,6 +737,8 @@ TARGET_ADDRESS nub_lexical_variable_address
   DWORD               offset;
   DWORD               addr;
 
+  debug_me("nub_lexical_variable_address",0);
+
   switch (sym->LookupType) {
 
   case MAPPED_CODEVIEW_SYMBOL:
@@ -713,9 +764,11 @@ TARGET_ADDRESS nub_lookup_symbol_address
    NUBHANDLE table, 
    NUB_INDEX index)
 {
-
   SYMBOL_LOOKUP_ENTRY *sym = find_entry ((LOOKUP_TABLE*) table,
                                          (DWORD) index);
+
+  debug_me("nub_lookup_symbol_address",0);
+
 
   switch (sym->LookupType) {
 
@@ -734,9 +787,11 @@ TARGET_ADDRESS nub_lookup_function_debug_start
    NUBHANDLE table, 
    NUB_INDEX index)
 {
-
   SYMBOL_LOOKUP_ENTRY *sym = find_entry ((LOOKUP_TABLE*) table,
                                          (DWORD) index);
+
+  debug_me("nub_lookup_function_debug_start",0);
+
 
   switch (sym->LookupType) {
 
@@ -755,9 +810,11 @@ TARGET_ADDRESS nub_lookup_function_debug_end
    NUBHANDLE table, 
    NUB_INDEX index)
 {
-
   SYMBOL_LOOKUP_ENTRY *sym = find_entry ((LOOKUP_TABLE*) table,
                                          (DWORD) index);
+
+  debug_me("nub_lookup_function_debug_end",0);
+
 
   switch (sym->LookupType) {
 
@@ -780,9 +837,11 @@ TARGET_ADDRESS nub_lookup_function_end
    NUBHANDLE table, 
    NUB_INDEX index)
 {
-
   SYMBOL_LOOKUP_ENTRY *sym = find_entry ((LOOKUP_TABLE*) table,
                                          (DWORD) index);
+
+  debug_me("nub_lookup_function_end",0);
+
 
   switch (sym->LookupType) {
 
@@ -804,6 +863,9 @@ NUBINT nub_symbol_is_function (NUB nub, NUBHANDLE table, NUB_INDEX index)
 {
   SYMBOL_LOOKUP_ENTRY *sym = find_entry ((LOOKUP_TABLE*) table,
                                          (DWORD) index);
+
+  debug_me("nub_symbol_is_function",0);
+
 
   switch (sym->LookupType) {
 
