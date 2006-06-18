@@ -151,7 +151,7 @@ define inline-only C-function setsockopt
   parameter socket :: <C-int>;
   parameter level :: <C-int>;
   parameter option-name :: <C-int>;
-  parameter option-value :: <C-void*>;
+  parameter option-value :: <C-int*>;
   parameter option-len :: <socklen-t>;
   result val :: <C-int>;
   c-name: "setsockopt";

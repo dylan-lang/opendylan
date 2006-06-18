@@ -17,6 +17,15 @@ define function accessor-new-socket-descriptor
   if (the-descriptor = $INVALID-SOCKET)
     unix-socket-error("unix-socket");
   end if;
+  with-stack-structure (int :: <C-int*>)
+    pointer-value(int) := 1;
+    let setsockopt-result =
+      setsockopt(the-descriptor, $SOL-SOCKET, $SO-REUSEADDR,
+                 int, size-of(<C-int*>));
+    if (setsockopt-result < 0)
+      unix-socket-error("setsockopt");
+    end;
+  end;
   the-descriptor
 end function;
 

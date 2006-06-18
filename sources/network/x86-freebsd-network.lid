@@ -6,7 +6,7 @@ Major-Version: 2
 Minor-Version: 1
 Files:  unix-network-library
         unix-sockets/x86-unix-sockets-data
-        unix-sockets/x86-linux-sockets-data
+        unix-sockets/x86-freebsd-sockets-data
         unix-sockets/sockets-interfaces
         unix-sockets/sockets-extras
         unix-sockets/x86-linux-address-data
