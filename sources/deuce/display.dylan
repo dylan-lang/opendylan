@@ -475,10 +475,10 @@ define sealed method do-redisplay-window
       unless (window-enabled?(window))
         return()
       end;
-      let (width, height) = window-size(window);
+      //let (width, height) = window-size(window);
       let (vwidth, vheight) = window-viewport-size(window);
       unless (buffer)
-        clear-area(window, 0, 0, width, height);
+        clear-area(window, 0, 0, vwidth, vheight);
         return()
       end;
       // If this is truly from redisplay, then DUIM will have cleared
@@ -486,7 +486,7 @@ define sealed method do-redisplay-window
       // won't have been cleared, so we should do it to be safe.
       // Ideally we should distinguish, so we don't clear it twice.
       when (redisplay?)
-        clear-area(window, 0, 0, width, height)
+        clear-area(window, 0, 0, vwidth, vheight)
       end;
       let degree        = window-redisplay-degree(window);
       let current-point = window-point(window);
@@ -591,7 +591,8 @@ define sealed method do-redisplay-window
       window-centering-fraction(window) := #f;
       when (show-caret?)
         show-caret(window, tooltip?: #t)
-      end
+      end;
+      check-invariants(window);
     end
   end
 end method do-redisplay-window;
@@ -645,7 +646,7 @@ define method redisplay-line
   let mode         = buffer-major-mode(buffer);
   let current-mark = window-mark(window);
   let index :: <integer> = window-redisplay-index(window);
-  let (width,  height)   = window-size(window);
+  let (width,  height)   = window-viewport-size(window);
   ignore(height);
   // We can reduce flicker by clearing and displaying less,
   // but we can only get away with this if we are not clearing
@@ -678,7 +679,7 @@ define method redisplay-text
   let mode          = buffer-major-mode(buffer);
   let current-point = window-point(window);
   let current-line  = bp-line(current-point);
-  let (width,  height) = window-size(window);
+  let (width,  height) = window-viewport-size(window);
   // Now redisplay the changed contents of the window
   when (move-viewport?
         & ~find-display-line(window, current-line, compulsive?: #t))
@@ -736,6 +737,7 @@ end method redisplay-text;
 
 define sealed method update-scroll-bars
     (window :: <basic-window>, buffer :: <basic-buffer>) => ()
+  check-invariants(window);
   let n-lines :: <integer> = window-n-display-lines(window);
   // Update the horizontal scroll bar first, because it can
   // mess up the vertical scroll bar
@@ -874,7 +876,7 @@ define sealed method update-display-lines
  => (redisplay-y :: false-or(<integer>))
   let buffer = window-buffer(window);
   let mode   = buffer-major-mode(buffer);
-  let (width, height) = window-size(window);
+  let (width, height) = window-viewport-size(window);
   let vsp = window-line-spacing(window);
   let border = window-border(window);
   let lines   :: <simple-object-vector> = window-display-lines(window);
@@ -987,6 +989,7 @@ define sealed method update-display-lines
   end block;
   window-n-display-lines(window) := n-lines;
   window-max-line-width(window)  := max-width;
+  check-invariants(window);
   if (n-lines > 0 & old-y > display-line-y(lines[n-lines - 1]))
     // The total display shrank, we'll need to clear the end
     display-line-y(lines[n-lines - 1])
@@ -1161,6 +1164,17 @@ define sealed method scroll-n-lines-slowly
   dy
 end method scroll-n-lines-slowly;
 
+define method check-invariants (window :: <basic-window>)
+  when ($debug-redisplay?)
+    let (width, height) = window-viewport-size(window);
+    for (n from 0 below window.window-n-display-lines)
+      if (window.window-display-lines[n].display-line-y > height)
+        break()
+      end
+    end
+  end
+end;
+
 
 // Insert and display 'n' display lines at the given index,
 // using bitblt to move the existing lines down
@@ -1169,10 +1183,12 @@ define sealed method insert-display-lines
      line :: <basic-line>, index :: <integer>, n :: <integer>,
      #key move-point? = #f)
  => (dy :: <integer>)
+  //break();
+  check-invariants(window);
   let show-caret? = #t;
   block ()
     hide-caret(window, tooltip?: #t);
-    let (width, height) = window-size(window);
+    let (width, height) = window-viewport-size(window);
     ignore(width);
     let buffer  :: <basic-buffer> = window-buffer(window);
     let mode    :: <major-mode>   = buffer-major-mode(buffer);
@@ -1342,7 +1358,8 @@ define sealed method insert-display-lines
     when (show-caret?)
       show-caret(window, tooltip?: #t)
     end;
-  end
+    check-invariants(window);
+  end;
 end method insert-display-lines;
 
 // Delete 'n' display lines at the given index,
@@ -1353,6 +1370,7 @@ define sealed method delete-display-lines
      line :: <basic-line>, index :: <integer>, n :: <integer>,
      #key move-point? = #f)
  => (dy :: <integer>)
+  check-invariants(window);
   let show-caret? = #t;
   block ()
     hide-caret(window, tooltip?: #t);
@@ -1456,7 +1474,8 @@ define sealed method delete-display-lines
     when (show-caret?)
       show-caret(window, tooltip?: #t)
     end;
-  end
+    check-invariants(window);
+  end;
 end method delete-display-lines;
 
 
@@ -1544,7 +1563,7 @@ define sealed method update-display-line-marking
       let mode    = buffer-major-mode(buffer);
       let frame   = window-frame(window);
       let extend? = (marking-policy(editor-policy(frame-editor(frame))) == #"right-margin");
-      let (width, height) = window-size(window);
+      let (width, height) = window-viewport-size(window);
       ignore(height);
       // Restrict the interval to what is visible on the screen, so
       // that we don't spend lots of time updating what is not visible
