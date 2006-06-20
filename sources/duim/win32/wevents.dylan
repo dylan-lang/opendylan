@@ -585,6 +585,7 @@ computation. FIXME.
 define sealed method handle-wm-mousewheel
     (sheet :: <scrolling-sheet-mixin>, wParam :: <wparam-type>, lParam :: <lparam-type>)
  => (handled? :: <boolean>)
+  let scroll-bar = sheet.sheet-vertical-scroll-bar | sheet.sheet-horizontal-scroll-bar;
   if (sheet.sheet-vertical-scroll-bar)
     let distance = HIWORD(wParam);
     if (distance > 32768)
