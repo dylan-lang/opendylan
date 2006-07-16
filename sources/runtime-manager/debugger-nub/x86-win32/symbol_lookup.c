@@ -39,9 +39,13 @@ void add_boundary_cache
 
 char out[1024];
 
+#ifdef DEBUGGING
 #define debug_me(x, y) \
   sprintf(out, x, y); \
   debugger_message(out, 0, 0);
+#else
+#define debug_me(x, y)
+#endif
 
 BOOL CALLBACK nub_enumerate_symbol_callback
   (PSYMBOL_INFO pSymInfo,
