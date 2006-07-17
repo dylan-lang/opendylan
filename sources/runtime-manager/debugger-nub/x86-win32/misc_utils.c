@@ -466,8 +466,6 @@ void add_library_descriptor
   LPDBGLIBRARY  last_library;
   LPDBGLIBRARY  new_library;
 
-  debugger_message("Adding DLL: %= %=", info.lpBaseOfDll, info.hFile);
-
 
   // Create the new library first.
 
@@ -551,8 +549,6 @@ void ensure_debug_information_for_library
   BOOL success;
 
   if ((module == NULL) || (module->DebugType == NOT_YET_LOADED)) {
-    debugger_message("Loading debug information\n", 0, 0);
-
     module->DebugType = NONE;
     create_library_debug_map(process, module);
     pull_image_information(module);
@@ -570,7 +566,6 @@ void ensure_debug_information_for_library
 			0);
       if (base != 0) {
 	module->SymbolHandlerWorking = 1;
-        debugger_message("Succeeded!\n", 0, 0);
       }
 
       memset(&(module->ImagehlpModuleStruct), 0, sizeof(IMAGEHLP_MODULE64));
@@ -580,9 +575,6 @@ void ensure_debug_information_for_library
           SymGetModuleInfo64(process->ProcessHandle,
 		            (DWORD64) module->ImageInformation.ImageBase,
 		            &(module->ImagehlpModuleStruct));
-	if(!success) {
-          debugger_message("SymGetModuleInfo64 failed with %=\n", GetLastError(), 0);
-        }
       }
     }
   }
@@ -651,6 +643,19 @@ void housekeep_for_stop_reason
     break;
 
   case EXIT_PROCESS_DEBUG_EVENT:
+    if (process->SymbolHandlerWorking) {
+      LPDBGLIBRARY  module = process->LibraryList;
+
+      while (module != NULL) {
+        if (module->SymbolHandlerWorking) {
+          SymUnloadModule64(process->ProcessHandle,
+                            (DWORD64) module->ImageInformation.ImageBase);
+        }
+        module = module->Next;
+      }
+      
+      SymCleanup(process->ProcessHandle);
+    }
     break;
 
   case CREATE_THREAD_DEBUG_EVENT:

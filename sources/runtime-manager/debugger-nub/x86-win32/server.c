@@ -19,7 +19,7 @@ int get_os_wall_clock_time (LPDBGPROCESS process);
 MODULED *module_enumeration_descriptor_from_base_address
     (MODULED *list, DWORD base);
 
-#define ENVIRONMENT_VARIABLE_BUFFER_SIZE 1024
+#define ENVIRONMENT_VARIABLE_BUFFER_SIZE 32768
 #define ENVIRONMENT_PATH "PATH"
 
 void extend_path_environment_variable
@@ -294,9 +294,12 @@ NUB create_and_debug_process
   char            *name_starts;
   char            *search_path = NULL;
   char            *default_extension = ".exe";
-  char            original_path_variable[ENVIRONMENT_VARIABLE_BUFFER_SIZE];
-  char            extended_path_variable[ENVIRONMENT_VARIABLE_BUFFER_SIZE];
+  char            *original_path_variable;
+  char            *extended_path_variable;
   OSVERSIONINFO   platform_data;
+
+  original_path_variable = malloc(ENVIRONMENT_VARIABLE_BUFFER_SIZE);
+  extended_path_variable = malloc(ENVIRONMENT_VARIABLE_BUFFER_SIZE);
 
   platform_data.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
   GetVersionEx(&platform_data);
@@ -520,6 +523,10 @@ NUB create_and_debug_process
 
   process_handle->ExitProcessFunction = (TARGET_ADDRESS)NULL;
   process_handle->ExitingProcess = FALSE;
+
+  free(original_path_variable);
+  free(extended_path_variable);
+
 
   // Return it as a handle.
   return ((NUB) process_handle);

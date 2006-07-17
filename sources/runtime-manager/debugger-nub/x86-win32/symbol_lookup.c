@@ -519,7 +519,7 @@ void nub_function_bounding_addresses
     // DbgHelp did not come through for us, so defer to bruteforce
     // methods.
 
-    debugger_message("Tried to lookup symbols for %= and failed!\n", addr, 0);
+//    debugger_message("Tried to lookup symbols for %= and failed!\n", addr, 0);
 
     module = library_descriptor_from_address (process, (DWORD) addr);
 
