@@ -110,6 +110,7 @@ Section "${APPNAME} Core" SecOpendylanCore
   SectionIn 1 2 RO
 
   SetOutPath "$INSTDIR\"
+  File ..\..\License.txt
   File /r bin
   File /r lib
   File /r databases
@@ -146,6 +147,8 @@ Section "${APPNAME} Core" SecOpendylanCore
   StrCmp $2 "1" "" +2
     StrCpy $R0 "x86-win32-vc7-build.jam"
   StrCmp $3 "1" "" +2
+    StrCpy $R0 "x86-win32-vc8-build.jam"
+  StrCmp $4 "1" "" +2
     StrCpy $R0 "x86-win32-pellesc-build.jam"
 
   WriteRegStr HKCU "${REGISTRY_KEY}\1.0\Build-System" "build-script" \
@@ -384,7 +387,7 @@ Section "Uninstall"
   RMDir /r "$INSTDIR" 
 
   ;; Delete start menu stuff
-  RMDir /r "$SMPROGRAMS"
+  RMDir /r "$SMPROGRAMS\Open Dylan"
 
   ;; Delete desktop icons...
   Delete "$DESKTOP\${APPNAMEANDVERSION}.lnk"
