@@ -14,5 +14,8 @@ xcopy /e/h/y/q/i ..\..\sources\corba\orb\ir-protocol sources\corba\orb\ir-protoc
 xcopy /e/h/y/q/i ..\..\sources\corba\services\naming\naming-protocol sources\corba\services\naming\naming-protocol
 xcopy /e/h/y/q/i ..\..\sources\corba\services\naming\naming-stubs sources\corba\services\naming\naming-stubs
 xcopy /e/h/y/q/i ..\..\sources\corba\services\naming\naming-skeletons sources\corba\services\naming\naming-skeletons
+xcopy /e/h/y/q/i ..\..\sources\runtime-manager\debugger-nub\protocol sources\runtime-manager\debugger-nub\protocol
+xcopy /e/h/y/q/i ..\..\sources\runtime-manager\debugger-nub\skeletons sources\runtime-manager\debugger-nub\skeletons
+xcopy /e/h/y/q/i ..\..\sources\runtime-manager\debugger-nub\stubs sources\runtime-manager\debugger-nub\stubs
 
 makensis fundev.nsi
