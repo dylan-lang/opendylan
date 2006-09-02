@@ -1716,6 +1716,7 @@ define sealed method make-gadget-control
       SendMessage(handle, $LVM-INSERTCOLUMN, i, pointer-address(lvcol))
     end
   end;
+  SendMessage(handle, $LVM-SETEXTENDEDLISTVIEWSTYLE, $LVS-EX-FULLROWSELECT, $LVS-EX-FULLROWSELECT);
   handle
 end method make-gadget-control;
 
