@@ -25,7 +25,8 @@ define constant $system-directories
 
 define method maybe-set-roots
     (#key personal-root :: false-or(<directory-locator>),
-          system-root :: false-or(<directory-locator>))
+          system-root :: false-or(<directory-locator>),
+          user-root :: false-or(<directory-locator>))
  => ()
   local method set-variable
             (variable :: <string>, directory :: <directory-locator>,
@@ -46,7 +47,16 @@ define method maybe-set-roots
       let subdirectories = directory-info.tail;
       set-variable(variable, system-root, subdirectories)
     end
-  end
+  end;
+  if (user-root)
+    for (directory-info :: <list> in $personal-directories)
+      let variable       = directory-info.head;
+      let subdirectories = directory-info.tail;
+      if (~ any?(curry(\=, "sources"), subdirectories))
+        set-variable(variable, user-root, subdirectories)
+      end;
+    end;
+  end;
 end method maybe-set-roots;
 
 define method process-arguments
@@ -54,6 +64,7 @@ define method process-arguments
  => (filename :: false-or(<file-locator>))
   let personal-root = #f;
   let system-root   = #f;
+  let user-root     = #f;
   let filename      = #f;
   let arguments     = as(<deque>, arguments);
   while (~empty?(arguments))
@@ -61,7 +72,8 @@ define method process-arguments
     if (argument[0] == '/')
       select (copy-sequence(argument, start: 1) by \=)
         "personal" => personal-root := as(<directory-locator>, pop(arguments));
-        "system"   => system-root   := as(<directory-locator>, pop(arguments));
+        "user-root" => user-root    := as(<directory-locator>, pop(arguments));
+        "system" => system-root     := as(<directory-locator>, pop(arguments));
         otherwise  => #f;
       end
     else
@@ -77,7 +89,8 @@ define method process-arguments
   end;
   if (release-internal?())
     maybe-set-roots(personal-root: personal-root,
-                    system-root:   system-root)
+                    system-root:   system-root,
+                    user-root:     user-root)
   end;
   filename
 end method process-arguments;
