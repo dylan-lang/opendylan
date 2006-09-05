@@ -20,22 +20,22 @@ define sealed method reorder-mirror
     (_port  :: <win32-port>,
      sheet  :: <sheet>, mirror :: <window-mirror>, where  :: <mirror-order>) => ()
   local method dbg-msg (where-to :: <string>) => ()
-	  debug-message("reorder-mirror: placing mirror for frame \"%s\" %s",
-			mirror.mirror-sheet.sheet-frame.frame-title, where-to);
-	end method;
+          debug-message("reorder-mirror: placing mirror for frame \"%s\" %s",
+                        mirror.mirror-sheet.sheet-frame.frame-title, where-to);
+        end method;
   let where-handle
     = case
-	instance?(where, <window-mirror>) =>
-	  dbg-msg(concatenate("behind frame \"",
-			      where.mirror-sheet.sheet-frame.frame-title,
-			      "\""));
-	  window-handle(where);
-	where = #"top" =>
-	  dbg-msg("at top using $HWND-TOP");
-	  $HWND-TOP; // $HWND-NOTOPMOST;
-	where = #"bottom" =>
-	  dbg-msg("at bottom using $HWND-BOTTOM");
-	  $HWND-BOTTOM;
+        instance?(where, <window-mirror>) =>
+          dbg-msg(concatenate("behind frame \"",
+                              where.mirror-sheet.sheet-frame.frame-title,
+                              "\""));
+          window-handle(where);
+        where = #"top" =>
+          dbg-msg("at top using $HWND-TOP");
+          $HWND-TOP; // $HWND-NOTOPMOST;
+        where = #"bottom" =>
+          dbg-msg("at bottom using $HWND-BOTTOM");
+          $HWND-BOTTOM;
       end;
   let handle :: <HWND> = window-handle(mirror);
   //---*** cpage: 1998.07.07 Experiment with this flag.
@@ -52,8 +52,8 @@ define sealed method reorder-mirror
     // check-result("SetActiveWindow", SetActiveWindow(handle));
   else
     check-result("SetWindowPos",
-		 SetWindowPos(handle, where-handle, 0, 0, 0, 0,
-			      %logior($SWP-NOMOVE, $SWP-NOSIZE, activate-flag)))
+                 SetWindowPos(handle, where-handle, 0, 0, 0, 0,
+                              %logior($SWP-NOMOVE, $SWP-NOSIZE, activate-flag)))
   end
 end method reorder-mirror;
 
@@ -66,10 +66,10 @@ define sealed method reorder-sheet
   when (mirror)
     let mirror-where
       = if (instance?(where, <sheet>))
-	  sheet-direct-mirror(where)
-	else
-	  where
-	end;
+          sheet-direct-mirror(where)
+        else
+          where
+        end;
     when (mirror-where)
       reorder-mirror(port(sheet), sheet, mirror, mirror-where)
     end
@@ -85,13 +85,13 @@ define sealed sideways method reorder-frame
          frame);
   let sheet-where
     = if (instance?(where, <frame>))
-	let where-top-sheet = top-level-sheet(where);
-	assert(where-top-sheet & sheet-mapped?(where-top-sheet),
-	       "Attempted to reorder below %=, which isn't mapped",
-	       where);
-	where-top-sheet
+        let where-top-sheet = top-level-sheet(where);
+        assert(where-top-sheet & sheet-mapped?(where-top-sheet),
+               "Attempted to reorder below %=, which isn't mapped",
+               where);
+        where-top-sheet
       else
-	where
+        where
       end;
   reorder-sheet(top-sheet, sheet-where);
   frame
@@ -103,10 +103,10 @@ define sealed sideways method order-frames
   // Be lenient when getting window handles.  Because of multithreading,
   // a frame's mirror may be gone before we operate on it.
   local method frame-window-handle (frame :: <frame>) => (handle :: false-or(<HWND>))
-	  let sheet  = top-level-sheet(frame);
-	  let mirror = sheet & sheet-direct-mirror(sheet);
-	  mirror & window-handle(mirror)
-	end method;
+          let sheet  = top-level-sheet(frame);
+          let mirror = sheet & sheet-direct-mirror(sheet);
+          mirror & window-handle(mirror)
+        end method;
   let handles = remove(map(frame-window-handle, frames), #f);
   let defer-handle :: <HDWP> = BeginDeferWindowPos(size(frames));
   check-result("BeginDeferWindowPos", defer-handle);
@@ -114,17 +114,17 @@ define sealed sideways method order-frames
        i :: <integer> from 0)
     let (where :: <HWND>, activate-flag)
       = if (i = 0)
-	  values($HWND-TOP, 0)
-	else
-	  values(handles[i - 1], $SWP-NOACTIVATE)
-	end;
+          values($HWND-TOP, 0)
+        else
+          values(handles[i - 1], $SWP-NOACTIVATE)
+        end;
     defer-handle := DeferWindowPos(defer-handle, handle, where,
-				   0, 0, 0, 0,
-				   %logior($SWP-NOMOVE, $SWP-NOSIZE, activate-flag));
+                                   0, 0, 0, 0,
+                                   %logior($SWP-NOMOVE, $SWP-NOSIZE, activate-flag));
     check-result("DeferWindowPos", defer-handle);
   end;
   check-result("EndDeferWindowPos",
-	       EndDeferWindowPos(defer-handle));
+               EndDeferWindowPos(defer-handle));
 end method order-frames;
 
 // Restore a frame from minimized/maximized state without bringing

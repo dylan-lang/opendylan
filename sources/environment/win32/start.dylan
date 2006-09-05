@@ -28,11 +28,11 @@ define method maybe-set-roots
           system-root :: false-or(<directory-locator>))
  => ()
   local method set-variable
-	    (variable :: <string>, directory :: <directory-locator>,
-	     subdirectories :: <sequence>)
-	  let subdirectory = apply(subdirectory-locator, directory, subdirectories);
-	  environment-variable(variable) := as(<string>, subdirectory)
-	end method set-variable;
+            (variable :: <string>, directory :: <directory-locator>,
+             subdirectories :: <sequence>)
+          let subdirectory = apply(subdirectory-locator, directory, subdirectories);
+          environment-variable(variable) := as(<string>, subdirectory)
+        end method set-variable;
   if (personal-root)
     for (directory-info :: <list> in $personal-directories)
       let variable       = directory-info.head;
@@ -60,24 +60,24 @@ define method process-arguments
     let argument = pop(arguments);
     if (argument[0] == '/')
       select (copy-sequence(argument, start: 1) by \=)
-	"personal" => personal-root := as(<directory-locator>, pop(arguments));
-	"system"   => system-root   := as(<directory-locator>, pop(arguments));
-	otherwise  => #f;
+        "personal" => personal-root := as(<directory-locator>, pop(arguments));
+        "system"   => system-root   := as(<directory-locator>, pop(arguments));
+        otherwise  => #f;
       end
     else
       block ()
-	filename := as(<file-locator>, argument)
+        filename := as(<file-locator>, argument)
       exception (error :: <locator-error>)
-	environment-startup-error
-	  ("Invalid filename '%s' passed to %s",
-	   argument,
-	   release-product-name());
+        environment-startup-error
+          ("Invalid filename '%s' passed to %s",
+           argument,
+           release-product-name());
       end
     end
   end;
   if (release-internal?())
     maybe-set-roots(personal-root: personal-root,
-		    system-root:   system-root)
+                    system-root:   system-root)
   end;
   filename
 end method process-arguments;
@@ -96,7 +96,7 @@ end method environment-startup-error;
 define method main 
     (name :: <string>, arguments :: <sequence>) => ()
   debug-message("Starting environment: %s with arguments '%='...\n", 
-		name, arguments);
+                name, arguments);
   initialize-bitmaps();
   initialize-deuce();
   initialize-editors();

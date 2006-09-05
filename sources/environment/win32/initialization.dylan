@@ -14,27 +14,27 @@ define variable *bitmaps-initialized?* :: <boolean> = #f;
 define macro initialize-bitmap
   { initialize-bitmap(?bitmap:name, ?resource-id:expression) }
     => { let _id     = as(<byte-string>, ?resource-id);
-	 let _bitmap = read-image-as(<win32-bitmap>, _id, #"bitmap");
-	 when (_bitmap)
-	   ?bitmap := _bitmap
-	 end }
+         let _bitmap = read-image-as(<win32-bitmap>, _id, #"bitmap");
+         when (_bitmap)
+           ?bitmap := _bitmap
+         end }
 end macro initialize-bitmap;
 
 define macro initialize-icon
   { initialize-icon(?size:expression, ?icon:name, ?resource-id:expression) }
     => { let _id   = as(<byte-string>, ?resource-id);
-	 let _icon
-	   = select (?size)
-	       #"small" => read-image-as(<win32-icon>, _id, #"small-icon");
-	       #"large" => read-image-as(<win32-icon>, _id, #"large-icon");
-	       #"16x16" => read-image-as(<win32-icon>, _id, #"icon",
-					 width: 16, height: 16);
-	       #"32x32" => read-image-as(<win32-icon>, _id, #"icon",
-					 width: 32, height: 32);
-	     end;
-	 when (_icon)
-	   ?icon := _icon
-	 end }
+         let _icon
+           = select (?size)
+               #"small" => read-image-as(<win32-icon>, _id, #"small-icon");
+               #"large" => read-image-as(<win32-icon>, _id, #"large-icon");
+               #"16x16" => read-image-as(<win32-icon>, _id, #"icon",
+                                         width: 16, height: 16);
+               #"32x32" => read-image-as(<win32-icon>, _id, #"icon",
+                                         width: 32, height: 32);
+             end;
+         when (_icon)
+           ?icon := _icon
+         end }
 end macro initialize-icon;
 
 define function initialize-bitmaps ()
@@ -43,7 +43,7 @@ define function initialize-bitmaps ()
     //---*** hughg, 1998/11/02: This one really belongs in DUIM, but andrewa
     //---*** agrees this'll do for now (for the playground dialog).
     $check-bitmap := read-image-as(<win32-bitmap>, $OBM-CHECK, #"bitmap",
-				   resource-context: #"system");
+                                   resource-context: #"system");
 
     // Initialize the splash screen
     initialize-bitmap($splash-screen-bitmap, "SPLASHSCREEN");
@@ -182,9 +182,9 @@ end function initialize-bitmaps;
 
 define function initialize-deuce ()
   local method make-deuce-color (color) => (deuce-color)
-	  let (r, g, b) = color-rgb(color);
-	  deuce/make-color(floor(r * 255.0), floor(g * 255.0), floor(b * 255.0))
-	end method;
+          let (r, g, b) = color-rgb(color);
+          deuce/make-color(floor(r * 255.0), floor(g * 255.0), floor(b * 255.0))
+        end method;
   $region-marking-color        := make-deuce-color($default-face-color);
   $dylan-definition-line-color := make-deuce-color($default-shadow-color)
 end function initialize-deuce;
@@ -218,10 +218,10 @@ define function icon-for-file
   with-stack-structure (file-info :: <LPSHFILEINFOA>)
     let options
       = %logior($SHGFI-ICON,
-		select (icon-size)
-		  #"small" => $SHGFI-SMALLICON;
-		  #"large" => $SHGFI-LARGEICON;
-		end);
+                select (icon-size)
+                  #"small" => $SHGFI-SMALLICON;
+                  #"large" => $SHGFI-LARGEICON;
+                end);
     with-c-string (c-string = filename)
       SHGetFileInfo(c-string, 0, file-info, size-of(<SHFILEINFO>), options);
     end;
@@ -233,9 +233,9 @@ define function icon-for-file
     let handle = file-info.hIcon-value;
     unless (null-pointer?(handle))
       make(<win32-icon>,
-	   resource-id: "none",
-	   handle: file-info.hIcon-value,
-	   width: width, height: height)
+           resource-id: "none",
+           handle: file-info.hIcon-value,
+           width: width, height: height)
     end
   end
 end function icon-for-file;
@@ -261,8 +261,8 @@ define method frame-shell-execute
  => ()
   let action-name
     = select (action)
-	#"open"  => $open-action;
-	#"print" => $print-action;
+        #"open"  => $open-action;
+        #"print" => $print-action;
       end;
   debug-message("Action: %sing %s", action-name, locator);
   let sheet = top-level-sheet(frame);
@@ -271,12 +271,12 @@ define method frame-shell-execute
     let handle = window-handle(sheet);
     with-c-string (action-name = action-name)
       with-c-string (filename = as(<string>, locator))
-	with-c-string (path = "")
-	  check-result
-	    ("ShellExecute",
-	     ShellExecute(handle, action-name, filename,
-			  $NULL-string, path, show-command))
-	end
+        with-c-string (path = "")
+          check-result
+            ("ShellExecute",
+             ShellExecute(handle, action-name, filename,
+                          $NULL-string, path, show-command))
+        end
       end
     end
   end
@@ -305,9 +305,9 @@ define sideways method frame-cascade-offset
   let resizable? = frame-resizable?(frame);
   let (extra-width, extra-height)
      = values(GetSystemMetrics
-		(if (resizable?) $SM-CXSIZEFRAME else $SM-CXFIXEDFRAME end),
-	      GetSystemMetrics
-		(if (resizable?) $SM-CYSIZEFRAME else $SM-CYFIXEDFRAME end));
+                (if (resizable?) $SM-CXSIZEFRAME else $SM-CXFIXEDFRAME end),
+              GetSystemMetrics
+                (if (resizable?) $SM-CYSIZEFRAME else $SM-CYFIXEDFRAME end));
 */
   let (extra-width, extra-height) = values(1, 1);
   values(title-bar-height + extra-width, title-bar-height + extra-height)
