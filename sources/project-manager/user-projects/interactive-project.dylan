@@ -167,7 +167,7 @@ define method evaluate-expression
 end method;
 
 define method macroexpand-expression
-    (project :: <user-project>, module :: <symbol>, source :: <byte-string>,
+    (project :: <project>, module :: <symbol>, source :: <byte-string>,
      #key expansion-stream, trace-stream)
  => ()
   //--- We have to use <interactive-source-record> since it is the only
