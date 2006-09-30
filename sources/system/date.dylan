@@ -313,43 +313,126 @@ define function clone-date (date :: <date>) => (date :: <date>)
 	      time-zone-offset: date-time-zone-offset(date))
 end function clone-date;
 
-
 ///
+define table *short-day-of-week-names* = {
+  #"monday" => "Mon", #"tuesday" => "Tue",
+  #"wednesday" => "Wed", #"thursday" => "Thu",
+  #"friday" => "Fri", #"saturday" => "Sat",
+  #"sunday" => "Sun" };
+
+define table *day-of-week-names* = {
+  #"monday" => "Monday", #"tuesday" => "Tuesday",
+  #"wednesday" => "Wednesday", #"thursday" => "Thursday",
+  #"friday" => "Friday", #"saturday" => "Saturday",
+  #"sunday" => "Sunday" };
+
+define variable *short-month-names* =
+  #["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+define variable *month-names* =
+  #["January", "February", "March", "April",
+    "May", "June", "July", "August", "September",
+    "October", "November", "December"];
 
 define constant $digits = #['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
+define generic append (string :: <string>, appendant :: <object>)
+ => (result :: <string>);
+
+define method append (string :: <string>, appendant :: <string>)
+ => (result :: <string>);
+  string := concatenate(string, appendant);
+  string;
+end;
+
+define method append (string :: <string>, appendant :: <character>)
+ => (result :: <string>);
+  string := add!(string, appendant);
+  string;
+end;
+
+define method format-date (format :: <string>, date :: <date>)
+ => (date-string :: <string>);
+  let (year, month, day, hours, minutes, seconds,
+       day-of-week, time-zone-offset) = decode-date(date);
+  let absolute-time-zone-offset :: <integer> = abs(time-zone-offset);
+  local method wrap (wrap :: <string>, i :: <integer>) => (string :: <string>)
+    if (i < 10) concatenate(wrap, integer-to-string(i));
+      else integer-to-string(i) end;
+  end;
+  local method format-integer (integer :: <integer>, length :: <integer>) => (string :: <string>)
+    let string = make(<byte-string>, size: length, fill: '0');
+    for (position from 0 below length)
+      string[length - position - 1] := $digits[modulo(integer, 10)];
+      integer := floor/(integer, 10);
+    end;
+    string
+  end;
+  let date-string :: <string> = "";
+  let format? :: <boolean> = #f;
+  let use-dots? :: <boolean> = #f;
+  for (char in format)
+    if (char = '%' & ~ format?)
+      format? := #t;
+    elseif (char = ':' & format?)
+      use-dots? := #t;
+    elseif (format?)
+      date-string := append(date-string, select (char)
+        'Y' => integer-to-string(year);
+        'y' => format-integer(year, 2);
+        'H' => wrap("0", hours);
+        'k' => integer-to-string(hours);
+        'M' => wrap("0", minutes);
+        'S' => wrap("0", seconds);
+        'm' => wrap("0", month);
+        'd' => wrap("0", day);
+        'e' => wrap(" ", day);
+        'A' => *day-of-week-names*[day-of-week];
+        'a' => *short-day-of-week-names*[day-of-week];
+        'B' => *month-names*[month - 1];
+        'b' => *short-month-names*[month - 1];
+        'z' => concatenate(if (negative?(time-zone-offset))
+                  "-" else "+" 
+                end if, wrap("0", floor/(absolute-time-zone-offset, 60)),
+                if (use-dots?) ":" else "" end if,
+                wrap("0", modulo(absolute-time-zone-offset, 60)));
+        'n' => '\n';
+        '%' => '%';
+        otherwise => char;
+      end select);
+      format? := #f;
+      use-dots? := #f;
+    else
+      date-string := append(date-string, char);
+    end if;
+  end for;
+  date-string;
+end;
+
+define function as-rfc822-string (date :: <date>)
+ => (rfc822-date :: <string>);
+  format-date("%a, %d %b %y %H:%M:%S %z", date);
+end;
+
+define function as-rfc1123-string (date :: <date>)
+ => (rfc822-date :: <string>);
+  format-date("%a, %d %b %Y %H:%M:%S %z", date);
+end;
+
 define function as-iso8601-string (date :: <date>, #key precision :: <integer> = 0)
  => (iso8601-string :: <string>)
-  local method format-integer (x :: <integer>, n :: <integer>) => (s :: <string>)
-          let s = make(<byte-string>, size: n, fill: '0');
-          for (i from 0 below n)
-            s[n - i - 1] := $digits[modulo(x, 10)];
-            x := floor/(x, 10);
-          end;
-          s
-        end method format-integer;
-  let old-tz = date-time-zone-offset(date);
-  block ()
-    date-time-zone-offset(date) := 0;
-    concatenate(format-integer(date-year(date), 4),
-		format-integer(date-month(date), 2),
-		format-integer(date-day(date), 2),
-		"T",
-		format-integer(date-hours(date), 2),
-		format-integer(date-minutes(date), 2),
-		format-integer(date-seconds(date), 2),
-		if (precision > 0)
+/*
+    if (precision > 0)
 		  concatenate(".", format-integer(round/(date-microseconds(date),
 							 10 ^ (6 - precision)),
 						  precision))
 		else
 		  ""
-		end,
-		"Z")
-  cleanup
-    date-time-zone-offset(date) := old-tz;
-  end
-end function as-iso8601-string;
+    end;
+*/
+  format-date("%Y-%m-%dT%H:%M:%S%:z", date);
+end;
 
 ///---*** Doesn't yet parse all legitimate forms of ISO 8601 strings.
 ///---*** For now, just parse a small superset of the strings produced above ...
