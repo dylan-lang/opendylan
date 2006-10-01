@@ -217,10 +217,6 @@ define method size-setter
          => (new-size :: <integer>)
   check-nat(new-size);
   let size = size(vector);
-  unless (new-size <= size)
-    // expected to fail when #f is incompatible with element-type
-    check-type(#f, element-type(vector))
-  end unless;
   trusted-size(vector) := new-size;
 end method size-setter;
 
