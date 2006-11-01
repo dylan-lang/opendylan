@@ -18,7 +18,8 @@ end method as-slot-descriptor-class;
 define method add-setter-method
     (class :: <class>,
      slot-setter :: <generic-function>,
-     descriptor :: <constant-slot-descriptor>)
+     descriptor :: <constant-slot-descriptor>,
+     override-sealing? :: <boolean>)
   values(#f, #f)
 end method add-setter-method;
 
@@ -263,20 +264,22 @@ end function;
 define method add-getter-method
     (class-NOT :: <class>,
      slot-getter :: <generic-function>,
-     descriptor :: <slot-descriptor>)
+     descriptor :: <slot-descriptor>,
+     override-sealing? :: <boolean>)
   let new-method = make-a-slot-method(descriptor, #f);
   %add-a-method(slot-getter, new-method, home-library(class-module(class-NOT)),
-		#t, #t, slot-method-sealed?(descriptor))
+		#t, ~ override-sealing?, slot-method-sealed?(descriptor))
 end method add-getter-method;
 
 
 define method add-setter-method
     (class-NOT :: <class>,
      slot-setter :: <generic-function>,
-     descriptor :: <slot-descriptor>)
+     descriptor :: <slot-descriptor>,
+     override-sealing? :: <boolean>)
   let new-method = make-a-slot-method(descriptor, #t);
   %add-a-method(slot-setter, new-method, home-library(class-module(class-NOT)),
-		#t, #t, slot-method-sealed?(descriptor))
+		#t, ~ override-sealing?, slot-method-sealed?(descriptor))
 end method add-setter-method;
 
 
@@ -306,14 +309,16 @@ end method add-setter-method;
 define method add-getter-method
     (class :: <class>,
      slot-getter :: <generic-function>,
-     descriptor :: <virtual-slot-descriptor>)
+     descriptor :: <virtual-slot-descriptor>,
+     override-sealing? :: <boolean>)
   values(#f, #f)
 end method add-getter-method;
 
 define method add-setter-method
     (class :: <class>,
      slot-setter :: <generic-function>,
-     descriptor :: <virtual-slot-descriptor>)
+     descriptor :: <virtual-slot-descriptor>,
+     override-sealing? :: <boolean>)
   values(#f, #f)
 end method add-setter-method;
 

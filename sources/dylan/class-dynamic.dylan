@@ -84,7 +84,6 @@ define inline method class-library (x :: <implementation-class>) => (l :: <libra
   class-library(iclass-class(x))
 end method;
 
-
 define method initialize 
     (class :: <class>, #rest initargs,
      #key superclasses, slots :: <sequence> = #[], 
@@ -105,7 +104,8 @@ define method initialize
 	    library: home-library(module),
 	    initargs);
   install-implementation-class(iclass, $empty-subjunctive-class-universe);
-  add-slot-methods(iclass, $empty-subjunctive-class-universe);
+  add-slot-methods(iclass, $empty-subjunctive-class-universe,
+                   override-sealing?: module ~= $runtime-module);
   complete-dependent-generic-functions(iclass, $empty-subjunctive-class-universe);
 end method initialize;
 
@@ -763,14 +763,15 @@ end function;
 
 
 define function add-slot-methods (iclass :: <implementation-class>,
-				  u :: <subjunctive-class-universe>)
+				  u :: <subjunctive-class-universe>,
+                                  #key override-sealing?)
  => ()
   let slotvec :: <simple-object-vector> = direct-slot-descriptors(iclass);
   for (sd :: <slot-descriptor> in slotvec)
     let g = slot-getter(sd);
-    if (g) add-getter-method(slot-owner(sd), g, sd) end;
+    if (g) add-getter-method(slot-owner(sd), g, sd, override-sealing?) end;
     let s = slot-setter(sd);
-    if (s) add-setter-method(slot-owner(sd), s, sd) end;
+    if (s) add-setter-method(slot-owner(sd), s, sd, override-sealing?) end;
   end for;
 end function;
 
