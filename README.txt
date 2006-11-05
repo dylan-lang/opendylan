@@ -10,10 +10,7 @@ Source version.
 WHAT WAS OPEN SOURCED
 
 Everything except for the files necessary to build Windows installers
-has been Open Sourced.  Functional Objects plans to continue to build
-pre-packaged versions of Functional Developer for the Windows platform
-and make them available for a small fee to anyone who prefers not to
-build it themselves.
+has been Open Sourced.
 
 Open Dylan uses the Memory Pool System (MPS) from Ravenbrook, Limited
 to do its memory management.  The MPS is available from Ravenbrook at
@@ -55,6 +52,10 @@ cd $BUILDDIR
 $SRCDIR/configure --with-mps=/path/to/mps-header-files
               # you must call configure with absolute path!
 make
+
+[Ubuntu note: In Ubuntu 6.06 I had to install the XML::Parser module via
+ "cpan -i XML::Parser", which blew up because expat.h was not found,
+ so first "sudo apt-get install libexpat-dev".  --cgay 20061104]
 
 The goal was ultimately to make it possible to build Open Dylan in the
 Open Dylan IDE, but unfortunately we never quite made that happen.
