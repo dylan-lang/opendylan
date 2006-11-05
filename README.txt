@@ -49,18 +49,20 @@ cd $SRCDIR
 ./autogen.sh
 
 cd $BUILDDIR
-$SRCDIR/configure --with-mps=/path/to/mps-header-files
+$SRCDIR/configure --with-mps=/path/to/mps-kit                   [1][2]
               # you must call configure with absolute path!
 make
 
-[Ubuntu note: In Ubuntu 6.06 I had to install the XML::Parser module via
- "cpan -i XML::Parser", which blew up because expat.h was not found,
- so first "sudo apt-get install libexpat-dev".  --cgay 20061104]
+[1] Note that the directory --with-mps wants here is the one containing the
+    "code" directory.  If you downloaded the MPS kit from Ravenbrook this
+    would be, for example, "--with-mps=/path/to/mps-kit-1.106.2".
 
-The goal was ultimately to make it possible to build Open Dylan in the
-Open Dylan IDE, but unfortunately we never quite made that happen.
-Some work may need to be done on the "project manager" first, at a
-minimum.
+[2] Ubuntu note: In Ubuntu 6.06 I had to install the XML::Parser module via
+    "cpan -i XML::Parser", which blew up because expat.h was not found, so
+    first "sudo apt-get install libexpat-dev".  --cgay 20061104
+
+
+GENERAL BUILD INSTRUCTIONS
 
 If you encounter problems during the build, please refer to the log
 files that are written in the 'logs' directory under each bootstrap
