@@ -1,6 +1,4 @@
 prefix		= @prefix@
-install_root	= $(prefix)/lib/functional-developer
-
 srcdir		= @abs_srcdir@
 abs_srcdir	= @abs_srcdir@
 abs_builddir	= @abs_builddir@
