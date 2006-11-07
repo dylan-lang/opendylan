@@ -1207,8 +1207,8 @@ define sealed method update-list-view-items
         // The analog of the insertion case, except that we delete
         // just enough items and fix the remaining ones in place
         let delta :: <integer> = n-items - n-objects;
-        for (object in objects,
-             index :: <integer> from 0)
+        for (index :: <integer> from 0 below n-objects)
+          let object = objects[index];
           when (force?
                 | index >= n-items
                 | ~test(object, item-object(items[index])))
@@ -1219,6 +1219,7 @@ define sealed method update-list-view-items
             else
               remove-at!(items, index);
               SendMessage(handle, $LVM-DELETEITEM, index, 0);
+              dec!(index);
               dec!(n-items);
               dec!(delta)
             end
