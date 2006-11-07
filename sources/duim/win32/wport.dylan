@@ -18,13 +18,13 @@ define sealed class <win32-port> (<basic-port>)
   sealed slot port-metrics :: <win32-metrics>;
   sealed slot %memory-hDC  :: <hDC> = $null-hDC;
   sealed slot %common-controls-initialized? = #f;
-  sealed slot %os-name = #"Windows-NT";	// #"Windows-NT", #"Windows-95", or #"Windows-98"
-  sealed slot %use-3d? = #t;		// #t when we're using the Win-95 look and feel
-  sealed slot %display = #f;		// the Windows display device
-  sealed slot %altgr-key? = #t;		// #t iff there's an AltGr key on this keyboard
-  sealed slot %alt-key-state = #f;	// for keyboard event handling
-  sealed slot %wm-char-state = 0;	// for keyboard event handling
-  sealed slot %extended-key-state = #f;	// for keyboard event handling
+  sealed slot %os-name = #"Windows-NT"; // #"Windows-NT", #"Windows-95", or #"Windows-98"
+  sealed slot %use-3d? = #t;            // #t when we're using the Win-95 look and feel
+  sealed slot %display = #f;            // the Windows display device
+  sealed slot %altgr-key? = #t;         // #t iff there's an AltGr key on this keyboard
+  sealed slot %alt-key-state = #f;      // for keyboard event handling
+  sealed slot %wm-char-state = 0;       // for keyboard event handling
+  sealed slot %extended-key-state = #f; // for keyboard event handling
   // The currently recorded focus
   sealed slot %focus :: false-or(<HWND>) = #f;
   // Cache to ensure WM_SETCURSOR handling is fast
@@ -53,18 +53,18 @@ define sealed method initialize
     check-result("GetVersionEx", GetVersionEx(info));
     let (os-name, os-version)
       = select (info.dwPlatformId-value)
-	  $VER-PLATFORM-WIN32S =>
-	    values(#"Windows-95", 3);
-	  $VER-PLATFORM-WIN32-WINDOWS =>
-	    values(if (info.dwMinorVersion-value = 0) #"Windows-95" else #"Windows-98" end,
-		   info.dwMajorVersion-value);
-	  $VER-PLATFORM-WIN32-NT =>
-	    values(#"Windows-NT", info.dwMajorVersion-value);
-	end;
+          $VER-PLATFORM-WIN32S =>
+            values(#"Windows-95", 3);
+          $VER-PLATFORM-WIN32-WINDOWS =>
+            values(if (info.dwMinorVersion-value = 0) #"Windows-95" else #"Windows-98" end,
+                   info.dwMajorVersion-value);
+          $VER-PLATFORM-WIN32-NT =>
+            values(#"Windows-NT", info.dwMajorVersion-value);
+        end;
     _port.%os-name := os-name;
     _port.%use-3d? := (   os-name == #"Windows-NT"
-		       |  os-name == #"Windows-98"
-		       | (os-name == #"Windows-95" & os-version > 3))
+                       |  os-name == #"Windows-98"
+                       | (os-name == #"Windows-95" & os-version > 3))
   end;
   register-window-classes(_port);
   load-default-resources();
@@ -113,10 +113,10 @@ end method destroy-port;
 define function shutdown-win32-duim ()
   let ports :: <stretchy-object-vector> = make(<stretchy-vector>);
   do-ports(method (_port)
-	     when (instance?(_port, <win32-port>))
-	       add!(ports, _port)
-	     end
-	   end method);
+             when (instance?(_port, <win32-port>))
+               add!(ports, _port)
+             end
+           end method);
   do(destroy-port, ports);
   unregister-window-classes()
 end function shutdown-win32-duim;
@@ -163,7 +163,7 @@ define sealed inline method win32-dialog-units->pixels
     (client, x :: <integer>, y :: <integer>) => (x :: <integer>, y :: <integer>)
   let metrics = port-metrics(client);
   values(floor/(x * win32-dialog-x-units(metrics), 4),
-	 floor/(y * win32-dialog-y-units(metrics), 8))
+         floor/(y * win32-dialog-y-units(metrics), 8))
 end method win32-dialog-units->pixels;
 
 define sealed inline method win32-mouse-buttons
@@ -255,7 +255,7 @@ define table $cursor-table :: <object-table>
       #"i-beam"            => $IDC-IBEAM,
       #"cross"             => $IDC-CROSS,
       #"starting"          => $IDC-APPSTARTING,
-      #"hand"              => $IDC-SIZENS	/*---*** $IDC-HAND */ };
+      #"hand"              => $IDC-SIZENS       /*---*** $IDC-HAND */ };
 
 define sealed method do-set-pointer-cursor
     (_port :: <win32-port>, pointer :: <pointer>, cursor :: <cursor>) => ()
@@ -317,7 +317,7 @@ define sealed method realize-cursor
   | begin
       let hCursor = LoadCursor($null-hInstance, cursor);
       when (null-handle?(hCursor))
-	hCursor := LoadCursor($null-hInstance, $IDC-ARROW)
+        hCursor := LoadCursor($null-hInstance, $IDC-ARROW)
       end;
       gethash(_port.%cursor-cache, cursor) := hCursor;
       hCursor
@@ -449,16 +449,16 @@ define method set-focus
     (sheet :: <mirrored-sheet-mixin>) => (set? :: <boolean>)
   let sheet :: false-or(<mirrored-sheet-mixin>)
     = if (sheet-accepts-focus?(sheet))
-	sheet
+        sheet
       else
-	find-child-for-focus(sheet)
+        find-child-for-focus(sheet)
       end;
   let handle = sheet & window-handle(sheet);
   case
     ~handle =>
       warn("Ignored attempt to set focus to unattached sheet %=", sheet);
       #f;
-    GetFocus() = handle =>		// avoid recursion
+    GetFocus() = handle =>              // avoid recursion
       duim-debug-message("'set-focus' avoiding recursion");
       #f;
     otherwise =>
@@ -486,21 +486,21 @@ define method find-child-for-focus
  => (child :: false-or(<mirrored-sheet-mixin>))
   let child
     = block (return)
-	local method find-child (sheet :: <sheet>)
-		for (child :: <sheet> in sheet-children(sheet))
-		  unless (instance?(child, <menu>))
-		    find-child(child);
-		    let mirror = sheet-direct-mirror(child);
-		    when (instance?(mirror, <window-mirror>)
-			  & sheet-mapped?(child)
-			  & sheet-accepts-focus?(child))
-		      return(child)
-		    end
-		  end
-		end
-	      end method;
-	find-child(sheet);
-	#f
+        local method find-child (sheet :: <sheet>)
+                for (child :: <sheet> in sheet-children(sheet))
+                  unless (instance?(child, <menu>))
+                    find-child(child);
+                    let mirror = sheet-direct-mirror(child);
+                    when (instance?(mirror, <window-mirror>)
+                          & sheet-mapped?(child)
+                          & sheet-accepts-focus?(child))
+                      return(child)
+                    end
+                  end
+                end
+              end method;
+        find-child(sheet);
+        #f
       end;
   // If the child is a radio button within a radio box, put the focus
   // on the selected radio button
@@ -541,30 +541,30 @@ define sealed method maybe-update-focus
       duim-debug-message("Ignoring focus change for %=", sheet)
     end;
     unless (sheet-ignore-focus-change?(sheet)
-	      | focus = old-focus)
+              | focus = old-focus)
       let new
-	= if (sheet-accepts-focus?(sheet))
-	    sheet
-	  else
-	    duim-debug-message("Focus set to non-accepting sheet: %=", sheet);
-	    find-child-for-focus(sheet)
-	  end;
+        = if (sheet-accepts-focus?(sheet))
+            sheet
+          else
+            duim-debug-message("Focus set to non-accepting sheet: %=", sheet);
+            find-child-for-focus(sheet)
+          end;
       case
-	new =>
-	  duim-debug-message("Focus now set to %=", new);
-	  _port.%focus := focus;
-	  unless (new == sheet)
-	    let handle = window-handle(new);
-	    handle & SetFocus(handle)
-	  end;
-	  port-input-focus(_port) := new;
-	old-focus =>
-	  duim-debug-message("Reverting focus from %= back to %=",
-			     sheet,
-			     handle-sheet(old-focus) | old-focus);
-	  SetFocus(old-focus);
-	otherwise =>
-	  #f;
+        new =>
+          duim-debug-message("Focus now set to %=", new);
+          _port.%focus := focus;
+          unless (new == sheet)
+            let handle = window-handle(new);
+            handle & SetFocus(handle)
+          end;
+          port-input-focus(_port) := new;
+        old-focus =>
+          duim-debug-message("Reverting focus from %= back to %=",
+                             sheet,
+                             handle-sheet(old-focus) | old-focus);
+          SetFocus(old-focus);
+        otherwise =>
+          #f;
       end
     end
   else

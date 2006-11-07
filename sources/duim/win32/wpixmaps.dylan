@@ -38,7 +38,7 @@ define sealed method initialize
     = check-result("CreateCompatibleDC", CreateCompatibleDC(hDC));
   let hbitmap :: <HBITMAP>
     = check-result("CreateCompatibleBitmap",
-		   CreateCompatibleBitmap(hDC, width, height));
+                   CreateCompatibleBitmap(hDC, width, height));
   SelectObject(bitmap-hDC, hbitmap);
   pixmap.%hDC     := bitmap-hDC;
   pixmap.%hbitmap := hbitmap
@@ -75,7 +75,7 @@ end method get-DC;
 define sealed method draw-image
     (medium :: <win32-medium>, pixmap :: <win32-pixmap>, x, y) => (record)
   do-copy-area(pixmap, 0, 0, image-width(pixmap), image-height(pixmap),
-	       medium, x, y);
+               medium, x, y);
   #f
 end method draw-image;
 
@@ -83,7 +83,7 @@ define sealed method draw-pixmap
     (medium :: <win32-medium>, pixmap :: <win32-pixmap>, x, y,
      #key function = $boole-1) => (record)
   do-copy-area(pixmap, 0, 0, image-width(pixmap), image-height(pixmap),
-	       medium, x, y, function: function);
+               medium, x, y, function: function);
   #f
 end method draw-pixmap;
 
@@ -104,9 +104,9 @@ define sealed method make-pixmap-medium
   with-sheet-medium (medium = sheet)
     let pixmap = do-make-pixmap(_port, medium, width, height);
     let medium = make(<win32-pixmap-medium>,
-		      port: _port,
-		      sheet: sheet,
-		      pixmap: pixmap);
+                      port: _port,
+                      sheet: sheet,
+                      pixmap: pixmap);
     medium-drawable(medium) := pixmap;
     medium
   end
@@ -173,9 +173,9 @@ define sealed method do-copy-area
     let hDC :: <HDC> = get-DC(medium-drawable(from-medium));
     with-device-coordinates (transform, from-x, from-y, to-x, to-y)
       with-device-distances (transform, width, height)
-	BitBlt(hDC, to-x, to-y, width, height,
-	       hDC, from-x, from-y,
-	       $function-map[function])
+        BitBlt(hDC, to-x, to-y, width, height,
+               hDC, from-x, from-y,
+               $function-map[function])
       end
     end
   else
@@ -187,11 +187,11 @@ define sealed method do-copy-area
     let to-hDC   :: <HDC> = get-DC(medium-drawable(to-medium));
     with-device-coordinates (from-transform, from-x, from-y)
       with-device-coordinates (to-transform, to-x, to-y)
-	with-device-distances (from-transform, width, height)
-	  BitBlt(to-hDC, to-x, to-y, width, height,
-		 from-hDC, from-x, from-y,
-		 $function-map[function])
-	end
+        with-device-distances (from-transform, width, height)
+          BitBlt(to-hDC, to-x, to-y, width, height,
+                 from-hDC, from-x, from-y,
+                 $function-map[function])
+        end
       end
     end
   end
@@ -208,8 +208,8 @@ define sealed method do-copy-area
   with-device-coordinates (from-transform, from-x, from-y)
     with-device-distances (from-transform, width, height)
       BitBlt(to-hDC, to-x, to-y, width, height,
-	     from-hDC, from-x, from-y,
-	     $function-map[function])
+             from-hDC, from-x, from-y,
+             $function-map[function])
     end
   end
 end method do-copy-area;
@@ -225,8 +225,8 @@ define sealed method do-copy-area
   with-device-coordinates (from-transform, from-x, from-y)
     with-device-distances (from-transform, width, height)
       BitBlt(to-hDC, to-x, to-y, width, height,
-	     from-hDC, from-x, from-y,
-	     $function-map[function])
+             from-hDC, from-x, from-y,
+             $function-map[function])
     end
   end
 end method do-copy-area;
@@ -241,8 +241,8 @@ define sealed method do-copy-area
   let to-hDC   :: <HDC> = get-DC(medium-drawable(to-medium));
   with-device-coordinates (to-transform, to-x, to-y)
     BitBlt(to-hDC, to-x, to-y, width, height,
-	   from-hDC, from-x, from-y,
-	   $function-map[function])
+           from-hDC, from-x, from-y,
+           $function-map[function])
   end
 end method do-copy-area;
 
@@ -256,8 +256,8 @@ define sealed method do-copy-area
   let to-hDC   :: <HDC> = get-DC(medium-drawable(to-medium));
   with-device-coordinates (to-transform, to-x, to-y)
     BitBlt(to-hDC, to-x, to-y, width, height,
-	   from-hDC, from-x, from-y,
-	   $function-map[function])
+           from-hDC, from-x, from-y,
+           $function-map[function])
   end
 end method do-copy-area;
 
@@ -269,8 +269,8 @@ define sealed method do-copy-area
   let from-hDC :: <HDC> = get-DC(medium-drawable(from-medium));
   let to-hDC   :: <HDC> = get-DC(medium-drawable(to-medium));
   BitBlt(to-hDC, to-x, to-y, width, height,
-	 from-hDC, from-x, from-y,
-	 $function-map[function])
+         from-hDC, from-x, from-y,
+         $function-map[function])
 end method do-copy-area;
 
 define sealed method do-copy-area
@@ -281,8 +281,8 @@ define sealed method do-copy-area
   let from-hDC :: <HDC> = get-DC(from-pixmap);
   let to-hDC   :: <HDC> = get-DC(to-pixmap);
   BitBlt(to-hDC, to-x, to-y, width, height,
-	 from-hDC, from-x, from-y,
-	 $function-map[function])
+         from-hDC, from-x, from-y,
+         $function-map[function])
 end method do-copy-area;
 
 
@@ -335,8 +335,8 @@ define sideways method read-image-as
  => (image :: false-or(<win32-bitmap>))
   let handle :: <HANDLE>
     = LoadImage(concrete-resource-context(resource-context, image-type),
-		resource-id,
-		$IMAGE-BITMAP, width | 0, height | 0, $LR-DEFAULTCOLOR);
+                resource-id,
+                $IMAGE-BITMAP, width | 0, height | 0, $LR-DEFAULTCOLOR);
   when (error?)
     check-result("LoadImage (bitmap)", handle)
   end;
@@ -344,15 +344,15 @@ define sideways method read-image-as
     let handle = pointer-cast(<HBITMAP>, handle);
     let (width, height)
       = if (width & height)
-	  values(width, height)
-	else
-	  let (default-width, default-height) = win32-bitmap-size(handle);
-	  values(width | default-width, height | default-height)
-	end;
+          values(width, height)
+        else
+          let (default-width, default-height) = win32-bitmap-size(handle);
+          values(width | default-width, height | default-height)
+        end;
     make(<win32-bitmap>,
-	 handle: handle,
-	 width: width, height: height,
-	 resource-id: resource-id)
+         handle: handle,
+         width: width, height: height,
+         resource-id: resource-id)
   end
 end method read-image-as;
 
@@ -363,30 +363,30 @@ define sideways method read-image-as
      #key width, height, error? = #f, resource-context = #"application")
  => (image :: false-or(<win32-bitmap>))
   assert(resource-id > 32700 & resource-id < 32767,
-	 "The value #o%o is not a valid ordinal bitmap constant", resource-id);
+         "The value #o%o is not a valid ordinal bitmap constant", resource-id);
   let resource-id-as-pointer = make(<LPTSTR>, address: resource-id);
   let handle :: <HBITMAP>
     = LoadBitmap(concrete-resource-context(resource-context, image-type),
-		 resource-id-as-pointer);
+                 resource-id-as-pointer);
   when (error?)
     check-result("LoadBitmap (bitmap)", handle)
   end;
   unless (null-pointer?(handle))
     let (width, height)
       = if (width & height)
-	  values(width, height)
-	else
-	  let (default-width, default-height) = win32-bitmap-size(handle);
-	  values(width | default-width, height | default-height)
-	end;
+          values(width, height)
+        else
+          let (default-width, default-height) = win32-bitmap-size(handle);
+          values(width | default-width, height | default-height)
+        end;
     make(<win32-bitmap>,
-	 handle: handle,
-	 width: width, height: height,
-	 //---*** This was 'resource-id: resource-id'
-	 //---*** The conversion to <byte-string> is just plain *wrong*,
-	 //---*** because trying to feed that string back to other Win32
-	 //---*** resource functions won't get the same object, if it works at all.
-	 resource-id: integer-to-string(resource-id))
+         handle: handle,
+         width: width, height: height,
+         //---*** This was 'resource-id: resource-id'
+         //---*** The conversion to <byte-string> is just plain *wrong*,
+         //---*** because trying to feed that string back to other Win32
+         //---*** resource functions won't get the same object, if it works at all.
+         resource-id: integer-to-string(resource-id))
   end
 end method read-image-as;
 
@@ -401,12 +401,12 @@ define sealed method draw-image
     let hBrush
       = bitmap.%hBrush
         | begin
-	    //---*** Loses in Win-95 when the image is bigger than 8x8
-	    let hBrush = CreatePatternBrush(image-handle(bitmap));
-	    check-result("CreatePatternBrush", hBrush);
-	    bitmap.%hBrush := hBrush;
-	    hBrush
-	  end;
+            //---*** Loses in Win-95 when the image is bigger than 8x8
+            let hBrush = CreatePatternBrush(image-handle(bitmap));
+            check-result("CreatePatternBrush", hBrush);
+            bitmap.%hBrush := hBrush;
+            hBrush
+          end;
     let pen :: <HPEN> = $null-hpen;
     let old-hBrush = SelectObject(hDC, hBrush);
     let old-hPen   = SelectObject(hDC, pen);
@@ -446,10 +446,10 @@ define sideways method read-image-as
      #key width, height, error? = #f, resource-context = #"application")
  => (image :: false-or(<win32-icon>))
   read-image-as(class, resource-id, #"icon",
-		width:  GetSystemMetrics($SM-CXSMICON),
-		height: GetSystemMetrics($SM-CYSMICON),
-		error?: error?,
-		resource-context: resource-context)
+                width:  GetSystemMetrics($SM-CXSMICON),
+                height: GetSystemMetrics($SM-CYSMICON),
+                error?: error?,
+                resource-context: resource-context)
 end method read-image-as;
 
 define sideways method read-image-as
@@ -458,10 +458,10 @@ define sideways method read-image-as
      #key width, height, error? = #f, resource-context = #"application")
  => (image :: false-or(<win32-icon>))
   read-image-as(class, resource-id, #"icon",
-		width:  GetSystemMetrics($SM-CXICON),
-		height: GetSystemMetrics($SM-CYICON),
-		error?: error?,
-		resource-context: resource-context)
+                width:  GetSystemMetrics($SM-CXICON),
+                height: GetSystemMetrics($SM-CYICON),
+                error?: error?,
+                resource-context: resource-context)
 end method read-image-as;
 
 define sideways method read-image-as
@@ -471,8 +471,8 @@ define sideways method read-image-as
  => (image :: false-or(<win32-icon>))
   let handle :: <HANDLE>
     = LoadImage(concrete-resource-context(resource-context, image-type),
-		resource-id,
-		$IMAGE-ICON, width | 0, height | 0, $LR-DEFAULTCOLOR);
+                resource-id,
+                $IMAGE-ICON, width | 0, height | 0, $LR-DEFAULTCOLOR);
   when (error?)
     check-result("LoadImage (icon)", handle)
   end;
@@ -480,15 +480,15 @@ define sideways method read-image-as
     let handle = pointer-cast(<HICON>, handle);
     let (width, height)
       = if (width & height)
-	  values(width, height)
-	else
-	  let (default-width, default-height) = win32-icon-size(handle);
-	  values(width | default-width, height | default-height)
-	end;
+          values(width, height)
+        else
+          let (default-width, default-height) = win32-icon-size(handle);
+          values(width | default-width, height | default-height)
+        end;
     make(<win32-icon>,
-	 handle: handle,
-	 width: width, height: height,
-	 resource-id: resource-id)
+         handle: handle,
+         width: width, height: height,
+         resource-id: resource-id)
   end
 end method read-image-as;
 
@@ -502,7 +502,7 @@ define sealed method draw-image
     let height = image-height(icon);
     let hbrush = mirror-background-brush(medium-sheet(medium), drawable);
     DrawIconEx(hDC, x, y, image-handle(icon),
-	       width, height, 0, hbrush, $DI-COMPAT)
+               width, height, 0, hbrush, $DI-COMPAT)
   end;
   #f
 end method draw-image;

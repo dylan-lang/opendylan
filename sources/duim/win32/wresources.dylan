@@ -105,12 +105,12 @@ end method encode-resource;
 
 define sealed method encode-resource
     (resource-id :: <C-string>) => (raw-id :: <raw-resource-id>)
-  as(<raw-resource-id>, resource-id)		// this should work
+  as(<raw-resource-id>, resource-id)            // this should work
 end method encode-resource;
 
 define sealed method encode-resource
     (resource-id :: <C-unicode-string>) => (raw-id :: <raw-resource-id>)
-  as(<raw-resource-id>, resource-id)		// this should work
+  as(<raw-resource-id>, resource-id)            // this should work
 end method encode-resource;
 
 define sealed method encode-resource
@@ -340,7 +340,7 @@ define generic store-resource-details
 
 define sealed class <win32-resource-database> (<resource-database>)
   constant slot %resources :: <resource-table> = make(<resource-table>);
-  slot %module :: <HANDLE>;		// the current instance handle
+  slot %module :: <HANDLE>;             // the current instance handle
 end class <win32-resource-database>;
 
 define sealed domain make (singleton(<win32-resource-database>));
@@ -399,10 +399,10 @@ end method store-resource-name;
 define sealed method store-new-resource
     (database :: <win32-resource-database>, name :: <raw-resource-id>) => ()
   let resource = make(<resource-description>, 
-		      resource-id: name,
-		      resource-type: *current-type*);
+                      resource-id: name,
+                      resource-type: *current-type*);
   let wrapper  = make(<resource-wrapper>,
-		      resource: resource);
+                      resource: resource);
   *current-type-table*[name] := wrapper;
   *current-resource*         := resource;
 end method store-new-resource;
@@ -423,9 +423,9 @@ define sealed method enumerate-resources
   assert(~null-handle?(handle), "Invalid handle to resource module");
   assert(database, "No database supplied");
   dynamic-bind (*current-database*   = database,
-		*current-type*       = #f,
-		*current-type-table* = #f,
-		*current-resource*   = #f)
+                *current-type*       = #f,
+                *current-type-table* = #f,
+                *current-resource*   = #f)
     let success? = EnumResourceTypes(handle, EnumResTypeProc, 0);
     success?
   end
@@ -433,9 +433,9 @@ end method enumerate-resources;
 
 
 define sealed method enumerate-resource-types
-    (hModule :: <HANDLE>,		// module handle
-     lpType  :: <LPTSTR>,		// address of resource type
-     lParam  :: <lparam-type>)		// extra parameter, could be used for error checking
+    (hModule :: <HANDLE>,               // module handle
+     lpType  :: <LPTSTR>,               // address of resource type
+     lParam  :: <lparam-type>)          // extra parameter, could be used for error checking
  => (value :: <boolean>)      
   unless (null-pointer?(lpType))
     processing-type(*current-database*, lpType);
@@ -449,10 +449,10 @@ define callback EnumResTypeProc :: <ENUMRESTYPEPROC> = enumerate-resource-types;
   
 
 define sealed method enumerate-resource-names
-    (hModule :: <HANDLE>,		// module handle
-     lpType  :: <LPCTSTR>,		// address of resource type
-     lpName  :: <LPTSTR>,		// address of resource name
-     lParam  :: <lparam-type>)		// extra parameter, could be used for error checking
+    (hModule :: <HANDLE>,               // module handle
+     lpType  :: <LPCTSTR>,              // address of resource type
+     lpName  :: <LPTSTR>,               // address of resource name
+     lParam  :: <lparam-type>)          // extra parameter, could be used for error checking
  => (value :: <boolean>)      
   unless (null-pointer?(lpName))
     store-resource-name(*current-database*, lpName);
@@ -466,11 +466,11 @@ define callback EnumResNameProc :: <ENUMRESNAMEPROC> = enumerate-resource-names;
 
 
 define sealed method enumerate-resource-languages
-    (hModule :: <HANDLE>,		// module handle
-     lpType  :: <LPCTSTR>,		// address of resource type
-     lpName  :: <LPCTSTR>,		// address of resource name
-     wLang   :: <integer>,		// resource language
-     lParam  :: <lparam-type>)		// extra parameter, could be used for error checking
+    (hModule :: <HANDLE>,               // module handle
+     lpType  :: <LPCTSTR>,              // address of resource type
+     lpName  :: <LPCTSTR>,              // address of resource name
+     wLang   :: <integer>,              // resource language
+     lParam  :: <lparam-type>)          // extra parameter, could be used for error checking
  => (value :: <boolean>)
   let hResInfo :: <HANDLE> = 
     FindResourceEx(hModule, lpType, lpName, wLang);
@@ -490,7 +490,7 @@ define constant *grok-resource-table* :: <resource-table>
 define sealed method lookup-resource
     (type :: <resource-type>, id :: <unsigned-int>)
  => (resource :: <resource>)
-  let table    = *resource-database*.%resources[type];	// doesn't have to be encoded
+  let table    = *resource-database*.%resources[type];  // doesn't have to be encoded
   let wrapper  = table[encode-resource(id)];
   let resource = retrieve-resource(wrapper.%resource, *resource-database*);
   wrapper.%resource := resource;
@@ -585,8 +585,8 @@ define function grok-dialog
   let template :: <LPDLGTEMPLATE>
     = make(<LPDLGTEMPLATE>, address: resource-address);
   let dialog = make(<dialog-resource>, 
-		    resource-description: resource,
-		    template: template);
+                    resource-description: resource,
+                    template: template);
   let template-size :: <integer> = 0;
   unless (null-pointer?(template))
     let offset :: <integer> = $dlg-template-size;
@@ -608,34 +608,34 @@ define function grok-dialog
     let font-resource-size :: <integer> = 0;
     when (logand(template.style-value, $DS-SETFONT) ~= 0)
       let font-size-pointer :: <LPWORD>
-	= make(<LPWORD>, address: \%+(resource-address, offset));
+        = make(<LPWORD>, address: \%+(resource-address, offset));
       offset := offset + size-of(<WORD>);
       dialog-font-size(dialog) := pointer-value(font-size-pointer);
       let font-name-pointer :: <C-pointer>
-	= pointer+(font-size-pointer, 1);
+        = pointer+(font-size-pointer, 1);
       let (font-name, font-name-size)
-	= grok-resource-string(font-name-pointer);
+        = grok-resource-string(font-name-pointer);
       dialog-font-name(dialog) := encode-resource(font-name);
       offset := offset + font-name-size;
     end;
     let addr = \%+(resource-address, offset);
     for (i :: <integer> from 1 below template.cdit-value,
-	 item = make(<LPDLGITEMTEMPLATE>, address: pointer-address-32(addr))
-	   then make(<LPDLGITEMTEMPLATE>, address: pointer-address-32(addr)))
+         item = make(<LPDLGITEMTEMPLATE>, address: pointer-address-32(addr))
+           then make(<LPDLGITEMTEMPLATE>, address: pointer-address-32(addr)))
       let (item-size, control-resource)
-	= grok-item-template(item);
+        = grok-item-template(item);
       register-child(dialog, control-resource, get-resource-id(control-resource));
       addr := \%+(pointer-address(item), item-size);
     finally
       let (item-size, control-resource)
-	= grok-item-template(item);
+        = grok-item-template(item);
       register-child(dialog, control-resource, get-resource-id(control-resource));
       addr := \%+(pointer-address(item), item-size);
       template-size := as(<integer>, \%-(addr, resource-address));
     end
   end;
   assert(resource-size(dialog) = template-size,
-	 "Incorrect dialog resource size retrieved");
+         "Incorrect dialog resource size retrieved");
   dialog
 end function grok-dialog;
 
@@ -645,7 +645,7 @@ define method grok-item-template
     (template :: <LPDLGITEMTEMPLATE>)
  => (resource-size :: <integer>, resource :: <control-resource>)
   let control = make(<control-resource>,
-		     template: template);
+                     template: template);
   let class-test-pointer :: <LPWORD>
     = make(<LPWORD>, address: \%+(pointer-address(template), $item-template-size));
   let (class-resource-id, class-resource-id-size)
@@ -660,9 +660,9 @@ define method grok-item-template
     = make(<LPWORD>, address: \%+(text-address, text-size));
   let data-size = grok-creation-data(creation-data-pointer);
   let template-size
-    = as(<integer>,		// skip overflow check
-	 \%-(\%+(pointer-address(creation-data-pointer), data-size),
-	     pointer-address(template)));
+    = as(<integer>,             // skip overflow check
+         \%-(\%+(pointer-address(creation-data-pointer), data-size),
+             pointer-address(template)));
   resource-size(control) := template-size;
   values(template-size, control)
 end method grok-item-template;
@@ -720,14 +720,14 @@ end C-struct <CTOOLBARDATA>;
 
 struct CToolBarData
 {
-	WORD wVersion;
-	WORD wWidth;
-	WORD wHeight;
-	WORD wItemCount;
-	//WORD aItems[wItemCount]
+        WORD wVersion;
+        WORD wWidth;
+        WORD wHeight;
+        WORD wItemCount;
+        //WORD aItems[wItemCount]
 
-	WORD* items()
-		{ return (WORD*)(this+1); }
+        WORD* items()
+                { return (WORD*)(this+1); }
 };
 
 *grok-resource-table*[$RT-TOOLBAR] := grok-toolbar;

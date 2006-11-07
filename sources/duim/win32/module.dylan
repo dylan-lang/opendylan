@@ -12,18 +12,18 @@ define module win32-duim
 
   use duim-imports;
   use duim-internals;
-  use duim-gadget-panes-internals;	//---*** until we've got all native gadgets in
+  use duim-gadget-panes-internals;      //---*** until we've got all native gadgets in
 
   use C-FFI;
   use win32-core;
   use dylan-extensions,
    import: { <abstract-integer>, <big-integer>,
-	    <double-integer>, %double-integer-low, %double-integer-high };
+            <double-integer>, %double-integer-low, %double-integer-high };
 
   export check-result,
-	 report-error,
-	 ensure-no-error,
-	 windows-debug-message;
+         report-error,
+         ensure-no-error,
+         windows-debug-message;
 
   // Basic classes
   export <win32-port>,
@@ -36,8 +36,8 @@ define module win32-duim
   // Bitmaps and icons
   export <win32-image>,
          <win32-bitmap>,
-	 <win32-icon>,
-	 image-handle;
+         <win32-icon>,
+         image-handle;
 
   // These can be used when the user wants to use the Win32 API directly
   // on a window that was created through DUIM
@@ -46,18 +46,18 @@ define module win32-duim
 
   // These can be used by someone who wants to import their own Win32 gadget
   export <native-color>,
- 	 <win32-mirror>,
+         <win32-mirror>,
          <window-mirror>,
-	 <win32-pane-mixin>,
-	 <win32-gadget-mixin>,
+         <win32-pane-mixin>,
+         <win32-gadget-mixin>,
          <win32-subclassed-gadget-mixin>,
          <win32-control-mixin>,
- 	 color->native-color, native-color->color, native-brush->color,
-	 $default-face-color, $default-shadow-color, $default-highlight-color,
-	 make-gadget-control,
+         color->native-color, native-color->color, native-brush->color,
+         $default-face-color, $default-shadow-color, $default-highlight-color,
+         make-gadget-control,
          handle-message,
          handle-command,
-	 handle-command-for-id,
+         handle-command-for-id,
          handle-notify,
          handle-control-message,
          handle-scrolling,
@@ -68,25 +68,25 @@ define module win32-duim
 
   // Exports for messing with Help systems
   export <winhelp>,
-	 <htmlhelp>;
+         <htmlhelp>;
 
   // Keyboard handling
   export virtual-key->keysym,
-	 keysym->virtual-key,
-	 virtual-key->character,
-	 character->virtual-key;
+         keysym->virtual-key,
+         virtual-key->character,
+         character->virtual-key;
 
   // Exports for OLE-DUIM, possibly useful for others too
   export make-win32-menu,
          repaint-sheet-with-DC,
-	 repaint-in-DC-recursive,
-	 accelerator-table,
-	 make-text-style-from-font,
+         repaint-in-DC-recursive,
+         accelerator-table,
+         make-text-style-from-font,
          mirror-registered-dialogs,
          update-frame-documentation,
          window-mirror,
          note-win32-frame-destroyed,
-	 shutdown-win32-duim;
+         shutdown-win32-duim;
 
   // Utilities
   export get-window-edges,

@@ -13,11 +13,11 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define constant $progress-bar-min-width  :: <integer> = 50;
 define constant $progress-bar-height     :: <integer> = 18;
 
-define constant $tab-control-border :: <integer> = 2;	// in dialog units
+define constant $tab-control-border :: <integer> = 2;   // in dialog units
 
 define constant $slider-page-size   :: <integer> =  4;
-define constant $slider-min-length  :: <integer> = 50;	// in pixels
-define constant $slider-min-breadth :: <integer> = 30;	// in pixels
+define constant $slider-min-length  :: <integer> = 50;  // in pixels
+define constant $slider-min-breadth :: <integer> = 30;  // in pixels
 
 define constant $list-view-minimum-visible-lines :: <integer> =  3;
 define constant $list-view-default-visible-lines :: <integer> = 10;
@@ -27,8 +27,8 @@ define constant $tree-view-minimum-visible-lines :: <integer> =  3;
 define constant $tree-view-default-visible-lines :: <integer> = 10;
 define constant $tree-view-extra-height          :: <integer> =  2;
 
-define constant $status-bar-border  :: <integer> = 1;	// in pixels
-define constant $status-bar-spacing :: <integer> = 4;	// in pixels
+define constant $status-bar-border  :: <integer> = 1;   // in pixels
+define constant $status-bar-spacing :: <integer> = 4;   // in pixels
 
 define constant $spin-box-spacing      :: <integer> =  0;
 define constant $up-down-control-width :: <integer> = 12;
@@ -54,22 +54,22 @@ define sealed method initialize-common-controls
       // which enables the use of Windows XP visual styles in common controls using the
       // manifest embedded as a resource in the DUIM DLL...
       if (~null-pointer?(fCreateActCtx) & ~null-pointer?(fActivateActCtx))
-	with-stack-structure (act :: <PACTCTX>)
-	  with-stack-structure (moduleName :: <LPSTR>, size: $MAX-PATH + 1)
-	    GetModuleFileName(null-handle(<HMODULE>), moduleName, $MAX-PATH);
-	    act.cbSize-value := safe-size-of(<ACTCTX>);
-	    act.dwFlags-value := logior($ACTCTX-FLAG-RESOURCE-NAME-VALID,
-					$ACTCTX-FLAG-HMODULE-VALID);
-	    act.lpSource-value := moduleName;
-	    act.lpResourceName-value := MAKEINTRESOURCE(2);
-	    act.hModule-value := GetModuleHandle($ME);
-	    let hActCtx :: <HANDLE> = CreateActCtx(fCreateActCtx, act);
-	    if (~null-handle?(hActCtx))
-	      //---*** Should we save the activation handle & cookie and deactivate on exit?
-	      ActivateActCtx(fActivateActCtx, hActCtx);
-	    end;
-	  end;
-	end;
+        with-stack-structure (act :: <PACTCTX>)
+          with-stack-structure (moduleName :: <LPSTR>, size: $MAX-PATH + 1)
+            GetModuleFileName(null-handle(<HMODULE>), moduleName, $MAX-PATH);
+            act.cbSize-value := safe-size-of(<ACTCTX>);
+            act.dwFlags-value := logior($ACTCTX-FLAG-RESOURCE-NAME-VALID,
+                                        $ACTCTX-FLAG-HMODULE-VALID);
+            act.lpSource-value := moduleName;
+            act.lpResourceName-value := MAKEINTRESOURCE(2);
+            act.hModule-value := GetModuleHandle($ME);
+            let hActCtx :: <HANDLE> = CreateActCtx(fCreateActCtx, act);
+            if (~null-handle?(hActCtx))
+              //---*** Should we save the activation handle & cookie and deactivate on exit?
+              ActivateActCtx(fActivateActCtx, hActCtx);
+            end;
+          end;
+        end;
       end;
     end;
     InitCommonControls();
@@ -113,14 +113,14 @@ define sealed method make-gadget-control
  => (handle :: <HWND>)
   let handle :: <HWND>
     = CreateWindowEx(gadget-extended-options(gadget),
-		     $PROGRESS-CLASS,
-		     "",
-		     options,
-		     x, y, width, height,
-		     parent,
-		     $null-hMenu,
-		     application-instance-handle(),
-		     $NULL-VOID);
+                     $PROGRESS-CLASS,
+                     "",
+                     options,
+                     x, y, width, height,
+                     parent,
+                     $null-hMenu,
+                     application-instance-handle(),
+                     $NULL-VOID);
   check-result("CreateWindowEx (PROGRESS_CLASS)", handle);
   handle
 end method make-gadget-control;
@@ -210,20 +210,20 @@ define sealed method make-gadget-control
   let ticks? = slider-tick-marks(gadget);
   let handle :: <HWND>
     = CreateWindowEx(gadget-extended-options(gadget, default-border?: #f),
-		     $TRACKBAR-CLASS,
-		     "",
-		     %logior(options,
-			     if (sheet-tab-stop?(gadget)) %logior($WS-GROUP, $WS-TABSTOP) else 0 end,
-			     select (gadget-orientation(gadget))
-			       #"horizontal" => $TBS-HORZ;
-			       #"vertical"   => $TBS-VERT;
-			     end,
-			     if (ticks?) $TBS-AUTOTICKS else 0 end),
-		     x, y, width, height,
-		     parent,
-		     $null-hMenu,
-		     application-instance-handle(),
-		     $NULL-VOID);
+                     $TRACKBAR-CLASS,
+                     "",
+                     %logior(options,
+                             if (sheet-tab-stop?(gadget)) %logior($WS-GROUP, $WS-TABSTOP) else 0 end,
+                             select (gadget-orientation(gadget))
+                               #"horizontal" => $TBS-HORZ;
+                               #"vertical"   => $TBS-VERT;
+                             end,
+                             if (ticks?) $TBS-AUTOTICKS else 0 end),
+                     x, y, width, height,
+                     parent,
+                     $null-hMenu,
+                     application-instance-handle(),
+                     $NULL-VOID);
   check-result("CreateWindowEx (TRACKBAR_CLASS)", handle);
   handle
 end method make-gadget-control;
@@ -243,17 +243,17 @@ define sealed method do-compose-space
       let min-height   = $slider-min-breadth;
       let width = constrain-size(width | min-width, min-width, $fill);
       make(<space-requirement>,
-	   width:      width,      height:     min-height,
-	   min-width:  min-width,  min-height: min-height,
-	   max-width:  $fill,      max-height: min-height);
+           width:      width,      height:     min-height,
+           min-width:  min-width,  min-height: min-height,
+           max-width:  $fill,      max-height: min-height);
     #"vertical" =>
       let min-width    = $slider-min-breadth;
       let min-height   = $slider-min-length;
       let height = constrain-size(height | min-height, min-height, $fill);
       make(<space-requirement>,
-	   width:      min-width,  height:     height,
-	   min-width:  min-width,  min-height: min-height,
-	   max-width:  min-width,  max-height: $fill);
+           width:      min-width,  height:     height,
+           min-width:  min-width,  min-height: min-height,
+           max-width:  min-width,  max-height: $fill);
   end
 end method do-compose-space;
 
@@ -306,31 +306,31 @@ define sealed method handle-scrolling
     let value-range = gadget-value-range(gadget);
     select (scroll-code)
       $TB-THUMBTRACK =>
-	let (min-pos, max-pos) = values(0, size(value-range) - 1);
-	when (position >= min-pos & position <= max-pos)
-	  distribute-value-changing-callback(gadget, value-range[position])
-	end;
+        let (min-pos, max-pos) = values(0, size(value-range) - 1);
+        when (position >= min-pos & position <= max-pos)
+          distribute-value-changing-callback(gadget, value-range[position])
+        end;
       $TB-THUMBPOSITION =>
-	let (min-pos, max-pos) = values(0, size(value-range) - 1);
-	when (position >= min-pos & position <= max-pos)
-	  distribute-value-changed-callback(gadget,  value-range[position])
-	end;
+        let (min-pos, max-pos) = values(0, size(value-range) - 1);
+        when (position >= min-pos & position <= max-pos)
+          distribute-value-changed-callback(gadget,  value-range[position])
+        end;
       $TB-PAGEUP =>
-	handle-slider-increment(gadget, - $slider-page-size);
+        handle-slider-increment(gadget, - $slider-page-size);
       $TB-PAGEDOWN =>
-	handle-slider-increment(gadget,   $slider-page-size);
+        handle-slider-increment(gadget,   $slider-page-size);
       $TB-LINEUP =>
-	handle-slider-increment(gadget, -1);
+        handle-slider-increment(gadget, -1);
       $TB-LINEDOWN =>
-	handle-slider-increment(gadget,  1);
+        handle-slider-increment(gadget,  1);
       $TB-BOTTOM =>
-	let position = size(value-range) - 1;
+        let position = size(value-range) - 1;
         distribute-value-changed-callback(gadget, value-range[position]);
       $TB-TOP =>
-	let position = 0;
-	distribute-value-changed-callback(gadget, value-range[position]);
+        let position = 0;
+        distribute-value-changed-callback(gadget, value-range[position]);
       otherwise =>
-	return(#f)
+        return(#f)
     end;
     #t
   end
@@ -434,14 +434,14 @@ define sealed method make-gadget-control
  => (handle :: <HWND>)
   let handle :: <HWND>
     = CreateWindowEx(gadget-extended-options(gadget, default-border?: #f),
-		     $STATUSCLASSNAME,
-		     "",
-		     %logior(options, $SBARS-SIZEGRIP),
-		     0, 0, 0, 0,
-		     parent,
-		     $null-hMenu,
-		     application-instance-handle(),
-		     $NULL-VOID);
+                     $STATUSCLASSNAME,
+                     "",
+                     %logior(options, $SBARS-SIZEGRIP),
+                     0, 0, 0, 0,
+                     parent,
+                     $null-hMenu,
+                     application-instance-handle(),
+                     $NULL-VOID);
   check-result("CreateWindowEx (STATUSCLASSNAME)", handle);
   handle
 end method make-gadget-control;
@@ -453,10 +453,10 @@ define sealed method do-compose-space
   // obscured by the resize grip
   let extra-width :: <integer> = GetSystemMetrics($SM-CXVSCROLL);
   let space-req = next-method(gadget,
-			      width:  width & (width - extra-width),
-			      height: height);
+                              width:  width & (width - extra-width),
+                              height: height);
   space-requirement+(gadget, space-req,
-		     width: extra-width, min-width: extra-width, max-width: extra-width)
+                     width: extra-width, min-width: extra-width, max-width: extra-width)
 end method do-compose-space;
 
 //---*** We should be more careful that the height is set up right, taking
@@ -480,7 +480,7 @@ define sealed method do-allocate-space
     let final-x    :: <integer> = 0;
     duim-debug-message("Laying out %=:", gadget);
     for (i :: <integer> from 0 below n-children,
-	 child in children)
+         child in children)
       let (left, top, right, bottom) = sheet-device-edges(child);
       ignore(left);
       min-height := max(min-height, bottom - top);
@@ -503,16 +503,16 @@ define sealed method do-allocate-space
   else
     // Otherwise, ensure the part that holds the size grip has no border
     SendMessage(handle, $SB-SETTEXT,
-		%logior(n-parts - 1, $SBT-NOBORDERS), 
-		pointer-address($empty-c-string))
+                %logior(n-parts - 1, $SBT-NOBORDERS), 
+                pointer-address($empty-c-string))
   end;
   // Remove the borders for the non-label parts
   for (i :: <integer> from 0 below n-children,
        child in children)
     unless (instance?(child, <label>))
       SendMessage(handle, $SB-SETTEXT, 
-		  %logior(i, $SBT-NOBORDERS), 
-		  pointer-address($empty-c-string));
+                  %logior(i, $SBT-NOBORDERS), 
+                  pointer-address($empty-c-string));
     end
   end
 end method do-allocate-space;
@@ -531,7 +531,7 @@ define sealed method make-sheet-mirror
   let part-number
     = position(children, gadget)
       | error("Gadget %= not a direct child of status bar %=",
-	      gadget, status-bar);
+              gadget, status-bar);
   make(<status-label-mirror>, 
        sheet: gadget,
        status-bar: status-bar,
@@ -544,17 +544,17 @@ define sealed method update-mirror-label
   let primary-label = status-bar-label-pane(status-bar);
   let label
     = if (status-bar-simple?(status-bar) & gadget = primary-label)
-	status-bar-simple-text(status-bar)
+        status-bar-simple-text(status-bar)
       else
-	defaulted-gadget-label(gadget)
+        defaulted-gadget-label(gadget)
       end;
   let label :: <string> = if (instance?(label, <string>)) label else "" end;
   let handle = window-handle(status-bar);
   let part-number = status-label-part-number(mirror);
   with-c-string (c-string = label)
     SendMessage(handle, $SB-SETTEXT,
-		%logior(part-number, 0),
-		pointer-address(c-string));
+                %logior(part-number, 0),
+                pointer-address(c-string));
     UpdateWindow(handle)
   end
 end method update-mirror-label;
@@ -674,16 +674,16 @@ define sealed method make-gadget-control
  => (handle :: <HWND>)
   let handle :: <HWND>
     = CreateWindowEx(gadget-extended-options(gadget),
-		     $WC-TABCONTROL,
-		     "",
-		     //---*** Add $TCS-BOTTOM if 'tab-control-tabs-position' is #"bottom"
-		     %logior(options,
-			     if (sheet-tab-stop?(gadget)) %logior($WS-GROUP, $WS-TABSTOP) else 0 end),
-		     x, y, width, height,
-		     parent,
-		     $null-hMenu,
-		     application-instance-handle(),
-		     $NULL-VOID);
+                     $WC-TABCONTROL,
+                     "",
+                     //---*** Add $TCS-BOTTOM if 'tab-control-tabs-position' is #"bottom"
+                     %logior(options,
+                             if (sheet-tab-stop?(gadget)) %logior($WS-GROUP, $WS-TABSTOP) else 0 end),
+                     x, y, width, height,
+                     parent,
+                     $null-hMenu,
+                     application-instance-handle(),
+                     $NULL-VOID);
   check-result("CreateWindowEx (WC_TABCONTROL)", handle);
   handle
 end method make-gadget-control;
@@ -700,12 +700,12 @@ define sealed method create-tab-control-pages
   let labels = tab-control-labels(pane);
   with-stack-structure (item :: <LPTC-ITEMA>)
     for (page-number :: <integer> from 0 below size(labels),
-	 label in labels)
+         label in labels)
       item.mask-value := $TCIF-TEXT;
       with-c-string (c-string = label)
-	item.pszText-value := c-string;
+        item.pszText-value := c-string;
         SendMessage(handle, $TCM-INSERTITEM, page-number, 
-		    pointer-address(item))
+                    pointer-address(item))
       end
     end
   end;
@@ -794,9 +794,9 @@ define sealed method do-compose-space
   let (w, w-, w+, h, h-, h+)
     = space-requirement-components(stack | pane, space-req);
   let min-width  = max(w- + extra-width, tabs-width);
-  let max-width  = $fill;	// was 'min(w+ + extra-width, min-width)'
+  let max-width  = $fill;       // was 'min(w+ + extra-width, min-width)'
   let min-height = h- + extra-height;
-  let max-height = $fill;	// was 'min(h+ + extra-height, min-height)'
+  let max-height = $fill;       // was 'min(h+ + extra-height, min-height)'
   let best-width  = constrain-size(w + extra-width,  min-width,  max-width);
   let best-height = constrain-size(h + extra-height, min-height, max-height);
   make(<space-requirement>,
@@ -895,12 +895,12 @@ define sealed method handle-notify
       #t;
     $TCN-KEYDOWN =>
       when (gadget-key-press-callback(pane))
-	let keydown :: <LPTC-KEYDOWN>
-	  = make(<LPTC-KEYDOWN>, address: lParam);
-	let vkey :: <integer> = keydown.wVKey-value;
-	let keysym = virtual-key->keysym(vkey);
-	distribute-key-press-callback(pane, keysym);
-	#t
+        let keydown :: <LPTC-KEYDOWN>
+          = make(<LPTC-KEYDOWN>, address: lParam);
+        let vkey :: <integer> = keydown.wVKey-value;
+        let keysym = virtual-key->keysym(vkey);
+        distribute-key-press-callback(pane, keysym);
+        #t
       end;
     otherwise =>
       next-method();
@@ -930,16 +930,16 @@ define sealed method make-gadget-control
   let horizontal? = gadget-orientation(gadget) == #"horizontal";
   let handle :: <HWND>
     = CreateWindowEx(gadget-extended-options(gadget),
-		     $UPDOWN-CLASS,
-		     "",
-		     %logior($UDS-ARROWKEYS, $UDS-WRAP, $UDS-AUTOBUDDY,
-			     if (horizontal?) $UDS-HORZ else 0 end,
-			     options),
-		     x, y, width, height,
-		     parent,
-		     $null-hMenu,
-		     application-instance-handle(),
-		     $NULL-VOID);
+                     $UPDOWN-CLASS,
+                     "",
+                     %logior($UDS-ARROWKEYS, $UDS-WRAP, $UDS-AUTOBUDDY,
+                             if (horizontal?) $UDS-HORZ else 0 end,
+                             options),
+                     x, y, width, height,
+                     parent,
+                     $null-hMenu,
+                     application-instance-handle(),
+                     $NULL-VOID);
   check-result("CreateWindowEx (UPDOWN_CLASS)", handle);
   handle
 end method make-gadget-control;
@@ -1003,39 +1003,39 @@ define sealed domain initialize (<win32-spin-box>);
 define sealed method initialize
     (gadget :: <win32-spin-box>,
      #key documentation,
-	  width, min-width, max-width, height, min-height, max-height) => ()
+          width, min-width, max-width, height, min-height, max-height) => ()
   let enabled? = gadget-enabled?(gadget);
   let text-field 
     = make(<text-field>, 
-	   // Pass along the space requirement to the text field
-	   width:      width     & (width     - $up-down-control-width),
-	   min-width:  min-width & (min-width - $up-down-control-width),
-	   max-width:  max-width & (max-width - $up-down-control-width),
-	   height: height, min-height: min-height, max-height: max-height,
-	   // Pass along the documentation to the text field, too
-	   documentation: documentation,
-	   //---*** Need to handle value-changed and activate callbacks
-	   enabled?: enabled?);
+           // Pass along the space requirement to the text field
+           width:      width     & (width     - $up-down-control-width),
+           min-width:  min-width & (min-width - $up-down-control-width),
+           max-width:  max-width & (max-width - $up-down-control-width),
+           height: height, min-height: min-height, max-height: max-height,
+           // Pass along the documentation to the text field, too
+           documentation: documentation,
+           //---*** Need to handle value-changed and activate callbacks
+           enabled?: enabled?);
   let up-down-control
     = make(<win32-up-down-control>,
-	   orientation: #"vertical",
-	   enabled?: enabled?,
-	   width: $up-down-control-width, fixed-width?: #t,
-	   // We equalize the heights of the up-down control and the text field
-	   // in the layout below, so ensure the up-down control is smaller
-	   height: 1, fixed-height?: #t,
-	   value-changed-callback: 
-	     method (up-down-control)
-	       let value = gadget-value(up-down-control);
-	       gadget-selection(gadget, do-callback?: #t) := vector(value)
-	     end method);
+           orientation: #"vertical",
+           enabled?: enabled?,
+           width: $up-down-control-width, fixed-width?: #t,
+           // We equalize the heights of the up-down control and the text field
+           // in the layout below, so ensure the up-down control is smaller
+           height: 1, fixed-height?: #t,
+           value-changed-callback: 
+             method (up-down-control)
+               let value = gadget-value(up-down-control);
+               gadget-selection(gadget, do-callback?: #t) := vector(value)
+             end method);
   gadget.%up-down-control := up-down-control;
   gadget.%text-field      := text-field;
   next-method();
   update-win32-spin-box(gadget);
   sheet-child(gadget)
     := horizontally (x-spacing: $spin-box-spacing,
-		     fixed-height?: #t, equalize-heights?: #t)
+                     fixed-height?: #t, equalize-heights?: #t)
          text-field;
          up-down-control
        end
@@ -1100,14 +1100,14 @@ define sealed method make-gadget-control
   end;
   let handle :: <HWND>
     = CreateWindowEx(gadget-extended-options(pane),
-		     $WC-LISTVIEW,
-		     "",
-		     win32-list-view-options(pane, options),
-		     x, y, width, height,
-		     parent,
-		     $null-hMenu,
-		     application-instance-handle(),
-		     $NULL-VOID);
+                     $WC-LISTVIEW,
+                     "",
+                     win32-list-view-options(pane, options),
+                     x, y, width, height,
+                     parent,
+                     $null-hMenu,
+                     application-instance-handle(),
+                     $NULL-VOID);
   check-result("CreateWindow (List View)", handle);
   SendMessage(handle, $LVM-SETCOLUMNWIDTH, -1, $LVSCW-AUTOSIZE);
   handle
@@ -1170,75 +1170,75 @@ define sealed method update-list-view-items
     case
       n-objects = n-items
       | (n-objects > n-items & n-objects <= n-items * 1.25) =>
-	// Adding either zero or a few more items
-	// The idea of the following code is to insert just enough
-	// new items -- preferably in the right place -- to make the
-	// set of items as long as the set of objects, then update
-	// the remaining items in place as needed.  This makes it
-	// pretty fast to insert just a few new items into any
-	// part of a much larger set of items.
-	let delta :: <integer> = n-objects - n-items;
-	for (object in objects,
-	     index :: <integer> from 0)
-	  // If the new and the existing objects are the same,
-	  // no need to do anything -- except if we are forcibly
-	  // updating in order to get new labels, e.g.
-	  when (force?
-		| index >= n-items
-		| ~test(object, item-object(items[index])))
-	    //--- Do we really need to make a new item?
-	    let item = make-item(pane, object);
-	    if (delta = 0)
-	      // If we've inserted the right number of new items,
-	      // we can now just update the remaining ones in place
-	      items[index] := item;
-	      do-update-item(pane, handle, item, index, message: $LVM-SETITEM)
-	    else
-	      // Otherwise, insert a new item and count it off
-	      insert-at!(items, item, index);
-	      do-update-item(pane, handle, item, index, message: $LVM-INSERTITEM);
-	      inc!(n-items);
-	      dec!(delta)
-	    end
-	  end
-	end;
+        // Adding either zero or a few more items
+        // The idea of the following code is to insert just enough
+        // new items -- preferably in the right place -- to make the
+        // set of items as long as the set of objects, then update
+        // the remaining items in place as needed.  This makes it
+        // pretty fast to insert just a few new items into any
+        // part of a much larger set of items.
+        let delta :: <integer> = n-objects - n-items;
+        for (object in objects,
+             index :: <integer> from 0)
+          // If the new and the existing objects are the same,
+          // no need to do anything -- except if we are forcibly
+          // updating in order to get new labels, e.g.
+          when (force?
+                | index >= n-items
+                | ~test(object, item-object(items[index])))
+            //--- Do we really need to make a new item?
+            let item = make-item(pane, object);
+            if (delta = 0)
+              // If we've inserted the right number of new items,
+              // we can now just update the remaining ones in place
+              items[index] := item;
+              do-update-item(pane, handle, item, index, message: $LVM-SETITEM)
+            else
+              // Otherwise, insert a new item and count it off
+              insert-at!(items, item, index);
+              do-update-item(pane, handle, item, index, message: $LVM-INSERTITEM);
+              inc!(n-items);
+              dec!(delta)
+            end
+          end
+        end;
       (n-objects < n-items & n-objects >= n-items * 0.75) =>
-	// Removing a few items
-	// The analog of the insertion case, except that we delete
-	// just enough items and fix the remaining ones in place
-	let delta :: <integer> = n-items - n-objects;
-	for (object in objects,
-	     index :: <integer> from 0)
-	  when (force?
-		| index >= n-items
-		| ~test(object, item-object(items[index])))
-	    if (delta = 0)
-	      let item = make-item(pane, object);
-	      items[index] := item;
-	      do-update-item(pane, handle, item, index, message: $LVM-SETITEM)
-	    else
-	      remove-at!(items, index);
-	      SendMessage(handle, $LVM-DELETEITEM, index, 0);
-	      dec!(n-items);
-	      dec!(delta)
-	    end
-	  end
-	end;
+        // Removing a few items
+        // The analog of the insertion case, except that we delete
+        // just enough items and fix the remaining ones in place
+        let delta :: <integer> = n-items - n-objects;
+        for (object in objects,
+             index :: <integer> from 0)
+          when (force?
+                | index >= n-items
+                | ~test(object, item-object(items[index])))
+            if (delta = 0)
+              let item = make-item(pane, object);
+              items[index] := item;
+              do-update-item(pane, handle, item, index, message: $LVM-SETITEM)
+            else
+              remove-at!(items, index);
+              SendMessage(handle, $LVM-DELETEITEM, index, 0);
+              dec!(n-items);
+              dec!(delta)
+            end
+          end
+        end;
       otherwise =>
-	// Major change, just do everything from scratch
-	size(items) := 0;
-	with-busy-cursor (pane)
-	  with-delayed-drawing (handle)
-	    SendMessage(handle, $LVM-DELETEALLITEMS, 0, 0);
-	    SendMessage(handle, $LVM-SETITEMCOUNT, n-objects, 0);
-	    for (object in objects,
-		 index :: <integer> from 0)
-	      let item = make-item(pane, object);
-	      add!(items, item);
-	      do-update-item(pane, handle, item, index, message: $LVM-INSERTITEM)
-	    end
-	  end
-	end;
+        // Major change, just do everything from scratch
+        size(items) := 0;
+        with-busy-cursor (pane)
+          with-delayed-drawing (handle)
+            SendMessage(handle, $LVM-DELETEALLITEMS, 0, 0);
+            SendMessage(handle, $LVM-SETITEMCOUNT, n-objects, 0);
+            for (object in objects,
+                 index :: <integer> from 0)
+              let item = make-item(pane, object);
+              add!(items, item);
+              do-update-item(pane, handle, item, index, message: $LVM-INSERTITEM)
+            end
+          end
+        end;
     end;
     // Restore the old selection
     //--- Note that we have to do it this way instead of just calling
@@ -1267,11 +1267,11 @@ define sealed method note-gadget-selection-changed
       lvitem.iSubItem-value  := 0;
       lvitem.stateMask-value := $LVIS-SELECTED;
       for (index :: <integer> from 0 below n-items)
-	let selected? = member?(index, selection);
-	when (selected?) first-item := index end;
-	lvitem.iItem-value   := index;
-	lvitem.state-value   := if (selected?) $LVIS-SELECTED else 0 end;
-	SendMessage(handle, $LVM-SETITEM, 0, pointer-address(lvitem))
+        let selected? = member?(index, selection);
+        when (selected?) first-item := index end;
+        lvitem.iItem-value   := index;
+        lvitem.state-value   := if (selected?) $LVIS-SELECTED else 0 end;
+        SendMessage(handle, $LVM-SETITEM, 0, pointer-address(lvitem))
       end
     end;
     when (first-item & gadget-keep-selection-visible?(pane))
@@ -1306,84 +1306,84 @@ define sealed method handle-notify
   select (code)
     $LVN-ITEMCHANGED =>
       let nmlistview :: <LPNM-LISTVIEW>
-	= make(<LPNM-LISTVIEW>, address: lParam);
+        = make(<LPNM-LISTVIEW>, address: lParam);
       let index :: <integer> = nmlistview.iItem-value;
       let changed   :: <unsigned-int> = nmlistview.uChanged-value;
       let old-state :: <unsigned-int> = nmlistview.uOldState-value;
       let new-state :: <unsigned-int> = nmlistview.uNewState-value;
       when (~zero?(logand(changed, $LVIF-STATE)))
-	dynamic-bind (*port-did-it?* = #t)
-	  select (gadget-selection-mode(pane))
-	    #"none" =>
-	      #f;
-	    #"single" =>
-	      // NB: single-selection gadgets can never deselect everything
-	      // We look at the old state of $LVIS-SELECTED because we might
-	      // get a state change for $LVIS-FOCUSED, etc.
-	      when (~zero?(logand(new-state, $LVIS-SELECTED))
-		    & zero?(logand(old-state, $LVIS-SELECTED)))
-		let selection = vector(index);
-		//--- Was: 'distribute-selection-changed-callback(pane, selection)'
-		gadget-selection(pane, do-callback?: #t) := selection
-	      end;
-	    #"multiple" =>
-	      let old-selection = gadget-selection(pane);
-	      let new-selection		// this code intentionally copies the selection
-		= case
-		    ~zero?(logand(new-state, $LVIS-SELECTED))
-		    & zero?(logand(old-state, $LVIS-SELECTED)) =>
-		      //--- If 'note-gadget-selection-changed' bound *port-did-it?*
-		      //--- and this code checked, we might not need to use 'add-new!'
-		      add-new!(old-selection, index);
-		    zero?(logand(new-state, $LVIS-SELECTED))
-		    & ~zero?(logand(old-state, $LVIS-SELECTED)) =>
-		      remove(old-selection, index);
-		    otherwise =>
-		      old-selection;
-		  end;
-	      when (new-selection ~= old-selection)
-		//--- Was: 'distribute-selection-changed-callback(pane, selection)'
-		gadget-selection(pane, do-callback?: #t) := new-selection
-	      end;
-	  end
-	end
+        dynamic-bind (*port-did-it?* = #t)
+          select (gadget-selection-mode(pane))
+            #"none" =>
+              #f;
+            #"single" =>
+              // NB: single-selection gadgets can never deselect everything
+              // We look at the old state of $LVIS-SELECTED because we might
+              // get a state change for $LVIS-FOCUSED, etc.
+              when (~zero?(logand(new-state, $LVIS-SELECTED))
+                    & zero?(logand(old-state, $LVIS-SELECTED)))
+                let selection = vector(index);
+                //--- Was: 'distribute-selection-changed-callback(pane, selection)'
+                gadget-selection(pane, do-callback?: #t) := selection
+              end;
+            #"multiple" =>
+              let old-selection = gadget-selection(pane);
+              let new-selection         // this code intentionally copies the selection
+                = case
+                    ~zero?(logand(new-state, $LVIS-SELECTED))
+                    & zero?(logand(old-state, $LVIS-SELECTED)) =>
+                      //--- If 'note-gadget-selection-changed' bound *port-did-it?*
+                      //--- and this code checked, we might not need to use 'add-new!'
+                      add-new!(old-selection, index);
+                    zero?(logand(new-state, $LVIS-SELECTED))
+                    & ~zero?(logand(old-state, $LVIS-SELECTED)) =>
+                      remove(old-selection, index);
+                    otherwise =>
+                      old-selection;
+                  end;
+              when (new-selection ~= old-selection)
+                //--- Was: 'distribute-selection-changed-callback(pane, selection)'
+                gadget-selection(pane, do-callback?: #t) := new-selection
+              end;
+          end
+        end
       end;
       #t;
     $NM-DBLCLK =>
       // The selection is already set when we get here
       unless (empty?(gadget-selection(pane)))
-	activate-win32-gadget(pane)
+        activate-win32-gadget(pane)
       end;
       #t;
     $NM-RCLICK =>
       // The selection is already set when we get here
       when (gadget-popup-menu-callback(pane))
-	let handle :: <HWND> = window-handle(mirror);
-	let (x, y) = pointer-position-within-window(handle);
-	let target = #f;
-	// Check to see if the user clicked within one of the items.  If so,
-	// that's the target, otherwise the target is #f (i.e., background)
-	with-stack-structure (hit :: <LPLV-HITTESTINFO>)
-	  let point :: <LPPOINT> = hit.pt-value;
-	  point.x-value := x;
-	  point.y-value := y;
-	  let index = SendMessage(handle, $LVM-HITTEST, 0, pointer-address(hit));
-	  when (index >= 0
-		& ~zero?(logand(hit.flags-value, $LVHT-ONITEM)))
-	    target := gadget-items(pane)[index]
-	  end
-	end;
-	distribute-popup-menu-callback(pane, target, x: x, y: y);
-	#t
+        let handle :: <HWND> = window-handle(mirror);
+        let (x, y) = pointer-position-within-window(handle);
+        let target = #f;
+        // Check to see if the user clicked within one of the items.  If so,
+        // that's the target, otherwise the target is #f (i.e., background)
+        with-stack-structure (hit :: <LPLV-HITTESTINFO>)
+          let point :: <LPPOINT> = hit.pt-value;
+          point.x-value := x;
+          point.y-value := y;
+          let index = SendMessage(handle, $LVM-HITTEST, 0, pointer-address(hit));
+          when (index >= 0
+                & ~zero?(logand(hit.flags-value, $LVHT-ONITEM)))
+            target := gadget-items(pane)[index]
+          end
+        end;
+        distribute-popup-menu-callback(pane, target, x: x, y: y);
+        #t
       end;
     $LVN-KEYDOWN =>
       when (gadget-key-press-callback(pane))
-	let keydown :: <LPLV-KEYDOWN>
-	  = make(<LPLV-KEYDOWN>, address: lParam);
-	let vkey :: <integer> = keydown.wVKey-value;
-	let keysym = virtual-key->keysym(vkey);
-	distribute-key-press-callback(pane, keysym);
-	#t
+        let keydown :: <LPLV-KEYDOWN>
+          = make(<LPLV-KEYDOWN>, address: lParam);
+        let vkey :: <integer> = keydown.wVKey-value;
+        let keysym = virtual-key->keysym(vkey);
+        distribute-key-press-callback(pane, keysym);
+        #t
       end;
     otherwise =>
       next-method();
@@ -1436,10 +1436,10 @@ define sealed method make-gadget-control
     lvcol.cx-value         := 100;
     lvcol.fmt-value        := $LVCFMT-LEFT;
     /* lvcol.fmt-value     := select (gadget-alignment(pane))
-				#"left"   => $LVCFMT-LEFT;
-				#"right"  => $LVCFMT-RIGHT;
-				#"center" => $LVCFMT-CENTER;
-			      end; */
+                                #"left"   => $LVCFMT-LEFT;
+                                #"right"  => $LVCFMT-RIGHT;
+                                #"center" => $LVCFMT-CENTER;
+                              end; */
     SendMessage(handle, $LVM-INSERTCOLUMN, 0, pointer-address(lvcol))
   end;
   handle
@@ -1449,24 +1449,24 @@ define sealed method win32-list-view-options
     (pane :: <win32-list-control>, options :: <options-type>)
  => (options :: <options-type>)
   %logior(options,
-	  // Note that $WS-EX-CLIENTEDGE subsumes $WS-BORDER
-	  if (sheet-tab-stop?(pane)) %logior($WS-GROUP, $WS-TABSTOP) else 0 end,
-	  select (list-control-view(pane))
-	    #"list"       => $LVS-REPORT;
-	    #"small-icon" => $LVS-SMALLICON;
-	    #"large-icon" => $LVS-ICON;
-	  end,
-	  $LVS-NOCOLUMNHEADER,		// because we use the report view...
-	  /*--- For some reason, turning off scroll bars breaks things...
-	  select (gadget-scroll-bars(pane))
-	    #f, #"none" => $LVS-NOSCROLL;
-	    otherwise   => 0;
-	  end, */
-	  select (gadget-selection-mode(pane))
-	    #"single" => $LVS-SINGLESEL;
-	    otherwise => 0;
-	  end,
-	  if (pane.%always-show-selection?) $LVS-SHOWSELALWAYS else 0 end)
+          // Note that $WS-EX-CLIENTEDGE subsumes $WS-BORDER
+          if (sheet-tab-stop?(pane)) %logior($WS-GROUP, $WS-TABSTOP) else 0 end,
+          select (list-control-view(pane))
+            #"list"       => $LVS-REPORT;
+            #"small-icon" => $LVS-SMALLICON;
+            #"large-icon" => $LVS-ICON;
+          end,
+          $LVS-NOCOLUMNHEADER,          // because we use the report view...
+          /*--- For some reason, turning off scroll bars breaks things...
+          select (gadget-scroll-bars(pane))
+            #f, #"none" => $LVS-NOSCROLL;
+            otherwise   => 0;
+          end, */
+          select (gadget-selection-mode(pane))
+            #"single" => $LVS-SINGLESEL;
+            otherwise => 0;
+          end,
+          if (pane.%always-show-selection?) $LVS-SHOWSELALWAYS else 0 end)
 end method win32-list-view-options;
 
 define sealed method do-compose-space
@@ -1474,21 +1474,21 @@ define sealed method do-compose-space
  => (space-req :: <space-requirement>)
   let icon-height
     = if (list-control-icon-function(pane))
-	if (list-control-view(pane) == #"large-icon")
-	  GetSystemMetrics($SM-CYICON)
-	else
-	  GetSystemMetrics($SM-CYSMICON)
-	end
+        if (list-control-view(pane) == #"large-icon")
+          GetSystemMetrics($SM-CYICON)
+        else
+          GetSystemMetrics($SM-CYSMICON)
+        end
       else
-	0
+        0
       end;
   compose-space-for-list-box(pane,
-			     width: width, height: height,
-			     default-lines: $list-view-default-visible-lines,
-			     minimum-lines: $list-view-minimum-visible-lines,
-			     extra-height:  $list-view-extra-height,
-			     extra-lines:   1,
-			     icon-height:   icon-height)
+                             width: width, height: height,
+                             default-lines: $list-view-default-visible-lines,
+                             minimum-lines: $list-view-minimum-visible-lines,
+                             extra-height:  $list-view-extra-height,
+                             extra-lines:   1,
+                             icon-height:   icon-height)
 end method do-compose-space;
 
 define sealed method set-mirror-edges
@@ -1502,13 +1502,13 @@ define sealed method set-mirror-edges
   let char-width  = font-width(text-style, _port);
   with-stack-structure (lvcol :: <LPLV-COLUMN>)
     lvcol.mask-value := %logior($LVCF-WIDTH, $LVCF-FMT);
-    lvcol.cx-value   := right - left - char-width;	// avoid hscroll bar...
+    lvcol.cx-value   := right - left - char-width;      // avoid hscroll bar...
     lvcol.fmt-value  := $LVCFMT-LEFT;
     /* lvcol.fmt-value  := select (gadget-alignment(pane))
-			     #"left"   => $LVCFMT-LEFT;
-			     #"right"  => $LVCFMT-RIGHT;
-			     #"center" => $LVCFMT-CENTER;
-			   end; */
+                             #"left"   => $LVCFMT-LEFT;
+                             #"right"  => $LVCFMT-RIGHT;
+                             #"center" => $LVCFMT-CENTER;
+                           end; */
     SendMessage(handle, $LVM-SETCOLUMN, 0, pointer-address(lvcol))
   end
 end method set-mirror-edges;
@@ -1522,11 +1522,11 @@ define sealed method list-control-view-setter
     let handle = window-handle(mirror);
     let old-style = GetWindowLong(handle, $GWL-STYLE);
     let new-style = %logior(%logand(old-style, %lognot($LVS-TYPEMASK)),
-			    select (view)
-			      #"list"       => $LVS-REPORT;
-			      #"small-icon" => $LVS-SMALLICON;
-			      #"large-icon" => $LVS-ICON;
-			    end);
+                            select (view)
+                              #"list"       => $LVS-REPORT;
+                              #"small-icon" => $LVS-SMALLICON;
+                              #"large-icon" => $LVS-ICON;
+                            end);
     SetWindowLong(handle, $GWL-STYLE, new-style)
   end;
   view
@@ -1555,7 +1555,7 @@ define sealed method do-find-item
   block (return)
     for (item :: <win32-list-item> in pane.%items)
       when (test(key(item-object(item)), the-key))
-	return(item)
+        return(item)
       end
     end;
     #f
@@ -1595,8 +1595,8 @@ define sealed method do-update-item
   with-stack-structure (lvitem :: <LPLV-ITEM>)
     lvitem.mask-value
       := %logior(if (label) $LVIF-TEXT  else 0 end,
-		 if (small-icon | large-icon) $LVIF-IMAGE else 0 end,
-		 $LVIF-STATE);
+                 if (small-icon | large-icon) $LVIF-IMAGE else 0 end,
+                 $LVIF-STATE);
     lvitem.iItem-value     := index;
     lvitem.iSubItem-value  := 0;
     lvitem.state-value     := 0;
@@ -1607,15 +1607,15 @@ define sealed method do-update-item
     end;
     when (small-icon | large-icon)
       case
-	~small-icon => small-icon := large-icon;
-	~large-icon => large-icon := small-icon;
+        ~small-icon => small-icon := large-icon;
+        ~large-icon => large-icon := small-icon;
       end;
       let small-index
-	= find-image(small-icon, pane.%icons, pane.%small-icons);
+        = find-image(small-icon, pane.%icons, pane.%small-icons);
       let large-index
-	= find-image(large-icon, pane.%icons, pane.%large-icons);
+        = find-image(large-icon, pane.%icons, pane.%large-icons);
       assert(small-index == large-index,
-	     "Small and large icons must have the same index");
+             "Small and large icons must have the same index");
       lvitem.iImage-value := small-index
     end;
     SendMessage(handle, message, 0, pointer-address(lvitem))
@@ -1646,7 +1646,7 @@ define sealed method item-label-setter
     let handle = window-handle(mirror);
     let index  = position(pane.%items, item);
     do-update-item(pane, handle, item, index,
-		   message: $LVM-SETITEM, label: label)
+                   message: $LVM-SETITEM, label: label)
   end;
   label
 end method item-label-setter;
@@ -1659,7 +1659,7 @@ define sealed method item-icon-setter
     let handle = window-handle(mirror);
     let index  = position(pane.%items, item);
     do-update-item(pane, handle, item, index,
-		   message: $LVM-SETITEM, icon: icon)
+                   message: $LVM-SETITEM, icon: icon)
   end;
   icon
 end method item-icon-setter;
@@ -1703,16 +1703,16 @@ define sealed method make-gadget-control
   with-stack-structure (lvcol :: <LPLV-COLUMN>)
     lvcol.mask-value := %logior($LVCF-FMT, $LVCF-SUBITEM, $LVCF-TEXT, $LVCF-WIDTH);
     for (i :: <integer> from 0,
-	 column :: <table-column> in table-control-columns(pane))
+         column :: <table-column> in table-control-columns(pane))
       lvcol.iSubitem-value   := i;
       lvcol.pszText-value    := table-column-heading(column);
       lvcol.cchTextMax-value := size(table-column-heading(column));
       lvcol.cx-value         := table-column-width(column);
       lvcol.fmt-value        := select (table-column-alignment(column))
-				  #"left"   => $LVCFMT-LEFT;
-				  #"right"  => $LVCFMT-RIGHT;
-				  #"center" => $LVCFMT-CENTER;
-				end;
+                                  #"left"   => $LVCFMT-LEFT;
+                                  #"right"  => $LVCFMT-RIGHT;
+                                  #"center" => $LVCFMT-CENTER;
+                                end;
       SendMessage(handle, $LVM-INSERTCOLUMN, i, pointer-address(lvcol))
     end
   end;
@@ -1724,24 +1724,24 @@ define sealed method win32-list-view-options
     (pane :: <win32-table-control>, options :: <options-type>)
  => (options :: <options-type>)
   %logior(options,
-	  // Note that $WS-EX-CLIENTEDGE subsumes $WS-BORDER
-	  if (sheet-tab-stop?(pane)) %logior($WS-GROUP, $WS-TABSTOP) else 0 end,
-	  select (table-control-view(pane))
-	    #"table"      => $LVS-REPORT;
-	    #"list"       => $LVS-LIST;
-	    #"small-icon" => $LVS-SMALLICON;
-	    #"large-icon" => $LVS-ICON;
-	  end,
-	  /*--- For some reason, turning off scroll bars breaks things...
-	  select (gadget-scroll-bars(pane))
-	    #f, #"none" => $LVS-NOSCROLL;
-	    otherwise   => 0;
-	  end, */
-	  select (gadget-selection-mode(pane))
-	    #"single" => $LVS-SINGLESEL;
-	    otherwise => 0;
-	  end,
-	  if (pane.%always-show-selection?) $LVS-SHOWSELALWAYS else 0 end)
+          // Note that $WS-EX-CLIENTEDGE subsumes $WS-BORDER
+          if (sheet-tab-stop?(pane)) %logior($WS-GROUP, $WS-TABSTOP) else 0 end,
+          select (table-control-view(pane))
+            #"table"      => $LVS-REPORT;
+            #"list"       => $LVS-LIST;
+            #"small-icon" => $LVS-SMALLICON;
+            #"large-icon" => $LVS-ICON;
+          end,
+          /*--- For some reason, turning off scroll bars breaks things...
+          select (gadget-scroll-bars(pane))
+            #f, #"none" => $LVS-NOSCROLL;
+            otherwise   => 0;
+          end, */
+          select (gadget-selection-mode(pane))
+            #"single" => $LVS-SINGLESEL;
+            otherwise => 0;
+          end,
+          if (pane.%always-show-selection?) $LVS-SHOWSELALWAYS else 0 end)
 end method win32-list-view-options;
 
 define sealed method do-compose-space
@@ -1749,27 +1749,27 @@ define sealed method do-compose-space
  => (space-req :: <space-requirement>)
   let icon-height
     = if (table-control-icon-function(pane))
-	if (table-control-view(pane) == #"large-icon")
-	  GetSystemMetrics($SM-CYICON)
-	else
-	  GetSystemMetrics($SM-CYSMICON)
-	end
+        if (table-control-view(pane) == #"large-icon")
+          GetSystemMetrics($SM-CYICON)
+        else
+          GetSystemMetrics($SM-CYSMICON)
+        end
       else
-	0
+        0
       end;
   let extra-height
     = if (table-control-view(pane) == #"table")
-	$list-view-extra-height + GetSystemMetrics($SM-CYHSCROLL) * 2
+        $list-view-extra-height + GetSystemMetrics($SM-CYHSCROLL) * 2
       else
-	$list-view-extra-height
+        $list-view-extra-height
       end;
   compose-space-for-list-box(pane,
-			     width: width, height: height,
-			     default-lines: $list-view-default-visible-lines,
-			     minimum-lines: $list-view-minimum-visible-lines,
-			     extra-height:  extra-height,
-			     extra-lines:   1,
-			     icon-height:   icon-height)
+                             width: width, height: height,
+                             default-lines: $list-view-default-visible-lines,
+                             minimum-lines: $list-view-minimum-visible-lines,
+                             extra-height:  extra-height,
+                             extra-lines:   1,
+                             icon-height:   icon-height)
 end method do-compose-space;
 
 define sealed method table-control-view-setter
@@ -1781,12 +1781,12 @@ define sealed method table-control-view-setter
     let handle = window-handle(mirror);
     let old-style = GetWindowLong(handle, $GWL-STYLE);
     let new-style = %logior(%logand(old-style, %lognot($LVS-TYPEMASK)),
-			    select (view)
-			      #"table"      => $LVS-REPORT;
-			      #"list"       => $LVS-LIST;
-			      #"small-icon" => $LVS-SMALLICON;
-			      #"large-icon" => $LVS-ICON;
-			    end);
+                            select (view)
+                              #"table"      => $LVS-REPORT;
+                              #"list"       => $LVS-LIST;
+                              #"small-icon" => $LVS-SMALLICON;
+                              #"large-icon" => $LVS-ICON;
+                            end);
     SetWindowLong(handle, $GWL-STYLE, new-style)
   end;
   view
@@ -1802,11 +1802,11 @@ define sealed method handle-notify
   select (code)
     $LVN-COLUMNCLICK =>
       let nmlistview :: <LPNM-LISTVIEW>
-	= make(<LPNM-LISTVIEW>, address: lParam);
+        = make(<LPNM-LISTVIEW>, address: lParam);
       let column :: <integer> = nmlistview.iSubitem-value;
       let column = table-control-columns(pane)[column];
       when (table-column-callback(column))
-	distribute-column-click-callback(pane, column)
+        distribute-column-click-callback(pane, column)
       end;
       #t;
     otherwise =>
@@ -1837,7 +1837,7 @@ define sealed method do-find-item
   block (return)
     for (item :: <win32-table-item> in pane.%items)
       when (test(key(item-object(item)), the-key))
-	return(item)
+        return(item)
       end
     end;
     #f
@@ -1880,8 +1880,8 @@ define sealed method do-update-item
     // First insert the "main" item
     lvitem.mask-value
       := %logior(if (label) $LVIF-TEXT  else 0 end,
-		 if (small-icon | large-icon) $LVIF-IMAGE else 0 end,
-		 $LVIF-STATE);
+                 if (small-icon | large-icon) $LVIF-IMAGE else 0 end,
+                 $LVIF-STATE);
     lvitem.iItem-value     := index;
     lvitem.iSubItem-value  := 0;
     lvitem.state-value     := 0;
@@ -1892,15 +1892,15 @@ define sealed method do-update-item
     end;
     when (small-icon | large-icon)
       case
-	~small-icon => small-icon := large-icon;
-	~large-icon => large-icon := small-icon;
+        ~small-icon => small-icon := large-icon;
+        ~large-icon => large-icon := small-icon;
       end;
       let small-index
-	= find-image(small-icon, pane.%icons, pane.%small-icons);
+        = find-image(small-icon, pane.%icons, pane.%small-icons);
       let large-index
-	= find-image(large-icon, pane.%icons, pane.%large-icons);
+        = find-image(large-icon, pane.%icons, pane.%large-icons);
       assert(small-index == large-index,
-	     "Small and large icons must have the same index");
+             "Small and large icons must have the same index");
       lvitem.iImage-value := small-index
     end;
     SendMessage(handle, message, 0, pointer-address(lvitem));
@@ -1943,7 +1943,7 @@ define sealed method item-label-setter
     let handle = window-handle(mirror);
     let index  = position(pane.%items, item);
     do-update-item(pane, handle, item, index,
-		   message: $LVM-SETITEM, label: label)
+                   message: $LVM-SETITEM, label: label)
   end;
   label
 end method item-label-setter;
@@ -1956,7 +1956,7 @@ define sealed method item-icon-setter
     let handle = window-handle(mirror);
     let index  = position(pane.%items, item);
     do-update-item(pane, handle, item, index,
-		   message: $LVM-SETITEM, icon: icon)
+                   message: $LVM-SETITEM, icon: icon)
   end;
   icon
 end method item-icon-setter;
@@ -1974,10 +1974,10 @@ define sealed method do-add-column
       lvcol.cchTextMax-value := size(table-column-heading(column));
       lvcol.cx-value         := table-column-width(column);
       lvcol.fmt-value        := select (table-column-alignment(column))
-				  #"left"   => $LVCFMT-LEFT;
-				  #"right"  => $LVCFMT-RIGHT;
-				  #"center" => $LVCFMT-CENTER;
-				end;
+                                  #"left"   => $LVCFMT-LEFT;
+                                  #"right"  => $LVCFMT-RIGHT;
+                                  #"center" => $LVCFMT-CENTER;
+                                end;
       SendMessage(handle, $LVM-INSERTCOLUMN, index, pointer-address(lvcol))
     end
   end
@@ -2031,14 +2031,14 @@ define sealed method make-gadget-control
  => (handle :: <HWND>)
   let handle :: <HWND>
     = CreateWindowEx(gadget-extended-options(pane),
-		     $WC-TREEVIEW,
-		     "",
-		     win32-tree-view-options(pane, options),
-		     x, y, width, height,
-		     parent,
-		     $null-hMenu,
-		     application-instance-handle(),
-		     $NULL-VOID);
+                     $WC-TREEVIEW,
+                     "",
+                     win32-tree-view-options(pane, options),
+                     x, y, width, height,
+                     parent,
+                     $null-hMenu,
+                     application-instance-handle(),
+                     $NULL-VOID);
   check-result("CreateWindow (Tree View)", handle);
   when (tree-control-icon-function(pane))
     pane.%small-icons := make-image-list($SM-CXSMICON, $SM-CYSMICON);
@@ -2051,12 +2051,12 @@ define sealed method win32-tree-view-options
     (pane :: <win32-tree-control>, options :: <options-type>)
  => (options :: <options-type>)
   %logior(options,
-	  // Note that $WS-EX-CLIENTEDGE subsumes $WS-BORDER
-	  if (sheet-tab-stop?(pane)) %logior($WS-GROUP, $WS-TABSTOP) else 0 end,
-	  if (tree-control-show-buttons?(pane))    $TVS-HASBUTTONS    else 0 end,
-	  if (tree-control-show-edges?(pane))      $TVS-HASLINES      else 0 end,
-	  if (tree-control-show-root-edges?(pane)) $TVS-LINESATROOT   else 0 end,
-	  if (pane.%always-show-selection?)        $TVS-SHOWSELALWAYS else 0 end)
+          // Note that $WS-EX-CLIENTEDGE subsumes $WS-BORDER
+          if (sheet-tab-stop?(pane)) %logior($WS-GROUP, $WS-TABSTOP) else 0 end,
+          if (tree-control-show-buttons?(pane))    $TVS-HASBUTTONS    else 0 end,
+          if (tree-control-show-edges?(pane))      $TVS-HASLINES      else 0 end,
+          if (tree-control-show-root-edges?(pane)) $TVS-LINESATROOT   else 0 end,
+          if (pane.%always-show-selection?)        $TVS-SHOWSELALWAYS else 0 end)
 end method win32-tree-view-options;
 
 define sealed method destroy-mirror 
@@ -2074,17 +2074,17 @@ define sealed method do-compose-space
  => (space-req :: <space-requirement>)
   let icon-height
     = if (tree-control-icon-function(pane))
-	GetSystemMetrics($SM-CYSMICON)
+        GetSystemMetrics($SM-CYSMICON)
       else
-	0
+        0
       end;
   compose-space-for-list-box(pane,
-			     width: width, height: height,
-			     default-lines: $tree-view-default-visible-lines,
-			     minimum-lines: $tree-view-minimum-visible-lines,
-			     extra-height:  $tree-view-extra-height,
-			     extra-lines:   1,
-			     icon-height:   icon-height)
+                             width: width, height: height,
+                             default-lines: $tree-view-default-visible-lines,
+                             minimum-lines: $tree-view-minimum-visible-lines,
+                             extra-height:  $tree-view-extra-height,
+                             extra-lines:   1,
+                             icon-height:   icon-height)
 end method do-compose-space;
 
 // Build the items for the first time when the sheet is fully attached
@@ -2111,9 +2111,9 @@ define sealed method note-gadget-selection-changed
       let item-handle = selected-node.%handle;
       SendMessage(handle, $TVM-SELECTITEM, $TVGN-CARET, pointer-address(item-handle));
       unless (*port-did-it?*)
-	when (gadget-keep-selection-visible?(pane))
-	  SendMessage(handle, $TVM-ENSUREVISIBLE, 0, pointer-address(item-handle))
-	end
+        when (gadget-keep-selection-visible?(pane))
+          SendMessage(handle, $TVM-ENSUREVISIBLE, 0, pointer-address(item-handle))
+        end
       end
     else
       let item-handle = null-pointer(<LPTV-ITEM>);
@@ -2126,10 +2126,10 @@ define sealed method note-gadget-selection-changed
       tvitem.mask-value      := $TVIF-STATE;
       tvitem.stateMask-value := $TVIS-SELECTED;
       for (node :: <win32-tree-node> in pane.%nodes)
-	let index = position(items, node-object(node));
-	tvitem.hItem-value   := node.%handle;
-	tvitem.state-value   := if (member?(index, selection)) $TVIS-SELECTED else 0 end;
-	SendMessage(handle, $TVM-SETITEM, 0, pointer-address(tvitem))
+        let index = position(items, node-object(node));
+        tvitem.hItem-value   := node.%handle;
+        tvitem.state-value   := if (member?(index, selection)) $TVIS-SELECTED else 0 end;
+        SendMessage(handle, $TVM-SETITEM, 0, pointer-address(tvitem))
       end
     end
 */
@@ -2146,53 +2146,53 @@ define sealed method note-tree-control-roots-changed
     when (mirror)
       let handle = window-handle(mirror);
       with-delayed-drawing (handle)
-	SendMessage(handle, $TVM-DELETEITEM, 0, pointer-address($TVI-ROOT));
-	let roots = tree-control-roots(pane);
-	let children-predicate = tree-control-children-predicate(pane);
-	let children-generator = tree-control-children-generator(pane);
-	local method add-one (node, object, depth) => ()
-		let child-node = make-node(pane, object);
-		add-node(pane, node, child-node, setting-roots?: #t);
-		when (depth > 0 & children-predicate(object))
-		  for (child in children-generator(object))
-		    add-one(child-node, child, depth - 1)
-		  end;
-		  node-state(child-node) := #"expanded";
-		  do-expand-node(pane, child-node)
-		end
-	      end method;
-	for (root in roots)
-	  duim-debug-message("Adding root object %= to tree %=", root, pane);
-	  add-one(pane, root, tree-control-initial-depth(pane))
-	end;
-	let items = gadget-items(pane);
-	// Try to preserve the old value and selection
-	select (gadget-selection-mode(pane))
-	  #"single", #"multiple" =>
-	    unless (empty?(items))
-	      let index = supplied?(value) & position(items, value);
-	      if (index)
-		gadget-selection(pane) := vector(index)
-	      else
-		gadget-selection(pane) := #[0]
-	      end
-	    end;
-	  /* #"multiple" =>		//---*** doesn't work in Win32 Tree Views...
-	       let selection :: <stretchy-object-vector> = make(<stretchy-vector>);
-	       when (supplied?(value))
-		 for (v in value)
-		   let index = position(items, v);
-		   when (index)
-		     add!(selection, index)
-		   end
-		 end
-	       end;
-	       unless (empty?(selection))
-		 gadget-selection(pane) := selection
-	       end; */
-	  #"none" =>
-	    #f;
-	end
+        SendMessage(handle, $TVM-DELETEITEM, 0, pointer-address($TVI-ROOT));
+        let roots = tree-control-roots(pane);
+        let children-predicate = tree-control-children-predicate(pane);
+        let children-generator = tree-control-children-generator(pane);
+        local method add-one (node, object, depth) => ()
+                let child-node = make-node(pane, object);
+                add-node(pane, node, child-node, setting-roots?: #t);
+                when (depth > 0 & children-predicate(object))
+                  for (child in children-generator(object))
+                    add-one(child-node, child, depth - 1)
+                  end;
+                  node-state(child-node) := #"expanded";
+                  do-expand-node(pane, child-node)
+                end
+              end method;
+        for (root in roots)
+          duim-debug-message("Adding root object %= to tree %=", root, pane);
+          add-one(pane, root, tree-control-initial-depth(pane))
+        end;
+        let items = gadget-items(pane);
+        // Try to preserve the old value and selection
+        select (gadget-selection-mode(pane))
+          #"single", #"multiple" =>
+            unless (empty?(items))
+              let index = supplied?(value) & position(items, value);
+              if (index)
+                gadget-selection(pane) := vector(index)
+              else
+                gadget-selection(pane) := #[0]
+              end
+            end;
+          /* #"multiple" =>             //---*** doesn't work in Win32 Tree Views...
+               let selection :: <stretchy-object-vector> = make(<stretchy-vector>);
+               when (supplied?(value))
+                 for (v in value)
+                   let index = position(items, v);
+                   when (index)
+                     add!(selection, index)
+                   end
+                 end
+               end;
+               unless (empty?(selection))
+                 gadget-selection(pane) := selection
+               end; */
+          #"none" =>
+            #f;
+        end
       end
     end
   end
@@ -2218,17 +2218,17 @@ define sealed method handle-control-message
     $WM-LBUTTONDBLCLK =>
       let mirror = sheet-direct-mirror(pane);
       if (~mirror
-	  | ~tree-control-show-buttons?(pane)
-	  | ~pane.%use-buttons-only?)
-	#f
+          | ~tree-control-show-buttons?(pane)
+          | ~pane.%use-buttons-only?)
+        #f
       else
-	let (target, x, y, on-item?)
-	  = force-tree-control-selection(pane, mirror);
-	ignore(target, x, y);
-	when (on-item? & ~empty?(gadget-selection(pane)))
-	  activate-win32-gadget(pane)
-	end;
-	#t
+        let (target, x, y, on-item?)
+          = force-tree-control-selection(pane, mirror);
+        ignore(target, x, y);
+        when (on-item? & ~empty?(gadget-selection(pane)))
+          activate-win32-gadget(pane)
+        end;
+        #t
       end;
     otherwise =>
       #f;
@@ -2248,46 +2248,46 @@ define sealed method handle-notify
       let handle :: <HWND> = window-handle(mirror);
       let (x, y) = pointer-position-within-window(handle);
       let on-button?
-	= ~tree-control-show-buttons?(pane)	// no buttons, OK to expand/contract
-	  | ~pane.%use-buttons-only?		// hacker says double-clicking is OK
-	  | with-stack-structure (hit :: <LPTV-HITTESTINFO>)
-	      // Otherwise, only expand/contract when user clicks on the button
-	      let point :: <LPPOINT> = hit.pt-value;
-	      point.x-value := x;
-	      point.y-value := y;
-	      let item-handle :: <HTREEITEM>
-		= make(<HTREEITEM>,
-		       address: SendMessage(handle, $TVM-HITTEST, 0, pointer-address(hit)));
-	      ~null-pointer?(item-handle)
-	      & ~zero?(logand(hit.flags-value, $TVHT-ONITEMBUTTON))
-	    end;
+        = ~tree-control-show-buttons?(pane)     // no buttons, OK to expand/contract
+          | ~pane.%use-buttons-only?            // hacker says double-clicking is OK
+          | with-stack-structure (hit :: <LPTV-HITTESTINFO>)
+              // Otherwise, only expand/contract when user clicks on the button
+              let point :: <LPPOINT> = hit.pt-value;
+              point.x-value := x;
+              point.y-value := y;
+              let item-handle :: <HTREEITEM>
+                = make(<HTREEITEM>,
+                       address: SendMessage(handle, $TVM-HITTEST, 0, pointer-address(hit)));
+              ~null-pointer?(item-handle)
+              & ~zero?(logand(hit.flags-value, $TVHT-ONITEMBUTTON))
+            end;
       when (on-button?)
-	let nmtreeview :: <LPNM-TREEVIEW>
-	  = make(<LPNM-TREEVIEW>, address: lParam);
-	let tvitem :: <LPTV-ITEM> = nmtreeview.itemNew-value;
-	let action = nmtreeview.action-value;
-	let item-handle :: <HTREEITEM> = tvitem.hItem-value;
-	let node = item-handle->tree-node(pane, item-handle);
-	when (node)
-	  dynamic-bind (*port-did-it?* = #t)
-	    select (action)
-	      $TVE-EXPAND =>
-		expand-node(pane, node);
-	      $TVE-COLLAPSE =>
-		contract-node(pane, node);
-	      $TVE-TOGGLE =>
-		if (node-state(node) == #"expanded")
-		  contract-node(pane, node)
-		else
-		  expand-node(pane, node)
-		end;
-	      $TVE-COLLAPSERESET =>
-		contract-node(pane, node);
-		node-children(node) := #[];
-	    end;
-	    distribute-node-state-changed-callback(pane, node);
-	  end
-	end
+        let nmtreeview :: <LPNM-TREEVIEW>
+          = make(<LPNM-TREEVIEW>, address: lParam);
+        let tvitem :: <LPTV-ITEM> = nmtreeview.itemNew-value;
+        let action = nmtreeview.action-value;
+        let item-handle :: <HTREEITEM> = tvitem.hItem-value;
+        let node = item-handle->tree-node(pane, item-handle);
+        when (node)
+          dynamic-bind (*port-did-it?* = #t)
+            select (action)
+              $TVE-EXPAND =>
+                expand-node(pane, node);
+              $TVE-COLLAPSE =>
+                contract-node(pane, node);
+              $TVE-TOGGLE =>
+                if (node-state(node) == #"expanded")
+                  contract-node(pane, node)
+                else
+                  expand-node(pane, node)
+                end;
+              $TVE-COLLAPSERESET =>
+                contract-node(pane, node);
+                node-children(node) := #[];
+            end;
+            distribute-node-state-changed-callback(pane, node);
+          end
+        end
       end;
       // Don't let Windows expand/contract, because we've already done
       // whatever it is that needs to be done
@@ -2306,24 +2306,24 @@ define sealed method handle-notify
       let old-index = old-node & position(gadget-items(pane), node-object(old-node));
       let new-index = new-node & position(gadget-items(pane), node-object(new-node));
       dynamic-bind (*port-did-it?* = #t)
-	select (gadget-selection-mode(pane))
-	  #"single", #"multiple" =>
-	    when (new-index)
-	      let selection = vector(new-index);
-	      //--- Was: 'distribute-selection-changed-callback(pane, selection)'
-	      gadget-selection(pane, do-callback?: #t) := selection
-	    end;
-	  /* #"multiple" =>	//---*** doesn't work in Win32 Tree Views...
-	       // This code intentionally copies the selection...
-	       let selection = if (old-index) remove(gadget-selection(pane), old-index)
-			       else gadget-selection(pane) end;
-	       let selection = if (new-index) add!(selection, new-index)
-			       else selection end;
-	       //--- Was: 'distribute-selection-changed-callback(pane, selection)'
-	       gadget-selection(pane, do-callback?: #t) := selection; */
-	  #"none" =>
-	    #f;
-	end
+        select (gadget-selection-mode(pane))
+          #"single", #"multiple" =>
+            when (new-index)
+              let selection = vector(new-index);
+              //--- Was: 'distribute-selection-changed-callback(pane, selection)'
+              gadget-selection(pane, do-callback?: #t) := selection
+            end;
+          /* #"multiple" =>     //---*** doesn't work in Win32 Tree Views...
+               // This code intentionally copies the selection...
+               let selection = if (old-index) remove(gadget-selection(pane), old-index)
+                               else gadget-selection(pane) end;
+               let selection = if (new-index) add!(selection, new-index)
+                               else selection end;
+               //--- Was: 'distribute-selection-changed-callback(pane, selection)'
+               gadget-selection(pane, do-callback?: #t) := selection; */
+          #"none" =>
+            #f;
+        end
       end;
       #t;
     $TVN-GETDISPINFO =>
@@ -2331,27 +2331,27 @@ define sealed method handle-notify
       #t;
     $NM-DBLCLK =>
       let (target, x, y, on-item?)
-	= force-tree-control-selection(pane, mirror);
+        = force-tree-control-selection(pane, mirror);
       ignore(target, x, y);
       when (on-item? & ~empty?(gadget-selection(pane)))
-	activate-win32-gadget(pane)
+        activate-win32-gadget(pane)
       end;
       #t;
     $NM-RCLICK =>
       let (target, x, y, on-item?)
-	= force-tree-control-selection(pane, mirror);
+        = force-tree-control-selection(pane, mirror);
       when (on-item? & gadget-popup-menu-callback(pane))
-	distribute-popup-menu-callback(pane, target, x: x, y: y);
-	#t
+        distribute-popup-menu-callback(pane, target, x: x, y: y);
+        #t
       end;
     $TVN-KEYDOWN =>
       when (gadget-key-press-callback(pane))
-	let keydown :: <LPTV-KEYDOWN>
-	  = make(<LPTV-KEYDOWN>, address: lParam);
-	let vkey :: <integer> = keydown.wVKey-value;
-	let keysym = virtual-key->keysym(vkey);
-	distribute-key-press-callback(pane, keysym);
-	#t
+        let keydown :: <LPTV-KEYDOWN>
+          = make(<LPTV-KEYDOWN>, address: lParam);
+        let vkey :: <integer> = keydown.wVKey-value;
+        let keysym = virtual-key->keysym(vkey);
+        distribute-key-press-callback(pane, keysym);
+        #t
       end;
     otherwise =>
       next-method();
@@ -2375,32 +2375,32 @@ define sealed method force-tree-control-selection
     point.y-value := y;
     let item-handle :: <HTREEITEM>
       = make(<HTREEITEM>,
-	     address: SendMessage(handle, $TVM-HITTEST, 0, pointer-address(hit)));
+             address: SendMessage(handle, $TVM-HITTEST, 0, pointer-address(hit)));
     when (~null-pointer?(item-handle)
-	  & ~zero?(logand(hit.flags-value, $TVHT-ONITEM)))
+          & ~zero?(logand(hit.flags-value, $TVHT-ONITEM)))
       let node  = item-handle->tree-node(pane, item-handle);
       let index = node & position(gadget-items(pane), node-object(node));
       on-item? := #t;
       dynamic-bind (*port-did-it?* = #t)
-	select (gadget-selection-mode(pane))
-	  #"single", #"multiple" =>
-	    when (index)
-	      target := gadget-items(pane)[index];
-	      when (empty?(gadget-selection(pane))	// be robust...
-		    | gadget-selection(pane)[0] ~= index)
-		//--- Was: 'distribute-selection-changed-callback(pane, selection)'
-		gadget-selection(pane, do-callback?: #t) := vector(index)
-	      end
-	    end;
-	  /* #"multiple" =>	//---*** doesn't work in Win32 Tree Views...
-	       when (index)
-		 target := gadget-items(pane)[index];
-		 //--- Was: 'distribute-selection-changed-callback(pane, selection)'
-		 gadget-selection(pane, do-callback?: #t) := vector(index)
-	       end; */
-	  #"none" =>
-	    #f;
-	end
+        select (gadget-selection-mode(pane))
+          #"single", #"multiple" =>
+            when (index)
+              target := gadget-items(pane)[index];
+              when (empty?(gadget-selection(pane))      // be robust...
+                    | gadget-selection(pane)[0] ~= index)
+                //--- Was: 'distribute-selection-changed-callback(pane, selection)'
+                gadget-selection(pane, do-callback?: #t) := vector(index)
+              end
+            end;
+          /* #"multiple" =>     //---*** doesn't work in Win32 Tree Views...
+               when (index)
+                 target := gadget-items(pane)[index];
+                 //--- Was: 'distribute-selection-changed-callback(pane, selection)'
+                 gadget-selection(pane, do-callback?: #t) := vector(index)
+               end; */
+          #"none" =>
+            #f;
+        end
       end
     end
   end;
@@ -2421,7 +2421,7 @@ define function item-handle->tree-node
  => (node :: false-or(<tree-node>))
   unless (null-pointer?(item-handle))
     find-value(pane.%nodes,
-	       method (node) node.%handle = item-handle end)
+               method (node) node.%handle = item-handle end)
   end
 end function item-handle->tree-node;
 
@@ -2441,10 +2441,10 @@ define sealed method do-find-node
   block (return)
     for (node :: <win32-tree-node> in pane.%nodes)
       when (test(key(node-object(node)), the-key))
-	// Is it a child of the requested node?
-	when (~parent-node | member?(node, node-children(parent-node)))
-	  return(node)
-	end
+        // Is it a child of the requested node?
+        when (~parent-node | member?(node, node-children(parent-node)))
+          return(node)
+        end
       end
     end;
     #f
@@ -2465,47 +2465,47 @@ define sealed method do-add-node
     let label  = (label-function & label-function(object)) | "";
     let (icon, selected-icon)
       = if (icon-function) icon-function(object) else values(#f, #f) end;
-    selected-icon := selected-icon | icon;	// a favor for our users
+    selected-icon := selected-icon | icon;      // a favor for our users
     let has-children? = tree-control-children-predicate(pane)(object);
     let root-node?    = ~instance?(parent, <tree-node>);
     with-stack-structure (tvinsert :: <LPTV-INSERTSTRUCT>)
       let tvitem :: <LPTV-ITEM> = tvinsert.item-value;
       tvitem.mask-value
         := %logior(if (label) $TVIF-TEXT  else 0 end,
-		   if (icon)  $TVIF-IMAGE else 0 end,
-		   if (selected-icon) $TVIF-SELECTEDIMAGE else 0 end,
-		   $TVIF-STATE,
-		   $TVIF-CHILDREN);
+                   if (icon)  $TVIF-IMAGE else 0 end,
+                   if (selected-icon) $TVIF-SELECTEDIMAGE else 0 end,
+                   $TVIF-STATE,
+                   $TVIF-CHILDREN);
       tvitem.state-value     := 0;
       tvitem.stateMask-value := $TVIS-SELECTED;
       when (label)
-	tvitem.pszText-value    := label;
-	tvitem.cchTextMax-value := size(label)
+        tvitem.pszText-value    := label;
+        tvitem.cchTextMax-value := size(label)
       end;
       when (icon)
-	tvitem.iImage-value := find-image(icon, pane.%icons, pane.%small-icons)
+        tvitem.iImage-value := find-image(icon, pane.%icons, pane.%small-icons)
       end;
       when (selected-icon)
-	tvitem.iSelectedImage-value := find-image(selected-icon, pane.%icons, pane.%small-icons)
+        tvitem.iSelectedImage-value := find-image(selected-icon, pane.%icons, pane.%small-icons)
       end;
       tvitem.cChildren-value := if (has-children?) 1 else 0 end;
       if (root-node?)
-	tvinsert.hParent-value := $TVI-ROOT
+        tvinsert.hParent-value := $TVI-ROOT
       else
-	tvinsert.hParent-value := parent.%handle
+        tvinsert.hParent-value := parent.%handle
       end;
       if (after)
-	tvinsert.hInsertAfter-value := after.%handle
+        tvinsert.hInsertAfter-value := after.%handle
       else
-	tvinsert.hInsertAfter-value := $TVI-LAST
+        tvinsert.hInsertAfter-value := $TVI-LAST
       end;
       duim-debug-message("Adding %s for object %= to tree %=:\n"
-			 "  [label %=, has-children? %=]", 
-			 if (root-node?) "root" else "node" end,
-			 object, pane, label, has-children?);
+                         "  [label %=, has-children? %=]", 
+                         if (root-node?) "root" else "node" end,
+                         object, pane, label, has-children?);
       let item-handle :: <HTREEITEM>
-	= make(<HTREEITEM>,
-	       address: SendMessage(handle, $TVM-INSERTITEM, 0, pointer-address(tvinsert)));
+        = make(<HTREEITEM>,
+               address: SendMessage(handle, $TVM-INSERTITEM, 0, pointer-address(tvinsert)));
       node.%handle := item-handle
     end
   end
@@ -2567,8 +2567,8 @@ define sealed method node-label-setter
     with-stack-structure (tvitem :: <LPTV-ITEM>)
       tvitem.mask-value := $TVIF-TEXT;
       when (label)
-	tvitem.pszText-value    := label;
-	tvitem.cchTextMax-value := size(label)
+        tvitem.pszText-value    := label;
+        tvitem.cchTextMax-value := size(label)
       end;
       SendMessage(handle, $TVM-SETITEM, 0, pointer-address(tvitem))
     end
@@ -2586,7 +2586,7 @@ define sealed method node-icon-setter
     with-stack-structure (tvitem :: <LPTV-ITEM>)
       tvitem.mask-value := $TVIF-IMAGE;
       when (icon)
-	tvitem.iImage-value := find-image(icon, pane.%icons, pane.%small-icons)
+        tvitem.iImage-value := find-image(icon, pane.%icons, pane.%small-icons)
       end;
       SendMessage(handle, $TVM-SETITEM, 0, pointer-address(tvitem))
     end
@@ -2626,11 +2626,11 @@ define sealed method do-expand-node
     unless (empty?(node-children(node)))
       let mirror = sheet-direct-mirror(pane);
       when (mirror)
-	let handle = window-handle(mirror);
-	let item-handle :: <HTREEITEM> = node.%handle;
-	duim-debug-message("Expanding node object %= for tree %=",
-			   node-object(node), pane);
-	SendMessage(handle, $TVM-EXPAND, $TVE-EXPAND, pointer-address(item-handle))
+        let handle = window-handle(mirror);
+        let item-handle :: <HTREEITEM> = node.%handle;
+        duim-debug-message("Expanding node object %= for tree %=",
+                           node-object(node), pane);
+        SendMessage(handle, $TVM-EXPAND, $TVE-EXPAND, pointer-address(item-handle))
       end
     end
   end
@@ -2642,11 +2642,11 @@ define sealed method do-contract-node
     unless (empty?(node-children(node)))
       let mirror = sheet-direct-mirror(pane);
       when (mirror)
-	let handle = window-handle(mirror);
-	let item-handle :: <HTREEITEM> = node.%handle;
-	duim-debug-message("Contracting node object %= for tree %=",
-			   node-object(node), pane);
-	SendMessage(handle, $TVM-EXPAND, $TVE-COLLAPSE, pointer-address(item-handle))
+        let handle = window-handle(mirror);
+        let item-handle :: <HTREEITEM> = node.%handle;
+        duim-debug-message("Contracting node object %= for tree %=",
+                           node-object(node), pane);
+        SendMessage(handle, $TVM-EXPAND, $TVE-COLLAPSE, pointer-address(item-handle))
       end
     end
   end
@@ -2662,30 +2662,30 @@ define method tree-control-expanded-objects-setter
   let children-predicate = tree-control-children-predicate(tree);
   let children-generator = tree-control-children-generator(tree);
   local method add-one (node :: <tree-node>) => ()
-	  when (member?(node-object(node), objects, test: gadget-test(tree)))
-	    when (~node-state(node) & children-predicate(node-object(node)))
-	      let objects = children-generator(node-object(node));
-	      let nodes = map-as(<simple-vector>,
-				 method (object) make-node(tree, object) end, objects);
-	      do-add-nodes(tree, node, nodes)
-	    end;
-	    node-state(node) := #"contracted";
-	    when (node-generation(node) <= depth)
-	      do(add-one, node-children(node))
-	    end
-	  end
-	end method,
+          when (member?(node-object(node), objects, test: gadget-test(tree)))
+            when (~node-state(node) & children-predicate(node-object(node)))
+              let objects = children-generator(node-object(node));
+              let nodes = map-as(<simple-vector>,
+                                 method (object) make-node(tree, object) end, objects);
+              do-add-nodes(tree, node, nodes)
+            end;
+            node-state(node) := #"contracted";
+            when (node-generation(node) <= depth)
+              do(add-one, node-children(node))
+            end
+          end
+        end method,
         method expand-one (node :: <tree-node>) => ()
-	  when (member?(node-object(node), objects, test: gadget-test(tree)))
-	    when (node-generation(node) <= depth)
-	      do(expand-one, node-children(node))
-	    end;
-	    when (node-state(node) == #"contracted")
-	      node-state(node) := #"expanded";
-	      do-expand-node(tree, node)
-	    end
-	  end
-	end method;
+          when (member?(node-object(node), objects, test: gadget-test(tree)))
+            when (node-generation(node) <= depth)
+              do(expand-one, node-children(node))
+            end;
+            when (node-state(node) == #"contracted")
+              node-state(node) := #"expanded";
+              do-expand-node(tree, node)
+            end
+          end
+        end method;
   let root-nodes = tree-control-root-nodes(tree);
   do(add-one,    root-nodes);
   do(expand-one, root-nodes);
@@ -2699,22 +2699,22 @@ define method initialize-tree-control-icons
     (port :: <win32-port>, graph :: <graph-control-pane>) => ()
   let expand-icon
     = with-output-to-pixmap (medium = graph, width: 9, height: 9)
-	with-drawing-options (medium, brush: $tree-control-gray)
-	  draw-rectangle(medium, 0, 0, 8, 8, filled?: #f)
-	end;
-	with-drawing-options (medium, brush: $tree-control-black)
-	  draw-line(medium, 2, 4, 7, 4);
-	  draw-line(medium, 4, 2, 4, 7)
-	end;
+        with-drawing-options (medium, brush: $tree-control-gray)
+          draw-rectangle(medium, 0, 0, 8, 8, filled?: #f)
+        end;
+        with-drawing-options (medium, brush: $tree-control-black)
+          draw-line(medium, 2, 4, 7, 4);
+          draw-line(medium, 4, 2, 4, 7)
+        end;
       end;
   let contract-icon
     = with-output-to-pixmap (medium = graph, width: 9, height: 9)
-	with-drawing-options (medium, brush: $tree-control-gray)
-	  draw-rectangle(medium, 0, 0, 8, 8, filled?: #f)
-	end;
-	with-drawing-options (medium, brush: $tree-control-black)
-	  draw-line(medium, 2, 4, 7, 4)
-	end;
+        with-drawing-options (medium, brush: $tree-control-gray)
+          draw-rectangle(medium, 0, 0, 8, 8, filled?: #f)
+        end;
+        with-drawing-options (medium, brush: $tree-control-black)
+          draw-line(medium, 2, 4, 7, 4)
+        end;
       end;
   tree-control-expand-icon(graph)   := expand-icon;
   tree-control-contract-icon(graph) := contract-icon;
@@ -2730,7 +2730,7 @@ define function make-image-list
   let cx :: <integer> = GetSystemMetrics(width);
   let cy :: <integer> = GetSystemMetrics(height);
   check-result("ImageList-Create",
-	       ImageList-Create(cx, cy, %logior($ILC-COLOR8, $ILC-MASK), 8, 8))
+               ImageList-Create(cx, cy, %logior($ILC-COLOR8, $ILC-MASK), 8, 8))
 end function make-image-list;
 
 // Interns the bitmap or icon into the image list, returning the index
@@ -2744,7 +2744,7 @@ define sealed method find-image
       //--- NB: Win32 SDK says to be sure to destroy the image...
       let index = ImageList-Add(image-list, image-handle(bitmap), null-pointer(<HBITMAP>));
       when (index < 0)
-	report-error("ImageList-Add (bitmap)")
+        report-error("ImageList-Add (bitmap)")
       end;
       gethash(image-table, bitmap) := index;
       index
@@ -2760,7 +2760,7 @@ define sealed method find-image
       //--- NB: Win32 SDK says to be sure to destroy the image...
       let index = ImageList-AddIcon(image-list, image-handle(icon));
       when (index < 0)
-	report-error("ImageList-Add (icon)")
+        report-error("ImageList-Add (icon)")
       end;
       gethash(image-table, icon) := index;
       index

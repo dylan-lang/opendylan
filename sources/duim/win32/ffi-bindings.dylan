@@ -39,10 +39,10 @@ define macro <LPBFFCALLBACK>-callback-wrapper
     => { <WNDPROC>-callback-wrapper(?new,?old) }
 end macro <LPBFFCALLBACK>-callback-wrapper;
 
-define C-struct <SHITEMID>		// mkid  
-  slot cb-value :: <USHORT>;		// size of identifier, including cb itself 
+define C-struct <SHITEMID>              // mkid  
+  slot cb-value :: <USHORT>;            // size of identifier, including cb itself 
   array slot abID-array :: <C-BYTE>, length: 1,
-	address-getter: abID-value;
+        address-getter: abID-value;
   pointer-type-name: <LPSHITEMID>;
   c-name: "struct _SHITEMID";
 end C-struct <SHITEMID>;
@@ -52,8 +52,8 @@ ignore(cb-value, cb-value-setter,
        abID-array, abID-array-setter, abID-value,
        <LPCSHITEMID>);
 
-define C-struct <ITEMIDLIST>		// idl  
-  slot mkid-value :: <SHITEMID>;	// list of item identifers 
+define C-struct <ITEMIDLIST>            // idl  
+  slot mkid-value :: <SHITEMID>;        // list of item identifers 
   pointer-type-name: <LPITEMIDLIST>;
   c-name: "struct _ITEMIDLIST";
 end C-struct <ITEMIDLIST>;
@@ -71,7 +71,7 @@ define C-struct <BROWSEINFOA>
   slot lpfn-value :: <LPBFFCALLBACK>;
   slot lParam-value :: <LPARAM>;
   slot iImage2-value :: <INT>;
-  // slot iImage-value :: <INT>;	// this name is sealed in win32-controls
+  // slot iImage-value :: <INT>;        // this name is sealed in win32-controls
   pointer-type-name: <PBROWSEINFOA>;
   c-name: "struct _browseinfoA";
 end C-struct <BROWSEINFOA>;
@@ -112,10 +112,10 @@ end;
 define macro <TIMERPROC>-callback-wrapper
   { <TIMERPROC>-callback-wrapper(?new:name,?old:name) } =>
     { define C-callable-wrapper ?new of ?old
-	parameter hWnd :: <HWND>;
-	parameter uMsg :: <UINT>;
-	parameter idEvent :: <UINT>;
-	parameter dwTime :: <DWORD>;
-	c-modifiers: "__stdcall";
+        parameter hWnd :: <HWND>;
+        parameter uMsg :: <UINT>;
+        parameter idEvent :: <UINT>;
+        parameter dwTime :: <DWORD>;
+        c-modifiers: "__stdcall";
       end C-callable-wrapper }
 end;

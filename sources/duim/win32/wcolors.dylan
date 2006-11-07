@@ -88,8 +88,8 @@ end function native-color->color;
 define inline function %native-color->color
     (native-color :: <native-color>) => (color :: <rgb-color>)
   make-rgb-color(GetRValue(native-color) / $max-float-color,
-		 GetGValue(native-color) / $max-float-color,
-		 GetBValue(native-color) / $max-float-color)
+                 GetGValue(native-color) / $max-float-color,
+                 GetBValue(native-color) / $max-float-color)
 end function %native-color->color;
 
 

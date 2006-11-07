@@ -12,7 +12,7 @@ define library win32-duim
 
   use duim-utilities;
   use duim-core;
-  use duim-gadget-panes;	//---*** until we've got all native gadgets in
+  use duim-gadget-panes;        //---*** until we've got all native gadgets in
 
   use C-FFI;
 

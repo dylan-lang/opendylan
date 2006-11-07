@@ -107,16 +107,16 @@ define sealed method clipboard-format-available?
       SetLastError($NO_ERROR);
       next-format := EnumClipboardFormats(next-format);
       duim-debug-message("Clipboard format %d found -- looking for %d",
-			 next-format, format);
+                         next-format, format);
       select (next-format by \=)
-	format => 
-	  return(#t);
-	0 =>
-	  //---*** The error code is not setup in Windows 95/98.
-	  // ensure-no-error("EnumClipboardFormats");
-	  return(#f);
-	otherwise =>
-	  #f;
+        format => 
+          return(#t);
+        0 =>
+          //---*** The error code is not setup in Windows 95/98.
+          // ensure-no-error("EnumClipboardFormats");
+          return(#f);
+        otherwise =>
+          #f;
       end
     end
   end
@@ -132,32 +132,32 @@ define macro with-clipboard-lock
       ?failure-body:body
     end }
     => { begin
-	   let _handle  = ?buffer-handle;
-	   let _pointer = GlobalLock(_handle);
-	   if (null-pointer?(_pointer))
-	     ?failure-body
-	   else
-	     block ()
-	       let ?buffer :: <C-string> = pointer-cast(<C-string>, _pointer);
-	       ?body
-	     cleanup
-	       when (GlobalUnlock(_handle) == #f)
-		 //--- This was 'ensure-no-error("GlobalUnlock")',
-		 //--- but that blew out on Win-95 from time to time,
-		 //--- and there's nothing the user can do anyway...
-		 #f
-	       end
-	     end
-	   end
-	 end }
+           let _handle  = ?buffer-handle;
+           let _pointer = GlobalLock(_handle);
+           if (null-pointer?(_pointer))
+             ?failure-body
+           else
+             block ()
+               let ?buffer :: <C-string> = pointer-cast(<C-string>, _pointer);
+               ?body
+             cleanup
+               when (GlobalUnlock(_handle) == #f)
+                 //--- This was 'ensure-no-error("GlobalUnlock")',
+                 //--- but that blew out on Win-95 from time to time,
+                 //--- and there's nothing the user can do anyway...
+                 #f
+               end
+             end
+           end
+         end }
   { with-clipboard-lock (?buffer:name = ?buffer-handle:expression)
       ?body:body
     end }
     => { with-clipboard-lock (?buffer = ?buffer-handle)
-	   ?body
-	 failure
-	   ensure-no-error("GlobalLock");
-	   #f
+           ?body
+         failure
+           ensure-no-error("GlobalLock");
+           #f
          end }
 end macro with-clipboard-lock;
 
@@ -170,7 +170,7 @@ define function string-to-clipboard-buffer
   with-clipboard-lock (buffer = buffer-handle)
     without-bounds-checks
       for (i from 0 below buffer-size - 1)
-	buffer[i] := string[i]
+        buffer[i] := string[i]
       end;
       buffer[buffer-size - 1] := '\0'
     end;

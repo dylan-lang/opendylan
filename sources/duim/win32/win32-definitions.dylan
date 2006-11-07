@@ -11,7 +11,7 @@ define constant $FFFFFFFF :: <machine-word> =
 define constant <U8> = limited(<integer>, min: 0, max: #xFF);
 define constant <U16> = limited(<integer>, min: 0, max: #xFFFF);
 define constant <S16> = limited(<integer>, min: -#x8000, max: #x7FFF);
-define constant <ambiguous-short> =	// 16 bits, signed or unsigned
+define constant <ambiguous-short> =     // 16 bits, signed or unsigned
   limited(<integer>, min: -#x8000, max: #xFFFF);
 
 define constant <signed-long> =
@@ -105,8 +105,8 @@ define method HIWORD ( n :: <double-integer> ) => value :: <U16>;
 end HIWORD;
 
 define sealed method MAKELONG ( wLow :: <ambiguous-short>,
-			        wHigh :: <ambiguous-short> )
-			=> value :: <unsigned-long>;
+                                wHigh :: <ambiguous-short> )
+                        => value :: <unsigned-long>;
   let low :: <integer> = logand(wLow, #xFFFF);
   if ( wHigh > #x0FFF | wHigh < 0 )
     %logior(low, u%shift-left(as(<machine-word>, logand(wHigh, #xFFFF)), 16))
@@ -116,7 +116,7 @@ define sealed method MAKELONG ( wLow :: <ambiguous-short>,
 end MAKELONG;
 
 define sealed method MAKELONG ( wLow :: <boolean>, wHigh :: <object> )
-	=> value :: <unsigned-long>;
+        => value :: <unsigned-long>;
   MAKELONG( (if(wLow) 1 else 0 end if), wHigh)
 end MAKELONG;
 
@@ -125,13 +125,13 @@ end MAKELONG;
 define function LPARAM-TO-XY( lparam ) => ( x :: <S16> , y :: <S16> );
 
   local method extend-short( u :: <U16> ) => s :: <S16>;
-	  // sign-extend a 16-bit number
-	  if ( logand( u, #x8000 ) = 0 )
-	    u
-	  else
-	    logior( u, lognot(#x7FFF) );
-	  end if;
-	end extend-short;
+          // sign-extend a 16-bit number
+          if ( logand( u, #x8000 ) = 0 )
+            u
+          else
+            logior( u, lognot(#x7FFF) );
+          end if;
+        end extend-short;
 
   values( extend-short(LOWORD(lparam)), extend-short(HIWORD(lparam)) )
 end LPARAM-TO-XY;
@@ -164,12 +164,12 @@ define inline function MAKELANGID(p :: <U16>, s :: <U16>)
 end MAKELANGID;
 
 define function MAKEINTRESOURCE( n :: <integer> )
-	=> value :: <LPTSTR>;
+        => value :: <LPTSTR>;
   make(<LPTSTR>, address: n)
 end MAKEINTRESOURCE;
 
 define inline function RGB(red :: <U8>, green :: <U8>, blue :: <U8> )
-			 => value :: <integer>;
+                         => value :: <integer>;
   logior ( logior(red, ash(green,8)), ash(blue,16) )
 end RGB;
 
@@ -767,7 +767,7 @@ define inline-only constant $WM-RBUTTONDBLCLK           = #x0206;
 define inline-only constant $WM-RBUTTONDOWN             = #x0204;
 define inline-only constant $WM-RBUTTONUP               = #x0205;
 define inline-only constant $WM-SETCURSOR               = #x0020;
-define inline-only constant $WM-MOUSEWHEEL		= #x020A;
+define inline-only constant $WM-MOUSEWHEEL              = #x020A;
 define inline-only constant $WM-SETFOCUS                = #x0007;
 define inline-only constant $WM-SETFONT                 = #x0030;
 define inline-only constant $WM-SETICON                 = #x0080;

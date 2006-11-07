@@ -32,12 +32,12 @@ define sealed method frame-manager-do-frames
     // Z ordering or the set of windows.
     let frames :: <stretchy-object-vector> = make(<stretchy-vector>);
     for (handle :: <HWND> = GetTopWindow($NULL-HWND)
-	   then GetNextWindow(handle, $GW-HWNDNEXT),
-	 until: null-handle?(handle))
+           then GetNextWindow(handle, $GW-HWNDNEXT),
+         until: null-handle?(handle))
       let sheet = handle-sheet(handle);
       let frame = sheet & sheet-frame(sheet);
       when (frame & frame-state(frame) ~== #"destroyed")
-	add!(frames, frame)
+        add!(frames, frame)
       end;
     end;
     // Now put the frames into the desired order
@@ -80,10 +80,10 @@ end method note-frame-icon-changed;
 define method update-mirror-icon
     (mirror :: <top-level-mirror>, icon :: false-or(<image>)) => ()
   let hIcon = select (icon by instance?)
-		<win32-icon>  => image-handle(icon);
-		singleton(#f) => null-pointer(<HICON>);
-		otherwise     => #f;
-	      end;
+                <win32-icon>  => image-handle(icon);
+                singleton(#f) => null-pointer(<HICON>);
+                otherwise     => #f;
+              end;
   when (hIcon)
     let handle = window-handle(mirror);
     SendMessage(handle, $WM-SETICON, $ICON-SMALL, pointer-address(hIcon));
@@ -137,45 +137,45 @@ end method note-frame-disabled;
 
 define sealed method note-frame-iconified
     (framem :: <win32-frame-manager>, frame :: <simple-frame>) => ()
-  next-method();				// update the frame's state
+  next-method();                                // update the frame's state
   let sheet  = top-level-sheet(frame);
   let mirror = sheet & sheet-direct-mirror(sheet);
   when (mirror)
     let handle :: <HWND> = window-handle(mirror);
-    ShowWindow(handle, $SW-MINIMIZE)		// no status code for this
+    ShowWindow(handle, $SW-MINIMIZE)            // no status code for this
   end
 end method note-frame-iconified;
 
 define sealed method note-frame-deiconified
     (framem :: <win32-frame-manager>, frame :: <simple-frame>) => ()
-  next-method();				// update the frame's state
+  next-method();                                // update the frame's state
   let sheet  = top-level-sheet(frame);
   let mirror = sheet & sheet-direct-mirror(sheet);
   when (mirror)
     let handle :: <HWND> = window-handle(mirror);
-    ShowWindow(handle, $SW-RESTORE)		// no status code for this
+    ShowWindow(handle, $SW-RESTORE)             // no status code for this
   end
 end method note-frame-deiconified;
 
 
 define sealed method note-frame-maximized
     (framem :: <win32-frame-manager>, frame :: <simple-frame>) => ()
-  next-method();				// update the frame's state
+  next-method();                                // update the frame's state
   let sheet  = top-level-sheet(frame);
   let mirror = sheet & sheet-direct-mirror(sheet);
   when (mirror)
     let handle :: <HWND> = window-handle(mirror);
-    ShowWindow(handle, $SW-MAXIMIZE)		// no status code for this
+    ShowWindow(handle, $SW-MAXIMIZE)            // no status code for this
   end
 end method note-frame-maximized;
 
 define sealed method note-frame-unmaximized
     (framem :: <win32-frame-manager>, frame :: <simple-frame>) => ()
-  next-method();				// update the frame's state
+  next-method();                                // update the frame's state
   let sheet  = top-level-sheet(frame);
   let mirror = sheet & sheet-direct-mirror(sheet);
   when (mirror)
     let handle :: <HWND> = window-handle(mirror);
-    ShowWindow(handle, $SW-RESTORE)		// no status code for this
+    ShowWindow(handle, $SW-RESTORE)             // no status code for this
   end
 end method note-frame-unmaximized;

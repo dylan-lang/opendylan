@@ -12,7 +12,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define constant $first-gadget-id :: <integer> = 1000;
 
 //---*** This should really be computed
-define constant $top-level-y-spacing = 3;		// in pixels
+define constant $top-level-y-spacing = 3;               // in pixels
 
 //---*** These should be defined in Win32-User
 define constant $ACCEL-FVIRTKEY     :: <integer> = #x01;
@@ -151,12 +151,12 @@ define sealed method do-make-mirror
   let (left, top, right, bottom) = get-window-edges(handle);
   let mirror
     = apply(make,
-	    mirror-class,
-	    sheet:  sheet,
-	    handle: handle,
-	    resource: resource,
-	    region: make-bounding-box(left, top, right, bottom),
-	    mirror-initargs);
+            mirror-class,
+            sheet:  sheet,
+            handle: handle,
+            resource: resource,
+            region: make-bounding-box(left, top, right, bottom),
+            mirror-initargs);
   let container = sheet-parent-window(sheet);
   if (container == #f)
     // Create a shared ToolTip so that the entire application can use it
@@ -178,14 +178,14 @@ define sealed method sheet-parent-window
   when (container)
     select (container by instance?)
       <frame> => 
-	let top-sheet = top-level-sheet(container);
-	top-sheet & window-handle(top-sheet);
+        let top-sheet = top-level-sheet(container);
+        top-sheet & window-handle(top-sheet);
       <sheet> => 
-	window-handle(container);
+        window-handle(container);
       <mirror> =>
-	window-handle(container);
-      otherwise =>	// presumably an <HWND>...
-	container;
+        window-handle(container);
+      otherwise =>      // presumably an <HWND>...
+        container;
     end
   end
 end method sheet-parent-window;
@@ -203,11 +203,11 @@ define method frame-window-styles
  => (style :: <unsigned-int>, extended-style :: <unsigned-int>)
   let style
     = %logior($WS-OVERLAPPEDWINDOW,
-	      if (frame-iconified?(frame)) $WS-ICONIC else 0 end,
-	      if (frame-maximized?(frame)) $WS-MAXIMIZE else 0 end);
+              if (frame-iconified?(frame)) $WS-ICONIC else 0 end,
+              if (frame-maximized?(frame)) $WS-MAXIMIZE else 0 end);
   let extended-style
     = %logior($WS-EX-CONTROLPARENT,
-	      if (frame-always-on-top?(frame)) $WS-EX-TOPMOST else 0 end);
+              if (frame-always-on-top?(frame)) $WS-EX-TOPMOST else 0 end);
   values(style, extended-style)
 end method frame-window-styles;
 
@@ -222,9 +222,9 @@ define sealed method make-top-level-window
   //---*** Need to do some error handling here
   let handle :: <HWND>
     = CreateDialog(application-instance-handle(),
-		   encode-resource(resource-id),
-		   $NULL-HWND,
-		   Null-Proc);
+                   encode-resource(resource-id),
+                   $NULL-HWND,
+                   Null-Proc);
   check-result("CreateDialog (top-level)", handle);
   // Set the default font
   let font-name  = as(<byte-string>, dialog-font-name(resource));
@@ -239,7 +239,7 @@ define sealed method make-top-level-window
   let (x, y)          = win32-dialog-units->pixels(_port, x, y);
   let (width, height) = win32-dialog-units->pixels(_port, width, height);
   duim-debug-message("Frame geometry %= from resource: %d x %d at %d, %d",
-		     frame, width, height, x, y);
+                     frame, width, height, x, y);
   set-frame-position(frame, x, y);
   set-frame-size(frame, width, height);
   initialize-sheet-geometry(sheet, x, y, width, height);
@@ -263,23 +263,23 @@ define sealed method make-top-level-window
   let handle :: <HWND>
     = CreateWindowEx
         (extended-style,
-	 $window-class-name,		// See RegisterClass call
-	 title,				// Text for window title bar
-	 style,				// Style for a normal top-level window
-	 x | $CW-USEDEFAULT,		// x position
-	 y | $CW-USEDEFAULT,		// y position
-	 width | right - left,		// width
-	 height | bottom - top,		// height
-	 $NULL-HWND,			// No parent
-	 $null-hMenu,			// Use the window class menu
-	 application-instance-handle(),
-	 $NULL-VOID);			// No data in our WM_CREATE
+         $window-class-name,            // See RegisterClass call
+         title,                         // Text for window title bar
+         style,                         // Style for a normal top-level window
+         x | $CW-USEDEFAULT,            // x position
+         y | $CW-USEDEFAULT,            // y position
+         width | right - left,          // width
+         height | bottom - top,         // height
+         $NULL-HWND,                    // No parent
+         $null-hMenu,                   // Use the window class menu
+         application-instance-handle(),
+         $NULL-VOID);                   // No data in our WM_CREATE
   check-result("CreateWindow (top-level)", handle);
   values(handle, #f, <top-level-mirror>, #[])
 end method make-top-level-window;
 
 define sealed method make-top-level-window
-    (frame :: <basic-frame>,	//--- should be <basic-embedded-frame>,
+    (frame :: <basic-frame>,    //--- should be <basic-embedded-frame>,
      sheet :: <win32-embedded-top-level-sheet>,
      resource-id :: <resource-id>)
  => (handle :: <HWND>, resource :: singleton(#f),
@@ -289,7 +289,7 @@ define sealed method make-top-level-window
 end method make-top-level-window;
 
 define sealed method make-top-level-window
-    (frame :: <basic-frame>,	//--- should be <basic-embedded-frame>,
+    (frame :: <basic-frame>,    //--- should be <basic-embedded-frame>,
      sheet :: <win32-embedded-top-level-sheet>,
      resource-id == #f)
  => (handle :: <HWND>, resource :: singleton(#f),
@@ -316,17 +316,17 @@ define method make-top-level-embedded-window
   let handle :: <HWND>
     = CreateWindowEx
         ($WS-EX-NOPARENTNOTIFY,
-	 $window-class-name,		// See RegisterClass call
-	 $null-string,			// no title
-	 %logior($WS-CHILD, $WS-TABSTOP),// no border or title bar
-	 x | $CW-USEDEFAULT,		// x position
-	 y | $CW-USEDEFAULT,		// y position
-	 right - left,			// width
-	 bottom - top,			// height
-	 sheet-parent-window(sheet) | $NULL-HWND, // parent, if known yet
-	 $null-hMenu,			// no menu
-	 application-instance-handle(),
-	 $NULL-VOID);			// No data in our WM_CREATE
+         $window-class-name,            // See RegisterClass call
+         $null-string,                  // no title
+         %logior($WS-CHILD, $WS-TABSTOP),// no border or title bar
+         x | $CW-USEDEFAULT,            // x position
+         y | $CW-USEDEFAULT,            // y position
+         right - left,                  // width
+         bottom - top,                  // height
+         sheet-parent-window(sheet) | $NULL-HWND, // parent, if known yet
+         $null-hMenu,                   // no menu
+         application-instance-handle(),
+         $NULL-VOID);                   // No data in our WM_CREATE
   check-result("CreateWindow (embedded top-level)", handle);
   values(handle, #f, <top-level-mirror>, #[])
 end make-top-level-embedded-window;
@@ -338,14 +338,14 @@ define sealed method map-mirror
     (_port :: <win32-port>,
      sheet :: <win32-top-level-sheet-mixin>, mirror :: <top-level-mirror>) => ()
   local method show-window (handle :: <HWND>) => (was-visible? :: <boolean>)
-	  //--- This should maybe be done with 'conditional-update'
-	  if (*first-show-window?*)
-	    *first-show-window?* := #f;
-	    ShowWindow(handle, application-show-window())
-	  else
-	    ShowWindow(handle, $SW-SHOW)
-	  end
-	end method;
+          //--- This should maybe be done with 'conditional-update'
+          if (*first-show-window?*)
+            *first-show-window?* := #f;
+            ShowWindow(handle, application-show-window())
+          else
+            ShowWindow(handle, $SW-SHOW)
+          end
+        end method;
   let frame = sheet-frame(sheet);
   let handle :: <HWND> = window-handle(mirror);
   show-window(handle);
@@ -357,7 +357,7 @@ define sealed method map-mirror
       frame-input-focus(frame) := focus
     end
   end;
-  UpdateWindow(handle)	// Sends WM_PAINT message and returns status
+  UpdateWindow(handle)  // Sends WM_PAINT message and returns status
 end method map-mirror;
 
 define sealed method raise-mirror 
@@ -372,8 +372,8 @@ define sealed method raise-mirror
     end
   else
     check-result("SetWindowPos ($HWND-TOP)",
-		 SetWindowPos(handle, $HWND-TOP, 0, 0, 0, 0,
-			      %logior($SWP-NOMOVE, $SWP-NOSIZE, $SWP-NOACTIVATE)))
+                 SetWindowPos(handle, $HWND-TOP, 0, 0, 0, 0,
+                              %logior($SWP-NOMOVE, $SWP-NOSIZE, $SWP-NOACTIVATE)))
   end
 end method raise-mirror;
 
@@ -391,17 +391,17 @@ define sealed method set-mirror-edges
   let height = bottom - top;
   mirror.%region := set-box-edges(mirror.%region, left, top, right, bottom);
   duim-debug-message("Setting top level geometry for %= to %d, %d, %d x %d",
-		     sheet, left, top, width, height);
+                     sheet, left, top, width, height);
   duim-debug-message("  [old geometry was %d, %d, %d x %d]",
-		     old-left, old-top, old-width, old-height);
+                     old-left, old-top, old-width, old-height);
   let same-position? = (left  = old-left)  & (right  = old-right);
   let same-size?     = (width = old-width) & (height = old-height);
   let flags = %logior($SWP-NOACTIVATE, $SWP-NOZORDER,
-		      if (same-position?) $SWP-NOMOVE else 0 end,
-		      if (same-size?)     $SWP-NOSIZE else 0 end);
+                      if (same-position?) $SWP-NOMOVE else 0 end,
+                      if (same-size?)     $SWP-NOSIZE else 0 end);
   check-result("SetWindowPos",
-	       SetWindowPos(handle, $NULL-HWND,
-			    left, top, width, height, flags))
+               SetWindowPos(handle, $NULL-HWND,
+                            left, top, width, height, flags))
 end method set-mirror-edges;
 
 define sealed method destroy-mirror 
@@ -451,7 +451,7 @@ define sealed method do-compose-space
     let client-height = height & (height - extra-height);
     let child-space
       = compose-space(client-layout, 
-		      width: client-width, height: client-height);
+                      width: client-width, height: client-height);
     let (w, w-, w+, h, h-, h+)
       = space-requirement-components(client-layout, child-space);
     let best-width  = max(w,  menu-width) + extra-width;
@@ -461,16 +461,16 @@ define sealed method do-compose-space
     let min-height  = h- + extra-height;
     let max-height  = h+ + extra-height;
     make(<space-requirement>,
-	 width:  best-width,  min-width:  min-width,  max-width:  max-width,
-	 height: best-height, min-height: min-height, max-height: max-height)
+         width:  best-width,  min-width:  min-width,  max-width:  max-width,
+         height: best-height, min-height: min-height, max-height: max-height)
   else
     let min-width   = extra-width;
     let min-height  = extra-height;
     let best-width  = max(width  | 0, min-width);
     let best-height = max(height | 0, min-height);
     make(<space-requirement>,
-	 width:  best-width,  min-width: min-width, max-width: $fill,
-	 height: best-height, min-height: min-height, max-height: $fill)
+         width:  best-width,  min-width: min-width, max-width: $fill,
+         height: best-height, min-height: min-height, max-height: $fill)
   end
 end method do-compose-space;
 
@@ -480,8 +480,8 @@ define sealed method do-allocate-space
   let (extra-width, extra-height) = window-frame-extra-size(frame);
   let client-layout = top-level-client-layout(layout);
   set-sheet-edges(client-layout,
-		  0, 0, 
-		  width - extra-width, height - extra-height)
+                  0, 0, 
+                  width - extra-width, height - extra-height)
 end method do-allocate-space;
 
 define sealed method frame-menu-bar-size
@@ -551,7 +551,7 @@ define method client->frame-edges
     let menu-bar? = frame-menu-bar(frame) & #t;
     let (style, extended-style) = frame-window-styles(frame);
     check-result("AdjustWindowRectEx",
-		 AdjustWindowRectEx(rect, style, menu-bar?, extended-style));
+                 AdjustWindowRectEx(rect, style, menu-bar?, extended-style));
     let frame-left   = rect.left-value;
     let frame-top    = rect.top-value;
     let frame-right  = rect.right-value;
@@ -590,27 +590,27 @@ define sealed method update-frame-wrapper
       let children = sheet-children(top-layout);
       let client-layout = ~empty?(children) & children[size(children) - 1];
       let client-layout
-	= if (client-layout)
-	    update-client-layout(framem, frame, client-layout)
-	  else
-	    make-client-layout(framem, frame, frame-layout(frame))
-	  end;
+        = if (client-layout)
+            update-client-layout(framem, frame, client-layout)
+          else
+            make-client-layout(framem, frame, frame-layout(frame))
+          end;
       let new-children = make-children(menu-bar, client-layout);
       unless (new-children = sheet-children(top-layout))
-	sheet-children(top-layout) := new-children;
-	if (sheet-mapped?(top-layout))
-	  if (client-layout)
-	    sheet-mapped?(client-layout) := #t;
-	    relayout-parent(client-layout)
-	  end
-	end
+        sheet-children(top-layout) := new-children;
+        if (sheet-mapped?(top-layout))
+          if (client-layout)
+            sheet-mapped?(client-layout) := #t;
+            relayout-parent(client-layout)
+          end
+        end
       end
     else
       let wrapper = frame-wrapper(framem, frame, frame-layout(frame));
       sheet-child(top-sheet) := wrapper;
       relayout-parent(wrapper);
       if (sheet-mapped?(top-sheet))
-	sheet-mapped?(wrapper, clear?: #t, repaint?: #t) := #t
+        sheet-mapped?(wrapper, clear?: #t, repaint?: #t) := #t
       end
     end
   end
@@ -627,15 +627,15 @@ define sealed method make-client-layout
       = make-children(tool-bar & tool-bar-decoration(tool-bar), layout);
     let indented-children-layout
       = unless (empty?(indented-children))
-	  with-spacing (spacing: win32-dialog-x-pixels(framem, 1))
-	    make(<column-layout>,
-		 children: indented-children,
-		 y-spacing: $top-level-y-spacing)
+          with-spacing (spacing: win32-dialog-x-pixels(framem, 1))
+            make(<column-layout>,
+                 children: indented-children,
+                 y-spacing: $top-level-y-spacing)
           end
         end;
     make(<column-layout>,
-	 children: make-children(indented-children-layout, status-bar),
-	 y-spacing: $top-level-y-spacing)
+         children: make-children(indented-children-layout, status-bar),
+         y-spacing: $top-level-y-spacing)
   end
 end method make-client-layout;
 
@@ -653,17 +653,17 @@ define sealed method update-client-layout
       = make-children(tool-bar & tool-bar-decoration(tool-bar), layout);
     let new-layout
       = if (~empty?(indented-children))
-	  if (old-layout)
-	    let column-layout = sheet-child(old-layout);
-	    update-sheet-children(column-layout, indented-children)
-	  else
-	    with-spacing (spacing: win32-dialog-x-pixels(framem, 1))
-	      make(<column-layout>,
-		   children: indented-children,
-		   y-spacing: $top-level-y-spacing)
-	    end
-	  end
-	end;
+          if (old-layout)
+            let column-layout = sheet-child(old-layout);
+            update-sheet-children(column-layout, indented-children)
+          else
+            with-spacing (spacing: win32-dialog-x-pixels(framem, 1))
+              make(<column-layout>,
+                   children: indented-children,
+                   y-spacing: $top-level-y-spacing)
+            end
+          end
+        end;
     let new-children = make-children(new-layout, status-bar);
     update-sheet-children(client-layout, new-children)
   end
@@ -686,7 +686,7 @@ define function update-sheet-children
     if (sheet-mapped?(sheet))
       relayout-parent(sheet);
       for (child in sheet-children(sheet))
-	sheet-mapped?(child) := #t
+        sheet-mapped?(child) := #t
       end
     end
   end
@@ -771,7 +771,7 @@ define sealed method handle-move
     let x :: <integer> = x - x-offset;
     let y :: <integer> = y - y-offset;
     duim-debug-message("Sheet %= moved to %=, %= (from %=, %=)",
-		       sheet, x, y, old-x, old-y);
+                       sheet, x, y, old-x, old-y);
     set-sheet-position(sheet, x, y)
   end;
   #t
@@ -793,14 +793,14 @@ define sealed method handle-resize
   if (sheet-mapped?(sheet))
     let (old-width, old-height) = box-size(sheet-region(sheet));
     duim-debug-message("Resizing %= to %dx%d -- was %dx%d",
-		       sheet, width, height, old-width, old-height);
+                       sheet, width, height, old-width, old-height);
     distribute-event(port(sheet),
-		     make(<window-configuration-event>,
-			  sheet: sheet,
-			  region: region))
+                     make(<window-configuration-event>,
+                          sheet: sheet,
+                          region: region))
   else
     duim-debug-message("Ignoring WM_SIZE event for %= to size %dx%d",
-		       sheet, width, height)
+                       sheet, width, height)
   end;
   #t
 end method handle-resize;
@@ -819,8 +819,8 @@ define function gesture-modifiers
  => (shift? :: <boolean>, control? :: <boolean>, alt? :: <boolean>)
   let modifier-state = gesture-modifier-state(gesture);
   values(~zero?(logand(modifier-state, $shift-key)),
-	 ~zero?(logand(modifier-state, $control-key)),
-	 ~zero?(logand(modifier-state, $alt-key)))
+         ~zero?(logand(modifier-state, $control-key)),
+         ~zero?(logand(modifier-state, $alt-key)))
 end function gesture-modifiers;
 
 define table $accelerator-table :: <object-table>
@@ -894,11 +894,11 @@ define sealed method gadget-label-postfix
     let keysym = gesture-keysym(gesture);
     let (shift?, control?, alt?) = gesture-modifiers(gesture);
     concatenate-as(<string>, 
-		   "\t",
-		   if (control?) "Ctrl+"  else "" end,
-		   if (alt?)     "Alt+"   else "" end,
-		   if (shift?)   "Shift+" else "" end,
-		   keysym->key-name(keysym))
+                   "\t",
+                   if (control?) "Ctrl+"  else "" end,
+                   if (alt?)     "Alt+"   else "" end,
+                   if (shift?)   "Shift+" else "" end,
+                   keysym->key-name(keysym))
   else
     ""
   end
@@ -909,14 +909,14 @@ define table $keysym->key-name :: <object-table>
   = { #"return"     => "Enter",
       #"newline"    => "Shift+Enter",
       #"linefeed"   => "Line Feed",
-      #"up"	    => "Up Arrow",
-      #"down"	    => "Down Arrow",
-      #"left"	    => "Left Arrow",
-      #"right"	    => "Right Arrow",
-      #"prior"	    => "Page Up",
-      #"next"	    => "Page Down",
-      #"lwin"	    => "Left Windows",
-      #"rwin"	    => "Right Windows",
+      #"up"         => "Up Arrow",
+      #"down"       => "Down Arrow",
+      #"left"       => "Left Arrow",
+      #"right"      => "Right Arrow",
+      #"prior"      => "Page Up",
+      #"next"       => "Page Down",
+      #"lwin"       => "Left Windows",
+      #"rwin"       => "Right Windows",
       #"numpad0"    => "Num 0",
       #"numpad1"    => "Num 1",
       #"numpad2"    => "Num 2",
@@ -960,45 +960,45 @@ end method accelerator-table;
 define method make-accelerator-table
     (sheet :: <top-level-sheet>) => (accelerators :: <HACCEL>)
   local method fill-accelerator-entry
-	    (gadget :: <accelerator-mixin>, accelerator :: <accelerator>,
-	     entry :: <LPACCEL>) => ()
-	  let keysym    = gesture-keysym(accelerator);
-	  let modifiers = gesture-modifier-state(accelerator);
-	  let char      = gesture-character(accelerator);
-	  let (vkey :: <integer>, fVirt :: <integer>)
-	    = if (char
-		  & zero?(logand(modifiers, logior($control-key, $meta-key)))
-		  & character->virtual-key(char))
-		values(character->virtual-key(char), 0)
-	      else
-		let vkey = keysym->virtual-key(keysym);
-		if (vkey)
-		  values(vkey,
-			 logior($ACCEL-FVIRTKEY,
-				if (zero?(logand(modifiers, $shift-key)))   0 else $ACCEL-FSHIFT end,
-				if (zero?(logand(modifiers, $control-key))) 0 else $ACCEL-FCONTROL end,
-				if (zero?(logand(modifiers, $alt-key)))     0 else $ACCEL-FALT end))
-		else
-		  error("Can't decode the gesture with keysym %=, modifiers #o%o",
-			keysym, modifiers)
-		end
-	      end;
-	  let cmd :: <integer>
-	    = sheet-resource-id(gadget) | gadget->id(gadget);
-	  entry.fVirt-value := fVirt;
-	  entry.key-value   := vkey;
-	  entry.cmd-value   := cmd;
-	end method;
+            (gadget :: <accelerator-mixin>, accelerator :: <accelerator>,
+             entry :: <LPACCEL>) => ()
+          let keysym    = gesture-keysym(accelerator);
+          let modifiers = gesture-modifier-state(accelerator);
+          let char      = gesture-character(accelerator);
+          let (vkey :: <integer>, fVirt :: <integer>)
+            = if (char
+                  & zero?(logand(modifiers, logior($control-key, $meta-key)))
+                  & character->virtual-key(char))
+                values(character->virtual-key(char), 0)
+              else
+                let vkey = keysym->virtual-key(keysym);
+                if (vkey)
+                  values(vkey,
+                         logior($ACCEL-FVIRTKEY,
+                                if (zero?(logand(modifiers, $shift-key)))   0 else $ACCEL-FSHIFT end,
+                                if (zero?(logand(modifiers, $control-key))) 0 else $ACCEL-FCONTROL end,
+                                if (zero?(logand(modifiers, $alt-key)))     0 else $ACCEL-FALT end))
+                else
+                  error("Can't decode the gesture with keysym %=, modifiers #o%o",
+                        keysym, modifiers)
+                end
+              end;
+          let cmd :: <integer>
+            = sheet-resource-id(gadget) | gadget->id(gadget);
+          entry.fVirt-value := fVirt;
+          entry.key-value   := vkey;
+          entry.cmd-value   := cmd;
+        end method;
   let accelerators   = frame-accelerators(sheet-frame(sheet));
   let n :: <integer> = size(accelerators);
   if (n > 0)
     with-stack-structure (entries :: <LPACCEL>, element-count: n)
       for (i :: <integer> from 0 below n)
-	let entry  = accelerators[i];
-	let gadget = entry[0];
-	let accel  = entry[1];
-	let entry  = pointer-value-address(entries, index: i);
-	fill-accelerator-entry(gadget, accel, entry)
+        let entry  = accelerators[i];
+        let gadget = entry[0];
+        let accel  = entry[1];
+        let entry  = pointer-value-address(entries, index: i);
+        fill-accelerator-entry(gadget, accel, entry)
       end;
       check-result("CreateAcceleratorTable", CreateAcceleratorTable(entries, n))
     end
@@ -1037,17 +1037,17 @@ define sealed method make-frame-tooltip
   let tooltip
     = CreateWindowEx
         (0,
-	 $TOOLTIPS-CLASS,
-	 $NULL-string,
-	 %logior($TTS-NOPREFIX, $TTS-ALWAYSTIP),
-	 $CW-USEDEFAULT,		// x position
-	 $CW-USEDEFAULT,		// y position
-	 $CW-USEDEFAULT,		// width
-	 $CW-USEDEFAULT,		// height
-	 handle,			// top-level sheet is the parent
-	 $null-hMenu,			// no menu
-	 application-instance-handle(),
-	 $NULL-VOID);			// No data in our WM_CREATE
+         $TOOLTIPS-CLASS,
+         $NULL-string,
+         %logior($TTS-NOPREFIX, $TTS-ALWAYSTIP),
+         $CW-USEDEFAULT,                // x position
+         $CW-USEDEFAULT,                // y position
+         $CW-USEDEFAULT,                // width
+         $CW-USEDEFAULT,                // height
+         handle,                        // top-level sheet is the parent
+         $null-hMenu,                   // no menu
+         application-instance-handle(),
+         $NULL-VOID);                   // No data in our WM_CREATE
   check-result("CreateWindow (TOOLTIP)", tooltip);
   mirror.%tool-tip := tooltip
 end method make-frame-tooltip;
@@ -1057,7 +1057,7 @@ define sealed method destroy-tooltip
   let tooltip = mirror.%tool-tip;
   when (tooltip)
     unless (null-handle?(tooltip))
-      DestroyWindow(tooltip)	// error-checking probably won't buy anything...
+      DestroyWindow(tooltip)    // error-checking probably won't buy anything...
     end
   end
 end method destroy-tooltip;
@@ -1073,11 +1073,11 @@ define sealed method register-tooltip-for-sheet
     // Register a tool tip for this gadget
     with-c-string (c-string = documentation)
       with-stack-structure (ti :: <LPTOOLINFOA>)
-	ti.cbSize-value   := safe-size-of(<TOOLINFOA>);
-	ti.uFlags-value   := %logior($TTF-IDISHWND, $TTF-SUBCLASS);
-	ti.hWnd-value     := handle;
-	ti.uId-value      := pointer-address(handle);
-	ti.lpszText-value := c-string;
+        ti.cbSize-value   := safe-size-of(<TOOLINFOA>);
+        ti.uFlags-value   := %logior($TTF-IDISHWND, $TTF-SUBCLASS);
+        ti.hWnd-value     := handle;
+        ti.uId-value      := pointer-address(handle);
+        ti.lpszText-value := c-string;
         SendMessage(tooltip, $TTM-ADDTOOL, 0, pointer-address(ti))
       end
     end
@@ -1110,18 +1110,18 @@ define sealed method register-keyboard-interrupt-handler
     with-port-locked (_port)
       let handle = window-handle(sheet);
       when (handle)
-	// Compute a hot key id that isn't currently in use
-	let id = block (return)
-		   for (id :: <integer> from 0)
-		     unless (member?(id, _port.%hot-keys))
-		       return(id)
-		     end
-		   end
-		 end;
-	gethash(_port.%hot-keys, sheet) := id;
-	// By fiat, the "break" key on Windows is Crtl+Cancel (== Ctrl+Pause)
-	//---*** Too bad this registers a system-wide key!
-	// RegisterHotKey(handle, id, $MOD-CONTROL, $VK-CANCEL)
+        // Compute a hot key id that isn't currently in use
+        let id = block (return)
+                   for (id :: <integer> from 0)
+                     unless (member?(id, _port.%hot-keys))
+                       return(id)
+                     end
+                   end
+                 end;
+        gethash(_port.%hot-keys, sheet) := id;
+        // By fiat, the "break" key on Windows is Crtl+Cancel (== Ctrl+Pause)
+        //---*** Too bad this registers a system-wide key!
+        // RegisterHotKey(handle, id, $MOD-CONTROL, $VK-CANCEL)
       end
     end
   end
@@ -1134,8 +1134,8 @@ define sealed method unregister-keyboard-interrupt-handler
     with-port-locked (_port)
       let handle = window-handle(sheet);
       when (handle)
-	//---*** Fix this when we actually call 'RegisterHotKey'
-	// UnregisterHotKey(handle, id)
+        //---*** Fix this when we actually call 'RegisterHotKey'
+        // UnregisterHotKey(handle, id)
       end
     end
   end

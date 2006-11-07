@@ -67,7 +67,7 @@ define C-struct <LOGFONTA>
   sealed inline-only slot lfQuality-value :: <C-BYTE>;
   sealed inline-only slot lfPitchAndFamily-value :: <C-BYTE>;
   sealed inline-only array slot lfFaceName-array :: <CHAR>,
-	length: $LF-FACESIZE, address-getter: lfFaceName-value;
+        length: $LF-FACESIZE, address-getter: lfFaceName-value;
   pointer-type-name: <LPLOGFONT>;
   c-name: "struct tagLOGFONTA";
 end C-struct <LOGFONTA>;
@@ -76,7 +76,7 @@ define sealed domain initialize (<LPLOGFONT>);
 
 define C-struct <DEVMODEA>
   sealed inline-only array slot dmDeviceName-array :: <C-BYTE>,
-	length: $CCHDEVICENAME, address-getter: dmDeviceName-value;
+        length: $CCHDEVICENAME, address-getter: dmDeviceName-value;
   sealed inline-only slot dmSpecVersion-value :: <WORD>;
   sealed inline-only slot dmDriverVersion-value :: <WORD>;
   sealed inline-only slot dmSize-value   :: <WORD>;
@@ -93,7 +93,7 @@ define C-struct <DEVMODEA>
   sealed inline-only slot dmTTOption-value :: <C-short>;
   sealed inline-only slot dmCollate-value :: <C-short>;
   sealed inline-only array slot dmFormName-array :: <C-BYTE>,
-	length: $CCHFORMNAME, address-getter: dmFormName-value;
+        length: $CCHFORMNAME, address-getter: dmFormName-value;
   sealed inline-only slot dmLogPixels-value :: <WORD>;
   sealed inline-only slot dmBitsPerPel-value :: <DWORD>;
   sealed inline-only slot dmPelsWidth-value :: <DWORD>;
@@ -235,7 +235,7 @@ define C-struct <OSVERSIONINFO>
   sealed inline-only slot dwBuildNumber-value :: <DWORD>;
   sealed inline-only slot dwPlatformId-value :: <DWORD>;
   sealed inline-only array slot szCSDVersion-array :: <CHAR>,
-	length: 128, address-getter: szCSDVersion-value;
+        length: 128, address-getter: szCSDVersion-value;
   pointer-type-name: <LPOSVERSIONINFO>;
   c-name: "struct _OSVERSIONINFOA";
 end C-struct <OSVERSIONINFO>;
@@ -271,7 +271,7 @@ define C-struct <PAINTSTRUCT>
   sealed inline-only slot fRestore-value :: <BOOL>;
   sealed inline-only slot fIncUpdate-value :: <BOOL>;
   sealed inline-only array slot rgbReserved-array :: <C-BYTE>,
-	length: 32, address-getter: rgbReserved-value;
+        length: 32, address-getter: rgbReserved-value;
   pointer-type-name: <LPPAINTSTRUCT>;
   c-name: "struct tagPAINTSTRUCT";
 end C-struct <PAINTSTRUCT>;
@@ -507,7 +507,7 @@ define C-struct <TOOLTIPTEXTA>
   sealed inline-only slot hdr-value      :: <NMHDR>;
   sealed inline-only slot lpszText-value :: <LPSTR>;
   sealed inline-only array slot szText-array :: <C-char>, length: 80,
-	address-getter: szText-value;
+        address-getter: szText-value;
   sealed inline-only slot hinst-value    :: <HINSTANCE>;
   sealed inline-only slot uFlags-value   :: <UINT>;
   pack: 1;
@@ -714,30 +714,30 @@ define inline constant <PCACTCTX> = /* const */ <PACTCTX>;
 
 define macro callback-definer
   { define callback ?new:name :: ?ftype:name = ?old:name } =>
-	{ ?ftype ## "-callback-wrapper" (?new, ?old) }
+        { ?ftype ## "-callback-wrapper" (?new, ?old) }
 end;
 
 define macro <WNDPROC>-callback-wrapper
   { <WNDPROC>-callback-wrapper(?new:name,?old:name) } =>
     { define C-callable-wrapper ?new of ?old
-	parameter hWnd :: <HWND>;
-	parameter Msg  :: <UINT>;
-	parameter wParam :: <WPARAM>;
-	parameter lParam :: <LPARAM>;
-	result    value :: <LRESULT>;
-	c-modifiers: "__stdcall";
+        parameter hWnd :: <HWND>;
+        parameter Msg  :: <UINT>;
+        parameter wParam :: <WPARAM>;
+        parameter lParam :: <LPARAM>;
+        result    value :: <LRESULT>;
+        c-modifiers: "__stdcall";
       end C-callable-wrapper }
 end;
 
 define macro <DLGPROC>-callback-wrapper
   { <DLGPROC>-callback-wrapper(?new:name,?old:name) } =>
     { define C-callable-wrapper ?new of ?old
-	parameter hWnd :: <HWND>;
-	parameter Msg  :: <UINT>;
-	parameter wParam :: <WPARAM>;
-	parameter lParam :: <LPARAM>;
-	result    value :: <BOOL>;
-	c-modifiers: "__stdcall";
+        parameter hWnd :: <HWND>;
+        parameter Msg  :: <UINT>;
+        parameter wParam :: <WPARAM>;
+        parameter lParam :: <LPARAM>;
+        result    value :: <BOOL>;
+        c-modifiers: "__stdcall";
       end C-callable-wrapper }
 end;
 
@@ -1956,7 +1956,7 @@ define inline-only C-function WinHelp
 end;
 
 define inline function CreateDialog(hInstance, lpName, hWndParent,
-				    lpDialogFunc);
+                                    lpDialogFunc);
   CreateDialogParam(hInstance, lpName, hWndParent, lpDialogFunc, 0)
 end CreateDialog;
 
@@ -2110,13 +2110,13 @@ define inline-only C-function ActivateActCtx
 end;
 
 define C-function FormatMessage
-  parameter dwFlags	 :: <DWORD>;
-  parameter lpSource	 :: <LPCVOID>;
-  parameter dwMessageId	 :: <DWORD>;
+  parameter dwFlags      :: <DWORD>;
+  parameter lpSource     :: <LPCVOID>;
+  parameter dwMessageId  :: <DWORD>;
   parameter dwLanguageId :: <DWORD>;
-  parameter lpBuffer	 :: <LPSTR>;
-  parameter nSize	 :: <DWORD>;
-  parameter _dummy	 :: <C-pointer>; // va_list *Arguments
+  parameter lpBuffer     :: <LPSTR>;
+  parameter nSize        :: <DWORD>;
+  parameter _dummy       :: <C-pointer>; // va_list *Arguments
   result val :: <DWORD>;
   c-name: "FormatMessageA", c-modifiers: "__stdcall";
 end;
@@ -2128,20 +2128,20 @@ define function win32-error-message
   with-stack-structure (buffer :: <LPTSTR>, size: buf-size)
     let length :: <integer> =
       FormatMessage(logior($FORMAT-MESSAGE-FROM-SYSTEM,
-			   $FORMAT-MESSAGE-IGNORE-INSERTS),
-		    $NULL-VOID,
-		    error-code,
-		    $LANG-USER-DEFAULT,
-		    buffer,
-		    buf-size,
-		    $NULL-VOID);
+                           $FORMAT-MESSAGE-IGNORE-INSERTS),
+                    $NULL-VOID,
+                    error-code,
+                    $LANG-USER-DEFAULT,
+                    buffer,
+                    buf-size,
+                    $NULL-VOID);
     if ( length <= 0 )
       #f
     else
       let last :: <integer> = length - 1;
       while ( last >= 0 & buffer[last] <= '\r' ) // remove trailing CRLF
-	buffer[last] := '\0';
-	last := last - 1;
+        buffer[last] := '\0';
+        last := last - 1;
       end while;
       as(<byte-string>, buffer)
     end if
@@ -2160,7 +2160,7 @@ define function application-show-window () => (nCmdShow :: <signed-int>)
     if ( ~ zero?(%logand(startup-info.dwFlags-value, $STARTF-USESHOWWINDOW)) )
       startup-info.wShowWindow-value
     else
-      10			//---*** $SW-SHOWDEFAULT
+      10                        //---*** $SW-SHOWDEFAULT
     end
   end
 end function application-show-window;

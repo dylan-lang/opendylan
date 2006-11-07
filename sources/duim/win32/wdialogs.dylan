@@ -32,16 +32,16 @@ define method frame-window-styles
   //---*** For some reason making a dialog with no title doesn't work,
   //---*** but then screws up the layout calculations. So until it works
   //---*** we'll just always supply a title.
-  let title? = #t;	//--- was 'frame-title(frame)';
+  let title? = #t;      //--- was 'frame-title(frame)';
   let style
     = %logior($WS-OVERLAPPED,
-	      if (frame-minimize-box?(frame)) %logior($WS-SYSMENU, $WS-MINIMIZEBOX) else 0 end,
-	      if (frame-maximize-box?(frame)) %logior($WS-SYSMENU, $WS-MAXIMIZEBOX) else 0 end,
-	      if (title?) $WS-CAPTION else 0 end,
-	      if (frame-resizable?(frame)) $WS-SIZEBOX else 0 end);
+              if (frame-minimize-box?(frame)) %logior($WS-SYSMENU, $WS-MINIMIZEBOX) else 0 end,
+              if (frame-maximize-box?(frame)) %logior($WS-SYSMENU, $WS-MAXIMIZEBOX) else 0 end,
+              if (title?) $WS-CAPTION else 0 end,
+              if (frame-resizable?(frame)) $WS-SIZEBOX else 0 end);
   let extended-style
     = %logior($WS-EX-DLGMODALFRAME,
-	      if (frame-always-on-top?(frame)) $WS-EX-TOPMOST else 0 end);
+              if (frame-always-on-top?(frame)) $WS-EX-TOPMOST else 0 end);
   values(style, extended-style)
 end method frame-window-styles;
 
@@ -74,9 +74,9 @@ define sealed method make-dialog-top-level-window
   let owner-top-level = owner & top-level-sheet(owner);
   let owner-handle
     = if (owner-top-level & sheet-mapped?(owner-top-level))
-	window-handle(owner-top-level)
+        window-handle(owner-top-level)
       else
-	$NULL-HWND
+        $NULL-HWND
       end;
   let (style, extended-style) = frame-window-styles(frame);
   //--- Call compute-default-foreground/background/text-style to
@@ -84,17 +84,17 @@ define sealed method make-dialog-top-level-window
   let handle :: <HWND>
     = CreateWindowEx
         (extended-style,
-	 $dialog-class-name,		// See RegisterClass call
-	 title | "",			// Text for window title bar
-	 style,
-	 x | $CW-USEDEFAULT,		// x position
-	 y | $CW-USEDEFAULT,		// y position
-	 right - left,			// width
-	 bottom - top,			// height
-	 owner-handle,			// dialog's owner
-	 $null-hMenu,			// Use the window class menu
-	 application-instance-handle(),
-	 $NULL-VOID);			// No data in our WM_CREATE
+         $dialog-class-name,            // See RegisterClass call
+         title | "",                    // Text for window title bar
+         style,
+         x | $CW-USEDEFAULT,            // x position
+         y | $CW-USEDEFAULT,            // y position
+         right - left,                  // width
+         bottom - top,                  // height
+         owner-handle,                  // dialog's owner
+         $null-hMenu,                   // Use the window class menu
+         application-instance-handle(),
+         $NULL-VOID);                   // No data in our WM_CREATE
   check-result("CreateWindow (dialog)", handle);
   values(handle, #f, <dialog-mirror>, vector(owner:, owner))
 end method make-dialog-top-level-window;
@@ -148,9 +148,9 @@ define sealed method ensure-dialog-position
   let (x, y) = compute-dialog-position(frame);
   duim-debug-message("Setting position for %= to %d x %d", frame, x, y);
   check-result("SetWindowPos",
-	       SetWindowPos(handle, $NULL-HWND, x, y, 0, 0,
-			    %logior($SWP-NOACTIVATE, $SWP-NOZORDER, 
-				    $SWP-NOSIZE)))
+               SetWindowPos(handle, $NULL-HWND, x, y, 0, 0,
+                            %logior($SWP-NOACTIVATE, $SWP-NOZORDER, 
+                                    $SWP-NOSIZE)))
 end method ensure-dialog-position;
 
 define sealed method compute-dialog-position
@@ -183,25 +183,25 @@ define sealed method compute-dialog-position
       let (owner-width, owner-height) = get-client-size(owner-handle);
       let (x-offset, y-offset) = frame-client-area-offset(owner);
       duim-debug-message("  Owner currently %d x %d, at %d, %d [offset %d x %d]",
-			 owner-width, owner-height, owner-x, owner-y,
-			 x-offset, y-offset);
+                         owner-width, owner-height, owner-x, owner-y,
+                         x-offset, y-offset);
       duim-debug-message("  Dialog currently %d x %d",
-			 width, height);
+                         width, height);
       let x
-	= max(min(screen-width - width,
-		  owner-x + floor/(owner-width  - width, 2)),
-	      0);
+        = max(min(screen-width - width,
+                  owner-x + floor/(owner-width  - width, 2)),
+              0);
       let y
-	= max(min(screen-height - height,
-		  owner-y + max(floor/(owner-height - height, 2), 
-				//---*** andrewa: why do I need this 20?
-				y-offset - 20)),
-	      0);
+        = max(min(screen-height - height,
+                  owner-y + max(floor/(owner-height - height, 2), 
+                                //---*** andrewa: why do I need this 20?
+                                y-offset - 20)),
+              0);
       values(x, y)
     else
       // Center the dialog on the screen
       values(max(floor/(screen-width  - width, 2),  0),
-	     max(floor/(screen-height - height, 2), 0))
+             max(floor/(screen-height - height, 2), 0))
     end
   end
 end method compute-dialog-position;
@@ -230,15 +230,15 @@ define method make-exit-button
   when (callback)
     with-frame-manager (framem)
       apply(make, <push-button>,
-	    activate-callback: method (button)
-				 let dialog = sheet-frame(button);
-				 execute-callback(dialog, callback, dialog)
-			       end,
-	    label: label,
-	    enabled?: enabled?,
+            activate-callback: method (button)
+                                 let dialog = sheet-frame(button);
+                                 execute-callback(dialog, callback, dialog)
+                               end,
+            label: label,
+            enabled?: enabled?,
             fixed-width?: #t,
-	    width: $exit-button-min-width,
-	    initargs)
+            width: $exit-button-min-width,
+            initargs)
     end
   end
 end method make-exit-button;
@@ -287,9 +287,9 @@ define sealed method do-exit-dialog
   end;
   frame-mapped?(dialog) := #f;
   distribute-event(port(dialog),
-		   make(<dialog-exit-event>,
-			frame: dialog,
-			destroy-frame?: destroy?))
+                   make(<dialog-exit-event>,
+                        frame: dialog,
+                        destroy-frame?: destroy?))
 end method do-exit-dialog;
 
 // Generate an "error" exit event
@@ -302,9 +302,9 @@ define sealed method do-cancel-dialog
   end;
   frame-mapped?(dialog) := #f;
   distribute-event(port(dialog),
-		   make(<dialog-cancel-event>,
-			frame: dialog,
-			destroy-frame?: destroy?))
+                   make(<dialog-cancel-event>,
+                        frame: dialog,
+                        destroy-frame?: destroy?))
 end method do-cancel-dialog;
 
 
@@ -327,47 +327,47 @@ define sealed method do-notify-user
     (framem :: <win32-frame-manager>, owner :: <sheet>,
      message :: <string>, style :: <notification-style>,
      #key title :: false-or(<string>), documentation :: false-or(<string>), name, 
-	  exit-style :: false-or(<notification-exit-style>) = #f,
+          exit-style :: false-or(<notification-exit-style>) = #f,
      #all-keys)
  => (ok? :: <boolean>, exit-type)
   let handle = dialog-owner-handle(owner);
   let title
     = title | select (style)
-		#"information"   => "Note";
-		#"question"      => "Note";
-		#"warning"       => "Warning";
-		#"error"         => "Error";
-		#"serious-error" => "Error";
-		#"fatal-error"   => "Error";
-	      end;
+                #"information"   => "Note";
+                #"question"      => "Note";
+                #"warning"       => "Warning";
+                #"error"         => "Error";
+                #"serious-error" => "Error";
+                #"fatal-error"   => "Error";
+              end;
   let style-flag
     = select (style)
-	#"information"   => $MB-ICONINFORMATION;
-	#"question"      => $MB-ICONQUESTION;
-	#"warning"       => $MB-ICONWARNING;
-	#"error"         => $MB-ICONERROR;
-	#"serious-error" => $MB-ICONERROR;
-	#"fatal-error"   => $MB-ICONERROR;
+        #"information"   => $MB-ICONINFORMATION;
+        #"question"      => $MB-ICONQUESTION;
+        #"warning"       => $MB-ICONWARNING;
+        #"error"         => $MB-ICONERROR;
+        #"serious-error" => $MB-ICONERROR;
+        #"fatal-error"   => $MB-ICONERROR;
       end;
   let button-flag
     = if (exit-style)
-	select (exit-style)
-	  #"ok"            => $MB-OK;
-	  #"ok-cancel"     => $MB-OKCANCEL;
-	  #"yes-no"        => $MB-YESNO;
-	  #"yes-no-cancel" => $MB-YESNOCANCEL;
-	end
+        select (exit-style)
+          #"ok"            => $MB-OK;
+          #"ok-cancel"     => $MB-OKCANCEL;
+          #"yes-no"        => $MB-YESNO;
+          #"yes-no-cancel" => $MB-YESNOCANCEL;
+        end
       else
-	select (style)
-	  #"question" => $MB-YESNO;
-	  otherwise   => $MB-OK;
-	end
+        select (style)
+          #"question" => $MB-YESNO;
+          otherwise   => $MB-OK;
+        end
       end;
   let modality
     = select (style)
-	#"serious-error" => $MB-TASKMODAL;
-	#"fatal-error"   => $MB-SYSTEMMODAL;
-	otherwise        => $MB-APPLMODAL;
+        #"serious-error" => $MB-TASKMODAL;
+        #"fatal-error"   => $MB-SYSTEMMODAL;
+        otherwise        => $MB-APPLMODAL;
       end;
   let flags  = %logior(style-flag, button-flag, modality, $MB-SETFOREGROUND);
   let result = MessageBox(handle, message, title, flags);
@@ -389,9 +389,9 @@ define sealed method do-choose-file
     (framem :: <win32-frame-manager>, owner :: <sheet>, 
      direction == #"input",
      #key title :: false-or(<string>), documentation :: false-or(<string>), exit-boxes,
-	  if-exists, if-does-not-exist = #"ask",
-	  default :: false-or(<string>), default-type = $unsupplied,
-	  filters, default-filter, selection-mode = #"single",
+          if-exists, if-does-not-exist = #"ask",
+          default :: false-or(<string>), default-type = $unsupplied,
+          filters, default-filter, selection-mode = #"single",
      #all-keys)
  => (locator :: false-or(type-union(<string>, <sequence>)),
      filter :: false-or(<integer>))
@@ -401,22 +401,22 @@ define sealed method do-choose-file
   with-stack-structure (buffer :: <C-string>, size: bufsiz)
     with-stack-structure (file :: <LPOPENFILENAME>)
       init-open-file-name(file, handle, buffer, bufsiz,
-			  direction: direction,
-			  selection-mode: selection-mode,
-			  if-does-not-exist: if-does-not-exist,
-			  default: default,
-			  default-type: default-type,
-			  filters: filters,
-			  default-filter: default-filter,
-			  title: title);
+                          direction: direction,
+                          selection-mode: selection-mode,
+                          if-does-not-exist: if-does-not-exist,
+                          default: default,
+                          default-type: default-type,
+                          filters: filters,
+                          default-filter: default-filter,
+                          title: title);
       let result = GetOpenFileName(file);
       deinit-open-file-name(file);
       if (result)
-	values(parse-file-name-buffer(buffer, bufsiz, file.nFileOffset-value, selection-mode),
-	       file.nFilterIndex-value - 1)
+        values(parse-file-name-buffer(buffer, bufsiz, file.nFileOffset-value, selection-mode),
+               file.nFilterIndex-value - 1)
       else
-	values(ensure-no-dialog-error("GetOpenFileName"),
-	       file.nFilterIndex-value - 1)
+        values(ensure-no-dialog-error("GetOpenFileName"),
+               file.nFilterIndex-value - 1)
       end
     end
   end
@@ -426,9 +426,9 @@ define sealed method do-choose-file
     (framem :: <win32-frame-manager>, owner :: <sheet>, 
      direction == #"output",
      #key title :: false-or(<string>), documentation :: false-or(<string>), exit-boxes,
-	  if-exists = #"ask", if-does-not-exist,
-	  default :: false-or(<string>), default-type = $unsupplied,
-	  filters, default-filter, selection-mode = #"single",
+          if-exists = #"ask", if-does-not-exist,
+          default :: false-or(<string>), default-type = $unsupplied,
+          filters, default-filter, selection-mode = #"single",
      #all-keys)
  => (locator :: false-or(type-union(<string>, <sequence>)),
      filter :: false-or(<integer>))
@@ -438,22 +438,22 @@ define sealed method do-choose-file
   with-stack-structure (buffer :: <C-string>, size: bufsiz)
     with-stack-structure (file :: <LPOPENFILENAME>)
       init-open-file-name(file, handle, buffer, bufsiz,
-			  direction: direction,
-			  selection-mode: selection-mode,
-			  if-exists: if-exists,
-			  default: default,
-			  default-type: default-type,
-			  filters: filters,
-			  default-filter: default-filter,
-			  title: title);
+                          direction: direction,
+                          selection-mode: selection-mode,
+                          if-exists: if-exists,
+                          default: default,
+                          default-type: default-type,
+                          filters: filters,
+                          default-filter: default-filter,
+                          title: title);
       let result = GetSaveFileName(file);
       deinit-open-file-name(file);
       if (result)
-	values(parse-file-name-buffer(buffer, bufsiz, file.nFileOffset-value, selection-mode),
-	       file.nFilterIndex-value - 1)
+        values(parse-file-name-buffer(buffer, bufsiz, file.nFileOffset-value, selection-mode),
+               file.nFilterIndex-value - 1)
       else
-	values(ensure-no-dialog-error("GetSaveFileName"),
-	       file.nFilterIndex-value - 1)
+        values(ensure-no-dialog-error("GetSaveFileName"),
+               file.nFilterIndex-value - 1)
       end
     end
   end
@@ -466,45 +466,45 @@ define function parse-file-name-buffer
     #"single" =>
       as(<byte-string>, buffer);
     #"multiple" =>
-      local method copy-substring	// like 'copy-sequence-as'...
-		(buffer :: <C-string>, _start :: <integer>, _end :: <integer>)
-	     => (string :: <byte-string>)
-	      let string :: <byte-string> = make(<byte-string>, size: _end - _start);
-	      without-bounds-checks
-		for (i :: <integer> from _start below _end,
-		     j :: <integer> from 0)
-		  string[j] := buffer[i]
-		end
-	      end;
-	      string
-	    end method,
-	    method find-null		// like 'position'...
-		(buffer :: <C-string>, _start :: <integer>, _end :: <integer>)
-	     => (index :: false-or(<integer>))
-	      block (return)
-		without-bounds-checks
-		  for (i :: <integer> = _start then i + 1,
-		       until: i = _end)
-		    when (buffer[i] == '\0')
-		      return(i)
-		    end
-		  end
-	        end;
-	        #f
-	      end
-	    end method;
+      local method copy-substring       // like 'copy-sequence-as'...
+                (buffer :: <C-string>, _start :: <integer>, _end :: <integer>)
+             => (string :: <byte-string>)
+              let string :: <byte-string> = make(<byte-string>, size: _end - _start);
+              without-bounds-checks
+                for (i :: <integer> from _start below _end,
+                     j :: <integer> from 0)
+                  string[j] := buffer[i]
+                end
+              end;
+              string
+            end method,
+            method find-null            // like 'position'...
+                (buffer :: <C-string>, _start :: <integer>, _end :: <integer>)
+             => (index :: false-or(<integer>))
+              block (return)
+                without-bounds-checks
+                  for (i :: <integer> = _start then i + 1,
+                       until: i = _end)
+                    when (buffer[i] == '\0')
+                      return(i)
+                    end
+                  end
+                end;
+                #f
+              end
+            end method;
       let locators  = make(<stretchy-vector>);
       let directory = copy-substring(buffer, 0, offset);
       directory[size(directory) - 1] := '\\';
       let i :: <integer> = offset;
       block (break)
-	while (i < buffer-size)
-	  let j = find-null(buffer, i, buffer-size);
-	  when (~j | j = i + 1) break() end;	// two nulls means we're done
-	  let name = copy-substring(buffer, i, j);
-	  add!(locators, concatenate(directory, name));
-	  i := j + 1
-	end
+        while (i < buffer-size)
+          let j = find-null(buffer, i, buffer-size);
+          when (~j | j = i + 1) break() end;    // two nulls means we're done
+          let name = copy-substring(buffer, i, j);
+          add!(locators, concatenate(directory, name));
+          i := j + 1
+        end
       end;
       locators;
   end
@@ -514,9 +514,9 @@ define sealed method init-open-file-name
     (file :: <LPOPENFILENAME>, handle :: <HWND>,
      buffer :: <C-string>, buffer-size :: <integer>,
      #key direction = #"input", title :: false-or(<string>),
-	  if-exists = #"ask", if-does-not-exist = #"ask",
-	  default :: false-or(<string>), default-type = $unsupplied,
-	  filters, default-filter, selection-mode = #"single") => ()
+          if-exists = #"ask", if-does-not-exist = #"ask",
+          default :: false-or(<string>), default-type = $unsupplied,
+          filters, default-filter, selection-mode = #"single") => ()
   file.lStructSize-value := safe-size-of(<OPENFILENAME>);
   file.hwndOwner-value   := handle;
   file.hInstance-value   := application-instance-handle();
@@ -532,16 +532,16 @@ define sealed method init-open-file-name
     without-bounds-checks
       let i :: <integer> = 0;
       for (filter in filters)
-	for (string :: <byte-string> in filter,
-	     name? = #t then #f)
-	  for (j :: <integer> from 0 below size(string))
-	    filter-value[i] := string[j];
-	    inc!(i)
-	  end;
-	  filter-value[i] := if (name?) '\0' else ';' end;
-	  inc!(i)
-	end;
-	filter-value[i - 1] := '\0';
+        for (string :: <byte-string> in filter,
+             name? = #t then #f)
+          for (j :: <integer> from 0 below size(string))
+            filter-value[i] := string[j];
+            inc!(i)
+          end;
+          filter-value[i] := if (name?) '\0' else ';' end;
+          inc!(i)
+        end;
+        filter-value[i - 1] := '\0';
       end
     end
   end;
@@ -553,13 +553,13 @@ define sealed method init-open-file-name
     = process-default-type(default-type);
   // Set up filters, defaults, etc
   let flags
-    = %logior($OFN-HIDEREADONLY,	//---*** use $OFN-SHOWHELP someday...
-	      $OFN-EXPLORER,
-	      if (selection-mode == #"multiple") $OFN-ALLOWMULTISELECT else 0 end);
+    = %logior($OFN-HIDEREADONLY,        //---*** use $OFN-SHOWHELP someday...
+              $OFN-EXPLORER,
+              if (selection-mode == #"multiple") $OFN-ALLOWMULTISELECT else 0 end);
   let direction-flags
     = select (direction)
-	#"input"  => if (if-exists == #"ask")         $OFN-FILEMUSTEXIST   else 0 end;
-	#"output" => if (if-does-not-exist == #"ask") $OFN-OVERWRITEPROMPT else 0 end;
+        #"input"  => if (if-exists == #"ask")         $OFN-FILEMUSTEXIST   else 0 end;
+        #"output" => if (if-does-not-exist == #"ask") $OFN-OVERWRITEPROMPT else 0 end;
       end;
   file.Flags-value             := %logior(flags, direction-flags);
   file.lpstrFilter-value       := filter-value;
@@ -579,11 +579,11 @@ define sealed method init-open-file-name
   when (default-name ~= $NULL-string)
     without-bounds-checks
       for (i :: <integer> from 0 below size(default-name))
-	file.lpstrFile-value[i] := default-name[i]
+        file.lpstrFile-value[i] := default-name[i]
       end;
       file.lpstrFile-value[size(default-name)] := as(<character>, 0)
     end;
-    destroy(default-name)	// all done with this now
+    destroy(default-name)       // all done with this now
   end
 end method init-open-file-name;
 
@@ -611,13 +611,13 @@ define function process-default-name
     let backslash = #f;
     without-bounds-checks
       for (i :: <integer> from size(name) - 1 to 0 by -1,
-	   until: name[i] = '\\')
+           until: name[i] = '\\')
       finally backslash := i;
       end
     end;
     if (backslash)
       values(as(<C-string>, copy-sequence(name, end: backslash + 1)),
-	     as(<C-string>, copy-sequence(name, start: backslash + 1)))
+             as(<C-string>, copy-sequence(name, start: backslash + 1)))
     else
       values($NULL-string, as(<C-string>, name))
     end
@@ -673,7 +673,7 @@ end function get-shell-IMalloc;
 define sealed method do-choose-directory
     (framem :: <win32-frame-manager>, owner :: <sheet>,
      #key title :: false-or(<string>), documentation :: false-or(<string>), exit-boxes,
-	  default :: false-or(<string>),
+          default :: false-or(<string>),
      #all-keys)
  => (locator :: false-or(<string>))
   ignore(exit-boxes);
@@ -687,27 +687,27 @@ define sealed method do-choose-directory
     when (default)
       let _size = size(default);
       let _end  = if (element(default, _size - 1, default: #f) = '\\') _size - 1
-		  else _size end;
+                  else _size end;
       default := copy-sequence(default, end: _end)
     end;
     with-stack-structure (bi :: <LPBROWSEINFO>)
       with-stack-structure (buffer :: <C-string>, size: $MAX-PATH)
-	title   := as(<C-string>, copy-sequence(title | ""));
+        title   := as(<C-string>, copy-sequence(title | ""));
         default := if (default) as(<C-string>, default)
-		   else $NULL-string end;
-	bi.hwndOwner-value := handle;
-	bi.pidlRoot-value  := null-pointer(<LPCITEMIDLIST>);
-	bi.pszDisplayName-value := buffer;
-	bi.lpszTitle-value := title;
-	bi.ulFlags-value   := $BIF-RETURNONLYFSDIRS;
-	bi.lpfn-value      := browse-for-folder;	// see below
-	bi.lParam-value    := pointer-address(default);
-	bi.iImage2-value   := 0;
-	let pidlBrowse = SHBrowseForFolder(bi);
-	when (SHGetPathFromIDList(pidlBrowse, buffer))
-	  locator := as(<byte-string>, buffer)
-	end;
-	IMalloc/Free(shell-IMalloc, pidlBrowse); 
+                   else $NULL-string end;
+        bi.hwndOwner-value := handle;
+        bi.pidlRoot-value  := null-pointer(<LPCITEMIDLIST>);
+        bi.pszDisplayName-value := buffer;
+        bi.lpszTitle-value := title;
+        bi.ulFlags-value   := $BIF-RETURNONLYFSDIRS;
+        bi.lpfn-value      := browse-for-folder;        // see below
+        bi.lParam-value    := pointer-address(default);
+        bi.iImage2-value   := 0;
+        let pidlBrowse = SHBrowseForFolder(bi);
+        when (SHGetPathFromIDList(pidlBrowse, buffer))
+          locator := as(<byte-string>, buffer)
+        end;
+        IMalloc/Free(shell-IMalloc, pidlBrowse); 
         unless (default = $NULL-string) destroy(default) end;
         unless (title   = $NULL-string) destroy(title)   end;
       end
@@ -719,10 +719,10 @@ end method do-choose-directory;
 // This callback allows the dialog to open with its selection set to
 // the 'default:' passed in to 'do-choose-directory' 
 define sealed method browse-for-folder-function
-    (handle :: <HWND>,			// window handle
-     message :: <message-type>,		// type of message
-     lParam  :: <wparam-type>,		// additional information
-     lpData  :: <lparam-type>)		// additional information
+    (handle :: <HWND>,                  // window handle
+     message :: <message-type>,         // type of message
+     lParam  :: <wparam-type>,          // additional information
+     lpData  :: <lparam-type>)          // additional information
  => (result :: <lresult-type>)
   ignore(lParam);
   when (message = $BFFM-INITIALIZED & ~zero?(lpData))
@@ -744,7 +744,7 @@ define variable *printer-device-mode*  :: <LPDEVMODE>  = make(<LPDEVMODE>);
 define sealed method do-choose-printer
     (framem :: <win32-frame-manager>, owner :: <sheet>,
      #key title :: false-or(<string>), documentation :: false-or(<string>), exit-boxes,
-	  default, setup?,
+          default, setup?,
      #all-keys)
  => (#rest values);
   ignore(exit-boxes);
@@ -753,23 +753,23 @@ define sealed method do-choose-printer
     print.lStructSize-value  := safe-size-of(<PRINTDLG>);
     print.hwndOwner-value    := handle;
     print.hInstance-value    := application-instance-handle();
-    print.hDevMode-value     := *printer-device-mode*;	//--- use 'null-pointer(<HGLOBAL>)'?
+    print.hDevMode-value     := *printer-device-mode*;  //--- use 'null-pointer(<HGLOBAL>)'?
     print.hDevNames-value    := null-pointer(<HGLOBAL>);
     print.Flags-value        := %logior($PD-ALLPAGES,
-					$PD-COLLATE,
-					if (setup?) $PD-PRINTSETUP else 0 end,
-					$PD-USEDEVMODECOPIES,
-					$PD-SHOWHELP);
+                                        $PD-COLLATE,
+                                        if (setup?) $PD-PRINTSETUP else 0 end,
+                                        $PD-USEDEVMODECOPIES,
+                                        $PD-SHOWHELP);
     print.nCopies-value      := 1;
     if (PrintDlg(print))
       if (setup?)
-	values()
+        values()
       else
-	if (~zero?(logand(print.Flags-value, $PD-PRINTTOFILE)))
-	  values(#f, print.nCopies-value, #t)
-	else
-	  values(#f, print.nCopies-value, #f)
-	end	
+        if (~zero?(logand(print.Flags-value, $PD-PRINTTOFILE)))
+          values(#f, print.nCopies-value, #t)
+        else
+          values(#f, print.nCopies-value, #f)
+        end     
       end
     else
       ensure-no-dialog-error("PrintDlg");
@@ -787,7 +787,7 @@ define variable *custom-colors* :: <LPCOLORREF>
 define sealed method do-choose-color
     (framem :: <win32-frame-manager>, owner :: <sheet>,
      #key title :: false-or(<string>), documentation :: false-or(<string>), exit-boxes,
-	  default :: false-or(<color>),
+          default :: false-or(<color>),
      #all-keys)
  => (color :: false-or(<color>));
   ignore(exit-boxes);
@@ -797,10 +797,10 @@ define sealed method do-choose-color
     color.hwndOwner-value    := handle;
     color.hInstance-value    := application-instance-handle();
     color.rgbResult-value    := if (default) %color->native-color(default)
-				else $native-black end;
+                                else $native-black end;
     color.Flags-value        := %logior($CC-ANYCOLOR,
-					if (default) $CC-RGBINIT else 0 end,
-					$CC-SHOWHELP);
+                                        if (default) $CC-RGBINIT else 0 end,
+                                        $CC-SHOWHELP);
     color.lpCustColors-value := *custom-colors*;
     if (ChooseColor(color))
       let colorref = color.rgbResult-value;
@@ -820,11 +820,11 @@ end method do-choose-color;
 define sealed method do-choose-text-style
     (framem :: <win32-frame-manager>, owner :: <sheet>,
      #key title :: false-or(<string>), documentation :: false-or(<string>),
-	  exit-boxes, default :: false-or(<text-style>),
-	
-	  fixed-width-only? :: <boolean>,
-	  show-help? :: <boolean>, show-apply? :: <boolean>,
-	  choose-character-set? :: <boolean>, choose-effects? :: <boolean>,
+          exit-boxes, default :: false-or(<text-style>),
+        
+          fixed-width-only? :: <boolean>,
+          show-help? :: <boolean>, show-apply? :: <boolean>,
+          choose-character-set? :: <boolean>, choose-effects? :: <boolean>,
      #all-keys)
  => (text-style :: false-or(<text-style>));
   ignore(exit-boxes, show-apply?);
@@ -837,38 +837,38 @@ define sealed method do-choose-text-style
       // in the following call to #"ANSI", which should get reasonable results
       // (for English-speaking setups) but probably isn't the Right Thing.
       let (height :: <integer>,
-	   width :: <integer>,
-	   escapement :: <integer>,
-	   orientation :: <integer>,
-	   weight :: <integer>,
-	   italic :: <integer>,
-	   underline :: <integer>,
-	   strikeout :: <integer>,
-	   charset :: <integer>,
-	   output-precision :: <integer>,
-	   clip-precision :: <integer>,
-	   quality :: <integer>,
-	   pitch-and-family :: <integer>,
-	   face-name :: limited(<string>, size: ($LF-FACESIZE - 1)))
-	= font-components-from-text-style(_port, default, #"ANSI");
+           width :: <integer>,
+           escapement :: <integer>,
+           orientation :: <integer>,
+           weight :: <integer>,
+           italic :: <integer>,
+           underline :: <integer>,
+           strikeout :: <integer>,
+           charset :: <integer>,
+           output-precision :: <integer>,
+           clip-precision :: <integer>,
+           quality :: <integer>,
+           pitch-and-family :: <integer>,
+           face-name :: limited(<string>, size: ($LF-FACESIZE - 1)))
+        = font-components-from-text-style(_port, default, #"ANSI");
       logfont.lfHeight-value := height;
       logfont.lfWidth-value := width;
       logfont.lfEscapement-value := escapement;
       logfont.lfOrientation-value := orientation;
       logfont.lfWeight-value := weight;
       logfont.lfItalic-value := italic;
-      logfont.lfUnderline-value	:= underline;
-      logfont.lfStrikeOut-value	:= strikeout;
+      logfont.lfUnderline-value := underline;
+      logfont.lfStrikeOut-value := strikeout;
       logfont.lfCharSet-value := charset;
       logfont.lfOutPrecision-value := output-precision;
       logfont.lfClipPrecision-value := clip-precision;
       logfont.lfQuality-value := quality;
       logfont.lfPitchAndFamily-value := pitch-and-family;
       for (char in face-name,
-	   i :: <integer> from 0 below ($LF-FACESIZE - 1))
-	lfFaceName-array(logfont, i) := char;
+           i :: <integer> from 0 below ($LF-FACESIZE - 1))
+        lfFaceName-array(logfont, i) := char;
       finally
-	lfFaceName-array(logfont, i) := '\0';
+        lfFaceName-array(logfont, i) := '\0';
       end;
     end;
     with-stack-structure (cf :: <LPCHOOSEFONT>)
@@ -882,19 +882,19 @@ define sealed method do-choose-text-style
       // cf.hDC-value         := hDC;
       cf.lpLogFont-value   := logfont;
       cf.Flags-value
-	:= %logior(if (fixed-width-only?) $CF-FIXEDPITCHONLY else 0 end,
-		   if (show-apply?) $CF-APPLY else 0 end,
-		   if (show-help?) $CF-SHOWHELP else 0 end,
-		   if (choose-effects?) $CF-EFFECTS else 0 end,
-		   if (choose-character-set?) 0 else $CF-NOSCRIPTSEL end,
-		   if (default) $CF-INITTOLOGFONTSTRUCT else 0 end,
-		   $CF-FORCEFONTEXIST,
-		   $CF-SCREENFONTS);
+        := %logior(if (fixed-width-only?) $CF-FIXEDPITCHONLY else 0 end,
+                   if (show-apply?) $CF-APPLY else 0 end,
+                   if (show-help?) $CF-SHOWHELP else 0 end,
+                   if (choose-effects?) $CF-EFFECTS else 0 end,
+                   if (choose-character-set?) 0 else $CF-NOSCRIPTSEL end,
+                   if (default) $CF-INITTOLOGFONTSTRUCT else 0 end,
+                   $CF-FORCEFONTEXIST,
+                   $CF-SCREENFONTS);
       cf.lpszStyle-value   := $NULL-string;
       if (ChooseFont(cf))
-	make-text-style-from-font(_port, logfont)
+        make-text-style-from-font(_port, logfont)
       else
-	ensure-no-dialog-error("ChooseFont")
+        ensure-no-dialog-error("ChooseFont")
       end
     end
   end

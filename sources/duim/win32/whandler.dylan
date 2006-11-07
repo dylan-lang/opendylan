@@ -16,10 +16,10 @@ define method win32-duim-last-handler (condition :: <serious-condition>, next-ha
   OutputDebugString("\r\n");
   let message :: <string> =
     format-to-string("Unhandled Dylan error:\n\n"
-		     "%s\n\n"
-		     "Do you want to quit?\n\n"
-		     "Press YES to quit, NO to ignore or CANCEL to debug.",
-		     condition-string);
+                     "%s\n\n"
+                     "Do you want to quit?\n\n"
+                     "Press YES to quit, NO to ignore or CANCEL to debug.",
+                     condition-string);
 
   // Use the executable file name as the window title.  Unfortunately
   // for OLE controls, this is a bit misleading, but have instituted
@@ -31,13 +31,13 @@ define method win32-duim-last-handler (condition :: <serious-condition>, next-ha
     GetModuleFileName(module-handle, szFullPath, buf-size);
   let button :: <integer> =
     MessageBox($NULL-HWND, 
-	       message, /* message text */
-	       if(path-length > 0) szFullPath else "Dylan" end if, /* title */
-	       logior($MB-YESNOCANCEL,	 // buttons
-		      $MB-ICONSTOP,	 // icon
-		      $MB-SETFOREGROUND, // appear at front
-		      $MB-TASKMODAL)	 // freeze all windows of application
-		 );
+               message, /* message text */
+               if(path-length > 0) szFullPath else "Dylan" end if, /* title */
+               logior($MB-YESNOCANCEL,   // buttons
+                      $MB-ICONSTOP,      // icon
+                      $MB-SETFOREGROUND, // appear at front
+                      $MB-TASKMODAL)     // freeze all windows of application
+                 );
   destroy(szFullPath);
   select (button)
     $IDYES    => ExitProcess(0);
@@ -53,7 +53,7 @@ define method safe-condition-to-string
       format-to-string("%s", condition);
     exception (print-error :: <error>)
       format-to-string("%=\nsignalled while trying to print an instance of %=",
-		       print-error, object-class(condition));
+                       print-error, object-class(condition));
     end block;
   exception (error :: <error>)
     "*** Crashed trying to print condition ***"

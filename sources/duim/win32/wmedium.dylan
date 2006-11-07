@@ -25,7 +25,7 @@ define constant <native-color> = <integer>;
 define sealed class <win32-medium> (<basic-medium>)
   sealed slot %ink-cache :: <object-table> = make(<table>);
   // Cached clipping region
-  sealed slot %clip-mask = #f;	// #f, #"none", or #[left, top, right, bottom]
+  sealed slot %clip-mask = #f;  // #f, #"none", or #[left, top, right, bottom]
   sealed slot %hRect :: false-or(type-union(<LPRECT>, <HRGN>)) = #f;
   // Cached font
   sealed slot %hFont :: false-or(<HFONT>) = #f;
@@ -108,7 +108,7 @@ end method get-DC;
 define sealed method release-DC
     (medium :: <win32-medium>) => ()
   let drawable = medium-drawable(medium);
-  drawable & release-DC(drawable);	// be careful during shutdown...
+  drawable & release-DC(drawable);      // be careful during shutdown...
   // Force 'invalidate-cached-drawing-state'.  Note that 'release-DC' on
   // mirrors is careful not to do any work for CS_OWNDC windows.  That is
   // not the case here -- when 'release-DC' gets called on a medium, it
@@ -125,8 +125,8 @@ define sealed method do-attach-medium
     (sheet :: <sheet>, medium :: <win32-medium>) => ()
   let mirror = sheet-mirror(sheet);
   assert(mirror,
-	 "Unexpected failure: no mirror when attaching medium for %=",
-	 sheet);
+         "Unexpected failure: no mirror when attaching medium for %=",
+         sheet);
   clear-ink-cache(medium);
   medium-drawable(medium) := mirror
 end method do-attach-medium;
@@ -147,7 +147,7 @@ end method deallocate-medium;
 
 define sealed method medium-foreground-setter
     (fg :: <ink>, medium :: <win32-medium>) => (foreground :: <ink>)
-  next-method();	// also sets 'medium-drawing-state-cache' appropriately
+  next-method();        // also sets 'medium-drawing-state-cache' appropriately
   clear-ink-cache(medium);
   // Force repaint to be done later (#f => don't repaint the background)
   unless (instance?(medium, <pixmap-medium>))
@@ -158,7 +158,7 @@ end method medium-foreground-setter;
 
 define sealed method medium-background-setter
     (bg :: <ink>, medium :: <win32-medium>) => (background :: <ink>)
-  next-method();	// also sets 'medium-drawing-state-cache' appropriately
+  next-method();        // also sets 'medium-drawing-state-cache' appropriately
   clear-ink-cache(medium);
   //---*** Need to create an HBRUSH to be used by the WM_ERASEBKGND message.
   //---*** Also should remember the color to pass to SetBkColor for text.
@@ -199,7 +199,7 @@ define sealed method invalidate-cached-drawing-state
   ignore(new-state);
   medium.%hFont := #f;
   when (medium.%hBrush
-	& zero?(logand(new-state, $medium-brush-cached)))
+        & zero?(logand(new-state, $medium-brush-cached)))
     // Make sure the DC no longer refers to the cached brush before deleting it
     let hDC :: <HDC> = get-DC(medium);
     SelectObject(hDC, medium.%old-hBrush | $null-hBrush);
@@ -209,8 +209,8 @@ define sealed method invalidate-cached-drawing-state
     medium.%cached-brush := #f
   end;
   when (medium.%hPen
-	& (  zero?(logand(new-state, $medium-brush-cached))
-	   | zero?(logand(new-state, $medium-pen-cached))))
+        & (  zero?(logand(new-state, $medium-brush-cached))
+           | zero?(logand(new-state, $medium-pen-cached))))
     // Make sure the DC no longer refers to the cached pen before deleting it
     let hDC :: <HDC> = get-DC(medium);
     SelectObject(hDC, medium.%old-hPen | $null-hPen);
@@ -262,7 +262,7 @@ define sealed method update-drawing-state
     // Note that we have to establish a new pen if the brush changed,
     // because the pen encodes the brush color
     when (  zero?(logand(old-cache, $medium-brush-cached))
-	  | zero?(logand(old-cache, $medium-pen-cached)))
+          | zero?(logand(old-cache, $medium-pen-cached)))
       let pen = pen | medium-pen(medium);
       establish-pen(medium, pen, hDC);
       new-cache := logior(new-cache, $medium-pen-cached)
@@ -271,8 +271,8 @@ define sealed method update-drawing-state
     // Note that, even if the font didn't change, we still have to set
     // the text color if the brush changed
     when (font
-	  & (  zero?(logand(old-cache, $medium-brush-cached))
-	     | zero?(logand(old-cache, $medium-font-cached))))
+          & (  zero?(logand(old-cache, $medium-brush-cached))
+             | zero?(logand(old-cache, $medium-font-cached))))
       establish-font(medium, font, hDC);
       new-cache := logior(new-cache, $medium-font-cached)
     end;
@@ -280,23 +280,23 @@ define sealed method update-drawing-state
       let hrect = medium.%hRect;
       // If the clip mask is decached, flush the old hRect
       unless (hRect = $null-region)
-	destroy(hRect)
+        destroy(hRect)
       end;
       medium.%hRect := #f
     end;
     unless (medium.%hRect)
       let mask = compute-clip-mask(medium);
       if (mask == #"none")
-	medium.%hRect := $null-region
+        medium.%hRect := $null-region
       else
-	let hRect :: <LPRECT> = make(<LPRECT>);
-	without-bounds-checks
-	  hRect.left-value   := mask[0];
-	  hRect.top-value    := mask[1];
-	  hRect.right-value  := mask[2];
-	  hRect.bottom-value := mask[3]
-	end;
-	medium.%hRect := hRect
+        let hRect :: <LPRECT> = make(<LPRECT>);
+        without-bounds-checks
+          hRect.left-value   := mask[0];
+          hRect.top-value    := mask[1];
+          hRect.right-value  := mask[2];
+          hRect.bottom-value := mask[3]
+        end;
+        medium.%hRect := hRect
       end;
       //---*** SelectClipRgn isn't imported yet :-(
       // SelectClipRgn(hDC, medium.%hRect)
@@ -333,19 +333,19 @@ define sealed method establish-brush
     (medium :: <win32-medium>, brush :: <standard-brush>, hDC :: <HDC>) => ()
   let hBrush :: <HBRUSH>
     = case
-	brush == medium.%cached-brush =>
-	  medium.%hBrush;
-	otherwise =>
-	  let (color :: <native-color>, fill-style, operation :: <integer>, image)
-	    = convert-ink-to-DC-components(medium, hDC, brush);
-	  //---*** Hack the image
-	  //---***   This should set the tile-x/y to (0,0) if the brush is a stipple, or it
-	  //---***   should align it to the left/top of the figure if the brush is a pattern
-	  //---*** Make use of fill-style by using 'CreateHatchBrush' or
-	  //---***   'CreatePatternBrush' instead of 'CreateSolidBrush'
-	  medium.%brush-color := color;
-	  medium.%ROP2 := $rop2-map[operation];
-	  check-result("CreateSolidBrush", CreateSolidBrush(color));
+        brush == medium.%cached-brush =>
+          medium.%hBrush;
+        otherwise =>
+          let (color :: <native-color>, fill-style, operation :: <integer>, image)
+            = convert-ink-to-DC-components(medium, hDC, brush);
+          //---*** Hack the image
+          //---***   This should set the tile-x/y to (0,0) if the brush is a stipple, or it
+          //---***   should align it to the left/top of the figure if the brush is a pattern
+          //---*** Make use of fill-style by using 'CreateHatchBrush' or
+          //---***   'CreatePatternBrush' instead of 'CreateSolidBrush'
+          medium.%brush-color := color;
+          medium.%ROP2 := $rop2-map[operation];
+          check-result("CreateSolidBrush", CreateSolidBrush(color));
       end;
   do-establish-brush(medium, brush, hBrush, hDC)
 end method establish-brush;
@@ -354,22 +354,22 @@ define sealed method establish-brush
     (medium :: <win32-medium>, brush :: <rgb-color>, hDC :: <HDC>) => ()
   let hBrush :: <HBRUSH>
     = case
-	brush == medium.%cached-brush =>
-	  medium.%hBrush;
-	brush == $black =>
-	  medium.%brush-color := $native-black;
-	  medium.%ROP2 := $R2-COPYPEN;
-	  $black-hbrush;
-	brush == $white =>
-	  medium.%brush-color := $native-white;
-	  medium.%ROP2 := $R2-COPYPEN;
-	  $white-hbrush;
-	otherwise =>
-	  let color = color->native-color(brush, medium);
-	  medium.%brush-color := color;
-	  medium.%ROP2 := $R2-COPYPEN;
-	  check-result("CreateSolidBrush", CreateSolidBrush(color));
-	end;
+        brush == medium.%cached-brush =>
+          medium.%hBrush;
+        brush == $black =>
+          medium.%brush-color := $native-black;
+          medium.%ROP2 := $R2-COPYPEN;
+          $black-hbrush;
+        brush == $white =>
+          medium.%brush-color := $native-white;
+          medium.%ROP2 := $R2-COPYPEN;
+          $white-hbrush;
+        otherwise =>
+          let color = color->native-color(brush, medium);
+          medium.%brush-color := color;
+          medium.%ROP2 := $R2-COPYPEN;
+          check-result("CreateSolidBrush", CreateSolidBrush(color));
+        end;
   do-establish-brush(medium, brush, hBrush, hDC)
 end method establish-brush;
 
@@ -415,21 +415,21 @@ define sealed method establish-pen
     (medium :: <win32-medium>, pen :: <standard-pen>, hDC :: <HDC>) => ();
   let hPen :: <HPEN>
     = case
-	pen == medium.%cached-pen =>
-	  medium.%hPen;
-	otherwise =>
-	  let width = pen-width(pen);
-	  let style
-	    = select (pen-dashes(pen))
-		#f                            => $PS-SOLID;
-		#t                            => $PS-DASH;
-		pen-dashes($dotted-pen)       => $PS-DOT;
-		pen-dashes($dash-dot-pen)     => $PS-DASHDOT;
-		pen-dashes($dash-dot-dot-pen) => $PS-DASHDOTDOT;
-		otherwise                     => $PS-DASHDOT;
-	      end;
-	  // Note well!  Depends on the brush having been established first!
-	  check-result("CreatePen", CreatePen(style, width, medium.%brush-color));
+        pen == medium.%cached-pen =>
+          medium.%hPen;
+        otherwise =>
+          let width = pen-width(pen);
+          let style
+            = select (pen-dashes(pen))
+                #f                            => $PS-SOLID;
+                #t                            => $PS-DASH;
+                pen-dashes($dotted-pen)       => $PS-DOT;
+                pen-dashes($dash-dot-pen)     => $PS-DASHDOT;
+                pen-dashes($dash-dot-dot-pen) => $PS-DASHDOTDOT;
+                otherwise                     => $PS-DASHDOT;
+              end;
+          // Note well!  Depends on the brush having been established first!
+          check-result("CreatePen", CreatePen(style, width, medium.%brush-color));
       end;
   when (medium.%hPen ~= hPen)
     medium.%cached-pen := pen;
@@ -503,31 +503,31 @@ define sealed method convert-ink-to-DC-components
   let bitmap :: false-or(<image>)
     = gethash(cache, brush)
       | begin
-	  let (array, colors) = decode-pattern(brush);
-	  let width   :: <integer> = image-width(brush);
-	  let height  :: <integer> = image-height(brush);
-	  let ncolors :: <integer> = size(colors);
-	  //---*** Should we create a DIB here or what?
-	  let pixels   :: <simple-object-vector> = make(<simple-vector>, size: ncolors);
-	  let pixarray :: <array> = make(<array>, dimensions: list(width, height));
-	  without-bounds-checks
-	    for (n :: <integer> from 0 below ncolors)
-	      let pixel = convert-ink-to-DC-components(medium, hDC, colors[n]);
-	      pixels[n] := pixel
-	    end;
-	    for (y :: <integer> from 0 below height)
-	      for (x :: <integer> from 0 below width)
-		pixarray[y,x] := pixels[array[y,x]]
-	      end
-	    end
-	  end;
-	  //---*** Fill in the DIB from 'pixels' and 'pixarray'
-	  let bitmap = make(<win32-bitmap>,
-			    width: width, height: height,
-			    handle: #f);
-	  gethash(cache, brush) := bitmap;
-	  bitmap
-	end;
+          let (array, colors) = decode-pattern(brush);
+          let width   :: <integer> = image-width(brush);
+          let height  :: <integer> = image-height(brush);
+          let ncolors :: <integer> = size(colors);
+          //---*** Should we create a DIB here or what?
+          let pixels   :: <simple-object-vector> = make(<simple-vector>, size: ncolors);
+          let pixarray :: <array> = make(<array>, dimensions: list(width, height));
+          without-bounds-checks
+            for (n :: <integer> from 0 below ncolors)
+              let pixel = convert-ink-to-DC-components(medium, hDC, colors[n]);
+              pixels[n] := pixel
+            end;
+            for (y :: <integer> from 0 below height)
+              for (x :: <integer> from 0 below width)
+                pixarray[y,x] := pixels[array[y,x]]
+              end
+            end
+          end;
+          //---*** Fill in the DIB from 'pixels' and 'pixarray'
+          let bitmap = make(<win32-bitmap>,
+                            width: width, height: height,
+                            handle: #f);
+          gethash(cache, brush) := bitmap;
+          bitmap
+        end;
   values($native-white, #"solid", $boole-1, bitmap)
 end method convert-ink-to-DC-components;
 
@@ -546,7 +546,7 @@ define sealed method convert-ink-to-DC-components
   let (color :: <native-color>, fill-style, operation :: <integer>, pattern)
     = convert-ink-to-DC-components
         (medium, hDC,
-	 brush-tile(brush) | brush-stipple(brush) | brush-foreground(brush));
+         brush-tile(brush) | brush-stipple(brush) | brush-foreground(brush));
   // ignore(operation);
   values(color, fill-style, brush-mode(brush), pattern)
 end method convert-ink-to-DC-components;
@@ -558,33 +558,33 @@ define sealed method compute-clip-mask
   medium.%clip-mask 
   | (medium.%clip-mask
        := begin
-	    let sheet = medium-sheet(medium);
-	    let sregion = sheet-device-region(sheet);
-	    let mregion = medium-clipping-region(medium);
-	    let valid? = #t;
-	    if (sregion == $nowhere | mregion == $nowhere)
-	      #"none"
-	    else
-	      let (sleft, stop, sright, sbottom) = box-edges(sregion);
-	      unless (mregion == $everywhere)
-		let (mleft, mtop, mright, mbottom) = box-edges(mregion);
-		let (mleft, mtop, mright, mbottom)
-		  = transform-box(sheet-device-transform(sheet), 
-				  mleft, mtop, mright, mbottom);
-		let (v, left, top, right, bottom)
-		  = ltrb-intersects-ltrb?(sleft, stop, sright, sbottom,
-					  mleft, mtop, mright, mbottom);
-		sleft := left;
-		stop  := top;
-		sright  := right;
-		sbottom := bottom;
-		valid? := v
-	      end;
-	      if (valid?)
-		vector(sleft, stop, sright, sbottom)
-	      else
-		#"none"
-	      end
-	    end
-	  end)
+            let sheet = medium-sheet(medium);
+            let sregion = sheet-device-region(sheet);
+            let mregion = medium-clipping-region(medium);
+            let valid? = #t;
+            if (sregion == $nowhere | mregion == $nowhere)
+              #"none"
+            else
+              let (sleft, stop, sright, sbottom) = box-edges(sregion);
+              unless (mregion == $everywhere)
+                let (mleft, mtop, mright, mbottom) = box-edges(mregion);
+                let (mleft, mtop, mright, mbottom)
+                  = transform-box(sheet-device-transform(sheet), 
+                                  mleft, mtop, mright, mbottom);
+                let (v, left, top, right, bottom)
+                  = ltrb-intersects-ltrb?(sleft, stop, sright, sbottom,
+                                          mleft, mtop, mright, mbottom);
+                sleft := left;
+                stop  := top;
+                sright  := right;
+                sbottom := bottom;
+                valid? := v
+              end;
+              if (valid?)
+                vector(sleft, stop, sright, sbottom)
+              else
+                #"none"
+              end
+            end
+          end)
 end method compute-clip-mask;

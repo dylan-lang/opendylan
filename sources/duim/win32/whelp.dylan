@@ -94,11 +94,11 @@ define sealed method display-help
     let top-sheet = top-level-sheet(frame);
     when (top-sheet)
       with-help-data (data = system, command)
-	do-display-help(system,
-			window-handle(top-sheet),
-			help-path(system, command),
-			help-id(system, command),
-			data)
+        do-display-help(system,
+                        window-handle(top-sheet),
+                        help-path(system, command),
+                        help-id(system, command),
+                        data)
       end
     end;
   exception (condition :: <help-system-error>)
@@ -128,7 +128,7 @@ define method do-with-open-registry-subkey
     (key, subkeyname, body :: <function>) => (#rest values)
   let (result, subkey)
     = RegOpenKeyEx(key, subkeyname, 0,
-		   %logior($KEY-ENUMERATE-SUB-KEYS, $KEY-QUERY-VALUE));
+                   %logior($KEY-ENUMERATE-SUB-KEYS, $KEY-QUERY-VALUE));
   if (result = $ERROR-SUCCESS)
     block ()
       body(subkey)
@@ -166,9 +166,9 @@ define method read-registry-string
       let (result, type)
         = RegQueryValueEx(key, name, null-pointer(<LPDWORD>), buffer, count);
       if (result ~= $ERROR-SUCCESS | type ~= $REG-SZ)
-	error(make(<registry-entry-lookup-error>, name: name, result: result))
+        error(make(<registry-entry-lookup-error>, name: name, result: result))
       else
-	as(<byte-string>, buffer)
+        as(<byte-string>, buffer)
       end
     end
   end
@@ -391,9 +391,9 @@ define sealed method help-data
   let region = help-window-region(command);
   let (left, top, right, bottom) = box-edges(region);
   let info = make(<LPHELPWININFO>,
-		  x:  left, y:  top, 
-		  dx: right - left, dy: bottom - top,
-		  wMax: $SW-SHOWNA);
+                  x:  left, y:  top, 
+                  dx: right - left, dy: bottom - top,
+                  wMax: $SW-SHOWNA);
   info
 end method help-data;
 */

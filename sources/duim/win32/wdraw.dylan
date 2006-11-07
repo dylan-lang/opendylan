@@ -20,18 +20,18 @@ end method initialize-graphics;
 define macro with-temporary-gdi-object
   { with-temporary-gdi-object (?hDC:name = ?object:expression) ?body:body end }
     => { begin
-	   let object :: <HGDIOBJ> = ?object;
-	   let old-object = SelectObject(?hDC, object);
-	   ?body;
-	   SelectObject(?hDC, old-object)
-	 end }
+           let object :: <HGDIOBJ> = ?object;
+           let old-object = SelectObject(?hDC, object);
+           ?body;
+           SelectObject(?hDC, old-object)
+         end }
 end macro with-temporary-gdi-object;
 
 define macro with-fill-selected
   { with-fill-selected (?hDC:name, ?filled?:expression) ?body:body end }
     => { with-temporary-gdi-object (?hDC = if (?filled?) $null-hpen else $null-hbrush end)
-	   ?body  
-	 end }
+           ?body  
+         end }
 end macro with-fill-selected;
 
 
@@ -48,8 +48,8 @@ define sealed method draw-point
     else 
       let thickness/2 = truncate/(thickness, 2);
       Ellipse(hDC,
-	      x - thickness/2, y - thickness/2, 
-	      x + thickness/2, y + thickness/2)
+              x - thickness/2, y - thickness/2, 
+              x + thickness/2, y + thickness/2)
     end
   end;
   #f
@@ -63,20 +63,20 @@ define sealed method draw-points
   if (thickness < 2)
     do-coordinates
       (method (x, y)
-	 with-device-coordinates (transform, x, y)
-	   SetPixel(hDC, x, y, medium.%brush-color)
-	 end
+         with-device-coordinates (transform, x, y)
+           SetPixel(hDC, x, y, medium.%brush-color)
+         end
        end,
        coord-seq)
   else
     let thickness/2 = truncate/(thickness, 2);
     do-coordinates
       (method (x, y)
-	 with-device-coordinates (transform, x, y)
-	   Ellipse(hDC,
-		   x - thickness/2, y - thickness/2,
-		   x + thickness/2, y + thickness/2)
-	 end
+         with-device-coordinates (transform, x, y)
+           Ellipse(hDC,
+                   x - thickness/2, y - thickness/2,
+                   x + thickness/2, y + thickness/2)
+         end
        end,
        coord-seq)
   end;
@@ -102,8 +102,8 @@ define sealed method draw-lines
   do-endpoint-coordinates
     (method (x1, y1, x2, y2)
        with-device-coordinates (transform, x1, y1, x2, y2)
-	 MoveToEx(hDC, x1, y1, $NULL-POINT);
-	 LineTo(hDC, x2, y2)
+         MoveToEx(hDC, x1, y1, $NULL-POINT);
+         LineTo(hDC, x2, y2)
        end
      end,
      coord-seq);
@@ -123,7 +123,7 @@ define sealed method draw-rectangle
     let fudge-factor = *rectangle-fudge-factor*;
     with-device-coordinates (transform, x1, y1, x2, y2)
       with-fill-selected (hDC, filled?)
-	Rectangle(hDC, x1, y1, x2 + fudge-factor, y2 + fudge-factor)
+        Rectangle(hDC, x1, y1, x2 + fudge-factor, y2 + fudge-factor)
       end
     end
   end;
@@ -143,12 +143,12 @@ define sealed method draw-rectangles
     with-fill-selected (hDC, filled?)
       //---*** Use PolyPolyLine
       do-endpoint-coordinates
-	(method (x1, y1, x2, y2)
-	   with-device-coordinates (transform, x1, y1, x2, y2)
-	     Rectangle(hDC, x1, y1, x2 + fudge-factor, y2 + fudge-factor)
-	   end
-	 end,
-	 coord-seq)
+        (method (x1, y1, x2, y2)
+           with-device-coordinates (transform, x1, y1, x2, y2)
+             Rectangle(hDC, x1, y1, x2 + fudge-factor, y2 + fudge-factor)
+           end
+         end,
+         coord-seq)
     end
   end;
   #f
@@ -161,17 +161,17 @@ define sealed method draw-transformed-rectangles
   ignore(filled?);
   let ncoords :: <integer> = size(coord-seq);
   assert(zero?(modulo(ncoords, 4)),
-	 "The coordinate sequence has the wrong number of elements");
+         "The coordinate sequence has the wrong number of elements");
   local method draw-one (x1, y1, x2, y2) => ()
-	  with-stack-vector (coords = x1, y1, x2, y1, x2, y2, x1, y2)
-	    apply(draw-polygon, medium, coords, closed?: #t, keys)
-	  end
+          with-stack-vector (coords = x1, y1, x2, y1, x2, y2, x1, y2)
+            apply(draw-polygon, medium, coords, closed?: #t, keys)
+          end
         end method;
   dynamic-extent(draw-one);
   without-bounds-checks
     for (i :: <integer> = 0 then i + 4, until: i = ncoords)
       draw-one(coord-seq[i + 0], coord-seq[i + 1],
-	       coord-seq[i + 2], coord-seq[i + 3])
+               coord-seq[i + 2], coord-seq[i + 3])
     end
   end;
   #f
@@ -205,36 +205,36 @@ define sealed method draw-polygon
   with-fill-selected (hDC, filled?)
     with-stack-structure (c-points :: <LPPOINT>, element-count: npoints)
       without-bounds-checks
-	let i :: <integer> = 0;
-	for (j :: <integer> from 0 below ncoords)
-	  let x = coord-seq[i + 0];
-	  let y = coord-seq[i + 1];
-	  with-device-coordinates (transform, x, y)
-	    //---*** Should be (in some later version of Webster)...
-	    //---*** c-points[j].x-value := x;
-	    //---*** c-points[j].y-value := y;
-	    pointer-value-address(c-points, index: j).x-value := x;
-	    pointer-value-address(c-points, index: j).y-value := y;
-	    i := i + 2
-	  end
-	finally
-	  when (closed? & ~filled?)
-	    let x = coord-seq[0];
-	    let y = coord-seq[1];
-	    with-device-coordinates (transform, x, y)
-	      //---*** Should be (in some later version of Webster)...
-	      //---*** c-points[npoints - 1].x-value := x;
-	      //---*** c-points[npoints - 1].y-value := y
-	      pointer-value-address(c-points, index: npoints - 1).x-value := x;
-	      pointer-value-address(c-points, index: npoints - 1).y-value := y
-	    end
-	  end
-	end
+        let i :: <integer> = 0;
+        for (j :: <integer> from 0 below ncoords)
+          let x = coord-seq[i + 0];
+          let y = coord-seq[i + 1];
+          with-device-coordinates (transform, x, y)
+            //---*** Should be (in some later version of Webster)...
+            //---*** c-points[j].x-value := x;
+            //---*** c-points[j].y-value := y;
+            pointer-value-address(c-points, index: j).x-value := x;
+            pointer-value-address(c-points, index: j).y-value := y;
+            i := i + 2
+          end
+        finally
+          when (closed? & ~filled?)
+            let x = coord-seq[0];
+            let y = coord-seq[1];
+            with-device-coordinates (transform, x, y)
+              //---*** Should be (in some later version of Webster)...
+              //---*** c-points[npoints - 1].x-value := x;
+              //---*** c-points[npoints - 1].y-value := y
+              pointer-value-address(c-points, index: npoints - 1).x-value := x;
+              pointer-value-address(c-points, index: npoints - 1).y-value := y
+            end
+          end
+        end
       end;
       if (filled?)
-	Polygon(hDC, c-points, npoints)
+        Polygon(hDC, c-points, npoints)
       else
-	Polyline(hDC, c-points, npoints)
+        Polyline(hDC, c-points, npoints)
       end
     end
   end;
@@ -251,21 +251,21 @@ define sealed method draw-triangle
   with-device-coordinates (transform, x1, y1, x2, y2, x3, y3)
     with-fill-selected (hDC, filled?)
       with-stack-structure (c-points :: <LPPOINT>, element-count: npoints)
-	pointer-value-address(c-points, index: 0).x-value := x1;
-	pointer-value-address(c-points, index: 0).y-value := y1;
-	pointer-value-address(c-points, index: 1).x-value := x2;
-	pointer-value-address(c-points, index: 1).y-value := y2;
-	pointer-value-address(c-points, index: 2).x-value := x3;
-	pointer-value-address(c-points, index: 2).y-value := y3;
-	when (~filled?)
-	  pointer-value-address(c-points, index: 3).x-value := x1;
-	  pointer-value-address(c-points, index: 3).y-value := y1;
-	end;
-	if (filled?)
-	  Polygon(hDC, c-points, npoints)
-	else
-	  Polyline(hDC, c-points, npoints)
-	end
+        pointer-value-address(c-points, index: 0).x-value := x1;
+        pointer-value-address(c-points, index: 0).y-value := y1;
+        pointer-value-address(c-points, index: 1).x-value := x2;
+        pointer-value-address(c-points, index: 1).y-value := y2;
+        pointer-value-address(c-points, index: 2).x-value := x3;
+        pointer-value-address(c-points, index: 2).y-value := y3;
+        when (~filled?)
+          pointer-value-address(c-points, index: 3).x-value := x1;
+          pointer-value-address(c-points, index: 3).y-value := y1;
+        end;
+        if (filled?)
+          Polygon(hDC, c-points, npoints)
+        else
+          Polyline(hDC, c-points, npoints)
+        end
       end
     end
   end;
@@ -281,35 +281,35 @@ define sealed method draw-ellipse
   with-device-coordinates (transform, center-x, center-y)
     with-device-distances (transform, radius-1-dx, radius-1-dy, radius-2-dx, radius-2-dy)
       let (angle-2, x-radius, y-radius, angle-1)
-	= singular-value-decomposition-2x2(radius-1-dx, radius-2-dx, radius-1-dy, radius-2-dy);
+        = singular-value-decomposition-2x2(radius-1-dx, radius-2-dx, radius-1-dy, radius-2-dy);
       with-fill-selected (hDC, filled?)
-	if (#t					//---*** remove when tilted ellipses work
-	    | x-radius = abs(y-radius)		// a circle - rotations are irrelevant
-	    | zero?(angle-1))			// axis-aligned ellipse
-	  x-radius := abs(x-radius);
-	  y-radius := abs(y-radius);
-	  let (left, top, right, bottom)
-	    = elliptical-arc-box(center-x, center-y,
-				 x-radius, 0, 0, y-radius,
-				 thickness: pen-width(medium-pen(medium)));
-	  if (start-angle & end-angle)
-	    let start-x = truncate(center-x +  x-radius * cos(end-angle));
-	    let start-y = truncate(center-y +  y-radius * sin(end-angle));
-	    let end-x   = truncate(center-x +  x-radius * cos(start-angle));
-	    let end-y   = truncate(center-y +  y-radius * sin(start-angle));
-	    let dx = start-x - end-x;
-	    let dy = start-y - end-y;
-	    if (filled?)
-	      Pie(hDC, left, top, right, bottom, start-x, start-y, end-x, end-y)
-	    else
-	      Arc(hDC, left, top, right, bottom, start-x, start-y, end-x, end-y)
-	    end
-	  else
-	    Ellipse(hDC, left, top, right, bottom)
-	  end
-	else
-	  #f					//---*** do tilted ellipses here
-	end
+        if (#t                                  //---*** remove when tilted ellipses work
+            | x-radius = abs(y-radius)          // a circle - rotations are irrelevant
+            | zero?(angle-1))                   // axis-aligned ellipse
+          x-radius := abs(x-radius);
+          y-radius := abs(y-radius);
+          let (left, top, right, bottom)
+            = elliptical-arc-box(center-x, center-y,
+                                 x-radius, 0, 0, y-radius,
+                                 thickness: pen-width(medium-pen(medium)));
+          if (start-angle & end-angle)
+            let start-x = truncate(center-x +  x-radius * cos(end-angle));
+            let start-y = truncate(center-y +  y-radius * sin(end-angle));
+            let end-x   = truncate(center-x +  x-radius * cos(start-angle));
+            let end-y   = truncate(center-y +  y-radius * sin(start-angle));
+            let dx = start-x - end-x;
+            let dy = start-y - end-y;
+            if (filled?)
+              Pie(hDC, left, top, right, bottom, start-x, start-y, end-x, end-y)
+            else
+              Arc(hDC, left, top, right, bottom, start-x, start-y, end-x, end-y)
+            end
+          else
+            Ellipse(hDC, left, top, right, bottom)
+          end
+        else
+          #f                                    //---*** do tilted ellipses here
+        end
       end
     end
   end;
@@ -339,7 +339,7 @@ define sealed method set-pixels
   do-coordinates
     (method (x, y)
        with-device-coordinates (transform, x, y)
-	 SetPixel(hDC, x, y, color)
+         SetPixel(hDC, x, y, color)
        end
      end,
      coord-seq);
@@ -360,30 +360,30 @@ define sealed method draw-image
   let pixmap
     = gethash(cache, image)
       | begin
-	  // Decode the pattern into a pixmap...
-	  let (array, colors) = decode-pattern(image);
-	  let ncolors :: <integer> = size(colors);
-	  let pixels  :: <simple-object-vector> = make(<simple-vector>, size: ncolors);
-	  without-bounds-checks
-	    for (n :: <integer> from 0 below ncolors)
-	      let pixel = convert-ink-to-DC-components(medium, hDC, colors[n]);
-	      pixels[n] := pixel
-	    end;
-	    let pixmap
-	      = with-output-to-pixmap(medium, width: width, height: height)
-		  let hDC = get-DC(medium);	// get the DC for the pixmap medium
-		  for (y :: <integer> from 0 below height)
-		    for (x :: <integer> from 0 below width)
-		      SetPixel(hDC, x, y, pixels[array[y,x]])
-		    end
-		  end
-		end;
-	    gethash(cache, image) := pixmap;
-	    pixmap
-	  end
-	end;
+          // Decode the pattern into a pixmap...
+          let (array, colors) = decode-pattern(image);
+          let ncolors :: <integer> = size(colors);
+          let pixels  :: <simple-object-vector> = make(<simple-vector>, size: ncolors);
+          without-bounds-checks
+            for (n :: <integer> from 0 below ncolors)
+              let pixel = convert-ink-to-DC-components(medium, hDC, colors[n]);
+              pixels[n] := pixel
+            end;
+            let pixmap
+              = with-output-to-pixmap(medium, width: width, height: height)
+                  let hDC = get-DC(medium);     // get the DC for the pixmap medium
+                  for (y :: <integer> from 0 below height)
+                    for (x :: <integer> from 0 below width)
+                      SetPixel(hDC, x, y, pixels[array[y,x]])
+                    end
+                  end
+                end;
+            gethash(cache, image) := pixmap;
+            pixmap
+          end
+        end;
   do-copy-area(pixmap, 0, 0, width, height,
-	       medium, x, y)
+               medium, x, y)
 end method draw-image;
 
 
@@ -439,12 +439,12 @@ define sealed method clip-from-path
     (medium :: <win32-medium>, #key function = $boole-and) => (record)
   let hDC :: <HDC> = get-DC(medium);
   let mode = select (function)
-	       $boole-and   => $RGN-AND;
-	       $boole-set   => $RGN-COPY;
-	       $boole-ior   => $RGN-OR;
-	       $boole-xor   => $RGN-XOR;
-	       $boole-andc2 => $RGN-DIFF;
-	     end;
+               $boole-and   => $RGN-AND;
+               $boole-set   => $RGN-COPY;
+               $boole-ior   => $RGN-OR;
+               $boole-xor   => $RGN-XOR;
+               $boole-andc2 => $RGN-DIFF;
+             end;
   SelectClipPath(hDC, mode);
   #f
 end method clip-from-path;
@@ -490,22 +490,22 @@ define sealed method arc-to
   with-device-coordinates (transform, center-x, center-y)
     with-device-distances (transform, radius-1-dx, radius-1-dy, radius-2-dx, radius-2-dy)
       let (x-radius, y-radius)
-	= case
-	    radius-1-dx = 0 & radius-2-dy = 0 =>
-	      values(abs(radius-2-dx), abs(radius-1-dy));
-	    radius-2-dx = 0 & radius-1-dy = 0 =>
-	      values(abs(radius-1-dx), abs(radius-2-dy));
-	    otherwise =>
-	      not-yet-implemented("Tilted ellipses");
-	  end;
+        = case
+            radius-1-dx = 0 & radius-2-dy = 0 =>
+              values(abs(radius-2-dx), abs(radius-1-dy));
+            radius-2-dx = 0 & radius-1-dy = 0 =>
+              values(abs(radius-1-dx), abs(radius-2-dy));
+            otherwise =>
+              not-yet-implemented("Tilted ellipses");
+          end;
       let (left, top, right, bottom)
-	= elliptical-arc-box(center-x, center-y,
-			     radius-1-dx, radius-1-dy, radius-2-dx, radius-2-dy);
+        = elliptical-arc-box(center-x, center-y,
+                             radius-1-dx, radius-1-dy, radius-2-dx, radius-2-dy);
       //---*** What angle conventions does Windows use?
       start-angle := start-angle | 0.0;
       end-angle   := end-angle | $2pi;
       when (end-angle < start-angle)
-	end-angle := end-angle + $2pi
+        end-angle := end-angle + $2pi
       end;
       let (rx1, ry1) = values(cos(start-angle), sin(start-angle));
       let (rx2, ry2) = values(cos(end-angle),   sin(end-angle));
@@ -550,7 +550,7 @@ define sealed method clear-box
     //---*** Wrong -- only do this for 3d canvases
     with-temporary-gdi-object (hDC = as(<HBRUSH>, $COLOR-3DFACE))
       with-temporary-gdi-object (hDC = $null-hpen)
-	let fudge-factor = *rectangle-fudge-factor*;
+        let fudge-factor = *rectangle-fudge-factor*;
         Rectangle(hDC, left, top, right + fudge-factor, bottom + fudge-factor);
       end
     end
@@ -599,7 +599,7 @@ define sealed method draw-text
   let _start :: <integer> = _start | 0;
   let _end   :: <integer> = _end   | length;
   assert(_end - _start < 32000,
-	 "'draw-text' cannot draw text strings longer than 32000 characters");
+         "'draw-text' cannot draw text strings longer than 32000 characters");
   with-device-coordinates (transform, x, y)
     when (towards-x & towards-y)
       convert-to-device-coordinates!(transform, towards-x, towards-y)
@@ -607,22 +607,22 @@ define sealed method draw-text
     //---*** It would be great if 'with-c-string' took start & end!
     let substring
       = if (_start = 0 & _end = length) string
-	else copy-sequence(string, start: _start, end: _end) end;
+        else copy-sequence(string, start: _start, end: _end) end;
     with-c-string (c-string = substring)
       let old-alignment = SetTextAlign(hDC, windows-text-alignment(align-x, align-y));
       //--- Unfortunately Windows can't do y-centering...
       when (align-y == #"center")
-	let (font, width, height, ascent, descent)
-	  = windows-font-metrics(font, port(medium));
-	ignore(font, width, ascent, descent);
-	y := y - floor/(height, 2)
+        let (font, width, height, ascent, descent)
+          = windows-font-metrics(font, port(medium));
+        ignore(font, width, ascent, descent);
+        y := y - floor/(height, 2)
       end;
       if (do-tabs?)
-	let tab-origin :: <integer> = if (do-tabs? == #t) x else do-tabs? end;
-	TabbedTextOut(hDC, x, y, c-string, _end - _start,
-		      0, null-pointer(<LPINT>), tab-origin)
+        let tab-origin :: <integer> = if (do-tabs? == #t) x else do-tabs? end;
+        TabbedTextOut(hDC, x, y, c-string, _end - _start,
+                      0, null-pointer(<LPINT>), tab-origin)
       else
-	TextOut(hDC, x, y, c-string, _end - _start)
+        TextOut(hDC, x, y, c-string, _end - _start)
       end;
       SetTextAlign(hDC, old-alignment)
     end
@@ -633,14 +633,14 @@ end method draw-text;
 define inline function windows-text-alignment
     (align-x, align-y) => (flag :: <integer>)
   logior(select (align-x)
-	   #"left"     => $TA-LEFT;
-	   #"right"    => $TA-RIGHT;
-	   #"center"   => $TA-CENTER;
-	 end,
-	 select (align-y)
-	   #"top"      => $TA-TOP;
-	   #"bottom"   => $TA-BOTTOM;
-	   #"center"   => $TA-TOP;	//--- Windows can't do this so we hack it later
-	   #"baseline" => $TA-BASELINE;
-	 end)
+           #"left"     => $TA-LEFT;
+           #"right"    => $TA-RIGHT;
+           #"center"   => $TA-CENTER;
+         end,
+         select (align-y)
+           #"top"      => $TA-TOP;
+           #"bottom"   => $TA-BOTTOM;
+           #"center"   => $TA-TOP;      //--- Windows can't do this so we hack it later
+           #"baseline" => $TA-BASELINE;
+         end)
 end function windows-text-alignment;

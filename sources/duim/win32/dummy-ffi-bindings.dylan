@@ -13,8 +13,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define macro dummy-function-definer
   { define dummy-function ?name:name }
     => { define function ?name (#rest objects)
-	   error(?"name" ## "cannot be invoked in loose mode!")
-	 end;
+           error(?"name" ## "cannot be invoked in loose mode!")
+         end;
          ignore(?name) }
 end macro dummy-function-definer;
 

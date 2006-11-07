@@ -186,23 +186,23 @@ define sealed method compute-used-mnemonics
   for (child in sheet-children(gadget))
     select (child by instance?)
       <menu>, <menu-button> =>
-	let (label, mnemonic, index)
-	  = compute-mnemonic-from-label(child, defaulted-gadget-label(child));
-	ignore(label, index);
-	mnemonic & add!(used-mnemonics, as-uppercase(gesture-character(mnemonic)));
+        let (label, mnemonic, index)
+          = compute-mnemonic-from-label(child, defaulted-gadget-label(child));
+        ignore(label, index);
+        mnemonic & add!(used-mnemonics, as-uppercase(gesture-character(mnemonic)));
       <menu-box> =>
-	for (sub-child in sheet-children(child))
-	  select (sub-child by instance?)
-	    <menu>, <menu-button> =>
-	      let (label, mnemonic, index)
-		= compute-mnemonic-from-label(sub-child, defaulted-gadget-label(sub-child));
-	      ignore(label, index);
-	      mnemonic & add!(used-mnemonics, as-uppercase(gesture-character(mnemonic)));
-	    <menu-box> =>
-	      error("Found menu-box %= as child of menu-box %=",
-		    sub-child, child);
-	  end;
-	end;
+        for (sub-child in sheet-children(child))
+          select (sub-child by instance?)
+            <menu>, <menu-button> =>
+              let (label, mnemonic, index)
+                = compute-mnemonic-from-label(sub-child, defaulted-gadget-label(sub-child));
+              ignore(label, index);
+              mnemonic & add!(used-mnemonics, as-uppercase(gesture-character(mnemonic)));
+            <menu-box> =>
+              error("Found menu-box %= as child of menu-box %=",
+                    sub-child, child);
+          end;
+        end;
     end
   end;
 end method compute-used-mnemonics;
@@ -221,41 +221,41 @@ define sealed method allocate-unique-mnemonic
     (gadget :: <gadget>, string :: <string>)
  => (index :: false-or(<integer>))
   assert(~empty?(string),
-	 "Menu label for %= must have contents", gadget);
+         "Menu label for %= must have contents", gadget);
   let mirror = sheet-mirror(gadget);
   let used-mnemonics = mirror.%used-mnemonics;
   block (return)
     local method maybe-return-index (index :: <integer>)
-	    let char = as-uppercase(string[index]);
-	    unless (member?(char, used-mnemonics))
-	      add!(used-mnemonics, char);
-	      return(index)
-	    end
-	  end;
+            let char = as-uppercase(string[index]);
+            unless (member?(char, used-mnemonics))
+              add!(used-mnemonics, char);
+              return(index)
+            end
+          end;
     let string-size = size(string);
     if (string-size > 0)
       let _end = position(string, '\t') | string-size;
       let first-char = string[0];
       when (consonant?(first-char)
-	    | vowel?(first-char)
-	    | digit-char?(first-char))
-	maybe-return-index(0)
+            | vowel?(first-char)
+            | digit-char?(first-char))
+        maybe-return-index(0)
       end;
       for (i :: <integer> from 0 below _end - 1)
-	let char = string[i];
-	char == ' ' & maybe-return-index(i + 1)
+        let char = string[i];
+        char == ' ' & maybe-return-index(i + 1)
       end;
       for (i :: <integer> from 0 below _end)
-	let char = string[i];
-	consonant?(char) & maybe-return-index(i)
+        let char = string[i];
+        consonant?(char) & maybe-return-index(i)
       end;
       for (i :: <integer> from 0 below _end)
-	let char = string[i];
-	vowel?(char) & maybe-return-index(i)
+        let char = string[i];
+        vowel?(char) & maybe-return-index(i)
       end;
       for (i :: <integer> from 0 below _end)
-	let char = string[i];
-	digit-char?(char) & maybe-return-index(i)
+        let char = string[i];
+        digit-char?(char) & maybe-return-index(i)
       end
     end
   end
@@ -305,20 +305,20 @@ define sealed method compute-menu-bar-width
   for (child in sheet-children(menu))
     select (child by instance?)
       <menu>, <menu-button> =>
-	let label = defaulted-gadget-label(child);
-	select (label by instance?)
-	  <string> =>
-	    let ampersand = position(label, '&');
-	    when (ampersand & (ampersand < size(label) - 1))
-	      label := remove(label, '&', count: 1)
-	    end;
-	    inc!(width, text-size(_port, label, text-style: text-style));
-	  <image> =>
-	    inc!(width, image-width(label));
-	end;
-	inc!(n-items);
+        let label = defaulted-gadget-label(child);
+        select (label by instance?)
+          <string> =>
+            let ampersand = position(label, '&');
+            when (ampersand & (ampersand < size(label) - 1))
+              label := remove(label, '&', count: 1)
+            end;
+            inc!(width, text-size(_port, label, text-style: text-style));
+          <image> =>
+            inc!(width, image-width(label));
+        end;
+        inc!(n-items);
       <menu-box> =>
-	#f;
+        #f;
     end
   end;
   width + $menu-bar-border-width * 2 + $menu-bar-label-spacing * (n-items - 1)
@@ -356,7 +356,7 @@ define sealed method make-win32-menu-bar-contents
   let _port = port(menu-bar);
   compute-used-mnemonics(menu-bar);
   do(method (menu)
-       menu.%port := _port;		//--- normally done in 'graft-sheet'
+       menu.%port := _port;             //--- normally done in 'graft-sheet'
        make-mirror(_port, menu)
      end,
      sheet-children(menu-bar));
@@ -406,7 +406,7 @@ define method compute-menu-button-label
     = add-mnemonic? & ~mnemonic & allocate-unique-mnemonic(button, text);
   let label
     = make-win32-mnemonic-label(text, mnemonic, index, new-index,
-				postfix: gadget-label-postfix(button));
+                                postfix: gadget-label-postfix(button));
   values(label, image)
 end method compute-menu-button-label;
 
@@ -416,7 +416,7 @@ define sealed method note-gadget-label-changed
   let (handle, id) = menu-item-handle-and-id(gadget);
   when (handle)
     let (label, image) = compute-menu-button-label(gadget, add-mnemonic?: #f);
-    ignore(image);	//---*** we need to handle images at some point
+    ignore(image);      //---*** we need to handle images at some point
     with-stack-structure (item-info :: <LPMENUITEMINFO>)
       item-info.cbSize-value := safe-size-of(<MENUITEMINFO>);
       item-info.fMask-value := %logior($MIIM-TYPE);
@@ -485,14 +485,14 @@ define sealed method make-menu-mirror-for-owner
  => (mirror :: <menu-mirror>)
   let (text, image, mnemonic, index)
     = text-or-image-from-gadget-label(menu);
-  ignore(image);	//---*** we need to handle images at some point
+  ignore(image);        //---*** we need to handle images at some point
   let new-index = ~mnemonic & allocate-unique-mnemonic(menu, text);
   let parent = sheet-device-parent(menu);
   let label = make-win32-mnemonic-label(text, mnemonic, index, new-index);
   AppendMenu(window-handle(parent), 
-	     %logior($MF-POPUP, $MF-STRING),
-	     pointer-address(handle),
-	     label);
+             %logior($MF-POPUP, $MF-STRING),
+             pointer-address(handle),
+             label);
   unless (label = $NULL-string) destroy(label) end;
   let selection-owner = mirror-selection-owner(sheet-direct-mirror(parent));
   make(<menu-mirror>,
@@ -524,26 +524,26 @@ define sealed method map-mirror
   let (menu-x,  menu-y)  = sheet-position(menu);
   update-menu(menu, submenus?: #t);
   let x-align = select (gadget-x-alignment(menu))
-		  #"left"   => $TPM-LEFTALIGN;
-		  #"right"  => $TPM-RIGHTALIGN;
-		  #"center" => $TPM-CENTERALIGN;
-		end;
+                  #"left"   => $TPM-LEFTALIGN;
+                  #"right"  => $TPM-RIGHTALIGN;
+                  #"center" => $TPM-CENTERALIGN;
+                end;
   let y-align = select (gadget-y-alignment(menu))
-		  #"top"      => $TPM-TOPALIGN;
-		  #"bottom"   => $TPM-BOTTOMALIGN;
-		  #"baseline" => $TPM-BOTTOMALIGN;
-		  #"center"   => $TPM-VCENTERALIGN;
-		end;
+                  #"top"      => $TPM-TOPALIGN;
+                  #"bottom"   => $TPM-BOTTOMALIGN;
+                  #"baseline" => $TPM-BOTTOMALIGN;
+                  #"center"   => $TPM-VCENTERALIGN;
+                end;
   let result
    = TrackPopupMenu-cmd(handle,
-			%logior(x-align, y-align,
-				$TPM-RIGHTBUTTON,	// allow both left and right buttons
-				$TPM-NONOTIFY, $TPM-RETURNCMD),
-			owner-x + menu-x,
-			owner-y + menu-y,
-			0,
-			window-handle(sheet-mirror(owner)),
-			$NULL-RECT);
+                        %logior(x-align, y-align,
+                                $TPM-RIGHTBUTTON,       // allow both left and right buttons
+                                $TPM-NONOTIFY, $TPM-RETURNCMD),
+                        owner-x + menu-x,
+                        owner-y + menu-y,
+                        0,
+                        window-handle(sheet-mirror(owner)),
+                        $NULL-RECT);
   // Ensure pop-up menu messages get handled "soon" (see article Q135788)
   SendMessage(handle, $WM-NULL, 0, 0);
   mirror-selected-gadget(mirror) := #f;
@@ -552,12 +552,12 @@ define sealed method map-mirror
       // Find the button the user clicked on, set the result for
       // 'choose-from-menu' and then simulate the button click
       do-sheet-tree(method (button)
-		      when (instance?(button, <win32-menu-button-mixin>)
-			    & button.%mirror-id = result)
-			handle-gadget-activation(button);
-			break()
-		      end
-		    end method, menu)
+                      when (instance?(button, <win32-menu-button-mixin>)
+                            & button.%mirror-id = result)
+                        handle-gadget-activation(button);
+                        break()
+                      end
+                    end method, menu)
     end
   end
 end method map-mirror;
@@ -602,16 +602,16 @@ end method handle-menu-update;
 define method update-menu
     (menu :: <win32-menu>, #key submenus? = #t) => ()
   local method update-menus
-	    (gadget :: <gadget>) => ()
-	  execute-update-callback
-	    (gadget, gadget-client(gadget), gadget-id(gadget));
-	  for (child in sheet-children(gadget))
-	    if (instance?(child, <menu-box>)
-		  | (submenus? & instance?(child, <menu>)))
-	      update-menus(child)
-	    end
-	  end
-	end method update-menus;
+            (gadget :: <gadget>) => ()
+          execute-update-callback
+            (gadget, gadget-client(gadget), gadget-id(gadget));
+          for (child in sheet-children(gadget))
+            if (instance?(child, <menu-box>)
+                  | (submenus? & instance?(child, <menu>)))
+              update-menus(child)
+            end
+          end
+        end method update-menus;
   update-menus(menu);
   //--- Now make sure any new submenus are mirrored...
   ensure-menus-mirrored(menu)
@@ -621,13 +621,13 @@ define sealed method ensure-menus-mirrored
     (gadget :: <gadget>) => ()
   let mirrored?
     = begin
-	if (instance?(gadget, <win32-menu>))
-	  let mirror = sheet-direct-mirror(gadget);
-	  if (mirror & ~mirror.%created?)
-	    make-win32-menu-contents(gadget, mirror);
-	    #t
-	  end
-	end
+        if (instance?(gadget, <win32-menu>))
+          let mirror = sheet-direct-mirror(gadget);
+          if (mirror & ~mirror.%created?)
+            make-win32-menu-contents(gadget, mirror);
+            #t
+          end
+        end
       end;
   unless (mirrored?)
     do(ensure-menus-mirrored, sheet-children(gadget))
@@ -645,30 +645,30 @@ define sealed method make-win32-menu-contents
   let need-separator? = #f;
   let seen-item? = #f;
   local method add-separator () => ()
-	  AppendMenu(handle, $MF-SEPARATOR, 0, "");
-	  need-separator? := #f;
-	  seen-item? := #f
-	end method add-separator;
+          AppendMenu(handle, $MF-SEPARATOR, 0, "");
+          need-separator? := #f;
+          seen-item? := #f
+        end method add-separator;
   local method add-menu-children
-	    (gadget :: <gadget>) => ()
-	  for (child in sheet-children(gadget))
-	    select (child by instance?)
-	      <menu> =>
-		child.%port := _port;	//--- normally done in 'graft-sheet'
-		make-mirror(_port, child);
-		seen-item? := #t;
-	      <menu-box> =>
-		if (seen-item?) need-separator? := #t end;
-		add-menu-children(child);
-		need-separator? := #t;
-	      <menu-button> =>
-		when (need-separator?) add-separator() end;
-		add-menu-item(menu, handle, child);
-		seen-item? := #t;
-	    end
-	  end;
-	  mirror.%created? := #t
-	end method add-menu-children;
+            (gadget :: <gadget>) => ()
+          for (child in sheet-children(gadget))
+            select (child by instance?)
+              <menu> =>
+                child.%port := _port;   //--- normally done in 'graft-sheet'
+                make-mirror(_port, child);
+                seen-item? := #t;
+              <menu-box> =>
+                if (seen-item?) need-separator? := #t end;
+                add-menu-children(child);
+                need-separator? := #t;
+              <menu-button> =>
+                when (need-separator?) add-separator() end;
+                add-menu-item(menu, handle, child);
+                seen-item? := #t;
+            end
+          end;
+          mirror.%created? := #t
+        end method add-menu-children;
   add-menu-children(menu);
   mirror.%created? := #t
 end method make-win32-menu-contents;
@@ -679,11 +679,11 @@ define sealed method remove-win32-menu-contents
   let count = GetMenuItemCount(handle);
   //--- Remove all mirrors, as we're going to rebuild them
   do-sheet-tree(method (g :: <gadget>)
-		  if (g ~= gadget & sheet-direct-mirror(g))
-		    sheet-direct-mirror(g) := #f
-		  end
-		end,
-		gadget);
+                  if (g ~= gadget & sheet-direct-mirror(g))
+                    sheet-direct-mirror(g) := #f
+                  end
+                end,
+                gadget);
   //--- Delete items backwards, so the positions don't change
   for (i :: <integer> from (count - 1) to 0 by -1)
     DeleteMenu(handle, i, $MF-BYPOSITION)
@@ -707,7 +707,7 @@ define sealed method add-menu-item
   let id             = ensure-gadget-id(button);
   button.%mirror-id := id;
   let (label, image) = compute-menu-button-label(button);
-  ignore(image);	//---*** we need to handle images at some point
+  ignore(image);        //---*** we need to handle images at some point
   with-stack-structure (item-info :: <LPMENUITEMINFO>)
     item-info.cbSize-value := safe-size-of(<MENUITEMINFO>);
     item-info.wId-value := id;
@@ -731,8 +731,8 @@ define sealed method menu-button-item-state
   let selected?      = ~push-button? & gadget-value(button);
   let default?       = push-button?  & gadget-default?(button);
   %logior(if (default?)  $MFS-DEFAULT else 0 end,
-	  if (enabled?)  $MFS-ENABLED else $MFS-DISABLED end,
-	  if (selected?) $MFS-CHECKED else 0 end)
+          if (enabled?)  $MFS-ENABLED else $MFS-DISABLED end,
+          if (selected?) $MFS-CHECKED else 0 end)
 end method menu-button-item-state;
 
 define sealed method note-child-added
@@ -803,29 +803,29 @@ define sealed method menu-button-position
   let need-separator? = #f;
   let seen-item? = #f;
   local method add-separator-position ()
-	  position := position + 1;
-	  need-separator? := #f;
-	  seen-item? := #f
-	end;
+          position := position + 1;
+          need-separator? := #f;
+          seen-item? := #f
+        end;
   block (return)
     for (child in sheet-children(menu))
       when (need-separator?) add-separator-position() end;
       select (child by instance?)
-	<menu-button> =>
-	  when (child = button)
-	    return(position)
-	  end;
-	<menu-box> =>
-	  when (seen-item?) add-separator-position() end;
-	  for (subchild in sheet-children(child))
-	    when (subchild = button)
-	      return(position)
-	    end;
-	    position := position + 1;
-	    need-separator? := #t;
-	  end;
-	<menu> =>
-	  #f;
+        <menu-button> =>
+          when (child = button)
+            return(position)
+          end;
+        <menu-box> =>
+          when (seen-item?) add-separator-position() end;
+          for (subchild in sheet-children(child))
+            when (subchild = button)
+              return(position)
+            end;
+            position := position + 1;
+            need-separator? := #t;
+          end;
+        <menu> =>
+          #f;
       end;
       seen-item? := #t;
       position := position + 1;
@@ -857,14 +857,14 @@ define sealed method menu-item-handle-and-position
     let count = GetMenuItemCount(parent-handle);
     let position
       = block (return)
-	  for (i :: <integer> from 0 below count)
-	    let submenu = GetSubMenu(parent-handle, i);
-	    if (submenu = handle) return(i) end
-	  end;
-	  error("Failed to find menu position for %= in %=", 
-		gadget-label(menu) | menu,
-		(instance?(parent, <menu>) & gadget-label(parent)) | parent)
-	end;
+          for (i :: <integer> from 0 below count)
+            let submenu = GetSubMenu(parent-handle, i);
+            if (submenu = handle) return(i) end
+          end;
+          error("Failed to find menu position for %= in %=", 
+                gadget-label(menu) | menu,
+                (instance?(parent, <menu>) & gadget-label(parent)) | parent)
+        end;
     values(handle, position)
   else
     values(#f, #f)
@@ -889,8 +889,8 @@ define sealed method note-gadget-value-changed
   let (handle, id) = menu-item-handle-and-id(gadget);
   when (handle)
     CheckMenuItem(handle, id, 
-		  %logior($MF-BYCOMMAND,
-			  if (gadget-value(gadget)) $MF-CHECKED else $MF-UNCHECKED end))
+                  %logior($MF-BYCOMMAND,
+                          if (gadget-value(gadget)) $MF-CHECKED else $MF-UNCHECKED end))
   end
 end method note-gadget-value-changed;
 
@@ -1003,11 +1003,11 @@ define sealed method do-choose-from-menu
     (framem :: <win32-frame-manager>, owner :: <sheet>, menu :: <menu>,
      #key title, value, label-key, value-key, 
           width, height, foreground, background, text-style,
-	  multiple-sets?,
+          multiple-sets?,
      #all-keys)
  => (value, success? :: <boolean>)
   ignore(title, value, label-key, value-key,
-	 width, height, foreground, background, text-style, multiple-sets?);
+         width, height, foreground, background, text-style, multiple-sets?);
   // record-selection? determines whether the events are distributed or
   // just recorded so that we can pick them up afterwards.
   menu-record-selection?(menu) := #t;

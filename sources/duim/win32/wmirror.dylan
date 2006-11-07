@@ -88,7 +88,7 @@ end method handle-sheet;
 define method mirror-edges
     (_port :: <win32-port>, sheet :: <sheet>, mirror :: <win32-mirror>)
  => (left :: <integer>, top :: <integer>, right :: <integer>, bottom :: <integer>)
-  values(0, 0, 100, 100)	//--- kludge city
+  values(0, 0, 100, 100)        //--- kludge city
 end method mirror-edges;
 
 // The real methods are on more specific classes, such as <window-mirror>
@@ -137,26 +137,26 @@ define function register-window-classes (_port :: <win32-port>) => ()
   when ($window-class-atom = 0)
     $window-class-atom
       := register-window-class(_port, $window-class-name,
-			       own-dc?: #t,
-			       resource?: #t)
+                               own-dc?: #t,
+                               resource?: #t)
   end;
   when ($canvas-class-atom = 0)
     $canvas-class-atom
       := register-window-class(_port, $canvas-class-name,
-			       //---*** Should be 'own-dc?: _port.%os-name == #"Windows-NT"'
-			       own-dc?: #t,
-			       use-3d?: #f)
+                               //---*** Should be 'own-dc?: _port.%os-name == #"Windows-NT"'
+                               own-dc?: #t,
+                               use-3d?: #f)
   end;
   when ($simple-class-atom = 0)
     $simple-class-atom
       := register-window-class(_port, $simple-class-name,
-			       own-dc?: #f,
-			       use-3d?: #f)
+                               own-dc?: #f,
+                               use-3d?: #f)
   end;
   when ($dialog-class-atom = 0)
     $dialog-class-atom
       := register-window-class(_port, $dialog-class-name,
-			       resource?: #t)
+                               resource?: #t)
   end;
 end function register-window-classes;
 
@@ -167,21 +167,21 @@ define function register-window-class
   with-stack-structure (wc :: <PWNDCLASS>)
     // Fill in window class structure with parameters that describe the
     // main window.
-    wc.lpszClassName-value := name;		// name of window class
+    wc.lpszClassName-value := name;             // name of window class
     wc.style-value := %logior($CS-HREDRAW, $CS-VREDRAW, $CS-DBLCLKS,
-			      if (own-dc?) $CS-OWNDC else 0 end);
-    wc.lpfnWndProc-value := WndProc;		// Window Procedure
-    wc.cbClsExtra-value := 0;			// No per-class extra data.
+                              if (own-dc?) $CS-OWNDC else 0 end);
+    wc.lpfnWndProc-value := WndProc;            // Window Procedure
+    wc.cbClsExtra-value := 0;                   // No per-class extra data.
     wc.cbWndExtra-value := if (resource?) $DLGWINDOWEXTRA else 0 end;
     wc.hInstance-value := application-instance-handle(); // owner
     wc.hIcon-value := LoadIcon($null-hInstance, $IDI-APPLICATION);
     wc.hCursor-value := LoadCursor($null-hInstance, $IDC-ARROW);
     wc.hbrBackground-value
       := as(<HBRUSH>,
-	    1 + if (use-3d?) $COLOR-3DFACE else $COLOR-WINDOW end);
-    wc.lpszMenuName-value := $null-string;	// no menu yet
+            1 + if (use-3d?) $COLOR-3DFACE else $COLOR-WINDOW end);
+    wc.lpszMenuName-value := $null-string;      // no menu yet
     let class-id = RegisterClass(wc);
-    when (zero?(class-id))			// register the window class
+    when (zero?(class-id))                      // register the window class
       report-error("RegisterClass")
     end;
     class-id
@@ -211,7 +211,7 @@ end function unregister-window-classes;
 define function unregister-window-class
     (name :: <string>) => (class-id :: singleton(0))
   check-result("UnregisterClass",
-	       UnregisterClass(name, application-instance-handle()));
+               UnregisterClass(name, application-instance-handle()));
   0
 end function unregister-window-class;
 
@@ -252,9 +252,9 @@ define method do-make-mirror
   let resource-id = sheet-resource-id(sheet);
   let mirror
     = if (resource-id & sheet-direct-mirror(parent).%mirror-resource)
-	make-sheet-mirror-from-resource(parent, sheet, resource-id)
+        make-sheet-mirror-from-resource(parent, sheet, resource-id)
       else
-	make-sheet-mirror(parent, sheet)
+        make-sheet-mirror(parent, sheet)
       end;
   note-mirror-created(sheet, mirror);
   mirror
@@ -304,39 +304,39 @@ define sealed method make-sheet-mirror
   let own-dc? = instance?(sheet, <permanent-medium-mixin>);
   let options
     = %logior($WS-CHILD,
-	      case
-		sheet-tab-stop?(sheet) & sheet-accepts-focus?(sheet) =>
-		  %logior($WS-GROUP, $WS-TABSTOP);
-		otherwise =>
-		  0;
-	      end);
+              case
+                sheet-tab-stop?(sheet) & sheet-accepts-focus?(sheet) =>
+                  %logior($WS-GROUP, $WS-TABSTOP);
+                otherwise =>
+                  0;
+              end);
   let handle :: <HWND>
     = CreateWindowEx
-        (0,				// Extended styles
-	 if (own-dc?) $canvas-class-name else $simple-class-name end,
-	 $null-string,			// no title
-	 options,			// Window style
-	 left,				// x position
-	 top,				// y position
-	 right - left,			// width
-	 bottom - top,			// height
-	 window-handle(parent), 	// parent window
-	 $null-hMenu,			// Use the window class menu
-	 application-instance-handle(),
-	 $NULL-VOID);			// No data in our WM_CREATE
+        (0,                             // Extended styles
+         if (own-dc?) $canvas-class-name else $simple-class-name end,
+         $null-string,                  // no title
+         options,                       // Window style
+         left,                          // x position
+         top,                           // y position
+         right - left,                  // width
+         bottom - top,                  // height
+         window-handle(parent),         // parent window
+         $null-hMenu,                   // Use the window class menu
+         application-instance-handle(),
+         $NULL-VOID);                   // No data in our WM_CREATE
   check-result("CreateWindow", handle);
   let mirror
     = make(<window-mirror>,
-	   sheet: sheet, handle: handle,
-	   region: make-bounding-box(left, top, right, bottom));
+           sheet: sheet, handle: handle,
+           region: make-bounding-box(left, top, right, bottom));
   when (own-dc?)
     let background = get-default-background(port(sheet), sheet);
     when (color?(background))
       let (red, green, blue) = color-rgb(background);
       let color
-	= RGB(truncate(red   * $max-int-color),
-	      truncate(green * $max-int-color),
-	      truncate(blue  * $max-int-color));
+        = RGB(truncate(red   * $max-int-color),
+              truncate(green * $max-int-color),
+              truncate(blue  * $max-int-color));
       let hDC = get-DC(mirror);
       SetBkColor(hDC, color)
     end
@@ -361,15 +361,15 @@ define sealed method make-sheet-mirror-from-resource
   let (x, y)          = win32-dialog-units->pixels(_port, x, y);
   let (width, height) = win32-dialog-units->pixels(_port, width, height);
   duim-debug-message("Sheet geometry %= from resource: %d x %d at %d, %d",
-		     sheet, width, height, x, y);
+                     sheet, width, height, x, y);
   initialize-sheet-geometry(sheet, x, y, width, height);
   initialize-sheet-from-resource(sheet, handle);
   let (left, top, right, bottom) = sheet-native-edges(sheet);
   let mirror
     = make(<window-mirror>,
-	   sheet: sheet, handle: handle,
-	   resource: resource,
-	   region: make-bounding-box(left, top, right, bottom));
+           sheet: sheet, handle: handle,
+           resource: resource,
+           region: make-bounding-box(left, top, right, bottom));
   when (gadget?(sheet))
     let documentation = gadget-documentation(sheet);
     documentation & register-tooltip-for-sheet(sheet, documentation)
@@ -408,17 +408,17 @@ define method mirror-background-brush
   | begin
       let background = get-default-background(port(sheet), sheet);
       assert(color?(background),
-	     "Non-color background %= not currently supported for sheet %=",
-	     sheet, background);
+             "Non-color background %= not currently supported for sheet %=",
+             sheet, background);
       case
-	background == $white =>
-	  mirror.%background-brush := $white-hbrush;
-	background == $black =>
-	  mirror.%background-brush := $black-hbrush;
-	otherwise =>
-	  let color = %color->native-color(background);
-	  mirror.%background-brush
-	    := check-result("CreateSolidBrush", CreateSolidBrush(color));
+        background == $white =>
+          mirror.%background-brush := $white-hbrush;
+        background == $black =>
+          mirror.%background-brush := $black-hbrush;
+        otherwise =>
+          let color = %color->native-color(background);
+          mirror.%background-brush
+            := check-result("CreateSolidBrush", CreateSolidBrush(color));
       end
     end
 end method mirror-background-brush;
@@ -434,7 +434,7 @@ define sealed method destroy-mirror
   let handle :: <HWND> = window-handle(mirror);
   // For our own subclassed windows, this will get us a WM_DESTROY
   unless (null-handle?(handle))
-    DestroyWindow(handle)	// error-checking probably won't buy anything...
+    DestroyWindow(handle)       // error-checking probably won't buy anything...
   end;
   // Note that top level sheets invoke 'note-mirror-destroyed' when
   // a WM_DESTROY is issued, but non-top level sheets won't see that
@@ -456,12 +456,12 @@ end method note-mirror-destroyed;
 define sealed method note-mirror-destroyed
     (sheet :: <win32-embedded-top-level-sheet>, mirror :: <top-level-mirror>) => ()
   local method note-destroyed (sheet :: <sheet>)
-	  let mirror = sheet-direct-mirror(sheet);
-	  when (instance?(mirror, <win32-mirror>))
-	    do-sheet-children(note-destroyed, sheet);
-	    note-mirror-destroyed(sheet, mirror)
-	  end
-	end method;
+          let mirror = sheet-direct-mirror(sheet);
+          when (instance?(mirror, <win32-mirror>))
+            do-sheet-children(note-destroyed, sheet);
+            note-mirror-destroyed(sheet, mirror)
+          end
+        end method;
   do-sheet-children(note-destroyed, sheet);
   next-method()
 end method note-mirror-destroyed;
@@ -501,11 +501,11 @@ define sealed method release-DC
       // the drawing state only if we actually released the DC.
       // Note that we need the DC in order to invalidate the cached info,
       // so we do a local get and release here.
-      mirror.%DC := $null-hDC;		// force 'get-DC' to really call GetDC
+      mirror.%DC := $null-hDC;          // force 'get-DC' to really call GetDC
       let hDC :: <HDC> = get-DC(mirror);// now really get a DC
       let medium = sheet-medium(mirror-sheet(mirror));
       when (medium)
-	medium-drawing-state-cache(medium) := 0
+        medium-drawing-state-cache(medium) := 0
       end;
       // Note that mustn't invalidate this slot until AFTER we've decached
       // the drawing state.  Otherwise decaching will cause GetDC to be
@@ -550,27 +550,27 @@ define function repaint-in-DC-recursive
      x-scale  :: <real>, y-scale  :: <real>,
      x-offset :: <real>, y-offset :: <real>) => ()
   duim-debug-message("  repaint-in-dc-recursive(%=,,,,%=,%=)\n",
-		     sheet, x-offset, y-offset);
+                     sheet, x-offset, y-offset);
   if (sheet-handles-repaint?(sheet)
       & instance?(sheet, <sheet-with-medium-mixin>))
     // Use the sheet's 'handle-repaint' method
     let medium = sheet-medium(sheet);
     let xform
       = if (x-scale = 1 & y-scale = 1)
-	  // Special case hack because 'make-translation-transform' is always 
-	  // available, but 'make-transform' only works if the optional
-	  // 'duim-extended-geometry' library is loaded.  Don't require the
-	  // caller to 'use duim-extended-geometry' unless scaling is needed.
-	  make-translation-transform(x-offset, y-offset)
-	else
-	  make-transform(x-scale, 0, 0, y-scale, x-offset, y-offset)
-	end;
+          // Special case hack because 'make-translation-transform' is always 
+          // available, but 'make-transform' only works if the optional
+          // 'duim-extended-geometry' library is loaded.  Don't require the
+          // caller to 'use duim-extended-geometry' unless scaling is needed.
+          make-translation-transform(x-offset, y-offset)
+        else
+          make-transform(x-scale, 0, 0, y-scale, x-offset, y-offset)
+        end;
     with-transform (medium, xform)
       repaint-sheet-with-DC(sheet, hDC)
     end;
 /*
   // Not useful until we figure out how to do the coordinate transformation.
-  // Might need to use w/ModifyWorldTransform			???
+  // Might need to use w/ModifyWorldTransform                   ???
   // Or maybe draw into a bit map that can be pasted into the proper place?
   elseif (instance?(sheet, <win32-gadget-mixin>))
     // This may be a Windows control that we can ask Windows to draw.
@@ -578,15 +578,15 @@ define function repaint-in-DC-recursive
     when (handle)
       let drawn? = zero?(SendMessage(handle, $WM-PAINT, pointer-address(hDC), 0));
       duim-debug-message("  WM_PAINT %s\n",
-			 if(drawn?) "OK" else "not handled" end);
+                         if(drawn?) "OK" else "not handled" end);
     end;
 */
   end;
   for (child :: <basic-sheet> in sheet-children(sheet))
     let (x, y) = sheet-position(child);
     repaint-in-DC-recursive(child, hDC,
-			    x-scale, y-scale,
-			    (x * x-scale) + x-offset, (y * y-scale) + y-offset);
+                            x-scale, y-scale,
+                            (x * x-scale) + x-offset, (y * y-scale) + y-offset);
   end
 end function repaint-in-DC-recursive;
 
@@ -597,7 +597,7 @@ end function repaint-in-DC-recursive;
 define sealed method map-mirror
     (_port :: <win32-port>, sheet :: <sheet>, mirror :: <window-mirror>) => ()
   let handle :: <HWND> = window-handle(mirror);
-  ShowWindow(handle, $SW-SHOWNORMAL);	// no status code for this
+  ShowWindow(handle, $SW-SHOWNORMAL);   // no status code for this
   // Sends WM_PAINT message and returns status
   check-result("UpdateWindow", UpdateWindow(handle))
 end method map-mirror;
@@ -605,7 +605,7 @@ end method map-mirror;
 define sealed method unmap-mirror
     (_port :: <win32-port>, sheet :: <sheet>, mirror :: <window-mirror>) => ()
   let handle :: <HWND> = window-handle(mirror);
-  ShowWindow(handle, $SW-HIDE)		// no status code for this
+  ShowWindow(handle, $SW-HIDE)          // no status code for this
 end method unmap-mirror;
 
 define sealed method raise-mirror 
@@ -614,16 +614,16 @@ define sealed method raise-mirror
   ignore(activate?);
   let handle :: <HWND> = window-handle(mirror);
   check-result("SetWindowPos ($HWND-TOP)",
-	       SetWindowPos(handle, $HWND-TOP, 0, 0, 0, 0,
-			    %logior($SWP-NOMOVE, $SWP-NOSIZE)))
+               SetWindowPos(handle, $HWND-TOP, 0, 0, 0, 0,
+                            %logior($SWP-NOMOVE, $SWP-NOSIZE)))
 end method raise-mirror;
 
 define sealed method lower-mirror
     (_port :: <win32-port>, sheet :: <sheet>, mirror :: <window-mirror>) => ()
   let handle :: <HWND> = window-handle(mirror);
   check-result("SetWindowPos ($HWND-BOTTOM)",
-	       SetWindowPos(handle, $HWND-BOTTOM, 0, 0, 0, 0,
-			    %logior($SWP-NOMOVE, $SWP-NOSIZE)))
+               SetWindowPos(handle, $HWND-BOTTOM, 0, 0, 0, 0,
+                            %logior($SWP-NOMOVE, $SWP-NOSIZE)))
 end method lower-mirror;
 
 define sealed method mirror-visible? 
@@ -649,15 +649,15 @@ define sealed method set-mirror-edges
   let handle :: <HWND> = window-handle(mirror);
   mirror.%region := set-box-edges(mirror.%region, left, top, right, bottom);
   duim-debug-message("Setting mirror edges for %= to %d x %d at %d,%d",
-		     sheet, right - left, bottom - top, left, top);
+                     sheet, right - left, bottom - top, left, top);
   // Just change the size and position without doing anything else
   let flags = %logior($SWP-NOACTIVATE, $SWP-NOZORDER);
   // Note that using 'MoveWindow(handle, left, top, right, bottom, #f)'
   // would send a WM_SIZE message, which would cause redundant overhead
   // at best, or infinite recursion at worst.
   check-result("SetWindowPos",
-	       SetWindowPos(handle, $NULL-HWND,
-			    left, top, right - left, bottom - top, flags))
+               SetWindowPos(handle, $NULL-HWND,
+                            left, top, right - left, bottom - top, flags))
 end method set-mirror-edges;
 
 // Returns the position of the sheet in "absolute" (screen) coordinates
@@ -666,11 +666,11 @@ define sealed method sheet-screen-position
  => (x :: <integer>, y :: <integer>)
   let (mirror :: <window-mirror>, transform :: <transform>)
     = if (sheet-direct-mirror(sheet))
-	values(sheet-direct-mirror(sheet), $identity-transform)
+        values(sheet-direct-mirror(sheet), $identity-transform)
       else
-	let parent    = sheet-device-parent(sheet);
-	let transform = sheet-delta-transform(sheet, parent);
-	values(sheet-direct-mirror(parent), transform)
+        let parent    = sheet-device-parent(sheet);
+        let transform = sheet-delta-transform(sheet, parent);
+        values(sheet-direct-mirror(parent), transform)
       end;
   // Get the position of the sheet in its mirrored parent's coordinates
   let (x, y) = transform-position(transform, 0, 0);
@@ -779,8 +779,8 @@ end method port-default-background;
 // We arrange to map this to something close to ANSI_VAR_FONT
 define constant $win32-default-text-style
     = make(<text-style>,
-	   family: #"sans-serif", weight: #"normal",
-	   slant: #"roman", size: #"normal");
+           family: #"sans-serif", weight: #"normal",
+           slant: #"roman", size: #"normal");
 
 // Note that this "default default" text style is _not_ the one that we use
 // for gadgets.  There's another method for that on <win32-gadget-mixin>.

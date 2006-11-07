@@ -72,8 +72,8 @@ define function report-error
   let error = error | GetLastError();
   unless (error = $NO_ERROR)
     cerror("Try to continue anyway",
-	   "%s error %d: %s",
-	   name, error, win32-error-message(error))
+           "%s error %d: %s",
+           name, error, win32-error-message(error))
   end
 end function report-error;
 
@@ -94,8 +94,8 @@ end function ensure-no-dialog-error;
 define function not-yet-implemented
     (format-message :: <string>, #rest format-args)
   apply(error, 
-	concatenate(format-message, " not yet implemented!"),
-	format-args)
+        concatenate(format-message, " not yet implemented!"),
+        format-args)
 end function not-yet-implemented;
 
 // A simpler debug message since the console debugger is too slow!
@@ -103,13 +103,13 @@ define function windows-debug-message
     (format-string :: <string>, #rest format-arguments) => ()
   let message
     = block ()
-	apply(format-to-string, format-string, format-arguments)
+        apply(format-to-string, format-string, format-arguments)
       exception (error :: <error>)
-	block ()
-	  format-to-string("*** debug-message crashed: %s", error)
-	exception (error :: <error>)
-	  "*** debug-message crashed"
-	end
+        block ()
+          format-to-string("*** debug-message crashed: %s", error)
+        exception (error :: <error>)
+          "*** debug-message crashed"
+        end
       end;
   OutputDebugString(concatenate(message, "\n"))
 end function windows-debug-message;
@@ -212,11 +212,11 @@ define macro with-delayed-drawing
       ?body:body
     end }
  => { block ()
-	SendMessage(?handle, $WM-SETREDRAW, $false, 0);
-	?body
+        SendMessage(?handle, $WM-SETREDRAW, $false, 0);
+        ?body
       cleanup
-	SendMessage(?handle, $WM-SETREDRAW, $true, 0);
-	InvalidateRect(?handle, $NULL-RECT, #f)
+        SendMessage(?handle, $WM-SETREDRAW, $true, 0);
+        InvalidateRect(?handle, $NULL-RECT, #f)
       end }
 end macro with-delayed-drawing;
 
@@ -224,8 +224,8 @@ end macro with-delayed-drawing;
 /// String conversion utilities
 
 // The rules for handling newlines:
-//	\r\n => \r\n
-//	\n   => \r\n
+//      \r\n => \r\n
+//      \n   => \r\n
 //      \r   => \r
 define sealed method convert-to-windows-newlines
     (string :: <byte-string>)
@@ -237,29 +237,29 @@ define sealed method convert-to-windows-newlines
     let length :: <integer>     = size(string);
     let result :: <byte-string> = make(<byte-string>, size: length + n-newlines);
     without-bounds-checks
-      let j :: <integer> = 0;		// index into 'result'
+      let j :: <integer> = 0;           // index into 'result'
       for (i :: <integer> from 0 below length)
-	let ch = string[i];
-	case
-	  ch == '\n' =>
-	    result[j + 0] := '\r';
-	    result[j + 1] := '\n';
-	    inc!(j, 2);
-	  ch == '\r' =>
-	    let next = (i < length - 1) & string[i + 1];
-	    if (next == '\n')
-	      result[j + 0] := '\r';
-	      result[j + 1] := '\n';
-	      inc!(i, 1);		// skip both '\r' and '\n'
-	      inc!(j, 2)
-	    else
-	      result[j + 0] := '\r';
-	      inc!(j, 1)
-	    end;
-	  otherwise =>
-	    result[j] := ch;
-	    inc!(j, 1);
-	end
+        let ch = string[i];
+        case
+          ch == '\n' =>
+            result[j + 0] := '\r';
+            result[j + 1] := '\n';
+            inc!(j, 2);
+          ch == '\r' =>
+            let next = (i < length - 1) & string[i + 1];
+            if (next == '\n')
+              result[j + 0] := '\r';
+              result[j + 1] := '\n';
+              inc!(i, 1);               // skip both '\r' and '\n'
+              inc!(j, 2)
+            else
+              result[j + 0] := '\r';
+              inc!(j, 1)
+            end;
+          otherwise =>
+            result[j] := ch;
+            inc!(j, 1);
+        end
       end
     end;
     result
@@ -267,8 +267,8 @@ define sealed method convert-to-windows-newlines
 end method convert-to-windows-newlines;
 
 // The rules for handling newlines:
-//	\r\n => \n
-//	\n   => \n
+//      \r\n => \n
+//      \n   => \n
 //      \r   => [gone]
 // This is equivalent to just dropping \r when we see it.
 define method convert-from-windows-newlines
@@ -281,13 +281,13 @@ define method convert-from-windows-newlines
     let length :: <integer>     = size(string);
     let result :: <byte-string> = make(<byte-string>, size: length - n-returns);
     without-bounds-checks
-      let j :: <integer> = 0;		// index into 'result'
+      let j :: <integer> = 0;           // index into 'result'
       for (i :: <integer> from 0 below length)
-	let ch = string[i];
-	unless (ch == '\r')
-	  result[j] := ch;
-	  inc!(j, 1)
-	end
+        let ch = string[i];
+        unless (ch == '\r')
+          result[j] := ch;
+          inc!(j, 1)
+        end
       end
     end;
     result

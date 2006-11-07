@@ -45,6 +45,6 @@ define sealed method display-size
   let display-height = GetSystemMetrics($SM-CYFULLSCREEN);
   sheet-region(_display) :=
     set-box-edges(sheet-region(_display),
-		  0, 0, display-width, display-height);
+                  0, 0, display-width, display-height);
   values(display-width, display-height)
 end method display-size;
