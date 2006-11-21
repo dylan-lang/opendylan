@@ -2000,9 +2000,10 @@ define method display-line
      #key start: _start :: <integer> = 0, end: _end :: <integer> = line-length(line),
           align-y = #"top") => ()
   let contents   = line-contents(line);
-  let changes    = line-style-changes(line);
+  let changes    = sort(line-style-changes(line), test: method(x, y) x.style-change-index < y.style-change-index end);
   let properties = line-contents-properties(line);
-  case 
+  case
+     _end <= _start => ;  // do nothing
     ~empty?(changes) =>
       // There are style changes, we have to draw the string the slow way
       //--- For now we ignore colorizing properties, it's just too hairy
@@ -2031,9 +2032,11 @@ define method display-line
           color := next-color;
         end;
         // Draw the last part of the string
-        draw-string(window, contents, x, y,
-                    start: index, end: _end,
-                    font: font, color: color, align-y: align-y)
+        when (index >= _start & index < _end)
+          draw-string(window, contents, x, y,
+                      start: index, end: _end,
+                      font: font, color: color, align-y: align-y)
+        end;
       end;
     //--- This isn't really the right modularity for this...
     ~empty?(properties) =>
@@ -2072,9 +2075,9 @@ define method line-size
      #key start: _start :: <integer> = 0, end: _end :: <integer> = line-length(line))
  => (width :: <integer>, height :: <integer>, baseline :: <integer>)
   let contents = line-contents(line);
-  let changes  = line-style-changes(line);
+  let changes    = sort(line-style-changes(line), test: method(x, y) x.style-change-index < y.style-change-index end);
   case
-    ((_end - _start) = 0) =>
+    ((_end - _start) <= 0) =>
       // Ensure that blank lines have some height
       let font = window-default-font(window);
       let (width, height, ascent, descent) = font-metrics(window, font);
@@ -2103,13 +2106,15 @@ define method line-size
           index := next-index;
           font  := next-font;
         end;
-        let (width, height, baseline)
-          = string-size(window, contents,
-                        start: index, end: _end,
-                        font: font);
-        inc!(total-width,   width);
-        max!(max-height,    height);
-        max!(max-baseline,  baseline);
+        when (index >= _start & index < _end)
+          let (width, height, baseline)
+            = string-size(window, contents,
+                          start: index, end: _end,
+                          font: font);
+          inc!(total-width,   width);
+          max!(max-height,    height);
+          max!(max-baseline,  baseline);
+        end;
         values(total-width, max-height, max-baseline)
       end;
     otherwise =>
