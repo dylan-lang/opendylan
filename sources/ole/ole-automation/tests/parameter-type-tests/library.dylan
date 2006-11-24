@@ -17,7 +17,6 @@ define library parameter-type-tests
   use win32-common;
   use system;
   use testworks;
-  use testworks-plus;
 end library parameter-type-tests;
 
 
@@ -35,5 +34,4 @@ define module parameter-type-tests
   use file-system;
   use operating-system;
   use testworks;
-  use testworks-plus;
 end module parameter-type-tests;

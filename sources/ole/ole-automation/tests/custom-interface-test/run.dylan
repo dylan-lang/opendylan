@@ -39,7 +39,7 @@ define method run-suite ()
     end block;
   elseif ( OLE-util-automation?() ) // "/Automation"
     run-as-server();
-  else // normal testworks-plus run
+  else // normal testworks run
     run-test-application(custom-interface-suite);
   end if;
 end method run-suite;

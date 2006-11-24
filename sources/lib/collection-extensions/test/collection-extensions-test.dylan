@@ -40,7 +40,11 @@ define suite collection-extensions-suite
 end suite collection-extensions-suite;
 
 define method main () => ()
-  perform-suite(collection-extensions-suite);
+  block ()
+    perform-suite(collection-extensions-suite);
+  exception (e :: <error>)
+    format-out("collection-extensions-suite error: %=", e);
+  end;
 end method main;
 
 begin
