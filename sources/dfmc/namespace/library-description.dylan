@@ -6,7 +6,7 @@ License:      Functional Objects Library Public License Version 1.0
 Dual-license: GNU Lesser General Public License
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define constant $dfmc-dood-version = 239;
+define constant $dfmc-dood-version = 240;
 
 //// Abstract library descriptions.
 
