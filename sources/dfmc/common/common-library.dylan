@@ -177,6 +177,8 @@ define module dfmc-common
     current-top-level-library-description, 
       current-top-level-library-description?,
     current-library-in-context?,
+    current-back-end,
+    current-back-end-name,
     current-compilation-mode,
     current-processor-name, current-os-name,
     compiling-dylan-library?,
@@ -184,10 +186,6 @@ define module dfmc-common
     library-description-personal?,
 
     run-compilation-passes,
-
-    *back-end*, *default-back-end*,
-      default-back-end, default-back-end-setter,
-      current-back-end, \with-back-end, do-with-back-end,
 
     word-size,
 

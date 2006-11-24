@@ -15,7 +15,7 @@ define macro with-harp-emitter
              method(back-end :: <harp-back-end>)
 		 let old-variables = back-end.cg-variables;
 
-                 dynamic-bind (*back-end*           = back-end,
+                 dynamic-bind (
 			       *harp-outputter*     = ?stream,
 			       *emitting-data?*     = #f,
 			       *tail-calls*         = #())

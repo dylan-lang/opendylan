@@ -91,6 +91,8 @@ define module projects
     project-source-location,
     project-compilation-mode,
     project-compilation-mode-setter,
+    project-compiler-back-end,
+    project-compiler-back-end-setter,
     project-operating-system,
     project-operating-system-setter,
     project-processor,

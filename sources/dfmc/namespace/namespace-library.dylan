@@ -39,7 +39,7 @@ define module dfmc-namespace
 	      <variable-name-table>
 	    };
 
-  use dfmc-macro-expander;
+  use dfmc-macro-expander; 
   // Debugging
   export
     read-databases?, read-databases?-setter,
@@ -108,6 +108,8 @@ define module dfmc-namespace
     dood-boot-mapped-objects,
     compilation-context-object-names,
     library-description-emit-name,
+    library-description-compiler-back-end-name,
+      library-description-compiler-back-end-name-setter,
     library-description-os-name,
       library-description-os-name-setter,
     library-description-processor-name,

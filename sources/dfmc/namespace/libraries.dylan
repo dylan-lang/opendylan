@@ -724,6 +724,13 @@ define sideways method compiling-dylan-library? () => (well? :: <boolean>)
     dylan-library-library-description?(current-library-description())
 end method;
 
+define sideways method current-back-end-name () => (name :: false-or(<symbol>))
+  let ld = current-library-description();
+  if (ld)
+    library-description-compiler-back-end-name(ld);
+  end;
+end method;
+
 define sideways method current-compilation-mode () => (mode :: <symbol>)
   library-description-compilation-mode(current-library-description())
 end method;

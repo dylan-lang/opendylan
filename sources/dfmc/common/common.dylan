@@ -62,7 +62,8 @@ define compiler-open generic current-top-level-library-description?
   (ld) => (well? :: <boolean>);
 
 define compiler-open generic current-library-in-context? (ld) => (well? :: <boolean>);
-
+define compiler-open generic current-back-end () => (back-end);
+define compiler-open generic current-back-end-name () => (name :: false-or(<symbol>));
 define compiler-open generic current-compilation-mode () => (mode :: <symbol>);
 define compiler-open generic current-processor-name () => (name :: <symbol>);
 define compiler-open generic current-os-name () => (name :: <symbol>);

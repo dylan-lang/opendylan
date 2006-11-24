@@ -11,6 +11,37 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // Compilation mode
 
+define class <compiler-back-end-property> (<project-property>)
+end class <compiler-back-end-property>;
+
+define command-property compiler-back-end => <compiler-back-end-property>
+  (summary:       "current compiler back end",
+   documentation: "The current back-end code generator.",
+   type:          <symbol>,
+   persistent?:   #t)
+end command-property compiler-back-end;
+
+define method show-property
+  (context :: <environment-context>, property :: <compiler-back-end-property>)
+ => ()
+  let project = context.context-project;
+  message(context, "Compiler back end: %s", project.project-compiler-back-end);
+end method show-property;
+
+define method set-property
+  (context :: <environment-context>, property :: <compiler-back-end-property>,
+   back-end :: <symbol>,
+   #key save?)
+ => ()
+  ignore(save?);
+  let project = context.context-project;
+  project.project-compiler-back-end :=
+    select (back-end)
+      #"harp", #"c" => back-end;
+      otherwise => set-error("Unrecognized back end: %s", back-end);
+    end;
+end method set-property;
+
 define class <compilation-mode-property> (<project-property>)
 end class <compilation-mode-property>;
 
@@ -57,7 +88,7 @@ define class <build-script-property> (<environment-property>)
 end class <build-script-property>;
 
 define command-property build-script => <build-script-property>
-  (summary:       "Current build script",
+  (summary:       "current build script",
    documentation: "The currently active build script.",
    type:          <file-locator>,
    persistent?:   #t)
@@ -351,6 +382,7 @@ end method do-execute-command;
 define command-group build
     (summary: "project building commands",
      documentation: "Commands to drive project building.")
+  property compiler-back-end;
   property compilation-mode;
   property build-script;
   command  build;

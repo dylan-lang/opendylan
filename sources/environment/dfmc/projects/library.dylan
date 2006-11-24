@@ -41,6 +41,8 @@ define module dfmc-environment-projects
 	      default-build-script-setter => env/default-build-script-setter,
               project-compilation-mode => env/project-compilation-mode,
               project-compilation-mode-setter => env/project-compilation-mode-setter,
+              project-compiler-back-end => env/project-compiler-back-end,
+              project-compiler-back-end-setter => env/project-compiler-back-end-setter,
               project-target-type => env/project-target-type,
               <project-target-type> => env/<project-target-type>,
               project-target-type-setter => env/project-target-type-setter,

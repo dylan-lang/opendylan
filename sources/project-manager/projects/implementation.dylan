@@ -309,11 +309,20 @@ define method make-project
       unless (processor) processor := default-processor end;
       unless (operating-system) operating-system := default-os end;
     end;
+
+    // choose harp for platforms that have it, c for others
+    let back-end = 
+        select (operating-system)
+            #"darwin" => #"c";
+			otherwise => #"harp";
+        end;
+
     debug-out(#"project-manager", "Make-project: %s parent: %s\n", key, 
 	      parent & parent.project-name);
     let project = 
       apply(make, c, 
 	    processor:, processor, operating-system:, operating-system,
+		compiler-back-end:, back-end,
 	    keys);
 
     if (mode) project-compilation-mode(project) := mode end;
@@ -345,7 +354,7 @@ define method make-project
     // we attempt to just load the db's without updating sources
     // unless we are in a compiler transaction
     // TO DO: make sure %project-top-level? has meaningful value
-  
+
     if(project.%project-top-level?)
      verify-project-database(project)
     else
@@ -362,7 +371,6 @@ define method make-project
 
     project-set-compilation-parameters(project);
     project.%database-saved & note-database-saved(project);
-
     project
   end with-used-project-cache
   end 
@@ -410,7 +418,6 @@ define function project-open-compilation-context (project :: <project>,
 	user-warning("Discarding incompatible compiler database %s", 
 		     as(<string>, condition-database-name(cond)))
       end;
-
     let context = open-compilation-context(project,
 					   database-location: 
 					     project-database-location(project),
@@ -462,6 +469,7 @@ define function project-set-compilation-parameters(project :: <project>,
     add-setting(processor: project-processor(project));
     add-setting(operating-system: project-operating-system(project));
   end;
+  add-setting(back-end: project-compiler-back-end(project));
   add-setting(build-location: project-build-location(project));
   add-setting(library-pack: project-library-pack(project));
   context.compilation-context-compiler-settings := compiler-settings;

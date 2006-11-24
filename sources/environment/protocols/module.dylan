@@ -410,6 +410,7 @@ define module environment-protocols
   // Project objects
   export <project-object>,
          <compilation-mode>,
+         <compiler-back-end>,
          <project-target-type>,
          <project-interface-type>,
          active-project, active-project-setter,
@@ -468,6 +469,7 @@ define module environment-protocols
          project-release-directory,
          project-server-path,
          project-compilation-mode, project-compilation-mode-setter,
+         project-compiler-back-end, project-compiler-back-end-setter,
          project-target-type, project-target-type-setter,
          project-interface-type, project-interface-type-setter,
          project-base-address, project-base-address-setter,

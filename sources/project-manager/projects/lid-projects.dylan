@@ -93,6 +93,9 @@ define open abstract class <lid-project> (<project>)
   slot project-compilation-mode :: <symbol>, 
     init-keyword: compilation-mode:,
     setter: project-compilation-mode-slot-setter;
+  slot project-compiler-back-end :: <symbol>,
+    init-keyword: compiler-back-end:,
+    setter: project-compiler-back-end-slot-setter;
   slot project-processor, 
     init-keyword: processor:,
     setter: project-processor-slot-setter;
@@ -287,6 +290,11 @@ define method project-library-name
     (project :: <lid-project>) => (name :: <symbol>)
   project.project-lid-library-name
 end method project-library-name;
+
+define method project-compiler-back-end-setter(back-end, project :: <lid-project>)
+  project-compiler-back-end-slot(project) := back-end;
+  project-compiler-setting(project, back-end:) := back-end;
+end;
 
 define method project-processor-setter(processor, project :: <lid-project>)
   project-processor-slot(project) := processor;

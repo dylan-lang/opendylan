@@ -113,6 +113,7 @@ define dood-class <project-library-description>
   weak slot library-description-database-location,
     required-init-keyword: location:,
     reinit-expression: #f;
+  lazy slot library-description-compiler-back-end-slot :: false-or(<symbol>) = #f;
   lazy slot library-description-os-name-slot :: <symbol> = #"unknown";
   lazy slot library-description-processor-name-slot :: <symbol> = #"unknown";
   lazy slot library-description-compilation-mode-slot :: <symbol> = #"tight";
@@ -512,6 +513,19 @@ define compiler-open generic retract-library-compilation
 define method library-description-emit-name (ld :: <library-description>)
   let library = ld.language-definition;
   library & namespace-name(library)
+end method;
+
+define method library-description-compiler-back-end-name
+    (project :: <project-library-description>) => (back-end :: false-or(<symbol>))
+  project.library-description-compiler-back-end-slot
+end method;
+
+define method library-description-compiler-back-end-name-setter
+    (back-end :: false-or(<symbol>), project :: <project-library-description>)
+  unless (back-end == project.library-description-compiler-back-end-name)
+    retract-library-compilation(project);
+    project.library-description-compiler-back-end-slot := back-end;
+  end;
 end method;
 
 define method library-description-os-name

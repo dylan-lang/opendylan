@@ -52,6 +52,11 @@ define open generic project-compilation-mode(project :: <project>)
 
 define open generic project-compilation-mode-setter(mode, project :: <project>);
 
+define open generic project-compiler-back-end(project :: <project>)
+ => back-end;
+
+define open generic project-compiler-back-end-setter(back-end, project :: <project>);
+
 define open generic project-build-location
     (project :: <project>) 
  => (location :: false-or(<directory-locator>));

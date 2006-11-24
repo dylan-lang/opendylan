@@ -24,8 +24,3 @@ define constant $optimization-default   = $optimization-low;
 
 define thread variable *optimization-level* = $optimization-default;
 
-
-//// back ends
-
-define thread-property back-end = #f; // should be subclass(<back-end>)
-

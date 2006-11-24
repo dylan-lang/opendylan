@@ -19,6 +19,8 @@ define abstract open class <local-variable> (<object>)
 end class;
 
 define constant $back-end-registry = make(<stretchy-vector>);
+define thread variable *cached-back-end* :: false-or(<back-end>) = #f;
+define thread variable *cached-back-end-name* :: false-or(<symbol>) = #f;
 
 define class <back-end-registry-entry> (<object>)
   constant slot back-end-class :: <class>,
@@ -35,28 +37,34 @@ define function register-back-end (class :: <class>,
                                    type :: <symbol>,
                                    architecture :: false-or(<symbol>),
                                    os :: false-or(<symbol>)) => ();
-  add!($back-end-registry,
+    add!($back-end-registry,
        make(<back-end-registry-entry>,
             back-end-class: class,
             back-end-type: type,
             target-architecture: architecture,
             target-os: os));
-  if (type = #"harp"
-        & architecture = $machine-name
-        & os = $os-name)
-    default-back-end() := make(class)
-  end;
 end;
 
 define function find-back-end (type :: <symbol>,
                                architecture :: <symbol>,
-                               os :: <symbol>) => (class :: <class>);
+                               os :: <symbol>) => (entry);
   choose(method (x)
            x.back-end-type == type 
-             & x.target-architecture == architecture
-             & x.target-os == os
+             & (~ x.target-architecture | x.target-architecture == architecture)
+             & (~ x.target-os | x.target-os == os)
          end, $back-end-registry)
 end;
-  
-  
-            
+
+define sideways method current-back-end () => (back-end)
+  let name = current-back-end-name();
+  if (name ~== *cached-back-end-name*)
+    let entries = find-back-end(name, current-processor-name(), current-os-name());
+    if (~ empty?(entries))
+      *cached-back-end* := make(back-end-class(first(entries)));
+      *cached-back-end-name* := name;
+    else
+      error("Invalid back-end %s", name);
+    end;
+  end;
+  *cached-back-end*
+end;

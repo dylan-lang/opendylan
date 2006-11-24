@@ -864,6 +864,23 @@ define sealed method env/project-compilation-mode-setter
   compilation-mode
 end method env/project-compilation-mode-setter;
 
+define sealed method env/project-compiler-back-end
+    (project :: <dfmc-project-object>)
+ => (back-end :: <compiler-back-end>)
+  project-compiler-back-end(project.ensure-project-proxy);
+end method env/project-compiler-back-end;
+
+define sealed method env/project-compiler-back-end-setter
+    (back-end :: <compiler-back-end>, project :: <dfmc-project-object>)
+ => (back-end :: <compiler-back-end>)
+  let proxy = project.ensure-project-proxy;
+  unless (proxy.project-compiler-back-end == back-end)
+    proxy.project-compiler-back-end := back-end;
+    save-project(proxy);
+  end;
+  back-end
+end method env/project-compiler-back-end-setter;
+
 define sealed method env/project-target-type
     (project :: <dfmc-project-object>)
  => (target-type :: env/<project-target-type>)
