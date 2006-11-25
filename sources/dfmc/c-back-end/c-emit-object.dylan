@@ -232,6 +232,11 @@ define method ambiguous-lexical-variable?
   end block;
 end method;
 
+// Hacky workaround for the fact that
+// the frame-offset of two anonymous
+// lexical variables can be the same.
+define thread variable *name-salt* = 1;
+
 define method ambiguous-parameter? 
     (parameters :: <sequence>, var :: <temporary>) 
  => (ambiguous? :: <boolean>)
@@ -239,6 +244,10 @@ define method ambiguous-parameter?
     for (tmp in parameters)
       if (tmp ~== var 
             & same-name?(var.name, tmp.name))
+          if (tmp.frame-offset == var.frame-offset)
+            var.frame-offset := tmp.frame-offset + *name-salt*;
+            *name-salt* := *name-salt* + 1;
+          end;
         return(#t);
       end if;
     end for;

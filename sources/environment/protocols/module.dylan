@@ -477,6 +477,8 @@ define module environment-protocols
          project-minor-version, project-minor-version-setter,
          find-project-source-record,
          find-source-record-library,
+         session-property,
+         session-property-setter,
          source-record-top-level-forms,
          source-record-projects,
          source-record-colorization-info,

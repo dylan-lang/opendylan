@@ -10,7 +10,6 @@ srcdir=`(cd $srcdir; pwd)`
 AC_DEFUN(FD_PLATFORM,[
 case $1 in
 i*86-*-linux-gnu*) $2=x86-linux ;;
-i*86-suse-linux*) $2=x86-linux ;;
 i*86-*-freebsd*) $2=x86-bsd ;;
 powerpc-*-linux-gnu*) $2=ppc-linux ;;
 powerpc-apple-darwin*) $2=ppc-darwin ;;
@@ -80,6 +79,6 @@ AC_MSG_RESULT($LIBRARY_PACKS)
 AC_SUBST(LIBRARY_PACKS)
 
 # for now, replace mps only in pentium-linux
-AC_CONFIG_FILES(Makefile sources/lib/run-time/pentium-linux/Makefile)
+AC_CONFIG_FILES(Makefile sources/lib/run-time/pentium-linux/Makefile sources/dfmc/c-run-time/Makefile)
 
 AC_OUTPUT

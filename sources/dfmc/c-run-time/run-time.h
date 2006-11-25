@@ -1,4 +1,5 @@
 #include <setjmp.h>
+#include <gc/gc.h>
 
 #define OPTIONAL_ARGUMENT_CHECK(fn, req, count)
 #define REQUIRED_ARGUMENT_CHECK(fn, req, count)
@@ -52,6 +53,7 @@ typedef double			DDFLT;
 typedef long double		DEFLT;
 typedef unsigned long		DADDR;
 typedef char*			DBSTR;
+typedef const char*		DCBSTR;
 typedef void* 			D;
 
 /* DYLAN TAGGING */

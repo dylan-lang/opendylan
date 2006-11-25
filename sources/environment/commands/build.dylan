@@ -11,7 +11,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // Compilation mode
 
-define class <compiler-back-end-property> (<project-property>)
+define class <compiler-back-end-property> (<environment-property>)
 end class <compiler-back-end-property>;
 
 define command-property compiler-back-end => <compiler-back-end-property>
@@ -24,8 +24,8 @@ end command-property compiler-back-end;
 define method show-property
   (context :: <environment-context>, property :: <compiler-back-end-property>)
  => ()
-  let project = context.context-project;
-  message(context, "Compiler back end: %s", project.project-compiler-back-end);
+  let back-end = session-property(#"compiler-back-end");
+  message(context, "Compiler back end: %s", back-end);
 end method show-property;
 
 define method set-property
@@ -34,8 +34,7 @@ define method set-property
    #key save?)
  => ()
   ignore(save?);
-  let project = context.context-project;
-  project.project-compiler-back-end :=
+  session-property(#"compiler-back-end") :=
     select (back-end)
       #"harp", #"c" => back-end;
       otherwise => set-error("Unrecognized back end: %s", back-end);

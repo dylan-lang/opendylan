@@ -806,6 +806,16 @@ end method project-start-function-name-setter;
 
 /// Project properties
 
+define sideways method env/session-property
+    (key :: <symbol>) => (value)
+  session-property(key)
+end method env/session-property;
+
+define sideways method env/session-property-setter
+    (value, key :: <symbol>) => (value)
+  session-property(key) := value
+end method env/session-property-setter;
+
 define sealed method env/project-read-only?
     (project :: <dfmc-project-object>)
  => (read-only? :: <boolean>)

@@ -20,6 +20,8 @@ define library dfmc-environment-projects
   use dfmc-pentium-harp-cg;		// Pentium backend
   use dfmc-harp-browser-support;	// Harp browsing support
   use dfmc-debug-back-end;		// Compiler print methods
+  use dfmc-c-back-end;          // C backend
+  use dfmc-c-linker;            // C linker
 
   use dfmc-environment-database;
 
@@ -52,6 +54,8 @@ define module dfmc-environment-projects
               project-major-version-setter => env/project-major-version-setter,
               project-minor-version => env/project-minor-version,
               project-minor-version-setter => env/project-minor-version-setter,
+          session-property => env/session-property,
+              session-property-setter => env/session-property-setter,
 	      project-read-only? => env/project-read-only? };
   use dfmc-environment-database;
 

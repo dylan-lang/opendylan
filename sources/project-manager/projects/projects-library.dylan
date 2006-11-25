@@ -116,6 +116,8 @@ define module projects
     note-database-unsaved,
     note-database-invalidated,
     ensure-project-database,
+    session-property,
+    session-property-setter,
     project-build-property,
     project-build-property-setter;
   create

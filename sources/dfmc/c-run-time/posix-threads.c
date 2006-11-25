@@ -19,9 +19,7 @@
 #include <pthread.h>
 #include <time.h>
 
-#define SOLARIS_THREADS
-#define _SOLARIS_PTHREADS
-#include "gc.h"
+#include <gc/gc.h>
 
 
 
@@ -280,7 +278,6 @@ D primitive_make_thread(D t, D n, D p, D f, DBOOL s)
   ZINT     zpriority = (ZINT)p;
   DBOOL    synchronize = s;
 
-  pthread_t           tid;
   pthread_attr_t      attr;
   struct sched_param  param;
   int                 priority = (int)zpriority >> 2;
@@ -309,7 +306,7 @@ D primitive_make_thread(D t, D n, D p, D f, DBOOL s)
 //    return CREATE_ERROR;
 //  }
 
-  if (pthread_create(&tid, &attr, trampoline, thread)) {
+  if (pthread_create(&thread->tid, &attr, trampoline, thread)) {
     MSG0("make-thread: error creating thread\n");
     return CREATE_ERROR;
   }
@@ -447,6 +444,14 @@ D primitive_thread_join_multiple(D v)
   return joined_thread;
 }
 
+/* 4.5 */
+void primitive_detach_thread(D t)
+{
+  DTHREAD* thread = t;
+  assert(thread != NULL);
+
+  pthread_detach(thread->tid);
+}
 
 /* 5 */
 void primitive_thread_yield(void)
@@ -1302,7 +1307,6 @@ D primitive_initialize_current_thread(D t, DBOOL synchronize)
 {
   DTHREAD     *thread = (DTHREAD *)t;
   TLV_VECTOR   tlv_vector;
-  pthread_t    tid;
   int          size;
 
   assert(thread != NULL);
@@ -1310,9 +1314,8 @@ D primitive_initialize_current_thread(D t, DBOOL synchronize)
   MSG1("Initializing thread %p\n", t);
 
   // Put the thread object and handle in the TEB for later use
-  tid = pthread_self();
   set_current_thread(thread);
-  set_current_thread_handle((void *)tid);
+  set_current_thread_handle((void *)thread->tid);
 
   pthread_mutex_lock(&tlv_vector_list_lock);
 

@@ -50,9 +50,15 @@ end method;
 define method emit-forward  // !@#$ NEED UNIFYING TYPE
     (back-end :: <c-back-end>, stream :: <stream>, o) => ()
   unless (o.direct-object?)
-    write(stream, "extern ");
-    emit-type-name(back-end, stream, o);
-    format-emit*(back-end, stream, " ^;\n", o);
+    if (o.model-definition 
+		 | instance?(o, <&mm-wrapper>)
+		 | instance?(o, <&singular-terminal-engine-node>))
+		write(stream, "extern ");
+	else
+		write(stream, "static ");
+	end;
+	emit-type-name(back-end, stream, o);
+   	format-emit*(back-end, stream, " ^;\n", o);
   end unless;
 end method;
 
@@ -177,7 +183,7 @@ define method emit-slot-definition-using-type-name
   write(stream, prefix-string);
   print-message(type-name, stream);
   write-element(stream, ' ');
-  emit-struct-field-name(*c-back-end*, stream, o, slotd, offset);
+  emit-struct-field-name(current-back-end(), stream, o, slotd, offset);
   write(stream, suffix-string);
 end method;
 

@@ -230,6 +230,12 @@ define constant <compiler-back-end> = one-of(#"harp", #"c");
 define constant <project-target-type> = one-of(#"executable", #"dll");
 define constant <project-interface-type> = one-of(#"console", #"gui");
 
+define open generic session-property
+    (key :: <symbol>) => (value);
+
+define open generic session-property-setter
+    (value, key :: <symbol>) => (value);
+
 define open generic project-compilation-mode
     (project :: <project-object>) => (mode :: <compilation-mode>);
 

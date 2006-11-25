@@ -312,9 +312,10 @@ define method make-project
 
     // choose harp for platforms that have it, c for others
     let back-end = 
-        select (operating-system)
-            #"darwin" => #"c";
-			otherwise => #"harp";
+      session-property(#"compiler-back-end")
+      | select(operating-system)
+          #"darwin" => #"c";
+          otherwise => #"harp";
         end;
 
     debug-out(#"project-manager", "Make-project: %s parent: %s\n", key, 

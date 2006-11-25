@@ -29,7 +29,6 @@ define module dfmc-c-back-end
   use dfmc-conversion;
   use dfmc-typist;
   export
-    // *** emit-all,
     <c-back-end>,
     emit-struct-name,
     emit-struct-definer-name,

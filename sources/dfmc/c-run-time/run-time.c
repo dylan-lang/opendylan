@@ -3331,7 +3331,7 @@ D primitive_initialize_engine_node (D engine) {
     Pnext_methods_ = parent_; \
     return(ncb_(ARGTEMPLATE##_nargs)); \
   }
-
+  
 DEFINE_DISCRIMINATOR_ENGINE(1, 1)
 DEFINE_DISCRIMINATOR_ENGINE(1, 2)
 DEFINE_DISCRIMINATOR_ENGINE(1, 3)
@@ -4346,11 +4346,7 @@ DSINT primitive_set_errno (DSINT code) {
   return(errno);
 }
 
-#ifndef macintosh
-extern char *sys_errlist[ ];
-#endif
-  
-DBSTR primitive_errstr (DSINT no) {
+DCBSTR primitive_errstr (DSINT no) {
 #ifdef macintosh
   static char text[32];
   sprintf(text, "error %d", no);
@@ -4382,7 +4378,9 @@ DBOOL primitive_file_existsQ(DBSTR filename) {
 
 /* TERMINAL */
 
-D pseudo_stdout = (D)stdout;
+/* RIH - Moved initialization to startup */
+
+D pseudo_stdout = 0;
 
 /* OPERATING SYSTEM */
 
@@ -4694,6 +4692,7 @@ void _Init_Run_Time ()
     IKJboole_ior_ = primitive_string_as_symbol(&bs_boole_ior_);
     max_stack_size = INITIAL_MAX_STACK_SIZE;
     bottom_of_stack = (unsigned long)&stack_marker;
+	pseudo_stdout = (D)stdout;
   }
 }
 

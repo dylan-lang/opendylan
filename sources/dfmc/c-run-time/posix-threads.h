@@ -84,6 +84,7 @@ typedef struct _ctr2
   D class;
   void *handle1;
   void *handle2;
+  pthread_t tid;
 } DTHREAD;
 
 typedef void * D_NAME;

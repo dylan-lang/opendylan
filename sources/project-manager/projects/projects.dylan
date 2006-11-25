@@ -184,6 +184,7 @@ define variable *default-library-major-version* = 0;
 define variable *default-library-minor-version* = 0;
 define variable *default-library-library-pack*  = 0;
 
+define variable *session-properties* = make(<table>);
 
 // this is external interface to return the set of records on disk
 define function project-source-records(project :: <project>)
@@ -314,6 +315,23 @@ define open generic project-build-settings
 define method project-build-settings
     (project :: <project>) => (res :: singleton(#()));
   #()
+end method;
+
+// [Optional] Access to global, per-session properties applying to all projects.
+define open generic session-property 
+    (key :: <symbol>) => (value);
+
+define method session-property
+    (key :: <symbol>) => (value)
+  element(*session-properties*, key, default: #f)
+end method;
+
+define open generic session-property-setter
+    (value, key :: <symbol>) => (value);
+
+define method session-property-setter
+    (value, key :: <symbol>) => (value)
+  element(*session-properties*, key) := value;
 end method;
 
 // [Optional] Access to some optional static properties of the project.

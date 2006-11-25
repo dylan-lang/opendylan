@@ -19,6 +19,11 @@ void threads_get_stuffed () {
   primitive_break();
 }
 
+D primitive_detach_thread(D t) {
+  ignore(t);
+  return(THREAD_SUCCESS);
+}
+
 D primitive_release_simple_lock(D l) {
   ignore(l);
   return(THREAD_SUCCESS);
