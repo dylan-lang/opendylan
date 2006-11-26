@@ -9,7 +9,7 @@ srcdir=`(cd $srcdir; pwd)`
 
 AC_DEFUN(FD_PLATFORM,[
 case $1 in
-i*86-*-linux-gnu*) $2=x86-linux ;;
+i*86-*-linux-*) $2=x86-linux ;;
 i*86-*-freebsd*) $2=x86-bsd ;;
 powerpc-*-linux-gnu*) $2=ppc-linux ;;
 powerpc-apple-darwin*) $2=ppc-darwin ;;
