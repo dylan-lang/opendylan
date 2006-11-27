@@ -10,8 +10,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 /// define class <c-linker> (<linker>) end;
 
 define function c-output-basename (basename :: <string>) => (c-basename)
-  //concatenate(basename, "")
-	basename
+  basename
 end function;
 
 // DRIVER PROTOCOL FUNCTIONS

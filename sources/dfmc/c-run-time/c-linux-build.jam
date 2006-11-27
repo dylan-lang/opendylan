@@ -2,15 +2,15 @@
 # Configuration variables
 #
 
-CC	?= gcc ;
+CC     ?= gcc ;
 
-MKF	?= dylanmakefile.mkf ;
+MKF    ?= dylanmakefile.mkf ;
 
-SUFOBJ	?= .o ;			# object files suffix
-SUFASM	?= .s ;			# assembly source files suffix
-SUFLIB	?= .a ;			# static library suffix
-SUFDLL	?= .so ;		# shared library suffix
-SUFMKF	?= .mkf ;               # build-system files
+SUFOBJ ?= .o ;    # object files suffix
+SUFASM ?= .s ;    # assembly source files suffix
+SUFLIB ?= .a ;    # static library suffix
+SUFDLL ?= .so ;   # shared library suffix
+SUFMKF ?= .mkf ;  # build-system files
 
 {
   local _lib = lib ;
@@ -201,9 +201,9 @@ rule DylanLibraryCLibraries image : libraries {
       case -L* : LINKLIBS on $(_dll) += $(lib) ;
       case -l* : LINKLIBS on $(_dll) += $(lib) ;
       case *.a : lib = [ FGristFiles $(lib) ] ;
-		 SEARCH on $(lib) = $(SEARCH_SOURCE) ;
-		 Depends $(_dll) : $(lib) ;
-		 NEEDLIBS on $(_dll) += $(lib) ;
+        SEARCH on $(lib) = $(SEARCH_SOURCE) ;
+        Depends $(_dll) : $(lib) ;
+        NEEDLIBS on $(_dll) += $(lib) ;
       case * :   Exit Unknown C library $(lib) ;
     }
   }
@@ -299,11 +299,11 @@ rule DylanLibraryUses image : library : dir {
 
       local LIBDIR BINDIR ;
       {
-	local _lib = lib ;
-	local _bin = bin ;
+        local _lib = lib ;
+        local _bin = bin ;
 
-	LIBDIR = $(_lib:P=$(PERSONAL_ROOT:E=$(LOCATE_TARGET:P))) ;
-	BINDIR = $(_bin:P=$(PERSONAL_ROOT:E=$(LOCATE_TARGET:P))) ;
+        LIBDIR = $(_lib:P=$(PERSONAL_ROOT:E=$(LOCATE_TARGET:P))) ;
+        BINDIR = $(_bin:P=$(PERSONAL_ROOT:E=$(LOCATE_TARGET:P))) ;
       }
 
       local _mkf = $(MKF:G=$(library:L)) ;

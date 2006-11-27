@@ -54,9 +54,9 @@ define module dfmc-environment-projects
               project-major-version-setter => env/project-major-version-setter,
               project-minor-version => env/project-minor-version,
               project-minor-version-setter => env/project-minor-version-setter,
-          session-property => env/session-property,
-              session-property-setter => env/session-property-setter,
-	      project-read-only? => env/project-read-only? };
+              session-property => env/session-property,
+                session-property-setter => env/session-property-setter,
+              project-read-only? => env/project-read-only? };
   use dfmc-environment-database;
 
   use project-manager-interface,

@@ -51,14 +51,14 @@ define method emit-forward  // !@#$ NEED UNIFYING TYPE
     (back-end :: <c-back-end>, stream :: <stream>, o) => ()
   unless (o.direct-object?)
     if (o.model-definition 
-		 | instance?(o, <&mm-wrapper>)
-		 | instance?(o, <&singular-terminal-engine-node>))
-		write(stream, "extern ");
-	else
-		write(stream, "static ");
-	end;
-	emit-type-name(back-end, stream, o);
-   	format-emit*(back-end, stream, " ^;\n", o);
+        | instance?(o, <&mm-wrapper>)
+        | instance?(o, <&singular-terminal-engine-node>))
+      write(stream, "extern ");
+    else
+      write(stream, "static ");
+    end;
+    emit-type-name(back-end, stream, o);
+    format-emit*(back-end, stream, " ^;\n", o);
   end unless;
 end method;
 
@@ -70,8 +70,8 @@ define method emit-definition // !@#$ need unifying type
   // are never referred to by name, hence no need for a forward declaration.
   unless (o.direct-object?)
     unless (o.model-definition 
-	      | instance?(o, <&mm-wrapper>)
-	      | instance?(o, <&singular-terminal-engine-node>)) 
+            | instance?(o, <&mm-wrapper>)
+            | instance?(o, <&singular-terminal-engine-node>)) 
       write(stream, "static ");
     end;
     emit-type-name(back-end, stream, o);
