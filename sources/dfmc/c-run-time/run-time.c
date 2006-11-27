@@ -94,13 +94,6 @@ INLINE D instance_header_setter (D header, D* instance) {
   return(header); 
 }
 
-extern void *malloc(size_t size);
-extern void free(void *p);
-extern void *GC_malloc(size_t size);
-extern void *GC_realloc(void *mem, size_t size);
-extern void GC_gcollect(void);
-extern long GC_get_heap_size(void);
-
 void  primitive_mps_collect (DBOOL ignored) {
   ignore(ignored);
   GC_gcollect();
@@ -4692,7 +4685,7 @@ void _Init_Run_Time ()
     IKJboole_ior_ = primitive_string_as_symbol(&bs_boole_ior_);
     max_stack_size = INITIAL_MAX_STACK_SIZE;
     bottom_of_stack = (unsigned long)&stack_marker;
-	pseudo_stdout = (D)stdout;
+    pseudo_stdout = (D)stdout;
   }
 }
 
