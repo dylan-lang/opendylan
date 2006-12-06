@@ -295,7 +295,7 @@ define inline-only constant $AF-MAX                     =   26;
 
 define C-struct <sockaddr>
   sealed inline-only slot sa-family-value :: <u-short>;
-  sealed inline-only array slot sa-data-array :: <C-char>,
+  sealed inline-only array slot sa-data-array :: <C-unsigned-char>,
 	length: 14, address-getter: sa-data-value;
   pointer-type-name: <LPSOCKADDR>;
 end C-struct;
