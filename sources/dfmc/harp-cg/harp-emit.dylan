@@ -601,6 +601,12 @@ define sideways method emit-name-internal
   c-emitted-name
 end method emit-name-internal;
 
+define sideways method emit-name-internal
+    (back-end :: <harp-back-end>, stream, o :: <&c-variable>)
+  => (c-name :: <string>)
+  c-name(back-end, o.name)
+end method emit-name-internal;
+
 define method emit-iep-name
     (back-end :: <harp-back-end>, stream, o :: <&function>)
  => (name :: <string>);
