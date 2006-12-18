@@ -469,8 +469,8 @@ define function project-set-compilation-parameters(project :: <project>,
     add-setting(mode: project-compilation-mode(project));
     add-setting(processor: project-processor(project));
     add-setting(operating-system: project-operating-system(project));
+    add-setting(back-end: project-compiler-back-end(project));
   end;
-  add-setting(back-end: project-compiler-back-end(project));
   add-setting(build-location: project-build-location(project));
   add-setting(library-pack: project-library-pack(project));
   context.compilation-context-compiler-settings := compiler-settings;
