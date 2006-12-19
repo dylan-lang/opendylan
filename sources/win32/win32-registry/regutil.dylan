@@ -35,7 +35,7 @@ end append-c-string;
 
 define method register-item(subkey1 :: <byte-string>, subkey2 :: <byte-string>,
 			    subkey3 :: <byte-string>, value :: <string>)
-  let max-key-size = reduce1(\+, map(size, list(subkey1, subkey2, subkey3))) + 1;
+  let max-key-size = min(reduce1(\+, map(size, list(subkey1, subkey2, subkey3))) + 1, 1000);
   with-stack-structure( key-buf :: <LPTSTR>, size: max-key-size)
     let start-id = append-c-string(key-buf, subkey1 );
     let end-id = append-c-string(start-id, subkey2);
@@ -60,7 +60,7 @@ define method get-registry-item(subkey1 :: <byte-string>,
 				subkey2 :: <byte-string>,
 				subkey3 :: <byte-string>)
  => (value :: false-or(<string>));
-  let max-key-size = reduce1(\+, map(size, list(subkey1, subkey2, subkey3))) + 1;
+  let max-key-size = min(reduce1(\+, map(size, list(subkey1, subkey2, subkey3))) + 1, 1000);
   with-stack-structure( key-buf :: <LPTSTR>, size: max-key-size)
   with-stack-structure( value-buf :: <LPTSTR>, size: max-key-size)
   with-stack-structure( size-ptr :: <PLONG> )
