@@ -8,6 +8,7 @@ Files:	      library
               collectors-macros
               collectors
               plists
+              table-macros
 Other-Files:  Open-Source-License.txt
 Major-Version: 2
 Minor-Version: 1

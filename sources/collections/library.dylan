@@ -72,6 +72,7 @@ define module set
 end module set;
 
 define module table-extensions
+  use dylan;
   use dylan-extensions,
     import: { <string-table>, <hash-state>,
               collection-hash, sequence-hash, 
@@ -80,9 +81,10 @@ define module table-extensions
               string-hash,
               case-insensitive-string-hash,
               case-insensitive-equal,
-	      remove-all-keys!,
-	      merge-hash-ids },
+      	      remove-all-keys!,
+      	      merge-hash-ids },
     export: all;
+  export \table;
 end module table-extensions;
 
 define module collections-internals
