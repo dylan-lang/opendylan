@@ -18,3 +18,5 @@ gtk_file_info_set_size
 
 // This struct contains multidimensional arrays.
 _GtkCalendar
+GtkCalendar 
+GtkCalendarPrivate

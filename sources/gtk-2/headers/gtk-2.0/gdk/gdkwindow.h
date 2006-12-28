@@ -1,3 +1,29 @@
+/* GDK - The GIMP Drawing Kit
+ * Copyright (C) 1995-1997 Peter Mattis, Spencer Kimball and Josh MacDonald
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * Boston, MA 02111-1307, USA.
+ */
+
+/*
+ * Modified by the GTK+ Team and others 1997-2000.  See the AUTHORS
+ * file for a list of people on the GTK+ Team.  See the ChangeLog
+ * files for a list of changes.  These files are distributed with
+ * GTK+ at ftp://ftp.gtk.org/pub/gtk/. 
+ */
+
 #ifndef __GDK_WINDOW_H__
 #define __GDK_WINDOW_H__
 
@@ -5,9 +31,7 @@
 #include <gdk/gdktypes.h>
 #include <gdk/gdkevents.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 typedef struct _GdkGeometry           GdkGeometry;
 typedef struct _GdkWindowAttr	      GdkWindowAttr;
@@ -265,6 +289,7 @@ struct _GdkWindowObject
 
   guint accept_focus : 1;
   guint focus_on_map : 1;
+  guint shaped : 1;
   
   GdkEventMask event_mask;
 };
@@ -335,6 +360,10 @@ void          gdk_window_remove_filter         (GdkWindow     *window,
 void          gdk_window_scroll                (GdkWindow *window,
                                                 gint       dx,
                                                 gint       dy);
+void	      gdk_window_move_region           (GdkWindow *window,
+						GdkRegion *region,
+						gint       dx,
+						gint       dy);
 
 /* 
  * This allows for making shaped (partially transparent) windows
@@ -418,6 +447,8 @@ void gdk_window_set_skip_taskbar_hint (GdkWindow *window,
                                        gboolean   skips_taskbar);
 void gdk_window_set_skip_pager_hint   (GdkWindow *window,
                                        gboolean   skips_pager);
+void gdk_window_set_urgency_hint      (GdkWindow *window,
+				       gboolean   urgent);
 
 void          gdk_window_set_geometry_hints (GdkWindow        *window,
 					     GdkGeometry      *geometry,
@@ -589,8 +620,6 @@ GdkWindow *gdk_get_default_root_window (void);
    gdk_draw_pixmap(drawable,gc,source_drawable,source_x,source_y,x,y,width,height)
 #endif /* GDK_DISABLE_DEPRECATED */
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GDK_WINDOW_H__ */

@@ -2,9 +2,9 @@
 #define GDK_PIXBUF_FEATURES_H 1
 
 #define GDK_PIXBUF_MAJOR (2)
-#define GDK_PIXBUF_MINOR (6)
-#define GDK_PIXBUF_MICRO (9)
-#define GDK_PIXBUF_VERSION "2.6.9"
+#define GDK_PIXBUF_MINOR (8)
+#define GDK_PIXBUF_MICRO (10)
+#define GDK_PIXBUF_VERSION "2.8.10"
 
 /* We prefix variable declarations so they can
  * properly get exported/imported from Windows DLLs.

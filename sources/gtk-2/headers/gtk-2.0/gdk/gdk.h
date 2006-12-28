@@ -27,6 +27,7 @@
 #ifndef __GDK_H__
 #define __GDK_H__
 
+#include <gdk/gdkcairo.h>
 #include <gdk/gdkcolor.h>
 #include <gdk/gdkcursor.h>
 #include <gdk/gdkdisplay.h>
@@ -53,9 +54,7 @@
 #include <gdk/gdkvisual.h>
 #include <gdk/gdkwindow.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 
 /* Initialization, exit and events
@@ -209,9 +208,7 @@ void     gdk_threads_set_lock_functions   (GCallback enter_fn,
 #  define GDK_THREADS_LEAVE()
 #endif	/* !G_THREADS_ENABLED */
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 
 #endif /* __GDK_H__ */

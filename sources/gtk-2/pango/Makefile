@@ -1,4 +1,5 @@
 module = Pango
+pkgconfig-flags =$(shell  pkg-config --libs pango)
 module-deps = GLib-2 GObject-2
 headers-dir = ../headers/pango-1.0/pango
 headers = \

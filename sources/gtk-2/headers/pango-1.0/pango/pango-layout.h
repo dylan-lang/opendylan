@@ -197,8 +197,13 @@ PangoLayoutLine *pango_layout_get_line             (PangoLayout    *layout,
 						    int             line);
 GSList *         pango_layout_get_lines            (PangoLayout    *layout);
 
-void     pango_layout_line_ref          (PangoLayoutLine  *line);
-void     pango_layout_line_unref        (PangoLayoutLine  *line);
+#define PANGO_TYPE_LAYOUT_LINE (pango_layout_line_get_type ())
+
+GType    pango_layout_line_get_type     (void) G_GNUC_CONST;
+
+PangoLayoutLine *pango_layout_line_ref   (PangoLayoutLine *line);
+void             pango_layout_line_unref (PangoLayoutLine *line);
+
 gboolean pango_layout_line_x_to_index   (PangoLayoutLine  *line,
 					 int               x_pos,
 					 int              *index_,

@@ -1,3 +1,28 @@
+/* GDK - The GIMP Drawing Kit
+ * Copyright (C) 1995-1997 Peter Mattis, Spencer Kimball and Josh MacDonald
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * Boston, MA 02111-1307, USA.
+ */
+
+/*
+ * Modified by the GTK+ Team and others 1997-2000.  See the AUTHORS
+ * file for a list of people on the GTK+ Team.  See the ChangeLog
+ * files for a list of changes.  These files are distributed with
+ * GTK+ at ftp://ftp.gtk.org/pub/gtk/. 
+ */
 #ifndef __GDK_DRAWABLE_H__
 #define __GDK_DRAWABLE_H__
 
@@ -6,9 +31,9 @@
 #include <gdk/gdkrgb.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+#include <cairo.h>
+
+G_BEGIN_DECLS
 
 typedef struct _GdkDrawableClass GdkDrawableClass;
 typedef struct _GdkTrapezoid     GdkTrapezoid;
@@ -168,8 +193,9 @@ struct _GdkDrawableClass
 				   GdkTrapezoid     *trapezoids,
 				   gint              n_trapezoids);
 
+  cairo_surface_t *(*ref_cairo_surface) (GdkDrawable *drawable);
+
   /* Padding for future expansion */
-  void         (*_gdk_reserved3)  (void);
   void         (*_gdk_reserved4)  (void);
   void         (*_gdk_reserved5)  (void);
   void         (*_gdk_reserved6)  (void);
@@ -394,16 +420,6 @@ GdkImage *gdk_drawable_copy_to_image (GdkDrawable  *drawable,
 GdkRegion *gdk_drawable_get_clip_region    (GdkDrawable *drawable);
 GdkRegion *gdk_drawable_get_visible_region (GdkDrawable *drawable);
 
-gboolean gdk_draw_rectangle_alpha_libgtk_only (GdkDrawable *drawable,
-					       gint         x,
-					       gint         y,
-					       gint         width,
-					       gint         height,
-					       GdkColor    *color,
-					       guint16      alpha);
-
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GDK_DRAWABLE_H__ */

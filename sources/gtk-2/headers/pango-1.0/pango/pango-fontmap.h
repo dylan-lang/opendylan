@@ -32,7 +32,6 @@ G_BEGIN_DECLS
 #define PANGO_IS_FONT_MAP(object)        (G_TYPE_CHECK_INSTANCE_TYPE ((object), PANGO_TYPE_FONT_MAP))
 
 typedef struct _PangoContext PangoContext;
-typedef struct _PangoFontMap PangoFontMap;
 
 GType         pango_font_map_get_type       (void) G_GNUC_CONST;
 PangoFont *   pango_font_map_load_font     (PangoFontMap                 *fontmap,

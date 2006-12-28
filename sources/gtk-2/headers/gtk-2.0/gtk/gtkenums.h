@@ -450,7 +450,14 @@ typedef enum
   GTK_IM_STATUS_NONE
 } GtkIMStatusStyle;
 
-G_END_DECLS
+typedef enum
+{
+  GTK_PACK_DIRECTION_LTR,
+  GTK_PACK_DIRECTION_RTL,
+  GTK_PACK_DIRECTION_TTB,
+  GTK_PACK_DIRECTION_BTT
+} GtkPackDirection;
 
+G_END_DECLS
 
 #endif /* __GTK_ENUMS_H__ */

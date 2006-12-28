@@ -184,14 +184,14 @@ void    gtk_text_buffer_insert_with_tags          (GtkTextBuffer     *buffer,
                                                    const gchar       *text,
                                                    gint               len,
                                                    GtkTextTag        *first_tag,
-                                                   ...);
+                                                   ...) G_GNUC_NULL_TERMINATED;
 
 void    gtk_text_buffer_insert_with_tags_by_name  (GtkTextBuffer     *buffer,
                                                    GtkTextIter       *iter,
                                                    const gchar       *text,
                                                    gint               len,
                                                    const gchar       *first_tag_name,
-                                                   ...);
+                                                   ...) G_GNUC_NULL_TERMINATED;
 
 /* Delete from the buffer */
 void     gtk_text_buffer_delete             (GtkTextBuffer *buffer,

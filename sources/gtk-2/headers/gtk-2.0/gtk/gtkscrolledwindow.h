@@ -34,9 +34,7 @@
 #include <gtk/gtkviewport.h>
 
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 
 #define GTK_TYPE_SCROLLED_WINDOW            (gtk_scrolled_window_get_type ())
@@ -55,9 +53,11 @@ struct _GtkScrolledWindow
 {
   GtkBin container;
 
+  /*< public >*/
   GtkWidget *hscrollbar;
   GtkWidget *vscrollbar;
 
+  /*< private >*/
   guint hscrollbar_policy      : 2;
   guint vscrollbar_policy      : 2;
   guint hscrollbar_visible     : 1;
@@ -102,9 +102,11 @@ GtkWidget*     gtk_scrolled_window_new               (GtkAdjustment     *hadjust
 void           gtk_scrolled_window_set_hadjustment   (GtkScrolledWindow *scrolled_window,
 						      GtkAdjustment     *hadjustment);
 void           gtk_scrolled_window_set_vadjustment   (GtkScrolledWindow *scrolled_window,
-						      GtkAdjustment     *hadjustment);
+						      GtkAdjustment     *vadjustment);
 GtkAdjustment* gtk_scrolled_window_get_hadjustment   (GtkScrolledWindow *scrolled_window);
 GtkAdjustment* gtk_scrolled_window_get_vadjustment   (GtkScrolledWindow *scrolled_window);
+GtkWidget*     gtk_scrolled_window_get_hscrollbar    (GtkScrolledWindow *scrolled_window);
+GtkWidget*     gtk_scrolled_window_get_vscrollbar    (GtkScrolledWindow *scrolled_window);
 void           gtk_scrolled_window_set_policy        (GtkScrolledWindow *scrolled_window,
 						      GtkPolicyType      hscrollbar_policy,
 						      GtkPolicyType      vscrollbar_policy);
@@ -122,9 +124,8 @@ void	       gtk_scrolled_window_add_with_viewport (GtkScrolledWindow *scrolled_w
 
 gint _gtk_scrolled_window_get_scrollbar_spacing (GtkScrolledWindow *scrolled_window);
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+
+G_END_DECLS
 
 
 #endif /* __GTK_SCROLLED_WINDOW_H__ */

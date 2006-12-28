@@ -4,7 +4,7 @@ Target-Type:   DLL
 Files:         library
                special
                @FILES@
-C-Libraries:   -lgobject-2.0 -lglib-2.0
+C-Libraries:   @LIBRARIES@
 Copyright:     Copyright (C) 1999  Functional Objects, Inc.
                Copyright (C) 2005  Daniel Brockman
 License:       Functional Objects Library Public License Version 1.0

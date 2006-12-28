@@ -87,11 +87,11 @@ guint	    g_hash_table_size		   (GHashTable	   *hash_table);
 
 /* Hash Functions
  */
-gboolean g_str_equal (gconstpointer  v,
+gboolean g_str_equal (gconstpointer  v1,
                       gconstpointer  v2);
 guint    g_str_hash  (gconstpointer  v);
 
-gboolean g_int_equal (gconstpointer  v,
+gboolean g_int_equal (gconstpointer  v1,
                       gconstpointer  v2);
 guint    g_int_hash  (gconstpointer  v);
 
@@ -102,7 +102,7 @@ guint    g_int_hash  (gconstpointer  v);
  * same effect as passing g_direct_hash().
  */
 guint    g_direct_hash  (gconstpointer  v) G_GNUC_CONST;
-gboolean g_direct_equal (gconstpointer  v,
+gboolean g_direct_equal (gconstpointer  v1,
                          gconstpointer  v2) G_GNUC_CONST;
 
 G_END_DECLS

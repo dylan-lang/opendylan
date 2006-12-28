@@ -134,9 +134,13 @@ GType gtk_im_preedit_style_get_type (void) G_GNUC_CONST;
 #define GTK_TYPE_IM_PREEDIT_STYLE (gtk_im_preedit_style_get_type())
 GType gtk_im_status_style_get_type (void) G_GNUC_CONST;
 #define GTK_TYPE_IM_STATUS_STYLE (gtk_im_status_style_get_type())
+GType gtk_pack_direction_get_type (void) G_GNUC_CONST;
+#define GTK_TYPE_PACK_DIRECTION (gtk_pack_direction_get_type())
 /* enumerations from "gtkfilechooser.h" */
 GType gtk_file_chooser_action_get_type (void) G_GNUC_CONST;
 #define GTK_TYPE_FILE_CHOOSER_ACTION (gtk_file_chooser_action_get_type())
+GType gtk_file_chooser_confirmation_get_type (void) G_GNUC_CONST;
+#define GTK_TYPE_FILE_CHOOSER_CONFIRMATION (gtk_file_chooser_confirmation_get_type())
 GType gtk_file_chooser_error_get_type (void) G_GNUC_CONST;
 #define GTK_TYPE_FILE_CHOOSER_ERROR (gtk_file_chooser_error_get_type())
 /* enumerations from "gtkfilefilter.h" */
@@ -147,6 +151,9 @@ GType gtk_icon_lookup_flags_get_type (void) G_GNUC_CONST;
 #define GTK_TYPE_ICON_LOOKUP_FLAGS (gtk_icon_lookup_flags_get_type())
 GType gtk_icon_theme_error_get_type (void) G_GNUC_CONST;
 #define GTK_TYPE_ICON_THEME_ERROR (gtk_icon_theme_error_get_type())
+/* enumerations from "gtkiconview.h" */
+GType gtk_icon_view_drop_position_get_type (void) G_GNUC_CONST;
+#define GTK_TYPE_ICON_VIEW_DROP_POSITION (gtk_icon_view_drop_position_get_type())
 /* enumerations from "gtkimage.h" */
 GType gtk_image_type_get_type (void) G_GNUC_CONST;
 #define GTK_TYPE_IMAGE_TYPE (gtk_image_type_get_type())

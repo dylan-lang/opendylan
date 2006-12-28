@@ -7,7 +7,9 @@ library.dylan: library.dylan.in $(module-built-dylan-files) \
 
 $(lid-file): $(lid-file).in $(export-files) $(makefiles)
 	sed -e 's/\(\s*\)@FILES@/ls -1 *.h | \
-	        sed "s\/^\\(.\\+\\)\\.h\\$$\/\1\\1\/"/e' $< > $@
+	        sed "s\/^\\(.\\+\\)\\.h\\$$\/\1\\1\/"/e' \
+	    -e 's/@LIBRARIES@/$(pkgconfig-flags)/' $< > $@
+
 
 tidy:
 	rm -f *.bak *.exp *.h copy-headers-stamp

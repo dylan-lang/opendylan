@@ -52,6 +52,7 @@ gpointer g_realloc        (gpointer	 mem,
 			   gulong	 n_bytes);
 void	 g_free	          (gpointer	 mem);
 gpointer g_try_malloc     (gulong	 n_bytes) G_GNUC_MALLOC;
+gpointer g_try_malloc0    (gulong	 n_bytes) G_GNUC_MALLOC;
 gpointer g_try_realloc    (gpointer	 mem,
 			   gulong	 n_bytes);
 
@@ -64,6 +65,13 @@ gpointer g_try_realloc    (gpointer	 mem,
     ((struct_type *) g_malloc0 (((gsize) sizeof (struct_type)) * ((gsize) (n_structs))))
 #define g_renew(struct_type, mem, n_structs)	\
     ((struct_type *) g_realloc ((mem), ((gsize) sizeof (struct_type)) * ((gsize) (n_structs))))
+
+#define g_try_new(struct_type, n_structs)		\
+    ((struct_type *) g_try_malloc (((gsize) sizeof (struct_type)) * ((gsize) (n_structs))))
+#define g_try_new0(struct_type, n_structs)		\
+    ((struct_type *) g_try_malloc0 (((gsize) sizeof (struct_type)) * ((gsize) (n_structs))))
+#define g_try_renew(struct_type, mem, n_structs)	\
+    ((struct_type *) g_try_realloc ((mem), ((gsize) sizeof (struct_type)) * ((gsize) (n_structs))))
 
 
 /* Memory allocation virtualization for debugging purposes

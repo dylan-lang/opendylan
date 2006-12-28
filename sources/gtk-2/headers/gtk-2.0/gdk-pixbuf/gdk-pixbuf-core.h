@@ -166,7 +166,7 @@ gboolean gdk_pixbuf_save           (GdkPixbuf  *pixbuf,
                                     const char *filename, 
                                     const char *type, 
                                     GError    **error,
-                                    ...);
+                                    ...) G_GNUC_NULL_TERMINATED;
 
 gboolean gdk_pixbuf_savev          (GdkPixbuf  *pixbuf, 
                                     const char *filename, 
@@ -187,7 +187,7 @@ gboolean gdk_pixbuf_save_to_callback    (GdkPixbuf  *pixbuf,
 					 gpointer user_data,
 					 const char *type, 
 					 GError    **error,
-					 ...);
+					 ...) G_GNUC_NULL_TERMINATED;
 
 gboolean gdk_pixbuf_save_to_callbackv   (GdkPixbuf  *pixbuf, 
 					 GdkPixbufSaveFunc save_func,
@@ -204,7 +204,7 @@ gboolean gdk_pixbuf_save_to_buffer      (GdkPixbuf  *pixbuf,
 					 gsize      *buffer_size,
 					 const char *type, 
 					 GError    **error,
-					 ...);
+					 ...) G_GNUC_NULL_TERMINATED;
 
 gboolean gdk_pixbuf_save_to_bufferv     (GdkPixbuf  *pixbuf,
 					 gchar     **buffer,

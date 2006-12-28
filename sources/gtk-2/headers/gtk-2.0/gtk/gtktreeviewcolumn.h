@@ -28,9 +28,9 @@
 /* Not needed, retained for compatibility -Yosh */
 #include <gtk/gtkobject.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+
+G_BEGIN_DECLS
+
 
 #define GTK_TYPE_TREE_VIEW_COLUMN	     (gtk_tree_view_column_get_type ())
 #define GTK_TREE_VIEW_COLUMN(obj)	     (G_TYPE_CHECK_INSTANCE_CAST ((obj), GTK_TYPE_TREE_VIEW_COLUMN, GtkTreeViewColumn))
@@ -124,7 +124,7 @@ GType                   gtk_tree_view_column_get_type            (void) G_GNUC_C
 GtkTreeViewColumn      *gtk_tree_view_column_new                 (void);
 GtkTreeViewColumn      *gtk_tree_view_column_new_with_attributes (const gchar             *title,
 								  GtkCellRenderer         *cell,
-								  ...);
+								  ...) G_GNUC_NULL_TERMINATED;
 void                    gtk_tree_view_column_pack_start          (GtkTreeViewColumn       *tree_column,
 								  GtkCellRenderer         *cell,
 								  gboolean                 expand);
@@ -139,7 +139,7 @@ void                    gtk_tree_view_column_add_attribute       (GtkTreeViewCol
 								  gint                     column);
 void                    gtk_tree_view_column_set_attributes      (GtkTreeViewColumn       *tree_column,
 								  GtkCellRenderer         *cell_renderer,
-								  ...);
+								  ...) G_GNUC_NULL_TERMINATED;
 void                    gtk_tree_view_column_set_cell_data_func  (GtkTreeViewColumn       *tree_column,
 								  GtkCellRenderer         *cell_renderer,
 								  GtkTreeCellDataFunc      func,
@@ -230,11 +230,11 @@ gboolean                gtk_tree_view_column_cell_get_position   (GtkTreeViewCol
 					                          GtkCellRenderer         *cell_renderer,
 					                          gint                    *start_pos,
 					                          gint                    *width);
+void                    gtk_tree_view_column_queue_resize        (GtkTreeViewColumn       *tree_column);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
+
 
 #endif /* __GTK_TREE_VIEW_COLUMN_H__ */
 

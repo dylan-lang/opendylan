@@ -315,6 +315,7 @@ void                  pango_font_get_glyph_extents (PangoFont        *font,
 						    PangoGlyph        glyph,
 						    PangoRectangle   *ink_rect,
 						    PangoRectangle   *logical_rect);
+PangoFontMap         *pango_font_get_font_map      (PangoFont        *font);
 
 #ifdef PANGO_ENABLE_BACKEND
 
@@ -347,13 +348,13 @@ struct _PangoFontClass
 					       PangoRectangle *logical_rect);
   PangoFontMetrics *    (*get_metrics)        (PangoFont      *font,
 					       PangoLanguage  *language);
+  PangoFontMap *        (*get_font_map)       (PangoFont      *font);
   /*< private >*/
 
   /* Padding for future expansion */
   void (*_pango_reserved1) (void);
   void (*_pango_reserved2) (void);
   void (*_pango_reserved3) (void);
-  void (*_pango_reserved4) (void);
 };
 
 #endif /* PANGO_ENABLE_BACKEND */

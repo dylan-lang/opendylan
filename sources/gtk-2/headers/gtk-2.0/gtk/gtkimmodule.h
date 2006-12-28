@@ -20,11 +20,10 @@
 #ifndef __GTK_IM_MODULE_H__
 #define __GTK_IM_MODULE_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
 
 #include <gtk/gtkimcontext.h>
+
+G_BEGIN_DECLS
 
 typedef struct _GtkIMContextInfo GtkIMContextInfo;
 
@@ -55,8 +54,8 @@ void          im_module_exit   (void);
 GtkIMContext *im_module_create (const gchar             *context_id);
 */
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+
+G_END_DECLS
+
 
 #endif /* __GTK_IM_MODULE_H__ */

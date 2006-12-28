@@ -1,4 +1,5 @@
 module = GObject-2
+pkgconfig-flags =$(shell  pkg-config --libs gobject-2.0)
 module-deps = GLib-2
 headers-dir = ../headers/glib-2.0/gobject
 headers = \

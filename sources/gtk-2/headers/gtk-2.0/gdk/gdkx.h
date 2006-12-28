@@ -55,6 +55,7 @@ Screen * gdk_x11_screen_get_xscreen       (GdkScreen   *screen);
 int      gdk_x11_screen_get_screen_number (GdkScreen   *screen);
 void     gdk_x11_window_set_user_time     (GdkWindow   *window,
 					   guint32      timestamp);
+void     gdk_x11_window_move_to_current_desktop (GdkWindow   *window);
 
 const char* gdk_x11_screen_get_window_manager_name (GdkScreen *screen);
 
@@ -139,7 +140,11 @@ GdkColormap *gdk_x11_colormap_foreign_new (GdkVisual *visual,
 gpointer      gdk_xid_table_lookup_for_display (GdkDisplay *display,
 						XID         xid);
 guint32       gdk_x11_get_server_time  (GdkWindow       *window);
-guint32       gdk_x11_display_get_user_time_libgtk_only (GdkDisplay *display);
+guint32       gdk_x11_display_get_user_time (GdkDisplay *display);
+
+void          gdk_x11_display_set_cursor_theme (GdkDisplay  *display,
+						const gchar *theme,
+						const gint   size);
 
 /* returns TRUE if we support the given WM spec feature */
 gboolean gdk_x11_screen_supports_net_wm_hint (GdkScreen *screen,
@@ -150,7 +155,6 @@ gpointer      gdk_xid_table_lookup   (XID              xid);
 gboolean      gdk_net_wm_supports    (GdkAtom    property);
 void          gdk_x11_grab_server    (void);
 void          gdk_x11_ungrab_server  (void);
-
 #endif
 
 GdkDisplay   *gdk_x11_lookup_xdisplay (Display *xdisplay);

@@ -65,8 +65,8 @@ struct _PangoFcDecoder
  *  #FcCharSet that is returned should be an internal reference to your
  *  code.  Pango will not free this structure.  It is important that
  *  you make this callback fast because this callback is called
- *  separately for each character to determine unicode coverage.
- * @get_glyph: This returns a single #PangoGlyph for a given unicode
+ *  separately for each character to determine Unicode coverage.
+ * @get_glyph: This returns a single #PangoGlyph for a given Unicode
  *  code point.
  *
  * Class structure for #PangoFcDecoder.

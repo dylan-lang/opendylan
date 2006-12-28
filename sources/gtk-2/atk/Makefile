@@ -1,4 +1,5 @@
 module = ATK
+pkgconfig-flags = $(shell pkg-config --libs atk)
 module-deps = GLib-2 GObject-2
 headers-dir = ../headers/atk-1.0/atk
 headers = \

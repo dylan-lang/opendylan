@@ -25,9 +25,9 @@
 #include <gtk/gtktreeviewcolumn.h>
 #include <gtk/gtkdnd.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+
+G_BEGIN_DECLS
+
 
 typedef enum
 {
@@ -167,7 +167,7 @@ gint                   gtk_tree_view_insert_column_with_attributes (GtkTreeView 
 								    gint                       position,
 								    const gchar               *title,
 								    GtkCellRenderer           *cell,
-								    ...);
+								    ...) G_GNUC_NULL_TERMINATED;
 gint                   gtk_tree_view_insert_column_with_data_func  (GtkTreeView               *tree_view,
 								    gint                       position,
 								    const gchar               *title,
@@ -262,6 +262,9 @@ void                   gtk_tree_view_tree_to_widget_coords         (GtkTreeView 
 								    gint                       ty,
 								    gint                      *wx,
 								    gint                      *wy);
+gboolean               gtk_tree_view_get_visible_range             (GtkTreeView               *tree_view,
+								    GtkTreePath              **start_path,
+								    GtkTreePath              **end_path);
 
 /* Drag-and-Drop support */
 void                   gtk_tree_view_enable_model_drag_source      (GtkTreeView               *tree_view,
@@ -332,9 +335,8 @@ void                        gtk_tree_view_set_row_separator_func (GtkTreeView   
 								  gpointer                    data,
 								  GtkDestroyNotify            destroy);
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+
+G_END_DECLS
 
 
 #endif /* __GTK_TREE_VIEW_H__ */

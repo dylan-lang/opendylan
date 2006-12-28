@@ -149,6 +149,10 @@ void             gdk_display_get_pointer           (GdkDisplay             *disp
 GdkWindow *      gdk_display_get_window_at_pointer (GdkDisplay             *display,
 						    gint                   *win_x,
 						    gint                   *win_y);
+void             gdk_display_warp_pointer          (GdkDisplay             *display,
+						    GdkScreen              *screen,
+						    gint                   x,
+						    gint                   y);
 
 GdkDisplayPointerHooks *gdk_display_set_pointer_hooks (GdkDisplay                   *display,
 						       const GdkDisplayPointerHooks *new_hooks);

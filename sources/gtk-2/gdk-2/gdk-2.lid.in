@@ -4,9 +4,7 @@ Target-type:   DLL
 Files:	       library
                special
                @FILES@
-C-Libraries:   -lgdk-x11-2.0 -lgdk_pixbuf-2.0 -lm -lpangoxft-1.0
-               -lpangox-1.0 -lpangoft2-1.0 -lpango-1.0 -lgobject-2.0
-               -lgmodule-2.0 -ldl -lglib-2.0
+C-Libraries:   @LIBRARIES@
 Copyright:     Copyright (C) 2005  Daniel Brockman
 License:       Functional Objects Library Public License Version 1.0
 Dual-License:  GNU Lesser General Public License

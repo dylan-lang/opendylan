@@ -4,7 +4,7 @@ Target-type:   DLL
 Files:	       library
                special
                @FILES@
-C-Libraries:   -lgdk_pixbuf-2.0 -lm -lgobject-2.0 -lgmodule-2.0 -ldl -lglib-2.0
+C-Libraries:   @LIBRARIES@
 Copyright:     Copyright (C) 2005  Daniel Brockman
 License:       Functional Objects Library Public License Version 1.0
 Dual-License:  GNU Lesser General Public License

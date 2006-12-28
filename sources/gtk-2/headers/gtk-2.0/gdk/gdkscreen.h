@@ -24,6 +24,7 @@
 #ifndef __GDK_SCREEN_H__
 #define __GDK_SCREEN_H__
 
+#include <cairo.h>
 #include "gdk/gdktypes.h"
 #include "gdk/gdkdisplay.h"
 
@@ -46,6 +47,9 @@ struct _GdkScreen
 
   GdkGC *normal_gcs[32];
   GdkGC *exposure_gcs[32];
+
+  cairo_font_options_t *font_options;
+  double resolution;		/* pixels/points scale factor for fonts */
 };
 
 struct _GdkScreenClass
@@ -63,6 +67,9 @@ GdkColormap* gdk_screen_get_system_colormap   (GdkScreen   *screen);
 GdkVisual*   gdk_screen_get_system_visual     (GdkScreen   *screen);
 GdkColormap *gdk_screen_get_rgb_colormap      (GdkScreen   *screen);
 GdkVisual *  gdk_screen_get_rgb_visual        (GdkScreen   *screen);
+GdkColormap *gdk_screen_get_rgba_colormap     (GdkScreen   *screen);
+GdkVisual *  gdk_screen_get_rgba_visual       (GdkScreen   *screen);
+
 
 GdkWindow *  gdk_screen_get_root_window       (GdkScreen   *screen);
 GdkDisplay * gdk_screen_get_display           (GdkScreen   *screen);
@@ -94,6 +101,14 @@ GdkScreen *gdk_screen_get_default (void);
 gboolean   gdk_screen_get_setting (GdkScreen   *screen,
 				   const gchar *name,
 				   GValue      *value);
+
+void                        gdk_screen_set_font_options_libgtk_only (GdkScreen                  *screen,
+								     const cairo_font_options_t *options);
+const cairo_font_options_t *gdk_screen_get_font_options_libgtk_only (GdkScreen                  *screen);
+
+void    gdk_screen_set_resolution_libgtk_only (GdkScreen *screen,
+					       gdouble    dpi);
+gdouble gdk_screen_get_resolution_libgtk_only (GdkScreen *screen);
 
 G_END_DECLS
 

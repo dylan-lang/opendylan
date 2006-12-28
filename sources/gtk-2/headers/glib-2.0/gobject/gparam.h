@@ -53,7 +53,12 @@ typedef enum
   G_PARAM_CONSTRUCT	      = 1 << 2,
   G_PARAM_CONSTRUCT_ONLY      = 1 << 3,
   G_PARAM_LAX_VALIDATION      = 1 << 4,
-  G_PARAM_PRIVATE	      = 1 << 5
+  G_PARAM_STATIC_NAME	      = 1 << 5,
+#ifndef G_DISABLE_DEPRECATED
+  G_PARAM_PRIVATE	      = G_PARAM_STATIC_NAME,
+#endif
+  G_PARAM_STATIC_NICK	      = 1 << 6,
+  G_PARAM_STATIC_BLURB	      = 1 << 7
 } GParamFlags;
 #define	G_PARAM_READWRITE	(G_PARAM_READABLE | G_PARAM_WRITABLE)
 #define	G_PARAM_MASK		(0x000000ff)
@@ -149,10 +154,13 @@ GParamSpec*     g_value_dup_param               (const GValue  *value);
 
 void           g_value_take_param               (GValue        *value,
 					         GParamSpec    *param);
+/* %%% DYLAN-HACK %%% */
+/*
 #ifndef G_DISABLE_DEPRECATED
 void           g_value_set_param_take_ownership (GValue        *value,
 					         GParamSpec    *param);
 #endif
+*/
 
 /* --- convenience functions --- */
 typedef struct _GParamSpecTypeInfo GParamSpecTypeInfo;

@@ -1,4 +1,5 @@
 module = GLib-2
+pkgconfig-flags =$(shell  pkg-config --libs glib-2.0)
 headers-dir = ../headers/glib-2.0/glib
 headers = \
 	../gmodule.h \

@@ -219,7 +219,7 @@ PangoAttribute *pango_attr_shape_new_with_data (const PangoRectangle       *ink_
 
 GType              pango_attr_list_get_type      (void) G_GNUC_CONST;
 PangoAttrList *    pango_attr_list_new           (void);
-void               pango_attr_list_ref           (PangoAttrList  *list);
+PangoAttrList *    pango_attr_list_ref           (PangoAttrList  *list);
 void               pango_attr_list_unref         (PangoAttrList  *list);
 PangoAttrList *    pango_attr_list_copy          (PangoAttrList  *list);
 void               pango_attr_list_insert        (PangoAttrList  *list,

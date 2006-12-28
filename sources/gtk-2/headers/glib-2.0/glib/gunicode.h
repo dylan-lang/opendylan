@@ -1,7 +1,7 @@
 /* gunicode.h - Unicode manipulation functions
  *
  *  Copyright (C) 1999, 2000 Tom Tromey
- *  Copyright 2000 Red Hat, Inc.
+ *  Copyright 2000, 2005 Red Hat, Inc.
  *
  * The Gnome Library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License as
@@ -31,7 +31,7 @@ typedef guint32 gunichar;
 typedef guint16 gunichar2;
 
 /* These are the possible character classifications.
- * See http://www.unicode.org/Public/UNIDATA/UnicodeData.html
+ * See http://www.unicode.org/Public/UNIDATA/UCD.html#General_Category_Values
  */
 typedef enum
 {
@@ -278,6 +278,8 @@ gint   g_utf8_collate     (const gchar *str1,
 			   const gchar *str2);
 gchar *g_utf8_collate_key (const gchar *str,
 			   gssize       len) G_GNUC_MALLOC;
+gchar *g_utf8_collate_key_for_filename (const gchar *str,
+			                gssize       len) G_GNUC_MALLOC;
 
 gboolean g_unichar_get_mirror_char (gunichar ch,
                                     gunichar *mirrored_ch);

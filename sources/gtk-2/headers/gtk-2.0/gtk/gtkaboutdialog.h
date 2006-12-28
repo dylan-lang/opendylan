@@ -62,7 +62,7 @@ GType                  gtk_about_dialog_get_type               (void) G_GNUC_CON
 GtkWidget             *gtk_about_dialog_new                    (void);
 void                   gtk_show_about_dialog                   (GtkWindow       *parent,
 								const gchar     *first_property_name,
-								...);
+								...) G_GNUC_NULL_TERMINATED;
 
 G_CONST_RETURN gchar  *gtk_about_dialog_get_name               (GtkAboutDialog  *about);
 void                   gtk_about_dialog_set_name               (GtkAboutDialog  *about,
@@ -79,6 +79,11 @@ void                   gtk_about_dialog_set_comments           (GtkAboutDialog  
 G_CONST_RETURN gchar  *gtk_about_dialog_get_license            (GtkAboutDialog  *about);
 void                   gtk_about_dialog_set_license            (GtkAboutDialog  *about,
 								const gchar     *license);
+
+gboolean               gtk_about_dialog_get_wrap_license       (GtkAboutDialog  *about);
+void                   gtk_about_dialog_set_wrap_license       (GtkAboutDialog  *about,
+                                                                gboolean         wrap_license);
+
 G_CONST_RETURN gchar  *gtk_about_dialog_get_website            (GtkAboutDialog  *about);
 void                   gtk_about_dialog_set_website            (GtkAboutDialog  *about,
 								const gchar     *website);

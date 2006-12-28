@@ -204,6 +204,9 @@ gboolean   gtk_window_get_skip_taskbar_hint    (GtkWindow           *window);
 void       gtk_window_set_skip_pager_hint      (GtkWindow           *window,
                                                 gboolean             setting);
 gboolean   gtk_window_get_skip_pager_hint      (GtkWindow           *window);
+void       gtk_window_set_urgency_hint         (GtkWindow           *window,
+                                                gboolean             setting);
+gboolean   gtk_window_get_urgency_hint         (GtkWindow           *window);
 void       gtk_window_set_accept_focus         (GtkWindow           *window,
                                                 gboolean             setting);
 gboolean   gtk_window_get_accept_focus         (GtkWindow           *window);
@@ -301,7 +304,9 @@ gboolean gtk_window_activate_key          (GtkWindow        *window,
 gboolean gtk_window_propagate_key_event   (GtkWindow        *window,
 					   GdkEventKey      *event);
 
-void     gtk_window_present       (GtkWindow *window);
+void     gtk_window_present            (GtkWindow *window);
+void     gtk_window_present_with_time  (GtkWindow *window,
+				        guint32    timestamp);
 void     gtk_window_iconify       (GtkWindow *window);
 void     gtk_window_deiconify     (GtkWindow *window);
 void     gtk_window_stick         (GtkWindow *window);
@@ -386,6 +391,7 @@ void            _gtk_window_constrain_size     (GtkWindow *window,
 						gint      *new_width,
 						gint      *new_height);
 GtkWindowGroup *_gtk_window_get_group          (GtkWindow *window);
+GtkWidget      *_gtk_window_group_get_current_grab (GtkWindowGroup *window_group);
 
 void            _gtk_window_set_has_toplevel_focus (GtkWindow *window,
 						    gboolean   has_toplevel_focus);

@@ -104,7 +104,7 @@ G_BEGIN_DECLS
 #  define G_INLINE_FUNC
 #endif /* !G_INLINE_FUNC */
 
-/* Retrieve static string info
+/* Retrive static string info
  */
 #ifdef G_OS_WIN32
 #define g_get_user_name g_get_user_name_utf8
@@ -117,6 +117,7 @@ G_CONST_RETURN gchar* g_get_user_name        (void);
 G_CONST_RETURN gchar* g_get_real_name        (void);
 G_CONST_RETURN gchar* g_get_home_dir         (void);
 G_CONST_RETURN gchar* g_get_tmp_dir          (void);
+G_CONST_RETURN gchar* g_get_host_name	     (void);
 gchar*                g_get_prgname          (void);
 void                  g_set_prgname          (const gchar *prgname);
 G_CONST_RETURN gchar* g_get_application_name (void);
@@ -126,6 +127,20 @@ G_CONST_RETURN gchar*    g_get_user_data_dir      (void);
 G_CONST_RETURN gchar*    g_get_user_config_dir    (void);
 G_CONST_RETURN gchar*    g_get_user_cache_dir     (void);
 G_CONST_RETURN gchar* G_CONST_RETURN * g_get_system_data_dirs   (void);
+
+#ifdef G_OS_WIN32
+G_CONST_RETURN gchar* G_CONST_RETURN * g_win32_get_system_data_dirs_for_module (gconstpointer address);
+#endif
+
+#if defined (G_OS_WIN32) && defined (G_CAN_INLINE) && !defined (__cplusplus)
+static inline G_CONST_RETURN gchar * G_CONST_RETURN *
+g_win32_get_system_data_dirs (void)
+{
+  return g_win32_get_system_data_dirs_for_module ((gconstpointer) &g_win32_get_system_data_dirs);
+}
+#define g_get_system_data_dirs g_win32_get_system_data_dirs
+#endif
+
 G_CONST_RETURN gchar* G_CONST_RETURN * g_get_system_config_dirs (void);
 
 G_CONST_RETURN gchar* G_CONST_RETURN * g_get_language_names (void);
@@ -195,7 +210,7 @@ gboolean              g_setenv             (const gchar *variable,
 					    const gchar *value,
 					    gboolean     overwrite);
 void                  g_unsetenv           (const gchar *variable);
-
+gchar**               g_listenv            (void);
 
 /* we try to provide a usefull equivalent for ATEXIT if it is
  * not defined, but use is actually abandoned. people should
@@ -213,6 +228,17 @@ typedef	void		(*GVoidFunc)		(void);
  * missing include files.
  */
 void	g_atexit		(GVoidFunc    func);
+
+#ifdef G_OS_WIN32
+/* It's a bad idea to wrap atexit() on Windows. If the GLib DLL calls
+ * atexit(), the function will be called when the GLib DLL is detached
+ * from the program, which is not what the caller wants. The caller
+ * wants the function to be called when it *itself* exits (or is
+ * detached, in case the caller, too, is a DLL).
+ */
+int atexit (void (*)(void));
+#define g_atexit(func) atexit(func)
+#endif
 
 /* Look for an executable in PATH, following execvp() rules */
 gchar*  g_find_program_in_path  (const gchar *program);

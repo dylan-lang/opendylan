@@ -62,11 +62,11 @@ typedef void (*GWeakNotify)		(gpointer      data,
 					 GObject      *where_the_object_was);
 struct  _GObject
 {
-  GTypeInstance g_type_instance;
+  GTypeInstance  g_type_instance;
   
   /*< private >*/
-  guint         ref_count;
-  GData        *qdata;
+  volatile guint ref_count;
+  GData         *qdata;
 };
 struct  _GObjectClass
 {
@@ -140,16 +140,16 @@ GObject*    g_object_new_valist               (GType           object_type,
 					       va_list         var_args);
 void	    g_object_set                      (gpointer	       object,
 					       const gchar    *first_property_name,
-					       ...);
+					       ...) G_GNUC_NULL_TERMINATED;
 void        g_object_get                      (gpointer        object,
 					       const gchar    *first_property_name,
-					       ...);
+					       ...) G_GNUC_NULL_TERMINATED;
 gpointer    g_object_connect                  (gpointer	       object,
 					       const gchar    *signal_spec,
-					       ...);
+					       ...) G_GNUC_NULL_TERMINATED;
 void	    g_object_disconnect               (gpointer	       object,
 					       const gchar    *signal_spec,
-					       ...);
+					       ...) G_GNUC_NULL_TERMINATED;
 void        g_object_set_valist               (GObject        *object,
 					       const gchar    *first_property_name,
 					       va_list         var_args);
@@ -178,6 +178,18 @@ void        g_object_add_weak_pointer         (GObject        *object,
                                                gpointer       *weak_pointer_location);
 void        g_object_remove_weak_pointer      (GObject        *object, 
                                                gpointer       *weak_pointer_location);
+
+typedef void (*GToggleNotify) (gpointer      data,
+			       GObject      *object,
+			       gboolean      is_last_ref);
+
+void g_object_add_toggle_ref    (GObject       *object,
+				 GToggleNotify  notify,
+				 gpointer       data);
+void g_object_remove_toggle_ref (GObject       *object,
+				 GToggleNotify  notify,
+				 gpointer       data);
+
 gpointer    g_object_get_qdata                (GObject        *object,
 					       GQuark          quark);
 void        g_object_set_qdata                (GObject        *object,
@@ -228,6 +240,8 @@ void        g_value_take_object               (GValue         *value,
 #ifndef G_DISABLE_DEPRECATED
 void        g_value_set_object_take_ownership (GValue         *value,
 					       gpointer        v_object);
+gsize       g_object_compat_control           (gsize           what,
+                                               gpointer        data);
 #endif
 
 /* --- implementation macros --- */

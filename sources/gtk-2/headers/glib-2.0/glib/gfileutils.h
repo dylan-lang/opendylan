@@ -86,6 +86,10 @@ gboolean g_file_get_contents (const gchar  *filename,
                               gchar       **contents,
                               gsize        *length,    
                               GError      **error);
+gboolean g_file_set_contents (const gchar *filename,
+			      const gchar *contents,
+			      gssize	     length,
+			      GError	   **error);
 gchar   *g_file_read_link    (const gchar  *filename,
 			      GError      **error);
 
@@ -99,9 +103,16 @@ gint    g_file_open_tmp      (const gchar  *tmpl,
 
 gchar *g_build_path     (const gchar *separator,
 			 const gchar *first_element,
-			 ...);
+			 ...) G_GNUC_MALLOC G_GNUC_NULL_TERMINATED;
+gchar *g_build_pathv    (const gchar  *separator,
+			 gchar       **args) G_GNUC_MALLOC;
+
 gchar *g_build_filename (const gchar *first_element,
-			 ...);
+			 ...) G_GNUC_MALLOC G_GNUC_NULL_TERMINATED;
+gchar *g_build_filenamev (gchar      **args) G_GNUC_MALLOC;
+
+int    g_mkdir_with_parents (const gchar *pathname,
+			     int          mode);
 
 G_END_DECLS
 

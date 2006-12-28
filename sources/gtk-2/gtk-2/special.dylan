@@ -78,22 +78,28 @@ define opaque-structure <_GtkWindowGeometryInfo>;
 
 /// Type coercion functions
 
-// define macro gtk-type-cast-function-definer
-//   { define gtk-type-cast-function ?name:name => ?type:name }
-//  => { define inline function ?name
-// 	  (pointer :: <C-pointer>) => (object :: ?type)
-// 	pointer-cast(?type, pointer)
-//       end }
-// end macro gtk-type-cast-function-definer;
+ define macro gtk-type-cast-function-definer
+   { define gtk-type-cast-function ?name:name => ?type:name }
+  => { define inline function ?name
+ 	  (pointer :: <C-pointer>) => (object :: ?type)
+ 	pointer-cast(?type, pointer)
+       end }
+ end macro gtk-type-cast-function-definer;
 
-// define gtk-type-cast-function GTK-OBJECT        => <GtkObject*>;
-// define gtk-type-cast-function GTK-CONTAINER     => <GtkContainer*>;
-// define gtk-type-cast-function GTK-BOX           => <GtkBox*>;
-// define gtk-type-cast-function GTK-WIDGET        => <GtkWidget*>;
-// define gtk-type-cast-function GTK-ADJUSTMENT    => <GtkAdjustment*>;
-// define gtk-type-cast-function GTK-FIXED         => <GtkFixed*>;
-// define gtk-type-cast-function GTK-WINDOW        => <GtkWindow*>;
-// define gtk-type-cast-function GTK-DRAWING-AREA  => <GtkDrawingArea*>;
+ define gtk-type-cast-function GTK-OBJECT        => <GtkObject*>;
+ define gtk-type-cast-function GTK-CONTAINER     => <GtkContainer*>;
+ define gtk-type-cast-function GTK-BOX           => <GtkBox*>;
+ define gtk-type-cast-function GTK-WIDGET        => <GtkWidget*>;
+ define gtk-type-cast-function GTK-ADJUSTMENT    => <GtkAdjustment*>;
+ define gtk-type-cast-function GTK-FIXED         => <GtkFixed*>;
+ define gtk-type-cast-function GTK-WINDOW        => <GtkWindow*>;
+ define gtk-type-cast-function GTK-DRAWING-AREA  => <GtkDrawingArea*>;
+ define gtk-type-cast-function GTK-MENU-BAR      => <GtkMenuBar*>;
+ define gtk-type-cast-function GTK-MENU-ITEM     => <GtkMenuItem*>;
+ define gtk-type-cast-function GTK-MENU          => <GtkMenu*>;
+ define gtk-type-cast-function GTK-LABEL         => <GtkLabel*>;
+ define gtk-type-cast-function GTK-ENTRY         => <GtkEntry*>;
+ define gtk-type-cast-function GTK-Button        => <GtkButton*>;
 
 
 /// Useful functions

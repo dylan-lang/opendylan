@@ -12,3 +12,8 @@ GdkAtom
 // This one has function pointer arguments --- which our
 // Gema script can't cope with --- so we define it manually.
 gdk_window_invalidate_maybe_recurse
+
+// Needs 31 bit integers, which OD doesn't have
+// GdkModifierType
+
+gdk_window_get_pointer

@@ -47,6 +47,10 @@ struct _PangoItem
   PangoAnalysis analysis;
 };
 
+#define PANGO_TYPE_ITEM (pango_item_get_type ())
+
+GType pango_item_get_type (void) G_GNUC_CONST;
+
 PangoItem *pango_item_new   (void);
 PangoItem *pango_item_copy  (PangoItem  *item);
 void       pango_item_free  (PangoItem  *item);

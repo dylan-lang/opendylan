@@ -1,4 +1,5 @@
 module = GDK-2
+pkgconfig-flags = $(shell pkg-config --libs gdk-2.0)
 module-deps = GLib-2 GObject-2 Pango GDK-Pixbuf-2
 headers-dir = ../headers/gtk-2.0/gdk
 headers = \

@@ -64,7 +64,7 @@ struct _GtkRuler
   GtkWidget widget;
 
   GdkPixmap *backing_store;
-  GdkGC *non_gr_exp_gc;
+  GdkGC *non_gr_exp_gc;		/* unused */
   GtkRulerMetric *metric;
   /* %%% DYLAN-HACK %%% */
   gint xsrc;

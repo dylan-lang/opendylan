@@ -1,4 +1,5 @@
 module = GTK-2
+pkgconfig-flags =$(shell  pkg-config --libs gtk+-2.0)
 module-deps = GLib-2 GObject-2 Pango GDK-2
 headers-dir = ../headers/gtk-2.0/gtk
 headers = \

@@ -26,11 +26,11 @@ parse-header = $(GEMA) -f ../patterns.gema \
 all: $(built-files)
 
 module.mk: copy-headers-stamp $(common-makefiles)
-	( echo 'module-built-dylan-files = \\' ; \
+	( echo 'module-built-dylan-files = \' ; \
 	  for header in *.h ; do \
-	    echo -n '  ' ; \
+	    echo -n '	' ; \
 	    echo -n $$header | sed -e 's/h$$/dylan/' ; \
-	    echo ' \\' ; \
+	    echo ' \' ; \
 	  done ; \
 	  echo '  # end of list' ; \
 	  echo ; \

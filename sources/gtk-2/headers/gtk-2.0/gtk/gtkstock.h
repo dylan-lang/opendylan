@@ -29,6 +29,7 @@
 
 
 #include <gdk/gdk.h>
+#include <gtk/gtkitemfactory.h> /* for GtkTranslateFunc */
 
 G_BEGIN_DECLS
 
@@ -58,6 +59,10 @@ GSList*  gtk_stock_list_ids  (void);
 GtkStockItem *gtk_stock_item_copy (const GtkStockItem *item);
 void          gtk_stock_item_free (GtkStockItem       *item);
 
+void          gtk_stock_set_translate_func (const gchar      *domain,
+					    GtkTranslateFunc  func,
+					    gpointer          data,
+					    GtkDestroyNotify  notify);
 
 /* Stock IDs (not all are stock items; some are images only) */
 #define GTK_STOCK_DIALOG_AUTHENTICATION \
@@ -92,6 +97,7 @@ void          gtk_stock_item_free (GtkStockItem       *item);
 #define GTK_STOCK_FIND             "gtk-find"
 #define GTK_STOCK_FIND_AND_REPLACE "gtk-find-and-replace"
 #define GTK_STOCK_FLOPPY           "gtk-floppy"
+#define GTK_STOCK_FULLSCREEN       "gtk-fullscreen"
 #define GTK_STOCK_GOTO_BOTTOM      "gtk-goto-bottom"
 #define GTK_STOCK_GOTO_FIRST       "gtk-goto-first"
 #define GTK_STOCK_GOTO_LAST        "gtk-goto-last"
@@ -105,6 +111,7 @@ void          gtk_stock_item_free (GtkStockItem       *item);
 #define GTK_STOCK_HOME             "gtk-home"
 #define GTK_STOCK_INDEX            "gtk-index"
 #define GTK_STOCK_INDENT           "gtk-indent"
+#define GTK_STOCK_INFO             "gtk-info"
 #define GTK_STOCK_UNINDENT         "gtk-unindent"
 #define GTK_STOCK_ITALIC           "gtk-italic"
 #define GTK_STOCK_JUMP_TO          "gtk-jump-to"
@@ -112,6 +119,7 @@ void          gtk_stock_item_free (GtkStockItem       *item);
 #define GTK_STOCK_JUSTIFY_FILL     "gtk-justify-fill"
 #define GTK_STOCK_JUSTIFY_LEFT     "gtk-justify-left"
 #define GTK_STOCK_JUSTIFY_RIGHT    "gtk-justify-right"
+#define GTK_STOCK_LEAVE_FULLSCREEN "gtk-leave-fullscreen"
 #define GTK_STOCK_MISSING_IMAGE    "gtk-missing-image"
 #define GTK_STOCK_MEDIA_FORWARD    "gtk-media-forward"
 #define GTK_STOCK_MEDIA_NEXT       "gtk-media-next"
