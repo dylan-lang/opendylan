@@ -34,7 +34,7 @@ end function not-yet-implemented;
 
 define function ignoring
     (format-message :: <string>, #rest format-args)
-  apply(debug-message, 
+  apply(duim-debug-message, 
 	concatenate("Ignoring ", format-message),
 	format-args)
 end function ignoring;
@@ -43,7 +43,7 @@ end function ignoring;
 define variable *gtk-debug* = #t;
 
 define inline-only function gtk-debug (#rest args)
-  *gtk-debug* & apply(debug-message, args)
+  *gtk-debug* & apply(duim-debug-message, args)
 end;
 
 

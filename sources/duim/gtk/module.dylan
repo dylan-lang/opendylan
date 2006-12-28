@@ -10,15 +10,19 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // Implementation module
 define module gtk-duim
   use dylan;
+  use operating-system;
 
   use duim-imports;
   use duim-internals;
   use duim-gadget-panes-internals;	//---*** until we've got all native gadgets in
 
   use C-FFI;
-  use Glib;
-  use Gdk;
-  use Gtk;
+  use Glib-2;
+  use Gdk-2;
+  use Gtk-2;
+  use GObject-2;
+  use Xlib, prefix: "x/";
+  use Xt, prefix: "Xt/";
 
   // Basic classes
   export <gtk-port>,
@@ -61,4 +65,5 @@ define module gtk-duim
 
   // Other possibly useful exports
   export shutdown-gtk-duim;
+
 end module gtk-duim;

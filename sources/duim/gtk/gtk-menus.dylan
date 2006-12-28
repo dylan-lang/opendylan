@@ -22,10 +22,10 @@ end class <menu-mirror>;
 define method set-mirror-parent
     (child :: <menu-button-mirror>, parent :: <menu-mirror>)
  => ()
-  debug-message("Adding %= to menu %=",
+  duim-debug-message("Adding %= to menu %=",
 		gadget-label(mirror-sheet(child)),
 		gadget-label(mirror-sheet(parent)));
-  gtk-menu-append(GTK-MENU(mirror-widget(parent).submenu-value),
+  gtk-menu-shell-append(GTK-MENU(mirror-widget(parent).GtkMenuItem-submenu),
 		  mirror-widget(child))
 end method set-mirror-parent;
     
@@ -34,10 +34,10 @@ define method set-mirror-parent
  => ()
   let widget = mirror-widget(child);
   let menu = GTK-MENU(gtk-menu-new());
-  debug-message("Creating submenu for %s",
+  duim-debug-message("Creating submenu for %s",
 		gadget-label(mirror-sheet(child)));
   gtk-menu-item-set-submenu(widget, menu);
-  gtk-menu-append(GTK-MENU(mirror-widget(parent).submenu-value),
+  gtk-menu-shell-append(GTK-MENU(mirror-widget(parent).GtkMenuItem-submenu),
 		  widget)
 end method set-mirror-parent;
     
@@ -47,12 +47,13 @@ define method set-mirror-parent
   if (instance?(parent.mirror-sheet, <menu-bar>))
     let widget = mirror-widget(child);
     if (child.mirror-sheet.gadget-label = "Help")
-      gtk-menu-item-right-justify(widget)
+//      gtk-menu-item-right-justify(widget)
+      gtk-menu-item-set-right-justified ((widget), /* TRUE */ 1)
     end;
     let menu = GTK-MENU(gtk-menu-new());
-    debug-message("Creating submenu for menu bar");
+    duim-debug-message("Creating submenu for menu bar");
     gtk-menu-item-set-submenu(widget, menu);
-    gtk-menu-bar-append(mirror-widget(parent),
+    gtk-menu-shell-append(mirror-widget(parent),
 			widget)
   else
     next-method()
@@ -648,6 +649,11 @@ define sealed method class-for-make-pane
   values(<gtk-radio-menu-button>, #f)
 end method class-for-make-pane;
 
+// Because we don't have <action-gadget-mixin> in radio menu buttons
+define sealed method activate-gtk-gadget
+    (gadget :: <gtk-radio-menu-button>) => (activated? :: <boolean>)
+  activate-gadget(gadget);
+end method activate-gtk-gadget;
 
 define sealed class <gtk-check-menu-button>
     (<gtk-menu-button-mixin>,

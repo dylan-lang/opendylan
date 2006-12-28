@@ -56,7 +56,7 @@ define method gadget-widget (sheet :: <gtk-gadget-mixin>)
   widget
 end;
 
-/*---*** Not used yet!
+// /*---*** Not used yet!
 define method widget-attributes
     (_port :: <gtk-port>, gadget :: <gtk-gadget-mixin>)
  => (foreground, background, font)
@@ -83,7 +83,7 @@ define method widget-attributes
       end;
   values(foreground, background, font)
 end method widget-attributes;
-*/
+// */
 
 
 define method do-compose-space
@@ -117,7 +117,7 @@ define method widget-size
  => (width :: <integer>, height :: <integer>)
   with-stack-structure (request :: <GtkRequisition*>)
     gtk-widget-size-request(widget, request);
-    values(request.width-value, request.height-value)
+    values(request.GtkRequisition-width, request.GtkRequisition-height)
   end
 end method widget-size;
 
@@ -1095,12 +1095,12 @@ define sealed method note-scroll-bar-changed
     let (value, lower, upper, step-inc, page-inc, page-size)
       = scroll-bar-adjusted-contents(gadget);
     let adjustment :: <GtkAdjustment*> = gtk-range-get-adjustment(widget);
-    adjustment.lower-value := lower;
-    adjustment.upper-value := upper;
-    adjustment.value-value := value;
-    adjustment.step-increment-value := step-inc;
-    adjustment.page-increment-value := page-inc;
-    adjustment.page-size-value := page-size;
+    adjustment.GtkAdjustment-lower := lower;
+    adjustment.GtkAdjustment-upper := upper;
+    adjustment.GtkAdjustment-value := value;
+    adjustment.GtkAdjustment-step-increment := step-inc;
+    adjustment.GtkAdjustment-page-increment := page-inc;
+    adjustment.GtkAdjustment-page-size := page-size;
     // --- TODO: cache gtk-signal-lookup
     with-c-string (name = "changed")
       gtk-signal-emitv-by-name(adjustment, name, null-pointer(<GtkArg*>));
@@ -1162,14 +1162,14 @@ define sealed method handle-gtk-button-press-event
      event :: <GdkEventButton*>)
  => (handled? :: <boolean>)
   gtk-debug("Pressed button %=, type %=",
-		event.button-value,
-		select (event.type-value)
+		event.GdkEventButton-button,
+		select (event.GdkEventButton-type)
 		  $GDK-BUTTON-PRESS  => "button press";
 		  $GDK-2BUTTON-PRESS => "double click";
 		  $GDK-3BUTTON-PRESS => "treble click";
-		  otherwise => event.type-value;
+		  otherwise => event.GdkEventButton-type;
 		end);
-  if (event.type-value == $GDK-2BUTTON-PRESS)
+  if (event.GdkEventButton-type == $GDK-2BUTTON-PRESS)
     gtk-debug("Double clicked on list control!");
     when (gadget-activate-callback(gadget))
       distribute-activate-callback(gadget);
@@ -1181,6 +1181,7 @@ end method handle-gtk-button-press-event;
 define method list-selection
     (gadget :: <gtk-list-control-mixin>, mirror :: <gadget-mirror>)
  => (vector :: <vector>)
+/* TODO: GtkCList is deprecated in GTK2 */
   let widget = GTK-CLIST(mirror.mirror-widget);
   let selection = widget.selection-value;
   glist-to-vector(selection, <integer>)
@@ -1701,8 +1702,10 @@ end method class-for-make-pane;
 define method make-gtk-mirror
     (sheet :: <gtk-viewport>)
  => (mirror :: <widget-mirror>)
- let widget = GTK-DRAWING-AREA(gtk-drawing-area-new());
- gtk-drawing-area-size(widget, 200, 200);
+// let widget = GTK-DRAWING-AREA(gtk-drawing-area-new());
+ let widget = GTK-WIDGET(gtk-drawing-area-new());
+// gtk-drawing-area-size(widget, 200, 200);
+ gtk-widget-set-size-request(widget, 200, 200);
  make(<drawing-area-mirror>,
       widget: widget,
       sheet:  sheet);
@@ -2145,4 +2148,4 @@ define method update-frame-documentation
     end
   end
 end method update-frame-documentation;
-*/
+// */

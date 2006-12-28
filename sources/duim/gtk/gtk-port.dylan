@@ -27,7 +27,7 @@ define sealed method initialize
     (_port :: <gtk-port>, #key server-path) => ()
   next-method();
   initialize-gtk();
-  /*---*** What to do here?
+/*---*** What to do here?
   let type    = head(server-path);
   let display = get-property(tail(server-path), #"display",
 			     default: environment-variable("DISPLAY"));
@@ -44,7 +44,7 @@ define sealed method initialize
   _port.%modifier-map := initialize-modifier-map(_port.%display);
   install-default-palette(_port);
   install-default-text-style-mappings(_port);
-  */
+*/
 end method initialize;
 
 register-port-class(#"gtk", <gtk-port>, default?: #t);

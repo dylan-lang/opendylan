@@ -421,10 +421,10 @@ define sealed method handle-gtk-delete-event
   let frame  = sheet-frame(sheet);
   let controller = frame & frame-controlling-frame(frame);
   when (controller)
-    debug-message("Exiting frame");
+    duim-debug-message("Exiting frame");
     exit-frame(frame, destroy?: #t)
   end;
-  debug-message("Handled delete event");
+  duim-debug-message("Handled delete event");
   #t
 end method handle-gtk-delete-event;
 
@@ -432,7 +432,7 @@ define sealed method destroy-mirror
     (_port :: <gtk-port>,
      sheet :: <gtk-top-level-sheet-mixin>, mirror :: <top-level-mirror>)
  => ()
-  debug-message("destroy-mirror of %=", mirror);
+  duim-debug-message("destroy-mirror of %=", mirror);
   let widget = mirror-widget(mirror);
   gtk-widget-destroy(widget);
   next-method();
@@ -539,14 +539,14 @@ define sealed method handle-gtk-configure-event
      event :: <GdkEventConfigure*>)
  => (handled? :: <boolean>)
   let frame  = sheet-frame(sheet);
-  let left   = event.x-value;
-  let top    = event.y-value;
-  let width  = event.width-value;
-  let height = event.height-value;
+  let left   = event.GdkEventConfigure-x;
+  let top    = event.GdkEventConfigure-y;
+  let width  = event.GdkEventConfigure-width;
+  let height = event.GdkEventConfigure-height;
   let region = make-bounding-box(left, top, left + width, top + height);
   let (old-width, old-height) = box-size(sheet-region(sheet));
   //---*** Switch back to duim-debug-message
-  debug-message("Resizing %= to %dx%d -- was %dx%d",
+  duim-debug-message("Resizing %= to %dx%d -- was %dx%d",
 		sheet, width, height, old-width, old-height);
   distribute-event(port(sheet),
 		   make(<window-configuration-event>,

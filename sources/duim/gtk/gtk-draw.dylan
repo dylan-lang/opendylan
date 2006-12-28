@@ -217,8 +217,10 @@ define sealed method draw-polygon
 	  //---*** This doesn't work in the FFI!
 	  // let point = points[j];
 	  let point = pointer-value-address(points, index: j);
-	  point.x-value := x;
-	  point.y-value := y;
+//	  point.x-value := x;
+//	  point.y-value := y;
+	  point.GdkPoint-x := x;
+	  point.GdkPoint-y := y;
 	end;
       finally
 	when (closed? & ~filled?)
@@ -226,8 +228,8 @@ define sealed method draw-polygon
 	  // let point = points[0];
 	  let first-point = pointer-value-address(points, index: 0);
 	  let last-point  = pointer-value-address(points, index: npoints - 1);
-	  last-point.x-value := first-point.x-value;
-	  last-point.y-value := first-point.y-value;
+	  last-point.GdkPoint-x := first-point.GdkPoint-x;
+	  last-point.GdkPoint-y := first-point.GdkPoint-y;
 	end
       end;
     // end;
@@ -247,29 +249,29 @@ define sealed method draw-polygon
         let old-cap-style = #f;
         block ()
           gdk-gc-get-values(gcontext, gcontext-values);
-          old-cap-style := gcontext-values.cap-style-value;
+          old-cap-style := gcontext-values.GdkGCValues-cap-style;
           gdk-gc-set-line-attributes(gcontext,
-                                     gcontext-values.line-width-value,
-                                     gcontext-values.line-style-value,
+                                     gcontext-values.GdkGCValues-line-width,
+                                     gcontext-values.GdkGCValues-line-style,
                                      $gdk-cap-butt, // NB short lines for better joins
-                                     gcontext-values.join-style-value);
+                                     gcontext-values.GdkGCValues-join-style);
           let previous-p = pointer-value-address(points, index: 0);
           for (i from 1 below npoints)
-            let previous-x :: <integer> = previous-p.x-value;
-            let previous-y :: <integer> = previous-p.y-value;
+            let previous-x :: <integer> = previous-p.GdkPoint-x;
+            let previous-y :: <integer> = previous-p.GdkPoint-y;
             let p = pointer-value-address(points, index: i);
-            let x = p.x-value;
-            let y = p.y-value;
+            let x = p.GdkPoint-x;
+            let y = p.GdkPoint-y;
             gdk-draw-line(drawable, gcontext, previous-x, previous-y, x, y);
             previous-p := p;
           end;
         cleanup
           if (old-cap-style)
             gdk-gc-set-line-attributes(gcontext,
-                                       gcontext-values.line-width-value,
-                                       gcontext-values.line-style-value,
+                                       gcontext-values.GdkGCValues-line-width,
+                                       gcontext-values.GdkGCValues-line-style,
                                        old-cap-style,
-                                       gcontext-values.join-style-value);
+                                       gcontext-values.GdkGCValues-join-style);
           end;
         end block;
       end with-stack-structure;

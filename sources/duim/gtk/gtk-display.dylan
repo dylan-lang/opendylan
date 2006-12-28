@@ -35,12 +35,12 @@ define sealed method initialize-display
     := set-box-edges(sheet-region(_display),
 		     0, 0, pixel-width, pixel-height);
   sheet-direct-mirror(_display) := mirror;
-  /*---*** Not doing palettes yet...
+/*---*** Not doing palettes yet...
   let palette  = port-default-palette(_port);
   let drawable = xt/XtWindow(top-shell);
   palette.%default-drawable := drawable;
   palette.%gcontext         := x/XCreateGC(_port.%display, drawable)
-  */
+*/
 end method initialize-display;
 
 define method set-mirror-parent

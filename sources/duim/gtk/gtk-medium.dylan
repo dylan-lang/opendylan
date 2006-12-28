@@ -49,10 +49,10 @@ define sealed method do-attach-medium
   assert(mirror,
 	 "Unexpected failure: no mirror when attaching medium for %=",
 	 sheet);
-  debug-message("Attaching medium to %= (medium-sheet %=)",
+  duim-debug-message("Attaching medium to %= (medium-sheet %=)",
 		sheet, medium-sheet(medium));
   let widget = GTK-WIDGET(mirror.mirror-widget);
-  let drawable = pointer-cast(<GdkDrawable*>, widget.window-value);
+  let drawable = pointer-cast(<GdkDrawable*>, widget.GtkWidget-window);
   clear-ink-cache(medium);
   medium-drawable(medium) := drawable;
   // Set up the palette and fg/bg pixels
@@ -174,11 +174,11 @@ define inline method get-gcontext
   let mirror = sheet.sheet-mirror;
   let widget = GTK-WIDGET(mirror.mirror-widget);
   let drawable = medium-drawable(medium);
-  // let gcontext = widget.style-value.black-gc-value;
-  let gcontext = widget.style-value.fg-gc-value[GTK-WIDGET(widget).state-value];
+  // let gcontext = widget.GtkWidget-style.GtkStyle-black-gc;
+  let gcontext = widget.GtkWidget-style.GtkStyle-fg-gc[GTK-WIDGET(widget).GtkWidget-state];
   if (null-pointer?(drawable))
-    debug-message("Null pointer drawable!");
-    let drawable = pointer-cast(<GdkDrawable*>, widget.window-value);
+    duim-debug-message("Null pointer drawable!");
+    let drawable = pointer-cast(<GdkDrawable*>, widget.GtkWidget-window);
     medium-drawable(medium) := drawable;
     values(drawable, gcontext)
   else

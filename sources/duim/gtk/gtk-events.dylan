@@ -88,6 +88,7 @@ define event-handler (select_row,           <GdkEventAny*>)       = handle-gtk-s
 define event-handler (click_column,         <GdkEventAny*>)       = handle-gtk-click-column-event;
 define event-handler (resize_column,        <GdkEventAny*>)       = handle-gtk-resize-column-event;
 
+	
 define inline function do-handle-gtk-signal
     (handler_ :: <function>, widget :: <GtkWidget*>, name :: <string>,
      #rest args)
@@ -95,9 +96,9 @@ define inline function do-handle-gtk-signal
   let mirror = widget-mirror(widget);
   debug-assert(mirror, "Unknown widget");
   let gadget = mirror-sheet(mirror);
-  debug-message("Handling %s for %=", name, gadget);
+  duim-debug-message("Handling %s for %=", name, gadget);
   let value = apply(handler_, gadget, args);
-  debug-message("  handled?: %=", value);
+  duim-debug-message("  handled?: %=", value);
   if (instance?(value, <integer>))
     value
   elseif (value)
@@ -165,33 +166,38 @@ define function install-named-handlers
     (mirror :: <gtk-mirror>, handlers :: <sequence>, #key adjustment) => ()
   let widget = mirror-widget(mirror);
   let object = GTK-OBJECT(widget);
-  debug-message("Installing handlers for %=: %=",
+  duim-debug-message("Installing handlers for %=: %=",
 		mirror-sheet(mirror), handlers);
   for (key :: <symbol> in handlers)
     let handler_ = fetch-signal-handler(key);
     if (handler_)
-      let name     = handler_.handler-name;
+      let name     = as(<byte-string>, handler_.handler-name);
       let function = handler_.handler-function;
       let value = if (adjustment)
-		    gtk-signal-connect(adjustment, name, function, widget)
+		    g-signal-connect(adjustment, name, function, widget);
 		  else
 		   //--- Should we pass an object to help map back to a mirror?
-		    gtk-signal-connect(object, name, function, $null-gpointer)
+		    g-signal-connect(object, name, function, $null-gpointer);
 		  end;
       if (zero?(value))
-	debug-message("Unable to connect signal '%s'", name)
+	duim-debug-message("Unable to connect signal '%s'", name)
       end
     end
   end;
   gtk-widget-add-events(widget,
 			logior($GDK-EXPOSURE-MASK,
 			       $GDK-LEAVE-NOTIFY-MASK,
-			       if (member?(#"motion", handlers))
+			       if (member?(#"motion_event", handlers))
 				 logior($GDK-POINTER-MOTION-MASK,
 					$GDK-POINTER-MOTION-HINT-MASK)
 			       else
 				 0
-			       end))
+			       end,
+			       if (member?(#"button_press_event", handlers))
+				 logior($GDK-BUTTON-PRESS-MASK, $GDK-BUTTON-RELEASE-MASK)
+			       else
+				 0
+			       end));
 end function install-named-handlers;
 
 
@@ -233,9 +239,9 @@ define method handle-gtk-motion-event
   let sheet = mirror-sheet(mirror);
   let _port = port(sheet);
   when (_port)
-    let native-x  = event.x-value;
-    let native-y  = event.y-value;
-    let state     = event.state-value;
+    let native-x  = event.GdkEventMotion-x;
+    let native-y  = event.GdkEventMotion-y;
+    let state     = event.GdkEventMotion-state;
     ignoring("motion modifiers");
     let modifiers = 0;
     let (x, y)
@@ -271,11 +277,11 @@ define sealed method handle-gtk-crossing-event
  => (handled? :: <boolean>)
   let _port = port(sheet);
   when (_port)
-    let native-x  = event.x-value;
-    let native-y  = event.y-value;
-    let state     = event.state-value;
+    let native-x  = event.GdkEventCrossing-x;
+    let native-y  = event.GdkEventCrossing-y;
+    let state     = event.GdkEventCrossing-state;
     let modifiers = 0;	//--- Do this properly!
-    let detail    = event.detail-value;
+    let detail    = event.GdkEventCrossing-detail;
     let (x, y)
       = untransform-position(sheet-native-transform(sheet), native-x, native-y);
     distribute-event(_port,
@@ -317,11 +323,11 @@ define method handle-gtk-button-event
  => (handled? :: <boolean>)
   let _port = port(sheet);
   when (_port)
-    let native-x  = event.x-value;
-    let native-y  = event.y-value;
-    let button    = gtk-button->duim-button(event.button-value);
-    let state     = event.state-value;
-    let type      = event.type-value;
+    let native-x  = event.GdkEventButton-x;
+    let native-y  = event.GdkEventButton-y;
+    let button    = gtk-button->duim-button(event.GdkEventButton-button);
+    let state     = event.GdkEventButton-state;
+    let type      = event.GdkEventButton-type;
     let modifiers = 0;	//--- Do this!
     let event-class
       = select (type)
@@ -342,15 +348,15 @@ define method handle-gtk-button-event
 			    pointer: pointer,
 			    button: button,
 			    modifier-state: modifiers,
-			    x: x, y: y));
+			    x: round(x), y: round(y)));
       #t
     end
   end
 end method handle-gtk-button-event;
 
 define function gtk-button->duim-button
-    (gtk-button :: <integer>) => (duim-button :: <integer>)
-  select (gtk-button)
+    (the-gtk-button :: <integer>) => (duim-button :: <integer>)
+  select (the-gtk-button)
     1 => $left-button;
     2 => $middle-button;
     3 => $right-button;
@@ -362,11 +368,11 @@ define method handle-gtk-expose-event
  => (handled? :: <boolean>)
   let _port = port(sheet);
   when (_port)
-    let area = event.area-value;
-    let native-x = area.x-value;
-    let native-y = area.y-value;
-    let native-width = area.width-value;
-    let native-height = area.height-value;
+    let area = event.GdkEventExpose-area;
+    let native-x = area.GdkRectangle-x;
+    let native-y = area.GdkRectangle-y;
+    let native-width = area.GdkRectangle-width;
+    let native-height = area.GdkRectangle-height;
     let native-transform = sheet-native-transform(sheet);
     let (x, y)
       = untransform-position(native-transform, native-x, native-y);
@@ -381,7 +387,7 @@ define method handle-gtk-expose-event
   #t
 end method handle-gtk-expose-event;
 
-/*---*** Not handling state changes yet
+// /*---*** Not handling state changes yet
 define xt/xt-event-handler state-change-callback
     (widget, mirror, event)
   ignore(widget);
@@ -464,16 +470,16 @@ define sealed method handle-gtk-state-change-no-config-event
     end
   end
 end method handle-gtk-state-change-no-config-event;
-*/
+// */
 
 define method handle-gtk-configure-event
     (sheet :: <sheet>, widget :: <GtkWidget*>, event :: <GdkEventConfigure*>)
  => (handled? :: <boolean>)
-  let allocation = widget.allocation-value;
-  let native-x  = event.x-value;
-  let native-y  = event.y-value;
-  let native-width  = allocation.width-value;
-  let native-height = allocation.height-value;
+  let allocation = widget.GtkWidget-allocation;
+  let native-x  = event.GdkEventConfigure-x;
+  let native-y  = event.GdkEventConfigure-y;
+  let native-width  = allocation.GdkRectangle-width;
+  let native-height = allocation.GdkRectangle-height;
   let native-transform = sheet-native-transform(sheet);
   let (x, y)
     = untransform-position(native-transform, native-x, native-y);

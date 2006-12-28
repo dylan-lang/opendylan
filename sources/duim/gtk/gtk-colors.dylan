@@ -8,7 +8,7 @@ Dual-license: GNU Lesser General Public License
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Palettes
-/*---*** No palettes for now...
+// /*---*** No palettes for now...
 //--- How much more do we need to flesh out palettes?
 define sealed class <gtk-palette> (<basic-palette>)
   sealed slot port :: false-or(<port>),
@@ -18,7 +18,7 @@ define sealed class <gtk-palette> (<basic-palette>)
     required-init-keyword: colormap:;
   sealed slot %default-drawable,
     init-keyword: drawable:;
-  sealed slot %gcontext :: false-or(<GtkGC*>) = #f;
+  sealed slot %gcontext :: false-or(<GdkGC*>) = #f;
   sealed constant slot %gc-cache      :: <object-table> = make(<table>);
   sealed constant slot %color-cache   :: <object-table> = make(<table>);
   sealed constant slot %pattern-cache :: <object-table> = make(<table>);
@@ -184,16 +184,15 @@ end method query-pixel-for-color;
 
 
 /// Color utilities
-
 define constant $16-bits :: <integer> = ash(1, 16) - 1;
 
 define inline function float->16-bits
-    (x :: <real) => (_16bits :: <integer>)
+    (x :: <real>) => (_16bits :: <integer>)
   round(as(<single-float>, x) * $16-bits)
 end function float->16-bits;
 
 define inline function _16-bits->float
-    (_16bits :: <integer>) => (x :: <real)
+    (_16bits :: <integer>) => (x :: <real>)
   as(<single-float>, _16-bits) / $16-bits
 end function _16-bits->float;
 
@@ -236,4 +235,4 @@ define sealed method set-x-read-write-color
     x/XStoreColor(x-display, x-colormap, x-color)
   end
 end method set-x-read-write-color;
-*/
+// */

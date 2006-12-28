@@ -8,7 +8,7 @@ Dual-license: GNU Lesser General Public License
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// GTK pixmaps
-/*---*** Not doing pixmaps yet!
+// /*---*** Not doing pixmaps yet!
 
 define sealed class <gtk-pixmap> (<pixmap>)
   sealed slot %pixmap :: false-or(<GdkPixmap*>) = #f,
@@ -231,4 +231,4 @@ define sealed method do-copy-area
   gdk-window-copy-area(to-drawable, gcontext, to-x, to-y,
 		       from-drawable, from-x, from-y, width, height)
 end method do-copy-area;
-*/
+// */
