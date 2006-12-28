@@ -101,6 +101,7 @@ Bootstrap.2/bin/minimal-console-compiler: stage-1-bootstrap
 	@echo Building stage 2 bootstrap...
 	OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.2 \
 	  $(MAKE) -C sources/lib/run-time/pentium-linux install
+	OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.2 \
 	  $(MAKE) -C sources/dfmc/c-run-time install
 	@OPEN_DYLAN_PLATFORM_NAME=$(fd_build) \
 	  OPEN_DYLAN_RELEASE_ROOT=$(abs_builddir)/Bootstrap.2 \
@@ -128,6 +129,7 @@ Bootstrap.3/bin/minimal-console-compiler: stage-2-bootstrap
 	@echo Building stage 3 bootstrap...
 	OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.3 \
 	  $(MAKE) -C sources/lib/run-time/pentium-linux install
+	OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.3 \
 	  $(MAKE) -C sources/dfmc/c-run-time install
 	@OPEN_DYLAN_PLATFORM_NAME=$(fd_build) \
 	  OPEN_DYLAN_RELEASE_ROOT=$(abs_builddir)/Bootstrap.2 \
@@ -165,6 +167,7 @@ final-bootstrap: Bootstrap.final
 	@echo Building final stage bootstrap...
 	OPEN_DYLAN_USER_INSTALL=$(prefix) \
 	  $(MAKE) -C sources/lib/run-time/pentium-linux install
+	OPEN_DYLAN_USER_INSTALL=$(prefix) \
 	  $(MAKE) -C sources/dfmc/c-run-time install
 	@$(FINAL_ENV) $(FDCOMPILE) \
 		$(FINAL_LIBRARIES)
