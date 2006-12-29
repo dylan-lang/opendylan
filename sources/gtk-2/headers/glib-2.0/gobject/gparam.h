@@ -54,9 +54,12 @@ typedef enum
   G_PARAM_CONSTRUCT_ONLY      = 1 << 3,
   G_PARAM_LAX_VALIDATION      = 1 << 4,
   G_PARAM_STATIC_NAME	      = 1 << 5,
+/* %%% DYLAN-HACK %%% */
+/*
 #ifndef G_DISABLE_DEPRECATED
   G_PARAM_PRIVATE	      = G_PARAM_STATIC_NAME,
 #endif
+*/
   G_PARAM_STATIC_NICK	      = 1 << 6,
   G_PARAM_STATIC_BLURB	      = 1 << 7
 } GParamFlags;
