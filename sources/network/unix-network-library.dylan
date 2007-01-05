@@ -213,6 +213,8 @@ define module sockets
           <TCP-socket>,
           <UDP-socket>;
   create
+    \interruptible-system-call;
+  create
     \with-socket-thread,
     invoke-with-socket-thread,
     register-socket-thread,
