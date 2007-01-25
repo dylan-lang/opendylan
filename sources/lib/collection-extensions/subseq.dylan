@@ -327,8 +327,6 @@ define method aref(c :: <vector-subsequence>,
    end if;
 end method;
 
-define sealed copy-down-method aref
-    (c :: <byte-vector-subsequence>, #rest rest) => (result :: <byte>);
 
 define method aref-setter(value, c :: <vector-subsequence>,
 			  #rest rest) => (result :: <object>);
@@ -340,9 +338,6 @@ define method aref-setter(value, c :: <vector-subsequence>,
    end if;
 end method;
 
-define sealed copy-down-method aref-setter
-    (value :: <byte>, c :: <byte-vector-subsequence>, #rest rest)
- => (result :: <byte>);
 
 define method dimensions(c :: <vector-subsequence>) => (result :: <vector>);
    vector(c.end-index - c.start-index);
@@ -363,9 +358,6 @@ define method element(seq :: <vector-subsequence>, key :: <integer>,
   end case;
 end method element;
 
-define sealed copy-down-method element
-    (seq :: <byte-vector-subsequence>, key :: <integer>, #key default = subseq-no-default)
- => elt :: <byte>;
 
 define method element-setter(value, seq :: <vector-subsequence>,
 			     key :: <integer>) => (result :: <object>);
@@ -376,9 +368,6 @@ define method element-setter(value, seq :: <vector-subsequence>,
    end case;
 end method element-setter;
 
-define sealed copy-down-method element-setter
-    (value :: <byte>, seq :: <byte-vector-subsequence>, key :: <integer>)
- => (result :: <byte>);
 
 define method subsequence(seq :: <string>,
 			  #key start: first = 0,

@@ -1,0 +1,13 @@
+&makegen_include("../common-Makegen");
+
+$D2CFLAGS         # added by update-libdirs
+    = $d2c_runtime
+    . ' -L../common-dylan'
+    . ' -L../table-ext'
+    . ' -L../../d2c/runtime/random'
+    . ' -L../../d2c/runtime/threads';
+
+do emit_library_rule(
+    'gd-collection-extensions', '$(BUILDROOT)/force.timestamp', '', 'compile',
+    'install'
+);

@@ -1,5 +1,5 @@
 Library: collection-extensions
-Files: library
+Files: gd-library
         collection-utils
 	solist
 	subseq
