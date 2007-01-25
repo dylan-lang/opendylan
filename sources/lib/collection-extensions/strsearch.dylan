@@ -1,5 +1,4 @@
 module: 	string-search
-rcs-header:	$Header&
 author: 	Robert Stockton (rgs@cs.cmu.edu)
 synopsis:	Provides a small assortment of specialized operations for
 		searching and modifying <vector>s and <byte-string>s.  These
@@ -215,3 +214,4 @@ define method
     big;
   end if;
 end method replace-substring;
+

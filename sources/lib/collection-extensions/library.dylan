@@ -39,8 +39,9 @@ define library collection-extensions
   use dylan;
   use common-dylan, import: { byte-vector };
   export heap, self-organizing-list, vector-search, subseq, sequence-diff;
-  export SDE-vector;
-  export collection-utilities, sequence-utilities;
+  export sde-vector;
+  export collection-utilities;
+  export sequence-utilities;
 end library collection-extensions;
 
 define module self-organizing-list

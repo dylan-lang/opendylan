@@ -8,6 +8,7 @@ synopsis:  This Module implements some useful methods on sequences.
 // =========
 
 // Copyright (C) 1998-2004 Matthias Hölzl.
+// Copyright (C) 1998 Way Forward Technologies.
 
 //  Use and copying of this software and preparation of derivative
 //  works based on this software are permitted, including commercial

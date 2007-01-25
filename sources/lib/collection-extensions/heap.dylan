@@ -562,3 +562,4 @@ define method random-iteration-protocol (collection :: <heap>)
 	 end method
 	);
 end method random-iteration-protocol;	 
+

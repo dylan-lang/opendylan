@@ -133,7 +133,7 @@ define class <generic-subsequence> (<subsequence>)
   constant slot current-elem-sttr, required-init-keyword: elem-setter:;
   constant slot copy-state, required-init-keyword: copy:;
 end class;
- 
+
 define method subsequence(seq :: <sequence>,
 			  #key start: first = 0,
 			       end: last) => (result ::
