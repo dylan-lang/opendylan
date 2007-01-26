@@ -125,8 +125,6 @@ define method format (stream :: <stream>, control-string :: <byte-string>,
     block (exit)
       let start :: <integer> = 0;
       let arg-i :: <integer> = 0;
-      // Ensure all output is contiguous at stream's destination.
-      lock-stream(stream);
       while (start < control-len)
 	// Skip to dispatch char.
 	for (i :: <integer> = start then (i + 1),

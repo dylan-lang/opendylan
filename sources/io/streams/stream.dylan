@@ -24,7 +24,7 @@ define open abstract primary class <basic-stream> (<stream>)
     init-keyword: element-type:;
   slot private-stream-direction-value :: <integer>; //  = $input,
    //   init-keyword: direction:;
-  slot private-stream-lock-value = #f;
+  constant slot private-stream-lock-value :: <lock> = make(<recursive-lock>);
 end class <basic-stream>;
 
 define method initialize
@@ -312,27 +312,21 @@ define open generic stream-locked?
 define method stream-locked?
     (stream :: <stream>) => (locked? :: <boolean>)
   stream-lock(stream)
-  //---*** & stream-lock(stream).owned?
+    & stream-lock(stream).owned?
 end method stream-locked?;
 
 define open generic lock-stream
     (stream :: <stream>) => ();
 
 define method lock-stream (stream :: <stream>) => ()
-  //---*** Implement this
-  // if (stream-lock(stream))
-  //   ---
-  // end
+  wait-for(stream-lock(stream));
 end method lock-stream;
 
 define open generic unlock-stream
     (stream :: <stream>) => ();
 
 define method unlock-stream (stream :: <stream>) => ()
-  //---*** Implement this
-  // if (stream-lock(stream))
-  //   ---
-  // end
+  release(stream-lock(stream))
 end method unlock-stream;
 
 define macro with-stream-locked
