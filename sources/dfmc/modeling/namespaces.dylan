@@ -1873,6 +1873,8 @@ define &module threads
     \%dynamic-bind-variable, // HACK: HYGIENE GLITCH
 
     // Conditions,
+    <thread-error>,
+    <thread-creation-error>,
     <thread-inactive-error>,
     <duplicate-join-error>,
     <count-exceeded-error>,
