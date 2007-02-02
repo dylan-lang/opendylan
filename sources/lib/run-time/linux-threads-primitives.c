@@ -25,7 +25,7 @@
 #include <sys/types.h>
 
 #ifdef BOEHM_GC
-#include "gc.h"
+#include <gc/gc.h>
 #endif
 
 #include "linux-types.h"

@@ -90,7 +90,7 @@ void force_reference_to_spy_interface()
 #endif
 
 #ifdef BOEHM_GC
-#include "gc.h"
+#include <gc/gc.h>
 #define MAX_BOEHM_HEAP_SIZE (176 * 1024 * 1024)
 /* #define INITIAL_BOEHM_HEAP_SIZE (50 * 1024 * 1024) */
 #define NO_FINALIZATION
