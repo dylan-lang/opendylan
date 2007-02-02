@@ -159,9 +159,11 @@ define macro with-input-buffer
        ?body:body
      end }
   => { begin
-	 let ?buffer :: false-or(<buffer>) 
-	   = get-input-buffer(?stream, bytes: ?bytes);
-	 ?body
+         with-stream-locked(?stream)
+           let ?buffer :: false-or(<buffer>) 
+             = get-input-buffer(?stream, bytes: ?bytes);
+           ?body
+         end
        end }
 end macro with-input-buffer;
 
@@ -171,6 +173,7 @@ end macro with-input-buffer;
 define inline function get-output-buffer
     (stream :: <buffered-stream>, #key bytes = 1)
  => (buffer :: false-or(<buffer>))
+  with-stream-locked(stream)
   let sb = stream-output-buffer(stream);
   if (sb)
     let sb :: <buffer> = sb; // HACK: TYPE ONLY
@@ -181,6 +184,7 @@ define inline function get-output-buffer
     end
   else
     do-get-output-buffer(stream, bytes: bytes)
+  end
   end
 end function get-output-buffer;
 
@@ -220,9 +224,11 @@ define macro with-output-buffer
       ?body:body
     end }
   => { begin
-	 let ?buffer :: false-or(<buffer>)
-	   = get-output-buffer(?stream, bytes: ?bytes);
-	 ?body
+         with-stream-locked(?stream)
+           let ?buffer :: false-or(<buffer>)
+             = get-output-buffer(?stream, bytes: ?bytes);
+           ?body
+         end
        end }
 end macro with-output-buffer;
 
@@ -363,6 +369,7 @@ end method force-output-buffers;
 // next and  end pointers reset by this method.
 define method do-force-output-buffers
     (stream :: <double-buffered-stream>) => ()
+  with-stream-locked(stream)
   // This method ignores the buffer-dirty? flag.  This is backward
   // compatible with the old streams library.
   let sb :: <buffer> = stream-output-buffer(stream);
@@ -381,6 +388,7 @@ define method do-force-output-buffers
   // discretion of subclasses.  Aligned buffers for instance should not
   // have their pointers reset.
   values()
+  end;
 end method do-force-output-buffers;
 
 
@@ -719,6 +727,7 @@ end method write-element;
 define method write
     (stream :: <buffered-stream>, elements :: <sequence>,
      #key start: _start :: <integer> = 0, end: _end = #f) => ()
+  with-stream-locked(stream)
   with-output-buffer (sb = stream)
     let e :: <integer> = _end | elements.size;
     iterate loop (i :: <integer> = _start, sb :: false-or(<buffer>) = sb)
@@ -742,6 +751,7 @@ define method write
 	end
       end
     end iterate
+  end
   end
 end method write;
 

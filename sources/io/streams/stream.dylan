@@ -137,11 +137,6 @@ define method stream-lock (the-stream :: <basic-stream>) => (result>)
   the-stream.private-stream-lock-value
 end method stream-lock;
 
-define method stream-lock-setter
-    (the-lock, the-stream :: <basic-stream>) => (result)
-  the-stream.private-stream-lock-value := the-lock;
-  the-lock
-end method stream-lock-setter;
 
 /// Stream query functions, common to all streams
 

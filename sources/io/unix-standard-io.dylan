@@ -121,9 +121,11 @@ define variable *standard-error*
   = make(<console-stream>, file-descriptor: 2, direction: #"output");
 
 define function flush-stdout () => ()
-  let ob = stream-output-buffer(*standard-output*);
-  if (ob & ~(ob.buffer-start = ob.buffer-end))
-    force-output(*standard-output*)
+  with-stream-locked(*standard-output*)
+    let ob = stream-output-buffer(*standard-output*);
+    if (ob & ~(ob.buffer-start = ob.buffer-end))
+      force-output(*standard-output*)
+    end
   end
 end function flush-stdout;
 
@@ -133,14 +135,16 @@ end function flush-stdout;
 define method close
     (stream :: <console-stream>,
      #key abort? = #f) => ()
-  unless (abort?)
-    if (stream.stream-direction == #"output") 
-      let ob = stream-output-buffer(stream);
-      if (ob & ~(ob.buffer-start = ob.buffer-end))
-	force-output(stream);
+  with-stream-locked(stream)
+    unless (abort?)
+      if (stream.stream-direction == #"output") 
+        let ob = stream-output-buffer(stream);
+        if (ob & ~(ob.buffer-start = ob.buffer-end))
+          force-output(stream);
+        end if;
       end if;
-    end if;
-  end;
+    end;
+  end
   //  DON'T CALL NEXT-METHOD()!! Lower level close methods shouldn't
   //  be called on console streams.
 end method close;
@@ -149,9 +153,11 @@ end method close;
 
 define method stream-input-available?
     (stream :: <console-stream>) => (input-available? :: <boolean>)
-  stream-direction(stream) = #"input"
-  & (stream-input-buffer(stream).buffer-next < stream-input-buffer(stream).buffer-end
-     | do-input-available-at-source?(stream))
+  with-stream-locked(stream)
+    stream-direction(stream) = #"input"
+      & (stream-input-buffer(stream).buffer-next < stream-input-buffer(stream).buffer-end
+           | do-input-available-at-source?(stream))
+  end
 end method stream-input-available?;
 
 define method do-input-available-at-source?
@@ -201,15 +207,17 @@ define method accessor-read-into!
     (accessor :: <console-stream-accessor>, stream :: <console-stream>,
      offset :: <buffer-index>, count :: <buffer-index>, #key buffer)
  => (nread :: <integer>)
-  ignore(accessor);
-  let bufv = as(<vector>, buffer | stream-input-buffer(stream));
-  // N.B. No checking for sufficient length, e.g.
-  // if (offset + count > buffer.size) error "Argh!!" end;
-  let nread = unix-read(stream.file-descriptor, bufv, offset, count);
-  if (nread < 0)
-    unix-error("read");
-  end if;
-  nread
+  with-stream-locked(stream)
+    ignore(accessor);
+    let bufv = as(<vector>, buffer | stream-input-buffer(stream));
+    // N.B. No checking for sufficient length, e.g.
+    // if (offset + count > buffer.size) error "Argh!!" end;
+    let nread = unix-read(stream.file-descriptor, bufv, offset, count);
+    if (nread < 0)
+      unix-error("read");
+    end if;
+    nread
+  end
 end method accessor-read-into!;
 
 
@@ -217,23 +225,29 @@ end method accessor-read-into!;
 
 define method write-element
     (stream :: <console-stream>, element :: <character>) => ()
-  next-method();
-  if (element == '\n' | element == '\r')
-    force-output(stream)
+  with-stream-locked(stream)
+    next-method();
+    if (element == '\n' | element == '\r')
+      force-output(stream)
+    end
   end
 end method write-element;
 
 define method write-line
     (stream :: <console-stream>, elements :: <string>,
      #key start: _start = 0, end: _end = #f) => ()
-  next-method();
-  force-output(stream);
+  with-stream-locked(stream)
+    next-method();
+    force-output(stream);
+  end
 end method write-line;
 
 define method new-line
     (stream :: <console-stream>) => ()
-  next-method();
-  force-output(stream)
+  with-stream-locked(stream)
+    next-method();
+    force-output(stream)
+  end
 end method new-line;
 
 define method accessor-write-from
@@ -241,26 +255,28 @@ define method accessor-write-from
      offset :: <buffer-index>, count :: <buffer-index>, #key buffer,
      return-fresh-buffer? = #f)
  => (number-of-bytes-written :: <integer>, new-buffer :: <buffer>)
-  ignore(accessor);
-  let buffer = buffer | stream-output-buffer(stream);
-  let bufv = as(<vector>, buffer);
-  // N.B. No checking for sufficient length, e.g.
-  // if (offset + count > buffer.size) error "Argh!!" end;
-  let total-written = 0;
-  local method try-writing ()
-          let nwritten = unix-write(stream.file-descriptor,
-                                    bufv, offset, count);
-          total-written := total-written + nwritten;
-          if (nwritten < 0)
-            unix-error("write")
-          elseif (nwritten < count)
-            count := count - nwritten;
-            offset := offset + nwritten;
-            try-writing();
-          end if;
-        end;
-  try-writing();
-  values(total-written, buffer)
+  with-stream-locked(stream)
+    ignore(accessor);
+    let buffer = buffer | stream-output-buffer(stream);
+    let bufv = as(<vector>, buffer);
+    // N.B. No checking for sufficient length, e.g.
+    // if (offset + count > buffer.size) error "Argh!!" end;
+    let total-written = 0;
+    local method try-writing ()
+            let nwritten = unix-write(stream.file-descriptor,
+                                      bufv, offset, count);
+            total-written := total-written + nwritten;
+            if (nwritten < 0)
+              unix-error("write")
+            elseif (nwritten < count)
+              count := count - nwritten;
+              offset := offset + nwritten;
+              try-writing();
+            end if;
+          end;
+    try-writing();
+    values(total-written, buffer)
+  end
 end method accessor-write-from;
 
 define method accessor-force-output
@@ -272,13 +288,15 @@ end method accessor-force-output;
 
 define method do-force-output-buffers
     (stream :: <console-stream>) => ()
-  next-method();
-  let sb :: <buffer> = stream-output-buffer(stream);
-  sb.buffer-next := 0;
-  sb.buffer-end := 0;
-  values()
+  with-stream-locked(stream)
+    next-method();
+    let sb :: <buffer> = stream-output-buffer(stream);
+    sb.buffer-next := 0;
+    sb.buffer-end := 0;
+    values()
+  end
 end method do-force-output-buffers;
-
+  
 define method accessor-newline-sequence
     (accessor :: <console-stream-accessor>)
  => (newline-sequence :: <sequence>);
