@@ -185,16 +185,12 @@ end function dirent-name;
 
 /// Error handling
 
-define function unix-last-error () => (errno :: <integer>)
-  raw-as-integer(unix-errno())
-end function unix-last-error;
-
 define function unix-last-error-message () => (message :: <string>)
   let message :: <byte-string>
     = primitive-raw-as-string
        (%call-c-function ("strerror")
 	    (errno :: <raw-c-signed-int>) => (message :: <raw-byte-string>)
-	  (integer-as-raw(unix-last-error()))
+	  (integer-as-raw(unix-errno()))
 	end);
   // Make a copy to avoid it being overwritten ...
   copy-sequence(message)

@@ -108,7 +108,7 @@ define function %file-type
 	     (primitive-string-as-raw(as(<byte-string>, file)),
 	      primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(st)))
 	   end))
-      if (unix-last-error() = $ENOENT & if-not-exists)
+      if (unix-errno() = $ENOENT & if-not-exists)
 	if-not-exists
       else
 	unix-file-error("determine the type of", "%s", file)
@@ -140,7 +140,7 @@ define function %link-target
 			    integer-as-raw(8192))
 		       end);
     if (count = -1)
-      unless (unix-last-error() = $ENOENT | unix-last-error() = $EINVAL)
+      unless (unix-errno() = $ENOENT | unix-errno() = $EINVAL)
 	unix-file-error("readlink", "%s", link)
       end
     else
@@ -366,7 +366,7 @@ define function accessible?
 	  => (failed? :: <raw-c-signed-int>)
 	   (primitive-string-as-raw(as(<byte-string>, file)), abstract-integer-as-raw(mode))
 	 end))
-    unless (unix-last-error() = $EACCESS)
+    unless (unix-errno() = $EACCESS)
       unix-file-error("determine access to", "%s", file)
     end;
     #f
@@ -508,7 +508,7 @@ define function %do-directory
 /*
     if (primitive-machine-word-equal?
 	     (primitive-unwrap-machine-word(dirent),
-	      integer-as-raw($NO_MORE_DIRENTRIES)) & (unix-last-error() ~= 0))
+	      integer-as-raw($NO_MORE_DIRENTRIES)) & (unix-errno() ~= 0))
       unix-file-error("continue listing of", "%s", directory)
     end;
 */
@@ -605,7 +605,7 @@ define function %working-directory
 	let _end = position(buffer, '\0', test: \=);
 	return(as(<directory-locator>, copy-sequence(buffer, end: _end)))
       else
-	errno := unix-last-error();
+	errno := unix-errno();
 	bufsiz := bufsiz * 2;
       end
     end;

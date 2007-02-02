@@ -1,18 +1,8 @@
 module: unix-sockets
 
 /* These values come from the headers of an x86 Linux machine.
-   Other Linux platforms are expected to be the same, but not
-   guaranteed.  __errno_location is glibc-specific, but we have
-   no other chance than swallowing this toad here. */
-
-define inline-only C-function errno-location
-  result val :: <C-int*>;
-  c-name: $errno-location;
-end C-function;
-
-define function errno() => (error-number :: <integer>)
-  as(<integer>, C-int-at(errno-location()));
-end function errno;
+   Other UNIX platforms are expected to be the same, but not
+   guaranteed. */
 
 define constant $EPERM           =   1;
 define constant $ENOENT          =   2;

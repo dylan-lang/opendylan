@@ -110,7 +110,7 @@ define method accessor-open
 	      if (unix-delete-file(pathstring))
 		logior(mode-code, $o_creat);
 	      else
-		let errno = unix-errno-value();
+		let errno = unix-errno();
 		if (errno = $e_access)
 		  return(signal(make(<invalid-file-permissions-error>,
 				     locator: locator)));
@@ -134,7 +134,7 @@ define method accessor-open
 	end;
     let fd = unix-open(pathstring, mode-code, $file_create_permissions);
     if (fd < 0)
-      let errno = unix-errno-value();
+      let errno = unix-errno();
       if (errno = $e_access)
 	return(signal(make(<invalid-file-permissions-error>,
 			   locator: locator)));

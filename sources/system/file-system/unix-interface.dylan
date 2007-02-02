@@ -13,7 +13,7 @@ define macro with-interrupt-repeat
     =>
   { iterate loop()
       let result = ?body;
-      if(result < 0 & unix-errno-value() == $EINTR)
+      if(result < 0 & unix-errno() == $EINTR)
         loop()
       else
         result
@@ -103,10 +103,6 @@ define function get-unix-error (errno :: <integer>) => (message :: <string>)
   copy-sequence(message)
 end function get-unix-error;
 
-define function unix-errno-value () => (errno :: <integer>)
-  raw-as-integer(unix-errno())
-end function unix-errno-value;
-
 
 /// HIGHER LEVEL INTERFACE
 
@@ -180,6 +176,6 @@ define constant $e_access = 13;
 define function unix-error (syscall :: <string>, #key errno = #f) => ()
   let message :: <string> 
    = get-unix-error
-       (if (~errno) unix-errno-value() else errno end);
+       (if (~errno) unix-errno() else errno end);
   error("%s %s", syscall, message);
 end function unix-error;
