@@ -1,7 +1,11 @@
 
-% $Id: overview.tex,v 1.1 2004/03/12 00:42:07 cgay Exp $
+% $Id: overview.tex,v 1.4 2003/12/28 02:19:11 dngray Exp $
 
 \section{Operational Overview}
+
+The program operates on files which (as in the C programming language) are
+a stream of bytes, with lines separated by a new line character, which is
+denoted as ``\verb|\n|''.
 
 The general model of operation is that the program reads an input file
 and writes an output file which consists of the input data transformed in
@@ -145,3 +149,15 @@ user-defined domain.
 case letter also apply in actions, typically for conditional output of
 spaces or newlines.
 \end{itemize}
+
+A notable difference from traditional macro processors is that the text
+resulting
+from an action is not automatically re-scanned to look for matches on the
+result.  This has seemed to be more useful since many of the typical
+uses of {\tt gema} involve translating from one language or representation
+to another, so the rules that apply to the input language are not relevant to
+the output language.  Where desired, rescanning can be explicitly invoked
+as a part of the action by using the notation
+``\verb/@/{\em domain}\verb/{/{\em text}\verb/}/'' to re-process the
+constructed text with the rules of the specified domain.
+

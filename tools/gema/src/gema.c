@@ -1,7 +1,7 @@
 
 /* generalized macro processor */
 
-/* $Id: gema.c,v 1.1 2004/03/12 00:42:08 cgay Exp $ */
+/* $Id: gema.c,v 1.14 2001/12/15 20:22:13 gray Exp $ */
 
 /*********************************************************************
   This file is part of "gema", the general-purpose macro translator,
@@ -12,10 +12,11 @@
 
 /*
  * $Log: gema.c,v $
- * Revision 1.1  2004/03/12 00:42:08  cgay
- * Initial revision
+ * Revision 1.14  2001/12/15 20:22:13  gray
+ * Add new convenience option "-ml" for using "[...]" instead of "<...>"
+ * with HTML, XML, etc.
  *
- * Revision 1.13  1995/10/01 23:29:44  gray
+ * Revision 1.13  1995/10/01  23:29:44  gray
  * Fix to support MS-DOS wild card expansion with a full pathname.
  *
  * Revision 1.12  1995/09/29  05:42:18  gray
@@ -257,6 +258,7 @@ CI "\\N-trace\\n=@set-switch{trace;1}\n"
 #endif
 CI "\\N-line\\n=@set-switch{line;1}\n"
 CI "\\N-match\\n=@set-switch{match;1}\n"
+CI "\\N-ml\\n=@set-syntax{</>LLL;[|]</>}\n" /* for Markup Language (XML,HTML)*/
 #ifdef MSDOS
 #if 0 /* doesn't work because causes "\Z" action to be invoked. */
    "\\N\\/<L1>\\n=@ARGV{-$1\\n}\n"	/* allow "/" instead of "-" */

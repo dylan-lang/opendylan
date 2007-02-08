@@ -1,6 +1,6 @@
 !  test patterns
 
-! $Id: testpat.dat,v 1.9 1996/04/21 00:54:22 gray Exp $
+! $Id: testpat.dat,v 1.9 1996/04/08 05:41:08 gray Exp $
 
 \Iwo\I=ya
 \L(*\W+\W*)=\NADD *,*\n

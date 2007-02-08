@@ -1,21 +1,29 @@
 /* character stream functions */
 
-/* $Id: cstream.c,v 1.1 2004/03/12 00:42:08 cgay Exp $ */
+/* $Id: cstream.c,v 1.12 2002/02/17 01:17:58 gray Exp $ */
 
 /*********************************************************************
   This file is part of "gema", the general-purpose macro translator,
   written by David N. Gray <dgray@acm.org> in 1994 and 1995.
-  Adapted for the Macintosh by David A. Mundie <mundie@telerama.lm.com>.
+  Adapted for the Macintosh by David A. Mundie <mundie@anthus.com>.
   You may do whatever you like with this, so long as you retain
   an acknowledgment of the original source.
  *********************************************************************/
 
 /*
  * $Log: cstream.c,v $
- * Revision 1.1  2004/03/12 00:42:08  cgay
- * Initial revision
+ * Revision 1.12  2002/02/17 01:17:58  gray
+ * Prevent a reference outside of array -- fix contributed by Alex Karahalios.
  *
- * Revision 1.9  1996/04/21 00:30:34  gray
+ * Revision 1.11  2002/02/17  00:29:39  gray
+ * On Windows 95 and later, append ".bak" like on Unix instead of replacing
+ * the extension like on MS-DOS.
+ *
+ * Revision 1.10  2001/12/15  20:22:01  gray
+ * Update directory check to be more portable.
+ * Clean up compiler warnings.
+ *
+ * Revision 1.9  1996/04/08  05:09:02  gray
  * Fix `extend_buffer' to correctly handle binary files on MS-DOS.
  * Modify `open_output_file' to facilitate better error message when input and
  * output files are the same and non-existent.
@@ -168,7 +176,7 @@ int cis_getch(CIStream s){
       }
       return EOF;
     }
-    if ( s->next[-1] == '\n' ) {
+    if ( s->next == s->start || s->next[-1] == '\n' ) {
       s->line++;
       s->column = 1;
     }
@@ -412,7 +420,13 @@ char probe_pathname(const char* pathname) {
 #else
     struct stat sbuf;
     if ( stat( pathname, &sbuf ) == 0 ) {
-      if ( sbuf.st_mode & S_IFDIR )
+      int isdir;
+#ifdef S_ISDIR  /* POSIX */
+      isdir = S_ISDIR(sbuf.st_mode);
+#else	       /* older way */
+      isdir = sbuf.st_mode & S_IFDIR;
+#endif
+      if ( isdir )
 	return 'D'; /* directory */
       else if ( sbuf.st_mode & S_IFREG )
 	return 'F'; /* file */
@@ -747,13 +761,13 @@ open_output_file( const char* pathname, boolean binary )
     COStream outbuf;
     const char* backup_pathname;
     outbuf = make_buffer_output_stream();
-#if defined(unix) | defined(__unix__) | defined(__unix)
-    /* on Unix, append ".bak" to the file name */
+#if defined(MSDOS) && !defined(_WIN32)
+    /* on MS-DOS (8.3 filenames), replace any previous extension */
+    merge_pathnames( outbuf, FALSE, NULL, pathname, backup_suffix);
+#else
+    /* on Unix or Win32, append ".bak" to the file name */
     cos_puts(outbuf,pathname);
     cos_puts(outbuf,backup_suffix);
-#else
-    /* on MS-DOS, replace any previous extension */
-    merge_pathnames( outbuf, FALSE, NULL, pathname, backup_suffix);
 #endif
     bakpath = convert_output_to_input( outbuf );
     backup_pathname = cis_whole_string(bakpath);
@@ -769,9 +783,10 @@ open_output_file( const char* pathname, boolean binary )
   if ( outfs == NULL ) {
     input_error(input_stream, EXS_OUTPUT, "Can't open output file:\n");
     perror(pathname);
-    if ( keep_going )
-      return NULL;
-    else exit(EXS_OUTPUT);
+    if ( ! keep_going ) {
+      exit(EXS_OUTPUT);
+    }
+    return NULL;
   }
   else {
     current_output = make_file_output_stream(outfs,pathname);
@@ -865,7 +880,7 @@ CIStream convert_output_to_input( COStream out ) {
 }
 
 void cos_copy_input_stream(COStream out, CIStream in) {
-  if ( in != NULL )
+  if ( in != NULL ) {
     if ( is_file_stream(in) ) {
       int ch;
       while ( (ch = cis_getch(in)) != EOF )
@@ -875,5 +890,6 @@ void cos_copy_input_stream(COStream out, CIStream in) {
       cos_put_len(out, (const char*)in->next, in->end - in->next);
       in->next = in->end;
     }
+  }
 }
 

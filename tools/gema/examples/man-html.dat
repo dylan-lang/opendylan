@@ -1,4 +1,6 @@
 !   Convert man page to HTML
+!
+! $Id: man-html.dat,v 1.3 2003/06/24 20:25:12 gray Exp $
 
 \B=\<\!-- "@outpath" generated @just-date{@datime} by "@getenv{USER;}" --\>\n\
    \<\!-- Converted from "@inpath" dated @just-date{@file-time} --\>\n
@@ -14,8 +16,10 @@ just-date:\n=;
 \\\"*\n=\n\<\!-- * --\>\n
 \N.\W\n=\n
 \N.TH\L <arg> <arg> <arg>*<endline>=\
-	\<TITLE\>\<TT\>@downcase{$1}\</TT\>($2)\</TITLE\>\n\
+	\<TITLE\>@downcase{$1}($2)\</TITLE\>\n\
 	\<\!-- $3 $4 --\>\n\<H1\>$1\</H1\>\n
+\N.TH\L <arg> <arg>\W<endline>=\
+	\<TITLE\>@downcase{$1}($2)\</TITLE\>\n\<H1\>$1\</H1\>\n
 !\N.SH <arg> =@endlist{$P}\N\<H2\>$1\</H2\>\n
 \N.SH\L "*"=@endlist{$P}\N\<H2\>@{$1}\</H2\>\n
 \N.SH\L *\n=@endlist{$P}\N\<H2\>@{$1}\</H2\>\n
@@ -40,10 +44,11 @@ infont:<L>,<U>=@startfont{$1}@{$2}@endfont{${font}};=@end
 \\fI=@startfont{I}
 \\fB=@startfont{TT}
 \\fP=@endfont{@var{font;}}
-\\fR=@endfont{@var{font;}}
+\\fR=@repeat{5;@endfont{@var{font;}}}
 \\f1=@endfont{@var{font;}}
 \\f2=@startfont{I}
 \\f3=@startfont{TT}
+\\fL=@startfont{TT}
 
 \N.ft B =@startfont{B}
 \N.ft I =@startfont{I}
@@ -52,6 +57,8 @@ infont:<L>,<U>=@startfont{$1}@{$2}@endfont{${font}};=@end
 \N.ft 1 =@endfont{@var{font;}}
 \N.ft 2 =@startfont{I}
 \N.ft 3 =@startfont{B}
+\N.ft L =@startfont{TT}
+\N.ft\W\n=@endfont{@var{font;}}
 
 \\fB<I>\W(<A1>)\\fP=@wrap{\<A HREF="$1.$2.html"\>\<TT\>$1\</TT\>($2)\</A\>}
 \N.BR <I>\W(<A1>)=@wrap{\<A HREF="$1.$2.html"\>\<TT\>$1\</TT\>($2)\</A\>}
@@ -102,6 +109,7 @@ newpar:\Z=@endlist{$P}\<P\>\n
 \N.nh<endline>=
 \N.hy<endline>=
 \N.hy\L <D><endline>=
+\N.hw\L *\n=
 \N.ne\I*\n=
 !\N.nf<endline>#\n.fi<endline>=\<PRE\>\n#\n\</PRE\>\n
 \N.nf<endline>=\<PRE\>\n@set{EndPre;\</PRE\>\n}
@@ -110,6 +118,10 @@ newpar:\Z=@endlist{$P}\<P\>\n
 \N.ce<endline>#\n=\<P ALIGN\=\"CENTER\"\>\n#\n\<P\>\n
 \N.ce *\n#\n.ce 0\W\n=\<P ALIGN\=\"CENTER\"\>\n#\n\<P\>\n
 \N.bp<endline>=\<P\>\n
+
+\N.nr <I> <G>\n=@define{\\\\n$1\\I\=\@\{@quote{$2}\}}\
+		@define{\\\\n($1\\I\=\@\{@quote{$2}\}}
+\N.ad /[bnl]/\W\n=
 
 \N.eo<endline>*\n.ec<endline>=@litesc{*}
 litesc:\\=\\
@@ -137,7 +149,8 @@ endRS:\t=@pop{P};?=
 
 \N.in +<A><endline>#\N.in -<A><endline>=\N\<BLOCKQUOTE\>\n#\N\</BLOCKQUOTE\>\n
 
-\\s-?#\\s0=#
+\\s-<D1>#\\s0=\<SMALL\>#\<\/SMALL\>
+\\s+<D1>#\\s0=\<BIG\>#\<\/BIG\>
 \N.SM <arg>\\s0=$1
 \N.SM =
 
@@ -146,6 +159,8 @@ endRS:\t=@pop{P};?=
 
 \N.if t .ti *\n=
 \N.if n .ti *\n=\<BR\>\n
+\N.if t .ig <G>\n*\n.$1\W\n=
+\N.if n .ig <G>\n*\n.$1\W\n=@{*\n}
 \N.if t *\n=@{*\n}
 \N.if n *\n=
 
@@ -153,7 +168,8 @@ endRS:\t=@pop{P};?=
 	\<optarg\>\<optarg\>\<optarg\>\<optarg\>\=\@\{@macbody{$4\N}\}}\
 	@{.$2 $5\n}
 \N.de <G><endline>*\n..=@define{\\N.@quote{$1} \<optarg\>\<optarg\>\
-	\<optarg\>\<optarg\>\<optarg\>\<optarg\>=\@\{@macbody{$3\N}\}}
+	\<optarg\>\<optarg\>\<optarg\>\<optarg\>\<optarg\>\<optarg\>=\
+	\@\{@macbody{$3\N}\}}
 \N.rm <G><endline> =@undefine{\\N.@quote{$1} \<optarg\>\<optarg\>\
 	\<optarg\>\<optarg\>\<optarg\>\<optarg\>}
 
@@ -162,14 +178,14 @@ macbody:\\\\=\\\\
 macbody:<A>=$1
 macbody:?=@quote{$1}
 
-\N.ds <G1> <stringval>=@define{@quote{\\\*$1}=@quote{$2}}
-\N.ds <G2> <stringval>=@define{@quote{\\\*\($1}=@quote{$2}}
+\N.ds <G1> <stringval>=@define{@quote{\\\*$1}=@quote{@{$2}}}
+\N.ds <G2> <stringval>=@define{@quote{\\\*\($1}=@quote{@{$2}}}
 stringval:\n=@end;\\\n=;
 
 \N.so <G><endline>=@{@read{@mergepath{@inpath;$1;$1}}}
 \N.ex<endline>=@end
 
-\N.*<endline>=\N.$1\N@err{"@file" line @line\: Unrecognized\:  .@cut{$1}\n}
+\N.*<endline>=@out-error{\N.$1}\N
 
 ! Emacs w3 recognizes these character names, but not Mosaic or Netscape.
 !\\-=\&ndash\;
@@ -223,9 +239,12 @@ stringval:\n=@end;\\\n=;
 \\\[=\[
 \\\]=\]
 
-\\f?=[\\f?]@err{"@file" line @line\: Unrecognized\:  \\f$1\n}
-\\(??=[\\(??]@err{"@file" line @line\: Unrecognized\:  \\($1$2\n}
-\\?=?@err{"@file" line @line\: Unrecognized\:  \\$1\n}
+\\f?=@out-error{$0}
+\\(??=@out-error{$0}
+\\?\'<p40>\'=@out-error{$0}
+\\?=@out-error{$0}
+out-error:*=\<font color\=red\>$1\<\/font\>\
+	@err{"@file" line @line\: Unrecognized\:  @cut{$1}\n}
 
 arg:"\L<>"=$1@end
 arg:<S0>=@terminate
@@ -234,3 +253,10 @@ arg::
 args:\N=@end;\S=\S;"<>"=$1;
 args:\\c\n=@terminate
 args::
+
+\Ihttp\:\/\/<host>=\<a href\="$0"\>$0\<\/a\>
+\Iftp\:\/\/<host>=\<a href\="$0"\>$0\<\/a\>
+host:\P. =@terminate;<I>=$1;\/=\/;\#=\#;\.<F0>=\.;<F1>=$1;=@terminate
+host:\P\, =@terminate;\P\; =@terminate
+
+

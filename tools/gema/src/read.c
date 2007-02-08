@@ -1,7 +1,7 @@
 
 /* read pattern definitions */
 
-/* $Id: read.c,v 1.1 2004/03/12 00:42:09 cgay Exp $ */
+/* $Id: read.c,v 1.20 2004/09/18 22:57:06 dngray Exp $ */
 
 /*********************************************************************
   This file is part of "gema", the general-purpose macro translator,
@@ -10,18 +10,27 @@
   an acknowledgment of the original source.
  *********************************************************************/
 
-/* $Log: read.c,v $
- * Revision 1.1  2004/03/12 00:42:09  cgay
- * Initial revision
+/* 
+ * $Log: read.c,v $
+ * Revision 1.20  2004/09/18 22:57:06  dngray
+ * Allow MAX_DOMAINS to be larger than 255
+ * (merged changes contributed by Alex Karahalios).
  *
-/* Revision 1.17  1996/04/21 00:37:37  gray
-/* Fixed initialization of `fnnargs' so that ${varname} always works even when
-/* @var has never been used.  Fixed interaction of comment and continuation
-/* lines.  If the first line of a pattern file begins with "#!", ignore that
-/* line so that pattern files can be made directly executable.  When '=' is
-/* missing, discard incomplete rule to avoid other errors.  Warn when template
-/* begins with recursive argument in same domain (will just overflow stack).
-/*
+ * Revision 1.19  2001/12/15  20:22:44  gray
+ * Modify use of hex character constants to work-around a compiler bug on
+ * DEC Alpha OSF1.  Clean up compiler warnings..
+ *
+ * Revision 1.18  2001/09/30  23:10:20  gray
+ * Fix uninitialized variable in skip_comment.
+ *
+ * Revision 1.17  1996/04/08  05:29:56  gray
+ * Fixed initialization of `fnnargs' so that ${varname} always works even when
+ * @var has never been used.  Fixed interaction of comment and continuation
+ * lines.  If the first line of a pattern file begins with "#!", ignore that
+ * line so that pattern files can be made directly executable.  When '=' is
+ * missing, discard incomplete rule to avoid other errors.  Warn when template
+ * begins with recursive argument in same domain (will just overflow stack).
+ *
  * Revision 1.16  1995/08/27  21:03:46  gray
  * Fix handling of space between identifiers with "-t" or "-w".
  * Fix to not be prevented from using dispatch table when template begins with
@@ -250,7 +259,9 @@ boolean set_syntax( int type, const char* char_set ) {
 #endif
 
 int ndomains = 0;
-
+#if MAX_DOMAINS > (1<<14)
+  #error "MAX_DOMAINS is too large; must fit in 14 bits."
+#endif
 Domain domains[MAX_DOMAINS] = { NULL };
 
 char* trim_name( unsigned char* x ) {
@@ -282,6 +293,7 @@ static int find_domain( const char* name ) {
   if ( ndomains >= MAX_DOMAINS ) {
     fprintf(stderr,"More than %d domain names; aborting.\n", MAX_DOMAINS);
     exit((int)EXS_SYNTAX);
+    return -1; /* just to avoid warning from SGI compiler */
   }
   else {
     Patterns p;
@@ -464,23 +476,23 @@ escaped_char( int ch, unsigned char* bp, CIStream s ) {
 	case 'r': pc = '\r'; break;
 	case 'v': pc = '\v'; break;
 	case 's': pc = ' '; break;
-#if 'A' == '\x41'
-	case 'e': pc = '\x1B' ; break; /* ASCII Escape */
-	case 'd': pc = '\x7F' ; break; /* ASCII Delete */
+#if 'A' == 0x41
+	case 'e': pc = ((char)0x1B) ; break; /* ASCII Escape */
+	case 'd': pc = ((char)0x7F) ; break; /* ASCII Delete */
 	case 'c': {	/* control */
 	  int xc;
 	  xc = cis_getch(s);
       	  pc = toupper(xc) ^ 0x40;
 	  break;
 	}
-#elif 'A' == '\xC1'
-	case 'e': pc = '\x27' ; break; /* EBCDIC Escape */
-	case 'd': pc = '\x07' ; break; /* EBCDIC Delete */
+#elif 'A' == 0xC1
+	case 'e': pc = ((char)0x27) ; break; /* EBCDIC Escape */
+	case 'd': pc = ((char)0x07) ; break; /* EBCDIC Delete */
 #endif
 #if 0	/* not needed */
 		/* the following two are the same in ASCI and EBCDIC */
-	case 'o': pc = '\x0E' ; break; /* shift out */
-	case 'i': pc = '\x0F' ; break; /* shift in */
+	case 'o': pc = ((char)0x0E) ; break; /* shift out */
+	case 'i': pc = ((char)0x0F) ; break; /* shift in */
 #endif
 	case 'x': {
 	  char cbuf[4];
@@ -572,6 +584,7 @@ int intern_regexp( unsigned char* exp, CIStream in ) {
     input_error(in, EXS_SYNTAX, "More than %d unique regular expressions.\n",
 		MAX_NUM_REGEXP);
     exit(exit_status);
+    return -1; /* just to avoid warning from SGI compiler */
   }
   else {
     struct regex_struct* p;
@@ -596,9 +609,10 @@ int intern_regexp( unsigned char* exp, CIStream in ) {
       }
       else {
 	input_error(in, EXS_SYNTAX, "Error in regular expression: %s\n", msg);
-	if ( keep_going )
-	  return intern_regexp( (unsigned char*)"\1", in );
-	else exit(exit_status);
+	if ( ! keep_going ) {
+	  exit(exit_status);
+	}
+	return intern_regexp( (unsigned char*)"\1", in );
       }
     }
     return last_regex;
@@ -831,6 +845,7 @@ read_put( CIStream s, unsigned char** app, int nargs,
 static boolean 
 skip_comment( CIStream s ) {
   int ch;
+  ch = 0;
   for ( ; ; ) {
     int nc;
     nc = cis_getch(s);
@@ -854,11 +869,13 @@ static unsigned char*
 read_action( CIStream s, unsigned char* bp, int nargs,
 	     unsigned char* arg_keys ) {
   unsigned char* ap;
-  int ch; /* character read */
-  int pc; /* code for action */
   enum char_kinds kind;
     for ( ap = bp ; ; ) {
+      int pc; /* code for action */
+      int ch; /* character read */
+
       ch = cis_getch(s);
+      pc = ch; /* just to avoid warning from Gnu compiler */
       kind = char_kind(ch);
 dispatch:
       switch ( kind ) {
@@ -935,7 +952,12 @@ charop: {
 #if 1
 		  int domain = find_domain(name);
 	          *ap++ = PT_DOMAIN;
+#if MAX_DOMAINS < 256
 		  *ap++ = (unsigned char)(domain + 1);
+#else
+                  *ap++ = (unsigned char)((domain & 0x7f)|0x80);
+                  *ap++ = (unsigned char)(((domain>>7) & 0x7f)|0x80);
+#endif
 		  if ( char_kind(xc) == PI_BEGIN_ARG ) {
 		    int term_kind;
 		    int term_char;
@@ -1119,7 +1141,7 @@ charop: {
 	ap = &bp[BUFSIZE/2];
       }
       *ap++ = (unsigned char)pc;
-    }
+    } /* end for */
 } /* end read_action */
 
 static unsigned char*
@@ -1178,6 +1200,7 @@ top:
     prev_bp = start_bp;
     start_bp = bp;
     ch = cis_getch(s);
+    pc = ch; /* just to avoid warning from Gnu compiler */
     kind = char_kind(ch);
 dispatch:
     switch (kind) {
@@ -1256,7 +1279,11 @@ dispatch:
 		"Domain change \"%s%c\" not allowed in temporary pattern.\n",
       		name, ch);
 	else
+#if MAX_DOMAINS < 256
 	*domainpt = name[0] == PT_RECUR ? name[1]-1 : find_domain( name );
+#else
+	*domainpt = name[0] == PT_RECUR ? (unsigned int)(name[1]&0x7f) | (unsigned int)((name[2]&0x7f)<<7) : find_domain( name );
+#endif
 	bp = pbuf;
 	domain_seen = TRUE;
 	continue;
@@ -1298,15 +1325,30 @@ dispatch:
 	nargs++;
 	arg_keys[nargs] = (unsigned char)ch;
 	if ( kind == PI_RARG ) {
-	  pc = *domainpt + 1;
+	  int domain = *domainpt;
 	  *bp++ = PT_RECUR;
+#if MAX_DOMAINS < 256
+	  pc = domain + 1;
+#else
+	  /* Save low byte of domain index */
+	  *bp++ = (unsigned char)((domain &0x7f)|0x80);
+	  pc = ((domain>>7) & 0x7f)|0x80;
+#endif
 	}
 	else if ( kind == PI_ABBREV_DOMAIN ) {
+	  int domain;
 	  char aname[2];
 	  aname[0] = ch;
 	  aname[1] = '\0';
-	  pc = 1 + find_domain(aname);
+	  domain = find_domain(aname);
 	  *bp++ = PT_RECUR;
+#if MAX_DOMAINS < 256
+	  pc = 1 + domain;
+#else
+	  /* Save low byte of domain index */
+	  *bp++ = (unsigned char)((domain &0x7f)|0x80);
+	  pc = (((unsigned int)domain>>7) & 0x7f)|0x80;
+#endif
 	}
 	else if ( kind == PI_BEGIN_DOMAIN_ARG ) {
 	  int xc;
@@ -1350,8 +1392,15 @@ dispatch:
 		*bp++ = parms;
 	      }
 	      else {  /* user-defined domain */
-	        pc = 1 + find_domain( dname );
+		int domain = find_domain( dname );
 	        *bp++ = PT_RECUR;
+#if MAX_DOMAINS < 256
+	        pc = 1 + domain;
+#else
+		/* Save low byte of domain index */
+		*bp++ = (unsigned char)((domain & 0x7f)|0x80);
+		pc = ((domain>>7) & 0x7f)|0x80;
+#endif
 	      }
 	      break;
 	    }
@@ -1359,7 +1408,6 @@ dispatch:
 	      input_error(s, EXS_SYNTAX, "Error: unmatched '%c'\n", ch);
 	      bp = xp;
 	      goto done;
-	      break;
 	    }
 	    *xp = (unsigned char)xc;
 	  }
@@ -1418,7 +1466,7 @@ dispatch:
     case PI_QUOTE:
     case PI_ESC: {
        bp = escaped_char(ch,bp,s);
-       if ( start_bp > pbuf )
+       if ( start_bp > pbuf ) {
 	 if ( *start_bp == PT_AUX ) {
     	   if ( start_bp[1] == PTX_INIT || start_bp[1] == PTX_BEGIN_FILE )
 	     input_error(s, EXS_SYNTAX,
@@ -1431,6 +1479,7 @@ dispatch:
 	 else if ( *start_bp == *prev_bp && *prev_bp == PT_ID_DELIM )
 	   /* delete redundancy */
 	   bp = start_bp;
+       }
        continue;
     }
 
@@ -1859,7 +1908,14 @@ install_pattern( const unsigned char* template, Pattern pat,
   if ( key == PT_QUOTE )
     key = *rest++;
   else if ( is_operator(key) ) {
-    if ( key == PT_RECUR && patset == &domains[rest[0]-1]->patterns )
+    if ( key == PT_RECUR
+#if MAX_DOMAINS < 256
+	 && patset == &domains[rest[0]-1]->patterns
+#else
+	 && patset == &domains[(unsigned int)(rest[0]&0x7f)
+			      |(unsigned int)((rest[1]&0x7f)<<7)]->patterns
+#endif
+	 )
       /* template beginning with recursive arg in same domain is
 	 going to get stack overflow */
       input_error(input_stream, EXS_SYNTAX, "Unbounded recursion.\n");

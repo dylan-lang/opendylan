@@ -1,6 +1,6 @@
 !  test patterns, this version for use with "-t" option (token mode).
 
-! $Id: testtok.dat,v 1.4 1996/04/21 00:44:30 gray Exp $
+! $Id: testtok.dat,v 1.4 1996/04/08 05:50:14 gray Exp $
 
 wo=ya
 \L(*\W+\W*)=\NADD *,*\n

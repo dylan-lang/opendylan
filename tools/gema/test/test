@@ -1,6 +1,6 @@
 
 # test script for Unix
-# $Header: /scm/cvs/fundev/tools/gema/test/test,v 1.1 2004/03/12 00:42:10 cgay Exp $
+# $Header: /cvsroot/gema/gema/test/test,v 1.3 1995/07/27 05:39:54 gray Exp $
 
 rm -f /tmp/pattest*.out
 ./gema -version -f testpat.dat testin.dat /tmp/pattest.out

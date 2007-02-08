@@ -1,6 +1,6 @@
 .\" @(#)gema.1
-.\" $Id: gema.1,v 1.1 2004/03/12 00:42:07 cgay Exp $
-.TH GEMA 1 "31 Mar 1996" "version 1.3" " "
+.\" $Id: gema.1,v 1.6 2003/12/28 02:18:03 dngray Exp $
+.TH GEMA 1 "26 Dec 2003" "version 1.4" " "
 .SH NAME
 gema \- general purpose macro processor
 .SH SYNOPSIS
@@ -21,6 +21,7 @@ Where \fIoptions\fP is:
 \fB\-idchars \fP\fIcharset\fP |
 \fB\-filechars \fP\fIcharset\fP |
 \fB\-literal \fP\fIcharset\fP |
+.BR \-ml " | "
 .BR \-trace " | "
 \fB\-arglen \fP\fInum\fP
 .de QX
@@ -95,7 +96,8 @@ instead of a
 because it is more general than that.)
 The presence of the equal sign serves to distinguish a pattern argument
 from a file name.  Note that pattern arguments will usually need to be
-enclosed in single quotes on Unix, or double quotes on MS-DOS.
+enclosed in single quotes on Unix (as shown in the example), or double
+quotes on MS-DOS or Windows.
 .LP
 Patterns can also be defined in one or more files loaded with the
 .B \-f
@@ -383,6 +385,11 @@ can usually be omitted since an argument containing
 or beginning with
 .QX @
 is automatically recognized as a pattern argument.
+Any number of 
+.B \-f
+and/or
+.B \-p
+options may be given.
 .TP
 .BI \-in " file"
 Explicitly specifies the input file pathname.  If the file name is
@@ -408,6 +415,9 @@ search of a group of files:
 .br
 \ \ \fBgema -match -p 'Copyright *\\n=@file\\: $0' -out - *.c\fP
 .br
+(The special notation
+.QX $0
+copies all of the matched text into the output.)
 .TP
 .BI \-odir " directory"
 Specifies the output directory.  For each input file that follows, a
@@ -445,7 +455,7 @@ so with
 .B \-b
 Binary.  With this option, all input and output files are opened in
 binary mode instead of text mode.  This makes no difference on most Unix
-systems, but on MS-DOS it changes the meaning of the new line character and
+systems, but on Windows it changes the meaning of the new line character and
 doesn't treat Control-Z as the end of the file.
 .TP
 .B \-k
@@ -523,7 +533,7 @@ characters which are accepted by
 as being file name constituents, in addition to letters and digits.
 The default value is
 .QX "./\-_~#@%+="
-for Unix.  On MS-DOS, colon and backslash are also included in the
+for Unix.  On Windows, colon and backslash are also included in the
 default set.
 .TP
 .BI \-literal " charset"
@@ -537,6 +547,33 @@ For example, rather than saying something like:
 you could instead say:
 .br
  \ \ \ \fBgema -literal / '/usr/foo/<F>=/usr/bar/$1'\fP \fI...\fP
+.TP
+.B \-ml
+For convenience in processing Markup Languages (HTML, XML, etc.), this
+option (which is new in version 1.4) 
+changes the syntax so that the characters
+.QX < ,
+.QX >
+and
+.QX /
+are taken as literals, using 
+.QX [ ,
+.QX ]
+and
+.QX |
+respectively in their places.
+For example:
+.br
+ \ \ \ \fBgema -ml -p '<i>[T]</i>=<em>$1</em>'\fP \fI...\fP
+.br
+has the same effect as:
+.br
+ \ \ \ \fBgema -p '\\<i\\><T>\\<\\/i\\>=\\<em\\>$1\\<\\/em\\>'\fP \fI...\fP
+.br
+The
+.QX -ml
+option is an abbreviation for
+.QX @set-syntax{</>LLL;[|]</>} .
 .TP
 .BI \-arglen " number"
 Specify the maximum length of a
@@ -651,7 +688,7 @@ the rest of the line is a comment
 Also, as a special case, the first line of a pattern file is ignored if the
 first two characters are
 .QX #! .
-This allows a pattern file to be made directly executable by putting
+This allows a pattern file to be made directly executable on Unix by putting
 something like "\fB#!/usr/local/bin/gema -f\fP" as the first line.
 .LP
 .ne 6
@@ -932,7 +969,7 @@ Write the argument value to the error output stream. No return value.
 Specify exit code to return when the program terminates.  No return value.
 .TP
 .BI @expand-wild{ path }
-Expand wild card pathname on MS-DOS.
+Expand wild card pathname on MS-DOS or Windows.
 .TP
 .B @fail{}
 Signal translation failure; causes failed match of recursive argument.
@@ -1180,13 +1217,12 @@ The
 .B gema
 user manual and the example pattern files provided.
 .LP
-All source files and documentation are available by anonymous FTP from
-directory 
-.QX /pub/gema
-at
-.QX ftp.harlequin.com .
-WWW documentation is at URL: 
-.QX ftp://ftp.harlequin.com/pub/gema/www/top.html .
+The source files and documentation can be downloaded from
+.QX http://sourceforge.net/projects/gema/
+or
+.QX http://www.cbayona.com/pub/Macro%20Languages/Gema/ .
+The documentation can be read at
+.QX http://gema.sourceforge.net/ .
 .LP
 .SH AUTHORS
 .PP

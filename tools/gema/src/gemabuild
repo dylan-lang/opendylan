@@ -1,0 +1,38 @@
+#!/bin/sh
+
+# Unix shell script to build "gema", using the compiler options
+# appropriate for the current system.
+
+# $Id: gemabuild,v 1.1 2003/11/02 00:35:35 gray Exp $
+
+if [ "$1" = "clean" -o "$1" = "-clean" ]
+then
+  echo '+ make -f Makefile clean'
+  make -f Makefile clean
+  shift
+fi
+compiler='cc'
+compflags='-O -DNDEBUG'
+sysname=`uname`
+case "$sysname" in
+  AIX*)   compiler='cc'   ;;
+  OSF1)   compiler='cc'   ;;
+  IRIX*)  compiler='cc'   ;;
+  HP-UX*) compiler='cc'   ;;
+  SunOS*) if [ -x /opt/SUNWspro/bin/cc ];then compiler='/opt/SUNWspro/bin/cc';else compiler='acc';fi ;;
+  Linux*) compiler='gcc' ; compflags='-Wall -O2 -DNDEBUG' ;;
+  Darwin) compiler='cc'  ; compflags='-ansi -Wall -O2 -DNDEBUG' ;;
+  *) echo 'Unrecognized system "'$sysname'"; trying using "gcc".'; compiler=gcc;;
+esac
+uname -a
+date
+set -x
+make -f Makefile "CC=$compiler" "CCFLAGS=$compflags" gema "$@"
+if [ -x gema ]
+then
+  GEMA=`pwd`/gema
+  cd ../test
+  ./gematest $GEMA
+else
+  echo Build failed.
+fi

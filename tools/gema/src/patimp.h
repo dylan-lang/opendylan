@@ -1,7 +1,7 @@
 
 /* pattern implementation internal declarations */
 
-/* $Id: patimp.h,v 1.1 2004/03/12 00:42:09 cgay Exp $ */
+/* $Id: patimp.h,v 1.10 2004/09/18 22:58:58 dngray Exp $ */
 
 /*********************************************************************
   This file is part of "gema", the general-purpose macro translator,
@@ -26,29 +26,29 @@
 #define PT_SKIP_WHITE_SPACE '\6'	/* skip optional white space */
 #define PT_SPECIAL_ARG	'\7'		/* predefined recognition domains */
 	/* note: skip over codes 08..0D for whitspace control */
-#define PT_WORD_DELIM '\x0E'		/* word delimiter */
-#define PT_ID_DELIM '\x0F'		/* identifier delimiter */
-#define PT_AUX '\x10'			/* extended opcode PTX_... */
-#define PT_REGEXP '\x11'		/* argument as regular expression */
-#define PT_MATCH_ONE '\x12'		/* match a single character */
+#define PT_WORD_DELIM ((char)0x0E)	/* word delimiter */
+#define PT_ID_DELIM ((char)0x0F)	/* identifier delimiter */
+#define PT_AUX ((char)0x10)		/* extended opcode PTX_... */
+#define PT_REGEXP ((char)0x11)		/* argument as regular expression */
+#define PT_MATCH_ONE ((char)0x12)	/* match a single character */
 #if 0
-#define PT_ARG_DELIM '\x13'		/* command line argument delimiter */
+#define PT_ARG_DELIM ((char)0x13)	/* command line argument delimiter */
 #endif
 
   /* operations in actions: */
-#define PT_PUT_ARG '\x14'		/* output argument value */
-	/* skip over '\x15' for EBCDIC NewLine */
-#define PT_DOMAIN '\x16'	/* translate argument in another domain */
-#define PT_SEPARATOR '\x17'	/* separates arguments */
-#define PT_OP '\x18'		/* operator prefix, followed by OP_... */
-#define PT_VAR1 '\x19'		/* value of variable with 1 letter name */
-#define PT_MATCHED_TEXT '\x1A'	/* output all the matched text */
-	/* note: skip over '\x1B' for Escape character */
+#define PT_PUT_ARG ((char)0x14)		/* output argument value */
+	/* skip over ((char)0x15) for EBCDIC NewLine */
+#define PT_DOMAIN ((char)0x16)	/* translate argument in another domain */
+#define PT_SEPARATOR ((char)0x17)	/* separates arguments */
+#define PT_OP ((char)0x18)		/* operator prefix, followed by OP_... */
+#define PT_VAR1 ((char)0x19)		/* value of variable with 1 letter name */
+#define PT_MATCHED_TEXT ((char)0x1A)	/* output all the matched text */
+	/* note: skip over ((char)0x1B) for Escape character */
 
-#define PT_ONE_OPT '\x1C'	/* optimized "?" argument */
+#define PT_ONE_OPT ((char)0x1C)	/* optimized "?" argument */
 
   /* special flag used during undefinition: */
-#define PT_UNDEF '\x1F'		/* undefine the pattern */
+#define PT_UNDEF ((char)0x1F)		/* undefine the pattern */
 
   /* extended template opcodes following PT_AUX: */
 #define PTX_INIT '\1'		/* beginning-of-domain processing */
@@ -58,8 +58,8 @@
 #define PTX_ONE_LINE '\5'	/* set line mode for this template */
 #define PTX_NO_CASE '\6'	/* case insensitive mode for this template */
 #define PTX_POSITION '\7'	/* mark ending position of input stream */
-#define PTX_NO_GOAL '\x08'	/* don't use rest as argument terminator */
-#define PTX_JOIN '\x09'		/* concatenate (override token mode) */
+#define PTX_NO_GOAL ((char)0x08)/* don't use rest as argument terminator */
+#define PTX_JOIN ((char)0x09)	/* concatenate (override token mode) */
 
 enum Operators {
  OP_NONE, /* skip 0 */
@@ -190,7 +190,10 @@ struct domain_struct {
   Domain inherits;
 };
 
-#define MAX_DOMAINS 200
+/* Maximum number of domains.  This may be modified as needed. */
+#ifndef MAX_DOMAINS
+#define MAX_DOMAINS 240
+#endif
 
 extern int ndomains;
 

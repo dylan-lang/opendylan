@@ -253,9 +253,10 @@ CHAR *regexp_comp (CHAR *pat, CHAR *dfa, int bufsize)
   tagc = 1,                     /* actual tag count */
   n, c1, c2;
 
-  if (pat==NULL || *pat=='\0')
+  if (pat==NULL || *pat=='\0') {
     if (pattern_compiled) CHECK_RETURN();
     else badpat("No previous regular expression");
+  }
   pattern_compiled = FALSE;
 
   for (p = pat; *p; p++)
@@ -281,7 +282,7 @@ CHAR *regexp_comp (CHAR *pat, CHAR *dfa, int bufsize)
                   p++;
                   c1 = *(p-2) +1; /* 'b' since 'a' already put into bittab */
                   c2 = *p++;    /* 'z' */
-                  /*	    if (c1>c2) badpat("Empty set");	/* tried something like z-a */
+                  /* if (c1>c2) badpat("Empty set"); */	/* tried something like z-a */
                   while (c1<=c2) chset(c1++); /* build bit table */
                 }
 #ifdef EXTEND
@@ -455,7 +456,7 @@ void regexp_fail (CHAR *msg, CHAR op);
 #define CHRSKIP	3		/* CLO CHR chr END ...	   */
 #define SETSKIP (2 +BITBLK)	/* CLO SET 16bytes END ... */
 
-static CHAR *pmatch (CHAR *lp, char *dfa)
+static CHAR *pmatch (CHAR *lp, CHAR *dfa)
 {
   CHAR
     *e,                         /* extra pointer for CLO */
@@ -527,11 +528,12 @@ static CHAR *pmatch (CHAR *lp, char *dfa)
 	dfa += n;
 	while (lp >= are)	/* backup up till match next pattern */
           {
-            if (e = pmatch(lp,dfa)) return e;
+	    e = pmatch(lp,dfa);
+            if ( e ) return e;
             --lp;
           }
 	return NULL;
-      default: regexp_fail((unsigned char*)"regexp_exec: bad dfa.",op);
+      default: regexp_fail((unsigned char*)"regexp_exec: bad dfa.",(CHAR)op);
 	return NULL;
       }
   return lp;
@@ -554,7 +556,7 @@ int regexp_subs (CHAR *src, CHAR *dst)
 
   if (!regexp_bopat[0]) return FALSE;
 
-  while (c = *src++)
+  while ( (c = *src++) )
     {
       switch(c)
         {

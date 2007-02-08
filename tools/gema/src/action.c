@@ -1,7 +1,7 @@
 
 /* execute the action for a matched template */
 
-/* $Id: action.c,v 1.1 2004/03/12 00:42:08 cgay Exp $ */
+/* $Id: action.c,v 1.15 2004/12/29 00:10:15 dngray Exp $ */
 
 /*********************************************************************
   This file is part of "gema", the general-purpose macro translator,
@@ -12,10 +12,27 @@
 
 /*
  * $Log: action.c,v $
- * Revision 1.1  2004/03/12 00:42:08  cgay
- * Initial revision
+ * Revision 1.15  2004/12/29 00:10:15  dngray
+ * Extend range of @radix by using strtoul instead of strtol.
+ * (Suggested by Alex Karahalios.)
  *
- * Revision 1.9  1996/04/21 00:27:23  gray
+ * Revision 1.14  2004/09/18 22:57:05  dngray
+ * Allow MAX_DOMAINS to be larger than 255
+ * (merged changes contributed by Alex Karahalios).
+ *
+ * Revision 1.13  2003/12/01 18:58:16  gray
+ * Fix a flaw in @set-syntax that affects optimized Microsoft compile.
+ *
+ * Revision 1.12  2003/11/02  00:03:56  gray
+ * Add trace printout of domain call.
+ *
+ * Revision 1.11  2001/12/31  01:35:22  gray
+ * Flush stdout before invoking @shell command.
+ *
+ * Revision 1.10  2001/12/15  20:21:06  gray
+ * Clean up compiler warnings.
+ *
+ * Revision 1.9  1996/04/08  05:04:50  gray
  * Fix @wrap to do nothing if the argument is empty, and to not wrap when the
  * current column is less than the margin.
  *
@@ -24,8 +41,7 @@
  * introduce spaces that were not present in the original text.
  *
  * Revision 1.7  1995/07/04  23:36:22  gray
- * Use separate segment on Macintosh --
- * from David A. Mundie <mundie@telerama.lm.com>
+ * Use separate segment on Macintosh -- from David A. Mundie
  *
  * Revision 1.6  1995/06/12 02:58:25 gray
  * Add OP_OUTCOL and OP_GET_SWITCH.
@@ -313,7 +329,11 @@ skip_action( const unsigned char* action) {
 	break;
 
       case PT_DOMAIN:
+#if MAX_DOMAINS < 256
 	as = skip_action( as+1 );
+#else
+        as = skip_action( as+2 );	/* +2 since domains take up 2 bytes */
+#endif
 	break;
       case PT_OP: {
 	int n;
@@ -383,7 +403,13 @@ do_action( const unsigned char* action, CIStream* args, COStream out) {
       case PT_DOMAIN: {
 	CIStream inbuf;
 	Pattern save_rule = current_rule;
+#if MAX_DOMAINS < 256
 	int domain = *as++ - 1;
+#else
+	/* Get domain index as 14 bit little endian number */
+        int domain = ((unsigned char)*as++)&0x7f;
+        domain = ((((unsigned char)*as++)&0x7f)<<7) | domain;
+#endif
         if ( as[0] == PT_VAR1 ||
              ( as[0] == PT_OP &&
 	       ( as[1] == OP_VAR || as[1] == OP_VAR_DFLT ) ) ) {
@@ -396,9 +422,34 @@ do_action( const unsigned char* action, CIStream* args, COStream out) {
 	}
 	else /* optimized operand access */
 	  inbuf = function_operand( &as, args );
+#ifdef TRACE
+	if ( trace_switch ) {
+	  int n;
+	  fprintf( stderr, "%12ld,%2d ",
+		   cis_line(input_stream), cis_column(input_stream));
+	  for ( n = trace_indent ; n > 0 ; n-- )
+	    fputc(' ',stderr);
+	  if ( cis_is_file(inbuf) ) {
+	    const char* inpath = cis_pathname(inbuf);
+	    if ( inpath == NULL )
+	      inpath = "-";
+	    fprintf( stderr, "@%s{@read{%s}}\n",
+		     domains[domain]->name, inpath);
+	  }
+	  else 
+	    fprintf( stderr, "@%s{%.60s}\n",
+		     domains[domain]->name, cis_whole_string(inbuf));
+	  ++trace_indent;
+	}
+#endif
 	if ( !translate( inbuf, domains[domain], out, NULL ) &&
 	     cis_is_file(inbuf) && exit_status < EXS_FAIL )
 	  exit_status = EXS_FAIL;
+#ifdef TRACE
+	if ( trace_switch ) {
+	  --trace_indent;
+	}
+#endif
 	current_rule = save_rule;
 	cis_close(inbuf);
 	break;
@@ -421,9 +472,14 @@ do_action( const unsigned char* action, CIStream* args, COStream out) {
 	break;
 
       case PT_SPECIAL_ARG:
+#if MAX_DOMAINS >= 256 /* advance one more since  2 bytes for domain index */
+      case PT_RECUR:
+#endif
 	as++;
       case PT_REGEXP:
+#if MAX_DOMAINS < 256
       case PT_RECUR:
+#endif
 	as++;
       case PT_MATCH_ANY:
       case PT_MATCH_ONE: {
@@ -704,6 +760,7 @@ do_action( const unsigned char* action, CIStream* args, COStream out) {
 	    case OP_OR:  z = x | y; break;
 	    default: /* can't happen; just to avoid compiler warning */
 	      assert(FALSE);
+	      z = 0;
 	      break;
 	  }
 	  put_number(out,z);
@@ -715,16 +772,16 @@ do_action( const unsigned char* action, CIStream* args, COStream out) {
 
 	case OP_RADIX: {
 	  int from, to;
-	  long value;
+	  unsigned long value;
 	  char* string;
 	  char* end;
 	  const char* fmt;
-	  char buf[20];
+	  char buf[24]; /* enough for 64 bits in octal */
 	  from = (int)numeric_operand( &as, args );
 	  to = (int)numeric_operand( &as, args );
 	  inbuf = function_operand( &as, args );
 	  string = cis_whole_string(inbuf);
-	  value = strtol( string, &end, from );
+	  value = strtoul( string, &end, from );
 	  if ( *end != '\0' )
 	    input_error ( input_stream, EXS_NUM,
 		"Invalid argument for radix %d conversion: \"%.99s\"\n",
@@ -737,7 +794,9 @@ do_action( const unsigned char* action, CIStream* args, COStream out) {
 	    if ( to != 10 )
 	      input_error ( input_stream, EXS_NUM,
 	    		    "Unsupported radix: %d\n", to);
-	    fmt = "%ld";
+	    while ( isspace(string[0]) )
+	      string++;
+	    fmt = (string[0]=='-') ? "%ld" : "%lu";
 	  }
 	  sprintf(buf, fmt, value);
 	  cos_puts(out, buf);
@@ -919,6 +978,7 @@ do_action( const unsigned char* action, CIStream* args, COStream out) {
 	  const char* command;
 	  inbuf = function_operand( &as, args );
 	  command = cis_whole_string(inbuf);
+	  fflush(stdout);
 	  if ( system( command ) < 0 ) {
 	    input_error ( input_stream, EXS_SHELL,
 	  		 "Failed shell command \"%.20s...\":\n", command );
@@ -994,10 +1054,10 @@ do_action( const unsigned char* action, CIStream* args, COStream out) {
 	  charset = cis_whole_string(val);
 	  for ( type = cis_whole_string(inbuf) ; *type != '\0' ; type++ ) {
 	    const char* chars;
+	    char c[2];
 	    if ( type[1] == '\0' )
 	      chars = charset;
 	    else {
-	      char c[2];
 	      c[0] = *charset++;
 	      c[1] = '\0';
 	      chars = c;
@@ -1088,4 +1148,6 @@ do_action( const unsigned char* action, CIStream* args, COStream out) {
 	cos_putch(out, ac);
       } /* end switch ac */
     } /* end for */
+  /* can't ever get here, but return to avoid Gnu compiler warning. */
+  return as;
 }

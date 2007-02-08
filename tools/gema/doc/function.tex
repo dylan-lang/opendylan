@@ -1,4 +1,4 @@
-% $Id: function.tex,v 1.1 2004/03/12 00:42:07 cgay Exp $
+% $Id: function.tex,v 1.5 2003/12/28 02:20:04 dngray Exp $
 
 \section{Built-in Functions}
 There are a large number of built-in functions that can be used in
@@ -463,12 +463,14 @@ For example:
 
 \item[{\tt @expand-wild\ttlb}{\it pathname}{\tt \ttrb}]
 Usually this function just returns its argument followed by a newline.
-When running on MS-DOS and the {\it pathname} is a wild card (i.e. contains
+When running on MS-DOS or Windows
+and the {\it pathname} is a wild card (i.e. contains
 ``\verb/*/'' or ``\verb/?/''), the return value consists of all files
 that match the pattern, with a newline following each one.  If there are
 no matches, a warning is written to the error output and the return value
-is empty.  This wild card expansion is done by an MS-DOS system call, so it
-is consistent with other MS-DOS utilities, but the meaning of ``\verb/*/''
+is empty.  This wild card expansion is done by a system call, so it
+is consistent with other MS-DOS or Windows command-line utilities, but the
+meaning of ``\verb/*/''
 is not completely the same as in {\bf gema} patterns.
 On Unix, wild card arguments are presumed to have already been expanded by
 the shell, so expansion is not done here.
@@ -751,12 +753,12 @@ Substitution.
 Return the result of translating the operand according to the patterns
 specified by the first argument.
 The first argument is processed the same as by \verb/@define/, except
-that the rules are implicitely defined in a temporary domain which is
+that the rules are implicitly defined in a temporary domain which is
 deleted after being used to translate the operand.  An explicit domain
 name (i.e. before a colon) is not allowed.
 For example, ``\verb/@subst{\\Iis\\I\=was;this is it}/'' will return
 ``\verb/this was it/''.
-Usually this sort of substition is more conveniently and efficiently
+Usually this sort of substitution is more conveniently and efficiently
 done by using a domain function (for example, ``\verb/@frob{this is it}/''
 with rule ``\verb/frob:\Iis\I=was/''), but the \verb/@subst/ function
 can be used in cases where the substitution needs to be computed at run

@@ -1,0 +1,18 @@
+
+! this pattern file assumes that the "-ml" option is in effect.
+
+[I] [I]\W[arglist][body]=$1 <font color\=red>$2</font>$3$4
+
+arglist:([matchparen])=$0@end
+arglist:=@fail
+
+body:[S]=$1
+body:\;=\;@end
+body:\{[matchparen]\}=$0@end
+
+matchparen:(#)=(#)
+matchparen:\[#\]=\[#\]
+
+[I]=$1
+[S]=$1
+

@@ -1,7 +1,7 @@
 
 /* variables */
 
-/* $Id: var.c,v 1.1 2004/03/12 00:42:09 cgay Exp $ */
+/* $Id: var.c,v 1.3 1996/04/08 05:24:06 gray Exp $ */
 
 /*********************************************************************
   This file is part of "gema", the general-purpose macro translator,

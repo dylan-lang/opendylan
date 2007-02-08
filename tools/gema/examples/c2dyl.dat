@@ -1,8 +1,7 @@
 
-! Preliminary syntax conversion from C to Dylan.
-! (For C++, load companion file "cpp-dyla.dat" before this one.)
+! Preliminary syntax conversion from C (or C++) to Dylan
 
-! 6/19/95, 7/26/95, 8/16/95, 3/11/96, 4/15/96
+! 6/19/95, 7/26/95, 8/16/95, 3/11/96
 
 ! not handled:
 !  `break'
@@ -237,8 +236,6 @@ else-part:=@end
 statement:\{<body>\}=$1@end
 statement:<ReqSpace>=$1
 statement:<expression>\;=$1\;@end
-statement:\;=@end
-statement:<G>=$1 @err{@file, line @line\: Can\'t parse statement at\: $1\n}
 statement:\}=@fail;\)=@fail
 code:(\W\&#)=( \/\* addr \*\/ #)
 code:(#)=(#)
@@ -283,11 +280,6 @@ statement:break\;=%$0@end
 statement:continue\;=%$0@end
 statement:goto <I>\;=%goto $1%\;@end
 
-statement:printf(<argument-expression-list>)\;=format-out($1)\;@end
-statement:fprintf(<argument-expression-list>)\;=format($1)\;@end
-statement:sprintf(<postfix-expression>,\W<argument-expression-list>)\;=\
-	$1 \:\= format-to-string($2)\;@end
-
 struct <I><space>\{<fields>\}<space>*\;=\
 	@set{sclass;\<$1\>}\
 	define class ${sclass} ( \<object\> )$2\N$3\Nend class ${sclass}\;$4\
@@ -300,6 +292,11 @@ sdefs:<I>=\Ndefine variable @rid{$1} \:\: ${sclass}\;
 sdefs:\*<I>=\Ndefine variable @rid{$1} \:\: \/\* pointer to \*\/ ${sclass}\;
 sdefs:\,=
 
+unary-expression:new <I>()=make(\<$1\>)@end
+unary-expression:new <I>(<argument-expression-list>)=make(\<$1\>, $2)@end
+unary-expression:new <I>=make(\<$1\>)@end
+statement:delete <I>\;=\/\* delete @rid{$1}\; \*\/@end
+
 code:(\W<type>)<I>=as($1, $2)
 
 code:<I>=\I@rid{$1}
@@ -310,7 +307,7 @@ code:\:\:=\/
 
 <expression>:\W<assignment-expression><space><comopt>=@putop{$3\0$1$2}@end
 <expression>:=@fail
-comopt:,\W<assignment-expression><space>=,\0$1$2@end
+comopt:,\W<assignment-expression>=,\0$1@end
 comopt:=@end
 
 <assignment-expression>:\W<unary-expression>\W<assignment-operator>\W<assignment-expression>=\
@@ -363,7 +360,6 @@ parenthesize:'<string>'\Z=$0
 parenthesize:\#<G>\Z=\#$1
 parenthesize:<I>(*)\Z=$1($2)
 parenthesize:<I><s>\[*\]\Z=$0
-parenthesize:<I>.<I>\Z=$0
 parenthesize:*=(*)
 
 
@@ -371,11 +367,10 @@ parenthesize:*=(*)
 <logical-and-expression>:\&\&<inclusive-or-expression>= \& $1
 <logical-and-expression>:=@terminate
 
-<inclusive-or-expression>:<ReqSpace>=$1
 <inclusive-or-expression>:<exclusive-or-expression>\W<optor>=@putop{$2\0$1}@end
 <inclusive-or-expression>:=@fail
 optor:\P\|\|=@end
-optor:\|<inclusive-or-expression>=logior\0$1@end;=@end
+optor:\|\W<inclusive-or-expression>=logior\0$1@end;=@end
 
 <exclusive-or-expression>:<and-expression>\W<optxor>=@putop{$2\0$1}@end
 <exclusive-or-expression>:=@fail
@@ -401,15 +396,13 @@ relop:\<\==\<\=@end;\>\==\>\=@end;\<=\<@end;\>=\>@end;=@fail
 optshift:<shiftop>\W<additive-expression>=$1\0$2@end;=@end
 shiftop:\<\<=lsh@end;\>\>=rsh@end;=@fail
 
-<additive-expression>:<cast-expression><space><optarith>=@putop{$3\0$1$2}@end
-<additive-expression>:=@fail
+<additive-expression>:<cast-expression>\W<optarith>=@putop{$2\0$1}@end;=@fail
 optarith:<arithop>\W<additive-expression>=$1\0$2@end;=@end
 arithop:+\J+=@fail;-\J-=@fail
 arithop:+=+@end;-=-@end;\*=\*@end;\/=\/@end;\%=mod@end;=@fail
 
 <cast-expression>:\S=
 <cast-expression>:(<type>)<cast-expression>= as($1, $2)@end;
-<statement>:(void)=
 <cast-expression>::unary-expression
 
 <unary-expression>:\S=
@@ -427,10 +420,10 @@ arithop:+=+@end;-=-@end;\*=\*@end;\/=\/@end;\%=mod@end;=@fail
 
 <postfix-expression>:<primary-expression>\W<optpost>=@putpost{$2\0$1}@end
 <postfix-expression>:=@fail
-optpost:[<expression>]\W<optpost>=$0@end
+optpost:[<expression>]=$0@end
 optpost:(<argument-expression-list>)=$0@end
-optpost:.<I>\W<optpost>=.@rid{$1}$2@end
-optpost:-\><I>\W<optpost>=.@rid{$1}$2@end
+optpost:.<I>=.@rid{$1}@end
+optpost:-\><I>=.@rid{$1}@end
 optpost:++=++@end;--=+-@end
 optpost:=@end
 putpost:+?\0*= %prog1($2, $2 := $2 $1 1)
@@ -455,4 +448,3 @@ primary-expression:<S>=$1
 <primary-expression>:(<expression>)=($1)@end
 <primary-expression>:=@fail
 optexpo:\C\JE\J<N>=$1@end;=@end
-

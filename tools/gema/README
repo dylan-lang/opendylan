@@ -7,29 +7,39 @@
      examples   sample applications, including LaTeX to HTML conversion.
      test       script and data for verification of build
 
-  This description applies to version 1.2.
+  This description applies to version 1.4.
 
-  The program currently works on Unix, MS-DOS, Windows NT, and
-  Macintosh. It may need some modification for use on other systems,
-  particular in regard to pathname syntax and accessing file attributes;
-  see the places where ``#ifdef unix'', ``#ifdef MSDOS'', and ``#ifdef
-  MACOS'' are used.
+  The program currently works on several varieties of Unix, MS-DOS,
+  Microsoft Windows, and Macintosh (both OS-X and earlier MACOS with
+  MPW). It may need some modification for use on other systems, particular
+  in regard to pathname syntax and accessing file attributes; see the
+  places where ``#ifdef unix'', ``#ifdef MSDOS'', and ``#ifdef MACOS'' are
+  used.
 
-  To build the program, you just need to use an ANSI C compiler to compile
-  all of the ".c" files and link the resulting object files together.  An
-  example "Makefile" for Unix is provided, and a "gema.mak" file from
-  Microsoft Quick C.  Normally you should compile with optimization and
-  with the option "-DNDEBUG" to omit internal debugging checks.  You may
-  also want to use "-DTRACE" to enable the experimental diagnostic trace
-  option.  For MS-DOS, you'll need to specify a stack size somewhere in the
-  range of 4000 to 6000 bytes; I'm currently using 5600. So far, this has
-  been successfully built with the following brands of compilers:
-  Microsoft, Borland, Sun, Gnu, Lucid, and MPW.
+  On most systems, you can build the program by just cd-ing to the "src"
+  directory and then running the command "gemabuild".  This will build and
+  test the program, automatically selecting the appropriate compiler
+  options for any of many common operating systems.  (There are actually
+  two script files, "gemabuild" for Unix and "gemabuild.bat" for Windows.)
 
-  After building the program, you can verify that it works correctly by
-  running the test script in the "test" directory -- "test" for Unix, or
-  "test.bat" for MS-DOS or Windows.  The test passes if no file comparison
-  differences are reported.
+  Further build details if needed:
+
+    To build the program, you just need to use an ANSI C compiler to
+    compile all of the ".c" files and link the resulting object files
+    together.  An example "Makefile" for Unix is provided.  Normally you
+    should compile with optimization and with the option "-DNDEBUG" to omit
+    internal debugging checks.  You may also want to use "-DTRACE" to
+    enable the experimental diagnostic trace option.
+ 
+    For MS-DOS (16-bit mode), there is a "gema.mak" file from Microsoft
+    Quick C.  It builds using the "small memory model".  You'll need to
+    specify a stack size somewhere in the range of 4000 to 6000 bytes; I'm
+    currently using 5600.
+
+    After building the program, you can verify that it works correctly by
+    running the command "gematest" in the "test" directory (script file
+    "gematest" for Unix or "gematest.bat" for Windows.) The test passes if
+    no file comparison differences are reported.
 
   The "examples" directory includes the following non-trivial pattern files
   for document conversion:
@@ -68,7 +78,8 @@
 
 				e-mail:  DGray@acm.org
 
-				850 Roble Ave., Apt. G
-				Menlo Park, CA  94025
+				175 Dalma Drive
+				Mountain View, CA  94041
 
-				August 19, 1995
+				February, 2002
+

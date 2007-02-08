@@ -1,4 +1,4 @@
-/* $Id: version.c,v 1.1 2004/03/12 00:42:10 cgay Exp $ */
+/* $Id: version.c,v 1.24 2004/12/29 00:11:26 dngray Exp $ */
 
 /*      Version identification string
 
@@ -11,9 +11,7 @@
 	can be distinguished from the original version.
  */
 
-const char what_string [] = "@(#)gema 1.3 April 7, 1996";
+const char what_string [] = "@(#)gema 1.3.4 Dec 28, 2004";
 
-
-/* this is just so it will appear in "strings" output: */
-const char author [] = "David N. Gray <DGray@acm.org>";
+const char author [] = "@(#) David N. Gray <DGray@acm.org>";
 

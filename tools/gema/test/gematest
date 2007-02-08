@@ -1,0 +1,21 @@
+
+# test script for gema on Unix
+# $Id: gematest,v 1.1 2003/11/02 00:22:37 gray Exp $
+
+GEMA=${1:-./gema}
+rm -f /tmp/pattest*.out
+$GEMA -version -f testpat.dat testin.dat /tmp/pattest.out
+diff testout.dat /tmp/pattest.out
+$GEMA -f testpat.dat -i -idchars "-_" -out /tmp/pattest2.out test2.dat
+diff test2out.dat /tmp/pattest2.out
+echo '@Cgroups(foo.c,v )' | \
+    $GEMA -f testpat.dat -filechars '.,:/\\-_' -out /tmp/pattest3.out -in -
+diff test3out.dat /tmp/pattest3.out
+$GEMA -t -f testtok.dat testin.dat /tmp/pattest4.out
+diff testout.dat /tmp/pattest4.out
+$GEMA -t -w -match -f testtw.dat -odir /tmp -otyp .out test5in.dat  
+diff test5out.dat /tmp/test5in.out
+
+# test 6 is for new features and bug fixes since version 1.3
+$GEMA -ml -f test6pat.dat  test6in.dat > /tmp/pattest6.out
+diff test6out.dat /tmp/pattest6.out

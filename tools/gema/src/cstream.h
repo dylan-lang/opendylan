@@ -1,6 +1,6 @@
 /* character stream functions */
 
-/* $Id: cstream.h,v 1.1 2004/03/12 00:42:08 cgay Exp $ */
+/* $Id: cstream.h,v 1.4 1996/04/08 05:05:37 gray Exp $ */
 
 /*********************************************************************
   This file is part of "gema", the general-purpose macro translator,

@@ -1,5 +1,5 @@
 
-# $Id: Makefile,v 1.1 2004/03/12 00:42:06 cgay Exp $
+# $Id: Makefile,v 1.6 2003/12/28 02:15:03 dngray Exp $
 
 all: doc.ps gema.ps doc.html gema.html gema.lpr
 
@@ -7,16 +7,16 @@ all: doc.ps gema.ps doc.html gema.html gema.lpr
 
 TEXFILES = doc.tex overview.tex notation.tex function.tex conclude.tex
 
-doc.dvi: ${TEXFILES}
+doc.dvi: $(TEXFILES)
 	latex doc.tex || rm -f doc.dvi
 
 doc.ps: doc.dvi
-	dvi2ps doc.dvi > $@
+	dvi2ps doc.dvi > $@ || dvips doc.dvi -o $@
 
 view: doc.dvi
 	xtex doc.dvi &
 
-doc.html: ${TEXFILES} latex-to-html
+doc.html: $(TEXFILES) latex-to-html
 	./latex-to-html doc.tex $@
 
 latex-to-html:
@@ -36,19 +36,6 @@ gema.ps: gema.1
 
 gema.html: gema.1
 	gema -f ../examples/man-html.dat gema.1 $@
-
-# ------------------------------------------------------------------
-
-#	RTF files for Windows Help
-
-gema.hpj: top.html gema.html doc.html ../examples/htmlrtf.pat
-	gema -f ../examples/htmlrtf.pat -makefile $@ \
-		-helpfile gema.hlp -title gema \
-		top.html gema.html doc.html overview.html notation.html \
-		function.html conclude.html overview-footnotes.html \
-		function-footnotes.html conclude-footnotes.html
-
-rtf: gema.hpj
 
 # ------------------------------------------------------------------
 

@@ -1,7 +1,7 @@
 
 /* pattern matching */
 
-/* $Id: match.c,v 1.1 2004/03/12 00:42:09 cgay Exp $ */
+/* $Id: match.c,v 1.21 2004/09/18 22:57:06 dngray Exp $ */
 
 /*********************************************************************
   This file is part of "gema", the general-purpose macro translator,
@@ -10,21 +10,32 @@
   an acknowledgment of the original source.
  *********************************************************************/
 
-/* $Log: match.c,v $
- * Revision 1.1  2004/03/12 00:42:09  cgay
- * Initial revision
- *
-/* Revision 1.17  1996/04/21 00:34:48  gray
-/* Use new `goal_state' structure to pass additional context information for
-/* goal match; this allows access to previous arguments and the correct local
-/* mode for case sensitivity.  New function `match_to_stream' combines common
-/* code for matching on variables and previous arguments; fixed to respect
-/* case-insensitive option.  Also support case-insensitive comparison for the
-/* terminator of a recognizer or recursive argument.  Don't automatically skip
-/* whitespace at the beginning of a template.  For domain with default rule
-/* ``=@fail'', don't match an empty string if delimiter found immediately.
-/* Minor improvement of trace messages.
 /*
+ * $Log: match.c,v $
+ * Revision 1.21  2004/09/18 22:57:06  dngray
+ * Allow MAX_DOMAINS to be larger than 255
+ * (merged changes contributed by Alex Karahalios).
+ *
+ * Revision 1.20  2003/11/02  00:03:46  gray
+ * Moved some trace-related variable declarations to "pattern.h".
+ *
+ * Revision 1.19  2003/09/06  00:36:03  gray
+ * Don't match empty string at EOF when default rule is ``=@fail''.
+ *
+ * Revision 1.18  2001/12/15  20:22:23  gray
+ * Clean up compiler warnings.
+ *
+ * Revision 1.17  1996/04/08  05:23:04  gray
+ * Use new `goal_state' structure to pass additional context information for
+ * goal match; this allows access to previous arguments and the correct local
+ * mode for case sensitivity.  New function `match_to_stream' combines common
+ * code for matching on variables and previous arguments; fixed to respect
+ * case-insensitive option.  Also support case-insensitive comparison for the
+ * terminator of a recognizer or recursive argument.  Don't automatically skip
+ * whitespace at the beginning of a template.  For domain with default rule
+ * ``=@fail'', don't match an empty string if delimiter found immediately.
+ * Minor improvement of trace messages.
+ *
  * Revision 1.16  1995/09/29  04:09:44  gray
  * Fix `trace' format on MS-DOS.
  *
@@ -183,9 +194,8 @@ boolean trace_switch = FALSE;
 
 #include <stdarg.h>
 #include <limits.h>
-static int trace_indent = 0;
-static struct { int level; long line; int column; int ch; int domain; }
-	trace_enter = {INT_MAX,0,0,0,-1};
+int trace_indent = 0;
+struct trace_enter_struct trace_enter = {INT_MAX,0,0,0,-1};
 static char*
 show_char(int ch) {
   static char buf[6];
@@ -251,7 +261,6 @@ trace( struct mark_struct * mp, trace_kinds kind, const char* format, ... ) {
 #define TRACE_FAILURE(string) if(trace_switch) trace(&marker,FAIL,string)
 
 #else
-#define trace_switch FALSE
 #define TRACE_FAILURE(string)
 #endif
 
@@ -388,7 +397,13 @@ try_pattern( CIStream in, const unsigned char* patstring, CIStream* next_arg,
 	goto success;
       assert( next_arg[0] == NULL );
       outbuf = make_buffer_output_stream();
+#if MAX_DOMAINS < 256
       domain = *++ps - 1;
+#else
+      /* Get domain index as 14 bit little endian number */
+      domain = ((unsigned char)*++ps)&0x7f;
+      domain = ((((unsigned char)*++ps)&0x7f)<<7) | domain;
+#endif
       if ( !marker.marked ) {
 	cis_mark(in,&marker.start);
 	marker.marked = TRUE;
@@ -856,6 +871,20 @@ again:
 static int global_options;
 Pattern current_rule = NULL;
 
+/* does the domain have a default rule "=@fail"? */
+static boolean
+default_fail( Domain domainpt )
+{
+  Pattern tailpat;
+  tailpat = domainpt->patterns.tail;
+  if ( tailpat == NULL ) {
+    return FALSE;
+  }
+  else return ( tailpat->pattern[0] == PT_END && /* empty template */
+		tailpat->action[0] == PT_OP &&
+		tailpat->action[1] == OP_FAIL );
+}
+
 static boolean
 try_match( CIStream in, Pattern pat, COStream out, Goal goal )
 {
@@ -986,6 +1015,7 @@ boolean translate ( CIStream in, Domain domainpt, COStream out,
   if ( goal_info == NULL ) {
     goal = NULL;
     goal_char = ENDOP;
+    alt_goal_char = ENDOP; /* just to avoid warning from Gnu compiler */
   }
   else {
     goal = goal_info->template;
@@ -1026,8 +1056,14 @@ boolean translate ( CIStream in, Domain domainpt, COStream out,
   for ( ; translation_status == Translate_Complete ; ) {
     Domain idp;
     ch = cis_peek(in);
-    if ( ch == EOF )
-      break;  /* done */
+    if ( ch == EOF ) {
+      /* For a domain whose default rule is ``=@fail'',
+	 an argument should not match an empty string just
+	 because the end of file is found before starting. */
+      if( !( beginning && default_fail(domainpt) ) ) {
+	break;  /* done */
+      }
+    }
     else if ( goal_char != ENDOP ) {
       if ( ((unsigned)ch) == goal_char || ((unsigned)ch) == alt_goal_char ||
     	   (goal_char == UPOP(PT_SPACE) && isspace(ch) &&
@@ -1039,19 +1075,15 @@ boolean translate ( CIStream in, Domain domainpt, COStream out,
 	     || /* use general pattern matching */
 	     try_pattern( in, goal, NULL, goal_info->args,
 			  goal_info->options, NULL ) ) {
-	  Pattern tailpat;
 	    /* For a domain whose default rule is ``=@fail'',
 	       an argument should not match an empty string just
 	       because the terminator is found before starting. */
-	  if( !( beginning && NULL != ( tailpat = domainpt->patterns.tail ) &&
-		 tailpat->pattern[0] == PT_END && /* empty template */
-		 tailpat->action[0] == PT_OP &&
-		 tailpat->action[1] == OP_FAIL ) )
+	  if( !( beginning && default_fail(domainpt) ) )
 	    break;
 	}
       }
-      beginning = FALSE;
     }
+    beginning = FALSE;
     for ( idp = domainpt ; idp != NULL ; idp = idp->inherits )
       if ( try_patterns( ch, in, NULL, &idp->patterns, out, goal_info ) ) {
 	/* match found */

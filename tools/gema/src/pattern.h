@@ -1,4 +1,4 @@
-/* $Id: pattern.h,v 1.1 2004/03/12 00:42:09 cgay Exp $ */
+/* $Id: pattern.h,v 1.6 2003/11/02 00:03:37 gray Exp $ */
 
 #ifndef PATTERN_H
 #define PATTERN_H
@@ -48,6 +48,17 @@ void pattern_help( FILE* f ); /* write help info to f */
 void initialize_syntax(void);
 
 boolean set_syntax( int type, const char* char_set );
+
+#ifdef TRACE
+/* Compile with -DTRACE to enable use of the -trace option */
+extern boolean trace_switch;
+extern int trace_indent;
+struct trace_enter_struct
+{ int level; long line; int column; int ch; int domain; };
+extern struct trace_enter_struct trace_enter;
+#else
+#define trace_switch FALSE
+#endif
 
 #if 0
 #define Arg_Delim '\0'

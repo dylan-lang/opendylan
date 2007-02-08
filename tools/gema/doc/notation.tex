@@ -1,14 +1,17 @@
+% $Id: notation.tex,v 1.5 2003/12/28 02:19:35 dngray Exp $
 
 \section{Notation}
 
 In the documentation, quotation marks are often used to visually delimit
 examples that are embedded in the text.  The quotation marks are never part
 of the example.
+Letters in italics are descriptive place-holders, not literal characters.
 
 \subsection{Special characters}
 By default, the following characters have special meaning in patterns.
 Note that all of these can be changed through the use of the
-\verb/@set-syntax/ function.  See also the \verb/-literal/ option.
+\verb/@set-syntax/ function.  See also the \verb/-literal/ and
+\verb/-ml/ options.
 
 \begin{description}
 \item[{\tt *}]
@@ -48,10 +51,14 @@ or a pre-defined recognizer argument.  The name may be empty to denote
 the default domain.
 The name does not have to have been defined before it is referenced.
 This can be used only in a template.
+If the \verb/-ml/ option (new in version 1.4) is in effect, the syntax is
+instead:  \verb/[/{\it name}\verb/]/
 \item[{\tt /}{\it regexp}{\tt /}]
 In a template, this denotes an argument where
 the characters between the slashes are used as a regular expression,
 and the argument value is however much text it matches.
+If the \verb/-ml/ option is in effect, a vertical bar is used instead of a
+slash. 
 Regular expressions have been documented many other places, so will not
 be detailed here.  Suffice it to say that the following characters and
 combinations have special meaning:\newline
@@ -99,8 +106,8 @@ Escape character; see the section on ``escape sequences'' below.
 Control key.  Together with the following character, this represents the
 control character formed by combining the Control key with the character.
 For example, either ``\verb/^J/'' or ``\verb/^j/'' could be used to
-denote the ASCII Line Feed character.  This notation is not meaningful if a
-character set other than ASCII is being used.
+denote the ASCII Line Feed character.  This notation is not meaningful if 
+the character set being used is not based on ASCII.
 \item[Space]
 In a template, a space character matches one or more whitespace
 characters in the input, the same as ``\verb|\S|''.

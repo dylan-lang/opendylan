@@ -1,5 +1,5 @@
 
-/* $Id: util.c,v 1.1 2004/03/12 00:42:09 cgay Exp $ */
+/* $Id: util.c,v 1.3 1995/02/27 23:29:14 gray Exp $ */
 
 #include <stdio.h>
 #include <stdlib.h>

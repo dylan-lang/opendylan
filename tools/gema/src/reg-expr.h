@@ -143,7 +143,7 @@
  *	matches:	foo-foo fo-fo fob-fob foobar-foobar ...
  */
 
-/* $Id: reg-expr.h,v 1.1 2004/03/12 00:42:09 cgay Exp $ */
+/* $Id: reg-expr.h,v 1.2 1993/05/07 06:59:27 hbs Exp $ */
 
 #ifndef REG_EXPR_DOT_H
 #define REG_EXPR_DOT_H

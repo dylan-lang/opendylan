@@ -1,5 +1,6 @@
-REM  "gema" test script for MS-DOS
-REM   $Id: test.bat,v 1.3 1995/08/07 03:24:31 gray Exp $
+@echo off 
+REM  "gema" test script for MS-DOS or Windows
+REM   $Id: gematest.bat,v 1.1 2003/11/02 00:22:47 gray Exp $
 erase test.out
 erase test2.out
 erase test3.out

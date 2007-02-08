@@ -1,4 +1,4 @@
-% $Id: conclude.tex,v 1.1 2004/03/12 00:42:06 cgay Exp $
+% $Id: conclude.tex,v 1.5 2003/12/28 02:20:32 dngray Exp $
 
 \section{Customized command-line processing}
 
@@ -83,21 +83,32 @@ codes to the operating system (unless overridden by the use of function
 \pagebreak[4]
 \section{Status and Future development}
 
-This program is now at the stage where in an ideal world it should be
-regarded as a completed prototype, and it would now be the time to start
+This program was essentially functionally complete by the end of 1995.
+There have been only minor enhancements and bug fixes since then, both
+because it had reached a point where it was sufficient for my own needs and
+because I have had very little time to spend on further development in
+recent years.
+
+I consider this to have been a succesful experiment since this program
+continues to prove very useful for a wide variety of tasks that are not as
+well served by other tools.
+
+In an ideal world, the current program would be
+regarded as a completed prototype, and it would be appropriate to start
 designing the real program to replace it.  However, as usually happens
 in the real world, we ship the prototype because there isn't time to do
 any more.  There is room for improvement in the areas of consistency,
 ease of use, and performance at least.
-Also, this documentation was written rather hurriedly and is not nearly as
-polished as I would like.
+One particular design issue is that the pattern matching should build a
+multi-level decision tree instead of using just a two-level dispatch with
+linear search after that.
 
 Since this was developed by one person as a spare time hobby, it has not
-had very extensive testing, so there are likely to be bugs.  The
-\verb/-w/ and \verb/-t/ options are the most recently added
-functionality, and hence the most likely to have inadequacies.
+had as extensive or systematic testing as could be done, but I continue to
+use it frequently and it has been used by a number of other people over the
+years, with only a small number of bugs being discovered.
 
-I don't know at this time whether I will be spending any more effort on
+I don't know  whether I will be spending any more effort on
 further development, but I am interested in hearing about any bugs found
 or other suggestions.
 
@@ -120,6 +131,9 @@ run-time error messages.
 \item Improved trace mode as an aid for debugging pattern files.
 \item A template operator for specifying an action to be taken after all
 input files have been processed.
+\item A variation of the \verb/@shell/ function that
+returns the output of the command.
+\item Support for Unicode characters.
 \end{itemize}
 
 \section{Acknowledgments}
@@ -139,5 +153,10 @@ deliberate copying.  I did copy the \verb/$0/ notation and adopt the term
 This program was designed and coded by myself, David N. Gray, except for the
 regular expression processor, which utilizes public domain code written
 by Ozan S. Yigit and updated by Craig Durland and Harlan Sexton.
-David A. Mundie\footnote{\tt mundie@telerama.lm.com} supplied modifications
-to enable use on the Macintosh, and offered some helpful comments.
+David A. Mundie\footnote{\tt mundie@anthus.com} supplied modifications
+to enable use on the Macintosh, and offered helpful comments and encouragement.
+
+Thanks to Remo Dentato for the integration with Lua and for setting up a
+SourceForge project\footnote{\tt http://sourceforge.net/projects/gema/}
+and to Cecil Bayona for providing a mirror distribution 
+site\footnote{\tt http://www.cbayona.com/pub/Macro\%20Languages/Gema/}.
