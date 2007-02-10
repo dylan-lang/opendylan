@@ -416,7 +416,7 @@ define function as-rfc822-string (date :: <date>)
 end;
 
 define function as-rfc1123-string (date :: <date>)
- => (rfc822-date :: <string>);
+ => (rfc1123-date :: <string>);
   format-date("%a, %d %b %Y %H:%M:%S %z", date);
 end;
 
