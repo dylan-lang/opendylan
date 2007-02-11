@@ -2,7 +2,7 @@
 
 #include <time.h>
 #include <stdio.h>
-#ifndef FREEBSD 
+#ifndef __FreeBSD__ 
 #include <malloc.h>
 #else
 #include <stdlib.h>
