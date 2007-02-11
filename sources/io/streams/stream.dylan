@@ -24,7 +24,8 @@ define open abstract primary class <basic-stream> (<stream>)
     init-keyword: element-type:;
   slot private-stream-direction-value :: <integer>; //  = $input,
    //   init-keyword: direction:;
-  constant slot private-stream-lock-value :: <lock> = make(<recursive-lock>);
+  slot private-stream-lock-value :: false-or(<lock>) = make(<recursive-lock>),
+    init-keyword: stream-lock:;
 end class <basic-stream>;
 
 define method initialize
@@ -128,15 +129,21 @@ define inline function read-write?
 end function;
 
 define open generic stream-lock
-    (stream :: <basic-stream>) => (lock);
+    (stream :: <basic-stream>) => (lock :: false-or(<lock>));
 
 define sealed generic stream-lock-setter 
-    (value, the-stream :: <basic-stream>) => (result>);
+    (value, the-stream :: <basic-stream>) => (result :: false-or(<lock>));
 
-define method stream-lock (the-stream :: <basic-stream>) => (result>)
+define method stream-lock
+    (the-stream :: <basic-stream>) => (result :: false-or(<lock>))
   the-stream.private-stream-lock-value
 end method stream-lock;
 
+define method stream-lock-setter
+    (value :: false-or(<lock>), the-stream :: <basic-stream>)
+ => (result :: false-or(<lock>))
+  the-stream.private-stream-lock-value := value;
+end;
 
 /// Stream query functions, common to all streams
 
@@ -307,21 +314,25 @@ define open generic stream-locked?
 define method stream-locked?
     (stream :: <stream>) => (locked? :: <boolean>)
   stream-lock(stream)
-    & stream-lock(stream).owned?
+   & stream-lock(stream).owned?
 end method stream-locked?;
 
 define open generic lock-stream
     (stream :: <stream>) => ();
 
 define method lock-stream (stream :: <stream>) => ()
-  wait-for(stream-lock(stream));
+  if (stream-lock(stream))
+    wait-for(stream-lock(stream));
+  end
 end method lock-stream;
 
 define open generic unlock-stream
     (stream :: <stream>) => ();
 
 define method unlock-stream (stream :: <stream>) => ()
-  release(stream-lock(stream))
+  if (stream-lock(stream))
+    release(stream-lock(stream))
+  end
 end method unlock-stream;
 
 define macro with-stream-locked

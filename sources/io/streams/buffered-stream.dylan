@@ -173,7 +173,6 @@ end macro with-input-buffer;
 define inline function get-output-buffer
     (stream :: <buffered-stream>, #key bytes = 1)
  => (buffer :: false-or(<buffer>))
-  with-stream-locked(stream)
   let sb = stream-output-buffer(stream);
   if (sb)
     let sb :: <buffer> = sb; // HACK: TYPE ONLY
@@ -184,7 +183,6 @@ define inline function get-output-buffer
     end
   else
     do-get-output-buffer(stream, bytes: bytes)
-  end
   end
 end function get-output-buffer;
 
