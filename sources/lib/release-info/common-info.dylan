@@ -12,7 +12,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define constant $release-full-copyright =
 "Original Code is Copyright 1995-2004 Functional Objects, Inc.\n"
 "All rights reserved.\n"
-"Portions Copyright 2004-2006 Dylan Hackers.\n"
+"Portions Copyright 2004-2007 Dylan Hackers.\n"
 "\n"
 "The software programs and libraries that make up Open Dylan\n"
 "are subject to the Functional Objects Library Public License Version\n"
@@ -41,7 +41,7 @@ define constant $release-support-address
   = "bugs@opendylan.org";
 
 define constant $release-web-address
-  = "http://www.opendylan.org/index.phtml";
+  = "http://www.opendylan.org/";
 
 define constant $bug-report-template-filename = "bug-report.txt";
 define constant $license-agreement-filename   = "License.txt";
@@ -51,13 +51,13 @@ define constant $license-agreement-filename   = "License.txt";
 define constant $release-product-name     = "Open Dylan";
 define constant $release-edition          = "Hacker Edition";
 define constant $release-edition-type     = #"internal";
-define constant $release-version          = "Version 1.0 [Beta 2]";
+define constant $release-version          = "Version 1.0 [Beta 3]";
 define constant $release-version-type     = #"1.0";
 define constant $release-beta?            = #t;
 
 define constant $release-copyright
   = "Copyright (c) 1997-2004, Functional Objects, Inc.\n"
-    "Portions Copyright (c) 2004-2006, Dylan Hackers\n"
+    "Portions Copyright (c) 2004-2007, Dylan Hackers\n"
     "All rights reserved.";
 
 

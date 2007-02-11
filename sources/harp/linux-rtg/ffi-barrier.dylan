@@ -14,10 +14,6 @@ define c-fun runtime-external tlv-destroy-key   = "tlv_destroy_key";
 define c-fun runtime-external tlv-get-value     = "tlv_get_value";
 define c-fun runtime-external tlv-set-value     = "tlv_set_value";
 
-define c-fun runtime-external check-runtime-expiration 
-  = "check_runtime_library_expiration_date";
-
-
 define sideways method op--create-TEB-tlv-index 
     (be :: <native-unix-back-end>) => ()
   with-harp (be)
@@ -86,10 +82,6 @@ define shared init no-public unix-API-runtime-primitive dylan-shared-object-entr
     op--initialize-master-thread(be);
   end when-base;
   ins--call-alien(be, primitive-dylan-initialize-ref, 0);
-
-  when-base
-    op--call-c(be, check-runtime-expiration);
-  end when-base;
 
   ins--move(be, c-result, 0);
   ins--rts-and-drop(be, 0);
