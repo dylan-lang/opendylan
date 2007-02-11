@@ -544,7 +544,10 @@ define method open-output-stream
        file-name :: <byte-string>, extension :: <byte-string>) 
       => (s :: <stream>)
   let full-name = concatenate(file-name, ".", extension);
-  make(<file-stream>, locator: as(<file-locator>, full-name), direction: #"output");
+  make(<file-stream>,
+       locator: as(<file-locator>, full-name),
+       direction: #"output",
+       stream-lock: #f);
 end method;
 
 define method open-output-stream
@@ -554,7 +557,10 @@ define method open-output-stream
   let extension = file-extension-for-outputter-type(back-end, type);
   let stream-type = stream-type-for-outputter-type(back-end, type);
   let full-name = concatenate(file-name, ".", extension);
-  make(stream-type, locator: as(<file-locator>, full-name), direction: #"output");
+  make(stream-type,
+       locator: as(<file-locator>, full-name),
+       direction: #"output",
+       stream-lock: #f);
 end method;
 
 define method open-output-stream

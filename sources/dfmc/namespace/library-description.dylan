@@ -970,7 +970,7 @@ define function call-with-build-area-output (fn :: <function>,
 					     #key base, name, type)
   let locator = apply(build-area-output-locator, ld, keys);
   if (locator)
-    with-open-file (stream = locator, direction: #"output")
+    with-open-file (stream = locator, direction: #"output", stream-lock: #f)
       fn(stream)
     end;
   else
@@ -1029,7 +1029,7 @@ define function call-with-profile-area-output (fn :: <function>,
 					       #key base, name, type)
   let locator = apply(profile-area-output-locator, ld, keys);
   if (locator)
-    with-open-file (stream = locator, direction: #"output")
+    with-open-file (stream = locator, direction: #"output", stream-lock: #f)
       fn(stream)
     end;
   else
@@ -1106,7 +1106,7 @@ define function read-build-srv-file (ld :: <library-description>)
     let srv-location = merge-locators(as(<file-locator>, "_SRV"),
 				      as(<directory-locator>, location));
     if (file-exists?(srv-location))
-      with-open-file (stream = srv-location)
+      with-open-file (stream = srv-location, stream-lock: #f)
 	let os = as(<symbol>, read-line(stream));
 	let processor = as(<symbol>, read-line(stream));
 	let version = read-int-line(stream);
