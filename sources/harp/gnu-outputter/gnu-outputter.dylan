@@ -187,7 +187,11 @@ define sideways method output-compiled-lambda
   write-element(stream, byte-for-newline);
 
   do-export(export?, outputter, name);
-  
+ 
+  write(stream, "\t.size "); write(stream, name); write(stream, ", ");
+  write(stream, integer-to-string(total-len)); 
+  write-element(stream, byte-for-newline);
+
   write(stream, name); write(stream, ":\n");
 
   let code-index = 0;
