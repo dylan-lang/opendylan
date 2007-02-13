@@ -38,6 +38,8 @@ define class <interactive-library-description> (<library-description>)
   inherited slot compiled-to-definitions? = #t;
   constant slot interactive-library-target,
     required-init-keyword: target:;
+  constant slot interactive-library-compiler-back-end-name :: <symbol>,
+    required-init-keyword: back-end:;
   constant slot interactive-library-os-name :: <symbol>,
     required-init-keyword: os:;
   constant slot interactive-library-processor-name :: <symbol>,
@@ -67,6 +69,11 @@ end;
 define method library-description-change-count
     (ild :: <interactive-library-description>) => (count :: singleton(0))
   0
+end method;
+
+define method library-description-compiler-back-end-name
+    (ild :: <interactive-library-description>) => (name :: <symbol>)
+  ild.interactive-library-compiler-back-end-name
 end method;
 
 define method library-description-os-name
@@ -696,6 +703,7 @@ define method make-interactive-context (ld :: <project-library-description>,
 		 used-libraries: used-libraries-for-target(ld, target),
 		 target: target,
 		 // TODO: these should come from the target, or at least match it
+		 back-end: ld.library-description-compiler-back-end-name, 
 		 os: ld.library-description-os-name,
 		 processor: ld.library-description-processor-name,
 		 major-version: ld.library-description-major-version,

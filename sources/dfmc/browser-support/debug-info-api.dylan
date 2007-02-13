@@ -12,9 +12,11 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define function context-back-end 
     (context :: dfmc-<library-description>)
-    => (back-end :: dfmc-<back-end>)
-  ignore(context);
-  dfmc-current-back-end();  // Is this safe ???
+    => (back-end)
+  let name = dfmc-library-description-compiler-back-end-name(context);
+  let os = dfmc-library-description-os-name(context);
+  let arch = dfmc-library-description-processor-name(context);
+  find-back-end-object(name, arch, os)
 end function;
 
 
@@ -377,4 +379,5 @@ define function compilation-context-runtime-component-name
   => (component-name :: <byte-string>)
   context.compilation-context-dylan-component-name;
 end function;
+
 

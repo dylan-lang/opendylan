@@ -17,6 +17,7 @@ define library dfmc-browser-support
   use dfmc-management;
   use dfmc-namespace;
   use dfmc-back-end;
+  use dfmc-back-end-protocol;
 
   use dfmc-linker;
   use dfmc-c-ffi;
@@ -45,6 +46,7 @@ define module browser-used-modules
   use dfmc-management, export: all;
   use dfmc-linker, export: all;
   use dfmc-back-end, export: all;
+  use dfmc-back-end-protocol, export: all;
 end module;
 
 define macro interface-module-definer
@@ -334,6 +336,7 @@ define module dfmc-browser-support
   use dfmc-derived-information;
   use dfmc-interactive-execution;
   use dfmc-browser-back-end;
+  use dfmc-back-end-protocol;
   // Use prefix to avoid conflicts with interface names.
   use browser-used-modules, prefix: "dfmc-";
 end module;

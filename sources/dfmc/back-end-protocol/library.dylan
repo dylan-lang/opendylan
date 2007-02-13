@@ -30,6 +30,8 @@ define module dfmc-back-end-protocol
     raw-mangle,
 
     register-back-end,
-    find-back-end;
+    find-back-end,
+    find-back-end-object;
 end module;
+
 

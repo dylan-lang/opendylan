@@ -55,10 +55,11 @@ define function find-back-end (type :: <symbol>,
          end, $back-end-registry)
 end;
 
-define sideways method current-back-end () => (back-end)
-  let name = current-back-end-name();
+define function find-back-end-object (name :: <symbol>,
+                                      architecture :: <symbol>,
+                                      os :: <symbol>) => (back-end)
   if (name ~== *cached-back-end-name*)
-    let entries = find-back-end(name, current-processor-name(), current-os-name());
+    let entries = find-back-end(name, architecture, os);
     if (~ empty?(entries))
       *cached-back-end* := make(back-end-class(first(entries)));
       *cached-back-end-name* := name;
@@ -67,4 +68,13 @@ define sideways method current-back-end () => (back-end)
     end;
   end;
   *cached-back-end*
+end;
+
+define sideways method current-back-end () => (back-end)
+  if (current-library-description())
+    let name = current-back-end-name();
+    let arch = current-processor-name();
+    let os = current-os-name();
+    find-back-end-object(name, arch, os)
+  end;
 end;
