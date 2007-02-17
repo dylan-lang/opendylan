@@ -154,7 +154,7 @@ end module cpp;
 
 define module cpp-internal
   use functional-dylan, exclude: {<union>};
-  use table-extensions;
+  use table-extensions, exclude: { table };
   use streams, export: {read-element, unread-element};			
   use standard-io; 
   use locators;

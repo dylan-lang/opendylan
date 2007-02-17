@@ -340,7 +340,7 @@ define module deuce-internals
 	      element-range-error };
   use simple-format;
   use threads;
-  use table-extensions;
+  use table-extensions, exclude: { table };
   use plists;
 
   use byte-vector;

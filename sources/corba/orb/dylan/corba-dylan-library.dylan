@@ -33,7 +33,7 @@ define module corba-dylan
              keyboard-interrupt?,
              keyboard-interrupt-polling?-setter,
              <keyboard-interrupt>};
-  use table-extensions, export: all;
+  use table-extensions, exclude: { table }, export: all;
   use threads, export: all;
   use format, export: all;
   use streams, export: all;

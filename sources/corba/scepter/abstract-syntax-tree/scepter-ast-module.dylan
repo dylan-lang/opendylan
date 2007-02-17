@@ -10,7 +10,7 @@ define module scepter-ast
   use generic-arithmetic-functional-dylan, exclude: { union };
   use streams;
   use format;
-  use table-extensions;
+  use table-extensions, exclude: { table };
   use scepter-driver;
   use scepter-front-end;
   use scepter-error;
