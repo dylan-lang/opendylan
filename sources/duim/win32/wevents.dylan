@@ -348,15 +348,20 @@ define method handle-message
               let (width, min-width, max-width, height, min-height, max-height)
                 = space-requirement-components(sheet, space-req);
               ignore(width, height);
-              let (display-width, display-height) = display-size(display(sheet));
               when (min-width  >= $fill) min-width  := 1 end;
               when (min-height >= $fill) min-height := 1 end;
+/* Workaround: since we don't support multiple displays, limiting
+   the size of windows to the size of the primary display is annoying.
+   Windows can't be made bigger than the primary display on the secondary
+   display, which might be larger.   --andreas 20070223
+              let (display-width, display-height) = display-size(display(sheet));
               when (max-width  >= $fill) max-width  := display-width  end;
               when (max-height >= $fill) max-height := display-height end;
               min!(min-width,  display-width);
               min!(min-height, display-height);
               min!(max-width,  display-width);
               min!(max-height, display-height);
+*/
               // Don't set the x and y position, since Windows should have
               // passed in reasonable values for those
               max-size.x-value := max-width;
