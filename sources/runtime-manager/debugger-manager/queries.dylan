@@ -381,9 +381,11 @@ define method remote-table-inspect
   // dylan library that indicates an unused key in the table. We need to
   // know this value.
 
+  let dylan-lib = application.application-dylan-library;
   let empty-entry = resolve-dylan-name(application,
                                        "$table-entry-empty",
-                                       $dylan-internal);
+                                       $dylan-internal,
+                                       library: dylan-lib);
 
   // Make sure that last-index, if it was not supplied, has a meaningful
   // numeric value of some kind.
