@@ -20,7 +20,7 @@
 ;;; Application defines
 ;;;
 !define APPNAME "Open Dylan"
-!define APPVERSION "1.0 Beta 2"
+!define APPVERSION "1.0 Beta 3"
 !define APPNAMEANDVERSION "${APPNAME} ${APPVERSION}"
 
 ;;;-------------------------------------
@@ -123,11 +123,6 @@ Section "${APPNAME} Core" SecOpendylanCore
 
   WriteRegStr HKEY_LOCAL_MACHINE "${REGISTRY_KEY}\License" "User" \
               "Open Dylan Hacker"
-  WriteRegStr HKEY_LOCAL_MACHINE "${REGISTRY_KEY}\License" "Expiration" "0000"
-  WriteRegStr HKEY_LOCAL_MACHINE "${REGISTRY_KEY}\License" "Serial" \
-              "FDTNG-0200"
-  WriteRegStr HKEY_LOCAL_MACHINE "${REGISTRY_KEY}\License" "Data" \
-              "74c1e46d0134432c7e8f17e2c38897c367f082a6"
 
   ;; Read the build script selection
   !insertmacro MUI_INSTALLOPTIONS_READ $0 "choose-build-script.ini" \
