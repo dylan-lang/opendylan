@@ -58,9 +58,6 @@ define sideways method op--free-teb-tlv
 end method;
 
 
-define c-fun runtime-external check-runtime-expiration   = "check_runtime_library_expiration_date";
-
-
 define sideways method op--get-module-handle(be :: <pentium-windows-back-end>) => ()
   with-harp (be)
     c-result c-result;
@@ -120,10 +117,6 @@ define shared init win32-API-runtime-primitive dylan-dll-entry ("DylanDllEntry",
     op--initialize-master-thread(be);
   end when-base;
   ins--call-alien(be, primitive-dylan-initialize-ref, 0);
-  when-base
-    op--call-c(be, check-runtime-expiration);
-  end when-base;
-  ins--bra(be, done);
 
   ins--tag(be, tag-t-attach);
   when-base

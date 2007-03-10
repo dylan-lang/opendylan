@@ -5,8 +5,6 @@ TARGETOS = BOTH
 
 OPTIMIZEDDEBUG = 1
 
-EXPIRATION = -1
-
 !if defined(BuildArea)
 INCLUDEDEST      = $(BuildArea)\include
 LIBDEST          = $(BuildArea)\lib
@@ -42,9 +40,9 @@ MPSKIT	 = C:\fundev\mps-kit\code
 
 CC	 = $(cc)
 LINKLIB	 = $(implib) /nologo /out:
-CFLAGS	 = $(cflags) $(cvarsmt) $(cdebug) /I$(INCLUDEDEST) /I. /I.. /I$(MPSKIT) $(OPEN_DYLAN_C_FLAGS) $(mmtuneflags) /DEXPIRATION=$(EXPIRATION)
+CFLAGS	 = $(cflags) $(cvarsmt) $(cdebug) /I$(INCLUDEDEST) /I. /I.. /I$(MPSKIT) $(OPEN_DYLAN_C_FLAGS) $(mmtuneflags)
 HEAPOBJS = heap-display.obj heap-utils.obj heap-trail.obj heap-order1.obj heap-order2.obj heap-table.obj
-OBJS	 = collector.obj $(HEAPOBJS) runtime.obj win32-threads-primitives.obj spy-interfaces.obj expiration.obj
+OBJS	 = collector.obj $(HEAPOBJS) runtime.obj win32-threads-primitives.obj spy-interfaces.obj
 LIBFILE	 = pentium-run-time.lib
 USEROBJ	 = dylan-support.obj
 USERLIB	 = dylan-support.lib
@@ -224,7 +222,7 @@ install: ensure-dirs install-stripped install-build
 # Only delete the products that should be built by this makefile.
 # (The files runtime.obj & dylan-support.obj are checked out from HOPE)
 clean:
-	pushd . & (del /f /q *collector.obj $(HEAPOBJS) win32-threads-primitives.obj spy-interfaces.obj expiration.obj) & popd
+	pushd . & (del /f /q *collector.obj $(HEAPOBJS) win32-threads-primitives.obj spy-interfaces.obj) & popd
         pushd . & (del /f /q *pentium-run-time.lib $(USERLIB)) & popd
         pushd . & (del /f /q $(MINCRT) rtsyms.obj) & popd
         pushd . & (del /f /q $(DYLANPLINTH) $(PLINTHOBJS)) & popd
