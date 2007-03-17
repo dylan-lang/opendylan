@@ -86,6 +86,7 @@ define module date
     <day-of-week>,
     date-day-of-week,
     format-date,
+    parse-date,
     as-iso8601-string,
     as-rfc822-string,
     as-rfc1123-string,

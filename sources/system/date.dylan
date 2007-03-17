@@ -358,17 +358,17 @@ define method format-date (format :: <string>, date :: <date>)
        day-of-week, time-zone-offset) = decode-date(date);
   let absolute-time-zone-offset :: <integer> = abs(time-zone-offset);
   local method wrap (wrap :: <string>, i :: <integer>) => (string :: <string>)
-    if (i < 10) concatenate(wrap, integer-to-string(i));
-      else integer-to-string(i) end;
-  end;
-  local method format-integer (integer :: <integer>, length :: <integer>) => (string :: <string>)
-    let string = make(<byte-string>, size: length, fill: '0');
-    for (position from 0 below length)
-      string[length - position - 1] := $digits[modulo(integer, 10)];
-      integer := floor/(integer, 10);
+      if (i < 10) concatenate(wrap, integer-to-string(i));
+        else integer-to-string(i) end;
     end;
-    string
-  end;
+  local method format-integer (integer :: <integer>, length :: <integer>) => (string :: <string>)
+      let string = make(<byte-string>, size: length, fill: '0');
+      for (position from 0 below length)
+        string[length - position - 1] := $digits[modulo(integer, 10)];
+        integer := floor/(integer, 10);
+      end;
+      string
+    end;
   let date-string :: <string> = "";
   let format? :: <boolean> = #f;
   let use-dots? :: <boolean> = #f;
@@ -382,7 +382,7 @@ define method format-date (format :: <string>, date :: <date>)
         'Y' => integer-to-string(year);
         'y' => format-integer(year, 2);
         'H' => wrap("0", hours);
-        'k' => integer-to-string(hours);
+        'k' => wrap(" ", hours);
         'M' => wrap("0", minutes);
         'S' => wrap("0", seconds);
         'm' => wrap("0", month);
@@ -434,8 +434,73 @@ define function as-iso8601-string (date :: <date>, #key precision :: <integer> =
   format-date("%Y-%m-%dT%H:%M:%S%:z", date);
 end;
 
+define variable *default-date-formats* :: <sequence> = #();
+
+define method parse-date (date :: <string>, format :: <string>)
+ => (date :: false-or(<date>));
+
+  let date-stream = make(<string-stream>, contents: date);
+  let date = make(<date>, year: 1970, month: 1, day: 1);
+  let format? :: <boolean> = #f;
+  let use-dots? :: <boolean> = #f;
+
+  local method parse-month (month-names :: <sequence>)
+      let start = stream-position(date-stream);
+      date.date-month := block (return)
+          for (month-name in month-names)
+            if (month-name = read(date-stream, size(month-name)))
+              return(find-key(month-names, curry(\=, month-name)) + 1);
+            else
+              date-stream.stream-position := start;
+            end if;
+          end for;
+        end block;
+    end; 
+
+  for (char in format)
+    if (char = '%' & ~ format?)
+      format? := #t;
+    elseif (char = ':' & format?)
+      use-dots? := #t;
+    elseif (format?)
+      select (char)
+        'Y' => date.date-year := string-to-integer(read(date-stream, 4));
+        'y' => date.date-year := begin 
+                  let year = string-to-integer(read(date-stream, 2));
+                  if (year < 70) 1900 else 2000 end if + year;
+                end;
+        'H', 'k' => date.date-hours := string-to-integer(read(date-stream, 2));
+        'M' => date.date-minutes := string-to-integer(read(date-stream, 2));
+        'S' => date.date-seconds := string-to-integer(read(date-stream, 2));
+        'm' => date.date-month := string-to-integer(read(date-stream, 2));
+        'd', 'e' => date.date-day := string-to-integer(read(date-stream, 2));
+        'B' => parse-month(*month-names*);
+        'b' => parse-month(*short-month-names*);
+        'z' => date.date-time-zone-offset := begin
+                let sign = read(date-stream, 1);
+                let hours =  read(date-stream, 2);
+                if (use-dots?)
+                  read(date-stream, 1);
+                end if;
+                let minutes = read(date-stream, 2);
+                string-to-integer(concatenate(sign, "1")) *
+                  string-to-integer(hours) * 60 + string-to-integer(minutes);
+              end;
+        'n', '%' => read(date-stream, 1);
+        otherwise => #f;
+      end select;
+      format? := #f;
+      use-dots? := #f;
+    else
+      read(date-stream, 1);
+    end if;
+  end for;
+  date;
+end;
+
 ///---*** Doesn't yet parse all legitimate forms of ISO 8601 strings.
 ///---*** For now, just parse a small superset of the strings produced above ...
+// parse-date(foo, "%Y-%m-%dT%H:%M:%S%:z") , "%Y-%m-%dT%H:%M:%S%z", ...
 define function parse-iso8601-string (string :: <string>)
  => (year :: <integer>, month :: <integer>, day :: <integer>,
      hours :: <integer>, minutes :: <integer>, seconds :: <integer>,
