@@ -25,7 +25,7 @@ define library dfmc-projects
   use dfmc-browser-support;
   use dfmc-macro-expander;
 
-  use project-protocols;
+  use projects-protocol;
 
   export dfmc-projects;
 end library dfmc-projects;

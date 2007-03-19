@@ -1,4 +1,4 @@
-Library:   projects-protocols
+Library:   projects-protocol
 Synopsis:  Project manager protocol library
 Author:    Andy Armstrong
 Files:  library
