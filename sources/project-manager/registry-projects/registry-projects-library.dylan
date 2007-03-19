@@ -43,6 +43,7 @@ define module registry-projects-internal
   use lid-projects;
   export
     <registry-project>,
+    registry-location,
     <registry-entry-not-found-error>,
     find-registries,
     compute-library-location;
