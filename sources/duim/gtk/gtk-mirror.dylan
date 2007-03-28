@@ -320,7 +320,7 @@ end method install-event-handlers;
 define method install-event-handlers
     (sheet :: <mirrored-sheet-mixin>, mirror :: <drawing-area-mirror>) => ()
   next-method();
-  install-named-handlers(mirror, #[#"expose_event", #"button_press_event", #"button_release_event"])
+  install-named-handlers(mirror, #[#"expose_event", #"button_press_event", #"button_release_event", #"motion_notify_event"])
 end method install-event-handlers;
 
 define sealed method handle-gtk-expose-event

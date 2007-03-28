@@ -23,8 +23,8 @@ define function register-signal-handler
      #key key = as(<symbol>, name)) => ()
   $signal-handlers[key]
     := make(<signal-handler>,
-	    name:     as(<C-string>, name),
-	    function: function)
+      name:     as(<C-string>, name),
+      function: function)
 end function register-signal-handler;
 
 define function fetch-signal-handler
@@ -60,20 +60,20 @@ define macro event-handler-definer
         ?eq "handle_" ## ?name;
       register-signal-handler(as-lowercase(?"name"), "_gtk-" ## ?name ## "-callback");
       define open generic ?handler
-	  (sheet :: <abstract-sheet>, widget :: <GtkWidget*>, 
-	   event :: ?event-type)
+    (sheet :: <abstract-sheet>, widget :: <GtkWidget*>, 
+     event :: ?event-type)
        => (handled? :: <boolean>);
       define function "handle_" ## ?name
-	  (widget :: <GtkWidget*>, event :: ?event-type)
+    (widget :: <GtkWidget*>, event :: ?event-type)
        => (code :: <integer>)
-	do-handle-gtk-signal
-	  (?handler, widget, ?"name", widget, event)
+  do-handle-gtk-signal
+    (?handler, widget, ?"name", widget, event)
       end }
 end macro event-handler-definer;
 
 define event-handler (destroy,              <GdkEventAny*>)       = handle-gtk-destroy-event;
 define event-handler (delete_event,         <GdkEventAny*>)       = handle-gtk-delete-event;
-define event-handler (motion_event,         <GdkEventMotion*>)    = handle-gtk-motion-event;
+define event-handler (motion_notify_event,  <GdkEventMotion*>)    = handle-gtk-motion-event;
 define event-handler (button_press_event,   <GdkEventButton*>)    = handle-gtk-button-press-event;
 define event-handler (button_release_event, <GdkEventButton*>)    = handle-gtk-button-release-event;
 define event-handler (key_press_event,      <GdkEventKey*>)       = handle-gtk-key-press-event;
@@ -88,7 +88,7 @@ define event-handler (select_row,           <GdkEventAny*>)       = handle-gtk-s
 define event-handler (click_column,         <GdkEventAny*>)       = handle-gtk-click-column-event;
 define event-handler (resize_column,        <GdkEventAny*>)       = handle-gtk-resize-column-event;
 
-	
+  
 define inline function do-handle-gtk-signal
     (handler_ :: <function>, widget :: <GtkWidget*>, name :: <string>,
      #rest args)
@@ -114,8 +114,8 @@ define macro signal-handler-definer
   { define signal-handler ?:name (?args:*) ?eq:token ?handler:name }
     => { signal-handler-aux ?"name",
          ?handler (?args),
-	"%gtk-" ## ?name ## "-signal-handler" (?args),
-	"_gtk-" ## ?name ## "-signal-handler" (?args)
+  "%gtk-" ## ?name ## "-signal-handler" (?args),
+  "_gtk-" ## ?name ## "-signal-handler" (?args)
        end }
 end macro;
 define macro signal-handler-aux
@@ -125,8 +125,8 @@ define macro signal-handler-aux
       ?_handler:name (?c-params)
     end }
     => { define function ?%handler (widget :: <GtkWidget*>, ?params)
-	   do-handle-gtk-signal(?handler, widget, ?signal, ?args)
-	 end;
+    do-handle-gtk-signal(?handler, widget, ?signal, ?args)
+   end;
          define C-callable-wrapper ?_handler of ?%handler
             parameter widget :: <GtkWidget*>;
            ?c-params
@@ -151,7 +151,7 @@ define signal-handler activate (user-data :: <gpointer>)
 define function %gtk-adjustment-value-changed-signal-handler
     (adj :: <GtkAdjustment*>, widget :: <GtkWidget*>)
   do-handle-gtk-signal(gtk-adjustment-value-changed-signal-handler,
-		       widget, "adjustment/value_changed", adj)
+           widget, "adjustment/value_changed", adj)
 end;
 define C-callable-wrapper _gtk-adjustment-value-changed-signal-handler
   of %gtk-adjustment-value-changed-signal-handler
@@ -159,45 +159,43 @@ define C-callable-wrapper _gtk-adjustment-value-changed-signal-handler
   parameter user-data :: <GtkWidget*>;
 end;
 register-signal-handler("value_changed",
-			_gtk-adjustment-value-changed-signal-handler,
-			key: #"adjustment/value_changed");
+      _gtk-adjustment-value-changed-signal-handler,
+      key: #"adjustment/value_changed");
 
 define function install-named-handlers
     (mirror :: <gtk-mirror>, handlers :: <sequence>, #key adjustment) => ()
   let widget = mirror-widget(mirror);
   let object = GTK-OBJECT(widget);
   duim-debug-message("Installing handlers for %=: %=",
-		mirror-sheet(mirror), handlers);
+      mirror-sheet(mirror), handlers);
   for (key :: <symbol> in handlers)
     let handler_ = fetch-signal-handler(key);
     if (handler_)
       let name     = as(<byte-string>, handler_.handler-name);
       let function = handler_.handler-function;
       let value = if (adjustment)
-		    g-signal-connect(adjustment, name, function, widget);
-		  else
-		   //--- Should we pass an object to help map back to a mirror?
-		    g-signal-connect(object, name, function, $null-gpointer);
-		  end;
+        g-signal-connect(adjustment, name, function, widget);
+      else
+        //--- Should we pass an object to help map back to a mirror?
+        g-signal-connect(object, name, function, $null-gpointer);
+      end;
       if (zero?(value))
-	duim-debug-message("Unable to connect signal '%s'", name)
+  duim-debug-message("Unable to connect signal '%s'", name)
       end
     end
   end;
   gtk-widget-add-events(widget,
-			logior($GDK-EXPOSURE-MASK,
-			       $GDK-LEAVE-NOTIFY-MASK,
-			       if (member?(#"motion_event", handlers))
-				 logior($GDK-POINTER-MOTION-MASK,
-					$GDK-POINTER-MOTION-HINT-MASK)
-			       else
-				 0
-			       end,
-			       if (member?(#"button_press_event", handlers))
-				 logior($GDK-BUTTON-PRESS-MASK, $GDK-BUTTON-RELEASE-MASK)
-			       else
-				 0
-			       end));
+      logior($GDK-EXPOSURE-MASK, $GDK-LEAVE-NOTIFY-MASK,
+             if (member?(#"motion_notify_event", handlers))
+              logior($GDK-POINTER-MOTION-MASK, $GDK-POINTER-MOTION-HINT-MASK)
+             else
+              0
+             end,
+             if (member?(#"button_press_event", handlers))
+              logior($GDK-BUTTON-PRESS-MASK, $GDK-BUTTON-RELEASE-MASK)
+             else
+              0
+            end));
 end function install-named-handlers;
 
 
@@ -239,19 +237,33 @@ define method handle-gtk-motion-event
   let sheet = mirror-sheet(mirror);
   let _port = port(sheet);
   when (_port)
-    let native-x  = event.GdkEventMotion-x;
-    let native-y  = event.GdkEventMotion-y;
-    let state     = event.GdkEventMotion-state;
     ignoring("motion modifiers");
+    let (unused-widget, native-x, native-y, native-state)
+    = if (event.GdkEventMotion-is-hint ~= 0)
+         gdk-window-get-pointer(event.GdkEventMotion-window)
+      else
+        values(event.GdkEventMotion-window, event.GdkEventMotion-x, event.GdkEventMotion-y, event.GdkEventMotion-state)
+      end;
     let modifiers = 0;
+    let state = key-flags->button-state(native-state); 
     let (x, y)
       = untransform-position(sheet-native-transform(sheet), native-x, native-y);
-    distribute-event(_port,
-		     make(<pointer-motion-event>,
-			  sheet: sheet,
-			  pointer: port-pointer(_port),
-			  modifier-state: modifiers,
-			  x: x, y: y))
+    if (logand(state, logior($left-button,$middle-button,$right-button))  ~= 0)
+      distribute-event(_port,
+        make(<pointer-drag-event>,
+          sheet: sheet,
+          pointer: port-pointer(_port),
+          modifier-state: modifiers,
+          button: state,
+          x: round(x), y: round(y)));
+    else
+      distribute-event(_port,
+        make(<pointer-motion-event>,
+          sheet: sheet,
+          pointer: port-pointer(_port),
+          modifier-state: modifiers,
+          x: round(x), y: round(y)));
+    end;
   end;
   #t
 end method handle-gtk-motion-event;
@@ -280,17 +292,17 @@ define sealed method handle-gtk-crossing-event
     let native-x  = event.GdkEventCrossing-x;
     let native-y  = event.GdkEventCrossing-y;
     let state     = event.GdkEventCrossing-state;
-    let modifiers = 0;	//--- Do this properly!
+    let modifiers = 0;  //--- Do this properly!
     let detail    = event.GdkEventCrossing-detail;
     let (x, y)
       = untransform-position(sheet-native-transform(sheet), native-x, native-y);
     distribute-event(_port,
-		     make(event-class,
-			  sheet: sheet,
-			  pointer: port-pointer(_port),
-			  kind: gtk-detail->duim-crossing-kind(detail),
-			  modifier-state: modifiers,
-			  x: x, y: y));
+         make(event-class,
+        sheet: sheet,
+        pointer: port-pointer(_port),
+        kind: gtk-detail->duim-crossing-kind(detail),
+        modifier-state: modifiers,
+        x: x, y: y));
     #t
   end
 end method handle-gtk-crossing-event;
@@ -328,27 +340,27 @@ define method handle-gtk-button-event
     let button    = gtk-button->duim-button(event.GdkEventButton-button);
     let state     = event.GdkEventButton-state;
     let type      = event.GdkEventButton-type;
-    let modifiers = 0;	//--- Do this!
+    let modifiers = 0;  //--- Do this!
     let event-class
       = select (type)
-	  $GDK-2BUTTON-PRESS  => <double-click-event>;
-	  $GDK-BUTTON-PRESS   => <button-press-event>;
-	  $GDK-BUTTON-RELEASE => <button-release-event>;
-	  otherwise           => #f;
-	end;
+    $GDK-2BUTTON-PRESS  => <double-click-event>;
+    $GDK-BUTTON-PRESS   => <button-press-event>;
+    $GDK-BUTTON-RELEASE => <button-release-event>;
+    otherwise           => #f;
+  end;
     if (event-class)
       let (x, y)
-	= untransform-position(sheet-native-transform(sheet), native-x, native-y);
+  = untransform-position(sheet-native-transform(sheet), native-x, native-y);
       port-modifier-state(_port)    := modifiers;
       let pointer = port-pointer(_port);
       pointer-button-state(pointer) := button;
       distribute-event(_port,
-		       make(event-class,
-			    sheet: sheet,
-			    pointer: pointer,
-			    button: button,
-			    modifier-state: modifiers,
-			    x: round(x), y: round(y)));
+           make(event-class,
+          sheet: sheet,
+          pointer: pointer,
+          button: button,
+          modifier-state: modifiers,
+          x: round(x), y: round(y)));
       #t
     end
   end
@@ -380,14 +392,14 @@ define method handle-gtk-expose-event
       = untransform-distance(native-transform, native-width, native-height);
     let region = make-bounding-box(x, y, x + width, y + height);
     distribute-event(_port,
-		     make(<window-repaint-event>,
-			  sheet:  sheet,
-			  region: region))
+         make(<window-repaint-event>,
+        sheet:  sheet,
+        region: region))
   end;
   #t
 end method handle-gtk-expose-event;
 
-// /*---*** Not handling state changes yet
+/*---*** Not handling state changes yet
 define xt/xt-event-handler state-change-callback
     (widget, mirror, event)
   ignore(widget);
@@ -403,11 +415,11 @@ define sealed method handle-gtk-state-change-event
     let type = event.x/type-value;
     select (type)
       #"configure-notify" =>
-	handle-gtk-configuration-change-event(_port, sheet, event);
+  handle-gtk-configuration-change-event(_port, sheet, event);
       #"map-notify"       =>
-	note-mirror-enabled/disabled(_port, sheet, #t);
+  note-mirror-enabled/disabled(_port, sheet, #t);
       #"unmap-notify"     =>
-	note-mirror-enabled/disabled(_port, sheet, #f);
+  note-mirror-enabled/disabled(_port, sheet, #f);
       #"circulate-notify" => #f;
       #"destroy-notify"   => #f;
       #"gravity-notify"   => #f;
@@ -432,7 +444,7 @@ define sealed method handle-gtk-state-change-config-event
     let type = event.x/type-value;
     select (type)
       #"configure-notify" =>
-	handle-gtk-configuration-change-event(_port, sheet, event);
+  handle-gtk-configuration-change-event(_port, sheet, event);
       #"map-notify"       => #f;
       #"unmap-notify"     => #f;
       #"circulate-notify" => #f;
@@ -459,9 +471,9 @@ define sealed method handle-gtk-state-change-no-config-event
     let type = event.x/type-value;
     select (type)
       #"map-notify"       =>
-	note-mirror-enabled/disabled(_port, sheet, #t);
+  note-mirror-enabled/disabled(_port, sheet, #t);
       #"unmap-notify"     =>
-	note-mirror-enabled/disabled(_port, sheet, #f);
+  note-mirror-enabled/disabled(_port, sheet, #f);
       #"configure-notify" => #f;
       #"circulate-notify" => #f;
       #"destroy-notify"   => #f;
@@ -470,7 +482,7 @@ define sealed method handle-gtk-state-change-no-config-event
     end
   end
 end method handle-gtk-state-change-no-config-event;
-// */
+*/
 
 define method handle-gtk-configure-event
     (sheet :: <sheet>, widget :: <GtkWidget*>, event :: <GdkEventConfigure*>)
@@ -487,9 +499,9 @@ define method handle-gtk-configure-event
     = untransform-distance(native-transform, native-width, native-height);
   let region = make-bounding-box(x, y, x + width, y + height);
   distribute-event(port(sheet),
-		   make(<window-configuration-event>,
-			sheet:  sheet,
-			region: region));
+       make(<window-configuration-event>,
+      sheet:  sheet,
+      region: region));
   #t
 end method handle-gtk-configure-event;
 
@@ -502,4 +514,19 @@ define sealed method note-mirror-enabled/disabled
     (_port :: <gtk-port>, sheet :: <top-level-sheet>, enabled? :: <boolean>) => ()
   ignoring("note-mirror-enabled/disabled")
 end method note-mirror-enabled/disabled;
+
+define function key-flags->button-state
+    (flags :: <integer>) => (button-state :: <integer>)
+  let button-state :: <integer> = 0;
+  when (~zero?(logand(flags, $GDK-BUTTON1-MASK)))
+    button-state := logior(button-state, $left-button)
+  end;
+  when (~zero?(logand(flags, $GDK-BUTTON2-MASK)))
+    button-state := logior(button-state, $middle-button)
+  end;
+  when (~zero?(logand(flags, $GDK-BUTTON3-MASK)))
+    button-state := logior(button-state, $right-button)
+  end;
+  button-state
+end function key-flags->button-state;
 
