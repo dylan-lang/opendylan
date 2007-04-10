@@ -91,6 +91,18 @@ define sealed method make-environment-object-for-source-form
 			  compiler-object-proxy: project)
 end method make-environment-object-for-source-form;
 
+define class <dfmc-type-expression-object> (<type-expression-object>)
+end;
+
+define method environment-object-primitive-name
+  (server :: <server>, expression :: <dfmc-type-expression-object>) => (result :: false-or(<string>));
+  let s :: <byte-string-stream>
+    = make(<byte-string-stream>,
+	   contents: make(<byte-string>, size: 32), direction: #"output");
+  print(expression.compiler-object-proxy, s, escape?: #f);
+  s.stream-contents
+end;
+
 define function make-environment-object-for-type-expression
     (server :: <dfmc-database>, type-expression :: false-or(<type-expression>))
  => (object :: <environment-object>)
@@ -99,7 +111,9 @@ define function make-environment-object-for-type-expression
     make-environment-object-for-source-form
       (server.server-project, type-definition)
   else
-    $complex-type-expression-object
+    make-environment-object(<dfmc-type-expression-object>, 
+                            project: server.server-project,
+                            compiler-object-proxy: type-expression)
   end
 end function make-environment-object-for-type-expression;
 

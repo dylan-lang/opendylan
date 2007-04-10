@@ -9,6 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module dfmc-environment-database
   use environment-imports;
+  use print, import: { print };
   use environment-protocols,
     rename: { project-read-only? => env/project-read-only?,
 	      project-target-type => env/project-target-type };

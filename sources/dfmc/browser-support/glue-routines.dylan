@@ -340,7 +340,7 @@ end method;
 
 // #t means something not representable in the API.
 define constant <type-expression> 
-  = type-union(<variable>, singleton(#t), <source-locator>);
+  = type-union(<variable>, singleton(#t), dfmc-<fragment>);
 
 define generic externalize-type (type) => (res :: false-or(<type-expression>));
 
@@ -358,6 +358,8 @@ end method;
 
 define method externalize-type 
     (type :: dfmc-<fragment>) => (res :: <type-expression>)
+  type
+/*
   if (instance?(type, <variable>))
     // Hack to work around the fact that <fragment> actually precedes 
     // <variable> in the CPL of a name fragment.
@@ -366,6 +368,7 @@ define method externalize-type
     let loc = dfmc-fragment-source-location(type);
     loc | #t
   end;
+*/
 end method;
 
 define function source-locator-positions (loc :: <source-locator>)

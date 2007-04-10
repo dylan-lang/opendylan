@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library dfmc-environment-database
   use environment-protocols;
-
+  use io, import: { print };
   use dfmc-browser-support;
   use user-projects;
   use dfmc-conditions;	//---*** for the warning classes
