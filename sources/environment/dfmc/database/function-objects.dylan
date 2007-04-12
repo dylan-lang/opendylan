@@ -148,16 +148,23 @@ define sealed method method-specializers
     (server :: <dfmc-database>, object :: <method-object>)
  => (specializers :: <sequence>)
   let specializers = make(<stretchy-vector>);
-  do-method-definition-specializers
-    (method (type :: false-or(<definition>))
-       add!(specializers,
-	    if (type)
-	      make-environment-object-for-source-form(server, type)
-	    else
-	      $complex-type-expression-object
-	    end)
-     end,
-     server, object.compiler-object-proxy);
+  let definition = object.compiler-object-proxy;
+  let context = browsing-context(server, definition);
+
+  let req-types //...rest-type, next-type, key-types, value-types, rest-value-type)
+    = functional-parameter-types(definition);
+  if (req-types)
+    for (type in req-types)
+      add!(specializers, make-environment-object-for-type-expression(server, type));
+    end
+  else
+    let req-vars //...rest-var, next-var, key-vars, value-vars, rest-value-var)
+      = functional-parameters(definition);
+    let object-class-definition = find-<object>(server);
+    for (i from 0 below size(req-vars))
+      add!(specializers, object-class-definition)
+    end
+  end;
   specializers
 end method method-specializers;
 

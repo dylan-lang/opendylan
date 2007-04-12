@@ -198,7 +198,7 @@ define module environment-protocols
   // Dylan expression objects
   export <expression-object>,
          <type-expression-object>,
-         $complex-type-expression-object;
+         <complex-type-expression-object>;
 
   // Dylan application objects
   export <character-object>,

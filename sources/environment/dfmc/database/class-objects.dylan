@@ -39,17 +39,7 @@ define sealed method do-direct-superclasses
   let context = browsing-context(server, class-definition);
   let direct-superclasses = class-definition.class-definition-superclass-types;
   do(method (superclass-type) => ()
-       let type-object
-         = select (superclass-type)
-	     #t => 
-	       $complex-type-expression-object;
-	     otherwise =>
-	       let superclass
-		 = variable-active-definition(context, superclass-type);
-	       superclass
-		 & make-environment-object-for-source-form
-		     (project-object, superclass);
-	   end;
+      let type-object = make-environment-object-for-type-expression(server, superclass-type);
        type-object & function(type-object)
      end,
      direct-superclasses)

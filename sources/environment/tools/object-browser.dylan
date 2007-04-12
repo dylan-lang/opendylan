@@ -611,7 +611,7 @@ define sideways method browse-object-type
     (project :: <project-object>, object :: <environment-object>, #key page)
  => (success? :: <boolean>)
   let type = environment-object-type(project, object);
-  if (type & type ~== $complex-type-expression-object)
+  if (type)
     find-environment-frame(default-port(),
 			   <object-browser>,
 			   project: project,

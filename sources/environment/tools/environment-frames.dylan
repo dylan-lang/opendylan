@@ -1185,7 +1185,7 @@ define method update-frame-commands-for-browse-target
 	let describable?    = frame-describe-object?(frame, object);
 	let documentable?   = frame-document-object?(frame, object);
 	let browsable?      = frame-browse-object?(frame, object);
-	let type-browsable? = type & type ~== $complex-type-expression-object;
+	let type-browsable? = type & (~ instance?(type, <complex-type-expression-object>));
 	let generic?
 	  = instance?(object, <method-object>)
 	      & method-generic-function(project, object) ~= #f;

@@ -23,9 +23,6 @@ end class <type-expression-object>;
 define sealed class <complex-type-expression-object> (<type-expression-object>)
 end class <complex-type-expression-object>;
 
-define constant $complex-type-expression-object :: <complex-type-expression-object>
-  = make(<complex-type-expression-object>,
-         compiler-object-proxy: vector(#"complex-type-expression-object"));
 
 
 /// Naming

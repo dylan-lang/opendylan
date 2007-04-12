@@ -87,14 +87,9 @@ define method write-binding-spec
 	   otherwise         => "variable";
 	 end,
 	 name);
-  select (type)
-    $complex-type-expression-object => 
-      format(stream, "<object>");
-    otherwise =>
-      //---*** What to do with unexported types?
-      print-environment-object-name
-	(stream, project, type, qualify-names?: #f);
-  end;
+  //---*** What to do with unexported types?
+  print-environment-object-name
+    (stream, project, type, qualify-names?: #f);
   format(stream, ");\n")
 end method write-binding-spec;
 
@@ -107,13 +102,11 @@ define method write-binding-spec
   let separator = "";
   format(stream, "  class %s (", name);
   for (superclass in class-direct-superclasses(project, class))
-    unless (superclass == $complex-type-expression-object)
-      format(stream, "%s", separator);
-      //---*** What to do with unexported types?
-      print-environment-object-name
-	(stream, project, superclass, qualify-names?: #f);
-      separator := ", "
-    end
+    format(stream, "%s", separator);
+    //---*** What to do with unexported types?
+    print-environment-object-name
+      (stream, project, superclass, qualify-names?: #f);
+    separator := ", "
   end;
   format(stream, ");\n")
 end method write-binding-spec;
