@@ -91,7 +91,7 @@ define sealed method make-environment-object-for-source-form
 			  compiler-object-proxy: project)
 end method make-environment-object-for-source-form;
 
-define class <dfmc-type-expression-object> (<type-expression-object>)
+define class <dfmc-type-expression-object> (<complex-type-expression-object>)
 end;
 
 define method environment-object-primitive-name
