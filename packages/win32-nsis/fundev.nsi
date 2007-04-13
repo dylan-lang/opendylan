@@ -133,6 +133,8 @@ Section "${APPNAME} Core" SecOpendylanCore
                                           "Field 4" "State"
   !insertmacro MUI_INSTALLOPTIONS_READ $3 "choose-build-script.ini" \
                                           "Field 5" "State"
+  !insertmacro MUI_INSTALLOPTIONS_READ $4 "choose-build-script.ini" \
+                                          "Field 6" "State"
   
   ;; Display a messagebox if check box was checked
   StrCmp $0 "1" "" +2
