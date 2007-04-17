@@ -131,7 +131,8 @@ define sealed method queue-redisplay
             // An associated buffer is in another window; we'll have to
             // work a bit harder to redisplay it, since we don't know
             // exactly where the damage region is in that window
-            queue-redisplay-1(frame-window(other-frame), max(degree, $display-text));
+            queue-redisplay-1(frame-window(other-frame), max(degree, $display-text),
+                              line: line, index: index);
           otherwise =>
             #f;
         end
