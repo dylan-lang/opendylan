@@ -20,7 +20,7 @@ define open class <type-expression-object> (<expression-object>)
 end class <type-expression-object>;
 
 // The canonical type expression of arbitrary complexity (only one instance)
-define sealed class <complex-type-expression-object> (<type-expression-object>)
+define open class <complex-type-expression-object> (<type-expression-object>)
 end class <complex-type-expression-object>;
 
 
