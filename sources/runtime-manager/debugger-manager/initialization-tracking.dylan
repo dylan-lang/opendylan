@@ -161,10 +161,10 @@ define method dynamic-initializer-start-callback
   if (start.entry-initialization-tracker.tracker-remote-library ==
          application.application-dylan-library)
     allocate-temporary-download-block-in(application, thread);
-    initialize-static-keywords(application, thread);
   end if;
   if (start.entry-initialization-tracker.tracker-top-level?)
     construct-component-name-table(application);
+    initialize-static-keywords(application, thread);
   end if;
   handle-library-initialization-phase
     (application, thread,

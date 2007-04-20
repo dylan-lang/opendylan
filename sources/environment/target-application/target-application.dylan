@@ -140,6 +140,8 @@ end method;
 /// OBTAIN-COMPONENT-NAME
 /// 
 /// Get the DLL name for a given library
+/// XXX does not work with library packs! find-library-info is broken
+/// we hope nobody calls it (it wasn't called during our debugging sessions)
 
 define method obtain-component-name
     (application :: <target-application>, library-name :: <string>)
