@@ -17,6 +17,7 @@ define module projects-protocol
 
   // Workspaces
   create <project-workspace>,
+         <project-user-settings>,
          default-workspace, default-workspace-setter,
          workspace-processor,
          workspace-operating-system,
@@ -29,8 +30,11 @@ define module projects-protocol
   create <project>,
          project-name,
          project-title,
+         project-location,
+         project-directory,
          project-workspace,
          build-project,
+         register-project-condition,
          open-project-database,
          project-read-only?,
          project-can-be-closed?, project-can-be-closed?-setter,
@@ -48,9 +52,11 @@ define module projects-protocol
 
   // Build targets
   create <build-target>,
+         <build-state>,
          <target-source-record>,
          remove-target-build-products,
          target-project,
+         target-files,
          target-read-only?, target-read-only?-setter,
          target-source-files,
          target-source-records,
@@ -121,7 +127,9 @@ define module projects-protocol
          <release-file-information>;
 
   // Warnings
-  create <project-warning>,
+  create <project-condition>,
+         <project-error>,
+         <project-warning>,
          <project-serious-warning>,
          warning-project;
 

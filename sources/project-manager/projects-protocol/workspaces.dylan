@@ -12,6 +12,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //---*** What should these really be?
 define constant <processor>           = <symbol>;
 define constant <operating-system>    = <symbol>;
+define constant <linker> = <symbol>;
 
 define constant <abort-reason>
   = one-of(#"never", #"warnings", #"serious-warnings");
