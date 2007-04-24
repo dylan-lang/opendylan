@@ -45,8 +45,11 @@ $(INCDEST):
 $(RUNTIMELIBDEST):
 	mkdir -p $(RUNTIMELIBDEST)
 
-install-build: $(runtime_srcdir)/c-linux-build.jam
-	cp -fp $(runtime_srcdir)/c-linux-build.jam $(LIBDEST)
+install-build:
+	cp -fp $(top_srcdir)/sources/lib/run-time/mini-jambase.jam $(LIBDEST)
+	cp -fp $(runtime_srcdir)/x86-linux-build.jam $(LIBDEST)
+	cp -fp $(runtime_srcdir)/x86-darwin-build.jam $(LIBDEST)
+	cp -fp $(runtime_srcdir)/ppc-darwin-build.jam $(LIBDEST)
 
 install-header:	$(runtime_srcdir)/run-time.h $(INCDEST)
 	cp -fp $(runtime_srcdir)/run-time.h $(INCDEST)

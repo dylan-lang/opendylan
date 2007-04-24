@@ -9,6 +9,11 @@ my $lidfile_line;
 
 my $platform_name = $ENV{'OPEN_DYLAN_PLATFORM_NAME'};
 
+my $library_extension = "so";
+if($platform_name =~ m/darwin/) {
+    $library_extension = "dylib";
+}
+
 my $user_root = $ENV{'OPEN_DYLAN_USER_ROOT'};
 my $user_build = $ENV{'OPEN_DYLAN_USER_BUILD'};
 my $user_install = $ENV{'OPEN_DYLAN_USER_INSTALL'};
@@ -71,7 +76,7 @@ sub build_library {
     
     &scan_lidfile($lidfile, $header, $dir);
 
-    my $needs_rebuild = !-f "$user_root/lib/lib${library}.so";
+    my $needs_rebuild = !-f "$user_root/lib/lib${library}.${library_extension}";
 
     if(defined $deps{$library}) {
 	foreach my $dep (@{$deps{$library}}) {
@@ -82,7 +87,7 @@ sub build_library {
     }
 
     if(!$needs_rebuild) {
-	my $libdate = (stat "$user_root/lib/lib${library}.so")[9];
+	my $libdate = (stat "$user_root/lib/lib${library}.${library_extension}")[9];
 	foreach my $source (split /\s+/, $$header{'files'}) {
 	    unless($source =~ /\.dylan$/) {
 		$source = "$source.dylan";
@@ -122,7 +127,7 @@ sub build_library {
 
     system $command || die "Couldn't execute $compiler";
     if($? != 0
-       || !(-f "$user_root/lib/lib${library}.so"
+       || !(-f "$user_root/lib/lib${library}.${library_extension}"
 	    || -f "$user_root/bin/$library")) {
 	print "\n";
 	if(defined $build_logs && !$debugger) {

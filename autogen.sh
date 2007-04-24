@@ -6,6 +6,14 @@ test -z "$srcdir" && srcdir=.
 
 DIE=false
 
+LIBTOOL=libtool
+LIBTOOLIZE=libtoolize
+
+if test `uname` = "Darwin";
+then LIBTOOL=glibtool;
+LIBTOOLIZE=glibtoolize
+fi
+
 (autoconf --version && autoheader --version) < /dev/null > /dev/null 2>&1 || {
     echo
     echo "You must have autoconf installed to compile Functional Developer."
@@ -22,7 +30,7 @@ DIE=false
     DIE=true
 }
 
-(libtoolize --version) < /dev/null > /dev/null 2>&1 || {
+($LIBTOOLIZE --version) < /dev/null > /dev/null 2>&1 || {
     echo
     echo "You must have libtool installed to compile Functional Developer."
     echo "Download the appropriate package for your distribution,"

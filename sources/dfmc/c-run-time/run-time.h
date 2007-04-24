@@ -1,5 +1,4 @@
 #include <setjmp.h>
-#include <gc/gc.h>
 
 #define OPTIONAL_ARGUMENT_CHECK(fn, req, count)
 #define REQUIRED_ARGUMENT_CHECK(fn, req, count)

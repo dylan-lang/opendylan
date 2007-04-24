@@ -11,11 +11,13 @@ AC_DEFUN(FD_PLATFORM,[
 case $1 in
 i*86-*-linux*) $2=x86-linux ;;
 i*86-*-freebsd*) $2=x86-bsd ;;
+i*86-*-darwin*) $2=x86-darwin ;;
+powerpc-*-darwin*) $2=ppc-darwin ;;
 powerpc-*-linux-gnu*) $2=ppc-linux ;;
 powerpc-apple-darwin*) $2=ppc-darwin ;;
 *) AC_MSG_ERROR([The $1 platform is not supported.]) ;;
 esac])
-
+ 
 AC_CANONICAL_BUILD
 FD_PLATFORM($build,fd_build)
 AC_SUBST(fd_build)
@@ -27,6 +29,12 @@ AC_SUBST(fd_host)
 AC_CANONICAL_TARGET
 FD_PLATFORM($target,fd_target)
 AC_SUBST(fd_target)
+
+case $build in
+*-*-darwin*) RT_SRCDIR=$srcdir/sources/dfmc/c-run-time ;;
+*) RT_SRCDIR=$srcdir/sources/lib/run-time/pentium-linux ;;
+esac
+AC_SUBST(RT_SRCDIR)
 
 AC_PROG_INSTALL
 AC_PROG_LN_S
