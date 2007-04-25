@@ -93,14 +93,14 @@ end function st-mode;
 
 define inline-only function st-uid (st :: <machine-word>) => (uid :: <abstract-integer>)
   raw-as-abstract-integer
-  (primitive-c-unsigned-short-at(primitive-unwrap-machine-word(st),
+  (primitive-c-unsigned-int-at(primitive-unwrap-machine-word(st),
 			       integer-as-raw($st-uid-offset),
 			       integer-as-raw(0)))
 end function st-uid;
 
 define inline-only function st-gid (st :: <machine-word>) => (gid :: <abstract-integer>)
   raw-as-abstract-integer
-  (primitive-c-unsigned-short-at(primitive-unwrap-machine-word(st),
+  (primitive-c-unsigned-int-at(primitive-unwrap-machine-word(st),
 			       integer-as-raw($st-gid-offset),
 			       integer-as-raw(0)))
 end function st-gid;
