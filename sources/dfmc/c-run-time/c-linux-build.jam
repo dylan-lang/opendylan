@@ -239,7 +239,6 @@ rule DylanLibraryCSources image : sources {
       Cc $(_obj) : $(_i) ;
       
       LinkDLL $(_dll) : $(_obj) ;
-      LinkEXE $(_exe) : $(_obj) ;
     }
   }
 }
