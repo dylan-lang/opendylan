@@ -21,7 +21,7 @@ define settings <environment-settings> (<open-dylan-user-settings>)
   slot about-box-action         :: <symbol>  = #"initial";
   slot default-save-databases   :: <boolean> = #t;
   slot default-copy-sources     :: <boolean> = #f;
-  slot default-link-mode        :: <symbol>  = #"ask";
+  slot default-link-mode        :: <symbol>  = #"force";
   slot default-upgrade-warnings :: <boolean> = #f;
   slot application-confirm-stop :: <boolean> = #t;
   slot opened-project-active    :: <boolean> = #t;
