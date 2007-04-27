@@ -21,6 +21,8 @@ define settings <environment-settings> (<open-dylan-user-settings>)
   slot about-box-action         :: <symbol>  = #"initial";
   slot default-save-databases   :: <boolean> = #t;
   slot default-copy-sources     :: <boolean> = #f;
+  //FIXME: this should be reverted to #"ask" once library dylan
+  //builds without serious warnings
   slot default-link-mode        :: <symbol>  = #"force";
   slot default-upgrade-warnings :: <boolean> = #f;
   slot application-confirm-stop :: <boolean> = #t;
