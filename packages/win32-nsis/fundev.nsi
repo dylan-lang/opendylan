@@ -20,7 +20,7 @@
 ;;; Application defines
 ;;;
 !define APPNAME "Open Dylan"
-!define APPVERSION "1.0 Beta 3"
+!define APPVERSION "1.0 Beta 4"
 !define APPNAMEANDVERSION "${APPNAME} ${APPVERSION}"
 
 ;;;-------------------------------------
