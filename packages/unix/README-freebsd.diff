@@ -1,0 +1,18 @@
+--- README	Sun Apr 29 21:37:36 2007
++++ /usr/local/opendylan-1.0beta4/README	Sun Apr 29 22:52:07 2007
+@@ -23,14 +23,8 @@
+ Requirements
+ ============
+ 
+-This tarball contains the port of Open Dylan to Linux on x86 CPUs.  So,
++This tarball contains the port of Open Dylan to FreeBSD-6 on x86 CPUs.  So,
+ you should have that, or an emulation thereof, to run this distribution.
+-More specifically, due to the usage of thread-local storage, the
+-minimum requirements are:
+-
+- * Linux kernel 2.6 (or newer)
+- * glibc 2.3 (or newer)
+-
+ 
+ Installation
+ ============
