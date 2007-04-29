@@ -1,0 +1,119 @@
+#!/usr/bin/perl -w
+
+$duim = 0;
+$appname = shift || &usage;
+while(1) {
+    if($appname eq '-d' || $appname eq '--duim') {
+	$duim = 1;
+	$appname = shift || &usage;
+    } else {
+	last;
+    }
+}
+shift && &usage;
+
+if ($duim) {
+    $extra = "\n  use duim;";
+    $hello_line = "start-frame(make(<$appname-frame>))";
+    $defs = <<"EOD"
+
+define frame <$appname-frame> (<simple-frame>)
+  menu-bar (frame) frame.$appname-menu-bar;
+  pane $appname-menu-bar (frame)
+    make(<menu-bar>, children: vector(frame.file-menu, frame.help-menu));
+  pane file-menu (frame)
+    make(<menu>, label: "File", children: vector(frame.exit-menu-button));
+  pane exit-menu-button (frame)
+    make(<menu-button>,
+           label: "Exit",
+	   activate-callback: method(button) exit-application(0) end);
+  pane help-menu (frame)
+    make(<menu>, label: "Help", children: vector(frame.about-menu-button));
+  pane about-menu-button (frame)
+    make(<menu-button>,
+           label: "About...",
+           activate-callback:
+             method(button) start-dialog(make(<about-$appname-dialog>)) end);
+
+  status-bar (frame) frame.$appname-status-bar;
+  pane $appname-status-bar (frame)
+    make(<status-bar>, label: "Hello, world!");
+  
+  layout (frame) frame.$appname-layout;
+  pane $appname-layout (frame)
+    vertically ()
+      make(<label>, label: "Hello, world!");
+    end;
+
+  keyword title: = "$appname Application";
+end frame;
+
+define frame <about-$appname-dialog> (<dialog-frame>)
+  layout(frame)
+    vertically()
+      make(<label>, label: "$appname Application");
+    end;
+  keyword title: = "About $appname Application";
+  keyword cancel-callback: = #f;
+end frame;
+EOD
+} else {
+    $extra = "";
+    $hello_line = 'format-out("Hello, world!\\n")';
+    $defs = '';
+}
+
+mkdir $appname, 0777 or die "Can't create directory $appname: $!";
+chdir $appname or die "Can't chdir to directory $appname: $!";
+
+&write_file("$appname.lid", <<"EOD");
+library: $appname
+executable: $appname
+files: $appname-exports
+  $appname
+EOD
+
+&write_file("$appname-exports.dylan", <<"EOD");
+module: dylan-user
+
+define library $appname
+  use common-dylan;
+  use io;$extra
+end library;
+
+define module $appname
+  use common-dylan;
+  use format-out;$extra
+end module;
+EOD
+
+&write_file("$appname.dylan", <<"EOD");
+module: $appname
+synopsis: 
+author: 
+copyright: 
+$defs
+define function main(name, arguments)
+  $hello_line;
+  exit-application(0);
+end function main;
+
+// Invoke our main() function.
+main(application-name(), application-arguments());
+EOD
+
+sub write_file {
+    local ($filename, $contents) = @_;
+    open(OUTPUT, ">$filename") or die "Can't create $filename: $!";
+    print OUTPUT $contents;
+    close OUTPUT;
+}
+
+sub usage {
+    print STDERR <<EOD;
+Usage:
+  make-dylan-app appname
+  make-dylan-app -d appname	(include DUIM support)
+EOD
+    exit 1;
+}

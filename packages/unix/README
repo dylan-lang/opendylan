@@ -1,0 +1,115 @@
+Welcome to Open Dylan!
+======================
+
+Open Dylan is an open source implementation of the Dylan programming
+language, plus a large number of assorted libraries.  Most of the
+code had once been developed by a company called Harlequin, for a
+product called DylanWorks in the beginning, and Harlequin Dylan later.
+After Harlequin demised, some of the programmers acquired the rights,
+and kept selling the development environment under the name of
+Functional Developer.  Eventually, to the joy of the Dylan community,
+they decided to release all of their source code under an open source
+license.  What you are holding in your hands is the attempt of a group
+of enthusiasts calling themselves the "Dylan Hackers" to bundle
+up this code, and publish it in a form useful for the general public.
+
+This is release Open Dylan 1.0beta4. Naturally, we expect this release
+to have bugs.  We're interested in getting your feedback, in order to
+improve this product.  Write to bugs@opendylan.org, or use the bug
+tracker on http://www.opendylan.org, in case you find any.
+
+This build corresponds to revision 11307 in svn repository.
+
+Requirements
+============
+
+This tarball contains the port of Open Dylan to Linux on x86 CPUs.  So,
+you should have that, or an emulation thereof, to run this distribution.
+More specifically, due to the usage of thread-local storage, the
+minimum requirements are:
+
+ * Linux kernel 2.6 (or newer)
+ * glibc 2.3 (or newer)
+
+
+Installation
+============
+
+This tarball is set up to be extracted in /usr/local, resulting in the
+creation of a directory /usr/local/opendylan-1.0beta4.  In case you
+installed in this location (or move the tree you found this README in
+there now), you just have to add /usr/local/opendylan-1.0beta4/bin to
+your PATH:
+
+  $ export PATH=/usr/local/opendylan-1.0beta4/bin:$PATH    # for bash
+
+or
+
+  $ setenv PATH /usr/local/opendylan-1.0beta4/bin:$PATH    # for tcsh
+
+If you choose any other installation location, you have to make sure
+the shared libraries required by the compiler are found.  You can do
+this by either setting the LD_LIBRARY_PATH environment variable:
+
+  $ export LD_LIBRARY_PATH=/where/ever/opendylan-1.0beta4/lib:LD_LIBRARY_PATH
+
+or by adding the path to /etc/ld.so.conf, and re-running ldconfig.  You
+have to do this as root, of course.
+
+
+Usage
+=====
+
+You're now set for trying out the compiler:
+
+  $ opendylan -build hello-world
+
+This will build the hello-world application, provided with this
+distribution, together with all dependent libraries, from source.
+Intermediate build products will end up in your home directory, under
+a directory named "Open-Dylan/build".  Final build targets, such as
+the libraries, binaries and compiler databases, will end up in your
+home too, in "Open-Dylan/lib", "Open-Dylan/bin" and
+"Open-Dylan/databases" respectively.  Provided that "~/Open-Dylan/bin"
+is in your path, you can try it out:
+
+  $ hello-world
+  Hello, there!
+
+If you wish to change the place where files are kept, you can set an
+environment variable to have it leave the files somewhere else:
+
+  $ export OPEN_DYLAN_USER_ROOT=/home/me/opendylan-build
+
+
+Also, make-dylan-app is provided. It is a perl script which takes one
+argument and generates a Dylan library (exports, lid and the real
+code).  It is useful for starting new projects.
+  $ make-dylan-app my-hello-world
+  $ cd my-hello-world
+  $ opendylan -build my-hello-world.lid
+  $ my-hello-world
+  Hello, world!
+
+Documentation
+=============
+
+Documentation is still scattered around a number of places.  One of the
+most important documents is certainly the Dylan Reference Manual,
+specifying the language standard:
+
+  http://www.opendylan.org/books/drm/
+
+Documentation for language extensions and libraries can be found at
+the Open Dylan website too:
+
+  http://www.opendylan.org/documentation/opendylan
+
+Still more documentation can be found on:
+
+  http://www.opendylan.org/gdref.phtml
+
+and more than you probably need is available from the Subversion
+repository:
+
+  $ svn co svn://anonsvn.gwydiondylan.org/scm/svn/dylan/trunk/documentation
