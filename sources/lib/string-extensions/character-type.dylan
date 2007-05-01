@@ -74,9 +74,9 @@ end function whitespace?;
 // This has been moved to %Hash-Tables in order to prevent circular library
 // definitions.
 //
-//define function uppercase? (c :: <character>) => answer :: <boolean>;
-//  c >= 'A' & c <= 'Z';
-//end function uppercase?;
+define function uppercase? (c :: <character>) => answer :: <boolean>;
+  c >= 'A' & c <= 'Z';
+end function uppercase?;
 
 // islower
 //

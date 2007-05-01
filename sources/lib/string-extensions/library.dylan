@@ -52,7 +52,7 @@ define module character-type
   // use %Hash-Tables, export: {uppercase?};
   export
     case-insensitive-equal, // KJP: added
-    alpha?, alphabetic?, digit?, alphanumeric?, whitespace?,
+    alpha?, alphabetic?, digit?, alphanumeric?, whitespace?, uppercase?,
     lowercase?, hex-digit?, graphic?, printable?,
     punctuation?, control?, byte-character?;
 end module character-type;
