@@ -3,13 +3,12 @@ author:   Nick Kramer (nkramer@cs.cmu.edu)
 synopsis: This implements search and replace facilities, which is 
           given a wrapper and called from both regular-expressions
           and substring-search.
-copyright:  Copyright (C) 1994, Carnegie Mellon University.
-            All rights reserved.
-rcs-header: $Header: /scm/cvs/fundev/Sources/lib/string-extensions/do-replacement.dylan,v 1.1 2004/03/12 00:09:20 cgay Exp $
+copyright: see below
 
 //======================================================================
 //
 // Copyright (c) 1994  Carnegie Mellon University
+// Copyright (c) 1998, 1999, 2000  Gwydion Dylan Maintainers
 // All rights reserved.
 // 
 // Use and copying of this software and preparation of derivative
@@ -21,14 +20,15 @@ rcs-header: $Header: /scm/cvs/fundev/Sources/lib/string-extensions/do-replacemen
 // 2. Documentation (paper or online) accompanying any system that
 //    incorporates this software, or any part of it, must acknowledge
 //    the contribution of the Gwydion Project at Carnegie Mellon
-//    University.
+//    University, and the Gwydion Dylan Maintainers.
 // 
 // This software is made available "as is".  Neither the authors nor
 // Carnegie Mellon University make any warranty about the software,
 // its performance, or its conformity to any specification.
 // 
-// Bug reports, questions, comments, and suggestions should be sent by
-// E-mail to the Internet address "gwydion-bugs@cs.cmu.edu".
+// Bug reports should be sent to <gd-bugs@gwydiondylan.org>; questions,
+// comments and suggestions are welcome at <gd-hackers@gwydiondylan.org>.
+// Also, see http://www.gwydiondylan.org/ for updates and documentation. 
 //
 //======================================================================
 
