@@ -86,7 +86,7 @@ end macro with-stack-stat;
 
 define inline-only function st-mode (st :: <machine-word>) => (mode :: <abstract-integer>)
   raw-as-abstract-integer
-  (primitive-c-unsigned-short-at(primitive-unwrap-machine-word(st),
+  (primitive-c-unsigned-int-at(primitive-unwrap-machine-word(st),
 			       integer-as-raw($st-mode-offset),
 			       integer-as-raw(0)))
 end function st-mode;
