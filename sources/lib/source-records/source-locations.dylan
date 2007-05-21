@@ -109,7 +109,7 @@ define function source-location-string
   let end-pos = loc.source-location-end-character;
   let count = end-pos - start-pos;
   let string = make(<byte-string>, size: count);
-  copy-bytes(source-record-contents(record), start-pos, string, 0, count);
+  copy-bytes(string, 0, source-record-contents(record), start-pos, count);
   string
 end;
 

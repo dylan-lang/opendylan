@@ -325,8 +325,8 @@ end method index-check;
 
 
 define inline method copy-bytes 
-      (src :: type-union(<byte-vector>, <byte-string>), src-start :: <integer>,
-       dst :: <memory-mapped-file>, dst-start :: <integer>,
+      (dst :: <memory-mapped-file>, dst-start :: <integer>,
+       src :: type-union(<byte-vector>, <byte-string>), src-start :: <integer>,
        n :: <integer>) => ()
   let src-end :: <integer> = src-start + n;
   let dst-end :: <integer> = dst-start + n;
@@ -343,8 +343,8 @@ end method copy-bytes;
 
 
 define inline method copy-bytes 
-      (src :: <memory-mapped-file>, src-start :: <integer>,
-       dst :: type-union(<byte-vector>, <byte-string>), dst-start :: <integer>,
+      (dst :: type-union(<byte-vector>, <byte-string>), dst-start :: <integer>,
+       src :: <memory-mapped-file>, src-start :: <integer>,
        n :: <integer>) => ()
   let src-end :: <integer> = src-start + n;
   let dst-end :: <integer> = dst-start + n;

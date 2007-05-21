@@ -820,7 +820,7 @@ define method copy-to-section
   let new-pos = pos + len;
   ensure-size-of-section-data(section, new-pos);
   section.raw-data-size := new-pos;
-  copy-bytes(string, start, section.section-data, pos, len);
+  copy-bytes(section.section-data, pos, string, start, len);
 end method;
 
 define method copy-integer-to-section 

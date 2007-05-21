@@ -601,7 +601,7 @@ define sideways method add-string-to-section
   let pos = section.current-position;
   let len = string.size;
   section.current-position := pos + len;
-  copy-bytes(string, 0, section.section-data, pos, len);
+  copy-bytes(section.section-data, pos, string, 0, len);
 end method;
 
 
@@ -610,7 +610,7 @@ define method add-vector-to-section
   let pos = section.current-position;
   let len = vector.size;
   section.current-position := pos + len;
-  copy-bytes(vector, 0, section.section-data, pos, len);
+  copy-bytes(section.section-data, pos, vector, 0, len);
 end method;
 
 
@@ -854,7 +854,7 @@ define method splice-string-into-vector! (data :: <byte-vector>,
                                           string :: <byte-string>, 
                                           inx :: <integer>) => ()
   let len = string.size;
-  copy-bytes(string, 0, data, inx, len);
+  copy-bytes(data, inx, string, 0, len);
   data[inx + len] := 0;  // the null termination
 end method;
 

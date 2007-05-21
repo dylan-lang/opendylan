@@ -179,7 +179,7 @@ define sealed method line-length-setter
       = make(object-class(contents),
 	     size: max(length,
 		       floor(contents-length * $line-expansion-factor)));
-    copy-bytes(contents, 0, new-contents, 0, line-length(line));
+    copy-bytes(new-contents, 0, contents, 0, line-length(line));
     line.%contents := new-contents
   end;
   line.%length := length;
@@ -332,7 +332,7 @@ define method as
   let contents = line-contents(line);
   let string   = make(<byte-string>, size: length);
   // Use the fastest method available to copy the line contents
-  copy-bytes(contents, 0, string, 0, length);
+  copy-bytes(string, 0, contents, 0, length);
   string
 end method as;
 

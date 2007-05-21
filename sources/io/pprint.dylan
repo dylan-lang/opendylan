@@ -58,7 +58,7 @@ define method copy-maybe-overlapping-bytes
     src ~== dst
       => // Use the standard "any which way" version, which is likely to be
          // faster.
-         copy-bytes(src, src-start, dst, dst-start, n);
+         copy-bytes(dst, dst-start, src, src-start, n);
     src-start < 0 | src-start + n > size(src)
       => error("Source parameters for copy-maybe-overlapping-bytes from %= "
                "are out of range - start at %d, copy %d bytes.",
@@ -321,7 +321,7 @@ define method append-raw-output
   let count = min(chars, available);
   let fill-pointer = stream.pretty-stream-buffer-fill-pointer;
   let new-fill-ptr = fill-pointer + count;
-  copy-bytes(stuff, start, stream.pretty-stream-buffer, fill-pointer, count);
+  copy-bytes(stream.pretty-stream-buffer, fill-pointer, stuff, start, count);
   stream.pretty-stream-buffer-fill-pointer := new-fill-ptr;
   unless (count == chars)
     append-raw-output(stream, stuff, start + count, stop);
@@ -400,8 +400,8 @@ define method really-start-logical-block
     // Therefore, set-indentation grew the prefix enough to put spaces in where
     // we are about to put the per-line-prefix.
     new-block.logical-block-per-line-prefix-end := column;
-    copy-bytes(prefix, 0,
-	       stream.pretty-stream-prefix, column - prefix.size,
+    copy-bytes(stream.pretty-stream-prefix, column - prefix.size,
+	       prefix, 0,
 	       prefix.size);
   end;
   if (suffix)
@@ -414,15 +414,15 @@ define method really-start-logical-block
 	= max(total-suffix-len * 2,
 	      suffix-length + floor/(additional * 5, 4));
       let new-total-suffix = make(<byte-string>, size: new-total-suffix-len);
-      copy-bytes(total-suffix, total-suffix-len - suffix-length,
-		 new-total-suffix, new-total-suffix-len - suffix-length,
-		 suffix-length);
+      copy-bytes(new-total-suffix, new-total-suffix-len - suffix-length,
+		 total-suffix, total-suffix-len - suffix-length,
+     suffix-length);
       total-suffix := new-total-suffix;
       total-suffix-len := new-total-suffix-len;
       stream.pretty-stream-suffix := total-suffix;
     end;
-    copy-bytes(suffix, 0,
-	       total-suffix, total-suffix-len - new-suffix-len,
+    copy-bytes(total-suffix, total-suffix-len - new-suffix-len,
+	       suffix, 0,
 	       additional);
     new-block.logical-block-suffix-length := new-suffix-len;
   end;
@@ -445,7 +445,7 @@ define method set-indentation
     let new-prefix-len
       = max(prefix-len * 2, prefix-len + floor/((column - prefix-len) * 5, 4));
     let new-prefix = make(<byte-string>, size: new-prefix-len);
-    copy-bytes(prefix, 0, new-prefix, 0, current);
+    copy-bytes(new-prefix, 0, prefix, 0, current);
     prefix := stream.pretty-stream-prefix := new-prefix;
   end;
   if (column > current)
@@ -854,7 +854,7 @@ define method expand-tabs
       stop := tabpos;
     end;
     unless (new-buffer == buffer)
-      copy-bytes(buffer, 0, new-buffer, 0, stop);
+      copy-bytes(new-buffer, 0, buffer, 0, stop);
     end;
   end;
 end;
@@ -886,7 +886,7 @@ define method assure-space-in-buffer
     let new-length = max(length * 2, length + floor/(want * 5, 4));
     let new-buffer = make(<byte-string>, size: new-length);
     stream.pretty-stream-buffer := new-buffer;
-    copy-bytes(buffer, 0, new-buffer, 0, fill-ptr);
+    copy-bytes(new-buffer, 0, buffer, 0, fill-ptr);
     new-length - fill-ptr;
   end;
 end;
@@ -1103,7 +1103,7 @@ define method output-line (stream :: <pretty-stream>, newline :: <newline>) => (
   copy-maybe-overlapping-bytes
     (buffer, amount-to-consume, new-buffer, prefix-len, 
        fill-ptr - amount-to-consume);
-  copy-bytes(stream.pretty-stream-prefix, 0, new-buffer, 0, prefix-len);
+  copy-bytes(new-buffer, 0, stream.pretty-stream-prefix, 0, prefix-len);
   stream.pretty-stream-buffer-fill-pointer := new-fill-ptr;
   stream.pretty-stream-buffer-offset
     := stream.pretty-stream-buffer-offset + shift;
@@ -1134,7 +1134,7 @@ define method output-partial-line (stream :: <pretty-stream>) => ()
   write(stream.pretty-stream-target, buffer, start: 0, end: count);
   stream.pretty-stream-buffer-start-column
     := stream.pretty-stream-buffer-start-column + count;
-  copy-bytes(buffer, count, buffer, 0, new-fill-ptr);
+  copy-bytes(buffer, 0, buffer, count, new-fill-ptr);
   stream.pretty-stream-buffer-fill-pointer := new-fill-ptr;
   stream.pretty-stream-buffer-offset
     := stream.pretty-stream-buffer-offset + count;

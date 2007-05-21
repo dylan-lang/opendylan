@@ -141,7 +141,7 @@ define sealed method read-into!
       do-lines(method (line, si, ei, last?)
 		 ignore(last?);
 		 let n :: <integer> = ei - si;
-		 copy-bytes(line-contents(line), si, dst, i, min(n, limit));
+		 copy-bytes(dst, i, line-contents(line), si, min(n, limit));
 		 inc!(i, n);
 		 dec!(limit, n);
 		 when (limit <= 0)
@@ -198,12 +198,12 @@ define sealed method read-line-into!
     let contents = line-contents(line);
     case
       length - index <= size(string) - start =>
-	copy-bytes(contents, index, string, start, length - index);
+	copy-bytes(string, start, contents, index, length - index);
       grow? =>
 	string := make(type-for-copy(string), size: length - index);
-	copy-bytes(contents, index, string, start, length - index);
+	copy-bytes(string, start, contents, index, length - index);
       otherwise =>
-	copy-bytes(contents, index, string, start, size(string) - start);
+	copy-bytes(string, start, contents, index, size(string) - start);
     end;
     let next = line-next-in-buffer(line, stream.%buffer);
     if (next)

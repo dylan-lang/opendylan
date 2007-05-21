@@ -131,7 +131,7 @@ define function extract-string
     (contents :: <byte-vector>, start-pos :: <integer>, end-pos :: <integer>)
   let bytes = end-pos - start-pos;
   let string :: <byte-string> = make(<byte-string>, size: bytes);
-  copy-bytes(contents, start-pos, string, 0, bytes);
+  copy-bytes(string, 0, contents, start-pos, bytes);
   string
 end;
 

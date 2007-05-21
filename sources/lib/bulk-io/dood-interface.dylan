@@ -79,7 +79,7 @@ define method read-into! (this :: <mm-dood-stream>, n :: <integer>,
 		      => (count)
   ignore(on-end-of-stream);
   block ()
-    copy-bytes(this.mapped-file, this.stream-position, seq, start, n);
+    copy-bytes(seq, start, this.mapped-file, this.stream-position, n);
     this.stream-position := this.stream-position + n;
     n
   exception (<invalid-index-error>)
@@ -102,7 +102,7 @@ define method write (this :: <mm-dood-stream>, seq :: <sequence>,
 		 => ()
   if (unsupplied?(last)) last := seq.size; end if;
   let n = last - start;
-  copy-bytes(seq, start, this.mapped-file, this.stream-position, n);
+  copy-bytes(this.mapped-file, this.stream-position, seq, start, n);
   this.stream-position := this.stream-position + n;
   if (this.stream-position > this.stream-size)
     this.stream-size := this.stream-position;

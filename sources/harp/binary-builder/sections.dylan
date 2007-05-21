@@ -167,7 +167,7 @@ define method ensure-size-of-section-data
       want := want + want;
     end while;
     let new-data = make(<byte-vector>, size: want);
-    copy-bytes(data, 0, new-data, 0, curr-len);
+    copy-bytes(new-data, 0, data, 0, curr-len);
     section.section-data := new-data;
   end if;
 end method;

@@ -542,13 +542,13 @@ define method read-line
 	      if (line)
 		let new = make(stream-sequence-class(stream),
 			       size: line.size + i - bi);
-		copy-bytes(line, 0, new, 0, line.size);
-		copy-bytes(sb, bi, new, line.size, i - bi);
+		copy-bytes(new, 0, line, 0, line.size);
+		copy-bytes(new, line.size, sb, bi, i - bi);
 		line := new
 	      else
 		line := make(stream-sequence-class(stream),
 			     size: i - bi);
-		copy-bytes(sb, bi, line, 0, i - bi)
+		copy-bytes(line, 0, sb, bi, i - bi)
 	      end
 	    end method;
       iterate loop (sb :: false-or(<buffer>) = sb)

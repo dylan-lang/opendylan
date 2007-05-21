@@ -189,7 +189,7 @@ define method read-into!
   let src-n :: <integer>  = (stream-limit(stream) | stream.final-position) - pos;
   let dst-n :: <integer>  = dst.size - start;
   let n-read :: <integer> = min(n, src-n, dst-n);
-  copy-bytes(seq, pos, dst, start, n-read);
+  copy-bytes(dst, start, seq, pos, n-read);
   stream.current-position := pos + n-read;
   if (n > src-n & dst-n > src-n
       & unsupplied?(on-end-of-stream))
@@ -242,7 +242,7 @@ define method write
     dst := grow-for-stream(dst, required-space);
     stream-sequence(stream) := dst
   end;
-  copy-bytes(src, start-index, dst, pos, count);
+  copy-bytes(dst, pos, src, start-index, count);
   let new-pos = pos + count;
   stream.current-position := new-pos;
   if (new-pos > stream.final-position)
@@ -255,7 +255,7 @@ define method grow-for-stream
  => (new-seq :: <sequence>)
   let n :: <integer> = seq.size;
   let new-seq = make(object-class(seq), size: max(min-size, 2 * n));
-  copy-bytes(seq, 0, new-seq, 0, n);
+  copy-bytes(new-seq, 0, seq, 0, n);
   new-seq
 end method grow-for-stream;
 
@@ -304,7 +304,7 @@ define method stream-contents-as
   let _end = stream-limit(stream) | stream.final-position;
   let n = _end - _start;
   let result = make(type, size: n);
-  copy-bytes(stream-sequence(stream), _start, result, 0, n);
+  copy-bytes(result, 0, stream-sequence(stream), _start, n);
   if (clear-contents?)
     clear-contents(stream)
   end;

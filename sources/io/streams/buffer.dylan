@@ -134,7 +134,7 @@ define sealed method buffer-subsequence
  => (result :: <byte-string>)
   let count = end-index - start-index;
   let seq = make(class, size: count);
-  copy-bytes(buffer, start-index, seq, 0, count);
+  copy-bytes(seq, 0, buffer, start-index, count);
   seq
 end method buffer-subsequence;
 
@@ -144,7 +144,7 @@ define sealed method buffer-subsequence
  => (result :: <byte-vector>)
   let count = end-index - start-index;
   let seq = make(class, size: count);
-  copy-bytes(buffer, start-index, seq, 0, count);
+  copy-bytes(seq, 0, buffer, start-index, count);
   seq
 end method buffer-subsequence;
 
@@ -176,14 +176,14 @@ define sealed method copy-into-buffer!
     (buffer :: <buffer>, buffer-start-index :: <buffer-index>,
      sequence :: <byte-string>,
      #key start: start-index = 0, end: end-index) => ()
-  copy-bytes(sequence, start-index, buffer, buffer-start-index, (end-index | sequence.size))
+  copy-bytes(buffer, buffer-start-index, sequence, start-index, (end-index | sequence.size))
 end method copy-into-buffer!;
 
 define sealed method copy-into-buffer!
     (buffer :: <buffer>, buffer-start-index :: <buffer-index>,
      sequence :: <byte-vector>,
      #key start: start-index = 0, end: end-index) => ()
-  copy-bytes(sequence, start-index, buffer, buffer-start-index, (end-index | sequence.size))
+  copy-bytes(buffer, buffer-start-index, sequence, start-index, (end-index | sequence.size))
 end method copy-into-buffer!;
 
 
@@ -197,14 +197,14 @@ define sealed method copy-from-buffer!
     (buffer :: <buffer>, buffer-start-index :: <buffer-index>,
      sequence :: <byte-string>,
      #key start: start-index = 0, end: end-index) => ()
-  copy-bytes(buffer, buffer-start-index, sequence, start-index, (end-index | sequence.size))
+  copy-bytes(sequence, start-index, buffer, buffer-start-index, (end-index | sequence.size))
 end method copy-from-buffer!;
 
 define sealed method copy-from-buffer!
     (buffer :: <buffer>, buffer-start-index :: <buffer-index>,
      sequence :: <byte-vector>,
      #key start: start-index = 0, end: end-index) => ()
-  copy-bytes(buffer, buffer-start-index, sequence, start-index, (end-index | sequence.size))
+  copy-bytes(sequence, start-index, buffer, buffer-start-index, (end-index | sequence.size))
 end method copy-from-buffer!;
 
 //

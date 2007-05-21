@@ -380,10 +380,10 @@ define method substitute-command
         let new-size = max(truncate/(result.size * 3, 2),
                            result.size + str-size);
         let new-result = make(<byte-string>, size: new-size);
-        copy-bytes(result, 0, new-result, 0, result.size);
+        copy-bytes(new-result, 0, result, 0, result.size);
         result := new-result;
       end if;
-      copy-bytes(str, start, result, result-size, str-size);
+      copy-bytes(result, result-size, str, start, str-size);
       result-size := result-size + str-size;
     end method,
 

@@ -58,9 +58,7 @@ define inline function extract-string
     = make(<byte-string>, size: bytes);
   let sr :: <compilation-record> = loc.source-location-record;
   copy-bytes
-    (sr.contents, 
-     the-start,
-     string, 0, bytes);
+    (string, 0, sr.contents, the-start, bytes);
   string
 end function;
 
@@ -91,9 +89,7 @@ define function extract-token-text
   let bytes = the-end - the-start;
   let string :: <byte-string> = make(<byte-string>, size: bytes);
   copy-bytes
-    (loc.source-location-record.contents,
-     the-start,
-     string, 0, bytes);
+    (string, 0, loc.source-location-record.contents, the-start, bytes);
   string
 end function;
 

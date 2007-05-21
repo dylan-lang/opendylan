@@ -29,8 +29,10 @@ define open abstract class <typed-stream> (<basic-stream>)
   slot sequence-type /* ---*** :: subclass(<sequence>) */ = <byte-string>;
   slot to-element-mapper    :: <function> = byte-to-byte-char;
   slot from-element-mapper  :: <function> = byte-char-to-byte;
-  constant slot to-sequence-mapper   :: <function> = copy-bytes;
-  constant slot from-sequence-mapper :: <function> = copy-bytes;
+  constant slot to-sequence-mapper   :: <function> = 
+      method (s, ss, d, ds, n) => () copy-bytes(d, ds, s, ss, n) end;
+  constant slot from-sequence-mapper :: <function> = 
+      method (s, ss, d, ds, n) => () copy-bytes(d, ds, s, ss, n) end;
 end class <typed-stream>;
 
 define open abstract class <general-typed-stream> (<typed-stream>)
@@ -141,7 +143,7 @@ define sealed inline method coerce-to-sequence
      buffer :: <buffer>, buf-start :: <integer>,
      sequence :: <sequence>, seq-start :: <integer>,
      count :: <integer>) => ()
-  copy-bytes(buffer, buf-start, sequence, seq-start, count)
+  copy-bytes(sequence, seq-start, buffer, buf-start, count)
 end method coerce-to-sequence;
 
 define sealed inline method coerce-to-sequence
@@ -149,7 +151,7 @@ define sealed inline method coerce-to-sequence
      buffer :: <buffer>, buf-start :: <integer>,
      sequence :: <sequence>, seq-start :: <integer>,
      count :: <integer>) => ()
-  copy-bytes(buffer, buf-start, sequence, seq-start, count)
+  copy-bytes(sequence, seq-start, buffer, buf-start, count)
 end method coerce-to-sequence;
 
 define method coerce-to-sequence
@@ -157,7 +159,7 @@ define method coerce-to-sequence
      buffer :: <buffer>, buf-start :: <integer>,
      sequence :: <sequence>, seq-start :: <integer>,
      count :: <integer>) => ()
-  copy-bytes(buffer, buf-start, sequence, seq-start, count)
+  copy-bytes(sequence, seq-start, buffer, buf-start, count)
 end method coerce-to-sequence;
 
 
@@ -180,7 +182,7 @@ define sealed inline method coerce-from-sequence
      buffer :: <buffer>, buf-start :: <integer>,
      sequence :: <sequence>, seq-start :: <integer>,
      count :: <integer>) => ()
-  copy-bytes(sequence, seq-start, buffer, buf-start, count)
+  copy-bytes(buffer, buf-start, sequence, seq-start, count)
 end method coerce-from-sequence;
 
 define sealed inline method coerce-from-sequence
@@ -188,7 +190,7 @@ define sealed inline method coerce-from-sequence
      buffer :: <buffer>, buf-start :: <integer>,
      sequence :: <sequence>, seq-start :: <integer>,
      count :: <integer>) => ()
-  copy-bytes(sequence, seq-start, buffer, buf-start, count)
+  copy-bytes(buffer, buf-start, sequence, seq-start, count)
 end method coerce-from-sequence;
 
 define method coerce-from-sequence
@@ -196,5 +198,5 @@ define method coerce-from-sequence
      buffer :: <buffer>, buf-start :: <integer>,
      sequence :: <sequence>, seq-start :: <integer>,
      count :: <integer>) => ()
-  copy-bytes(sequence, seq-start, buffer, buf-start, count)
+  copy-bytes(buffer, buf-start, sequence, seq-start, count)
 end method coerce-from-sequence;
