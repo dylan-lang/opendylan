@@ -411,7 +411,7 @@ define method restart-port (_port :: <port>) => ()
       port-event-thread(_port)
 	:= make(<thread>,
 		function: method () port-event-loop(_port) end,
-		name: format-to-string("CLIM Event Dispatcher for %a",
+		name: format-to-string("DUIM Event Dispatcher for %=",
 				       port-server-path(_port)));
     #"2n" => #f;	//---*** what do we do about this case?
   end
