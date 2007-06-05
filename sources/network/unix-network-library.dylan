@@ -141,6 +141,7 @@ define module unix-sockets
       ifr-flags, ifr-flags-setter,
       $IF-NAMESIZE, $SIOCGIFINDEX,
       $SIOCGIFFLAGS, $SIOCSIFFLAGS,
+      $SIOCGIFNAME,
       $IFF-UP,
       $IFF-BROADCAST,
       $IFF-DEBUG,

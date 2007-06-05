@@ -177,7 +177,13 @@ end C-struct;
 
 define method ifr-name (ifreq :: <ifreq*>)
  => (name :: <string>);
-  error("not implemented");
+  let res = "";
+  let i = 0;
+  while (%ifr-name(ifreq, i) ~= 0 & i < $IF-NAMESIZE)
+    res := add(res, as(<character>, %ifr-name(ifreq, i)));
+    i := i + 1;
+  end;
+  res;
 end method ifr-name;
 
 define method ifr-name-setter (name :: <string>, ifreq :: <ifreq*>)
@@ -212,6 +218,7 @@ end method ifr-flags-setter;
 
 
 define constant $SIOCGIFINDEX = #x8933;
+define constant $SIOCGIFNAME  = #x8910;
 define constant $SIOCGIFFLAGS = #x8913;
 define constant $SIOCSIFFLAGS = #x8914;
 
