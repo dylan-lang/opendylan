@@ -1044,8 +1044,8 @@ extern D initialize_object_stack_allocate_filled
 #define primitive_gc_state() (I(0)) /* !@#$ DUMMY DEFN */
 #define primitive_pin_object(x) (x)
 extern void primitive_unpin_object(D);
-#define primitive_mps_finalize(x) { }
-#define primitive_mps_finalization_queue_first() ((D)0)
+extern void primitive_mps_finalize(D);
+extern void* primitive_mps_finalization_queue_first();
 #define primitive_mps_park()
 #define primitive_mps_clamp()
 #define primitive_mps_release()

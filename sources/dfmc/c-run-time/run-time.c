@@ -95,6 +95,37 @@ INLINE D instance_header_setter (D header, D* instance) {
   return(header); 
 }
 
+static struct _mps_finalization_queue {
+  D first;
+  struct _mps_finalization_queue *rest;
+} * mps_finalization_queue = NULL;
+
+static void mps_finalization_proc(D obj, void *data) {
+  struct _mps_finalization_queue *new_finalization_queue =
+    GC_NEW(struct _mps_finalization_queue);
+  
+  new_finalization_queue->first = obj;
+  do {
+    new_finalization_queue->rest = mps_finalization_queue;
+  } while (!CONDITIONAL_UPDATE(mps_finalization_queue,
+                               new_finalization_queue,
+                               new_finalization_queue->rest));
+}
+
+void primitive_mps_finalize(void *obj) {
+  GC_register_finalizer(obj, mps_finalization_proc, NULL, NULL, NULL);
+}
+  
+void* primitive_mps_finalization_queue_first() {
+  if (mps_finalization_queue) {
+    D obj = mps_finalization_queue->first;
+    mps_finalization_queue = mps_finalization_queue->rest;
+    return(obj);
+  }
+  else
+    return(NULL);
+}
+
 void  primitive_mps_collect (DBOOL ignored) {
   ignore(ignored);
   GC_gcollect();
