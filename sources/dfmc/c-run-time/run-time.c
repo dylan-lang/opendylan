@@ -100,6 +100,11 @@ static struct _mps_finalization_queue {
   struct _mps_finalization_queue *rest;
 } * mps_finalization_queue = NULL;
 
+/* XXX: [by bruce hoult via mail on 30 July 2007]
+> this does a GC_NEW() from within the finalizer, which is called
+> from within the GC.  Therefore the GC is entered recursively.  This is
+> very very bad and will bite you one day and you won't know why.
+*/
 static void mps_finalization_proc(D obj, void *data) {
   struct _mps_finalization_queue *new_finalization_queue =
     GC_NEW(struct _mps_finalization_queue);
