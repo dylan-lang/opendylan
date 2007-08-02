@@ -98,37 +98,34 @@ INLINE D instance_header_setter (D header, D* instance) {
 static struct _mps_finalization_queue {
   D first;
   struct _mps_finalization_queue *rest;
-} * mps_finalization_queue = NULL;
+} *mps_finalization_queue = NULL;
 
-/* XXX: [by bruce hoult via mail on 30 July 2007]
-> this does a GC_NEW() from within the finalizer, which is called
-> from within the GC.  Therefore the GC is entered recursively.  This is
-> very very bad and will bite you one day and you won't know why.
-*/
-static void mps_finalization_proc(D obj, void *data) {
-  struct _mps_finalization_queue *new_finalization_queue =
-    GC_NEW(struct _mps_finalization_queue);
-  
-  new_finalization_queue->first = obj;
+static void mps_finalization_proc(D obj, struct _mps_finalization_queue *cons) {
+  cons->first = obj;
   do {
-    new_finalization_queue->rest = mps_finalization_queue;
-  } while (!CONDITIONAL_UPDATE(mps_finalization_queue,
-                               new_finalization_queue,
-                               new_finalization_queue->rest));
+    cons->rest = mps_finalization_queue;
+  } while (!CONDITIONAL_UPDATE(mps_finalization_queue, cons, cons->rest));
 }
 
-void primitive_mps_finalize(void *obj) {
-  GC_register_finalizer(obj, mps_finalization_proc, NULL, NULL, NULL);
+void primitive_mps_finalize(D obj) {
+  GC_register_finalizer(obj,
+			(GC_finalization_proc)mps_finalization_proc,
+			GC_NEW(struct _mps_finalization_queue),
+			NULL, NULL);
 }
   
-void* primitive_mps_finalization_queue_first() {
-  if (mps_finalization_queue) {
-    D obj = mps_finalization_queue->first;
-    mps_finalization_queue = mps_finalization_queue->rest;
-    return(obj);
+D primitive_mps_finalization_queue_first() {
+  struct _mps_finalization_queue *queue;
+
+ RETRY:
+  if ((queue = mps_finalization_queue)) {
+    if (!CONDITIONAL_UPDATE(mps_finalization_queue, queue->rest, queue))
+      goto RETRY;
+
+    return(queue->first);
   }
-  else
-    return(NULL);
+
+  return(NULL);
 }
 
 void  primitive_mps_collect (DBOOL ignored) {

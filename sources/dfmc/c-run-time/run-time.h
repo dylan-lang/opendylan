@@ -1045,7 +1045,7 @@ extern D initialize_object_stack_allocate_filled
 #define primitive_pin_object(x) (x)
 extern void primitive_unpin_object(D);
 extern void primitive_mps_finalize(D);
-extern void* primitive_mps_finalization_queue_first();
+extern D primitive_mps_finalization_queue_first();
 #define primitive_mps_park()
 #define primitive_mps_clamp()
 #define primitive_mps_release()
