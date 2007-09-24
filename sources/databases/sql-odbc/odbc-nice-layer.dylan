@@ -214,7 +214,7 @@ end method;
 //Lose this ASAP.
 define function collect-garbage ()
   block ()
-    primitive-mps-collect();
+    primitive-mps-collect(primitive-boolean-as-raw(#f));
     values(raw-as-integer(primitive-mps-committed()), 0)
   afterwards
     primitive-mps-release();
@@ -464,7 +464,7 @@ define constant <sqlgetinfo-smallint-info-type>
            $sql-quoted-identifier-case,
            $sql-txn-capable);
                     
-define constant <sqlgetinfo-uinteger-info-type>
+define constant <sqlgetinfo-uinteger-info-part1>
   = one-of(//$sql-aggregate-functions,
            $sql-alter-domain,
            $sql-alter-table,
@@ -519,8 +519,10 @@ define constant <sqlgetinfo-uinteger-info-type>
            $sql-drop-schema,
            $sql-drop-table,
            $sql-drop-translation,
-           $sql-drop-view,
-           $sql-dynamic-cursor-attributes1,
+           $sql-drop-view);
+
+define constant <sqlgetinfo-uinteger-info-part2>
+  = one-of($sql-dynamic-cursor-attributes1,
            $sql-dynamic-cursor-attributes2,
            $sql-forward-only-cursor-attributes1,
            $sql-forward-only-cursor-attributes2,
@@ -567,6 +569,9 @@ define constant <sqlgetinfo-uinteger-info-type>
            $sql-txn-isolation-option,
            $sql-union);
 
+define constant <sqlgetinfo-uinteger-info-type>
+  = type-union(<sqlgetinfo-uinteger-info-part1>,
+               <sqlgetinfo-uinteger-info-part2>);
 
 define generic nice-SQLGetInfo(connection-handle :: <object>,
                                info-type :: <object>)
