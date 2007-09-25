@@ -1,4 +1,4 @@
-AC_INIT([Open Dylan], [1.0 beta 1])
+AC_INIT([Open Dylan], [1.0 beta 5])
 AC_PREREQ(2.50)
 
 #---------------------
@@ -9,32 +9,29 @@ srcdir=`(cd $srcdir; pwd)`
 
 AC_DEFUN(FD_PLATFORM,[
 case $1 in
-i*86-*-linux*) $2=x86-linux ;;
-i*86-*-freebsd*) $2=x86-bsd ;;
-i*86-*-darwin*) $2=x86-darwin ;;
-powerpc-*-darwin*) $2=ppc-darwin ;;
-powerpc-*-linux-gnu*) $2=ppc-linux ;;
-powerpc-apple-darwin*) $2=ppc-darwin ;;
+i*86-*-linux*) $2=x86-linux; $3=sources/lib/run-time/pentium-linux ;;
+i*86-*-freebsd*) $2=x86-freebsd; $3=sources/lib/run-time/pentium-freebsd ;;
+i*86-*-darwin*) $2=x86-darwin; $3=sources/dfmc/c-run-time ;;
+powerpc-*-darwin*) $2=ppc-darwin; $3=sources/dfmc/c-run-time ;;
+powerpc-*-linux-gnu*) $2=ppc-linux; $3=sources/dfmc/c-run-time ;;
+powerpc-apple-darwin*) $2=ppc-darwin; $3=sources/dfmc/c-run-time ;;
 *) AC_MSG_ERROR([The $1 platform is not supported.]) ;;
 esac])
  
 AC_CANONICAL_BUILD
-FD_PLATFORM($build,fd_build)
+FD_PLATFORM($build,fd_build,rt_build)
 AC_SUBST(fd_build)
+AC_SUBST(rt_build)
 
 AC_CANONICAL_HOST
-FD_PLATFORM($host,fd_host)
+FD_PLATFORM($host,fd_host,rt_host)
 AC_SUBST(fd_host)
+AC_SUBST(rt_host)
 
 AC_CANONICAL_TARGET
-FD_PLATFORM($target,fd_target)
+FD_PLATFORM($target,fd_target,rt_target)
 AC_SUBST(fd_target)
-
-case $build in
-*-*-darwin*) RT_SRCDIR=$srcdir/sources/dfmc/c-run-time ;;
-*) RT_SRCDIR=$srcdir/sources/lib/run-time/pentium-linux ;;
-esac
-AC_SUBST(RT_SRCDIR)
+AC_SUBST(rt_target)
 
 AC_PROG_INSTALL
 AC_PROG_LN_S
