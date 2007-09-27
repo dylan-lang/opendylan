@@ -4,6 +4,7 @@ use strict;
 use File::Spec;
 use Getopt::Long;
 use XML::Parser;
+use Config;
 
 my $lidfile_line;
 
@@ -58,19 +59,35 @@ sub build_library {
 
     return $built{$library} if exists $built{$library};
 
-    open(REGISTRY, '<', "$user_registries/$platform_name/$library")
-	|| open(REGISTRY, '<', "$user_registries/generic/$library")
-	|| return 0;
-    my $line = <REGISTRY>;
-    close(REGISTRY);
+    my $separator = quotemeta(($Config{'osname'} eq 'MSWin32') ? ';' : ':');
+    my $lidfile;
+    my $dir;
+  REGISTRY:
+    foreach my $registry (split /$separator/, $user_registries) {
+	open(REGISTRY, '<', "$registry/$platform_name/$library")
+	    || open(REGISTRY, '<', "$registry/generic/$library")
+	    || next REGISTRY;
+	my $line = <REGISTRY>;
+	close(REGISTRY);
 
+	my ($volume, $directories, undef) = File::Spec->splitpath($registry, 1);
+	my @directories = File::Spec->splitdir($directories);
 
-    # abstract://dylan/environment/console/minimal-console-compiler.lid
-    $line =~ s|^abstract://dylan/||;
-    my ($dir, $lidfile) = ($line =~ m|(.*)/(.*)|);
+	lc(pop(@directories)) eq 'registry' or die;
 
-    $dir = File::Spec->catdir($user_sources, $dir);
-    $lidfile = File::Spec->catfile($dir, $lidfile);
+	# abstract://dylan/environment/console/minimal-console-compiler.lid
+	$line =~ s|^abstract://dylan/||;
+	($dir, $lidfile) = ($line =~ m|(.*)/(.*)|);
+	push @directories, File::Spec::Unix->splitdir($dir);
+	$dir = File::Spec->catpath($volume,
+				   File::Spec->catdir(@directories), '');
+	$lidfile = File::Spec->catfile($dir, $lidfile);
+	last REGISTRY;
+    }
+
+    if (!defined $lidfile) {
+	return 0;
+    }
 
     my $header = &parse_lid_file($lidfile);
     
