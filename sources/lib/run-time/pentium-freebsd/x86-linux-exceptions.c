@@ -25,27 +25,19 @@ extern void dylan_float_underflow_handler();
 /* ---*** TODO: Find out how to trap stack overflows and add an appropriate handler */
 
 #include <sys/signal.h>
+#include <ucontext.h>
 #include <ieeefp.h>
+#include <fenv.h>
 
 #define EXCEPTION_PREAMBLE() \
   struct sigaction oldFPEHandler; \
   struct sigaction oldSEGVHandler; \
-  void doFPEHandler (int signum, siginfo_t *info, void * sc) { \
-    DylanFPEHandler(signum, info, sc);	\
-  } \
-  void doSEGVHandler (int signum, siginfo_t *info, void * sc) { \
-    DylanSEGVHandler(signum, info, sc); \
-  } \
-  oldFPEHandler.sa_sigaction = doFPEHandler; \
-  oldSEGVHandler.sa_sigaction = doSEGVHandler; \
   EstablishDylanExceptionHandlers(&oldFPEHandler, &oldSEGVHandler); \
   {
 
 #define EXCEPTION_POSTAMBLE() \
   } \
   RemoveDylanExceptionHandlers(&oldFPEHandler, &oldSEGVHandler);
-
-typedef void (* SIG_SIGCONTEXT)(int, struct sigcontext);
 
 static void DylanFPEHandler (int sig, siginfo_t *info, void *sc);
 static void DylanSEGVHandler (int sig, siginfo_t *info, void *sc);
@@ -58,16 +50,16 @@ static void EstablishDylanExceptionHandlers (struct sigaction * oldFPEHandler,
 
   sigset_t set, oldset;
 
-  newFPEHandler.sa_handler = oldFPEHandler->sa_handler;
-  sigemptyset(&newFPEHandler.sa_mask);
-  newFPEHandler.sa_flags = 0;
+  sigfillset(&newFPEHandler.sa_mask);
+  newFPEHandler.sa_sigaction = DylanFPEHandler;
+  newFPEHandler.sa_flags = SA_SIGINFO;
   sigaction(SIGFPE, &newFPEHandler, oldFPEHandler);
 
 #if 0
-  newSEGVHandler.sa_handler = oldSEGVHandler->sa_handler;
-  sigemptyset(&newSEGVHandler.sa_mask);
-  newSEGVHandler.sa_flags = 0;
-  sigaction(SIGSEGV, &newSEGVHandler, oldSEGVHandler);
+  sigfillset(&newFPEHandler.sa_mask);
+  newSEGVHandler.sa_sigaction = DylanFSEGVandler;
+  newSEGVHandler.sa_flags = SA_SIGINFO;
+  sigaction(SIGFPE, &newSEGVHandler, oldSEGVHandler);
 #endif
 
   sigemptyset(&set);
@@ -84,25 +76,6 @@ static void RemoveDylanExceptionHandlers (struct sigaction * oldFPEHandler,
 #endif
 }
 
-
-/* ---*** NOTE: There doesn't appear to be an include file that defines these constants! */
-
-#define TRAP_INTEGER_DIVZERO   0
-#define TRAP_INTEGER_OVERFLOW  4
-#define TRAP_FLOAT_EXCEPTION  16
-
-#define FS_INVALID_OP          1
-#define FS_DENORMAL_OPERAND    2
-#define FS_DIVZERO             4
-#define FS_OVERFLOW            8
-#define FS_UNDERFLOW          16
-#define FS_INEXACT            32
-#define FS_FSTACK_OVERFLOW    64
-#define FS_ALL_EXCEPTIONS \
-  (FS_INVALID_OP | FS_DENORMAL_OPERAND | FS_DIVZERO | FS_OVERFLOW | FS_UNDERFLOW \
-   | FS_INEXACT | FS_FSTACK_OVERFLOW)
-
-#include <fenv.h>
 __inline
 void RestoreFPState ()
 {
@@ -111,47 +84,43 @@ void RestoreFPState ()
   return;
 }
 
-static void DylanFPEHandler (int sig, siginfo_t *info, void *sc)
+static void DylanFPEHandler (int sig, siginfo_t *info, void *uap)
 {
   if (inside_dylan_ffi_barrier() == 0) { }
 
   else {
+    ucontext_t *uc = (ucontext_t *) uap;
+
     switch (info->si_code) {
     case FPE_INTDIV:
       RestoreFPState();
-      dylan_integer_divide_0_handler();
-      break;                                    /* Should never get here ... */              
+      uc->uc_mcontext.mc_eip = (long) dylan_integer_divide_0_handler;
+      break;
+      
     case FPE_INTOVF:
       RestoreFPState();
-      dylan_integer_overflow_handler();
-      break;                                    /* Should never get here ... */              
+      uc->uc_mcontext.mc_eip = (long) dylan_integer_overflow_handler;
+      break;
+      
     case FPE_FLTDIV:
       RestoreFPState();
-      dylan_float_divide_0_handler();       /* Should never return ... */
+      uc->uc_mcontext.mc_eip = (long) dylan_float_divide_0_handler;
       break;
+      
     case FPE_FLTOVF:
       RestoreFPState();
-      dylan_float_overflow_handler();       /* Should never return ... */
+      uc->uc_mcontext.mc_eip = (long) dylan_float_overflow_handler;
       break;
+
     case FPE_FLTUND:
       RestoreFPState();
-      dylan_float_underflow_handler();      /* Should never return ... */
+      uc->uc_mcontext.mc_eip = (long) dylan_float_underflow_handler;
       break;
+      
     default:
       break;
     }
   }
-
-  /*  // Here iff we should invoke the previous handler ...
-  if (oldHandler == SIG_DFL) {
-    signal(signum, SIG_DFL);
-    raise(signum);
-  }
-  else
-    // ---*** NOTE: What if the old handler isn't expecting this calling sequence?
-    (*(SIG_SIGCONTEXT)oldHandler)(signum, sc);
-  */
-  return;
 }
 
 
