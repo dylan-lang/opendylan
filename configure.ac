@@ -63,8 +63,13 @@ AC_SUBST(bootstrap_target)
 
 AC_ARG_WITH(mps,
             AC_HELP_STRING([--with-mps=PATH],
-                            [Path to MPS location.]))
+                            [Path to MPS distribution and build.]))
 AC_SUBST(with_mps)
+
+AC_ARG_WITH(library-source,
+            AC_HELP_STRING([--with-library-source=PATH],
+                           [Path to Dylan contributed libraries source.]))
+AC_SUBST(with_library_source)
 
 AC_MSG_CHECKING(for Library Packs to include)
 LIBRARY_PACKS=Core

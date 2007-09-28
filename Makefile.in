@@ -15,6 +15,8 @@ fdmake		= @PERL@ $(srcdir)/admin/builds/fdmake.pl
 
 FDCOMPILE	= @FDCOMPILE@
 
+library_srcdir	= @with_library_source@
+
 LIBRARY_PACKS	= @LIBRARY_PACKS@
 
 all:	@bootstrap_target@
@@ -156,7 +158,7 @@ FINAL_ENV = \
 	OPEN_DYLAN_BUILD_LOGS=$(abs_builddir)/Bootstrap.final/logs \
 	OPEN_DYLAN_USER_ROOT=$(abs_builddir)/Bootstrap.final \
 	OPEN_DYLAN_USER_INSTALL=$(prefix) \
-	OPEN_DYLAN_USER_REGISTRIES=$(abs_srcdir)/sources/registry \
+	OPEN_DYLAN_USER_REGISTRIES=$(abs_srcdir)/sources/registry:$(library_srcdir)/registry \
 	OPEN_DYLAN_USER_SOURCES=$(abs_srcdir)/sources \
 	OPEN_DYLAN_USER_BUILD=$(abs_builddir)/Bootstrap.final/build
 
@@ -190,7 +192,30 @@ TAGS:
 
 dist:
 
-check:
+CHECK_STAGE = 3
+
+CHECK_APPS = \
+	libraries-test-suite-app \
+	c-ffi-test-suite-app \
+	duim-test-suite-app \
+	deuce-test-suite-app \
+	channels-tests
+
+check:	stage-$(CHECK_STAGE)-bootstrap
+	@OPEN_DYLAN_PLATFORM_NAME=$(fd_build) \
+	  OPEN_DYLAN_RELEASE_ROOT=$(abs_builddir)/Bootstrap.$(CHECK_STAGE) \
+	  OPEN_DYLAN_RELEASE_INSTALL=$(abs_builddir)/Bootstrap.$(CHECK_STAGE) \
+	  OPEN_DYLAN_BUILD_LOGS=$(abs_builddir)/Bootstrap.$(CHECK_STAGE)/logs \
+	  OPEN_DYLAN_USER_ROOT=$(abs_builddir)/Bootstrap.$(CHECK_STAGE) \
+	  OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.$(CHECK_STAGE) \
+	  OPEN_DYLAN_USER_REGISTRIES=$(abs_srcdir)/sources/registry:$(library_srcdir)/registry \
+	  OPEN_DYLAN_USER_SOURCES=$(abs_srcdir)/sources \
+	  OPEN_DYLAN_USER_BUILD=$(abs_builddir)/Bootstrap.$(CHECK_STAGE)/build \
+	  $(fdmake) --compiler="Bootstrap.$(CHECK_STAGE)/bin/minimal-console-compiler -build -save" \
+		$(CHECK_APPS)
+	for app in $(CHECK_APPS); do \
+	  ./Bootstrap.$(CHECK_STAGE)/bin/$$app; \
+	done
 
 installcheck:
 
