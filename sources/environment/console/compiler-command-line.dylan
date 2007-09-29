@@ -73,6 +73,9 @@ define command-line internal-main => <internal-main-command>
   keyword system-root   :: <directory-locator> = "system area root";
   flag unify            = "combine the libraries into a single executable";
   flag profile-commands = "profile the execution of each command";
+  flag harp             = "generate HARP output";
+  flag assemble         = "generate assembly-language output";
+  flag dfm              = "generate Dylan Flow Machine output";
 
   // Backwards-compatibility options for pentium-dw users
   flag not-recursive    = "don't build subprojects as well";

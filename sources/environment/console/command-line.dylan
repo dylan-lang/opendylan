@@ -60,13 +60,13 @@ define abstract class <basic-main-command> (<basic-command>)
     init-keyword: debug-info:;
   constant slot %messages :: false-or(<symbol>) = #f,
     init-keyword: messages:;
-/*---*** fill this in later.
   constant slot %harp?          :: <boolean> = #f,
     init-keyword: harp?:;
   constant slot %assemble?                   = #f,
     init-keyword: assemble?:;
   constant slot %dfm?           :: <boolean> = #f,
     init-keyword: dfm?:;
+/*---*** fill this in later.
   constant slot %exports?       :: <boolean> = #f,
     init-keyword: exports?:;
   let gc? = #f;
@@ -101,7 +101,14 @@ define method execute-main-command
 	save?:       command.%save?,
 	link?:       #f,
 	release?:    command.%release?,
-	subprojects: command.%subprojects? & ~command.%not-recursive?)
+	subprojects: command.%subprojects? & ~command.%not-recursive?,
+        output:      begin
+                       let output = make(<stretchy-object-vector>);
+                       if (command.%assemble?) add!(output, #"assembler") end;
+                       if (command.%dfm?) add!(output, #"dfm") end;
+                       if (command.%harp?) add!(output, #"harp") end;
+                       output
+                     end)
   end;
   if (build? | command.%link?)
     let target
