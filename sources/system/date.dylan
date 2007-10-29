@@ -467,7 +467,7 @@ define method parse-date (date :: <string>, format :: <string>)
         'Y' => date.date-year := string-to-integer(read(date-stream, 4));
         'y' => date.date-year := begin 
                   let year = string-to-integer(read(date-stream, 2));
-                  if (year < 70) 1900 else 2000 end if + year;
+                  if (year > 70) 1900 else 2000 end if + year;
                 end;
         'H', 'k' => date.date-hours := string-to-integer(read(date-stream, 2));
         'M' => date.date-minutes := string-to-integer(read(date-stream, 2));
