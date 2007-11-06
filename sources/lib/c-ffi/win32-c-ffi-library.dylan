@@ -167,6 +167,10 @@ define module c-ffi-interface
     equal-memory?,
     clear-memory!,
 
+    $trace-ffi-calls,
+    log-entry,
+    log-exit,
+
     <ffi-integer>
     ;
 end module;

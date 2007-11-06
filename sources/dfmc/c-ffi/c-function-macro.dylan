@@ -91,20 +91,41 @@ define &macro C-function-definer
     let (arg-specs, result-spec, c-name, options)
       = parse-c-function-spec(dylan-name, spec);
     let (arg-fragments, result-fragment, parameter-list-fragment,
-	 return-values-fragment, define-gf?)
+	 return-values-fragment, define-gf?, parameter-names-fragment)
       = parse-early-options(arg-specs, result-spec, options, dylan-name);
     let inline-policy = mods;
-    let body = #{ c-function-body
-		   ?dylan-name
-		   (c-name ?c-name),
-		 (options ??options, ...),
-		 ?result-fragment,
-		 ??arg-fragments, ...
-		end };
+    let body = #{ begin
+                    if (?=$trace-ffi-calls)
+                      // we depend on folding one of the branches for
+                      // performance reasons, so $trace-ffi-calls better be
+                      // a constant.  apply(values, ...)
+                      // isn't optimized, that's why the whole c-function-body
+                      // code segment is duplicated here.
+                      ?=log-entry(?c-name, ?parameter-names-fragment);
+                      let (#rest results) = c-function-body
+                                               ?dylan-name
+                                               (c-name ?c-name),
+                                               (options ??options, ...),
+                                               ?result-fragment,
+                                               ??arg-fragments, ...
+                                             end;
+                      ?=log-exit(?c-name, results);
+                      apply(values, results)
+                    else
+                      c-function-body
+		        ?dylan-name
+                        (c-name ?c-name),
+                        (options ??options, ...),
+                        ?result-fragment,
+                        ??arg-fragments, ...
+                      end
+                    end
+                  end
+                };
     if (define-gf?)
       #{ define ?inline-policy method ?dylan-name ?parameter-list-fragment
 	  => ?return-values-fragment;
-	     ?body
+           ?body
 	 end }
     else
       #{ define ?inline-policy function ?dylan-name ?parameter-list-fragment
@@ -132,9 +153,10 @@ define method parse-early-options
      result-fragment :: <template>,
      parameter-list-fragment :: <template>,
      return-values-fragment :: <template>,
-     function-generic? :: <boolean>);
+     function-generic? :: <boolean>,
+     parameter-names-fragment :: <template>);
 
-  collecting (return-values, arg-fragments, parameters)
+  collecting (return-values, arg-fragments, parameters, parameter-names)
     let result-fragment = #f;
     let vname = result-spec.name;
     let type = ~void?(result-spec) & result-spec.designator-name;
@@ -182,10 +204,12 @@ define method parse-early-options
 		     #{ ?nn :: import-type-for-reference(?type) });
         if (call-discipline(arg) = #"in-out")
 	  // parameter to the dylan function
+          collect-into(parameter-names, #{ ?nn });
 	  collect-into(parameters,
                        #{ ?nn :: export-type-for-reference(?type) })
         end;
       else
+        collect-into(parameter-names, #{ ?nn });
         collect-into(parameters, #{ ?nn :: export-type-for(?type) })
       end;
 
@@ -203,12 +227,14 @@ define method parse-early-options
     end unless;
 
     let params = collected(parameters);
+    let param-names = collected(parameter-names);
     let returns = collected(return-values);
     values(collected(arg-fragments),
 	   result-fragment,
 	   #{ (??params, ...) },
 	   #{ (??returns, ...) },
-	   gf-method?);
+	   gf-method?,
+           #{ ??param-names, ... });
   end collecting;
 end method;
 	   

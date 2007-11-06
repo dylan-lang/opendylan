@@ -56,3 +56,28 @@ define inline function clear-memory! (pointer :: <C-pointer>,
   let raw-size = primitive-unwrap-machine-word(as(<machine-word>, size));
   primitive-fill!(raw-pointer, raw-zero, raw-zero, raw-size, raw-zero);
 end function;
+
+// If this is set to #t, all calls to foreign functions are traced.
+// This is done by calling a function log-entry(c-function-name, #rest
+// args) on function entry, and log-exit(c-function-name, #rest
+// results) on function exit.  You need to provide these functions in
+// the lexical scope of the "define C-function".  Empty stubs are
+// provided here, in case you don't want to trace all your FFI
+// libraries.
+//
+//You can easily use those definitions in a client library and
+//exclude log-entry and log-exit from c-ffi.
+/*
+define inline-only function log-entry(c-function-name, #rest args) => ();
+  format-out("entering %s %=", c-function-name, args);
+end;
+define inline-only function log-exit(c-function-name, #rest results) => ();
+  format-out(" => %=\n", results);
+end;
+*/
+
+define constant $trace-ffi-calls = #f;
+
+define inline-only function log-entry(c-function-name, #rest args) => (); end;
+define inline-only function log-exit(c-function-name, #rest results) => (); end;
+
