@@ -240,7 +240,7 @@ define method as
   do-lines(method (line, si, ei, last?)
 	     let n :: <integer> = ei - si;
 	     // Use the fastest method available to copy the line contents
-	     copy-bytes(line-contents(line), si, string, i, n);
+	     copy-bytes(string, i, line-contents(line), si, n);
 	     inc!(i, n);
 	     if (~last? | ei > line-length(line))
 	       string[i] := '\n';
