@@ -72,6 +72,11 @@ define method write-section-table
   end for;
 end method;
 
+// When there are more than 64k relocation entries, we need to set a flag
+// and write the actual number of relocations into the virtual address
+// of the first relocation.  See:
+//   http://msdn2.microsoft.com/en-us/library/ms680341.aspx
+//
 define method write-coff-section-header
      (stream :: <stream>, coff-file :: <coff-file>, 
       section :: <coff-section>, base :: <integer>) => ()
@@ -88,9 +93,11 @@ define method write-coff-section-header
   write-word(stream, coff-file, base-of-raw-data);
   write-word(stream, coff-file, if (reloc-size > 0) base-of-relocs else 0 end); 
   write-word(stream, coff-file, if (lines-size > 0) base-of-lines  else 0 end); 
-  write-short(stream, coff-file, reloc-size);
+  write-short(stream, coff-file, min(65535, reloc-size)); // $lnk-nreloc-ovfl
   write-short(stream, coff-file, lines-size);
-  write-word(stream, coff-file, section.section-flags);
+  write-word(stream,
+             coff-file,
+             generic-+(section.section-flags, if (reloc-size > 65535) $lnk-nreloc-ovfl else 0 end));
 end method;
 
 
@@ -136,6 +143,13 @@ end method;
 define method write-relocations
     (stream :: <stream>,  coff-file :: <coff-file>, section :: <coff-section>)
     => ()
+  if (section.relocations.size > 65535)
+    // overflow of SHORT header field for number of
+    // relocations.  See write-coff-section-header above.
+    write-word(stream, coff-file, section.relocations.size);
+    write-word(stream, coff-file, 0);
+    write-short(stream, coff-file, 0);
+  end;
   for (reloc :: <coff-relocation> in section.relocations)
     write-relocation(stream, coff-file, reloc);
   end for;
@@ -255,7 +269,8 @@ define method write-one-symbol
   end for;
 end method;
 
-
+// no support for more than 64k relocations.  Fortunately,
+// we don't use this.
 define method write-one-symbol
      (stream :: <stream>, 
       coff-file :: <coff-file>, 

@@ -118,11 +118,19 @@ end method;
 
 define method total-relocation-size 
     (section :: <coff-section>) => (size :: <integer>)
-  reduce(method (val :: <integer>, reloc :: <coff-relocation>)
-           val + reloc.unit-size
-         end method,
-         0,
-         section.relocations);
+  let reloc-size =
+    reduce(method (val :: <integer>, reloc :: <coff-relocation>)
+             val + reloc.unit-size
+           end method,
+           0,
+           section.relocations);
+  if (section.relocations.size > 65535)
+    // COFF section header only allows SHORT for number
+    // of relocations, so we need an ugly hack
+    reloc-size + section.relocations.first.unit-size
+  else
+    reloc-size
+  end
 end method;
 
 
