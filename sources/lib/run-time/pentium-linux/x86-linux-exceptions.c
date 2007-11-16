@@ -28,31 +28,39 @@ extern void dylan_float_underflow_handler();
 #define EXCEPTION_PREAMBLE() \
   struct sigaction oldFPEHandler; \
   struct sigaction oldSEGVHandler; \
+  struct sigaction oldTRAPHandler; \
   void doFPEHandler (int signum, struct sigcontext sc) { \
     DylanFPEHandler(oldFPEHandler.sa_handler, signum, sc); \
   } \
   void doSEGVHandler (int signum, struct sigcontext sc) { \
     DylanSEGVHandler(oldSEGVHandler.sa_handler, signum, sc); \
   } \
+  void doTRAPHandler (int signum, struct sigcontext sc) { \
+    DylanTRAPHandler(oldTRAPHandler.sa_handler, signum, sc);	\
+  } \
   oldFPEHandler.sa_handler = (sighandler_t)doFPEHandler; \
   oldSEGVHandler.sa_handler = (sighandler_t)doSEGVHandler; \
-  EstablishDylanExceptionHandlers(&oldFPEHandler, &oldSEGVHandler); \
+  oldTRAPHandler.sa_handler = (sighandler_t)doTRAPHandler; \
+  EstablishDylanExceptionHandlers(&oldFPEHandler, &oldSEGVHandler, &oldTRAPHandler);	\
   {
 
 #define EXCEPTION_POSTAMBLE() \
   } \
-  RemoveDylanExceptionHandlers(&oldFPEHandler, &oldSEGVHandler);
+  RemoveDylanExceptionHandlers(&oldFPEHandler, &oldSEGVHandler, &oldTRAPHandler);
 
 typedef void (* SIG_SIGCONTEXT)(int, struct sigcontext);
 
 static void DylanFPEHandler (sighandler_t, int, struct sigcontext);
 static void DylanSEGVHandler (sighandler_t, int, struct sigcontext);
+static void DylanTRAPHandler (sighandler_t, int, struct sigcontext);
 
 static void EstablishDylanExceptionHandlers (struct sigaction * oldFPEHandler,
-					     struct sigaction * oldSEGVHandler)
+					     struct sigaction * oldSEGVHandler,
+					     struct sigaction * oldTRAPHandler)
 {
   struct sigaction newFPEHandler;
   struct sigaction newSEGVHandler;
+  struct sigaction newTRAPHandler;
 
   sigset_t set, oldset;
 
@@ -68,18 +76,25 @@ static void EstablishDylanExceptionHandlers (struct sigaction * oldFPEHandler,
   sigaction(SIGSEGV, &newSEGVHandler, oldSEGVHandler);
 #endif
 
+  newTRAPHandler.sa_handler = oldTRAPHandler->sa_handler;
+  sigemptyset(&newTRAPHandler.sa_mask);
+  newTRAPHandler.sa_flags = 0;
+  sigaction(SIGTRAP, &newTRAPHandler, oldTRAPHandler);
+
   sigemptyset(&set);
   sigaddset(&set, SIGPIPE);
   sigprocmask(SIG_BLOCK, &set, &oldset);
 }
 
 static void RemoveDylanExceptionHandlers (struct sigaction * oldFPEHandler,
-					  struct sigaction * oldSEGVHandler)
+					  struct sigaction * oldSEGVHandler,
+					  struct sigaction * oldTRAPHandler)
 {
   sigaction(SIGFPE, oldFPEHandler, NULL);
 #if 0
   sigaction(SIGSEGV, oldSEGVHandler, NULL);
 #endif
+  sigaction(SIGTRAP, oldTRAPHandler, NULL);
 }
 
 
@@ -174,4 +189,46 @@ static void DylanSEGVHandler (sighandler_t oldHandler, int signum, struct sigcon
     (*(SIG_SIGCONTEXT)oldHandler)(signum, sc);
 
   return;
+}
+
+static void DylanTRAPHandler (sighandler_t oldHandler, int signum, struct sigcontext sc)
+{
+  walkstack();
+  (*(SIG_SIGCONTEXT)oldHandler)(signum, sc);
+  return;
+}
+
+#include <stdio.h>
+#include <dlfcn.h>
+
+int getebp () {
+    int ebp;
+    asm("mov (%%ebp), %0"
+        :"=r"(ebp));
+    return ebp;
+};
+
+void walkstack() {
+  int ebp = getebp();
+  int eip;
+  int rc;
+  Dl_info info;
+
+  while(ebp) {
+    eip = *((int*)ebp + 1);
+    rc = dladdr((void*)eip, &info);
+    if (!rc||(!info.dli_sname && !info.dli_fname)) {
+      printf("0x%x (unknown)\n");
+    } else {
+      if (!info.dli_sname) {
+        printf("0x%x (%s)\n", eip, info.dli_fname);
+      } else {
+        printf("%s+%i (%s)\n",
+               info.dli_sname,
+	       eip - (int)info.dli_saddr,
+	       info.dli_fname);
+      }
+    }
+    ebp = *((int*)ebp);
+  }
 }
