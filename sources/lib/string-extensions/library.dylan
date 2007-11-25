@@ -62,7 +62,7 @@ end module character-type;
 define module %parse-string
   use functional-dylan;
   // use extensions;
-  export <parse-string>, consume, lookahead, parse-string-done?;
+  export <parse-string>, parse-string, parse-index, consume, lookahead, parse-string-done?;
 end module %parse-string;
 
 

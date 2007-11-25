@@ -37,31 +37,34 @@ copyright: see below
 // pointer along.
 //
 define class <parse-string> (<object>)
-  constant slot string :: <sequence>, required-init-keyword: #"string";
-  slot index :: <integer>, init-value: 0;
+  constant slot parse-string :: <sequence>, required-init-keyword: #"string";
+  slot parse-index :: <integer>, init-value: 0;
 end class <parse-string>;
 
 define constant <character?> = false-or(<character>);
 
-define method consume (s :: <parse-string>) => s :: <parse-string>;
-  if (s.index >= size(s.string))
+define method consume
+    (s :: <parse-string>) => (result :: false-or(<parse-string>))
+  if (s.parse-index >= size(s.parse-string))
     #f;
   else
-    s.index := s.index + 1;
+    s.parse-index := s.parse-index + 1;
     s;
   end if;
 end method consume;
 
-define method lookahead (s :: <parse-string>) => answer :: <character?>;
-  if (s.index >= size(s.string))
+define method lookahead
+    (s :: <parse-string>) => (answer :: false-or(<character?>))
+  if (s.parse-index >= size(s.parse-string))
     #f;
   else
-    s.string[s.index];
+    s.parse-string[s.parse-index];
   end if;
 end method lookahead;
 
-define method parse-string-done? (s :: <parse-string>) => answer :: <boolean>;
-  s.index >= s.string.size;
+define method parse-string-done?
+    (s :: <parse-string>) => (answer :: <boolean>)
+  s.parse-index >= s.parse-string.size;
 end method parse-string-done?;
 
 
