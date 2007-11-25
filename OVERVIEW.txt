@@ -1,0 +1,304 @@
+                         ============================
+                            OPEN DYLAN SOURCE CODE
+                         CONVENTIONS AND ORGANIZATION
+                         ============================
+
+========================
+Acronyms and Definitions
+========================
+
+CG   - 
+MPS  - A memory management system. When using a HARP back-end, MPS manages
+       garbage collection. When using a C back-end, the Boehm GC library
+       manages garbage collection.
+DFM  - Data flow model.
+DFMC - 
+HARP - An artificial assembly language. HARP code is transformed into the
+       target processor's actual assembly language. The other back-ends are
+       Java byte-code and C.
+RTG  - 
+DOOD - File-based object-oriented database.
+DOSS - Dylan object serialization format.
+
+
+========================
+Platforms and Registries
+========================
+
+A platform is a combination of CPU and OS. Dylan-only code is platform
+independent, but calling specific OS functions or specifying a library for the
+linker introduces a platform dependency.
+
+A platform-specific Dylan library is created through a platform-specific LID
+file. The association between LID file and platform is created through files
+in "sources/registry" directory. The files will contain a single line that
+indicates the LID file for that library on that platform. The location of the
+LID file is given relative to the "sources" directory.
+
+The LID file will be in the source-code directory corresponding to that
+library. There will be several LID files in that directory, with names that
+indicate what platforms each applies to.
+
+
+==================
+Naming Conventions
+==================
+
+OD uses the following special character prefixes to indicate different things:
+
+%name - An internal name.
+&name - A model class. It models a run-time value at compile time.
+^name - A compile-time computation on run-time values via a model class.
+
+
+======================
+Commenting Conventions
+======================
+
+"///"    - Documentation of a function, macro, etc.
+"---"    - Interim solution or questionable code.
+"---***" - Serious concerns or bug work-arounds.
+
+===========
+Directories
+===========
+
+The directory structure doesn't provide enough context to say which file is
+used where, so I've attempted to catalog each directory's purpose myself.
+
+---------------
+Compiler System
+---------------
+                        
+sources
+  dfmc
+    core                - Module imports and re-exports.
+    java-backend        - Java back-end.
+    java-linker         - Java back-end.
+    linker              - Linker generics. Makefile prototype.
+    management          - Safeguards and progress of compilation.
+    mangling            - Mangle Dylan names into [a-zA-Z0-9_] names.
+    namespace           - Bindings, libraries, modules, lib structure.
+    optimization        - Analyzes and performs optimizations.
+    reader              - Lexer and parser. Also, formatted output.
+    typist              - Type inferencing engine.
+  lib
+    build-system        - Jam-based build system.
+    jam                 - Jam script interpreter.
+    java                - Java back-end.
+    java-parser         - Java back-end.
+    parser-run-time     - Support for parsers.
+    source-records      - Reads source files and tracks location.
+    walker              - Build has-a tree.
+
+------------------------
+IDE and Tool Source Code
+------------------------
+  
+sources
+  environment           - Main code for IDE and tools.
+    commands            - Defines various shell commands.
+    console             - Console IDE declarations.
+    core                - Module imports and re-exports.
+    debugger            - Debugger GUI.
+    deuce               - Deuce customizations for IDE.
+    dfmc                - Introspection and IDE interactor.
+    dummy               - Interactor environment.
+    editor              - External editor support.
+    framework           - Generic GUI elements.
+    manager             - Client/server communication.
+    profiler            - Profiler GUI.
+    protocols           - Models of various project elements for display and
+                          introspection.
+    source-control      - External source control system interface.
+    target-application  - Access control to application being debugged.
+    tools               - Miscellaneous, mostly GUI-related.
+  lib
+    command-shell       - Compiler/debugger/interactor shell. Command-line arg
+                          and "help" handling.
+    debug-dispatch      - Something for the debugger.
+    disasm              - x86 disassembler for debugger.
+    grammar-compiler    - Used by parser-generator.
+    motley              - OLE stub generator.
+    parser-generator    - Generates Dylan code that can parse a grammar.
+    ppml                - Pretty-printer formatting and markup.
+    release-info        - Copyrights, banners, and setting retrieval. Also
+                          includes a simple XML parser.
+  tools/map-statistics  - Win32 MAP files.
+
+----------
+Registries
+----------
+
+These files are installed as part of an Open Dylan release, and indicate what
+libraries go together and how a library should be built for a specific
+platform.
+
+sources
+  Library-Packs
+  registry
+    generic             - This code is platform-independent.
+    ...                 - Each platform gets its own directory. Platforms are
+                          named for their processor and operating system.
+
+--------------------------------------------
+Dylan Language, Extensions, Run-Time Support
+--------------------------------------------
+
+By "extension," I mean a library that extends built-in definitions and class
+hierarchies.
+
+sources
+  collections           - Collection extensions.
+  common-dylan          - Common language extensions shared by Open Dylan and
+                          Gwydion Dylan.
+  dylan                 - Dylan Reference Manual implementation.
+  functional-dylan      - Open Dylan-specific language extensions.
+  lib                   
+    big-integers        - Mathematical library for big integers (> 28 bits).
+    generic-arithmetic  - Arithmetic prototypes for all numeric libraries.
+    memory-manager      - Abstraction layer for memory manager (MPS or Boehm).
+    ratio               - Mathematical ratio library.
+    run-time            - Memory management and threading.
+
+---------------------------------
+Main Libraries Used by Open Dylan
+---------------------------------
+  
+sources
+  deuce                 - OD advanced text editor.
+  duim                  - Platform-independent GUI wrapper.
+  io                    - I/O library.
+  lib                  
+    bulk-io             - Bulk I/O library for <byte>s. Used by DOOD.
+    c-ffi               - General C API wrapper.
+    channels            - Intra-application messaging.
+    dood                - File database library.
+    doss                - Object serialization library.
+    variable-search     - Locate a binding in DLLs or libs.
+  system                - OS-specific code for file system, environment
+                          variables, Windows registry, dates and times.
+                          Architecture definitions.
+                        
+---------------
+Other Libraries
+---------------
+
+These libraries aren't used by Open Dylan, or are only used in a minor
+capacity, but they do have use.
+
+sources
+  corba                 - CORBA library.
+  databases             - SQL and ODBC library.
+  gnu                   - GNU and GTK API wrappers.
+  gtk-2                 - GTK-2 API wrappers.
+  lib                   
+    cgi                 - CGI library.
+    cl                  - Common Lisp plists, sequences, and strings.
+    c-lexer             - C lexer.
+    commands            - Win32 inter-process communication helper, intended
+                          for things like DDE via command shell.
+    complex             - Complex number support.
+    collection-extensions - Extensions from Gwydion Dylan.
+    dylan-script        - Network management scripting.
+    http-streams        - I/O wrapper for HTTP.
+    lotus-notes         - Lotus Notes interface.               
+    midi                - MIDI library.
+    regular-expressions - Regex library.
+    string-extensions   - Add'l string methods.
+    timers              - For profiling blocks of code.
+    t-list              - A variation of a <dequeue>. Don't know its purpose.
+    union-collection    - Iterate several collections sequentially.
+    unix-portability    - Wrappers for errno and lseek.
+  macos                 - Mac OS Carbon API wrappers.
+  network               - Socket and protocol libraries.
+  ole                   - COM and OLE libraries.
+  web                   - HTML and XML libraries.
+  win32                 - Win32 API wrappers.
+  x11                   - Motif and X11 libraries.
+                        
+-----------
+Sample Code
+-----------
+  
+sources
+  app                   - Sample applications.
+  examples              - Sample applications.
+
+--------
+Not Used
+--------
+
+This code isn't used by Open Dylan, and isn't likely to be useful for any
+other purpose.
+
+experimental
+old  
+sources
+  dfmc
+    flow-typist
+    webster
+  lib    
+    stack-walker
+
+------------
+Unclassified
+------------
+
+These may or may not be used or useful, but either I haven't look at them,
+or I don't know what they do, or I don't know how to properly describe them.
+
+admin                   
+install                 
+packages                
+project                 
+releases                
+Samples
+sources
+  benchmarks
+  bootstrap1-registry
+  dfmc
+    back-end
+    back-end-protocol
+    browser-support
+    c-back-end
+    c-compiler
+    c-ffi
+    c-linker
+    c-run-time
+    common
+    conditions
+    conversion
+    debug-back-end
+    definitions
+    dylan
+    execution
+    file-compiler
+    flow-graph
+    harp-browser-support
+    harp-cg
+    harp-cg-linker
+    macro-expander
+    modeling
+    native-harp-cg
+    pentium-harp-cg
+    powerpc-harp-cg
+    shell
+    testing
+  environment
+    emulator
+    gtk
+    project-wizard
+    property-pages
+    reports
+    server
+    splash-screen
+    tests
+  harp
+  lib
+    dispatch-profiler
+    metering      
+  project-manager
+  qa
+  runtime-manager 
+tools
