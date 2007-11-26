@@ -41,8 +41,6 @@ define class <parse-string> (<object>)
   slot parse-index :: <integer>, init-value: 0;
 end class <parse-string>;
 
-define constant <character?> = false-or(<character>);
-
 define method consume
     (s :: <parse-string>) => (result :: false-or(<parse-string>))
   if (s.parse-index >= size(s.parse-string))
@@ -54,7 +52,7 @@ define method consume
 end method consume;
 
 define method lookahead
-    (s :: <parse-string>) => (answer :: false-or(<character?>))
+    (s :: <parse-string>) => (answer :: false-or(<character>))
   if (s.parse-index >= size(s.parse-string))
     #f;
   else
