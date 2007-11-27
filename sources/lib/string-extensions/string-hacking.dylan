@@ -269,19 +269,26 @@ end method as;
 define method parse-description (string :: <sequence>);
   let s = make(<parse-string>, string: string);
   let negated = (lookahead(s) == '^');
-  if (negated)   consume(s)   end;
+  if (negated)
+    consume(s)
+  end;
 
   let char-list  = #();
   let range-list = #();
-
   until (lookahead(s) = #f)         // until end of string
     let char = lookahead(s);
     consume(s);
     if (lookahead(s) = '-')
       consume(s);
       let second-char = lookahead(s);
-      consume(s);
-      range-list := add!(range-list, pair(char, second-char));
+      if (second-char)
+        consume(s);
+        range-list := add!(range-list, pair(char, second-char));
+      else
+        // e.g., [a-] is the set containing 'a' and '-'.
+        char-list := add!(char-list, char);
+        char-list := add!(char-list, '-');
+      end;
     elseif (char = '\\')
       let escaped-char = lookahead(s);
       consume(s);
