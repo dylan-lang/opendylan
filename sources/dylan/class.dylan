@@ -242,6 +242,19 @@ define class <slot-type-error> (<type-error>)
     required-init-keyword: slot-descriptor:;
 end;
 
+define method make
+    (class == <slot-type-error>, #rest keys, #key value, type, slot-descriptor)
+ => (error :: <slot-type-error>)
+  apply(next-method, class,
+        format-string: "Incorrect type for the %= init-keyword to %=.  "
+          "The given value, %=, is not of type %=.",
+        format-arguments: list(slot-descriptor.init-keyword,
+                               slot-descriptor.slot-owner,
+                               value,
+                               slot-descriptor.slot-type),
+	keys)
+end method make;
+
 define function keyword-value
     (descriptor :: <slot-descriptor>, iclass :: <implementation-class>,
      init-args :: <simple-object-vector>)
@@ -269,7 +282,8 @@ define function keyword-value
                    format-arguments: list(iclass-class(iclass), descriptor.init-keyword)))
       end if;
     elseif (~instance?(keyword-value, slot-type(descriptor)))
-      error(make(<slot-type-error>, value: keyword-value,
+      error(make(<slot-type-error>,
+                 value: keyword-value,
 		 type: slot-type(descriptor),
 		 slot-descriptor: descriptor))
     end if;
