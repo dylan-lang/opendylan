@@ -438,6 +438,7 @@ define constant $STARTUPINFO_SIZE = 16 * $DWORD_SIZE;
 define constant $STARTF_USESHOWWINDOW = 1;
 define constant $STARTF_USESTDHANDLES = #x00000100;
 
+define constant $SW-HIDE                            =    0;
 define constant $SW-SHOWNORMAL                      =    1;
 define constant $SW-SHOWMINIMIZED                   =    2;
 define constant $SW-SHOWNOACTIVATE                  =    4;
@@ -549,6 +550,7 @@ define function run-application (command :: <string>,
 				      inherit-console? = #t,
 				      activate? = #t,
 				      minimize? = #f,
+                                      hide? = #f,
 				      outputter :: false-or(<function>),
 				      asynchronous? = #f)
  => (status :: <integer>)
@@ -564,6 +566,7 @@ define function run-application (command :: <string>,
   startupinfo-dwFlags(startupInfo) := $STARTF_USESHOWWINDOW;
   startupinfo-wShowWindow(startupInfo)
     := case
+         hide?                   => $SW-HIDE;
 	 activate?  & minimize?  => $SW-SHOWMINIMIZED;
 	 activate?  & ~minimize? => $SW-SHOWNORMAL;
 	 ~activate? & minimize?  => $SW-SHOWMINNOACTIVE;
