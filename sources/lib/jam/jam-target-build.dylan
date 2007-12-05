@@ -295,8 +295,7 @@ define method jam-target-build
                                     under-shell?: #t,
                                     inherit-console?: #f,
                                     outputter: outputter,
-                                    minimize?: #t,
-                                    activate?: #f);
+                                    hide?: #t);
 
                 // clean up temporary files
                 jam-clean-temporary-files(jam);
