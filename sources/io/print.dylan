@@ -369,12 +369,12 @@ define method print-object (object :: <object>, stream :: <stream>) => ()
     let obj-class = object.object-class;
     let name = obj-class.debug-name;
     if (name)
-      write(stream, "instance of ");
       write(stream, as-lowercase(as(<byte-string>, name)));
     else
-      write(stream, "instance of ");
       print(obj-class, stream);
-    end if
+    end if;
+    write(stream, " ");
+    write(stream, machine-word-to-string(address-of(object)));
   end;
 end method;
 
