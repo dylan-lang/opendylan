@@ -109,7 +109,7 @@ define &macro C-function-definer
                                                ?result-fragment,
                                                ??arg-fragments, ...
                                              end;
-                      ?=log-exit(?c-name, results);
+                      apply(?=log-exit, ?c-name, results);
                       apply(values, results)
                     else
                       c-function-body
