@@ -246,7 +246,8 @@ define module deuce
 	 add-node!, remove-node!,
 	 do-save-all-files;
 
-  create <interval-stream>;
+  create <interval-stream>, 
+         <repainting-interval-stream>;
 
   create <kill-history>,
          do-history-elements,

@@ -21,8 +21,15 @@ define sealed class <interval-stream>
   sealed slot %current-position :: <basic-bp>;
 end class <interval-stream>;
 
+define sealed class <repainting-interval-stream> (<interval-stream>)
+  sealed constant slot %window :: <window>, required-init-keyword: window:;
+end;
+
 define sealed domain make (singleton(<interval-stream>));
 define sealed domain initialize (<interval-stream>);
+
+define sealed domain make (singleton(<repainting-interval-stream>));
+define sealed domain initialize (<repainting-interval-stream>);
 
 define sealed method make
     (class == <interval-stream>, #rest initargs,
@@ -41,6 +48,26 @@ define sealed method make
     apply(next-method, class,
 	  start-bp: start-bp, end-bp: end-bp,
 	  buffer: buffer, initargs)
+  end
+end method make;
+
+define sealed method make
+    (class == <repainting-interval-stream>, #rest initargs,
+     #key buffer, interval, direction, window, #all-keys)
+ => (stream :: <interval-stream>)
+  ignore(direction);
+  let (start-bp, end-bp)
+    = values(interval-start-bp(buffer | interval), interval-end-bp(buffer | interval));
+  let buffer
+    = buffer
+      | select (interval by instance?)
+          <buffer>  => interval;
+          otherwise => bp-buffer(start-bp);
+        end;
+  with-keywords-removed (initargs = initargs, #[interval:])
+    apply(next-method, class,
+	  start-bp: start-bp, end-bp: end-bp,
+	  buffer: buffer, window: window, initargs)
   end
 end method make;
 
@@ -231,6 +258,14 @@ define sealed method write-element
   insert-moving!(bp, char)
 end method write-element;
 
+define sealed method write-element
+    (stream :: <repainting-interval-stream>, char :: <object>) => ()
+  next-method();
+  // ---*** The centering argument is a hack, and doesn't belong here
+  queue-redisplay(stream.%window, $display-text, centering: 1);
+  redisplay-window(stream.%window);
+end;
+
 define sealed method write
     (stream :: <interval-stream>, string :: <byte-string>,
      #key start: _start :: <integer> = 0, end: _end :: <integer> = size(string)) => ()
@@ -238,6 +273,15 @@ define sealed method write
   let bp :: <basic-bp> = stream.%current-position;
   insert-moving!(bp, string, start: _start, end: _end)
 end method write;
+
+define sealed method write
+    (stream :: <repainting-interval-stream>, string :: <byte-string>,
+     #key start: _start :: <integer> = 0, end: _end :: <integer> = size(string)) => ()
+  next-method();
+  // ---*** The centering argument is a hack, and doesn't belong here
+  queue-redisplay(stream.%window, $display-text, centering: 1);
+  redisplay-window(stream.%window);
+end;
 
 
 /// Positionable stream protocol
