@@ -37,9 +37,13 @@ define library string-extensions
   // use collection-extensions;
   // use table-extensions;
   export
-    string-conversions, character-type, string-hacking, substring-search, 
+    string-conversions,
+    character-type,
+    string-hacking,
+    substring-search, 
     // These last two are only to be used by the Regular-expressions library
-    %parse-string, %do-replacement;  
+    %parse-string,
+    %do-replacement;  
 end library string-extensions;
 
 
@@ -52,9 +56,19 @@ define module character-type
   // use %Hash-Tables, export: {uppercase?};
   export
     case-insensitive-equal, // KJP: added
-    alpha?, alphabetic?, digit?, alphanumeric?, whitespace?, uppercase?,
-    lowercase?, hex-digit?, graphic?, printable?,
-    punctuation?, control?, byte-character?;
+    alpha?,
+    alphabetic?,
+    alphanumeric?,
+    digit?,
+    whitespace?,
+    uppercase?,
+    lowercase?,
+    hex-digit?,
+    graphic?,
+    printable?,
+    punctuation?,
+    control?,
+    byte-character?;
 end module character-type;
 
 // For internal use and for use by the regexp library
@@ -62,7 +76,14 @@ end module character-type;
 define module %parse-string
   use functional-dylan;
   // use extensions;
-  export <parse-string>, parse-string, parse-index, consume, lookahead, parse-string-done?;
+  export
+    <parse-string>,
+    parse-string,
+    parse-index,
+    consume,
+    lookahead,
+    lookbehind,
+    parse-string-done?;
 end module %parse-string;
 
 
@@ -73,15 +94,12 @@ define module string-hacking
   // use extensions;
   use character-type;
   use %parse-string;
-  // Re-export case-insensitive-equal from table-extensions
-  /* KJP: removed
-  use table-extensions,
-    import: {case-insensitive-equal},
-    export: {case-insensitive-equal};
-  */
   export
-    predecessor, successor, add-last,
-    <character-set>, <case-sensitive-character-set>, 
+    predecessor,
+    successor,
+    add-last,
+    <character-set>,
+    <case-sensitive-character-set>, 
     <case-insensitive-character-set>, 
     <byte-character-table>;
 end module string-hacking;
@@ -93,17 +111,15 @@ end module string-hacking;
 //
 define module string-conversions
   use functional-dylan,
-    export: { string-to-integer, integer-to-string }; // KJP: added
-  /*
-  use extensions, 
-    import: {<general-integer>, <extended-integer>, $maximum-integer,
-	       $minimum-integer};
-  */
+    export: {
+      string-to-integer,
+      integer-to-string
+    };
   use string-hacking;
   use character-type;
   export
-    // string-to-integer, integer-to-string, // KJP: removed
-    digit-to-integer, integer-to-digit;
+    digit-to-integer,
+    integer-to-digit;
 end module string-conversions;
 
 
@@ -123,13 +139,11 @@ end module %do-replacement;
 define module substring-search
   use functional-dylan;
   use character-type; // KJP: added
-  // use extensions;
-  /* KJP: removed
-  use subseq;
-  */
   use string-hacking;
   use %do-replacement;
   export
-    substring-position, make-substring-positioner, 
-    substring-replace, make-substring-replacer;
+    substring-position,
+    make-substring-positioner, 
+    substring-replace,
+    make-substring-replacer;
 end module substring-search;

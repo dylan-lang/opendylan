@@ -272,7 +272,6 @@ define method parse-description (string :: <sequence>);
   if (negated)
     consume(s)
   end;
-
   let char-list  = #();
   let range-list = #();
   until (lookahead(s) = #f)         // until end of string

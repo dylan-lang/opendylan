@@ -60,6 +60,17 @@ define method lookahead
   end if;
 end method lookahead;
 
+define method lookbehind
+    (str :: <parse-string>, distance :: <integer>)
+ => (char :: false-or(<character>))
+  let index = str.parse-index - distance;
+  if (index >= 0)
+    str.parse-string[index]
+  else
+    #f
+  end
+end method lookbehind;
+
 define method parse-string-done?
     (s :: <parse-string>) => (answer :: <boolean>)
   s.parse-index >= s.parse-string.size;
