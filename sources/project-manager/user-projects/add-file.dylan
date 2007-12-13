@@ -25,7 +25,7 @@ define method project-other-sources(project :: <lid-project>)
 	  let filenames = project-build-property(project, keyword) | #[];
 	  add-sources(filenames)
 	end method add-project-filenames;
-  for (key in #[#"c-source-files", #"c-header-files", #"c-object-files",
+  for (key in #[#"c-source-files", #"c-header-files", #"jam-includes", #"c-object-files",
 		  #"c-libraries", #"rc-files", #"other-files", #"broken-files"])
     add-project-filenames(key)
   end;
@@ -109,6 +109,12 @@ define method project-add-file-of-type(type == $rc-file-type,
 				       p :: <user-project>,
 				       file-locator :: <file-locator>)
   project-add-list-property(p, #"rc-files", as(<string>, file-locator))
+end;
+
+define method project-add-file-of-type(type == $jam-file-type,
+				       p :: <user-project>,
+				       file-locator :: <file-locator>)
+  project-add-list-property(p, #"jam-includes", as(<string>, file-locator))
 end;
 
 define method project-add-file-of-type(type :: $project-file-types,
@@ -229,6 +235,13 @@ define method project-remove-file-of-type(type == $rc-file-type,
 				       p :: <user-project>,
 				       file-locator :: <file-locator>)
   project-remove-list-property(p, #"rc-files",
+			       project-relative-file(p, file-locator))
+end;
+
+define method project-remove-file-of-type(type == $jam-file-type,
+				       p :: <user-project>,
+				       file-locator :: <file-locator>)
+  project-remove-list-property(p, #"jam-includes",
 			       project-relative-file(p, file-locator))
 end;
 

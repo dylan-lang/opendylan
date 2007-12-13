@@ -21,6 +21,8 @@ define constant $rc-file-type          = #"rc";
 define constant $ico-file-type         = #"ico";
 define constant $bmp-file-type         = #"bmp";
 
+define constant $jam-file-type         = #"jam";
+
 define constant $include-file-types = type-union(singleton($C-header-file-type),
 						 singleton($ico-file-type),
 						 singleton($bmp-file-type));

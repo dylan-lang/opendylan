@@ -22,7 +22,8 @@ define function lid-project-build-settings
      c-header-files :: <sequence>,
      c-object-files :: <sequence>,
      c-libraries :: <sequence>,
-     rc-files :: <sequence>)
+     rc-files :: <sequence>,
+     jam-includes :: <sequence>)
 
 // extend this function if you don't want to save default values, 
 // i.e. values that were never explicitly set
@@ -36,11 +37,12 @@ define function lid-project-build-settings
 
 	 project-build-property(p, #"linker-options") | #[],
 	 project-build-property(p, #"c-source-files") | 
-	   project-build-property(p, #"c-files") | #[],
+         project-build-property(p, #"c-files") | #[],
 	 project-build-property(p, #"c-header-files") | #[],
 	 project-build-property(p, #"c-object-files") | #[],
 	 project-build-property(p, #"c-libraries") | #[],
-	 project-build-property(p, #"rc-files") | #[])
+	 project-build-property(p, #"rc-files") | #[],
+	 project-build-property(p, #"jam-includes") | #[])
 end function lid-project-build-settings;
 
 /// Generate a list of all C libraries used by this Dylan library and all used
@@ -139,7 +141,7 @@ define function save-lid-info
   let (executable, base-address-string, 
        debug-command, debug-arguments-string, debug-machine, debug-directory,
        start-function, linker-options, c-source-files,
-       c-header-files, c-object-files, c-libraries, rc-files)
+       c-header-files, c-object-files, c-libraries, rc-files, jam-includes)
     = lid-project-build-settings(p);
   let relative = if (flatten-extras?)
 		   curry(map, convert-path-to-filename)
@@ -161,6 +163,7 @@ define function save-lid-info
   save-list-value(stream, #"c-object-files", relative(c-object-files));
   save-list-value(stream, #"c-libraries", c-libraries);
   save-list-value(stream, #"rc-files", relative(rc-files));
+  save-list-value(stream, #"jam-includes", relative(jam-includes));
   save-single-value(stream, #"major-version", p.project-major-version);
   save-single-value(stream, #"minor-version", p.project-minor-version);
   save-single-value(stream, #"library-pack", p.project-library-pack);

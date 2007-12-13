@@ -27,7 +27,8 @@ define constant $standard-lid-keyword = #[#"comment",
 					  #"rc-files",
 					  #"major-version",
 					  #"minor-version",
-					  #"library-pack"];
+					  #"library-pack",
+                                          #"jam-includes"];
 
 define constant $simple-build-keyword = #[#"executable",
 					  #"base-address",
@@ -49,7 +50,8 @@ define constant $list-build-keyword = #[#"linker-options",
 					#"c-libraries",
 					#"rc-files",
 					#"other-files",
-					#"broken-files"];
+					#"broken-files",
+                                        #"jam-includes"];
 
 define open generic project-lid-library-name
   (p :: <project>) => (name :: <symbol>);
@@ -502,6 +504,8 @@ define function lid-build-settings (source-loc, properties)
   if (c-libs) add-setting(c-libraries: c-libs) end;
   let rc-names = element(properties, #"rc-files", default: #f);
   if (rc-names) add-setting(rc-files: map(source-dir, rc-names)) end;
+  let jam-names = element(properties, #"jam-includes", default: #f);
+  if (jam-names) add-setting(rc-files: map(source-dir, jam-names)) end;
   //
   //---*** NOTE: Gwydion uses Executable: as well to name the file but,
   //---*** in their implementation, its presence also indicates that
