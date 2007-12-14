@@ -263,7 +263,6 @@ define sealed method write-element
   next-method();
   // ---*** The centering argument is a hack, and doesn't belong here
   queue-redisplay(stream.%window, $display-text, centering: 1);
-  redisplay-window(stream.%window);
 end;
 
 define sealed method write
@@ -280,7 +279,6 @@ define sealed method write
   next-method();
   // ---*** The centering argument is a hack, and doesn't belong here
   queue-redisplay(stream.%window, $display-text, centering: 1);
-  redisplay-window(stream.%window);
 end;
 
 
