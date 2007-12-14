@@ -28,15 +28,15 @@ define method jam-read-mkf
   // DylanLibraryRCFiles image : rcfiles ;
   // DylanLibraryJamIncludes image : includes ;
   let rule-specs
-    = #[#["DylanLibraryFiles", #"files", #f],
+    = #[#["DylanLibraryJamIncludes", #"jam-includes", #f],
+	#["DylanLibraryFiles", #"files", #f],
         #["DylanLibraryBaseAddress", #"base-address", #f],
         #["DylanLibraryLinkerOptions", #"linker-options", #t],
         #["DylanLibraryCLibraries", #"c-libraries", #t],
         #["DylanLibraryCObjects", #"c-objects", #f],
         #["DylanLibraryCSources", #"c-source-files", #f],
         #["DylanLibraryCHeaders", #"c-header-files", #f],
-        #["DylanLibraryRCFiles", #"rc-files", #f],
-        #["DylanLibraryJamIncludes", #"jam-includes", #f]];
+        #["DylanLibraryRCFiles", #"rc-files", #f]];
   for(spec in rule-specs)
     let value = element(variables, spec[1], default: #());
     let expanded = if (spec[2]) jam-expand-list(jam, value) else value end;
