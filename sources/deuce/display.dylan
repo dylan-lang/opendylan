@@ -100,46 +100,48 @@ define sealed method queue-redisplay
      #key line :: false-or(<basic-line>) = #f, index :: false-or(<integer>) = #f,
           centering :: false-or(<real>) = #f)
  => (degree :: <redisplay-degree>)
-  when (centering)
-    set-centering-fraction(window, centering)
-  end;
-  let window-degree
-    = queue-redisplay-1(window, degree, line: line, index: index);
-  let frame :: <editor-state-mixin> = window-frame(window);
-  let editor  = frame-editor(frame);
-  let buffer  = frame-buffer(frame);
-  let command = frame-command(frame);
-  // Redisplay other windows unless the command was purely for display
-  when (degree > $display-point
-        & command ~== scroll-forward            //--- kludgy way to do this...
-        & command ~== scroll-backward-ext
-        & command ~== scroll-forward
-        & command ~== scroll-backward-ext
-        & command ~== force-redisplay
-        & command ~== force-recenter)
-    let associated-buffers = buffer-associated-buffers(buffer);
-    for (other-frame :: <editor-state-mixin> in editor-frames(editor))
-      when (frame-window(other-frame) ~== window)
-        let other-buffer = frame-buffer(other-frame);
-        case
-          other-buffer == buffer =>
-            // The same buffer is shown in another window, redisplay it
-            // exactly the same way
-            queue-redisplay-1(frame-window(other-frame), degree,
-                              line: line, index: index);
-          member?(other-buffer, associated-buffers) =>
-            // An associated buffer is in another window; we'll have to
-            // work a bit harder to redisplay it, since we don't know
-            // exactly where the damage region is in that window
-            queue-redisplay-1(frame-window(other-frame), max(degree, $display-text),
-                              line: line, index: index);
-          otherwise =>
-            #f;
+  with-window-locked (window)
+    when (centering)
+      set-centering-fraction(window, centering)
+    end;
+    let window-degree
+      = queue-redisplay-1(window, degree, line: line, index: index);
+    let frame :: <editor-state-mixin> = window-frame(window);
+    let editor  = frame-editor(frame);
+    let buffer  = frame-buffer(frame);
+    let command = frame-command(frame);
+    // Redisplay other windows unless the command was purely for display
+    when (degree > $display-point
+          & command ~== scroll-forward            //--- kludgy way to do this...
+          & command ~== scroll-backward-ext
+          & command ~== scroll-forward
+          & command ~== scroll-backward-ext
+          & command ~== force-redisplay
+          & command ~== force-recenter)
+      let associated-buffers = buffer-associated-buffers(buffer);
+      for (other-frame :: <editor-state-mixin> in editor-frames(editor))
+        when (frame-window(other-frame) ~== window)
+          let other-buffer = frame-buffer(other-frame);
+          case
+            other-buffer == buffer =>
+              // The same buffer is shown in another window, redisplay it
+              // exactly the same way
+              queue-redisplay-1(frame-window(other-frame), degree,
+                                line: line, index: index);
+              member?(other-buffer, associated-buffers) =>
+                // An associated buffer is in another window; we'll have to
+                // work a bit harder to redisplay it, since we don't know
+                // exactly where the damage region is in that window
+                queue-redisplay-1(frame-window(other-frame), max(degree, $display-text),
+                                  line: line, index: index);
+            otherwise =>
+              #f;
+          end
         end
       end
-    end
+    end;
+    window-degree
   end;
-  window-degree
 end method queue-redisplay;
   
 define sealed method queue-redisplay-1
@@ -189,13 +191,15 @@ end method queue-redisplay-1;
 define function queue-region-redisplay
     (window :: <basic-window>, bp1 :: <basic-bp>, bp2 :: <basic-bp>,
      #key centering :: false-or(<real>) = #f) => ()
-  if (bp-line(bp1) == bp-line(bp2))
-    // Faster redisplay if the change is within a single line
-    queue-redisplay(window, $display-line,
-                    line: bp-line(bp1), index: min(bp-index(bp1), bp-index(bp2)),
-                    centering: centering)
-  else
-    queue-redisplay(window, $display-text, centering: centering)
+  with-window-locked (window)
+    if (bp-line(bp1) == bp-line(bp2))
+      // Faster redisplay if the change is within a single line
+      queue-redisplay(window, $display-line,
+                      line: bp-line(bp1), index: min(bp-index(bp1), bp-index(bp2)),
+                      centering: centering)
+    else
+      queue-redisplay(window, $display-text, centering: centering)
+    end
   end
 end function queue-region-redisplay;
 
@@ -206,18 +210,20 @@ end function queue-region-redisplay;
 define method initialize-redisplay-for-buffer
     (window :: <basic-window> , buffer :: <basic-buffer>,
      #key point: _point, mark: _mark, line: _line, goal-x) => ()
-  let _point = buffer-initial-point(buffer, point: _point);
-  let _mark  = buffer-initial-mark(buffer,  mark:  _mark);
-  let _line  = buffer-initial-line(buffer,  line:  _line);
-  window-point(window)
-    := _point & make(<bp>, line: bp-line(_point), index: bp-index(_point), buffer: buffer);
-  window-mark(window)
-    := _mark  & make(<bp>, line: bp-line(_mark),  index: bp-index(_mark),  buffer: buffer);
-  window-initial-line(window)    := _line;
-  window-goal-x-position(window) := goal-x | 0;
-  window-line-number(window)     := #f;
-  window-total-lines(window)     := #f;
-  window-centering-fraction(window) := #f;
+  with-window-locked (window)
+    let _point = buffer-initial-point(buffer, point: _point);
+    let _mark  = buffer-initial-mark(buffer,  mark:  _mark);
+    let _line  = buffer-initial-line(buffer,  line:  _line);
+    window-point(window)
+      := _point & make(<bp>, line: bp-line(_point), index: bp-index(_point), buffer: buffer);
+    window-mark(window)
+      := _mark  & make(<bp>, line: bp-line(_mark),  index: bp-index(_mark),  buffer: buffer);
+    window-initial-line(window)    := _line;
+    window-goal-x-position(window) := goal-x | 0;
+    window-line-number(window)     := #f;
+    window-total-lines(window)     := #f;
+    window-centering-fraction(window) := #f;
+  end
 end method initialize-redisplay-for-buffer;
 
 
@@ -228,30 +234,32 @@ define constant <recenter-type>
 
 define sealed method recenter-window
     (window :: <basic-window>, line :: <basic-line>, type :: <recenter-type>) => ()
-  let line-number = #f;
-  let fraction = #f;
-  case
-    type == #"top"             => line-number := 0;
-    type == #"bottom"          => fraction := 1.0;
-    type == #"center"          => fraction := 0.5;
-    instance?(type, <integer>) => line-number := type;
-    0.0 <= type & type <= 1.0  => fraction := type;
-    otherwise                  => error("Unrecognized recenter type %=", type);
-  end;
-  let first-line
-    = find-initial-display-line(window, line, 
-                                fraction: fraction,
-                                line-number: line-number);
-  when ($debug-scrolling?)
-    debug-message("Recenter: fraction=%= line=%=\n",
-                  fraction, line-number);
-    debug-message("  Actual line=%=, total lines=%=\n",
-                  determine-display-line-number(window, first-line, line),
-                  total-visible-display-lines(window, first-line))
-  end;
-  window-initial-line(window) := first-line;
-  window-line-number(window)  := #f;
-  window-total-lines(window)  := #f;
+  with-window-locked (window)
+    let line-number = #f;
+    let fraction = #f;
+    case
+      type == #"top"             => line-number := 0;
+      type == #"bottom"          => fraction := 1.0;
+      type == #"center"          => fraction := 0.5;
+      instance?(type, <integer>) => line-number := type;
+      0.0 <= type & type <= 1.0  => fraction := type;
+      otherwise                  => error("Unrecognized recenter type %=", type);
+    end;
+    let first-line
+      = find-initial-display-line(window, line, 
+                                  fraction: fraction,
+                                  line-number: line-number);
+    when ($debug-scrolling?)
+      debug-message("Recenter: fraction=%= line=%=\n",
+                    fraction, line-number);
+      debug-message("  Actual line=%=, total lines=%=\n",
+                    determine-display-line-number(window, first-line, line),
+                    total-visible-display-lines(window, first-line))
+    end;
+    window-initial-line(window) := first-line;
+    window-line-number(window)  := #f;
+    window-total-lines(window)  := #f;
+  end
 end method recenter-window;
 
 // This algorithm could be improved by using the cached size information
@@ -404,22 +412,24 @@ end method set-centering-fraction;
 define sealed method redisplay-window
     (window :: <basic-window>,
      #key move-point? = #f, move-viewport? = #t) => ()
-  let frame  = window-frame(window);
-  let degree = window-redisplay-degree(window);
-  case
-    degree > $display-point =>
-      // Redisplay of changed text must be done everywhere
-      //--- Should we delay displaying in windows with associated
-      //--- buffers until they get repainted due to (re-)exposure?
-      let editor = frame-editor(frame);
-      for (window :: <basic-window> in editor-windows(editor))
+  with-window-locked (window)
+    let frame  = window-frame(window);
+    let degree = window-redisplay-degree(window);
+    case
+      degree > $display-point =>
+        // Redisplay of changed text must be done everywhere
+        //--- Should we delay displaying in windows with associated
+        //--- buffers until they get repainted due to (re-)exposure?
+        let editor = frame-editor(frame);
+        for (window :: <basic-window> in editor-windows(editor))
+          redisplay-window-within-frame(frame, window,
+                                        move-point?: move-point?, move-viewport?: move-viewport?)
+        end;
+      otherwise =>
+        // Just moving the point or region in this one window
         redisplay-window-within-frame(frame, window,
-				      move-point?: move-point?, move-viewport?: move-viewport?)
-      end;
-    otherwise =>
-      // Just moving the point or region in this one window
-      redisplay-window-within-frame(frame, window,
-				    move-point?: move-point?, move-viewport?: move-viewport?);
+                                      move-point?: move-point?, move-viewport?: move-viewport?);
+    end
   end
 end method redisplay-window;
 
@@ -469,131 +479,133 @@ end method redisplay-window-within-frame;
 define sealed method do-redisplay-window
     (window :: <basic-window>,
      #key redisplay? = #f, move-point? = #f, move-viewport? = #t) => ()
-  with-editor-state-bound (buffer = window)
-    let show-caret? = #t;
-    block (return)
-      hide-caret(window, tooltip?: #t);
-      unless (window-enabled?(window))
-        return()
-      end;
-      //let (width, height) = window-size(window);
-      let (vwidth, vheight) = window-viewport-size(window);
-      unless (buffer)
-        clear-area(window, 0, 0, vwidth, vheight);
-        return()
-      end;
-      // If this is truly from redisplay, then DUIM will have cleared
-      // the background, but if it is a generated redisplay then it
-      // won't have been cleared, so we should do it to be safe.
-      // Ideally we should distinguish, so we don't clear it twice.
-      when (redisplay?)
-        clear-area(window, 0, 0, vwidth, vheight)
-      end;
-      let degree        = window-redisplay-degree(window);
-      let current-point = window-point(window);
-      let current-mark  = window-mark(window);
-      let current-line  = bp-line(current-point);
-      let last-size     = window-last-size(window);
-      let new-width?    = (vwidth  ~== head(last-size));
-      let new-height?   = (vheight ~== tail(last-size));
-      when ($debug-redisplay?)
-        debug-message("Redisplay degree: %=", if (redisplay?) "repaint" else degree end)
-      end;
-      // If the height of the viewport changed since the last time we redisplayed,
-      // we'll need to recompute the display lines
-      when (new-width? | new-height?)
-        head(last-size) := vwidth;
-        tail(last-size) := vheight;
-        when (new-height?)
-          degree := $display-all
-        end
-      end;
-      when (redisplay? | degree > $display-none)
-        unhighlight-matching-thing(window);
-        block (return)
-          select (~redisplay? & degree)
-            $display-region =>
-              if (current-mark) display-region-marking(window)
-              else clear-region-marking(window) end;
-              return();
-            $display-point =>
-              if (find-display-line(window, current-line))
+  with-window-locked (window)
+    with-editor-state-bound (buffer = window)
+      let show-caret? = #t;
+      block (return)
+        hide-caret(window, tooltip?: #t);
+        unless (window-enabled?(window))
+          return()
+        end;
+        //let (width, height) = window-size(window);
+        let (vwidth, vheight) = window-viewport-size(window);
+        unless (buffer)
+          clear-area(window, 0, 0, vwidth, vheight);
+          return()
+        end;
+        // If this is truly from redisplay, then DUIM will have cleared
+        // the background, but if it is a generated redisplay then it
+        // won't have been cleared, so we should do it to be safe.
+        // Ideally we should distinguish, so we don't clear it twice.
+        when (redisplay?)
+          clear-area(window, 0, 0, vwidth, vheight)
+        end;
+        let degree        = window-redisplay-degree(window);
+        let current-point = window-point(window);
+        let current-mark  = window-mark(window);
+        let current-line  = bp-line(current-point);
+        let last-size     = window-last-size(window);
+        let new-width?    = (vwidth  ~== head(last-size));
+        let new-height?   = (vheight ~== tail(last-size));
+        when ($debug-redisplay?)
+          debug-message("Redisplay degree: %=", if (redisplay?) "repaint" else degree end)
+        end;
+        // If the height of the viewport changed since the last time we redisplayed,
+        // we'll need to recompute the display lines
+        when (new-width? | new-height?)
+          head(last-size) := vwidth;
+          tail(last-size) := vheight;
+          when (new-height?)
+            degree := $display-all
+          end
+        end;
+        when (redisplay? | degree > $display-none)
+          unhighlight-matching-thing(window);
+          block (return)
+            select (~redisplay? & degree)
+              $display-region =>
                 if (current-mark) display-region-marking(window)
-                else clear-region-marking(window) end;
-                return()
-              else
-                ensure-line-visible(window, buffer, current-line);
-                // It would be nice to bitblt when possible...
-                degree := $display-text;
-		when ($debug-redisplay?)
-		  debug-message("Ensured line visible: degree %=", degree)
-		end;
-              end;
-            $display-line =>
-              // We can erase and redraw a single line
-              let line  :: <basic-line> = window-redisplay-line(window);
-              // First clear the old line's area if it's on the screen
-              let dline = find-display-line(window, line);
-              if (dline)
-                redisplay-line(window, line, dline, degree);
-                return()
-              else
-                // This line was not on the screen, we need to redisplay harder
-                degree := $display-all
-              end;
-            otherwise =>
-              #f;
-          end;
-          when (~redisplay? & degree == $display-blt)
-            let line  :: <basic-line> = window-redisplay-line(window);
-            let count :: <integer>    = window-redisplay-index(window);
-            let (dline, hint) = find-display-line(window, line);
-            if (~dline | window-occluded?(window))
-              // If we can't find a dline or the window is occluded, bitblt won't work
-              degree := $display-text
-            else
-              let n-lines :: <integer> = window-n-display-lines(window);
-              let index   :: <integer> = hint - 1;
-              if (index + abs(count) < n-lines)
-                // If the number of lines we are inserting/deleting fits on
-                // the screen, we can do the bitblt optimization
-                case
-		  count < 0 =>
-		    delete-display-lines(window, line, index, -count,
-					 move-point?: move-point?);
-                  count > 0 =>
-                    insert-display-lines(window, line, index, count,
-					 move-point?: move-point?);
-                  otherwise =>
-                    #f;
+                  else clear-region-marking(window) end;
+                return();
+              $display-point =>
+                if (find-display-line(window, current-line))
+                  if (current-mark) display-region-marking(window)
+                    else clear-region-marking(window) end;
+                  return()
+                else
+                  ensure-line-visible(window, buffer, current-line);
+                  // It would be nice to bitblt when possible...
+                  degree := $display-text;
+                  when ($debug-redisplay?)
+                    debug-message("Ensured line visible: degree %=", degree)
+                  end;
                 end;
-                return()
-              else
+              $display-line =>
+                // We can erase and redraw a single line
+                let line  :: <basic-line> = window-redisplay-line(window);
+                // First clear the old line's area if it's on the screen
+                let dline = find-display-line(window, line);
+                if (dline)
+                  redisplay-line(window, line, dline, degree);
+                  return()
+                else
+                  // This line was not on the screen, we need to redisplay harder
+                  degree := $display-all
+                end;
+              otherwise =>
+                #f;
+            end;
+            when (~redisplay? & degree == $display-blt)
+              let line  :: <basic-line> = window-redisplay-line(window);
+              let count :: <integer>    = window-redisplay-index(window);
+              let (dline, hint) = find-display-line(window, line);
+              if (~dline | window-occluded?(window))
+                // If we can't find a dline or the window is occluded, bitblt won't work
                 degree := $display-text
+              else
+                let n-lines :: <integer> = window-n-display-lines(window);
+                let index   :: <integer> = hint - 1;
+                if (index + abs(count) < n-lines)
+                  // If the number of lines we are inserting/deleting fits on
+                  // the screen, we can do the bitblt optimization
+                  case
+		    count < 0 =>
+		      delete-display-lines(window, line, index, -count,
+                                           move-point?: move-point?);
+                    count > 0 =>
+                      insert-display-lines(window, line, index, count,
+                                           move-point?: move-point?);
+                    otherwise =>
+                      #f;
+                  end;
+                  return()
+                else
+                  degree := $display-text
+                end
               end
-            end
+            end;
+            when (redisplay? | degree >= $display-text)
+              redisplay-text(window, degree,
+                             redisplay?: redisplay?, move-point?: move-point?, move-viewport?: move-viewport?)
+            end;
           end;
-          when (redisplay? | degree >= $display-text)
-            redisplay-text(window, degree,
-			   redisplay?: redisplay?, move-point?: move-point?, move-viewport?: move-viewport?)
+          when (redisplay? | degree >= $display-point)
+            update-scroll-bars(window, buffer);
+            show-caret? := update-caret-position(window, buffer,
+                                                 move-point?: move-point?, move-viewport?: move-viewport?)
           end;
+          highlight-matching-thing(window)
+        end
+      cleanup
+        window-redisplay-degree(window)   := $display-none;
+        window-redisplay-line(window)     := #f;
+        window-redisplay-index(window)    := #f;
+        window-centering-fraction(window) := #f;
+        when (show-caret?)
+          show-caret(window, tooltip?: #t)
         end;
-        when (redisplay? | degree >= $display-point)
-          update-scroll-bars(window, buffer);
-          show-caret? := update-caret-position(window, buffer,
-					       move-point?: move-point?, move-viewport?: move-viewport?)
-        end;
-        highlight-matching-thing(window)
+        check-invariants(window);
       end
-    cleanup
-      window-redisplay-degree(window)   := $display-none;
-      window-redisplay-line(window)     := #f;
-      window-redisplay-index(window)    := #f;
-      window-centering-fraction(window) := #f;
-      when (show-caret?)
-        show-caret(window, tooltip?: #t)
-      end;
-      check-invariants(window);
     end
   end
 end method do-redisplay-window;

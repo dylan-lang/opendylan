@@ -201,13 +201,15 @@ end method deuce/window-viewport-size;
 define method redisplay-window-within-frame
     (frame :: <editor-state-mixin>, window :: <deuce-pane>,
      #key move-point? = #f, move-viewport? = #t) => ()
-  let window-frame = sheet-frame(window);
-  when (window-frame)
-    if (frame-thread(window-frame) == current-thread())
-      do-redisplay-window(window, move-point?: move-point?, move-viewport?: move-viewport?)
-    else
-      call-in-frame(window-frame, do-redisplay-window, window,
-		    move-point?: move-point?, move-viewport?: move-viewport?)
+  when (sheet-mapped?(window))
+    let window-frame = sheet-frame(window);
+    when (window-frame)
+      if (frame-thread(window-frame) == current-thread())
+        do-redisplay-window(window, move-point?: move-point?, move-viewport?: move-viewport?)
+      else
+        call-in-frame(window-frame, do-redisplay-window, window,
+                      move-point?: move-point?, move-viewport?: move-viewport?)
+      end
     end
   end
 end method redisplay-window-within-frame;

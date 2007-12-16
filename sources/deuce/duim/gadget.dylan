@@ -75,9 +75,7 @@ define sealed method gadget-text-setter
     // Now make sure it displays correctly
     initialize-redisplay-for-buffer(window, buffer);
     queue-redisplay(window, $display-all);
-    when (sheet-mapped?(window))
-      redisplay-window(window)
-    end;
+    redisplay-window(window);
     when (do-callback?)
       execute-value-changed-callback(window, gadget-client(window), gadget-id(window))
     end;
@@ -129,9 +127,7 @@ define sealed method text-selection-setter
 	move-mark!(bp2, window: window);
 	queue-redisplay(window, $display-point, centering: 0);
     end;
-    when (sheet-mapped?(window))
-      redisplay-window(window)
-    end;
+    redisplay-window(window);
     range
   end
 end method text-selection-setter;
@@ -164,9 +160,7 @@ define sealed method selected-text-setter
       clear-mark!(window: window);
       move-point!(bp, window: window);
       queue-redisplay(window, $display-text, centering: 0);
-      when (sheet-mapped?(window))
-	redisplay-window(window)
-      end
+      redisplay-window(window)
     end;
     string
   end

@@ -13,6 +13,8 @@ define constant $default-window-border       = 0;
 define constant $default-window-line-spacing = 1;
 
 define protocol <<window>> ()
+  getter window-lock
+    (window :: <window>) => (lock :: <exclusive-lock>);
   getter window-buffer
     (window :: <window>) => (buffer :: false-or(<buffer>));
   setter window-buffer-setter
@@ -65,6 +67,7 @@ end protocol <<window>>;
 // Deuce back-ends are expected to supply a concrete implementation class
 // that is a subclass of <basic-window>.
 define open abstract class <basic-window> (<window>)
+  constant sealed slot window-lock :: <exclusive-lock> = make(<recursive-lock>);
   // The buffer being displayed in this window
   sealed slot window-buffer :: false-or(<basic-buffer>) = #f,
     init-keyword: buffer:;

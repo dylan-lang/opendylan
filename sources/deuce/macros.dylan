@@ -105,6 +105,11 @@ define macro with-editor-locked
     => { with-thing-locked (?editor, editor-lock) ?body end }
 end macro with-editor-locked;
 
+define macro with-window-locked
+  { with-window-locked (?window:expression) ?:body end }
+    => { with-thing-locked (?window, window-lock) ?body end }
+end macro with-editor-locked;
+
 define macro with-thing-locked
   { with-thing-locked (?thing:expression, ?accessor:name) ?:body end }
     => { begin
@@ -114,7 +119,7 @@ define macro with-thing-locked
 	     when (_lock) wait-for(_lock) end;
 	     ?body
 	   cleanup
-	     when (_lock) release-all(_lock) end;
+	     when (_lock) release(_lock) end;
 	   end
 	 end }
 end macro with-thing-locked;
