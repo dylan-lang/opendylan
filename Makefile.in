@@ -21,166 +21,164 @@ LIBRARY_PACKS	= @LIBRARY_PACKS@
 
 all:	@bootstrap_target@
 
-1-stage-bootstrap: final-bootstrap
+# 2-stage bootstrap includes both stages 1 and 2.
+# Stage 2 will use compiler built in stage 1.
 
-2-stage-bootstrap: stage-1-bootstrap
-	OPEN_DYLAN_RELEASE_ROOT=$(abs_builddir)/Bootstrap.1 \
-	  $(MAKE) FDCOMPILE="$(abs_builddir)/Bootstrap.1/bin/minimal-console-compiler -build -save" final-bootstrap
+2-stage-bootstrap: BOOTSTRAP_2_COMPILER = \
+	$(abs_builddir)/Bootstrap.1/bin/minimal-console-compiler -build
+2-stage-bootstrap: bootstrap-stage-1 bootstrap-stage-2
 
-3-stage-bootstrap: stage-1-bootstrap stage-2-bootstrap
-	OPEN_DYLAN_RELEASE_ROOT=$(abs_builddir)/Bootstrap.2 \
-	  $(MAKE) FDCOMPILE="$(abs_builddir)/Bootstrap.2/bin/minimal-console-compiler -build -save" final-bootstrap
+# 1-stage bootstrap includes only stage 2.
+# Stage 2 will use existing compiler.
 
-4-stage-bootstrap: stage-1-bootstrap stage-2-bootstrap stage-3-bootstrap
-	OPEN_DYLAN_RELEASE_ROOT=$(abs_builddir)/Bootstrap.3 \
-	  $(MAKE) FDCOMPILE="$(abs_builddir)/Bootstrap.3/bin/minimal-console-compiler -build -save" final-bootstrap
+1-stage-bootstrap: BOOTSTRAP_2_COMPILER = \
+	$(FDCOMPILE)
+1-stage-bootstrap: bootstrap-stage-2
 
-stage-1-bootstrap: \
-		Bootstrap.1 \
-		Bootstrap.1/lib/$(fd_build)-build.jam \
-		$(srcdir)/sources/bootstrap1-registry \
-		Bootstrap.1/bin/minimal-console-compiler
+# Stage 1 builds a compiler that can understand new primitives etc. used in
+# BOOTSTRAP_1_PRIMITIVE_LIBS libraries. An existing compiler won't understand
+# the new stuff, so until new compiler is built, existing libs are used instead.
 
-Bootstrap.1:
-	mkdir Bootstrap.1
-	mkdir Bootstrap.1/build 
-	mkdir Bootstrap.1/logs
-	mkdir Bootstrap.1/bin
-	mkdir Bootstrap.1/lib
+BOOTSTRAP_1_PRIMITIVE_LIBS = \
+	dylan functional-extensions machine-word byte-vector \
+	threads transcendentals functional-dylan \
+        common-extensions common-dylan \
+        c-ffi bit-vector bit-set collectors plists set \
+        table-extensions collections streams standard-io \
+        print format format-out io date file-system \
+        operating-system locators settings system \
+        generic-arithmetic big-integers duim-utilities \
+        duim-geometry duim-dcs duim-sheets duim-graphics \
+        duim-layouts duim-gadgets duim-frames duim-core \
+        duim-extended-geometry duim-gadget-panes duim \
+        winsock2 sockets network midi \
+        deuce duim-deuce com ole ole-server sql odbc-ffi \
+        sql-odbc corba-dylan corba-protocol dylan-orb \
+        iop-protocol ir-protocol ir-stubs orb-connections \
+        orb-core orb-iiop orb-ir orb-poa orb-streams \
+        orb-utilities portableserver-protocol \
+        naming-protocol naming-stubs naming-client
 
-Bootstrap.1/lib/$(fd_build)-build.jam: Bootstrap.1 $(srcdir)/$(rt_build)/$(fd_build)-build.jam
+BOOTSTRAP_1_REGISTRY = $(abs_srcdir)/sources/bootstrap1-registry
+
+BOOTSTRAP_1_ENV = \
+	OPEN_DYLAN_PLATFORM_NAME=$(fd_build) \
+	OPEN_DYLAN_BUILD_LOGS=$(abs_builddir)/Bootstrap.1/build/logs \
+	OPEN_DYLAN_USER_ROOT=$(abs_builddir)/Bootstrap.1 \
+	OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.1 \
+	OPEN_DYLAN_USER_BUILD=$(abs_builddir)/Bootstrap.1/build \
+	OPEN_DYLAN_USER_REGISTRIES=$(BOOTSTRAP_1_REGISTRY):$(library_srcdir)/registry \
+	OPEN_DYLAN_USER_SOURCES=$(abs_srcdir)/sources
+
+$(abs_builddir)/Bootstrap.1:
+	mkdir $(abs_builddir)/Bootstrap.1
+	mkdir $(abs_builddir)/Bootstrap.1/bin
+	mkdir $(abs_builddir)/Bootstrap.1/lib
+	mkdir $(abs_builddir)/Bootstrap.1/build 
+	mkdir $(abs_builddir)/Bootstrap.1/build/logs
 	cp $(srcdir)/$(rt_build)/$(fd_build)-build.jam \
 	   Bootstrap.1/lib/$(fd_build)-build.jam
 
-BOOTSTRAP1_REGISTRY = $(srcdir)/sources/bootstrap1-registry
-BOOTSTRAP1_LIBS = \
-		dylan functional-extensions machine-word byte-vector \
-		threads transcendentals functional-dylan \
-                common-extensions common-dylan \
-	        c-ffi bit-vector bit-set collectors plists set \
-	        table-extensions collections streams standard-io \
-	        print format format-out io date file-system \
-	        operating-system locators settings system \
-	        generic-arithmetic big-integers duim-utilities \
-	        duim-geometry duim-dcs duim-sheets duim-graphics \
-	        duim-layouts duim-gadgets duim-frames duim-core \
-	        duim-extended-geometry duim-gadget-panes duim \
-	        winsock2 sockets network midi \
-	        deuce duim-deuce com ole ole-server sql odbc-ffi \
-	        sql-odbc corba-dylan corba-protocol dylan-orb \
-	        iop-protocol ir-protocol ir-stubs orb-connections \
-	        orb-core orb-iiop orb-ir orb-poa orb-streams \
-	        orb-utilities portableserver-protocol \
-	        naming-protocol naming-stubs naming-client
-
-$(BOOTSTRAP1_REGISTRY):
-	mkdir $(BOOTSTRAP1_REGISTRY)
-	cp -r $(srcdir)/sources/registry/generic $(BOOTSTRAP1_REGISTRY)
-	cp -r $(srcdir)/sources/registry/$(fd_build) $(BOOTSTRAP1_REGISTRY)
-	for lib in $(BOOTSTRAP1_LIBS); do \
-	  rm -f $(BOOTSTRAP1_REGISTRY)/generic/$$lib; \
-	  rm -f $(BOOTSTRAP1_REGISTRY)/$(fd_build)/$$lib; \
+$(BOOTSTRAP_1_REGISTRY):
+	mkdir $(BOOTSTRAP_1_REGISTRY)
+	cp -r $(srcdir)/sources/registry/generic $(BOOTSTRAP_1_REGISTRY)
+	cp -r $(srcdir)/sources/registry/$(fd_build) $(BOOTSTRAP_1_REGISTRY)
+	for lib in $(BOOTSTRAP_1_PRIMITIVE_LIBS); do \
+	  rm -f $(BOOTSTRAP_1_REGISTRY)/generic/$$lib; \
+	  rm -f $(BOOTSTRAP_1_REGISTRY)/$(fd_build)/$$lib; \
 	done
 
-Bootstrap.1/bin/minimal-console-compiler:
-	@echo Building stage 1 bootstrap...
-	@OPEN_DYLAN_PLATFORM_NAME=$(fd_build) \
-	  OPEN_DYLAN_BUILD_LOGS=$(abs_builddir)/Bootstrap.1/logs \
-	  OPEN_DYLAN_USER_ROOT=$(abs_builddir)/Bootstrap.1 \
-	  OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.1 \
-	  OPEN_DYLAN_USER_REGISTRIES=$(BOOTSTRAP1_REGISTRY) \
-	  OPEN_DYLAN_USER_SOURCES=$(abs_srcdir)/sources \
-	  OPEN_DYLAN_USER_BUILD=$(abs_builddir)/Bootstrap.1/build \
+$(abs_builddir)/Bootstrap.1/bin/minimal-console-compiler:
+	@echo Building Open Dylan bootstrap stage 1...
+	@OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.1 \
+	  $(MAKE) -C $(rt_build) install
+	@$(BOOTSTRAP_1_ENV) \
 	  $(fdmake) --compiler="$(FDCOMPILE)" minimal-console-compiler
 
-stage-2-bootstrap: Bootstrap.2 Bootstrap.2/bin/minimal-console-compiler
+bootstrap-stage-1: \
+		$(abs_builddir)/Bootstrap.1 \
+		$(BOOTSTRAP_1_REGISTRY) \
+		$(abs_builddir)/Bootstrap.1/bin/minimal-console-compiler
 
-Bootstrap.2:
-	mkdir Bootstrap.2
-	mkdir Bootstrap.2/build 
-	mkdir Bootstrap.2/logs
-	mkdir Bootstrap.2/bin
-	mkdir Bootstrap.2/lib
-	mkdir Bootstrap.2/lib/runtime
+# Stage 2 bootstrap builds altered libraries and compiler and does not link to
+# any existing or stage 1 libraries.
 
-Bootstrap.2/bin/minimal-console-compiler: stage-1-bootstrap
-	@echo Building stage 2 bootstrap...
-	OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.2 \
-	  $(MAKE) -C $(rt_build) install
-	@OPEN_DYLAN_PLATFORM_NAME=$(fd_build) \
-	  OPEN_DYLAN_RELEASE_ROOT=$(abs_builddir)/Bootstrap.2 \
-	  OPEN_DYLAN_RELEASE_INSTALL=$(abs_builddir)/Bootstrap.2 \
-	  OPEN_DYLAN_BUILD_LOGS=$(abs_builddir)/Bootstrap.2/logs \
-	  OPEN_DYLAN_USER_ROOT=$(abs_builddir)/Bootstrap.2 \
-	  OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.2 \
-	  OPEN_DYLAN_USER_REGISTRIES=$(abs_srcdir)/sources/registry \
-	  OPEN_DYLAN_USER_SOURCES=$(abs_srcdir)/sources \
-	  OPEN_DYLAN_USER_BUILD=$(abs_builddir)/Bootstrap.2/build \
-	  $(fdmake) --compiler="Bootstrap.1/bin/minimal-console-compiler -build -save" \
-		    minimal-console-compiler
-
-stage-3-bootstrap: Bootstrap.3 Bootstrap.3/bin/minimal-console-compiler
-
-Bootstrap.3:
-	mkdir Bootstrap.3
-	mkdir Bootstrap.3/build 
-	mkdir Bootstrap.3/logs
-	mkdir Bootstrap.3/bin
-	mkdir Bootstrap.3/lib
-	mkdir Bootstrap.3/lib/runtime
-
-Bootstrap.3/bin/minimal-console-compiler: stage-2-bootstrap
-	@echo Building stage 3 bootstrap...
-	OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.3 \
-	  $(MAKE) -C $(rt_build) install
-	@OPEN_DYLAN_PLATFORM_NAME=$(fd_build) \
-	  OPEN_DYLAN_RELEASE_ROOT=$(abs_builddir)/Bootstrap.2 \
-	  OPEN_DYLAN_BUILD_LOGS=$(abs_builddir)/Bootstrap.3/logs \
-	  OPEN_DYLAN_USER_ROOT=$(abs_builddir)/Bootstrap.3 \
-	  OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.3 \
-	  OPEN_DYLAN_USER_REGISTRIES=$(abs_srcdir)/sources/registry \
-	  OPEN_DYLAN_USER_SOURCES=$(abs_srcdir)/sources \
-	  OPEN_DYLAN_USER_BUILD=$(abs_builddir)/Bootstrap.3/build \
-	  $(fdmake) --compiler="Bootstrap.2/bin/minimal-console-compiler -build -save" \
-		    minimal-console-compiler
-
-Bootstrap.final:
-	mkdir Bootstrap.final
-	mkdir Bootstrap.final/build 
-	mkdir Bootstrap.final/logs
-	-mkdir $(prefix)
-	-mkdir $(prefix)/bin
-	-mkdir $(prefix)/lib
-	-mkdir $(prefix)/lib/runtime
-
-FINAL_ENV = \
+BOOTSTRAP_2_ENV = \
 	OPEN_DYLAN_PLATFORM_NAME=$(fd_build) \
-	OPEN_DYLAN_BUILD_LOGS=$(abs_builddir)/Bootstrap.final/logs \
-	OPEN_DYLAN_USER_ROOT=$(abs_builddir)/Bootstrap.final \
-	OPEN_DYLAN_USER_INSTALL=$(prefix) \
+	OPEN_DYLAN_BUILD_LOGS=$(abs_builddir)/Bootstrap.2/build/logs \
+	OPEN_DYLAN_USER_ROOT=$(abs_builddir)/Bootstrap.2 \
+	OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.2 \
+	OPEN_DYLAN_USER_BUILD=$(abs_builddir)/Bootstrap.2/build \
 	OPEN_DYLAN_USER_REGISTRIES=$(abs_srcdir)/sources/registry:$(library_srcdir)/registry \
-	OPEN_DYLAN_USER_SOURCES=$(abs_srcdir)/sources \
-	OPEN_DYLAN_USER_BUILD=$(abs_builddir)/Bootstrap.final/build
+	OPEN_DYLAN_USER_SOURCES=$(abs_srcdir)/sources
 
-FINAL_LIBRARIES = \
-	minimal-console-compiler
+$(abs_builddir)/Bootstrap.2:
+	mkdir $(abs_builddir)/Bootstrap.2
+	mkdir $(abs_builddir)/Bootstrap.2/bin
+	mkdir $(abs_builddir)/Bootstrap.2/lib
+	mkdir $(abs_builddir)/Bootstrap.2/build 
+	mkdir $(abs_builddir)/Bootstrap.2/build/logs
 
-final-bootstrap: Bootstrap.final
-	@echo Building final stage bootstrap...
+$(abs_builddir)/Bootstrap.2/bin/minimal-console-compiler:
+	@echo Building Open Dylan bootstrap stage 2...
+	@OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.2 \
+	  $(MAKE) -C $(rt_build) install
+	@$(BOOTSTRAP_2_ENV) \
+	  $(fdmake) --compiler="$(BOOTSTRAP_2_COMPILER)" minimal-console-compiler
+
+bootstrap-stage-2: \
+		$(abs_builddir)/Bootstrap.2 \
+		$(abs_builddir)/Bootstrap.2/bin/minimal-console-compiler
+		
+# Install stage builds libraries and compiler using stage 2 products, taking
+# advantage of any new optimizations etc. in this release.
+
+INSTALL_ENV = \
+	OPEN_DYLAN_PLATFORM_NAME=$(fd_build) \
+	OPEN_DYLAN_BUILD_LOGS=$(prefix)/build/logs \
+	OPEN_DYLAN_USER=$(prefix) \
+	OPEN_DYLAN_USER_ROOT=$(prefix) \
+	OPEN_DYLAN_USER_INSTALL=$(prefix) \
+	OPEN_DYLAN_USER_BUILD=$(prefix)/build \
+	OPEN_DYLAN_USER_REGISTRIES=$(prefix)/sources/registry:$(library_srcdir)/registry \
+	OPEN_DYLAN_USER_SOURCES=$(prefix)/sources
+
+INSTALL_LIBRARIES = minimal-console-compiler
+
+INSTALL_LIBRARY_PACKS = @LIBRARY_PACKS@
+
+$(prefix):
+	mkdir $(prefix)
+	mkdir $(prefix)/bin
+	mkdir $(prefix)/lib
+	mkdir $(prefix)/build
+	mkdir $(prefix)/build/logs
+	@echo Copying sources...
+	cp -R $(abs_srcdir)/sources $(prefix)
+	@echo Removing unnecessary directories...
+	find -d $(prefix)/sources -name '.*' -exec rm -r {} \;
+	-rm -r $(prefix)/sources/boostrap1-registry
+
+install-stage: $(prefix)
+	@echo Building Open Dylan installation...
 	OPEN_DYLAN_USER_INSTALL=$(prefix) \
 	  $(MAKE) -C $(rt_build) install
-	@$(FINAL_ENV) $(fdmake) --compiler="$(FDCOMPILE)" \
-		$(FINAL_LIBRARIES) --library-packs="$(LIBRARY_PACKS)"
+	@$(INSTALL_ENV) \
+	  $(fdmake) \
+	  --compiler="$(abs_builddir)/Bootstrap.2/bin/minimal-console-compiler -build" \
+	  $(INSTALL_LIBRARIES) --library-packs="$(INSTALL_LIBRARY_PACKS)"
 
-install: all
+install: install-stage
 
 uninstall:
+	rm -rv $(prefix)
 
 install-strip:
 
 clean:
-	rm -rf Bootstrap.1 Bootstrap.2 Bootstrap.3 Bootstrap.final
-	rm -rf $(srcdir)/sources/bootstrap1-registry
+	rm -rf $(abs_builddir)/Bootstrap.1
+	rm -rf $(abs_builddir)/Bootstrap.2
+	rm -rf $(BOOTSTRAP_1_REGISTRY)
 
 distclean:
 
@@ -192,7 +190,7 @@ TAGS:
 
 dist:
 
-CHECK_STAGE = 3
+CHECK_STAGE = 2
 
 CHECK_APPS = \
 	libraries-test-suite-app \
@@ -201,7 +199,7 @@ CHECK_APPS = \
 	deuce-test-suite-app \
 	channels-tests
 
-check:	stage-$(CHECK_STAGE)-bootstrap
+check:	bootstrap-$(CHECK_STAGE)-stage
 	@OPEN_DYLAN_PLATFORM_NAME=$(fd_build) \
 	  OPEN_DYLAN_RELEASE_ROOT=$(abs_builddir)/Bootstrap.$(CHECK_STAGE) \
 	  OPEN_DYLAN_RELEASE_INSTALL=$(abs_builddir)/Bootstrap.$(CHECK_STAGE) \

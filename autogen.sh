@@ -43,6 +43,6 @@ $DIE && exit 1
 echo "processing (ignore errors and warnings from automake and libtoolize)..."
 
 ( cd $srcdir
-  libtoolize --force --copy
+  $LIBTOOLIZE --force --copy
   automake --foreign --add-missing
   autoconf )

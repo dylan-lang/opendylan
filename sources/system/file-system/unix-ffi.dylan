@@ -84,22 +84,22 @@ define macro with-stack-stat
        end }
 end macro with-stack-stat;
 
-define inline-only function st-mode (st :: <machine-word>) => (mode :: <abstract-integer>)
-  raw-as-abstract-integer
+define inline-only function st-mode (st :: <machine-word>) => (mode :: <integer>)
+  raw-as-integer
   (primitive-c-unsigned-int-at(primitive-unwrap-machine-word(st),
 			       integer-as-raw($st-mode-offset),
 			       integer-as-raw(0)))
 end function st-mode;
 
-define inline-only function st-uid (st :: <machine-word>) => (uid :: <abstract-integer>)
-  raw-as-abstract-integer
+define inline-only function st-uid (st :: <machine-word>) => (uid :: <integer>)
+  raw-as-integer
   (primitive-c-unsigned-int-at(primitive-unwrap-machine-word(st),
 			       integer-as-raw($st-uid-offset),
 			       integer-as-raw(0)))
 end function st-uid;
 
-define inline-only function st-gid (st :: <machine-word>) => (gid :: <abstract-integer>)
-  raw-as-abstract-integer
+define inline-only function st-gid (st :: <machine-word>) => (gid :: <integer>)
+  raw-as-integer
   (primitive-c-unsigned-int-at(primitive-unwrap-machine-word(st),
 			       integer-as-raw($st-gid-offset),
 			       integer-as-raw(0)))

@@ -2,15 +2,15 @@
 # Configuration variables
 #
 
-CC	?= gcc ;
+CC      ?= gcc ;
 
-MKF	?= dylanmakefile.mkf ;
+MKF     ?= dylanmakefile.mkf ;
 
-SUFOBJ	?= .o ;			# object files suffix
-SUFASM	?= .s ;			# assembly source files suffix
-SUFLIB	?= .a ;			# static library suffix
-SUFDLL	?= .dylib ;	# shared library suffix
-SUFMKF	?= .mkf ;   # build-system files
+SUFOBJ  ?= .o ;                 # object files suffix
+SUFASM  ?= .s ;                 # assembly source files suffix
+SUFLIB  ?= .a ;                 # static library suffix
+SUFDLL  ?= .dylib ;     # shared library suffix
+SUFMKF  ?= .mkf ;   # build-system files
 
 {
   local _lib = lib ;
@@ -32,15 +32,21 @@ SUFMKF	?= .mkf ;   # build-system files
   HDRS ?= $(SYSTEM_INCDIR) ;
 }
 
-CCFLAGS ?= -fdefer-pop -fguess-branch-probability -fcprop-registers -floop-optimize -fif-conversion -fif-conversion2 -ftree-ccp -ftree-dce -ftree-dominator-opts -ftree-dse -ftree-ter -ftree-lrs -ftree-sra -ftree-copyrename -ftree-fre -ftree-ch -fmerge-constants -fomit-frame-pointer -fPIC -fno-common -g0 ;
+CCFLAGS ?= -fdefer-pop -fguess-branch-probability -fcprop-registers
+           -floop-optimize -fif-conversion -fif-conversion2 -ftree-ccp
+           -ftree-dce -ftree-dominator-opts -ftree-dse -ftree-ter -ftree-lrs
+           -ftree-sra -ftree-copyrename -ftree-fre -ftree-ch -fmerge-constants
+           -fomit-frame-pointer -fPIC -g ;
+
+DEFINES += _POSIX_C_SOURCE ;
 
 #
 # Runtime
 #
 
 RTOBJS ?= posix-threads.o
-	  debug-print.o
-	  run-time.o ;
+          debug-print.o
+          run-time.o ;
 
 rtlibs ?= $(SYSTEM_LIBDIR)/runtime/$(RTOBJS) -lgc -lpthread -ldl -lm ;
 
@@ -203,9 +209,9 @@ rule DylanLibraryCLibraries image : libraries {
       case -L* : LINKLIBS on $(_dll) += $(lib) ;
       case -l* : LINKLIBS on $(_dll) += $(lib) ;
       case *.a : lib = [ FGristFiles $(lib) ] ;
-		 SEARCH on $(lib) = $(SEARCH_SOURCE) ;
-		 Depends $(_dll) : $(lib) ;
-		 NEEDLIBS on $(_dll) += $(lib) ;
+                 SEARCH on $(lib) = $(SEARCH_SOURCE) ;
+                 Depends $(_dll) : $(lib) ;
+                 NEEDLIBS on $(_dll) += $(lib) ;
       case * :   Exit Unknown C library $(lib) ;
     }
   }
@@ -294,18 +300,18 @@ rule DylanLibraryUses image : library : dir {
     }
     else {
       # Another personal library; read its mkf from its build directory.
-	
+        
       local SEARCH_SOURCE LOCATE_SOURCE LOCATE_TARGET
         = $(dir:R=$(LOCATE_TARGET:E=$(DOT))) ;
       local SOURCE_GRIST ;
 
       local LIBDIR BINDIR ;
       {
-	local _lib = lib ;
-	local _bin = bin ;
+        local _lib = lib ;
+        local _bin = bin ;
 
-	LIBDIR = $(_lib:P=$(PERSONAL_ROOT:E=$(LOCATE_TARGET:P))) ;
-	BINDIR = $(_bin:P=$(PERSONAL_ROOT:E=$(LOCATE_TARGET:P))) ;
+        LIBDIR = $(_lib:P=$(PERSONAL_ROOT:E=$(LOCATE_TARGET:P))) ;
+        BINDIR = $(_bin:P=$(PERSONAL_ROOT:E=$(LOCATE_TARGET:P))) ;
       }
 
       local _mkf = $(MKF:G=$(library:L)) ;

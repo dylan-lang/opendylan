@@ -11,7 +11,7 @@ CG   -
 MPS  - A memory management system. When using a HARP back-end, MPS manages
        garbage collection. When using a C back-end, the Boehm GC library
        manages garbage collection.
-DFM  - Data flow model.
+DFM  - Dylan Flow Machine.
 DFMC - 
 HARP - An artificial assembly language. HARP code is transformed into the
        target processor's actual assembly language. The other back-ends are

@@ -1,6 +1,9 @@
 AC_INIT([Open Dylan], [1.0 beta 5])
 AC_PREREQ(2.50)
 
+# Directory for config.guess etc.
+AC_CONFIG_AUX_DIR(build-aux)
+
 #---------------------
 # Make srcdir absolute
 #---------------------
@@ -33,8 +36,11 @@ FD_PLATFORM($target,fd_target,rt_target)
 AC_SUBST(fd_target)
 AC_SUBST(rt_target)
 
+AM_INIT_AUTOMAKE
+
 AC_PROG_INSTALL
 AC_PROG_LN_S
+AC_PROG_LIBTOOL
 
 AC_PATH_PROG(PERL, perl, no)
 test "$PERL" = no && AC_MSG_ERROR([
@@ -58,7 +64,7 @@ test "$FDCOMPILE" = opendylan && FDCOMPILE="$FDCOMPILE -build"
 AC_SUBST(FDCOMPILE)
 
 # TODO: figure out the bootstrap type given the fdcompile version
-bootstrap_target=3-stage-bootstrap
+bootstrap_target=1-stage-bootstrap
 AC_SUBST(bootstrap_target)
 
 AC_ARG_WITH(mps,

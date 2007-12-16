@@ -32,7 +32,13 @@ SUFMKF	?= .mkf ;   # build-system files
   HDRS ?= $(SYSTEM_INCDIR) ;
 }
 
-CCFLAGS ?= -fdefer-pop -fguess-branch-probability -fcprop-registers -floop-optimize -fif-conversion -fif-conversion2 -ftree-ccp -ftree-dce -ftree-dominator-opts -ftree-dse -ftree-ter -ftree-lrs -ftree-sra -ftree-copyrename -ftree-fre -ftree-ch -fmerge-constants -fomit-frame-pointer -fPIC -fno-common -g0 ;
+CCFLAGS ?= -fdefer-pop -fguess-branch-probability -fcprop-registers
+           -floop-optimize -fif-conversion -fif-conversion2 -ftree-ccp
+           -ftree-dce -ftree-dominator-opts -ftree-dse -ftree-ter -ftree-lrs
+           -ftree-sra -ftree-copyrename -ftree-fre -ftree-ch -fmerge-constants
+           -fomit-frame-pointer -fPIC -g ;
+
+DEFINES += _POSIX_C_SOURCE ;
 
 #
 # Runtime

@@ -7,6 +7,7 @@ hacking on Open Dylan and what is and is not included in the Open
 Source version.
 
 
+
 WHAT WAS OPEN SOURCED
 
 Everything except for the files necessary to build Windows installers
@@ -16,6 +17,7 @@ Open Dylan uses the Memory Pool System (MPS) from Ravenbrook, Limited
 to do its memory management.  The MPS is available from Ravenbrook at
 http://www.ravenbrook.com/project/mps/ and must be downloaded and
 built separately.
+
 
 
 HOW TO BUILD ON WINDOWS
@@ -39,19 +41,19 @@ HOW TO BUILD ON LINUX
 Install the latest binary release of Open Dylan from
 http://www.opendylan.org/downloading.phtml
 
-svn co svn://anonsvn.gwydiondylan.org/scm/svn/dylan/trunk/fundev fundev
-export SRCDIR=`pwd`/fundev        # must be absolute path!
-export BUILDDIR=<your build dir>
+  svn co svn://anonsvn.gwydiondylan.org/scm/svn/dylan/trunk/fundev fundev
+  export SRCDIR=`pwd`/fundev        # must be absolute path!
+  export BUILDDIR=<your build dir>
 
 Build the MPS and copy it into the Open Dylan source tree (see below).
 
-cd $SRCDIR
-./autogen.sh
+  cd $SRCDIR
+  ./autogen.sh
 
-cd $BUILDDIR
-$SRCDIR/configure --with-mps=/path/to/mps-kit                   [1][2]
+  cd $BUILDDIR
+  $SRCDIR/configure --with-mps=/path/to/mps-kit                   [1][2]
               # you must call configure with absolute path!
-make
+  make
 
 [1] Note that the directory --with-mps wants here is the one containing the
     "code" directory.  If you downloaded the MPS kit from Ravenbrook this
@@ -60,6 +62,44 @@ make
 [2] Ubuntu note: In Ubuntu 6.06 I had to install the XML::Parser module via
     "cpan -i XML::Parser", which blew up because expat.h was not found, so
     first "sudo apt-get install libexpat-dev".  --cgay 20061104
+
+
+
+HOW TO BUILD ON DARWIN OR MAC OS X
+
+Install the latest binary release of Open Dylan from
+http://www.opendylan.org/downloads/opendylan. Ensure the release's bin
+directory is in your path.
+
+Install the expat library, followed by the XML::Parser Perl module. For the
+expat library, you can use a package manager like MacPorts or Fink. For the
+XML::Parser module, use CPAN:
+
+  sudo cpan XML::Parser
+
+Download, make, and install the Boehm garbage collection library. On the Mac,
+Open Dylan uses that instead of the MPS library. I used the following
+configure settings:
+
+  ./configure --disable-dependency-tracking --enable-parallel-mark 
+    --enable-large-config --enable-gc-debug USE_I686_PREFETCH=1
+
+Download the Open Dylan source tree, containing this file and the "sources"
+directory, from SVN as described on http://www.opendylan.org/repository.phtml.
+
+In the directory of the downloaded source tree, run these commands (set the
+prefix to whatever you want):
+
+  ./autogen.sh
+  ./configure --prefix=/usr/local/opendylan
+  make
+  sudo make install
+
+Ignore any errors printed by autogen.sh. The build process may freeze; if
+several minutes pass without any progress, cancel the build with ^C and re-run
+the last command. After installation is complete, don't forget to remove the
+binary release's bin directory from your path.
+
 
 
 GENERAL BUILD INSTRUCTIONS

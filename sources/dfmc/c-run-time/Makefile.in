@@ -12,7 +12,7 @@ VPATH		= $(srcdir)
 
 LIBDEST         = $(OPEN_DYLAN_USER_INSTALL)/lib
 BINDEST         = $(OPEN_DYLAN_USER_INSTALL)/bin
-INCDEST			= $(OPEN_DYLAN_USER_INSTALL)/include
+INCDEST		= $(OPEN_DYLAN_USER_INSTALL)/include
 
 EXPIRATION	= -1
 
@@ -45,11 +45,13 @@ $(INCDEST):
 $(RUNTIMELIBDEST):
 	mkdir -p $(RUNTIMELIBDEST)
 
+# mini-jambase.jam has to be present, but do not require all platform-specific
+# files to be present; only one will be used, so the others can be missing.
 install-build:
 	cp -fp $(top_srcdir)/sources/lib/run-time/mini-jambase.jam $(LIBDEST)
-	cp -fp $(runtime_srcdir)/x86-linux-build.jam $(LIBDEST)
-	cp -fp $(runtime_srcdir)/x86-darwin-build.jam $(LIBDEST)
-	cp -fp $(runtime_srcdir)/ppc-darwin-build.jam $(LIBDEST)
+	-cp -fp $(runtime_srcdir)/x86-linux-build.jam $(LIBDEST)
+	-cp -fp $(runtime_srcdir)/x86-darwin-build.jam $(LIBDEST)
+	-cp -fp $(runtime_srcdir)/ppc-darwin-build.jam $(LIBDEST)
 
 install-header:	$(runtime_srcdir)/run-time.h $(INCDEST)
 	cp -fp $(runtime_srcdir)/run-time.h $(INCDEST)
