@@ -255,7 +255,11 @@ rule DylanLibraryRCFiles image : rcfiles {
 rule DylanLibraryJamIncludes image : includes {
   # DylanLibraryJamIncludes image : includes ;
   
-  Echo Ignoring Jam include file(s) $(includes) ;
+  local _i ;
+  for _i in [ FGristFiles $(includes) ] {
+    SEARCH on $(_i) = $(SEARCH_SOURCE) ;
+    include $(_i) ;
+  }
 }
 
 rule DylanLibraryUses image : library : dir {
