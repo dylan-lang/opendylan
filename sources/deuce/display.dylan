@@ -445,13 +445,13 @@ define method redisplay-all-windows
 end method redisplay-all-windows;
 
 define method redisplay-section
-    (section :: <section>, #key editor) => ()
+    (section :: <section>, #key editor, centering :: false-or(<real>) = #f) => ()
   let editor = editor | (*editor-frame* & frame-editor(*editor-frame*));
   when (editor)
     for (window :: <window> in editor-windows(editor))
       let buffer = window-buffer(window);
       when (buffer & buffer-contains-section?(buffer, section))
-        queue-redisplay(window, $display-all);
+        queue-redisplay(window, $display-all, centering: centering);
         redisplay-window-within-frame(window-frame(window), window)
       end
     end

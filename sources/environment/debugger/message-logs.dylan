@@ -112,7 +112,7 @@ define sealed method print-application-message
     if (instance?(section, <dylanworks-shell-section>))
       section-output-line(section) := bp-line(stream-position(stream))
     end;
-    redisplay-section(section, editor: $environment-editor)
+    redisplay-section(section, editor: $environment-editor, centering: 1.0)
   else
     debug-message("Ignoring application message: %s", message)
   end
