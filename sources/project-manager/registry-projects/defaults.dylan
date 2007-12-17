@@ -70,6 +70,7 @@ define function find-registries-internal
 		      as(<string>, path));
 	let (platform-registry, generic-registry) 
 	  = make-registry-from-path(path, platform, personal?: #t);
+        //XXX: set to #f here to prevent rebuilds all over the place
 	platform-system-registries
 	  := add!(platform-system-registries, platform-registry);
 	generic-system-registries
