@@ -279,14 +279,17 @@ define command activate-shell-input (frame)
       let mode :: <shell-mode> = buffer-major-mode(buffer);
       let (complete?, message) = shell-input-complete?(mode, buffer, section);
       if (complete?)
-	process-shell-input(mode, buffer, section, window: window)
+	process-shell-input(mode, buffer, section, window: window);
+        buffer.%current-input := #f;
+        frame-last-command-type(frame) := #"shell"
       else
-	when (message)
+	if (message)
 	  command-error(message)
-	end
+	else
+          do-insert-newline(frame);
+          frame-last-command-type(frame) := #"insert"
+        end
       end;
-      buffer.%current-input := #f;
-      frame-last-command-type(frame) := #"shell"
     else
       copy-previous-section(frame, line-section(line))
     end
@@ -305,9 +308,6 @@ define command activate-shell-input-newline (frame)
   let section = node-section(last-node);
   when (shell-section?(section))
     if (line-section(line) == section)
-      // First insert the newline character.  We don't recenter at the very bottom,
-      // because if any values get printed, the display gets jittery
-      let bp = do-insert-newline(frame);
       // Try to activate the input iff the newline was at the end of the input,
       // or there is only trailing whitespace
       let end-bp = interval-end-bp(buffer);
@@ -315,10 +315,11 @@ define command activate-shell-input-newline (frame)
 	  | forward-over(bp, #[' ', '\t', '\n', '\f']) = end-bp)
 	// Ensure redisplay has already happened in case the input line gets
 	// a parse error
-	redisplay-window(window);
+        redisplay-window(window);
 	activate-shell-input(frame)
       else
-	frame-last-command-type(frame) := #"insert"
+        do-insert-newline(frame);
+        frame-last-command-type(frame) := #"insert"
       end
     else
       copy-previous-section(frame, line-section(line))
