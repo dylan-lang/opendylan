@@ -223,7 +223,7 @@ TARGET_ADDRESS nub_allocate_stack_space
   execute_thread(thread);
 
   wait_for_stop_reason_internal
-     (process, TRUE, 1000, &code, STOP_REASON_WAIT_SPY);
+     (process, TRUE, 30000, &code, STOP_REASON_WAIT_SPY);
 
   if (code == SPY_RETURN_DBG_EVENT) {
     // Resume the suspended threads.
@@ -260,9 +260,9 @@ TARGET_ADDRESS nub_allocate_stack_space
             sizeof(ALLOCATOR_INSTRUCTION_SEQUENCE),
             &bytes_written);
     SetThreadContext(thread->ThreadHandle, &context_as_was);
-    nub_debug_message("Error: Micro Spy call failed on Thread %=",
+    nub_debug_message("Error: Micro Spy call failed on Thread %=, code: %=",
 		      (TARGET_ADDRESS)thread->ThreadHandle,
-		      (TARGET_ADDRESS)NULL);
+		      (TARGET_ADDRESS)code);
     return (NULL);
   }
   // Resume the suspended threads.
