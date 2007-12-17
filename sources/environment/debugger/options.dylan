@@ -18,7 +18,7 @@ define settings <debugger-settings> (<open-dylan-user-settings>)
   slot open-debugger-on-pause     :: <boolean> = #t;
   slot stack-include              :: <string>  = "";
   slot stack-exclude              :: <string>  = "";
-  slot stack-modules              :: <symbol>  = #"used";
+  slot stack-modules              :: <symbol>  = #"all";
   slot stack-show-dylan-calls     :: <boolean> = #t;
   slot stack-show-internal-calls  :: <boolean> = #f;
   slot stack-show-foreign-calls   :: <boolean> = #f;
