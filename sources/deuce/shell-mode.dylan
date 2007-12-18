@@ -207,9 +207,7 @@ define method process-shell-input
   let start-bp   = line-start(start-line);
   let end-line   = section-end-line(section);
   let end-bp     = line-end(end-line);
-  unless (line-empty?(end-line))
-    insert-moving!(end-bp, '\n')
-  end;
+  insert-moving!(end-bp, '\n');
   section-output-line(section) := bp-line(end-bp);	// first line of output
   let interval = make-interval(start-bp, line-end(line-previous(bp-line(end-bp))),
 			       in-order?: #t);
