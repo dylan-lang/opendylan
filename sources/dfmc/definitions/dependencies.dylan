@@ -831,11 +831,11 @@ define method dependent-stages (form :: <top-level-form>,
     // compressed dependencies as compressed referenced-variables
     // with module name ... module name ... see strip-incremental-slots
     block (return)
-      let vars = form-referenced-variables(form);
+      let vars = form-referenced-variables(form) | #[];
       let from = form-referenced-binding-variables-from(vars);
       iterate search (i :: <integer> = from, module = #f)
-        let elt = vars[i];
         when (i < size(vars))
+          let elt = vars[i];
 	  if (instance?(elt, <module>))
 	    search(i + 1, elt)
 	  elseif (module) // MAKE SURE
