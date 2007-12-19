@@ -25,20 +25,35 @@ define method set-mirror-parent
   duim-debug-message("Adding %= to menu %=",
 		gadget-label(mirror-sheet(child)),
 		gadget-label(mirror-sheet(parent)));
-  gtk-menu-shell-append(GTK-MENU(mirror-widget(parent).GtkMenuItem-submenu),
-		  mirror-widget(child))
+  with-gdk-lock
+    gtk-menu-shell-append(mirror-widget(parent).Gtk-Menu-Item-get-submenu,
+                          mirror-widget(child))
+  end
+end method set-mirror-parent;
+
+define method set-mirror-parent
+    (child :: <menu-button-mirror>, parent :: <popup-menu-mirror>)
+ => ()
+  duim-debug-message("Adding %= to popup menu %=",
+		gadget-label(mirror-sheet(child)),
+		gadget-label(mirror-sheet(parent)));
+  with-gdk-lock
+    gtk-menu-shell-append(mirror-widget(parent),
+                          mirror-widget(child))
+  end
 end method set-mirror-parent;
     
 define method set-mirror-parent
     (child :: <menu-mirror>, parent :: <menu-mirror>)
  => ()
-  let widget = mirror-widget(child);
-  let menu = GTK-MENU(gtk-menu-new());
-  duim-debug-message("Creating submenu for %s",
-		gadget-label(mirror-sheet(child)));
-  gtk-menu-item-set-submenu(widget, menu);
-  gtk-menu-shell-append(GTK-MENU(mirror-widget(parent).GtkMenuItem-submenu),
-		  widget)
+  with-gdk-lock
+    let widget = mirror-widget(child);
+    let menu = gtk-menu-new();
+    duim-debug-message("Creating submenu for %s",
+                       gadget-label(mirror-sheet(child)));
+    gtk-menu-item-set-submenu(widget, menu);
+    gtk-menu-shell-append(mirror-widget(parent).Gtk-Menu-Item-get-submenu, widget)
+  end
 end method set-mirror-parent;
     
 define method set-mirror-parent
@@ -46,15 +61,17 @@ define method set-mirror-parent
  => ()
   if (instance?(parent.mirror-sheet, <menu-bar>))
     let widget = mirror-widget(child);
-    if (child.mirror-sheet.gadget-label = "Help")
-//      gtk-menu-item-right-justify(widget)
-      gtk-menu-item-set-right-justified ((widget), /* TRUE */ 1)
-    end;
-    let menu = GTK-MENU(gtk-menu-new());
-    duim-debug-message("Creating submenu for menu bar");
-    gtk-menu-item-set-submenu(widget, menu);
-    gtk-menu-shell-append(mirror-widget(parent),
-			widget)
+    with-gdk-lock
+      if (child.mirror-sheet.gadget-label = "Help")
+        //      gtk-menu-item-right-justify(widget)
+        gtk-menu-item-set-right-justified ((widget), /* TRUE */ 1)
+      end;
+      let menu = gtk-menu-new();
+      duim-debug-message("Creating submenu for menu bar");
+      gtk-menu-item-set-submenu(widget, menu);
+      gtk-menu-shell-append(mirror-widget(parent),
+                            widget);
+    end
   else
     next-method()
   end
@@ -158,7 +175,7 @@ define table $mnemonic-table :: <object-table>
 
 define sealed method compute-mnemonic-from-label
     (gadget :: <gtk-gadget-mixin>, label :: <string>, 
-     #key remove-ampersand? = #f)
+     #key remove-ampersand? = #t)
  => (label, mnemonic :: false-or(<mnemonic>), index :: false-or(<integer>))
   let (label, mnemonic, index) = next-method();
   if (mnemonic)
@@ -170,7 +187,7 @@ define sealed method compute-mnemonic-from-label
 end method compute-mnemonic-from-label;
 
 define sealed method compute-standard-gtk-mnemonic
-    (gadget :: <gadget>, label :: <string>, #key remove-ampersand? = #f)
+    (gadget :: <gadget>, label :: <string>, #key remove-ampersand? = #t)
  => (label, mnemonic :: false-or(<mnemonic>), index :: false-or(<integer>))
   let length :: <integer> = size(label);
   let dots :: <byte-string> = "...";
@@ -297,6 +314,19 @@ define sealed class <gtk-menu-bar>
   keyword gtk-fixed-height?: = #t;
 end class <gtk-menu-bar>;
 
+define method %gtk-fixed-width?
+    (gadget :: <gtk-menu-bar>)
+ => (fixed? :: <boolean>)
+  #f;
+end method;
+
+define method %gtk-fixed-height?
+    (gadget :: <gtk-menu-bar>)
+ => (fixed? :: <boolean>)
+  #t;
+end method;
+
+
 define sealed method class-for-make-pane
     (framem :: <gtk-frame-manager>, class == <menu-bar>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
@@ -306,7 +336,7 @@ end method class-for-make-pane;
 define sealed method make-gtk-mirror
     (gadget :: <gtk-menu-bar>)
  => (mirror :: <gadget-mirror>)
-  let widget = GTK-MENU-BAR(gtk-menu-bar-new());
+  let widget = with-gdk-lock gtk-menu-bar-new() end;
   make(<gadget-mirror>,
        widget: widget,
        sheet:  gadget)
@@ -353,26 +383,17 @@ define sealed method make-gtk-mirror
   unless (mnemonic)
     mnemonic := allocate-unique-mnemonic(gadget, text)
   end;
-  with-c-string (c-string = text)
-    let widget = GTK-MENU-ITEM(gtk-menu-item-new-with-label(c-string));
-    make(<menu-button-mirror>,
-	 widget: widget,
-	 sheet:  gadget)
-  end
+  let widget = with-gdk-lock gtk-menu-item-new-with-label(text) end;
+  make(<menu-button-mirror>,
+       widget: widget,
+       sheet:  gadget)
 end method make-gtk-mirror;
 
 define method install-event-handlers
     (sheet :: <gtk-menu-button-mixin>, mirror :: <gadget-mirror>) => ()
   next-method();
-  install-named-handlers(mirror, #[#"activate"])
+  duim-g-signal-connect(sheet, #"activate") (#rest args) activate-gtk-gadget(sheet) end;
 end method install-event-handlers;
-
-// #"activate" signal
-define method gtk-activate-signal-handler (gadget :: <gtk-menu-button-mixin>,
-					   user-data :: <gpointer>)
-  ignore(user-data);
-  activate-gtk-gadget(gadget);
-end;
 
 define method update-mirror-attributes
     (gadget :: <gtk-menu-button-mixin>, mirror :: <menu-button-mirror>) => ()
@@ -396,11 +417,28 @@ define sealed class <gtk-menu>
   sealed slot menu-record-selection? = #f;
 end class <gtk-menu>;
 
+define sealed class <gtk-popup-menu> (<gtk-menu>)
+end;
+
 define sealed method class-for-make-pane 
-    (framem :: <gtk-frame-manager>, class == <menu>, #key)
+    (framem :: <gtk-frame-manager>, class == <menu>, #key owner)
  => (class :: <class>, options :: false-or(<sequence>))
-  values(<gtk-menu>, #f)
+  if (owner)
+    values(<gtk-popup-menu>, #f);
+  else
+    values(<gtk-menu>, #f)
+  end;
 end method class-for-make-pane;
+
+define sealed method make-gtk-mirror
+  (gadget :: <gtk-popup-menu>) => (mirror :: <menu-mirror>)
+  let widget = with-gdk-lock gtk-menu-new() end;
+  let selection-owner = menu-record-selection?(gadget) & gadget;
+  make(<popup-menu-mirror>, 
+       widget: widget,
+       sheet:  gadget, 
+       selection-owner: selection-owner)
+end;   
 
 define sealed method make-gtk-mirror
     (gadget :: <gtk-menu>)
@@ -410,37 +448,30 @@ define sealed method make-gtk-mirror
   if (image)
     ignoring("menu with image")
   end;
-  with-c-string (c-string = text)
-    let widget = GTK-MENU-ITEM(gtk-menu-item-new-with-label(c-string));
-    let owner = menu-owner(gadget);
-    let owner = if (frame?(owner)) top-level-sheet(owner) else owner end;
-    make-menu-mirror-for-owner(owner, gadget, widget)
-  end
-end method make-gtk-mirror;
-
-define sealed method make-menu-mirror-for-owner
-    (owner :: <sheet>, gadget :: <gtk-menu>, widget :: <GtkMenuItem*>)
- => (mirror :: <popup-menu-mirror>)
-  let selection-owner = menu-record-selection?(gadget) & gadget;
-  make(<popup-menu-mirror>, 
-       widget: widget,
-       sheet:  gadget, 
-       selection-owner: selection-owner)
-end method make-menu-mirror-for-owner;
-
-define sealed method make-menu-mirror-for-owner
-    (owner == #f, gadget :: <gtk-menu>, widget :: <GtkMenuItem*>)
- => (mirror :: <menu-mirror>)
+  let widget = with-gdk-lock gtk-menu-item-new-with-label(text) end;
   make(<menu-mirror>,
        widget: widget,
        sheet:  gadget)
-end method make-menu-mirror-for-owner;
+end method make-gtk-mirror;
 
 define sealed method map-mirror
-    (_port :: <gtk-port>, menu :: <gtk-menu>, 
+    (_port :: <gtk-port>, menu :: <gtk-popup-menu>, 
      mirror :: <popup-menu-mirror>) => ()
-  ignoring("map-mirror on a popup menu")
+  with-gdk-lock popup-gtk-menu(mirror.mirror-widget, 3); end
 end method map-mirror;
+
+define method sheet-mapped?-setter 
+    (mapped? == #f, menu :: <gtk-popup-menu>, 
+     #key do-repaint? = #t, clear? = do-repaint?)
+ => (mapped? :: <boolean>)
+  #f;
+end;
+
+define sealed method set-mirror-parent
+    (menu :: <popup-menu-mirror>, widget :: <gtk-mirror>) => ()
+  //what are we supposed to do here?
+  //nothing works just great!
+end;
 
 /*---*** Should be called just before a menu pops up
 define method handle-menu-update

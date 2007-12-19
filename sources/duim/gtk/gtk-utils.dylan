@@ -7,11 +7,6 @@ License:      Functional Objects Library Public License Version 1.0
 Dual-license: GNU Lesser General Public License
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-/// Useful constants
-
-define constant $TRUE  :: <integer> = 1;
-define constant $FALSE :: <integer> = 0;
-
 define constant $null-gpointer = null-pointer(<gpointer>);
 
 

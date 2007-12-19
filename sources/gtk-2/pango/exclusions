@@ -1,5 +1,0 @@
-// This file lists Pango 1.0 names that we don't want to
-// include in this Dylan wrapper library.
-
-// This depends on stdio.h.
-pango_read_line

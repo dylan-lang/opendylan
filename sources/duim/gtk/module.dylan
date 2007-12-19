@@ -16,13 +16,9 @@ define module gtk-duim
   use duim-internals;
   use duim-gadget-panes-internals;	//---*** until we've got all native gadgets in
 
-  use C-FFI;
-  use Glib-2;
-  use Gdk-2;
-  use Gtk-2;
-  use GObject-2;
-  use Xlib, prefix: "x/";
-  use Xt, prefix: "Xt/";
+  use c-ffi;
+
+  use gtk;
 
   // Basic classes
   export <gtk-port>,

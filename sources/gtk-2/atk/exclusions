@@ -1,8 +1,0 @@
-// This file lists ATK 1.0 names that we don't want to
-// include in this Dylan wrapper library.
-
-// in atkstate.h:
-AtkState                        // typedef for guint64
-
-// in atkobject.h
-atk_object_notify_state_change  // refers to AtkState

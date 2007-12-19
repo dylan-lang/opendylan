@@ -29,8 +29,7 @@ ignore(mirror-registered-dialogs);
 define sealed method make-top-level-mirror
     (sheet :: <top-level-sheet>, frame :: <dialog-frame>)
  => (mirror :: <top-level-mirror>)
-//  let widget = GTK-WINDOW(gtk-window-new($GTK-WINDOW-DIALOG));
-  let widget = GTK-WINDOW(gtk-dialog-new());
+  let widget = gtk-window-new($GTK-WINDOW-TOPLEVEL);
   let owner = frame-owner(frame);
   make(<dialog-mirror>,
        widget: widget,
@@ -333,87 +332,48 @@ end method make-exit-buttons;
 
 
 /// Choose file
-/*---
 define sealed method do-choose-file
     (framem :: <gtk-frame-manager>, owner :: <sheet>, 
      direction :: one-of(#"input", #"output"),
      #key title :: false-or(<string>), documentation :: false-or(<string>), exit-boxes,
 	  if-exists, if-does-not-exist = #"ask",
 	  default :: false-or(<string>), default-type = $unsupplied,
-	  filters, default-filter,
+	  filters, default-filter, selection-mode,
      #all-keys)
  => (locator :: false-or(<string>), filter :: false-or(<integer>))
   ignore(if-exists);
   let _port     = port(owner);
-  let x-display = _port.%display;
   let parent-widget = mirror-widget(sheet-mirror(owner));
-  let (visual, colormap, depth) = xt/widget-visual-specs(parent-widget);
-  let (directory, pattern) = gtk-directory-and-pattern(default, default-type);
-  let shell-resources
-    = vector(visual:, visual,
-	     colormap:, colormap,
-	     depth:, depth);
-  let resources
-    = vector(directory:, directory,
-	     pattern:, pattern,
-	     dialog-title:, title, 
-	     dialog-style:, xm/$XmDIALOG-FULL-APPLICATION-MODAL,
-	     default-position:, #f);
-
-  when (file-label)
-    resources
-      := concatenate!(resources, vector(file-list-label-string:, file-label))
-  end;
-  when (directory-label)
-    resources
-      := concatenate!(resources, vector(dir-list-label-string:, directory-label))
-  end;
-  let (x, y)
-    = begin
-	let (x, y) = sheet-size(owner);
-	let (x, y) = values(floor/(x, 2), floor/(y, 2));
-	with-device-coordinates (sheet-device-transform(owner), x, y)
-	  values(x, y)
-	end
+  let (mtitle, action, second-name)
+    = if (direction == #"output")
+        values("Save File", $GTK-FILE-CHOOSER-ACTION-SAVE, $GTK-STOCK-SAVE)
+      else
+        values("Open File", $GTK-FILE-CHOOSER-ACTION-OPEN, $GTK-STOCK-OPEN);
       end;
-  let shell  = #f;
-  let dialog = #f;
-  let result = #f;
-  let client-data  = #f;
-  block ()
-    local method waiter () result end method,
-	  method setter (value) result := value end method;
-    shell  := xt/XtCreatePopupShell("ChooseFileShell", xm/<dialog-shell>, parent-widget,
-				   resources: shell-resources);
-    dialog := xm/XmCreateFileSelectionBox(shell, "ChooseFile",
-					  resources: resources);
-    client-data := make(<callback-client-data>,
-			owner-widget: parent-widget,
-			x-display: x-display,
-			pointer-x: x,
-			pointer-y: y,
-			setter: setter);
-    xt/XtAddCallback(dialog, "okCallback",     choose-file-button-press-callback, client-data);
-    xt/XtAddCallback(dialog, "cancelCallback", choose-file-button-press-callback, client-data)
-    xt/XtUnmanageChild(xm/XmFileSelectionBoxGetChild(dialog, xm/$XmDIALOG-HELP-BUTTON))
-    xt/XtAddCallback(dialog, "mapCallback", notifier-map-callback, client-data);
-    xm/XmAddWmProtocolCallback(xt/XtParent(dialog), "wmDeleteWindow", notifier-delete-window-callback, setter);
-    xt/XtManageChild(dialog);
-    //---*** CLIM does this: '(mp:process-wait "Waiting for CLIM:SELECT-FILE" #'waiter)'
-    if (result == #"cancel")
-      values(#f, #f)
-    else
-      values(result, #f)
-    end
-  cleanup
-    when (dialog)
-      x/XSync(x-display, #f);
-      xt/XtUnmanageChild(dialog);
-      xt/XtDestroyWidget(shell)
+  with-gdk-lock
+    let dialog
+      = gtk-file-chooser-dialog-new (title | mtitle, parent-widget, action,
+                                     null-pointer(<gchar*>));
+    gtk-dialog-add-button(dialog, $GTK-STOCK-CANCEL, $GTK-RESPONSE-CANCEL);
+    gtk-dialog-add-button(dialog, second-name, $GTK-RESPONSE-ACCEPT);
+    if (default)
+      gtk-file-chooser-set-filename(dialog, default)
     end;
-  end
+    let filename =
+      if (gtk-dialog-run (dialog) == $GTK-RESPONSE-ACCEPT)
+        gtk-file-chooser-get-filename(dialog); // FIXME: leaks the filename C string
+      end;
+    gtk-widget-destroy(dialog);
+    if (filename)
+      values(as(<byte-string>, filename), #f)
+    else
+      values(#f, #f);
+    end;
+  end;
 end method do-choose-file;
 
+
+/*---
 define xm/xm-callback-function choose-file-button-press-callback
     (widget, client-data :: <callback-client-data>, call-data :: xm/<XmFileSelectionBoxCallbackStruct>)
   ignore(widget);

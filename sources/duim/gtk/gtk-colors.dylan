@@ -8,7 +8,7 @@ Dual-license: GNU Lesser General Public License
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Palettes
-// /*---*** No palettes for now...
+/*---*** No palettes for now...
 //--- How much more do we need to flesh out palettes?
 define sealed class <gtk-palette> (<basic-palette>)
   sealed slot port :: false-or(<port>),
@@ -18,7 +18,7 @@ define sealed class <gtk-palette> (<basic-palette>)
     required-init-keyword: colormap:;
   sealed slot %default-drawable,
     init-keyword: drawable:;
-  sealed slot %gcontext :: false-or(<GdkGC*>) = #f;
+  sealed slot %gcontext :: false-or(<GdkGC>) = #f;
   sealed constant slot %gc-cache      :: <object-table> = make(<table>);
   sealed constant slot %color-cache   :: <object-table> = make(<table>);
   sealed constant slot %pattern-cache :: <object-table> = make(<table>);
@@ -216,7 +216,7 @@ define sealed method allocate-x-read-write-color
  => (pixel :: <integer>)
   //--- Handle colormap resource exhaustion
   let (plane-masks, pixels)
-    = x/XAllocColorCells(x-display, x-colormap, #f, 0, 1)
+    = x/XAllocColorCells(x-display, x-colormap, #f, 0, 1);
   ignore(plane-masks);
   let pixel = pixels[0];
   set-x-read-write-color(pixel, red, green, blue, x-display, x-colormap);
@@ -235,4 +235,4 @@ define sealed method set-x-read-write-color
     x/XStoreColor(x-display, x-colormap, x-color)
   end
 end method set-x-read-write-color;
-// */
+*/

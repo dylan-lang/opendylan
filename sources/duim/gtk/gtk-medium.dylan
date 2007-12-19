@@ -15,10 +15,11 @@ define constant <native-color> = <integer>;
 define sealed class <gtk-medium> (<basic-medium>)
   sealed slot %ink-cache :: <object-table> = make(<table>);
   sealed slot %palette = #f;		//---*** MAYBE JUST USE THE FRAME'S PALETTE?
-  sealed slot %foreground-color :: false-or(<GdkColor*>) = #f;
-  sealed slot %background-color :: false-or(<GdkColor*>) = #f;
+  sealed slot %foreground-color :: false-or(<GdkColor>) = #f;
+  sealed slot %background-color :: false-or(<GdkColor>) = #f;
   // Cached clipping region
   sealed slot %clip-mask = #f;		// #f, #"none", or an X region
+  sealed slot %gcontext = #f;
 end class <gtk-medium>;
 
 define sealed domain make (singleton(<gtk-medium>));
@@ -51,10 +52,11 @@ define sealed method do-attach-medium
 	 sheet);
   duim-debug-message("Attaching medium to %= (medium-sheet %=)",
 		sheet, medium-sheet(medium));
-  let widget = GTK-WIDGET(mirror.mirror-widget);
-  let drawable = pointer-cast(<GdkDrawable*>, widget.GtkWidget-window);
+  let widget = mirror.mirror-widget;
+// FIXME
+//  let drawable = widget.gtk-widget-get-window;
   clear-ink-cache(medium);
-  medium-drawable(medium) := drawable;
+//  medium-drawable(medium) := drawable;
   // Set up the palette and fg/bg pixels
   let widget  = mirror-widget(mirror);
   let palette = port-default-palette(_port);
@@ -169,29 +171,23 @@ end method synchronize-display;
 
 define inline method get-gcontext
     (medium :: <gtk-medium>)
- => (drawable :: <GdkDrawable*>, gcontext :: <GdkGC*>)
-  let sheet = medium.medium-sheet;
-  let mirror = sheet.sheet-mirror;
-  let widget = GTK-WIDGET(mirror.mirror-widget);
+ => (drawable :: <GdkDrawable>, gcontext :: <GdkGC>)
   let drawable = medium-drawable(medium);
-  // let gcontext = widget.GtkWidget-style.GtkStyle-black-gc;
-  let gcontext = widget.GtkWidget-style.GtkStyle-fg-gc[GTK-WIDGET(widget).GtkWidget-state];
-  if (null-pointer?(drawable))
-    duim-debug-message("Null pointer drawable!");
-    let drawable = pointer-cast(<GdkDrawable*>, widget.GtkWidget-window);
+  unless (drawable)
+    let widget = medium.medium-sheet.sheet-mirror.mirror-widget;
+    drawable := widget.gtk-widget-get-window;
     medium-drawable(medium) := drawable;
-    values(drawable, gcontext)
-  else
-    values(drawable, gcontext)
-  end
+    %gcontext(medium) := gdk-gc-new(drawable);
+  end;
+  values(drawable, %gcontext(medium))
 end method get-gcontext;
 
 // Note that the brush defaults to 'medium-brush(medium)',
 // but the pen and font default to #f in order to avoid unnecessary work
 define sealed method update-drawing-state
     (medium :: <gtk-medium>, #key brush, pen, font)
- => (drawable :: <GdkDrawable*>, gcontext :: <GdkGC*>)
-  let (drawable :: <GdkDrawable*>, gcontext :: <GdkGC*>)
+ => (drawable :: <GdkDrawable>, gcontext :: <GdkGC>)
+  let (drawable :: <GdkDrawable>, gcontext :: <GdkGC>)
     = get-gcontext(medium);
   ignoring("update-drawing-state");
   /*
@@ -257,13 +253,13 @@ begin
 end;
 
 define sealed method establish-brush
-    (medium :: <gtk-medium>, brush :: <standard-brush>, gcontext :: <GdkGC*>)
+    (medium :: <gtk-medium>, brush :: <standard-brush>, gcontext :: <GdkGC>)
  => ()
   ignoring("establish-brush for <standard-brush>")
 end method establish-brush;
 
 define sealed method establish-brush
-    (medium :: <gtk-medium>, color :: <rgb-color>, gcontext :: <GdkGC*>) => ()
+    (medium :: <gtk-medium>, color :: <rgb-color>, gcontext :: <GdkGC>) => ()
   ignoring("establish-brush");
   /*---*** Colors not implemented yet!
   gdk-gc-set-fill(gcontext, $GDK-SOLID);
@@ -273,12 +269,12 @@ define sealed method establish-brush
 end method establish-brush;
 
 define sealed method establish-brush
-    (medium :: <gtk-medium>, color :: <contrasting-color>, gcontext :: <GdkGC*>) => ()
+    (medium :: <gtk-medium>, color :: <contrasting-color>, gcontext :: <GdkGC>) => ()
   ignoring("establish-brush for <contrasting-color>")
 end method establish-brush;
 
 define sealed method establish-brush
-    (medium :: <gtk-medium>, brush :: <foreground>, gcontext :: <GdkGC*>) => ()
+    (medium :: <gtk-medium>, brush :: <foreground>, gcontext :: <GdkGC>) => ()
   ignoring("establish-brush");
   /*---*** Colors not implemented yet!
   gdk-gc-set-fill(gcontext, $GDK-SOLID);
@@ -288,7 +284,7 @@ define sealed method establish-brush
 end method establish-brush;
 
 define sealed method establish-brush
-    (medium :: <gtk-medium>, brush :: <background>, gcontext :: <GdkGC*>) => ()
+    (medium :: <gtk-medium>, brush :: <background>, gcontext :: <GdkGC>) => ()
   ignoring("establish-brush");
   /*---*** Colors not implemented yet!
   gdk-gc-set-fill(gcontext, $GDK-SOLID);
@@ -299,7 +295,7 @@ end method establish-brush;
 
 
 define sealed method establish-pen 
-    (medium :: <gtk-medium>, pen :: <standard-pen>, gcontext :: <GdkGC*>) => ()
+    (medium :: <gtk-medium>, pen :: <standard-pen>, gcontext :: <GdkGC>) => ()
   let width 
     = begin
 	let width = pen-width(pen);
@@ -342,7 +338,7 @@ end method establish-pen;
 
 
 define sealed method establish-font
-    (medium :: <gtk-medium>, font :: <gtk-font>, gcontext :: <GdkGC*>) => ()
+    (medium :: <gtk-medium>, font :: <gtk-font>, gcontext :: <GdkGC>) => ()
   ignoring("establish-font");
   // gdk-gc-set-font(gcontext, font.%font-id)
 end method establish-font;
@@ -351,33 +347,33 @@ end method establish-font;
 /// Ink decoding
 
 define generic decode-ink
-    (medium :: <gtk-medium>, gcontext :: <GdkGC*>, brush)
+    (medium :: <gtk-medium>, gcontext :: <GdkGC>, brush)
  => (color :: <native-color>, fill-style, operation :: <integer>,
      image :: false-or(<image>));
 
 define sealed method decode-ink 
-    (medium :: <gtk-medium>, gcontext :: <GdkGC*>, brush :: <foreground>)
+    (medium :: <gtk-medium>, gcontext :: <GdkGC>, brush :: <foreground>)
  => (color :: <native-color>, fill-style, operation :: <integer>,
      image :: false-or(<image>))
   decode-ink(medium, gcontext, medium-foreground(medium))
 end method decode-ink;
 
 define sealed method decode-ink 
-    (medium :: <gtk-medium>, gcontext :: <GdkGC*>, brush :: <background>)
+    (medium :: <gtk-medium>, gcontext :: <GdkGC>, brush :: <background>)
  => (color :: <native-color>, fill-style, operation :: <integer>,
      image :: false-or(<image>))
   decode-ink(medium, gcontext, medium-background(medium))
 end method decode-ink;
 
 define sealed method decode-ink 
-    (medium :: <gtk-medium>, gcontext :: <GdkGC*>, color :: <color>)
+    (medium :: <gtk-medium>, gcontext :: <GdkGC>, color :: <color>)
  => (color :: <native-color>, fill-style, operation :: <integer>,
      image :: false-or(<image>))
   values(allocate-color(color, medium.%palette), $GDK-SOLID, $boole-1, #f)
 end method decode-ink;
 
 define sealed method decode-ink
-    (medium :: <gtk-medium>, gcontext :: <GdkGC*>, color :: <contrasting-color>)
+    (medium :: <gtk-medium>, gcontext :: <GdkGC>, color :: <contrasting-color>)
  => (color :: <native-color>, fill-style, operation :: <integer>,
      image :: false-or(<image>))
   let color = contrasting-color->color(color);
@@ -385,7 +381,7 @@ define sealed method decode-ink
 end method decode-ink;
 
 define sealed method decode-ink
-    (medium :: <gtk-medium>, gcontext :: <GdkGC*>, pattern :: <stencil>)
+    (medium :: <gtk-medium>, gcontext :: <GdkGC>, pattern :: <stencil>)
  => (color :: <native-color>, fill-style, operation :: <integer>,
      image :: false-or(<image>))
   not-yet-implemented("decode-ink");
@@ -422,14 +418,14 @@ define sealed method decode-ink
 end method decode-ink;
 
 define sealed method decode-ink
-    (medium :: <gtk-medium>, gcontext :: <GdkGC*>, pixmap :: <pixmap>)
+    (medium :: <gtk-medium>, gcontext :: <GdkGC>, pixmap :: <pixmap>)
  => (color :: <native-color>, fill-style, operation :: <integer>,
      image :: false-or(<image>))
   not-yet-implemented("decode-ink for <pixmap>")
 end method decode-ink;
 
 define sealed method decode-ink
-    (medium :: <gtk-medium>, gcontext :: <GdkGC*>, brush :: <standard-brush>)
+    (medium :: <gtk-medium>, gcontext :: <GdkGC>, brush :: <standard-brush>)
  => (color :: <native-color>, fill-style, operation :: <integer>,
      image :: false-or(<image>))
   let (color :: <native-color>, fill-style, operation :: <integer>, pattern)

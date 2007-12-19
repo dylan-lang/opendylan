@@ -7,4 +7,9 @@ License:      Functional Objects Library Public License Version 1.0
 Dual-license: GNU Lesser General Public License
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
- *debug-duim-function* := debug-message;
+
+define function dbg (message, #rest args)
+  apply(format-out, concatenate(message, "\n"), args);
+end;
+
+*debug-duim-function* := dbg;

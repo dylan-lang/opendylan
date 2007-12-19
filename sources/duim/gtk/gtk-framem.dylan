@@ -29,7 +29,7 @@ define method note-frame-title-changed
   let sheet  = top-level-sheet(frame);
   let mirror = sheet & sheet-direct-mirror(sheet);
   when (mirror)
-    let widget = GTK-WINDOW(mirror-widget(mirror));
+    let widget = mirror-widget(mirror);
     let title   = frame-title(frame) | "";
     with-c-string (c-string = title)
       gtk-window-set-title(widget, c-string)

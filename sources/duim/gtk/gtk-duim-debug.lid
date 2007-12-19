@@ -17,6 +17,7 @@ Files:  library
 	gtk-pixmaps
 	gtk-top
 	gtk-gadgets
+	gtk-layout
 	gtk-menus
         gtk-dialogs
 	gtk-help

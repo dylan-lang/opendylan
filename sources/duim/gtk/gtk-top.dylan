@@ -43,9 +43,10 @@ end method top-level-mirror;
 define method set-mirror-parent
     (child :: <widget-mirror>, parent :: <top-level-mirror>)
  => ()
-  let (x, y) = sheet-native-edges(mirror-sheet(child));
-  gtk-container-add(GTK-CONTAINER(mirror-widget(parent)),
-		    mirror-widget(child))
+  with-gdk-lock
+    gtk-container-add(mirror-widget(parent),
+                      mirror-widget(child))
+  end
 end method set-mirror-parent;
     
 define method move-mirror
@@ -354,7 +355,7 @@ end method make-gtk-mirror;
 define sealed method make-top-level-mirror
     (sheet :: <top-level-sheet>, frame :: <basic-frame>)
  => (mirror :: <top-level-mirror>)
-  let widget = GTK-WINDOW(gtk-window-new($GTK-WINDOW-TOPLEVEL));
+  let widget = gtk-window-new($GTK-WINDOW-TOPLEVEL);
   make(<top-level-mirror>,
        widget: widget,
        sheet:  sheet)
@@ -368,18 +369,18 @@ define method update-mirror-attributes
   let widget = mirror-widget(mirror);
   let modal? = frame-mode(frame) == #"modal";
   let title = frame-title(frame) | $default-window-title;
-  with-c-string (c-string = title)
-    gtk-window-set-title(widget, c-string)
-  end;
-  gtk-window-set-modal(widget, if (modal?) $true else $false end);
-  gtk-container-set-border-width(GTK-CONTAINER(widget), $top-level-border);
+  with-gdk-lock
+    gtk-window-set-title(widget, title);
+    gtk-window-set-modal(widget, if (modal?) $true else $false end);
+    gtk-container-set-border-width(widget, $top-level-border);
+  end
 end method update-mirror-attributes;
 
 define method install-event-handlers
     (sheet :: <gtk-top-level-sheet-mixin>, mirror :: <top-level-mirror>) => ()
   next-method();
-  install-named-handlers(mirror,
-			 #[#"delete_event", #"configure_event"])
+  duim-g-signal-connect(sheet, #"delete-event") (#rest args) handle-gtk-delete-event(sheet) end;
+  duim-g-signal-connect(sheet, #"configure-event") (widget, event, #rest args) handle-gtk-configure-event(sheet, widget, event) end;
 end method install-event-handlers;
 
 
@@ -388,7 +389,9 @@ define sealed method map-mirror
      mirror :: <top-level-mirror>)
  => ()
   let widget = mirror-widget(mirror);
-  gtk-widget-show(widget)
+  with-gdk-lock
+    gtk-widget-show(widget)
+  end
 end method map-mirror;
 
 define sealed method unmap-mirror
@@ -396,7 +399,9 @@ define sealed method unmap-mirror
      sheet :: <gtk-top-level-sheet-mixin>, mirror :: <top-level-mirror>)
  => ()
   let widget = mirror-widget(mirror);
-  gtk-widget-hide(widget)
+  with-gdk-lock
+    gtk-widget-hide(widget)
+  end
 end method unmap-mirror;
 
 define sealed method raise-mirror 
@@ -404,7 +409,10 @@ define sealed method raise-mirror
      mirror :: <top-level-mirror>,
      #key activate? :: <boolean> = #f)
  => ()
-  ignoring("raise-mirror")
+  let widget = mirror-widget(mirror);
+  with-gdk-lock
+    gtk-window-present(widget);
+  end
 end method raise-mirror;
 
 define sealed method lower-mirror
@@ -415,8 +423,7 @@ define sealed method lower-mirror
 end method lower-mirror;
 
 define sealed method handle-gtk-delete-event
-    (sheet :: <top-level-sheet>, widget :: <GtkWidget*>,
-     event :: <GdkEventAny*>)
+    (sheet :: <top-level-sheet>)
  => (handled? :: <boolean>)
   let frame  = sheet-frame(sheet);
   let controller = frame & frame-controlling-frame(frame);
@@ -434,7 +441,9 @@ define sealed method destroy-mirror
  => ()
   duim-debug-message("destroy-mirror of %=", mirror);
   let widget = mirror-widget(mirror);
-  gtk-widget-destroy(widget);
+  with-gdk-lock
+    gtk-widget-destroy(widget);
+  end;
   next-method();
 end method destroy-mirror;
 
@@ -535,8 +544,8 @@ define sealed method handle-move
 end method handle-move;
 
 define sealed method handle-gtk-configure-event
-    (sheet :: <top-level-sheet>, widget :: <GtkWidget*>,
-     event :: <GdkEventConfigure*>)
+    (sheet :: <top-level-sheet>, widget :: <GtkWidget>,
+     event :: <GdkEventConfigure>)
  => (handled? :: <boolean>)
   let frame  = sheet-frame(sheet);
   let left   = event.GdkEventConfigure-x;
@@ -545,12 +554,11 @@ define sealed method handle-gtk-configure-event
   let height = event.GdkEventConfigure-height;
   let region = make-bounding-box(left, top, left + width, top + height);
   let (old-width, old-height) = box-size(sheet-region(sheet));
-  //---*** Switch back to duim-debug-message
   duim-debug-message("Resizing %= to %dx%d -- was %dx%d",
-		sheet, width, height, old-width, old-height);
+                     sheet, width, height, old-width, old-height);
   distribute-event(port(sheet),
-		   make(<window-configuration-event>,
-			sheet: sheet,
-			region: region));
+                   make(<window-configuration-event>,
+                        sheet: sheet,
+                        region: region));
   #t
 end method handle-gtk-configure-event;

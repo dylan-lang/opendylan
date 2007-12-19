@@ -53,7 +53,7 @@ define method move-mirror
     (parent :: <display-mirror>, child :: <top-level-mirror>,
      x :: <integer>, y :: <integer>)
  => ()
-  let widget = GTK-WIDGET(mirror-widget(child));
+  let widget = mirror-widget(child);
   //---*** This causes problems!
   // gtk-widget-set-uposition(widget, x, y)
 end method move-mirror;
@@ -62,8 +62,8 @@ define method size-mirror
     (parent :: <display-mirror>, child :: <top-level-mirror>,
      width :: <integer>, height :: <integer>)
  => ()
-  let widget = GTK-WIDGET(mirror-widget(child));
+  let widget = mirror-widget(child);
   //--- This may not work after the sheet is mapped...
   //---*** This causes the window to grow and grow...
-  // gtk-window-set-default-size(widget, width, height)
+  gtk-window-set-default-size(widget, width, height)
 end method size-mirror;

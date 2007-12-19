@@ -25,26 +25,8 @@ end class <gtk-port>;
 
 define sealed method initialize
     (_port :: <gtk-port>, #key server-path) => ()
-  next-method();
   initialize-gtk();
-/*---*** What to do here?
-  let type    = head(server-path);
-  let display = get-property(tail(server-path), #"display",
-			     default: environment-variable("DISPLAY"));
-  ignore(type);
-  let (shell, context, unused-args)
-    = construct-application("DUIM port",	// class name -- defines resources
-			    display-name: display,
-			    app-context-name: format-to-string("DUIM port on %s", display),
-			    fallback-resources: $primitive-resources);
-  ignore(unused-args);
-  _port.%display      := xt/XtDisplay(shell);
-  _port.%app-shell    := shell;
-  _port.%app-context  := context;
-  _port.%modifier-map := initialize-modifier-map(_port.%display);
-  install-default-palette(_port);
-  install-default-text-style-mappings(_port);
-*/
+  next-method();
 end method initialize;
 
 register-port-class(#"gtk", <gtk-port>, default?: #t);
@@ -52,7 +34,10 @@ register-port-class(#"gtk", <gtk-port>, default?: #t);
 define sideways method class-for-make-port
     (type == #"gtk", #rest initargs, #key)
  => (class :: <class>, initargs :: false-or(<sequence>))
-  values(<gtk-port>, concatenate(initargs, #(event-processor-type:, #"n")))
+  values(<gtk-port>,
+         concatenate(initargs,
+                     list(event-processor-type:,
+                          if ($os-name == #"win32") #"n" else #"n+1" end)))
 end method class-for-make-port;
 
 define sealed method port-type
@@ -170,14 +155,14 @@ define method grab-pointer
     //---*** Get real current time...
     let current-time = 0;
     result
-      := gdk-pointer-grab(widget,
-			  0,		// owner events
-			  logior($GDK-POINTER-MOTION-MASK,
-				 $GDK-BUTTON-PRESS-MASK,
-				 $GDK-BUTTON-RELEASE-MASK),
-			  null-pointer(<GdkWindow*>),		// confine to
-			  null-pointer(<GdkCursor*>),		// cursor
-			  current-time);
+      := with-gdk-lock gdk-pointer-grab(widget,
+                                        0,		// owner events
+                                        logior($GDK-POINTER-MOTION-MASK,
+                                               $GDK-BUTTON-PRESS-MASK,
+                                               $GDK-BUTTON-RELEASE-MASK),
+                                        null-pointer(<GdkWindow>),		// confine to
+                                        null-pointer(<GdkCursor>),		// cursor
+                                        current-time) end;
   end;
   result ~= 0
 end method grab-pointer;
@@ -192,7 +177,7 @@ define method ungrab-pointer
   if (widget)
     //---*** How do we get the current time?
     let current-time = 0;
-    gdk-pointer-ungrab(current-time);
+    with-gdk-lock gdk-pointer-ungrab(current-time) end;
     #t
   end
 end method ungrab-pointer;
@@ -226,18 +211,14 @@ define sealed method make-caret
        width:  width  | $caret-width,
        height: height | (sheet-line-height(sheet) + sheet-line-spacing(sheet)))
 end method make-caret;
-
 define sealed method do-set-caret-position
     (caret :: <gtk-caret>, x :: <integer>, y :: <integer>) => ()
-  let transform = sheet-device-transform(caret-sheet(caret));
-  with-device-coordinates (transform, x, y)
-    ignoring("do-set-caret-position")
-  end
+  ignoring("do-set-caret-position");
 end method do-set-caret-position;
 
 define sealed method do-set-caret-size
     (caret :: <gtk-caret>, width :: <integer>, height :: <integer>) => ()
-  ignoring("do-set-caret-size")
+  ignoring("do-set-caret-size");
 end method do-set-caret-size;
 
 define sealed method do-show-caret
@@ -245,8 +226,10 @@ define sealed method do-show-caret
   ignore(tooltip?);
   let sheet  = caret-sheet(caret);
   let widget = sheet & mirror-widget(sheet-mirror(sheet));
+  let (x, y) = caret-position(caret);
+  let (width, height) = caret-size(caret);
   when (widget)
-    ignoring("do-show-caret")
+    draw-rectangle(sheet-medium(sheet), x, y, x + width, y + height, filled?: #t);
   end
 end method do-show-caret;
 
@@ -256,7 +239,10 @@ define sealed method do-hide-caret
   let sheet  = caret-sheet(caret);
   let widget = sheet & mirror-widget(sheet-mirror(sheet));
   when (widget)
-    ignoring("do-hide-caret")
+    let (x, y) = caret-position(caret);
+    let (width, height) = caret-size(caret);
+    clear-box(sheet-medium(sheet), x, y, x + width, y + height);
+    // queue-repaint(sheet, make(<general-box>, left: x, right: x + width, top: y + height, bottom: y));
   end
 end method do-hide-caret;
 

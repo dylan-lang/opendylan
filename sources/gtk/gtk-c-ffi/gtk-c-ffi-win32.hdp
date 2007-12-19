@@ -1,0 +1,32 @@
+comment:	This file is generated, please don't edit
+format-version:	2
+library:	gtk-c-ffi
+files:	library
+	gtk-module-2-10-win32
+	gtk-2-10-win32
+c-libraries:	gtk-win32-2.0.lib
+	gdk-win32-2.0.lib
+	atk-1.0.lib
+	gdk_pixbuf-2.0.lib
+	pangoft2-1.0.lib
+	freetype.lib
+	z.lib
+	fontconfig.lib
+	pangowin32-1.0.lib
+	gobject-2.0.lib
+	gmodule-2.0.lib
+	gthread-2.0.lib
+	glib-2.0.lib
+	intl.lib
+	iconv.lib
+	pango-1.0.lib
+	cairo.lib
+	pangocairo-1.0.lib
+base-address:	0x63FE0000
+linker-options:	$(guilflags)
+major-version:	1
+minor-version:	0
+library-pack:	0
+compilation-mode:	tight
+target-type:	dll
+comment:	additional keywords

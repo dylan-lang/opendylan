@@ -11,7 +11,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // /*---*** Not doing pixmaps yet!
 
 define sealed class <gtk-pixmap> (<pixmap>)
-  sealed slot %pixmap :: false-or(<GdkPixmap*>) = #f,
+  sealed slot %pixmap :: false-or(<GdkPixmap>) = #f,
     init-keyword: pixmap:;
   sealed slot %medium :: <gtk-medium>,
     required-init-keyword: medium:;
@@ -115,35 +115,33 @@ end method make-pixmap-medium;
 
 /// BitBlt
 
-//---*** THESE ALL NEED TO GET A GC TO DO THE COPYING ON AND ESTABLISH THE COPYING GCONTEXT
-
 define sealed method do-copy-area
     (from-medium :: <gtk-medium>, from-x :: <integer>, from-y :: <integer>,
      width :: <integer>, height :: <integer>,
      to-medium :: <gtk-medium>, to-x :: <integer>, to-y :: <integer>,
      #key function = $boole-1) => ()
   if (from-medium == to-medium)
+    let (drawable, gcontext) = get-gcontext(from-medium);
     let sheet     = medium-sheet(from-medium);
     let transform = sheet-device-transform(sheet);
-    let drawable  = medium-drawable(from-medium);
     with-device-coordinates (transform, from-x, from-y, to-x, to-y)
       with-device-distances (transform, width, height)
-	gdk-window-copy-area(drawable, gcontext, to-x, to-y,
-			     drawable, from-x, from-y, width, height)
+	gdk-draw-drawable(drawable, gcontext, drawable, from-x, from-y,
+                          to-x, to-y, width, height)
       end
     end
   else
+    let from-drawable = get-gcontext(from-medium);
+    let (to-drawable, gcontext) = get-gcontext(from-medium);
     let from-sheet     = medium-sheet(from-medium);
     let from-transform = sheet-device-transform(from-sheet);
-    let from-drawable  = medium-drawable(from-medium);
     let to-sheet       = medium-sheet(to-medium);
     let to-transform   = sheet-device-transform(to-sheet);
-    let to-drawable    = medium-drawable(to-medium);
     with-device-coordinates (from-transform, from-x, from-y)
       with-device-coordinates (to-transform, to-x, to-y)
 	with-device-distances (from-transform, width, height)
-	  gdk-window-copy-area(to-drawable, gcontext, to-x, to-y,
-			       from-drawable, from-x, from-y, width, height)
+	  gdk-draw-drawable(to-drawable, gcontext, from-drawable, from-x, from-y,
+                            to-x, to-y, width, height)
 	end
       end
     end

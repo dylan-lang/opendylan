@@ -15,13 +15,9 @@ define library gtk-duim
   use duim-core;
   use gtk-duim-gadget-panes;	//---*** until we've got all native gadgets in
 
-  use C-FFI;
-  use Glib-2;
-  use Gdk-2;
-  use Gtk-2;
-  use GObject-2;
-  use Xlib;
-  use Xt;
+  use c-ffi;
+
+  use gtk;
 
   export gtk-duim;
 
