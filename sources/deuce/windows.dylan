@@ -77,6 +77,9 @@ define open abstract class <basic-window> (<window>)
     init-keyword: point:;
   sealed slot window-mark :: false-or(<basic-bp>) = #f,
     init-keyword: mark:;
+  // keep track of when the mark was set using Shift + arrow keys
+  // and drop the mark on point movements then
+  sealed slot window-mark-with-shift :: <boolean> = #f;
   // This is only set by 'with-temporary-selection'...
   sealed slot window-temporary-mark? :: type-union(<boolean>, <bp>) = #f;
   sealed slot window-last-mark :: false-or(<basic-bp>) = #f;

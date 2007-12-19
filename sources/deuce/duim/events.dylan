@@ -226,7 +226,7 @@ define sealed method handle-event
 	when (bp & ~presentation & bp ~= window-point(sheet))
 	  // If no mark, set it now so that we get a region
 	  unless (window-mark(sheet))
-	    move-mark!(window-point(sheet), window: sheet)
+	    move-mark!(window-point(sheet), window: sheet, volatile?: #t);
 	  end;
 	  // Move the point to extend the region.  But first, make sure
 	  // point is on a real line, otherwise 'update-caret-position'

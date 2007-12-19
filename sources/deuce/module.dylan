@@ -213,7 +213,8 @@ define module deuce
 	 standard-command-table,
 	 control-X-command-table,
 	 control-C-command-table,
-	 escape-command-table;
+	 escape-command-table,
+         compute-key-binding-documentation;
 
   create <mode>,
 	 <major-mode>,

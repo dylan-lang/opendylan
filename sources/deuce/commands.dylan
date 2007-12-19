@@ -836,15 +836,16 @@ define method set-or-clear-mark (frame :: <editor-state-mixin>) => ()
   let state = frame-command-modifiers(frame);
   if (mark())
     // If there is already a mark and the motion command is not "shifted",
-    // then we clear the mark
-    when (logand(state, $shift-key) = 0)
+    // but we set the original mark with a shift, then we clear the mark
+    when ((logand(state, $shift-key) = 0)
+            & (frame.frame-window.window-mark-with-shift))
       clear-mark!()
     end
   else
     // If there is not already a mark and the motion command is "shifted",
     // then we set the mark
     unless (logand(state, $shift-key) = 0)
-      move-mark!(point())
+      move-mark!(point(), volatile?: #t)
     end
   end
 end method set-or-clear-mark;

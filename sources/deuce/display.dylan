@@ -1931,12 +1931,12 @@ define generic move-mark!
     (bp-or-line :: type-union(<bp>, <line>), #key) => ();
 
 define sealed inline method move-mark!
-    (bp :: <basic-bp>, #key window) => ()
-  move-mark!(bp-line(bp), index: bp-index(bp), window: window)
+    (bp :: <basic-bp>, #key window, volatile?) => ()
+  move-mark!(bp-line(bp), index: bp-index(bp), window: window, volatile?: volatile?)
 end method move-mark!;
 
 define sealed method move-mark!
-    (line :: <basic-line>, #key index :: <integer> = 0, window) => ()
+    (line :: <basic-line>, #key index :: <integer> = 0, window, volatile?) => ()
   let window :: <basic-window> = window | frame-window(*editor-frame*);
   let buffer = window-buffer(window);
   when (buffer)
@@ -1949,7 +1949,10 @@ define sealed method move-mark!
       window-mark(window) := bp;
       window-note-selection-changed(window, bp)
     end;
-    window-last-mark(window) := window-mark(window)
+    window-last-mark(window) := window-mark(window);
+    when (volatile?)
+      window.window-mark-with-shift := #t;
+    end
   end
 end method move-mark!;
 
@@ -1961,6 +1964,7 @@ define sealed method clear-mark!
   when (buffer & window-mark(window))
     window-last-mark(window) := window-mark(window);
     window-mark(window) := #f;
+    window.window-mark-with-shift := #f;
     window-note-selection-changed(window, #f);
     when (redisplay?)
       queue-redisplay(window, $display-region);
