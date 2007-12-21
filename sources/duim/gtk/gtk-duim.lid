@@ -22,6 +22,7 @@ Files:  library
         gtk-dialogs
 	gtk-help
 	gtk-clipboard
+	gtk-debug
 Other-files:   Open-Source-License.txt
 Major-version: 2
 Minor-version: 1

@@ -411,10 +411,11 @@ define sealed method handle-gtk-expose-event
 		     sheet, x, y, width, height);
   // We call 'handle-event' instead of 'distribute-event' because we
   // want the repainting to happen between BeginPaint and EndPaint
-  handle-event(sheet,
-	       make(<window-repaint-event>,
-		    sheet: sheet,
-		    region: region))
+  distribute-event(port(sheet),
+                   make(<window-repaint-event>,
+		        sheet: sheet,
+		        region: region));
+  #f;
 end method handle-gtk-expose-event;
 
 define method set-mirror-parent

@@ -182,6 +182,7 @@ end function gtk-button->duim-button;
 define method handle-gtk-expose-event
     (sheet :: <sheet>, event :: <GdkEventExpose>)
  => (handled? :: <boolean>)
+  
   let _port = port(sheet);
   when (_port)
     let area = event.GdkEventExpose-area;
@@ -196,11 +197,11 @@ define method handle-gtk-expose-event
       = untransform-distance(native-transform, native-width, native-height);
     let region = make-bounding-box(x, y, x + width, y + height);
     distribute-event(_port,
-         make(<window-repaint-event>,
-        sheet:  sheet,
-        region: region))
+                     make(<window-repaint-event>,
+                          sheet:  sheet,
+                          region: region));
+    #f
   end;
-  #t
 end method handle-gtk-expose-event;
 
 /*---*** Not handling state changes yet
