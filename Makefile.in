@@ -74,6 +74,7 @@ $(abs_builddir)/Bootstrap.1:
 	mkdir $(abs_builddir)/Bootstrap.1
 	mkdir $(abs_builddir)/Bootstrap.1/bin
 	mkdir $(abs_builddir)/Bootstrap.1/lib
+	mkdir $(abs_builddir)/Bootstrap.1/lib/runtime
 	mkdir $(abs_builddir)/Bootstrap.1/build 
 	mkdir $(abs_builddir)/Bootstrap.1/build/logs
 	cp $(srcdir)/$(rt_build)/$(fd_build)-build.jam \
@@ -116,6 +117,7 @@ $(abs_builddir)/Bootstrap.2:
 	mkdir $(abs_builddir)/Bootstrap.2
 	mkdir $(abs_builddir)/Bootstrap.2/bin
 	mkdir $(abs_builddir)/Bootstrap.2/lib
+	mkdir $(abs_builddir)/Bootstrap.2/lib/runtime
 	mkdir $(abs_builddir)/Bootstrap.2/build 
 	mkdir $(abs_builddir)/Bootstrap.2/build/logs
 
@@ -151,6 +153,7 @@ $(prefix):
 	mkdir $(prefix)
 	mkdir $(prefix)/bin
 	mkdir $(prefix)/lib
+	mkdir $(prefix)/lib/runtime
 	mkdir $(prefix)/build
 	mkdir $(prefix)/build/logs
 	@echo Copying sources...
