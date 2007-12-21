@@ -159,7 +159,7 @@ $(prefix):
 	@echo Copying sources...
 	cp -R $(abs_srcdir)/sources $(prefix)
 	@echo Removing unnecessary directories...
-	find -d $(prefix)/sources -name '.*' -exec rm -r {} \;
+	find $(prefix)/sources -depth -name '.*' -exec rm -r {} \;
 	-rm -r $(prefix)/sources/boostrap1-registry
 
 install-stage: $(prefix)

@@ -54,10 +54,10 @@ runtime.o:	$(srcdir)/runtime.s
 #	cp -fp gc.a $(LIBDEST)/libgc.a
 #
 
-$(MPS_LIB)/mmdw.a
+$(MPS_LIB)/mmdw.a:
 	(cd $(MPS)/code; make -f lii4gc.gmk mmdw.a)
 
-$(MPS_LIB)/mpsplan.a
+$(MPS_LIB)/mpsplan.a:
 	(cd $(MPS)/code; make -f lii4gc.gmk mpsplan.a)
 
 $(LIBDEST)/libmpsplan.a: $(MPS_LIB)/mpsplan.a
