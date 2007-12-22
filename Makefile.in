@@ -174,7 +174,7 @@ install-stage: $(prefix)
 install: install-stage
 
 uninstall:
-	rm -rv $(prefix)
+	rm -r $(prefix)
 
 install-strip:
 
@@ -202,21 +202,23 @@ CHECK_APPS = \
 	deuce-test-suite-app \
 	channels-tests
 
-check:	bootstrap-$(CHECK_STAGE)-stage
-	@OPEN_DYLAN_PLATFORM_NAME=$(fd_build) \
-	  OPEN_DYLAN_RELEASE_ROOT=$(abs_builddir)/Bootstrap.$(CHECK_STAGE) \
-	  OPEN_DYLAN_RELEASE_INSTALL=$(abs_builddir)/Bootstrap.$(CHECK_STAGE) \
-	  OPEN_DYLAN_BUILD_LOGS=$(abs_builddir)/Bootstrap.$(CHECK_STAGE)/logs \
-	  OPEN_DYLAN_USER_ROOT=$(abs_builddir)/Bootstrap.$(CHECK_STAGE) \
-	  OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.$(CHECK_STAGE) \
-	  OPEN_DYLAN_USER_REGISTRIES=$(abs_srcdir)/sources/registry:$(library_srcdir)/registry \
-	  OPEN_DYLAN_USER_SOURCES=$(abs_srcdir)/sources \
-	  OPEN_DYLAN_USER_BUILD=$(abs_builddir)/Bootstrap.$(CHECK_STAGE)/build \
-	  $(fdmake) --compiler="Bootstrap.$(CHECK_STAGE)/bin/minimal-console-compiler -build -save" \
-		$(CHECK_APPS)
-	for app in $(CHECK_APPS); do \
-	  ./Bootstrap.$(CHECK_STAGE)/bin/$$app; \
-	done
+CHECK-ENV = \
+	OPEN_DYLAN_PLATFORM_NAME=$(fd_build) \
+	OPEN_DYLAN_BUILD_LOGS=$(abs_builddir)/Bootstrap.$(CHECK_STAGE)/build/logs \
+	OPEN_DYLAN_USER_ROOT=$(abs_builddir)/Bootstrap.$(CHECK_STAGE) \
+	OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.$(CHECK_STAGE) \
+	OPEN_DYLAN_USER_BUILD=$(abs_builddir)/Bootstrap.$(CHECK_STAGE)/build \
+	OPEN_DYLAN_USER_REGISTRIES=$(abs_srcdir)/sources/registry:$(library_srcdir)/registry \
+	OPEN_DYLAN_USER_SOURCES=$(abs_srcdir)/sources
+
+check:	bootstrap-stage-$(CHECK_STAGE)
+	@$(CHECK-ENV) \
+	  $(fdmake) \
+	  --compiler="$(abs_builddir)/Bootstrap.$(CHECK_STAGE)/bin/minimal-console-compiler -build -save" \
+	  $(CHECK_APPS) && \
+	  for app in $(CHECK_APPS); do \
+	    $(abs_builddir)/Bootstrap.$(CHECK_STAGE)/bin/$$app; \
+	  done
 
 installcheck:
 

@@ -81,17 +81,18 @@ Download, make, and install the Boehm garbage collection library. On the Mac,
 Open Dylan uses that instead of the MPS library. I used the following
 configure settings:
 
-  ./configure --disable-dependency-tracking --enable-parallel-mark 
+  ./configure --enable-parallel-mark --enable-threads=posix
     --enable-large-config --enable-gc-debug USE_I686_PREFETCH=1
 
 Download the Open Dylan source tree, containing this file and the "sources"
 directory, from SVN as described on http://www.opendylan.org/repository.phtml.
 
 In the directory of the downloaded source tree, run these commands (set the
-prefix to whatever you want):
+prefix to whatever you want, and set the correct path to the Boehm GC
+libraries):
 
   ./autogen.sh
-  ./configure --prefix=/usr/local/opendylan
+  ./configure --prefix=/usr/local/opendylan --with-gc=/usr/local/lib
   make
   sudo make install
 

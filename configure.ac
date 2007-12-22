@@ -72,6 +72,11 @@ AC_ARG_WITH(mps,
                             [Path to MPS distribution and build.]))
 AC_SUBST(with_mps)
 
+AC_ARG_WITH(gc,
+            AC_HELP_STRING([--with-gc=PATH],
+			   [Path to Boehm GC libraries.]))
+AC_SUBST(with_gc)
+
 AC_ARG_WITH(library-source,
             AC_HELP_STRING([--with-library-source=PATH],
                            [Path to Dylan contributed libraries source.]))
@@ -95,6 +100,7 @@ AC_MSG_RESULT($LIBRARY_PACKS)
 AC_SUBST(LIBRARY_PACKS)
 
 # for now, replace mps only in pentium-linux
+# gc is replaced in sources/dfmc/c-run-time
 AC_CONFIG_FILES(Makefile sources/lib/run-time/pentium-linux/Makefile sources/lib/run-time/pentium-freebsd/Makefile sources/dfmc/c-run-time/Makefile)
 
 AC_OUTPUT

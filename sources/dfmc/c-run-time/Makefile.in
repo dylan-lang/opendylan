@@ -3,6 +3,7 @@
 srcdir		= @srcdir@
 top_srcdir	= @top_srcdir@
 top_builddir	= @top_builddir@
+gc_libdir	= @with_gc@
 
 runtime_srcdir	= $(top_srcdir)/sources/dfmc/c-run-time
 
@@ -19,7 +20,7 @@ EXPIRATION	= -1
 AS = as -L
 AR = ar -q
 
-CFLAGS		= -DGC_LINUX_THREADS=1 -D_REENTRANT=1 \
+CFLAGS		= -DGC_LINUX_THREADS=1 -D_REENTRANT=1 -DGC_DEBUG=1 \
 		  -O -g -DEXPIRATION=$(EXPIRATION) \
 		  -I$(srcdir) -I$(runtime_srcdir)
 

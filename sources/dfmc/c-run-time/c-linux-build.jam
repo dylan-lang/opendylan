@@ -32,6 +32,8 @@ SUFMKF ?= .mkf ;  # build-system files
   HDRS ?= $(SYSTEM_INCDIR) ;
 }
 
+DEFINES += GC_LINUX_THREADS _REENTRANT ;
+
 #
 # Runtime
 #
