@@ -32,7 +32,9 @@ define method note-frame-title-changed
     let widget = mirror-widget(mirror);
     let title   = frame-title(frame) | "";
     with-c-string (c-string = title)
-      gtk-window-set-title(widget, c-string)
+      with-gdk-lock
+        gtk-window-set-title(widget, c-string)
+      end
     end
   end
 end method note-frame-title-changed;

@@ -20,10 +20,12 @@ define sealed method initialize-display
   let mirror
     = make(<display-mirror>,
 	   sheet:  _display);
-  let mm-width     = gdk-screen-width-mm();
-  let mm-height    = gdk-screen-height-mm();
-  let pixel-width  = gdk-screen-width();
-  let pixel-height = gdk-screen-height();
+  with-gdk-lock
+    let mm-width     = gdk-screen-width-mm();
+    let mm-height    = gdk-screen-height-mm();
+    let pixel-width  = gdk-screen-width();
+    let pixel-height = gdk-screen-height();
+  end;
   display-pixel-width(_display)  := pixel-width;
   display-pixel-height(_display) := pixel-height;
   display-mm-width(_display)     := mm-width;
@@ -65,5 +67,7 @@ define method size-mirror
   let widget = mirror-widget(child);
   //--- This may not work after the sheet is mapped...
   //---*** This causes the window to grow and grow...
-  gtk-window-set-default-size(widget, width, height)
+  with-gdk-lock
+    gtk-window-set-default-size(widget, width, height)
+  end
 end method size-mirror;

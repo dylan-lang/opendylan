@@ -29,7 +29,9 @@ ignore(mirror-registered-dialogs);
 define sealed method make-top-level-mirror
     (sheet :: <top-level-sheet>, frame :: <dialog-frame>)
  => (mirror :: <top-level-mirror>)
-  let widget = gtk-window-new($GTK-WINDOW-TOPLEVEL);
+  with-gdk-lock
+    let widget = gtk-window-new($GTK-WINDOW-TOPLEVEL);
+  end;
   let owner = frame-owner(frame);
   make(<dialog-mirror>,
        widget: widget,

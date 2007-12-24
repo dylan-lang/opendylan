@@ -1926,7 +1926,9 @@ end method make-gtk-mirror;
 define method update-mirror-attributes
     (gadget :: <gtk-combo-box>, mirror :: <gadget-mirror>) => ()
   next-method();
-  gtk-combo-box-entry-set-text-column(mirror.mirror-widget, 1);
+  with-gtk-lock
+    gtk-combo-box-entry-set-text-column(mirror.mirror-widget, 1);
+  end
 end;
 
 define method install-event-handlers

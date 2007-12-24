@@ -215,8 +215,10 @@ define sealed method gtk-font-metrics
     (font :: <gtk-font>, _port :: <gtk-port>)
  => (font :: <gtk-font>,
      width :: <integer>, height :: <integer>, ascent :: <integer>, descent :: <integer>)
-  let pango-context = gtk-get-pango-context-from-port(_port);
-  gtk-font-metrics(font, pango-context);
+  with-gdk-lock
+    let pango-context = gtk-get-pango-context-from-port(_port);
+    gtk-font-metrics(font, pango-context);
+  end;
 end method gtk-font-metrics;
 
 
