@@ -355,9 +355,7 @@ end method make-gtk-mirror;
 define sealed method make-top-level-mirror
     (sheet :: <top-level-sheet>, frame :: <basic-frame>)
  => (mirror :: <top-level-mirror>)
-  with-gdk-lock
-    let widget = gtk-window-new($GTK-WINDOW-TOPLEVEL);
-  end;
+  let widget = with-gdk-lock gtk-window-new($GTK-WINDOW-TOPLEVEL) end;
   make(<top-level-mirror>,
        widget: widget,
        sheet:  sheet)

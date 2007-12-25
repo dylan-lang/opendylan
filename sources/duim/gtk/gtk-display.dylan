@@ -25,18 +25,18 @@ define sealed method initialize-display
     let mm-height    = gdk-screen-height-mm();
     let pixel-width  = gdk-screen-width();
     let pixel-height = gdk-screen-height();
-  end;
-  display-pixel-width(_display)  := pixel-width;
-  display-pixel-height(_display) := pixel-height;
-  display-mm-width(_display)     := mm-width;
-  display-mm-height(_display)    := mm-height;
-  display-pixels-per-point(_display)
-    := sqrt(  (pixel-width  / (mm-width  * $points-per-mm))
-	    * (pixel-height / (mm-height * $points-per-mm)));
-  sheet-region(_display)
-    := set-box-edges(sheet-region(_display),
-		     0, 0, pixel-width, pixel-height);
-  sheet-direct-mirror(_display) := mirror;
+    display-pixel-width(_display)  := pixel-width;
+    display-pixel-height(_display) := pixel-height;
+    display-mm-width(_display)     := mm-width;
+    display-mm-height(_display)    := mm-height;
+    display-pixels-per-point(_display)
+      := sqrt(  (pixel-width  / (mm-width  * $points-per-mm))
+  	    * (pixel-height / (mm-height * $points-per-mm)));
+    sheet-region(_display)
+      := set-box-edges(sheet-region(_display),
+  		     0, 0, pixel-width, pixel-height);
+    sheet-direct-mirror(_display) := mirror;
+  end
 /*---*** Not doing palettes yet...
   let palette  = port-default-palette(_port);
   let drawable = xt/XtWindow(top-shell);
