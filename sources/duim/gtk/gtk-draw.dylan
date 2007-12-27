@@ -229,8 +229,6 @@ define sealed method draw-polygon
 	  //---*** This doesn't work in the FFI!
 	  // let point = points[j];
 	  let point = pointer-value-address(points, index: j);
-//	  point.x-value := x;
-//	  point.y-value := y;
 	  point.GdkPoint-x := x;
 	  point.GdkPoint-y := y;
 	end;

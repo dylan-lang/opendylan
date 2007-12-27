@@ -324,7 +324,6 @@ define method do-make-gtk-mirror
   => (mirror :: <widget-mirror>)
   with-gdk-lock
     let widget = gtk-drawing-area-new();
-    //  gtk-drawing-area-size(widget, 200, 200);
     gtk-widget-set-size-request(widget, 200, 200);
     widget.@can-focus := $true;
     make(<drawing-area-mirror>,

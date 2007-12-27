@@ -780,7 +780,7 @@ define sealed method text-caret-position-setter
   if (position)
     let widget = gadget-widget(gadget);
     with-gdk-lock
-      gtk-editable-get-position(widget, position);
+      gtk-editable-set-position(widget, position);
     end;
     position
   end;
@@ -1926,7 +1926,7 @@ end method make-gtk-mirror;
 define method update-mirror-attributes
     (gadget :: <gtk-combo-box>, mirror :: <gadget-mirror>) => ()
   next-method();
-  with-gtk-lock
+  with-gdk-lock
     gtk-combo-box-entry-set-text-column(mirror.mirror-widget, 1);
   end
 end;
@@ -2438,4 +2438,4 @@ define method update-frame-documentation
     end
   end
 end method update-frame-documentation;
-// */
+*/

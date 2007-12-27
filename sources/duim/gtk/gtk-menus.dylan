@@ -63,7 +63,6 @@ define method set-mirror-parent
     let widget = mirror-widget(child);
     with-gdk-lock
       if (child.mirror-sheet.gadget-label = "Help")
-        //      gtk-menu-item-right-justify(widget)
         gtk-menu-item-set-right-justified ((widget), /* TRUE */ 1)
       end;
       let menu = gtk-menu-new();
