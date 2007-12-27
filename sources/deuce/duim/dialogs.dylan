@@ -115,8 +115,8 @@ end method new-file-dialog;
 
 
 // These can be tweaked by the user...
-define variable $buffer-box-width  :: <integer> = 250;
-define variable $buffer-box-height :: <integer> = 100;
+define variable $buffer-box-width  :: <integer> = 500;
+define variable $buffer-box-height :: <integer> = 300;
 
 define sealed method save-buffers-dialog
     (window :: <deuce-pane>,
@@ -178,7 +178,6 @@ define sealed method do-save-buffers-dialog
 	       items: all-buffers,
 	       value: default-buffers,
 	       label-key: buffer-name,
-	       width: $buffer-box-width, height: $buffer-box-height,
 	       selection-mode: #"multiple",
 	       activate-callback:
 		 method (b)
@@ -252,13 +251,14 @@ define sealed method do-save-buffers-dialog
 			mode: #"modal",
 			owner: frame,
 			// Be consistent with 'choose-buffer-dialog'
-			width: max($buffer-box-width, 300));
+			width: max($buffer-box-width, 300),
+			height: max($buffer-box-height, 200));
       frame-default-button(dialog) := save-button;
       let exit-status = start-dialog(dialog);
       when (exit-status)
-	let (width, height) = sheet-size(buffers-box);
+	let (width, height) = frame-size(dialog);
 	$buffer-box-width  := width;
-	$buffer-box-height := height
+	$buffer-box-height := height;
       end;
       values(exit-status & result, #f)
     end
@@ -330,7 +330,6 @@ define sealed method do-choose-buffers-dialog
 	     items: buffers,
 	     value: default,
 	     label-key: buffer-name,
-	     width: $buffer-box-width, height: $buffer-box-height,
 	     selection-mode: selection-mode,
 	     value-changed-callback:
 	       method (b)
@@ -390,13 +389,14 @@ define sealed method do-choose-buffers-dialog
 		      mode: #"modal",
 		      owner: frame,
 		      // Be consistent with 'save-buffers-dialog'
-		      width: max($buffer-box-width, 300));
+		      width: max($buffer-box-width, 300),
+                      height: max($buffer-box-height, 200));
     frame-default-button(dialog) := ok-button;
     let exit-status = start-dialog(dialog);
     when (exit-status)
-      let (width, height) = sheet-size(buffers-box);
+      let (width, height) = frame-size(dialog);
       $buffer-box-width  := width;
-      $buffer-box-height := height
+      $buffer-box-height := height;
     end;
     exit-status & result
   end
