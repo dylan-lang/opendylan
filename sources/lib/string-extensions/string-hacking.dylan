@@ -306,7 +306,10 @@ define method parse-description (string :: <sequence>);
 						     pair('0', '9')));
 	  char-list := add!(char-list, '_');
 
-	's' => char-list := concatenate(char-list, " \t\n\r\f");  // whitespace
+        // Whitespace
+        // Note this is perl compatible, but not the same as the POSIX "space"
+        // class, because it doesn't contain the VT character (code 11).
+	's' => char-list := concatenate(char-list, " \t\n\r\f");
 	otherwise => char-list := add!(char-list, escaped-char);
       end select;
     else
