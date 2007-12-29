@@ -110,17 +110,13 @@ end method find-buffer-from-pathname;
 
 define method buffer-source-location-equals
     (buffer :: <buffer>, locator :: <file-locator>)
-  debug-message("NFB: %=\n", buffer-name(buffer));
   #f
 end method buffer-source-location-equals;
 
 define method buffer-source-location-equals
     (buffer :: <file-buffer-mixin>, locator :: <file-locator>)
   let buffer-pathname = container-pathname(buffer-source-container(buffer));
-  let same? = (as(<file-locator>, buffer-pathname) = locator);
-  debug-message("%= = %=?  %s\n",
-                as(<string>, locator), buffer-pathname, same?);
-  same?
+  locator = as(<file-locator>, buffer-pathname)
 end method buffer-source-location-equals;
 
 

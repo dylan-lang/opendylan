@@ -108,7 +108,7 @@ end macro with-editor-locked;
 define macro with-window-locked
   { with-window-locked (?window:expression) ?:body end }
     => { with-thing-locked (?window, window-lock) ?body end }
-end macro with-editor-locked;
+end macro with-window-locked;
 
 define macro with-thing-locked
   { with-thing-locked (?thing:expression, ?accessor:name) ?:body end }
