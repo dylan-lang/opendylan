@@ -250,6 +250,7 @@ define constant $subdirectory-tests
 
 define constant $microsoft-subdirectory-tests
   = #[#["h:/a/",  #["b"],    "h:/a/b/"],
+      #["h:/a/",  #["b"],    "H:/a/b/"],
       #["//h/a/", #["b"],    "//h/a/b/"]];
 
 define locators function-test subdirectory-locator ()

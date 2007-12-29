@@ -93,17 +93,35 @@ end method editor-search-string-setter;
 define method find-buffer
     (editor :: <basic-editor>, name :: <byte-string>)
  => (buffer :: false-or(<basic-buffer>))
-  let buffers = editor-buffers(editor);
-  find-value(buffers,
-	     //--- Should this use case-insensitive compare?
-	     method (b) buffer-name(b) = name end)
+  find-buffer(editor, method (b) buffer-name(b) = name end)
+end method find-buffer;
+
+define method find-buffer
+    (editor :: <basic-editor>, test-function :: <function>)
+  find-value(editor-buffers(editor), test-function)
 end method find-buffer;
 
 define method find-buffer-from-pathname
     (editor :: <basic-editor>, pathname :: <pathname>)
  => (buffer :: false-or(<basic-buffer>))
-  find-buffer(editor, pathname->buffer-name(pathname))
+  let locator = as(<file-locator>, pathname);
+  find-buffer(editor, rcurry(buffer-source-location-equals, locator))
 end method find-buffer-from-pathname;
+
+define method buffer-source-location-equals
+    (buffer :: <buffer>, locator :: <file-locator>)
+  debug-message("NFB: %=\n", buffer-name(buffer));
+  #f
+end method buffer-source-location-equals;
+
+define method buffer-source-location-equals
+    (buffer :: <file-buffer-mixin>, locator :: <file-locator>)
+  let buffer-pathname = container-pathname(buffer-source-container(buffer));
+  let same? = (as(<file-locator>, buffer-pathname) = locator);
+  debug-message("%= = %=?  %s\n",
+                as(<string>, locator), buffer-pathname, same?);
+  same?
+end method buffer-source-location-equals;
 
 
 /// Editor frames
