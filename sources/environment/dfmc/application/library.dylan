@@ -47,9 +47,12 @@ define module dfmc-application
 
   use channels;
   use environment-protocols,
+    // Prevent name clashes with projects:projects, imported above
+    // via project-manager-interface.  (Many of these are renamed but
+    // not used.  Not sure why they weren't just excluded.  --cgay)
     rename: { close-project => env/close-project,
 	      project-name => env/project-name,
-	      project-source-location => env/project-source-location,
+              project-source-location => env/project-source-location,
 	      project-other-sources => env/project-other-sources,
 	      open-project => env/open-project,
               save-project => env/save-project,
@@ -62,7 +65,12 @@ define module dfmc-application
               project-major-version-setter => env/project-major-version-setter,
               project-minor-version => env/project-minor-version,
               project-minor-version-setter => env/project-minor-version-setter,
-	      project-read-only? => env/project-read-only? };
+              project-read-only? => env/project-read-only?,
+              project-compiler-back-end => env/project-compiler-back-end,
+              project-compiler-back-end-setter => env/project-compiler-back-end-setter,
+              session-property => env/session-property,
+              session-property-setter => env/session-property-setter };
+
   use dfmc-environment-database;
   use target-application;
 

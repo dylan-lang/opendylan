@@ -34,7 +34,8 @@ define module environment-deuce
   use commands;
   use command-lines,
     exclude: { command-error, <command-error> };
-  use environment-commands;
+  use environment-commands,
+    exclude: { command-title };
 
   use editor-manager,
     exclude: { <editor> };		// clashes with Deuce
@@ -120,6 +121,7 @@ define module environment-deuce
 	      $yellow		  => deuce/$yellow },
     exclude: { // Random DUIM clashes
 	       node-children,
+	       node-children-setter,
 	       node-parent,
 	       <command-table>,
 	       <standard-command-table>,

@@ -11,6 +11,9 @@ define module environment-internal-commands
   use environment-imports,
     exclude: { load-library };
   use environment-protocols,
+    // Prevent name clashes with projects:projects, imported below
+    // via project-manager-interface.  (Many of these are renamed but
+    // not used.  Not sure why they weren't just excluded.  --cgay)
     rename: { close-project => env/close-project,
 	      project-name => env/project-name,
 	      project-source-location => env/project-source-location,
@@ -35,7 +38,9 @@ define module environment-internal-commands
               project-minor-version-setter => env/project-minor-version-setter,
 	      project-read-only? => env/project-read-only?,
  	      do-library-modules => env/do-library-modules,
- 	      source-record-top-level-forms => env/source-record-top-level-forms };
+ 	      source-record-top-level-forms => env/source-record-top-level-forms,
+              session-property => env/session-property,
+              session-property-setter => env/session-property-setter };
   use environment-commands;
 
   use commands;

@@ -39,7 +39,7 @@ define module utilities
   export <text-field-option>,
 	 text-field-option-text-field,
 	 text-field-option-text-field-value,
-	   text-field-option-text-field-value-setter,
+         text-field-option-text-field-value-setter,
 	 text-field-option-value;
 
 /* #### MULTI-LINE TEXT #############################

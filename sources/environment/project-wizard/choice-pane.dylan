@@ -16,7 +16,7 @@ end method choice-label;
 
 // This GF must be extended to cope with every kind of object which
 // is to be displayed in a <choice-pane>
-define open generic choice-object-label
+define generic choice-object-label
     (object) => (label :: <string>);
 
 define sealed method choice-object-label
@@ -42,7 +42,7 @@ end method choice-documentation;
 
 // This GF must be extended to cope with every kind of object which
 // is to be displayed in a <choice-pane>
-define open generic choice-object-documentation
+define generic choice-object-documentation
     (object) => (documentation :: <string>);
 
 define sealed method choice-object-documentation
