@@ -56,6 +56,8 @@ define module repository
   use duim-internals,	 // for string-capitalize
     exclude: { position };
   use release-info;
+  use format,
+    import: { format-to-string };
 
   // Modules from this library.
   use utilities;

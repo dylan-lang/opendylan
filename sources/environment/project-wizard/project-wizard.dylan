@@ -33,8 +33,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //   can have nicer help text layout.
 // - Test template projects, and un-comment-out the UI for them.  (They
 //   are implemented but completely untested and I'm out of time.)
-// - Make all mentions of "Functional Developer" refer to 'release-product-name'
-//   instead of the literal string.
 // - Use environment{-,-warning,-error}-message instead of notify-user ...
 //   except they're defined in environment-tools, which we don't want to
 //   have to "use" here.
@@ -880,7 +878,8 @@ define sealed frame <project-wizard-frame> (<wizard-frame>)
 "On this page you must choose a CORBA IDL file (or a blank one will be created)";
 "and decide whether to generate a client or server project, or both.";
 "These projects will use some or all of the 'protocol', 'stubs' and 'skeletons'";
-"libraries which Functional Developer will generate automatically from the IDL file.";
+format-to-string("libraries which %s will generate automatically from the IDL file.",
+                 release-product-name());
                end;
 	       grouping ("CORBA IDL file",
 			 max-width: $fill)
@@ -1099,14 +1098,16 @@ define sealed frame <project-wizard-frame> (<wizard-frame>)
 	       make(<radio-button>, label: "&Simple", id: #"simple");
 	       indenting ($radio-indent) labels
 "The following pages will lead you through options for using libraries for several";
-"main areas of support provided by Functional Developer.";
+format-to-string("main areas of support provided by %s.",
+                 release-product-name());
 	       end; end;
 	     end;
 	     vertically (y-spacing: 4)
 	       make(<radio-button>, label: "&Custom", id: #"custom");
 	       indenting ($radio-indent) labels
 "The next page will let you choose exactly which libraries your project will use"; 
-"from the groups of libraries supplied with Functional Developer.";
+format-to-string("from the groups of libraries supplied with %s.",
+                 release-product-name());
 	       end; end;
 	     end;
 	   end,
@@ -1227,7 +1228,8 @@ define sealed frame <project-wizard-frame> (<wizard-frame>)
 	     vertically (y-spacing: 4)
 	       make(<radio-button>, label: "Win32 API", id: #"win32");
 	       indenting ($radio-indent) labels
-"Use libraries for access to much of the Win32 API via the Functional Developer";
+format-to-string("Use libraries for access to much of the Win32 API via the %s",
+                 release-product-name());
 "C Foreign Function Interface.";
 	       end; end;
 	     end;
@@ -1341,7 +1343,8 @@ define sealed frame <project-wizard-frame> (<wizard-frame>)
 		    label: "Low-level ODBC support", id: #"odbc-ffi");
 	       indenting ($radio-indent) labels
 "Use the ODBC-FFI library, which provides a low-level interface to the";
-"Microsoft ODBC API, via the Functional Developer C Foreign Function Interface.";
+format-to-string("Microsoft ODBC API, via the %s C Foreign Function Interface.",
+                 release-product-name());
 "This is not recommended for new users.";
 	       end; end;
 	     end;
@@ -1388,7 +1391,8 @@ define sealed frame <project-wizard-frame> (<wizard-frame>)
     vertically ()
       labels
 "This page lets you choose which groups of libraries to use from the libraries";
-"provided with Functional Developer.";
+format-to-string("provided with %s.",
+                 release-product-name());
 "";
 "Double-click on an item in the list to change whether it is used.";
 "";
