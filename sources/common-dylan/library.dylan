@@ -75,10 +75,6 @@ define module common-extensions
     export: { \assert,
 	      \debug-assert,
 	      debug-message };
-  use simple-debugging,
-    export: { \assert,
-              \debug-assert,
-              debug-message };
   use simple-profiling,
     export: { \profiling, 
 	      profiling-type-result };

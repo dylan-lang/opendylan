@@ -464,11 +464,6 @@ define sealed inline method sheet-mapped?
   logand(sheet-flags(sheet), %sheet_mapped_mask) = %sheet_mapped
 end method sheet-mapped?;
 
-define open generic sheet-mapped?-setter
-    (mapped? :: <boolean>, sheet :: <basic-sheet>,
-     #key do-repaint?, clear?)
- => (mapped? :: <boolean>);
-
 // Map sheets from the bottom up
 // This can only move a sheet tree from the "managed" to the "mapped" state
 define method sheet-mapped?-setter
