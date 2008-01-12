@@ -404,7 +404,7 @@ end method do-choose-buffers-dialog;
 
 
 // This can be tweaked by the user...
-define variable $choose-string-field-width :: <integer> = 250;
+define variable $choose-string-field-width :: <integer> = 300;
 
 define sealed method choose-string-dialog
     (window :: <deuce-pane>,

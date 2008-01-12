@@ -171,8 +171,8 @@ define method frame-most-recent-objects
   end
 end method frame-most-recent-objects;
 
-define variable $view-history-dialog-width  :: false-or(<integer>) = #f;
-define variable $view-history-dialog-height :: false-or(<integer>) = #f;
+define variable $view-history-dialog-width  :: <integer> = 500;
+define variable $view-history-dialog-height :: <integer> = 300;
 
 define method frame-view-history
     (frame :: <frame-history-mixin>) => ()

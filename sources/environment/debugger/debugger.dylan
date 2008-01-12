@@ -11,7 +11,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //---*** andrewa: I think these are irritating, so I've switched them off
 define constant $debugger-pane-tooltips? = #f;
 
-define constant $default-debugger-frame-width :: <integer>  = 660;
+define constant $default-debugger-frame-width :: <integer>  = 900;
 define constant $default-debugger-frame-height :: <integer> = 600;
 
 define thread variable *debugger* :: false-or(<debugger>) = #f;
@@ -210,8 +210,8 @@ define method debugger-thread-setter
   thread
 end method debugger-thread-setter;
 
-define variable $select-thread-dialog-width  :: false-or(<integer>) = #f;
-define variable $select-thread-dialog-height :: false-or(<integer>) = #f;
+define variable $select-thread-dialog-width  :: <integer> = 500;
+define variable $select-thread-dialog-height :: <integer> = 300;
 
 define method debugger-select-thread
     (debugger :: <debugger>) => ()

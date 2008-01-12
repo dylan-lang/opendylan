@@ -55,7 +55,7 @@ define method frame-current-library
   end
 end method frame-current-library;
 
-define variable $current-module-dialog-width :: <integer> = 250;
+define variable $current-module-dialog-width :: <integer> = 500;
 
 define method frame-choose-current-module
     (frame :: <frame-module-mixin>)

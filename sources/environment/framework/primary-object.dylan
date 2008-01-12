@@ -276,7 +276,7 @@ end method refresh-name-selector;
 
 /// Select an object by name
 
-define variable $select-object-dialog-width :: <integer> = 350;
+define variable $select-object-dialog-width :: <integer> = 500;
 
 define frame <select-object-dialog> (<dialog-frame>)
   constant slot select-object-dialog-label,

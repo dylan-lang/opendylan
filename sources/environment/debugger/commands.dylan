@@ -428,8 +428,8 @@ define function application-abort-restart (project :: <project-object>, restarts
   end block;
 end function;
 
-define variable $choose-restart-dialog-width  :: false-or(<integer>) = #f;
-define variable $choose-restart-dialog-height :: false-or(<integer>) = #f;
+define variable $choose-restart-dialog-width  :: <integer> = 500;
+define variable $choose-restart-dialog-height :: <integer> = 300;
 
 define sealed method execute-debugger-command
     (command :: <debugger-choose-restart-command>, debugger :: <debugger>)

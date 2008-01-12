@@ -431,8 +431,8 @@ end method make-clone;
 
 /// Environment persistent state
 
-define variable $default-environment-frame-width  = 500;
-define variable $default-environment-frame-height = 300;
+define variable $default-environment-frame-width  = 800;
+define variable $default-environment-frame-height = 600;
 
 define open class <frame-window-settings-mixin> (<frame>)
 end class <frame-window-settings-mixin>;

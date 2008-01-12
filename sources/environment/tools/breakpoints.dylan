@@ -522,7 +522,7 @@ end function breakpoint-arguments;
 
 /// New Breakpoint Dialog
 
-define variable $new-breakpoint-dialog-width :: <integer> = 250;
+define variable $new-breakpoint-dialog-width :: <integer> = 500;
 
 define frame <new-breakpoint-dialog> (<dialog-frame>)
   constant slot %frame :: <environment-frame>,

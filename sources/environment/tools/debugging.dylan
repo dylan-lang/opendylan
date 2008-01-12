@@ -132,7 +132,7 @@ end method frame-open-just-in-time-project;
 
 /// Choose project for filename
 
-define variable $choose-project-dialog-width :: <integer> = 350;
+define variable $choose-project-dialog-width :: <integer> = 500;
 
 define frame <choose-project-dialog> (<dialog-frame>)
   slot %filename :: <file-locator>,
