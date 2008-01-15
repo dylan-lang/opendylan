@@ -13,12 +13,12 @@ license.  What you are holding in your hands is the attempt of a group
 of enthusiasts calling themselves the "Dylan Hackers" to bundle
 up this code, and publish it in a form useful for the general public.
 
-This is release Open Dylan 1.0beta4. Naturally, we expect this release
+This is release Open Dylan 1.0beta5. Naturally, we expect this release
 to have bugs.  We're interested in getting your feedback, in order to
 improve this product.  Write to bugs@opendylan.org, or use the bug
 tracker on http://www.opendylan.org, in case you find any.
 
-This build corresponds to revision 11307 in svn repository.
+This build corresponds to revision 11623 in svn repository.
 
 Requirements
 ============
@@ -36,22 +36,22 @@ Installation
 ============
 
 This tarball is set up to be extracted in /usr/local, resulting in the
-creation of a directory /usr/local/opendylan-1.0beta4.  In case you
+creation of a directory /usr/local/opendylan-1.0beta5.  In case you
 installed in this location (or move the tree you found this README in
-there now), you just have to add /usr/local/opendylan-1.0beta4/bin to
+there now), you just have to add /usr/local/opendylan-1.0beta5/bin to
 your PATH:
 
-  $ export PATH=/usr/local/opendylan-1.0beta4/bin:$PATH    # for bash
+  $ export PATH=/usr/local/opendylan-1.0beta5/bin:$PATH    # for bash
 
 or
 
-  $ setenv PATH /usr/local/opendylan-1.0beta4/bin:$PATH    # for tcsh
+  $ setenv PATH /usr/local/opendylan-1.0beta5/bin:$PATH    # for tcsh
 
 If you choose any other installation location, you have to make sure
 the shared libraries required by the compiler are found.  You can do
 this by either setting the LD_LIBRARY_PATH environment variable:
 
-  $ export LD_LIBRARY_PATH=/where/ever/opendylan-1.0beta4/lib:LD_LIBRARY_PATH
+  $ export LD_LIBRARY_PATH=/where/ever/opendylan-1.0beta5/lib:LD_LIBRARY_PATH
 
 or by adding the path to /etc/ld.so.conf, and re-running ldconfig.  You
 have to do this as root, of course.
@@ -112,4 +112,4 @@ Still more documentation can be found on:
 and more than you probably need is available from the Subversion
 repository:
 
-  $ svn co svn://anonsvn.gwydiondylan.org/scm/svn/dylan/trunk/documentation
+  $ svn co svn://svn.opendylan.org/scm/svn/dylan/trunk/documentation
