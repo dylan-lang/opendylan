@@ -276,7 +276,7 @@ STANDALONE_DEUCE_INSTALL_DIRECTORY = $(DUIM_EXAMPLES_INSTALL_DIRECTORY)\standalo
 SYSTEM_TESTS_SOURCE = $(SYSTEM_DIRECTORY)\tests
 T_LISTS_SOURCE = $(LIB_DIRECTORY)\t-lists
 TEST_APPS_SOURCE = $(QA_DIRECTORY)\test-apps
-TEST_REPORT_SOURCE = $(QA_DIRECTORY)\test-report
+TESTWORKS_REPORT_SOURCE = $(QA_DIRECTORY)\testworks-report
 TEST_SUITES_SOURCE = $(QA_DIRECTORY)\test-suites
 TESTWORKS_SOURCE = $(QA_DIRECTORY)\testworks
 TESTWORKS_TESTS_SOURCE = $(TESTWORKS_SOURCE)\tests
@@ -406,7 +406,7 @@ INTERPRETER = $(INSTALL_BIN_DIRECTORY)\interpreter.exe
 MAP_STATISTICS = $(INSTALL_BIN_DIRECTORY)\map-statistics.exe
 PARSER_COMPILER = $(INSTALL_BIN_DIRECTORY)\parser-compiler.exe
 PENTIUM_DW = $(INSTALL_BIN_DIRECTORY)\pentium-dw.exe
-TEST_REPORT = $(INSTALL_BIN_DIRECTORY)\test-report.exe
+TESTWORKS_REPORT = $(INSTALL_BIN_DIRECTORY)\testworks-report.exe
 WIN32_ENVIRONMENT = $(INSTALL_BIN_DIRECTORY)\win32-environment.exe
 WITH_SPLASH_SCREEN = $(INSTALL_BIN_DIRECTORY)\with-splash-screen.exe
 
@@ -842,7 +842,7 @@ interpreter: $(INTERPRETER)
 map-statistics: $(MAP_STATISTICS)
 parser-compiler: $(PARSER_COMPILER)
 pentium-dw: $(PENTIUM_DW)
-test-report: $(TEST_REPORT)
+testworks-report: $(TESTWORKS_REPORT)
 
 project-manager-libraries: tools-interface user-projects
 core-compiler-libraries: file-source-records release-info dood metering binary-manager coff-manager binary-builder coff-builder build-system parser-run-time dfmc-management dfmc-browser-support project-manager-libraries dfmc-execution dfmc-debug-back-end
@@ -1211,7 +1211,7 @@ internal-environment: console-environment win32-environment with-splash-screen
 internal-libraries: enhanced-libraries midi
 internal-example-projects: enhanced-example-projects
 install-internal-examples: install-enhanced-examples install-midi-examples
-internal-only-tools: testworks-libraries test-report debugger map-statistics parser-compiler # hd2c interpreter
+internal-only-tools: testworks-libraries testworks-report debugger map-statistics parser-compiler # hd2c interpreter
 internal-tools: enhanced-tools internal-only-tools
 internal-release: release-info console-compiler compiler internal-environment internal-libraries internal-tools install-runtime-dlls install-internal-examples
 
@@ -1721,10 +1721,10 @@ checkout-test-apps:
   $(ENSURE_DIRECTORY) $(QA_DIRECTORY)
   $(CHECKOUT) test-apps fundev/Sources/qa/test-apps $(TEST_APPS_SOURCE)
 
-checkout-test-report:
+checkout-testworks-report:
   $(ENSURE_RELEASE_AREA)
   $(ENSURE_DIRECTORY) $(QA_DIRECTORY)
-  $(CHECKOUT) test-report fundev/Sources/qa/test-report $(TEST_REPORT_SOURCE)
+  $(CHECKOUT) testworks-report fundev/Sources/qa/testworks-report $(TESTWORKS_REPORT_SOURCE)
 
 checkout-test-suites:
   $(ENSURE_RELEASE_AREA)
@@ -2277,9 +2277,9 @@ $(SQL_ODBC):
   $(ENSURE_RUNTIME_LIBRARY) $(IO_DLL) io
   $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
   $(ENSURE_SOURCES) databases $(DATABASES_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) sql x86-win32
+  $(ENSURE_REGISTRY_ENTRY) sql generic
   $(ENSURE_REGISTRY_ENTRY) odbc-ffi x86-win32
-  $(ENSURE_REGISTRY_ENTRY) sql-odbc x86-win32
+  $(ENSURE_REGISTRY_ENTRY) sql-odbc generic
   $(BUILD_RUNTIME_LIBRARY) sql-odbc $(SQL_ODBC_DLL)
 
 #
@@ -2289,13 +2289,13 @@ $(SQL_ODBC):
 $(TESTWORKS):
   $(ENSURE_RUNTIME_LIBRARY) $(FUNCTIONAL_DYLAN_DLL) functional-dylan
   $(ENSURE_SOURCES) testworks $(TESTWORKS_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) testworks x86-win32
+  $(ENSURE_REGISTRY_ENTRY) testworks generic
   $(BUILD_RUNTIME_LIBRARY) testworks $(TESTWORKS_DLL)
 
 $(TESTWORKS_SPECS):
   $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_DLL) testworks
   $(ENSURE_SOURCES) testworks-specs $(TESTWORKS_SPECS_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) testworks-specs x86-win32
+  $(ENSURE_REGISTRY_ENTRY) testworks-specs generic
   $(BUILD_RUNTIME_LIBRARY) testworks-specs $(TESTWORKS_SPECS_DLL)
 
 $(GUI_TESTWORKS):
@@ -3138,14 +3138,14 @@ $(MAP_STATISTICS):
   $(ENSURE_REGISTRY_ENTRY) map-statistics x86-win32
   $(BUILD_APPLICATION) map-statistics
 
-$(TEST_REPORT):
+$(TESTWORKS_REPORT):
   $(ENSURE_RUNTIME_LIBRARY) $(FUNCTIONAL_DYLAN_DLL) functional-dylan
   $(ENSURE_RUNTIME_LIBRARY) $(IO_DLL) io
   $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
   $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_DLL) testworks
-  $(ENSURE_SOURCES) test-report $(TEST_REPORT_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) test-report generic
-  $(BUILD_APPLICATION) test-report
+  $(ENSURE_SOURCES) testworks-report $(TESTWORKS_REPORT_SOURCE)
+  $(ENSURE_REGISTRY_ENTRY) testworks-report generic
+  $(BUILD_APPLICATION) testworks-report
 
 # Basic Release
 
@@ -3509,7 +3509,7 @@ $(SQL_ODBC_TEST):
   $(ENSURE_RUNTIME_LIBRARY) $(SQL_ODBC_DLL) sql-odbc
   $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_DLL) testworks
   $(ENSURE_SOURCES) databases $(DATABASES_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) sql-odbc-test x86-win32
+  $(ENSURE_REGISTRY_ENTRY) sql-odbc-test generic
   $(BUILD_APPLICATION) sql-odbc-test
 
 test-odbc:

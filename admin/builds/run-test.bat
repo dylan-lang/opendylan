@@ -43,12 +43,12 @@ goto find_test_report
 set TEST_NAME=%TEST_APP%
 goto find_test_report
 
-:FIND_TEST_REPORT
-call ensure-application test-report
-set TEST_REPORT=%OPEN_DYLAN_USER_INSTALL%\bin\test-report.exe
-if exist "%TEST_REPORT%" goto setup_variables
-set TEST_REPORT=%DYLAN_RELEASE_ROOT%\bin\test-report.exe
-if not exist "%TEST_REPORT%" goto no_test_report
+:FIND_TESTWORKS_REPORT
+call ensure-application testworks-report
+set TESTWORKS_REPORT=%OPEN_DYLAN_USER_INSTALL%\bin\testworks-report.exe
+if exist "%TESTWORKS_REPORT%" goto setup_variables
+set TESTWORKS_REPORT=%DYLAN_RELEASE_ROOT%\bin\testworks-report.exe
+if not exist "%TESTWORKS_REPORT%" goto no_test_report
 
 :SETUP_VARIABLES
 set LOG_NAME=test-%TEST_NAME%.log
@@ -82,17 +82,17 @@ if "%FORMATTED%"=="no" goto output_report
 if not exist "%OLD_LOG%" goto log_report
 
 :COMPARE_LOGS
-if "%QUIET%"=="no" echo Running: %TEST_REPORT% /quiet %LOG% %OLD_LOG%
-%TEST_REPORT% /quiet %LOG% %OLD_LOG% > %REPORT_LOG%
+if "%QUIET%"=="no" echo Running: %TESTWORKS_REPORT% /quiet %LOG% %OLD_LOG%
+%TESTWORKS_REPORT% /quiet %LOG% %OLD_LOG% > %REPORT_LOG%
 if %ERRORLEVEL% NEQ 0 goto test_report_diff_failed
-if "%QUIET%"=="no" echo Running: %TEST_REPORT% %LOG% %OLD_LOG% -report summary
-%TEST_REPORT% %LOG% %OLD_LOG% -report summary
+if "%QUIET%"=="no" echo Running: %TESTWORKS_REPORT% %LOG% %OLD_LOG% -report summary
+%TESTWORKS_REPORT% %LOG% %OLD_LOG% -report summary
 if %ERRORLEVEL% NEQ 0 goto test_report_failed
 goto success
 
 :LOG_REPORT
-if "%QUIET%"=="no" echo Running: %TEST_REPORT% /quiet %LOG% -report summary
-%TEST_REPORT% /quiet %LOG% -report summary
+if "%QUIET%"=="no" echo Running: %TESTWORKS_REPORT% /quiet %LOG% -report summary
+%TESTWORKS_REPORT% /quiet %LOG% -report summary
 if %ERRORLEVEL% NEQ 0 goto test_report_failed
 goto success
 
@@ -118,16 +118,16 @@ echo Test suite %TEST_APP% failed (status code %ERRORLEVEL%)
 echo [see log %LOG%]
 goto generate_error
 
-:NO_TEST_REPORT
-echo test-report.exe wasn't found
+:NO_TESTWORKS_REPORT
+echo testworks-report.exe wasn't found
 goto generate_error
 
-:TEST_REPORT_FAILED
+:TESTWORKS_REPORT_FAILED
 echo Test Report failed (status code %ERRORLEVEL%)
 echo [see log %REPORT_LOG%]
 goto generate_error
 
-:TEST_REPORT_DIFF_FAILED
+:TESTWORKS_REPORT_DIFF_FAILED
 echo Test Report difference failed (status code %ERRORLEVEL%)
 echo [see log %REPORT_LOG%]
 goto generate_error

@@ -510,6 +510,7 @@ xcopy /E /I %USER_REGISTRY%\generic %OPEN_DYLAN_USER_REGISTRIES%\generic >nul
 xcopy /E /I %USER_REGISTRY%\x86-win32 %OPEN_DYLAN_USER_REGISTRIES%\x86-win32 >nul
 
 echo Removing runtime registry entries
+del "%OPEN_DYLAN_USER_REGISTRIES%\generic\unix-portability" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\unix-portability" 2>nul
 del "%OPEN_DYLAN_USER_REGISTRIES%\generic\dylan" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\dylan" 2>nul
 del "%OPEN_DYLAN_USER_REGISTRIES%\generic\functional-extensions" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\functional-extensions" 2>nul
 del "%OPEN_DYLAN_USER_REGISTRIES%\generic\machine-word" "%OPEN_DYLAN_USER_REGISTRIES%\x86-win32\machine-word" 2>nul
