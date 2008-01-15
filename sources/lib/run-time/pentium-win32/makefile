@@ -151,6 +151,10 @@ install-buffalo-runtime: $(BUFFLIBFILE)
 	copy $(BUFFLIBFILE) $(RUNTIMELIBDEST)
 
 
+install-plinth: $(RELEASEPLINTH)
+	if exist $(PLINTHDEST) del /q /f $(PLINTHDEST)
+	copy $(RELEASEPLINTH) $(PLINTHDEST)
+
 install-dylan-plinth: $(DYLANPLINTH)
 	if exist $(PLINTHDEST) del /q /f $(PLINTHDEST)
 	copy $(DYLANPLINTH) $(PLINTHDEST)
@@ -163,7 +167,6 @@ install-debug-ansi-plinth: $(DEBUGPLINTH)
 	if exist $(PLINTHDEST) del /q /f $(PLINTHDEST)
 	copy $(DEBUGPLINTH) $(PLINTHDEST)
 
-install-plinth: install-dylan-plinth
 
 
 
@@ -176,7 +179,7 @@ install-mincrt: $(MINCRT)
 !endif
 
 
-install-mmdw: 
+install-mmdw: $(RELEASEMMDW)
 	if exist $(MMDWDEST) del /q /f $(MMDWDEST)
 	copy $(RELEASEMMDW) $(MMDWDEST)
 
