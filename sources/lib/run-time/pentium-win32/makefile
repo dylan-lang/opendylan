@@ -123,6 +123,7 @@ install-build:
 	if not exist $(LIBDEST)\x86-win32-build.jam copy x86-win32-vc6-build.jam $(LIBDEST)\x86-win32-build.jam
 	if not exist $(LIBDEST)\x86-win32-vc6-build.jam copy x86-win32-vc6-build.jam $(LIBDEST)
 	if not exist $(LIBDEST)\x86-win32-vc7-build.jam copy x86-win32-vc7-build.jam $(LIBDEST)
+	if not exist $(LIBDEST)\x86-win32-vc8-build.jam copy x86-win32-vc8-build.jam $(LIBDEST)
 	if not exist $(LIBDEST)\x86-win32-pellesc-build.jam copy x86-win32-pellesc-build.jam $(LIBDEST)
 	if not exist $(LIBDEST)\dylan-support.obj copy dylan-support.obj $(LIBDEST)
 	if not exist $(LIBDEST)\dylanpe.script copy dylanpe.script $(LIBDEST)
