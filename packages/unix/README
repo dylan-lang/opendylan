@@ -51,7 +51,7 @@ If you choose any other installation location, you have to make sure
 the shared libraries required by the compiler are found.  You can do
 this by either setting the LD_LIBRARY_PATH environment variable:
 
-  $ export LD_LIBRARY_PATH=/where/ever/opendylan-1.0beta5/lib:LD_LIBRARY_PATH
+  $ export LD_LIBRARY_PATH=/where/ever/opendylan-1.0beta5/lib:$LD_LIBRARY_PATH
 
 or by adding the path to /etc/ld.so.conf, and re-running ldconfig.  You
 have to do this as root, of course.
