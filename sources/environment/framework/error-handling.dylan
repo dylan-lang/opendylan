@@ -66,7 +66,7 @@ define method do-environment-handler
   apply(notify-user, message,
 	title: product-name,
 	style: #"error",
-	owner: owner & frame-mapped?(owner))
+	owner: if (owner & frame-mapped?(owner)) owner end)
 end method do-environment-handler;
 
 
