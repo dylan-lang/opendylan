@@ -443,7 +443,7 @@ define function get-shell-IMalloc () => (IMalloc :: false-or(<C-Interface>))
   end;
   $Shell-IMalloc
 end function get-shell-IMalloc;
-
+*/
 define sealed method do-choose-directory
     (framem :: <gtk-frame-manager>, owner :: <sheet>,
      #key title :: false-or(<string>), documentation :: false-or(<string>), exit-boxes,
@@ -451,45 +451,29 @@ define sealed method do-choose-directory
      #all-keys)
  => (locator :: false-or(<string>))
   let locator = #f;
-  let shell-IMalloc = get-shell-IMalloc();
-  when (shell-IMalloc)
-    let handle = dialog-owner-handle(owner);
-    // "C:\" and "C:\WINDOWS" are valid paths, but "C:\WINDOWS\"
-    // is not.  If we pass in an invalid path, the dialog silently
-    // ignores us.  For simplicity, just strip off any trailing '\\'.
-    when (default)
-      let _size = size(default);
-      let _end  = if (element(default, _size - 1, default: #f) = '\\') _size - 1
-		  else _size end;
-      default := copy-sequence(default, end: _end)
+  let parent-widget = mirror-widget(sheet-mirror(owner));
+  with-gdk-lock
+    let dialog
+      = gtk-file-chooser-dialog-new (title | "Choose Directory", parent-widget,
+				     $GTK-FILE-CHOOSER-ACTION-SELECT-FOLDER,
+				     null-pointer(<gchar*>));
+    gtk-dialog-add-button(dialog, $GTK-STOCK-CANCEL, $GTK-RESPONSE-CANCEL);
+    gtk-dialog-add-button(dialog, $GTK-STOCK-OPEN, $GTK-RESPONSE-ACCEPT);
+    if (default)
+      gtk-file-chooser-set-filename(dialog, default)
     end;
-    with-stack-structure (bi :: <LPBROWSEINFO>)
-      with-stack-structure (buffer :: <C-string>, size: $MAX-PATH)
-	title   := if (title) as(<C-string>, copy-sequence(title))
-		   else $NULL-string end;
-        default := if (default) as(<C-string>, default)
-		   else $NULL-string end;
-	bi.hwndOwner-value := handle;
-	bi.pidlRoot-value  := null-pointer(<LPCITEMIDLIST>);
-	bi.pszDisplayName-value := buffer;
-	bi.lpszTitle-value := title;
-	bi.ulFlags-value   := $BIF-RETURNONLYFSDIRS;
-	bi.lpfn-value      := browse-for-folder;	// see below
-	bi.lParam-value    := pointer-address(default);
-	bi.iImage2-value   := 0;
-	let pidlBrowse = SHBrowseForFolder(bi);
-	when (SHGetPathFromIDList(pidlBrowse, buffer))
-	  locator := as(<byte-string>, buffer)
-	end;
-	IMalloc/Free(shell-IMalloc, pidlBrowse); 
-        unless (default = $NULL-string) destroy(default) end;
-        unless (title   = $NULL-string) destroy(title)   end;
-      end
-    end
+    let filename =
+      if (gtk-dialog-run (dialog) == $GTK-RESPONSE-ACCEPT)
+        gtk-file-chooser-get-filename(dialog); // FIXME: leaks the filename C string
+      end;
+    gtk-widget-destroy(dialog);
+    if (filename)
+      locator := as(<byte-string>, filename);
+    end;
   end;
   locator
 end method do-choose-directory;
-
+/*
 // This callback allows the dialog to open with its selection set to
 // the 'default:' passed in to 'do-choose-directory' 
 define sealed method browse-for-folder-function
