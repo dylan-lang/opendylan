@@ -39,11 +39,11 @@ define method read-to
     let seq = make(<stretchy-vector>);
     let matched? = #f;
     while (~stream-at-end?(stream) & ~matched?)
-      let next-elt = read-element(stream);
+      let next-elt = peek(stream);
       if (test(next-elt, elt))
         matched? := #t
       else
-        add!(seq, next-elt)
+        add!(seq, read-element(stream))
       end
     end;
     values(as(stream-sequence-class(stream), seq), matched?)
