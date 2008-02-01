@@ -36,7 +36,7 @@ mmtuneflags = /DTUNE_GEN0_FREQ=$(gen0freq)
 mmtuneflags = 
 !endif
 
-MPSKIT	 = C:\fundev\mps-kit\code
+MPSKIT	 = C:\dylan\mps\code
 
 CC	 = $(cc)
 LINKLIB	 = $(implib) /nologo /out:
@@ -152,10 +152,6 @@ install-buffalo-runtime: $(BUFFLIBFILE)
 	copy $(BUFFLIBFILE) $(RUNTIMELIBDEST)
 
 
-install-plinth: $(RELEASEPLINTH)
-	if exist $(PLINTHDEST) del /q /f $(PLINTHDEST)
-	copy $(RELEASEPLINTH) $(PLINTHDEST)
-
 install-dylan-plinth: $(DYLANPLINTH)
 	if exist $(PLINTHDEST) del /q /f $(PLINTHDEST)
 	copy $(DYLANPLINTH) $(PLINTHDEST)
@@ -168,6 +164,7 @@ install-debug-ansi-plinth: $(DEBUGPLINTH)
 	if exist $(PLINTHDEST) del /q /f $(PLINTHDEST)
 	copy $(DEBUGPLINTH) $(PLINTHDEST)
 
+install-plinth: install-dylan-plinth
 
 
 
@@ -180,7 +177,7 @@ install-mincrt: $(MINCRT)
 !endif
 
 
-install-mmdw: $(RELEASEMMDW)
+install-mmdw: 
 	if exist $(MMDWDEST) del /q /f $(MMDWDEST)
 	copy $(RELEASEMMDW) $(MMDWDEST)
 
