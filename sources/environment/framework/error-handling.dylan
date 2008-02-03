@@ -63,10 +63,10 @@ define method do-environment-handler
          "Please close any unused projects or applications.",
 	 product-name);
   let owner = current-frame();
-  apply(notify-user, message,
-	title: product-name,
-	style: #"error",
-	owner: if (owner & frame-mapped?(owner)) owner end)
+  notify-user(message,
+              title: product-name,
+              style: #"error",
+              owner: if (owner & frame-mapped?(owner)) owner end)
 end method do-environment-handler;
 
 
@@ -95,10 +95,10 @@ define variable $internal-error-bitmap = #f;
 //
 // Unfortunately, release-product-name isn't available until the edition
 // specific DLL has been initialized, and this error handler can kick in
-// before then. So just use "Functional Developer" if we can't do better,
+// before then. So just use "Open Dylan" if we can't do better,
 // because we really shouldn't be crashing here.
 
-define constant $product-name = "Functional Developer";
+define constant $product-name = "Open Dylan";
 
 define function safe-release-product-name
     () => (name :: <string>)
