@@ -385,6 +385,9 @@ define method format-date (format :: <string>, date :: <date>)
         'k' => wrap(" ", hours);
         'M' => wrap("0", minutes);
         'S' => wrap("0", seconds);
+	'T' => concatenate(wrap("0", hours), ":",
+                           wrap("0", minutes), ":",
+			   wrap("0", seconds));
         'm' => wrap("0", month);
         'd' => wrap("0", day);
         'e' => wrap(" ", day);
