@@ -91,6 +91,7 @@ define module common-extensions
 	 difference,
 	 position,
 	 split,
+         join,
 	 fill-table!,
 	 find-element,
 	 find-value,

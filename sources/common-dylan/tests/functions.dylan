@@ -275,58 +275,118 @@ define common-extensions function-test position ()
 end function-test position;
 
 define common-extensions function-test split ()
-  check-equal("split on empty string",
-              split("", '/'),
-              #[]);
-  check-equal("split on single character",
-	      split("a", '/'),
-	      #["a"]);
-  check-equal("split on two characters",
-	      split("a/b", '/'),
-	      #["a", "b"]);
-  check-equal("split on multiple single characters",
-	      split("aXbXcXdXeXfXg", 'X'),
-	      #["a", "b", "c", "d", "e", "f", "g"]);
-  check-equal("split on single word",
-	      split("hello", '/'),
-	      #["hello"]);
-  check-equal("split on two words",
-	      split("hello/world", '/'),
-	      #["hello", "world"]);
-  check-equal("split on three words",
-	      split("majorXminorXbuild", 'X'),
-	      #["major", "minor", "build"]);
-  check-equal("split on multiple words",
-	      split("x=100&y=200&width=30&height=10", '&'),
-	      #["x=100", "y=200", "width=30", "height=10"]);
-  check-equal("split on single separator character",
-	      split("/", '/'),
-	      #["", ""]);
-  check-equal("split on a/",
-	      split("a/", '/'),
-	      #["a", ""]);
-  check-equal("split on /b",
-	      split("/b", '/'),
-	      #["", "b"]);
-  check-equal("split with double separator",
-	      split("majorXXbuild", 'X'),
-	      #["major", "", "build"]);
-  check-equal("split with spaces",
-	      split(" major X minor X build ", 'X'),
-	      #["major", "minor", "build"]);
-  check-equal("no trim split with spaces",
-	      split(" major X minor X build ", 'X', trim?: #f),
-	      #[" major ", " minor ", " build "]);
-  check-equal("split with start",
-	      split("123456789x123456789", 'x', start: 1),
-	      #["23456789", "123456789"]);
-  check-equal("split with end",
-	      split("0123456789", '3', end: 8),
-	      #["012", "4567"]);
-  check-equal("split with start and end",
-	      split("0123456789", '3', start: 2, end: 8),
-	      #["2", "4567"]);
+  // a character separator should act the same as a string separator that
+  // contains only that character...
+  for (separator in #('/', "/"))
+    local method fmt (name)
+            format-to-string("%s, sep = %=", name, separator);
+          end;
+    check-equal(fmt("split empty string"),
+                split("", separator),
+                #[""]);
+    check-equal(fmt("split single character"),
+                split("a", separator),
+                #["a"]);
+    check-equal(fmt("split two characters"),
+                split("a/b", separator),
+                #["a", "b"]);
+    check-equal(fmt("split multiple single characters"),
+                split("a/b/c/d/e/f/g", separator),
+                #["a", "b", "c", "d", "e", "f", "g"]);
+    check-equal(fmt("split single word"),
+                split("hello", separator),
+                #["hello"]);
+    check-equal(fmt("split two words"),
+                split("hello/world", separator),
+                #["hello", "world"]);
+    check-equal(fmt("split three words"),
+                split("major/minor/build", separator),
+                #["major", "minor", "build"]);
+    check-equal(fmt("split multiple words"),
+                split("x=100/y=200/width=30/height=10", separator),
+                #["x=100", "y=200", "width=30", "height=10"]);
+    check-equal(fmt("split only the separator character"),
+                split("/", separator),
+                #["", ""]);
+    check-equal(fmt("split a/"),
+                split("a/", separator),
+                #["a", ""]);
+    check-equal(fmt("split /b"),
+                split("/b", separator),
+                #["", "b"]);
+    check-equal(fmt("split with double separator"),
+                split("major//build", separator),
+                #["major", "", "build"]);
+    check-equal(fmt("split with spaces"),
+                split(" major / minor / build ", separator),
+                #[" major ", " minor ", " build "]);
+    check-equal(fmt("split with start"),
+                split("123456789/123456789", separator, start: 1),
+                #["23456789", "123456789"]);
+    check-equal(fmt("split with end"),
+                split("012/456789", separator, end: 8),
+                #["012", "4567"]);
+    check-equal(fmt("split with start and end"),
+                split("012/456789", separator, start: 2, end: 8),
+                #["2", "4567"]);
+    check-equal(fmt("split with count"),
+                split("1/2/3/4", separator, count: 2),
+                #["1", "2/3/4"]);
+    check-equal(fmt("split with count and start"),
+                split("1/2/3/4", separator, count: 2, start: 2),
+                #["2", "3/4"]);
+    check-equal(fmt("split with count and end"),
+                split("1/2/3/4", separator, count: 2, end: 5),
+                #["1", "2/3"]);
+    check-equal(fmt("split with count, start, and end"),
+                split("1/2/3/4", separator, count: 2, start: 2, end: 5),
+                #["2", "3"]);
+    check-equal(fmt("split with count = 1"),
+                split("a/b/c/d", separator, count: 1),
+                #["a/b/c/d"]);
+  end for;
+  check-equal("split with separator crossing start:",
+              split("xxx one xxx two xxx", "xxx", start: 1),
+              #["xx one ", " two ", ""]);
+  check-equal("split with separator crossing end:",
+              split("xxx one xxx two xxx", "xxx", end: 17),
+              #["", " one ", " two x"]);
+  check-equal("split with separator crossing start: and end:",
+              split("xxx one xxx two xxx", "xxx", start: 1, end: 17),
+              #["xx one ", " two x"]);
 end function-test split;
+
+define common-extensions function-test join ()
+  let abc = #("a", "b", "c");
+  check-condition("join empty sequence is an error",
+                  <error>,
+                  join(#(), ", "));
+  check-equal("basic join",
+              "a, b, c",
+              join(abc, ", "));
+  check-equal("join of one element",
+              "singleton",
+              join(#("singleton"), " "));
+  check-equal("join with conjunction",
+              "a, b and c",
+              join(abc, ", ",
+                   conjunction: " and "));
+  check-equal("join with key",
+              "1, 2, 3",
+              join(#(1, 2, 3), ", ",
+                   key: integer-to-string));
+  check-equal("join with conjunction and key",
+              "1, 2 and 3",
+              join(#(1, 2, 3), ", ",
+                   conjunction: " and ",
+                   key: integer-to-string));
+  check-equal("non-string join",
+              #(1, #t, 2, #t, 3),
+              join(#(1, 2, 3), #(#t)));
+  check-equal("join with empty separator",
+              #(1, 2, 3),
+              join(#(1, 2, 3), #()))
+end function-test join;
 
 define common-extensions function-test remove-all-keys! ()
   //---*** Do all collections by using dylan-test-suite collection code
@@ -535,3 +595,4 @@ end function-test stop-profiling-type;
 define simple-profiling function-test profiling-type-result ()
   //---*** Fill this in...
 end function-test profiling-type-result;
+
