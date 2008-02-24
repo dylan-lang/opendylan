@@ -24,7 +24,7 @@ define module unix-sockets
 
   // Misc
   export
-    <C-char**>;
+    <C-char**>, <C-buffer-offset>, <LPSOCKADDR>, <timeval>;
 
   // From sys/socket.h
   export

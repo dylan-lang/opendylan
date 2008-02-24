@@ -9,7 +9,8 @@ end;
 
 define constant <gsize> = <C-unsigned-int>;
 
-define constant <GType> = <gsize>;
+//define constant <GType> = <gsize>;
+define constant <GType> = <C-raw-unsigned-long>;
 
 define C-struct <_GTypeClass>
   slot GTypeClass-g-type :: <C-unsigned-int>;
@@ -4074,48 +4075,6 @@ end;
 
  /* Ignoring declaration for {instance of <variable-declaration>} "_g-type-debug-flags"*/
 define constant $G-TYPE-FUNDAMENTAL-MAX = 1020;
-
-define constant $G-TYPE-INVALID = 0;
-
-define constant $G-TYPE-NONE = 4;
-
-define constant $G-TYPE-INTERFACE = 8;
-
-define constant $G-TYPE-CHAR = 12;
-
-define constant $G-TYPE-UCHAR = 16;
-
-define constant $G-TYPE-BOOLEAN = 20;
-
-define constant $G-TYPE-INT = 24;
-
-define constant $G-TYPE-UINT = 28;
-
-define constant $G-TYPE-LONG = 32;
-
-define constant $G-TYPE-ULONG = 36;
-
-define constant $G-TYPE-INT64 = 40;
-
-define constant $G-TYPE-UINT64 = 44;
-
-define constant $G-TYPE-ENUM = 48;
-
-define constant $G-TYPE-FLAGS = 52;
-
-define constant $G-TYPE-FLOAT = 56;
-
-define constant $G-TYPE-DOUBLE = 60;
-
-define constant $G-TYPE-STRING = 64;
-
-define constant $G-TYPE-POINTER = 68;
-
-define constant $G-TYPE-BOXED = 72;
-
-define constant $G-TYPE-PARAM = 76;
-
-define constant $G-TYPE-OBJECT = 80;
 
 define constant $G-TYPE-FUNDAMENTAL-SHIFT = 2;
 
@@ -12158,11 +12117,6 @@ end;
 
  /* Ignoring declaration for {instance of <variable-declaration>} "daylight"*/
  /* Ignoring declaration for {instance of <variable-declaration>} "timezone"*/
-define C-function stime
-  input parameter arg1 :: <time-t*>;
-  result res :: <C-signed-int>;
-  c-name: "stime";
-end;
 
 define C-function timegm
   input parameter arg1 :: <tm>;
@@ -12176,34 +12130,11 @@ define C-function timelocal
   c-name: "timelocal";
 end;
 
-define C-function dysize
-  input parameter arg1 :: <C-signed-int>;
-  result res :: <C-signed-int>;
-  c-name: "dysize";
-end;
-
 define C-function nanosleep
   input parameter arg1 :: <timespec>;
   input parameter arg2 :: <timespec>;
   result res :: <C-signed-int>;
   c-name: "nanosleep";
-end;
-
-define C-function clock-nanosleep
-  input parameter arg1 :: <clockid-t>;
-  input parameter arg2 :: <C-signed-int>;
-  input parameter arg3 :: <timespec>;
-  input parameter arg4 :: <timespec>;
-  result res :: <C-signed-int>;
-  c-name: "clock_nanosleep";
-end;
-
-define C-pointer-type <clockid-t*> => <clockid-t>;
-define C-function clock-getcpuclockid
-  input parameter arg1 :: <pid-t>;
-  input parameter arg2 :: <clockid-t*>;
-  result res :: <C-signed-int>;
-  c-name: "clock_getcpuclockid";
 end;
 
 define C-pointer-type <timer-t*> => <timer-t>;
@@ -12248,8 +12179,6 @@ define constant $_TIME-H = 1;
 define constant $__clock-t-defined = 1;
 
 define constant $__time-t-defined = 1;
-
-define constant $__clockid-t-defined = 1;
 
 define constant $__timer-t-defined = 1;
 
@@ -17787,11 +17716,6 @@ define constant <fpos-t> = <_G-fpos-t>;
  /* Ignoring declaration for {instance of <variable-declaration>} "stdin"*/
  /* Ignoring declaration for {instance of <variable-declaration>} "stdout"*/
  /* Ignoring declaration for {instance of <variable-declaration>} "stderr"*/
-define C-function remove
-  input parameter arg1 :: <char*>;
-  result res :: <C-signed-int>;
-  c-name: "remove";
-end;
 
 define C-function rename
   input parameter arg1 :: <char*>;
@@ -17811,12 +17735,6 @@ define C-function tmpnam
   c-name: "tmpnam";
 end;
 
-define C-function tmpnam-r
-  input parameter arg1 :: <char*>;
-  result res :: <char*>;
-  c-name: "tmpnam_r";
-end;
-
 define C-function tempnam
   input parameter arg1 :: <char*>;
   input parameter arg2 :: <char*>;
@@ -17834,12 +17752,6 @@ define C-function fflush
   input parameter arg1 :: <FILE>;
   result res :: <C-signed-int>;
   c-name: "fflush";
-end;
-
-define C-function fflush-unlocked
-  input parameter arg1 :: <FILE>;
-  result res :: <C-signed-int>;
-  c-name: "fflush_unlocked";
 end;
 
 define C-function fopen
@@ -17999,12 +17911,6 @@ define C-function getchar-unlocked
   c-name: "getchar_unlocked";
 end;
 
-define C-function fgetc-unlocked
-  input parameter arg1 :: <FILE>;
-  result res :: <C-signed-int>;
-  c-name: "fgetc_unlocked";
-end;
-
 define C-function fputc
   input parameter arg1 :: <C-signed-int>;
   input parameter arg2 :: <FILE>;
@@ -18023,13 +17929,6 @@ define C-function putchar
   input parameter arg1 :: <C-signed-int>;
   result res :: <C-signed-int>;
   c-name: "putchar";
-end;
-
-define C-function fputc-unlocked
-  input parameter arg1 :: <C-signed-int>;
-  input parameter arg2 :: <FILE>;
-  result res :: <C-signed-int>;
-  c-name: "fputc_unlocked";
 end;
 
 define C-function putc-unlocked
@@ -18108,24 +18007,6 @@ define C-function fwrite
   input parameter arg4 :: <FILE>;
   result res :: <size-t>;
   c-name: "fwrite";
-end;
-
-define C-function fread-unlocked
-  input parameter arg1 :: <C-void*>;
-  input parameter arg2 :: <size-t>;
-  input parameter arg3 :: <size-t>;
-  input parameter arg4 :: <FILE>;
-  result res :: <size-t>;
-  c-name: "fread_unlocked";
-end;
-
-define C-function fwrite-unlocked
-  input parameter arg1 :: <C-void*>;
-  input parameter arg2 :: <size-t>;
-  input parameter arg3 :: <size-t>;
-  input parameter arg4 :: <FILE>;
-  result res :: <size-t>;
-  c-name: "fwrite_unlocked";
 end;
 
 define C-function fseek
@@ -18297,196 +18178,6 @@ define constant $L-ctermid = 9;
 define constant $L-cuserid = 9;
 
 define constant $FOPEN-MAX = 16;
-
-define C-struct <_IO-jump-t>
-end;
-
-define constant <__codecvt-result> = <C-int>;
-define constant $__codecvt-ok = 0;
-define constant $__codecvt-partial = 1;
-define constant $__codecvt-error = 2;
-define constant $__codecvt-noconv = 3;
-
-define C-struct <_IO-FILE-plus>
-end;
-
- /* Ignoring declaration for {instance of <variable-declaration>} "_IO-2-1-stdin-"*/
- /* Ignoring declaration for {instance of <variable-declaration>} "_IO-2-1-stdout-"*/
- /* Ignoring declaration for {instance of <variable-declaration>} "_IO-2-1-stderr-"*/
-define constant <anonymous-2307> = <C-function-pointer>;
-define constant <__io-read-fn> = <anonymous-2307>;
-
-define constant <anonymous-2308> = <C-function-pointer>;
-define constant <__io-write-fn> = <anonymous-2308>;
-
-define constant <anonymous-2309> = <C-function-pointer>;
-define constant <__io-seek-fn> = <anonymous-2309>;
-
-define constant <anonymous-2310> = <C-function-pointer>;
-define constant <__io-close-fn> = <anonymous-2310>;
-
-define C-function __underflow
-  input parameter arg1 :: <_IO-FILE>;
-  result res :: <C-signed-int>;
-  c-name: "__underflow";
-end;
-
-define C-function __uflow
-  input parameter arg1 :: <_IO-FILE>;
-  result res :: <C-signed-int>;
-  c-name: "__uflow";
-end;
-
-define C-function __overflow
-  input parameter arg1 :: <_IO-FILE>;
-  input parameter arg2 :: <C-signed-int>;
-  result res :: <C-signed-int>;
-  c-name: "__overflow";
-end;
-
-define C-function __wunderflow
-  input parameter arg1 :: <_IO-FILE>;
-  result res :: <wint-t>;
-  c-name: "__wunderflow";
-end;
-
-define C-function __wuflow
-  input parameter arg1 :: <_IO-FILE>;
-  result res :: <wint-t>;
-  c-name: "__wuflow";
-end;
-
-define C-function __woverflow
-  input parameter arg1 :: <_IO-FILE>;
-  input parameter arg2 :: <wint-t>;
-  result res :: <wint-t>;
-  c-name: "__woverflow";
-end;
-
-define C-function _IO-getc
-  input parameter arg1 :: <_IO-FILE>;
-  result res :: <C-signed-int>;
-  c-name: "_IO_getc";
-end;
-
-define C-function _IO-putc
-  input parameter arg1 :: <C-signed-int>;
-  input parameter arg2 :: <_IO-FILE>;
-  result res :: <C-signed-int>;
-  c-name: "_IO_putc";
-end;
-
-define C-function _IO-feof
-  input parameter arg1 :: <_IO-FILE>;
-  result res :: <C-signed-int>;
-  c-name: "_IO_feof";
-end;
-
-define C-function _IO-ferror
-  input parameter arg1 :: <_IO-FILE>;
-  result res :: <C-signed-int>;
-  c-name: "_IO_ferror";
-end;
-
-define C-function _IO-peekc-locked
-  input parameter arg1 :: <_IO-FILE>;
-  result res :: <C-signed-int>;
-  c-name: "_IO_peekc_locked";
-end;
-
-define C-function _IO-flockfile
-  input parameter arg1 :: <_IO-FILE>;
-  c-name: "_IO_flockfile";
-end;
-
-define C-function _IO-funlockfile
-  input parameter arg1 :: <_IO-FILE>;
-  c-name: "_IO_funlockfile";
-end;
-
-define C-function _IO-ftrylockfile
-  input parameter arg1 :: <_IO-FILE>;
-  result res :: <C-signed-int>;
-  c-name: "_IO_ftrylockfile";
-end;
-
-define C-function _IO-vfscanf
-  input parameter arg1 :: <_IO-FILE>;
-  input parameter arg2 :: <char*>;
-  input parameter arg3 :: <__gnuc-va-list>;
-  input parameter arg4 :: <int*>;
-  result res :: <C-signed-int>;
-  c-name: "_IO_vfscanf";
-end;
-
-define C-function _IO-vfprintf
-  input parameter arg1 :: <_IO-FILE>;
-  input parameter arg2 :: <char*>;
-  input parameter arg3 :: <__gnuc-va-list>;
-  result res :: <C-signed-int>;
-  c-name: "_IO_vfprintf";
-end;
-
-define C-function _IO-padn
-  input parameter arg1 :: <_IO-FILE>;
-  input parameter arg2 :: <C-signed-int>;
-  input parameter arg3 :: <__ssize-t>;
-  result res :: <__ssize-t>;
-  c-name: "_IO_padn";
-end;
-
-define C-function _IO-sgetn
-  input parameter arg1 :: <_IO-FILE>;
-  input parameter arg2 :: <C-void*>;
-  input parameter arg3 :: <size-t>;
-  result res :: <size-t>;
-  c-name: "_IO_sgetn";
-end;
-
-define C-function _IO-seekoff
-  input parameter arg1 :: <_IO-FILE>;
-  input parameter arg2 :: <__off64-t>;
-  input parameter arg3 :: <C-signed-int>;
-  input parameter arg4 :: <C-signed-int>;
-  result res :: <__off64-t>;
-  c-name: "_IO_seekoff";
-end;
-
-define C-function _IO-seekpos
-  input parameter arg1 :: <_IO-FILE>;
-  input parameter arg2 :: <__off64-t>;
-  input parameter arg3 :: <C-signed-int>;
-  result res :: <__off64-t>;
-  c-name: "_IO_seekpos";
-end;
-
-define C-function _IO-free-backup-area
-  input parameter arg1 :: <_IO-FILE>;
-  c-name: "_IO_free_backup_area";
-end;
-
-define constant <_IO-pos-t> = <_G-fpos-t>;
-
-define constant <_IO-fpos-t> = <_G-fpos-t>;
-
-define C-struct <_G-fpos64-t>
-  slot G_fpos64_t-__pos :: <__quad-t>;
-  slot G_fpos64_t-__state :: <__mbstate-t>;
-end;
-
-define constant <_IO-fpos64-t> = <_G-fpos64-t>;
-
-define constant <_IO-size-t> = <size-t>;
-
-define constant <_IO-ssize-t> = <__ssize-t>;
-
-define constant <_IO-off-t> = <__off-t>;
-
-define constant <_IO-off64-t> = <__off64-t>;
-
-define constant <_IO-pid-t> = <__pid-t>;
-
-define constant <_IO-uid-t> = <__uid-t>;
 
 define C-struct <__gconv-loaded-object>
 end;

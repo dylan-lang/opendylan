@@ -10,7 +10,7 @@ typedef long                *LPLONG;
 typedef unsigned char        BYTE;
 typedef int                  BOOL;
 typedef unsigned long        DWORD;
-typedef int64_t              _int64;
+typedef long long            _int64;
 
 #define WINAPI
 

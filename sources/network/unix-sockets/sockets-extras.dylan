@@ -10,6 +10,12 @@ define simple-C-mapped-subtype <C-buffer-offset> (<C-char*>)
   export-map <machine-word>, export-function: identity;
 end;
 
+define C-struct <timeval>
+  slot tv_sec :: <C-int>;
+  slot tv_usec :: <C-int>;
+  c-name: "timeval";
+end;
+
 define inline-only C-function unix-recv-buffer
   parameter socket :: <C-int>;
   parameter buffer :: <C-buffer-offset>;

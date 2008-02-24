@@ -2,6 +2,27 @@ Module:    gtk-support
 Author:    Hannes Mehnert, Andreas Bogk
 Copyright: (C) 2007,.  All rights reserved.
 
+define constant $G-TYPE-INVALID = as(<machine-word>, 0);
+define constant $G-TYPE-NONE = as(<machine-word>, 4);
+define constant $G-TYPE-CHAR = as(<machine-word>, 12);
+define constant $G-TYPE-UCHAR = as(<machine-word>, 16);
+define constant $G-TYPE-BOOLEAN = as(<machine-word>, 20);
+define constant $G-TYPE-INT = as(<machine-word>, 24);
+define constant $G-TYPE-UINT = as(<machine-word>, 28);
+define constant $G-TYPE-LONG = as(<machine-word>, 32);
+define constant $G-TYPE-ULONG = as(<machine-word>, 36);
+define constant $G-TYPE-INT64 = as(<machine-word>, 40);
+define constant $G-TYPE-UINT64 = as(<machine-word>, 44);
+define constant $G-TYPE-ENUM = as(<machine-word>, 48);
+define constant $G-TYPE-FLAGS = as(<machine-word>, 52);
+define constant $G-TYPE-FLOAT = as(<machine-word>, 56);
+define constant $G-TYPE-DOUBLE = as(<machine-word>, 60);
+define constant $G-TYPE-STRING = as(<machine-word>, 64);
+define constant $G-TYPE-POINTER = as(<machine-word>, 68);
+define constant $G-TYPE-BOXED = as(<machine-word>, 72);
+define constant $G-TYPE-PARAM = as(<machine-word>, 76);
+define constant $G-TYPE-OBJECT = as(<machine-word>, 80);
+
 define C-function g-type-from-instance
   input parameter instance :: <GTypeInstance>;
   result type :: <GType>;
@@ -132,7 +153,7 @@ define function find-gtype-by-name(name :: <string>)
   end block;
 end function find-gtype-by-name;
 
-define method find-gtype(g-type :: <integer>)
+define function find-gtype(g-type)
  => (type :: false-or(<class>));
   let dylan-type = element($gtype-table, g-type, default: #f);
   unless(dylan-type)
@@ -141,7 +162,7 @@ define method find-gtype(g-type :: <integer>)
     $gtype-table[g-type] := dylan-type;
   end unless;
   dylan-type
-end method find-gtype;
+end function find-gtype;
 
 define constant $all-gtype-instances = all-subclasses(<_GTypeInstance>);
 
@@ -175,10 +196,12 @@ define function dylan-meta-marshaller (closure :: <GClosure>,
   *holding-gdk-lock* := *holding-gdk-lock* - 1;
   if(return-value ~= null-pointer(<gvalue>))
     select(g-value-type(return-value))
-      $G-TYPE-BOOLEAN => g-value-set-boolean(return-value, 
+      $G-TYPE-BOOLEAN => g-value-set-boolean(return-value,
                                              if(res) 1 else 0 end);
       $G-TYPE-NONE, $G-TYPE-INVALID => ;
-      otherwise error("Unsupported GType in return from signal handler.");
+      otherwise =>
+        error("Unsupported GType in return from signal handler: %=.",
+              g-value-type(return-value));
     end select;
   end if;
 end;
