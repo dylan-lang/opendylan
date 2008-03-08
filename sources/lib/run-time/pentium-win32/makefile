@@ -36,11 +36,9 @@ mmtuneflags = /DTUNE_GEN0_FREQ=$(gen0freq)
 mmtuneflags = 
 !endif
 
-MPSKIT	 = C:\dylan\mps\code
-
 CC	 = $(cc)
 LINKLIB	 = $(implib) /nologo /out:
-CFLAGS	 = $(cflags) $(cvarsmt) $(cdebug) /I$(INCLUDEDEST) /I. /I.. /I$(MPSKIT) $(OPEN_DYLAN_C_FLAGS) $(mmtuneflags)
+CFLAGS	 = $(cflags) $(cvarsmt) $(cdebug) /I$(INCLUDEDEST) /I. /I.. /I$(SDK4MEMORY_POOL_SYSTEM) $(OPEN_DYLAN_C_FLAGS) $(mmtuneflags)
 HEAPOBJS = heap-display.obj heap-utils.obj heap-trail.obj heap-order1.obj heap-order2.obj heap-table.obj
 OBJS	 = collector.obj $(HEAPOBJS) runtime.obj win32-threads-primitives.obj spy-interfaces.obj
 LIBFILE	 = pentium-run-time.lib
@@ -64,8 +62,8 @@ NOWEAKLIBFILE	 = no-weakness-pentium-run-time.lib
 BOEHMOBJS	 = boehm-collector.obj $(HEAPOBJS) runtime.obj win32-threads-primitives.obj spy-interfaces.obj
 BOEHMLIBFILE	 = boehm-pentium-run-time.lib
 
-RELEASEMMDW      = $(MPSKIT)\w3i3mv\hi\mmdw.lib
-RELEASEPLINTH	 = $(MPSKIT)\w3i3mv\hi\mpsplan.lib
+RELEASEMMDW     = $(SDK4MEMORY_POOL_SYSTEM)\w3i3mv\hi\mmdw.lib
+RELEASEPLINTH	  = $(SDK4MEMORY_POOL_SYSTEM)\w3i3mv\hi\mpsplan.lib
 
 DEBUGMMDW        = debug-mmdw.lib
 DEBUGPLINTH	 = debug-mpsplan.lib
@@ -119,6 +117,7 @@ ensure-dirs:
 	if not exist $(BINDEST) mkdir $(BINDEST)
 
 install-build:
+	echo Building pentium run time: install-build
 	if not exist $(LIBDEST)\mini-jambase.jam copy ..\mini-jambase.jam $(LIBDEST)
 	if not exist $(LIBDEST)\x86-win32-build.jam copy x86-win32-vc6-build.jam $(LIBDEST)\x86-win32-build.jam
 	if not exist $(LIBDEST)\x86-win32-vc6-build.jam copy x86-win32-vc6-build.jam $(LIBDEST)
@@ -130,66 +129,88 @@ install-build:
 	if not exist $(BINDEST)\make-reloc.exe copy make-reloc.exe $(BINDEST)
 
 install-userlib: $(USERLIB)
+  echo Building pentium run time: install-userlib
 	pushd $(LIBDEST) & (del /q /f $(USERLIB)) & popd
 	copy $(USERLIB) $(LIBDEST)
 
 
 install-runtime: $(LIBFILE)
+  echo Building pentium run time: install-runtime
 	pushd $(LIBDEST) & (del /q /f $(LIBFILE)) & popd
 	copy $(LIBFILE) $(LIBDEST)
 
 install-noweak-runtime: $(NOWEAKLIBFILE)
+  echo Building pentium run time: install-noweak-runtime
 	if exist $(RUNTIMELIBDEST) del /q /f $(RUNTIMELIBDEST)
 	copy $(NOWEAKLIBFILE) $(RUNTIMELIBDEST)
 
 install-boehm-runtime: $(BOEHMLIBFILE)
+  echo Building pentium run time: install-boehm-runtime
 	if exist $(RUNTIMELIBDEST) del /q /f $(RUNTIMELIBDEST)
 	copy $(BOEHMLIBFILE) $(RUNTIMELIBDEST)
 	copy gc.dll $(BOEHMGCDEST)
 
 install-buffalo-runtime: $(BUFFLIBFILE)
+  echo Building pentium run time: install-buffalo-runtime
 	if exist $(RUNTIMELIBDEST) del /q /f $(RUNTIMELIBDEST)
 	copy $(BUFFLIBFILE) $(RUNTIMELIBDEST)
 
 
 install-dylan-plinth: $(DYLANPLINTH)
+  echo Building pentium run time: install-dylan-plinth
 	if exist $(PLINTHDEST) del /q /f $(PLINTHDEST)
 	copy $(DYLANPLINTH) $(PLINTHDEST)
 
 install-ansi-plinth: $(SYMBOLICPLINTH)
+	echo Building pentium run time: install-ansi-plinth
 	if exist $(PLINTHDEST) del /q /f $(PLINTHDEST)
 	copy $(SYMBOLICPLINTH) $(PLINTHDEST)
 
 install-debug-ansi-plinth: $(DEBUGPLINTH)
-	if exist $(PLINTHDEST) del /q /f $(PLINTHDEST)
+  echo Building pentium run time: install-debug-ansi-plinth
+ 	if exist $(PLINTHDEST) del /q /f $(PLINTHDEST)
 	copy $(DEBUGPLINTH) $(PLINTHDEST)
 
 install-plinth: install-dylan-plinth
-
+  echo Building pentium run time: install-plinth
 
 
 !if defined(fullcrt)
 install-mincrt:
+   echo Building pentium run time: install-mincrt (fullcrt)
 !else
 install-mincrt: $(MINCRT)
+  echo Building pentium run time: install-mincrt 
 	if exist $(MINCRTDEST) del /q /f $(MINCRTDEST)
 	copy $(MINCRT) $(MINCRTDEST)
 !endif
 
 
+make-mmdw:
+  echo Building pentium run time: make-mmdw
+  pushd $(SDK4MEMORY_POOL_SYSTEM) \
+    & $(MAKE) /k /f w3i3mv.nmk mmdw.lib > $(BUILD_LOGS)\make-mmdw.log \
+    & popd
+
 install-mmdw: 
+  echo Building pentium run time: install-mmdw
 	if exist $(MMDWDEST) del /q /f $(MMDWDEST)
-	copy $(RELEASEMMDW) $(MMDWDEST)
+	if not exist $(RELEASEMMDW) make-mmdw
+  copy $(RELEASEMMDW) $(MMDWDEST)
+	
 
 install-symbolic-mmdw: $(SYMBOLICMMDW)
+  echo Building pentium run time: install-symbolic-mmdw
 	if exist $(MMDWDEST) del /q /f $(MMDWDEST)
 	copy $(SYMBOLICMMDW) $(MMDWDEST)
 
 install-debug-mmdw: $(DEBUGMMDW)
+  echo Building pentium run time: install-debug-mmdw
 	if exist $(MMDWDEST) del /q /f $(MMDWDEST)
 	copy $(DEBUGMMDW) $(MMDWDEST)
 
 install-buffalo-mmdw: $(BUFFMMDW)
+  echo Building pentium run time: install-buffalo-mmdw
 	if exist $(MMDWDEST) del /q /f $(MMDWDEST)
 	copy $(BUFFMMDW) $(MMDWDEST)
 
