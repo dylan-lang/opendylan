@@ -2,21 +2,21 @@ Welcome to Open Dylan!
 ======================
 
 Open Dylan is an open source implementation of the Dylan programming
-language, plus a large number of assorted libraries.  Most of the
-code had once been developed by a company called Harlequin, for a
-product called DylanWorks in the beginning, and Harlequin Dylan later.
-After Harlequin demised, some of the programmers acquired the rights,
-and kept selling the development environment under the name of
-Functional Developer.  Eventually, to the joy of the Dylan community,
-they decided to release all of their source code under an open source
-license.  What you are holding in your hands is the attempt of a group
-of enthusiasts calling themselves the "Dylan Hackers" to bundle
-up this code, and publish it in a form useful for the general public.
+language, plus a large number of assorted libraries.  Most of the code
+was originally developed by a company called Harlequin, for a product
+called Harlequin Dylan.  After Harlequin's demise, some of the
+programmers acquired the rights, and kept selling the development
+environment under the name of Functional Developer.  Eventually, to
+the joy of the Dylan community, they decided to release all of their
+source code under an open source license.  What you are holding in
+your hands is the attempt of a group of enthusiasts calling themselves
+the "Dylan Hackers" to bundle up this code, and publish it in a form
+useful for the general public.
 
-This is release Open Dylan 1.0beta5. Naturally, we expect this release
+This release is Open Dylan 1.0beta5. Naturally, we expect this release
 to have bugs.  We're interested in getting your feedback, in order to
 improve this product.  Write to bugs@opendylan.org, or use the bug
-tracker on http://www.opendylan.org, in case you find any.
+tracker on http://www.opendylan.org, if you find any.
 
 This build corresponds to revision 11623 in svn repository.
 
@@ -36,10 +36,9 @@ Installation
 ============
 
 This tarball is set up to be extracted in /usr/local, resulting in the
-creation of a directory /usr/local/opendylan-1.0beta5.  In case you
-installed in this location (or move the tree you found this README in
-there now), you just have to add /usr/local/opendylan-1.0beta5/bin to
-your PATH:
+creation of a directory /usr/local/opendylan-1.0beta5.  Assuming you
+installed in this location you just have to add
+/usr/local/opendylan-1.0beta5/bin to your PATH:
 
   $ export PATH=/usr/local/opendylan-1.0beta5/bin:$PATH    # for bash
 
@@ -49,7 +48,7 @@ or
 
 If you choose any other installation location, you have to make sure
 the shared libraries required by the compiler are found.  You can do
-this by either setting the LD_LIBRARY_PATH environment variable:
+this either by setting the LD_LIBRARY_PATH environment variable:
 
   $ export LD_LIBRARY_PATH=/where/ever/opendylan-1.0beta5/lib:$LD_LIBRARY_PATH
 
@@ -60,7 +59,7 @@ have to do this as root, of course.
 Usage
 =====
 
-You're now set for trying out the compiler:
+You're now set to use the compiler:
 
   $ opendylan -build hello-world
 
