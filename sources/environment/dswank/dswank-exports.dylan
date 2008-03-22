@@ -5,6 +5,12 @@ define library dswank
   use io;
   use network;
   use lisp-reader;
+  use environment-commands;
+  use environment-protocols;
+  use commands;
+  use source-records;
+  use file-source-records;
+  use system;
 end library;
 
 define module dswank
@@ -14,4 +20,12 @@ define module dswank
   use streams;
   use standard-io;
   use sockets;
+  use environment-commands;
+  use environment-protocols;
+  use command-lines;
+  use commands;
+  use source-records;
+  use file-source-records;
+  use file-system;
+  use locators;
 end module;
