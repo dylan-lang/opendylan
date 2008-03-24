@@ -58,20 +58,72 @@ define swank-function connection-info ()
     #":version", "2008-03-18");
 end;
 
+define swank-function quit-lisp ()
+  exit-application(0);
+end;
+
+define swank-function list-all-package-names (t)
+  let res = #();
+  local method collect-project
+            (dir :: <pathname>, filename :: <string>, type :: <file-type>)
+          if (type == #"file" & filename ~= "Open-Source-License.txt")
+            if (last(filename) ~= '~')
+              res := pair(filename, res);
+            end;
+          end;
+        end;
+  let regs = find-registries("x86", "linux");
+  let reg-paths = map(registry-location, regs);
+  for (reg-path in reg-paths)
+    if (file-exists?(reg-path))
+      do-directory(collect-project, reg-path);
+    end;
+  end;
+  res;
+end;
+
+define thread variable *project* = #f;
+
+define swank-function set-package (package-name)
+  run-compiler(*server*, concatenate("open ", package-name));
+  *project* := package-name;
+  list(package-name, package-name);
+end;
+
+define swank-function default-directory ()
+  as(<string>, working-directory());
+end;
+
+define swank-function set-default-directory (new-directory)
+  working-directory-setter(expand-pathname(new-directory));
+  new-directory;
+end;
+
+//define swank-function describe-symbol (symbol-name)
+//end;
+
 define swank-function find-definitions-for-emacs (symbol-name)
-  let project = open-projects()[0];
   let library = #f;
   let module = #f;
-  local method check-and-set-module (lib)
+  let project = #f;
+  local method check-and-set-module (p, lib)
           unless(module)
-            module := find-module(project, *package*, library: lib);
+            module := find-module(p, *package*, library: lib);
             if (module)
               library := lib;
             end;
           end;
         end;
-  check-and-set-module(project-library(project));
-  do-project-used-libraries (check-and-set-module, project, project);
+
+  for (p in open-projects())
+    unless (project)
+      check-and-set-module(p, project-library(p));
+      do-project-used-libraries(curry(check-and-set-module, p), p, p);
+      if (library)
+        project := p;
+      end;
+    end;
+  end;
 
   let env-obj = find-environment-object(project, symbol-name,
                                         library: library,

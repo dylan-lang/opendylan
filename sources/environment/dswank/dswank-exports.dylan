@@ -11,6 +11,7 @@ define library dswank
   use source-records;
   use file-source-records;
   use system;
+  use registry-projects;
 end library;
 
 define module dswank
@@ -28,4 +29,5 @@ define module dswank
   use file-source-records;
   use file-system;
   use locators;
+  use registry-projects;
 end module;
