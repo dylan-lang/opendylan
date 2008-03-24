@@ -99,8 +99,36 @@ define swank-function set-default-directory (new-directory)
   new-directory;
 end;
 
-//define swank-function compiler-notes-for-emacs ()
-//end;
+define swank-function compiler-notes-for-emacs ()
+  *project* := open-projects()[0];
+  let warnings = project-warnings(*project*);
+  let res = make(<stretchy-vector>);
+  for (w in warnings)
+    let message = compiler-warning-full-message(*project*, w);
+    let short-message = compiler-warning-short-message(*project*, w);
+    let source-form = warning-owner(*project*, w);
+    let location = if (source-form)
+                     get-location-as-sexp(#f, source-form).tail.head;
+                   else
+                     #(#":error", "No error location available")
+                   end;
+    let severity = if (instance?(w, <compiler-error-object>))
+                     #":error"
+                   elseif (instance?(w, <serious-compiler-warning-object>))
+                     #":warning"
+                   else
+                     #":note"
+                   end;
+    let warning =
+      list(#":message", message,
+           #":severity", severity,
+           #":location", location,
+           #":references", #(),
+           #":short-message", short-message);
+    res := add!(res, warning);
+  end;
+  res;
+end;
 
 //define swank-function describe-symbol (symbol-name)
 //end;
@@ -163,12 +191,16 @@ define function get-location-as-sexp (search, env-obj)
        list(#":location",
             list(#":file", as(<string>, source-name)),
             list(#":line", lineno, column),
-            list(#":snippet" search)));
+            if (search)
+              list(#":snippet" search)
+            else
+              #()
+            end));
 end;
 
 define swank-function find-definitions-for-emacs (symbol-name)
   let env-obj = get-environment-object(symbol-name);
-  list(get-location-as-sexp(symbol-name, env-obj));
+  list(get-location-as-sexp(#f, env-obj));
 end;
 
 define swank-function listener-eval (arg)
