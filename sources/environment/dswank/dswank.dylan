@@ -1,10 +1,12 @@
 module: dswank
-synopsis: 
-author: 
-copyright: 
+synopsis: swank support for opendylan. swank is the protocol of SLIME 
+author: Andreas Bogk and Hannes Mehnert
+copyright: (c) 2008; All rights reversed.
 
 define thread variable *server* = start-compiler();
-define thread variable *package* = #f;
+define thread variable *project* = #f;
+define thread variable *library* = #f;
+define thread variable *module* = #f;
 
 define constant $emacs-commands = make(<table>);
 
@@ -25,7 +27,7 @@ define emacs-command emacs-rex (command, package, thread-id, request-id)
   // do funky stuff
   block()
     let function = $swank-functions[command.head];
-    *package* := package;
+    *module* := package;
     let result = apply(function, command.tail);
     list(#":return", list(#":ok", result), request-id);
   exception(e :: <error>)
@@ -55,7 +57,7 @@ define swank-function connection-info ()
     #":lisp-implementation", #(#":type", "dylan",
                                #":name", "opendylan",
                                #":version", "1.0beta5"),
-    #":version", "2008-03-18");
+    #":version", "2008-03-24");
 end;
 
 define swank-function quit-lisp ()
@@ -82,8 +84,6 @@ define swank-function list-all-package-names (t)
   res;
 end;
 
-define thread variable *project* = #f;
-
 define swank-function set-package (package-name)
   run-compiler(*server*, concatenate("open ", package-name));
   *project* := package-name;
@@ -99,16 +99,19 @@ define swank-function set-default-directory (new-directory)
   new-directory;
 end;
 
+//define swank-function compiler-notes-for-emacs ()
+//end;
+
 //define swank-function describe-symbol (symbol-name)
 //end;
 
-define swank-function find-definitions-for-emacs (symbol-name)
+define function get-environment-object (symbol-name)
   let library = #f;
   let module = #f;
   let project = #f;
   local method check-and-set-module (p, lib)
           unless(module)
-            module := find-module(p, *package*, library: lib);
+            module := find-module(p, *module*, library: lib);
             if (module)
               library := lib;
             end;
@@ -124,12 +127,17 @@ define swank-function find-definitions-for-emacs (symbol-name)
       end;
     end;
   end;
+  *project* := project;
+  *library* := library;
+  *module* := module;
 
-  let env-obj = find-environment-object(project, symbol-name,
-                                        library: library,
-                                        module: module);
+  find-environment-object(project, symbol-name,
+                          library: library,
+                          module: module);
+end;
 
-  let location = environment-object-source-location(project, env-obj);
+define function get-location-as-sexp (search, env-obj)
+  let location = environment-object-source-location(*project*, env-obj);
 
   let source-name =
     if (location)
@@ -148,15 +156,51 @@ define swank-function find-definitions-for-emacs (symbol-name)
                            location.source-location-start-line);
   let column = location.source-location-start-column;
 
-  list(list(symbol-name,
-            list(#":location",
-                 list(#":file", as(<string>, source-name)),
-                 list(#":line", lineno, column),
-                 #())));
+  let hname = environment-object-home-name(*project*, env-obj);
+  let name = environment-object-primitive-name(*project*, hname);
+
+  list(name,
+       list(#":location",
+            list(#":file", as(<string>, source-name)),
+            list(#":line", lineno, column),
+            list(#":snippet" search)));
+end;
+
+define swank-function find-definitions-for-emacs (symbol-name)
+  let env-obj = get-environment-object(symbol-name);
+  list(get-location-as-sexp(symbol-name, env-obj));
 end;
 
 define swank-function listener-eval (arg)
   pair(#":values", run-compiler(*server*, arg))
+end;
+
+define swank-function xref (quoted-arg, quoted-name)
+  let function = $xref-functions[quoted-arg.tail.head];
+  let env-obj = get-environment-object(quoted-name.tail.head);
+  let result = function(env-obj);
+  let res = map(curry(get-location-as-sexp, quoted-name.tail.head),
+                reverse(result));
+  res;
+end;
+
+define constant $xref-functions = make(<table>);
+
+define macro xref-function-definer
+  {
+   define xref-function ?:name (?args:*)
+     ?:body
+   end
+} => {
+   define function ?name (?args);
+     ?body
+   end;
+   $xref-functions[":" ## ?#"name"] := ?name;
+ }
+end;
+
+define xref-function calls (env-obj)
+  source-form-clients(*project*, env-obj);
 end;
 
 define function main()
