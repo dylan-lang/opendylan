@@ -99,6 +99,23 @@ define swank-function set-default-directory (new-directory)
   new-directory;
 end;
 
+define swank-function compile-file-for-emacs (filename, foo)
+  block(ret)
+    for (p in open-projects())
+      for (source in project-sources(p))
+        if (source.source-record-location = filename)
+          *project* := p;
+          ret();
+        end;
+      end;
+    end;
+  end;
+  //do something useful with the compiler output
+  run-compiler(*server*, concatenate("build ", *project*.project-name));
+  //slime expects a list with 2 elements, so be it
+  #("NIL", "2.1");
+end;
+
 define swank-function compiler-notes-for-emacs ()
   let warnings = project-warnings(*project*);
   let res = make(<stretchy-vector>);
