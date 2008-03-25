@@ -86,7 +86,7 @@ end;
 
 define swank-function set-package (package-name)
   run-compiler(*server*, concatenate("open ", package-name));
-  *project* := package-name;
+  *project* := find-project(package-name);
   list(package-name, package-name);
 end;
 
@@ -100,7 +100,6 @@ define swank-function set-default-directory (new-directory)
 end;
 
 define swank-function compiler-notes-for-emacs ()
-  *project* := open-projects()[0];
   let warnings = project-warnings(*project*);
   let res = make(<stretchy-vector>);
   for (w in warnings)
