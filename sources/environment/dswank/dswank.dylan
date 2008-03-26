@@ -3,7 +3,7 @@ synopsis: swank support for opendylan. swank is the protocol of SLIME
 author: Andreas Bogk and Hannes Mehnert
 copyright: (c) 2008; All rights reversed.
 
-define thread variable *server* = start-compiler();
+define thread variable *server* = #f;
 define thread variable *project* = #f;
 define thread variable *library* = #f;
 define thread variable *module* = #f;
@@ -24,7 +24,6 @@ define macro emacs-command-definer
 end;
 
 define emacs-command emacs-rex (command, package, thread-id, request-id)
-  // do funky stuff
   block()
     let function = $swank-functions[command.head];
     *module* := package;
@@ -33,6 +32,7 @@ define emacs-command emacs-rex (command, package, thread-id, request-id)
   exception(e :: <error>)
     format(*standard-error*, "Received error during evalution:\n%=\n", e);
     list(#":return", #(#":abort"), request-id);
+    walk-stack();
   end;
 end;
 
@@ -110,7 +110,6 @@ define swank-function compile-file-for-emacs (filename, foo)
       end;
     end;
   end;
-  //do something useful with the compiler output
   run-compiler(*server*, concatenate("build ", *project*.project-name));
   //slime expects a list with 2 elements, so be it
   #("NIL", "2.1");
@@ -122,12 +121,7 @@ define swank-function compiler-notes-for-emacs ()
   for (w in warnings)
     let message = compiler-warning-full-message(*project*, w);
     let short-message = compiler-warning-short-message(*project*, w);
-    let source-form = warning-owner(*project*, w);
-    let location = if (source-form)
-                     get-location-as-sexp(#f, source-form).tail.head;
-                   else
-                     #(#":error", "No error location available")
-                   end;
+    let location = get-location-as-sexp(#f, w).tail.head;
     let severity = if (instance?(w, <compiler-error-object>))
                      #":error"
                    elseif (instance?(w, <serious-compiler-warning-object>))
@@ -182,10 +176,11 @@ end;
 
 define function get-location-as-sexp (search, env-obj)
   let location = environment-object-source-location(*project*, env-obj);
+    
 
-  let source-name =
-    if (location)
-      let source-record = location.source-location-source-record;
+  if (location)
+    let source-record = location.source-location-source-record;
+    let source-name =
       select (source-record by instance?)
         <file-source-record> =>
           let location = source-record.source-record-location;
@@ -193,25 +188,30 @@ define function get-location-as-sexp (search, env-obj)
         otherwise =>
           source-record.source-record-name;
       end;
-    end;
-  
-  let (name, lineno)
-    = source-line-location(location.source-location-source-record,
-                           location.source-location-start-line);
-  let column = location.source-location-start-column;
 
-  let hname = environment-object-home-name(*project*, env-obj);
-  let name = environment-object-primitive-name(*project*, hname);
+    let (name, lineno)
+      = source-line-location(location.source-location-source-record,
+                             location.source-location-start-line);
+    let column = location.source-location-start-column;
+    let hname = environment-object-home-name(*project*, env-obj);
+    let name = if (hname)
+                 environment-object-primitive-name(*project*, hname);
+               else
+                 "unknown"
+               end;
 
-  list(name,
-       list(#":location",
-            list(#":file", as(<string>, source-name)),
-            list(#":line", lineno, column),
-            if (search)
-              list(#":snippet" search)
-            else
-              #()
-            end));
+    list(name,
+         list(#":location",
+              list(#":file", as(<string>, source-name)),
+              list(#":line", lineno, column),
+              if (search)
+                list(#":snippet" search)
+              else
+                #()
+              end));
+  else
+    list(#"unknown", #(#":error", "No error location available"));
+  end;
 end;
 
 define swank-function find-definitions-for-emacs (symbol-name)
@@ -220,7 +220,8 @@ define swank-function find-definitions-for-emacs (symbol-name)
 end;
 
 define swank-function listener-eval (arg)
-  pair(#":values", run-compiler(*server*, arg))
+  run-compiler(*server*, arg);
+  list(#":values", "Done.")
 end;
 
 define swank-function xref (quoted-arg, quoted-name)
@@ -251,23 +252,105 @@ define xref-function calls (env-obj)
   source-form-clients(*project*, env-obj);
 end;
 
+define function print-function-parameters
+    (server :: <server>, function-object :: <function-object>,
+     namespace :: false-or(<namespace-object>))
+ => (name :: <string>)
+  with-output-to-string (stream)
+    let <object>-class = find-environment-object(server, $<object>-id);
+    let (required, rest, key, all-keys?, next) // ... values, rest-value)
+      = function-parameters(server, function-object);
+    format(stream, "(");
+    local method do-parameter (parameter :: <parameter>) => ()
+            let keyword 
+              = instance?(parameter, <optional-parameter>)
+                  & parameter.parameter-keyword;
+            let type = parameter.parameter-type;
+	    if (keyword)
+	      format(stream, "%s: ", keyword)
+	    end;
+	    format(stream, "%s", parameter.parameter-name);
+            unless (type == <object>-class)
+              format(stream, " :: %s",
+                     environment-object-display-name(server, type, namespace)
+                       | "<?>")
+            end
+          end method do-parameter;
+    local method do-parameters (parameters :: <parameters>) => ()
+            for (parameter :: <parameter> in parameters,
+                 separator = "" then ", ")
+              format(stream, separator);
+              do-parameter(parameter)
+            end for;
+          end method do-parameters;
+    do-parameters(required);
+    let printed-something = size(required) > 0;
+    local method print-separator () => ()
+            if (printed-something)
+              format(stream, ", ");
+            else
+              printed-something := #t;
+            end;
+          end method print-separator;
+    if (next)
+      print-separator();
+      format(stream, "#next ");
+      do-parameter(next);
+    end;
+    if (rest)
+      print-separator();
+      format(stream, "#rest ");
+      do-parameter(rest);
+    end;
+    case
+      key & size(key) > 0 =>
+        print-separator();
+        format(stream, "#key ");
+        do-parameters(key);
+        if (all-keys?) 
+          format(stream, ", #all-keys")
+        end;
+      all-keys? =>
+        print-separator();
+        format(stream, "#key, #all-keys");
+      otherwise =>
+        #f;
+    end;
+    format(stream, ")");
+  end
+end function print-function-parameters;
+
+define swank-function operator-arglist (symbol, package)
+  let env-obj = get-environment-object(symbol);
+  if (instance?(env-obj, <function-object>))
+    print-function-parameters(*project*, env-obj, *module*)
+  else
+    #"nil"
+  end;
+end;
+
+define function write-to-emacs (stream, s-expression)
+  let newstream = make(<string-stream>, direction: #"output");
+  print-s-expression(newstream, s-expression);
+  let s-expression = stream-contents(newstream);
+//  format(*standard-error*, "write: %s\n", s-expression);
+  let siz = integer-to-string(s-expression.size, base: 16, size: 6);
+  format(stream, "%s%s", siz, s-expression);
+end;
+
 define function main()
   start-sockets();
-  let socket = make(<server-socket>, port: 3456);
+  let socket = make(<server-socket>, port: 4005);
   let stream = accept(socket);
+  *server* := start-compiler(stream);
   while(#t)
     let length = string-to-integer(read(stream, 6), base: 16);
     let line = read(stream, length);
-    format(*standard-error*, "read: %s", line);
+    format(*standard-error*, "read: %s\n", line);
     let expr = read-lisp(make(<string-stream>, direction: #"input", contents: line));
     let function = $emacs-commands[expr.head];
     let result = apply(function, expr.tail);
-    let newstream = make(<string-stream>, direction: #"output");
-    print-s-expression(newstream, result);
-    let s-expression = stream-contents(newstream);
-    format(*standard-error*, "write: %s\n", s-expression);
-    let siz = integer-to-string(s-expression.size, base: 16, size: 6);
-    format(stream, "%s%s", siz, s-expression);
+    write-to-emacs(stream, result);
   end;
 end;
 
