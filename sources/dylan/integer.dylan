@@ -220,7 +220,8 @@ define method \^
     (base :: <integer>, power :: <integer>) => (res :: <rational>)
   if (negative?(power))
     //---*** THIS IS WRONG AS / ISN'T DEFINED FOR <integer>!
-    1 / (base ^ -power)
+    //1 / (base ^ -power)
+    error("Negative powers are unimplemented")
   elseif (base = 2)
     ash(1, power)
   elseif (negative?(base))
