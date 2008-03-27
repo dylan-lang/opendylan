@@ -17,6 +17,7 @@ define library environment-protocols
   use release-info;
   use collections;
   use memory-manager;
+  use cl, import: { cl-strings };
 
   export environment-protocols;
   export environment-imports;

@@ -650,12 +650,12 @@ end method string-search-not-set;
 
 // Pluralize the given string
 define method string-pluralize
-    (string :: <string>) => (plural :: <string>)
+    (string :: <string>, #key count) => (plural :: <string>)
   block (return)
     let length = size(string);
     let pos
       = (string-search-set(string, #(' ', '\t'), from-end?: #t) | -1) + 1;
-    if (zero?(length))
+    if (zero?(length) | (count & count = 1))
       return(string)
     end;
     let flush = #f;

@@ -52,12 +52,13 @@ define macro swank-function-definer
 end;
 
 define swank-function connection-info ()
-  #(#":pid", 23, 
-    #":style", #":fd-handler",
-    #":lisp-implementation", #(#":type", "dylan",
-                               #":name", "opendylan",
-                               #":version", "1.0beta5"),
-    #":version", "2008-03-24");
+  list(#":pid", 23, 
+       #":style", #":fd-handler",
+       #":lisp-implementation", list(#":type", "dylan",
+                                     #":name", release-product-name(),
+                                     #":version", release-version()),
+       #":version", "2008-03-24",
+       #":package", #(#":name", "opendylan", #":prompt", "opendylan"));
 end;
 
 define swank-function quit-lisp ()
@@ -140,8 +141,10 @@ define swank-function compiler-notes-for-emacs ()
   res;
 end;
 
-//define swank-function describe-symbol (symbol-name)
-//end;
+define swank-function describe-symbol (symbol-name)
+  let env = get-environment-object(symbol-name);
+  environment-object-description(*project*, env, *module*)
+end;
 
 define function get-environment-object (symbol-name)
   let library = #f;
@@ -179,15 +182,7 @@ define function get-location-as-sexp (search, env-obj)
     
 
   if (location)
-    let source-record = location.source-location-source-record;
-    let source-name =
-      select (source-record by instance?)
-        <file-source-record> =>
-          let location = source-record.source-record-location;
-          file-exists?(location) & locator-as-string(<byte-string>, location);
-        otherwise =>
-          source-record.source-record-name;
-      end;
+    let source-name = print-environment-object-location(*project*, env-obj); 
 
     let (name, lineno)
       = source-line-location(location.source-location-source-record,
@@ -252,78 +247,53 @@ define xref-function calls (env-obj)
   source-form-clients(*project*, env-obj);
 end;
 
-define function print-function-parameters
-    (server :: <server>, function-object :: <function-object>,
-     namespace :: false-or(<namespace-object>))
- => (name :: <string>)
-  with-output-to-string (stream)
-    let <object>-class = find-environment-object(server, $<object>-id);
-    let (required, rest, key, all-keys?, next) // ... values, rest-value)
-      = function-parameters(server, function-object);
-    format(stream, "(");
-    local method do-parameter (parameter :: <parameter>) => ()
-            let keyword 
-              = instance?(parameter, <optional-parameter>)
-                  & parameter.parameter-keyword;
-            let type = parameter.parameter-type;
-	    if (keyword)
-	      format(stream, "%s: ", keyword)
-	    end;
-	    format(stream, "%s", parameter.parameter-name);
-            unless (type == <object>-class)
-              format(stream, " :: %s",
-                     environment-object-display-name(server, type, namespace)
-                       | "<?>")
-            end
-          end method do-parameter;
-    local method do-parameters (parameters :: <parameters>) => ()
-            for (parameter :: <parameter> in parameters,
-                 separator = "" then ", ")
-              format(stream, separator);
-              do-parameter(parameter)
-            end for;
-          end method do-parameters;
-    do-parameters(required);
-    let printed-something = size(required) > 0;
-    local method print-separator () => ()
-            if (printed-something)
-              format(stream, ", ");
-            else
-              printed-something := #t;
-            end;
-          end method print-separator;
-    if (next)
-      print-separator();
-      format(stream, "#next ");
-      do-parameter(next);
-    end;
-    if (rest)
-      print-separator();
-      format(stream, "#rest ");
-      do-parameter(rest);
-    end;
-    case
-      key & size(key) > 0 =>
-        print-separator();
-        format(stream, "#key ");
-        do-parameters(key);
-        if (all-keys?) 
-          format(stream, ", #all-keys")
-        end;
-      all-keys? =>
-        print-separator();
-        format(stream, "#key, #all-keys");
-      otherwise =>
-        #f;
-    end;
-    format(stream, ")");
+define xref-function references (env-obj)
+  source-form-clients(*project*, env-obj);
+end;
+
+define xref-function sets (env-obj)
+  // FIXME: returns all references, needs to find actual setters
+  source-form-clients(*project*, env-obj);
+end;
+
+define xref-function binds (env-obj)
+  // FIXME: returns all references, needs to find actual setters
+  source-form-clients(*project*, env-obj);
+end;
+
+define xref-function macroexpands (env-obj)
+  macro-call-source-forms(*project*, env-obj);
+end;
+
+define xref-function specializes (function)
+  let generic
+    = select (function by instance?)
+        <generic-function-object> => function;
+        <method-object>           => method-generic-function(*project*, function);
+        otherwise                 => #f;
+      end;
+  if (generic)
+    concatenate-as(<vector>,
+                   vector(generic), generic-function-object-methods(*project*, generic));
+  else
+    #()
   end
-end function print-function-parameters;
+end;
+
+define xref-function callers (env-obj)
+  source-form-clients(*project*, env-obj);
+end;
+
+define xref-function callees (env-obj)
+  // FIXME: filter for function definitions
+  source-form-used-definitions(*project*, env-obj);
+end;
 
 define swank-function operator-arglist (symbol, package)
   let env-obj = get-environment-object(symbol);
   if (instance?(env-obj, <function-object>))
-    print-function-parameters(*project*, env-obj, *module*)
+    concatenate(print-function-parameters(*project*, env-obj, *module*),
+                " => ", print-function-values(*project*, env-obj, *module*));
   else
     #"nil"
   end;
@@ -338,11 +308,46 @@ define function write-to-emacs (stream, s-expression)
   format(stream, "%s%s", siz, s-expression);
 end;
 
-define function main()
+define function main(args)
   start-sockets();
-  let socket = make(<server-socket>, port: 4005);
+  let tmpfile = #f;
+  let port = 4005;
+  unless (args.size >= 1 & args[0] = "--listen")
+    let line = read-line(*standard-input*);
+    let sexp = read-lisp(make(<string-stream>, direction: #"input", contents: line));
+    tmpfile :=
+      block(ret)
+        for (call in sexp.tail)
+          if (call.head == #"funcall")
+            if (call.tail.head.tail.head = "swank:start-server")
+              ret(call[2])
+            end;
+          end;
+        end;
+        error("error parsing swank startup command");
+      end;
+  end;
+  local method open ()
+          block ()
+            let socket = make(<server-socket>, port: port);
+            format(*standard-output*, "Waiting for connection on port %d\n", port);
+            if (tmpfile)
+              with-open-file (file = tmpfile, direction: #"output")
+                write(file, integer-to-string(port));
+              end;
+            end;
+            socket;
+          exception (e :: <error>)
+            port := port + 1;
+            open();
+          end;
+        end;
+  let socket = open();
   let stream = accept(socket);
   *server* := start-compiler(stream);
+  let greeting = concatenate("Welcome to dswank - the ", release-product-name(), " ",
+                             release-version(), " SLIME interface");
+  write-to-emacs(stream, list(#":write-string", greeting));
   while(#t)
     let length = string-to-integer(read(stream, 6), base: 16);
     let line = read(stream, length);
@@ -354,4 +359,4 @@ define function main()
   end;
 end;
 
-main();
+main(application-arguments());

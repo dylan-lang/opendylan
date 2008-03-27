@@ -49,6 +49,7 @@ Files:	library
         profiling
         naming
 	channels
+	utils
 Major-version: 2
 Minor-version: 1
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.

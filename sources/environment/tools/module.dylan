@@ -38,9 +38,7 @@ define module environment-tools
   use environment-server;
 
   // Some useful constants
-  export $n/a,
-         $unknown,
-         project-not-built-message;
+  export project-not-built-message;
 
   // Environment startup (shutdown is managed by the Env-Framework)
   export start-environment;
@@ -60,14 +58,10 @@ define module environment-tools
 
   // Printing functions
   export compilation-warning-count-message,
-         environment-object-contents,
          frame-print-environment-object,
          frame-object-unique-name,
          frame-default-object-name,
-         frame-qualify-names?, frame-qualify-names?-setter,
-         print-function-parameters,
-         print-function-values,
-         print-environment-object-location;
+         frame-qualify-names?, frame-qualify-names?-setter;
 
   // Percentages
   export <percentage>,

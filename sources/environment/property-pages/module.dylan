@@ -16,7 +16,7 @@ define module environment-property-pages
   use environment-protocols;
 
   use duim-internals,
-    exclude: { position,
+    exclude: { position, string-pluralize,
 	       get-property,
 	       \put-property!, do-put-property!,
 	       \remove-property!, do-remove-property!,

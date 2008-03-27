@@ -9,47 +9,16 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// User object property pages
 
-define method show-slot-information?
-    (class :: subclass(<user-object>)) => (show-information? :: <boolean>)
-  #t
-end method show-slot-information?;
-
-define method show-slot-information?
-    (class :: subclass(<internal-object>)) => (show-information? :: <boolean>)
-  //---*** Maybe should make this a setting
-  select (release-edition-type())
-    #"emulator" => #t;
-    #"internal" => #t;
-    otherwise   => #f;
-  end
-end method show-slot-information?;
-
-define method show-slot-information?
-    (object :: <user-object>) => (show-information? :: <boolean>)
-  show-slot-information?(object-class(object))
-end method show-slot-information?;
-
 define sideways method frame-property-types
     (frame :: <environment-frame>, class :: subclass(<user-object>))
  => (types :: <list>)
-  if (show-slot-information?(class))
-    concatenate(next-method(), #(#"contents"))
-  else
-    next-method()
-  end
+  concatenate(next-method(), #(#"contents"))
 end method frame-property-types;
 
 define sideways method frame-default-property-type
     (frame :: <environment-frame>, class :: subclass(<user-object>))
  => (type :: false-or(<symbol>))
-  //--- This is a little odd. We want the default page to be consistent
-  //--- for internal and non-internal releases, so don't make internal
-  //--- objects have the contents page as their default.
-  if (show-slot-information?(class) & ~subtype?(class, <internal-object>))
-    #"contents"
-  else
-    next-method()
-  end
+  #"contents"
 end method frame-default-property-type;
 
 

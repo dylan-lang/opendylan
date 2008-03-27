@@ -45,6 +45,7 @@ define module environment-imports
   use source-records, export: all;
   use file-source-records, export: all;
   use release-info, export: all;
+  use cl-strings, import: { string-pluralize }, export: { string-pluralize };
 end module environment-imports;
 
 define module environment-protocols
@@ -768,4 +769,21 @@ define module environment-protocols
   export print-source-location,
          application-state-label,
          thread-state-label;
+
+  export environment-object-contents,
+         environment-object-description,
+         print-function-parameters,
+         print-function-values,
+         print-environment-object-location;
+
+
+  export $n/a,
+         $type-n/a,
+         $no-information-available,
+         $unknown-name,
+         $unknown,
+         $project-not-built,
+         $interactive-definition,
+         $not-available,
+         $not-applicable;
 end module environment-protocols;

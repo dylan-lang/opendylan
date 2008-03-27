@@ -40,6 +40,7 @@ Files:	library
         code-execution
         naming
 	channels
+	utils
 Major-version: 2
 Minor-version: 1
 Compilation-Mode: incremental
