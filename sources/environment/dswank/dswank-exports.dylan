@@ -23,7 +23,7 @@ define module dswank
   use standard-io;
   use sockets;
   use environment-commands;
-  use environment-protocols;
+  use environment-protocols, exclude: { application-filename, application-arguments };
   use command-lines;
   use commands;
   use source-records;
