@@ -143,7 +143,7 @@ define generic remove-keywords
     (plist :: <sequence>, keywords :: <sequence>) => (plist :: <sequence>);
 
 define method remove-keywords
-    (plist :: <list>, keywords :: <sequence>) => (plist :: <vector>)
+    (plist :: <list>, keywords :: <sequence>) => (plist :: <sequence>)
   case
     empty?(plist)    => plist;
     empty?(keywords) => plist;
