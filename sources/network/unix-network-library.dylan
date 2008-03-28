@@ -24,7 +24,12 @@ define module unix-sockets
 
   // Misc
   export
-    <C-char**>, <C-buffer-offset>, <LPSOCKADDR>, <timeval>;
+    <C-char**>, <C-buffer-offset>, <LPSOCKADDR>;
+
+  export
+    <timeval>,
+    tv-sec-value, tv-sec-value-setter,
+    tv-usec-value, tv-usec-value-setter;
 
   // From sys/socket.h
   export
@@ -139,6 +144,7 @@ define module unix-sockets
       ifr-name, ifr-name-setter,
       ifr-ifindex, ifr-ifindex-setter,
       ifr-flags, ifr-flags-setter,
+      ifr-ifru, ifr-ifru-setter,
       $IF-NAMESIZE, $SIOCGIFINDEX,
       $SIOCGIFFLAGS, $SIOCSIFFLAGS,
       $SIOCGIFNAME,
