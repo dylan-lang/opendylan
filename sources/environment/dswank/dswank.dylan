@@ -31,7 +31,7 @@ define emacs-command emacs-rex (command, package, thread-id, request-id)
     list(#":return", list(#":ok", result), request-id);
   exception(e :: <error>)
     format(*standard-error*, "Received error during evalution:\n%=\n", e);
-    walk-stack();
+    //walk-stack();
     list(#":return", #(#":abort"), request-id);
   end;
 end;
@@ -203,7 +203,7 @@ define function get-location-as-sexp (search, env-obj)
               list(#":file", as(<string>, source-name)),
               list(#":line", lineno, column),
               if (search)
-                list(#":snippet" search)
+                list(#":snippet", search)
               else
                 #()
               end));

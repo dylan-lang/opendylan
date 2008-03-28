@@ -12,7 +12,7 @@ define library dswank
   use file-source-records;
   use system;
   use registry-projects;
-  use stack-walker;
+  //use stack-walker;
   use release-info;
 end library;
 
@@ -32,6 +32,6 @@ define module dswank
   use file-system;
   use locators;
   use registry-projects;
-  use stack-walker;
+  //use stack-walker;
   use release-info;
 end module;
