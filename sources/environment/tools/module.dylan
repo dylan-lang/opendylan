@@ -11,7 +11,7 @@ define module environment-tools
   use environment-imports;	// this gets functional-dylan
 
   use duim-internals,
-    exclude: { position,
+    exclude: { position, string-pluralize,
 	       get-property,
 	       \put-property!, do-put-property!,
 	       \remove-property!, do-remove-property!,
