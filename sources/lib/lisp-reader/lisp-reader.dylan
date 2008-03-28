@@ -79,17 +79,6 @@ define function read-symbol (stream :: <stream>) => (result :: <symbol>)
   as(<symbol>, read-word(stream));
 end;
 
-define function test ()
-  while(#t)
-    let line = read-line(*standard-input*);
-    let stream = make(<string-stream>, direction: #"input", contents: line);
-    let expr = read-lisp(stream);
-    format(*standard-output*, "%=\n", expr);
-  end;
-end;
-
-//test();
-
 define method print-s-expression (stream :: <stream>, expression :: <integer>)
   format(stream, "%d", expression);
 end;

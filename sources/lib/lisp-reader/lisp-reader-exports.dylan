@@ -8,7 +8,7 @@ define library lisp-reader
 end library;
 
 define module lisp-reader
-  use common-dylan;
+  use common-dylan, exclude: { format-to-string };
   use streams;
   use format;
   use standard-io;
