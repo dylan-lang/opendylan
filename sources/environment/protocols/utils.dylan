@@ -598,11 +598,13 @@ end function print-function-values;
 /// Source location display
 
 define open generic print-environment-object-location
-    (server :: <server>, object :: <environment-object>)
+    (server :: <server>, object :: <environment-object>,
+     #key absolute-path? :: <boolean>)
  => (location :: <string>);
 
 define method print-environment-object-location
-    (project :: <project-object>, object :: <environment-object>)
+    (project :: <project-object>, object :: <environment-object>,
+     #key absolute-path? :: <boolean>)
  => (location :: <string>)
   let source-location = environment-object-source-location(project, object);
   if (source-location)
@@ -612,7 +614,13 @@ define method print-environment-object-location
 	$interactive-definition;
       <file-source-record> =>
 	let location = source-record.source-record-location;
-	file-exists?(location) & location.locator-name;
+	if (file-exists?(location)) 
+	  if (absolute-path?)
+	    locator-as-string(<byte-string>, location);
+	  else 
+	    location.locator-name;
+	  end;
+	end;
       otherwise =>
 	source-record.source-record-name;
     end
@@ -622,12 +630,23 @@ end method print-environment-object-location;
 
 define method print-environment-object-location
     (project :: <project-object>,
-     project-object :: <project-object>)
+     project-object :: <project-object>,
+     #key absolute-path? :: <boolean>)
  => (location :: <string>)
   ignore(project);
-  as(<string>,
-     project-object.project-filename
-       | project-object.project-debug-filename
-       | $n/a)
+  block (ret)
+    local method printit (locator :: false-or(<locator>))
+	    if (locator)
+	      if (absolute-path?)
+		ret(locator-as-string(<byte-string>, locator))
+	      else
+		ret(as(<string>, locator))
+	      end;
+	    end;
+	  end;
+    printit(project-object.project-filename);
+    printit(project-object.project-debug-filename);
+    $n/a;
+  end;
 end method print-environment-object-location;
 

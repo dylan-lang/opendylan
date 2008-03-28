@@ -182,7 +182,10 @@ define function get-location-as-sexp (search, env-obj)
     
 
   if (location)
-    let source-name = print-environment-object-location(*project*, env-obj); 
+    let source-name
+      = print-environment-object-location(*project*,
+					  env-obj,
+					  absolute-path?: #t); 
 
     let (name, lineno)
       = source-line-location(location.source-location-source-record,
