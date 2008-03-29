@@ -146,10 +146,19 @@ define swank-function describe-symbol (symbol-name)
   environment-object-description(*project*, env, *module*)
 end;
 
-define function get-environment-object (symbol-name)
+define function get-environment-object (symbols)
+  let env = split(symbols, ":");
+  let symbol-name = env[0];
   let library = #f;
   let module = #f;
   let project = #f;
+
+  if (env.size == 3)
+    project := *project*;
+    library := find-library(project, env[2]);
+    module := find-module(project, env[1], library: library);
+  end;
+
   local method check-and-set-module (p, lib)
           unless(module)
             module := find-module(p, *module*, library: lib);
@@ -168,9 +177,11 @@ define function get-environment-object (symbol-name)
       end;
     end;
   end;
-  *project* := project;
-  *library* := library;
-  *module* := module;
+  if (env.size == 1)
+    *project* := project;
+    *library* := library;
+    *module* := module;
+  end;
 
   find-environment-object(project, symbol-name,
                           library: library,
@@ -192,11 +203,11 @@ define function get-location-as-sexp (search, env-obj)
                              location.source-location-start-line);
     let column = location.source-location-start-column;
     let hname = environment-object-home-name(*project*, env-obj);
-    let name = if (hname)
-                 environment-object-primitive-name(*project*, hname);
-               else
-                 "unknown"
-               end;
+    let name =  if (hname)
+		  environment-object-primitive-name(*project*, hname);
+		else
+		  "unknown"
+		end;
 
     list(name,
          list(#":location",
@@ -226,8 +237,7 @@ define swank-function xref (quoted-arg, quoted-name)
   let function = $xref-functions[quoted-arg.tail.head];
   let env-obj = get-environment-object(quoted-name.tail.head);
   let result = function(env-obj);
-  let res = map(curry(get-location-as-sexp, quoted-name.tail.head),
-                reverse(result));
+  let res = map(curry(get-location-as-sexp, quoted-name.tail.head), result);
   res;
 end;
 
@@ -302,11 +312,31 @@ define swank-function operator-arglist (symbol, package)
   end;
 end;
 
+define function get-names (env-objs)
+  let module = if (instance?(*module*, <string>))
+		 find-module(*project*, *module*)
+	       else
+		 *module*
+	       end;
+  sort!(map(rcurry(curry(environment-object-display-name, *project*),
+		   module, qualify-names?: #t), env-objs));
+end;
+
+define swank-function dylan-subclasses (symbols)
+  let env-obj = get-environment-object(symbols);
+  get-names(class-direct-subclasses(*project*, env-obj));
+end;
+
+define swank-function dylan-superclasses (symbol)
+  let env-obj = get-environment-object(symbol);
+  get-names(class-direct-superclasses(*project*, env-obj));
+end;
+
 define function write-to-emacs (stream, s-expression)
   let newstream = make(<string-stream>, direction: #"output");
   print-s-expression(newstream, s-expression);
   let s-expression = stream-contents(newstream);
-//  format(*standard-error*, "write: %s\n", s-expression);
+  //format(*standard-error*, "write: %s\n", s-expression);
   let siz = integer-to-string(s-expression.size, base: 16, size: 6);
   format(stream, "%s%s", siz, s-expression);
 end;
@@ -333,7 +363,9 @@ define function main(args)
   local method open ()
           block ()
             let socket = make(<server-socket>, port: port);
-            format(*standard-output*, "Waiting for connection on port %d\n", port);
+            format(*standard-output*,
+		   "Waiting for connection on port %d\n",
+		   port);
             if (tmpfile)
               with-open-file (file = tmpfile, direction: #"output")
                 write(file, integer-to-string(port));
@@ -348,8 +380,9 @@ define function main(args)
   let socket = open();
   let stream = accept(socket);
   *server* := start-compiler(stream);
-  let greeting = concatenate("Welcome to dswank - the ", release-product-name(), " ",
-                             release-version(), " SLIME interface");
+  let greeting = concatenate("Welcome to dswank - the ",
+			     release-full-name(),
+			     " SLIME interface\n");
   write-to-emacs(stream, list(#":write-string", greeting));
   while(#t)
     let length = string-to-integer(read(stream, 6), base: 16);
