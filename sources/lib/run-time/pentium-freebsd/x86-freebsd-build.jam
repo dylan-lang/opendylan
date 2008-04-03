@@ -336,7 +336,7 @@ rule LinkDLL {
 }
 
 actions together LinkDLL bind NEEDLIBS {
-  $(CC) -shared -o $(<) -T $(LINKSCRIPTDLL) $(LINKFLAGS) $(>) -L"$(LIBPATH)" $(NEEDLIBS) $(LINKLIBS)
+  $(CC) -shared -o $(<) -T $(LINKSCRIPTDLL) -Wl,-rpath,"$(LIBPATH:J=:)" $(LINKFLAGS) $(>) -L"$(LIBPATH)" $(NEEDLIBS) $(LINKLIBS)
 }
 
 rule LinkEXE {
