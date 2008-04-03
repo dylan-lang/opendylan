@@ -18,5 +18,3 @@ define function unix-errno () => (res :: <integer>)
      (%call-c-function ("__error") () => (errnop :: <raw-pointer>) () end,
      integer-as-raw(0), integer-as-raw(0)))
 end;
-
-define constant $proc-path = "file";

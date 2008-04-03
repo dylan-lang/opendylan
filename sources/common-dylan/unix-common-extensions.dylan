@@ -47,82 +47,24 @@ define variable *application-name* :: false-or(<byte-string>) = #f;
 define variable *application-filename* :: false-or(<byte-string>) = #f;
 define variable *application-arguments* :: <simple-object-vector> = #[];
 
-///---*** NOTE: The following works on Linux and, presumably, any other UNIX
-///---***       variant that implements the /proc filesystem.
 define inline-only function ensure-application-name-filename-and-arguments () => ()
   unless (*application-name*)
-    let pid
-      = raw-as-integer(%call-c-function ("getpid") () => (pid :: <raw-c-signed-int>) () end);
-    //
-    let cmdline-path
-      = concatenate("/proc/", integer-to-string(pid), "/cmdline");
-    let cmdline-fd = -1;
-    block ()
-      cmdline-fd 
-	:= raw-as-integer(%call-c-function ("open")
-			      (path :: <raw-byte-string>, flags :: <raw-c-signed-int>,
-			       mode :: <raw-c-signed-int>)
-			   => (fd :: <raw-c-signed-int>)
-			    (primitive-string-as-raw(cmdline-path),
-			     integer-as-raw(0),
-			     integer-as-raw(0))
-			  end);
-      if (cmdline-fd > 0)
-	let cmdline :: <byte-string> = "";
-	let count :: <integer> = 1;
-	while (count > 0)
-	  let buffer = make(<byte-string>, size: 8192, fill: '\0');
-	  count
-	    := raw-as-integer(%call-c-function ("read")
-				  (fd :: <raw-c-signed-int>, buffer :: <raw-byte-string>,
-				   size :: <raw-c-unsigned-long>)
-			       => (count :: <raw-c-signed-int>)
-				(integer-as-raw(cmdline-fd),
-				 primitive-string-as-raw(buffer),
-				 integer-as-raw(8192))
-			      end);
-	  if (count > 0)
-	    cmdline := concatenate(cmdline, copy-sequence(buffer, end: count));
-	  end;
-	end;
-	let tokens = make(<stretchy-vector>);
-	let _start :: <integer> = 0;
-	let _end :: <integer> = size(cmdline);
-	let _skip :: <integer> = 0;
-	while (_start < _end)
-	  let _next :: <integer> = position(cmdline, '\0', test: \=, skip: _skip) | _end;
-	  add!(tokens, copy-sequence(cmdline, start: _start, end: _next));
-	  _start := _next + 1;
-	  _skip := _skip + 1;
-	end;
-	*application-name* := tokens[0];
-	*application-arguments* := apply(vector, copy-sequence(tokens, start: 1));
-      end;
-    cleanup
-      if (cmdline-fd > 0)
-	%call-c-function ("close")
-	    (fd :: <raw-c-signed-int>) => (ok? :: <raw-c-signed-int>)
-	  (integer-as-raw(cmdline-fd))
-	end
-      end
+    let cmdline = get-application-commandline();
+    let tokens = make(<stretchy-vector>);
+    let _start :: <integer> = 0;
+    let _end :: <integer> = size(cmdline);
+    let _skip :: <integer> = 0;
+    while (_start < _end)
+      let _next :: <integer>
+	= position(cmdline, '\0', test: \=, skip: _skip) | _end;
+      add!(tokens, copy-sequence(cmdline, start: _start, end: _next));
+      _start := _next + 1;
+      _skip := _skip + 1;
     end;
-    //
-    let exe-path
-      = concatenate("/proc/", integer-to-string(pid), "/", $proc-path);
-    let buffer = make(<byte-string>, size: 8192, fill: '\0');
-    let count
-      = raw-as-integer(%call-c-function ("readlink")
-			   (path :: <raw-byte-string>, buffer :: <raw-byte-string>,
-			    bufsize :: <raw-c-unsigned-long>)
-			=> (count :: <raw-c-signed-int>)
-			 (primitive-string-as-raw(exe-path),
-			  primitive-string-as-raw(buffer),
-			  integer-as-raw(8192))
-		       end);
-    unless (count = -1)
-      *application-filename* := copy-sequence(buffer, end: count)
-    end
-  end
+    *application-name* := tokens[0];
+    *application-arguments* := apply(vector, copy-sequence(tokens, start: 1));
+    *application-filename* := get-application-filename();
+  end;
 end function ensure-application-name-filename-and-arguments;
 
 define function application-name () => (name :: <byte-string>)

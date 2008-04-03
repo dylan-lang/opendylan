@@ -12,10 +12,6 @@ define function unix-lseek (fd :: <integer>, position :: <integer>, mode :: <int
      end)
 end;
 
-
-
 define function unix-errno () => (res :: <integer>)
  raw-as-integer(%call-c-function ("myerrno") () => (errnop :: <raw-c-signed-int>) () end)
 end;
-
-define constant $proc-path = "exe";

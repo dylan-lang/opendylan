@@ -7,5 +7,3 @@ end;
 
 define function unix-errno () => (res)
 end;
-
-define constant $proc-path = "";

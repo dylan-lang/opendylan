@@ -5,6 +5,7 @@ Author:       Andy Armstrong
 Files: library
        macros
        common-extensions
+       linux-common-extensions
        unix-common-extensions
        locators-protocol
        streams-protocol

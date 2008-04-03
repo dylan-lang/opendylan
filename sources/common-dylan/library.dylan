@@ -14,7 +14,6 @@ define library common-dylan
 	      finalization,
 	      threads, 
 	      threads-extensions };
-  use unix-portability;
   export 
     common-dylan,
     common-extensions,
@@ -305,5 +304,4 @@ define module common-dylan-internals
   use simple-random;
   use simple-profiling;
   use simple-io;
-  use unix-portability;
 end module common-dylan-internals;

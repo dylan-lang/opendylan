@@ -11,5 +11,5 @@ define module unix-portability
   use dylan;
   use dylan-direct-c-ffi;
 
-  export unix-errno, $proc-path, unix-lseek;
+  export unix-errno, unix-lseek;
 end;
