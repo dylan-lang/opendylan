@@ -57,7 +57,7 @@ define swank-function connection-info ()
        #":lisp-implementation", list(#":type", "dylan",
                                      #":name", release-product-name(),
                                      #":version", release-version()),
-       #":version", "2008-03-24",
+       #":version", "2008-03-27",
        #":package", #(#":name", "opendylan", #":prompt", "opendylan"));
 end;
 
@@ -75,7 +75,7 @@ define swank-function list-all-package-names (t)
             end;
           end;
         end;
-  let regs = find-registries("x86", "linux");
+  let regs = find-registries($machine-name, $os-name);
   let reg-paths = map(registry-location, regs);
   for (reg-path in reg-paths)
     if (file-exists?(reg-path))

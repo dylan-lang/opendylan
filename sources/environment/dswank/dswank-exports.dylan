@@ -24,7 +24,10 @@ define module dswank
   use standard-io;
   use sockets;
   use environment-commands;
-  use environment-protocols, exclude: { application-filename, application-arguments };
+  use environment-protocols,
+    exclude: { application-filename,
+	       application-arguments,
+	       run-application };
   use command-lines;
   use commands;
   use source-records;
@@ -34,4 +37,5 @@ define module dswank
   use registry-projects;
   //use stack-walker;
   use release-info;
+  use operating-system;
 end module;
