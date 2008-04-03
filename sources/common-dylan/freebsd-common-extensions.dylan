@@ -1,7 +1,7 @@
 Module:       common-dylan-internals
 Author: Hannes Mehnert
 Synopsis:     Common extensions to Dylan
-Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
+Copyright:    Original Code is Copyright (c) 2008 Dylan Hackers
               All rights reserved.
 License:      Functional Objects Library Public License Version 1.0
 Dual-license: GNU Lesser General Public License
