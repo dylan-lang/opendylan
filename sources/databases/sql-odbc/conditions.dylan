@@ -48,7 +48,7 @@ define method assert-odbc-goodness
             if (return-code = $sql-invalid-handle)
               error("Assert-odbc-goodness: invalid ODBC handle.");
             else
-              error("Assert-odbc-goodness: error in acquiring sqlstate.");
+              error("Assert-odbc-goodness: error in acquiring sqlstate: %=", return-code);
             end if;
           end if;
         end method;

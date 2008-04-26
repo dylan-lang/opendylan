@@ -2,13 +2,13 @@ Library:        odbc-ffi
 Major-Version:  2
 Minor-Version:  1
 Library-Pack:   ODBC
-Linker-Options: -lodbc -liodbcinst
+Linker-Options: -lodbc -lodbcinst
 Files:  odbc-library
         macros
         constant
         sqltypes
-        sql
-        sqlext
+        sql-unix
+        sqlext-unix
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      Functional Objects Library Public License Version 1.0

@@ -102,7 +102,7 @@ define method create-storage(sql-data-type :: <object>,
   signal(make(<simple-warning>, 
          format-string: "Binding to column whose datatype (%=) is not supported\n"
                         "Using instance of <sql-unsupported-type> instead.\n",
-         format-arguments: sql-data-type)); 
+         format-arguments: list(sql-data-type))); 
   values($sql-unsupported-type, null-pointer(<c-int*>), 0, 0);
 end method;
 
@@ -380,6 +380,26 @@ end method;
 
 
 define method create-storage(sql-data-type == $sql-varchar,
+			     precision :: <integer>,
+			     scale :: <integer>,
+			     #key initial-value :: false-or(<string>))
+ => (c-data-type :: <object>,
+     storage :: <object>, 
+     storage-size :: <integer>,
+     data-size :: <integer>)
+  // string size includes the null termination byte which ODBC appends
+  let storage-size = precision + 1;
+  let storage = make(<C-string>, size: storage-size);
+  if (initial-value ~= #f)
+    for (ndx from 0 to min(initial-value.size, storage-size) - 1)
+      pointer-value(storage, index: ndx) := initial-value[ndx];
+    end for;
+  end if;
+
+  values($sql-c-char, storage, storage-size, precision);
+end method;
+
+define method create-storage(sql-data-type == $sql-longvarchar,
 			     precision :: <integer>,
 			     scale :: <integer>,
 			     #key initial-value :: false-or(<string>))

@@ -90,6 +90,14 @@ define constant $SQL-REAL                           =    7;
 define constant $SQL-DOUBLE                         =    8;
 define constant $SQL-DATETIME                       =    9;
 define constant $SQL-VARCHAR                        =   12;
+define constant $SQL-LONGVARCHAR                    =   -1;
+define constant $SQL-BINARY                         =   -2;
+define constant $SQL-VARBINARY                      =   -3;
+define constant $SQL-LONGVARBINARY                  =   -4;
+define constant $SQL-BIGINT                         =   -5;
+define constant $SQL-TINYINT                        =   -6;
+define constant $SQL-BIT                            =   -7;
+
 define constant $SQL-TYPE-DATE                      =   91;
 define constant $SQL-TYPE-TIME                      =   92;
 define constant $SQL-TYPE-TIMESTAMP                 =   93;
