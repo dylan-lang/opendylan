@@ -461,8 +461,9 @@ define method installed-library-categories
   root-category.info-subcategories
 end method installed-library-categories;
 
-//---*** andrewa: for bootstrapping only, this really lives in
-//---*** functional-extensions.dylan.
+//---*** cgay: This is a copy of split from functional-extensions
+//       (now common-extensions) but the original has now diverged
+//       from this one.
 define sealed method %split
     (string :: <byte-string>, character :: <byte-character>,
      #key start :: <integer> = 0,

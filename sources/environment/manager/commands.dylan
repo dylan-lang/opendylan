@@ -112,6 +112,7 @@ define method coerce-for-command-call
   // where "<>" surrounds 'placeholders' and "[]" indicates "optional"
   // Any of the placeholders may be empty.
 
+  // Replace with common-dylan:split. --cgay
   local
     method split
 	(string :: <string>, char :: <character>)
