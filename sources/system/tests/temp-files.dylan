@@ -38,7 +38,7 @@ define function temp-file-pathname
     counter := *temp-file-counter*;
   end;
   let filename = concatenate(initial-substring | "",
-			     copy-sequence(as-iso8601-string(now), start: 6),
+			     format-date("%d%H%M%S.", now),
 			     integer-to-string(counter, size: 6),
 			     (extension & ".") | "",
 			     extension | "");

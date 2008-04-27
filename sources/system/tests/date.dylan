@@ -223,7 +223,7 @@ define date function-test as-iso8601-string ()
 		(make(<date>, year: 2000, month: 1, day: 1, hours: 0,
 		      minutes: 0, seconds: 0, time-zone-offset: 0,
 		      microseconds: 0)),
-	      "20000101T000000Z");
+	      "2000-01-01T00:00:00+00:00");
   
 				     
 end;

@@ -212,7 +212,7 @@ end function-test position;
 define functional-extensions function-test split ()
   check-equal("split on empty string",
               split("", '/'),
-              #[]);
+              #[""]);
   check-equal("split on single character",
 	      split("a", '/'),
 	      #["a"]);
@@ -248,10 +248,10 @@ define functional-extensions function-test split ()
 	      #["major", "", "build"]);
   check-equal("split with spaces",
 	      split("major, minor, build", ','),
-	      #["major", "minor", "build"]);
+	      #["major", " minor", " build"]);
   check-equal("split with spaces everywhere",
 	      split(" major , minor , build ", ','),
-	      #["major", "minor", "build"]);
+	      #[" major ", " minor ", " build "]);
   check-equal("no trim split with spaces",
 	      split("major, minor, build", ',', trim?: #f),
 	      #["major", " minor", " build"]);

@@ -436,6 +436,9 @@ end method locator-as-string;
 
 /// File index locators
 
+// These might be better called <fragment-locator> to follow the terminology in
+// RFC 3986.
+
 define sealed class <file-index-url> (<url>)
   sealed constant slot locator-file :: <file-url>,
     required-init-keyword: file:;
@@ -462,6 +465,9 @@ end method locator-server;
 
 
 /// CGI locators
+
+// These might be better called <query-locator> to follow the terminology in
+// RFC 3986.
 
 define sealed class <cgi-url> (<url>)
   sealed constant slot locator-file :: <file-url>,
