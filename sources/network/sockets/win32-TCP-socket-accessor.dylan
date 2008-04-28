@@ -173,10 +173,14 @@ define method accessor-open
 		   host-port: input-remote-port);
 	    else #f
 	    end if;
-	  win32-socket-error("win32-connect", error-code: connect-error-code,
-			     high-level-error: high-level-error, 
-			     host-address: input-remote-host,
-			     host-port: input-remote-port);
+          let name = host-name(input-remote-host) | host-address(input-remote-host);
+          win32-socket-error("win32-connect",
+                             format-string: "connection to %s:%s failed",
+                             format-arguments: list(name, input-remote-port),
+                             error-code: connect-error-code,
+                             high-level-error: high-level-error, 
+                             host-address: input-remote-host,
+                             host-port: input-remote-port);
         end if;
 	let (the-local-address :: false-or(<ipv4-address>), 
 	     the-local-port :: false-or(<integer>)) =
