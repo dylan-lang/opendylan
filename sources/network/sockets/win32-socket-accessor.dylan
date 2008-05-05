@@ -59,8 +59,7 @@ define function win32-socket-error
 	 error-code: error-code, format-string: format-string,
 	 format-arguments: format-arguments);
   if (high-level-error)
-    high-level-error.socket-condition-details :=
-      win32-condition-object;
+    high-level-error.socket-condition-details := win32-condition-object;
   else
     //     high-level-error :=
     select (error-code by ==)
@@ -122,11 +121,11 @@ define function win32-socket-error
 	       format-arguments: format-arguments, host-port: host-port,
 	       host-address: host-address);
       $WSAEADDRINUSE =>
-	high-level-error := 
-	  make(<address-in-use>, details: win32-condition-object,
-	       format-string: format-string, 
-	       format-arguments: format-arguments,
-	       host-address: host-address, host-port: host-port);
+	high-level-error := make(<address-in-use>,
+                                 details: win32-condition-object,
+                                 format-string: "address in use",
+                                 host-address: host-address,
+                                 host-port: host-port);
       otherwise =>
 	high-level-error := win32-condition-object;
     end select;
