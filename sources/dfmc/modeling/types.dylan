@@ -190,14 +190,24 @@ define method ^subtype?
   ^instance?(^singleton-object(s), t)
 end method;
 
-define method ^subtype? 
-    (t :: <&limited-collection-type>, c :: <&class>) => (result :: <boolean>)
-  ^subtype?(^limited-collection-concrete-class(t) | ^limited-collection-class(t), c)
+define method ^subtype?
+    (u :: <&union>, t :: <&limited-collection-type>) => (well? :: <boolean>)
+  ^subtype?(u.^union-type1, t) & ^subtype?(u.^union-type2, t)
 end method;
 
 define method ^subtype? 
     (t :: <&limited-collection-type>, c :: <&type>) => (result :: <boolean>)
   #f
+end method;
+
+define method ^subtype? 
+    (t :: <&limited-collection-type>, c :: <&class>) => (result :: <boolean>)
+  ^subtype?(^limited-collection-concrete-class(t) | ^limited-collection-class(t), c)
+end method;
+
+define method ^subtype?
+    (t :: <&limited-collection-type>, u :: <&union>) => (well? :: <boolean>)
+  ^subtype?(t, u.^union-type1) | ^subtype?(t, u.^union-type2)
 end method;
 
 define method ^instance? (object :: <model-value>, t :: <&limited-collection-type>)

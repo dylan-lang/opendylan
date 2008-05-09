@@ -508,7 +508,7 @@ define method subtype?
 end method;
 
 define method subjunctive-subtype? (t1 :: <type>, t2 :: <limited-collection-type>,
-				    scu :: <subjunctive-class-universe>)
+                                 scu :: <subjunctive-class-universe>)
  => (result == #f)
   #f
 end method;
@@ -530,9 +530,33 @@ define method subtype?
 end method;
 
 define method subjunctive-subtype? (t1 :: <limited-collection-type>, t2 :: <type>,
-				    scu :: <subjunctive-class-universe>)
+                                 scu :: <subjunctive-class-universe>)
  => (result == #f)
   #f
+end method;
+
+// With union types
+
+define method subtype? (u :: <union>, t :: <limited-collection-type>)
+ => (result :: <boolean>)
+  subtype?(u.union-type1, t) & subtype?(u.union-type2, t)
+end method;
+
+define method subtype? (t :: <limited-collection-type>, u :: <union>)
+ => (result :: <boolean>)
+  subtype?(t, u.union-type1) | subtype?(t, u.union-type2)
+end method;
+
+define method subjunctive-subtype? (u :: <union>, t :: <limited-collection-type>,
+				    scu :: <subjunctive-class-universe>) 
+ => (result :: <boolean>)
+  subjunctive-subtype?(u.union-type1, t, scu) & subjunctive-subtype?(u.union-type2, t, scu)
+end method;
+
+define method subjunctive-subtype? (t :: <limited-collection-type>, u :: <union>,
+				    scu :: <subjunctive-class-universe>)
+ => (result :: <boolean>)
+  subjunctive-subtype?(t, u.union-type1, scu) | subjunctive-subtype?(t, u.union-type2, scu)
 end method;
 
 define method subtype? 
