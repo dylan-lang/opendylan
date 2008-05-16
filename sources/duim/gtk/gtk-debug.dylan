@@ -12,4 +12,4 @@ define function dbg (message, #rest args)
   apply(format-out, concatenate(message, "\n"), args);
 end;
 
-*debug-duim-function* := dbg;
+//*debug-duim-function* := dbg;
