@@ -143,7 +143,7 @@ define method read-line
       elseif (next-elt == '\r')
         matched? := #t;
         // If '\r' is followed by '\n', eat the '\n'
-        if (peek(stream) == '\n')
+        if (peek(stream, on-end-of-stream: #f) == '\n')
           read-element(stream)
         end
       else
@@ -186,7 +186,7 @@ define method read-line-into!
       elseif (next-elt == '\r')
         matched? := #t;
         // If '\r' is followed by '\n', eat the '\n'
-        if (peek(stream) == '\n')
+        if (peek(stream, on-end-of-stream: #f) == '\n')
           read-element(stream)
         end
       else
@@ -242,7 +242,7 @@ define method read-character
     let character = read-element(stream);
     select (character)
       '\r' =>
-	if (peek(stream) == '\n')
+	if (peek(stream, on-end-of-stream: #f) == '\n')
 	  read-element(stream)
 	end;
 	'\n';
@@ -282,7 +282,7 @@ define method read-text-into!
       let character :: <character>
 	= select (character)
 	    '\r' =>
-	      if (peek(stream) == '\n')
+	      if (peek(stream, on-end-of-stream: #f) == '\n')
 		read-element(stream)
 	      end;
 	      '\n';
