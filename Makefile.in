@@ -19,22 +19,45 @@ library_srcdir	= @with_library_source@
 
 LIBRARY_PACKS	= @LIBRARY_PACKS@
 
+.PHONY: 1-stage-bootstrap 1-stage-bootstrap-reentry \
+	2-stage-bootstrap 2-stage-bootstrap-reentry \
+	3-stage-bootstrap 3-stage-bootstrap-reentry \
+	bootstrap-stage-1 bootstrap-stage-2 bootstrap-stage-3 \
+	all install install-stage uninstall clean check
+
 all:	@bootstrap_target@
 
-# 2-stage bootstrap includes both stages 1 and 2.
-# Stage 2 will use compiler built in stage 1.
+###
+# 3-stage bootstrap includes stages 1 and 2 and 3: it rebuilds the compiler
+# and libraries, then rebuilds them again to take advantage of new
+# optimizations. The 3-stage bootstrap is useful to build Open Dylan locally
+# without installing it; if you want to install it, do a 2-stage bootstrap and
+# run make install (which effectively does the third stage).
 
-2-stage-bootstrap: BOOTSTRAP_2_COMPILER = \
-	$(abs_builddir)/Bootstrap.1/bin/minimal-console-compiler -build
-2-stage-bootstrap: bootstrap-stage-1 bootstrap-stage-2
+3-stage-bootstrap:
+	$(MAKE) 3-stage-bootstrap-reentry \
+	  BOOTSTRAP_2_COMPILER="$(abs_builddir)/Bootstrap.1/bin/minimal-console-compiler -build"
+3-stage-bootstrap-reentry: bootstrap-stage-1 bootstrap-stage-2 bootstrap-stage-3
 
-# 1-stage bootstrap includes only stage 2.
-# Stage 2 will use existing compiler.
+###
+# 2-stage bootstrap includes both stages 1 and 2: it rebuilds the compiler to
+# support new primitives and rebuilds the libraries using that compiler.
 
-1-stage-bootstrap: BOOTSTRAP_2_COMPILER = \
-	$(FDCOMPILE)
-1-stage-bootstrap: bootstrap-stage-2
+2-stage-bootstrap:
+	$(MAKE) 2-stage-bootstrap-reentry \
+	  BOOTSTRAP_2_COMPILER="$(abs_builddir)/Bootstrap.1/bin/minimal-console-compiler -build"
+2-stage-bootstrap-reentry: bootstrap-stage-1 bootstrap-stage-2
 
+###
+# 1-stage bootstrap includes only stage 2: it rebuilds compiler and libraries
+# when no new primitives have been introduced.
+
+1-stage-bootstrap:
+	$(MAKE) 1-stage-bootstrap-reentry \
+	  BOOTSTRAP_2_COMPILER="$(FDCOMPILE)"
+1-stage-bootstrap-reentry: bootstrap-stage-2
+
+###
 # Stage 1 builds a compiler that can understand new primitives etc. used in
 # BOOTSTRAP_1_PRIMITIVE_LIBS libraries. An existing compiler won't understand
 # the new stuff, so until new compiler is built, existing libs are used instead.
@@ -42,22 +65,22 @@ all:	@bootstrap_target@
 BOOTSTRAP_1_PRIMITIVE_LIBS = \
 	dylan functional-extensions machine-word byte-vector \
 	threads transcendentals functional-dylan \
-        common-extensions common-dylan \
-        c-ffi bit-vector bit-set collectors plists set \
-        table-extensions collections streams standard-io \
-        print format format-out io date file-system \
-        operating-system locators settings system \
-        generic-arithmetic big-integers duim-utilities \
-        duim-geometry duim-dcs duim-sheets duim-graphics \
-        duim-layouts duim-gadgets duim-frames duim-core \
-        duim-extended-geometry duim-gadget-panes duim \
-        winsock2 sockets network midi \
-        deuce duim-deuce com ole ole-server sql odbc-ffi \
-        sql-odbc corba-dylan corba-protocol dylan-orb \
-        iop-protocol ir-protocol ir-stubs orb-connections \
-        orb-core orb-iiop orb-ir orb-poa orb-streams \
-        orb-utilities portableserver-protocol \
-        naming-protocol naming-stubs naming-client
+	common-extensions common-dylan \
+	c-ffi bit-vector bit-set collectors plists set \
+	table-extensions collections streams standard-io \
+	print format format-out io date file-system \
+	operating-system locators settings system \
+	generic-arithmetic big-integers duim-utilities \
+	duim-geometry duim-dcs duim-sheets duim-graphics \
+	duim-layouts duim-gadgets duim-frames duim-core \
+	duim-extended-geometry duim-gadget-panes duim \
+	winsock2 sockets network midi \
+	deuce duim-deuce com ole ole-server sql odbc-ffi \
+	sql-odbc corba-dylan corba-protocol dylan-orb \
+	iop-protocol ir-protocol ir-stubs orb-connections \
+	orb-core orb-iiop orb-ir orb-poa orb-streams \
+	orb-utilities portableserver-protocol \
+	naming-protocol naming-stubs naming-client
 
 BOOTSTRAP_1_REGISTRY = $(abs_srcdir)/sources/bootstrap1-registry
 
@@ -101,6 +124,7 @@ bootstrap-stage-1: \
 		$(BOOTSTRAP_1_REGISTRY) \
 		$(abs_builddir)/Bootstrap.1/bin/minimal-console-compiler
 
+###
 # Stage 2 bootstrap builds altered libraries and compiler and does not link to
 # any existing or stage 1 libraries.
 
@@ -113,6 +137,13 @@ BOOTSTRAP_2_ENV = \
 	OPEN_DYLAN_USER_REGISTRIES=$(abs_srcdir)/sources/registry:$(library_srcdir)/registry \
 	OPEN_DYLAN_USER_SOURCES=$(abs_srcdir)/sources
 
+BOOTSTRAP_2_UNSET_ENV = \
+	OPEN_DYLAN_RELEASE_ROOT \
+	OPEN_DYLAN_RELEASE_INSTALL \
+	OPEN_DYLAN_RELEASE_BUILD \
+	OPEN_DYLAN_RELEASE_REGISTRIES \
+	OPEN_DYLAN_RELEASE_SOURCES
+
 $(abs_builddir)/Bootstrap.2:
 	mkdir $(abs_builddir)/Bootstrap.2
 	mkdir $(abs_builddir)/Bootstrap.2/bin
@@ -124,19 +155,74 @@ $(abs_builddir)/Bootstrap.2:
 $(abs_builddir)/Bootstrap.2/bin/minimal-console-compiler:
 	@echo Building Open Dylan bootstrap stage 2...
 	@OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.2 \
+	  unset $(BOOTSTRAP_2_UNSET_ENV) ; \
 	  $(MAKE) -C $(rt_build) install
 	@$(BOOTSTRAP_2_ENV) \
+	  unset $(BOOTSTRAP_2_UNSET_ENV) ; \
 	  $(fdmake) --compiler="$(BOOTSTRAP_2_COMPILER)" minimal-console-compiler
 
 bootstrap-stage-2: \
 		$(abs_builddir)/Bootstrap.2 \
 		$(abs_builddir)/Bootstrap.2/bin/minimal-console-compiler
 		
-# Install stage builds libraries and compiler using stage 2 products, taking
-# advantage of any new optimizations etc. in this release.
+###
+# Stage 3 builds libraries and compiler using stage 2 products, taking
+# advantage of any new optimizations etc. in this release. It basically builds
+# an installation without actually installing it.
+
+BOOTSTRAP_3_ENV = \
+	OPEN_DYLAN_PLATFORM_NAME=$(fd_build) \
+	OPEN_DYLAN_RELEASE_ROOT=$(abs_builddir)/Bootstrap.2 \
+	OPEN_DYLAN_RELEASE_INSTALL=$(abs_builddir)/Bootstrap.2 \
+	OPEN_DYLAN_RELEASE_BUILD=$(abs_builddir)/Bootstrap.2/build \
+	OPEN_DYLAN_RELEASE_REGISTRIES=$(abs_srcdir)/sources/registry:$(library_srcdir)/registry \
+	OPEN_DYLAN_RELEASE_SOURCES=$(abs_srcdir)/sources \
+	OPEN_DYLAN_BUILD_LOGS=$(abs_builddir)/Bootstrap.3/build/logs \
+	OPEN_DYLAN_USER_ROOT=$(abs_builddir)/Bootstrap.3 \
+	OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.3 \
+	OPEN_DYLAN_USER_BUILD=$(abs_builddir)/Bootstrap.3/build \
+	OPEN_DYLAN_USER_REGISTRIES=$(abs_srcdir)/sources/registry:$(library_srcdir)/registry \
+	OPEN_DYLAN_USER_SOURCES=$(abs_srcdir)/sources
+
+BOOTSTRAP_3_LIBRARIES = minimal-console-compiler
+
+BOOTSTRAP_3_LIBRARY_PACKS = @LIBRARY_PACKS@
+
+BOOTSTRAP_3_COMPILER = \
+	$(abs_builddir)/Bootstrap.2/bin/minimal-console-compiler -build
+
+$(abs_builddir)/Bootstrap.3:
+	mkdir $(abs_builddir)/Bootstrap.3
+	mkdir $(abs_builddir)/Bootstrap.3/bin
+	mkdir $(abs_builddir)/Bootstrap.3/lib
+	mkdir $(abs_builddir)/Bootstrap.3/lib/runtime
+	mkdir $(abs_builddir)/Bootstrap.3/build
+	mkdir $(abs_builddir)/Bootstrap.3/build/logs
+	@echo Copying sources...
+	cp -R $(abs_srcdir)/sources $(abs_builddir)/Bootstrap.3
+	@echo Removing unnecessary directories...
+	find $(abs_builddir)/Bootstrap.3/sources -depth -name '.*' -exec rm -rf {} \;
+	-rm -r $(abs_builddir)/Bootstrap.3/sources/bootstrap1-registry
+
+bootstrap-stage-3: $(abs_builddir)/Bootstrap.3
+	@echo Building Open Dylan bootstrap stage 3...
+	@OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.3 \
+	  $(MAKE) -C $(rt_build) install
+	@$(BOOTSTRAP_3_ENV) \
+	  $(fdmake) --compiler="$(BOOTSTRAP_3_COMPILER)" \
+	  $(BOOTSTRAP_3_LIBRARIES) --library-packs="$(BOOTSTRAP_3_LIBRARY_PACKS)"
+
+###
+# Install stage is like stage 3, but it builds libraries and compiler in their
+# installed locations.
 
 INSTALL_ENV = \
 	OPEN_DYLAN_PLATFORM_NAME=$(fd_build) \
+	OPEN_DYLAN_RELEASE_ROOT=$(abs_builddir)/Bootstrap.2 \
+	OPEN_DYLAN_RELEASE_INSTALL=$(abs_builddir)/Bootstrap.2 \
+	OPEN_DYLAN_RELEASE_BUILD=$(abs_builddir)/Bootstrap.2/build \
+	OPEN_DYLAN_RELEASE_REGISTRIES=$(abs_srcdir)/sources/registry:$(library_srcdir)/registry \
+	OPEN_DYLAN_RELEASE_SOURCES=$(abs_srcdir)/sources \
 	OPEN_DYLAN_BUILD_LOGS=$(prefix)/build/logs \
 	OPEN_DYLAN_USER=$(prefix) \
 	OPEN_DYLAN_USER_ROOT=$(prefix) \
@@ -149,6 +235,9 @@ INSTALL_LIBRARIES = minimal-console-compiler
 
 INSTALL_LIBRARY_PACKS = @LIBRARY_PACKS@
 
+INSTALL_COMPILER = \
+	$(abs_builddir)/Bootstrap.2/bin/minimal-console-compiler -build
+
 $(prefix):
 	mkdir $(prefix)
 	mkdir $(prefix)/bin
@@ -159,19 +248,21 @@ $(prefix):
 	@echo Copying sources...
 	cp -R $(abs_srcdir)/sources $(prefix)
 	@echo Removing unnecessary directories...
-	find $(prefix)/sources -depth -name '.*' -exec rm -r {} \;
-	-rm -r $(prefix)/sources/boostrap1-registry
+	find $(prefix)/sources -depth -name '.*' -exec rm -rf {} \;
+	-rm -r $(prefix)/sources/bootstrap1-registry
 
 install-stage: $(prefix)
 	@echo Building Open Dylan installation...
 	OPEN_DYLAN_USER_INSTALL=$(prefix) \
 	  $(MAKE) -C $(rt_build) install
 	@$(INSTALL_ENV) \
-	  $(fdmake) \
-	  --compiler="$(abs_builddir)/Bootstrap.2/bin/minimal-console-compiler -build" \
+	  $(fdmake) --compiler="$(INSTALL_COMPILER)" \
 	  $(INSTALL_LIBRARIES) --library-packs="$(INSTALL_LIBRARY_PACKS)"
 
 install: install-stage
+
+###
+# Maintenance and test targets
 
 uninstall:
 	rm -r $(prefix)
@@ -181,6 +272,7 @@ install-strip:
 clean:
 	rm -rf $(abs_builddir)/Bootstrap.1
 	rm -rf $(abs_builddir)/Bootstrap.2
+	rm -rf $(abs_builddir)/Bootstrap.3
 	rm -rf $(BOOTSTRAP_1_REGISTRY)
 
 distclean:
@@ -193,7 +285,7 @@ TAGS:
 
 dist:
 
-CHECK_STAGE = 2
+CHECK_STAGE = 3
 
 CHECK_APPS = \
 	libraries-test-suite-app \
@@ -202,8 +294,13 @@ CHECK_APPS = \
 	deuce-test-suite-app \
 	channels-tests
 
-CHECK-ENV = \
+CHECK_ENV = \
 	OPEN_DYLAN_PLATFORM_NAME=$(fd_build) \
+	OPEN_DYLAN_RELEASE_ROOT=$(abs_builddir)/Bootstrap.$(CHECK_STAGE) \
+	OPEN_DYLAN_RELEASE_INSTALL=$(abs_builddir)/Bootstrap.$(CHECK_STAGE) \
+	OPEN_DYLAN_RELEASE_BUILD=$(abs_builddir)/Bootstrap.$(CHECK_STAGE)/build \
+	OPEN_DYLAN_RELEASE_REGISTRIES=$(abs_srcdir)/sources/registry:$(library_srcdir)/registry \
+	OPEN_DYLAN_RELEASE_SOURCES=$(abs_srcdir)/sources \
 	OPEN_DYLAN_BUILD_LOGS=$(abs_builddir)/Bootstrap.$(CHECK_STAGE)/build/logs \
 	OPEN_DYLAN_USER_ROOT=$(abs_builddir)/Bootstrap.$(CHECK_STAGE) \
 	OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.$(CHECK_STAGE) \
@@ -212,7 +309,7 @@ CHECK-ENV = \
 	OPEN_DYLAN_USER_SOURCES=$(abs_srcdir)/sources
 
 check:	bootstrap-stage-$(CHECK_STAGE)
-	@$(CHECK-ENV) \
+	@$(CHECK_ENV) \
 	  $(fdmake) \
 	  --compiler="$(abs_builddir)/Bootstrap.$(CHECK_STAGE)/bin/minimal-console-compiler -build -save" \
 	  $(CHECK_APPS) && \
