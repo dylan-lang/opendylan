@@ -42,5 +42,5 @@ define module dfmc-projects
 	      compilation-context-library-name };
   use dfmc-macro-expander; // for template projects
 
-  use project-protocols-internals;
+  use projects-protocol-internals;
 end module dfmc-projects;
