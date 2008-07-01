@@ -41,7 +41,7 @@ define sealed method as-uppercase (character :: <character>)
   end if
 end method as-uppercase;
 
-define sealed method as-lowercase-guts (character :: <character>)
+define inline function as-lowercase-guts (character :: <character>)
  => (lowercase-character :: <character>)
   if (character.uppercase?)
     as(<character>,
@@ -49,7 +49,7 @@ define sealed method as-lowercase-guts (character :: <character>)
   else
     character
   end if
-end method as-lowercase-guts;
+end function as-lowercase-guts;
 
 define sealed method as-lowercase (character :: <character>)
  => (lowercase-character :: <character>)

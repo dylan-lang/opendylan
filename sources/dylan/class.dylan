@@ -68,7 +68,7 @@ define primary class <scu-node> (<object>)
   slot scu-node-initialized? :: <boolean> = #f;
 end class;
 
-define variable $empty-scu-node = make(<scu-node>);
+define constant $empty-scu-node :: <scu-node> = make(<scu-node>);
 
 
 define primary class <subjunctive-class-universe> (<object>)
