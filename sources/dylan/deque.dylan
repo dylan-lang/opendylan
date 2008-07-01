@@ -110,7 +110,7 @@ end method reverse;
 
 define class <object-deque> (<deque>, <limited-collection>)
   slot representation :: <island-deque>, 
-    init-value: $empty-island-deque;
+    init-value: make(<island-deque>);
 end class <object-deque>;
 
 
@@ -159,9 +159,6 @@ define class <island-deque> (<deque>)
     size-init-keyword: size:,
     size-init-value: 0;
 end class <island-deque>;
-
-define constant $empty-island-deque = make(<island-deque>, size: 0);
-
 
 //
 // INITIALIZE
