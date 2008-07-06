@@ -127,7 +127,11 @@ end method;
 
 define method back-end-word-size
     (object :: <c-back-end>) => (size :: <integer>)
-  if (current-processor-name() == #"alpha") 8 else 4 end;
+  if (member?(current-processor-name(), #(#"alpha", #"x86_64"))) 
+    8 
+  else
+    4 
+  end;
 end method;
 
 define function format-emit
