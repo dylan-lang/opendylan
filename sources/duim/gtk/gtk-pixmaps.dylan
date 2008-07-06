@@ -27,6 +27,7 @@ define sealed method do-make-pixmap
   make(<gtk-pixmap>, medium: medium, width: width, height: height)
 end method do-make-pixmap;
 
+/* ---*** Port me
 define sealed method initialize
     (pixmap :: <gtk-pixmap>, #key width, height, medium) => ()
   next-method();
@@ -39,6 +40,7 @@ define sealed method initialize
   //---*** Do we have to call 'gdk-pixmap-ref'???
   pixmap.%pixmap := x-pixmap
 end method initialize;
+*/
 
 define sealed method destroy-pixmap
     (pixmap :: <gtk-pixmap>) => ()
@@ -56,6 +58,8 @@ define sealed method pixmap-drawable
     (pixmap :: <gtk-pixmap>) => (drawable)
   pixmap
 end method pixmap-drawable;
+
+/* ---*** Implement me
 
 define sealed method image-width 
     (pixmap :: <gtk-pixmap>) => (width :: <integer>)
@@ -86,6 +90,7 @@ define sealed method image-depth
   ignore(success?, root, x, y, width, height, border);
   depth
 end method image-depth;
+*/
 
 
 /// GTK pixmap mediums
@@ -148,6 +153,7 @@ define sealed method do-copy-area
   end
 end method do-copy-area;
 
+/* ---*** Implement me
 define sealed method do-copy-area
     (from-medium :: <gtk-medium>, from-x :: <integer>, from-y :: <integer>,
      width :: <integer>, height :: <integer>,
@@ -229,4 +235,4 @@ define sealed method do-copy-area
   gdk-window-copy-area(to-drawable, gcontext, to-x, to-y,
 		       from-drawable, from-x, from-y, width, height)
 end method do-copy-area;
-// */
+*/

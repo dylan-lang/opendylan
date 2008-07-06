@@ -702,6 +702,7 @@ define sealed method handle-text-gadget-changed
   end
 end method handle-text-gadget-changed;
 
+/* ---*** Implement me
 define sealed method text-selection
     (gadget :: <gtk-text-gadget-mixin>) => (range :: type-union(<text-range>, one-of(#f)))
   let widget = gadget-widget(gadget);
@@ -730,6 +731,8 @@ define sealed method selected-text
     end
   end;
 end method selected-text;
+
+*/
 
 define method widget-range-bounds (widget, range == #t)
  => (start-pos :: <integer>, end-pos :: <integer>)
