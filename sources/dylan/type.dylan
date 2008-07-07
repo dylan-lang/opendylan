@@ -409,9 +409,9 @@ define sealed inline method make
   let concrete-class = limited-collection-concrete-class(t);
   let size :: <integer> = limited-collection-size(t) | (supplied?(size) & size) | 0;
   apply(make, concrete-class,
-	element-type: limited-collection-element-type(t),
-	size:         size,
-	all-keys)
+        element-type: limited-collection-element-type(t),
+        size:         size,
+        all-keys);
 end method;
 
 define function limited-collection-instance? 
@@ -421,11 +421,11 @@ define function limited-collection-instance?
   //---*** this is unfortunate and needs a redesign of limited (collection)
   //       types! it'd be much nicer to have the inheritance hierarchy fixed
   //       and thus <simple-vector> should subclas <limited-collection>, but
-  //       currently not doable - hannes (Jan 2012)
+  //       currently not doable
   (instance?(x, <limited-collection>) | instance?(x, <simple-vector>) |
      instance?(x, <limited-stretchy-vector>) | instance?(x, <simple-array>) /* |
      //not sure how useful the following are, they don't have element-type
-     //specialized - hannes (Jan 2012)
+     //specialized
      instance?(x, <object-table>) | instance?(x, <object-set>) |
      instance?(x, <deque>) */ )
     & instance?(x, limited-collection-class(t))

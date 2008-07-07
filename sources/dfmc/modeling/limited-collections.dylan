@@ -126,14 +126,15 @@ end method;
 
 define method lookup-any-limited-collection-element-type
     (concrete-class :: <&class>)
- => (element-type :: false-or(<&type>))
+ => (element-type :: false-or(<&type>), base-class :: false-or(<&type>))
   block (return)
     for (mapping in $limited-element-type-mappings)
       if (^subtype?(concrete-class, dylan-value(head(mapping))))
-	return(lookup-limited-collection-element-type(concrete-class, tail(mapping)))
+	return(lookup-limited-collection-element-type(concrete-class, tail(mapping)),
+               dylan-value(head(mapping)))
       end if
     end for;
-    #f
+    values(#f, #f)
   end block;
 end method;
 

@@ -216,13 +216,13 @@ define method ^instance? (object :: <model-value>, t :: <&limited-collection-typ
   //---*** this is unfortunate and needs a redesign of limited (collection)
   //       types! it'd be much nicer to have the inheritance hierarchy fixed
   //       and thus <simple-vector> should subclas <limited-collection>, but
-  //       currently not doable - hannes (Jan 2012)
+  //       currently not doable
   (^instance?(object, dylan-value(#"<limited-collection>")) |
      ^instance?(object, dylan-value(#"<simple-vector>")) |
      ^instance?(object, dylan-value(#"<limited-stretchy-vector>")) |
      ^instance?(object, dylan-value(#"<simple-array>")) /* |
      //not sure how useful the following are, they don't have element-type
-     //specialized - hannes (Jan 2012)
+     //specialized
      ^instance?(object, dylan-value(#"<object-table>")) |
      ^instance?(object, dylan-value(#"<object-set>") |
      ^instance?(object, dylan-value(#"<deque>") */ )

@@ -745,6 +745,9 @@ define macro limited-vector-minus-selector-definer
 	     (t :: "<simple-" ## ?name ## "-vector>") => (type :: <type>)
 	   "<" ## ?name ## ">"
 	 end method;
+
+         // This method is not inline, because the typist needs to find it
+         // in order to propagate limited collection type information.
 	 define method make
 	      (class == "<simple-" ## ?name ## "-vector>", 
 	       #key fill :: "<" ## ?name ## ">" = ?fill, size :: <integer> = 0)
