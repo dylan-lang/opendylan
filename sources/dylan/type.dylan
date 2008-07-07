@@ -415,17 +415,19 @@ define sealed inline method make
   let concrete-class = limited-collection-concrete-class(t);
   let size :: <integer> = limited-collection-size(t) | (supplied?(size) & size) | 0;
   apply(make, concrete-class,
-	element-type: limited-collection-element-type(t),
-	size:         size,
-	all-keys)
+        element-type: limited-collection-element-type(t),
+        size:         size,
+        all-keys);
 end method;
 
 define function limited-collection-instance? 
     (x, t :: <limited-collection-type>) => (well? :: <boolean>)
   let lc-size       = limited-collection-size(t);
   let lc-dimensions = limited-collection-dimensions(t);
-  instance?(x, <limited-collection>)
-    & instance?(x, limited-collection-class(t))
+  // Same workaround as for the runtime version of this.
+  // See there for details.
+  /* instance?(x, <limited-collection>)
+    & */ instance?(x, limited-collection-class(t))
     & type-equivalent?(element-type(x), limited-collection-element-type(t))
     & (~lc-size | size(x) = lc-size)
     & (~lc-dimensions | every?(\=, dimensions(x), lc-dimensions))

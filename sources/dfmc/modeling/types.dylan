@@ -214,9 +214,13 @@ define method ^instance? (object :: <model-value>, t :: <&limited-collection-typ
     => (instance? :: <boolean>)
   let lc-size       = ^limited-collection-size(t);
   let lc-dimensions = ^limited-collection-dimensions(t);
-  ^instance?(object, dylan-value(#"<limited-collection>"))
-    & ^instance?(object, ^limited-collection-class(t))
-    & ^instance?(^element-type(object), ^limited-collection-element-type(t))
+  // Nasty workaround: <simple-single-float-vector> is not an
+  // instance of <limited-collection>, but still a limited
+  // collection.  Fixing the inheritance breaks weird
+  // things in the compiler.  FIXME: do the research.
+  /* ^instance?(object, dylan-value(#"<limited-collection>"))
+    & */ ^instance?(object, ^limited-collection-class(t))
+    & ^type-equivalent?(^element-type(object), ^limited-collection-element-type(t))
     & (~lc-size | size(object) = lc-size)
     & (~lc-dimensions | every?(\=, dimensions(object), lc-dimensions))
 end method;
