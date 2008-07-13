@@ -49,6 +49,7 @@ define module unix-sockets
     $SO-KEEPALIVE, $SO-LINGER, $SO-OOBINLINE, $SO-RCVBUF, $SO-RCVLOWAT,
     $SO-RCVTIMEO, $SO-REUSEADDR, $SO-SNDBUF, $SO-SNDLOWAT, $SO-SNDTIMEO,
     $SO-TYPE;
+  export $TCP-NODELAY, $IPPROTO-TCP;
   export
     <socklen-t>, <socklen-t*>, <sa-family-t>, <sa-family-t*>;
   export

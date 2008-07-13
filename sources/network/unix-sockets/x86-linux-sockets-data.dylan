@@ -25,3 +25,6 @@ define constant $SO-SNDBUF =	7;
 define constant $SO-SNDLOWAT =	19;
 define constant $SO-SNDTIMEO =	21;
 define constant $SO-TYPE =	3;
+
+define constant $TCP-NODELAY =  1;
+define constant $IPPROTO-TCP =  6;

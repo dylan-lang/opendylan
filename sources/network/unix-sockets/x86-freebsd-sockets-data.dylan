@@ -20,3 +20,6 @@ define constant $SO-SNDLOWAT =	#x1003;
 define constant $SO-SNDTIMEO =	#x1005;
 define constant $SO-TYPE =	#x1008;
 define constant $SO-ERROR =	#x1007;
+
+define constant $TCP-NODELAY =  1;
+define constant $IPPROTO-TCP =  6;

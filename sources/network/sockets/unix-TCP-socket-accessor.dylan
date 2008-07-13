@@ -103,6 +103,7 @@ define method accessor-open
      remote-port: input-remote-port :: false-or(<integer>),
      descriptor: 
        input-descriptor :: false-or(<accessor-socket-descriptor>) = #f,
+     no-delay? :: <boolean>,
      // These next keys are meaningless for sockets but required keys
      // for the generic defined in external-stream.dylan (sigh)
      direction, if-exists, if-does-not-exist,
@@ -160,12 +161,21 @@ define method accessor-open
 // whether to switch the option on or not.  Sounds random whether the
 // option gets set or not. Furthermore the option supposedly "disables
 // Nagle algorithm for send coalescing" whatever the hell that means.
-// 	if (no-delay)
-// 	  with-stack-structure(mi :: <C-int*>) // unused parameter buffer!!
-// 	    setsockopt(accessor.socket-descriptor, $IPPROTO-TCP, $TCP-NODELAY,
-// 		       pointer-cast(<c-char*>, mi), size-of(<C-int>));
-// 	  end with-stack-structure;
-//       end if;
+
+// enable this code, make no-delay? an init keyword and set the value
+// of mi to 1; Needed TCP connection without Nagle.
+//     -- hannes, 13. July 2008
+ 	if (no-delay?)
+ 	  with-stack-structure(mi :: <C-int*>)
+	    pointer-value(mi) := 1;
+	    let setsockopt-result =
+	      setsockopt(accessor.socket-descriptor, $IPPROTO-TCP, $TCP-NODELAY,
+			 pointer-cast(<c-char*>, mi), size-of(<C-int>));
+	    if (setsockopt-result < 0)
+	      unix-socket-error("setsockopt");
+	    end;
+ 	  end with-stack-structure;
+	end if;
 
         let addr = pointer-cast(<LPSOCKADDR>, inaddr);
         let connect-result =  
