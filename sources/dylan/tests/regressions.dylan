@@ -132,6 +132,15 @@ define test bug-2178 ()
                & pop(d3) = 0 & pop(d3) = 0 & pop(d3) = 1 & pop(d3) = 1
              end);
 end test bug-2178;
+
+define test bug-7388 ()
+  let (foo, bar) =
+    block(return)
+      return(values(#"foo", #"bar"));
+    end;
+  check-equal("First argument of MV return in block", #"foo", foo);
+  check-equal("Second argument of MV return in block", #"bar", bar);
+end;
                    
 define suite dylan-regressions ()
   test bug-5800;
@@ -146,5 +155,6 @@ define suite dylan-regressions ()
   test bug-2263;
   test bug-2212;
   test bug-2178;
+  test bug-7388;
 end suite dylan-regressions;
 
