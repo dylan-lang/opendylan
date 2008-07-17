@@ -878,15 +878,15 @@ end method test-member?;
 define method test-find-key
     (name :: <string>, collection :: <collection>) => ()
   check-equal(format-to-string("%s find-key failure", name),
-              find-key(collection, curry(\=, #"no-such-key")), #f);
+              #f, find-key(collection, curry(\=, #"no-such-key")));
   check-equal(format-to-string("%s find-key failure value", name),
+              #"failure",
               find-key(collection, curry(\=, #"no-such-key"),
-                       failure: #"failure"),
-              #"failure");
+                       failure: #"failure"));
   for (item in collection)
     check-equal(format-to-string("%s find-key %=", name, item),
-                element(collection, find-key(collection, curry(\=, item))),
-                item)
+                item,
+                element(collection, find-key(collection, curry(\=, item))))
   end
 end method test-find-key;
 
