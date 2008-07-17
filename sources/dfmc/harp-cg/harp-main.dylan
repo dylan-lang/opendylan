@@ -873,15 +873,12 @@ define method emit-transfer
       end if;
     rhs-req < lhs-req =>
       if (rhs-imprecise?)
+        ins--move(back-end, back-end.registers.reg-mlist, lhs-req);
+        ins--call(back-end,
+                  $primitive-pad-mv.runtime-reference,
+                  back-end.registers.arguments-passed-in-registers);
 	for (i :: <integer> from rhs-req below lhs-req)
-	  if (i == 0)
-	    op--move-mv(back-end, lhs-reg, rhs-reg, i);
-	  else
-	    ins--load(back-end,
-		      emit-multiple-value(back-end, #f, lhs-reg, i),
-		      multiple-values-area(back-end),
-		      bytes%(back-end, i));
-	  end if;
+          op--move-mv(back-end, lhs-reg, rhs-reg, i);
 	end for;
       else
 	for (i :: <integer> from rhs-req below lhs-req)
@@ -890,7 +887,9 @@ define method emit-transfer
 		    $false);
 	end for;
       end if;
+
     otherwise =>
+      // This looks weird. What about 'values()'?
       if (lhs-req = 0 & rhs-req = 0)
 	op--move-mv(back-end, lhs-reg, rhs-reg, 0);
       end if;
