@@ -389,12 +389,6 @@ define method maybe-recompute-library-heaps
   end;
 end method;
 
-// TODO: Kludge!  Dood doesn't support emulator conditions, so for
-// now just always strip warnings on unix so can at least use databases
-// in the emulator...
-define variable *strip-conditions?*
-  = ($os-name == #"osf3" | $os-name == #"sunos4" | $os-name == #"solaris2");
-
 define sideways method strip-incremental-slots
     (ld :: <project-library-description>)
   // TODO: this should be without-dependency-tracking
@@ -420,9 +414,6 @@ define sideways method strip-incremental-slots
 	strip-incremental-slots(module)
       end;
     end for;
-  end;
-  if (*strip-conditions?*)
-    library-conditions-table(ld) := make(<table>);
   end;
   ld.library-description-stripped? := #t;
 end method;
