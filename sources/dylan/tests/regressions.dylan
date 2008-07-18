@@ -133,13 +133,40 @@ define test bug-2178 ()
              end);
 end test bug-2178;
 
+define open generic foo-function (i);
+
+define method foo-function (i :: <integer>)
+  if (i > 0)
+    #"foo"
+  else
+    values(#"foo", #"bar")
+  end
+end;
+
+define variable *foo* = #[];
+
+// Don't merge the tests, an optimizer bug will shadow the bug
+// (<exit> doesn't get optimized to a branch)
+
 define test bug-7388 ()
   let (foo, bar) =
     block(return)
-      return(values(#"foo", #"bar"));
+      return(#"foo");
     end;
   check-equal("First argument of MV return in block", #"foo", foo);
-  check-equal("Second argument of MV return in block", #"bar", bar);
+  check-equal("Second argument of MV return in block", #f, bar);
+end;
+
+define test bug-7388-a ()
+  let (foo, bar) = foo-function(23);
+  check-equal("First argument of MV return", #"foo", foo);
+  check-equal("Second argument of MV return", #f, bar);
+end;
+
+define test bug-7388-b ()
+  let (foo, bar) = block(return) apply(return, *foo*) end;
+  check-equal("First argument of empty MV return", #f, foo);
+  check-equal("Second argument of empty MV return", #f, bar);
 end;
                    
 define suite dylan-regressions ()
@@ -156,5 +183,7 @@ define suite dylan-regressions ()
   test bug-2212;
   test bug-2178;
   test bug-7388;
+  test bug-7388-a;
+  test bug-7388-b;
 end suite dylan-regressions;
 
