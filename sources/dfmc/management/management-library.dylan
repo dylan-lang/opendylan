@@ -92,8 +92,9 @@ define module dfmc-management
     \timing-compilation-phase,
     do-timing-compilation-phase,
     *dfmc-profile-allocation?*,
-    *combine-object-files?*
-
+    *combine-object-files?*,
+    
+    *demand-load-library-only?*
     ;
     // *always-check-after?*,
     // *always-check-before?*

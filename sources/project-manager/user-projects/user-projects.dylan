@@ -346,14 +346,6 @@ define method replace-project-with?(c :: subclass(<project>),
   end
 end method;
 
-define generic project-read-only?(project :: <project>) => (flag :: <boolean>);
-
-define generic project-read-only?-setter(flag, project :: <project>);
-
-define method project-read-only?(project :: <lid-project>) => (flag :: <boolean>);
-  ~project.project-personal-library?
-end;
-
 define method project-read-only?-setter(flag, project :: <system-project>)
   // cannot change the registry projects
   project.project-personal-library?

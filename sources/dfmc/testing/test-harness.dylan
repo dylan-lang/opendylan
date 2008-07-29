@@ -20,7 +20,11 @@ end;
 
 // Function for use in tests...
 define function compile-library-until-optimized (lib)
-  compile-library-from-definitions(lib, force?: #t, skip-link?: #t);
+  block()
+    compile-library-from-definitions(lib, force?: #t, skip-link?: #t,
+                                     compile-if-built?: #t, skip-heaping?: #t);
+  exception (e :: <abort-compilation>)
+  end
 end function;
 
 define function print-test-report 
@@ -124,8 +128,8 @@ end macro;
 define function compiler-test-internal (name, test) => (result :: <boolean>)
   // Compile the template
   let lib-desc = 
-    dynamic-bind (*progress-stream*          = #f,  // with-compiler-muzzled
-		  *trace-compilation-passes* = #f)
+    dynamic-bind (*progress-stream*           = #f,  // with-compiler-muzzled
+                  *demand-load-library-only?* = #f)
       compile-template(test, compiler: compile-library-until-optimized)
     end;
   // Run the initializations; the last one is the test value.

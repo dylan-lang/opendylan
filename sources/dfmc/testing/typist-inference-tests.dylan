@@ -132,8 +132,8 @@ end;
 define function try-top-level-init-form (string :: <string>)
   debug-assert(instance?(string, <string>));
   // Compile a template & cut through the underbrush to the init form
-  dynamic-bind (*progress-stream*          = #f,  // with-compiler-muzzled
-		*trace-compilation-passes* = #f)
+  dynamic-bind (*progress-stream*           = #f,  // with-compiler-muzzled
+                *demand-load-library-only?* = #f)
     let lib = compile-template(string,
                                compiler: compile-library-until-optimized);
     let cr* = library-description-compilation-records(lib);
@@ -191,31 +191,31 @@ end;
 
 define typist-inference-test typist-constants
   // Do you recognize a constant when you see one?
-  "0;"       TYPE: fixed: list(class-te(#"<integer>")),              rest: #f;
-  "3.14;"    TYPE: fixed: list(class-te(#"<extended-float>")),       rest: #f;
-  "#f;"      TYPE: fixed: list(false-te()),                          rest: #f;
-  "\"foo\";" TYPE: fixed: list(class-te(#"<byte-string>")),          rest: #f;
-  "'c';"     TYPE: fixed: list(class-te(#"<character>")),            rest: #f;
-  "foo:;"    TYPE: fixed: list(class-te(#"<symbol>")),               rest: #f;
-  "#[];"     TYPE: fixed: list(class-te(#"<simple-object-vector>")), rest: #f;
-  "#[1];"    TYPE: fixed: list(class-te(#"<simple-object-vector>")), rest: #f;
-  "#();"     TYPE: fixed: list(class-te(#"<empty-list>")),           rest: #f;
-  "#(1);"    TYPE: fixed: list(class-te(#"<pair>")),                 rest: #f
+  "0;"       TYPE: fixed: vector(class-te(#"<integer>")),              rest: #f;
+  "3.14;"    TYPE: fixed: vector(class-te(#"<extended-float>")),       rest: #f;
+  "#f;"      TYPE: fixed: vector(false-te()),                          rest: #f;
+  "\"foo\";" TYPE: fixed: vector(class-te(#"<byte-string>")),          rest: #f;
+  "'c';"     TYPE: fixed: vector(class-te(#"<character>")),            rest: #f;
+  "foo:;"    TYPE: fixed: vector(class-te(#"<symbol>")),               rest: #f;
+  "#[];"     TYPE: fixed: vector(class-te(#"<simple-object-vector>")), rest: #f;
+  "#[1];"    TYPE: fixed: vector(class-te(#"<simple-object-vector>")), rest: #f;
+  "#();"     TYPE: fixed: vector(class-te(#"<empty-list>")),           rest: #f;
+  "#(1);"    TYPE: fixed: vector(class-te(#"<pair>")),                 rest: #f
 end;
 
 // *** ??: Warning: Reference to undefined binding values // undefined.
 define typist-inference-test typist-values
   // Can we figure out multiple values properly?
-  " values(); "                TYPE: fixed: #(),
+  " values(); "                TYPE: fixed: #[],
                                      rest: #f;
-  " values(1); "               TYPE: fixed: list(class-te(#"<integer>")),
+  " values(1); "               TYPE: fixed: vector(class-te(#"<integer>")),
                                      rest: #f;
-  " values(1, 'c'); "          TYPE: fixed: list(class-te(#"<integer>"), 
-                                                class-te(#"<character>")), 
+  " values(1, 'c'); "          TYPE: fixed: vector(class-te(#"<integer>"), 
+                                                   class-te(#"<character>")), 
                                      rest: #f;
-  " values(1, 'c', \"foo\"); " TYPE: fixed: list(class-te(#"<integer>"), 
-                                                class-te(#"<character>"),
-                                                class-te(#"<byte-string>")),
+  " values(1, 'c', \"foo\"); " TYPE: fixed: vector(class-te(#"<integer>"), 
+                                                   class-te(#"<character>"),
+                                                   class-te(#"<byte-string>")),
                                      rest: #f
   // *** Example with rest-values?
 end;
@@ -223,37 +223,37 @@ end;
 define typist-inference-test typist-merge
   // Is the merge node the union of its sources?
   " define variable x = 1; if (x) 1 else 2     end; "
-    TYPE: fixed: list(class-te(#"<integer>")), 
+    TYPE: fixed: vector(class-te(#"<integer>")), 
           rest: #f;
   " define variable x = 1; if (x) 1 else \"foo\" end; "
-    TYPE: fixed: list(make(<type-estimate-union>, 
-                          unionees: list(class-te(#"<integer>"), 
-                                         class-te(#"<byte-string>")))),
+    TYPE: fixed: vector(make(<type-estimate-union>, 
+                             unionees: list(class-te(#"<integer>"), 
+                                            class-te(#"<byte-string>")))),
           rest: #f;
   " define variable x = 1; if (x) 1 else \"foo\" end; "
-    TYPE: fixed: list(make(<type-estimate-union>, 
-                          unionees: list(class-te(#"<byte-string>"), 
-                                         class-te(#"<integer>")))),
+    TYPE: fixed: vector(make(<type-estimate-union>, 
+                             unionees: list(class-te(#"<byte-string>"), 
+                                            class-te(#"<integer>")))),
           rest: #f
 end;
 
 define typist-inference-test typist-check
   // Do you know about <check-type> instructions?
   " define variable f = #f; begin let x :: <integer> = f(); x end; "
-    TYPE: fixed: list(class-te(#"<integer>")), rest: #f
+    TYPE: fixed: vector(class-te(#"<integer>")), rest: #f
 end;
 
 define typist-inference-test typist-assign
   // Does the target of an assignment get a type?
   "define variable global1 = #f; global1 := 0; global1;"
     // *** Should pick up #f initial value, too? 
-    TYPE: fixed: list(class-te(#"<integer>")), 
+    TYPE: fixed: vector(class-te(#"<integer>")), 
           rest: #f;
   " define variable global2 = #f; global2 := 0; global2 := \"foo\"; global2; "
     // *** Should pick up #f initial value, too? 
-    TYPE: fixed: list(make(<type-estimate-union>, 
-                           unionees: list(class-te(#"<byte-string>"), 
-                                          class-te(#"<integer>")))),
+    TYPE: fixed: vector(make(<type-estimate-union>, 
+                             unionees: list(class-te(#"<byte-string>"), 
+                                            class-te(#"<integer>")))),
           rest: #f
   // *** More assignments to lexicals and so on.
 end;
@@ -261,73 +261,75 @@ end;
 define typist-inference-test typist-lambda
   // Do you know a function when you see one?  What can you know about it?
   " method (x :: <integer>) x end; "
-    TYPE: fixed: list(make(<type-estimate-limited-function>, 
-                           class:     dylan-value(#"<method>"),
-                           requireds: list(class-te(#"<integer>")),
-                           rest?:     #f, 
-                           vals:      make(<type-estimate-values>, 
-                                           fixed: list(class-te(#"<integer>")),
-                                           rest:  #f))),
+    TYPE: fixed: vector(make(<type-estimate-limited-function>, 
+                             class:     dylan-value(#"<method>"),
+                             requireds: vector(class-te(#"<integer>")),
+                             rest?:     #f, 
+                             vals:      make(<type-variable>,
+                                             contents: make(<type-estimate-values>, 
+                                                            fixed: vector(class-te(#"<integer>")),
+                                                            rest:  #f)))),
           rest:  #f
 end;
 
 define typist-inference-test typist-unwind-protect
   // Can we type an unwind-protect?  Even with degenerate body & cleanups.
   " define variable foo = #f; block () 1 cleanup foo() end; "
-     TYPE: fixed: list(class-te(#"<integer>")), rest: #f;
+     TYPE: fixed: vector(class-te(#"<integer>")), rest: #f;
   " define variable foo = #f; block () 1 cleanup end; "
-     TYPE: fixed: list(class-te(#"<integer>")), rest: #f;
+     TYPE: fixed: vector(class-te(#"<integer>")), rest: #f;
   " define variable foo = #f; block () cleanup foo() end; "
-     TYPE: fixed: list(false-te()), rest: #f
+     TYPE: fixed: vector(false-te()), rest: #f
 end;
 
 define typist-inference-test typist-bind-exit
   // Can you figure out bind-exit?  Easy case is where exit is used only locally.
   // Non-local case is, well, non-local.
   " block (xit) xit(2); 'c' end; "
-     TYPE: fixed: list(make(<type-estimate-union>, 
-                            unionees: list(class-te(#"<integer>"), 
-                                           class-te(#"<character>")))),
+     TYPE: fixed: vector(make(<type-estimate-union>, 
+                              unionees: list(class-te(#"<integer>"), 
+                                             class-te(#"<character>")))),
            rest: #f;
   " block (xit) xit(1); xit('c'); \"foo\" end; "
-     TYPE: fixed: list(make(<type-estimate-union>, 
-                            unionees: list(class-te(#"<integer>"), 
-                                           class-te(#"<character>"),
-                                           class-te(#"<byte-string>")))),
+     TYPE: fixed: vector(make(<type-estimate-union>, 
+                              unionees: list(class-te(#"<integer>"), 
+                                             class-te(#"<character>"),
+                                             class-te(#"<byte-string>")))),
            rest:  #f
 end;
 
 define typist-inference-test typist-primops
   // Can you figure out what the primops in <primitive-call>s do?
   " primitive-word-size(); "
-    TYPE: fixed: list(raw-te(#"<raw-integer>")),
+    TYPE: fixed: vector(raw-te(#"<raw-integer>")),
           rest:  #f;
   " primitive-allocate(integer-as-raw(1)); "
-    TYPE: fixed: list(raw-te(#"<raw-pointer>")),
+    TYPE: fixed: vector(raw-te(#"<raw-pointer>")),
           rest:  #f;
   " primitive-machine-word-add(integer-as-raw(1), integer-as-raw(2)); "
-    TYPE: fixed: list(raw-te(#"<raw-machine-word>")),
+    TYPE: fixed: vector(raw-te(#"<raw-machine-word>")),
           rest:  #f;
   " primitive-machine-word-equals?(integer-as-raw(1), integer-as-raw(1)); "
-    TYPE: fixed: list(raw-te(#"<raw-boolean>")),
+    TYPE: fixed: vector(raw-te(#"<raw-boolean>")),
           rest:  #f;
   " primitive-object-class(integer-as-raw(1)); "
-    TYPE: fixed: list(class-te(#"<class>")),
+    TYPE: fixed: vector(class-te(#"<class>")),
           rest:  #f;
 end;
 
 define typist-inference-test typist-raw-constants
   // Do you recognize a raw constant when you see one?
   " integer-as-raw(0); "
-       TYPE: fixed: list(raw-te(#"<raw-integer>")),
+       TYPE: fixed: vector(raw-te(#"<raw-integer>")),
              rest: #f;
   " primitive-byte-character-as-raw('c'); "
-       TYPE: fixed: list(raw-te(#"<raw-byte-character>")),
+       TYPE: fixed: vector(raw-te(#"<raw-byte-character>")),
              rest: #f;
   " primitive-not(foo:); "
-       TYPE: fixed: list(raw-te(#"<raw-boolean>")),
+       TYPE: fixed: vector(raw-te(#"<raw-boolean>")),
              rest: #f;
   " primitive-single-float-as-raw(1.0); "
-       TYPE: fixed: list(raw-te(#"<raw-single-float>")),
+       TYPE: fixed: vector(raw-te(#"<raw-single-float>")),
              rest: #f
 end;
+

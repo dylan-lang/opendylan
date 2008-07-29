@@ -22,7 +22,10 @@ define library projects
   use dfmc-common;
 
   use dfmc-browser-support;
-  use dfmc-macro-expander; // for template projects
+
+  // for template projects
+  use dfmc-macro-expander;
+  use dfmc-namespace;
 
   export projects, projects-implementation, lid-projects;
 end library;
@@ -31,6 +34,8 @@ define module projects
   create <project>,
     <project-target-type>,
     project-name,
+    project-read-only?,
+    project-read-only?-setter,
     project-location,
     project-canonical-source-records,
     project-source-records,
@@ -173,7 +178,10 @@ define module projects-implementation
 	      source-record-notes,
 	      program-note-location };
 
-  use dfmc-macro-expander; // for template projects
+  // for template projects
+  use dfmc-macro-expander;
+  use dfmc-namespace,
+    import: { library-description-compiler-back-end-name-setter };
 
   use projects, export: all;
   export

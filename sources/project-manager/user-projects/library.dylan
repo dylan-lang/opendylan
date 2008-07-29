@@ -71,8 +71,6 @@ define module user-projects
     project-file-location,
     <find-project-location-restart>,
     save-project-as-lid-file,
-    project-read-only?,
-    project-read-only?-setter,
     new-user-project,
     project-add-file,
     project-remove-file,

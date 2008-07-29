@@ -34,6 +34,11 @@ end class;
 define open generic project-name(project :: <project>)
  => (name :: false-or(<symbol>));
 
+define open generic project-read-only?(project :: <project>) => (flag :: <boolean>);
+
+define open generic project-read-only?-setter(flag, project :: <project>);
+
+
 define open generic project-location(project :: <project>)
  => (location :: false-or(<file-locator>));
 

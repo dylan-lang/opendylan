@@ -109,6 +109,10 @@ define open abstract class <lid-project> (<project>)
     setter: project-target-type-slot-setter;
 end class;
 
+define method project-read-only?(project :: <lid-project>) => (flag :: <boolean>);
+  ~project.project-personal-library?
+end;
+
 define method project-dylan-sources(project :: <lid-project>)
  => (sources :: <vector>);
   project.project-source-files | #[]

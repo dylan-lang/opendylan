@@ -20,46 +20,23 @@ define constant $scratch-module-name$  :: <symbol> = #"scratch-module";
 define constant $scratch-lib+mod-def-file$ :: <string> = "scratch-lib+mod";
 define constant $scratch-source-file$      :: <string> = "scratch-source";
 
-
-define class <template-project> (<project>)
-  constant slot template-project-template,
-    required-init-keyword: template:;
-end class;
-
-define method project-key? (project :: <template-project>, key)
- => (result :: singleton(#f))
-  #f
-end method;
-
-define function scratch-lib+mod-template ()
-  // The contents of the (assumed) library & module definition file.
-    #{ define library scratch-library
-         use dylan;
-       end;
-       define module scratch-module
-         use dylan;
-         use dylan-extensions; // function, subclass, <abstract-integer>, etc.
-         use dylan-c-ffi;
-       end; };
-end function;
-
-define method project-current-source-records (project :: <template-project>)
- => sr*;
-  list(make(<template-source-record>,                 // Lib+mod defns
-	    template: scratch-lib+mod-template,
-	    name:     $scratch-lib+mod-def-file$,
-	    module:   #"dylan-user"),
-       make(<template-source-record>,                 // Actual source
-	    template: method () template-project-template(project) end,
-	    name:     $scratch-source-file$,
-	    module:   $scratch-module-name$))
-end;
-
-
 define class <string-template-project> (<project>)
   constant slot project-current-source-records,
     required-init-keyword: source-records:;
+  constant slot project-minor-version :: <integer> = 0;
+  constant slot project-major-version :: <integer> = 0;
+  constant slot project-read-only? :: <boolean> = #f;
+  constant slot project-library-name :: <symbol> = #"string-template";
+  constant slot project-compiler-source-location :: <directory-locator>
+    = as(<directory-locator>, "nowhere");
+  constant slot project-personal-library? :: <boolean> = #t;
 end class;
+
+define method project-inter-library-binding
+    (project ::  <string-template-project>, used-project :: <project>) 
+ => (mode :: one-of(#"tight", #"loose"));
+  #"loose"
+end;
 
 define method project-key? (project :: <string-template-project>, key)
  => (result :: singleton(#f))
@@ -75,7 +52,7 @@ define constant $scratch-lib+mod-bv
        "  use dylan;\n"
        "  use dylan-extensions;\n"
        "  use dylan-c-ffi;\n"
-       " end;\n");
+       "end;\n");
 
 // We don't implement the full source record protocol, just what's needed
 // for testing, so don't call these "<string-source-records>"...
@@ -128,14 +105,6 @@ end method;
 /// The main entry point.
 ///
 
-define method project-class-for-template (template :: <function>)
-  <template-project>
-end method;
-
-define method project-class-for-template (template :: <string>)
-  <string-template-project>
-end method;
-
 define function compile-template 
     (template,
      #key compiler :: <function> = compile-library,
@@ -143,17 +112,21 @@ define function compile-template
     => (context, sr)
   // Compile a template in a scratch library & module: compile-template(#{1});.
   // Give compiler: compile-library-until-optimized to get optimized DFM only.
-  let project = make(project-class-for-template(template),
+  let project = make(<string-template-project>,
 		     template: template,
 		     processor: processor,
 		     operating-system: operating-system,
 		     mode: mode);
+  project.project-current-compilation-context
+    := open-compilation-context(project, build-settings: #());
+  project.project-current-compilation-context.library-description-compiler-back-end-name
+    := #"c";
   block ()
     if (compiler == compile-library)
       compile-library(project)
     else
       // Else some internal compiler function, have to set up for it.
-      canonicalize-project-sources(project);
+      canonicalize-project-sources(project, force-parse?: #t);
       compiler(project.project-current-compilation-context)
     end;
     let context = project.project-current-compilation-context;
