@@ -1,4 +1,4 @@
-Module:       collections-test-suite
+Module:       dylan-user
 Synopsis:     Test suite for collections library
 Author:       Gary Palter
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
