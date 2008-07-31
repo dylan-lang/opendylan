@@ -33,8 +33,7 @@ end;
 
 ///--- Emitting extern declarations for these functions will produce parameter
 ///--- lists that conflict with their declarations in the system header files.
-define constant $generic-names-not-to-emit = #["getenv", "putenv",
-					       "pseudo_primitive_command_name",
+define constant $generic-names-not-to-emit = #["pseudo_primitive_command_name",
 					       "pseudo_primitive_command_arguments"];
 
 define method emit-c-function-forward
@@ -72,35 +71,6 @@ define method emit-c-function-forward
 		 o);
     emit-parameter-types(back-end, stream, o);
     format-emit*(back-end, stream, ";\n");
-  end;
-end method;
-
-///--- Emitting extern declarations for these functions will produce parameter
-///--- lists that conflict with their declarations in the system header files.
-define constant $macos7-names-not-to-emit = #["pseudo_primitive_command_name",
-					      "pseudo_primitive_command_arguments"];
-
-define method emit-c-function-forward
-    (back-end :: <c-back-end>, stream :: <stream>, o :: <&c-function>,
-     os == #"macos7")
- => ();
-  unless(member?(o.binding-name, $macos7-names-not-to-emit, test: \=))
-    let sig-values = o.primitive-signature.^signature-values;
-    let return-type = first(sig-values, default: dylan-value(#"<object>"));
-    let modifiers? = ~empty?(o.c-modifiers);
-    if (modifiers?)
-      write(stream, "#pragma only_std_keywords off\n")
-    end;
-    format-emit*(back-end, stream, "~ ~ ^ ^ ", 
-		 if (o.binding-name) "extern" else "typedef" end, 
-		 o.c-modifiers,
-		 return-type,
-		 o);
-    emit-parameter-types(back-end, stream, o);
-    format-emit*(back-end, stream, ";\n");
-    if (modifiers?)
-      write(stream, "#pragma only_std_keywords reset\n")
-    end;
   end;
 end method;
 

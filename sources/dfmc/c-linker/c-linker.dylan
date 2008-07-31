@@ -9,10 +9,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 /// NOTE: Nothing actually uses this class ...
 /// define class <c-linker> (<linker>) end;
 
-define function c-output-basename (basename :: <string>) => (c-basename)
-  basename
-end function;
-
 // DRIVER PROTOCOL FUNCTIONS
 define sideways method emit-library-records
     (back-end :: <c-back-end>, ld :: <library-description>, #rest flags, #key, #all-keys)
@@ -38,91 +34,9 @@ define sideways method emit-library-record
       end;
     end;
     compilation-record-needs-linking?(cr) := #f;
-    maybe-compile-c-file(back-end, ld, c-file);
   end if;
 end method;
 
-define method c-compiler-command-line
-    (platform, ld, c-file) => (command :: <byte-string>)
-  //---*** GENERATE UNIX COMMAND LINE HERE!
-  ""
-end method c-compiler-command-line;
-
-define method c-compiler-command-line
-    (platform == #"x86-win32", ld, c-file) => (command :: <byte-string>)
-  let include 
-    = environment-variable("OPEN_DYLAN_RELEASE_INCLUDE")
-      | begin
-	  let install = environment-variable("OPEN_DYLAN_RELEASE_INSTALL");
-	  install
-	    & as(<string>,
-		 subdirectory-locator(as(<directory-locator>, install), "include"))
-	end;
-  let c-flags = environment-variable("OPEN_DYLAN_C_FLAGS");
-  let object-file = backend-object-file-name(makefile-target-using-os-name(#"win32"), c-file);
-  let command = "cl /c /DCRTAPI1=_cdecl /DCRTAPI2=_cdecl /nologo /D_X86_=1 "
-                "/D_WIN32_IE=0x0300 /DWINVER=0x0400 /DWIN32 /D_WIN32 /D_MT /MT /Z7 /Od /W2 ";
-  command := concatenate(command, "/Fo", object-file, " ");
-  if (include)
-    command := concatenate(command, "/I", include, " ");
-  end;
-  if (c-flags)
-    command := concatenate(command, c-flags, " ");
-  end;
-  concatenate(command, as(<string>, c-file))
-end method c-compiler-command-line;
-
-define method maybe-compile-c-file
-    (back-end :: <c-back-end>, ld :: <library-description>, c-file :: <locator>) => ()
-  let saved-wd = working-directory();
-  let c-filename = locator-name(c-file);
-  block ()
-    local method display-compiler-results (buffer :: <byte-string>, 
-					   #key end: last = #f)
-	    unless (last)
-	      last := size(buffer);
-	    end;
-	    if (buffer[last - 1] == '\n')
-	      last := last - 1;
-	    end;
-	    let start = 0;
-	    let skip = 0;
-	    while (start < last)
-	      let eol = position(buffer, '\n', skip: skip);
-	      unless (eol)
-		eol := last;
-	      end;
-	      let text = copy-sequence(buffer, start: start, end: eol);
-	      if (text[size(text) - 1] == '\r')
-		text := copy-sequence(text, end: size(text) - 1);
-	      end;
-	      unless (text = c-filename)
-		progress-line("%s", text);
-	      end;
-	      start := eol + 1;
-	      skip := skip + 1;
-	    end;
-	  end method;
-    if (library-description-os-name(ld) == $os-name 
-	  & library-description-processor-name(ld) == $machine-name)
-      progress-line("Compiling %s.", c-file);
-      working-directory() := locator-directory(c-file);
-      let command = c-compiler-command-line($platform-name, ld, c-filename);
-      let status = run-application(command, outputter: display-compiler-results);
-      unless (status = 0)
-	progress-line("Compilation of %s failed.", c-filename);
-	//---*** SHOULD WE ABORT THE COMPILATION HERE SOMEHOW?
-      end
-    end
-  cleanup
-    working-directory() := saved-wd;
-  end
-end method maybe-compile-c-file;
-
-define method maybe-compile-c-file
-    (back-end :: <c-back-end>, ld :: <library-description>, c-file :: <string>) => ()
-  maybe-compile-c-file(back-end, ld, as(<file-locator>, c-file))
-end method maybe-compile-c-file;
 
 //// TOP-LEVEL
 

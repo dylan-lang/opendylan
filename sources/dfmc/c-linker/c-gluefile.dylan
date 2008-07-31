@@ -37,7 +37,6 @@ define sideways method emit-mainfile
     format(stream, "}\n");
     c-file := stream-locator(stream);
   end with-build-area-output;
-  maybe-compile-c-file(back-end, ld, c-file);
 end method;
 
 define sideways method emit-gluefile
@@ -77,7 +76,6 @@ define sideways method emit-gluefile
     format(stream, "}\n");
     c-file := stream-locator(stream);
   end with-build-area-output;
-  maybe-compile-c-file(back-end, ld, c-file);
 end method;
 
 define method command-arguments-name ()

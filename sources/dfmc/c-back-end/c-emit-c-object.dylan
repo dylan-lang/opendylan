@@ -94,34 +94,4 @@ define method emit-c-callable-lambda-interface
   end if;
 end method;
 
-define method emit-c-callable-lambda-interface
-    (back-end :: <c-back-end>, stream :: <stream>, o :: <&iep>,
-     fun :: <&c-callable-function>, os == #"macos7")
-  let modifiers? = ~empty?(fun.c-modifiers);
-  let global-name = fun.binding-name;
-  if (modifiers?)
-    write(stream, "#pragma only_std_keywords off\n");
-  end;
-  // !@#$ is this right for the mac?  It might need to com after the modifiers.
-  unless (global-name)
-    write(stream, "static ");
-  end;
-  if (modifiers?)
-    format-emit*(back-end, stream, " ~", fun.c-modifiers)
-  end;
-  emit-return-types(back-end, stream, o);
-  format-emit*(back-end, stream, " ^ ", o);
-  if (fun.parameters)
-    emit-parameters(back-end, stream, o, o.parameters, fun.c-signature);
-  else
-    emit-signature-types(back-end, stream, o, fun.signature-spec, fun.c-signature);
-  end if;
-  if (modifiers?)
-    write(stream, "\n#pragma only_std_keywords reset\n");
-  end;
-end method;
-
-
-
-
 // eof

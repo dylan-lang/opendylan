@@ -7,6 +7,10 @@ Dual-license: GNU Lesser General Public License
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
+define function c-output-basename (basename :: <string>) => (c-basename)
+  basename
+end function;
+
 //// C backend Makefile generation ...
 
 define sideways method source-suffix (back-end :: <c-back-end>, t :: <unix-makefile-target>) "c" end;
