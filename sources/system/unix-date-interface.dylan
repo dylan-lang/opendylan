@@ -63,8 +63,8 @@ define inline-only function tm-dst? (tm :: <machine-word>) => (dst? :: <boolean>
 			       integer-as-raw(0)))
 end function tm-dst?;
 
-define system-offset tm-tz (alpha 5) 9;
-define system-offset tm-tz-name (alpha 6) 10;
+define system-offset tm-tz (alpha-linux 5, x86_64-linux 5) 9;
+define system-offset tm-tz-name (alpha-linux 6, x86_64-linux 6) 10;
 
 define inline-only function tm-tz-offset (tm :: <machine-word>) => (tz-offset :: <integer>)
   truncate/(raw-as-integer
