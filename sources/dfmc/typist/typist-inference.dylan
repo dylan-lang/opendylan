@@ -288,8 +288,8 @@ define method type-estimate-call-from-site(call :: <method-call>,
               if (element-type-parm)
                 element-type := element-type-parm;
               end;
-              if (element-type == dylan-value(#"<object>"))
-                element-type := #f;
+              unless (element-type)
+                element-type := dylan-value(#"<object>");
               end;
               let size = #f;
               let dimensions = #f;
@@ -301,7 +301,7 @@ define method type-estimate-call-from-site(call :: <method-call>,
                 make(<type-estimate-limited-collection>,
                      class:          class | arg-type,
                      concrete-class: arg-type,
-                     of:             element-type & as(<type-estimate>, element-type),
+                     of:             as(<type-estimate>, element-type),
                      size:           size,
                      dimensions:     dimensions & as(limited(<vector>, of: <integer>), dimensions));
               else
