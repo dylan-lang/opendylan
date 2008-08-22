@@ -141,14 +141,14 @@ end method discard-output;
 
 /// Convenience functions
 
-define sealed method read-to
+define method read-to
     (stream :: <wrapper-stream>, elt, #rest keys, #key on-end-of-stream, test)
  => (sequence-or-eof :: <object>, found? :: <boolean>)
   ignore(on-end-of-stream, test);
   apply(read-to, stream.inner-stream, elt, keys)
 end method read-to;
 
-define sealed method read-through
+define method read-through
     (stream :: <wrapper-stream>, elt, #rest keys, #key on-end-of-stream, test)
  => (sequence-or-eof :: <object>, found? :: <boolean>)
   ignore(on-end-of-stream, test);
