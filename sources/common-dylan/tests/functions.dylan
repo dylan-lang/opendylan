@@ -380,12 +380,6 @@ define common-extensions function-test join ()
               join(#(1, 2, 3), ", ",
                    conjunction: " and ",
                    key: integer-to-string));
-  check-equal("non-string join",
-              #(1, #t, 2, #t, 3),
-              join(#(1, 2, 3), #(#t)));
-  check-equal("join with empty separator",
-              #(1, 2, 3),
-              join(#(1, 2, 3), #()))
 end function-test join;
 
 define common-extensions function-test remove-all-keys! ()
