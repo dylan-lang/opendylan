@@ -288,17 +288,22 @@ define open generic join
 //      key: integer-to-string,
 //      conjunction: " and ");
 // => "1, 2 and 3"
-
+//
 define method join
     (sequences :: <sequence>, separator :: <sequence>,
      #key key :: <function> = identity,
           conjunction :: false-or(<sequence>))
  => (joined :: <sequence>)
+  if (key ~== identity)
+    // This allocates a new list, but allows us to calculate the result-size
+    // correctly when key is passed.  Seems the lesser of two evils.
+    sequences := map(key, sequences);
+  end;
   let length :: <integer> = sequences.size;
   if (length == 0)
     error("Attempt to join an empty sequence.")
   elseif (length == 1)
-    key(sequences[0])
+    sequences[0]
   else
     let result-size :: <integer>
       = (reduce(method (len, seq)
@@ -313,7 +318,7 @@ define method join
              else
                0
              end);
-    let first = key(sequences[0]);   // don't call key > once on sequences[0]
+    let first = sequences[0];
     let result = make(object-class(first), size: result-size);
     let result-index :: <integer> = 0;
     local method copy-to-result (seq :: <sequence>)
@@ -329,7 +334,7 @@ define method join
                      else
                        separator
                      end);
-      copy-to-result(key(seq));
+      copy-to-result(seq);
     end;
     result
   end if
