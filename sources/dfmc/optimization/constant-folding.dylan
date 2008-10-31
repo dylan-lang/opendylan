@@ -1222,14 +1222,6 @@ define method constant-fold (c :: <slot-value>)
 	     else 
 	       #f
 	     end if;
-	dylan-value(#"size")
-	  => if (type-estimate-size(type))
-	       let ref  = make-value-reference(type-estimate-size(type), <immutable-object-reference>);
-	       replace-computation-with-temporary!(c, ref);
-	       #t;
-	     else 
-	       #f
-	     end if;
 	dylan-value(#"element-type") 
 	  => let ref = make-object-reference(as(<&type>, type-estimate-of(type)));
 	     replace-computation-with-temporary!(c, ref);
