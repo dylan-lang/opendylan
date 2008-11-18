@@ -191,13 +191,6 @@ static void DylanSEGVHandler (sighandler_t oldHandler, int signum, struct sigcon
   return;
 }
 
-static void DylanTRAPHandler (sighandler_t oldHandler, int signum, struct sigcontext sc)
-{
-  walkstack();
-  (*(SIG_SIGCONTEXT)oldHandler)(signum, sc);
-  return;
-}
-
 #include <stdio.h>
 #include <dlfcn.h>
 
@@ -232,3 +225,11 @@ void walkstack() {
     ebp = *((int*)ebp);
   }
 }
+
+static void DylanTRAPHandler (sighandler_t oldHandler, int signum, struct sigcontext sc)
+{
+  walkstack();
+  (*(SIG_SIGCONTEXT)oldHandler)(signum, sc);
+  return;
+}
+
