@@ -43,7 +43,6 @@ typedef long long            _int64;
     pthread_mutexattr_t _attr; \
     pthread_mutexattr_init(&_attr); \
     pthread_mutexattr_setkind_np(&_attr, PTHREAD_MUTEX_RECURSIVE_NP); \
-    pthread_mutexattr_setkind_np(&_attr, PTHREAD_MUTEX_RECURSIVE); \
     pthread_mutex_init((mutex), &_attr); \
     pthread_mutexattr_destroy(&_attr); \
   } while(0)
