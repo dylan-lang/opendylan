@@ -1,4 +1,7 @@
 prefix		= @prefix@
+ifneq ($(DESTDIR),)
+prefix := $(DESTDIR)+$(prefix)
+endif
 srcdir		= @abs_srcdir@
 abs_srcdir	= @abs_srcdir@
 abs_builddir	= @abs_builddir@
@@ -154,17 +157,17 @@ $(abs_builddir)/Bootstrap.2:
 
 $(abs_builddir)/Bootstrap.2/bin/minimal-console-compiler:
 	@echo Building Open Dylan bootstrap stage 2...
-	@OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.2 \
-	  unset $(BOOTSTRAP_2_UNSET_ENV) ; \
+	@unset $(BOOTSTRAP_2_UNSET_ENV) ; \
+	  OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.2 \
 	  $(MAKE) -C $(rt_build) install
-	@$(BOOTSTRAP_2_ENV) \
-	  unset $(BOOTSTRAP_2_UNSET_ENV) ; \
+	@unset $(BOOTSTRAP_2_UNSET_ENV) ; \
+	  $(BOOTSTRAP_2_ENV) \
 	  $(fdmake) --compiler="$(BOOTSTRAP_2_COMPILER)" minimal-console-compiler
 
 bootstrap-stage-2: \
 		$(abs_builddir)/Bootstrap.2 \
 		$(abs_builddir)/Bootstrap.2/bin/minimal-console-compiler
-		
+
 ###
 # Stage 3 builds libraries and compiler using stage 2 products, taking
 # advantage of any new optimizations etc. in this release. It basically builds
@@ -238,20 +241,21 @@ INSTALL_LIBRARY_PACKS = @LIBRARY_PACKS@
 INSTALL_COMPILER = \
 	$(abs_builddir)/Bootstrap.2/bin/minimal-console-compiler -build
 
-$(prefix):
-	mkdir $(prefix)
-	mkdir $(prefix)/bin
-	mkdir $(prefix)/lib
-	mkdir $(prefix)/lib/runtime
-	mkdir $(prefix)/build
-	mkdir $(prefix)/build/logs
+
+$(prefix)/sources:
+	-mkdir $(prefix)
 	@echo Copying sources...
 	cp -R $(abs_srcdir)/sources $(prefix)
 	@echo Removing unnecessary directories...
 	find $(prefix)/sources -depth -name '.*' -exec rm -rf {} \;
 	-rm -r $(prefix)/sources/bootstrap1-registry
 
-install-stage: $(prefix)
+install-stage: $(prefix)/sources
+	-mkdir $(prefix)/bin
+	-mkdir $(prefix)/lib
+	-mkdir $(prefix)/lib/runtime
+	-mkdir $(prefix)/build
+	-mkdir $(prefix)/build/logs
 	@echo Building Open Dylan installation...
 	OPEN_DYLAN_USER_INSTALL=$(prefix) \
 	  $(MAKE) -C $(rt_build) install
@@ -259,7 +263,7 @@ install-stage: $(prefix)
 	  $(fdmake) --compiler="$(INSTALL_COMPILER)" \
 	  $(INSTALL_LIBRARIES) --library-packs="$(INSTALL_LIBRARY_PACKS)"
 
-install: install-stage
+install: @bootstrap_target@ install-stage
 
 ###
 # Maintenance and test targets
@@ -275,7 +279,14 @@ clean:
 	rm -rf $(abs_builddir)/Bootstrap.3
 	rm -rf $(BOOTSTRAP_1_REGISTRY)
 
-distclean:
+distclean: clean
+	-rm -f configure
+	-rm -f config.log
+	-rm -f config.status
+	-rm -f config.status.lineno
+	-rm -f Makefile
+	-rm -rf build-aux
+	-rm -rf autom4te.cache
 
 mostlyclean:
 
