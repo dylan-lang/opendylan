@@ -455,7 +455,7 @@ define class <external-dooded-object> (<object>)
   slot external-value,     required-init-keyword: value:;
 end class;
 
-define method \= (x :: <external-dooded-object>, y :: <external-dooded-object>)
+define method \= (x :: <external-dooded-object>, y :: <external-dooded-object>) => (res :: <boolean>)
   external-dood-name(x) == external-dood-name(y) &
     external-name(x) == external-name(y) &
     external-value(x) = external-value(y)
@@ -575,4 +575,5 @@ define method print-object (x :: <external-dooded-object>, stream :: <stream>)
   format-out("[OBJ %=]", external-name(x));
 end method;
 
+run-test-application(dood-test-suite);
 // eof

@@ -11,7 +11,7 @@ define library dood-test-suite
   use io;
   use dood;
   use testworks;
-  use random;
+  use common-dylan;
   export dood-test-suite;
 end library;
 
@@ -23,7 +23,7 @@ define module dood-test-suite
   use format-out;
   use dood;
   use testworks;
-  use random;
+  use simple-random;
   export dood-test-suite;
 end module;
 
