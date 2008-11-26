@@ -241,49 +241,40 @@ end function character-to-integer;
 define function integer-to-string
     (integer :: <integer>,
      #key base :: <integer> = 10, 
-          size: string-size :: false-or(<integer>),
+          size: string-size :: <integer> = 0,
           fill :: <byte-character> = '0')
  => (string :: <byte-string>)
   user-assert(2 <= base & base <= 36,
 	      "Base %d is not between 2 and 36",
 	      base);
   let negative-integer? = negative?(integer);
-  let number-size 
-    = if (negative-integer?)
-	// We have to be careful not to overflow here, since
-	// -$minimum-integer > $maximum-integer.
-	let quotient = truncate/(integer, base);
-	if (zero?(quotient))
-	  1
-	else
-	  floor(logn(as(<single-float>, -quotient), base)) + 2
-	end
-      else
-	floor(logn(as(<single-float>, max(integer, 1)), base)) + 1
-      end;
-  let sign-size = if (negative-integer?) 1 else 0 end;
-  let buffer-size = max(string-size | number-size, number-size) + sign-size;
-  let buffer :: <byte-string> = make(<byte-string>, size: buffer-size, fill: fill);
-  if (negative-integer?)
-    buffer[0] := '-';
+  let buffer = make(<string-buffer>);
+  if (zero?(integer))
+    buffer := add!(buffer, '0');
   end;
-  let last-index :: <integer> = buffer-size - 1;
-  buffer[last-index] := '0';
   if (negative-integer?) 
     // Do the first digit by hand to avoid overflows when printing
     // $minimum-integer, since -$minimum-integer > $maximum-integer.
     let (quotient, remainder :: <integer>) = truncate/(integer, base);
-    buffer[last-index] := integer-to-character(-remainder);
-    last-index := last-index - 1;
+    buffer := add!(buffer, integer-to-character(-remainder));
     integer := -quotient
   end;
   until (zero?(integer))
     let (quotient, remainder :: <integer>) = truncate/(integer, base);
-    buffer[last-index] := integer-to-character(remainder);
-    last-index := last-index - 1;
+    buffer := add!(buffer, integer-to-character(remainder));
     integer := quotient
   end;
-  buffer
+  let remaining = string-size - buffer.size;
+  if (negative-integer?)
+    remaining := remaining - 1;
+  end;
+  for (i from 0 below remaining)
+    buffer := add!(buffer, fill);
+  end;
+  if (negative-integer?)
+    buffer := add!(buffer, '-');
+  end;
+  as(<string>, reverse!(buffer));
 end function integer-to-string;
 
 // Given a string, parse an integer from it.  Skips left whitespace.
