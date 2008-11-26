@@ -127,7 +127,7 @@ end method;
 
 define method back-end-word-size
     (object :: <c-back-end>) => (size :: <integer>)
-  if (member?(current-processor-name(), #(#"alpha", #"x86_64"))) 
+  if (member?(current-processor-name(), #(#"alpha", #"x86_64", #"amd64"))) 
     8 
   else
     4 
