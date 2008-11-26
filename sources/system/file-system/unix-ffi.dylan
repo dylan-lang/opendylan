@@ -44,14 +44,15 @@ define constant $EINVAL  = 22;
 
 /// From <sys/stat.h> ...
 
-define system-offset stat-size (alpha-linux 10, x86-linux 22, ppc-linux 22, x86-freebsd 24, x86-darwin 24, ppc-darwin 24, x86_64-linux 18) 18;
-define system-offset st-mode (x86-linux 4, ppc-linux 4, x86-freebsd 2, x86-darwin 2, ppc-darwin 2, x86_64-linux 6) 2;
-define system-offset st-uid (x86-linux 6, ppc-linux 6, x86-freebsd 3, x86-darwin 3, ppc-darwin 3, x86_64-linux 7) 4;
-define system-offset st-gid (x86-linux 7, ppc-linux 7, x86-freebsd 4, x86-darwin 4, ppc-darwin 4, x86_64-linux 8) 5;
-define system-offset st-size (alpha-linux 4, x86-linux 11, ppc-linux 11, x86-freebsd 12, x86-darwin 12, ppc-darwin 12, x86_64-linux 6) 7;
-define system-offset st-atime (alpha-linux 10, x86-linux 14, ppc-linux 14, x86-freebsd 6, x86-darwin 6, ppc-darwin 6, x86_64-linux 16) 8;
-define system-offset st-mtime (alpha-linux 12, x86-linux 16, ppc-linux 16, x86-freebsd 8, x86-darwin 8, ppc-darwin 8, x86_64-linux 22) 10;
-define system-offset st-ctime (alpha-linux 14, x86-linux 18, ppc-linux 18, x86-freebsd 10, x86-darwin 10, ppc-darwin 10, x86_64-linux 26) 12;
+define system-offset stat-size (x86-linux 22, ppc-linux 22, x86-freebsd 24, amd64-freebsd 15, x86-darwin 24, ppc-darwin 24, x86_64-linux 18) 18;
+define system-offset st-mode (x86-linux 4, ppc-linux 4, x86-freebsd 2, amd64-freebsd 1, x86-darwin 2, ppc-darwin 2, x86_64-linux 6) 2;
+//XXX: st-uid is 12 on FreeBSD-amd64, so it should be 1.5 here...
+define system-offset st-uid (x86-linux 6, ppc-linux 6, x86-freebsd 3, amd64-freebsd 2, x86-darwin 3, ppc-darwin 3, x86_64-linux 7) 4;
+define system-offset st-gid (x86-linux 7, ppc-linux 7, x86-freebsd 4, amd64-freebsd 2, x86-darwin 4, ppc-darwin 4, x86_64-linux 8) 5;
+define system-offset st-size (x86-linux 11, ppc-linux 11, x86-freebsd 12, amd64-freebsd 9, x86-darwin 12, ppc-darwin 12, x86_64-linux 6) 7;
+define system-offset st-atime (x86-linux 14, ppc-linux 14, x86-freebsd 6, amd64-freebsd 3, x86-darwin 6, ppc-darwin 6, x86_64-linux 16) 8;
+define system-offset st-mtime (x86-linux 16, ppc-linux 16, x86-freebsd 8, amd64-freebsd 5, x86-darwin 8, ppc-darwin 8, x86_64-linux 22) 10;
+define system-offset st-ctime (x86-linux 18, ppc-linux 18, x86-freebsd 10, amd64-freebsd 7, x86-darwin 10, ppc-darwin 10, x86_64-linux 26) 12;
 
 define constant $STAT_SIZE = 
   $stat-size-offset * raw-as-integer(primitive-word-size());
