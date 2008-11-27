@@ -19,7 +19,6 @@ define constant <dood-disk-pointer> = <pointer>;
 
 define constant $tag-pairs?         = #t;
 
-define constant $word-size          = 32;
 define constant $number-tag-bits    = 2;
 define constant $tagged-word-size   = $word-size - $number-tag-bits;
 define constant $dood-word-size     = $tagged-word-size - $number-tag-bits;
@@ -106,8 +105,6 @@ define inline function tag-as-address
     logior(ash(address, $number-tag-bits), $address-tag)
   end if
 end function;
-
-define constant $bytes-per-word = 4;
 
 define inline function bytes-to-words (bytes :: <integer>)
   truncate/(bytes + $bytes-per-word - 1, $bytes-per-word)

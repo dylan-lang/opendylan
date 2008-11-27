@@ -423,7 +423,7 @@ define method walk-slots
     (dood :: <dood>, info :: <walk-info>, object :: <single-float>) => ()
   walk-slot(dood, info, object, <single-float>);
   if (walk-info-commit?(info))
-    dood-write-word(dood, decode-single-float(object));
+    dood-write-machine-word(dood, decode-single-float(object));
   end if;
 end method;
 
@@ -432,8 +432,8 @@ define method walk-slots
   walk-slot(dood, info, object, <double-float>);
   if (walk-info-commit?(info))
     let (low, high) = decode-double-float(object);
-    dood-write-word(dood, low);
-    dood-write-word(dood, high);
+    dood-write-machine-word(dood, low);
+    dood-write-machine-word(dood, high);
   end if;
 end method;
 

@@ -364,20 +364,20 @@ end function;
 define method read-object-using-class-at
     (dood :: <dood>, class == <machine-word>, address :: <address>)
  => (object)
-  dood-read-word(dood)
+  dood-read-machine-word(dood)
 end method;
 
 define method read-object-using-class-at
     (dood :: <dood>, class == <single-float>, address :: <address>)
  => (object)
-  encode-single-float(dood-read-word(dood))
+  encode-single-float(dood-read-machine-word(dood))
 end method;
 
 define method read-object-using-class-at
     (dood :: <dood>, class == <double-float>, address :: <address>)
  => (object)
-  let low  = dood-read-word(dood);
-  let high = dood-read-word(dood);
+  let low  = dood-read-machine-word(dood);
+  let high = dood-read-machine-word(dood);
   encode-double-float(low, high)
 end method;
 

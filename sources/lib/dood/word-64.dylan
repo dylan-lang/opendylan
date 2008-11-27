@@ -11,6 +11,9 @@ define inline method dood-compute-instance-size
   1 + 1 + 1 // 64 bits
 end method;
 
+define constant $word-size      = 64;
+define constant $bytes-per-word = 8;
+
 define inline function encode-machine-word-bytes
     (b1 :: <machine-word>, b2 :: <machine-word>, 
      b3 :: <machine-word>, b4 :: <machine-word>,
@@ -54,12 +57,6 @@ define inline function dood-read-machine-word
   value 
 end function; 
 
-define inline function dood-read-machine-word-at 
-    (dood :: <dood>, address :: <address>) => (res :: <dood-word>)
-  dood-position(dood) := address;
-  dood-read-machine-word(dood);
-end function;
-
 define inline function decode-machine-word-bytes (value :: <machine-word>) 
  => (b1 :: <machine-word>, b2 :: <machine-word>, 
      b3 :: <machine-word>, b4 :: <machine-word>,
@@ -94,12 +91,6 @@ define inline function dood-write-machine-word
   // write-element(dood, as(<integer>, b6));
   // write-element(dood, as(<integer>, b7));
   // write-element(dood, as(<integer>, b8));
-end function;
-
-define inline function dood-write-machine-word-at 
-    (dood :: <dood>, value :: <machine-word>, address :: <address>)
-  dood-position(dood) := address;
-  dood-write-machine-word(dood, value);
 end function;
 
 // eof
