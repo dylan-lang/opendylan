@@ -315,6 +315,7 @@ define method make-project
       session-property(#"compiler-back-end")
       | select(operating-system)
           #"darwin" => #"c";
+	  #"freebsd" => if (processor == #"amd64") #"c" else #"harp" end;
           otherwise => #"harp";
         end;
 
