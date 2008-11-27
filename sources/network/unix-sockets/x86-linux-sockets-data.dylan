@@ -1,6 +1,17 @@
 Module: unix-sockets
 Synopsis: Linux specific constants
 
+
+define constant <sa-family-t> = <C-unsigned-short>;
+define constant <sa-family-t*> = <C-unsigned-short*>;
+
+define C-struct <sockaddr>
+  slot sa-family-value :: <sa-family-t>;
+  array slot sa-data-array :: <C-char>, length: 14,
+    address-getter: sa-data-value;
+  pointer-type-name: <sockaddr*>;
+end C-struct;
+
 //linux only
 define constant $PF-PACKET = 17;
 define constant $AF-PACKET =    $PF-PACKET;

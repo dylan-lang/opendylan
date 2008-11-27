@@ -1,6 +1,17 @@
 Module: unix-sockets
 Synopsis: FreeBSD specific constants
 
+define constant <sa-family-t> = <C-unsigned-char>;
+define constant <sa-family-t*> = <C-unsigned-char*>;
+
+define C-struct <sockaddr>
+  slot sa-len :: <C-unsigned-char>;
+  slot sa-family-value :: <sa-family-t>;
+  array slot sa-data-array :: <C-char>, length: 14,
+    address-getter: sa-data-value;
+  pointer-type-name: <sockaddr*>;
+end C-struct;
+
 define constant $SOL-SOCKET = #xFFFF;
 
 define constant $SO-ACCEPTCONN = #x2;

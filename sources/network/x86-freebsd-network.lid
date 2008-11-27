@@ -9,7 +9,7 @@ Files:  unix-network-library
         unix-sockets/x86-freebsd-sockets-data
         unix-sockets/sockets-interfaces
         unix-sockets/sockets-extras
-        unix-sockets/x86-linux-address-data
+        unix-sockets/x86-freebsd-address-data
         unix-sockets/address-interfaces
         unix-sockets/errno
         unix-sockets/poll

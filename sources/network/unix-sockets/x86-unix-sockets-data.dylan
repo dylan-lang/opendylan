@@ -14,16 +14,6 @@ define constant <size-t> = <C-int>;
 define constant <socklen-t> = <C-unsigned-int>;
 define constant <socklen-t*> = <C-unsigned-int*>;
 
-define constant <sa-family-t> = <C-unsigned-short>;
-define constant <sa-family-t*> = <C-unsigned-short*>;
-
-define C-struct <sockaddr>
-  slot sa-family-value :: <sa-family-t>;
-  array slot sa-data-array :: <C-char>, length: 14,
-    address-getter: sa-data-value;
-  pointer-type-name: <sockaddr*>;
-end C-struct;
-
 define C-struct <linger>
   slot l-onoff-value :: <C-int>;
   slot l-linger-value :: <C-int>;
