@@ -15,14 +15,11 @@ LIBDEST         = $(OPEN_DYLAN_USER_INSTALL)/lib
 BINDEST         = $(OPEN_DYLAN_USER_INSTALL)/bin
 INCDEST		= $(OPEN_DYLAN_USER_INSTALL)/include
 
-EXPIRATION	= -1
-
 AS = as -L
 AR = ar -q
 
-CFLAGS		= -DGC_LINUX_THREADS=1 -D_REENTRANT=1 -DGC_DEBUG=1 \
-		  -O -g -DEXPIRATION=$(EXPIRATION) \
-		  -I$(srcdir) -I$(runtime_srcdir)
+CFLAGS		= -DGC_LINUX_THREADS=1 -D_REENTRANT=1 -DGC_DEBUG=1 -fPIC \
+		  -O -g -I$(srcdir) -I$(runtime_srcdir) -I/usr/local/include
 
 OBJS		= dummy-threads.o \
 		  debug-print.o \

@@ -659,14 +659,10 @@ extern void primitive_invoke_debugger (D format_string, D arguments);
 extern D primitive_inside_debuggerQ (void);
 extern void primitive_debug_message (D format_string, D arguments);
 
-# if defined(__alpha)
-#   define ALPHA
-# endif
-
-#if defined(ALPHA)
-#define primitive_word_size()	8
+#if defined(__alpha) || defined(__x86_64__)
+#define primitive_word_size() 8
 #else
-#define primitive_word_size()	4
+#define primitive_word_size() 4
 #endif
 
 #define primitive_header_size()	primitive_word_size ()
@@ -997,7 +993,12 @@ extern D primitive_allocate_weak_in_awl_pool(DSINT, D, DSINT, D, DSINT, DSINT, D
 #ifdef WIN32
 #include <malloc.h>
 #else
-#include <alloca.h>
+  #if __FreeBSD__
+  #include <sys/types.h>
+  extern void * alloca (size_t size);
+  #else
+  #include <alloca.h>
+  #endif
 #endif
 
 #define primitive_stack_allocate(sz) ((D)(alloca((int)(sz) * sizeof(D))))

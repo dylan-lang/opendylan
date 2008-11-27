@@ -12,7 +12,7 @@
 #include <Timer.h>
 #endif
 
-#if defined(__alpha) || defined(__mips64)
+#if defined(__alpha) || defined(__mips64) || defined(__x86_64__)
 #define NO_LONGLONG 1
 #define LONG_BIT 64
 #define WORD_BIT 32
@@ -4703,7 +4703,7 @@ static BS9 bs_boole_xor_ = {
 };
 
 #define INITIAL_MAX_STACK_SIZE (  4 * 1024 * 1024) /* Was: 200000 */
-#define MAX_HEAP_SIZE          (1024 * 1024 * 1024)
+#define MAX_HEAP_SIZE          (2047 * 1024 * 1024)
 void GC_set_max_heap_size(unsigned long);
 
 void _Init_Run_Time ()
