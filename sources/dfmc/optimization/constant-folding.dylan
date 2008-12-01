@@ -561,10 +561,10 @@ define method constant-fold-closure (f :: <&lambda>)
               computation-init-closure(c) := #f;
             end if;
           end method;
-    // format-out("CONSTANT-FOLDING-CLOSURE %=\n", lambda);
+    format-out("CONSTANT-FOLDING-CLOSURE %=\n", lambda);
     if (empty?(closure))
       if (~sigtmp & ~closed-over?(temporary(c)))
-	// format-out("DELETING MAKE-CLOSURE\n");
+	format-out("DELETING MAKE-CLOSURE\n");
 	// print-method-out(lambda);
 	let ref = make(<method-reference>, value: lambda);
 	add-user!(lambda, ref);
@@ -573,7 +573,7 @@ define method constant-fold-closure (f :: <&lambda>)
       end if
     elseif (~any?(method (tmp) instance?(generator(tmp), <make-closure>) end, 
                   closure))
-      // format-out("DELETING UNNECESSARY INIT-CLOSURE %=\n", f);
+      format-out("DELETING UNNECESSARY INIT-CLOSURE %=\n", f);
       maybe-delete-init-closure(computation-init-closure(c));
     end if;
   end if;

@@ -69,7 +69,7 @@ define macro thread-property-definer
 end macro;
 
 // list of keys to trigger output on.
-define variable *debug-out* = #();
+define variable *debug-out* = #(#"internal");
 
 // Conditional debugging output.  E.g. debug-out(#"linker", "Foo")
 // will output "Foo" only if *debug-out* contains #"linker".

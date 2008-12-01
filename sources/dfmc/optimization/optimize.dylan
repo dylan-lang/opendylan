@@ -75,7 +75,7 @@ end method;
 define constant $max-reoptimization-iterations = 50;
 define constant $max-optimization-iterations   = 10000;
 
-define variable *trace-optimizations?*     = #f;
+define variable *trace-optimizations?*     = #t;
 define variable *trace-optimizing-library* = #f;
 define variable *trace-optimizing-file*    = #f;
 define variable *trace-optimizing-method*  = #f;
