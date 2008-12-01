@@ -10,8 +10,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define compiler-sideways method print-object (o :: <binding>, stream :: <stream>) => ()
   format(stream, "%s", o.name);
-//  let te = type-estimate(o);
-//  format(stream, "::%=", te);
+  let te = type-estimate(o);
+  format(stream, "::%=", te);
 end method;
 
 define compiler-sideways method print-object (o :: <module-binding>, stream :: <stream>) => ()
@@ -60,8 +60,8 @@ define compiler-sideways method print-object (o :: <temporary>, stream :: <strea
       format(stream, "(%d%s)", o.required-values, 
         if (o.rest-values?) ",#rest" else "" end)
     end if;
-//    let te = type-estimate(o);
-//    format(stream, "::%=", te);
+    let te = type-estimate(o);
+    format(stream, "::%=", te);
   exception (<error>)
   end block;
 end method;
@@ -125,6 +125,7 @@ define compiler-sideways method print-object
     format(stream, " :: %=", type-estimate(c))
   end if;
   */
+    format(stream, " :: %=", type-estimate(c))
   exception (<error>)
   end block;
   values()
