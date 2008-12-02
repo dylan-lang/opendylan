@@ -57,7 +57,7 @@ define swank-function connection-info ()
        #":lisp-implementation", list(#":type", "dylan",
                                      #":name", release-product-name(),
                                      #":version", release-version()),
-       #":version", "2008-03-27",
+       #":version", "2008-11-23",
        #":package", #(#":name", "opendylan", #":prompt", "opendylan"));
 end;
 
@@ -112,8 +112,8 @@ define swank-function compile-file-for-emacs (filename, foo)
     end;
   end;
   run-compiler(*server*, concatenate("build ", *project*.project-name));
-  //slime expects a list with 2 elements, so be it
-  #("NIL", "2.1");
+  let notes = compiler-notes-for-emacs();
+  list("T", notes);
 end;
 
 define swank-function compiler-notes-for-emacs ()
