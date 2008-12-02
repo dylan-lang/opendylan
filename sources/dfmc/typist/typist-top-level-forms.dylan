@@ -41,7 +41,7 @@ end;
 // form-model-object -- gets model object from variable def form + name.
 // form-model
 
-define variable *annoying-typist-chatter?* :: <boolean> = #f;
+define variable *annoying-typist-chatter?* :: <boolean> = #t;
 
 define function typist-chatter(format-str, #rest format-args)
   // For interim debugging.
@@ -61,7 +61,13 @@ define type-estimate-top-level-form-rules
     <- #f;
   form :: <top-level-init-form>
     // Non-definition top-level forms are misc inits -- get init method & type it.
-    <- type-estimate(form-init-method(form));
+    <- begin
+	 typist-chatter("top level init form (%=),"
+			  "calling type-estimate on %=\n",
+			form,
+			form-init-method(form));
+	 type-estimate(form-init-method(form));
+       end;
   form :: <namespace-defining-form>
     // Do nothing for <module-definition>s and <library-definition>s.
     <- #f;
