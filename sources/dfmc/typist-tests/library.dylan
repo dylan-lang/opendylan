@@ -28,6 +28,6 @@ define module dfmc-typist-tests
 
   use projects;
   use environment-protocols,
-    import: { find-project, open-project-compiler-database };
+    import: { find-project, open-project-compiler-database, project-warnings };
   use dfmc-environment-projects; //needed for find-project
 end module;

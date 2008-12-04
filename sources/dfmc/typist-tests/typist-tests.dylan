@@ -4,12 +4,10 @@ author: Hannes Mehnert
 copyright: 2008, all rights reversed
 
 define function compile-library-until-optimized (lib)
-  block()
-    compile-library-from-definitions(lib, force?: #t, skip-link?: #t,
-                                     compile-if-built?: #t, skip-heaping?: #t,
-                                     compile-until-type-inferred?: #t);
-  exception (e :: <abort-compilation>)
-  end
+  compile-library-from-definitions(lib, force?: #t, skip-link?: #t,
+                                   compile-if-built?: #t, skip-heaping?: #t,
+                                  // compile-until-type-inferred?: #t,
+                                   abort-on-all-warnings?: #t);
 end function;
 
 define function static-type (lambda :: <&method>) => (res :: <type-estimate>)
@@ -51,19 +49,62 @@ define method \= (te1 :: <type-estimate>, te2 :: <type-estimate>)
   end;
 end;
 
+
+define test noop ()
+  let mycode = "concatenate(1, 2);";
+  dynamic-bind (*progress-stream*           = #f,  // with-compiler-muzzled
+                *demand-load-library-only?* = #f)
+    let lib = compile-template(mycode, compiler: compile-library-until-optimized);
+    //format-out("LIB %= %=\n", lib, concatenate(1, 2));
+    //let warn = lib.library-description-project.project-warnings;
+    //format-out("WARN %= %=\n", warn.size, warn);
+  end;
+//    check-condition("concatenating 1 and 2",
+//                    <abort-compilation>, 
+    //<wrong-type-in-assignment>?
+end;
+
+define test reduce-literal-limited-list ()
+  let mycode = "define function my-+ (a :: <integer>, b :: <integer>) => (res :: <integer>)"
+               "  a + b;"
+               "end;"
+               "define function reduceme ()"
+               "  let mylist :: limited(<list>, of: <symbol>) = #(#\"foo\", #\"bar\");"
+               "  reduce1(my-+, mylist);"
+               "end";
+  dynamic-bind (*progress-stream*           = #f,  // with-compiler-muzzled
+                *demand-load-library-only?* = #f)
+    check-condition("reducing literal list of symbols with a function which signature contains only <integer>",
+                    <warning>, compile-template(mycode, compiler: compile-library-until-optimized));
+                    //<wrong-type-in-assignment>?
+  end;
+end;
+
+define test map-limited-list ()
+  let mycode = "define function my-+ (a :: <integer>, b :: <integer>) => (res :: <integer>)"
+               "  a + b;"
+               "end;"
+               "define function map-limited-list (l :: limited(<collection>, of: <string>))"
+               "  map(method(x) my-+(x, x) end, l);"
+               "end;";
+  dynamic-bind (*progress-stream*           = #f,  // with-compiler-muzzled
+                *demand-load-library-only?* = #f)
+    check-condition("map list of strings with a function which signature contains only <integer>",
+                    <warning>, compile-template(mycode, compiler: compile-library-until-optimized));
+                    //<wrong-type-in-assignment>?
+  end;
+end;
+
 define test literal-limited-list ()
   let lambda = 
     compile-string("define function literal-limited-list ()"
-                     "#(#\"bar\", #\"foo\", #\"barf\");"
-                     "end;"
-                     "literal-limited-list()");
-  //compile-string("define function f () 2 end; f()");
+                   "  #(#\"bar\", #\"foo\", #\"barf\");"
+                   "end; literal-limited-list();");
   let te = make(<type-estimate-values>,
                 fixed: vector(make(<type-estimate-class>,
                                    class: dylan-value(#"<list>"))),
                 rest: #f);
   let type = static-type(lambda);
-  format-out("foo %= %=\n", type, te);
   check-equal("type estimate for literal-list is a <list>", te, type);
   let te2 = make(<type-estimate-values>,
                  fixed: vector(make(<type-estimate-limited-collection>,
@@ -72,7 +113,6 @@ define test literal-limited-list ()
                                     of: make(<type-variable>,
                                              contents: make(<type-estimate-class>, class: dylan-value(#"<symbol>"))))),
 		 rest: #f);
-  format-out("foo %= %=\n", type, te2);
   check-equal("type estimate for literal-list is a limited list of symbols",
 	      te2, type);
 
@@ -83,7 +123,6 @@ define test literal-limited-list ()
 				    concrete-class: dylan-value(#"<list>"),
 				    size: 3)),
 		 rest: #f);
-  format-out("foo %= %=\n", type, te3);
   check-equal("type estimate for literal-list is a limited list of size 3",
 	      te3, type);
 
@@ -95,17 +134,23 @@ define test literal-limited-list ()
                                              contents: make(<type-estimate-class>, class: dylan-value(#"<symbol>"))),
 				    size: 3)),
 		 rest: #f);
-  format-out("foo %= %=\n", type, te4);
   check-equal("type estimate for literal-list is a limited list of symbol and size 3",
 	      te4, type);
-
-    // Sometimes you want a diagnostic for the failure cases.
-//    dynamic-bind (*print-method-bodies?* = #t)
-//      format-out("\nFor %=:\nExpected type: %=\n  Inferred type: %=", 
-//		 lambda, expected-type, found-type)
 end;
 
+
+
 define suite typist-suite ()
+  //tests for the test environment
+  test noop;
+
+  //tests which should succeed with polymorphic types
+  test reduce-literal-limited-list;
+  test map-limited-list;
+
+  //tests for occurence typing
+
+  //tests which should succeed once literals are typed "better"
   test literal-limited-list;
 end;
 
