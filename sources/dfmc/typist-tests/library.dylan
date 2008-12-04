@@ -1,0 +1,33 @@
+module: dylan-user
+
+define library dfmc-typist-tests
+  use common-dylan;
+  use io;
+  use testworks;
+
+  use dfmc-core;
+  use dfmc-typist;
+  use dfmc-management;
+  use dfmc-debug-back-end;
+
+  use projects;
+  use environment-protocols;
+  use dfmc-environment-projects;
+end library;
+
+define module dfmc-typist-tests
+  use common-dylan;
+  use threads, import: { dynamic-bind };
+  use format-out;
+  use testworks;
+
+  use dfmc-core;
+  use dfmc-typist;
+  use dfmc-management;
+  use dfmc-debug-back-end, import: {*print-method-bodies?*};
+
+  use projects;
+  use environment-protocols,
+    import: { find-project, open-project-compiler-database };
+  use dfmc-environment-projects; //needed for find-project
+end module;
