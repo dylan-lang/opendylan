@@ -175,7 +175,10 @@ define sealed method really-run-compilation-passes (code :: <&lambda>)
 	    if (f == code | lambda-used?(f))
 	      opt-format-out("PASS TWO %=\n", f);
 	      if (*trace-optimizations?*)
-		print-method-out(code);
+                block()
+                  print-method-out(code);
+                exception (e :: <condition>)
+                end;
 	      end if;
 	      // Now we're ready for some fun.
 	      run-optimizations(f);
@@ -260,7 +263,10 @@ define method run-optimizations (code) => (b :: <boolean>)
       if (*trace-optimizations?*)
         format-out("---------\n");
         unless (instance?(item, <nop>))
-          print-method-out(code);
+          block()
+            print-method-out(code);
+          exception (e :: <condition>)
+          end;
           format-out("---------\n");
         end unless;
       end if

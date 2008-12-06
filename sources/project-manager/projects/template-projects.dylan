@@ -34,7 +34,7 @@ end class;
 define method project-inter-library-binding
     (project ::  <string-template-project>, used-project :: <project>) 
  => (mode :: one-of(#"tight", #"loose"));
-  #"loose"
+  #"tight"
 end;
 
 define method project-key? (project :: <string-template-project>, key)

@@ -819,12 +819,12 @@ define method optimize-method (m :: <&method>)
   with-simple-abort-retry-restart
       ("Skip optimizing this method", 
        "Retry optimizing for this method")
-    // progress-line("<<<<");
-    // progress-line("  Method before: %=.", m);
-    // progress-line("  ----");
+    progress-line("<<<<");
+    progress-line("  Method before: %=.", m);
+    progress-line("  ----");
     run-compilation-passes(m);
-    // progress-line("  Method after: %=.", m);
-    // progress-line(">>>>");
+    progress-line("  Method after: %=.", m);
+    progress-line(">>>>");
   end;
 end method;
 
