@@ -55,3 +55,11 @@ define method \= (te1 :: <type-estimate>, te2 :: <type-estimate>)
   end;
 end;
 
+define function collect-elements (table :: <table>) => (res :: <collection>)
+  //we don't have flatten...
+  let res = make(<stretchy-vector>);
+  do(curry(do, curry(add!, res)), as(<list>, table));
+  res;
+end;
+
+

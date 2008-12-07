@@ -8,9 +8,9 @@ define test noop ()
   dynamic-bind (*progress-stream*           = #f,  // with-compiler-muzzled
                 *demand-load-library-only?* = #f)
     let lib = compile-template(mycode, compiler: compiler);
-    let conditions = as(<list>, lib.library-conditions-table);
+    let conditions = collect-elements(lib.library-conditions-table);
     check-equal("one condition was reported", 1, size(conditions));
-    let condition = conditions[0].pop;
+    let condition = conditions[0];
     check-instance?("it is a <argument-type-mismatch-in-call> object",
                     <argument-type-mismatch-in-call>, condition);
   end;
@@ -26,9 +26,11 @@ define test reduce-literal-limited-list ()
                "end";
   dynamic-bind (*progress-stream*           = #f,  // with-compiler-muzzled
                 *demand-load-library-only?* = #f)
-    check-condition("reducing literal list of symbols with a function which signature contains only <integer>",
-                    <warning>, compile-template(mycode, compiler: compiler));
-                    //<wrong-type-in-assignment>?
+    let lib = compile-template(mycode, compiler: compiler);
+    let conditions = collect-elements(lib.library-conditions-table);
+    check-equal("two conditions were reported (not-used and type-mismatch)", 2, size(conditions));
+    let type-cons = choose(rcurry(instance?, <argument-type-mismatch-in-call>), conditions);
+    check-equal("one condition is an argument-type-mismatch", 1, size(type-cons));
   end;
 end;
 
@@ -41,9 +43,53 @@ define test map-limited-list ()
                "end;";
   dynamic-bind (*progress-stream*           = #f,  // with-compiler-muzzled
                 *demand-load-library-only?* = #f)
-    check-condition("map list of strings with a function which signature contains only <integer>",
-                    <warning>, compile-template(mycode, compiler: compiler));
-                    //<wrong-type-in-assignment>?
+    let lib = compile-template(mycode, compiler: compiler);
+    let conditions = as(<list>, lib.library-conditions-table);
+    check-equal("two conditions were reported (not-used and type-mismatch)", 2, size(conditions));
+    let type-cons = choose(rcurry(instance?, <argument-type-mismatch-in-call>), conditions);
+    check-equal("one condition is an argument-type-mismatch", 1, size(type-cons));
+  end;
+end;
+
+define test occurence-argument-wrong-typed ()
+  let mycode = "define function my-+ (a :: <integer>, b :: <integer>) => (res :: <integer>)"
+               "  a + b;"
+               "end;"
+               "define function occurence-argument-wrong-typed (x)"
+               "  if (instance?(x, <symbol>))"
+               "    my-+(x, x);"
+               "  else"
+               "    x;"
+               "  end;"
+               "end;";
+  dynamic-bind (*progress-stream*           = #f,  // with-compiler-muzzled
+                *demand-load-library-only?* = #f)
+    let lib = compile-template(mycode, compiler: compiler);
+    let conditions = collect-elements(lib.library-conditions-table);
+    check-equal("three conditions were reported (not-used and one for each arg of my-+)", 3, size(conditions));
+    let type-cons = choose(rcurry(instance?, <argument-type-mismatch-in-call>), conditions);
+    check-equal("two conditions are argument-type-mismatch", 2, size(type-cons));
+  end;
+end;
+
+define test occurence-argument-wrong-typed2 ()
+  let mycode = "define function my-+ (a :: <integer>, b :: <integer>) => (res :: <integer>)"
+               "  a + b;"
+               "end;"
+               "define function occurence-argument-wrong-typed2 (x)"
+               "  if (instance?(x, <integer>))"
+               "    x;"
+               "  else"
+               "    my-+(x, x);"
+               "  end;"
+               "end;";
+  dynamic-bind (*progress-stream*           = #f,  // with-compiler-muzzled
+                *demand-load-library-only?* = #f)
+    let lib = compile-template(mycode, compiler: compiler);
+    let conditions = collect-elements(lib.library-conditions-table);
+    check-equal("three conditions were reported (not-used and one for each arg of my-+)", 3, size(conditions));
+    let type-cons = choose(rcurry(instance?, <argument-type-mismatch-in-call>), conditions);
+    check-equal("two conditions are argument-type-mismatch", 2, size(type-cons));
   end;
 end;
 
@@ -64,30 +110,30 @@ define test literal-limited-list ()
                                     concrete-class: dylan-value(#"<list>"),
                                     of: make(<type-variable>,
                                              contents: make(<type-estimate-class>, class: dylan-value(#"<symbol>"))))),
-		 rest: #f);
+                 rest: #f);
   check-equal("type estimate for literal-list is a limited list of symbols",
-	      te2, type);
+              te2, type);
 
 
   let te3 = make(<type-estimate-values>,
-		 fixed: vector(make(<type-estimate-limited-collection>,
-				    class: dylan-value(#"<list>"),
-				    concrete-class: dylan-value(#"<list>"),
-				    size: 3)),
+                 fixed: vector(make(<type-estimate-limited-collection>,
+                                    class: dylan-value(#"<list>"),
+                                    concrete-class: dylan-value(#"<list>"),
+                                    size: 3)),
 		 rest: #f);
   check-equal("type estimate for literal-list is a limited list of size 3",
-	      te3, type);
+              te3, type);
 
   let te4 = make(<type-estimate-values>,
-		 fixed: vector(make(<type-estimate-limited-collection>,
-				    class: dylan-value(#"<list>"),
-				    concrete-class: dylan-value(#"<list>"),
-				    of: make(<type-variable>,
+                 fixed: vector(make(<type-estimate-limited-collection>,
+                                    class: dylan-value(#"<list>"),
+                                    concrete-class: dylan-value(#"<list>"),
+                                    of: make(<type-variable>,
                                              contents: make(<type-estimate-class>, class: dylan-value(#"<symbol>"))),
-				    size: 3)),
-		 rest: #f);
+                                    size: 3)),
+                 rest: #f);
   check-equal("type estimate for literal-list is a limited list of symbol and size 3",
-	      te4, type);
+              te4, type);
 end;
 
 
@@ -97,13 +143,23 @@ define suite typist-suite ()
   test noop;
 
   //tests which should succeed with polymorphic types
-  //test reduce-literal-limited-list;
-  //test map-limited-list;
+  test reduce-literal-limited-list;
+  test map-limited-list;
 
   //tests for occurence typing
+  //the first works because instance is specially treated in optimization/assignment.dylan
+  test occurence-argument-wrong-typed;
+  test occurence-argument-wrong-typed2;
 
   //tests which should succeed once literals are typed "better"
-  //test literal-limited-list;
+  test literal-limited-list;
+
+  //how to check the amount of bound checks?
+  //define function limited-vector-bounds-check ()
+  //  //here, bounds checks are generated
+  //  let foo = make(limited(<vector>, of: <single-float>, size: 3));
+  //  foo[1] := foo[0];
+  //end;
 end;
 
 define function callback-handler (#rest args)
