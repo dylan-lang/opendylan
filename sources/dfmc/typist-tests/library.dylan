@@ -9,6 +9,7 @@ define library dfmc-typist-tests
   use dfmc-typist;
   use dfmc-management;
   use dfmc-debug-back-end;
+  use dfmc-optimization; //to get program-note classes
 
   use projects;
   use environment-protocols;
@@ -25,6 +26,7 @@ define module dfmc-typist-tests
   use dfmc-typist;
   use dfmc-management;
   use dfmc-debug-back-end, import: {*print-method-bodies?*};
+  use dfmc-optimization;
 
   use projects;
   use environment-protocols,

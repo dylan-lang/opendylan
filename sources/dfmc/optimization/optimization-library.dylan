@@ -78,6 +78,30 @@ define module dfmc-optimization
     *dump-dfm-file*,
     *call-upgrading?*;
 
+  export <run-time-type-error>,
+    <run-time-result-type-error>,
+    <non-sequence-last-argument-in-apply>,
+    <attempt-to-instantiate-abstract-class>,
+    <ambiguous-copy-down-method>,
+    <unknown-copy-down-method-domain>,
+    <missing-copy-down-method>,
+    <non-function-in-call>,
+    <unknown-keyword-in-call>,
+    <argument-count-mismatch-in-call>,
+    <too-few-arguments-in-call>,
+    <too-many-arguments-in-call>,
+    <unbalanced-keyword-arguments-in-call>,
+    <non-keywords-in-call>,
+    <argument-type-mismatch-in-call>,
+    <values-argument-type-mismatch-in-call>,
+    <bogus-upgrade-possible>,
+    <unrecognized-keyword-arguments-in-call>,
+    <too-many-arguments-in-apply-call>,
+    <argument-type-mismatch-in-apply-call>,
+    <bogus-apply-upgrade-possible>,
+    <no-applicable-methods-in-call>,
+    <calling-inline-only-function-out-of-line>;
+
   export
     best-function-key?,
     best-function-rest?,
