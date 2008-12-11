@@ -4,16 +4,20 @@ author: Hannes Mehnert
 copyright: 2008, all rights reversed
 
 define function compile-library-until-optimized (lib)
-  compile-library-from-definitions(lib, force?: #t, skip-link?: #t,
-                                   compile-if-built?: #t, skip-heaping?: #t,
-                                   compile-until-type-inferred?: #t,
-                                   abort-on-all-warnings?: #t);
+  block()
+    compile-library-from-definitions(lib, force?: #t, skip-link?: #t,
+                                     compile-if-built?: #t, skip-heaping?: #t,
+                                     compile-until-type-inferred?: #t)
+  exception (e :: <abort-compilation>)
+  end
 end function;
 
 define function compiler (lib)
-  compile-library-from-definitions(lib, force?: #t, skip-link?: #t,
-                                   compile-if-built?: #t, skip-heaping?: #t,
-                                   abort-on-all-warnings?: #t);
+  block()
+    compile-library-from-definitions(lib, force?: #t, skip-link?: #t,
+                                     compile-if-built?: #t, skip-heaping?: #t);
+  exception (e :: <abort-compilation>)
+  end
 end;
 
 define function static-type (lambda :: <&method>) => (res :: <type-estimate>)
