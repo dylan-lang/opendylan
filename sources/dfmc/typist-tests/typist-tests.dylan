@@ -17,15 +17,18 @@ define test noop ()
 end;
 
 define test polymorphic-type-test ()
-  let mycode = "define function mymap (All(A, B)(fun :: A -> B, c :: limited(<collection>, of: A)) => res :: limited(<collection>, of: B))"
+  let mycode = "define function mymap (All(A, B)(fun :: A => B, c :: limited(<collection>, of: A)) => res :: limited(<collection>, of: B))"
                "  map(fun, c);"
-               "end";
+               "end;"
+               "define function my-+ (a :: <integer>, b :: <integer>) => (res :: <integer>)"
+               "  a + b;"
+               "end;"
+               "mymap(curry(my-+, 1), #(1, 2, 3))"
   dynamic-bind (*progress-stream*           = #f,  // with-compiler-muzzled
                 *demand-load-library-only?* = #f)
     let lib = compile-template(mycode, compiler: compiler);
     let conditions = collect-elements(lib.library-conditions-table);
-    check-equal("one condition was reported (not-used)", 1, size(conditions));
-    check-instance?("it is a <binding-defined-but-not-used>", <binding-defined-but-not-used>, conditions[0]);
+    check-equal("no conditions were reported", 0, size(conditions));
   end;
 end;
 

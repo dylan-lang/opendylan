@@ -405,6 +405,32 @@ define class <method-complex-signature+complex-values-spec>
     (<complex-values-spec>, <method-complex-signature+values-spec>)
 end class;
 
+define class <method-polymorphic-signature-spec> (<method-signature-spec>)
+  constant slot real-signature-spec :: <method-signature-spec>,
+    required-init-keyword: signature:;
+  constant slot type-variables :: <list>,
+    required-init-keyword: variables:;
+end;
+
+define method spec-argument-required-variable-specs (spec :: <method-polymorphic-signature-spec>)
+  spec-argument-required-variable-specs(spec.real-signature-spec)
+end method;
+
+define method spec-argument-rest-variable-spec (spec :: <method-polymorphic-signature-spec>)
+  spec-argument-rest-variable-spec(spec.real-signature-spec)
+end method;
+
+//define method spec-argument-next-variable-spec (spec :: <method-polymorphic-signature-spec>)
+//  spec-argument-next-variable-spec(spec.real-signature-spec)
+//end method;
+
+define method spec-argument-key-variable-specs (spec :: <method-polymorphic-signature-spec>)
+  spec-argument-key-variable-specs(spec.real-signature-spec)
+end method;
+
+define method spec-argument-key? (spec :: <method-polymorphic-signature-spec>)
+  spec-argument-key?(spec.real-signature-spec)
+end method;
 
 /// GENERIC-SIGNATURE-SPEC
 
@@ -454,6 +480,12 @@ define method parse-variables-list (fragment)
         => collect-first-into
              (required, make(<required-variable-spec>,
                              variable-name:   name));
+      { ?:name :: ?type1:expression => ?type2:expression, ?parameters }
+        => collect-first-into
+             (required, make(<typed-required-variable-spec>,
+                             variable-name:   name,
+                             //for now, in real: limited(<function>) ?
+                             type-expression: as-expression( #{ <function> } )));
       { ?:name :: ?type:expression, ?parameters }
         => collect-first-into
              (required, make(<typed-required-variable-spec>,
@@ -580,6 +612,15 @@ define method parse-signature-as
           sig-spec
 	end method;
   macro-case (fragment)
+    { (All (?vars:*) ?rest:*) ?more:* }
+      => begin
+           let (sig, mor) = parse-signature-as(sig-class, rest);
+           values(make(<method-polymorphic-signature-spec>,
+                       signature: sig,
+                       variables: list(vars),
+                       argument-next-variable-spec: sig.spec-argument-next-variable-spec),
+                  more);
+         end;
     { (?args:*) => (?vals:*); ?more:* }
       => values(parse-using-fragments(sig-class, args, vals), more);
     { (?args:*) => (?vals:*) ?more:* }
