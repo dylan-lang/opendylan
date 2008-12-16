@@ -23,7 +23,12 @@ define test polymorphic-type-test ()
                "define function my-+ (a :: <integer>, b :: <integer>) => (res :: <integer>)"
                "  a + b;"
                "end;"
-               "mymap(curry(my-+, 1), #(1, 2, 3))"
+               "begin"
+               "  let incs = mymap(curry(my-+, 1), #(1, 2, 3));"
+               "  if (incs[0] ~= 2 || incs[1] ~= 3 || incs[2] ~= 4)"
+               "    signal(make(<error>))"
+               "  end;"
+               "end;";
   dynamic-bind (*progress-stream*           = #f,  // with-compiler-muzzled
                 *demand-load-library-only?* = #f)
     let lib = compile-template(mycode, compiler: compiler);

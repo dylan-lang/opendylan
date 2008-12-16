@@ -408,12 +408,13 @@ end class;
 define class <method-polymorphic-signature-spec> (<method-signature-spec>)
   constant slot real-signature-spec :: <method-signature-spec>,
     required-init-keyword: signature:;
-  constant slot type-variables :: <list>,
+  constant slot type-variables :: <collection>,
     required-init-keyword: variables:;
 end;
 
 define method spec-argument-required-variable-specs (spec :: <method-polymorphic-signature-spec>)
-  spec-argument-required-variable-specs(spec.real-signature-spec)
+  concatenate-as(<simple-object-vector>, spec.type-variables,
+                 spec-argument-required-variable-specs(spec.real-signature-spec))
 end method;
 
 define method spec-argument-rest-variable-spec (spec :: <method-polymorphic-signature-spec>)
@@ -612,12 +613,12 @@ define method parse-signature-as
           sig-spec
 	end method;
   macro-case (fragment)
-    { (All (?vars:*) ?rest:*) ?more:* }
+    { (All (?type-vars:*) ?rest:*) ?more:* }
       => begin
            let (sig, mor) = parse-signature-as(sig-class, rest);
            values(make(<method-polymorphic-signature-spec>,
                        signature: sig,
-                       variables: list(vars),
+                       variables: parse-type-variable-list(type-vars),
                        argument-next-variable-spec: sig.spec-argument-next-variable-spec),
                   more);
          end;
@@ -631,9 +632,42 @@ define method parse-signature-as
       => values(parse-using-fragments(sig-class, args, #f), more);
     { (?args:*) ?more:* }
       => values(parse-using-fragments(sig-class, args, #f), more);
+
   end macro-case;
 end method;
 
+define function parse-type-variable-list (fragment :: <fragment>) => (result :: <variable-specs>)
+  collecting (required :: <variable-specs>)
+    macro-case (fragment)
+
+      { ?parameters:* }
+        => collected(required);
+
+    parameters:
+      { }
+        => #f;
+      { ?:name, ?parameters }
+        => collect-first-into
+             (required, make(<typed-required-variable-spec>,
+                             variable-name:   name,
+                             type-expression: as-expression( #{ <type> })));
+      { ?:name :: ?type:expression, ?parameters }
+        => collect-first-into
+             (required, make(<typed-required-variable-spec>,
+                             variable-name:   name,
+                             type-expression: as-expression( #{ subclass(?type) })));
+//not yet sure whether singleton types will be needed
+//      { ?:name == ?object:expression, ?parameters }
+//        => collect-first-into
+//             (required, make(<typed-required-variable-spec>,
+//                             variable-name:   name,
+//                             type-expression: 
+//                               as-expression(#{ singleton(?object) })));
+      { }
+        => #f;
+    end macro-case;
+  end collecting
+end;
 //// Utilities.
 
 define inline function as-boolean (object) => (boolean :: <boolean>)
