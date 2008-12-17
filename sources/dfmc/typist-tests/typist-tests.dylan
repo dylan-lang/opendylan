@@ -25,8 +25,8 @@ define test polymorphic-type-test ()
                "end;"
                "begin"
                "  let incs = mymap(curry(my-+, 1), #(1, 2, 3));"
-               "  if (incs[0] ~= 2 || incs[1] ~= 3 || incs[2] ~= 4)"
-               "    signal(make(<error>))"
+               "  if ((incs[0] ~= 2) | (incs[1] ~= 3) | (incs[2] ~= 4))"
+               "    signal(make(<error>));"
                "  end;"
                "end;";
   dynamic-bind (*progress-stream*           = #f,  // with-compiler-muzzled
