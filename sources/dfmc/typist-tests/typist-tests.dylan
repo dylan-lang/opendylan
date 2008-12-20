@@ -16,6 +16,17 @@ define test noop ()
   end;
 end;
 
+define test polymorphic-type-test0 ()
+  let mycode = "define function my-+ (All(A)(a :: A, b :: A) => res :: A)"
+               "  a + b;"
+               "end;";
+  dynamic-bind (*progress-stream*           = #f,  // with-compiler-muzzled
+                *demand-load-library-only?* = #f)
+    let lib = compile-template(mycode, compiler: compiler);
+    let conditions = collect-elements(lib.library-conditions-table);
+    check-equal("not-used conditions was reported", 1, size(conditions));
+  end;
+end;
 define test polymorphic-type-test ()
   let mycode = "define function mymap (All(A, B)(fun :: A => B, c :: limited(<collection>, of: A)) => res :: limited(<collection>, of: B))"
                "  map(fun, c);"
@@ -165,6 +176,7 @@ define suite typist-suite ()
   test noop;
 
   //test for type variable syntax
+  test polymorphic-type-test0;
   test polymorphic-type-test;
 
   //tests which should succeed with polymorphic types

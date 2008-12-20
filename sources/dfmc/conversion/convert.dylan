@@ -3808,9 +3808,10 @@ define inline method ^top-level-eval (fragment, #rest options)
 end method;
 
 define method ^top-level-eval-using-optimization
-    (fragment, #key on-failure = #f) => (maybe-value)
+    (fragment, #key on-failure = #f, type-variables = #[]) => (maybe-value)
   let m = convert-method-to-model-as
             (<&method>, "type-initializer", #{ () ?fragment });
+
   ensure-method-optimized(m);
   let (constant?, result) = lambda-returns-constant?(m);
   if (constant?)
@@ -3820,15 +3821,40 @@ define method ^top-level-eval-using-optimization
   end;
 end method;
 
+define method &eval-type-expression
+    (env :: <table>, binding :: <module-binding>, #key on-failure = #f) => (models)
+  let (model, found?) = binding-constant-model-object(binding);
+  if (found?) model else on-failure end
+end method;
+
+define method &eval-type-expression
+    (env :: <table>, fragment :: <variable-name-fragment>, #key on-failure = #f) => (models)
+  let tv-value = element(env, fragment.fragment-name, default: #f);
+  if (tv-value)
+    //TODO: correctness (type of tv constrained).
+    // dylan-value only works for stuff in dylan library
+    //evaluate tv-value.spec-type-expression
+    dylan-value(#"<object>");
+  else
+    let binding = lookup(#f, fragment);
+    if (binding)
+      &eval-type-expression(env, binding, on-failure: on-failure)
+    else
+      on-failure
+    end
+  end;
+end method;
+
 // Must be a type.
-define method ^top-level-eval-type (fragment, #key on-failure = #f)
+define method ^top-level-eval-type (fragment, #key on-failure = #f, type-variables = make(<table>))
   // Try quickie top level eval.
-  let result
-    = ^top-level-eval(fragment, on-failure: on-failure);
+  let result 
+    //= ^top-level-eval(fragment, on-failure: on-failure);
+    = &eval-type-expression(type-variables, fragment, on-failure: on-failure);
   // Try harder if the above failed.
   let result
     = if (result == on-failure)
-        ^top-level-eval-using-optimization(fragment, on-failure: on-failure)
+        ^top-level-eval-using-optimization(fragment, on-failure: on-failure, type-variables: type-variables)
       else
         result
       end;
@@ -3851,7 +3877,6 @@ define compiler-sideways method &eval (env, fragment) => (object)
     &unbound;
   end block;
 end method;
-
 
 ///////
 /////// STATIC CASE WHICH WILL GO AWAY

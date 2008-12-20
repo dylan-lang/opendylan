@@ -212,6 +212,10 @@ define inline function spec-value-number-required (spec :: <signature-spec>)
   size(spec-value-required-variable-specs(spec))
 end;
 
+define method spec-type-variables (spec :: <signature-spec>) => (res :: <collection>)
+  #[]
+end;
+
 define function spec-default-value-rest-variable-spec () => (spec :: <rest-variable-spec>)
   %library-description-default-value-rest-spec(dylan-library-description())
     | (%library-description-default-value-rest-spec(dylan-library-description())
@@ -413,8 +417,7 @@ define class <method-polymorphic-signature-spec> (<method-signature-spec>)
 end;
 
 define method spec-argument-required-variable-specs (spec :: <method-polymorphic-signature-spec>)
-  concatenate-as(<simple-object-vector>, spec.type-variables,
-                 spec-argument-required-variable-specs(spec.real-signature-spec))
+  spec-argument-required-variable-specs(spec.real-signature-spec)
 end method;
 
 define method spec-argument-rest-variable-spec (spec :: <method-polymorphic-signature-spec>)
@@ -433,6 +436,9 @@ define method spec-argument-key? (spec :: <method-polymorphic-signature-spec>)
   spec-argument-key?(spec.real-signature-spec)
 end method;
 
+define method spec-type-variables (spec :: <method-polymorphic-signature-spec>) => (res :: <collection>)
+  spec.type-variables;
+end;
 /// GENERIC-SIGNATURE-SPEC
 
 define constant <generic-signature-spec> = <signature-spec>;

@@ -30,17 +30,17 @@ define function compute-signature
   // Try to evaluate each specializer in turn.
   let (required-types, required-types-static?) 
     = compute-variable-specs-types
-        (form, spec-argument-required-variable-specs(sig-spec));
+        (form, sig-spec, spec-argument-required-variable-specs(sig-spec));
   // Keys are always static because they're syntactically constrained to
   // be literals.
   let keys
     = compute-variables-spec-keys(form, sig-spec);
   let (key-types, key-types-static?)
      = compute-variable-specs-types
-         (form, spec-argument-key-variable-specs(sig-spec));
+         (form, sig-spec, spec-argument-key-variable-specs(sig-spec));
   let (values-types, values-types-static?)
     = compute-variable-specs-types
-        (form, spec-value-required-variable-specs(sig-spec));
+        (form, sig-spec, spec-value-required-variable-specs(sig-spec));
   let (rest-value-type, rest-value-type-static?)
     = compute-variables-spec-rest-value-type(form, sig-spec);
   let sig
@@ -73,15 +73,22 @@ end program-warning;
 */
 
 define function compute-variable-specs-types
-    (form, variable-specs :: <variable-specs>) 
+    (form, sig-spec :: <signature-spec>, variable-specs :: <variable-specs>) 
  => (types :: <simple-object-vector>, static? :: <boolean>)
   let static-types = make(<vector>, size: size(variable-specs));
+  let tvs = sig-spec.spec-type-variables;
+  let type-vars = make(<table>);
+  for (tv in tvs)
+    type-vars[tv.spec-variable-name.fragment-name] := tv;
+  end;
   collecting (dynamic-types)
     for (var-spec in variable-specs,
 	 i :: <integer> from 0)
       let type 
         = ^top-level-eval-type
-             (spec-type-expression(var-spec), on-failure: #f);
+             (spec-type-expression(var-spec),
+              on-failure: #f,
+              type-variables: type-vars);
       static-types[i] :=
 	if (type)
 	  type
