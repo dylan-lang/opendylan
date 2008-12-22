@@ -238,6 +238,13 @@ end &class;
 define primary &class <object-signature> (<signature>)
 end &class;
 
+define primary &class <signature-with-type-variables> (<signature>)
+  &slot signature-type-variables :: <simple-object-vector>,
+    required-init-keyword: type-variables:;
+  constant &slot signature-signature :: <signature>,
+    required-init-keyword: signature:;
+end;
+
 define function compute-signature-definition-name 
     (type-name :: <symbol>, rest-value? :: <boolean>, size :: <integer>) 
  => (definition-name :: <symbol>)

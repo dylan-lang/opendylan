@@ -23,7 +23,7 @@ define inline-only function ^function-specializers (f :: <&function>)
  => (types)
   let sig  = ^function-signature(f);
   let reqs = ^signature-required(sig);
-  if (size(reqs) ~= ^signature-number-required(sig))
+  if (size(reqs) ~= ^signature-number-required(sig)) //how can this be true?
     copy-sequence(reqs, end: ^signature-number-required(sig))
   else
     reqs
@@ -178,7 +178,7 @@ end method;
 define abstract class <&referenced-object> (<referenced-object>) end;
 
 // Warning - run-time.h knows about this object's format!
-define primary compiler-model-class <method> (<referenced-object>, <function>) (<function>)
+define abstract primary compiler-model-class <method> (<referenced-object>, <function>) (<function>)
 end compiler-model-class;
 
 define method lambda-top-level? (f :: <&method>) => (well? :: <boolean>)
