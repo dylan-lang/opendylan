@@ -24,6 +24,7 @@ define test polymorphic-type-test0 ()
                 *demand-load-library-only?* = #f)
     let lib = compile-template(mycode, compiler: compiler);
     let conditions = collect-elements(lib.library-conditions-table);
+    format-out("conditions: %=\n", conditions);
     check-equal("not-used conditions was reported", 1, size(conditions));
   end;
 end;

@@ -22,3 +22,11 @@ define primary &class <variable-arity-different-type-variable> (<type-variable>)
   &slot type-variables :: <list>, init-value: #();
 end;
 */
+
+define method ^make (class == <&type-variable>, #rest all-keys, #key)
+ => (res :: <&type-variable>)
+  apply(^make, <&simple-type-variable>,
+	all-keys);
+end;
+	
+	

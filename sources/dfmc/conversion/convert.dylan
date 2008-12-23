@@ -2289,7 +2289,8 @@ define method convert-signature
           fast-constant-value(val-t),
           fast-constant-value(rest-val-t),
           if (key?) fast-constant-value(keys-t) else #[] end,
-          if (key?) fast-constant-value(key-t)  else #[] end))
+          if (key?) fast-constant-value(key-t)  else #[] end,
+	  #[]))
   else
     let next-t =
       make-object-reference(#t);
@@ -3822,19 +3823,20 @@ define method ^top-level-eval-using-optimization
 end method;
 
 define method &eval-type-expression
-    (env :: <table>, binding :: <module-binding>, #key on-failure = #f) => (models)
+    (env :: <simple-object-vector>, binding :: <module-binding>, #key on-failure = #f) => (models)
   let (model, found?) = binding-constant-model-object(binding);
   if (found?) model else on-failure end
 end method;
 
 define method &eval-type-expression
-    (env :: <table>, fragment :: <variable-name-fragment>, #key on-failure = #f) => (models)
-  let tv-value = element(env, fragment.fragment-name, default: #f);
-  if (tv-value)
-    //TODO: correctness (type of tv constrained).
-    // dylan-value only works for stuff in dylan library
-    //evaluate tv-value.spec-type-expression
-    dylan-value(#"<object>");
+    (env :: <simple-object-vector>, fragment :: <variable-name-fragment>, #key on-failure = #f) => (models)
+  let tv-value = choose(compose(curry(\==, fragment.fragment-name),
+				^type-variable-name),
+			env);
+  if (tv-value.size == 1)
+    tv-value.first;
+  elseif (tv-value.size > 1)
+    error("unexpected!")
   else
     let binding = lookup(#f, fragment);
     if (binding)
@@ -3846,7 +3848,7 @@ define method &eval-type-expression
 end method;
 
 // Must be a type.
-define method ^top-level-eval-type (fragment, #key on-failure = #f, type-variables = make(<table>))
+define method ^top-level-eval-type (fragment, #key on-failure = #f, type-variables = #[])
   // Try quickie top level eval.
   let result 
     //= ^top-level-eval(fragment, on-failure: on-failure);

@@ -171,11 +171,17 @@ define module-with-models dfmc-modeling
       &getter signature-values,
       &getter signature-rest-value,
       &getter signature-properties,
+      &getter signature-type-variables,
       ^signature-optionals?,
       ^signature-number-required, ^signature-number-required-setter,
       ^signature-number-values,
       ^pack-signature-properties,
       ^signature-number-keys,
+
+    <&type-variable>,
+      &getter type-variable-name,
+      &getter type-variable-kind,
+      &slot type-variable-constraints,
       
     <&domain>,
       ^domain-library,
