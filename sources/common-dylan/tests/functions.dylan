@@ -358,9 +358,12 @@ end function-test split;
 
 define common-extensions function-test join ()
   let abc = #("a", "b", "c");
-  check-condition("join empty sequence is an error",
-                  <error>,
-                  join(#(), ", "));
+  for (separator in #("blah", #[1], #(1)),
+       expected in #("", #[], #()))
+    check-equal("join empty sequence return type",
+                join(#[], separator),
+                expected);
+  end;
   check-equal("basic join",
               "a, b, c",
               join(abc, ", "));

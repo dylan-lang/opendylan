@@ -41,6 +41,9 @@ define module-spec common-extensions ()
       (<sequence>, <object>, #"key", #"test", #"count") => (<integer>);
   function split
       (<string>, <character>, #"key", #"start", #"end", #"trim?") => (<sequence>);
+  function join
+    (<sequence>, <sequence>, #"key" #"key", #"conjunction") => (<sequence>);
+
   open generic-function remove-all-keys! (<mutable-collection>) => ();
   open generic-function difference
       (<sequence>, <sequence>, #"key", #"test") => (<sequence>);

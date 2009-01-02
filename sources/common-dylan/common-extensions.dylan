@@ -279,7 +279,10 @@ define method split
         remove-if-empty: remove-if-empty)
 end method split;
 
-// Join several sequences together, including a separator between each sequence.
+// Join several sequences together, including a separator between each
+// sequence.  If the first argument is empty, an empty sequence of type
+// type-for-copy(separator) is returned.
+//
 define open generic join
     (items :: <sequence>, separator :: <sequence>, #key key, conjunction)
  => (joined :: <sequence>);
@@ -301,7 +304,7 @@ define method join
   end;
   let length :: <integer> = sequences.size;
   if (length == 0)
-    error("Attempt to join an empty sequence.")
+    make(type-for-copy(separator), size: 0)
   elseif (length == 1)
     sequences[0]
   else
