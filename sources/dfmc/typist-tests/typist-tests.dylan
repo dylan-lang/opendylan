@@ -17,17 +17,33 @@ define test noop ()
 end;
 
 define test polymorphic-type-test0 ()
-  let mycode = "define function my-+ (All(A)(a :: A, b :: A) => res :: A)"
-               "  a + b;"
+  let mycode = "define function my-+ (All(A)(x :: A, y :: A) => res :: A)"
+               "  x + y;"
                "end;";
   dynamic-bind (*progress-stream*           = #f,  // with-compiler-muzzled
                 *demand-load-library-only?* = #f)
     let lib = compile-template(mycode, compiler: compiler);
     let conditions = collect-elements(lib.library-conditions-table);
     format-out("conditions: %=\n", conditions);
-    check-equal("not-used conditions was reported", 1, size(conditions));
+    check-equal("not-used condition was reported", 1, size(conditions));
   end;
 end;
+
+define test polymorphic-type-test0a ()
+  let mycode = "define function my-+ (All(A)(x :: A, y :: A) => res :: A)"
+               "  x + y;"
+               "end;"
+               "let my-increment = curry(my-+, 1);"
+               "my-increment(\"foo\");";
+  dynamic-bind (*progress-stream*           = #f,  // with-compiler-muzzled
+                *demand-load-library-only?* = #f)
+    let lib = compile-template(mycode, compiler: compiler);
+    let conditions = collect-elements(lib.library-conditions-table);
+    format-out("conditions: %=\n", conditions);
+    check-equal("wrong type (<string> != <integer>) condition was reported", 1, size(conditions));
+  end;
+end;
+
 define test polymorphic-type-test ()
   let mycode = "define function mymap (All(A, B)(fun :: A => B, c :: limited(<collection>, of: A)) => res :: limited(<collection>, of: B))"
                "  map(fun, c);"
@@ -178,6 +194,7 @@ define suite typist-suite ()
 
   //test for type variable syntax
   test polymorphic-type-test0;
+  test polymorphic-type-test0a;
   test polymorphic-type-test;
 
   //tests which should succeed with polymorphic types
