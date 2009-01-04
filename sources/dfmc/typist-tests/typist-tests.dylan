@@ -29,6 +29,48 @@ define test polymorphic-type-test0 ()
   end;
 end;
 
+define test limited-function-type-test ()
+  let mycode = "define function my-function (x :: <integer> => <string>, y :: <integer>) => res :: <string>)"
+               "  x(y);"
+               "end;"
+               "my-function(method(x :: <integer>) \"foo\" end, 23);";
+  dynamic-bind (*progress-stream*           = #f,  // with-compiler-muzzled
+                *demand-load-library-only?* = #f)
+    let lib = compile-template(mycode, compiler: compiler);
+    let conditions = collect-elements(lib.library-conditions-table);
+    format-out("conditions: %=\n", conditions);
+    check-equal("no condition was reported", 0, size(conditions));
+  end;
+end;
+
+define test limited-function-type-test2 ()
+  let mycode = "define function my-function (x :: <integer> => <string>, y :: <integer>) => res :: <string>)"
+               "  x(y);"
+               "end;"
+               "my-function(method(x) \"foo\" end, 23);"; //here, <object> >= <integer>
+  dynamic-bind (*progress-stream*           = #f,  // with-compiler-muzzled
+                *demand-load-library-only?* = #f)
+    let lib = compile-template(mycode, compiler: compiler);
+    let conditions = collect-elements(lib.library-conditions-table);
+    format-out("conditions: %=\n", conditions);
+    check-equal("no condition was reported", 0, size(conditions));
+  end;
+end;
+
+define test limited-function-type-test3 ()
+  let mycode = "define function my-function (x :: <integer> => <string>, y :: <integer>) => res :: <string>)"
+               "  x(y);"
+               "end;"
+               "my-function(method(x :: <string>) \"foo\" end, 23);"; // <string> ! >= <integer>
+  dynamic-bind (*progress-stream*           = #f,  // with-compiler-muzzled
+                *demand-load-library-only?* = #f)
+    let lib = compile-template(mycode, compiler: compiler);
+    let conditions = collect-elements(lib.library-conditions-table);
+    format-out("conditions: %=\n", conditions);
+    check-equal("one condition was reported (wrong function type)", 1, size(conditions));
+  end;
+end;
+
 define test polymorphic-type-test0a ()
   let mycode = "define function my-+ (All(A)(x :: A, y :: A) => res :: A)"
                "  x + y;"
@@ -192,10 +234,15 @@ define suite typist-suite ()
   //tests for the test environment
   test noop;
 
-  //test for type variable syntax
+  //tests for type variable syntax
   test polymorphic-type-test0;
   test polymorphic-type-test0a;
   test polymorphic-type-test;
+
+  //tests for limited function types
+  test limited-function-type-test;
+  test limited-function-type-test2;
+  test limited-function-type-test3;
 
   //tests which should succeed with polymorphic types
   test reduce-literal-limited-list;
