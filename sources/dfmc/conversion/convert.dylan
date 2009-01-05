@@ -3822,10 +3822,38 @@ define method ^top-level-eval-using-optimization
   end;
 end method;
 
+define method ^eval-type-expression-sequence
+    (env :: <simple-object-vector>, fragments :: <sequence>, #key on-failure = #f) => (models)
+  block (return)
+    collecting (results)
+      for (fragment in fragments)
+        let model = &eval-type-expression(env, fragment, on-failure: $eval-failure);
+        if (model ~== $eval-failure)
+          collect-into(results, model);
+        else
+          return(on-failure);
+        end;
+      end;
+      collected(results);
+    end;
+  end;
+end method;
+
 define method &eval-type-expression
     (env :: <simple-object-vector>, binding :: <module-binding>, #key on-failure = #f) => (models)
   let (model, found?) = binding-constant-model-object(binding);
   if (found?) model else on-failure end
+end method;
+
+define method &eval-type-expression
+    (env :: <simple-object-vector>, fragment :: <literal-constant-fragment>, #key on-failure = #f) 
+ => (models)
+  let object = fragment-value(fragment);
+  if (instance?(object, <module-binding>))
+    &eval-type-expression(env, object, on-failure: on-failure)
+  else
+    make-compile-time-literal(object)
+  end;
 end method;
 
 define method &eval-type-expression
@@ -3847,6 +3875,27 @@ define method &eval-type-expression
   end;
 end method;
 
+define method &eval-type-expression 
+    (env :: <simple-object-vector>, fragment :: <function-call-fragment>, #key on-failure = #f) 
+      => (models)
+  let function = ^top-level-eval(fragment-function(fragment));
+  let override = lookup-compile-stage-function(function);
+  if (override)
+    let argument-values =
+      ^eval-type-expression-sequence(env, fragment-arguments(fragment));
+    if (argument-values)
+      block ()
+        apply(override, argument-values);
+      exception (<error>)
+        on-failure
+      end
+    else
+      on-failure
+    end;
+  else
+    on-failure
+  end;
+end method;
 // Must be a type.
 define method ^top-level-eval-type (fragment, #key on-failure = #f, type-variables = #[])
   // Try quickie top level eval.

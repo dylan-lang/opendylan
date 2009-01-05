@@ -20,7 +20,7 @@ define function subtype-tests()
   format-out("sub5 (DRM #t) fail %=\n", s5); //#f
   let s6 = subtype?(limited(<list>, of: <integer>),
                     limited(<list>, of: <string>));
-  format-out("sub6 (DRM #f) ok %=\n", s6); //#t
+  format-out("sub6 (DRM #f) fail %=\n", s6); //#t
   let s7 = subtype?(limited(<list>, of: <integer>),
                     limited(<collection>, of: <string>));
   format-out("sub7 (DRM #f) ok %=\n", s7); //#f

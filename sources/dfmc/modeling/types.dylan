@@ -280,17 +280,6 @@ define method ^instance? (o :: <model-value>, lft :: <&limited-function-type>) =
 end;
 
 define method ^instance? (f :: <&function>, lft :: <&limited-function-type>) => (result :: <boolean>)
-  ^subtype?(f, lft);
-end;
-
-define method ^subtype? (f :: <&limited-function-type>, g :: <&limited-function-type>) => (result :: <boolean>)
-  ^subtype-arguments-and-values?(f.^limited-function-argument-types,
-                                 g.^limited-function-argument-types,
-                                 f.^limited-function-return-values,
-                                 g.^limited-function-return-values)
-end;
-
-define method ^subtype? (f :: <&function>, lft :: <&limited-function-type>) => (result :: <boolean>)
   let signature = ^function-signature(f);
   let arguments = ^signature-required(signature);
   let values = ^signature-values(signature);
@@ -299,6 +288,18 @@ define method ^subtype? (f :: <&function>, lft :: <&limited-function-type>) => (
                                  lft.^limited-function-argument-types,
                                  values,
                                  lft.^limited-function-return-values)  
+end;
+
+//is this correct?
+define method ^instance? (f :: <&limited-function-type>, g :: <&limited-function-type>) => (result :: <boolean>)
+  ^subtype?(f, g)
+end;
+
+define method ^subtype? (f :: <&limited-function-type>, g :: <&limited-function-type>) => (result :: <boolean>)
+  ^subtype-arguments-and-values?(f.^limited-function-argument-types,
+                                 g.^limited-function-argument-types,
+                                 f.^limited-function-return-values,
+                                 g.^limited-function-return-values)
 end;
 
 define method ^subtype? (f :: <&type>, lft :: <&limited-function-type>) => (result :: <boolean>)

@@ -491,7 +491,7 @@ define method parse-variables-list (fragment)
         => collect-first-into
              (required, make(<typed-required-variable-spec>,
                              variable-name:   name,
-                             type-expression: as-expression( #{ limited(<function>, arguments: ?type1, values: ?type2) } )));
+                             type-expression: as-expression( #{ limited(<function>, arguments: vector(?type1), values: vector(?type2)) } )));
       { ?:name :: ?type:expression, ?parameters }
         => collect-first-into
              (required, make(<typed-required-variable-spec>,

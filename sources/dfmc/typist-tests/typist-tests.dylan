@@ -17,7 +17,7 @@ define test noop ()
 end;
 
 define test polymorphic-type-test0 ()
-  let mycode = "define function my-+ (All(A)(x :: A, y :: A) => res :: A)"
+  let mycode = "define function my-+ (All(A)(x :: A, y :: A) => (res :: A))"
                "  x + y;"
                "end;";
   dynamic-bind (*progress-stream*           = #f,  // with-compiler-muzzled
@@ -30,7 +30,7 @@ define test polymorphic-type-test0 ()
 end;
 
 define test limited-function-type-test ()
-  let mycode = "define function my-function (x :: <integer> => <string>, y :: <integer>) => res :: <string>)"
+  let mycode = "define function my-function (x :: <integer> => <string>, y :: <integer>) => (res :: <string>)"
                "  x(y);"
                "end;"
                "my-function(method(x :: <integer>) \"foo\" end, 23);";
@@ -44,7 +44,7 @@ define test limited-function-type-test ()
 end;
 
 define test limited-function-type-test2 ()
-  let mycode = "define function my-function (x :: <integer> => <string>, y :: <integer>) => res :: <string>)"
+  let mycode = "define function my-function (x :: <integer> => <string>, y :: <integer>) => (res :: <string>)"
                "  x(y);"
                "end;"
                "my-function(method(x) \"foo\" end, 23);"; //here, <object> >= <integer>
@@ -58,7 +58,7 @@ define test limited-function-type-test2 ()
 end;
 
 define test limited-function-type-test3 ()
-  let mycode = "define function my-function (x :: <integer> => <string>, y :: <integer>) => res :: <string>)"
+  let mycode = "define function my-function (x :: <integer> => <string>, y :: <integer>) => (res :: <string>)"
                "  x(y);"
                "end;"
                "my-function(method(x :: <string>) \"foo\" end, 23);"; // <string> ! >= <integer>
@@ -72,7 +72,7 @@ define test limited-function-type-test3 ()
 end;
 
 define test polymorphic-type-test0a ()
-  let mycode = "define function my-+ (All(A)(x :: A, y :: A) => res :: A)"
+  let mycode = "define function my-+ (All(A)(x :: A, y :: A) => (res :: A))"
                "  x + y;"
                "end;"
                "let my-increment = curry(my-+, 1);"
@@ -87,7 +87,7 @@ define test polymorphic-type-test0a ()
 end;
 
 define test polymorphic-type-test ()
-  let mycode = "define function mymap (All(A, B)(fun :: A => B, c :: limited(<collection>, of: A)) => res :: limited(<collection>, of: B))"
+  let mycode = "define function mymap (All(A, B)(fun :: A => B, c :: limited(<collection>, of: A)) => (res :: limited(<collection>, of: B)))"
                "  map(fun, c);"
                "end;"
                "define function my-+ (a :: <integer>, b :: <integer>) => (res :: <integer>)"
@@ -234,15 +234,15 @@ define suite typist-suite ()
   //tests for the test environment
   test noop;
 
-  //tests for type variable syntax
-  test polymorphic-type-test0;
-  test polymorphic-type-test0a;
-  test polymorphic-type-test;
-
   //tests for limited function types
   test limited-function-type-test;
   test limited-function-type-test2;
   test limited-function-type-test3;
+
+  //tests for type variable syntax
+  test polymorphic-type-test0;
+  test polymorphic-type-test0a;
+  test polymorphic-type-test;
 
   //tests which should succeed with polymorphic types
   test reduce-literal-limited-list;
