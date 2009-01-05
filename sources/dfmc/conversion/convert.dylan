@@ -3846,6 +3846,12 @@ define method &eval-type-expression
 end method;
 
 define method &eval-type-expression
+    (env :: <simple-object-vector>, fragment :: type-union(<vector-fragment>, <list-fragment>), #key on-failure = #f) 
+ => (models)
+  map(curry(&eval-type-expression, env), fragment.fragment-value);
+end;
+
+define method &eval-type-expression
     (env :: <simple-object-vector>, fragment :: <literal-constant-fragment>, #key on-failure = #f) 
  => (models)
   let object = fragment-value(fragment);

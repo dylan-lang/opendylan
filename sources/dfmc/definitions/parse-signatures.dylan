@@ -487,11 +487,15 @@ define method parse-variables-list (fragment)
         => collect-first-into
              (required, make(<required-variable-spec>,
                              variable-name:   name));
-      { ?:name :: ?type1:expression => ?type2:expression, ?parameters }
-        => collect-first-into
-             (required, make(<typed-required-variable-spec>,
-                             variable-name:   name,
-                             type-expression: as-expression( #{ limited(<function>, arguments: vector(?type1), values: vector(?type2)) } )));
+      { ?:name :: ?type1:* => ?type2:*, ?parameters }
+        => begin
+             let args = parse-function-type(type1);
+             let vals = parse-function-type(type2);
+             collect-first-into
+               (required, make(<typed-required-variable-spec>,
+                               variable-name:   name,
+                               type-expression: as-expression(#{ limited(<function>, arguments: ?args, values: ?vals) })));
+           end;
       { ?:name :: ?type:expression, ?parameters }
         => collect-first-into
              (required, make(<typed-required-variable-spec>,
@@ -640,6 +644,19 @@ define method parse-signature-as
 
   end macro-case;
 end method;
+
+define function parse-function-type (fragment :: <fragment>) => (result :: <variable-specs>)
+  collecting (required :: <variable-specs>)
+    macro-case(fragment)
+      { ?parameters:* } => collected(required);
+
+      parameters:
+        { } => #f;
+        { ?:name ?parameters }
+          => collect-first-into(required, name);
+    end;
+  end;
+end;
 
 define function parse-type-variable-list (fragment :: <fragment>) => (result :: <variable-specs>)
   collecting (required :: <variable-specs>)

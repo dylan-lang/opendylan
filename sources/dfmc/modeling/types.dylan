@@ -245,7 +245,7 @@ end method ^known-disjoint?;
 
 define &class <limited-function-type> (<limited-type>)
   constant &slot limited-function-argument-types :: <simple-object-vector>,
-    required-init-keyword: types:;
+    required-init-keyword: arguments:;
   constant &slot limited-function-return-values :: <simple-object-vector>,
     required-init-keyword: values:;
 end;
