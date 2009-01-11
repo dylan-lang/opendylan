@@ -156,6 +156,12 @@ define sealed method really-run-compilation-passes (code :: <&lambda>)
 	  opt-format-out("READY %=\n", code);
 	  for-all-lambdas (f in code)
 	    opt-format-out("PASS ONE %=\n", f);
+            if (*trace-optimizations?*)
+              block()
+                print-method-out(f);
+              exception (e :: <condition>)
+              end;
+            end if;
 	    // make sure we've got some DFM to play with
 	    // elaborate-top-level-definitions(f);
 	    // finish pseudo-SSA conversion
@@ -235,9 +241,12 @@ define sealed method really-run-compilation-passes (code :: <&lambda>)
 	optimization-queue(f) := #f;
         strip-environment(environment(f));
       end for-all-lambdas;
-      when (dumping-dfm?(code))
+      block()
+      //when (dumping-dfm?(code))
 	print-method-out(code);
-      end when;
+      //end when;
+      exception (e :: <condition>)
+      end;
     end block;
   end unless;
   end dynamic-bind;
