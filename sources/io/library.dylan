@@ -61,6 +61,9 @@ define module streams
 	 write-line,
 	 new-line;
 
+  // Used mainly by the above convenience functions and line-oriented functions.
+  create stream-sequence-class;
+
   // Positionable streams
   create <basic-positionable-stream>,
 	 <position-type>,
@@ -142,8 +145,7 @@ define module streams-internals
 	 ensure-readable, ensure-writable;
 
   // Querying streams
-  export stream-sequence-class,
-         stream-direction;
+  export stream-direction;
 
   // Positionable streams
   export current-position, current-position-setter,
