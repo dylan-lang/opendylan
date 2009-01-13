@@ -262,10 +262,10 @@ define method print-source-location
   let first-line = record.source-record-start-line;
   let name
     = select (record by instance?)
-	<source-record> => 
-	  record.source-record-name | $interactive-record;
-	<file-source-record> =>
-	  locator-name(record.source-record-location);
+        <file-source-record> =>
+          locator-name(record.source-record-location);
+        <source-record> =>
+          record.source-record-name | $interactive-record;
       end;
   let (start-line, end-line)
     = if (line-number)
