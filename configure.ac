@@ -18,6 +18,7 @@ i*86-*-darwin*) $2=x86-darwin; $3=sources/dfmc/c-run-time ;;
 powerpc-*-darwin*) $2=ppc-darwin; $3=sources/dfmc/c-run-time ;;
 powerpc-*-linux-gnu*) $2=ppc-linux; $3=sources/dfmc/c-run-time ;;
 amd64-*-freebsd*) $2=amd64-freebsd; $3=sources/dfmc/c-run-time ;;
+x86_64-*-linux*) $2=x86_64-linux; $3=sources/dfmc/c-run-time ;;
 *) AC_MSG_ERROR([The $1 platform is not supported.]) ;;
 esac])
  

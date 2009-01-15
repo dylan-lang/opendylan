@@ -313,11 +313,14 @@ define method make-project
     // choose harp for platforms that have it, c for others
     let back-end = 
       session-property(#"compiler-back-end")
-      | select(operating-system)
-          #"darwin" => #"c";
-	  #"freebsd" => if (processor == #"amd64") #"c" else #"harp" end;
-          otherwise => #"harp";
-        end;
+    | select (processor)
+        #"x86" =>
+          select(operating-system)
+            #"darwin" => #"c";
+            otherwise => #"harp";
+          end;
+        otherwise => #"c";
+      end;
 
     debug-out(#"project-manager", "Make-project: %s parent: %s\n", key, 
 	      parent & parent.project-name);
