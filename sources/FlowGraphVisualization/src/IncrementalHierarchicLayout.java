@@ -149,7 +149,7 @@ public class IncrementalHierarchicLayout extends DemoBase
 		paMode.setSpc(sourcePortMap);
 		paMode.setTpc(targetPortMap);
 		
-		initGraph();
+		//initGraph();
 	}
 
 	protected void registerViewModes() {
@@ -168,7 +168,7 @@ public class IncrementalHierarchicLayout extends DemoBase
 		return bar;
 	}
 	
-	protected void initGraph ()
+	protected void initGraph (ArrayList controlflow)
 	{
 		//a simple example for some control flow:
 		//"define function occurence-argument-wrong-typed (x)"

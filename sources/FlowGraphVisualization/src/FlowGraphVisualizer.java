@@ -1,26 +1,25 @@
-/****************************************************************************
- **
- ** This file is part of yFiles-2.6.0.1. 
- ** 
- ** yWorks proprietary/confidential. Use is subject to license terms.
- **
- ** Redistribution of this file or of an unauthorized byte-code version
- ** of this file is strictly forbidden.
- **
- ** Copyright (c) 2000-2009 by yWorks GmbH, Vor dem Kreuzberg 28, 
- ** 72070 Tuebingen, Germany. All rights reserved.
- **
- ***************************************************************************/
-
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 
 public class FlowGraphVisualizer {
-
-	public static void main(String[] args) {	
-		new TCPListener().listen();
+	private static final int port = 1234;
+	
+	public static void main(String[] args) {
 		DemoBase.initLnF();
-		IncrementalHierarchicLayout demo = new IncrementalHierarchicLayout();
-		demo.start("Incremental Hierarchic Layouter Demo");
+		FlowGraphVisualizer.listen();
 	}
 
+	static void listen () {
+		try {
+			ServerSocket sock = new ServerSocket(port);
+			while (true) {
+				Socket cli = sock.accept();
+				new LayouterClient(cli).start();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

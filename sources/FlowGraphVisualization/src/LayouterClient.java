@@ -11,6 +11,10 @@ public class LayouterClient extends Thread {
 	private Socket socket;
 	private BufferedReader reader;
 	private PrintWriter writer;
+	private IncrementalHierarchicLayout demo;
+	private Symbol identifier;
+	private final Symbol connection = new Symbol("connection-identifier"); 
+	private final Symbol receive_dfm = new Symbol("receive-dfm"); 
 	
 	public LayouterClient (Socket s) {
 		try {
@@ -22,22 +26,117 @@ public class LayouterClient extends Thread {
 		}
 	}
 	
-	public void run() {
+	private ArrayList readMessage () throws NumberFormatException, IOException {
 		char[] buffer = new char[6];
+		if (reader.read(buffer, 0, 6) == 6) {
+			String size = "";
+			for (int i = 0; i < 6; i++)
+				size += Character.toString(buffer[i]);
+			int message_length = Integer.parseInt(size, 16);
+			return read_s_expression(message_length);
+		}
+		return null;
+	}
+	
+	public void run() {
+		demo = new IncrementalHierarchicLayout();
+		//first ask for connection identifier
 		try {
-			while (true) {
-				if (reader.read(buffer, 0, 6) == 6) {
-					String size = "";
-					for (int i = 0; i < 6; i++)
-						size += Character.toString(buffer[i]);
-					int message_length = Integer.parseInt(size, 16);
-					ArrayList result = read_s_expression(message_length);
-					System.out.println("read [" + message_length + "]: " + result);
-				} else break;
-			}
+			ArrayList question = new ArrayList();
+			question.add(connection);
+			printMessage(question);
+			ArrayList answer = readMessage();
+			assert(answer.size() == 2);
+			assert(answer.get(0) instanceof Symbol);
+			assert(answer.get(1) instanceof Symbol);
+			if (((Symbol)answer.get(0)).isEqual(connection))
+				identifier = (Symbol)answer.get(1);
+			
+			//receive initial DFM
+			ArrayList question2 = new ArrayList();
+			question2.add(receive_dfm);
+			question2.add(identifier);
+			printMessage(question2);
+			answer = readMessage();
+			assert(answer.size() == 3);
+			assert(answer.get(0) instanceof Symbol);
+			assert(answer.get(1) instanceof Symbol);
+			assert(answer.get(2) instanceof ArrayList);
+			assert(((Symbol)answer.get(0)).isEqual(new Symbol("respond-dfm")));
+			assert(((Symbol)answer.get(1)).isEqual(identifier));
+			System.out.println("dfm is " + (ArrayList)answer.get(2));
+			demo.initGraph((ArrayList)answer.get(2));
+			demo.start(identifier.toString());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private int compute_s_expression_size (Symbol message) {
+		return message.toString().length();
+	}
+	private void write_s_expression (Symbol message) {
+		writer.write(message.toString());
+	}
+	
+	private int compute_s_expression_size (String message) {
+		return 2 + message.length();
+	}
+	private void write_s_expression (String message) {
+		writer.write((int)'"');
+		writer.write(message);
+		writer.write((int)'"');
+	}
+	
+	private int compute_s_expression_size (Integer message) {
+		return (Integer.toString(message)).length();
+	}
+	private void write_s_expression (Integer message) {
+		writer.write(Integer.toString(message));
+	}
+	
+	private int compute_s_expression_size (ArrayList message) {
+		int size = 1; //'(' + ')'
+		for (Object s : message) {
+			if (s instanceof String)
+				size += compute_s_expression_size((String)s);
+			else if (s instanceof Symbol)
+				size += compute_s_expression_size((Symbol)s);
+			else if (s instanceof Integer)
+				size += compute_s_expression_size((Integer)s);
+			else if (s instanceof ArrayList)
+				size += compute_s_expression_size((ArrayList)s);
+			size++; //' '
+		}
+		return size;
+	}
+	private void write_s_expression (ArrayList message) {
+		int i = message.size();
+		writer.write((int)'(');
+		for (Object s : message) {
+			i--;
+			if (s instanceof String)
+				write_s_expression((String)s);
+			else if (s instanceof Symbol)
+				write_s_expression((Symbol)s);
+			else if (s instanceof Integer)
+				write_s_expression((Integer)s);
+			else if (s instanceof ArrayList)
+				write_s_expression((ArrayList)s);
+			if (i > 0)
+				writer.write((int)' ');
+		}
+		writer.write((int)')');
+	}
+	
+	public void printMessage (ArrayList message) {
+		int size = compute_s_expression_size(message);
+		String sizeb = Integer.toHexString(size);
+		for (int i = sizeb.length(); i < 6; i++)
+			writer.write((int)'0');
+		writer.write(sizeb);
+		write_s_expression(message);
+		writer.flush();
 	}
 	
 	private enum ParseState { Number, Symbol, String, Nested };
@@ -64,7 +163,6 @@ public class LayouterClient extends Thread {
 		boolean first = true;
 		for (int i = 0; i < message_length; i++) {
 			char next = (char)reader.read();
-			//System.out.println("next " + next + " state " + state + " res " + result + " i is " + i + " lenght " + message_length);
 			switch (state) {
 			case Number:
 				if (isWhitespace(next) | next == ')') {
@@ -78,7 +176,7 @@ public class LayouterClient extends Thread {
 				break;
 			case Symbol:
 				if (isWhitespace(next) | next == ')') {
-					res.add(result);
+					res.add(new Symbol(result));
 					result = "";
 					state = ParseState.Nested;
 				} else
@@ -125,7 +223,6 @@ public class LayouterClient extends Thread {
 			}
 			first = false;
 		}
-		System.out.println("should not happen");
 		return res;
 	}
 
