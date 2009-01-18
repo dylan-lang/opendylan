@@ -3,7 +3,8 @@ synopsis: Tests which should succeed once the new typist is in place
 author: Hannes Mehnert
 copyright: 2008, all rights reversed
 
-define function compile-library-until-optimized (lib)
+define function compile-library-until-optimized (project)
+  let lib = project.project-current-compilation-context;
   block()
     compile-library-from-definitions(lib, force?: #t, skip-link?: #t,
                                      compile-if-built?: #t, skip-heaping?: #t,
@@ -12,10 +13,31 @@ define function compile-library-until-optimized (lib)
   end
 end function;
 
-define function compiler (lib)
+define function report-progress (i1 :: <integer>, i2 :: <integer>,
+                                 #key heading-label, item-label)
+  //if (item-label[0] = 'D' & item-label[1] = 'F' & item-label[2] = 'M')
+    format-out("%s %s\n", heading-label, item-label);
+  //end;
+end;
+
+define function visualize (context, object :: <object>)
+if (object.tail.head == #"occurence-argument-wrong-typed2")
+  let v = make(<dfmc-graph-visualization>, id: object.tail.head);
+  connect-to-server(v);
+  format-out("VIS %= %=\n", context, object);
+  write-to-visualizer(v, list(#"DFM", object));
+end;
+end;
+
+define function compiler (project)
+  let lib = project.project-current-compilation-context;
   block()
-    compile-library-from-definitions(lib, force?: #t, skip-link?: #t,
-                                     compile-if-built?: #t, skip-heaping?: #t);
+    dynamic-bind(*progress-library* = lib)
+      with-progress-reporting(project, report-progress, visualization-callback: visualize)
+        compile-library-from-definitions(lib, force?: #t, skip-link?: #t,
+                                         compile-if-built?: #t, skip-heaping?: #t);
+      end;
+    end;
   exception (e :: <abort-compilation>)
   end
 end;

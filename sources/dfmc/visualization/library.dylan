@@ -22,5 +22,10 @@ define module dfmc-visualization
   use sockets;
   use lisp-reader;  
 
-  export <dfmc-graph-visualization>, connect-to-server;
+  export <dfmc-graph-visualization>,
+    connect-to-server,
+    process-request,
+    read-from-visualizer,
+    write-to-visualizer,
+    visualizer-command-definer;
 end;

@@ -570,6 +570,9 @@ define function ensure-library-dfm-computed (ld :: <compilation-context>)
   timing-compilation-phase ("DFM generation" of ld)
     for-library-method ("Computing code models for", $compilation of m in ld)
       ensure-method-dfm-or-heap(m);
+      let str = make(<string-stream>); //, direction: #"output");
+      let sexp = print-method(str, m, output-format: #"sexp");
+      visualization-report(#"DFM", sexp);
     end;
   end;
   debug-out(#"internal", "DFM generation complete.\n");

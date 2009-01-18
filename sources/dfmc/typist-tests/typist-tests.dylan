@@ -16,6 +16,28 @@ define test noop ()
   end;
 end;
 
+define test visualization-test ()
+  let mycode = "define method occurence-argument-wrong-typed2 (x, y, z)"
+               "  if (x == y)"
+               "    if (y == z)"
+               "      x + y;"
+               "      \"all equal\";"
+               "    else"
+               "      x * y * z;"
+               "      \"x and z equal\";"
+               "    end;"
+               "  elseif (y == z)"
+               "    \"y is z\";"
+               "  else"
+               "    \"all different\";"
+               "  end;"
+               "end;";
+  dynamic-bind (*progress-stream*           = #f,  // with-compiler-muzzled
+                *demand-load-library-only?* = #f)
+    let lib = compile-template(mycode, compiler: compiler);
+    check-equal("no test to run", 0, 0);
+  end;
+end;
 define test polymorphic-type-test0 ()
   let mycode = "define function my-+ (All(A)(x :: A, y :: A) => (res :: A))"
                "  x + y;"
@@ -233,6 +255,7 @@ end;
 define suite typist-suite ()
   //tests for the test environment
   test noop;
+  test visualization-test;
 
   //tests for limited function types
   test limited-function-type-test;

@@ -50,8 +50,12 @@ define method output-lambda-computations
 end method;
 
 define compiler-sideways method print-method (stream :: <stream>, 
-      o :: <&lambda>, #key css) 
-  output-lambda-computations(stream, 0, o);
+      o :: <&lambda>, #key css, output-format) 
+  if (output-format == #"sexp")
+    output-lambda-computations-sexp(stream, o);
+  else
+    output-lambda-computations(stream, 0, o);
+  end;
 end method;
 
 define compiler-sideways method print-method-out (o :: <&lambda>, #key css) 
@@ -131,3 +135,96 @@ define method output-computation
      c.cleanups, c.next-computation);
   indentd-format(stream, depth, "END UNWIND-PROTECT\n");
 end method;
+
+//s-expression outputter
+define method output-lambda-computations-sexp
+    (stream :: <stream>, o :: <&lambda>, #key prefix)
+  let res = #();
+  if (prefix)
+    res := add!(res, prefix);
+  end;
+  res := add!(res, #"METHOD");
+  if (o.debug-string)
+    res := add!(res, o.debug-string);
+  end;
+  let str = make(<string-stream>, direction: #"output");
+  print-contents(signature-spec(o), str);
+  res := add!(res, str.stream-contents);
+  for-used-lambda (sub-f in o)
+    res := add!(res, output-lambda-computations-sexp(stream, sub-f, prefix: "LOCAL"));
+  end;
+  if (o.body)
+    res := concatenate(reverse!(res),
+                       output-computations-sexp(o.body.next-computation, #f));
+  end;
+  res;
+end;
+
+define method output-computations-sexp
+    (c :: <computation>, last)
+  let res = #();
+  iterate loop (c = c)
+    if (c & c ~== last)
+      /*
+      let loc = dfm-source-location(c);
+      if (loc)
+        print-source-record-source-location
+          (source-location-source-record(loc), loc, stream);
+      end;
+      */
+      res := add!(res, output-computation-sexp(c));
+      // format(stream, "In scope: %=\n", lexical-variables-in-scope(c));
+      loop(next-computation(c))
+    end if;
+  end iterate;
+  reverse!(res);
+end method;
+
+define method output-computation-sexp
+    (c :: <computation>)
+  let res = #();
+  let str = make(<string-stream>, direction: #"output");
+  print-computation(str, c);
+  res := add!(res, str.stream-contents);
+  if (c.temporary & c.temporary.used?)
+    res := add!(res, format-to-string("%s", c.temporary));
+    res := add!(res, #"temporary");
+  end if;
+  res;
+end method;
+
+define method output-computation-sexp
+    (c :: <loop>)
+  let res = #();
+  res := add!(res, output-computations-sexp(loop-body(c), last));
+  add!(res, #"LOOP")
+end method;
+
+define method output-computation-sexp
+    (c :: <if>)
+  let res = #();
+  res := add!(res, output-computations-sexp(c.alternative, c.next-computation));
+  res := add!(res, output-computations-sexp(c.consequent, c.next-computation));
+  res := add!(res, list(format-to-string("%=", c.test)));
+  add!(res, #"IF");
+end method;
+
+define method output-computation-sexp
+    (c :: <bind-exit>) 
+  let res = #();
+  res := add!(res, output-computations-sexp(c.body, c.next-computation));
+  res := add!(res, list(format-to-string("%=", c.entry-state)));
+  add!(res, #"BIND-EXIT");
+end method;
+
+define method output-computation-sexp
+    (c :: <unwind-protect>) 
+  let res = #();
+  res := add!(res, output-computations-sexp(c.cleanups, c.next-computation));
+  res := add!(res, output-computations-sexp(c.body, c.next-computation));
+  res := add!(res, list(format-to-string("%=", c.entry-state)));
+  add!(res, #"UNWIND-PROTECT");
+end method;
+
+// eof
+

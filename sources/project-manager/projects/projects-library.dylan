@@ -137,6 +137,9 @@ define module projects
 	      library-progress-report
 	    },
     export: all;
+  use dfmc-progress-reports,
+    import: { visualization-report },
+    export: all;
   use build-system,
     import: { default-build-script, default-build-script-setter },
     export: all;

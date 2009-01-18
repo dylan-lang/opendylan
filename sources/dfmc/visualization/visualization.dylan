@@ -37,6 +37,7 @@ define function connect-to-server
     v.socket := make(<tcp-socket>,
                      host: host | $default-host,
                      port: port | $default-port);
+    write-to-visualizer(v, list(#"connection-identifier", v.connection-id))
   end;
 end;
 
@@ -52,20 +53,21 @@ define visualizer-command connection-identifier ()
   write-to-visualizer(v, list(#"connection-identifier", v.connection-id));
 end;
 
-define visualizer-command receive-dfm (identifier :: <symbol>)
-  //get-my-dfm
-  write-to-visualizer(v, list(#"respond-dfm", identifier, #("foo", "bar")));
+define function process-request (v :: <dfmc-graph-visualization>)
+  let command = read-from-visualizer(v);
+  if (element($command-map, command.head, default: #f))
+    apply($command-map[command.head], v, command.tail);
+  end;
 end;
-  
+ 
 begin
   start-sockets();
+end;
+define function testme ()
   let v = make(<dfmc-graph-visualization>, id: #"fooobar");
   connect-to-server(v);
   while (#t)
-    let command = read-from-visualizer(v);
-    if (element($command-map, command.head, default: #f))
-      apply($command-map[command.head], v, command.tail);
-    end;
+    process-request(v);
   end;
 end;
 

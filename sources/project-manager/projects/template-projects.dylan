@@ -126,7 +126,7 @@ define function compile-template
     else
       // Else some internal compiler function, have to set up for it.
       canonicalize-project-sources(project, force-parse?: #t);
-      compiler(project.project-current-compilation-context)
+      compiler(project) //.project-current-compilation-context)
     end;
     let context = project.project-current-compilation-context;
     let sr* = compilation-context-sources(context);

@@ -85,6 +85,7 @@ define module dfmc-management
     library-progress-report,
     library-condition-report,
     conditions-for,
+    visualization-report,
 
     \timing-compilation-phase,
     do-timing-compilation-phase,
