@@ -148,8 +148,6 @@ public class IncrementalHierarchicLayout extends DemoBase
 		// deferred since the mode is created in the super class's constructor
 		paMode.setSpc(sourcePortMap);
 		paMode.setTpc(targetPortMap);
-		
-		//initGraph();
 	}
 
 	protected void registerViewModes() {
@@ -170,66 +168,36 @@ public class IncrementalHierarchicLayout extends DemoBase
 	
 	protected void initGraph (ArrayList controlflow)
 	{
-		//a simple example for some control flow:
-		//"define function occurence-argument-wrong-typed (x)"
-        //"  if (instance?(x, <symbol>))"
-        //"    my-+(x, x);"
-        //"  else"
-        //"    x;"
-        //"  end;"
-        //"end;";
-		//initial dfm:
-		/*
-		METHOD occurence-argument-wrong-typed (x) => (#rest results)
-		  t1 := [CALLo ^{<&generic> instance?}({{ x }}, ^{<&class> <symbol>})]
-		  IF (t1::{Type Estimate: <bottom>})
-		    *t2(0,#rest)::{Type Estimate: values(<integer>)} := [CALLx ^{<&method> my-+	(<integer>, <integer>)}({{ x }}, {{ x }})] // tail call
-		  ELSE
-		    *t3(0,#rest)::{Type Estimate: values(<object>)} := [VALUES {{ x }}]
-		  END IF
-		  *t4(0,#rest)::{Type Estimate: values(<object>)} := [IF-MERGE *t2(0,#rest)::{Type Estimate: values(<integer>)} *t3(0,#rest)::{Type Estimate: values(<object>)}]
-		  return *t4(0,#rest)::{Type Estimate: values(<object>)}
-		END
-		*/
-		//optimized dfm
-		/*
-		METHOD occurence-argument-wrong-typed (x) => (#rest results)
-		  t8::{Type Estimate: <boolean>} := [PRIMOP instance?({{ x }}, ^{<&class> <symbol>})]
-		  IF (t8::{Type Estimate: <boolean>})
-		    t5::{Type Estimate: <symbol>} := check-type {{ x }} :: ^{<&class> <symbol>}
-		    *t2(0,#rest)::{Type Estimate: values(<integer>)} := [CALLx ^{<&method> my-+	(<integer>, <integer>)}(t5::{Type Estimate: <symbol>}, t5::{Type Estimate: <symbol>})] // tail call
-		  ELSE
-		    *t3(0,#rest)::{Type Estimate: values(<object>)} := [VALUES {{ x }}]
-		  END IF
-		  *t4(0,#rest)::{Type Estimate: values(<object>)} := [IF-MERGE *t2(0,#rest)::{Type Estimate: values(<integer>)} *t3(0,#rest)::{Type Estimate: values(<object>)}]
-		  return *t4(0,#rest)::{Type Estimate: values(<object>)}
-		END
-		*/
 		byte oldMode = hierarchicLayouter.getLayoutMode();
 		hierarchicLayouter.setLayoutMode(IncrementalHierarchicLayouter.LAYOUT_MODE_FROM_SCRATCH);
+		//top level entry, sexp is (?prefix #"METHOD" methodname args->values instr*)
+		Node prev = null;
+		int index = 0;
+		Object first = controlflow.get(index);
+		if (first instanceof Symbol) {
+			assert(((Symbol)first).isEqual(new Symbol("METHOD")));
+		} else {
+			assert(first instanceof String);
+			index++;
+		}
+		index++;
 		
-		NodeRealizer n1 = new GenericNodeRealizer(graph.getDefaultNodeRealizer());
-		NodeLabel nl1 = n1.createNodeLabel();
-		nl1.setText("t1 := CALLo ^{<&generic> instance?}({{ x }}, ^{<&class> <symbol>})");
-		n1.setLabel(nl1);
-		n1.setWidth(nl1.getWidth() + 10);
-		Node t1 = graph.createNode(n1);
+		Object namei = controlflow.get(index);
+		assert(namei instanceof Symbol);
+		Symbol name = (Symbol)namei;
+		index++;
 		
-		NodeRealizer n2 = new GenericNodeRealizer(graph.getDefaultNodeRealizer());
-		n2.setLabelText("t1 :: {Type estimate: <botton>}");
-		Node if_node = graph.createNode(n2);
+		Object args_vals = controlflow.get(index);
+		assert(args_vals instanceof String);
+		index++;
 		
-		Node then = graph.createNode();
-		Node else_node = graph.createNode();
-		Node t4 = graph.createNode();
-		Node ret = graph.createNode();
-		graph.createEdge(t1, if_node);
-		graph.createEdge(if_node, then);
-		graph.createEdge(if_node, else_node);
-		graph.createEdge(then, t4);
-		graph.createEdge(else_node, t4);
-		graph.createEdge(t4, ret);
-		
+		prev = createNodeWithLabel(name.toString() + " " + args_vals);
+
+		for (int i = index; i < controlflow.size(); i++) {
+			Object o = controlflow.get(i);
+			prev = initGraphHelperHelper(o, prev);
+		}
+
 		try {
 			calcLayout();
 		} finally {
@@ -237,6 +205,116 @@ public class IncrementalHierarchicLayout extends DemoBase
 		}
 	}
 
+	
+	
+	private Node othernode = null;
+	
+	private Node initGraphHelperHelper (Object o, Node prev) {
+		Node curr = null;
+		if (o instanceof String)
+			curr = initGraphHelper((String)o, prev);
+		else if (o instanceof Symbol)
+			curr = initGraphHelper((Symbol)o, prev);
+		else if (o instanceof Integer)
+			curr = initGraphHelper((Integer)o, prev);
+		else if (o instanceof ArrayList)
+			curr = initGraphHelper((ArrayList)o, prev);
+		return curr;
+	}
+
+	private Node initGraphHelper (ArrayList nodelist, Node prev) {
+		Node last = null;
+		//temporary hack
+		String t = null;
+		int index = 0;
+		if (nodelist.get(0) instanceof Symbol) {
+			Symbol s = (Symbol)nodelist.get(0);
+			if (s.isEqual(new Symbol("temporary"))) {
+				assert(nodelist.get(1) instanceof String);
+				t = (String)nodelist.get(1);
+				index = 2;
+			} else if (s.isEqual(new Symbol("if"))) {
+				//test, exactly one element, a string
+				Object n = nodelist.get(1);
+				assert(n instanceof ArrayList);
+				ArrayList testnodes = (ArrayList) n;
+				assert(testnodes.size() == 1);
+				assert(testnodes.get(0) instanceof String);
+				Node test = createNodeWithLabel((String)testnodes.get(0));
+				changeLabel(test, "if ", true);
+				graph.createEdge(prev, test);
+				
+				//consequence
+				assert(nodelist.get(2) instanceof ArrayList);
+				Node consequence = initGraphHelperHelper((ArrayList)nodelist.get(2), test);
+
+				//alternative
+				assert(nodelist.get(3) instanceof ArrayList);
+				Node alternative = initGraphHelperHelper((ArrayList)nodelist.get(3), test);
+				othernode = consequence;
+				return alternative;
+			}
+		}
+		for (int i = index; i < nodelist.size(); i++) {
+			Object o = nodelist.get(i);
+			if (last == null) last = prev;
+			last = initGraphHelperHelper(o, last);
+			if (t != null) {
+				changeLabel(last, t + " = ", true);
+				t = null;
+			}
+		}
+		return last;
+	}
+	
+	private Node initGraphHelper (String node, Node prev) {
+		Node t = createNodeWithLabel(node);
+		graph.createEdge(prev, t);
+		if (othernode != null) {
+			graph.createEdge(othernode, t);
+			othernode = null;
+		}
+		return t;
+	}
+	
+	private Node initGraphHelper (Symbol node, Node prev) {
+		Node t = createNodeWithLabel(node.toString());
+		graph.createEdge(prev, t);
+		if (othernode != null) {
+			graph.createEdge(othernode, t);
+			othernode = null;
+		}
+		return t;
+	}
+	
+	private Node initGraphHelper (Integer node, Node prev) {
+		Node t = createNodeWithLabel(Integer.toString(node));
+		graph.createEdge(prev, t);
+		if (othernode != null) {
+			graph.createEdge(othernode, t);
+			othernode = null;
+		}
+		return t;
+	}
+	
+	private Node createNodeWithLabel (String label) {
+		NodeRealizer n1 = new GenericNodeRealizer(graph.getDefaultNodeRealizer());
+		NodeLabel nl1 = n1.createNodeLabel();
+		nl1.setText(label);
+		n1.setLabel(nl1);
+		n1.setWidth(nl1.getWidth() + 10);
+		return graph.createNode(n1);
+	}
+	
+	private void changeLabel (Node n, String app, boolean append) {
+		NodeLabel nl = graph.getRealizer(n).getLabel();
+		if (append)
+			nl.setText(app + nl.getText());
+		else
+			nl.setText(app);
+		graph.getRealizer(n).setWidth(nl.getWidth());
+	}
+	
 	/**
 	 * Simple Layout action (incremental)
 	 */

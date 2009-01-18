@@ -42,9 +42,9 @@ public class LayouterClient extends Thread {
 		demo = new IncrementalHierarchicLayout();
 		//first ask for connection identifier
 		try {
-			ArrayList question = new ArrayList();
-			question.add(connection);
-			printMessage(question);
+			//ArrayList question = new ArrayList();
+			//question.add(connection);
+			//printMessage(question);
 			ArrayList answer = readMessage();
 			assert(answer.size() == 2);
 			assert(answer.get(0) instanceof Symbol);
@@ -53,19 +53,17 @@ public class LayouterClient extends Thread {
 				identifier = (Symbol)answer.get(1);
 			
 			//receive initial DFM
-			ArrayList question2 = new ArrayList();
-			question2.add(receive_dfm);
-			question2.add(identifier);
-			printMessage(question2);
+			//ArrayList question2 = new ArrayList();
+			//question2.add(receive_dfm);
+			//question2.add(identifier);
+			//printMessage(question2);
 			answer = readMessage();
-			assert(answer.size() == 3);
+			assert(answer.size() > 2);
 			assert(answer.get(0) instanceof Symbol);
-			assert(answer.get(1) instanceof Symbol);
-			assert(answer.get(2) instanceof ArrayList);
-			assert(((Symbol)answer.get(0)).isEqual(new Symbol("respond-dfm")));
-			assert(((Symbol)answer.get(1)).isEqual(identifier));
-			System.out.println("dfm is " + (ArrayList)answer.get(2));
-			demo.initGraph((ArrayList)answer.get(2));
+			assert(answer.get(1) instanceof ArrayList);
+			assert(((Symbol)answer.get(0)).isEqual(new Symbol("DFM")));
+			System.out.println("dfm is " + (ArrayList)answer.get(1));
+			demo.initGraph((ArrayList)answer.get(1));
 			demo.start(identifier.toString());
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -155,14 +153,16 @@ public class LayouterClient extends Thread {
 	}
 
 	private int usedTokens = 0;
-	
+	private int level = 0;
 	private ArrayList read_s_expression (int message_length) throws IOException {
+		level++;
 		ArrayList res = new ArrayList();
 		ParseState state = ParseState.Nested;
 		String result = "";
 		boolean first = true;
 		for (int i = 0; i < message_length; i++) {
 			char next = (char)reader.read();
+			//System.out.println("level:" + level + " result:" + result + " i:" + i + " state:" + state + " next:" + next);
 			switch (state) {
 			case Number:
 				if (isWhitespace(next) | next == ')') {
@@ -204,7 +204,7 @@ public class LayouterClient extends Thread {
 					//do nothing
 					break;
 				} else if (next == '(') {
-					if (first) break;
+					if (first && level == 1) break;
 					res.add(read_s_expression(message_length - i - 1));
 					i += usedTokens;
 				} else if (next == '"') {
@@ -214,6 +214,7 @@ public class LayouterClient extends Thread {
 					result += Character.toString(next);
 				} else if (next == ')') {
 					usedTokens = i + 1;
+					level--;
 					return res;
 				} else {
 					state = ParseState.Symbol;
@@ -223,6 +224,8 @@ public class LayouterClient extends Thread {
 			}
 			first = false;
 		}
+		level--;
+		//System.out.println("leaving outer level");
 		return res;
 	}
 
