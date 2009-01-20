@@ -141,7 +141,7 @@ define method output-lambda-computations-sexp
     (stream :: <stream>, o :: <&lambda>, #key prefix)
   let res = #();
   if (prefix)
-    res := add!(res, prefix);
+    res := add!(res, as(<symbol>, prefix));
   end;
   res := add!(res, #"METHOD");
   if (o.debug-string)
@@ -197,6 +197,7 @@ define method output-computation-sexp
     (c :: <loop>)
   let res = #();
   res := add!(res, output-computations-sexp(loop-body(c), last));
+  //res := add!(res, output-computations-sexp(loop-merges(c), #f));
   add!(res, #"LOOP")
 end method;
 

@@ -38,6 +38,83 @@ define test visualization-test ()
     check-equal("no test to run", 0, 0);
   end;
 end;
+
+define test visualization-test2 ()
+  let mycode = "define method occurence-argument-wrong-typed2 (x, y, z)"
+               "  while(#t)"
+               "    1 + 2;"
+               "  end;"
+               "end;";
+  dynamic-bind (*progress-stream*           = #f,  // with-compiler-muzzled
+                *demand-load-library-only?* = #f)
+    let lib = compile-template(mycode, compiler: compiler);
+    check-equal("no test to run", 0, 0);
+  end;
+end;
+
+define test visualization-test2a ()
+  let mycode = "define method occurence-argument-wrong-typed2 (x, y, z)"
+               "  let i = 0;"
+               "  while(i < 42)"
+               "    i := i + 1;"
+               "  end;"
+               "end;";
+  dynamic-bind (*progress-stream*           = #f,  // with-compiler-muzzled
+                *demand-load-library-only?* = #f)
+    let lib = compile-template(mycode, compiler: compiler);
+    check-equal("no test to run", 0, 0);
+  end;
+end;
+
+define test visualization-test2b ()
+  let mycode = "define method occurence-argument-wrong-typed2 (x, y, z)"
+               "  let i = 0;"
+               "  while(i < 42)"
+               "    i := i + 1;"
+               "    while (i < 20)"
+               "      i := i * i;"
+               "    end;"
+               "  end;"
+               "end;";
+  dynamic-bind (*progress-stream*           = #f,  // with-compiler-muzzled
+                *demand-load-library-only?* = #f)
+    let lib = compile-template(mycode, compiler: compiler);
+    check-equal("no test to run", 0, 0);
+  end;
+end;
+define test visualization-test3 ()
+  let mycode = "define method occurence-argument-wrong-typed2 (x, y, z)"
+               "  block(t)"
+               "    1 + 2;"
+               "    if (x == y)"
+               "      t();"
+               "    end;"
+               "  cleanup"
+               "    x := 0;"
+               "  end;"
+               "end;";
+  dynamic-bind (*progress-stream*           = #f,  // with-compiler-muzzled
+                *demand-load-library-only?* = #f)
+    let lib = compile-template(mycode, compiler: compiler);
+    check-equal("no test to run", 0, 0);
+  end;
+end;
+
+define test visualization-test4 ()
+  let mycode = "define method occurence-argument-wrong-typed2 (x, y, z)"
+               "  let t = 42;"
+               "  dynamic-bind(t = 0)"
+               "    t * t;"
+               "  end;"
+               "  t + t;"
+               "end;";
+  dynamic-bind (*progress-stream*           = #f,  // with-compiler-muzzled
+                *demand-load-library-only?* = #f)
+    let lib = compile-template(mycode, compiler: compiler);
+    check-equal("no test to run", 0, 0);
+  end;
+end;
+
 define test polymorphic-type-test0 ()
   let mycode = "define function my-+ (All(A)(x :: A, y :: A) => (res :: A))"
                "  x + y;"
@@ -256,6 +333,11 @@ define suite typist-suite ()
   //tests for the test environment
   test noop;
   test visualization-test;
+  test visualization-test2;
+  test visualization-test2a;
+  test visualization-test2b;
+  test visualization-test3;
+  test visualization-test4;
 
   //tests for limited function types
   test limited-function-type-test;
