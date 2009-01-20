@@ -58,10 +58,10 @@ public class LayouterClient extends Thread {
 			//question2.add(identifier);
 			//printMessage(question2);
 			answer = readMessage();
-			assert(answer.size() > 2);
+			assert(answer.size() == 2);
 			assert(answer.get(0) instanceof Symbol);
 			assert(answer.get(1) instanceof ArrayList);
-			assert(((Symbol)answer.get(0)).isEqual(new Symbol("DFM")));
+			assert(((Symbol)answer.get(0)).isEqual(new Symbol("dfm")));
 			System.out.println("dfm is " + (ArrayList)answer.get(1));
 			demo.initGraph((ArrayList)answer.get(1));
 			demo.start(identifier.toString());

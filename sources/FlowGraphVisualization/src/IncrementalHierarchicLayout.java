@@ -173,28 +173,21 @@ public class IncrementalHierarchicLayout extends DemoBase
 		hierarchicLayouter.setLayoutMode(IncrementalHierarchicLayouter.LAYOUT_MODE_FROM_SCRATCH);
 		//top level entry, sexp is (?prefix #"METHOD" methodname args->values instr*)
 		Node prev = null;
-		int index = 0;
-		Object first = controlflow.get(index);
-		if (first instanceof Symbol) {
-			assert(((Symbol)first).isEqual(new Symbol("METHOD")));
-		} else {
-			assert(first instanceof String);
-			index++;
-		}
-		index++;
+
+		Object first = controlflow.get(0);
+		assert (first instanceof Symbol);
+		assert(((Symbol)first).isEqual(new Symbol("method")));
 		
-		Object namei = controlflow.get(index);
+		Object namei = controlflow.get(1);
 		assert(namei instanceof Symbol);
 		Symbol name = (Symbol)namei;
-		index++;
 		
-		Object args_vals = controlflow.get(index);
+		Object args_vals = controlflow.get(2);
 		assert(args_vals instanceof String);
-		index++;
 		
 		prev = createNodeWithLabel(name.toString() + " " + args_vals);
 
-		for (int i = index; i < controlflow.size(); i++) {
+		for (int i = 3; i < controlflow.size(); i++) {
 			Object o = controlflow.get(i);
 			prev = initGraphHelperHelper(o, prev);
 		}
@@ -328,14 +321,15 @@ public class IncrementalHierarchicLayout extends DemoBase
 				return lastbody;
 			} else if (s.isEqual(new Symbol("local"))) {
 				//local method: local, method, name, args, body
-				assert(nodelist.size() == 5);
+				assert(nodelist.size() > 4);
 				assert(nodelist.get(1) instanceof Symbol);
 				assert(((Symbol)nodelist.get(1)).isEqual(new Symbol("method")));
 				assert(nodelist.get(2) instanceof Symbol);
 				assert(nodelist.get(3) instanceof String);
 				Node header = createNodeWithLabel("local method " + ((Symbol)nodelist.get(2)).toString() + " " + (String)nodelist.get(3));
-				assert(nodelist.get(4) instanceof ArrayList);
-				initGraphHelper((ArrayList)nodelist.get(4), header);
+				Node p = header;
+				for (int i = 4; i < nodelist.size(); i++)
+					p = initGraphHelperHelper(nodelist.get(i), p);
 				return prev;
 			}
 		} 
