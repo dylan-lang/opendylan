@@ -60,7 +60,8 @@ define inline-only function get-application-commandline () => (res :: <string>)
   cmdline
 end;
 
-define inline-only function get-application-filename () => (res :: <string>)
+define inline-only function get-application-filename
+    () => (filename :: false-or(<byte-string>))
   let pid
     = raw-as-integer(%call-c-function("getpid")
 		       () => (pid :: <raw-c-signed-int>)
