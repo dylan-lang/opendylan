@@ -11,10 +11,8 @@ public class LayouterClient extends Thread {
 	private Socket socket;
 	private BufferedReader reader;
 	private PrintWriter writer;
-	private IncrementalHierarchicLayout demo;
-	private Symbol identifier;
 	private final Symbol connection = new Symbol("connection-identifier"); 
-	private final Symbol receive_dfm = new Symbol("receive-dfm"); 
+	private ArrayList<IncrementalHierarchicLayout> graphs = new ArrayList<IncrementalHierarchicLayout>();
 	
 	public LayouterClient (Socket s) {
 		try {
@@ -24,6 +22,10 @@ public class LayouterClient extends Thread {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public IncrementalHierarchicLayout getGraph (int index) {
+		return graphs.get(index);
 	}
 	
 	private ArrayList readMessage () throws NumberFormatException, IOException {
@@ -39,7 +41,6 @@ public class LayouterClient extends Thread {
 	}
 	
 	public void run() {
-		demo = new IncrementalHierarchicLayout();
 		//first ask for connection identifier
 		try {
 			//ArrayList question = new ArrayList();
@@ -49,22 +50,30 @@ public class LayouterClient extends Thread {
 			assert(answer.size() == 2);
 			assert(answer.get(0) instanceof Symbol);
 			assert(answer.get(1) instanceof Symbol);
-			if (((Symbol)answer.get(0)).isEqual(connection))
-				identifier = (Symbol)answer.get(1);
+			assert(((Symbol)answer.get(0)).isEqual(connection));
+			Symbol identifier = (Symbol)answer.get(1);
 			
-			//receive initial DFM
-			//ArrayList question2 = new ArrayList();
-			//question2.add(receive_dfm);
-			//question2.add(identifier);
-			//printMessage(question2);
-			answer = readMessage();
-			assert(answer.size() == 2);
-			assert(answer.get(0) instanceof Symbol);
-			assert(answer.get(1) instanceof ArrayList);
-			assert(((Symbol)answer.get(0)).isEqual(new Symbol("dfm")));
-			System.out.println("dfm is " + (ArrayList)answer.get(1));
-			demo.initGraph((ArrayList)answer.get(1));
-			demo.start(identifier.toString());
+			DemoBase demo = new DemoBase(identifier.toString(), this);
+			demo.start();
+			
+			while (true) {
+				answer = readMessage();
+				assert(answer.size() == 3);
+				assert(answer.get(0) instanceof Symbol);
+				assert(answer.get(1) instanceof Integer);
+				assert(answer.get(2) instanceof ArrayList);
+				if (((Symbol)answer.get(0)).isEqual(new Symbol("initial-dfm"))) {
+					System.out.println("initial dfm for " + (Integer)answer.get(1) + " is " + (ArrayList)answer.get(2));
+					IncrementalHierarchicLayout graph = new IncrementalHierarchicLayout(demo);
+					ArrayList cf = (ArrayList)answer.get(2);
+					assert(cf.size() > 1);
+					assert(cf.get(1) instanceof Symbol); //method name
+					graphs.add(graph);
+					demo.addGraph((Integer)answer.get(1), ((Symbol)(cf.get(1))).toString());
+					graph.activateLayouter();
+					graph.initGraph((ArrayList)answer.get(2));
+				}
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
