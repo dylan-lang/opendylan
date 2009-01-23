@@ -15,7 +15,7 @@ define function write-to-visualizer (v :: <dfmc-graph-visualization>, data)
   let newstream = make(<string-stream>, direction: #"output");
   print-s-expression(newstream, data);
   let s-expression = stream-contents(newstream);
-  format(*standard-error*, "write: %s\n", s-expression);
+  //format(*standard-error*, "write: %s\n", s-expression);
   let siz = integer-to-string(s-expression.size, base: 16, size: 6);
   format(v.socket, "%s%s", siz, s-expression);
   force-output(v.socket);

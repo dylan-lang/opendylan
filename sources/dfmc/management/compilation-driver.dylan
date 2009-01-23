@@ -567,14 +567,17 @@ end function;
 
 define function ensure-library-dfm-computed (ld :: <compilation-context>)
   debug-out(#"internal", "DFM generation: %s\n", ld);
+  let i :: <integer> = 0;
   timing-compilation-phase ("DFM generation" of ld)
     for-library-method ("Computing code models for", $compilation of m in ld)
       ensure-method-dfm-or-heap(m);
-      let str = make(<string-stream>); //, direction: #"output");
+      let str = make(<string-stream>);
       let sexp = print-method(str, m, output-format: #"sexp");
-      visualization-report(#"DFM", sexp);
+      visualization-report(#"initial-dfm", list(i, sexp));
+      i := i + 1;
     end;
   end;
+  visualization-report(#"finished", #());
   debug-out(#"internal", "DFM generation complete.\n");
 end function;
 

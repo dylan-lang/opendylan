@@ -17,7 +17,7 @@ define test noop ()
 end;
 
 define test visualization-test ()
-  let mycode = "define method occurence-argument-wrong-typed2 (x, y, z)"
+  let mycode = "define method if-nested (x, y, z)"
                "  if (x == y)"
                "    if (y == z)"
                "      x + y;"
@@ -31,43 +31,25 @@ define test visualization-test ()
                "  else"
                "    \"all different\";"
                "  end;"
-               "end;";
-  dynamic-bind (*progress-stream*           = #f,  // with-compiler-muzzled
-                *demand-load-library-only?* = #f)
-    let lib = compile-template(mycode, compiler: compiler);
-    check-equal("no test to run", 0, 0);
-  end;
-end;
-
-define test visualization-test2 ()
-  let mycode = "define method occurence-argument-wrong-typed2 (x, y, z)"
+               "end;"
+               "define method for-loop (x, y, z)"
+               "  let f = 20;"
+               "  for (i from 0 below 20)"
+               "    x := y + 1;"
+               "  end;"
+               "end;"
+               "define method while-true-loop (x, y, z)"
                "  while(#t)"
                "    1 + 2;"
                "  end;"
-               "end;";
-  dynamic-bind (*progress-stream*           = #f,  // with-compiler-muzzled
-                *demand-load-library-only?* = #f)
-    let lib = compile-template(mycode, compiler: compiler);
-    check-equal("no test to run", 0, 0);
-  end;
-end;
-
-define test visualization-test2a ()
-  let mycode = "define method occurence-argument-wrong-typed2 (x, y, z)"
+               "end;"
+               "define method while-loop (x, y, z)"
                "  let i = 0;"
                "  while(i < 42)"
                "    i := i + 1;"
                "  end;"
-               "end;";
-  dynamic-bind (*progress-stream*           = #f,  // with-compiler-muzzled
-                *demand-load-library-only?* = #f)
-    let lib = compile-template(mycode, compiler: compiler);
-    check-equal("no test to run", 0, 0);
-  end;
-end;
-
-define test visualization-test2b ()
-  let mycode = "define method occurence-argument-wrong-typed2 (x, y, z)"
+               "end;"
+               "define method while-loop-nested (x, y, z)"
                "  let i = 0;"
                "  while(i < 42)"
                "    i := i + 1;"
@@ -75,15 +57,8 @@ define test visualization-test2b ()
                "      i := i * i;"
                "    end;"
                "  end;"
-               "end;";
-  dynamic-bind (*progress-stream*           = #f,  // with-compiler-muzzled
-                *demand-load-library-only?* = #f)
-    let lib = compile-template(mycode, compiler: compiler);
-    check-equal("no test to run", 0, 0);
-  end;
-end;
-define test visualization-test3 ()
-  let mycode = "define method occurence-argument-wrong-typed2 (x, y, z)"
+               "end;"
+               "define method block-cleanup (x, y, z)"
                "  block(t)"
                "    1 + 2;"
                "    if (x == y)"
@@ -92,16 +67,8 @@ define test visualization-test3 ()
                "  cleanup"
                "    x := 0;"
                "  end;"
-               "end;";
-  dynamic-bind (*progress-stream*           = #f,  // with-compiler-muzzled
-                *demand-load-library-only?* = #f)
-    let lib = compile-template(mycode, compiler: compiler);
-    check-equal("no test to run", 0, 0);
-  end;
-end;
-
-define test visualization-test4 ()
-  let mycode = "define method occurence-argument-wrong-typed2 (x, y, z)"
+               "end;"
+               "define method dyn-bind (x, y, z)"
                "  let t = 42;"
                "  dynamic-bind(t = 0)"
                "    t * t;"
@@ -333,11 +300,6 @@ define suite typist-suite ()
   //tests for the test environment
   test noop;
   test visualization-test;
-  test visualization-test2;
-  test visualization-test2a;
-  test visualization-test2b;
-  test visualization-test3;
-  test visualization-test4;
 
   //tests for limited function types
   test limited-function-type-test;

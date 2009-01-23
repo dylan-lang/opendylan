@@ -16,20 +16,24 @@ end function;
 define function report-progress (i1 :: <integer>, i2 :: <integer>,
                                  #key heading-label, item-label)
   //if (item-label[0] = 'D' & item-label[1] = 'F' & item-label[2] = 'M')
-    format-out("%s %s\n", heading-label, item-label);
+  //  format-out("%s %s\n", heading-label, item-label);
   //end;
 end;
 
-define function visualize (context, object :: <object>)
-if (object.tail.head == #"occurence-argument-wrong-typed2")
-  let v = make(<dfmc-graph-visualization>, id: object.tail.head);
-  connect-to-server(v);
-  format-out("VIS %= %=\n", context, object);
-  write-to-visualizer(v, list(#"DFM", object));
-end;
+define thread variable *vis* :: false-or(<dfmc-graph-visualization>) = #f; 
+define function visualize (key :: <symbol>, object :: <object>)
+//format-out("VIS %= %=\n", context, object);
+  if (key == #"initial-dfm")
+    write-to-visualizer(*vis*, list(key, object.head, object.tail.head));
+  end;
+  if (key == #"finished")
+    format-out("now we could wait for input and process requests");
+  end;
 end;
 
 define function compiler (project)
+  *vis* := make(<dfmc-graph-visualization>, id: project.project-library-name);
+  connect-to-server(*vis*);
   let lib = project.project-current-compilation-context;
   block()
     dynamic-bind(*progress-library* = lib)

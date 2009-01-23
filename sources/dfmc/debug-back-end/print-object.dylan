@@ -198,13 +198,15 @@ end method;
 
 // hack to get a decent debug name out of an ^debug-name
 
-define method debug-string-using (debug-name)
+define function debug-string-using (debug-name)
   if (instance?(debug-name, <variable-name-fragment>))
     debug-name.fragment-identifier
+  elseif (debug-name == #f)
+    #"no-name"
   else
     as(<symbol>, debug-name)
   end
-end method debug-string-using;
+end function debug-string-using;
 
 define method debug-string (object)
   debug-string-using(object.^debug-name)
