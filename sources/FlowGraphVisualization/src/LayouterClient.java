@@ -62,8 +62,9 @@ public class LayouterClient extends Thread {
 				assert(answer.get(0) instanceof Symbol);
 				assert(answer.get(1) instanceof Integer);
 				assert(answer.get(2) instanceof ArrayList);
-				if (((Symbol)answer.get(0)).isEqual(new Symbol("initial-dfm"))) {
-					System.out.println("initial dfm for " + (Integer)answer.get(1) + " is " + (ArrayList)answer.get(2));
+				Symbol key = (Symbol)answer.get(0);
+				if (key.isEqual("initial-dfm") || key.isEqual("optimized-dfm")) {
+					System.out.println(key.toString() + " for " + (Integer)answer.get(1) + " is " + (ArrayList)answer.get(2));
 					IncrementalHierarchicLayout graph = new IncrementalHierarchicLayout(demo);
 					ArrayList cf = (ArrayList)answer.get(2);
 					assert(cf.size() > 1);

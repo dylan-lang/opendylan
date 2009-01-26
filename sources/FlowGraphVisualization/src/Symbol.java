@@ -10,4 +10,8 @@ public class Symbol {
 	public boolean isEqual (Symbol another) {
 		return another.toString().equals(s);
 	}
+	
+	public boolean isEqual (String another) {
+		return another.equals(s);
+	}
 }

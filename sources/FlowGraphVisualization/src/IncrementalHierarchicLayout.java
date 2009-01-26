@@ -130,7 +130,7 @@ public class IncrementalHierarchicLayout
 
 		Object first = controlflow.get(0);
 		assert (first instanceof Symbol);
-		assert(((Symbol)first).isEqual(new Symbol("method")));
+		assert(((Symbol)first).isEqual("method"));
 		
 		Object namei = controlflow.get(1);
 		assert(namei instanceof Symbol);
@@ -147,7 +147,7 @@ public class IncrementalHierarchicLayout
 		}
 		
 		for (Node n : todelete) {
-			assert(n.outDegree() == 1);
+			//assert(n.outDegree() == 1); //well, unwind-protect adds an edge, which is safe to remove
 			assert(n.inDegree() == 1);
 			Node previous = n.firstInEdge().source();
 			Node next = n.firstOutEdge().target();
@@ -192,11 +192,11 @@ public class IncrementalHierarchicLayout
 		int index = 0;
 		if (nodelist.get(0) instanceof Symbol) {
 			Symbol s = (Symbol)nodelist.get(0);
-			if (s.isEqual(new Symbol("temporary"))) {
+			if (s.isEqual("temporary")) {
 				assert(nodelist.get(1) instanceof String);
 				t = (String)nodelist.get(1);
 				index = 2;
-			} else if (s.isEqual(new Symbol("if"))) {
+			} else if (s.isEqual("if")) {
 				//test, exactly one element, a string
 				Object n = nodelist.get(1);
 				assert(n instanceof ArrayList);
@@ -242,13 +242,13 @@ public class IncrementalHierarchicLayout
 
 				othernode = alternative;
 				return consequence;
-			} else if (s.isEqual(new Symbol("loop"))) {
+			} else if (s.isEqual("loop")) {
 				Node loop = createNodeWithLabel("loop");
 				graph.createEdge(prev, loop);
 				assert(nodelist.size() == 2);
 				assert(nodelist.get(1) instanceof ArrayList);
 				return loopHelper((ArrayList)nodelist.get(1), loop);
-			} else if (s.isEqual(new Symbol("unwind-protect"))) {
+			} else if (s.isEqual("unwind-protect")) {
 				assert(nodelist.size() == 4);
 				//entry-state
 				assert(nodelist.get(1) instanceof ArrayList);
@@ -281,7 +281,7 @@ public class IncrementalHierarchicLayout
 						graph.createEdge(n, firstcleanup, real);
 				}
 				return lastcleanup;
-			} else if (s.isEqual(new Symbol("bind-exit"))) {
+			} else if (s.isEqual("bind-exit")) {
 				assert(nodelist.size() == 3);
 				assert(nodelist.get(1) instanceof ArrayList);
 				ArrayList entrystate = (ArrayList)nodelist.get(1);
@@ -294,7 +294,7 @@ public class IncrementalHierarchicLayout
 				Node lastbody = initGraphHelper((ArrayList)nodelist.get(2), start);
 				//transform calls to entry-state to reflect this in CF!
 				return lastbody;
-			} else if (s.isEqual(new Symbol("local"))) {
+			} else if (s.isEqual("local")) {
 				//local method: local, method, name, args, body
 				assert(nodelist.size() > 4);
 				assert(nodelist.get(1) instanceof Symbol);
