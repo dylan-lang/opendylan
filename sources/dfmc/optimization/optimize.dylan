@@ -75,7 +75,7 @@ end method;
 define constant $max-reoptimization-iterations = 50;
 define constant $max-optimization-iterations   = 10000;
 
-define variable *trace-optimizations?*     = #t;
+define variable *trace-optimizations?*     = #f;
 define variable *trace-optimizing-library* = #f;
 define variable *trace-optimizing-file*    = #f;
 define variable *trace-optimizing-method*  = #f;
@@ -162,11 +162,17 @@ define sealed method really-run-compilation-passes (code :: <&lambda>)
               exception (e :: <condition>)
               end;
             end if;
+            if (f == code & *dump-dfm-method*)
+              *dump-dfm-method*(#"pass-one", print-method(make(<string-stream>), f, output-format: #"sexp"));
+            end;
 	    // make sure we've got some DFM to play with
 	    // elaborate-top-level-definitions(f);
 	    // finish pseudo-SSA conversion
 	    if (f == code | ~maybe-delete-function-body(f))
 	      eliminate-assignments(f);
+              if (*dump-dfm-method*)
+                *dump-dfm-method*(#"pseudo-ssa-finished", print-method(make(<string-stream>), f, output-format: #"sexp"));
+              end;
 	    end;
 	  end for-all-lambdas;
           if (*flow-types-through-conditionals?*)

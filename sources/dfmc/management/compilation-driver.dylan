@@ -571,8 +571,7 @@ define function ensure-library-dfm-computed (ld :: <compilation-context>)
   timing-compilation-phase ("DFM generation" of ld)
     for-library-method ("Computing code models for", $compilation of m in ld)
       ensure-method-dfm-or-heap(m);
-      let str = make(<string-stream>);
-      let sexp = print-method(str, m, output-format: #"sexp");
+      let sexp = print-method(make(<string-stream>), m, output-format: #"sexp");
       visualization-report(#"initial-dfm", list(i, sexp));
       i := i + 1;
     end;
@@ -794,13 +793,19 @@ end function;
 
 define function ensure-library-optimized (ld :: <compilation-context>)
   debug-out(#"internal", "Optimizing library: %s.\n", ld);
+  let i :: <integer> = 0;
   timing-compilation-phase ("Optimization" of ld)
     for-library-method ("Optimizing", $compilation of m in ld)
+      visualization-report(#"optimizing", i);
       optimize-method(m);
+      let sexp = print-method(make(<string-stream>), m, output-format: #"sexp");
+      visualization-report(#"optimized-dfm", list(i, sexp));
+      i := i + 1;
     end;
     do(compact-coloring-info, compilation-context-records(ld));
     dispatch-decisions-progress-line(ld);
   end;
+  visualization-report(#"finished", #());
   debug-out(#"internal", "Done optimizing library: %s.\n", ld);
 end function;
 

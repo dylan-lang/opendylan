@@ -21,13 +21,28 @@ define function report-progress (i1 :: <integer>, i2 :: <integer>,
 end;
 
 define thread variable *vis* :: false-or(<dfmc-graph-visualization>) = #f; 
+define thread variable *current-index* :: <integer> = 0;
+
 define function visualize (key :: <symbol>, object :: <object>)
 //format-out("VIS %= %=\n", context, object);
-  if (key == #"initial-dfm")
-    write-to-visualizer(*vis*, list(key, object.head, object.tail.head));
-  end;
-  if (key == #"finished")
-    format-out("now we could wait for input and process requests");
+  select (key by \==)
+    #"initial-dfm", #"optimized-dfm" =>
+      begin
+        let id :: <integer> = object.head;
+        //if (id == 4)
+          write-to-visualizer(*vis*, list(key, id, object.tail.head));
+        //end;
+      end;
+    #"optimizing" =>
+      *current-index* := object;
+    #"pass-one", #"pseudo-ssa-finished" =>
+      format-out("GOT %= %=\n", key, object);
+    #"finished" =>
+      begin
+        //format-out("now we could wait for input and process requests");
+        *vis* := make(<dfmc-graph-visualization>, id: #"optimized");
+        connect-to-server(*vis*);
+      end;
   end;
 end;
 
@@ -37,9 +52,11 @@ define function compiler (project)
   let lib = project.project-current-compilation-context;
   block()
     dynamic-bind(*progress-library* = lib)
-      with-progress-reporting(project, report-progress, visualization-callback: visualize)
-        compile-library-from-definitions(lib, force?: #t, skip-link?: #t,
-                                         compile-if-built?: #t, skip-heaping?: #t);
+      dynamic-bind(*dump-dfm-method* = visualize)
+        with-progress-reporting(project, report-progress, visualization-callback: visualize)
+          compile-library-from-definitions(lib, force?: #t, skip-link?: #t,
+                                           compile-if-built?: #t, skip-heaping?: #t);
+        end;
       end;
     end;
   exception (e :: <abort-compilation>)

@@ -12,11 +12,11 @@ define abstract dood-class <computation> (<queueable-item-mixin>)
          = parent-source-location(),
     init-keyword: source-location:;
 
-  weak slot previous-computation :: false-or(<computation>) = #f,
+  weak slot %previous-computation :: false-or(<computation>) = #f,
     reinit-expression: #f,
     init-keyword: previous-computation:;
 
-  slot next-computation :: false-or(<computation>) = #f,
+  slot %next-computation :: false-or(<computation>) = #f,
     init-keyword: next-computation:;
 
   slot temporary :: false-or(<temporary>) = #f, 
@@ -58,6 +58,29 @@ define generic previous-computation (computation :: <computation>)
 define generic previous-computation-setter
     (previous, computation :: <computation>)
  => (previous);
+
+define method next-computation (computation :: <computation>)
+ => (next);
+  computation.%next-computation;
+end;
+
+define method next-computation-setter
+    (next, computation :: <computation>)
+ => (next);
+  computation.%next-computation := next;
+end;
+
+define method previous-computation (computation :: <computation>)
+ => (previous);
+  computation.%previous-computation;
+end;
+
+define method previous-computation-setter
+    (previous, computation :: <computation>)
+ => (previous);
+  computation.%previous-computation := previous;
+end;
+
 
 //// <computation> initialization
 

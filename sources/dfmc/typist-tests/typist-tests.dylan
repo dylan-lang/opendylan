@@ -18,22 +18,21 @@ end;
 
 define test visualization-test ()
   let mycode = "define method if-nested (x, y, z)"
-               "  if (x == y)"
-               "    if (y == z)"
-               "      x + y;"
-               "      \"all equal\";"
+               "  if (x == 1)"
+               "    if (y == 1)"
+               "      if (z == 1)"
+               "        \"all equal\";"
+               "      else"
+               "        \"x and y equal\";"
+               "      end;"
+               "    elseif (z == 2)"
+               "      \"y + 1 is z\";"
                "    else"
-               "      x * y * z;"
-               "      \"x and z equal\";"
+               "      \"all different\";"
                "    end;"
-               "  elseif (y == z)"
-               "    \"y is z\";"
-               "  else"
-               "    \"all different\";"
                "  end;"
                "end;"
                "define method for-loop (x, y, z)"
-               "  let f = 20;"
                "  for (i from 0 below 20)"
                "    x := y + 1;"
                "  end;"
@@ -60,20 +59,22 @@ define test visualization-test ()
                "end;"
                "define method block-cleanup (x, y, z)"
                "  block(t)"
-               "    1 + 2;"
-               "    if (x == y)"
+               "    if (x == 42)"
                "      t();"
                "    end;"
+               "    x := 20;"
+               "    y := 42 * x;"
                "  cleanup"
-               "    x := 0;"
+               "    x := y;"
                "  end;"
                "end;"
                "define method dyn-bind (x, y, z)"
                "  let t = 42;"
                "  dynamic-bind(t = 0)"
-               "    t * t;"
+               "    x := t * t;"
                "  end;"
-               "  t + t;"
+               "  y := t + t;"
+               "  values(x, y);"
                "end;";
   dynamic-bind (*progress-stream*           = #f,  // with-compiler-muzzled
                 *demand-load-library-only?* = #f)
@@ -99,7 +100,7 @@ define test limited-function-type-test ()
   let mycode = "define function my-function (x :: <integer> => <string>, y :: <integer>) => (res :: <string>)"
                "  x(y);"
                "end;"
-               "my-function(method(x :: <integer>) \"foo\" end, 23);";
+               "my-function(method(x :: <integer>) => (y :: <string>) \"foo\" end, 23);";
   dynamic-bind (*progress-stream*           = #f,  // with-compiler-muzzled
                 *demand-load-library-only?* = #f)
     let lib = compile-template(mycode, compiler: compiler);
@@ -298,14 +299,14 @@ end;
 
 define suite typist-suite ()
   //tests for the test environment
-  test noop;
+//  test noop;
   test visualization-test;
 
   //tests for limited function types
   test limited-function-type-test;
-  test limited-function-type-test2;
-  test limited-function-type-test3;
-
+//  test limited-function-type-test2;
+//  test limited-function-type-test3;
+/*
   //tests for type variable syntax
   test polymorphic-type-test0;
   test polymorphic-type-test0a;
@@ -322,7 +323,7 @@ define suite typist-suite ()
 
   //tests which should succeed once literals are typed "better"
   test literal-limited-list;
-
+*/
   //how to check the amount of bound checks?
   //define function limited-vector-bounds-check ()
   //  //here, bounds checks are generated
