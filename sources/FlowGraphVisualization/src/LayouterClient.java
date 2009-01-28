@@ -58,21 +58,47 @@ public class LayouterClient extends Thread {
 			
 			while (true) {
 				answer = readMessage();
-				assert(answer.size() == 3);
+				assert(answer.size() > 2);
 				assert(answer.get(0) instanceof Symbol);
 				assert(answer.get(1) instanceof Integer);
-				assert(answer.get(2) instanceof ArrayList);
+				int dfm_id = (Integer)answer.get(1);
 				Symbol key = (Symbol)answer.get(0);
 				if (key.isEqual("initial-dfm") || key.isEqual("optimized-dfm")) {
-					System.out.println(key.toString() + " for " + (Integer)answer.get(1) + " is " + (ArrayList)answer.get(2));
+					assert(answer.size() == 3);
+					assert(answer.get(2) instanceof ArrayList);
+					System.out.println(key.toString() + " for " + dfm_id + " is " + (ArrayList)answer.get(2));
 					IncrementalHierarchicLayout graph = new IncrementalHierarchicLayout(demo);
 					ArrayList cf = (ArrayList)answer.get(2);
 					assert(cf.size() > 1);
 					assert(cf.get(1) instanceof Symbol); //method name
 					graphs.add(graph);
-					demo.addGraph((Integer)answer.get(1), ((Symbol)(cf.get(1))).toString());
+					demo.addGraph(dfm_id, ((Symbol)(cf.get(1))).toString());
 					graph.activateLayouter();
 					graph.initGraph((ArrayList)answer.get(2));
+				} else if (key.isEqual("remove-edge")) {
+					assert(answer.size() == 4);
+					assert(answer.get(2) instanceof Integer);
+					assert(answer.get(3) instanceof Integer);
+					//IncrementalHierarchicLayout gr = graphs.get(dfm_id);
+					int from = (Integer)answer.get(2);
+					int to = (Integer)answer.get(3);
+					System.out.println("removing edge in graph " + dfm_id + " from " + from + " to " + to);
+				} else if (key.isEqual("insert-edge")) {
+					assert(answer.size() == 4);
+					assert(answer.get(2) instanceof Integer);
+					assert(answer.get(3) instanceof Integer);
+					//IncrementalHierarchicLayout gr = graphs.get(dfm_id);
+					int from = (Integer)answer.get(2);
+					int to = (Integer)answer.get(3);
+					System.out.println("inserting edge in graph " + dfm_id + " from " + from + " to " + to);
+				} else if (key.isEqual("new-computation")) {
+					assert(answer.size() == 4);
+					assert(answer.get(2) instanceof Integer);
+					assert(answer.get(3) instanceof String);
+					//IncrementalHierarchicLayout gr = graphs.get(dfm_id);
+					int new_id = (Integer)answer.get(2);
+					String text = (String)answer.get(3);
+					System.out.println("adding node in graph " + dfm_id + " id " + new_id + " text " + text);
 				}
 			}
 		} catch (IOException e) {
