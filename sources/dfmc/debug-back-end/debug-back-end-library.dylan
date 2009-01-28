@@ -28,5 +28,6 @@ define module dfmc-debug-back-end
   use dfmc-typist;
 
   export
-    *print-method-bodies?*;
+    *print-method-bodies?*,
+    print-computation;
 end module;

@@ -23,26 +23,49 @@ end;
 define thread variable *vis* :: false-or(<dfmc-graph-visualization>) = #f; 
 define thread variable *current-index* :: <integer> = 0;
 
+define thread variable *trace-edges* :: <boolean> = #f;
+
+define function trace-computations (key :: <symbol>, id :: <integer>, comp-or-id :: type-union(<computation>, <integer>))
+  select (key by \==)
+    #"remove-edge", #"insert-edge" =>
+      if (*trace-edges*)
+        write-to-visualizer(*vis*, list(key, *current-index*, id, comp-or-id));
+      end;
+    #"new-computation" =>
+      begin
+        let str = make(<string-stream>, direction: #"output");
+        print-computation(str, comp-or-id);
+        write-to-visualizer(*vis*, list(key, *current-index*, id, str.stream-contents));
+      end;
+    end;
+end;
 define function visualize (key :: <symbol>, object :: <object>)
 //format-out("VIS %= %=\n", context, object);
   select (key by \==)
-    #"initial-dfm", #"optimized-dfm" =>
+    #"initial-dfm" => //, #"optimized-dfm" =>
       begin
         let id :: <integer> = object.head;
         //if (id == 4)
           write-to-visualizer(*vis*, list(key, id, object.tail.head));
         //end;
+        *current-index* := *current-index* + 1;
       end;
     #"optimizing" =>
-      *current-index* := object;
+      begin
+        *current-index* := object;
+        *trace-edges* := #t;
+      end;
     #"pass-one", #"pseudo-ssa-finished" =>
       format-out("GOT %= %=\n", key, object);
     #"finished" =>
       begin
         //format-out("now we could wait for input and process requests");
-        *vis* := make(<dfmc-graph-visualization>, id: #"optimized");
-        connect-to-server(*vis*);
+        *trace-edges* := #f;
+        *current-index* := 0;
+        //*vis* := make(<dfmc-graph-visualization>, id: #"optimized");
+        //connect-to-server(*vis*);
       end;
+    otherwise => ;
   end;
 end;
 
@@ -52,12 +75,14 @@ define function compiler (project)
   let lib = project.project-current-compilation-context;
   block()
     dynamic-bind(*progress-library* = lib)
-      dynamic-bind(*dump-dfm-method* = visualize)
-        with-progress-reporting(project, report-progress, visualization-callback: visualize)
-          compile-library-from-definitions(lib, force?: #t, skip-link?: #t,
-                                           compile-if-built?: #t, skip-heaping?: #t);
+     // dynamic-bind(*dump-dfm-method* = visualize)
+        dynamic-bind(*computation-tracer* = trace-computations)
+          with-progress-reporting(project, report-progress, visualization-callback: visualize)
+            compile-library-from-definitions(lib, force?: #t, skip-link?: #t,
+                                             compile-if-built?: #t, skip-heaping?: #t);
+          end;
         end;
-      end;
+     // end;
     end;
   exception (e :: <abort-compilation>)
   end

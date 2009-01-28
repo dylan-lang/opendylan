@@ -3987,14 +3987,14 @@ define function parse-parameters-into
   for (var-spec in required-specs)
     let name = spec-variable-name(var-spec);
     push-variable!(name,
-                   make(<lexical-required-variable>,
-                        name:
-                          name,
-                        environment:
-                          lambda-env,
-                        // TODO: dynamic type expressions
-                        specializer:
-                          &eval(env, spec-type-expression(var-spec))));
+		   make(<lexical-required-variable>,
+			name:
+			  name,
+			environment: 
+			  lambda-env,
+			// TODO: dynamic type expressions
+			specializer: //TODO: fixme! this has been computed before!
+			  ^top-level-eval-type(spec-type-expression(var-spec), type-variables: type-vars)));
   end;
   if (spec-rest?)
     insert-rest-variable!

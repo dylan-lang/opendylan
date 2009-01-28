@@ -273,7 +273,7 @@ define method print-computation (stream :: <stream>, c :: <stack-vector>)
 end method;
 
 define method print-computation (stream :: <stream>, c :: <loop>) 
-  format(stream, "[LOOP %=]", loop-parameters(c));
+  format(stream, "[LOOP]");
 end method;
 
 define method print-computation (stream :: <stream>, c :: <loop-call>) 

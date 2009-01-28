@@ -22,12 +22,13 @@ define module dfmc-typist-tests
   use common-dylan;
   use threads, import: { dynamic-bind };
   use format-out;
+  use streams;
   use testworks;
 
   use dfmc-core;
   use dfmc-typist;
   use dfmc-management;
-  use dfmc-debug-back-end, import: {*print-method-bodies?*};
+  use dfmc-debug-back-end;
   use dfmc-optimization;
 
   use dfmc-visualization;

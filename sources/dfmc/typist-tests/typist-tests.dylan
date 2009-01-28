@@ -299,13 +299,13 @@ end;
 
 define suite typist-suite ()
   //tests for the test environment
-//  test noop;
+  test noop;
   test visualization-test;
 
   //tests for limited function types
   test limited-function-type-test;
-//  test limited-function-type-test2;
-//  test limited-function-type-test3;
+  test limited-function-type-test2;
+  test limited-function-type-test3;
 /*
   //tests for type variable syntax
   test polymorphic-type-test0;
