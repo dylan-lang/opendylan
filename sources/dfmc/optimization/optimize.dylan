@@ -294,6 +294,7 @@ define method run-optimizations (code) => (b :: <boolean>)
   for (count from 0 below $max-optimization-iterations,
        item = something? then queue-head(queue), while: item) 
     // do-queue(method (i) opt-format-out("  ELT %=\n", i) end, queue);
+    *dump-dfm-method*(#"highlight-queue", queue & map(computation-id, queue) | #());
     if (do-optimize(item))
       something? := #t;
       if (*trace-optimizations?*)

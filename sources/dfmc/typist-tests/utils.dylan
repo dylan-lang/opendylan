@@ -25,8 +25,6 @@ define thread variable *current-index* :: <integer> = 0;
 
 define thread variable *trace-edges* :: <boolean> = #f;
 
-define thread variable *optim* :: <boolean> = #f;
-
 define function trace-computations (key :: <symbol>, id :: <integer>, comp-or-id :: type-union(<computation>, <integer>),
                                     comp2 :: <integer>)
   if (member?(id, #(170, 176, 171, 175)))
@@ -49,28 +47,25 @@ define function visualize (key :: <symbol>, object :: <object>)
     #"initial-dfm" =>
       begin
         let id :: <integer> = object.head;
-        //if (id == 4)
-          write-to-visualizer(*vis*, list(key, id, object.tail.head));
-        //end;
-        *current-index* := *current-index* + 1;
+        write-to-visualizer(*vis*, list(key, id, object.tail.head));
+        *current-index* := id;
       end;
     #"optimizing" =>
       begin
         *current-index* := object;
         *trace-edges* := #t;
+        write-to-visualizer(*vis*, list(#"relayouted", *current-index*));
       end;
-    #"pass-one", #"pseudo-ssa-finished" =>
-      format-out("GOT %= %=\n", key, object);
     #"finished" =>
       begin
         //format-out("now we could wait for input and process requests");
         *trace-edges* := #f;
         *current-index* := 0;
-        //*vis* := make(<dfmc-graph-visualization>, id: #"optimized");
-        //connect-to-server(*vis*);
       end;
     #"relayouted" =>
       write-to-visualizer(*vis*, list(key, *current-index*));
+    #"highlight-queue" =>
+      write-to-visualizer(*vis*, list(key, *current-index*, object));
     #"highlight" =>
       if (instance?(object, <integer>))
         write-to-visualizer(*vis*, list(key, *current-index*, object));
