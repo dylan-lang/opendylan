@@ -128,7 +128,6 @@ public class DemoBase extends Thread {
    */
   protected Graph2DView view;
   protected final JPanel contentPane;
-  private LayerDrawable layerDrawable;
   protected IncrementalHierarchicLayout incrementallayouter;
   private String name;
   private LayouterClient client;
@@ -149,9 +148,6 @@ public class DemoBase extends Thread {
 
     contentPane = new JPanel();
     contentPane.setLayout( new BorderLayout() );
-
-    this.layerDrawable = new LayerDrawable();
-    view.addBackgroundDrawable(layerDrawable);
     
     registerViewModes();
     registerViewActions();
@@ -171,9 +167,8 @@ public class DemoBase extends Thread {
     registerViewListeners();
   }
 
-  public void graphChanged (IncrementalHierarchicLayout ihl, Graph2D gra, NodeMap layerids) {
+  public void graphChanged (IncrementalHierarchicLayout ihl, Graph2D gra) {
 	  incrementallayouter = ihl;
-	  this.layerDrawable.setGraphAndLayerId(gra, layerids);
 	  calcLayout();
   }
   
@@ -182,36 +177,6 @@ public class DemoBase extends Thread {
   }
 
   public void dispose() {
-  }
-
-  protected void loadGraph( Class aClass, String resourceString ) {
-    String fqResourceName = aClass.getPackage().getName().replace( '.', '/' ) + '/' + resourceString;
-
-    URL resource = aClass.getResource( resourceString );
-    if ( resource == null ) {
-      String message = "Resource \"" + fqResourceName + "\" not found in classpath";
-      D.showError( message );
-      throw new RuntimeException( message );
-    }
-
-    try {
-      IOHandler ioh;
-      if ( resource.getFile().endsWith( "ygf" ) ) {
-        ioh = new YGFIOHandler();
-      } else {
-        ioh = new GMLIOHandler();
-      }
-      ioh.read( view.getGraph2D(), resource );
-    } catch ( Exception e ) {
-      String message = "Unexpected error while loading resource \"" + fqResourceName + "\" due to " + e.getMessage();
-      D.showError( message );
-      throw new RuntimeException( message, e );
-    }
-    view.fitContent();
-  }
-
-  protected void loadGraph( String resourceString ) {
-    loadGraph( getClass(), resourceString );
   }
 
   /**
@@ -241,9 +206,6 @@ public class DemoBase extends Thread {
     Graph2DViewActions actions = new Graph2DViewActions( view );
     ActionMap amap = actions.createActionMap();
     InputMap imap = actions.createDefaultInputMap( amap );
-    if ( !isDeletionEnabled() ) {
-      amap.remove( Graph2DViewActions.DELETE_SELECTION );
-    }
     view.getCanvasComponent().setActionMap( amap );
     view.getCanvasComponent().setInputMap( JComponent.WHEN_FOCUSED, imap );
   }
@@ -256,16 +218,6 @@ public class DemoBase extends Thread {
   protected void registerViewModes() {
     //edit mode will show tool tips over nodes
     view.addViewMode( new AutoDragViewMode() );
-	EditMode editMode = new IncrementalEditMode();
-	//editMode.setMoveSelectionMode(paMode = new IncrementalMoveSelectionMode());
-	editMode.setPopupMode(new IncrementalPopupMode());
-	//editMode.setCreateEdgeMode(new IncrementalEdgeCreateMode());
-	editMode.setHotSpotMode(new IncrementalHotSpotMode());
-	editMode.allowNodeCreation(false);
-	editMode.allowEdgeCreation(false);
-	editMode.allowMoveLabels(false);
-	editMode.allowMovePorts(false);
-	view.addViewMode( editMode );
   }
 
   /**
@@ -278,25 +230,12 @@ public class DemoBase extends Thread {
   }
 
   /**
-   * Determines whether default actions for deletions will be added to the view
-   * and toolbar.
-   */
-  protected boolean isDeletionEnabled() {
-    return false;
-  }
-
-  /**
    * Creates a toolbar for this demo.
    */
   protected JToolBar createToolBar() {
     JToolBar toolBar = new JToolBar();
-    if ( isDeletionEnabled() ) {
-      toolBar.add( createDeleteAllAction() );
-      toolBar.add( createDeleteSelectionAction() );
-    }
     toolBar.add( new Zoom( 1.2 ) );
     toolBar.add( new Zoom( 0.8 ) );
-    toolBar.add( new ZoomArea() );
     toolBar.add( new FitContent( view ) );
 	toolBar.add( new LayoutAction() );
 
@@ -309,7 +248,6 @@ public class DemoBase extends Thread {
   protected JMenuBar createMenuBar() {
     JMenuBar menuBar = new JMenuBar();
     JMenu menu = new JMenu( "File" );
-    menu.add( createLoadAction() );
     menu.add( createSaveAction() );
     menu.add( new SaveSubsetAction() );
     menu.addSeparator();
@@ -320,20 +258,8 @@ public class DemoBase extends Thread {
     return menuBar;
   }
 
-  protected Action createLoadAction() {
-    return new LoadAction();
-  }
-
   protected Action createSaveAction() {
     return new SaveAction();
-  }
-
-  protected Action createDeleteAllAction() {
-    return new DeleteAll( view );
-  }
-
-  protected Action createDeleteSelectionAction() {
-    return new DeleteSelection( view );
   }
 
   public JPanel getContentPane() {
@@ -720,384 +646,29 @@ public class DemoBase extends Thread {
 	}
 
 	/**
-	 * Recalculate layout after resizings
-	 */
-	final class IncrementalHotSpotMode extends HotSpotMode {
-		public void mouseReleasedLeft(double x, double y)
-		{
-			super.mouseReleasedLeft(x, y);
-			calcLayout();
-		}
-	}
-
-	/**
-	 * Recalculate layout after node creation
-	 */
-	final class IncrementalEditMode extends EditMode {
-		protected void nodeCreated(Node v)
-		{
-			super.nodeCreated(v);
-			final YPoint center = view.getGraph2D().getCenter(v);
-			int layerId = layerDrawable.getLayerId(center.x, center.y);
-			setLayers(new NodeList(v).nodes(), layerId, Integer.MAX_VALUE);
-			calcLayout();
-		}
-	}
-
-	/**
-	 * Drawable implementation and utility functions
-	 */
-	static final class LayerDrawable implements Drawable {
-
-
-		private List layers = new ArrayList(20);
-		private static final Color[] colors = new Color[] {new Color(255, 255, 150), new Color(255, 255, 100)};
-
-		private Rectangle bounds = new Rectangle(20,20,200,200);
-
-		private Graph2D graph;
-		private NodeMap layerIdMap;
-
-		LayerDrawable(){
-			//this.graph = graph;
-			//this.layerIdMap = layerIdMap;
-		}
-
-		public void setGraphAndLayerId (Graph2D gr, NodeMap idmap) {
-			this.graph = gr;
-			this.layerIdMap = idmap;
-		}
-		
-		public Rectangle getBounds()
-		{
-			return bounds;
-		}
-
-		public void updateLayers(){
-			final double spacing = 20.0d;
-			layers.clear();
-			if (graph.N() < 1) return;
-			double minX = Double.MAX_VALUE, maxX = -Double.MAX_VALUE;
-			for (NodeCursor nc = graph.nodes(); nc.ok(); nc.next()){
-				final Node node = nc.node();
-				final int layer = layerIdMap.getInt(node);
-				if (layer < 0) continue;
-				while (layers.size() - 1 < layer){
-					layers.add(new Rectangle2D.Double(0,0,-1,-1));
-				}
-				Rectangle2D.Double layerRect = (Rectangle2D.Double) layers.get(layer);
-				final NodeLayout nl = graph.getNodeLayout(node);
-				if (layerRect.width < 0){
-					layerRect.setFrame(nl.getX(), nl.getY(), nl.getWidth(), nl.getHeight());
-				} else {
-					layerRect.add(nl.getX(), nl.getY());
-					layerRect.add(nl.getX() + nl.getWidth(), nl.getY() + nl.getHeight());
-				}
-				minX = Math.min(nl.getX(), minX);
-				maxX = Math.max(nl.getX() + nl.getWidth(), maxX);
-			}
-
-			double minY = Double.MAX_VALUE;
-			double maxY = -Double.MAX_VALUE;
-			for (int i = 0; i < layers.size(); i++){
-				Rectangle2D.Double rect = (Rectangle2D.Double) layers.get(i);
-				rect.x = minX - spacing;
-				rect.width = maxX - minX + spacing * 2;
-				if (i == 0){
-					rect.y -= spacing;
-					rect.height += spacing;
-					minY = rect.y;
-				}
-				if (i == layers.size() - 1){
-					rect.height += spacing;
-					maxY = rect.height + rect.y;
-				} else if (i < layers.size() - 1){
-					Rectangle2D.Double nextRect = (Rectangle2D.Double) layers.get(i + 1);
-					final double mid = (rect.getY() + rect.getHeight() + nextRect.getY()) * 0.5d;
-					rect.height += mid - (rect.y + rect.height);
-					final double nextDelta = mid - nextRect.y;
-					nextRect.y += nextDelta;
-					nextRect.height -= nextDelta;
-				}
-			}
-			bounds.setFrame(minX - spacing, minY, maxX - minX + 2 * spacing, maxY - minY);
-			graph.updateViews();
-		}
-
-		public final int inset = 8;
-
-		public int getLayerId(double x, double y){
-			if (x < bounds.x - outerInsets || x > bounds.x + bounds.width + outerInsets){
-				return Integer.MAX_VALUE;
-			}
-			if (y < bounds.y + inset){
-				return -1;
-			}
-			if (y > bounds.y + bounds.height - inset){
-				return layers.size();
-			}
-			for (int i = 0; i < layers.size(); i++){
-				final Rectangle2D.Double rect= (Rectangle2D.Double) layers.get(i);
-				if (y >= rect.y + inset && y <= rect.y + rect.height - inset){
-					return i;
-				} else if (y < rect.y + inset){
-					return -(i+1);
-				}
-			}
-			return Integer.MAX_VALUE;
-		}
-
-		public static final double outerInsets = 40;
-
-		public Rectangle2D getLayerBounds(int layer){
-			if (layer >= 0 && layer < layers.size()){
-				Rectangle2D.Double rect = (Rectangle2D.Double) layers.get(layer);
-				rect = new Rectangle2D.Double(rect.x, rect.y + inset, rect.width, rect.height - 2 * inset);
-				return rect;
-			}
-			if (layer == -1){
-				return new Rectangle2D.Double(bounds.x, bounds.y - outerInsets, bounds.width, outerInsets + inset);
-			}
-			if (layer >= layers.size() && (layer != Integer.MAX_VALUE)){
-				return new Rectangle2D.Double(bounds.x, bounds.y + bounds.height - inset, bounds.width, outerInsets);
-			}
-			if (layer < 0){
-				int beforeLayer = -(layer + 1);
-				if (beforeLayer < layers.size()){
-					Rectangle2D.Double rect = (Rectangle2D.Double) layers.get(beforeLayer);
-					rect = new Rectangle2D.Double(rect.x, rect.y - inset, rect.width, 2 * inset);
-					return rect;
-				}
-			}
-			return new Rectangle2D.Double(bounds.x - 2 * outerInsets, bounds.y -  2 * outerInsets, bounds.width + 4.0d * outerInsets, bounds.height + outerInsets * 4.0d);
-		}
-
-		public void paint(Graphics2D g)
-		{
-			for (int i = 0; i < layers.size(); i++){
-				Color color = colors[i % colors.length];
-				g.setColor(color);
-				g.fill((Shape) layers.get(i));
-			}
-		}
-	}
-
-	/**
 	 * Animated layout assignment
 	 */
 	public void calcLayout(){
 		if (!view.getGraph2D().isEmpty()){
-			incrementallayouter.gll.normalize(view.getGraph2D(), incrementallayouter.layerIdMap, incrementallayouter.layerIdMap);
+			//incrementallayouter.gll.normalize(view.getGraph2D(), incrementallayouter.layerIdMap, incrementallayouter.layerIdMap);
 			Cursor oldCursor = view.getCanvasComponent().getCursor();
 			try {
 				view.getCanvasComponent().setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 				GraphLayout result = new BufferedLayouter(incrementallayouter.hierarchicLayouter).calcLayout(view.getGraph2D());
 				LayoutMorpher morpher = new LayoutMorpher(view, result);
 				morpher.setSmoothViewTransform(true);
-				morpher.setPreferredDuration(300);
+				morpher.setPreferredDuration(1000);
 				final AnimationPlayer player = new AnimationPlayer();
 				player.addAnimationListener(view);
-				player.setFps(120);
+				player.setFps(60);
 				player.animate(AnimationFactory.createEasedAnimation(morpher));
 			} finally {
 				view.getCanvasComponent().setCursor(oldCursor);
 			}
 		}
-		layerDrawable.updateLayers();
 		view.updateView();
 	}
 
-	/**
-	 * Utility method to assign nodes to a new layer.
-	 */
-	protected void setLayers(NodeCursor nodes, int newLayer, int previousLayer){
-		if (!nodes.ok()) return;
-		//calculate number of layers to insert
-		int lesserLayers = 0;
-		int greaterLayers = 0;
-		final Set nodeSet = new HashSet();
-		for (nodes.toFirst(); nodes.ok(); nodes.next()){
-			nodeSet.add(nodes.node());
-		}
-		if (previousLayer != Integer.MAX_VALUE){
-			for (nodes.toFirst(); nodes.ok(); nodes.next()){
-				int pLayer = incrementallayouter.layerIdMap.getInt(nodes.node());
-				if (pLayer < previousLayer){
-					lesserLayers = Math.max(lesserLayers, previousLayer - pLayer);
-				}
-				if (pLayer > previousLayer){
-					greaterLayers = Math.max(greaterLayers, pLayer - previousLayer);
-				}
-			}
-		} else {
-			previousLayer = 0;
-		}
-		final int newLayerCount = lesserLayers + greaterLayers + 1;
-		if (newLayer < 0){
-			int beforeLayer = -(newLayer + 1);
-			for (NodeCursor nc = view.getGraph2D().nodes(); nc.ok(); nc.next()){
-				if (!nodeSet.contains(nc.node())){
-					int oldLayer = incrementallayouter.layerIdMap.getInt(nc.node());
-					if (oldLayer >= beforeLayer){
-						incrementallayouter.layerIdMap.setInt(nc.node(), oldLayer + newLayerCount);
-					}
-				}
-			}
-			for (nodes.toFirst(); nodes.ok(); nodes.next()){
-				int oldLayer = incrementallayouter.layerIdMap.getInt(nodes.node());
-				incrementallayouter.layerIdMap.setInt(nodes.node(), beforeLayer + lesserLayers + oldLayer - previousLayer);
-			}
-		} else {
-			if (newLayer == Integer.MAX_VALUE){
-				int maxLayer = -1;
-				for (NodeCursor nc = view.getGraph2D().nodes(); nc.ok(); nc.next()){
-					if (!nodeSet.contains(nc.node())){
-						int layer = incrementallayouter.layerIdMap.getInt(nc.node());
-						maxLayer = Math.max(layer, maxLayer);
-					}
-				}
-				newLayer = maxLayer + 1;
-			}
-			if (lesserLayers > 0 || greaterLayers > 0){
-				for (NodeCursor nc = view.getGraph2D().nodes(); nc.ok(); nc.next()){
-					if (!nodeSet.contains(nc.node())){
-						int layer = incrementallayouter.layerIdMap.getInt(nc.node());
-						if (layer == newLayer) {
-							incrementallayouter.layerIdMap.setInt(nc.node(), layer + lesserLayers);
-						} else if (layer > newLayer){
-							incrementallayouter.layerIdMap.setInt(nc.node(), layer + newLayerCount);
-						}
-					}
-				}
-			}
-			for (nodes.toFirst(); nodes.ok(); nodes.next()){
-				int oldLayer = incrementallayouter.layerIdMap.getInt(nodes.node());
-				incrementallayouter.layerIdMap.setInt(nodes.node(), newLayer + lesserLayers + oldLayer - previousLayer);
-			}
-		}
-	}
-
-	/**
-	 * Recalculate layout after selection move
-	 */
-	final class IncrementalMoveSelectionMode extends PortAssignmentMoveSelectionMode {
-		private boolean firstTime = true;
-		private MoveSelectionDrawable drawable;
-		private NodeList selectedNodes;
-		private BendList selectedBends;
-
-		public IncrementalMoveSelectionMode(){
-			super(null, null);
-		}
-
-		protected void selectionMovedAction(double dx, double dy, double x, double y)
-		{
-			super.selectionMovedAction(dx, dy, x, y);
-			if (selectedNodes != null){
-				view.removeBackgroundDrawable(drawable);
-				drawable = null;
-				int newLayer = layerDrawable.getLayerId(x, y);
-				HitInfo hi = this.getLastHitInfo();
-				Node movedNode = hi.getHitNode();
-				int originalLayer = movedNode != null ? incrementallayouter.layerIdMap.getInt(movedNode) : Integer.MAX_VALUE;
-				if (newLayer != originalLayer){
-					setLayers(selectedNodes.nodes(), newLayer, originalLayer);
-				}
-				if (newLayer != Integer.MAX_VALUE){
-					List hints = new ArrayList(128);
-					for (NodeCursor nc = selectedNodes.nodes(); nc.ok(); nc.next()){
-						for (EdgeCursor edges = nc.node().edges(); edges.ok(); edges.next()){
-							hints.add(edges.edge());
-							incrementallayouter.hintMap.set(edges.edge(), incrementallayouter.hintsFactory.createSequenceIncrementallyHint(edges.edge()));
-						}
-					}
-					calcLayout();
-					for (int i = 0; i < hints.size(); i++){
-						incrementallayouter.hintMap.set(hints.get(i), null);
-					}
-				} else {
-					List hints = new ArrayList(128);
-					for (NodeCursor nc = selectedNodes.nodes(); nc.ok(); nc.next()){
-						hints.add(nc.node());
-						incrementallayouter.hintMap.set(nc.node(), incrementallayouter.hintsFactory.createLayerIncrementallyHint(nc.node()));
-					}
-					calcLayout();
-					for (int i = 0; i < hints.size(); i++){
-						Node node = (Node) hints.get(i);
-						incrementallayouter.hintMap.set(node, null);
-					}
-					layerDrawable.updateLayers();
-				}
-				selectedNodes = null;
-			} else if (selectedBends != null){
-				calcLayout();
-			}
-			selectedBends = null;
-			selectedNodes = null;
-			firstTime = true;
-		}
-
-		protected void selectionOnMove(double dx, double dy, double x, double y)
-		{
-			if (firstTime){
-				firstTime = false;
-				Graph2D g = getGraph2D();
-				NodeCursor nc = g.selectedNodes();
-				selectedBends = null;
-				selectedNodes = null;
-				if (nc.ok()){
-					selectedNodes = new NodeList(nc);
-					drawable = new MoveSelectionDrawable();
-					view.addBackgroundDrawable(drawable);
-				}
-				BendCursor bc = g.selectedBends();
-				if (selectedNodes == null && bc.ok()){
-					selectedBends = new BendList(bc);
-				}
-			}
-			super.selectionOnMove(dx, dy, x, y);
-			if (selectedNodes != null) {
-				int layer = layerDrawable.getLayerId(x, y);
-				drawable.layer = layer;
-				drawable.layerCount = layerDrawable.layers.size();
-				drawable.drawable = layerDrawable.getLayerBounds(layer);
-			}
-		}
-
-		final class MoveSelectionDrawable implements Drawable {
-			Shape drawable;
-			int layer;
-			int layerCount;
-			Color color = Color.red;
-			Color color2 = Color.orange;
-			Color color3 = Color.red.darker();
-
-			public Rectangle getBounds()
-			{
-				return drawable.getBounds();
-			}
-
-			public void paint(Graphics2D g)
-			{
-				Stroke s = g.getStroke();
-				if (layer == Integer.MAX_VALUE){
-					g.setColor(color3);
-					g.setStroke(LineType.DOTTED_3);
-					g.draw(drawable);
-				} else {
-					if (layer >= 0 && layer < layerCount){
-						g.setColor(color);
-						g.setStroke(LineType.LINE_3);
-						g.draw(drawable);
-					} else {
-						g.setColor(color2);
-						g.fill(drawable);
-					}
-				}
-				g.setStroke(s);
-			}
-		}
-	}
 
 
 }

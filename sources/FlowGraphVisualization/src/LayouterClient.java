@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -5,6 +6,12 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
+
+import y.base.Edge;
+import y.base.EdgeCursor;
+import y.base.Node;
+import y.base.NodeCursor;
+import y.base.NodeList;
 
 
 public class LayouterClient extends Thread {
@@ -58,7 +65,7 @@ public class LayouterClient extends Thread {
 			
 			while (true) {
 				answer = readMessage();
-				assert(answer.size() > 2);
+				assert(answer.size() > 1);
 				assert(answer.get(0) instanceof Symbol);
 				assert(answer.get(1) instanceof Integer);
 				int dfm_id = (Integer)answer.get(1);
@@ -75,30 +82,117 @@ public class LayouterClient extends Thread {
 					demo.addGraph(dfm_id, ((Symbol)(cf.get(1))).toString());
 					graph.activateLayouter();
 					graph.initGraph((ArrayList)answer.get(2));
+				} else if (key.isEqual("change-edge")) {
+					assert(answer.size() == 5);
+					assert(answer.get(2) instanceof Integer);
+					assert(answer.get(3) instanceof Integer);
+					assert(answer.get(4) instanceof Integer);
+					IncrementalHierarchicLayout gr = graphs.get(dfm_id);
+					int from = (Integer)answer.get(2);
+					int toold = (Integer)answer.get(3);
+					int tonew = (Integer)answer.get(4);
+					if ((gr.int_node_map.get(from) != null) &&
+							(gr.int_node_map.get(toold) != null) &&
+							(gr.int_node_map.get(tonew) != null)) {
+						Node fromN = gr.int_node_map.get(from);
+						Node tooldN = gr.int_node_map.get(toold);
+						Node tonewN = gr.int_node_map.get(tonew);
+						Edge change = null;
+						for (EdgeCursor ec = fromN.outEdges(); ec.ok(); ec.next())
+							if (ec.edge().target() == tooldN) {
+								change = ec.edge();
+								//if (toN.degree() == 0)
+								//	gr.graph.removeNode(toN);
+								System.out.println("changing edge in graph " + dfm_id + " from " + from + " toold " + toold + " tonew " + tonew);
+								break;
+							}
+						if (change != null)
+							gr.graph.changeEdge(change, fromN, tonewN);
+						else
+							gr.graph.createEdge(fromN, tonewN);
+						
+					}else
+						System.out.println("graph " + dfm_id + " node " + from + " or " + toold + " or " + tonew + " nonexistant :/");
 				} else if (key.isEqual("remove-edge")) {
+		
 					assert(answer.size() == 4);
 					assert(answer.get(2) instanceof Integer);
 					assert(answer.get(3) instanceof Integer);
-					//IncrementalHierarchicLayout gr = graphs.get(dfm_id);
+					IncrementalHierarchicLayout gr = graphs.get(dfm_id);
 					int from = (Integer)answer.get(2);
 					int to = (Integer)answer.get(3);
-					System.out.println("removing edge in graph " + dfm_id + " from " + from + " to " + to);
+					System.out.println("TRY removing edge in graph " + dfm_id + " from " + from + " to " + to);
+					if ((gr.int_node_map.get(from) != null) &&
+							(gr.int_node_map.get(to) != null)) {
+						Node fromN = gr.int_node_map.get(from);
+						Node toN = gr.int_node_map.get(to);
+						for (EdgeCursor ec = fromN.outEdges(); ec.ok(); ec.next())
+							if (ec.edge().target() == toN) {
+								gr.graph.removeEdge(ec.edge());
+								System.out.println("removing edge in graph " + dfm_id + " from " + from + " to " + to);
+								break;
+							}
+					} else
+						System.out.println("graph " + dfm_id + " node " + from + " or " + to + " nonexistant :/");
 				} else if (key.isEqual("insert-edge")) {
 					assert(answer.size() == 4);
 					assert(answer.get(2) instanceof Integer);
 					assert(answer.get(3) instanceof Integer);
-					//IncrementalHierarchicLayout gr = graphs.get(dfm_id);
+					IncrementalHierarchicLayout gr = graphs.get(dfm_id);
 					int from = (Integer)answer.get(2);
 					int to = (Integer)answer.get(3);
-					System.out.println("inserting edge in graph " + dfm_id + " from " + from + " to " + to);
+					System.out.println("TRY inserting edge in graph " + dfm_id + " from " + from + " to " + to);
+					if ((gr.int_node_map.get(from) != null) &&
+							(gr.int_node_map.get(to) != null)) {
+						Node fromN = gr.int_node_map.get(from);
+						Node toN = gr.int_node_map.get(to);
+						boolean found = false;
+						for (EdgeCursor ec = fromN.outEdges(); ec.ok(); ec.next())
+							if (ec.edge().target() == toN) {
+								found = true;
+								break;
+							}
+						if (! found) {
+							gr.graph.createEdge(fromN, toN);
+							gr.scf.addPlaceNodeAfterConstraint(fromN, toN);
+							System.out.println("inserting edge in graph " + dfm_id + " from " + from + " to " + to);
+						}
+						
+					} else
+						System.out.println("graph " + dfm_id + " node " + from + " or " + to + " nonexistant :/");
 				} else if (key.isEqual("new-computation")) {
-					assert(answer.size() == 4);
-					assert(answer.get(2) instanceof Integer);
-					assert(answer.get(3) instanceof String);
-					//IncrementalHierarchicLayout gr = graphs.get(dfm_id);
-					int new_id = (Integer)answer.get(2);
-					String text = (String)answer.get(3);
-					System.out.println("adding node in graph " + dfm_id + " id " + new_id + " text " + text);
+					assert(answer.size() == 3);
+					assert(answer.get(2) instanceof ArrayList);
+					IncrementalHierarchicLayout gr = graphs.get(dfm_id);
+					ArrayList text = (ArrayList)answer.get(2);
+					assert(text.size() > 1);
+					System.out.print("graph " + dfm_id);
+					gr.initGraphHelperHelper(text, null, -1);
+					/* int new_id = -1;
+					if (text.get(0) instanceof Integer)
+						new_id = (Integer)text.get(0);
+					else if (text.size() > 2 && text.get(2) instanceof Integer) {
+						new_id = (Integer)text.get(2);
+					} */
+					//String txt = (String)text.get(1);
+					//System.out.println("added node in graph " + dfm_id + " id " + new_id + " text " + text);
+				} else if (key.isEqual("relayouted")) {
+					IncrementalHierarchicLayout gr = graphs.get(dfm_id);
+					for (NodeCursor nc = gr.graph.nodes(); nc.ok(); nc.next())
+						if (nc.node().degree() == 0)
+							gr.graph.removeNode(nc.node());
+					gr.activateLayouter();
+				} else if (key.isEqual("highlight")) {
+					IncrementalHierarchicLayout gr = graphs.get(dfm_id);
+					gr.activateLayouter();
+					int from = (Integer)answer.get(2);
+					Node highlight = gr.int_node_map.get(from);
+					if (highlight != null) {
+						if (gr.oldhighlight != null)
+							gr.graph.getRealizer(gr.oldhighlight).setFillColor(gr.graph.getRealizer(gr.graph.firstNode()).getFillColor());
+						gr.graph.getRealizer(highlight).setFillColor(Color.green);
+						gr.oldhighlight = highlight;
+					}
 				}
 			}
 		} catch (IOException e) {
