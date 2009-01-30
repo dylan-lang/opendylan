@@ -29,5 +29,6 @@ define module dfmc-debug-back-end
 
   export
     *print-method-bodies?*,
-    print-computation;
+    print-computation,
+    output-computation-sexp;
 end module;

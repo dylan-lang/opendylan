@@ -25,24 +25,28 @@ define thread variable *current-index* :: <integer> = 0;
 
 define thread variable *trace-edges* :: <boolean> = #f;
 
-define function trace-computations (key :: <symbol>, id :: <integer>, comp-or-id :: type-union(<computation>, <integer>))
-  select (key by \==)
-    #"remove-edge", #"insert-edge" =>
-      if (*trace-edges*)
+define thread variable *optim* :: <boolean> = #f;
+
+define function trace-computations (key :: <symbol>, id :: <integer>, comp-or-id :: type-union(<computation>, <integer>),
+                                    comp2 :: <integer>)
+  if (member?(id, #(170, 176, 171, 175)))
+    format-out("got me\n");
+  end;
+  if (*trace-edges*)
+    select (key by \==)
+      #"remove-edge", #"insert-edge" =>
         write-to-visualizer(*vis*, list(key, *current-index*, id, comp-or-id));
-      end;
-    #"new-computation" =>
-      begin
-        let str = make(<string-stream>, direction: #"output");
-        print-computation(str, comp-or-id);
-        write-to-visualizer(*vis*, list(key, *current-index*, id, str.stream-contents));
-      end;
+      #"change-edge" =>
+        write-to-visualizer(*vis*, list(key, *current-index*, id, comp-or-id, comp2));
+      #"new-computation" =>
+        write-to-visualizer(*vis*, list(key, *current-index*, output-computation-sexp(comp-or-id)));
     end;
+  end;
 end;
 define function visualize (key :: <symbol>, object :: <object>)
 //format-out("VIS %= %=\n", context, object);
   select (key by \==)
-    #"initial-dfm" => //, #"optimized-dfm" =>
+    #"initial-dfm" =>
       begin
         let id :: <integer> = object.head;
         //if (id == 4)
@@ -65,6 +69,12 @@ define function visualize (key :: <symbol>, object :: <object>)
         //*vis* := make(<dfmc-graph-visualization>, id: #"optimized");
         //connect-to-server(*vis*);
       end;
+    #"relayouted" =>
+      write-to-visualizer(*vis*, list(key, *current-index*));
+    #"highlight" =>
+      if (instance?(object, <integer>))
+        write-to-visualizer(*vis*, list(key, *current-index*, object));
+      end;
     otherwise => ;
   end;
 end;
@@ -75,14 +85,14 @@ define function compiler (project)
   let lib = project.project-current-compilation-context;
   block()
     dynamic-bind(*progress-library* = lib)
-     // dynamic-bind(*dump-dfm-method* = visualize)
+      dynamic-bind(*dump-dfm-method* = visualize)
         dynamic-bind(*computation-tracer* = trace-computations)
           with-progress-reporting(project, report-progress, visualization-callback: visualize)
             compile-library-from-definitions(lib, force?: #t, skip-link?: #t,
                                              compile-if-built?: #t, skip-heaping?: #t);
           end;
         end;
-     // end;
+      end;
     end;
   exception (e :: <abort-compilation>)
   end

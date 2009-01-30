@@ -162,16 +162,13 @@ define sealed method really-run-compilation-passes (code :: <&lambda>)
               exception (e :: <condition>)
               end;
             end if;
-            if (f == code & *dump-dfm-method*)
-              *dump-dfm-method*(#"pass-one", print-method(make(<string-stream>), f, output-format: #"sexp"));
-            end;
 	    // make sure we've got some DFM to play with
 	    // elaborate-top-level-definitions(f);
 	    // finish pseudo-SSA conversion
 	    if (f == code | ~maybe-delete-function-body(f))
 	      eliminate-assignments(f);
               if (*dump-dfm-method*)
-                *dump-dfm-method*(#"pseudo-ssa-finished", print-method(make(<string-stream>), f, output-format: #"sexp"));
+                *dump-dfm-method*(#"relayouted", #());
               end;
 	    end;
 	  end for-all-lambdas;
@@ -180,6 +177,9 @@ define sealed method really-run-compilation-passes (code :: <&lambda>)
 	      opt-format-out("PASS ONE(A) %=\n", f);
   	      if (f == code | lambda-used?(f))
                 maybe-rename-temporaries-in-conditionals(f);
+              end;
+              if (*dump-dfm-method*)
+                *dump-dfm-method*(#"relayouted", #());
               end;
 	    end for-all-lambdas;
           end;
@@ -194,6 +194,9 @@ define sealed method really-run-compilation-passes (code :: <&lambda>)
 	      end if;
 	      // Now we're ready for some fun.
 	      run-optimizations(f);
+              if (*dump-dfm-method*)
+                *dump-dfm-method*(#"relayouted", #());
+              end;
 	    end;
 	  end for-all-lambdas;
 	  iterate loop (count = 0)
@@ -212,12 +215,18 @@ define sealed method really-run-compilation-passes (code :: <&lambda>)
 	      end if;
 	    end;
 	  end iterate;
+          if (*dump-dfm-method*)
+            *dump-dfm-method*(#"relayouted", #());
+          end;
 	  // now carry out the global stuff like environment analysis
 	  for-all-lambdas (f in code)
 	    if (f == code | lambda-used?(f) | lambda-top-level?(f))
 	      opt-format-out("PASS FOUR %=\n", f);
 	      share-common-subexpressions(f);
 	      delete-useless-environments(f);
+              if (*dump-dfm-method*)
+                *dump-dfm-method*(#"relayouted", #());
+              end;
 	    end;
 	  end for-all-lambdas;
 	  for-all-lambdas (f in code)
@@ -226,18 +235,27 @@ define sealed method really-run-compilation-passes (code :: <&lambda>)
 	      analyze-dynamic-extent-for(f);
 	      analyze-environments(f);
 	      check-optimized-computations(f);
+              if (*dump-dfm-method*)
+                *dump-dfm-method*(#"relayouted", #());
+              end;
 	    end;
 	  end for-all-lambdas;
 	  for-all-lambdas (f in code)
 	    if (f == code | lambda-used?(f) | lambda-top-level?(f))
               opt-format-out("PASS SIX %=\n", f);
 	      prune-closure(environment(f));
+              if (*dump-dfm-method*)
+                *dump-dfm-method*(#"relayouted", #());
+              end;
 	    end;
 	  end for-all-lambdas;
 	  for-all-lambdas (f in code)
 	    if (f == code | lambda-used?(f) | lambda-top-level?(f))
 	      opt-format-out("PASS SIX %=\n", f);
 	      constant-fold-closure(f);
+              if (*dump-dfm-method*)
+                *dump-dfm-method*(#"relayouted", #());
+              end;
 	    end;
 	  end for-all-lambdas;
 	end with-dependent-context;
@@ -247,6 +265,9 @@ define sealed method really-run-compilation-passes (code :: <&lambda>)
 	optimization-queue(f) := #f;
         strip-environment(environment(f));
       end for-all-lambdas;
+      if (*dump-dfm-method*)
+        *dump-dfm-method*(#"relayouted", #());
+      end;
       block()
       //when (dumping-dfm?(code))
 	print-method-out(code);
@@ -314,7 +335,12 @@ define generic optimize (item :: <computation>) => (b :: <boolean>);
 
 define function do-optimize (item :: <computation>) => (b :: <boolean>)
   with-parent-computation (item)
-    optimize(item) & #t;
+    *dump-dfm-method*(#"highlight", item.computation-id);
+    let res = optimize(item) & #t;
+    if (res)
+      //*dump-dfm-method*(#"relayouted", #());
+    end;
+    res;
   end;
 end function;
 

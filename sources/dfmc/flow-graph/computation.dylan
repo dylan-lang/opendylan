@@ -57,36 +57,39 @@ define generic computation-value
 
 define thread variable *computation-tracer* :: false-or(<function>) = #f;
 
-define function trace (a :: <computation>, old-next :: false-or(<computation>), new-next :: false-or(<computation>), #key new, previous) => ()
+define function trace (a :: <computation>, old-next :: false-or(<computation>), new-next :: false-or(<computation>), #key new, previous?) => ()
   if (*computation-tracer*)
     if (~ (slot-initialized?(a, computation-id) & instance?(a.computation-id, <integer>)))
       a.computation-id := next-computation-id();
-      *computation-tracer*(#"new-computation", a.computation-id, a);      
+      *computation-tracer*(#"new-computation", a.computation-id, a, 0);      
     end;
     if (new)
-      *computation-tracer*(#"new-computation", a.computation-id, a);
+      *computation-tracer*(#"new-computation", a.computation-id, a, 0);
     end;
     if (old-next & ~(slot-initialized?(old-next, computation-id) & instance?(old-next.computation-id, <integer>)))
       old-next.computation-id := next-computation-id();
-      *computation-tracer*(#"new-computation", old-next.computation-id, old-next);
+      *computation-tracer*(#"new-computation", old-next.computation-id, old-next, 0);
     end;
     if (new-next & ~(slot-initialized?(new-next, computation-id) & instance?(new-next.computation-id, <integer>)))
       new-next.computation-id := next-computation-id();
-      *computation-tracer*(#"new-computation", new-next.computation-id, new-next);
+      *computation-tracer*(#"new-computation", new-next.computation-id, new-next, 0);
     end;
-    if (previous)
-      if (old-next) //actually, old-previous
-        *computation-tracer*(#"remove-edge", old-next.computation-id, a.computation-id);
-      end;
-      if (new-next) //actually, new-previous
-        *computation-tracer*(#"insert-edge", new-next.computation-id, a.computation-id);
-      end;
-    else
+    if (previous?)
+      //if (old-next & new-next)
+      //  *computation-tracer*(#"change-edge", a.computation-id, old-next.computation-id, new-next.computation-id);
       if (old-next)
-        *computation-tracer*(#"remove-edge", a.computation-id, old-next.computation-id);
+        *computation-tracer*(#"remove-edge", old-next.computation-id, a.computation-id, 0);
       end;
-      if (new-next)
-        *computation-tracer*(#"insert-edge", a.computation-id, new-next.computation-id);
+      //if (new-next)
+      //  *computation-tracer*(#"insert-edge", new-next.computation-id, a.computation-id, 0);
+      //end;
+    else
+      if (old-next & new-next)
+        *computation-tracer*(#"change-edge", a.computation-id, old-next.computation-id, new-next.computation-id);
+      elseif (old-next)
+        *computation-tracer*(#"remove-edge", a.computation-id, old-next.computation-id, 0);
+      elseif (new-next)
+        *computation-tracer*(#"insert-edge", a.computation-id, new-next.computation-id, 0);
       end;
     end;
   end;
@@ -116,6 +119,20 @@ define method next-computation-setter
   computation.%next-computation := next;
 end;
 
+define method next-computation-setter (next, c :: <loop>) => (next)
+  walk-computation(method(a, b) 
+                     if (instance?(a, <end-loop>) & a.ending-loop == b)
+                       trace(a, c.%next-computation, next);
+                     end;
+                   end, c.loop-body, c);
+  c.%next-computation := next;
+end;
+
+define method next-computation-setter
+    (next, computation :: <if>)
+ => (next);
+  computation.%next-computation := next;
+end;
 define method previous-computation (computation :: <computation>)
  => (previous);
   computation.%previous-computation;
@@ -124,7 +141,9 @@ end;
 define method previous-computation-setter
     (previous, computation :: <computation>)
  => (previous);
-  trace(computation, computation.%previous-computation, previous, previous: #t);
+  if (computation.%previous-computation ~= previous)
+    //trace(computation, computation.%previous-computation, previous, previous?: #t);
+  end;
   computation.%previous-computation := previous;
 end;
 
@@ -700,12 +719,31 @@ end graph-class;
 
 define graph-class <if> (<computation>)
   temporary slot test :: <value-reference>, required-init-keyword: test:;
-  slot consequent :: false-or(<computation>),
+  slot %consequent :: false-or(<computation>),
     required-init-keyword: consequent:;
-  slot alternative :: false-or(<computation>),
+  slot %alternative :: false-or(<computation>),
     required-init-keyword: alternative:;
 end graph-class;
 
+define method consequent (c :: <if>) => (res :: false-or(<computation>))
+  c.%consequent;
+end;
+
+define method alternative (c :: <if>) => (res :: false-or(<computation>))
+  c.%alternative;
+end;
+
+
+define method consequent-setter (value :: false-or(<computation>), c :: <if>) => (res :: false-or(<computation>))
+  trace(c, c.%consequent, value);
+  c.%consequent := value;
+end;
+
+define method alternative-setter (value :: false-or(<computation>), c :: <if>)
+ => (res :: false-or(<computation>))
+  trace(c, c.%alternative, value);
+  c.%alternative := value;
+end;
 /// BLOCK
 
 define abstract graph-class <block> (<computation>)
@@ -793,9 +831,18 @@ define graph-class <loop> (<nop-computation>)
   slot %label, init-value: #f;
   slot loop-merges :: <simple-object-vector>,
     required-init-keyword: merges:;
-  slot loop-body :: false-or(<computation>), init-value: #f,
+  slot %loop-body :: false-or(<computation>), init-value: #f,
     init-keyword: body:;
 end graph-class;
+
+define method loop-body (c :: <loop>) => (res :: false-or(<computation>))
+  c.%loop-body;
+end;
+
+define method loop-body-setter (value :: false-or(<computation>), c :: <loop>) => (res :: false-or(<computation>))
+  trace(c, c.%loop-body, value);
+  c.%loop-body := value;
+end;
 
 define graph-class <end-loop> (<end>)
   constant slot ending-loop :: <loop>, required-init-keyword: loop:;
@@ -826,6 +873,10 @@ define graph-class <loop-call> (<computation>)
    init-keyword: merges:;
 end graph-class;
 
+define method next-computation-setter (value :: false-or(<computation>), c :: <loop-call>)
+      => (res :: false-or(<computation>))
+  c.%next-computation := value;
+end;
 /// BIND
 
 define graph-class <bind> (<computation>)
