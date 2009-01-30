@@ -12,49 +12,16 @@
  **
  ***************************************************************************/
 
-import y.anim.AnimationFactory;
-import y.anim.AnimationPlayer;
-import y.base.DataProvider;
-import y.base.Edge;
-import y.base.EdgeCursor;
-import y.base.EdgeList;
-import y.base.Node;
-import y.base.NodeCursor;
-import y.base.NodeList;
-import y.base.NodeMap;
-import y.geom.YPoint;
-import y.io.GMLIOHandler;
-import y.io.IOHandler;
-import y.io.YGFIOHandler;
-import y.layout.BufferedLayouter;
-import y.layout.GraphLayout;
-import y.layout.NodeLayout;
-import y.layout.hierarchic.IncrementalHierarchicLayouter;
-import y.layout.hierarchic.incremental.IncrementalHintsFactory;
-import y.layout.hierarchic.incremental.IntValueHolderAdapter;
-import y.layout.hierarchic.incremental.OldLayererWrapper;
-import y.option.OptionHandler;
-import y.util.D;
-import y.view.AreaZoomMode;
-import y.view.AutoDragViewMode;
-import y.view.BendCursor;
-import y.view.BendList;
-import y.view.Drawable;
-import y.view.EditMode;
-import y.view.Graph2D;
-import y.view.Graph2DPrinter;
-import y.view.Graph2DView;
-import y.view.Graph2DViewActions;
-import y.view.Graph2DViewMouseWheelZoomListener;
-import y.view.HitInfo;
-import y.view.HotSpotMode;
-import y.view.LayoutMorpher;
-import y.view.LineType;
-import y.view.NodeRealizer;
-import y.view.PopupMode;
-import y.view.PortAssignmentMoveSelectionMode;
-import y.view.Selections;
-import y.view.ViewMode;
+import java.awt.BorderLayout;
+import java.awt.Cursor;
+import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.print.PageFormat;
+import java.awt.print.PrinterJob;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -65,7 +32,6 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
@@ -74,26 +40,30 @@ import javax.swing.JRootPane;
 import javax.swing.JToolBar;
 import javax.swing.UIManager;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.Shape;
-import java.awt.Stroke;
-import java.awt.event.ActionEvent;
-import java.awt.geom.Rectangle2D;
-import java.awt.print.PageFormat;
-import java.awt.print.PrinterJob;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
-import java.util.Vector;
+import y.anim.AnimationFactory;
+import y.anim.AnimationPlayer;
+import y.base.DataProvider;
+import y.base.Node;
+import y.base.NodeCursor;
+import y.base.NodeList;
+import y.io.GMLIOHandler;
+import y.io.YGFIOHandler;
+import y.layout.BufferedLayouter;
+import y.layout.GraphLayout;
+import y.option.OptionHandler;
+import y.util.D;
+import y.view.AreaZoomMode;
+import y.view.AutoDragViewMode;
+import y.view.EditMode;
+import y.view.Graph2D;
+import y.view.Graph2DPrinter;
+import y.view.Graph2DView;
+import y.view.Graph2DViewActions;
+import y.view.Graph2DViewMouseWheelZoomListener;
+import y.view.LayoutMorpher;
+import y.view.PopupMode;
+import y.view.Selections;
+import y.view.ViewMode;
 
 /**
  * Abstract base class for GUI- and <code>Graph2DView</code>-based demos.
@@ -132,6 +102,9 @@ public class DemoBase extends Thread {
   private String name;
   private LayouterClient client;
   private JComboBox graph_chooser;
+  public Node highlight = null;
+  public ArrayList<Integer> opt_queue = new ArrayList<Integer>();
+  
   /**
    * This constructor creates the {@link #view}
    * and calls,
@@ -167,8 +140,13 @@ public class DemoBase extends Thread {
     registerViewListeners();
   }
 
-  public void graphChanged (IncrementalHierarchicLayout ihl, Graph2D gra) {
+  public void graphChanged (IncrementalHierarchicLayout ihl) {
 	  incrementallayouter = ihl;
+	  for (int i = 0; i < graph_chooser.getItemCount(); i++)
+		  if (((ListElement)graph_chooser.getItemAt(i)).myindex() == ihl.graph_id) {
+			  graph_chooser.setSelectedIndex(i);
+			  break;
+		  }
 	  calcLayout();
   }
   
@@ -608,6 +586,7 @@ public class DemoBase extends Thread {
 		}
 		public void actionPerformed(ActionEvent ev)
 		{
+			incrementallayouter.changed = true;
 			calcLayout();
 		}
 	}
@@ -649,7 +628,8 @@ public class DemoBase extends Thread {
 	 * Animated layout assignment
 	 */
 	public void calcLayout(){
-		if (!view.getGraph2D().isEmpty()){
+		if (!view.getGraph2D().isEmpty() && incrementallayouter.changed){
+			incrementallayouter.changed = false;
 			//incrementallayouter.gll.normalize(view.getGraph2D(), incrementallayouter.layerIdMap, incrementallayouter.layerIdMap);
 			Cursor oldCursor = view.getCanvasComponent().getCursor();
 			try {

@@ -11,7 +11,6 @@ import y.base.Edge;
 import y.base.EdgeCursor;
 import y.base.Node;
 import y.base.NodeCursor;
-import y.base.NodeList;
 
 
 public class LayouterClient extends Thread {
@@ -74,7 +73,7 @@ public class LayouterClient extends Thread {
 					assert(answer.size() == 3);
 					assert(answer.get(2) instanceof ArrayList);
 					System.out.println(key.toString() + " for " + dfm_id + " is " + (ArrayList)answer.get(2));
-					IncrementalHierarchicLayout graph = new IncrementalHierarchicLayout(demo);
+					IncrementalHierarchicLayout graph = new IncrementalHierarchicLayout(demo, dfm_id);
 					ArrayList cf = (ArrayList)answer.get(2);
 					assert(cf.size() > 1);
 					assert(cf.get(1) instanceof Symbol); //method name
@@ -110,11 +109,10 @@ public class LayouterClient extends Thread {
 							gr.graph.changeEdge(change, fromN, tonewN);
 						else
 							gr.graph.createEdge(fromN, tonewN);
-						
-					}else
+						gr.changed = true;
+					} else
 						System.out.println("graph " + dfm_id + " node " + from + " or " + toold + " or " + tonew + " nonexistant :/");
 				} else if (key.isEqual("remove-edge")) {
-		
 					assert(answer.size() == 4);
 					assert(answer.get(2) instanceof Integer);
 					assert(answer.get(3) instanceof Integer);
@@ -130,6 +128,7 @@ public class LayouterClient extends Thread {
 							if (ec.edge().target() == toN) {
 								gr.graph.removeEdge(ec.edge());
 								System.out.println("removing edge in graph " + dfm_id + " from " + from + " to " + to);
+								gr.changed = true;
 								break;
 							}
 					} else
@@ -154,10 +153,10 @@ public class LayouterClient extends Thread {
 							}
 						if (! found) {
 							gr.graph.createEdge(fromN, toN);
+							gr.changed = true;
 							gr.scf.addPlaceNodeAfterConstraint(fromN, toN);
 							System.out.println("inserting edge in graph " + dfm_id + " from " + from + " to " + to);
 						}
-						
 					} else
 						System.out.println("graph " + dfm_id + " node " + from + " or " + to + " nonexistant :/");
 				} else if (key.isEqual("new-computation")) {
@@ -168,31 +167,53 @@ public class LayouterClient extends Thread {
 					assert(text.size() > 1);
 					System.out.print("graph " + dfm_id);
 					gr.initGraphHelperHelper(text, null, -1);
-					/* int new_id = -1;
-					if (text.get(0) instanceof Integer)
-						new_id = (Integer)text.get(0);
-					else if (text.size() > 2 && text.get(2) instanceof Integer) {
-						new_id = (Integer)text.get(2);
-					} */
-					//String txt = (String)text.get(1);
-					//System.out.println("added node in graph " + dfm_id + " id " + new_id + " text " + text);
+					gr.changed = true;
 				} else if (key.isEqual("relayouted")) {
 					IncrementalHierarchicLayout gr = graphs.get(dfm_id);
 					for (NodeCursor nc = gr.graph.nodes(); nc.ok(); nc.next())
-						if (nc.node().degree() == 0)
+						if (nc.node().degree() == 0) {
 							gr.graph.removeNode(nc.node());
+							gr.changed = true;
+						}
 					gr.activateLayouter();
 				} else if (key.isEqual("highlight")) {
 					IncrementalHierarchicLayout gr = graphs.get(dfm_id);
 					gr.activateLayouter();
 					int from = (Integer)answer.get(2);
-					Node highlight = gr.int_node_map.get(from);
-					if (highlight != null) {
-						if (gr.oldhighlight != null)
-							gr.graph.getRealizer(gr.oldhighlight).setFillColor(gr.graph.getRealizer(gr.graph.firstNode()).getFillColor());
-						gr.graph.getRealizer(highlight).setFillColor(Color.green);
-						gr.oldhighlight = highlight;
+					Node highlightnew = gr.int_node_map.get(from);
+					if (highlightnew != null && demo.highlight != highlightnew) {
+						if (demo.highlight != null)
+							gr.graph.getRealizer(demo.highlight).setFillColor(gr.graph.getRealizer(gr.graph.firstNode()).getFillColor());
+						gr.graph.getRealizer(highlightnew).setFillColor(Color.green);
+						demo.highlight = highlightnew;
+						demo.contentPane.repaint();
 					}
+				} else if (key.isEqual("highlight-queue")) {
+					IncrementalHierarchicLayout gr = graphs.get(dfm_id);
+					gr.activateLayouter();
+					ArrayList queue = (ArrayList)answer.get(2);
+					ArrayList<Integer> removed = new ArrayList<Integer>();
+					ArrayList<Integer> added = new ArrayList<Integer>();
+					for (Object ind : queue)
+						if (! demo.opt_queue.contains((Integer)ind))
+							added.add((Integer)ind);
+					for (Integer old : demo.opt_queue)
+						if (! queue.contains(old))
+							removed.add(old);
+					
+					for (Integer rem : removed) {
+						demo.opt_queue.remove(rem);
+						Node unh = gr.int_node_map.get(rem);
+						if (unh != demo.highlight && unh != null)
+							gr.graph.getRealizer(unh).setFillColor(gr.graph.getRealizer(gr.graph.firstNode()).getFillColor());
+					}
+					for (Integer a : added) {
+						demo.opt_queue.add(a);
+						Node h = gr.int_node_map.get(a);
+						if (h != demo.highlight && h != null)
+							gr.graph.getRealizer(h).setFillColor(Color.orange);
+					}
+					demo.contentPane.repaint();
 				}
 			}
 		} catch (IOException e) {

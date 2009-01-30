@@ -16,20 +16,10 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import y.base.DataMap;
-import y.base.EdgeMap;
 import y.base.Node;
 import y.base.NodeCursor;
-import y.base.NodeMap;
-import y.layout.PortConstraintKeys;
-import y.layout.hierarchic.ClassicLayerSequencer;
-import y.layout.hierarchic.GivenLayersLayerer;
 import y.layout.hierarchic.IncrementalHierarchicLayouter;
-import y.layout.hierarchic.incremental.IncrementalHintsFactory;
-import y.layout.hierarchic.incremental.IntValueHolderAdapter;
-import y.layout.hierarchic.incremental.OldLayererWrapper;
 import y.layout.hierarchic.incremental.SequenceConstraintFactory;
-import y.util.Maps;
 import y.view.Arrow;
 import y.view.BridgeCalculator;
 import y.view.DefaultGraph2DRenderer;
@@ -62,10 +52,13 @@ public class IncrementalHierarchicLayout
 	private Graph2DView view;
 	private DemoBase demobase;
 	protected SequenceConstraintFactory scf;
+	public boolean changed = false;
+	protected final int graph_id;
 
 	
-	public IncrementalHierarchicLayout(DemoBase db)
+	public IncrementalHierarchicLayout(DemoBase db, int id)
 	{
+		graph_id = id;
 		graph = new Graph2D();
 		view = db.view;
 		demobase = db;
@@ -83,22 +76,15 @@ public class IncrementalHierarchicLayout
 		hierarchicLayouter = new IncrementalHierarchicLayouter();
 		
 		scf = hierarchicLayouter.createSequenceConstraintFactory(graph);
-
-		
-		//hierarchicLayouter.setLayoutMode(IncrementalHierarchicLayouter.LAYOUT_MODE_INCREMENTAL);
-
-		//hierarchicLayouter.getEdgeLayoutDescriptor().setSourcePortOptimizationEnabled(true);
-		//hierarchicLayouter.getEdgeLayoutDescriptor().setTargetPortOptimizationEnabled(true);
-		//hierarchicLayouter.getEdgeLayoutDescriptor().setOrthogonallyRouted(true);
-
-		// deferred since the mode is created in the super class's constructor
-		//paMode.setSpc(sourcePortMap);
-		//paMode.setTpc(targetPortMap);
 	}
 	
 	public void activateLayouter () {
-		view.setGraph2D(graph);
-		demobase.graphChanged(this, graph);
+		if (demobase.incrementallayouter != this) {
+			changed = true;
+			view.setGraph2D(graph);
+			demobase.graphChanged(this);
+		} else
+			demobase.calcLayout();
 	}
 
 	protected void initGraph (ArrayList controlflow)
@@ -139,6 +125,8 @@ public class IncrementalHierarchicLayout
 		}
 		todelete.clear();
 		
+		changed = true;
+		
 		try {
 			demobase.calcLayout();
 		} finally {
@@ -149,7 +137,6 @@ public class IncrementalHierarchicLayout
 	
 	private Node othernode = null;
 	private ArrayList<Node> todelete = new ArrayList<Node>();
-	public Node oldhighlight;
 	
 	protected Node initGraphHelperHelper (Object o, Node prev, int id) {
 		Node curr = null;
@@ -378,7 +365,7 @@ public class IncrementalHierarchicLayout
 						graph.changeEdge(n.firstOutEdge(), n, loop);
 					}
 				}
-				else if (graph.getRealizer(n).getLabel().getText().equals("BREAK")) {
+				else if (graph.getRealizer(n).getLabel().getText().contains("BREAK")) {
 					if (n.outDegree() == 0)
 						breaks = n;
 				}
@@ -392,7 +379,7 @@ public class IncrementalHierarchicLayout
 	private Node createNodeWithLabel (String label, int id) {
 		NodeRealizer n1 = new GenericNodeRealizer(graph.getDefaultNodeRealizer());
 		NodeLabel nl1 = n1.createNodeLabel();
-		nl1.setText(label);
+		nl1.setText(id + ": " + label);
 		n1.setLabel(nl1);
 		n1.setWidth(nl1.getWidth() + 10);
 		Node n = graph.createNode(n1);
@@ -403,9 +390,12 @@ public class IncrementalHierarchicLayout
 	
 	private void changeLabel (Node n, String app, boolean append) {
 		NodeLabel nl = graph.getRealizer(n).getLabel();
-		if (append)
-			nl.setText(app + nl.getText());
-		else
+		if (append) {
+			String old = nl.getText();
+			//filter number out
+			int start = old.indexOf(' ') + 1;
+			nl.setText(old.substring(0, start) + app + old.substring(start));
+		} else
 			nl.setText(app);
 		graph.getRealizer(n).setWidth(nl.getWidth());
 	}

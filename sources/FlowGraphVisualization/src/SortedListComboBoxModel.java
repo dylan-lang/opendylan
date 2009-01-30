@@ -1,11 +1,8 @@
 import java.io.Serializable;
-import java.lang.reflect.Array;
-import java.util.Comparator;
 import java.util.Vector;
 
 import javax.swing.AbstractListModel;
 import javax.swing.MutableComboBoxModel;
-import javax.swing.event.ListDataListener;
 
 
 public class SortedListComboBoxModel extends AbstractListModel implements
