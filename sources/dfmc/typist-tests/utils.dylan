@@ -38,6 +38,8 @@ define function trace-computations (key :: <symbol>, id :: <integer>, comp-or-id
         write-to-visualizer(*vis*, list(key, *current-index*, id, comp-or-id, comp2));
       #"new-computation" =>
         write-to-visualizer(*vis*, list(key, *current-index*, output-computation-sexp(comp-or-id)));
+      #"remove-computation" =>
+        write-to-visualizer(*vis*, list(key, *current-index*, id));
     end;
   end;
 end;

@@ -33,7 +33,7 @@ define abstract dood-class <computation> (<queueable-item-mixin>)
   weak slot computation-type = #f,
     reinit-expression: #f;
 
-  weak slot computation-id :: <integer>,
+  weak slot %computation-id :: <integer>,
     init-function: next-computation-id;
 
 end dood-class <computation>;
@@ -44,6 +44,15 @@ define function next-computation-id () => (result :: <integer>)
   current-computation-id := current-computation-id + 1;
 end;
 
+define method computation-id (c :: <computation>) => (res :: <integer>)
+  if (instance?(c.%computation-id, <integer>))
+    c.%computation-id;
+  else
+    c.%computation-id := next-computation-id();
+    *computation-tracer*(#"new-computation", c.%computation-id, c, 0);      
+  end;
+  c.%computation-id;
+end;
 // Seal construction over the <computation> world.
 
 define sealed domain make (subclass(<computation>));
@@ -57,40 +66,17 @@ define generic computation-value
 
 define thread variable *computation-tracer* :: false-or(<function>) = #f;
 
-define function trace (a :: <computation>, old-next :: false-or(<computation>), new-next :: false-or(<computation>), #key new, previous?) => ()
+define function trace (a :: <computation>, old-next :: false-or(<computation>), new-next :: false-or(<computation>), #key new) => ()
   if (*computation-tracer*)
-    if (~ (slot-initialized?(a, computation-id) & instance?(a.computation-id, <integer>)))
-      a.computation-id := next-computation-id();
-      *computation-tracer*(#"new-computation", a.computation-id, a, 0);      
-    end;
     if (new)
       *computation-tracer*(#"new-computation", a.computation-id, a, 0);
     end;
-    if (old-next & ~(slot-initialized?(old-next, computation-id) & instance?(old-next.computation-id, <integer>)))
-      old-next.computation-id := next-computation-id();
-      *computation-tracer*(#"new-computation", old-next.computation-id, old-next, 0);
-    end;
-    if (new-next & ~(slot-initialized?(new-next, computation-id) & instance?(new-next.computation-id, <integer>)))
-      new-next.computation-id := next-computation-id();
-      *computation-tracer*(#"new-computation", new-next.computation-id, new-next, 0);
-    end;
-    if (previous?)
-      //if (old-next & new-next)
-      //  *computation-tracer*(#"change-edge", a.computation-id, old-next.computation-id, new-next.computation-id);
-      if (old-next)
-        *computation-tracer*(#"remove-edge", old-next.computation-id, a.computation-id, 0);
-      end;
-      //if (new-next)
-      //  *computation-tracer*(#"insert-edge", new-next.computation-id, a.computation-id, 0);
-      //end;
-    else
-      if (old-next & new-next)
-        *computation-tracer*(#"change-edge", a.computation-id, old-next.computation-id, new-next.computation-id);
-      elseif (old-next)
-        *computation-tracer*(#"remove-edge", a.computation-id, old-next.computation-id, 0);
-      elseif (new-next)
-        *computation-tracer*(#"insert-edge", a.computation-id, new-next.computation-id, 0);
-      end;
+    if (old-next & new-next)
+      *computation-tracer*(#"change-edge", a.computation-id, old-next.computation-id, new-next.computation-id);
+    elseif (old-next)
+      *computation-tracer*(#"remove-edge", a.computation-id, old-next.computation-id, 0);
+    elseif (new-next)
+      *computation-tracer*(#"insert-edge", a.computation-id, new-next.computation-id, 0);
     end;
   end;
 end;
@@ -141,9 +127,6 @@ end;
 define method previous-computation-setter
     (previous, computation :: <computation>)
  => (previous);
-  if (computation.%previous-computation ~= previous)
-    //trace(computation, computation.%previous-computation, previous, previous?: #t);
-  end;
   computation.%previous-computation := previous;
 end;
 

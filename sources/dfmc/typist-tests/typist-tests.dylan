@@ -17,7 +17,7 @@ define test noop ()
 end;
 
 define test visualization-test ()
-  let mycode = /* "define method if-nested (x, y, z)"
+  let mycode = "define method if-nested (x, y, z)"
                "  if (x == 1)"
                "    if (y == 1)"
                "      if (z == 1)"
@@ -41,7 +41,7 @@ define test visualization-test ()
                "  while(#t)"
                "    1 + 2;"
                "  end;"
-               "end;" */
+               "end;"
                "define method while-loop (x, y, z)"
                "  let i = 0;"
                "  while(i < 42)"
