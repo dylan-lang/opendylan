@@ -168,6 +168,12 @@ public class LayouterClient extends Thread {
 					System.out.print("graph " + dfm_id);
 					gr.initGraphHelperHelper(text, null, -1);
 					gr.changed = true;
+				} else if (key.isEqual("remove-computation")) {
+					assert(answer.size() == 3);
+					assert(answer.get(2) instanceof Integer);
+					IncrementalHierarchicLayout gr = graphs.get(dfm_id);
+					gr.graph.removeNode(gr.int_node_map.get((Integer)answer.get(2)));
+					gr.changed = true;
 				} else if (key.isEqual("relayouted")) {
 					IncrementalHierarchicLayout gr = graphs.get(dfm_id);
 					for (NodeCursor nc = gr.graph.nodes(); nc.ok(); nc.next())

@@ -65,13 +65,6 @@ import y.view.PopupMode;
 import y.view.Selections;
 import y.view.ViewMode;
 
-/**
- * Abstract base class for GUI- and <code>Graph2DView</code>-based demos.
- * Provides useful callback methods.
- * <p/>
- * To avoid problems with "calls to overwritten method in constructor", do not initialize the demo
- * within the constructor of the subclass, use the method {@link #initialize()} instead.
- */
 public class DemoBase extends Thread {
   /**
    * Initializes to a "nice" look and feel.

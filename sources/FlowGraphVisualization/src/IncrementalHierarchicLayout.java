@@ -31,18 +31,6 @@ import y.view.Graph2DView;
 import y.view.NodeLabel;
 import y.view.NodeRealizer;
 
-/**
- * This demo shows how to use the {@link y.layout.hierarchic.IncrementalHierarchicLayouter} together
- * with sophisticated customized {@link y.view.ViewMode}s.
- * The application will automatically perform a new layout whenever the user
- * makes changes to the graph. <br/>
- * It demonstrates how to use a predetermined layering and how the application
- * can retrieve the layering computed during the layout. The layering information
- * is visualized using a {@link y.view.Drawable} in the canvas. <br/>
- * For a simpler demo that depicts the basics of {@link y.layout.hierarchic.IncrementalHierarchicLayouter}
- * see {@link SimpleIncrementalHierarchicLayouterDemo}.
- * @see y.layout.hierarchic.IncrementalHierarchicLayouter
- */
 public class IncrementalHierarchicLayout
 {
 	protected IncrementalHierarchicLayouter hierarchicLayouter;
