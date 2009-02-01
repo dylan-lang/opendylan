@@ -26,32 +26,34 @@ define thread variable *current-index* :: <integer> = 0;
 define thread variable *trace-edges* :: <boolean> = #f;
 
 define function trace-computations (key :: <symbol>, id :: <integer>, comp-or-id :: type-union(<computation>, <integer>),
-                                    comp2 :: <integer>)
-  if (member?(id, #(170, 176, 171, 175)))
-    format-out("got me\n");
-  end;
-  if (*trace-edges*)
-    select (key by \==)
-      #"remove-edge", #"insert-edge" =>
-        write-to-visualizer(*vis*, list(key, *current-index*, id, comp-or-id));
-      #"change-edge" =>
-        write-to-visualizer(*vis*, list(key, *current-index*, id, comp-or-id, comp2));
-      #"new-computation" =>
-        write-to-visualizer(*vis*, list(key, *current-index*, output-computation-sexp(comp-or-id)));
-      #"remove-computation" =>
-        write-to-visualizer(*vis*, list(key, *current-index*, id));
-    end;
+                                    comp2 :: <integer>, #key label)
+  select (key by \==)
+    #"add-temporary-user", #"add-temporary", #"remove-temporary-user" =>
+      write-to-visualizer(*vis*, list(key, *current-index*, id, comp-or-id));
+    #"temporary-generator" =>
+      write-to-visualizer(*vis*, list(key, *current-index*, id, comp-or-id, comp2));
+    #"remove-edge", #"insert-edge" =>
+      write-to-visualizer(*vis*, list(key, *current-index*, id, comp-or-id, label));
+    #"change-edge" =>
+      write-to-visualizer(*vis*, list(key, *current-index*, id, comp-or-id, comp2, label));
+    #"new-computation" =>
+      write-to-visualizer(*vis*, list(key, *current-index*, output-computation-sexp(comp-or-id)));
+    #"remove-computation" =>
+      write-to-visualizer(*vis*, list(key, *current-index*, id));
   end;
 end;
 define function visualize (key :: <symbol>, object :: <object>)
 //format-out("VIS %= %=\n", context, object);
   select (key by \==)
-    #"initial-dfm" =>
+    #"start-compilation" =>
       begin
-        let id :: <integer> = object.head;
-        write-to-visualizer(*vis*, list(key, id, object.tail.head));
-        *current-index* := id;
+        *current-index* := object;
+        write-to-visualizer(*vis*, list(key, object));
       end;
+    #"file-changed" => if (object = "scratch-source") *vis*.report-enabled? := #t else *vis*.report-enabled? := #f end;
+    #"dfm-switch" => *current-index* := object;
+    #"dfm-header" =>
+        write-to-visualizer(*vis*, list(key, *current-index*, object));
     #"optimizing" =>
       begin
         *current-index* := object;
@@ -72,6 +74,8 @@ define function visualize (key :: <symbol>, object :: <object>)
       if (instance?(object, <integer>))
         write-to-visualizer(*vis*, list(key, *current-index*, object));
       end;
+    #"full-dfm" =>
+      format-out("GOT DFM %=\n", object);
     otherwise => ;
   end;
 end;

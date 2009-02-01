@@ -38,18 +38,18 @@ define abstract dood-class <computation> (<queueable-item-mixin>)
 
 end dood-class <computation>;
 
-define thread variable current-computation-id :: <integer> = -1;
+define thread variable current-computation-id :: <integer> = 0;
 
 define function next-computation-id () => (result :: <integer>)
   current-computation-id := current-computation-id + 1;
 end;
 
 define method computation-id (c :: <computation>) => (res :: <integer>)
-  if (instance?(c.%computation-id, <integer>))
-    c.%computation-id;
-  else
+  if (~ (slot-initialized?(c, %computation-id) & instance?(c.%computation-id, <integer>)))
     c.%computation-id := next-computation-id();
-    *computation-tracer*(#"new-computation", c.%computation-id, c, 0);      
+    if (*computation-tracer*)
+      *computation-tracer*(#"new-computation", c.%computation-id, c, 0);
+    end;
   end;
   c.%computation-id;
 end;
@@ -66,17 +66,18 @@ define generic computation-value
 
 define thread variable *computation-tracer* :: false-or(<function>) = #f;
 
-define function trace (a :: <computation>, old-next :: false-or(<computation>), new-next :: false-or(<computation>), #key new) => ()
+define function trace (a :: <computation>, old-next :: false-or(<computation>), new-next :: false-or(<computation>), #key new, label) => ()
   if (*computation-tracer*)
     if (new)
       *computation-tracer*(#"new-computation", a.computation-id, a, 0);
     end;
+    unless (label) label := #"no" end;
     if (old-next & new-next)
-      *computation-tracer*(#"change-edge", a.computation-id, old-next.computation-id, new-next.computation-id);
+      *computation-tracer*(#"change-edge", a.computation-id, old-next.computation-id, new-next.computation-id, label: label);
     elseif (old-next)
-      *computation-tracer*(#"remove-edge", a.computation-id, old-next.computation-id, 0);
+      *computation-tracer*(#"remove-edge", a.computation-id, old-next.computation-id, 0, label: label);
     elseif (new-next)
-      *computation-tracer*(#"insert-edge", a.computation-id, new-next.computation-id, 0);
+      *computation-tracer*(#"insert-edge", a.computation-id, new-next.computation-id, 0, label: label);
     end;
   end;
 end;
@@ -107,8 +108,8 @@ end;
 
 define method next-computation-setter (next, c :: <loop>) => (next)
   walk-computation(method(a, b) 
-                     if (instance?(a, <end-loop>) & a.ending-loop == b)
-                       trace(a, c.%next-computation, next);
+                     if (instance?(b, <end-loop>) & b.ending-loop == c)
+                       trace(b, c.%next-computation, next);
                      end;
                    end, c.loop-body, c);
   c.%next-computation := next;
@@ -173,14 +174,13 @@ define /* inline */ method make
     (class :: subclass(<computation>), #rest initargs, #key next-computation, #all-keys)
  => (object)
   let c = next-method();
-  register-used-temporaries(c);
   trace(c, #f, next-computation, new: #t);
+  register-used-temporaries(c);
   c
 end method;
 
 define inline function register-used-temporaries (c :: <computation>)
-  do-used-temporaries(method (t) add-user!(t, c) end,
-		      c);
+  do-used-temporaries(method (t) add-user!(t, c) end, c);
 end;
 
 define class <temporary-accessors> (<object>)
@@ -718,13 +718,13 @@ end;
 
 
 define method consequent-setter (value :: false-or(<computation>), c :: <if>) => (res :: false-or(<computation>))
-  trace(c, c.%consequent, value);
+  trace(c, c.%consequent, value, label: #"true");
   c.%consequent := value;
 end;
 
 define method alternative-setter (value :: false-or(<computation>), c :: <if>)
  => (res :: false-or(<computation>))
-  trace(c, c.%alternative, value);
+  trace(c, c.%alternative, value, label: #"false");
   c.%alternative := value;
 end;
 /// BLOCK
@@ -830,6 +830,12 @@ end;
 define graph-class <end-loop> (<end>)
   constant slot ending-loop :: <loop>, required-init-keyword: loop:;
 end graph-class;
+
+define method make (class == <end-loop>, #rest rest, #key loop, #all-keys) => (res :: <end-loop>)
+  let el = next-method();
+  trace(el, #f, loop.next-computation);
+  el;
+end;
 
 define function loop-parameters (c :: <loop>)
   collecting ()

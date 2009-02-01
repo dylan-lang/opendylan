@@ -9,6 +9,7 @@ define constant $default-port = 1234;
 define class <dfmc-graph-visualization> (<object>)
   slot socket :: false-or(<socket>) = #f;
   constant slot connection-id :: <symbol>, required-init-keyword: id:;
+  slot report-enabled? :: <boolean> = #t;
 end;
 
 define function write-to-visualizer (v :: <dfmc-graph-visualization>, data)
@@ -18,8 +19,12 @@ define function write-to-visualizer (v :: <dfmc-graph-visualization>, data)
   //format(*standard-error*, "write: %s\n", s-expression);
   let siz = integer-to-string(s-expression.size, base: 16, size: 6);
   block()
-    format(v.socket, "%s%s", siz, s-expression);
-    force-output(v.socket);
+    if (v.report-enabled?)
+      format(v.socket, "%s%s", siz, s-expression);
+      force-output(v.socket);
+    else
+      format(*standard-output*, "not sending: %s\n", s-expression);
+    end;
   exception (c :: <condition>)
     format(*standard-output*, "failed communication: %=\n", c);
   end;

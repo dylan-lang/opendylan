@@ -75,10 +75,14 @@ define function compute-and-install-model-objects
     source-record-progress-text("Computing data models for %s.dylan", name);
     unless (cr.compilation-record-model-heap)
       progress-line("Computing models for %s.dylan", name);
+      visualization-report(#"file-changed", name);
+      let i :: <integer> = 0;
       compiling-forms ($compilation of form in cr)
-	unless (form-ignored?(form))
+        unless (form-ignored?(form))
+          visualization-report(#"start-compilation", i);
 	  maybe-compute-and-install-form-model-objects(form);
 	  finish-installing-form-model-objects(form);
+          i := i + 1;
 	end unless;
       end compiling-forms;
     end unless;
@@ -570,9 +574,11 @@ define function ensure-library-dfm-computed (ld :: <compilation-context>)
   let i :: <integer> = 0;
   timing-compilation-phase ("DFM generation" of ld)
     for-library-method ("Computing code models for", $compilation of m in ld)
+      visualization-report(#"dfm-switch", i);
       ensure-method-dfm-or-heap(m);
-      let sexp = print-method(make(<string-stream>), m, output-format: #"sexp");
-      visualization-report(#"initial-dfm", list(i, sexp));
+      let sexp = print-method(make(<string-stream>), m, output-format: #"sexp", header-only: #t);
+      visualization-report(#"dfm-header", sexp);
+      visualization-report(#"full-dfm", print-method(make(<string-stream>), m, output-format: #"sexp"));
       i := i + 1;
     end;
   end;

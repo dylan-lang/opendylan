@@ -50,9 +50,13 @@ define method output-lambda-computations
 end method;
 
 define compiler-sideways method print-method (stream :: <stream>, 
-      o :: <&lambda>, #key css, output-format) 
+      o :: <&lambda>, #key css, output-format, header-only) 
   if (output-format == #"sexp")
-    output-lambda-computations-sexp(stream, o);
+    if (header-only)
+      output-lambda-header-sexp(stream, o);
+    else
+      output-lambda-computations-sexp(stream, o);
+    end;
   else
     output-lambda-computations(stream, 0, o);
   end;
@@ -137,7 +141,7 @@ define method output-computation
 end method;
 
 //s-expression outputter
-define method output-lambda-computations-sexp
+define method output-lambda-header-sexp
     (stream :: <stream>, o :: <&lambda>, #key prefix)
   let res = #();
   if (prefix)
@@ -149,13 +153,17 @@ define method output-lambda-computations-sexp
   end;
   let str = make(<string-stream>, direction: #"output");
   print-contents(signature-spec(o), str);
-  res := add!(res, str.stream-contents);
+  reverse(add!(res, str.stream-contents));
+end;
+
+define method output-lambda-computations-sexp
+    (stream :: <stream>, o :: <&lambda>, #key prefix)
+  let res = output-lambda-header-sexp(stream, o, prefix: prefix);
   for-used-lambda (sub-f in o)
     res := add!(res, output-lambda-computations-sexp(stream, sub-f, prefix: "LOCAL"));
   end;
   if (o.body)
-    res := concatenate(reverse!(res),
-                       output-computations-sexp(o.body, #f));
+    res := concatenate(res, output-computations-sexp(o.body, #f));
   end;
   res;
 end;
@@ -185,34 +193,45 @@ define method output-computations-sexp
   #()
 end;
 
+define function get-computation-ids
+ (c :: false-or(<computation>), last :: false-or(<computation>))
+  let res = make(<stretchy-vector>);
+  if (c)
+    walk-computations(method(a) if (a) add!(res, a.computation-id) end end, c, last);
+  end;
+  res;
+end;
+
 define method output-computation-sexp
     (c :: <computation>)
   let res = #();
   let str = make(<string-stream>, direction: #"output");
   print-computation(str, c);
   res := add!(res, str.stream-contents);
-  res := add!(res, c.computation-id);
-  if (c.temporary & c.temporary.used?)
-    res := add!(res, format-to-string("%s", c.temporary));
-    res := add!(res, #"temporary");
-  end if;
-  res;
+  add!(res, c.computation-id);
 end method;
 
 define method output-computation-sexp
     (c :: <loop>)
   let res = #();
-  res := add!(res, output-computations-sexp(loop-body(c), last));
-  //res := add!(res, output-computations-sexp(loop-merges(c), #f));
+  res := add!(res, get-computation-ids(c.loop-body, c.next-computation));
   res := add!(res, #"LOOP");
+  add!(res, c.computation-id);
+end method;
+
+define method output-computation-sexp
+    (c :: <loop-call>)
+  let res = #();
+  res := add!(res, computation-id(loop-call-loop(c)));
+  res := add!(res, #"LOOP-CALL");
   add!(res, c.computation-id);
 end method;
 
 define method output-computation-sexp
     (c :: <if>)
   let res = #();
-  res := add!(res, output-computations-sexp(c.alternative, c.next-computation));
-  res := add!(res, output-computations-sexp(c.consequent, c.next-computation));
+  res := add!(res, get-computation-ids(c.alternative, c.next-computation));
+  res := add!(res, get-computation-ids(c.consequent, c.next-computation));
   res := add!(res, list(format-to-string("%=", c.test)));
   res := add!(res, #"IF");
   add!(res, c.computation-id);

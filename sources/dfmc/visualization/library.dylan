@@ -23,6 +23,7 @@ define module dfmc-visualization
   use lisp-reader;  
 
   export <dfmc-graph-visualization>,
+    report-enabled?, report-enabled?-setter,
     connect-to-server,
     process-request,
     read-from-visualizer,

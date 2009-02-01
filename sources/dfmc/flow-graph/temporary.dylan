@@ -15,14 +15,55 @@ end method;
 // Like a value continuation
 
 define dood-class <temporary> (<value-reference>)
-  weak slot generator :: false-or(<computation>) = #f, 
+  weak slot %generator :: false-or(<computation>) = #f, 
     reinit-expression: #f,
     init-keyword: generator:;
   weak slot environment :: false-or(<lambda-lexical-environment>), 
     reinit-expression: #f,
     required-init-keyword: environment:;
   slot temporary-properties :: <integer> = 0;
+  weak slot %temporary-id :: false-or(<integer>),
+    init-function: next-computation-id,
+    reinit-expression: #f;
 end dood-class;
+
+define method generator (t :: <temporary>) => (res :: false-or(<computation>))
+  t.%generator;
+end;
+
+define method generator-setter (g :: false-or(<computation>), t :: <temporary>) => (res :: false-or(<computation>))
+  if (g & *computation-tracer*)
+    let old-id = if (t.%generator) t.%generator.computation-id else 0 end;
+    *computation-tracer*(#"temporary-generator", t.temporary-id, g.computation-id, old-id);
+  end;
+  t.%generator := g;
+end;
+define method remove-user! (t :: <temporary>, c :: <computation>)
+  next-method();
+  if (*computation-tracer*)
+    *computation-tracer*(#"remove-temporary-user", t.temporary-id, c.computation-id, 0);
+  end;
+end;
+
+define method add-user! (t :: <temporary>, c :: <computation>)
+  next-method();
+  if (*computation-tracer*)
+    *computation-tracer*(#"add-temporary-user", t.temporary-id, c.computation-id, 0);
+  end;
+end;
+
+define method temporary-id (t :: <temporary>) => (id :: <integer>)
+  if (instance?(t.%temporary-id, <integer>))
+    t.%temporary-id;
+  else
+    t.%temporary-id := next-computation-id();
+    if (*computation-tracer*)
+      let gen = if (t.generator) t.generator.computation-id else 0 end;
+      *computation-tracer*(#"add-temporary", t.%temporary-id, gen, 0);
+    end;
+    t.%temporary-id;
+  end;
+end;
 
 // Seal construction over the <temporary> world.
 
@@ -61,10 +102,14 @@ define packed-slots temporary-properties (<temporary>, <object>)
 end packed-slots;
 
 define method initialize
-    (temporary :: <temporary>, #rest all-keys, #key environment)
+    (temporary :: <temporary>, #rest all-keys, #key environment, generator)
   next-method();
   apply(initialize-packed-slots, temporary, all-keys);
   add-temporary!(environment, temporary);
+  if (*computation-tracer*)
+    let gen = if (generator) generator.computation-id else 0 end;
+    *computation-tracer*(#"add-temporary", temporary.temporary-id, gen, 0);
+  end;
   temporary.frame-offset
     := min(next-frame-offset(environment), $max-frame-offset);
   temporary
