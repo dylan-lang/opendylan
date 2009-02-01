@@ -37,6 +37,12 @@ define test visualization-test ()
                "    x := y + 1;"
                "  end;"
                "end;"
+               "define method for-loop-multiple-variables ()"
+               "  let sum = 0;"
+               "  for (i from 0, j from 5, k from 20 above 0 by -1, l from 7 below 10)"
+               "    sum := i + j * k + l;"
+               "  end;"
+               "end;"
                "define method while-true-loop (x, y, z)"
                "  while(#t)"
                "    1 + 2;"
@@ -57,8 +63,7 @@ define test visualization-test ()
                "    end;"
                "  end;"
                "end;";
-/*
-               "define method block-cleanup (x, y, z)"
+/*               "define method block-cleanup (x, y, z)"
                "  block(t)"
                "    if (x == 42)"
                "      t();"

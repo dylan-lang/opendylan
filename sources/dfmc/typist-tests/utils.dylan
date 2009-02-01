@@ -23,15 +23,13 @@ end;
 define thread variable *vis* :: false-or(<dfmc-graph-visualization>) = #f; 
 define thread variable *current-index* :: <integer> = 0;
 
-define thread variable *trace-edges* :: <boolean> = #f;
-
 define function trace-computations (key :: <symbol>, id :: <integer>, comp-or-id :: type-union(<computation>, <integer>),
                                     comp2 :: <integer>, #key label)
   select (key by \==)
-    #"add-temporary-user", #"add-temporary", #"remove-temporary-user" =>
-      write-to-visualizer(*vis*, list(key, *current-index*, id, comp-or-id));
-    #"temporary-generator" =>
-      write-to-visualizer(*vis*, list(key, *current-index*, id, comp-or-id, comp2));
+    //#"add-temporary-user", #"add-temporary", #"remove-temporary-user" =>
+    //  write-to-visualizer(*vis*, list(key, *current-index*, id, comp-or-id));
+    //#"temporary-generator" =>
+    //  write-to-visualizer(*vis*, list(key, *current-index*, id, comp-or-id, comp2));
     #"remove-edge", #"insert-edge" =>
       write-to-visualizer(*vis*, list(key, *current-index*, id, comp-or-id, label));
     #"change-edge" =>
@@ -40,16 +38,11 @@ define function trace-computations (key :: <symbol>, id :: <integer>, comp-or-id
       write-to-visualizer(*vis*, list(key, *current-index*, output-computation-sexp(comp-or-id)));
     #"remove-computation" =>
       write-to-visualizer(*vis*, list(key, *current-index*, id));
+    otherwise => ;
   end;
 end;
 define function visualize (key :: <symbol>, object :: <object>)
-//format-out("VIS %= %=\n", context, object);
   select (key by \==)
-    #"start-compilation" =>
-      begin
-        *current-index* := object;
-        write-to-visualizer(*vis*, list(key, object));
-      end;
     #"file-changed" => if (object = "scratch-source") *vis*.report-enabled? := #t else *vis*.report-enabled? := #f end;
     #"dfm-switch" => *current-index* := object;
     #"dfm-header" =>
@@ -57,15 +50,12 @@ define function visualize (key :: <symbol>, object :: <object>)
     #"optimizing" =>
       begin
         *current-index* := object;
-        *trace-edges* := #t;
         write-to-visualizer(*vis*, list(#"relayouted", *current-index*));
       end;
     #"finished" =>
-      begin
-        //format-out("now we could wait for input and process requests");
-        *trace-edges* := #f;
-        *current-index* := 0;
-      end;
+      *current-index* := 0;
+    #"beginning" =>
+      write-to-visualizer(*vis*, list(key, object));
     #"relayouted" =>
       write-to-visualizer(*vis*, list(key, *current-index*));
     #"highlight-queue" =>

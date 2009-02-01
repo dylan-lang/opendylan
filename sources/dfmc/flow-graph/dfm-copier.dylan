@@ -33,7 +33,8 @@ define dont-copy-slots  <queueable-item-mixin>       using <dfm-copier> =
 
 define dont-copy-slots  <computation>                using <dfm-copier> =
   { computation-source-location => parent-source-location(),
-    computation-type => #f };
+    computation-type => #f,
+    %computation-id => #f };
 
 define dont-copy-slots  <bind-exit>                  using <dfm-copier> =
   { %label => #f };
@@ -57,6 +58,9 @@ define dont-copy-slots  <&lambda>                    using <dfm-copier> =
 
 define dont-copy-slots  <&iep>                       using <dfm-copier> =
   { code              => #f };
+
+define dont-copy-slots <temporary>                   using <dfm-copier> =
+  { %temporary-id     => #f };
 
 // If a call checked incompatible out of line, it might still become
 // compatible inline (and so amenable to upgrading and inlining), so

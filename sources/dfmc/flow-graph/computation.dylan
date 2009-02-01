@@ -49,6 +49,9 @@ define method computation-id (c :: <computation>) => (res :: <integer>)
     c.%computation-id := next-computation-id();
     if (*computation-tracer*)
       *computation-tracer*(#"new-computation", c.%computation-id, c, 0);
+      if (c.%next-computation)
+        trace(c, #f, c.%next-computation);
+      end;
     end;
   end;
   c.%computation-id;
