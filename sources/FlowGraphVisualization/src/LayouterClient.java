@@ -11,13 +11,13 @@ import y.base.Edge;
 import y.base.EdgeCursor;
 import y.base.Node;
 import y.base.NodeCursor;
+import y.view.EdgeRealizer;
 
 
 public class LayouterClient extends Thread {
 	private Socket socket;
 	private BufferedReader reader;
 	private PrintWriter writer;
-	private final Symbol connection = new Symbol("connection-identifier"); 
 	private ArrayList<IncrementalHierarchicLayout> graphs = new ArrayList<IncrementalHierarchicLayout>();
 	
 	public LayouterClient (Socket s) {
@@ -47,16 +47,12 @@ public class LayouterClient extends Thread {
 	}
 	
 	public void run() {
-		//first ask for connection identifier
 		try {
-			//ArrayList question = new ArrayList();
-			//question.add(connection);
-			//printMessage(question);
 			ArrayList answer = readMessage();
 			assert(answer.size() == 2);
 			assert(answer.get(0) instanceof Symbol);
 			assert(answer.get(1) instanceof Symbol);
-			assert(((Symbol)answer.get(0)).isEqual(connection));
+			assert(((Symbol)answer.get(0)).isEqual("connection-identifier"));
 			Symbol identifier = (Symbol)answer.get(1);
 			
 			DemoBase demo = new DemoBase(identifier.toString(), this);
@@ -69,113 +65,163 @@ public class LayouterClient extends Thread {
 				assert(answer.get(1) instanceof Integer);
 				int dfm_id = (Integer)answer.get(1);
 				Symbol key = (Symbol)answer.get(0);
-				if (key.isEqual("initial-dfm") || key.isEqual("optimized-dfm")) {
+				IncrementalHierarchicLayout gr = null;
+				System.out.println(key.toString() + " for " + dfm_id + " : " + answer.subList(2, answer.size()));
+				if (key.isEqual("start-compilation")) {
+					assert(answer.size() == 2);
+					gr = new IncrementalHierarchicLayout(demo, dfm_id);
+					graphs.add(gr);
+					continue;
+				}
+				gr = graphs.get(dfm_id);
+				if (key.isEqual("dfm-header")) {
 					assert(answer.size() == 3);
 					assert(answer.get(2) instanceof ArrayList);
-					System.out.println(key.toString() + " for " + dfm_id + " is " + (ArrayList)answer.get(2));
-					IncrementalHierarchicLayout graph = new IncrementalHierarchicLayout(demo, dfm_id);
 					ArrayList cf = (ArrayList)answer.get(2);
-					assert(cf.size() > 1);
+					assert(cf.size() == 3);
+					assert(cf.get(0) instanceof Symbol);
+					assert(((Symbol)cf.get(0)).isEqual("method"));
 					assert(cf.get(1) instanceof Symbol); //method name
-					graphs.add(graph);
-					demo.addGraph(dfm_id, ((Symbol)(cf.get(1))).toString());
-					graph.activateLayouter();
-					graph.initGraph((ArrayList)answer.get(2));
+					assert(cf.get(2) instanceof String); //arg, val
+					gr.initGraph(((Symbol)(cf.get(1))).toString(), (String)cf.get(2));
 				} else if (key.isEqual("change-edge")) {
-					assert(answer.size() == 5);
+					assert(answer.size() == 6);
 					assert(answer.get(2) instanceof Integer);
 					assert(answer.get(3) instanceof Integer);
 					assert(answer.get(4) instanceof Integer);
-					IncrementalHierarchicLayout gr = graphs.get(dfm_id);
-					int from = (Integer)answer.get(2);
-					int toold = (Integer)answer.get(3);
-					int tonew = (Integer)answer.get(4);
-					if ((gr.int_node_map.get(from) != null) &&
-							(gr.int_node_map.get(toold) != null) &&
-							(gr.int_node_map.get(tonew) != null)) {
-						Node fromN = gr.int_node_map.get(from);
-						Node tooldN = gr.int_node_map.get(toold);
-						Node tonewN = gr.int_node_map.get(tonew);
-						Edge change = null;
-						for (EdgeCursor ec = fromN.outEdges(); ec.ok(); ec.next())
-							if (ec.edge().target() == tooldN) {
-								change = ec.edge();
-								//if (toN.degree() == 0)
-								//	gr.graph.removeNode(toN);
-								System.out.println("changing edge in graph " + dfm_id + " from " + from + " toold " + toold + " tonew " + tonew);
-								break;
-							}
-						if (change != null)
-							gr.graph.changeEdge(change, fromN, tonewN);
-						else
-							gr.graph.createEdge(fromN, tonewN);
-						gr.changed = true;
-					} else
-						System.out.println("graph " + dfm_id + " node " + from + " or " + toold + " or " + tonew + " nonexistant :/");
+					assert(answer.get(5) instanceof Symbol);
+					Node from = gr.int_node_map.get((Integer)answer.get(2));
+					Node toold = gr.int_node_map.get((Integer)answer.get(3));
+					Node tonew = gr.int_node_map.get((Integer)answer.get(4));
+					assert(from != null);
+					assert(tonew != null);
+					if (toold == tonew)
+						continue;
+					Symbol label = (Symbol)answer.get(5);
+					if (label.isEqual("no"))
+						label = null;
+					Edge change = null;
+					if (toold != null) {
+						for (EdgeCursor ec = from.outEdges(); ec.ok(); ec.next())
+							if (ec.edge().target() == toold)
+								if (label == null || label.isEqual(gr.graph.getRealizer(ec.edge()).getLabelText())) {
+									change = ec.edge();
+									System.out.println("sucess");
+									break;
+								}
+						if (change != null) {
+							gr.graph.changeEdge(change, from, tonew);
+							gr.changed = true;
+						}
+					}
+					if (change == null)
+						if (gr.safeCreateEdge(from, tonew)) {
+							if (label != null)
+								gr.setEdgeLabel(label);
+							gr.changed = true;
+						}
 				} else if (key.isEqual("remove-edge")) {
-					assert(answer.size() == 4);
+					assert(answer.size() == 5);
 					assert(answer.get(2) instanceof Integer);
 					assert(answer.get(3) instanceof Integer);
-					IncrementalHierarchicLayout gr = graphs.get(dfm_id);
-					int from = (Integer)answer.get(2);
-					int to = (Integer)answer.get(3);
-					System.out.println("TRY removing edge in graph " + dfm_id + " from " + from + " to " + to);
-					if ((gr.int_node_map.get(from) != null) &&
-							(gr.int_node_map.get(to) != null)) {
-						Node fromN = gr.int_node_map.get(from);
-						Node toN = gr.int_node_map.get(to);
-						for (EdgeCursor ec = fromN.outEdges(); ec.ok(); ec.next())
-							if (ec.edge().target() == toN) {
+					assert(answer.get(4) instanceof Symbol);
+					Node from = gr.int_node_map.get((Integer)answer.get(2));
+					Node to = gr.int_node_map.get((Integer)answer.get(3));
+					assert(from != null);
+					assert(to != null);
+					Symbol label = (Symbol)answer.get(4);
+					if (label.isEqual("no"))
+						label = null;
+					for (EdgeCursor ec = from.outEdges(); ec.ok(); ec.next())
+						if (ec.edge().target() == to)
+							if (label == null || label.isEqual(gr.graph.getRealizer(ec.edge()).getLabelText())) {
 								gr.graph.removeEdge(ec.edge());
-								System.out.println("removing edge in graph " + dfm_id + " from " + from + " to " + to);
+								System.out.println("success");
 								gr.changed = true;
 								break;
 							}
-					} else
-						System.out.println("graph " + dfm_id + " node " + from + " or " + to + " nonexistant :/");
 				} else if (key.isEqual("insert-edge")) {
-					assert(answer.size() == 4);
+					assert(answer.size() == 5);
 					assert(answer.get(2) instanceof Integer);
 					assert(answer.get(3) instanceof Integer);
-					IncrementalHierarchicLayout gr = graphs.get(dfm_id);
-					int from = (Integer)answer.get(2);
-					int to = (Integer)answer.get(3);
-					System.out.println("TRY inserting edge in graph " + dfm_id + " from " + from + " to " + to);
-					if ((gr.int_node_map.get(from) != null) &&
-							(gr.int_node_map.get(to) != null)) {
-						Node fromN = gr.int_node_map.get(from);
-						Node toN = gr.int_node_map.get(to);
-						boolean found = false;
-						for (EdgeCursor ec = fromN.outEdges(); ec.ok(); ec.next())
-							if (ec.edge().target() == toN) {
-								found = true;
-								break;
-							}
-						if (! found) {
-							gr.graph.createEdge(fromN, toN);
-							gr.changed = true;
-							gr.scf.addPlaceNodeAfterConstraint(fromN, toN);
-							System.out.println("inserting edge in graph " + dfm_id + " from " + from + " to " + to);
-						}
-					} else
-						System.out.println("graph " + dfm_id + " node " + from + " or " + to + " nonexistant :/");
+					assert(answer.get(4) instanceof Symbol);
+					Symbol label = (Symbol)answer.get(4);
+					if (label.isEqual("no"))
+						label = null;
+					if (gr.safeCreateEdge((Integer)answer.get(2), (Integer)answer.get(3))) {
+						if (label != null)
+							gr.setEdgeLabel(label);
+						gr.changed = true;
+					}
 				} else if (key.isEqual("new-computation")) {
 					assert(answer.size() == 3);
 					assert(answer.get(2) instanceof ArrayList);
-					IncrementalHierarchicLayout gr = graphs.get(dfm_id);
 					ArrayList text = (ArrayList)answer.get(2);
-					assert(text.size() > 1);
-					System.out.print("graph " + dfm_id);
-					gr.initGraphHelperHelper(text, null, -1);
+					gr.createNewNode(text);
 					gr.changed = true;
 				} else if (key.isEqual("remove-computation")) {
 					assert(answer.size() == 3);
 					assert(answer.get(2) instanceof Integer);
-					IncrementalHierarchicLayout gr = graphs.get(dfm_id);
 					gr.graph.removeNode(gr.int_node_map.get((Integer)answer.get(2)));
 					gr.changed = true;
+				} else if (key.isEqual("add-temporary")) {
+					assert(answer.size() == 4);
+					assert(answer.get(2) instanceof Integer);
+					assert(answer.get(3) instanceof Integer);
+					int temp_id = (Integer)answer.get(2);
+					int c_id = (Integer)answer.get(3);
+					gr.createTemporary(temp_id, c_id);
+					gr.changed = true;
+				} else if (key.isEqual("add-temporary-user")) {
+					assert(answer.size() == 4);
+					assert(answer.get(2) instanceof Integer);
+					assert(answer.get(3) instanceof Integer);
+					int temp_id = (Integer)answer.get(2);
+					int c_id = (Integer)answer.get(3);
+					System.out.println("inserting temporary edge in graph " + dfm_id + " from " + temp_id + " to " + c_id);
+					if (gr.safeCreateEdge(temp_id, c_id)) {
+						gr.setEdgeColor(Color.pink);
+						gr.changed = true;
+					}
+				} else if (key.isEqual("remove-temporary-user")) {
+					assert(answer.size() == 4);
+					assert(answer.get(2) instanceof Integer);
+					assert(answer.get(3) instanceof Integer);
+					int temp_id = (Integer)answer.get(2);
+					int c_id = (Integer)answer.get(3);
+					Node c = gr.int_node_map.get(c_id);
+					for (EdgeCursor ec = gr.int_node_map.get(temp_id).outEdges(); ec.ok(); ec.next())
+							if (ec.edge().target() == c) {
+								gr.graph.removeEdge(ec.edge());
+								gr.changed = true;
+								break;
+							}
+					gr.changed = true;
+				} else if (key.isEqual("temporary-generator")) {
+					assert(answer.size() == 5);
+					assert(answer.get(2) instanceof Integer);
+					assert(answer.get(3) instanceof Integer);
+					assert(answer.get(4) instanceof Integer);
+					Node temp = gr.int_node_map.get((Integer)answer.get(2));
+					Node oldgen = gr.int_node_map.get((Integer)answer.get(4));
+					Node newgen = gr.int_node_map.get((Integer)answer.get(3));
+					assert(temp != null);
+					assert(newgen != null);
+					boolean found = false;
+					if (oldgen != null)
+						for (EdgeCursor ec = temp.inEdges(); ec.ok(); ec.next())
+							if (ec.edge().source() == oldgen) {
+								gr.graph.changeEdge(ec.edge(), temp, newgen);
+								gr.changed = true;
+								found = true;
+								break;
+							}
+					if (! found)
+						if (gr.safeCreateEdge(temp, newgen)) {
+							gr.setEdgeColor(Color.pink);
+							gr.changed = true;
+						}
 				} else if (key.isEqual("relayouted")) {
-					IncrementalHierarchicLayout gr = graphs.get(dfm_id);
 					for (NodeCursor nc = gr.graph.nodes(); nc.ok(); nc.next())
 						if (nc.node().degree() == 0) {
 							gr.graph.removeNode(nc.node());
@@ -183,19 +229,17 @@ public class LayouterClient extends Thread {
 						}
 					gr.activateLayouter();
 				} else if (key.isEqual("highlight")) {
-					IncrementalHierarchicLayout gr = graphs.get(dfm_id);
 					gr.activateLayouter();
 					int from = (Integer)answer.get(2);
 					Node highlightnew = gr.int_node_map.get(from);
 					if (highlightnew != null && demo.highlight != highlightnew) {
 						if (demo.highlight != null)
-							gr.graph.getRealizer(demo.highlight).setFillColor(gr.graph.getRealizer(gr.graph.firstNode()).getFillColor());
+							gr.graph.getRealizer(demo.highlight).setFillColor(gr.graph.getDefaultNodeRealizer().getFillColor());
 						gr.graph.getRealizer(highlightnew).setFillColor(Color.green);
 						demo.highlight = highlightnew;
 						demo.contentPane.repaint();
 					}
 				} else if (key.isEqual("highlight-queue")) {
-					IncrementalHierarchicLayout gr = graphs.get(dfm_id);
 					gr.activateLayouter();
 					ArrayList queue = (ArrayList)answer.get(2);
 					ArrayList<Integer> removed = new ArrayList<Integer>();
@@ -211,7 +255,7 @@ public class LayouterClient extends Thread {
 						demo.opt_queue.remove(rem);
 						Node unh = gr.int_node_map.get(rem);
 						if (unh != demo.highlight && unh != null)
-							gr.graph.getRealizer(unh).setFillColor(gr.graph.getRealizer(gr.graph.firstNode()).getFillColor());
+							gr.graph.getRealizer(unh).setFillColor(gr.graph.getDefaultNodeRealizer().getFillColor());
 					}
 					for (Integer a : added) {
 						demo.opt_queue.add(a);
@@ -313,29 +357,39 @@ public class LayouterClient extends Thread {
 	private int level = 0;
 	private ArrayList read_s_expression (int message_length) throws IOException {
 		level++;
+		//System.out.println("called with level " + level + " message length " + message_length);
 		ArrayList res = new ArrayList();
 		ParseState state = ParseState.Nested;
 		String result = "";
 		boolean first = true;
 		for (int i = 0; i < message_length; i++) {
 			char next = (char)reader.read();
-			//System.out.println("level:" + level + " result:" + result + " i:" + i + " state:" + state + " next:" + next);
+			//System.out.println("result:" + result + " i:" + i + " state:" + state + " next:" + next);
 			switch (state) {
 			case Number:
-				if (isWhitespace(next) | next == ')') {
+				if (isWhitespace(next)) {
 					res.add(Integer.parseInt(result));
 					result = "";
 					state = ParseState.Nested;
-				} else if (isNumeric(next))
+				} else if (isNumeric(next)) {
 					result += Character.toString(next);
-				else
-					System.out.println("unknown numeric token: " + next + " in " + result);
+				} else if (next == ')') {
+					res.add(Integer.parseInt(result));
+					usedTokens = i + 1;
+					level--;
+					return res;
+				}
 				break;
 			case Symbol:
-				if (isWhitespace(next) | next == ')') {
+				if (isWhitespace(next)) {
 					res.add(new Symbol(result));
 					result = "";
 					state = ParseState.Nested;
+				} else if (next == ')') {
+					res.add(new Symbol(result));
+					usedTokens = i + 1;
+					level--;
+					return res;
 				} else
 					result += Character.toString(next);
 				break;

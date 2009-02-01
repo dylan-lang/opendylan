@@ -16,6 +16,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import y.base.EdgeCursor;
 import y.base.Node;
 import y.base.NodeCursor;
 import y.layout.hierarchic.IncrementalHierarchicLayouter;
@@ -42,6 +43,8 @@ public class IncrementalHierarchicLayout
 	protected SequenceConstraintFactory scf;
 	public boolean changed = false;
 	protected final int graph_id;
+	private ArrayList<Node> arguments = new ArrayList<Node>();
+	private Node bind = null;
 
 	
 	public IncrementalHierarchicLayout(DemoBase db, int id)
@@ -75,277 +78,85 @@ public class IncrementalHierarchicLayout
 			demobase.calcLayout();
 	}
 
-	protected void initGraph (ArrayList controlflow)
+	protected void initGraph (String name, String args)
 	{
-		byte oldMode = hierarchicLayouter.getLayoutMode();
-		hierarchicLayouter.setLayoutMode(IncrementalHierarchicLayouter.LAYOUT_MODE_FROM_SCRATCH);
-		//top level entry, sexp is (?prefix #"METHOD" methodname args->values instr*)
-		Node prev = null;
-
-		Object first = controlflow.get(0);
-		assert (first instanceof Symbol);
-		assert(((Symbol)first).isEqual("method"));
+		Node header = createNodeWithLabel(name + " " + args, -1);
+		assert(bind != null);
+		graph.createEdge(header, bind); //edge to bind!
+		scf.addPlaceNodeAtHeadConstraint(header);
 		
-		Object namei = controlflow.get(1);
-		assert(namei instanceof Symbol);
-		Symbol name = (Symbol)namei;
-		
-		Object args_vals = controlflow.get(2);
-		assert(args_vals instanceof String);
-		
-		prev = createNodeWithLabel(name.toString() + " " + args_vals, -1);
-
-		for (int i = 3; i < controlflow.size(); i++) {
-			Object o = controlflow.get(i);
-			prev = initGraphHelperHelper(o, prev, -1);
+		for (Node n : arguments) {
+			EdgeRealizer myreal = new GenericEdgeRealizer(graph.getDefaultEdgeRealizer());
+			myreal.setLineColor(Color.blue);
+			graph.createEdge(header, n, myreal);
+			
 		}
-		
-		for (Node n : todelete) {
-			//assert(n.outDegree() == 1); //well, unwind-protect adds an edge, which is safe to remove
-			assert(n.inDegree() == 1);
-			Node previous = n.firstInEdge().source();
-			Node next = n.firstOutEdge().target();
-			String label = graph.getLabelText(n.firstInEdge());
-			graph.removeNode(n);
-			EdgeRealizer realf = new GenericEdgeRealizer(graph.getDefaultEdgeRealizer());
-			realf.setLabelText(label);
-			graph.createEdge(previous, next, realf);
-		}
-		todelete.clear();
 		
 		changed = true;
-		
-		try {
-			demobase.calcLayout();
-		} finally {
-			hierarchicLayouter.setLayoutMode(oldMode);
-		}
+		demobase.addGraph(graph_id, name);
+		activateLayouter();
 	}
 
 	
-	private Node othernode = null;
-	private ArrayList<Node> todelete = new ArrayList<Node>();
-	
-	protected Node initGraphHelperHelper (Object o, Node prev, int id) {
-		Node curr = null;
+	private void initGraphHelperHelper (Object o, int id) {
 		if (o instanceof String)
-			curr = initGraphHelper((String)o, prev, id);
+			initGraphHelper((String)o, id);
 		else if (o instanceof Symbol)
-			curr = initGraphHelper((Symbol)o, prev, id);
+			initGraphHelper((Symbol)o, id);
 		else if (o instanceof Integer)
-			curr = initGraphHelper((Integer)o, prev, id);
+			initGraphHelper((Integer)o, id);
 		else if (o instanceof ArrayList)
-			curr = initGraphHelper((ArrayList)o, prev, id);
-		return curr;
+			initGraphHelper((ArrayList)o, id);
 	}
 
-	private Node initGraphHelper (ArrayList nodelist, Node prev, int id) {
-		Node last = null;
-		if (nodelist.size() == 0)
-			return prev;
-		//temporary hack
-		String t = null;
-		int index = 0;
-		if (nodelist.get(0) instanceof Symbol) {
-			Symbol s = (Symbol)nodelist.get(0);
-			if (s.isEqual("temporary")) {
-				assert(nodelist.get(1) instanceof String);
-				t = (String)nodelist.get(1);
-				index = 2;
-			} else if (s.isEqual("local")) {
-				//local method: local, method, name, args, body
-				assert(nodelist.size() > 4);
-				assert(nodelist.get(1) instanceof Symbol);
-				assert(((Symbol)nodelist.get(1)).isEqual("method"));
-				assert(nodelist.get(2) instanceof Symbol);
-				assert(nodelist.get(3) instanceof String);
-				Node header = createNodeWithLabel("local method " + ((Symbol)nodelist.get(2)).toString() + " " + (String)nodelist.get(3), -1);
-				Node p = header;
-				for (int i = 4; i < nodelist.size(); i++)
-					p = initGraphHelperHelper(nodelist.get(i), p, -1);
-				return prev;
+	private void initGraphHelper (ArrayList nodelist, int id) {
+		assert (nodelist.size() > 1);
+
+		assert(nodelist.get(0) instanceof Integer);
+		assert(nodelist.get(1) instanceof Symbol);
+		
+		int comp_id = (Integer)nodelist.get(0);
+		Symbol s = (Symbol)nodelist.get(1);
+
+		if (s.isEqual("if")) {
+			//test, exactly one element, a string
+			assert(nodelist.size() == 5);
+			assert(nodelist.get(2) instanceof ArrayList);
+			ArrayList testnodes = (ArrayList)nodelist.get(2);
+			assert(testnodes.size() == 1);
+			assert(testnodes.get(0) instanceof String);
+			Node test = createNodeWithLabel((String)testnodes.get(0), comp_id);
+			changeLabel(test, "if ");
+				
+			//consequence
+			assert(nodelist.get(3) instanceof ArrayList);
+			ArrayList<Node> consequence = getNodes((ArrayList)nodelist.get(3));
+				
+			if (consequence.size() > 0) {
+				graph.createEdge(test, consequence.get(0));
+				setEdgeLabel("true");
 			}
-		} 
-
-		int comp_id = -1;
-		if (nodelist.get(index) instanceof Integer) {
-			comp_id = (Integer)nodelist.get(index);
-			index++;
-		}
-		if (nodelist.get(index) instanceof Symbol) {
-			Symbol s = (Symbol)nodelist.get(index);
-			index++;
-			if (s.isEqual("if")) {
-				//test, exactly one element, a string
-				assert(nodelist.get(index) instanceof ArrayList);
-				Object n = (ArrayList)nodelist.get(index);
-				index++;
-				ArrayList testnodes = (ArrayList) n;
-				assert(testnodes.size() == 1);
-				assert(testnodes.get(0) instanceof String);
-				Node test = createNodeWithLabel((String)testnodes.get(0), comp_id);
-				changeLabel(test, "if ", true);
-				graph.createEdge(prev, test);
 				
-				//consequence
-				assert(nodelist.get(index) instanceof ArrayList);
-				Node consequence = initGraphHelperHelper((ArrayList)nodelist.get(index), test, -1);
-				index++;
+			//alternative
+			assert(nodelist.get(4) instanceof ArrayList);
+			ArrayList<Node> alternative = getNodes((ArrayList)nodelist.get(4));
 				
-				EdgeRealizer myreal = new GenericEdgeRealizer(graph.getDefaultEdgeRealizer());
-				myreal.setLabelText("true");
-				Node firstc = null;
-				if (consequence == test) {
-					consequence = createNodeWithLabel("", -1);
-					firstc = consequence;
-					todelete.add(consequence);
-				} else {
-					assert(test.outDegree() == 1);
-					firstc = test.firstOutEdge().target();
-					graph.removeEdge(test.firstOutEdge());
-				}
-				
-				//alternative
-				assert(nodelist.get(index) instanceof ArrayList);
-				Node alternative = initGraphHelperHelper((ArrayList)nodelist.get(index), test, -1);
-				index++;
-				
-				EdgeRealizer realf = new GenericEdgeRealizer(graph.getDefaultEdgeRealizer());
-				realf.setLabelText("false");
-				Node firsta = null;
-				if (alternative == test) {
-					alternative = createNodeWithLabel("", -1);
-					firsta = alternative;
-					todelete.add(alternative);
-				} else {
-					firsta = test.lastOutEdge().target();
-					graph.removeEdge(test.firstOutEdge());
-				}
-				graph.createEdge(test, firstc, myreal);
-				graph.createEdge(test, firsta, realf);
-
-				othernode = alternative;
-				return consequence;
-			} else if (s.isEqual("loop")) {
-				Node loop = createNodeWithLabel("loop", comp_id);
-				if (comp_id > 0)
-					int_node_map.put(comp_id, loop);
-				graph.createEdge(prev, loop);
-				assert(nodelist.size() == 3);
-				assert(nodelist.get(index) instanceof ArrayList);
-				return loopHelper((ArrayList)nodelist.get(index), loop);
-			} else if (s.isEqual("unwind-protect")) {
-				assert(nodelist.size() == 5);
-				//entry-state
-				assert(nodelist.get(index) instanceof ArrayList);
-				ArrayList entrystate = (ArrayList)nodelist.get(index);
-				index++;
-				
-				assert(entrystate.size() == 1);
-				assert(entrystate.get(0) instanceof String);
-				Node up = createNodeWithLabel("unwind-protect [entry-state: " + (String)entrystate.get(0) + "]", comp_id);
-				if (comp_id > 0)
-					int_node_map.put(comp_id, up);
-				graph.createEdge(prev, up);
-				//body
-				assert(nodelist.get(index) instanceof ArrayList);
-				Node lastbody = initGraphHelper((ArrayList)nodelist.get(index), up, -1);
-				index++;
-				
-				//cleanup ("end-protected-block entry-state: " entry-state)
-				assert(nodelist.get(index) instanceof ArrayList);
-				Node lastcleanup = initGraphHelper((ArrayList)nodelist.get(index), lastbody, -1);
-				index++;
-				
-				assert(lastbody.outDegree() == 1);
-				Node firstcleanup = lastbody.firstOutEdge().target();
-				boolean active = false;
-				for (NodeCursor nc = graph.nodes(); nc.ok(); nc.next()) {
-					EdgeRealizer real = new GenericEdgeRealizer(graph.getDefaultEdgeRealizer());
-					real.setLineColor(Color.red);
-					Node n = nc.node();
-					if (n == up)
-						active = true;
-					if (n == lastbody)
-						active = false;
-					if (active)
-						graph.createEdge(n, firstcleanup, real);
-				}
-				return lastcleanup;
-			} else if (s.isEqual("bind-exit")) {
-				assert(nodelist.size() == 4);
-				assert(nodelist.get(index) instanceof ArrayList);
-				ArrayList entrystate = (ArrayList)nodelist.get(index);
-				index++;
-				
-				assert(entrystate.size() == 1);
-				assert(entrystate.get(0) instanceof String);
-				Node start = createNodeWithLabel("bind-exit [entry-state: " + (String)entrystate.get(0) + "]", comp_id);
-				if (comp_id > 0)
-					int_node_map.put(comp_id, start);
-				graph.createEdge(prev, start);
-				
-				assert(nodelist.get(index) instanceof ArrayList);
-				Node lastbody = initGraphHelper((ArrayList)nodelist.get(index), start, -1);
-				index++;
-				//transform calls to entry-state to reflect this in CF!
-				return lastbody;
+			if (alternative.size() > 0) {
+				graph.createEdge(test, alternative.get(0));
+				setEdgeLabel("false");
 			}
-		}
 
-		for (int i = index; i < nodelist.size(); i++) {
-			Object o = nodelist.get(i);
-			if (last == null) last = prev;
-			last = initGraphHelperHelper(o, last, comp_id);
-			if (t != null) {
-				changeLabel(last, t + " = ", true);
-				t = null;
-			}
-		}
-		return last;
-	}
-	
-	private Node initGraphHelper (String node, Node prev, int id) {
-		Node t = createNodeWithLabel(node, id);
-		connect(prev, t);
-		return t;
-	}
-	
-	private Node initGraphHelper (Symbol node, Node prev, int id) {
-		Node t = createNodeWithLabel(node.toString(), id);
-		connect(prev, t);
-		return t;
-	}
-	
-	private Node initGraphHelper (Integer node, Node prev, int id) {
-		Node t = createNodeWithLabel(Integer.toString(node), id);
-		connect(prev, t);
-		return t;
-	}
-	
-	private void connect (Node prev, Node t) {
-		if (prev != null) {
-			graph.createEdge(prev, t);
-			if (othernode != null) {
-				graph.createEdge(othernode, t);
-				othernode = null;
-			}
-		}
-	}
+		} else if (s.isEqual("loop")) {
+			Node loop = createNodeWithLabel("loop", comp_id);
+			assert(nodelist.size() == 3);
+			assert(nodelist.get(2) instanceof ArrayList);
+				
+			ArrayList<Node> body = getNodes((ArrayList)nodelist.get(2));
 
-	private Node loopHelper(ArrayList nodelist, Node loop) {
-		Node breaks = null;
-		//first, an if (with empty else)
-		//the interesting part is CONTINUE (args) <- loop-call
-		//and BREAK <- end-loop
-		Node last = initGraphHelper(nodelist, loop, -1);
-		boolean active = false;
-		for (NodeCursor nc = graph.nodes(); nc.ok(); nc.next()) {
-			Node n = nc.node();
-			//groupMap.set(n, loop-id);
-			if (n == loop)
-				active = true;
-			if (active)
+			//the interesting part is CONTINUE (args) <- loop-call
+			//and BREAK <- end-loop
+			/* for (Node n : body) {
+				//groupMap.set(n, loop-id);
 				if (graph.getRealizer(n).getLabel().getText().contains("[CONTINUE")) {
 					assert(n.outDegree() == 1);
 					Node target = n.firstOutEdge().target();
@@ -353,15 +164,39 @@ public class IncrementalHierarchicLayout
 						graph.changeEdge(n.firstOutEdge(), n, loop);
 					}
 				}
-				else if (graph.getRealizer(n).getLabel().getText().contains("BREAK")) {
-					if (n.outDegree() == 0)
-						breaks = n;
-				}
-			if (n == last)
-				active = false;
+			} */
+			if (body.size() > 0)
+				graph.createEdge(loop, body.get(0));
+		} else if (s.isEqual("loop-call")) {
+			assert(nodelist.size() == 3);
+			assert(nodelist.get(2) instanceof Integer);
+			Node loop = int_node_map.get((Integer)nodelist.get(2));
+			Node loopc = createNodeWithLabel("CONTINUE", comp_id);
+			graph.createEdge(loopc, loop);
+		} 
+	}
+	
+	private ArrayList<Node> getNodes(ArrayList arrayList) {
+		ArrayList<Node> res = new ArrayList<Node>();
+		for (Object o : arrayList) {
+			assert(o instanceof Integer);
+			Integer i = (Integer)o;
+			assert(int_node_map.get(i) != null);
+			res.add(int_node_map.get(i));
 		}
-		assert(breaks == last);
-		return breaks;
+		return res;
+	}
+
+	private Node initGraphHelper (String node, int id) {
+		return createNodeWithLabel(node, id);
+	}
+	
+	private Node initGraphHelper (Symbol node, int id) {
+		return createNodeWithLabel(node.toString(), id);
+	}
+	
+	private Node initGraphHelper (Integer node, int id) {
+		return createNodeWithLabel(Integer.toString(node), id);
 	}
 	
 	private Node createNodeWithLabel (String label, int id) {
@@ -372,21 +207,90 @@ public class IncrementalHierarchicLayout
 		n1.setWidth(nl1.getWidth() + 10);
 		Node n = graph.createNode(n1);
 		System.out.println("added node " + id + " : " + label);
+		if (label.equalsIgnoreCase("[BIND]") && bind == null)
+			bind = n;
+		assert(int_node_map.get(id) == null);
 		int_node_map.put(id, n);
 		return n;
 	}
 	
-	private void changeLabel (Node n, String app, boolean append) {
+	private void changeLabel (Node n, String app) {
 		NodeLabel nl = graph.getRealizer(n).getLabel();
-		if (append) {
-			String old = nl.getText();
-			//filter number out
-			int start = old.indexOf(' ') + 1;
-			nl.setText(old.substring(0, start) + app + old.substring(start));
-		} else
-			nl.setText(app);
+		String old = nl.getText();
+		//filter number out
+		int start = old.indexOf(' ') + 1;
+		nl.setText(old.substring(0, start) + app + old.substring(start));
 		graph.getRealizer(n).setWidth(nl.getWidth());
 	}
+
+	public void createTemporary(int temp_id, int c_id) {
+		Node t = createNodeWithLabel("temporary", temp_id);
+		if (bind == null)
+			arguments.add(t);
+		graph.getRealizer(t).setFillColor(Color.magenta);
+		if (safeCreateEdge(c_id, t))
+			setEdgeColor(Color.pink);
+	}
+
+	public boolean safeCreateEdge (int source, int target) {
+		if (int_node_map.get(source) != null)
+			return safeCreateEdge(int_node_map.get(source), target);
+		return false;
+	}
+	public boolean safeCreateEdge (int source, Node target) {
+		if (int_node_map.get(source) != null)
+			return safeCreateEdge(int_node_map.get(source), target);
+		return false;
+	}
+	public boolean safeCreateEdge (Node source, int target) {
+		if (int_node_map.get(target) != null)
+			return safeCreateEdge(source, int_node_map.get(target));
+		return false;
+	}
+	public boolean safeCreateEdge (Node source, Node target) {
+		if (source == null || target == null)
+			return false;
+		boolean connected = false;
+		for (EdgeCursor ec = source.outEdges(); ec.ok(); ec.next())
+			if (ec.edge().target() == target) {
+				connected = true;
+				break;
+			}
+		if (! connected) {
+			graph.createEdge(source, target);
+			return true;
+		}
+		System.out.println("nodes " + source + " and " + target + " were already connected");
+		return false;
+	}
+
+	public void createNewNode(ArrayList text) {
+		assert(text.get(0) instanceof Integer);
+		if (text.size() == 2)
+			initGraphHelperHelper(text.get(1), (Integer)text.get(0));
+		else
+			initGraphHelperHelper(text, (Integer)text.get(0));
+	}
+
+	public void setEdgeLabel(String label) {
+		EdgeRealizer myreal = new GenericEdgeRealizer(graph.getDefaultEdgeRealizer());
+		myreal.setLabelText(label);
+		if (label.equals("true"))
+			myreal.setLineColor(Color.green);
+		else if (label.equals("false"))
+			myreal.setLineColor(Color.red);
+		graph.setRealizer(graph.lastEdge(), myreal);
+		
+	}
 	
+	public void setEdgeLabel(Symbol label) {
+		setEdgeLabel(label.toString());
+	}
+	
+	public void setEdgeColor (Color color) {
+		EdgeRealizer myreal = new GenericEdgeRealizer(graph.getDefaultEdgeRealizer());
+		myreal.setLineColor(color);
+		graph.setRealizer(graph.lastEdge(), myreal);		
+	}
 }
 
