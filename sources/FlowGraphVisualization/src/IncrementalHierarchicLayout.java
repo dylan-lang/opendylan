@@ -153,18 +153,7 @@ public class IncrementalHierarchicLayout
 				
 			ArrayList<Node> body = getNodes((ArrayList)nodelist.get(2));
 
-			//the interesting part is CONTINUE (args) <- loop-call
-			//and BREAK <- end-loop
-			/* for (Node n : body) {
-				//groupMap.set(n, loop-id);
-				if (graph.getRealizer(n).getLabel().getText().contains("[CONTINUE")) {
-					assert(n.outDegree() == 1);
-					Node target = n.firstOutEdge().target();
-					if (! graph.getRealizer(target).getLabel().getText().equals("loop")) {
-						graph.changeEdge(n.firstOutEdge(), n, loop);
-					}
-				}
-			} */
+			//groupMap.set(n, loop-id);
 			if (body.size() > 0)
 				graph.createEdge(loop, body.get(0));
 		} else if (s.isEqual("loop-call")) {
@@ -206,7 +195,6 @@ public class IncrementalHierarchicLayout
 		n1.setLabel(nl1);
 		n1.setWidth(nl1.getWidth() + 10);
 		Node n = graph.createNode(n1);
-		System.out.println("added node " + id + " : " + label);
 		if (label.equalsIgnoreCase("[BIND]") && bind == null)
 			bind = n;
 		assert(int_node_map.get(id) == null);
@@ -235,21 +223,26 @@ public class IncrementalHierarchicLayout
 	public boolean safeCreateEdge (int source, int target) {
 		if (int_node_map.get(source) != null)
 			return safeCreateEdge(int_node_map.get(source), target);
+		System.out.println("FAIL from " + source + " target " + target + " (source not available)");
 		return false;
 	}
 	public boolean safeCreateEdge (int source, Node target) {
 		if (int_node_map.get(source) != null)
 			return safeCreateEdge(int_node_map.get(source), target);
+		System.out.println("FAIL from " + source + " target " + target + " (source not available)");
 		return false;
 	}
 	public boolean safeCreateEdge (Node source, int target) {
 		if (int_node_map.get(target) != null)
 			return safeCreateEdge(source, int_node_map.get(target));
+		System.out.println("FAIL from " + source + " target " + target + " (target not available)");
 		return false;
 	}
 	public boolean safeCreateEdge (Node source, Node target) {
-		if (source == null || target == null)
+		if (source == null || target == null) {
+			System.out.println("FAIL from " + source + " target " + target + " (source or target null)");
 			return false;
+		}
 		boolean connected = false;
 		for (EdgeCursor ec = source.outEdges(); ec.ok(); ec.next())
 			if (ec.edge().target() == target) {
@@ -260,7 +253,7 @@ public class IncrementalHierarchicLayout
 			graph.createEdge(source, target);
 			return true;
 		}
-		System.out.println("nodes " + source + " and " + target + " were already connected");
+		System.out.println("FAIL: nodes " + source + " and " + target + " were already connected");
 		return false;
 	}
 

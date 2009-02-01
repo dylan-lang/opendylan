@@ -32,6 +32,7 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
@@ -97,6 +98,7 @@ public class DemoBase extends Thread {
   private JComboBox graph_chooser;
   public Node highlight = null;
   public ArrayList<Integer> opt_queue = new ArrayList<Integer>();
+  protected JLabel phase = new JLabel();
   
   /**
    * This constructor creates the {@link #view}
@@ -124,9 +126,12 @@ public class DemoBase extends Thread {
     graph_chooser.setMaximumRowCount(50);
     graph_chooser.addActionListener(new ChangeGraphAction());
 
+    
+    
     final JToolBar jtb = createToolBar();
     if ( jtb != null ) {
       jtb.add(graph_chooser);
+      jtb.add(phase);
       contentPane.add( jtb, BorderLayout.NORTH );
     }
 

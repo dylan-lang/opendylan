@@ -62,16 +62,24 @@ public class LayouterClient extends Thread {
 				answer = readMessage();
 				assert(answer.size() > 1);
 				assert(answer.get(0) instanceof Symbol);
+				Symbol key = (Symbol)answer.get(0);
+				if (key.isEqual("beginning")) {
+					assert(answer.get(1) instanceof ArrayList);
+					assert(((ArrayList)answer.get(1)).size() == 1);
+					assert(((ArrayList)answer.get(1)).get(0) instanceof String);
+					String ph = (String)((ArrayList)answer.get(1)).get(0);
+					demo.phase.setText(ph);
+					demo.phase.validate();
+					continue;
+				}
 				assert(answer.get(1) instanceof Integer);
 				int dfm_id = (Integer)answer.get(1);
-				Symbol key = (Symbol)answer.get(0);
 				IncrementalHierarchicLayout gr = null;
-				System.out.println(key.toString() + " for " + dfm_id + " : " + answer.subList(2, answer.size()));
-				if (key.isEqual("start-compilation")) {
-					assert(answer.size() == 2);
+				if (! (key.isEqual("highlight") || key.isEqual("highlight-queue") || key.isEqual("relayouted")))
+					System.out.println(key.toString() + " for " + dfm_id + " : " + answer.subList(2, answer.size()));
+				if (graphs.size() <= dfm_id) {
 					gr = new IncrementalHierarchicLayout(demo, dfm_id);
 					graphs.add(gr);
-					continue;
 				}
 				gr = graphs.get(dfm_id);
 				if (key.isEqual("dfm-header")) {
@@ -95,8 +103,10 @@ public class LayouterClient extends Thread {
 					Node tonew = gr.int_node_map.get((Integer)answer.get(4));
 					assert(from != null);
 					assert(tonew != null);
-					if (toold == tonew)
+					if (toold == tonew) {
+						System.out.println("got edge with equal toold and tonew");
 						continue;
+					}
 					Symbol label = (Symbol)answer.get(5);
 					if (label.isEqual("no"))
 						label = null;
@@ -106,7 +116,6 @@ public class LayouterClient extends Thread {
 							if (ec.edge().target() == toold)
 								if (label == null || label.isEqual(gr.graph.getRealizer(ec.edge()).getLabelText())) {
 									change = ec.edge();
-									System.out.println("sucess");
 									break;
 								}
 						if (change != null) {
@@ -116,6 +125,7 @@ public class LayouterClient extends Thread {
 					}
 					if (change == null)
 						if (gr.safeCreateEdge(from, tonew)) {
+							System.out.println("only created edge");
 							if (label != null)
 								gr.setEdgeLabel(label);
 							gr.changed = true;
@@ -132,14 +142,17 @@ public class LayouterClient extends Thread {
 					Symbol label = (Symbol)answer.get(4);
 					if (label.isEqual("no"))
 						label = null;
+					boolean removed = false;
 					for (EdgeCursor ec = from.outEdges(); ec.ok(); ec.next())
 						if (ec.edge().target() == to)
 							if (label == null || label.isEqual(gr.graph.getRealizer(ec.edge()).getLabelText())) {
 								gr.graph.removeEdge(ec.edge());
-								System.out.println("success");
 								gr.changed = true;
+								removed = true;
 								break;
 							}
+					if (! removed)
+						System.out.println("FAILED");
 				} else if (key.isEqual("insert-edge")) {
 					assert(answer.size() == 5);
 					assert(answer.get(2) instanceof Integer);
@@ -223,10 +236,10 @@ public class LayouterClient extends Thread {
 						}
 				} else if (key.isEqual("relayouted")) {
 					for (NodeCursor nc = gr.graph.nodes(); nc.ok(); nc.next())
-						if (nc.node().degree() == 0) {
-							gr.graph.removeNode(nc.node());
-							gr.changed = true;
-						}
+						//if (nc.node().degree() == 0) {
+						//	gr.graph.removeNode(nc.node());
+						//	gr.changed = true;
+						//}
 					gr.activateLayouter();
 				} else if (key.isEqual("highlight")) {
 					gr.activateLayouter();
