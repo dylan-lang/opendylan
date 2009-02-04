@@ -60,6 +60,15 @@ define method temporary-id (t :: <temporary>) => (id :: <integer>)
     if (*computation-tracer*)
       let gen = if (t.generator) t.generator.computation-id else 0 end;
       *computation-tracer*(#"add-temporary", t.%temporary-id, gen, 0);
+      if (t.generator)
+        let new = t.generator.computation-type;
+        *computation-tracer*(#"change-type", t.%temporary-id, new, 0);
+      end;
+      if (t.users)
+        do(compose(rcurry(curry(*computation-tracer*, #"add-temporary-user", t.%temporary-id), 0),
+                   computation-id),
+           t.users);
+      end;
     end;
     t.%temporary-id;
   end;

@@ -30,7 +30,7 @@ define abstract dood-class <computation> (<queueable-item-mixin>)
     reinit-expression: #f,
     required-init-keyword: environment:;
 
-  weak slot computation-type = #f,
+  weak slot %computation-type = #f,
     reinit-expression: #f;
 
   weak slot %computation-id :: <integer>,
@@ -52,10 +52,25 @@ define method computation-id (c :: <computation>) => (res :: <integer>)
       if (c.%next-computation)
         trace(c, #f, c.%next-computation);
       end;
+      if (c.temporary)
+        c.temporary.temporary-id; //side effect: adding temporary
+      end;
     end;
   end;
   c.%computation-id;
 end;
+
+define method computation-type (c :: <computation>) => (res)
+  c.%computation-type;
+end;
+
+define method computation-type-setter (new, c :: <computation>) => (res)
+  if (*computation-tracer* & c.temporary & slot-initialized?(c.temporary, %temporary-id) & instance?(c.temporary.%temporary-id, <integer>))
+      *computation-tracer*(#"change-type", c.temporary.%temporary-id, new, 0);
+  end;
+  c.%computation-type := new;
+end;
+
 // Seal construction over the <computation> world.
 
 define sealed domain make (subclass(<computation>));
@@ -730,6 +745,7 @@ define method alternative-setter (value :: false-or(<computation>), c :: <if>)
   trace(c, c.%alternative, value, label: #"false");
   c.%alternative := value;
 end;
+
 /// BLOCK
 
 define abstract graph-class <block> (<computation>)

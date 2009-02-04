@@ -22,6 +22,7 @@ define module dfmc-typist-tests
   use common-dylan;
   use threads, import: { dynamic-bind };
   use format-out;
+  use print, import: { print-object };
   use streams;
   use testworks;
 

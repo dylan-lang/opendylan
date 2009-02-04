@@ -23,13 +23,14 @@ end;
 define thread variable *vis* :: false-or(<dfmc-graph-visualization>) = #f; 
 define thread variable *current-index* :: <integer> = 0;
 
-define function trace-computations (key :: <symbol>, id :: <integer>, comp-or-id :: type-union(<computation>, <integer>),
-                                    comp2 :: <integer>, #key label)
+define function trace-computations (key :: <symbol>, id :: <integer>, comp-or-id, comp2 :: <integer>, #key label)
   select (key by \==)
-    //#"add-temporary-user", #"add-temporary", #"remove-temporary-user" =>
-    //  write-to-visualizer(*vis*, list(key, *current-index*, id, comp-or-id));
-    //#"temporary-generator" =>
-    //  write-to-visualizer(*vis*, list(key, *current-index*, id, comp-or-id, comp2));
+    #"add-temporary-user", #"add-temporary", #"remove-temporary-user" =>
+      write-to-visualizer(*vis*, list(key, *current-index*, id, comp-or-id));
+    #"temporary-generator" =>
+      write-to-visualizer(*vis*, list(key, *current-index*, id, comp-or-id, comp2));
+    #"remove-temporary" =>
+      write-to-visualizer(*vis*, list(key, *current-index*, id));        
     #"remove-edge", #"insert-edge" =>
       write-to-visualizer(*vis*, list(key, *current-index*, id, comp-or-id, label));
     #"change-edge" =>
@@ -38,6 +39,20 @@ define function trace-computations (key :: <symbol>, id :: <integer>, comp-or-id
       write-to-visualizer(*vis*, list(key, *current-index*, output-computation-sexp(comp-or-id)));
     #"remove-computation" =>
       write-to-visualizer(*vis*, list(key, *current-index*, id));
+    #"change-type" =>
+      begin
+        let str = make(<string-stream>, direction: #"output");
+        if (instance?(comp-or-id, <type-variable>))
+          unless (comp-or-id.type-contents-callback)
+            comp-or-id.type-contents-callback
+              := rcurry(curry(trace-computations, #"change-type", id), 0);
+          end;
+          print-object(comp-or-id.type-variable-contents, str);
+        else
+          print-object(comp-or-id, str);
+        end;
+        write-to-visualizer(*vis*, list(key, *current-index*, id, str.stream-contents));
+      end;
     otherwise => ;
   end;
 end;

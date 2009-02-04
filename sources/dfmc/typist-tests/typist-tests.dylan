@@ -16,6 +16,25 @@ define test noop ()
   end;
 end;
 
+define test visualization-demo ()
+  let mycode =
+   "define method if-test ()"
+   "  let a :: <integer> = 23;"
+   "  let b :: <integer> = 42;"
+   "  if (instance?(a, <string>))"
+   "    a := a * b;"
+   "  else"
+   "    a := a + b;"
+   "  end;"
+   "  a;"
+   "end;";
+  dynamic-bind (*progress-stream*           = #f,  // with-compiler-muzzled
+                *demand-load-library-only?* = #f)
+    let lib = compile-template(mycode, compiler: compiler);
+    check-equal("no test to run", 0, 0);
+  end;
+end;
+
 define test visualization-test ()
   let mycode = "define method if-nested (x, y, z)"
                "  if (x == 1)"
@@ -306,7 +325,8 @@ end;
 define suite typist-suite ()
   //tests for the test environment
 //  test noop;
-  test visualization-test;
+  test visualization-demo;
+//  test visualization-test;
 
   //tests for limited function types
 //  test limited-function-type-test;
