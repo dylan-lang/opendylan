@@ -18,7 +18,6 @@ import java.util.HashMap;
 
 import y.base.EdgeCursor;
 import y.base.Node;
-import y.base.NodeCursor;
 import y.layout.hierarchic.IncrementalHierarchicLayouter;
 import y.layout.hierarchic.incremental.SequenceConstraintFactory;
 import y.view.Arrow;

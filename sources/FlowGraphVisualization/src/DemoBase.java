@@ -56,7 +56,6 @@ import y.util.D;
 import y.view.AreaZoomMode;
 import y.view.AutoDragViewMode;
 import y.view.EditMode;
-import y.view.Graph2D;
 import y.view.Graph2DPrinter;
 import y.view.Graph2DView;
 import y.view.Graph2DViewActions;
@@ -165,6 +164,7 @@ public class DemoBase extends Thread {
 	  frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 	  this.addContentTo( frame.getRootPane() );
 	  frame.pack();
+	  frame.setSize(1400, 1000);
 	  frame.setLocationRelativeTo( null );
 	  frame.setVisible( true );
   }

@@ -11,7 +11,7 @@ import y.base.Edge;
 import y.base.EdgeCursor;
 import y.base.Node;
 import y.base.NodeCursor;
-import y.view.EdgeRealizer;
+import y.view.NodeLabel;
 
 
 public class LayouterClient extends Thread {
@@ -68,6 +68,7 @@ public class LayouterClient extends Thread {
 					assert(((ArrayList)answer.get(1)).size() == 1);
 					assert(((ArrayList)answer.get(1)).get(0) instanceof String);
 					String ph = (String)((ArrayList)answer.get(1)).get(0);
+					System.out.println("PHASE " + ph);
 					demo.phase.setText(ph);
 					demo.phase.validate();
 					continue;
@@ -234,6 +235,23 @@ public class LayouterClient extends Thread {
 							gr.setEdgeColor(Color.pink);
 							gr.changed = true;
 						}
+				} else if (key.isEqual("remove-temporary")) {
+					assert(answer.size() == 3);
+					assert(answer.get(2) instanceof Integer);
+					gr.graph.removeNode(gr.int_node_map.get((Integer)answer.get(2)));
+					gr.changed = true;
+				} else if (key.isEqual("change-type")) {
+					assert(answer.size() == 4);
+					assert(answer.get(2) instanceof Integer);
+					assert(answer.get(3) instanceof String);
+					Node n = gr.int_node_map.get((Integer)answer.get(2));
+					NodeLabel nl = gr.graph.getRealizer(n).getLabel();
+					String old = nl.getText();
+					//filter number out
+					int start = old.indexOf(' ') + 1;
+					nl.setText(old.substring(0, start) + (String)answer.get(3));
+					gr.graph.getRealizer(n).setWidth(nl.getWidth());
+					gr.changed = true;
 				} else if (key.isEqual("relayouted")) {
 					for (NodeCursor nc = gr.graph.nodes(); nc.ok(); nc.next())
 						//if (nc.node().degree() == 0) {
