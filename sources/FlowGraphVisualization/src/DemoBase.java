@@ -21,6 +21,7 @@ import java.awt.print.PrinterJob;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.Iterator;
 
 import javax.swing.AbstractAction;
@@ -38,8 +39,11 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JRootPane;
+import javax.swing.JSlider;
 import javax.swing.JToolBar;
 import javax.swing.UIManager;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import y.anim.AnimationFactory;
 import y.anim.AnimationPlayer;
@@ -98,6 +102,7 @@ public class DemoBase extends Thread {
   public Node highlight = null;
   public ArrayList<Integer> opt_queue = new ArrayList<Integer>();
   protected JLabel phase = new JLabel();
+  protected JSlider slider = new JSlider(JSlider.VERTICAL);
   
   /**
    * This constructor creates the {@link #view}
@@ -134,6 +139,13 @@ public class DemoBase extends Thread {
       contentPane.add( jtb, BorderLayout.NORTH );
     }
 
+    slider.setPaintLabels(true);
+    slider.setSnapToTicks(true);
+    slider.setMinimum(0);
+    slider.setMaximum(0);
+    slider.addChangeListener(new ChangeSlider());
+    contentPane.add( slider, BorderLayout.EAST );
+    
     registerViewListeners();
   }
 
@@ -144,6 +156,7 @@ public class DemoBase extends Thread {
 			  graph_chooser.setSelectedIndex(i);
 			  break;
 		  }
+	  slider.setLabelTable(ihl.sliderLabels);
 	  calcLayout();
   }
   
@@ -255,6 +268,15 @@ public class DemoBase extends Thread {
 		}
 	}
   
+  final class ChangeSlider implements ChangeListener
+  {
+	public void stateChanged(ChangeEvent arg0) {
+		if (!slider.getValueIsAdjusting() && incrementallayouter.graphfinished) {
+			int step = slider.getValue();
+			incrementallayouter.resetGraph(step);
+		}
+	}
+  }
   /**
    * Action that prints the contents of the view
    */
@@ -646,7 +668,5 @@ public class DemoBase extends Thread {
 		}
 		view.updateView();
 	}
-
-
 
 }

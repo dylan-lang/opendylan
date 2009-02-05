@@ -13,8 +13,13 @@
  ***************************************************************************/
 
 import java.awt.Color;
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Hashtable;
+
+import javax.swing.JLabel;
+import javax.swing.SwingUtilities;
 
 import y.base.EdgeCursor;
 import y.base.Node;
@@ -40,7 +45,17 @@ public class IncrementalHierarchicLayout
 	private Graph2DView view;
 	private DemoBase demobase;
 	protected SequenceConstraintFactory scf;
+
 	public boolean changed = false;
+	public int numChanges = 0;
+	protected Hashtable<Integer, JLabel> sliderLabels = new Hashtable<Integer, JLabel>();
+	private int lastEntry = 0;
+	private int lastChangeCount = 0;
+	public ArrayList<ArrayList> changes = new ArrayList<ArrayList>();
+
+	private int lastslidervalue = 0;
+	protected boolean graphfinished = false;
+	
 	protected final int graph_id;
 	private ArrayList<Node> arguments = new ArrayList<Node>();
 	private Node bind = null;
@@ -66,6 +81,9 @@ public class IncrementalHierarchicLayout
 		hierarchicLayouter = new IncrementalHierarchicLayouter();
 		
 		scf = hierarchicLayouter.createSequenceConstraintFactory(graph);
+		
+		sliderLabels.put(0, new JLabel("initial DFM models"));
+		changes.add(new ArrayList());
 	}
 	
 	public void activateLayouter () {
@@ -283,6 +301,67 @@ public class IncrementalHierarchicLayout
 		EdgeRealizer myreal = new GenericEdgeRealizer(graph.getDefaultEdgeRealizer());
 		myreal.setLineColor(color);
 		graph.setRealizer(graph.lastEdge(), myreal);		
+	}
+
+	public synchronized void updatephase(String text, boolean minor) {
+		demobase.phase.setText(text);
+		demobase.phase.validate();
+		final String txt = text;
+		boolean incremented = false;
+		if (lastChangeCount < numChanges) {
+			incremented = true;
+			lastEntry++;
+			lastChangeCount = numChanges;
+		}
+		String slidertext = text;
+		if (minor)
+			slidertext = "   " + slidertext;
+		JLabel foo = new JLabel(slidertext);
+		sliderLabels.put(lastEntry, foo);
+		demobase.slider.setMaximum(lastEntry);
+		Runnable updateMyUI = new Runnable() {
+			public void run () {
+				demobase.slider.updateUI();		
+				demobase.slider.setValue(lastEntry);
+				if (txt.equals("finished")) {
+					graphfinished = true;
+					changed = true;
+				}
+			}
+		};
+		if (incremented || ! minor)
+			changes.add(new ArrayList());
+		if (! minor && ! incremented) {
+			lastEntry++;
+			lastChangeCount = numChanges;
+		}
+		SwingUtilities.invokeLater(updateMyUI);
+		lastslidervalue = lastEntry;
+	}
+
+	public void resetGraph(int step) {
+		if (step >= lastslidervalue)
+			for (int i = lastslidervalue; i < step; i++)
+				for (Object comm : changes.get(i)) {
+					ArrayList com = (ArrayList)comm;
+					Commands.processCommand(this, com, demobase);
+				}
+		else { //I was too lazy to implement undo, so do the graph from scratch
+			System.out.println("scratch");
+			graph = new Graph2D();
+			int_node_map = new HashMap<Integer, Node>();
+			bind = null;
+			for (int i = 0; i < step; i++)
+				for (Object comm : changes.get(i)) {
+					ArrayList com = (ArrayList)comm;
+					//System.out.println("doing " + com);
+					Commands.processCommand(this, com, demobase);
+				}
+		}
+		lastslidervalue = step;
+		changed = true;
+		view.setGraph2D(graph);
+		demobase.calcLayout();
 	}
 }
 
