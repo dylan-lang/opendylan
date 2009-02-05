@@ -70,7 +70,7 @@ define function visualize (key :: <symbol>, object :: <object>)
     #"finished" =>
       *current-index* := 0;
     #"beginning" =>
-      write-to-visualizer(*vis*, list(key, object));
+      write-to-visualizer(*vis*, list(key, *current-index*, object));
     #"relayouted" =>
       write-to-visualizer(*vis*, list(key, *current-index*));
     #"highlight-queue" =>

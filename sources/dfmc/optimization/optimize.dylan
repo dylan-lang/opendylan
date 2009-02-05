@@ -246,7 +246,7 @@ define sealed method really-run-compilation-passes (code :: <&lambda>)
               end;
 	    end;
 	  end for-all-lambdas;
-          *dump-dfm-method*(#"beginning", #("pass sevem: pruning closures"));
+          *dump-dfm-method*(#"beginning", #("pass seven: pruning closures"));
 	  for-all-lambdas (f in code)
 	    if (f == code | lambda-used?(f) | lambda-top-level?(f))
               opt-format-out("PASS SIX %=\n", f);
@@ -276,6 +276,7 @@ define sealed method really-run-compilation-passes (code :: <&lambda>)
       if (*dump-dfm-method*)
         *dump-dfm-method*(#"relayouted", #());
       end;
+      *dump-dfm-method*(#"beginning", #("finished"));
       block()
       //when (dumping-dfm?(code))
 	print-method-out(code);
@@ -358,7 +359,7 @@ define inline method run-optimizer
  => (b :: <boolean>)
   opt-format-out("%s %= \n", name, c);
   // with-parent-computation (c)
-  *dump-dfm-method*(#"beginning", list(name));
+  *dump-dfm-method*(#"beginning", list(name, c.computation-id));
     optimize(c) & #t;
   // end;
 end method;

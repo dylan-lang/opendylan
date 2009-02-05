@@ -569,7 +569,7 @@ end function;
 define function ensure-library-dfm-computed (ld :: <compilation-context>)
   debug-out(#"internal", "DFM generation: %s\n", ld);
   let i :: <integer> = 0;
-  visualization-report(#"beginning", #("initial DFM models"));
+  visualization-report(#"beginning", #("initial DFM models", #"global"));
   timing-compilation-phase ("DFM generation" of ld)
     for-library-method ("Computing code models for", $compilation of m in ld)
       visualization-report(#"dfm-switch", i);
@@ -588,7 +588,7 @@ end function;
 define function ensure-library-bindings-checked
     (ld :: <project-library-description>)
   debug-out(#"internal", "Checking bindings:\n");
-  visualization-report(#"beginning", #("Checking bindings"));
+  visualization-report(#"beginning", #("Checking bindings", #"global"));
   timing-compilation-phase ("Checking bindings" of ld)
     check-bindings(ld);
   end;
@@ -774,7 +774,7 @@ end method;
 define function ensure-library-type-estimated (ld :: <compilation-context>)
   // Run the typist over the forms of this library.
   debug-out(#"internal", "Inferring library types: %s\n", ld);
-  visualization-report(#"beginning", #("Initial type inference"));
+  visualization-report(#"beginning", #("Initial type inference", #"global"));
   // The cache was established when the <compilation-context> was made,
   // because some early-bird optimizers want it.
   timing-compilation-phase ("Initial type inference" of ld)
@@ -798,7 +798,7 @@ end function;
 
 define function ensure-library-optimized (ld :: <compilation-context>)
   debug-out(#"internal", "Optimizing library: %s.\n", ld);
-  visualization-report(#"beginning", #("Optimization"));
+  visualization-report(#"beginning", #("Optimization", #"global"));
   let i :: <integer> = 0;
   timing-compilation-phase ("Optimization" of ld)
     for-library-method ("Optimizing", $compilation of m in ld)
