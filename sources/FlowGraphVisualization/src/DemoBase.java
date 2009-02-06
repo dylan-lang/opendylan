@@ -101,9 +101,8 @@ public class DemoBase extends Thread {
   private JComboBox graph_chooser;
   public Node highlight = null;
   public ArrayList<Integer> opt_queue = new ArrayList<Integer>();
-  protected JLabel phase = new JLabel();
   protected JSlider slider = new JSlider(JSlider.VERTICAL);
-  private boolean updatingslider = false; 
+  public boolean updatingslider = false;
   
   /**
    * This constructor creates the {@link #view}
@@ -136,7 +135,6 @@ public class DemoBase extends Thread {
     final JToolBar jtb = createToolBar();
     if ( jtb != null ) {
       jtb.add(graph_chooser);
-      jtb.add(phase);
       contentPane.add( jtb, BorderLayout.NORTH );
     }
 
@@ -157,11 +155,12 @@ public class DemoBase extends Thread {
 			  graph_chooser.setSelectedIndex(i);
 			  break;
 		  }
-          updatingslider = true;
+	  updatingslider = true;
 	  slider.setLabelTable(ihl.sliderLabels);
 	  slider.setMaximum(ihl.lastEntry);
 	  slider.setValue(ihl.lastEntry);
-          updatingslider = false;
+	  opt_queue = new ArrayList<Integer>();
+	  updatingslider = false;
 	  calcLayout();
   }
   
@@ -232,6 +231,8 @@ public class DemoBase extends Thread {
     toolBar.add( new Zoom( 0.8 ) );
     toolBar.add( new FitContent( view ) );
 	toolBar.add( new LayoutAction() );
+	toolBar.add( new Play() );
+	toolBar.add( new Step() );
 
     return toolBar;
   }
@@ -616,7 +617,33 @@ public class DemoBase extends Thread {
 		}
 	}
 	
+	final class Play extends AbstractAction
+	{
+		Play() {
+			super("Play");
+			this.putValue( Action.SHORT_DESCRIPTION, "Play");
+		}
+		
+		public void actionPerformed (ActionEvent ev) {
+			while (true)
+				if (! incrementallayouter.nextStep())
+					break;
+		}
+		
+	}
 	
+	final class Step extends AbstractAction
+	{
+		Step() {
+			super("Step");
+			this.putValue( Action.SHORT_DESCRIPTION, "Step");
+		}
+		
+		public void actionPerformed (ActionEvent ev) {
+			incrementallayouter.nextStep();
+		}
+		
+	}
 	/**
 	 * Provides popups for all kinds of actions
 	 */
@@ -654,9 +681,8 @@ public class DemoBase extends Thread {
 	 */
 	public void calcLayout(){
 		if (!view.getGraph2D().isEmpty() && incrementallayouter.changed){
-		    System.out.println("calculating layout");
+		    //System.out.println("calculating layout");
 			incrementallayouter.changed = false;
-			//incrementallayouter.gll.normalize(view.getGraph2D(), incrementallayouter.layerIdMap, incrementallayouter.layerIdMap);
 			Cursor oldCursor = view.getCanvasComponent().getCursor();
 			try {
 				view.getCanvasComponent().setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
@@ -668,6 +694,9 @@ public class DemoBase extends Thread {
 				player.addAnimationListener(view);
 				player.setFps(60);
 				player.animate(AnimationFactory.createEasedAnimation(morpher));
+			} catch (Exception e) {
+				System.out.println("got exception during layouting");
+				e.printStackTrace();
 			} finally {
 				view.getCanvasComponent().setCursor(oldCursor);
 			}

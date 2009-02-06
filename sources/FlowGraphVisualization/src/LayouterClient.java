@@ -72,7 +72,9 @@ public class LayouterClient extends Thread {
 					graphs.add(gr);
 				}
 				gr = graphs.get(dfm_id);
-				gr.changed = Commands.processCommand(gr, answer, demo);
+				if (Commands.processCommand(gr, answer, demo))
+					if (! gr.changed)
+						gr.changed = true;
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

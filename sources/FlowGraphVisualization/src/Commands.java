@@ -8,13 +8,24 @@ import y.view.NodeLabel;
 
 
 public final class Commands {
+	public static boolean processIfNoChange (IncrementalHierarchicLayout ihl, ArrayList answer, DemoBase demo) {
+		assert(answer.size() > 1);
+		assert(answer.get(0) instanceof Symbol);
+		Symbol key = (Symbol)answer.get(0);
+		if (key.isEqual("highlight") || key.isEqual("highlight-queue")) {
+			processCommand(ihl, answer, demo);
+			return true;
+		}
+		return false;
+	}
+	
 	public static boolean processCommand (IncrementalHierarchicLayout ihl, ArrayList answer, DemoBase demo) {
 		assert(answer.size() > 1);
 		assert(answer.get(0) instanceof Symbol);
 		Symbol key = (Symbol)answer.get(0);
 
 		if (key.isEqual("beginning"))
-			return beginning(ihl, answer);
+			return beginning(ihl, answer, demo);
 		if (! ihl.graphfinished) {
 			if (! (key.isEqual("highlight") || key.isEqual("highlight-queue") || key.isEqual("relayouted")))
 				ihl.numChanges++;
@@ -44,7 +55,7 @@ public final class Commands {
 		if (key.isEqual("remove-temporary"))
 			return removenode(ihl, answer);
 		if (key.isEqual("change-type"))
-			return changetype(ihl, answer);
+			return changetype(ihl, answer, demo);
 		if (key.isEqual("relayouted"))
 			return relayouted(ihl);
 		if (key.isEqual("highlight"))
@@ -65,16 +76,14 @@ public final class Commands {
 		return n;
 	}
 	
-	private static boolean beginning (IncrementalHierarchicLayout ihl, ArrayList answer) {
+	private static boolean beginning (IncrementalHierarchicLayout ihl, ArrayList answer, DemoBase demo) {
 		assert(answer.get(2) instanceof ArrayList);
 		ArrayList mess = (ArrayList)answer.get(2);
 		assert(mess.get(0) instanceof String);
 		String ph = (String)mess.get(0);
-		boolean minor = false;
 		if (mess.size() == 2) {
 			if (mess.get(1) instanceof Integer) {
 				int id = (Integer)mess.get(1);
-				minor = true;
 				ph = ph + " " + id; //or label text? but might be too long
 			} else if (mess.get(1) instanceof Symbol) {
 				Symbol tag = (Symbol)mess.get(1);
@@ -85,7 +94,8 @@ public final class Commands {
 				}
 			}
 		}
-		ihl.updatephase(ph, minor);
+		ihl.updatephase(ph);
+		demo.calcLayout();
 		return false;
 	}
 	
@@ -99,7 +109,7 @@ public final class Commands {
 		assert(cf.get(1) instanceof Symbol); //method name
 		assert(cf.get(2) instanceof String); //arg, val
 		ihl.initGraph(((Symbol)(cf.get(1))).toString(), (String)cf.get(2));
-		return false; //for now, initgraph does repaint stuff
+		return true;
 	}
 	
 	private static boolean changeedge (IncrementalHierarchicLayout ihl, ArrayList answer) {
@@ -232,7 +242,7 @@ public final class Commands {
 		return false;
 	} 
 	
-	private static boolean changetype (IncrementalHierarchicLayout ihl, ArrayList answer) {
+	private static boolean changetype (IncrementalHierarchicLayout ihl, ArrayList answer, DemoBase demo) {
 		assert(answer.size() == 4);
 		Node n = getNode(ihl, answer, 2, false);
 		assert(answer.get(3) instanceof String);
@@ -242,7 +252,8 @@ public final class Commands {
 		int start = old.indexOf(' ') + 1;
 		nl.setText(old.substring(0, start) + (String)answer.get(3));
 		ihl.graph.getRealizer(n).setWidth(nl.getWidth());
-		return true;
+		demo.contentPane.repaint();
+		return false;
 	}
         
 	private static boolean relayouted (IncrementalHierarchicLayout ihl) {
@@ -251,7 +262,6 @@ public final class Commands {
 	} 
         
 	private static boolean highlight (IncrementalHierarchicLayout ihl, ArrayList answer, DemoBase demo) {
-		ihl.activateLayouter();
 		Node highlightnew = getNode(ihl, answer, 2, false);
 		if (demo.highlight != highlightnew) {
 			if (demo.highlight != null)
@@ -264,7 +274,6 @@ public final class Commands {
 	} 
 		
 	private static boolean highlightqueue (IncrementalHierarchicLayout ihl, ArrayList answer, DemoBase demo) {
-		ihl.activateLayouter();
 		ArrayList queue = (ArrayList)answer.get(2);
 		ArrayList<Integer> removed = new ArrayList<Integer>();
 		ArrayList<Integer> added = new ArrayList<Integer>();
