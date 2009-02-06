@@ -49,7 +49,7 @@ public class IncrementalHierarchicLayout
 	public boolean changed = false;
 	public int numChanges = 0;
 	protected Hashtable<Integer, JLabel> sliderLabels = new Hashtable<Integer, JLabel>();
-	private int lastEntry = 0;
+	protected int lastEntry = 0;
 	private int lastChangeCount = 0;
 	public ArrayList<ArrayList> changes = new ArrayList<ArrayList>();
 
@@ -110,7 +110,8 @@ public class IncrementalHierarchicLayout
 		}
 		
 		changed = true;
-		demobase.addGraph(graph_id, name);
+		if (! graphfinished)
+		    demobase.addGraph(graph_id, name);
 		activateLayouter();
 	}
 
@@ -359,6 +360,7 @@ public class IncrementalHierarchicLayout
 				}
 		}
 		lastslidervalue = step;
+		arguments = new ArrayList<Node>();
 		changed = true;
 		view.setGraph2D(graph);
 		demobase.calcLayout();

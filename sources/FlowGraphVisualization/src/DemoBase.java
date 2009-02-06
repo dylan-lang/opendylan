@@ -103,6 +103,7 @@ public class DemoBase extends Thread {
   public ArrayList<Integer> opt_queue = new ArrayList<Integer>();
   protected JLabel phase = new JLabel();
   protected JSlider slider = new JSlider(JSlider.VERTICAL);
+  private boolean updatingslider = false; 
   
   /**
    * This constructor creates the {@link #view}
@@ -156,7 +157,11 @@ public class DemoBase extends Thread {
 			  graph_chooser.setSelectedIndex(i);
 			  break;
 		  }
+          updatingslider = true;
 	  slider.setLabelTable(ihl.sliderLabels);
+	  slider.setMaximum(ihl.lastEntry);
+	  slider.setValue(ihl.lastEntry);
+          updatingslider = false;
 	  calcLayout();
   }
   
@@ -271,7 +276,7 @@ public class DemoBase extends Thread {
   final class ChangeSlider implements ChangeListener
   {
 	public void stateChanged(ChangeEvent arg0) {
-		if (!slider.getValueIsAdjusting() && incrementallayouter.graphfinished) {
+		if (!updatingslider && !slider.getValueIsAdjusting() && incrementallayouter.graphfinished) {
 			int step = slider.getValue();
 			incrementallayouter.resetGraph(step);
 		}
@@ -649,6 +654,7 @@ public class DemoBase extends Thread {
 	 */
 	public void calcLayout(){
 		if (!view.getGraph2D().isEmpty() && incrementallayouter.changed){
+		    System.out.println("calculating layout");
 			incrementallayouter.changed = false;
 			//incrementallayouter.gll.normalize(view.getGraph2D(), incrementallayouter.layerIdMap, incrementallayouter.layerIdMap);
 			Cursor oldCursor = view.getCanvasComponent().getCursor();

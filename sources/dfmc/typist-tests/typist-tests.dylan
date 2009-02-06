@@ -51,17 +51,24 @@ define test visualization-test ()
                "    end;"
                "  end;"
                "end;"
+               "define method if-simple (a :: <integer>, b :: <integer>) => (res :: <integer>)"
+               "  if (a == 23)"
+               "    1 + a + b;"
+               "  else"
+               "    42 + 10;"
+               "  end;"
+               "end;"
                "define method for-loop (x, y, z)"
                "  for (i from 0 below 20)"
                "    x := y + 1;"
                "  end;"
                "end;"
-               "define method for-loop-multiple-variables ()"
+/*               "define method for-loop-multiple-variables ()"
                "  let sum = 0;"
                "  for (i from 0, j from 5, k from 20 above 0 by -1, l from 7 below 10)"
                "    sum := i + j * k + l;"
                "  end;"
-               "end;"
+               "end;" */
                "define method while-true-loop (x, y, z)"
                "  while(#t)"
                "    1 + 2;"
@@ -325,8 +332,8 @@ end;
 define suite typist-suite ()
   //tests for the test environment
 //  test noop;
-  test visualization-demo;
-//  test visualization-test;
+ // test visualization-demo;
+  test visualization-test;
 
   //tests for limited function types
 //  test limited-function-type-test;
