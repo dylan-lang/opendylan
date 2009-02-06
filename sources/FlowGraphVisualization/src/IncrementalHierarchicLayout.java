@@ -76,11 +76,7 @@ public class IncrementalHierarchicLayout
 		view = db.view;
 		demobase = db;
 		
-		// make it look nice
-		EdgeRealizer defaultER = graph.getDefaultEdgeRealizer();
-		defaultER.setArrow(Arrow.STANDARD);
-
-		// enable bridges for PolyLineEdgeRealizer
+			// enable bridges for PolyLineEdgeRealizer
 		BridgeCalculator bridgeCalculator = new BridgeCalculator();
 		bridgeCalculator.setCrossingMode( BridgeCalculator.CROSSING_MODE_HORIZONTAL_CROSSES_VERTICAL );
 		((DefaultGraph2DRenderer) view.getGraph2DRenderer()).setBridgeCalculator(bridgeCalculator );
@@ -91,13 +87,24 @@ public class IncrementalHierarchicLayout
 		cl.setCoreLayerer(hierarchicLayouter.getLayerer());
 		hierarchicLayouter.setLayerer(cl);
 
-		scf = ConstraintLayerer.createConstraintFactory(graph);
-		
-		groups = graph.createNodeMap();
-		graph.addDataProvider(ClassicLayerSequencer.GROUP_KEY, groups);
-		
 		sliderLabels.put(0, new JLabel("initial DFM models"));
 		changes.add(new ArrayList());
+		initGraph();
+	}
+	
+	public void initGraph () {
+		// make it look nice
+		EdgeRealizer defaultER = graph.getDefaultEdgeRealizer();
+		defaultER.setArrow(Arrow.STANDARD);
+		if (scf != null)
+			scf.dispose();
+		scf = ConstraintLayerer.createConstraintFactory(graph);
+		groups = graph.createNodeMap();
+		graph.addDataProvider(ClassicLayerSequencer.GROUP_KEY, groups);
+		arguments = new ArrayList<Node>();
+		int_node_map = new HashMap<Integer, Node>();
+		demobase.opt_queue = new ArrayList<Integer>();
+		bind = null;
 	}
 	
 	public void activateLayouter () {
@@ -109,7 +116,7 @@ public class IncrementalHierarchicLayout
 			demobase.calcLayout();
 	}
 
-	protected void initGraph (String name, String args)
+	protected void addMethodNode (String name, String args)
 	{
 		Node header = createNodeWithLabel(name + " " + args, -1);
 		assert(bind != null);
@@ -268,7 +275,7 @@ public class IncrementalHierarchicLayout
 			assert(gen != null);
 			EdgeRealizer myreal = new GenericEdgeRealizer(graph.getDefaultEdgeRealizer());
 			myreal.setLineColor(Color.pink);
-			graph.createEdge(t, gen, myreal);
+			graph.createEdge(gen, t, myreal);
 			scf.addPlaceNodeInSameLayerConstraint(t, gen);
 		}
 	}
@@ -351,9 +358,9 @@ public class IncrementalHierarchicLayout
 			changes.add(new ArrayList());
 		}
 		sliderLabels.put(lastEntry, new JLabel(text));
-		demobase.slider.setMaximum(lastEntry);
 		Runnable updateMyUI = new Runnable() {
 			public void run () {
+				demobase.slider.setMaximum(lastEntry);
 				demobase.slider.setValue(lastEntry);
 				demobase.slider.updateUI();		
 				if (rfinished)
@@ -397,11 +404,8 @@ public class IncrementalHierarchicLayout
 				}
 		else { //I was too lazy to implement undo, so do the graph from scratch
 			graph = new Graph2D();
-			arguments = new ArrayList<Node>();
-			int_node_map = new HashMap<Integer, Node>();
-			demobase.opt_queue = new ArrayList<Integer>();
+			initGraph();
 			view.setGraph2D(graph);
-			bind = null;
 			for (int i = 0; i < step; i++)
 				for (Object comm : changes.get(i)) {
 					ArrayList com = (ArrayList)comm;

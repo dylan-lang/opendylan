@@ -108,7 +108,7 @@ public final class Commands {
 		assert(((Symbol)cf.get(0)).isEqual("method"));
 		assert(cf.get(1) instanceof Symbol); //method name
 		assert(cf.get(2) instanceof String); //arg, val
-		ihl.initGraph(((Symbol)(cf.get(1))).toString(), (String)cf.get(2));
+		ihl.addMethodNode(((Symbol)(cf.get(1))).toString(), (String)cf.get(2));
 		return true;
 	}
 	
