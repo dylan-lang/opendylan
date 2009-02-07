@@ -43,7 +43,7 @@ public final class Commands {
 		if (key.isEqual("new-computation"))
 			return newcomputation(ihl, answer);
 		if (key.isEqual("remove-computation"))
-			return removenode(ihl, answer);
+			return removenode(ihl, answer, false);
 		if (key.isEqual("add-temporary"))
 			return addtemporary(ihl, answer);
 		if (key.isEqual("add-temporary-user"))
@@ -53,7 +53,7 @@ public final class Commands {
 		if (key.isEqual("temporary-generator"))
 			return temporarygenerator(ihl, answer);
 		if (key.isEqual("remove-temporary"))
-			return removenode(ihl, answer);
+			return removenode(ihl, answer, true);
 		if (key.isEqual("change-type"))
 			return changetype(ihl, answer, demo);
 		if (key.isEqual("relayouted"))
@@ -103,12 +103,13 @@ public final class Commands {
 		assert(answer.size() == 3);
 		assert(answer.get(2) instanceof ArrayList);
 		ArrayList cf = (ArrayList)answer.get(2);
-		assert(cf.size() == 3);
+		assert(cf.size() == 4);
 		assert(cf.get(0) instanceof Symbol);
 		assert(((Symbol)cf.get(0)).isEqual("method"));
 		assert(cf.get(1) instanceof Symbol); //method name
-		assert(cf.get(2) instanceof String); //arg, val
-		ihl.addMethodNode(((Symbol)(cf.get(1))).toString(), (String)cf.get(2));
+		assert(cf.get(2) instanceof ArrayList); //args
+		assert(cf.get(3) instanceof ArrayList); //arg ma,es
+		ihl.addMethodNode(((Symbol)(cf.get(1))).toString(), (ArrayList)cf.get(2), (ArrayList)cf.get(3));
 		return true;
 	}
 	
@@ -183,38 +184,47 @@ public final class Commands {
 		return true;
 	} 
 	
-	
-	private static boolean removenode (IncrementalHierarchicLayout ihl, ArrayList answer) {
+	private static boolean removenode (IncrementalHierarchicLayout ihl, ArrayList answer, boolean mayfail) {
 		assert(answer.size() == 3);
-		Node del = getNode(ihl, answer, 2, false);
-		ihl.graph.removeNode(del);
-		return true;
+		Node del = getNode(ihl, answer, 2, mayfail);
+		if (del != null) {
+			ihl.graph.removeNode(del);
+			ihl.int_node_map.remove((Integer)answer.get(2));
+			return true;
+		}
+		return false;
 	} 
 	
 	private static boolean addtemporary (IncrementalHierarchicLayout ihl, ArrayList answer) {
-		assert(answer.size() == 4);
+		assert(answer.size() == 5);
 		assert(answer.get(2) instanceof Integer);
-		assert(answer.get(3) instanceof Integer);
+		assert(answer.get(3) instanceof String);
+		assert(answer.get(4) instanceof Integer);
 		int temp_id = (Integer)answer.get(2);
-		int c_id = (Integer)answer.get(3);
-		ihl.createTemporary(temp_id, c_id);
-		return true;
+		String text = (String)answer.get(3);
+		int c_id = (Integer)answer.get(4);
+		if (ihl.int_node_map.get(temp_id) == null) {
+			ihl.createTemporary(temp_id, c_id, text + ":");
+			return true;
+		}
+		System.out.println("should not happen " + temp_id + " " + text);
+		return false;
 	}
 	
 	private static boolean addtemporaryuser (IncrementalHierarchicLayout ihl, ArrayList answer) {
 		assert(answer.size() == 4);
 		Node temp = getNode(ihl, answer, 2, false);
 		Node comp = getNode(ihl, answer, 3, false);
-		if (ihl.safeCreateEdge(temp, comp)) {
-			ihl.setEdgeColor(Color.pink);
-			return true;
-		}
-		return false;
+		ihl.graph.createEdge(temp, comp);
+		ihl.setEdgeColor(Color.pink);
+		return true;
 	} 
 	
 	private static boolean removetemporaryuser (IncrementalHierarchicLayout ihl, ArrayList answer) {
 		assert(answer.size() == 4);
-		Node temp = getNode(ihl, answer, 2, false);
+		Node temp = getNode(ihl, answer, 2, true);
+		if (temp == null)
+			return false; //happens with arguments of inlined functions
 		Node comp = getNode(ihl, answer, 3, false);
 		for (EdgeCursor ec = temp.outEdges(); ec.ok(); ec.next())
 			if (ec.edge().target() == comp) {
@@ -235,7 +245,7 @@ public final class Commands {
 					ihl.graph.changeEdge(ec.edge(), temp, newgenerator);
 					return true;
 				}
-		if (ihl.safeCreateEdge(temp, newgenerator)) {
+		if (ihl.safeCreateEdge(newgenerator, temp)) {
 			ihl.setEdgeColor(Color.pink);
 			return true;
 		}
@@ -249,11 +259,11 @@ public final class Commands {
 		NodeLabel nl = ihl.graph.getRealizer(n).getLabel();
 		String old = nl.getText();
 		//filter number out
-		int start = old.indexOf(' ') + 1;
+		int start = old.indexOf(':', old.indexOf(':') + 1) + 1;
 		nl.setText(old.substring(0, start) + (String)answer.get(3));
 		ihl.graph.getRealizer(n).setWidth(nl.getWidth());
 		demo.contentPane.repaint();
-		return false;
+		return true;
 	}
         
 	private static boolean relayouted (IncrementalHierarchicLayout ihl) {

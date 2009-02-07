@@ -62,8 +62,6 @@ public class IncrementalHierarchicLayout
 	protected boolean graphfinished = false;
 	
 	protected final int graph_id;
-	private ArrayList<Node> arguments = new ArrayList<Node>();
-	private Node bind = null;
 	
 	private NodeMap groups;
 	private NodeMap groumasters;
@@ -101,10 +99,8 @@ public class IncrementalHierarchicLayout
 		scf = ConstraintLayerer.createConstraintFactory(graph);
 		groups = graph.createNodeMap();
 		graph.addDataProvider(ClassicLayerSequencer.GROUP_KEY, groups);
-		arguments = new ArrayList<Node>();
 		int_node_map = new HashMap<Integer, Node>();
 		demobase.opt_queue = new ArrayList<Integer>();
-		bind = null;
 	}
 	
 	public void activateLayouter () {
@@ -116,20 +112,25 @@ public class IncrementalHierarchicLayout
 			demobase.calcLayout();
 	}
 
-	protected void addMethodNode (String name, String args)
+	protected void addMethodNode (String name, ArrayList arguments, ArrayList argumentnames)
 	{
-		Node header = createNodeWithLabel(name + " " + args, -1);
-		assert(bind != null);
-		graph.createEdge(header, bind); //edge to bind!
+		Node header = createNodeWithLabel(name, 0);
+		graph.createEdge(header, graph.firstNode()); //edge to bind!
 		scf.addPlaceNodeAtTopConstraint(header);
-		scf.addPlaceNodeBelowConstraint(header, bind);
+		scf.addPlaceNodeBelowConstraint(header, graph.firstNode());
 		
-		for (Node n : arguments) {
+		int i = 0;
+		for (Object number : arguments) {
+			assert(number instanceof Integer);
+			Node n = int_node_map.get((Integer)number);
+			if (n == null) {
+				createTemporary((Integer)number, 0, (String)argumentnames.get(i) + ":");
+				n = graph.lastNode();
+			}
 			EdgeRealizer myreal = new GenericEdgeRealizer(graph.getDefaultEdgeRealizer());
 			myreal.setLineColor(Color.blue);
 			graph.createEdge(header, n, myreal);
 			scf.addPlaceNodeBelowConstraint(header, n);
-			scf.addPlaceNodeInSameLayerConstraint(bind, n);
 		}
 		
 		if (! graphfinished)
@@ -249,8 +250,6 @@ public class IncrementalHierarchicLayout
 		n1.setLabel(nl1);
 		n1.setWidth(nl1.getWidth() + 10);
 		Node n = graph.createNode(n1);
-		if (label.equalsIgnoreCase("[BIND]") && bind == null)
-			bind = n;
 		assert(int_node_map.get(id) == null);
 		int_node_map.put(id, n);
 		return n;
@@ -265,10 +264,8 @@ public class IncrementalHierarchicLayout
 		graph.getRealizer(n).setWidth(nl.getWidth());
 	}
 
-	public void createTemporary(int temp_id, int c_id) {
-		Node t = createNodeWithLabel("temporary", temp_id);
-		if (bind == null)
-			arguments.add(t);
+	public void createTemporary(int temp_id, int c_id, String text) {
+		Node t = createNodeWithLabel(text, temp_id);
 		graph.getRealizer(t).setFillColor(Color.magenta);
 		if (c_id != 0) {
 			Node gen = int_node_map.get(c_id);

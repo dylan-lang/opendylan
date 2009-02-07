@@ -644,6 +644,8 @@ public class DemoBase extends Thread {
 		}
 		
 	}
+	
+	
 	/**
 	 * Provides popups for all kinds of actions
 	 */
@@ -686,8 +688,8 @@ public class DemoBase extends Thread {
 			Cursor oldCursor = view.getCanvasComponent().getCursor();
 			try {
 				view.getCanvasComponent().setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-				GraphLayout result = new BufferedLayouter(incrementallayouter.hierarchicLayouter).calcLayout(view.getGraph2D());
-				LayoutMorpher morpher = new LayoutMorpher(view, result);
+				GraphLayout layout = new BufferedLayouter(incrementallayouter.hierarchicLayouter).calcLayout(view.getGraph2D());
+				LayoutMorpher morpher = new LayoutMorpher(view, layout);
 				morpher.setSmoothViewTransform(true);
 				morpher.setPreferredDuration(1000);
 				final AnimationPlayer player = new AnimationPlayer();
