@@ -25,8 +25,14 @@ define thread variable *current-index* :: <integer> = 0;
 
 define function trace-computations (key :: <symbol>, id :: <integer>, comp-or-id, comp2 :: <integer>, #key label)
   select (key by \==)
-    #"add-temporary-user", #"add-temporary", #"remove-temporary-user" =>
+    #"add-temporary-user", #"remove-temporary-user" =>
       write-to-visualizer(*vis*, list(key, *current-index*, id, comp-or-id));
+    #"add-temporary" =>
+      begin
+        let str = make(<string-stream>, direction: #"output");
+        print-object(comp-or-id, str);
+        write-to-visualizer(*vis*, list(key, *current-index*, id, str.stream-contents, comp2));
+      end;
     #"temporary-generator" =>
       write-to-visualizer(*vis*, list(key, *current-index*, id, comp-or-id, comp2));
     #"remove-temporary" =>

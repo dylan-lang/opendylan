@@ -62,6 +62,9 @@ define dont-copy-slots  <&iep>                       using <dfm-copier> =
 define dont-copy-slots <temporary>                   using <dfm-copier> =
   { %temporary-id     => #f };
 
+define dont-copy-slots <object-reference>            using <dfm-copier> =
+  { %temporary-id     => #f };
+
 // If a call checked incompatible out of line, it might still become
 // compatible inline (and so amenable to upgrading and inlining), so
 // we reset its state in the inline copy.

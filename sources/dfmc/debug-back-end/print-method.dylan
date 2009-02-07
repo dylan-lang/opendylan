@@ -151,9 +151,12 @@ define method output-lambda-header-sexp
   if (o.debug-string)
     res := add!(res, o.debug-string);
   end;
-  let str = make(<string-stream>, direction: #"output");
-  print-contents(signature-spec(o), str);
-  reverse(add!(res, str.stream-contents));
+  res := add!(res, map(temporary-id, o.parameters | #()));
+  reverse(add!(res, map(method(x)
+                          let str = make(<string-stream>, direction: #"output");
+                          print-object(x, str);
+                          str.stream-contents
+                        end, o.parameters | #())));
 end;
 
 define method output-lambda-computations-sexp

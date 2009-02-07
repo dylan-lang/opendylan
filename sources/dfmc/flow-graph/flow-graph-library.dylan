@@ -61,7 +61,7 @@ define module dfmc-flow-graph
     walk-all-lambda-computations,
     walk-computation-references,
     walk-lambda-references, walk-all-lambda-references,
-    *computation-tracer*, computation-id,
+    *computation-tracer*, computation-id, temporary-id,
     
     <nop-computation>,
     <nop>,

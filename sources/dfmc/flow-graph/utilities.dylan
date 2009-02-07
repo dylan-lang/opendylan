@@ -536,10 +536,10 @@ define method remove-computation-references! (c :: <computation>)
     let env :: <lambda-lexical-environment> = environment(c);
     remove-temporary!(env, t);
   end;
+  do-used-temporaries(method (t) remove-user!(t, c) end, c);
   if (*computation-tracer*)
     *computation-tracer*(#"remove-computation", c.computation-id, 0, 0);
   end;
-  do-used-temporaries(method (t) remove-user!(t, c) end, c);
 end method remove-computation-references!;
 
 define method remove-computation-references! (c :: <make-closure>)

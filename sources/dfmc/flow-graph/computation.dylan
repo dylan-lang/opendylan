@@ -65,7 +65,7 @@ define method computation-type (c :: <computation>) => (res)
 end;
 
 define method computation-type-setter (new, c :: <computation>) => (res)
-  if (*computation-tracer* & c.temporary & slot-initialized?(c.temporary, %temporary-id) & instance?(c.temporary.%temporary-id, <integer>))
+  if (*computation-tracer* & c.temporary & (c.temporary.users.size > 0) & slot-initialized?(c.temporary, %temporary-id) & instance?(c.temporary.%temporary-id, <integer>))
       *computation-tracer*(#"change-type", c.temporary.%temporary-id, new, 0);
   end;
   c.%computation-type := new;
@@ -290,21 +290,82 @@ define class <interactor-binding-reference>
     required-init-keyword: value:;
 end class;                                                                     
 
-define class <object-reference> (<value-reference>)
+define dood-class <object-reference> (<value-reference>)
   slot reference-value, required-init-keyword: value:;
+  weak slot %temporary-id :: false-or(<integer>) = #f,
+    reinit-expression: #f;
+    //init-function: next-computation-id;
 end class;
+
+define method temporary-id (t :: <object-reference>) => (res :: <integer>)
+  if (instance?(t.%temporary-id, <integer>))
+    t.%temporary-id;
+  elseif (instance?(t.reference-value, <&function>))
+    0;
+  else
+    t.%temporary-id := next-computation-id();
+    if (*computation-tracer*)
+      if (t.users.size > 0)
+        let gen = if (t.generator) t.generator.computation-id else 0 end;
+        *computation-tracer*(#"add-temporary", t.%temporary-id, t, gen);
+        if (t.generator)
+          let new = t.generator.computation-type;
+          *computation-tracer*(#"change-type", t.%temporary-id, new, 0);
+        end;
+        do(compose(rcurry(curry(*computation-tracer*, #"add-temporary-user", t.%temporary-id), 0),
+                   computation-id),
+           t.users);
+      end;
+    end;
+    t.%temporary-id;
+  end;
+end;
+
+define method remove-user! (t :: <object-reference>, c :: <computation>)
+  next-method();
+  if (*computation-tracer* & ~ instance?(t.reference-value, <&function>))
+    *computation-tracer*(#"remove-temporary-user", t.temporary-id, c.computation-id, 0);
+  end;
+  if (t.users.size == 0 & ~ instance?(t.reference-value, <&function>))
+    *computation-tracer*(#"remove-temporary", t.temporary-id, 0, 0);
+  end;
+end;
+
+define method add-user! (t :: <object-reference>, c :: <computation>)
+  if (t.users.size == 0 & ~ instance?(t.reference-value, <&function>))
+    *computation-tracer*(#"add-temporary", t.temporary-id, t, 0);
+  end;
+  next-method();
+  if (*computation-tracer* & ~ instance?(t.reference-value, <&function>))
+    *computation-tracer*(#"add-temporary-user", t.temporary-id, c.computation-id, 0);
+  end;
+end;
 
 define class <immutable-object-reference> (<object-reference>)
 end class;
 
 define /* inline */ method make
+    (class == <immutable-object-reference>, #rest initargs, #key value, #all-keys)
+ => (object)
+  let res = next-method();
+  *computation-tracer*(#"add-temporary", res.temporary-id, res, 0);
+  res;
+end;
+define /* inline */ method make
     (class == <object-reference>, #rest initargs, #key value, #all-keys)
  => (object)
-  if (instance?(value, <&method>))
-    apply(make, <method-reference>, initargs)
-  else
-    next-method()
-  end if
+  let res = if (instance?(value, <&method>))
+              apply(make, <method-reference>, initargs)
+            else
+              next-method()
+            end if;
+  if (~ instance?(value, <&function>) & (res.users.size > 0))
+    *computation-tracer*(#"add-temporary", res.temporary-id, res, 0);
+    do(compose(rcurry(curry(*computation-tracer*, #"add-temporary-user", res.temporary-id), 0),
+               computation-id),
+       res.users);
+  end;
+  res;
 end method;
 
 define class <method-reference> (<object-reference>)

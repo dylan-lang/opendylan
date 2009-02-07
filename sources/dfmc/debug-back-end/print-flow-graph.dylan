@@ -42,26 +42,24 @@ define compiler-sideways method print-object
   format(stream, "[ENV]");
 end method;
 
+define compiler-sideways method print-object (o :: <lexical-specialized-variable>, stream :: <stream>) => ()
+  format(stream, "%s (%=)", o.name, o.specializer);
+end;
+
+define compiler-sideways method print-object (o :: <cell>, stream :: <stream>) => ()
+  format(stream, "%s (%=)", o.name, o.cell-type);
+end;
+
 define compiler-sideways method print-object (o :: <temporary>, stream :: <stream>) => ()
   block ()
     print-temporary-properties(stream, o);
     if (named?(o))
       format(stream, "%s/%=", o.name, o.frame-offset);
+    elseif (instance?(o, <multiple-value-temporary>))
+      format(stream, "MVT");
     else
-      format(stream, "t");
-      if (o.frame-offset)
-        format(stream, "%d",
-	       o.frame-offset - o.environment.lambda.parameters.size);
-      else
-        format(stream, "?")
-      end if;
+      format(stream, "T");
     end if;
-    if (instance?(o, <multiple-value-temporary>))
-      format(stream, "(%d%s)", o.required-values, 
-        if (o.rest-values?) ",#rest" else "" end)
-    end if;
-    //let te = type-estimate(o);
-    //format(stream, ":: %=", te);
   exception (<error>)
   end block;
 end method;
@@ -76,7 +74,7 @@ define compiler-sideways method print-object (o :: <object-reference>, stream ::
 end method;
 
 define compiler-sideways method print-object (o :: <defined-constant-reference>, stream :: <stream>) => ()
-  format(stream, "^");
+  format(stream, "$");
   print-referenced-object(o.referenced-binding, stream);
 end method;
 
@@ -89,16 +87,6 @@ define method print-temporary-properties (stream, o :: <temporary>)
   end if;
 end method;
 
-define method print-temporary-properties
-    (stream, o :: <multiple-value-temporary>)
-  next-method();
-  format(stream, "*");
-  //if (o.mvt-local?)
-  //  let num-vals = required-values(o);
-  //  format(stream, "L(%s)", num-vals);
-  //end if;
-end method print-temporary-properties;
-
 //// COMPUTATIONS
 
 define method print-computations
@@ -231,13 +219,13 @@ define method print-tail-call-annotation
 end method;
 
 define method print-computation (stream :: <stream>, c :: <function-call>) 
-  format(stream, "[%s%s %=(",
+  format(stream, "[%s%s %=]",
 	 c.operation-name,
          entry-point-character(c, call-effective-function(c)),
          c.function);
-  print-args(stream, c.arguments);
-  format(stream, ")]");
-  print-tail-call-annotation(stream, c);
+  //print-args(stream, c.arguments);
+  //format(stream, ")]");
+  //print-tail-call-annotation(stream, c);
 end method;
 
 define method print-computation (stream :: <stream>, c :: <slot-value>) 
@@ -281,10 +269,15 @@ define method print-computation (stream :: <stream>, c :: <loop-call>)
 end method;
 
 define method print-computation (stream :: <stream>, c :: <primitive-call>) 
-  format(stream, "[PRIMOP %s(", primitive-name(c.primitive));
-  print-args(stream, c.arguments);
+  format(stream, "[PRIMOP %s (", primitive-name(c.primitive));
+  let sig = c.primitive.primitive-signature;
+  for (i from 0 below ^signature-number-required(sig))
+    format(stream, "%=,", ^signature-required(sig)[i]);
+  end;
   format(stream, ")]");
-  print-tail-call-annotation(stream, c);
+  //print-args(stream, c.arguments);
+  //format(stream, ")]");
+  //print-tail-call-annotation(stream, c);
 end method;
 
 define method print-computation (stream :: <stream>, c :: <if>) 
@@ -292,23 +285,20 @@ define method print-computation (stream :: <stream>, c :: <if>)
 end method;
 
 define method print-computation (stream :: <stream>, c :: <if-merge>) 
-  format(stream, "[IF-MERGE %= %=]",
-	 merge-left-value(c), merge-right-value(c));
+  format(stream, "[IF-MERGE]");
 end method;
 
 define method print-computation (stream :: <stream>, c :: <loop-merge>) 
-  format(stream, "[LOOP-MERGE%s %= %=]",
-	 if (loop-merge-initial?(c)) "i" else "" end,
-         merge-left-value(c), merge-right-value(c));
+  format(stream, "[LOOP-MERGE%s]",
+	 if (loop-merge-initial?(c)) "i" else "" end);
 end method;
 
 define method print-computation (stream :: <stream>, c :: <bind-exit-merge>) 
-  format(stream, "[BIND-EXIT-MERGE %= %=]",
-	 merge-left-value(c), merge-right-value(c));
+  format(stream, "[BIND-EXIT-MERGE]");
 end method;
 
 define method print-computation (stream :: <stream>, c :: <return>) 
-  format(stream, "return %s", c.computation-value);
+  format(stream, "return");
 end method;
 
 define method print-computation (stream :: <stream>, c :: <bind>) 
@@ -335,7 +325,7 @@ define method print-computation
 end method;
 
 define method print-computation (stream :: <stream>, c :: <set!>) 
-  format(stream, "%s := %=", c.assigned-binding, c.computation-value);
+  format(stream, "set! %s", c.assigned-binding);
 end method;
 
 define method print-computation (stream :: <stream>, c :: <bind-exit>)
@@ -370,14 +360,7 @@ end method;
 // multiple values
 
 define method print-computation (stream :: <stream>, c :: <values>)
-  format(stream, "[VALUES", c.fixed-values);
-  for (v in c.fixed-values)
-    format(stream, " %=", v);
-  end for;
-  if (c.rest-value)
-    format(stream, " #rest %=", c.rest-value)
-  end if;
-  format(stream, "]")
+  format(stream, "[VALUES %d%s]", c.fixed-values.size, if (c.rest-value) " #rest" else "" end);
 end method;
 
 define method print-computation
@@ -457,11 +440,11 @@ define method print-computation (stream :: <stream>, c :: <make-cell>)
 end method print-computation;
 
 define method print-computation (stream :: <stream>, c :: <get-cell-value>);
-  format(stream, "cell-value(%s)", c.computation-cell)
+  format(stream, "cell-value")
 end method print-computation;
 
 define method print-computation (stream :: <stream>, c :: <set-cell-value!>);
-  format(stream, "cell-value(%s) := %s", c.computation-cell, c.computation-value)
+  format(stream, "cell-value := %s", c.computation-value)
 end method print-computation;
 
 // C-FFI
