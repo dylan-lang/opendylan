@@ -56,7 +56,7 @@ define compiler-sideways method print-object (o :: <temporary>, stream :: <strea
     if (named?(o))
       format(stream, "%s/%=", o.name, o.frame-offset);
     elseif (instance?(o, <multiple-value-temporary>))
-      format(stream, "MVT");
+      format(stream, "MVT (%d%s)", required-values(o), if (rest-values?(o)) ", #rest" else "" end);
     else
       format(stream, "T");
     end if;
@@ -360,7 +360,7 @@ end method;
 // multiple values
 
 define method print-computation (stream :: <stream>, c :: <values>)
-  format(stream, "[VALUES %d%s]", c.fixed-values.size, if (c.rest-value) " #rest" else "" end);
+  format(stream, "[VALUES (#%d%s)]", c.fixed-values.size, if (c.rest-value) " #rest" else "" end);
 end method;
 
 define method print-computation

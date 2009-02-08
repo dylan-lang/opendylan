@@ -36,7 +36,7 @@ define test visualization-demo ()
 end;
 
 define test visualization-test ()
-  let mycode = "define method if-nested (x, y, z)"
+  let mycode = /* "define method if-nested (x, y, z)"
                "  if (x == 1)"
                "    if (y == 1)"
                "      if (z == 1)"
@@ -50,7 +50,7 @@ define test visualization-test ()
                "      \"all different\";"
                "    end;"
                "  end;"
-               "end;"
+               "end;" */
                "define method if-simple (a :: <integer>, b :: <integer>) => (res :: <integer>)"
                "  if (a == 23)"
                "    1 + a + b;"
@@ -60,6 +60,11 @@ define test visualization-test ()
                "end;"
                "define method common-subexpression (a, b)"
                "  values(a + b, (a + b) * b);"
+               "end;"
+               "define method while-true-loop (x, y, z)"
+               "  while(#t)"
+               "    1 + 2;"
+               "  end;"
                "end;"
                "define method for-loop (x, y, z)"
                "  for (i from 0 below 20)"
@@ -72,12 +77,7 @@ define test visualization-test ()
 //               "    sum := i + j * k + l;"
 //               "  end;"
 //               "end;"
-               "define method while-true-loop (x, y, z)"
-               "  while(#t)"
-               "    1 + 2;"
-               "  end;"
-               "end;"
-               "define method while-loop (x, y, z)"
+/*               "define method while-loop (x, y, z)"
                "  let i = 0;"
                "  while(i < 42)"
                "    i := i + 1;"
@@ -91,8 +91,20 @@ define test visualization-test ()
                "      i := i * i;"
                "    end;"
                "  end;"
-               "end;";
-/*               "define method block-cleanup (x, y, z)"
+               "end;" */
+               "define method block-test (x)"
+               "  block(t)"
+               "    t();"
+               "  end;"
+               "end;"
+/*               "define method block-exception (x)"
+               "  block()"
+               "    x := x * x;"
+               "  exception (c :: <condition>)"
+               "    x := 0;"
+               "  end;"
+               "end;" */
+               "define method block-cleanup (x, y, z)"
                "  block(t)"
                "    if (x == 42)"
                "      t();"
@@ -110,7 +122,7 @@ define test visualization-test ()
                "  end;"
                "  y := t + t;"
                "  values(x, y);"
-               "end;"; */
+               "end;";
   dynamic-bind (*progress-stream*           = #f,  // with-compiler-muzzled
                 *demand-load-library-only?* = #f)
     let lib = compile-template(mycode, compiler: compiler);

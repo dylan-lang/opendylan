@@ -142,26 +142,30 @@ end method;
 
 //s-expression outputter
 define method output-lambda-header-sexp
-    (stream :: <stream>, o :: <&lambda>, #key prefix)
-  let res = #();
-  if (prefix)
-    res := add!(res, as(<symbol>, prefix));
+    (stream :: <stream>, lambda :: <&lambda>)
+  local method single-header (o)
+          let res = #();
+          res := add!(res, #"METHOD");
+          res := add!(res, o.debug-string);
+          res := add!(res, o.body.computation-id);
+          res := add!(res, map(temporary-id, o.parameters | #()));
+          reverse!(add!(res, map(method(x)
+                                   let str = make(<string-stream>, direction: #"output");
+                                   print-object(x, str);
+                                   str.stream-contents
+                                 end, o.parameters | #())));
+        end;
+  let result = #();
+  result := add!(result, single-header(lambda));
+  for-used-lambda (sub-f in lambda)
+    result := add!(result, single-header(sub-f));
   end;
-  res := add!(res, #"METHOD");
-  if (o.debug-string)
-    res := add!(res, o.debug-string);
-  end;
-  res := add!(res, map(temporary-id, o.parameters | #()));
-  reverse(add!(res, map(method(x)
-                          let str = make(<string-stream>, direction: #"output");
-                          print-object(x, str);
-                          str.stream-contents
-                        end, o.parameters | #())));
+  result;
 end;
 
 define method output-lambda-computations-sexp
     (stream :: <stream>, o :: <&lambda>, #key prefix)
-  let res = output-lambda-header-sexp(stream, o, prefix: prefix);
+  let res = output-lambda-header-sexp(stream, o);
   for-used-lambda (sub-f in o)
     res := add!(res, output-lambda-computations-sexp(stream, sub-f, prefix: "LOCAL"));
   end;
@@ -243,8 +247,8 @@ end method;
 define method output-computation-sexp
     (c :: <bind-exit>) 
   let res = #();
-  res := add!(res, output-computations-sexp(c.body, c.next-computation));
-  res := add!(res, list(format-to-string("%=", c.entry-state)));
+  res := add!(res, get-computation-ids(c.body, c.next-computation));
+  //res := add!(res, c.entry-state.temporary-id);
   res := add!(res, #"BIND-EXIT");
   add!(res, c.computation-id);
 end method;
@@ -252,9 +256,9 @@ end method;
 define method output-computation-sexp
     (c :: <unwind-protect>) 
   let res = #();
-  res := add!(res, output-computations-sexp(c.cleanups, c.next-computation));
-  res := add!(res, output-computations-sexp(c.body, c.next-computation));
-  res := add!(res, list(format-to-string("%=", c.entry-state)));
+  res := add!(res, get-computation-ids(c.cleanups, c.next-computation));
+  res := add!(res, get-computation-ids(c.body, c.next-computation));
+  //res := add!(res, list(format-to-string("%=", c.entry-state)));
   res := add!(res, #"UNWIND-PROTECT");
   add!(res, c.computation-id);
 end method;

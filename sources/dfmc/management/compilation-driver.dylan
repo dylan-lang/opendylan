@@ -575,6 +575,7 @@ define function ensure-library-dfm-computed (ld :: <compilation-context>)
       visualization-report(#"dfm-switch", i);
       ensure-method-dfm-or-heap(m);
       let sexp = print-method(make(<string-stream>), m, output-format: #"sexp", header-only: #t);
+      //print-method(*standard-output*, m);
       visualization-report(#"dfm-header", sexp);
       i := i + 1;
     end;
@@ -804,8 +805,6 @@ define function ensure-library-optimized (ld :: <compilation-context>)
     for-library-method ("Optimizing", $compilation of m in ld)
       visualization-report(#"optimizing", i);
       optimize-method(m);
-      let sexp = print-method(make(<string-stream>), m, output-format: #"sexp");
-      visualization-report(#"optimized-dfm", list(i, sexp));
       i := i + 1;
     end;
     do(compact-coloring-info, compilation-context-records(ld));
