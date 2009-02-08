@@ -112,12 +112,13 @@ public class IncrementalHierarchicLayout
 			demobase.calcLayout();
 	}
 
-	protected void addMethodNode (String name, ArrayList arguments, ArrayList argumentnames)
+	protected void addMethodNode (String name, Node bind, ArrayList arguments, ArrayList argumentnames)
 	{
 		Node header = createNodeWithLabel(name, 0);
-		graph.createEdge(header, graph.firstNode()); //edge to bind!
+		graph.getRealizer(header).setFillColor(Color.LIGHT_GRAY);
+		graph.createEdge(header, bind); //edge to bind!
 		scf.addPlaceNodeAtTopConstraint(header);
-		scf.addPlaceNodeBelowConstraint(header, graph.firstNode());
+		scf.addPlaceNodeBelowConstraint(header, bind);
 		
 		int i = 0;
 		for (Object number : arguments) {
@@ -131,12 +132,14 @@ public class IncrementalHierarchicLayout
 			myreal.setLineColor(Color.blue);
 			graph.createEdge(header, n, myreal);
 			scf.addPlaceNodeBelowConstraint(header, n);
+			i++; //want loop over multiple variables!
 		}
-		
+	}
+
+	protected void dfmfinished (String name) {
 		if (! graphfinished)
 		    demobase.addGraph(graph_id, name);
 	}
-
 	
 	private void initGraphHelperHelper (Object o, int id) {
 		if (o instanceof String)
@@ -217,7 +220,26 @@ public class IncrementalHierarchicLayout
 			Node loop = int_node_map.get((Integer)nodelist.get(2));
 			Node loopc = createNodeWithLabel("CONTINUE", comp_id);
 			graph.createEdge(loopc, loop);
-		} 
+		} else if (s.isEqual("bind-exit")) {
+			assert(nodelist.size() == 3);
+			//assert(nodelist.get(2) instanceof Integer); //entry-state
+			assert(nodelist.get(2) instanceof ArrayList); //body
+			Node bind_exit = createNodeWithLabel("bind-exit", comp_id);
+			ArrayList<Node> body = getNodes((ArrayList)nodelist.get(2));
+			if (body.size() > 0)
+				graph.createEdge(bind_exit, body.get(0));
+		} else if (s.isEqual("unwind-protect")) {
+			assert(nodelist.size() == 4);
+			assert(nodelist.get(2) instanceof ArrayList); //body
+			assert(nodelist.get(3) instanceof ArrayList); //cleanups
+			Node unwind_protect = createNodeWithLabel("unwind-protect", comp_id);
+			ArrayList<Node> body = getNodes((ArrayList)nodelist.get(2));
+			if (body.size() > 0)
+				graph.createEdge(unwind_protect, body.get(0));
+			ArrayList<Node> cleanups = getNodes((ArrayList)nodelist.get(3));
+			if (body.size() > 0)
+				graph.createEdge(unwind_protect, cleanups.get(0));
+		}
 	}
 	
 	private ArrayList<Node> getNodes(ArrayList arrayList) {
@@ -250,8 +272,10 @@ public class IncrementalHierarchicLayout
 		n1.setLabel(nl1);
 		n1.setWidth(nl1.getWidth() + 10);
 		Node n = graph.createNode(n1);
-		assert(int_node_map.get(id) == null);
-		int_node_map.put(id, n);
+		if (id > 0) {
+			assert(int_node_map.get(id) == null);
+			int_node_map.put(id, n);
+		}
 		return n;
 	}
 	

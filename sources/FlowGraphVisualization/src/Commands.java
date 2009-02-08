@@ -102,14 +102,23 @@ public final class Commands {
 	private static boolean dfmheader (IncrementalHierarchicLayout ihl, ArrayList answer) {
 		assert(answer.size() == 3);
 		assert(answer.get(2) instanceof ArrayList);
-		ArrayList cf = (ArrayList)answer.get(2);
-		assert(cf.size() == 4);
-		assert(cf.get(0) instanceof Symbol);
-		assert(((Symbol)cf.get(0)).isEqual("method"));
-		assert(cf.get(1) instanceof Symbol); //method name
-		assert(cf.get(2) instanceof ArrayList); //args
-		assert(cf.get(3) instanceof ArrayList); //arg ma,es
-		ihl.addMethodNode(((Symbol)(cf.get(1))).toString(), (ArrayList)cf.get(2), (ArrayList)cf.get(3));
+		ArrayList cfs = (ArrayList)answer.get(2);
+		String main = null;
+		for (Object o : cfs) {
+			assert(o instanceof ArrayList);
+			ArrayList cf = (ArrayList)o;
+			assert(cf.size() == 5);
+			assert(cf.get(0) instanceof Symbol);
+			assert(((Symbol)cf.get(0)).isEqual("method"));
+			assert(cf.get(1) instanceof Symbol); //method name
+			assert(cf.get(2) instanceof Integer); //bind
+			Node bind = getNode(ihl, cf, 2, false);
+			assert(cf.get(3) instanceof ArrayList); //args
+			assert(cf.get(4) instanceof ArrayList); //arg names
+			main = ((Symbol)(cf.get(1))).toString();
+			ihl.addMethodNode(main, bind, (ArrayList)cf.get(3), (ArrayList)cf.get(4));
+		}
+		ihl.dfmfinished(main);
 		return true;
 	}
 	
