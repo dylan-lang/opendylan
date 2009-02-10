@@ -56,6 +56,8 @@ public final class Commands {
 			return removenode(ihl, answer, true);
 		if (key.isEqual("change-type"))
 			return changetype(ihl, answer, demo);
+		if (key.isEqual("change-entry-point"))
+			return changeentrypoint(ihl, answer, demo);
 		if (key.isEqual("relayouted"))
 			return relayouted(ihl);
 		if (key.isEqual("highlight"))
@@ -83,8 +85,9 @@ public final class Commands {
 		String ph = (String)mess.get(0);
 		if (mess.size() == 2) {
 			if (mess.get(1) instanceof Integer) {
-				int id = (Integer)mess.get(1);
-				ph = ph + " " + id; //or label text? but might be too long
+				Node n = getNode(ihl, mess, 1, false);
+				String label = ihl.graph.getRealizer(n).getLabelText();
+				ph = ph + " " + label; //or label text? but might be too long
 			} else if (mess.get(1) instanceof Symbol) {
 				Symbol tag = (Symbol)mess.get(1);
 				if (tag.isEqual("global")) {
@@ -197,6 +200,13 @@ public final class Commands {
 		assert(answer.size() == 3);
 		Node del = getNode(ihl, answer, 2, mayfail);
 		if (del != null) {
+			if (ihl.graph.getRealizer(del).getLabelText().contains("bind") && del.inDegree() == 1)
+				ihl.graph.removeNode(del.firstInEdge().source());
+			//System.out.println("D:" + del.degree() + " " + ihl.graph.getRealizer(del).getLabelText());
+			if (del.degree() > 0)
+				for (EdgeCursor ec = del.edges(); ec.ok(); ec.next()) {
+					//System.out.println("  was connected to " + ihl.graph.getRealizer(ec.edge().opposite(del)).getLabelText());
+				}
 			ihl.graph.removeNode(del);
 			ihl.int_node_map.remove((Integer)answer.get(2));
 			return true;
@@ -216,7 +226,7 @@ public final class Commands {
 			ihl.createTemporary(temp_id, c_id, text + ":");
 			return true;
 		}
-		System.out.println("should not happen " + temp_id + " " + text);
+		//System.out.println("already added temporary " + temp_id + " " + text);
 		return false;
 	}
 	
@@ -232,8 +242,10 @@ public final class Commands {
 	private static boolean removetemporaryuser (IncrementalHierarchicLayout ihl, ArrayList answer) {
 		assert(answer.size() == 4);
 		Node temp = getNode(ihl, answer, 2, true);
-		if (temp == null)
+		if (temp == null) {
+			System.out.println("temp not present " + (Integer)answer.get(2));
 			return false; //happens with arguments of inlined functions
+		}
 		Node comp = getNode(ihl, answer, 3, false);
 		for (EdgeCursor ec = temp.outEdges(); ec.ok(); ec.next())
 			if (ec.edge().target() == comp) {
@@ -271,10 +283,27 @@ public final class Commands {
 		int start = old.indexOf(':', old.indexOf(':') + 1) + 1;
 		nl.setText(old.substring(0, start) + (String)answer.get(3));
 		ihl.graph.getRealizer(n).setWidth(nl.getWidth());
+		System.out.println("change type " + old + " => " + (String)answer.get(3));
 		demo.contentPane.repaint();
+		//ihl.isok = false;
 		return true;
 	}
         
+	private static boolean changeentrypoint(IncrementalHierarchicLayout ihl, ArrayList answer, DemoBase demo) {
+		assert(answer.size() == 4);
+		Node n = getNode(ihl, answer, 2, false);
+		assert(answer.get(3) instanceof Symbol);
+		NodeLabel nl = ihl.graph.getRealizer(n).getLabel();
+		String old = nl.getText();
+		//filter number out
+		int start = old.indexOf(':') + 1;
+		nl.setText(old.substring(0, start) + " " + ((Symbol)answer.get(3)).toString() + " " + old.substring(start));
+		ihl.graph.getRealizer(n).setWidth(nl.getWidth());
+		//System.out.println("change entry point " + old + " => " + ((Symbol)answer.get(3)).toString());
+		demo.contentPane.repaint();
+		return true;		
+	}
+	
 	private static boolean relayouted (IncrementalHierarchicLayout ihl) {
 		ihl.activateLayouter();
 		return false;

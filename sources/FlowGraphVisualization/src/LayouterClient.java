@@ -53,6 +53,10 @@ public class LayouterClient extends Thread {
 			assert(answer.get(1) instanceof Symbol);
 			assert(((Symbol)answer.get(0)).isEqual("connection-identifier"));
 			Symbol identifier = (Symbol)answer.get(1);
+			ArrayList result = new ArrayList();
+			result.add(new Symbol("ok"));
+
+			printMessage(result);
 			
 			DemoBase demo = new DemoBase(identifier.toString(), this);
 			demo.start();
@@ -66,7 +70,7 @@ public class LayouterClient extends Thread {
 				int dfm_id = (Integer)answer.get(1);
 				IncrementalHierarchicLayout gr = null;
 				if (! (key.isEqual("highlight") || key.isEqual("highlight-queue") || key.isEqual("relayouted")))
-					System.out.println(key.toString() + " for " + dfm_id + " : " + answer.subList(2, answer.size()));
+					; //System.out.println(key.toString() + " for " + dfm_id + " : " + answer.subList(2, answer.size()));
 				if (graphs.size() <= dfm_id) {
 					gr = new IncrementalHierarchicLayout(demo, dfm_id);
 					graphs.add(gr);
@@ -75,6 +79,14 @@ public class LayouterClient extends Thread {
 				if (Commands.processCommand(gr, answer, demo))
 					if (! gr.changed)
 						gr.changed = true;
+				if (gr.isok)
+					printMessage(result);
+				else {
+					gr.isok = true;
+					ArrayList res = new ArrayList();
+					res.add(new Symbol("bar"));
+					printMessage(res);
+				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

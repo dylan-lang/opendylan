@@ -65,6 +65,8 @@ public class IncrementalHierarchicLayout
 	
 	private NodeMap groups;
 	private NodeMap groumasters;
+	
+	public boolean isok = true;
 
 	
 	public IncrementalHierarchicLayout(DemoBase db, int id)
