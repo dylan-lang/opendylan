@@ -59,6 +59,9 @@ define function trace-computations (key :: <symbol>, id :: <integer>, comp-or-id
         end;
         write-to-visualizer(*vis*, list(key, *current-index*, id, str.stream-contents));
       end;
+    #"change-entry-point" =>
+      write-to-visualizer(*vis*, list(key, *current-index*, id, comp-or-id));
+      //format-out("changing entry point of %d %=\n", id, comp-or-id);
     otherwise => ;
   end;
 end;

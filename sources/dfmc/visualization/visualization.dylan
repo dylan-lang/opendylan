@@ -22,6 +22,10 @@ define function write-to-visualizer (v :: <dfmc-graph-visualization>, data)
     if (v.report-enabled?)
       format(v.socket, "%s%s", siz, s-expression);
       force-output(v.socket);
+      let res = read-from-visualizer(v);
+      unless (res = #(#"ok"))
+        format(*standard-output*, "expected ok, but got %=\n", res);
+      end;
     else
       format(*standard-output*, "not sending: %s\n", s-expression);
     end;
@@ -34,9 +38,9 @@ define function read-from-visualizer (v :: <dfmc-graph-visualization>) => (resul
   let stream = v.socket;
   let length = string-to-integer(read(stream, 6), base: 16);
   let line = read(stream, length);
-  format(*standard-output*, "read: %s\n", line);
+  //format(*standard-output*, "read: %s\n", line);
   let expr = read-lisp(make(<string-stream>, direction: #"input", contents: line));
-  format(*standard-output*, "parsed: %=\n", expr);
+  //format(*standard-output*, "parsed: %=\n", expr);
   expr;
 end;
 

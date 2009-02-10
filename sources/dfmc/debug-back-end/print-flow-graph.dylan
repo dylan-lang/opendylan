@@ -219,9 +219,9 @@ define method print-tail-call-annotation
 end method;
 
 define method print-computation (stream :: <stream>, c :: <function-call>) 
-  format(stream, "[%s%s %=]",
+  format(stream, "[%s %=]",
 	 c.operation-name,
-         entry-point-character(c, call-effective-function(c)),
+         //entry-point-character(c, call-effective-function(c)),
          c.function);
   //print-args(stream, c.arguments);
   //format(stream, ")]");

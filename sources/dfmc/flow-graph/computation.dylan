@@ -270,7 +270,7 @@ define dood-class <object-reference> (<value-reference>)
   weak slot %temporary-id :: false-or(<integer>) = #f,
     reinit-expression: #f;
     //init-function: next-computation-id;
-end class;
+end dood-class;
 
 define method temporary-id (t :: <object-reference>) => (res :: <integer>)
   if (instance?(t.%temporary-id, <integer>))
@@ -662,8 +662,18 @@ end graph-class;
 define packed-slots item-properties (<function-call>, <call>)
   field   slot dispatch-state  = $dispatch-untried, field-size: 1;
   boolean slot call-congruent? = #f;
-  boolean slot call-iep?       = #f;
+  boolean slot %call-iep?       = #f;
 end packed-slots;
+
+define method call-iep? (c :: <function-call>) => (res :: <boolean>)
+  c.%call-iep?;
+end;
+
+define method call-iep?-setter (new :: <boolean>, c :: <function-call>) => (res :: <boolean>)
+  c.%call-iep? := new;
+  *computation-tracer*(#"change-entry-point", c.computation-id, if (new) #"interior" else #"exterior" end, 0);
+  new;
+end;
 
 /// PRIMITIVE CALL
 

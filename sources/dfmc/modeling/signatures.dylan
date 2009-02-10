@@ -237,9 +237,9 @@ define primary &class <signature> (<object>)
     init-value: 0;
   runtime-constant &slot signature-required :: <simple-object-vector>,
     required-init-keyword: required:;
-  &slot signature-type-variables :: <simple-object-vector>,
-    init-keyword: type-variables:,
-    init-value: #[];
+//  &slot signature-type-variables :: <simple-object-vector>,
+//    init-keyword: type-variables:,
+//    init-value: #[];
 end &class;
 
 define primary &class <object-signature> (<signature>)

@@ -145,19 +145,19 @@ end method;
 define constant $bottom-string = "<bottom>";
 
 define compiler-sideways method print-object (o :: <&bottom-type>, stream :: <stream>) => ()
-  format(stream, "{<&bottom-type> %s}", $bottom-string);
+  format(stream, "{& %s}", $bottom-string);
 end method;
 
 define compiler-sideways method print-object (o :: <&class>, stream :: <stream>) => ()
-  format(stream, "{<&class> %s}", o.debug-string);
+  format(stream, "{& %s}", o.debug-string);
 end method;
 
 define compiler-sideways method print-object (o :: <&slot-descriptor>, stream :: <stream>) => ()
-  format(stream, "{<&slot-descriptor> %s}", o.^slot-getter.^debug-name);
+  format(stream, "{&slot %s}", o.^slot-getter.^debug-name);
 end method;
 
 define compiler-sideways method print-object (o :: <&raw-type>, stream :: <stream>) => ()
-  format(stream, "{<&raw-type> %s}", o.debug-string);
+  format(stream, "{&raw %s}", o.debug-string);
 end method;
 
 define compiler-sideways method print-object (o :: <&raw-object>, stream :: <stream>) => ()
