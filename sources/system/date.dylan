@@ -437,7 +437,7 @@ define function as-iso8601-string (date :: <date>, #key precision :: <integer> =
   format-date("%Y-%m-%dT%H:%M:%S%:z", date);
 end;
 
-define variable *default-date-formats* :: <sequence> = #();
+// define variable *default-date-formats* :: <sequence> = #();
 
 define method parse-date (date :: <string>, format :: <string>)
  => (date :: false-or(<date>));
