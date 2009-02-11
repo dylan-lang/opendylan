@@ -425,19 +425,8 @@ end;
 
 define function as-iso8601-string (date :: <date>, #key precision :: <integer> = 0)
  => (iso8601-string :: <string>)
-/*
-    if (precision > 0)
-		  concatenate(".", format-integer(round/(date-microseconds(date),
-							 10 ^ (6 - precision)),
-						  precision))
-		else
-		  ""
-    end;
-*/
   format-date("%Y-%m-%dT%H:%M:%S%:z", date);
 end;
-
-// define variable *default-date-formats* :: <sequence> = #();
 
 define method parse-date (date :: <string>, format :: <string>)
  => (date :: false-or(<date>));
