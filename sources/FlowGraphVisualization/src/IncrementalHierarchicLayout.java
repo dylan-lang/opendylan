@@ -13,7 +13,6 @@
  ***************************************************************************/
 
 import java.awt.Color;
-import java.awt.Font;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -27,9 +26,7 @@ import y.base.NodeMap;
 import y.layout.hierarchic.ClassicLayerSequencer;
 import y.layout.hierarchic.ConstraintLayerer;
 import y.layout.hierarchic.HierarchicLayouter;
-import y.layout.hierarchic.IncrementalHierarchicLayouter;
 import y.layout.hierarchic.ConstraintLayerer.ConstraintFactory;
-import y.layout.hierarchic.incremental.SequenceConstraintFactory;
 import y.view.Arrow;
 import y.view.BridgeCalculator;
 import y.view.DefaultGraph2DRenderer;
@@ -67,7 +64,7 @@ public class IncrementalHierarchicLayout
 	private NodeMap groumasters;
 	
 	public boolean isok = true;
-
+	
 	
 	public IncrementalHierarchicLayout(DemoBase db, int id)
 	{
@@ -138,11 +135,6 @@ public class IncrementalHierarchicLayout
 		}
 	}
 
-	protected void dfmfinished (String name) {
-		if (! graphfinished)
-		    demobase.addGraph(graph_id, name);
-	}
-	
 	private void initGraphHelperHelper (Object o, int id) {
 		if (o instanceof String)
 			initGraphHelper((String)o, id);
@@ -214,14 +206,17 @@ public class IncrementalHierarchicLayout
 				graph.createEdge(loop, body.get(0));
 			
 			for (Node b : body)
-				; //scf.addPlaceNodeBelowConstraint(loop, b);
+				if (graph.getRealizer(b).getLabelText().contains("CONTINUE"))
+					safeCreateEdge(b, loop);
 
 		} else if (s.isEqual("loop-call")) {
 			assert(nodelist.size() == 3);
 			assert(nodelist.get(2) instanceof Integer);
-			Node loop = int_node_map.get((Integer)nodelist.get(2));
 			Node loopc = createNodeWithLabel("CONTINUE", comp_id);
-			graph.createEdge(loopc, loop);
+			if ((Integer) nodelist.get(2) != 0) {
+				Node loop = int_node_map.get((Integer)nodelist.get(2));
+				graph.createEdge(loopc, loop);
+			}
 		} else if (s.isEqual("bind-exit")) {
 			assert(nodelist.size() == 3);
 			//assert(nodelist.get(2) instanceof Integer); //entry-state
@@ -292,7 +287,7 @@ public class IncrementalHierarchicLayout
 
 	public void createTemporary(int temp_id, int c_id, String text) {
 		Node t = createNodeWithLabel(text, temp_id);
-		graph.getRealizer(t).setFillColor(Color.magenta);
+		graph.getRealizer(t).setFillColor(Color.pink);
 		if (c_id != 0) {
 			Node gen = int_node_map.get(c_id);
 			assert(gen != null);
@@ -380,7 +375,7 @@ public class IncrementalHierarchicLayout
 			lastChangeCount = numChanges;
 			changes.add(new ArrayList());
 		}
-		sliderLabels.put(lastEntry, new JLabel(text));
+		sliderLabels.put(lastEntry, new JLabel(text.substring(0, Math.min(40, text.length()))));
 		Runnable updateMyUI = new Runnable() {
 			public void run () {
 				demobase.slider.setMaximum(lastEntry);

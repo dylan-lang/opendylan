@@ -1,7 +1,7 @@
 
 public class ListElement implements Comparable {
 	private String item;
-	private int index;
+	public int index;
 	
 	public ListElement (int index, String item) {
 		this.item = item;
@@ -15,10 +15,6 @@ public class ListElement implements Comparable {
 			return this.item.compareTo(other.toString());
 		}
 		return 0;
-	}
-	
-	public int myindex() {
-		return index;
 	}
 	
 	public String toString() {

@@ -16,15 +16,15 @@ public class SortedListComboBoxModel extends AbstractListModel implements
 	}
 	@Override
 	public void addElement(Object arg0) {
-		insertElementAt(arg0, 0);
+		insertElementAt(arg0, 1);
 	}
 
 	@Override
 	public void insertElementAt(Object element, int foo) {
-		if (getSize() == 0)
-			elements.insertElementAt(element, 0);
+		if (getSize() < 2)
+			elements.insertElementAt(element, getSize());
 		else
-			for (int index = 0; index < getSize(); index++)
+			for (int index = 1; index < getSize(); index++)
 			{
 				Comparable c = (Comparable)getElementAt( index );
 

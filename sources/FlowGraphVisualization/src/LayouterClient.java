@@ -1,4 +1,3 @@
-import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -6,11 +5,6 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
-
-import y.base.Edge;
-import y.base.EdgeCursor;
-import y.base.Node;
-import y.view.NodeLabel;
 
 
 public class LayouterClient extends Thread {
@@ -31,6 +25,10 @@ public class LayouterClient extends Thread {
 	
 	public IncrementalHierarchicLayout getGraph (int index) {
 		return graphs.get(index);
+	}
+	
+	public int getGraphSize () {
+		return graphs.size();
 	}
 	
 	private ArrayList readMessage () throws NumberFormatException, IOException {
@@ -66,6 +64,18 @@ public class LayouterClient extends Thread {
 				assert(answer.size() > 1);
 				assert(answer.get(0) instanceof Symbol);
 				Symbol key = (Symbol)answer.get(0);
+				System.out.println(key.toString() + " : " + answer);
+				if (key.isEqual("source")) {
+					assert(answer.size() == 3);
+					assert(answer.get(1) instanceof Symbol); //method name
+					assert(answer.get(2) instanceof String); //source code
+					String name = ((Symbol)answer.get(1)).toString();
+					demo.string_source_map.put(name, (String)answer.get(2));
+					demo.text.setText((String)answer.get(2));
+					demo.graph_chooser.addItem(new ListElement(0, name));
+					printMessage(result);
+					continue;
+				}
 				assert(answer.get(1) instanceof Integer);
 				int dfm_id = (Integer)answer.get(1);
 				IncrementalHierarchicLayout gr = null;
@@ -74,6 +84,7 @@ public class LayouterClient extends Thread {
 				if (graphs.size() <= dfm_id) {
 					gr = new IncrementalHierarchicLayout(demo, dfm_id);
 					graphs.add(gr);
+					((ListElement)demo.graph_chooser.getSelectedItem()).index = dfm_id;
 				}
 				gr = graphs.get(dfm_id);
 				if (Commands.processCommand(gr, answer, demo))

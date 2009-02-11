@@ -58,6 +58,8 @@ public final class Commands {
 			return changetype(ihl, answer, demo);
 		if (key.isEqual("change-entry-point"))
 			return changeentrypoint(ihl, answer, demo);
+		if (key.isEqual("set-loop-call-loop"))
+			return setloopcallloop(ihl, answer);
 		if (key.isEqual("relayouted"))
 			return relayouted(ihl);
 		if (key.isEqual("highlight"))
@@ -65,6 +67,15 @@ public final class Commands {
 		if (key.isEqual("highlight-queue"))
 			return highlightqueue(ihl, answer, demo);
 		System.out.println("shouldn't be here");
+		return false;
+	}
+
+	private static boolean setloopcallloop(IncrementalHierarchicLayout ihl,
+			ArrayList answer) {
+		Node loopcall = getNode(ihl, answer, 2, false);
+		Node loop = getNode(ihl, answer, 3, true);
+		if (loop != null)
+			ihl.graph.createEdge(loopcall, loop);
 		return false;
 	}
 
@@ -121,7 +132,6 @@ public final class Commands {
 			main = ((Symbol)(cf.get(1))).toString();
 			ihl.addMethodNode(main, bind, (ArrayList)cf.get(3), (ArrayList)cf.get(4));
 		}
-		ihl.dfmfinished(main);
 		return true;
 	}
 	
@@ -284,7 +294,7 @@ public final class Commands {
 		nl.setText(old.substring(0, start) + (String)answer.get(3));
 		ihl.graph.getRealizer(n).setWidth(nl.getWidth());
 		System.out.println("change type " + old + " => " + (String)answer.get(3));
-		demo.contentPane.repaint();
+		demo.view.repaint();
 		//ihl.isok = false;
 		return true;
 	}
@@ -300,7 +310,7 @@ public final class Commands {
 		nl.setText(old.substring(0, start) + " " + ((Symbol)answer.get(3)).toString() + " " + old.substring(start));
 		ihl.graph.getRealizer(n).setWidth(nl.getWidth());
 		//System.out.println("change entry point " + old + " => " + ((Symbol)answer.get(3)).toString());
-		demo.contentPane.repaint();
+		demo.view.repaint();
 		return true;		
 	}
 	
@@ -316,7 +326,7 @@ public final class Commands {
 				ihl.graph.getRealizer(demo.highlight).setFillColor(ihl.graph.getDefaultNodeRealizer().getFillColor());
 			ihl.graph.getRealizer(highlightnew).setFillColor(Color.green);
 			demo.highlight = highlightnew;
-			demo.contentPane.repaint();
+			demo.view.repaint();
 		}
 		return false;
 	} 
@@ -344,7 +354,7 @@ public final class Commands {
 			if (h != demo.highlight && h != null)
 				ihl.graph.getRealizer(h).setFillColor(Color.orange);
 		}
-		demo.contentPane.repaint();
+		demo.view.repaint();
 		return false;
 	}
 

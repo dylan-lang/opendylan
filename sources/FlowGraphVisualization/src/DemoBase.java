@@ -21,7 +21,7 @@ import java.awt.print.PrinterJob;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import javax.swing.AbstractAction;
@@ -29,17 +29,18 @@ import javax.swing.Action;
 import javax.swing.ActionMap;
 import javax.swing.ImageIcon;
 import javax.swing.InputMap;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JRootPane;
 import javax.swing.JSlider;
+import javax.swing.JTextArea;
 import javax.swing.JToolBar;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
@@ -98,11 +99,14 @@ public class DemoBase extends Thread {
   protected IncrementalHierarchicLayout incrementallayouter;
   private String name;
   private LayouterClient client;
-  private JComboBox graph_chooser;
+  protected JComboBox graph_chooser;
   public Node highlight = null;
   public ArrayList<Integer> opt_queue = new ArrayList<Integer>();
   protected JSlider slider = new JSlider(JSlider.VERTICAL);
   public boolean updatingslider = false;
+  protected HashMap<String, String> string_source_map = new HashMap<String, String>();
+  
+  protected JTextArea text;
   
   /**
    * This constructor creates the {@link #view}
@@ -120,13 +124,17 @@ public class DemoBase extends Thread {
 
     contentPane = new JPanel();
     contentPane.setLayout( new BorderLayout() );
-    
+
+    JPanel left = new JPanel();
+    left.setLayout( new BorderLayout() );
+
     registerViewModes();
     registerViewActions();
 
-    contentPane.add( view, BorderLayout.CENTER );
+    left.add( view, BorderLayout.CENTER );
 
     graph_chooser = new JComboBox(new SortedListComboBoxModel());
+    graph_chooser.addItem(new ListElement(0, "new..."));
     graph_chooser.setMaximumRowCount(50);
     graph_chooser.addActionListener(new ChangeGraphAction());
 
@@ -134,27 +142,59 @@ public class DemoBase extends Thread {
     
     final JToolBar jtb = createToolBar();
     if ( jtb != null ) {
-      jtb.add(graph_chooser);
-      contentPane.add( jtb, BorderLayout.NORTH );
+      left.add( jtb, BorderLayout.NORTH );
     }
 
+    contentPane.add(left, BorderLayout.CENTER);
+    
+    JPanel right = new JPanel();
+    right.setLayout( new BorderLayout() );
+    
+    JPanel textok = new JPanel();
+    textok.setLayout( new BorderLayout() );
+    
+    textok.add(graph_chooser, BorderLayout.NORTH);
+
+    text = new JTextArea("Choose code example or type code!", 8, 40);
+    string_source_map.put("new...", text.getText());
+    text.setEditable(true);
+    textok.add(text, BorderLayout.CENTER );
+
+    JButton send = new JButton("send");
+    textok.add(send, BorderLayout.SOUTH );
+    send.addActionListener(new SendAction());
+
+    right.add(textok, BorderLayout.NORTH );
+    
     slider.setPaintLabels(true);
     slider.setSnapToTicks(true);
     slider.setMinimum(0);
     slider.setMaximum(0);
     slider.addChangeListener(new ChangeSlider());
-    contentPane.add( slider, BorderLayout.EAST );
+    right.add(slider, BorderLayout.CENTER );
+    contentPane.add( right, BorderLayout.EAST );
     
     registerViewListeners();
   }
 
+  public String methodName () {
+	  name = text.getText();
+	  String def = "define method ";
+	  if (name.startsWith(def))
+		  name = name.substring(def.length(), name.indexOf(' ', def.length() + 1)).trim();
+	  return name;
+  }
+  
+  public boolean containsMethodHeader () {
+	  String name = text.getText();
+	  String def = "define method ";
+	  if (name.startsWith(def))
+		  return true;
+	  return false;
+  }
+  
   public void graphChanged (IncrementalHierarchicLayout ihl) {
 	  incrementallayouter = ihl;
-	  for (int i = 0; i < graph_chooser.getItemCount(); i++)
-		  if (((ListElement)graph_chooser.getItemAt(i)).myindex() == ihl.graph_id) {
-			  graph_chooser.setSelectedIndex(i);
-			  break;
-		  }
 	  updatingslider = true;
 	  slider.setLabelTable(ihl.sliderLabels);
 	  slider.setMaximum(ihl.lastEntry);
@@ -164,10 +204,6 @@ public class DemoBase extends Thread {
 	  calcLayout();
   }
   
-  public void addGraph(Integer index, String string) {
-	  graph_chooser.addItem(new ListElement(index, string));
-  }
-
   public void dispose() {
   }
 
@@ -187,10 +223,10 @@ public class DemoBase extends Thread {
   }
 
   public void addContentTo( final JRootPane rootPane ) {
-    final JMenuBar jmb = createMenuBar();
-    if ( jmb != null ) {
-      rootPane.setJMenuBar( jmb );
-    }
+    //final JMenuBar jmb = createMenuBar();
+    //if ( jmb != null ) {
+    //  rootPane.setJMenuBar( jmb );
+    //}
     rootPane.setContentPane( contentPane );
   }
 
@@ -261,6 +297,27 @@ public class DemoBase extends Thread {
     return contentPane;
   }
 
+  final class SendAction extends AbstractAction
+  {
+	public void actionPerformed(ActionEvent ev) {
+		if (string_source_map.get(methodName()) == null) {
+			System.out.println("new method :" + methodName() + ":");
+			string_source_map.put(methodName(), text.getText());
+			graph_chooser.addItem(new ListElement(0, methodName()));
+		} 
+		int realindex = ((ListElement)graph_chooser.getSelectedItem()).index;
+		if (realindex == 0) {
+			ArrayList data = new ArrayList();
+			data.add(new Symbol("compile"));
+			//data.add(new Symbol(methodName()));
+			if (containsMethodHeader())
+				data.add(text.getText());
+			else
+				data.add("define function test" + client.getGraphSize() + " () " + text.getText() + " end;");
+			client.printMessage(data);
+		}
+	}
+  }
   final class ChangeGraphAction extends AbstractAction
 	{
 		public ChangeGraphAction() {
@@ -269,8 +326,15 @@ public class DemoBase extends Thread {
 		}
 		
 		public void actionPerformed(ActionEvent ev) {
-			IncrementalHierarchicLayout ih = client.getGraph(((ListElement)graph_chooser.getSelectedItem()).myindex());
-			ih.activateLayouter();
+			text.setText(string_source_map.get(((ListElement)graph_chooser.getSelectedItem()).toString()));
+			int realindex = ((ListElement)graph_chooser.getSelectedItem()).index;
+			if (realindex > 0) {
+				IncrementalHierarchicLayout ih = client.getGraph(realindex);
+				ih.activateLayouter();
+			} else {
+				System.out.println("no graph yet, please wait");
+			}
+				
 		}
 	}
   
