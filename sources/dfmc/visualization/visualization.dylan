@@ -10,27 +10,28 @@ define class <dfmc-graph-visualization> (<object>)
   slot socket :: false-or(<socket>) = #f;
   constant slot connection-id :: <symbol>, required-init-keyword: id:;
   slot report-enabled? :: <boolean> = #t;
+  slot dfm-report-enabled? :: <boolean> = #t;
 end;
 
 define function write-to-visualizer (v :: <dfmc-graph-visualization>, data)
-  let newstream = make(<string-stream>, direction: #"output");
-  print-s-expression(newstream, data);
-  let s-expression = stream-contents(newstream);
-  //format(*standard-error*, "write: %s\n", s-expression);
-  let siz = integer-to-string(s-expression.size, base: 16, size: 6);
-  block()
-    if (v.report-enabled?)
+  if (v.report-enabled? & v.dfm-report-enabled?)
+    let newstream = make(<string-stream>, direction: #"output");
+    print-s-expression(newstream, data);
+    let s-expression = stream-contents(newstream);
+    //format(*standard-error*, "write: %s\n", s-expression);
+    let siz = integer-to-string(s-expression.size, base: 16, size: 6);
+    block()
       format(v.socket, "%s%s", siz, s-expression);
       force-output(v.socket);
       let res = read-from-visualizer(v);
       unless (res = #(#"ok"))
         format(*standard-output*, "expected ok, but got %=\n", res);
       end;
-    else
-      format(*standard-output*, "not sending: %s\n", s-expression);
+    exception (c :: <condition>)
+      format(*standard-output*, "failed communication: %=\n", c);
     end;
-  exception (c :: <condition>)
-    format(*standard-output*, "failed communication: %=\n", c);
+  else
+    format(*standard-output*, "not sending: %=\n", data);
   end;
 end;
 

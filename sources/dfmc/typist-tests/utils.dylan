@@ -21,7 +21,7 @@ define function report-progress (i1 :: <integer>, i2 :: <integer>,
 end;
 
 define thread variable *vis* :: false-or(<dfmc-graph-visualization>) = #f; 
-define thread variable *current-index* :: <integer> = 0;
+define thread variable *current-index* :: <integer> = -1;
 
 define function trace-computations (key :: <symbol>, id :: <integer>, comp-or-id, comp2 :: <integer>, #key label)
   select (key by \==)
@@ -62,22 +62,24 @@ define function trace-computations (key :: <symbol>, id :: <integer>, comp-or-id
     #"change-entry-point" =>
       write-to-visualizer(*vis*, list(key, *current-index*, id, comp-or-id));
       //format-out("changing entry point of %d %=\n", id, comp-or-id);
+    #"set-loop-call-loop" =>
+      write-to-visualizer(*vis*, list(#"set-loop-call-loop", *current-index*, id, comp-or-id, #"no"));
     otherwise => ;
   end;
 end;
 define function visualize (key :: <symbol>, object :: <object>)
   select (key by \==)
-    #"file-changed" => if (object = "scratch-source") *vis*.report-enabled? := #t else *vis*.report-enabled? := #f end;
-    #"dfm-switch" => *current-index* := object;
+    #"file-changed" => *vis*.report-enabled? := (object = "scratch-source");
+    #"dfm-switch" => *vis*.dfm-report-enabled? := (object == 4);
     #"dfm-header" =>
         write-to-visualizer(*vis*, list(key, *current-index*, object));
     #"optimizing" =>
       begin
-        *current-index* := object;
+        *vis*.dfm-report-enabled? := (object == 4);
         write-to-visualizer(*vis*, list(#"relayouted", *current-index*));
       end;
-    #"finished" =>
-      *current-index* := 0;
+    //#"finished" =>
+    //  *vis*.dfm-report-enabled? := #f;
     #"beginning" =>
       write-to-visualizer(*vis*, list(key, *current-index*, object));
     #"relayouted" =>
@@ -95,8 +97,6 @@ define function visualize (key :: <symbol>, object :: <object>)
 end;
 
 define function compiler (project)
-  *vis* := make(<dfmc-graph-visualization>, id: project.project-library-name);
-  connect-to-server(*vis*);
   let lib = project.project-current-compilation-context;
   block()
     dynamic-bind(*progress-library* = lib)

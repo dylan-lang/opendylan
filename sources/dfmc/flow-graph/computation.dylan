@@ -999,6 +999,13 @@ define method next-computation-setter (value :: false-or(<computation>), c :: <l
       => (res :: false-or(<computation>))
   c.%next-computation := value;
 end;
+
+define method make (c == <loop-call>, #rest all-keys, #key loop, #all-keys) => (res :: <loop-call>)
+  let l = next-method();
+  *computation-tracer*(#"set-loop-call-loop", l.computation-id, loop.computation-id, 0);
+  l;
+end;
+
 /// BIND
 
 define graph-class <bind> (<computation>)

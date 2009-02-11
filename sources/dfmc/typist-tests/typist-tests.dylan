@@ -387,6 +387,133 @@ define function callback-handler (#rest args)
   format-out("%=\n", args);
 end function callback-handler;
 
+define constant $tests = make(<stretchy-vector>);
+
+begin
+  let if-nested
+    = "define method if-nested (x, y, z)\n"
+      "  if (x == 1)\n"
+      "    if (y == 1)\n"
+      "      if (z == 1)\n"
+      "        \"all equal\";\n"
+      "      else"
+      "        \"x and y equal\";\n"
+      "      end;\n"
+      "    elseif (z == 2)\n"
+      "      \"y + 1 is z\";\n"
+      "    else\n"
+      "      \"all different\";\n"
+      "    end;\n"
+      "  end;\n"
+      "end;";
+  add!($tests, pair(#"if-nested", if-nested));
+  
+  let if-simple
+    = "define method if-simple\n"
+      " (a :: <integer>, b :: <integer>)\n"
+      " => (res :: <integer>)\n"
+      "  if (a == 23)\n"
+      "    1 + a + b;\n"
+      "  else\n"
+      "    42 + 10;\n"
+      "  end;\n"
+      "end;";
+  add!($tests, pair(#"if-simple", if-simple));
+
+  let common-sub =
+    "define method common-subexpression (a, b)\n"
+    "  values(a + b, (a + b) * b);\n"
+    "end;";
+  add!($tests, pair(#"common-subexpression", common-sub));
+
+  let common-sub2 =
+    "define method common-subexpression2\n"
+    " (a :: <integer>, b :: <integer>)\n"
+    "  values(a + b, (a + b) * b);\n"
+    "end;";
+  add!($tests, pair(#"common-subexpression2", common-sub2));
+
+  let whil-true =
+    "define method while-true-loop (x, y, z)\n"
+    "  while(#t)\n"
+    "    1 + 2;\n"
+    "  end;\n"
+    "end;";
+  add!($tests, pair(#"while-true-loop", whil-true));
+
+  let lfor =
+    "define method for-loop (x, y, z)\n"
+    "  for (i from 0 below 20)\n"
+    "    x := y + 1;\n"
+    "  end;\n"
+    "end;";
+  add!($tests, pair(#"for-loop", lfor));
+
+  let whill =
+    "define method while-loop (x, y, z)\n"
+    "  let i = 0;\n"
+    "  while(i < 42)\n"
+    "    i := i + 1;\n"
+    "  end;\n"
+    "end;";
+  add!($tests, pair(#"while-loop", whill));
+
+  let whilln =
+    "define method while-loop-nested (x, y, z)\n"
+    "  let i = 0;\n"
+    "  while(i < 42)\n"
+    "    i := i + 1;\n"
+    "    while (i < 20)\n"
+    "      i := i * i;\n"
+    "    end;\n"
+    "  end;\n"
+    "end;";
+  add!($tests, pair(#"while-loop-nested", whilln));
+
+  let blte =
+    "define method block-test (x)\n"
+    "  block(t)\n"
+    "    t();\n"
+    "  end;\n"
+    "end;";
+  add!($tests, pair(#"block-test", blte));
+
+  let ble =
+    "define method block-exception (x)\n"
+    "  block()\n"
+    "    x := x * x;\n"
+    "  exception (c :: <condition>)\n"
+    "    x := 0;\n"
+    "  end;\n"
+    "end;";
+  add!($tests, pair(#"block-exception", ble));
+
+  let blcl =
+    "define method block-cleanup (x, y, z)\n"
+    "  block(t)\n"
+    "    if (x == 42)\n"
+    "      t();\n"
+    "    end;\n"
+    "    x := 20;\n"
+    "    y := 42 * x;\n"
+    "  cleanup\n"
+    "    x := y;\n"
+    "  end;\n"
+    "end;";
+  add!($tests, pair(#"block-cleanup", blcl));
+
+  let db =
+    "define method dyn-bind (x, y, z)\n"
+    "  let t = 42;\n"
+    "  dynamic-bind(t = 0)\n"
+    "    x := t * t;\n"
+    "  end;\n"
+    "  y := t + t;\n"
+    "  values(x, y);\n"
+    "end;";
+  add!($tests, pair(#"dyn-bind", db));
+end;
+
 begin
   let project = find-project("dylan");
   open-project-compiler-database(project, 
@@ -394,7 +521,26 @@ begin
                                  error-handler: callback-handler);
   with-library-context (dylan-library-compilation-context())
     without-dependency-tracking
-      run-test-application(typist-suite)
+      *vis* := make(<dfmc-graph-visualization>, id: #"Dylan-Graph-Visualization");
+      connect-to-server(*vis*);
+      for (test in $tests)
+        write-to-visualizer(*vis*, list(#"source", test.head, test.tail));
+      end;
+      *vis*.dfm-report-enabled? := #f;
+      block()
+        while (#t)
+          let res = read-from-visualizer(*vis*); //expect: #"compile" "source"
+          if (res[0] == #"compile")
+            *current-index* := *current-index* + 1;
+            dynamic-bind (*progress-stream*           = #f,  // with-compiler-muzzled
+                          *demand-load-library-only?* = #f)
+              compile-template(res[1], compiler: compiler);
+            end;
+          end;
+        end;
+      exception (e :: <condition>)
+        format-out("received exception: %=\n", e);
+      end;
     end;
   end;
 end

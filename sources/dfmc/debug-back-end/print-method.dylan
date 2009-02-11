@@ -229,7 +229,8 @@ end method;
 define method output-computation-sexp
     (c :: <loop-call>)
   let res = #();
-  res := add!(res, computation-id(loop-call-loop(c)));
+  //res := add!(res, computation-id(loop-call-loop(c)));
+  res := add!(res, 0);
   res := add!(res, #"LOOP-CALL");
   add!(res, c.computation-id);
 end method;
