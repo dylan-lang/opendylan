@@ -276,6 +276,7 @@ define sealed method really-run-compilation-passes (code :: <&lambda>)
       if (*dump-dfm-method*)
         *dump-dfm-method*(#"relayouted", #());
       end;
+      *dump-dfm-method*(#"highlight", 0);
       *dump-dfm-method*(#"beginning", #("finished"));
       block()
       //when (dumping-dfm?(code))

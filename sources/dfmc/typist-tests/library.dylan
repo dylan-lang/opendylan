@@ -4,6 +4,9 @@ define library dfmc-typist-tests
   use common-dylan;
   use io;
   use testworks;
+  use system;
+  use registry-projects;
+  use release-info;
 
   use dfmc-core;
   use dfmc-typist;
@@ -39,4 +42,10 @@ define module dfmc-typist-tests
   use environment-protocols,
     import: { find-project, open-project-compiler-database, project-warnings };
   use dfmc-environment-projects; //needed for find-project
+
+  use file-system;
+  use locators;
+  use registry-projects;
+  use release-info;
+  use operating-system;
 end module;

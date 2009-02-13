@@ -516,7 +516,7 @@ end;
 
 begin
   let project = find-project("dylan");
-  open-project-compiler-database(project, 
+  open-project-compiler-database(project,
                                  warning-callback: callback-handler,
                                  error-handler: callback-handler);
   with-library-context (dylan-library-compilation-context())
@@ -542,6 +542,72 @@ begin
         format-out("received exception: %=\n", e);
       end;
     end;
+  end;
+end;
+            
+define function list-all-package-names ()
+  let res = #();
+  local method collect-project
+            (dir :: <pathname>, filename :: <string>, type :: <file-type>)
+          if (type == #"file" & filename ~= "Open-Source-License.txt")
+            if (last(filename) ~= '~')
+              unless (any?(curry(\=, filename), res))
+                res := pair(filename, res);
+              end;
+            end;
+          end;
+        end;
+  let regs = find-registries($machine-name, $os-name);
+  let reg-paths = map(registry-location, regs);
+  for (reg-path in reg-paths)
+    if (file-exists?(reg-path))
+      do-directory(collect-project, reg-path);
+    end;
+  end;
+  res;
+end;
+
+begin
+  let projects = list-all-package-names();
+  *vis* := make(<dfmc-graph-visualization>, id: #"Dylan-Graph-Visualization");
+  connect-to-server(*vis*);
+  for (project in projects)
+    write-to-visualizer(*vis*, list(#"project", project));
+  end;
+  block()
+    let project = #f;
+    while (#t)
+      let res = read-from-visualizer(*vis*); //expect: #"compile" "source"
+      if (res[0] == #"open-project")
+        project := find-project(res[1]);
+        open-project-compiler-database(project, 
+                                       warning-callback: callback-handler,
+                                       error-handler: callback-handler);
+        //canonicalize-project-sources(project, force-parse?: #t);
+        *current-index* := 0;
+        *vis*.dfm-report-enabled? := #t;
+        //send top-level-definitions
+        //(#"source", method-name, compilation-record-id, source)
+        *vis*.dfm-report-enabled? := #f;
+      elseif (res[0] == #"compile")
+        with-library-context (dylan-library-compilation-context()) //get cc from project
+          without-dependency-tracking
+            *current-index* := *current-index* + 1;
+            dynamic-bind (*progress-stream*           = #f,  // with-compiler-muzzled
+                          *demand-load-library-only?* = #f)
+              compile-template(res[1], compiler: compiler);
+              //actually, find fragment and definition by id and call
+              //top-level-convert-using-definition and/or use an interactive-layer
+              //and call execute-source
+              //be careful: probably need to hack top-level-convert-using-definition
+              // to generate dfm even if we have a tight library
+            end;
+          end;
+        end;
+      end;
+    end;
+  exception (e :: <condition>)
+    format-out("received exception: %=\n", e);
   end;
 end
 
