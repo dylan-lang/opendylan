@@ -396,7 +396,7 @@ begin
       "    if (y == 1)\n"
       "      if (z == 1)\n"
       "        \"all equal\";\n"
-      "      else"
+      "      else\n"
       "        \"x and y equal\";\n"
       "      end;\n"
       "    elseif (z == 2)\n"

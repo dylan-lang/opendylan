@@ -50,7 +50,7 @@ define method computation-id (c :: <computation>) => (res :: <integer>)
     if (*computation-tracer*)
       *computation-tracer*(#"new-computation", c.%computation-id, c, 0);
       if (c.next-computation)
-        trace(c, #f, c.next-computation);
+        c.next-computation := c.next-computation; //side effect: trace!
       end;
       if (c.temporary)
         c.temporary.temporary-id; //side effect: adding temporary
@@ -91,7 +91,11 @@ define function trace (a :: <computation>, old-next :: false-or(<computation>), 
     end;
     unless (label) label := #"no" end;
     if (old-next & new-next)
-      *computation-tracer*(#"change-edge", a.computation-id, old-next.computation-id, new-next.computation-id, label: label);
+      if (old-next == new-next)
+        *computation-tracer*(#"insert-edge", a.computation-id, new-next.computation-id, 0, label: label);
+      else
+        *computation-tracer*(#"change-edge", a.computation-id, old-next.computation-id, new-next.computation-id, label: label);
+      end;
     elseif (old-next)
       *computation-tracer*(#"remove-edge", a.computation-id, old-next.computation-id, 0, label: label);
     elseif (new-next)
@@ -775,6 +779,8 @@ end graph-class;
 define method next-computation-setter
     (next, computation :: <if>)
  => (next);
+  computation.consequent := computation.consequent;
+  computation.alternative := computation.alternative;
   computation.%next-computation := next;
 end;
 
