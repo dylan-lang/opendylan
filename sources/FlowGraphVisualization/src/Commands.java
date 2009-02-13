@@ -320,12 +320,20 @@ public final class Commands {
 	} 
         
 	private static boolean highlight (IncrementalHierarchicLayout ihl, ArrayList answer, DemoBase demo) {
+		if ((Integer)answer.get(2) == 0) {
+			if (ihl.highlight != null) {
+				ihl.graph.getRealizer(ihl.highlight).setFillColor(ihl.graph.getDefaultNodeRealizer().getFillColor());
+				ihl.highlight = null;
+				demo.view.repaint();
+			}
+			return false;
+		}
 		Node highlightnew = getNode(ihl, answer, 2, false);
-		if (demo.highlight != highlightnew) {
-			if (demo.highlight != null)
-				ihl.graph.getRealizer(demo.highlight).setFillColor(ihl.graph.getDefaultNodeRealizer().getFillColor());
+		if (ihl.highlight != highlightnew) {
+			if (ihl.highlight != null)
+				ihl.graph.getRealizer(ihl.highlight).setFillColor(ihl.graph.getDefaultNodeRealizer().getFillColor());
 			ihl.graph.getRealizer(highlightnew).setFillColor(Color.green);
-			demo.highlight = highlightnew;
+			ihl.highlight = highlightnew;
 			demo.view.repaint();
 		}
 		return false;
@@ -336,22 +344,22 @@ public final class Commands {
 		ArrayList<Integer> removed = new ArrayList<Integer>();
 		ArrayList<Integer> added = new ArrayList<Integer>();
 		for (Object ind : queue)
-			if (! demo.opt_queue.contains((Integer)ind))
+			if (! ihl.opt_queue.contains((Integer)ind))
 				added.add((Integer)ind);
-		for (Integer old : demo.opt_queue)
+		for (Integer old : ihl.opt_queue)
 			if (! queue.contains(old))
 				removed.add(old);
 
 		for (Integer rem : removed) {
-			demo.opt_queue.remove(rem);
+			ihl.opt_queue.remove(rem);
 			Node unh = ihl.int_node_map.get(rem);
-			if (unh != demo.highlight && unh != null)
+			if (unh != ihl.highlight && unh != null)
 				ihl.graph.getRealizer(unh).setFillColor(ihl.graph.getDefaultNodeRealizer().getFillColor());
 		}
 		for (Integer a : added) {
-			demo.opt_queue.add(a);
+			ihl.opt_queue.add(a);
 			Node h = ihl.int_node_map.get(a);
-			if (h != demo.highlight && h != null)
+			if (h != ihl.highlight && h != null)
 				ihl.graph.getRealizer(h).setFillColor(Color.orange);
 		}
 		demo.view.repaint();

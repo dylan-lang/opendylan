@@ -65,14 +65,20 @@ public class LayouterClient extends Thread {
 				assert(answer.get(0) instanceof Symbol);
 				Symbol key = (Symbol)answer.get(0);
 				System.out.println(key.toString() + " : " + answer);
+				if (key.isEqual("project")) {
+					assert(answer.size() == 2);
+					assert(answer.get(1) instanceof String); //method name
+					demo.project_chooser.addItem((String)answer.get(1));
+					printMessage(result);
+					continue;
+				}
 				if (key.isEqual("source")) {
 					assert(answer.size() == 3);
 					assert(answer.get(1) instanceof Symbol); //method name
 					assert(answer.get(2) instanceof String); //source code
 					String name = ((Symbol)answer.get(1)).toString();
 					demo.string_source_map.put(name, (String)answer.get(2));
-					demo.text.setText((String)answer.get(2));
-					demo.graph_chooser.addItem(new ListElement(0, name));
+					demo.graph_chooser.addItem(new ListElement(-1, name));
 					printMessage(result);
 					continue;
 				}

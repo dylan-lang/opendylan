@@ -61,6 +61,7 @@ import y.util.D;
 import y.view.AreaZoomMode;
 import y.view.AutoDragViewMode;
 import y.view.EditMode;
+import y.view.Graph2D;
 import y.view.Graph2DPrinter;
 import y.view.Graph2DView;
 import y.view.Graph2DViewActions;
@@ -99,9 +100,8 @@ public class DemoBase extends Thread {
   protected IncrementalHierarchicLayout incrementallayouter;
   private String name;
   private LayouterClient client;
+  protected JComboBox project_chooser;
   protected JComboBox graph_chooser;
-  public Node highlight = null;
-  public ArrayList<Integer> opt_queue = new ArrayList<Integer>();
   protected JSlider slider = new JSlider(JSlider.VERTICAL);
   public boolean updatingslider = false;
   protected HashMap<String, String> string_source_map = new HashMap<String, String>();
@@ -134,10 +134,14 @@ public class DemoBase extends Thread {
     left.add( view, BorderLayout.CENTER );
 
     graph_chooser = new JComboBox(new SortedListComboBoxModel());
-    graph_chooser.addItem(new ListElement(0, "new..."));
+    graph_chooser.addItem(new ListElement(-1, "new..."));
+    graph_chooser.setSelectedIndex(0);
     graph_chooser.setMaximumRowCount(50);
     graph_chooser.addActionListener(new ChangeGraphAction());
 
+    project_chooser = new JComboBox(new SortedListComboBoxModel());
+    project_chooser.setMaximumRowCount(50);
+    project_chooser.addActionListener(new ChangeProjectAction());
     
     
     final JToolBar jtb = createToolBar();
@@ -153,7 +157,14 @@ public class DemoBase extends Thread {
     JPanel textok = new JPanel();
     textok.setLayout( new BorderLayout() );
     
-    textok.add(graph_chooser, BorderLayout.NORTH);
+    JPanel choosers = new JPanel();
+    choosers.setLayout( new BorderLayout() );
+    
+    //choosers.add(project_chooser, BorderLayout.NORTH);
+    choosers.add(graph_chooser, BorderLayout.SOUTH);
+    
+    textok.add(choosers, BorderLayout.NORTH);
+    
 
     text = new JTextArea("Choose code example or type code!", 8, 40);
     string_source_map.put("new...", text.getText());
@@ -198,8 +209,7 @@ public class DemoBase extends Thread {
 	  updatingslider = true;
 	  slider.setLabelTable(ihl.sliderLabels);
 	  slider.setMaximum(ihl.lastEntry);
-	  slider.setValue(ihl.lastEntry);
-	  opt_queue = new ArrayList<Integer>();
+	  slider.setValue(ihl.lastslidervalue);
 	  updatingslider = false;
 	  calcLayout();
   }
@@ -303,10 +313,12 @@ public class DemoBase extends Thread {
 		if (string_source_map.get(methodName()) == null) {
 			System.out.println("new method :" + methodName() + ":");
 			string_source_map.put(methodName(), text.getText());
-			graph_chooser.addItem(new ListElement(0, methodName()));
+			ListElement newLE = new ListElement(-1, methodName());
+			graph_chooser.addItem(newLE);
+			graph_chooser.setSelectedItem(newLE);
 		} 
 		int realindex = ((ListElement)graph_chooser.getSelectedItem()).index;
-		if (realindex == 0) {
+		if (realindex == -1) {
 			ArrayList data = new ArrayList();
 			data.add(new Symbol("compile"));
 			//data.add(new Symbol(methodName()));
@@ -318,6 +330,17 @@ public class DemoBase extends Thread {
 		}
 	}
   }
+  
+  final class ChangeProjectAction extends AbstractAction
+  {
+		public void actionPerformed(ActionEvent ev) {
+			ArrayList data = new ArrayList();
+			data.add(new Symbol("open-project"));
+			data.add((String)project_chooser.getSelectedItem());
+			client.printMessage(data);					
+		} 
+  }
+  
   final class ChangeGraphAction extends AbstractAction
 	{
 		public ChangeGraphAction() {
@@ -328,10 +351,16 @@ public class DemoBase extends Thread {
 		public void actionPerformed(ActionEvent ev) {
 			text.setText(string_source_map.get(((ListElement)graph_chooser.getSelectedItem()).toString()));
 			int realindex = ((ListElement)graph_chooser.getSelectedItem()).index;
-			if (realindex > 0) {
+			if (realindex >= 0) {
 				IncrementalHierarchicLayout ih = client.getGraph(realindex);
 				ih.activateLayouter();
 			} else {
+				updatingslider = true;
+				slider.setLabelTable(null);
+				slider.setMaximum(0);
+				updatingslider = false;
+				view.setGraph2D(new Graph2D());
+				view.repaint();
 				System.out.println("no graph yet, please wait");
 			}
 				

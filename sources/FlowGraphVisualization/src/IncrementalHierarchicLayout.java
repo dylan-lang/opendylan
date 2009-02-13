@@ -47,6 +47,10 @@ public class IncrementalHierarchicLayout
 	private Graph2DView view;
 	private DemoBase demobase;
 	protected ConstraintFactory scf;
+	
+	public Node highlight = null;
+	public ArrayList<Integer> opt_queue;
+
 
 	public boolean changed = false;
 	public int numChanges = 0;
@@ -55,7 +59,7 @@ public class IncrementalHierarchicLayout
 	private int lastChangeCount = 0;
 	public ArrayList<ArrayList> changes = new ArrayList<ArrayList>();
 
-	private int lastslidervalue = 0;
+	protected int lastslidervalue = 0;
 	protected boolean graphfinished = false;
 	
 	protected final int graph_id;
@@ -99,7 +103,8 @@ public class IncrementalHierarchicLayout
 		groups = graph.createNodeMap();
 		graph.addDataProvider(ClassicLayerSequencer.GROUP_KEY, groups);
 		int_node_map = new HashMap<Integer, Node>();
-		demobase.opt_queue = new ArrayList<Integer>();
+		opt_queue = new ArrayList<Integer>();
+		highlight = null;
 	}
 	
 	public void activateLayouter () {

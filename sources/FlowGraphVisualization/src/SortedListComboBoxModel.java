@@ -38,7 +38,6 @@ public class SortedListComboBoxModel extends AbstractListModel implements
 				}
 			}
 		fireIntervalAdded(this, 0, getSize());
-		setSelectedItem(element);
 	}
 
 	@Override
