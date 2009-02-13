@@ -5,6 +5,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
 
 
 public class LayouterClient extends Thread {
@@ -119,11 +120,12 @@ public class LayouterClient extends Thread {
 	}
 	
 	private int compute_s_expression_size (String message) {
-		return 2 + message.length();
+		String m = message.replaceAll("\"", Matcher.quoteReplacement("\\\""));
+		return 2 + m.length();
 	}
 	private void write_s_expression (String message) {
 		writer.write((int)'"');
-		writer.write(message);
+		writer.write(message.replaceAll("\"", Matcher.quoteReplacement("\\\"")));
 		writer.write((int)'"');
 	}
 	
