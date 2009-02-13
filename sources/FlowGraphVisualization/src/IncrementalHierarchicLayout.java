@@ -1,17 +1,3 @@
-/****************************************************************************
- **
- ** This file is part of yFiles-2.6.0.1. 
- ** 
- ** yWorks proprietary/confidential. Use is subject to license terms.
- **
- ** Redistribution of this file or of an unauthorized byte-code version
- ** of this file is strictly forbidden.
- **
- ** Copyright (c) 2000-2009 by yWorks GmbH, Vor dem Kreuzberg 28, 
- ** 72070 Tuebingen, Germany. All rights reserved.
- **
- ***************************************************************************/
-
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -67,6 +53,8 @@ public class IncrementalHierarchicLayout
 	private NodeMap groups;
 	private NodeMap groumasters;
 	
+	public Node selection;
+	
 	public boolean isok = true;
 	
 	
@@ -105,6 +93,7 @@ public class IncrementalHierarchicLayout
 		int_node_map = new HashMap<Integer, Node>();
 		opt_queue = new ArrayList<Integer>();
 		highlight = null;
+		selection = null;
 	}
 	
 	public void activateLayouter () {
@@ -419,13 +408,15 @@ public class IncrementalHierarchicLayout
 	}
 
 	public void resetGraph(int step) {
-		if (step >= lastslidervalue)
+		if (step >= lastslidervalue) {
+			demobase.unselect();
 			for (int i = lastslidervalue; i < step; i++)
 				for (Object comm : changes.get(i)) {
 					ArrayList com = (ArrayList)comm;
 					Commands.processCommand(this, com, demobase);
 				}
-		else { //I was too lazy to implement undo, so do the graph from scratch
+		} else { //I was too lazy to implement undo, so do the graph from scratch
+			demobase.unselect();
 			graph = new Graph2D();
 			initGraph();
 			view.setGraph2D(graph);

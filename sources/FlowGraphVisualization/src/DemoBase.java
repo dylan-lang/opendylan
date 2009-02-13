@@ -1,24 +1,10 @@
-/****************************************************************************
- **
- ** This file is part of yFiles-2.6.0.1. 
- ** 
- ** yWorks proprietary/confidential. Use is subject to license terms.
- **
- ** Redistribution of this file or of an unauthorized byte-code version
- ** of this file is strictly forbidden.
- **
- ** Copyright (c) 2000-2009 by yWorks GmbH, Vor dem Kreuzberg 28, 
- ** 72070 Tuebingen, Germany. All rights reserved.
- **
- ***************************************************************************/
-
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
-import java.awt.print.PageFormat;
-import java.awt.print.PrinterJob;
-import java.io.IOException;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,19 +12,13 @@ import java.util.Iterator;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.ActionMap;
 import javax.swing.ImageIcon;
-import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
-import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.JRootPane;
 import javax.swing.JSlider;
 import javax.swing.JTextArea;
 import javax.swing.JToolBar;
@@ -48,27 +28,24 @@ import javax.swing.event.ChangeListener;
 
 import y.anim.AnimationFactory;
 import y.anim.AnimationPlayer;
-import y.base.DataProvider;
+import y.base.EdgeCursor;
 import y.base.Node;
 import y.base.NodeCursor;
 import y.base.NodeList;
-import y.io.GMLIOHandler;
-import y.io.YGFIOHandler;
+import y.geom.YRectangle;
 import y.layout.BufferedLayouter;
 import y.layout.GraphLayout;
-import y.option.OptionHandler;
-import y.util.D;
 import y.view.AreaZoomMode;
 import y.view.AutoDragViewMode;
 import y.view.EditMode;
 import y.view.Graph2D;
-import y.view.Graph2DPrinter;
 import y.view.Graph2DView;
-import y.view.Graph2DViewActions;
 import y.view.Graph2DViewMouseWheelZoomListener;
 import y.view.LayoutMorpher;
+import y.view.LineType;
+import y.view.NavigationMode;
+import y.view.NodeRealizer;
 import y.view.PopupMode;
-import y.view.Selections;
 import y.view.ViewMode;
 
 public class DemoBase extends Thread {
@@ -105,7 +82,6 @@ public class DemoBase extends Thread {
   protected JSlider slider = new JSlider(JSlider.VERTICAL);
   public boolean updatingslider = false;
   protected HashMap<String, String> string_source_map = new HashMap<String, String>();
-  
   protected JTextArea text;
   
   /**
@@ -129,7 +105,6 @@ public class DemoBase extends Thread {
     left.setLayout( new BorderLayout() );
 
     registerViewModes();
-    registerViewActions();
 
     left.add( view, BorderLayout.CENTER );
 
@@ -184,8 +159,6 @@ public class DemoBase extends Thread {
     slider.addChangeListener(new ChangeSlider());
     right.add(slider, BorderLayout.CENTER );
     contentPane.add( right, BorderLayout.EAST );
-    
-    registerViewListeners();
   }
 
   public String methodName () {
@@ -225,28 +198,11 @@ public class DemoBase extends Thread {
   public final void run() {
 	  JFrame frame = new JFrame( name );
 	  frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-	  this.addContentTo( frame.getRootPane() );
+	  frame.getRootPane().setContentPane( contentPane );
 	  frame.pack();
 	  frame.setSize(1400, 1000);
 	  frame.setLocationRelativeTo( null );
 	  frame.setVisible( true );
-  }
-
-  public void addContentTo( final JRootPane rootPane ) {
-    //final JMenuBar jmb = createMenuBar();
-    //if ( jmb != null ) {
-    //  rootPane.setJMenuBar( jmb );
-    //}
-    rootPane.setContentPane( contentPane );
-  }
-
-  protected void registerViewActions() {
-    //register keyboard actions
-    Graph2DViewActions actions = new Graph2DViewActions( view );
-    ActionMap amap = actions.createActionMap();
-    InputMap imap = actions.createDefaultInputMap( amap );
-    view.getCanvasComponent().setActionMap( amap );
-    view.getCanvasComponent().setInputMap( JComponent.WHEN_FOCUSED, imap );
   }
 
   /**
@@ -255,17 +211,9 @@ public class DemoBase extends Thread {
    * a new {@link AutoDragViewMode}.
    */
   protected void registerViewModes() {
-    //edit mode will show tool tips over nodes
-    view.addViewMode( new AutoDragViewMode() );
-  }
-
-  /**
-   * Instantiates and registers the listeners for the view.
-   * (e.g. {@link y.view.Graph2DViewMouseWheelZoomListener}
-   */
-  protected void registerViewListeners() {
-    //Note that mouse wheel support requires J2SE 1.4 or higher.
-    view.getCanvasComponent().addMouseWheelListener( new Graph2DViewMouseWheelZoomListener() );
+	  view.getCanvasComponent().addMouseListener(new MyMouseListener());
+	  view.addViewMode(new NavigationMode());
+	  view.getCanvasComponent().addMouseWheelListener( new Graph2DViewMouseWheelZoomListener() );
   }
 
   /**
@@ -283,30 +231,38 @@ public class DemoBase extends Thread {
     return toolBar;
   }
 
-  /**
-   * Create a menu bar for this demo.
-   */
-  protected JMenuBar createMenuBar() {
-    JMenuBar menuBar = new JMenuBar();
-    JMenu menu = new JMenu( "File" );
-    menu.add( createSaveAction() );
-    menu.add( new SaveSubsetAction() );
-    menu.addSeparator();
-    menu.add( new PrintAction() );
-    menu.addSeparator();
-    menu.add( new ExitAction() );
-    menuBar.add( menu );
-    return menuBar;
-  }
+  final class MyMouseListener implements MouseListener {
+	public void mouseClicked(MouseEvent arg0) {
+		double xv = view.toWorldCoordX(arg0.getX());
+		double yv = view.toWorldCoordY(arg0.getY());
+		Node selected = null;
+		for (NodeCursor nc = incrementallayouter.graph.nodes(); nc.ok(); nc.next()) {
+			YRectangle x = incrementallayouter.graph.getRectangle(nc.node());
+			if (incrementallayouter.graph.getRectangle(nc.node()).contains(xv, yv)) {
+				selected = nc.node();
+				break;
+			}
+		}
+		if (selected == null)
+			unselect();
+		else
+			select(selected);
+		view.repaint();
+	}
 
-  protected Action createSaveAction() {
-    return new SaveAction();
-  }
+	public void mouseEntered(MouseEvent arg0) {
+	}
 
-  public JPanel getContentPane() {
-    return contentPane;
-  }
+	public void mouseExited(MouseEvent arg0) {
+	}
 
+	public void mousePressed(MouseEvent arg0) {
+	}
+
+	public void mouseReleased(MouseEvent arg0) {
+	}
+	  
+  }
   final class SendAction extends AbstractAction
   {
 	public void actionPerformed(ActionEvent ev) {
@@ -376,238 +332,7 @@ public class DemoBase extends Thread {
 		}
 	}
   }
-  /**
-   * Action that prints the contents of the view
-   */
-  protected class PrintAction extends AbstractAction {
-    PageFormat pageFormat;
-    OptionHandler printOptions;
-
-    public PrintAction() {
-      super( "Print" );
-
-      //setup option handler
-      printOptions = new OptionHandler( "Print Options" );
-      printOptions.addInt( "Poster Rows", 1 );
-      printOptions.addInt( "Poster Columns", 1 );
-      printOptions.addBool( "Add Poster Coords", false );
-      final String[] area = {"View", "Graph"};
-      printOptions.addEnum( "Clip Area", area, 1 );
-    }
-
-    public void actionPerformed( ActionEvent e ) {
-      Graph2DPrinter gprinter = new Graph2DPrinter( view );
-
-      //show custom print dialog and adopt values
-      if ( !printOptions.showEditor() ) {
-        return;
-      }
-      gprinter.setPosterRows( printOptions.getInt( "Poster Rows" ) );
-      gprinter.setPosterColumns( printOptions.getInt( "Poster Columns" ) );
-      gprinter.setPrintPosterCoords(
-          printOptions.getBool( "Add Poster Coords" ) );
-      if ("Graph".equals( printOptions.get( "Clip Area" ) ) ) {
-        gprinter.setClipType( Graph2DPrinter.CLIP_GRAPH );
-      } else {
-        gprinter.setClipType( Graph2DPrinter.CLIP_VIEW );
-      }
-
-      //show default print dialogs
-      PrinterJob printJob = PrinterJob.getPrinterJob();
-      if ( pageFormat == null ) {
-        pageFormat = printJob.defaultPage();
-      }
-      PageFormat pf = printJob.pageDialog( pageFormat );
-      if ( pf == pageFormat ) {
-        return;
-      } else {
-        pageFormat = pf;
-      }
-
-      //setup printjob.
-      //Graph2DPrinter is of type Printable
-      printJob.setPrintable( gprinter, pageFormat );
-
-      if ( printJob.printDialog() ) {
-        try {
-          printJob.print();
-        } catch ( Exception ex ) {
-          ex.printStackTrace();
-        }
-      }
-    }
-  }
-
-  /**
-   * Action that terminates the application
-   */
-  protected static class ExitAction extends AbstractAction {
-    public ExitAction() {
-      super( "Exit" );
-    }
-
-    public void actionPerformed( ActionEvent e ) {
-      System.exit( 0 );
-    }
-  }
-
-  /**
-   * Action that saves the current graph to a file in YGF format.
-   */
-  protected class SaveAction extends AbstractAction {
-    JFileChooser chooser;
-
-    public SaveAction() {
-      super( "Save..." );
-      chooser = null;
-    }
-
-    public void actionPerformed( ActionEvent e ) {
-      if ( chooser == null ) {
-        chooser = new JFileChooser();
-      }
-      if ( chooser.showSaveDialog( contentPane ) == JFileChooser.APPROVE_OPTION ) {
-        String name = chooser.getSelectedFile().toString();
-        if ( name.endsWith( ".gml" ) ) {
-          GMLIOHandler ioh = new GMLIOHandler();
-          try {
-            ioh.write( view.getGraph2D(), name );
-          } catch ( IOException ioe ) {
-            D.show( ioe );
-          }
-        } else {
-          if ( !name.endsWith( ".ygf" ) ) {
-            name = name + ".ygf";
-          }
-          YGFIOHandler ioh = new YGFIOHandler();
-          try {
-            ioh.write( view.getGraph2D(), name );
-          } catch ( IOException ioe ) {
-            D.show( ioe );
-          }
-        }
-      }
-    }
-  }
-
-  /**
-   * Action that saves the current subset of the graph to a file in YGF format.
-   */
-  protected class SaveSubsetAction extends AbstractAction {
-    JFileChooser chooser;
-
-    public SaveSubsetAction() {
-      super( "Save selection..." );
-      chooser = null;
-    }
-
-    public void actionPerformed( ActionEvent e ) {
-      if ( chooser == null ) {
-        chooser = new JFileChooser();
-      }
-      if ( chooser.showSaveDialog( contentPane ) == JFileChooser.APPROVE_OPTION ) {
-        String name = chooser.getSelectedFile().toString();
-        if ( !name.endsWith( ".ygf" ) ) {
-          name = name + ".ygf";
-        }
-        YGFIOHandler ioh = new YGFIOHandler();
-        try {
-          DataProvider dp = Selections.createSelectionDataProvider( view.getGraph2D() );
-          ioh.writeSubset( view.getGraph2D(), dp, name );
-        } catch ( IOException ioe ) {
-          D.show( ioe );
-        }
-      }
-    }
-  }
-
-  /**
-   * Action that loads the current graph from a file in YGF format.
-   */
-  protected class LoadAction extends AbstractAction {
-    JFileChooser chooser;
-
-    public LoadAction() {
-      super( "Load..." );
-      chooser = null;
-    }
-
-    public void actionPerformed( ActionEvent e ) {
-      if ( chooser == null ) {
-        chooser = new JFileChooser();
-      }
-      if ( chooser.showOpenDialog( contentPane ) == JFileChooser.APPROVE_OPTION ) {
-        String name = chooser.getSelectedFile().toString();
-        if ( name.endsWith( ".gml" ) ) {
-          GMLIOHandler ioh = new GMLIOHandler();
-          try {
-            view.getGraph2D().clear();
-            ioh.read( view.getGraph2D(), name );
-          } catch ( IOException ioe ) {
-            D.show( ioe );
-          }
-        } else {
-          if ( !name.endsWith( ".ygf" ) ) {
-            name = name + ".ygf";
-          }
-          YGFIOHandler ioh = new YGFIOHandler();
-          try {
-            view.getGraph2D().clear();
-            ioh.read( view.getGraph2D(), name );
-          } catch ( IOException ioe ) {
-            D.show( ioe );
-          }
-        }
-        //force redisplay of view contents
-        view.fitContent();
-        view.getGraph2D().updateViews();
-      }
-    }
-  }
-
-  /**
-   * Action that deletes all graph elements.
-   */
-  protected static class DeleteAll extends AbstractAction {
-    private final Graph2DView view;
-
-    public DeleteAll( final Graph2DView view ) {
-      this.view = view;
-      URL imageURL = ClassLoader.getSystemResource( "demo/view/resource/New16.gif" );
-      if ( imageURL != null ) {
-        putValue( Action.SMALL_ICON, new ImageIcon( imageURL ) );
-      }
-      putValue( Action.SHORT_DESCRIPTION, "Clear Window" );
-    }
-
-    public void actionPerformed( ActionEvent e ) {
-      view.getGraph2D().clear();
-      view.getGraph2D().updateViews();
-    }
-  }
-
-  /**
-   * Action that deletes the selected parts of the graph.
-   */
-  protected static class DeleteSelection extends AbstractAction {
-    private final Graph2DView view;
-
-    public DeleteSelection( final Graph2DView view ) {
-      super( "Delete Selection" );
-      this.view = view;
-      URL imageURL = ClassLoader.getSystemResource( "demo/view/resource/Delete16.gif" );
-      if ( imageURL != null ) {
-        this.putValue( Action.SMALL_ICON, new ImageIcon( imageURL ) );
-      }
-      this.putValue( Action.SHORT_DESCRIPTION, "Delete Selection" );
-    }
-
-    public void actionPerformed( ActionEvent e ) {
-      view.getGraph2D().removeSelection();
-      view.getGraph2D().updateViews();
-    }
-  }
-
+ 
   /**
    * Action that applies a specified zoom level to the view.
    */
@@ -738,6 +463,38 @@ public class DemoBase extends Thread {
 		
 	}
 	
+	protected void unselect () {
+		if (incrementallayouter != null) {
+			Node old = incrementallayouter.selection;
+			if  (old != null) {
+				incrementallayouter.graph.setSelected(old, false);
+				for (EdgeCursor ec = old.edges(); ec.ok(); ec.next())
+					if (incrementallayouter.graph.getRealizer(ec.edge()).getLineColor() == Color.pink) {
+						incrementallayouter.graph.getRealizer(ec.edge()).setLineType(LineType.LINE_1);
+						NodeRealizer o = incrementallayouter.graph.getRealizer(ec.edge().opposite(old)); 
+						o.setFillColor(o.getFillColor().brighter());
+					}
+				incrementallayouter.selection = null;
+			}
+		}
+	}
+	
+	protected void select (Node s) {
+		if (s != null) {
+			if (s != incrementallayouter.selection) {
+				unselect();
+				//System.out.println("selection now " + incrementallayouter.graph.getLabelText(s));
+				incrementallayouter.graph.setSelected(s, true);
+				for (EdgeCursor ec = s.edges(); ec.ok(); ec.next())
+					if (incrementallayouter.graph.getRealizer(ec.edge()).getLineColor() == Color.pink) {
+						incrementallayouter.graph.getRealizer(ec.edge()).setLineType(LineType.LINE_3);
+						NodeRealizer n = incrementallayouter.graph.getRealizer(ec.edge().opposite(s)); 
+						n.setFillColor(n.getFillColor().darker());
+					}
+				incrementallayouter.selection = s;
+			}
+		}
+	}
 	
 	/**
 	 * Provides popups for all kinds of actions

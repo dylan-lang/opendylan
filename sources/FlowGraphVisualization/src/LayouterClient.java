@@ -93,6 +93,7 @@ public class LayouterClient extends Thread {
 					((ListElement)demo.graph_chooser.getSelectedItem()).index = dfm_id;
 				}
 				gr = graphs.get(dfm_id);
+				demo.unselect();
 				if (Commands.processCommand(gr, answer, demo))
 					if (! gr.changed)
 						gr.changed = true;

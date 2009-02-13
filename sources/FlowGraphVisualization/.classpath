@@ -2,6 +2,10 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Users/foo bar/Desktop/yfiles-2.6.0.1-complete/lib/y.jar"/>
+	<classpathentry kind="lib" path="C:/Users/foo bar/Desktop/yfiles-2.6.0.1-complete/lib/y.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/C:/Users/foo bar/Desktop/yfiles-2.6.0.1-complete/doc/api/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
