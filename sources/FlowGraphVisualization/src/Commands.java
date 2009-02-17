@@ -190,7 +190,7 @@ public final class Commands {
 		Symbol label = (Symbol)answer.get(4);
 		if (label.isEqual("no"))
 			label = null;
-		if (ihl.safeCreateEdge((Integer)answer.get(2), (Integer)answer.get(3))) {
+		if (ihl.safeCreateEdge(from, to)) {
 			if (label != null)
 				ihl.setEdgeLabel(label);
 			return true;

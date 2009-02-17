@@ -356,10 +356,6 @@ public class DemoBase extends Thread {
 
     public void actionPerformed( ActionEvent e ) {
       view.setZoom( view.getZoom() * factor );
-      //optional code that adjusts the size of the
-      //view's world rectangle. The world rectangle
-      //defines the region of the canvas that is
-      //accessible by using the scrollbars of the view.
       Rectangle box = view.getGraph2D().getBoundingBox();
       view.setWorldRect( box.x - 20, box.y - 20, box.width + 40, box.height + 40 );
 
@@ -536,8 +532,42 @@ public class DemoBase extends Thread {
 		    //System.out.println("calculating layout");
 			incrementallayouter.changed = false;
 			Cursor oldCursor = view.getCanvasComponent().getCursor();
+/*			for (NodeCursor nc = incrementallayouter.graph.nodes(); nc.ok(); nc.next()) {
+				Object hint = incrementallayouter.hintMap.get(nc.node()); 
+				if ((hint != null) && (hint instanceof Integer) && ((Integer)hint == 42))
+					incrementallayouter.hintMap.set(nc.node(), null);
+				else {
+					boolean data = true;
+					for (EdgeCursor ec = nc.node().edges(); ec.ok(); ec.next())
+						if (incrementallayouter.graph.getRealizer(ec.edge()).getLineColor() != Color.pink) {
+							data = false;
+							break;
+						}
+					if (! data) {
+						if (nc.node().inDegree() == 1) {
+							System.out.println("found generator " + incrementallayouter.graph.getLabelText(nc.node()));
+							incrementallayouter.hintMap.set(nc.node(), incrementallayouter.hintsFactory.createLayerIncrementallyHint(nc.node().firstInEdge().source()));
+						} else if (nc.node().outDegree() == 1) {
+							System.out.println("found single user " + incrementallayouter.graph.getLabelText(nc.node()));
+							incrementallayouter.hintMap.set(nc.node(), incrementallayouter.hintsFactory.createLayerIncrementallyHint(nc.node().firstOutEdge().target()));
+						} else {
+							System.out.println("don't know what to do");
+							incrementallayouter.hintMap.set(nc.node(), incrementallayouter.hintsFactory.createLayerIncrementallyHint(nc.node()));
+						}
+					else 
+						Object newhint = incrementallayouter.hintsFactory.createLayerIncrementallyHint(nc.node());
+						incrementallayouter.hintMap.set(nc.node(), newhint);
+						for (EdgeCursor ec = nc.node().outEdges(); ec.ok(); ec.next())
+							if (incrementallayouter.graph.getRealizer(ec.edge()).getLineColor() == Color.pink) {
+								System.out.println("setting hint of " + incrementallayouter.graph.getLabelText(ec.edge().target()));
+								incrementallayouter.hintMap.set(ec.edge().target(), newhint);
+							}
+					}
+				}
+			} */
 			try {
 				view.getCanvasComponent().setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+				incrementallayouter.calcSwimLanes();
 				GraphLayout layout = new BufferedLayouter(incrementallayouter.hierarchicLayouter).calcLayout(view.getGraph2D());
 				LayoutMorpher morpher = new LayoutMorpher(view, layout);
 				morpher.setSmoothViewTransform(true);
@@ -551,7 +581,10 @@ public class DemoBase extends Thread {
 				e.printStackTrace();
 			} finally {
 				view.getCanvasComponent().setCursor(oldCursor);
+				//incrementallayouter.hierarchicLayouter.setLayoutMode(IncrementalHierarchicLayouter.LAYOUT_MODE_INCREMENTAL);
 			}
+//			for (NodeCursor nc = incrementallayouter.graph.nodes(); nc.ok(); nc.next())
+//				incrementallayouter.hintMap.set(nc.node(), 42);
 		}
 		view.updateView();
 	}

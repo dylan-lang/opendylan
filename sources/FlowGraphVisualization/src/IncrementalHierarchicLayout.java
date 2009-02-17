@@ -1,18 +1,26 @@
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.LinkedList;
 
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 
+import y.base.DataMap;
 import y.base.EdgeCursor;
 import y.base.Node;
+import y.base.NodeCursor;
 import y.base.NodeMap;
-import y.layout.hierarchic.ClassicLayerSequencer;
 import y.layout.hierarchic.ConstraintLayerer;
-import y.layout.hierarchic.HierarchicLayouter;
+import y.layout.hierarchic.IncrementalHierarchicLayouter;
+import y.layout.hierarchic.TopologicalLayerer;
 import y.layout.hierarchic.ConstraintLayerer.ConstraintFactory;
+import y.layout.hierarchic.incremental.IncrementalHintsFactory;
+import y.layout.hierarchic.incremental.OldLayererWrapper;
+import y.layout.hierarchic.incremental.SwimLaneDescriptor;
+import y.util.Maps;
 import y.view.Arrow;
 import y.view.BridgeCalculator;
 import y.view.DefaultGraph2DRenderer;
@@ -26,7 +34,7 @@ import y.view.NodeRealizer;
 
 public class IncrementalHierarchicLayout
 {
-	protected HierarchicLayouter hierarchicLayouter;
+	protected IncrementalHierarchicLayouter hierarchicLayouter;
 	protected HashMap<Integer, Node> int_node_map = new HashMap<Integer, Node>();
 	
 	protected Graph2D graph;
@@ -50,12 +58,14 @@ public class IncrementalHierarchicLayout
 	
 	protected final int graph_id;
 	
-	private NodeMap groups;
-	private NodeMap groumasters;
-	
 	public Node selection;
 	
 	public boolean isok = true;
+
+	private NodeMap swimLane;
+	protected DataMap hintMap;
+	protected IncrementalHintsFactory hintsFactory;
+	private ArrayList<Node> topnodes;
 	
 	
 	public IncrementalHierarchicLayout(DemoBase db, int id)
@@ -65,16 +75,30 @@ public class IncrementalHierarchicLayout
 		view = db.view;
 		demobase = db;
 		
-			// enable bridges for PolyLineEdgeRealizer
+		// enable bridges for PolyLineEdgeRealizer
 		BridgeCalculator bridgeCalculator = new BridgeCalculator();
 		bridgeCalculator.setCrossingMode( BridgeCalculator.CROSSING_MODE_HORIZONTAL_CROSSES_VERTICAL );
 		((DefaultGraph2DRenderer) view.getGraph2DRenderer()).setBridgeCalculator(bridgeCalculator );
 
 		// create and configure the layout algorithm
-		hierarchicLayouter = new HierarchicLayouter();
+		hierarchicLayouter = new IncrementalHierarchicLayouter();
+		hierarchicLayouter.setLayoutMode(IncrementalHierarchicLayouter.LAYOUT_MODE_FROM_SCRATCH);
+		
+	    hierarchicLayouter.getEdgeLayoutDescriptor().setMinimumFirstSegmentLength(0);
+	    hierarchicLayouter.getEdgeLayoutDescriptor().setMinimumLastSegmentLength(0);
+	    //hierarchicLayouter.getEdgeLayoutDescriptor().setOrthogonallyRouted(true);
+	    hierarchicLayouter.getEdgeLayoutDescriptor().setMinimumDistance(10.0d);
+
+	    hierarchicLayouter.getNodeLayoutDescriptor().setLayerAlignment(0.5d);
+	    hierarchicLayouter.setMinimumLayerDistance(20.0d);
+
+		
 		ConstraintLayerer cl = new ConstraintLayerer();
-		cl.setCoreLayerer(hierarchicLayouter.getLayerer());
-		hierarchicLayouter.setLayerer(cl);
+		TopologicalLayerer tl = new TopologicalLayerer();
+		//tl.setRankingPolicy(TopologicalLayerer.DOWN_SHIFT);
+		cl.setCoreLayerer(tl);
+		//cl.setCoreLayerer(hierarchicLayouter.getLayerer());
+		hierarchicLayouter.setFromScratchLayerer(new OldLayererWrapper(cl));
 
 		sliderLabels.put(0, new JLabel("initial DFM models"));
 		changes.add(new ArrayList());
@@ -88,10 +112,14 @@ public class IncrementalHierarchicLayout
 		if (scf != null)
 			scf.dispose();
 		scf = ConstraintLayerer.createConstraintFactory(graph);
-		groups = graph.createNodeMap();
-		graph.addDataProvider(ClassicLayerSequencer.GROUP_KEY, groups);
+		swimLane = graph.createNodeMap();
+		graph.addDataProvider(IncrementalHierarchicLayouter.SWIMLANE_DESCRIPTOR_DPKEY, swimLane);
+		hintMap = Maps.createHashedDataMap();
+	    //graph.addDataProvider(IncrementalHierarchicLayouter.INCREMENTAL_HINTS_DPKEY, hintMap);
+	    hintsFactory = hierarchicLayouter.createIncrementalHintsFactory();
 		int_node_map = new HashMap<Integer, Node>();
 		opt_queue = new ArrayList<Integer>();
+		topnodes = new ArrayList<Node>();
 		highlight = null;
 		selection = null;
 	}
@@ -266,7 +294,8 @@ public class IncrementalHierarchicLayout
 		if (id > 0) {
 			assert(int_node_map.get(id) == null);
 			int_node_map.put(id, n);
-		}
+		} else
+			topnodes.add(n);
 		return n;
 	}
 	
@@ -292,24 +321,6 @@ public class IncrementalHierarchicLayout
 		}
 	}
 
-	public boolean safeCreateEdge (int source, int target) {
-		if (int_node_map.get(source) != null)
-			return safeCreateEdge(int_node_map.get(source), target);
-		System.out.println("FAIL from " + source + " target " + target + " (source not available)");
-		return false;
-	}
-	public boolean safeCreateEdge (int source, Node target) {
-		if (int_node_map.get(source) != null)
-			return safeCreateEdge(int_node_map.get(source), target);
-		System.out.println("FAIL from " + source + " target " + target + " (source not available)");
-		return false;
-	}
-	public boolean safeCreateEdge (Node source, int target) {
-		if (int_node_map.get(target) != null)
-			return safeCreateEdge(source, int_node_map.get(target));
-		System.out.println("FAIL from " + source + " target " + target + " (target not available)");
-		return false;
-	}
 	public boolean safeCreateEdge (Node source, Node target) {
 		if (source == null || target == null) {
 			System.out.println("FAIL from " + source + " target " + target + " (source or target null)");
@@ -359,7 +370,7 @@ public class IncrementalHierarchicLayout
 		graph.setRealizer(graph.lastEdge(), myreal);
 	}
 
-	public synchronized void updatephase(String text) {
+	public void updatephase(String text) {
 		boolean finished = false;
 		if (text.equals("finished"))
 			finished = true;
@@ -435,5 +446,162 @@ public class IncrementalHierarchicLayout
 		changed = true;
 		demobase.calcLayout();
 	}
+
+	public void calcSwimLanes() {
+		for (Node t : topnodes) {
+			if (swimLane.get(t) == null) {
+				SwimLaneDescriptor sld = new SwimLaneDescriptor(16);
+				swimLane.set(t, sld);
+			}
+			visited = graph.createNodeMap();
+			currindex = 16;
+			step = 8;
+			for (EdgeCursor ec = t.outEdges(); ec.ok(); ec.next())
+				if (graph.getRealizer(ec.edge()).getLineColor() == Color.black) 
+					visitComputations(ec.edge().target(), null);
+			int argc = 17;
+			for (EdgeCursor ec = t.outEdges(); ec.ok(); ec.next()) {
+				Color c = graph.getRealizer(ec.edge()).getLineColor(); 
+				if (c == Color.blue) {
+					int lane = 0;
+					for (NodeCursor nc = ec.edge().target().successors(); nc.ok(); nc.next())
+						lane += (Integer)((SwimLaneDescriptor)swimLane.get(nc.node())).getClientObject();
+					if (swimLane.get(ec.edge().target()) == null) {
+						int divisor = ec.edge().target().outDegree();
+						int la = argc;
+						if (divisor != 0)
+							la = lane / divisor;
+						argc++;
+						SwimLaneDescriptor sld2 = new SwimLaneDescriptor(la);
+						swimLane.set(ec.edge().target(), sld2);
+					}
+				}
+			}
+		}
+	}
+	
+	private NodeMap visited;
+	private final int middle = 16;
+	private int currindex = 16;
+	private int step = 8;
+
+	private void update (int direction) {
+		System.out.println("update called with " + direction + " (" + currindex + ", " + step + ")");
+		if (direction == 1)
+			currindex += step;
+		else if (direction == -1)
+			currindex -= step;
+		else if (currindex < middle)
+			currindex -= step;
+		else
+			currindex += step;
+		step /= 2;
+	}
+	
+	private void restore (int direction) {
+		System.out.println("restore called (" + currindex + ", " + step + ")");
+		step *= 2;
+		if (direction == 1)
+			currindex -= step;
+		else if (direction == -1)
+			currindex += step;
+		else if (currindex < middle)
+			currindex += step;
+		else
+			currindex -= step;
+	}
+
+	private Node visitComputations (Node t, String until) {
+		final Deque<Node> workingset = new LinkedList<Node>();
+		workingset.push(t);
+		while (workingset.size() > 0) {
+			Node work = workingset.pollFirst();
+			if (until != null && graph.getLabelText(work).contains(until))
+				return work;
+			visited.set(work, true);
+			Node next = visit(work);
+			if (next != null) work = next;
+			for (EdgeCursor ec = work.outEdges(); ec.ok(); ec.next())
+				if (graph.getRealizer(ec.edge()).getLineColor() != Color.pink) {
+					Node targ = ec.edge().target();
+					if (visited.get(targ) == null)
+						workingset.push(targ);
+				}
+		}
+		return null;
+	}
+	
+	private Node nextC (Node n) {
+		for (EdgeCursor ec = n.outEdges(); ec.ok(); ec.next())
+			if (graph.getRealizer(ec.edge()).getLineColor() != Color.pink)
+				return ec.edge().target();
+		return null;
+	}
+	
+	private Node visit (Node n) {
+		String text = graph.getLabelText(n);
+		setL(currindex, n);
+		for (EdgeCursor ec = n.edges(); ec.ok(); ec.next())
+			if (graph.getRealizer(ec.edge()).getLineColor() == Color.pink) {
+				int weight = - step;
+				if (nextC(n) == nextC(ec.edge().opposite(n)))
+					weight = step;
+				if (ec.edge().opposite(n).degree() == 1)
+					weight = 0;
+				if (currindex < middle)
+					setL(currindex - weight, ec.edge().opposite(n));
+				else
+					setL(currindex + weight, ec.edge().opposite(n));
+			}
+		if (text.contains(" if ")) {
+			Node merge = null;
+			int direction = 1;
+			for (EdgeCursor ec = n.outEdges(); ec.ok(); ec.next())
+				if (graph.getRealizer(ec.edge()).getLineColor() == Color.green) {
+					if (! graph.getLabelText(ec.edge().target()).contains("IF-MERGE"))
+						if (swimLane.get(ec.edge().target()) != null)
+							if ((Integer)((SwimLaneDescriptor)swimLane.get(ec.edge().target())).getClientObject() < currindex)
+								direction = -1;
+					update(direction);
+					merge = visitComputations(ec.edge().target(), "IF-MERGE");
+					restore(direction);
+				} else { //Color == red!
+					if (! graph.getLabelText(ec.edge().target()).contains("IF-MERGE"))
+						if (swimLane.get(ec.edge().target()) != null)
+							if ((Integer)((SwimLaneDescriptor)swimLane.get(ec.edge().target())).getClientObject() > currindex)
+								direction = -1;
+					update(-1 * direction);
+					Node merge2 = visitComputations(ec.edge().target(), "IF-MERGE");
+					if (merge == null)
+						merge = merge2;
+					restore(-1 * direction);
+				}
+			if (merge != null) {
+				setL(currindex, merge);
+				visited.set(merge, true);
+			}
+			return merge;
+		}
+		if (text.endsWith(" loop")) {
+			update(0);
+			Node mbreak = visitComputations(n.firstOutEdge().target(), "BREAK");
+			restore(0);
+			if (mbreak != null) {
+				setL(currindex, mbreak);
+				visited.set(mbreak, true);
+			}
+			return mbreak;
+		}
+		return n;
+	}
+	
+	private void setL (int num, Node n) {
+		if (swimLane.get(n) == null) {
+			System.out.println("setting swimlane to " + num + " of " + graph.getLabelText(n));
+			SwimLaneDescriptor sld = new SwimLaneDescriptor(num);
+			swimLane.set(n, sld);
+		}
+	}
+
 }
 
