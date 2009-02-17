@@ -87,10 +87,10 @@ public class IncrementalHierarchicLayout
 	    hierarchicLayouter.getEdgeLayoutDescriptor().setMinimumFirstSegmentLength(0);
 	    hierarchicLayouter.getEdgeLayoutDescriptor().setMinimumLastSegmentLength(0);
 	    //hierarchicLayouter.getEdgeLayoutDescriptor().setOrthogonallyRouted(true);
-	    hierarchicLayouter.getEdgeLayoutDescriptor().setMinimumDistance(10.0d);
+	    hierarchicLayouter.getEdgeLayoutDescriptor().setMinimumDistance(2.0d);
 
-	    hierarchicLayouter.getNodeLayoutDescriptor().setLayerAlignment(0.5d);
-	    hierarchicLayouter.setMinimumLayerDistance(20.0d);
+	    hierarchicLayouter.getNodeLayoutDescriptor().setLayerAlignment(0.0d);
+	    hierarchicLayouter.setMinimumLayerDistance(3.0d);
 
 		
 		ConstraintLayerer cl = new ConstraintLayerer();
@@ -448,18 +448,20 @@ public class IncrementalHierarchicLayout
 	}
 
 	public void calcSwimLanes() {
+	    int i = 1;
 		for (Node t : topnodes) {
 			if (swimLane.get(t) == null) {
-				SwimLaneDescriptor sld = new SwimLaneDescriptor(16);
+				SwimLaneDescriptor sld = new SwimLaneDescriptor(i * 16);
 				swimLane.set(t, sld);
 			}
 			visited = graph.createNodeMap();
-			currindex = 16;
+			currindex = i * 16;
+			middle = i * 16;
 			step = 8;
 			for (EdgeCursor ec = t.outEdges(); ec.ok(); ec.next())
 				if (graph.getRealizer(ec.edge()).getLineColor() == Color.black) 
 					visitComputations(ec.edge().target(), null);
-			int argc = 17;
+			int argc = i * 16 + 1;
 			for (EdgeCursor ec = t.outEdges(); ec.ok(); ec.next()) {
 				Color c = graph.getRealizer(ec.edge()).getLineColor(); 
 				if (c == Color.blue) {
@@ -477,11 +479,12 @@ public class IncrementalHierarchicLayout
 					}
 				}
 			}
+			i++;
 		}
 	}
 	
 	private NodeMap visited;
-	private final int middle = 16;
+	private int middle = 16;
 	private int currindex = 16;
 	private int step = 8;
 
@@ -532,8 +535,8 @@ public class IncrementalHierarchicLayout
 	}
 	
 	private Node nextC (Node n) {
-		for (EdgeCursor ec = n.outEdges(); ec.ok(); ec.next())
-			if (graph.getRealizer(ec.edge()).getLineColor() != Color.pink)
+	    for (EdgeCursor ec = n.outEdges(); ec.ok(); ec.next())
+		if ((graph.getRealizer(ec.edge()).getLineColor() != Color.pink) || (graph.getRealizer(n).getFillColor() == Color.pink))
 				return ec.edge().target();
 		return null;
 	}
@@ -543,12 +546,12 @@ public class IncrementalHierarchicLayout
 		setL(currindex, n);
 		for (EdgeCursor ec = n.edges(); ec.ok(); ec.next())
 			if (graph.getRealizer(ec.edge()).getLineColor() == Color.pink) {
-				int weight = - step;
-				if (nextC(n) == nextC(ec.edge().opposite(n)))
-					weight = step;
-				if (ec.edge().opposite(n).degree() == 1)
-					weight = 0;
-				if (currindex < middle)
+				int weight = -1 * step;
+				//if (nextC(n) == nextC(ec.edge().opposite(n)))
+				//	weight = step;
+				if (ec.edge().opposite(n).degree() == 1) {
+					setLf(currindex, ec.edge().opposite(n));
+				} else if (currindex < middle)
 					setL(currindex - weight, ec.edge().opposite(n));
 				else
 					setL(currindex + weight, ec.edge().opposite(n));
@@ -600,7 +603,28 @@ public class IncrementalHierarchicLayout
 			System.out.println("setting swimlane to " + num + " of " + graph.getLabelText(n));
 			SwimLaneDescriptor sld = new SwimLaneDescriptor(num);
 			swimLane.set(n, sld);
+		} else {
+		    SwimLaneDescriptor sld = (SwimLaneDescriptor)swimLane.get(n);
+		    int oldnum = (Integer)sld.getClientObject();
+		    if ((oldnum > (middle + 16)) || (oldnum < (middle - 16))) {
+			        System.out.println("resetting swimlane to " + num + " of " + graph.getLabelText(n));
+				SwimLaneDescriptor sld2 = new SwimLaneDescriptor(num);
+				swimLane.set(n, sld);
+		    }
 		}
+	}
+
+	private void setLf (int num, Node n) {
+		if (swimLane.get(n) == null) {
+			System.out.println("setting swimlane to " + num + " of " + graph.getLabelText(n));
+			SwimLaneDescriptor sld = new SwimLaneDescriptor(num);
+			swimLane.set(n, sld);
+		} else {
+		    System.out.println("resetting swimlane to " + num + " of " + graph.getLabelText(n));
+		    SwimLaneDescriptor sld = new SwimLaneDescriptor(num);
+		    swimLane.set(n, sld);
+		}
+		    
 	}
 
 }

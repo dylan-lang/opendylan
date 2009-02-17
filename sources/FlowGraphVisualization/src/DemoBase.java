@@ -571,10 +571,11 @@ public class DemoBase extends Thread {
 				GraphLayout layout = new BufferedLayouter(incrementallayouter.hierarchicLayouter).calcLayout(view.getGraph2D());
 				LayoutMorpher morpher = new LayoutMorpher(view, layout);
 				morpher.setSmoothViewTransform(true);
+				//morpher.setKeepZoomFactor(true);
 				morpher.setPreferredDuration(1000);
 				final AnimationPlayer player = new AnimationPlayer();
 				player.addAnimationListener(view);
-				player.setFps(60);
+				player.setFps(30);
 				player.animate(AnimationFactory.createEasedAnimation(morpher));
 			} catch (Exception e) {
 				System.out.println("got exception during layouting");
