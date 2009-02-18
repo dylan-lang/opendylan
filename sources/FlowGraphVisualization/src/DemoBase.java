@@ -35,6 +35,7 @@ import y.base.NodeList;
 import y.geom.YRectangle;
 import y.layout.BufferedLayouter;
 import y.layout.GraphLayout;
+import y.layout.hierarchic.IncrementalHierarchicLayouter;
 import y.view.AreaZoomMode;
 import y.view.AutoDragViewMode;
 import y.view.EditMode;
@@ -543,7 +544,7 @@ public class DemoBase extends Thread {
 							data = false;
 							break;
 						}
-					if (! data) {
+					if (data) {
 						if (nc.node().inDegree() == 1) {
 							System.out.println("found generator " + incrementallayouter.graph.getLabelText(nc.node()));
 							incrementallayouter.hintMap.set(nc.node(), incrementallayouter.hintsFactory.createLayerIncrementallyHint(nc.node().firstInEdge().source()));
@@ -554,7 +555,7 @@ public class DemoBase extends Thread {
 							System.out.println("don't know what to do");
 							incrementallayouter.hintMap.set(nc.node(), incrementallayouter.hintsFactory.createLayerIncrementallyHint(nc.node()));
 						}
-					else 
+					} else { 
 						Object newhint = incrementallayouter.hintsFactory.createLayerIncrementallyHint(nc.node());
 						incrementallayouter.hintMap.set(nc.node(), newhint);
 						for (EdgeCursor ec = nc.node().outEdges(); ec.ok(); ec.next())
@@ -584,8 +585,8 @@ public class DemoBase extends Thread {
 				view.getCanvasComponent().setCursor(oldCursor);
 				//incrementallayouter.hierarchicLayouter.setLayoutMode(IncrementalHierarchicLayouter.LAYOUT_MODE_INCREMENTAL);
 			}
-//			for (NodeCursor nc = incrementallayouter.graph.nodes(); nc.ok(); nc.next())
-//				incrementallayouter.hintMap.set(nc.node(), 42);
+			//for (NodeCursor nc = incrementallayouter.graph.nodes(); nc.ok(); nc.next())
+			//	incrementallayouter.hintMap.set(nc.node(), 42);
 		}
 		view.updateView();
 	}
