@@ -203,11 +203,7 @@ end method;
 define method as-sig-types 
     (x :: <simple-object-vector>) => (types :: <simple-object-vector>)
   let sig-size = size(x);
-  if (any?(rcurry(instance?, <&type-variable>), x))
-    immutable-model(x);
-  elseif (any?(rcurry(instance?, <&limited-function-type>), x))
-    immutable-model(x);
-  elseif (sig-size > 0 & ^instance?(x[0], dylan-value(#"<class>")))
+  if (sig-size > 0 & ^instance?(x[0], dylan-value(#"<class>")))
     let type-name = as(<symbol>, ^debug-name(x[0]));
     let sig-type-vec :: false-or(<signature-type-vector>)
        = element($signature-type-vectors, type-name, default: #f);
@@ -237,9 +233,6 @@ define primary &class <signature> (<object>)
     init-value: 0;
   runtime-constant &slot signature-required :: <simple-object-vector>,
     required-init-keyword: required:;
-//  &slot signature-type-variables :: <simple-object-vector>,
-//    init-keyword: type-variables:,
-//    init-value: #[];
 end &class;
 
 define primary &class <object-signature> (<signature>)

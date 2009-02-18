@@ -846,11 +846,6 @@ define as-type-estimate-rules
 					  dimensions:     ^limited-collection-dimensions(t) &
 					                    as(limited(<vector>, of: <integer>),
 							       ^limited-collection-dimensions(t)));
-  t :: <&limited-function-type>   -> make(<type-estimate-limited-function>,
-                                          class: dylan-value(#"<function>"),
-                                          requireds: map(curry(as, <type-estimate>), t.^limited-function-argument-types),
-                                          rest?: #f,
-                                          vals: make(<type-estimate-values>, fixed: map(curry(as, <type-estimate>), t.^limited-function-return-values)));
   t :: <&singleton>               -> make(<type-estimate-limited-instance>, // *** Use cons cache?
 					  singleton: ^singleton-object(t));
   t :: <&union>                   -> make(<type-estimate-union>,

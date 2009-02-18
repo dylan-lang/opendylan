@@ -8,11 +8,11 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define function compute-signature-using-types
     (sig-spec :: <signature-spec>, 
-     required-types, values-types, rest-value-type, keys, key-types, tvs)
+     required-types, values-types, rest-value-type, keys, key-types)
  => (model)
   ^make(<&signature>,
         rest-value?:     spec-value-rest?(sig-spec),
-        rest?:           spec-argument-rest?(sig-spec),
+	rest?:           spec-argument-rest?(sig-spec),
 	all-keys?:       spec-argument-all-keys?(sig-spec),
 	key?:            if (spec-argument-key?(sig-spec)) #t else #f end,
 	number-values:   spec-value-number-required(sig-spec),
@@ -21,34 +21,32 @@ define function compute-signature-using-types
 	values:          as-sig-types(values-types),
 	rest-value:      rest-value-type,
 	keys:            immutable-model(as(<simple-object-vector>, keys)),
-	key-types:       as-sig-types(key-types),
-	type-variables:  tvs)
+	key-types:       as-sig-types(key-types))
 end function;
 
 define function compute-signature
     (form, sig-spec :: <signature-spec>) 
  => (model, static? :: <boolean>)
-  let tvs = compute-type-variables(sig-spec.spec-type-variables);
   // Try to evaluate each specializer in turn.
   let (required-types, required-types-static?) 
     = compute-variable-specs-types
-        (form, tvs, spec-argument-required-variable-specs(sig-spec));
+        (form, spec-argument-required-variable-specs(sig-spec));
   // Keys are always static because they're syntactically constrained to
   // be literals.
   let keys
     = compute-variables-spec-keys(form, sig-spec);
   let (key-types, key-types-static?)
      = compute-variable-specs-types
-         (form, tvs, spec-argument-key-variable-specs(sig-spec));
+         (form, spec-argument-key-variable-specs(sig-spec));
   let (values-types, values-types-static?)
     = compute-variable-specs-types
-        (form, tvs, spec-value-required-variable-specs(sig-spec));
+        (form, spec-value-required-variable-specs(sig-spec));
   let (rest-value-type, rest-value-type-static?)
     = compute-variables-spec-rest-value-type(form, sig-spec);
   let sig
     = compute-signature-using-types
        (sig-spec, required-types, values-types, rest-value-type,
-          keys, key-types, tvs);
+          keys, key-types);
   let static?
     = required-types-static? 
         & key-types-static? 
@@ -56,16 +54,6 @@ define function compute-signature
         & rest-value-type-static?;
   values(sig, static?)
 end function;
-
-//get definition objects, return modeling objects
-define function compute-type-variables
-    (type-vars :: <collection>) => (res :: <simple-object-vector>)
-  map-as(<simple-object-vector>,
-	 compose(curry(^make, <&type-variable>, name:),
-		 fragment-name, spec-variable-name),
-	 type-vars)
-end;
-
 
 // This old warning should no longer be necessary. We drop back
 // to the dynamic case, in which case any problems are reported
@@ -85,7 +73,7 @@ end program-warning;
 */
 
 define function compute-variable-specs-types
-    (form, tvs :: <simple-object-vector>, variable-specs :: <variable-specs>) 
+    (form, variable-specs :: <variable-specs>) 
  => (types :: <simple-object-vector>, static? :: <boolean>)
   let static-types = make(<vector>, size: size(variable-specs));
   collecting (dynamic-types)
@@ -93,9 +81,7 @@ define function compute-variable-specs-types
 	 i :: <integer> from 0)
       let type 
         = ^top-level-eval-type
-             (spec-type-expression(var-spec),
-              on-failure: #f,
-              type-variables: tvs);
+             (spec-type-expression(var-spec), on-failure: #f);
       static-types[i] :=
 	if (type)
 	  type

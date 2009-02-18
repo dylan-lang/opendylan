@@ -266,7 +266,6 @@ define module dfmc-flow-graph
     <lexical-variable>,
     <lexical-specialized-variable>,
     <lexical-required-variable>,
-    <lexical-required-type-variable>,
     specializer, specializer-setter,
     <lexical-local-variable>,
     <lexical-optional-variable>,

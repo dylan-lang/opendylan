@@ -243,84 +243,11 @@ define method ^known-disjoint? (t1 :: <&limited-collection-type>, t2 :: <&class>
   ^known-disjoint?(t2, t1)
 end method ^known-disjoint?;
 
-define &class <limited-function-type> (<limited-type>)
-  constant &slot limited-function-argument-types :: <simple-object-vector>,
-    required-init-keyword: arguments:;
-  constant &slot limited-function-return-values :: <simple-object-vector>,
-    required-init-keyword: values:;
-end;
-
-define inline function ^subtype-arguments-and-values?
-    (arg1 :: <simple-object-vector>, val1 :: <simple-object-vector>,
-     arg2 :: <simple-object-vector>, val2 :: <simple-object-vector>)
- => (result :: <boolean>)
-  if (arg1.size == arg2.size)
-    block (return)
-      for (x in arg1, y in arg2)
-        unless(^subtype?(y, x)) //contravariance
-          return(#f)
-        end;
-      end;
-      for (x in val1, y in val2) //length! (append #f to val2 until size is equal to val1)
-        unless(^subtype?(x, y)) //covariant
-          return(#f);
-        end;
-      end;
-      #t;
-    end block;
-  end;
-end;
-
-define method ^base-type (function :: <&limited-function-type>) => (result :: <&type>)
-  dylan-value(#"<function>"); //or introduce <arrow-type>?
-end;
-
-define method ^instance? (o :: <model-value>, lft :: <&limited-function-type>) => (result :: <boolean>)
-  #f
-end;
-
-define method ^instance? (f :: <&function>, lft :: <&limited-function-type>) => (result :: <boolean>)
-  let signature = ^function-signature(f);
-  let arguments = ^signature-required(signature);
-  let values = ^signature-values(signature);
-  //take care about #rest!
-  ^subtype-arguments-and-values?(arguments,
-                                 lft.^limited-function-argument-types,
-                                 values,
-                                 lft.^limited-function-return-values)  
-end;
-
-//is this correct?
-define method ^instance? (f :: <&limited-function-type>, g :: <&limited-function-type>) => (result :: <boolean>)
-  ^subtype?(f, g)
-end;
-
-define method ^subtype? (f :: <&limited-function-type>, g :: <&limited-function-type>) => (result :: <boolean>)
-  ^subtype-arguments-and-values?(f.^limited-function-argument-types,
-                                 g.^limited-function-argument-types,
-                                 f.^limited-function-return-values,
-                                 g.^limited-function-return-values)
-end;
-
-define method ^subtype? (f :: <&type>, lft :: <&limited-function-type>) => (result :: <boolean>)
-  #f
-end;
-
-//^known-disjoint? - ^instantiable?
-define function ^limited-function (#rest all-keys,
-                                   #key arguments :: <simple-object-vector> = #[],
-                                   values :: <simple-object-vector> = #[])
- => (result :: <&limited-function-type>)
-  immutable-model(make(<&limited-function-type>, arguments: arguments, values: values));
-end;
-
 define &override-function ^limited 
     (type :: <&type>, #rest keys) => (type :: <&type>)
   select (type)
     dylan-value(#"<integer>"), <&integer> // Convenient hack.
       => apply(^limited-integer, keys);
-    dylan-value(#"<function>"), <&function>
-      => apply(^limited-function, keys);
     otherwise
       => if (^subtype?(type, dylan-value(#"<collection>")))
            apply(^limited-collection, type, keys);

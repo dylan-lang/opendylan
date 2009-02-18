@@ -130,7 +130,6 @@ define module dfmc-definitions
     spec-value-number-required,
     spec-value-rest-variable-spec,
     spec-value-rest?,
-    spec-type-variables,
 
     <variable-specs>
     ;
@@ -263,7 +262,7 @@ define module dfmc-definitions
   export
     *heap-statistics?*;
 
-  export // hygiene for emulator // ehm, did you mean "hacks" instead of hygiene?
+  export // hygiene for emulator
     find-property, parse-many-property-adjectives,
     <unrecognized-properties>, <contradictory-properties>,
     <property>, <property-value>,

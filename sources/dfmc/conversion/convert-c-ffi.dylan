@@ -273,7 +273,7 @@ define method make-ffi-signature (sig-spec :: <signature-spec>)
         (sig-spec, 
          shallow-copy(ffi-signature.^signature-required),
          shallow-copy(ffi-signature.^signature-values),
-         #f, #[], #[], #[]);
+         #f, #[], #[]);
   let required  = signature.^signature-required;
   let req-specs = sig-spec.spec-argument-required-variable-specs;
   for (i from 0 below ^signature-number-required(signature),

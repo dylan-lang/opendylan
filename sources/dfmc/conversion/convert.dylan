@@ -2289,8 +2289,7 @@ define method convert-signature
           fast-constant-value(val-t),
           fast-constant-value(rest-val-t),
           if (key?) fast-constant-value(keys-t) else #[] end,
-          if (key?) fast-constant-value(key-t)  else #[] end,
-	  #[]))
+          if (key?) fast-constant-value(key-t)  else #[] end))
   else
     let next-t =
       make-object-reference(#t);
@@ -3809,10 +3808,9 @@ define inline method ^top-level-eval (fragment, #rest options)
 end method;
 
 define method ^top-level-eval-using-optimization
-    (fragment, #key on-failure = #f, type-variables = #[]) => (maybe-value)
+    (fragment, #key on-failure = #f) => (maybe-value)
   let m = convert-method-to-model-as
             (<&method>, "type-initializer", #{ () ?fragment });
-
   ensure-method-optimized(m);
   let (constant?, result) = lambda-returns-constant?(m);
   if (constant?)
@@ -3822,104 +3820,23 @@ define method ^top-level-eval-using-optimization
   end;
 end method;
 
-define method ^eval-type-expression-sequence
-    (env :: <simple-object-vector>, fragments :: <sequence>, #key on-failure = #f) => (models)
-  block (return)
-    collecting (results)
-      for (fragment in fragments)
-        let model = &eval-type-expression(env, fragment, on-failure: $eval-failure);
-        if (model ~== $eval-failure)
-          collect-into(results, model);
-        else
-          return(on-failure);
-        end;
-      end;
-      collected(results);
-    end;
-  end;
-end method;
-
-define method &eval-type-expression
-    (env :: <simple-object-vector>, binding :: <module-binding>, #key on-failure = #f) => (models)
-  let (model, found?) = binding-constant-model-object(binding);
-  if (found?) model else on-failure end
-end method;
-
-define method &eval-type-expression
-    (env :: <simple-object-vector>, fragment :: type-union(<vector-fragment>, <list-fragment>), #key on-failure = #f) 
- => (models)
-  map(curry(&eval-type-expression, env), fragment.fragment-value);
-end;
-
-define method &eval-type-expression
-    (env :: <simple-object-vector>, fragment :: <literal-constant-fragment>, #key on-failure = #f) 
- => (models)
-  let object = fragment-value(fragment);
-  if (instance?(object, <module-binding>))
-    &eval-type-expression(env, object, on-failure: on-failure)
-  else
-    make-compile-time-literal(object)
-  end;
-end method;
-
-define method &eval-type-expression
-    (env :: <simple-object-vector>, fragment :: <variable-name-fragment>, #key on-failure = #f) => (models)
-  let tv-value = choose(compose(curry(\==, fragment.fragment-name),
-				^type-variable-name),
-			env);
-  if (tv-value.size == 1)
-    tv-value.first;
-  elseif (tv-value.size > 1)
-    error("unexpected!")
-  else
-    let binding = lookup(#f, fragment);
-    if (binding)
-      &eval-type-expression(env, binding, on-failure: on-failure)
-    else
-      on-failure
-    end
-  end;
-end method;
-
-define method &eval-type-expression 
-    (env :: <simple-object-vector>, fragment :: <function-call-fragment>, #key on-failure = #f) 
-      => (models)
-  let function = ^top-level-eval(fragment-function(fragment));
-  let override = lookup-compile-stage-function(function);
-  if (override)
-    let argument-values =
-      ^eval-type-expression-sequence(env, fragment-arguments(fragment));
-    if (argument-values)
-      block ()
-        apply(override, argument-values);
-      exception (<error>)
-        on-failure
-      end
-    else
-      on-failure
-    end;
-  else
-    on-failure
-  end;
-end method;
 // Must be a type.
-define method ^top-level-eval-type (fragment, #key on-failure = #f, type-variables = #[])
+define method ^top-level-eval-type (fragment, #key on-failure = #f)
   // Try quickie top level eval.
   let result 
-    //= ^top-level-eval(fragment, on-failure: on-failure);
-    = &eval-type-expression(type-variables, fragment, on-failure: on-failure);
+    = ^top-level-eval(fragment, on-failure: on-failure);
   // Try harder if the above failed.
   let result
     = if (result == on-failure)
-        ^top-level-eval-using-optimization(fragment, on-failure: on-failure, type-variables: type-variables)
+        ^top-level-eval-using-optimization(fragment, on-failure: on-failure)
       else
         result
       end;
   if (result == on-failure)
     on-failure
- // elseif (~instance?(result, <&type>))
- //   // Put a warning here.
- //   on-failure
+  elseif (~instance?(result, <&type>))
+    // Put a warning here.
+    on-failure
   else
     result
   end;
@@ -3935,6 +3852,7 @@ define compiler-sideways method &eval (env, fragment) => (object)
   end block;
 end method;
 
+
 ///////
 /////// STATIC CASE WHICH WILL GO AWAY
 ///////
@@ -3942,8 +3860,6 @@ end method;
 define function parse-parameters-into
     (env :: <environment>, lambda-env :: <lambda-lexical-environment>,
      sig-spec :: <signature-spec>)
-  let type-vars
-    = spec-type-variables(sig-spec);
   let required-specs
     = spec-argument-required-variable-specs(sig-spec);
   let key-specs
@@ -3953,7 +3869,7 @@ define function parse-parameters-into
   let spec-key?
     = spec-argument-key?(sig-spec);
   let keys-start =
-    size(required-specs) + size(type-vars)
+    size(required-specs)
       + if (spec-rest? | spec-key?) 1 else 0 end;
   let variables
     = make(<simple-object-vector>, size: keys-start + size(key-specs));
@@ -3973,17 +3889,6 @@ define function parse-parameters-into
 			      name: name,
 			      environment: lambda-env));
 	end;
-  for (var-spec in type-vars)
-    let name = spec-variable-name(var-spec);
-    push-variable!(name,
-		   make(<lexical-required-type-variable>,
-			name:
-			  name,
-			environment: 
-			  lambda-env,
-			specializer: 
-			  spec-type-expression(var-spec)));
-  end;
   for (var-spec in required-specs)
     let name = spec-variable-name(var-spec);
     push-variable!(name,
@@ -3993,8 +3898,8 @@ define function parse-parameters-into
 			environment: 
 			  lambda-env,
 			// TODO: dynamic type expressions
-			specializer: //TODO: fixme! this has been computed before!
-			  ^top-level-eval-type(spec-type-expression(var-spec), type-variables: type-vars)));
+			specializer: 
+			  &eval(env, spec-type-expression(var-spec))));
   end;
   if (spec-rest?)
     insert-rest-variable!
