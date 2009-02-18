@@ -150,7 +150,7 @@ public class IncrementalHierarchicLayout
 				n = graph.lastNode();
 			}
 			EdgeRealizer myreal = new GenericEdgeRealizer(graph.getDefaultEdgeRealizer());
-			myreal.setLineColor(Color.blue);
+			myreal.setLineColor(Color.pink);
 			graph.createEdge(header, n, myreal);
 			scf.addPlaceNodeBelowConstraint(header, n);
 			i++; //want loop over multiple variables!
@@ -464,7 +464,7 @@ public class IncrementalHierarchicLayout
 			int argc = i * 16 + 1;
 			for (EdgeCursor ec = t.outEdges(); ec.ok(); ec.next()) {
 				Color c = graph.getRealizer(ec.edge()).getLineColor(); 
-				if (c == Color.blue) {
+				if (c == Color.pink) {
 					int lane = 0;
 					for (NodeCursor nc = ec.edge().target().successors(); nc.ok(); nc.next())
 						lane += (Integer)((SwimLaneDescriptor)swimLane.get(nc.node())).getClientObject();
@@ -489,7 +489,6 @@ public class IncrementalHierarchicLayout
 	private int step = 8;
 
 	private void update (int direction) {
-		System.out.println("update called with " + direction + " (" + currindex + ", " + step + ")");
 		if (direction == 1)
 			currindex += step;
 		else if (direction == -1)
@@ -502,7 +501,6 @@ public class IncrementalHierarchicLayout
 	}
 	
 	private void restore (int direction) {
-		System.out.println("restore called (" + currindex + ", " + step + ")");
 		step *= 2;
 		if (direction == 1)
 			currindex -= step;
@@ -535,26 +533,23 @@ public class IncrementalHierarchicLayout
 	}
 	
 	private Node nextC (Node n) {
-	    for (EdgeCursor ec = n.outEdges(); ec.ok(); ec.next())
-		if ((graph.getRealizer(ec.edge()).getLineColor() != Color.pink) || (graph.getRealizer(n).getFillColor() == Color.pink))
+		for (EdgeCursor ec = n.outEdges(); ec.ok(); ec.next())
+			if (graph.getRealizer(ec.edge()).getLineColor() != Color.pink)
 				return ec.edge().target();
 		return null;
 	}
-	
 	private Node visit (Node n) {
 		String text = graph.getLabelText(n);
 		setL(currindex, n);
 		for (EdgeCursor ec = n.edges(); ec.ok(); ec.next())
 			if (graph.getRealizer(ec.edge()).getLineColor() == Color.pink) {
-				int weight = -1 * step;
-				//if (nextC(n) == nextC(ec.edge().opposite(n)))
-				//	weight = step;
+				int weight = step;
 				if (ec.edge().opposite(n).degree() == 1) {
 					setLf(currindex, ec.edge().opposite(n));
 				} else if (currindex < middle)
-					setL(currindex - weight, ec.edge().opposite(n));
-				else
 					setL(currindex + weight, ec.edge().opposite(n));
+				else
+					setL(currindex - weight, ec.edge().opposite(n));
 			}
 		if (text.contains(" if ")) {
 			Node merge = null;
@@ -595,37 +590,36 @@ public class IncrementalHierarchicLayout
 			}
 			return mbreak;
 		}
+		if (text.endsWith(" bind-exit")) {
+			update(0);
+			Node mbreak = visitComputations(nextC(n), "BIND-EXIT-MERGE");
+			restore(0);
+			if (mbreak != null) {
+				setL(currindex, mbreak);
+				visited.set(mbreak, true);
+			}
+			return mbreak;
+		}
 		return n;
 	}
 	
 	private void setL (int num, Node n) {
 		if (swimLane.get(n) == null) {
-			System.out.println("setting swimlane to " + num + " of " + graph.getLabelText(n));
 			SwimLaneDescriptor sld = new SwimLaneDescriptor(num);
 			swimLane.set(n, sld);
 		} else {
 		    SwimLaneDescriptor sld = (SwimLaneDescriptor)swimLane.get(n);
 		    int oldnum = (Integer)sld.getClientObject();
-		    if ((oldnum > (middle + 16)) || (oldnum < (middle - 16))) {
-			        System.out.println("resetting swimlane to " + num + " of " + graph.getLabelText(n));
+		    if ((oldnum > (middle + 16)) || (oldnum < (middle - 16)) || oldnum > (step * 2)) {
 				SwimLaneDescriptor sld2 = new SwimLaneDescriptor(num);
-				swimLane.set(n, sld);
+				swimLane.set(n, sld2);
 		    }
 		}
 	}
 
 	private void setLf (int num, Node n) {
-		if (swimLane.get(n) == null) {
-			System.out.println("setting swimlane to " + num + " of " + graph.getLabelText(n));
-			SwimLaneDescriptor sld = new SwimLaneDescriptor(num);
-			swimLane.set(n, sld);
-		} else {
-		    System.out.println("resetting swimlane to " + num + " of " + graph.getLabelText(n));
-		    SwimLaneDescriptor sld = new SwimLaneDescriptor(num);
-		    swimLane.set(n, sld);
-		}
-		    
+		SwimLaneDescriptor sld = new SwimLaneDescriptor(num);
+		swimLane.set(n, sld);
 	}
-
 }
 
