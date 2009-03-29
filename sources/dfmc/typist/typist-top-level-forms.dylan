@@ -41,7 +41,7 @@ end;
 // form-model-object -- gets model object from variable def form + name.
 // form-model
 
-define variable *annoying-typist-chatter?* :: <boolean> = #t;
+define variable *annoying-typist-chatter?* :: <boolean> = #f;
 
 define function typist-chatter(format-str, #rest format-args)
   // For interim debugging.

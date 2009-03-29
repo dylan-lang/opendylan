@@ -566,7 +566,7 @@ define function list-all-package-names ()
   end;
   res;
 end;
-
+/*
 begin
   let projects = list-all-package-names();
   *vis* := make(<dfmc-graph-visualization>, id: #"Dylan-Graph-Visualization");
@@ -610,4 +610,4 @@ begin
     format-out("received exception: %=\n", e);
   end;
 end
-
+*/

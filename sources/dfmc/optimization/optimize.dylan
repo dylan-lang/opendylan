@@ -280,7 +280,7 @@ define sealed method really-run-compilation-passes (code :: <&lambda>)
       *dump-dfm-method*(#"beginning", #("finished"));
       block()
       //when (dumping-dfm?(code))
-	print-method-out(code);
+//	print-method-out(code);
       //end when;
       exception (e :: <condition>)
       end;

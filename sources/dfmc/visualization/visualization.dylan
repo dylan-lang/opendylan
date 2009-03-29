@@ -30,8 +30,8 @@ define function write-to-visualizer (v :: <dfmc-graph-visualization>, data)
     exception (c :: <condition>)
       format(*standard-output*, "failed communication: %=\n", c);
     end;
-  else
-    format(*standard-output*, "not sending: %=\n", data);
+  //else
+  //  format(*standard-output*, "not sending: %=\n", data);
   end;
 end;
 

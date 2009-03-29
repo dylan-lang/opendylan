@@ -29,4 +29,4 @@ define function subtype-tests()
   format-out("sub8 (DRM #t) ok %=\n", s8); //#t
 end;
 
-subtype-tests();
+//subtype-tests();
