@@ -55,6 +55,10 @@ define open class <binary-builder> (<object>)
     // Contains normal code
   slot init-code-section :: false-or(<binary-section>) = #f;
     // Contains initialization code
+  slot elf-init-code-section :: false-or(<binary-section>) = #f;
+    // Contains the ELF .init (library initialization) section
+  slot elf-fini-code-section :: false-or(<binary-section>) = #f;
+    // Contains the ELF .fini (library finalization) section
   slot directives-section :: false-or(<binary-section>) = #f;
     // Contains directives for the linker, including DLL export info
 

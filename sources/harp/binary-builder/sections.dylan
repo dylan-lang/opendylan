@@ -10,8 +10,10 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define constant $code-section           = ".text";     // Code
 define constant $init-code-section      = ".text$i";   // Initialization code
+define constant $elf-init-code-section  = ".init";     // SO initialization code
+define constant $elf-fini-code-section  = ".fini";     // SO finalization code
 define constant $untraced-objs-section  = ".dyutr$m";  // Untraced Dylan objects 
-define constant $untraced-data-section  = ".dyutr$r";  // Untraced randon data
+define constant $untraced-data-section  = ".dyutr$r";  // Untraced random data
 define constant $data-section           = ".dydat$m";  // Ambiguously traced data
 define constant $data-start-section     = ".dydat$a";
 define constant $data-end-section       = ".dydat$z";
@@ -92,37 +94,55 @@ define function select-dylan-section
   if (*dll-support*)
     select (section)
       #"code" =>
-        builder.code-section := 
-          ensure-code-section(builder, builder.code-section, $code-section, code-item-increment);
+        builder.code-section
+          := ensure-code-section(builder, builder.code-section,
+                                 $code-section, code-item-increment);
       #"init-code" =>
-        builder.init-code-section := 
-          ensure-code-section(builder, builder.init-code-section, $init-code-section, code-item-increment);
+        builder.init-code-section
+          := ensure-code-section(builder, builder.init-code-section,
+                                 $init-code-section, code-item-increment);
+      #"elf-init-code" =>
+        builder.elf-init-code-section
+          := ensure-code-section(builder, builder.elf-init-code-section,
+                                 $elf-init-code-section, code-item-increment);
+      #"elf-fini-code" =>
+        builder.elf-fini-code-section
+          := ensure-code-section(builder, builder.elf-fini-code-section,
+                                 $elf-fini-code-section, code-item-increment);
       #"data", #"ambiguous-data" => 
-        builder.optional-data-section :=
-          ensure-optional-section(builder, builder.optional-data-section, 
-                                  $data-section, $obj-file-start-data-symbol);
+        builder.optional-data-section
+          := ensure-optional-section(builder, builder.optional-data-section, 
+                                     $data-section,
+                                     $obj-file-start-data-symbol);
       #"objects" =>
-        builder.optional-objs-section :=
-          ensure-optional-section(builder, builder.optional-objs-section, 
-                                  $objs-section, $obj-file-start-objs-symbol);
+        builder.optional-objs-section
+          := ensure-optional-section(builder, builder.optional-objs-section, 
+                                     $objs-section,
+                                     $obj-file-start-objs-symbol);
       #"variables" =>
-        builder.optional-vars-section :=
-          ensure-optional-section(builder, builder.optional-vars-section, 
-                                  $vars-section, $obj-file-start-vars-symbol);
+        builder.optional-vars-section
+          := ensure-optional-section(builder, builder.optional-vars-section, 
+                                     $vars-section,
+                                     $obj-file-start-vars-symbol);
       #"untraced-objects" =>
-        builder.optional-untraced-objs-section :=
-          ensure-optional-section(builder, builder.optional-untraced-objs-section, 
-                                  $untraced-objs-section, $obj-file-start-untraced-objs-symbol);
+        builder.optional-untraced-objs-section
+          := ensure-optional-section(builder,
+                                     builder.optional-untraced-objs-section, 
+                                     $untraced-objs-section,
+                                     $obj-file-start-untraced-objs-symbol);
       #"untraced-data" =>
-        builder.optional-untraced-data-section :=
-          ensure-optional-section(builder, builder.optional-untraced-data-section, 
-                                  $untraced-data-section, $obj-file-start-untraced-data-symbol);
+        builder.optional-untraced-data-section
+          := ensure-optional-section(builder,
+                                     builder.optional-untraced-data-section, 
+                                     $untraced-data-section,
+                                     $obj-file-start-untraced-data-symbol);
       otherwise => 
         select-data-section(builder, as(<string>, section));
         builder.current-fixups := #f;
         builder.id-current-fixups := #f;
     end select;
-  else select-data-section(builder, ".data") // for backwards compatibility
+  else
+    select-data-section(builder, ".data"); // for backwards compatibility
   end if;
 end function;
 

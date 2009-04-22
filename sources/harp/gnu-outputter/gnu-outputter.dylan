@@ -41,9 +41,6 @@ define sideways method make-harp-outputter-by-type
     => (outputter :: <harp-gnu-outputter>)
   let file-string = as(<string>, filename);
   let stream = open-output-stream(backend, file-string, type);
-  let obj-name
-    = concatenate(file-string, ".", 
-                  file-extension-for-outputter-type(backend, type));
   let def-file = open-output-stream(backend, file-string, "def");
   let outputter
     = make-binary-builder(<harp-gnu-outputter>,
@@ -72,9 +69,6 @@ define sideways method make-harp-outputter-by-type
     => (outputter :: <harp-linux-outputter>)
   let file-string = as(<string>, filename);
   let stream = open-output-stream(backend, file-string, type);
-  let obj-name
-    = concatenate(file-string, ".", 
-                  file-extension-for-outputter-type(backend, type));
   let outputter
     = make-binary-builder(<harp-linux-outputter>,
 			  destination: stream);
@@ -130,7 +124,7 @@ end method;
 
 define sideways method output-compiled-lambda
     (be :: <harp-back-end>, outputter :: <harp-gnu-outputter>, lambda :: <fully-compiled-lambda>,
-     #key, #all-keys)
+     #key section = #"code", #all-keys)
     => ()
 // This produces assembly output for one function.
 
@@ -142,11 +136,6 @@ define sideways method output-compiled-lambda
   let export? = lambda.lambda-is-export?.and-emit-dll?;
   let ref-data = lambda.lambda-referenced-data;
   let stream = outputter.destination;
-
-  // Just use the standard code section because the GNU Assembler
-  // has problems referencing other code defined in init-code
-  // sections                        Nosa   Feb 9, 1999
-  let section = #"code";
 
   // Just toggle the required code sections; these can be interleaved
 
@@ -329,8 +318,7 @@ define method output-code-label
     (outputter :: <harp-gnu-outputter>,
      item :: <labelled-absolute-thread-constant>,
      increment :: <integer>) => ()
-  output-code-label-internal
-  (outputter, item, increment, attr: "@ntpoff");
+  output-code-label-internal(outputter, item, increment, attr: "@ntpoff");
 end method;
 
 
@@ -620,11 +608,9 @@ define method output-data-footer
   copy-to-section(section, name);
 end method;
 
-
 define method do-export
     (export?, builder :: <harp-linux-outputter>, name :: <byte-string>) => ()
 end method do-export;
-
 
 // Functions to update the current position within the line
 
@@ -912,7 +898,12 @@ define method write-binary-section-header
   write(stream, "\n\t.section ");
   write(stream, section.section-name);
   unless (section.section-flags.empty?)
-    write(stream, concatenate(", \"", section.section-flags, "\""));
+    let flags = choose(curry(\~=, 'p'), section.section-flags);
+    write(stream, concatenate(", \"", flags, "\""));
+
+    if (member?('p', section.section-flags))
+      write(stream, ", @progbits");
+    end if;
   end unless;
   write-element(stream, byte-for-newline);
   write(stream, "\t.align 4\n");
@@ -933,26 +924,11 @@ end method;
 
 // GNU Assembler Section flags
 
-define constant $mem-read = "R";
-define constant $mem-write = "W";
-define constant $mem-execute = "X";
-define constant $align-1bytes = "1";
-define constant $align-4bytes = "4";
-define constant $cnt-initialized-data = "d";
-define constant $cnt-code = "x";
+define constant $data-flags  = "aw";  // Allocatable, writable
+define constant $fixup-flags = "a";   // Allocatable
+define constant $code-flags  = "axp"; // Allocatable, executable, @progbits
 
-define constant $data-flags =
-  concatenate($mem-read, $mem-write, $align-4bytes, $cnt-initialized-data);
-
-define constant $fixup-flags =
-  concatenate($mem-read, $align-1bytes, $cnt-initialized-data);
-
-define constant $code-flags =
-  concatenate($mem-execute, $mem-read, $align-4bytes, $cnt-code);
-
-define constant $directives-flags =
-  $align-1bytes;
-
+define constant $directives-flags = "n";
 define constant $null-flags = "";
 
 
@@ -981,7 +957,7 @@ end method;
 
 define inline method dylan-data-flags(outputter :: <harp-linux-outputter>)
  => (flags)
-  "aw"
+  $data-flags
 end method;
 
 define inline method code-flags(outputter :: <harp-gnu-outputter>)

@@ -356,6 +356,8 @@ define open generic output-export
 //      #"untraced-data"    - untraced data section 
 //      #"code"             - the code or text section
 //      #"init-code"        - separate initialization part of the code section
+//      #"elf-init-code"    - ELF initialization code
+//      #"elf-fini-code"    - ELF finalization code
 //
 // Must be specialized by an outputter library. 
 //
