@@ -1,4 +1,5 @@
 Library: dfmc-linker
+Target-Type: dll
 Files:	 linker-library
 	 linker
 	 makefile

@@ -4,6 +4,7 @@ Author:       Gail Zacharias
 Major-Version: 2
 Minor-Version: 1
 Other-Files:   Open-Source-License.txt
+Target-Type:   dll
 Files: library
        operating-system
        amd64-freebsd-operating-system

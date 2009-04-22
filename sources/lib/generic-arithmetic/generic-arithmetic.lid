@@ -1,6 +1,7 @@
 Library:   generic-arithmetic
 Major-Version: 2
 Minor-Version: 1
+Target-Type: dll
 Files:     library
 	   generic-number
 	   generic-integer

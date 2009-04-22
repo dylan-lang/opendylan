@@ -1,4 +1,5 @@
 Library: variable-search
+Target-Type: dll
 Files:   unix-variable-search-library
          protocol
          unix-variable-search

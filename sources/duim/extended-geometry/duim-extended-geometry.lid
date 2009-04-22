@@ -1,6 +1,7 @@
 Library:      duim-extended-geometry
 Synopsis:     DUIM extended geometry
 Author:       Scott McKay, Andy Armstrong
+Target-Type:  dll
 Files:  library
 	module
 	classes

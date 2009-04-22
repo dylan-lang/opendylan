@@ -1,4 +1,5 @@
 Library: registry-projects
+Target-Type: dll
 Files: registry-projects-library
        defaults
        registry

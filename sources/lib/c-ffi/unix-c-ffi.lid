@@ -1,6 +1,7 @@
 Library:       c-ffi
 Major-Version: 2
 Minor-Version: 1
+Target-Type:   dll
 Files: unix-c-ffi-library
        pointer-ref
        pointer-value

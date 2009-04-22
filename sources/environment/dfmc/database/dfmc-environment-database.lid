@@ -1,6 +1,7 @@
 Library:   dfmc-environment-database
 Synopsis:  DFM compiler database
 Author:    Chris Page
+Target-Type: dll
 Files:	library
 	module
 	utilities

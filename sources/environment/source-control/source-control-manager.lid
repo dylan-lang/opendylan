@@ -1,6 +1,7 @@
 Library:   Source-Control-Manager
 Synopsis:  Environment-Source Control Interface
 Author:    Scott McKay
+Target-Type: dll
 Files:  library
 	module
 	source-control

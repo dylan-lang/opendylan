@@ -1,5 +1,6 @@
 Library:  dfmc-conditions
 Synopsis: Framework for handling errors and warnings in user code.
+Target-Type: dll
 Files:    conditions-library
 	  native-hacks
 	  macros

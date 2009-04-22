@@ -1,4 +1,5 @@
 Library: dfmc-common
+Target-Type: dll
 Files:	 common-library
 	 common-macros
 	 property-delegation-macros

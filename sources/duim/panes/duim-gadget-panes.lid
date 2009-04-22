@@ -1,6 +1,7 @@
 Library:      duim-gadget-panes
 Synopsis:     DUIM concrete gadget panes
 Author:       Scott McKay, Andy Armstrong
+Target-Type:  dll
 Files:  library
 	module
         border-panes

@@ -1,4 +1,5 @@
 library:   ppml
+Target-Type: dll
 files:     ppml-library
 	   ppml
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.

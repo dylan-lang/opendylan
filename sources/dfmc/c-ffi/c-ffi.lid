@@ -1,4 +1,5 @@
 Library: dfmc-c-ffi
+Target-Type: dll
 Files:   c-ffi-library
          c-designator-modeling
 	 c-designator-models

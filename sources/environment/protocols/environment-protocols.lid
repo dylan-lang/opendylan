@@ -1,6 +1,7 @@
 Library:   environment-protocols
 Synopsis:  Environment Protocols
 Author:    Andy Armstrong
+Target-Type: dll
 Files:	library
 	module
         server-objects

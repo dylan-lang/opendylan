@@ -1,6 +1,7 @@
 Library:   environment-manager
 Synopsis:  Environment Manager
 Author:    Andy Armstrong, Hugh Greene
+Target-Type: dll
 Files:	library
 	module
         tools

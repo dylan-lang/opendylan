@@ -1,4 +1,5 @@
 library: dfmc-back-end-protocol
+Target-Type: dll
 files:	 library
 	 back-end
 	 mangle

@@ -1,4 +1,5 @@
 library: harp-coff
+Target-Type: dll
 files:	 library
 	 module
 	 cv4-builder

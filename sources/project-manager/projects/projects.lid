@@ -1,4 +1,5 @@
 Library: projects
+Target-Type: dll
 Files:  projects-library
         projects
 	implementation

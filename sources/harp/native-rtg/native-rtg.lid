@@ -1,4 +1,5 @@
 library: native-rtg
+Target-Type: dll
 files:	 library
 	 module
 	 mangling

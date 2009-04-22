@@ -1,4 +1,5 @@
 library: linux-rtg
+Target-Type: dll
 files:	 library
 	 module
 	 mangling

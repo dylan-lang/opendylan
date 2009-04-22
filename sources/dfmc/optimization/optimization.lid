@@ -1,4 +1,5 @@
 library: dfmc-optimization
+Target-Type: dll
 files:	 optimization-library
 	 assignment
 	 constant-folding

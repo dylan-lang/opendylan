@@ -1,4 +1,5 @@
 library: native-harp
+Target-Type: dll
 files:	 library
 	 module
 	 native-back-end

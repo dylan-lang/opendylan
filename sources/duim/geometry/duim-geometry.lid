@@ -1,6 +1,7 @@
 Library:      duim-geometry
 Synopsis:     DUIM geometry
 Author:       Scott McKay, Andy Armstrong
+Target-Type:  dll
 Files:  library
 	module
         classes

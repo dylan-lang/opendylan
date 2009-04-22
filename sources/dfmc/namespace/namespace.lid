@@ -1,4 +1,5 @@
 Library: dfmc-namespace
+Target-Type: dll
 Files:   namespace-library
 	 binding
          environments

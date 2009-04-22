@@ -1,6 +1,7 @@
 Library:   CL
 Synopsis:  Grab-bag of CL-like functionality for Dylan
 Author:    Scott McKay
+Target-Type: dll
 Files:	library
 	module
 	macros

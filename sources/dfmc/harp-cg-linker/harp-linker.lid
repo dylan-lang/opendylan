@@ -1,4 +1,5 @@
 Library: dfmc-harp-cg-linker
+Target-Type:  dll
 Files:   harp-linker-library
          harp-linker
          harp-link-object

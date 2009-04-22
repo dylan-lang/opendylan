@@ -1,4 +1,5 @@
 Library:   c-ffi
+Target-Type: dll
 Files: c-ffi-library
        pointer-ref
        pointer-value

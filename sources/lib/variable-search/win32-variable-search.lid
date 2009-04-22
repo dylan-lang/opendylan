@@ -2,6 +2,7 @@ Library:       variable-search
 Library-Pack:  DOOD
 Major-Version: 2
 Minor-Version: 1
+Target-Type:   dll
 Files:   win32-variable-search-library
          protocol
          win32-variable-search

@@ -1,4 +1,5 @@
 library: dfmc-mangling
+Target-Type: dll
 files:	 mangling-library
 	 mangling
          demangling

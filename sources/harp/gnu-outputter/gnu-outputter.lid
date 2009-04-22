@@ -1,4 +1,5 @@
 library: gnu-outputter
+Target-Type: dll
 files:	 library
 	 gnu-outputter
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.

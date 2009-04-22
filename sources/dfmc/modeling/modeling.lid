@@ -1,4 +1,5 @@
 Library: dfmc-modeling
+Target-Type: dll
 Files:   modeling-library
 	 model-object-macros
          namespace-macros

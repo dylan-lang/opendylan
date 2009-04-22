@@ -1,4 +1,5 @@
 Library: dfmc-native-harp-cg
+Target-Type: dll
 Files:   library
          back-end
          calls

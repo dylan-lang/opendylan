@@ -1,4 +1,5 @@
 library: dfmc-c-back-end
+Target-Type: dll
 files:   c-back-end-library
 	 c-mangle
 	 c-back-end

@@ -1,4 +1,5 @@
 library: pentium-rtg
+Target-Type: dll
 files:	 library
 	 module
 	 optionals-support

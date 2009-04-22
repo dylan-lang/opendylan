@@ -1,4 +1,5 @@
 Library: dfmc-reader
+Target-Type: dll
 Files:   reader-library
          range-source-locations
          infix-parser

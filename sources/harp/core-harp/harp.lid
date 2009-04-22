@@ -1,4 +1,5 @@
 library: harp
+Target-Type: dll
 files:	 library
 	 module
 	 macro-support

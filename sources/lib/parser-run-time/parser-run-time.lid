@@ -1,4 +1,5 @@
 Library: parser-run-time
+Target-Type: dll
 Files:   library
          dispatch
          switch-states

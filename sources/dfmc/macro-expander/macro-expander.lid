@@ -1,4 +1,5 @@
 Library: dfmc-macro-expander
+Target-Type: dll
 Files:   macro-expander-library
          interface
          pattern-elements

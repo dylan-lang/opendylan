@@ -1,4 +1,5 @@
 library: dfmc-c-linker
+Target-Type: dll
 files:   c-linker-library
 	 c-linker
 	 c-link-object

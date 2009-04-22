@@ -1,4 +1,5 @@
 library: dfmc-back-end
+Target-Type: dll
 files:	 back-end-library
 	 back-end
 	 load-bound-references

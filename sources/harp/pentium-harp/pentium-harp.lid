@@ -1,4 +1,5 @@
 library: pentium-harp
+Target-Type: dll
 files:	 library
 	 module
 	 pentium-macros

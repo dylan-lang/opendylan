@@ -1,4 +1,5 @@
 Library: variable-search
+Target-Type: dll
 Files:   dummy-library
          protocol
          dummy-locate

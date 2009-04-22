@@ -1,6 +1,7 @@
 Library:      duim-frames
 Synopsis:     DUIM frames
 Author:       Scott McKay, Andy Armstrong
+Target-Type:  dll
 Files:  library
 	module
 	classes

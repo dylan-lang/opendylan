@@ -1,4 +1,5 @@
 Library:	harp-cg-back-end
+Target-Type:    dll
 Files:		harp-cg-back-end-module
 		harp-cg-back-end
 		variables

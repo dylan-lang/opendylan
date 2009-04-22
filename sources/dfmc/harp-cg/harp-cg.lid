@@ -1,4 +1,5 @@
 library: dfmc-harp-cg
+Target-Type: dll
 files:   harp-cg-library
          harp-mangle
          harp-macros

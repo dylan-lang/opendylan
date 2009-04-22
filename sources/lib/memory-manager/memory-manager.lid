@@ -1,4 +1,5 @@
 Library: memory-manager
+Target-Type: dll
 Files:   library
 	 native-memory-manager
          memory-manager

@@ -1,6 +1,7 @@
 Library:      duim-gadgets
 Synopsis:     DUIM gadgets
 Author:       Scott McKay, Andy Armstrong
+Target-Type:  dll
 Files:  library
 	module
         gadget-mixins

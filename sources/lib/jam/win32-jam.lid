@@ -1,6 +1,7 @@
 Library:      jam
 Synopsis:     An interpreter for the Jam build-system language
 Author:       Peter S. Housel
+Target-Type:  dll
 Files:        library
               regular-expression
               jam-state

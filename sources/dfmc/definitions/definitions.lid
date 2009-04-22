@@ -1,4 +1,5 @@
 Library: dfmc-definitions
+Target-Type: dll
 Files:   definitions-library
 	 dependencies
 	 boot-definitions

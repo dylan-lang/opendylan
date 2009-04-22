@@ -1,4 +1,5 @@
 Library: source-records
+Target-Type: dll
 Files: source-records-library
        source-records
        source-locations

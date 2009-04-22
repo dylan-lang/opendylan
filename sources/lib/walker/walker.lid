@@ -1,5 +1,6 @@
 library:   walker
 author:    jonathan bachrach
+Target-Type: dll
 files:     walker-library
            walker
 	   class

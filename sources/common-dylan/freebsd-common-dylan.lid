@@ -2,6 +2,7 @@ Library:      common-dylan
 Module:       dylan-user
 Synopsis:     Common Dylan library definition
 Author:       Andy Armstrong
+Target-Type:  dll
 Files: library
        macros
        common-extensions

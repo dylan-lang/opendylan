@@ -1,6 +1,7 @@
 Library:      duim-dcs
 Synopsis:     DUIM display device contexts
 Author:       Scott McKay, Andy Armstrong
+Target-Type:  dll
 Files:  library
 	module
         classes

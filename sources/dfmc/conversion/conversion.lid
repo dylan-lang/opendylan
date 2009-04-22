@@ -1,4 +1,5 @@
 Library: dfmc-conversion
+Target-Type: dll
 Files:   conversion-library
 	 utilities
 	 convert

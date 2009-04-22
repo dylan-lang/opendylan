@@ -1,4 +1,5 @@
 Library: dfmc-flow-graph
+Target-Type: dll
 Files:   flow-graph-library
          macros
          temporary

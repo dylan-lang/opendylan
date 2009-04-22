@@ -1,6 +1,7 @@
 Library:      duim-recording
 Synopsis:     DUIM output recording
 Author:       Scott McKay
+Target-Type:  dll
 Files:  library
 	module
 	recording-defs
