@@ -16,7 +16,6 @@ define library dfmc-native-harp-cg
  use native-harp;
  use dfmc-harp-cg;
  use dfmc-harp-cg-linker;
- use native-glue-rtg;
 
  export dfmc-native-harp-cg;
 
@@ -35,6 +34,5 @@ define module dfmc-native-harp-cg
               <native-freebsd-back-end> };
  use dfmc-harp-cg, export: {*trace-harp?*};
  use dfmc-harp-cg-linker;
- use native-rtg, import: { output-data, output-glue, output-functions };
 
 end module dfmc-native-harp-cg;

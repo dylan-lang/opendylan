@@ -1,0 +1,358 @@
+
++++ start of data +++
+
++++ external: "primitive_wrap_machine_word" +++
++++ external: "primitive_wrap_c_pointer" +++
++++ external: "primitive_exit_application" +++
+
++++ variable{constant "Pstatic_root"} " in section untraced-data" = 0 +++
+
++++ variable{constant "Pimmut_root"} " in section untraced-data" = 0 +++
+
++++ variable{constant "Pambig_root"} " in section untraced-data" = 0 +++
+
++++ variable{constant "Pexact_root"} " in section untraced-data" = 0 +++
+
++++ (public) variable{constant "module_hInstance"} " in section untraced-data" = 0 +++
+
++++ (public) variable{indirect-constant "_init_dylan_library"} " in section untraced-data" = 0 +++
++++ external: "primitive_ensure_valid_teb" +++
++++ external: "primitive_register_traced_roots" +++
++++ external: "primitive_deregister_traced_roots" +++
++++ external: "dylan_init_thread_local" +++
++++ external: "primitive_call_first_dylan_iep" +++
+
++++ Defining glue symbols +++
+  Data start is "_dylan_data_start"
+  Data end is "_dylan_data_end"
+  Variables start is "_dylan_vars_start"
+  Variables end is "_dylan_vars_end"
+  Objects start is "_dylan_objs_start"
+  Objects end is "_dylan_objs_end"
+  Fixup start is "_dylan_fixup_start"
+  Fixup end is "_dylan_fixup_end"
+  Import start is "_dylan_import_start"
+  Import end is "_dylan_import_end"
+
+
++++ start of code +++
+
+
++++ Defining function init_dylan_data in section init-code +++
+
++++ Static function definition init_dylan_data +++
+
++++ starting code for init_dylan_data +++
+
+#() [0->5] (level:0) is red with stack state before
+#({basic-block #({tag 2:65}) 65 80})
+  rem	"This is a dummy first basic block."
+
+#({tag 2:65}) [65->80] (level:0) is #f with stack state #f
+#({basic-block #() 5 55})
+  preserve-registers-entry	
+  allocate-local-area	
+  allocate-raw-area	
+
+#() [5->55] (level:0) is red with stack state with
+#({basic-block #() 55 55})
+  push	{constant "Pexact_root"}
+  push	{constant "_dylan_vars_end"}
+  push	{constant "_dylan_vars_start"}
+  push	{constant "Pstatic_root"}
+  push	{constant "_dylan_objs_end"}
+  push	{constant "_dylan_objs_start"}
+  push	{constant "Pambig_root"}
+  push	{constant "_dylan_data_end"}
+  move	eax, {constant "_dylan_data_start"}
+  call	{constant "primitive_register_traced_roots"}, 1
+
+#() [55->55] (level:0) is red with stack state with
+#({basic-block #({tag 1:60}) 60 65})
+
+#({tag 1:60}) [60->65] (level:0) is #f with stack state #f
+#({basic-block #() 55 60})
+  preserve-registers-exit	
+
+#() [55->60] (level:0) is red with stack state #f
+#()
+  rts	
+
++++ ending code for init_dylan_data +++
+
++++ Live variable scopes for init_dylan_data +++
+Start scope at 7 with frame for no variables
+End scope at 56
+
++++ No Source Code Locators for init_dylan_data +++
+
+
++++ Defining function call_init_dylan in section init-code +++
+
++++ Static function definition call_init_dylan +++
+
++++ starting code for call_init_dylan +++
+
+#() [0->5] (level:0) is red with stack state before
+#({basic-block #({tag 2:20}) 20 35})
+  rem	"This is a dummy first basic block."
+
+#({tag 2:20}) [20->35] (level:0) is #f with stack state #f
+#({basic-block #() 5 10})
+  preserve-registers-entry	
+  allocate-local-area	
+  allocate-raw-area	
+
+#() [5->10] (level:0) is red with stack state with
+#({basic-block #() 10 10})
+  call	{indirect-constant "_init_dylan_library"}, 0
+
+#() [10->10] (level:0) is red with stack state with
+#({basic-block #({tag 1:15}) 15 20})
+
+#({tag 1:15}) [15->20] (level:0) is #f with stack state #f
+#({basic-block #() 10 15})
+  preserve-registers-exit	
+
+#() [10->15] (level:0) is red with stack state #f
+#()
+  rts	
+
++++ ending code for call_init_dylan +++
+
++++ Live variable scopes for call_init_dylan +++
+Start scope at 7 with frame for no variables
+End scope at 12
+
++++ No Source Code Locators for call_init_dylan +++
+
+
++++ Defining function dylan_initialize in section init-code +++
+
++++ Static function definition dylan_initialize +++
+
++++ starting code for dylan_initialize +++
+
+#() [0->5] (level:0) is red with stack state before
+#({basic-block #({tag 2:85}) 85 100})
+  rem	"This is a dummy first basic block."
+
+#({tag 2:85}) [85->100] (level:0) is #f with stack state #f
+#({basic-block #() 5 20})
+  preserve-registers-entry	
+  allocate-local-area	
+  allocate-raw-area	
+
+#() [5->20] (level:0) is red with stack state with
+#({basic-block #() 20 25})
+  push	0
+  move	N0/NSPILL-0, esp
+  call-alien	{constant "init_dylan_data"}, 0
+
+#() [20->25] (level:0) is red with stack state with
+#({basic-block #() 25 60})
+  call	{constant "primitive_ensure_valid_teb"}, 0
+
+#() [25->60] (level:0) is red with stack state with
+#({basic-block #() 60 75})
+  move	N1/edi, eax
+  st	-1, N1/edi, 20
+  push	0
+  push	0
+  push	{constant "call_init_dylan"}
+  push	N0/NSPILL-0
+  call-alien	{constant "dylan_init_thread_local"}, 0
+
+#() [60->75] (level:0) is red with stack state with
+#({basic-block #({tag 1:80}) 80 85})
+  add	esp, esp, 16
+  st	0, N1/edi, 20
+  move	eax, 0
+
+#({tag 1:80}) [80->85] (level:0) is #f with stack state #f
+#({basic-block #() 75 80})
+  preserve-registers-exit	
+
+#() [75->80] (level:0) is red with stack state #f
+#()
+  rts	
+
++++ ending code for dylan_initialize +++
+
++++ Frame sizes for dylan_initialize: GC: 0, NC: 1 +++
+
++++ Live variable scopes for dylan_initialize +++
+Start scope at 7 with frame for no variables
+End scope at 64
+
++++ No Source Code Locators for dylan_initialize +++
+
+
++++ Defining function dylan_main in section init-code +++
+
++++ starting code for dylan_main +++
+
+#() [0->5] (level:0) is red with stack state before
+#({basic-block #({tag 2:50}) 50 65})
+  rem	"This is a dummy first basic block."
+
+#({tag 2:50}) [50->65] (level:0) is #f with stack state #f
+#({basic-block #() 5 10})
+  preserve-registers-entry	
+  allocate-local-area	
+  allocate-raw-area	
+
+#() [5->10] (level:0) is red with stack state with
+#({basic-block #() 10 30})
+  call-alien	{constant "dylan_initialize"}, 0
+
+#() [10->30] (level:0) is red with stack state with
+#({basic-block #() 30 40})
+  push	{constant "Pexact_root"}
+  push	{constant "Pstatic_root"}
+  move	eax, {constant "Pambig_root"}
+  call	{constant "primitive_deregister_traced_roots"}, 1
+
+#() [30->40] (level:0) is red with stack state with
+#({basic-block #() 40 40})
+  move	eax, eax
+  call	{constant "primitive_exit_application"}, 1
+
+#() [40->40] (level:0) is red with stack state with
+#({basic-block #({tag 1:45}) 45 50})
+
+#({tag 1:45}) [45->50] (level:0) is #f with stack state #f
+#({basic-block #() 40 45})
+  preserve-registers-exit	
+
+#() [40->45] (level:0) is red with stack state #f
+#()
+  rts	
+
++++ ending code for dylan_main +++
+
++++ Live variable scopes for dylan_main +++
+Start scope at 7 with frame for no variables
+End scope at 37
+
++++ No Source Code Locators for dylan_main +++
+
+
++++ starting code for primitive_runtime_module_handle +++
+
+#() [0->5] (level:0) is red with stack state before
+#({basic-block #({tag 2:30}) 30 45})
+  rem	"This is a dummy first basic block."
+
+#({tag 2:30}) [30->45] (level:0) is #f with stack state #f
+#({basic-block #() 5 20})
+  preserve-registers-entry	
+  allocate-local-area	
+  allocate-raw-area	
+
+#() [5->20] (level:0) is red with stack state with
+#({basic-block #() 20 20})
+  ld	N0/eax, {constant "module_hInstance"}, 0
+  move	eax, N0/eax
+  call	{constant "primitive_wrap_machine_word"}, 1
+
+#() [20->20] (level:0) is red with stack state with
+#({basic-block #({tag 1:25}) 25 30})
+
+#({tag 1:25}) [25->30] (level:0) is #f with stack state #f
+#({basic-block #() 20 25})
+  preserve-registers-exit	
+
+#() [20->25] (level:0) is red with stack state #f
+#()
+  rts-and-drop	0
+
++++ ending code for primitive_runtime_module_handle +++
+
++++ Live variable scopes for primitive_runtime_module_handle +++
+Start scope at 3 with frame for no variables
+End scope at 13
+
++++ No Source Code Locators for primitive_runtime_module_handle +++
+
+
++++ Defining function DylanSOEntry in section init-code +++
+
++++ starting code for DylanSOEntry +++
+
+#() [0->5] (level:0) is red with stack state before
+#({basic-block #({tag 2:25}) 25 40})
+  rem	"This is a dummy first basic block."
+
+#({tag 2:25}) [25->40] (level:0) is #f with stack state #f
+#({basic-block #() 5 10})
+  preserve-registers-entry	
+  allocate-local-area	
+  allocate-raw-area	
+
+#() [5->10] (level:0) is red with stack state with
+#({basic-block #() 10 15})
+  call-alien	{constant "dylan_initialize"}, 0
+
+#() [10->15] (level:0) is red with stack state with
+#({basic-block #({tag 1:20}) 20 25})
+  move	eax, 0
+
+#({tag 1:20}) [20->25] (level:0) is #f with stack state #f
+#({basic-block #() 15 20})
+  preserve-registers-exit	
+
+#() [15->20] (level:0) is red with stack state #f
+#()
+  rts-and-drop	0
+
++++ ending code for DylanSOEntry +++
+
++++ Live variable scopes for DylanSOEntry +++
+Start scope at 3 with frame for no variables
+End scope at 10
+
++++ No Source Code Locators for DylanSOEntry +++
+
+
++++ Defining function DylanSOExit in section init-code +++
+
++++ starting code for DylanSOExit +++
+
+#() [0->5] (level:0) is red with stack state before
+#({basic-block #({tag 2:40}) 40 55})
+  rem	"This is a dummy first basic block."
+
+#({tag 2:40}) [40->55] (level:0) is #f with stack state #f
+#({basic-block #() 5 25})
+  preserve-registers-entry	
+  allocate-local-area	
+  allocate-raw-area	
+
+#() [5->25] (level:0) is red with stack state with
+#({basic-block #() 25 30})
+  push	{constant "Pexact_root"}
+  push	{constant "Pstatic_root"}
+  move	eax, {constant "Pambig_root"}
+  call	{constant "primitive_deregister_traced_roots"}, 1
+
+#() [25->30] (level:0) is red with stack state with
+#({basic-block #({tag 1:35}) 35 40})
+  move	eax, 0
+
+#({tag 1:35}) [35->40] (level:0) is #f with stack state #f
+#({basic-block #() 30 35})
+  preserve-registers-exit	
+
+#() [30->35] (level:0) is red with stack state #f
+#()
+  rts-and-drop	0
+
++++ ending code for DylanSOExit +++
+
++++ Live variable scopes for DylanSOExit +++
+Start scope at 7 with frame for no variables
+End scope at 28
+
++++ No Source Code Locators for DylanSOExit +++
+

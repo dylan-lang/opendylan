@@ -1,11 +1,24 @@
 /* Script for ld --shared: link shared library */
-OUTPUT_FORMAT("elf32-i386", "elf32-i386",
-	      "elf32-i386")
+OUTPUT_FORMAT("elf32-i386", "elf32-i386", "elf32-i386")
 OUTPUT_ARCH(i386)
 ENTRY(_start)
 SEARCH_DIR("/usr/i386-linux/lib"); SEARCH_DIR("/usr/lib"); SEARCH_DIR("/usr/local/lib"); SEARCH_DIR("/lib");
 /* Do we need any of these for elf?
    __DYNAMIC = 0;    */
+VERSION {
+  /* Ensure that dylan-support.o symbols are not overridden by other
+   * shared libraries
+   */
+  {
+  local:
+    DylanSOEntry;
+    DylanSOExit;
+    _init_dylan_library;
+    dylan_main;
+    module_hInstance;
+    primitive_runtime_module_handle;
+  };
+}
 SECTIONS
 {
   /* Read-only sections, merged into text segment: */
@@ -47,7 +60,7 @@ SECTIONS
   .plt            : { *(.plt) }
   .text           :
   {
-    *(.text .stub .text.* .gnu.linkonce.t.*)
+    *(.text .text$i .stub .text.* .gnu.linkonce.t.*)
     /* .gnu.warning sections are handled specially by elf32.em.  */
     *(.gnu.warning)
   } =0x90909090

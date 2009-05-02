@@ -111,6 +111,52 @@
 	BYTE 0
 	BYTE 0+++ external: "primitive_exit_application" +++
 
++++ (public) variable{constant "Pmaster_gc_teb"} " in section ambiguous-data" = 0 +++
+
++++ (public) variable{constant "Pmaster_teb"} " in section ambiguous-data" = 0 +++
+
++++ (public) variable{indirect-constant "Pteb_tlv_index"} " in section untraced-data" = -1 +++
+
++++ (public) variable{indirect-constant "Pteb_chain"} " in section untraced-data" = 0 +++
++++ external: "dylan_init_thread" +++
++++ external: "dylan_callin_handler" +++
++++ external: "trampoline_body" +++
++++ external: "dylan_mm_register_thread" +++
++++ external: "dylan_mm_deregister_thread_from_teb" +++
++++ external: "dylan_init_memory_manager" +++
++++ external: "dylan_shut_down_memory_manager" +++
++++ external: "MMRegisterRootStatic" +++
++++ external: "MMRegisterRootImmut" +++
++++ external: "MMRegisterRootAmbig" +++
++++ external: "MMRegisterRootExact" +++
++++ external: "MMDeregisterRoot" +++
++++ external: "MMFreeMisc" +++
++++ external: "Kmake_foreign_threadYthreads_primitivesVdylanI" +++
++++ external: "Kcall_application_exit_functionsVKeI" +++
+
++++ variable{constant "Pstatic_root"} " in section untraced-data" = 0 +++
+
++++ variable{constant "Pimmut_root"} " in section untraced-data" = 0 +++
+
++++ variable{constant "Pambig_root"} " in section untraced-data" = 0 +++
+
++++ variable{constant "Pexact_root"} " in section untraced-data" = 0 +++
+
++++ (public) variable{indirect-constant "Pstarted_unloading"} " in section untraced-data" = 0 +++
+
++++ (public) variable{constant "module_hInstance"} " in section untraced-data" = 0 +++
+
++++ (public) variable{indirect-constant "_init_dylan_library"} " in section untraced-data" = 0 +++
+
++++ (public) variable{indirect-constant "Pruntime_spin_lock"} " in section untraced-data" = 0 +++
+
++++ (public) variable{indirect-constant "Pruntime_thread_count"} " in section untraced-data" = 0 +++
++++ external: "primitive_ensure_valid_teb" +++
++++ external: "primitive_register_traced_roots" +++
++++ external: "primitive_deregister_traced_roots" +++
++++ external: "dylan_init_thread_local" +++
++++ external: "primitive_call_first_dylan_iep" +++
+
 +++ (public) variable{indirect-constant "Prunning_dylan_spy_functionQ"} " in section untraced-data" = 0 +++
 +++ external: "spy_invoke_dylan_under_coded_restartVKi" +++
 +++ external: "Kmake_simple_lockYthreads_primitivesVdylan" +++
@@ -248,6 +294,23 @@
 +++ external: "c_primitive_stop_timer" +++
 +++ external: "exit" +++
 +++ external: "system" +++
++++ external: "tlv_create_key" +++
++++ external: "tlv_destroy_key" +++
++++ external: "tlv_get_value" +++
++++ external: "tlv_set_value" +++
+
++++ Defining glue symbols +++
+  Data start is "_dylan_data_start"
+  Data end is "_dylan_data_end"
+  Variables start is "_dylan_vars_start"
+  Variables end is "_dylan_vars_end"
+  Objects start is "_dylan_objs_start"
+  Objects end is "_dylan_objs_end"
+  Fixup start is "_dylan_fixup_start"
+  Fixup end is "_dylan_fixup_end"
+  Import start is "_dylan_import_start"
+  Import end is "_dylan_import_end"
+
 
 +++ start of code +++
 
@@ -4687,6 +4750,1268 @@ Start scope at 3 with frame for no variables
 End scope at 12
 
 +++ No Source Code Locators for primitive_run_application +++
+
+
++++ Exported function definition make_foreign_thread_internal +++
+
++++ starting code for make_foreign_thread_internal +++
+
+#() [0->5] (level:0) is red with stack state before
+#({basic-block #({tag 2:20}) 20 35})
+  rem	"This is a dummy first basic block."
+
+#({tag 2:20}) [20->35] (level:0) is #f with stack state #f
+#({basic-block #() 5 10})
+  preserve-registers-entry	
+  allocate-local-area	
+  allocate-raw-area	
+
+#() [5->10] (level:0) is red with stack state with
+#({basic-block #() 10 10})
+  call	{constant "Kmake_foreign_threadYthreads_primitivesVdylanI"}, 0
+
+#() [10->10] (level:0) is red with stack state with
+#({basic-block #({tag 1:15}) 15 20})
+
+#({tag 1:15}) [15->20] (level:0) is #f with stack state #f
+#({basic-block #() 10 15})
+  preserve-registers-exit	
+
+#() [10->15] (level:0) is red with stack state #f
+#()
+  rts	
+
++++ ending code for make_foreign_thread_internal +++
+
++++ Live variable scopes for make_foreign_thread_internal +++
+Start scope at 7 with frame for no variables
+End scope at 11
+
++++ No Source Code Locators for make_foreign_thread_internal +++
+
+
++++ Exported function definition primitive_ensure_valid_teb +++
+
++++ starting code for primitive_ensure_valid_teb +++
+
+#() [0->5] (level:0) is red with stack state before
+#({basic-block #({tag 13:375}) 375 390})
+  rem	"This is a dummy first basic block."
+
+#({tag 13:375}) [375->390] (level:0) is #f with stack state #f
+#({basic-block #() 5 15})
+  preserve-registers-entry	
+  allocate-local-area	
+  allocate-raw-area	
+
+#() [5->15] (level:0) is red with stack state with
+#({basic-block #() 15 30})
+  push	{indirect-constant "Pteb_tlv_index"}
+  call-alien	{constant "tlv_get_value"}, 0
+
+#() [15->30] (level:0) is red with stack state with
+#({basic-block #() 30 40}, {basic-block #({tag 1:305}) 305 315})
+  add	esp, esp, 4
+  move	N0/NSPILL-0, eax
+  bne	{tag 1:305}, N0/NSPILL-0, 0
+
+#() [30->40] (level:0) is red with stack state with
+#({basic-block #() 40 80})
+  push	336
+  call-alien	{constant "dylan__malloc__misc"}, 0
+
+#() [40->80] (level:0) is red with stack state with
+#({basic-block #() 80 85})
+  add	esp, esp, 4
+  move	N1/edi, eax
+  add	N2/NSPILL-1, N1/edi, 12
+  add	N3/ebx, N2/NSPILL-1, 324
+  push	N3/ebx
+  push	N1/edi
+  push	N1/edi
+  call-alien	{constant "MMRegisterRootAmbig"}, 0
+
+#() [80->85] (level:0) is red with stack state with
+#({basic-block #({tag 8:335}) 335 340})
+  add	esp, esp, 12
+
+#({tag 8:335}) [335->340] (level:1) is green with stack state with
+#({basic-block #({tag 9:90}) 90 95}, {basic-block #({tag 8:335}) 335 340})
+  conditional-move	{tag 8:335}, {indirect-constant "Pruntime_spin_lock"}, 1, 0
+
+#({tag 9:90}) [90->95] (level:0) is red with stack state with
+#({basic-block #() 95 100}, {basic-block #({tag 2:100}) 100 170})
+  beq	{tag 2:100}, {indirect-constant "Pteb_chain"}, 0
+
+#() [95->100] (level:0) is red with stack state with
+#({basic-block #({tag 2:100}) 100 170})
+  st	N1/edi, {indirect-constant "Pteb_chain"}, 8
+
+#({tag 2:100}) [100->170] (level:0) is red with stack state with
+#({basic-block #() 170 195})
+  st	{indirect-constant "Pteb_chain"}, N1/edi, 4
+  st	0, N1/edi, 8
+  move	{indirect-constant "Pteb_chain"}, N1/edi
+  move	{indirect-constant "Pruntime_spin_lock"}, 0
+  add	N0/NSPILL-0, N2/NSPILL-1, 32
+  st	0, N2/NSPILL-1, 0
+  st	0, N2/NSPILL-1, 4
+  st	0, N0/NSPILL-0, 0
+  st	{constant "KPempty_listVKi"}, N0/NSPILL-0, 16
+  st	{constant "KPunboundVKi"}, N0/NSPILL-0, 4
+  set-teb	N0/NSPILL-0
+  push	N0/NSPILL-0
+  push	{indirect-constant "Pteb_tlv_index"}
+  call-alien	{constant "tlv_set_value"}, 0
+
+#() [170->195] (level:0) is red with stack state with
+#({basic-block #() 195 205})
+  add	esp, esp, 8
+  st	0, N0/NSPILL-0, 20
+  or	N4/edi, esp, 1020
+  push	N4/edi
+  call-alien	{constant "dylan_mm_register_thread"}, 0
+
+#() [195->205] (level:0) is red with stack state with
+#({basic-block #() 205 220}, {basic-block #({tag 6:320}) 320 335})
+  add	esp, esp, 4
+  beq	{tag 6:320}, eax, 0
+
+#() [205->220] (level:0) is red with stack state with
+#({basic-block #() 220 230})
+  push	0
+  push	{indirect-constant "Pteb_tlv_index"}
+  call-alien	{constant "tlv_set_value"}, 0
+
+#() [220->230] (level:0) is red with stack state with
+#({basic-block #({tag 6:320}) 320 335})
+  add	esp, esp, 8
+  halt	
+
+#({tag 6:320}) [320->335] (level:1) is green with stack state with
+#({basic-block #({tag 7:245}) 245 290}, {basic-block #({tag 6:320}) 320 335})
+  move	N5/eax, {indirect-constant "Pruntime_thread_count"}
+  add	N6/edi, N5/eax, 1
+  conditional-move	{tag 6:320}, {indirect-constant "Pruntime_thread_count"}, N6/edi, N5/eax
+
+#({tag 7:245}) [245->290] (level:0) is red with stack state with
+#({basic-block #() 290 305})
+  init-fpu	
+  push	0
+  move	N7/edi, esp
+  st	-1, N0/NSPILL-0, 20
+  push	0
+  push	0
+  push	{constant "make_foreign_thread_internal"}
+  push	N7/edi
+  call-alien	{constant "dylan_init_thread"}, 0
+
+#() [290->305] (level:0) is red with stack state with
+#({basic-block #({tag 1:305}) 305 315})
+  add	esp, esp, 16
+  add	esp, esp, 4
+  st	0, N0/NSPILL-0, 20
+
+#({tag 1:305}) [305->315] (level:0) is red with stack state with
+#({basic-block #({tag 10:340}) 340 345})
+  set-teb	N0/NSPILL-0
+  move	eax, N0/NSPILL-0
+
+#({tag 10:340}) [340->345] (level:0) is #f with stack state #f
+#({basic-block #() 315 320})
+  preserve-registers-exit	
+
+#() [315->320] (level:0) is red with stack state #f
+#()
+  rts	
+
++++ ending code for primitive_ensure_valid_teb +++
+
++++ Frame sizes for primitive_ensure_valid_teb: GC: 0, NC: 2 +++
+
++++ Live variable scopes for primitive_ensure_valid_teb +++
+Start scope at 3 with frame for no variables
+End scope at 386
+
++++ No Source Code Locators for primitive_ensure_valid_teb +++
+
+
++++ Exported function definition dylan_call_in +++
+
++++ starting code for dylan_call_in +++
+
+#() [0->5] (level:0) is red with stack state before
+#({basic-block #({tag 3:105}) 105 120})
+  rem	"This is a dummy first basic block."
+
+#({tag 3:105}) [105->120] (level:0) is #f with stack state #f
+#({basic-block #() 5 20})
+  preserve-registers-entry	
+  allocate-local-area	
+  allocate-raw-area	
+
+#() [5->20] (level:0) is red with stack state with
+#({basic-block #() 20 65})
+  move	N4/NSPILL-0, ecx
+  move	N5/NSPILL-1, eax
+  call	{constant "primitive_ensure_valid_teb"}, 0
+
+#() [20->65] (level:0) is red with stack state with
+#({basic-block #() 65 95})
+  move	N0/edi, eax
+  st	-1, N0/edi, 20
+  load-address-of-stack-arg-n	#t, N2/edx, 0
+  push	N2/edx
+  push	N5/NSPILL-1
+  move	N3/edx, esp
+  push	N4/NSPILL-0
+  push	N3/edx
+  call-alien	{constant "dylan_callin_handler"}, 0
+
+#() [65->95] (level:0) is red with stack state with
+#({basic-block #({tag 2:100}) 100 105})
+  add	esp, esp, 8
+  add	esp, esp, 8
+  move	N1/eax, eax
+  st	0, N0/edi, 20
+  move	eax, N1/eax
+  asl	ecx, N4/NSPILL-0, 2
+
+#({tag 2:100}) [100->105] (level:0) is #f with stack state #f
+#({basic-block #() 95 100})
+  preserve-registers-exit	
+
+#() [95->100] (level:0) is red with stack state #f
+#()
+  rts-and-drop	ecx
+
++++ ending code for dylan_call_in +++
+
++++ Frame sizes for dylan_call_in: GC: 0, NC: 2 +++
+
++++ Live variable scopes for dylan_call_in +++
+Start scope at 7 with frame for no variables
+End scope at 67
+
++++ No Source Code Locators for dylan_call_in +++
+
+
++++ Exported function definition dylan_call_in_syscall +++
+
++++ starting code for dylan_call_in_syscall +++
+
+#() [0->5] (level:0) is red with stack state before
+#({basic-block #({tag 3:100}) 100 115})
+  rem	"This is a dummy first basic block."
+
+#({tag 3:100}) [100->115] (level:0) is #f with stack state #f
+#({basic-block #() 5 20})
+  preserve-registers-entry	
+  allocate-local-area	
+  allocate-raw-area	
+
+#() [5->20] (level:0) is red with stack state with
+#({basic-block #() 20 65})
+  move	N4/NSPILL-1, ecx
+  move	N5/NSPILL-0, eax
+  call	{constant "primitive_ensure_valid_teb"}, 0
+
+#() [20->65] (level:0) is red with stack state with
+#({basic-block #() 65 90})
+  move	N0/edi, eax
+  st	-1, N0/edi, 20
+  load-address-of-stack-arg-n	#t, N2/edx, 0
+  push	N2/edx
+  push	N5/NSPILL-0
+  move	N3/edx, esp
+  push	N4/NSPILL-1
+  push	N3/edx
+  call-alien	{constant "dylan_callin_handler"}, 0
+
+#() [65->90] (level:0) is red with stack state with
+#({basic-block #({tag 2:95}) 95 100})
+  add	esp, esp, 8
+  add	esp, esp, 8
+  move	N1/eax, eax
+  st	0, N0/edi, 20
+  move	eax, N1/eax
+
+#({tag 2:95}) [95->100] (level:0) is #f with stack state #f
+#({basic-block #() 90 95})
+  preserve-registers-exit	
+
+#() [90->95] (level:0) is red with stack state #f
+#()
+  rts	
+
++++ ending code for dylan_call_in_syscall +++
+
++++ Frame sizes for dylan_call_in_syscall: GC: 0, NC: 2 +++
+
++++ Live variable scopes for dylan_call_in_syscall +++
+Start scope at 7 with frame for no variables
+End scope at 61
+
++++ No Source Code Locators for dylan_call_in_syscall +++
+
+
++++ Exported function definition dylan_callin_internal +++
+
++++ starting code for dylan_callin_internal +++
+
+#() [0->5] (level:0) is red with stack state before
+#({basic-block #({tag 4:60}) 60 75})
+  rem	"This is a dummy first basic block."
+
+#({tag 4:60}) [60->75] (level:0) is #f with stack state #f
+#({basic-block #() 5 25})
+  preserve-registers-entry	
+  allocate-local-area	
+  allocate-raw-area	
+
+#() [5->25] (level:0) is red with stack state with
+#({basic-block #({tag 1:25}) 25 45})
+  load-stack-arg-n	#t, N0/edx, 0
+  load-stack-arg-n	#t, N1/ecx, 1
+  ld	N2/eax, N0/edx, 0
+  ld	N3/edx, N0/edx, 4
+
+#({tag 1:25}) [25->45] (level:0) is red with stack state with
+#({basic-block #({tag 2:45}) 45 50})
+  asl	N4/edi, N1/ecx, 2
+  sub	esp, esp, N4/edi
+  move	N5/edi, esp
+  copy-words-down-w	N5/edi, N3/edx, N1/ecx
+
+#({tag 2:45}) [45->50] (level:0) is red with stack state with
+#({basic-block #() 50 50})
+  call-alien	N2/eax, 0
+
+#() [50->50] (level:0) is red with stack state with
+#({basic-block #({tag 3:55}) 55 60})
+
+#({tag 3:55}) [55->60] (level:0) is #f with stack state #f
+#({basic-block #() 50 55})
+  preserve-registers-exit	
+
+#() [50->55] (level:0) is red with stack state #f
+#()
+  rts	
+
++++ ending code for dylan_callin_internal +++
+
++++ Live variable scopes for dylan_callin_internal +++
+Start scope at 7 with frame for no variables
+End scope at 34
+
++++ No Source Code Locators for dylan_callin_internal +++
+
+
++++ Exported function definition inside_dylan_ffi_barrier +++
+
++++ starting code for inside_dylan_ffi_barrier +++
+
+#() [0->5] (level:0) is red with stack state before
+#({basic-block #({tag 3:55}) 55 70})
+  rem	"This is a dummy first basic block."
+
+#({tag 3:55}) [55->70] (level:0) is #f with stack state #f
+#({basic-block #() 5 15})
+  preserve-registers-entry	
+  allocate-local-area	
+  allocate-raw-area	
+
+#() [5->15] (level:0) is red with stack state with
+#({basic-block #() 15 35})
+  push	{indirect-constant "Pteb_tlv_index"}
+  call-alien	{constant "tlv_get_value"}, 0
+
+#() [15->35] (level:0) is red with stack state with
+#({basic-block #() 35 40}, {basic-block #({tag 1:50}) 40 45})
+  add	esp, esp, 4
+  move	N0/eax, eax
+  ld	N1/eax, N0/eax, 20
+  beq	{tag 1:50}, N1/eax, -1
+
+#() [35->40] (level:0) is red with stack state with
+#({basic-block #({tag 1:50}) 40 45})
+  move	N1/eax, 0
+
+#({tag 1:50}) [40->45] (level:0) is red with stack state with
+#({basic-block #({tag 1:50}, {tag 2:50}) 50 55})
+  move	eax, N1/eax
+
+#({tag 1:50}, {tag 2:50}) [50->55] (level:0) is #f with stack state #f
+#({basic-block #() 45 50})
+  preserve-registers-exit	
+
+#() [45->50] (level:0) is red with stack state #f
+#()
+  rts	
+
++++ ending code for inside_dylan_ffi_barrier +++
+
++++ Live variable scopes for inside_dylan_ffi_barrier +++
+Start scope at 3 with frame for no variables
+End scope at 27
+
++++ No Source Code Locators for inside_dylan_ffi_barrier +++
+
+
++++ Defining function primitive_register_traced_roots in section init-code +++
+
++++ Exported function definition primitive_register_traced_roots +++
+
++++ starting code for primitive_register_traced_roots +++
+
+#() [0->5] (level:0) is green with stack state before
+#({basic-block #() 5 55})
+  rem	"This is a dummy first basic block."
+
+#() [5->55] (level:0) is green with stack state before
+#({basic-block #({tag 13:190}) 190 205}, {basic-block #({tag 1:80}) 80 85})
+  move	N0/edx, eax
+  load-stack-arg-n	#f, N1/ebx, 0
+  load-stack-arg-n	#f, N2/ecx, 1
+  load-stack-arg-n	#f, N3/NSPILL--3, 2
+  load-stack-arg-n	#f, N4/NSPILL--4, 3
+  load-stack-arg-n	#f, N5/NSPILL--5, 4
+  load-stack-arg-n	#f, N6/NSPILL--6, 5
+  load-stack-arg-n	#f, N7/edi, 6
+  load-stack-arg-n	#f, N8/NSPILL--8, 7
+  beq	{tag 1:80}, N0/edx, N1/ebx
+
+#({tag 13:190}) [190->205] (level:0) is #f with stack state #f
+#({basic-block #() 55 75})
+  preserve-registers-entry	
+  allocate-local-area	
+  allocate-raw-area	
+
+#() [55->75] (level:0) is red with stack state with
+#({basic-block #() 75 80})
+  push	N1/ebx
+  push	N0/edx
+  push	N2/ecx
+  call-alien	{constant "MMRegisterRootAmbig"}, 0
+
+#() [75->80] (level:0) is red with stack state with
+#({basic-block #({tag 8:150}) 150 155})
+  add	esp, esp, 12
+
+#({tag 8:150}) [150->155] (level:0) is green with stack state with
+#({basic-block #({tag 9:85}) 85 105}, {basic-block #({tag 6:145}) 145 150})
+  beq	{tag 6:145}, N3/NSPILL--3, N4/NSPILL--4
+
+#({tag 9:85}) [85->105] (level:0) is red with stack state with
+#({basic-block #() 105 110})
+  push	N4/NSPILL--4
+  push	N3/NSPILL--3
+  push	N5/NSPILL--5
+  call-alien	{constant "MMRegisterRootStatic"}, 0
+
+#() [105->110] (level:0) is red with stack state with
+#({basic-block #({tag 6:145}) 145 150})
+  add	esp, esp, 12
+
+#({tag 6:145}) [145->150] (level:0) is green with stack state with
+#({basic-block #({tag 7:115}) 115 135}, {basic-block #({tag 4:155}) 145 145})
+  beq	{tag 4:155}, N6/NSPILL--6, N7/edi
+
+#({tag 7:115}) [115->135] (level:0) is red with stack state with
+#({basic-block #() 135 140})
+  push	N7/edi
+  push	N6/NSPILL--6
+  push	N8/NSPILL--8
+  call-alien	{constant "MMRegisterRootExact"}, 0
+
+#() [135->140] (level:0) is red with stack state with
+#({basic-block #({tag 4:155}) 145 145})
+  add	esp, esp, 12
+
+#({tag 4:155}) [145->145] (level:0) is green with stack state with
+#({basic-block #({tag 4:155}, {tag 10:155}) 155 160})
+
+#({tag 4:155}, {tag 10:155}) [155->160] (level:0) is #f with stack state #f
+#({basic-block #({tag 3:140}, {tag 5:140}) 140 145})
+  preserve-registers-exit	
+
+#({tag 3:140}, {tag 5:140}) [140->145] (level:0) is green with stack state #f
+#()
+  rts-and-drop	32
+
+#({tag 1:80}) [80->85] (level:0) is green with stack state before
+#({basic-block #({tag 12:175}) 175 190}, {basic-block #({tag 2:110}) 110 115})
+  beq	{tag 2:110}, N3/NSPILL--3, N4/NSPILL--4
+
+#({tag 12:175}) [175->190] (level:0) is #f with stack state #f
+#({basic-block #({tag 9:85}) 85 105})
+  preserve-registers-entry	
+  allocate-local-area	
+  allocate-raw-area	
+
+#() [205->210] (level:0) is #f with stack state #f
+#()
+  bra	{tag 9:85}
+
+#({tag 2:110}) [110->115] (level:0) is green with stack state before
+#({basic-block #({tag 11:160}) 160 175}, {basic-block #({tag 3:140}) 140 140})
+  beq	{tag 3:140}, N6/NSPILL--6, N7/edi
+
+#({tag 11:160}) [160->175] (level:0) is #f with stack state #f
+#({basic-block #({tag 7:115}) 115 135})
+  preserve-registers-entry	
+  allocate-local-area	
+  allocate-raw-area	
+
+#() [210->215] (level:0) is #f with stack state #f
+#()
+  bra	{tag 7:115}
+
+#({tag 3:140}) [140->140] (level:0) is green with stack state before
+#({basic-block #({tag 3:140}, {tag 5:140}) 140 145})
+
++++ ending code for primitive_register_traced_roots +++
+
++++ Live variable scopes for primitive_register_traced_roots +++
+Start scope at 21 with frame for no variables
+End scope at 79
+Start scope at 80 no frame for no variables
+End scope at 96
+Start scope at 97 with frame for no variables
+End scope at 107
+
++++ No Source Code Locators for primitive_register_traced_roots +++
+
+
++++ Exported function definition call_dylan_exit_functions_internal +++
+
++++ starting code for call_dylan_exit_functions_internal +++
+
+#() [0->5] (level:0) is red with stack state before
+#({basic-block #({tag 2:20}) 20 35})
+  rem	"This is a dummy first basic block."
+
+#({tag 2:20}) [20->35] (level:0) is #f with stack state #f
+#({basic-block #() 5 10})
+  preserve-registers-entry	
+  allocate-local-area	
+  allocate-raw-area	
+
+#() [5->10] (level:0) is red with stack state with
+#({basic-block #() 10 10})
+  call	{constant "Kcall_application_exit_functionsVKeI"}, 0
+
+#() [10->10] (level:0) is red with stack state with
+#({basic-block #({tag 1:15}) 15 20})
+
+#({tag 1:15}) [15->20] (level:0) is #f with stack state #f
+#({basic-block #() 10 15})
+  preserve-registers-exit	
+
+#() [10->15] (level:0) is red with stack state #f
+#()
+  rts	
+
++++ ending code for call_dylan_exit_functions_internal +++
+
++++ Live variable scopes for call_dylan_exit_functions_internal +++
+Start scope at 7 with frame for no variables
+End scope at 11
+
++++ No Source Code Locators for call_dylan_exit_functions_internal +++
+
+
++++ Exported function definition call_dylan_exit_functions +++
+
++++ starting code for call_dylan_exit_functions +++
+
+#() [0->5] (level:0) is green with stack state before
+#({basic-block #() 5 15})
+  rem	"This is a dummy first basic block."
+
+#() [5->15] (level:0) is green with stack state #f
+#({basic-block #() 15 20})
+  move	ecx, 0
+  move	eax, {constant "call_dylan_exit_functions_internal"}
+
+#() [15->20] (level:0) is green with stack state #f
+#()
+  jmp-alien	{constant "dylan_call_in_syscall"}, #[1, #"arg-count"], 0, #f, #f
+
++++ ending code for call_dylan_exit_functions +++
+
++++ No Source Code Locators for call_dylan_exit_functions +++
+
+
++++ Defining function primitive_deregister_traced_roots in section init-code +++
+
++++ Exported function definition primitive_deregister_traced_roots +++
+
++++ starting code for primitive_deregister_traced_roots +++
+
+#() [0->5] (level:0) is red with stack state before
+#({basic-block #({tag 3:110}) 110 125})
+  rem	"This is a dummy first basic block."
+
+#({tag 3:110}) [110->125] (level:0) is #f with stack state #f
+#({basic-block #() 5 25})
+  preserve-registers-entry	
+  allocate-local-area	
+  allocate-raw-area	
+
+#() [5->25] (level:0) is red with stack state with
+#({basic-block #() 25 30}, {basic-block #({tag 1:40}) 40 55})
+  move	N1/edi, eax
+  load-stack-arg-n	#t, N2/NSPILL--1, 0
+  load-stack-arg-n	#t, N3/NSPILL--2, 1
+  bne	{tag 1:40}, {indirect-constant "Pstarted_unloading"}, 0
+
+#() [25->30] (level:0) is red with stack state with
+#({basic-block #() 30 40})
+  call-alien	{constant "call_dylan_exit_functions"}, 0
+
+#() [30->40] (level:0) is red with stack state with
+#({basic-block #({tag 1:40}) 40 55})
+  move	{indirect-constant "Pstarted_unloading"}, 1
+  call-alien	{constant "primitive_mps_park"}, 0
+
+#({tag 1:40}) [40->55] (level:0) is red with stack state with
+#({basic-block #() 55 75})
+  ld	N0/edi, N1/edi, 0
+  push	N0/edi
+  call-alien	{constant "MMDeregisterRoot"}, 0
+
+#() [55->75] (level:0) is red with stack state with
+#({basic-block #() 75 95})
+  add	esp, esp, 4
+  ld	N0/edi, N2/NSPILL--1, 0
+  push	N0/edi
+  call-alien	{constant "MMDeregisterRoot"}, 0
+
+#() [75->95] (level:0) is red with stack state with
+#({basic-block #() 95 100})
+  add	esp, esp, 4
+  ld	N0/edi, N3/NSPILL--2, 0
+  push	N0/edi
+  call-alien	{constant "MMDeregisterRoot"}, 0
+
+#() [95->100] (level:0) is red with stack state with
+#({basic-block #({tag 2:105}) 105 110})
+  add	esp, esp, 4
+
+#({tag 2:105}) [105->110] (level:0) is #f with stack state #f
+#({basic-block #() 100 105})
+  preserve-registers-exit	
+
+#() [100->105] (level:0) is red with stack state #f
+#()
+  rts-and-drop	8
+
++++ ending code for primitive_deregister_traced_roots +++
+
++++ Live variable scopes for primitive_deregister_traced_roots +++
+Start scope at 3 with frame for no variables
+End scope at 77
+
++++ No Source Code Locators for primitive_deregister_traced_roots +++
+
+
++++ Exported function definition dylan_init_thread_local +++
+
++++ starting code for dylan_init_thread_local +++
+
+#() [0->5] (level:0) is green with stack state before
+#({basic-block #() 5 5})
+  rem	"This is a dummy first basic block."
+
+#() [5->5] (level:0) is green with stack state #f
+#({basic-block #() 5 10})
+
+#() [5->10] (level:0) is green with stack state #f
+#()
+  jmp	{constant "dylan_init_thread"}, 0, 0, #f, #f
+
++++ ending code for dylan_init_thread_local +++
+
++++ No Source Code Locators for dylan_init_thread_local +++
+
+
++++ Defining function primitive_call_first_dylan_iep in section init-code +++
+
++++ Exported function definition primitive_call_first_dylan_iep +++
+
++++ starting code for primitive_call_first_dylan_iep +++
+
+#() [0->5] (level:0) is green with stack state before
+#({basic-block #() 5 10})
+  rem	"This is a dummy first basic block."
+
+#() [5->10] (level:0) is green with stack state #f
+#({basic-block #() 10 15})
+  move	N0/eax, eax
+
+#() [10->15] (level:0) is green with stack state #f
+#()
+  jmp	N0/eax, 0, 0, #f, #f
+
++++ ending code for primitive_call_first_dylan_iep +++
+
++++ No Source Code Locators for primitive_call_first_dylan_iep +++
+
+
++++ Defining function init_dylan_data in section init-code +++
+
++++ Static function definition init_dylan_data +++
+
++++ starting code for init_dylan_data +++
+
+#() [0->5] (level:0) is red with stack state before
+#({basic-block #({tag 2:65}) 65 80})
+  rem	"This is a dummy first basic block."
+
+#({tag 2:65}) [65->80] (level:0) is #f with stack state #f
+#({basic-block #() 5 55})
+  preserve-registers-entry	
+  allocate-local-area	
+  allocate-raw-area	
+
+#() [5->55] (level:0) is red with stack state with
+#({basic-block #() 55 55})
+  push	{constant "Pexact_root"}
+  push	{constant "_dylan_vars_end"}
+  push	{constant "_dylan_vars_start"}
+  push	{constant "Pstatic_root"}
+  push	{constant "_dylan_objs_end"}
+  push	{constant "_dylan_objs_start"}
+  push	{constant "Pambig_root"}
+  push	{constant "_dylan_data_end"}
+  move	eax, {constant "_dylan_data_start"}
+  call	{constant "primitive_register_traced_roots"}, 1
+
+#() [55->55] (level:0) is red with stack state with
+#({basic-block #({tag 1:60}) 60 65})
+
+#({tag 1:60}) [60->65] (level:0) is #f with stack state #f
+#({basic-block #() 55 60})
+  preserve-registers-exit	
+
+#() [55->60] (level:0) is red with stack state #f
+#()
+  rts	
+
++++ ending code for init_dylan_data +++
+
++++ Live variable scopes for init_dylan_data +++
+Start scope at 7 with frame for no variables
+End scope at 56
+
++++ No Source Code Locators for init_dylan_data +++
+
+
++++ Defining function call_init_dylan in section init-code +++
+
++++ Static function definition call_init_dylan +++
+
++++ starting code for call_init_dylan +++
+
+#() [0->5] (level:0) is red with stack state before
+#({basic-block #({tag 2:20}) 20 35})
+  rem	"This is a dummy first basic block."
+
+#({tag 2:20}) [20->35] (level:0) is #f with stack state #f
+#({basic-block #() 5 10})
+  preserve-registers-entry	
+  allocate-local-area	
+  allocate-raw-area	
+
+#() [5->10] (level:0) is red with stack state with
+#({basic-block #() 10 10})
+  call	{indirect-constant "_init_dylan_library"}, 0
+
+#() [10->10] (level:0) is red with stack state with
+#({basic-block #({tag 1:15}) 15 20})
+
+#({tag 1:15}) [15->20] (level:0) is #f with stack state #f
+#({basic-block #() 10 15})
+  preserve-registers-exit	
+
+#() [10->15] (level:0) is red with stack state #f
+#()
+  rts	
+
++++ ending code for call_init_dylan +++
+
++++ Live variable scopes for call_init_dylan +++
+Start scope at 7 with frame for no variables
+End scope at 12
+
++++ No Source Code Locators for call_init_dylan +++
+
+
++++ Defining function dylan_initialize in section init-code +++
+
++++ Static function definition dylan_initialize +++
+
++++ starting code for dylan_initialize +++
+
+#() [0->5] (level:0) is red with stack state before
+#({basic-block #({tag 2:80}) 80 95})
+  rem	"This is a dummy first basic block."
+
+#({tag 2:80}) [80->95] (level:0) is #f with stack state #f
+#({basic-block #() 5 20})
+  preserve-registers-entry	
+  allocate-local-area	
+  allocate-raw-area	
+
+#() [5->20] (level:0) is red with stack state with
+#({basic-block #() 20 55})
+  push	0
+  move	N0/NSPILL-0, esp
+  call-alien	{constant "init_dylan_data"}, 0
+
+#() [20->55] (level:0) is red with stack state with
+#({basic-block #() 55 70})
+  get-teb	N1/edi
+  st	-1, N1/edi, 20
+  push	0
+  push	0
+  push	{constant "call_init_dylan"}
+  push	N0/NSPILL-0
+  call-alien	{constant "dylan_init_thread_local"}, 0
+
+#() [55->70] (level:0) is red with stack state with
+#({basic-block #({tag 1:75}) 75 80})
+  add	esp, esp, 16
+  st	0, N1/edi, 20
+  move	eax, 0
+
+#({tag 1:75}) [75->80] (level:0) is #f with stack state #f
+#({basic-block #() 70 75})
+  preserve-registers-exit	
+
+#() [70->75] (level:0) is red with stack state #f
+#()
+  rts	
+
++++ ending code for dylan_initialize +++
+
++++ Frame sizes for dylan_initialize: GC: 0, NC: 1 +++
+
++++ Live variable scopes for dylan_initialize +++
+Start scope at 5 with frame for no variables
+End scope at 68
+
++++ No Source Code Locators for dylan_initialize +++
+
+
++++ Defining function dylan_main in section init-code +++
+
++++ starting code for dylan_main +++
+
+#() [0->5] (level:0) is red with stack state before
+#({basic-block #({tag 2:50}) 50 65})
+  rem	"This is a dummy first basic block."
+
+#({tag 2:50}) [50->65] (level:0) is #f with stack state #f
+#({basic-block #() 5 10})
+  preserve-registers-entry	
+  allocate-local-area	
+  allocate-raw-area	
+
+#() [5->10] (level:0) is red with stack state with
+#({basic-block #() 10 30})
+  call-alien	{constant "dylan_initialize"}, 0
+
+#() [10->30] (level:0) is red with stack state with
+#({basic-block #() 30 40})
+  push	{constant "Pexact_root"}
+  push	{constant "Pstatic_root"}
+  move	eax, {constant "Pambig_root"}
+  call	{constant "primitive_deregister_traced_roots"}, 1
+
+#() [30->40] (level:0) is red with stack state with
+#({basic-block #() 40 40})
+  move	eax, eax
+  call	{constant "primitive_exit_application"}, 1
+
+#() [40->40] (level:0) is red with stack state with
+#({basic-block #({tag 1:45}) 45 50})
+
+#({tag 1:45}) [45->50] (level:0) is #f with stack state #f
+#({basic-block #() 40 45})
+  preserve-registers-exit	
+
+#() [40->45] (level:0) is red with stack state #f
+#()
+  rts	
+
++++ ending code for dylan_main +++
+
++++ Live variable scopes for dylan_main +++
+Start scope at 7 with frame for no variables
+End scope at 37
+
++++ No Source Code Locators for dylan_main +++
+
+
++++ Defining function dylan_main_0 in section init-code +++
+
++++ Exported function definition dylan_main_0 +++
+
++++ starting code for dylan_main_0 +++
+
+#() [0->5] (level:0) is red with stack state before
+#({basic-block #({tag 26:530}) 530 545})
+  rem	"This is a dummy first basic block."
+
+#({tag 26:530}) [530->545] (level:0) is #f with stack state #f
+#({basic-block #() 5 10})
+  preserve-registers-entry	
+  allocate-local-area	
+  allocate-raw-area	
+
+#() [5->10] (level:0) is red with stack state with
+#({basic-block #() 10 60})
+  call-alien	{constant "tlv_create_key"}, 0
+
+#() [10->60] (level:0) is red with stack state with
+#({basic-block #() 60 75})
+  move	{indirect-constant "Pteb_tlv_index"}, eax
+  st	0, {constant "Pmaster_gc_teb"}, 0
+  st	0, {constant "Pmaster_gc_teb"}, 4
+  st	0, {constant "Pmaster_teb"}, 0
+  st	{constant "KPempty_listVKi"}, {constant "Pmaster_teb"}, 16
+  st	{constant "KPunboundVKi"}, {constant "Pmaster_teb"}, 4
+  set-teb	{constant "Pmaster_teb"}
+  push	{constant "Pmaster_teb"}
+  push	{indirect-constant "Pteb_tlv_index"}
+  call-alien	{constant "tlv_set_value"}, 0
+
+#() [60->75] (level:0) is red with stack state with
+#({basic-block #() 75 90})
+  add	esp, esp, 8
+  st	0, {constant "Pmaster_teb"}, 20
+  call-alien	{constant "dylan_init_memory_manager"}, 0
+
+#() [75->90] (level:0) is red with stack state with
+#({basic-block #() 90 100})
+  or	N0/edx, esp, 1020
+  push	N0/edx
+  call-alien	{constant "dylan_mm_register_thread"}, 0
+
+#() [90->100] (level:0) is red with stack state with
+#({basic-block #() 100 115}, {basic-block #({tag 19:450}) 450 465})
+  add	esp, esp, 4
+  beq	{tag 19:450}, eax, 0
+
+#() [100->115] (level:0) is red with stack state with
+#({basic-block #() 115 125})
+  push	0
+  push	{indirect-constant "Pteb_tlv_index"}
+  call-alien	{constant "tlv_set_value"}, 0
+
+#() [115->125] (level:0) is red with stack state with
+#({basic-block #({tag 19:450}) 450 465})
+  add	esp, esp, 8
+  halt	
+
+#({tag 19:450}) [450->465] (level:1) is green with stack state with
+#({basic-block #({tag 20:140}) 140 150}, {basic-block #({tag 19:450}) 450 465})
+  move	N1/eax, {indirect-constant "Pruntime_thread_count"}
+  add	N2/edx, N1/eax, 1
+  conditional-move	{tag 19:450}, {indirect-constant "Pruntime_thread_count"}, N2/edx, N1/eax
+
+#({tag 20:140}) [140->150] (level:0) is red with stack state with
+#({basic-block #() 150 170})
+  init-fpu	
+  call-alien	{constant "dylan_initialize"}, 0
+
+#() [150->170] (level:0) is red with stack state with
+#({basic-block #() 170 180})
+  push	{constant "Pexact_root"}
+  push	{constant "Pstatic_root"}
+  move	eax, {constant "Pambig_root"}
+  call	{constant "primitive_deregister_traced_roots"}, 1
+
+#() [170->180] (level:0) is red with stack state with
+#({basic-block #() 180 190}, {basic-block #({tag 5:215}) 215 220})
+  ld	N3/edx, {constant "Pmaster_gc_teb"}, 4
+  beq	{tag 5:215}, N3/edx, 0
+
+#() [180->190] (level:0) is red with stack state with
+#({basic-block #() 190 200})
+  push	{constant "Pmaster_gc_teb"}
+  call-alien	{constant "dylan_mm_deregister_thread_from_teb"}, 0
+
+#() [190->200] (level:0) is red with stack state with
+#({basic-block #({tag 18:435}) 435 450})
+  add	esp, esp, 4
+  st	0, {constant "Pmaster_gc_teb"}, 4
+
+#({tag 18:435}) [435->450] (level:1) is green with stack state with
+#({basic-block #({tag 5:215}) 215 220}, {basic-block #({tag 18:435}) 435 450})
+  move	N4/eax, {indirect-constant "Pruntime_thread_count"}
+  sub	N5/edx, N4/eax, 1
+  conditional-move	{tag 18:435}, {indirect-constant "Pruntime_thread_count"}, N5/edx, N4/eax
+
+#({tag 5:215}) [215->220] (level:0) is green with stack state with
+#({basic-block #({tag 8:220}) 220 225})
+  move	N6/NSPILL-0, {indirect-constant "Pteb_chain"}
+
+#({tag 8:220}) [220->225] (level:1) is green with stack state with
+#({basic-block #() 225 240}, {basic-block #({tag 7:375}) 375 385})
+  beq	{tag 7:375}, N6/NSPILL-0, 0
+
+#() [225->240] (level:1) is green with stack state with
+#({basic-block #() 240 250}, {basic-block #({tag 9:275}) 275 285})
+  add	N7/edi, N6/NSPILL-0, 12
+  ld	N8/edx, N7/edi, 4
+  beq	{tag 9:275}, N8/edx, 0
+
+#() [240->250] (level:1) is red with stack state with
+#({basic-block #() 250 260})
+  push	N7/edi
+  call-alien	{constant "dylan_mm_deregister_thread_from_teb"}, 0
+
+#() [250->260] (level:1) is red with stack state with
+#({basic-block #({tag 17:420}) 420 435})
+  add	esp, esp, 4
+  st	0, N7/edi, 4
+
+#({tag 17:420}) [420->435] (level:2) is green with stack state with
+#({basic-block #({tag 9:275}) 275 285}, {basic-block #({tag 17:420}) 420 435})
+  move	N9/eax, {indirect-constant "Pruntime_thread_count"}
+  sub	N10/edx, N9/eax, 1
+  conditional-move	{tag 17:420}, {indirect-constant "Pruntime_thread_count"}, N10/edx, N9/eax
+
+#({tag 9:275}) [275->285] (level:1) is green with stack state with
+#({basic-block #({tag 15:415}) 415 420})
+  ld	N6/NSPILL-0, N6/NSPILL-0, 4
+  sub	N11/edx, N7/edi, 12
+
+#({tag 15:415}) [415->420] (level:2) is green with stack state with
+#({basic-block #({tag 16:290}) 290 305}, {basic-block #({tag 15:415}) 415 420})
+  conditional-move	{tag 15:415}, {indirect-constant "Pruntime_spin_lock"}, 1, 0
+
+#({tag 16:290}) [290->305] (level:1) is red with stack state with
+#({basic-block #() 305 310}, {basic-block #({tag 11:310}) 310 315})
+  ld	N12/eax, N11/edx, 4
+  ld	N13/ebx, N11/edx, 8
+  bne	{tag 11:310}, {indirect-constant "Pteb_chain"}, N11/edx
+
+#() [305->310] (level:1) is red with stack state with
+#({basic-block #({tag 12:315}) 315 320})
+  move	{indirect-constant "Pteb_chain"}, N12/eax
+
+#({tag 12:315}) [315->320] (level:1) is red with stack state with
+#({basic-block #() 320 325}, {basic-block #({tag 13:325}) 325 345})
+  beq	{tag 13:325}, N12/eax, 0
+
+#() [320->325] (level:1) is red with stack state with
+#({basic-block #({tag 13:325}) 325 345})
+  st	N13/ebx, N12/eax, 8
+
+#({tag 13:325}) [325->345] (level:1) is red with stack state with
+#({basic-block #() 345 370})
+  move	{indirect-constant "Pruntime_spin_lock"}, 0
+  ld	N11/edx, N7/edi, -12
+  push	N11/edx
+  call-alien	{constant "MMDeregisterRoot"}, 0
+
+#() [345->370] (level:1) is red with stack state with
+#({basic-block #() 370 375})
+  add	esp, esp, 4
+  sub	N11/edx, N7/edi, 12
+  push	336
+  push	N11/edx
+  call-alien	{constant "MMFreeMisc"}, 0
+
+#() [370->375] (level:1) is red with stack state with
+#({basic-block #({tag 8:220}) 220 225})
+  add	esp, esp, 8
+
+#() [545->550] (level:0) is #f with stack state #f
+#()
+  bra	{tag 8:220}
+
+#({tag 7:375}) [375->385] (level:1) is red with stack state with
+#({basic-block #() 385 395})
+  push	{indirect-constant "Pteb_tlv_index"}
+  call-alien	{constant "tlv_destroy_key"}, 0
+
+#() [385->395] (level:1) is red with stack state with
+#({basic-block #() 395 400}, {basic-block #({tag 4:400}) 400 410})
+  add	esp, esp, 4
+  bne	{tag 4:400}, {indirect-constant "Pruntime_thread_count"}, 0
+
+#() [395->400] (level:1) is red with stack state with
+#({basic-block #({tag 4:400}) 400 410})
+  call-alien	{constant "dylan_shut_down_memory_manager"}, 0
+
+#({tag 4:400}) [400->410] (level:1) is red with stack state with
+#({basic-block #() 410 410})
+  move	eax, eax
+  call	{constant "primitive_exit_application"}, 1
+
+#() [410->410] (level:1) is red with stack state with
+#({basic-block #({tag 23:495}) 495 500})
+
+#({tag 23:495}) [495->500] (level:0) is #f with stack state #f
+#({basic-block #() 410 415})
+  preserve-registers-exit	
+
+#() [410->415] (level:1) is red with stack state #f
+#()
+  rts	
+
+#({tag 11:310}) [310->315] (level:1) is red with stack state with
+#({basic-block #({tag 12:315}) 315 320})
+  st	N12/eax, N13/ebx, 4
+
+#() [550->555] (level:0) is #f with stack state #f
+#()
+  bra	{tag 12:315}
+
++++ ending code for dylan_main_0 +++
+
++++ Frame sizes for dylan_main_0: GC: 0, NC: 1 +++
+
++++ Live variable scopes for dylan_main_0 +++
+Start scope at 7 with frame for no variables
+End scope at 494
+
++++ No Source Code Locators for dylan_main_0 +++
+
+
++++ starting code for primitive_runtime_module_handle +++
+
+#() [0->5] (level:0) is red with stack state before
+#({basic-block #({tag 2:30}) 30 45})
+  rem	"This is a dummy first basic block."
+
+#({tag 2:30}) [30->45] (level:0) is #f with stack state #f
+#({basic-block #() 5 20})
+  preserve-registers-entry	
+  allocate-local-area	
+  allocate-raw-area	
+
+#() [5->20] (level:0) is red with stack state with
+#({basic-block #() 20 20})
+  ld	N0/eax, {constant "module_hInstance"}, 0
+  move	eax, N0/eax
+  call	{constant "primitive_wrap_machine_word"}, 1
+
+#() [20->20] (level:0) is red with stack state with
+#({basic-block #({tag 1:25}) 25 30})
+
+#({tag 1:25}) [25->30] (level:0) is #f with stack state #f
+#({basic-block #() 20 25})
+  preserve-registers-exit	
+
+#() [20->25] (level:0) is red with stack state #f
+#()
+  rts-and-drop	0
+
++++ ending code for primitive_runtime_module_handle +++
+
++++ Live variable scopes for primitive_runtime_module_handle +++
+Start scope at 3 with frame for no variables
+End scope at 13
+
++++ No Source Code Locators for primitive_runtime_module_handle +++
+
+
++++ Exported function definition primitive_manual_allocate +++
+
++++ starting code for primitive_manual_allocate +++
+
+#() [0->5] (level:0) is red with stack state before
+#({basic-block #({tag 2:50}) 50 65})
+  rem	"This is a dummy first basic block."
+
+#({tag 2:50}) [50->65] (level:0) is #f with stack state #f
+#({basic-block #() 5 15})
+  preserve-registers-entry	
+  allocate-local-area	
+  allocate-raw-area	
+
+#() [5->15] (level:0) is red with stack state with
+#({basic-block #() 15 25})
+  move	eax, eax
+  call	{constant "primitive_unwrap_abstract_integer"}, 1
+
+#() [15->25] (level:0) is red with stack state with
+#({basic-block #() 25 40})
+  push	eax
+  call-alien	{constant "mps__malloc"}, 0
+
+#() [25->40] (level:0) is red with stack state with
+#({basic-block #() 40 40})
+  add	esp, esp, 4
+  move	eax, eax
+  call	{constant "primitive_wrap_machine_word"}, 1
+
+#() [40->40] (level:0) is red with stack state with
+#({basic-block #({tag 1:45}) 45 50})
+
+#({tag 1:45}) [45->50] (level:0) is #f with stack state #f
+#({basic-block #() 40 45})
+  preserve-registers-exit	
+
+#() [40->45] (level:0) is red with stack state #f
+#()
+  rts-and-drop	0
+
++++ ending code for primitive_manual_allocate +++
+
++++ Live variable scopes for primitive_manual_allocate +++
+Start scope at 3 with frame for no variables
+End scope at 22
+
++++ No Source Code Locators for primitive_manual_allocate +++
+
+
++++ Exported function definition primitive_manual_free +++
+
++++ starting code for primitive_manual_free +++
+
+#() [0->5] (level:0) is red with stack state before
+#({basic-block #({tag 2:40}) 40 55})
+  rem	"This is a dummy first basic block."
+
+#({tag 2:40}) [40->55] (level:0) is #f with stack state #f
+#({basic-block #() 5 20})
+  preserve-registers-entry	
+  allocate-local-area	
+  allocate-raw-area	
+
+#() [5->20] (level:0) is red with stack state with
+#({basic-block #() 20 30})
+  ld	N0/eax, eax, 4
+  push	N0/eax
+  call-alien	{constant "mps__free"}, 0
+
+#() [20->30] (level:0) is red with stack state with
+#({basic-block #({tag 1:35}) 35 40})
+  add	esp, esp, 4
+  move	eax, {constant "KPfalseVKi"}
+
+#({tag 1:35}) [35->40] (level:0) is #f with stack state #f
+#({basic-block #() 30 35})
+  preserve-registers-exit	
+
+#() [30->35] (level:0) is red with stack state #f
+#()
+  rts-and-drop	0
+
++++ ending code for primitive_manual_free +++
+
++++ Live variable scopes for primitive_manual_free +++
+Start scope at 3 with frame for no variables
+End scope at 20
+
++++ No Source Code Locators for primitive_manual_free +++
 
 
 +++ Exported function definition call_first_dylan_function +++
@@ -18161,4 +19486,478 @@ End scope at 13
 +++ ending code for primitive_float_class +++
 
 +++ No Source Code Locators for primitive_float_class +++
+
+
++++ starting code for dylan_thread_trampoline +++
+
+#() [0->5] (level:0) is red with stack state before
+#({basic-block #({tag 23:570}) 570 585})
+  rem	"This is a dummy first basic block."
+
+#({tag 23:570}) [570->585] (level:0) is #f with stack state #f
+#({basic-block #() 5 20})
+  preserve-registers-entry	
+  allocate-local-area	
+  allocate-raw-area	
+
+#() [5->20] (level:0) is red with stack state with
+#({basic-block #() 20 60})
+  load-stack-arg-n	#t, N0/NSPILL--1, 0
+  push	336
+  call-alien	{constant "dylan__malloc__misc"}, 0
+
+#() [20->60] (level:0) is red with stack state with
+#({basic-block #() 60 65})
+  add	esp, esp, 4
+  move	N6/edi, eax
+  add	N7/NSPILL-0, N6/edi, 12
+  add	N8/edx, N7/NSPILL-0, 324
+  push	N8/edx
+  push	N6/edi
+  push	N6/edi
+  call-alien	{constant "MMRegisterRootAmbig"}, 0
+
+#() [60->65] (level:0) is red with stack state with
+#({basic-block #({tag 16:500}) 500 505})
+  add	esp, esp, 12
+
+#({tag 16:500}) [500->505] (level:1) is green with stack state with
+#({basic-block #({tag 17:70}) 70 75}, {basic-block #({tag 16:500}) 500 505})
+  conditional-move	{tag 16:500}, {indirect-constant "Pruntime_spin_lock"}, 1, 0
+
+#({tag 17:70}) [70->75] (level:0) is red with stack state with
+#({basic-block #() 75 80}, {basic-block #({tag 1:80}) 80 150})
+  beq	{tag 1:80}, {indirect-constant "Pteb_chain"}, 0
+
+#() [75->80] (level:0) is red with stack state with
+#({basic-block #({tag 1:80}) 80 150})
+  st	N6/edi, {indirect-constant "Pteb_chain"}, 8
+
+#({tag 1:80}) [80->150] (level:0) is red with stack state with
+#({basic-block #() 150 185})
+  st	{indirect-constant "Pteb_chain"}, N6/edi, 4
+  st	0, N6/edi, 8
+  move	{indirect-constant "Pteb_chain"}, N6/edi
+  move	{indirect-constant "Pruntime_spin_lock"}, 0
+  add	N3/edi, N7/NSPILL-0, 32
+  st	0, N7/NSPILL-0, 0
+  st	0, N7/NSPILL-0, 4
+  st	0, N3/edi, 0
+  st	{constant "KPempty_listVKi"}, N3/edi, 16
+  st	{constant "KPunboundVKi"}, N3/edi, 4
+  set-teb	N3/edi
+  push	N3/edi
+  push	{indirect-constant "Pteb_tlv_index"}
+  call-alien	{constant "tlv_set_value"}, 0
+
+#() [150->185] (level:0) is red with stack state with
+#({basic-block #() 185 195})
+  add	esp, esp, 8
+  st	0, N3/edi, 20
+  st	-1, N3/edi, 20
+  sub	N5/edi, N3/edi, 32
+  or	N9/edx, esp, 1020
+  push	N9/edx
+  call-alien	{constant "dylan_mm_register_thread"}, 0
+
+#() [185->195] (level:0) is red with stack state with
+#({basic-block #() 195 210}, {basic-block #({tag 14:485}) 485 500})
+  add	esp, esp, 4
+  beq	{tag 14:485}, eax, 0
+
+#() [195->210] (level:0) is red with stack state with
+#({basic-block #() 210 220})
+  push	0
+  push	{indirect-constant "Pteb_tlv_index"}
+  call-alien	{constant "tlv_set_value"}, 0
+
+#() [210->220] (level:0) is red with stack state with
+#({basic-block #({tag 14:485}) 485 500})
+  add	esp, esp, 8
+  halt	
+
+#({tag 14:485}) [485->500] (level:1) is green with stack state with
+#({basic-block #({tag 15:235}) 235 270}, {basic-block #({tag 14:485}) 485 500})
+  move	N10/eax, {indirect-constant "Pruntime_thread_count"}
+  add	N11/edx, N10/eax, 1
+  conditional-move	{tag 14:485}, {indirect-constant "Pruntime_thread_count"}, N11/edx, N10/eax
+
+#({tag 15:235}) [235->270] (level:0) is red with stack state with
+#({basic-block #() 270 300})
+  init-fpu	
+  push	0
+  move	N2/NSPILL-0, esp
+  ld	G1/GSPILL-0, N0/NSPILL--1, 0
+  push	4
+  push	N0/NSPILL--1
+  call-alien	{constant "dylan__free__root"}, 0
+
+#() [270->300] (level:0) is red with stack state with
+#({basic-block #() 300 315})
+  add	esp, esp, 8
+  push	0
+  push	G1/GSPILL-0
+  push	{constant "trampoline_body"}
+  push	N2/NSPILL-0
+  call-alien	{constant "dylan_init_thread"}, 0
+
+#() [300->315] (level:0) is red with stack state with
+#({basic-block #() 315 325})
+  add	esp, esp, 16
+  push	N5/edi
+  call-alien	{constant "dylan_mm_deregister_thread_from_teb"}, 0
+
+#() [315->325] (level:0) is red with stack state with
+#({basic-block #({tag 12:470}) 470 485})
+  add	esp, esp, 4
+  st	0, N5/edi, 4
+
+#({tag 12:470}) [470->485] (level:1) is green with stack state with
+#({basic-block #({tag 13:340}) 340 355}, {basic-block #({tag 12:470}) 470 485})
+  move	N12/eax, {indirect-constant "Pruntime_thread_count"}
+  sub	N13/edx, N12/eax, 1
+  conditional-move	{tag 12:470}, {indirect-constant "Pruntime_thread_count"}, N13/edx, N12/eax
+
+#({tag 13:340}) [340->355] (level:0) is red with stack state with
+#({basic-block #() 355 365})
+  push	0
+  push	{indirect-constant "Pteb_tlv_index"}
+  call-alien	{constant "tlv_set_value"}, 0
+
+#() [355->365] (level:0) is red with stack state with
+#({basic-block #({tag 10:465}) 465 470})
+  add	esp, esp, 8
+  sub	N14/edx, N5/edi, 12
+
+#({tag 10:465}) [465->470] (level:1) is green with stack state with
+#({basic-block #({tag 11:370}) 370 385}, {basic-block #({tag 10:465}) 465 470})
+  conditional-move	{tag 10:465}, {indirect-constant "Pruntime_spin_lock"}, 1, 0
+
+#({tag 11:370}) [370->385] (level:0) is red with stack state with
+#({basic-block #() 385 390}, {basic-block #({tag 6:390}) 390 395})
+  ld	N15/eax, N14/edx, 4
+  ld	N16/ebx, N14/edx, 8
+  bne	{tag 6:390}, {indirect-constant "Pteb_chain"}, N14/edx
+
+#() [385->390] (level:0) is red with stack state with
+#({basic-block #({tag 7:395}) 395 400})
+  move	{indirect-constant "Pteb_chain"}, N15/eax
+
+#({tag 7:395}) [395->400] (level:0) is red with stack state with
+#({basic-block #() 400 405}, {basic-block #({tag 8:405}) 405 425})
+  beq	{tag 8:405}, N15/eax, 0
+
+#() [400->405] (level:0) is red with stack state with
+#({basic-block #({tag 8:405}) 405 425})
+  st	N16/ebx, N15/eax, 8
+
+#({tag 8:405}) [405->425] (level:0) is red with stack state with
+#({basic-block #() 425 450})
+  move	{indirect-constant "Pruntime_spin_lock"}, 0
+  ld	N14/edx, N5/edi, -12
+  push	N14/edx
+  call-alien	{constant "MMDeregisterRoot"}, 0
+
+#() [425->450] (level:0) is red with stack state with
+#({basic-block #() 450 460})
+  add	esp, esp, 4
+  sub	N14/edx, N5/edi, 12
+  push	336
+  push	N14/edx
+  call-alien	{constant "MMFreeMisc"}, 0
+
+#() [450->460] (level:0) is red with stack state with
+#({basic-block #({tag 18:505}) 505 510})
+  add	esp, esp, 8
+  move	eax, 0
+
+#({tag 18:505}) [505->510] (level:0) is #f with stack state #f
+#({basic-block #() 460 465})
+  preserve-registers-exit	
+
+#() [460->465] (level:0) is red with stack state #f
+#()
+  rts	
+
+#({tag 6:390}) [390->395] (level:0) is red with stack state with
+#({basic-block #({tag 7:395}) 395 400})
+  st	N15/eax, N16/ebx, 4
+
+#() [585->590] (level:0) is #f with stack state #f
+#()
+  bra	{tag 7:395}
+
++++ ending code for dylan_thread_trampoline +++
+
++++ Frame sizes for dylan_thread_trampoline: GC: 1, NC: 1 +++
+
++++ Live variable scopes for dylan_thread_trampoline +++
+Start scope at 6 with frame for no variables
+End scope at 483
+
++++ No Source Code Locators for dylan_thread_trampoline +++
+
+
++++ Defining function DylanSOEntry in section init-code +++
+
++++ starting code for DylanSOEntry +++
+
+#() [0->5] (level:0) is red with stack state before
+#({basic-block #({tag 9:195}) 195 210})
+  rem	"This is a dummy first basic block."
+
+#({tag 9:195}) [195->210] (level:0) is #f with stack state #f
+#({basic-block #() 5 10})
+  preserve-registers-entry	
+  allocate-local-area	
+  allocate-raw-area	
+
+#() [5->10] (level:0) is red with stack state with
+#({basic-block #() 10 60})
+  call-alien	{constant "tlv_create_key"}, 0
+
+#() [10->60] (level:0) is red with stack state with
+#({basic-block #() 60 75})
+  move	{indirect-constant "Pteb_tlv_index"}, eax
+  st	0, {constant "Pmaster_gc_teb"}, 0
+  st	0, {constant "Pmaster_gc_teb"}, 4
+  st	0, {constant "Pmaster_teb"}, 0
+  st	{constant "KPempty_listVKi"}, {constant "Pmaster_teb"}, 16
+  st	{constant "KPunboundVKi"}, {constant "Pmaster_teb"}, 4
+  set-teb	{constant "Pmaster_teb"}
+  push	{constant "Pmaster_teb"}
+  push	{indirect-constant "Pteb_tlv_index"}
+  call-alien	{constant "tlv_set_value"}, 0
+
+#() [60->75] (level:0) is red with stack state with
+#({basic-block #() 75 90})
+  add	esp, esp, 8
+  st	0, {constant "Pmaster_teb"}, 20
+  call-alien	{constant "dylan_init_memory_manager"}, 0
+
+#() [75->90] (level:0) is red with stack state with
+#({basic-block #() 90 100})
+  or	N0/edx, esp, 1020
+  push	N0/edx
+  call-alien	{constant "dylan_mm_register_thread"}, 0
+
+#() [90->100] (level:0) is red with stack state with
+#({basic-block #() 100 115}, {basic-block #({tag 5:160}) 160 160})
+  add	esp, esp, 4
+  beq	{tag 5:160}, eax, 0
+
+#() [100->115] (level:0) is red with stack state with
+#({basic-block #() 115 125})
+  push	0
+  push	{indirect-constant "Pteb_tlv_index"}
+  call-alien	{constant "tlv_set_value"}, 0
+
+#() [115->125] (level:0) is red with stack state with
+#({basic-block #({tag 5:160}) 160 160})
+  add	esp, esp, 8
+  halt	
+
+#({tag 5:160}) [160->160] (level:0) is yellow with stack state with
+#({basic-block #({tag 5:160}, {tag 6:160}) 160 175})
+
+#({tag 5:160}, {tag 6:160}) [160->175] (level:1) is green with stack state with
+#({basic-block #({tag 4:140}) 160 160}, {basic-block #({tag 5:160}, {tag 6:160}) 160 175})
+  move	N1/eax, {indirect-constant "Pruntime_thread_count"}
+  add	N2/edx, N1/eax, 1
+  conditional-move	{tag 6:160}, {indirect-constant "Pruntime_thread_count"}, N2/edx, N1/eax
+
+#({tag 4:140}) [160->160] (level:0) is brown with stack state with
+#({basic-block #({tag 4:140}) 140 150})
+
+#({tag 4:140}) [140->150] (level:0) is red with stack state with
+#({basic-block #() 150 155})
+  init-fpu	
+  call-alien	{constant "dylan_initialize"}, 0
+
+#() [150->155] (level:0) is red with stack state with
+#({basic-block #({tag 7:175}) 175 180})
+  move	eax, 0
+
+#({tag 7:175}) [175->180] (level:0) is #f with stack state #f
+#({basic-block #() 155 160})
+  preserve-registers-exit	
+
+#() [155->160] (level:0) is red with stack state #f
+#()
+  rts-and-drop	0
+
++++ ending code for DylanSOEntry +++
+
++++ Live variable scopes for DylanSOEntry +++
+Start scope at 4 with frame for no variables
+End scope at 201
+
++++ No Source Code Locators for DylanSOEntry +++
+
+
++++ Defining function DylanSOExit in section init-code +++
+
++++ starting code for DylanSOExit +++
+
+#() [0->5] (level:0) is red with stack state before
+#({basic-block #({tag 20:350}) 350 365})
+  rem	"This is a dummy first basic block."
+
+#({tag 20:350}) [350->365] (level:0) is #f with stack state #f
+#({basic-block #() 5 25})
+  preserve-registers-entry	
+  allocate-local-area	
+  allocate-raw-area	
+
+#() [5->25] (level:0) is red with stack state with
+#({basic-block #() 25 35})
+  push	{constant "Pexact_root"}
+  push	{constant "Pstatic_root"}
+  move	eax, {constant "Pambig_root"}
+  call	{constant "primitive_deregister_traced_roots"}, 1
+
+#() [25->35] (level:0) is red with stack state with
+#({basic-block #() 35 45}, {basic-block #({tag 2:70}) 70 75})
+  ld	N0/edx, {constant "Pmaster_gc_teb"}, 4
+  beq	{tag 2:70}, N0/edx, 0
+
+#() [35->45] (level:0) is red with stack state with
+#({basic-block #() 45 55})
+  push	{constant "Pmaster_gc_teb"}
+  call-alien	{constant "dylan_mm_deregister_thread_from_teb"}, 0
+
+#() [45->55] (level:0) is red with stack state with
+#({basic-block #({tag 15:285}) 285 300})
+  add	esp, esp, 4
+  st	0, {constant "Pmaster_gc_teb"}, 4
+
+#({tag 15:285}) [285->300] (level:1) is green with stack state with
+#({basic-block #({tag 2:70}) 70 75}, {basic-block #({tag 15:285}) 285 300})
+  move	N1/eax, {indirect-constant "Pruntime_thread_count"}
+  sub	N2/edx, N1/eax, 1
+  conditional-move	{tag 15:285}, {indirect-constant "Pruntime_thread_count"}, N2/edx, N1/eax
+
+#({tag 2:70}) [70->75] (level:0) is green with stack state with
+#({basic-block #({tag 5:75}) 75 80})
+  move	N3/NSPILL-0, {indirect-constant "Pteb_chain"}
+
+#({tag 5:75}) [75->80] (level:1) is green with stack state with
+#({basic-block #() 80 95}, {basic-block #({tag 4:230}) 230 240})
+  beq	{tag 4:230}, N3/NSPILL-0, 0
+
+#() [80->95] (level:1) is green with stack state with
+#({basic-block #() 95 105}, {basic-block #({tag 6:130}) 130 140})
+  add	N4/edi, N3/NSPILL-0, 12
+  ld	N5/edx, N4/edi, 4
+  beq	{tag 6:130}, N5/edx, 0
+
+#() [95->105] (level:1) is red with stack state with
+#({basic-block #() 105 115})
+  push	N4/edi
+  call-alien	{constant "dylan_mm_deregister_thread_from_teb"}, 0
+
+#() [105->115] (level:1) is red with stack state with
+#({basic-block #({tag 14:270}) 270 285})
+  add	esp, esp, 4
+  st	0, N4/edi, 4
+
+#({tag 14:270}) [270->285] (level:2) is green with stack state with
+#({basic-block #({tag 6:130}) 130 140}, {basic-block #({tag 14:270}) 270 285})
+  move	N6/eax, {indirect-constant "Pruntime_thread_count"}
+  sub	N7/edx, N6/eax, 1
+  conditional-move	{tag 14:270}, {indirect-constant "Pruntime_thread_count"}, N7/edx, N6/eax
+
+#({tag 6:130}) [130->140] (level:1) is green with stack state with
+#({basic-block #({tag 12:265}) 265 270})
+  ld	N3/NSPILL-0, N3/NSPILL-0, 4
+  sub	N8/edx, N4/edi, 12
+
+#({tag 12:265}) [265->270] (level:2) is green with stack state with
+#({basic-block #({tag 13:145}) 145 160}, {basic-block #({tag 12:265}) 265 270})
+  conditional-move	{tag 12:265}, {indirect-constant "Pruntime_spin_lock"}, 1, 0
+
+#({tag 13:145}) [145->160] (level:1) is red with stack state with
+#({basic-block #() 160 165}, {basic-block #({tag 8:165}) 165 170})
+  ld	N9/eax, N8/edx, 4
+  ld	N10/ebx, N8/edx, 8
+  bne	{tag 8:165}, {indirect-constant "Pteb_chain"}, N8/edx
+
+#() [160->165] (level:1) is red with stack state with
+#({basic-block #({tag 9:170}) 170 175})
+  move	{indirect-constant "Pteb_chain"}, N9/eax
+
+#({tag 9:170}) [170->175] (level:1) is red with stack state with
+#({basic-block #() 175 180}, {basic-block #({tag 10:180}) 180 200})
+  beq	{tag 10:180}, N9/eax, 0
+
+#() [175->180] (level:1) is red with stack state with
+#({basic-block #({tag 10:180}) 180 200})
+  st	N10/ebx, N9/eax, 8
+
+#({tag 10:180}) [180->200] (level:1) is red with stack state with
+#({basic-block #() 200 225})
+  move	{indirect-constant "Pruntime_spin_lock"}, 0
+  ld	N8/edx, N4/edi, -12
+  push	N8/edx
+  call-alien	{constant "MMDeregisterRoot"}, 0
+
+#() [200->225] (level:1) is red with stack state with
+#({basic-block #() 225 230})
+  add	esp, esp, 4
+  sub	N8/edx, N4/edi, 12
+  push	336
+  push	N8/edx
+  call-alien	{constant "MMFreeMisc"}, 0
+
+#() [225->230] (level:1) is red with stack state with
+#({basic-block #({tag 5:75}) 75 80})
+  add	esp, esp, 8
+
+#() [365->370] (level:0) is #f with stack state #f
+#()
+  bra	{tag 5:75}
+
+#({tag 4:230}) [230->240] (level:1) is red with stack state with
+#({basic-block #() 240 250})
+  push	{indirect-constant "Pteb_tlv_index"}
+  call-alien	{constant "tlv_destroy_key"}, 0
+
+#() [240->250] (level:1) is red with stack state with
+#({basic-block #() 250 255}, {basic-block #({tag 1:255}) 255 260})
+  add	esp, esp, 4
+  bne	{tag 1:255}, {indirect-constant "Pruntime_thread_count"}, 0
+
+#() [250->255] (level:1) is red with stack state with
+#({basic-block #({tag 1:255}) 255 260})
+  call-alien	{constant "dylan_shut_down_memory_manager"}, 0
+
+#({tag 1:255}) [255->260] (level:1) is red with stack state with
+#({basic-block #({tag 18:330}) 330 335})
+  move	eax, 0
+
+#({tag 18:330}) [330->335] (level:0) is #f with stack state #f
+#({basic-block #() 260 265})
+  preserve-registers-exit	
+
+#() [260->265] (level:1) is red with stack state #f
+#()
+  rts-and-drop	0
+
+#({tag 8:165}) [165->170] (level:1) is red with stack state with
+#({basic-block #({tag 9:170}) 170 175})
+  st	N9/eax, N10/ebx, 4
+
+#() [370->375] (level:0) is #f with stack state #f
+#()
+  bra	{tag 9:170}
+
++++ ending code for DylanSOExit +++
+
++++ Frame sizes for DylanSOExit: GC: 0, NC: 1 +++
+
++++ Live variable scopes for DylanSOExit +++
+Start scope at 7 with frame for no variables
+End scope at 295
+
++++ No Source Code Locators for DylanSOExit +++
 

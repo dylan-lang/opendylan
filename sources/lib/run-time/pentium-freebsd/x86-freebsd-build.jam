@@ -36,13 +36,15 @@ LINKSCRIPTEXE ?= $(SYSTEM_LIBDIR)/dylan-elf-exe.script ;
 # Runtime
 #
 
-RTOBJS ?= runtime.o
-	  x86-linux-collector.o
-	  x86-linux-threads-primitives.o
-	  linux-spy-interfaces.o
-	  linux-support.o ;
+RTOBJS  ?= runtime.o
+	   x86-linux-collector.o
+	   x86-linux-threads-primitives.o
+	   linux-spy-interfaces.o
+	   linux-support.o ;
 
-rtlibs ?= $(SYSTEM_LIBDIR)/runtime/$(RTOBJS) -lmmdw -lmpsplan -lpthread ;
+SUPOBJS ?= $(SYSTEM_LIBDIR)/runtime/dylan-support.o ;
+
+rtlibs  ?= $(SYSTEM_LIBDIR)/runtime/$(RTOBJS) -lmmdw -lmpsplan -lpthread ;
 
 guilflags ?= ;
 
@@ -107,8 +109,12 @@ rule DylanLibrary image : version {
     Depends $(_dll) : $(_mkf) ;
   }
 
-  # The executable depends only on _main.o and the DLL.
+  # The .so requires the runtime support object file
+  if $(image[1]:L) != dylan {
+    LinkDLL $(_dll) : $(SUPOBJS) ;
+  }
 
+  # The executable depends only on _main.o and the DLL.
   local _obj = [ FGristFiles _main$(SUFOBJ) ] ;
   local _asm = [ FGristFiles _main$(SUFASM) ] ;
   SEARCH on $(_obj) $(_asm) = $(SEARCH_SOURCE) ;

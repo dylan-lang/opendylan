@@ -68,7 +68,7 @@ all:	@bootstrap_target@
 BOOTSTRAP_1_PRIMITIVE_LIBS = \
 	dylan functional-extensions machine-word byte-vector \
 	threads transcendentals functional-dylan \
-	common-extensions common-dylan \
+	common-extensions common-dylan unix-portability \
 	c-ffi bit-vector bit-set collectors plists set \
 	table-extensions collections streams standard-io \
 	print format format-out io date file-system \

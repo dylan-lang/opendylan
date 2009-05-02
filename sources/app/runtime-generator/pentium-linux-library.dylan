@@ -7,7 +7,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library pentium-linux-runtime-generator
   use functional-dylan;
-  use pentium-linux-core-rtg;
+  use pentium-linux-rtg;
 end library;
 
 define module pentium-linux-runtime-generator

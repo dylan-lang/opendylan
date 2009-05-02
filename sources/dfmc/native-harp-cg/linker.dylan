@@ -45,16 +45,6 @@ define sideways method output-compilation-record-data
 end method;
 
 
-define sideways method emit-glue-data
-    (back-end :: <native-unix-back-end>, stream, ld) => ()
-  let dylan-library? = *compiling-dylan?*;
-  output-data(back-end, stream, client?: (~ dylan-library?));
-  output-glue(back-end, stream);
-end method;
-
-
-
-
 define sideways method emit-library-initializer
     (back-end :: <native-unix-back-end>, stream, ld,
      emit-call-used :: <method>,
@@ -156,17 +146,6 @@ end method;
 define sideways method emit-shared-library-entry-points
     (back-end :: <native-unix-back-end>, stream, ld,
      #key harp-output?, debug-info?) => ()
-
-  let output-one-fn =
-    method (name :: <byte-string>, fn :: <function>, #rest keys)
-      apply(invoke-harp, back-end, fn, name, 
-            outputter: stream, harp-debug: harp-output?, keys);
-    end method;
-
-
-  let dylan-library? = *compiling-dylan?*;
-  output-functions(back-end, stream, output-one-fn, client?: (~ dylan-library?));
-
 end method;
 
 define sideways method main-unit?(back-end :: <native-unix-back-end>) => (main? :: <boolean>)

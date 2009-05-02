@@ -186,8 +186,6 @@ define method emit-gluefile-internal
           emit-library-imported-data(back-end, stream, ld,
                                      compilation-layer: compilation-layer);
 
-          emit-glue-data(back-end, stream, ld);
-
           output-variable(back-end, stream, initialize-library?, $false,
                           section: #"variables", export?: #f);
           emit-data-footer(back-end, stream, initialize-library?);
@@ -257,17 +255,6 @@ define method emit-gluefile-internal
     end with-harp-outputter;
   end if;
   data
-end method;
-
-
-define open generic emit-glue-data
-    (back-end :: <harp-back-end>, stream, ld)
- => ();
-
-define sideways method emit-glue-data
-    (back-end :: <harp-back-end>, stream, ld)
- => ();
-  // do nothing by default
 end method;
 
 

@@ -61,7 +61,7 @@ end unix-API-runtime-primitive;
 
 
 
-define shared init no-public unix-API-runtime-primitive dylan-shared-object-entry
+define shared init unix-API-runtime-primitive dylan-shared-object-entry
   ("DylanSOEntry")
   c-result c-result;
   
@@ -93,7 +93,7 @@ define open generic op--initialize-thread-instructions (be :: <native-unix-back-
 define sideways method op--initialize-thread-instructions (be :: <native-unix-back-end>) => ()
 end method;
 
-define shared init no-public unix-API-runtime-primitive dylan-shared-object-exit
+define shared init unix-API-runtime-primitive dylan-shared-object-exit
   ("DylanSOExit")
   c-result c-result;
   
