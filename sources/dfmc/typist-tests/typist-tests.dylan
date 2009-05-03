@@ -521,25 +521,30 @@ begin
                                  error-handler: callback-handler);
   with-library-context (dylan-library-compilation-context())
     without-dependency-tracking
-      *vis* := make(<dfmc-graph-visualization>, id: #"Dylan-Graph-Visualization");
-      connect-to-server(*vis*);
-      for (test in $tests)
-        write-to-visualizer(*vis*, list(#"source", test.head, test.tail));
-      end;
-      *vis*.dfm-report-enabled? := #f;
-      block()
-        while (#t)
-          let res = read-from-visualizer(*vis*); //expect: #"compile" "source"
-          if (res[0] == #"compile")
-            *current-index* := *current-index* + 1;
-            dynamic-bind (*progress-stream*           = #f,  // with-compiler-muzzled
-                          *demand-load-library-only?* = #f)
-              compile-template(res[1], compiler: compiler);
+      with-open-file (file = "/home/visualization/log", if-exists: #"append", direction: #"output")
+        *vis* := make(<dfmc-graph-visualization>, id: #"Dylan-Graph-Visualization");
+        connect-to-server(*vis*);
+        for (test in $tests)
+          write-to-visualizer(*vis*, list(#"source", test.head, test.tail));
+        end;
+	format(file, "%s new connection %=\n", as-iso8601-string(current-date()), *vis*.system-info);
+	force-output(file);
+        *vis*.dfm-report-enabled? := #f;
+        block()
+          while (#t)
+            let res = read-from-visualizer(*vis*); //expect: #"compile" "source"
+            if (res[0] == #"compile")
+              *current-index* := *current-index* + 1;
+              dynamic-bind (*progress-stream*           = #f,  // with-compiler-muzzled
+                            *demand-load-library-only?* = #f)
+                format(file, "compiling %s\n", res[1]);
+                compile-template(res[1], compiler: compiler);
+              end;
             end;
           end;
+        exception (e :: <condition>)
+          format(file, "received exception: %=\n", e);
         end;
-      exception (e :: <condition>)
-        //format-out("received exception: %=\n", e);
       end;
     end;
   end;

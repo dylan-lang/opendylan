@@ -25,6 +25,7 @@ define module dfmc-visualization
   export <dfmc-graph-visualization>,
     report-enabled?, report-enabled?-setter,
     dfm-report-enabled?, dfm-report-enabled?-setter,
+    system-info,
     connect-to-server,
     process-request,
     read-from-visualizer,

@@ -11,6 +11,7 @@ define class <dfmc-graph-visualization> (<object>)
   constant slot connection-id :: <symbol>, required-init-keyword: id:;
   slot report-enabled? :: <boolean> = #t;
   slot dfm-report-enabled? :: <boolean> = #t;
+  slot system-info;
 end;
 
 define function write-to-visualizer (v :: <dfmc-graph-visualization>, data)
@@ -53,7 +54,8 @@ define function connect-to-server
   //  v.socket := make(<tcp-socket>,
   //                   host: host | $default-host,
   //                   port: port | $default-port);
-    write-to-visualizer(v, list(#"connection-identifier", v.connection-id))
+    write-to-visualizer(v, list(#"connection-identifier", v.connection-id));
+    v.system-info := read-from-visualizer(v);
   //end;
 end;
 

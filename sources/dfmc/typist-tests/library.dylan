@@ -28,6 +28,8 @@ define module dfmc-typist-tests
   use print, import: { print-object };
   use streams;
   use testworks;
+  use format;
+  use date, import: { current-date, as-iso8601-string };
 
   use dfmc-core;
   use dfmc-typist;
