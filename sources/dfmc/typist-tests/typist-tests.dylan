@@ -539,7 +539,7 @@ begin
           end;
         end;
       exception (e :: <condition>)
-        format-out("received exception: %=\n", e);
+        //format-out("received exception: %=\n", e);
       end;
     end;
   end;
