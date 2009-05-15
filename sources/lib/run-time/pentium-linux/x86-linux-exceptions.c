@@ -3,6 +3,17 @@
 
 /* ---*** TODO: Find out how to trap stack overflows on Linux */
 
+#define _GNU_SOURCE
+#include <stdlib.h>
+#include <unistd.h>
+#include <stddef.h>
+#include <stdio.h>
+#include <signal.h>
+#include <sys/ucontext.h>
+#include <ucontext.h>
+#include <fpu_control.h>
+#include <dlfcn.h>
+
 extern int inside_dylan_ffi_barrier();
 extern void dylan_stack_overflow_handler(PVOID base_address, int size, DWORD protection);
 extern void dylan_integer_overflow_handler();
@@ -11,52 +22,114 @@ extern void dylan_float_divide_0_handler();
 extern void dylan_float_overflow_handler();
 extern void dylan_float_underflow_handler();
 
+/* Linux exception handling: Setup signal handlers for SIGFPE
+ * (floating point exceptions), SIGSEGV (segmentation violation), and
+ * SIGTRAP (breakpoint trap).
+ *
+ * ---*** NOTE: On x86 Linux, our use of the INT 4 and INTO
+ *        instructions to raise an integer overflow exception actually
+ *        results in a SIGSEGV signal being raised. Though this
+ *        doesn't really make much sense, that is how things are
+ *        defined in the SysV x86 ABI. In our SIGSEGV handler we check
+ *        for this case, and chain to an outer SIGSEGV handler if a
+ *        memory access error is involved.
+ */
 
-/* Linux exception handling:  Setup a signal handler for SIGFPE (floating point exceptions).
-   We rely on the fact that Linux passes a second argument containing the error context. */
+/* ---*** TODO: Find out how to trap stack overflows and add an
+          appropriate handler
+ */
 
-/* ---*** NOTE: On x86 Linux, our use of the INT 4 and INTO instructions to raise an
-                integer overflow exception isn't properly converted into a SIGFPE signal.
-                Presumably, the hardware trap vector isn't setup properly and, as a result,
-                we get a SIGSEGV signal instead.  So, on x86 Linux only, we establish
-                a SIGSEGV handler which checks the trap number in the sigcontext structure
-                to see if we were invoked for an integer overflow. */
+#define INT_OPCODE  0xCD        /* x86 INT instruction */
+#define INTO_OPCODE 0xCE        /* x86 INTO instruction */
 
-/* ---*** TODO: Find out how to trap stack overflows and add an appropriate handler */
+/* FPU Control Word mask enabling exceptions for divide-by-zero,
+ * overflow, and underflow
+ */
+#define DYLAN_FPU_CW (_FPU_DEFAULT              \
+                      & ~(_FPU_MASK_ZM          \
+                          | _FPU_MASK_OM        \
+                          | _FPU_MASK_UM))
 
+inline void chain_sigaction(const struct sigaction *act,
+                            int sig, siginfo_t *info, void *uap)
+{
+  if(act->sa_flags & SA_SIGINFO) {
+    /* Inner handler uses the same (sa_sigaction) convention... call it */
+    (*act->sa_sigaction)(sig, info, uap);
+  }
+  else {
+    /* Inner handler uses the old (sa_handler) convention, with a
+     * struct sigcontext passed as a structure argument. The content
+     * of struct sigcontext is identical to the content of the
+     * ucontext_t uc_mcontext field.
+     */
+    ucontext_t *uc = (ucontext_t *) uap;
+    asm volatile(/* Preserve scratch registers on the stack */
+                 "push\t%%eax\n\t"
+                 "push\t%%edx\n\t"
+
+                 /* Reserve stack space for the sigcontext argument */
+                 "subl\t%[mcontext_bytes],%%esp\n\t"
+                 
+                 /* Copy the sigcontext onto the stack as the second
+                  * argument
+                  */
+                 "cld\n\t"
+                 "movl\t%[mcontext_words],%%ecx\n\t"
+                 "lea\t%[mcontext],%%esi\n\t"
+                 "lea\t(%%esp),%%edi\n\t"
+                 "rep\tmovsl\n\t"
+
+                 /* Push the signal number onto the stack as the first
+                  * argument
+                  */
+                 "push\t%[sig]\n\t"
+
+                 /* Call the handler */
+                 "call\t*%[handler]\n\t"
+
+                 /* Restore scratch registers */
+                 "movl\t4+%c0(%%esp),%%edx\n\t"
+                 "movl\t8+%c0(%%esp),%%eax\n\t"
+
+                 /* Copy the sigcontext back into uc->uc_mcontext */
+                 "movl\t%[mcontext_words],%%ecx\n\t"
+                 "lea\t4(%%esp),%%esi\n\t"
+                 "lea\t%[mcontext],%%edi\n\t"
+                 "rep\tmovsl\n\t"
+
+                 /* Restore the stack pointer */
+                 "addl\t%[mcontext_bytes]+12,%%esp\n\t"
+                 : /* no outputs */
+                 : [mcontext_bytes] "i" (sizeof(uc->uc_mcontext)),
+                   [mcontext_words] "i" (sizeof(uc->uc_mcontext) / 4),
+                   [mcontext] "m" (uc->uc_mcontext),
+                   [handler] "g" (act->sa_handler),
+                   [sig] "g" (sig)
+                 : "memory", "cc", "ecx", "esi", "edi");
+  }
+}
+
+static unsigned exception_handler_level = 0;
+struct sigaction outer_FPEHandler;
+struct sigaction outer_SEGVHandler;
+struct sigaction outer_TRAPHandler;
 
 #define EXCEPTION_PREAMBLE() \
-  struct sigaction oldFPEHandler; \
-  struct sigaction oldSEGVHandler; \
-  struct sigaction oldTRAPHandler; \
-  void doFPEHandler (int signum, struct sigcontext sc) { \
-    DylanFPEHandler(oldFPEHandler.sa_handler, signum, sc); \
-  } \
-  void doSEGVHandler (int signum, struct sigcontext sc) { \
-    DylanSEGVHandler(oldSEGVHandler.sa_handler, signum, sc); \
-  } \
-  void doTRAPHandler (int signum, struct sigcontext sc) { \
-    DylanTRAPHandler(oldTRAPHandler.sa_handler, signum, sc);	\
-  } \
-  oldFPEHandler.sa_handler = (sighandler_t)doFPEHandler; \
-  oldSEGVHandler.sa_handler = (sighandler_t)doSEGVHandler; \
-  oldTRAPHandler.sa_handler = (sighandler_t)doTRAPHandler; \
-  EstablishDylanExceptionHandlers(&oldFPEHandler, &oldSEGVHandler, &oldTRAPHandler);	\
-  {
-
+  {						    \
+    if (exception_handler_level++ == 0)		    \
+      EstablishDylanExceptionHandlers();
+  
 #define EXCEPTION_POSTAMBLE() \
-  } \
-  RemoveDylanExceptionHandlers(&oldFPEHandler, &oldSEGVHandler, &oldTRAPHandler);
+    if (--exception_handler_level == 0)	            \
+      RemoveDylanExceptionHandlers();		    \
+  }
 
-typedef void (* SIG_SIGCONTEXT)(int, struct sigcontext);
+static void DylanFPEHandler (int sig, siginfo_t *info, void *sc);
+static void DylanSEGVHandler (int sig, siginfo_t *info, void *sc);
+static void DylanTRAPHandler (int sig, siginfo_t *info, void *sc);
 
-static void DylanFPEHandler (sighandler_t, int, struct sigcontext);
-static void DylanSEGVHandler (sighandler_t, int, struct sigcontext);
-static void DylanTRAPHandler (sighandler_t, int, struct sigcontext);
-
-static void EstablishDylanExceptionHandlers (struct sigaction * oldFPEHandler,
-					     struct sigaction * oldSEGVHandler,
-					     struct sigaction * oldTRAPHandler)
+static void EstablishDylanExceptionHandlers(void)
 {
   struct sigaction newFPEHandler;
   struct sigaction newSEGVHandler;
@@ -64,135 +137,113 @@ static void EstablishDylanExceptionHandlers (struct sigaction * oldFPEHandler,
 
   sigset_t set, oldset;
 
-  newFPEHandler.sa_handler = oldFPEHandler->sa_handler;
-  sigemptyset(&newFPEHandler.sa_mask);
-  newFPEHandler.sa_flags = 0;
-  sigaction(SIGFPE, &newFPEHandler, oldFPEHandler);
+  unsigned short cw;
 
-#if 0
-  newSEGVHandler.sa_handler = oldSEGVHandler->sa_handler;
-  sigemptyset(&newSEGVHandler.sa_mask);
-  newSEGVHandler.sa_flags = 0;
-  sigaction(SIGSEGV, &newSEGVHandler, oldSEGVHandler);
-#endif
+  sigfillset(&newFPEHandler.sa_mask);
+  newFPEHandler.sa_sigaction = DylanFPEHandler;
+  newFPEHandler.sa_flags = SA_SIGINFO;
+  sigaction(SIGFPE, &newFPEHandler, &outer_FPEHandler);
 
-  newTRAPHandler.sa_handler = oldTRAPHandler->sa_handler;
-  sigemptyset(&newTRAPHandler.sa_mask);
-  newTRAPHandler.sa_flags = 0;
-  sigaction(SIGTRAP, &newTRAPHandler, oldTRAPHandler);
+  sigfillset(&newSEGVHandler.sa_mask);
+  newSEGVHandler.sa_sigaction = DylanSEGVHandler;
+  newSEGVHandler.sa_flags = SA_SIGINFO;
+  sigaction(SIGSEGV, &newSEGVHandler, &outer_SEGVHandler);
+
+  sigfillset(&newTRAPHandler.sa_mask);
+  newTRAPHandler.sa_sigaction = DylanTRAPHandler;
+  newTRAPHandler.sa_flags = SA_SIGINFO;
+  sigaction(SIGTRAP, &newTRAPHandler, &outer_TRAPHandler);
 
   sigemptyset(&set);
   sigaddset(&set, SIGPIPE);
   sigprocmask(SIG_BLOCK, &set, &oldset);
+
+  /* Set the FPU control word */
+  cw = DYLAN_FPU_CW;
+  _FPU_SETCW(cw);
 }
 
-static void RemoveDylanExceptionHandlers (struct sigaction * oldFPEHandler,
-					  struct sigaction * oldSEGVHandler,
-					  struct sigaction * oldTRAPHandler)
+static void RemoveDylanExceptionHandlers (void)
 {
-  sigaction(SIGFPE, oldFPEHandler, NULL);
-#if 0
-  sigaction(SIGSEGV, oldSEGVHandler, NULL);
-#endif
-  sigaction(SIGTRAP, oldTRAPHandler, NULL);
+  sigaction(SIGFPE, &outer_FPEHandler, NULL);
+  sigaction(SIGSEGV, &outer_SEGVHandler, NULL);
+  sigaction(SIGTRAP, &outer_TRAPHandler, NULL);
 }
-
-
-/* ---*** NOTE: There doesn't appear to be an include file that defines these constants! */
-
-#define TRAP_INTEGER_DIVZERO   0
-#define TRAP_INTEGER_OVERFLOW  4
-#define TRAP_FLOAT_EXCEPTION  16
-
-#define FS_INVALID_OP          1
-#define FS_DENORMAL_OPERAND    2
-#define FS_DIVZERO             4
-#define FS_OVERFLOW            8
-#define FS_UNDERFLOW          16
-#define FS_INEXACT            32
-#define FS_FSTACK_OVERFLOW    64
-#define FS_ALL_EXCEPTIONS \
-  (FS_INVALID_OP | FS_DENORMAL_OPERAND | FS_DIVZERO | FS_OVERFLOW | FS_UNDERFLOW \
-   | FS_INEXACT | FS_FSTACK_OVERFLOW)
 
 __inline
-void RestoreFPState (struct _fpstate * fp)
+void RestoreFPState (ucontext_t *uc)
 {
-  fp->sw &= ~(long)FS_ALL_EXCEPTIONS;           /* Reset all exception flags */
-  asm ("movl %0,%%eax\n\tfldenv 0(%%eax)" : : "g" (fp) : "ax");
-  return;
+  unsigned long int cw = DYLAN_FPU_CW;
+  if (uc->uc_mcontext.fpregs)
+    uc->uc_mcontext.fpregs->cw = cw;
+  _FPU_SETCW(cw);
 }
 
-static void DylanFPEHandler (sighandler_t oldHandler, int signum, struct sigcontext sc)
+static void DylanFPEHandler (int sig, siginfo_t *info, void *uap)
 {
-  if (inside_dylan_ffi_barrier() == 0) { }
-
+  if (inside_dylan_ffi_barrier() == 0) {
+  }
   else {
-    switch (sc.trapno) {
-    case TRAP_INTEGER_DIVZERO:
-      RestoreFPState(sc.fpstate);
-      dylan_integer_divide_0_handler();
-      break;                                    /* Should never get here ... */              
-    case TRAP_INTEGER_OVERFLOW:
-      RestoreFPState(sc.fpstate);
-      dylan_integer_overflow_handler();
-      break;                                    /* Should never get here ... */              
-    case TRAP_FLOAT_EXCEPTION:
-      {
-	long state = sc.fpstate->sw;
-	if (state & FS_DIVZERO) {
-	  RestoreFPState(sc.fpstate);
-	  dylan_float_divide_0_handler();       /* Should never return ... */
-	} else if (state & FS_OVERFLOW) {
-	  RestoreFPState(sc.fpstate);
-	  dylan_float_overflow_handler();       /* Should never return ... */
-	} else if (state & FS_UNDERFLOW) {
-	  RestoreFPState(sc.fpstate);
-	  dylan_float_underflow_handler();      /* Should never return ... */
-	}
-      }
+    ucontext_t *uc = (ucontext_t *) uap;
+
+    switch (info->si_code) {
+    case FPE_INTDIV:
+      RestoreFPState(uc);
+      uc->uc_mcontext.gregs[REG_EIP] = (greg_t) dylan_integer_divide_0_handler;
       break;
+      
+    case FPE_INTOVF:
+      RestoreFPState(uc);
+      uc->uc_mcontext.gregs[REG_EIP] = (long) dylan_integer_overflow_handler;
+      break;
+      
+    case FPE_FLTDIV:
+      RestoreFPState(uc);
+      uc->uc_mcontext.gregs[REG_EIP] = (long) dylan_float_divide_0_handler;
+      break;
+      
+    case FPE_FLTOVF:
+      RestoreFPState(uc);
+      uc->uc_mcontext.gregs[REG_EIP] = (long) dylan_float_overflow_handler;
+      break;
+
+    case FPE_FLTUND:
+      RestoreFPState(uc);
+      uc->uc_mcontext.gregs[REG_EIP] = (long) dylan_float_underflow_handler;
+      break;
+      
     default:
       break;
     }
   }
-
-  // Here iff we should invoke the previous handler ...
-  if (oldHandler == SIG_DFL) {
-    signal(signum, SIG_DFL);
-    raise(signum);
-  }
-  else
-    // ---*** NOTE: What if the old handler isn't expecting this calling sequence?
-    (*(SIG_SIGCONTEXT)oldHandler)(signum, sc);
-
-  return;
 }
 
-
-static void DylanSEGVHandler (sighandler_t oldHandler, int signum, struct sigcontext sc)
+static void DylanSEGVHandler (int sig, siginfo_t *info, void *uap)
 {
-  if (inside_dylan_ffi_barrier() == 0) { }
+  if (inside_dylan_ffi_barrier() == 0) {
+  }
+  else {
+    ucontext_t *uc = (ucontext_t *) uap;
+    const unsigned char *eip
+      = (const unsigned char *)uc->uc_mcontext.gregs[REG_EIP];
 
-  else if (sc.trapno == TRAP_INTEGER_OVERFLOW) {
-    RestoreFPState(sc.fpstate);
-    dylan_integer_overflow_handler();           /* Should never return ... */
+    switch (info->si_code) {
+    case SEGV_MAPERR:
+    case SEGV_ACCERR:
+      break;
+
+    default:
+      if (eip[-1] == INTO_OPCODE
+	  || (eip[-2] == INT_OPCODE && eip[-1] == 0x04)) {
+	uc->uc_mcontext.gregs[REG_EIP] = (long) dylan_integer_overflow_handler;
+	return;
+      }
+      break;
+    }
   }
 
-  // Here iff we should invoke the previous handler ...
-  if (oldHandler == SIG_DFL) {
-    signal(signum, SIG_DFL);
-    raise(signum);
-  }
-  else
-    // ---*** NOTE: What if the old handler isn't expecting this calling sequence?
-    (*(SIG_SIGCONTEXT)oldHandler)(signum, sc);
-
-  return;
+  chain_sigaction(&outer_SEGVHandler, sig, info, uap);
 }
-
-#include <stdio.h>
-#include <dlfcn.h>
 
 int getebp () {
     int ebp;
@@ -226,10 +277,8 @@ void walkstack() {
   }
 }
 
-static void DylanTRAPHandler (sighandler_t oldHandler, int signum, struct sigcontext sc)
+static void DylanTRAPHandler (int sig, siginfo_t *info, void *sc)
 {
   walkstack();
-  (*(SIG_SIGCONTEXT)oldHandler)(signum, sc);
-  return;
+  chain_sigaction(&outer_TRAPHandler, sig, info, sc);
 }
-
