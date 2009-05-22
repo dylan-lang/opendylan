@@ -52,7 +52,8 @@ define module win32-resources-internal
   use functional-dylan,
     exclude: { debug-message };
   use threads;
-  use table-extensions;
+  use table-extensions,
+    exclude: { table };
   use machine-words;
   use c-ffi;
   use win32-common;
