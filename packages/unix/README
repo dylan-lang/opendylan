@@ -102,13 +102,8 @@ specifying the language standard:
 Documentation for language extensions and libraries can be found at
 the Open Dylan website too:
 
-  http://www.opendylan.org/documentation/opendylan
+  http://www.opendylan.org/documentation.phtml
 
-Still more documentation can be found on:
-
-  http://www.opendylan.org/gdref.phtml
-
-and more than you probably need is available from the Subversion
-repository:
+Still more documentation can be found in the Subversion repository:
 
   $ svn co svn://svn.opendylan.org/scm/svn/dylan/trunk/documentation
