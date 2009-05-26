@@ -36,6 +36,7 @@ define module native-rtg
     op--get-teb-tlv,
     op--set-teb-tlv,
     op--free-teb-tlv,
+    op--get-stack-bottom,
     op--get-module-handle,
     op--pop-any-SEH-handlers,
     op--init-dylan-data,

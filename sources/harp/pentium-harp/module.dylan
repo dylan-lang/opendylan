@@ -54,6 +54,7 @@ define module pentium-harp
     ins--move-arg-count-byte, ins--load-stack-index,
     ins--offset-to-tag, 
     ins--clear-direction-flag, ins--push-last-arg,
+    ins--get-stack-bottom,
 
 
     // registers

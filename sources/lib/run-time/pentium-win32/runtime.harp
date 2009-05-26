@@ -4987,7 +4987,7 @@ End scope at 11
 #() [165->185] (level:0) is red with stack state with
 #({basic-block #() 185 195})
   st	0, N0/NSPILL-0, 20
-  or	N4/edi, esp, 1020
+  get-stack-bottom	N4/edi
   push	N4/edi
   call-alien	{constant "_dylan_mm_register_thread"}, 0
 
@@ -5049,7 +5049,7 @@ End scope at 11
 
 +++ Live variable scopes for primitive_ensure_valid_teb +++
 Start scope at 3 with frame for no variables
-End scope at 361
+End scope at 360
 
 +++ No Source Code Locators for primitive_ensure_valid_teb +++
 
@@ -5838,7 +5838,7 @@ End scope at 51
 
 #() [80->95] (level:0) is red with stack state with
 #({basic-block #() 95 105})
-  or	N0/edx, esp, 1020
+  get-stack-bottom	N0/edx
   push	N0/edx
   call-alien	{constant "_dylan_mm_register_thread"}, 0
 
@@ -6025,7 +6025,7 @@ End scope at 51
 
 +++ Live variable scopes for _dylan_main_0 +++
 Start scope at 7 with frame for no variables
-End scope at 497
+End scope at 496
 
 +++ No Source Code Locators for _dylan_main_0 +++
 
@@ -19751,7 +19751,7 @@ End scope at 13
   st	0, N3/edi, 20
   st	-1, N3/edi, 20
   sub	N5/edi, N3/edi, 32
-  or	N9/edx, esp, 1020
+  get-stack-bottom	N9/edx
   push	N9/edx
   call-alien	{constant "_dylan_mm_register_thread"}, 0
 
@@ -19886,7 +19886,7 @@ End scope at 13
 
 +++ Live variable scopes for _dylan_thread_trampoline@4 +++
 Start scope at 6 with frame for no variables
-End scope at 466
+End scope at 465
 
 +++ No Source Code Locators for _dylan_thread_trampoline@4 +++
 
@@ -19965,7 +19965,7 @@ End scope at 466
 
 #() [130->145] (level:0) is red with stack state with
 #({basic-block #() 145 155})
-  or	N3/edx, esp, 1020
+  get-stack-bottom	N3/edx
   push	N3/edx
   call-alien	{constant "_dylan_mm_register_thread"}, 0
 
@@ -19991,15 +19991,9 @@ End scope at 466
   conditional-move	{tag 36:690}, {indirect-constant "Pruntime_thread_count"}, N5/edx, N4/eax
 
 #({tag 37:190}) [190->200] (level:0) is red with stack state with
-#({basic-block #({tag 2:200}) 200 215})
+#({basic-block #({tag 26:630}) 630 635})
   init-fpu	
   call-alien	{constant "_dylan_initialize"}, 0
-
-#({tag 2:200}) [200->215] (level:0) is red with stack state with
-#({basic-block #({tag 26:630}) 630 635})
-  push	0
-  push	{indirect-constant "Pteb_tlv_index"}
-  call-alien	{constant "_TlsSetValue@8"}, 0
 
 #({tag 26:630}) [630->635] (level:0) is green with stack state with
 #({basic-block #({tag 38:705}) 705 710})
@@ -20019,9 +20013,15 @@ End scope at 466
   allocate-local-area	
   allocate-raw-area	
 
+#({tag 2:200}) [200->215] (level:0) is red with stack state with
+#({basic-block #({tag 26:630}) 630 635})
+  push	0
+  push	{indirect-constant "Pteb_tlv_index"}
+  call-alien	{constant "_TlsSetValue@8"}, 0
+
 #() [865->870] (level:0) is #f with stack state #f
 #()
-  bra	{tag 2:200}
+  bra	{tag 26:630}
 
 #({tag 45:800}) [800->815] (level:0) is #f with stack state #f
 #({basic-block #({tag 3:215}) 215 225})
@@ -20264,11 +20264,11 @@ End scope at 466
 
 +++ Live variable scopes for _DylanDllEntry@12 +++
 Start scope at 55 with frame for no variables
-End scope at 270
-Start scope at 271 no frame for no variables
-End scope at 290
-Start scope at 291 with frame for no variables
-End scope at 488
+End scope at 255
+Start scope at 256 no frame for no variables
+End scope at 275
+Start scope at 276 with frame for no variables
+End scope at 487
 
 +++ No Source Code Locators for _DylanDllEntry@12 +++
 

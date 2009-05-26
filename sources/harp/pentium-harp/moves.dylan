@@ -431,7 +431,7 @@ define method op--load-thread-local
 end method;
 
 define method op--tlb-base-register 
-    (be :: <pentium-back-end>, dest :: <real-register>) => ()
+    (be :: <pentium-windows-back-end>, dest :: <real-register>) => ()
   op--load-thread-local(be, dest, #x14);
 end method;
 
@@ -569,6 +569,14 @@ define pentium-template (st-teb)
       st(be, data, reg--tmp1, index);
     end harp-out;
 
+end pentium-template;
+
+
+define pentium-template (get-stack-bottom)
+  // The stack bottom (i.e., the highest address) is stored at offxet #x04
+  // in the TEB
+  pattern (be, dest :: <real-register> by colour)
+    op--load-thread-local(be, dest, #x04);
 end pentium-template;
 
 

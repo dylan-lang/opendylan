@@ -36,6 +36,8 @@ define instruction-set <pentium-instruction-set>
 
   du    op load-stack-index;
 
+  d     op get-stack-bottom;
+
   t     op offset-to-tag;
 
   none  op clear-direction-flag, push-last-arg;
