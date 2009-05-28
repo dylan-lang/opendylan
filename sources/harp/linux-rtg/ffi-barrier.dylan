@@ -78,6 +78,16 @@ end method;
 define sideways method op--get-module-handle(be :: <native-unix-back-end>) => ()
 end method;
 
+define sideways method op--shut-down-dll-library
+    (be :: <native-unix-back-end>) => ()
+  op--call-iep(be, primitive-deregister-traced-roots-ref, 
+	       %ambig-root, %static-root, %exact-root);
+end method;
+
+define sideways method op--shut-down-exe-library
+    (be :: <native-unix-back-end>) => ()
+  // Do nothing
+end method;
 
 
 define no-export unix-API-runtime-primitive dylan-thread-trampoline
@@ -125,7 +135,7 @@ define shared init unix-API-runtime-primitive dylan-shared-object-exit
   c-result c-result;
   
   // Uninitialize any DLL roots etc.
-  op--shut-down-library(be);
+  op--shut-down-dll-library(be);
   when-base
     // Do any deregistration of the MM state for the master thread here
     op--maybe-uninitialize-thread-for-p-detach(be);

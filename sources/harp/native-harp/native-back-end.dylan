@@ -38,6 +38,9 @@ define sideways method big-endian?
   #t
 end;
 
+define abstract open class <native-windows-back-end> (<harp-native-back-end>)
+end;
+
 define abstract open class <native-unix-back-end> (<harp-native-back-end>)
 end;
 

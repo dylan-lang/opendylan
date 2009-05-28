@@ -7,8 +7,6 @@ License:      Functional Objects Library Public License Version 1.0
 Dual-license: GNU Lesser General Public License
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-
-
 // The Pentium backend class. Nothing very interesting here.
 
 define class <pentium-back-end> (<harp-cisc-back-end>)
@@ -21,7 +19,8 @@ define method initialize
   obj;
 end;
 
-define class <pentium-windows-back-end> (<pentium-back-end>)
+define class <pentium-windows-back-end> (<pentium-back-end>, 
+                                         <native-windows-back-end>)
 end;
 
 register-back-end(<pentium-windows-back-end>, #"harp", #"x86", #"win32");

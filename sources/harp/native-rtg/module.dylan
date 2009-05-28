@@ -50,7 +50,8 @@ define module native-rtg
     op--dylan-thread-trampoline,
     op--initialize-master-thread,
     op--maybe-uninitialize-thread-for-p-detach,
-    op--shut-down-library,
+    op--shut-down-dll-library,
+    op--shut-down-exe-library,
     op--shut-down-dylan-library,
     op--dylan-registration-error,
     op--maybe-uninitialize-thread,
@@ -103,6 +104,7 @@ define module native-rtg
     primitive-allocate-vector-ref,
     primitive-dylan-initialize-ref,
     primitive-register-traced-roots-ref,
+    primitive-deregister-traced-roots-ref,
     primitive-nlx-ref,
 
     primitive-name,

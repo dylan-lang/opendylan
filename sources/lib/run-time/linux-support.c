@@ -51,15 +51,11 @@ D c_primitive_stop_timer()
     stop.ru_utime.tv_sec -= 1;
   }
 
-  { SOV* value = make_dylan_vector(2);
+  {
+    SOV* value = make_dylan_vector(2);
     D* data = (D*)vector_data(value);
     data[0] = I(stop.ru_utime.tv_sec);
     data[1] = I(stop.ru_utime.tv_usec);
     return((D)value); 
-}}
-
-
-/* Needed to keep code generated for applications happy ... */
-
-int TargcT;
-char **TargvT[];
+  }
+}

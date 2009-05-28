@@ -28,7 +28,6 @@ define module dfmc-harp-cg-linker
     glue-name,
     emit-executable-entry-points,
     emit-shared-library-entry-points,
-    emit-glue-data,
     emit-library-initializer,
     emit-library-imported-data,
     main-unit?;

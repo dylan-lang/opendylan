@@ -946,11 +946,8 @@ define used-by-client init runtime-primitive deregister-traced-roots
 end runtime-primitive;
 
 
-
-define method op--shut-down-library (be :: <harp-back-end>) => ()
-  op--call-iep(be, primitive-deregister-traced-roots-ref, 
-	       %ambig-root, %static-root, %exact-root);
-end method;
+define open generic op--shut-down-dll-library (be :: <harp-back-end>) => ();
+define open generic op--shut-down-exe-library (be :: <harp-back-end>) => ();
 
 
 define method op--shut-down-dylan-library (be :: <harp-back-end>) => ()
@@ -1100,7 +1097,7 @@ define shared init c-runtime-primitive dylan-main
   c-result c-result;
   op--get-module-handle(be);
   op--call-c(be, primitive-dylan-initialize-ref);
-  op--shut-down-library(be);
+  op--shut-down-exe-library(be);
   op--call-iep(be, primitive-exit-application-ref, c-result);
   ins--rts(be);    // except that we'll never get to here.
 end c-runtime-primitive;
@@ -1123,7 +1120,7 @@ define init c-runtime-primitive dylan-main-0
 
   op--call-c(be, primitive-dylan-initialize-ref);
 
-  op--shut-down-library(be);
+  op--shut-down-exe-library(be);
 
   // Do any deregistration of the MM state for the master thread here
   op--maybe-uninitialize-thread-for-p-detach(be);

@@ -193,39 +193,32 @@ End scope at 64
 +++ starting code for dylan_main +++
 
 #() [0->5] (level:0) is red with stack state before
-#({basic-block #({tag 2:50}) 50 65})
+#({basic-block #({tag 2:30}) 30 45})
   rem	"This is a dummy first basic block."
 
-#({tag 2:50}) [50->65] (level:0) is #f with stack state #f
+#({tag 2:30}) [30->45] (level:0) is #f with stack state #f
 #({basic-block #() 5 10})
   preserve-registers-entry	
   allocate-local-area	
   allocate-raw-area	
 
 #() [5->10] (level:0) is red with stack state with
-#({basic-block #() 10 30})
+#({basic-block #() 10 20})
   call-alien	{constant "dylan_initialize"}, 0
 
-#() [10->30] (level:0) is red with stack state with
-#({basic-block #() 30 40})
-  push	{constant "Pexact_root"}
-  push	{constant "Pstatic_root"}
-  move	eax, {constant "Pambig_root"}
-  call	{constant "primitive_deregister_traced_roots"}, 1
-
-#() [30->40] (level:0) is red with stack state with
-#({basic-block #() 40 40})
+#() [10->20] (level:0) is red with stack state with
+#({basic-block #() 20 20})
   move	eax, eax
   call	{constant "primitive_exit_application"}, 1
 
-#() [40->40] (level:0) is red with stack state with
-#({basic-block #({tag 1:45}) 45 50})
+#() [20->20] (level:0) is red with stack state with
+#({basic-block #({tag 1:25}) 25 30})
 
-#({tag 1:45}) [45->50] (level:0) is #f with stack state #f
-#({basic-block #() 40 45})
+#({tag 1:25}) [25->30] (level:0) is #f with stack state #f
+#({basic-block #() 20 25})
   preserve-registers-exit	
 
-#() [40->45] (level:0) is red with stack state #f
+#() [20->25] (level:0) is red with stack state #f
 #()
   rts	
 
@@ -233,7 +226,7 @@ End scope at 64
 
 +++ Live variable scopes for dylan_main +++
 Start scope at 7 with frame for no variables
-End scope at 37
+End scope at 17
 
 +++ No Source Code Locators for dylan_main +++
 

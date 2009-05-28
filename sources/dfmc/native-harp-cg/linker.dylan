@@ -46,6 +46,32 @@ end method;
 
 
 define sideways method emit-library-initializer
+    (back-end :: <native-windows-back-end>, stream, ld,
+     emit-call-used :: <method>,
+     emit-call-crs :: <method>,
+     emit-branch-on-init :: <method>,
+     init-name :: <byte-string>,
+     harp-output?, debug-info?)
+ => ();
+  let initializer
+    = with-harp-emitter (back-end, stream, init-name,
+                         harp-debug: harp-output?,
+                         export: #t)
+        let return-tag = make-tag(back-end);
+        emit-branch-on-init(back-end, return-tag);
+        emit-call-used(back-end);
+        emit-call-crs(back-end);
+        ins--tag(back-end, return-tag);
+        ins--rts-and-drop(back-end, 0);
+      end with-harp-emitter;
+  
+  output-compiled-lambda(back-end, stream,
+                         initializer,
+                         section: #"init-code",
+                         debug-info?: debug-info?);
+end method;
+
+define sideways method emit-library-initializer
     (back-end :: <native-unix-back-end>, stream, ld,
      emit-call-used :: <method>,
      emit-call-crs :: <method>,
@@ -62,11 +88,10 @@ define sideways method emit-library-initializer
 
   output-compiled-lambda(back-end, stream,
 			 with-harp-emitter(back-end,
-							   stream,
-							   init-name,
-							   harp-debug: harp-output?,
-							   export: #t)
-			       
+                                           stream,
+                                           init-name,
+                                           harp-debug: harp-output?,
+                                           export: #t)
 			   let return-tag = make-tag(back-end);
 			   emit-branch-on-init(back-end, return-tag);
 			   emit-call-used(back-end);
@@ -75,7 +100,6 @@ define sideways method emit-library-initializer
 			   
 			   ins--tag(back-end, return-tag);
 			   ins--rts-and-drop(back-end, 0);
-
 			 end with-harp-emitter,
                          section: #"init-code",
                          debug-info?: debug-info?);
@@ -96,7 +120,78 @@ define sideways method emit-library-initializer
 						 debug-info?: debug-info?);
 end method;
 
+define sideways method emit-executable-entry-points
+    (back-end :: <native-windows-back-end>, stream, ld,
+     #key harp-output?, debug-info?) => ()
+  let constant-ref = curry(ins--constant-ref, back-end);
+  let lib-name = as-lowercase(as(<string>, library-description-emit-name(ld)));
+  let name = glue-name(lib-name);
+  let name-ref = constant-ref(name);
+  let dylan-library? = *compiling-dylan?*;
+  let mangled-lib-name = harp-raw-mangle(lib-name);
+  let init-dylan-library
+    = ins--indirect-constant-ref(back-end, "_init_dylan_library");
+  let dylandllentry
+    = constant-ref(shared-library-runtime-entry-point-name(back-end));
 
+  output-external(back-end, stream, init-dylan-library);
+  output-external(back-end, stream, dylandllentry);
+
+  let dllentry = 
+    invoke-harp(back-end,
+		method (back-end :: <harp-back-end>)
+                  ins--move(back-end, init-dylan-library, name-ref);
+                  ins--jmp(back-end, dylandllentry, 1);
+                end method,
+		shared-library-entry-point-name(back-end, mangled-lib-name),
+		section: #"init-code",
+		harp-debug: harp-output?,
+		export: #f);
+
+  output-compiled-lambda(back-end, stream, dllentry,
+                         section: #"init-code",
+			 debug-info?: debug-info?);
+
+  let dylanexeentry = constant-ref(c-name(back-end, "dylan_main"));
+  output-external(back-end, stream, dylanexeentry);
+  let exeentry = 
+    invoke-harp(back-end,
+                method(back-end :: <harp-back-end>)
+		    ins--move(back-end, init-dylan-library, name-ref);
+		    ins--jmp(back-end, dylanexeentry, 1);
+		end method,
+		c-name(back-end, concatenate(mangled-lib-name, "Exe")),
+		section: #"init-code",
+		harp-debug: harp-output?,
+		export: #f);
+
+  output-compiled-lambda(back-end, stream, exeentry,
+			 section: #"init-code",
+			 debug-info?: debug-info?);
+
+  let dylan-main = c-name(back-end, "dylan_main_0");
+  let dylanexeentry = constant-ref(dylan-main);
+  output-external(back-end, stream, dylanexeentry);
+
+  let exeentry = 
+    invoke-harp(back-end,
+		method(back-end :: <harp-back-end>)
+		    ins--move(back-end, init-dylan-library, name-ref);
+		    ins--jmp(back-end, dylanexeentry, 1);
+		end method,
+		c-name(back-end, concatenate(mangled-lib-name, "Exe0")),
+		section: #"init-code",
+		harp-debug: harp-output?,
+		export: #f);
+
+  output-compiled-lambda(back-end, stream, exeentry,
+			 section: #"init-code",
+			 debug-info?: debug-info?);
+
+  unless (dylan-library?)
+    cache-import-in-library(back-end, dylan-main, dylan-library-description());
+  end unless;
+end method;
 
 define sideways method emit-executable-entry-points
     (back-end :: <native-unix-back-end>, stream, ld,
@@ -114,23 +209,12 @@ define sideways method emit-executable-entry-points
 
   output-external(back-end, stream, exit-application);
 
-  let argc = ins--indirect-constant-ref(back-end, c-name(back-end, "TargcT"));
-  let argv = ins--indirect-constant-ref(back-end, c-name(back-end, "TargvT"));
-
-  output-external(back-end, stream, argc);
-  output-external(back-end, stream, argv);
-
   let exeentry = 
     invoke-harp(back-end,
-		method(back-end :: <harp-back-end>)
-		    let argc-param = make-n-register(back-end);
-		    let argv-param = make-n-register(back-end);
-		    op--c-load-arguments(back-end, argc-param, argv-param);
-		    ins--move(back-end, argc, argc-param);
-		    ins--move(back-end, argv, argv-param);
-		    ins--call(back-end, name-ref, 0);
-			ins--move(back-end, back-end.registers.reg-arg0, 0);
-			ins--jmp(back-end, exit-application, 1);
+		method (back-end :: <harp-back-end>)
+                  ins--call(back-end, name-ref, 0);
+                  ins--move(back-end, back-end.registers.reg-arg0, 0);
+                  ins--jmp(back-end, exit-application, 1);
 		end method,
 		c-name(back-end, "main"),
 		section: #"init-code",
@@ -144,10 +228,41 @@ define sideways method emit-executable-entry-points
 end method;
 
 define sideways method emit-shared-library-entry-points
-    (back-end :: <native-unix-back-end>, stream, ld,
+    (back-end :: <native-windows-back-end>, stream, ld,
      #key harp-output?, debug-info?) => ()
 end method;
 
-define sideways method main-unit?(back-end :: <native-unix-back-end>) => (main? :: <boolean>)
+define sideways method emit-shared-library-entry-points
+    (back-end :: <native-unix-back-end>, stream, ld,
+     #key harp-output?, debug-info?) => ()
+  let constant-ref = curry(ins--constant-ref, back-end);
+  let lib-name = as-lowercase(as(<string>, library-description-emit-name(ld)));
+  let mangled-lib-name = harp-raw-mangle(lib-name);
+
+  let dylandllexit = constant-ref(c-name(back-end, "DylanSOExit"));
+  output-external(back-end, stream, dylandllexit);
+
+  let dllexit = 
+    invoke-harp-asm(back-end,
+                    method (back-end :: <harp-back-end>)
+                      ins--call(back-end, dylandllexit, 0);
+                    end method,
+                    concatenate(mangled-lib-name, "SOexit"),
+                    section: #"elf-fini-code",
+                    harp-debug: harp-output?,
+                    export: #f);
+  
+  output-compiled-lambda(back-end, stream, dllexit,
+                         section: #"elf-fini-code",
+			 debug-info?: debug-info?);
+end method;
+
+define sideways method main-unit?
+    (back-end :: <native-windows-back-end>) => (main? :: <boolean>)
+  #f
+end method;
+
+define sideways method main-unit?
+    (back-end :: <native-unix-back-end>) => (main? :: <boolean>)
   #t
 end method;

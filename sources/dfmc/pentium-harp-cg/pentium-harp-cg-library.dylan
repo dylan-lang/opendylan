@@ -17,7 +17,6 @@ define library dfmc-pentium-harp-cg
  use dfmc-harp-cg;
  use dfmc-native-harp-cg;
  use dfmc-harp-cg-linker;
- use pentium-linux-glue-rtg;
 
  export dfmc-pentium-harp-cg;
 
