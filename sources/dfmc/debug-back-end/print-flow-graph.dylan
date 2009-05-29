@@ -229,35 +229,41 @@ define method print-computation (stream :: <stream>, c :: <function-call>)
 end method;
 
 define method print-computation (stream :: <stream>, c :: <slot-value>) 
-  format(stream, "SLOT-VALUE%s(%=, %s)", 
+  format(stream, "SLOT-VALUE%s(%s)", 
+//  format(stream, "SLOT-VALUE%s(%=, %s)", 
          if (computation-guaranteed-initialized?(c)) "-INITD" else "" end,
-	 computation-instance(c), ^debug-name(computation-slot-descriptor(c)));
+//	 computation-instance(c),
+	 ^debug-name(computation-slot-descriptor(c)));
 end method;
 
 define method print-computation (stream :: <stream>, c :: <slot-value-setter>) 
-  format(stream, "SLOT-VALUE(%=, %s) := %=", 
-	 computation-instance(c), ^debug-name(computation-slot-descriptor(c)), 
-	 computation-new-value(c));
+  format(stream, "SLOT-VALUE-SETTER(%s)", 
+//  format(stream, "SLOT-VALUE(%=, %s) := %=", 
+//	 computation-instance(c),
+	 ^debug-name(computation-slot-descriptor(c)));
+//	 computation-new-value(c));
 end method;
 
 define method print-computation (stream :: <stream>, c :: <repeated-slot-value>) 
-  format(stream, "REPEATED-SLOT-VALUE(%=, %s, %=)", 
-	 computation-instance(c), ^debug-name(computation-slot-descriptor(c)),
+  format(stream, "REPEATED-SLOT-VALUE(%s, %=)", 
+//	 computation-instance(c),
+	 ^debug-name(computation-slot-descriptor(c)),
 	 computation-index(c));
 end method;
 
 define method print-computation 
     (stream :: <stream>, c :: <repeated-slot-value-setter>) 
-  format(stream, "REPEATED-SLOT-VALUE(%=, %s, %=) := %=", 
-	 computation-instance(c), ^debug-name(computation-slot-descriptor(c)), 
-	 computation-index(c),
-	 computation-new-value(c));
+  format(stream, "REPEATED-SLOT-VALUE-SETTER(%s, %=)", 
+//	 computation-instance(c),
+	 ^debug-name(computation-slot-descriptor(c)), 
+	 computation-index(c));
+//	 computation-new-value(c));
 end method;
 
 define method print-computation (stream :: <stream>, c :: <stack-vector>) 
-  format(stream, "[STACK-VECTOR (");
-  print-args(stream, c.arguments);
-  format(stream, ")]");
+  format(stream, "[STACK-VECTOR]");
+//  print-args(stream, c.arguments);
+//  format(stream, ")]");
 end method;
 
 define method print-computation (stream :: <stream>, c :: <loop>) 
@@ -269,12 +275,12 @@ define method print-computation (stream :: <stream>, c :: <loop-call>)
 end method;
 
 define method print-computation (stream :: <stream>, c :: <primitive-call>) 
-  format(stream, "[PRIMOP %s (", primitive-name(c.primitive));
-  let sig = c.primitive.primitive-signature;
-  for (i from 0 below ^signature-number-required(sig))
-    format(stream, "%=,", ^signature-required(sig)[i]);
-  end;
-  format(stream, ")]");
+  format(stream, "[PRIMOP %s]", primitive-name(c.primitive));
+  //let sig = c.primitive.primitive-signature;
+  //for (i from 0 below ^signature-number-required(sig))
+  //  format(stream, "%=,", ^signature-required(sig)[i]);
+  //end;
+  //format(stream, ")]");
   //print-args(stream, c.arguments);
   //format(stream, ")]");
   //print-tail-call-annotation(stream, c);
@@ -365,72 +371,81 @@ end method;
 
 define method print-computation
     (stream :: <stream>, c :: <extract-single-value>)
-  format(stream, "%= [%d]", c.computation-value, c.index);
+  format(stream, "extract [%d]", c.index);
+//  format(stream, "%= [%d]", c.computation-value, c.index);
 end method;
 
 define method print-computation
     (stream :: <stream>, c :: <extract-rest-value>)
-  format(stream, "#rest %= [%d]", c.computation-value, c.index);
+  format(stream, "extract #rest [%d]", c.index);
+//  format(stream, "#rest %= [%d]", c.computation-value, c.index);
 end method;
 
 define method print-computation
     (stream :: <stream>, c :: <multiple-value-spill>)
-  format(stream, "[MV-SPILL %=]", c.computation-value);
+  format(stream, "[MV-SPILL]");
+//  format(stream, "[MV-SPILL %=]", c.computation-value);
 end method;
 
 define method print-computation
     (stream :: <stream>, c :: <multiple-value-unspill>)
-  format(stream, "[MV-UNSPILL %=]", c.computation-value);
+  format(stream, "[MV-UNSPILL]");
+//  format(stream, "[MV-UNSPILL %=]", c.computation-value);
 end method;
 
 define method print-computation
     (stream :: <stream>, c :: <adjust-multiple-values>)
-  format(stream, "[ADJUST-MV %= %d]",
-	 c.computation-value, c.number-of-required-values);
+  format(stream, "[ADJUST-MV %d]",
+//  format(stream, "[ADJUST-MV %= %d]",
+//	 c.computation-value,
+	 c.number-of-required-values);
 end method;
 
 define method print-computation
     (stream :: <stream>, c :: <adjust-multiple-values-rest>)
-  format(stream, "[ADJUST-MV-REST %= %d]",
-	 c.computation-value, c.number-of-required-values);
+  format(stream, "[ADJUST-MV-REST %d]",
+//  format(stream, "[ADJUST-MV-REST %= %d]",
+//	 c.computation-value,
+	 c.number-of-required-values);
 end method;
 
 // types
 
 define method print-computation
     (stream :: <stream>, c :: <single-value-check-type-computation>)
-  format(stream, "check-type %s :: %s", c.computation-value, c.type)
+  format(stream, "check-type"); //%s :: %s", c.computation-value, c.type)
 end method print-computation;
 
 define method print-computation
     (stream :: <stream>, c :: <assignment-check-type>)
-  format(stream, "assignment-check-type %s = %s :: %s", c.lhs-variable-name, c.computation-value, c.type)
+  format(stream, "assignment-check-type"); // %s = %s :: %s", c.lhs-variable-name, c.computation-value, c.type)
 end method print-computation;
 
 define method print-computation
     (stream :: <stream>, c :: <multiple-value-check-type-computation>)
-  format(stream, "multiple-value-check-type %s :: ", c.computation-value);
-  for (first? = #t then #f, type in c.types)
-    unless (first?)
-      format(stream, ", ");
-    end unless;
-    format(stream, "%=", type);
-  end;
+  format(stream, "multiple-value-check-type"); // %s :: ", c.computation-value);
+//  for (first? = #t then #f, type in c.types)
+//    unless (first?)
+//      format(stream, ", ");
+//    end unless;
+//    format(stream, "%=", type);
+//  end;
 end method print-computation;
 
 define method print-computation
     (stream :: <stream>, c :: <multiple-value-check-type-rest>)
-  next-method();		// print fixed part
-  unless (empty?(c.types))
-    format(stream, ", ");
-  end;
-  format(stream, "#rest %=", c.rest-type);
+  format(stream, "multiple-value-check-type-rest");
+//  next-method();		// print fixed part
+//  unless (empty?(c.types))
+//    format(stream, ", ");
+//  end;
+//  format(stream, "#rest %=", c.rest-type);
 end method print-computation;
 
 define method print-computation
     (stream :: <stream>, c :: <guarantee-type>)
-  format(stream, "guarantee-type %s :: %s",
-	 c.computation-value, c.static-guaranteed-type | c.guaranteed-type)
+  format(stream, "guarantee-type"); // %s :: %s",
+//	 c.computation-value, c.static-guaranteed-type | c.guaranteed-type)
 end method print-computation;
 
 // cells
@@ -444,7 +459,7 @@ define method print-computation (stream :: <stream>, c :: <get-cell-value>);
 end method print-computation;
 
 define method print-computation (stream :: <stream>, c :: <set-cell-value!>);
-  format(stream, "cell-value := %s", c.computation-value)
+  format(stream, "cell-value"); // := %s", c.computation-value)
 end method print-computation;
 
 // C-FFI
