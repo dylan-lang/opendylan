@@ -17,6 +17,8 @@ define constant $default-smtp-port :: <integer> = 25;
 /// Conditions
 
 define abstract class <smtp-error> (<error>)
+  constant slot smtp-error-code :: <integer>,
+    required-init-keyword: code:;
   constant slot smtp-error-response :: <string>, 
     required-init-keyword: response:;
 end class;
@@ -24,19 +26,30 @@ end class;
 define sealed class <transient-smtp-error> (<smtp-error>) end;
 define sealed class <permanent-smtp-error> (<smtp-error>) end;
 
+define constant $whitespace-regex = compile-regex("[ \t]+");
+
 define function check-smtp-response
     (stream :: <stream>) => ()
   let response = read-line(stream);
   when (*debug-smtp*)
     format-out("%s\n", response);
   end;
-  assert(size(response) > 3, "Error code missing from SMTP response");
-  select (response[0])
-    '4' => error(make(<permanent-smtp-error>, response: response));
-    '5' => error(make(<transient-smtp-error>, response: response));
-    otherwise => #t;	// OK
+  let (code, message) = apply(values, split(response, $whitespace-regex, count: 2));
+  let code = block ()
+               string-to-integer(code);
+             exception (ex :: <serious-condition>)
+               let msg = format-to-string("Invalid response from SMTP server: %s",
+                                          response);
+               error(make(<permanent-smtp-error>, code: -1, response: msg));
+             end;
+  if (code >= 500 & code <= 599)
+    error(make(<permanent-smtp-error>, code: code, response: response));
+  elseif (code >= 400 & code <= 499)
+    error(make(<transient-smtp-error>, code: code, response: response));
+  else
+    #t;   // OK
   end;
-end function;
+end function check-smtp-response;
 
 
 /// Session-level interface.

@@ -8,17 +8,22 @@ Dual-license: GNU Lesser General Public License
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module smtp-client
-  use functional-dylan;
-  use streams;
+  use common-dylan;
   use format-out;
-  use format;
+  use format,
+    import: { format };
+  use regular-expressions;
   use sockets;
+  use streams;
 
   export *debug-smtp*;
+
+  export $default-smtp-port;
 
   export <smtp-error>,
 	 <transient-smtp-error>,
 	 <permanent-smtp-error>,
+	 smtp-error-code,
 	 smtp-error-response;
 
   export \with-smtp-stream,

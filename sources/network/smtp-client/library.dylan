@@ -8,9 +8,10 @@ Dual-license: GNU Lesser General Public License
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library smtp-client
-  use functional-dylan;
+  use common-dylan;
   use io;
   use network;
+  use regular-expressions;
 
   export smtp-client;
 end library smtp-client;
