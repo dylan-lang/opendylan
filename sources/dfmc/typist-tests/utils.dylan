@@ -3,6 +3,8 @@ synopsis: Tests which should succeed once the new typist is in place
 author: Hannes Mehnert
 copyright: 2008, all rights reversed
 
+define thread variable *batch-compiling* :: <boolean> = #f;
+
 define function compile-library-until-optimized (project)
   let lib = project.project-current-compilation-context;
   block()
@@ -21,7 +23,7 @@ define function report-progress (i1 :: <integer>, i2 :: <integer>,
 end;
 
 define thread variable *vis* :: false-or(<dfmc-graph-visualization>) = #f; 
-define thread variable *current-index* :: <integer> = -1;
+define thread variable *current-index* :: <integer> = 0;
 
 define function trace-computations (key :: <symbol>, id :: <integer>, comp-or-id, comp2 :: <integer>, #key label)
   select (key by \==)
@@ -69,13 +71,13 @@ define function trace-computations (key :: <symbol>, id :: <integer>, comp-or-id
 end;
 define function visualize (key :: <symbol>, object :: <object>)
   select (key by \==)
-    #"file-changed" => *vis*.report-enabled? := (object = "scratch-source");
-    #"dfm-switch" => *vis*.dfm-report-enabled? := (object == 4);
+    #"file-changed" => *vis*.report-enabled? := (object = "scratch-source") | *batch-compiling*;
+    #"dfm-switch" => *vis*.dfm-report-enabled? := (object == 4) | *batch-compiling*;
     #"dfm-header" =>
         write-to-visualizer(*vis*, list(key, *current-index*, object));
     #"optimizing" =>
       begin
-        *vis*.dfm-report-enabled? := (object == 4);
+        *vis*.dfm-report-enabled? := (object == 4) | *batch-compiling*;
         write-to-visualizer(*vis*, list(#"relayouted", *current-index*));
       end;
     //#"finished" =>
@@ -92,19 +94,30 @@ define function visualize (key :: <symbol>, object :: <object>)
       end;
     #"full-dfm" =>
       format-out("GOT DFM %=\n", object);
+    #"source" =>
+      *batch-compiling* & write-to-visualizer(*vis*, list(key, object.head, object.tail));
+    #"choose-source" =>
+      *batch-compiling* & write-to-visualizer(*vis*, list(key, object));
     otherwise => ;
   end;
 end;
 
-define function compiler (project)
-  let lib = project.project-current-compilation-context;
+define function compiler (project, #rest keys, #key library, #all-keys)
+  let lib = library | project.project-current-compilation-context;
   block()
     dynamic-bind(*progress-library* = lib)
       dynamic-bind(*dump-dfm-method* = visualize)
         dynamic-bind(*computation-tracer* = trace-computations)
           with-progress-reporting(project, report-progress, visualization-callback: visualize)
-            compile-library-from-definitions(lib, force?: #t, skip-link?: #t,
-                                             compile-if-built?: #t, skip-heaping?: #t);
+    let subc = project-load-namespace(project, force-parse?: #t);
+    for (s in subc using backward-iteration-protocol)
+      parse-project-sources(s);
+    end;
+    let project2 = compilation-context-project(project-current-compilation-context(project));
+    let settings = project-build-settings(project2);
+
+            apply(compile-library-from-definitions, lib, force?: #t, skip-link?: #t,
+                                             compile-if-built?: #t, skip-heaping?: #t, build-settings: settings, keys);
           end;
         end;
       end;

@@ -13,6 +13,7 @@ define library dfmc-typist-tests
   use dfmc-management;
   use dfmc-debug-back-end;
   use dfmc-optimization; //to get program-note classes
+  use dfmc-browser-support;
 
   use dfmc-visualization;
 
@@ -40,10 +41,11 @@ define module dfmc-typist-tests
   use dfmc-visualization;
 
   use projects;
-  use projects-implementation, import: { project-current-compilation-context };
+  use projects-implementation, import: { project-current-compilation-context, project-build-settings };
   use environment-protocols,
     import: { find-project, open-project-compiler-database, project-warnings };
   use dfmc-environment-projects; //needed for find-project
+  use dfmc-project-compilation, import: { compilation-context-project };
 
   use file-system;
   use locators;

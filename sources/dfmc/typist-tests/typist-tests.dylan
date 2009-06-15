@@ -546,6 +546,21 @@ begin
   add!($tests, pair(#"tail-call", tc));
 end;
 
+
+begin
+  let top-build = "c:\\vis-stage3\\";
+  environment-variable("OPEN_DYLAN_USER_ROOT") := top-build;
+  environment-variable("OPEN_DYLAN_USER_BUILD") := concatenate(top-build, "build");
+  environment-variable("OPEN_DYLAN_USER_INSTALL") := top-build;
+  *vis* := make(<dfmc-graph-visualization>, id: #"Dylan-Graph-Visualization");
+  connect-to-server(*vis*);
+  dynamic-bind(*batch-compiling* = #t)
+    let project = lookup-named-project("dylan");
+    compiler(project);
+  end;
+end;
+
+/*
 begin
   let project = find-project("dylan");
   open-project-compiler-database(project,
@@ -581,7 +596,7 @@ begin
     end;
   end;
 end;
-            
+*/            
 define function list-all-package-names ()
   let res = #();
   local method collect-project
