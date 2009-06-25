@@ -347,6 +347,7 @@ define generic optimize (item :: <computation>) => (b :: <boolean>);
 define function do-optimize (item :: <computation>) => (b :: <boolean>)
   with-parent-computation (item)
     *dump-dfm-method*(#"highlight", item.computation-id);
+    *dump-dfm-method*(#"relayouted", #());
     let res = optimize(item) & #t;
     if (res)
       //*dump-dfm-method*(#"relayouted", #());
