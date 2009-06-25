@@ -23,7 +23,7 @@ define function report-progress (i1 :: <integer>, i2 :: <integer>,
 end;
 
 define thread variable *vis* :: false-or(<dfmc-graph-visualization>) = #f; 
-define thread variable *current-index* :: <integer> = 0;
+define thread variable *current-index* :: <string> = "";
 
 define function trace-computations (key :: <symbol>, id :: <integer>, comp-or-id, comp2 :: <integer>, #key label)
   select (key by \==)
@@ -109,15 +109,15 @@ define function compiler (project, #rest keys, #key library, #all-keys)
       dynamic-bind(*dump-dfm-method* = visualize)
         dynamic-bind(*computation-tracer* = trace-computations)
           with-progress-reporting(project, report-progress, visualization-callback: visualize)
-    let subc = project-load-namespace(project, force-parse?: #t);
-    for (s in subc using backward-iteration-protocol)
-      parse-project-sources(s);
-    end;
-    let project2 = compilation-context-project(project-current-compilation-context(project));
-    let settings = project-build-settings(project2);
+    //let subc = project-load-namespace(project, force-parse?: #t);
+    //for (s in subc using backward-iteration-protocol)
+    //  parse-project-sources(s);
+    //end;
+    //let project2 = compilation-context-project(project-current-compilation-context(project));
+    //let settings = project-build-settings(project2);
 
             apply(compile-library-from-definitions, lib, force?: #t, skip-link?: #t,
-                                             compile-if-built?: #t, skip-heaping?: #t, build-settings: settings, keys);
+                                             compile-if-built?: #t, skip-heaping?: #t,/* build-settings: settings, */ keys);
           end;
         end;
       end;

@@ -546,7 +546,7 @@ begin
   add!($tests, pair(#"tail-call", tc));
 end;
 
-
+/*
 begin
   let top-build = "c:\\vis-stage3\\";
   environment-variable("OPEN_DYLAN_USER_ROOT") := top-build;
@@ -559,8 +559,21 @@ begin
     compiler(project);
   end;
 end;
+*/
 
-/*
+define function getname (str :: <string>) => (res :: <string>)
+  let real = copy-sequence(str, start: 14);
+  copy-sequence(real, end: find-ws(real, 0));
+end;
+
+define function find-ws (s :: <string>, c :: <integer>) => (res :: <integer>)
+  if (s.first == ' ' | s.first == '\n')
+    c;
+  else
+    find-ws(copy-sequence(s, start: 1), c + 1);
+  end;
+end;
+
 begin
   let project = find-project("dylan");
   open-project-compiler-database(project,
@@ -568,35 +581,35 @@ begin
                                  error-handler: callback-handler);
   with-library-context (dylan-library-compilation-context())
     without-dependency-tracking
-      with-open-file (file = "/home/visualization/log", if-exists: #"append", direction: #"output")
+      //with-open-file (file = "/home/visualization/log", if-exists: #"append", direction: #"output")
         *vis* := make(<dfmc-graph-visualization>, id: #"Dylan-Graph-Visualization");
         connect-to-server(*vis*);
         for (test in $tests)
-          write-to-visualizer(*vis*, list(#"source", test.head, test.tail));
+          write-to-visualizer(*vis*, list(#"source", as(<string>, test.head), test.tail));
         end;
-	format(file, "%s new connection %=\n", as-iso8601-string(current-date()), *vis*.system-info);
-	force-output(file);
+        //format(file, "%s new connection %=\n", as-iso8601-string(current-date()), *vis*.system-info);
+	//force-output(file);
         *vis*.dfm-report-enabled? := #f;
         block()
           while (#t)
             let res = read-from-visualizer(*vis*); //expect: #"compile" "source"
             if (res[0] == #"compile")
-              *current-index* := *current-index* + 1;
+              *current-index* := getname(res[1]); //*current-index* + 1;
               dynamic-bind (*progress-stream*           = #f,  // with-compiler-muzzled
                             *demand-load-library-only?* = #f)
-                format(file, "compiling %s\n", res[1]);
+                //format(file, "compiling %s\n", res[1]);
                 compile-template(res[1], compiler: compiler);
               end;
             end;
           end;
         exception (e :: <condition>)
-          format(file, "received exception: %=\n", e);
+          //format(file, "received exception: %=\n", e);
         end;
-      end;
+      //end;
     end;
   end;
 end;
-*/            
+            
 define function list-all-package-names ()
   let res = #();
   local method collect-project
