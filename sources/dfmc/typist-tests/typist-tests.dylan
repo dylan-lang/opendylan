@@ -544,6 +544,23 @@ begin
     "  end;\n"
     "end;";
   add!($tests, pair(#"tail-call", tc));
+
+  let mymap =
+    "define method map-vector ()\n"
+    "  local method mymap\n"
+    "   (fun :: <function>, l :: <vector>)\n"
+    "   => (res :: <vector>)\n"
+    "    if (l.empty?)\n"
+    "      #[]\n"
+    "    else\n"
+    "     let tail = copy-sequence(l, start: 1);\n"
+    "     vector(fun(l.first),\n"
+    "            mymap(fun, tail))\n"
+    "    end\n"
+    "  end;\n"
+    "  mymap(method(x) x + 1 end, #[1, 2, 3]);\n"
+    "end;";
+  add!($tests, pair(#"map-vector", mymap));
 end;
 
 /*
@@ -603,7 +620,7 @@ begin
             end;
           end;
         exception (e :: <condition>)
-          //format(file, "received exception: %=\n", e);
+          format-out("received exception: %=\n", e);
         end;
       //end;
     end;
