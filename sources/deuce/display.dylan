@@ -905,6 +905,12 @@ define sealed method update-display-lines
   //three setter for window-n-display-lines, I suspect this should
   //reflect the number of displayed lines? or the size of
   //array window-display-lines? -- hannes, 11 July 2009
+  //how to reproduce: open deuce with dylan code, so that
+  //all code is displayed without scroll-bar (y-axis). then
+  //insert multiple lines, press tab each time (to get proper
+  //indent; used windows-mode, not emacs-mode)
+  //if no tab pressed or not complete code visible, but a scrollbar
+  //used, can't reproduce
   let old-y :: <integer> = if (old-n > 0) display-line-y(lines[old-n - 1]) else 0 end;
   block (return)
     without-bounds-checks
