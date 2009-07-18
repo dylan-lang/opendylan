@@ -149,7 +149,7 @@ define sealed method really-run-compilation-passes (code :: <&lambda>)
       for-all-lambdas (f in code)
 	lambda-optimized?(f) := #t;
       end for-all-lambdas;
-      // format-out("OPTIMIZING %=\n", code);
+      // opt-format-out("OPTIMIZING %=\n", code);
       with-simple-abort-retry-restart
 	  ("Abort all analysis passes and continue.", 
 	   "Restart all analysis passes.")
@@ -194,7 +194,7 @@ define sealed method really-run-compilation-passes (code :: <&lambda>)
 	      if (count < $max-reoptimization-iterations) 
 		loop(count + 1)
 	      else
-		format-out("MAX REOPTIMIZATIONS FOR %= REACHED\n", code);
+		opt-format-out("MAX REOPTIMIZATIONS FOR %= REACHED\n", code);
 	      end if;
 	    end;
 	  end iterate;
@@ -255,7 +255,7 @@ define method run-optimizations (code) => (b :: <boolean>)
   let something? = queue-head(queue);
   for (count from 0 below $max-optimization-iterations,
        item = something? then queue-head(queue), while: item) 
-    // do-queue(method (i) format-out("  ELT %=\n", i) end, queue);
+    // do-queue(method (i) opt-format-out("  ELT %=\n", i) end, queue);
     if (do-optimize(item))
       something? := #t;
       if (*trace-optimizations?*)
@@ -272,7 +272,7 @@ define method run-optimizations (code) => (b :: <boolean>)
     end if
   finally
     if (count = $max-optimization-iterations)
-      format-out("MAX OPTIMIZATIONS FOR %= REACHED\n", code);
+      opt-format-out("MAX OPTIMIZATIONS FOR %= REACHED\n", code);
     end if;
   end;
   if (something?) #t else #f end;
