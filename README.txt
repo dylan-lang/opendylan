@@ -39,6 +39,10 @@ Build the MPS (see below).
               # you must call configure with absolute path!
   make
 
+Your new Dylan compiler will be in
+$BUILDDIR/Bootstrap.2/bin/minimal-console-compiler
+
+
 [1] Note that the directory --with-mps wants here is the one containing the
     "code" directory.  If you downloaded the MPS kit from Ravenbrook this
     would be, for example, "--with-mps=/path/to/mps-kit-1.106.2".
@@ -57,11 +61,9 @@ MPS.
 The main build script for Open Dylan on Windows is
 fundev/admin/builds/build-release.bat.  See that file for additional
 notes and a list of prerequisites.  Notably, to do the initial build
-you will need Open Dylan installed.  (This should be available from
-www.opendylan.org by the time you read this.)  You will also need VC++
-6.0.
+you will need Open Dylan installed.  You will also need VC++ 6.0.
 
-[TODO: verify details here]
+[TODO: verify details here and fill this out]
 
 
 
