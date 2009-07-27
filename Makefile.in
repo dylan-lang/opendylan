@@ -268,8 +268,10 @@ install: @bootstrap_target@ install-stage
 ###
 # Maintenance and test targets
 
+# The only safe directory to delete is $(prefix)/sources. All others may have
+# user content if $(prefix) is /usr or /usr/local.
 uninstall:
-	rm -r $(prefix)
+	rm -rf $(prefix)/sources
 
 install-strip:
 
