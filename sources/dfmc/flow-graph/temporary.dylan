@@ -32,34 +32,26 @@ define method generator (t :: <temporary>) => (res :: false-or(<computation>))
 end;
 
 define method generator-setter (g :: false-or(<computation>), t :: <temporary>) => (res :: false-or(<computation>))
-  if (g & *computation-tracer* & (t.users.size > 0))
-    let old-id = if (t.%generator) t.%generator.computation-id else 0 end;
-    *computation-tracer*(#"temporary-generator", t.temporary-id, g.computation-id, old-id);
+  if (g & *computation-tracer*)
+    let old-id = if (t.%generator) t.%generator else 0 end;
+    *computation-tracer*(#"temporary-generator", t, g, old-id);
   end;
   t.%generator := g;
 end;
 define method remove-user! (t :: <temporary>, c :: <computation>)
   next-method();
   if (*computation-tracer*)
-    *computation-tracer*(#"remove-temporary-user", t.temporary-id, c.computation-id, 0);
-  end;
-  if (*computation-tracer* & (t.users.size == 0))
-    *computation-tracer*(#"remove-temporary", t.temporary-id, 0, 0);
+    *computation-tracer*(#"remove-temporary-user", t, c, 0);
   end;
 end;
 
 define method add-user! (t :: <temporary>, c :: <computation>)
-  if (*computation-tracer* & (t.users.size == 0))
-    let gen = if (t.generator) t.generator.computation-id else 0 end;
-    *computation-tracer*(#"add-temporary", t.temporary-id, t, gen);
-    if (t.generator)
-      let new = t.generator.computation-type;
-      *computation-tracer*(#"change-type", t.%temporary-id, new, 0);
-    end;
+  if (*computation-tracer* & t.environment ~== c.environment)
+    *computation-tracer*(#"add-temporary", t, c, 0);
   end;
   next-method();
   if (*computation-tracer*)
-    *computation-tracer*(#"add-temporary-user", t.temporary-id, c.computation-id, 0);
+    *computation-tracer*(#"add-temporary-user", t, c, 0);
   end;
 end;
 
@@ -70,14 +62,14 @@ define method temporary-id (t :: <temporary>) => (id :: <integer>)
     t.%temporary-id := next-computation-id();
     if (*computation-tracer*)
       if (t.users.size > 0)
-        let gen = if (t.generator) t.generator.computation-id else 0 end;
-        *computation-tracer*(#"add-temporary", t.%temporary-id, t, gen);
+        let gen = if (t.generator) t.generator else 0 end;
+        *computation-tracer*(#"add-temporary", t, gen, 0);
         if (t.generator)
+          *computation-tracer*(#"temporary-generator", t, gen, 0);
           let new = t.generator.computation-type;
-          *computation-tracer*(#"change-type", t.%temporary-id, new, 0);
+          *computation-tracer*(#"change-type", t, new, 0);
         end;
-        do(compose(rcurry(curry(*computation-tracer*, #"add-temporary-user", t.%temporary-id), 0),
-                   computation-id),
+        do(rcurry(curry(*computation-tracer*, #"add-temporary-user", t), 0),
            t.users);
       end;
     end;
@@ -126,9 +118,12 @@ define method initialize
   next-method();
   apply(initialize-packed-slots, temporary, all-keys);
   add-temporary!(environment, temporary);
-  if (*computation-tracer* & (temporary.users.size > 0))
-    let gen = if (generator) generator.computation-id else 0 end;
-    *computation-tracer*(#"add-temporary", temporary.temporary-id, temporary, gen);
+  if (*computation-tracer*)
+    let gen = if (generator) generator else 0 end;
+    *computation-tracer*(#"add-temporary", temporary, gen, 0);
+    unless (gen == 0)
+      *computation-tracer*(#"temporary-generator", temporary, gen, 0);
+    end;
   end;
   temporary.frame-offset
     := min(next-frame-offset(environment), $max-frame-offset);
@@ -155,7 +150,7 @@ end;
 
 define method cell-type-setter (new :: <&type>, c :: <cell>) => (t :: <&type>)
   c.%cell-type := new;
-  if (c.users.size > 0)
+  if (c.users.size > 0 & *computation-tracer*)
     *computation-tracer*(#"change-type", c.temporary-id, new, 0);
   end;
   new;
@@ -166,25 +161,16 @@ define method remove-user! (t :: <cell>, c :: <computation>)
     next-method();
   end;
   if (*computation-tracer*)
-    *computation-tracer*(#"remove-temporary-user", t.temporary-id, c.computation-id, 0);
-  end;
-  if (t.users.size == 0)
-    *computation-tracer*(#"remove-temporary", t.temporary-id, 0, 0);
+    *computation-tracer*(#"remove-temporary-user", t, c, 0);
   end;
 end;
 
 define method add-user! (t :: <cell>, c :: <computation>)
-  if (t.users.size == 0)
-    let gen = if (t.generator) t.generator.computation-id else 0 end;
-    *computation-tracer*(#"add-temporary", t.temporary-id, t, gen);
-    let new = t.%cell-type;
-    *computation-tracer*(#"change-type", t.%temporary-id, new, 0);
-  end;
   dynamic-bind(*computation-tracer* = #f)
     next-method();
   end;
   if (*computation-tracer*)
-    *computation-tracer*(#"add-temporary-user", t.temporary-id, c.computation-id, 0);
+    *computation-tracer*(#"add-temporary-user", t, c, 0);
   end;
 end;
 define method cell? (t :: <temporary>) #f end;

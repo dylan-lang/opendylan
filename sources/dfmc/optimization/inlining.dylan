@@ -513,11 +513,14 @@ define method move-code-into!
     (method (c :: <computation>)
        c.environment := env;
        re-optimize-into!(c, lambda);
+     end, mapped-body); 
+
+  walk-lambda-computations
+    (method (c :: <computation>)
        if (instance?(c, <call>))
-         do(temporary-id, c.arguments);
+         do(temporary-id, choose(rcurry(instance?, type-union(<object-reference>, <temporary>)), c.arguments));
        end;
-     end, 
-     mapped-body); 
+     end, mapped-body);
 
   let mapped-q = lambda.optimization-queue;
   lambda.optimization-queue := old-q;

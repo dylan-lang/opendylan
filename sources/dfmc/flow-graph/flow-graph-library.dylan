@@ -256,6 +256,7 @@ define module dfmc-flow-graph
     <get-cell-value>,
     <set-cell-value!>,
     computation-cell, computation-cell-setter,
+    %cell-type,
 
     computation-source-location, computation-source-location-setter,
     dfm-source-location,

@@ -538,7 +538,7 @@ define method remove-computation-references! (c :: <computation>)
   end;
   do-used-temporaries(method (t) remove-user!(t, c) end, c);
   if (*computation-tracer*)
-    *computation-tracer*(#"remove-computation", c.computation-id, 0, 0);
+    *computation-tracer*(#"remove-computation", c, 0, 0);
   end;
 end method remove-computation-references!;
 

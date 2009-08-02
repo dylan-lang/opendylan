@@ -406,7 +406,7 @@ begin
       "    end;\n"
       "  end;\n"
       "end;";
-  add!($tests, pair(#"if-nested", if-nested));
+  add!($tests, pair(#"if-nested (<object>, <object>, <object>)", if-nested));
   
   let if-simple
     = "define method if-simple\n"
@@ -418,48 +418,48 @@ begin
       "    42 + 10;\n"
       "  end;\n"
       "end;";
-  add!($tests, pair(#"if-simple", if-simple));
+  add!($tests, pair(#"if-simple (<integer>, <integer>)", if-simple));
 
   let common-sub =
     "define method common-subexpression (a, b)\n"
     "  values(a + b, (a + b) * b);\n"
     "end;";
-  add!($tests, pair(#"common-subexpression", common-sub));
+  add!($tests, pair(#"common-subexpression (<object>, <object>)", common-sub));
 
   let common-sub2 =
     "define method common-subexpression2\n"
     " (a :: <integer>, b :: <integer>)\n"
     "  values(a + b, (a + b) * b);\n"
     "end;";
-  add!($tests, pair(#"common-subexpression2", common-sub2));
+  add!($tests, pair(#"common-subexpression2 (<integer>, <integer>)", common-sub2));
 
   let whil-true =
-    "define method while-true-loop (x, y, z)\n"
+    "define method while-true-loop ()\n"
     "  while(#t)\n"
     "    1 + 2;\n"
     "  end;\n"
     "end;";
-  add!($tests, pair(#"while-true-loop", whil-true));
+  add!($tests, pair(#"while-true-loop ()", whil-true));
 
   let lfor =
-    "define method for-loop (x, y, z)\n"
+    "define method for-loop (x, y)\n"
     "  for (i from 0 below 20)\n"
     "    x := y + 1;\n"
     "  end;\n"
     "end;";
-  add!($tests, pair(#"for-loop", lfor));
+  add!($tests, pair(#"for-loop (<object>, <object>)", lfor));
 
   let whill =
-    "define method while-loop (x, y, z)\n"
+    "define method while-loop ()\n"
     "  let i = 0;\n"
     "  while(i < 42)\n"
     "    i := i + 1;\n"
     "  end;\n"
     "end;";
-  add!($tests, pair(#"while-loop", whill));
+  add!($tests, pair(#"while-loop ()", whill));
 
   let whilln =
-    "define method while-loop-nested (x, y, z)\n"
+    "define method while-loop-nested ()\n"
     "  let i = 0;\n"
     "  while(i < 42)\n"
     "    i := i + 1;\n"
@@ -468,15 +468,15 @@ begin
     "    end;\n"
     "  end;\n"
     "end;";
-  add!($tests, pair(#"while-loop-nested", whilln));
+  add!($tests, pair(#"while-loop-nested ()", whilln));
 
   let blte =
-    "define method block-test (x)\n"
+    "define method block-test ()\n"
     "  block(t)\n"
     "    t();\n"
     "  end;\n"
     "end;";
-  add!($tests, pair(#"block-test", blte));
+  add!($tests, pair(#"block-test ()", blte));
 
   let ble =
     "define method block-exception (x)\n"
@@ -486,10 +486,10 @@ begin
     "    x := 0;\n"
     "  end;\n"
     "end;";
-  add!($tests, pair(#"block-exception", ble));
+  add!($tests, pair(#"block-exception (<object>)", ble));
 
   let blcl =
-    "define method block-cleanup (x, y, z)\n"
+    "define method block-cleanup (x, y)\n"
     "  block(t)\n"
     "    if (x == 42)\n"
     "      t();\n"
@@ -500,10 +500,10 @@ begin
     "    x := y;\n"
     "  end;\n"
     "end;";
-  add!($tests, pair(#"block-cleanup", blcl));
+  add!($tests, pair(#"block-cleanup (<object>, <object>)", blcl));
 
   let db =
-    "define method dyn-bind (x, y, z)\n"
+    "define method dyn-bind (x, y)\n"
     "  let t = 42;\n"
     "  dynamic-bind(t = 0)\n"
     "    x := t * t;\n"
@@ -511,13 +511,13 @@ begin
     "  y := t + t;\n"
     "  values(x, y);\n"
     "end;";
-  add!($tests, pair(#"dyn-bind", db));
+  add!($tests, pair(#"dyn-bind (<object>, <object>)", db));
 
   let inl =
     "define method double\n (a :: <integer>)\n"
     "  2 * a;\n"
     "end;";
-  add!($tests, pair(#"double", inl));
+  add!($tests, pair(#"double (<integer>)", inl));
 
   let dead-code =
     "define method dead ()\n"
@@ -527,13 +527,13 @@ begin
     "    42;\n"
     "  end;\n"
     "end;";
-  add!($tests, pair(#"dead", dead-code));
+  add!($tests, pair(#"dead ()", dead-code));
 
   let cse =
     "define method cse\n (a :: <integer>)\n"
     "  values(42 + a, (42 + a) * 2);\n"
     "end;";
-  add!($tests, pair(#"cse", cse));
+  add!($tests, pair(#"cse (<integer>)", cse));
 
   let tc =
     "define method tail-call\n (x :: <integer>)\n"
@@ -543,7 +543,7 @@ begin
     "    tail-call(x - 1)\n"
     "  end;\n"
     "end;";
-  add!($tests, pair(#"tail-call", tc));
+  add!($tests, pair(#"tail-call (<integer>)", tc));
 
   let mymap =
     "define method map-vector ()\n"
@@ -560,37 +560,23 @@ begin
     "  end;\n"
     "  mymap(method(x) x + 1 end, #[1, 2, 3]);\n"
     "end;";
-  add!($tests, pair(#"map-vector", mymap));
+  add!($tests, pair(#"map-vector ()", mymap));
 end;
 
-/*
+
 begin
   let top-build = "c:\\vis-stage3\\";
   environment-variable("OPEN_DYLAN_USER_ROOT") := top-build;
   environment-variable("OPEN_DYLAN_USER_BUILD") := concatenate(top-build, "build");
   environment-variable("OPEN_DYLAN_USER_INSTALL") := top-build;
-  *vis* := make(<dfmc-graph-visualization>, id: #"Dylan-Graph-Visualization");
-  connect-to-server(*vis*);
-  dynamic-bind(*batch-compiling* = #t)
-    let project = lookup-named-project("dylan");
-    compiler(project);
-  end;
-end;
-*/
-
-define function getname (str :: <string>) => (res :: <string>)
-  let real = copy-sequence(str, start: 14);
-  copy-sequence(real, end: find-ws(real, 0));
+  environment-variable("OPEN_DYLAN_USER_REGISTRIES") := "c:\\opendylan-visualization\\registry";
+  let vis = make(<dfmc-graph-visualization>, id: #"Dylan-Graph-Visualization");
+  connect-to-server(vis);
+  let project = lookup-named-project("dylan");
+  visualizing-compiler(vis, project, parse?: #t);
 end;
 
-define function find-ws (s :: <string>, c :: <integer>) => (res :: <integer>)
-  if (s.first == ' ' | s.first == '\n')
-    c;
-  else
-    find-ws(copy-sequence(s, start: 1), c + 1);
-  end;
-end;
-
+/*
 begin
   let project = find-project("dylan");
   open-project-compiler-database(project,
@@ -599,23 +585,21 @@ begin
   with-library-context (dylan-library-compilation-context())
     without-dependency-tracking
       //with-open-file (file = "/home/visualization/log", if-exists: #"append", direction: #"output")
-        *vis* := make(<dfmc-graph-visualization>, id: #"Dylan-Graph-Visualization");
-        connect-to-server(*vis*);
+        let vis = make(<dfmc-graph-visualization>, id: #"Dylan-Graph-Visualization");
+        connect-to-server(vis);
         for (test in $tests)
-          write-to-visualizer(*vis*, list(#"source", as(<string>, test.head), test.tail));
+          write-to-visualizer(vis, list(#"source", as(<string>, test.head), test.tail));
         end;
-        //format(file, "%s new connection %=\n", as-iso8601-string(current-date()), *vis*.system-info);
+        //format(file, "%s new connection %=\n", as-iso8601-string(current-date()), vis.system-info);
 	//force-output(file);
-        *vis*.dfm-report-enabled? := #f;
         block()
           while (#t)
-            let res = read-from-visualizer(*vis*); //expect: #"compile" "source"
+            let res = read-from-visualizer(vis); //expect: #"compile" "source"
             if (res[0] == #"compile")
-              *current-index* := getname(res[1]); //*current-index* + 1;
               dynamic-bind (*progress-stream*           = #f,  // with-compiler-muzzled
                             *demand-load-library-only?* = #f)
                 //format(file, "compiling %s\n", res[1]);
-                compile-template(res[1], compiler: compiler);
+                compile-template(res[1], compiler: curry(visualizing-compiler, vis));
               end;
             end;
           end;
@@ -626,7 +610,7 @@ begin
     end;
   end;
 end;
-            
+*/            
 define function list-all-package-names ()
   let res = #();
   local method collect-project

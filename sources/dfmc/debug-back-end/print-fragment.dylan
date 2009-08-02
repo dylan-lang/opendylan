@@ -6,7 +6,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define compiler-sideways method print-object
     (o :: <variable-name-fragment>, stream :: <stream>) => ()
-  format(stream, "{ %s }", fragment-identifier(o))
+  format(stream, "%s", fragment-identifier(o))
 end method;
 
 define method print-contents (frag :: <function-call-fragment>, stream) => ()

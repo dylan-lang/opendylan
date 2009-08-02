@@ -126,6 +126,10 @@ define sideways method maybe-compute-and-install-form-model-objects
       form.form-models-installed? := #"processing";
       block ()
 	with-fragment-info (form-variable-names(form).first)
+          let str = make(<string-stream>, direction: #"output");
+          print(form, str, escape?: #t);
+          let text = str.stream-contents;
+          visualization-report(#"source", pair(form, text));
 	  compute-and-install-form-model-objects(form);
 	end;
       cleanup
@@ -568,19 +572,15 @@ end function;
 
 define function ensure-library-dfm-computed (ld :: <compilation-context>)
   debug-out(#"internal", "DFM generation: %s\n", ld);
-  let i :: <integer> = 0;
-  visualization-report(#"beginning", #("initial DFM models", #"global"));
   timing-compilation-phase ("DFM generation" of ld)
     for-library-method ("Computing code models for", $compilation of m in ld)
-      visualization-report(#"dfm-switch", i);
+      visualization-report(#"beginning", pair(m, #("initial DFM models")));
       ensure-method-dfm-or-heap(m);
       let sexp = print-method(make(<string-stream>), m, output-format: #"sexp", header-only: #t);
       //print-method(*standard-output*, m);
-      visualization-report(#"dfm-header", sexp);
-      i := i + 1;
+      visualization-report(#"dfm-header", pair(m, sexp));
     end;
   end;
-  visualization-report(#"finished", #());
   debug-out(#"internal", "DFM generation complete.\n");
 end function;
 
@@ -589,7 +589,6 @@ end function;
 define function ensure-library-bindings-checked
     (ld :: <project-library-description>)
   debug-out(#"internal", "Checking bindings:\n");
-  visualization-report(#"beginning", #("Checking bindings", #"global"));
   timing-compilation-phase ("Checking bindings" of ld)
     check-bindings(ld);
   end;
@@ -775,7 +774,6 @@ end method;
 define function ensure-library-type-estimated (ld :: <compilation-context>)
   // Run the typist over the forms of this library.
   debug-out(#"internal", "Inferring library types: %s\n", ld);
-  visualization-report(#"beginning", #("Initial type inference", #"global"));
   // The cache was established when the <compilation-context> was made,
   // because some early-bird optimizers want it.
   timing-compilation-phase ("Initial type inference" of ld)
@@ -799,13 +797,9 @@ end function;
 
 define function ensure-library-optimized (ld :: <compilation-context>)
   debug-out(#"internal", "Optimizing library: %s.\n", ld);
-  visualization-report(#"beginning", #("Optimization", #"global"));
-  let i :: <integer> = 0;
   timing-compilation-phase ("Optimization" of ld)
     for-library-method ("Optimizing", $compilation of m in ld)
-      visualization-report(#"optimizing", i);
       optimize-method(m);
-      i := i + 1;
     end;
     do(compact-coloring-info, compilation-context-records(ld));
     dispatch-decisions-progress-line(ld);

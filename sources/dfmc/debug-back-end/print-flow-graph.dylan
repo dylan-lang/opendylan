@@ -43,11 +43,21 @@ define compiler-sideways method print-object
 end method;
 
 define compiler-sideways method print-object (o :: <lexical-specialized-variable>, stream :: <stream>) => ()
-  format(stream, "%s (%=)", o.name, o.specializer);
+  let spec = if (slot-initialized?(o, specializer) & o.specializer & o.specializer ~= dylan-value(#"<object>"))
+               format-to-string(" (%=)", o.specializer);
+             else
+               ""
+             end;
+  format(stream, "var %s%s", o.name, spec);
 end;
 
 define compiler-sideways method print-object (o :: <cell>, stream :: <stream>) => ()
-  format(stream, "%s (%=)", o.name, o.cell-type);
+  let spec = if (slot-initialized?(o, %cell-type) & o.cell-type & o.cell-type ~= dylan-value(#"<object>"))
+                 format-to-string(" (%=)", o.cell-type)
+               else
+                 ""
+               end;
+  format(stream, "cell %s%s", o.name, spec);
 end;
 
 define compiler-sideways method print-object (o :: <temporary>, stream :: <stream>) => ()
@@ -121,17 +131,17 @@ end method print-object;
 
 define method print-computation
     (stream :: <stream>, c :: <computation>) => ();
-  format(stream, "[%= computation]", c.object-class);
+  format(stream, "%=", c.object-class);
 end method print-computation;
 
 define method print-computation (stream :: <stream>, c :: <nop>) => ();
-  format(stream, "[NOP]");
+  format(stream, "nop");
 end method print-computation;
 
 define method print-computation
     (stream :: <stream>, c :: <keyword-default>) => ();
-  format(stream, "[KEYWORD-DEFAULT %=, %d]",
-	 c.computation-value, c.keyword-default-value-index);
+  format(stream, "keyword-default %d",
+	 c.keyword-default-value-index);
 end method print-computation;
 
 define method print-computation (s :: <stream>, c :: <make-closure>)
@@ -139,18 +149,18 @@ define method print-computation (s :: <stream>, c :: <make-closure>)
   let sigval = computation-signature-value(c);
   let extent = if (closure-has-dynamic-extent?(c)) " on stack" else "" end;
   if (computation-no-free-references?(c))
-    format(s, "MAKE-METHOD-WITH-SIGNATURE(%s, %=)%s", lambda, sigval, extent);
+    format(s, "make-method-with-signature (%s, %=)%s", lambda, sigval, extent);
   else
     if (sigval)
-      format(s, "MAKE-CLOSURE-WITH-SIGNATURE(%s, %=)%s", lambda, sigval, extent);
+      format(s, "make-closure-with-signature (%s, %=)%s", lambda, sigval, extent);
     else
-      format(s, "MAKE-CLOSURE(%s)%s", lambda, extent)
+      format(s, "make-closure (%s)%s", lambda, extent)
     end if
   end if;
 end method;
 
 define method print-computation (s :: <stream>, c :: <initialize-closure>)
-  format(s, "INIT-CLOSURE(%=, %s)", 
+  format(s, "init-closure(%=, %s)", 
          computation-closure(c), computation-closure-method(c));
 end method;
 
@@ -159,7 +169,7 @@ define method print-computation (s :: <stream>, c :: <variable-reference>)
 end method;
 
 define method print-computation (stream :: <stream>, c :: <temporary-transfer>)
-  format(stream, "%=", c.computation-value);
+  format(stream, "temporary-transfer");
 end method;
 
 define method entry-point-character (c :: <function-call>, o :: <object>)
@@ -175,19 +185,19 @@ define method entry-point-character (c :: <function-call>, o :: <&iep>)
 end method entry-point-character;
 
 define method operation-name (c :: <function-call>)
-  "UNKNOWN CALL"
+  "unknown-call"
 end method operation-name;
 
 define method operation-name (c :: <simple-call>)
-  "CALL"
+  "call"
 end method operation-name;
 
 define method operation-name (c :: <method-call>)
-  "METHOD-CALL"
+  "method-call"
 end method operation-name;
 
 define method operation-name (c :: <apply>)
-  "APPLY"
+  "apply"
 end method operation-name;
 
 define method print-args (stream :: <stream>, arguments)
@@ -219,71 +229,47 @@ define method print-tail-call-annotation
 end method;
 
 define method print-computation (stream :: <stream>, c :: <function-call>) 
-  format(stream, "[%s %=]",
-	 c.operation-name,
-         //entry-point-character(c, call-effective-function(c)),
-         c.function);
-  //print-args(stream, c.arguments);
-  //format(stream, ")]");
-  //print-tail-call-annotation(stream, c);
+  format(stream, "%s", c.operation-name);
 end method;
 
 define method print-computation (stream :: <stream>, c :: <slot-value>) 
-  format(stream, "SLOT-VALUE%s(%s)", 
-//  format(stream, "SLOT-VALUE%s(%=, %s)", 
-         if (computation-guaranteed-initialized?(c)) "-INITD" else "" end,
-//	 computation-instance(c),
+  format(stream, "slot-value%s (%s)", 
+         if (computation-guaranteed-initialized?(c)) "-initd" else "" end,
 	 ^debug-name(computation-slot-descriptor(c)));
 end method;
 
 define method print-computation (stream :: <stream>, c :: <slot-value-setter>) 
-  format(stream, "SLOT-VALUE-SETTER(%s)", 
-//  format(stream, "SLOT-VALUE(%=, %s) := %=", 
-//	 computation-instance(c),
+  format(stream, "slot-value-setter (%s)", 
 	 ^debug-name(computation-slot-descriptor(c)));
-//	 computation-new-value(c));
 end method;
 
 define method print-computation (stream :: <stream>, c :: <repeated-slot-value>) 
-  format(stream, "REPEATED-SLOT-VALUE(%s, %=)", 
-//	 computation-instance(c),
+  format(stream, "repeated-slot-value (%s, %=)", 
 	 ^debug-name(computation-slot-descriptor(c)),
 	 computation-index(c));
 end method;
 
 define method print-computation 
     (stream :: <stream>, c :: <repeated-slot-value-setter>) 
-  format(stream, "REPEATED-SLOT-VALUE-SETTER(%s, %=)", 
-//	 computation-instance(c),
+  format(stream, "repeated-slot-value-setter (%s, %=)", 
 	 ^debug-name(computation-slot-descriptor(c)), 
 	 computation-index(c));
-//	 computation-new-value(c));
 end method;
 
 define method print-computation (stream :: <stream>, c :: <stack-vector>) 
-  format(stream, "[STACK-VECTOR]");
-//  print-args(stream, c.arguments);
-//  format(stream, ")]");
+  format(stream, "stack-vector");
 end method;
 
 define method print-computation (stream :: <stream>, c :: <loop>) 
-  format(stream, "[LOOP]");
+  format(stream, "loop");
 end method;
 
 define method print-computation (stream :: <stream>, c :: <loop-call>) 
-  format(stream, "[CONTINUE %=]", loop-call-arguments(c));
+  format(stream, "continue %=", loop-call-arguments(c));
 end method;
 
 define method print-computation (stream :: <stream>, c :: <primitive-call>) 
-  format(stream, "[PRIMOP %s]", primitive-name(c.primitive));
-  //let sig = c.primitive.primitive-signature;
-  //for (i from 0 below ^signature-number-required(sig))
-  //  format(stream, "%=,", ^signature-required(sig)[i]);
-  //end;
-  //format(stream, ")]");
-  //print-args(stream, c.arguments);
-  //format(stream, ")]");
-  //print-tail-call-annotation(stream, c);
+  format(stream, "primitive %s", primitive-name(c.primitive));
 end method;
 
 define method print-computation (stream :: <stream>, c :: <if>) 
@@ -291,16 +277,16 @@ define method print-computation (stream :: <stream>, c :: <if>)
 end method;
 
 define method print-computation (stream :: <stream>, c :: <if-merge>) 
-  format(stream, "[IF-MERGE]");
+  format(stream, "if-merge");
 end method;
 
 define method print-computation (stream :: <stream>, c :: <loop-merge>) 
-  format(stream, "[LOOP-MERGE%s]",
+  format(stream, "loop-merge%s",
 	 if (loop-merge-initial?(c)) "i" else "" end);
 end method;
 
 define method print-computation (stream :: <stream>, c :: <bind-exit-merge>) 
-  format(stream, "[BIND-EXIT-MERGE]");
+  format(stream, "bind-exit-merge");
 end method;
 
 define method print-computation (stream :: <stream>, c :: <return>) 
@@ -308,26 +294,24 @@ define method print-computation (stream :: <stream>, c :: <return>)
 end method;
 
 define method print-computation (stream :: <stream>, c :: <bind>) 
-  format(stream, "[BIND]");
+  format(stream, "bind");
 end method;
 
 define method print-computation (stream :: <stream>, c :: <definition>) 
-  format(stream, "define %s = %=", c.assigned-binding, c.computation-value);
+  format(stream, "define %s", c.assigned-binding);
 end method;
 
 define method print-computation (stream :: <stream>, c :: <redefinition>) 
-  format(stream, "redefine %s = %=", c.assigned-binding, c.computation-value);
+  format(stream, "redefine %s", c.assigned-binding);
 end method;
 
 define method print-computation (stream :: <stream>, c :: <type-definition>) 
-  format(stream, "define-type %s = %=", 
-         c.typed-binding, c.computation-value);
+  format(stream, "define-type %s", c.typed-binding);
 end method;
 
 define method print-computation 
     (stream :: <stream>, c :: <type-redefinition>) 
-  format(stream, "redefine-type %s = %=", 
-         c.typed-binding, c.computation-value);
+  format(stream, "redefine-type %s", c.typed-binding);
 end method;
 
 define method print-computation (stream :: <stream>, c :: <set!>) 
@@ -335,11 +319,11 @@ define method print-computation (stream :: <stream>, c :: <set!>)
 end method;
 
 define method print-computation (stream :: <stream>, c :: <bind-exit>)
-  format(stream, "[BIND-EXIT entry-state: %= ...]", c.entry-state);
+  format(stream, "bind-exit entry-state: %=", c.entry-state);
 end method;
 
 define method print-computation (stream :: <stream>, c :: <unwind-protect>)
-  format(stream, "[UNWIND-PROTECT entry-state: %= ...]", c.entry-state);
+  format(stream, "unwind-protect entry-state: %=", c.entry-state);
 end method;
 
 define method print-computation (stream :: <stream>, c :: <exit>)
@@ -347,7 +331,7 @@ define method print-computation (stream :: <stream>, c :: <exit>)
 end method;
 
 define method print-computation (stream :: <stream>, c :: <end-loop>)
-  format(stream, "BREAK");
+  format(stream, "break");
 end method;
 
 define method print-computation (stream :: <stream>, c :: <end-exit-block>)
@@ -366,46 +350,38 @@ end method;
 // multiple values
 
 define method print-computation (stream :: <stream>, c :: <values>)
-  format(stream, "[VALUES (#%d%s)]", c.fixed-values.size, if (c.rest-value) " #rest" else "" end);
+  format(stream, "values (#%d%s)", c.fixed-values.size, if (c.rest-value) " #rest" else "" end);
 end method;
 
 define method print-computation
     (stream :: <stream>, c :: <extract-single-value>)
   format(stream, "extract [%d]", c.index);
-//  format(stream, "%= [%d]", c.computation-value, c.index);
 end method;
 
 define method print-computation
     (stream :: <stream>, c :: <extract-rest-value>)
   format(stream, "extract #rest [%d]", c.index);
-//  format(stream, "#rest %= [%d]", c.computation-value, c.index);
 end method;
 
 define method print-computation
     (stream :: <stream>, c :: <multiple-value-spill>)
-  format(stream, "[MV-SPILL]");
-//  format(stream, "[MV-SPILL %=]", c.computation-value);
+  format(stream, "mv-spill");
 end method;
 
 define method print-computation
     (stream :: <stream>, c :: <multiple-value-unspill>)
-  format(stream, "[MV-UNSPILL]");
-//  format(stream, "[MV-UNSPILL %=]", c.computation-value);
+  format(stream, "mv-unspill");
 end method;
 
 define method print-computation
     (stream :: <stream>, c :: <adjust-multiple-values>)
-  format(stream, "[ADJUST-MV %d]",
-//  format(stream, "[ADJUST-MV %= %d]",
-//	 c.computation-value,
+  format(stream, "adjust-mv %d",
 	 c.number-of-required-values);
 end method;
 
 define method print-computation
     (stream :: <stream>, c :: <adjust-multiple-values-rest>)
-  format(stream, "[ADJUST-MV-REST %d]",
-//  format(stream, "[ADJUST-MV-REST %= %d]",
-//	 c.computation-value,
+  format(stream, "adjust-mv-rest %d",
 	 c.number-of-required-values);
 end method;
 
@@ -413,45 +389,33 @@ end method;
 
 define method print-computation
     (stream :: <stream>, c :: <single-value-check-type-computation>)
-  format(stream, "check-type"); //%s :: %s", c.computation-value, c.type)
+  format(stream, "check-type");
 end method print-computation;
 
 define method print-computation
     (stream :: <stream>, c :: <assignment-check-type>)
-  format(stream, "assignment-check-type"); // %s = %s :: %s", c.lhs-variable-name, c.computation-value, c.type)
+  format(stream, "assignment-check-type");
 end method print-computation;
 
 define method print-computation
     (stream :: <stream>, c :: <multiple-value-check-type-computation>)
-  format(stream, "multiple-value-check-type"); // %s :: ", c.computation-value);
-//  for (first? = #t then #f, type in c.types)
-//    unless (first?)
-//      format(stream, ", ");
-//    end unless;
-//    format(stream, "%=", type);
-//  end;
+  format(stream, "multiple-value-check-type");
 end method print-computation;
 
 define method print-computation
     (stream :: <stream>, c :: <multiple-value-check-type-rest>)
   format(stream, "multiple-value-check-type-rest");
-//  next-method();		// print fixed part
-//  unless (empty?(c.types))
-//    format(stream, ", ");
-//  end;
-//  format(stream, "#rest %=", c.rest-type);
 end method print-computation;
 
 define method print-computation
     (stream :: <stream>, c :: <guarantee-type>)
-  format(stream, "guarantee-type"); // %s :: %s",
-//	 c.computation-value, c.static-guaranteed-type | c.guaranteed-type)
+  format(stream, "guarantee-type");
 end method print-computation;
 
 // cells
 
 define method print-computation (stream :: <stream>, c :: <make-cell>)
-  format(stream, "make-cell(%s)", c.computation-value)
+  format(stream, "make-cell")
 end method print-computation;
 
 define method print-computation (stream :: <stream>, c :: <get-cell-value>);
@@ -459,7 +423,7 @@ define method print-computation (stream :: <stream>, c :: <get-cell-value>);
 end method print-computation;
 
 define method print-computation (stream :: <stream>, c :: <set-cell-value!>);
-  format(stream, "cell-value"); // := %s", c.computation-value)
+  format(stream, "set-cell-value!");
 end method print-computation;
 
 // C-FFI

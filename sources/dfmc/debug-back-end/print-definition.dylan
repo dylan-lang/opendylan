@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define compiler-sideways method print-object
     (o :: <variable-defining-form>, stream :: <stream>) => ()
-  format(stream, "{%s %s}", 
+  format(stream, "%s %s", 
          o.object-class, 
          map(fragment-identifier, form-variable-names(o)));
 end method;

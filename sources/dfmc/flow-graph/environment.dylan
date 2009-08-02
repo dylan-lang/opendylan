@@ -154,7 +154,7 @@ define inline method remove-temporary!
     (env :: <lambda-lexical-environment>, t :: <temporary>)
   remove!(env.temporaries, t);
   if (*computation-tracer*)
-    *computation-tracer*(#"remove-temporary", t.temporary-id, 0, 0);
+    *computation-tracer*(#"remove-temporary", t, env, 0);
   end;
 end method;
 

@@ -9,31 +9,25 @@ define constant $default-port = 1234;
 define class <dfmc-graph-visualization> (<object>)
   slot socket :: false-or(<socket>) = #f;
   constant slot connection-id :: <symbol>, required-init-keyword: id:;
-  slot report-enabled? :: <boolean> = #t;
-  slot dfm-report-enabled? :: <boolean> = #t;
   slot system-info;
 end;
 
 define function write-to-visualizer (v :: <dfmc-graph-visualization>, data)
-  if (v.report-enabled? & v.dfm-report-enabled?)
-    let newstream = make(<string-stream>, direction: #"output");
-    print-s-expression(newstream, data);
-    let s-expression = stream-contents(newstream);
-    //format(*standard-error*, "write: %s\n", s-expression);
-    let siz = integer-to-string(s-expression.size, base: 16, size: 6);
-    block()
-      format(v.socket, "%s%s", siz, s-expression);
-      //format(*standard-output*, "%s%s", siz, s-expression);
-      //force-output(*standard-output*);
-      let res = read-from-visualizer(v);
-      unless (res = #(#"ok"))
-        //format(*standard-output*, "expected ok, but got %=\n", res);
-      end;
-    exception (c :: <condition>)
-      //format(*standard-output*, "failed communication: %=\n", c);
+  let newstream = make(<string-stream>, direction: #"output");
+  print-s-expression(newstream, data);
+  let s-expression = stream-contents(newstream);
+  //format(*standard-error*, "write: %s\n", s-expression);
+  let siz = integer-to-string(s-expression.size, base: 16, size: 6);
+  block()
+    format(v.socket, "%s%s", siz, s-expression);
+    //format(*standard-output*, "%s%s", siz, s-expression);
+    //force-output(*standard-output*);
+    let res = read-from-visualizer(v);
+    unless (res = #(#"ok"))
+      format(*standard-output*, "expected ok, but got %=\n", res);
     end;
-  //else
-  //  format(*standard-output*, "not sending: %=\n", data);
+  exception (c :: <condition>)
+    format(*standard-output*, "failed communication: %=\n", c);
   end;
 end;
 
@@ -59,34 +53,8 @@ define function connect-to-server
   end;
 end;
 
-define constant $command-map :: <table> = make(<table>);
-
-define macro visualizer-command-definer
- { define visualizer-command ?:name (?args:*) ?:body end }
-  => { define function ?name (?=v :: <dfmc-graph-visualization>, ?args) ?body end;
-       $command-map[?#"name"] := ?name; }
-end;
-
-define visualizer-command connection-identifier ()
-  write-to-visualizer(v, list(#"connection-identifier", v.connection-id));
-end;
-
-define function process-request (v :: <dfmc-graph-visualization>)
-  let command = read-from-visualizer(v);
-  if (element($command-map, command.head, default: #f))
-    apply($command-map[command.head], v, command.tail);
-  end;
-end;
- 
 begin
   start-sockets();
-end;
-define function testme ()
-  let v = make(<dfmc-graph-visualization>, id: #"fooobar");
-  connect-to-server(v);
-  while (#t)
-    process-request(v);
-  end;
 end;
 
 
