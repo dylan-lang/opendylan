@@ -10,7 +10,27 @@ define function report-progress (i1 :: <integer>, i2 :: <integer>,
   //end;
 end;
 
-define function write-data (vis :: <dfmc-graph-visualization>, #rest arguments)
+define function write-data (vis :: <dfmc-graph-visualization>, key :: <symbol>, e, #rest arguments)
+  let form = e.form;
+  let env = form.identifier;
+  let cr = if (instance?(form, <&method>))
+             let cr = form.model-creator; //sometimes model-creator is already a <compilation-record>
+             unless (instance?(cr, <compilation-record>))
+               cr := cr.form-compilation-record;
+             end;
+             cr;
+           elseif (instance?(form, <top-level-form>))
+             form.form-compilation-record;
+           end;
+  if (cr)
+    let sr = cr.compilation-record-source-record;
+    let loc = if (instance?(sr, <flat-file-source-record>))
+                sr.source-record-location.locator-name
+              else
+                "unknown"
+              end;
+    if (loc = "dispatch-prologue.dylan")
+
 //  if (member?(arguments[1], list(//"indirect-object-implementation-class", "object-implementation-class", //<object> vs <raw-pointer> in call to indirect-object-implementation-class
                                  //"member-eql?" <- <raw-pointer> vs <object>
                                  //"default-initialize", //<raw-integer> vs <raw-address> because of wrap/unwrap
@@ -51,13 +71,24 @@ define function write-data (vis :: <dfmc-graph-visualization>, #rest arguments)
                                  //"indirect-object-implementation-class"),
                                  //"value-wrapper",
                                  //"<stretchy-object-vector-representation> constructor"),
+                                 //"grounded-lckd-add", "ckd-add", "class-instance?-rcpl-single-small",
+                                 //"handle-missed-dispatch", "compute-dispatch-from-root",
+                                 //"linear-by-class-discriminator", "walk-existing-dispatch-engine", "mckd-add"),
+                                 //"effective-initialization-argument-descriptor"),
+                                 //"grounded-subtype"),
+//"%restart-dispatch",
+
+                                 //"allocation-attributes"),
 //              test: method(x, y) copy-sequence(x, end: min(x.size, y.size)) = y end))
-    write-to-visualizer(vis, arguments);
-//  end;
+      write-to-visualizer(vis, apply(list, key, env, arguments));
+    end;
+  else
+    //uhm... shouldn't be here
+  end;
 end;
 
 define method form (c :: type-union(<temporary>, <computation>))
-  c.environment.lambda
+  c.environment.form
 end;
 
 define method form (c :: <exit>)
@@ -65,11 +96,23 @@ define method form (c :: <exit>)
 end;
 
 define method form (c :: type-union(<&accessor-method>, <&lambda>))
+  if (instance?(c.environment, <lexical-environment>))
+    c.environment.form
+  else
+    c
+  end
+end;
+
+define method form (c :: <variable-defining-form>)
   c
 end;
 
 define method form (c :: <lambda-lexical-environment>)
-  c.lambda
+  (c.outer & c.outer.form) | c.lambda
+end;
+
+define method form (c :: <local-lexical-environment>)
+  c.outer.form
 end;
 
 define constant $lambda-string-table = make(<table>);
@@ -141,36 +184,36 @@ end;
 define function trace-computations (vis :: <dfmc-graph-visualization>, key :: <symbol>, id, comp-or-id, comp2, #key label)
   select (key by \==)
     #"add-temporary-user", #"remove-temporary-user" =>
-      write-data(vis, key, comp-or-id.form-id, id.get-id, comp-or-id.get-id);
+      write-data(vis, key, comp-or-id, id.get-id, comp-or-id.get-id);
     #"add-temporary" =>
       begin
         let str = make(<string-stream>, direction: #"output");
         print-object(id, str);
-        write-data(vis, key, if (comp-or-id == 0) id.form-id else comp-or-id.form-id end,
+        write-data(vis, key, if (comp-or-id == 0) id else comp-or-id end,
                    id.get-id, str.stream-contents, 0);
       end;
     #"temporary-generator" =>
-      write-data(vis, key, comp-or-id.form-id, id.get-id, comp-or-id.get-id, comp2.get-id);
+      write-data(vis, key, comp-or-id, id.get-id, comp-or-id.get-id, comp2.get-id);
     #"remove-temporary" =>
-      write-data(vis, key, if (comp-or-id == 0) id.form-id else comp-or-id.form-id end, id.get-id);        
+      write-data(vis, key, if (comp-or-id == 0) id else comp-or-id end, id.get-id);        
     #"remove-edge", #"insert-edge" =>
-      write-data(vis, key, id.form-id, id.get-id, comp-or-id.get-id, label);
+      write-data(vis, key, id, id.get-id, comp-or-id.get-id, label);
     #"change-edge" =>
-      write-data(vis, key, id.form-id, id.get-id, comp-or-id.get-id, comp2.get-id, label);
+      write-data(vis, key, id, id.get-id, comp-or-id.get-id, comp2.get-id, label);
     #"new-computation" =>
-      write-data(vis, key, comp-or-id.form-id, output-computation-sexp(comp-or-id));
+      write-data(vis, key, comp-or-id, output-computation-sexp(comp-or-id));
     #"remove-computation" =>
-      write-data(vis, key, id.form-id, id.get-id);
+      write-data(vis, key, id, id.get-id);
     #"change-entry-point" =>
-      write-data(vis, key, id.form-id, id.get-id, comp-or-id);
+      write-data(vis, key, id, id.get-id, comp-or-id);
     #"change-function" =>
       begin
         let str = make(<string-stream>, direction: #"output");
         print-object(comp-or-id, str);
-        write-data(vis, key, id.form-id, id.get-id, str.stream-contents);
+        write-data(vis, key, id, id.get-id, str.stream-contents);
       end;
     #"set-loop-call-loop" =>
-      write-data(vis, key, id.form-id, id.get-id, comp-or-id, #"no");
+      write-data(vis, key, id, id.get-id, comp-or-id, #"no");
     otherwise => ;
   end;
 end;
@@ -178,17 +221,17 @@ end;
 define function visualize (vis :: <dfmc-graph-visualization>, key :: <symbol>, object :: <object>)
   select (key by \==)
     #"dfm-header" =>
-      write-data(vis, key, object.head.form-id, object.tail);
+      write-data(vis, key, object.head, object.tail);
     #"beginning" =>
-      write-data(vis, key, object.head.form-id, object.tail);
+      write-data(vis, key, object.head, object.tail);
     #"relayouted" =>
-      write-data(vis, key, object.head.form-id);
+      write-data(vis, key, object.head);
     #"highlight-queue" =>
-      write-data(vis, key, object.head.form-id, object.tail);
+      write-data(vis, key, object.head, object.tail);
     #"highlight" =>
-      write-data(vis, key, object.form-id, object.get-id);
+      write-data(vis, key, object, object.get-id);
     #"source" =>
-      write-data(vis, key, object.head.identifier, object.tail);
+      write-data(vis, key, object.head, object.tail);
     otherwise => ;
   end;
 end;

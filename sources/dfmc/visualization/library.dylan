@@ -9,6 +9,9 @@ define library dfmc-visualization
   use io;
   use network;
   use lisp-reader;
+  use system;
+
+  use file-source-records;
 
   use dfmc-core;
   use dfmc-management;
@@ -33,7 +36,10 @@ define module dfmc-visualization
   use standard-io;
   use print, import: { print-object };
   use sockets;
-  use lisp-reader;  
+  use lisp-reader;
+  use locators, import: { locator-name };
+
+  use file-source-records, import: { <flat-file-source-record>, source-record-location };
 
   use dfmc-core;
   use dfmc-management;

@@ -610,7 +610,8 @@ begin
     end;
   end;
 end;
-*/            
+*/
+
 define function list-all-package-names ()
   let res = #();
   local method collect-project
