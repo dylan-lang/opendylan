@@ -985,11 +985,11 @@ define method make (class == <loop>, #rest rest, #key, #all-keys) => (res :: <lo
 end;
 
 define method next-computation-setter (next, c :: <loop>) => (next)
-  walk-computation(method(a, b) 
-                     if (instance?(b, <end-loop>) & b.ending-loop == c)
-                       trace(b, c.next-computation, next);
-                     end;
-                   end, c.loop-body, c);
+  walk-computations(method(b) 
+                      if (instance?(b, <end-loop>) & b.ending-loop == c)
+                        trace(b, c.next-computation, next);
+                      end;
+                    end, c.loop-body, #f);
   c.%next-computation := next;
 end;
 
@@ -1010,6 +1010,10 @@ define method make (class == <end-loop>, #rest rest, #key loop, #all-keys) => (r
   let el = next-method();
   trace(el, #f, loop.next-computation);
   el;
+end;
+
+define method next-computation-setter (next, c :: <end-loop>) => (next)
+  c.%next-computation := next;
 end;
 
 define function loop-parameters (c :: <loop>)
