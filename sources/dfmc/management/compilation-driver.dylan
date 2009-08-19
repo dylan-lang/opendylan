@@ -129,7 +129,7 @@ define sideways method maybe-compute-and-install-form-model-objects
           let str = make(<string-stream>, direction: #"output");
           print(form, str, escape?: #t);
           let text = str.stream-contents;
-          visualization-report(#"source", pair(form, text));
+          //visualization-report(#"source", pair(form, text));
 	  compute-and-install-form-model-objects(form);
 	end;
       cleanup
@@ -576,9 +576,6 @@ define function ensure-library-dfm-computed (ld :: <compilation-context>)
     for-library-method ("Computing code models for", $compilation of m in ld)
       visualization-report(#"beginning", pair(m, #("initial DFM models")));
       ensure-method-dfm-or-heap(m);
-      let sexp = print-method(make(<string-stream>), m, output-format: #"sexp", header-only: #t);
-      //print-method(*standard-output*, m);
-      visualization-report(#"dfm-header", pair(m, sexp));
     end;
   end;
   debug-out(#"internal", "DFM generation complete.\n");

@@ -29,57 +29,10 @@ define function write-data (vis :: <dfmc-graph-visualization>, key :: <symbol>, 
               else
                 "unknown"
               end;
-    if (loc = "dispatch-prologue.dylan")
+//    if (loc = "new-dispatch.dylan")
 
-//  if (member?(arguments[1], list(//"indirect-object-implementation-class", "object-implementation-class", //<object> vs <raw-pointer> in call to indirect-object-implementation-class
-                                 //"member-eql?" <- <raw-pointer> vs <object>
-                                 //"default-initialize", //<raw-integer> vs <raw-address> because of wrap/unwrap
-                                 //"system-allocate-simple-instance", //too many arguments
-                                 //"make-simple-lock", "make-notification", //too many arguments
-                                 //"make-slot-access-engine-repository"), //too many arguments
-                                 //"in-place-rehashable?" <- <set!> on global variable! (inlined by rehash-table)
-                                 //"ash", "search-for-entry-count", //<make-cell>
-                                 //"any?", //constraint <function> vs <simple-object-vector>
-                                 //"curry",
-                                 //"element-no-bounds-check" //, "case-insensitive-string-equal-2", "gethash-or-set" <raw-integer> vs <byte-character>
-                                 //"same-specializer?" //no applicable methods in call [subclass-class [singleton]]
-                                 // also, run-time type error (inferred <singleton>, expected <subclass>)
-                                 //"grounded-subtype?" //no-app-m (singleton-object on <class>) + run-time type error + argument-type mismatch
-                                 //"parent-of" //no appl meth (cache-header-engine-node-parent (<generic-function>))
-                                 //"byte-slot-element-setter" //<raw-integer> vs <raw-byte-character>
-                                 //"object-class" //raw-integer vs raw-address
-                                 //"system-allocate-repeated-byte-character-instance-i" //<raw-byte> vs <raw-integer>
-                                 //"signal" //phi-placement - <set!> not in table (df/mapping)
-                                 //"make-symbol"
-                                 //"wait-for", "gethash"
-                                 //"object-class"
-                                 //"compute-size-from-dimensions", //occurence typing!
-                                 //"stretchy-vector-element-setter", "remove-all-keys",
-  //                               "add-method-internal-internal"),
-                                 //"map-as-one", "partition!", "primitive-partition"),
-//                                 "<subjunctive-class-universe"),
-//                                 "compute-implementation-class-precedence-list"),
-//                                 "eassign"),
-                                 //"list"),
-                                 //"initme"),
-                                 //"rcpl-isubclass"),
-                                 //"search-for-entry-count",
-                                 //"make-symbol"),
-                                 //"make-slot-access-engine-node"),
-//                                 "object-implementation-class",
-//                                 "class-instance?-rcpl-single-small"),
-                                 //"indirect-object-implementation-class"),
-                                 //"value-wrapper",
-                                 //"<stretchy-object-vector-representation> constructor"),
-                                 //"grounded-lckd-add", "ckd-add", "class-instance?-rcpl-single-small",
-                                 //"handle-missed-dispatch", "compute-dispatch-from-root",
-                                 //"linear-by-class-discriminator", "walk-existing-dispatch-engine", "mckd-add"),
-                                 //"effective-initialization-argument-descriptor"),
-                                 //"grounded-subtype"),
-//"%restart-dispatch",
-
-                                 //"allocation-attributes"),
-//              test: method(x, y) copy-sequence(x, end: min(x.size, y.size)) = y end))
+     if (member?(env, list("%remove-method-from-library", "automatic-finalization-function"),
+              test: method(x, y) copy-sequence(x, end: min(x.size, y.size)) = y end))
       write-to-visualizer(vis, apply(list, key, env, arguments));
     end;
   else
