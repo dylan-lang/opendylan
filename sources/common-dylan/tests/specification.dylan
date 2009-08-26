@@ -38,9 +38,10 @@ define module-spec common-extensions ()
   sealed instantiable class <stretchy-object-vector> (<stretchy-vector>);
   open generic-function concatenate! (<sequence>, #"rest") => (<sequence>);
   function position
-      (<sequence>, <object>, #"key", #"test", #"count") => (<integer>);
+      (<sequence>, <object>, #"key", #"test", #"start", #"end", #"skip")
+   => (false-or(<integer>));
   function split
-      (<string>, <character>, #"key", #"start", #"end", #"trim?") => (<sequence>);
+      (<string>, <character>, #"key", #"start", #"end", #"count", #"remove-if-empty") => (<sequence>);
   function join
     (<sequence>, <sequence>, #"key" #"key", #"conjunction") => (<sequence>);
 

@@ -258,17 +258,31 @@ end function-test one-of;
 
 define common-extensions function-test position ()
   //---*** Do all collections by using dylan-test-suite collection code
-  let list1 = #(1, 'a', 34.43, 'a', "done");
-  check-equal("test position",
-              position(list1, 'a'),
-              1);
-  check-equal("test position with skip of 2",
-              position(list1, 'a', skip: 1),
-              3);
-  check-false("test position with wrong item",
-              position(list1, 'w'));
-  check-false("test posision with skip greater than existance", 
-	      position(list1, 'a', skip: 2));
+  for (sequence in #[#(1, 'a', 34.43, 'a', "done"),
+                     #[1, 'a', 34.43, 'a', "done"],
+                     "xaxad"])
+    check-equal("test position",
+                position(sequence, 'a'),
+                1);
+    check-equal("test position with skip of 1",
+                position(sequence, 'a', skip: 1),
+                3);
+    check-false("test position with wrong item",
+                position(sequence, 'w'));
+    check-false("test posision with skip greater than existance", 
+                position(sequence, 'a', skip: 2));
+
+    check-equal("test position with start at first",
+                position(sequence, 'a', start: 1),
+                1);
+    check-equal("test position with start beyond first",
+                position(sequence, 'a', start: 2),
+                3);
+    check-false("test position with end",
+                position(sequence, 'a', end: 1));
+    check-false("test position with skip and end",
+                position(sequence, 'a', end: 3, skip: 1));
+  end for;
   check-equal("test position using test: \\<", 
               position(#(1, 2, 3, 4), 3, test: \<),
               3);
