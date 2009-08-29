@@ -14,13 +14,30 @@ define sideways method emit-mainfile
 						makefile-target(ld),
 						main-unit(lib-name)),
 			  type: "c")
-    write(stream, "#include \"run-time.h\"\n\n");
+    write(stream, "#include <stdlib.h>\n");
     write(stream, "#include <gc/gc.h>\n\n");
+    write(stream, "#include \"run-time.h\"\n\n");
+
+    format(stream, "static void call_application_exit_functions(void) {\n");
+    without-dependency-tracking
+      let call-application-exit-functions
+        = ^iep(dylan-value(#"call-application-exit-functions"));
+      format-emit(back-end, stream, 1, "  extern ~ ^();\n", 
+                  $dylan-type-string, call-application-exit-functions);
+      
+      format-emit(back-end, stream, 1, "  (void) ^();\n",
+                  call-application-exit-functions);
+    end;
+    format(stream, "}\n\n");
+    
     format(stream, "main (int argc, char *argv[]) {\n");
     format(stream, "  extern void %s ();\n", glue-name(lib-name));
     format(stream, "  extern D %s;\n", command-arguments-name());
     format(stream, "  extern D %s;\n", command-name-name());
+
     format(stream, "  GC_INIT();\n");
+    format(stream, "  atexit(call_application_exit_functions);\n");
+
     write (stream, "  D args = primitive_make_vector((argc > 0) ? argc - 1 : 0);\n");
     write (stream, "  int i;\n");
     format(stream, "  if (argc > 0)\n");
