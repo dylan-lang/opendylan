@@ -10,7 +10,6 @@ define library network
   use functional-dylan;
   use C-FFI;
   use IO;
-  use unix-portability;
   export unix-sockets,
          sockets;
 end;
@@ -20,7 +19,6 @@ define module unix-sockets
   use functional-dylan,
     exclude: { close };
   use C-FFI;
-  use unix-portability;
 
   // Misc
   export
@@ -173,6 +171,7 @@ define module unix-sockets
   export
     gethostname;
   export
+    errno,
     $EPERM, $ENOENT, $ESRCH, $EINTR, $EIO, $ENXIO, $E2BIG, $ENOEXEC,
     $EBADF, $ECHILD, $EAGAIN, $EWOULDBLOCK, $ENOMEM, $EACCES, $EFAULT,
     $ENOTBLK, $EBUSY, $EEXIST, $EXDEV, $ENODEV, $ENOTDIR, $EISDIR,
@@ -262,7 +261,6 @@ define module sockets-internals
   use format;
   use format-out;
   use byte-vector;
-  use unix-portability;
   use unix-sockets,
     rename: {socket => unix-socket,
              connect => unix-connect,
@@ -278,7 +276,8 @@ define module sockets-internals
 	     getpeername => unix-getpeername,
 	     gethostname => unix-gethostname,
 	     <c-socket> => <unix-socket-descriptor>,
-	     close => unix-closesocket },
+	     close => unix-closesocket,
+             errno => unix-errno },
     exclude: {<socket>, // use <accessor-socket-descriptor>
 	      send,  //  use unix-send-buffer instead
 	      recv};  //  use unix-recv-buffer instead

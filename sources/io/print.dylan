@@ -46,7 +46,7 @@ define thread variable *print-length* :: false-or(<integer>) = *default-length*;
 define variable *default-level* :: false-or(<integer>) = #f;
 define thread variable *print-level* :: false-or(<integer>) = *default-level*;
 
-// Print-circle? holds whether the user wants pretty printing.
+// Print-circle? holds whether the user wants circular printing.
 define variable *default-circle?* :: <boolean> = #f;
 define thread variable *print-circle?* :: <boolean> = *default-circle?*;
 

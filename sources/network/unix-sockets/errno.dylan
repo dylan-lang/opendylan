@@ -1,5 +1,10 @@
 module: unix-sockets
 
+define inline-only C-function errno
+  result val :: <C-int>;
+  c-name: "io_errno";
+end C-function;
+
 /* These values come from the headers of an x86 Linux machine.
    Other UNIX platforms are expected to be the same, but not
    guaranteed. */

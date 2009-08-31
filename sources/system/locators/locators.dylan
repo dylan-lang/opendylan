@@ -151,7 +151,7 @@ define open generic locator-might-have-links?
     (locator :: <directory-locator>) => (links? :: <boolean>);
 
 define method locator-might-have-links?
-    (locator :: <directory-locator>) => (links? == #f)
+    (locator :: <directory-locator>) => (links? :: singleton(#f))
   #f
 end method locator-might-have-links?;
 

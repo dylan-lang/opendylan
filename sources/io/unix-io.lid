@@ -15,14 +15,19 @@ Files:	library
 	streams/cleanup-streams
         streams/native-speed
         streams/async-writes
+        streams/file-stream
+        streams/multi-buffered-streams
         pprint
         print
         print-double-integer-kludge
 	format
 	buffered-format
 	format-condition
+        unix-file-accessor
 	unix-standard-io
+	unix-interface
 	format-out
+C-Source-Files:	unix-portability.c
 Other-Files:   Open-Source-License.txt
 Major-Version: 2
 Minor-Version: 1

@@ -15,12 +15,16 @@ Files:	library
 	streams/wrapper-stream
 	streams/cleanup-streams
         streams/native-speed
+        streams/file-stream
+        streams/multi-buffered-streams
         pprint
         print
         print-double-integer-kludge
 	format
 	buffered-format
 	format-condition
+        win32-interface
+        win32-file-accessor
 	win32-standard-io
 	format-out
 Other-Files:   Open-Source-License.txt

@@ -10,7 +10,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define library system
   use functional-dylan;
   use io;
-  use unix-portability;
   export
     operating-system,
     date,
@@ -62,6 +61,9 @@ define module operating-system
 	 environment-variable, environment-variable-setter,
 	 tokenize-environment-variable,
 	 run-application,
+         <application-process>,
+         wait-for-application-process,
+         \with-application-output,
 	 create-application-event,
 	 wait-for-application-event,
 	 signal-application-event,
@@ -207,27 +209,28 @@ define module file-system
          <invalid-file-permissions-error>;
 
   // File streams
-  create <file-stream>,
-         <byte-file-stream>,
-	 type-for-file-stream,
-	 \with-open-file,
-	 stream-locator,
-	 writable-file-stream-position-setter;
-
   // Multi-buffered streams
-  create <buffer-vector>,
-	 <multi-buffered-stream>,
-	 multi-buffered-stream-position-setter,
-	 write-4-aligned-bytes-from-word,
-	 read-4-aligned-bytes-as-word,
-	 write-4-aligned-bytes, write-8-aligned-bytes,
-	 read-4-aligned-bytes, read-8-aligned-bytes,
-	 multi-buffer-working-set,
-	 multi-buffer-reads,
-	 multi-buffer-bytes,
-	 multi-buffer-total-working-set,
-	 multi-buffer-total-reads,
-	 multi-buffer-total-bytes;
+  create \with-open-file;
+  use streams-internals,
+    export: { <file-stream>,
+              <byte-file-stream>,
+              type-for-file-stream,
+              stream-locator,
+              writable-file-stream-position-setter,
+             
+              <buffer-vector>,
+              <multi-buffered-stream>,
+              multi-buffered-stream-position-setter,
+              write-4-aligned-bytes-from-word,
+              read-4-aligned-bytes-as-word,
+              write-4-aligned-bytes, write-8-aligned-bytes,
+              read-4-aligned-bytes, read-8-aligned-bytes,
+              multi-buffer-working-set,
+              multi-buffer-reads,
+              multi-buffer-bytes,
+              multi-buffer-total-working-set,
+              multi-buffer-total-reads,
+              multi-buffer-total-bytes };
 
   // File system locators
   create <file-system-locator>,
@@ -285,22 +288,16 @@ define module file-system
 end module file-system;
 
 define module file-system-internals
-  use file-system, export: all;
-
   // File streams
-  export <general-file-stream>,
-         <byte-char-file-stream>;
+  use streams-internals,
+    export: { <general-file-stream>,
+              <byte-char-file-stream> };
 
   // Multi-buffered streams
-  export <general-multi-buffered-stream>,
-         <byte-multi-buffered-stream>,
-         <byte-char-multi-buffered-stream>;
-
-  // Native file support
-  export accessor-set-file-position,
-	 accessor-file-position,
-	 accessor-file-size,
-         file-handle;
+  use streams-internals,
+    export: { <general-multi-buffered-stream>,
+              <byte-multi-buffered-stream>,
+              <byte-char-multi-buffered-stream> };
 end module file-system-internals;
 
 define module settings
@@ -355,10 +352,10 @@ define module system-internals
   use threads;
   use simple-format;
   use streams-internals;
-  use unix-portability, rename: { unix-lseek => unwrapped-unix-lseek };
   use operating-system, export: all;
   use date, export: all;
   use locators-internals, export: all;
+  use file-system, export: all;
   use file-system-internals, export: all;
   use simple-xml, export: all;
   use settings-internals, export: all;

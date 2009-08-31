@@ -1,4 +1,4 @@
-Module:       system-internals
+Module:       streams-internals
 Synopsis:     Implementation of multi-buffered streams for dood.
 Author:       Toby Weinberg
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
@@ -226,11 +226,16 @@ end method stream-at-end?;
 
 define sealed method stream-input-available?
     (stream :: <multi-buffered-stream>) => (available? :: <boolean>)
-  stream-position(stream) < stream.stream-size
+  if (stream.stream-open?)
+    stream-position(stream) < stream.stream-size
+  else
+    #f
+  end
 end method stream-input-available?;
 
 define sealed method stream-size 
     (the-stream :: <multi-buffered-stream>) => (the-size :: <integer>);
+  if (the-stream.stream-open?)
   // If the last buffer for this stream is paged in and modified then
   // use the maximum of buffer-end for that last buffer and the
   // accessor file size, otherwise use the accessor file size.
@@ -243,10 +248,14 @@ define sealed method stream-size
   if (last-buffer & last-buffer.buffer-dirty?)
     let last-buffer :: <buffer> = last-buffer; // HACK: TYPE ONLY
     max(last-buffer.buffer-position + last-buffer.buffer-end,
-	the-stream.accessor.accessor-file-size)
+          the-stream.accessor.accessor-size)
   else
-    the-stream.accessor.accessor-file-size
+      the-stream.accessor.accessor-size
   end if
+  else
+    error(make(<stream-closed-error>, stream: the-stream,
+               format-string: "Cant get the size of a closed stream"));
+  end;
 end method;
 
 
@@ -453,7 +462,7 @@ define function preempt-buffer
       // Zero out the stream-shared-buffer in the stream which currently
       // owns the buffer we are preempting if the stream-shared-buffer is
       // the preempted buffer.  This can't happen unless the
-      // buffer-vector is being shared by more than o ne stream.
+      // buffer-vector is being shared by more than one stream.
       if (the-owning-stream.stream-shared-buffer == the-buffer)
 	// First save the position
 	the-owning-stream.current-position 
@@ -628,11 +637,16 @@ end method do-force-output-buffers;
 /// Positioning methods
 define sealed method stream-position
     (stream :: <multi-buffered-stream>) => (position :: <integer>)
+  if(stream.stream-open?)
   if (stream-shared-buffer(stream))
     stream-shared-buffer(stream).buffer-position
       + stream-shared-buffer(stream).buffer-next 
   else
     stream.current-position
+  end
+  else
+    error(make(<stream-closed-error>, stream: stream,
+               format-string: "Cant get the position of a closed stream"));
   end
 end method stream-position;
 
@@ -652,7 +666,7 @@ define sealed method stream-position-setter
 		   "Can't set position of closed stream"));
     else       
        error(make(<stream-position-error>, stream: stream, 
-                  size: stream.accessor.accessor-file-size, position: position));
+                  size: stream.accessor.accessor-size, position: position));
     end if;
   end;
   the-position
@@ -683,7 +697,7 @@ define function multi-buffered-stream-position-setter
 		     "Can't set position of closed stream"));
       else       
 	error(make(<stream-position-error>, stream: stream, 
-		   size: stream.accessor.accessor-file-size, position: position));
+		   size: stream.accessor.accessor-size, position: position));
       end if;
     end if;
   elseif (the-position >= 0)
@@ -695,7 +709,7 @@ define function multi-buffered-stream-position-setter
 		   "Can't set position of closed stream"));
     else       
       error(make(<stream-position-error>, stream: stream, 
-		 size: stream.accessor.accessor-file-size, position: position));
+		 size: stream.accessor.accessor-size, position: position));
     end if; 
   end if;
   the-position
@@ -719,7 +733,7 @@ define sealed method adjust-stream-position
 		   "Can't set position of closed stream"));
     else       
       error(make(<stream-position-error>, stream: stream, 
-		 size: stream.accessor.accessor-file-size, position: position));
+		 size: stream.accessor.accessor-size, position: position));
     end if; 
   else
     // Don't call next-method() it just figures out everything above again

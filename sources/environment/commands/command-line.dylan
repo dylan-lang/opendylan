@@ -303,7 +303,8 @@ define inline method message
   let server = context.context-server;
   let stream = server.server-output-stream;
   apply(format, stream, format-string, format-arguments);
-  new-line(stream)
+  new-line(stream);
+  force-output(stream);
 end method message;
 
 define function display-condition
@@ -768,7 +769,10 @@ define method command-line-loop
   let input-stream  = server.server-input-stream;
   let output-stream = server.server-output-stream;
   let banner = context.context-banner;
-  banner & write(output-stream, banner);
+  if (banner)
+    write(output-stream, banner);
+    force-output(output-stream);
+  end if;
   let handler (<serious-condition>)
     = method (condition :: <serious-condition>, next-handler :: <function>)
 	case
@@ -786,7 +790,8 @@ define method command-line-loop
     block ()
       unless (server.server-incomplete-command-line)
 	new-line(output-stream);
-	display-command-prompt(output-stream, context)
+        display-command-prompt(output-stream, context);
+        force-output(output-stream);
       end;
       let command-line = read-line(input-stream, on-end-of-stream: #f);
       case

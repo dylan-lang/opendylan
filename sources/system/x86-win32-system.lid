@@ -17,7 +17,6 @@ Files: library
        locators/web-locators
        file-system/file-system
        file-system/file-stream
-       file-system/multi-buffered-streams
        file-system/wrapper-file-accessor
        file-system/win32-ffi
        file-system/win32-file-system

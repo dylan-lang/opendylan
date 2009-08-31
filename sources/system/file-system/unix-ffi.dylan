@@ -59,30 +59,7 @@ define constant $STAT_SIZE =
 
 define macro with-stack-stat
   { with-stack-stat (?st:name, ?file:expression) ?:body end }
-  => { begin
-         let ?st = primitive-wrap-machine-word(integer-as-raw(0));
-         block ()
-	   ?st := primitive-wrap-machine-word
-                    (primitive-cast-pointer-as-raw
-		       (%call-c-function ("GC_malloc")
-                            (nbytes :: <raw-c-unsigned-long>) => (p :: <raw-c-pointer>)
-                          (integer-as-raw($STAT_SIZE))
-                        end));
-	   if (primitive-machine-word-equal?(primitive-unwrap-machine-word(?st),
-					     integer-as-raw(0)))
-	     unix-file-error("get space for STAT structure for", "%s", ?file)
-	   end;
-           ?body
-         cleanup
-	   if (primitive-machine-word-not-equal?(primitive-unwrap-machine-word(?st),
-						 integer-as-raw(0)))
-	     %call-c-function ("GC_free") (p :: <raw-c-pointer>) => (void :: <raw-c-void>)
-	       (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(?st)))
-	     end;
-	     #f
-	   end
-         end
-       end }
+  => { with-storage (?st, $STAT_SIZE) ?body end }
 end macro with-stack-stat;
 
 define inline-only function st-mode (st :: <machine-word>) => (mode :: <integer>)
@@ -183,8 +160,12 @@ define inline-only function dirent-name (dirent :: <machine-word>) => (name :: <
 				   integer-as-raw($dirent-name-offset))))
 end function dirent-name;
 
-
 /// Error handling
+
+define function unix-errno () => (errno :: <integer>)
+  raw-as-integer
+    (%call-c-function("io_errno") ()=>(result :: <raw-c-signed-int>)() end)
+end function;
 
 define function unix-last-error-message () => (message :: <string>)
   let message :: <byte-string>
@@ -220,86 +201,3 @@ define function unix-file-error
 	       format-arguments: list(status-message, operation)))
   end;
 end function unix-file-error;
-
-
-/*
-
-  File attributes on x86-Linux
-
-zab.functionalobjects.com:/u/ldisk/nosa/libc/include/sys/stat.h
-
-struct stat {
-	dev_t		st_dev;
-
-#ifdef __SVR4_I386_ABI_L1__
-	long st_pad1[3];
-#else
-	unsigned short __pad1;
-#endif
-
-	ino_t		st_ino;
-	umode_t		st_mode;
-	nlink_t		st_nlink;
-	uid_t		st_uid;
-	gid_t		st_gid;
-	dev_t		st_rdev;
-
-#ifdef __SVR4_I386_ABI_L1__
-	long st_pad2[2];
-#else
-	unsigned short __pad2;
-#endif
-
-	off_t		st_size;
-
-#ifdef __SVR4_I386_ABI_L1__
-	timestruc_t	st_atim;
-	timestruc_t	st_mtim;
-	timestruc_t	st_ctim;
-    	long		st_blksize;
-    	long		st_blocks;
-
-#define	FSTYPSZ		16
-
-        char            st_fstype[FSTYPSZ];
-        long		st_pad4[8];
-
-#define st_atime	st_atim.tv_sec
-#define st_mtime	st_mtim.tv_sec
-#define st_ctime	st_ctim.tv_sec
-
-#else /*! __SVR4_I386_ABI_L1__*/
-	unsigned long	st_blksize;
-	unsigned long	st_blocks;
-	time_t		st_atime;
-	unsigned long	__unused1;
-	time_t		st_mtime;
-	unsigned long	__unused2;
-	time_t		st_ctime;
-	unsigned long	__unused3;
-	unsigned long	__unused4;
-	unsigned long	__unused5;
-#endif /*! __SVR4_I386_ABI_L1__*/
-};
-
-(gdb) p *(struct stat *)0x8065e10
-$3 = {st_dev = 2054, __pad1 = 0, st_ino = 139286, st_mode = 33277, 
-  st_nlink = 1, st_uid = 681, st_gid = 100, st_rdev = 0, __pad2 = 0, 
-  st_size = 11276, st_blksize = 4096, st_blocks = 24, st_atime = 930182170, 
-  __unused1 = 0, st_mtime = 930182170, __unused2 = 0, st_ctime = 930182170, 
-  __unused3 = 0, __unused4 = 0, __unused5 = 0}
-
-(gdb) x /32 0x8065e10
-0x8065e10:	0x00000806	0x00000000	0x00000000	0x00022016
-0x8065e20:	0x000081fd	0x00000001	0x000002a9	0x00000064
-0x8065e30:	0x00000000	0x00000000	0x00000000	0x00002c0c
-0x8065e40:	0x00001000	0x00000018	0x3771741a	0x00000000
-0x8065e50:	0x3771741a	0x00000000	0x3771741a	0x00000000
-0x8065e60:	0x00000000	0x00000000	0x4040e250	0x403b7cb4
-0x8065e70:	0x40386614	0x40386614	0x40386614	0x403669f8
-0x8065e80:	0x40322374	0x402e2844	0x402e2844	0x402e2844
-(gdb)
-
-
-*/
-

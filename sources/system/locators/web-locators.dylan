@@ -148,7 +148,7 @@ define sealed method locator-port
 end method locator-port;
 
 define sealed method locator-default-port
-    (server :: <server-url>) => (port == #f)
+    (server :: <server-url>) => (port :: singleton(#f))
   #f
 end method locator-default-port;
 

@@ -14,7 +14,7 @@ define constant $INVALID_HANDLE_VALUE         = -1;
 define constant $FILE_ATTRIBUTE_READONLY      = #x00000001;
 define constant $FILE_ATTRIBUTE_READONLY_BIT  = 0;	// #x00000001
 define constant $FILE_ATTRIBUTE_DIRECTORY_BIT = 4;	// #x00000010
-define constant $FORMAT_MESSAGE_FLAGS         = #x00001100;
+define constant $FORMAT_MESSAGE_FLAGS         = #x000011FF;
 define constant $FORMAT_MESSAGE_LANGUAGE      = #x00000400;
 //---*** NOTE: See the code for the #"executable?" property for an explanation
 //---*** of why the next three values are presently unused...
@@ -29,36 +29,6 @@ define constant $ERROR_NOT_SUPPORTED          = 50;
 define constant $SHGFI_EXETYPE                = #x00002000;
 
 ///
-
-define macro with-stack-dword
-  { with-stack-dword (?dword:name) ?:body end }
-  => { begin
-         let ?dword = primitive-wrap-machine-word(integer-as-raw(0));
-	 block ()
-	   ?dword := primitive-wrap-machine-word
-	               (primitive-cast-pointer-as-raw
-			  (%call-c-function ("LocalAlloc", c-modifiers: "__stdcall")
-			       (flags :: <raw-c-unsigned-int>, bytes :: <raw-c-unsigned-int>)
-			    => (pointer :: <raw-c-pointer>)
-			     (integer-as-raw(0), integer-as-raw($DWORD_SIZE))
-			   end));
-	   if (primitive-machine-word-equal?(primitive-unwrap-machine-word(?dword),
-					     integer-as-raw(0)))
-	     // Can't use win32-file-error as we may be called from there!
-	     error("Can't allocate space for a DWORD")
-	   end;
-	   ?body
-	 cleanup
-	   if (primitive-machine-word-not-equal?(primitive-unwrap-machine-word(?dword),
-						 integer-as-raw(0)))
-	     %call-c-function ("LocalFree", c-modifiers: "__stdcall")
-	         (pointer :: <raw-c-pointer>) => (null-pointer :: <raw-c-pointer>)
-	       (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(?dword)))
-	     end
-	   end
-         end
-       end }
-end macro with-stack-dword;
 
 define macro with-stack-path
   { with-stack-path (?path:name) ?:body end }

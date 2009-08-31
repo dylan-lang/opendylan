@@ -161,7 +161,7 @@ end function extend-print-object;
 define function test-print-variables ()
   check-print("print circular list",
 	      begin
-		let my-list = #(1, 2, 3);
+		let my-list = list(1, 2, 3);
 		last(my-list) := my-list;
 		my-list
 	      end,

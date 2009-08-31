@@ -90,7 +90,7 @@ define inline function get-input-buffer
   let sb = stream-input-buffer(stream);
   if (sb)
     let sb :: <buffer> = sb;
-    if (sb.buffer-next = sb.buffer-end)	// gone past last valid byte?
+    if (sb.buffer-next >= sb.buffer-end) // gone past last valid byte?
       do-next-input-buffer(stream, wait?: wait?, bytes: bytes)
 	// This returns #f if number of bytes read is 0
     else
@@ -176,7 +176,7 @@ define inline function get-output-buffer
   let sb = stream-output-buffer(stream);
   if (sb)
     let sb :: <buffer> = sb; // HACK: TYPE ONLY
-    if (sb.buffer-next = sb.buffer-size) // gone past the end of the buffer?
+    if (sb.buffer-next >= sb.buffer-size) // gone past the end of the buffer?
       do-next-output-buffer(stream, bytes: bytes)
     else
       sb
@@ -522,15 +522,11 @@ define method read-line
  => (string-or-eof :: <object>, newline? :: <boolean>)
   // If we're at the end before we've started to read anything,
   // signal end-of-stream instead of incomplete read
-  if (stream-at-end?(stream))
-    if (closed?(stream))
+  if (closed?(stream))
       error(make(<stream-closed-error>, stream: stream,
 		 format-string: 
 		   "Can't set position of closed stream"));
-    else       
-      values(end-of-stream-value(stream, on-end-of-stream), #f)
-    end if;
-  else 
+  else       
     let line = #f;
     let matched? = #f;
     // This assumes that the elements of <buffer> are <byte>s.  But
@@ -595,7 +591,11 @@ define method read-line
 	end if;
       end iterate;
     end with-input-buffer;
-    values(line, matched?)
+    if (line)
+      values(line, matched?)
+    else
+      values(end-of-stream-value(stream, on-end-of-stream), #f)
+    end;
   end if
 end method read-line;
 
@@ -620,15 +620,11 @@ define method read-line-into!
 	  end
 	end method;
   // Same deal as 'read-line'
-  if (stream-at-end?(stream))
-    if (closed?(stream))
+  if (closed?(stream))
       error(make(<stream-closed-error>, stream: stream,
 		 format-string: 
 		   "Can't set position of closed stream"));
-    else       
-      values(end-of-stream-value(stream, on-end-of-stream), #f)
-    end if;
-  else 
+  else       
     let matched? = #f;
     // This assumes that the elements of <buffer> are <byte>s.  But
     // that assumption is shot through this code so talley-ho...
@@ -673,7 +669,11 @@ define method read-line-into!
     if (overflow)
       string := concatenate(string, overflow);
     end;
-    values(string, matched?)
+    if (index > start | matched? | overflow)
+      values(string, matched?)
+    else       
+      values(end-of-stream-value(stream, on-end-of-stream), #f)
+    end if
   end
 end method read-line-into!;
 

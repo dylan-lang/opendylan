@@ -17,7 +17,6 @@ Files: library
        locators/web-locators
        file-system/file-system
        file-system/file-stream
-       file-system/multi-buffered-streams
        file-system/wrapper-file-accessor
        file-system/carbon-ffi
        file-system/carbon-file-system

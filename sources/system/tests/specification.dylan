@@ -206,11 +206,18 @@ define module-spec operating-system ()
   function login-group () => (false-or(<string>));
   function owner-name () => (false-or(<string>));
   function owner-organization () => (false-or(<string>));
+  class <application-process> (<object>);
   function run-application 
-    (<string>,
+    (type-union(<string>, limited(<sequence>, of: <string>)),
      #"key", #"under-shell?", #"inherit-console?", #"activate?",
-     #"minimize?", #"outputter", #"asynchronous?")
- => (<integer>);
+     #"minimize?", #"hide?", #"outputter", #"asynchronous?",
+     #"environment", #"working-directory",
+     #"input", #"if-input-does-not-exist",
+     #"output", #"if-output-exists", #"error", #"if-error-exists")
+    => (<integer>, false-or(<integer>),
+        false-or(<application-process>), #"rest");
+  function wait-for-application-process
+    (<application-process>) => (<integer>, false-or(<integer>));
   function load-library (<string>) => (<object>);
 
   // Application startup handling
@@ -228,6 +235,9 @@ define module-spec operating-system ()
   function environment-variable-setter
     (false-or(<string>), <string>) => (false-or(<string>));
   function tokenize-environment-variable (<string>) => (<sequence>);
+
+  // Macros
+  macro-test with-application-output-test;
 end module-spec operating-system;
 
 define module-spec settings ()

@@ -65,7 +65,7 @@ define sealed method initialize
 end method initialize;
 
 define method locator-server
-    (locator :: <posix-directory-locator>) => (server == #f)
+    (locator :: <posix-directory-locator>) => (server :: singleton(#f))
   #f
 end method locator-server;
 
@@ -113,7 +113,7 @@ define sealed method locator-test
 end method locator-test;
 
 define method locator-might-have-links?
-    (locator :: <posix-directory-locator>) => (links? == #t)
+    (locator :: <posix-directory-locator>) => (links? :: singleton(#t))
   #t
 end method locator-might-have-links?;
 
@@ -193,7 +193,7 @@ define sealed method string-as-locator
   let (directory, name)
     = if (pos)
 	values(as(<posix-directory-locator>, 
-		  copy-sequence(string, end: pos)),
+		  copy-sequence(string, end: pos + 1)),
 	       copy-sequence(string, start: pos + 1))
       else
 	values(#f, string)

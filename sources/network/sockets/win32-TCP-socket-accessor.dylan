@@ -91,7 +91,7 @@ end method accessor-open?;
 define variable *linger* :: <integer> = 1; //seconds
 
 define method accessor-open
-    (accessor :: <win32-socket-accessor>,
+    (accessor :: <win32-socket-accessor>, locator,
      #key remote-host: input-remote-host :: false-or(<ipv4-address>),
      remote-port: input-remote-port :: false-or(<integer>),
      descriptor: 

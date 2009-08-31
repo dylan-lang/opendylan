@@ -18,7 +18,6 @@ Files: library
        locators/web-locators
        file-system/file-system
        file-system/file-stream
-       file-system/multi-buffered-streams
        file-system/wrapper-file-accessor
        file-system/unix-ffi
        file-system/unix-file-system

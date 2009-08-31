@@ -12,6 +12,28 @@ define constant $platform-name
          concatenate(as(<string>, $machine-name), "-", 
                      as(<string>, $os-name)));
 
+define macro with-application-output
+  { with-application-output (?stream:variable = ?command:expression,
+                             #rest ?keys:expression)
+      ?body:body
+    end }
+  => { begin
+         let _stream = #f;
+         let _process = #f;
+	 block ()
+           let (exit-code, signal, process, ostream)
+             = run-application(?command, asynchronous?: #t, output: #"stream",
+                               ?keys);
+           _stream := ostream;
+           _process := process;
+           let ?stream :: <file-stream> = ostream;
+           ?body;
+         cleanup
+           if (_process) wait-for-application-process(_process) end;
+           if (_stream & stream-open?(_stream)) close(_stream) end;
+	 end
+       end }
+end macro with-application-output;
 
 /// System data offset definitions
 

@@ -21,8 +21,8 @@ define sideways method platform-accessor-class
 end method platform-accessor-class;
 
 define method accessor-open
-    (accessor :: <wrapper-file-accessor>, 
-     #key locator, direction, if-exists, if-does-not-exist,
+    (accessor :: <wrapper-file-accessor>, locator,
+     #key direction, if-exists, if-does-not-exist,
      #all-keys)
  => ()
   wrapper-file-accessor-stream(accessor) := locator;
