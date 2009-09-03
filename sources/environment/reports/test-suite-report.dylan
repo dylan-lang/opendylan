@@ -51,6 +51,8 @@ define method write-report-as
     let module = name-value(project, name);
     let module-name = environment-object-primitive-name(project, name);
     let names = module-names-to-document(project, module);
+    format(stream, "\n");
+    format(stream, "// Module: %s\n", module-name);
     for (name :: <binding-name-object> in names)
       let value = name-value(project, name);
       let class-name
@@ -60,6 +62,7 @@ define method write-report-as
 	    <function-object> => "function";
 	    <macro-object>    => "macro";
 	    <variable-object> => "variable";
+            otherwise         => "constant"
 	  end;
       let print-name = environment-object-primitive-name(project, name);
       let test-suffix
@@ -100,7 +103,15 @@ define method write-binding-spec
   let project = report.report-project;
   let name = environment-object-primitive-name(project, name);
   let separator = "";
-  format(stream, "  class %s (", name);
+
+  format(stream, "  ");
+  let modifiers = definition-modifiers(project, class);
+  for (modifier in #[#"open", #"abstract", #"primary"])
+    if (member?(modifier, modifiers))
+      format(stream, "%s ", modifier);
+    end if;
+  end for;
+  format(stream, "class %s (", name);
   for (superclass in class-direct-superclasses(project, class))
     format(stream, "%s", separator);
     //---*** What to do with unexported types?
@@ -116,10 +127,101 @@ define method write-binding-spec
      name :: <binding-name-object>, function :: <function-object>)
  => ()
   let project = report.report-project;
-  //---*** Flesh this out, handle generics etc...
-  format(stream, "  function %s;\n",
-	 environment-object-primitive-name(project, name))
+  format(stream, "  function %s ",
+	 environment-object-primitive-name(project, name));
+  write-binding-spec-parameters(stream, project, function);
+  format(stream, ";\n");
 end method write-binding-spec;
+
+define method write-binding-spec
+    (stream :: <stream>, report :: <test-suite-report>, 
+     name :: <binding-name-object>, function :: <generic-function-object>)
+ => ()
+  let project = report.report-project;
+  let modifiers = definition-modifiers(project, function);
+  let open?     = member?(#"open", modifiers);
+  if (open?)
+    format(stream, "  open generic-function %s ",
+           environment-object-primitive-name(project, name));
+    write-binding-spec-parameters(stream, project, function);
+    format(stream, ";\n");
+  else
+    let methods = generic-function-object-methods(project, function);
+    if (methods.size = 1)
+      next-method(stream, report, name, methods[0]);
+    else
+      next-method();
+    end if;
+  end if;
+end method write-binding-spec;
+
+define method write-binding-spec-parameters
+    (stream :: <stream>, project :: <project-object>,
+     function :: <function-object>)
+ => ();
+  let (required :: <parameters>,
+       rest :: false-or(<parameter>),
+       keys :: <optional-parameters>,
+       all-keys? :: <boolean>,
+       next :: false-or(<parameter>),
+       values :: <parameters>,
+       rest-value :: false-or(<parameter>))
+    = function-parameters(project, function);
+  format(stream, "(");
+  for (parameter in required, first? = #t then #f)
+    unless (first?)
+      format(stream, ", ");
+    end;
+    print-environment-object-name
+      (stream, project, parameter-type(parameter), qualify-names?: #f);
+  finally
+    if (rest)
+      unless (first?)
+        format(stream, ", ");
+      end;
+      format(stream, "#\"rest\"");
+    end if;
+  end for;
+
+  if (~keys.empty? | all-keys?)
+    if (~required.empty? | rest)
+      format(stream, ", ");
+    end if;
+
+    format(stream, "#\"key\"");
+
+    for (key in keys)
+      if (key.parameter-keyword)
+        format(stream, ", %=", key.parameter-keyword);
+      else
+        format(stream, ", #\"%s\"", key.parameter-name);
+      end if;
+    end for;
+
+    if (all-keys?)
+      format(stream, ", #\"all-keys\"");
+    end if;
+  end if;
+
+  format(stream, ") => (");
+
+  for (value in values, first? = #t then #f)
+    unless (first?)
+      format(stream, ", ");
+    end;
+    print-environment-object-name
+      (stream, project, parameter-type(value), qualify-names?: #f);
+  finally
+    if (rest-value)
+      unless (first?)
+        format(stream, ", ");
+      end;
+      format(stream, "#\"rest\"");
+    end if;
+  end for;
+
+  format(stream, ")");
+end method;
 
 define method write-binding-spec
     (stream :: <stream>, report :: <test-suite-report>, 
@@ -127,6 +229,15 @@ define method write-binding-spec
  => ()
   let project = report.report-project;
   format(stream, "  macro-test %s-test;\n",
+	 environment-object-primitive-name(project, name))
+end method write-binding-spec;
+
+define method write-binding-spec
+    (stream :: <stream>, report :: <test-suite-report>, 
+     name :: <binding-name-object>, macro-object :: <source-form-object>)
+ => ()
+  let project = report.report-project;
+  format(stream, "  constant %s;\n",
 	 environment-object-primitive-name(project, name))
 end method write-binding-spec;
 
