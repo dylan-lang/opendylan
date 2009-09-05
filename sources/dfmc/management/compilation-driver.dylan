@@ -75,7 +75,6 @@ define function compute-and-install-model-objects
     source-record-progress-text("Computing data models for %s.dylan", name);
     unless (cr.compilation-record-model-heap)
       progress-line("Computing models for %s.dylan", name);
-      visualization-report(#"file-changed", name);
       compiling-forms ($compilation of form in cr)
         unless (form-ignored?(form))
 	  maybe-compute-and-install-form-model-objects(form);
@@ -126,10 +125,6 @@ define sideways method maybe-compute-and-install-form-model-objects
       form.form-models-installed? := #"processing";
       block ()
 	with-fragment-info (form-variable-names(form).first)
-          let str = make(<string-stream>, direction: #"output");
-          print(form, str, escape?: #t);
-          let text = str.stream-contents;
-          //visualization-report(#"source", pair(form, text));
 	  compute-and-install-form-model-objects(form);
 	end;
       cleanup
@@ -825,12 +820,12 @@ define method optimize-method (m :: <&method>)
   with-simple-abort-retry-restart
       ("Skip optimizing this method", 
        "Retry optimizing for this method")
-    progress-line("<<<<");
-    progress-line("  Method before: %=.", m);
-    progress-line("  ----");
+    // progress-line("<<<<");
+    // progress-line("  Method before: %=.", m);
+    // progress-line("  ----");
     run-compilation-passes(m);
-    progress-line("  Method after: %=.", m);
-    progress-line(">>>>");
+    // progress-line("  Method after: %=.", m);
+    // progress-line(">>>>");
   end;
 end method;
 

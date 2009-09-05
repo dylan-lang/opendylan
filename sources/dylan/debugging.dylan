@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// DEBUGGING
 
-define variable *debugging?* :: <boolean>      = #t;
+define variable *debugging?* :: <boolean>      = #f;
 define variable *debug-parts* :: <list>        = #();
 
 define sealed inline method debugging?
