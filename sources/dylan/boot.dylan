@@ -1110,7 +1110,7 @@ define inline function major-minor-only-library? (lib :: <library>) => (well? ::
   library-build-count(lib) == $library-build-count-only-wildcard
 end function;
 
-define variable *version-checks?* = #f;
+define variable *version-checks?* = #t;
 
 define function version-checks?-setter (well?)
   *version-checks?* := well?;

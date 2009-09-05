@@ -268,10 +268,7 @@ define method run-optimizations (code) => (b :: <boolean>)
       if (*trace-optimizations?*)
         format-out("---------\n");
         unless (instance?(item, <nop>))
-          block()
-            print-method-out(code);
-          exception (e :: <condition>)
-          end;
+          print-method-out(code);
           format-out("---------\n");
         end unless;
       end if
