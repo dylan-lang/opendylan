@@ -45,5 +45,6 @@ echo "processing (ignore errors and warnings from automake and libtoolize)..."
 ( cd $srcdir
   mkdir build-aux
   $LIBTOOLIZE --force --copy
+  aclocal
   automake --foreign --add-missing
   autoconf )
