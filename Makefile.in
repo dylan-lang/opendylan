@@ -299,6 +299,7 @@ TAGS:
 dist:
 
 CHECK_STAGE = 3
+CHECK_COMPILER_STAGE = $(CHECK_STAGE)
 
 CHECK_APPS = \
 	libraries-test-suite-app \
@@ -321,10 +322,10 @@ CHECK_ENV = \
 	OPEN_DYLAN_USER_REGISTRIES=$(abs_srcdir)/sources/registry:$(library_srcdir)/registry \
 	OPEN_DYLAN_USER_SOURCES=$(abs_srcdir)/sources
 
-check:	bootstrap-stage-$(CHECK_STAGE)
+check:	bootstrap-stage-$(CHECK_COMPILER_STAGE)
 	@$(CHECK_ENV) \
 	  $(fdmake) \
-	  --compiler="$(abs_builddir)/Bootstrap.$(CHECK_STAGE)/bin/minimal-console-compiler -build -save" \
+	  --compiler="$(abs_builddir)/Bootstrap.$(CHECK_COMPILER_STAGE)/bin/minimal-console-compiler -build -save" \
 	  $(CHECK_APPS) && \
 	  for app in $(CHECK_APPS); do \
 	    $(abs_builddir)/Bootstrap.$(CHECK_STAGE)/bin/$$app; \
