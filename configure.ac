@@ -10,7 +10,7 @@ AC_CONFIG_AUX_DIR(build-aux)
 
 srcdir=`(cd $srcdir; pwd)`
 
-AC_DEFUN(FD_PLATFORM,[
+AC_DEFUN([FD_PLATFORM],[
 case $1 in
 i*86-*-linux*) $2=x86-linux; $3=sources/lib/run-time/pentium-linux ;;
 i*86-*-freebsd*) $2=x86-freebsd; $3=sources/lib/run-time/pentium-freebsd ;;
