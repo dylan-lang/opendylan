@@ -306,6 +306,7 @@ CHECK_APPS = \
 	c-ffi-test-suite-app \
 	duim-test-suite-app \
 	deuce-test-suite-app \
+	jam-test-suite-app \
 	channels-tests
 
 CHECK_ENV = \

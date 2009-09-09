@@ -2,6 +2,7 @@ Library:      jam-test-suite
 Author:       Peter S. Housel
 Files:        library
               jam-test
+Target:       dll
 Copyright:    Original Code is Copyright 2004 Gwydion Dylan Maintainers
               All rights reserved.
 License:      Functional Objects Library Public License Version 1.0

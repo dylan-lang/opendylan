@@ -27,8 +27,8 @@ define module-spec jam ()
   function jam-read-file(<jam-state>, <locator>) => ();
 
   function jam-rule(<jam-state>, <string>) => (false-or(<function>));
-  function jam-rule-setter(false-or(<function>), <jam-state>, <string>)
-    => (false-or(<function>));
+  function jam-rule-setter(<function>, <jam-state>, <string>)
+    => (<function>);
 
   function jam-invoke-rule(<jam-state>, <string>, #"rest") => (<sequence>);
 
@@ -38,6 +38,9 @@ define module-spec jam ()
   function jam-target-variable-setter
       (false-or(<sequence>), <jam-state>, <string>, <string>)
    => (false-or(<sequence>));
+
+  function jam-target-bind
+      (<jam-state>, <string>) => (<physical-locator>, <jam-target>);
 
   function jam-target-build
       (<jam-state>, <sequence>, #"key", #"force?", #"progress-callback")
@@ -67,7 +70,7 @@ define jam function-test jam-variable-setter ()
 end function-test jam-variable-setter;
 
 define jam function-test jam-expand-arg ()
-  begin 
+  with-test-unit ("jam-expand-arg simple variable expansion")
     let jam = make-test-instance(<jam-state>);
     jam-variable(jam, "X") := #("a", "b", "c");
 
@@ -85,7 +88,11 @@ define jam function-test jam-expand-arg ()
                 #("a-a", "a-b", "a-c",
                   "b-a", "b-b", "b-c",
                   "c-a", "c-b", "c-c"));
+  end;
 
+  with-test-unit ("jam-expand-arg two-level variable expansion")
+    let jam = make-test-instance(<jam-state>);
+    jam-variable(jam, "X") := #("a", "b", "c");
     jam-variable(jam, "Y") := #("1", "2");
     jam-variable(jam, "Z") := #("X", "Y");
 
@@ -94,7 +101,7 @@ define jam function-test jam-expand-arg ()
                 #("a", "b", "c", "1", "2"));
   end;
 
-  begin
+  with-test-unit ("jam-expand-arg null elements")
     let jam = make-test-instance(<jam-state>);
 
     jam-variable(jam, "X") := #("a", "");
@@ -118,7 +125,7 @@ define jam function-test jam-expand-arg ()
                 #());
   end;
 
-  begin
+  with-test-unit ("jam-expand-arg element selection")
     let jam = make-test-instance(<jam-state>);
 
     jam-variable(jam, "X") := #("A", "B", "C", "D", "E", "F", "G", "H");
@@ -134,7 +141,23 @@ define jam function-test jam-expand-arg ()
                 #("3", "4", "5"));
   end;
 
-  begin
+  with-test-unit ("jam-expand-arg :B expansion and replacement")
+    //---*** Fill this in...
+  end;
+
+  with-test-unit ("jam-expand-arg :S expansion and replacement")
+    //---*** Fill this in...
+  end;
+  
+  with-test-unit ("jam-expand-arg :D expansion and replacement")
+    //---*** Fill this in...
+  end;
+  
+  with-test-unit ("jam-expand-arg :P expansion and replacement")
+    //---*** Fill this in...
+  end;
+  
+  with-test-unit ("jam-expand-arg :G expansion and replacement")
     let jam = make-test-instance(<jam-state>);
 
     jam-variable(jam, "g0") := #("A");
@@ -183,7 +206,27 @@ define jam function-test jam-expand-arg ()
                 jam-expand-arg(jam, "$(g2:G=<wham>whir)"), #("<wham>whir>B"));
   end;
 
-  begin
+  with-test-unit ("jam-expand-arg :U expansion and replacement")
+    //---*** Fill this in...
+  end;
+
+  with-test-unit ("jam-expand-arg :L expansion and replacement")
+    //---*** Fill this in...
+  end;
+
+  with-test-unit ("jam-expand-arg multi-modifier expansion")
+    //---*** Fill this in...
+  end;
+
+  with-test-unit ("jam-expand-arg :R replacement")
+    //---*** Fill this in...
+  end;
+
+  with-test-unit ("jam-expand-arg :E replacement")
+    //---*** Fill this in...
+  end;
+
+  with-test-unit("jam-expand-arg with :J modifier")
     let jam = make-test-instance(<jam-state>);
     jam-variable(jam, "join") := #("one", "two", "three");
 
@@ -195,7 +238,7 @@ define jam function-test jam-expand-arg ()
                 #("one!two!three"));
   end;
 
-  begin
+  with-test-unit ("jam-expand-arg two-level expansion with modifier")
     let jam = make-test-instance(<jam-state>);
 
     jam-variable(jam, "grelge:froop") := #("toads");
@@ -203,6 +246,14 @@ define jam function-test jam-expand-arg ()
     check-equal("$($(q):U)",
                 jam-expand-arg(jam, "$($(q):U)"),
                 #("TOADS"));
+  end;
+
+  with-test-unit ("jam-expand-arg :Q expansion")
+    //---*** Fill this in...
+  end;
+
+  with-test-unit ("jam-expand-arg :@ expansion")
+    //---*** Fill this in...
   end;
 end function-test jam-expand-arg;
 
@@ -243,6 +294,10 @@ end function-test jam-target-variable-setter;
 define jam function-test jam-target-variable ()
   //---*** Fill this in...
 end function-test jam-target-variable;
+
+define jam function-test jam-target-bind ()
+  //---*** Fill this in...
+end function-test jam-target-build;
 
 define jam function-test jam-target-build ()
   //---*** Fill this in...
