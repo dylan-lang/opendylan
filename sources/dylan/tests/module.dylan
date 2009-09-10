@@ -10,7 +10,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define module dylan-test-suite
   use dylan-extensions,
     import: { <limited-collection>,
-              element-type };
+              element-type,
+              <hash-state> };
   use common-dylan;
   use testworks;
   use testworks-specs;

@@ -186,8 +186,8 @@ define protocol-spec arithmetic ()
   function truncate (<real>) => (<integer>, <real>);
   function floor/ (<real>, <real>) => (<integer>, <real>);
   function ceiling/ (<real>, <real>) => (<integer>, <real>);
-  function round (<real>, <real>) => (<integer>, <real>);
-  function truncate (<real>, <real>) => (<integer>, <real>);
+  function round/ (<real>, <real>) => (<integer>, <real>);
+  function truncate/ (<real>, <real>) => (<integer>, <real>);
   function modulo (<real>, <real>) => (<real>);
   function remainder (<real>, <real>) => (<real>);
   open generic-function \^ (<object>, <object>) => (#"rest");
@@ -258,7 +258,7 @@ define protocol-spec collections ()
   open generic-function rank (<array>) => (<integer>);
   open generic-function row-major-index (<array>, #"rest") => (<integer>);
   open generic-function dimensions (<array>) => (<sequence>);
-  open generic-function dimension (<array>, <integer>) => (<sequence>);
+  open generic-function dimension (<array>, <integer>) => (<integer>);
   open generic-function key-test (<collection>) => (<function>);
   open generic-function key-sequence (<collection>) => (<sequence>);
   open generic-function element 
@@ -267,18 +267,14 @@ define protocol-spec collections ()
       (<object>, <mutable-collection>, <object>) => (<object>);
   open generic-function aref (<array>, #"rest") => (<object>);
   open generic-function aref-setter (<object>, <array>, #"rest") => (<object>);
-  function first (<sequence>, #"key", "default") => (<object>);
-  function second (<sequence>, #"key", "default") => (<object>);
-  function third (<sequence>, #"key", "default") => (<object>);
-  function first-setter
-      (<object>, <mutable-sequence>, #"key", "default") => (<object>);
-  function second-setter 
-      (<object>, <mutable-sequence>, #"key", "default") => (<object>);
-  function third-setter
-      (<object>, <mutable-sequence>, #"key", "default") => (<object>);
-  function last (<sequence>, #"key", "default") => (<object>);
-  function last-setter
-      (<object>, <mutable-sequence>, #"key", "default") => (<object>);
+  function first (<sequence>, #"key", #"default") => (<object>);
+  function second (<sequence>, #"key", #"default") => (<object>);
+  function third (<sequence>, #"key", #"default") => (<object>);
+  function first-setter (<object>, <mutable-sequence>) => (<object>);
+  function second-setter (<object>, <mutable-sequence>) => (<object>);
+  function third-setter (<object>, <mutable-sequence>) => (<object>);
+  function last (<sequence>, #"key", #"default") => (<object>);
+  function last-setter (<object>, <mutable-sequence>) => (<object>);
   function head (<list>) => (<object>);
   function tail (<list>) => (<object>);
   function head-setter (<object>, <pair>) => (<object>);
@@ -294,9 +290,9 @@ define protocol-spec collections ()
   open generic-function remove!
       (<sequence>, <object>, #"key", #"test", #"count") => (<sequence>);
   open generic-function push (<deque>, <object>) => (<object>);
-  open generic-function pop (<deque>, <object>) => (<object>);
+  open generic-function pop (<deque>) => (<object>);
   open generic-function push-last (<deque>, <object>) => (<object>);
-  open generic-function pop-last (<deque>, <object>) => (<object>);
+  open generic-function pop-last (<deque>) => (<object>);
   open generic-function reverse (<sequence>) => (<sequence>);
   open generic-function reverse! (<sequence>) => (<sequence>);
   open generic-function sort 
@@ -325,7 +321,8 @@ define protocol-spec collections ()
       (<object>, <collection>, #"key", #"test") => (<boolean>);
   open generic-function find-key
       (<collection>, <function>, #"key", #"skip", #"failure") => (<object>);
-  open generic-function remove-key! (<collection>, <object>) => (<boolean>);
+  open generic-function remove-key!
+       (<mutable-explicit-key-collection>, <object>) => (<boolean>);
   open generic-function replace-elements!
       (<mutable-collection>, <function>, <function>, #"key", #"count")
    => (<mutable-collection>);
@@ -346,8 +343,8 @@ define protocol-spec collections ()
       (<table>) => (<function>, <function>);
   function merge-hash-ids
       (<integer>, <integer>, #"key", #"ordered")
-   => (<integer>, <object>);
-  function object-hash (<object>, <object>) => (<integer>, <object>);
+   => (<integer>);
+  function object-hash (<object>, <hash-state>) => (<integer>, <hash-state>);
 
   /// Set operations
   open generic-function intersection
