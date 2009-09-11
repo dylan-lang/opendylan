@@ -93,7 +93,7 @@ define method write-binding-spec
   //---*** What to do with unexported types?
   print-environment-object-name
     (stream, project, type, qualify-names?: #f);
-  format(stream, ");\n")
+  format(stream, ";\n")
 end method write-binding-spec;
 
 define method write-binding-spec
