@@ -288,9 +288,10 @@ define function run-application
         make-envp(environment);
       else
         primitive-wrap-machine-word
-          (primitive-c-pointer-at(%c-variable-pointer("environ", #t),
-                                  integer-as-raw(0),
-                                  integer-as-raw(0)))
+          (%call-c-function ("system_environ")
+             () => (environ :: <raw-c-pointer>)
+             ()
+           end);
       end if;
 
   let dir = working-directory & as(<byte-string>, working-directory);
@@ -453,9 +454,9 @@ define function make-envp
   // environment variable name
   let old-envp :: <machine-word>
     = primitive-wrap-machine-word
-        (primitive-c-pointer-at(%c-variable-pointer("environ", #t),
-                                integer-as-raw(0),
-                                integer-as-raw(0)));
+        (%call-c-function ("system_environ") () => (environ :: <raw-c-pointer>)
+           ()
+         end);
   block (envp-done)
     for (i :: <integer> from 0)
       let raw-item

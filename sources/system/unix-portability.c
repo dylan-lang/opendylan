@@ -2,6 +2,18 @@
 #include <signal.h>
 #include <errno.h>
 
+#ifdef __APPLE__
+#include <crt_externs.h>
+#define environ (*_NSGetEnviron())
+#else
+extern char **environ;
+#endif
+
+char **system_environ(void)
+{
+  return environ;
+}
+
 /* Adapted from the SBCL run-time system, which in turn is derived
  * from the CMU CL system, which was written at Carnegie Mellon
  * University and released into the public domain.
