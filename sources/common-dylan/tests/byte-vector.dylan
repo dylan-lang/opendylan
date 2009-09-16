@@ -7,6 +7,10 @@ License:      Functional Objects Library Public License Version 1.0
 Dual-license: GNU Lesser General Public License
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
+define byte-vector constant-test <byte> ()
+  //---*** Fill this in...
+end constant-test <byte>;
+
 define byte-vector class-test <byte-vector> ()
   //---*** Fill this in...
 end class-test <byte-vector>;

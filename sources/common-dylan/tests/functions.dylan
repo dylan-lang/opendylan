@@ -496,6 +496,38 @@ define common-extensions function-test format-to-string ()
   format-object-tests()
 end function-test format-to-string;
 
+define common-extensions function-test unfound ()
+  //---*** Fill this in...
+end function-test unfound;
+
+define common-extensions function-test unfound? ()
+  //---*** Fill this in...
+end function-test unfound?;
+
+define common-extensions function-test found? ()
+  //---*** Fill this in...
+end function-test found?;
+
+define common-extensions function-test unsupplied ()
+  //---*** Fill this in...
+end function-test unsupplied;
+
+define common-extensions function-test unsupplied? ()
+  //---*** Fill this in...
+end function-test unsupplied?;
+
+define common-extensions function-test supplied? ()
+  //---*** Fill this in...
+end function-test supplied?;
+
+define common-extensions function-test true? ()
+  //---*** Fill this in...
+end function-test true?;
+
+define common-extensions function-test false? ()
+  //---*** Fill this in...
+end function-test false?;
+
 
 /// simple-format module
 
@@ -607,3 +639,25 @@ define simple-profiling function-test profiling-type-result ()
   //---*** Fill this in...
 end function-test profiling-type-result;
 
+
+/// finalization tests
+
+define finalization function-test drain-finalization-queue ()
+  //---*** Fill this in...
+end function-test drain-finalization-queue;
+
+define finalization function-test finalize ()
+  //---*** Fill this in...
+end function-test finalize;
+
+define finalization function-test finalize-when-unreachable ()
+  //---*** Fill this in...
+end function-test finalize-when-unreachable;
+
+define finalization function-test automatic-finalization-enabled?-setter ()
+  //---*** Fill this in...
+end function-test automatic-finalization-enabled?-setter;
+
+define finalization function-test automatic-finalization-enabled? ()
+  //---*** Fill this in...
+end function-test automatic-finalization-enabled?;

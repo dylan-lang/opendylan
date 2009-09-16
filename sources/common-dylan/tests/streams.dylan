@@ -782,3 +782,8 @@ end function-test stream-error-sequence;
 define streams-protocol function-test stream-error-count ()
   //---*** Fill this in...
 end function-test stream-error-count;
+
+define streams-protocol function-test open-file-stream ()
+  //---*** Fill this in...
+end function-test open-file-stream;
+

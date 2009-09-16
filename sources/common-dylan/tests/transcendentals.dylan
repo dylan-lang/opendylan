@@ -7,6 +7,22 @@ License:      Functional Objects Library Public License Version 1.0
 Dual-license: GNU Lesser General Public License
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
+define transcendentals constant-test $single-pi ()
+  //---** What can we do here?
+end constant-test $single-pi;
+
+define transcendentals constant-test $double-pi ()
+  //---** What can we do here?
+end constant-test $double-pi;
+
+define transcendentals constant-test $single-e ()
+  //---** What can we do here?
+end constant-test $single-e;
+
+define transcendentals constant-test $double-e ()
+  //---** What can we do here?
+end constant-test $double-e;
+
 // Trigonometric identities:
 //
 // sin^2(x) + cos^2(x) = 1

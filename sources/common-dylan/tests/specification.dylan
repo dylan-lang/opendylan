@@ -18,30 +18,40 @@ define library-spec common-dylan ()
   module transcendentals;
   module byte-vector;
   module machine-words;
+  module threads;
   suite common-dylan-regressions;
-  suite threads-test-suite;             //---*** NOTE: Should be changed to module test
+  suite threads-test-suite; //---*** NOTE: Should be changed to module test
   suite test-stream-suite;
 end library-spec common-dylan;
 
 define module-spec common-extensions ()
-  
   // Numerics
   function integer-length (<integer>) => (<integer>);
 
   // Unsupplied, unfound
   constant $unsupplied :: <object>;
+  function unsupplied () => (<object>);
+  function unsupplied? (<object>) => (<boolean>);
+  function supplied? (<object>) => (<boolean>);
+
   constant $unfound    :: <object>;
+  function unfound () => (<object>);
+  function unfound? (<object>) => (<boolean>);
+  function found? (<object>) => (<boolean>);
   
   // Collections
   sealed instantiable class <object-deque> (<deque>);
   open abstract class <stretchy-sequence> (<stretchy-collection>, <sequence>);
   sealed instantiable class <stretchy-object-vector> (<stretchy-vector>);
+  sealed instantiable class <string-table> (<table>);
   open generic-function concatenate! (<sequence>, #"rest") => (<sequence>);
   function position
       (<sequence>, <object>, #"key", #"test", #"start", #"end", #"skip")
    => (false-or(<integer>));
-  function split
-      (<string>, <character>, #"key", #"start", #"end", #"count", #"remove-if-empty") => (<sequence>);
+  open generic-function split
+      (<sequence>, <object>,
+       #"key", #"start", #"end", #"count", #"remove-if-empty")
+   => (<sequence>);
   function join
     (<sequence>, <sequence>, #"key" #"key", #"conjunction") => (<sequence>);
 
@@ -55,7 +65,8 @@ define module-spec common-extensions ()
 
   // Conditions
   open abstract class <format-string-condition> (<condition>);
-  function condition-to-string (<condition>) => (<string>);
+  open abstract primary class <simple-condition> (<condition>);
+  open generic-function condition-to-string (<condition>) => (false-or(<string>));
   open abstract class <arithmetic-error> (<error>);
   sealed instantiable class <division-by-zero-error> (<arithmetic-error>);
   sealed instantiable class <arithmetic-overflow-error> (<arithmetic-error>);
@@ -68,20 +79,21 @@ define module-spec common-extensions ()
 
   // Types
   function false-or (<type>, #"rest") => (<type>);
-  function one-of (<type>, #"rest") => (<type>);
+  function one-of (<object>, #"rest") => (<type>);
   function subclass (<class>) => (<type>);
-  
+
   // Ignoring
-  function ignorable (<object>) => ();
-  function ignore (<object>) => ();
+  function ignorable (#"rest") => ();
+  function ignore (#"rest") => ();
   
   // Formatting
   function float-to-string (<float>) => (<string>);
   function integer-to-string (<integer>, #"key", #"base") => (<string>);
-  function number-to-string (<number>) => (<string>);
-  function string-to-integer
-      (<string>, #"key", #"base", #"start", #"end")
+  open generic-function number-to-string (<number>) => (<string>);
+  function string-to-integer 
+      (<string>, #"key", #"base", #"start", #"end", #"default")
    => (<integer>, <integer>);
+
   function format-to-string (<string>, #"rest") => (<string>);
   
   // Control constructs
@@ -94,14 +106,14 @@ define module-spec common-extensions ()
   function application-arguments () => (<sequence>);
   function exit-application (<integer>) => ();
   function register-application-exit-function (<function>) => ();
+
+  // Other
+  function false? (<object>) => (<boolean>);
+  function true? (<object>) => (<boolean>);
 end module-spec common-extensions;
 
 define module-spec streams-protocol ()
-  abstract class <stream> (<object>);
-  variable *standard-input* :: <stream>;
-  variable *standard-output* :: <stream>;
-  variable *standard-error* :: <stream>;
-  variable *debug-output* :: <stream>;
+  open abstract class <stream> (<object>);
 
   // Conditions
   open abstract class <stream-error> (<error>);
@@ -156,25 +168,34 @@ define module-spec streams-protocol ()
   open generic-function adjust-stream-position
       (<positionable-stream>, <integer>, #"key", #"from")
    => (<object>);
+
+  // Other
+  open generic-function open-file-stream
+    (<object>, #"key", #"all-keys") => (<stream>);
+  open generic-function wait-for-io-completion (<stream>) => ();
+  open generic-function close
+    (<stream>, #"rest", #"key", #"all-keys") => ();
 end module-spec streams-protocol;
 
 define module-spec locators-protocol ()
   // This may be merged into any other module.
-  open abstract instantiable class <locator> (<object>);
+  open abstract class <locator> (<object>);
   open generic-function supports-open-locator? (<locator>) => (<boolean>);
-  open generic-function open-locator (<locator>) => (<stream>);
+  open generic-function open-locator (<locator>, #"key", #"all-keys") => (<stream>);
   open generic-function supports-list-locator? (<locator>) => (<boolean>);
   open generic-function list-locator (<locator>) => (<sequence>);
 end module-spec locators-protocol;
 
 define module-spec finalization ()
-  // As per Functional Objects documentation.
+  function automatic-finalization-enabled? () => (<boolean>);
+  function automatic-finalization-enabled?-setter (<boolean>) => ();
+  function drain-finalization-queue () => ();
+  open generic-function finalize (<object>) => ();
+  function finalize-when-unreachable (<object>) => (<object>);
 end module-spec finalization;
   
 define module-spec simple-io ()
-  // Exports some or all of streams protocol?
   function format-out (<string>, #"rest") => ();
-  // ... under construction
 end module-spec simple-io;
   
 define module-spec simple-random ()
@@ -196,6 +217,7 @@ define module-spec simple-profiling ()
 end module-spec simple-profiling;
 
 define module-spec byte-vector ()
+  constant <byte> :: <type>;
   sealed instantiable class <byte-vector> (<vector>);
   open generic function copy-bytes
     (<sequence>, <integer>, <sequence>, <integer>, <integer>)
@@ -211,12 +233,66 @@ end module-spec byte-vector;
 
 define module-spec machine-words ()
   sealed instantiable class <machine-word> (<object>);
+
+  // Variables
   constant $machine-word-size :: <integer>;
   constant $maximum-signed-machine-word :: <machine-word>;
   constant $minimum-signed-machine-word :: <machine-word>;
   constant $maximum-unsigned-machine-word :: <machine-word>;
   constant $minimum-unsigned-machine-word :: <machine-word>;
   function as-unsigned (<type>, <machine-word>) => (<object>);
+
+  // Basic and signed single word operations
+  function %logior (#"rest") => (<machine-word>);
+  function %logxor (#"rest") => (<machine-word>);
+  function %logand (#"rest") => (<machine-word>);
+  function %lognot (<object>) => (<machine-word>);
+  function %logbit? (<integer>, <object>) => (<boolean>);
+  function %count-low-zeros (<object>) => (<integer>);
+  function %count-high-zeros (<object>) => (<integer>);
+  function \%+ (<object>, <object>) => (<machine-word>, <boolean>);
+  function \%- (<object>, <object>) => (<machine-word>, <boolean>);
+  function \%* (<object>, <object>) => (<machine-word>, <machine-word>, <boolean>);
+  function %floor/ (<object>, <object>) => (<machine-word>, <machine-word>);
+  function %ceiling/ (<object>, <object>) => (<machine-word>, <machine-word>);
+  function %round/ (<object>, <object>) => (<machine-word>, <machine-word>);
+  function %truncate/ (<object>, <object>) => (<machine-word>, <machine-word>);
+  function %divide (<object>, <object>) => (<machine-word>, <machine-word>);
+  function %negative (<object>) => (<machine-word>, <boolean>);
+  function %abs (<object>) => (<machine-word>, <boolean>);
+  function %shift-left (<object>, <integer>) => (<machine-word>, <machine-word>, <boolean>);
+  function %shift-right (<object>, <integer>) => (<machine-word>);
+
+  // Overflow signalling operations
+  function so%+ (<machine-word>, <machine-word>) => (<machine-word>);
+  function so%- (<machine-word>, <machine-word>) => (<machine-word>);
+  function so%* (<object>, <object>) => (<machine-word>);
+  function so%negative (<object>) => (<machine-word>);
+  function so%abs (<object>) => (<machine-word>);
+  function so%shift-left (<object>, <integer>) => (<machine-word>);
+
+  // Signed double word operations
+  function d%floor/ (<object>, <object>, <object>) => (<machine-word>, <machine-word>);
+  function d%ceiling/ (<object>, <object>, <object>) => (<machine-word>, <machine-word>);
+  function d%round/ (<object>, <object>, <object>) => (<machine-word>, <machine-word>);
+  function d%truncate/ (<object>, <object>, <object>) => (<machine-word>, <machine-word>);
+  function d%divide (<object>, <object>, <object>) => (<machine-word>, <machine-word>);
+
+  // Unsigned single word operations
+  function u%+ (<object>, <object>) => (<machine-word>, <machine-word>);
+  function u%- (<object>, <object>) => (<machine-word>, <machine-word>);
+  function u%* (<object>, <object>) => (<machine-word>, <machine-word>);
+  function u%divide (<object>, <object>) => (<machine-word>, <machine-word>);
+  function u%rotate-left (<object>, <integer>) => (<machine-word>);
+  function u%rotate-right (<object>, <integer>) => (<machine-word>);
+  function u%shift-left (<object>, <integer>) => (<machine-word>);
+  function u%shift-right (<object>, <integer>) => (<machine-word>);
+  function u%< (<object>, <object>) => (<boolean>);
+
+  // Unsigned double word operations
+  function ud%divide (<object>, <object>, <object>) => (<machine-word>, <machine-word>);
+  function ud%shift-left (<object>, <object>, <integer>) => (<machine-word>, <machine-word>);
+  function ud%shift-right (<object>, <object>, <integer>) => (<machine-word>, <machine-word>);
 end module-spec machine-words;
 
 define module-spec transcendentals ()
@@ -334,3 +410,69 @@ define module-spec transcendentals ()
   /// Other protocols
 //  protocol transcendentals;
 end module-spec transcendentals;
+
+define module-spec threads ()
+  // Low-level synchronization
+  function sequence-point () => ();
+  function synchronize-side-effects () => ();
+
+  // Operations on threads
+  sealed instantiable class <thread> (<object>);
+  constant $low-priority :: <object>;
+  constant $background-priority :: <object>;
+  constant $normal-priority :: <object>;
+  constant $interactive-priority :: <object>;
+  constant $high-priority :: <object>;
+  function thread-name (<thread>) => (false-or(<string>));
+  function join-thread (<thread>, #"rest") => (<thread>, #"rest");
+  class <duplicate-join-error> (<thread-error>);
+  function thread-yield () => ();
+  function current-thread () => (<thread>);
+
+  // Synchronization protocol
+  open abstract class <synchronization> (<object>);
+  open generic-function wait-for (<synchronization>, #"key", #"timeout") => (<object>);
+  open generic-function release (<synchronization>) => ();
+  open generic-function synchronization-name (<synchronization>) => (false-or(<string>));
+
+  // Locks
+  open abstract instantiable class <lock> (<synchronization>);
+  macro-test with-lock-test;
+  class <timeout-expired> (<serious-condition>);
+
+  // Semaphores
+  open abstract instantiable primary class <semaphore> (<lock>);
+  constant $semaphore-maximum-count-limit :: <object>;
+  class <count-exceeded-error> (<error>);
+
+  // Exclusive locks
+  open abstract instantiable class <exclusive-lock> (<lock>);
+  open generic-function owned? (<exclusive-lock>) => (<boolean>);
+
+  // Recursive locks
+  open abstract instantiable primary class <recursive-lock> (<exclusive-lock>);
+  
+  // Simple locks
+  open abstract instantiable primary class <simple-lock> (<exclusive-lock>);
+
+  // Multiple reader / single writer locks
+  open abstract instantiable primary class <read-write-lock> (<exclusive-lock>);
+
+  // Notifications
+  sealed instantiable class <notification> (<synchronization>);
+  function associated-lock (<notification>) => (<simple-lock>);
+  class <not-owned-error> (<error>);
+  function release-all (<notification>) => ();
+
+  // Timers
+  function sleep (<real>) => ();
+
+  // Dynamic binding
+  macro-test dynamic-bind-test;
+
+  // Conditional update
+  macro-test conditional-update!-test;
+  sealed instantiable class <conditional-update-error> (<error>);
+  macro-test atomic-decrement!-test;
+  macro-test atomic-increment!-test;
+end module-spec threads;

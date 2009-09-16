@@ -116,9 +116,41 @@ define common-extensions class-test <arithmetic-underflow-error> ()
 		  end);
 end class-test <arithmetic-underflow-error>;
 
+define sideways method make-test-instance
+    (class == <stretchy-sequence>) => (object)
+  make(<stretchy-sequence>)
+end method make-test-instance;
+
 define common-extensions class-test <stretchy-sequence> ()
   //---*** Fill this in...
 end class-test <stretchy-sequence>;
+
+define sideways method make-test-instance
+    (class == <stretchy-object-vector>) => (object)
+  make(<stretchy-object-vector>)
+end method make-test-instance;
+
+define common-extensions class-test <stretchy-object-vector> ()
+  //---*** Fill this in...
+end class-test <stretchy-object-vector>;
+
+define sideways method make-test-instance
+    (class == <object-deque>) => (object)
+  make(<object-deque>)
+end method make-test-instance;
+
+define common-extensions class-test <object-deque> ()
+  //---*** Fill this in...
+end class-test <object-deque>;
+
+define sideways method make-test-instance
+    (class == <string-table>) => (object)
+  make(<string-table>)
+end method make-test-instance;
+
+define common-extensions class-test <string-table> ()
+  //---*** Fill this in...
+end class-test <string-table>;
 
 
 /// simple-random classes
