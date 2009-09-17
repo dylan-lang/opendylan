@@ -155,22 +155,19 @@ define method accessor-write-from
      return-fresh-buffer? = #f)
  => (nwritten :: <integer>, new-buffer :: <buffer>)
   let buffer :: <buffer> = buffer | stream-output-buffer(stream);
-  let file-position-before-write = accessor.file-position;
-  let nwritten :: <integer>
-    = unix-write(accessor.file-descriptor, buffer, offset, count);
-  if (nwritten > 0)
-    // NB Can loop until empty, too lazy at the moment
-    accessor.file-position := file-position-before-write + nwritten;
-  end;
-  if (nwritten ~= count)
+  iterate loop (offset :: <integer> = offset, count :: <integer> = count)
+    let nwritten :: <integer>
+      = unix-write(accessor.file-descriptor, buffer, offset, count);
     if (nwritten < 0)
-      unix-error("write")
+      unix-error("write");
     else
-      error("write: didn't write sufficient characters (%d instead of %d)",
-            nwritten, count)
-    end
-  end;
-  values(nwritten, buffer)
+      accessor.file-position := accessor.file-position + nwritten;
+      if (nwritten < count)
+        loop(offset + nwritten, count - nwritten);
+      end if;
+    end if;
+  end iterate;
+  values(count, buffer)
 end method accessor-write-from;
 
 define method accessor-force-output
