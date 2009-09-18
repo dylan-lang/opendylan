@@ -224,7 +224,7 @@ primitive_make_thread(DTHREAD *newthread, D_NAME name,
   
 
   if (status != 0) {
-    MSG1("make-thread: pthread_create returned error %p\n", status);
+    MSG1("make-thread: pthread_create returned error %d\n", status);
     return CREATE_ERROR;
   }
 
@@ -259,7 +259,21 @@ trampoline_body(void *arg, size_t ignore)
 THREADS_RUN_TIME_API  ZINT
 primitive_destroy_thread(DTHREAD *thread)
 {
+  pthread_t pThread;
+  int status;
+
   assert(thread != NULL);
+
+  if (thread->handle1 != NULL) {
+    pThread = (pthread_t)(thread->handle1);
+    
+    status = pthread_detach(pThread);
+    if (status != 0) {
+      MSG2("pthread_detach %p failed with error %d\n",
+	   (void *) pThread, status);
+    }
+  }
+
   return OK;
 }
 
@@ -269,14 +283,19 @@ THREADS_RUN_TIME_API  ZINT
 primitive_thread_join_single(DTHREAD *thread)
 {
   pthread_t pThread;
+  int status;
   
   assert(thread != NULL);
-  
   pThread = (pthread_t)(thread->handle1);
-  if (pthread_join(pThread, NULL) != 0) {
-    MSG0("thread-join-single: pthread_join returned error\n");
+
+  status = pthread_join(pThread, NULL);
+  if (status != 0) {
+    MSG2("thread-join-single: pthread_join %p returned error %d\n",
+	 (void *) pThread, status);
     return GENERAL_ERROR;
   }
+  
+  thread->handle1 = NULL;
   return OK;
 }
 
@@ -1288,12 +1307,8 @@ primitive_initialize_special_thread(DTHREAD *thread)
 THREADS_RUN_TIME_API  void
 primitive_detach_thread(DTHREAD *thread)
 {
-  HANDLE      hThread;
-
+  // do nothing
   assert(thread != NULL);
-  hThread = thread->handle1;
-
-  pthread_detach(hThread);
 }
 
 
