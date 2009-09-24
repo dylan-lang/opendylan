@@ -398,9 +398,11 @@ define method emit-computation
     let tmp = c.temporary;
     if (loop-merge-initial?(c))
       if (tmp)
-	ins--move(back-end,
-		  emit-reference(back-end, #f, tmp),
-		  loop-temporary(back-end, tmp));
+        let lhs-ref = emit-reference(back-end, #f, tmp);
+        let op--move = op--move%(lhs-ref);
+	op--move(back-end,
+                 lhs-ref,
+                 loop-temporary(back-end, tmp));
       end if;
     else
       emit-assignment(back-end,
@@ -1251,9 +1253,11 @@ define method emit-computation (back-end :: <harp-back-end>, c :: <loop>) => ()
     let tmp = temporary(merge);
     if (tmp & used?(tmp))
       emit-reference(back-end, #f, tmp);
-      ins--move(back-end,
-		loop-temporary(back-end, tmp),
-		emit-reference(back-end, #f, loop-merge-parameter(merge)));
+      let lhs-ref = loop-temporary(back-end, tmp);
+      let op--move = op--move%(lhs-ref);
+      op--move(back-end,
+               lhs-ref,
+               emit-reference(back-end, #f, loop-merge-parameter(merge)));
     end if;
   end for;
   emit-label(back-end, c);
