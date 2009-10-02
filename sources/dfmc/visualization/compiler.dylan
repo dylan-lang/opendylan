@@ -31,10 +31,10 @@ define function write-data (vis :: <dfmc-graph-visualization>, key :: <symbol>, 
               end;
 //    if (loc = "new-dispatch.dylan")
 
-     if (member?(env, list("%remove-method-from-library", "automatic-finalization-function"),
-              test: method(x, y) copy-sequence(x, end: min(x.size, y.size)) = y end))
+//     if (member?(env, list("%remove-method-from-library", "automatic-finalization-function"),
+//              test: method(x, y) copy-sequence(x, end: min(x.size, y.size)) = y end))
       write-to-visualizer(vis, apply(list, key, env, arguments));
-    end;
+//    end;
   else
     //uhm... shouldn't be here
   end;
