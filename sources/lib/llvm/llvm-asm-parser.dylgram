@@ -1,0 +1,836 @@
+Module:       llvm-internals
+Author:       Peter S. Housel
+Copyright:    Original Code is Copyright 2009 Gwydion Dylan Maintainers
+              All rights reserved.
+License:      Functional Objects Library Public License Version 1.0
+Dual-license: GNU Lesser General Public License
+Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
+
+define thread variable *llvm-module*
+  = make(<llvm-module>, name: "<dummy>");
+
+define thread variable *llvm-unresolved-named-types* :: <string-table>
+  = make(<string-table>);
+
+define thread variable *llvm-unnamed-types* :: <stretchy-object-vector>
+  = make(<stretchy-object-vector>);
+
+define thread variable *llvm-unresolved-unnamed-types* :: <stretchy-object-vector>
+  = make(<stretchy-object-vector>);
+
+define parser llvm-parser
+
+// Module Structure
+start:
+  definition-list EOF => #f;;
+
+definition-list:
+  => #f;;
+  definition-list definition => #f;;
+
+definition:
+  %MODULE %ASM asm-block
+    => if (empty?(*llvm-module*.llvm-module-asm))
+         *llvm-module*.llvm-module-asm := arg$3;
+       else
+         *llvm-module*.llvm-module-asm
+           := concatenate(*llvm-module*.llvm-module-asm, "\n", arg$3);
+       end if;;
+  global-assign      opt-linkage g-v-visibility-style opt-thread-local
+    opt-addr-space global-type const-val global-var-attributes
+    => #f;;
+                     opt-linkage g-v-visibility-style opt-thread-local
+                   global-type const-val global-var-attributes 
+    => #f;;
+  global-assign external-linkage g-v-visibility-style opt-thread-local
+    opt-addr-space global-type types global-var-attributes 
+    => #f;;
+                external-linkage g-v-visibility-style opt-thread-local
+                   global-type types global-var-attributes 
+    => #f;;
+  global-assign opt-linkage g-v-visibility-style %ALIAS opt-linkage aliasee-ref
+    => #f;;
+
+  %TARGET %TRIPLE %EQUALS %STRINGCONSTANT
+    => *llvm-module*.llvm-module-target-triple := arg$4;;
+  %TARGET %DATALAYOUT %EQUALS %STRINGCONSTANT
+    => *llvm-module*.llvm-module-data-layout := arg$4;;
+
+  %DEPLIBS %EQUALS libraries-definition
+    => concatenate!(*llvm-module*.llvm-module-dependent-libraries, arg$3);;
+
+asm-block:
+  %STRINGCONSTANT => arg$1;;
+
+libraries-definition:
+  %LBRACK lib-list %RBRACK
+    => reverse!(arg$2);;
+
+lib-list:
+  /* empty */
+    => #();;
+  %STRINGCONSTANT
+    => list(arg$1);;
+  lib-list %COMMA %STRINGCONSTANT
+    => pair(arg$3, arg$1);;
+
+// Linkage Types
+
+opt-linkage:
+  /* empty */
+    => #f;;
+  %PRIVATE
+    => #"private";;
+  %LINKER_PRIVATE
+    => #"linker-private";;
+  %INTERNAL
+    => #"internal";;
+  %WEAK
+    => #"weak";;
+  %WEAK_ODR
+    => #"weak-odr";;
+  %LINKONCE
+    => #"linkonce";;
+  %LINKONCE_ODR
+    => #"linkonce-odr";;
+  %AVAILABLE_EXTERNALLY
+    => #"available-externally";;
+  %APPENDING
+    => #"appending";;
+  %DLLEXPORT
+    => #"dllexport";;
+  %COMMON
+    => #"common";;
+
+external-linkage:
+  %DLLIMPORT
+    => #"dllimport";;
+  %EXTERN_WEAK
+    => #"extern-weak";;
+  %EXTERNAL
+    => #"external";;
+
+// Named Types
+
+definition:
+  opt-local-assign %TYPE types
+    => if (arg$1)
+         if (found?(element(*llvm-module*.llvm-type-table, arg$1,
+                            default: $unfound)))
+           error("type %%%s is multiply defined", arg$1);
+         end if;
+
+         // Record this type 
+         element(*llvm-module*.llvm-type-table, arg$1) := arg$3;
+
+         // Resolve any unresolved references
+         let unresolved
+           = element(*llvm-unresolved-named-types*, arg$1, default: #());
+         for (placeholder in unresolved)
+           placeholder.llvm-placeholder-type-forward := arg$3;
+         end for;
+         remove-key!(*llvm-unresolved-named-types*, arg$1);
+       else
+         add!(*llvm-unnamed-types*, arg$3);
+       end if;;
+  local-number     %TYPE types
+    => if (arg$1 = *llvm-unnamed-types*.size)
+         add!(*llvm-unnamed-types*, arg$3);
+
+         let unresolved
+           = element(*llvm-unresolved-unnamed-types*, arg$1, default: #());
+         for (placeholder in unresolved)
+           placeholder.llvm-placeholder-type-forward := arg$3;
+         end for;
+         *llvm-unresolved-unnamed-types*[arg$1] := #();
+       else
+         error("Expected %%%d rather than %%%d for unnamed type",
+               *llvm-unnamed-types*.size, arg$1);
+       end if;;
+
+opt-local-assign:
+    => #f;;
+  local-name %EQUALS
+    => arg$1;;
+
+local-name:
+  %LOCALVAR
+    => arg$1;;
+  %STRINGCONSTANT
+    => arg$1;;
+
+local-number:
+  %LOCALVAL_ID %EQUALS
+    => arg$1;;
+
+// Functions
+
+definition:
+  %DEFINE function 
+    => #f;;
+  %DECLARE function-proto
+    => #f;;
+
+function: 
+  function-header function-body => #f;;
+
+function-header:
+  opt-linkage g-v-visibility-style function-header-h => #f;;
+
+function-body:
+  %BEGIN basic-block-list %END
+    => arg$2;;
+  %LBRACE basic-block-list %RBRACE
+    => arg$2;;
+
+function-proto:
+  function-linkage g-v-visibility-style function-header-h => #f;;
+
+function-header-h:
+  opt-calling-conv opt-ret-attrs result-types function-name
+    %LPAREN arg-list %RPAREN opt-func-attrs opt-section opt-align opt-g-c
+    => #f;;
+
+function-linkage:
+  opt-linkage => arg$1;;
+  external-linkage => arg$1;;
+
+function-name:
+  global-name => arg$1;;
+  %GLOBALVAL_ID => arg$1;;
+
+opt-calling-conv:
+  /* empty */
+    => 0;;
+  %CCC
+    => 0;;
+  %FASTCC
+    => 8;;
+  %COLDCC
+    => 9;;
+  %X86_STDCALLCC
+    => 64;;
+  %X86_FASTCALLCC
+    => 65;;
+  %ARM_APCSCC
+    => 66;;
+  %ARM_AAPCSCC
+    => 67;;
+  %ARM_AAPCS_VFPCC
+    => 68;;
+  %CC %EUINT64VAL
+    => arg$2;;
+
+opt-ret-attrs:
+  => #f;;
+  opt-ret-attrs ret-attr => #f;;
+
+ret-attr:
+  %INREG
+    => #f;;
+  %ZEROEXT
+    => #f;;
+  %SIGNEXT
+    => #f;;
+  %NOALIAS
+    => #f;;
+
+types:
+  nonfunction-types
+    => arg$1;;
+  function-types
+    => arg$1;;
+
+nonfunction-types:
+  %OPAQUE
+    => make(<llvm-primitive-type>, kind: #"OPAQUE");;
+  %INTTYPE
+    => make(<llvm-integer-type>, width: arg$1);;
+  prim-type
+    => make(<llvm-primitive-type>, kind: arg$1);;
+  types opt-addr-space %STAR
+    => make(<llvm-pointer-type>, pointee: arg$1, address-space: arg$2);;
+  %LOCALVAL_ID
+    => if (arg$1 < *llvm-unnamed-types*.size)
+         *llvm-unnamed-types*[arg$1]
+       else
+         let placeholder = make(<llvm-unnamed-type>, index: arg$1);
+         
+         element(*llvm-unresolved-unnamed-types*, arg$1)
+           := add(element(*llvm-unresolved-unnamed-types*, arg$1,
+                          default: #()),
+                  placeholder);
+         
+         placeholder
+       end if;;
+  local-name
+    => begin
+         element(*llvm-module*.llvm-type-table, arg$1, default: #f)
+           | begin
+               let placeholder = make(<llvm-symbolic-type>, name: arg$1);
+               element(*llvm-unresolved-named-types*, arg$1)
+                 := add(element(*llvm-unresolved-named-types*, arg$1,
+                                default: #()),
+                        placeholder);
+               placeholder
+             end
+       end;;
+  %UPVAL %EUINT64VAL
+    => make(<llvm-upval-type>, index: arg$2);;
+  %LBRACK %EUINT64VAL %x types %RBRACK
+    => make(<llvm-array-type>, size: arg$2, element-type: arg$4);;
+  %LANGLE %EUINT64VAL %x types %RANGLE
+    => make(<llvm-vector-type>, size: arg$2, element-type: arg$4);;
+  %LBRACE type-list-i %RBRACE
+    => make(<llvm-struct-type>, packed?: #f, elements: reverse(arg$2));;
+  %LBRACE %RBRACE
+    => make(<llvm-struct-type>, packed?: #f, elements: #[]);;
+  %LANGLE %LBRACE type-list-i %RBRACE %RANGLE
+    => make(<llvm-struct-type>, packed?: #f, elements: reverse(arg$3));;
+  %LANGLE %LBRACE %RBRACE %RANGLE
+    => make(<llvm-struct-type>, packed?: #t, elements: #[]);;
+
+prim-type:
+  %FLOAT
+    => #"FLOAT";;
+  %DOUBLE
+    => #"DOUBLE";;
+  %PPC_FP128
+    => #"PPC_FP128";;
+  %FP128
+    => #"FP128";;
+  %X86_FP80
+    => #"X86_FP80";;
+  %LABEL
+    => #"LABEL";;
+  %METADATA
+    => #"METADATA";;
+
+opt-addr-space:
+  /* empty */
+    => 0;;
+  %ADDRSPACE %LPAREN %EUINT64VAL %RPAREN
+    => arg$3;;
+
+function-types:
+  types %LPAREN arg-type-list-i %RPAREN opt-func-attrs
+    => make(<llvm-function-type>,
+            return-type: arg$1,
+            parameter-types: arg$3.head,
+            varargs?: arg$3.tail);;
+  %VOID %LPAREN arg-type-list-i %RPAREN opt-func-attrs
+    => make(<llvm-function-type>,
+            return-type: make(<llvm-primitive-type>, kind: #"VOID"),
+            parameter-types: arg$3.head,
+            varargs?: arg$3.tail);;
+
+types-opt-attributes:
+  function-types
+    => pair(arg$1, #f);;
+  nonfunction-types
+    => pair(arg$1, #f);;
+  nonfunction-types overlap-attribute
+    => pair(arg$1, #f);;
+  types-opt-attributes nonoverlap-attribute
+    => pair(arg$1.head, #f);;
+
+g-v-visibility-style:
+  /* empty */
+    => #f;;
+  %DEFAULT
+    => #f;;
+  %HIDDEN
+    => #f;;
+  %PROTECTED
+    => #f;;
+
+opt-thread-local:
+  /* empty */
+    => #f;;
+  %THREAD_LOCAL
+    => #t;;
+
+global-type:
+  %GLOBAL
+    => #"global";;
+  %CONSTANT
+    => #"constant";;
+
+const-val:
+  types %LBRACK const-vector %RBRACK
+    => #f;;
+  types %LBRACK %RBRACK
+    => #f;;
+  types %C %STRINGCONSTANT
+    => #f;;
+  types %LANGLE const-vector %RANGLE
+    => #f;;
+  types %LBRACE const-vector %RBRACE
+    => #f;;
+  types %LBRACE %RBRACE
+    => #f;;
+  types %LANGLE %LBRACE const-vector %RBRACE %RANGLE
+    => #f;;
+  types %LANGLE %LBRACE %RBRACE %RANGLE
+    => #f;;
+  types %NULL
+    => #f;;
+  types %UNDEF
+    => #f;;
+  types symbolic-value-ref
+    => #f;;
+  types const-expr
+    => #f;;
+  types %ZEROINITIALIZER
+    => #f;;
+  types %ESINT64VAL
+    => #f;;
+  types %ESAPINTVAL
+    => #f;;
+  types %EUINT64VAL
+    => #f;;
+  types %EUAPINTVAL
+    => #f;;
+  types %TRUE
+    => #f;;
+  types %FALSE
+    => #f;;
+  types %FPVAL
+    => #f;;
+
+global-var-attributes:
+  /* empty */
+    => #();;
+  %COMMA global-var-attribute global-var-attributes
+    => pair(arg$2, arg$3);;
+
+aliasee-ref:
+  result-types symbolic-value-ref
+    => #f;;
+  %BITCAST %LPAREN aliasee-ref %TO types %RPAREN
+    => #f;;
+  %GETELEMENTPTR opt-inbounds %LPAREN const-val index-list %RPAREN
+    => #f;;
+
+basic-block-list:
+  basic-block => #f;;
+  basic-block-list basic-block => #f;;
+
+symbolic-value-ref:
+  %LOCALVAL_ID
+    => #f;;
+  %GLOBALVAL_ID
+    => #f;;
+  local-name
+    => #f;;
+  global-name
+    => #f;;
+
+arg-type-list-i:
+  /* empty */
+    => pair(#(), #f);;
+  arg-type-list
+    => pair(reverse(arg$1), #f);;
+  arg-type-list %COMMA %DOTDOTDOT
+    => pair(reverse(arg$1), #t);;
+  %DOTDOTDOT
+    => pair(#(), #t);;
+
+arg-type-list:
+  types-opt-attributes
+    => list(arg$1);;
+  arg-type-list %COMMA types-opt-attributes
+    => pair(arg$3, arg$1);;
+
+type-list-i:
+  types
+    => #();;
+  type-list-i %COMMA types
+     => pair(arg$3, arg$1);;
+
+global-assign:
+  global-name %EQUALS => #f;;
+  %GLOBALVAL_ID %EQUALS => #f;;
+
+const-vector:
+  const-val
+    => #f;;
+  const-vector %COMMA const-val
+    => #f;;
+
+const-expr:
+  cast-ops %LPAREN const-val %TO types %RPAREN => #f;;
+  %GETELEMENTPTR opt-inbounds %LPAREN const-val index-list %RPAREN => #f;;
+  %SELECT %LPAREN const-val %COMMA const-val %COMMA const-val %RPAREN => #f;;
+  arithmetic-ops %LPAREN const-val %COMMA const-val %RPAREN => #f;;
+  logical-ops %LPAREN const-val %COMMA const-val %RPAREN => #f;;
+  %ICMP i-predicates %LPAREN const-val %COMMA const-val %RPAREN => #f;;
+  %FCMP f-predicates %LPAREN const-val %COMMA const-val %RPAREN => #f;;
+  %EXTRACTELEMENT %LPAREN const-val %COMMA const-val %RPAREN => #f;;
+  %INSERTELEMENT %LPAREN const-val %COMMA const-val %COMMA const-val %RPAREN => #f;;
+  %SHUFFLEVECTOR %LPAREN const-val %COMMA const-val %COMMA const-val %RPAREN => #f;;
+  %EXTRACTVALUE %LPAREN const-val constant-index-list %RPAREN => #f;;
+  %INSERTVALUE %LPAREN const-val %COMMA const-val constant-index-list %RPAREN => #f;;
+
+cast-ops:
+  %TRUNC => #f;;
+  %ZEXT => #f;;
+  %SEXT => #f;;
+  %FPTRUNC => #f;;
+  %FPEXT => #f;;
+  %BITCAST => #f;;
+  %UITOFP => #f;;
+  %SITOFP => #f;;
+  %FPTOUI => #f;;
+  %FPTOSI => #f;;
+  %INTTOPTR => #f;;
+  %PTRTOINT => #f;;
+
+constant-index-list:
+  %COMMA %EUINT64VAL => #f;;
+  constant-index-list %COMMA %EUINT64VAL => #f;;
+
+global-var-attribute:
+  section-string => #f;;
+  %ALIGN %EUINT64VAL => #f;;
+
+section-string:
+  %SECTION %STRINGCONSTANT => #f;;
+
+result-types:
+  types => arg$1;;
+  %VOID => #f;;
+
+basic-block:
+  instruction-list opt-local-assign b-b-terminator-inst
+    => #f;;
+  instruction-list local-number b-b-terminator-inst
+    => #f;;
+
+global-name:
+  %GLOBALVAR
+    => arg$1;;
+
+arg-list:
+  arg-list-h => #f;;
+  arg-list-h %COMMA %DOTDOTDOT => #f;;
+  %DOTDOTDOT => #f;;
+  => #f;;
+
+arg-list-h:
+  types-opt-attributes opt-local-name
+    => #f;;
+  arg-list-h %COMMA types-opt-attributes opt-local-name
+    => #f;;
+
+opt-func-attrs:
+  /* empty */
+    => #f;;
+  opt-func-attrs func-attr
+    => #f;;
+
+opt-section:
+  => #f;;
+  section-string => #f;;
+
+opt-align:
+  => #f;;
+  %ALIGN %EUINT64VAL => #f;;
+
+opt-g-c:
+  => #f;;
+  %GC %STRINGCONSTANT => #f;;
+
+index-list:
+  => #f;;
+  index-list %COMMA resolved-val => #f;;
+
+arithmetic-ops:
+  %ADD opt-nuw-nsw => #f;;
+  %FADD => #f;;
+  %SUB opt-nuw-nsw => #f;;
+  %FSUB => #f;;
+  %MUL opt-nuw-nsw => #f;;
+  %FMUL => #f;;
+  %UDIV => #f;;
+  %SDIV => #f;;
+  %SDIV %EXACT => #f;;
+  %FDIV => #f;;
+  %UREM => #f;;
+  %SREM => #f;;
+  %FREM => #f;;
+
+opt-nuw-nsw:
+  => #f;;
+  %NUW => #f;;
+  %NSW => #f;;
+  %NUW %NSW => #f;;
+  %NSW %NUW => #f;;
+
+logical-ops:
+  %SHL => #f;;
+  %LSHR => #f;;
+  %ASHR => #f;;
+  %AND => #f;;
+  %OR => #f;;
+  %XOR => #f;;
+
+i-predicates:
+  %EQ => #f;;
+  %NE => #f;;
+  %SLT => #f;;
+  %SGT => #f;;
+  %SLE => #f;;
+  %SGE => #f;;
+  %ULT => #f;;
+  %UGT => #f;;
+  %ULE => #f;;
+  %UGE => #f;;
+
+f-predicates:
+  %OEQ => #f;;
+  %ONE => #f;;
+  %OLT => #f;;
+  %OGT => #f;;
+  %OLE => #f;;
+  %OGE => #f;;
+  %ORD => #f;;
+  %UNO => #f;;
+  %UEQ => #f;;
+  %UNE => #f;;
+  %ULT => #f;;
+  %UGT => #f;;
+  %ULE => #f;;
+  %UGE => #f;;
+  %TRUE => #f;;
+  %FALSE => #f;;
+
+instruction-list:
+  => #f;;
+  %LABELSTR => #f;;
+  instruction-list inst => #f;;
+
+b-b-terminator-inst:
+  %RET returned-val
+    => #f;;
+  %RET %VOID
+    => #f;;
+  %BR %LABEL value-ref
+    => #f;;
+  %BR %INTTYPE value-ref %COMMA %LABEL value-ref %COMMA %LABEL value-ref
+    => #f;;
+  %SWITCH %INTTYPE value-ref %COMMA %LABEL value-ref %LBRACK jump-table %RBRACK
+    => #f;;
+  %SWITCH %INTTYPE value-ref %COMMA %LABEL value-ref %LBRACK %RBRACK
+    => #f;;
+  %INDIRECTBR types value-ref %COMMA %LBRACK indirectbr-table %RBRACK
+    => #f;;
+  %INDIRECTBR types value-ref %COMMA %LBRACK %RBRACK
+    => #f;;
+  %INVOKE opt-calling-conv opt-ret-attrs result-types value-ref
+    %LPAREN param-list %RPAREN opt-func-attrs
+    %TO %LABEL value-ref
+    %UNWIND %LABEL value-ref
+    => #f;;
+  %UNWIND
+    => #f;;
+  %UNREACHABLE
+    => #f;;
+
+func-attr:
+  %NORETURN
+    => #f;;
+  %NOUNWIND
+    => #f;;
+  %INREG
+    => #f;;
+  %ZEROEXT
+    => #f;;
+  %SIGNEXT
+    => #f;;
+  %READNONE
+    => #f;;
+  %READONLY
+    => #f;;
+  %NOINLINE
+    => #f;;
+  %ALWAYSINLINE
+    => #f;;
+  %INLINEHINT
+    => #f;;
+  %OPTSIZE
+    => #f;;
+  %SSP
+    => #f;;
+  %SSPREQ
+    => #f;;
+  %NOREDZONE
+    => #f;;
+  %NOIMPLICITFLOAT
+    => #f;;
+  %NAKED
+    => #f;;
+
+resolved-val:
+  types value-ref
+    => #f;;
+
+inst:
+  opt-local-assign inst-val
+    => #f;;
+  local-number inst-val
+    => #f;;
+
+returned-val:
+  resolved-val => #f;;
+  returned-val %COMMA resolved-val => #f;;
+
+value-ref:
+  symbolic-value-ref => #f;;
+  const-value-ref => #f;;
+
+jump-table:
+  %INTTYPE const-value-ref %COMMA %LABEL value-ref
+    => #f;;
+  jump-table %INTTYPE const-value-ref %COMMA %LABEL value-ref
+    => #f;;
+
+indirectbr-table:
+  %COMMA %LABEL value-ref
+    => #f;;
+  indirectbr-table %COMMA %LABEL value-ref
+    => #f;;
+
+param-list:
+  types-opt-attributes value-ref opt-attributes => #f;;
+  param-list %COMMA types-opt-attributes value-ref opt-attributes => #f;;
+  => #f;;
+
+opt-attributes:
+  => #f;;
+  opt-attributes attribute => #f;;
+
+opt-local-name:
+  => #f;;
+  local-name => #f;;
+
+inst-val:
+  arithmetic-ops types value-ref %COMMA value-ref
+    => #f;;
+  logical-ops types value-ref %COMMA value-ref
+    => #f;;
+  %ICMP i-predicates types value-ref %COMMA value-ref
+    => #f;;
+  %FCMP f-predicates types value-ref %COMMA value-ref
+    => #f;;
+  cast-ops resolved-val %TO types
+    => #f;;
+  %SELECT resolved-val %COMMA resolved-val %COMMA resolved-val
+    => #f;;
+  %VAARG resolved-val %COMMA types
+    => #f;;
+  %EXTRACTELEMENT resolved-val %COMMA resolved-val
+    => #f;;
+  %INSERTELEMENT resolved-val %COMMA resolved-val %COMMA resolved-val
+    => #f;;
+  %SHUFFLEVECTOR resolved-val %COMMA resolved-val %COMMA resolved-val
+    => #f;;
+  %PHI phi-list
+    => #f;;
+  opt-tail-call opt-calling-conv opt-ret-attrs result-types value-ref
+    %LPAREN param-list %RPAREN opt-func-attrs
+    => #f;;
+  memory-inst
+    => arg$1;;
+
+opt-tail-call:
+  %TAIL %CALL => #f;;
+  %CALL => #f;;
+
+const-value-ref:
+  %ESINT64VAL => #f;;
+  %EUINT64VAL => #f;;
+  %ESAPINTVAL => #f;;
+  %EUAPINTVAL => #f;;
+  %FPVAL => #f;;
+  %TRUE => #f;;
+  %FALSE => #f;;
+  %NULL => #f;;
+  %UNDEF => #f;;
+  %ZEROINITIALIZER => #f;;
+  %LANGLE const-vector %RANGLE => #f;;
+  %LBRACK const-vector %RBRACK => #f;;
+  %LBRACK %RBRACK => #f;;
+  %C %STRINGCONSTANT => #f;;
+  %LBRACE const-vector %RBRACE => #f;;
+  %LBRACE %RBRACE => #f;;
+  %LANGLE %LBRACE const-vector %RBRACE %RANGLE => #f;;
+  %LANGLE %LBRACE %RBRACE %RANGLE => #f;;
+  const-expr => #f;;
+  %ASM opt-asm-flags %STRINGCONSTANT %COMMA %STRINGCONSTANT
+    => #f;;
+
+attribute:
+  overlap-attribute
+    => arg$1;;
+  nonoverlap-attribute
+    => arg$1;;
+
+overlap-attribute:
+  %ZEROEXT
+    => #f;;
+  %SIGNEXT
+    => #f;;
+  %INREG
+    => #f;;
+
+nonoverlap-attribute:
+  %ZEXT => #f;;
+  %SEXT => #f;;
+  %SRET => #f;;
+  %NOALIAS => #f;;
+  %NOCAPTURE => #f;;
+  %BYVAL => #f;;
+  %NEST => #f;;
+  %ALIGN %EUINT64VAL => #f;;
+
+phi-list:
+  types %LBRACK value-ref %COMMA value-ref %RBRACK => #f;;
+  phi-list %COMMA %LBRACK value-ref %COMMA value-ref %RBRACK => #f;;
+
+memory-inst:
+  %MALLOC types opt-c-align => #f;;
+  %MALLOC types %COMMA %INTTYPE value-ref opt-c-align => #f;;
+  %ALLOCA types opt-c-align => #f;;
+  %ALLOCA types %COMMA %INTTYPE value-ref opt-c-align => #f;;
+  %FREE resolved-val => #f;;
+  opt-volatile %LOAD types value-ref opt-c-align => #f;;
+  opt-volatile %STORE resolved-val %COMMA types value-ref opt-c-align => #f;;
+  %GETRESULT types value-ref %COMMA %EUINT64VAL => #f;;
+  %GETELEMENTPTR opt-inbounds types value-ref index-list => #f;;
+  %EXTRACTVALUE types value-ref constant-index-list => #f;;
+  %INSERTVALUE types value-ref %COMMA types value-ref constant-index-list => #f;;
+
+opt-asm-flags:
+  /* empty */
+    => #f;;
+  %SIDEEFFECT
+    => #f;;
+  %ALIGNSTACK
+    => #f;;
+  %SIDEEFFECT %ALIGNSTACK
+    => #f;;
+
+opt-c-align:
+  => #f;;
+  %COMMA %ALIGN %EUINT64VAL => #f;;
+
+opt-volatile:
+  %VOLATILE => #f;;
+  => #f;;
+
+opt-inbounds:
+  => #f;;
+  %INBOUNDS => #f;;
+
+end parser;
