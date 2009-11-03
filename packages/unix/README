@@ -20,6 +20,7 @@ tracker on http://www.opendylan.org, if you find any.
 
 This build corresponds to revision 11623 in svn repository.
 
+
 Requirements
 ============
 
@@ -65,12 +66,15 @@ You're now set to use the compiler:
 
 This will build the hello-world application, provided with this
 distribution, together with all dependent libraries, from source.
-Intermediate build products will end up in your home directory, under
-a directory named "Open-Dylan/build".  Final build targets, such as
-the libraries, binaries and compiler databases, will end up in your
-home too, in "Open-Dylan/lib", "Open-Dylan/bin" and
-"Open-Dylan/databases" respectively.  Provided that "~/Open-Dylan/bin"
-is in your path, you can try it out:
+Build products will end up in ~/Open-Dylan/ in the following
+directories:
+
+  build            # intermediate build products
+  lib              # libraries
+  bin              # executables
+  databases        # compiler databases
+
+Provided that ~/Open-Dylan/bin is in your path, you can try it out:
 
   $ hello-world
   Hello, there!
@@ -80,15 +84,17 @@ environment variable to have it leave the files somewhere else:
 
   $ export OPEN_DYLAN_USER_ROOT=/home/me/opendylan-build
 
+For generating the initial boilerplate for a new Dylan project, a perl
+script named make-dylan-app is provided.  It takes one argument, the
+name of the new library, and generates a a set of Dylan files that you
+can then modify.
 
-Also, make-dylan-app is provided. It is a perl script which takes one
-argument and generates a Dylan library (exports, lid and the real
-code).  It is useful for starting new projects.
-  $ make-dylan-app my-hello-world
-  $ cd my-hello-world
-  $ opendylan -build my-hello-world.lid
-  $ my-hello-world
+  $ make-dylan-app my-lib
+  $ cd my-lib
+  $ opendylan -build my-lib.lid
+  $ my-lib
   Hello, world!
+
 
 Documentation
 =============
