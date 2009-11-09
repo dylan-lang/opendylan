@@ -57,7 +57,7 @@ define swank-function connection-info ()
        #":lisp-implementation", list(#":type", "dylan",
                                      #":name", release-product-name(),
                                      #":version", release-version()),
-       #":version", "2008-11-23",
+       #":version", "2009-11-06",
        #":package", #(#":name", "opendylan", #":prompt", "opendylan"));
 end;
 
