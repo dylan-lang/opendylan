@@ -58,7 +58,11 @@ define swank-function connection-info ()
                                      #":name", release-product-name(),
                                      #":version", release-version()),
        #":version", "2009-11-06",
-       #":package", #(#":name", "opendylan", #":prompt", "opendylan"));
+       #":package", #(#":name", "opendylan", #":prompt", "opendylan"))
+end;
+
+define swank-function create-repl (x)
+  list("opendylan", "opendylan")
 end;
 
 define swank-function quit-lisp ()
