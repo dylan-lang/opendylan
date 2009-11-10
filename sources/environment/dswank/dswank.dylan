@@ -104,7 +104,7 @@ define swank-function set-default-directory (new-directory)
   new-directory;
 end;
 
-define swank-function compile-file-for-emacs (filename, foo)
+define swank-function compile-file-for-emacs (filename, #rest foo)
   block(ret)
     for (p in open-projects())
       for (source in project-sources(p))
@@ -117,7 +117,8 @@ define swank-function compile-file-for-emacs (filename, foo)
   end;
   run-compiler(*server*, concatenate("build ", *project*.project-name));
   let notes = compiler-notes-for-emacs();
-  list("T", notes);
+  //result is output-pathname, notes, success/failure of compilation
+  list("pathname", notes, "T");
 end;
 
 define swank-function compiler-notes-for-emacs ()
