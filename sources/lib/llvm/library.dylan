@@ -26,7 +26,9 @@ define module llvm
     llvm-module-data-layout,
     llvm-module-data-layout-setter,
     llvm-module-asm,
-    llvm-module-asm-setter;
+    llvm-module-asm-setter,
+
+    llvm-save-bitcode-file;
 end module;
 
 define module llvm-internals

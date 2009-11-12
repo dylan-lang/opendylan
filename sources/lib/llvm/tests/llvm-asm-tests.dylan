@@ -23,9 +23,6 @@ option:
 end macro llvm-asm-suite-definer;
 
 define llvm-asm-suite llvm-asm-suite ()
-  directory "Assembler";
-  directory "Bitcode";
-  directory "Feature";
   directory "Analysis/Andersens";
   directory "Analysis/BasicAA";
   directory "Analysis/CallGraph";
@@ -38,6 +35,8 @@ define llvm-asm-suite llvm-asm-suite ()
   directory "Analysis/Profiling";
   directory "Analysis/ScalarEvolution";
   directory "Archive";
+  directory "Assembler";
+  directory "Bitcode";
   directory "BugPoint";
   directory "CodeGen/ARM";
   directory "CodeGen/Alpha";
@@ -59,17 +58,18 @@ define llvm-asm-suite llvm-asm-suite ()
   directory "CodeGen/XCore";
   directory "DebugInfo";
   directory "ExecutionEngine";
+  directory "Feature";
   directory "FrontendC";
   directory "Integer";
   directory "Linker";
   directory "Other";
+  directory "Transforms/ABCD";
   directory "Transforms/ADCE";
   directory "Transforms/ArgumentPromotion";
   directory "Transforms/BlockPlacement";
   directory "Transforms/BranchFolding";
   directory "Transforms/CodeExtractor";
   directory "Transforms/CodeGenPrepare";
-  directory "Transforms/CondProp";
   directory "Transforms/ConstProp";
   directory "Transforms/ConstantMerge";
   directory "Transforms/DeadArgElim";
@@ -191,6 +191,8 @@ define function make-llvm-test-function
         check-no-errors(format-to-string("Parse %s", file-locator),
                         llvm-asm-parse(module, stream));
       end with-open-file;
+      check-no-errors(format-to-string("Write .bc for %s", file-locator),
+                      llvm-save-bitcode-file(module, "out.bc"));
     end method
   end if
 end function;
