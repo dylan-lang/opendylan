@@ -145,6 +145,183 @@ define bitcode-block $METADATA_ATTACHMENT = 16
 end bitcode-block;
 
 
+/// Type output
+
+define class <sequence-table> (<table>)
+end class;
+
+define sealed method table-protocol
+    (table :: <sequence-table>)
+ => (test :: <function>, hash :: <function>);
+  values(method (x :: <sequence>, y :: <sequence>) x = y end, 
+         method
+             (key :: <sequence>, hash-state)
+          => (hash :: <integer>, hash-state);
+           let hash :: <integer> = 0;
+           for (item in key)
+             let (item-hash :: <integer>, item-hash-state)
+               = object-hash(item, hash-state);
+             hash := merge-hash-ids(hash, item-hash, ordered: #t);
+             hash-state := item-hash-state;
+           end for;
+           values (hash, hash-state)
+         end);
+end method table-protocol;
+
+define function enumerate-types
+    (m :: <llvm-module>)
+ => (type-partition-table :: <object-table>,
+     type-partition-exemplars :: <vector>);
+  let type-partition-table = make(<object-table>);
+  let partition-types = make(<stretchy-object-vector>);
+
+  let initial-partition-table = make(<sequence-table>);
+  local
+    method initial-traverse-type (type :: <llvm-type>) => ();
+      let type = type-forward(type);
+      unless (element(type-partition-table, type, default: #f))
+        let (partition-key, splittable?) = type-partition-key(type);
+        let partition-index
+          = element(initial-partition-table, partition-key, default: #f)
+          | (initial-partition-table[partition-key]
+               := initial-partition-table.size);
+        
+        type-partition-table[type] := partition-index;
+
+        let partition-other-types
+          = element(partition-types, partition-index, default: #());
+        if (splittable? | empty?(partition-other-types))
+          partition-types[partition-index]
+            := add(partition-other-types, type);
+        end if;
+
+        if (splittable?)
+          do(initial-traverse-type, type-referenced-types(type));
+        end if;
+      end unless;
+    end method;
+
+  // Traverse each mentioned type to compute the initial partitions
+  do(initial-traverse-type, m.llvm-type-table);
+
+  // Refine partitions until they are stable
+  iterate loop (i :: <integer> = 0)
+    let stable? = #t;
+    if (i < partition-types.size)
+      let types :: <list> = partition-types[i];
+      // Try to split partitions that contain more than one type
+      unless (empty?(types.tail))
+        let split-types = make(<sequence-table>);
+        for (type in types)
+          let reference-partitions
+            = map(method (type) type-partition-table[type-forward(type)] end,
+                  type-referenced-types(type));
+          split-types[reference-partitions]
+            := add(element(split-types, reference-partitions, default: #()),
+                   type);
+        end for;
+
+        // Assign new partitions when necessary
+        for (new-types in split-types, first? = #t then #f)
+          if (first?)
+            partition-types[i] := new-types;
+          else
+            let partition-index = partition-types.size;
+            add!(partition-types, new-types);
+            do (method (type)
+                  type-partition-table[type] := partition-index;
+                end,
+                new-types);
+            stable? := #f;
+          end if;
+        end for;
+      end unless;
+      loop(i + 1);
+    elseif (~stable?)
+      loop(0);
+    end if;
+  end iterate;
+
+  //
+  values(type-partition-table, map(first, partition-types))
+end function;
+
+define method write-type-record
+    (stream :: <bitcode-stream>, type-partition-table :: <object-table>,
+     type :: <llvm-primitive-type>)
+ => ();
+  write-record(stream, type.llvm-primitive-type-kind);
+end method;
+
+define method write-type-record
+    (stream :: <bitcode-stream>, type-partition-table :: <object-table>,
+     type :: <llvm-integer-type>)
+ => ();
+  write-record(stream, #"INTEGER", type.llvm-integer-type-width);
+end method;
+
+define method write-type-record
+    (stream :: <bitcode-stream>, type-partition-table :: <object-table>,
+     type :: <llvm-pointer-type>)
+ => ();
+  let pointee = type-forward(type.llvm-pointer-type-pointee);
+  write-record(stream, #"POINTER",
+               type-partition-table[pointee],
+               type.llvm-pointer-type-address-space);
+end method;
+
+define method write-type-record
+    (stream :: <bitcode-stream>, type-partition-table :: <object-table>,
+     type :: <llvm-function-type>)
+ => ();
+  let return-type = type-forward(type.llvm-function-type-return-type);
+  apply(write-record, stream, #"FUNCTION",
+        if (type.llvm-function-type-varargs?) 1 else 0 end, // vararg
+        0,                                                  // ignored
+        type-partition-table[return-type],                  // retty
+        map(method (type) type-partition-table[type-forward(type)] end,
+            type.llvm-function-type-parameter-types))
+end method;
+
+define method write-type-record
+    (stream :: <bitcode-stream>, type-partition-table :: <object-table>,
+     type :: <llvm-struct-type>)
+ => ();
+  apply(write-record, stream, #"STRUCT",
+        if (type.llvm-struct-type-packed?) 1 else 0 end,
+        map(method (type) type-partition-table[type-forward(type)] end,
+            type.llvm-struct-type-elements))
+end method;
+
+define method write-type-record
+    (stream :: <bitcode-stream>, type-partition-table :: <object-table>,
+     type :: <llvm-array-type>)
+ => ();
+  let element-type = type-forward(type.llvm-array-type-element-type);
+  write-record(stream, #"ARRAY",
+               type.llvm-array-type-size,
+               type-partition-table[element-type]);
+end method;
+
+define method write-type-record
+    (stream :: <bitcode-stream>, type-partition-table :: <object-table>,
+     type :: <llvm-vector-type>)
+ => ();
+  let element-type = type-forward(type.llvm-vector-type-element-type);
+  write-record(stream, #"VECTOR",
+               type.llvm-vector-type-size,
+               type-partition-table[element-type]);
+end method;
+
+define method write-type-record
+    (stream :: <bitcode-stream>, type-partition-table :: <object-table>,
+     type :: <llvm-opaque-type>)
+ => ();
+  write-record(stream, #"OPAQUE");
+end method;
+
+
+/// Module output
 
 define function write-module
     (stream :: <bitcode-stream>, m :: <llvm-module>)
@@ -155,6 +332,17 @@ define function write-module
     // Write the parameter attribute table
 
     // Write the type table
+    let (type-partition-table :: <object-table>,
+         type-partition-exemplars :: <vector>) = enumerate-types(m);
+    unless (empty?(type-partition-exemplars))
+      with-block-output (stream, $TYPE_BLOCK, 3)
+        write-record(stream, #"NUMENTRY", type-partition-exemplars.size);
+
+        for (type in type-partition-exemplars)
+          write-type-record(stream, type-partition-table, type);
+        end for;
+      end with-block-output;
+    end unless;
 
     // Write the module info:
     begin
@@ -189,6 +377,15 @@ define function write-module
     // Write metadata (store?)
 
     // Write the type symbol table
+    unless (empty?(m.llvm-type-table))
+      with-block-output (stream, $TYPE_SYMTAB_BLOCK, 3)
+        for (type keyed-by name in m.llvm-type-table)
+          write-record(stream, #"ENTRY",
+                       type-partition-table[type-forward(type)],
+                       name);
+        end for;
+      end with-block-output;
+    end unless;
 
     // Write the value symbol table
 
