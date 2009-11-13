@@ -28,34 +28,5 @@ define module dfmc-linker
   export
     link-and-download,
     download-for-interactive-execution;
-
-  export 
-    <makefile-target>,
-      <unix-makefile-target>, <win32-makefile-target>, <MPW-makefile-target>,
-    source-suffix, object-suffix, resource-suffix,
-    output-basename,
-    makefile-variable-ref, makefile-pathname, makefile-command,
-    link-target-separator, makefile-linker-option-massage,
-    library-unit-ref, library-unit-link-ref, relative-makefile-unit-ref, executable-unit-ref,
-    source-unit, object-unit, executable-unit, source-units, object-units, 
-    object-unit-name, object-units-names, library-unit-name,
-    additional-platform-libraries,
-    backend-object-file-name, backend-resource-file-name,
-    emit-makefile-object-dependencies,
-    glue-unit, main-unit,
-    personal-library?,
-    runtime-unit-link-ref,
-    makefile-target, makefile-target-using-os-name,
-    make-install-command,
-    emit-target-makefile,
-    emit-makefile-rule,
-    emit-makefile-header,
-    emit-makefile-footer,
-    emit-makefile-program-setups,
-    emit-makefile-separator,
-    emit-makefile-definition,
-    emit-makefile-units,
-    emit-makefile;
-  
 end module;
 

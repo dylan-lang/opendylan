@@ -37,7 +37,7 @@ end method;
 
 define method glue-unit-name
     (lib-name, interactive?) => (name :: <byte-string>)
-  let simple-name :: <byte-string> = glue-unit(lib-name);
+  let simple-name :: <byte-string> = "_glue";
   if (interactive?)
     concatenate("_interactive_", simple-name)
   else
@@ -47,7 +47,7 @@ end method;
 
 define method main-unit-name 
     (lib-name, interactive?) => (name :: <byte-string>)
-  let simple-name :: <byte-string> = main-unit(lib-name);
+  let simple-name :: <byte-string> = "_main";
   if (interactive?)
     concatenate("_interactive_", simple-name)
   else
@@ -262,13 +262,6 @@ end method;
 // define method used-glue-names (ld)
 //   map(library-description-glue-name, library-description-used-descriptions(ld))
 // end method;
-
-define sideways method output-basename
-    (back-end :: <harp-back-end>, t :: <makefile-target>, basename :: <string>)
- => (harp-basename)
-  basename
-end method;
-
 
 // 
 // Support for Dynamic linking of Dylan derived implementation objects

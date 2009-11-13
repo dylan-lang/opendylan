@@ -9,11 +9,7 @@ define sideways method emit-mainfile
     (back-end :: <c-back-end>, ld, #rest flags, #key, #all-keys)
   let lib-name = library-description-emit-name(ld);
   let c-file = #f;
-  with-build-area-output (stream = ld,
-			  base: output-basename(back-end,
-						makefile-target(ld),
-						main-unit(lib-name)),
-			  type: "c")
+  with-build-area-output (stream = ld, base: "_main", type: "c")
     write(stream, "#include <stdlib.h>\n");
     write(stream, "#include <gc/gc.h>\n\n");
     write(stream, "#include \"run-time.h\"\n\n");
@@ -60,11 +56,7 @@ define sideways method emit-gluefile
     (back-end :: <c-back-end>, ld, cr-names, #rest flags, #key, #all-keys)
   let lib-name = library-description-emit-name(ld);
   let c-file = #f;
-  with-build-area-output (stream = ld,
-			  base: output-basename(back-end, 
-						makefile-target(ld),
-						glue-unit(lib-name)),
-			  type: "c")
+  with-build-area-output (stream = ld, base: "_glue", type: "c")
     let used-glue-names = used-glue-names(ld);
     let cr-init-names = cr-init-names(ld, cr-names);
     let rt-init-names = list(glue-name-raw("Run_Time"));

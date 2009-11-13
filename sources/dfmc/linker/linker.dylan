@@ -20,8 +20,6 @@ define open generic emit-gluefile
 define open generic emit-mainfile
   (back-end :: <back-end>, ld, #rest flags, #key);
 
-define open generic emit-makefile (ld, cr-names, #rest build-keys, #key);
-
 define open generic emit-glue 
    (back-end :: <back-end>, ld :: <library-description>,
     #rest keys, #key, #all-keys);
@@ -31,7 +29,6 @@ define method emit-glue (back-end :: <back-end>, ld :: <library-description>,
   let cr-names = compilation-context-object-names(ld);
   apply(emit-gluefile, back-end, ld, cr-names, keys);
   apply(emit-mainfile, back-end, ld, keys);
-  apply(emit-makefile, ld, cr-names, build-settings)
 end method;
 
 define open generic link-and-download 

@@ -4,7 +4,6 @@ files:   c-linker-library
 	 c-linker
 	 c-link-object
 	 c-link-c-object
-         c-makefile
 	 c-gluefile
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.

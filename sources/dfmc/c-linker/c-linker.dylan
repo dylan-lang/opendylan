@@ -24,9 +24,7 @@ define sideways method emit-library-record
     let c-file = #f;
     with-dependent($compilation of cr)
       with-build-area-output
-        (stream = ld,
-	 base: output-basename(back-end, makefile-target(ld), compilation-record-name(cr)),
-	 type: "c")
+        (stream = ld, base: compilation-record-name(cr), type: "c")
 	let name = cr.compilation-record-source-record.source-record-name;
         progress-line("Linking %s.dylan", name);
         link-all(back-end, stream, cr);
