@@ -24,6 +24,7 @@ define module smtp-client
 	 <transient-smtp-error>,
 	 <permanent-smtp-error>,
 	 smtp-error-code,
+         $invalid-response-error-code,
 	 smtp-error-response;
 
   export \with-smtp-stream,

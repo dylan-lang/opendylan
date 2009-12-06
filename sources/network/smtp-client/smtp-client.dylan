@@ -13,15 +13,24 @@ define variable *debug-smtp* :: <boolean> = #f;
 
 define constant $default-smtp-port :: <integer> = 25;
 
+define constant $invalid-response-error-code :: <integer> = -1;
 
 /// Conditions
 
 define abstract class <smtp-error> (<error>)
   constant slot smtp-error-code :: <integer>,
     required-init-keyword: code:;
+  // Note that the response usually contains the error code at the
+  // beginning of the string.
   constant slot smtp-error-response :: <string>, 
     required-init-keyword: response:;
 end class;
+
+define method condition-to-string
+    (cond :: <smtp-error>)
+ => (string :: false-or(<string>))
+  format-to-string("%=: %s", cond.object-class, cond.smtp-error-response)
+end;
 
 define sealed class <transient-smtp-error> (<smtp-error>) end;
 define sealed class <permanent-smtp-error> (<smtp-error>) end;
@@ -40,7 +49,9 @@ define function check-smtp-response
              exception (ex :: <serious-condition>)
                let msg = format-to-string("Invalid response from SMTP server: %s",
                                           response);
-               error(make(<permanent-smtp-error>, code: -1, response: msg));
+               error(make(<permanent-smtp-error>,
+                          code: $invalid-response-error-code,
+                          response: msg));
              end;
   if (code >= 500 & code <= 599)
     error(make(<permanent-smtp-error>, code: code, response: response));
@@ -195,17 +206,19 @@ end method;
 
 /*
 define method test () => ()
+  let recipients = #["keith@functionalobjects.com"];
   // Send a string...
   send-smtp-message
     (host: "mailhost",
      from: "keith@functionalobjects.com",
-     recipients: #["keith@functionalobjects.com"],
-     body: "Subject: SMTP Test\n\nTest\nFrom\nTest\n");
+     recipients: recipients,
+     body: "To: ...\nSubject: SMTP Test\n\nTest\nFrom\nTest\n");
   // Send using a stream...
   with-smtp-message-stream (stream to "mailhost",
 			    from: "keith@functionalobjects.com",
-			    recipients: #["keith@functionalobjects.com"])
+			    recipients: recipients)
     // Header
+    format(stream, "To: %s\r\n", join(recipients, ", "));
     format(stream, "Subject: SMTP Stream Test\r\n");
     format(stream, "\r\n");
     // Body
