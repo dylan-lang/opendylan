@@ -88,5 +88,3 @@ define method emit-computation
   format-emit(b, s, d, "\tfree(@);\n", wss-var(begin-wss(c)));
 end method;
 */
-
-// eof

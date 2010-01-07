@@ -1682,5 +1682,3 @@ define method skip-to-next-top-level-form (lexer :: <lexer>) => ()
   end;
   lexer.posn := walk(lexer.posn);
 end method;
-
-// eof

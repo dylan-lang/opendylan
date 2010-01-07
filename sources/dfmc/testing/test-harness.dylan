@@ -220,5 +220,3 @@ define function run-tests (#key tests       = key-sequence(*tests*),
   end;
   values()
 end;
-
-// eof

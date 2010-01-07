@@ -493,5 +493,3 @@ end method;
 define method dood-flush-lazy-slots (dood :: <dood>, object) => ()
   mark-lazy-slots(dood, object);
 end method;
-
-// eof

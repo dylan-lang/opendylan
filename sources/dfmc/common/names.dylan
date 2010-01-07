@@ -26,5 +26,3 @@ define constant <name> = type-union(<symbol>, <byte-string>);
 define method coerce-name (x) => (res :: <symbol>)
   as(<symbol>, x)
 end method;
-
-// eof

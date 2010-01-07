@@ -19,5 +19,3 @@ define library remote-access-path
   use dylan-orb;
   use remote-nub-client;
 end library;
-
-// eof

@@ -346,5 +346,3 @@ define module java-vm-code-generation
     emit-java-constant-load ;
 
 end module;
-
-// eof

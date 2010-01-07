@@ -9,5 +9,3 @@ define method locate-variable (o :: <object>)
  => (variable-encoding, module-encoding, library-encoding)
   error("Failed to locate a variable binding for %=", o);
 end method;
-
-// eof

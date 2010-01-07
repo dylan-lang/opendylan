@@ -247,5 +247,3 @@ end method;
 define method parse-option-value (constraint == #"name->symbol", fragment)
   macro-case (fragment) { ?:name } => { ?#"name" } end
 end method;
-
-// eof

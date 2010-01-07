@@ -12,7 +12,3 @@ define library java-modeling
   
   export java-modeling ;
 end library;
-
-// eof
-
-

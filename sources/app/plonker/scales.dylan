@@ -42,6 +42,3 @@ define constant $major-scale-naturals
 
 define constant $major-scale-naturals-cycle
   = apply(cycle, $major-scale-naturals);
-
-// eof
-

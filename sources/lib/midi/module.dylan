@@ -83,6 +83,3 @@ define module midi
     midi-on, midi-off, midi-pitch-bend;
 
 end module midi;
-
-// eof
-

@@ -487,6 +487,3 @@ define method read-object-using-class-at
   let proxy = next-method();
   proxy
 end method;
-
-// eof
-

@@ -106,5 +106,3 @@ define method do-template-substitutions
     (f :: <function>, elt :: <nested-fragment>) => ()
   do-template-substitutions(f, fragment-nested-fragments(elt));
 end method;
-
-// eof 

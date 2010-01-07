@@ -69,5 +69,3 @@ define module walker
     walker-diff-last-two-statistics,
     walker-stats;
 end module;
-
-// eof

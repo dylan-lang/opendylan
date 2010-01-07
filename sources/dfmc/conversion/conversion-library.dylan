@@ -133,5 +133,3 @@ define module dfmc-conversion
     *strip-enabled?*;
 
 end module;
-
-// eof

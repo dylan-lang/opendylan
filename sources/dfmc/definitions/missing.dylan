@@ -50,5 +50,3 @@ define method install-missing-definition
   // change triggering.
   note-binding-dependency(binding, dep$defined?);
 end method;
-
-// eof

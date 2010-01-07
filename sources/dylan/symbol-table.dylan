@@ -217,9 +217,3 @@ define sealed method copy-byte-string
      integer-as-raw(len));
   str
 end method copy-byte-string;
-
-
-// eof
- 
-
-

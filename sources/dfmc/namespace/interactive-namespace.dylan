@@ -1122,6 +1122,4 @@ define class <interactor-binding> (<named-object>, <binding>)
   // just hand it back later.
   constant slot binding-interactor-id,
     required-init-keyword: interactor-id:;
-end class;           
-
-// eof
+end class;

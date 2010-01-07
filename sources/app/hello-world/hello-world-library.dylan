@@ -16,6 +16,3 @@ define module hello-world
   use common-dylan;
   use simple-io;
 end module;
-
-// eof
-

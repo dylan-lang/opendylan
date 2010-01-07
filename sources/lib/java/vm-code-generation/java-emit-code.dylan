@@ -1150,5 +1150,3 @@ define method emit-java-constant-load (jbb :: <java-basic-block>, const :: <java
 end;
 
 format-out ("inited java-emit-code.dylan\n") ;
-
-// eof

@@ -228,5 +228,3 @@ define open generic unregister-interpreter-transaction
 define open generic ensure-library-interpreted
     (description :: <library-description>, #key trace? = #f, results? = #f)
  => ();
-
-// eof

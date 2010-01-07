@@ -69,5 +69,3 @@ define C-callable-wrapper PushedCallbackRef of pushed-callback
 end C-callable-wrapper;
 
 main();
-
-// eof

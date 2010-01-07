@@ -104,5 +104,3 @@ end method;
 define method generate-one-template-element-function (element :: <substitution>)
   generate-substitution-function(element);
 end method;
-
-// eof

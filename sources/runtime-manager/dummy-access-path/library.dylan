@@ -17,5 +17,3 @@ define library access-path
              access-path;
 
 end library;
-
-// eof

@@ -109,5 +109,3 @@ end function;
 define inline function bytes-to-words (bytes :: <integer>)
   truncate/(bytes + $bytes-per-word - 1, $bytes-per-word)
 end function;
-
-// eof

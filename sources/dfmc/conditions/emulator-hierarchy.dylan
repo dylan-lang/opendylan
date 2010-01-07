@@ -322,5 +322,3 @@ define program-condition-definer portability-note;
 //// and report them ourselves.
 
 define method default-handler (c :: <program-warning>) end;
-
-// eof

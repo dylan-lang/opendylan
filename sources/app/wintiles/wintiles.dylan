@@ -183,5 +183,3 @@ end method;
 
 doit();
 */
-
-// eof

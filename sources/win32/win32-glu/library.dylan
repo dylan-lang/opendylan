@@ -13,6 +13,3 @@ define library win32-glu
   use win32-gl;
   export win32-glu;
 end library win32-glu;
-
-// eof
-

@@ -257,5 +257,3 @@ define method emit-definition
     (back-end :: <c-back-end>, stream :: <stream>, o :: <&iep>) => ()
   format(stream, "%s\n", o.code);
 end method;
-
-// eof

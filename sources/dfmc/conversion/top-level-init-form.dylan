@@ -23,5 +23,3 @@ define method convert-top-level-initializer-for-values
   let model = convert-method-to-model(debug-name, form);
   model
 end method;
-
-// eof

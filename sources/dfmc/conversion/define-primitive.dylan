@@ -25,5 +25,3 @@ define compiler-sideways method compute-form-model-object
   primitive.model-definition := form;
   primitive
 end method;
-
-// eof

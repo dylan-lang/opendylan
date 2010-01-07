@@ -45,5 +45,3 @@ end method;
 define method c-type-name (o)
   $dylan-type-string
 end method;
-
-// eof

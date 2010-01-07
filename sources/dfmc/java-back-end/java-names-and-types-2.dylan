@@ -660,5 +660,3 @@ define method java-rep (vec :: <&mm-wrapper>) => (thing)
   // hmm!
   $dummy-slot-for-mm-wrapper$
 end;
-
-// eof

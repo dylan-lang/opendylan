@@ -127,6 +127,3 @@ end method;
 define method used-glue-names (ld)
   map(library-description-glue-name, library-description-used-descriptions(ld))
 end method;
-
-// eof
-

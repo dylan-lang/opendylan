@@ -46,6 +46,3 @@ define macro without-bounds-checks
            ?body
          end }
 end macro without-bounds-checks;
-
-// eof
-

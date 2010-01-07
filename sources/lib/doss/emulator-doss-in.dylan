@@ -109,5 +109,3 @@ end method get-object-definition;
 define method get-keyword (dl :: <doss-loader>) => (k :: <keyword>)
   as-keyword(dl.get-string)
 end method get-keyword;
-
-// eof

@@ -97,5 +97,3 @@ end method;
 define method walk (walker :: <code-walker>, c :: <nop-computation>) => ()
   maybe-walk(walker, c.next-computation);
 end method;
-
-// eof

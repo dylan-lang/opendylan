@@ -164,6 +164,3 @@ end method;
 define method display-status-error (#key tip :: false-or(<string>)) => ()
   display-status-icon($error-icon, tip);
 end method;
-
-// eof
-

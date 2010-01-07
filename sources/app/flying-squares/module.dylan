@@ -23,5 +23,3 @@ define module flying-squares
   use win32-gl;
   use win32-glu;
 end module flying-squares;
-
-// eof

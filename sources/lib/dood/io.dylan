@@ -107,5 +107,3 @@ define inline function dood-write-machine-word-at
   dood-position(dood) := address;
   dood-write-machine-word(dood, value);
 end function;
-
-// eof

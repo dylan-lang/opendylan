@@ -1367,6 +1367,3 @@ define constant $empty-subjunctive-class-universe :: <subjunctive-class-universe
   = make-empty-subjunctive-class-universe();
 
 /// HACK END:
-
-// eof
- 

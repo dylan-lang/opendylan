@@ -331,6 +331,3 @@ define sideways method compute-raw-aggregate-member (member-list :: <sequence>)
 	 raw-type: ^top-level-eval(#{ <raw-c-pointer> }));
   end if;
 end;
-
-// eof
-

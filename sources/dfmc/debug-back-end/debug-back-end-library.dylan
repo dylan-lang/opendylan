@@ -31,6 +31,3 @@ define module dfmc-debug-back-end
   export
     *print-method-bodies?*;
 end module;
-
-// eof
-

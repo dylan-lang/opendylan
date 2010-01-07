@@ -24,5 +24,3 @@ define method print-contents
     (frag :: <literal-constant-fragment>, stream) => ()
   format(stream, "%=", fragment-value(frag));
 end method;
-
-// eof

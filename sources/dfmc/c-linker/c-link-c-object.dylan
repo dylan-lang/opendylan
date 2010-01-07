@@ -199,6 +199,3 @@ define method emit-heap-typedefs
   format-emit*(back-end, stream, "^", object);
   format(stream, ";\n");
 end;
-
-// eof
-

@@ -99,6 +99,3 @@ define module source-records-implementation
   //export call-with-source-record-input-stream;
 
 end module;
-
-// eof
-

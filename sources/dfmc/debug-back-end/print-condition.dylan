@@ -319,5 +319,3 @@ end;
 define compiler-sideways method as(class == <ppml>, o :: <module-binding>) => (ppml :: <ppml>)
   ppml-browser-aware-object(o)
 end;
-
-// eof

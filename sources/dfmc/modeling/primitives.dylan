@@ -615,5 +615,3 @@ define side-effecting stateless dynamic-extent &primitive primitive-exit-applica
 define side-effecting stateless dynamic-extent &primitive primitive-start-timer () => ();
 define side-effecting stateless dynamic-extent &primitive primitive-stop-timer 
     () => (time :: <simple-object-vector>);
-
-// eof

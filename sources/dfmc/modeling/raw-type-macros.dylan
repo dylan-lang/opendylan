@@ -144,7 +144,3 @@ type-names:
   { ?name:*, ... }
     => { define &raw-type-and-accessors ?name machine-word; ... }
 end macro;
-
-
-
-// eof

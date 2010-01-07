@@ -599,6 +599,3 @@ end method;
 define inline function as-boolean (object) => (boolean :: <boolean>)
   if (object) #t else #f end
 end function;
-
-
-// eof

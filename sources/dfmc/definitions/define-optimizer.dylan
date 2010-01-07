@@ -44,5 +44,3 @@ define &optimizer-function values (env, arguments) => (stuff)
   format-out("Optimizing values in %= for %=\n", env, arguments);
 end &optimizer-function;
 */
-
-// eof

@@ -100,5 +100,3 @@ define method put-specially
     next-method()
   end
 end method put-specially;
-
-// eof

@@ -82,5 +82,3 @@ define macro symbolic-accessors-definer
     end } 
     => { }
 end macro;
-
-// eof

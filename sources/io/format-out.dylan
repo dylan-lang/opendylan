@@ -10,5 +10,3 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define method format-out (format-string :: <string>, #rest args) => ()
   apply(format, *standard-output*, format-string, args)
 end method;
-
-// eof

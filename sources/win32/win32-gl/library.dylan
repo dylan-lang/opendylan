@@ -12,5 +12,3 @@ define library win32-gl
   use win32-common;
   export win32-gl;
 end library win32-gl;
-
-// eof

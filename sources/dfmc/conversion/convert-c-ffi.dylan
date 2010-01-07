@@ -290,6 +290,3 @@ define method make-ffi-signature (sig-spec :: <signature-spec>)
   end;
   values(ffi-signature, signature);
 end;
-
-// eof
-

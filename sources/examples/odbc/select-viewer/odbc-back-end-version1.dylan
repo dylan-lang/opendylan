@@ -61,6 +61,3 @@ end method;
 // TODO: Implement close-database.
 define method close-database (dbd) => ()
 end method;
-
-// eof
-

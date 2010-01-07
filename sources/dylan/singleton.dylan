@@ -157,6 +157,3 @@ define method has-instances? (class :: <class>, s :: <singleton>,
   let some? = has-instances?(s.singleton-object.object-class, class, scu);
   values(some?, #f)
 end method has-instances?;
-
-// eof
- 

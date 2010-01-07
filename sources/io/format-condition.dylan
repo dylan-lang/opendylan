@@ -19,5 +19,3 @@ define sideways method print-object (c :: <condition>, s :: <stream>) => ()
     write(s, message)
   end
 end method print-object;
-
-// eof

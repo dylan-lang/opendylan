@@ -114,5 +114,3 @@ define method inlineable?
     (object :: <&raw-object>) => (inlineable? :: <boolean>, value)
   shared-inlineable?(object, #t);
 end method;
-
-// eof

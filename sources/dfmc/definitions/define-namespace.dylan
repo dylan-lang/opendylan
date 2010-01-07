@@ -24,5 +24,3 @@ define sideways method namespace-name
     (space :: <namespace>) => (name :: <symbol>)
   form-namespace-name(namespace-definition(space));
 end method;
-
-// eof

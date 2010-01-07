@@ -146,6 +146,3 @@ define method close
     (stream :: <message-stream>, #key) => ()
   close-pop-stream(stream-socket(stream));
 end method;
-
-// eof
-

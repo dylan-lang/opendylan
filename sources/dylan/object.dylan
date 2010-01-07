@@ -114,6 +114,3 @@ define open generic as-lowercase!
 
 define open generic as-uppercase! 
     (object :: <object>) => (result :: <object>);
-
-// eof
- 

@@ -48,6 +48,3 @@ define C-function Shell-NotifyIcon
 end;
 
 // TODO: Add Shell32.lib to the project's Sources
-
-// eof
-

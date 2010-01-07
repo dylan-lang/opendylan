@@ -9,5 +9,3 @@ define library ratio
   use dylan;
   export ratio;
 end module;
-
-// eof

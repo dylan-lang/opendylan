@@ -295,5 +295,3 @@ define method uninstall-top-level-form-bindings (form :: <variable-defining-form
     remove-definition(name, form);
   end;
 end method;
-
-// eof

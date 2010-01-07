@@ -563,5 +563,3 @@ define constant $Initial-State :: <state>
 	     pair("a-zA-Z", #"numeric-alpha"),
 	     pair("!&*<=>|^$%@_+~?/", #"leading-numeric"),
 	     pair("-", #"leading-numeric")));
-
-// eof

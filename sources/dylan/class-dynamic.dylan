@@ -791,6 +791,3 @@ define function complete-dependent-generic-functions (iclass :: <implementation-
 	end method;
   p2(iclass);
 end function;
-
-
-// eof

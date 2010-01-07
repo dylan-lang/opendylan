@@ -148,5 +148,3 @@ define function library-profile-locator
        base:      as-lowercase(as(<string>, library-name)),
        extension: $dylan-profile-suffix)
 end function;
-
-// eof

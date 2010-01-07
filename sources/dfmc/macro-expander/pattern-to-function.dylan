@@ -571,5 +571,3 @@ define function call-list-with-collecting (funlist, arg)
     for (f in funlist) collect(f(arg)) end;
   end;
 end function;
-
-// eof

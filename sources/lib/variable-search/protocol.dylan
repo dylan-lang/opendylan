@@ -11,5 +11,3 @@ define generic locate-variable (object)
 define generic variable-value 
     (variable-encoding, module-encoding, library-encoding, #key)
   => (object);
-
-// eof

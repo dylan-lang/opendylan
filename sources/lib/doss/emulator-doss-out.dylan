@@ -131,5 +131,3 @@ end method put-specially;
 define method =hash (module :: <translator-module>) => (hash :: <integer>)
   =hash(module-name(module));
 end method =hash;
-
-// eof

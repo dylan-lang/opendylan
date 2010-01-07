@@ -905,5 +905,3 @@ define method map-as-one
   error(make(<infinite-range-error>, format-string: "Cannot map over an infinite range"))
 end method map-as-one;
 */
-
-// eof

@@ -9,5 +9,3 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 start-emulator-templates();
 // start-switchable-templates();
-
-// eof

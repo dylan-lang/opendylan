@@ -114,5 +114,3 @@ define inline method concrete-class-setter
  => (cclass :: false-or(<designator-class>))
   cclass
 end method;
-
-// eof

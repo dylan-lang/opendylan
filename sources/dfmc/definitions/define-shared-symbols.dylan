@@ -77,7 +77,3 @@ define method generate-initializer-definition-forms
       end collecting;
   forms
 end method;
-
-// eof
-
-

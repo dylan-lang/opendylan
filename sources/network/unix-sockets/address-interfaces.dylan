@@ -163,5 +163,3 @@ define inline-only C-function inet-ntoa
   result val :: <C-char*>;
   c-name: "inet_ntoa";
 end C-function;
-
-// eof

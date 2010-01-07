@@ -80,5 +80,3 @@ end class;
 
 define class <load-bound-code-reference> (<load-bound-reference>) 
 end class;
-
-// eof

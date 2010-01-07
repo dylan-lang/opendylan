@@ -190,5 +190,3 @@ define method do-body-match-tails
     (f :: <function>, rule :: <rewrite-rule>) => ()
   do-body-match-tails(f, rule-pattern(rule));
 end method;
-
-// eof

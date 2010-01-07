@@ -114,5 +114,3 @@ define module java-modeling
     assignment-compatible? ;
 
 end module;
-
-// eof

@@ -90,7 +90,3 @@ define inline function always (object) => (result :: <function>)
     object
   end method
 end function always;
-
-// eof
-
- 

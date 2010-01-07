@@ -142,6 +142,3 @@ define method preceding-specializer?
  => (result :: <boolean>)
   preceding-specializer?(subt1, subt2, object-class(arg.type))
 end method;
- 
-// eof
- 

@@ -212,6 +212,3 @@ define method maybe-rename-temporaries-in-conditional
     end
   end;
 end method;
-
-
-// eof

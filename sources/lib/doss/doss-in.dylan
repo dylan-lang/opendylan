@@ -498,5 +498,3 @@ define method set-remove!
   remove-key!(set, x);
   set
 end method set-remove!;
-
-// eof

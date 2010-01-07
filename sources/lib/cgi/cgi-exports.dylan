@@ -49,5 +49,3 @@ define module environment-variables
     $http-user-agent,
     $http-accept;
 end;
-
-// eof

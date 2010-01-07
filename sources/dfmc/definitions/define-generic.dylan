@@ -186,6 +186,3 @@ define method verify-generic-signature-spec (name, sig :: <generic-signature-spe
          source-location:  fragment-source-location(sig-fragment));
   end;
 end method;
-
-
-// eof

@@ -1608,5 +1608,3 @@ define &optimizer-function immutable-type-vector
     #f
   end if;
 end;
-
-// eof

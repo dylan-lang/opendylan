@@ -16,6 +16,3 @@ define library midi
 
   export midi;
 end library midi;
-
-// eof
-

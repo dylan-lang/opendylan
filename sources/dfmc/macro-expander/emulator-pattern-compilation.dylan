@@ -334,5 +334,3 @@ end method;
 define method macro-word-in-variable-name (v :: <vector>, var)
   values(v[1], v[2]);
 end method;
-
-// eof

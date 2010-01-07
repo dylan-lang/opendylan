@@ -232,5 +232,3 @@ define module doss
    };
 
 end module doss;
-
-// eof

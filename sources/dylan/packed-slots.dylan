@@ -183,5 +183,3 @@ define macro packed-accessors-definer
            ?more-slots
          end }
 end macro;
-
-// eof

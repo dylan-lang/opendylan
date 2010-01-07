@@ -254,5 +254,3 @@ define method definitions-module ()
   lookup-module(#"dfmc-conversion", default: #f)
     | lookup-module(#"dfmc-definitions");
 end method;
-
-// eof

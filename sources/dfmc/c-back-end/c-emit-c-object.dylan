@@ -93,5 +93,3 @@ define method emit-c-callable-lambda-interface
     emit-signature-types(back-end, stream, o, fun.signature-spec, fun.c-signature);
   end if;
 end method;
-
-// eof

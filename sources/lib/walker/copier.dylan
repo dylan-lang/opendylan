@@ -248,5 +248,3 @@ define method copier-reset
     (copier :: <copier>, #rest all-keys, #key capacity) => (copier :: <copier>)
   apply(walker-reset, copier, all-keys)
 end method;
-
-// eof

@@ -184,5 +184,3 @@ define method print-contents-sequence
     print-contents(object, stream);
   end;
 end method;
-
-// eof

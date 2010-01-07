@@ -26,5 +26,3 @@ define compiler-sideways method compute-form-model-object
        definition:   form,
        macro-object: macro-object);
 end method;
-
-// eof

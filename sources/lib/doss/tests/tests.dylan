@@ -226,5 +226,3 @@ define method do-doss-tests ()
 end method;
 
 do-doss-tests();
-
-// eof

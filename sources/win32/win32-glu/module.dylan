@@ -77,6 +77,3 @@ define module win32-glu
 	$GLU-END, $GLU-ERROR, $GLU-EDGE-FLAG;
 
 end module win32-glu;
-
-// eof
-

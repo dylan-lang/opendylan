@@ -21,5 +21,3 @@ define macro with-metering
 end macro;
 
 define function do-with-metering (set, body) body() end;
-
-// eof

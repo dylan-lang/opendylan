@@ -670,5 +670,3 @@ define inline copy-down-method map-into-rigid-one
 define inline copy-down-method map-into-rigid-one
   (fun :: <function>, target :: <mutable-sequence>, coll :: <stretchy-object-vector>) =>
   (target :: <mutable-collection>);
-
-// eof

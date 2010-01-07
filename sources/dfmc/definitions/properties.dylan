@@ -315,5 +315,3 @@ end method;
 define method all-identical? (l :: <sequence>)
   every?(curry(\==, l.first), l)
 end method;
-
-// eof

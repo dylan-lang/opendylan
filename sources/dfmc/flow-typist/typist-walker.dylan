@@ -108,5 +108,3 @@ define method typist-walk-computation (walk :: <function>, c :: <loop>, css :: <
         end;
   typist-walk-computations(walk, c.loop-body, css, end?);
 end method;
-
-// eof

@@ -55,5 +55,3 @@ define inline-only C-function unix-send-buffer-to
   result val :: <C-int>; // TODO: ssize_t 
   c-name: "sendto";
 end C-function;
-
-// eof

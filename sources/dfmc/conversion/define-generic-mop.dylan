@@ -241,5 +241,3 @@ define method ^signatures-congruent?
   end block;
 
 end method ^signatures-congruent?;
-
-// eof

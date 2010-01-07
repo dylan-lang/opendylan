@@ -97,6 +97,3 @@ define method compute-template-element-references
     end;
   end;
 end method;
-
-// eof
-

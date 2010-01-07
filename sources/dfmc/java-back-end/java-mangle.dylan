@@ -141,4 +141,3 @@ define method java-type-name (o)
   $dylan-type-string
 end;
 */
-// eof

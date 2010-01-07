@@ -34,5 +34,3 @@ define method make-line-location
        source-record: sr,
        start-offset:  offset)
 end method;
-
-// eof

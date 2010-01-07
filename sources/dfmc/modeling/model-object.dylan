@@ -28,5 +28,3 @@ define method binding-name (object)
     var.fragment-identifier
   end
 end method;
-
-// eof

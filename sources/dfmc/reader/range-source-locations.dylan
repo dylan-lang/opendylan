@@ -301,5 +301,3 @@ define sideways method make-source-location
        start-offset:  make-source-offset(start-char, start-line, start-col),
        end-offset:    make-source-offset(end-char, end-line, end-col));
 end method;
-
-// eof

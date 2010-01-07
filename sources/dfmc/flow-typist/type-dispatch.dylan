@@ -583,16 +583,3 @@ define method strictly-guaranteed-method-relationship
     end;
   end;
 end method;
-
-// eof
-
-
-
-
-
-
-
-
-
-
-

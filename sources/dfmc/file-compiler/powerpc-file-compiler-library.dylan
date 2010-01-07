@@ -103,5 +103,3 @@ define module dfmc-debug
     execute-string;
 
 end module;
-
-// eof

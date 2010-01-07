@@ -93,5 +93,3 @@ define method generate-dude-expander-function (exp)
     end;
   end
 end method;
-
-// eof

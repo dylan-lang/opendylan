@@ -16,5 +16,3 @@ end method;
 define method locate-variable (o :: <class>)
   values(o.debug-name, #"dylan", #"dylan");
 end method;
-
-// eof

@@ -280,5 +280,3 @@ define method emit-resolve-for-fixup
   // format-emit*
   //  (back-end, stream, "~(@)", $primitive-resolve-symbol-string, object);
 end method;
-
-// eof

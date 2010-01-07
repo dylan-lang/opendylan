@@ -341,5 +341,3 @@ define method type-known-imported?
     (library, type :: <&subclass>) => (imported? :: <boolean>)
   type-known-imported?(library, type.^subclass-class);
 end method;
-
-// eof

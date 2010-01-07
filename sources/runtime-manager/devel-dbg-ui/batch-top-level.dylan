@@ -123,6 +123,3 @@ end method;
 ///// Get on with it, then, ya bastid!
 
 do-the-devel-debugger ();
-
-
-//eof

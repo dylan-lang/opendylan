@@ -114,5 +114,3 @@ define module dfmc-c-file-compiler
   use registry-projects;
   use dfmc-c-ffi;
 end module;
-
-// eof

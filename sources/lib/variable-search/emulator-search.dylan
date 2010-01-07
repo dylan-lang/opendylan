@@ -90,5 +90,3 @@ define method variable-value
   variable-value
     (name, find-translator-module(module-name), library, default: default)
 end method;
-
-// eof

@@ -82,7 +82,4 @@ define inline function dood-read-machine-word
   dood-format("READING %= @ %d\n", value, dood-position(dood));
   value
   */
-end function; 
-
-
-// eof
+end function;

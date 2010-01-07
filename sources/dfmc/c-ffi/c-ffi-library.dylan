@@ -40,5 +40,3 @@ define module dfmc-c-ffi
     concrete-class-name, pointer-type-name;
 
 end;
-
-// eof

@@ -297,5 +297,3 @@ define method parse-renames-to-symbols
       => pair(pair(as(<symbol>, name), as(<symbol>, new)), ...);
   end macro-case
 end method;
-
-// eof

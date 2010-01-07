@@ -147,5 +147,3 @@ define stateful side-effect-free dynamic-extent &primitive primitive-sequence-po
 
 define side-effecting stateful dynamic-extent &primitive primitive-synchronize-side-effects
     () => ();
-
-// eof

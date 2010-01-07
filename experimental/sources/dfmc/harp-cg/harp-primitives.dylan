@@ -2247,7 +2247,3 @@ define &c-primitive-descriptor primitive-unlock-recursive-lock;
 
 define &primitive-descriptor primitive-sequence-point, emitter: op--nop;
 define &primitive-descriptor primitive-synchronize-side-effects, emitter: op--nop;
-
-
-
-// eof

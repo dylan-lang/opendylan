@@ -1427,6 +1427,3 @@ define sideways method dood-boot-mapped-objects
  => ()
   do(curry(restore-mapped-object-proxy, dood, ld), proxies)
 end method;
-
-// eof
-

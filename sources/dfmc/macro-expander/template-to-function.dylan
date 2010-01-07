@@ -141,5 +141,3 @@ define method generate-substitution-function
     end;
   end;
 end method;
-
-// eof

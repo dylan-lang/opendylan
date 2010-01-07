@@ -10,5 +10,3 @@ define constant $architecture-little-endian? :: <boolean> = #t;
 
 define constant $machine-name = #"mips";
 define constant $os-name      = #"irix5";
-
-// eof

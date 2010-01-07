@@ -69,5 +69,3 @@ define method do-the-devel-debugger () => ()
   welcome-banner();
   process-global-mode();
 end method;
-
-//eof

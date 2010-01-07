@@ -30,5 +30,3 @@ define compiler-sideways method print-object
   // let format-string = if (*verbose-objects?*) "[%s %=]" else "[%s %s]" end;
   format(stream, "[%s $s]", "C-CALLABLE-FUNCTION", o.iep);
 end method print-object;
-
-// eof

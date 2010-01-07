@@ -13,5 +13,3 @@ define metering-set *monitoring-1*
     streams, streams-internals,
     dfmc-c-back-end;
 end metering-set;
-
-// eof

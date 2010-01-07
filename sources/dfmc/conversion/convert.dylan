@@ -4289,5 +4289,3 @@ define method convert-lambda-into*
   strip-bindings(lambda-env);
   f
 end method convert-lambda-into*;
-
-// eof

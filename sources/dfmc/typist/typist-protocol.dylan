@@ -562,5 +562,3 @@ define method add-type-estimate-dispatch-cache-entry
              := make(<type-estimate-sequence-match-table>));
   element(gf-cache, te*) := methods;
 end method;
-
-// eof

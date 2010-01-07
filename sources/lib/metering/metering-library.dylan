@@ -16,5 +16,3 @@ define module metering
     \with-metering, do-with-metering,
     metering-set-definer, make-metering-set;
 end module;
-
-// eof

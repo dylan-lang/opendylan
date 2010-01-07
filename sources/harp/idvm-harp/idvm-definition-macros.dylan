@@ -181,9 +181,3 @@ define macro idvm-harp-branch-res-op-lit-inst-definer
     => { define idvm-harp-inst-emitter ?name (literal, branch-offset)
          end }
 end macro;
-
-
-
-// eof
-
-

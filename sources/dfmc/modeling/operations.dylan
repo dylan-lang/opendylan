@@ -196,6 +196,3 @@ end;
 define &override-function ^object-class end;
 define &override-function ^instance? end;
 define &override-function ^subtype? end;
-
-// eof
-

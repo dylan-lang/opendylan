@@ -22,6 +22,3 @@ define module select-viewer
   use functional-dylan;
   use simple-random;
 end module select-viewer;
-
-// eof
-

@@ -2357,5 +2357,3 @@ define method dood-restore-proxy
     (dood :: <dood>, proxy :: <dood-cross-model-iep-proxy>) => (object)
   ^iep(next-method())
 end method;
-
-// eof

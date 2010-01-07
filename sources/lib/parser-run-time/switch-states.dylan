@@ -47,5 +47,3 @@ define method recover-from-error
   error("Parse error on %=", symbol);
 end method;
 */
-
-// eof

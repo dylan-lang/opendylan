@@ -1491,5 +1491,3 @@ end macro;
 ignore($token-token);
 ignore($hash-t-token);
 ignore($hash-f-token);
-
-// eof

@@ -151,5 +151,3 @@ renames:
   { ?before:name => ?after:name, ... }
     => { pair(?#"before", ?#"after"), ... } 
 end macro;
-
-// eof

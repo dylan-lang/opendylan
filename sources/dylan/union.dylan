@@ -176,5 +176,3 @@ end;
 define inline function one-of (first, #rest rest)
   reduce(type-union, singleton(first), map(singleton, rest))
 end;
-
-// eof

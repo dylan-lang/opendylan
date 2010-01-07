@@ -396,5 +396,3 @@ define module dfmc-namespace
     binding-interactor-id;
 
 end module;
-
-// eof

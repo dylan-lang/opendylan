@@ -2814,5 +2814,3 @@ define constant <PFNGLGETCOLORTABLEPARAMETERFVEXTPROC> = <C-function-pointer>;
 
 define inline-only constant $GL-DOUBLE-EXT = $GL-DOUBLE;
 define inline-only constant $GL-LOGIC-OP = $GL-INDEX-LOGIC-OP;
-
-// eof

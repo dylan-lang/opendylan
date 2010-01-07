@@ -462,5 +462,3 @@ define method dood-flush-all (dood :: <dood>, function :: <function>)
     end unless;
   end for;
 end method;
-
-// eof

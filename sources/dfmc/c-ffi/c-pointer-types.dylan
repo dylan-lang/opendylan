@@ -443,5 +443,3 @@ define function generate-implicit-exports
    (#rest implicitly-exported-names) => (implicit-export-fragment)
   #{ begin ??implicitly-exported-names; ...; #f end }
 end function;
-
-// eof

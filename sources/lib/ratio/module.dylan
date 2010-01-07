@@ -10,5 +10,3 @@ define module ratio
   export 
     <ratio>, numerator, denominator, make-ratio, make-ratio*;
 end module;
-
-// eof

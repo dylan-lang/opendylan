@@ -24,5 +24,3 @@ define module windows-ffi-example
   use Win32-GDI;
   use Win32-kernel;
 end module;
-
-// eof

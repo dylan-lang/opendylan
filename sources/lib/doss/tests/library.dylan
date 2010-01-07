@@ -35,5 +35,3 @@ define module doss-tests
   export
     do-doss-tests;
 end module doss-testing;
-
-// eof

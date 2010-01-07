@@ -71,7 +71,3 @@ break(); //MT
   map(glue-name, used-library-names(library))
 end method;
 */
-
-
-// eof
-

@@ -292,5 +292,3 @@ define module win32-gl
 	<PFNGLGETCOLORTABLEPARAMETERFVEXTPROC>;
 
 end module win32-gl;
-
-// eof

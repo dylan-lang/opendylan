@@ -138,6 +138,3 @@ define method history-add
   let seq = remove(seq, entry, test: \=);
   pair(entry, as(<list>, seq));
 end method;
-
-// eof
-

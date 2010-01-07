@@ -53,5 +53,3 @@ define function find-library-locator (library-name, registries)
     values(#f, #f)
   end
 end function find-library-locator;
-
-// eof

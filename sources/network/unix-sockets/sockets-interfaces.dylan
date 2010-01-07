@@ -182,5 +182,3 @@ define inline-only C-function socketpair
 end C-function;
 
 // Shared: write
-
-// eof

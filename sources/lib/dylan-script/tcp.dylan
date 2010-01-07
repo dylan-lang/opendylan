@@ -51,6 +51,3 @@ define method open
                 options);
   end;
 end method;
-
-// eof
-

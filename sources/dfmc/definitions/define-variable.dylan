@@ -120,5 +120,3 @@ define function parse-variable-adjectives
     (bindings, mods) => (initargs, adjectives)
   parse-property-adjectives(variable-adjectives, mods, bindings);
 end function;
-
-// eof

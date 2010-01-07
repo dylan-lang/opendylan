@@ -85,6 +85,3 @@ define method as-dylan-string (s :: <C-string>) => (_ :: <string>)
   end for;
   ds;
 end method;
-
-// eof
-

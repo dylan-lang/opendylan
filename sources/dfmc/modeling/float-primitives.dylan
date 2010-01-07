@@ -203,5 +203,3 @@ define side-effect-free stateless dynamic-extent &primitive primitive-single-flo
 
 define side-effect-free stateless dynamic-extent &primitive primitive-double-float-class
     (x :: <raw-double-float>) => (class :: <string>);
-
-// eof

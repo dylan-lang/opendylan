@@ -68,5 +68,3 @@ define sealed inline method type-for-copy
     (vector :: <stretchy-element-type-vector>) => (type :: <type>)
   limited-stretchy-vector(element-type(vector))
 end method type-for-copy;
-
-// eof

@@ -19,5 +19,3 @@ end;
 
 define compiler-open generic emitted-name (object);
 define compiler-open generic emitted-name-setter (name, object);
-
-// eof

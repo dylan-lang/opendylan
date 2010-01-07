@@ -361,6 +361,3 @@ define function finish-env-only-class (jclass :: <java-concrete-class>, slot-vec
     java-field (slot.get-slot-spec)
   end;
 end;
-
-
-// eof

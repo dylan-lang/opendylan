@@ -16,5 +16,3 @@ define library select-viewer
 
   export select-viewer;
 end library select-viewer;
-
-// eof

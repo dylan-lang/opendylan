@@ -170,6 +170,3 @@ define method limited-array
     concrete-class
   end if;
 end method;
-
-// eof
-

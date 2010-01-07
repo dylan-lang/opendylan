@@ -107,6 +107,3 @@ define method employee-icon (employee :: <employee>) => (icon)
     $serf-icon
   end;
 end method;
-
-// eof
-

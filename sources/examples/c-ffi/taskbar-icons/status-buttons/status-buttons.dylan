@@ -57,6 +57,3 @@ end method main;
 begin
   main();
 end;
-
-// eof
-

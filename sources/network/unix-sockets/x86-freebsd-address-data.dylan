@@ -209,5 +209,3 @@ define constant $SIOCGIFINDEX = #x8933;
 define constant $SIOCGIFNAME  = #x8910;
 define constant $SIOCGIFFLAGS = #x8913;
 define constant $SIOCSIFFLAGS = #x8914;
-
-// eof

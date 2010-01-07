@@ -90,6 +90,3 @@ define method compute-subordinates (e :: <employee>) => (sub :: <sequence>)
       range(from: 1, to: 5));
 end method;
 */
-
-// eof
-

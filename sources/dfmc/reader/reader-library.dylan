@@ -233,5 +233,3 @@ define module dfmc-reader
     present-fragments;
 
 end module;
-
-// eof

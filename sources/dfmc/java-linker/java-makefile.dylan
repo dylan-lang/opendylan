@@ -37,6 +37,3 @@ define method emit-target-makefile (back-end :: <java-back-end>,
 //  format-out ("-- No makefile needed for Java!\n") ;
   #f
 end method;
-
-// eof
-

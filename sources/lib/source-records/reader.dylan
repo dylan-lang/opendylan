@@ -25,5 +25,3 @@ define constant $newline-code = as(<integer>, '\n');
 define function stream-skip-lines (stream, nlines)
   for (i from 0 below nlines) skip-through(stream, $newline-code) end;
 end function;
-
-// eof

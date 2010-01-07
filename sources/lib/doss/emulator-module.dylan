@@ -22,5 +22,3 @@ define module emulator-doss
   use variable-search;
   use doss-internals;
 end module emulator-doss;
-
-// eof

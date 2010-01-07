@@ -157,6 +157,3 @@ end method as-lowercase;
 
 // (for ((index from 0 below 256))
 //  (set! (element *byte-characters* index) (as <byte-character> index)))
-
-// eof
- 

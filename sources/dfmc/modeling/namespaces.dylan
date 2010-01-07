@@ -2627,5 +2627,3 @@ end &module;
 define &module dylan-internal
   use internal, export: all;
 end &module;
-
-// eof

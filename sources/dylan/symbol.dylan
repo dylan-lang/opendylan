@@ -40,6 +40,3 @@ end function;
 define inline function keyword? (x)
   instance?(x, <symbol>)
 end function;
-
-// eof
- 

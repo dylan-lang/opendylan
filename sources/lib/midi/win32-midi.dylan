@@ -141,6 +141,3 @@ define method send-midi-message
   send-midi-message
     (midi-handle(md), status, midi-number(channel), data1, data2);
 end method;
-
-// eof
-

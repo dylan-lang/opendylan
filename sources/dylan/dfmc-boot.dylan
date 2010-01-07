@@ -8,6 +8,3 @@ Dual-license: GNU Lesser General Public License
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 boot-dylan-definitions();
-
-// eof
- 

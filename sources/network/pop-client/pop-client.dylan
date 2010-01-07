@@ -165,5 +165,3 @@ define method format-pop-line
   apply(format, stream, template, args);
   write(stream, "\r\n");
 end method;
-
-// eof

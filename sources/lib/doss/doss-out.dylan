@@ -542,5 +542,3 @@ define method doss-repeated-slot-element
     (obj, i :: <integer>, dd :: <doss-dumper>) => (slot-contents :: <object>)
   obj[i]
 end method doss-repeated-slot-element;
-
-// eof

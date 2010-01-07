@@ -66,5 +66,3 @@ end method;
 define limited-array <machine-word>  (fill: as(<machine-word>, 0));
 define limited-array <single-float>  (fill: 0.0);
 define limited-array <double-float>  (fill: as(<double-float>, 0.0));
-
-// eof

@@ -320,7 +320,3 @@ define function force-out-java-classes () => ()
   end;
   *java-class-cache* := #f
 end;
-  
-
-// eof
-

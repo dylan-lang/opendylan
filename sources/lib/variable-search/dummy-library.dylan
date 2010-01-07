@@ -17,6 +17,4 @@ define module variable-search
   use dylan;
   export
     locate-variable, variable-value;
-end module;  
-
-// eof
+end module;

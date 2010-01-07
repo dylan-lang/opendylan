@@ -14,5 +14,3 @@ define method variable-value
     (label :: <symbol>, module, library, #key default) => (object)
   lookup-constant(as-lowercase(as(<string>, label)), #"IDVM", #"IDVM");
 end method;
-
-// eof

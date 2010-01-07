@@ -65,5 +65,3 @@ define method find
  => (result)
   apply(find, pattern, locator-as-string(<byte-string>, container), options);
 end method;
-
-// eof

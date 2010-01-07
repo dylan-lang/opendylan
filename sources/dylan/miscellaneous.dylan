@@ -22,12 +22,3 @@ define inline constant ignorable =
       ignorable-values;
       values()
     end;
-
-// eof
- 
-
-
-
-
-
-

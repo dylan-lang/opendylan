@@ -160,6 +160,3 @@ define macro when
   { when (?test:expression) ?action:body end }
     => { if (?test) ?action end }
 end macro;
-
-// eof
-

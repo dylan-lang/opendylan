@@ -201,7 +201,3 @@ define method uninstall-top-level-form (form :: <module-definition>)
   end;
   form.form-top-level-installed? := #f;
 end method;
-
-
-
-// eof

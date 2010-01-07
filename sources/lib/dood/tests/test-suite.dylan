@@ -576,4 +576,3 @@ define method print-object (x :: <external-dooded-object>, stream :: <stream>)
 end method;
 
 run-test-application(dood-test-suite);
-// eof

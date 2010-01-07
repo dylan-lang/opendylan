@@ -200,5 +200,3 @@ define method re-optimize-generators (s :: <vector>)
     re-optimize(t.generator);
   end;
 end method;
-
-// eof

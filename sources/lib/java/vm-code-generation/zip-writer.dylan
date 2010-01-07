@@ -597,5 +597,3 @@ end;
 
 
 format-out ("inited zip-writer.dylan\n") ;
-
-// eof

@@ -45,5 +45,3 @@ define sealed copy-down-method add-new!
     (vector :: <simple-object-vector>, object,
      #key test :: <function> = \==) 
  => (v :: <simple-object-vector>);
-
-// eof

@@ -185,5 +185,3 @@ define function valid-match-constraint? (constraint) => (well? :: <boolean>)
   constraint == #f // none specified
     | member?(constraint, $valid-constraints);
 end function;
-
-// eof

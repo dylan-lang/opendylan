@@ -278,8 +278,3 @@ define method gen-primitive
   // not sure what this needs to return
   emit-raw-expression-leaf (jbb, 0)
 end;
-
-
-
-
-// eof

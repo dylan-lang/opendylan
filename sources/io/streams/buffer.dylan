@@ -222,5 +222,3 @@ define sealed /*inline*/ method type-for-copy (object :: <buffer>)
  => (c :: <class>)
   <buffer>
 end method type-for-copy;
-
-// eof

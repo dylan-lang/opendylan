@@ -22,5 +22,3 @@ define module wintiles
   use simple-streams;
   use dylan-print;
 end module;
-
-// eof

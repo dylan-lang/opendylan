@@ -112,5 +112,3 @@ define function gts-debug(id, format-string, #rest r)
     apply(format-out, format-string, r);
   end if;
 end function;
-
-// eof

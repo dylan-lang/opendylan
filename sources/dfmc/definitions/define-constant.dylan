@@ -181,5 +181,3 @@ define method define-booted-constant (variable-name, type, value)
     (variable-name, 
      #{ }, #{ ?variable-name :: ?type }, value, #t).first;
 end method;
-
-// eof

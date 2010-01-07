@@ -184,5 +184,3 @@ define inline function address-as-integer
     (x :: <integer>) => (res :: <integer>)
   x
 end function;
-
-// eof

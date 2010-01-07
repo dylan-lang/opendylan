@@ -1016,6 +1016,3 @@ define function set-action (gv :: <gvars>,
     end unless;
   end if;
 end;
-
-// eof
-

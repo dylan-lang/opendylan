@@ -27,5 +27,3 @@ define method &values-element
   &values-model-objects(vals)[n]
 end method;
 */
-
-// eof

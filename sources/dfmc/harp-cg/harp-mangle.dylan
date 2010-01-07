@@ -43,5 +43,3 @@ define method cr-init-name (ld, cr-name)
   concatenate(ld.library-description-glue-name, "_X_",
 	      harp-local-mangle(cr-name))
 end method;
-
-// eof

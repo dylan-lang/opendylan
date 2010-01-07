@@ -96,5 +96,3 @@ stuff:
 end macro;
 
 aux-rule-overflow(2);
-
-// eof

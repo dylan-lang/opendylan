@@ -429,5 +429,3 @@ define midi-percussion from 35
   sound "Mute Triangle";
   sound "Open Triangle"; 
 end midi-percussion;
-
-// eof

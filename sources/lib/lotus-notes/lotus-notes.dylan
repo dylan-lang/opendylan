@@ -19,5 +19,3 @@ define method cast-object (class :: <class>, untyped) => (object)
 end method;
 
 define constant $TEMPLATE-CANDIDATE = 1246;
-
-// eof

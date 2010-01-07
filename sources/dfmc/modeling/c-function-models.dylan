@@ -43,5 +43,3 @@ end &class;
 define class <&c-variable> (<named-object>, <emitted-object>)
   constant slot dll-import? = #f, init-keyword: import:;
 end class <&c-variable>;
-
-// eof

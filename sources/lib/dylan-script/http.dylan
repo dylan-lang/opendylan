@@ -38,5 +38,3 @@ define sideways method as
     (type == <html-document>, string :: <string>) => (doc :: <html-document>)
   parse-html-from-stream(make(<string-stream>, contents: string))  
 end method;
-
-// eof

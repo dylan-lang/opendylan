@@ -737,8 +737,3 @@ define sideways method remove-dependent-program-conditions
   let cond-tab = form.form-library.library-conditions-table;
   remove-program-conditions-from!(cond-tab, form, stages);
 end method;
-
-
-
-
-// eof

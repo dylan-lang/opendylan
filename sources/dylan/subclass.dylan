@@ -196,6 +196,3 @@ define method has-instances? (class :: <class>, subc :: <subclass>,
   let class? :: <boolean> = subjunctive-subtype?(class, <class>, scu);
   values(class?, class? & subclass-class(subc) == <object>)
 end method;
- 
-// eof
- 

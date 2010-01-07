@@ -44,6 +44,3 @@ end method;
 define method subordinates? (e :: <employee>) => (well? :: <boolean>)
   ~empty?(subordinates(e))
 end method;
-
-// eof
-

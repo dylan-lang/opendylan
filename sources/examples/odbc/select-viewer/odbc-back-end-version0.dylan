@@ -50,6 +50,3 @@ end method;
 // TODO: Implement close-database.
 define method close-database (dbd :: <database-data>) => ()
 end method;
-
-// eof
-

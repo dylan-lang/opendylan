@@ -58,5 +58,3 @@ define method generate-substitution
     #{ substitute-sequence(?name) }
   end;
 end method;
-
-// eof

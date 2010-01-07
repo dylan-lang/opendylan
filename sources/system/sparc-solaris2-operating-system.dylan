@@ -10,5 +10,3 @@ define constant $architecture-little-endian? :: <boolean> = #f;
 
 define constant $machine-name 	= #"sparc";
 define constant $os-name 	= #"solaris2";
-
-// eof

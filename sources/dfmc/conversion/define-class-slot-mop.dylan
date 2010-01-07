@@ -482,5 +482,3 @@ define function find-accessor-method-with-class-at-position
 end;
 
 */
-
-// eof

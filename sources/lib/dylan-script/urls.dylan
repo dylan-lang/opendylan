@@ -48,5 +48,3 @@ define method find-delimiters
     end
   end
 end method find-delimiters;
-
-// eof

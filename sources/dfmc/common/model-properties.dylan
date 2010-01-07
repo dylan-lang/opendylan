@@ -181,5 +181,3 @@ define compiler-open generic model-creator (object);
 define method model-creator (object)
   read-only-model-properties(object).model-creator
 end method;
-
-// eof

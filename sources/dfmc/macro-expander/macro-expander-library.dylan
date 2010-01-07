@@ -208,5 +208,3 @@ define module dfmc-macro-expander
     compiling-for-macroexpansion?;
 
 end module;
-
-// eof

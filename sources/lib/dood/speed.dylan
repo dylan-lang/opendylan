@@ -234,5 +234,3 @@ define method dood-compute-instance-size
     (dood :: <dood>, object == <symbol>) => (address :: <address>)
   1
 end method;
-
-// eof

@@ -69,6 +69,3 @@ define function do-define-copy-down-method (fragment, mods, name, signature)
     list (method-definition)
   end
 end;
-
-
-// eof

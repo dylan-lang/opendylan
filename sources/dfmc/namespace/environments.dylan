@@ -34,5 +34,3 @@ define generic undefine-name
 
 define generic lookup-name 
     (env :: <environment>, name :: <name>, #key default) => (value);
-
-// eof

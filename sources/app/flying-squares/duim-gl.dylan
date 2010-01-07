@@ -73,6 +73,3 @@ define method setup-pixel-format (hdc :: <HDC>)
     SetPixelFormat(hdc, pixelformat, ppfd);
   end;
 end method;
-
-// eof
-

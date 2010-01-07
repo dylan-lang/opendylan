@@ -269,5 +269,3 @@ define method trace-object-references
     (unit :: <compilation-unit>, object :: <module-binding>) => ()
   trace-object(unit, object.value);
 end method;
-
-// eof

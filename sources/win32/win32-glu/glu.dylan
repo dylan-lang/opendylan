@@ -529,5 +529,3 @@ define inline-only constant $GLU-VERTEX  = $GLU-TESS-VERTEX;
 define inline-only constant $GLU-END     = $GLU-TESS-END;
 define inline-only constant $GLU-ERROR   = $GLU-TESS-ERROR;
 define inline-only constant $GLU-EDGE-FLAG = $GLU-TESS-EDGE-FLAG;
-
-// eof

@@ -84,5 +84,3 @@ define method total-time(et :: <execution-timer>)
     #f
   end
 end method;
-
-// eof

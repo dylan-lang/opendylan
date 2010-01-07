@@ -778,6 +778,3 @@ define suite dylan-control-suite ()
   test multiple-valuesies;
   test exceptions;
 end suite dylan-control-suite;
-
-/// eof
-

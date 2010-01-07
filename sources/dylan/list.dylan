@@ -979,5 +979,3 @@ define sealed method third-setter
     (value :: <object>, sequence :: <pair>) => (value :: <object>)
   head(tail-or-range-error(tail(sequence), 2)) := value
 end;
-
-// eof

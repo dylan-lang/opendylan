@@ -110,5 +110,3 @@ define macro property-delegation-setters-definer
     end }
     => { }
 end macro;
-
-// eof

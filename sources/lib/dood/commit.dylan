@@ -81,5 +81,3 @@ define method dood-shallow-commit
   object
 end method;
 */
-
-// eof

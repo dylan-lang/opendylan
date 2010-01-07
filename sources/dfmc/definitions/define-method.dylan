@@ -432,5 +432,3 @@ define inline function choose-instances
     (type :: <type>, sequence :: <sequence>) => (subsequence :: <sequence>)
   choose(rcurry(instance?, type), sequence)
 end function;
-
-// eof

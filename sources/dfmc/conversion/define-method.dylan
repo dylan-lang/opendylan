@@ -563,5 +563,3 @@ define method compute-form-dynamic-init-code
      #{ ?definer(?name, generic-method (?form) ?signature-and-body end, ?lib) }
   end with-expansion-source-form)
 end method;
-
-// eof

@@ -68,8 +68,3 @@ define method variable-value
     primitive-element(val, integer-as-raw(0), integer-as-raw(0))
   end if;
 end method;
-
-
-// eof
-
-

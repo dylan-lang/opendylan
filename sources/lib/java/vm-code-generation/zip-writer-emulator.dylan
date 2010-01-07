@@ -566,8 +566,3 @@ end;
 define function current-jar-setter (jar :: <jar-file-rep>) => (jar :: <jar-file-rep>)
   *current-jar* := jar
 end;
-
-
-// eof
-
-

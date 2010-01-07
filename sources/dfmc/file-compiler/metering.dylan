@@ -191,5 +191,3 @@ define metering-set *emulator-monitoring*
     do-2-collections-by-key  in internal,
     do-collections-by-key    in internal,
 end metering-set;
-
-// eof

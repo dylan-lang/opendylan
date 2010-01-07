@@ -940,5 +940,3 @@ define method form-in-place-redefinition?
   binding-previously-defined?(binding)
     & instance?(binding-previous-definition(binding), form.object-class);
 end method;
-
-// eof

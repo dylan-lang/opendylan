@@ -53,6 +53,3 @@ define function exit-application (status-code :: <integer>) => ()
   *exit-code* := status-code;
   release($final-thread-notification)
 end function exit-application;
-
-// eof
-

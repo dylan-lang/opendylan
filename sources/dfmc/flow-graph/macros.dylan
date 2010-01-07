@@ -161,5 +161,3 @@ define macro for-computations
          ?body 
        end }
 end macro;
-
-// eof

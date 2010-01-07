@@ -376,5 +376,3 @@ define generic emit-primitive-call
 // 
 // define &primitive-descriptor primitive-unwrap-c-pointer;
 // define &primitive-descriptor primitive-wrap-c-pointer;
-
-// eof

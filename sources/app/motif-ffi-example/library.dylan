@@ -19,5 +19,3 @@ define module motif-ffi-example
   use c-ffi;
   use imported-xm;
 end module;
-
-// eof

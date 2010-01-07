@@ -19,5 +19,3 @@ define module variable-search
   export
     locate-variable, variable-value;
 end module;
-
-// eof

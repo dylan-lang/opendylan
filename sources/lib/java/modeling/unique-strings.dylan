@@ -170,5 +170,3 @@ define function print-unique-strings ()
 end;
 
 format-out ("inited unique-strings.dylan\n") ;
-
-// eof

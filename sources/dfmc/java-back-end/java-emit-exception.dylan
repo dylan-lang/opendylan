@@ -189,5 +189,3 @@ define function generate-java-handlers (context :: <java-method-context>)
   end;
   #f
 end;
-
-// eof

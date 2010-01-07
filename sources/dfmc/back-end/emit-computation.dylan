@@ -13,5 +13,3 @@ end class;
 
 define compiler-open generic make-emitter 
     (back-end :: <back-end>, stream :: <stream>) => (emitter :: <emitter>);
-
-// eof

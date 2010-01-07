@@ -44,5 +44,3 @@ define function generate-expander-function (exp) => (function)
   end;
 end function;
 */
-
-// eof

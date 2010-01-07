@@ -22,5 +22,3 @@ end method;
 define copy-down-method \=
     (x :: <byte-string>, y :: <byte-string>) => (result :: <boolean>);
 */
-// eof
- 

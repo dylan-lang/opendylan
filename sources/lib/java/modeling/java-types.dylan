@@ -588,5 +588,3 @@ define function assignment-compatible? (src :: <java-type>, dest :: <java-type>)
 end;
 
 format-out ("inited java-types.dylan\n");
-
-// eof

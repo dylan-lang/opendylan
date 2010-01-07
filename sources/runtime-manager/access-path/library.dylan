@@ -19,5 +19,3 @@ define library access-path
   export
     access-path, access-path-nub;
 end library;
-
-// eof

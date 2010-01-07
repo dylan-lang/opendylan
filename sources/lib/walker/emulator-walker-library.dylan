@@ -74,5 +74,3 @@ define module walker
     walker-stats,
     walker-statistics;
 end module;
-
-// eof

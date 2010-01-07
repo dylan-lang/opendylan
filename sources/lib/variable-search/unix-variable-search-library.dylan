@@ -22,6 +22,4 @@ define module variable-search
   use dfmc-mangling;
   export
     locate-variable, variable-value;
-end module;  
-
-// eof
+end module;

@@ -271,6 +271,3 @@ end method remainder;
 define inline method abs (x :: <machine-number>) => (result :: <machine-number>)
   if (negative?(x)) negative(x) else x end
 end method abs;
-
-// eof
- 

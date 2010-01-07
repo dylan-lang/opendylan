@@ -257,5 +257,3 @@ end class;
 
 define abstract class <simple-array> (<multidimensional-array>)
 end class;
-
-// eof

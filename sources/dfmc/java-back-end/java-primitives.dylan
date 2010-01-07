@@ -361,5 +361,3 @@ define c-primitive-field c-int;
 define &primitive-descriptor primitive-unwrap-c-pointer;
 define &primitive-descriptor primitive-wrap-c-pointer;
 */
-
-// eof

@@ -555,8 +555,3 @@ options:
   { } => #();
   { ?option:expression, ... } => pair(option, ...);
 end;
-
-
-
-// eof
-

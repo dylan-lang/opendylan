@@ -39,5 +39,3 @@ end method;
 define method collect-garbage! () 
   collect-garbage();
 end method;
-
-// eof

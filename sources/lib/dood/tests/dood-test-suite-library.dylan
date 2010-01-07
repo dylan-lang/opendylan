@@ -26,5 +26,3 @@ define module dood-test-suite
   use simple-random;
   export dood-test-suite;
 end module;
-
-// eof

@@ -61,7 +61,3 @@ define method variable-value
   else val
   end if;
 end method;
-
-
-// eof
-

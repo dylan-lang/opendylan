@@ -382,5 +382,3 @@ define method ^limited-collection
     class
   end if;
 end method;
-
-// eof

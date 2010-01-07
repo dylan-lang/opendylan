@@ -232,5 +232,3 @@ define function dood-instance-size (dood :: <dood>, object) => (res :: <integer>
   let dood-class = dood-class(dood, class);
   dood-instance-size-using-class(dood, object, dood-class)
 end function;
-
-// eof

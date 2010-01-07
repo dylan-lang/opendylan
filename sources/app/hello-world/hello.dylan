@@ -10,5 +10,3 @@ define method say-hello()
 end method say-hello;
 
 say-hello();
-
-// eof

@@ -17,5 +17,3 @@ define module timers
     <execution-timer>, set-start, set-end, system-time, user-time, total-time,
     \with-execution-times;
 end module;
-
-// eof

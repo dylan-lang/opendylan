@@ -26,5 +26,3 @@ define method allocate-registers (f :: <&lambda>) => ();
   end for;
   e.frame-size := offset + 1;
 end method;
-
-// eof

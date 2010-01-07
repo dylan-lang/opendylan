@@ -546,5 +546,3 @@ define constant  j-hardware = make-jcop ("hardware", 255, #f) ;
 
 
 format-out ("inited java-opcodes.dylan\n") ;
-
-// eof

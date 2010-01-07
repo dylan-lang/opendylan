@@ -48,5 +48,3 @@ end method;
 define method remove-user! (o :: <referenced-object>, user)
   o.users := remove!(o.users, user, count: 1);
 end method;
-
-// eof

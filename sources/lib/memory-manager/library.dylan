@@ -27,5 +27,3 @@ define module memory-manager
     enable-gc-messages,
     \with-ramp-allocation;
 end module;
-
-// eof

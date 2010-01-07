@@ -152,5 +152,3 @@ define method database-filepath
     (db :: <NOTESDATABASE>) => (title :: <byte-string>)
   as(<byte-string>, notesdatabase/filepath(db))  
 end method;
-
-// eof

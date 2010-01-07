@@ -285,5 +285,3 @@ define method as-expression (stuff)
     { ?:expression } => expression
   end;
 end method;
-
-// eof

@@ -19,6 +19,3 @@ define module plonker
   use c-ffi; use win32-multimedia; // Just for testing purposes
   use midi;
 end module plonker;
-
-// eof
-

@@ -16,5 +16,3 @@ define open abstract class <stretchy-mutable-collection>  // Not in the DRM
     (<stretchy-collection>, <mutable-collection>)
 end class <stretchy-mutable-collection>;
 */
-
-// eof

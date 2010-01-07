@@ -42,5 +42,3 @@ define method describe-repeated-slot (o, desc :: <&repeated-slot-descriptor>)
                repeated-name, i, ^repeated-slot-value(o, desc, i));
   end;
 end method;
-
-// eof

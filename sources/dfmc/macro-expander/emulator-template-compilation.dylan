@@ -178,5 +178,3 @@ define method as-fragment (c :: <template-closure>)
 end method;
 
 define method fragments (c :: <template-closure>) c end;
-
-// eof

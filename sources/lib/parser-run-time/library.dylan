@@ -19,5 +19,3 @@ define module parser-run-time
   export
     <parser>, run-parser;
 end module;
-
-// eof

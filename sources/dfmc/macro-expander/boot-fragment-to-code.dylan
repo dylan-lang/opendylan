@@ -88,5 +88,3 @@ define punctuation-generator <query-query-fragment>;
 define punctuation-generator <query-equal-fragment>;
 
 define punctuation-generator <hash-lbrace-fragment>;
-
-// eof

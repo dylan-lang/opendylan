@@ -42,6 +42,3 @@ define module ppml
          ppml-print,
          ppml-print-one-line;
 end module;
-
-// eof
-

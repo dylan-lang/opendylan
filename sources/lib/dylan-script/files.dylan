@@ -65,5 +65,3 @@ define sideways method contents
     do-directory(process-file, locator);
   end;
 end method;
-
-// eof

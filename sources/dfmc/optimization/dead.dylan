@@ -188,5 +188,3 @@ define compiler-sideways method remove-user! (ref :: <object-reference>, user)
     remove-user!(reference-value(ref), ref);
   end;
 end method;
-
-// eof

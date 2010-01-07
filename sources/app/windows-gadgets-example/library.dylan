@@ -28,5 +28,3 @@ define module windows-gadgets-example
   use Win32-kernel;
   use Win32-dialog;
 end module;
-
-// eof

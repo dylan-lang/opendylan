@@ -733,5 +733,3 @@ define method rename-temporary-references!
      new-t :: <value-reference>) => (renamed? :: <boolean>)
   replace-temporary-references!(c, t, new-t)
 end method;
-
-// eof

@@ -193,5 +193,3 @@ define sealed method copy-bytes
     copy-bytes-range-error(src, src-start, dst, dst-start, n);
   end if; 
 end method;
-
-// eof

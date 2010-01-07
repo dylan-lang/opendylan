@@ -115,5 +115,3 @@ define sealed inline method forward-iteration-protocol
 	 table-current-element-setter,
 	 table-copy-state)
 end method forward-iteration-protocol;
-
-// eof

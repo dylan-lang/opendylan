@@ -829,5 +829,3 @@ define function split-at-commas (l :: <list>)
     walk(l, 1);
   end;
 end function;
-
-// eof

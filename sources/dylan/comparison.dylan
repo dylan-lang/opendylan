@@ -167,6 +167,3 @@ end function;
 define function max (object, #rest objects) => (max)
   reduce(binary-max, object, objects)
 end function max;
-
-// eof
- 

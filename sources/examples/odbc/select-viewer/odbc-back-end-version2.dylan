@@ -53,6 +53,3 @@ end method;
 define method close-database (dbd :: <connection>) => ()
   disconnect(dbd);
 end method;
-
-// eof
-

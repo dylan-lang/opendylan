@@ -66,5 +66,3 @@ define method re-read-template-elements (start-constraint, elements)
   end;
   re-read-fragments(lexer);
 end method;
-
-// eof

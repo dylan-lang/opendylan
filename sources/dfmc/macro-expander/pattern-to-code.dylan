@@ -507,5 +507,3 @@ end method;
 define method env-bound-names (e)
   e
 end method;
-
-// eof

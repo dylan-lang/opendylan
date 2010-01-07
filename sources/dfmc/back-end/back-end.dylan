@@ -76,5 +76,3 @@ define compiler-open generic print-method-out (o :: <&lambda>, #key css);
 define compiler-open generic print-referenced-object (o :: <object>, stream :: <stream>) => ();
 
 define thread variable *current-environment* = #f;
-
-// eof

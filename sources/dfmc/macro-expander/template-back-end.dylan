@@ -697,5 +697,3 @@ end method;
 define inline method export-fragment-tokens (f :: <fragment>)
   f
 end method;
-
-// eof

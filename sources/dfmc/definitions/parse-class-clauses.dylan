@@ -767,5 +767,3 @@ define function parse-metaclass-adjectives (name, adjectives) => ()
   // Just check that there aren't any.
   parse-property-adjectives(#(), adjectives, name);
 end;
-
-// eof

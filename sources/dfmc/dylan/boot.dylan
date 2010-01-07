@@ -23,5 +23,3 @@ end class <unsigned-machine-integer>;
 
 define constant <big-integer> = <unsigned-machine-integer>;
 define constant <machine-integer> = <unsigned-machine-integer>;
-
-// eof

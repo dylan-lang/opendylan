@@ -10,5 +10,3 @@ define module union-collection
   export 
     <union-collection>, <cached-union-collection>, members, members-setter;
 end module;
-
-// eof

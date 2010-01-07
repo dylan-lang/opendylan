@@ -258,5 +258,3 @@ define method generate-variable-names-debug-name (names)
   end;
   concatenate(reduce1(splice, strings), "-initializer");
 end method;
-
-// eof

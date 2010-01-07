@@ -603,5 +603,3 @@ define method directly-used-namespaces (space :: <full-namespace>) => (spaces)
 				 used-name),
 			 space.use-clauses))
 end method;
-
-// eof

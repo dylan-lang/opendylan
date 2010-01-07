@@ -1038,7 +1038,3 @@ define method reduce-incomplete-classes (f :: <function>, t :: <class>, ans)
 end method;
 
 define variable *class-profiling-enabled?* :: <boolean> = #f;
-
-
-// eof
- 

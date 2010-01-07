@@ -20,6 +20,4 @@ define module variable-search
   use idvm-namespace, import: {lookup-variable, lookup-constant};
   export
     locate-variable, variable-value;
-end module;  
-
-// eof
+end module;

@@ -781,5 +781,3 @@ define method emit-init-code (back-end :: <c-back-end>, o :: <&iep>)
     o.code := stream-contents-as(<byte-string>, stream);
   end unless;
 end method emit-init-code;
-
-// eof

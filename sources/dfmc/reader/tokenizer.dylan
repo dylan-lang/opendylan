@@ -32,5 +32,3 @@ define generic note-potential-end-point (tokenizer :: <tokenizer>) => ();
 define method note-potential-end-point (tokenizer :: <tokenizer>) => ();
 end method note-potential-end-point;
 */
-
-// eof

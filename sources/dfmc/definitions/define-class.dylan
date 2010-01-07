@@ -358,6 +358,3 @@ define method generate-initializer-definition-forms
   form-class(first(forms)) := #"initializer";
   forms
 end method;
-
-// eof
-

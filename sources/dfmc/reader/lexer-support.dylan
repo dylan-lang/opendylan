@@ -227,5 +227,3 @@ define inline function contents
     (source :: <compilation-record>) => (bytes :: <byte-vector>)
   source-record-contents(compilation-record-source-record(source));
 end function;
-
-// eof

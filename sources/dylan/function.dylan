@@ -64,5 +64,3 @@ define method function-return-values (function :: <accessor-method>)
  => (return-value-types :: <sequence>, rest-return-value :: false-or(<type>))
   values(vector(slot-type(method-slot-descriptor(function))), #f)
 end method;
-
-// eof

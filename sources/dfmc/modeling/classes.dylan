@@ -151,5 +151,3 @@ define method ^known-disjoint?
     & ~member?(class2, ^all-superclasses(class1))
     & ~guaranteed-joint-2?(class1)
 end method;
-
-// eof

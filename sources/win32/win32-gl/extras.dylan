@@ -19,5 +19,3 @@ define C-function wglMakeCurrent
   result    val :: <BOOL>;
   c-name: "wglMakeCurrent", c-modifiers: "__stdcall";
 end C-function;
-
-// eof

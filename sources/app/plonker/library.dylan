@@ -14,6 +14,3 @@ define library plonker
   use c-ffi; use win32-multimedia; // Just for testing purposes
   use midi;
 end library plonker;
-
-// eof
-

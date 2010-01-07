@@ -132,17 +132,3 @@ define method do-handlers (function)
   do-with-handlers(*current-handlers*);
   do-with-handlers(*last-handlers*);
 end method do-handlers;
-
-// eof
- 
-
-
-
-
-
-
-
-
-
-
-

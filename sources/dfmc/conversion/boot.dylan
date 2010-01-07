@@ -50,5 +50,3 @@ define compiler-sideways method compute-form-model-object
 	supertype: supertype-model,
 	descriptor-function: form-raw-type-descriptor-function(form));
 end method;
-
-// eof

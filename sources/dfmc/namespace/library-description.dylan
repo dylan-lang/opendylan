@@ -1407,5 +1407,3 @@ define function save-namespace-database
     apply(ensure-namespace-database-saved, ld, keys);
   end;
 end function;
-
-// eof

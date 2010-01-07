@@ -131,5 +131,3 @@ define &override-function ^false-or
     (type :: <&type>, #rest types) => (type :: <&type>)
   apply(^type-union, ^singleton(#f), type, types)
 end &override-function;
-
-// eof

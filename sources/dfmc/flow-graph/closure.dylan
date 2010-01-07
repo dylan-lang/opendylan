@@ -393,5 +393,3 @@ define method add-call-argument
   add-user!(arg, c);
   c.arguments := concatenate(vector(arg), c.arguments);
 end method;
-
-// eof

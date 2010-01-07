@@ -401,8 +401,3 @@ define method reduce-incomplete-classes (f :: <function>, x :: <signature-values
  => (ans)
   reduce-incomplete-classes-sov(f, signature-values(x), signature-number-values(x), next-method())
 end method;
-
-
-  
-  
-// eof

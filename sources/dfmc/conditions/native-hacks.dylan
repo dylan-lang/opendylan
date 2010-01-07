@@ -42,6 +42,3 @@ define macro with-program-restarts
   { restart (?spec:*) ?:body ... }
     => { exception (?spec) ?body ... }
 end macro with-program-restarts;
-
-
-// eof

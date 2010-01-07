@@ -1378,5 +1378,3 @@ define function java-unemit-class (jc :: <java-class-or-interface>) => ()
 end;
 
 format-out ("inited java-emit-class.dylan\n") ;
-  
-// eof

@@ -335,7 +335,3 @@ end method add-setter-method;
 //      descriptor :: <virtual-slot-descriptor>)
 //   #f
 // end method remove-setter-method;
-
-
-// eof
- 

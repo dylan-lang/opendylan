@@ -195,5 +195,3 @@ define method table-protocol (tepmt :: <type-estimate-sequence-match-table>)
            end;
          end)
 end;
-
-// eof

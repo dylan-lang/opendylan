@@ -98,5 +98,3 @@ define method as
     (class == <vector>, x :: <simple-byte-vector>) => (vector :: <vector>)
   x
 end method;
-
-// eof

@@ -178,5 +178,3 @@ end method;
 define method lookup-library-description (library-key :: <project>)
   project-current-compilation-context(library-key)
 end;
-
-// eof

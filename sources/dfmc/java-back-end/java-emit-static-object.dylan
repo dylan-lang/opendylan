@@ -890,5 +890,3 @@ define method cache-java-model (model :: <&object>) => (spec)
   slot-spec
 end;
 */
-// eof
-

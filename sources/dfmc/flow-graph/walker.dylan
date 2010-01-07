@@ -177,5 +177,3 @@ define method walk-computation-references
   next-method();
   walk(c, #f, c.c-variable); // !@#$ external
 end method;
-
-// eof

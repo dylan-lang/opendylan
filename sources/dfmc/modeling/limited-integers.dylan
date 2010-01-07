@@ -118,5 +118,3 @@ define method ^known-disjoint?
     (t :: <&type>, limint :: <&limited-integer>) => (well? :: <boolean>)
   ^known-disjoint?(limint, t)
 end method;
-
-// eof

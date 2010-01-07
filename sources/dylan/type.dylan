@@ -628,6 +628,3 @@ end method;
 define method map-congruency-classes (f :: <function>, t :: <limited-type>) => ()
   map-congruency-classes(f, limits(t))
 end method;
-
-
-// eof

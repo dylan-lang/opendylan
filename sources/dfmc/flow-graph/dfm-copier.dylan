@@ -278,5 +278,3 @@ define function current-dfm-copier (capacity :: <integer>) => (res :: <dfm-copie
             := make(<dfm-copier>)),
      capacity: capacity);
 end function;
-
-// eof

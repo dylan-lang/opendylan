@@ -155,5 +155,3 @@ end;
 define method immutable-model (object :: <model-properties>) => model;
   object
 end method;
-
-// eof

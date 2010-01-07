@@ -392,4 +392,3 @@ define class <jvm-stack-pair-type-model-double> (<jvm-stack-pair-type-model>)
 end;
 
 */
-// eof

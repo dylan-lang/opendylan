@@ -14,5 +14,3 @@ import-cl-functions
    system(get-cpu-times-user-micros)(as: cpu-times-user-micros),
    system(get-cpu-times-system-secs)(as: cpu-times-system-secs),
    system(get-cpu-times-system-micros)(as: cpu-times-system-micros));
-
-// eof

@@ -36,5 +36,3 @@ define module webster
   use registry-projects;
   use dfmc-c-ffi;
 end module;
-
-// eof

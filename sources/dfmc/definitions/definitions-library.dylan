@@ -271,5 +271,3 @@ define module dfmc-definitions
     <option>;
 
 end module;
-
-// eof

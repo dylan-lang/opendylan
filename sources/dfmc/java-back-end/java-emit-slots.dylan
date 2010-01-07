@@ -316,7 +316,3 @@ define function dylan-write-model-slot (jbb :: <java-basic-block>, slotd :: <&sl
     java-write (jbb, reader-spec) ;
   end
 end;
-  
-// eof
-
-

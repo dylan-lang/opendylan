@@ -6,5 +6,3 @@ Dual-license: GNU Lesser General Public License
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define constant parser = make(<parser>);
-
-// eof

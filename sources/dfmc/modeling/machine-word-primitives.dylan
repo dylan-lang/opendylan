@@ -480,5 +480,3 @@ define &simple-machine-word-primitive primitive-machine-word-unsigned-double-shi
 define &simple-machine-word-primitive primitive-machine-word-unsigned-double-shift-right
     (x-low :: <raw-machine-word>, x-high :: <raw-machine-word>, shift :: <raw-machine-word>)
  => (low :: <raw-machine-word>, high :: <raw-machine-word>);
-
-// eof

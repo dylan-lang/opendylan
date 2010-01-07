@@ -55,8 +55,3 @@ define open generic download-for-interactive-execution
     (runtime-context, downloadable-records :: <sequence>,
      component-name :: <byte-string>, init-function :: <byte-string>)
  => transaction-id;
-
-
-
-// eof
-

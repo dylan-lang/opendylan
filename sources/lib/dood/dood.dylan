@@ -961,6 +961,3 @@ end class;
 
 define sealed domain initialize (<walk-info>);
 define sealed domain make (subclass(<walk-info>));
-
-// eof
-

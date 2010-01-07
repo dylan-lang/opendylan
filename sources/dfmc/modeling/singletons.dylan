@@ -74,5 +74,3 @@ define method ^known-disjoint? (t1 :: <&type>, t2 :: <&singleton>)
  => (known-disjoint? :: <boolean>)
   ~^instance?(t2.^singleton-object, t1);
 end method ^known-disjoint?;
-
-// eof

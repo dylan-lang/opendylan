@@ -18,5 +18,3 @@ define library flying-squares
   use win32-gl;
   use win32-glu;
 end library flying-squares;
-
-// eof

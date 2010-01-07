@@ -136,6 +136,3 @@ end method;
 //  => (some? :: <boolean>, all? == #f)
 //   values(subjunctive-subtype?(<integer>, class, scu) | subjunctive-subtype?(class, <integer>, scu), #f)
 // end method;
- 
-// eof
- 

@@ -49,5 +49,3 @@ define module file-source-records-implementation
   use source-records-implementation;
   use file-source-records;
 end module;
-
-// eof

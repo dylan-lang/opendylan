@@ -475,5 +475,3 @@ define method print-source-record-source-location
     end;
   end;
 end method;
-
-// eof

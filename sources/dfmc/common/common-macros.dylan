@@ -89,5 +89,3 @@ define macro sealed-constructor-definer
     => { define sealed domain make(singleton(?class));
          define sealed domain initialize(?class); }
 end macro;
-
-// eof

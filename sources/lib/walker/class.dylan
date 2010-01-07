@@ -225,5 +225,3 @@ define function walker-deep-slot-descriptors
   walker-slot-descriptors-of
     (walker, class, walker-class-deep-slot-descriptors)
 end function;
-
-// eof

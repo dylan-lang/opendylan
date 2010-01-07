@@ -23,5 +23,3 @@ end graph-class;
 define graph-class <end-with-stack-structure> (<computation>)
   slot begin-wss :: <begin-with-stack-structure>, init-keyword: begin-wss:;
 end graph-class;
-
-// eof

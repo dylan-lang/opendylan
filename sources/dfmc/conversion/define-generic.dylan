@@ -383,5 +383,3 @@ define compiler-sideways method retract-form-model-objects (form :: <generic-def
   library-description-system-gf-init-code(form-library(form)) := #f;
   next-method()
 end method;
-
-// eof

@@ -400,5 +400,3 @@ define module dfmc-flow-graph
     estimated-copier-table-size,
     current-dfm-copier;
 end module;
-
-// eof

@@ -226,5 +226,3 @@ define inline method type-for-copy (x :: <set>)
     limited-set(element-type(x), #f)
   end if
 end method type-for-copy;
-
-// eof

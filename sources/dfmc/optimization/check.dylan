@@ -435,5 +435,3 @@ define function find-inline-copy
     copy
   end
 end function;
-
-// eof

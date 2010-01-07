@@ -394,7 +394,3 @@ end method;
 define inline method mangle-wrapper(name :: <string>) => (name :: <string>)
   concatenate($constant-prefix, name, $wrapper-suffix)
 end method;
-
-
-// eof
-

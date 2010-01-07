@@ -31,5 +31,3 @@ define inline method do-handling-parse-errors (body, fixup, #key context = "form
     end;
   end;
 end method;
-
-// eof

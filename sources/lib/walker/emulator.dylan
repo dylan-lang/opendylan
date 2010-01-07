@@ -97,5 +97,3 @@ define function walker-allocate-simple-object (class)
 end function;
 
 define constant walker-allocate-repeated-object = walker-allocate-object;
-
-// eof

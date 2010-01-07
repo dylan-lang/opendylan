@@ -168,5 +168,3 @@ define function copy-sequence-removing-returns
     end
   end;
 end function;
-
-// eof

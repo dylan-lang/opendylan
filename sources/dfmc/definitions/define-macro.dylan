@@ -1083,5 +1083,3 @@ define function macro-fragment? (fragment) => (well? :: <boolean>)
   instance?(fragment, <macro-call-fragment>) 
     & (lookup-binding(fragment-macro(fragment)) == dylan-binding(#"macro"))
 end function;
-
-// eof

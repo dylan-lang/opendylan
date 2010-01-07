@@ -298,5 +298,3 @@ define method equivalent-computation?
     & equivalent-computation?
         (computation-instance(c1), computation-instance(c2))
 end method;
-
-// eof

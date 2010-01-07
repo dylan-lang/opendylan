@@ -177,5 +177,3 @@ define method compute-form-dynamic-init-code (form :: <domain-definition>)
     end);
   end if;
 end method;
-
-// eof

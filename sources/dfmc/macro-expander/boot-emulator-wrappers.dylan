@@ -41,5 +41,3 @@ define method generate-expander-function (exp)
   end;
 end method;
 */
-
-// eof

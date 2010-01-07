@@ -104,5 +104,3 @@ define macro collect
   { collect (?:expression) }
     => { collect-last-into(?=_collector, ?expression) }
 end macro;
-
-// eof

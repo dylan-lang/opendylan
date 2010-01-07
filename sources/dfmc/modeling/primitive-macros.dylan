@@ -235,5 +235,3 @@ define macro &machine-word-primitive-body
     => { let ?parameter-name = ?extractor(?parameter-name);
          &machine-word-primitive-body (?extractor, ?generator, ?rest-parameters) ?body end }
 end macro &machine-word-primitive-body;
-
-// eof

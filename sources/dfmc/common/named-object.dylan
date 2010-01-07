@@ -31,5 +31,3 @@ end class <named-object>;
 define method named? (o :: <named-object>) => (well? :: <boolean>)
   o.name & #t
 end method named?;
-
-// eof

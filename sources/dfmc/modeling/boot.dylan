@@ -140,5 +140,3 @@ define method dood-disk-object
   dood-as-proxy(dood, object, dood-make-binding-definition-proxy)
 end method;
 */
-
-// eof

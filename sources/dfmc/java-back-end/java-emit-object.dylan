@@ -1675,5 +1675,3 @@ define function write-zip-file (file-name, entries :: <sequence>) => (size :: <i
     if (zip-stream)  close (zip-stream)  end
   end
 end;
-
-// eof

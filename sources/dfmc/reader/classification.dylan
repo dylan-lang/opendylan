@@ -187,5 +187,3 @@ define merge-method macro-case-begin-word-only, define-macro-body-word-only
 // TODO: Just for bootstrapping.
 define merge-method begin-word-only, define-macro-body-word-only
   => macro-case-begin-and-define-macro-body-word;
-
-// eof

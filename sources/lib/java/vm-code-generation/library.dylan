@@ -14,7 +14,3 @@ define library java-vm-code-generation
 
   export java-vm-code-generation ;
 end library;
-
-// eof
-
-

@@ -760,5 +760,3 @@ define method import-c-dylan-object (handle :: <c-dylan-object>)
   end;
   existing-object
 end;
-
-// eof

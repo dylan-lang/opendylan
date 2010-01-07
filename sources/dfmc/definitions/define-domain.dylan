@@ -153,5 +153,3 @@ define method uninstall-top-level-form-bindings
     (form :: <domain-definition>) => ()
   remove-modifying-definition(form-variable-name(form), form);
 end method;
-
-// eof

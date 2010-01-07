@@ -188,5 +188,3 @@ define function make-last-handler
 	       test: test,
 	       init-arguments: init-arguments)
 end function make-last-handler;
-
-// EOF

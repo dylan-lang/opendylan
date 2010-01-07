@@ -37,6 +37,3 @@ define C-callable-wrapper of DisplayStatus
   result code :: <C-int>;
   c-name: "DisplayStatus", export: #t, c-modifiers: "__stdcall";
 end C-callable-wrapper;
-
-// eof
-

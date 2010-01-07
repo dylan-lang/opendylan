@@ -944,5 +944,3 @@ define sealed method copy-sequence
      integer-as-raw(sz));
   result
 end method;
-
-// eof

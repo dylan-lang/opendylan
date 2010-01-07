@@ -461,6 +461,3 @@ define macro runtime-slot-offset-definer
   }
 
 end macro;
-
-
-// eof

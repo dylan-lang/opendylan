@@ -234,5 +234,3 @@ end method emit-dfm;
 define method emit-dfm (back-end :: <c-back-end>, stream :: <stream>, o,
 			#rest flags, #key, #all-keys) => ()
 end method emit-dfm;
-
-// eof

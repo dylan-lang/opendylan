@@ -132,5 +132,3 @@ define method output-computation
      c.cleanups, c.next-computation);
   indentd-format(stream, depth, "END UNWIND-PROTECT\n");
 end method;
-
-// eof

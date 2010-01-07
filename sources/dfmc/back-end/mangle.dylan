@@ -115,5 +115,3 @@ define method global-mangle
   mangle-namespace-spread-into(mangler, "dylan", "dylan");
   mangler-as-string(mangler)
 end method;
-
-// eof

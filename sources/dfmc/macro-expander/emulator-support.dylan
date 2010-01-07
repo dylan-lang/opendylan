@@ -29,5 +29,3 @@ define function pattern-variable-name (var)
          token-value: name)
   end;
 end function;
-
-// eof

@@ -18,6 +18,3 @@ define library duim-gl-demo
   use win32-gl;
   use win32-glu;
 end library duim-gl-demo;
-
-// eof
-

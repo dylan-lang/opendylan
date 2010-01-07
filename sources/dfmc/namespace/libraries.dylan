@@ -1154,6 +1154,3 @@ define sideways method dood-disk-object
     dood-disk-object-default(dood, object)
   end;
 end method;
-
-// eof
-

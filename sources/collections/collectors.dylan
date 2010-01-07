@@ -179,5 +179,3 @@ end method;
 define method sequence-collection-not-yet-implemented (collector, seq)
   error("Sorry, sequence collection not yet implemented.");
 end method;
-
-// eof

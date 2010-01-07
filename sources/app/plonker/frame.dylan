@@ -267,6 +267,3 @@ define method first-keyboard-frame ()
     if (open) close-midi-device(dev) end;
   end;
 end method;
-
-// eof
-

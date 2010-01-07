@@ -264,5 +264,3 @@ op:
 end macro;
 
 */
-
-// eof

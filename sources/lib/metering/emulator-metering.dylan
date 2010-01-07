@@ -88,5 +88,3 @@ define macro with-metering
   { with-metering (?set:expression, #rest ?options) ?:body end }
     => { do-with-metering(?set, method () ?body end, ?options) }
 end macro;
-
-// eof

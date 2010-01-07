@@ -274,5 +274,3 @@ end method;
 define method compiling-for-macroexpansion? () => (well? :: <boolean>)
   (*expansion-stream* | *trace-stream*) & #t
 end method;
-
-// eof

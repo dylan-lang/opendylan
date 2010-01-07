@@ -96,7 +96,3 @@ define function trim-whitespace (line :: <string>, start)
 	end method;
   fwd(line, start, size(line))
 end function;
-
-
-// eof
-

@@ -91,5 +91,3 @@ define module dylan-script-internals
   use ole-automation;
   use lotus-notes;
 end module;
-
-// eof

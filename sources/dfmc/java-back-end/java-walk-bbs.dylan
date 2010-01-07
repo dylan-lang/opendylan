@@ -1207,6 +1207,3 @@ define function describe-dylan-bbs (bbs :: <bb-collection>)
     format-out ("}\n")
   end
 end;
-
-    
-// eof

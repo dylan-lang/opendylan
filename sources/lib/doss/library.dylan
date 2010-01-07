@@ -20,5 +20,3 @@ define library doss
 
   export doss, doss-internals;
 end library doss;
-
-// eof

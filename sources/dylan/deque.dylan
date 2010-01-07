@@ -733,6 +733,3 @@ define inline method map-as-one
   for (e in collection) push-last(result, function(e)) end for;
   result
 end method map-as-one;
-
-// eof 
-

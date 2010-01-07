@@ -18,6 +18,3 @@ define module emtiles
   use emulator-simple-draw;
   use tiles;
 end module;
-
-// eof
-

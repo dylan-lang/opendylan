@@ -133,5 +133,3 @@ define function walker-error (walker, object, slot-descriptor, condition)
   #f
 end function;
 */
-
-// eof

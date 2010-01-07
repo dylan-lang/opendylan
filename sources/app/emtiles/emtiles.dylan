@@ -17,6 +17,3 @@ end method;
     tv.idle
   end;
 */
-
-// eof
-

@@ -18,5 +18,3 @@ define module memory-manager
     mark-garbage, block-promotion,
     room;
 end module;
-
-// eof

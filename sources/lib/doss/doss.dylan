@@ -132,5 +132,3 @@ define function my-format (#rest all-args) => ()
     apply(format, *debug-stream*, all-args)
   end
 end function my-format;
-
-// eof

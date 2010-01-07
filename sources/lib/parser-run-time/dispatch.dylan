@@ -421,5 +421,3 @@ define method recover (symbol, value, history)
 	    make(<string>),
 	    reverse!(tail(history))));
 end method;
-
-// eof

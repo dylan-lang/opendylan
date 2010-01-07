@@ -31,5 +31,3 @@ define inline method walker-allocate-object (class :: <class>, size) => (value)
 end method;
 
 define dont-walk-object <unbound> using <copier>;
-
-// eof

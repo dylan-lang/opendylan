@@ -138,5 +138,3 @@ define method uninstall-top-level-form (form :: <library-definition>)
   retract-library-parsing(description);
   ensure-language-definition(description);
 end method;
-
-// eof

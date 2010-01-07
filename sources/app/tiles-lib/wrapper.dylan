@@ -85,5 +85,3 @@ define method do-mouse-drag-action (view :: <view>, x, y)
      end if;
   end unless;
 end method;
-
-// eof

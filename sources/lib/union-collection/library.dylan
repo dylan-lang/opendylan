@@ -9,5 +9,3 @@ define library union-collection
   use functional-dylan;
   export union-collection;
 end module;
-
-// eof

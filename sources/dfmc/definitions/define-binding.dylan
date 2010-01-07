@@ -83,5 +83,3 @@ define method model-variable-using-definition
       | error("Can find variable for model %s", model-object);
   end;
 end;
-
-// eof

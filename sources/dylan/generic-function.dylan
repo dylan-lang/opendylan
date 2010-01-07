@@ -706,6 +706,3 @@ define method function-return-values (gf :: <generic-function>, #next next-metho
   check-generic-incomplete (gf, "function-return-values", #f) ;
   next-method ()
 end;
-
-// eof
- 

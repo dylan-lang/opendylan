@@ -161,5 +161,3 @@ end method;
 define open abstract serious-program-warning <manual-parser-error> 
     (<reader-error>)
 end serious-program-warning;
-
-// eof

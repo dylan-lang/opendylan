@@ -100,5 +100,3 @@ define function expand-macro-call
     #f
   end;
 end function;
-
-// eof

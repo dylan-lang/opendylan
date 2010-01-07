@@ -37,5 +37,3 @@ define method parse-value-bindings (bindings)
 	   value-rest-variable-spec:      value-rest);
   spec
 end method;
-
-// eof

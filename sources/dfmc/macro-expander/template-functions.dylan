@@ -62,5 +62,3 @@ end method;
 define method generate-one-template-function (element :: <substitution>)
   generate-substitution-function(element);
 end method;
-
-// eof

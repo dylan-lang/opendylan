@@ -155,5 +155,3 @@ end method;
 //     do(fn, heap-defined-objects(heap))
 //   end for;
 // end function;
-
-// eof

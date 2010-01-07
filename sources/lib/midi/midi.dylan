@@ -37,5 +37,3 @@ end macro;
 
 define open generic select-midi-instrument 
     (md :: <midi-device>, mc :: <midi-channel>, mv :: <midi-instrument>) => ();
-
-// eof

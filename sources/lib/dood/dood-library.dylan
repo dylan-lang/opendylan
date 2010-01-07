@@ -180,5 +180,3 @@ define module dood
     key-sequence-vector,
     symbol-less-than?;
 end module;
-
-// eof

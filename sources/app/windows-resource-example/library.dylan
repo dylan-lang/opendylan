@@ -54,5 +54,3 @@ define module windows-resource-example
   use win32-resource-database;
   use example-support;
 end;
-
-// eof

@@ -9,5 +9,3 @@ define method variable-value
     (label :: <string>, module, library, #key default) => (object)
   default
 end method;
-
-// eof

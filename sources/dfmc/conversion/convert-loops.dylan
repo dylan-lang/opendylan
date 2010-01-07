@@ -907,5 +907,3 @@ define method convert-loop
 
   match-values-with-context(env, context, loop-c, loop-c, #f)
 end convert-loop;
-
-// eof

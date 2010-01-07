@@ -266,4 +266,3 @@ break(); //MT
   format(stream, "%s\n", o.code);
 end method;
 */
-// eof

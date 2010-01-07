@@ -898,5 +898,3 @@ define compiler-open generic form-incremental?
 
 define compiler-open generic form-redefinition?
     (form :: <top-level-form>) => (well? :: <boolean>);
-
-// eof

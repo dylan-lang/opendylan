@@ -180,6 +180,3 @@ define method dood-world-unregister-object-dood
   remove-key!(dood-world-objects(world), object)
 end method;
 */
-
-/// EOF
-

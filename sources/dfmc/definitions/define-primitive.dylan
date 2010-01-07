@@ -53,5 +53,3 @@ end function;
 // Signature parsing.
 
 define constant <primitive-signature-spec> = <signature-spec>;
-
-// eof

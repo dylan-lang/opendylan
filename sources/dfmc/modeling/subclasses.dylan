@@ -143,6 +143,3 @@ define method ^known-disjoint?
     (singleton :: <&singleton>, subc :: <&subclass>) => (value :: <boolean>)
   ~^subtype?(singleton, subc)
 end method;
-
-
-// eof

@@ -426,6 +426,3 @@ define inline method limited-list
     (type :: <type>) => (list-type :: subclass(<limited-list>))
   <simple-object-list>
 end method;
-
-// eof
-

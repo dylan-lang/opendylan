@@ -197,5 +197,3 @@ define constant  $dylan-type-vector-sig$ = arraysig ($dylan-type-class-sig$) ;
 
 
 // define constant  $java-iep-fixed-args$ = 4 ;  // not used
-
-// eof

@@ -20,5 +20,3 @@ define compiler-sideways method compute-and-install-form-model-objects
       (form-variable-name(form), make-compile-time-literal(0))
   end unless;
 end method;
-
-// eof

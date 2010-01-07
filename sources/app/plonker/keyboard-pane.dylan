@@ -202,6 +202,3 @@ define method compute-hit-note
     #f
   end;
 end method;
-
-// eof
-

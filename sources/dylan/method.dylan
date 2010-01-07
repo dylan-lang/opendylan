@@ -49,8 +49,3 @@ define method reduce-incomplete-classes (f :: <function>,l :: <lambda>, ans)
  => (ans)
   reduce-incomplete-classes(f, function-signature(l), ans)
 end method;
-
-
-
-// eof
- 

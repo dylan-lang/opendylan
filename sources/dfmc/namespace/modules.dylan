@@ -826,5 +826,3 @@ define sideways method resolve-qualified-variable-name-module
   end;
   module
 end method;
-
-// eof

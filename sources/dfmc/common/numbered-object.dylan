@@ -15,5 +15,3 @@ end method;
 define compiler-open class <numbered-object> (<object>)
   slot id :: <integer> = make-next-id();
 end class;
-
-// eof

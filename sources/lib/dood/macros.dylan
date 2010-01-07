@@ -214,6 +214,3 @@ define macro with-saved-position
 	 dood-position(?dood) := saved-position;
 	 value }
 end macro;
-  
-// eof
-

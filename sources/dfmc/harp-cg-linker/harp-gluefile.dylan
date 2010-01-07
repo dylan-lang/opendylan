@@ -705,6 +705,3 @@ define method output-imported-data
   
   emit-data-footer(back-end, stream, name);
 end method;
-
-
-// eof

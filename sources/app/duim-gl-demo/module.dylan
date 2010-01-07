@@ -20,6 +20,3 @@ define module duim-gl-demo
   use win32-gl;
   use win32-glu;
 end module duim-gl-demo;
-
-// eof
-

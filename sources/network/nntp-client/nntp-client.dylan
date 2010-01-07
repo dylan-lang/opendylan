@@ -66,5 +66,3 @@ define method close-nntp-stream
     (stream :: <stream>) => ()
   close(stream);
 end method;
-
-// eof

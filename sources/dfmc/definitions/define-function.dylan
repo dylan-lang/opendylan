@@ -35,6 +35,3 @@ define &macro function-definer
          #{ define ?mods constant ?name = method ?signature-and-body end }
        end;
 end &macro;
-
-
-// eof

@@ -312,5 +312,3 @@ end method;
 //   let names = f.exported-filtered-key->key(name);
 //   if (empty?(names)) #f else names.first end
 // end method;
-
-// eof

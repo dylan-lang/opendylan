@@ -70,6 +70,3 @@ define method print-object
   // what %= produces;  %s leads to a false verbose? value, which the
   // condition printing interprets as terse.
 end method;
-
-// eof
-

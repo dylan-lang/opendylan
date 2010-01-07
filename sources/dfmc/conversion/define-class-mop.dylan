@@ -1506,5 +1506,3 @@ define macro for-layout-repeated-slot-value
     => { do-layout-repeated-slot-values
            (method (?desc, ?index, ?variable) ?body end, ?expression) }
 end macro;
-
-// eof

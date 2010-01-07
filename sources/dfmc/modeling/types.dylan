@@ -263,5 +263,3 @@ end &override-function;
 define method type-checked-at-run-time? (type) 
   ~(raw-type?(type) | type == dylan-value(#"<object>"))
 end method;
-
-// eof

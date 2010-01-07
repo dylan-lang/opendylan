@@ -41,5 +41,3 @@ define function ^domain-generic-function (object :: <&domain>)
   let model = binding & binding-model-object(binding, default: #f);
   model
 end function;
-
-// eof

@@ -507,5 +507,3 @@ end function main;
 begin
   main();
 end;
-
-// eof

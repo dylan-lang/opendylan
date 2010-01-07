@@ -563,5 +563,3 @@ define sealed method cell-representation
     (type :: <&type>) => (type :: <&type>)
   repeated-representation(type)
 end method;
-
-// eof

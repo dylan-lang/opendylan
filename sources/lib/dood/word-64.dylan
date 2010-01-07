@@ -92,5 +92,3 @@ define inline function dood-write-machine-word
   // write-element(dood, as(<integer>, b7));
   // write-element(dood, as(<integer>, b8));
 end function;
-
-// eof

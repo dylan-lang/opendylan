@@ -151,6 +151,3 @@ define method write-new-line-terminated-text
     new-line(stream);
   end;
 end method;
-
-// eof
-

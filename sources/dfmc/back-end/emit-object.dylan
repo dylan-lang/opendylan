@@ -363,5 +363,3 @@ define method emit-name-internal
  => (name)
   o.raw-type-c-name;
 end method;
-
-// eof
