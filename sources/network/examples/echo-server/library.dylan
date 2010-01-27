@@ -7,18 +7,16 @@ Dual-license: GNU Lesser General Public License
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library echo-server
-  use functional-dylan;
+  use common-dylan;
   use io;
   use network;
   export echo-server;
 end library;
 
 define module echo-server
-  use functional-dylan;
+  use dylan;
   use streams;
-  use standard-io;
-  use format;
-  use format-out;
+  use simple-io;
   use threads;
   use sockets;
 end module;

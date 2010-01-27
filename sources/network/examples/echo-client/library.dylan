@@ -7,17 +7,16 @@ Dual-license: GNU Lesser General Public License
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library echo-client
-  use functional-dylan;
+  use common-dylan;
   use io;
   use network;
   export echo-client;
 end library;
 
 define module echo-client
-  use functional-dylan;
+  use dylan;
   use streams;
   use standard-io;
-  use format;
-  use format-out;
+  use simple-io;
   use sockets;
 end module;

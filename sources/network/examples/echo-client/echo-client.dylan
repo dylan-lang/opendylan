@@ -26,6 +26,7 @@ define method echo-client () => ();
 	error("server died unexpectedly");
       end if;
       write-line(*standard-output*, echoed-stuff);
+      force-output(*standard-output*);
       stuff-to-echo := 
 	read-line(*standard-input*, on-end-of-stream: #"eoi");
     end until;
