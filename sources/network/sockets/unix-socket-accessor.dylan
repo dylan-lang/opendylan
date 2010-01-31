@@ -592,7 +592,7 @@ define function accessor-local-host-name()
 end function;
 
 define constant <accessor-socket-descriptor> 
-  = type-union(<machine-word>, <integer>);
+  = type-union(<C-void*>, <machine-word>, <integer>);
 
 // Return Values
 // 

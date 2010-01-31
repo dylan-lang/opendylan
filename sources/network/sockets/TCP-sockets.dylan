@@ -87,11 +87,17 @@ end method;
 
 define method make (class == <TCP-socket>, #rest initargs,
 		    #key element-type = <byte-character>,
-		    direction: requested-direction = #"input-output")
+		    direction: requested-direction = #"input-output",
+		    ssl?)
  => (stream :: <TCP-socket>)
-  apply(make, client-class-for-element-type(class, element-type),
-        direction: requested-direction,
-        initargs)
+  let s = apply(make, client-class-for-element-type(class, element-type),
+		direction: requested-direction,
+		initargs);
+  if (ssl?)
+    apply(make, <ssl-socket>, element-type:, element-type, lower:, s, initargs)
+  else
+    s
+  end
 end method make;
 
 define generic client-class-for-element-type
@@ -160,6 +166,17 @@ end method;
 define inline method socket-code (socket :: <TCP-server-socket>)
   $SOCK-STREAM
 end method;
+
+define method make
+ (class == <TCP-server-socket>, #rest initargs, #key ssl?, #all-keys)
+ => (res :: <TCP-server-socket>)
+  let s = next-method();
+  if (ssl?)
+    apply(make, <ssl-server-socket>, lower:, s, initargs)
+  else
+    s
+  end
+end;
 
 define method initialize 
     (new-server-socket :: <platform-server-socket>, #rest initargs,

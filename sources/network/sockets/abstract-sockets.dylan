@@ -29,7 +29,7 @@ define open generic local-port
 // maybe to restrictive return type -- object instead?
 define open generic socket-descriptor
     (the-socket :: type-union(<abstract-socket>, <socket-accessor>)) 
- => (handle-or-fd :: false-or(type-union(<integer>, <machine-word>)));
+ => (handle-or-fd :: false-or(<accessor-socket-descriptor>));
 
 //  Should think about meanings for the keys used by streams close
 // #key abort? :: <boolean>, wait? :: <boolean>, synchronize? ::
