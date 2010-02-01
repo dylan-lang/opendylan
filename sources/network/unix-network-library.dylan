@@ -10,6 +10,7 @@ define library network
   use functional-dylan;
   use C-FFI;
   use IO;
+  use system, import: { file-system };
   export unix-sockets,
          openssl-sockets,
          sockets;
@@ -229,6 +230,10 @@ define module openssl-sockets
 
   export $SSL-MODE-AUTO-RETRY, $SSL-FILETYPE-PEM;
 
+  export $SSL-ERROR-NONE, $SSL-ERROR-SSL, $SSL-ERROR-WANT-READ,
+    $SSL-ERROR-WANT-WRITE, $SSL-ERROR-WANT-X509-LOOKUP, $SSL-ERROR-SYSCALL,
+    $SSL-ERROR-ZERO-RETURN, $SSL-ERROR-WANT-CONNECT, $SSL-ERROR-WANT-ACCEPT;
+
   export SSL-set-mode, PEM-read-X509, SSL-context-add-extra-chain-certificate;
 end module;
 
@@ -279,6 +284,10 @@ define module sockets
       <socket-accessor-error>,
         explanation, calling-function;
   create start-tls;
+
+  create <ssl-failure>, <pem-file-failure>, <pem-file-not-available>,
+    <pem-file-not-readable>, <error-reading-pem-file>, <x509-failure>,
+    <ssl-error>, <err-error>;
 end module sockets;
 
 define module sockets-internals
@@ -313,6 +322,7 @@ define module sockets-internals
 	      send,  //  use unix-send-buffer instead
 	      recv};  //  use unix-recv-buffer instead
   use openssl-sockets;
+  use file-system, import: { file-exists?, file-property, <pathname> };
   use sockets, export: all;
   create
     <general-TCP-socket>, <byte-char-TCP-socket>, <byte-TCP-socket>;

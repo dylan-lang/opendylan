@@ -92,7 +92,7 @@ end;
 
 define C-function ERR-error-string
   input parameter errcode :: <C-unsigned-long>;
-  input parameter buffer :: <C-string>;
+  input parameter buffer :: <C-void*>;
   result res :: <C-string>;
   c-name: "ERR_error_string"
 end;
@@ -207,6 +207,16 @@ end;
 //some constants
 define constant $SSL-MODE-AUTO-RETRY = 4;
 define constant $SSL-FILETYPE-PEM = 1;
+
+define constant $SSL-ERROR-NONE = 0;
+define constant $SSL-ERROR-SSL = 1;
+define constant $SSL-ERROR-WANT-READ = 2;
+define constant $SSL-ERROR-WANT-WRITE = 3;
+define constant $SSL-ERROR-WANT-X509-LOOKUP = 4;
+define constant $SSL-ERROR-SYSCALL = 5; /* look at error stack/return value/errno */
+define constant $SSL-ERROR-ZERO-RETURN = 6;
+define constant $SSL-ERROR-WANT-CONNECT = 7;
+define constant $SSL-ERROR-WANT-ACCEPT = 8;
 
 //these are macros or other stuff defined in support.c
 define C-function SSL-set-mode
