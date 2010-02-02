@@ -15,6 +15,7 @@ define module ssl-smtp-client
   use standard-io;
   use regular-expressions;
   use sockets;
+  use ssl-sockets;
   use streams;
 
   export *debug-smtp*;

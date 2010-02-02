@@ -10,6 +10,7 @@ define library ssl-echo-server
   use common-dylan;
   use io;
   use network;
+  use ssl-network;
   export ssl-echo-server;
 end library;
 

@@ -43,7 +43,7 @@ define macro interruptible-system-call
     end iterate }
 end macro;
 
-define class <unix-socket-accessor> (<socket-accessor>)
+define open class <unix-socket-accessor> (<socket-accessor>)
   slot remote-host :: false-or(<ipv4-address>), init-value: #f;
   slot remote-port :: false-or(<integer>), init-value: #f;
   slot local-host :: false-or(<ipv4-address>), init-value: #f;

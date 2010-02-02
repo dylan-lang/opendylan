@@ -1,4 +1,4 @@
-module: openssl-sockets
+module: openssl-wrapper
 synopsis: ssl support for sockets
 author: Hannes Mehnert, hannes@mehnert.org
 copyright: BSD, GNU LGPL

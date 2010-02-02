@@ -13,7 +13,6 @@ Files:  unix-network-library
         unix-sockets/address-interfaces
         unix-sockets/errno
         unix-sockets/poll
-	openssl-sockets/c-wrapper
 	sockets/socket-conditions
 	sockets/unix-socket-accessor
 	sockets/internet-address
@@ -24,9 +23,6 @@ Files:  unix-network-library
 	sockets/unix-TCP-socket-accessor
 	sockets/UDP-sockets
 	sockets/unix-UDP-sockets
-	openssl-sockets/openssl-wrapper
-c-libraries: -lssl -lcrypto
-c-source-files: openssl-sockets/support.c
 Other-Files:  Open-Source-License.txt
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.

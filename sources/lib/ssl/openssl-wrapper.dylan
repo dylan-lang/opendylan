@@ -1,4 +1,4 @@
-module: sockets-internals
+module: ssl-sockets
 synopsis: ssl support for sockets
 author: Hannes Mehnert, hannes@mehnert.org
 copyright: BSD, GNU LGPL
@@ -72,7 +72,7 @@ define function read-pem (filename :: <string>) => (result :: <x509>)
 end;
 
 define abstract class <ssl-socket> (<TCP-socket>)
-  slot underlying-socket :: <socket>, init-keyword: lower:;
+  constant slot underlying-socket :: <socket>, init-keyword: lower:;
   slot ssl-context :: <SSL-CTX>;
 end;
 
@@ -292,7 +292,7 @@ define function ssl-error (ssl, r) => ()
   if (err == $SSL-ERROR-SSL)
     ERR-error(prefix: "received ssl error");
   elseif (err == $SSL-ERROR-SYSCALL)
-    signal(make(<ssl-error>, format-string: "received syscall error %d while calling openssl", format-arguments: unix-errno()));
+    signal(make(<ssl-error>, format-string: "received syscall error %d while calling openssl", format-arguments: errno()));
   end;
   signal(make(<ssl-error>, format-string: "%d %s",
 	      format-arguments: list(err,
@@ -403,3 +403,13 @@ define sideways method platform-accessor-class
   ignore(locator);
   <unix-ssl-socket-accessor>
 end method platform-accessor-class;
+
+define sideways method ssl-socket-class (class == <TCP-socket>)
+ => (ssl-class == <ssl-socket>)
+  <ssl-socket>
+end;
+
+define sideways method ssl-server-socket-class (class == <TCP-server-socket>)
+ => (ssl-server-class == <ssl-server-socket>)
+  <ssl-server-socket>
+end;
