@@ -13,9 +13,9 @@ MPS  - A memory management system. When using a HARP back-end, MPS manages
        manages garbage collection.
 DFM  - Dylan Flow Machine.
 DFMC - 
-HARP - An artificial assembly language. HARP code is transformed into the
-       target processor's actual assembly language. The other back-ends are
-       Java byte-code and C.
+HARP - Harlequin Abstract RISC Processor. An artificial assembly language.
+       HARP code is transformed into the target processor's actual assembly
+       language. The other back-ends are Java byte-code and C.
 RTG  - 
 DOOD - File-based object-oriented database.
 DOSS - Dylan object serialization format.
@@ -207,7 +207,7 @@ sources
     regular-expressions - Regex library.
     string-extensions   - Add'l string methods.
     timers              - For profiling blocks of code.
-    t-list              - A variation of a <dequeue>. Don't know its purpose.
+    t-list              - A variation of a <deque>. Don't know its purpose.
     union-collection    - Iterate several collections sequentially.
     unix-portability    - Wrappers for errno and lseek.
   macos                 - Mac OS Carbon API wrappers.
@@ -245,7 +245,7 @@ sources
 Unclassified
 ------------
 
-These may or may not be used or useful, but either I haven't look at them,
+These may or may not be used or useful, but either I haven't looked at them,
 or I don't know what they do, or I don't know how to properly describe them.
 
 admin                   
