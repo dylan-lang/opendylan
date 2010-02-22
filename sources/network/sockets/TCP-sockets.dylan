@@ -90,6 +90,22 @@ end method;
 define open generic ssl-socket-class (socket :: <type>) => (result :: <type>);
 define open generic ssl-server-socket-class (socket :: <type>) => (result :: <type>);
 
+// ssl-network implements these methods (sideways).  The failure mode for
+// not using ssl-network is pretty bad so try to soften the blow.
+
+define method ssl-server-socket-class (class :: <type>)
+ => (ssl-server-class :: <type>)
+  error("The SSL server socket class for %= is unknown.  "
+          "Perhaps you need to 'use ssl-network' in your library definition?")
+end;
+
+define method ssl-socket-class (class :: <type>)
+ => (ssl-server-class :: <type>)
+  error("The SSL socket class for %= is unknown.  "
+          "Perhaps you need to 'use ssl-network' in your library definition?")
+end;
+
+
 define method make (class == <TCP-socket>, #rest initargs,
 		    #key element-type = <byte-character>,
 		    direction: requested-direction = #"input-output",
