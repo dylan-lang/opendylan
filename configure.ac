@@ -75,7 +75,7 @@ AC_SUBST(with_mps)
 
 AC_ARG_WITH(gc,
             AC_HELP_STRING([--with-gc=PATH],
-			   [Path to Boehm GC libraries.]))
+			   [Path of Boehm GC installation.]))
 AC_SUBST(with_gc)
 
 AC_ARG_WITH(library-source,

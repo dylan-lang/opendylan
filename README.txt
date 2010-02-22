@@ -79,9 +79,9 @@ XML::Parser module, use CPAN:
 
   sudo cpan XML::Parser
 
-Download, make, and install the Boehm garbage collection library. On the Mac,
-Open Dylan uses that instead of the MPS library. I used the following
-configure settings:
+Install the Boehm garbage collection library. On the Mac, Open Dylan uses that
+instead of the MPS library. You can use a package manager or download, make,
+and install it directly. I have used the following configure settings:
 
   ./configure --enable-parallel-mark --enable-threads=posix
     --enable-large-config --enable-gc-debug USE_I686_PREFETCH=1
@@ -94,7 +94,7 @@ prefix to whatever you want, and set the correct path to the Boehm GC
 libraries):
 
   ./autogen.sh
-  ./configure --prefix=/usr/local/opendylan --with-gc=/usr/local/lib
+  ./configure --prefix=/usr/local/opendylan --with-gc=/usr/local
   make
   sudo make install
 
