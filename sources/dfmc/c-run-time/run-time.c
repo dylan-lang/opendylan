@@ -7,11 +7,6 @@
 #include <math.h>
 #include <gc/gc.h>
 
-#ifdef macintosh
-#include <MacTypes.h>
-#include <Timer.h>
-#endif
-
 #if defined(__alpha) || defined(__mips64) || defined(__x86_64__)
 #define NO_LONGLONG 1
 #define LONG_BIT 64
@@ -40,12 +35,6 @@
 
 /* PLATFORM SPECIFIC HAX */
  
-#ifdef macintosh
-#define rint(x) floor(x)
-#define strncasecmp(s1,s2,n) strncmp(s1, s2, n)
-#define putenv(X)
-#endif
-
 #ifdef WIN32
 #define rint(x) floor(x)
 #define strncasecmp _strnicmp
@@ -62,8 +51,6 @@ extern OBJECT KPunboundVKi;
 
 #if defined(WIN32)
 #define INLINE __inline
-#elif defined(macintosh)
-#define INLINE 
 #else
 #define INLINE inline
 #endif
@@ -77,9 +64,7 @@ D primitive_runtime_module_handle()
 /* SUPPORT */
 
 void primitive_break() {
-#if defined(macintosh)
-  Debugger();
-#elif defined(WIN32)
+#if defined(WIN32)
   extern void __stdcall DebugBreak(void);
   DebugBreak();
 #else
@@ -4374,33 +4359,7 @@ DSINT primitive_set_errno (DSINT code) {
 }
 
 DCBSTR primitive_errstr (DSINT no) {
-#ifdef macintosh
-  static char text[32];
-  sprintf(text, "error %d", no);
-  return(text);
-#else
   return(sys_errlist[no]);
-#endif
-}
-
-/* FILE PRIMITIVES */
-
-/*---*** NOTE: These aren't really primitives but are called 
-  ---*** by various Dylan libraries by the direct C-FFI.  They
-  ---*** should be renamed psuedo_primitive_... */
-
-#ifdef macintosh
-#include <stat.mac.h>
-#else
-#include <sys/types.h>
-#include <sys/stat.h>
-#endif
-
-DBOOL primitive_file_existsQ(DBSTR filename) {
-  struct stat stat_buffer;
-  int result = stat(filename, &stat_buffer);
-
-  return(result>=0);
 }
 
 /* TERMINAL */
@@ -4431,189 +4390,14 @@ void  primitive_exit_application (DSINT code) {
   exit(code);
 }
 
-#if defined (macintosh) || defined (WIN32)
-
-int connect_to_numbered_server (char *host, int port) { 
-  ignore(host); ignore(port);
-  return(-1);
-}
-int connect_to_named_server (char *host, char *service) {
-  ignore(host); ignore(service);
-  return(-1);
-}
-
-#else
-
-#if __hp9000s300 || __hp9000s800 || __hp9000s700
-#define HPUX 1
-#endif
-
-#ifdef SUN3
-#ifndef HPUX
-junk
-#endif
-#endif
-
-#include <stdio.h>
-#include <sys/types.h>
-#include <errno.h>
-#include <sys/ioctl.h>
-
-#ifdef MIPS
-#ifndef IRIX
-#include <bsd/netinet/in.h>
-#include <bsd/netdb.h>
-#include <bsd/sys/socket.h>
-#include <bsd/sys/un.h>
-#else				/* IRIX */
-#include <netinet/in.h>
-#include <netdb.h>
-#include <sys/socket.h>
-#include <sys/un.h>
-#endif				/* IRIX */
-#include <sys/file.h>
-#else				/* MIPS */
-#include <netinet/in.h>
-#include <netdb.h> 
-#include <sys/socket.h>
-#ifdef OLIVETTI
-#include <sys/file.h>
-#else				/* OLIVETTI */
-#include <sys/un.h>
-
-#if INTERGRAF | HPUX | SOLARIS2
-#include <sys/file.h>
-#endif
-
-#endif				/* OLIVETTI */
-#endif				/* MIPS */
-
-#include <fcntl.h>
-
-#ifndef SO_DONTLINGER
-#define SO_DONTLINGER ~SO_LINGER
-#endif
-
-int connect_to_numbered_server (host, port)
-     char *host;
-     unsigned port;
-{
-  struct sockaddr_in inaddr;	/* INET socket address. */
-  struct sockaddr *addr;	/* address to connect to */
-  struct hostent *host_ptr;
-  struct servent *sp;
-  int addrlen;			/* length of address */
-  extern struct hostent *gethostbyname();
-  int fd;			/* Network socket */
-  {
-    {
-      /* Get the statistics on the specified host. */
-
-      if ((inaddr.sin_addr.s_addr = inet_addr(host)) == -1) 
-	{
-	  if ((host_ptr = gethostbyname(host)) == NULL) 
-	    {
-	      /* No such host! */
-	      errno = EINVAL;
-	      return(-1);
-	    }
-	  /* Check the address type for an internet host. */
-	  if (host_ptr->h_addrtype != AF_INET) 
-	    {
-	      /* Not an Internet host! */
-	      errno = EPROTOTYPE;
-	      return(-1);
-	    }
-	  /* Set up the socket data. */
-	  inaddr.sin_family = host_ptr->h_addrtype;
-	  bcopy((char *)host_ptr->h_addr, 
-		(char *)&inaddr.sin_addr, 
-		sizeof(inaddr.sin_addr));
-	} 
-      else 
-	{
-	  inaddr.sin_family = AF_INET;
-	}
-      addr = (struct sockaddr *) &inaddr;
-      addrlen = sizeof (struct sockaddr_in);
-      inaddr.sin_port = htons(port);
-
-      /*
-       * Open the network connection.
-       */
-      if ((fd = socket((int) addr->sa_family, SOCK_STREAM, 0)) < 0){
-	return(-1);	    /* errno set by system call. */}
-      /* make sure to turn off TCP coalescence */
-#ifdef TCP_NODELAY
-      {
-	int mi;
-	setsockopt (fd, IPPROTO_TCP, TCP_NODELAY, &mi, sizeof (int));
-      }
-#endif
-    }
-    if (connect(fd, addr, addrlen) == -1) 
-      {
-	(void) close (fd);
-	return(-1); 	    /* errno set by system call. */
-      }
-  }
-  /*
-   * Return the id if the connection succeeded.
-   */
-  return(fd);
-}
-
-int connect_to_named_server (host, service)
-     char *host ,*service;
-{
-  struct servent *sp;
-  /* Lets find the service */
-  if ((sp = getservbyname(service, "tcp")) == NULL) 
-    return -1;
-  else
-    return(connect_to_numbered_server(host, ntohs(sp->s_port)));
-}
-
-#endif
 
 /*
  * TIMING PRIMITIVES
  */
 
-/* Macintosh */
-
-#if defined(macintosh)
-
-static UnsignedWide start;
-
-void primitive_start_timer()
-{
-  Microseconds(&start);
-}
-
-D primitive_stop_timer()
-{
-  UnsignedWide stop;
-  UINT64 *started, *finished, elapsed;
-  INT32  seconds, microseconds;
-    Microseconds(&stop);
-    started  = (UINT64*)&start;
-    finished = (UINT64*)&stop;
-    elapsed  = *finished - *started;
-    seconds      = (INT32)(elapsed / 1000000);
-    microseconds = (INT32)(elapsed % 1000000);
-    {  SOV* value = make_vector(2);
-       D* data = (D*)vector_data(value);
-       data[0] = I(seconds);
-       data[1] = I(microseconds);
-       return((D)value);
-    }
-}
-
-
 /* Win32 (PC) */
 
-#elif defined(WIN32)
+#if defined(WIN32)
 
 static _int64 start, stop, frequency;
 extern int __stdcall QueryPerformanceCounter(_int64*);

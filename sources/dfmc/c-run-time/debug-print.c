@@ -16,8 +16,6 @@
 
 #if defined(WIN32)
 #define INLINE __inline
-#elif defined(macintosh)
-#define INLINE
 #else
 #define INLINE inline
 #endif
@@ -508,43 +506,11 @@ void dylan_format (STREAM stream, D dylan_string, D dylan_arguments) {
   }
 }
 
-#if defined(macintosh)
-#include <MacTypes.h>
-#endif
-
 void do_debug_message (BOOL forBreak, D string, D arguments) {
   char error_output[8192];
   error_output[0] = 0;
   dylan_format(error_output, string, arguments);
-#if defined(macintosh)
-  {
-    Str255 pascalMessage;
-    size_t messageLength = strlen(error_output);
-    size_t maxMessageLength = (size_t)((forBreak) ? 255 : 253);
-    if (messageLength > maxMessageLength) {
-      messageLength = maxMessageLength;
-      error_output[maxMessageLength-1] = 'É';
-    }
-    pascalMessage[0] = (unsigned char)messageLength;
-    memcpy(&pascalMessage[1], error_output, messageLength);
-    if (forBreak)
-      DebugStr((StringPtr)pascalMessage);
-    else {
-      /* Relies on the machine being 32-bit capable which, as we're PowerPC-only
-         right now, is guarenteed to be the case */
-      #define MacJmpFlag (char *) 0xBFF      /* MacsBug flag [byte] */
-      #define DebuggerInstalled   5
-      short   debugFlags;
-      debugFlags = *MacJmpFlag;
-      if (debugFlags & (1 << DebuggerInstalled)) {
-        pascalMessage[0] += 2;
-        pascalMessage[pascalMessage[0]-1] = ';';
-        pascalMessage[pascalMessage[0]] = 'G';
-        DebugStr((StringPtr)pascalMessage);
-      }
-    }
-  }
-#elif defined(WIN32)
+#if defined(WIN32)
   {
     #define $STD_OUTPUT_HANDLE (unsigned long)-11
     #define $INVALID_HANDLE_VALUE (void*)-1
@@ -568,9 +534,7 @@ void do_debug_message (BOOL forBreak, D string, D arguments) {
 
 void primitive_invoke_debugger (D string, D arguments) {
   do_debug_message(TRUE, string, arguments);
-#ifndef macintosh
   primitive_break();
-#endif
   return;
 }
 
