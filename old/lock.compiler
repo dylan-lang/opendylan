@@ -1,6 +1,0 @@
-This unit is used as a lock by the script /u/dylan/tools/scripts/atomic.
-For more details on the functionality, see:
-	. Script header
-	. Dylan Notebook in Spring under \Infrastructure\User's Guide to Atomic
-
-

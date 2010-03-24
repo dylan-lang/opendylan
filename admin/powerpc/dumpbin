@@ -1,3 +1,0 @@
-objdump --all-headers --full-contents --source --reloc --dynamic-reloc --syms --dynamic-syms  $1 > $1.dump
-
-# objdump --debugging --disassemble-all --disassemble-zeroes --headers --line-numbers --full-contents --source --reloc --dynamic-reloc --syms --dynamic-syms --all-headers $1 > $1.dump

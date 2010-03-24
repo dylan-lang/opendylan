@@ -1,6 +1,0 @@
-logfile=/home/nosa/dylan/logs/$1
-shift
-
-command_to_run=$*
-
-$command_to_run > $logfile

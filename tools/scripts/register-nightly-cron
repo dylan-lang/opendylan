@@ -1,4 +1,0 @@
-#!/bin/sh
-
-crontab /usr/users/dylan/.lib/cron/nightly
-crontab -l

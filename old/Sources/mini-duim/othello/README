@@ -1,8 +1,0 @@
-  MINI-DUIM Othello
-
-Based on the DUIM othello.
-
-To run this, just do:
-
-  in: othello;
-  play-othello();

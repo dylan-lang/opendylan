@@ -1,6 +1,0 @@
-
-# rm -f $OPEN_DYLAN_USER_INSTALL/lib/lib$1.so
-# cp -p /home/nosa/dylan/build/$1/$1.so $OPEN_DYLAN_USER_INSTALL/lib/lib$1.so
-
-rm -f $OPEN_DYLAN_USER_INSTALL/lib/lib$1.a
-cp -p /home/nosa/dylan/build/$1/$1.a $OPEN_DYLAN_USER_INSTALL/lib/lib$1.a

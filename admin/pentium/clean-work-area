@@ -1,7 +1,0 @@
-cd $1/b1; rm -rf build; rm -rf lib; rm -rf databases
-cd $1/b2; rm -rf build; rm -rf lib; rm -rf databases
-cd $1/b3; rm -rf build; rm -rf lib; rm -rf databases
-cd $1/b4; rm -rf build; rm -rf lib; rm -rf databases
-cd $1/b5; rm -rf build; rm -rf lib; rm -rf databases
-
-new-work-area $1

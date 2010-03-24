@@ -1,9 +1,0 @@
-pushd /home/nosa/dylan/sources/lib
-rm powerpc-run-time.tar
-unarchive powerpc-run-time
-cd powerpc-run-time
-
-make install
-staticdump runtime.o
-
-popd

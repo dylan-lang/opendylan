@@ -1,3 +1,0 @@
-
-rm -f $OPEN_DYLAN_USER_INSTALL/lib/lib$1.so
-cp -p $OPEN_DYLAN_USER_BUILD/$1/$1.so $OPEN_DYLAN_USER_INSTALL/lib/lib$1.so

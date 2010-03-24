@@ -1,4 +1,0 @@
-set-write-databases? true
-compile -force-compile dylan
-save -export-only dylan
-exit

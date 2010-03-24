@@ -1,5 +1,0 @@
-pushd $OPEN_DYLAN_USER_SOURCES/lib/run-time/powerpc-linux
-
-make install
-
-popd

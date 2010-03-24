@@ -1,9 +1,0 @@
-;; Dylan library definition.
-
-(define-library dylan
-  (export 
-    (dylan))
-  (components
-    ...))
-
-;; eof

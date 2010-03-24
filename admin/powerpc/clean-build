@@ -1,9 +1,0 @@
-pushd $OPEN_DYLAN_USER_INSTALL
-
-rm -rf build
-rm -rf lib
-rm -rf databases
-
-new-build-area $OPEN_DYLAN_USER_INSTALL
-
-popd

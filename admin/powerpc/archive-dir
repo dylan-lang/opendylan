@@ -1,3 +1,0 @@
-tar cf $1.tar $1
-
-gzip $1.tar

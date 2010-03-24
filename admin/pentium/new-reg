@@ -1,3 +1,0 @@
-mkdir $OPEN_DYLAN_USER_SOURCES/test-registry$1
-mkdir $OPEN_DYLAN_USER_SOURCES/test-registry$1/generic
-mkdir $OPEN_DYLAN_USER_SOURCES/test-registry$1/x86-linux

@@ -1,5 +1,0 @@
-define constant
-// ---*** Do we have any adjectives for this?
-define constant %e%($Xconstant-nameX)
-    :: <XtypeX>
-  = XexprX;

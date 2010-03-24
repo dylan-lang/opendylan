@@ -1,6 +1,0 @@
-
-rm -f $1.tar
-
-gunzip $1.tar.gz
-
-tar xf $1.tar

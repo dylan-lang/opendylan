@@ -1,2 +1,0 @@
-cp -p $OPEN_DYLAN_USER_SOURCES/registry/generic/$1 $OPEN_DYLAN_USER_REGISTRIES/generic/$1
-cp -p $OPEN_DYLAN_USER_SOURCES/registry/x86-linux/$1 $OPEN_DYLAN_USER_REGISTRIES/x86-linux/$1

@@ -1,8 +1,0 @@
-
-# Synopsis: build a compiler generation
-# Usage:    build-gen old-gen new-gen
-# Example:  build-gen /home/nosa/dylan/b1 /home/nosa/dylan/b2
-
-source /home/nosa/dylan/admin/config -rc $1 -s /home/nosa/dylan -b $2
-compile-all
-clean-link

@@ -1,7 +1,0 @@
-pushd /home/nosa/dylan/build
-rm $1.tar
-unarchive $1
-
-link $1
-
-popd

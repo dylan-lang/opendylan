@@ -1,5 +1,0 @@
-# For a file copied to Unix from MS-DOS, remove the carriage returns at
-# the end of lines, and use tabs instead of leading spaces.
-# Usage:   msdos-to-unix  input-file  output-file
-# or:      msdos-to-unix  -odir output-directory  input-files...
-gema '^M^J=\n;^Z\W\E=;\N\s\s\s\s\s\s\s\s=\t' "$@"

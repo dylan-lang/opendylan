@@ -1,6 +1,0 @@
-#/bin/sh
-
-for file in *.s; do
-  echo as -L -Z -o $file.o $file ...
-  as -L -Z -o $file.o $file
-done

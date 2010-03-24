@@ -1,6 +1,0 @@
-#/bin/csh
-
-cd /home/nosa/dylan/build/cmu-test-suite
-
-gcc -o cmu-test-suite -L$OPEN_DYLAN_USER_INSTALL/lib -L$OPEN_DYLAN_RELEASE/lib -L/usr/lib -L/usr/X11R6/lib -L/usr/X11/lib -L/lib -L/usr/X11R6/lib/xrt/lib $OPEN_DYLAN_USER_INSTALL/lib/dylan-support.o *.o -ldylan -lfunctional-extensions -lmachine-word -lbyte-vector -lfunctional-dylan -lthreads -ltranscendentals
-

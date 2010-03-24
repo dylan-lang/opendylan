@@ -1,6 +1,0 @@
-let handler
-let handler
-    (%e%(<XtypeX>),
-     test: XexprX,
-     init-arguments: XexprX)
-  = XexprX ;

@@ -1,8 +1,0 @@
-Begin File
-This test needs to be run with the "-i" (case-insensitive) option,
-and with:  -idchars "_-"
-@f(ya)
-and etc. 
-(* a b-c)
-	Stop!
-

@@ -1,1 +1,0 @@
-find . -size +300 -ls

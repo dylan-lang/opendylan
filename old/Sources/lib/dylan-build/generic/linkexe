@@ -1,1 +1,0 @@
-link /NODEFAULTLIB /INCREMENTAL:NO /PDB:NONE /RELEASE /NOLOGO -align:0x1000 -subsystem:console,4.0 -debug:full -debugtype:cv /nologo /ENTRY:dylan_main /out:%s

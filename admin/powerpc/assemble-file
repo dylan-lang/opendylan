@@ -1,4 +1,0 @@
-#/bin/sh
-
-echo as -L -Z -o $1.o $1.s ...
-as -L -Z -o $1.o $1.s
