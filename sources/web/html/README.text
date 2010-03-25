@@ -1,3 +1,0 @@
-This directory contains a home-grown HTML parser that creates the objects
-defined in DOM.  The main exported interfaces are 'parse-HTML-from-stream'
-and 'print-HTML-to-stream'.
