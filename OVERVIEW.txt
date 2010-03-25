@@ -8,17 +8,18 @@ Acronyms and Definitions
 ========================
 
 CG   - 
-MPS  - A memory management system. When using a HARP back-end, MPS manages
-       garbage collection. When using a C back-end, the Boehm GC library
-       manages garbage collection.
-DFM  - Dylan Flow Machine.
-DFMC - 
+MPS  - A memory management system. http://www.ravenbrook.com/project/mps/
+	 When using a HARP back-end, either MPS or Boehm GC can be
+	 used for garbage collection. When using a C back-end, the Boehm GC does
+      	 garbage collection.
+DFM  - Dylan Flow Machine. The indermediate high-level language of the compiler
+DFMC - Dylan Flow Machine Compiler. Takes care about DFM
 HARP - Harlequin Abstract RISC Processor. An artificial assembly language.
        HARP code is transformed into the target processor's actual assembly
        language. The other back-ends are Java byte-code and C.
-RTG  - 
+RTG  - Runtime Generator
 DOOD - File-based object-oriented database.
-DOSS - Dylan object serialization format.
+DOSS - Dylan object serialization format. Outdated, no longer in use.
 
 
 ========================
@@ -48,7 +49,7 @@ OD uses the following special character prefixes to indicate different things:
 
 %name - An internal name.
 &name - A model class. It models a run-time value at compile time.
-^name - A compile-time computation on run-time values via a model class.
+^name - A compile-time computation on run-time value via a model class.
 
 
 ======================
@@ -73,9 +74,13 @@ Compiler System
 sources
   dfmc
     core                - Module imports and re-exports.
+    conversion     - Converts definitions to DFM by emitting corresponding control and data flow nodes, initializer methods, etc.
+    definitions     - Takes input from parser and adds some semantics to it. Like 'this is a class definition' etc.
+    flow-graph   - Defines the DFM language by defining classes involved.
     linker              - Linker generics. Makefile prototype.
-    management          - Safeguards and progress of compilation.
+    management          - Safeguards and progress of compilation. Compilation driver.
     mangling            - Mangle Dylan names into [a-zA-Z0-9_] names.
+    modeling          - Bridge between compile time and runtime, contains the classes and methods which are available at runtime, but also at compile time (e.g. for optimizations).
     namespace           - Bindings, libraries, modules, lib structure.
     optimization        - Analyzes and performs optimizations.
     reader              - Lexer and parser. Also, formatted output.
@@ -85,7 +90,9 @@ sources
     jam                 - Jam script interpreter.
     parser-run-time     - Support for parsers.
     source-records      - Reads source files and tracks location.
+    stack-walker - debugging on UNIX by walking the stack. Nowadays directly in the run-time.
     walker              - Build has-a tree.
+  project-manager - takes care about dependencies of projects and actual invocation of linker, etc.
 
 ------------------------
 IDE and Tool Source Code
@@ -153,7 +160,7 @@ sources
     big-integers        - Mathematical library for big integers (> 28 bits).
     generic-arithmetic  - Arithmetic prototypes for all numeric libraries.
     memory-manager      - Abstraction layer for memory manager (MPS or Boehm).
-    run-time            - Memory management and threading.
+    run-time            - Memory management and threading primitives.
 
 ---------------------------------
 Main Libraries Used by Open Dylan
@@ -167,7 +174,7 @@ sources
     c-ffi               - General C API wrapper.
     channels            - Intra-application messaging.
     dood                - File database library.
-    doss                - Object serialization library.
+    doss                - Object serialization library (deprecated!).
     variable-search     - Locate a binding in DLLs or libs.
   system                - OS-specific code for file system, environment
                           variables, Windows registry, dates and times.
@@ -190,14 +197,12 @@ sources
                           for things like DDE via command shell.
     collection-extensions - Extensions from Gwydion Dylan.
     midi                - MIDI library.
-    regular-expressions - Regex library.
     string-extensions   - Add'l string methods.
     t-list              - A variation of a <deque>. Don't know its purpose.
   network               - Socket and protocol libraries.
   ole                   - COM and OLE libraries.
   win32                 - Win32 API wrappers.
-  x11                   - Motif and X11 libraries.
-                        
+                       
 -----------
 Sample Code
 -----------
@@ -205,17 +210,6 @@ Sample Code
 sources
   app                   - Sample applications.
   examples              - Sample applications.
-
---------
-Not Used
---------
-
-This code isn't used by Open Dylan, and isn't likely to be useful for any
-other purpose.
-
-sources
-  lib    
-    stack-walker
 
 ------------
 Unclassified
@@ -229,7 +223,6 @@ install
 packages                
 sources
   benchmarks
-  bootstrap1-registry
   dfmc
     back-end
     back-end-protocol
@@ -241,18 +234,14 @@ sources
     c-run-time
     common
     conditions
-    conversion
     debug-back-end
-    definitions
     dylan
     execution
     file-compiler
-    flow-graph
     harp-browser-support
     harp-cg
     harp-cg-linker
     macro-expander
-    modeling
     native-harp-cg
     pentium-harp-cg
     powerpc-harp-cg
@@ -271,7 +260,6 @@ sources
   lib
     dispatch-profiler
     metering      
-  project-manager
   qa
   runtime-manager 
 tools
