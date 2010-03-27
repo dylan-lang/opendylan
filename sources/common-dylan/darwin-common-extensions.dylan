@@ -143,11 +143,50 @@ define inline-only function ensure-application-name-filename-and-arguments () =>
         end;
       end while;
       *application-name* := tokens[0];
-      *application-filename* := *application-name*;
+      *application-filename* := binary-location();
       *application-arguments* 
         := apply(vector, copy-sequence(tokens, start: 2, end: argc + 1));
     end when;
   end unless;
+end function;
+
+define function binary-location
+    () => (location :: false-or(<string>))
+  let bufsiz :: <integer> = 128;
+  let size = primitive-wrap-machine-word
+    (primitive-cast-pointer-as-raw
+       (%call-c-function ("GC_malloc")
+	  (nbytes :: <raw-c-unsigned-long>) => (p :: <raw-c-pointer>)
+	  (integer-as-raw(4))
+       end));
+  let err = -1;
+  block (return)
+    while (err == -1)
+      let buffer = make(<byte-string>, size: bufsiz, fill: '\0');
+      primitive-c-unsigned-int-at-setter(integer-as-raw(bufsiz), size,
+					 integer-as-raw(0), integer-as-raw(0));
+      if (raw-as-integer
+	    (%call-c-function ("_NSGetExecutablePath")
+	       (buf :: <raw-byte-string>, siz :: <raw-c-pointer> /* uint32_t */)
+	       => (result :: <raw-c-signed-int>)
+	       (primitive-string-as-raw(buffer), size)
+	    end) == 0)
+	let real-size = raw-as-integer(primitive-c-unsigned-int-at
+					 (size,
+					  integer-as-raw(0),
+					  integer-as-raw(0)));
+        return(copy-sequence(buffer, end: real-size))
+      else
+        bufsiz := raw-as-integer(primitive-c-unsigned-int-at
+				   (size, integer-as-raw(0), integer-as-raw(0)));
+      end
+    end;
+    #f
+  cleanup
+    %call-c-function ("GC_free") (p :: <raw-c-pointer>) => (void :: <raw-c-void>)
+      (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(size)))
+    end
+  end
 end function;
 
 define function application-name () => (name :: <byte-string>)
