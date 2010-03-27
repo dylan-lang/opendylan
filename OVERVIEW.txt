@@ -93,6 +93,12 @@ sources
     stack-walker - debugging on UNIX by walking the stack. Nowadays directly in the run-time.
     walker              - Build has-a tree.
   project-manager - takes care about dependencies of projects and actual invocation of linker, etc.
+    dfmc-projects - new code, not in use
+    projects-protocol - new code, not in use
+    projects - shared code between user and registry projects, general API
+    registry-projects - code handling projects in the registry
+    tools-interface  - hookup for libraries into a release
+    user-projects - code handling user projects
 
 ------------------------
 IDE and Tool Source Code
@@ -174,7 +180,6 @@ sources
     c-ffi               - General C API wrapper.
     channels            - Intra-application messaging.
     dood                - File database library.
-    doss                - Object serialization library (deprecated!).
     variable-search     - Locate a binding in DLLs or libs.
   system                - OS-specific code for file system, environment
                           variables, Windows registry, dates and times.
