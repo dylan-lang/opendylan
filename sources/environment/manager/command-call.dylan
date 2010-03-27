@@ -164,8 +164,7 @@ define constant <environment-command-return-action>
 // Remove this when environment-commands moves into environment-manager.
 
 define abstract class <environment-result> (<object>)
-  // The emulator doesn't handle each-subclass properly :-(
-  /* each-subclass */ slot command-name :: <symbol>;
+  each-subclass slot command-name :: <symbol>;
   // We have nothing else to put here yet, nor in subclasses, but we will
   // later on.  Other slots' names should begin with "result-".
 end class;

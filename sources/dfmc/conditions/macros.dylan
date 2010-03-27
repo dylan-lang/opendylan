@@ -286,11 +286,11 @@ end macro condition-block;
 
 define macro condition-block-aux
   { condition-block-aux ?:body ?restarts end }
-  => { with-program-restarts ?body ?restarts end }
+  => { block ?body ?restarts end }
 
  restarts:
   { restart ?spec => ?:body ... }
-  => { restart (?spec) ?body ... }
+  => { exception (?spec) ?body ... }
   { }
   => { }
 

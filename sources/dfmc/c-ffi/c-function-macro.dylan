@@ -258,7 +258,7 @@ end method;
 
 
 define method c-function-parse-parameter-spec
-    (kind  == input:, // !@#$ as-keyword crap for emulator
+    (kind == #"input",
      spec :: <c-ffi-argument-descriptor>,
      model :: <&designator-class>)
  => (dylan-function-parameter,
@@ -289,7 +289,7 @@ define method c-function-parse-parameter-spec
 end;
 
 define method c-function-parse-parameter-spec
-    (kind == output:, // !@#$ as-keyword crap for emulator
+    (kind == #"output",
      spec :: <c-ffi-argument-descriptor>,
      model :: <&designator-class>)
  => (dylan-function-parameter,
@@ -324,7 +324,7 @@ define method c-function-parse-parameter-spec
 end method;
 
 define method c-function-parse-parameter-spec
-    (kind == in-out:, // !@#$ as-keyword crap for emulator
+    (kind == #"in-out",
      spec :: <c-ffi-argument-descriptor>,
      model :: <&designator-class>)
  => (dylan-function-parameter,
@@ -596,9 +596,9 @@ arg:
 	   <c-ffi-argument-descriptor>,
 	   name: arg-name,
 	   designator-name: type,
-	   // !@#$ as-keyword and fragment-value bogosity
+	   // !@#$ fragment-value bogosity
 	   //      should probably be able to to as(<symbol>, discipline)
-	   call-discipline: as-keyword(fragment-value(discipline)),
+	   call-discipline: as(<symbol>, fragment-value(discipline)),
 	   key-options);
 result-spec:
   { (result void) }
@@ -614,9 +614,9 @@ result-spec:
 key-options:
    { } => #()
    { ?key:expression, ?value:expression, ... } 
-    // !@#$ as-keyword and fragment-value bogosity
+    // !@#$ fragment-value bogosity
     //      should probably be able to to as(<symbol>, discipline)
-    => pair(as-keyword(fragment-value(key)), pair(value, ...));
+    => pair(as(<symbol>, fragment-value(key)), pair(value, ...));
 c-name:
   { #f } => #f
   { ?x:expression } => x;
@@ -753,7 +753,7 @@ define method parse-c-function-spec (form-name, specs :: <sequence>)
       => parse-options!(options, function-options)
       { ?key:symbol ?key-value:expression }
       => begin
-	   add!(options, as-keyword(as(<symbol>, key)));
+	   add!(options, as(<symbol>, key));
 	   add!(options, key-value);
 	 end;
 
@@ -765,12 +765,12 @@ define method parse-c-function-spec (form-name, specs :: <sequence>)
           => (keyword)
            if (output-adjective?)
              if (input-adjective?)
-               as-keyword(#"in-out");
+               #"in-out";
 	     else
-               as-keyword(#"output");
+               #"output";
 	     end if;
 	   else
-             as-keyword(#"input");
+             #"input";
 	   end if;
          end method;
          apply(process-parameter-adjectives,
@@ -781,7 +781,7 @@ define method parse-c-function-spec (form-name, specs :: <sequence>)
     function-options:
       { } => #()
       { ?key:symbol ?value:expression, ... } 
-      => pair(as-keyword(as(<symbol>, key)), pair(value, ...));
+      => pair(as(<symbol>, key), pair(value, ...));
       { ?other:* }
       => begin
 	   note(<unrecognized-clause>,
@@ -804,7 +804,7 @@ end method parse-c-function-spec;
 define method parse-options! (options :: <stretchy-vector>, spec :: <sequence>)
  => ();
   for (index from 0 below size(spec) by 2)
-    let key :: <symbol> = as-keyword(as(<symbol>, spec[index]));
+    let key :: <symbol> = as(<symbol>, spec[index]);
     let value :: <fragment> = spec[index + 1];
     add!(options, key);
     add!(options, value);
@@ -1097,9 +1097,9 @@ arg:
 	   <c-ffi-argument-descriptor>,
 	   name: arg-name,
 	   designator-name: type,
-	   // !@#$ as-keyword and fragment-value bogosity
+	   // !@#$ fragment-value bogosity
 	   //      should probably be able to to as(<symbol>, discipline)
-	   call-discipline: as-keyword(fragment-value(discipline)),
+	   call-discipline: as(<symbol>, fragment-value(discipline)),
 	   key-options);
 result-spec:
   { (result void) }
@@ -1115,9 +1115,9 @@ result-spec:
 key-options:
    { } => #()
    { ?key:expression, ?value:expression, ... } 
-	   // !@#$ as-keyword and fragment-value bogosity
+	   // !@#$ fragment-value bogosity
 	   //      should probably be able to to as(<symbol>, discipline)
-    => pair(as-keyword(fragment-value(key)), pair(value, ...));
+    => pair(as(<symbol>, fragment-value(key)), pair(value, ...));
 end;
 
 define method expand-c-function-body

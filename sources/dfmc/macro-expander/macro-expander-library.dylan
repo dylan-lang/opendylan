@@ -183,7 +183,6 @@ define module dfmc-macro-expander
   // Pattern/template compilation entry points.
 
   export
-    \with-native-template-evaluation, do-with-native-template-evaluation,
     \with-expansion-module, do-with-expansion-module,
     \with-expansion-source-location, do-with-expansion-source-location,
     \with-expansion-source-form, do-with-expansion-source-form,

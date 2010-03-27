@@ -63,7 +63,7 @@ options:
   { }
     => { }
   { ?:name ?:expression ... }
-    => { as-keyword(?#"name"), ?expression, ... }
+    => { ?#"name", ?expression, ... }
   { = ?:expression ... }
     => { from:, ?expression, ... }
 end macro;

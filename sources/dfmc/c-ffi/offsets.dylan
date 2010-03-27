@@ -135,10 +135,7 @@ end;
 
 define method compute-field-size (field :: <repeated-field-indicator>)
  => (size :: <integer>)
-  field.field-repeat-count
-      // should really call next-method here but emulator seems to get
-      // it wrong.
-    * raw-type-info-size(field.field-raw-type);
+  field.field-repeat-count * next-method()
 end;
 
 define method compute-aggregate-size

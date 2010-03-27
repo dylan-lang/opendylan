@@ -32,11 +32,3 @@ define sealed inline method \<
     (symbol-1 :: <symbol>, symbol-2 :: <symbol>) => (well? :: <boolean>)
   as(<string>, symbol-1) < as(<string>, symbol-2)
 end method \<;
-
-define inline function as-keyword (x)
-  as(<symbol>, x)
-end function;
-
-define inline function keyword? (x)
-  instance?(x, <symbol>)
-end function;

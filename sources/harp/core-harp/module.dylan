@@ -13,16 +13,16 @@ define module common-harp-imports
     rename: { <stretchy-object-vector> => <stretchy-vector> },
     export: all;
   use dylan-extensions, 
-    import: {false-or, as-keyword, <abstract-integer>,
-	     \without-bounds-checks,
-	     element-no-bounds-check, element-no-bounds-check-setter,
-	     <machine-word>, <simple-machine-word-vector>,
-	     <simple-integer-vector>, empty,
-	     <simple-vector>, \limited-vector-definer,
-	     \limited-stretchy-vector-definer,
-	     <double-integer>, $minimum-unsigned-machine-word, %double-integer-low,
-	     \packed-slots-definer, initialize-packed-slots,
-	     integer-as-raw},
+    import: { false-or, <abstract-integer>,
+              \without-bounds-checks,
+              element-no-bounds-check, element-no-bounds-check-setter,
+              <machine-word>, <simple-machine-word-vector>,
+              <simple-integer-vector>, empty,
+              <simple-vector>, \limited-vector-definer,
+              \limited-stretchy-vector-definer,
+              <double-integer>, $minimum-unsigned-machine-word, %double-integer-low,
+              \packed-slots-definer, initialize-packed-slots,
+              integer-as-raw },
     export: all;
   use big-integers,
     prefix: "generic-",
@@ -1211,7 +1211,7 @@ define module print-harp
 end module;
 
 define module harp-for-extenders
-  use standard-imports, export: {false-or, as-keyword};
+  use standard-imports, export: { false-or };
   use base-harp, export: all;
   use main-harp, export: all;
   use harp-instructions, export: all;
@@ -1223,7 +1223,7 @@ end module;
 
 
 define module harp
-  use standard-imports, export: {false-or, as-keyword};
+  use standard-imports, export: { false-or };
   use base-harp-for-clients, export: all;
   use main-harp-for-clients, export: all;
   use harp-instructions-for-clients, export: all;

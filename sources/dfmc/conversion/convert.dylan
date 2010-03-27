@@ -2932,7 +2932,7 @@ define function convert-type-expression (env :: <environment>, type)
 	  (env, <check-type>, value: type-temp, type: <type>-temp);
       let (f, l, t) = 
         join-2x1-t!(type-first, type-last, check-c, check-temp);
-      values(f, l, t, #f);  // emulator doesn't do this right (gts, 9/97)
+      values(f, l, t, #f);
     end
   else
     let t = make-dylan-reference(#"<object>");

@@ -1057,11 +1057,9 @@ define open abstract primary class <table>
   constant slot initial-entries :: <integer>,
     init-keyword: size:,
     init-value: $default-table-size;
-  // --- EMULATOR kludge
-  // --- I would have used an init-value here, but the pinhead emulator
-  // --- tries to resolve that forward reference way too early.
   constant slot grow-size-function :: <function> = default-grow-size,
-    init-keyword: grow-size-function:;	// extension
+    init-keyword: grow-size-function:,
+    init-value: default-grow-size;
   constant slot weak? :: one-of(#"key", #"value", #f) = #f,
     init-keyword: weak:;
   // RECYCLING TABLE-VECTOR

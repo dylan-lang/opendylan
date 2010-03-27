@@ -17,14 +17,12 @@ end &macro;
 define method do-define-&converter 
     (fragment :: <fragment>, mods, name, rules)
   let module = definitions-module();
-  with-native-template-evaluation
-    with-expansion-module (module)
-      do-define-some-kind-of-an-expander
-        (fragment, mods, name, 
-	 #{ env, context, form }, rules, 
-         #{ ?name ## "-converter" }, 
-         #{ do-define-core-converter });
-    end;
+  with-expansion-module (module)
+    do-define-some-kind-of-an-expander
+      (fragment, mods, name, 
+       #{ env, context, form }, rules, 
+       #{ ?name ## "-converter" }, 
+       #{ do-define-core-converter });
   end;
 end method;
 
@@ -36,14 +34,12 @@ end &macro;
 define method do-define-&definition 
     (fragment :: <fragment>, mods, name, rules)
   let module = definitions-module();
-  with-native-template-evaluation
-    with-expansion-module (module)
-      do-define-some-kind-of-an-expander
-        (fragment, mods, name, 
-	 #{ env, form }, rules, 
-         #{ ?name ## "-definition" }, 
-         #{ do-define-core-definition });
-    end;
+  with-expansion-module (module)
+    do-define-some-kind-of-an-expander
+      (fragment, mods, name, 
+       #{ env, form }, rules, 
+       #{ ?name ## "-definition" }, 
+       #{ do-define-core-definition });
   end;
 end method;
 
@@ -55,14 +51,12 @@ end &macro;
 define method do-define-&macro 
     (fragment :: <fragment>, mods, name, rules)
   let module = definitions-module();
-  with-native-template-evaluation
-    with-expansion-module (module)
-      do-define-some-kind-of-an-expander
-        (fragment, mods, name, 
-         #{ env, form }, rules,
-	 #{ ?name ## "-expander" }, 
-         #{ do-define-core-macro });
-    end;
+  with-expansion-module (module)
+    do-define-some-kind-of-an-expander
+      (fragment, mods, name, 
+       #{ env, form }, rules,
+       #{ ?name ## "-expander" }, 
+       #{ do-define-core-macro });
   end;
 end method;
 
@@ -71,33 +65,31 @@ define method do-define-some-kind-of-an-expander
        rules, expander-name, installer-name) 
  => (expansion)
   let module = definitions-module();
-  with-native-template-evaluation
-    with-expansion-module (module)
-      let (main-rule-set, aux-rule-sets) = parse-macro-rules(name, rules);
-      // Need to at least the pre-processing/analysis here, right now to
-      // determine the word involved.
-      let compiled-main = compile-rule-set-spec(main-rule-set);
-      let compiled-aux = map(compile-rule-set-spec, aux-rule-sets);
-      let compiled-exp 
-        = make(<rewrite-rule-expander>,
-               name: name,
-               module: fragment-module(name),
-               main-rule-set: compiled-main,
-               aux-rule-sets: compiled-aux);
-      let input = #{ form };
-      let expander-code
-        = compile-define-macro-rules(input, compiled-exp);
-      let descriptor-generator
-        = make-macro-descriptor-generator-matching
-            (main-rule-set.spec-rule-specs.first.spec-pattern-spec,
-             name, expander-name);
-      #{ define method ?expander-name (?parameters)
-	   ?expander-code
-	 end;
-         ?installer-name
-           (?#"name", #f, #f, ?descriptor-generator, ?expander-name); }
+  with-expansion-module (module)
+    let (main-rule-set, aux-rule-sets) = parse-macro-rules(name, rules);
+    // Need to at least the pre-processing/analysis here, right now to
+    // determine the word involved.
+    let compiled-main = compile-rule-set-spec(main-rule-set);
+    let compiled-aux = map(compile-rule-set-spec, aux-rule-sets);
+    let compiled-exp 
+      = make(<rewrite-rule-expander>,
+	     name: name,
+	     module: fragment-module(name),
+	     main-rule-set: compiled-main,
+	     aux-rule-sets: compiled-aux);
+    let input = #{ form };
+    let expander-code
+      = compile-define-macro-rules(input, compiled-exp);
+    let descriptor-generator
+      = make-macro-descriptor-generator-matching
+          (main-rule-set.spec-rule-specs.first.spec-pattern-spec,
+           name, expander-name);
+    #{ define method ?expander-name (?parameters)
+	 ?expander-code
+       end;
+       ?installer-name
+         (?#"name", #f, #f, ?descriptor-generator, ?expander-name); }
     end with-expansion-module;
-  end with-native-template-evaluation;
 end method;
 
 // TODO: Allow the special case word categrory for macro definers to be
@@ -173,20 +165,18 @@ define method do-expand-macro-case (fragment :: <fragment>, input, rules)
   let aux-rule-sets = parse-macro-case-rules(rules);
   // Need to at least the pre-processing/analysis here, right now to
   // determine the word involved.
-  with-native-template-evaluation
-    with-expansion-module (module)
-      let compiled-main = compile-rule-set-spec(aux-rule-sets.head);
-      let compiled-aux = map(compile-rule-set-spec, aux-rule-sets.tail);
-      let compiled-exp 
-        = make(<rewrite-rule-expander>,
-               module: module,
-               main-rule-set: compiled-main,
-               aux-rule-sets: compiled-aux);
-      let expander-code
-        = compile-macro-case-rules(input, compiled-exp);
-      // break("Done macro case");
-      expander-code
-    end;
+  with-expansion-module (module)
+    let compiled-main = compile-rule-set-spec(aux-rule-sets.head);
+    let compiled-aux = map(compile-rule-set-spec, aux-rule-sets.tail);
+    let compiled-exp 
+      = make(<rewrite-rule-expander>,
+	     module: module,
+	     main-rule-set: compiled-main,
+	     aux-rule-sets: compiled-aux);
+    let expander-code
+      = compile-macro-case-rules(input, compiled-exp);
+    // break("Done macro case");
+    expander-code
   end;
 end method;
 
@@ -227,12 +217,10 @@ define method do-expand-macro-template (fragment :: <fragment>, stuff)
   let module = macro-expander-module();
   if (module)
     let template-code
-      = with-native-template-evaluation
-          with-expansion-module (module)
-            let analysed-template 
-              = compile-template-spec-elements(fragment-fragments(stuff));
-            compile-macro-template-to-code(analysed-template);
-          end;
+      = with-expansion-module (module)
+	  let analysed-template 
+            = compile-template-spec-elements(fragment-fragments(stuff));
+          compile-macro-template-to-code(analysed-template);
         end;
     template-code
   else

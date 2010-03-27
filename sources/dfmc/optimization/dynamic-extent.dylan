@@ -136,7 +136,7 @@ define method compute-dynamic-extent-of-lambda-parameters
     if (f.parameters)
       let extent :: <simple-object-vector> =
         as(<vector>,
-           my-choose-by(really-dynamic-extent?, f.parameters, range(from: 0)));
+           choose-by(really-dynamic-extent?, f.parameters, range(from: 0)));
       if (*colorize-dispatch*) color-extent(f, extent) end;
       f.parameters-dynamic-extent := (extent.size = f.parameters.size) | extent
     else
@@ -362,7 +362,7 @@ define method used-with-dynamic-extent?
     | (~empty?(dynamic-extent-of-parameters)
       & begin
           let arg-positions 
-	    = my-choose-by(curry(\=, temp), comp.arguments, range(from: 0));
+	    = choose-by(curry(\=, temp), comp.arguments, range(from: 0));
           every?(method (a) member?(a, dynamic-extent-of-parameters) end, 
                  arg-positions)
         end )
@@ -410,7 +410,7 @@ define method get-extent-of-parameters-in-call
     if (fun-extent == #t) so-far
     elseif (so-far == #t) fun-extent
     else
-      my-choose(rcurry(member?, fun-extent), so-far)
+      choose(rcurry(member?, fun-extent), so-far)
     end
   end;
   local method corresponds-to-a-model-parameter(temp, call, model)
@@ -556,38 +556,3 @@ define method really-dynamic-extent?
     #t
   end;
 end;
-
-
-
-
-
-
-
-// Temporary definitions to avoid "bug" in the emulator that causes the
-// predicate to be applied twice to each element.
-
-define inline function my-choose
-    (test :: <function>, sequence :: <sequence>) 
-        => (result :: <sequence>);
-  for (result :: <list> = #() then if (test(item)) pair(item,result) else result end,
-       item in sequence)
-  finally 
-    as(sequence.type-for-copy, reverse!(result))
-  end for
-end function my-choose;
-
-define inline function my-choose-by
-    (test :: <function>, 
-     test-sequence :: <sequence>, value-sequence :: <sequence>)
-        => (result-sequence :: <sequence>);
-  for (result :: <list> = #() 
-         then if (test(test-item)) pair(value-item,result) else result end,
-       test-item  in test-sequence, 
-       value-item in value-sequence)
-  finally 
-    as(value-sequence.type-for-copy, reverse!(result))
-  end for
-end function my-choose-by;
-
-// End of temporary definitions
-

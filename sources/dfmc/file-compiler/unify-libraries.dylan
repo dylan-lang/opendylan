@@ -770,7 +770,7 @@ define function read-grouper-config (filename) => (plist :: <list>)
 		end method;
 	  let rev-chars = token-loop(list(first-ch));
 	  if (rev-chars.head == ':')
-	    as-keyword( as(<string>, reverse!(rev-chars.tail)))
+	    as(<symbol>, as(<string>, reverse!(rev-chars.tail)))
 	  else
 	    as(<string>, reverse!(rev-chars))
 	  end;

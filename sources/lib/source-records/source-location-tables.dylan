@@ -6,11 +6,6 @@ License:      Functional Objects Library Public License Version 1.0
 Dual-license: GNU Lesser General Public License
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-/// NB There is an emulator copy of this code which should
-/// be kept up to date with this copy. The main difference
-/// is that the hashing function takes only one arg in the
-/// emulator.
-
 /// Protocol
 
 define open class <source-location-table> (<table>)

@@ -142,9 +142,7 @@ define class <lazy-table-value> (<object>)
     required-init-keyword: thunk:;
 end class <lazy-table-value>;
 
-// --- hughg, 1997/10/07: Needs to be "define method", as emulator
-// gets #all-keys wrong for "define function".
-define sealed method lazy-element
+define function lazy-element
     (table :: <table>, key, #rest keys, #key, #all-keys) => (element)
   let value = apply(element, table, key, keys);
   select (value by instance?)
@@ -154,7 +152,7 @@ define sealed method lazy-element
     otherwise =>
       value
   end
-end method lazy-element;
+end function lazy-element;
 
 //---*** It would be cool to generalize this to work in functional-extensions
 define macro lazy-table-definer

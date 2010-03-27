@@ -89,9 +89,7 @@ define function ensure-layer-heaps-computed (layer :: <interactive-layer>,
 end function;
 
 // Part of documented API
-// (this is a method only because 'function's don't recognize #all-keys in the
-//  emulator).
-define method execute-source
+define function execute-source
   (ild :: <interactive-library-description>,
    runtime-context,
    sr* :: <sequence>,
@@ -119,7 +117,7 @@ define method execute-source
       end dynamic-bind;
     end with-interactive-layer;
   end with-program-conditions;
-end /* function */;
+end function;
 
 define function source-complete?
   (ild :: <interactive-library-description>,

@@ -21,8 +21,6 @@ end library;
 
 define module command-args
   use functional-dylan;
-  use dylan-extensions,
-    import: { as-keyword, keyword? };
   use threads;
   use operating-system;
   use streams;
@@ -104,8 +102,6 @@ end module;
 
 define module command-shell
   use functional-dylan;
-  use dylan-extensions,
-    import: { as-keyword, keyword? };
   use threads;
   use streams;
   use standard-io;

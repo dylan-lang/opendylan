@@ -215,8 +215,6 @@ end pane;
 define method make
     (class == <file-browse-pane>, #rest initargs, #key, #all-keys)
  => (pane :: <file-browse-pane>)
-  // --- copy-sequence is a hack for emulator compatibility.
-  let initargs = copy-sequence(initargs);
   apply(next-method, class, browse-function-initargs: initargs, initargs)
 end method;
 

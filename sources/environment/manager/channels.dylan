@@ -42,8 +42,6 @@ end class;
 define class <environment-stopped-message> (<environment-message>)
 end class;
 
-// The emulator currently doesn't send shutdown notification.
-//
 // Those who want to be notified of startup/shutdown should do the
 // following early on.  Substitute the name of your callback function
 // for "my-callback", of course!

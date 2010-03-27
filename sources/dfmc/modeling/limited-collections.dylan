@@ -318,9 +318,6 @@ end method;
 
 define method ^limited-collection 
     (class :: <&class>, #rest all-keys, #key of, size, dimensions, #all-keys)
-  let of         = of | lookup-keyword-value(all-keys, #"of"); // HACK: FOR EMULATOR
-  let size       = size | lookup-keyword-value(all-keys, #"size"); // HACK: FOR EMULATOR
-  let dimensions = dimensions | lookup-keyword-value(all-keys, #"dimensions"); // HACK: FOR EMULATOR
   if (of) 
     // PARALLELS RUNTIME METHODS ON LIMITED
     select (class)

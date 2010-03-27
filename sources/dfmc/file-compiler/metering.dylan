@@ -5,23 +5,6 @@ License:      Functional Objects Library Public License Version 1.0
 Dual-license: GNU Lesser General Public License
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define function compile-metering (compiler, metering-specs, #rest compiler-args)
-  // Set up metering, and call the compiler on its args.
-  with-metering (metering-specs)
-    apply(compiler, compiler-args)
-  end
-end;
-
-define constant compile-library-metering 
-  = curry(compile-metering, compile-library);
-
-ignore(compile-library-metering);	// For use by the emulator ...
-
-define constant update-libraries-metering
-  = curry(compile-metering, update-libraries);
-
-ignore(update-libraries-metering);	// For use by the emulator ...
-
 define metering-set *top-level-metering*
   functions
     canonicalize-project-sources     in projects-implementation,
@@ -171,23 +154,4 @@ end metering-set;
 define metering-set *top-level+optimizer+typist-metering*
   include *optimizer-metering*;
   modules dfmc-typist;
-end metering-set;
-
-define metering-set *emulator-monitoring*
-  functions
-    every?, 
-      dylan-every?   in-package dylan,
-      dylan-every?-1 in-package dylan,
-    any?,   
-      dylan-any?   in-package dylan,
-      dylan-any?-1 in-package dylan,
-    do, 
-    map, 
-      map in-package dylan,
-    map-into,
-    map-as, 
-    key-sequence,
-    do-1-collection-by-value in internal,
-    do-2-collections-by-key  in internal,
-    do-collections-by-key    in internal,
 end metering-set;

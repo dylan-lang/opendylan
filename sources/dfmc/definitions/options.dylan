@@ -105,8 +105,7 @@ define method parse-options (options, options-fragment, name)
         => #();
       { ?key:symbol ?val:*, ... }
         => begin
-             // TODO: EMULATOR: Remove this keyword/symbol hack.
-             let key = as-keyword(fragment-value(key));
+             let key = as(<symbol>, fragment-value(key));
              let val-collector = element(val-table, key, default: #f);
              if (val-collector)
                push-last(val-collector, val);
@@ -210,8 +209,6 @@ end method;
 // A tool for parsing any property list to a compile-stage property list
 // of keyword/unparsed-fragment pairs.
 
-// TODO: Lose the call to as-keyword here when we go native.
-
 define method parse-property-list (list-fragment) => (list)
   macro-case (list-fragment)
     { ?properties:* }
@@ -220,7 +217,7 @@ define method parse-property-list (list-fragment) => (list)
     { }
       => #();
     { ?key:symbol ?val:expression, ... }
-      => pair(as-keyword(as(<symbol>, key)), pair(val, ...))
+      => pair(as(<symbol>, key), pair(val, ...))
   end;
 end method;
 

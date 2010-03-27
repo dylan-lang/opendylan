@@ -73,9 +73,7 @@ end macro pop!;
 /// Conditions and restarts
 
 define macro with-restart
-  //--- Should be ?condition:expression, but there's a bug in how
-  //--- the emulator parses 'block'
-  { with-restart (?condition:name, #rest ?initargs:*)
+  { with-restart (?condition:expression, #rest ?initargs:*)
       ?:body
     end }
     => { block ()

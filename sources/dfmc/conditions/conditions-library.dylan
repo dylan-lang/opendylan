@@ -107,10 +107,6 @@ define module dfmc-conditions
   // workarounds for implicit macro exports not working yet
   create \condition-block-aux,
          \condition-make-method-maybe-definer,
-         \with-program-restarts,
-         // Emulator only...
-         // *program-restarts*,
-         // <pseudo-restart>
          ;
 
 end module dfmc-conditions;

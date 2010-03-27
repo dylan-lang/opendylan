@@ -55,9 +55,7 @@ end method;
 
 define &definition macro-definer
   { define ?mods:* \macro ?:name ?rules:* end }
-    => with-native-template-evaluation
-         do-define-macro(form, mods, name, rules);
-       end;
+    => do-define-macro(form, mods, name, rules);
 end &definition;
 
 define function do-compile-macro 

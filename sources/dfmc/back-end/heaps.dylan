@@ -1198,7 +1198,6 @@ define method do-export (heap :: <model-heap>, e)
 end;
 
 define method do-export (heap :: <model-heap>, e :: <symbol>)
-  when (e == #()) next-method() end; // TODO: Emulator-specific hack.
 end;
 
 define method do-export (heap :: <model-heap>, e :: <uninterned-symbol>)
@@ -2108,11 +2107,7 @@ end method;
 
 define method maybe-claim-heap-element 
     (heap :: <model-heap>, parent, symbol :: <symbol>, ct-ref?) => ()
-  // TODO: This is an emulator-specific hack to catch #(), which is 
-  // classified as a symbol there.
-  if (symbol == #())
-    next-method();
-  elseif (~internal-object?(heap, symbol) & model-has-definition?(symbol))
+  if (~internal-object?(heap, symbol) & model-has-definition?(symbol))
     record-external-heap-element-reference(heap, parent, symbol, ct-ref?);
   else
     if (~element(heap-symbols(heap), symbol, default: #f))
@@ -2134,8 +2129,7 @@ end method;
 
 define method load-bound-object? 
     (element :: <symbol>) => (boolean)
-  element ~== #() // TODO: Remove this emulator-specific hack.
-    & ~model-has-definition?(element)
+  ~model-has-definition?(element)
 end method;
 
 

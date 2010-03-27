@@ -179,8 +179,7 @@ define method cook-keys (raw-keys :: <list>) => (key-list :: <sequence>);
   let limit = size(raw-keys);
   let result = make(<vector>, size: limit);
   for (i from 0 below limit by 2)
-    // TODO: shouldn't really need as-keyword here.
-    let key = as-keyword(fragment-value(head(raw-keys)));
+    let key = as(<symbol>, fragment-value(head(raw-keys)));
     result[i] := key;
     raw-keys := tail(raw-keys);
     result[i + 1]

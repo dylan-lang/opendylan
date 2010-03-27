@@ -20,8 +20,6 @@ define method ^limited-integer
     (#rest all-keys,
      #key min :: false-or(<integer>) = #f, 
           max :: false-or(<integer>) = #f)
-  let min = min | lookup-keyword-value(all-keys, #"min"); // HACK: FOR EMULATOR
-  let max = max | lookup-keyword-value(all-keys, #"max"); // HACK: FOR EMULATOR
   if (min | max)
     // Could check for min > max and return a dignified empty type but
     // I'm not sure that's worthwile.

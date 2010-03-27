@@ -7,10 +7,6 @@ License:      Functional Objects Library Public License Version 1.0
 Dual-license: GNU Lesser General Public License
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-// IMPORTANT: After redefining the transition table, the emulator lexer
-// patch has to be reloaded in order for the changes to take effect since
-// a copy is made there for use in Lisp.
-
 // Derived from CMU code.
 // 
 // Copyright (c) 1994  Carnegie Mellon University

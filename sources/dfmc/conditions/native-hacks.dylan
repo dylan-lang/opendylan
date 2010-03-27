@@ -28,17 +28,3 @@ define macro with-simple-abort-retry-restart
          end;
          _loop_() }
 end macro;
-
-// with-program-restarts is used to hide the fact that restarts aren't
-// really conditions in the emulator.  In real Dylan, this can just
-// become a block clause.
-
-define macro with-program-restarts
-  { with-program-restarts ?:body ?catchers end }
-    => { block () ?body ?catchers end }
- catchers:
-  { }
-    => { }
-  { restart (?spec:*) ?:body ... }
-    => { exception (?spec) ?body ... }
-end macro with-program-restarts;

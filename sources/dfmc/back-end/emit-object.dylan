@@ -90,12 +90,7 @@ end method;
 define method emit-name-internal 
     (back-end :: <back-end>, stream, o :: <symbol>) 
  => (name)
-  // TODO: Remove this emulator-specific hack.
-  if (o == #()) 
-    next-method();
-  else
-    emit-symbol-name(back-end, stream, o, as(<string>, o));
-  end;
+  emit-symbol-name(back-end, stream, o, as(<string>, o));
 end method;
 
 define method emit-symbol-name 

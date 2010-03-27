@@ -197,7 +197,7 @@ define function build-command-call(command :: <command>, #rest arguments)
       //format-out("arg: %s all-args: %s\n", arg, key-sequence(*all-arguments*));
       error(make(<illegal-option>, command: command, option: arguments[i]))
     end;
-    parameter-list := pair(as-keyword(arg.command-argument-keyword), 
+    parameter-list := pair(as(<symbol>, arg.command-argument-keyword), 
 			   parameter-list);
     if(arg.command-argument-value?)
       i := i + 1;
@@ -219,7 +219,7 @@ define function build-command-call(command :: <command>, #rest arguments)
 	//format-out("finally command: %s arg: %s\n", command, command-arg);
 	error(make(<illegal-option>, command: command, option: command-arg))
       end;
-      parameter-list := pair(as-keyword(arg.command-argument-keyword), 
+      parameter-list := pair(as(<symbol>, arg.command-argument-keyword), 
 			     parameter-list);
       parameter-list := pair(command-arg, parameter-list);
     end for;

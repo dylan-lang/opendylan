@@ -27,8 +27,6 @@ define module dfmc-imports
 	       %double-integer-high,
 	     <machine-word>,
 	     debug-name, debug-name-setter,
-	     // TODO: EMULATOR COMPATIBILITY
-	     as-keyword, keyword?,
 	     // converter support
 	     &definition-definer,
 	     &converter-definer,

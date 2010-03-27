@@ -345,7 +345,7 @@ define macro update-op
 modifiers:
   { } => { }
   { ?key:token, ?val:expression, ... }
-    => { as-keyword(?key), ?val, ... }
+    => { as(<symbol>, ?key), ?val, ... }
 end macro;
 
 
