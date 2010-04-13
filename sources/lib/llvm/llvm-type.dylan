@@ -1,6 +1,6 @@
 Module:       llvm-internals
 Author:       Peter S. Housel
-Copyright:    Original Code is Copyright 2009 Gwydion Dylan Maintainers
+Copyright:    Original Code is Copyright 2009-2010 Gwydion Dylan Maintainers
               All rights reserved.
 License:      Functional Objects Library Public License Version 1.0
 Dual-license: GNU Lesser General Public License
@@ -64,7 +64,7 @@ define class <llvm-pointer-type> (<llvm-type>)
   constant slot llvm-pointer-type-pointee :: <llvm-type>,
     required-init-keyword: pointee:;
   constant slot llvm-pointer-type-address-space :: <integer>,
-    required-init-keyword: address-space:;
+    init-value: 0, init-keyword: address-space:;
 end class;
 
 define method type-partition-key
@@ -129,6 +129,25 @@ define method type-referenced-types
     (type :: <llvm-struct-type>)
  => (types :: <vector>);
   as(<vector>, type.llvm-struct-type-elements)
+end method;
+
+define class <llvm-union-type> (<llvm-aggregate-type>)
+  constant slot llvm-union-type-elements :: <sequence>,
+    required-init-keyword: elements:;
+end class;
+
+define method type-partition-key
+    (type :: <llvm-union-type>)
+ => (key :: <vector>, splittable? :: <boolean>);
+  values(vector(<llvm-union-type>,
+                type.llvm-union-type-elements.size),
+         #t)
+end method;
+
+define method type-referenced-types
+    (type :: <llvm-union-type>)
+ => (types :: <vector>);
+  as(<vector>, type.llvm-union-type-elements)
 end method;
 
 define class <llvm-array-type> (<llvm-aggregate-type>)
@@ -209,7 +228,7 @@ define method type-forward
 end method;
 
 define class <llvm-symbolic-type> (<llvm-placeholder-type>)
-  constant slot llvm-symbolic-type-name :: <string>,
+  constant slot llvm-symbolic-type-name :: type-union(<string>, <integer>),
     required-init-keyword: name:;
 end class;
 
@@ -220,21 +239,6 @@ define method type-forward
     type-forward(type.llvm-placeholder-type-forward)
   else
     error("type %%%s was not resolved", type.llvm-symbolic-type-name);
-  end if
-end method;
-
-define class <llvm-unnamed-type> (<llvm-placeholder-type>)
-  constant slot llvm-unnamed-type-index :: <integer>,
-    required-init-keyword: index:;
-end class;
-
-define method type-forward
-    (type :: <llvm-unnamed-type>)
- => (type :: <llvm-type>);
-  if (slot-initialized?(type, llvm-placeholder-type-forward))
-    type-forward(type.llvm-placeholder-type-forward)
-  else
-    error("type %%%d was not resolved", type.llvm-unnamed-type-index);
   end if
 end method;
 

@@ -4,12 +4,17 @@ Author:       Peter S. Housel
 Files:        library
 	      llvm-module
 	      llvm-type
+	      llvm-value
+	      llvm-operator
+	      llvm-constant
+	      llvm-global
+	      llvm-function
               llvm-asm-parser
               llvm-asm-reader
 	      bitcode
 	      llvm-bitcode
 Target:       dll
-Copyright:    Original Code is Copyright 2009 Gwydion Dylan Maintainers
+Copyright:    Original Code is Copyright 2009-2010 Gwydion Dylan Maintainers
               All rights reserved.
 License:      Functional Objects Library Public License Version 1.0
 Dual-license: GNU Lesser General Public License

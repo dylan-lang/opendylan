@@ -67,6 +67,7 @@ define table $llvm-keywords :: <string-table>
      "arm_apcscc" => $%ARM_apcscc-token,
      "arm_aapcscc" => $%ARM_aapcscc-token,
      "arm_aapcs_vfpcc" => $%ARM_aapcs_vfpcc-token,
+     "msp430_intrcc" => $%MSP430_INTRCC-token,
      
      "cc" => $%CC-token,
      "c" => $%C-token,
@@ -96,6 +97,7 @@ define table $llvm-keywords :: <string-table>
      
      "type" => $%TYPE-token,
      "opaque" => $%OPAQUE-token,
+     "union" => $%UNION-token,
      
      "eq" => $%EQ-token,
      "ne" => $%NE-token,
@@ -119,6 +121,7 @@ define table $llvm-keywords :: <string-table>
      "une" => $%UNE-token,
      
      "x" => $%X-token,
+     "blockaddress" => $%BLOCKADDRESS-token,
 
      "void" => $%VOID-token,
      "float" => $%FLOAT-token,
@@ -674,10 +677,7 @@ define function llvm-asm-parse
       error("syntax error at %= (%=)", symbol, value);
     end method;
 
-  dynamic-bind (*llvm-module* = module,
-                *llvm-unresolved-named-types* = make(<string-table>),
-                *llvm-unnamed-types* = make(<stretchy-object-vector>),
-                *llvm-unresolved-unnamed-types* = make(<stretchy-object-vector>))
+  dynamic-bind (*llvm-parse-state* = make(<llvm-parse-state>, module: module))
     run-parser(#f, llvm-parser, lexer, on-error: on-error);
   end dynamic-bind;
 end function;
