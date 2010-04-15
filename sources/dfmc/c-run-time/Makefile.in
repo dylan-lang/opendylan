@@ -4,6 +4,7 @@ srcdir		= @srcdir@
 top_srcdir	= @top_srcdir@
 top_builddir	= @top_builddir@
 gc_prefix	= @with_gc@
+arch_build  = @arch_build@
 
 runtime_srcdir	= $(top_srcdir)/sources/dfmc/c-run-time
 
@@ -19,7 +20,7 @@ AS = as -L
 AR = ar -q
 
 CFLAGS		= -DGC_LINUX_THREADS=1 -D_REENTRANT=1 -DGC_DEBUG=1 -fPIC \
-		  -O -g -I$(srcdir) -I$(runtime_srcdir) \
+		  $(arch_build) -O -g -I$(srcdir) -I$(runtime_srcdir) \
 		  -I$(gc_prefix)/include -L$(gc_prefix)/lib
 
 OBJS		= dummy-threads.o \

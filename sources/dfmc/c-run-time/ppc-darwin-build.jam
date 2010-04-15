@@ -36,7 +36,7 @@ CCFLAGS ?= -fdefer-pop -fguess-branch-probability -fcprop-registers
            -floop-optimize -fif-conversion -fif-conversion2 -ftree-ccp
            -ftree-dce -ftree-dominator-opts -ftree-dse -ftree-ter -ftree-lrs
            -ftree-sra -ftree-copyrename -ftree-fre -ftree-ch -fmerge-constants
-           -fomit-frame-pointer -fPIC -g ;
+           -fomit-frame-pointer -fPIC -g -arch ppc ;
 
 DEFINES += _POSIX_C_SOURCE GC_DEBUG ;
 
@@ -354,7 +354,7 @@ rule LinkDLL {
 }
 
 actions together LinkDLL bind NEEDLIBS {
-  $(CC) -dynamiclib -flat_namespace -o $(<)  $(LINKFLAGS) $(>) -L"$(LIBPATH)" $(NEEDLIBS) $(LINKLIBS)
+  $(CC) -dynamiclib -flat_namespace -arch ppc -o $(<)  $(LINKFLAGS) $(>) -L"$(LIBPATH)" $(NEEDLIBS) $(LINKLIBS)
 }
 
 rule LinkEXE {
@@ -362,7 +362,7 @@ rule LinkEXE {
 }
 
 actions together LinkEXE bind NEEDLIBS {
-   $(CC) -o $(<)  $(LINKFLAGS) $(>) -L"$(LIBPATH)" $(NEEDLIBS) $(LINKLIBS) -lgc -lc
+   $(CC) -arch ppc -o $(<)  $(LINKFLAGS) $(>) -L"$(LIBPATH)" $(NEEDLIBS) $(LINKLIBS) -lgc -lc
 }
 
 #
