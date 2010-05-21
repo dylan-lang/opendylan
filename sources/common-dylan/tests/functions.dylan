@@ -45,10 +45,6 @@ define common-extensions function-test concatenate! ()
 	\=, my-stretchy-vector, my-stretchy-vector-afterwards);
 end function-test concatenate!;
 
-define common-extensions function-test integer-length ()
-  //---*** Fill this in...
-end function-test integer-length;
-
 define constant $test-error-message = "Test Error";
 
 define class <test-error> (<error>)
@@ -661,3 +657,26 @@ end function-test automatic-finalization-enabled?-setter;
 define finalization function-test automatic-finalization-enabled? ()
   //---*** Fill this in...
 end function-test automatic-finalization-enabled?;
+
+
+/// Numerics
+
+define common-extensions function-test integer-length ()
+  for (i from 0 below 27)
+    let v1 = ash(1, i) - 1;
+    check-equal(format-to-string("integer-length(%d) is %d", v1, i),
+                i, integer-length(v1));
+
+    let v2 = ash(1, i);
+    check-equal(format-to-string("integer-length(%d) is %d", v2, i + 1),
+                i + 1, integer-length(v2));
+
+    let v3 = - ash(1, i);
+    check-equal(format-to-string("integer-length(%d) is %d", v3, i),
+                i, integer-length(v3));
+
+    let v4 = -1 - ash(1, i);
+    check-equal(format-to-string("integer-length(%d) is %d", v4, i + 1),
+                i + 1, integer-length(v4));
+  end for;
+end function-test integer-length;

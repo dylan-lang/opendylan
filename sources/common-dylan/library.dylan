@@ -82,6 +82,7 @@ define module common-extensions
   create <closable-object>,
          <stream>,
          close,
+         integer-length,
          $unsupplied, unsupplied, unsupplied?, supplied?,
          $unfound,    unfound,    unfound?,    found?,
          true?, false?,

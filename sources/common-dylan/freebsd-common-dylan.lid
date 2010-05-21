@@ -11,6 +11,7 @@ Files: library
        locators-protocol
        streams-protocol
        random
+       numerics
        format
        byte-vector
        transcendentals
