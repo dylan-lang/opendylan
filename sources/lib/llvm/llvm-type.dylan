@@ -151,7 +151,7 @@ define method type-referenced-types
 end method;
 
 define class <llvm-array-type> (<llvm-aggregate-type>)
-  constant slot llvm-array-type-size :: <integer>,
+  constant slot llvm-array-type-size :: <abstract-integer>,
     required-init-keyword: size:;
   constant slot llvm-array-type-element-type :: <llvm-type>,
     required-init-keyword: element-type:;

@@ -24,7 +24,7 @@ define class <llvm-undef-constant> (<llvm-constant-value>)
 end class;
 
 define class <llvm-integer-constant> (<llvm-constant-value>)
-  constant slot llvm-integer-constant-integer :: <integer>,
+  constant slot llvm-integer-constant-integer :: <abstract-integer>,
     required-init-keyword: integer:;
 end class;
 

@@ -465,6 +465,9 @@ define method write-type-record
   write-record(stream, #"OPAQUE");
 end method;
 
+
+/// Constant output
+
 define method write-constant-record
     (stream :: <bitcode-stream>,
      type-partition-table :: <object-table>,
@@ -490,13 +493,7 @@ define method write-constant-record
      value :: <llvm-integer-constant>)
  => ();
   let integer = value.llvm-integer-constant-integer;
-  write-record(stream, #"INTEGER",
-               // Signed VBR
-               if (negative?(integer))
-                 logior(ash(-integer, 1), 1)
-               else
-                 ash(integer, 1)
-               end);
+  write-record(stream, #"INTEGER", as-signed-vbr(integer));
 end method;
 
 define method write-constant-record
@@ -505,7 +502,23 @@ define method write-constant-record
      value-partition-table :: <object-table>,
      value :: <llvm-float-constant>)
  => ();
-  error("write-constant-record FLOAT");
+  let type = type-forward(llvm-value-type(value));
+  select (type.llvm-primitive-type-kind)
+    #"FLOAT" =>
+      let single-float = as(<single-float>, value.llvm-float-constant-float);
+      write-record(stream, #"FLOAT", decode-single-float(single-float));
+    
+    #"DOUBLE" =>
+      let double-float
+        = as(<double-float>, value.llvm-float-constant-float);
+      let (low :: <machine-word>, high :: <machine-word>)
+        = decode-double-float(double-float);
+      write-record(stream, #"FLOAT",
+                   make(<double-machine-word>, low: low, high: high));
+      
+    #"X86_FP80", #"FP128", #"PPC_FP128" =>
+      error("Can't write %s floating point", type.llvm-primitive-type-kind);
+  end select;
 end method;
 
 // An aggregate is a string if it is an array of i8 integer constants

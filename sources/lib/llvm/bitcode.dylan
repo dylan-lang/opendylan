@@ -88,6 +88,76 @@ define method write-vbr
   write-vbr(stream, bits, as(<machine-word>, value));
 end method;
 
+define method write-vbr
+    (stream :: <bitcode-stream>, bits :: <integer>, value :: <character>)
+ => ();
+  write-vbr(stream, bits, as(<machine-word>, as(<integer>, value)));
+end method;
+
+define method write-vbr
+    (stream :: <bitcode-stream>, bits :: <integer>, value :: <double-integer>)
+ => ();
+  write-vbr-aux(stream, bits,
+                %double-integer-low(value),
+                %double-integer-high(value));
+end method;
+
+define method write-vbr
+    (stream :: <bitcode-stream>, bits :: <integer>,
+     value :: <double-machine-word>)
+ => ();
+  write-vbr-aux(stream, bits,
+                double-machine-word-low(value),
+                double-machine-word-high(value));
+end method;
+
+define method write-vbr-aux
+    (stream :: <bitcode-stream>, bits :: <integer>,
+     value-low :: <machine-word>, value-high :: <machine-word>)
+ => ();
+  let limit = u%shift-left(1, bits - 1);
+  let mask = \%-(limit, 1);
+  iterate loop (value-low :: <machine-word> = value-low,
+                value-high :: <machine-word> = value-high)
+    if (zero?(value-high) & u%<(value-low, limit))
+      write-fixed(stream, bits, value-low);
+    else
+      write-fixed(stream, bits, %logior(limit, %logand(value-low, mask)));
+      let (low :: <machine-word>, high :: <machine-word>)
+        = ud%shift-right(value-low, value-high, bits - 1);
+      loop(low, high);
+    end if;
+  end iterate;
+end method;
+
+define method as-signed-vbr (value :: <integer>) => (result :: <machine-word>);
+  if (negative?(value))
+    %logior(%shift-left(%negative(value), 1), 1)
+  else
+    %shift-left(value, 1)
+  end if
+end method;
+
+define method as-signed-vbr
+    (value :: <double-integer>)
+ => (result :: <double-machine-word>)
+  if (negative?(value))
+    let (low-neg :: <machine-word>, carry :: <machine-word>)
+      = u%+(%lognot(%double-integer-low(value)), 1);
+    let high-neg :: <machine-word>
+      = u%+(%lognot(%double-integer-high(value)), carry);
+    let (low :: <machine-word>, high :: <machine-word>)
+        = ud%shift-left(low-neg, high-neg, 1);
+    make(<double-machine-word>, low: %logior(low, 1), high: high)
+  else
+    let (low :: <machine-word>, high :: <machine-word>)
+        = ud%shift-left(%double-integer-low(value),
+                        %double-integer-high(value),
+                        1);
+    make(<double-machine-word>, low: low, high: high)
+  end if
+end method;
+
 define method write-alignword
     (stream :: <bitcode-stream>)
  => ();
@@ -250,7 +320,7 @@ define method write-record
   for (operand in operands)
     if (instance?(operand, <sequence>))
       for (item in operand)
-        write-vbr(stream, 6, as(<integer>, item));
+        write-vbr(stream, 6, item);
       end for;
     else
       write-vbr(stream, 6, operand)

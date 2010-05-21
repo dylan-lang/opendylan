@@ -2,6 +2,7 @@ Library:      llvm
 Synopsis:     Interface for generating code for the Low Level Virtual Machine
 Author:       Peter S. Housel
 Files:        library
+	      double-machine-word
 	      llvm-module
 	      llvm-type
 	      llvm-value

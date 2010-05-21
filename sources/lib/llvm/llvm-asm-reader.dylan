@@ -382,7 +382,11 @@ define function llvm-asm-parse
                 | ('a' <= ch & ch <= 'f')
                 | ('A' <= ch & ch <= 'F'))
         add!(characters, read-element(stream));
-        lexer-0x-digit(characters, 'J');
+        if (characters[0] = 's' | characters[0] = 'u')
+          lexer-0x-digit(characters, 's');
+        else
+          lexer-0x-digit(characters, 'J');
+        end if;
       elseif (llvm-identifier-character?(ch))
         add!(characters, read-element(stream));
         lexer-identifier(characters);
@@ -412,15 +416,30 @@ define function llvm-asm-parse
       else
         let number = as(<string>, characters);
         select (class)
-          'J' =>
+          's' =>
             let start = position(number, 'x') + 1;
             let token = if (number[0] == 's')
                           $%ESINT64VAL-token
                         else
                           $%EUINT64VAL-token
                         end if;
-            let value = string-to-integer(number, start: start, base: 16);
-            values(token, if (number[0] == '-') -value else value end);
+            let value
+              = generic-string-to-integer(number, start: start, base: 16);
+            values(token,
+                   if (number[0] == '-')
+                     generic-negative(value)
+                   else
+                     value
+                   end);
+            
+          'J' =>
+            let start = position(number, 'x') + 1;
+            let high
+              = string-to-machine-word(number, start: start, end: start + 8);
+            let low
+              = string-to-machine-word(number, start: start + 8);
+            values($%FPVAL-token, encode-double-float(low, high));
+              
           otherwise =>
             error("Not handling 0x%c", class);
         end select;
@@ -444,7 +463,7 @@ define function llvm-asm-parse
         values($%LABELSTR-token, as(<string>, characters))
       else
         let number = as(<string>, characters);
-        values($%EUINT64VAL-token, string-to-integer(number))
+        values($%EUINT64VAL-token, generic-string-to-integer(number))
       end if;
     end method,
 
@@ -681,3 +700,119 @@ define function llvm-asm-parse
     run-parser(#f, llvm-parser, lexer, on-error: on-error);
   end dynamic-bind;
 end function;
+
+define function generic-string-to-integer
+    (string :: <string>,
+     #key base :: <integer> = 10, 
+          start :: <integer> = 0, 
+          end: _end :: <integer> = size(string),
+          default = $unsupplied)
+ => (result :: <abstract-integer>, next-key :: <integer>);
+  // Set initial state
+  let valid? :: <boolean> = #f;
+  let negative? :: <boolean> = #f;
+  let integer :: <abstract-integer> = 0;
+  
+  block (return)
+    for (i :: <integer> from start below _end)
+      let char :: <character> = string[i];
+      let digit :: false-or(<integer>)
+        = select (char)
+            '-' =>
+              if (i = start)
+                negative? := #t;
+              elseif (valid?)
+                return(if (negative?)
+                         generic-negative(integer)
+                       else
+                         integer
+                       end, i);
+              elseif (supplied?(default))
+                return(default, i);
+              else
+                error("not a valid integer");
+              end if;
+              #f;
+            '+' =>
+              if (i = start)
+                negative? := #f;
+              elseif (valid?)
+                return(if (negative?) - integer else integer end, i);
+              elseif (supplied?(default))
+                return(default, i);
+              else
+                error("not a valid integer");
+              end if;
+              #f;
+            '0'      => 0;
+            '1'      => 1;
+            '2'      => 2;
+            '3'      => 3;
+            '4'      => 4;
+            '5'      => 5;
+            '6'      => 6;
+            '7'      => 7;
+            '8'      => 8;
+            '9'      => 9;
+            'A', 'a' => 10;
+            'B', 'b' => 11;
+            'C', 'c' => 12;
+            'D', 'd' => 13;
+            'E', 'e' => 14;
+            'F', 'f' => 15;
+            'G', 'g' => 16;
+            'H', 'h' => 17;
+            'I', 'i' => 18;
+            'J', 'j' => 19;
+            'K', 'k' => 20;
+            'L', 'l' => 21;
+            'M', 'm' => 22;
+            'N', 'n' => 23;
+            'O', 'o' => 24;
+            'P', 'p' => 25;
+            'Q', 'q' => 26;
+            'R', 'r' => 27;
+            'S', 's' => 28;
+            'T', 't' => 29;
+            'U', 'u' => 30;
+            'V', 'v' => 31;
+            'W', 'w' => 32;
+            'X', 'x' => 33;
+            'Y', 'y' => 34;
+            'Z', 'z' => 35;
+            otherwise =>
+              if (valid?)
+                return(if (negative?)
+                         generic-negative(integer)
+                       else
+                         integer
+                       end, i);
+              elseif (supplied?(default))
+                return(default, i);
+              else
+                error("not a valid integer");
+              end if;
+            end select;
+      if (digit)
+        if (digit < base)
+          integer := generic-+(generic-*(integer, base), digit);
+          valid? := #t;
+        elseif (valid?)
+          return(if (negative?) generic-negative(integer) else integer end, i);
+        elseif (supplied?(default))
+          return(default, i);
+        else
+          error("not a valid integer");
+        end if;
+      end if;
+    end for;
+
+    if (valid?)
+      values(if (negative?) generic-negative(integer) else integer end, _end);
+    elseif (supplied?(default))
+      return(default, _end);
+    else
+      error("not a valid integer");
+    end if;
+  end block;
+end function generic-string-to-integer;
