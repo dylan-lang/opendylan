@@ -573,34 +573,73 @@ define method write-constant-record
 //   llvm-asm-constant-align-stack?
 end method;
 
+define function binop-operator-encoding
+    (operator :: <llvm-binary-operator>)
+ => (encoding :: <integer>);
+  select (operator)
+    #"ADD", #"FADD"  => 0;
+    #"SUB", #"FSUB"  => 1;
+    #"MUL", #"FMUL"  => 2;
+    #"UDIV"          => 3;
+    #"SDIV", #"FDIV" => 4;
+    #"UREM"          => 5;
+    #"SREM", #"FREM" => 6;
+    #"SHL"           => 7;
+    #"LSHR"          => 8;
+    #"ASHR"          => 9;
+    #"AND"           => 10;
+    #"OR"            => 11;
+    #"XOR"           => 12;
+  end select
+end function;
+
+define function binop-flags-encoding
+    (value :: <llvm-binary-operator-flags-mixin>)
+ => (encoding :: <integer>);
+  logior(if (value.llvm-binop-no-unsigned-wrap?) ash(1, 0) else 0 end,
+         if (value.llvm-binop-no-signed-wrap?)   ash(1, 1) else 0 end,
+         if (value.llvm-binop-exact?)            ash(1, 0) else 0 end)
+end function;
+
 define method write-constant-record
     (stream :: <bitcode-stream>,
      type-partition-table :: <object-table>,
      value-partition-table :: <object-table>,
      value :: <llvm-binop-constant>)
  => ();
-  let opcode
-    = select (value.llvm-binop-constant-operator)
-        #"ADD", #"FADD"  => 0;
-        #"SUB", #"FSUB"  => 1;
-        #"MUL", #"FMUL"  => 2;
-        #"UDIV"          => 3;
-        #"SDIV", #"FDIV" => 4;
-        #"UREM"          => 5;
-        #"SREM", #"FREM" => 6;
-        #"SHL"           => 7;
-        #"LSHR"          => 8;
-        #"ASHR"          => 9;
-        #"AND"           => 10;
-        #"OR"            => 11;
-        #"XOR"           => 12;
-      end select;
-  write-record(stream, #"CE_BINOP", opcode,
-               map(method (value :: <llvm-constant-value>)
-                     value-partition-table[value-forward(value)]
-                   end,
-                   value.llvm-expression-constant-operands))
+  let operands
+    = map-as(<stretchy-object-vector>,
+             method (value :: <llvm-constant-value>)
+               value-partition-table[value-forward(value)]
+             end,
+             value.llvm-expression-constant-operands);
+  let flags = binop-flags-encoding(value);
+  unless (zero?(flags))
+    add!(operands, flags);
+  end unless;
+  write-record(stream, #"CE_BINOP",
+               binop-operator-encoding(value.llvm-binop-constant-operator),
+               operands)
 end method;
+
+define function cast-operator-encoding
+    (operator :: <llvm-cast-operator>)
+ => (encoding :: <integer>);
+  select (operator)
+    #"TRUNC"    => 0;
+    #"ZEXT"     => 1;
+    #"SEXT"     => 2;
+    #"FPTOUI"   => 3;
+    #"FPTOSI"   => 4;
+    #"UITOFP"   => 5;
+    #"SITOFP"   => 6;
+    #"FPTRUNC"  => 7;
+    #"FPEXT"    => 8;
+    #"PTRTOINT" => 9;
+    #"INTTOPTR" => 10;
+    #"BITCAST"  => 11;
+  end
+end function;
 
 define method write-constant-record
     (stream :: <bitcode-stream>,
@@ -608,25 +647,11 @@ define method write-constant-record
      value-partition-table :: <object-table>,
      value :: <llvm-cast-constant>)
  => ();
-  let opcode
-    = select (value.llvm-cast-constant-operator)
-        #"TRUNC" => 0;
-        #"ZEXT"  => 1;
-        #"SEXT"  => 2;
-        #"FPTOUI" => 3;
-        #"FPTOSI" => 4;
-        #"UITOFP" => 5;
-        #"SITOFP" => 6;
-        #"FPTRUNC" => 7;
-        #"FPEXT" => 8;
-        #"PTRTOINT" => 9;
-        #"INTTOPTR" => 10;
-        #"BITCAST" => 11;
-      end;
-  let opval = value.llvm-expression-constant-operands[0];
-  write-record(stream, #"CE_CAST", opcode,
-               type-partition-table[type-forward(llvm-value-type(value))],
-               value-partition-table[value-forward(opval)]);
+  let opval = value-forward(value.llvm-expression-constant-operands[0]);
+  write-record(stream, #"CE_CAST",
+               cast-operator-encoding(value.llvm-cast-constant-operator),
+               type-partition-table[type-forward(llvm-value-type(opval))],
+               value-partition-table[opval]);
 end method;
 
 define method write-constant-record
@@ -653,19 +678,19 @@ define method write-constant-record
      value-partition-table :: <object-table>,
      value :: <llvm-cmp-constant>)
  => ();
-  let op0val = value.llvm-expression-constant-operands[0];
-  let op1val = value.llvm-expression-constant-operands[1];
+  let op0val = value-forward(value.llvm-expression-constant-operands[0]);
+  let op1val = value-forward(value.llvm-expression-constant-operands[1]);
   write-record(stream, #"CE_CMP",
                type-partition-table[type-forward(llvm-value-type(op0val))],
-               value-partition-table[value-forward(op0val)],
-               value-partition-table[value-forward(op1val)],
+               value-partition-table[op0val],
+               value-partition-table[op1val],
                encode-predicate(value));
 end method;
 
 define method encode-predicate
-    (value :: <llvm-icmp-constant>)
+    (value :: <llvm-icmp-mixin>)
  => (encoding :: <integer>);
-  select (value.llvm-cmp-constant-predicate)
+  select (value.llvm-cmp-predicate)
     #"EQ"  => 32;
     #"NE"  => 33;
     #"UGT" => 34;
@@ -680,9 +705,9 @@ define method encode-predicate
 end method;
 
 define method encode-predicate
-    (value :: <llvm-fcmp-constant>)
+    (value :: <llvm-fcmp-mixin>)
  => (encoding :: <integer>);
-  select (value.llvm-cmp-constant-predicate)
+  select (value.llvm-cmp-predicate)
     #"FALSE" => 0;
     #"OEQ"   => 1;
     #"OGT"   => 2;

@@ -97,7 +97,8 @@ define method value-referenced-values
   as(<vector>, value.llvm-expression-constant-operands)
 end method;
 
-define class <llvm-binop-constant> (<llvm-expression-constant>)
+define class <llvm-binop-constant> (<llvm-expression-constant>,
+                                    <llvm-binary-operator-flags-mixin>)
   constant slot llvm-binop-constant-operator :: <llvm-binary-operator>,
     required-init-keyword: operator:;
 end class;
@@ -130,21 +131,20 @@ define method value-partition-key
   vector(object-class(value), value.llvm-gep-constant-in-bounds?)
 end method;
 
-define abstract class <llvm-cmp-constant> (<llvm-expression-constant>)
-  constant slot llvm-cmp-constant-predicate :: <llvm-predicate>,
-    required-init-keyword: predicate:;
+define abstract class <llvm-cmp-constant> (<llvm-expression-constant>,
+                                           <llvm-cmp-mixin>)
 end class;
 
 define method value-partition-key
     (value :: <llvm-cmp-constant>)
  => (key :: <vector>);
-  vector(object-class(value), value.llvm-cmp-constant-predicate)
+  vector(object-class(value), value.llvm-cmp-predicate)
 end method;
 
-define class <llvm-icmp-constant> (<llvm-cmp-constant>)
+define class <llvm-icmp-constant> (<llvm-cmp-constant>, <llvm-icmp-mixin>)
 end class;
 
-define class <llvm-fcmp-constant> (<llvm-cmp-constant>)
+define class <llvm-fcmp-constant> (<llvm-cmp-constant>, <llvm-fcmp-mixin>)
 end class;
 
 // FIXME:
@@ -167,7 +167,7 @@ end class;
 
 define method value-forward
     (value :: <llvm-symbolic-constant>)
- => (value :: <llvm-value>);
+ => (value :: <llvm-constant-value>);
   if (slot-initialized?(value, llvm-placeholder-value-forward))
     value-forward(value.llvm-placeholder-value-forward)
   else
