@@ -49,6 +49,11 @@ define method type-partition-key
   values(vector(<llvm-primitive-type>, type.llvm-primitive-type-kind), #f)
 end method;
 
+define function llvm-void-type? (type :: <llvm-type>) => (void? :: <boolean>)
+  instance?(type, <llvm-primitive-type>)
+    & type.llvm-primitive-type-kind == #"VOID"
+end function;
+
 define class <llvm-integer-type> (<llvm-type>)
   constant slot llvm-integer-type-width :: <integer>,
     required-init-keyword: width:;
@@ -78,7 +83,7 @@ define method type-referenced-types
  => (types :: <vector>);
   vector(type.llvm-pointer-type-pointee);
 end method;
-  
+
 define class <llvm-function-type> (<llvm-type>)
   constant slot llvm-function-type-return-type :: <llvm-type>,
     required-init-keyword: return-type:;
@@ -188,6 +193,9 @@ define method type-referenced-types
   vector(type.llvm-vector-type-element-type);
 end method;
 
+
+/// Placeholder types
+
 define abstract class <llvm-placeholder-type> (<llvm-type>)
   slot llvm-placeholder-type-forward :: <llvm-type>;
 end class;
@@ -260,3 +268,24 @@ define method type-forward
     type
   end if
 end method;
+
+
+/// Well-known types
+
+define constant $llvm-label-type :: <llvm-type>
+  = make(<llvm-primitive-type>, kind: #"LABEL");
+define constant $llvm-void-type :: <llvm-type>
+  = make(<llvm-primitive-type>, kind: #"VOID");
+define constant $llvm-metadata-type :: <llvm-type>
+  = make(<llvm-primitive-type>, kind: #"METADATA");
+
+define constant $llvm-i1-type :: <llvm-type>
+  = make(<llvm-integer-type>, width: 1);
+
+define constant $llvm-i8-type :: <llvm-type>
+  = make(<llvm-integer-type>, width: 8);
+define constant $llvm-i8*-type
+  = make(<llvm-pointer-type>, pointee: $llvm-i8-type);
+
+define constant $llvm-i32-type :: <llvm-type>
+  = make(<llvm-integer-type>, width: 32);

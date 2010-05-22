@@ -126,7 +126,6 @@ define function string-constant-contents
     (string-constant :: <string>)
  => (contents :: <sequence>);
   let contents = make(<stretchy-object-vector>);
-  let i8-type = make(<llvm-integer-type>, width: 8);
   let string-constant-size = string-constant.size;
 
   iterate loop (i = 0)
@@ -135,7 +134,7 @@ define function string-constant-contents
       if (ch == '\\')
         if (i + 1 < string-constant-size & string-constant[i + 1] == '\\')
           add!(contents, make(<llvm-integer-constant>,
-                              type: i8-type,
+                              type: $llvm-i8-type,
                               integer: as(<integer>, '\\')));
           loop(i + 2);
         elseif (i + 2 < string-constant-size)
@@ -143,13 +142,13 @@ define function string-constant-contents
             = string-to-integer(string-constant, base: 16,
                                 start: i + 1, end: i + 3);
           add!(contents, make(<llvm-integer-constant>,
-                              type: i8-type,
+                              type: $llvm-i8-type,
                               integer: hex-value));
           loop(i + 3);
         end if;
       else
         add!(contents, make(<llvm-integer-constant>,
-                            type: i8-type,
+                            type: $llvm-i8-type,
                             integer: as(<integer>, ch)));
         loop(i + 1);
       end if;
@@ -563,7 +562,7 @@ function-types:
             varargs?: arg$3.tail);;
   %VOID %LPAREN arg-type-list-i %RPAREN opt-func-attrs
     => make(<llvm-function-type>,
-            return-type: make(<llvm-primitive-type>, kind: #"VOID"),
+            return-type: $llvm-void-type,
             parameter-types: map(arg-type, arg$3.head),
             varargs?: arg$3.tail);;
 
@@ -866,7 +865,7 @@ result-types:
   types
     => arg$1;;
   %VOID
-    => make(<llvm-primitive-type>, kind: #"VOID");;
+    => $llvm-void-type;;
 
 basic-block:
   instruction-list opt-local-assign b-b-terminator-inst
