@@ -526,7 +526,7 @@ nonfunction-types:
   %LBRACE %RBRACE
     => make(<llvm-struct-type>, packed?: #f, elements: #[]);;
   %LANGLE %LBRACE type-list-i %RBRACE %RANGLE
-    => make(<llvm-struct-type>, packed?: #f, elements: reverse!(arg$3));;
+    => make(<llvm-struct-type>, packed?: #t, elements: reverse!(arg$3));;
   %LANGLE %LBRACE %RBRACE %RANGLE
     => make(<llvm-struct-type>, packed?: #t, elements: #[]);;
   %UNION %LBRACE type-list-i %RBRACE
