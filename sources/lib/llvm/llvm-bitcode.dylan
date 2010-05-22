@@ -175,8 +175,8 @@ define function refine-partitions
      partition-table :: <object-table>,
      reference-partitions-function :: <function>)
  => ()
-  iterate loop (i :: <integer> = 0)
-    let stable? = #t;
+  iterate loop (i :: <integer> = 0,
+                initial-partition-count :: <integer> = partitions.size)
     if (i < partitions.size)
       let instances :: <list> = partitions[i];
       // Try to split partitions that contain more than one instance
@@ -201,16 +201,15 @@ define function refine-partitions
                   partition-table[instance] := partition-index;
                 end,
                 new-instances);
-            stable? := #f;
           end if;
         end for;
       end unless;
-      loop(i + 1);
-    elseif (~stable?)
-      loop(0);
+      loop(i + 1, initial-partition-count);
+    elseif (initial-partition-count ~= partitions.size)
+      loop(0, partitions.size);
     end if;
   end iterate;
-end function;  
+end function;
 
 define function enumerate-types-constants
     (m :: <llvm-module>)
