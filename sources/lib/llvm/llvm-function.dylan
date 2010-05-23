@@ -11,4 +11,6 @@ define class <llvm-function> (<llvm-global-value>)
     init-value: 0, init-keyword: calling-convention:;
   constant slot llvm-function-garbage-collector :: false-or(<string>),
     init-value: #f, init-keyword: garbage-collector:;
+  constant slot llvm-function-attribute-list :: <llvm-attribute-list>
+    = make(<llvm-attribute-list>), init-keyword: attribute-list:;
 end class;

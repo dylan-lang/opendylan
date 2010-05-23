@@ -9,6 +9,7 @@ Files:        library
 	      llvm-operator
 	      llvm-constant
 	      llvm-global
+	      llvm-attribute
 	      llvm-function
               llvm-asm-parser
               llvm-asm-reader

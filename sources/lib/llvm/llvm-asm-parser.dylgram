@@ -114,12 +114,10 @@ define method do-constrain-type
 end method;
 
 define class <arg-entry> (<object>)
-  constant slot arg-attributes :: <sequence>,
-    init-value: #(), init-keyword: attributes:;
+  constant slot arg-attributes :: <llvm-attributes>,
+    init-value: $llvm-attribute-none, init-keyword: attributes:;
   constant slot arg-type :: <llvm-type>,
     init-keyword: type:;
-  constant slot arg-name :: false-or(<string>),
-    init-value: #f, init-keyword: name:;
 end class;
 
 define function string-constant-contents
@@ -156,6 +154,20 @@ define function string-constant-contents
   end iterate;
   
   contents
+end function;
+
+// Change some attributes (that used to be function attributes) to
+// return attributes
+define constant $return-attributes-mask
+  = %logior($llvm-attribute-zext, $llvm-attribute-sext, $llvm-attribute-inreg);
+define function munge-attributes
+    (return-attributes :: <llvm-attributes>,
+     function-attributes :: <llvm-attributes>)
+ => (return-attributes :: <llvm-attributes>,
+     function-attributes :: <llvm-attributes>);
+  values(%logior(return-attributes,
+                 %logand(function-attributes, $return-attributes-mask)),
+         %logand(function-attributes, %lognot($return-attributes-mask)))
 end function;
 
 define parser llvm-parser
@@ -407,6 +419,14 @@ function-header-h:
                   varargs?: arg$6.tail);
          let pointer-type
            = make(<llvm-pointer-type>, pointee: function-type);
+         let (return-attributes, function-attributes)
+           = munge-attributes(arg$2, arg$8);
+         let attribute-list
+           = make(<llvm-attribute-list>,
+                  return-attributes: return-attributes,
+                  function-attributes: function-attributes,
+                  parameter-attributes:
+                    map(arg-attributes, arg$6.head));
          vector(calling-convention: arg$1,
                 return-attributes: arg$2,
                 type: type-resolve-upvals(pointer-type),
@@ -455,19 +475,19 @@ opt-calling-conv:
 
 opt-ret-attrs:
   /* empty */
-    => #();;
+    => $llvm-attribute-none;;
   opt-ret-attrs ret-attr
-    => add(arg$1, arg$2);;
+    => llvm-attribute-merge(arg$1, arg$2);;
 
 ret-attr:
   %INREG
-    => #"inreg";;
+    => $llvm-attribute-inreg;;
   %ZEROEXT
-    => #"zeroext";;
+    => $llvm-attribute-zext;;
   %SIGNEXT
-    => #"signext";;
+    => $llvm-attribute-sext;;
   %NOALIAS
-    => #"noalias";;
+    => $llvm-attribute-noalias;;
 
 function-body:
   %BEGIN basic-block-list %END
@@ -572,11 +592,11 @@ types-opt-attributes:
   nonfunction-types
     => make(<arg-entry>, type: arg$1);;
   nonfunction-types overlap-attribute
-    => make(<arg-entry>, type: arg$1, attributes: list(arg$2));;
+    => make(<arg-entry>, type: arg$1, attributes: arg$2);;
   types-opt-attributes nonoverlap-attribute
     => make(<arg-entry>,
             type: arg$1.arg-type,
-            attributes: add(arg$1.arg-attributes, arg$2));;
+            attributes: llvm-attribute-merge(arg$1.arg-attributes, arg$2));;
 
 g-v-visibility-style:
   /* empty */
@@ -902,9 +922,9 @@ arg-list-h:
 
 opt-func-attrs:
   /* empty */
-    => #();;
+    => $llvm-attribute-none;;
   opt-func-attrs func-attr
-    => add(arg$1, arg$2);;
+    => llvm-attribute-merge(arg$1, arg$2);;
 
 opt-section:
   /* empty */
@@ -1045,37 +1065,39 @@ b-b-terminator-inst:
 
 func-attr:
   %NORETURN
-    => #f;;
+    => $llvm-attribute-noreturn;;
   %NOUNWIND
-    => #f;;
+    => $llvm-attribute-nounwind;;
   %INREG
-    => #f;;
+    => $llvm-attribute-inreg;;
   %ZEROEXT
-    => #f;;
+    => $llvm-attribute-zext;;
   %SIGNEXT
-    => #f;;
+    => $llvm-attribute-sext;;
   %READNONE
-    => #f;;
+    => $llvm-attribute-readnone;;
   %READONLY
-    => #f;;
+    => $llvm-attribute-readonly;;
   %NOINLINE
-    => #f;;
+    => $llvm-attribute-noinline;;
   %ALWAYSINLINE
-    => #f;;
+    => $llvm-attribute-alwaysinline;;
   %INLINEHINT
-    => #f;;
+    => $llvm-attribute-inlinehint;;
   %OPTSIZE
-    => #f;;
+    => $llvm-attribute-optsize;;
   %SSP
-    => #f;;
+    => $llvm-attribute-ssp;;
   %SSPREQ
-    => #f;;
+    => $llvm-attribute-sspreq;;
   %NOREDZONE
-    => #f;;
+    => $llvm-attribute-noredzone;;
   %NOIMPLICITFLOAT
-    => #f;;
+    => $llvm-attribute-noimplicitfloat;;
   %NAKED
-    => #f;;
+    => $llvm-attribute-naked;;
+  %ALIGNSTACK %EUINT64VAL
+    => llvm-attribute-stack-alignment(arg$2);;
 
 resolved-val:
   types value-ref
@@ -1124,9 +1146,9 @@ param-list:
 
 opt-attributes:
   /* empty */
-    => #f;;
+    => $llvm-attribute-none;;
   opt-attributes attribute
-    => #f;;
+    => llvm-attribute-merge(arg$1, arg$2);;
 
 opt-local-name:
   /* empty */
@@ -1235,22 +1257,21 @@ attribute:
 
 overlap-attribute:
   %ZEROEXT
-    => #"zeroext";;
+    => $llvm-attribute-zext;;
   %SIGNEXT
-    => #"signext";;
+    => $llvm-attribute-sext;;
   %INREG
-    => #"inreg";;
+    => $llvm-attribute-inreg;;
 
 nonoverlap-attribute:
-  %ZEXT => #f;;
-  %SEXT => #f;;
-  %SRET => #"sret";;
-  %NOALIAS => #"noalias";;
-  %NOCAPTURE => #"nocapture";;
-  %BYVAL => #"byval";;
-  %NEST => #"nest";;
-  %ALIGN %EUINT64VAL => #f;;
-  %STACKALIGN %EUINT64VAL => #f;;
+  %ZEXT => $llvm-attribute-zext;;
+  %SEXT => $llvm-attribute-sext;;
+  %SRET => $llvm-attribute-sret;;
+  %NOALIAS => $llvm-attribute-noalias;;
+  %NOCAPTURE => $llvm-attribute-nocapture;;
+  %BYVAL => $llvm-attribute-byval;;
+  %NEST => $llvm-attribute-nest;;
+  %ALIGN %EUINT64VAL => llvm-attribute-alignment(arg$2);;
 
 phi-list:
   types %LBRACK value-ref %COMMA value-ref %RBRACK => #f;;

@@ -169,6 +169,44 @@ define sealed method table-protocol
          end);
 end method table-protocol;
 
+// FIXME this is only necessary due to <double-machine-word>
+define class <encoding-sequence-table> (<table>)
+end class;
+
+define sealed method table-protocol
+    (table :: <encoding-sequence-table>)
+ => (test :: <function>, hash :: <function>);
+  values(method (x :: <sequence>, y :: <sequence>) x = y end, 
+         method
+             (key :: <sequence>, hash-state)
+          => (hash :: <integer>, hash-state);
+           let hash :: <integer> = 0;
+           for (item in key)
+             let (item-hash :: <integer>, item-hash-state)
+               = encoding-item-hash(item, hash-state);
+             hash := merge-hash-ids(hash, item-hash, ordered: #t);
+             hash-state := item-hash-state;
+           end for;
+           values (hash, hash-state)
+         end);
+end method table-protocol;
+
+define method encoding-item-hash
+    (item :: <object>, hash-state)
+ => (id :: <integer>, state)
+  object-hash(item, hash-state)
+end method encoding-item-hash;
+
+define method encoding-item-hash
+    (item :: <double-machine-word>, hash-state)
+ => (id :: <integer>, state)
+  let (id-low :: <integer>, state-low)
+    = object-hash(double-machine-word-low(item), hash-state);
+  let (id-high :: <integer>, state-high)
+    = object-hash(double-machine-word-high(item), state-low);
+  values(merge-hash-ids(id-low, id-high, ordered: #t), state-high)
+end method encoding-item-hash;
+
 define function refine-partitions
     (partitions :: <stretchy-vector>,
      offset :: <integer>,
@@ -211,13 +249,15 @@ define function refine-partitions
   end iterate;
 end function;
 
-define function enumerate-types-constants
+define function enumerate-types-constants-attributes
     (m :: <llvm-module>)
  => (type-partition-table :: <object-table>,
      type-partition-exemplars :: <vector>,
      value-partition-table :: <object-table>,
      first-constant-index :: <integer>,
-     constant-partition-exemplars :: <vector>);
+     constant-partition-exemplars :: <vector>,
+     attributes-index-table :: <encoding-sequence-table>,
+     attributes-exemplars :: <vector>);
   // Table mapping type instances to index (partition) numbers
   let type-partition-table = make(<object-table>);
   
@@ -230,6 +270,22 @@ define function enumerate-types-constants
   // Vector of lists of the constant value instances in a partition
   let partition-constants = make(<stretchy-object-vector>);
 
+  // Table mapping attribute encoding vectors to index numbers
+  let attributes-index-table = make(<encoding-sequence-table>);
+  attributes-index-table[#[]] := 0;
+
+  // Vector of distinct encoded attribute sequences
+  let attributes-exemplars = make(<stretchy-object-vector>);
+  local
+    method do-attribute-list (attribute-list :: <llvm-attribute-list>)
+      let encoding = encode-attribute-list(attribute-list);
+      element(attributes-index-table, encoding, default: #f)
+        | begin
+            add!(attributes-exemplars, encoding);
+            attributes-index-table[encoding] := attributes-exemplars.size;
+          end;
+    end method;
+  
   // Assign value indices to global variables
   let first-function-index :: <integer>
     = for (global :: <llvm-global-variable> in m.llvm-module-globals,
@@ -339,6 +395,7 @@ define function enumerate-types-constants
   // Traverse functions
   for (function :: <llvm-function> in m.llvm-module-functions)
     initial-traverse-type(llvm-value-type(function));
+    do-attribute-list(function.llvm-function-attribute-list);
   end for;
 
   // Traverse aliases
@@ -378,7 +435,59 @@ define function enumerate-types-constants
 
   values(type-partition-table, map(first, partition-types),
          value-partition-table,
-         first-constant-index, map(first, partition-constants))
+         first-constant-index, map(first, partition-constants),
+         attributes-index-table, attributes-exemplars)
+end function;
+
+define function encode-attributes
+    (attributes :: <llvm-attributes>) => (encoding)
+  let encoding = %logand(attributes, #xFFFF);
+
+  let alignment = as(<integer>, %logand(%shift-right(attributes, 16), 31));
+  let encoding-low
+    = if (zero?(alignment))
+        encoding
+      else
+        %logior(encoding, %shift-left(#x10000, alignment - 1))
+      end if;
+
+  let encoding-high = %shift-right(attributes, 21);
+  if (zero?(encoding-high))
+    encoding-low
+  elseif ($machine-word-size = 32)
+    make(<double-machine-word>, low: encoding-low, high: encoding-high)
+  else
+    error("encode-attributes $machine-word-size = %d", $machine-word-size);
+  end if
+end function;
+
+define function encode-attribute-list
+    (attribute-list :: <llvm-attribute-list>) => (encoding :: <sequence>)
+  let encoding = make(<stretchy-object-vector>);
+
+  let return-attributes = attribute-list.llvm-attribute-list-return-attributes;
+  unless (zero?(return-attributes))
+    add!(encoding, 0);
+    add!(encoding, encode-attributes(return-attributes));
+  end unless;
+
+  for (parameter-attributes
+         in attribute-list.llvm-attribute-list-parameter-attributes,
+       index from 1)
+    unless (zero?(parameter-attributes))
+      add!(encoding, index);
+      add!(encoding, encode-attributes(parameter-attributes));
+    end unless;
+  end for;
+
+  let function-attributes
+    = attribute-list.llvm-attribute-list-function-attributes;
+  unless (zero?(function-attributes))
+    add!(encoding, $maximum-unsigned-machine-word);
+    add!(encoding, encode-attributes(function-attributes));
+  end unless;
+
+  encoding
 end function;
 
 define method write-type-record
@@ -737,15 +846,21 @@ define function write-module
        type-partition-exemplars :: <vector>,
        value-partition-table :: <object-table>,
        first-constant-index :: <integer>,
-       constant-partition-exemplars :: <vector>)
-      = enumerate-types-constants(m);
+       constant-partition-exemplars :: <vector>,
+       attributes-index-table :: <encoding-sequence-table>,
+       attributes-exemplars :: <vector>)
+      = enumerate-types-constants-attributes(m);
 
   with-block-output (stream, $MODULE_BLOCK, 3)
     // Write the blockinfo
 
     // Write the parameter attribute table
-    begin
-      // FIXME
+    unless (empty?(attributes-exemplars))
+      with-block-output (stream, $PARAMATTR_BLOCK, 3)
+        for (encoding in attributes-exemplars)
+          write-record(stream, #"ENTRY", encoding);
+        end for;
+      end with-block-output;
     end;
 
     // Write the type table
@@ -844,12 +959,14 @@ define function write-module
 
       // Functions
       for (function :: <llvm-function> in m.llvm-module-functions)
+        let attribute-list-encoding
+          = encode-attribute-list(function.llvm-function-attribute-list);
         write-record(stream, #"FUNCTION",
                      type-partition-table[llvm-value-type(function)],
                      function.llvm-function-calling-convention,
                      1,         // FIXME isproto
                      linkage-encoding(function.llvm-global-linkage-kind),
-                     0,         // FIXME paramattr
+                     attributes-index-table[attribute-list-encoding],
                      alignment-encoding(function.llvm-global-alignment),
                      if (function.llvm-global-section)
                        section-index-table[function.llvm-global-section]
