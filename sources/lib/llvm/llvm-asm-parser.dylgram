@@ -117,11 +117,28 @@ define method do-constrain-type
     (constrained-type :: <llvm-placeholder-type>, type :: <llvm-type>) => ()
   if (slot-initialized?(constrained-type, llvm-placeholder-type-forward))
     do-constrain-type(constrained-type.llvm-placeholder-type-forward, type);
-  else
-    let real-type = type-forward(type);
-    unless (constrained-type == real-type)
-      constrained-type.llvm-placeholder-type-forward := type;
-    end unless;
+  elseif (constrained-type ~== type)
+    constrained-type.llvm-placeholder-type-forward := type;
+  end if;
+end method;
+
+define method do-constrain-type
+    (constrained-type :: <llvm-type>, type :: <llvm-placeholder-type>) => ()
+  if (slot-initialized?(type, llvm-placeholder-type-forward))
+    do-constrain-type(constrained-type, type.llvm-placeholder-type-forward);
+  elseif (constrained-type ~== type)
+    type.llvm-placeholder-type-forward := constrained-type;
+  end if;
+end method;
+
+define method do-constrain-type
+    (constrained-type :: <llvm-placeholder-type>,
+     type :: <llvm-placeholder-type>)
+ => ()
+  if (slot-initialized?(constrained-type, llvm-placeholder-type-forward))
+    do-constrain-type(constrained-type.llvm-placeholder-type-forward, type);
+  elseif (slot-initialized?(type, llvm-placeholder-type-forward))
+    do-constrain-type(constrained-type, type.llvm-placeholder-type-forward);
   end if;
 end method;
 
