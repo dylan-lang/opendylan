@@ -83,14 +83,26 @@ end method;
 define method do-define-global-value
     (supplied-index :: false-or(<integer>), value :: <llvm-constant-value>)
  => ();
-  let new-index = *llvm-parse-state*.parse-unnamed-global-values.size;
+  let new-index = *llvm-parse-state*.parse-unnamed-global-index;
   if (supplied-index & supplied-index ~= new-index)
     error("Expected @%d rather than @%d for unnamed global value",
           new-index, supplied-index);
   end;
+  let definition
+    = element(*llvm-parse-state*.parse-unnamed-global-values, new-index,
+              default: #f);
+  if (definition)
+    if (instance?(definition, <llvm-symbolic-constant>))
+      definition.llvm-placeholder-value-forward := value;
+      do-constrain-type(definition.llvm-value-type, llvm-value-type(value));
+    else
+      error("value @%d is multiply defined", new-index);
+    end if;
+  end if;
   
   // Record this value
-  add!(*llvm-parse-state*.parse-unnamed-global-values, value);
+  element(*llvm-parse-state*.parse-unnamed-global-values, new-index) := value;
+  *llvm-parse-state*.parse-unnamed-global-index := new-index + 1;
 end method;
 
 define method do-constrain-type
