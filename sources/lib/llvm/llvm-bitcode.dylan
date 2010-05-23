@@ -249,6 +249,37 @@ define function refine-partitions
   end iterate;
 end function;
 
+define function topological-sort-partitions
+    (partitions :: <stretchy-vector>,
+     offset :: <integer>,
+     partition-table :: <object-table>,
+     reference-partitions-function :: <function>)
+ => (new-partitions :: <stretchy-vector>);
+  let new-partitions = make(<stretchy-object-vector>);
+  local
+    method traverse-partition (index :: <integer>)
+      if (index >= offset & partitions[index - offset])
+        let instances = partitions[index - offset];
+        partitions[index - offset] := #f;
+
+        do(traverse-partition, reference-partitions-function(instances.first));
+
+        let new-index = new-partitions.size + offset;
+        add!(new-partitions, instances);
+        do (method (instance)
+              partition-table[instance] := new-index;
+            end,
+            instances);
+      end if;
+    end method;
+
+  for (index from offset below partitions.size + offset)
+    traverse-partition(index);
+  end for;
+
+  new-partitions
+end function;
+
 define function enumerate-types-constants-attributes
     (m :: <llvm-module>)
  => (type-partition-table :: <object-table>,
@@ -423,15 +454,23 @@ define function enumerate-types-constants-attributes
                     end);
 
   // Refine constant value partitions until they are stable
+  local
+    method constant-referenced-partitions (value :: <llvm-constant-value>)
+      map(method (referenced-value :: <llvm-constant-value>)
+            value-partition-table
+              [value-forward(referenced-value)]
+          end,
+          value-referenced-values(value))
+    end;
   refine-partitions(partition-constants, first-constant-index,
                     value-partition-table,
-                    method (value :: <llvm-constant-value>)
-                      map(method (referenced-value :: <llvm-constant-value>)
-                            value-partition-table
-                              [value-forward(referenced-value)]
-                          end,
-                          value-referenced-values(value))
-                    end);
+                    constant-referenced-partitions);
+
+  // Topologically sort constant values
+  let partition-constants
+    = topological-sort-partitions(partition-constants, first-constant-index,
+                                  value-partition-table,
+                                  constant-referenced-partitions);
 
   values(type-partition-table, map(first, partition-types),
          value-partition-table,
