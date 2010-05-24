@@ -808,16 +808,22 @@ define method write-constant-record
      value-partition-table :: <object-table>,
      value :: <llvm-gep-constant>)
  => ();
+  let operands = make(<stretchy-object-vector>);
+  for (operand :: <llvm-constant-value>
+         in value.llvm-expression-constant-operands)
+    let operand = value-forward(operand);
+    add!(operands,
+         type-partition-table[type-forward(llvm-value-type(operand))]);
+    add!(operands,
+         value-partition-table[operand]);
+  end for;
   write-record(stream,
                if (value.llvm-gep-constant-in-bounds?)
                  #"CE_INBOUNDS_GEP"
                else
                  #"CE_GEP"
                end,
-               map(method (value :: <llvm-constant-value>)
-                     value-partition-table[value-forward(value)]
-                   end,
-                   value.llvm-expression-constant-operands))
+               operands)
 end method;
 
 define method write-constant-record
