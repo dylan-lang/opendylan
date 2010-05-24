@@ -837,33 +837,13 @@ const-expr:
             operands: vector(arg$3, arg$5));;
   %ICMP i-predicates %LPAREN const-val %COMMA const-val %RPAREN
     => begin
-         let operand-type = type-forward(llvm-value-type(arg$4));
-         let result-type
-           = if (instance?(operand-type, <llvm-vector-type>))
-               make(<llvm-vector-type>,
-                    size: operand-type.llvm-vector-type-size,
-                    element-type: make(<llvm-integer-type>, width: 1))
-             else
-               make(<llvm-integer-type>, width: 1)
-             end if;
          make(<llvm-icmp-constant>,
-            type: result-type,
             predicate: arg$2,
             operands: vector(arg$4, arg$6))
        end;;
   %FCMP f-predicates %LPAREN const-val %COMMA const-val %RPAREN
     => begin
-         let operand-type = type-forward(llvm-value-type(arg$4));
-         let result-type
-           = if (instance?(operand-type, <llvm-vector-type>))
-               make(<llvm-vector-type>,
-                    size: operand-type.llvm-vector-type-size,
-                    element-type: make(<llvm-integer-type>, width: 1))
-             else
-               make(<llvm-integer-type>, width: 1)
-             end if;
          make(<llvm-fcmp-constant>,
-            type: result-type,
             predicate: arg$2,
             operands: vector(arg$4, arg$6))
        end;;
