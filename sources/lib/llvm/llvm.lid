@@ -10,6 +10,8 @@ Files:        library
 	      llvm-constant
 	      llvm-global
 	      llvm-attribute
+	      llvm-instruction
+	      llvm-basic-block
 	      llvm-function
               llvm-asm-parser
               llvm-asm-reader

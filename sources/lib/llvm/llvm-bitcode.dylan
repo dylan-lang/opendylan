@@ -146,7 +146,7 @@ define bitcode-block $METADATA_ATTACHMENT = 16
 end bitcode-block;
 
 
-/// Type output
+/// Value and type enumeration
 
 define class <sequence-table> (<table>)
 end class;
@@ -206,6 +206,47 @@ define method encoding-item-hash
     = object-hash(double-machine-word-high(item), state-low);
   values(merge-hash-ids(id-low, id-high, ordered: #t), state-high)
 end method encoding-item-hash;
+
+define function initial-traverse-type
+    (type-partition-table :: <object-table>,
+     partition-types :: <stretchy-object-vector>,
+     initial-type-partition-table :: <sequence-table>,
+     type :: <llvm-type>)
+ => ();
+  let type = type-forward(type);
+
+  unless (element(type-partition-table, type, default: #f))
+    // Determine which partition index this type initially belongs
+    // to, assigning a new index if necessary
+    let (partition-key, splittable?) = type-partition-key(type);
+    let partition-index
+      = element(initial-type-partition-table, partition-key, default: #f)
+      | (initial-type-partition-table[partition-key]
+           := initial-type-partition-table.size);
+    
+    // Record the partition assignment
+    type-partition-table[type] := partition-index;
+    
+    // Record this type instance if the partition is subject to
+    // splitting, or if it is the first one seen in this partition
+    let partition-other-types
+      = element(partition-types, partition-index, default: #());
+    if (splittable? | empty?(partition-other-types))
+      partition-types[partition-index]
+        := add(partition-other-types, type);
+    end if;
+    
+    // Traverse referenced types
+    if (splittable?)
+      for (referenced-type in type-referenced-types(type))
+        initial-traverse-type(type-partition-table,
+                              partition-types,
+                              initial-type-partition-table,
+                              referenced-type)
+      end for;
+    end if;
+  end unless;
+end function;
 
 define function refine-partitions
     (partitions :: <stretchy-vector>,
@@ -345,37 +386,6 @@ define function enumerate-types-constants-attributes
       end for;
 
   let initial-type-partition-table = make(<sequence-table>);
-  local
-    method initial-traverse-type (type :: <llvm-type>) => ();
-      let type = type-forward(type);
-      unless (element(type-partition-table, type, default: #f))
-        // Determine which partition index this type initially belongs
-        // to, assigning a new index if necessary
-        let (partition-key, splittable?) = type-partition-key(type);
-        let partition-index
-          = element(initial-type-partition-table, partition-key, default: #f)
-          | (initial-type-partition-table[partition-key]
-               := initial-type-partition-table.size);
-
-        // Record the partition assignment
-        type-partition-table[type] := partition-index;
-
-        // Record this type instance if the partition is subject to
-        // splitting, or if it is the first one seen in this partition
-        let partition-other-types
-          = element(partition-types, partition-index, default: #());
-        if (splittable? | empty?(partition-other-types))
-          partition-types[partition-index]
-            := add(partition-other-types, type);
-        end if;
-
-        // Traverse referenced types
-        if (splittable?)
-          do(initial-traverse-type, type-referenced-types(type));
-        end if;
-      end unless;
-    end method;
-
   let initial-constant-partition-table = make(<sequence-table>);
   local
     method initial-traverse-value (value :: <llvm-value>) => ();
@@ -383,7 +393,15 @@ define function enumerate-types-constants-attributes
 
       unless (element(value-partition-table, value, default: #f))
         // Traverse referenced types
-        do(initial-traverse-type, value-referenced-types(value));
+        for (referenced-type in value-referenced-types(value))
+          initial-traverse-type(type-partition-table,
+                                partition-types,
+                                initial-type-partition-table,
+                                referenced-type)
+        end for;
+
+        // Traverse referenced values
+        do(initial-traverse-value, value-referenced-values(value));
 
         // Determine which partition index this value initially belongs
         // to, assigning a new index if necessary
@@ -404,20 +422,44 @@ define function enumerate-types-constants-attributes
                     default: #());
         partition-constants[partition-index - first-constant-index]
           := add(partition-other-values, value);
+      end unless;
+    end method,
+    
+    method initial-traverse-operand-value (value :: <llvm-value>) => ();
+      let value = value-forward(value);
 
-        // Traverse referenced values
-        do(initial-traverse-value, value-referenced-values(value));
+      unless (element(value-partition-table, value, default: #f))
+        // Traverse referenced types
+        for (referenced-type in value-referenced-types(value))
+          initial-traverse-type(type-partition-table,
+                                partition-types,
+                                initial-type-partition-table,
+                                referenced-type)
+        end for;
+
+        if (instance?(value, <llvm-constant-value>))
+          // Traverse referenced values
+          do(initial-traverse-operand-value, value-referenced-values(value));
+        end if;
       end unless;
     end method;
 
   // Compute the initial partitions:
   
   // Traverse each named type
-  do(initial-traverse-type, m.llvm-type-table);
+  for (referenced-type in m.llvm-type-table)
+    initial-traverse-type(type-partition-table,
+                          partition-types,
+                          initial-type-partition-table,
+                          referenced-type)
+  end for;
 
   // Traverse globals
   for (global :: <llvm-global-variable> in m.llvm-module-globals)
-    initial-traverse-type(llvm-value-type(global));
+    initial-traverse-type(type-partition-table,
+                          partition-types,
+                          initial-type-partition-table,
+                          llvm-value-type(global));
     if (global.llvm-global-variable-initializer)
       initial-traverse-value(global.llvm-global-variable-initializer)
     end if;
@@ -425,16 +467,52 @@ define function enumerate-types-constants-attributes
 
   // Traverse functions
   for (function :: <llvm-function> in m.llvm-module-functions)
-    initial-traverse-type(llvm-value-type(function));
+    initial-traverse-type(type-partition-table,
+                          partition-types,
+                          initial-type-partition-table,
+                          llvm-value-type(function));
     do-attribute-list(function.llvm-function-attribute-list);
+
+    // Traverse argument types
+    for (argument in function.llvm-function-value-table)
+      initial-traverse-type(type-partition-table,
+                            partition-types,
+                            initial-type-partition-table,
+                            argument.llvm-value-type)
+    end for;
+
+    // Traverse instructions
+    for (basic-block in function.llvm-function-basic-blocks)
+      for (instruction in basic-block.llvm-basic-block-instructions)
+        // Traverse instruction operands
+        do(initial-traverse-operand-value,
+           instruction.llvm-instruction-operands);
+
+        // Traverse instruction return type
+        initial-traverse-type(type-partition-table,
+                              partition-types,
+                              initial-type-partition-table,
+                              instruction.llvm-value-type);
+
+        // Traverse attribute lists
+        if (instance?(instruction, <llvm-call-instruction>))
+          do-attribute-list(instruction.llvm-call-instruction-attribute-list);
+        elseif (instance?(instruction, <llvm-invoke-instruction>))
+          do-attribute-list(instruction.llvm-invoke-instruction-attribute-list);
+        end if;
+      end for;
+    end for;
   end for;
 
   // Traverse aliases
   for (alias :: <llvm-global-alias> in m.llvm-module-aliases)
-    initial-traverse-type(llvm-value-type(alias));
+    initial-traverse-type(type-partition-table,
+                          partition-types,
+                          initial-type-partition-table,
+                          llvm-value-type(alias));
     initial-traverse-value(alias.llvm-global-alias-aliasee);
   end for;
-  
+
   // Refine type partitions until they are stable
   refine-partitions(partition-types, 0,
                     type-partition-table,
@@ -476,6 +554,123 @@ define function enumerate-types-constants-attributes
          value-partition-table,
          first-constant-index, map(first, partition-constants),
          attributes-index-table, attributes-exemplars)
+end function;
+
+define function enumerate-function-constants
+    (function :: <llvm-function>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <object-table>,
+     first-function-local-index :: <integer>)
+ => (value-partition-table :: <object-table>,
+     first-constant-index :: <integer>,
+     constant-partition-exemplars :: <vector>);
+  // Make a local copy of the value table
+  let value-partition-table :: <object-table>
+    = shallow-copy(value-partition-table);
+
+  // Assign basic block numbers to basic blocks
+  for (basic-block in function.llvm-function-basic-blocks,
+       basic-block-number :: <integer> from 0)
+    value-partition-table[basic-block] := basic-block-number;
+  end for;
+
+  // Assign indices to the function arguments
+  let first-constant-index
+    = for (argument in function.llvm-function-arguments,
+           index from first-function-local-index)
+        value-partition-table[argument] := index;
+      finally
+        index
+      end for;
+ 
+  // Vector of lists of the constant value instances in a partition
+  let partition-constants = make(<stretchy-object-vector>);
+
+  let initial-constant-partition-table = make(<sequence-table>);
+  local
+    method initial-traverse-value (value :: <llvm-constant-value>) => ();
+      let value = value-forward(value);
+
+      unless (element(value-partition-table, value, default: #f))
+        // Traverse referenced values
+        do(initial-traverse-value, value-referenced-values(value));
+
+        // Determine which partition index this value initially belongs
+        // to, assigning a new index if necessary
+        let partition-key = value-partition-key(value);
+        let partition-index
+          = element(initial-constant-partition-table, partition-key,
+                    default: #f)
+          | (initial-constant-partition-table[partition-key]
+               := initial-constant-partition-table.size + first-constant-index);
+        
+        // Record the partition assignment
+        value-partition-table[value] := partition-index;
+
+        // Record this constant value instance
+        let partition-other-values
+          = element(partition-constants,
+                    partition-index - first-constant-index,
+                    default: #());
+        partition-constants[partition-index - first-constant-index]
+          := add(partition-other-values, value);
+      end unless;
+    end method;
+
+  // Traverse constant instruction operands
+  for (basic-block in function.llvm-function-basic-blocks)
+    for (instruction in basic-block.llvm-basic-block-instructions)
+      for (operand in instruction.llvm-instruction-operands)
+        let operand = value-forward(operand);
+        if (instance?(operand, <llvm-constant-value>))
+          initial-traverse-value(operand);
+        end if;
+      end for;
+    end for;
+  end for;
+
+  // Split constant value partitions based on types
+  refine-partitions(partition-constants, first-constant-index,
+                    value-partition-table,
+                    method (value :: <llvm-constant-value>)
+                      let type = llvm-value-type(value);
+                      vector(type-partition-table[type-forward(type)])
+                    end);
+
+  // Refine constant value partitions until they are stable
+  local
+    method constant-referenced-partitions (value :: <llvm-constant-value>)
+      map(method (referenced-value :: <llvm-constant-value>)
+            value-partition-table
+              [value-forward(referenced-value)]
+          end,
+          value-referenced-values(value))
+    end;
+  refine-partitions(partition-constants, first-constant-index,
+                    value-partition-table,
+                    constant-referenced-partitions);
+
+  // Topologically sort constant values
+  let partition-constants
+    = topological-sort-partitions(partition-constants, first-constant-index,
+                                  value-partition-table,
+                                  constant-referenced-partitions);
+
+  // Enumerate the instructions themselves
+  let instruction-index :: <integer>
+    = first-constant-index + partition-constants.size;
+  for (basic-block in function.llvm-function-basic-blocks)
+    for (instruction in basic-block.llvm-basic-block-instructions)
+      unless (llvm-void-type?(llvm-value-type(instruction)))
+        value-partition-table[instruction] := instruction-index;
+        instruction-index := instruction-index + 1;
+      end unless;
+    end for;
+  end for;
+
+  values(value-partition-table,
+         first-constant-index,
+         map(first, partition-constants))
 end function;
 
 define function encode-attributes
@@ -882,6 +1077,591 @@ define method encode-predicate
 end;
 
 
+/// Constant table output
+
+define function write-constant-table
+    (stream :: <bitcode-stream>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <object-table>,
+     constant-partition-exemplars :: <sequence>)
+ => ();
+  unless (empty?(constant-partition-exemplars))
+    with-block-output (stream, $CONSTANTS_BLOCK, 3)
+      let current-type-partition = #f;
+      for (constant in constant-partition-exemplars)
+        let type-partition
+          = type-partition-table[type-forward(llvm-value-type(constant))];
+        if (type-partition ~= current-type-partition)
+          write-record(stream, #"SETTYPE", type-partition);
+          current-type-partition := type-partition;
+        end if;
+        write-constant-record(stream,
+                              type-partition-table,
+                              value-partition-table,
+                              constant);
+      end for;
+    end with-block-output;
+  end unless;
+end function;
+
+
+/// Instruction output
+
+define function add-value
+    (operands :: <stretchy-vector>,
+     value-partition-table :: <object-table>,
+     value :: <llvm-value>)
+ => ();
+  let index = value-partition-table[value-forward(value)];
+  add!(operands, index);
+end function;
+
+define function add-value-type
+    (operands :: <stretchy-vector>,
+     instruction-index :: <integer>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <object-table>,
+     value :: <llvm-value>)
+ => ();
+  let value = value-forward(value);
+  let index = value-partition-table[value];
+  add!(operands, index);
+  if (index >= instruction-index)
+    add!(operands, type-partition-table[type-forward(llvm-value-type(value))]);
+  end if;
+end function;
+
+define method write-instruction-record
+    (stream :: <bitcode-stream>,
+     instruction-index :: <integer>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <object-table>,
+     attributes-index-table :: <encoding-sequence-table>,
+     value :: <llvm-binop-instruction>)
+ => ();
+  let operands = make(<stretchy-object-vector>);
+  add-value-type(operands, instruction-index,
+                 type-partition-table, value-partition-table,
+                 value.llvm-instruction-operands[0]);
+  add-value(operands, value-partition-table,
+            value.llvm-instruction-operands[1]);
+  add!(operands,
+       binop-operator-encoding(value.llvm-binop-instruction-operator));
+
+  let flags = binop-flags-encoding(value);
+  unless (zero?(flags))
+    add!(operands, flags);
+  end unless;
+
+  write-record(stream, #"INST_BINOP", operands);
+end method;
+
+define method write-instruction-record
+    (stream :: <bitcode-stream>,
+     instruction-index :: <integer>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <object-table>,
+     attributes-index-table :: <encoding-sequence-table>,
+     value :: <llvm-cast-instruction>)
+ => ();
+  let operands = make(<stretchy-object-vector>);
+  add-value-type(operands, instruction-index,
+                 type-partition-table, value-partition-table,
+                 value.llvm-instruction-operands[0]);
+  add!(operands, type-partition-table[type-forward(llvm-value-type(value))]);
+  add!(operands, cast-operator-encoding(value.llvm-cast-instruction-operator));
+  write-record(stream, #"INST_CAST", operands);
+end method;
+
+define method write-instruction-record
+    (stream :: <bitcode-stream>,
+     instruction-index :: <integer>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <object-table>,
+     attributes-index-table :: <encoding-sequence-table>,
+     value :: <llvm-gep-instruction>)
+ => ();
+  let operands = make(<stretchy-object-vector>);
+  for (operand in value.llvm-instruction-operands)
+    add-value-type(operands, instruction-index,
+                   type-partition-table, value-partition-table,
+                   operand);
+  end for;
+  write-record(stream,
+               if (value.llvm-gep-instruction-in-bounds?)
+                 #"INST_INBOUNDS_GEP"
+               else
+                 #"INST_GEP"
+               end if,
+               operands);
+end method;
+
+define method write-instruction-record
+    (stream :: <bitcode-stream>,
+     instruction-index :: <integer>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <object-table>,
+     attributes-index-table :: <encoding-sequence-table>,
+     value :: <llvm-select-instruction>)
+ => ();
+  let operands = make(<stretchy-object-vector>);
+  add-value-type(operands, instruction-index,
+                 type-partition-table, value-partition-table,
+                 value.llvm-instruction-operands[1]);
+  add-value(operands, value-partition-table,
+            value.llvm-instruction-operands[2]);
+  add-value-type(operands, instruction-index,
+                 type-partition-table, value-partition-table,
+                 value.llvm-instruction-operands[0]);
+  write-record(stream, #"INST_VSELECT", operands);
+end method;
+
+define method write-instruction-record
+    (stream :: <bitcode-stream>,
+     instruction-index :: <integer>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <object-table>,
+     attributes-index-table :: <encoding-sequence-table>,
+     value :: <llvm-extractelement-instruction>)
+ => ();
+  let operands = make(<stretchy-object-vector>);
+  add-value-type(operands, instruction-index,
+                 type-partition-table, value-partition-table,
+                 value.llvm-instruction-operands[0]);
+  add-value(operands, value-partition-table,
+            value.llvm-instruction-operands[1]);
+  write-record(stream, #"INST_EXTRACTELT", operands);
+end method;
+
+define method write-instruction-record
+    (stream :: <bitcode-stream>,
+     instruction-index :: <integer>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <object-table>,
+     attributes-index-table :: <encoding-sequence-table>,
+     value :: <llvm-insertelement-instruction>)
+ => ();
+  let operands = make(<stretchy-object-vector>);
+  add-value-type(operands, instruction-index,
+                 type-partition-table, value-partition-table,
+                 value.llvm-instruction-operands[0]);
+  add-value(operands, value-partition-table,
+            value.llvm-instruction-operands[1]);
+  add-value(operands, value-partition-table,
+            value.llvm-instruction-operands[2]);
+  write-record(stream, #"INST_INSERTELT", operands);
+end method;
+
+define method write-instruction-record
+    (stream :: <bitcode-stream>,
+     instruction-index :: <integer>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <object-table>,
+     attributes-index-table :: <encoding-sequence-table>,
+     value :: <llvm-shufflevector-instruction>)
+ => ();
+  let operands = make(<stretchy-object-vector>);
+  add-value-type(operands, instruction-index,
+                 type-partition-table, value-partition-table,
+                 value.llvm-instruction-operands[0]);
+  add-value(operands, value-partition-table,
+            value.llvm-instruction-operands[1]);
+  add-value(operands, value-partition-table,
+            value.llvm-instruction-operands[2]);
+  write-record(stream, #"INST_SHUFFLEVEC", operands);
+end method;
+
+define method write-instruction-record
+    (stream :: <bitcode-stream>,
+     instruction-index :: <integer>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <object-table>,
+     attributes-index-table :: <encoding-sequence-table>,
+     value :: <llvm-cmp-instruction>)
+ => ();
+  let operands = make(<stretchy-object-vector>);
+  add-value-type(operands, instruction-index,
+                 type-partition-table, value-partition-table,
+                 value.llvm-instruction-operands[0]);
+  add-value(operands, value-partition-table,
+            value.llvm-instruction-operands[1]);
+  add!(operands, encode-predicate(value));
+  write-record(stream, #"INST_CMP", operands);
+end method;
+
+define method write-instruction-record
+    (stream :: <bitcode-stream>,
+     instruction-index :: <integer>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <object-table>,
+     attributes-index-table :: <encoding-sequence-table>,
+     value :: <llvm-return-instruction>)
+ => ();
+  let operands = make(<stretchy-object-vector>);
+  for (operand in value.llvm-instruction-operands)
+    add-value-type(operands, instruction-index,
+                   type-partition-table, value-partition-table,
+                   operand);
+  end for;
+  write-record(stream, #"INST_RET", operands);
+end method;
+
+define method write-instruction-record
+    (stream :: <bitcode-stream>,
+     instruction-index :: <integer>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <object-table>,
+     attributes-index-table :: <encoding-sequence-table>,
+     value :: <llvm-branch-instruction>)
+ => ();
+  let operands = make(<stretchy-object-vector>);
+  if (value.llvm-instruction-operands.size = 1)
+    add-value(operands, value-partition-table,
+              value.llvm-instruction-operands[0]);
+  else
+    add-value(operands, value-partition-table,
+              value.llvm-instruction-operands[1]);
+    add-value(operands, value-partition-table,
+              value.llvm-instruction-operands[2]);
+    add-value(operands, value-partition-table,
+              value.llvm-instruction-operands[0]);
+  end if;
+  write-record(stream, #"INST_BR", operands);
+end method;
+
+define method write-instruction-record
+    (stream :: <bitcode-stream>,
+     instruction-index :: <integer>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <object-table>,
+     attributes-index-table :: <encoding-sequence-table>,
+     value :: <llvm-switch-instruction>)
+ => ();
+  let operand0 = value-forward(value.llvm-instruction-operands[0]);
+  write-record(stream, #"INST_SWITCH",
+               type-partition-table[type-forward(llvm-value-type(operand0))],
+               map(method (value :: <llvm-value>)
+                     value-partition-table[value-forward(value)]
+                   end,
+                   value.llvm-instruction-operands));
+end method;
+
+define method write-instruction-record
+    (stream :: <bitcode-stream>,
+     instruction-index :: <integer>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <object-table>,
+     attributes-index-table :: <encoding-sequence-table>,
+     value :: <llvm-invoke-instruction>)
+ => ();
+  let attribute-list-encoding
+    = encode-attribute-list(value.llvm-invoke-instruction-attribute-list);
+  let operands = make(<stretchy-object-vector>);
+  add-value(operands, value-partition-table,
+            value.llvm-instruction-operands[0]);
+  add-value(operands, value-partition-table,
+            value.llvm-instruction-operands[1]);
+  add-value-type(operands, instruction-index,
+                 type-partition-table, value-partition-table,
+                 value.llvm-instruction-operands[2]);
+
+  // Fixed parameters
+  let callee = value-forward(value.llvm-instruction-operands[2]);
+  let function-pointer-type
+    = type-forward(llvm-value-type(callee));
+  let function-type
+    = type-forward(function-pointer-type.llvm-pointer-type-pointee);
+  let fixed-parameter-count
+    = function-type.llvm-function-type-parameter-types.size;
+  for (i from 3 below fixed-parameter-count + 3)
+    add-value(operands, value-partition-table,
+              value.llvm-instruction-operands[i]);
+  end for;
+
+  // varargs parameters
+  if (function-type.llvm-function-type-varargs?)
+    for (i from fixed-parameter-count + 3
+           below value.llvm-instruction-operands.size)
+      add-value-type(operands, instruction-index,
+                     type-partition-table, value-partition-table,
+                     value.llvm-instruction-operands[i]);
+    end for;
+  end if;
+  
+  write-record(stream, #"INST_INVOKE",
+               attributes-index-table[attribute-list-encoding],
+               value.llvm-invoke-instruction-calling-convention,
+               operands);
+end method;
+
+define method write-instruction-record
+    (stream :: <bitcode-stream>,
+     instruction-index :: <integer>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <object-table>,
+     attributes-index-table :: <encoding-sequence-table>,
+     value :: <llvm-unwind-instruction>)
+ => ();
+  write-record(stream, #"INST_UNWIND");
+end method;
+
+define method write-instruction-record
+    (stream :: <bitcode-stream>,
+     instruction-index :: <integer>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <object-table>,
+     attributes-index-table :: <encoding-sequence-table>,
+     value :: <llvm-unreachable-instruction>)
+ => ();
+  write-record(stream, #"INST_UNREACHABLE");
+end method;
+
+define method write-instruction-record
+    (stream :: <bitcode-stream>,
+     instruction-index :: <integer>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <object-table>,
+     attributes-index-table :: <encoding-sequence-table>,
+     value :: <llvm-indirect-branch-instruction>)
+ => ();
+    error("write-instruction-record indirectbr");
+end method;
+
+define method write-instruction-record
+    (stream :: <bitcode-stream>,
+     instruction-index :: <integer>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <object-table>,
+     attributes-index-table :: <encoding-sequence-table>,
+     value :: <llvm-phi-node>)
+ => ();
+  write-record(stream, #"INST_PHI",
+               type-partition-table[type-forward(llvm-value-type(value))],
+               map(method (value :: <llvm-value>)
+                     value-partition-table[value-forward(value)]
+                   end,
+                   value.llvm-instruction-operands));
+end method;
+
+define method write-instruction-record
+    (stream :: <bitcode-stream>,
+     instruction-index :: <integer>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <object-table>,
+     attributes-index-table :: <encoding-sequence-table>,
+     value :: <llvm-alloca-instruction>)
+ => ();
+  let operands = make(<stretchy-object-vector>);
+  add-value(operands, value-partition-table,
+            value.llvm-instruction-operands[0]);
+  add!(operands, alignment-encoding(value.llvm-alloca-instruction-alignment));
+  write-record(stream, #"INST_ALLOCA",
+               type-partition-table[type-forward(llvm-value-type(value))],
+               operands);
+end method;
+
+define method write-instruction-record
+    (stream :: <bitcode-stream>,
+     instruction-index :: <integer>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <object-table>,
+     attributes-index-table :: <encoding-sequence-table>,
+     value :: <llvm-load-instruction>)
+ => ();
+  let operands = make(<stretchy-object-vector>);
+  add-value-type(operands, instruction-index,
+                 type-partition-table, value-partition-table,
+                 value.llvm-instruction-operands[0]);
+  add!(operands, alignment-encoding(value.llvm-memory-instruction-alignment));
+  add!(operands, if (value.llvm-memory-instruction-volatile?) 1 else 0 end);
+  write-record(stream, #"INST_LOAD", operands);
+end method;
+
+define method write-instruction-record
+    (stream :: <bitcode-stream>,
+     instruction-index :: <integer>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <object-table>,
+     attributes-index-table :: <encoding-sequence-table>,
+     value :: <llvm-store-instruction>)
+ => ();
+  let operands = make(<stretchy-object-vector>);
+  add-value-type(operands, instruction-index,
+                 type-partition-table, value-partition-table,
+                 value.llvm-instruction-operands[1]);
+  add-value(operands, value-partition-table,
+            value.llvm-instruction-operands[0]);
+  add!(operands, alignment-encoding(value.llvm-memory-instruction-alignment));
+  add!(operands, if (value.llvm-memory-instruction-volatile?) 1 else 0 end);
+  write-record(stream, #"INST_STORE2", operands);
+end method;
+
+define method write-instruction-record
+    (stream :: <bitcode-stream>,
+     instruction-index :: <integer>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <object-table>,
+     attributes-index-table :: <encoding-sequence-table>,
+     value :: <llvm-call-instruction>)
+ => ();
+  let attribute-list-encoding
+    = encode-attribute-list(value.llvm-call-instruction-attribute-list);
+  let operands = make(<stretchy-object-vector>);
+  add-value-type(operands, instruction-index,
+                 type-partition-table, value-partition-table,
+                 value.llvm-instruction-operands[0]);
+
+  // Fixed parameters
+  let callee = value-forward(value.llvm-instruction-operands[0]);
+  let function-pointer-type
+    = type-forward(llvm-value-type(callee));
+  let function-type
+    = type-forward(function-pointer-type.llvm-pointer-type-pointee);
+  let fixed-parameter-count
+    = function-type.llvm-function-type-parameter-types.size;
+  for (i from 1 below fixed-parameter-count + 1)
+    add-value(operands, value-partition-table,
+              value.llvm-instruction-operands[i]);
+  end for;
+
+  // varargs parameters
+  if (function-type.llvm-function-type-varargs?)
+    for (i from fixed-parameter-count + 1
+           below value.llvm-instruction-operands.size)
+      add-value-type(operands, instruction-index,
+                     type-partition-table, value-partition-table,
+                     value.llvm-instruction-operands[i]);
+    end for;
+  end if;
+  
+  write-record(stream, #"INST_CALL",
+               attributes-index-table[attribute-list-encoding],
+               logior(ash(value.llvm-call-instruction-calling-convention, 1),
+                      if(value.llvm-call-instruction-tail-call?) 1 else 0 end),
+               operands);
+end method;
+
+define method write-instruction-record
+    (stream :: <bitcode-stream>,
+     instruction-index :: <integer>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <object-table>,
+     attributes-index-table :: <encoding-sequence-table>,
+     value :: <llvm-va-arg-instruction>)
+ => ();
+  let operands = make(<stretchy-object-vector>);
+  let valist = value-forward(value.llvm-instruction-operands[0]);
+  add!(operands, type-partition-table[type-forward(llvm-value-type(valist))]);
+  add-value(operands, value-partition-table, valist);
+  add!(operands, type-partition-table[type-forward(llvm-value-type(value))]);
+  write-record(stream, #"INST_VAARG", operands);
+end method;
+
+define method write-instruction-record
+    (stream :: <bitcode-stream>,
+     instruction-index :: <integer>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <object-table>,
+     attributes-index-table :: <encoding-sequence-table>,
+     value :: <llvm-extract-value-instruction>)
+ => ();
+  let operands = make(<stretchy-object-vector>);
+  add-value-type(operands, instruction-index,
+                 type-partition-table, value-partition-table,
+                 value.llvm-instruction-operands[0]);
+  concatenate!(operands, value.llvm-aggregate-instruction-indices);
+  write-record(stream, #"INST_EXTRACTVAL", operands);
+end method;
+
+define method write-instruction-record
+    (stream :: <bitcode-stream>,
+     instruction-index :: <integer>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <object-table>,
+     attributes-index-table :: <encoding-sequence-table>,
+     value :: <llvm-insert-value-instruction>)
+ => ();
+  let operands = make(<stretchy-object-vector>);
+  add-value-type(operands, instruction-index,
+                 type-partition-table, value-partition-table,
+                 value.llvm-instruction-operands[0]);
+  add-value-type(operands, instruction-index,
+                 type-partition-table, value-partition-table,
+                 value.llvm-instruction-operands[1]);
+  concatenate!(operands, value.llvm-aggregate-instruction-indices);
+  write-record(stream, #"INST_INSERTVAL", operands);
+end method;
+
+
+/// Function output
+
+define function write-function
+    (stream :: <bitcode-stream>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <object-table>,
+     first-function-local-index :: <integer>,
+     attributes-index-table :: <encoding-sequence-table>,
+     function :: <llvm-function>)
+ => ();
+  unless (empty?(function.llvm-function-basic-blocks))
+    let (value-partition-table :: <object-table>,
+         first-constant-index :: <integer>,
+         constant-partition-exemplars :: <vector>)
+      = enumerate-function-constants(function,
+                                     type-partition-table,
+                                     value-partition-table,
+                                     first-function-local-index);
+
+    with-block-output (stream, $FUNCTION_BLOCK, 3)
+      // Tell the reader how many basic blocks there will be
+      write-record(stream, #"DECLAREBLOCKS",
+                   size(function.llvm-function-basic-blocks));
+
+      // Write the function constant table
+      write-constant-table(stream,
+                           type-partition-table,
+                           value-partition-table,
+                           constant-partition-exemplars);
+
+      // Write the instructions
+      let instruction-index :: <integer>
+        = first-constant-index + constant-partition-exemplars.size;
+      for (basic-block in function.llvm-function-basic-blocks)
+        for (instruction in basic-block.llvm-basic-block-instructions)
+          write-instruction-record(stream, instruction-index,
+                                   type-partition-table,
+                                   value-partition-table,
+                                   attributes-index-table,
+                                   instruction);
+
+          unless (llvm-void-type?(llvm-value-type(instruction)))
+            instruction-index := instruction-index + 1;
+          end unless;
+        end for;
+      end for;
+
+
+      // Write the function value symbol table
+      unless (empty?(function.llvm-function-value-table))
+        with-block-output (stream, $VALUE_SYMTAB_BLOCK, 3)
+          for (value keyed-by name in function.llvm-function-value-table)
+            if (instance?(value, <llvm-basic-block>))
+              write-record(stream, #"BBENTRY",
+                           value-partition-table[value-forward(value)],
+                           name);
+            else
+              write-record(stream, #"ENTRY",
+                           value-partition-table[value-forward(value)],
+                           name);
+            end if;
+          end for;
+        end with-block-output;
+      end unless;
+    end with-block-output;
+  end unless;
+end function;
+
+
 /// Module output
 
 define function write-module
@@ -1009,7 +1789,11 @@ define function write-module
         write-record(stream, #"FUNCTION",
                      type-partition-table[llvm-value-type(function)],
                      function.llvm-function-calling-convention,
-                     1,         // FIXME isproto
+                     if (empty?(function.llvm-function-basic-blocks))
+                       1
+                     else
+                       0
+                     end,
                      linkage-encoding(function.llvm-global-linkage-kind),
                      attributes-index-table[attribute-list-encoding],
                      alignment-encoding(function.llvm-global-alignment),
@@ -1039,27 +1823,24 @@ define function write-module
     end;
 
     // Write constants
-    unless (empty?(constant-partition-exemplars))
-      with-block-output (stream, $CONSTANTS_BLOCK, 3)
-        let current-type-partition = #f;
-        for (constant in constant-partition-exemplars)
-          let type-partition
-            = type-partition-table[type-forward(llvm-value-type(constant))];
-          if (type-partition ~= current-type-partition)
-            write-record(stream, #"SETTYPE", type-partition);
-            current-type-partition := type-partition;
-          end if;
-          write-constant-record(stream,
-                                type-partition-table,
-                                value-partition-table,
-                                constant);
-        end for;
-      end with-block-output;
-    end unless;
-
+    write-constant-table(stream,
+                         type-partition-table,
+                         value-partition-table,
+                         constant-partition-exemplars);
+    
     // Write metadata
 
     // Write function bodies
+    let first-function-local-index :: <integer>
+      = first-constant-index + constant-partition-exemplars.size;
+    for (function :: <llvm-function> in m.llvm-module-functions)
+      write-function(stream,
+                     type-partition-table,
+                     value-partition-table,
+                     first-function-local-index,
+                     attributes-index-table,
+                     function);
+    end for;
 
     // Write metadata (store?)
 

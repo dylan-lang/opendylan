@@ -61,3 +61,20 @@ end method;
 define abstract class <llvm-placeholder-value> (<llvm-value>)
   slot llvm-placeholder-value-forward :: <llvm-value>;
 end class;
+
+define class <llvm-symbolic-value> (<llvm-placeholder-value>)
+  constant slot llvm-value-type :: <llvm-type> = make(<llvm-opaque-type>),
+    init-keyword: type:;
+  constant slot llvm-symbolic-value-name :: type-union(<string>, <integer>),
+    required-init-keyword: name:;
+end class;
+
+define method value-forward
+    (value :: <llvm-symbolic-value>)
+ => (value :: <llvm-value>);
+  if (slot-initialized?(value, llvm-placeholder-value-forward))
+    value-forward(value.llvm-placeholder-value-forward)
+  else
+    error("value %%s is not defined", value.llvm-symbolic-value-name);
+  end if
+end method;
