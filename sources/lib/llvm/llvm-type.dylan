@@ -200,12 +200,51 @@ define abstract class <llvm-placeholder-type> (<llvm-type>)
   slot llvm-placeholder-type-forward :: <llvm-type>;
 end class;
 
+define method llvm-constrain-type
+    (constrained-type :: <llvm-type>, type :: <llvm-type>) => ()
+  let real-type = type-forward(type);
+  if (type-partition-key(constrained-type) ~= type-partition-key(real-type))
+    error("Type %s does not match %s", constrained-type, type);
+  end if;
+end method;
+
+define method llvm-constrain-type
+    (constrained-type :: <llvm-placeholder-type>, type :: <llvm-type>) => ()
+  if (slot-initialized?(constrained-type, llvm-placeholder-type-forward))
+    llvm-constrain-type(constrained-type.llvm-placeholder-type-forward, type);
+  elseif (constrained-type ~== type)
+    constrained-type.llvm-placeholder-type-forward := type;
+  end if;
+end method;
+
+define method llvm-constrain-type
+    (constrained-type :: <llvm-type>, type :: <llvm-placeholder-type>) => ()
+  if (slot-initialized?(type, llvm-placeholder-type-forward))
+    llvm-constrain-type(constrained-type, type.llvm-placeholder-type-forward);
+  elseif (constrained-type ~== type)
+    type.llvm-placeholder-type-forward := constrained-type;
+  end if;
+end method;
+
+define method llvm-constrain-type
+    (constrained-type :: <llvm-placeholder-type>,
+     type :: <llvm-placeholder-type>)
+ => ()
+  if (slot-initialized?(constrained-type, llvm-placeholder-type-forward))
+    llvm-constrain-type(constrained-type.llvm-placeholder-type-forward, type);
+  elseif (slot-initialized?(type, llvm-placeholder-type-forward))
+    llvm-constrain-type(constrained-type, type.llvm-placeholder-type-forward);
+  end if;
+end method;
+
+// Upval types
+
 define class <llvm-upval-type> (<llvm-placeholder-type>)
   constant slot llvm-upval-type-index :: <integer>,
     required-init-keyword: index:;
 end class;
 
-define method type-resolve-upvals
+define method llvm-type-resolve-upvals
     (root-type :: <llvm-type>)
  => (root-type :: <llvm-type>);
   local
@@ -288,4 +327,6 @@ define constant $llvm-i8*-type
   = make(<llvm-pointer-type>, pointee: $llvm-i8-type);
 
 define constant $llvm-i32-type :: <llvm-type>
+  = make(<llvm-integer-type>, width: 32);
+define constant $llvm-i64-type :: <llvm-type>
   = make(<llvm-integer-type>, width: 32);

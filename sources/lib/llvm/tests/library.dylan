@@ -13,6 +13,7 @@ define library llvm-test-suite
   use io;
   use system;
   use llvm;
+  use llvm-asm-parser;
 
   export llvm-test-suite;
 end library;
@@ -26,6 +27,7 @@ define module llvm-test-suite
   use locators;
   use operating-system;
   use llvm;
+  use llvm-asm-parser;
 
   export llvm-test-suite;
 end module;

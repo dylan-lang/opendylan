@@ -1,4 +1,4 @@
-Module:       llvm-internals
+Module:       llvm-asm-parser-internals
 Author:       Peter S. Housel
 Copyright:    Original Code is Copyright 2009 Gwydion Dylan Maintainers
               All rights reserved.
