@@ -68,6 +68,7 @@ define table $llvm-keywords :: <string-table>
      "arm_aapcscc" => $%ARM_aapcscc-token,
      "arm_aapcs_vfpcc" => $%ARM_aapcs_vfpcc-token,
      "msp430_intrcc" => $%MSP430_INTRCC-token,
+     "x86_thiscallcc" => $%X86_THISCALLCC-token,
      
      "cc" => $%CC-token,
      "c" => $%C-token,

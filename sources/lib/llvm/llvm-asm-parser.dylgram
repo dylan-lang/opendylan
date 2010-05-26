@@ -572,6 +572,8 @@ opt-calling-conv:
     => 68;;
   %MSP430_INTRCC
     => 69;;
+  %X86_THISCALLCC
+    => 70;;
   %CC %EUINT64VAL
     => arg$2;;
 
