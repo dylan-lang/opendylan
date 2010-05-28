@@ -750,10 +750,6 @@ const-val:
     => make(<llvm-integer-constant>,
             type: llvm-type-resolve-upvals(arg$1),
             integer: arg$2);;
-  types %ESAPINTVAL
-    => error("%%ESAPINTVAL");;
-  types %EUAPINTVAL
-    => error("%%EUAPINTVAL");;
   types %FPVAL
     => make(<llvm-float-constant>,
             type: llvm-type-resolve-upvals(arg$1),
@@ -1496,10 +1492,6 @@ const-value-ref:
     => make(<llvm-integer-constant>, integer: arg$1);;
   %EUINT64VAL
     => make(<llvm-integer-constant>, integer: arg$1);;
-  %ESAPINTVAL
-    => error("%%ESAPINTVAL");;
-  %EUAPINTVAL
-    => error("%%EUAPINTVAL");;
   %FPVAL
     => make(<llvm-float-constant>, float: arg$1);;
   %TRUE
