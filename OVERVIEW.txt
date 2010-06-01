@@ -9,9 +9,9 @@ Acronyms and Definitions
 
 CG   - 
 MPS  - A memory management system. http://www.ravenbrook.com/project/mps/
-	 When using a HARP back-end, either MPS or Boehm GC can be
-	 used for garbage collection. When using a C back-end, the Boehm GC does
-      	 garbage collection.
+       When using a HARP back-end, either MPS or Boehm GC can be
+       used for garbage collection. When using a C back-end, the Boehm GC does
+       garbage collection.
 DFM  - Dylan Flow Machine. The indermediate high-level language of the compiler
 DFMC - Dylan Flow Machine Compiler. Takes care about DFM
 HARP - Harlequin Abstract RISC Processor. An artificial assembly language.
@@ -74,13 +74,18 @@ Compiler System
 sources
   dfmc
     core                - Module imports and re-exports.
-    conversion     - Converts definitions to DFM by emitting corresponding control and data flow nodes, initializer methods, etc.
-    definitions     - Takes input from parser and adds some semantics to it. Like 'this is a class definition' etc.
-    flow-graph   - Defines the DFM language by defining classes involved.
+    conversion          - Converts definitions to DFM by emitting corresponding
+                          control and data flow nodes, initializer methods, etc.
+    definitions         - Takes input from parser and adds some semantics to it.
+                          Like 'this is a class definition' etc.
+    flow-graph          - Defines the DFM language by defining classes involved.
     linker              - Linker generics. Makefile prototype.
-    management          - Safeguards and progress of compilation. Compilation driver.
+    management          - Safeguards and progress of compilation. Compilation
+                          driver.
     mangling            - Mangle Dylan names into [a-zA-Z0-9_] names.
-    modeling          - Bridge between compile time and runtime, contains the classes and methods which are available at runtime, but also at compile time (e.g. for optimizations).
+    modeling            - Bridge between compile time and runtime, contains the
+                          classes and methods which are available at runtime,
+                          but also at compile time (e.g. for optimizations).
     namespace           - Bindings, libraries, modules, lib structure.
     optimization        - Analyzes and performs optimizations.
     reader              - Lexer and parser. Also, formatted output.
@@ -90,15 +95,18 @@ sources
     jam                 - Jam script interpreter.
     parser-run-time     - Support for parsers.
     source-records      - Reads source files and tracks location.
-    stack-walker - debugging on UNIX by walking the stack. Nowadays directly in the run-time.
+    stack-walker        - Debugging on UNIX by walking the stack. Nowadays
+                          directly in the run-time.
     walker              - Build has-a tree.
-  project-manager - takes care about dependencies of projects and actual invocation of linker, etc.
-    dfmc-projects - new code, not in use
-    projects-protocol - new code, not in use
-    projects - shared code between user and registry projects, general API
-    registry-projects - code handling projects in the registry
-    tools-interface  - hookup for libraries into a release
-    user-projects - code handling user projects
+  project-manager       - Takes care about dependencies of projects and actual
+                          invocation of linker, etc.
+    dfmc-projects       - New code, not in use.
+    projects-protocol   - New code, not in use.
+    projects            - Shared code between user and registry projects,
+                          general API.
+    registry-projects   - Code handling projects in the registry.
+    tools-interface     - Hookup for libraries into a release.
+    user-projects       - Code handling user projects.
 
 ------------------------
 IDE and Tool Source Code
