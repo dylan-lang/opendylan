@@ -103,6 +103,27 @@ several minutes pass without any progress, cancel the build with ^C and re-run
 the last command. After installation is complete, don't forget to remove the
 binary release's bin directory from your path.
 
+To avoid installing the release in the prefix location, replace the "sudo make
+install" command with "make bootstrap-stage-3". The final compiler will be put
+in the Bootstrap.3 directory in your source tree.
+
+BUILDING FOR 64 BITS
+
+You can build Open Dylan for 64 bits, but it is not functional yet. The 64-bit
+compiler will crash when run. That said, to build the 64-bit compiler, ensure
+you have installed a compatible Boehm garbage collection library, include the
+--with-arch option in the configure command, and make the 2-stage-bootstrap or
+3-stage-bootstrap target:
+
+  ./autogen.sh
+  ./configure --prefix=/usr/local/opendylan --with-gc=/usr/local --with-arch=x86_64
+  make 3-stage-bootstrap
+
+In addition, you will need to include the -arch x86_64 option whenever you build
+a Dylan library:
+
+  minimal-console-compiler -build -arch x86_64 my-project.lid
+
 
 
 GENERAL BUILD INSTRUCTIONS
@@ -110,6 +131,11 @@ GENERAL BUILD INSTRUCTIONS
 If you encounter problems during the build, please refer to the log
 files that are written in the 'logs' directory under each bootstrap
 stage build directory.
+
+Note that when building Open Dylan 1.0 beta 5 or later using the 1.0 beta 4
+binary release, you must NOT make the 2-stage-bootstrap or 3-stage-bootstrap
+targets. They will fail with a "bogus float" or some other error. Make the
+default target as described above (the 1-stage-bootstrap target).
 
 
 

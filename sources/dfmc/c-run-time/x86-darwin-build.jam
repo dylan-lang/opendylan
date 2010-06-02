@@ -32,11 +32,20 @@ SUFMKF	?= .mkf ;   # build-system files
   HDRS ?= $(SYSTEM_INCDIR) ;
 }
 
+# The architecture flag needs to be set for both the Link actions and the Cc
+# action. The Cc action in mini-jambase.jam is shared across different platforms
+# and so we cannot add the Darwin-only -arch flag to it; we have to use these
+# flag variables instead.
+
+ARCHFLAG ?= -arch $(TARGET_OSPLAT:E=i386) ;
+
 CCFLAGS ?= -fdefer-pop -fguess-branch-probability -fcprop-registers
            -floop-optimize -fif-conversion -fif-conversion2 -ftree-ccp
            -ftree-dce -ftree-dominator-opts -ftree-dse -ftree-ter -ftree-lrs
            -ftree-sra -ftree-copyrename -ftree-fre -ftree-ch -fmerge-constants
-           -fomit-frame-pointer -fPIC -g -arch i386 ;
+           -fomit-frame-pointer -fPIC -g $(ARCHFLAG) ;
+
+LINKFLAGS ?= $(ARCHFLAG) ;
 
 DEFINES += _POSIX_C_SOURCE GC_DEBUG ;
 
@@ -353,7 +362,7 @@ rule LinkDLL {
 }
 
 actions together LinkDLL bind NEEDLIBS {
-  $(CC) -dynamiclib -flat_namespace -arch i386 -o $(<)  $(LINKFLAGS) $(>) -L"$(LIBPATH)" $(NEEDLIBS) $(LINKLIBS)
+  $(CC) -dynamiclib -flat_namespace -o $(<)  $(LINKFLAGS) $(>) -L"$(LIBPATH)" $(NEEDLIBS) $(LINKLIBS)
 }
 
 rule LinkEXE {
@@ -361,7 +370,7 @@ rule LinkEXE {
 }
 
 actions together LinkEXE bind NEEDLIBS {
-   $(CC) -arch i386 -o $(<)  $(LINKFLAGS) $(>) -L"$(LIBPATH)" $(NEEDLIBS) $(LINKLIBS) -lgc -lc
+   $(CC) -o $(<)  $(LINKFLAGS) $(>) -L"$(LIBPATH)" $(NEEDLIBS) $(LINKLIBS) -lgc -lc
 }
 
 #

@@ -66,6 +66,7 @@ end method;
 
 define method link-library(project :: <project>, #rest keys,
 			   #key target-type, 
+			        arch,
 			        extent = #"changes",
                                 build-script,
                                 progress-callback = ignore,
@@ -92,6 +93,7 @@ define method link-library(project :: <project>, #rest keys,
   build-system(build-options,
 	       directory: build-location,
 	       build-script: build-script,
+	       arch: arch,
                progress-callback: progress-callback,
 	       project-build-info: project-build-info,
                force?: extent == #"all")

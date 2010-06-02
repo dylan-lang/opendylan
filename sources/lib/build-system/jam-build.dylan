@@ -81,7 +81,8 @@ define variable *cached-jam-state* :: false-or(<jam-state>) = #f;
 define function make-jam-state
     (build-script :: <file-locator>,
      #key progress-callback :: <function> = ignore,
-          build-directory :: <directory-locator>)
+          build-directory :: <directory-locator>,
+          arch :: false-or(<symbol>))
  => (jam :: <jam-state>);
   // Ensure that the build-script hasn't been modified, and that the
   // working directory hasn't changed, and that SYSTEM_ROOT and
@@ -115,6 +116,10 @@ define function make-jam-state
       #"linux", #"freebsd", #"solaris", #"osf3", #"darwin" =>
         jam-variable(state, "UNIX") := #["true"];
     end select;
+    
+    if (arch)
+      jam-variable(state, "TARGET_OSPLAT") := vector(as(<string>, arch));
+    end if;
     
     jam-variable(state, "JAMDATE")
       := vector(as-iso8601-string(current-date()));

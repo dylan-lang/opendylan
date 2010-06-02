@@ -14,6 +14,8 @@ rt_build	= @rt_build@
 rt_host		= @rt_host@
 rt_target	= @rt_target@
 
+arch_flag	= @arch_flag@
+
 fdmake		= @PERL@ $(srcdir)/admin/builds/fdmake.pl
 
 FDCOMPILE	= @FDCOMPILE@
@@ -39,7 +41,7 @@ all:	@bootstrap_target@
 
 3-stage-bootstrap:
 	$(MAKE) 3-stage-bootstrap-reentry \
-	  BOOTSTRAP_2_COMPILER="$(abs_builddir)/Bootstrap.1/bin/minimal-console-compiler -build"
+	  BOOTSTRAP_2_COMPILER="$(abs_builddir)/Bootstrap.1/bin/minimal-console-compiler $(arch_flag) -build"
 3-stage-bootstrap-reentry: bootstrap-stage-1 bootstrap-stage-2 bootstrap-stage-3
 
 ###
@@ -48,12 +50,12 @@ all:	@bootstrap_target@
 
 2-stage-bootstrap:
 	$(MAKE) 2-stage-bootstrap-reentry \
-	  BOOTSTRAP_2_COMPILER="$(abs_builddir)/Bootstrap.1/bin/minimal-console-compiler -build"
+	  BOOTSTRAP_2_COMPILER="$(abs_builddir)/Bootstrap.1/bin/minimal-console-compiler $(arch_flag) -build"
 2-stage-bootstrap-reentry: bootstrap-stage-1 bootstrap-stage-2
 
 ###
 # 1-stage bootstrap includes only stage 2: it rebuilds compiler and libraries
-# when no new primitives have been introduced.
+# when the existing compiler and libraries will understand the primitives.
 
 1-stage-bootstrap:
 	$(MAKE) 1-stage-bootstrap-reentry \
@@ -61,9 +63,11 @@ all:	@bootstrap_target@
 1-stage-bootstrap-reentry: bootstrap-stage-2
 
 ###
-# Stage 1 builds a compiler that can understand new primitives etc. used in
+# Stage 1 builds a compiler that can understand new primitives used in the
 # BOOTSTRAP_1_PRIMITIVE_LIBS libraries. An existing compiler won't understand
-# the new stuff, so until new compiler is built, existing libs are used instead.
+# the new stuff, so until a new compiler is built, existing libs are used
+# instead. Note that the stage 1 minimal-console-compiler loads a mix of
+# existing and stage 1 libraries.
 
 BOOTSTRAP_1_PRIMITIVE_LIBS = \
 	dylan functional-extensions machine-word byte-vector \
@@ -118,7 +122,7 @@ $(BOOTSTRAP_1_REGISTRY):
 $(abs_builddir)/Bootstrap.1/bin/minimal-console-compiler:
 	@echo Building Open Dylan bootstrap stage 1...
 	@OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.1 \
-	  $(MAKE) -C $(rt_build) install
+	  $(MAKE) -C $(rt_build) clean install
 	@$(BOOTSTRAP_1_ENV) \
 	  $(fdmake) --compiler="$(FDCOMPILE)" minimal-console-compiler
 
@@ -159,7 +163,7 @@ $(abs_builddir)/Bootstrap.2/bin/minimal-console-compiler:
 	@echo Building Open Dylan bootstrap stage 2...
 	@unset $(BOOTSTRAP_2_UNSET_ENV) ; \
 	  OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.2 \
-	  $(MAKE) -C $(rt_build) install
+	  $(MAKE) -C $(rt_build) clean install
 	@unset $(BOOTSTRAP_2_UNSET_ENV) ; \
 	  $(BOOTSTRAP_2_ENV) \
 	  $(fdmake) --compiler="$(BOOTSTRAP_2_COMPILER)" minimal-console-compiler
@@ -192,7 +196,7 @@ BOOTSTRAP_3_LIBRARIES = minimal-console-compiler
 BOOTSTRAP_3_LIBRARY_PACKS = @LIBRARY_PACKS@
 
 BOOTSTRAP_3_COMPILER = \
-	$(abs_builddir)/Bootstrap.2/bin/minimal-console-compiler -build
+	$(abs_builddir)/Bootstrap.2/bin/minimal-console-compiler $(arch_flag) -build
 
 $(abs_builddir)/Bootstrap.3:
 	mkdir $(abs_builddir)/Bootstrap.3
@@ -210,7 +214,7 @@ $(abs_builddir)/Bootstrap.3:
 bootstrap-stage-3: $(abs_builddir)/Bootstrap.3
 	@echo Building Open Dylan bootstrap stage 3...
 	@OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.3 \
-	  $(MAKE) -C $(rt_build) install
+	  $(MAKE) -C $(rt_build) clean install
 	@$(BOOTSTRAP_3_ENV) \
 	  $(fdmake) --compiler="$(BOOTSTRAP_3_COMPILER)" \
 	  $(BOOTSTRAP_3_LIBRARIES) --library-packs="$(BOOTSTRAP_3_LIBRARY_PACKS)"
@@ -254,7 +258,7 @@ install-stage: $(prefix)/sources
 	install -d $(prefix)/bin $(prefix)/lib $(prefix)/lib/runtime $(prefix)/build $(prefix)/build/logs
 	@echo Building Open Dylan installation...
 	OPEN_DYLAN_USER_INSTALL=$(prefix) \
-	  $(MAKE) -C $(rt_build) install
+	  $(MAKE) -C $(rt_build) clean install
 	@$(INSTALL_ENV) \
 	  $(fdmake) --compiler="$(INSTALL_COMPILER)" \
 	  $(INSTALL_LIBRARIES) --library-packs="$(INSTALL_LIBRARY_PACKS)"
@@ -264,8 +268,8 @@ install: @bootstrap_target@ install-stage
 ###
 # Maintenance and test targets
 
-# The only safe directory to delete is $(prefix)/sources. All others may have
-# user content if $(prefix) is /usr or /usr/local.
+# The only safe directory to delete is $(prefix)/sources. $(prefix)/bin and the
+# others may have user content if $(prefix) is /usr or /usr/local.
 uninstall:
 	rm -rf $(prefix)/sources
 

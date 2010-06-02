@@ -66,6 +66,7 @@ define method build-system
      #key directory :: <directory-locator> = working-directory(),
           progress-callback :: <function> = ignore,
 	  build-script = default-build-script(),
+	  arch :: false-or(<symbol>) = #f,
 	  project-build-info,
           force?,
 	  configure? = #t)
@@ -90,7 +91,7 @@ define method build-system
           end;
 
       let jam
-        = make-jam-state(build-script,
+        = make-jam-state(build-script, arch: arch,
                          progress-callback: wrap-progress-callback,
                          build-directory: directory);
       with-build-directory (directory)

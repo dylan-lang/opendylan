@@ -56,6 +56,8 @@ define abstract class <basic-main-command> (<basic-command>)
     init-keyword: link-exe?:;
   constant slot %gnu-exports? :: <boolean> = #f,
     init-keyword: gnu-exports?:;
+  constant slot %arch :: false-or(<symbol>) = #f,
+    init-keyword: arch:;
   constant slot %debug-info :: <symbol> = #"full",
     init-keyword: debug-info:;
   constant slot %messages :: false-or(<symbol>) = #f,
@@ -120,6 +122,7 @@ define method execute-main-command
     run(<link-project-command>, 
 	build-script: command.%build-script,
 	target:      target,
+	arch:        command.%arch,
 	force?:      command.%force? | command.%clean?,
 	subprojects: command.%subprojects? & ~command.%not-recursive?,
 	unify?:      command.%unify?)

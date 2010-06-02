@@ -97,6 +97,7 @@ define command-line main => <main-command>
 
   keyword build-script :: <file-locator> = "the (Jam) build script to use";
   keyword target :: <symbol> = "the target";
+  keyword arch :: <symbol> = "the architecture to build (e.g. i386 or x86_64)";
 
   flag help          = "show this help summary";
   flag logo          = "displays the copyright banner";
@@ -135,6 +136,7 @@ define command-line internal-main => <internal-main-command>
 
   keyword build-script :: <file-locator> = "the (Jam) build script to use";
   keyword target :: <symbol> = "the type of executable to generate";
+  keyword arch :: <symbol> = "the architecture to build (e.g. i386 or x86_64)";
   keyword debug-info :: <symbol>  = "control the debug info generated";
 
   flag help             = "show this help summary";
