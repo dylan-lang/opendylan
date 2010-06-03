@@ -19,11 +19,11 @@ EE  enhanced-console-environment  compile  execute  remote  plugins
 CC  console-compiler              compile                   plugins  internal
 CE  console-environment           compile  execute  remote  plugins  internal
 
-Compile		Can open and build projects.
-Execute 	Can execute and debug applications.
-Remote		Includes remote debugging.
-Plugins 	Includes Motley and Tool-Scepter plug-ins.
-Internal	Includes internal commands.
+Compile         Can open and build projects.
+Execute         Can execute and debug applications.
+Remote          Includes remote debugging.
+Plugins         Includes Motley and Tool-Scepter plug-ins.
+Internal        Includes internal commands.
 _____________________________________________________________________________
 
 The Dylan files in this directory used by each library are:
@@ -64,10 +64,10 @@ environment-command-line.dylan:
 
 Libraries_______Options_________________________In file_______________________
 
-BC, EC		<main-command>			compiler-command-line.dylan
-MC, CC		<internal-main-command>		compiler-command-line.dylan
-BE, EE		<main-command>			environment-command-line.dylan
-ME, CE		<internal-main-command>		environment-command-line.dylan
+BC, EC          <main-command>                  compiler-command-line.dylan
+MC, CC          <internal-main-command>         compiler-command-line.dylan
+BE, EE          <main-command>                  environment-command-line.dylan
+ME, CE          <internal-main-command>         environment-command-line.dylan
 ______________________________________________________________________________
 
 The command-line options are stored in <basic-main-command> or its subclass
@@ -75,8 +75,8 @@ The command-line options are stored in <basic-main-command> or its subclass
 
 Libraries_________Storage_______________________In file_______________________
                   
-BC, MC, EC, CC	  <basic-main-command>	        command-line.dylan
-BC, ME, EE, CE	  <environment-main-command>    environment-command-line.dylan
+BC, MC, EC, CC    <basic-main-command>          command-line.dylan
+BC, ME, EE, CE    <environment-main-command>    environment-command-line.dylan
 ______________________________________________________________________________
 
 The options are converted into <command> objects and executed in
