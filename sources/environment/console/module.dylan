@@ -9,7 +9,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module console-environment
   use environment-imports;	// this gets functional-dylan
-  use simple-debugging;
   use operating-system,
     import: { application-filename,
 	      application-arguments,

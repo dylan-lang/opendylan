@@ -58,7 +58,7 @@ define abstract class <basic-main-command> (<basic-command>)
     init-keyword: gnu-exports?:;
   constant slot %arch :: false-or(<symbol>) = #f,
     init-keyword: arch:;
-  constant slot %debug-info :: false-or(<sequence>) = #f,
+  constant slot %debug-info :: <symbol> = #"full",
     init-keyword: debug-info:;
   constant slot %messages :: false-or(<symbol>) = #f,
     init-keyword: messages:;
@@ -78,7 +78,7 @@ define abstract class <basic-main-command> (<basic-command>)
 end class <basic-main-command>;
 
 //---*** We need to implement these...
-ignore(%gnu-exports?, %messages);
+ignore(%gnu-exports?, %debug-info, %messages);
 
 define method execute-main-command
     (context :: <server-context>, command :: <basic-main-command>)
@@ -88,10 +88,6 @@ define method execute-main-command
 	  let command = apply(make, class, server: context, arguments);
 	  execute-command(command)
 	end method run;
-  if (command.%debug-info)
-    debugging?() := #t;
-    debug-parts() := command.%debug-info;
-  end;
   let filename = command.%project;
   if (command.%import?)
     run(<import-project-command>, file: filename)
