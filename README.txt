@@ -98,10 +98,10 @@ libraries):
   make
   sudo make install
 
-Ignore any errors printed by autogen.sh. The build process may freeze; if
-several minutes pass without any progress, cancel the build with ^C and re-run
-the last command. After installation is complete, don't forget to remove the
-binary release's bin directory from your path.
+Ignore any errors printed by autogen.sh. The build process may freeze or crash.
+If several minutes pass without any progress, cancel the build with ^C. Simply
+re-run the last command to resume building. After installation is complete,
+don't forget to remove the binary release's bin directory from your path.
 
 To avoid installing the release in the prefix location, replace the "sudo make
 install" command with "make bootstrap-stage-3". The final compiler will be put
