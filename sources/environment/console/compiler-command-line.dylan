@@ -73,6 +73,8 @@ define command-line internal-main => <internal-main-command>
   // Internal-only options
   keyword personal-root :: <directory-locator> = "personal area root";
   keyword system-root   :: <directory-locator> = "system area root";
+  keyword internal-debug :: $keyword-list-type
+                        = "show debug messages (e.g. for linker,project-manager)";
   flag unify            = "combine the libraries into a single executable";
   flag profile-commands = "profile the execution of each command";
   flag harp             = "generate HARP output";

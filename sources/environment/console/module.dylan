@@ -9,6 +9,9 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module console-environment
   use environment-imports;	// this gets functional-dylan
+  use simple-debugging;
+  use dfmc-common,
+    import: { *debug-out* => *dfmc-debug-out* };
   use operating-system,
     import: { application-filename,
 	      application-arguments,

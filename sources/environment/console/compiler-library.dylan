@@ -13,6 +13,7 @@ define library console-compiler
   use io;
   use commands;
 
+  use dfmc-common, import: { dfmc-common };
   use release-info;
 
   use environment-protocols;
