@@ -6,16 +6,6 @@ License:      Functional Objects Library Public License Version 1.0
 Dual-license: GNU Lesser General Public License
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define library-spec llvm ()
-  module llvm;
-
-  suite llvm-asm-suite;
-end library-spec llvm;
-
-define module-spec llvm ()
-  instantiable class <llvm-module> (<object>);
-end module-spec llvm;
-
 define sideways method make-test-instance
     (class :: subclass(<llvm-module>))
  => (module :: <llvm-module>)

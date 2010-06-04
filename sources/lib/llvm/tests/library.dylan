@@ -19,7 +19,7 @@ define library llvm-test-suite
 end library;
 
 define module llvm-test-suite
-  use common-dylan;
+  use common-dylan, exclude: { format-to-string };
   use testworks;
   use testworks-specs;
   use streams;
@@ -27,7 +27,11 @@ define module llvm-test-suite
   use locators;
   use operating-system;
   use llvm;
+  use llvm-builder;
   use llvm-asm-parser;
+
+  use format;                   // FIXME
+  use standard-io;              // FIXME
 
   export llvm-test-suite;
 end module;

@@ -15,6 +15,7 @@ Files:        llvm-library
 	      llvm-function
 	      bitcode
 	      llvm-bitcode
+	      llvm-builder
 Target:       dll
 Copyright:    Original Code is Copyright 2009-2010 Gwydion Dylan Maintainers
               All rights reserved.

@@ -16,6 +16,7 @@ define library llvm
   use big-integers;
 
   export llvm;
+  export llvm-builder;
 end library;
 
 define module llvm
@@ -172,6 +173,110 @@ define module llvm
     llvm-save-bitcode-file;
 end module;
 
+define module llvm-builder
+  create
+    <llvm-builder>,
+    llvm-builder-module,
+    llvm-builder-module-setter,
+    llvm-builder-function,
+    llvm-builder-function-setter,
+    llvm-builder-basic-block,
+    llvm-builder-basic-block-setter,
+
+    ins--local,
+    llvm-builder-local,
+    
+    ins--block,
+
+    ins--add,
+    ins--fadd,
+    ins--sub,
+    ins--fsub,
+    ins--mul,
+    ins--fmul,
+    ins--udiv,
+    ins--sdiv,
+    ins--fdiv,
+    ins--urem,
+    ins--srem,
+    ins--frem,
+    ins--shl,
+    ins--lshr,
+    ins--ashr,
+    ins--and,
+    ins--or,
+    ins--xor,
+
+    ins--trunc,
+    ins--zext,
+    ins--sext,
+    ins--fptoui,
+    ins--fptosi,
+    ins--uitofp,
+    ins--sitofp,
+    ins--fptrunc,
+    ins--fpext,
+    ins--ptrtoint,
+    ins--inttoptr,
+    ins--bitcast,
+
+    ins--icmp-eq,
+    ins--icmp-ne,
+    ins--icmp-slt,
+    ins--icmp-sgt,
+    ins--icmp-sle,
+    ins--icmp-sge,
+    ins--icmp-ult,
+    ins--icmp-ugt,
+    ins--icmp-ule,
+    ins--icmp-uge,
+
+    ins--fcmp-oeq,
+    ins--fcmp-one,
+    ins--fcmp-olt,
+    ins--fcmp-ogt,
+    ins--fcmp-ole,
+    ins--fcmp-oge,
+    ins--fcmp-ord,
+    ins--fcmp-uno,
+    ins--fcmp-ueq,
+    ins--fcmp-une,
+    ins--fcmp-ult,
+    ins--fcmp-ugt,
+    ins--fcmp-ule,
+    ins--fcmp-uge,
+    ins--fcmp-true,
+    ins--fcmp-false,
+
+    ins--gep,
+    ins--gep-inbounds,
+
+    ins--select,
+    ins--va-arg,
+
+    ins--extractelement,
+    ins--insertelement,
+    ins--shufflevector,
+    
+    ins--phi,
+    
+    ins--call,
+    ins--tail-call,
+    ins--alloca,
+    ins--load,
+    ins--store,
+    
+    ins--insertvalue,
+    ins--extractvalue,
+    
+    ins--ret,
+    ins--br,
+    ins--switch,
+    ins--invoke,
+    ins--unwind,
+    ins--unreachable;
+end module;
+
 define module llvm-internals
   use dylan-extensions,
     import: { <double-integer>, %double-integer-low, %double-integer-high,
@@ -192,4 +297,5 @@ define module llvm-internals
   use llvm,
     rename: { llvm-type-forward => type-forward,
               llvm-value-forward => value-forward };
+  use llvm-builder;
 end module;
