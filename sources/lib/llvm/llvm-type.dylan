@@ -116,7 +116,7 @@ end class;
 
 define class <llvm-struct-type> (<llvm-aggregate-type>)
   constant slot llvm-struct-type-packed? :: <boolean>,
-    required-init-keyword: packed?:;
+    init-value: #f, init-keyword: packed?:;
   constant slot llvm-struct-type-elements :: <sequence>,
     required-init-keyword: elements:;
 end class;

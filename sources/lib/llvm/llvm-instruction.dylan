@@ -34,7 +34,7 @@ define class <llvm-gep-instruction> (<llvm-instruction>)
   constant slot llvm-value-type :: <llvm-type> = make(<llvm-opaque-type>),
     init-keyword: type:;
   constant slot llvm-gep-instruction-in-bounds? :: <boolean>,
-    required-init-keyword: in-bounds?:;
+    init-value: #f, init-keyword: in-bounds?:;
 end class;
 
 define class <llvm-select-instruction> (<llvm-instruction>)
@@ -135,7 +135,7 @@ define abstract class <llvm-memory-instruction> (<llvm-instruction>)
   constant slot llvm-memory-instruction-alignment :: <integer>,
     init-value: 0, init-keyword: alignment:;
   constant slot llvm-memory-instruction-volatile? :: <boolean>,
-    required-init-keyword: volatile?:;
+    init-value: #f, init-keyword: volatile?:;
 end class;
 
 define class <llvm-load-instruction> (<llvm-memory-instruction>)
