@@ -96,31 +96,6 @@ define method corba/object/ior-setter (ior, object :: <object-reference>)
   object-reference-forwarded-ior(object) := ior
 end method;
 
-/*
----*** redo integer-length (and move into utils)
-
-count-high-zeros (m :: <machine-word>) => _ :: <integer>          [Function]
-    Returns the number of consecutive zero bits in m counting from the most
-    significant bit.
-
-      [Note: The position of the most significant non-zero bit in m can be
-      computed by subtracting this result from $machine-word-size - 1.
-      So if i is the result and p = ($machine-word-size - i - 1), then
-      logbit?(p, m) is true and for all values of j such that
-      p < j < $machine-word-size, logbit?(j, m) is false.]
-*/
-
-define method integer-length (n :: <integer>)
-  block (return)
-    for (bit from 32 to 0)
-      if (logbit?(bit, n))
-	return(bit)
-      end if;
-    end for;
-    return(0);
-  end block;
-end method;
-
 define variable $orb-hash-state = make(<hash-state>);
 
 define method corba/object/hash (object :: <object-reference>, max :: <integer>)
