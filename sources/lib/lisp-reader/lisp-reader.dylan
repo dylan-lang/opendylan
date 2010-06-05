@@ -93,9 +93,11 @@ end;
 
 define method print-s-expression (stream :: <stream>, expression :: <collection>)
   format(stream, "(");
-  for (e in expression)
+  for (e in expression, i from expression.size by -1)
     print-s-expression(stream, e);
-    format(stream, " ");
+    unless (i == 1)
+      format(stream, " ");
+    end;
   end;
   format(stream, ")");  
 end;
