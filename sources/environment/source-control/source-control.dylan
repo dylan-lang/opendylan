@@ -79,7 +79,6 @@ define function current-source-control-system
       otherwise =>
 	*current-source-control-system* := find-source-control-system-named(#"HOPE")
                                            | find-source-control-system-named(#"SourceSafe");
-      end
     end;
     *cscs-initialized?* := #t
   end;

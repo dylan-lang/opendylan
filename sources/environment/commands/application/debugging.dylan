@@ -221,7 +221,7 @@ define function available-machines
        if (include-local? | machine ~== environment-host-machine())
 	 add!(machines, machine)
        end
-     end)
+     end);
   machines
 end function available-machines;
 
