@@ -494,8 +494,7 @@ define module environment-tools
          frame-create-thread;
 
   // Profiling
-  export profiling-available?,
-         frame-find-profiler,
+  export frame-find-profiler,
          find-profiler-from-environment;
 
   // Command-line
