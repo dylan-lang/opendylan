@@ -21,13 +21,7 @@ define method environment-handler
   exception (condition :: <serious-condition>)
     debug-message("Internal error in environment error handler: %s",
 		  safe-condition-to-string(condition));
-    if (release-internal?())
-      // Internally go straight into the debugger, so we can track down the bug!
-      default-handler(condition)
-    else
-      // Give the next handler a crack at this condition.
-      next-handler()
-    end;
+    default-handler(condition)
   end block;
 end method environment-handler;
 

@@ -20,9 +20,6 @@ define sealed abstract class <repository-object> (<object>)
     init-keyword: label:;
   sealed constant slot repository-object-documentation :: <string>,
     init-keyword: documentation:;
-  sealed constant slot repository-object-minimum-edition :: <symbol>,
-    init-value: #"basic",
-    init-keyword: min-edition:;
 end class;
 
 define sealed method make
@@ -194,14 +191,11 @@ define function make-repository-choices
     //     - or (it *is* a library and) it's library pack is
     //       installed in this release.
     if (instance?(o, <repository-object>))
-      when (release-contains-edition?
-	      (o.repository-object-minimum-edition))
-	~instance?(o, <project-library>)
-	  | begin
-              let packs = o.project-library-packs;
-              ~packs | every?(release-contains-library-pack?, packs)
-            end
-      end
+      ~instance?(o, <project-library>)
+	| begin
+	    let packs = o.project-library-packs;
+	    ~packs | every?(release-contains-library-pack?, packs)
+	  end
     else
       #t
     end

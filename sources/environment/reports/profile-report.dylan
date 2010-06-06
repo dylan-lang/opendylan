@@ -28,15 +28,13 @@ define class <raw-profile-report> (<profile-report>)
 end class <raw-profile-report>;
 
 install-report(#"raw-profile", "Raw profile", 
-	       <raw-profile-report>,
-	       edition: #"enhanced");
+	       <raw-profile-report>);
 
 define class <profile-summary-report> (<profile-report>)
 end class <profile-summary-report>;
 
 install-report(#"profile-summary", "Profile summary", 
-	       <profile-summary-report>,
-	       edition: #"enhanced");
+	       <profile-summary-report>);
 
 define class <profile-call-history-report> (<profile-report>)
   //---*** Not currently used!
@@ -46,16 +44,14 @@ end class <profile-call-history-report>;
 
 /*---*** Not yet finished!
 install-report(#"profile-call-history", "Profile call history", 
-	       <profile-call-history-report>,
-	       edition: #"enhanced");
+	       <profile-call-history-report>);
 */
 
 /*---*** Not yet implemented!
 define class <full-profile-report> (<profile-report>)
 end class <full-profile-report>;
 
-install-report(#"full-profile", "Full profile", <full-profile-report>,
-	       edition: #"enhanced");
+install-report(#"full-profile", "Full profile", <full-profile-report>);
 */
 
 

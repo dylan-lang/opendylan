@@ -30,7 +30,6 @@ define module environment-reports
          report-info-name,
          report-info-title,
          report-info-class,
-         report-info-edition,
          report-info-formats,
          report-info-format-name,
          report-info-multi-file?;

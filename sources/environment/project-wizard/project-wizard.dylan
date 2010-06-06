@@ -503,9 +503,7 @@ define sealed frame <project-wizard-frame> (<wizard-frame>)
   pane project-type-pane (frame)
     make(<list-box>, // could be a <list-control> later, for icons like VC++
 	 selection-mode: #"single", scroll-bars: #"vertical",
-	 items: sort!(choose(method (o) o.repository-object-minimum-edition.
-			       release-contains-edition? end,
-			     as(<vector>, $project-types)),
+	 items: sort!(as(<vector>, $project-types),
                       test: method (o1, o2)
                               o1.project-type-order < o2.project-type-order
                             end),
@@ -1583,12 +1581,7 @@ define method compute-previous-page
 	#"minimal" => dialog.use-page;
 	#"custom"  => dialog.chooser-page;
 	otherwise =>
-	  if (release-contains-edition?(#"enhanced"))
-	    dialog.simple-databases-page
-	  else
-	    // No Databases page in the Basic Edition
-	    dialog.simple-gui-page
-	  end;
+	  dialog.simple-databases-page
       end;
     #"chooser-page" =>
       dialog.use-page;
@@ -1632,12 +1625,7 @@ define method compute-next-page
         //---*** predicate and, if it's true for the page this would return,
         //---*** then call this function on that to skip over it.  That only
         //---*** works if the first & last pages are never hidden.
-	if (release-contains-edition?(#"enhanced"))
-	  dialog.misc-enhanced-plus-page
-	else
-	  // No Databases page in the Basic Edition
-	  dialog.header-page
-	end;
+	dialog.misc-enhanced-plus-page;
       #"simple-databases-page" =>
 	dialog.header-page;
       otherwise =>

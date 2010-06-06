@@ -1344,9 +1344,7 @@ define method do-compiler-warnings
          object, project-object);
   let project = project-object.ensure-project-proxy;
   let database = project-object.project-compiler-database;
-  let show-read-only?
-    = release-internal?()
-        & project.project-read-only?;
+  let show-read-only? = project.project-read-only?;
 
   local
     method do-project-library-warnings

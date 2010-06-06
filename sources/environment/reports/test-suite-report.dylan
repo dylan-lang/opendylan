@@ -14,8 +14,7 @@ end class <test-suite-report>;
 
 //---*** Ultimately this should be available in all editions...
 install-report(#"test-suite", "Project test suite skeleton", 
-	       <test-suite-report>,
-	       edition: #"internal");
+	       <test-suite-report>);
 
 
 /// Report protocols

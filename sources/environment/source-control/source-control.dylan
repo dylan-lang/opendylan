@@ -72,19 +72,13 @@ define variable *cscs-initialized?* :: <boolean> = #f;
 define function current-source-control-system
     () => (sccs :: false-or(<source-control-system>))
   unless (*cscs-initialized?*)
-    let edition = release-edition-type();
-    when (edition == #"enhanced" | edition == #"internal")
-      let default-sccs = default-source-control-system();
-      case
-	default-sccs => 
-	  *current-source-control-system* := default-sccs;
-	edition == #"enhanced" =>
-	  *current-source-control-system* := find-source-control-system-named(#"SourceSafe");
-	edition == #"internal" =>
-	  *current-source-control-system* := find-source-control-system-named(#"HOPE")
+    let default-sccs = default-source-control-system();
+    case
+      default-sccs => 
+	*current-source-control-system* := default-sccs;
+      otherwise =>
+	*current-source-control-system* := find-source-control-system-named(#"HOPE")
                                            | find-source-control-system-named(#"SourceSafe");
-	otherwise =>
-	  *current-source-control-system* := #f;
       end
     end;
     *cscs-initialized?* := #t

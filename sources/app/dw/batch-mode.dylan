@@ -240,45 +240,43 @@ end function display-options;
 // Describe all internal options here
 
 define function display-internal-options () => ()
-  if (release-edition-type() == #"internal")
-    let locator = as(<file-locator>, os/application-filename());
-    let application-name = as-uppercase(as(<string>, locator-base(locator)));
+  let locator = as(<file-locator>, os/application-filename());
+  let application-name = as-uppercase(as(<string>, locator-base(locator)));
 
-    format-out
-      ("\n  /loose               - compile a project in interactive development mode"
-       "\n  /tight               - compile a project in production mode"
-       "\n"
-       "\n  /root:pathname       - sets the system and personal root directories"
-       "\n  /platform:name       - targets the specified platform (e.g., x86-win32)"
-       "\n"
-       "\n  /harp                - generate readable form of object files (.harp files)"
-       "\n  /dfm                 - generate DFM files"
-       "\n  /assemble            - generate Microsoft assembler files"
-       "\n  /assemble:masm       - generate Microsoft assembler files"
-       "\n  /assemble:gnu        - generate GNU assembler files"
-       "\n  /assemble:elf        - generate ELF assembler files"
-       "\n"
-       "\n  /gnu-exports         - generate exports files for GNU Linker"
-       "\n"
-       "\n  /debug[:full]        - generate full native debug info for DLLs"
-       "\n  /debug:min           - generate minimal native debug info for DLLs"
-       "\n  /debug:none          - generate minimal native debug info for DLLs"
-       "\n"
-       "\n  /gc[:Megs]           - activate full GC after project compilation"
-       "\n                         if Memory Usage exceeds Megs (default: 50 Megs)"
-       "\n"
-       "\n  /nocombine           - create multiple object files per library"
-       "\n  /combine-dlls        - link all DLLs into one executable"
-       "\n"
-       "\n  /profile:allocation  - profile heap allocation"
-       "\n"
-       "\n  /messages            - display internal progress messages in internal edition"
-       "\n  /messages:internal   - display internal progress messages in any edition"
-       "\n  /messages:none       - display external progress messages in any edition"
-       "\n",
-       application-name,
-       application-name);
-  end if;
+  format-out
+    ("\n  /loose               - compile a project in interactive development mode"
+     "\n  /tight               - compile a project in production mode"
+     "\n"
+     "\n  /root:pathname       - sets the system and personal root directories"
+     "\n  /platform:name       - targets the specified platform (e.g., x86-win32)"
+     "\n"
+     "\n  /harp                - generate readable form of object files (.harp files)"
+     "\n  /dfm                 - generate DFM files"
+     "\n  /assemble            - generate Microsoft assembler files"
+     "\n  /assemble:masm       - generate Microsoft assembler files"
+     "\n  /assemble:gnu        - generate GNU assembler files"
+     "\n  /assemble:elf        - generate ELF assembler files"
+     "\n"
+     "\n  /gnu-exports         - generate exports files for GNU Linker"
+     "\n"
+     "\n  /debug[:full]        - generate full native debug info for DLLs"
+     "\n  /debug:min           - generate minimal native debug info for DLLs"
+     "\n  /debug:none          - generate minimal native debug info for DLLs"
+     "\n"
+     "\n  /gc[:Megs]           - activate full GC after project compilation"
+     "\n                         if Memory Usage exceeds Megs (default: 50 Megs)"
+     "\n"
+     "\n  /nocombine           - create multiple object files per library"
+     "\n  /combine-dlls        - link all DLLs into one executable"
+     "\n"
+     "\n  /profile:allocation  - profile heap allocation"
+     "\n"
+     "\n  /messages            - display internal progress messages in internal edition"
+     "\n  /messages:internal   - display internal progress messages in any edition"
+     "\n  /messages:none       - display external progress messages in any edition"
+     "\n",
+     application-name,
+     application-name);
 end function display-internal-options;
 
 define function display-help-and-exit () => ()

@@ -380,7 +380,7 @@ define method print-environment-object-id
   let id = environment-object-id(project, object);
   //---*** Enable this in all editions when the runtime manager correctly
   //---*** maintains object identity.
-  if (release-internal?() & instance?(id, <integer>))
+  if (instance?(id, <integer>))
     write(stream, ": ");
     write(stream, integer-to-string(id))
   end

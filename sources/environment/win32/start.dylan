@@ -87,11 +87,9 @@ define method process-arguments
       end
     end
   end;
-  if (release-internal?())
-    maybe-set-roots(personal-root: personal-root,
-                    system-root:   system-root,
-                    user-root:     user-root)
-  end;
+  maybe-set-roots(personal-root: personal-root,
+		  system-root:   system-root,
+		  user-root:     user-root);
   filename
 end method process-arguments;
 

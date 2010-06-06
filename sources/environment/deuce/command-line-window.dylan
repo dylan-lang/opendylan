@@ -75,20 +75,10 @@ end method shell-parse-input;
 define method shell-execute-code
     (pane :: <command-line-pane>, command-line :: <string>, bp :: <basic-bp>) => ()
   let server = pane.command-line-server;
-  let debugger? = release-internal?();
   let stream = server.server-output-stream;
   let buffer = pane.window-buffer;
   stream-position(stream) := buffer.interval-end-bp;
   block ()
-    let handler (<serious-condition>)
-      = method (condition :: <serious-condition>, next-handler :: <function>)
-	  if (debugger?)
-	    next-handler()
-	  else
-	    display-condition(server.server-context, condition);
-	    abort();
-	  end
-	end;
     let exit? = execute-command-line(server, command-line);
     exit? & exit-frame(sheet-frame(pane))
   exception (<abort>)

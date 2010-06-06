@@ -130,14 +130,11 @@ define function show-compiler-messages?-setter
   *show-compiler-messages?* := messages?
 end function show-compiler-messages?-setter;
 
-//---*** andrewa: use symbols to avoid evaluating release-internal?
-//---*** before the release-info backend has been initialized.
-define variable *show-internal-messages* :: <symbol> = #"internal-release";
+define variable *show-internal-messages* :: <symbol> = #"always";
 
 define function show-internal-compiler-messages? () => (messages? :: <boolean>)
   show-compiler-messages?()
     & select (*show-internal-messages*)
-	#"internal-release" => release-internal?();
 	#"always"           => #t;
 	#"never"            => #f;
       end

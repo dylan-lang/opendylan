@@ -236,15 +236,6 @@ define constant $debugger-stack-frame-types :: <vector>
   = #[#"dylan-call", #"internal-call", #"foreign-call", #"cleanup",
       #"unknown"];
 
-define function debugger-stack-frame-types
-    () => (types :: <sequence>)
-  if (release-internal?())
-    $debugger-stack-frame-types
-  else
-    remove($debugger-stack-frame-types, #"internal-call")
-  end
-end function debugger-stack-frame-types;
-
 
 /// STACK-FRAME-FUNCTION-NAME-VISIBILITY (internal)
 
@@ -718,7 +709,7 @@ define sealed pane <options-stack-page> ()
   pane stack-filter-dialog-types-box (dialog)
     make(<check-box>,
 	 orientation: #"vertical",
-	 items: debugger-stack-frame-types(),
+	 items: $debugger-stack-frame-types,
 	 label-key: stack-frame-type-label);
   pane stack-filter-dialog-modules-box (dialog)
     make(<radio-box>,

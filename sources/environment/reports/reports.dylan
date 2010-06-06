@@ -90,8 +90,6 @@ define class <report-info> (<object>)
     required-init-keyword: class:;
   sealed constant slot report-info-title :: <string>,
     required-init-keyword: title:;
-  sealed constant slot report-info-edition :: <symbol> = #"basic",
-    init-keyword: edition:;
   sealed constant slot report-info-formats :: <sequence> = #[#"text"],
     init-keyword: formats:;
   sealed constant slot report-info-multi-file? :: <boolean> = #f,
@@ -111,13 +109,7 @@ end function report-info-format-name;
 
 define function available-reports
     () => (reports :: <collection>)
-  let reports :: <stretchy-object-vector> = make(<stretchy-object-vector>);
-  for (report :: <report-info> in $reports)
-    if (release-contains-edition?(report.report-info-edition))
-      add!(reports, report)
-    end
-  end;
-  reports
+  $reports
 end function available-reports;
 
 define function install-report

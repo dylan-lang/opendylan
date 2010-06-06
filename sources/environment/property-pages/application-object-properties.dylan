@@ -12,7 +12,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define sideways method frame-property-types
     (frame :: <environment-frame>, class :: subclass(<application-object>))
  => (types :: <list>)
-  if (low-level-debugging?() & ~subtype?(class, <immediate-application-object>))
+  if (~subtype?(class, <immediate-application-object>))
     concatenate(next-method(),
 		#[#"memory"])
   else

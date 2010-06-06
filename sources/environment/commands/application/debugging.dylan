@@ -212,25 +212,16 @@ define method set-property
   application-context.context-show-messages? := messages == #"verbose"
 end method set-property;
 
-define method remote-debugging?
-    ()
-  let edition = release-edition-type();
-  edition == #"internal"
-    | edition == #"enhanced"
-end method remote-debugging?;
-
 define function available-machines
     (#key include-local? :: <boolean> = #t)
  => (machines :: <sequence>)
   let machines = make(<stretchy-vector>);
-  if (remote-debugging?())
-    do-machine-connections
-      (method (machine :: <machine>)
-	 if (include-local? | machine ~== environment-host-machine())
-	   add!(machines, machine)
-	 end
-       end)
-  end;
+  do-machine-connections
+    (method (machine :: <machine>)
+       if (include-local? | machine ~== environment-host-machine())
+	 add!(machines, machine)
+       end
+     end)
   machines
 end function available-machines;
 

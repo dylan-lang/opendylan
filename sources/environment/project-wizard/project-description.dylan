@@ -306,21 +306,19 @@ define function libraries-from-use-path
 	library-choice-included?
 	  (library-group-choices, option, option) := #t;
       end;
-      when (release-contains-edition?(#"enhanced"))
-	////// Other enhanced-plus options
-	// Network
-	when (gadget-value(wizard.network-option))
-	  library-choice-included?
-	    (library-group-choices, #"network", #"network") := #t;
-	end;
-	// OLE-Automation
-	// (We only want some of the OLE libraries at this point.)
-	library-group-choice-included?
-	  (library-group-choices, #"ole", recursive?: #t) := #f;
-	when (gadget-value(wizard.ole-automation-option))
-	  library-choice-included?
-	    (library-group-choices, #"ole", #"ole-automation") := #t;
-	end;
+      ////// Other enhanced-plus options
+      // Network
+      when (gadget-value(wizard.network-option))
+	library-choice-included?
+	  (library-group-choices, #"network", #"network") := #t;
+      end;
+      // OLE-Automation
+      // (We only want some of the OLE libraries at this point.)
+      library-group-choice-included?
+        (library-group-choices, #"ole", recursive?: #t) := #f;
+      when (gadget-value(wizard.ole-automation-option))
+	library-choice-included?
+	  (library-group-choices, #"ole", #"ole-automation") := #t;
       end;
       ////// GUI Support
       let gui-type = gadget-value(wizard.simple-gui-option);
@@ -335,16 +333,14 @@ define function libraries-from-use-path
 	#"win32" => library-group-choice-included?
 		      (library-group-choices, #"win32") := #t;
       end;
-      when (release-contains-edition?(#"enhanced"))
-	////// Database Support
-	// (We only want some of the libraries from the Databases group.)
-	let databases-option = gadget-value(wizard.simple-databases-option);
-	unless (databases-option == #"none")
-	  library-group-choice-included?
-	    (library-group-choices, #"databases", recursive?: #t) := #f;
-	  library-choice-included?
-	    (library-group-choices, #"databases", databases-option) := #t;
-	end;
+      ////// Database Support
+      // (We only want some of the libraries from the Databases group.)
+      let databases-option = gadget-value(wizard.simple-databases-option);
+      unless (databases-option == #"none")
+	library-group-choice-included?
+	  (library-group-choices, #"databases", recursive?: #t) := #f;
+	library-choice-included?
+	  (library-group-choices, #"databases", databases-option) := #t;
       end;
       collect-used-libraries(library-group-choices);
     #"custom" =>

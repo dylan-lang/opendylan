@@ -118,8 +118,7 @@ define method find-named-object
   when (project)
     let module  = frame.frame-current-module;
     let object
-      = if (low-level-debugging?()
-	      & project.application-tethered?
+      = if (project.application-tethered?
 	      & name.size > 2
 	      & (name[0] == '#' | name[0] == '0')
 	      & name[1] == 'x')

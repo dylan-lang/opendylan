@@ -696,7 +696,6 @@ begin
   make(<project-type>,
        id: #"motley",
        label: "Interface to COM Type Library",
-       min-edition: #"enhanced",
     documentation:
 "A project based around an interface to a COM type library.  It will run in"
 " the Win32 GUI subsystem but will not use any GUI libraries by default, and"
@@ -727,7 +726,6 @@ begin
   make(<project-type>,
        id: #"scepter",
        label: "CORBA Client and/or Server",
-       min-edition: #"enhanced",
        documentation:
 "Projects based around a CORBA IDL file.  You can create either a Client or"
 " Server project or both.  These projects will use CORBA interface libraries"

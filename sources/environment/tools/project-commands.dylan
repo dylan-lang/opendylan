@@ -824,21 +824,10 @@ define method frame-build-release
     (frame :: <environment-frame>) => ()
   let project = frame.ensure-frame-project;
   let compile? = ~project-compiled?(project);
-  if ((release-internal?() | ~release-beta?())
-	| environment-question
-	    (format-to-string
-	       ("Distribution of software created with this beta version of "
-		"%s is prohibited.\n"
-		"Would you like to build the release for private use only?",
-		release-product-name()),
-	     owner: frame,
-	     style: #"warning",
-	     exit-style: #"ok-cancel"))
-    frame-do-build-project(frame,
-			   parse?: #f, compile?: compile?, link?: #t,
-			   clean?: #f, release?: #t,
-			   process-subprojects?: #t)
-  end
+  frame-do-build-project(frame,
+			 parse?: #f, compile?: compile?, link?: #t,
+			 clean?: #f, release?: #t,
+			 process-subprojects?: #t)
 end method frame-build-release;
 
 define method frame-build-project

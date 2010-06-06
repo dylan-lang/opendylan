@@ -43,7 +43,6 @@ end class <library-report>;
 
 install-report(#"interface-reference", "Library interface reference",
 	       <library-report>,
-	       edition: #"internal",
 	       formats: #[#"text", #"html", #"xml"],
 	       multi-file?: #t);
 

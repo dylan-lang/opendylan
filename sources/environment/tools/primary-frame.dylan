@@ -32,13 +32,11 @@ define window-settings
 define method initialize
     (frame :: <environment-primary-frame>, #key) => ()
   next-method();
-  command-enabled?(frame-attach-application, frame) := just-in-time-debugging?();
-  if (release-internal?())
-    add-command-table-menu-item
-      (*primary-frame-command-table*, "Internal", <command-table>,
-       *primary-frame-internal-command-table*,
-       after: "Window")
-  end
+  command-enabled?(frame-attach-application, frame) := #t;
+  add-command-table-menu-item
+    (*primary-frame-command-table*, "Internal", <command-table>,
+     *primary-frame-internal-command-table*,
+     after: "Window")
 end method initialize;
 
 // The startup action is performed via creation of the primary frame.

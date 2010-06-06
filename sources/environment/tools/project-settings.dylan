@@ -253,7 +253,7 @@ define pane <debug-settings-pane> ()
 				  end);
   pane %debug-machine-pane (pane)
     make(<option-box>,
-	 enabled?: pane.%enabled? & remote-debugging?(),
+	 enabled?: pane.%enabled?,
 	 items: available-machines(),
 	 label-key: method (machine :: <machine>)
 		      if (machine == environment-host-machine())
@@ -270,7 +270,7 @@ define pane <debug-settings-pane> ()
   pane %open-remote-connection-button (pane)
     make(<button>,
 	 label: "Open New Connection...",
-	 enabled?: pane.%enabled? & remote-debugging?(),
+	 enabled?: pane.%enabled?,
 	 activate-callback: method (gadget)
 			      let frame = sheet-frame(gadget);
 			      let machine 

@@ -29,73 +29,40 @@ define sealed method find-debugger
 end method find-debugger;
 
 
-/// Debugging edition availability
-
-define method low-level-debugging?
-    ()
-  let edition = release-edition-type();
-  edition == #"internal"
-    | edition == #"enhanced"
-end method low-level-debugging?;
-
-define method profiling-available?
-    ()
-  let edition = release-edition-type();
-  edition == #"internal"
-    | edition == #"enhanced"
-end method profiling-available?;
-
-define method just-in-time-debugging?
-    ()
-  let edition = release-edition-type();
-  edition == #"internal"
-    | edition == #"enhanced"
-end method just-in-time-debugging?;
-
-define method remote-debugging?
-    ()
-  let edition = release-edition-type();
-  edition == #"internal"
-    | edition == #"enhanced"
-end method remote-debugging?;
-
-
 /// Just-in-time debugging
 
 define method just-in-time-debugging-arguments
     ()
  => (process :: false-or(<string>), id :: false-or(<string>))
-  if (just-in-time-debugging?())
-    let arguments = as(<deque>, os/application-arguments());
-    local method next-argument
-	      () => (argument :: <string>, option :: false-or(<string>))
-	    let argument = as-lowercase(pop(arguments));
-	    let first-char = argument[0];
-	    let colon-position = position(argument, ':');
-	    if ((first-char == '/' | first-char == '-') & colon-position)
-	      values(copy-sequence(argument, start: 1, end: colon-position),
-		     copy-sequence(argument, start: colon-position + 1))
-	    else
-	      values(argument, #f)
-	    end
-	  end method next-argument;
-    let process = #f;
-    let id = #f;
-    while (~empty?(arguments))
-      let (argument, option) = next-argument();
-      if (option)
-	select (argument by \=)
-	  "p", "process" =>
-	    process := option;
-	  "e", "id" =>
-	    id := option;
-	  otherwise =>
-	    #f;
-	end
+  let arguments = as(<deque>, os/application-arguments());
+  local method next-argument
+            () => (argument :: <string>, option :: false-or(<string>))
+          let argument = as-lowercase(pop(arguments));
+          let first-char = argument[0];
+          let colon-position = position(argument, ':');
+          if ((first-char == '/' | first-char == '-') & colon-position)
+            values(copy-sequence(argument, start: 1, end: colon-position),
+                   copy-sequence(argument, start: colon-position + 1))
+          else
+            values(argument, #f)
+          end
+        end method next-argument;
+  let process = #f;
+  let id = #f;
+  while (~empty?(arguments))
+    let (argument, option) = next-argument();
+    if (option)
+      select (argument by \=)
+        "p", "process" =>
+          process := option;
+        "e", "id" =>
+          id := option;
+        otherwise =>
+          #f;
       end
     end;
-    values(process, id)
   end;
+  values(process, id)
 end method just-in-time-debugging-arguments;
 
 define method frame-open-just-in-time-project
@@ -251,7 +218,7 @@ define frame <application-attach-dialog> (<dialog-frame>)
 	 items: available-machines(),
 	 value: frame.%machine,
 	 label-key: machine-hostname,
-	 enabled?: remote-debugging?(),
+	 enabled?: #t,
 	 value-changed-callback: method (gadget)
 				   frame.%machine := gadget-value(gadget);
 				   update-dialog-processes(frame)
@@ -761,7 +728,7 @@ define method enable-application-command-table
   let application-started? = application-running? | application-stopped?;
   let application-not-started? = ~application-started?;
   let application-not-running? = ~application-running?;
-  let attaching-available? = application-not-started? & just-in-time-debugging?();
+  let attaching-available? = application-not-started?;
 
   enabled?(frame-start-application)           := application-not-started?;
   enabled?(frame-attach-application)          := attaching-available?;

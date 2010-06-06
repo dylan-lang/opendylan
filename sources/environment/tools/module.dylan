@@ -489,10 +489,7 @@ define module environment-tools
          wrapper-project;
 
   // Debugging
-  export just-in-time-debugging?,
-         low-level-debugging?,
-         remote-debugging?,
-         find-debugger,
+  export find-debugger,
          find-debugger-from-environment,
          frame-create-thread;
 

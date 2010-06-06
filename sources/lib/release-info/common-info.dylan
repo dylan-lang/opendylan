@@ -10,10 +10,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 /// Release constants
 
 define constant $release-full-copyright =
-"Original Code is Copyright 1995-2004 Functional Objects, Inc.\n"
-"All rights reserved.\n"
-"Portions Copyright 2004-2007 Dylan Hackers.\n"
-"\n"
 "The software programs and libraries that make up Open Dylan\n"
 "are subject to the Functional Objects Library Public License Version\n"
 "1.0 (the \"License\"); you may not use this software except in\n"
@@ -50,14 +46,12 @@ define constant $license-agreement-filename   = "License.txt";
 /// Release constants
 define constant $release-product-name     = "Open Dylan";
 define constant $release-edition          = "Hacker Edition";
-define constant $release-edition-type     = #"internal";
 define constant $release-version          = "Version 1.0 [Beta 5]";
 define constant $release-version-type     = #"1.0";
-define constant $release-beta?            = #t;
 
 define constant $release-copyright
   = "Copyright (c) 1997-2004, Functional Objects, Inc.\n"
-    "Portions Copyright (c) 2004-2007, Dylan Hackers\n"
+    "Portions Copyright (c) 2004-2010, Dylan Hackers\n"
     "All rights reserved.";
 
 
@@ -70,10 +64,6 @@ define method release-edition () => (edition :: <string>)
   $release-edition
 end method release-edition;
 
-define method release-edition-type () => (edition :: <symbol>)
-  $release-edition-type
-end method release-edition-type;
-
 define method release-version () => (version :: <string>)
   release-full-version($release-version)
 end method release-version;
@@ -81,10 +71,6 @@ end method release-version;
 define method release-version-type () => (version :: <symbol>)
   $release-version-type
 end method release-version-type;
-
-define method release-beta? () => (beta? :: <boolean>)
-  $release-beta?
-end method release-beta?;
 
 define method release-copyright () => (copyright :: <string>)
   $release-copyright
@@ -122,30 +108,6 @@ define function release-web-address
   $release-web-address
 end function release-web-address;
 
-define constant $internal-release-editions = #[#"internal", #"emulator"];
-
-define function release-internal?
-    () => (internal? :: <boolean>)
-  member?(release-edition-type(), $internal-release-editions)
-end function release-internal?;
-
-define function release-contains-edition?
-    (edition :: <symbol>) => (contains-edition? :: <boolean>)
-  let edition-type = release-edition-type();
-  let basic? = edition-type == #"basic";
-  select (edition)
-    #"basic"    => #t;
-    #"enhanced" => ~basic?;
-    #"internal" => release-internal?();
-  end
-end function release-contains-edition?;
-
-define function release-free-edition?
-    () => (free? :: <boolean>)
-  #t
-end function release-free-edition?;
-
-
 /// Library pack information
 
 define function release-library-packs

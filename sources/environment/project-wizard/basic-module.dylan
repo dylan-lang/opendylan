@@ -65,8 +65,7 @@ define module repository
   export <repository-object>,
 	 repository-object-id,
 	 repository-object-label,
-	 repository-object-documentation,
-	 repository-object-minimum-edition;
+	 repository-object-documentation;
 
   export <project-library-group>,
 	 project-library-group-libraries,

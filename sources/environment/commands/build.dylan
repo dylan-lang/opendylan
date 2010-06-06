@@ -171,7 +171,7 @@ define method do-execute-command
     (context :: <environment-context>, command :: <build-project-command>)
  => ()
   let project = command.%project | context.context-project;
-  let messages = if (release-internal?()) #"internal" else #"external" end;
+  let messages = #"internal";
   block ()
     if (build-project
 	  (project,
@@ -322,7 +322,7 @@ define method do-execute-command
   let project = command.%project | context.context-project;
   let build-script
     = command.%build-script | project-context.context-build-script;
-  let messages = if (release-internal?()) #"internal" else #"external" end;
+  let messages = #"internal";
   link-project(project,
 	       build-script:         build-script,
 	       target:               command.%target,

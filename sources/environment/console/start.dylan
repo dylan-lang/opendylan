@@ -18,11 +18,7 @@ define function main
     = make-environment-command-line-server
         (input-stream:   input-stream,
 	 output-stream:  output-stream);
-  let class
-    = case
-	release-internal?() => <internal-main-command>;
-	otherwise           => <main-command>;
-      end;
+  let class = <internal-main-command>;
   let command
     = block ()
 	parse-command-line(server, arguments, class: class)

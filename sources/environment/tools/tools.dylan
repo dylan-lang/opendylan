@@ -16,7 +16,7 @@ end class <environment-tool>;
 define method initialize
     (frame :: <environment-tool>, #key) => ()
   next-method();
-  command-enabled?(frame-find-profiler, frame) := profiling-available?();
+  command-enabled?(frame-find-profiler, frame) := #t;
 end method initialize;
 
 define method start-environment-frame
@@ -163,9 +163,7 @@ define method make-environment-tool-bar-buttons
     add-buttons(make-build-tool-bar-buttons);
     add-buttons(make-application-tool-bar-buttons);
     add-buttons(make-debug-tool-bar-buttons);
-    if (profiling-available?())
-      add-buttons(make-profile-tool-bar-buttons)
-    end;
+    add-buttons(make-profile-tool-bar-buttons);
     buttons
   end
 end method make-environment-tool-bar-buttons;

@@ -127,7 +127,7 @@ define sealed method generate-frame-title
     let project = debugger.frame-project;
     let application = project.project-application;
     let thread :: false-or(<thread-object>) = debugger.debugger-thread;
-    let machine = remote-debugging?() & application & application.application-machine;
+    let machine = application & application.application-machine;
     if (thread)
       write(stream, frame-default-object-name(debugger, thread));
       write(stream, " - ")
