@@ -251,7 +251,7 @@ end function;
 define function refine-partitions
     (partitions :: <stretchy-vector>,
      offset :: <integer>,
-     partition-table :: <object-table>,
+     partition-table :: <mutable-explicit-key-collection>,
      reference-partitions-function :: <function>)
  => ()
   iterate loop (i :: <integer> = 0,
@@ -293,7 +293,7 @@ end function;
 define function topological-sort-partitions
     (partitions :: <stretchy-vector>,
      offset :: <integer>,
-     partition-table :: <object-table>,
+     partition-table :: <mutable-explicit-key-collection>,
      reference-partitions-function :: <function>)
  => (new-partitions :: <stretchy-vector>);
   let new-partitions = make(<stretchy-object-vector>);
@@ -556,17 +556,43 @@ define function enumerate-types-constants-attributes
          attributes-index-table, attributes-exemplars)
 end function;
 
+define class <hierarchical-object-table> (<mutable-explicit-key-collection>)
+  constant slot %hot-parent-table :: <explicit-key-collection>,
+    required-init-keyword: parent-table:;
+  constant slot %hot-object-table :: <object-table>
+    = make(<object-table>);
+end class;
+
+define method element
+    (table :: <hierarchical-object-table>, key, #key default = $unsupplied)
+ => (value);
+  let value = element(table.%hot-object-table, key, default: $unfound);
+  if (found?(value))
+    value
+  elseif (supplied?(default))
+    element(table.%hot-parent-table, key, default: default)
+  else
+    element(table.%hot-parent-table, key)
+  end if
+end method;
+
+define method element-setter
+    (value, table :: <hierarchical-object-table>, key)
+ => (value);
+  element-setter(value, table.%hot-object-table, key)
+end method;
+
 define function enumerate-function-constants
     (function :: <llvm-function>,
      type-partition-table :: <object-table>,
      value-partition-table :: <object-table>,
      first-function-local-index :: <integer>)
- => (value-partition-table :: <object-table>,
+ => (value-partition-table :: <explicit-key-collection>,
      first-constant-index :: <integer>,
      constant-partition-exemplars :: <vector>);
   // Make a local copy of the value table
-  let value-partition-table :: <object-table>
-    = shallow-copy(value-partition-table);
+  let value-partition-table :: <hierarchical-object-table>
+    = make(<hierarchical-object-table>, parent-table: value-partition-table);
 
   // Assign basic block numbers to basic blocks
   for (basic-block in function.llvm-function-basic-blocks,
@@ -813,7 +839,7 @@ end method;
 define method write-constant-record
     (stream :: <bitcode-stream>,
      type-partition-table :: <object-table>,
-     value-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
      value :: <llvm-null-constant>)
  => ();
   write-record(stream, #"NULL");
@@ -822,7 +848,7 @@ end method;
 define method write-constant-record
     (stream :: <bitcode-stream>,
      type-partition-table :: <object-table>,
-     value-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
      value :: <llvm-undef-constant>)
  => ();
   write-record(stream, #"UNDEF");
@@ -831,7 +857,7 @@ end method;
 define method write-constant-record
     (stream :: <bitcode-stream>,
      type-partition-table :: <object-table>,
-     value-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
      value :: <llvm-integer-constant>)
  => ();
   let integer = value.llvm-integer-constant-integer;
@@ -841,7 +867,7 @@ end method;
 define method write-constant-record
     (stream :: <bitcode-stream>,
      type-partition-table :: <object-table>,
-     value-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
      value :: <llvm-float-constant>)
  => ();
   let type = type-forward(llvm-value-type(value));
@@ -882,7 +908,7 @@ end function;
 define method write-constant-record
     (stream :: <bitcode-stream>,
      type-partition-table :: <object-table>,
-     value-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
      value :: <llvm-aggregate-constant>)
  => ();
   if (aggregate-string?(value))
@@ -906,7 +932,7 @@ end method;
 define method write-constant-record
     (stream :: <bitcode-stream>,
      type-partition-table :: <object-table>,
-     value-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
      value :: <llvm-asm-constant>)
  => ();
     error("write-constant-record INLINEASM");
@@ -947,7 +973,7 @@ end function;
 define method write-constant-record
     (stream :: <bitcode-stream>,
      type-partition-table :: <object-table>,
-     value-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
      value :: <llvm-binop-constant>)
  => ();
   let operands
@@ -987,7 +1013,7 @@ end function;
 define method write-constant-record
     (stream :: <bitcode-stream>,
      type-partition-table :: <object-table>,
-     value-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
      value :: <llvm-cast-constant>)
  => ();
   let opval = value-forward(value.llvm-expression-constant-operands[0]);
@@ -1000,7 +1026,7 @@ end method;
 define method write-constant-record
     (stream :: <bitcode-stream>,
      type-partition-table :: <object-table>,
-     value-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
      value :: <llvm-gep-constant>)
  => ();
   let operands = make(<stretchy-object-vector>);
@@ -1024,7 +1050,7 @@ end method;
 define method write-constant-record
     (stream :: <bitcode-stream>,
      type-partition-table :: <object-table>,
-     value-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
      value :: <llvm-cmp-constant>)
  => ();
   let op0val = value-forward(value.llvm-expression-constant-operands[0]);
@@ -1082,7 +1108,7 @@ end;
 define function write-constant-table
     (stream :: <bitcode-stream>,
      type-partition-table :: <object-table>,
-     value-partition-table :: <object-table>,
+     value-partition-table :: <mutable-explicit-key-collection>,
      constant-partition-exemplars :: <sequence>)
  => ();
   unless (empty?(constant-partition-exemplars))
@@ -1109,7 +1135,7 @@ end function;
 
 define function add-value
     (operands :: <stretchy-vector>,
-     value-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
      value :: <llvm-value>)
  => ();
   let index = value-partition-table[value-forward(value)];
@@ -1120,7 +1146,7 @@ define function add-value-type
     (operands :: <stretchy-vector>,
      instruction-index :: <integer>,
      type-partition-table :: <object-table>,
-     value-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
      value :: <llvm-value>)
  => ();
   let value = value-forward(value);
@@ -1135,7 +1161,7 @@ define method write-instruction-record
     (stream :: <bitcode-stream>,
      instruction-index :: <integer>,
      type-partition-table :: <object-table>,
-     value-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
      attributes-index-table :: <encoding-sequence-table>,
      value :: <llvm-binop-instruction>)
  => ();
@@ -1160,7 +1186,7 @@ define method write-instruction-record
     (stream :: <bitcode-stream>,
      instruction-index :: <integer>,
      type-partition-table :: <object-table>,
-     value-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
      attributes-index-table :: <encoding-sequence-table>,
      value :: <llvm-cast-instruction>)
  => ();
@@ -1177,7 +1203,7 @@ define method write-instruction-record
     (stream :: <bitcode-stream>,
      instruction-index :: <integer>,
      type-partition-table :: <object-table>,
-     value-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
      attributes-index-table :: <encoding-sequence-table>,
      value :: <llvm-gep-instruction>)
  => ();
@@ -1200,7 +1226,7 @@ define method write-instruction-record
     (stream :: <bitcode-stream>,
      instruction-index :: <integer>,
      type-partition-table :: <object-table>,
-     value-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
      attributes-index-table :: <encoding-sequence-table>,
      value :: <llvm-select-instruction>)
  => ();
@@ -1220,7 +1246,7 @@ define method write-instruction-record
     (stream :: <bitcode-stream>,
      instruction-index :: <integer>,
      type-partition-table :: <object-table>,
-     value-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
      attributes-index-table :: <encoding-sequence-table>,
      value :: <llvm-extractelement-instruction>)
  => ();
@@ -1237,7 +1263,7 @@ define method write-instruction-record
     (stream :: <bitcode-stream>,
      instruction-index :: <integer>,
      type-partition-table :: <object-table>,
-     value-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
      attributes-index-table :: <encoding-sequence-table>,
      value :: <llvm-insertelement-instruction>)
  => ();
@@ -1256,7 +1282,7 @@ define method write-instruction-record
     (stream :: <bitcode-stream>,
      instruction-index :: <integer>,
      type-partition-table :: <object-table>,
-     value-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
      attributes-index-table :: <encoding-sequence-table>,
      value :: <llvm-shufflevector-instruction>)
  => ();
@@ -1275,7 +1301,7 @@ define method write-instruction-record
     (stream :: <bitcode-stream>,
      instruction-index :: <integer>,
      type-partition-table :: <object-table>,
-     value-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
      attributes-index-table :: <encoding-sequence-table>,
      value :: <llvm-cmp-instruction>)
  => ();
@@ -1293,7 +1319,7 @@ define method write-instruction-record
     (stream :: <bitcode-stream>,
      instruction-index :: <integer>,
      type-partition-table :: <object-table>,
-     value-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
      attributes-index-table :: <encoding-sequence-table>,
      value :: <llvm-return-instruction>)
  => ();
@@ -1310,7 +1336,7 @@ define method write-instruction-record
     (stream :: <bitcode-stream>,
      instruction-index :: <integer>,
      type-partition-table :: <object-table>,
-     value-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
      attributes-index-table :: <encoding-sequence-table>,
      value :: <llvm-branch-instruction>)
  => ();
@@ -1333,7 +1359,7 @@ define method write-instruction-record
     (stream :: <bitcode-stream>,
      instruction-index :: <integer>,
      type-partition-table :: <object-table>,
-     value-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
      attributes-index-table :: <encoding-sequence-table>,
      value :: <llvm-switch-instruction>)
  => ();
@@ -1350,7 +1376,7 @@ define method write-instruction-record
     (stream :: <bitcode-stream>,
      instruction-index :: <integer>,
      type-partition-table :: <object-table>,
-     value-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
      attributes-index-table :: <encoding-sequence-table>,
      value :: <llvm-invoke-instruction>)
  => ();
@@ -1398,7 +1424,7 @@ define method write-instruction-record
     (stream :: <bitcode-stream>,
      instruction-index :: <integer>,
      type-partition-table :: <object-table>,
-     value-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
      attributes-index-table :: <encoding-sequence-table>,
      value :: <llvm-unwind-instruction>)
  => ();
@@ -1409,7 +1435,7 @@ define method write-instruction-record
     (stream :: <bitcode-stream>,
      instruction-index :: <integer>,
      type-partition-table :: <object-table>,
-     value-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
      attributes-index-table :: <encoding-sequence-table>,
      value :: <llvm-unreachable-instruction>)
  => ();
@@ -1420,7 +1446,7 @@ define method write-instruction-record
     (stream :: <bitcode-stream>,
      instruction-index :: <integer>,
      type-partition-table :: <object-table>,
-     value-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
      attributes-index-table :: <encoding-sequence-table>,
      value :: <llvm-indirect-branch-instruction>)
  => ();
@@ -1431,7 +1457,7 @@ define method write-instruction-record
     (stream :: <bitcode-stream>,
      instruction-index :: <integer>,
      type-partition-table :: <object-table>,
-     value-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
      attributes-index-table :: <encoding-sequence-table>,
      value :: <llvm-phi-node>)
  => ();
@@ -1447,7 +1473,7 @@ define method write-instruction-record
     (stream :: <bitcode-stream>,
      instruction-index :: <integer>,
      type-partition-table :: <object-table>,
-     value-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
      attributes-index-table :: <encoding-sequence-table>,
      value :: <llvm-alloca-instruction>)
  => ();
@@ -1464,7 +1490,7 @@ define method write-instruction-record
     (stream :: <bitcode-stream>,
      instruction-index :: <integer>,
      type-partition-table :: <object-table>,
-     value-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
      attributes-index-table :: <encoding-sequence-table>,
      value :: <llvm-load-instruction>)
  => ();
@@ -1481,7 +1507,7 @@ define method write-instruction-record
     (stream :: <bitcode-stream>,
      instruction-index :: <integer>,
      type-partition-table :: <object-table>,
-     value-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
      attributes-index-table :: <encoding-sequence-table>,
      value :: <llvm-store-instruction>)
  => ();
@@ -1500,7 +1526,7 @@ define method write-instruction-record
     (stream :: <bitcode-stream>,
      instruction-index :: <integer>,
      type-partition-table :: <object-table>,
-     value-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
      attributes-index-table :: <encoding-sequence-table>,
      value :: <llvm-call-instruction>)
  => ();
@@ -1545,7 +1571,7 @@ define method write-instruction-record
     (stream :: <bitcode-stream>,
      instruction-index :: <integer>,
      type-partition-table :: <object-table>,
-     value-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
      attributes-index-table :: <encoding-sequence-table>,
      value :: <llvm-va-arg-instruction>)
  => ();
@@ -1561,7 +1587,7 @@ define method write-instruction-record
     (stream :: <bitcode-stream>,
      instruction-index :: <integer>,
      type-partition-table :: <object-table>,
-     value-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
      attributes-index-table :: <encoding-sequence-table>,
      value :: <llvm-extract-value-instruction>)
  => ();
@@ -1577,7 +1603,7 @@ define method write-instruction-record
     (stream :: <bitcode-stream>,
      instruction-index :: <integer>,
      type-partition-table :: <object-table>,
-     value-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
      attributes-index-table :: <encoding-sequence-table>,
      value :: <llvm-insert-value-instruction>)
  => ();
@@ -1604,7 +1630,7 @@ define function write-function
      function :: <llvm-function>)
  => ();
   unless (empty?(function.llvm-function-basic-blocks))
-    let (value-partition-table :: <object-table>,
+    let (value-partition-table :: <mutable-explicit-key-collection>,
          first-constant-index :: <integer>,
          constant-partition-exemplars :: <vector>)
       = enumerate-function-constants(function,
