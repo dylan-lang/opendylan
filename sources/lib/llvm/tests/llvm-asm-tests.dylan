@@ -105,6 +105,14 @@ define function make-llvm-test-function
     end method
   else
     method ()
+      let reference :: <string>
+        = with-application-output (stream = "llvm-as | llvm-dis",
+                                   under-shell?: #t,
+                                   input: merged-file-locator,
+                                   error: #"null")
+            read-to-end(stream)
+          end;
+      
       let module
         = make(<llvm-module>, name: as(<string>, merged-file-locator));
 
@@ -116,9 +124,26 @@ define function make-llvm-test-function
                           parsed? := #t;
                         end);
       end with-open-file;
+
+      let saved? = #f;
+      let bc-pathname = "out.bc"; // FIXME
       if (parsed?)
         check-no-errors(format-to-string("Write .bc for %s", file-locator),
-                        llvm-save-bitcode-file(module, "out.bc"));
+                        begin
+                          llvm-save-bitcode-file(module, bc-pathname);
+                          saved? := #t;
+                        end);
+      end if;
+
+      if (saved?)
+        check-equal(format-to-string("Disassembly of .bc for %s"
+                                       " matches reference", file-locator),
+                    reference,
+                    with-application-output (stream = "llvm-dis",
+                                             input: bc-pathname,
+                                             error: #"null")
+                      read-to-end(stream)
+                    end);
       end if;
     end method
   end if
