@@ -214,7 +214,10 @@ define function run-application
         #"inherit" =>
           -1;
         #"null" =>
-          unix-open($null-device, $O_RDONLY, $file_create_permissions);
+          let read-fd 
+            = unix-open($null-device, $O_RDONLY, $file_create_permissions);
+          close-fds := add(close-fds, read-fd);
+          read-fd;
         #"stream" =>
           let (read-fd, write-fd) = make-pipe();
           streams := add(streams, make(<file-stream>,
@@ -231,7 +234,10 @@ define function run-application
               else
                 $O_RDONLY;
               end if;
-          unix-open(pathstring, mode-code, $file_create_permissions);
+          let read-fd
+            = unix-open(pathstring, mode-code, $file_create_permissions);
+          close-fds := add(close-fds, read-fd);
+          read-fd;
       end select;
 
   local
@@ -240,7 +246,10 @@ define function run-application
         #"inherit" =>
           -1;
         #"null" =>
-          unix-open($null-device, $O_WRONLY, $file_create_permissions);
+          let write-fd
+            = unix-open($null-device, $O_WRONLY, $file_create_permissions);
+          close-fds := add(close-fds, write-fd);
+          write-fd;
         #"stream" =>
           let (read-fd, write-fd) = make-pipe();
           streams := add(streams, make(<file-stream>,
@@ -268,6 +277,7 @@ define function run-application
           if (if-output-exists == #"append")
             unix-lseek(fd, 0, $seek_end);
           end if;
+          close-fds := add(close-fds, fd);
           fd;
       end select;
     end method;

@@ -665,8 +665,11 @@ define function run-application
          #"inherit" =>
            win32-std-handle($STD_INPUT_HANDLE);
          #"null" =>
-           win32-open/create($null-device, $GENERIC_READ,
-                             $FILE_SHARE_READ, $OPEN_EXISTING);
+           let handle
+             = win32-open/create($null-device, $GENERIC_READ,
+                                 $FILE_SHARE_READ, $OPEN_EXISTING);
+           close-handles := add(close-handles, handle);
+           handle;
          #"stream" =>
            let (input-p, output-p) = Win32CreatePipe();
            streams := add(streams, make(<file-stream>,
@@ -686,8 +689,11 @@ define function run-application
                else
                  $OPEN_EXISTING
                end if;
-           win32-open/create(pathstring, $GENERIC_READ, $FILE_SHARE_READ,
-                             fdwCreate);
+           let handle
+             = win32-open/create(pathstring, $GENERIC_READ, $FILE_SHARE_READ,
+                                 fdwCreate);
+           close-handles := add(close-handles, handle);
+           handle;
        end select;
   
   let input-pipe :: <machine-word> = as(<machine-word>, 0);
@@ -713,8 +719,11 @@ define function run-application
           #"inherit" =>
             win32-std-handle(std-handle);
           #"null" =>
-            win32-open/create($null-device, $GENERIC_WRITE,
-                              $FILE_SHARE_WRITE, $OPEN_EXISTING);
+            let handle
+              = win32-open/create($null-device, $GENERIC_WRITE,
+                                  $FILE_SHARE_WRITE, $OPEN_EXISTING);
+            close-handles := add(close-handles, handle);
+            handle;
           #"stream" =>
             let (input-p, output-p) = Win32CreatePipe();
             streams := add(streams, make(<file-stream>,
@@ -747,6 +756,7 @@ define function run-application
             if (if-output-exists == #"append")
               win32-set-file-position(handle, 0, $FILE_END);
             end if;
+            close-handles := add(close-handles, handle);
             handle;
         end select;
       end method;
@@ -852,7 +862,7 @@ define function run-application
               reverse!(streams))
       end
     cleanup
-      // Close the other end of all pipes
+      // Close handles that belong to the child
       do(win32-close-handle, close-handles);
 
       // Close the process and thread information handles
@@ -872,6 +882,7 @@ define function run-application
       end if;
     end
   else
+    do(win32-close-handle, close-handles);
     error("create process failed: %s", win32-last-error-message());
   end
 end function run-application;
