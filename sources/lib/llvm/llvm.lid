@@ -16,7 +16,7 @@ Files:        llvm-library
 	      bitcode
 	      llvm-bitcode
 	      llvm-builder
-Target:       dll
+Target-Type:  dll
 Copyright:    Original Code is Copyright 2009-2010 Gwydion Dylan Maintainers
               All rights reserved.
 License:      Functional Objects Library Public License Version 1.0
