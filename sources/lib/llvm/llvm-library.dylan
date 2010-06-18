@@ -289,6 +289,7 @@ define module llvm-internals
     import: { <double-integer>, %double-integer-low, %double-integer-high,
               decode-single-float, decode-double-float,
               encode-single-float, encode-double-float };
+  use machine-word-lowlevel;
   use common-dylan, exclude: { format-to-string };
   use streams;
   use file-system;

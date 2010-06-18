@@ -24,33 +24,41 @@ end class;
 define method bitcode-flush
     (stream :: <bitcode-stream>)
  => ();
+  let accumulator = stream.bitcode-accumulator;
+  let byte-mask = coerce-integer-to-machine-word(#xFF);
   write-4-aligned-bytes
     (inner-stream(stream),
-     as(<integer>,
-        %logand(stream.bitcode-accumulator,                   #xFF)),
-     as(<integer>,
-        %logand(%shift-right(stream.bitcode-accumulator, 8),  #xFF)),
-     as(<integer>,
-        %logand(%shift-right(stream.bitcode-accumulator, 16), #xFF)),
-     as(<integer>,
-        %logand(%shift-right(stream.bitcode-accumulator, 24), #xFF)));
+     coerce-machine-word-to-integer
+       (machine-word-logand(accumulator, byte-mask)),
+     coerce-machine-word-to-integer
+       (machine-word-logand(machine-word-shift-right(accumulator, 8),
+                            byte-mask)),
+     coerce-machine-word-to-integer
+       (machine-word-logand(machine-word-shift-right(accumulator, 16),
+                            byte-mask)),
+     coerce-machine-word-to-integer
+       (machine-word-logand(machine-word-shift-right(accumulator, 24),
+                            byte-mask)));
 end method;
 
-define method write-fixed
+define inline method write-fixed
     (stream :: <bitcode-stream>, bits :: <integer>, value :: <machine-word>)
  => ();
+  let accumulator-size = stream.bitcode-accumulator-size;
   stream.bitcode-accumulator
-    := %logior(stream.bitcode-accumulator,
-               %shift-left(value, stream.bitcode-accumulator-size));
-  let slack = 32 - stream.bitcode-accumulator-size;
-  stream.bitcode-accumulator-size := stream.bitcode-accumulator-size + bits;
+    := machine-word-logior
+         (stream.bitcode-accumulator,
+          machine-word-unsigned-shift-left(value, accumulator-size));
+  let slack = 32 - accumulator-size;
+  stream.bitcode-accumulator-size := accumulator-size + bits;
   if (stream.bitcode-accumulator-size >= 32)
     bitcode-flush(stream);
     stream.bitcode-accumulator-size := stream.bitcode-accumulator-size - 32;
     if (slack < 32)
-      stream.bitcode-accumulator := u%shift-right(value, slack);
+      stream.bitcode-accumulator
+        := machine-word-unsigned-shift-right(value, slack);
     else
-      stream.bitcode-accumulator := as(<machine-word>, 0);
+      stream.bitcode-accumulator := coerce-integer-to-machine-word(0);
     end if;
   end if;
 end method;
@@ -67,7 +75,7 @@ define method write-abbrev-id
   write-fixed(stream, stream.bitcode-abbrev-bits, id);
 end method;
 
-define method write-vbr
+define inline method write-vbr
     (stream :: <bitcode-stream>, bits :: <integer>, value :: <machine-word>)
  => ();
   let limit = u%shift-left(1, bits - 1);
@@ -76,8 +84,10 @@ define method write-vbr
     if (u%<(value, limit))
       write-fixed(stream, bits, value);
     else
-      write-fixed(stream, bits, %logior(limit, %logand(value, mask)));
-      loop(u%shift-right(value, bits - 1));
+      write-fixed(stream, bits,
+                  machine-word-logior(limit,
+                                      machine-word-logand(value, mask)));
+      loop(machine-word-unsigned-shift-right(value, bits - 1));
     end if;
   end iterate;
 end method;
@@ -122,7 +132,9 @@ define method write-vbr-aux
     if (zero?(value-high) & u%<(value-low, limit))
       write-fixed(stream, bits, value-low);
     else
-      write-fixed(stream, bits, %logior(limit, %logand(value-low, mask)));
+      write-fixed(stream, bits,
+                  machine-word-logior(limit,
+                                      machine-word-logand(value-low, mask)));
       let (low :: <machine-word>, high :: <machine-word>)
         = ud%shift-right(value-low, value-high, bits - 1);
       loop(low, high);
@@ -132,7 +144,8 @@ end method;
 
 define method as-signed-vbr (value :: <integer>) => (result :: <machine-word>);
   if (negative?(value))
-    %logior(%shift-left(%negative(value), 1), 1)
+    machine-word-logior(%shift-left(%negative(value), 1),
+                        coerce-integer-to-machine-word(1))
   else
     %shift-left(value, 1)
   end if
