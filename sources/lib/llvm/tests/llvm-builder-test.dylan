@@ -202,6 +202,14 @@ define llvm-builder function-test llvm-builder-module-setter ()
   //---*** Fill this in...
 end function-test llvm-builder-module-setter;
 
+define llvm-builder function-test llvm-builder-define-global ()
+  //---*** Fill this in...
+end function-test llvm-builder-define-global;
+
+define llvm-builder function-test llvm-builder-global ()
+  //---*** Fill this in...
+end function-test llvm-builder-global;
+
 define llvm-builder function-test ins--local ()
   //---*** Fill this in...
 end function-test ins--local;

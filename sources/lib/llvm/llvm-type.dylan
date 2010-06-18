@@ -326,6 +326,8 @@ define constant $llvm-i8-type :: <llvm-type>
 define constant $llvm-i8*-type
   = make(<llvm-pointer-type>, pointee: $llvm-i8-type);
 
+define constant $llvm-i16-type :: <llvm-type>
+  = make(<llvm-integer-type>, width: 16);
 define constant $llvm-i32-type :: <llvm-type>
   = make(<llvm-integer-type>, width: 32);
 define constant $llvm-i64-type :: <llvm-type>

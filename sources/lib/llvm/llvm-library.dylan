@@ -30,6 +30,7 @@ define module llvm
     llvm-function-type-return-type,
     llvm-function-type-parameter-types,
     <llvm-struct-type>,
+    llvm-struct-type-elements,
     <llvm-union-type>,
     <llvm-array-type>,
     <llvm-vector-type>,
@@ -55,6 +56,7 @@ define module llvm
     $llvm-i1-type,
     $llvm-i8-type,
     $llvm-i8*-type,
+    $llvm-i16-type,
     $llvm-i32-type,
     $llvm-i64-type,
 
@@ -182,6 +184,11 @@ define module llvm-builder
     llvm-builder-function-setter,
     llvm-builder-basic-block,
     llvm-builder-basic-block-setter,
+
+    llvm-builder-value,
+
+    llvm-builder-define-global,
+    llvm-builder-global,
 
     ins--local,
     llvm-builder-local,

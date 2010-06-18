@@ -50,6 +50,38 @@ define inline function llvm-builder-value
 end function;
 
 
+/// Global variables
+
+define function llvm-builder-define-global
+    (builder :: <llvm-builder>, name :: <string>,
+     value :: <llvm-constant-value>)
+ => (value :: <llvm-constant-value>);
+  let global-table = builder.llvm-builder-module.llvm-global-table;
+  let definition
+    = element(global-table, name, default: #f);
+  if (definition)
+    if (instance?(definition, <llvm-symbolic-constant>))
+      definition.llvm-placeholder-value-forward := value;
+      llvm-constrain-type(definition.llvm-value-type, llvm-value-type(value));
+    else
+      error("value @%s is multiply defined", name);
+    end if;
+  end if;
+  
+  // Record this value
+  element(global-table, name) := value
+end function;
+
+define function llvm-builder-global
+    (builder :: <llvm-builder>, name :: <string>)
+ => (value :: <llvm-constant-value>);
+  let global-table = builder.llvm-builder-module.llvm-global-table;
+  element(global-table, name, default: #f)
+    | (element(global-table, name)
+         := make(<llvm-symbolic-constant>, name: name))
+end function;
+
+
 /// Local variables
 
 define function ins--local

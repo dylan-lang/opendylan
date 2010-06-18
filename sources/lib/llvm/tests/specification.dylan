@@ -34,6 +34,12 @@ define module-spec llvm-builder ()
   function llvm-builder-module-setter
       (false-or(<llvm-module>), <llvm-builder>) => (false-or(<llvm-module>));
 
+  function llvm-builder-define-global
+      (<llvm-builder>, <string>, <llvm-constant-value>)
+   => (<llvm-constant-value>);
+  function llvm-builder-global
+      (<llvm-builder>, <string>) => (<llvm-constant-value>);
+
   function ins--local
       (<llvm-builder>, <string>,
        type-union(<llvm-instruction>, <llvm-basic-block>))
