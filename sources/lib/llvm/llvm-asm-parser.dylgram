@@ -516,27 +516,27 @@ function-name:
 
 opt-calling-conv:
   /* empty */
-    => 0;;
+    => $llvm-calling-convention-c;;
   %CCC
-    => 0;;
+    => $llvm-calling-convention-c;;
   %FASTCC
-    => 8;;
+    => $llvm-calling-convention-fast;;
   %COLDCC
-    => 9;;
+    => $llvm-calling-convention-cold;;
   %X86_STDCALLCC
-    => 64;;
+    => $llvm-calling-convention-x86-stdcall;;
   %X86_FASTCALLCC
-    => 65;;
+    => $llvm-calling-convention-x86-fastcall;;
   %ARM_APCSCC
-    => 66;;
+    => $llvm-calling-convention-arm-apcs;;
   %ARM_AAPCSCC
-    => 67;;
+    => $llvm-calling-convention-arm-aapcs;;
   %ARM_AAPCS_VFPCC
-    => 68;;
+    => $llvm-calling-convention-arm-vfp;;
   %MSP430_INTRCC
-    => 69;;
+    => $llvm-calling-convention-msp430-intr;;
   %X86_THISCALLCC
-    => 70;;
+    => $llvm-calling-convention-x86-thiscall;;
   %CC %EUINT64VAL
     => arg$2;;
 

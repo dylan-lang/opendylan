@@ -6,9 +6,21 @@ License:      Functional Objects Library Public License Version 1.0
 Dual-license: GNU Lesser General Public License
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
+define constant $llvm-calling-convention-c            =  0; // C (default)
+define constant $llvm-calling-convention-fast         =  8; // Fast
+define constant $llvm-calling-convention-cold         =  9; // Cold
+define constant $llvm-calling-convention-ghc          = 10; // GHC
+define constant $llvm-calling-convention-x86-stdcall  = 64; // X86_StdCall
+define constant $llvm-calling-convention-x86-fastcall = 65; // X86_StdCall
+define constant $llvm-calling-convention-arm-apcs     = 66; // ARM_APCS
+define constant $llvm-calling-convention-arm-aapcs    = 67; // ARM_AAPCS
+define constant $llvm-calling-convention-arm-vfp      = 68; // ARM_VFP
+define constant $llvm-calling-convention-msp430-intr  = 69; // MSP430_INTR
+define constant $llvm-calling-convention-x86-thiscall = 70; // X86_StdCall
+
 define class <llvm-function> (<llvm-global-value>)
   constant slot llvm-function-calling-convention :: <integer>,
-    init-value: 0, init-keyword: calling-convention:;
+    init-value: $llvm-calling-convention-c, init-keyword: calling-convention:;
   constant slot llvm-function-garbage-collector :: false-or(<string>),
     init-value: #f, init-keyword: garbage-collector:;
   constant slot llvm-function-arguments :: <sequence>,

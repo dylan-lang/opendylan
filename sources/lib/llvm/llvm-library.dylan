@@ -115,6 +115,18 @@ define module llvm
     llvm-attribute-stack-alignment,
     llvm-attribute-merge,
     <llvm-attribute-list>,
+
+    $llvm-calling-convention-c,
+    $llvm-calling-convention-fast,
+    $llvm-calling-convention-cold,
+    $llvm-calling-convention-ghc,
+    $llvm-calling-convention-x86-stdcall,
+    $llvm-calling-convention-x86-fastcall,
+    $llvm-calling-convention-arm-apcs,
+    $llvm-calling-convention-arm-aapcs,
+    $llvm-calling-convention-arm-vfp,
+    $llvm-calling-convention-msp430-intr,
+    $llvm-calling-convention-x86-thiscall,
     
     <llvm-function>,
     llvm-function-arguments,
