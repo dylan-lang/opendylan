@@ -26,7 +26,7 @@ define class <llvm-function> (<llvm-global-value>)
   constant slot llvm-function-arguments :: <sequence>,
     init-value: #[], init-keyword: arguments:;
   constant slot llvm-function-attribute-list :: <llvm-attribute-list>
-    = make(<llvm-attribute-list>), init-keyword: attribute-list:;
+    = $llvm-empty-attribute-list, init-keyword: attribute-list:;
   constant slot llvm-function-basic-blocks :: <sequence>
     = make(<stretchy-object-vector>);
   constant slot llvm-function-value-table :: <mutable-explicit-key-collection>

@@ -100,8 +100,8 @@ end class;
 define class <llvm-invoke-instruction> (<llvm-terminator-instruction>)
   constant slot llvm-value-type :: <llvm-type>,
     required-init-keyword: type:;
-  constant slot llvm-invoke-instruction-attribute-list :: <llvm-attribute-list>,
-    required-init-keyword: attribute-list:;
+  constant slot llvm-invoke-instruction-attribute-list :: <llvm-attribute-list>
+    = $llvm-empty-attribute-list, init-keyword: attribute-list:;
   constant slot llvm-invoke-instruction-calling-convention :: <integer>,
     init-value: $llvm-calling-convention-c, init-keyword: calling-convention:;
 end class;
@@ -161,8 +161,8 @@ end method;
 define class <llvm-call-instruction> (<llvm-instruction>)
   constant slot llvm-value-type :: <llvm-type>,
     required-init-keyword: type:;
-  constant slot llvm-call-instruction-attribute-list :: <llvm-attribute-list>,
-    required-init-keyword: attribute-list:;
+  constant slot llvm-call-instruction-attribute-list :: <llvm-attribute-list>
+    = $llvm-empty-attribute-list, init-keyword: attribute-list:;
   constant slot llvm-call-instruction-calling-convention :: <integer>,
     init-value: $llvm-calling-convention-c, init-keyword: calling-convention:;
   constant slot llvm-call-instruction-tail-call? :: <boolean>,

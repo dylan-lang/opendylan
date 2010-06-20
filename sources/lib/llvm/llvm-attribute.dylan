@@ -52,3 +52,6 @@ define class <llvm-attribute-list> (<object>)
   constant slot llvm-attribute-list-parameter-attributes :: <sequence>,
     init-value: #[], init-keyword: parameter-attributes:;
 end class;
+
+define constant $llvm-empty-attribute-list :: <llvm-attribute-list>
+  = make(<llvm-attribute-list>);
