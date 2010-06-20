@@ -52,7 +52,7 @@ end function;
 
 /// Global variables
 
-define function llvm-builder-define-global
+define method llvm-builder-define-global
     (builder :: <llvm-builder>, name :: <string>,
      value :: <llvm-constant-value>)
  => (value :: <llvm-constant-value>);
@@ -71,6 +71,31 @@ define function llvm-builder-define-global
   // Record this value
   element(global-table, name) := value
 end function;
+
+define method llvm-builder-define-global
+    (builder :: <llvm-builder>, name :: <string>,
+     value :: <llvm-global-variable>)
+ => (value :: <llvm-global-variable>);
+  next-method();
+  add!(builder.llvm-builder-module.llvm-module-globals, value);
+  value
+end method;
+
+define method llvm-builder-define-global
+    (builder :: <llvm-builder>, name :: <string>, value :: <llvm-function>)
+ => (value :: <llvm-function>);
+  next-method();
+  add!(builder.llvm-builder-module.llvm-module-functions, value);
+  value
+end method;
+
+define method llvm-builder-define-global
+    (builder :: <llvm-builder>, name :: <string>, value :: <llvm-global-alias>)
+ => (value :: <llvm-global-alias>);
+  next-method();
+  add!(builder.llvm-builder-module.llvm-module-aliases, value);
+  value
+end method;
 
 define function llvm-builder-global
     (builder :: <llvm-builder>, name :: <string>)

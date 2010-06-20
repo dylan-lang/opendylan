@@ -74,8 +74,7 @@ define function make-builder-with-test-function
            type: test-function-pointer-type,
            arguments: arguments,
            linkage: #"external");
-  add!(module.llvm-module-functions, test-function);
-  module.llvm-global-table["test"] := test-function;
+  llvm-builder-define-global(builder, "test", test-function);
   builder.llvm-builder-function := test-function;
 
   for (argument in arguments)
