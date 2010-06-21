@@ -8,7 +8,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library dfmc-llvm-back-end
   use functional-dylan;
-  use io;
+  use generic-arithmetic;
+  use big-integers;
   use dfmc-core;
   use dfmc-conversion;
   use dfmc-back-end;
@@ -19,10 +20,13 @@ end library;
 
 define module dfmc-llvm-back-end
   use functional-dylan;
+  use generic-arithmetic,
+    prefix: "generic/";
   use dfmc-core;
   use dfmc-conversion;
   use dfmc-imports;
   use dfmc-back-end;
+  use machine-words;
 
   use llvm;
   use llvm-builder;
@@ -30,5 +34,20 @@ define module dfmc-llvm-back-end
   export
     <llvm-back-end>,
     llvm-back-end-target-triple,
-    llvm-back-end-data-layout;
+    llvm-back-end-data-layout,
+    llvm-section-name,
+
+    *loose-mode?*,
+    *interactive-mode?*,
+    llvm-retract-cached,
+
+    $llvm-object-pointer-type,
+    llvm-pointer-to,
+    llvm-object-type,
+    llvm-class-type,
+    llvm-reference-type,
+    llvm-lambda-type,
+    llvm-entry-point-type,
+
+    llvm-raw-byte-character;
 end module;
