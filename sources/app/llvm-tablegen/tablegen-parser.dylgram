@@ -1,0 +1,451 @@
+Module:       llvm-tablegen
+Author:       Peter S. Housel
+Copyright:    Original Code is Copyright 2009-2010 Gwydion Dylan Maintainers
+              All rights reserved.
+License:      Functional Objects Library Public License Version 1.0
+Dual-license: GNU Lesser General Public License
+Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
+
+define class <tablegen-class-reference> (<object>)
+  constant slot class-reference-class :: <tablegen-class>,
+    required-init-keyword: class:;
+  constant slot class-reference-template-arguments :: <sequence>,
+    init-value: #(), init-keyword: template-arguments:;
+end class;
+
+define variable *tablegen-overrides* = make(<string-table>);
+
+define function add-initializer
+    (sequence :: <stretchy-sequence>,
+     environment :: <string-table>,
+     initializer :: <tablegen-initializer>)
+ => (value :: <tablegen-value>);
+  let value
+    = element(*tablegen-overrides*, initializer.initializer-name, default: #f)
+    | resolve-value(environment, initializer.initializer-value);
+  add!(sequence, make(<tablegen-initializer>,
+                      name: initializer.initializer-name,
+                      type: initializer.initializer-type,
+                      value: value));
+  value
+end function;
+
+define function instantiate-class-reference
+    (sequence :: <stretchy-sequence>,
+     environment :: <string-table>,
+     reference :: <tablegen-class-reference>,
+     resolve? :: <boolean>)
+ => ();
+  let class = reference.class-reference-class;
+  let template-arguments
+    = reference.class-reference-template-arguments;
+  for (parameter in class.record-template-parameters, index from 0)
+    let parameter-name
+      = format-to-string("%s:%s",
+                         class.record-name,
+                         parameter.initializer-name);
+    let parameter-value
+      = element(template-arguments, index, default: #f);
+    if (parameter-value)
+      environment[parameter-name] := parameter-value;
+    else
+      let value = resolve-value(environment, parameter.initializer-value);
+      add!(sequence,
+           make(<tablegen-initializer>,
+                name: parameter-name,
+                type: parameter.initializer-type,
+                value: value));
+      if (resolve?)
+        environment[parameter-name] := value;
+      end if;
+    end if;
+  end for;
+
+  for (initializer in class.record-initializers)
+    let value = add-initializer(sequence, environment, initializer);
+    if (resolve?)
+      environment[initializer.initializer-name] := value;
+    end if;
+  end for;
+end function;
+
+define variable *tablegen-anonymous-counter* :: <integer> = 0;
+define variable *tablegen-anonymous-value-counter* :: <integer> = 0;
+
+define parser tablegen-parser
+
+file:
+  object-list EOF
+    => #f;;
+
+object-list:
+  object
+    => #f;;
+  object-list object
+    => #f;;
+
+object:
+  class-inst
+    => #f;;
+  def-inst
+    => #f;;
+  multi-class-inst
+    => error("multi-class-inst");;
+  def-minst
+    => error("def-minst");;
+  let-command %LBRACE object-list %RBRACE
+    => *tablegen-overrides* := arg$1;;
+  let-command object
+    => *tablegen-overrides* := arg$1;;
+
+class-inst:
+  %CLASS class-name opt-template-parameter-list object-body
+    => begin
+         // Alpha-convert template parameters
+         let environment = make(<string-table>);
+         for (parameter in arg$3)
+           environment[parameter.initializer-name]
+             := make(<tablegen-named-value>,
+                     name: format-to-string("%s:%s",
+                                            arg$2,
+                                            parameter.initializer-name));
+         end for;
+
+         let initializers = make(<stretchy-object-vector>);
+
+         for (reference in arg$4.head)
+           instantiate-class-reference
+             (initializers, environment, reference, #f);
+         end for;
+
+         do(curry(add-initializer, initializers, environment), arg$4.tail);
+         $tablegen-classes[arg$2]
+           := make(<tablegen-class>,
+                   name: arg$2,
+                   template-parameters: arg$3,
+                   superclasses: map(class-reference-class, arg$4.head),
+                   initializers: initializers);
+       end;;
+
+class-name:
+  object-name
+    => arg$1;;
+
+object-name:
+  opt-id
+    => arg$1;;
+
+opt-id:
+  /* empty */
+    => begin
+         let name
+           = format-to-string("anonymous.%d", *tablegen-anonymous-counter*);
+         *tablegen-anonymous-counter* := *tablegen-anonymous-counter* + 1;
+         name
+       end;;
+  %ID
+    => arg$1;;
+
+opt-template-parameter-list:
+  /* empty */
+    => #();;
+  template-parameter-list
+    => arg$1;;
+
+template-parameter-list:
+  %LANGLE decl-list-ne %RANGLE
+    => reverse!(arg$2);;
+
+decl-list-ne:
+  declaration
+    => list(arg$1);;
+  decl-list-ne %COMMA declaration
+    => add(arg$1, arg$3);;
+
+declaration:
+  opt-prefix type %ID opt-value
+    => make(<tablegen-initializer>, type: arg$2, name: arg$3, value: arg$4);;
+
+opt-prefix:
+  /* empty */
+    => #f;;
+  %FIELD
+    => #f;;
+
+type:
+  %STRING
+    => make(<tablegen-simple-type>, kind: #"STRING");;
+  %BIT
+    => make(<tablegen-simple-type>, kind: #"BIT");;
+  %BITS %LANGLE %INTVAL %RANGLE
+    => make(<tablegen-bits-type>, size: arg$3);;
+  %INT
+    => make(<tablegen-simple-type>, kind: #"INT");;
+  %LIST %LANGLE type %RANGLE
+    => make(<tablegen-list-type>, of: arg$3);;
+  %CODE
+    => make(<tablegen-simple-type>, kind: #"CODE");;
+  %DAG
+    => make(<tablegen-simple-type>, kind: #"DAG");;
+  class-id
+    => make(<tablegen-class-type>, class: arg$1);;
+
+class-id:
+  %ID
+    => $tablegen-classes[arg$1];;
+
+opt-value:
+  /* empty */
+    => make(<tablegen-unknown-value>);;
+  %EQ value
+    => arg$2;;
+
+value:
+  idvalue
+    => make(<tablegen-named-value>, name: arg$1);;
+  %INTVAL
+    => make(<tablegen-simple-value>, value: arg$1);;
+  %STRVAL
+    => make(<tablegen-simple-value>, value: arg$1);;
+//%CODEFRAGMENT
+//  => error("%%CODEFRAGMENT");;
+  %QUEST
+    => make(<tablegen-unknown-value>);;
+  %LBRACE value-list %RBRACE
+    => error("bits-value");;
+  class-id %LANGLE value-list-ne %RANGLE
+    => begin
+         let def-name
+           = format-to-string("anonymous.val.%d",
+                              *tablegen-anonymous-value-counter*);
+         *tablegen-anonymous-value-counter*
+           := *tablegen-anonymous-value-counter* + 1;
+
+         let initializers = make(<stretchy-object-vector>);
+         let environment = make(<string-table>);
+         let reference
+           = make(<tablegen-class-reference>,
+                  class: arg$1, template-arguments: reverse!(arg$3));
+         instantiate-class-reference(initializers, environment, reference, #t);
+
+         $tablegen-definitions[def-name]
+           := make(<tablegen-definition>,
+                   name: def-name,
+                   superclasses: vector(arg$1),
+                   initializers: initializers);
+
+         make(<tablegen-named-value>, name: def-name);
+       end;;
+  value %LBRACE bit-list %RBRACE
+    => error("bit-list value");;
+  %LBRACK value-list %RBRACK
+    => make(<tablegen-list-value>, list: arg$2);;
+  value %DOT %ID
+    => error("field %s", arg$3);;
+  %LPAREN idvalue dag-arg-list %RPAREN
+    => error("dag");;
+  value %LBRACK bit-list %RBRACK
+    => error("slice");;
+  %CARTOK %LPAREN value %RPAREN
+    => error("!car");;
+  %CDRTOK %LPAREN value %RPAREN
+    => error("!cdr");;
+  %NULLTOK %LPAREN value %RPAREN
+    => error("!null");;
+  %CASTTOK %LANGLE type %RANGLE %LPAREN value %RPAREN
+    => error("!cast");;
+  %CONCATTOK %LPAREN value %COMMA value %RPAREN
+    => error("!concat");;
+  %SHLTOK %LPAREN value %COMMA value %RPAREN
+    => error("!shl");;
+  %SRATOK %LPAREN value %COMMA value %RPAREN
+    => error("!sra");;
+  %SRLTOK %LPAREN value %COMMA value %RPAREN
+    => error("!srl");;
+  %EQTOK %LPAREN value %COMMA value %RPAREN
+    => error("!eq");;
+  %STRCONCATTOK %LPAREN value %COMMA value %RPAREN
+    => make(<tablegen-operator-value>,
+            kind: #"strconcat",
+            operands: vector(arg$3, arg$5));;
+  %NAMECONCATTOK %LANGLE type %RANGLE %LPAREN value %COMMA value %RPAREN
+    => error("!nameconcat");;
+  %IFTOK %LPAREN value %COMMA value %COMMA value %RPAREN
+    => error("!if");;
+  %FOREACHTOK %LPAREN value %COMMA value %COMMA value %RPAREN
+    => error("!foreach");;
+  %SUBSTTOK %LPAREN value %COMMA value %COMMA value %RPAREN
+    => error("!subst");;
+
+idvalue:
+  %ID
+    => arg$1;;
+
+value-list:
+  /* empty */
+    => #();;
+  value-list-ne
+    => reverse!(arg$1);;
+
+value-list-ne:
+  value
+    => list(arg$1);;
+  value-list-ne %COMMA value
+    => add(arg$1, arg$3);;
+
+bit-list:
+  rbit-list
+    => #f;;
+
+rbit-list:
+  %INTVAL
+    => #f;;
+  %INTVAL %MINUS %INTVAL
+    => #f;;
+  %INTVAL %INTVAL
+    => #f;;
+  rbit-list %COMMA %INTVAL
+    => #f;;
+  rbit-list %COMMA %INTVAL %MINUS %INTVAL
+    => #f;;
+  rbit-list %COMMA %INTVAL %INTVAL
+    => #f;;
+
+dag-arg-list:
+  /* empty */
+    => #f;;
+  dag-arg-list-ne
+    => #f;;
+
+dag-arg-list-ne:
+  value opt-var-name
+    => #f;;
+  dag-arg-list-ne %COMMA value opt-var-name
+    => #f;;
+
+opt-var-name:
+  /* empty */
+    => #f;;
+  %COLON %VARNAME
+    => #f;;
+
+object-body:
+  class-list body
+    => pair(arg$1, arg$2);;
+
+class-list:
+  /* empty */
+    => #();;
+  %COLON class-list-ne
+    => reverse!(arg$2);;
+
+class-list-ne:
+  sub-class-ref
+    => list(arg$1);;
+  class-list-ne %COMMA sub-class-ref
+    => add(arg$1, arg$3);;
+
+sub-class-ref:
+  class-id
+    => make(<tablegen-class-reference>, class: arg$1);;
+  class-id %LANGLE value-list-ne %RANGLE
+    => begin
+         make(<tablegen-class-reference>,
+              class: arg$1,
+              template-arguments: reverse!(arg$3))
+       end;;
+
+body:
+  %SEMI
+    => #();;
+  %LBRACE body-list %RBRACE
+    => reverse!(arg$2);;
+
+body-list:
+  /* empty */
+    => #();;
+  body-list body-item
+    => add(arg$1, arg$2);;
+
+body-item:
+  declaration %SEMI
+    => arg$1;;
+  %LET %ID opt-bit-list %EQ value %SEMI
+    => error("body-item %%LET");;
+
+opt-bit-list:
+  /* empty */
+    => #f;;
+  %LBRACE bit-list %RBRACE
+    => error("opt-bit-list");;
+
+def-inst:
+  %DEF def-name object-body
+    => begin
+         let initializers = make(<stretchy-object-vector>);
+         let environment = make(<string-table>);
+         for (reference in arg$3.head)
+           instantiate-class-reference
+             (initializers, environment, reference, #t);
+         end for;
+         do(curry(add-initializer, initializers, environment), arg$3.tail);
+
+         $tablegen-definitions[arg$2]
+           := make(<tablegen-definition>,
+                   name: arg$2,
+                   superclasses: map(class-reference-class, arg$3.head),
+                   initializers: initializers);
+       end;;
+
+def-name:
+  object-name
+    => arg$1;;
+
+multi-class-inst:
+  %MULTICLASS multi-class-name opt-template-parameter-list %LBRACE multi-class-body %RBRACE
+    => #f;;
+
+multi-class-name:
+  %ID
+    => #f;;
+
+multi-class-body:
+  multi-class-def
+    => #f;;
+  multi-class-body multi-class-def
+    => #f;;
+
+multi-class-def:
+  def-inst
+    => #f;;
+
+def-minst:
+  %DEFM %ID %COLON sub-class-ref %SEMI
+    => #f;;
+
+let-command:
+  %LET let-save let-list %IN
+    => arg$2;;
+
+let-save:
+  /* empty */
+    => begin
+         let previous-overrides = *tablegen-overrides*;
+         // FIXME
+         //*tablegen-overrides* := shallow-copy(*tablegen-overrides*);
+         *tablegen-overrides* := make(<string-table>);
+         map-into(*tablegen-overrides*, identity, previous-overrides);
+         previous-overrides
+       end;;
+
+let-list:
+  let-item
+    => #f;;
+  let-list %COMMA let-item
+    => #f;;
+
+let-item:
+  %ID opt-bit-list %EQ value
+    => *tablegen-overrides*[arg$1] := arg$4;;
+
+end parser;
