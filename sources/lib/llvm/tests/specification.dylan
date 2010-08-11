@@ -15,6 +15,16 @@ end library-spec llvm;
 
 define module-spec llvm ()
   instantiable class <llvm-module> (<object>);
+
+  constant $llvm-label-type :: <llvm-type>;
+  constant $llvm-void-type :: <llvm-type>;
+  constant $llvm-metadata-type :: <llvm-type>;
+  constant $llvm-i1-type :: <llvm-type>;
+  constant $llvm-i8-type :: <llvm-type>;
+  constant $llvm-i8*-type :: <llvm-type>;
+  constant $llvm-i16-type :: <llvm-type>;
+  constant $llvm-i32-type :: <llvm-type>;
+  constant $llvm-i64-type :: <llvm-type>;
 end module-spec llvm;
 
 define module-spec llvm-builder ()

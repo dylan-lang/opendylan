@@ -24,6 +24,7 @@ define module llvm
     <llvm-type>,
     <llvm-primitive-type>,
     <llvm-integer-type>,
+    llvm-integer-type-width,
     <llvm-pointer-type>,
     llvm-pointer-type-pointee,
     <llvm-function-type>,
