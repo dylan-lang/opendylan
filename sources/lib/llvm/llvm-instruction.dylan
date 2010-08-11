@@ -31,11 +31,61 @@ define class <llvm-cast-instruction> (<llvm-instruction>)
 end class;
 
 define class <llvm-gep-instruction> (<llvm-instruction>)
-  constant slot llvm-value-type :: <llvm-type> = make(<llvm-opaque-type>),
-    init-keyword: type:;
+  slot %llvm-value-type :: <llvm-type>;
   constant slot llvm-gep-instruction-in-bounds? :: <boolean>,
     init-value: #f, init-keyword: in-bounds?:;
 end class;
+
+define method llvm-value-type
+    (value :: <llvm-gep-instruction>)
+ => (type :: <llvm-type>);
+  if (slot-initialized?(value, %llvm-value-type))
+    value.%llvm-value-type
+  else
+    let operands = value.llvm-instruction-operands;
+    let pointer-type
+      = type-forward(llvm-value-type(operands[0]));
+    value.%llvm-value-type
+      := if (operands.size < 2)
+           pointer-type
+         else
+           for (i from 2 below operands.size,
+                type = type-forward(pointer-type.llvm-pointer-type-pointee)
+                  then type-forward(llvm-gep-index(type, operands[i])))
+           finally
+             make(<llvm-pointer-type>,
+                  pointee: type,
+                  address-space: pointer-type.llvm-pointer-type-address-space)
+           end for
+         end if
+  end if
+end method;
+
+define method llvm-gep-index
+    (type :: <llvm-array-type>, index :: <llvm-value>)
+ => (indexed-type :: <llvm-type>)
+  type.llvm-array-type-element-type
+end method;
+
+define method llvm-gep-index
+    (type :: <llvm-vector-type>, index :: <llvm-value>)
+ => (indexed-type :: <llvm-type>)
+  type.llvm-vector-type-element-type
+end method;
+
+define method llvm-gep-index
+    (type :: <llvm-struct-type>, index :: <llvm-integer-constant>)
+ => (indexed-type :: <llvm-type>)
+  llvm-constrain-type(llvm-value-type(index), $llvm-i32-type);
+  type.llvm-struct-type-elements[index.llvm-integer-constant-integer]
+end method;
+
+define method llvm-gep-index
+    (type :: <llvm-union-type>, index :: <llvm-integer-constant>)
+ => (indexed-type :: <llvm-type>)
+  llvm-constrain-type(llvm-value-type(index), $llvm-i32-type);
+  type.llvm-union-type-elements[index.llvm-integer-constant-integer]
+end method;
 
 define class <llvm-select-instruction> (<llvm-instruction>)
 end class;
