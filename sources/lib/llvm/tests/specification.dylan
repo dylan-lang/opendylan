@@ -49,6 +49,9 @@ define module-spec llvm-builder ()
   function llvm-builder-define-global
       (<llvm-builder>, <string>, <llvm-constant-value>)
    => (<llvm-constant-value>);
+  function llvm-builder-declare-global
+      (<llvm-builder>, <string>, <llvm-constant-value>)
+   => (<llvm-constant-value>);
   function llvm-builder-global
       (<llvm-builder>, <string>) => (<llvm-constant-value>);
 
@@ -246,6 +249,9 @@ define module-spec llvm-builder ()
    => (<llvm-instruction>);
   function ins--tail-call
       (<llvm-builder>, <llvm-value>, <sequence>, #"rest")
+   => (<llvm-instruction>);
+  function ins--call-intrinsic
+      (<llvm-builder>, <string>, <sequence>, #"rest")
    => (<llvm-instruction>);
   function ins--alloca
       (<llvm-builder>, <llvm-type>, <llvm-value>, #"key", #"alignment")

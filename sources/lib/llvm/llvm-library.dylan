@@ -207,8 +207,10 @@ define module llvm-builder
     llvm-builder-basic-block-setter,
 
     llvm-builder-value,
+    llvm-builder-value-function,
 
     llvm-builder-define-global,
+    llvm-builder-declare-global,
     llvm-builder-global,
 
     ins--local,
@@ -290,6 +292,7 @@ define module llvm-builder
     
     ins--call,
     ins--tail-call,
+    ins--call-intrinsic,
     ins--alloca,
     ins--load,
     ins--store,
@@ -313,6 +316,7 @@ define module llvm-internals
   use machine-word-lowlevel;
   use common-dylan, exclude: { format-to-string };
   use streams;
+  use format;
   use file-system;
   use locators;
   use machine-words;

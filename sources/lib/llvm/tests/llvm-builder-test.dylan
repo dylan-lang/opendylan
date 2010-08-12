@@ -205,6 +205,10 @@ define llvm-builder function-test llvm-builder-define-global ()
   //---*** Fill this in...
 end function-test llvm-builder-define-global;
 
+define llvm-builder function-test llvm-builder-declare-global ()
+  //---*** Fill this in...
+end function-test llvm-builder-declare-global;
+
 define llvm-builder function-test llvm-builder-global ()
   //---*** Fill this in...
 end function-test llvm-builder-global;
@@ -988,6 +992,54 @@ end function-test ins--call;
 define llvm-builder function-test ins--tail-call ()
   //---*** Fill this in...
 end function-test ins--tail-call;
+
+define llvm-builder function-test ins--call-intrinsic ()
+  with-test-unit ("ins--call-intrinsic @llvm.prefetch")
+    let builder = make-builder-with-test-function();
+    let ptr = ins--alloca(builder, $llvm-float-type, 1);
+    let address = ins--bitcast(builder, ptr, $llvm-i8*-type);
+    ins--call-intrinsic(builder, "llvm.prefetch", vector(address, 0, 3));
+    ins--load(builder, ptr);
+    ins--ret(builder);
+    check-equal("ins--call-intrinsic @llvm.prefetch disassembly",
+                #("entry:",
+                  "%0 = alloca float",
+                  "%1 = bitcast float* %0 to i8*",
+                  "call void @llvm.prefetch(i8* nocapture %1, i32 0, i32 3)"
+                    " nounwind",
+                  "%2 = load float* %0",
+                  "ret void"),
+                builder-test-function-disassembly(builder));
+  end;
+  with-test-unit ("ins--call-intrinsic float @llvm.sqrt")
+    let builder = make-builder-with-test-function();
+    ins--call-intrinsic(builder, "llvm.sqrt", vector(2.0s0));
+    ins--ret(builder);
+    check-equal("ins--call-intrinsic @llvm.sqrt disassembly",
+                #("entry:",
+                  "%0 = call float @llvm.sqrt.f32(float 2.000000e+00)"
+                    " nounwind readonly",
+                  "ret void"),
+                builder-test-function-disassembly(builder));
+  end;
+  with-test-unit ("ins--call-intrinsic i8 @llvm.memcpy")
+    let builder = make-builder-with-test-function();
+    let ptr1 = ins--alloca(builder, $llvm-i8-type, 20);
+    let ptr2 = ins--alloca(builder, $llvm-i8-type, 20);
+    ins--call-intrinsic(builder, "llvm.memcpy",
+                        vector(ptr1, ptr2, 20, 0, $llvm-false));
+    ins--ret(builder);
+    check-equal("ins--call-intrinsic @llvm.sqrt disassembly",
+                #("entry:",
+                  "%0 = alloca i8, i32 20",
+                  "%1 = alloca i8, i32 20",
+                  "call void @llvm.memcpy.p0i8.p0i8.i32"
+                    "(i8* nocapture %0, i8* nocapture %1, i32 20, i32 0,"
+                    " i1 false) nounwind",
+                  "ret void"),
+                builder-test-function-disassembly(builder));
+  end;
+end function-test ins--call-intrinsic;
 
 define llvm-builder function-test ins--alloca ()
   let builder = make-builder-with-test-function();

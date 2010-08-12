@@ -13,6 +13,7 @@ Files:        llvm-library
 	      llvm-instruction
 	      llvm-basic-block
 	      llvm-function
+	      llvm-intrinsics
 	      bitcode
 	      llvm-bitcode
 	      llvm-builder

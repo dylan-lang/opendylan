@@ -97,6 +97,16 @@ define method llvm-builder-define-global
   value
 end method;
 
+define method llvm-builder-declare-global
+    (builder :: <llvm-builder>, name :: <string>,
+     value :: <llvm-constant-value>)
+ => (value :: <llvm-constant-value>);
+  let global-table = builder.llvm-builder-module.llvm-global-table;
+  element(global-table, name, default: #f)
+    | llvm-builder-define-global(builder, name, value);
+  value
+end method;
+
 define function llvm-builder-global
     (builder :: <llvm-builder>, name :: <string>)
  => (value :: <llvm-constant-value>);
@@ -459,4 +469,16 @@ define inline function ins--tail-call
      #rest options)
  => (instruction :: <llvm-instruction>);
   apply(ins--call, builder, fnptrval, args, tail-call?: #t, options)
+end function;
+
+define inline function ins--call-intrinsic
+    (builder :: <llvm-builder>, name :: <string>, args :: <sequence>,
+     #rest options)
+ => (instruction :: <llvm-instruction>);
+  let args = map(curry(llvm-builder-value, builder), args);
+  let function :: <llvm-function> = $llvm-intrinsic-makers[name](args);
+  llvm-builder-declare-global(builder, function.llvm-global-name, function);
+  apply(ins--call, builder, function, args,
+        attribute-list: function.llvm-function-attribute-list,
+        options)
 end function;
