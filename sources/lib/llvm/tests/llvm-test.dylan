@@ -37,6 +37,20 @@ define llvm constant-test $llvm-metadata-type ()
                                            kind: #"METADATA")));
 end constant-test $llvm-metadata-type;
 
+define llvm constant-test $llvm-float-type ()
+  check-no-errors("$llvm-float-type matches expected definition",
+                  llvm-constrain-type($llvm-float-type,
+                                      make(<llvm-primitive-type>,
+                                           kind: #"FLOAT")));
+end constant-test $llvm-float-type;
+
+define llvm constant-test $llvm-double-type ()
+  check-no-errors("$llvm-double-type matches expected definition",
+                  llvm-constrain-type($llvm-double-type,
+                                      make(<llvm-primitive-type>,
+                                           kind: #"DOUBLE")));
+end constant-test $llvm-double-type;
+
 define llvm constant-test $llvm-i1-type ()
   check-equal("$llvm-i1-type width",
               1, llvm-integer-type-width($llvm-i1-type));

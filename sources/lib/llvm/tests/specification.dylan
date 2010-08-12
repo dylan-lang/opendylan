@@ -19,6 +19,8 @@ define module-spec llvm ()
   constant $llvm-label-type :: <llvm-type>;
   constant $llvm-void-type :: <llvm-type>;
   constant $llvm-metadata-type :: <llvm-type>;
+  constant $llvm-float-type :: <llvm-type>;
+  constant $llvm-double-type :: <llvm-type>;
   constant $llvm-i1-type :: <llvm-type>;
   constant $llvm-i8-type :: <llvm-type>;
   constant $llvm-i8*-type :: <llvm-type>;

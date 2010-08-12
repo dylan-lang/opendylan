@@ -30,6 +30,7 @@ define module llvm
     <llvm-function-type>,
     llvm-function-type-return-type,
     llvm-function-type-parameter-types,
+    llvm-function-type-varargs?,
     <llvm-struct-type>,
     llvm-struct-type-elements,
     <llvm-union-type>,
@@ -54,6 +55,8 @@ define module llvm
     $llvm-label-type,
     $llvm-void-type,
     $llvm-metadata-type,
+    $llvm-float-type,
+    $llvm-double-type,
     $llvm-i1-type,
     $llvm-i8-type,
     $llvm-i8*-type,
@@ -83,6 +86,9 @@ define module llvm
     <llvm-gep-constant>,
     <llvm-icmp-constant>,
     <llvm-fcmp-constant>,
+
+    $llvm-false,
+    $llvm-true,
 
     <llvm-global-value>,
     llvm-global-name,
@@ -133,6 +139,8 @@ define module llvm
     llvm-function-arguments,
     llvm-function-basic-blocks,
     llvm-function-value-table,
+    llvm-function-calling-convention,
+    llvm-function-attribute-list,
 
     <llvm-argument>,
     llvm-argument-name,

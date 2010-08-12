@@ -317,6 +317,10 @@ define constant $llvm-void-type :: <llvm-type>
   = make(<llvm-primitive-type>, kind: #"VOID");
 define constant $llvm-metadata-type :: <llvm-type>
   = make(<llvm-primitive-type>, kind: #"METADATA");
+define constant $llvm-float-type :: <llvm-type>
+  = make(<llvm-primitive-type>, kind: #"FLOAT");
+define constant $llvm-double-type :: <llvm-type>
+  = make(<llvm-primitive-type>, kind: #"DOUBLE");
 
 define constant $llvm-i1-type :: <llvm-type>
   = make(<llvm-integer-type>, width: 1);

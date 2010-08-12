@@ -174,3 +174,11 @@ define method value-forward
     error("value @%s is not defined", value.llvm-symbolic-constant-name);
   end if
 end method;
+
+
+/// Well-known constants
+
+define constant $llvm-false
+  = make(<llvm-integer-constant>, type: $llvm-i1-type, integer: 0);
+define constant $llvm-true
+  = make(<llvm-integer-constant>, type: $llvm-i1-type, integer: 1);

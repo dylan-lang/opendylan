@@ -1007,8 +1007,7 @@ end function-test ins--alloca;
 
 define llvm-builder function-test ins--load ()
   let builder = make-builder-with-test-function();
-  let float-type = make(<llvm-primitive-type>, kind: #"FLOAT");
-  let ptr = ins--alloca(builder, float-type, 1);
+  let ptr = ins--alloca(builder, $llvm-float-type, 1);
   ins--load(builder, ptr);
   ins--ret(builder);
   check-equal("ins--load disassembly",
