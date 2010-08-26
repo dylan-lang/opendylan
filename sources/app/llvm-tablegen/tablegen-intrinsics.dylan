@@ -311,8 +311,10 @@ define function tablegen-gen-intrinsic () => ();
       // Target prefix
       let target-prefix = record-field-value(def, "TargetPrefix", default: "");
 
-      // FIXME: For now, only generate target-independent intrinsics
-      if (empty?(target-prefix))
+      // FIXME: For now, only generate target-independent intrinsics,
+      // and target-dependent intrinsics that we know we need
+      if (empty?(target-prefix)
+            | def-name = "int_x86_int")
         // Intrinsic name
         let llvm-name = record-field-value(def, "LLVMName", default: "");
         let name

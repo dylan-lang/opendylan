@@ -1632,4 +1632,20 @@ begin
          method (arguments) function end
        end;
 
+  $llvm-intrinsic-makers["llvm.x86.int"]
+    := begin
+         let function-type
+           = make(<llvm-function-type>,
+                  return-type: $llvm-void-type,
+                  parameter-types: vector($llvm-i8-type),
+                  varargs?: #f);
+         let function
+           = make(<llvm-function>,
+                  name: "llvm.x86.int",
+                  type: make(<llvm-pointer-type>, pointee: function-type),
+                  attribute-list: $llvm-intrinsic-default-attribute-list,
+                  linkage: #"external");
+         method (arguments) function end
+       end;
+
 end;
