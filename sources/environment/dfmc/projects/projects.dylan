@@ -877,13 +877,13 @@ end method env/project-compilation-mode-setter;
 
 define sealed method env/project-compiler-back-end
     (project :: <dfmc-project-object>)
- => (back-end :: <compiler-back-end>)
+ => (back-end :: <symbol>)
   project-compiler-back-end(project.ensure-project-proxy);
 end method env/project-compiler-back-end;
 
 define sealed method env/project-compiler-back-end-setter
-    (back-end :: <compiler-back-end>, project :: <dfmc-project-object>)
- => (back-end :: <compiler-back-end>)
+    (back-end :: <symbol>, project :: <dfmc-project-object>)
+ => (back-end :: <symbol>)
   let proxy = project.ensure-project-proxy;
   unless (proxy.project-compiler-back-end == back-end)
     proxy.project-compiler-back-end := back-end;

@@ -34,11 +34,7 @@ define method set-property
    #key save?)
  => ()
   ignore(save?);
-  session-property(#"compiler-back-end") :=
-    select (back-end)
-      #"harp", #"c" => back-end;
-      otherwise => set-error("Unrecognized back end: %s", back-end);
-    end;
+  session-property(#"compiler-back-end") := back-end;
 end method set-property;
 
 define class <compilation-mode-property> (<project-property>)

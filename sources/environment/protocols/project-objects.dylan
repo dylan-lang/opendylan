@@ -226,7 +226,6 @@ define open generic project-bind-variable
 /// Project property protocols
 
 define constant <compilation-mode> = one-of(#"loose", #"tight");
-define constant <compiler-back-end> = one-of(#"harp", #"c");
 define constant <project-target-type> = one-of(#"executable", #"dll");
 define constant <project-interface-type> = one-of(#"console", #"gui");
 
@@ -244,11 +243,11 @@ define open generic project-compilation-mode-setter
  => (mode :: <compilation-mode>);
 
 define open generic project-compiler-back-end
-	  (project :: <project-object>) => (back-end :: <compiler-back-end>);
+	  (project :: <project-object>) => (back-end :: <symbol>);
 
 define open generic project-compiler-back-end-setter
-    (back-end :: <compiler-back-end>, project :: <project-object>) 
- => (back-end :: <compiler-back-end>);
+    (back-end :: <symbol>, project :: <project-object>) 
+ => (back-end :: <symbol>);
 
 define open generic project-target-type
     (project :: <project-object>) => (target-type :: <project-target-type>);
