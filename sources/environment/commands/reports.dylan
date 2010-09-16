@@ -20,7 +20,8 @@ define constant $documentation-report
 
 define function command-reports
     () => (reports :: <sequence>)
-  concatenate(vector($documentation-report), available-reports())
+  concatenate(vector($documentation-report),
+              as(<vector>, available-reports()))
 end function command-reports;
 
 define function write-command-documentation
