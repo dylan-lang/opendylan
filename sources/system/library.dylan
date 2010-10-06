@@ -206,7 +206,8 @@ define module file-system
          <file-error>,
          <file-exists-error>,
          <file-does-not-exist-error>,
-         <invalid-file-permissions-error>;
+         <invalid-file-permissions-error>,
+         file-error-locator;
 
   // File streams
   // Multi-buffered streams
