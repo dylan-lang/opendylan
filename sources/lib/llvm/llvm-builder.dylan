@@ -378,25 +378,28 @@ define instruction-set
        make(<llvm-phi-node>, operands: operands);
 
   op call (fnptrval :: <llvm-value>, args :: <sequence>, #rest options)
-    => let fnptrtype = type-forward(fnptrval.llvm-value-type);
+    => let args = map(curry(llvm-builder-value, builder), args);
+       let fnptrtype = type-forward(fnptrval.llvm-value-type);
        let return-type
          = if (instance?(fnptrtype, <llvm-pointer-type>))
              let pointee
                = type-forward(fnptrtype.llvm-pointer-type-pointee);
              if (instance?(pointee, <llvm-function-type>))
+               for (arg-type in pointee.llvm-function-type-parameter-types,
+                    arg in args)
+                 llvm-constrain-type(llvm-value-type(arg), arg-type);
+               end for;
                type-forward(pointee.llvm-function-type-return-type)
              end if
            end if;
        if (return-type)
          apply(make, <llvm-call-instruction>,
                type: return-type,
-               operands: map(curry(llvm-builder-value, builder),
-                             concatenate(vector(fnptrval), args)),
+               operands: concatenate(vector(fnptrval), args),
                options)
        else
          apply(make, <llvm-call-instruction>,
-               operands: map(curry(llvm-builder-value, builder),
-                             concatenate(vector(fnptrval), args)),
+               operands: concatenate(vector(fnptrval), args),
                options)
        end if;
 
