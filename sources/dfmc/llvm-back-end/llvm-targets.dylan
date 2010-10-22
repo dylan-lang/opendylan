@@ -25,7 +25,7 @@ end class;
 define abstract class <llvm-x86-back-end> (<llvm-back-end>)
 end class;
 
-define method back-end-word-size 
+define method back-end-word-size
     (back-end :: <llvm-x86-back-end>)
  => (number-bytes :: <integer>)
   4
@@ -35,15 +35,15 @@ define method llvm-back-end-data-layout
     (back-end :: <llvm-x86-back-end>) => (layout :: <string>);
   "e-p:32:32:32-i1:8:8-i8:8:8-i16:16:16-i32:32:32-"
     "i64:32:64-f32:32:32-f64:32:64-v64:64:64-v128:128:128-"
-    "a0:0:64-f80:32:32-n8:16:32"  
+    "a0:0:64-f80:32:32-n8:16:32"
 end method;
 
 // x86_64
 
-define abstract class <llvm-x86_64-back-end> (<llvm-back-end>)
+define abstract class <llvm-x86_64-back-end> (<llvm-x86-back-end>)
 end class;
 
-define method back-end-word-size 
+define method back-end-word-size
     (back-end :: <llvm-x86_64-back-end>)
  => (number-bytes :: <integer>)
   8
@@ -61,7 +61,7 @@ end method;
 define abstract class <llvm-ppc-back-end> (<llvm-back-end>)
 end class;
 
-define method back-end-word-size 
+define method back-end-word-size
     (back-end :: <llvm-ppc-back-end>)
  => (number-bytes :: <integer>)
   4
@@ -75,10 +75,10 @@ end method;
 
 // PowerPC (64-bit)
 
-define abstract class <llvm-ppc64-back-end> (<llvm-back-end>)
+define abstract class <llvm-ppc64-back-end> (<llvm-ppc-back-end>)
 end class;
 
-define method back-end-word-size 
+define method back-end-word-size
     (back-end :: <llvm-ppc64-back-end>)
  => (number-bytes :: <integer>)
   8
