@@ -13,8 +13,10 @@ define library llvm-runtime-generator
   use llvm;
   use dfmc-core;
   use dfmc-management;
+  use file-source-records;
   use dfmc-back-end;
   use dfmc-llvm-back-end;
+  use dfmc-llvm-linker;
 end library;
 
 define module llvm-runtime-generator
@@ -27,6 +29,8 @@ define module llvm-runtime-generator
   use dfmc-core;
   use dfmc-imports;
   use dfmc-management;
+  use file-source-records;
   use dfmc-back-end;
   use dfmc-llvm-back-end;
+  use dfmc-llvm-linker;
 end module;

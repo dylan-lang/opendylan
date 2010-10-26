@@ -7,22 +7,27 @@ Dual-license: GNU Lesser General Public License
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define function generate-runtime
-    (architecture :: <symbol>, os :: <symbol>) => ();
-  with-booted-dylan-context
+    (lid-locator :: <file-locator>,
+     processor :: <symbol>,
+     operating-system :: <symbol>)
+ => ();
+  with-booted-dylan-context (lid-locator: lid-locator,
+                             back-end: #"llvm",
+                             processor: processor,
+                             operating-system: operating-system)
     without-dependency-tracking
-      let back-end :: <llvm-back-end>
-        = find-back-end-object(#"llvm", architecture, os);
+      let back-end :: <llvm-back-end> = current-back-end();
       with-back-end-initialization(back-end)
         let m = make(<llvm-module>,
                      name: "runtime",
                      target-triple: llvm-back-end-target-triple(back-end),
                      data-layout: llvm-back-end-data-layout(back-end));
         back-end.llvm-builder-module := m;
-        
+
         // FIXME do the real work here...
-        
+
         let output-basename
-          = format-to-string("%s-%s-runtime", architecture, os);
+          = format-to-string("%s-%s-runtime", processor, operating-system);
         let output-locator
           = make(<file-locator>, base: output-basename, extension: "bc");
         llvm-save-bitcode-file(m, output-locator);
@@ -31,21 +36,24 @@ define function generate-runtime
   end;
 end function;
 
-block ()
+begin
   let arguments = application-arguments();
-  if (arguments.size = 1)
-    let name = arguments[0];
-    // Split into processor and os portions
+  if (arguments.size = 2)
+    let lid-locator = as(<file-locator>, arguments[0]);
+    let name = arguments[1];
+
+    // Split name into processor/architecture and os portions
     let separator-position = position(name, '-');
     let processor-name = copy-sequence(name, end: separator-position);
     let os-name = copy-sequence(name, start: separator-position + 1);
-    // Generate runtime support for the requested platofmr
-    generate-runtime(as(<symbol>, processor-name), as(<symbol>, os-name));
+
+    // Generate runtime support for the requested platform
+    generate-runtime(lid-locator,
+                     as(<symbol>, processor-name),
+                     as(<symbol>, os-name));
   else
-    format(*standard-error*, "Usage: llvm-runtime-generator processor-os\n");
+    format(*standard-error*,
+           "Usage: llvm-runtime-generator dylan.lid processor-os\n");
     exit-application(1);
   end if;
-exception (e :: <simple-error>)
-  format(*standard-error*, "%s\n", e);
-  exit-application(1);
 end;
