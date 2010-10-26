@@ -49,6 +49,22 @@ define macro with-output-to-string
       stream-contents(?stream, clear-contents?: #f) }
 end macro with-output-to-string;
 
+define macro with-input-from-string
+  { with-input-from-string (?stream:name = ?string:expression, #rest ?options:*)
+      ?body:body
+    end }
+ => { let ?stream :: <string-stream>
+        = make(<string-stream>, contents: ?string, direction: #"input", ?options);
+      ?body;
+    }
+  { with-input-from-string (?stream:name :: ?class:name = ?string:expression, #rest ?options:*)
+      ?body:body
+    end }
+ => { let ?stream :: ?class = make(?class, contents: ?string, direction: #"input", ?options);
+      ?body;
+    }
+end macro with-input-from-string;
+
 
 /// Creating sequence streams
 

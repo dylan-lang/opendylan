@@ -6,22 +6,6 @@ License:      Functional Objects Library Public License Version 1.0
 Dual-license: GNU Lesser General Public License
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define macro with-input-from-string
-  { with-input-from-string (?stream:name = ?string:expression, #rest ?options:*)
-      ?body:body
-    end }
- => { let ?stream :: <string-stream>
-        = make(<string-stream>, contents: ?string, direction: #"input", ?options);
-      ?body;
-    }
-  { with-input-from-string (?stream:name :: ?class:name = ?string:expression, #rest ?options:*)
-      ?body:body
-    end }
- => { let ?stream :: ?class = make(?class, contents: ?string, direction: #"output", ?options);
-      ?body;
-    }
-end macro with-input-from-string;
-
 define class <client> (<object>)
   constant slot client-name :: <string>, required-init-keyword: name:;
   constant slot client-function :: <function>, required-init-keyword: function:;

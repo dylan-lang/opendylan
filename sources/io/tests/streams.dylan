@@ -550,6 +550,20 @@ define streams macro-test with-output-to-string-test ()
 	      test-string)
 end;
 
+define streams macro-test with-input-from-string-test ()
+  let test-string = "Hello world";
+  check-equal("with-input-from-string test, no class spec",
+              test-string,
+	      with-input-from-string (stream = test-string)
+		read-to-end(stream)
+	      end);
+  check-equal("with-input-from-string test, with class spec",
+              test-string,
+	      with-input-from-string (stream :: <string-stream> = test-string)
+		read-to-end(stream)
+	      end);
+end;
+
 
 /// Miscellaneous stream tests
 

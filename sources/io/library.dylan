@@ -104,6 +104,7 @@ define module streams
 
   // Sequence streams
   create \with-output-to-string,
+         \with-input-from-string,
 	 <sequence-stream>,
 	 <string-stream>,
 	 <byte-string-stream>,

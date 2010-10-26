@@ -144,6 +144,7 @@ define module-spec streams ()
   macro-test with-input-buffer-test;
   macro-test with-output-buffer-test;
   macro-test with-output-to-string-test;
+  macro-test with-input-from-string-test;
 end module-spec streams;
 
 
