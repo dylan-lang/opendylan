@@ -38,6 +38,8 @@ define constant $ENOENT  =  2;
 define constant $EINTR   =  4;
 define constant $EACCESS = 13;
 define constant $EINVAL  = 22;
+define constant $ETXTBSY = 26;
+define constant $EROFS   = 30;
 
 
 /// Used instead of define C-struct to avoid relying on the C-FFI library ...

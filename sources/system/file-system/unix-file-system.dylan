@@ -366,8 +366,9 @@ define function accessible?
 	  => (failed? :: <raw-c-signed-int>)
 	   (primitive-string-as-raw(as(<byte-string>, file)), abstract-integer-as-raw(mode))
 	 end))
-    unless (unix-errno() = $EACCESS)
-      unix-file-error("determine access to", "%s", file)
+    let errno = unix-errno();
+    unless (errno = $EACCESS | errno = $EROFS | errno = $ETXTBSY)
+      unix-file-error("determine access to", "%s (errno = %=)", file, errno)
     end;
     #f
   else
