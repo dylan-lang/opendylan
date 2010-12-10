@@ -378,7 +378,9 @@ define method ensure-directories-exist (file :: <file-system-directory-locator>)
 end method ensure-directories-exist;
 
 define method ensure-directories-exist (file :: <file-system-file-locator>) => (created? :: <boolean>)
-  ensure-directories-exist(locator-directory(file))
+  if (locator-directory(file))
+    ensure-directories-exist(locator-directory(file))
+  end if
 end method ensure-directories-exist;
 
 define method ensure-directories-exist (file :: <string>) => (created? :: <boolean>)
