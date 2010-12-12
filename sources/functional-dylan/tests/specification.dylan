@@ -49,7 +49,8 @@ define module-spec functional-extensions ()
   function position
       (<sequence>, <object>, #"key", #"test", #"count") => (<integer>);
   function split
-      (<string>, <character>, #"key", #"start", #"end", #"trim?") => (<sequence>);
+      (<string>, <character>, #"key", #"start", #"end", #"count", #"remove-if-empty")
+   => (<sequence>);
   open generic-function remove-all-keys! (<mutable-collection>) => ();
   function string-to-integer
       (<string>, #"key", #"base", #"start", #"end")

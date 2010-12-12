@@ -63,7 +63,7 @@ end class-test <color-not-found>;
 
 define duim-dcs class-test <color> ()
   //---*** Fill this in...
-end constant-test <color>;
+end class-test <color>;
 
 define duim-dcs constant-test <contrasting-color> ()
   //---*** Fill this in...

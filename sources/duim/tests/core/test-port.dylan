@@ -784,7 +784,7 @@ define class <test-progress-bar>
     (<test-gadget-mixin>,
      <progress-bar>,
      <leaf-pane>)
-end class <test-tree-control>;
+end class <test-progress-bar>;
 
 define method class-for-make-pane 
     (framem :: <test-frame-manager>, class == <progress-bar>, #key)
@@ -797,7 +797,7 @@ define class <test-status-bar>
     (<test-gadget-mixin>,
      <status-bar>,
      <leaf-pane>)
-end class <test-tree-control>;
+end class <test-status-bar>;
 
 define method class-for-make-pane 
     (framem :: <test-frame-manager>, class == <status-bar>, #key)

@@ -252,12 +252,6 @@ define functional-extensions function-test split ()
   check-equal("split with spaces everywhere",
 	      split(" major , minor , build ", ','),
 	      #[" major ", " minor ", " build "]);
-  check-equal("no trim split with spaces",
-	      split("major, minor, build", ',', trim?: #f),
-	      #["major", " minor", " build"]);
-  check-equal("no trim split with spaces everywhere",
-	      split(" major , minor , build ", ',', trim?: #f),
-	      #[" major ", " minor ", " build "]);
   check-equal("split with start",
 	      split("http://www.dylan.com/first/second/third", '/', start: 21),
 	      #["first", "second", "third"]);
