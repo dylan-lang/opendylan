@@ -22,11 +22,8 @@ define variable *help-file-string*
   = as(<string>, *help-file*);
 
 // define constant $beta-release-text
-//   = #["This is a beta release of Functional Developer. Please submit bugs",
-//       "to support@functionalobjects.com.",
-//       "",
-//       "Note that distribution of software created with any beta version",
-//       "of Functional Developer is prohibited."];
+//   = #["This is a beta release of Open Dylan. Please submit bugs",
+//       "to support@functionalobjects.com."];
 
 define constant $license-font
   = make(<text-style>, 

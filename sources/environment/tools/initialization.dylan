@@ -20,7 +20,7 @@ define constant $examples-description
 /*---*** Not used currently
 define constant $tutorial-description
   = #["This option starts a tutorial that describes",
-      "Functional Developer and the Dylan language."];
+      "Open Dylan and the Dylan language."];
 */
 
 
@@ -224,7 +224,7 @@ define frame <initial-dialog> (<dialog-frame>)
   pane %dialog-buttons (frame)
     vertically (spacing: 5, equalize-widths?: #t)
       /*---*** 1997.02.09 Temporarily omit the tutorial option until implemented.
-      grouping ("Start the Functional Developer tutorial")
+      grouping ("Start the Open Dylan tutorial")
         make(<table-layout>,
              columns: 2,
              y-alignment: #"center",

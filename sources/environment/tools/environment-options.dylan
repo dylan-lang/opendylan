@@ -167,7 +167,7 @@ define pane <environment-general-options-page> ()
       grouping ("Startup", max-width: $fill)
         vertically (spacing: 8)
           make(<label>,
-               label: "When Functional Developer starts:");
+               label: "When Open Dylan starts:");
           pane.%start-action-pane;
         end vertically
       end grouping;

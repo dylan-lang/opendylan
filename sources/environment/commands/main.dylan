@@ -8,8 +8,8 @@ Dual-license: GNU Lesser General Public License
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define command-group environment
-    (summary: "Functional Developer commands",
-     documentation: "The set of commands provided by Functional Developer.")
+    (summary: "Open Dylan commands",
+     documentation: "The set of commands provided by Open Dylan.")
   group basic;
   group property;
   group system;

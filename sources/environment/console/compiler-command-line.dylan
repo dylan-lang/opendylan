@@ -15,8 +15,8 @@ define class <main-command> (<basic-main-command>)
 end class <main-command>;
 
 define command-line main => <main-command>
-    (summary:       "command-line version of Functional Developer",
-     documentation: "Command-line version of Functional Developer.")
+    (summary:       "command-line version of Open Dylan",
+     documentation: "Command-line version of Open Dylan.")
   optional project :: <file-locator>  = "the project to be built";
 
   keyword build-script :: <file-locator> = "the (Jam) build script to use";
@@ -47,8 +47,8 @@ define class <internal-main-command> (<basic-main-command>)
 end class <internal-main-command>;
 
 define command-line internal-main => <internal-main-command>
-    (summary:       "command-line version of Functional Developer",
-     documentation: "Command-line version of Functional Developer.")
+    (summary:       "command-line version of Open Dylan",
+     documentation: "Command-line version of Open Dylan.")
   optional project :: <file-locator> = "the project to be built";
 
   keyword build-script :: <file-locator> = "the (Jam) build script to use";

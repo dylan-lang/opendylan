@@ -241,7 +241,7 @@ define lazy-table $file-type-filters
 	       make-filter(project-file-extension()),
 	       make-filter(lid-file-extension())),
       #"project"       =>
-        vector("Functional Developer Projects",
+        vector("Open Dylan Projects",
                make-filter(project-file-extension())),
       #"lid"           => 
         vector("Dylan Library Interchange Descriptions",
@@ -254,7 +254,7 @@ define lazy-table $file-type-filters
         vector("Dylan Source Files",
 	       make-filter(dylan-file-extension()),
 	       "*.dyl"),
-      #"tool-spec"     => #["Functional Developer Tool Specifications", "*.spec"],
+      #"tool-spec"     => #["Open Dylan Tool Specifications", "*.spec"],
       #"executable"    => #["Programs",        "*.exe"],
       #"resource"      => #["Resource Files",  "*.rc"],
       #"build-script"  => #["Jam build scripts", "*.jam"],

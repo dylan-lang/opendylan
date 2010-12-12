@@ -856,7 +856,7 @@ define method write-definition-header
 	   "<refman>\n"
 	   "\n"
 	   "<head>\n"
-	   "<title>Functional Developer %s Reference Manual</title>\n"
+	   "<title>Open Dylan %s Reference Manual</title>\n"
 	   "<organization>%s</organization>\n"
 	   "<copyright>%s</copyright>\n"
 	   "<version>%s</version>\n"
