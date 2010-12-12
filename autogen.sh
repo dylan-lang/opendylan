@@ -16,7 +16,7 @@ fi
 
 (autoconf --version && autoheader --version) < /dev/null > /dev/null 2>&1 || {
     echo
-    echo "You must have autoconf installed to compile Functional Developer."
+    echo "You must have autoconf installed to compile Open Dylan."
     echo "Download the appropriate package for your distribution,"
     echo "or get the source tarball at ftp://ftp.gnu.org/pub/gnu/autoconf"
     DIE=true
@@ -24,7 +24,7 @@ fi
 
 (aclocal --version) < /dev/null > /dev/null 2>&1 || {
     echo
-    echo "You must have automake installed to compile Functional Developer."
+    echo "You must have automake installed to compile Open Dylan."
     echo "Download the appropriate package for your distribution,"
     echo "or get the source tarball at ftp://ftp.gnu.org/pub/gnu/automake"
     DIE=true
@@ -32,7 +32,7 @@ fi
 
 ($LIBTOOLIZE --version) < /dev/null > /dev/null 2>&1 || {
     echo
-    echo "You must have libtool installed to compile Functional Developer."
+    echo "You must have libtool installed to compile Open Dylan."
     echo "Download the appropriate package for your distribution,"
     echo "or get the source tarball at ftp://ftp.gnu.org/pub/gnu/libtool"
     DIE=true
