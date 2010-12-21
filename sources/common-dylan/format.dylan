@@ -288,11 +288,11 @@ define function string-to-integer
   let actual-start :: <integer> = start;
   let string-length :: <integer> = size(string);
   user-assert(start == 0 | (start > 0 & start < string-length),
-	      "Start: %d is out of range [0, %d] for string %=",
+	      "start: %d is out of range [0, %d] for string %=",
 	      start, string-length, string);
   if (stop)
     user-assert(stop >= start & stop <= string-length,
-		"Stop: %d is out of range [0, %d] for string %=",
+		"end: %d is out of range [0, %d] for string %=",
 		stop, string-length, string);
   else
     stop := string-length
