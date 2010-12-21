@@ -208,7 +208,7 @@ define module sockets
        local-host, local-port, socket-descriptor, close-socket, socket-open?,
        <server-socket>,
          server-class-for-protocol, with-server-socket, start-server,
-         accept, client-class-for-server,
+         accept, client-class-for-server, type-for-socket,
          <TCP-server-socket>,
          <UDP-server-socket>,
       <socket>, // client socket
@@ -254,7 +254,7 @@ define module sockets
   create
     socket-descriptor-setter, <platform-socket>, buffer-offset,
     accessor-close-socket, <unix-socket-accessor>, current-socket-manager,
-    socket-manager-lock, accessor-accept, default-element-type, type-for-socket;
+    socket-manager-lock, accessor-accept, default-element-type;
 end module sockets;
 
 define module sockets-internals
