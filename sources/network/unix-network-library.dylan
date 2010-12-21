@@ -217,12 +217,10 @@ define module sockets
           <TCP-socket>,
           <UDP-socket>;
   create
-    \interruptible-system-call;
-  create
     \with-socket-thread,
     invoke-with-socket-thread,
     register-socket-thread,
-    unregister-socket-thread;				
+    unregister-socket-thread;
   create
     <internet-address>,
       <ipv4-address>,
@@ -246,12 +244,17 @@ define module sockets
         <service-not-found>,
       <socket-accessor-error>,
         explanation, calling-function;
-
-  create socket-descriptor-setter, <platform-socket>, buffer-offset,
+  create
+    ssl-socket-class, ssl-server-socket-class;
+  // Nothing below here is in the win32 version of the sockets module.
+  // Why are these in the "sockets" module if they're (all?) unix-specific?
+  // --cgay Dec 2010
+  create
+    \interruptible-system-call;
+  create
+    socket-descriptor-setter, <platform-socket>, buffer-offset,
     accessor-close-socket, <unix-socket-accessor>, current-socket-manager,
     socket-manager-lock, accessor-accept, default-element-type, type-for-socket;
-
-  create ssl-socket-class, ssl-server-socket-class;
 end module sockets;
 
 define module sockets-internals

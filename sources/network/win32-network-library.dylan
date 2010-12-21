@@ -480,7 +480,7 @@ define module sockets
        local-host, local-port, socket-descriptor, close-socket, socket-open?,
        <server-socket>,
          server-class-for-protocol, with-server-socket, start-server,
-         accept, client-class-for-server,
+         accept, client-class-for-server, type-for-socket,
          <TCP-server-socket>,
          <UDP-server-socket>,
       <socket>, // client socket
@@ -492,7 +492,7 @@ define module sockets
     \with-socket-thread,
     invoke-with-socket-thread,
     register-socket-thread,
-    unregister-socket-thread;				      
+    unregister-socket-thread;
   create
     <internet-address>,
       <ipv4-address>,
@@ -516,6 +516,7 @@ define module sockets
         <service-not-found>,
       <socket-accessor-error>,
         explanation, calling-function;
+  create ssl-socket-class, ssl-server-socket-class;
 end module sockets;
 
 define module sockets-internals
