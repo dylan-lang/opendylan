@@ -31,9 +31,18 @@ define abstract class <llvm-back-end> (<back-end>, <llvm-builder>)
   constant slot %reference-table :: <string-table>
     = make(<string-table>, weak: #"value");
 
+  // Computed <llvm-function> objects for runtime and C primitives,
+  // keyed by <llvm-primitive-descriptor> object reference
+  constant slot %primitive-function-table :: <object-table>
+    = make(<object-table>);
+
   // Precomputed byte character constants
   constant slot %byte-character-constants :: <simple-object-vector>
     = make(<simple-object-vector>, size: 256);
+
+  // Value import function
+  inherited slot llvm-builder-value-function,
+    init-value: llvm-back-end-value-function;
 end;
 
 define generic llvm-back-end-target-triple
@@ -63,4 +72,45 @@ define method llvm-retract-cached (back-end :: <llvm-back-end>) => ()
   remove-all-keys!(back-end.%direct-object-table);
   remove-all-keys!(back-end.%raw-object-table);
   remove-all-keys!(back-end.%reference-table);
+end method;
+
+
+/// Value import support
+
+define method llvm-back-end-value-function
+    (builder :: <llvm-back-end>, value :: <llvm-value>)
+ => (result :: <llvm-value>);
+  value
+end method;
+
+// Automatically declare referenced global values in the current module
+define method llvm-back-end-value-function
+    (builder :: <llvm-back-end>, value :: <llvm-global-value>)
+ => (result :: <llvm-value>);
+  llvm-builder-declare-global(builder, value.llvm-global-name, value)
+end method;
+
+define method llvm-back-end-value-function
+    (back-end :: <llvm-back-end>, value :: <abstract-integer>)
+ => (result :: <llvm-value>);
+  element(back-end.%raw-object-table, value, default: #f)
+    | begin
+        let iWord-type = back-end.%type-table["iWord"];
+        let constant
+          = make(<llvm-integer-constant>, type: iWord-type, integer: value);
+        element(back-end.%raw-object-table, value) := constant;
+        constant
+      end
+end method;
+
+define method llvm-back-end-value-function
+    (back-end :: <llvm-back-end>, value :: <single-float>)
+ => (result :: <llvm-value>);
+  make(<llvm-float-constant>, type: $llvm-float-type, float: value)
+end method;
+
+define method llvm-back-end-value-function
+    (back-end :: <llvm-back-end>, value :: <double-float>)
+ => (result :: <llvm-value>);
+  make(<llvm-float-constant>, type: $llvm-double-type, float: value)
 end method;

@@ -27,6 +27,7 @@ define constant $dylan-tag-bits = 2;
 define constant $dylan-tag-pointer   = 0;
 define constant $dylan-tag-integer   = 1;
 define constant $dylan-tag-character = 2;
+define constant $dylan-tag-unichar   = 3; // FIXME
 
 // Generic
 

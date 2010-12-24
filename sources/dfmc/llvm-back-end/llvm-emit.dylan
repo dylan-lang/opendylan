@@ -17,8 +17,8 @@ define method emit-all (back-end :: <llvm-back-end>,
                  name: compilation-record-name(cr),
                  target-triple: llvm-back-end-target-triple(back-end),
                  data-layout: llvm-back-end-data-layout(back-end));
-    register-types(back-end, m);
-
+    llvm-register-types(back-end, m);
+    
     // Associate it with this compilation record
     block ()
       cr.compilation-record-back-end-data

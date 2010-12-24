@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// DEFINING
 
-define class <primitive-descriptor> (<object>)
+define compiler-open class <primitive-descriptor> (<object>)
   constant slot primitive-emitter :: <function>, 
     required-init-keyword: emitter:;
 end class;

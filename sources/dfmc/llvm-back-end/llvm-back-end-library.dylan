@@ -42,12 +42,27 @@ define module dfmc-llvm-back-end
     llvm-retract-cached,
 
     $llvm-object-pointer-type,
+    llvm-register-types,
     llvm-pointer-to,
     llvm-object-type,
     llvm-class-type,
     llvm-reference-type,
     llvm-lambda-type,
     llvm-entry-point-type,
+
+    <llvm-primitive-descriptor>,
+    primitive-attributes,
+    primitive-generator,
+    $llvm-primitive-descriptors,
+    llvm-primitive-function,
+
+    <llvm-runtime-variable-descriptor>,
+    runtime-variable-type-name,
+    runtime-variable-init-function,
+    runtime-variable-section,
+    runtime-variable-global,
+    runtime-variable-global-setter,
+    $llvm-runtime-variable-descriptors,
 
     llvm-raw-byte-character;
 end module;
