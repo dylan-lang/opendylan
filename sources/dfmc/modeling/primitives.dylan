@@ -475,7 +475,7 @@ end;
 define side-effect-free stateless indefinite-extent &primitive primitive-string-as-raw
     (x :: <byte-string>) => (r :: <raw-byte-string>);
 define side-effect-free stateless indefinite-extent &primitive primitive-raw-as-string
-    (n :: <raw-integer>, r :: <raw-byte-string>) => (x :: <byte-string>);
+    (r :: <raw-byte-string>) => (x :: <byte-string>);
 
 /// INSTANCE
 
