@@ -105,14 +105,20 @@ define function make-llvm-test-function
     end method
   else
     method ()
-      let reference :: <string>
+      let reference-lines
         = with-application-output (stream = "llvm-as | llvm-dis",
                                    under-shell?: #t,
                                    input: merged-file-locator,
                                    error: #"null")
-            read-to-end(stream)
+            let lines = make(<stretchy-vector>);
+            for (line = read-line(stream, on-end-of-stream: #f)
+                   then read-line(stream, on-end-of-stream: #f),
+                 while: line)
+              add!(lines, line);
+            end for;
+            lines
           end;
-      
+
       let module
         = make(<llvm-module>, name: as(<string>, merged-file-locator));
 
@@ -136,15 +142,59 @@ define function make-llvm-test-function
       end if;
 
       if (saved?)
+        let result-lines
+          = with-application-output (stream = "llvm-dis",
+                                     input: bc-pathname,
+                                     error: #"null")
+              let lines = make(<stretchy-vector>);
+              for (line = read-line(stream, on-end-of-stream: #f)
+                     then read-line(stream, on-end-of-stream: #f),
+                   while: line)
+                add!(lines, line);
+              end for;
+              lines
+            end;
+        let script = sequence-diff(reference-lines, result-lines);
         check-equal(format-to-string("Disassembly of .bc for %s"
                                        " matches reference", file-locator),
-                    reference,
-                    with-application-output (stream = "llvm-dis",
-                                             input: bc-pathname,
-                                             error: #"null")
-                      read-to-end(stream)
-                    end);
+                    "", script-string(script, reference-lines, result-lines));
       end if;
     end method
   end if
 end function;
+
+define function script-string
+    (script :: <sequence>,
+     reference-lines :: <vector>,
+     result-lines :: <vector>)
+ => (result :: <string>);
+  with-output-to-string (s)
+    for (entry in script)
+      write-script-entry(s, entry, reference-lines, result-lines)
+    end for
+  end
+end function;
+
+define method write-script-entry
+    (s :: <stream>,
+     entry :: <delete-entry>,
+     reference-lines :: <vector>,
+     result-lines :: <vector>)
+ => ();
+  format(s, "%dd%d\n", entry.dest-index + 1, entry.element-count);
+  for (count from 0 below entry.element-count, index from entry.dest-index)
+    format(s, "-%s\n", reference-lines[index]);
+  end for;
+end method;
+
+define method write-script-entry
+    (s :: <stream>,
+     entry :: <insert-entry>,
+     reference-lines :: <vector>,
+     result-lines :: <vector>)
+ => ();
+  format(s, "%da%d\n", entry.dest-index + 1, entry.element-count);
+  for (count from 0 below entry.element-count, index from entry.source-index)
+    format(s, "+%s\n", result-lines[index]);
+  end for;
+end method;

@@ -14,6 +14,7 @@ define library llvm-test-suite
   use system;
   use llvm;
   use llvm-asm-parser;
+  use collection-extensions;
 
   export llvm-test-suite;
 end library;
@@ -29,6 +30,7 @@ define module llvm-test-suite
   use llvm;
   use llvm-builder;
   use llvm-asm-parser;
+  use sequence-diff;
 
   use format;                   // FIXME
   use standard-io;              // FIXME
