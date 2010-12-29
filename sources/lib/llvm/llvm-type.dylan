@@ -36,7 +36,8 @@ end method;
 
 define constant <llvm-primitive-type-kind>
   = one-of(#"VOID", #"FLOAT", #"DOUBLE", #"LABEL",
-           #"X86_FP80", #"FP128", #"PPC_FP128", #"METADATA");
+           #"X86_FP80", #"FP128", #"PPC_FP128", #"METADATA",
+           #"X86_MMX");
 
 define class <llvm-primitive-type> (<llvm-type>)
   constant slot llvm-primitive-type-kind :: <llvm-primitive-type-kind>,

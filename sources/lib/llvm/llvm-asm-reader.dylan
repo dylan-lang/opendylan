@@ -19,6 +19,8 @@ define table $llvm-keywords :: <string-table>
 
      "private" => $%PRIVATE-token,
      "linker_private" => $%LINKER_PRIVATE-token,
+     "linker_private_weak" => $%LINKER_PRIVATE_WEAK-token,
+     "linker_private_weak_def_auto" => $%LINKER_PRIVATE_WEAK_DEF_AUTO-token,
      "internal" => $%INTERNAL-token,
      "available_externally" => $%AVAILABLE_EXTERNALLY-token,
      "linkonce" => $%LINKONCE-token,
@@ -69,6 +71,8 @@ define table $llvm-keywords :: <string-table>
      "arm_aapcs_vfpcc" => $%ARM_aapcs_vfpcc-token,
      "msp430_intrcc" => $%MSP430_INTRCC-token,
      "x86_thiscallcc" => $%X86_THISCALLCC-token,
+     "ptx_kernel" => $%PTX_KERNELCC-token,
+     "ptx_device" => $%PTX_DEVICECC-token,
      
      "cc" => $%CC-token,
      "c" => $%C-token,
@@ -98,7 +102,6 @@ define table $llvm-keywords :: <string-table>
      
      "type" => $%TYPE-token,
      "opaque" => $%OPAQUE-token,
-     "union" => $%UNION-token,
      
      "eq" => $%EQ-token,
      "ne" => $%NE-token,
@@ -132,6 +135,7 @@ define table $llvm-keywords :: <string-table>
      "ppc_fp128" => $%PPC_FP128-token,
      "label" => $%LABEL-token,
      "metadata" => $%METADATA-token,
+     "x86_mmx" => $%X86_MMX-token,
 
      "add" => $%ADD-token,
      "fadd" => $%FADD-token,
@@ -456,7 +460,7 @@ define function llvm-asm-parse
       elseif (ch == '.')
         add!(characters, read-element(stream));
         lexer-fractional(characters);
-      elseif (llvm-identifier-character?(ch))
+      elseif (llvm-identifier-character?(ch) & ch ~== 'x')
         add!(characters, read-element(stream));
         lexer-identifier(characters);
       elseif (ch == ':')

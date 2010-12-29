@@ -134,6 +134,8 @@ define module llvm
     $llvm-calling-convention-arm-vfp,
     $llvm-calling-convention-msp430-intr,
     $llvm-calling-convention-x86-thiscall,
+    $llvm-calling-convention-ptx-kernel,
+    $llvm-calling-convention-ptx-device,
     
     <llvm-function>,
     llvm-function-arguments,

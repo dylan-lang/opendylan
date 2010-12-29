@@ -367,6 +367,10 @@ opt-linkage:
     => #"private";;
   %LINKER_PRIVATE
     => #"linker-private";;
+  %LINKER_PRIVATE_WEAK
+    => #"linker-private-weak";;
+  %LINKER_PRIVATE_WEAK_DEF_AUTO
+    => #"linker-private-weak-def-auto";;
   %INTERNAL
     => #"internal";;
   %WEAK
@@ -537,6 +541,10 @@ opt-calling-conv:
     => $llvm-calling-convention-msp430-intr;;
   %X86_THISCALLCC
     => $llvm-calling-convention-x86-thiscall;;
+  %PTX_KERNELCC
+    => $llvm-calling-convention-ptx-kernel;;
+  %PTX_DEVICECC
+    => $llvm-calling-convention-ptx-device;;
   %CC %EUINT64VAL
     => arg$2;;
 
@@ -620,8 +628,6 @@ nonfunction-types:
     => make(<llvm-struct-type>, packed?: #t, elements: reverse!(arg$3));;
   %LANGLE %LBRACE %RBRACE %RANGLE
     => make(<llvm-struct-type>, packed?: #t, elements: #[]);;
-  %UNION %LBRACE type-list-i %RBRACE
-    => make(<llvm-union-type>, elements: reverse!(arg$3));;
 
 prim-type:
   %FLOAT
@@ -638,6 +644,8 @@ prim-type:
     => #"LABEL";;
   %METADATA
     => #"METADATA";;
+  %X86_MMX
+    => #"X86_MMX";;
 
 opt-addr-space:
   /* empty */

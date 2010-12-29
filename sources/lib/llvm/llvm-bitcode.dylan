@@ -60,7 +60,7 @@ define bitcode-block $TYPE_BLOCK = 10
   record FP128    = 14;   // LONG DOUBLE (112 bit mantissa)
   record PPC_FP128 = 15;  // PPC LONG DOUBLE (2 doubles)
   record METADATA = 16;   // METADATA
-  record UNION    = 17;   // UNION: [eltty x N]
+  record X86_MMX  = 17;   // X86 MMX
 end bitcode-block;
 
 define bitcode-block $CONSTANTS_BLOCK = 11
@@ -121,7 +121,12 @@ define bitcode-block $FUNCTION_BLOCK = 12
   record INST_CMP2        = 28; // CMP2:       [opty, opval, opval, pred]
   record INST_VSELECT     = 29; // VSELECT:    [ty,opval,opval,predty,pred]
   record INST_INBOUNDS_GEP = 30; // INBOUNDS_GEP: [n x operands]
-  record INST_INDIRECTBR  = 31;  // INDIRECTBR: [opty, op0, op1, ...]
+  record INST_INDIRECTBR  = 31; // INDIRECTBR: [opty, op0, op1, ...]
+
+  record DEBUG_LOC        = 32; // DEBUG_LOC with potentially invalid metadata
+  record DEBUG_LOC_AGAIN  = 33; // DEBUG_LOC_AGAIN
+  record INST_CALL2       = 34; // CALL2:      [attr, fnty, fnid, args...]
+  record DEBUG_LOC2       = 35; // DEBUG_LOC2: [Line,Col,ScopeVal, IAVal]
 end bitcode-block;
 
 define bitcode-block $TYPE_SYMTAB_BLOCK = 13
@@ -135,11 +140,16 @@ end bitcode-block;
 
 define bitcode-block $METADATA_BLOCK = 15
   record STRING        = 1;   // MDSTRING:      [values]
-  record NODE          = 2;   // MDNODE:        [n x (type num, value num)]
-  record NAME          = 3;   // STRING:        [values]
-  record NAMED_NODE    = 4;   // NAMEDMDNODE:   [n x mdnodes]
-  record KIND          = 5;   // [n x [id, name]]
-  record ATTACHMENT    = 6;   // [m x [value, [n x [id, mdnode]]]
+  record NODE          = 2;   // NODE with potentially invalid metadata
+  record FN_NODE       = 3;   // FN_NODE with potentially invalid metadata
+  record NAME          = 4;   // STRING:        [values]
+  record NAMED_NODE    = 5;   // NAMED_NODE with potentially invalid metadata
+  record KIND          = 6;   // [n x [id, name]]
+  record ATTACHMENT    = 7;   // ATTACHMENT with potentially invalid metadata
+  record NODE2         = 8;   // NODE2:         [n x (type num, value num)]
+  record FN_NODE2      = 9;   // FN_NODE2:      [n x (type num, value num)]
+  record NAMED_NODE2   = 10;  // NAMED_NODE2:   [n x mdnodes]
+  record ATTACHMENT2   = 11;  // [m x [value, [n x [id, mdnode]]]
 end bitcode-block;
 
 define bitcode-block $METADATA_ATTACHMENT = 16

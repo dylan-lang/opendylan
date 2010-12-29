@@ -7,10 +7,11 @@ Dual-license: GNU Lesser General Public License
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define constant <llvm-linkage-kind>
-  = one-of(#"private", #"linker-private", #"internal", #"weak",
-           #"weak-odr", #"linkonce", #"linkonce-odr", #"available-externally",
-           #"appending", #"dllexport", #"common", #"dllimport", #"extern-weak",
-           #"external");
+
+  = one-of(#"private", #"linker-private", #"linker-private-weak",
+           #"linker-private-weak-def-auto", #"internal", #"weak", #"weak-odr",
+           #"linkonce", #"linkonce-odr", #"available-externally", #"appending",
+           #"dllexport", #"common", #"dllimport", #"extern-weak", #"external");
 
 define constant <llvm-visibility-kind>
   = one-of(#"default", #"hidden", #"protected");

@@ -17,6 +17,8 @@ define constant $llvm-calling-convention-arm-aapcs    = 67; // ARM_AAPCS
 define constant $llvm-calling-convention-arm-vfp      = 68; // ARM_VFP
 define constant $llvm-calling-convention-msp430-intr  = 69; // MSP430_INTR
 define constant $llvm-calling-convention-x86-thiscall = 70; // X86_StdCall
+define constant $llvm-calling-convention-ptx-kernel   = 71; // PTX_Kernel
+define constant $llvm-calling-convention-ptx-device   = 72; // PTX_Device
 
 define class <llvm-function> (<llvm-global-value>)
   constant slot llvm-function-calling-convention :: <integer>,
