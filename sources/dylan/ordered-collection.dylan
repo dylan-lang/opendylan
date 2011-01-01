@@ -74,8 +74,8 @@ define sealed inline method forward-iteration-protocol
   local method elt (tab :: <ordered-key-collection>, index :: <integer>)
 	  element(tab.ordered-mapping, tab.key-sequence[index])
 	end;
-  local method elt-setter (tab :: <ordered-key-collection>, index :: <integer>)
-	  element(tab.ordered-mapping, tab.key-sequence[index])
+  local method elt-setter (value, tab :: <ordered-key-collection>, index :: <integer>)
+	  tab.ordered-mapping[tab.key-sequence[index]] := value
 	end;
   local method copy (tab, index :: <integer>)
 	  index
