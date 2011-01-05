@@ -19,7 +19,6 @@ HARP - Harlequin Abstract RISC Processor. An artificial assembly language.
        language. The other back-ends are Java byte-code and C.
 RTG  - Runtime Generator
 DOOD - File-based object-oriented database.
-DOSS - Dylan object serialization format. Outdated, no longer in use.
 
 
 ========================
@@ -257,7 +256,6 @@ sources
     macro-expander
     native-harp-cg
     pentium-harp-cg
-    powerpc-harp-cg
     shell
     testing
   environment
