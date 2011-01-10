@@ -3,8 +3,7 @@ Author:       Gary Palter
 Synopsis:     Common extensions to Dylan
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
-License:      Functional Objects Library Public License Version 1.0
-Dual-license: GNU Lesser General Public License
+License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define function format-out (format-string :: <string>, #rest format-arguments) => ()

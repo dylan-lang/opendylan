@@ -11,5 +11,4 @@ Copyright: N Feinberg/S E Keene/R Mathews/P Tucker Withington,
 target-type: dll
 files:   say-library
          say 
-Other-files: Open-Source-License.txt
 

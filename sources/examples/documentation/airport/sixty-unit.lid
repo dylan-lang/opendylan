@@ -10,5 +10,4 @@ Copyright: N Feinberg/S E Keene/R Mathews/P Tucker Withington,
 	publisher.
 files:   sixty-unit-library
          sixty-unit 
-Other-files: Open-Source-License.txt
 

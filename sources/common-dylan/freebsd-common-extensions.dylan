@@ -3,8 +3,7 @@ Author: Hannes Mehnert
 Synopsis:     Common extensions to Dylan
 Copyright:    Original Code is Copyright (c) 2008 Dylan Hackers
               All rights reserved.
-License:      Functional Objects Library Public License Version 1.0
-Dual-license: GNU Lesser General Public License
+License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define inline-only function get-application-commandline () => (res :: <string>)

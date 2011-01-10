@@ -13,5 +13,4 @@ files:    airport-library
           airport-classes
           vehicle-dynamics
           schedule 
-Other-files: Open-Source-License.txt
 

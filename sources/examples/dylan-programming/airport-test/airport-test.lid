@@ -11,5 +11,4 @@ Copyright: N Feinberg/S E Keene/R Mathews/P Tucker Withington,
 target-type: executable
 files:    airport-test-library
           airport-test 
-Other-files: Open-Source-License.txt
 

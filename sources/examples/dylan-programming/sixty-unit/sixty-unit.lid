@@ -11,5 +11,4 @@ Copyright: N Feinberg/S E Keene/R Mathews/P Tucker Withington,
 target-type: dll
 files:   sixty-unit-library
          sixty-unit 
-Other-files: Open-Source-License.txt
 

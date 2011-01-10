@@ -3,35 +3,14 @@ Synopsis:  Functional Developer release information
 Author:    Andy Armstrong
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
-License:      Functional Objects Library Public License Version 1.0
-Dual-license: GNU Lesser General Public License
+License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Release constants
-
 define constant $release-full-copyright =
-"The software programs and libraries that make up Open Dylan\n"
-"are subject to the Functional Objects Library Public License Version\n"
-"1.0 (the \"License\"); you may not use this software except in\n"
-"compliance with the License. \n"
-"\n"
-"Software distributed under the License is distributed on an \"AS IS\"\n"
-"basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See\n"
-"the License for the specific language governing rights and limitations\n"
-"under the License.  You may obtain a copy of the License at\n"
-"http://www.functionalobjects.com/licenses/library-public-license-1.0.txt\n"
-"\n"
-"Alternatively, the software may be used under the terms of the GNU\n"
-"Lesser General Public License, in which case the provisions of GNU\n"
-"Lesser General Public License are applicable instead of those\n"
-"above. If you wish to allow use of your version of this library only\n"
-"under the terms of the GNU Lesser General Public License and not to\n"
-"allow others to use your version of this library under the License,\n"
-"indicate your decision by deleting the provisions above and replacing\n"
-"them with the notice and other provisions required by the GNU Lesser\n"
-"General Public License. If you do not delete the provisions\n"
-"above, a recipient may use your version of this library under either\n"
-"the License or the GNU Lesser General Public License.\n";
+  "The software programs and libraries that make up Open Dylan\n"
+  "are subject to the following license terms.\n"
+  "\n";
 
 define constant $release-support-address 
   = "bugs@opendylan.org";
@@ -51,8 +30,8 @@ define constant $release-version-type     = #"1.0";
 
 define constant $release-copyright
   = "Copyright (c) 1997-2004, Functional Objects, Inc.\n"
-    "Portions Copyright (c) 2004-2010, Dylan Hackers\n"
-    "All rights reserved.";
+    "Portions Copyright (c) 2004-2011, Dylan Hackers\n"
+    "Portions Copyright (c) 2001-2002, Ravenbrook Ltd.";
 
 
 /// Release info querying functions

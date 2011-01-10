@@ -1,11 +1,10 @@
 Module:       common-dylan-internals
 Author:       Toby Weinberg, Jonathan Bachrach + Eliot Miranda, Scott McKay
 Synopsis:     Native byte vectors
-Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
+Copyright:    Original Code is Copyright 1995-2011 Functional Objects, Inc.
               All rights reserved.
-License:      Functional Objects Library Public License Version 1.0
-Dual-license: GNU Lesser General Public License
-Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
+License:      See License.txt in this distribution for details.
+
 
 /////
 ///// BYTE-VECTOR

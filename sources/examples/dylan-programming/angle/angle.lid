@@ -12,5 +12,4 @@ target-type: dll
 files:   angle-library
          angle
          position 
-Other-files: Open-Source-License.txt
 

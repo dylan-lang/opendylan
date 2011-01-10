@@ -4,8 +4,7 @@ Synopsis:  This is a simple example of a Windows program implemented in Dylan
 	   It was adapted from sample C programs in the Win32 SDK.
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
-License:      Functional Objects Library Public License Version 1.0
-Dual-license: GNU Lesser General Public License
+License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define variable *hInst* // current instance

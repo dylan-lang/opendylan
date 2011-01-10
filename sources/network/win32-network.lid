@@ -25,12 +25,10 @@ Files:  win32-network-library
 	sockets/win32-TCP-socket-accessor
 	sockets/UDP-sockets
 	sockets/win32-UDP-sockets
-Other-Files:  Open-Source-License.txt
 C-Libraries:  WS2_32.LIB
               mswsock.lib
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
-License:      Functional Objects Library Public License Version 1.0
-Dual-license: GNU Lesser General Public License
+License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 

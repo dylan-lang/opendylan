@@ -11,5 +11,4 @@ Copyright: N Feinberg/S E Keene/R Mathews/P Tucker Withington,
 files:   angle-library
          angle
          position 
-Other-files: Open-Source-License.txt
 

@@ -10,5 +10,4 @@ Copyright: N Feinberg/S E Keene/R Mathews/P Tucker Withington,
 	publisher.
 files:    sorted-sequence-library
           sorted-sequence 
-Other-files: Open-Source-License.txt
 

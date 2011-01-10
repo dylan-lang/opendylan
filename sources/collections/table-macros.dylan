@@ -3,8 +3,7 @@ Synopsis:     The table constructor macro, et al.
 Author:       Dustin Voss
 Copyright:    Copyright (c) 2006 Dustin Voss.
               All rights reserved.
-License:      Functional Objects Library Public License Version 1.0
-Dual-license: GNU Lesser General Public License
+License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // Table constructor. Syntax:

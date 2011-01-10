@@ -10,5 +10,4 @@ Copyright: N Feinberg/S E Keene/R Mathews/P Tucker Withington,
 	publisher.
 files:   say-library
          say 
-Other-files: Open-Source-License.txt
 
