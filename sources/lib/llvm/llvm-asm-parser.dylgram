@@ -21,6 +21,9 @@ define class <llvm-parse-state> (<object>)
   slot parse-unnamed-local-index :: <integer> = 0;
   constant slot parse-unnamed-local-values :: <stretchy-object-vector>
     = make(<stretchy-object-vector>);
+
+  constant slot parse-unnamed-metadata-values :: <stretchy-object-vector>
+    = make(<stretchy-object-vector>);
 end class;
 
 define thread variable *llvm-parse-state* :: <llvm-parse-state>
@@ -154,6 +157,26 @@ define method do-define-local-value
     *llvm-parse-state*.parse-unnamed-local-index := new-index + 1;
   end unless;
   value
+end method;
+
+define method do-define-metadata-value
+    (supplied-index :: <integer>, value :: <llvm-metadata-value>)
+ => ();
+  let definition
+    = element(*llvm-parse-state*.parse-unnamed-metadata-values, supplied-index,
+              default: #f);
+  if (definition)
+    if (instance?(definition, <llvm-symbolic-metadata>))
+      definition.llvm-placeholder-value-forward := value;
+      llvm-constrain-type(definition.llvm-value-type, llvm-value-type(value));
+    else
+      error("value !%d is multiply defined", supplied-index);
+    end if;
+  end if;
+
+  // Record this value
+  element(*llvm-parse-state*.parse-unnamed-metadata-values, supplied-index)
+    := value;
 end method;
 
 define class <arg-entry> (<object>)
@@ -772,6 +795,13 @@ const-val:
   types %BLOCKADDRESS %LPAREN global-name %COMMA local-name %RPAREN
     => error("%%BLOCKADDRESS");;
 
+  types metadata-value
+    => begin
+         llvm-constrain-type(llvm-value-type(arg$2),
+                             llvm-type-resolve-upvals(arg$1));
+         arg$2
+       end;;
+
 global-var-attributes:
   /* empty */
     => #[];;
@@ -1137,49 +1167,55 @@ inst:
     => do-define-local-value(arg$1, arg$2);;
 
 b-b-terminator-inst:
-  %RET returned-val
-    => make(<llvm-return-instruction>, operands: reverse!(arg$2));;
-  %RET %VOID
-    => make(<llvm-return-instruction>, operands: #[]);;
-  %BR %LABEL value-ref
+  %RET returned-val opt-inst-metadata
+    => make(<llvm-return-instruction>,
+            operands: reverse!(arg$2),
+            metadata: arg$3);;
+  %RET %VOID opt-inst-metadata
+    => make(<llvm-return-instruction>, operands: #[], metadata: arg$3);;
+  %BR %LABEL value-ref opt-inst-metadata
     => begin
          llvm-constrain-type(llvm-value-type(arg$3), $llvm-label-type);
          make(<llvm-branch-instruction>,
-              operands: vector(arg$3));
+              operands: vector(arg$3),
+              metadata: arg$4);
        end;;
-  %BR %INTTYPE value-ref %COMMA %LABEL value-ref %COMMA %LABEL value-ref
+  %BR %INTTYPE value-ref %COMMA %LABEL value-ref %COMMA %LABEL value-ref opt-inst-metadata
     => begin
          llvm-constrain-type(llvm-value-type(arg$3),
                              make(<llvm-integer-type>, width: arg$2));
          llvm-constrain-type(llvm-value-type(arg$6), $llvm-label-type);
          llvm-constrain-type(llvm-value-type(arg$9), $llvm-label-type);
          make(<llvm-branch-instruction>,
-              operands: vector(arg$3, arg$6, arg$9));
+              operands: vector(arg$3, arg$6, arg$9),
+              metadata: arg$10);
        end;;
-  %SWITCH %INTTYPE value-ref %COMMA %LABEL value-ref %LBRACK jump-table %RBRACK
+  %SWITCH %INTTYPE value-ref %COMMA %LABEL value-ref %LBRACK jump-table %RBRACK opt-inst-metadata
     => begin
          llvm-constrain-type(llvm-value-type(arg$3),
                              make(<llvm-integer-type>, width: arg$2));
          llvm-constrain-type(llvm-value-type(arg$6), $llvm-label-type);
          make(<llvm-switch-instruction>,
-              operands: concatenate(vector(arg$3, arg$6), arg$8))
+              operands: concatenate(vector(arg$3, arg$6), arg$8),
+              metadata: arg$10)
        end;;
-  %SWITCH %INTTYPE value-ref %COMMA %LABEL value-ref %LBRACK %RBRACK
+  %SWITCH %INTTYPE value-ref %COMMA %LABEL value-ref %LBRACK %RBRACK opt-inst-metadata
     => begin
          llvm-constrain-type(llvm-value-type(arg$3),
                              make(<llvm-integer-type>, width: arg$2));
          llvm-constrain-type(llvm-value-type(arg$6), $llvm-label-type);
          make(<llvm-switch-instruction>,
-              operands: vector(arg$3, arg$6))
+              operands: vector(arg$3, arg$6),
+              metadata: arg$9)
        end;;
-  %INDIRECTBR resolved-val %COMMA %LBRACK indirectbr-table %RBRACK
+  %INDIRECTBR resolved-val %COMMA %LBRACK indirectbr-table %RBRACK opt-inst-metadata
     => error("%%INDIRECTBR");;
-  %INDIRECTBR resolved-val %COMMA %LBRACK %RBRACK
+  %INDIRECTBR resolved-val %COMMA %LBRACK %RBRACK opt-inst-metadata
     => error("%%INDIRECTBR");;
   %INVOKE opt-calling-conv opt-ret-attrs result-types value-ref
     %LPAREN param-list %RPAREN opt-func-attrs
     %TO %LABEL value-ref
-    %UNWIND %LABEL value-ref
+    %UNWIND %LABEL value-ref opt-inst-metadata
     => begin
          let type = llvm-type-resolve-upvals(arg$4);
          let return-type
@@ -1210,12 +1246,13 @@ b-b-terminator-inst:
               attribute-list: attribute-list,
               calling-convention: arg$2,
               operands: concatenate(vector(arg$12, arg$15, arg$5),
-                                    map(param-value, param-list)))
+                                    map(param-value, param-list)),
+              metadata: arg$16)
        end;;
-  %UNWIND
-    => make(<llvm-unwind-instruction>);;
-  %UNREACHABLE
-    => make(<llvm-unreachable-instruction>);;
+  %UNWIND opt-inst-metadata
+    => make(<llvm-unwind-instruction>, metadata: arg$2);;
+  %UNREACHABLE opt-inst-metadata
+    => make(<llvm-unreachable-instruction>, metadata: arg$2);;
 
 func-attr:
   %NORETURN
@@ -1332,7 +1369,7 @@ opt-local-name:
     => arg$1;;
 
 inst-val:
-  arithmetic-ops types value-ref %COMMA value-ref
+  arithmetic-ops types value-ref %COMMA value-ref opt-inst-metadata
     => begin
          let type = llvm-type-resolve-upvals(arg$2);
          llvm-constrain-type(llvm-value-type(arg$3), type);
@@ -1340,67 +1377,77 @@ inst-val:
          apply(make, <llvm-binop-instruction>,
                operator: arg$1.head,
                operands: vector(arg$3, arg$5),
+               metadata: arg$6,
                arg$1.tail)
        end;;
-  logical-ops types value-ref %COMMA value-ref
+  logical-ops types value-ref %COMMA value-ref opt-inst-metadata
     => begin
          let type = llvm-type-resolve-upvals(arg$2);
          llvm-constrain-type(llvm-value-type(arg$3), type);
          llvm-constrain-type(llvm-value-type(arg$5), type);
          make(<llvm-binop-instruction>,
               operator: arg$1,
-              operands: vector(arg$3, arg$5))
+              operands: vector(arg$3, arg$5),
+              metadata: arg$6)
        end;;
-  %ICMP i-predicates types value-ref %COMMA value-ref
+  %ICMP i-predicates types value-ref %COMMA value-ref opt-inst-metadata
     => begin
          let type = llvm-type-resolve-upvals(arg$3);
          llvm-constrain-type(llvm-value-type(arg$4), type);
          llvm-constrain-type(llvm-value-type(arg$6), type);
          make(<llvm-icmp-instruction>,
               predicate: arg$2,
-              operands: vector(arg$4, arg$6))
+              operands: vector(arg$4, arg$6),
+              metadata: arg$7)
        end;;
-  %FCMP f-predicates types value-ref %COMMA value-ref
+  %FCMP f-predicates types value-ref %COMMA value-ref opt-inst-metadata
     => begin
          let type = llvm-type-resolve-upvals(arg$3);
          llvm-constrain-type(llvm-value-type(arg$4), type);
          llvm-constrain-type(llvm-value-type(arg$6), type);
          make(<llvm-fcmp-instruction>,
               predicate: arg$2,
-              operands: vector(arg$4, arg$6))
+              operands: vector(arg$4, arg$6),
+              metadata: arg$7)
        end;;
-  cast-ops resolved-val %TO types
+  cast-ops resolved-val %TO types opt-inst-metadata
     => make(<llvm-cast-instruction>,
             type: llvm-type-resolve-upvals(arg$4),
             operator: arg$1,
-            operands: vector(arg$2));;
-  %SELECT resolved-val %COMMA resolved-val %COMMA resolved-val
+            operands: vector(arg$2),
+            metadata: arg$5);;
+  %SELECT resolved-val %COMMA resolved-val %COMMA resolved-val opt-inst-metadata
     => make(<llvm-select-instruction>,
-            operands: vector(arg$2, arg$4, arg$6));;
-  %VAARG resolved-val %COMMA types
+            operands: vector(arg$2, arg$4, arg$6),
+            metadata: arg$7);;
+  %VAARG resolved-val %COMMA types opt-inst-metadata
     => make(<llvm-va-arg-instruction>,
             type: arg$4,
-            operands: vector(arg$2));;
-  %EXTRACTELEMENT resolved-val %COMMA resolved-val
+            operands: vector(arg$2),
+            metadata: arg$5);;
+  %EXTRACTELEMENT resolved-val %COMMA resolved-val opt-inst-metadata
     => make(<llvm-extractelement-instruction>,
-            operands: vector(arg$2, arg$4));;
-  %INSERTELEMENT resolved-val %COMMA resolved-val %COMMA resolved-val
+            operands: vector(arg$2, arg$4),
+            metadata: arg$5);;
+  %INSERTELEMENT resolved-val %COMMA resolved-val %COMMA resolved-val opt-inst-metadata
     => make(<llvm-insertelement-instruction>,
-            operands: vector(arg$2, arg$4, arg$6));;
-  %SHUFFLEVECTOR resolved-val %COMMA resolved-val %COMMA resolved-val
+            operands: vector(arg$2, arg$4, arg$6),
+            metadata: arg$7);;
+  %SHUFFLEVECTOR resolved-val %COMMA resolved-val %COMMA resolved-val opt-inst-metadata
     => make(<llvm-shufflevector-instruction>,
-            operands: vector(arg$2, arg$4, arg$6));;
-  %PHI types phi-list
+            operands: vector(arg$2, arg$4, arg$6),
+            metadata: arg$7);;
+  %PHI types phi-list opt-inst-metadata
     => begin
          let type = llvm-type-resolve-upvals(arg$2);
          for (i from 0 below arg$3.size by 2)
            llvm-constrain-type(llvm-value-type(arg$3[i]), type);
            llvm-constrain-type(llvm-value-type(arg$3[i + 1]), $llvm-label-type)
          end for;
-         make(<llvm-phi-node>, operands: arg$3)
+         make(<llvm-phi-node>, operands: arg$3, metadata: arg$4)
        end;;
   opt-tail-call opt-calling-conv opt-ret-attrs result-types value-ref
-    %LPAREN param-list %RPAREN opt-func-attrs
+    %LPAREN param-list %RPAREN opt-func-attrs opt-inst-metadata
     => begin
          let param-list = reverse!(arg$7);
          let type = llvm-type-resolve-upvals(arg$4);
@@ -1429,13 +1476,14 @@ inst-val:
               attribute-list: attribute-list,
               tail-call?: arg$1,
               calling-convention: arg$2,
-              operands: pair(arg$5, map(param-value, param-list)))
+              operands: pair(arg$5, map(param-value, param-list)),
+              metadata: arg$10)
        end;;
-  %MALLOC types opt-c-align
+  %MALLOC types opt-c-align-metadata
     => error("%%MALLOC");;
-  %MALLOC types %COMMA %INTTYPE value-ref opt-c-align
+  %MALLOC types %COMMA %INTTYPE value-ref opt-c-align-metadata
     => error("%%MALLOC");;
-  %ALLOCA types opt-c-align
+  %ALLOCA types opt-c-align-metadata
     => begin
          let pointer-type
            = make(<llvm-pointer-type>, pointee: arg$2);
@@ -1443,50 +1491,54 @@ inst-val:
            = make(<llvm-integer-constant>,
                   type: $llvm-i32-type,
                   integer: 1);
-         make(<llvm-alloca-instruction>,
-              type: llvm-type-resolve-upvals(pointer-type),
-              alignment: arg$3,
-              operands: vector(size-operand))
+         apply(make, <llvm-alloca-instruction>,
+               type: llvm-type-resolve-upvals(pointer-type),
+               operands: vector(size-operand),
+               arg$3)
        end;;
-  %ALLOCA types %COMMA %INTTYPE value-ref opt-c-align
+  %ALLOCA types %COMMA %INTTYPE value-ref opt-c-align-metadata
     => begin
          let pointer-type
            = make(<llvm-pointer-type>, pointee: arg$2);
          llvm-constrain-type(llvm-value-type(arg$5),
                              make(<llvm-integer-type>, width: arg$4));
-         make(<llvm-alloca-instruction>,
-              type: llvm-type-resolve-upvals(pointer-type),
-              alignment: arg$6,
-              operands: vector(arg$5))
+         apply(make, <llvm-alloca-instruction>,
+               type: llvm-type-resolve-upvals(pointer-type),
+               operands: vector(arg$5),
+               arg$6)
        end;;
   %FREE resolved-val
     => error("%%FREE");;
-  opt-volatile %LOAD resolved-val opt-c-align
-    => make(<llvm-load-instruction>,
-            volatile?: arg$1,
-            alignment: arg$4,
-            operands: vector(arg$3));;
-  opt-volatile %STORE resolved-val %COMMA resolved-val opt-c-align
-    => make(<llvm-store-instruction>,
-            volatile?: arg$1,
-            alignment: arg$6,
-            operands: vector(arg$3, arg$5));;
-  %GETELEMENTPTR opt-inbounds resolved-val index-list
+  opt-volatile %LOAD resolved-val opt-c-align-metadata
+    => apply(make, <llvm-load-instruction>,
+             volatile?: arg$1,
+             operands: vector(arg$3),
+             arg$4);;
+  opt-volatile %STORE resolved-val %COMMA resolved-val opt-c-align-metadata
+    => apply(make, <llvm-store-instruction>,
+             volatile?: arg$1,
+             operands: vector(arg$3, arg$5),
+             arg$6);;
+  %GETELEMENTPTR opt-inbounds resolved-val index-list opt-inst-metadata
     => make(<llvm-gep-instruction>,
             in-bounds?: arg$2,
-            operands: pair(arg$3, reverse!(arg$4)));;
-  %INSERTVALUE resolved-val %COMMA resolved-val constant-index-list
+            operands: pair(arg$3, reverse!(arg$4)),
+            metadata: arg$5);;
+  %INSERTVALUE resolved-val %COMMA resolved-val constant-index-list opt-inst-metadata
     => make(<llvm-insert-value-instruction>,
             operands: vector(arg$2, arg$4),
-            indices: reverse!(arg$5));;
-  %EXTRACTVALUE resolved-val constant-index-list
+            indices: reverse!(arg$5),
+            metadata: arg$6);;
+  %EXTRACTVALUE resolved-val constant-index-list opt-inst-metadata
     => make(<llvm-extract-value-instruction>,
             operands: vector(arg$2),
-            indices: reverse!(arg$3));;
-  %GETRESULT resolved-val %COMMA %EUINT64VAL
+            indices: reverse!(arg$3),
+            metadata: arg$4);;
+  %GETRESULT resolved-val %COMMA %EUINT64VAL opt-inst-metadata
     => make(<llvm-extract-value-instruction>,
             operands: vector(arg$2),
-            indices: vector(arg$4));;
+            indices: vector(arg$4),
+            metadata: arg$5);;
 
 opt-tail-call:
   %TAIL %CALL
@@ -1530,6 +1582,8 @@ const-value-ref:
     => make(<llvm-aggregate-constant>, aggregate-values: #[]);;
   %BLOCKADDRESS %LPAREN global-name %COMMA local-name %RPAREN
     => error("%%BLOCKADDRESS");;
+  metadata-value
+    => arg$1;;
   %ASM opt-asm-flags %STRINGCONSTANT %COMMA %STRINGCONSTANT
     => apply(make, <llvm-asm-constant>,
              asm-string: arg$3,
@@ -1578,12 +1632,6 @@ phi-list:
   phi-list %COMMA %LBRACK value-ref %COMMA value-ref %RBRACK
     => concatenate(arg$1, vector(arg$4, arg$6));;
 
-opt-c-align:
-  /* empty */
-    => 0;;
-  %COMMA %ALIGN %EUINT64VAL
-    => arg$3;;
-
 opt-volatile:
   /* empty */
     => #f;;
@@ -1596,4 +1644,80 @@ opt-inbounds:
   %INBOUNDS
     => #t;;
 
+opt-c-align-metadata:
+  opt-inst-metadata
+    => vector(alignment: 0, metadata: arg$1);;
+  %COMMA %ALIGN %EUINT64VAL opt-inst-metadata
+    => vector(alignment: arg$3, metadata: arg$4);;
+
+// Metadata
+definition:
+  %METADATAVAR %EQUALS %EXCLAIM %LBRACE %RBRACE
+    => add!(*llvm-parse-state*.parse-module.llvm-module-named-metadata,
+            make(<llvm-named-metadata>, name: arg$1, operands: #()));;
+  %METADATAVAR %EQUALS %EXCLAIM %LBRACE metadata-list %RBRACE
+    => add!(*llvm-parse-state*.parse-module.llvm-module-named-metadata,
+            make(<llvm-named-metadata>, name: arg$1, operands: arg$5));;
+
+  %EXCLAIM %EUINT64VAL %EQUALS types %EXCLAIM %LBRACE %RBRACE
+    => do-define-metadata-value(arg$2,
+                                make(<llvm-metadata-node>,
+                                     node-values: #[],
+                                     function-local?: #f));;
+  %EXCLAIM %EUINT64VAL %EQUALS types %EXCLAIM %LBRACE metadata-vector %RBRACE
+    => do-define-metadata-value(arg$2,
+                                make(<llvm-metadata-node>,
+                                     node-values: reverse!(arg$7),
+                                     function-local?: #f));;
+
+metadata-list:
+  metadata-ref
+    => list(arg$1);;
+  metadata-list %COMMA metadata-ref
+    => pair(arg$3, arg$1);;
+
+metadata-vector:
+  const-val
+    => list(arg$1);;
+  %NULL
+    => list(#f);;
+  metadata-vector %COMMA const-val
+    => pair(arg$3, arg$1);;
+  metadata-vector %COMMA %NULL
+    => pair(#f, arg$1);;
+
+metadata-value:
+  metadata-ref
+    => arg$1;;
+  %EXCLAIM %LBRACE %RBRACE
+    => make(<llvm-metadata-node>, node-values: #[], function-local?: #f);;
+  %EXCLAIM %LBRACE metadata-vector %RBRACE
+    => make(<llvm-metadata-node>, node-values: reverse!(arg$3));;
+  %EXCLAIM %STRINGCONSTANT
+    => make(<llvm-metadata-string>, string: arg$2);;
+
+metadata-ref:
+  %EXCLAIM %EUINT64VAL
+    => begin
+         element(*llvm-parse-state*.parse-unnamed-metadata-values, arg$2,
+                 default: #f)
+           | begin
+               let placeholder = make(<llvm-symbolic-metadata>, name: arg$2);
+               element(*llvm-parse-state*.parse-unnamed-metadata-values, arg$2)
+                 := placeholder
+             end
+       end;;
+
+opt-inst-metadata:
+  /* empty */
+    => #();;
+  %COMMA inst-metadata
+    => arg$2;;
+
+inst-metadata:
+  %METADATAVAR metadata-value
+    => list(make(<llvm-named-metadata>, name: arg$1, operands: list(arg$2)));;
+  inst-metadata %COMMA %METADATAVAR metadata-value
+    => pair(make(<llvm-named-metadata>, name: arg$3, operands: list(arg$4)),
+            arg$1);;
 end parser;

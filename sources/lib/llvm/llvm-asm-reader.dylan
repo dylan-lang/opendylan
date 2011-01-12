@@ -693,7 +693,24 @@ define function llvm-asm-parse
     method lexer-metadata
         () => (token-class, token-value);
       let ch = peek(stream, on-end-of-stream: #f);
-      error("Not handling !");
+      if (('a' <= ch & ch <= 'z') | ('A' <= ch & ch <= 'Z'))
+        let characters = make(<stretchy-object-vector>);
+        add!(characters, read-element(stream));
+        lexer-metadata-var(characters)
+      else
+        values($%EXCLAIM-token, #f)
+      end if
+    end method,
+
+    method lexer-metadata-var
+        (characters :: <stretchy-object-vector>) => (token-class, token-value);
+      let ch = peek(stream, on-end-of-stream: #f);
+      if (llvm-identifier-character?(ch))
+        add!(characters, read-element(stream));
+        lexer-metadata-var(characters)
+      else
+        values($%METADATAVAR-token, as(<string>, characters))
+      end if
     end method,
 
     method on-error (symbol, value, history) => ()

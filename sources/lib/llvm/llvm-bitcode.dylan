@@ -144,14 +144,14 @@ define bitcode-block $METADATA_BLOCK = 15
   record NAME          = 4;   // STRING:        [values]
   record NAMED_NODE    = 5;   // NAMED_NODE with potentially invalid metadata
   record KIND          = 6;   // [n x [id, name]]
-  record ATTACHMENT    = 7;   // ATTACHMENT with potentially invalid metadata
   record NODE2         = 8;   // NODE2:         [n x (type num, value num)]
   record FN_NODE2      = 9;   // FN_NODE2:      [n x (type num, value num)]
   record NAMED_NODE2   = 10;  // NAMED_NODE2:   [n x mdnodes]
-  record ATTACHMENT2   = 11;  // [m x [value, [n x [id, mdnode]]]
 end bitcode-block;
 
 define bitcode-block $METADATA_ATTACHMENT = 16
+  record ATTACHMENT    = 7;   // ATTACHMENT with potentially invalid metadata
+  record ATTACHMENT2   = 11;  // [m x [value, [n x [id, mdnode]]]
 end bitcode-block;
 
 
@@ -330,13 +330,14 @@ define function topological-sort-partitions
   new-partitions
 end function;
 
-define function enumerate-types-constants-attributes
+define function enumerate-types-constants-metadata-attributes
     (m :: <llvm-module>)
  => (type-partition-table :: <object-table>,
      type-partition-exemplars :: <vector>,
      value-partition-table :: <object-table>,
      first-constant-index :: <integer>,
      constant-partition-exemplars :: <vector>,
+     metadata-partition-exemplars :: <vector>,
      attributes-index-table :: <encoding-sequence-table>,
      attributes-exemplars :: <vector>);
   // Table mapping type instances to index (partition) numbers
@@ -347,9 +348,12 @@ define function enumerate-types-constants-attributes
   
   // Table mapping value instances to index (partition) numbers
   let value-partition-table = make(<object-table>);
-  
+
   // Vector of lists of the constant value instances in a partition
   let partition-constants = make(<stretchy-object-vector>);
+
+  // Vector of lists of the metadata value instances in a partition
+  let partition-metadata = make(<stretchy-object-vector>);
 
   // Table mapping attribute encoding vectors to index numbers
   let attributes-index-table = make(<encoding-sequence-table>);
@@ -395,12 +399,15 @@ define function enumerate-types-constants-attributes
       end for;
 
   let initial-type-partition-table = make(<sequence-table>);
-  let initial-constant-partition-table = make(<sequence-table>);
+  let initial-value-partition-table = make(<sequence-table>);
   local
     method initial-traverse-value (value :: <llvm-value>) => ();
       let value = value-forward(value);
 
       unless (element(value-partition-table, value, default: #f))
+        // Sentinel value to prevent infinite loops
+        value-partition-table[value] := #t;
+
         // Traverse referenced types
         for (referenced-type in value-referenced-types(value))
           initial-traverse-type(type-partition-table,
@@ -414,22 +421,25 @@ define function enumerate-types-constants-attributes
 
         // Determine which partition index this value initially belongs
         // to, assigning a new index if necessary
+        let (partitions, offset)
+          = if (instance?(value, <llvm-metadata-value>))
+              values(partition-metadata, 0)
+            else
+              values(partition-constants, first-constant-index)
+            end;
         let partition-key = value-partition-key(value);
         let partition-index
-          = element(initial-constant-partition-table, partition-key,
-                    default: #f)
-          | (initial-constant-partition-table[partition-key]
-               := initial-constant-partition-table.size + first-constant-index);
-        
+          = element(initial-value-partition-table, partition-key, default: #f)
+          | (initial-value-partition-table[partition-key]
+               := partitions.size + offset);
+
         // Record the partition assignment
         value-partition-table[value] := partition-index;
 
         // Record this constant value instance
         let partition-other-values
-          = element(partition-constants,
-                    partition-index - first-constant-index,
-                    default: #());
-        partition-constants[partition-index - first-constant-index]
+          = element(partitions, partition-index - offset, default: #());
+        partitions[partition-index - offset]
           := add(partition-other-values, value);
       end unless;
     end method,
@@ -437,7 +447,10 @@ define function enumerate-types-constants-attributes
     method initial-traverse-operand-value (value :: <llvm-value>) => ();
       let value = value-forward(value);
 
-      unless (element(value-partition-table, value, default: #f))
+      if (instance?(value, <llvm-metadata-value>)
+            & ~value.llvm-metadata-function-local?)
+        initial-traverse-value(value)
+      elseif (~element(value-partition-table, value, default: #f))
         // Traverse referenced types
         for (referenced-type in value-referenced-types(value))
           initial-traverse-type(type-partition-table,
@@ -446,11 +459,9 @@ define function enumerate-types-constants-attributes
                                 referenced-type)
         end for;
 
-        if (instance?(value, <llvm-constant-value>))
-          // Traverse referenced values
-          do(initial-traverse-operand-value, value-referenced-values(value));
-        end if;
-      end unless;
+        // Traverse referenced values
+        do(initial-traverse-operand-value, value-referenced-values(value));
+      end if;
     end method;
 
   // Compute the initial partitions:
@@ -497,6 +508,13 @@ define function enumerate-types-constants-attributes
         do(initial-traverse-operand-value,
            instruction.llvm-instruction-operands);
 
+        // Traverse instruction attached metadata
+        for (named :: <llvm-named-metadata>
+               in instruction.llvm-instruction-metadata)
+          do(initial-traverse-operand-value,
+             named.llvm-named-metadata-operands);
+        end for;
+
         // Traverse instruction return type
         initial-traverse-type(type-partition-table,
                               partition-types,
@@ -522,6 +540,11 @@ define function enumerate-types-constants-attributes
     initial-traverse-value(alias.llvm-global-alias-aliasee);
   end for;
 
+  // Traverse module named metadata
+  for (named :: <llvm-named-metadata> in m.llvm-module-named-metadata)
+    do(initial-traverse-value, named.llvm-named-metadata-operands);
+  end for;
+
   // Refine type partitions until they are stable
   refine-partitions(partition-types, 0,
                     type-partition-table,
@@ -540,28 +563,31 @@ define function enumerate-types-constants-attributes
                       vector(type-partition-table[type-forward(type)])
                     end);
 
-  // Refine constant value partitions until they are stable
+  // Refine constant and metadata value partitions until they are stable
   local
-    method constant-referenced-partitions (value :: <llvm-constant-value>)
-      map(method (referenced-value :: <llvm-constant-value>)
-            value-partition-table
-              [value-forward(referenced-value)]
+    method value-referenced-partitions (value :: <llvm-value>)
+      map(method (referenced-value :: <llvm-value>)
+            value-partition-table[value-forward(referenced-value)]
           end,
           value-referenced-values(value))
     end;
   refine-partitions(partition-constants, first-constant-index,
                     value-partition-table,
-                    constant-referenced-partitions);
+                    value-referenced-partitions);
+  refine-partitions(partition-metadata, 0,
+                    value-partition-table,
+                    value-referenced-partitions);
 
   // Topologically sort constant values
   let partition-constants
     = topological-sort-partitions(partition-constants, first-constant-index,
                                   value-partition-table,
-                                  constant-referenced-partitions);
+                                  value-referenced-partitions);
 
   values(type-partition-table, map(first, partition-types),
          value-partition-table,
          first-constant-index, map(first, partition-constants),
+         map(first, partition-metadata),
          attributes-index-table, attributes-exemplars)
 end function;
 
@@ -591,14 +617,16 @@ define method element-setter
   element-setter(value, table.%hot-object-table, key)
 end method;
 
-define function enumerate-function-constants
+define function enumerate-function-values
     (function :: <llvm-function>,
      type-partition-table :: <object-table>,
      value-partition-table :: <object-table>,
-     first-function-local-index :: <integer>)
+     first-function-local-constant-index :: <integer>,
+     first-function-local-metadata-index :: <integer>)
  => (value-partition-table :: <explicit-key-collection>,
      first-constant-index :: <integer>,
-     constant-partition-exemplars :: <vector>);
+     constant-partition-exemplars :: <vector>,
+     metadata-partition-exemplars :: <vector>);
   // Make a local copy of the value table
   let value-partition-table :: <hierarchical-object-table>
     = make(<hierarchical-object-table>, parent-table: value-partition-table);
@@ -612,7 +640,7 @@ define function enumerate-function-constants
   // Assign indices to the function arguments
   let first-constant-index
     = for (argument in function.llvm-function-arguments,
-           index from first-function-local-index)
+           index from first-function-local-constant-index)
         value-partition-table[argument] := index;
       finally
         index
@@ -621,45 +649,63 @@ define function enumerate-function-constants
   // Vector of lists of the constant value instances in a partition
   let partition-constants = make(<stretchy-object-vector>);
 
-  let initial-constant-partition-table = make(<sequence-table>);
+  // Vector of lists of the metadata value instances in a partition
+  let partition-metadata = make(<stretchy-object-vector>);
+
+  let initial-value-partition-table = make(<sequence-table>);
   local
-    method initial-traverse-value (value :: <llvm-constant-value>) => ();
+    method initial-traverse-value (value :: <llvm-value>) => ();
       let value = value-forward(value);
 
       unless (element(value-partition-table, value, default: #f))
+        // Sentinel value to prevent infinite loops
+        value-partition-table[value] := #t;
+
         // Traverse referenced values
-        do(initial-traverse-value, value-referenced-values(value));
+        for (referenced :: <llvm-value> in value-referenced-values(value))
+          if (instance?(referenced, <llvm-constant-value>)
+                | instance?(referenced, <llvm-metadata-value>))
+            initial-traverse-value(referenced);
+          end if;
+        end for;
 
         // Determine which partition index this value initially belongs
         // to, assigning a new index if necessary
+        let (partitions, offset)
+          = if (instance?(value, <llvm-metadata-value>))
+              values(partition-metadata, first-function-local-metadata-index)
+            else
+              values(partition-constants, first-constant-index)
+            end;
         let partition-key = value-partition-key(value);
         let partition-index
-          = element(initial-constant-partition-table, partition-key,
-                    default: #f)
-          | (initial-constant-partition-table[partition-key]
-               := initial-constant-partition-table.size + first-constant-index);
-        
+          = element(initial-value-partition-table, partition-key, default: #f)
+          | (initial-value-partition-table[partition-key]
+               := partitions.size + offset);
+
         // Record the partition assignment
         value-partition-table[value] := partition-index;
 
         // Record this constant value instance
         let partition-other-values
-          = element(partition-constants,
-                    partition-index - first-constant-index,
-                    default: #());
-        partition-constants[partition-index - first-constant-index]
+          = element(partitions, partition-index - offset, default: #());
+        partitions[partition-index - offset]
           := add(partition-other-values, value);
       end unless;
     end method;
 
-  // Traverse constant instruction operands
+  // Traverse constant instruction operands and metadata
   for (basic-block in function.llvm-function-basic-blocks)
-    for (instruction in basic-block.llvm-basic-block-instructions)
-      for (operand in instruction.llvm-instruction-operands)
+    for (inst in basic-block.llvm-basic-block-instructions)
+      for (operand :: <llvm-value> in inst.llvm-instruction-operands)
         let operand = value-forward(operand);
-        if (instance?(operand, <llvm-constant-value>))
+        if (instance?(operand, <llvm-constant-value>)
+              | instance?(operand, <llvm-metadata-value>))
           initial-traverse-value(operand);
         end if;
+      end for;
+      for (named :: <llvm-named-metadata> in inst.llvm-instruction-metadata)
+        do(initial-traverse-value, named.llvm-named-metadata-operands);
       end for;
     end for;
   end for;
@@ -674,22 +720,21 @@ define function enumerate-function-constants
 
   // Refine constant value partitions until they are stable
   local
-    method constant-referenced-partitions (value :: <llvm-constant-value>)
-      map(method (referenced-value :: <llvm-constant-value>)
-            value-partition-table
-              [value-forward(referenced-value)]
+    method value-referenced-partitions (value :: <llvm-value>)
+      map(method (referenced-value :: <llvm-value>)
+            value-partition-table[value-forward(referenced-value)]
           end,
           value-referenced-values(value))
     end;
   refine-partitions(partition-constants, first-constant-index,
                     value-partition-table,
-                    constant-referenced-partitions);
+                    value-referenced-partitions);
 
   // Topologically sort constant values
   let partition-constants
     = topological-sort-partitions(partition-constants, first-constant-index,
                                   value-partition-table,
-                                  constant-referenced-partitions);
+                                  value-referenced-partitions);
 
   // Enumerate the instructions themselves
   let instruction-index :: <integer>
@@ -703,9 +748,15 @@ define function enumerate-function-constants
     end for;
   end for;
 
+  // Refine metadata value partitions until they are stable
+  refine-partitions(partition-metadata, first-function-local-metadata-index,
+                    value-partition-table,
+                    value-referenced-partitions);
+
   values(value-partition-table,
          first-constant-index,
-         map(first, partition-constants))
+         map(first, partition-constants),
+         map(first, partition-metadata))
 end function;
 
 define function encode-attributes
@@ -1140,6 +1191,82 @@ define function write-constant-table
 end function;
 
 
+/// Metadata output
+
+define method write-metadata-record
+    (stream :: <bitcode-stream>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
+     value :: <llvm-metadata-string>)
+ => ();
+  write-record(stream, #"STRING",
+               map-as(<vector>,
+                      curry(as, <integer>), value.llvm-metadata-string));
+end method;
+
+define method write-metadata-record
+    (stream :: <bitcode-stream>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
+     value :: <llvm-metadata-node>)
+ => ();
+  let operands = make(<stretchy-object-vector>);
+  for (operand in value.llvm-metadata-node-values)
+    if (operand)
+      let operand = value-forward(operand);
+      add!(operands,
+           type-partition-table[type-forward(llvm-value-type(operand))]);
+      add!(operands, value-partition-table[operand]);
+    else
+      add!(operands, type-partition-table[$llvm-void-type]);
+      add!(operands, 0);
+    end if;
+  end for;
+  write-record(stream,
+               if (value.llvm-metadata-function-local?)
+                 #"FN_NODE2"
+               else
+                 #"NODE2"
+               end, 
+               operands);
+end method;
+
+
+/// Metadata table output
+
+define function write-metadata-table
+    (stream :: <bitcode-stream>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <mutable-explicit-key-collection>,
+     metadata-partition-exemplars :: <sequence>,
+     named-metadata :: <sequence>)
+ => ();
+  unless (empty?(metadata-partition-exemplars))
+    with-block-output (stream, $METADATA_BLOCK, 4)
+      // Write metadata records
+      for (metadata in metadata-partition-exemplars)
+        write-metadata-record(stream,
+                              type-partition-table,
+                              value-partition-table,
+                              metadata);
+      end for;
+
+      // Write records for each module-level named metadata
+      for (named :: <llvm-named-metadata> in named-metadata)
+        write-record(stream, #"NAME",
+                     map-as(<vector>, curry(as, <integer>),
+                            named.llvm-named-metadata-name));
+        write-record(stream, #"NAMED_NODE2",
+                     map(method (operand)
+                           value-partition-table[value-forward(operand)]
+                         end,
+                         named.llvm-named-metadata-operands));
+      end for;
+    end with-block-output;
+  end unless;
+end function;
+
+
 /// Instruction output
 
 define function add-value
@@ -1568,8 +1695,8 @@ define method write-instruction-record
                      value.llvm-instruction-operands[i]);
     end for;
   end if;
-  
-  write-record(stream, #"INST_CALL",
+
+  write-record(stream, #"INST_CALL2",
                attributes-index-table[attribute-list-encoding],
                logior(ash(value.llvm-call-instruction-calling-convention, 1),
                       if(value.llvm-call-instruction-tail-call?) 1 else 0 end),
@@ -1634,18 +1761,22 @@ define function write-function
     (stream :: <bitcode-stream>,
      type-partition-table :: <object-table>,
      value-partition-table :: <object-table>,
-     first-function-local-index :: <integer>,
+     first-function-local-constant-index :: <integer>,
+     first-function-local-metadata-index :: <integer>,
      attributes-index-table :: <encoding-sequence-table>,
+     metadata-kind-table :: <string-table>,
      function :: <llvm-function>)
  => ();
   unless (empty?(function.llvm-function-basic-blocks))
     let (value-partition-table :: <mutable-explicit-key-collection>,
          first-constant-index :: <integer>,
-         constant-partition-exemplars :: <vector>)
-      = enumerate-function-constants(function,
-                                     type-partition-table,
-                                     value-partition-table,
-                                     first-function-local-index);
+         constant-partition-exemplars :: <vector>,
+         metadata-partition-exemplars :: <vector>)
+      = enumerate-function-values(function,
+                                  type-partition-table,
+                                  value-partition-table,
+                                  first-function-local-constant-index,
+                                  first-function-local-metadata-index);
 
     with-block-output (stream, $FUNCTION_BLOCK, 3)
       // Tell the reader how many basic blocks there will be
@@ -1658,9 +1789,20 @@ define function write-function
                            value-partition-table,
                            constant-partition-exemplars);
 
+      // Write the function metadata table
+      write-metadata-table(stream,
+                           type-partition-table,
+                           value-partition-table,
+                           metadata-partition-exemplars,
+                           #[]);
+
+      let attached-instruction-indices :: <object-table>
+        = make(<object-table>);
+
       // Write the instructions
       let instruction-index :: <integer>
         = first-constant-index + constant-partition-exemplars.size;
+      let attachment-instruction-index :: <integer> = 0;
       for (basic-block in function.llvm-function-basic-blocks)
         for (instruction in basic-block.llvm-basic-block-instructions)
           write-instruction-record(stream, instruction-index,
@@ -1669,12 +1811,41 @@ define function write-function
                                    attributes-index-table,
                                    instruction);
 
+          // All non-void instructions are assigned value indices
           unless (llvm-void-type?(llvm-value-type(instruction)))
             instruction-index := instruction-index + 1;
           end unless;
+
+          // All instructions are assigned a separate index for
+          // identifying metadata attachments
+          unless (empty?(instruction.llvm-instruction-metadata))
+            attached-instruction-indices[instruction]
+              := attachment-instruction-index;
+          end unless;
+          attachment-instruction-index := attachment-instruction-index + 1;
         end for;
       end for;
 
+      // Write the metadata attachment table
+      unless (empty?(attached-instruction-indices))
+        with-block-output (stream, $METADATA_ATTACHMENT, 3)
+          for (index :: <integer> keyed-by inst :: <llvm-instruction-value>
+                 in attached-instruction-indices)
+            let operands = make(<stretchy-object-vector>);
+            for (named :: <llvm-named-metadata>
+                   in inst.llvm-instruction-metadata)
+              let name = named.llvm-named-metadata-name;
+              let kind
+                = element(metadata-kind-table, name, default: #f)
+                | (metadata-kind-table[name] := metadata-kind-table.size);
+              let value = named.llvm-named-metadata-operands[0];
+              add!(operands, kind);
+              add!(operands, value-partition-table[value-forward(value)]);
+            end for;
+            write-record(stream, #"ATTACHMENT2", index, operands);
+          end for;
+        end;
+      end unless;
 
       // Write the function value symbol table
       unless (empty?(function.llvm-function-value-table))
@@ -1707,9 +1878,10 @@ define function write-module
        value-partition-table :: <object-table>,
        first-constant-index :: <integer>,
        constant-partition-exemplars :: <vector>,
+       metadata-partition-exemplars :: <vector>,
        attributes-index-table :: <encoding-sequence-table>,
        attributes-exemplars :: <vector>)
-      = enumerate-types-constants-attributes(m);
+      = enumerate-types-constants-metadata-attributes(m);
 
   with-block-output (stream, $MODULE_BLOCK, 3)
     // Write the blockinfo
@@ -1862,22 +2034,41 @@ define function write-module
                          type-partition-table,
                          value-partition-table,
                          constant-partition-exemplars);
-    
+
     // Write metadata
+    write-metadata-table(stream,
+                         type-partition-table,
+                         value-partition-table,
+                         metadata-partition-exemplars,
+                         m.llvm-module-named-metadata);
+
+    let metadata-kind-table :: <string-table> = make(<string-table>);
 
     // Write function bodies
-    let first-function-local-index :: <integer>
+    let first-function-local-constant-index :: <integer>
       = first-constant-index + constant-partition-exemplars.size;
+    let first-function-local-metadata-index :: <integer>
+      = metadata-partition-exemplars.size;
     for (function :: <llvm-function> in m.llvm-module-functions)
       write-function(stream,
                      type-partition-table,
                      value-partition-table,
-                     first-function-local-index,
+                     first-function-local-constant-index,
+                     first-function-local-metadata-index,
                      attributes-index-table,
+                     metadata-kind-table,
                      function);
     end for;
 
-    // Write metadata (store?)
+    // Write metadata kinds
+    unless (empty?(metadata-kind-table))
+      with-block-output (stream, $METADATA_BLOCK, 4)
+        for (index :: <integer> keyed-by name :: <string>
+               in metadata-kind-table)
+          write-record(stream, #"KIND", index, name);
+        end for;
+      end;
+    end unless;
 
     // Write the type symbol table
     unless (empty?(m.llvm-type-table))
@@ -1921,6 +2112,8 @@ define function linkage-encoding
     #"linkonce-odr"         => 11;
     #"available-externally" => 12;
     #"linker-private"       => 13;
+    #"linker-private-weak"  => 14;
+    #"linker-private-weak-def-auto" => 15;
   end select
 end function;
 

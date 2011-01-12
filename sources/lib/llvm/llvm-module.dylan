@@ -22,9 +22,9 @@ define class <llvm-module> (<object>)
     = make(<stretchy-object-vector>);
   constant slot llvm-module-aliases :: <sequence>
     = make(<stretchy-object-vector>);
-  constant slot llvm-module-metadatas :: <sequence>
+  constant slot llvm-module-named-metadata :: <sequence>
     = make(<stretchy-object-vector>);
-  
+
   constant slot llvm-module-dependent-libraries :: <sequence>
     = make(<stretchy-object-vector>);
 

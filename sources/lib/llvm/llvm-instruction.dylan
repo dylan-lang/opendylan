@@ -8,6 +8,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define abstract class <llvm-instruction> (<llvm-value>)
   constant slot llvm-instruction-operands :: <sequence>,
     init-value: #[], init-keyword: operands:;
+  constant slot llvm-instruction-metadata :: <list>,
+    init-value: #(), init-keyword: metadata:;
 end class;
 
 define class <llvm-binop-instruction> (<llvm-instruction>,

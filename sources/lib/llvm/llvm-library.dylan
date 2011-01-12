@@ -89,6 +89,17 @@ define module llvm
     $llvm-false,
     $llvm-true,
 
+    <llvm-metadata-value>,
+    <llvm-metadata-string>,
+    llvm-metadata-string,
+    <llvm-metadata-node>,
+    llvm-metadata-node-values,
+    <llvm-symbolic-metadata>,
+
+    <llvm-named-metadata>,
+    llvm-named-metadata-name,
+    llvm-named-metadata-operands,
+
     <llvm-global-value>,
     llvm-global-name,
     <llvm-global-variable>,
@@ -190,6 +201,7 @@ define module llvm
     llvm-module-globals,
     llvm-module-functions,
     llvm-module-aliases,
+    llvm-module-named-metadata,
     llvm-module-dependent-libraries,
     llvm-type-table,
     llvm-global-table,

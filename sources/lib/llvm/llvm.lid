@@ -9,6 +9,7 @@ Files:        llvm-library
 	      llvm-operator
 	      llvm-constant
 	      llvm-global
+	      llvm-metadata
 	      llvm-attribute
 	      llvm-instruction
 	      llvm-basic-block
