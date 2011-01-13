@@ -30,7 +30,7 @@ define emacs-command emacs-rex (command, package, thread-id, request-id)
     let result = apply(function, command.tail);
     list(#":return", list(#":ok", result), request-id);
   exception(e :: <error>)
-    format(*standard-error*, "Received error during evalution:\n%=\n", e);
+    format(*standard-error*, "Received error during evaluation:\n%=\n", e);
     //walk-stack();
     list(#":return", #(#":abort"), request-id);
   end;
