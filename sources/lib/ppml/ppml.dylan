@@ -133,7 +133,7 @@ define constant $line-break = ppml-break(space: 999);
 //               ccc
 //               ddd
 //
-//   The choice of layout depends on whethe the break-type attribute of the
+//   The choice of layout depends on whether the break-type attribute of the
 //   block is #"consistent" or #"inconsistent".  The third alternative is
 //   #"fit".  This suppresses all breaks and truncates the output if it 
 //   won't fit on a line.
@@ -545,7 +545,7 @@ end method format-to-ppml;
 // PPML Printer
 //
 
-//   When outputing ppml we need to keep track of the space left on the
+//   When outputting ppml we need to keep track of the space left on the
 //   current line and the current margin.  We store these values in a 
 //   <ppml-printer> object, along with the functions used to display text
 //   and line breaks.  
