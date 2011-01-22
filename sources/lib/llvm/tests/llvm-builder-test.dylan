@@ -224,6 +224,36 @@ define llvm-builder function-test ins--block ()
   //---*** Fill this in...
 end function-test ins--block;
 
+define llvm-builder function-test ins--dbg ()
+  let builder = make-builder-with-test-function();
+
+  let dbg-compile-unit
+    = llvm-make-dbg-compile-unit($DW-LANG-C99, "test.c", ".", "test");
+  let dbg-file
+    = llvm-make-dbg-file(dbg-compile-unit, "test.c", ".");
+  let dbg-function-type
+    = llvm-make-dbg-function-type(dbg-file, #f, #[]);
+  let dbg-function
+    = llvm-make-dbg-function(dbg-file,
+                             builder.llvm-builder-function.llvm-global-name,
+                             builder.llvm-builder-function.llvm-global-name,
+                             dbg-file,
+                             12,
+                             dbg-function-type,
+                             definition?: #t,
+                             function: builder.llvm-builder-function);
+  let dbg-lexical-block
+    = llvm-make-dbg-lexical-block(dbg-function, dbg-file, 14, 0);
+  ins--dbg(builder, 14, 23, dbg-lexical-block, #f);
+  ins--add(builder, 1111, 2222);
+  ins--ret(builder);
+  check-equal("ins--dbg disassembly with metadata",
+              #("entry:",
+                "%0 = add i32 1111, 2222, !dbg !0",
+                "ret void, !dbg !0"),
+              builder-test-function-disassembly(builder));
+end function-test ins--dbg;
+
 define llvm-builder function-test ins--add ()
   let builder = make-builder-with-test-function();
   ins--add(builder, 1111, 2222);

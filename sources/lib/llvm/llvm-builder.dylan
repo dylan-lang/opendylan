@@ -14,6 +14,8 @@ define open abstract primary class <llvm-builder> (<object>)
     init-value: #f;
   slot llvm-builder-basic-block :: false-or(<llvm-basic-block>),
     init-value: #f;
+  slot llvm-builder-dbg :: false-or(<llvm-named-metadata>),
+    init-value: #f;
 end class;
 
 define class <llvm-concrete-builder> (<llvm-builder>)
@@ -194,6 +196,32 @@ define inline method builder-insert
 end method;
 
 
+/// Metadata attachments
+
+define method ins--dbg
+    (builder :: <llvm-builder>,
+     line-number :: <integer>, column-number :: <integer>,
+     scope :: <llvm-metadata-value>,
+     original-scope :: false-or(<llvm-metadata-value>))
+ => ();
+  let node = make(<llvm-metadata-node>,
+                  node-values: vector(i32(line-number), i32(column-number),
+                                      scope, original-scope));
+  builder.llvm-builder-dbg
+    := make(<llvm-named-metadata>, name: "dbg", operands: list(node));
+end method;
+
+define inline function builder-metadata
+    (builder :: <llvm-builder>, metadata :: <list>)
+ => (augmented-metadata :: <list>);
+  if (builder.llvm-builder-dbg)
+    pair(builder.llvm-builder-dbg, metadata)
+  else
+    metadata
+  end if
+end function;
+
+
 /// Instruction definitions
 
 define macro instruction-set-definer
@@ -205,7 +233,8 @@ clauses:
 
   { binop ?:name; ... }
     => { define inline function "ins--" ## ?name
-             (builder :: <llvm-builder>, lhs, rhs, #rest options)
+             (builder :: <llvm-builder>, lhs, rhs,
+              #rest options, #key metadata :: <list> = #(), #all-keys)
           => (instruction :: <llvm-binop-instruction>);
            let lhs = llvm-builder-value(builder, lhs);
            let rhs = llvm-builder-value(builder, rhs);
@@ -214,26 +243,30 @@ clauses:
                           apply(make, <llvm-binop-instruction>,
                                 operator: ?#"name",
                                 operands: vector(lhs, rhs),
+                                metadata: builder-metadata(builder, metadata),
                                 options))
          end function;
          ... }
 
   { cast ?:name; ... }
     => { define inline function "ins--" ## ?name
-             (builder :: <llvm-builder>, value, type :: <llvm-type>)
+             (builder :: <llvm-builder>, value, type :: <llvm-type>,
+              #key metadata :: <list> = #())
           => (instruction :: <llvm-cast-instruction>);
            builder-insert(builder,
                           make(<llvm-cast-instruction>,
                                 operator: ?#"name",
                                 operands:
                                  vector(llvm-builder-value(builder, value)),
-                                type: type))
+                                type: type,
+                                metadata: builder-metadata(builder, metadata)))
          end function;
          ... }
 
   { icmp ?:name; ... }
     => { define inline function "ins--icmp-" ## ?name
-             (builder :: <llvm-builder>, lhs, rhs)
+             (builder :: <llvm-builder>, lhs, rhs,
+              #key metadata :: <list> = #())
           => (instruction :: <llvm-icmp-instruction>);
            let lhs = llvm-builder-value(builder, lhs);
            let rhs = llvm-builder-value(builder, rhs);
@@ -241,21 +274,24 @@ clauses:
            builder-insert(builder,
                           make(<llvm-icmp-instruction>,
                                 predicate: ?#"name",
-                                operands: vector(lhs, rhs)))
+                                operands: vector(lhs, rhs),
+                                metadata: builder-metadata(builder, metadata)))
          end function;
          ... }
 
   { fcmp ?:name; ... }
     => { define inline function "ins--fcmp-" ## ?name
-             (builder :: <llvm-builder>, lhs, rhs)
+             (builder :: <llvm-builder>, lhs, rhs,
+              #key metadata :: <list> = #())
           => (instruction :: <llvm-fcmp-instruction>);
            let lhs = llvm-builder-value(builder, lhs);
            let rhs = llvm-builder-value(builder, rhs);
            llvm-constrain-type(llvm-value-type(lhs), llvm-value-type(rhs));
            builder-insert(builder,
                           make(<llvm-fcmp-instruction>,
-                                predicate: ?#"name",
-                                operands: vector(lhs, rhs)))
+                               predicate: ?#"name",
+                               operands: vector(lhs, rhs),
+                               metadata: builder-metadata(builder, metadata)))
          end function;
          ... }
 
@@ -332,39 +368,47 @@ define instruction-set
   op gep (value, #rest indices)
     => make(<llvm-gep-instruction>,
             operands: map(curry(llvm-builder-value, builder),
-                          concatenate(vector(value), indices)));
+                          concatenate(vector(value), indices)),
+            metadata: builder-metadata(builder, #()));
 
   op gep-inbounds (value, #rest indices)
     => make(<llvm-gep-instruction>,
             in-bounds?: #t,
             operands: map(curry(llvm-builder-value, builder),
-                          concatenate(vector(value), indices)));
+                          concatenate(vector(value), indices)),
+            metadata: builder-metadata(builder, #()));
 
-  op \select (c, true, false)
+  op \select (c, true, false, #key metadata :: <list> = #())
     => let true = llvm-builder-value(builder, true);
        let false = llvm-builder-value(builder, false);
        llvm-constrain-type(llvm-value-type(true), llvm-value-type(false));
        make(<llvm-select-instruction>,
-            operands: vector(llvm-builder-value(builder, c), true, false));
+            operands: vector(llvm-builder-value(builder, c), true, false),
+            metadata: builder-metadata(builder, metadata));
 
-  op va-arg (va-list :: <llvm-value>, type :: <llvm-type>)
-    => make(<llvm-va-arg-instruction>, operands: vector(va-list), type: type);
+  op va-arg (va-list :: <llvm-value>, type :: <llvm-type>,
+             #key metadata :: <list> = #())
+    => make(<llvm-va-arg-instruction>, operands: vector(va-list), type: type,
+            metadata: builder-metadata(builder, metadata));
 
-  op extractelement (vec, index)
+  op extractelement (vec, index, #key metadata :: <list> = #())
     => make(<llvm-extractelement-instruction>,
             operands: vector(llvm-builder-value(builder, vec),
-                             llvm-builder-value(builder, index)));
+                             llvm-builder-value(builder, index)),
+            metadata: builder-metadata(builder, metadata));
 
-  op insertelement (vec, scalar, index)
+  op insertelement (vec, scalar, index, #key metadata :: <list> = #())
    => make(<llvm-insertelement-instruction>,
             operands: vector(llvm-builder-value(builder, vec),
                              llvm-builder-value(builder, scalar),
-                             llvm-builder-value(builder, index)));
+                             llvm-builder-value(builder, index)),
+            metadata: builder-metadata(builder, metadata));
 
   op shufflevector (vec1 :: <llvm-value>, vec2 :: <llvm-value>,
-                    mask :: <llvm-value>)
+                    mask :: <llvm-value>, #key metadata :: <list> = #())
     => make(<llvm-shufflevector-instruction>,
-            operands: vector(vec1, vec2, mask));
+            operands: vector(vec1, vec2, mask),
+            metadata: builder-metadata(builder, metadata));
 
   op phi (#rest operands)
     => let operands = map(curry(llvm-builder-value, builder), operands);
@@ -374,9 +418,12 @@ define instruction-set
          llvm-constrain-type(llvm-value-type(operands[i]), type);
          llvm-constrain-type(llvm-value-type(operands[i + 1]), $llvm-label-type)
        end for;
-       make(<llvm-phi-node>, operands: operands);
+       make(<llvm-phi-node>,
+            operands: operands,
+            metadata: builder-metadata(builder, #()));
 
-  op call (fnptrval :: <llvm-value>, args :: <sequence>, #rest options)
+  op call (fnptrval :: <llvm-value>, args :: <sequence>,
+           #rest options, #key metadata :: <list> = #())
     => let args = map(curry(llvm-builder-value, builder), args);
        let fnptrtype = type-forward(fnptrval.llvm-value-type);
        let return-type
@@ -395,75 +442,91 @@ define instruction-set
          apply(make, <llvm-call-instruction>,
                type: return-type,
                operands: concatenate(vector(fnptrval), args),
+               metadata: builder-metadata(builder, metadata),
                options)
        else
          apply(make, <llvm-call-instruction>,
                operands: concatenate(vector(fnptrval), args),
+               metadata: builder-metadata(builder, metadata),
                options)
        end if;
 
-  op alloca (type :: <llvm-type>, num-elements, #key alignment = 0)
+  op alloca (type :: <llvm-type>, num-elements,
+             #key alignment = 0, metadata :: <list> = #())
     => let pointer-type
          = make(<llvm-pointer-type>, pointee: type);
        make(<llvm-alloca-instruction>,
             type: pointer-type,
             alignment: alignment,
-            operands: vector(llvm-builder-value(builder, num-elements)));
+            operands: vector(llvm-builder-value(builder, num-elements)),
+            metadata: builder-metadata(builder, metadata));
 
-  op load (pointer, #rest options)
+  op load (pointer, #rest options, #key metadata :: <list> = #())
     => let ptrtype = type-forward(pointer.llvm-value-type);
        if (instance?(ptrtype, <llvm-pointer-type>))
          apply(make, <llvm-load-instruction>,
                type: type-forward(ptrtype.llvm-pointer-type-pointee),
                operands: vector(llvm-builder-value(builder, pointer)),
+               metadata: builder-metadata(builder, metadata),
                options)
        else
          apply(make, <llvm-load-instruction>,
                operands: vector(llvm-builder-value(builder, pointer)),
+               metadata: builder-metadata(builder, metadata),
                options)
        end if;
 
-  op store (value, pointer, #rest options)
+  op store (value, pointer, #rest options, #key metadata :: <list> = #())
     => apply(make, <llvm-store-instruction>,
              operands: vector(llvm-builder-value(builder, value),
                               llvm-builder-value(builder, pointer)),
+             metadata: builder-metadata(builder, metadata),
              options);
 
   op insertvalue (aggregate, value, #rest indices)
     => make(<llvm-insert-value-instruction>,
             operands: vector(llvm-builder-value(builder, aggregate),
                              llvm-builder-value(builder, value)),
-            indices: indices);
+            indices: indices,
+            metadata: builder-metadata(builder, #()));
 
   op extractvalue (aggregate, #rest indices)
     => make(<llvm-extract-value-instruction>,
             operands: vector(llvm-builder-value(builder, aggregate)),
-            indices: indices);
+            indices: indices,
+            metadata: builder-metadata(builder, #()));
 
   op ret (#rest operands)
     => make(<llvm-return-instruction>,
-            operands: map(curry(llvm-builder-value, builder), operands));
+            operands: map(curry(llvm-builder-value, builder), operands),
+            metadata: builder-metadata(builder, #()));
 
   op br (#rest operands)
     => make(<llvm-branch-instruction>,
-            operands: map(curry(llvm-builder-value, builder), operands));
+            operands: map(curry(llvm-builder-value, builder), operands),
+            metadata: builder-metadata(builder, #()));
 
   op switch (value, default, #rest jump-table)
     => make(<llvm-switch-instruction>,
             operands: map(curry(llvm-builder-value, builder),
-                          concatenate(vector(value, default), jump-table)));
+                          concatenate(vector(value, default), jump-table)),
+            metadata: builder-metadata(builder, #()));
 
-  op invoke (to, unwind, fnptrval, args :: <sequence>, #rest options)
+  op invoke (to, unwind, fnptrval, args :: <sequence>,
+             #rest options, #key metadata :: <list> = #())
     => apply(make, <llvm-invoke-instruction>,
              operands: map(curry(llvm-builder-value, builder),
                            concatenate(vector(to, unwind, fnptrval), args)),
+             metadata: builder-metadata(builder, metadata),
              options);
 
-  op unwind ()
-    => make(<llvm-unwind-instruction>);
+  op unwind (#key metadata :: <list> = #())
+    => make(<llvm-unwind-instruction>,
+            metadata: builder-metadata(builder, metadata));
 
-  op unreachable ()
-    => make(<llvm-unreachable-instruction>);
+  op unreachable (#key metadata :: <list> = #())
+    => make(<llvm-unreachable-instruction>,
+            metadata: builder-metadata(builder, metadata));
 end instruction-set;
 
 define inline function ins--tail-call

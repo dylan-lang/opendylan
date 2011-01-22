@@ -28,6 +28,7 @@ define module llvm-test-suite
   use operating-system;
   use llvm;
   use llvm-builder;
+  use llvm-debug;
   use llvm-asm-parser;
   use sequence-diff;
 

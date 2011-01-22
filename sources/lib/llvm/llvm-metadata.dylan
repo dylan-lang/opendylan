@@ -42,10 +42,11 @@ define sealed method initialize
  => ();
   unless (slot-initialized?(instance, llvm-metadata-function-local?))
     instance.llvm-metadata-function-local?
-      := any?(method (value :: <llvm-value>)
+      := any?(method (value :: false-or(<llvm-value>))
                 select (value by instance?)
                   <llvm-constant-value> => #f;
                   <llvm-metadata-value> => value.llvm-metadata-function-local?;
+                  singleton(#f)         => #f;
                   otherwise             => #t;
                 end select
               end,
