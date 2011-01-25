@@ -38,7 +38,7 @@ define class <llvm-metadata-node> (<llvm-metadata-value>)
 end class;
 
 define sealed method initialize
-    (instance :: <llvm-metadata-node>, #key #all-keys)
+    (instance :: <llvm-metadata-node>, #key, #all-keys)
  => ();
   unless (slot-initialized?(instance, llvm-metadata-function-local?))
     instance.llvm-metadata-function-local?
