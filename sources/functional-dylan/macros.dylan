@@ -13,7 +13,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 ///
 /// Evaluates body, with the variables bound to the inits.  Any call
 /// to name inside the body terminates the current execution of the
-/// body and repeats fropm the start, with the variables bound to the
+/// body and repeats from the start, with the variables bound to the
 /// arguments of the call.  (Similar to iterate, but the call to
 /// restart the loop doesn't have to be in tail position.)
 

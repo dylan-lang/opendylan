@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // When we don't know in advance how big a result collection will be we use
 // accumulators.   The basic idea is very simple.  We just allocate storage
 // in fixed-size blocks, chaining them together when required.  We then
-// provide specialised vesions of "as" to coerce them to a "real" collection
+// provide specialized versions of "as" to coerce them to a "real" collection
 // when we have finished accumulating the values.
 
 define constant $accumulator-size = 25; // Must be odd.
@@ -63,7 +63,7 @@ define method element-setter
 end method element-setter;
 
 
-// We use add! to add entries to the end of a sequence accumumulator.
+// We use add! to add entries to the end of a sequence accumulator.
 
 define method add!
     (accumulator :: <sequence-accumulator>, new-element :: <object>)

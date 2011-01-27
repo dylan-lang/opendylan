@@ -625,7 +625,7 @@ define serious-program-warning <clashing-inherited-slot-definitions>
   slot condition-owners,
     required-init-keyword: owners:;
   format-string 
-    "The distinct inherited slots of %=, %= with repective owners %=, "
+    "The distinct inherited slots of %=, %= with respective owners %=, "
     "share an accessor and may not be mixed in the same class.";
   format-arguments inheriting-class, slots, owners;
 end;
@@ -862,7 +862,7 @@ define method ^check-inheritance (class :: <&class>) => ()
         (<subclass-of-a-sealed-imported-class>, class, super)
     end
   end;
-  // Abstract/conrete violations: Concrete classes can't have abstract kids.
+  // Abstract/concrete violations: Concrete classes can't have abstract kids.
   if (^class-abstract?(class))
     for (super in ^direct-superclasses(class))
       if (~ ^class-abstract?(super))
@@ -1033,7 +1033,7 @@ define method note-CPL-inconsistency(c, class1, class2, witness1, witness2)
                  explain-precedes(witness2, witness1, class2)))
 end;
 
-// Predictate to check if c1 precedes c2 in the local precedence order of in
+// Predicate to check if c1 precedes c2 in the local precedence order of in
 define method precedes?(c1, c2, in)
   let c1-found? = #f;
   block (return)
