@@ -210,7 +210,8 @@ define method llvm-signature-types
   let parameter-types = make(<stretchy-object-vector>);
 
   // Required arguments
-  for (type in ^signature-required(sig))
+  for (type in ^signature-required(sig),
+       i from 0 below ^signature-number-required(sig))
     add!(parameter-types, llvm-reference-type(back-end, type));
   end for;
   // Optional arguments
