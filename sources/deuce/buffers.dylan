@@ -164,7 +164,7 @@ define method initialize
     (buffer :: <basic-buffer>, #key editor = frame-editor(*editor-frame*)) => ()
   next-method();
   let buffers = editor-buffers(editor);
-  add!(buffers, buffer)
+  editor-buffers(editor) := add!(buffers, buffer);
 end method initialize;
 
 

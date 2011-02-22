@@ -176,7 +176,7 @@ define sealed method do-save-buffers-dialog
 	= make(<list-box>,
 	       items: all-buffers,
 	       value: default-buffers,
-	       label-key: buffer-name,
+	       label-key: list-buffers-buffer-name,
 	       selection-mode: #"multiple",
 	       activate-callback:
 		 method (b)
@@ -303,6 +303,12 @@ define sealed method choose-buffers-dialog
 			   selection-mode: #"multiple")
 end method choose-buffers-dialog;
 
+define function list-buffers-buffer-name
+    (b :: <buffer>) => (name :: <string>)
+  concatenate(if (buffer-modified?(b)) "*  " else "   " end,
+              buffer-name(b))
+end function list-buffers-buffer-name;
+
 define sealed method do-choose-buffers-dialog
     (window :: <deuce-pane>,
      #key title = "Choose Document",
@@ -328,7 +334,7 @@ define sealed method do-choose-buffers-dialog
       = make(<list-box>,
 	     items: buffers,
 	     value: default,
-	     label-key: buffer-name,
+	     label-key: list-buffers-buffer-name,
 	     selection-mode: selection-mode,
 	     value-changed-callback:
 	       method (b)
