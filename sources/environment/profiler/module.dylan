@@ -11,8 +11,6 @@ define module environment-profiler
     exclude: { info-name };
 
   use duim;
-  use duim-internals,
-    import: { string-pluralize };
 
   use environment-protocols;
   use environment-reports;

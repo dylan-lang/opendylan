@@ -6,6 +6,11 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
+define function not-yet-implemented
+    () => ()
+  error("This method is not yet implemented.");
+end;
+
 // Returns the index at which ITEM was found
 define generic cl-position
     (sequence :: <sequence>, item,
@@ -329,6 +334,8 @@ define method cl-remove!
     finish := size(sequence)
   end;
   //--- Do this
+  not-yet-implemented();
+  #()
 end method cl-remove!;
 
 define method cl-remove!
@@ -386,6 +393,8 @@ define method cl-remove-if!
     finish := size(sequence)
   end;
   //--- Do this
+  not-yet-implemented();
+  #()
 end method cl-remove-if!;
 
 define method cl-remove-if!
@@ -472,6 +481,8 @@ define method cl-substitute!
     finish := size(sequence)
   end;
   //--- Do this
+  not-yet-implemented();
+  #()
 end method cl-substitute!;
 
 define method cl-substitute!
@@ -521,6 +532,8 @@ define method cl-substitute-if!
     finish := size(sequence)
   end;
   //--- Do this
+  not-yet-implemented();
+  #()
 end method cl-substitute-if!;
 
 define method cl-substitute-if!
@@ -573,6 +586,8 @@ define method cl-remove-duplicates!
     finish := size(sequence)
   end;
   //--- Do this
+  not-yet-implemented();
+  #()
 end method cl-remove-duplicates!;
 
 define method cl-remove-duplicates!

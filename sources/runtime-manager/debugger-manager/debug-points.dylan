@@ -249,7 +249,7 @@ end method;
 ///// <THREAD-SENSITIVE-BREAKPOINT>
 /////
 
-define open abstract class <thread-sensitive-breakpoint> (<breakpoint>)
+define /* open */ abstract class <thread-sensitive-breakpoint> (<breakpoint>)
 
   constant slot
     breakpoint-affected-thread :: <remote-thread>,

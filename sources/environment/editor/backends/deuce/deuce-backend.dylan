@@ -17,7 +17,7 @@ define sealed domain make (singleton(<deuce-editor>));
 define sealed domain initialize (<deuce-editor>);
 
 
-define open abstract class <deuce-editor-command>
+define /* open */ abstract class <deuce-editor-command>
     (<editor-command>, <basic-command>)
 end class <deuce-editor-command>;
 

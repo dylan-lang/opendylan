@@ -35,7 +35,8 @@ define module win32-environment
 	      hIcon-value };
 
   use duim-internals,
-    exclude: { position };
+    exclude: { position,
+               string-pluralize };
   use win32-duim;
 
   // Use these modules just to get bitmap and color constants

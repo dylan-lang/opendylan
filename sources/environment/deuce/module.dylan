@@ -15,7 +15,7 @@ define module environment-deuce
     exclude: { \command-definer,
                <help-command> };
   use duim-internals,
-    import: { string-pluralize, string-a-or-an,
+    import: { string-a-or-an,
 	      <collection-gadget-mixin>,
               gadget-label-size,
               read-event,

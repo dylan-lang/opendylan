@@ -5,7 +5,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
-define constant <C-HRESULT> = <C-raw-signed-long>;
+//define constant <C-HRESULT> = <C-raw-signed-long>;
 
 define C-pointer-type <LPHICON> => <HICON>;
 

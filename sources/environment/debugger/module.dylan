@@ -7,7 +7,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module environment-debugger
   use environment-imports,
-    exclude: { <buffer> };
+    exclude: { <buffer>,
+               string-pluralize };
 
   use duim;
   use duim-internals,
