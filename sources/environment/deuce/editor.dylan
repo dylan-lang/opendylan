@@ -184,8 +184,8 @@ define frame <environment-editor>
   keyword frame-class-name:, init-value: #"editor";
   keyword editor: = $environment-editor;
   // Note that these get overwritten by saved settings
-  keyword lines:   = 30;
-  keyword columns: = 72;
+  keyword lines:   = 50;
+  keyword columns: = 80;
   keyword icon: = $editor-window-small-icon;
 end frame <environment-editor>;
 
