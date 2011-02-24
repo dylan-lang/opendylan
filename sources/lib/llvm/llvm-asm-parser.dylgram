@@ -1657,7 +1657,8 @@ definition:
             make(<llvm-named-metadata>, name: arg$1, operands: #()));;
   %METADATAVAR %EQUALS %EXCLAIM %LBRACE metadata-list %RBRACE
     => add!(*llvm-parse-state*.parse-module.llvm-module-named-metadata,
-            make(<llvm-named-metadata>, name: arg$1, operands: arg$5));;
+            make(<llvm-named-metadata>, name: arg$1,
+	         operands: reverse!(arg$5)));;
 
   %EXCLAIM %EUINT64VAL %EQUALS types %EXCLAIM %LBRACE %RBRACE
     => do-define-metadata-value(arg$2,
