@@ -1055,15 +1055,23 @@ define llvm-builder function-test ins--call-intrinsic ()
     let builder = make-builder-with-test-function();
     let ptr1 = ins--alloca(builder, $llvm-i8-type, 20);
     let ptr2 = ins--alloca(builder, $llvm-i8-type, 20);
+    let ptr3 = ins--alloca(builder, $llvm-i8-type, 20);
     ins--call-intrinsic(builder, "llvm.memcpy",
                         vector(ptr1, ptr2, 20, 0, $llvm-false));
+    ins--call-intrinsic(builder, "llvm.memcpy",
+                        vector(ptr2, ptr3, 20, 0, $llvm-false));
     ins--ret(builder);
-    check-equal("ins--call-intrinsic @llvm.sqrt disassembly",
+
+    check-equal("ins--call-intrinsic @llvm.memcpy disassembly",
                 #("entry:",
                   "%0 = alloca i8, i32 20",
                   "%1 = alloca i8, i32 20",
+                  "%2 = alloca i8, i32 20",
                   "call void @llvm.memcpy.p0i8.p0i8.i32"
                     "(i8* nocapture %0, i8* nocapture %1, i32 20, i32 0,"
+                    " i1 false) nounwind",
+                  "call void @llvm.memcpy.p0i8.p0i8.i32"
+                    "(i8* nocapture %1, i8* nocapture %2, i32 20, i32 0,"
                     " i1 false) nounwind",
                   "ret void"),
                 builder-test-function-disassembly(builder));

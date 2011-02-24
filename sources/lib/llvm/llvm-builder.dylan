@@ -104,8 +104,7 @@ define method llvm-builder-declare-global
  => (value :: <llvm-constant-value>);
   let global-table = builder.llvm-builder-module.llvm-global-table;
   element(global-table, name, default: #f)
-    | llvm-builder-define-global(builder, name, value);
-  value
+    | llvm-builder-define-global(builder, name, value)
 end method;
 
 define function llvm-builder-global
@@ -542,7 +541,9 @@ define inline function ins--call-intrinsic
  => (instruction :: <llvm-instruction>);
   let args = map(curry(llvm-builder-value, builder), args);
   let function :: <llvm-function> = $llvm-intrinsic-makers[name](args);
-  llvm-builder-declare-global(builder, function.llvm-global-name, function);
+  let function :: <llvm-function>
+    = llvm-builder-declare-global(builder, function.llvm-global-name,
+                                  function);
   apply(ins--call, builder, function, args,
         attribute-list: function.llvm-function-attribute-list,
         options)
