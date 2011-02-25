@@ -119,10 +119,13 @@ end function;
 
 /// Local variables
 
+define constant <llvm-local-value>
+  = type-union(<llvm-instruction>, <llvm-basic-block>, <llvm-argument>);
+
 define function ins--local
     (builder :: <llvm-builder>, name :: <string>,
-     value :: type-union(<llvm-instruction>, <llvm-basic-block>))
- => (value :: type-union(<llvm-instruction>, <llvm-basic-block>));
+     value :: <llvm-local-value>)
+ => (value :: <llvm-local-value>);
   let builder-function
     = builder.llvm-builder-function
     | error("llvm-builder-function is not set");

@@ -29,6 +29,8 @@ define module-spec llvm ()
 end module-spec llvm;
 
 define module-spec llvm-builder ()
+  constant <llvm-local-value> :: <type>;
+
   open abstract primary instantiable class <llvm-builder> (<object>);
 
   function llvm-builder-basic-block
@@ -55,9 +57,8 @@ define module-spec llvm-builder ()
       (<llvm-builder>, <string>) => (<llvm-constant-value>);
 
   function ins--local
-      (<llvm-builder>, <string>,
-       type-union(<llvm-instruction>, <llvm-basic-block>))
-   => (type-union(<llvm-instruction>, <llvm-basic-block>));
+      (<llvm-builder>, <string>, <llvm-local-value>)
+   => (<llvm-local-value>);
   function llvm-builder-local (<llvm-builder>, <string>) => (<llvm-value>);
 
   function ins--block

@@ -229,6 +229,7 @@ define module llvm-builder
     llvm-builder-declare-global,
     llvm-builder-global,
 
+    <llvm-local-value>,
     ins--local,
     llvm-builder-local,
     

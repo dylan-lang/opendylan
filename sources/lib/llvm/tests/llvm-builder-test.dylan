@@ -77,8 +77,7 @@ define function make-builder-with-test-function
   builder.llvm-builder-function := test-function;
 
   for (argument in arguments)
-    test-function.llvm-function-value-table[argument.llvm-argument-name]
-      := argument
+    ins--local(builder, argument.llvm-argument-name, argument);
   end for;
 
   if (entry-block?)
@@ -211,6 +210,10 @@ end function-test llvm-builder-declare-global;
 define llvm-builder function-test llvm-builder-global ()
   //---*** Fill this in...
 end function-test llvm-builder-global;
+
+define llvm-builder constant-test <llvm-local-value> ()
+  //---*** Fill this in...
+end constant-test <llvm-local-value>;
 
 define llvm-builder function-test ins--local ()
   //---*** Fill this in...
