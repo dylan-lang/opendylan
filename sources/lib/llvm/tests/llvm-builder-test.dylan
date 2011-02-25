@@ -1110,13 +1110,13 @@ end function-test ins--load;
 define llvm-builder function-test ins--store ()
   let builder = make-builder-with-test-function();
   let float-type = make(<llvm-primitive-type>, kind: #"FLOAT");
-  let ptr = ins--alloca(builder, float-type, 1);
-  ins--store(builder, 1.0s0, ptr);
+  let ptr = ins--alloca(builder, float-type, 1, alignment: 4);
+  ins--store(builder, 1.0s0, ptr, alignment: 4);
   ins--ret(builder);
   check-equal("ins--store disassembly",
               #("entry:",
-                "%0 = alloca float",
-                "store float 1.000000e+00, float* %0",
+                "%0 = alloca float, align 4",
+                "store float 1.000000e+00, float* %0, align 4",
                 "ret void"),
               builder-test-function-disassembly(builder));
 end function-test ins--store;

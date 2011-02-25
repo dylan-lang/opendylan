@@ -422,7 +422,7 @@ define instruction-set
             metadata: builder-metadata(builder, #()));
 
   op call (fnptrval :: <llvm-value>, args :: <sequence>,
-           #rest options, #key metadata :: <list> = #())
+           #rest options, #key metadata :: <list> = #(), #all-keys)
     => let args = map(curry(llvm-builder-value, builder), args);
        let fnptrtype = type-forward(fnptrval.llvm-value-type);
        let return-type
@@ -460,7 +460,7 @@ define instruction-set
             operands: vector(llvm-builder-value(builder, num-elements)),
             metadata: builder-metadata(builder, metadata));
 
-  op load (pointer, #rest options, #key metadata :: <list> = #())
+  op load (pointer, #rest options, #key metadata :: <list> = #(), #all-keys)
     => let ptrtype = type-forward(pointer.llvm-value-type);
        if (instance?(ptrtype, <llvm-pointer-type>))
          apply(make, <llvm-load-instruction>,
@@ -475,7 +475,8 @@ define instruction-set
                options)
        end if;
 
-  op store (value, pointer, #rest options, #key metadata :: <list> = #())
+  op store (value, pointer, #rest options,
+            #key metadata :: <list> = #(), #all-keys)
     => apply(make, <llvm-store-instruction>,
              operands: vector(llvm-builder-value(builder, value),
                               llvm-builder-value(builder, pointer)),
@@ -512,7 +513,7 @@ define instruction-set
             metadata: builder-metadata(builder, #()));
 
   op invoke (to, unwind, fnptrval, args :: <sequence>,
-             #rest options, #key metadata :: <list> = #())
+             #rest options, #key metadata :: <list> = #(), #all-keys)
     => apply(make, <llvm-invoke-instruction>,
              operands: map(curry(llvm-builder-value, builder),
                            concatenate(vector(to, unwind, fnptrval), args)),
