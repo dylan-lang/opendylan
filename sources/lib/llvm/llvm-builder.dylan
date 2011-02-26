@@ -206,11 +206,22 @@ define method ins--dbg
      scope :: <llvm-metadata-value>,
      original-scope :: false-or(<llvm-metadata-value>))
  => ();
-  let node = make(<llvm-metadata-node>,
-                  node-values: vector(i32(line-number), i32(column-number),
-                                      scope, original-scope));
-  builder.llvm-builder-dbg
-    := make(<llvm-named-metadata>, name: "dbg", operands: list(node));
+  let current-dbg = builder.llvm-builder-dbg;
+  if (~current-dbg
+        | begin
+            let current-node = current-dbg.llvm-named-metadata-operands.first;
+            let current-values = current-node.llvm-metadata-node-values;
+            line-number ~= current-values[0].llvm-integer-constant-integer
+              | column-number ~= current-values[1].llvm-integer-constant-integer
+              | scope ~== current-values[2]
+              | original-scope ~== current-values[3]
+          end)
+    let node = make(<llvm-metadata-node>,
+                    node-values: vector(i32(line-number), i32(column-number),
+                                        scope, original-scope));
+    builder.llvm-builder-dbg
+      := make(<llvm-named-metadata>, name: "dbg", operands: list(node));
+  end if;
 end method;
 
 define inline function builder-metadata

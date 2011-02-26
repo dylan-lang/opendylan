@@ -440,7 +440,10 @@ define module llvm-debug
     llvm-make-dbg-file,
     llvm-make-dbg-function-type,
     llvm-make-dbg-function,
-    llvm-make-dbg-lexical-block;
+    llvm-make-dbg-lexical-block,
+    llvm-make-dbg-local-variable,
+    llvm-make-dbg-basic-type,
+    llvm-make-dbg-derived-type;
 end module;
 
 define module llvm-internals

@@ -24,6 +24,8 @@ define class <llvm-module> (<object>)
     = make(<stretchy-object-vector>);
   constant slot llvm-module-named-metadata :: <sequence>
     = make(<stretchy-object-vector>);
+  constant slot %named-metadata-table :: <mutable-explicit-key-collection>
+    = make(<string-table>);
 
   constant slot llvm-module-dependent-libraries :: <sequence>
     = make(<stretchy-object-vector>);
