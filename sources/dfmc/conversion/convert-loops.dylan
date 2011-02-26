@@ -435,8 +435,7 @@ define function step-2(env :: <environment>, states)
     end collecting;
 
   let merges = make(<simple-object-vector>, size: number-of-bvs);
-  let loop-c 
-    = make(<loop>, environment: lambda-environment(env), merges: merges);
+  let loop-c = make-in-environment(env, <loop>, merges: merges);
   let (first, last) = join-2x1!(first, last, loop-c);
 
   let body-f = #f; let body-l = #f;
@@ -882,7 +881,7 @@ define method convert-loop
             last :: false-or(<computation>), 
             ref :: false-or(<value-reference>));
   let loop-c
-    = make(<loop>, environment: lambda-environment(env), merges: #[]);
+    = make-in-environment(env, <loop>, merges: #[]);
 
   let (body-f, body-l) = convert(env, $ignore, body);
   let (continue-c, continue-t) 
