@@ -1,4 +1,5 @@
 Welcome to Open Dylan!
+======================
 
 This file is intended to give you a basic hint as to how to start
 hacking on Open Dylan and what is and is not included in the Open
@@ -6,7 +7,8 @@ Source version.
 
 
 
-WHAT WAS OPEN SOURCED
+What Was Open Sourced
+=====================
 
 Everything except for the files necessary to build Windows installers
 has been Open Sourced.
@@ -17,17 +19,22 @@ http://www.ravenbrook.com/project/mps/ and must be downloaded and
 built separately.
 
 
-
-HOW TO BUILD ON LINUX
+How to Build on Linux
+=====================
 
 Install the latest binary release of Open Dylan from
 http://www.opendylan.org/downloading.phtml
+::
 
   git clone git@github.com:dylan-lang/opendylan.git
+  cd opendylan
+  git submodule init
+  git submodule update
   export SRCDIR=`pwd`/opendylan        # must be absolute path!
   export BUILDDIR=<your build dir>
 
 Build the MPS (see below).
+::
 
   cd $SRCDIR
   ./autogen.sh
@@ -51,7 +58,8 @@ $BUILDDIR/Bootstrap.2/bin/minimal-console-compiler
 
 
 
-HOW TO BUILD ON WINDOWS
+How to Build on Windows
+=======================
 
 First build the garbage collector.  See the section on BUILDING THE
 MPS.
@@ -65,7 +73,8 @@ you will need Open Dylan installed.  You will also need VC++ 6.0.
 
 
 
-HOW TO BUILD ON DARWIN OR MAC OS X
+How to Build on Darwin or Mac OS X
+==================================
 
 Install the latest binary release of Open Dylan from
 http://www.opendylan.org/downloads/opendylan. Ensure the release's bin
@@ -73,13 +82,13 @@ directory is in your path.
 
 Install the expat library, followed by the XML::Parser Perl module. For the
 expat library, you can use a package manager like MacPorts or Fink. For the
-XML::Parser module, use CPAN:
+XML::Parser module, use CPAN::
 
   sudo cpan XML::Parser
 
 Install the Boehm garbage collection library. On the Mac, Open Dylan uses that
 instead of the MPS library. You can use a package manager or download, make,
-and install it directly. I have used the following configure settings:
+and install it directly. I have used the following configure settings::
 
   ./configure --enable-parallel-mark --enable-threads=posix
     --enable-large-config --enable-gc-debug USE_I686_PREFETCH=1
@@ -89,7 +98,7 @@ directory, from github.com, as described on http://www.opendylan.org/repository.
 
 In the directory of the downloaded source tree, run these commands (set the
 prefix to whatever you want, and set the correct path to the Boehm GC
-libraries):
+libraries)::
 
   ./autogen.sh
   ./configure --prefix=/usr/local/opendylan --with-gc=/usr/local
@@ -105,26 +114,29 @@ To avoid installing the release in the prefix location, replace the "sudo make
 install" command with "make bootstrap-stage-3". The final compiler will be put
 in the Bootstrap.3 directory in your source tree.
 
-BUILDING FOR 64 BITS
+
+Building for 64 Bits
+====================
 
 You can build Open Dylan for 64 bits, but it is not functional yet. The 64-bit
 compiler will crash when run. That said, to build the 64-bit compiler, ensure
 you have installed a compatible Boehm garbage collection library, include the
 --with-arch option in the configure command, and make the 2-stage-bootstrap or
-3-stage-bootstrap target:
+3-stage-bootstrap target::
 
   ./autogen.sh
   ./configure --prefix=/usr/local/opendylan --with-gc=/usr/local --with-arch=x86_64
   make 3-stage-bootstrap
 
 In addition, you will need to include the -arch x86_64 option whenever you build
-a Dylan library:
+a Dylan library::
 
   minimal-console-compiler -build -arch x86_64 my-project.lid
 
 
 
-GENERAL BUILD INSTRUCTIONS
+General Build Instructions
+==========================
 
 If you encounter problems during the build, please refer to the log
 files that are written in the 'logs' directory under each bootstrap
@@ -137,7 +149,8 @@ default target as described above (the 1-stage-bootstrap target).
 
 
 
-BUILDING THE MPS
+Building the MPS
+================
 
 The Open Dylan garbage collector is the Memory Pool System (MPS), from
 Ravenbrook, Ltd.  Download version 1.100.1 (or greater) of the MPS
@@ -145,12 +158,12 @@ from Ravenbrook at http://www.ravenbrook.com/project/mps/ and extract
 it to some directory.  cd to the 'code' subdirectory in the MPS
 sources and build the mmdw target:
 
-Windows:
+Windows::
 
   nmake /k /f w3i3mv.nmk mmdw.lib
   copy *.h+w3i3mv\ci\mmdw.lib %OPENDYLAN%\sources\lib\run-time\pentium-win32
 
-Linux:
+Linux::
 
   make -f lii4gc.gmk mmdw.a mpsplan.a
 
