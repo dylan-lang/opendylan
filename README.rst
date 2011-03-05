@@ -30,7 +30,7 @@ http://www.opendylan.org/downloading.phtml
   cd opendylan
   git submodule init
   git submodule update
-  export SRCDIR=`pwd`/opendylan        # must be absolute path!
+  export SRCDIR=`pwd`        # must be absolute path!
   export BUILDDIR=<your build dir>
 
 Build the MPS (see below).
