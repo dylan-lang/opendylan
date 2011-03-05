@@ -1,0 +1,15 @@
+[submodule "sources/lib/collection-extensions"]
+	path = sources/lib/collection-extensions
+	url = git@github.com:dylan-lang/collection-extensions.git
+[submodule "sources/qa/testworks"]
+	path = sources/qa/testworks
+	url = git@github.com:dylan-lang/testworks.git
+[submodule "sources/qa/testworks-report"]
+	path = sources/qa/testworks-report
+	url = git@github.com:dylan-lang/testworks-report.git
+[submodule "sources/qa/testworks-specs"]
+	path = sources/qa/testworks-specs
+	url = git@github.com:dylan-lang/testworks-specs.git
+[submodule "sources/qa/gui-testworks"]
+	path = sources/qa/gui-testworks
+	url = git@github.com:dylan-lang/gui-testworks.git
