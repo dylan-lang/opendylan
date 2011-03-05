@@ -23,8 +23,8 @@ HOW TO BUILD ON LINUX
 Install the latest binary release of Open Dylan from
 http://www.opendylan.org/downloading.phtml
 
-  svn co svn://anonsvn.gwydiondylan.org/scm/svn/dylan/trunk/fundev fundev
-  export SRCDIR=`pwd`/fundev        # must be absolute path!
+  git clone git@github.com:dylan-lang/opendylan.git
+  export SRCDIR=`pwd`/opendylan        # must be absolute path!
   export BUILDDIR=<your build dir>
 
 Build the MPS (see below).
@@ -57,7 +57,7 @@ First build the garbage collector.  See the section on BUILDING THE
 MPS.
 
 The main build script for Open Dylan on Windows is
-fundev/admin/builds/build-release.bat.  See that file for additional
+opendylan/admin/builds/build-release.bat.  See that file for additional
 notes and a list of prerequisites.  Notably, to do the initial build
 you will need Open Dylan installed.  You will also need VC++ 6.0.
 
@@ -85,7 +85,7 @@ and install it directly. I have used the following configure settings:
     --enable-large-config --enable-gc-debug USE_I686_PREFETCH=1
 
 Download the Open Dylan source tree, containing this file and the "sources"
-directory, from SVN as described on http://www.opendylan.org/repository.phtml.
+directory, from github.com, as described on http://www.opendylan.org/repository.phtml.
 
 In the directory of the downloaded source tree, run these commands (set the
 prefix to whatever you want, and set the correct path to the Boehm GC
@@ -148,7 +148,7 @@ sources and build the mmdw target:
 Windows:
 
   nmake /k /f w3i3mv.nmk mmdw.lib
-  copy *.h+w3i3mv\ci\mmdw.lib %FUNDEV%\sources\lib\run-time\pentium-win32
+  copy *.h+w3i3mv\ci\mmdw.lib %OPENDYLAN%\sources\lib\run-time\pentium-win32
 
 Linux:
 
@@ -158,7 +158,7 @@ Linux:
   See the readme.txt file in the MPS distribution for a list.
 
   The build products will be picked up by
-  fundev/sources/lib/run-time/pentium-linux/Makefile.in
+  opendylan/sources/lib/run-time/pentium-linux/Makefile.in
   assuming you pass the appropriate value for --with-mps.
 
   glibc >=2.3 and linux kernel >= 2.6 required
@@ -182,7 +182,7 @@ mmdw.lib or mmdw.a instead.
 
 The above instructions use the ci, "cool internal" variant of the MPS
 on Windows. On Linux, MPS_VARIANT=hi is specified in
-fundev/sources/lib/run-time/pentium-linux/Makefile.in.  The ci variant
+opendylan/sources/lib/run-time/pentium-linux/Makefile.in.  The ci variant
 does quite a lot of sanity checks all over, which heavily impacts
 performance, up to a factor of three in total application runtime.  If
 you're looking for performance figures, use the hi, "hot internal", or
