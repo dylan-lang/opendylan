@@ -43,13 +43,11 @@
 OPTIONS = 
 RUNTIME_OPTIONS = 
 PENTIUM_RUNTIME_OPTIONS = 
-CHECKOUT_OPTIONS =
 
 #
 # Application setup.
 #
 
-CHECKOUT = cvs-checkout
 IMPORT_PROJECT = import-project $(OPTIONS)
 BUILD_LIBRARY = build-library /nowarnings $(OPTIONS)
 BUILD_RUNTIME_LIBRARY = $(BUILD_LIBRARY) $(RUNTIME_OPTIONS)
@@ -57,7 +55,6 @@ BUILD_APPLICATION = build-application /nowarnings $(OPTIONS)
 ENSURE_RELEASE_AREA = ensure-release-area
 ENSURE_DIRECTORY = ensure-directory
 ENSURE_SOURCES = ensure-sources
-ENSURE_REGISTRY_ENTRY = ensure-registry-entry
 ENSURE_LIBRARY = ensure-library $(OPTIONS) /pentium-runtime "$(PENTIUM_RUNTIME_OPTIONS)" /runtime $(RUNTIME_OPTIONS)
 ENSURE_RUNTIME_LIBRARY = $(ENSURE_LIBRARY) /dll
 ENSURE_APPLICATION = ensure-application $(OPTIONS)
@@ -1287,590 +1284,35 @@ clean-all:
 #   $(REMOVE_DIRECTORY) $(OPEN_DYLAN_USER_ROOT)
 
 #
-# Check out sources (in alphabetical order)
-#
-
-checkout-benchmarks:
-  $(ENSURE_RELEASE_AREA)
-  $(CHECKOUT) benchmarks fundev/Sources/benchmarks $(BENCHMARKS_DIRECTORY)
-
-checkout-big-integers:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) generic-arithmetic fundev/Sources/lib/generic-arithmetic $(GENERIC_ARITHMETIC_SOURCE)
-  $(CHECKOUT) big-integers fundev/Sources/lib/big-integers $(BIG_INTEGERS_SOURCE)
-
-checkout-install-bin:
-  $(ENSURE_DIRECTORY) $(INSTALL_BIN_SOURCE)\..
-  $(CHECKOUT) install-x86-win32-bin fundev/install/x86-win32/bin $(INSTALL_BIN_SOURCE)
-
-checkout-build-x86-win32:
-  $(ENSURE_DIRECTORY) $(BUILD_DIRECTORY)
-  $(CHECKOUT) build-x86-win32 fundev/build/x86-win32 $(BUILD_X86_WIN32_SOURCE)
-
-checkout-build-system:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) build-system fundev/Sources/lib/build-system $(BUILD_SYSTEM_SOURCE)
-
-checkout-c-ffi:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) c-ffi fundev/Sources/lib/c-ffi $(C_FFI_SOURCE)
-
-checkout-c-lexer:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) c-lexer fundev/Sources/lib/c-lexer $(C_LEXER_SOURCE)
-
-checkout-channels:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) channels fundev/Sources/lib/channels $(CHANNELS_SOURCE)
-
-checkout-channels-tests:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(CHANNELS_SOURCE)
-  $(CHECKOUT) channels-tests fundev/Sources/lib/channels/tests $(CHANNELS_TESTS_SOURCE)
-
-checkout-collections:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(SOURCES_DIRECTORY)
-  $(CHECKOUT) collections fundev/Sources/collections $(COLLECTIONS_DIRECTORY)
-
-checkout-collections-tests-suite:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(COLLECTIONS_DIRECTORY)
-  $(CHECKOUT) collections-tests fundev/Sources/collections/tests $(COLLECTIONS_TESTS_SOURCE)
-
-checkout-command-shell:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) command-shell fundev/Sources/lib/command-shell $(COMMAND_SHELL_SOURCE)
-
-checkout-commands:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) commands fundev/Sources/lib/commands $(COMMANDS_SOURCE)
-
-checkout-common-dylan:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(SOURCES_DIRECTORY)
-  $(CHECKOUT) common-dylan fundev/Sources/common-dylan $(COMMON_DYLAN_SOURCE)
-
-checkout-common-dylan-test-suite:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(COMMON_DYLAN_SOURCE)
-  $(CHECKOUT) common-dylan-tests fundev/Sources/common-dylan/tests $(COMMON_DYLAN_TESTS_SOURCE)
-
-checkout-corba:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(SOURCES_DIRECTORY)
-  $(CHECKOUT) corba fundev/Sources/corba $(CORBA_DIRECTORY)
-  $(ENSURE_WRITEABLE_HDP_FILES) $(CORBA_DIRECTORY)
-
-checkout-corba-demos:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(CORBA_DIRECTORY)
-  $(CHECKOUT) corba-demos fundev/Sources/corba/demos $(CORBA_DEMOS_SOURCE)
-  $(ENSURE_WRITEABLE_HDP_FILES) $(CORBA_DEMOS_SOURCE)
-
-checkout-corba-tests:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(CORBA_DIRECTORY)
-  $(CHECKOUT) corba-tests fundev/Sources/corba/tests $(CORBA_TESTS_SOURCE)
-  $(ENSURE_WRITEABLE_HDP_FILES) $(CORBA_TESTS_SOURCE)
-
-checkout-create-id:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(APP_DIRECTORY)
-  $(CHECKOUT) create-id fundev/Sources/app/create-id $(CREATE_ID_SOURCE)
-
-checkout-cmu-test-suite:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(CMU_SOURCE)
-  $(CHECKOUT) cmu-test-suite fundev/Sources/partners/cmu/cmu-test-suite $(CMU_TEST_SUITE_SOURCE)
-
-checkout-console-examples:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(EXAMPLES_DIRECTORY)
-  $(CHECKOUT) console-examples fundev/Sources/examples/console $(CONSOLE_EXAMPLES_SOURCE)
-
-checkout-database-stress-tool:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(DATABASES_SOURCE)
-  $(CHECKOUT) database-stress-tool fundev/Sources/databases/tests/stress-tool $(DATABASE_STRESS_TOOL_SOURCE)
-
-checkout-database-viewer:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(DATABASE_EXAMPLES_DIRECTORY)
-  $(CHECKOUT) database-viewer fundev/Sources/examples/odbc/database-viewer $(DATABASE_VIEWER_SOURCE)
-
-checkout-databases:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(SOURCES_DIRECTORY)
-  $(CHECKOUT) databases fundev/Sources/databases $(DATABASES_SOURCE)
-
-checkout-deuce:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(SOURCES_DIRECTORY)
-  $(CHECKOUT) deuce fundev/Sources/deuce $(DEUCE_SOURCE)
-
-checkout-deuce-tests:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(DEUCE_SOURCE)
-  $(CHECKOUT) deuce-tests fundev/Sources/deuce/tests $(DEUCE_TESTS_SOURCE)
-
-checkout-dfmc:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(SOURCES_DIRECTORY)
-  $(CHECKOUT) dfmc fundev/Sources/dfmc $(DFMC_SOURCE)
-
-checkout-disasm:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) disasm fundev/Sources/lib/disasm $(DISASM_SOURCE)
-
-checkout-dispatch-profiler:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) dispatch-profiler fundev/Sources/lib/dispatch-profiler $(DISPATCH_PROFILER_SOURCE)
-
-checkout-dll-wrap:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(APP_DIRECTORY)
-  $(CHECKOUT) dll-wrap fundev/Sources/app/dll-wrap $(DLL_WRAP_SOURCE)
-
-checkout-dood:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) dood fundev/Sources/lib/dood $(DOOD_SOURCE)
-
-checkout-doc-examples:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(EXAMPLES_DIRECTORY)
-  $(CHECKOUT) documentation-examples fundev/Sources/examples/documentation $(DOCUMENTATION_EXAMPLES_SOURCE)
-
-checkout-documentation-examples: checkout-doc-examples
-
-checkout-duim:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(SOURCES_DIRECTORY)
-  $(CHECKOUT) duim fundev/Sources/duim $(DUIM_DIRECTORY)
-
-checkout-duim-examples:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(DUIM_DIRECTORY)
-  $(CHECKOUT) duim-examples fundev/Sources/duim/examples $(DUIM_EXAMPLES_SOURCE)
-
-checkout-duim-gl-demo:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(APP_DIRECTORY)
-  $(CHECKOUT) duim-gl-demo fundev/Sources/app/duim-gl-demo $(DUIM_GL_DEMO_SOURCE)
-
-checkout-duim-tests:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(DUIM_DIRECTORY)
-  $(CHECKOUT) duim-tests fundev/Sources/duim/tests $(DUIM_TESTS_SOURCE)
-
-checkout-dw:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(APP_DIRECTORY)
-  $(CHECKOUT) dw fundev/Sources/app/dw $(DW_SOURCE)
-
-checkout-dylan:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(SOURCES_DIRECTORY)
-  $(CHECKOUT) dylan fundev/Sources/dylan $(DYLAN_SOURCE)
-
-checkout-dylan-playground:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(APP_DIRECTORY)
-  $(CHECKOUT) dylan-playground fundev/Sources/app/dylan-playground $(DYLAN_PLAYGROUND_SOURCE)
-
-checkout-dylan-test-suite:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(QA_DIRECTORY)
-  $(CHECKOUT) dylan-test-suite fundev/Sources/dylan/tests $(DYLAN_TEST_SUITE_SOURCE)
-
-checkout-environment:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(SOURCES_DIRECTORY)
-  $(CHECKOUT) environment fundev/Sources/environment $(ENVIRONMENT_SOURCE)
-
-checkout-environment-tests:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(ENVIRONMENT_SOURCE)
-  $(CHECKOUT) environment-tests fundev/Sources/environment/tests $(ENVIRONMENT_TESTS_SOURCE)
-
-checkout-examples-css:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(EXAMPLES_DIRECTORY)
-  $(CHECKOUT) examples-css fundev/Sources/examples $(EXAMPLES_DIRECTORY) examples.css
-
-checkout-factorial:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(APP_DIRECTORY)
-  $(CHECKOUT) factorial fundev/Sources/app/factorial $(FACTORIAL_SOURCE)
-
-checkout-flying-squares:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(APP_DIRECTORY)
-  $(CHECKOUT) flying-squares fundev/Sources/app/flying-squares $(FLYING_SQUARES_SOURCE)
-
-checkout-gnu:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(SOURCES_DIRECTORY)
-  $(CHECKOUT) gnu fundev/Sources/gnu $(GNU_DIRECTORY)
-
-checkout-grammar-compiler:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) grammar-compiler fundev/Sources/lib/grammar-compiler $(GRAMMAR_COMPILER_SOURCE)
-
-checkout-gui-testworks:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(QA_DIRECTORY)
-  $(CHECKOUT) gui-testworks fundev/Sources/qa/gui-testworks $(GUI_TESTWORKS_SOURCE)
-
-checkout-functional-dylan:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(SOURCES_DIRECTORY)
-  $(CHECKOUT) functional-dylan fundev/Sources/functional-dylan $(FUNCTIONAL_DYLAN_SOURCE)
-
-checkout-functional-dylan-test-suite:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(FUNCTIONAL_DYLAN_SOURCE)
-  $(CHECKOUT) functional-dylan-tests fundev/Sources/functional-dylan/tests $(FUNCTIONAL_DYLAN_TESTS_SOURCE)
-
-checkout-harp:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(SOURCES_DIRECTORY)
-  $(CHECKOUT) harp fundev/Sources/harp $(HARP_SOURCE)
-
-checkout-hello-world:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(APP_DIRECTORY)
-  $(CHECKOUT) hello-world fundev/Sources/app/hello-world $(HELLO_WORLD_SOURCE)
-
-checkout-install-lib:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(INSTALL_LIB_SOURCE)\..
-  $(CHECKOUT) install-x86-win32-lib fundev/install/x86-win32/lib $(INSTALL_LIB_SOURCE)
-
-checkout-io:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(SOURCES_DIRECTORY)
-  $(CHECKOUT) io fundev/Sources/io $(IO_DIRECTORY)
-
-checkout-io-test-suite:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(IO_DIRECTORY)
-  $(CHECKOUT) io-tests fundev/Sources/io/tests $(IO_TESTS_SOURCE)
-
-checkout-library-packs:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(SOURCES_DIRECTORY)
-  $(CHECKOUT) library-packs fundev/Sources/Library-Packs $(LIBRARY_PACKS_DIRECTORY)
-
-checkout-map-statistics:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(TOOLS_DIRECTORY)
-  $(CHECKOUT) map-statistics fundev/Sources/tools/map-statistics $(MAP_STATISTICS_SOURCE)
-
-checkout-memory-manager:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) memory-manager fundev/Sources/lib/memory-manager $(MEMORY_MANAGER_SOURCE)
-
-checkout-metering:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) metering fundev/Sources/lib/metering $(METERING_SOURCE)
-
-checkout-midi:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) midi fundev/Sources/lib/midi $(MIDI_SOURCE)
-
-checkout-motley:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) motley fundev/Sources/lib/motley $(MOTLEY_SOURCE)
-
-checkout-naming-service:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(CORBA_SERVICES_DIRECTORY)
-  $(CHECKOUT) corba-naming-service fundev/Sources/corba/services/naming $(NAMING_SERVICE_SOURCE)
-
-checkout-network:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(SOURCES_DIRECTORY)
-  $(CHECKOUT) network fundev/Sources/network $(NETWORK_DIRECTORY)
-
-checkout-network-examples:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(NETWORK_DIRECTORY)
-  $(CHECKOUT) network-examples fundev/Sources/network/examples $(NETWORK_EXAMPLES_SOURCE)
-
-checkout-ole:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(SOURCES_DIRECTORY)
-  $(CHECKOUT) ole fundev/Sources/ole $(OLE_DIRECTORY)
-
-checkout-ole-automation-tests:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(OLE_AUTOMATION_SOURCE)
-  $(CHECKOUT) ole-automation-tests fundev/Sources/ole/ole-automation/tests $(OLE_AUTOMATION_TESTS_SOURCE)
-
-checkout-ole-examples:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(OLE_DIRECTORY)
-  $(CHECKOUT) ole-examples fundev/Sources/ole/examples $(OLE_EXAMPLES_DIRECTORY)
-
-checkout-orb:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(CORBA_DIRECTORY)
-  $(CHECKOUT) orb fundev/Sources/corba/orb $(ORB_SOURCE)
-  $(ENSURE_WRITEABLE_HDP_FILES) $(ORB_SOURCE)
-
-checkout-parser-generator:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) parser-generator fundev/Sources/lib/parser-generator $(PARSER_GENERATOR_SOURCE)
-
-checkout-parser-compiler:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(APP_DIRECTORY)
-  $(CHECKOUT) parser-compiler fundev/Sources/app/parser-compiler $(PARSER_COMPILER_SOURCE)
-
-checkout-parser-run-time:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) parser-run-time fundev/Sources/lib/parser-run-time $(PARSER_RUN_TIME_SOURCE)
-
-checkout-pentium-run-time:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) run-time fundev/Sources/lib/run-time $(RUN_TIME_SOURCE)
-  $(CHECKOUT) pentium-run-time fundev/Sources/lib/run-time/pentium-win32 $(PENTIUM_RUN_TIME_SOURCE)
-
-checkout-plonker:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(APP_DIRECTORY)
-  $(CHECKOUT) plonker fundev/Sources/app/plonker $(PLONKER_SOURCE)
-
-checkout-ppml:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) ppml fundev/Sources/lib/ppml $(PPML_SOURCE)
-
-checkout-project-manager:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(SOURCES_DIRECTORY)
-  $(CHECKOUT) project-manager fundev/Sources/project-manager $(PROJECT_MANAGER_SOURCE)
-
-checkout-qa-scripts:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(QA_DIRECTORY)
-  $(CHECKOUT) qa-scripts fundev/Sources/qa/scripts $(QA_SCRIPTS_SOURCE)
-
-checkout-release-info:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) release-info fundev/Sources/lib/release-info $(RELEASE_INFO_SOURCE)
-
-checkout-runtime-manager:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(SOURCES_DIRECTORY)
-  $(CHECKOUT) runtime-manager fundev/Sources/runtime-manager $(RUNTIME_MANAGER_SOURCE)
-
-checkout-scepter:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(CORBA_DIRECTORY)
-  $(CHECKOUT) scepter fundev/Sources/corba/scepter $(SCEPTER_SOURCE)
-  $(ENSURE_WRITEABLE_HDP_FILES) $(SCEPTER_SOURCE)
-
-checkout-source-records:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) source-records fundev/Sources/lib/source-records $(SOURCE_RECORDS_SOURCE)
-
-checkout-system:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(SOURCES_DIRECTORY)
-  $(CHECKOUT) system fundev/Sources/system $(SYSTEM_DIRECTORY)
-
-checkout-system-test-suite:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(SYSTEM_DIRECTORY)
-  $(CHECKOUT) system-tests fundev/Sources/system/tests $(SYSTEM_TESTS_SOURCE)
-
-checkout-t-lists:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) t-lists fundev/Sources/lib/t-lists $(T_LISTS_SOURCE)
-
-checkout-templates:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(TOOLS_DIRECTORY)
-  $(CHECKOUT) templates fundev/Sources/tools/templates $(TEMPLATES_SOURCE)
-
-checkout-test-apps:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(QA_DIRECTORY)
-  $(CHECKOUT) test-apps fundev/Sources/qa/test-apps $(TEST_APPS_SOURCE)
-
-checkout-testworks-report:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(QA_DIRECTORY)
-  $(CHECKOUT) testworks-report fundev/Sources/qa/testworks-report $(TESTWORKS_REPORT_SOURCE)
-
-checkout-test-suites:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(QA_DIRECTORY)
-  $(CHECKOUT) test-suites fundev/Sources/qa/test-suites $(TEST_SUITES_SOURCE)
-
-checkout-testworks:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(QA_DIRECTORY)
-  $(CHECKOUT) testworks fundev/Sources/qa/testworks $(TESTWORKS_SOURCE)
-
-checkout-testworks-specs:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(QA_DIRECTORY)
-  $(CHECKOUT) testworks-specs fundev/Sources/qa/testworks-specs $(TESTWORKS_SPECS_SOURCE)
-
-checkout-testworks-test-suite:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(TESTWORKS_SOURCE)
-  $(CHECKOUT) testworks-tests fundev/Sources/qa/testworks/tests $(TESTWORKS_TESTS_SOURCE)
-  
-checkout-variable-search:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) variable-search fundev/Sources/lib/variable-search $(VARIABLE_SEARCH_SOURCE)
-
-checkout-walker:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(LIB_DIRECTORY)
-  $(CHECKOUT) walker fundev/Sources/lib/walker $(WALKER_SOURCE)
-
-checkout-warnings-test-suite:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(QA_DIRECTORY)
-  $(CHECKOUT) warnings-test-suite fundev/Sources/qa/warnings-test-suite $(WARNINGS_TEST_SUITE_SOURCE)
-
-checkout-windows-ffi-example:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(APP_DIRECTORY)
-  $(CHECKOUT) windows-ffi-example fundev/Sources/app/windows-ffi-example $(WINDOWS_FFI_EXAMPLE_SOURCE)
-
-checkout-windows-gadgets-example:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(APP_DIRECTORY)
-  $(CHECKOUT) windows-gadgets-example fundev/Sources/app/windows-gadgets-example $(WINDOWS_GADGETS_EXAMPLE_SOURCE)
-
-checkout-windows-resource-example:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(APP_DIRECTORY)
-  $(CHECKOUT) windows-resource-example fundev/Sources/app/windows-resource-example $(WINDOWS_RESOURCE_EXAMPLE_SOURCE)
-
-checkout-win32:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(SOURCES_DIRECTORY)
-  $(CHECKOUT) win32 fundev/Sources/win32 $(WIN32_DIRECTORY)
-
-checkout-win32-tests:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(WIN32_DIRECTORY)
-  $(CHECKOUT) win32-tests fundev/Sources/win32/tests $(WIN32_TESTS_SOURCE)
-
-checkout-with-splash-screen:
-  $(ENSURE_RELEASE_AREA)
-  $(ENSURE_DIRECTORY) $(APP_DIRECTORY)
-  $(CHECKOUT) with-splash-screen fundev/Sources/app/with-splash-screen $(WITH_SPLASH_SCREEN_SOURCE)
-
-checkout-compiler: checkout-user-libraries checkout-internal-libraries checkout-release-info checkout-dfmc checkout-variable-search checkout-walker checkout-metering checkout-motley checkout-project-manager checkout-source-records checkout-ppml checkout-parser-run-time checkout-memory-manager checkout-harp checkout-build-system checkout-dood checkout-dw checkout-command-shell
-
-checkout-testworks-libraries: checkout-testworks checkout-testworks-specs checkout-gui-testworks
-
-checkout-internal-libraries: checkout-channels checkout-commands
-
-checkout-functional-dylan-libraries: checkout-dylan checkout-common-dylan checkout-functional-dylan
-checkout-collection-libraries: checkout-collections
-checkout-io-libraries: checkout-io
-checkout-system-libraries: checkout-commands checkout-system
-
-checkout-user-libraries: checkout-pentium-run-time checkout-functional-dylan-libraries checkout-c-ffi checkout-collection-libraries checkout-io-libraries checkout-system-libraries checkout-big-integers
-
-checkout-basic-release: checkout-user-libraries checkout-compiler checkout-duim checkout-environment
-checkout-enhanced-release: checkout-basic-release
-checkout-internal-release: checkout-enhanced-release checkout-internal-libraries
-checkout-minimal-internal-release: checkout-basic-release
-
-checkout-console-examples: checkout-hello-world checkout-factorial
-checkout-win32-examples: checkout-windows-ffi-example checkout-windows-gadgets-example
-checkout-basic-examples: checkout-console-examples checkout-win32-examples checkout-duim-examples checkout-duim-tests
-
-checkout-network-examples: checkout-network
-checkout-enhanced-examples: checkout-basic-examples checkout-ole-examples checkout-duim-ole-examples checkout-network-examples
-
-checkout-internal-examples: checkout-enhanced-examples
-
-#
 # Ensure sources
 #
 
 dylan-sources:
   $(ENSURE_SOURCES) dylan $(DYLAN_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) dylan x86-win32
 
 common-dylan-sources:
   $(ENSURE_SOURCES) common-dylan $(COMMON_DYLAN_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) common-dylan x86-win32
 
 functional-dylan-sources:
   $(ENSURE_SOURCES) functional-dylan $(FUNCTIONAL_DYLAN_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) functional-dylan x86-win32
 
 c-ffi-sources:
   $(ENSURE_SOURCES) c-ffi $(C_FFI_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) c-ffi x86-win32
 
 collections-sources:
   $(ENSURE_SOURCES) collections $(COLLECTIONS_DIRECTORY)
-  $(ENSURE_REGISTRY_ENTRY) collections x86-win32
 
 io-sources:
   $(ENSURE_SOURCES) io $(IO_DIRECTORY)
-  $(ENSURE_REGISTRY_ENTRY) io x86-win32
 
 system-sources:
   $(ENSURE_SOURCES) system $(SYSTEM_DIRECTORY)
-  $(ENSURE_REGISTRY_ENTRY) system x86-win32
 
 big-integers-sources:
   $(ENSURE_SOURCES) big-integers $(BIG_INTEGERS_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) generic-arithmetic x86-win32
-  $(ENSURE_REGISTRY_ENTRY) big-integers x86-win32
 
 duim-sources:
   $(ENSURE_SOURCES) duim $(DUIM_DIRECTORY)
-  $(ENSURE_REGISTRY_ENTRY) duim-utilities x86-win32
-  $(ENSURE_REGISTRY_ENTRY) duim-geometry x86-win32
-  $(ENSURE_REGISTRY_ENTRY) duim-dcs x86-win32
-  $(ENSURE_REGISTRY_ENTRY) duim-sheets x86-win32
-  $(ENSURE_REGISTRY_ENTRY) duim-graphics x86-win32
-  $(ENSURE_REGISTRY_ENTRY) duim-layouts x86-win32
-  $(ENSURE_REGISTRY_ENTRY) duim-gadgets x86-win32
-  $(ENSURE_REGISTRY_ENTRY) duim-frames x86-win32
-  $(ENSURE_REGISTRY_ENTRY) duim-core x86-win32
-  $(ENSURE_REGISTRY_ENTRY) duim-recording x86-win32
-  $(ENSURE_REGISTRY_ENTRY) duim-extended-geometry x86-win32
-  $(ENSURE_REGISTRY_ENTRY) duim-gadget-panes x86-win32
-  $(ENSURE_REGISTRY_ENTRY) win32-duim x86-win32
-  $(ENSURE_REGISTRY_ENTRY) duim x86-win32
 
 basic-release-sources: dylan-sources common-dylan-sources functional-dylan-sources c-ffi-sources collections-sources io-sources system-sources big-integers-sources duim-sources
 enhanced-release-sources: basic-release-sources
@@ -1944,7 +1386,6 @@ $(C_FFI):
 $(CHANNELS):
   $(ENSURE_RUNTIME_LIBRARY) $(FUNCTIONAL_DYLAN_DLL) functional-dylan
   $(ENSURE_SOURCES) channels $(CHANNELS_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) channels x86-win32
   $(BUILD_RUNTIME_LIBRARY) channels $(CHANNELS_DLL)
 
 $(COLLECTIONS):
@@ -1955,7 +1396,6 @@ $(COLLECTIONS):
 $(COMMANDS):
   $(ENSURE_RUNTIME_LIBRARY) $(FUNCTIONAL_DYLAN_DLL) functional-dylan
   $(ENSURE_SOURCES) commands $(COMMANDS_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) commands x86-win32
   $(BUILD_RUNTIME_LIBRARY) commands $(COMMANDS_DLL)
 
 $(DOOD):
@@ -1966,10 +1406,6 @@ $(DOOD):
   $(ENSURE_SOURCES) walker $(WALKER_SOURCE)
   $(ENSURE_SOURCES) dfmc $(DFMC_SOURCE)
   $(ENSURE_SOURCES) dood $(DOOD_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) variable-search x86-win32
-  $(ENSURE_REGISTRY_ENTRY) walker x86-win32
-  $(ENSURE_REGISTRY_ENTRY) dfmc-mangling x86-win32
-  $(ENSURE_REGISTRY_ENTRY) dood x86-win32
   $(BUILD_RUNTIME_LIBRARY) dood $(DOOD_DLL)
 
 $(IO):
@@ -1981,7 +1417,6 @@ $(NETWORK):
   $(ENSURE_RUNTIME_LIBRARY) $(C_FFI_DLL) c-ffi
   $(ENSURE_RUNTIME_LIBRARY) $(IO_DLL) io
   $(ENSURE_SOURCES) network $(NETWORK_DIRECTORY)
-  $(ENSURE_REGISTRY_ENTRY) network x86-win32
   $(BUILD_RUNTIME_LIBRARY) network $(NETWORK_DLL)
 
 $(SYSTEM):
@@ -1994,102 +1429,86 @@ $(SYSTEM):
 $(WIN32_COMMON):
   $(ENSURE_RUNTIME_LIBRARY) $(C_FFI_DLL) c-ffi
   $(ENSURE_SOURCES) win32 $(WIN32_DIRECTORY)
-  $(ENSURE_REGISTRY_ENTRY) win32-common x86-win32
   $(BUILD_RUNTIME_LIBRARY) win32-common $(WIN32_COMMON_DLL)
 
 $(WIN32_CONTROLS):
   $(ENSURE_RUNTIME_LIBRARY) $(WIN32_COMMON_DLL) win32-common
   $(ENSURE_SOURCES) win32 $(WIN32_DIRECTORY)
-  $(ENSURE_REGISTRY_ENTRY) win32-controls x86-win32
   $(BUILD_RUNTIME_LIBRARY) win32-controls $(WIN32_CONTROLS_DLL)
 
 $(WIN32_DDE):
   $(ENSURE_RUNTIME_LIBRARY) $(WIN32_COMMON_DLL) win32-common
   $(ENSURE_SOURCES) win32 $(WIN32_DIRECTORY)
-  $(ENSURE_REGISTRY_ENTRY) win32-dde x86-win32
   $(BUILD_RUNTIME_LIBRARY) win32-dde $(WIN32_DDE_DLL)
 
 $(WIN32_DIALOG):
   $(ENSURE_RUNTIME_LIBRARY) $(WIN32_COMMON_DLL) win32-common
   $(ENSURE_SOURCES) win32 $(WIN32_DIRECTORY)
-  $(ENSURE_REGISTRY_ENTRY) win32-dialog x86-win32
   $(BUILD_RUNTIME_LIBRARY) win32-dialog $(WIN32_DIALOG_DLL)
 
 $(WIN32_GDI):
   $(ENSURE_RUNTIME_LIBRARY) $(WIN32_COMMON_DLL) win32-common
   $(ENSURE_SOURCES) win32 $(WIN32_DIRECTORY)
-  $(ENSURE_REGISTRY_ENTRY) win32-gdi x86-win32
   $(BUILD_RUNTIME_LIBRARY) win32-gdi $(WIN32_GDI_DLL)
 
 $(WIN32_HTML_HELP):
   $(MAKE) htmlhelp
   $(ENSURE_RUNTIME_LIBRARY) $(WIN32_USER_DLL) win32-user
   $(ENSURE_SOURCES) win32 $(WIN32_DIRECTORY)
-  $(ENSURE_REGISTRY_ENTRY) win32-html-help x86-win32
   $(BUILD_RUNTIME_LIBRARY) win32-html-help $(WIN32_HTML_HELP_DLL)
 
 $(WIN32_KERNEL):
   $(ENSURE_RUNTIME_LIBRARY) $(WIN32_COMMON_DLL) win32-common
   $(ENSURE_SOURCES) win32 $(WIN32_DIRECTORY)
-  $(ENSURE_REGISTRY_ENTRY) win32-kernel x86-win32
   $(BUILD_RUNTIME_LIBRARY) win32-kernel $(WIN32_KERNEL_DLL)
 
 $(WIN32_REGISTRY):
   $(ENSURE_RUNTIME_LIBRARY) $(WIN32_COMMON_DLL) win32-common
   $(ENSURE_RUNTIME_LIBRARY) $(WIN32_KERNEL_DLL) win32-kernel
   $(ENSURE_SOURCES) win32 $(WIN32_DIRECTORY)
-  $(ENSURE_REGISTRY_ENTRY) win32-registry x86-win32
   $(BUILD_RUNTIME_LIBRARY) win32-registry $(WIN32_REGISTRY_DLL)
 
 $(WIN32_RESOURCES):
   $(ENSURE_RUNTIME_LIBRARY) $(IO_DLL) io
   $(ENSURE_RUNTIME_LIBRARY) $(WIN32_USER_DLL) win32-user
   $(ENSURE_SOURCES) win32 $(WIN32_DIRECTORY)
-  $(ENSURE_REGISTRY_ENTRY) win32-resources x86-win32
   $(BUILD_RUNTIME_LIBRARY) win32-resources $(WIN32_RESOURCES_DLL)
 
 $(WIN32_RICH_EDIT):
   $(ENSURE_RUNTIME_LIBRARY) $(WIN32_COMMON_DLL) win32-common
   $(ENSURE_SOURCES) win32 $(WIN32_DIRECTORY)
-  $(ENSURE_REGISTRY_ENTRY) win32-rich-edit x86-win32
   $(BUILD_RUNTIME_LIBRARY) win32-rich-edit $(WIN32_RICH_EDIT_DLL)
 
 $(WIN32_SHELL):
   $(ENSURE_RUNTIME_LIBRARY) $(WIN32_USER_DLL) win32-user
   $(ENSURE_SOURCES) win32 $(WIN32_DIRECTORY)
-  $(ENSURE_REGISTRY_ENTRY) win32-shell x86-win32
   $(BUILD_RUNTIME_LIBRARY) win32-shell $(WIN32_SHELL_DLL)
 
 $(WIN32_USER):
   $(ENSURE_RUNTIME_LIBRARY) $(WIN32_KERNEL_DLL) win32-kernel
   $(ENSURE_RUNTIME_LIBRARY) $(WIN32_GDI_DLL) win32-gdi
   $(ENSURE_SOURCES) win32 $(WIN32_DIRECTORY)
-  $(ENSURE_REGISTRY_ENTRY) win32-user x86-win32
   $(BUILD_RUNTIME_LIBRARY) win32-user $(WIN32_USER_DLL)
 
 $(WIN32_VERSION):
   $(ENSURE_RUNTIME_LIBRARY) $(WIN32_USER_DLL) win32-user
   $(ENSURE_SOURCES) win32 $(WIN32_DIRECTORY)
-  $(ENSURE_REGISTRY_ENTRY) win32-version x86-win32
   $(BUILD_RUNTIME_LIBRARY) win32-version $(WIN32_VERSION_DLL)
 
 
 $(WIN32_GL):
   $(ENSURE_RUNTIME_LIBRARY) $(WIN32_COMMON_DLL) win32-common
   $(ENSURE_SOURCES) win32 $(WIN32_DIRECTORY)
-  $(ENSURE_REGISTRY_ENTRY) win32-gl x86-win32
   $(BUILD_RUNTIME_LIBRARY) win32-gl $(WIN32_GL_DLL)
 
 $(WIN32_GLU):
   $(ENSURE_RUNTIME_LIBRARY) $(WIN32_GL_DLL) win32-gl
   $(ENSURE_SOURCES) win32 $(WIN32_DIRECTORY)
-  $(ENSURE_REGISTRY_ENTRY) win32-glu x86-win32
   $(BUILD_RUNTIME_LIBRARY) win32-glu $(WIN32_GLU_DLL)
 
 $(WIN32_MULTIMEDIA):
   $(ENSURE_RUNTIME_LIBRARY) $(WIN32_USER_DLL) win32-user
   $(ENSURE_SOURCES) win32 $(WIN32_DIRECTORY)
-  $(ENSURE_REGISTRY_ENTRY) win32-multimedia x86-win32
   $(BUILD_RUNTIME_LIBRARY) win32-multimedia $(WIN32_MULTIMEDIA_DLL)
 
 
@@ -2098,39 +1517,33 @@ $(C_LEXER):
   $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
   $(ENSURE_LIBRARY) t-lists
   $(ENSURE_SOURCES) c-lexer $(C_LEXER_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) c-lexer generic
   $(BUILD_LIBRARY) c-lexer
 
 $(COMMAND_SHELL):
   $(ENSURE_RUNTIME_LIBRARY) $(IO_DLL) io
   $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
   $(ENSURE_SOURCES) command-shell $(COMMAND_SHELL_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) command-shell generic
   $(BUILD_LIBRARY) command-shell
 
 $(GRAMMAR_COMPILER):
   $(ENSURE_RUNTIME_LIBRARY) $(FUNCTIONAL_DYLAN_DLL) functional-dylan
   $(ENSURE_SOURCES) grammar-compiler $(GRAMMAR_COMPILER_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) grammar-compiler generic
   $(BUILD_LIBRARY) grammar-compiler
 
 $(MIDI):
   $(ENSURE_RUNTIME_LIBRARY) $(COLLECTIONS_DLL) collections
   $(ENSURE_RUNTIME_LIBRARY) $(WIN32_MULTIMEDIA_DLL) win32-multimedia
   $(ENSURE_SOURCES) midi $(MIDI_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) midi x86-win32
   $(BUILD_RUNTIME_LIBRARY) midi $(MIDI_DLL)
 
 $(PARSER_RUN_TIME):
   $(ENSURE_RUNTIME_LIBRARY) $(FUNCTIONAL_DYLAN_DLL) functional-dylan
   $(ENSURE_SOURCES) parser-run-time $(PARSER_RUN_TIME_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) parser-run-time generic
   $(BUILD_LIBRARY) parser-run-time
 
 $(T_LISTS):
   $(ENSURE_RUNTIME_LIBRARY) $(IO_DLL) io
   $(ENSURE_SOURCES) t-lists $(T_LISTS_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) t-lists generic
   $(BUILD_LIBRARY) t-lists
 
 
@@ -2146,11 +1559,6 @@ $(GTK):
   $(ENSURE_RUNTIME_LIBRARY) $(C_FFI_DLL) c-ffi
   $(MAKE) gtk-lib
   $(ENSURE_SOURCES) gnu $(GNU_DIRECTORY)
-  $(ENSURE_REGISTRY_ENTRY) glib x86-win32
-  $(ENSURE_REGISTRY_ENTRY) gdk x86-win32
-  $(ENSURE_REGISTRY_ENTRY) gtk-common x86-win32
-  $(ENSURE_REGISTRY_ENTRY) gtk-widgets x86-win32
-  $(ENSURE_REGISTRY_ENTRY) gtk x86-win32
   $(BUILD_LIBRARY) gtk
 
 
@@ -2159,7 +1567,6 @@ $(DEUCE):
   $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
   $(ENSURE_RUNTIME_LIBRARY) $(COLLECTIONS_DLL) collections
   $(ENSURE_SOURCES) deuce $(DEUCE_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) deuce x86-win32
   $(BUILD_RUNTIME_LIBRARY) deuce $(DEUCE_DLL)
 
 $(DUIM_CORE):
@@ -2172,7 +1579,6 @@ $(DUIM_DEUCE):
   $(ENSURE_RUNTIME_LIBRARY) $(DEUCE_DLL) deuce
   $(ENSURE_RUNTIME_LIBRARY) $(DUIM_DLL) duim
   $(ENSURE_SOURCES) deuce $(DEUCE_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) duim-deuce x86-win32
   $(BUILD_RUNTIME_LIBRARY) duim-deuce $(DUIM_DEUCE_DLL)
 
 $(DUIM_SHEETS):
@@ -2198,8 +1604,6 @@ $(GTK_DUIM):
   $(ENSURE_RUNTIME_LIBRARY) $(DUIM_CORE_DLL) duim-core
   $(ENSURE_LIBRARY) gtk
   $(MAKE) duim-sources
-  $(ENSURE_REGISTRY_ENTRY) gtk-duim-gadget-panes x86-win32
-  $(ENSURE_REGISTRY_ENTRY) gtk-duim x86-win32
   $(BUILD_LIBRARY) gtk-duim
 
 #
@@ -2209,7 +1613,6 @@ $(GTK_DUIM):
 $(COM):
   $(ENSURE_RUNTIME_LIBRARY) $(WIN32_KERNEL_DLL) win32-kernel
   $(ENSURE_SOURCES) ole $(OLE_DIRECTORY)
-  $(ENSURE_REGISTRY_ENTRY) com x86-win32
   $(BUILD_RUNTIME_LIBRARY) com $(COM_DLL)
 
 $(OLE_SERVER):
@@ -2218,43 +1621,34 @@ $(OLE_SERVER):
   $(ENSURE_RUNTIME_LIBRARY) $(WIN32_REGISTRY_DLL) win32-registry
   $(ENSURE_RUNTIME_LIBRARY) $(COM_DLL) com
   $(ENSURE_SOURCES) ole $(OLE_DIRECTORY)
-  $(ENSURE_REGISTRY_ENTRY) ole x86-win32
-  $(ENSURE_REGISTRY_ENTRY) ole-server x86-win32
   $(BUILD_RUNTIME_LIBRARY) ole-server $(OLE_SERVER_DLL)
 
 $(OLE_AUTOMATION):
   $(ENSURE_RUNTIME_LIBRARY) $(COM_DLL) com
   $(ENSURE_RUNTIME_LIBRARY) $(WIN32_REGISTRY_DLL) win32-registry
   $(ENSURE_SOURCES) ole $(OLE_DIRECTORY)
-  $(ENSURE_REGISTRY_ENTRY) win32-automation x86-win32
-  $(ENSURE_REGISTRY_ENTRY) ole-automation x86-win32
   $(BUILD_RUNTIME_LIBRARY) ole-automation $(OLE_AUTOMATION_DLL)
 
 $(OLE_CONTAINER):
   $(ENSURE_RUNTIME_LIBRARY) $(OLE_DIALOGS_DLL) ole-dialogs
   $(ENSURE_SOURCES) ole $(OLE_DIRECTORY)
-  $(ENSURE_REGISTRY_ENTRY) ole-container x86-win32
   $(BUILD_RUNTIME_LIBRARY) ole-container $(OLE_CONTAINER_DLL)
 
 $(OLE_CONTROL_FRAMEWORK):
   $(ENSURE_RUNTIME_LIBRARY) $(OLE_SERVER_DLL) ole-server
   $(ENSURE_RUNTIME_LIBRARY) $(OLE_AUTOMATION_DLL) ole-automation
   $(ENSURE_SOURCES) ole $(OLE_DIRECTORY)
-  $(ENSURE_REGISTRY_ENTRY) ole-controls x86-win32
-  $(ENSURE_REGISTRY_ENTRY) ole-control-framework x86-win32
   $(BUILD_RUNTIME_LIBRARY) ole-control-framework $(OLE_CONTROL_FRAMEWORK_DLL)
 
 $(OLE_DIALOGS):
   $(ENSURE_RUNTIME_LIBRARY) $(OLE_SERVER_DLL) ole-server
   $(ENSURE_SOURCES) ole $(OLE_DIRECTORY)
-  $(ENSURE_REGISTRY_ENTRY) ole-dialogs x86-win32
   $(BUILD_RUNTIME_LIBRARY) ole-dialogs $(OLE_DIALOGS_DLL)
 
 $(DUIM_OLE_CONTAINER):
   $(ENSURE_RUNTIME_LIBRARY) $(DUIM_DLL) duim
   $(ENSURE_RUNTIME_LIBRARY) $(OLE_CONTAINER_DLL) ole-container
   $(ENSURE_SOURCES) ole $(OLE_DIRECTORY)
-  $(ENSURE_REGISTRY_ENTRY) duim-ole-container x86-win32
   $(BUILD_RUNTIME_LIBRARY) duim-ole-container $(DUIM_OLE_CONTAINER_DLL)
 
 $(DUIM_OLE_CONTROL):
@@ -2262,14 +1656,12 @@ $(DUIM_OLE_CONTROL):
   $(ENSURE_RUNTIME_LIBRARY) $(OLE_CONTROL_FRAMEWORK_DLL) ole-control-framework
   $(ENSURE_RUNTIME_LIBRARY) $(DUIM_OLE_SERVER_DLL) duim-ole-server
   $(ENSURE_SOURCES) ole $(OLE_DIRECTORY)
-  $(ENSURE_REGISTRY_ENTRY) duim-ole-control x86-win32
   $(BUILD_RUNTIME_LIBRARY) duim-ole-control $(DUIM_OLE_CONTROL_DLL)
 
 $(DUIM_OLE_SERVER):
   $(ENSURE_RUNTIME_LIBRARY) $(DUIM_DLL) duim
   $(ENSURE_RUNTIME_LIBRARY) $(OLE_CONTROL_FRAMEWORK_DLL) ole-control-framework
   $(ENSURE_SOURCES) ole $(OLE_DIRECTORY)
-  $(ENSURE_REGISTRY_ENTRY) duim-ole-server x86-win32
   $(BUILD_RUNTIME_LIBRARY) duim-ole-server $(DUIM_OLE_SERVER_DLL)
 
 $(SQL_ODBC):
@@ -2277,9 +1669,6 @@ $(SQL_ODBC):
   $(ENSURE_RUNTIME_LIBRARY) $(IO_DLL) io
   $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
   $(ENSURE_SOURCES) databases $(DATABASES_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) sql generic
-  $(ENSURE_REGISTRY_ENTRY) odbc-ffi x86-win32
-  $(ENSURE_REGISTRY_ENTRY) sql-odbc generic
   $(BUILD_RUNTIME_LIBRARY) sql-odbc $(SQL_ODBC_DLL)
 
 #
@@ -2289,20 +1678,17 @@ $(SQL_ODBC):
 $(TESTWORKS):
   $(ENSURE_RUNTIME_LIBRARY) $(FUNCTIONAL_DYLAN_DLL) functional-dylan
   $(ENSURE_SOURCES) testworks $(TESTWORKS_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) testworks generic
   $(BUILD_RUNTIME_LIBRARY) testworks $(TESTWORKS_DLL)
 
 $(TESTWORKS_SPECS):
   $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_DLL) testworks
   $(ENSURE_SOURCES) testworks-specs $(TESTWORKS_SPECS_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) testworks-specs generic
   $(BUILD_RUNTIME_LIBRARY) testworks-specs $(TESTWORKS_SPECS_DLL)
 
 $(GUI_TESTWORKS):
   $(ENSURE_RUNTIME_LIBRARY) $(DUIM_DLL) duim
   $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_DLL) testworks
   $(ENSURE_SOURCES) gui-testworks $(GUI_TESTWORKS_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) gui-testworks x86-win32
   $(BUILD_RUNTIME_LIBRARY) gui-testworks $(GUI_TESTWORKS_DLL)
 
 #
@@ -2317,7 +1703,6 @@ $(BUILD_SYSTEM):
   $(ENSURE_LIBRARY) coff-manager
   $(ENSURE_LIBRARY) coff-builder
   $(ENSURE_SOURCES) build-system $(BUILD_SYSTEM_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) build-system generic
   $(BUILD_LIBRARY) build-system
 
 $(BINARY_BUILDER):
@@ -2326,7 +1711,6 @@ $(BINARY_BUILDER):
   $(ENSURE_RUNTIME_LIBRARY) $(BIG_INTEGERS_DLL) big-integers
   $(ENSURE_LIBRARY) binary-manager
   $(ENSURE_SOURCES) harp $(HARP_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) binary-builder generic
   $(BUILD_LIBRARY) binary-builder
 
 $(COFF_BUILDER):
@@ -2336,13 +1720,11 @@ $(COFF_BUILDER):
   $(ENSURE_LIBRARY) coff-manager
   $(ENSURE_LIBRARY) binary-builder
   $(ENSURE_SOURCES) harp $(HARP_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) coff-builder generic
   $(BUILD_LIBRARY) coff-builder
 
 $(COFF_DEBUG):
   $(ENSURE_LIBRARY) coff-manager
   $(ENSURE_SOURCES) harp $(HARP_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) coff-debug generic
   $(BUILD_LIBRARY) coff-debug
 
 $(BINARY_MANAGER):
@@ -2350,7 +1732,6 @@ $(BINARY_MANAGER):
   $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
   $(ENSURE_RUNTIME_LIBRARY) $(BIG_INTEGERS_DLL) big-integers
   $(ENSURE_SOURCES) harp $(HARP_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) binary-manager generic
   $(BUILD_LIBRARY) binary-manager
 
 $(COFF_MANAGER):
@@ -2359,27 +1740,23 @@ $(COFF_MANAGER):
   $(ENSURE_RUNTIME_LIBRARY) $(BIG_INTEGERS_DLL) big-integers
   $(ENSURE_LIBRARY) binary-manager
   $(ENSURE_SOURCES) harp $(HARP_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) coff-manager generic
   $(BUILD_LIBRARY) coff-manager
 
 $(DFMC_BROWSER_SUPPORT):
   $(ENSURE_LIBRARY) release-info
   $(ENSURE_LIBRARY) dfmc-management
   $(ENSURE_SOURCES) dfmc $(DFMC_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) dfmc-browser-support generic
   $(BUILD_LIBRARY) dfmc-browser-support
 
 $(DFMC_DEBUG_BACK_END):
   $(ENSURE_LIBRARY) dfmc-management
   $(ENSURE_SOURCES) dfmc $(DFMC_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) dfmc-debug-back-end generic
   $(BUILD_LIBRARY) dfmc-debug-back-end
 
 $(DFMC_EXECUTION):
   $(ENSURE_LIBRARY) user-projects
   $(ENSURE_LIBRARY) dfmc-management
   $(ENSURE_SOURCES) dfmc $(DFMC_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) dfmc-execution generic
   $(BUILD_LIBRARY) dfmc-execution
 
 $(DFMC_MANAGEMENT):
@@ -2393,25 +1770,6 @@ $(DFMC_MANAGEMENT):
   $(ENSURE_SOURCES) ppml $(PPML_SOURCE)
   $(ENSURE_SOURCES) memory-manager $(MEMORY_MANAGER_SOURCE)
   $(ENSURE_SOURCES) dfmc $(DFMC_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) ppml generic
-  $(ENSURE_REGISTRY_ENTRY) memory-manager generic
-  $(ENSURE_REGISTRY_ENTRY) dfmc-common generic
-  $(ENSURE_REGISTRY_ENTRY) dfmc-reader generic
-  $(ENSURE_REGISTRY_ENTRY) dfmc-conditions generic
-  $(ENSURE_REGISTRY_ENTRY) dfmc-namespace generic
-  $(ENSURE_REGISTRY_ENTRY) dfmc-definitions generic
-  $(ENSURE_REGISTRY_ENTRY) dfmc-modeling generic
-  $(ENSURE_REGISTRY_ENTRY) dfmc-macro-expander generic
-  $(ENSURE_REGISTRY_ENTRY) dfmc-linker generic
-  $(ENSURE_REGISTRY_ENTRY) dfmc-c-ffi generic
-  $(ENSURE_REGISTRY_ENTRY) dfmc-back-end-protocol generic
-  $(ENSURE_REGISTRY_ENTRY) dfmc-back-end generic
-  $(ENSURE_REGISTRY_ENTRY) dfmc-flow-graph generic
-  $(ENSURE_REGISTRY_ENTRY) dfmc-core generic
-  $(ENSURE_REGISTRY_ENTRY) dfmc-typist generic
-  $(ENSURE_REGISTRY_ENTRY) dfmc-conversion generic
-  $(ENSURE_REGISTRY_ENTRY) dfmc-optimization generic
-  $(ENSURE_REGISTRY_ENTRY) dfmc-management generic
   $(BUILD_LIBRARY) dfmc-management
 
 $(DFMC_PENTIUM_FILE_COMPILER):
@@ -2420,8 +1778,6 @@ $(DFMC_PENTIUM_FILE_COMPILER):
   $(ENSURE_LIBRARY) dfmc-debug-back-end
   $(ENSURE_LIBRARY) user-projects
   $(ENSURE_SOURCES) dfmc $(DFMC_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) dfmc-harp-browser-support generic
-  $(ENSURE_REGISTRY_ENTRY) dfmc-pentium-file-compiler generic
   $(BUILD_LIBRARY) dfmc-pentium-file-compiler
 
 $(DFMC_PENTIUM_HARP_CG):
@@ -2436,28 +1792,11 @@ $(DFMC_PENTIUM_HARP_CG):
   $(ENSURE_LIBRARY) disasm
   $(ENSURE_SOURCES) dfmc $(DFMC_SOURCE)
   $(ENSURE_SOURCES) harp $(HARP_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) binary-outputter generic
-  $(ENSURE_REGISTRY_ENTRY) harp-cg-back-end generic
-  $(ENSURE_REGISTRY_ENTRY) harp generic
-  $(ENSURE_REGISTRY_ENTRY) native-harp generic
-  $(ENSURE_REGISTRY_ENTRY) harp-coff generic
-  $(ENSURE_REGISTRY_ENTRY) gnu-outputter generic
-  $(ENSURE_REGISTRY_ENTRY) pentium-harp generic
-  $(ENSURE_REGISTRY_ENTRY) native-glue-rtg generic
-  $(ENSURE_REGISTRY_ENTRY) linux-glue-rtg generic
-  $(ENSURE_REGISTRY_ENTRY) pentium-glue-rtg generic
-  $(ENSURE_REGISTRY_ENTRY) pentium-linux-glue-rtg generic
-  $(ENSURE_REGISTRY_ENTRY) dfmc-harp-cg generic
-  $(ENSURE_REGISTRY_ENTRY) dfmc-harp-cg-linker generic
-  $(ENSURE_REGISTRY_ENTRY) dfmc-native-harp-cg generic
-  $(ENSURE_REGISTRY_ENTRY) dfmc-pentium-harp-cg generic
-  $(ENSURE_REGISTRY_ENTRY) mnemonic-assembler generic
   $(BUILD_LIBRARY) dfmc-pentium-harp-cg
 
 $(DFMC_SHELL):
   $(ENSURE_LIBRARY) command-shell
   $(ENSURE_SOURCES) dfmc $(DFMC_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) dfmc-shell generic
   $(BUILD_LIBRARY) dfmc-shell
 
 $(DFMC_INTERPRETER_FILE_COMPILER):
@@ -2466,21 +1805,18 @@ $(DFMC_INTERPRETER_FILE_COMPILER):
   $(ENSURE_LIBRARY) dfmc-debug-back-end
   $(ENSURE_LIBRARY) user-projects
   $(ENSURE_SOURCES) dfmc $(DFMC_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) dfmc-interpreter-file-compiler generic
   $(BUILD_LIBRARY) dfmc-interpreter-file-compiler
 
 $(INTERPRETER_DFMC_SHELL):
   $(ENSURE_LIBRARY) command-shell
   $(ENSURE_LIBRARY) ccl-linker
   $(ENSURE_SOURCES) dfmc $(DFMC_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) interpreter-dfmc-shell generic
   $(BUILD_LIBRARY) interpreter-dfmc-shell
 
 $(HD2C_DFMC_SHELL):
   $(ENSURE_LIBRARY) command-shell
   $(ENSURE_LIBRARY) ccl-linker
   $(ENSURE_SOURCES) dfmc $(DFMC_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) hd2c-dfmc-shell generic
   $(BUILD_LIBRARY) hd2c-dfmc-shell
 
 $(DFMC_C_FILE_COMPILER):
@@ -2488,9 +1824,6 @@ $(DFMC_C_FILE_COMPILER):
   $(ENSURE_LIBRARY) dfmc-debug-back-end
   $(ENSURE_LIBRARY) user-projects
   $(ENSURE_SOURCES) dfmc $(DFMC_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) dfmc-c-back-end generic
-  $(ENSURE_REGISTRY_ENTRY) dfmc-c-linker generic
-  $(ENSURE_REGISTRY_ENTRY) dfmc-c-file-compiler generic
   $(BUILD_LIBRARY) dfmc-c-file-compiler
 
 # NOTE: This is the first library that's built for the bootstrap (i.e., generation 1) compiler.
@@ -2501,14 +1834,11 @@ $(FILE_SOURCE_RECORDS):
   $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
   $(ENSURE_RUNTIME_LIBRARY) $(COLLECTIONS_DLL) collections
   $(ENSURE_SOURCES) source-records $(SOURCE_RECORDS_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) source-records generic
-  $(ENSURE_REGISTRY_ENTRY) file-source-records generic
   $(BUILD_LIBRARY) file-source-records
 
 $(METERING):
   $(ENSURE_RUNTIME_LIBRARY) $(FUNCTIONAL_DYLAN_DLL) functional-dylan
   $(ENSURE_SOURCES) metering $(METERING_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) metering generic
   $(BUILD_LIBRARY) metering
 
 $(MOTLEY):
@@ -2519,7 +1849,6 @@ $(MOTLEY):
   $(ENSURE_RUNTIME_LIBRARY) $(OLE_AUTOMATION_DLL) ole-automation
   $(ENSURE_LIBRARY) tools-interface
   $(ENSURE_SOURCES) motley $(MOTLEY_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) motley x86-win32
   $(BUILD_LIBRARY) motley
 
 $(RELEASE_INFO):
@@ -2527,7 +1856,6 @@ $(RELEASE_INFO):
   $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
   $(ENSURE_LIBRARY) file-source-records
   $(ENSURE_SOURCES) release-info $(RELEASE_INFO_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) release-info generic
   $(BUILD_LIBRARY) release-info
 
 $(TOOL_PARSER_GENERATOR):
@@ -2536,7 +1864,6 @@ $(TOOL_PARSER_GENERATOR):
   $(ENSURE_LIBRARY) tools-interface
   $(ENSURE_APPLICATION) parser-compiler
   $(ENSURE_SOURCES) parser-generator $(PARSER_GENERATOR_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) tool-parser-generator generic
   $(BUILD_LIBRARY) tool-parser-generator
 
 $(TOOLS_INTERFACE):
@@ -2544,7 +1871,6 @@ $(TOOLS_INTERFACE):
   $(ENSURE_RUNTIME_LIBRARY) $(IO_DLL) io
   $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
   $(ENSURE_SOURCES) project-manager $(PROJECT_MANAGER_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) tools-interface generic
   $(BUILD_LIBRARY) tools-interface
 
 $(USER_PROJECTS):
@@ -2554,9 +1880,6 @@ $(USER_PROJECTS):
   $(ENSURE_LIBRARY) tools-interface
   $(ENSURE_LIBRARY) dfmc-browser-support
   $(ENSURE_SOURCES) project-manager $(PROJECT_MANAGER_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) projects generic
-  $(ENSURE_REGISTRY_ENTRY) registry-projects generic
-  $(ENSURE_REGISTRY_ENTRY) user-projects generic
   $(BUILD_LIBRARY) user-projects
 
 #
@@ -2567,24 +1890,18 @@ $(DISASM):
   $(ENSURE_RUNTIME_LIBRARY) $(IO_DLL) io
   $(ENSURE_RUNTIME_LIBRARY) $(BIG_INTEGERS_DLL) big-integers
   $(ENSURE_SOURCES) disasm $(DISASM_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) disasm generic
   $(BUILD_LIBRARY) disasm
 
 $(DISPATCH_PROFILER):
   $(ENSURE_RUNTIME_LIBRARY) $(FUNCTIONAL_DYLAN_DLL) functional-dylan
   $(ENSURE_RUNTIME_LIBRARY) $(BIG_INTEGERS_DLL) big-integers
   $(ENSURE_SOURCES) dispatch-profiler $(DISPATCH_PROFILER_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) dispatch-profiler generic
   $(BUILD_LIBRARY) dispatch-profiler
 
 $(DEBUGGER_MANAGER): debugger-nub install-dbghelp
   $(ENSURE_RUNTIME_LIBRARY) $(FUNCTIONAL_DYLAN_DLL) functional-dylan
   $(ENSURE_RUNTIME_LIBRARY) $(IO_DLL) io
   $(ENSURE_SOURCES) runtime-manager $(RUNTIME_MANAGER_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) access-path generic
-  $(ENSURE_REGISTRY_ENTRY) tether-downloader generic
-  $(ENSURE_REGISTRY_ENTRY) interactive-symbol-table generic
-  $(ENSURE_REGISTRY_ENTRY) debugger-manager generic
   $(BUILD_LIBRARY) debugger-manager
 
 $(INTERACTIVE_DOWNLOADER):
@@ -2593,7 +1910,6 @@ $(INTERACTIVE_DOWNLOADER):
   $(ENSURE_LIBRARY) coff-manager
   $(ENSURE_LIBRARY) dfmc-browser-support
   $(ENSURE_SOURCES) runtime-manager $(RUNTIME_MANAGER_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) interactive-downloader generic
   $(BUILD_LIBRARY) interactive-downloader
 
 $(SIMPLE_DOWNLOADER):
@@ -2601,14 +1917,12 @@ $(SIMPLE_DOWNLOADER):
   $(ENSURE_LIBRARY) debugger-manager
   $(ENSURE_LIBRARY) coff-manager
   $(ENSURE_SOURCES) runtime-manager $(RUNTIME_MANAGER_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) simple-downloader generic
   $(BUILD_LIBRARY) simple-downloader
 
 $(TARGET_APPLICATION):
   $(ENSURE_RUNTIME_LIBRARY) $(IO_DLL) io
   $(ENSURE_LIBRARY) debugger-manager
   $(ENSURE_SOURCES) environment $(ENVIRONMENT_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) target-application generic
   $(BUILD_LIBRARY) target-application
 
 $(ENVIRONMENT_APPLICATION_COMMANDS):
@@ -2616,9 +1930,6 @@ $(ENVIRONMENT_APPLICATION_COMMANDS):
   $(ENSURE_LIBRARY) interactive-downloader
   $(ENSURE_LIBRARY) environment-commands
   $(ENSURE_SOURCES) environment $(ENVIRONMENT_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) dfmc-environment-application generic
-  $(ENSURE_REGISTRY_ENTRY) dfmc-environment generic
-  $(ENSURE_REGISTRY_ENTRY) environment-application-commands generic
   $(BUILD_LIBRARY) environment-application-commands
 
 $(ENVIRONMENT_COMMANDS):
@@ -2632,20 +1943,12 @@ $(ENVIRONMENT_COMMANDS):
   $(ENSURE_LIBRARY) dfmc-pentium-harp-cg
   $(ENSURE_LIBRARY) dfmc-debug-back-end
   $(ENSURE_SOURCES) environment $(ENVIRONMENT_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) environment-protocols generic
-  $(ENSURE_REGISTRY_ENTRY) environment-reports generic
-  $(ENSURE_REGISTRY_ENTRY) environment-manager generic
-  $(ENSURE_REGISTRY_ENTRY) source-control-manager generic
-  $(ENSURE_REGISTRY_ENTRY) dfmc-environment-database generic
-  $(ENSURE_REGISTRY_ENTRY) dfmc-environment-projects generic
-  $(ENSURE_REGISTRY_ENTRY) environment-commands generic
   $(BUILD_LIBRARY) environment-commands
 
 $(ENVIRONMENT_DEBUGGER):
   $(ENSURE_LIBRARY) environment-deuce
   $(ENSURE_LIBRARY) target-application
   $(ENSURE_SOURCES) environment $(ENVIRONMENT_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) environment-debugger generic
   $(BUILD_LIBRARY) environment-debugger
 
 $(ENVIRONMENT_DEUCE):
@@ -2653,7 +1956,6 @@ $(ENVIRONMENT_DEUCE):
   $(ENSURE_LIBRARY) environment-tools
   $(ENSURE_LIBRARY) dfmc-shell
   $(ENSURE_SOURCES) environment $(ENVIRONMENT_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) environment-deuce generic
   $(BUILD_LIBRARY) environment-deuce
 
 $(ENVIRONMENT_INTERNAL_COMMANDS):
@@ -2663,14 +1965,12 @@ $(ENVIRONMENT_INTERNAL_COMMANDS):
   $(ENSURE_LIBRARY) user-projects
   $(ENSURE_LIBRARY) environment-commands
   $(ENSURE_SOURCES) environment $(ENVIRONMENT_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) environment-internal-commands generic
   $(BUILD_LIBRARY) environment-internal-commands
 
 $(ENVIRONMENT_PROFILER):
   $(ENSURE_RUNTIME_LIBRARY) $(DUIM_DLL) duim
   $(ENSURE_LIBRARY) environment-tools
   $(ENSURE_SOURCES) environment $(ENVIRONMENT_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) environment-profiler generic
   $(BUILD_LIBRARY) environment-profiler
 
 $(ENVIRONMENT_PROJECT_WIZARD):
@@ -2680,7 +1980,6 @@ $(ENVIRONMENT_PROJECT_WIZARD):
   $(ENSURE_LIBRARY) environment-deuce
   $(ENSURE_LIBRARY) motley
   $(ENSURE_SOURCES) environment $(ENVIRONMENT_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) environment-project-wizard generic
   $(BUILD_LIBRARY) environment-project-wizard
 
 $(BASIC_ENVIRONMENT_PROJECT_WIZARD):
@@ -2689,14 +1988,12 @@ $(BASIC_ENVIRONMENT_PROJECT_WIZARD):
   $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
   $(ENSURE_LIBRARY) environment-deuce
   $(ENSURE_SOURCES) environment $(ENVIRONMENT_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) basic-environment-project-wizard generic
   $(BUILD_LIBRARY) basic-environment-project-wizard
 
 $(ENVIRONMENT_PROPERTY_PAGES):
   $(ENSURE_RUNTIME_LIBRARY) $(DUIM_DEUCE_DLL) duim-deuce
   $(ENSURE_LIBRARY) environment-tools
   $(ENSURE_SOURCES) environment $(ENVIRONMENT_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) environment-property-pages generic
   $(BUILD_LIBRARY) environment-property-pages
 
 $(ENVIRONMENT_SERVER):
@@ -2704,9 +2001,6 @@ $(ENVIRONMENT_SERVER):
   $(ENSURE_RUNTIME_LIBRARY) $(WIN32_USER_DLL) win32-user
   $(ENSURE_RUNTIME_LIBRARY) $(WIN32_DDE_DLL) win32-dde
   $(ENSURE_SOURCES) environment $(ENVIRONMENT_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) environment-server-parsers generic
-  $(ENSURE_REGISTRY_ENTRY) environment-dde-server x86-win32
-  $(ENSURE_REGISTRY_ENTRY) environment-server x86-win32
   $(BUILD_LIBRARY) environment-server
 
 $(ENVIRONMENT_TOOLS):
@@ -2714,10 +2008,6 @@ $(ENVIRONMENT_TOOLS):
   $(ENSURE_LIBRARY) environment-application-commands
   $(ENSURE_LIBRARY) environment-server
   $(ENSURE_SOURCES) environment $(ENVIRONMENT_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) editor-manager generic
-  $(ENSURE_REGISTRY_ENTRY) editor-deuce-backend generic
-  $(ENSURE_REGISTRY_ENTRY) environment-framework generic
-  $(ENSURE_REGISTRY_ENTRY) environment-tools generic
   $(BUILD_LIBRARY) environment-tools
 
 $(DYLAN_ENVIRONMENT):
@@ -2726,7 +2016,6 @@ $(DYLAN_ENVIRONMENT):
   $(ENSURE_LIBRARY) environment-property-pages
   $(ENSURE_LIBRARY) environment-deuce
   $(ENSURE_LIBRARY) environment-debugger
-  $(ENSURE_REGISTRY_ENTRY) dylan-environment x86-win32
   $(BUILD_LIBRARY) dylan-environment
 
 #
@@ -2739,27 +2028,23 @@ $(CORBA_DYLAN):
   $(ENSURE_RUNTIME_LIBRARY) $(COLLECTIONS_DLL) collections
   $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
   $(ENSURE_SOURCES) orb $(ORB_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) corba-dylan generic
   $(BUILD_RUNTIME_LIBRARY) corba-dylan
 
 $(CORBA_PROTOCOL):
   $(ENSURE_LIBRARY) corba-dylan
   $(ENSURE_SOURCES) orb $(ORB_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) corba-protocol generic
   $(BUILD_RUNTIME_LIBRARY) corba-protocol
 
 $(DYLAN_ORB):
   $(ENSURE_LIBRARY) orb-poa
   $(ENSURE_LIBRARY) orb-ir
   $(ENSURE_SOURCES) orb $(ORB_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) dylan-orb generic
   $(BUILD_RUNTIME_LIBRARY) dylan-orb $(DYLAN_ORB_DLL)
 
 $(IOP_PROTOCOL):
   $(ENSURE_LIBRARY) corba-protocol
   $(ENSURE_SOURCES) orb $(ORB_SOURCE)
   $(GENERATE_IDL_BINDINGS) /libmod functional-dylan /libmod corba-protocol /prefix iop /protocol $(ORB_SOURCE) iop
-  $(ENSURE_REGISTRY_ENTRY) iop-protocol generic
   $(BUILD_RUNTIME_LIBRARY) iop-protocol
 
 $(IR_STUBS):
@@ -2767,15 +2052,12 @@ $(IR_STUBS):
   $(ENSURE_LIBRARY) orb-core
   $(ENSURE_SOURCES) orb $(ORB_SOURCE)
   $(GENERATE_IDL_BINDINGS) /prefix ir /libmod functional-dylan /libmod corba-protocol /libmod orb-core /protocol /stubs /main /include $(ORB_SOURCE) $(ORB_SOURCE) ir
-  $(ENSURE_REGISTRY_ENTRY) ir-protocol generic
-  $(ENSURE_REGISTRY_ENTRY) ir-stubs generic
   $(BUILD_RUNTIME_LIBRARY) ir-stubs
 
 $(ORB_CONNECTIONS):
   $(ENSURE_RUNTIME_LIBRARY) $(NETWORK_DLL) network
   $(ENSURE_LIBRARY) orb-core
   $(ENSURE_SOURCES) orb $(ORB_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) orb-connections generic
   $(BUILD_RUNTIME_LIBRARY) orb-connections
 
 $(ORB_CORE):
@@ -2783,14 +2065,12 @@ $(ORB_CORE):
   $(ENSURE_RUNTIME_LIBRARY) $(NETWORK_DLL) network
   $(ENSURE_LIBRARY) orb-iiop
   $(ENSURE_SOURCES) orb $(ORB_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) orb-core generic
   $(BUILD_RUNTIME_LIBRARY) orb-core
 
 $(ORB_IIOP):
   $(ENSURE_LIBRARY) orb-streams
   $(ENSURE_LIBRARY) iop-protocol
   $(ENSURE_SOURCES) orb $(ORB_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) orb-iiop generic
   $(BUILD_RUNTIME_LIBRARY) orb-iiop
 
 $(ORB_IR):
@@ -2799,7 +2079,6 @@ $(ORB_IR):
   $(ENSURE_LIBRARY) orb-core
   $(ENSURE_LIBRARY) ir-stubs
   $(ENSURE_SOURCES) orb $(ORB_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) orb-ir generic
   $(BUILD_RUNTIME_LIBRARY) orb-ir
 
 $(ORB_POA):
@@ -2807,26 +2086,22 @@ $(ORB_POA):
   $(ENSURE_LIBRARY) portableserver-protocol
   $(ENSURE_LIBRARY) orb-connections
   $(ENSURE_SOURCES) orb $(ORB_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) orb-poa generic
   $(BUILD_RUNTIME_LIBRARY) orb-poa
 
 $(ORB_STREAMS):
   $(ENSURE_LIBRARY) orb-utilities
   $(ENSURE_SOURCES) orb $(ORB_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) orb-streams generic
   $(BUILD_RUNTIME_LIBRARY) orb-streams
 
 $(ORB_UTILITIES):
   $(ENSURE_RUNTIME_LIBRARY) $(IO_DLL) io
   $(ENSURE_LIBRARY) corba-dylan
   $(ENSURE_SOURCES) orb $(ORB_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) orb-utilities generic
   $(BUILD_RUNTIME_LIBRARY) orb-utilities
 
 $(PORTABLESERVER_PROTOCOL):
   $(ENSURE_LIBRARY) corba-protocol
   $(ENSURE_SOURCES) orb $(ORB_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) portableserver-protocol generic
   $(BUILD_RUNTIME_LIBRARY) portableserver-protocol
 
 
@@ -2838,15 +2113,6 @@ $(CONSOLE_SCEPTER):
   $(ENSURE_LIBRARY) parser-run-time
   $(ENSURE_LIBRARY) c-lexer
   $(ENSURE_SOURCES) scepter $(SCEPTER_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) scepter-utilities generic
-  $(ENSURE_REGISTRY_ENTRY) scepter-ast generic
-  $(ENSURE_REGISTRY_ENTRY) scepter-core generic
-  $(ENSURE_REGISTRY_ENTRY) scepter-dump-back-end generic
-  $(ENSURE_REGISTRY_ENTRY) scepter-dylan-back-end generic
-  $(ENSURE_REGISTRY_ENTRY) scepter-ir-back-end generic
-  $(ENSURE_REGISTRY_ENTRY) scepter-file-front-end generic
-  $(ENSURE_REGISTRY_ENTRY) scepter generic
-  $(ENSURE_REGISTRY_ENTRY) console-scepter generic
   $(GENERATE_PARSER) $(SCEPTER_SOURCE)\front-end\file\parser.dylgram $(SCEPTER_SOURCE)\front-end\file parser
   $(BUILD_APPLICATION) console-scepter
 
@@ -2855,9 +2121,6 @@ $(NAMING_CLIENT):
   $(ENSURE_RUNTIME_LIBRARY) $(DYLAN_ORB_DLL) dylan-orb
   $(ENSURE_SOURCES) naming-service $(NAMING_SERVICE_SOURCE)
   $(GENERATE_IDL_BINDINGS) /prefix naming /protocol /stubs /skeletons /main $(NAMING_SERVICE_SOURCE) naming
-  $(ENSURE_REGISTRY_ENTRY) naming-protocol generic
-  $(ENSURE_REGISTRY_ENTRY) naming-stubs generic
-  $(ENSURE_REGISTRY_ENTRY) naming-client x86-win32
   $(BUILD_RUNTIME_LIBRARY) naming-client
 
 $(NAMING_SERVICE):
@@ -2865,22 +2128,12 @@ $(NAMING_SERVICE):
   $(ENSURE_RUNTIME_LIBRARY) $(DYLAN_ORB_DLL) dylan-orb
   $(ENSURE_RUNTIME_LIBRARY) $(NAMING_CLIENT_DLL) naming-client
   $(ENSURE_SOURCES) naming-service $(NAMING_SERVICE_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) naming-skeletons generic
-  $(ENSURE_REGISTRY_ENTRY) naming-service generic
   $(BUILD_APPLICATION) naming-service
 
 $(TOOL_SCEPTER):
   $(ENSURE_LIBRARY) tools-interface
   $(ENSURE_LIBRARY) /dll scepter console-scepter
   $(ENSURE_SOURCES) scepter $(SCEPTER_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) scepter-utilities generic
-  $(ENSURE_REGISTRY_ENTRY) scepter-ast generic
-  $(ENSURE_REGISTRY_ENTRY) scepter-core generic
-  $(ENSURE_REGISTRY_ENTRY) scepter-dump-back-end generic
-  $(ENSURE_REGISTRY_ENTRY) scepter-dylan-back-end generic
-  $(ENSURE_REGISTRY_ENTRY) scepter-file-front-end generic
-  $(ENSURE_REGISTRY_ENTRY) scepter generic
-  $(ENSURE_REGISTRY_ENTRY) tool-scepter generic
   $(BUILD_LIBRARY) tool-scepter
 
 $(REMOTE_ACCESS_PATH):
@@ -2888,8 +2141,6 @@ $(REMOTE_ACCESS_PATH):
   $(ENSURE_RUNTIME_LIBRARY) $(IO_DLL) io
   $(ENSURE_LIBRARY) remote-nub-client
   $(ENSURE_SOURCES) runtime-manager $(RUNTIME_MANAGER_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) access-path generic
-  $(ENSURE_REGISTRY_ENTRY) remote-access-path generic
   $(BUILD_LIBRARY) remote-access-path
 
 $(REMOTE_NUB_CLIENT):
@@ -2897,22 +2148,16 @@ $(REMOTE_NUB_CLIENT):
   $(ENSURE_RUNTIME_LIBRARY) $(DYLAN_ORB_DLL) dylan-orb
   $(ENSURE_SOURCES) runtime-manager $(RUNTIME_MANAGER_SOURCE)
   $(GENERATE_IDL_BINDINGS) /protocol /stubs /skeletons $(RUNTIME_MANAGER_SOURCE)\debugger-nub remote-nub
-  $(ENSURE_REGISTRY_ENTRY) remote-nub-protocol generic
-  $(ENSURE_REGISTRY_ENTRY) remote-nub-stubs generic
-  $(ENSURE_REGISTRY_ENTRY) remote-nub-skeletons generic
-  $(ENSURE_REGISTRY_ENTRY) remote-nub-client generic
   $(BUILD_LIBRARY) remote-nub-client
 
 $(REMOTE_NUB):
   $(ENSURE_LIBRARY) remote-nub-client
   $(ENSURE_SOURCES) runtime-manager $(RUNTIME_MANAGER_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) remote-nub generic
   $(BUILD_APPLICATION) remote-nub
 
 $(DEBUGGER_SERVER):
   $(ENSURE_LIBRARY) remote-nub-client
   $(ENSURE_SOURCES) runtime-manager $(RUNTIME_MANAGER_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) debugger-server generic
   $(BUILD_APPLICATION) debugger-server
 
 
@@ -2924,14 +2169,12 @@ $(BATCH_DEBUG):
   $(ENSURE_APPLICATION) devel-dbg-ui
   $(ENSURE_LIBRARY) release-info
   $(ENSURE_LIBRARY) remote-access-path
-  $(ENSURE_REGISTRY_ENTRY) batch-debug generic
   $(BUILD_APPLICATION) batch-debug
 
 $(CREATE_ID):
   $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
   $(ENSURE_LIBRARY) ole-server
   $(ENSURE_SOURCES) create-id $(CREATE_ID_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) create-id x86-win32
   $(BUILD_APPLICATION) create-id
 
 $(DEVEL_DBG_UI):
@@ -2944,7 +2187,6 @@ $(DEVEL_DBG_UI):
   $(ENSURE_LIBRARY) simple-downloader
   $(ENSURE_LIBRARY) release-info
   $(ENSURE_LIBRARY) remote-access-path
-  $(ENSURE_REGISTRY_ENTRY) devel-dbg-ui generic
   $(BUILD_APPLICATION) devel-dbg-ui
 
 $(DLL_WRAP):
@@ -2952,26 +2194,22 @@ $(DLL_WRAP):
   $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
   $(ENSURE_RUNTIME_LIBRARY) $(WIN32_KERNEL_DLL) win32-kernel
   $(ENSURE_SOURCES) dll-wrap $(DLL_WRAP_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) dll-wrap x86-win32
   $(BUILD_APPLICATION) dll-wrap
 
 $(MINIMAL_DYLAN_PLAYGROUND):
   $(MAKE) user-libraries
   $(ENSURE_SOURCES) dylan-playground $(DYLAN_PLAYGROUND_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) minimal-dylan-playground generic
   $(BUILD_APPLICATION) minimal-dylan-playground
 
 $(DYLAN_PLAYGROUND):
   $(MAKE) user-libraries
   $(ENSURE_SOURCES) dylan-playground $(DYLAN_PLAYGROUND_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) dylan-playground generic
   $(BUILD_APPLICATION) dylan-playground
 
 $(GUI_DYLAN_PLAYGROUND):
   $(MAKE) user-libraries
   $(ENSURE_RUNTIME_LIBRARY) $(DUIM_DLL) duim
   $(ENSURE_SOURCES) dylan-playground $(DYLAN_PLAYGROUND_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) gui-dylan-playground generic
   $(BUILD_APPLICATION) gui-dylan-playground
 
 $(PENTIUM_DW):
@@ -2982,7 +2220,6 @@ $(PENTIUM_DW):
   $(ENSURE_LIBRARY) dfmc-shell
   $(ENSURE_LIBRARY) dispatch-profiler
   $(ENSURE_SOURCES) dw $(DW_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) pentium-dw generic
   $(BUILD_APPLICATION) pentium-dw
 
 $(DW):
@@ -2991,7 +2228,6 @@ $(DW):
   $(ENSURE_LIBRARY) hd2c-dfmc-shell
   $(ENSURE_LIBRARY) dispatch-profiler
   $(ENSURE_SOURCES) dw $(DW_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) dw generic
   $(BUILD_APPLICATION) dw
 
 $(INTERPRETER):
@@ -3000,7 +2236,6 @@ $(INTERPRETER):
   $(ENSURE_LIBRARY) interpreter-dfmc-shell
   $(ENSURE_LIBRARY) dispatch-profiler
   $(ENSURE_SOURCES) dw $(DW_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) interpreter generic
   $(BUILD_APPLICATION) interpreter
 
 $(INTERACTIVE_COMPILER):
@@ -3009,7 +2244,6 @@ $(INTERACTIVE_COMPILER):
   $(ENSURE_LIBRARY) coff-debug
   $(ENSURE_LIBRARY) disasm
   $(ENSURE_SOURCES) dw $(DW_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) interactive-compiler generic
   $(BUILD_APPLICATION) interactive-compiler
 
 $(PARSER_COMPILER):
@@ -3019,8 +2253,6 @@ $(PARSER_COMPILER):
   $(ENSURE_LIBRARY) grammar-compiler
   $(ENSURE_SOURCES) parser-generator $(PARSER_GENERATOR_SOURCE)
   $(ENSURE_SOURCES) parser-compiler $(PARSER_COMPILER_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) parser-generator generic
-  $(ENSURE_REGISTRY_ENTRY) parser-compiler generic
   $(BUILD_APPLICATION) parser-compiler
 
 $(MINIMAL_PENTIUM_DW):
@@ -3029,21 +2261,18 @@ $(MINIMAL_PENTIUM_DW):
   $(ENSURE_LIBRARY) dfmc-shell
   $(ENSURE_LIBRARY) dispatch-profiler
   $(ENSURE_SOURCES) dw $(DW_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) minimal-pentium-dw generic
   $(BUILD_APPLICATION) minimal-pentium-dw
 
 $(MINIMAL_CONSOLE_COMPILER):
   $(ENSURE_LIBRARY) environment-commands
   $(ENSURE_LIBRARY) environment-internal-commands
   $(ENSURE_LIBRARY) release-info
-  $(ENSURE_REGISTRY_ENTRY) minimal-console-compiler generic
   $(BUILD_APPLICATION) minimal-console-compiler
 
 $(MINIMAL_CONSOLE_ENVIRONMENT):
   $(ENSURE_LIBRARY) environment-application-commands
   $(ENSURE_LIBRARY) environment-internal-commands
   $(ENSURE_LIBRARY) release-info
-  $(ENSURE_REGISTRY_ENTRY) minimal-console-environment generic
   $(BUILD_APPLICATION) minimal-console-environment
 
 $(MINIMAL_WIN32_ENVIRONMENT):
@@ -3053,8 +2282,6 @@ $(MINIMAL_WIN32_ENVIRONMENT):
   $(ENSURE_LIBRARY) basic-environment-project-wizard
   $(ENSURE_LIBRARY) environment-internal-commands
   $(ENSURE_LIBRARY) release-info
-  $(ENSURE_REGISTRY_ENTRY) source-control-hope-backend generic
-  $(ENSURE_REGISTRY_ENTRY) minimal-win32-environment x86-win32
   $(BUILD_APPLICATION) minimal-win32-environment
 
 $(MINIMAL_GTK_ENVIRONMENT):
@@ -3065,8 +2292,6 @@ $(MINIMAL_GTK_ENVIRONMENT):
   $(ENSURE_LIBRARY) basic-environment-project-wizard
   $(ENSURE_LIBRARY) environment-internal-commands
   $(ENSURE_LIBRARY) release-info
-  $(ENSURE_REGISTRY_ENTRY) source-control-hope-backend generic
-  $(ENSURE_REGISTRY_ENTRY) minimal-gtk-environment x86-win32
   $(BUILD_APPLICATION) minimal-gtk-environment
 
 $(CONSOLE_COMPILER):
@@ -3075,7 +2300,6 @@ $(CONSOLE_COMPILER):
   $(ENSURE_LIBRARY) motley
   $(ENSURE_LIBRARY) tool-scepter
   $(ENSURE_LIBRARY) release-info
-  $(ENSURE_REGISTRY_ENTRY) console-compiler generic
   $(BUILD_APPLICATION) console-compiler
 
 $(CONSOLE_ENVIRONMENT):
@@ -3085,7 +2309,6 @@ $(CONSOLE_ENVIRONMENT):
   $(ENSURE_LIBRARY) tool-scepter
   $(ENSURE_LIBRARY) remote-access-path
   $(ENSURE_LIBRARY) release-info
-  $(ENSURE_REGISTRY_ENTRY) console-environment generic
   $(BUILD_APPLICATION) console-environment
 
 $(WIN32_ENVIRONMENT):
@@ -3099,10 +2322,6 @@ $(WIN32_ENVIRONMENT):
   $(ENSURE_LIBRARY) remote-access-path
   $(ENSURE_LIBRARY) tool-parser-generator
   $(ENSURE_LIBRARY) release-info
-  $(ENSURE_REGISTRY_ENTRY) SourceSafeTypeLib x86-win32
-  $(ENSURE_REGISTRY_ENTRY) source-control-vss-backend x86-win32
-  $(ENSURE_REGISTRY_ENTRY) source-control-hope-backend generic
-  $(ENSURE_REGISTRY_ENTRY) win32-environment x86-win32
   $(BUILD_APPLICATION) win32-environment
 
 $(GTK_ENVIRONMENT):
@@ -3117,17 +2336,12 @@ $(GTK_ENVIRONMENT):
   $(ENSURE_LIBRARY) remote-access-path
   $(ENSURE_LIBRARY) tool-parser-generator
   $(ENSURE_LIBRARY) release-info
-  $(ENSURE_REGISTRY_ENTRY) SourceSafeTypeLib x86-win32
-  $(ENSURE_REGISTRY_ENTRY) source-control-vss-backend x86-win32
-  $(ENSURE_REGISTRY_ENTRY) source-control-hope-backend generic
-  $(ENSURE_REGISTRY_ENTRY) gtk-environment x86-win32
   $(BUILD_APPLICATION) gtk-environment
 
 $(WITH_SPLASH_SCREEN):
   $(ENSURE_RUNTIME_LIBRARY) $(WIN32_USER_DLL) win32-user
   $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
   $(ENSURE_SOURCES) with-splash-screen $(WITH_SPLASH_SCREEN_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) with-splash-screen x86-win32
   $(BUILD_APPLICATION) with-splash-screen
 
 $(MAP_STATISTICS):
@@ -3135,7 +2349,6 @@ $(MAP_STATISTICS):
   $(ENSURE_RUNTIME_LIBRARY) $(IO_DLL) io
   $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
   $(ENSURE_SOURCES) map-statistics $(MAP_STATISTICS_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) map-statistics x86-win32
   $(BUILD_APPLICATION) map-statistics
 
 $(TESTWORKS_REPORT):
@@ -3144,7 +2357,6 @@ $(TESTWORKS_REPORT):
   $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
   $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_DLL) testworks
   $(ENSURE_SOURCES) testworks-report $(TESTWORKS_REPORT_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) testworks-report generic
   $(BUILD_APPLICATION) testworks-report
 
 # Basic Release
@@ -3152,7 +2364,6 @@ $(TESTWORKS_REPORT):
 $(BASIC_RELEASE_INFO):
   $(ENSURE_LIBRARY) release-info
   $(ENSURE_SOURCES) release-info $(RELEASE_INFO_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) basic-release-info generic
   $(BUILD_LIBRARY) basic-release-info
 
 $(BASIC_PENTIUM_DW):
@@ -3161,19 +2372,16 @@ $(BASIC_PENTIUM_DW):
   $(ENSURE_LIBRARY) dfmc-shell
   $(ENSURE_LIBRARY) dispatch-profiler
   $(ENSURE_SOURCES) dw $(DW_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) basic-pentium-dw x86-win32
   $(BUILD_APPLICATION) basic-pentium-dw
 
 $(BASIC_CONSOLE_COMPILER):
   $(ENSURE_LIBRARY) environment-commands
   $(ENSURE_LIBRARY) basic-release-info
-  $(ENSURE_REGISTRY_ENTRY) basic-console-compiler generic
   $(BUILD_APPLICATION) basic-console-compiler
 
 $(BASIC_CONSOLE_ENVIRONMENT):
   $(ENSURE_LIBRARY) environment-application-commands
   $(ENSURE_LIBRARY) basic-release-info
-  $(ENSURE_REGISTRY_ENTRY) basic-console-environment generic
   $(BUILD_APPLICATION) basic-console-environment
 
 $(BASIC_WIN32_ENVIRONMENT):
@@ -3181,7 +2389,6 @@ $(BASIC_WIN32_ENVIRONMENT):
   $(ENSURE_LIBRARY) dylan-environment
   $(ENSURE_LIBRARY) basic-environment-project-wizard
   $(ENSURE_LIBRARY) basic-release-info
-  $(ENSURE_REGISTRY_ENTRY) basic-win32-environment x86-win32
   $(BUILD_APPLICATION) basic-win32-environment
 
 $(BASIC_GTK_ENVIRONMENT):
@@ -3190,13 +2397,11 @@ $(BASIC_GTK_ENVIRONMENT):
   $(ENSURE_LIBRARY) dylan-environment
   $(ENSURE_LIBRARY) basic-environment-project-wizard
   $(ENSURE_LIBRARY) basic-release-info
-  $(ENSURE_REGISTRY_ENTRY) basic-gtk-environment x86-win32
   $(BUILD_APPLICATION) basic-gtk-environment
 
 $(BASIC_BATCH_DEBUG):
   $(ENSURE_APPLICATION) devel-dbg-ui
   $(ENSURE_LIBRARY) basic-release-info
-  $(ENSURE_REGISTRY_ENTRY) basic-batch-debug generic
   $(BUILD_APPLICATION) basic-batch-debug
 
 # Enhanced Release
@@ -3204,7 +2409,6 @@ $(BASIC_BATCH_DEBUG):
 $(ENHANCED_RELEASE_INFO):
   $(ENSURE_LIBRARY) release-info
   $(ENSURE_SOURCES) release-info $(RELEASE_INFO_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) enhanced-release-info generic
   $(BUILD_LIBRARY) enhanced-release-info
 
 $(ENHANCED_PENTIUM_DW):
@@ -3215,7 +2419,6 @@ $(ENHANCED_PENTIUM_DW):
   $(ENSURE_LIBRARY) dfmc-shell
   $(ENSURE_LIBRARY) dispatch-profiler
   $(ENSURE_SOURCES) dw $(DW_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) enhanced-pentium-dw x86-win32
   $(BUILD_APPLICATION) enhanced-pentium-dw
 
 $(ENHANCED_CONSOLE_COMPILER):
@@ -3223,7 +2426,6 @@ $(ENHANCED_CONSOLE_COMPILER):
   $(ENSURE_LIBRARY) enhanced-release-info
   $(ENSURE_LIBRARY) motley
   $(ENSURE_LIBRARY) tool-scepter
-  $(ENSURE_REGISTRY_ENTRY) enhanced-console-compiler generic
   $(BUILD_APPLICATION) enhanced-console-compiler
 
 $(ENHANCED_CONSOLE_ENVIRONMENT):
@@ -3232,7 +2434,6 @@ $(ENHANCED_CONSOLE_ENVIRONMENT):
   $(ENSURE_LIBRARY) motley
   $(ENSURE_LIBRARY) tool-scepter
   $(ENSURE_LIBRARY) remote-access-path
-  $(ENSURE_REGISTRY_ENTRY) enhanced-console-environment generic
   $(BUILD_APPLICATION) enhanced-console-environment
 
 $(ENHANCED_WIN32_ENVIRONMENT):
@@ -3244,9 +2445,6 @@ $(ENHANCED_WIN32_ENVIRONMENT):
   $(ENSURE_LIBRARY) tool-scepter
   $(ENSURE_LIBRARY) remote-access-path
   $(ENSURE_LIBRARY) enhanced-release-info
-  $(ENSURE_REGISTRY_ENTRY) SourceSafeTypeLib x86-win32
-  $(ENSURE_REGISTRY_ENTRY) source-control-vss-backend x86-win32
-  $(ENSURE_REGISTRY_ENTRY) enhanced-win32-environment x86-win32
   $(BUILD_APPLICATION) enhanced-win32-environment
 
 $(ENHANCED_GTK_ENVIRONMENT):
@@ -3259,16 +2457,12 @@ $(ENHANCED_GTK_ENVIRONMENT):
   $(ENSURE_LIBRARY) tool-scepter
   $(ENSURE_LIBRARY) remote-access-path
   $(ENSURE_LIBRARY) enhanced-release-info
-  $(ENSURE_REGISTRY_ENTRY) SourceSafeTypeLib x86-win32
-  $(ENSURE_REGISTRY_ENTRY) source-control-vss-backend x86-win32
-  $(ENSURE_REGISTRY_ENTRY) enhanced-gtk-environment x86-win32
   $(BUILD_APPLICATION) enhanced-gtk-environment
 
 $(ENHANCED_BATCH_DEBUG):
   $(ENSURE_APPLICATION) devel-dbg-ui
   $(ENSURE_LIBRARY) enhanced-release-info
   $(ENSURE_LIBRARY) remote-access-path
-  $(ENSURE_REGISTRY_ENTRY) enhanced-batch-debug generic
   $(BUILD_APPLICATION) enhanced-batch-debug
 
 # Test Suites
@@ -3276,69 +2470,59 @@ $(ENHANCED_BATCH_DEBUG):
 $(CMU_TEST_SUITE):
   $(ENSURE_RUNTIME_LIBRARY) $(FUNCTIONAL_DYLAN_DLL) functional-dylan
   $(ENSURE_SOURCES) cmu-test-suite $(CMU_TEST_SUITE_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) cmu-test-suite generic
   $(BUILD_APPLICATION) cmu-test-suite
 
 $(DYLAN_TEST_SUITE):
   $(ENSURE_RUNTIME_LIBRARY) $(FUNCTIONAL_DYLAN_DLL) functional-dylan
   $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_SPECS_DLL) testworks-specs
   $(ENSURE_SOURCES) dylan-test-suite $(DYLAN_TEST_SUITE_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) dylan-test-suite generic
   $(BUILD_LIBRARY) dylan-test-suite
 
 $(DYLAN_TEST_SUITE_APP):
   $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_DLL) testworks
   $(ENSURE_LIBRARY) dylan-test-suite
   $(ENSURE_SOURCES) test-apps $(TEST_APPS_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) dylan-test-suite-app generic
   $(BUILD_APPLICATION) dylan-test-suite-app
 
 $(COMMON_DYLAN_TEST_SUITE):
   $(ENSURE_LIBRARY) dylan-test-suite
   $(ENSURE_SOURCES) common-dylan-test-suite $(COMMON_DYLAN_TESTS_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) common-dylan-test-suite generic
   $(BUILD_LIBRARY) common-dylan-test-suite
 
 $(COMMON_DYLAN_TEST_SUITE_APP):
   $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_DLL) testworks
   $(ENSURE_LIBRARY) common-dylan-test-suite
   $(ENSURE_SOURCES) test-apps $(TEST_APPS_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) common-dylan-test-suite-app generic
   $(BUILD_APPLICATION) common-dylan-test-suite-app
 
 $(FUNCTIONAL_DYLAN_TEST_SUITE):
   $(ENSURE_LIBRARY) dylan-test-suite
   $(ENSURE_LIBRARY) common-dylan-test-suite
   $(ENSURE_SOURCES) functional-dylan-test-suite $(FUNCTIONAL_DYLAN_TESTS_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) functional-dylan-test-suite generic
   $(BUILD_LIBRARY) functional-dylan-test-suite
 
 $(FUNCTIONAL_DYLAN_TEST_SUITE_APP):
   $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_DLL) testworks
   $(ENSURE_LIBRARY) functional-dylan-test-suite
   $(ENSURE_SOURCES) test-apps $(TEST_APPS_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) functional-dylan-test-suite-app generic
   $(BUILD_APPLICATION) functional-dylan-test-suite-app
 
 $(COLLECTIONS_TEST_SUITE):
   $(ENSURE_RUNTIME_LIBRARY) $(COLLECTIONS_DLL) collections
   $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_SPECS_DLL) testworks-specs
   $(ENSURE_SOURCES) colletions-tests $(COLLECTIONS_TESTS_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) collections-test-suite generic
   $(BUILD_LIBRARY) collections-test-suite
 
 $(SYSTEM_TEST_SUITE):
   $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
   $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_SPECS_DLL) testworks-specs
   $(ENSURE_SOURCES) system-test-suite $(SYSTEM_TESTS_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) system-test-suite generic
   $(BUILD_LIBRARY) system-test-suite  
 
 $(IO_TEST_SUITE):
   $(ENSURE_RUNTIME_LIBRARY) $(IO_DLL) io
   $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_SPECS_DLL) testworks-specs
   $(ENSURE_SOURCES) io-test-suite $(IO_TESTS_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) io-test-suite generic
   $(BUILD_LIBRARY) io-test-suite
 
 $(LIBRARIES_TEST_SUITE):
@@ -3352,14 +2536,12 @@ $(LIBRARIES_TEST_SUITE):
   $(ENSURE_LIBRARY) io-test-suite
   $(ENSURE_LIBRARY) testworks-test-suite
   $(ENSURE_SOURCES) test-suites $(TEST_SUITES_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) libraries-test-suite generic
   $(BUILD_LIBRARY) libraries-test-suite
 
 $(LIBRARIES_TEST_SUITE_APP):
   $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_DLL) testworks
   $(ENSURE_LIBRARY) libraries-test-suite
   $(ENSURE_SOURCES) test-apps $(TEST_APPS_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) libraries-test-suite-app generic
   $(BUILD_APPLICATION) libraries-test-suite-app
 
 $(C_FFI_TEST_SUITE_APP):
@@ -3367,14 +2549,11 @@ $(C_FFI_TEST_SUITE_APP):
   $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_DLL) testworks
   $(ENSURE_SOURCES) c-ffi $(C_FFI_SOURCE)
   $(ENSURE_SOURCES) test-apps $(TEST_APPS_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) c-ffi-test generic
-  $(ENSURE_REGISTRY_ENTRY) c-ffi-test-suite-app generic
   $(BUILD_APPLICATION) c-ffi-test-suite-app
 
 $(TESTWORKS_TEST_SUITE):
   $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_DLL) testworks
   $(ENSURE_SOURCES) testworks-test-suite $(TESTWORKS_TESTS_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) testworks-test-suite generic
   $(BUILD_LIBRARY) testworks-test-suite
 
 test-dylan:
@@ -3395,7 +2574,6 @@ $(WIN32_UTIL_TEST):
   $(ENSURE_RUNTIME_LIBRARY) $(WIN32_COMMON_DLL) win32-common
   $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_DLL) testworks
   $(ENSURE_SOURCES) win32-tests $(WIN32_TESTS_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) win32-util-test x86-win32
   $(BUILD_APPLICATION) win32-util-test
 
 test-win32-libraries:
@@ -3408,38 +2586,32 @@ $(DUIM_TEST_SUITE):
   $(ENSURE_RUNTIME_LIBRARY) $(DUIM_DLL) duim
   $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_SPECS_DLL) testworks-specs
   $(ENSURE_SOURCES) duim-tests $(DUIM_TESTS_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) duim-test-suite generic
   $(BUILD_LIBRARY) duim-test-suite
 
 $(DUIM_TEST_SUITE_APP):
   $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_DLL) testworks
   $(ENSURE_LIBRARY) duim-test-suite
   $(ENSURE_SOURCES) test-apps $(TEST_APPS_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) duim-test-suite-app generic
   $(BUILD_APPLICATION) duim-test-suite-app
 
 $(DUIM_GUI_TEST_SUITE):
   $(ENSURE_RUNTIME_LIBRARY) $(DUIM_DLL) duim
   $(ENSURE_SOURCES) duim-tests $(DUIM_TESTS_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) duim-gui-test-suite x86-win32
   $(BUILD_APPLICATION) duim-gui-test-suite
 
 $(WIN32_DUIM_REGRESSION_TEST_SUITE):
   $(ENSURE_RUNTIME_LIBRARY) $(DUIM_DLL) duim
   $(ENSURE_SOURCES) duim-tests $(DUIM_TESTS_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) win32-duim-regression-test-suite x86-win32
   $(BUILD_APPLICATION) win32-duim-regression-test-suite
 
 $(WIN32_DUIM_GUI_TEST_SUITE):
   $(ENSURE_RUNTIME_LIBRARY) $(DUIM_DLL) duim
   $(ENSURE_SOURCES) duim-tests $(DUIM_TESTS_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) win32-duim-gui-test-suite x86-win32
   $(BUILD_APPLICATION) win32-duim-gui-test-suite
 
 $(GTK_DUIM_GUI_TEST_SUITE):
   $(ENSURE_LIBRARY) gtk-duim
   $(ENSURE_SOURCES) duim-tests $(DUIM_TESTS_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) gtk-duim-gui-test-suite x86-win32
   $(BUILD_APPLICATION) gtk-duim-gui-test-suite
 
 test-duim:
@@ -3452,20 +2624,17 @@ $(DEUCE_TEST_SUITE):
   $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_SPECS_DLL) testworks-specs
   $(ENSURE_RUNTIME_LIBRARY) $(DEUCE_DLL) deuce
   $(ENSURE_SOURCES) deuce-tests $(DEUCE_TESTS_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) deuce-test-suite generic
   $(BUILD_LIBRARY) deuce-test-suite
 
 $(DEUCE_TEST_SUITE_APP):
   $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_DLL) testworks
   $(ENSURE_LIBRARY) deuce-test-suite
   $(ENSURE_SOURCES) test-apps $(TEST_APPS_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) deuce-test-suite-app generic
   $(BUILD_APPLICATION) deuce-test-suite-app
 
 $(STANDALONE_DEUCE):
   $(ENSURE_RUNTIME_LIBRARY) $(DUIM_DEUCE_DLL) duim-deuce
   $(ENSURE_SOURCES) standalone-deuce $(STANDALONE_DEUCE_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) standalone-deuce x86-win32
   $(BUILD_APPLICATION) standalone-deuce
 
 test-deuce:
@@ -3478,21 +2647,18 @@ $(OLE_TEST):
   $(ENSURE_RUNTIME_LIBRARY) $(OLE_AUTOMATION_DLL) ole-automation
   $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_DLL) testworks
   $(ENSURE_SOURCES) ole-automation-tests $(OLE_AUTOMATION_TESTS_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) ole-test x86-win32
   $(BUILD_APPLICATION) ole-test
 
 $(OLE_COCLASS_TEST):
   $(ENSURE_RUNTIME_LIBRARY) $(OLE_AUTOMATION_DLL) ole-automation
   $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_DLL) testworks
   $(ENSURE_SOURCES) ole-automation-tests $(OLE_AUTOMATION_TESTS_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) ole-coclass-test x86-win32
   $(BUILD_APPLICATION) ole-coclass-test
 
 $(OLE_MACRO_TEST):
   $(ENSURE_RUNTIME_LIBRARY) $(OLE_AUTOMATION_DLL) ole-automation
   $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_DLL) testworks
   $(ENSURE_SOURCES) ole-automation-tests $(OLE_AUTOMATION_TESTS_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) ole-macro-test x86-win32
   $(BUILD_APPLICATION) ole-macro-test
 
 test-ole:
@@ -3509,7 +2675,6 @@ $(SQL_ODBC_TEST):
   $(ENSURE_RUNTIME_LIBRARY) $(SQL_ODBC_DLL) sql-odbc
   $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_DLL) testworks
   $(ENSURE_SOURCES) databases $(DATABASES_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) sql-odbc-test generic
   $(BUILD_APPLICATION) sql-odbc-test
 
 test-odbc:
@@ -3557,28 +2722,23 @@ $(CHANNELS_TESTS):
   $(ENSURE_RUNTIME_LIBRARY) $(CHANNELS_DLL) channels
   $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_DLL) testworks
   $(ENSURE_SOURCES) channels-tests $(CHANNELS_TESTS_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) channels-tests generic
   $(BUILD_APPLICATION) channels-tests
 
 $(DFMC_ENVIRONMENT_TEST_SUITE):
   $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_DLL) testworks
   $(ENSURE_LIBRARY) environment-application-commands
   $(ENSURE_SOURCES) environment-tests $(ENVIRONMENT_TESTS_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) environment-test-suite generic
-  $(ENSURE_REGISTRY_ENTRY) dfmc-environment-test-suite generic
   $(BUILD_LIBRARY) dfmc-environment-test-suite
 
 $(DFMC_ENVIRONMENT_TEST_SUITE_APP):
   $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_DLL) testworks
   $(ENSURE_LIBRARY) dfmc-environment-test-suite
   $(ENSURE_SOURCES) test-apps $(TEST_APPS_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) dfmc-environment-test-suite-app generic
   $(BUILD_APPLICATION) dfmc-environment-test-suite-app
 
 warnings-test-suite:
   $(ENSURE_RUNTIME_LIBRARY) $(COMMON_DYLAN_DLL) common-dylan
   $(ENSURE_SOURCES) warnings-test-suite $(WARNINGS_TEST_SUITE_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) warnings-test-suite generic
   $(BUILD_LIBRARY) /clean /warnings warnings-test-suite
 
 test-compiler: warnings-test-suite
@@ -3605,13 +2765,11 @@ test-environment-scripts:
 $(CN2):
   $(ENSURE_RUNTIME_LIBRARY) $(IO_DLL) io
   $(ENSURE_SOURCES) benchmarks $(BENCHMARKS_DIRECTORY)
-  $(ENSURE_REGISTRY_ENTRY) cn2 generic
   $(BUILD_APPLICATION) cn2
 
 $(FFT_TEST):
   $(ENSURE_RUNTIME_LIBRARY) $(IO_DLL) io
   $(ENSURE_SOURCES) benchmarks $(BENCHMARKS_DIRECTORY)
-  $(ENSURE_REGISTRY_ENTRY) fft-test generic
   $(BUILD_APPLICATION) fft-test
 
 
@@ -4131,20 +3289,17 @@ $(DOC_TASK_LIST_2_INSTALL_DIRECTORY):
 $(HELLO_WORLD):
   $(ENSURE_RUNTIME_LIBRARY) $(FUNCTIONAL_DYLAN_DLL) functional-dylan
   $(ENSURE_SOURCES) hello-world $(HELLO_WORLD_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) hello-world generic
   $(BUILD_APPLICATION) hello-world
 
 $(FACTORIAL_SMALL):
   $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
   $(ENSURE_SOURCES) factorial $(FACTORIAL_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) factorial-small generic
   $(BUILD_APPLICATION) factorial-small
 
 $(FACTORIAL_BIG):
   $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
   $(ENSURE_RUNTIME_LIBRARY) $(BIG_INTEGERS_DLL) big-integers
   $(ENSURE_SOURCES) factorial $(FACTORIAL_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) factorial-big generic
   $(BUILD_APPLICATION) factorial-big
 
 $(TOWERS_OF_HANOI):
@@ -4156,27 +3311,23 @@ $(TOWERS_OF_HANOI):
 $(WINDOWS_FFI_EXAMPLE):
   $(ENSURE_RUNTIME_LIBRARY) $(WIN32_USER_DLL) win32-user
   $(ENSURE_SOURCES) windows-ffi-example $(WINDOWS_FFI_EXAMPLE_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) windows-ffi-example x86-win32
   $(BUILD_APPLICATION) windows-ffi-example
 
 $(WINDOWS_GADGETS_EXAMPLE):
   $(ENSURE_RUNTIME_LIBRARY) $(WIN32_USER_DLL) win32-user
   $(ENSURE_SOURCES) windows-gadgets-example $(WINDOWS_GADGETS_EXAMPLE_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) windows-gadgets-example x86-win32
   $(BUILD_APPLICATION) windows-gadgets-example
 
 $(DUIM_RESOURCE_EXAMPLE):
   $(ENSURE_RUNTIME_LIBRARY) $(WIN32_RESOURCES_DLL) win32-resources
   $(ENSURE_RUNTIME_LIBRARY) $(DUIM_DLL) duim
   $(ENSURE_SOURCES) duim-examples $(DUIM_EXAMPLES_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) duim-resource-example x86-win32
   $(BUILD_APPLICATION) duim-resource-example
 
 $(INTERFACE_BUILDER):
   $(ENSURE_RUNTIME_LIBRARY) $(IO_DLL) io
   $(ENSURE_RUNTIME_LIBRARY) $(DUIM_DLL) duim
   $(ENSURE_SOURCES) duim-examples $(DUIM_EXAMPLES_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) interface-builder x86-win32
   $(BUILD_APPLICATION) interface-builder
 
 $(REVERSI):
@@ -4184,91 +3335,76 @@ $(REVERSI):
   $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
   $(ENSURE_RUNTIME_LIBRARY) $(DUIM_DLL) duim
   $(ENSURE_SOURCES) duim-examples $(DUIM_EXAMPLES_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) reversi x86-win32
   $(BUILD_APPLICATION) reversi
 
 $(PENTE):
   $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
   $(ENSURE_RUNTIME_LIBRARY) $(DUIM_DLL) duim
   $(ENSURE_SOURCES) duim-examples $(DUIM_EXAMPLES_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) pente x86-win32
   $(BUILD_APPLICATION) pente
 
 $(SCRIBBLE):
   $(ENSURE_RUNTIME_LIBRARY) $(DUIM_DLL) duim
   $(ENSURE_SOURCES) duim-examples $(DUIM_EXAMPLES_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) scribble x86-win32
   $(BUILD_APPLICATION) scribble
 
 $(STANDALONE_DEUCE):
   $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
   $(ENSURE_RUNTIME_LIBRARY) $(DUIM_DEUCE_DLL) duim-deuce
   $(ENSURE_SOURCES) deuce $(DEUCE_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) standalone-deuce x86-win32
   $(BUILD_APPLICATION) standalone-deuce
 
 $(TETRIS):
   $(ENSURE_RUNTIME_LIBRARY) $(DUIM_DLL) duim
   $(ENSURE_SOURCES) duim-examples $(DUIM_EXAMPLES_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) tetris x86-win32
   $(BUILD_APPLICATION) tetris
 
 $(TIC_TAC_TOE):
   $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
   $(ENSURE_RUNTIME_LIBRARY) $(DUIM_DLL) duim
   $(ENSURE_SOURCES) duim-examples $(DUIM_EXAMPLES_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) tic-tac-toe x86-win32
   $(BUILD_APPLICATION) tic-tac-toe
 
 $(WINDOWS_VIEWER):
   $(ENSURE_RUNTIME_LIBRARY) $(IO_DLL) io
   $(ENSURE_RUNTIME_LIBRARY) $(DUIM_DLL) duim
   $(ENSURE_SOURCES) duim-examples $(WINDOWS_VIEWER_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) windows-hook x86-win32
-  $(ENSURE_REGISTRY_ENTRY) windows-viewer x86-win32
   $(BUILD_APPLICATION) windows-viewer
 
 $(WIN32_SCRIBBLE):
   $(ENSURE_RUNTIME_LIBRARY) $(DUIM_DLL) duim
   $(ENSURE_SOURCES) duim-examples $(DUIM_EXAMPLES_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) win32-scribble x86-win32
   $(BUILD_APPLICATION) win32-scribble
 
 
 $(DAYTIME_CLIENT):
   $(ENSURE_RUNTIME_LIBRARY) $(NETWORK_DLL) network
   $(ENSURE_SOURCES) network-examples $(NETWORK_EXAMPLES_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) daytime-client generic
   $(BUILD_APPLICATION) daytime-client
 
 $(DAYTIME_SERVER):
   $(ENSURE_RUNTIME_LIBRARY) $(NETWORK_DLL) network
   $(ENSURE_SOURCES) network-examples $(NETWORK_EXAMPLES_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) daytime-server generic
   $(BUILD_APPLICATION) daytime-server
 
 $(ECHO_CLIENT):
   $(ENSURE_RUNTIME_LIBRARY) $(NETWORK_DLL) network
   $(ENSURE_SOURCES) network-examples $(NETWORK_EXAMPLES_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) echo-client generic
   $(BUILD_APPLICATION) echo-client
 
 $(ECHO_SERVER):
   $(ENSURE_RUNTIME_LIBRARY) $(NETWORK_DLL) network
   $(ENSURE_SOURCES) network-examples $(NETWORK_EXAMPLES_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) echo-server generic
   $(BUILD_APPLICATION) echo-server
 
 $(SIMPLE_DAYTIME_CLIENT):
   $(ENSURE_RUNTIME_LIBRARY) $(NETWORK_DLL) network
   $(ENSURE_SOURCES) network-examples $(NETWORK_EXAMPLES_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) simple-daytime-client generic
   $(BUILD_APPLICATION) simple-daytime-client
 
 $(SIMPLE_DAYTIME_SERVER):
   $(ENSURE_RUNTIME_LIBRARY) $(NETWORK_DLL) network
   $(ENSURE_SOURCES) network-examples $(NETWORK_EXAMPLES_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) simple-daytime-server generic
   $(BUILD_APPLICATION) simple-daytime-server
 
 $(PLONKER):
@@ -4276,7 +3412,6 @@ $(PLONKER):
   $(ENSURE_RUNTIME_LIBRARY) $(DUIM_DLL) duim
   $(ENSURE_RUNTIME_LIBRARY) $(MIDI_DLL) midi
   $(ENSURE_SOURCES) plonker $(PLONKER_SOURCE)
-  $(ENSURE_REGISTRY_ENTRY) plonker x86-win32
   $(BUILD_APPLICATION) plonker
 
 # eof
