@@ -26,11 +26,8 @@ Install the latest binary release of Open Dylan from
 http://www.opendylan.org/downloading.phtml
 ::
 
-  git clone git@github.com:dylan-lang/opendylan.git
-  cd opendylan
-  git submodule init
-  git submodule update
-  export SRCDIR=`pwd`        # must be absolute path!
+  git clone git@github.com:dylan-lang/opendylan.git --recursive   # get submodules too
+  export SRCDIR=`pwd`/opendylan        # must be absolute path!
   export BUILDDIR=<your build dir>
 
 Build the MPS (see below).
