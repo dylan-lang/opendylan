@@ -92,7 +92,11 @@ echo -     any pieces are missing, that they will get checked out
 echo -     as part of the build process [this may not be what you
 echo -     want, we should work on a solution if you need it].
 echo -     The build products will be stored in c:\dylan.
-echo ------------------------------------------------------------------------
+echo -
+echo ----------------------------------------------------------------------------
+echo - BEWARE: only internal release is supported; you want to invoke:
+echo -   build-release.bat TARGET /sources SRC /internal /target internal-release
+echo -----------------------------------------------------------------------------
 goto END
 
 :START
