@@ -24,7 +24,10 @@ define library win32-environment
   use deuce;
   use duim-deuce;
 
-  use dylan-environment;
+  use environment-commands;
+  use environment-application-commands;
+  use environment-property-pages;
+  use environment-deuce;
   use environment-protocols;
   use environment-framework;
   use environment-tools;
