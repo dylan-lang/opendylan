@@ -14,7 +14,6 @@ define library minimal-console-environment
 
   use dfmc-common, import: { dfmc-common };
   use release-info;
-  use build-system;
 
   use environment-protocols;
   use environment-commands;

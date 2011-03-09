@@ -14,23 +14,18 @@ define module console-environment
   use operating-system,
     import: { application-filename,
 	      application-arguments,
-	      exit-application,
-              environment-variable, environment-variable-setter };
+	      exit-application };
   use file-system,
     import: { file-exists?,
               working-directory };
   use standard-io;
   use format;
   use commands;
-  use command-lines,
-    exclude: { info-title };
-
-  use build-system,
-    import: { configure-build-system };
+  use command-lines;
 
   use environment-protocols,
-    exclude: { application-filename,
-               application-arguments };
+    exclude: { application-arguments,
+               application-filename };
   use environment-commands;
   use environment-application-commands;
 end module console-environment;
