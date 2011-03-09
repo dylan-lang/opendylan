@@ -31,7 +31,7 @@ end method;
 define method file-extension-for-outputter-type
        (backend :: <harp-back-end>, type == $mnemonic-asm-type$) 
        => (extension :: <byte-string>)
-  "s";
+  "asm";
 end method;
 
 /// This instantiable class is used as the outputter for HARP asm printing.

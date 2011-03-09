@@ -12,41 +12,38 @@ define method open-emit-output
           model-object-protocol? = #t,
           dynamic-linking-protocol? = #f,
           download? = #f,
-     #all-keys) => (outputter :: <harp-outputter>)
-  unless (supplied?(assembler-output?))
-    assembler-output? := select ($os-name)
-			   #"win32"  => #f;
-			   #"linux" => #"linux-outputter";
-			   #"freebsd" => #"linux-outputter";
-			   otherwise => #f;
-			 end;
-  end;
-  let main-outputter =
-    case
-      download? =>
-	make-harp-outputter(current-back-end(), filename, print-harp?: harp-output?,
-			    type: #"downloader");
-      otherwise =>
-	select (assembler-output?)
-	  #"gnu-outputter", #"linux-outputter" =>
-	    make-harp-outputter(current-back-end(), filename, print-harp?: harp-output?,
-				type: assembler-output?);
-	  otherwise =>
-	    make-harp-outputter(current-back-end(), filename, print-harp?: harp-output?);
-	end select
-    end case;
-  let outputter = 
-    if (assembler-output?)
-      select (assembler-output?)
-	#"gnu-outputter", #"linux-outputter" => main-outputter;
-	otherwise =>
-	  multiplex-outputters
-	    (main-outputter,
-	     make-harp-outputter(current-back-end(),
-				 filename, type: assembler-output?));
-      end select;
-    else main-outputter;
-    end if;
+     #all-keys)
+ => (outputter :: <harp-outputter>);
+  let outputters = make(<stretchy-object-vector>);
+
+  if (supplied?(assembler-output?) & assembler-output?)
+    add!(outputters,
+         make-harp-outputter(current-back-end(), filename,
+                             type: #"mnemonic-assembler"));
+  end if;
+
+  case
+    download? =>
+      add!(outputters,
+           make-harp-outputter(back-end, filename,
+                               print-harp?: harp-output?,
+                               type: #"downloader"));
+    current-os-name() == #"linux" | current-os-name() == #"freebsd" =>
+      add!(outputters,
+           make-harp-outputter(back-end, filename,
+                               print-harp?: harp-output?,
+                               type: #"linux-outputter"));
+    otherwise =>
+      add!(outputters,
+           make-harp-outputter(back-end, filename, print-harp?: harp-output?));
+  end case;
+
+  let outputter
+    = if (outputters.size = 1)
+        outputters.first
+      else
+        apply(multiplex-outputters, outputters)
+      end if;
   model-object-protocol? & model-object-protocol(outputter);
   dynamic-linking-protocol? & dynamic-linking-protocol(outputter);
   outputter
