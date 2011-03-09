@@ -26,18 +26,18 @@ The Dylan files in this directory used by each library are:
 
 File___________________________MC ME___CC CE
                                                            
-minimal-compiler-library     mc                   
-compiler-library                                 cc   
-compiler-command-line      mc         cc   
-compiler-module                 mc          cc   
+minimal-compiler-library       mc                   
+compiler-library                       cc   
+compiler-command-line          mc      cc   
+compiler-module                mc      cc   
                                                             
-minimal-library                          me                
-library                                                    ce
-environment-command-line      me      ce
-module                                  me       ce
+minimal-library                   me                
+library                                   ce
+environment-command-line          me      ce
+module                            me      ce
                                                             
 command-line                   mc me   cc ce
-start                                   mc me   cc ce
+start                          mc me   cc ce
 ____________________________________________________________
 
 All four libraries export a single module called console-environment. This
