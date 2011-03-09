@@ -1194,7 +1194,7 @@ enhanced-tools: basic-tools create-id console-scepter naming-service remote-debu
 enhanced-release: enhanced-release-info enhanced-console-compiler enhanced-compiler enhanced-environment enhanced-libraries enhanced-tools install-runtime-dlls install-enhanced-examples
 
 release-info: $(RELEASE_INFO)
-compiler: pentium-dw-libraries release-info motley t-lists c-lexer console-scepter-libraries pentium-dw
+compiler: pentium-dw-libraries release-info motley t-lists c-lexer console-scepter-libraries
 hd2c: c-compiler-libraries command-shell hd2c-dfmc-shell dispatch-profiler release-info dw
 internal-compiler: compiler
 interactive-compiler: $(INTERACTIVE_COMPILER)
@@ -2211,16 +2211,6 @@ $(GUI_DYLAN_PLAYGROUND):
   $(ENSURE_RUNTIME_LIBRARY) $(DUIM_DLL) duim
   $(ENSURE_SOURCES) dylan-playground $(DYLAN_PLAYGROUND_SOURCE)
   $(BUILD_APPLICATION) gui-dylan-playground
-
-$(PENTIUM_DW):
-  $(ENSURE_LIBRARY) dfmc-pentium-file-compiler
-  $(ENSURE_LIBRARY) motley
-  $(ENSURE_LIBRARY) tool-scepter
-  $(ENSURE_LIBRARY) release-info
-  $(ENSURE_LIBRARY) dfmc-shell
-  $(ENSURE_LIBRARY) dispatch-profiler
-  $(ENSURE_SOURCES) dw $(DW_SOURCE)
-  $(BUILD_APPLICATION) pentium-dw
 
 $(DW):
   $(ENSURE_LIBRARY) dfmc-c-file-compiler
