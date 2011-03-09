@@ -582,7 +582,6 @@ SIMPLE_DOWNLOADER = $(INSTALL_BIN_DIRECTORY)\simple-downloader.dll
 WDBGDYLAN = $(INSTALL_BIN_DIRECTORY)\wdbgdylan.dll
 DBGHELP = $(INSTALL_BIN_DIRECTORY)\dbghelp.dll
 
-DYLAN_ENVIRONMENT = $(INSTALL_BIN_DIRECTORY)\dylan-environment.dll
 ENVIRONMENT_APPLICATION_COMMANDS = $(INSTALL_BIN_DIRECTORY)\environment-application-commands.dll
 ENVIRONMENT_COMMANDS = $(INSTALL_BIN_DIRECTORY)\environment-commands.dll
 ENVIRONMENT_DEBUGGER = $(INSTALL_BIN_DIRECTORY)\environment-debugger.dll
@@ -812,7 +811,6 @@ disasm: $(DISASM)
 dispatch-profiler: $(DISPATCH_PROFILER)
 debugger-nub: $(DEBUGGER_NUB)
 debugger-manager: $(DEBUGGER_MANAGER)
-dylan-environment: $(DYLAN_ENVIRONMENT)
 environment-application-commands: $(ENVIRONMENT_APPLICATION_COMMANDS)
 environment-commands: $(ENVIRONMENT_COMMANDS)
 environment-debugger: $(ENVIRONMENT_DEBUGGER)
@@ -851,7 +849,7 @@ console-compiler-libraries: pentium-compiler-libraries environment-commands
 database-libraries: sql-odbc
 debugger: debugger-manager binary-manager coff-manager coff-debug devel-dbg-ui batch-debug
 duim-ole: duim-ole-container duim-ole-server duim-ole-control
-environment: deuce duim-deuce dfmc-environment environment-commands environment-application-commands environment-internal-commands environment-server environment-tools environment-property-pages environment-deuce environment-project-wizard environment-profiler debugger-manager target-application binary-manager coff-manager interactive-downloader environment-debugger dylan-environment win32-environment with-splash-screen
+environment: deuce duim-deuce dfmc-environment environment-commands environment-application-commands environment-internal-commands environment-server environment-tools environment-property-pages environment-deuce environment-project-wizard environment-profiler debugger-manager target-application binary-manager coff-manager interactive-downloader environment-debugger win32-environment with-splash-screen
 ole-libraries: com ole-server ole-automation ole-control-framework ole-container ole-dialogs
 testworks-libraries: testworks testworks-specs gui-testworks
 user-libraries: dylan common-dylan functional-dylan c-ffi system collections io commands
@@ -2010,14 +2008,6 @@ $(ENVIRONMENT_TOOLS):
   $(ENSURE_SOURCES) environment $(ENVIRONMENT_SOURCE)
   $(BUILD_LIBRARY) environment-tools
 
-$(DYLAN_ENVIRONMENT):
-  $(ENSURE_RUNTIME_LIBRARY) $(WIN32_SHELL_DLL) win32-shell
-  $(ENSURE_LIBRARY) environment-application-commands
-  $(ENSURE_LIBRARY) environment-property-pages
-  $(ENSURE_LIBRARY) environment-deuce
-  $(ENSURE_LIBRARY) environment-debugger
-  $(BUILD_LIBRARY) dylan-environment
-
 #
 # CORBA
 #
@@ -2303,7 +2293,6 @@ $(CONSOLE_ENVIRONMENT):
 
 $(WIN32_ENVIRONMENT):
   $(ENSURE_RUNTIME_LIBRARY) $(WIN32_SHELL_DLL) win32-shell
-  $(ENSURE_LIBRARY) dylan-environment
   $(ENSURE_LIBRARY) environment-profiler
   $(ENSURE_LIBRARY) environment-project-wizard
   $(ENSURE_LIBRARY) environment-internal-commands
