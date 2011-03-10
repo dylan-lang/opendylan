@@ -11,19 +11,13 @@
 # need to have set up your environment variables by running the script
 # set-builds-variables.bat from this directory.
 #
-# Note that the CVS branch is only used if there are sources missing
-# from your build area. It is a bug if CVS is used at any other time.
-#
 # Here are some of the more useful targets:
 #
 #    nmake dylan                    - build the Dylan DLL
 #    nmake duim                     - build DUIM
-#    nmake pentium-dw               - build pentium-dw.exe
 #    nmake win32-environment        - build win32-environment.exe
 #    nmake console-debugger         - build the console debugger
 #
-#    nmake basic-release            - build the Basic Edition
-#    nmake enhanced-release         - build the Enhanced Edition
 #    nmake internal-release         - build the Internal Edition
 #    nmake releases                 - build all of the editions
 #
@@ -65,7 +59,6 @@ TEST_APP = run-test
 TEST_SCRIPT = test-script
 REMOVE = del /F /Q
 REMOVE_DIRECTORY = rmdir /S /Q
-REMOVE_CVS_DIRECTORIES = remove-cvs-directories
 COPY = copy
 RECURSIVE_COPY = xcopy /E /I
 CLEAN =
@@ -101,14 +94,12 @@ DATABASES_SOURCE = $(SOURCES_DIRECTORY)\databases
 DATABASE_EXAMPLES_DIRECTORY = $(EXAMPLES_DIRECTORY)\odbc
 DATABASE_TESTS_DIRECTORY = $(DATABASES_SOURCE)\tests
 DUIM_DIRECTORY = $(SOURCES_DIRECTORY)\duim
-GNU_DIRECTORY = $(SOURCES_DIRECTORY)\gnu
 IO_DIRECTORY = $(SOURCES_DIRECTORY)\io
 LIBRARY_PACKS_DIRECTORY = $(SOURCES_DIRECTORY)\Library-Packs
 LIB_DIRECTORY = $(SOURCES_DIRECTORY)\lib
 NETWORK_DIRECTORY = $(SOURCES_DIRECTORY)\network
 OLE_DIRECTORY = $(SOURCES_DIRECTORY)\ole
 OLE_EXAMPLES_DIRECTORY = $(OLE_DIRECTORY)\examples
-PARTNERS_DIRECTORY = $(SOURCES_DIRECTORY)\partners
 QA_DIRECTORY = $(SOURCES_DIRECTORY)\qa
 SYSTEM_DIRECTORY = $(SOURCES_DIRECTORY)\system
 TOOLS_DIRECTORY = $(SOURCES_DIRECTORY)\tools
@@ -133,7 +124,6 @@ DOCUMENTATION_EXAMPLES_INSTALL_DIRECTORY = $(EXAMPLES_INSTALL_DIRECTORY)\documen
 NETWORK_EXAMPLES_INSTALL_DIRECTORY = $(EXAMPLES_INSTALL_DIRECTORY)\network
 
 BUILD_LOGS = $(OPEN_DYLAN_BUILD_LOGS)
-CVS_LOGS = $(OPEN_DYLAN_CVS_LOGS)
 
 ASP_VIEW_SOURCE = $(OLE_EXAMPLES_DIRECTORY)\asp-view
 ASP_VIEW_INSTALL_DIRECTORY = $(OLE_EXAMPLES_INSTALL_DIRECTORY)\asp-view
@@ -146,8 +136,6 @@ BUTTON_OCX_INSTALL_DIRECTORY = $(DUIM_OLE_EXAMPLES_INSTALL_DIRECTORY)\button-ocx
 C_FFI_SOURCE = $(LIB_DIRECTORY)\c-ffi
 C_FFI_TESTS_SOURCE = $(C_FFI_SOURCE)\test
 C_LEXER_SOURCE = $(LIB_DIRECTORY)\c-lexer
-CMU_SOURCE = $(PARTNERS_DIRECTORY)\cmu
-CMU_TEST_SUITE_SOURCE = $(CMU_SOURCE)\cmu-test-suite
 CHANNELS_SOURCE = $(LIB_DIRECTORY)\channels
 CHANNELS_TESTS_SOURCE = $(CHANNELS_SOURCE)\tests
 CHAT_DEMO_SOURCE = $(CORBA_DEMOS_SOURCE)\chat
@@ -195,7 +183,6 @@ DUIM_GUI_TEST_SUITE_SOURCE = $(DUIM_TESTS_SOURCE)\gui
 DUIM_GUI_TEST_SUITE_INSTALL_DIRECTORY = $(DUIM_EXAMPLES_INSTALL_DIRECTORY)\duim-gui-test-suite
 DUIM_RESOURCE_EXAMPLE_SOURCE = $(DUIM_EXAMPLES_SOURCE)\resources
 DUIM_RESOURCE_EXAMPLE_INSTALL_DIRECTORY = $(DUIM_EXAMPLES_INSTALL_DIRECTORY)\resources
-DW_SOURCE = $(APP_DIRECTORY)\dw
 DYLAN_SOURCE = $(SOURCES_DIRECTORY)\dylan
 DYLAN_PLAYGROUND_SOURCE = $(APP_DIRECTORY)\dylan-playground
 DYLAN_TEST_SUITE_SOURCE = $(DYLAN_SOURCE)\tests
@@ -387,22 +374,14 @@ HTMLHELP = $(INSTALL_LIB_DIRECTORY)\htmlhelp.lib
 
 MINIMAL_CONSOLE_COMPILER = $(INSTALL_BIN_DIRECTORY)\minimal-console-compiler.exe
 MINIMAL_CONSOLE_ENVIRONMENT = $(INSTALL_BIN_DIRECTORY)\minimal-console-environment.exe
-MINIMAL_WIN32_ENVIRONMENT = $(INSTALL_BIN_DIRECTORY)\minimal-win32-environment.exe
-MINIMAL_GTK_ENVIRONMENT = $(INSTALL_BIN_DIRECTORY)\minimal-gtk-environment.exe
-MINIMAL_PENTIUM_DW = $(INSTALL_BIN_DIRECTORY)\minimal-pentium-dw.exe
 BATCH_DEBUG = $(INSTALL_BIN_DIRECTORY)\batch-debug.exe
 CONSOLE_COMPILER = $(INSTALL_BIN_DIRECTORY)\console-compiler.exe
 CONSOLE_ENVIRONMENT = $(INSTALL_BIN_DIRECTORY)\console-environment.exe
 CREATE_ID = $(INSTALL_BIN_DIRECTORY)\create-id.exe
 DEVEL_DBG_UI = $(INSTALL_BIN_DIRECTORY)\devel-dbg-ui.exe
 DLL_WRAP = $(INSTALL_BIN_DIRECTORY)\dll-wrap.exe
-DW = $(INSTALL_BIN_DIRECTORY)\dw.exe
-GTK_ENVIRONMENT = $(INSTALL_BIN_DIRECTORY)\gtk-environment.exe
-INTERACTIVE_COMPILER = $(INSTALL_BIN_DIRECTORY)\interactive-compiler.exe
-INTERPRETER = $(INSTALL_BIN_DIRECTORY)\interpreter.exe
 MAP_STATISTICS = $(INSTALL_BIN_DIRECTORY)\map-statistics.exe
 PARSER_COMPILER = $(INSTALL_BIN_DIRECTORY)\parser-compiler.exe
-PENTIUM_DW = $(INSTALL_BIN_DIRECTORY)\pentium-dw.exe
 TESTWORKS_REPORT = $(INSTALL_BIN_DIRECTORY)\testworks-report.exe
 WIN32_ENVIRONMENT = $(INSTALL_BIN_DIRECTORY)\win32-environment.exe
 WITH_SPLASH_SCREEN = $(INSTALL_BIN_DIRECTORY)\with-splash-screen.exe
@@ -473,7 +452,6 @@ DUIM_DEUCE = $(INSTALL_BIN_DIRECTORY)\$(DUIM_DEUCE_DLL).dll
 DUIM_SHEETS = $(BUILD_DIRECTORY)\duim-sheets\$(BUILD_MAKEFILE)
 DUIM_CORE = $(INSTALL_BIN_DIRECTORY)\$(DUIM_CORE_DLL).dll
 DUIM = $(INSTALL_BIN_DIRECTORY)\$(DUIM_DLL).dll
-GTK_DUIM = $(INSTALL_BIN_DIRECTORY)\gtk-duim.dll
 
 WIN32_COMMON = $(INSTALL_BIN_DIRECTORY)\$(WIN32_COMMON_DLL).dll
 WIN32_CONTROLS = $(INSTALL_BIN_DIRECTORY)\$(WIN32_CONTROLS_DLL).dll
@@ -491,9 +469,6 @@ WIN32_RICH_EDIT = $(INSTALL_BIN_DIRECTORY)\$(WIN32_RICH_EDIT_DLL).dll
 WIN32_SHELL = $(INSTALL_BIN_DIRECTORY)\$(WIN32_SHELL_DLL).dll
 WIN32_USER = $(INSTALL_BIN_DIRECTORY)\$(WIN32_USER_DLL).dll
 WIN32_VERSION = $(INSTALL_BIN_DIRECTORY)\$(WIN32_VERSION_DLL).dll
-
-GTK = $(INSTALL_BIN_DIRECTORY)\gtk.dll
-GTK_LIB = $(INSTALL_LIB_DIRECTORY)\gtk-1.3.lib
 
 NETWORK = $(INSTALL_BIN_DIRECTORY)\$(NETWORK_DLL).dll
 SQL_ODBC = $(INSTALL_BIN_DIRECTORY)\$(SQL_ODBC_DLL).dll
@@ -554,18 +529,14 @@ COFF_BUILDER = $(INSTALL_BIN_DIRECTORY)\coff-builder.dll
 COFF_DEBUG = $(INSTALL_BIN_DIRECTORY)\coff-debug.dll
 COFF_MANAGER = $(INSTALL_BIN_DIRECTORY)\coff-manager.dll
 DFMC_BROWSER_SUPPORT = $(INSTALL_BIN_DIRECTORY)\dfmc-browser-support.dll
-DFMC_C_FILE_COMPILER = $(INSTALL_BIN_DIRECTORY)\dfmc-c-file-compiler.dll
 DFMC_DEBUG_BACK_END = $(INSTALL_BIN_DIRECTORY)\dfmc-debug-back-end.dll
 DFMC_EXECUTION = $(INSTALL_BIN_DIRECTORY)\dfmc-execution.dll
-DFMC_INTERPRETER_FILE_COMPILER = $(INSTALL_BIN_DIRECTORY)\dfmc-interpreter-file-compiler.dll
 DFMC_MANAGEMENT = $(INSTALL_BIN_DIRECTORY)\dfmc-management.dll
 DFMC_PENTIUM_FILE_COMPILER = $(INSTALL_BIN_DIRECTORY)\dfmc-pentium-file-compiler.dll
 DFMC_PENTIUM_HARP_CG = $(INSTALL_BIN_DIRECTORY)\dfmc-pentium-harp-cg.dll
 DFMC_SHELL = $(INSTALL_BIN_DIRECTORY)\dfmc-shell.dll
 FILE_SOURCE_RECORDS = $(INSTALL_BIN_DIRECTORY)\file-source-records.dll
 ELF_LINKER = $(INSTALL_BIN_DIRECTORY)\elf-linker.dll
-HD2C_DFMC_SHELL = $(INSTALL_BIN_DIRECTORY)\hd2c-dfmc-shell.dll
-INTERPRETER_DFMC_SHELL = $(INSTALL_BIN_DIRECTORY)\interpreter-dfmc-shell.dll
 METERING = $(INSTALL_BIN_DIRECTORY)\metering.dll
 MOTLEY = $(INSTALL_BIN_DIRECTORY)\motley.dll
 RELEASE_INFO = $(INSTALL_BIN_DIRECTORY)\release-info.dll
@@ -593,31 +564,15 @@ ENVIRONMENT_PROJECT_WIZARD = $(INSTALL_BIN_DIRECTORY)\environment-project-wizard
 ENVIRONMENT_PROPERTY_PAGES = $(INSTALL_BIN_DIRECTORY)\environment-property-pages.dll
 ENVIRONMENT_SERVER = $(INSTALL_BIN_DIRECTORY)\environment-server.dll
 ENVIRONMENT_TOOLS = $(INSTALL_BIN_DIRECTORY)\environment-tools.dll
-BASIC_ENVIRONMENT_PROJECT_WIZARD = $(INSTALL_BIN_DIRECTORY)\basic-environment-project-wizard.dll
 TARGET_APPLICATION = $(INSTALL_BIN_DIRECTORY)\target-application.dll
 
-INTERACTIVE_COMPILER = $(INSTALL_BIN_DIRECTORY)\interactive-compiler.exe
-
-BASIC_RELEASE_INFO = $(INSTALL_BIN_DIRECTORY)\basic-release-info.dll
-BASIC_PENTIUM_DW = $(INSTALL_BIN_DIRECTORY)\basic-pentium-dw.exe
-BASIC_CONSOLE_COMPILER = $(INSTALL_BIN_DIRECTORY)\basic-console-compiler.exe
-BASIC_CONSOLE_ENVIRONMENT = $(INSTALL_BIN_DIRECTORY)\basic-console-environment.exe
-BASIC_WIN32_ENVIRONMENT = $(INSTALL_BIN_DIRECTORY)\basic-win32-environment.exe
-BASIC_GTK_ENVIRONMENT = $(INSTALL_BIN_DIRECTORY)\basic-gtk-environment.exe
 BASIC_BATCH_DEBUG = $(INSTALL_BIN_DIRECTORY)\basic-batch-debug.exe
 
-ENHANCED_RELEASE_INFO = $(INSTALL_BIN_DIRECTORY)\enhanced-release-info.dll
-ENHANCED_PENTIUM_DW = $(INSTALL_BIN_DIRECTORY)\enhanced-pentium-dw.exe
-ENHANCED_CONSOLE_COMPILER = $(INSTALL_BIN_DIRECTORY)\enhanced-console-compiler.exe
-ENHANCED_CONSOLE_ENVIRONMENT = $(INSTALL_BIN_DIRECTORY)\enhanced-console-environment.exe
-ENHANCED_WIN32_ENVIRONMENT = $(INSTALL_BIN_DIRECTORY)\enhanced-win32-environment.exe
-ENHANCED_GTK_ENVIRONMENT = $(INSTALL_BIN_DIRECTORY)\enhanced-gtk-environment.exe
 ENHANCED_BATCH_DEBUG = $(INSTALL_BIN_DIRECTORY)\enhanced-batch-debug.exe
 
 COLLECTIONS_TEST_SUITE = $(INSTALL_BIN_DIRECTORY)\collections-test-suite.dll
 COMMON_DYLAN_TEST_SUITE_APP = $(INSTALL_BIN_DIRECTORY)\common-dylan-test-suite-app.exe
 COMMON_DYLAN_TEST_SUITE = $(INSTALL_BIN_DIRECTORY)\common-dylan-test-suite.dll
-CMU_TEST_SUITE = $(INSTALL_BIN_DIRECTORY)\cmu-test-suite.exe
 DYLAN_TEST_SUITE = $(INSTALL_BIN_DIRECTORY)\dylan-test-suite.dll
 DYLAN_TEST_SUITE_APP = $(INSTALL_BIN_DIRECTORY)\dylan-test-suite-app.exe
 FUNCTIONAL_DYLAN_TEST_SUITE = $(INSTALL_BIN_DIRECTORY)\functional-dylan-test-suite.dll
@@ -634,7 +589,6 @@ SYSTEM_TEST_SUITE = $(INSTALL_BIN_DIRECTORY)\system-test-suite.dll
 DUIM_TEST_SUITE = $(INSTALL_BIN_DIRECTORY)\duim-test-suite.dll
 DUIM_TEST_SUITE_APP = $(INSTALL_BIN_DIRECTORY)\duim-test-suite-app.exe
 DUIM_GUI_TEST_SUITE = $(INSTALL_BIN_DIRECTORY)\duim-gui-test-suite.exe
-GTK_DUIM_GUI_TEST_SUITE = $(INSTALL_BIN_DIRECTORY)\gtk-duim-gui-test-suite.exe
 WIN32_DUIM_GUI_TEST_SUITE = $(INSTALL_BIN_DIRECTORY)\win32-duim-gui-test-suite.exe
 WIN32_DUIM_REGRESSION_TEST_SUITE = $(INSTALL_BIN_DIRECTORY)\win32-duim-regression-test-suite.dll
 WIN32_UTIL_TEST = $(INSTALL_BIN_DIRECTORY)\win32-util-test.dll
@@ -751,13 +705,9 @@ win32-shell: $(WIN32_SHELL)
 win32-user: $(WIN32_USER)
 win32-version: $(WIN32_VERSION)
 
-gtk-lib: $(GTK_LIB)
-gtk: $(GTK)
-
 duim-sheets: $(DUIM_SHEETS)
 duim-core: $(DUIM_CORE)
 duim: $(DUIM)
-gtk-duim: $(GTK_DUIM)
 
 deuce: $(DEUCE)
 duim-deuce: $(DUIM_DEUCE)
@@ -787,10 +737,8 @@ coff-builder: $(COFF_BUILDER)
 coff-debug: $(COFF_DEBUG)
 coff-manager: $(COFF_MANAGER)
 dfmc-browser-support: $(DFMC_BROWSER_SUPPORT)
-dfmc-c-file-compiler: $(DFMC_C_FILE_COMPILER)
 dfmc-debug-back-end: $(DFMC_DEBUG_BACK_END)
 dfmc-execution: $(DFMC_EXECUTION)
-dfmc-interpreter-file-compiler: $(DFMC_INTERPRETER_FILE_COMPILER)
 dfmc-management: $(DFMC_MANAGEMENT)
 dfmc-pentium-file-compiler: $(DFMC_PENTIUM_FILE_COMPILER)
 dfmc-pentium-harp-cg: $(DFMC_PENTIUM_HARP_CG)
@@ -798,8 +746,6 @@ dfmc-shell: $(DFMC_SHELL)
 dood: $(DOOD)
 file-source-records: $(FILE_SOURCE_RECORDS)
 elf-linker: $(ELF_LINKER)
-hd2c-dfmc-shell: $(HD2C_DFMC_SHELL)
-interpreter-dfmc-shell: $(INTERPRETER_DFMC_SHELL)
 metering: $(METERING)
 motley: $(MOTLEY)
 release-info: $(RELEASE_INFO)
@@ -822,7 +768,6 @@ environment-property-pages: $(ENVIRONMENT_PROPERTY_PAGES)
 environment-server: $(ENVIRONMENT_SERVER)
 environment-tools: $(ENVIRONMENT_TOOLS)
 interactive-downloader: $(INTERACTIVE_DOWNLOADER)
-basic-environment-project-wizard: $(BASIC_ENVIRONMENT_PROJECT_WIZARD)
 simple-downloader: $(SIMPLE_DOWNLOADER)
 target-application: $(TARGET_APPLICATION)
 
@@ -830,19 +775,15 @@ batch-debug: $(BATCH_DEBUG)
 console-debugger: devel-dbg-ui
 create-id: $(CREATE_ID)
 devel-dbg-ui: $(DEVEL_DBG_UI)
-dfmc: pentium-dw
 dll-wrap: $(DLL_WRAP)
-dw: $(DW)
-interpreter: $(INTERPRETER)
 map-statistics: $(MAP_STATISTICS)
 parser-compiler: $(PARSER_COMPILER)
-pentium-dw: $(PENTIUM_DW)
 testworks-report: $(TESTWORKS_REPORT)
 
 project-manager-libraries: tools-interface user-projects
 core-compiler-libraries: file-source-records release-info dood metering binary-manager coff-manager binary-builder coff-builder build-system parser-run-time dfmc-management dfmc-browser-support project-manager-libraries dfmc-execution dfmc-debug-back-end
 pentium-compiler-libraries: core-compiler-libraries disasm dfmc-pentium-harp-cg dfmc-pentium-file-compiler
-c-compiler-libraries: core-compiler-libraries dfmc-c-file-compiler
+c-compiler-libraries: core-compiler-libraries
 pentium-dw-libraries: pentium-compiler-libraries command-shell dfmc-shell dispatch-profiler
 console-scepter-libraries: console-scepter tool-scepter
 console-compiler-libraries: pentium-compiler-libraries environment-commands
@@ -887,7 +828,6 @@ debugger-server: $(DEBUGGER_SERVER)
 # Testing targets
 
 c-ffi-test-suite-app: $(C_FFI_TEST_SUITE_APP)
-cmu-test-suite: $(CMU_TEST_SUITE)
 collections-test-suite: $(COLLECTIONS_TEST_SUITE)
 common-dylan-test-suite-app: $(COMMON_DYLAN_TEST_SUITE_APP)
 common-dylan-test-suite: $(COMMON_DYLAN_TEST_SUITE)
@@ -908,7 +848,6 @@ win32-util-test: $(WIN32_UTIL_TEST)
 duim-test-suite: $(DUIM_TEST_SUITE)
 duim-test-suite-app: $(DUIM_TEST_SUITE_APP)
 duim-gui-test-suite: $(DUIM_GUI_TEST_SUITE)
-gtk-duim-gui-test-suite: $(GTK_DUIM_GUI_TEST_SUITE)
 win32-duim-regression-test-suite: $(WIN32_DUIM_REGRESSION_TEST_SUITE)
 win32-duim-gui-test-suite: $(WIN32_DUIM_GUI_TEST_SUITE)
 
@@ -940,8 +879,7 @@ basic-test-suites: test-suites
 enhanced-test-suites: basic-test-suites ole-test-suites database-test-suites
 
 test-basic-release: test-libraries test-win32-libraries test-duim test-deuce test-compiler test-environment
-test-enhanced-release: test-basic-release test-ole test-odbc test-corba
-test-internal-release: test-enhanced-release
+test-internal-release: test-basic-release test-ole test-odbc test-corba
 test-minimal-internal-release: test-basic-release
 test-releases: test-internal-release
 
@@ -1157,57 +1095,20 @@ network-examples: daytime-client daytime-server echo-client echo-client echo-ser
 # Release targets
 #
 
-basic-release-info: $(BASIC_RELEASE_INFO)
-basic-pentium-dw: $(BASIC_PENTIUM_DW)
-basic-compiler: pentium-dw-libraries basic-release-info basic-pentium-dw
-basic-console-compiler-exe: $(BASIC_CONSOLE_COMPILER)
-basic-console-compiler: console-compiler-libraries basic-release-info basic-console-compiler-exe
-basic-console-environment: $(BASIC_CONSOLE_ENVIRONMENT)
-basic-win32-environment: $(BASIC_WIN32_ENVIRONMENT)
-basic-gtk-environment: $(BASIC_GTK_ENVIRONMENT)
-basic-batch-debug: $(BASIC_BATCH_DEBUG)
-basic-environment: basic-console-environment basic-win32-environment with-splash-screen
-basic-libraries: user-libraries win32-libraries duim
-basic-example-projects: console-example-projects duim-example-projects win32-example-projects
-install-basic-examples: install-examples-css install-console-examples install-duim-examples install-win32-examples install-basic-doc-examples install-templates
-basic-examples: console-examples duim-examples win32-examples
-basic-tools: install-wdbgdylan dll-wrap minimal-dylan-playground dylan-playground gui-dylan-playground
-basic-release: basic-release-info basic-console-compiler basic-compiler basic-environment basic-libraries basic-tools install-runtime-dlls install-basic-examples
-
-enhanced-release-info: $(ENHANCED_RELEASE_INFO)
-enhanced-pentium-dw: $(ENHANCED_PENTIUM_DW)
-enhanced-compiler: pentium-dw-libraries enhanced-release-info motley t-lists c-lexer console-scepter-libraries enhanced-pentium-dw
-enhanced-console-compiler-exe: $(ENHANCED_CONSOLE_COMPILER)
-enhanced-console-compiler: console-compiler-libraries enhanced-release-info motley t-lists c-lexer console-scepter-libraries enhanced-console-compiler-exe
-enhanced-console-environment: $(ENHANCED_CONSOLE_ENVIRONMENT)
-enhanced-win32-environment: $(ENHANCED_WIN32_ENVIRONMENT)
-enhanced-gtk-environment: $(ENHANCED_GTK_ENVIRONMENT)
-enhanced-batch-debug: $(ENHANCED_BATCH_DEBUG)
-enhanced-environment: enhanced-console-environment enhanced-win32-environment with-splash-screen
-enhanced-libraries: basic-libraries ole-libraries duim-ole database-libraries network dylan-orb naming-client
-enhanced-example-projects: basic-example-projects ole-example-projects duim-ole-example-projects network-example-projects corba-example-projects
-install-enhanced-examples: install-basic-examples install-database-examples install-ole-examples install-duim-ole-examples install-network-examples install-corba-examples install-enhanced-doc-examples
-enhanced-examples: basic-examples ole-examples duim-ole-examples network-examples
-enhanced-tools: basic-tools create-id console-scepter naming-service remote-debugger
-enhanced-release: enhanced-release-info enhanced-console-compiler enhanced-compiler enhanced-environment enhanced-libraries enhanced-tools install-runtime-dlls install-enhanced-examples
-
 release-info: $(RELEASE_INFO)
 compiler: pentium-dw-libraries release-info motley t-lists c-lexer console-scepter-libraries
-hd2c: c-compiler-libraries command-shell hd2c-dfmc-shell dispatch-profiler release-info dw
 internal-compiler: compiler
-interactive-compiler: $(INTERACTIVE_COMPILER)
 console-compiler-exe: $(CONSOLE_COMPILER)
 console-compiler: console-compiler-libraries release-info environment-internal-commands motley t-lists c-lexer console-scepter-libraries console-compiler-exe
 console-environment: $(CONSOLE_ENVIRONMENT)
 win32-environment: $(WIN32_ENVIRONMENT)
-gtk-environment: $(GTK_ENVIRONMENT)
 with-splash-screen: $(WITH_SPLASH_SCREEN)
 internal-environment: console-environment win32-environment with-splash-screen
-internal-libraries: enhanced-libraries midi
-internal-example-projects: enhanced-example-projects
-install-internal-examples: install-enhanced-examples install-midi-examples
-internal-only-tools: testworks-libraries testworks-report debugger map-statistics parser-compiler # hd2c interpreter
-internal-tools: enhanced-tools internal-only-tools
+internal-libraries: user-libraries win32-libraries duim ole-libraries duim-ole database-libraries network dylan-orb naming-client midi
+internal-example-projects: console-example-projects duim-example-projects win32-example-projects ole-example-projects duim-ole-example-projects network-example-projects corba-example-projects
+install-internal-examples: install-examples-css install-console-examples install-duim-examples install-win32-examples install-basic-doc-examples install-templates install-database-examples install-ole-examples install-duim-ole-examples install-network-examples install-corba-examples install-enhanced-doc-examples install-midi-examples
+internal-only-tools: testworks-libraries testworks-report debugger map-statistics parser-compiler
+internal-tools: install-wdbgdylan dll-wrap minimal-dylan-playground dylan-playground gui-dylan-playground create-id console-scepter naming-service remote-debugger internal-only-tools
 internal-release: release-info console-compiler compiler internal-environment internal-libraries internal-tools install-runtime-dlls install-internal-examples
 
 reinstall-internal-examples:
@@ -1219,12 +1120,13 @@ minimal-compiler: pentium-dw-libraries release-info minimal-pentium-dw
 minimal-console-compiler-exe: $(MINIMAL_CONSOLE_COMPILER)
 minimal-console-compiler: console-compiler-libraries release-info environment-internal-commands minimal-console-compiler-exe
 minimal-console-environment: $(MINIMAL_CONSOLE_ENVIRONMENT)
-minimal-win32-environment: $(MINIMAL_WIN32_ENVIRONMENT)
-minimal-gtk-environment: $(MINIMAL_GTK_ENVIRONMENT)
-minimal-internal-environment: minimal-console-environment minimal-win32-environment with-splash-screen
-minimal-internal-release: release-info minimal-console-compiler minimal-compiler minimal-internal-environment basic-libraries basic-tools internal-only-tools install-runtime-dlls install-basic-examples
+minimal-internal-libraries: user-libraries win32-libraries duim
+minimal-internal-environment: minimal-console-environment with-splash-screen
+install-minimal-internal-examples: install-examples-css install-console-examples install-duim-examples install-win32-examples install-basic-doc-examples install-templates
+minimal-internal-tools: install-wdbgdylan dll-wrap minimal-dylan-playground dylan-playground gui-dylan-playground
+minimal-internal-release: release-info minimal-console-compiler minimal-compiler minimal-internal-environment minimal-internal-libraries minimal-internal-tools internal-only-tools install-runtime-dlls install-minimal-internal-examples
 
-releases: internal-release basic-release enhanced-release
+releases: internal-release
 
 #
 # Clean
@@ -1311,11 +1213,6 @@ big-integers-sources:
 
 duim-sources:
   $(ENSURE_SOURCES) duim $(DUIM_DIRECTORY)
-
-basic-release-sources: dylan-sources common-dylan-sources functional-dylan-sources c-ffi-sources collections-sources io-sources system-sources big-integers-sources duim-sources
-enhanced-release-sources: basic-release-sources
-internal-release-sources: enhanced-release-sources
-minimal-internal-release-sources: basic-release-sources
 
 #
 # Basic Libraries
@@ -1545,21 +1442,6 @@ $(T_LISTS):
   $(BUILD_LIBRARY) t-lists
 
 
-$(GTK_LIB):
-  $(ENSURE_SOURCES) install-lib $(INSTALL_LIB_SOURCE)
-  $(COPY) $(INSTALL_LIB_SOURCE)\glib-1.3.lib $(INSTALL_LIB_DIRECTORY)
-  $(COPY) $(INSTALL_LIB_SOURCE)\gmodule-1.3.lib $(INSTALL_LIB_DIRECTORY)
-  $(COPY) $(INSTALL_LIB_SOURCE)\gthread-1.3.lib $(INSTALL_LIB_DIRECTORY)
-  $(COPY) $(INSTALL_LIB_SOURCE)\gdk-1.3.lib $(INSTALL_LIB_DIRECTORY)
-  $(COPY) $(INSTALL_LIB_SOURCE)\gtk-1.3.lib $(INSTALL_LIB_DIRECTORY)
-
-$(GTK):
-  $(ENSURE_RUNTIME_LIBRARY) $(C_FFI_DLL) c-ffi
-  $(MAKE) gtk-lib
-  $(ENSURE_SOURCES) gnu $(GNU_DIRECTORY)
-  $(BUILD_LIBRARY) gtk
-
-
 $(DEUCE):
   $(ENSURE_RUNTIME_LIBRARY) $(IO_DLL) io
   $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
@@ -1597,12 +1479,6 @@ $(DUIM):
   $(ENSURE_RUNTIME_LIBRARY) $(DUIM_CORE_DLL) duim-core
   $(MAKE) duim-sources
   $(BUILD_RUNTIME_LIBRARY) duim $(DUIM_DLL)
-
-$(GTK_DUIM):
-  $(ENSURE_RUNTIME_LIBRARY) $(DUIM_CORE_DLL) duim-core
-  $(ENSURE_LIBRARY) gtk
-  $(MAKE) duim-sources
-  $(BUILD_LIBRARY) gtk-duim
 
 #
 # Enhanced Libraries
@@ -1797,33 +1673,6 @@ $(DFMC_SHELL):
   $(ENSURE_SOURCES) dfmc $(DFMC_SOURCE)
   $(BUILD_LIBRARY) dfmc-shell
 
-$(DFMC_INTERPRETER_FILE_COMPILER):
-  $(ENSURE_LIBRARY) metering
-  $(ENSURE_LIBRARY) dfmc-browser-support
-  $(ENSURE_LIBRARY) dfmc-debug-back-end
-  $(ENSURE_LIBRARY) user-projects
-  $(ENSURE_SOURCES) dfmc $(DFMC_SOURCE)
-  $(BUILD_LIBRARY) dfmc-interpreter-file-compiler
-
-$(INTERPRETER_DFMC_SHELL):
-  $(ENSURE_LIBRARY) command-shell
-  $(ENSURE_LIBRARY) ccl-linker
-  $(ENSURE_SOURCES) dfmc $(DFMC_SOURCE)
-  $(BUILD_LIBRARY) interpreter-dfmc-shell
-
-$(HD2C_DFMC_SHELL):
-  $(ENSURE_LIBRARY) command-shell
-  $(ENSURE_LIBRARY) ccl-linker
-  $(ENSURE_SOURCES) dfmc $(DFMC_SOURCE)
-  $(BUILD_LIBRARY) hd2c-dfmc-shell
-
-$(DFMC_C_FILE_COMPILER):
-  $(ENSURE_LIBRARY) metering
-  $(ENSURE_LIBRARY) dfmc-debug-back-end
-  $(ENSURE_LIBRARY) user-projects
-  $(ENSURE_SOURCES) dfmc $(DFMC_SOURCE)
-  $(BUILD_LIBRARY) dfmc-c-file-compiler
-
 # NOTE: This is the first library that's built for the bootstrap (i.e., generation 1) compiler.
 #       Therefore, it needs to ensure that the Library-Packs hierarchy is present.
 $(FILE_SOURCE_RECORDS):
@@ -1979,14 +1828,6 @@ $(ENVIRONMENT_PROJECT_WIZARD):
   $(ENSURE_LIBRARY) motley
   $(ENSURE_SOURCES) environment $(ENVIRONMENT_SOURCE)
   $(BUILD_LIBRARY) environment-project-wizard
-
-$(BASIC_ENVIRONMENT_PROJECT_WIZARD):
-  $(ENSURE_RUNTIME_LIBRARY) $(DUIM_DLL) duim
-  $(ENSURE_RUNTIME_LIBRARY) $(IO_DLL) io
-  $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
-  $(ENSURE_LIBRARY) environment-deuce
-  $(ENSURE_SOURCES) environment $(ENVIRONMENT_SOURCE)
-  $(BUILD_LIBRARY) basic-environment-project-wizard
 
 $(ENVIRONMENT_PROPERTY_PAGES):
   $(ENSURE_RUNTIME_LIBRARY) $(DUIM_DEUCE_DLL) duim-deuce
@@ -2202,30 +2043,6 @@ $(GUI_DYLAN_PLAYGROUND):
   $(ENSURE_SOURCES) dylan-playground $(DYLAN_PLAYGROUND_SOURCE)
   $(BUILD_APPLICATION) gui-dylan-playground
 
-$(DW):
-  $(ENSURE_LIBRARY) dfmc-c-file-compiler
-  $(ENSURE_LIBRARY) release-info
-  $(ENSURE_LIBRARY) hd2c-dfmc-shell
-  $(ENSURE_LIBRARY) dispatch-profiler
-  $(ENSURE_SOURCES) dw $(DW_SOURCE)
-  $(BUILD_APPLICATION) dw
-
-$(INTERPRETER):
-  $(ENSURE_LIBRARY) dfmc-interpreter-file-compiler
-  $(ENSURE_LIBRARY) release-info
-  $(ENSURE_LIBRARY) interpreter-dfmc-shell
-  $(ENSURE_LIBRARY) dispatch-profiler
-  $(ENSURE_SOURCES) dw $(DW_SOURCE)
-  $(BUILD_APPLICATION) interpreter
-
-$(INTERACTIVE_COMPILER):
-  $(ENSURE_APPLICATION) pentium-dw
-  $(ENSURE_LIBRARY) interactive-downloader
-  $(ENSURE_LIBRARY) coff-debug
-  $(ENSURE_LIBRARY) disasm
-  $(ENSURE_SOURCES) dw $(DW_SOURCE)
-  $(BUILD_APPLICATION) interactive-compiler
-
 $(PARSER_COMPILER):
   $(ENSURE_RUNTIME_LIBRARY) $(FUNCTIONAL_DYLAN_DLL) functional-dylan
   $(ENSURE_RUNTIME_LIBRARY) $(IO_DLL) io
@@ -2234,14 +2051,6 @@ $(PARSER_COMPILER):
   $(ENSURE_SOURCES) parser-generator $(PARSER_GENERATOR_SOURCE)
   $(ENSURE_SOURCES) parser-compiler $(PARSER_COMPILER_SOURCE)
   $(BUILD_APPLICATION) parser-compiler
-
-$(MINIMAL_PENTIUM_DW):
-  $(ENSURE_LIBRARY) dfmc-pentium-file-compiler
-  $(ENSURE_LIBRARY) release-info
-  $(ENSURE_LIBRARY) dfmc-shell
-  $(ENSURE_LIBRARY) dispatch-profiler
-  $(ENSURE_SOURCES) dw $(DW_SOURCE)
-  $(BUILD_APPLICATION) minimal-pentium-dw
 
 $(MINIMAL_CONSOLE_COMPILER):
   $(ENSURE_LIBRARY) environment-commands
@@ -2254,25 +2063,6 @@ $(MINIMAL_CONSOLE_ENVIRONMENT):
   $(ENSURE_LIBRARY) environment-internal-commands
   $(ENSURE_LIBRARY) release-info
   $(BUILD_APPLICATION) minimal-console-environment
-
-$(MINIMAL_WIN32_ENVIRONMENT):
-  $(ENSURE_RUNTIME_LIBRARY) $(WIN32_SHELL_DLL) win32-shell
-  $(ENSURE_LIBRARY) dylan-environment
-  $(ENSURE_LIBRARY) environment-profiler
-  $(ENSURE_LIBRARY) basic-environment-project-wizard
-  $(ENSURE_LIBRARY) environment-internal-commands
-  $(ENSURE_LIBRARY) release-info
-  $(BUILD_APPLICATION) minimal-win32-environment
-
-$(MINIMAL_GTK_ENVIRONMENT):
-  $(ENSURE_RUNTIME_LIBRARY) $(WIN32_SHELL_DLL) win32-shell
-  $(ENSURE_LIBRARY) gtk-duim
-  $(ENSURE_LIBRARY) dylan-environment
-  $(ENSURE_LIBRARY) environment-profiler
-  $(ENSURE_LIBRARY) basic-environment-project-wizard
-  $(ENSURE_LIBRARY) environment-internal-commands
-  $(ENSURE_LIBRARY) release-info
-  $(BUILD_APPLICATION) minimal-gtk-environment
 
 $(CONSOLE_COMPILER):
   $(ENSURE_LIBRARY) environment-commands
@@ -2303,20 +2093,6 @@ $(WIN32_ENVIRONMENT):
   $(ENSURE_LIBRARY) release-info
   $(BUILD_APPLICATION) win32-environment
 
-$(GTK_ENVIRONMENT):
-  $(ENSURE_RUNTIME_LIBRARY) $(WIN32_SHELL_DLL) win32-shell
-  $(ENSURE_LIBRARY) gtk-duim
-  $(ENSURE_LIBRARY) dylan-environment
-  $(ENSURE_LIBRARY) environment-profiler
-  $(ENSURE_LIBRARY) environment-project-wizard
-  $(ENSURE_LIBRARY) environment-internal-commands
-  $(ENSURE_LIBRARY) motley
-  $(ENSURE_LIBRARY) tool-scepter
-  $(ENSURE_LIBRARY) remote-access-path
-  $(ENSURE_LIBRARY) tool-parser-generator
-  $(ENSURE_LIBRARY) release-info
-  $(BUILD_APPLICATION) gtk-environment
-
 $(WITH_SPLASH_SCREEN):
   $(ENSURE_RUNTIME_LIBRARY) $(WIN32_USER_DLL) win32-user
   $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
@@ -2338,118 +2114,7 @@ $(TESTWORKS_REPORT):
   $(ENSURE_SOURCES) testworks-report $(TESTWORKS_REPORT_SOURCE)
   $(BUILD_APPLICATION) testworks-report
 
-# Basic Release
-
-$(BASIC_RELEASE_INFO):
-  $(ENSURE_LIBRARY) release-info
-  $(ENSURE_SOURCES) release-info $(RELEASE_INFO_SOURCE)
-  $(BUILD_LIBRARY) basic-release-info
-
-$(BASIC_PENTIUM_DW):
-  $(ENSURE_LIBRARY) dfmc-pentium-file-compiler
-  $(ENSURE_LIBRARY) basic-release-info
-  $(ENSURE_LIBRARY) dfmc-shell
-  $(ENSURE_LIBRARY) dispatch-profiler
-  $(ENSURE_SOURCES) dw $(DW_SOURCE)
-  $(BUILD_APPLICATION) basic-pentium-dw
-
-$(BASIC_CONSOLE_COMPILER):
-  $(ENSURE_LIBRARY) environment-commands
-  $(ENSURE_LIBRARY) basic-release-info
-  $(BUILD_APPLICATION) basic-console-compiler
-
-$(BASIC_CONSOLE_ENVIRONMENT):
-  $(ENSURE_LIBRARY) environment-application-commands
-  $(ENSURE_LIBRARY) basic-release-info
-  $(BUILD_APPLICATION) basic-console-environment
-
-$(BASIC_WIN32_ENVIRONMENT):
-  $(ENSURE_RUNTIME_LIBRARY) $(WIN32_SHELL_DLL) win32-shell
-  $(ENSURE_LIBRARY) dylan-environment
-  $(ENSURE_LIBRARY) basic-environment-project-wizard
-  $(ENSURE_LIBRARY) basic-release-info
-  $(BUILD_APPLICATION) basic-win32-environment
-
-$(BASIC_GTK_ENVIRONMENT):
-  $(ENSURE_RUNTIME_LIBRARY) $(WIN32_SHELL_DLL) win32-shell
-  $(ENSURE_LIBRARY) gtk-duim
-  $(ENSURE_LIBRARY) dylan-environment
-  $(ENSURE_LIBRARY) basic-environment-project-wizard
-  $(ENSURE_LIBRARY) basic-release-info
-  $(BUILD_APPLICATION) basic-gtk-environment
-
-$(BASIC_BATCH_DEBUG):
-  $(ENSURE_APPLICATION) devel-dbg-ui
-  $(ENSURE_LIBRARY) basic-release-info
-  $(BUILD_APPLICATION) basic-batch-debug
-
-# Enhanced Release
-
-$(ENHANCED_RELEASE_INFO):
-  $(ENSURE_LIBRARY) release-info
-  $(ENSURE_SOURCES) release-info $(RELEASE_INFO_SOURCE)
-  $(BUILD_LIBRARY) enhanced-release-info
-
-$(ENHANCED_PENTIUM_DW):
-  $(ENSURE_LIBRARY) dfmc-pentium-file-compiler
-  $(ENSURE_LIBRARY) motley
-  $(ENSURE_LIBRARY) tool-scepter
-  $(ENSURE_LIBRARY) enhanced-release-info
-  $(ENSURE_LIBRARY) dfmc-shell
-  $(ENSURE_LIBRARY) dispatch-profiler
-  $(ENSURE_SOURCES) dw $(DW_SOURCE)
-  $(BUILD_APPLICATION) enhanced-pentium-dw
-
-$(ENHANCED_CONSOLE_COMPILER):
-  $(ENSURE_LIBRARY) environment-commands
-  $(ENSURE_LIBRARY) enhanced-release-info
-  $(ENSURE_LIBRARY) motley
-  $(ENSURE_LIBRARY) tool-scepter
-  $(BUILD_APPLICATION) enhanced-console-compiler
-
-$(ENHANCED_CONSOLE_ENVIRONMENT):
-  $(ENSURE_LIBRARY) environment-application-commands
-  $(ENSURE_LIBRARY) enhanced-release-info
-  $(ENSURE_LIBRARY) motley
-  $(ENSURE_LIBRARY) tool-scepter
-  $(ENSURE_LIBRARY) remote-access-path
-  $(BUILD_APPLICATION) enhanced-console-environment
-
-$(ENHANCED_WIN32_ENVIRONMENT):
-  $(ENSURE_RUNTIME_LIBRARY) $(WIN32_SHELL_DLL) win32-shell
-  $(ENSURE_LIBRARY) dylan-environment
-  $(ENSURE_LIBRARY) environment-profiler
-  $(ENSURE_LIBRARY) environment-project-wizard
-  $(ENSURE_LIBRARY) motley
-  $(ENSURE_LIBRARY) tool-scepter
-  $(ENSURE_LIBRARY) remote-access-path
-  $(ENSURE_LIBRARY) enhanced-release-info
-  $(BUILD_APPLICATION) enhanced-win32-environment
-
-$(ENHANCED_GTK_ENVIRONMENT):
-  $(ENSURE_RUNTIME_LIBRARY) $(WIN32_SHELL_DLL) win32-shell
-  $(ENSURE_LIBRARY) gtk-duim
-  $(ENSURE_LIBRARY) dylan-environment
-  $(ENSURE_LIBRARY) environment-profiler
-  $(ENSURE_LIBRARY) environment-project-wizard
-  $(ENSURE_LIBRARY) motley
-  $(ENSURE_LIBRARY) tool-scepter
-  $(ENSURE_LIBRARY) remote-access-path
-  $(ENSURE_LIBRARY) enhanced-release-info
-  $(BUILD_APPLICATION) enhanced-gtk-environment
-
-$(ENHANCED_BATCH_DEBUG):
-  $(ENSURE_APPLICATION) devel-dbg-ui
-  $(ENSURE_LIBRARY) enhanced-release-info
-  $(ENSURE_LIBRARY) remote-access-path
-  $(BUILD_APPLICATION) enhanced-batch-debug
-
 # Test Suites
-
-$(CMU_TEST_SUITE):
-  $(ENSURE_RUNTIME_LIBRARY) $(FUNCTIONAL_DYLAN_DLL) functional-dylan
-  $(ENSURE_SOURCES) cmu-test-suite $(CMU_TEST_SUITE_SOURCE)
-  $(BUILD_APPLICATION) cmu-test-suite
 
 $(DYLAN_TEST_SUITE):
   $(ENSURE_RUNTIME_LIBRARY) $(FUNCTIONAL_DYLAN_DLL) functional-dylan
@@ -2587,11 +2252,6 @@ $(WIN32_DUIM_GUI_TEST_SUITE):
   $(ENSURE_RUNTIME_LIBRARY) $(DUIM_DLL) duim
   $(ENSURE_SOURCES) duim-tests $(DUIM_TESTS_SOURCE)
   $(BUILD_APPLICATION) win32-duim-gui-test-suite
-
-$(GTK_DUIM_GUI_TEST_SUITE):
-  $(ENSURE_LIBRARY) gtk-duim
-  $(ENSURE_SOURCES) duim-tests $(DUIM_TESTS_SOURCE)
-  $(BUILD_APPLICATION) gtk-duim-gui-test-suite
 
 test-duim:
   $(ENSURE_APPLICATION) duim-test-suite-app
@@ -2932,7 +2592,6 @@ $(BUG_REPORT_TEMPLATE):
 $(SOURCE_TEMPLATES_INSTALL_DIRECTORY):
   $(ENSURE_SOURCES) environment $(ENVIRONMENT_SOURCE)
   $(RECURSIVE_COPY) $(ENVIRONMENT_SOURCE)\project-wizard\templates $(SOURCE_TEMPLATES_INSTALL_DIRECTORY) >nul
-  $(REMOVE_CVS_DIRECTORIES) $(SOURCE_TEMPLATES_INSTALL_DIRECTORY)
 
 # Install examples
 
@@ -2958,7 +2617,6 @@ $(TOWERS_OF_HANOI_INSTALL_DIRECTORY):
   $(ENSURE_SOURCES) console-examples $(CONSOLE_EXAMPLES_SOURCE)
   $(ENSURE_DIRECTORY) $(TOWERS_OF_HANOI_INSTALL_DIRECTORY)
   $(RECURSIVE_COPY) $(TOWERS_OF_HANOI_SOURCE) $(TOWERS_OF_HANOI_INSTALL_DIRECTORY) >nul
-  $(REMOVE_CVS_DIRECTORIES) $(TOWERS_OF_HANOI_INSTALL_DIRECTORY)
   $(ENSURE_WRITEABLE_HDP_FILES) $(TOWERS_OF_HANOI_INSTALL_DIRECTORY)
 
 
@@ -3111,14 +2769,12 @@ $(ASP_VIEW_INSTALL_DIRECTORY):
   $(ENSURE_SOURCES) ole-examples $(OLE_EXAMPLES_DIRECTORY)
   $(ENSURE_DIRECTORY) $(ASP_VIEW_INSTALL_DIRECTORY)
   $(RECURSIVE_COPY) $(ASP_VIEW_SOURCE) $(ASP_VIEW_INSTALL_DIRECTORY) >nul
-  $(REMOVE_CVS_DIRECTORIES) $(ASP_VIEW_INSTALL_DIRECTORY)
   $(ENSURE_WRITEABLE_HDP_FILES) $(ASP_VIEW_INSTALL_DIRECTORY)
 
 $(COM_BANK_DEMO_INSTALL_DIRECTORY):
   $(ENSURE_SOURCES) ole-examples $(OLE_EXAMPLES_DIRECTORY)
   $(ENSURE_DIRECTORY) $(COM_BANK_DEMO_INSTALL_DIRECTORY)
   $(RECURSIVE_COPY) $(COM_BANK_DEMO_SOURCE) $(COM_BANK_DEMO_INSTALL_DIRECTORY) >nul
-  $(REMOVE_CVS_DIRECTORIES) $(COM_BANK_DEMO_INSTALL_DIRECTORY)
   $(ENSURE_WRITEABLE_HDP_FILES) $(COM_BANK_DEMO_INSTALL_DIRECTORY)
 
 $(WIN32_INVISIBLE_CONTROL_INSTALL_DIRECTORY):
@@ -3211,28 +2867,24 @@ $(CORBA_HELLO_WORLD_INSTALL_DIRECTORY):
   $(ENSURE_SOURCES) corba-demos $(CORBA_DEMOS_SOURCE)
   $(ENSURE_DIRECTORY) $(CORBA_HELLO_WORLD_INSTALL_DIRECTORY)
   $(RECURSIVE_COPY) $(CORBA_HELLO_WORLD_SOURCE) $(CORBA_HELLO_WORLD_INSTALL_DIRECTORY) >nul
-  $(REMOVE_CVS_DIRECTORIES) $(CORBA_HELLO_WORLD_INSTALL_DIRECTORY)
   $(ENSURE_WRITEABLE_HDP_FILES) $(CORBA_HELLO_WORLD_INSTALL_DIRECTORY)
 
 $(CORBA_BANK_DEMO_INSTALL_DIRECTORY):
   $(ENSURE_SOURCES) corba-demos $(CORBA_DEMOS_SOURCE)
   $(ENSURE_DIRECTORY) $(CORBA_BANK_DEMO_INSTALL_DIRECTORY)
   $(RECURSIVE_COPY) $(CORBA_BANK_DEMO_SOURCE) $(CORBA_BANK_DEMO_INSTALL_DIRECTORY) >nul
-  $(REMOVE_CVS_DIRECTORIES) $(CORBA_BANK_DEMO_INSTALL_DIRECTORY)
   $(ENSURE_WRITEABLE_HDP_FILES) $(CORBA_BANK_DEMO_INSTALL_DIRECTORY)
 
 $(CORBA_PENTE_INSTALL_DIRECTORY):
   $(ENSURE_SOURCES) corba-demos $(CORBA_DEMOS_SOURCE)
   $(ENSURE_DIRECTORY) $(CORBA_PENTE_INSTALL_DIRECTORY)
   $(RECURSIVE_COPY) $(CORBA_PENTE_SOURCE) $(CORBA_PENTE_INSTALL_DIRECTORY) >nul
-  $(REMOVE_CVS_DIRECTORIES) $(CORBA_PENTE_INSTALL_DIRECTORY)
   $(ENSURE_WRITEABLE_HDP_FILES) $(CORBA_PENTE_INSTALL_DIRECTORY)
 
 $(CHAT_DEMO_INSTALL_DIRECTORY):
   $(ENSURE_SOURCES) corba-demos $(CORBA_DEMOS_SOURCE)
   $(ENSURE_DIRECTORY) $(CHAT_DEMO_INSTALL_DIRECTORY)
   $(RECURSIVE_COPY) $(CHAT_DEMO_SOURCE) $(CHAT_DEMO_INSTALL_DIRECTORY) >nul
-  $(REMOVE_CVS_DIRECTORIES) $(CHAT_DEMO_INSTALL_DIRECTORY)
   $(ENSURE_WRITEABLE_HDP_FILES) $(CHAT_DEMO_INSTALL_DIRECTORY)
 
 
