@@ -1115,8 +1115,7 @@ reinstall-internal-examples:
   $(REMOVE_DIRECTORY) $(EXAMPLES_INSTALL_DIRECTORY)
   $(MAKE) install-internal-examples
 
-minimal-pentium-dw: $(MINIMAL_PENTIUM_DW)
-minimal-compiler: pentium-dw-libraries release-info minimal-pentium-dw
+minimal-compiler: pentium-dw-libraries release-info
 minimal-console-compiler-exe: $(MINIMAL_CONSOLE_COMPILER)
 minimal-console-compiler: console-compiler-libraries release-info environment-internal-commands minimal-console-compiler-exe
 minimal-console-environment: $(MINIMAL_CONSOLE_ENVIRONMENT)
