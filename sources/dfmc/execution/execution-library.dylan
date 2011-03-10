@@ -28,12 +28,6 @@ define module dfmc-execution
   use dfmc-imports;
   use dfmc-optimization;
   use dfmc-back-end;
-  export 
-    closure-offset, // !!! used by c-back-end
-    closure-size    // !!! ditto
-    // *** eval
-    ;
-
 end module;
 
 define module dfmc-runtime-execution
@@ -49,7 +43,7 @@ define module dfmc-runtime-execution
   use threads;
   use variable-search;
   use dfmc-core,
-    exclude: { keyword-specifiers, xep, xep-setter, iep, 
+    exclude: { keyword-specifiers, xep, xep-setter, iep, closure-offset,
 	       <namespace>, <library>, <module> };
   use dfmc-imports;
   use dfmc-optimization;

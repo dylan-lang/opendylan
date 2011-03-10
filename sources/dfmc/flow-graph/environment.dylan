@@ -430,6 +430,44 @@ define function closure-self-referencing?
   any?(rcurry(closure-self-reference?, lambda-env), closure(lambda-env))
 end function;
 
+define method closure-size
+    (environment :: <lambda-lexical-environment>) => (res :: <integer>)
+  let closure = environment.closure;
+  let closure-size = size(closure);
+  iterate loop (count = 0, index = 0)
+    if (index >= closure-size)
+      count
+    else
+      let self? = #f 
+        /* closure-self-reference?(closure[index], environment) */;
+      loop(count + if (self?) 0 else 1 end, index + 1)
+    end if
+  end iterate;
+end method;
+
+define method closure-offset
+    (environment :: <lambda-lexical-environment>, tmp :: <temporary>)
+  let closure = environment.closure;
+  let closure-size = closure.size;
+  iterate check (offset = 0, index = 0)
+    if (index >= closure-size)
+      #f
+    // elseif (closure-self-reference?(tmp, environment))
+    //   check(offset, index + 1)
+    elseif (closure[index] == tmp)
+      offset
+    else
+      check(offset + 1, index + 1)
+    end if
+  end iterate;
+end method;
+
+define method closure-offset (lambda :: <&lambda>, tmp :: <temporary>)
+  if (tmp.closed-over?)
+    closure-offset(lambda.environment, tmp)
+  end if
+end method;
+
 define method lambda-has-free-lexical-references? (lambda :: <&lambda>)
  => (free-references? :: <boolean>)
   // look upward, since we know there isn't much that way --

@@ -296,6 +296,8 @@ define module dfmc-flow-graph
     lambda-has-free-lexical-references?,
     closure-self-reference?,
     closure-self-referencing?,
+    closure-size,
+    closure-offset,
     all-environments,
     next-frame-offset,
     add-variable!,

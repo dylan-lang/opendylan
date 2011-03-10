@@ -13,7 +13,6 @@ define library dfmc-llvm-linker
   use dfmc-back-end;
   use dfmc-llvm-back-end;
   use dfmc-linker;
-  //use dfmc-execution;
   use dfmc-management;
 
   use llvm;
@@ -29,7 +28,6 @@ define module dfmc-llvm-linker
   use dfmc-back-end;
   use dfmc-llvm-back-end;
   use dfmc-linker;
-  //use dfmc-execution;
   use dfmc-management;
 
   use llvm;

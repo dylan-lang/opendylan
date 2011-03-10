@@ -9,7 +9,6 @@ define library dfmc-c-back-end
   use io;
   use dfmc-core;
   use dfmc-back-end;
-  use dfmc-execution;
   use dfmc-reader;
   use dfmc-conversion;
   use dfmc-typist;
@@ -23,7 +22,6 @@ define module dfmc-c-back-end
   use dfmc-core;
   use dfmc-imports;
   use dfmc-back-end;
-  use dfmc-execution;
   use dfmc-reader;
   use dfmc-conversion;
   use dfmc-typist;

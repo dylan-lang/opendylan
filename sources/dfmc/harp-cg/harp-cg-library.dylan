@@ -11,7 +11,6 @@ define library dfmc-harp-cg
   use big-integers;
   use dfmc-core;
   use dfmc-back-end;
-  use dfmc-execution;
   use dfmc-reader;
   use dfmc-conversion;
   use dfmc-optimization;
@@ -126,7 +125,6 @@ define module dfmc-harp-cg
     export: all;
   use dfmc-imports, export: all;
   use dfmc-back-end, export: all;
-  use dfmc-execution, export: all;
   use dfmc-reader, export: all;
   use dfmc-conversion, export: all;
   use dfmc-optimization, export: all;
