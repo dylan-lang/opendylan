@@ -6,9 +6,7 @@ setlocal
 
 set DEBUGGING=no
 set DLL=no
-set EXE=no
 set EXT=
-set MODE=tight
 set QUIET=yes
 if "%OPEN_DYLAN_DEFAULT_ROOT%"=="" set OPEN_DYLAN_DEFAULT_ROOT=C:\Program Files\Functional Objects\Functional Developer
 
@@ -19,10 +17,10 @@ REM //
 If "%1%"==""                  GOTO PARAM_DONE
 If "%1%"=="/debugger"         GOTO SET_DEBUGGING
 If "%1%"=="/nodebugger"       GOTO SET_NODEBUGGING
-If "%1%"=="/dll"              GOTO SET_DLL
-If "%1%"=="/exe"              GOTO SET_EXE
-If "%1%"=="/loose"            GOTO SET_LOOSE
-If "%1%"=="/tight"            GOTO SET_TIGHT
+If "%1%"=="/dll"              GOTO IGNORE_ARG
+If "%1%"=="/exe"              GOTO IGNORE_ARG
+If "%1%"=="/loose"            GOTO IGNORE_ARG
+If "%1%"=="/tight"            GOTO IGNORE_ARG
 If "%1%"=="/quiet"            GOTO SET_QUIET
 If "%1%"=="/verbose"          GOTO SET_VERBOSE
 If "%1%"=="/exports"          GOTO IGNORE_ARG
@@ -55,22 +53,6 @@ set EXT=dll
 shift
 goto PARAM_LOOP
 
-:SET_EXE
-set EXE=yes
-set EXT=exe
-shift
-goto PARAM_LOOP
-
-:SET_TIGHT
-set MODE=tight
-shift
-goto PARAM_LOOP
-
-:SET_LOOSE
-set MODE=loose
-shift
-goto PARAM_LOOP
-
 :SET_QUIET
 set QUIET=yes
 shift
@@ -87,35 +69,14 @@ goto PARAM_LOOP
 
 :PARAM_DONE
 
-REM // if exist "%DYLAN_RELEASE_COMPILER%" goto compiler_found
-REM // call find-compiler
-set DYLAN_RELEASE_COMPILER=%DYLAN_RELEASE_ROOT%\bin\pentium-dw.exe
-if exist "%DYLAN_RELEASE_COMPILER%" goto compiler_found
-set DYLAN_RELEASE_COMPILER=%DYLAN_RELEASE_ROOT%\bin\basic-pentium-dw.exe
-if exist "%DYLAN_RELEASE_COMPILER%" goto compiler_found
-set DYLAN_RELEASE_COMPILER=%DYLAN_RELEASE_ROOT%\bin\personal-pentium-dw.exe
-if exist "%DYLAN_RELEASE_COMPILER%" goto compiler_found
-set DYLAN_RELEASE_COMPILER=%DYLAN_RELEASE_ROOT%\bin\fdbc.exe
-if exist "%DYLAN_RELEASE_COMPILER%" goto compiler_found
-set DYLAN_RELEASE_COMPILER=%DYLAN_RELEASE_ROOT%\bin\dylan-compile.exe
-if exist "%DYLAN_RELEASE_COMPILER%" goto compiler_found
 REM // Try what we just built
 REM //
-set DYLAN_RELEASE_COMPILER=%OPEN_DYLAN_RELEASE_ROOT%\bin\pentium-dw.exe
+set DYLAN_RELEASE_COMPILER=%OPEN_DYLAN_RELEASE_ROOT%\bin\console-compiler.exe
 if exist "%DYLAN_RELEASE_COMPILER%" goto compiler_found
-set DYLAN_RELEASE_COMPILER=%OPEN_DYLAN_RELEASE_ROOT%\bin\basic-pentium-dw.exe
-if exist "%DYLAN_RELEASE_COMPILER%" goto compiler_found
-set DYLAN_RELEASE_COMPILER=%OPEN_DYLAN_RELEASE_ROOT%\bin\personal-pentium-dw.exe
-if exist "%DYLAN_RELEASE_COMPILER%" goto compiler_found
-set DYLAN_RELEASE_COMPILER=%OPEN_DYLAN_RELEASE_ROOT%\bin\fdbc.exe
-if exist "%DYLAN_RELEASE_COMPILER%" goto compiler_found
-set DYLAN_RELEASE_COMPILER=%OPEN_DYLAN_RELEASE_ROOT%\bin\dylan-compile.exe
+set DYLAN_RELEASE_COMPILER=%OPEN_DYLAN_RELEASE_ROOT%\bin\minimal-console-compiler.exe
 if exist "%DYLAN_RELEASE_COMPILER%" goto compiler_found
 REM //... finally hope that we can find it on the path.
 REM //
-set DYLAN_RELEASE_COMPILER=%OPEN_DYLAN_DEFAULT_ROOT%\bin\fdbc.exe
-if exist "%DYLAN_RELEASE_COMPILER%" goto compiler_found
-set DYLAN_RELEASE_COMPILER=fdbc.exe
 
 :COMPILER_FOUND
 
@@ -135,13 +96,9 @@ set DEBUGGER=batch-debug
 :START_IMPORT
 call :fixup_PATHS "%DEBUGGER%"
 set LOG=%OPEN_DYLAN_BUILD_LOGS%\import-%PROJECT%.log
-set COMPILER_OPTIONS=/%MODE%
 set LID_PATHNAME=%DIRECTORY%\%LID%.lid
 set INCORRECT_HDP_PATHNAME=%DIRECTORY%\%LID%.hdp
 set HDP_PATHNAME=%PROJECT%.hdp
-
-if "%DLL%"=="yes" set COMPILER_OPTIONS=/dll %COMPILER_OPTIONS% 
-if "%DLL%"=="no" set COMPILER_OPTIONS=/exe %COMPILER_OPTIONS%
 
 REM // Locally unbind the OPEN_DYLAN_USER settings so that these
 REM // projects are built as if by a user.
