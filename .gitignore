@@ -2,3 +2,4 @@
 /configure
 build-aux/
 autom4te*.cache/
+*~
