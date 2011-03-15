@@ -352,7 +352,7 @@ define method delete-directory (directory :: <file-system-file-locator>) => ()
 end method delete-directory;
 
 define method delete-directory (directory :: <string>) => ()
-  delete-directory(as(<file-system-directory-locator>, directory))
+  delete-directory(as(<directory-locator>, directory))
 end method delete-directory;
 
 
