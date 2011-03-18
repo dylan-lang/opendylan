@@ -91,7 +91,7 @@ files:	library
 	errors\damaged-array
 	suites
 	metering
-subprojects:	..\scepter.hdp
+subprojects:	../scepter.hdp
 base-address:	0x64EA0000
 major-version: 2
 minor-version: 1

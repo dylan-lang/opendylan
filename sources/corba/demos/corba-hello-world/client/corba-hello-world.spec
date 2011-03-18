@@ -1,4 +1,4 @@
 Origin:   OMG-IDL
-Idl-File: ..\hello.idl
+Idl-File: ../hello.idl
 Stubs:    yes
 

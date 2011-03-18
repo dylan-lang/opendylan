@@ -18,8 +18,8 @@ minor-version:	1
 other-files:	iop-idl.spec
 compilation-mode:	tight
 library:	orb-iiop
-subprojects:	..\iop-protocol\iop-protocol.hdp
-	..\streams\orb-streams.hdp
-	..\utilities\orb-utilities.hdp
-	..\dylan\corba-dylan.hdp
-	..\protocols\corba\corba-protocol.hdp
+subprojects:	../iop-protocol/iop-protocol.hdp
+	../streams/orb-streams.hdp
+	../utilities/orb-utilities.hdp
+	../dylan/corba-dylan.hdp
+	../protocols/corba/corba-protocol.hdp

@@ -15,8 +15,8 @@ files:	scepter-ir-back-end-library
 	type
 	attribute
 	operation
-subprojects:	..\..\core\scepter-core.hdp
-	..\..\abstract-syntax-tree\scepter-ast.hdp
+subprojects:	../../core/scepter-core.hdp
+	../../abstract-syntax-tree/scepter-ast.hdp
 base-address:	0x63FE0000
 major-version:	2
 minor-version:	1

@@ -14,14 +14,14 @@ files:	orb-connections-library
 	in-memory
 other-files:	iop-idl.spec
 major-version:	2
-subprojects:	..\iop-protocol\iop-protocol.hdp
-	..\core\orb-core.hdp
-	..\iiop\orb-iiop.hdp
-	..\streams\orb-streams.hdp
-	..\dylan\corba-dylan.hdp
-	..\protocols\corba\corba-protocol.hdp
-	..\protocols\portableserver\portableserver-protocol.hdp
-	..\utilities\orb-utilities.hdp
+subprojects:	../iop-protocol/iop-protocol.hdp
+	../core/orb-core.hdp
+	../iiop/orb-iiop.hdp
+	../streams/orb-streams.hdp
+	../dylan/corba-dylan.hdp
+	../protocols/corba/corba-protocol.hdp
+	../protocols/portableserver/portableserver-protocol.hdp
+	../utilities/orb-utilities.hdp
 compilation-mode:	tight
 target-type:	dll
 library:	orb-connections

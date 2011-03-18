@@ -3,8 +3,8 @@ format-version:	2
 library:	corba-tests-client-app
 files:	corba-tests-client-app-library
 	corba-tests-client-app
-subprojects:	..\client\corba-tests-client.hdp
-	..\server\corba-tests-server.hdp
+subprojects:	../client/corba-tests-client.hdp
+	../server/corba-tests-server.hdp
 executable:	corba-tests-client-app
 base-address:	0x64E60000
 major-version:	2

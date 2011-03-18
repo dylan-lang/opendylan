@@ -9,7 +9,11 @@ define constant $keyword-prefixes = #['/', '-'];
 
 define inline-only method keyword-argument? (argument :: <string>)
  => (keyword? :: <boolean>)
-  member?(argument[0], $keyword-prefixes);
+  if (command-line-option-prefix() == '/')
+    member?(argument[0], $keyword-prefixes)
+  else
+    argument[0] == command-line-option-prefix()
+  end if
 end method;
 
 define constant $ORB-keyword-prefix = "-ORB";

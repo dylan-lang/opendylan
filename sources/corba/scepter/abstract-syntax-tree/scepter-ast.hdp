@@ -30,7 +30,7 @@ files:	scepter-ast-library
 	union-label
 	root
 	error
-subprojects:	..\core\scepter-core.hdp
+subprojects:	../core/scepter-core.hdp
 base-address:	0x63F40000
 major-version:	2
 minor-version:	1

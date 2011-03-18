@@ -1,5 +1,5 @@
 Origin:     OMG-IDL
-IDL-file:   ..\ir.idl
+IDL-file:   ../ir.idl
 Include: ..
 Prefix: ir
 Protocol:      no

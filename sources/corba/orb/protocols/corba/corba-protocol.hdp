@@ -12,7 +12,7 @@ files:	corba-protocol-library
 	name-service
 	exceptions
 	conditions
-subprojects:	..\..\dylan\corba-dylan.hdp
+subprojects:	../../dylan/corba-dylan.hdp
 base-address:	0x63D80000
 Library-Pack:   CORBA
 debug-arguments:	-debug

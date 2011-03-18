@@ -6,7 +6,7 @@ linker-options:	$(guilflags)
 start-function:	main
 major-version:	2
 minor-version:	1
-other-files:	..\README.htm
+other-files:	../README.htm
 	chat.spec
 debug-arguments:	-ORBport 2346
 compilation-mode:	loose

@@ -1,7 +1,7 @@
 comment:	This file is generated, please don't edit
 format-version:	2
-subprojects:	..\..\core\scepter-core.hdp
-	..\..\abstract-syntax-tree\scepter-ast.hdp
+subprojects:	../../core/scepter-core.hdp
+	../../abstract-syntax-tree/scepter-ast.hdp
 minor-version:	1
 files:	scepter-file-front-end-library
 	scepter-file-front-end-module

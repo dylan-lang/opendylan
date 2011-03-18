@@ -21,8 +21,8 @@ files:	scepter-dylan-back-end-library
 	exception
 	union
 	typedef
-subprojects:	..\..\core\scepter-core.hdp
-	..\..\abstract-syntax-tree\scepter-ast.hdp
+subprojects:	../../core/scepter-core.hdp
+	../../abstract-syntax-tree/scepter-ast.hdp
 base-address:	0x63FE0000
 major-version:	2
 minor-version:	1
