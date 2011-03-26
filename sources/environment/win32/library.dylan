@@ -41,7 +41,6 @@ define library win32-environment
 
   use source-control-manager;
   use source-control-vss-backend;
-  use source-control-hope-backend;
 
   // Project manager plug-ins
   use motley;
