@@ -174,6 +174,8 @@ end function;
 define constant $null-device = "/dev/null";
 define constant $posix-shell = "/bin/sh";
 
+// Note: streams are always returned in the order stdin, stdout, stderr
+//       even though not all of them are always returned.
 define function run-application
     (command :: type-union(<string>, limited(<sequence>, of: <string>)),
      #key under-shell? = #t,

@@ -603,6 +603,8 @@ end function win32-last-error;
 
 define constant $null-device = "NUL:";
 
+// Note: streams are always returned in the order stdin, stdout, stderr
+//       even though not all of them are always returned.
 define function run-application
     (command :: type-union(<string>, limited(<sequence>, of: <string>)),
      #key under-shell? = #f,
