@@ -1,5 +1,12 @@
+*~
 /aclocal.m4
 /configure
-build-aux/
-autom4te*.cache/
-*~
+/build-aux/
+/autom4te*.cache/
+/sources/corba/scepter/front-end/file/parser.dylan
+/sources/corba/orb/iop-protocol/
+/sources/corba/orb/ir-protocol/
+/sources/corba/orb/ir-stubs/
+/sources/corba/services/naming/naming-protocol/
+/sources/corba/services/naming/naming-skeletons/
+/sources/corba/services/naming/naming-stubs/
