@@ -507,8 +507,9 @@ define function parse-iso8601-string (string :: <string>)
 	  let value = 0;
 	  for (i from start below endpos)
 	    if (string[i] < '0' | string[i] > '9')
-	      error("Malformed ISO 8601 string %=: Unexpected character '%s'",
-		    string, string[i])
+	      error("Malformed ISO 8601 string %=: Unexpected character '%c' "
+                      "at index %d",
+		    string, string[i], i);
 	    end;
 	    value := 10 * value + as(<integer>, string[i]) - as(<integer>, '0')
 	  end;
