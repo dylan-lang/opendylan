@@ -8,7 +8,7 @@ files:	scepter-core-library
 	front-end
 	back-end
 	error
-subprojects:	..\utilities\scepter-utilities.hdp
+subprojects:	../utilities/scepter-utilities.hdp
 base-address:	0x63FE0000
 major-version:	2
 minor-version:	1

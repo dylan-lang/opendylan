@@ -6,8 +6,8 @@ files:	orb-streams-library
 	marshalling-streams
 	octet-streams
 	conditions
-subprojects:	..\utilities\orb-utilities.hdp
-	..\dylan\corba-dylan.hdp
+subprojects:	../utilities/orb-utilities.hdp
+	../dylan/corba-dylan.hdp
 Library-Pack:   CORBA
 base-address:	0x63FC0000
 major-version: 2

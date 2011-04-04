@@ -4,8 +4,8 @@ library:	scepter-ir-back-end-test-suite
 files:	library
 	module
 	scepter-ir-back-end-test-suite
-subprojects:	..\scepter-ir-back-end.hdp
-	..\..\..\core\scepter-core.hdp
+subprojects:	../scepter-ir-back-end.hdp
+	../../../core/scepter-core.hdp
 base-address:	0x63FE0000
 debug-arguments:	-debug -progress
 start-function:	

@@ -4,7 +4,7 @@ compilation-mode:	tight
 minor-version:	1
 major-version:	2
 target-type:	dll
-subprojects:	..\utilities\corba-tests-utilities.hdp
+subprojects:	../utilities/corba-tests-utilities.hdp
 files:	corba-tests-server-library
 	corba-tests-server-module
 	any-server

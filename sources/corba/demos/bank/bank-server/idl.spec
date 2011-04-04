@@ -1,4 +1,4 @@
 Origin:     OMG-IDL
-IDL-file:   ..\bank\bank.idl
+IDL-file:   ../bank/bank.idl
 Skeletons:  yes
 

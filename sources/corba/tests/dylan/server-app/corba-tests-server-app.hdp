@@ -3,8 +3,8 @@ format-version:	2
 library:	corba-tests-server-app
 files:	corba-tests-server-app-library
 	corba-tests-server-app
-subprojects:	..\server\corba-tests-server.hdp
-	..\utilities\corba-tests-utilities.hdp
+subprojects:	../server/corba-tests-server.hdp
+	../utilities/corba-tests-utilities.hdp
 base-address:	0x64DC0000
 major-version:	2
 minor-version:	1

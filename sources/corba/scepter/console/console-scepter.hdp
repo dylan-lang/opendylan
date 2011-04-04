@@ -5,10 +5,10 @@ files:	console-scepter-library
 	console-scepter
 	parse-arguments
 	main
-subprojects:	..\scepter.hdp
-	..\core\scepter-core.hdp
+subprojects:	../scepter.hdp
+	../core/scepter-core.hdp
 base-address:	0x64F20000
-debug-arguments:	/debugger /language:dump /stdout c:\users\keithd\foo.idl
+debug-arguments:	/debugger /language:dump /stdout c:/users/keithd/foo.idl
 start-function:	main
 major-version:	2
 minor-version:	1

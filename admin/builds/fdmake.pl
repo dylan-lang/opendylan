@@ -10,11 +10,6 @@ my $lidfile_line;
 
 my $platform_name = $ENV{'OPEN_DYLAN_PLATFORM_NAME'};
 
-my $library_extension = "so";
-if($platform_name =~ m/darwin/) {
-    $library_extension = "dylib";
-}
-
 my $user_root = $ENV{'OPEN_DYLAN_USER_ROOT'};
 my $user_build = $ENV{'OPEN_DYLAN_USER_BUILD'};
 my $user_install = $ENV{'OPEN_DYLAN_USER_INSTALL'};
@@ -35,95 +30,52 @@ my @library_packs;
             'library-packs=s' => sub {
                 push @library_packs, split(/\W+/, $_[1]);
             });
-
-# When a library is loaded for use, it opens dependent libraries. These are
-# the libraries used in its build. We want to make a new release's libraries
-# depend only on other new release libraries.
-#
-# To do this, evaluate dependencies. Build the library that depends on no
-# others first, followed by other libraries that depend only on it in turn.
-#
-# Bootstrap stage 1 removes a bunch of registry entries, forcing those libs to
-# fill their dependencies with older libraries. Because the registry entries
-# are missing, their dependencies can't be found. This is expected, so those
-# STDERRs are only printed in verbose mode.
-
 my %built;
 my %deps;
-my %lidfiles;
-my %lidfile_dirs;
 
-print "Evaluating dependencies... ";
 foreach my $library (@ARGV) {
-    if(!&find_library_deps($library)) {
-        print STDERR "\nfdmake: Unable to evaluate dependencies for library " .
-            "$library\n";
+    if(!&build_library($library)) {
+        print STDERR "fdmake: Unable to build library $library\n";
         exit 1;
     }
 }
 foreach my $pack (@library_packs) {
-    &find_library_pack_deps($pack);
+    &build_library_pack($pack);
 }
-foreach my $lib (keys(%deps)) {
-    &expand_library_deps($lib);
-}
-print "done\n";
-
-my @build_order = sort { @{$deps{$a}} <=> @{$deps{$b}} } keys(%deps);
-if ($verbose) {
-    foreach my $lib (@build_order) {
-        print "$lib : ";
-        foreach my $deplib ( $deps{$lib} ) {
-            print "@{$deplib}";
-        }
-        print "\n";
-    }
-}
-
-foreach my $library (@build_order) {
-    if(!&build_library($library)) {
-        print STDERR "\nfdmake: Unable to build library $library\n";
-        exit 1;
-    }
-}
-
 exit 0;
 
-# find_library_deps($library)
+# build_library($library)
 #
-# Find dependent libraries and put in %deps.
+# Builds the given libraries from source
 #
-# Returns 0 if could not evaluate.
-#
-sub find_library_deps {
+sub build_library {
     my ($library) = @_;
 
-    # Find the lid file for this library.
+    if (exists $built{$library}) {
+        return $built{$library};
+    }
+
     my $separator = quotemeta(($Config{'osname'} eq 'MSWin32') ? ';' : ':');
     my $lidfile;
     my $dir;
   REGISTRY:
     foreach my $registry (split /$separator/, $user_registries) {
-        if (!open(REGISTRY, '<', "$registry/$platform_name/$library")
-            && !open(REGISTRY, '<', "$registry/generic/$library")) {
-            print STDERR "fdmake: No registry entry for $library in " .
-                "$registry/$platform_name or $registry/generic\n" if $verbose;
-            next REGISTRY;
-        }
+        open(REGISTRY, '<', "$registry/$platform_name/$library")
+            || open(REGISTRY, '<', "$registry/generic/$library")
+            || next REGISTRY;
         my $line = <REGISTRY>;
         close(REGISTRY);
 
         my ($volume, $directories, undef) = File::Spec->splitpath($registry, 1);
         my @directories = File::Spec->splitdir($directories);
 
-        lc(pop(@directories)) =~ /(bootstrap1-)?registry/ or die;
+        pop(@directories) =~ /\bregistry$/i or die;
 
         # abstract://dylan/environment/console/minimal-console-compiler.lid
         $line =~ s|^abstract://dylan/||;
         ($dir, $lidfile) = ($line =~ m|(.*)/(.*)|);
         push @directories, File::Spec::Unix->splitdir($dir);
-        $dir = File::Spec->catpath($volume,
-                                   File::Spec->catdir(@directories), '');
+        $dir = File::Spec->catdir($volume, @directories);
         $lidfile = File::Spec->catfile($dir, $lidfile);
         last REGISTRY;
     }
@@ -132,178 +84,206 @@ sub find_library_deps {
         return 0;
     }
 
-    $lidfiles{$library} = $lidfile;
-    $lidfile_dirs{$library} = $dir;
-    my $header = &parse_lid_file($lidfile);
+    my $header = &parse_lid_file($lidfile, $dir);
 
-    # Scan the source code files and populate %deps for each defined library.
-    if (!exists $deps{$library}) {
-        $deps{$library} = [];
+    my $other_files = $header->{'other-files'};
+    if (defined $other_files) {
+        foreach my $spec (split /\s+/, $other_files) {
+            if ($spec =~ /\.spec$/) {
+		my $absspec = File::Spec->catfile($dir, $spec);
+		my ($specvol, $specdir, undef)
+		    = File::Spec->splitpath($absspec);
+		my $sdir = File::Spec->catdir($specvol, $specdir);
+                &invoke_tool($library, $sdir, $absspec);
+            }
+        }
     }
+
     &scan_lidfile($lidfile, $header, $dir);
 
-    # Now do library's dependecies.
-    foreach my $dep (@{$deps{$library}}) {
-        next if exists $deps{$dep};
-        if (&find_library_deps($dep) == 0) {
-            print STDERR "fdmake: Unable to evaluate dependencies of ".
-                "library $dep, which $library depends on\n" if $verbose;
-        }
+    my @products = &library_products($library, $header);
+
+    my $needs_rebuild;
+    for my $product (@products) {
+        $needs_rebuild ||= !-f $product;
     }
 
-    return 1;
-}
+    my $dbfile = File::Spec->catfile($user_root, 'databases', "${library}.ddb");
+    my $dbdate;
+    $needs_rebuild ||= !-f $dbfile;
+    if (!$needs_rebuild) {
+        $dbdate = (stat $dbfile)[9];
+    }
 
-# expand_library_deps
-# 
-# With a complete list of libraries' dependencies, expand recursively.
-#
-sub expand_library_deps {
-    my ($library) = @_;
-    my $deplist = $deps{$library};
-    my $addl_dep;
-
-    do {
-        # Get dependencies of library's dependencies.
-        my @deps_of_deps = ();
-        foreach my $dep (@$deplist) {
-            # Skip if no dependencies of dependencies found.
-            next if !exists $deps{$dep};
-            push @deps_of_deps, @{$deps{$dep}};
-        }
-        
-        # Add to library's dependencies if not already listed.
-        $addl_dep = 0;
-      DEP_OF_DEPS:
-        foreach my $dep (@deps_of_deps) {
-            foreach my $curr_dep (@$deplist) {
-                next DEP_OF_DEPS if $dep eq $curr_dep;
-            }
-            push @$deplist, $dep;
-            $addl_dep = 1;
-        }
-    } while $addl_dep;  # Loop until all dependents-of-dependents are listed.
-}
-
-# build_library($library)
-#
-# Builds the given libraries from source
-#
-# Returns 0 if could not build, 1 if already built, 2 if build succeeded.
-#
-sub build_library {
-    my ($library) = @_;
-
-    return $built{$library} if exists $built{$library};
-    return 0 if !exists $lidfiles{$library};
-
-    my $lidfile = $lidfiles{$library};
-    my $dir = $lidfile_dirs{$library};
-    my $header = &parse_lid_file($lidfile);
-
-    # This library needs to be built if it doesn't exist.
-    my $needs_rebuild = !-f "$user_install/lib/lib${library}.${library_extension}";
-
-    # If it does exist, try to rebuild prereq. libraries. If any of them are
-    # rebuilt, this library also needs to be rebuilt.
     if(defined $deps{$library}) {
         foreach my $dep (@{$deps{$library}}) {
-            if(&build_library($dep) > 1) {
+            my $date = &build_library($dep);
+            if (!$needs_rebuild && $date > $dbdate) {
+                #print "library $dep causes rebuild of $library\n";
                 $needs_rebuild = 1;
             }
         }
     }
 
-    # Double-check date and return if this library still doesn't need rebuild.
+    if (!$needs_rebuild && (stat $lidfile)[9] > $dbdate) {
+        #print "$lidfile causes rebuild of $library\n";
+        $needs_rebuild = 1;
+    }
+
+    my %fullpath;
+    foreach my $source (split /\s+/, $header->{'files'}) {
+        unless($source =~ /\.dylan$/) {
+            $source = "$source.dylan";
+        }
+        $source = File::Spec->catfile($dir, $source);
+        my $srcdate = (stat $source)[9]
+            || die "Library $library source file '$source' does not exist";
+        if(!$needs_rebuild && $srcdate > $dbdate) {
+            #print "$source causes rebuild of $library\n";
+            $needs_rebuild = 1;
+        }
+
+        my (undef, undef, $base) = File::Spec->splitpath($source);
+        $fullpath{$base} = $source;
+    }
+
     if(!$needs_rebuild) {
-        my $libdate = (stat "$user_install/lib/lib${library}.${library_extension}")[9];
-        foreach my $source (split /\s+/, $$header{'files'}) {
-            unless($source =~ /\.dylan$/) {
-                $source = "$source.dylan";
-            }
-            $source = File::Spec->catfile($dir, $source);
-            my $srcdate = (stat $source)[9]
-                || die "Library $library source file '$source' does not exist";
-            if($srcdate > $libdate) {
-                print "$source causes rebuild of $library\n";
-                $needs_rebuild = 1;
-            }
-        }
-        if(!$needs_rebuild) {
-            $built{$library} = 1;
-            return 1;
-        }
-    }
-
-    # Process any *.spec files.
-    my $other_files = $$header{'other-files'};
-    if(defined $other_files) {
-        foreach my $spec (split /\s+/, $other_files) {
-            if($spec =~ /\.spec$/) {
-                &invoke_tool($library, $dir, File::Spec->catfile($dir, $spec));
-            }
-        }
+        $built{$library} = $dbdate;
+        return $dbdate;
     }
 
     print "Building $library... ";
 
     my $command = $compiler;
-    $command .= " -debugger" if($debugger);
+    if ($debugger) {
+	$command .= " -debugger";
+    }
+    if (exists $header->{'target-type'}) {
+	$command .= " -target " . $header->{'target-type'};
+    }
     $command .= " $library";
 
-    if(defined $build_logs && !$debugger) {
-        $command .= " >$build_logs/compile-$library.txt";
+    if ($debugger) {
+	system($command) or die "Couldn't execute $compiler";
+	print "\n";
+    }
+    else {
+	open(my $compfd, '-|', $command) or die "Couldn't execute $compiler";
+
+	my $logfd;
+	if (defined $build_logs) {
+	    my $log = File::Spec->catfile($build_logs, "compile-$library.txt");
+	    open($logfd, '>', $log) or die "Couldn't write to $log: $!";
+	}
+
+        my $warnings = 0;
+        my $serious_warnings = 0;
+        my $errors = 0;
+
+	my $printed;
+        my $prefix;
+        while(<$compfd>) {
+	    if (defined $logfd) {
+		print $logfd $_;
+	    }
+
+            if(m|There were (\d+) warnings, (\d+) serious warnings and (\d+) errors|) {
+                $warnings += $1;
+                $serious_warnings += $2;
+                $errors += $3;
+            }
+            elsif (m|^Warning at (.+):(\d+(-\d+)?):|) {
+		my $source = (exists $fullpath{$1}) ? $fullpath{$1} : $1;
+                $prefix = "$source:$2: warning: ";
+            }
+            elsif (m|^Serious warning at (.+):(\d+(-\d+)?):|) {
+		my $source = (exists $fullpath{$1}) ? $fullpath{$1} : $1;
+                $prefix = "$source:$2: serious warning: ";
+            }
+            elsif (m|^Error at (.+):(\d+(-\d+)?):|) {
+		my $source = (exists $fullpath{$1}) ? $fullpath{$1} : $1;
+                $prefix = "$source:$2: error: ";
+            }
+            elsif (defined $prefix && !m|^$|) {
+		if (!$printed) {
+		    print "\n";
+		    $printed = 1;
+		}
+		print $prefix . $_;
+                undef $prefix;
+            }
+        }
+
+        print "${warnings} W, ${serious_warnings} SW, ${errors} E\n";
+
+	if (defined $logfd) {
+	    close($logfd);
+	}
+	close($compfd);
+    }
+    my $failed = $? != 0;
+
+    foreach my $product ($dbfile, @products) {
+        if (!-f $product) {
+            print STDERR "fdmake: build product $product missing\n";
+            $failed = 1;
+        }
     }
 
-    # Compile and check compilation.
-    system $command || die "Couldn't execute $compiler";
-
-    if($? != 0) {
+    if ($failed) {
         print "\n";
         if(defined $build_logs && !$debugger) {
             print STDERR
-                "fdmake: compile failed ($?), see " .
-                "$build_logs/compile-$library.txt\n";
+                "fdmake: compile failed ($?), see ",
+		File::Spec->catfile($build_logs, "compile-$library.txt"), "\n";
         }
         else {
             print STDERR "fdmake: compile failed\n";
         }
         exit 1;
     }
-    
-    if(!-f "$user_install/lib/lib$library.$library_extension"
-       && !-f "$user_install/bin/$library") {
-        print "\n";
-        print STDERR
-                "fdmake: build succeeded but library not found under " .
-                "$user_install/lib/lib$library.$library_extension " . 
-                "or $user_install/bin/$library\n";
-        exit 1;
-    }
-    
-    $built{$library} = 2;
 
-    # Print warnings, serious warnings, errors found.
-    if(defined $build_logs && !$debugger) {
-        my $warnings = 0;
-        my $serious_warnings = 0;
-        my $errors = 0;
-        open(LOGFILE, '<', "$build_logs/compile-$library.txt")
-            || die "Couldn't open logfile: $!";
-        while(<LOGFILE>) {
-            if(m|There were (\d+) warnings, (\d+) serious warnings and (\d+) errors|) {
-                $warnings += $1;
-                $serious_warnings += $2;
-                $errors += $3;
-            }
+    $dbdate = (stat $dbfile)[9];
+    $built{$library} = $dbdate;
+    return $dbdate;
+}
+
+sub library_products {
+    my ($library, $header) = @_;
+
+    my $executable = $library;
+    if (defined $header->{'executable'}) {
+        $executable = $header->{'executable'};
+    }
+
+    my @products;
+
+    if ($Config{'osname'} eq 'MSWin32') {
+        if (!defined $header->{'target-type'}
+            || lc($header->{'target-type'}) eq 'dll') {
+	    push(@products,
+		 File::Spec->catfile($user_root, 'bin', "${executable}.dll"));
+	    push(@products,
+		 File::Spec->catfile($user_root, 'lib', "${executable}.lib"));
+	}
+        if (!defined $header->{'target-type'}
+            || lc($header->{'target-type'}) eq 'executable') {
+            push(@products,
+		 File::Spec->catfile($user_root, 'bin', "${executable}.exe"));
+	}
+    }
+    else {
+        my $so = ($Config{'osname'} eq 'darwin') ? 'dylib' : 'so';
+        push(@products,
+             File::Spec->catfile($user_root, 'lib', "lib${library}.${so}"));
+
+        if (!defined $header->{'target-type'}
+            || lc($header->{'target-type'}) eq 'executable') {
+            push @products, File::Spec->catfile($user_root, 'bin', $executable);
         }
-        close(LOGFILE);
-        print "${warnings} W, ${serious_warnings} SW, ${errors} E\n";
-    } else {
-        print "\n";
     }
 
-    return 2;
+    return @products;
 }
 
 # invoke_tool($library, $dir, $spec)
@@ -317,40 +297,123 @@ sub invoke_tool {
     $lidfile_line = 1;
     my $header = &parse_header(\*SPEC, $spec);
 
-    my $origin = $$header{'origin'};
+    my $origin = $header->{'origin'};
 
     print "Invoking the $origin tool for the $library library\n";
 
-    if($origin =~ /\s*parser\s*/i) {
-        &build_library('parser-compiler') || die "Can't build parser-compiler";
+    if ($origin =~ /\A\s*parser\s*\Z/i) {
+        my $source = File::Spec->catfile($dir, $header->{'parser'});
+        my $output = File::Spec->catfile($dir, $header->{'output'});
 
-        my $source = File::Spec->catfile($dir, $$header{'parser'});
-        my $output = File::Spec->catfile($dir, $$header{'output'});
-        
-        system "$user_install/bin/parser-compiler $source $output";
-        if($? !=0 || ! -f $output) {
-            print STDERR "\nfdmake: Unable to build parser file\n";
-            exit 1;
-        }
-    } else {
+	if (!-f $output || (stat $source)[9] > (stat $output)[9]) {
+	    &build_library('parser-compiler')
+		or die "Can't build parser-compiler";
+	    my $parser_compiler
+		= File::Spec->catfile($user_root, 'bin', 'parser-compiler');
+
+	    system "$parser_compiler $source >$output";
+	    if($? !=0 || ! -f $output) {
+		print STDERR "\nfdmake: Unable to build parser file\n";
+		exit 1;
+	    }
+	}
+    }
+    elsif ($origin =~ /\A\s*omg-idl\s*\Z/i) {
+	my $idlfile = File::Spec->catfile($dir, $header->{'idl-file'});
+	my ($idlvol, $idldir, undef) = File::Spec->splitpath($idlfile);
+
+	my $needs_rebuild = 0;
+	my @options;
+	my $prefix = '';
+	if (defined $header->{'prefix'}) {
+	    push @options, '-prefix:' . $header->{'prefix'};
+	    $prefix = $header->{'prefix'} . '-';
+	}
+	if (defined $header->{'main'}
+	    && $header->{'main'} =~ /\A\s*yes\s*\Z/i) {
+	    push @options, '-main';
+	}
+
+	if (defined $header->{'protocol'}
+	    && $header->{'protocol'} =~ /\A\s*yes\s*\Z/i) {
+	    push @options, '-protocol';
+
+	    my $name = $prefix . 'protocol';
+	    my $genfile
+		= File::Spec->catfile($idlvol, $idldir, $name, $name.'.dylan');
+	    if (!-f $genfile || (stat $idlfile)[9] > (stat $genfile)[9]) {
+		$needs_rebuild = 1;
+	    }
+	}
+	if (defined $header->{'skeletons'}
+	    && $header->{'skeletons'} =~ /\A\s*yes\s*\Z/i) {
+	    push @options, '-skeletons';
+
+	    my $name = $prefix . 'skeletons';
+	    my $genfile
+		= File::Spec->catfile($idlvol, $idldir, $name, $name.'.dylan');
+	    if (!-f $genfile || (stat $idlfile)[9] > (stat $genfile)[9]) {
+		$needs_rebuild = 1;
+	    }
+	}
+	if (defined $header->{'stubs'}
+	    && $header->{'stubs'} =~ /\A\s*yes\s*\Z/i) {
+	    push @options, '-stubs';
+
+	    my $name = $prefix . 'stubs';
+	    my $genfile
+		= File::Spec->catfile($idlvol, $idldir, $name, $name.'.dylan');
+	    if (!-f $genfile || (stat $idlfile)[9] > (stat $genfile)[9]) {
+		$needs_rebuild = 1;
+	    }
+	}
+
+	if (defined $header->{'include'}) {
+	    push @options, '-include';
+	    push @options, File::Spec->catdir($dir, $header->{'include'});
+	}
+
+	if (defined $header->{'libraries'}) {
+	    push @options, '-libraries', $header->{'libraries'};
+	}
+	if (defined $header->{'modules'}) {
+	    push @options, '-modules', $header->{'modules'};
+	}
+
+	if ($needs_rebuild) {
+	    &build_library('minimal-console-scepter')
+		or die "Can't build scepter";
+	    my $scepter
+		= File::Spec->catfile($user_root,
+				      'bin', 'minimal-console-scepter');
+
+	    system($scepter, @options, $idlfile);
+	    if ($? != 0) {
+		print STDERR "\nfdmake: Unable to build $origin\n";
+		exit 1;
+	    }
+	}
+    }
+    else {
         print STDERR "\nfdmake: unknown tool: $origin\n";
         exit 1;
     }
 }
 
-# find_library_pack_deps($pack)
+# build_library_pack($pack)
 #
-# Find dependencies of libraries that constitute the given library pack and
-# put in %deps.
+# Builds the libraries that constitute the given library pack
 #
-sub find_library_pack_deps {
+sub build_library_pack {
     my ($lp) = @_;
 
     my $lclp = lc($lp);
 
-    my $dlpfile = "$user_sources/Library-Packs/$lp/$lclp.dlp";
+    my $dlpfile
+	= File::Spec->catfile($user_sources, 'Library-Packs', $lp,
+			      "${lclp}.dlp");
 
-    if(! -f $dlpfile) {
+    if(!-f $dlpfile) {
         print STDERR "fdmake: There is no library pack named $lp\n";
         exit 1;
     }
@@ -362,20 +425,18 @@ sub find_library_pack_deps {
 my $category = 'none';
 sub handle_dlp_start {
     my ($parser, $element, %attributes) = @_;
-    my $libpack;
-    
+
     if($element eq 'library-pack') {
-        $libpack = $attributes{'title'};
+        print "Building $attributes{'title'} library-pack...\n";
     } elsif($element eq 'libraries'
             || $element eq 'examples'
             || $element eq 'test-suites') {
         $category = $element;
     } elsif($element eq 'library') {
         if($category eq 'libraries') {
-            if(!&find_library_deps($attributes{'name'})) {
+            if(!&build_library($attributes{'name'})) {
                 print STDERR
-                    "fdmake: Unable to evaluate dependecies of library ".
-                    "$attributes{'name'} of library-pack $libpack\n" if $verbose;
+                    "fdmake: Unable to build library $attributes{'name'}\n";
                 exit 1;
             }
         }
@@ -391,18 +452,18 @@ sub handle_dlp_start {
 sub scan_lidfile {
     my ($lidfile, $header, $dir) = @_;
 
-    my $library = lc($$header{'library'});
+    my $library = lc($header->{'library'});
 
     if(!defined $library) {
         print STDERR "$lidfile: no `library:' keyword\n";
         return;
     }
 
-    if($library eq 'dylan' || !defined $$header{'files'}) {
+    if($library eq 'dylan' || !defined $header->{'files'}) {
         return;
     }
 
-    foreach my $source (split /\s+/, $$header{'files'}) {
+    foreach my $source (split /\s+/, $header->{'files'}) {
         if($source !~ /.*\.dylan$/i) {
             $source .= ".dylan";
         }
@@ -431,7 +492,7 @@ sub scan_dylan_user {
     }
 
     my $header = &parse_header(\*SOURCE, $source);
-    my $module = $$header{'module'};
+    my $module = $header->{'module'};
     if(!defined $module || $module !~ /dylan-user/i) {
         close(SOURCE);
         return 0;
@@ -562,7 +623,7 @@ sub use_library {
     push @{$deps{$library}}, $used;
 }
 
-# parse_lid_file($filename)
+# parse_lid_file($filename, $dir)
 #
 # Reads in a LID file, and returns an associative array where the
 # keys are header keywords (mashed to lower case), and the values are
@@ -570,22 +631,40 @@ sub use_library {
 # contains all the files in the body of the lid file.
 #
 sub parse_lid_file {
-    my ($lidfile) = @_;
+    my ($lidfile, $dir) = @_;
 
     open(LIDFILE, $lidfile) || die("Can't open $lidfile: $!\n");
     $lidfile_line = 1;
 
     my $contents = &parse_header(\*LIDFILE, $lidfile);
-
+    
+#   # Read filenames
+#     while (<LIDFILE>) {
+#         $lidfile_line = $lidfile_line + 1;
+#
+#       s/\r//g;                # Get rid of cross carriage returns
+#       chop;                   # kill newline
+#       $contents->{'files'} .= " $_";
+#     }
     close(LIDFILE);
 
-    if(defined $$contents{'files'}) {
+    if(defined $contents->{'files'}) {
         # replace multiple spaces with single spaces
-        $$contents{'files'} =~ s/\s+/ /g;
+        $contents->{'files'} =~ s/\s+/ /g;
         
         # strip leading whitespace, which tends to screw up other parts of
         # gen-makefile
-        $$contents{'files'} =~ s/^\s+//;
+        $contents->{'files'} =~ s/^\s+//;
+    }
+
+    while (my $lid = delete $contents->{'lid'}) {
+        $lid = File::Spec->catfile($dir, $lid);
+        my $lid_contents = &parse_lid_file($lid, $dir);
+        while (my ($key, $value) = each %$lid_contents) {
+            if (!exists $contents->{$key}) {
+                $contents->{$key} = $value;
+            }
+        }
     }
 
     return $contents;
@@ -632,4 +711,3 @@ sub parse_header {
     }
     return \%contents;
 }
-

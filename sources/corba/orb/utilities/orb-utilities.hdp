@@ -6,7 +6,7 @@ files:	orb-utilities-library
 	system
 	mailbox
 	tickets
-subprojects:	..\dylan\corba-dylan.hdp
+subprojects:	../dylan/corba-dylan.hdp
 Library-Pack:   CORBA
 base-address:	0x63FE0000
 major-version: 2

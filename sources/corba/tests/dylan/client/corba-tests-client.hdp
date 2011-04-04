@@ -29,4 +29,4 @@ minor-version:	1
 other-files:	idl.spec
 compilation-mode:	tight
 library:	corba-tests-client
-subprojects:	..\utilities\corba-tests-utilities.hdp
+subprojects:	../utilities/corba-tests-utilities.hdp

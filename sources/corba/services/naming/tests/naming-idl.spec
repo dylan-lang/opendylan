@@ -1,4 +1,4 @@
 Origin:    OMG-IDL
-Idl-File:  ..\naming.idl
+Idl-File:  ../naming.idl
 Stubs:     yes
 

@@ -5,8 +5,8 @@ files:	minimal-console-scepter-library
 	console-scepter
 	parse-arguments
 	main
-subprojects:	..\scepter.hdp
-	..\core\scepter-core.hdp
+subprojects:	../scepter.hdp
+	../core/scepter-core.hdp
 base-address:	0x64F20000
 start-function:	main
 major-version:	2

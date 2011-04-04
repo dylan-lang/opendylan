@@ -15,9 +15,9 @@ minor-version:	1
 other-files:	iop-idl.spec
 compilation-mode:	tight
 library:	orb-core
-subprojects:	..\iop-protocol\iop-protocol.hdp
-	..\iiop\orb-iiop.hdp
-	..\utilities\orb-utilities.hdp
-	..\dylan\corba-dylan.hdp
-	..\protocols\corba\corba-protocol.hdp
-	..\protocols\portableserver\portableserver-protocol.hdp
+subprojects:	../iop-protocol/iop-protocol.hdp
+	../iiop/orb-iiop.hdp
+	../utilities/orb-utilities.hdp
+	../dylan/corba-dylan.hdp
+	../protocols/corba/corba-protocol.hdp
+	../protocols/portableserver/portableserver-protocol.hdp
