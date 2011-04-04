@@ -261,7 +261,7 @@ define module file-system
   // Native locators
   create <native-file-system-locator>;
 
-  // Classes
+  // File and directory operations
   create <pathname>,
 	 <file-type>,
 	 <copy/rename-disposition>,
