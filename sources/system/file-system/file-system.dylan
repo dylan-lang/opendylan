@@ -310,12 +310,35 @@ define method do-directory (f :: <function>, directory :: <string>) => ()
 end method do-directory;
 
 
-///---*** FINISH ME!
-define function directory-contents () => ()
-  error(make(<file-system-error>,
-	     format-string: "directory-contents is not yet implemented",
-	     format-arguments: #()))
-end function directory-contents;
+define generic directory-contents
+    (directory :: <pathname>) => (locators :: <sequence>);
+
+define method directory-contents
+    (directory :: <string>) => (locators :: <sequence>)
+  directory-contents(as(<file-system-directory-locator>, directory))
+end;
+
+/// Return a locator for each file in the given directory.  The returned
+/// locators are guaranteed to be instances of <directory-locator> if the
+/// file is a directory, and instances of <file-locator> otherwise.
+///
+define method directory-contents
+    (directory :: <file-system-directory-locator>)
+ => (contents :: <sequence>)
+  let contents = #();
+  local method add-file (directory, filename, type)
+          if (filename ~= "." & filename ~= "..")
+            let locator = if (type = #"directory")
+                            subdirectory-locator(directory, filename)
+                          else
+                            merge-locators(as(<file-locator>, filename), directory)
+                          end;
+            contents := pair(locator, contents);
+          end;
+        end;
+  do-directory(add-file, directory);
+  reverse!(contents)
+end method directory-contents;
 
 
 ///
@@ -339,20 +362,36 @@ define method create-directory (parent :: <string>, name :: <string>)
 end method create-directory;
 
 
-///
-///---*** Should we add an 'if-not-empty?' keyword argument?
-define generic delete-directory (directory :: <pathname>) => ();
+define generic delete-directory
+    (directory :: <pathname>, #key recursive?) => ();
 
-define method delete-directory (directory :: <file-system-directory-locator>) => ()
-  %delete-directory(directory)
+define method delete-directory
+    (directory :: <file-system-directory-locator>, #key recursive? :: <boolean>)
+ => ()
+  if (recursive?)
+    for (file in directory-contents(directory))
+      if (instance?(file, <directory-locator>))
+        delete-directory(file, recursive?: #t);
+        %delete-directory(file);
+      else
+        delete-file(file);
+      end;
+    end;
+  else
+    %delete-directory(directory);
+  end;
 end method delete-directory;
 
-define method delete-directory (directory :: <file-system-file-locator>) => ()
-  delete-directory(locator-directory(directory))
+define method delete-directory
+    (directory :: <file-system-file-locator>,  #key recursive? :: <boolean>)
+ => ()
+  delete-directory(locator-directory(directory), recursive?: recursive?);
 end method delete-directory;
 
-define method delete-directory (directory :: <string>) => ()
-  delete-directory(as(<directory-locator>, directory))
+define method delete-directory
+    (directory :: <string>, #key recursive? :: <boolean>)
+ => ()
+  delete-directory(as(<directory-locator>, directory), recursive?: recursive?)
 end method delete-directory;
 
 
