@@ -257,3 +257,19 @@ define method emit-definition-section
     (back-end :: <llvm-back-end>, o) => (section-name :: <string>)
   llvm-section-name(back-end, #"objects");
 end method;
+
+define method emit-indirection-definition
+    (back-end :: <llvm-back-end>, module :: <llvm-module>, o) => ()
+  let name = concatenate($indirection-prefix, emit-name(back-end, module, o));
+  let global
+    = make(<llvm-global-variable>,
+           name: name,
+           type: llvm-pointer-to(back-end, $llvm-object-pointer-type),
+           initializer: emit-reference(back-end, module, o),
+           constant?: #f,
+           linkage: #"internal",
+           alignment: back-end-word-size(back-end),
+           section: llvm-section-name(back-end, #"variables"));
+  llvm-builder-define-global(back-end, name, global);
+end method;
+

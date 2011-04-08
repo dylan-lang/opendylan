@@ -77,7 +77,7 @@ define method link-all
     dynamic-bind (*loose-mode?*       = loose-mode?,
                   *interactive-mode?* = interactive-mode?)
       emit-externs(back-end, m, cr);
-      //emit-indirection-definitions(back-end, m, cr);
+      emit-indirection-definitions(back-end, m, cr);
 
       // Objects
       for (literal in heap.heap-defined-object-sequence)
@@ -124,8 +124,20 @@ define method emit-externs
   for (object in heap.heap-referenced-objects)
     emit-extern(back-end, m, object);
   end for;
+
   for (object in heap.heap-referenced-bindings)
     emit-extern(back-end, m, object);
+  end for;
+end method;
+
+define method emit-indirection-definitions
+    (back-end :: <llvm-back-end>, m :: <llvm-module>,
+     cr :: <compilation-record>)
+ => ();
+  let heap = cr.compilation-record-model-heap;
+  for (refs in heap.heap-load-bound-references)
+    let object = load-bound-referenced-object(first(refs));
+    emit-indirection-definition(back-end, m, object);
   end for;
 end method;
 
