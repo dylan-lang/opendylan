@@ -971,7 +971,9 @@ define method write-constant-record
      value-partition-table :: <explicit-key-collection>,
      value :: <llvm-aggregate-constant>)
  => ();
-  if (aggregate-string?(value))
+  if (empty?(value.llvm-aggregate-constant-values))
+    write-record(stream, #"NULL");
+  elseif (aggregate-string?(value))
     let contents = map(llvm-integer-constant-integer,
                        value.llvm-aggregate-constant-values);
     if (zero?(contents.last))
