@@ -58,6 +58,12 @@ define side-effect-free stateful indefinite-extent auxiliary &c-primitive-descri
      number-to-fill :: <raw-integer>, fill :: <raw-pointer>,
      rep-size :: <raw-integer>, rep-size-slot :: <raw-integer>)
  => (pointer :: <raw-pointer>);
+define side-effect-free stateful indefinite-extent auxiliary &c-primitive-descriptor primitive-alloc-leaf-s-rbf
+    (number-bytes :: <raw-integer>, wrapper :: <raw-pointer>,
+     number-to-fill :: <raw-integer>, fill :: <raw-pointer>,
+     rep-size :: <raw-integer>, rep-size-slot :: <raw-integer>,
+     byte-fill :: <raw-integer>)
+ => (pointer :: <raw-pointer>);
 define side-effect-free stateful indefinite-extent auxiliary &c-primitive-descriptor primitive-alloc-leaf-s-rbfz
     (number-bytes :: <raw-integer>, wrapper :: <raw-pointer>,
      number-to-fill :: <raw-integer>, fill :: <raw-pointer>,
@@ -308,7 +314,10 @@ define side-effect-free stateful indefinite-extent &primitive-descriptor primiti
 
   let byte-fill = op--untag-character(be, fill-value);
 
-  select (number-slots)
+  let raw-number-slots
+    = instance?(number-slots, <llvm-integer-constant>)
+    & number-slots.llvm-integer-constant-integer;
+  select (raw-number-slots)
     0 =>
       // Allocate a byte-repeated leaf object with no fixed slots
       call-primitive(be, primitive-alloc-leaf-rbfz-descriptor,
@@ -348,8 +357,15 @@ define macro repeated-allocate-primitive-definer
            let byte-size
              = ins--add(?be, number-bytes, repeated-byte-size);
 
-           if (repeated-size-offset == 0)
-             select (number-slots)
+           let raw-repeated-size-offset
+             = instance?(repeated-size-offset, <llvm-integer-constant>)
+             & repeated-size-offset.llvm-integer-constant-integer;
+           let raw-number-slots
+             = instance?(number-slots, <llvm-integer-constant>)
+             & number-slots.llvm-integer-constant-integer;
+
+           if (raw-repeated-size-offset = 0)
+             select (raw-number-slots)
                0 =>
                  call-primitive(?be, primitive-alloc-descriptor,
                                 byte-size, class-wrapper);
@@ -367,7 +383,7 @@ define macro repeated-allocate-primitive-definer
                                 number-slots, fill-value);
              end select
            else
-             select (number-slots)
+             select (raw-number-slots)
                0 =>
                  call-primitive(?be,
                                 "primitive-alloc-" ## ?alloc ## "-descriptor",
@@ -401,7 +417,7 @@ define repeated-allocate-primitive(be, single-float, leaf-rsff, leaf-rsff,
 define repeated-allocate-primitive(be, double-float, leaf-rdff, leaf-rdff,
                                    <raw-double-float>);
 
-define side-effect-free stateful indefinite-extent &unimplemented-primitive-descriptor primitive-byte-allocate-leaf-filled
+define side-effect-free stateful indefinite-extent &primitive-descriptor primitive-byte-allocate-leaf-filled
   (number-words :: <raw-integer>,
    class-wrapper :: <object>,
    number-slots :: <raw-integer>,
@@ -410,7 +426,30 @@ define side-effect-free stateful indefinite-extent &unimplemented-primitive-desc
    repeated-size-offset :: <raw-integer>,
    repeated-fill-value :: <raw-byte>)
   => (object :: <object>)
-  //---*** Fill this in...
+  let number-bytes = ins--mul(be, number-words, back-end-word-size(be));
+  let word-size = back-end-word-size(be);
+  let repeated-byte-size = ins--mul(be, number-words, word-size);
+  let total-size = ins--add(be, repeated-byte-size, repeated-size);
+  let total-size-rounded = op--round-up-to-word(be, total-size);
+
+  let byte-fill = op--untag-character(be, fill-value);
+
+  let raw-number-slots
+    = instance?(number-slots, <llvm-integer-constant>)
+    & number-slots.llvm-integer-constant-integer;
+  select (raw-number-slots)
+    0 =>
+      // Allocate a byte-repeated leaf object with no fixed slots
+      call-primitive(be, primitive-alloc-leaf-rbf-descriptor,
+                     total-size, class-wrapper,
+                     repeated-size, repeated-size-offset, byte-fill);
+    otherwise =>
+      // Allocate a byte-repeated leaf object with fixed slots
+      call-primitive(be, primitive-alloc-leaf-s-rbf-descriptor,
+                     total-size, class-wrapper,
+                     number-slots, fill-value,
+                     repeated-size, repeated-size-offset, byte-fill);
+  end select
 end;
 
 define side-effect-free stateful indefinite-extent &runtime-primitive-descriptor primitive-allocate-in-awl-pool

@@ -78,6 +78,7 @@ define module llvm
     <llvm-null-constant>,
     <llvm-undef-constant>,
     <llvm-integer-constant>,
+    llvm-integer-constant-integer,
     <llvm-float-constant>,
     <llvm-aggregate-constant>,
     <llvm-asm-constant>,
