@@ -222,7 +222,7 @@ define function llvm-make-dbg-function
     = make(<llvm-metadata-node>,
            function-local?: #f,
            node-values: vector(i32($llvm-debug-version + $DW-TAG-subprogram),
-                               i32-zero,
+                               i32-zero, // unused
                                context,
                                dbg-name,
                                dbg-name,
@@ -235,8 +235,8 @@ define function llvm-make-dbg-function
                                if (definition?) $llvm-true else $llvm-false end,
                                i32-zero,
                                i32-zero,
-                               #f,
-                               $llvm-false,
+                               i32-zero,
+                               i32-zero, // flags
                                if (optimized?) $llvm-true else $llvm-false end,
                                function));
   if (module)
@@ -285,7 +285,10 @@ define function llvm-make-dbg-local-variable
     (kind :: one-of(#"auto", #"argument", #"return"),
      scope :: <llvm-metadata-value>, name :: <string>,
      dbg-file :: <llvm-metadata-value>, line-number,
-     type :: <llvm-metadata-value>)
+     type :: <llvm-metadata-value>,
+     #key arg :: <integer> = 0,
+          module :: false-or(<llvm-module>) = #f,
+          function-name :: <string> = "fn")
  => (dbg-local-variable :: <llvm-metadata-value>);
   let tag
     = select (kind)
@@ -293,14 +296,22 @@ define function llvm-make-dbg-local-variable
         #"argument" => $DW-TAG-arg-variable;
         #"return"   => $DW-TAG-return-variable;
       end select;
-  make(<llvm-metadata-node>,
-       function-local?: #f,
-       node-values: vector(i32($llvm-debug-version + tag),
-                           scope,
-                           make(<llvm-metadata-string>, string: name),
-                           dbg-file,
-                           i32(line-number),
-                           type))
+  let node
+    = make(<llvm-metadata-node>,
+           function-local?: #f,
+           node-values: vector(i32($llvm-debug-version + tag),
+                               scope,
+                               make(<llvm-metadata-string>, string: name),
+                               dbg-file,
+                               i32(logior(line-number, ash(arg, 24))),
+                               type,
+                               i32(0)));
+  if (module)
+    add-to-named-metadata(module,
+                          concatenate("llvm.dbg.lv.", function-name),
+                          node);
+  end if;
+  node
 end function;
 
 define function llvm-make-dbg-basic-type
