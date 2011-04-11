@@ -19,6 +19,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define class <llvm-primitive-descriptor> (<primitive-descriptor>)
   constant slot primitive-attributes :: <sequence>,
     required-init-keyword: attributes:;
+  constant slot primitive-mapped-emitter :: <function>,
+    required-init-keyword: mapped-emitter:;
   constant slot primitive-generator :: false-or(<function>),
     init-value: #f, init-keyword: generator:;
   constant slot primitive-function-declarator :: <simple-object-vector>,
@@ -40,18 +42,30 @@ define macro &primitive-descriptor-definer
       ?:body
     end }
     => { define constant ?name ## "-descriptor"
-           = make(<llvm-primitive-descriptor>,
-                  emitter: primitive-emitter-method (?parameters) => (?values)
-                             ?body
-                           end,
-                  attributes: #[?adjectives]);
+           = begin
+               let emitter
+                 = primitive-emitter-method (?parameters) => (?values)
+                     ?body
+                   end;
+               let attributes = #[?adjectives];
+               make(<llvm-primitive-descriptor>,
+                    emitter: emitter,
+                    mapped-emitter:
+                      make-primitive-mapped-emitter
+                        (emitter, attributes,
+                         parameter-types-spec:
+                           primitive-parameter-types(?parameters),
+                         value-types-spec:
+                           primitive-parameter-types(?values)),
+                    attributes: attributes);
+             end;
          do-define-llvm-primitive-descriptor(?#"name", ?name ## "-descriptor") }
 adjectives:
     { } => { }
     { ?adjective:name ...} => { ?#"adjective", ... }
 end macro;
 
-// Descriptor for primitives kept as separate functions in the
+// Descriptor for primitives implemented as separate functions in the
 // generated runtime support code
 define macro &runtime-primitive-descriptor-definer
   { define ?adj:* &runtime-primitive-descriptor ?:name
@@ -67,24 +81,33 @@ define macro &runtime-primitive-descriptor-definer
       ?:body
     end }
     => { define constant ?name ## "-descriptor"
-           = make(<llvm-primitive-descriptor>,
-                  emitter: primitive-call-emitter-method
-                               (?parameters) => (?values)
-                             ?name ## "-descriptor"
-                           end,
-                  generator: primitive-emitter-method
-                                 (?parameters) => (?values)
-                               ?body
-                             end,
-                  declarator:
-                    vector(name: ?#"name",
-                           parameter-names:
-                             primitive-parameter-names(?parameters),
-                           parameter-types-spec:
-                             primitive-parameter-types(?parameters),
-                           value-types-spec:
-                             primitive-parameter-types(?values)),
-                  attributes: #[?adjectives]);
+           = begin
+               let emitter
+                 = primitive-call-emitter-method (?parameters) => (?values)
+                     ?name ## "-descriptor"
+                   end;
+               let declarator
+                 = vector(name: ?"name",
+                          parameter-names:
+                            primitive-parameter-names(?parameters),
+                          parameter-types-spec:
+                            primitive-parameter-types(?parameters),
+                          value-types-spec:
+                            primitive-parameter-types(?values));
+               let attributes = #[?adjectives];
+               make(<llvm-primitive-descriptor>,
+                    emitter: emitter,
+                    mapped-emitter:
+                      apply(make-primitive-mapped-emitter,
+                            emitter, attributes,
+                            declarator),
+                    generator:
+                      primitive-emitter-method (?parameters) => (?values)
+                        ?body
+                      end,
+                    declarator: declarator,
+                    attributes: attributes);
+             end;
          do-define-llvm-primitive-descriptor(?#"name", ?name ## "-descriptor") }
 adjectives:
     { } => { }
@@ -96,18 +119,27 @@ define macro &c-primitive-descriptor-definer
   { define ?adjectives:* &c-primitive-descriptor ?:name
         (?parameters:*) => (?values:*) }
     => { define constant ?name ## "-descriptor"
-           = make(<llvm-primitive-descriptor>,
-                  emitter: primitive-call-emitter-method
-                               (?parameters) => (?values)
-                             ?name ## "-descriptor"
-                           end,
-                  declarator:
-                    vector(name: ?#"name",
-                           parameter-types-spec:
-                             primitive-parameter-types(?parameters),
-                           value-types-spec:
-                             primitive-parameter-types(?values)),
-                  attributes: #[#"c-callable", ?adjectives]);
+           = begin
+               let emitter
+                 = primitive-call-emitter-method (?parameters) => (?values)
+                     ?name ## "-descriptor"
+                   end;
+               let declarator
+                 = vector(name: ?"name",
+                          parameter-types-spec:
+                            primitive-parameter-types(?parameters),
+                          value-types-spec:
+                            primitive-parameter-types(?values));
+               let attributes = #[#"c-callable", ?adjectives];
+               make(<llvm-primitive-descriptor>,
+                    emitter: emitter,
+                    mapped-emitter:
+                      apply(make-primitive-mapped-emitter,
+                            emitter, attributes,
+                            declarator),
+                    declarator: declarator,
+                    attributes: attributes);
+             end;
          do-define-llvm-primitive-descriptor(?#"name", ?name ## "-descriptor") }
 adjectives:
     { } => { }
@@ -117,26 +149,36 @@ end macro;
 // Descriptors for as-yet unimplemented primitives
 define macro &unimplemented-primitive-descriptor-definer
   { define ?adjectives:* &unimplemented-primitive-descriptor ?:name
-        (?parameters:*) => (?values:*)
-      // Empty
-    end }
-    => { define constant ?name ## "-descriptor"
-           = make(<llvm-primitive-descriptor>,
-                  emitter: method (#rest args) => (no-return :: <bottom>)
-                             error(?"name" " is currently unimplemented")
-                           end,
-                  attributes: #[?adjectives]);
-         do-define-llvm-primitive-descriptor(?#"name", ?name ## "-descriptor") }
-  { define ?adjectives:* &unimplemented-primitive-descriptor ?:name
         (?parameters:*) => (?values:*);
       // Empty
     end }
     => { define constant ?name ## "-descriptor"
-           = make(<llvm-primitive-descriptor>,
-                  emitter: method (#rest args) => (no-return :: <bottom>)
-                             error(?"name" " is currently unimplemented")
-                           end,
-                  attributes: #[?adjectives]);
+           = begin
+               local
+                 method emitter (#rest args) => (no-return :: <bottom>);
+                   error(?"name" " is currently unimplemented")
+                 end;
+               make(<llvm-primitive-descriptor>,
+                    emitter: emitter,
+                    mapped-emitter: emitter,
+                    attributes: #[?adjectives]);
+             end;
+         do-define-llvm-primitive-descriptor(?#"name", ?name ## "-descriptor") }
+  { define ?adjectives:* &unimplemented-primitive-descriptor ?:name
+        (?parameters:*) => (?values:*)
+      // Empty
+    end }
+    => { define constant ?name ## "-descriptor"
+           = begin
+               local
+                 method emitter (#rest args) => (no-return :: <bottom>);
+                   error(?"name" " is currently unimplemented")
+                 end;
+               make(<llvm-primitive-descriptor>,
+                    emitter: emitter,
+                    mapped-emitter: emitter,
+                    attributes: #[?adjectives]);
+             end;
          do-define-llvm-primitive-descriptor(?#"name", ?name ## "-descriptor") }
 adjectives:
     { } => { }
@@ -147,7 +189,6 @@ end macro;
 define macro primitive-emitter-method
   { primitive-emitter-method (?parameters) => (?values) ?:body end }
     => { method (?=be :: <llvm-back-end>, ?parameters) => (?values) ?body end }
-
 parameters:
     { } => { }
     { \#rest ?:name } => { #rest ?name }
@@ -161,7 +202,8 @@ variable-name:
     => { ?name :: <llvm-value> }
 end macro;
 
-// Emitter method that calls the primitive's function
+// Emitter method that calls a runtime primitive's function
+// FIXME this doesn't handle MV primitives (currently none are runtime)
 define macro primitive-call-emitter-method
   { primitive-call-emitter-method (?parameters:*) => (?values)
       ?descriptor:expression
@@ -203,7 +245,6 @@ end macro;
 define macro primitive-parameter-types
   { primitive-parameter-types(?parameters) }
     => { #[?parameters] }
-
 parameters:
     { } => { }
     { \#rest ?:name } => { #"rest" }
@@ -232,13 +273,13 @@ end method;
 
 define method make-primitive-function
     (back-end :: <llvm-back-end>, descriptor :: <llvm-primitive-descriptor>,
-     #key name :: <symbol>,
+     #key name :: <string>,
           parameter-names :: <simple-object-vector> = #[],
           parameter-types-spec :: <simple-object-vector>,
           value-types-spec :: <simple-object-vector>,
      #all-keys)
  => (function :: <llvm-function>);
-  let mangled-name = raw-mangle(back-end, as(<string>, name));
+  let mangled-name = raw-mangle(back-end, name);
 
   let (required-parameter-type-specs, required-parameter-names, rest-parameter-name)
     = if (~empty?(parameter-types-spec) & parameter-types-spec.last == #"rest")
@@ -258,7 +299,7 @@ define method make-primitive-function
       end if;
 
   let function-type
-    = llvm-primitive-function-type(back-end,
+    = llvm-primitive-function-type(back-end, descriptor,
                                    required-parameter-type-specs,
                                    true?(rest-parameter-name),
                                    required-value-type-specs,
@@ -297,14 +338,34 @@ end method;
 // Function type for a runtime primitive function
 define method llvm-primitive-function-type
     (back-end :: <llvm-back-end>,
+     descriptor :: <llvm-primitive-descriptor>,
      required-parameter-type-specs :: <simple-object-vector>,
      parameters-rest? :: <boolean>,
      required-value-type-specs :: <simple-object-vector>,
      values-rest? :: <boolean>)
  => (type :: <llvm-function-type>);
+  let mapped-parameters?
+    = member?(#"mapped", descriptor.primitive-attributes)
+    | member?(#"mapped-parameter", descriptor.primitive-attributes);
+  let mapped-results?
+    = member?(#"mapped", descriptor.primitive-attributes)
+    | member?(#"mapped-result", descriptor.primitive-attributes);
   local
     method parameter-type (type-name :: <symbol>) => (type :: <llvm-type>);
-      llvm-primitive-parameter-type(back-end, dylan-value(type-name))
+      let o = dylan-value(type-name);
+      if (mapped-parameters?)
+        llvm-mapped-primitive-parameter-type(back-end, o)
+      else
+        llvm-reference-type(back-end, o)
+      end if
+    end method,
+    method result-type (type-name :: <symbol>) => (type :: <llvm-type>);
+      let o = dylan-value(type-name);
+      if (mapped-results?)
+        llvm-mapped-primitive-parameter-type(back-end, o)
+      else
+        llvm-reference-type(back-end, o)
+      end if
     end method;
 
   // Compute parameter types
@@ -318,7 +379,7 @@ define method llvm-primitive-function-type
         $llvm-void-type
       else
         let return-types
-          = map(parameter-type, required-value-type-specs);
+          = map(result-type, required-value-type-specs);
         if (return-types.size = 1)
           return-types.first
         else
@@ -331,17 +392,101 @@ define method llvm-primitive-function-type
        varargs?: parameters-rest?)
 end method;
 
-define method llvm-primitive-parameter-type
+define method llvm-mapped-primitive-parameter-type
     (back-end :: <llvm-back-end>, class :: <&class>)
  => (type :: <llvm-type>);
   llvm-pointer-to(back-end, llvm-class-type(back-end, class))
 end method;
 
-define method llvm-primitive-parameter-type
+define method llvm-mapped-primitive-parameter-type
     (back-end :: <llvm-back-end>, o)
  => (type :: <llvm-type>);
   llvm-reference-type(back-end, o)
 end method;
+
+define function make-primitive-mapped-emitter
+    (emitter :: <function>, attributes :: <sequence>,
+     #key parameter-types-spec :: <simple-object-vector>,
+          value-types-spec :: <simple-object-vector>,
+     #all-keys)
+ => (function :: <function>);
+  let mapped-parameters?
+    = member?(#"mapped", attributes)
+    | member?(#"mapped-parameter", attributes);
+  let mapped-results?
+    = member?(#"mapped", attributes)
+    | member?(#"mapped-result", attributes);
+  case
+    mapped-parameters? & mapped-results? =>
+      method (be :: <llvm-back-end>, #rest arguments)
+        let arguments
+          = map(method (value, type-name)
+                  let type = dylan-value(type-name);
+                  emit-mapped-primitive-argument(be, value, type)
+                end,
+                arguments,
+                parameter-types-spec);
+        let (#rest results) = apply(emitter, be, arguments);
+        let results
+          = map(method (value, type-name)
+                  let type = dylan-value(type-name);
+                  emit-mapped-primitive-result(be, value, type)
+                end,
+                results,
+                value-types-spec);
+        apply(values, results)
+      end;
+    mapped-parameters? =>
+      method (be :: <llvm-back-end>, #rest arguments)
+        let arguments
+          = map(method (value, type-name)
+                  let type = dylan-value(type-name);
+                  emit-mapped-primitive-argument(be, value, type)
+                end,
+                arguments,
+                parameter-types-spec);
+        apply(emitter, be, arguments)
+      end;
+    mapped-results? =>
+      method (be :: <llvm-back-end>, #rest arguments)
+        let (#rest results) = apply(emitter, be, arguments);
+        let results
+          = map(method (value, type-name)
+                  let type = dylan-value(type-name);
+                  emit-mapped-primitive-result(be, value, type)
+                end,
+                results,
+                value-types-spec);
+        apply(values, results)
+      end;
+    otherwise =>
+      emitter;
+  end
+end function;
+
+define method emit-mapped-primitive-argument
+    (back-end :: <llvm-back-end>, value :: <llvm-value>, class :: <&class>)
+ => (reference :: <llvm-value>);
+  op--object-pointer-cast(back-end, value, class)
+end method;
+
+define method emit-mapped-primitive-argument
+    (back-end :: <llvm-back-end>, value :: <llvm-value>, type :: <&raw-type>)
+ => (reference :: <llvm-value>);
+  value
+end method;
+
+define method emit-mapped-primitive-result
+    (back-end :: <llvm-back-end>, value :: <llvm-value>, o)
+ => (value :: <llvm-value>)
+  ins--bitcast(back-end, value, $llvm-object-pointer-type)
+end method;
+
+define method emit-mapped-primitive-result
+    (back-end :: <llvm-back-end>, value :: <llvm-value>, type :: <&raw-type>)
+ => (value :: <llvm-value>)
+  value
+end;
 
 define function call-primitive
     (back-end :: <llvm-back-end>, primitive :: <primitive-descriptor>,

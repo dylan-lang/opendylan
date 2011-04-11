@@ -7,14 +7,14 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Single Float
 
-define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-single-float-as-raw
+define side-effect-free stateless dynamic-extent mapped &primitive-descriptor primitive-single-float-as-raw
     (x :: <single-float>) => (r :: <raw-single-float>);
   let ptr
     = op--getslotptr(be, x, #"<single-float>", #"%single-float-data");
   ins--load(be, ptr, alignment: back-end-word-size(be));
 end;
 
-define side-effect-free stateless dynamic-extent &runtime-primitive-descriptor primitive-raw-as-single-float
+define side-effect-free stateless dynamic-extent mapped &runtime-primitive-descriptor primitive-raw-as-single-float
     (r :: <raw-single-float>) => (x :: <single-float>);
   let result  = op--allocate-untraced(be, #"<single-float>");
   let ptr
@@ -162,14 +162,14 @@ end;
 
 /// Double Float
 
-define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-double-float-as-raw
+define side-effect-free stateless dynamic-extent mapped &primitive-descriptor primitive-double-float-as-raw
     (x :: <double-float>) => (r :: <raw-double-float>);
   let ptr
     = op--getslotptr(be, x, #"<double-float>", #"%double-float-data");
   ins--load(be, ptr, alignment: back-end-word-size(be));
 end;
 
-define side-effect-free stateless dynamic-extent &runtime-primitive-descriptor primitive-raw-as-double-float
+define side-effect-free stateless dynamic-extent mapped &runtime-primitive-descriptor primitive-raw-as-double-float
     (r :: <raw-double-float>) => (x :: <double-float>);
   let result = op--allocate-untraced(be, #"<double-float>");
   let ptr

@@ -20,7 +20,7 @@ define runtime-variable %oblist_size :: <raw-integer>
 define runtime-variable %oblist_cursor :: <raw-integer>
   = make-raw-literal(0);
 
-define side-effecting stateless indefinite-extent &runtime-primitive-descriptor primitive-resolve-symbol
+define side-effecting stateless indefinite-extent mapped &runtime-primitive-descriptor primitive-resolve-symbol
     (symbol :: <symbol>) => (canonical-symbol :: <symbol>);
   let module = be.llvm-builder-module;
 

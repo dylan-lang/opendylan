@@ -48,7 +48,7 @@ define side-effecting &c-primitive-descriptor primitive-keyboard-interrupt-polli
 define runtime-variable module-hInstance :: <raw-machine-word>
   = make-raw-literal(as(<machine-word>, 0));
 
-define side-effecting &runtime-primitive-descriptor primitive-runtime-module-handle
+define side-effecting mapped &runtime-primitive-descriptor primitive-runtime-module-handle
     () => (handle :: <machine-word>);
   let raw-handle
     = ins--load(be, module-hInstance-descriptor.runtime-variable-global);

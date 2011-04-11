@@ -236,7 +236,7 @@ end;
 
 // Allocate an explicitly-freeable block of memory; used as the
 // default allocator for C-FFI <C-pointer>
-define side-effect-free stateful indefinite-extent &runtime-primitive-descriptor primitive-manual-allocate
+define side-effect-free stateful indefinite-extent mapped-result &runtime-primitive-descriptor primitive-manual-allocate
     (number-bytes :: <abstract-integer>) => (pointer :: <machine-word>);
   let bytes
     = call-primitive(be, primitive-unwrap-abstract-integer-descriptor,
@@ -251,7 +251,7 @@ end;
 
 // Free a block of memory allocated by primitive-manual-allocate; used
 // as the default deallocator for C-FFI <C-pointer>
-define side-effecting indefinite-extent &runtime-primitive-descriptor primitive-manual-free
+define side-effecting indefinite-extent mapped &runtime-primitive-descriptor primitive-manual-free
     (pointer :: <machine-word>) => ();
   let raw
     = call-primitive(be, primitive-unwrap-machine-word-descriptor, pointer);
@@ -275,7 +275,7 @@ define side-effect-free stateful indefinite-extent &runtime-primitive-descriptor
   let ptr = call-primitive(be, primitive-alloc-leaf-s-r-descriptor,
                            number-bytes, wrapper, number-slots, fill,
                            repeated-size, repeated-size-offset);
-  op--object-pointer-cast(be, ptr, #"<object>")
+  ptr
 end;
 
 // Byte allocators:
@@ -465,11 +465,9 @@ define side-effect-free stateful indefinite-extent &runtime-primitive-descriptor
   let wrapper = op--raw-pointer-cast(be, class-wrapper);
   let fill = op--raw-pointer-cast(be, fill-value);
   let assoc = op--raw-pointer-cast(be, assoc-link);
-  let ptr
-    = call-primitive(be, primitive-alloc-exact-awl-s-r-descriptor,
-                     number-bytes, wrapper, assoc, number-slots, fill,
-                     repeated-size, repeated-size-offset);
-  op--object-pointer-cast(be, ptr, #"<object>")
+  call-primitive(be, primitive-alloc-exact-awl-s-r-descriptor,
+                 number-bytes, wrapper, assoc, number-slots, fill,
+                 repeated-size, repeated-size-offset);
 end;
 
 define side-effect-free stateful indefinite-extent &runtime-primitive-descriptor primitive-allocate-weak-in-awl-pool
@@ -485,11 +483,9 @@ define side-effect-free stateful indefinite-extent &runtime-primitive-descriptor
   let wrapper = op--raw-pointer-cast(be, class-wrapper);
   let fill = op--raw-pointer-cast(be, fill-value);
   let assoc = op--raw-pointer-cast(be, assoc-link);
-  let ptr
-    = call-primitive(be, primitive-alloc-weak-awl-s-r-descriptor,
-                     number-bytes, wrapper, assoc, number-slots, fill,
-                     repeated-size, repeated-size-offset);
-  op--object-pointer-cast(be, ptr, #"<object>")
+  call-primitive(be, primitive-alloc-weak-awl-s-r-descriptor,
+                 number-bytes, wrapper, assoc, number-slots, fill,
+                 repeated-size, repeated-size-offset);
 end;
 
 

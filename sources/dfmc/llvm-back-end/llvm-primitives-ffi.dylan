@@ -7,16 +7,15 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// C-FFI
 
-define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-unwrap-c-pointer
+define side-effect-free stateless dynamic-extent mapped &primitive-descriptor primitive-unwrap-c-pointer
     (pointer :: <C-pointer>) => (p :: <raw-c-pointer>);
   let ptr = op--getslotptr(be, pointer, #"<C-pointer>", #"raw-pointer-address");
   ins--load(be, ptr, alignment: back-end-word-size(be))
 end;
 
-define side-effect-free stateless dynamic-extent &runtime-primitive-descriptor primitive-wrap-c-pointer
+define side-effect-free stateless dynamic-extent mapped-result &runtime-primitive-descriptor primitive-wrap-c-pointer
     (wrapper :: <mm-wrapper>, pointer :: <raw-c-pointer>) => (p :: <C-pointer>);
   let class :: <&class> = dylan-value(#"<C-pointer>");
-  let wrapper = op--raw-pointer-cast(be, wrapper);
   let alloc
     = call-primitive(be, primitive-alloc-leaf-descriptor,
                      instance-storage-bytes(be, class),

@@ -374,12 +374,12 @@ define side-effect-free stateless dynamic-extent &runtime-primitive-descriptor p
   ins--sub(be, p-as-word, as-word)
 end;
 
-define side-effect-free stateless indefinite-extent &primitive-descriptor primitive-string-as-raw
+define side-effect-free stateless indefinite-extent mapped-parameter &primitive-descriptor primitive-string-as-raw
     (x :: <byte-string>) => (r :: <raw-byte-string>);
   op--getslotptr(be, x, #"<byte-string>", #"string-element", 0)
 end;
 
-define side-effect-free stateless indefinite-extent &runtime-primitive-descriptor primitive-raw-as-string
+define side-effect-free stateless indefinite-extent mapped &runtime-primitive-descriptor primitive-raw-as-string
     (r :: <raw-byte-string>) => (x :: <byte-string>);
   let word-size = back-end-word-size(be);
   let module = be.llvm-builder-module;
@@ -429,7 +429,7 @@ define side-effect-free stateless indefinite-extent &primitive-descriptor primit
                llvm-reference-type(be, dylan-value(#"<raw-pointer>")))
 end;
 
-define side-effect-free stateless indefinite-extent &primitive-descriptor primitive-repeated-slot-offset
+define side-effect-free stateless indefinite-extent mapped &primitive-descriptor primitive-repeated-slot-offset
     (x :: <object>) => (r :: <raw-integer>)
   let word-size = back-end-word-size(be);
 
@@ -457,7 +457,7 @@ define side-effect-free stateless indefinite-extent &unimplemented-primitive-des
   //---*** Fill this in...
 end;
 
-define side-effect-free stateless dynamic-extent &runtime-primitive-descriptor primitive-copy-vector
+define side-effect-free stateless dynamic-extent mapped &runtime-primitive-descriptor primitive-copy-vector
     (x :: <simple-object-vector>) => (value :: <simple-object-vector>);
   let word-size = back-end-word-size(be);
   let module = be.llvm-builder-module;
@@ -516,7 +516,7 @@ define side-effecting stateless indefinite-extent &primitive-descriptor primitiv
   ins--store(be, v, slot-ptr, alignment: back-end-word-size(be));
 end;
 
-define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-vector-size
+define side-effect-free stateless dynamic-extent mapped &primitive-descriptor primitive-vector-size
     (x :: <simple-object-vector>) => (size :: <raw-integer>);
   let size-slot-ptr
     = op--getslotptr(be, x, #"<simple-object-vector>", #"size");
@@ -525,7 +525,7 @@ define side-effect-free stateless dynamic-extent &primitive-descriptor primitive
   op--untag-integer(be, tagged-vector-size)
 end;
 
-define side-effect-free stateless indefinite-extent &primitive-descriptor primitive-vector-as-raw
+define side-effect-free stateless indefinite-extent mapped &primitive-descriptor primitive-vector-as-raw
     (x :: <simple-object-vector>) => (r :: <raw-pointer>);
   let repeated-slot-ptr
     = op--getslotptr(be, x, #"<simple-object-vector>", #"vector-element");
@@ -542,7 +542,7 @@ end;
 
 /// Instance
 
-define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-object-class
+define side-effect-free stateless dynamic-extent mapped-parameter &primitive-descriptor primitive-object-class
     (x :: <object>) => (c :: <class>);
   let word-size = back-end-word-size(be);
 
@@ -563,8 +563,7 @@ define side-effect-free stateless dynamic-extent &primitive-descriptor primitive
   let class-slot-ptr
     = op--getslotptr(be, iclass-cast, #"<implementation-class>",
                      #"iclass-class");
-  let class = ins--load(be, class-slot-ptr, alignment: word-size);
-  op--object-pointer-cast(be, class, #"<class>")
+  ins--load(be, class-slot-ptr, alignment: word-size);
 end;
 
 define side-effect-free stateless dynamic-extent &unimplemented-primitive-descriptor primitive-slot-value

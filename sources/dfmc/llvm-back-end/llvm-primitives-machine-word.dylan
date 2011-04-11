@@ -108,7 +108,7 @@ define sign-extend side-effect-free stateless dynamic-extent &primitive-descript
   op--boolean(be, cmp)
 end;
 
-define side-effect-free stateless dynamic-extent &runtime-primitive-descriptor primitive-wrap-machine-word
+define side-effect-free stateless dynamic-extent mapped &runtime-primitive-descriptor primitive-wrap-machine-word
     (x :: <raw-machine-word>) => (result :: <machine-word>);
   let result = op--allocate-untraced(be, #"<machine-word>");
   let ptr
@@ -117,7 +117,7 @@ define side-effect-free stateless dynamic-extent &runtime-primitive-descriptor p
   result
 end;
 
-define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-unwrap-machine-word
+define side-effect-free stateless dynamic-extent mapped &primitive-descriptor primitive-unwrap-machine-word
     (x :: <machine-word>) => (result :: <raw-machine-word>);
   let ptr = op--getslotptr(be, x, #"<machine-word>", #"%machine-word-data");
   ins--load(be, ptr, alignment: back-end-word-size(be))
@@ -142,7 +142,6 @@ define side-effect-free stateless dynamic-extent &runtime-primitive-descriptor p
     = generic/-(generic/ash(1, word-bits - $dylan-tag-bits - 1), 1);
   let minimum-fixed-integer
     = generic/-(-1, maximum-fixed-integer);
-  let class :: <&class> = dylan-value(#"<abstract-integer>");
 
   // Basic blocks
   let entry-block   = be.llvm-builder-basic-block;
@@ -164,15 +163,15 @@ define side-effect-free stateless dynamic-extent &runtime-primitive-descriptor p
   ins--block(be, fixed);
   let shifted = ins--shl(be, x, $dylan-tag-bits);
   let tagged = ins--or(be, shifted, $dylan-tag-integer);
-  let type = llvm-pointer-to(be, llvm-class-type(be, class));
-  let tagged-ptr = ins--inttoptr(be, tagged, type);
+  let tagged-ptr = ins--inttoptr(be, tagged, $llvm-object-pointer-type);
   ins--br(be, common-return);
 
   // Allocate and initialize a <double-integer> instance
   ins--block(be, common-alloc);
   let high = ins--phi(be, 0, entry-block, -1, below-check);
   let double-integer = op--allocate-double-integer(be, x, high);
-  let double-integer-ptr = op--object-pointer-cast(be, double-integer, class);
+  let double-integer-ptr
+    = ins--bitcast(be, double-integer, $llvm-object-pointer-type);
   ins--br(be, common-return);
 
   // Common return
@@ -186,7 +185,6 @@ define side-effect-free stateless dynamic-extent &runtime-primitive-descriptor p
   let word-bits = word-size * 8;
   let maximum-fixed-integer
     = generic/-(generic/ash(1, word-bits - $dylan-tag-bits - 1), 1);
-  let class :: <&class> = dylan-value(#"<abstract-integer>");
 
   // Basic blocks
   let entry-block   = be.llvm-builder-basic-block;
@@ -202,14 +200,14 @@ define side-effect-free stateless dynamic-extent &runtime-primitive-descriptor p
   ins--block(be, fixed);
   let shifted = ins--shl(be, x, $dylan-tag-bits);
   let tagged = ins--or(be, shifted, $dylan-tag-integer);
-  let type = llvm-pointer-to(be, llvm-class-type(be, class));
-  let tagged-ptr = ins--inttoptr(be, tagged, type);
+  let tagged-ptr = ins--inttoptr(be, tagged, $llvm-object-pointer-type);
   ins--br(be, common-return);
 
   // Allocate and initialize a <double-integer> instance
   ins--block(be, common-alloc);
   let double-integer = op--allocate-double-integer(be, x, 0);
-  let double-integer-ptr = op--object-pointer-cast(be, double-integer, class);
+  let double-integer-ptr
+    = ins--bitcast(be, double-integer, $llvm-object-pointer-type);
   ins--br(be, common-return);
 
   // Common return

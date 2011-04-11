@@ -86,8 +86,8 @@ define function op--boolean
  => (boolean :: <llvm-value>);
   let module = be.llvm-builder-module;
   ins--select(be, x,
-              llvm-builder-global(be, emit-name(be, module, &true)),
-              llvm-builder-global(be, emit-name(be, module, &false)))
+              emit-reference(be, module, &true),
+              emit-reference(be, module, &false))
 end function;
 
 // Round a byte count up to the next full word
