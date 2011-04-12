@@ -168,7 +168,7 @@ end method buffer-subsequence;
 define open generic copy-into-buffer!
     (buffer :: <buffer>,
      buffer-start-index :: <buffer-index>,
-     sequence :: <mutable-sequence>,
+     sequence :: <sequence>,
      #key start: start-index, end: end-index) => ();
 
 define sealed method copy-into-buffer!

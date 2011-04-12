@@ -198,8 +198,8 @@ define inline function next-output-buffer
 end function next-output-buffer;
 
 define open generic do-next-output-buffer
-    (stream :: <stream>, #key bytes)
- => (buffer :: false-or(<buffer>));
+    (stream :: <buffered-stream>, #key bytes)
+ => (buffer :: <buffer>);
 
 define inline function release-output-buffer
     (stream :: <buffered-stream>) => ()

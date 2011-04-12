@@ -98,12 +98,14 @@ define module-spec streams ()
   function buffer-end-setter (<buffer-index>, <buffer>)
     => (<buffer-index>);
   open generic-function buffer-subsequence
-    (<buffer>, <mutable-sequence>, <buffer-index>, <buffer-index>)
+    (<buffer>, subclass(<mutable-sequence>), <buffer-index>, <buffer-index>)
     => (<mutable-sequence>);
   open generic-function copy-into-buffer!
     (<buffer>, <buffer-index>, <sequence>, #"key", #"start", #"end") => ();
   open generic-function copy-from-buffer!
-    (<buffer>, <buffer-index>, <sequence>, #"key", #"start", #"end") => ();
+        (<buffer>, <buffer-index>, <mutable-sequence>,
+         #"key", #"start", #"end")
+     => ();
 
   // Buffered streams
   open abstract class <buffered-stream> (<stream>);
@@ -113,9 +115,9 @@ define module-spec streams ()
     (<buffered-stream>, #"key", #"wait?", #"bytes")
     => (false-or(<buffer>));
   function get-output-buffer (<buffered-stream>, #"key", #"bytes")
-    => (<buffer>);
+    => (false-or(<buffer>));
   open generic-function do-get-output-buffer (<buffered-stream>, #"key", #"bytes")
-    => (<buffer>);
+    => (false-or(<buffer>));
   function input-available-at-source? (<buffered-stream>)
     => (<boolean>);
   open generic-function do-input-available-at-source? (<buffered-stream>)
@@ -126,7 +128,7 @@ define module-spec streams ()
     (<buffered-stream>, #"key", #"wait?", #"bytes")
     => (false-or(<buffer>));
   function next-output-buffer (<buffered-stream>, #"key", #"bytes")
-    => (<buffer>);
+    => ();
   open generic-function do-next-output-buffer (<buffered-stream>, #"key", #"bytes")
     => (<buffer>);
   function release-input-buffer (<buffered-stream>)
