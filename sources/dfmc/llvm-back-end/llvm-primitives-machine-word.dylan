@@ -161,9 +161,7 @@ define side-effect-free stateless dynamic-extent &runtime-primitive-descriptor p
 
   // Tag as a fixed integer
   ins--block(be, fixed);
-  let shifted = ins--shl(be, x, $dylan-tag-bits);
-  let tagged = ins--or(be, shifted, $dylan-tag-integer);
-  let tagged-ptr = ins--inttoptr(be, tagged, $llvm-object-pointer-type);
+  let tagged-ptr = op--tag-integer(be, x);
   ins--br(be, common-return);
 
   // Allocate and initialize a <double-integer> instance
@@ -198,9 +196,7 @@ define side-effect-free stateless dynamic-extent &runtime-primitive-descriptor p
 
   // Tag as a fixed integer
   ins--block(be, fixed);
-  let shifted = ins--shl(be, x, $dylan-tag-bits);
-  let tagged = ins--or(be, shifted, $dylan-tag-integer);
-  let tagged-ptr = ins--inttoptr(be, tagged, $llvm-object-pointer-type);
+  let tagged-ptr = op--tag-integer(be, x);
   ins--br(be, common-return);
 
   // Allocate and initialize a <double-integer> instance

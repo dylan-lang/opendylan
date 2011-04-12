@@ -63,6 +63,15 @@ define function op--raw-pointer-cast
   ins--bitcast(be, x, llvm-reference-type(be, dylan-value(#"<raw-pointer>")))
 end function;
 
+// Tag a raw value (known to fit) as an integer)
+define method op--tag-integer
+    (be :: <llvm-back-end>, integer-value :: <llvm-value>)
+ => (result :: <llvm-value>);
+  let shifted = ins--shl(be, integer-value, $dylan-tag-bits);
+  let tagged = ins--or(be, shifted, $dylan-tag-integer);
+  ins--inttoptr(be, tagged, $llvm-object-pointer-type)
+end method;
+
 // Extract an integer value from an integer-tagged object reference
 define method op--untag-integer
     (be :: <llvm-back-end>, x :: <llvm-value>)
