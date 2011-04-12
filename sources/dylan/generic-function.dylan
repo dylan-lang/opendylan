@@ -686,7 +686,7 @@ end method;
 ////
 
 define generic sorted-applicable-methods (generic-function, #rest arguments)
- => (ordered-unambiguous :: <sequence>, unordered-ambiguous :: <collection>);
+ => (ordered-unambiguous :: <sequence>, unordered-ambiguous :: <sequence>);
 
 define method sorted-applicable-methods
     (generic-function :: <generic-function>, #rest arguments) 
