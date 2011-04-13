@@ -641,6 +641,9 @@ define method compute-slot-initialization-code
             = compute-slot-initialization-code-for-default-value
                 (class, slotd);
           #{ %slot-value-setter(?init, object, ?slotd, ?offset) }
+        elseif (^slot-type(slotd) == dylan-value(#"<raw-machine-word>"))
+          let raw-zero = make-raw-literal(0);
+          #{ %slot-value-setter(?raw-zero, object, ?slotd, ?offset) }
         else
           // Is this necessary, or does allocation fill in unbound?
           #{ %slot-value-setter(?$unbound, object, ?slotd, ?offset) }
