@@ -112,21 +112,21 @@ define open generic type-for-file-stream
     (locator :: <object>,
      element-type :: false-or(<type>), encoding :: <object>,
      #key, #all-keys)
- => (file-stream-type /* ---*** :: subclass(<file-stream>) */);
+ => (file-stream-type :: subclass(<file-stream>));
 
 define method type-for-file-stream 
     (locator :: <object>,
      element-type :: false-or(<type>), encoding :: <object>,
-     #key)
- => (file-stream-type /* ---*** :: subclass(<file-stream>) */)
+     #key, #all-keys)
+ => (file-stream-type :: subclass(<file-stream>))
   <general-file-stream>
 end method type-for-file-stream;
 
 define method type-for-file-stream 
     (locator :: <object>,
      element-type == <byte-character>, encoding :: <object>,
-     #key)
- => (file-stream-type /* ---*** :: subclass(<file-stream>) */)
+     #key, #all-keys)
+ => (file-stream-type :: subclass(<file-stream>))
   <byte-char-file-stream>
 end method type-for-file-stream;
 
@@ -134,15 +134,15 @@ end method type-for-file-stream;
 define method type-for-file-stream 
     (locator :: <object>,
      element-type == <character>, encoding :: <object>,
-     #key)
- => (file-stream-type /* ---*** :: subclass(<file-stream>) */)
+     #key, #all-keys)
+ => (file-stream-type :: subclass(<file-stream>))
   <byte-char-file-stream>
 end method type-for-file-stream;
 
 define method type-for-file-stream 
     (locator :: <object>,
      element-type  == <byte>, encoding :: <object>,
-     #key)
+     #key, #all-keys)
  => (file-stream-type :: subclass(<file-stream>))
   <byte-file-stream>
 end method type-for-file-stream;

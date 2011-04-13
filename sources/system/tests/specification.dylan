@@ -73,9 +73,9 @@ define module-spec locators ()
   open generic-function supports-list-locator? (<locator>) => (<boolean>);
   open generic-function list-locator (<locator>) => (<sequence>);
   open generic-function locator-host (<locator>) => (false-or(<string>));
-  open generic-function locator-server (<locator>) => (<server-locator>);
+  open generic-function locator-server (<locator>) => (false-or(<server-locator>));
   open generic-function locator-volume (<locator>) => (false-or(<string>));
-  open generic-function locator-directory (<locator>) => (<directory-locator>);
+  open generic-function locator-directory (<locator>) => (false-or(<directory-locator>));
   open generic-function locator-relative? (<locator>) => (<boolean>);
   open generic-function locator-path (<locator>) => (<sequence>);
   open generic-function locator-base (<locator>) => (false-or(<string>));
@@ -172,20 +172,20 @@ define module-spec file-system ()
     => (<object>);
   generic-function file-property-setter (<object>, <pathname>, <symbol>)
     => (<object>);
-  function do-directory (<pathname>, <function>) => ();
+  function do-directory (<function>, <pathname>) => ();
   // directory-contents is NYI currently.  Change <collection> to something
   // more specific when it is done.  -- carlg 06 May 97
   function directory-contents (<pathname>) => (<collection>);
   function create-directory (<pathname>, <string>) => (<pathname>);
   function delete-directory (<pathname>) => ();
   function ensure-directories-exist (<pathname>) => (<boolean>);
-  function home-directory () => (<pathname>);
+  function home-directory () => (false-or(<pathname>));
   function temp-directory () => (false-or(<pathname>));
   function root-directories () => (<sequence>);
 
   open generic-function type-for-file-stream
-    (<object>, type-union(<byte-character>, /* <unicode-character>, */ <byte>, singleton(#f)), #"rest", #"all-keys")
-    => (<type>);
+    (<object>, false-or(<type>), <object>, #"key", #"all-keys")
+    => (subclass(<file-stream>));
 
   // Macros
   macro-test with-open-file-test;
