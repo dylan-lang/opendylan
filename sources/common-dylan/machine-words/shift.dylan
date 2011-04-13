@@ -31,13 +31,13 @@ end method;
 define sealed generic %shift-right (x :: <object>, count :: <integer>)
   => result :: <machine-word>;
 
-define method %shift-right (x :: <machine-word>, count :: <integer>)
+define inline method %shift-right (x :: <machine-word>, count :: <integer>)
   => result :: <machine-word>;
   check-shift-quantity(count);
   machine-word-shift-right(x, count);
 end method;
 
-define method %shift-right (x :: <abstract-integer>, count :: <integer>)
+define inline method %shift-right (x :: <abstract-integer>, count :: <integer>)
   => result :: <machine-word>;
   check-shift-quantity(count);
   machine-word-shift-right(coerce-abstract-integer-to-machine-word(x), count);
