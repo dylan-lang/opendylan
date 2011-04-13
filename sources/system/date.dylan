@@ -26,16 +26,7 @@ define method make (class == <date>, #rest init-keywords,
                                      #all-keys)
  => (date :: <date>)
   if (iso8601-string)
-    let (year, month, day, hours, minutes, seconds, microseconds, zone-offset)
-      = parse-iso8601-string(iso8601-string);
-    make(<date>, year: year,
-		 month: month,
-		 day: day,
-		 hours: hours,
-		 minutes: minutes,
-		 seconds: seconds,
-                 microseconds: microseconds,
-                 time-zone-offset: zone-offset)
+    parse-iso8601-string(iso8601-string)
   elseif (native-clock)
     encode-native-clock-as-date(native-clock)
   else
@@ -67,7 +58,7 @@ define method initialize (date :: <date>, #key, #all-keys) => (#rest objects)
     date-month(date) := date-month(current-date())
   end;
   unless (validate(date-day(date), 1, days-in-month(date-year(date), date-month(date)),
-		   #t, "day of the month", "Use the first"))
+		   #t, "day of the month", "Use day 1 (one)"))
     date-day(date) := 1
   end;
   unless (validate(date-hours(date), 0, 24, #f, "hour of the day", "Use midnight"))
@@ -429,8 +420,8 @@ define function as-iso8601-string (date :: <date>, #key precision :: <integer> =
   format-date("%Y-%m-%dT%H:%M:%S%:z", date);
 end;
 
-define method parse-date (date :: <string>, format :: <string>)
- => (date :: false-or(<date>));
+define method parse-date-string (date :: <string>, format :: <string>)
+ => (date :: false-or(<date>))
 
   let date-stream = make(<string-stream>, contents: date);
   let date = make(<date>, year: 1970, month: 1, day: 1);
@@ -488,101 +479,177 @@ define method parse-date (date :: <string>, format :: <string>)
       read(date-stream, 1);
     end if;
   end for;
-  date;
-end;
+  date
+end method parse-date-string;
 
-///---*** Doesn't yet parse all legitimate forms of ISO 8601 strings.
-///---*** For now, just parse a small superset of the strings produced above ...
-// parse-date(foo, "%Y-%m-%dT%H:%M:%S%:z") , "%Y-%m-%dT%H:%M:%S%z", ...
-define function parse-iso8601-string (string :: <string>)
+/* This function parses the ISO 8601 formats listed below, with the
+   following differences if strict? = #f:
+
+     * the '-' in YYYY-MM-DD is optional
+     * the ':' in hh:mm:ss is optional
+     * the ':' in the timezone is optional
+     * the date and time may be separated by a space character
+     * TZD may be preceded by a space character
+
+   See http://www.w3.org/TR/NOTE-datetime.html.
+
+   Year:
+      YYYY (eg 1997)
+   Year and month:
+      YYYY-MM (eg 1997-07)
+   Complete date:
+      YYYY-MM-DD (eg 1997-07-16)
+   Complete date plus hours and minutes:
+      YYYY-MM-DDThh:mmTZD (eg 1997-07-16T19:20+01:00)
+   Complete date plus hours, minutes and seconds:
+      YYYY-MM-DDThh:mm:ssTZD (eg 1997-07-16T19:20:30+01:00)
+   Complete date plus hours, minutes, seconds and a decimal fraction of a second
+      YYYY-MM-DDThh:mm:ss.sTZD (eg 1997-07-16T19:20:30.45+01:00)
+where:
+     YYYY = four-digit year
+     MM   = two-digit month (01=January, etc.)
+     DD   = two-digit day of month (01 through 31)
+     hh   = two digits of hour (00 through 23) (am/pm NOT allowed)
+     mm   = two digits of minute (00 through 59)
+     ss   = two digits of second (00 through 59)
+     s    = one or more digits representing a decimal fraction of a second
+     TZD  = time zone designator (Z or +hh:mm or -hh:mm)
+*/
+// TODO: Add #key start, end
+define function split-iso8601-string
+    (string :: <string>, #key strict? :: <boolean> = #t)
  => (year :: <integer>, month :: <integer>, day :: <integer>,
      hours :: <integer>, minutes :: <integer>, seconds :: <integer>,
      microseconds :: <integer>, time-zone-offset :: <integer>)
-  let digits = size(string);
-  local method read-integer (start :: <integer>, endpos :: <integer>)
-	 => (value :: <integer>)
-	  unless (digits >= endpos)
-	    error("Malformed ISO 8601 string %=: Not enough digits", string)
-	  end;
-	  let value = 0;
-	  for (i from start below endpos)
-	    if (string[i] < '0' | string[i] > '9')
-	      error("Malformed ISO 8601 string %=: Unexpected character '%c' "
-                      "at index %d",
-		    string, string[i], i);
-	    end;
-	    value := 10 * value + as(<integer>, string[i]) - as(<integer>, '0')
-	  end;
-	  value
-	end method;
-  let year = read-integer(0, 4);
-  let month = read-integer(4, 6);
-  let day = read-integer(6, 8);
+  let len = size(string);
+  let idx :: <integer> = 0;  // current position
+  local method fail (reason, #rest args)
+          apply(error, concatenate("Malformed ISO 8601 string: ", reason), args)
+        end,
+        method peek () => (char :: false-or(<character>))
+          idx < len & string[idx]
+        end,
+        method next () => (char :: false-or(<character>))
+          if (idx < len)
+            let char =  string[idx];
+            idx := idx + 1;
+            char
+          else
+            fail("end of string reached");
+          end
+        end,
+        method read-integer (n-digits :: <integer>) => (value :: <integer>)
+          let value :: <integer> = 0;
+          for (ignore from 1 to n-digits)
+            let char = next();
+            if (char < '0' | char > '9')
+              fail("Unexpected character '%c' at index %d", char, idx - 1);
+            else
+              value := 10 * value + as(<integer>, char) - as(<integer>, '0');
+            end;
+          end;
+          value
+        end,
+        method maybe-skip (char :: <character>)
+          if (peek() = char)
+            next()
+          elseif (strict?)
+            fail("'%c' expected", char);
+          end
+        end,
+        method zone? () => (zone? :: <boolean>)
+          if (~strict? & peek() = ' ')
+            next();
+          end;
+          let c = peek();
+          c = 'Z' | c = 'z' | c = '+' | c = '-'
+        end;
+  let year = 0;
+  let month = 1;
+  let day = 1;
   let hours = 0;
   let minutes = 0;
   let seconds = 0;
   let microseconds = 0;
   let time-zone-offset = 0;
-  if (digits > 8)
-    unless (string[8] = 'T' | string[8] = 't')
-      error("Malformed ISO 8601 string %=: Date and time must be separated by 'T'",
-	    string)
+
+  block (return)
+    local method check-done ()
+            ~peek() &  return();
+          end;
+    year := read-integer(4);
+    check-done();
+    maybe-skip('-');
+    month := read-integer(2);
+    check-done();
+    maybe-skip('-');
+    day := read-integer(2);
+    check-done();
+    if (peek() = 'T' | peek() = 't' | (~strict? & peek() = ' '))
+      next();
+    else
+      fail("Date and time must be separated by 'T'%s.",
+           strict? & "" | " or space");
     end;
-    hours := read-integer(9, 11);
-    local method zone? (pos :: <integer>) => (zone? :: <boolean>)
-	    digits > pos
-	    & (string[pos] = 'Z' | string[pos] = 'z'
-		 | string[pos] = '+' | string[pos] = '-')
-	  end method;
-    let zone-pos = 11;
-    if (~zone?(zone-pos))
-      minutes := read-integer(11, 13);
-      zone-pos := 13;
-      if (~zone?(zone-pos))
-	seconds := read-integer(13, 15);
-	zone-pos := 15;
-	if (digits > 15 & string[15] = '.')
-	  let precision = 0;
-	  let i = 16;
-	  while (~zone?(i) & i < digits)
-	    precision := precision + 1;
-	    if (string[i] < '0' | string[i] > '9')
-	      error("Malformed ISO 8601 string %=: Unexpected character '%s'",
-		    string, string[i])
-	    end;
-	    if (precision > 6)
-	      error("Malformed ISO 8601 string %=: Too many digits in fraction", string)
-	    end;
-	    microseconds := 10 * microseconds + as(<integer>, string[i]) - as(<integer>, '0');
-	    i := i + 1
-	  end;
-	  microseconds := microseconds * 10 ^ (6 - precision);
-	  zone-pos := i;
-	end
-      end
+    hours := read-integer(2);
+    maybe-skip(':');
+    minutes := read-integer(2);
+    if (~zone?())
+      maybe-skip(':');
+      seconds := read-integer(2);
+      if (peek() = '.')
+        next();
+        let precision = 0;
+        while (~zone?())
+          precision := precision + 1;
+          let c = next();
+          if (c < '0' | c > '9')
+            fail("Unexpected character '%c'", c);
+          elseif (precision > 6)
+            fail("Too many digits in fraction");
+          else
+            microseconds := 10 * microseconds + as(<integer>, c) - as(<integer>, '0');
+          end;
+        end while;
+        microseconds := microseconds * 10 ^ (6 - precision);
+      end;
     end;
-    if (digits > zone-pos)
-      if (string[zone-pos] = '+' | string[zone-pos] = '-')
-	time-zone-offset := 60 * read-integer(zone-pos + 1, zone-pos + 3);
-	if (digits > zone-pos + 3)
-	  time-zone-offset := time-zone-offset + read-integer(zone-pos + 3,
-							      zone-pos + 5)
-	end;
-	if (string[zone-pos] = '-')
-	  time-zone-offset := 0 - time-zone-offset
-	end;
-	unless (digits = zone-pos + 3 | digits = zone-pos + 5)
-	  error("Malformed ISO 8601 string %=: Too many characters", string)
-	end
-      elseif (string[zone-pos] = 'Z' | string[zone-pos] = 'z')
-	unless (digits = zone-pos + 1)
-	  error("Malformed ISO 8601 string %=: Too many characters", string)
-	end
-      else
-	error("Malformed ISO 8601 string %=: Bad timezone indicator '%s'", string,
-	      string[zone-pos])
-      end
-    end
-  end;
+    if (~zone?())
+      fail("Time zone required");
+    end;
+    let tzi = next();
+    if (tzi = 'z' | tzi = 'Z')
+      // leave default value 0
+    else
+      // Any value for hh:mm is accepted, even 99:99.
+      time-zone-offset := 60 * read-integer(2);
+      maybe-skip(':');
+      time-zone-offset := time-zone-offset + read-integer(2);
+    end;
+    if (tzi = '-')
+      time-zone-offset := 0 - time-zone-offset;
+    end;
+    if (peek())
+      fail("Too many characters");
+    end;
+  end block;
   values(year, month, day, hours, minutes, seconds, microseconds, time-zone-offset)
+end function split-iso8601-string;
+
+define function parse-iso8601-string
+    (string :: <string>, #key strict? :: <boolean> = #t)
+ => (date :: <date>)
+  let (year, month, day, hours, minutes, seconds, microseconds, time-zone-offset)
+    = split-iso8601-string(string, strict?: strict?);
+  make(<date>,
+       year: year,
+       month: month,
+       day: day,
+       hours: hours,
+       minutes: minutes,
+       seconds: seconds,
+       microseconds: microseconds,
+       time-zone-offset: time-zone-offset)
 end function parse-iso8601-string;
+
+

@@ -28,14 +28,13 @@ define module-spec date ()
   // Functions
 
   //---*** Note that these leave out the keyword arguments!
-  //---*** encode-date and decode-date are not in the kan yet.
-  //       Leaving them in here anyway.  -- carlg 05 May 97
   function encode-date (<integer>, <integer>, <integer>, <integer>,
 			<integer>, <integer>)
            => (<date>);
   function decode-date (<date>)
             => (<integer>, <integer>, <integer>, <integer>,
 		<integer>, <integer>, <day-of-week>, <integer>);
+  function parse-iso8601-string (<string>) => (<date>);
   open generic-function \= (<date>, <date>) => (<boolean>);
   open generic-function \< (<date>, <date>) => (<boolean>);
   sealed generic-function date-year (<date>) => (<integer>);
