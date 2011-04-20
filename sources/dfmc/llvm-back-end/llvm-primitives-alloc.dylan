@@ -134,7 +134,7 @@ define side-effect-free stateful indefinite-extent auxiliary &c-primitive-descri
     (number-bytes :: <raw-integer>, wrapper :: <raw-pointer>,
      number-to-fill :: <raw-integer>, fill :: <raw-pointer>,
      rep-size :: <raw-integer>, rep-size-slot :: <raw-integer>,
-     rep-fill :: <raw-single-float>)
+     rep-fill :: <raw-double-float>)
  => (pointer :: <raw-pointer>);
 
 define side-effect-free stateful indefinite-extent auxiliary &c-primitive-descriptor primitive-copy
