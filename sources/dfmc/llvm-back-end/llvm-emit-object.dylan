@@ -48,6 +48,16 @@ define method emit-reference
   end if
 end method;
 
+define method emit-wrapper-reference
+    (back-end :: <llvm-back-end>, m :: <llvm-module>, o :: <&mm-wrapper>)
+ => (reference :: <llvm-constant-value>)
+  let wrapper-name = emit-name(back-end, m, o);
+  make(<llvm-cast-constant>,
+       operator: #"BITCAST",
+       type: llvm-pointer-to(back-end, back-end.%type-table["Wrapper"]),
+       operands: vector(llvm-builder-global(back-end, wrapper-name)))
+end method;
+
 // Code
 
 define constant $number-xeps = 10;

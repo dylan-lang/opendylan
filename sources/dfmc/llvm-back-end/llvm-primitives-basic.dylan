@@ -602,14 +602,15 @@ end;
 
 /// Type Checks
 
-define side-effect-free stateless dynamic-extent &unimplemented-primitive-descriptor primitive-instance?
+define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-instance?
     (x :: <object>, t :: <type>) => (true? :: <boolean>);
-  //---*** Fill this in...
+  let cmp = do-emit-instance-cmp(be, x, #f, t);
+  op--boolean(be, cmp)
 end;
 
-define side-effect-free stateless dynamic-extent &unimplemented-primitive-descriptor primitive-type-check
+define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-type-check
     (x :: <object>, t :: <type>) => (true? :: <boolean>);
-  //---*** Fill this in...
+  do-emit-type-check(be, x, #f, t)
 end;
 
 define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-range-check

@@ -20,6 +20,7 @@ files:   llvm-back-end-library
 	 llvm-primitives-os
 	 llvm-emit
 	 llvm-emit-object
+	 llvm-emit-type-check
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               Additional code is Copyright 2009-2010 Gwydion Dylan Maintainers
               All rights reserved.

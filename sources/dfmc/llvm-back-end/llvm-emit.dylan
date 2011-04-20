@@ -105,7 +105,7 @@ define method emit-code
                 linkage: linkage,
                 section: llvm-section-name(back-end, #"code"),
                 calling-convention:
-                  llvm-calling-convention(back-end, o, o.function));
+                  llvm-calling-convention(back-end, o));
       ins--block(back-end, make(<llvm-basic-block>, name: "bb.entry"));
       ins--ret(back-end, emit-reference(back-end, module, &false));
     cleanup
@@ -163,7 +163,14 @@ end method emit-init-code;
 
 // Calling convention for ordinary functions
 define method llvm-calling-convention
-    (back-end :: <llvm-back-end>, o :: <&iep>, fun :: <&callable-object>)
+    (back-end :: <llvm-back-end>, o :: <&iep>)
+ => (calling-convention :: <integer>);
+  $llvm-calling-convention-fast
+end method;
+
+// Calling convention for shared entry points
+define method llvm-calling-convention
+    (back-end :: <llvm-back-end>, o :: <&shared-entry-point>)
  => (calling-convention :: <integer>);
   $llvm-calling-convention-fast
 end method;
