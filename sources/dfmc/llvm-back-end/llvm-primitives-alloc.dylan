@@ -36,6 +36,11 @@ define side-effect-free stateful indefinite-extent auxiliary &c-primitive-descri
      rep-size :: <raw-integer>, rep-size-slot :: <raw-integer>,
      rep-fill :: <raw-integer>)
  => (pointer :: <raw-pointer>);
+define side-effect-free stateful indefinite-extent auxiliary &c-primitive-descriptor primitive-alloc-leaf-rwf
+    (number-bytes :: <raw-integer>, wrapper :: <raw-pointer>,
+     rep-size :: <raw-integer>, rep-size-slot :: <raw-integer>,
+     rep-fill :: <raw-integer>)
+ => (pointer :: <raw-pointer>);
 define side-effect-free stateful indefinite-extent auxiliary &c-primitive-descriptor primitive-alloc-leaf-rsff
     (number-bytes :: <raw-integer>, wrapper :: <raw-pointer>,
      rep-size :: <raw-integer>, rep-size-slot :: <raw-integer>,
@@ -119,6 +124,12 @@ define side-effect-free stateful indefinite-extent auxiliary &c-primitive-descri
      byte-fill :: <raw-integer>)
  => (pointer :: <raw-pointer>);
 define side-effect-free stateful indefinite-extent auxiliary &c-primitive-descriptor primitive-alloc-s-rhf
+    (number-bytes :: <raw-integer>, wrapper :: <raw-pointer>,
+     number-to-fill :: <raw-integer>, fill :: <raw-pointer>,
+     rep-size :: <raw-integer>, rep-size-slot :: <raw-integer>,
+     rep-fill :: <raw-integer>)
+ => (pointer :: <raw-pointer>);
+define side-effect-free stateful indefinite-extent auxiliary &c-primitive-descriptor primitive-alloc-s-rwf
     (number-bytes :: <raw-integer>, wrapper :: <raw-pointer>,
      number-to-fill :: <raw-integer>, fill :: <raw-pointer>,
      rep-size :: <raw-integer>, rep-size-slot :: <raw-integer>,
@@ -408,13 +419,13 @@ define repeated-allocate-primitive(be, byte,         leaf-rbf,  s-rbf,
                                    <raw-byte>);
 define repeated-allocate-primitive(be, double-byte,  leaf-rhf,  s-rhf,
                                    <raw-double-byte>);
-define repeated-allocate-primitive(be, word,         leaf-rf,   s-rf,
+define repeated-allocate-primitive(be, word,         leaf-rwf,  s-rwf,
                                    <raw-machine-word>);
 //define repeated-allocate-primitive(be, double-word,  leaf-rdwf, s-rdwf,
 //                                   <raw-double-integer>);
-define repeated-allocate-primitive(be, single-float, leaf-rsff, leaf-rsff,
+define repeated-allocate-primitive(be, single-float, leaf-rsff, s-rsff,
                                    <raw-single-float>);
-define repeated-allocate-primitive(be, double-float, leaf-rdff, leaf-rdff,
+define repeated-allocate-primitive(be, double-float, leaf-rdff, s-rdff,
                                    <raw-double-float>);
 
 define side-effect-free stateful indefinite-extent &primitive-descriptor primitive-byte-allocate-leaf-filled
