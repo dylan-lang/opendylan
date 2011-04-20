@@ -190,6 +190,18 @@ define inline method builder-insert
 end method;
 
 define inline method builder-insert
+    (builder :: <llvm-builder>, instruction :: <llvm-phi-node>)
+ => (instruction :: <llvm-instruction>);
+  let instructions
+    = builder.llvm-builder-basic-block.llvm-basic-block-instructions;
+  unless (empty?(instructions)
+            | instance?(instructions.last, <llvm-phi-node>))
+    error("PHI nodes must be grouped at the top of a basic block")
+  end unless;
+  next-method()
+end method;
+
+define inline method builder-insert
     (builder :: <llvm-builder>, instruction :: <llvm-terminator-instruction>)
  => (instruction :: <llvm-terminator-instruction>);
   next-method();

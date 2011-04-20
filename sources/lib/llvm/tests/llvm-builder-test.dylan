@@ -996,26 +996,59 @@ define llvm-builder function-test ins--shufflevector ()
 end function-test ins--shufflevector;
 
 define llvm-builder function-test ins--phi ()
-  let builder = make-builder-with-test-function();
-  let entry = builder.llvm-builder-basic-block;
-  let loop = make(<llvm-basic-block>, name: "Loop");
-  ins--br(builder, loop);
+  with-test-unit ("ins--phi valid")
+    let builder = make-builder-with-test-function();
+    let entry = builder.llvm-builder-basic-block;
+    let loop = make(<llvm-basic-block>, name: "Loop");
+    ins--br(builder, loop);
 
-  ins--block(builder, loop);
-  let indvar
-    = ins--phi(builder,
-               0, entry,
-               llvm-builder-local(builder, "nextindvar"), loop);
-  ins--local(builder, "nextindvar", ins--add(builder, indvar, 1));
-  ins--br(builder, loop);
-  check-equal("ins--phi disassembly",
-              #("entry:",
-                "br label %Loop",
-                "Loop:",
-                "%0 = phi i32 [ 0, %entry ], [ %nextindvar, %Loop ]",
-                "%nextindvar = add i32 %0, 1",
-                "br label %Loop"),
-              builder-test-function-disassembly(builder));
+    ins--block(builder, loop);
+    let indvar0
+      = ins--phi(builder,
+                 0, entry,
+                 llvm-builder-local(builder, "nextindvar0"), loop);
+    let indvar1
+      = ins--phi(builder,
+                 40, entry,
+                 llvm-builder-local(builder, "nextindvar1"), loop);
+    ins--local(builder, "nextindvar0", ins--add(builder, indvar0, 1));
+    ins--local(builder, "nextindvar1", ins--add(builder, indvar1, 1));
+    ins--br(builder, loop);
+    check-equal("ins--phi disassembly",
+                #("entry:",
+                  "br label %Loop",
+                  "Loop:",
+                  "%0 = phi i32 [ 0, %entry ], [ %nextindvar0, %Loop ]",
+                  "%1 = phi i32 [ 40, %entry ], [ %nextindvar1, %Loop ]",
+                  "%nextindvar0 = add i32 %0, 1",
+                  "%nextindvar1 = add i32 %1, 1",
+                  "br label %Loop"),
+                builder-test-function-disassembly(builder));
+  end;
+
+  with-test-unit ("ins--phi invalid")
+    check-condition
+      ("ins--phi must be grouped at basic block beginning",
+       <error>,
+       begin
+         let builder = make-builder-with-test-function();
+         let entry = builder.llvm-builder-basic-block;
+         let loop = make(<llvm-basic-block>, name: "Loop");
+         ins--br(builder, loop);
+         ins--block(builder, loop);
+         let indvar0
+           = ins--phi(builder,
+                      0, entry,
+                      llvm-builder-local(builder, "nextindvar0"), loop);
+         ins--local(builder, "nextindvar0", ins--add(builder, indvar0, 1));
+         let indvar1
+           = ins--phi(builder,
+                      40, entry,
+                      llvm-builder-local(builder, "nextindvar1"), loop);
+         ins--local(builder, "nextindvar1", ins--add(builder, indvar1, 1));
+         ins--br(builder, loop);
+       end);
+  end;
 end function-test ins--phi;
 
 define llvm-builder function-test ins--call ()
