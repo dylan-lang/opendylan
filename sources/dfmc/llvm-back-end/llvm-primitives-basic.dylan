@@ -104,17 +104,26 @@ define function op--byte-element-ptr
   ins--gep(be, x-ptr, offset)
 end function;
 
-define side-effect-free dynamic-extent &unimplemented-primitive-descriptor primitive-element
+define side-effect-free dynamic-extent &primitive-descriptor primitive-element
     (x :: <object>, offset :: <raw-integer>, byte-offset :: <raw-integer>)
  => (obj :: <object>);
-  //---*** Fill this in...
+  let byte-ptr = ins--gep(be, x, byte-offset);
+  let slots-ptr
+    = ins--bitcast(be, x, llvm-pointer-to(be, $llvm-object-pointer-type));
+  let slot-ptr = ins--gep(be, slots-ptr, offset);
+  ins--load(be, slot-ptr)
 end;
 
-define side-effecting stateless dynamic-extent &unimplemented-primitive-descriptor primitive-element-setter
+define side-effecting stateless dynamic-extent &primitive-descriptor primitive-element-setter
     (new-value :: <object>,
      x :: <object>, offset :: <raw-integer>, byte-offset :: <raw-integer>)
  => (obj :: <object>);
-  //---*** Fill this in...
+  let byte-ptr = ins--gep(be, x, byte-offset);
+  let slots-ptr
+    = ins--bitcast(be, x, llvm-pointer-to(be, $llvm-object-pointer-type));
+  let slot-ptr = ins--gep(be, slots-ptr, offset);
+  ins--store(be, new-value, slot-ptr);
+  new-value
 end;
 
 define side-effect-free dynamic-extent &primitive-descriptor primitive-byte-element
@@ -566,9 +575,42 @@ define side-effect-free stateless dynamic-extent mapped-parameter &primitive-des
   ins--load(be, class-slot-ptr, alignment: word-size);
 end;
 
-define side-effect-free stateless dynamic-extent &unimplemented-primitive-descriptor primitive-slot-value
+define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-slot-value
     (x :: <object>, position :: <raw-integer>) => (value :: <object>)
-  //---*** Fill this in...
+  let word-size = back-end-word-size(be);
+  let module = be.llvm-builder-module;
+  let x-slots
+    = ins--bitcast(be, x, llvm-pointer-to(be, $llvm-object-pointer-type));
+  let x-body
+    = ins--gep-inbounds(be, x-slots, dylan-value(#"$number-header-words"));
+  let slot-ptr = ins--gep-inbounds(be, x-body, position);
+  let result = ins--load(be, slot-ptr, alignment: word-size);
+
+  // Basic blocks
+  let error-bb = make(<llvm-basic-block>);
+  let result-bb = make(<llvm-basic-block>);
+
+  // Compare the slot value against the uninitialized slot marker
+  let unbound = emit-reference(be, module, &unbound);
+  let cmp = ins--icmp-eq(be, result, unbound);
+  ins--br(be, cmp, error-bb, result-bb);
+
+  // Throw an error
+  ins--block(be, error-bb);
+  let uis-iep = dylan-value(#"unbound-instance-slot").^iep;
+  let uis-global = llvm-builder-global(be, emit-name(be, module, uis-iep));
+  let tagged-position = op--tag-integer(be, position);
+  llvm-constrain-type
+    (uis-global.llvm-value-type,
+     llvm-pointer-to(be, llvm-lambda-type(be, uis-iep)));
+  ins--tail-call(be, uis-global, vector(x, tagged-position),
+                 calling-convention:
+                   llvm-calling-convention(be, uis-iep));
+  ins--unreachable(be);
+
+  // Not uninitialized
+  ins--block(be, result-bb);
+  result
 end;
 
 define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-initialized-slot-value
@@ -576,27 +618,50 @@ define side-effect-free stateless dynamic-extent &primitive-descriptor primitive
   let word-size = back-end-word-size(be);
   let x-slots
     = ins--bitcast(be, x, llvm-pointer-to(be, $llvm-object-pointer-type));
-  let x-body = ins--gep-inbounds(be, x, dylan-value(#"$number-header-words"));
-  let slot-ptr = ins--gep-inbounds(be, x, position);
+  let x-body
+    = ins--gep-inbounds(be, x-slots, dylan-value(#"$number-header-words"));
+  let slot-ptr = ins--gep-inbounds(be, x-body, position);
   ins--load(be, slot-ptr, alignment: word-size)
 end;
 
-define side-effecting stateless indefinite-extent &unimplemented-primitive-descriptor primitive-slot-value-setter
+define side-effecting stateless indefinite-extent &primitive-descriptor primitive-slot-value-setter
     (value :: <object>, x :: <object>, position :: <raw-integer>) => (value :: <object>)
-  //---*** Fill this in...
+  let word-size = back-end-word-size(be);
+  let x-slots
+    = ins--bitcast(be, x, llvm-pointer-to(be, $llvm-object-pointer-type));
+  let x-body
+    = ins--gep-inbounds(be, x-slots, dylan-value(#"$number-header-words"));
+  let slot-ptr = ins--gep-inbounds(be, x-body, position);
+  ins--store(be, value, slot-ptr, alignment: word-size)
 end;
 
-define side-effect-free stateless dynamic-extent &unimplemented-primitive-descriptor primitive-repeated-slot-value
+define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-repeated-slot-value
     (x :: <object>, base-position :: <raw-integer>, position :: <raw-integer>)
  => (value :: <object>);
-  //---*** Fill this in...
+  let word-size = back-end-word-size(be);
+  let x-slots
+    = ins--bitcast(be, x, llvm-pointer-to(be, $llvm-object-pointer-type));
+  let x-body
+    = ins--gep-inbounds(be, x-slots, dylan-value(#"$number-header-words"));
+  let x-repeated
+    = ins--gep-inbounds(be, x-body, base-position);
+  let slot-ptr = ins--gep(be, x-repeated, position);
+  ins--load(be, slot-ptr, alignment: word-size)
 end;
 
-define side-effecting stateless indefinite-extent &unimplemented-primitive-descriptor primitive-repeated-slot-value-setter
+define side-effecting stateless indefinite-extent &primitive-descriptor primitive-repeated-slot-value-setter
     (value :: <object>, x :: <object>,
      base-position :: <raw-integer>, position :: <raw-integer>)
  => (value :: <object>);
-  //---*** Fill this in...
+  let word-size = back-end-word-size(be);
+  let x-slots
+    = ins--bitcast(be, x, llvm-pointer-to(be, $llvm-object-pointer-type));
+  let x-body
+    = ins--gep-inbounds(be, x-slots, dylan-value(#"$number-header-words"));
+  let x-repeated
+    = ins--gep-inbounds(be, x-body, base-position);
+  let slot-ptr = ins--gep(be, x-repeated, position);
+  ins--store(be, value, slot-ptr, alignment: word-size)
 end;
 
 
