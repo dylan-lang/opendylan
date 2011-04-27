@@ -85,7 +85,8 @@ define method emit-extern
            name: name,
            type: llvm-pointer-to(back-end, function-type),
            arguments: #(),
-           linkage: #"external");
+           linkage: #"external",
+           calling-convention: llvm-calling-convention(back-end, o));
   llvm-builder-define-global(back-end, name, function);
 end method;
 
@@ -101,7 +102,8 @@ define method emit-extern
              name: name,
              type: llvm-pointer-to(back-end, function-type),
              arguments: #(),
-             linkage: #"external");
+             linkage: #"external",
+             calling-convention: llvm-calling-convention(back-end, ep));
     llvm-builder-define-global(back-end, name, function);
   end unless;
 end method;
