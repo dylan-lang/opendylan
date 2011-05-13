@@ -107,7 +107,8 @@ define date class-test <date> ()
   // 2000/2/29 is a leap year day.
   check-true("Make a date with Feb 29 on a leap year ok?",
 	     make(<date>, year: 2000, month: 2, day: 29));
-end;
+
+end class-test <date>;
 
 define date constant-test <day-of-week> ()
   check-instance?("<day-of-week> is a <type>?", 
@@ -223,8 +224,32 @@ define date function-test as-iso8601-string ()
 		      minutes: 0, seconds: 0, time-zone-offset: 0,
 		      microseconds: 0)),
 	      "2000-01-01T00:00:00+00:00");
-  
-				     
+end;
+
+define date function-test parse-iso8601-string ()
+  for (item in #[#("1997",                         #(1997, 1, 1,  0, 0, 0, 0, 0), #t),
+                 #("1997-07",                      #(1997, 7, 1,  0, 0, 0, 0, 0), #t),
+                 #("1997-07-16",                   #(1997, 7, 16, 0, 0, 0, 0, 0), #t),
+                 #("1997-07-16T19:20+01:00",       #(1997, 7, 16, 19, 20,  0,  0, 60), #t),
+                 #("1997-07-16T19:20:30+01:00",    #(1997, 7, 16, 19, 20, 30,  0, 60), #t),
+                 #("1997-07-16T19:20:30.45+01:30", #(1997, 7, 16, 19, 20, 30, 45, 90), #t),
+                 #("1997-07-16t19:20:30.45z", #(1997, 7, 16, 19, 20, 30, 45, 0), #t),
+                 #("1997-07-16T19:20:30.45Z", #(1997, 7, 16, 19, 20, 30, 45, 0), #t),
+                 #("19970716T192030.45Z",     #(1997, 7, 16, 19, 20, 30, 45, 0), #f)
+                 ])
+    let (input, expected, strict?) = apply(values, item);
+    check-equal(format-to-string("parse iso8601 date %= yields %=",
+                                 input, expected),
+                parse-iso8601-string(input, strict?: strict?),
+                begin
+                  let (yy, mo, dd, hh, mm, ss, usec, tz) = apply(values, expected);
+                  make(<date>,
+                       year: yy, month: mo, day: dd,
+                       hours: hh, minutes: mm, seconds: ss,
+                       microseconds: usec,
+                       time-zone-offset: tz)
+                end);
+  end for;
 end;
 
 define date function-test current-date ()
