@@ -16,11 +16,7 @@ define library dfmc-environment-projects
   use dfmc-conditions;	//---*** for the warning classes
   use build-system;
 
-  use dfmc-pentium-harp-cg;		// Pentium backend
-  use dfmc-harp-browser-support;	// Harp browsing support
   use dfmc-debug-back-end;		// Compiler print methods
-  use dfmc-c-back-end;          // C backend
-  use dfmc-c-linker;            // C linker
 
   use dfmc-environment-database;
 

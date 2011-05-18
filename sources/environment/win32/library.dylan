@@ -42,6 +42,12 @@ define library win32-environment
   use source-control-manager;
   use source-control-vss-backend;
 
+  // Back-ends
+  use dfmc-pentium-harp-cg;      // Pentium backend
+  use dfmc-harp-browser-support; // Harp browsing support
+  use dfmc-c-back-end;           // C backend
+  use dfmc-c-linker;             // C linker
+
   // Project manager plug-ins
   use motley;
   use tool-scepter;

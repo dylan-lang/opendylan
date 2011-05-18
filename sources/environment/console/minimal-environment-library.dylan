@@ -6,7 +6,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define library console-environment
+define library minimal-console-environment
   use functional-dylan;
   use system;
   use io;
@@ -20,12 +20,11 @@ define library console-environment
   use environment-application-commands;
   use environment-internal-commands;
 
-  // Project manager plug-ins
-  use motley;
-  use tool-scepter;
-
-  // Plug-in for Remote Debugging
-  use remote-access-path;
+  // Back-ends
+  use dfmc-pentium-harp-cg;      // Pentium backend
+  use dfmc-harp-browser-support; // Harp browsing support
+  use dfmc-c-back-end;           // C backend
+  use dfmc-c-linker;             // C linker
 
   export console-environment;
-end library console-environment;
+end library minimal-console-environment;

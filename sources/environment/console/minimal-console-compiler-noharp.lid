@@ -1,10 +1,11 @@
-Library:   minimal-console-environment
+Library:   minimal-console-compiler
 Synopsis:  The command line version of the environment
 Author:	   Andy Armstrong
-Files: minimal-environment-library
-       module
+Target-Type:	executable
+Files: minimal-compiler-noharp-library
+       compiler-module
        command-line
-       environment-command-line
+       compiler-command-line
        start
 RC-Files:       console.rc
 C-Header-Files: console.ico
