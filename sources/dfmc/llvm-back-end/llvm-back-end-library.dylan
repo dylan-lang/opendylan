@@ -29,6 +29,7 @@ define module dfmc-llvm-back-end
 
   use llvm;
   use llvm-builder;
+  use llvm-debug;
 
   export
     <llvm-back-end>,
@@ -62,6 +63,8 @@ define module dfmc-llvm-back-end
     runtime-variable-global,
     runtime-variable-global-setter,
     $llvm-runtime-variable-descriptors,
+
+    llvm-calling-convention,
 
     llvm-raw-byte-character;
 end module;

@@ -23,7 +23,12 @@ define method emit-all (back-end :: <llvm-back-end>,
       cr.compilation-record-back-end-data
         := back-end.llvm-builder-module
         := m;
-      
+
+      // Initialize a new debugging compile record and make it current
+      back-end.llvm-back-end-dbg-compile-unit
+        := llvm-compilation-record-dbg-compile-unit(back-end, cr);
+
+      // Items to emit from this compilation record
       let heap = cr.compilation-record-model-heap;
       let literals = heap.heap-defined-object-sequence;
       
@@ -45,10 +50,10 @@ define method emit-all (back-end :: <llvm-back-end>,
 
       with-labeling-from-dynamic
         for (code in heap.heap-root-system-init-code)
-          emit-init-code(back-end, m, code.^iep);
+          emit-code(back-end, m, code.^iep, init?: #t);
         end for;
         for (code in heap.heap-root-init-code)
-          emit-init-code(back-end, m, code.^iep);
+          emit-code(back-end, m, code.^iep, init?: #t);
         end for;
       end;
       retract-local-methods-in-heap(heap);
@@ -67,112 +72,6 @@ define method retract-local-methods-in-heap(heap :: <model-heap>) => ()
       end unless;
     end if;
   end for;
-end method;
-
-
-define method emit-code
-    (back-end :: <llvm-back-end>, module :: <llvm-module>, o) => ();
-  // Do nothing
-end method;
-
-define method emit-code
-    (back-end :: <llvm-back-end>, module :: <llvm-module>, o :: <&iep>) => ();
-  unless (code(o))
-    let name = emit-name(back-end, module, o);
-    let function-type = llvm-lambda-type(back-end, o);
-
-    let parameter-types = function-type.llvm-function-type-parameter-types;
-    let arguments
-      = map(method (arg-type, index) 
-              make(<llvm-argument>,
-                   type: arg-type,
-                   name: format-to-string("arg%d", index),
-                   index: index)
-            end,
-            parameter-types,
-            range(below: parameter-types.size));
-
-    let linkage
-      = if (o.model-definition) #"external" else #"internal" end;
-
-    block ()
-      o.code
-        := back-end.llvm-builder-function
-        := make(<llvm-function>,
-                name: name,
-                type: llvm-pointer-to(back-end, function-type),
-                arguments: arguments,
-                linkage: linkage,
-                section: llvm-section-name(back-end, #"code"),
-                calling-convention:
-                  llvm-calling-convention(back-end, o));
-      ins--block(back-end, make(<llvm-basic-block>, name: "bb.entry"));
-      ins--ret(back-end, emit-reference(back-end, module, &false));
-    cleanup
-      back-end.llvm-builder-function := #f;
-    end block;
-    
-    if (*retract-dfm?*)
-      if (lambda-top-level?(o))
-	retract-method-dfm(o);
-	retract-method-dfm(o.function);
-      end if;
-    end if;
-  end unless;
-end method;
-
-define method emit-init-code
-    (back-end :: <llvm-back-end>, module :: <llvm-module>, o :: <&iep>)
- => ();
-  unless (code(o))
-    let name = emit-name(back-end, module, o);
-    let function-type = llvm-lambda-type(back-end, o);
-
-    let parameter-types = function-type.llvm-function-type-parameter-types;
-    let arguments
-      = map(method (arg-type, index) 
-              make(<llvm-argument>,
-                   type: arg-type,
-                   name: format-to-string("arg%d", index),
-                   index: index)
-            end,
-            parameter-types,
-            range(below: parameter-types.size));
-    block ()
-      o.code
-        := back-end.llvm-builder-function
-        := make(<llvm-function>,
-                name: name,
-                type: llvm-pointer-to(back-end, function-type),
-                arguments: arguments,
-                linkage: #"internal",
-                section: llvm-section-name(back-end, #"init-code"),
-                calling-convention: $llvm-calling-convention-fast);
-      ins--block(back-end, make(<llvm-basic-block>, name: "bb.entry"));
-      ins--ret(back-end, emit-reference(back-end, module, &false));
-    cleanup
-      back-end.llvm-builder-function := #f;
-    end block;
-
-    if (*retract-dfm?*)
-      retract-method-dfm(o);
-      retract-method-dfm(o.function);
-    end if;
-  end unless;
-end method emit-init-code;
-
-// Calling convention for ordinary functions
-define method llvm-calling-convention
-    (back-end :: <llvm-back-end>, o :: <&iep>)
- => (calling-convention :: <integer>);
-  $llvm-calling-convention-fast
-end method;
-
-// Calling convention for shared entry points
-define method llvm-calling-convention
-    (back-end :: <llvm-back-end>, o :: <&shared-entry-point>)
- => (calling-convention :: <integer>);
-  $llvm-calling-convention-fast
 end method;
 
 

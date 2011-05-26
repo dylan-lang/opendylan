@@ -36,6 +36,78 @@ define method initialize-type-table
   t["iDoubleWord"]
     := make(<llvm-integer-type>, width: back-end-word-size(back-end) * 8 * 2);
 
+  // Raw types
+  local
+    method register-raw-type
+        (type-name :: <symbol>,
+         type :: <llvm-type>,
+         dbg-encoding :: false-or(<symbol>))
+     => ();
+      let raw-type = dylan-value(type-name);
+      back-end.%raw-type-table[raw-type] := type;
+      back-end.%raw-type-dbg-encoding-table[raw-type] := dbg-encoding;
+    end method;
+
+  // FIXME
+  let llvm-long-double-type = make(<llvm-primitive-type>, kind: #"X86_FP80");
+
+  register-raw-type(#"<raw-c-signed-char>",        $llvm-i8-type,
+                    #"signed-char");
+  register-raw-type(#"<raw-c-unsigned-char>",      $llvm-i8-type,
+                    #"unsigned-char");
+  register-raw-type(#"<raw-c-signed-short>",       $llvm-i16-type,
+                    #"signed");
+  register-raw-type(#"<raw-c-unsigned-short>",     $llvm-i16-type,
+                    #"unsigned");
+  register-raw-type(#"<raw-c-signed-int>",         $llvm-i32-type,
+                    #"signed");
+  register-raw-type(#"<raw-c-unsigned-int>",       $llvm-i32-type,
+                    #"unsigned");
+  register-raw-type(#"<raw-c-signed-long>",        t["iWord"],
+                    #"signed");
+  register-raw-type(#"<raw-c-unsigned-long>",      t["iWord"],
+                    #"unsigned");
+  register-raw-type(#"<raw-c-signed-long-long>",   $llvm-i64-type,
+                    #"signed");
+  register-raw-type(#"<raw-c-unsigned-long-long>", $llvm-i64-type,
+                    #"unsigned");
+  register-raw-type(#"<raw-c-float>",              $llvm-float-type,
+                    #"float");
+  register-raw-type(#"<raw-c-double>",             $llvm-double-type,
+                    #"float");
+  register-raw-type(#"<raw-c-long-double>",        llvm-long-double-type,
+                    #"float");
+  register-raw-type(#"<raw-c-void>",               $llvm-void-type,
+                    #f);
+  register-raw-type(#"<raw-c-pointer>",            $llvm-i8*-type,
+                    #f);
+  register-raw-type(#"<raw-boolean>",              $llvm-i8-type,
+                    #"boolean");
+  register-raw-type(#"<raw-byte-character>",       $llvm-i8-type,
+                    #"unsigned-char");
+  register-raw-type(#"<raw-unicode-character>",    $llvm-i32-type,
+                    #"unsigned-char");
+  register-raw-type(#"<raw-byte>",                 $llvm-i8-type,
+                    #"unsigned");
+  register-raw-type(#"<raw-double-byte>",          $llvm-i16-type,
+                    #"unsigned");
+  register-raw-type(#"<raw-byte-string>",          $llvm-i8*-type,
+                    #f);
+  register-raw-type(#"<raw-integer>",              t["iWord"],
+                    #"signed");
+  register-raw-type(#"<raw-single-float>",         $llvm-float-type,
+                    #"float");
+  register-raw-type(#"<raw-machine-word>",         t["iWord"],
+                    #"unsigned");
+  register-raw-type(#"<raw-double-float>",         $llvm-double-type,
+                    #"float");
+  register-raw-type(#"<raw-extended-float>",       llvm-long-double-type,
+                    #"float");
+  register-raw-type(#"<raw-pointer>",              $llvm-i8*-type,
+                    #f);
+  register-raw-type(#"<raw-address>",              t["iWord"],
+                    #"address");
+
   // MM Wrapper
   let placeholder = make(<llvm-opaque-type>);
   t["Wrapper"]
@@ -66,54 +138,6 @@ define method llvm-register-types
   for (type keyed-by name in back-end.%type-table)
     module.llvm-type-table[name] := type;
   end for;
-end method;
-
-
-/// Raw type mappings
-
-// Register LLVM types for each of the defined <&raw-type> instances
-define method initialize-raw-type-table
-    (back-end :: <llvm-back-end>) => ();
-  let t = back-end.%type-table;
-
-  local
-    method register-raw-type
-        (type-name :: <symbol>, type :: <llvm-type>) => ();
-      let raw-type = dylan-value(type-name);
-      back-end.%raw-type-table[raw-type] := type;
-    end method;
-
-  // FIXME
-  let llvm-long-double-type = make(<llvm-primitive-type>, kind: #"X86_FP80");
-  
-  register-raw-type(#"<raw-c-signed-char>",        $llvm-i8-type);
-  register-raw-type(#"<raw-c-unsigned-char>",      $llvm-i8-type);
-  register-raw-type(#"<raw-c-signed-short>",       $llvm-i16-type);
-  register-raw-type(#"<raw-c-unsigned-short>",     $llvm-i16-type);
-  register-raw-type(#"<raw-c-signed-int>",         $llvm-i32-type);
-  register-raw-type(#"<raw-c-unsigned-int>",       $llvm-i32-type);
-  register-raw-type(#"<raw-c-signed-long>",        t["iWord"]);
-  register-raw-type(#"<raw-c-unsigned-long>",      t["iWord"]);
-  register-raw-type(#"<raw-c-signed-long-long>",   $llvm-i64-type);
-  register-raw-type(#"<raw-c-unsigned-long-long>", $llvm-i64-type);
-  register-raw-type(#"<raw-c-float>",              $llvm-float-type);
-  register-raw-type(#"<raw-c-double>",             $llvm-double-type);
-  register-raw-type(#"<raw-c-long-double>",        llvm-long-double-type);
-  register-raw-type(#"<raw-c-void>",               $llvm-void-type);
-  register-raw-type(#"<raw-c-pointer>",            $llvm-i8*-type);
-  register-raw-type(#"<raw-boolean>",              $llvm-i8-type);
-  register-raw-type(#"<raw-byte-character>",       $llvm-i8-type);
-  register-raw-type(#"<raw-unicode-character>",    $llvm-i32-type);
-  register-raw-type(#"<raw-byte>",                 $llvm-i8-type);
-  register-raw-type(#"<raw-double-byte>",          $llvm-i16-type);
-  register-raw-type(#"<raw-byte-string>",          $llvm-i8*-type);
-  register-raw-type(#"<raw-integer>",              t["iWord"]);
-  register-raw-type(#"<raw-single-float>",         $llvm-float-type);
-  register-raw-type(#"<raw-machine-word>",         t["iWord"]);
-  register-raw-type(#"<raw-double-float>",         $llvm-double-type);
-  register-raw-type(#"<raw-extended-float>",       llvm-long-double-type);
-  register-raw-type(#"<raw-pointer>",              $llvm-i8*-type);
-  register-raw-type(#"<raw-address>",              t["iWord"]);
 end method;
 
 
@@ -294,6 +318,6 @@ define method llvm-entry-point-type
       := make(<llvm-function-type>,
               return-type: $llvm-object-pointer-type,
               parameter-types: #(),
-              varargs?: #t)
+              varargs?: #f)
   end if
 end method;

@@ -14,7 +14,11 @@ define abstract class <llvm-back-end> (<back-end>, <llvm-builder>)
   constant slot %raw-type-table :: <object-table>
     = make(<object-table>);
 
-  // Cache of <llvm-pointer-type> objects, keyed by pointee
+  // Debug encoding type for each defined <&raw-type> instance
+  constant slot %raw-type-dbg-encoding-table :: <object-table>
+    = make(<object-table>);
+
+  // Cache of <llvm-pointer-type> objects, keyed by pointee type
   constant slot %pointer-to-table :: <object-table>
     = make(<object-table>, weak: #"value");
 
@@ -42,6 +46,22 @@ define abstract class <llvm-back-end> (<back-end>, <llvm-builder>)
   // Value import function
   inherited slot llvm-builder-value-function,
     init-value: llvm-back-end-value-function;
+
+  // Debug compilation unit descriptor
+  slot llvm-back-end-dbg-compile-unit :: false-or(<llvm-metadata-value>),
+    init-value: #f;
+
+  // Debug file descriptor
+  constant slot %source-record-dbg-file-table :: <object-table>
+    = make(<object-table>);
+
+  // Debug function descriptor
+  slot llvm-back-end-dbg-function :: false-or(<llvm-metadata-value>),
+    init-value: #f;
+
+  // LLVM debug type for each defined <&raw-type> instance (or <object>)
+  constant slot %dbg-type-table :: <object-table>
+    = make(<object-table>);
 end;
 
 define generic llvm-back-end-target-triple
@@ -54,7 +74,6 @@ define sealed method initialize
     (back-end :: <llvm-back-end>, #key, #all-keys) => ()
   next-method();
   initialize-type-table(back-end);
-  initialize-raw-type-table(back-end);
 
   // Create canonical instances of the 256 i8 constants
   for (i from 0 below 256)
