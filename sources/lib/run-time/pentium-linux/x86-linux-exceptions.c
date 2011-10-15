@@ -262,7 +262,7 @@ void walkstack() {
     eip = *((int*)ebp + 1);
     rc = dladdr((void*)eip, &info);
     if (!rc||(!info.dli_sname && !info.dli_fname)) {
-      printf("0x%x (unknown)\n");
+      printf("0x%x (unknown)\n", eip);
     } else {
       if (!info.dli_sname) {
         printf("0x%x (%s)\n", eip, info.dli_fname);
