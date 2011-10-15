@@ -11,9 +11,6 @@ my $lidfile_line;
 my $platform_name = $ENV{'OPEN_DYLAN_PLATFORM_NAME'};
 
 my $user_root = $ENV{'OPEN_DYLAN_USER_ROOT'};
-my $user_build = $ENV{'OPEN_DYLAN_USER_BUILD'};
-my $user_install = $ENV{'OPEN_DYLAN_USER_INSTALL'};
-my $user_projects = $ENV{'OPEN_DYLAN_USER_PROJECTS'};
 my $user_registries = $ENV{'OPEN_DYLAN_USER_REGISTRIES'};
 my $user_sources = $ENV{'OPEN_DYLAN_USER_SOURCES'};
 
@@ -30,6 +27,8 @@ my @library_packs;
             'library-packs=s' => sub {
                 push @library_packs, split(/\W+/, $_[1]);
             });
+
+# Names of libraries we already built successfully.
 my %built;
 my %deps;
 
@@ -164,7 +163,7 @@ sub build_library {
     $command .= " $library";
 
     if ($debugger) {
-	system($command) or die "Couldn't execute $compiler";
+	system($command) or die "Couldn't execute $command";
 	print "\n";
     }
     else {
