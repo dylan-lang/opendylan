@@ -186,6 +186,18 @@ Linux::
   in both prmcli.h and pthrdext.c.  The comments in the above URL
   weren't explicit about that.
 
+  For MPS 1.108.0 I (cgay) encountered this problem on Ubuntu 11.04:
+
+    cc1: warnings being treated as errors
+    protlii3.c: In function ‘sigHandle’:
+    protlii3.c:115:3: error: case label is not an integer constant expression
+    protlii3.c:116:3: error: case label is not an integer constant expression
+    make[2]: *** [lii4gc/hi/protlii3.o] Error 1
+    make[1]: *** [target] Error 2
+    make: *** [mmdw.a] Error 2
+
+  To work around it edit gc.gmk to remove -Werror from CFLAGSCOMPILER.
+
 The main point to notice here is that you don't just build the default
 target, as described in the MPS documentation.  You must build
 mmdw.lib or mmdw.a instead.
