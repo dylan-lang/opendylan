@@ -49,7 +49,8 @@ $(RUNTIMELIBDEST):
 # files to be present; only one will be used, so the others can be missing.
 install-build:
 	cp -fp $(top_srcdir)/sources/lib/run-time/mini-jambase.jam $(LIBDEST)
-	-cp -fp $(runtime_srcdir)/x86-linux-build.jam $(LIBDEST)
+	-cp -fp $(runtime_srcdir)/c-freebsd-build.jam $(LIBDEST)
+	-cp -fp $(runtime_srcdir)/c-linux-build.jam $(LIBDEST)
 	-cp -fp $(runtime_srcdir)/x86-darwin-build.jam $(LIBDEST)
 	-cp -fp $(runtime_srcdir)/ppc-darwin-build.jam $(LIBDEST)
 
