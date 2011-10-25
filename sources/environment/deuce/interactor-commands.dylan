@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Interactor Commands
 //---*** andrewa: should replace this with environment-commands protocols
-
+/*
 define macro interactor-command-definer
   { define interactor-command ?:name (?args:*)
       description ?description:expression
@@ -304,3 +304,4 @@ define interactor-command
   //---*** implementation in interactor-control.dylan!
   #f
 end;
+*/

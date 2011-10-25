@@ -25,7 +25,7 @@ define library environment-deuce
   use commands;
   use environment-commands;
 
-  use dfmc-shell;
+//  use dfmc-shell;
 
   export environment-deuce;
 end library environment-deuce;

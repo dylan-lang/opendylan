@@ -41,7 +41,7 @@ define module environment-deuce
   use editor-manager-internals,
     import: { *current-editor* };
   use source-control-manager;
-
+/*
   use dfmc-shell, 
     rename: { <command>               => shell/<command>,
 	      <basic-command>         => shell/<basic-command>,
@@ -55,7 +55,7 @@ define module environment-deuce
     exclude: { display-condition,
                display-help,
 	       <help-command> };
-
+*/
   use deuce-internals, 
     rename: { execute-command	       => deuce/execute-command,
 	      execute-command-in-frame => deuce/execute-command-in-frame,

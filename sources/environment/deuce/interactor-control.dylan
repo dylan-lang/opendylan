@@ -11,6 +11,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define open class <dylan-interactor> (<environment-shell-window>)
   slot interactor-last-input  :: false-or(<string>) = #f;
   slot interactor-next-subset :: false-or(<result-subset>) = #f;
+  slot interactor-command-line-server :: false-or(<command-line-server>) = #f;
 end class <dylan-interactor>;
 
 ignorable(interactor-last-input, interactor-last-input-setter);
@@ -44,6 +45,15 @@ define function make-dylan-interactor
   let window = apply(make, class, documentation: documentation, initargs);
   dynamic-bind (*editor-frame* = window)
     let buffer = buffer | make-interactor-buffer();
+    let stream
+      = make(<interval-stream>,
+             interval: buffer,
+             direction: #"output");
+    let server
+      = make-environment-command-line-server
+          (input-stream: stream,
+           output-stream: stream);
+    window.interactor-command-line-server := server;
     dynamic-bind (*buffer* = buffer)
       select-buffer(window, buffer)
     end
@@ -356,10 +366,13 @@ define constant $show-contents-command    = "show-contents";
 
 define method interactor-process-command
     (pane :: <dylan-interactor>, text :: <string>, bp :: <basic-bp>) => ()
+  let server  = pane.interactor-command-line-server;
+  let stream  = server.server-output-stream;
+  let buffer  = pane.window-buffer;
+  stream-position(stream) := buffer.interval-end-bp;
   let frame   = sheet-frame(pane);
   let project = frame-current-project(frame);
   let text    = strip-interactor-command(text);
-  let length  = size(text);
   //--- Nasty special case hack because the tokenizer isn't up to
   //--- handling the syntax of function names with embedded spaces
   let (command, arguments) = parse-command-name(text);
@@ -370,11 +383,7 @@ define method interactor-process-command
       interactor-do-execute-code
 	(pane, arguments, bp, transaction-type: #"describe");
     otherwise =>
-      let _start = 1;
-      let (#rest args)
-	= os/tokenize-command-string(copy-sequence(text, start: 1));
-      *top-level-loop*.%source := pane;
-      apply(shell/execute-command, *top-level-loop*, args);
+      execute-command-line(server, copy-sequence(text, start: 1));
   end
 end method interactor-process-command;
 
