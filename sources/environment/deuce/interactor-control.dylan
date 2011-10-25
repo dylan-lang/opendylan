@@ -28,11 +28,11 @@ define method do-destroy-sheet
   end
 end method do-destroy-sheet;
 
-define open generic interactor-remote-thread 
+define open generic interactor-remote-thread
     (interactor :: <dylan-interactor>) => (thread :: <thread-object>);
 
 define open generic interactor-stack-frame-context
-    (pane :: <dylan-interactor>) 
+    (pane :: <dylan-interactor>)
  => (maybe-frame :: false-or(<stack-frame-object>));
 
 define function make-dylan-interactor
@@ -70,7 +70,7 @@ define method environment-empty-buffer
     = find-buffer(editor, name)
         | make-empty-buffer(<non-file-buffer>,
 			    anonymous?: #t,
-			    name: name, 
+			    name: name,
 			    editor: editor,
 			    read-only?: #t);
   buffer
@@ -85,7 +85,7 @@ define method interactor-stack-frame-context
 end method interactor-stack-frame-context;
 
 define method interactor-last-values
-    (pane :: <dylan-interactor>) 
+    (pane :: <dylan-interactor>)
  => (values :: false-or(<sequence>))
   //---*** Should return the values from the last evaluation
   #f
@@ -110,7 +110,7 @@ define method shell-parse-input
 	when (module)
 	  let thread  = interactor-remote-thread(pane);
 	  let stack-frame = interactor-stack-frame-context(pane);
-	  let (complete?, warnings) 
+	  let (complete?, warnings)
 	    = project-valid-code?(project, text, thread, module: module,
 				  stack-frame: stack-frame);
 	  if (complete?)
@@ -241,7 +241,7 @@ define method interactor-receive-values
 end method interactor-receive-values;
 
 define method interactor-receive-warnings
-    (pane :: <dylan-interactor>, warnings :: <sequence>, 
+    (pane :: <dylan-interactor>, warnings :: <sequence>,
      #key transaction-id) => ()
   call-in-frame(sheet-frame(pane),
                 present-interactor-warnings,
@@ -250,7 +250,7 @@ end method interactor-receive-warnings;
 
 //---*** What do we do if the evaluation resulted in an error?
 define method present-interactor-values
-    (pane :: <dylan-interactor>, name-value-pairs :: <sequence>, 
+    (pane :: <dylan-interactor>, name-value-pairs :: <sequence>,
      #key transaction-id, describe-function) => ()
   let frame   = sheet-frame(pane);
   let project = frame-current-project(frame);
@@ -271,7 +271,7 @@ define method present-interactor-values
         for (name-value-pair in name-value-pairs)
 	  let name-label  = head(name-value-pair);
 	  let value       = tail(name-value-pair);
-	  let value-label 
+	  let value-label
 	    = print-environment-object-to-string
 	        (project, value, namespace: module);
 	  // Bind 'line' now before we insert a '\n'...
@@ -298,7 +298,7 @@ define method present-interactor-values
 end method present-interactor-values;
 
 define method present-interactor-warnings
-    (pane :: <dylan-interactor>, warning-objects :: <sequence>, 
+    (pane :: <dylan-interactor>, warning-objects :: <sequence>,
      #key transaction-id) => ()
   let frame   = sheet-frame(pane);
   let project = frame-current-project(frame);
@@ -498,7 +498,7 @@ define method interactor-make-subset
   let frame   = sheet-frame(pane);
   let project = frame-current-project(frame);
   let (names, values) = composite-object-contents(project, object);
-  let result = make(<result-contents>, 
+  let result = make(<result-contents>,
 		    object: object, names: names, values: values);
   make(<result-subset>, contents: result)
 end method interactor-make-subset;
@@ -510,7 +510,7 @@ define method interactor-make-subset
   let project = frame-current-project(frame);
   let names   = collection-keys(project, object);
   let values  = collection-elements(project, object);
-  let result = make(<result-contents>, 
+  let result = make(<result-contents>,
 		    object: object, names: names, values: values);
   make(<result-subset>, contents: result)
 end method interactor-make-subset;
@@ -671,7 +671,7 @@ define method paste-object
 			  interval: buffer,
 			  direction: #"output");
 	stream-position(stream) := line-end(line);
-	let value-label 
+	let value-label
 	  = print-environment-object-to-string(project, value, namespace: module);
 	format(stream, "\n");
 	let line = bp-line(stream-position(stream));
