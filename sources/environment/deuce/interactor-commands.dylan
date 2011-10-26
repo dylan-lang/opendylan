@@ -61,6 +61,7 @@ define method do-execute-command (context :: <interactor-context>, command :: <i
 	message(context, "Module '%s' is not interactive.", module);
       otherwise =>
 	frame-current-module(frame) := the-module;
+        context.context-project-context.context-module := the-module;
 	update-module-gadget(frame);
 	let (module, library) = current-module-and-library-name();
 	message(context, "Module set to '%s' of library '%s'.", module, library);

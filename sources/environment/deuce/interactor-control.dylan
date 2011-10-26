@@ -23,10 +23,9 @@ end;
 
 define method context-project (context :: <interactor-context>)
  => (project :: <project-object>)
-//  let project =
- frame-current-project(sheet-frame(context.interactor));
-/*  let project-context
-    = context.context-project-context
+  let project = frame-current-project(sheet-frame(context.interactor));
+  let project-context
+    = context-project-context(context, project: project)
         | begin
             let library = project.project-library;
             let module = library & library-default-module(project, library);
@@ -34,9 +33,9 @@ define method context-project (context :: <interactor-context>)
               = make(<project-context>,
                      project: project,
                      module: module);
-            context.context-project-context := project-context;
+            context-project-context-setter(project-context, context, project: project)
           end;
-  project; */
+  project;
 end;
 
 define method do-destroy-sheet

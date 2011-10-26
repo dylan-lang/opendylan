@@ -132,7 +132,7 @@ define module environment-commands
 
   // Project context
   export <project-context>,
-         context-module,
+         context-module, context-module-setter,
          context-properties, context-properties-setter,
          context-project-context, context-project-context-setter;
 
