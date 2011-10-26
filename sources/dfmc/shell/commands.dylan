@@ -6,283 +6,6 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-
-define variable *trace-asm?* = #f;
-
-
-define command-argument-spec
-  flags: #("binding", "default-binding"),
-  keyword: #"default-binding",
-  value?: #t
-end;
-
-define command-flag force-compile;
-
-define command-flag force;
-
-define command-flag clean;
-
-define command-argument project;
-
-define command-argument boolean;
-
-define command-flag force-parse;
-
-define command-flag ignore-warnings;
-
-define command-flag seal;
-
-define command-flag combine-dlls;
-
-define command-argument-spec
-  flags: #("abort-on-serious-warnings", "abort"),
-  keyword: #"abort-on-serious-warnings"
-end;
-
-define command-argument-spec
-  flags: #("abort-on-any-warnings", "abort-on-any"),
-  keyword: #"abort-on-any-warnings"
-end;
-
-define command-flag export-only;
-
-define command-flag save;
-
-define command-flag flush;
-
-define command-flag harp;
-
-define command-flag dfm;
-
-define command-flag nodebug;
-
-define command-flag report;
-
-define command-argument library;
-
-define command-argument module;
-
-define command-argument filename;
-
-define command-argument formname;
-
-define command-argument-spec
-  flags: #("m"),
-  keyword: #"mode",
-  value?: #t
-end;
-
-define command-argument watchpoint;
-
-define command-flag assemble;
-
-define command-flag gnu;
-
-define command-flag microsoft;
-
-define command-flag nolink;
-
-define command-flag nocompile;
-
-define command-flag dll;
-
-define command-flag exe;
-
-define command-flag force;
-
-define command-argument-spec
-  flags: #("recursive", "rec"),
-  keyword: #"recursive"
-end;
-
-define command-flag not-recursive;
-
-define command-flag personal;
-
-define command-flag summary;
-
-define command-flag nonits;
-
-define command-flag skip-emit;
-
-define command-flag skip-link;
-
-/// User-level commands
-
-define inline function assemble? (assemble) => (assemble?)
-  assemble | *trace-asm?* | unsupplied()
-end function assemble?;
-
-define dylan-shell-command 
-  open (project)
-  description "opens a project"
-  documentation
-  "Usage: OPEN project\n"
-  "\n"
-  "Opens a project either by library name or filename. Once a project\n"
-  "is opened, then compilation of any libraries that use the library\n"
-  "defined by the project will use this opened definition.\n"
-  hidden? #f
-  ensure-project-open(context, project)
-end;
-
-define dylan-shell-command
-  remove-build-products (project, not-recursive)
-  description "removes all build products including compiler databases"
-  documentation
-  "Usage: REMOVE-BUILD-PRODUCTS [/not-recursive] project\n"
-  "\n"
-  "Removes all build products including compiler databases\n"
-  hidden? #f
-  with-project-location-handler (context)
-    let project = ensure-project-open(context, project);
-    if (project)
-      project-remove-build-products(project, recursive?: ~not-recursive);
-    else
-      user-message(context, "Project % not found", project);
-    end;
-  end;
-end;
-
-define dylan-shell-command 
-  import (project)
-  description "converts a .LID file into a project"
-  documentation
-  "Usage: IMPORT lid-file\n"
-  "\n"
-  "Creates a project file for a given Library Interchange Definition file.\n"
-  hidden? #f
-  let locator = as(<file-locator>, project);
-  let pathname = merge-locators(locator, working-directory());
-  if (file-exists?(pathname))
-    let project = import-lid-project(pathname);
-    if (project)
-      user-message(context, "Imported %s as %s\n",
-		   pathname, project-location(project))
-    else
-      user-message(context, "Failed to import %s\n", pathname)
-    end
-  else
-    user-message(context, "Failed to import %s: file does not exist", pathname)
-  end
-end;
-
-define dylan-shell-command 
-  close (project)
-  description "closes a project"
-  documentation
-  "Usage: CLOSE project\n"
-  "\n"
-  "The close command removes all knowledge of a project from the\n"
-  "batch compiler, such that the next time a library is compiled against\n"
-  "this library, the compiler will search for it again. This is\n"
-  "primarily useful to switch between different versions of a library\n"
-  "(say the debug and release versions).\n"
-  hidden? #f
-  if(close-project(project))
-    user-message(context, "Project %s closed\n", project);
-  else
-    user-message(context, "Failed to close project %s\n", project);
-  end;
-end;
-
-define dylan-shell-command 
-  close-all ()
-  description "closes all open projects"
-  documentation
-  "Usage: CLOSE-ALL\n"
-  "\n"
-  "This effectively restarts the compiler, in that all knowledge\n"
-  "of any opened projects is removed. This can be useful if you\n"
-  "wish to compile a different version of a project that you have\n"
-  "previously compiled in a session.\n"
-  hidden? #f
-  close-all-projects();
-end;
-
-define dylan-shell-command
-  Build (project, clean, not-recursive, save, dfm, harp, combine-dlls, nodebug, nolink, nocompile, dll, exe, microsoft, gnu, abort-on-serious-warnings, default-binding)
-  description "builds a project"
-  documentation
-  "Usage: BUILD {options} project\n"
-  "\n"
-  "This both compiles and links a project and its subprojects. By\n"
-  "default this is an incremental operation so that the compiler\n"
-  "and linker only do the smallest amount of work necessary.\n"
-  "\n"
-  "The following options are provided:\n"
-  "\n"
-  "  /not-recursive - don't process the subprojects of this project\n"
-  "  /clean         - force a clean build of the project\n"
-  "  /save          - save the compiler database\n"
-  "\n"
-  "  /nolink        - don't link the project\n"
-  "  /dll           - force the project to be linked as a DLL\n"
-  "  /exe           - force the project to be linked as an executable\n"
-  "\n"
-  "  /microsoft     - link using the Microsoft linker\n"
-  "  /gnu           - link using the GNU linker\n"
-
-  hidden? #f
-  with-compiler-transaction
-  with-project-location-handler (context)
-    let project = ensure-project-open(context, project);
-    let compile? = ~ nocompile;
-    let link? = ~ nolink;
-    let linker = case
-		   microsoft => #"microsoft";
-		   gnu       => #"gnu";
-		   otherwise => unsupplied();
-		 end;
-    if (project)
-      if (save) write-databases?() := #t end if;
-      let binding = default-binding & as(<symbol>, default-binding);
-      block(exit)
-	// validate inputs
-	if(binding & binding ~== #"tight" & binding ~== #"loose")
-	  user-message(context, "Incorrect value '%s' for default-binding flag\n"
-			 "Has to be 'loose' or 'tight'", binding);
-	  exit()
-	end;
-	let aborted?
-	  =
-	  if (compile?)
-	    if (not-recursive)
-	      compile-library
-		(project,
-		 save?: save, 
-		 default-binding: binding,
-		 force-compile?: clean, force-parse?: clean, dfm-output?: dfm,
-		 harp-output?: harp, debug-info?: ~ nodebug,
-		 abort-on-all-warnings?:     #f,
-		 abort-on-serious-warnings?: abort-on-serious-warnings,
-		 assembler-output?: assemble?(#f))
-	    else
-	      update-libraries
-		(project, save?: save, force?: clean,
-		 default-binding: binding, dfm-output?: dfm,
-		 harp-output?: harp, debug-info?: ~ nodebug,
-		 abort-on-all-warnings?:     #f,
-		 abort-on-serious-warnings?: abort-on-serious-warnings,
-		 assembler-output?: assemble?(#f))
-	    end;
-	  end;
-	unless (aborted?)
-	  if (link?)
-	    link-library-with-options
-	      (project, 
-	       linker: linker,
-	       dll?: dll, exe?: exe, combine?: combine-dlls,
-	       force?: clean, not-recursive?: not-recursive)
-	  end;
-	end
-      end
-    end
-  end
-  end with-compiler-transaction;
-end;
-
-
 /// Internal commands
 
 define dylan-shell-command
@@ -301,43 +24,6 @@ define dylan-shell-command
   end
 end;
 
-// TODO this needs to call project-compiled? which is currently
-// in environment/dfmc/projects, but should be in project manager
-// so we can call it...
-
-define dylan-shell-command
-  Link (project, gnu, microsoft, dll, exe, force, not-recursive, combine-dlls)
-  description "links compiled object files"
-  documentation
-  "Usage: LINK {options} project\n"
-  "\n"
-  "This links a project and its subprojects, producing either DLLs\n"
-  "or executables and storing them in the project's bin directory.\n"
-  "\n"
-  "The following options are provided:\n"
-  "\n"
-  "  /dll           - link the project as a DLL\n"
-  "  /exe           - link the project as an executable\n"
-  "  /force         - force link the project and its subprojects\n"
-  "  /not-recursive - only link this project, not its subprojects\n"
-  "  /combine-dlls  - link all DLLs into one executable\n"
-  "\n"
-  "  /microsoft     - link using the Microsoft linker\n"
-  "  /gnu           - link using the GNU linker\n"
-  hidden? #t
-  let project = ensure-project-open(context, project);
-  let linker = case
-		 microsoft => #"microsoft";
-		 gnu       => #"gnu";
-		 otherwise => unsupplied();
-	       end;
-  if (project)
-    link-library-with-options(project,
-			      linker: linker,
-			      dll?: dll, exe?: exe, combine?: combine-dlls,
-			      force?: force, not-recursive?: not-recursive)
-  end
-end;
 
 define dylan-shell-command 
   collect-garbage (report)
@@ -352,19 +38,6 @@ define dylan-shell-command
   let result = collect-garbage(print-stats?: report);
   user-message(context, "%s\n", result)
 end;
-
-define dylan-shell-command 
-  room ()
-  description "shows the heap space allocated"
-  documentation
-  "Shows the heap space allocated.\n"
-  hidden? #t
-  let result = room();
-  user-message(context, "%s\n", result);
-end;
-
-define command-flag allocation;
-define command-flag off;
 
 define dylan-shell-command 
   profile (allocation, off)
@@ -444,38 +117,6 @@ define dylan-shell-command
   display-class-breakpoints();
 end;
 
-
-define dylan-shell-command
-  compile-library (library, force-compile, force-parse, assemble, dfm, harp, nodebug, save, flush, abort-on-serious-warnings, abort-on-any-warnings, skip-emit, skip-link)
-  description "compiles a library without its used libraries"
-  documentation
-  "Compile a Dylan library without updating compilation of used libraries\n"
-  "\n"
-  "Options:  force-compile force-parse dfm harp nodebug assemble abort-on-serious-warnings abort-on-any-warnings skip-emit skip-link\n"
-  "\n"
-  "Example:  compile-library -force-parse test\n"
-  hidden? #t
-  with-compiler-transaction
-  with-project-location-handler (context)
-    let project = ensure-project-open(context, library);
-    if (project)
-      if (save) 
-	write-databases?() := #t;
-	force-parse := #t	// To save we need to rebuild everything
-      end;
-      compile-library
-	(project, 
-	 force-compile?: force-compile, force-parse?: force-parse,
-	 abort-on-all-warnings?: abort-on-any-warnings, 
-	 abort-on-serious-warnings?: abort-on-serious-warnings, 
-	 assembler-output?: assemble?(assemble), dfm-output?: dfm,
-	 harp-output?: harp, debug-info?: ~ nodebug,
-	 save?: save, flush?: flush, 
-	 skip-emit?: skip-emit, skip-link?: skip-link);
-    end if;
-  end with-project-location-handler
-  end with-compiler-transaction
-end;
 
 define dylan-shell-command 
   recursive-statistics (library, force)
@@ -796,8 +437,6 @@ define dylan-shell-command
   user-message(context, "%d\n", dood-buffer-size());
 end;
 
-define command-argument number-of-buffers;
-
 define dylan-shell-command 
   set-dood-number-of-buffers (number-of-buffers)
   description "sets dood buffer size"
@@ -992,18 +631,6 @@ define dylan-shell-command
   user-message(context, "%s\n", project);
 end;
 
-define dylan-shell-command
-  all-open-projects ()
-  description "shows all open projects"
-  documentation
-  "Show all open projects.\n"
-  hidden? #t
-  for (p in *all-open-projects*)
-    user-message(context, "  %s\n", p);
-  end for;
-end;
-
-
 define command-argument registry-path;
 
 define dylan-shell-command 
@@ -1060,32 +687,6 @@ define dylan-shell-command
     end if;
   end with-project-location-handler;
   end with-compiler-transaction;
-end;
-
-define dylan-shell-command
-  run-command-on-sources (command, library)
-  description "Runs shell command on every source file in a library"
-  documentation
-  "Runs shell program 'command' on every source file in 'library'\n"
-  "\n"
-  "Example:  run-command-on-sources dir my-library\n"
-  "    would run dir on every source file involved in the compilation of \n"
-  "    the library named my-library\n"
-  "Example:  run-command-on-sources c:\\users\\gts\\doit.bat play\n"
-  hidden? #t
-  run-command-on-sources(command, library);
-end;
-
-define dylan-shell-command
-  run-command-on-source-directories (command, library)
-  description "Runs shell command on every directory in a library"
-  documentation
-  "Runs shell 'command' on every directory which contains \n"
-  "source files used to compile 'library'\n"
-  "\n"
-  "Example:  run-command-on-source-directories hope-sync my-library\n"
-  hidden? #t
-  run-command-on-source-directories(command, library);
 end;
 
 define dylan-shell-command
