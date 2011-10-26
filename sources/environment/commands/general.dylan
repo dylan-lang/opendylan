@@ -10,13 +10,30 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define constant $command-prefix-character = ':';
 
-define class <environment-context> (<server-context>)
+define open abstract class <environment-context> (<server-context>)
   constant slot context-notification :: <notification>
     = make(<notification>, lock: make(<lock>));
   constant slot context-project-contexts :: <object-table>
     = make(<object-table>);
-  slot context-project :: false-or(<project-object>) = #f;
 end class <environment-context>;
+
+define open generic context-project
+    (context :: type-union(<project-context>, <environment-context>))
+ => (project :: false-or(<project-object>));
+
+define generic context-project-setter
+    (value :: false-or(<project-object>),
+     context :: type-union(<project-context>, <environment-context>))
+ => (project :: false-or(<project-object>));
+
+define method make (class == <environment-context>, #rest rest, #key, #all-keys)
+ => (res :: <environment-context>)
+  apply(make, <environment-context-implementation>, rest)
+end;
+
+define class <environment-context-implementation> (<environment-context>)
+  slot context-project :: false-or(<project-object>) = #f;
+end class <environment-context-implementation>;
 
 define open abstract class <environment-command> (<basic-command>)
 end class <environment-command>;

@@ -129,12 +129,12 @@ define module environment-commands
   export <environment-context>,
          context-notification,
          context-project;
-       
+
   // Project context
   export <project-context>,
          context-module,
          context-properties, context-properties-setter,
-         context-project-context;
+         context-project-context, context-project-context-setter;
 
   // Environment commands
   export $environment-command-group,

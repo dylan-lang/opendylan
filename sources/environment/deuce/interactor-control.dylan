@@ -16,6 +16,29 @@ end class <dylan-interactor>;
 
 ignorable(interactor-last-input, interactor-last-input-setter);
 
+define class <interactor-context> (<environment-context>)
+  constant slot interactor :: <dylan-interactor>,
+    required-init-keyword: interactor:;
+end;
+
+define method context-project (context :: <interactor-context>)
+ => (project :: <project-object>)
+//  let project =
+ frame-current-project(sheet-frame(context.interactor));
+/*  let project-context
+    = context.context-project-context
+        | begin
+            let library = project.project-library;
+            let module = library & library-default-module(project, library);
+            let project-context
+              = make(<project-context>,
+                     project: project,
+                     module: module);
+            context.context-project-context := project-context;
+          end;
+  project; */
+end;
+
 define method do-destroy-sheet
     (sheet :: <dylan-interactor>) => ()
   next-method();
@@ -36,6 +59,23 @@ define open generic interactor-stack-frame-context
     (pane :: <dylan-interactor>)
  => (maybe-frame :: false-or(<stack-frame-object>));
 
+define method make-interactor-command-line-server
+    (#key banner :: false-or(<string>) = #f,
+          interactor :: <dylan-interactor>,
+          input-stream :: <stream>,
+          output-stream :: <stream>,
+          echo-input? :: <boolean> = #f,
+          profile-commands? :: <boolean> = #f)
+ => (server :: <command-line-server>)
+  let context = make(<interactor-context>, banner: banner, interactor: interactor);
+  make(<command-line-server>,
+       context:           context,
+       input-stream:      input-stream,
+       output-stream:     output-stream,
+       echo-input?:       echo-input?,
+       profile-commands?: profile-commands?)
+end method;
+
 define function make-dylan-interactor
     (#rest initargs,
      #key class = <dylan-interactor>,
@@ -50,9 +90,10 @@ define function make-dylan-interactor
              interval: buffer,
              direction: #"output");
     let server
-      = make-environment-command-line-server
+      = make-interactor-command-line-server
           (input-stream: stream,
-           output-stream: stream);
+           output-stream: stream,
+           interactor: window);
     window.interactor-command-line-server := server;
     dynamic-bind (*buffer* = buffer)
       select-buffer(window, buffer)
@@ -367,12 +408,10 @@ define constant $show-contents-command    = "show-contents";
 define method interactor-process-command
     (pane :: <dylan-interactor>, text :: <string>, bp :: <basic-bp>) => ()
   let server  = pane.interactor-command-line-server;
+  let text    = strip-interactor-command(text);
   let stream  = server.server-output-stream;
   let buffer  = pane.window-buffer;
   stream-position(stream) := buffer.interval-end-bp;
-  let frame   = sheet-frame(pane);
-  let project = frame-current-project(frame);
-  let text    = strip-interactor-command(text);
   //--- Nasty special case hack because the tokenizer isn't up to
   //--- handling the syntax of function names with embedded spaces
   let (command, arguments) = parse-command-name(text);
@@ -383,7 +422,7 @@ define method interactor-process-command
       interactor-do-execute-code
 	(pane, arguments, bp, transaction-type: #"describe");
     otherwise =>
-      execute-command-line(server, copy-sequence(text, start: 1));
+      execute-command-line(server, text);
   end
 end method interactor-process-command;
 

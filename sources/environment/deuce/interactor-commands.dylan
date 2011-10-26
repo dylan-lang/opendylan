@@ -7,70 +7,17 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Interactor Commands
-//---*** andrewa: should replace this with environment-commands protocols
-/*
-define macro interactor-command-definer
-  { define interactor-command ?:name (?args:*)
-      description ?description:expression
-      documentation ?documentation:expression
-      hidden? ?hide:expression
-      ?:body
-    end }
-    => { define shell-command
-           ?name (?args)
-           description ?description
-           documentation ?documentation
-           hidden? ?hide
-           interactor-command-body ()
-             ?body
-           end
-         end }
-end macro interactor-command-definer;
-
-define macro interactor-command-body
-  { interactor-command-body () ?:body end }
-    => { let ?=pane  = %source(?=context);
-	 let ?=frame = sheet-frame(?=pane);
-	 let ?=the-project = frame-current-project(?=frame);
-	 with-editor-state-bound (buffer = ?=pane)
-	   let ?=stream = make(<interval-stream>,
-			       interval: buffer,
-			       direction: #"output");
-	   %sink(?=context) := ?=stream;
-	   ?body;
-	   queue-redisplay(?=pane, $display-text, centering: 1);
-	   redisplay-window(?=pane)
-	 end; }
-end macro interactor-command-body;
-
-define macro imported-interactor-command-definer
-  { define imported-interactor-command ?:name }
-    => { begin
-	   let command = "$" ## ?name ## "-command";
-	   let prev-command-function = shell/command-function(command);
-	   let command-function
-	     = method (?=context :: <command-loop>, #rest args) => ()
-		 interactor-command-body ()
-		   apply(prev-command-function, ?=context, args)
-	         end
-	       end method;
-	   shell/command-function(command) := command-function;
-	   register-command(*top-level-loop*, command)
-         end }
-end macro imported-interactor-command-definer;
-
-define function interactor-message
-    (stream :: <stream>, string :: <string>, #rest args) => ()
-  apply(format, stream, concatenate("// ", string, "\n"), args)
-end function interactor-message;
-
 
 /// User-level commands
 
-define interactor-command
-  in (module, library)
-  description "Switch to module in library"
-  documentation
+define class <in-command> (<basic-command>)
+  constant slot %module :: false-or(<string>) = #f, init-keyword: module:;
+  constant slot %library :: false-or(<string>) = #f, init-keyword: library:;
+end;
+
+define command-line in => <in-command>
+  (summary: "Switch to module in library",
+   documentation:
   "Usage: IN\n"
   "       IN module\n"
   "       IN module:library\n"
@@ -80,9 +27,17 @@ define interactor-command
   "If no arguments are specified, the current module and library\n"
   "are displayed.\n"
   "If the module is uniquely named within the application, then the\n"
-  "library need not be specified."
-  hidden? #f
+  "library need not be specified.")
+  optional module :: <string> = "target module";
+  optional library :: <string> = "target library";
+end;
 
+define method do-execute-command (context :: <interactor-context>, command :: <in-command>)
+  let module = command.%module;
+  let library = command.%library;
+  let pane = context.interactor;
+  let frame = sheet-frame(pane);
+  let the-project = frame-current-project(frame);
   local method current-module-and-library-name
 	    () => (module :: <string>, library :: <string>)
 	  let the-module
@@ -101,21 +56,29 @@ define interactor-command
       = the-module & environment-object-library(the-project, the-module);
     case
       ~the-module =>
-	interactor-message(stream, "No such module as '%s'.", module);
+	message(context, "No such module as '%s'.", module);
       ~library-interactive?(the-project, the-library) =>
-	interactor-message(stream, "Module '%s' is not interactive.", module);
+	message(context, "Module '%s' is not interactive.", module);
       otherwise =>
 	frame-current-module(frame) := the-module;
 	update-module-gadget(frame);
 	let (module, library) = current-module-and-library-name();
-	interactor-message(stream, "Module set to '%s' of library '%s'.", module, library);
+	message(context, "Module set to '%s' of library '%s'.", module, library);
     end
   else
     let (module, library) = current-module-and-library-name();
-    interactor-message(stream, "Currently in module '%s' of library '%s'.", module, library)
-  end
+    message(context, "Currently in module '%s' of library '%s'.", module, library)
+  end;
 end;
 
+
+define command-group interactor into environment
+  (summary: "Interactor commands",
+   documentation: "Commands for interactor")
+  command in;
+end command-group;
+
+/*
 define command-argument count;
 
 define interactor-command
