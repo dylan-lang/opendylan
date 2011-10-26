@@ -41,22 +41,8 @@ define module environment-deuce
   use editor-manager-internals,
     import: { *current-editor* };
   use source-control-manager;
-/*
-  use dfmc-shell, 
-    rename: { <command>               => shell/<command>,
-	      <basic-command>         => shell/<basic-command>,
-	      execute-command         => shell/execute-command,
-	      command-function        => shell/command-function,
-	      command-function-setter => shell/command-function-setter,
-	      command-description     => shell/command-description,
-	      command-documentation   => shell/command-documentation,
-	      command-hidden?         => shell/command-hidden?,
-	      command-arguments       => shell/command-arguments },
-    exclude: { display-condition,
-               display-help,
-	       <help-command> };
-*/
-  use deuce-internals, 
+
+  use deuce-internals,
     rename: { execute-command	       => deuce/execute-command,
 	      execute-command-in-frame => deuce/execute-command-in-frame,
 	      command-enabled?         => deuce/command-enabled?,
