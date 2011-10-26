@@ -30,7 +30,6 @@ define library devel-dbg-ui
   use release-info;
   use dfmc-browser-support;
   use dfmc-harp-browser-support;
-  use dfmc-pentium-file-compiler;
   export devel-dbg-ui;
 end library;
 
