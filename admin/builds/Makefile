@@ -142,7 +142,6 @@ CHAT_DEMO_SOURCE = $(CORBA_DEMOS_SOURCE)\chat
 CHAT_DEMO_INSTALL_DIRECTORY = $(CORBA_EXAMPLES_INSTALL_DIRECTORY)\chat
 COM_BANK_DEMO_SOURCE = $(OLE_EXAMPLES_DIRECTORY)\bank
 COM_BANK_DEMO_INSTALL_DIRECTORY = $(OLE_EXAMPLES_INSTALL_DIRECTORY)\bank
-COMMAND_SHELL_SOURCE = $(LIB_DIRECTORY)\command-shell
 COMMANDS_SOURCE = $(LIB_DIRECTORY)\commands
 COMMON_DYLAN_SOURCE = $(SOURCES_DIRECTORY)\common-dylan
 COMMON_DYLAN_TESTS_SOURCE = $(COMMON_DYLAN_SOURCE)\tests
@@ -506,7 +505,6 @@ ORB_UTILITIES = $(BUILD_DIRECTORY)\orb-utilities\$(BUILD_MAKEFILE)
 PORTABLESERVER_PROTOCOL = $(BUILD_DIRECTORY)\portableserver-protocol\$(BUILD_MAKEFILE)
 
 C_LEXER = $(INSTALL_BIN_DIRECTORY)\c-lexer.dll
-COMMAND_SHELL = $(INSTALL_BIN_DIRECTORY)\command-shell.dll
 GRAMMAR_COMPILER = $(INSTALL_BIN_DIRECTORY)\grammar-compiler.dll
 PARSER_RUN_TIME = $(INSTALL_BIN_DIRECTORY)\parser-run-time.dll
 T_LISTS = $(INSTALL_BIN_DIRECTORY)\t-lists.dll
@@ -524,17 +522,13 @@ DEBUGGER_SERVER = $(INSTALL_BIN_DIRECTORY)\debugger-server.exe
 BINARY_BUILDER = $(INSTALL_BIN_DIRECTORY)\binary-builder.dll
 BINARY_MANAGER = $(INSTALL_BIN_DIRECTORY)\binary-manager.dll
 BUILD_SYSTEM = $(INSTALL_BIN_DIRECTORY)\build-system.dll
-CCL_LINKER = $(INSTALL_BIN_DIRECTORY)\ccl-linker.dll
 COFF_BUILDER = $(INSTALL_BIN_DIRECTORY)\coff-builder.dll
 COFF_DEBUG = $(INSTALL_BIN_DIRECTORY)\coff-debug.dll
 COFF_MANAGER = $(INSTALL_BIN_DIRECTORY)\coff-manager.dll
 DFMC_BROWSER_SUPPORT = $(INSTALL_BIN_DIRECTORY)\dfmc-browser-support.dll
 DFMC_DEBUG_BACK_END = $(INSTALL_BIN_DIRECTORY)\dfmc-debug-back-end.dll
-DFMC_EXECUTION = $(INSTALL_BIN_DIRECTORY)\dfmc-execution.dll
 DFMC_MANAGEMENT = $(INSTALL_BIN_DIRECTORY)\dfmc-management.dll
-DFMC_PENTIUM_FILE_COMPILER = $(INSTALL_BIN_DIRECTORY)\dfmc-pentium-file-compiler.dll
 DFMC_PENTIUM_HARP_CG = $(INSTALL_BIN_DIRECTORY)\dfmc-pentium-harp-cg.dll
-DFMC_SHELL = $(INSTALL_BIN_DIRECTORY)\dfmc-shell.dll
 FILE_SOURCE_RECORDS = $(INSTALL_BIN_DIRECTORY)\file-source-records.dll
 ELF_LINKER = $(INSTALL_BIN_DIRECTORY)\elf-linker.dll
 METERING = $(INSTALL_BIN_DIRECTORY)\metering.dll
@@ -682,7 +676,6 @@ system: $(SYSTEM)
 c-lexer: $(C_LEXER)
 channels: $(CHANNELS)
 commands: $(COMMANDS)
-command-shell: $(COMMAND_SHELL)
 grammar-compiler: $(GRAMMAR_COMPILER)
 midi: $(MIDI)
 parser-run-time: $(PARSER_RUN_TIME)
@@ -732,17 +725,13 @@ sql-odbc: $(SQL_ODBC)
 binary-builder: $(BINARY_BUILDER)
 binary-manager: $(BINARY_MANAGER)
 build-system: $(BUILD_SYSTEM)
-ccl-linker: $(CCL_LINKER)
 coff-builder: $(COFF_BUILDER)
 coff-debug: $(COFF_DEBUG)
 coff-manager: $(COFF_MANAGER)
 dfmc-browser-support: $(DFMC_BROWSER_SUPPORT)
 dfmc-debug-back-end: $(DFMC_DEBUG_BACK_END)
-dfmc-execution: $(DFMC_EXECUTION)
 dfmc-management: $(DFMC_MANAGEMENT)
-dfmc-pentium-file-compiler: $(DFMC_PENTIUM_FILE_COMPILER)
 dfmc-pentium-harp-cg: $(DFMC_PENTIUM_HARP_CG)
-dfmc-shell: $(DFMC_SHELL)
 dood: $(DOOD)
 file-source-records: $(FILE_SOURCE_RECORDS)
 elf-linker: $(ELF_LINKER)
@@ -781,10 +770,10 @@ parser-compiler: $(PARSER_COMPILER)
 testworks-report: $(TESTWORKS_REPORT)
 
 project-manager-libraries: tools-interface user-projects
-core-compiler-libraries: file-source-records release-info dood metering binary-manager coff-manager binary-builder coff-builder build-system parser-run-time dfmc-management dfmc-browser-support project-manager-libraries dfmc-execution dfmc-debug-back-end
-pentium-compiler-libraries: core-compiler-libraries disasm dfmc-pentium-harp-cg dfmc-pentium-file-compiler
+core-compiler-libraries: file-source-records release-info dood metering binary-manager coff-manager binary-builder coff-builder build-system parser-run-time dfmc-management dfmc-browser-support project-manager-libraries dfmc-debug-back-end
+pentium-compiler-libraries: core-compiler-libraries disasm dfmc-pentium-harp-cg
 c-compiler-libraries: core-compiler-libraries
-pentium-dw-libraries: pentium-compiler-libraries command-shell dfmc-shell dispatch-profiler
+pentium-dw-libraries: pentium-compiler-libraries dispatch-profiler
 console-scepter-libraries: console-scepter tool-scepter
 console-compiler-libraries: pentium-compiler-libraries environment-commands
 database-libraries: sql-odbc
@@ -1413,12 +1402,6 @@ $(C_LEXER):
   $(ENSURE_SOURCES) c-lexer $(C_LEXER_SOURCE)
   $(BUILD_LIBRARY) c-lexer
 
-$(COMMAND_SHELL):
-  $(ENSURE_RUNTIME_LIBRARY) $(IO_DLL) io
-  $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
-  $(ENSURE_SOURCES) command-shell $(COMMAND_SHELL_SOURCE)
-  $(BUILD_LIBRARY) command-shell
-
 $(GRAMMAR_COMPILER):
   $(ENSURE_RUNTIME_LIBRARY) $(FUNCTIONAL_DYLAN_DLL) functional-dylan
   $(ENSURE_SOURCES) grammar-compiler $(GRAMMAR_COMPILER_SOURCE)
@@ -1626,12 +1609,6 @@ $(DFMC_DEBUG_BACK_END):
   $(ENSURE_SOURCES) dfmc $(DFMC_SOURCE)
   $(BUILD_LIBRARY) dfmc-debug-back-end
 
-$(DFMC_EXECUTION):
-  $(ENSURE_LIBRARY) user-projects
-  $(ENSURE_LIBRARY) dfmc-management
-  $(ENSURE_SOURCES) dfmc $(DFMC_SOURCE)
-  $(BUILD_LIBRARY) dfmc-execution
-
 $(DFMC_MANAGEMENT):
   $(ENSURE_RUNTIME_LIBRARY) $(IO_DLL) io
   $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
@@ -1645,32 +1622,18 @@ $(DFMC_MANAGEMENT):
   $(ENSURE_SOURCES) dfmc $(DFMC_SOURCE)
   $(BUILD_LIBRARY) dfmc-management
 
-$(DFMC_PENTIUM_FILE_COMPILER):
-  $(ENSURE_LIBRARY) metering
-  $(ENSURE_LIBRARY) dfmc-pentium-harp-cg
-  $(ENSURE_LIBRARY) dfmc-debug-back-end
-  $(ENSURE_LIBRARY) user-projects
-  $(ENSURE_SOURCES) dfmc $(DFMC_SOURCE)
-  $(BUILD_LIBRARY) dfmc-pentium-file-compiler
-
 $(DFMC_PENTIUM_HARP_CG):
   $(ENSURE_RUNTIME_LIBRARY) $(IO_DLL) io
   $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
   $(ENSURE_RUNTIME_LIBRARY) $(BIG_INTEGERS_DLL) big-integers
   $(ENSURE_LIBRARY) file-source-records
   $(ENSURE_LIBRARY) dfmc-management
-  $(ENSURE_LIBRARY) dfmc-execution
   $(ENSURE_LIBRARY) coff-manager
   $(ENSURE_LIBRARY) coff-builder
   $(ENSURE_LIBRARY) disasm
   $(ENSURE_SOURCES) dfmc $(DFMC_SOURCE)
   $(ENSURE_SOURCES) harp $(HARP_SOURCE)
   $(BUILD_LIBRARY) dfmc-pentium-harp-cg
-
-$(DFMC_SHELL):
-  $(ENSURE_LIBRARY) command-shell
-  $(ENSURE_SOURCES) dfmc $(DFMC_SOURCE)
-  $(BUILD_LIBRARY) dfmc-shell
 
 # NOTE: This is the first library that's built for the bootstrap (i.e., generation 1) compiler.
 #       Therefore, it needs to ensure that the Library-Packs hierarchy is present.
@@ -1800,7 +1763,6 @@ $(ENVIRONMENT_DEBUGGER):
 $(ENVIRONMENT_DEUCE):
   $(ENSURE_RUNTIME_LIBRARY) $(DUIM_DEUCE_DLL) duim-deuce
   $(ENSURE_LIBRARY) environment-tools
-  $(ENSURE_LIBRARY) dfmc-shell
   $(ENSURE_SOURCES) environment $(ENVIRONMENT_SOURCE)
   $(BUILD_LIBRARY) environment-deuce
 
