@@ -12,7 +12,7 @@ define constant $release-full-copyright =
   "are subject to the following license terms.\n"
   "\n";
 
-define constant $release-support-address 
+define constant $release-support-address
   = "bugs@opendylan.org";
 
 define constant $release-web-address
@@ -26,7 +26,6 @@ define constant $license-agreement-filename   = "License.txt";
 define constant $release-product-name     = "Open Dylan";
 define constant $release-edition          = "Hacker Edition";
 define constant $release-version          = "Version 1.0 [Beta 5]";
-define constant $release-version-type     = #"1.0";
 
 define constant $release-copyright
   = "Copyright (c) 1997-2004, Functional Objects, Inc.\n"
@@ -46,10 +45,6 @@ end method release-edition;
 define method release-version () => (version :: <string>)
   release-full-version($release-version)
 end method release-version;
-
-define method release-version-type () => (version :: <symbol>)
-  $release-version-type
-end method release-version-type;
 
 define method release-copyright () => (copyright :: <string>)
   $release-copyright
