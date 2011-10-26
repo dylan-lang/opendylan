@@ -72,59 +72,9 @@ define method do-execute-command (context :: <interactor-context>, command :: <i
   end;
 end;
 
-
-define command-group interactor into environment
-  (summary: "Interactor commands",
-   documentation: "Commands for interactor")
-  command in;
-end command-group;
-
-/*
-define command-argument count;
-
-define interactor-command
-  more (count)
-  description "Show more of the previously shown contents"
-  documentation
-  "Usage: MORE\n"
-  "       MORE count\n"
-  "\n"
-  "This command will show the next set of contents from the results\n"
-  "of using the \"Show Contents\" command. If count is specified\n"
-  "then that many items will be shown, otherwise the default will\n"
-  "be used.\n"
-  hidden? #f
-
-  let count  = count & string-to-integer(count);
-  let subset = interactor-next-subset(pane);
-  if (subset)
-    interactor-show-contents(pane, subset, count: count)
-  else
-    interactor-message(stream, "No more contents to show.")
-  end
-end;
-
-define imported-interactor-command help;
-
-define imported-interactor-command help-all;
-
-define imported-interactor-command parse;
-
-define imported-interactor-command open;
-
-define imported-interactor-command import;
-
-define imported-interactor-command close;
-
-define imported-interactor-command close-all;
-
-define imported-interactor-command link;
-
-define imported-interactor-command build;
-
-
 /// Internal commands
-
+// Need replacements for them - should be straightforward!
+/*
 define imported-interactor-command collect-garbage;
 
 define imported-interactor-command room;
@@ -150,11 +100,12 @@ define imported-interactor-command update-libraries;
 define imported-interactor-command trace-optimizations;
 
 define imported-interactor-command untrace-optimizations;
-
+*/
 
 /// Recovery Protocol
-
-define interactor-command 
+//same here, replacements
+/*
+define interactor-command
   continue (restart-option)
   description shell/command-description($continue-command)
   documentation shell/command-documentation($continue-command)
@@ -171,7 +122,7 @@ define interactor-command
   end
 end;
 
-define interactor-command 
+define interactor-command
   abort ()
   description shell/command-description($abort-command)
   documentation shell/command-documentation($abort-command)
@@ -190,7 +141,7 @@ define interactor-command
   end
 end;
 
-define interactor-command 
+define interactor-command
   restarts ()
   description shell/command-description($restarts-command)
   documentation shell/command-documentation($restarts-command)
@@ -224,48 +175,62 @@ define interactor-command
     interactor-message(stream, "Type :c followed by a number to proceed or type :help for other options.")
   end
 end;
+*/
 
-define interactor-command
-  describe ()
-  description "Show the contents of an object"
-  documentation
+define class <describe-command> (<basic-command>)
+  constant slot %expression :: <string>, required-init-keyword: expression:;
+end;
+
+define command-line describe => <describe-command>
+  (summary: "Show the contents of an object",
+  documentation:
   "Usage: DESCRIBE expression\n"
   "\n"
   "Evaluates expression, and then shows the contents of the\n"
-  "first returned value (if there is one)."
-  hidden? #f
-
+  "first returned value (if there is one).")
   //---*** Note that this is a fake to get help, see the real
   //---*** implementation in interactor-control.dylan!
-  #f
+  argument expression :: <string> = "expression to evaluate";
 end;
 
-define interactor-command
-  show-contents ()
-  description "Show the contents of an object"
-  documentation
+define class <show-contents-command> (<basic-command>)
+  constant slot %expression :: <string>, required-init-keyword: expression:;
+end;
+
+define command-line show-contents => <show-contents-command>
+  (summary: "Show the contents of an object",
+  documentation:
   "Usage: SHOW-CONTENTS expression\n"
   "\n"
   "Evaluates expression, and then shows the contents of the\n"
-  "first returned value (if there is one)."
-  hidden? #f
-
+  "first returned value (if there is one).")
   //---*** Note that this is a fake to get help, see the real
   //---*** implementation in interactor-control.dylan!
-  #f
+  argument expression :: <string> = "expression to evaluate";
 end;
 
-define interactor-command
-  break ()
-  description "Sets a function breakpoint"
-  documentation
+define class <break-command> (<basic-command>)
+  constant slot %name :: <string>, required-init-keyword: name:;
+end;
+
+define command-line break => <break-command>
+  (summary: "Sets a function breakpoint",
+  documentation:
   "Usage: BREAK name\n"
   "\n"
-  "Sets a breakpoint on the named function."
-  hidden? #f
-
+  "Sets a breakpoint on the named function.")
   //---*** Note that this is a fake to get help, see the real
   //---*** implementation in interactor-control.dylan!
-  #f
+  argument name :: <string> = "function name where to break"
 end;
-*/
+
+
+define command-group interactor into environment
+  (summary: "Interactor commands",
+   documentation: "Commands for interactor")
+  command in;
+  command describe;
+  command show-contents;
+  command break;
+end command-group;
+

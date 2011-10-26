@@ -403,6 +403,9 @@ define constant $command-prefix-character = ':';
 define constant $break-function-command   = "break";
 define constant $describe-command         = "describe";
 define constant $show-contents-command    = "show-contents";
+//hannes, 25.10.2011 - I never saw break, describe and show-contents working
+// I actually believe this should be abandoned, can be achieved in other ways
+// anyhow. There's also already the group breakpoints in environment/commands.
 
 define method interactor-process-command
     (pane :: <dylan-interactor>, text :: <string>, bp :: <basic-bp>) => ()
