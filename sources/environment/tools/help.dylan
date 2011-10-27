@@ -123,7 +123,7 @@ end method do-execute-command;
 
 /// NB This filename is agreed with the doc team and will be found in the OS Help directory.
 define help-source open-dylan
-  as(<string>, release-help-location)
+  as(<string>, release-help-location())
 end help-source;
 
 define method frame-help-source
