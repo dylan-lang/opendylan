@@ -1435,9 +1435,9 @@ end method note-project-warnings-updated;
 /// Project warning objects
 
 define sealed method warning-owner
-    (project-object :: <dfmc-project-object>, 
+    (project-object :: <dfmc-project-object>,
      warning :: <project-warning-object>)
- => (owner :: <dfmc-project-object>)
+ => (owner :: false-or(<dfmc-project-object>))
   block (return)
     let condition = warning.environment-object-proxy;
     for (warnings keyed-by project in $project-warnings)
@@ -1445,7 +1445,6 @@ define sealed method warning-owner
         return(%make-project-object(project))
       end
     end;
-    error("Unexpectedly found no owner for warning %=", warning)
   end
 end method warning-owner;
 
