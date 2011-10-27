@@ -20,6 +20,7 @@ define constant $release-web-address
 
 define constant $bug-report-template-filename = "bug-report.txt";
 define constant $license-agreement-filename   = "License.txt";
+define constant $help-filename                = "Documentation/opendylan.chm";
 
 
 /// Release constants
@@ -283,3 +284,9 @@ define function release-license-agreement-location
     () => (location :: <file-locator>)
   release-file($license-agreement-filename)
 end function release-license-agreement-location;
+
+define function release-help-location
+    () => (location :: <file-locator>)
+  release-file($help-filename)
+end function release-help-location;
+

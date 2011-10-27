@@ -8,40 +8,13 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Constants
 
-//define constant $bullet-character     = '\<95>';
-define constant $copyright-character  = '\<a9>';
-define constant $registered-character = '\<ae>';
-define constant $trademark-character  = '\<99>';
-
-//--- This should probably be in the release-info library
-
-define variable *help-file*
-  = release-file("Documentation/opendylan.chm");
-define variable *help-file-string*
-  = as(<string>, *help-file*);
-
-// define constant $beta-release-text
-//   = #["This is a beta release of Open Dylan. Please submit bugs",
-//       "to support@functionalobjects.com."];
-
 define constant $license-font
-  = make(<text-style>, 
+  = make(<text-style>,
 	 family: #"fix");
-  
-// define constant $about-box-font
-//   = make(<text-style>, 
-// 	 family: #"sans-serif", 
-// 	 size:   #"large");
-
-// define constant $about-box-title-font
-//   = make(<text-style>, 
-// 	 family: #"sans-serif",
-// 	 size:   #"huge",
-// 	 weight: #"bold");
 
 define constant $about-box-copyright-font
-  = make(<text-style>, 
-	 family: #"sans-serif", 
+  = make(<text-style>,
+	 family: #"sans-serif",
 	 size:   #"small");
 
 
@@ -65,112 +38,19 @@ define frame <license-agreement-box> (<dialog-frame>)
   keyword center?: = #t;
 end frame <license-agreement-box>;
 
-define function split-line-at-word-break
-    (line :: <string>, column :: <integer>)
- => (first-line :: <string>, rest :: false-or(<string>))
-  let line-size = line.size;
-  if (column >= line-size)
-    values(line, #f)
-  else
-    let column
-      = begin
-	  let i :: <integer> = column;
-	  while (i > 0 & line[i] ~= ' ')
-	    i := i - 1
-	  end;
-	  if (i = 0)
-	    while (i < line-size & line[i] ~= ' ')
-	      i := i + 1
-	    end;
-	  end;
-	  i
-	end;
-    let next-start
-      = begin
-	  let i :: <integer> = column;
-	  while (i < line-size & line[i] == ' ')
-	    i := i + 1
-	  end;
-	  if (i < line-size - 1) i end
-	end;
-    values(copy-sequence(line, end: column),
-	   next-start & copy-sequence(line, start: next-start))
-  end
-end function split-line-at-word-break;
-
-define function file-contents
-    (filename :: <file-locator>) => (contents :: <string>)
-  with-output-to-string (stream)
-    block (return)
-      with-open-file (file-stream = filename, direction: #"input")
-	while (#t)
-	  let line = read-line(file-stream, on-end-of-stream: #f);
-	  unless (line) return() end;
-	  while (line)
-	    let (first-line, rest)
-	      = split-line-at-word-break(line, $license-text-width);
-	    write-line(stream, first-line);
-	    line := rest
-	  end
-	end
-      end
-    end
-  end
-end function file-contents;
-
 define function license-agreement-text
     () => (text :: <string>)
-  file-contents(release-license-agreement-location())
+  with-open-file (file-stream = release-license-agreement-location())
+    read-to-end(file-stream)
+  end;
 end function license-agreement-text;
 
 
 /// About Box
 
-define function use-copyright-symbols
-    (string :: <byte-string>) => (new-string :: <byte-string>)
-  let string-size = string.size;
-  let new-string = make(<byte-string>, size: string-size);
-  let i :: <integer> = 0;
-  let pos :: <integer> = 0;
-  while (i < string-size)
-    let char = string[i];
-    let (new-char, new-pos)
-      = if (char == '(' & i < string-size - 2)
-          select (as-uppercase(string[i + 1]))
-            'C' =>
-              if (string[i + 2] == ')')
-                values($copyright-character, i + 3)
-              end;
-            'R' =>
-              if (string[i + 2] == ')')
-                values($registered-character, i + 3)
-              end;
-            'T' =>
-              if (i < string-size - 3
-                    & as-uppercase(string[i + 2]) == 'M'
-                    & string[i + 3] == ')')
-                values($trademark-character, i + 4)
-              end;
-            otherwise =>
-              #f;
-          end
-        end;  
-    if (new-char)
-      new-string[pos] := new-char;
-      i := new-pos;
-    else
-      new-string[pos] := string[i];
-      i := i + 1;
-    end;
-    pos := pos + 1;
-  end;
-  copy-sequence(new-string, end: pos)
-end function use-copyright-symbols;
-
 define function about-box-info-text
     () => (text :: <sequence>)
-  let version = use-copyright-symbols(release-version());
-  vector(version)
+  vector(release-version())
 end function about-box-info-text;
 
 define frame <about-box> (<dialog-frame>)
@@ -243,7 +123,7 @@ end method do-execute-command;
 
 /// NB This filename is agreed with the doc team and will be found in the OS Help directory.
 define help-source open-dylan
-  *help-file-string*
+  as(<string>, release-help-location)
 end help-source;
 
 define method frame-help-source
