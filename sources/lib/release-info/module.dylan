@@ -7,8 +7,19 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module release-info
+  use functional-dylan;
+  use machine-words;
+  use simple-format;
+  use operating-system;
+  use locators;
+  use settings;
+  use simple-xml;
+  use file-source-records, import: {read-file-header};
+  use file-system; // import: {file-exists?, do-directory};
+  use streams; // import: {\with-open-file};
+
   // Release information
-  create <release-info>,
+  export <release-info>,
          <named-release-info>,
          <described-release-info>,
          release-name,
@@ -24,7 +35,7 @@ define module release-info
          release-full-copyright;
 
   // Disk layout information
-  create release-directory,
+  export release-directory,
 	 release-subdirectory,
 	 release-file,
          release-runtime-directory,
@@ -38,7 +49,7 @@ define module release-info
          release-bug-report-template-location;
 
   // Information accessors
-  create // info-available?,
+  export // info-available?,
          info-author,
          info-binary,
          info-categories,
@@ -70,7 +81,7 @@ define module release-info
          info-version;
 
   // Library Pack information
-  create \library-pack-definer,
+  export \library-pack-definer,
          <library-pack-info>,
          <basic-library-pack-info>,
          <numbered-library-pack-info>,
@@ -94,33 +105,33 @@ define module release-info
          installed-library-categories;
 
   // Library information
-  create <library-info>,
+  export <library-info>,
          <library-binary-info>,
          <library-release-info>,
          find-library-info;
 
   // Example information
-  create <example-info>;
+  export <example-info>;
 
   // Test suite information
-  create <test-suite-info>;
+  export <test-suite-info>;
 
   /*
   // Library group information
-  create \library-group-definer,
+  export \library-group-definer,
          <library-group-info>,
          release-library-groups;
 
   // Dynamic example information
-  create invalidate-converted-example-info;
+  export invalidate-converted-example-info;
 
   // Example group information
-  create \example-group-definer,
+  export \example-group-definer,
          <example-group-info>,
          release-example-groups;
 
   // DLL grouping information
-  create \dll-group-definer,
+  export \dll-group-definer,
          \renamed-dll-definer,
          \renamed-dlls-definer,
          <dll-group-info>,
@@ -129,7 +140,7 @@ define module release-info
   */
 
   // Settings
-  create <general-open-dylan-local-settings>,
+  export <general-open-dylan-local-settings>,
 	 <general-open-dylan-user-settings>,
 	 <unversioned-open-dylan-local-settings>,
          <unversioned-open-dylan-user-settings>,
@@ -146,43 +157,3 @@ define module release-info
 	 <open-dylan-user-settings-2-1>,
 	 <open-dylan-user-settings>;
 end module release-info;
-
-// BOOTSTRAP: required until everyone is bootstrapped to 2.1a1
-define module release-info-xml
-  create <xml-error>;
-
-  create <xml-document>,
-         document-location, document-location-setter,
-         document-element, document-element-setter,
-         read-xml-document;
-
-  create <xml-node>,
-         node-attribute, node-attribute-setter,
-         node-attributes,
-         node-children,
-         node-name,
-         node-text, node-text-setter;
-
-  create <xml-element>;
-
-  create select-node-text,
-         select-nodes,
-         select-single-node;
-end module release-info-xml;
-
-define module release-info-internals
-  use functional-dylan;
-  use machine-words;
-  use simple-format;
-  use operating-system;
-  use locators;
-  use settings;
-  use release-info, export: all;
-  use release-info-xml;		// BOOTSTRAP: should be simple-xml
-  use file-source-records, import: {read-file-header};
-  use file-system; // import: {file-exists?, do-directory};
-  use streams; // import: {\with-open-file};
-
-  // Internal only protocols
-  export release-full-version;
-end module release-info-internals;

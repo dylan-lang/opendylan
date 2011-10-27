@@ -4,7 +4,6 @@ Author:    Andy Armstrong
 Target-Type:	dll
 Files:  library
 	module
-	xml
         libraries
         common-info
 	functional-settings

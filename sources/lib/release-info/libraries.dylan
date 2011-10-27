@@ -1,4 +1,4 @@
-Module:    release-info-internals
+Module:    release-info
 Synopsis:  Functional Developer release information
 Author:    Andy Armstrong
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.

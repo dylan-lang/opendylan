@@ -13,5 +13,4 @@ define library release-info
   use file-source-records;
 
   export release-info;
-  export release-info-internals;
 end library release-info;
