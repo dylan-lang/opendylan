@@ -39,11 +39,7 @@ SUFMKF  ?= .mkf ;   # build-system files
 
 ARCHFLAG ?= -arch $(TARGET_OSPLAT:E=ppc) ;
 
-CCFLAGS ?= -fdefer-pop -fguess-branch-probability -fcprop-registers
-           -floop-optimize -fif-conversion -fif-conversion2 -ftree-ccp
-           -ftree-dce -ftree-dominator-opts -ftree-dse -ftree-ter -ftree-lrs
-           -ftree-sra -ftree-copyrename -ftree-fre -ftree-ch -fmerge-constants
-           -fomit-frame-pointer -fPIC -g $(ARCHFLAG) ;
+CCFLAGS ?= -fPIC -g $(ARCHFLAG) ;
  
 LINKFLAGS ?= $(ARCHFLAG) ;
 
