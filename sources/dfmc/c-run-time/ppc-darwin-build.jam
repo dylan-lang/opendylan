@@ -39,7 +39,7 @@ SUFMKF  ?= .mkf ;   # build-system files
 
 ARCHFLAG ?= -arch $(TARGET_OSPLAT:E=ppc) ;
 
-CCFLAGS ?= -fPIC -g $(ARCHFLAG) ;
+CCFLAGS ?= -fno-strict-aliasing -fPIC -g $(ARCHFLAG) ;
  
 LINKFLAGS ?= $(ARCHFLAG) ;
 
