@@ -49,7 +49,7 @@ $BUILDDIR/Bootstrap.2/bin/minimal-console-compiler
     "code" directory.  If you downloaded the MPS kit from Ravenbrook this
     would be, for example, "--with-mps=/path/to/mps-kit-1.106.2".
 
-[2] Ubuntu note: In Ubuntu 6.06 I had to install the XML::Parser module via
+[2] Ubuntu note: In Ubuntu 6.06 I (cgay) had to install the XML::Parser module via
     "cpan -i XML::Parser", which blew up because expat.h was not found, so
     first "sudo apt-get install libexpat-dev".  --cgay 20061104
 
@@ -85,7 +85,7 @@ XML::Parser module, use CPAN::
 
 Install the Boehm garbage collection library. On the Mac, Open Dylan uses that
 instead of the MPS library. You can use a package manager or download, make,
-and install it directly. I have used the following configure settings::
+and install it directly. I (agent) have used the following configure settings::
 
   ./configure --enable-parallel-mark --enable-threads=posix
     --enable-large-config --enable-gc-debug USE_I686_PREFETCH=1
