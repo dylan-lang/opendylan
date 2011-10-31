@@ -69,7 +69,7 @@ used where, so I've attempted to catalog each directory's purpose myself.
 ---------------
 Compiler System
 ---------------
-                        
+
 sources
   dfmc
     core                - Module imports and re-exports.
@@ -110,7 +110,7 @@ sources
 ------------------------
 IDE and Tool Source Code
 ------------------------
-  
+
 sources
   environment           - Main code for IDE and tools.
     commands            - Defines various shell commands.
@@ -130,8 +130,6 @@ sources
     target-application  - Access control to application being debugged.
     tools               - Miscellaneous, mostly GUI-related.
   lib
-    command-shell       - Compiler/debugger/interactor shell. Command-line arg
-                          and "help" handling.
     disasm              - x86 disassembler for debugger.
     grammar-compiler    - Used by parser-generator.
     motley              - OLE stub generator.
@@ -169,7 +167,7 @@ sources
                           Gwydion Dylan.
   dylan                 - Dylan Reference Manual implementation.
   functional-dylan      - Open Dylan-specific language extensions.
-  lib                   
+  lib
     big-integers        - Mathematical library for big integers (> 28 bits).
     generic-arithmetic  - Arithmetic prototypes for all numeric libraries.
     memory-manager      - Abstraction layer for memory manager (MPS or Boehm).
@@ -178,12 +176,12 @@ sources
 ---------------------------------
 Main Libraries Used by Open Dylan
 ---------------------------------
-  
+
 sources
   deuce                 - OD advanced text editor.
   duim                  - Platform-independent GUI wrapper.
   io                    - I/O library.
-  lib                  
+  lib
     c-ffi               - General C API wrapper.
     channels            - Intra-application messaging.
     dood                - File database library.
@@ -191,7 +189,7 @@ sources
   system                - OS-specific code for file system, environment
                           variables, Windows registry, dates and times.
                           Architecture definitions.
-                        
+
 ---------------
 Other Libraries
 ---------------
@@ -202,7 +200,7 @@ capacity, but they do have use.
 sources
   corba                 - CORBA library.
   databases             - SQL and ODBC library.
-  lib                   
+  lib
     cl                  - Common Lisp plists, sequences, and strings.
     c-lexer             - C lexer.
     commands            - Win32 inter-process communication helper, intended
@@ -214,11 +212,11 @@ sources
   network               - Socket and protocol libraries.
   ole                   - COM and OLE libraries.
   win32                 - Win32 API wrappers.
-                       
+
 -----------
 Sample Code
 -----------
-  
+
 sources
   app                   - Sample applications.
   examples              - Sample applications.
@@ -231,8 +229,8 @@ These may or may not be used or useful, but either I haven't looked at them,
 or I don't know what they do, or I don't know how to properly describe them.
 
 admin
-install                   
-packages                
+install
+packages
 sources
   benchmarks
   dfmc
@@ -248,15 +246,12 @@ sources
     conditions
     debug-back-end
     dylan
-    execution
-    file-compiler
     harp-browser-support
     harp-cg
     harp-cg-linker
     macro-expander
     native-harp-cg
     pentium-harp-cg
-    shell
     testing
   environment
     emulator
@@ -270,7 +265,7 @@ sources
   harp
   lib
     dispatch-profiler
-    metering      
+    metering
   qa
-  runtime-manager 
+  runtime-manager
 tools
