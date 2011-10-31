@@ -23,7 +23,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 A copy of this license may be obtained here:
-http://www.opendylan.org/cgi-bin/viewvc.cgi/trunk/fundev/License.txt
+https://raw.github.com/dylan-lang/opendylan/master/License.txt
 
 
 Ravenbrook's Memory Pool System (MPS) binaries may be included in
