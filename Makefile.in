@@ -238,7 +238,7 @@ INSTALL_ENV = \
 	OPEN_DYLAN_USER_REGISTRIES=$(prefix)/sources/registry:$(library_srcdir)/registry \
 	OPEN_DYLAN_USER_SOURCES=$(prefix)/sources
 
-INSTALL_LIBRARIES = minimal-console-compiler
+INSTALL_LIBRARIES = minimal-console-compiler dswank
 
 INSTALL_LIBRARY_PACKS = @LIBRARY_PACKS@
 
