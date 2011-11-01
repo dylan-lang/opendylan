@@ -8,34 +8,33 @@ execute them.
 
 The libraries and their features are:
 
-____Library_______________________Compile__Execute__Remote__Plugins__Internal
+____Library_______________________Compile__Execute__Remote__Plugins
 
-MC  minimal-console-compiler      compile                            internal
-ME  minimal-console-environment   compile  execute                   internal
-CC  console-compiler              compile                   plugins  internal
-CE  console-environment           compile  execute  remote  plugins  internal
+MC  minimal-console-compiler      compile
+ME  minimal-console-environment   compile  execute
+CC  console-compiler              compile                   plugins
+CE  console-environment           compile  execute  remote  plugins
 
 Compile         Can open and build projects.
 Execute         Can execute and debug applications.
 Remote          Includes remote debugging.
 Plugins         Includes Motley and Tool-Scepter plug-ins.
-Internal        Includes internal commands.
 _____________________________________________________________________________
 
 The Dylan files in this directory used by each library are:
 
 File___________________________MC ME___CC CE
-                                                           
-minimal-compiler-library       mc                   
-compiler-library                       cc   
-compiler-command-line          mc      cc   
-compiler-module                mc      cc   
-                                                            
-minimal-library                   me                
+
+minimal-compiler-library       mc
+compiler-library                       cc
+compiler-command-line          mc      cc
+compiler-module                mc      cc
+
+minimal-library                   me
 library                                   ce
 environment-command-line          me      ce
 module                            me      ce
-                                                            
+
 command-line                   mc me   cc ce
 start                          mc me   cc ce
 ____________________________________________________________
@@ -58,7 +57,7 @@ The command-line options are stored in <basic-main-command> or its subclass
 <environment-main-command>:
 
 Libraries_________Storage_______________________In file_______________________
-                  
+
 MC,  CC    <basic-main-command>          command-line.dylan
 ME,  CE    <environment-main-command>    environment-command-line.dylan
 ______________________________________________________________________________

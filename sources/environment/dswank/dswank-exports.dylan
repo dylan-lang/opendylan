@@ -15,6 +15,7 @@ define library dswank
   use registry-projects;
   //use stack-walker;
   use release-info;
+  use dfmc-back-end-implementations;
 end library;
 
 define module dswank
