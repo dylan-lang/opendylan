@@ -11,9 +11,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define constant $whitespace                 = #[' ', '\t', '\n'];
 define constant $quote-characters           = #['\'', '"'];
 
-//---*** andrewa: once we're bootstrapped to 2.1a1, we can use this
-// define constant $option-prefix              = command-line-option-prefix();
-define constant $option-prefix              = if ($os-name == #"win32") '/' else '-' end;
+define constant $option-prefix              = command-line-option-prefix();
 define constant $standard-option-prefix     = '-';
 define constant $option-separator           = ',';
 define constant $command-prompt-string      = "> ";
