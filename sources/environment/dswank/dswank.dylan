@@ -32,7 +32,7 @@ define emacs-command emacs-rex (command, package, thread-id, request-id)
   exception(e :: <error>)
     format(*standard-error*, "Received error during evaluation:\n%=\n", e);
     //walk-stack();
-    list(#":return", #(#":abort"), request-id);
+    list(#":return", list(#":abort", format-to-string("%=", e)), request-id);
   end;
 end;
 
@@ -57,7 +57,7 @@ define swank-function connection-info ()
        #":lisp-implementation", list(#":type", "dylan",
                                      #":name", release-product-name(),
                                      #":version", release-version()),
-       #":version", "2009-11-06",
+       #":version", "2011-02-13",
        #":package", #(#":name", "opendylan", #":prompt", "opendylan"))
 end;
 
