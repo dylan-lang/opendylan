@@ -7,7 +7,7 @@
 Acronyms and Definitions
 ========================
 
-CG   - 
+CG   -
 MPS  - A memory management system. http://www.ravenbrook.com/project/mps/
        When using a HARP back-end, either MPS or Boehm GC can be
        used for garbage collection. When using a C back-end, the Boehm GC does
@@ -252,9 +252,7 @@ sources
     macro-expander
     native-harp-cg
     pentium-harp-cg
-    testing
   environment
-    emulator
     gtk
     project-wizard
     property-pages
