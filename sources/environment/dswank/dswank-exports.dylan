@@ -8,6 +8,7 @@ define library dswank
   use environment-commands;
   use environment-protocols;
   use commands;
+  use environment-internal-commands;
   use source-records;
   use file-source-records;
   use system;
@@ -24,6 +25,7 @@ define module dswank
   use standard-io;
   use sockets;
   use environment-commands;
+  use environment-internal-commands;
   use environment-protocols,
     exclude: { application-filename,
 	       application-arguments,
