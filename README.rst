@@ -58,16 +58,31 @@ $BUILDDIR/Bootstrap.2/bin/minimal-console-compiler
 How to Build on Windows
 =======================
 
-First build the garbage collector.  See the section on BUILDING THE
-MPS.
+Make sure to have required tools installed: namely Debugging tools for
+Windows, a C compiler (PellesC or VC6) and Microsoft Platform SDK.
 
-The main build script for Open Dylan on Windows is
-opendylan/admin/builds/build-release.bat.  See that file for additional
-notes and a list of prerequisites.  Notably, to do the initial build
-you will need Open Dylan installed.  You will also need VC++ 6.0.
+You also need to have opendylan installed.
 
-[TODO: verify details here and fill this out]
+Download the MPS zip from http://www.ravenbrook.com/project/mps/
+and unpack that.
 
+Open a shell (windows command processor), there set the environment
+variable SDK4MEMORY_POOL_SYSTEM to <where you unpacked MPS>\code.
+
+Please keep in mind that paths with whitespaces are not well supported.
+
+Go to admin\builds and do a
+ build-release.bat <target-dir> /source <git-checkout>\sources /internal /target internal-release
+
+This will do a multi-stage bootstrap, in the end there will be a
+complete IDE in <target-dir>.
+
+[TODO: make the instructions about how to build an installer more comprehensible]
+
+This requires at least nsis from http://nsis.sf.net and the HTML help
+workshop (to generate the chm).
+
+To build an installer, use the fundev.nsi in packages\win32-nsis.
 
 
 How to Build on Darwin or Mac OS X
@@ -154,11 +169,6 @@ Ravenbrook, Ltd.  Download version 1.100.1 (or greater) of the MPS
 from Ravenbrook at http://www.ravenbrook.com/project/mps/ and extract
 it to some directory.  cd to the 'code' subdirectory in the MPS
 sources and build the mmdw target:
-
-Windows::
-
-  nmake /k /f w3i3mv.nmk mmdw.lib
-  copy *.h+w3i3mv\ci\mmdw.lib %OPENDYLAN%\sources\lib\run-time\pentium-win32
 
 Linux::
 
