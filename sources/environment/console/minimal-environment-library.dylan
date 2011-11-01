@@ -21,10 +21,7 @@ define library minimal-console-environment
   use environment-internal-commands;
 
   // Back-ends
-  use dfmc-pentium-harp-cg;      // Pentium backend
-  use dfmc-harp-browser-support; // Harp browsing support
-  use dfmc-c-back-end;           // C backend
-  use dfmc-c-linker;             // C linker
+  use dfmc-back-end-implementations;
 
   export console-environment;
 end library minimal-console-environment;
