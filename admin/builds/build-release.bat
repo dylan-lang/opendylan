@@ -124,7 +124,6 @@ set TIMINGS_ROOT=
 set STRIP_RUNTIME=no
 set OLD_RUNTIME_PREFIX=D3
 set RUNTIME_PREFIX=Dx
-set SANITIZE=no
 set USE_ENVIRONMENT=yes
 set USE_FULL_C_RUNTIME=no
 set VERBOSE=no
@@ -185,8 +184,6 @@ if "%1"=="-test"               GOTO SET_TEST
 if "%1"=="/test"               GOTO SET_TEST
 if "%1"=="-strip-runtime"      GOTO SET_STRIP_RUNTIME
 if "%1"=="/strip-runtime"      GOTO SET_STRIP_RUNTIME
-if "%1"=="-sanitize"           GOTO SET_SANITIZE
-if "%1"=="/sanitize"           GOTO SET_SANITIZE
 if "%1"=="-internal"           GOTO SET_INTERNAL
 if "%1"=="/internal"           GOTO SET_INTERNAL
 if "%1"=="-external"           GOTO SET_EXTERNAL
@@ -322,11 +319,6 @@ set STRIP_RUNTIME=yes
 shift
 goto PARAM_LOOP
 
-:SET_SANITIZE
-set SANITIZE=yes
-shift
-goto PARAM_LOOP
-
 REM //
 REM // Setup the internal release options //
 REM //
@@ -443,12 +435,6 @@ set COMMON_BUILD_OPTIONS= -nopath
 set BUILD_OPTIONS=-p %NEW_RELEASE_ROOT% -s %OLD_RELEASE_ROOT% %COMMON_BUILD_OPTIONS%
 if not "%OPEN_DYLAN_USER_SOURCES%"=="" set BUILD_OPTIONS=%BUILD_OPTIONS% -sources %OPEN_DYLAN_USER_SOURCES%
 if "%USE_ENVIRONMENT%"=="yes" set BUILD_OPTIONS=%BUILD_OPTIONS% -environment
-
-REM // Source sanitizing options
-set CHECKOUT_OPTIONS=
-if "%SANITIZE%"=="no" goto setup_bootstrap_targets
-set CHECKOUT_OPTIONS=/sanitize
-set QUOTED_CHECKOUT_OPTIONS=CHECKOUT_OPTIONS=%CHECKOUT_OPTIONS%
 
 :SETUP_BOOTSTRAP_TARGETS
 if "%RELEASE_TARGET%"=="minimal-console-compiler" goto setup_minimal_builds
@@ -761,7 +747,7 @@ echo Final generation build starting at:
 call date /t
 call time /t
 call ensure-release-area
-%MAKE% %QUOTED_OPTIONS% %QUOTED_PENTIUM_RUNTIME_OPTIONS% %QUOTED_RUNTIME_OPTIONS% %QUOTED_CHECKOUT_OPTIONS% %RELEASE_TARGET%
+%MAKE% %QUOTED_OPTIONS% %QUOTED_PENTIUM_RUNTIME_OPTIONS% %QUOTED_RUNTIME_OPTIONS% %RELEASE_TARGET%
 if %ERRORLEVEL% NEQ 0 goto build_error
 if "%WARNINGS%"=="yes" call show-build-warnings %WARNINGS_OPTIONS%
 if "%TIMINGS%"=="yes" call generate-compiler-timings %OPEN_DYLAN_BUILD_LOGS%
