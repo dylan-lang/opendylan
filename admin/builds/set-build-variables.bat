@@ -45,9 +45,6 @@ echo -                                              Default: pentium(sets root t
 echo -                                              The other acceptable value for this option is 'c' which
 echo -                                              sets the root to \dylan\releases\kan
 echo -
-echo -                     -branch  [CVS Branch]    Specifies the CVS branch to be used for checkouts.
-echo -                                              Default: trunk
-echo -
 echo -                     -nopath                  Does not modify the PATH variable.
 echo -
 echo -                     -help,
@@ -95,7 +92,6 @@ echo -   If network drive "U" is mapped as superdirectory of dylan
 echo -   U: set-build-variables -ps \dylan\releases\pentium-kan-next -d \dylan\releases\pentium-kan
 echo -   U: set-build-variables -ps \dylan\releases\pentium-kan-next -d \dylan\releases\kan-970524
 echo -   U: set-build-variables -ps \dylan\releases\pentium-kan-next -d C:\Progra~1\Functi~1\Dylan\system
-echo -   U: set-build-variables -ps \dylan\releases\pentium-kan-next -d C:\Progra~1\Functi~1\Dylan\system -branch D-kan
 echo - 
 echo -   If network drive "D" is mapped as \dylan
 echo -   D: set-build-variables -ps \releases\pentium-kan-next -d \releases\pentium-kan
@@ -120,7 +116,6 @@ set BACK_END=pentium
 set GENERATION=
 set FINAL_GENERATION=
 if "%OPEN_DYLAN_DEFAULT_ROOT%"=="" set OPEN_DYLAN_DEFAULT_ROOT=C:\Program Files\Open Dylan
-set DYLAN_CVS_BRANCH=
 set DYLAN_RELEASE_ROOT=
 set NOPATH=
 set QUIET=no
@@ -137,7 +132,6 @@ If "%1%"=="-sr"  GOTO SET_ROOT
 If "%1%"=="-d"  GOTO SET_KAN_ROOT
 If "%1%"=="-dr"  GOTO SET_KAN_ROOT
 If "%1%"=="-l"  GOTO SET_TARGET_PLATFORM
-If "%1%"=="-branch"  GOTO SET_CVS_BRANCH
 If "%1%"=="-pr" GOTO SET_USER_ROOT
 If "%1%"=="-p"  GOTO SET_USER_ROOT
 If "%1%"=="-ps" GOTO SET_BOTH_ROOTS
@@ -172,13 +166,6 @@ goto PARAM_LOOP
 :SET_SYSTEM_DRIVE
 If "%2%"=="" GOTO NO_ARG
 set DYLAN_SYSTEM_DRIVE=%2%
-shift
-shift
-goto PARAM_LOOP
-
-:SET_CVS_BRANCH
-If "%2%"=="" GOTO NO_ARG
-set DYLAN_CVS_BRANCH=%2%
 shift
 shift
 goto PARAM_LOOP
@@ -289,20 +276,17 @@ REM //
 If "%OPEN_DYLAN_RELEASE_ROOT%"=="" set OPEN_DYLAN_RELEASE_ROOT=%OPEN_DYLAN_DEFAULT_ROOT%
 If "%DYLAN_RELEASE_ROOT%"=="" set DYLAN_RELEASE_ROOT=%OPEN_DYLAN_RELEASE_ROOT%
 call :fixup_PATHS "%OPEN_DYLAN_RELEASE_ROOT%" "%DYLAN_RELEASE_ROOT%"
-If "%DYLAN_CVS_BRANCH%"==""   set DYLAN_CVS_BRANCH=trunk
 If "%OPEN_DYLAN_USER_ROOT%"=="" goto :NO_PR
 
 REM //
 REM // Default user variables //
 REM //
 
-if "%OPEN_DYLAN_USER_SOURCES%"=="" set OPEN_DYLAN_CVS_LOGS=%OPEN_DYLAN_USER_ROOT%\logs
 if "%OPEN_DYLAN_USER_SOURCES%"=="" set OPEN_DYLAN_USER_SOURCES=%OPEN_DYLAN_USER_ROOT%\Sources
 if "%OPEN_DYLAN_USER_INSTALL%"=="" set OPEN_DYLAN_USER_INSTALL=%OPEN_DYLAN_USER_ROOT%
 if "%OPEN_DYLAN_USER_BUILD%"=="" set OPEN_DYLAN_BUILD_LOGS=%OPEN_DYLAN_USER_ROOT%\logs
 if "%OPEN_DYLAN_USER_BUILD%"=="" set OPEN_DYLAN_USER_BUILD=%OPEN_DYLAN_USER_ROOT%\Build
 set OPEN_DYLAN_USER_REGISTRIES=%OPEN_DYLAN_USER_SOURCES%\registry
-if "%OPEN_DYLAN_CVS_LOGS%"=="" set OPEN_DYLAN_CVS_LOGS=%OPEN_DYLAN_USER_SOURCES%\..\logs
 if "%OPEN_DYLAN_BUILD_LOGS%"=="" set OPEN_DYLAN_BUILD_LOGS=%OPEN_DYLAN_USER_BUILD%\..\logs
 
 REM //
@@ -411,12 +395,6 @@ if "%OPEN_DYLAN_RELEASE_INSTALL%"=="%OPEN_DYLAN_USER_INSTALL%" goto skip_release
 echo   [Bootstrap install:  %OPEN_DYLAN_RELEASE_INSTALL%]
 
 :SKIP_RELEASE_SETTINGS
-if "%DYLAN_CVS_BRANCH%"=="trunk" goto skip_cvs_branch
-echo   [CVS branch:         %DYLAN_CVS_BRANCH%]
-
-:SKIP_CVS_BRANCH
-echo   [CVS logs:           %OPEN_DYLAN_CVS_LOGS%]
-
 if "%OPEN_DYLAN_USER_SOURCES%"=="%OPEN_DYLAN_USER_ROOT%\Sources" goto skip_sources
 echo   [Sources:            %OPEN_DYLAN_USER_SOURCES%]
 

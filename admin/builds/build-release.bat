@@ -25,8 +25,6 @@ echo -       Specifies the directory to build from (previous release)
 echo -       [default: C:\Program Files\Open Dylan]
 echo -     /sources
 echo -       Specifies the location of the sources [default: under release]
-echo -     /branch
-echo -       Specifies the CVS branch. [default: trunk]
 echo -     /rm-early-builds
 echo -       Cleans up build products of non-last generations.
 echo -     /warnings
@@ -62,7 +60,6 @@ echo -   - If you didn't install the Hacker Edition in the standard location
 echo -     you should use the /dylan argument to specify its location.
 echo -   - It's a good idea to also set OPEN_DYLAN_DEFAULT_ROOT to
 echo -     the same value passed as the /dylan argument.
-echo -   - You must set the CVSROOT environment variable appropriately.
 echo -   - Some options cause perl scripts to be invoked.  Have perl on your PATH.
 echo -   - VC++ 6 and the MSSDK should be installed.  Make sure that the VC++ directories
 echo -     appear before the MSSDK directories on your PATH, and after them on your
@@ -86,11 +83,8 @@ echo -     to bootstrap.
 echo -
 echo -   build-release c:\dylan /sources u:\andrewa\dylan
 echo -
-echo -     Build the release from the sources in u:\andrewa\dylan
-echo -     rather than checking them out from CVS. Note that if
-echo -     any pieces are missing, that they will get checked out
-echo -     as part of the build process [this may not be what you
-echo -     want, we should work on a solution if you need it].
+echo -     Build the release from the sources in u:\andrewa\dylan.
+echo -     Note that if any pieces are missing, the build will fail.
 echo -     The build products will be stored in c:\dylan.
 echo -
 echo ----------------------------------------------------------------------------
@@ -112,7 +106,6 @@ set OLD_RELEASE_ROOT=%OPEN_DYLAN_DEFAULT_ROOT%
 set OPEN_DYLAN_USER_SOURCES=
 set SAVED_OPEN_DYLAN_LIBRARY_PACKS=%OPEN_DYLAN_LIBRARY_PACKS%
 set GENERATIONS=3
-set CVS_BRANCH=trunk
 set BOOTSTRAP_TARGET=
 set COMPILER_TARGET=
 set FINAL_COMPILER_TARGET=
@@ -159,8 +152,6 @@ if "%1"=="-pentium-dw"         GOTO SET_USE_PENTIUM_DW
 if "%1"=="/pentium-dw"         GOTO SET_USE_PENTIUM_DW
 if "%1"=="-dylan"              GOTO SET_OLD_RELEASE_ROOT
 if "%1"=="/dylan"              GOTO SET_OLD_RELEASE_ROOT
-if "%1"=="-branch"             GOTO SET_CVS_BRANCH
-if "%1"=="/branch"             GOTO SET_CVS_BRANCH
 if "%1"=="-generations"        GOTO SET_GENERATIONS
 if "%1"=="/generations"        GOTO SET_GENERATIONS
 if "%1"=="-target"             GOTO SET_RELEASE_TARGET
@@ -228,13 +219,6 @@ goto PARAM_LOOP
 :SET_OLD_RELEASE_ROOT
 if "%2"=="" GOTO NO_ARG
 set OLD_RELEASE_ROOT=%2
-shift
-shift
-goto PARAM_LOOP
-
-:SET_CVS_BRANCH
-if "%2"=="" GOTO NO_ARG
-set CVS_BRANCH=%2
 shift
 shift
 goto PARAM_LOOP
@@ -472,7 +456,7 @@ set OPTIONS=%OPTIONS% /show-failure-log
 set QUOTED_OPTIONS=OPTIONS="%OPTIONS%"
 
 :SKIP_SHOW_FAILURE_LOG_OPTION
-set COMMON_BUILD_OPTIONS= -branch %CVS_BRANCH% -nopath
+set COMMON_BUILD_OPTIONS= -nopath
 set BUILD_OPTIONS=-p %NEW_RELEASE_ROOT% -s %OLD_RELEASE_ROOT% %COMMON_BUILD_OPTIONS%
 if not "%OPEN_DYLAN_USER_SOURCES%"=="" set BUILD_OPTIONS=%BUILD_OPTIONS% -sources %OPEN_DYLAN_USER_SOURCES%
 if "%USE_ENVIRONMENT%"=="yes" set BUILD_OPTIONS=%BUILD_OPTIONS% -environment
@@ -719,9 +703,7 @@ call ensure-directory %USER_REGISTRY%
 call ensure-directory %USER_REGISTRY%\generic
 call ensure-directory %USER_REGISTRY%\x86-win32
 copy %OPEN_DYLAN_USER_REGISTRIES%\generic\*.* %USER_REGISTRY%\generic >nul
-xcopy /E /I %OPEN_DYLAN_USER_REGISTRIES%\generic\CVS %USER_REGISTRY%\generic\CVS >nul
 copy %OPEN_DYLAN_USER_REGISTRIES%\x86-win32\*.* %USER_REGISTRY%\x86-win32 >nul
-xcopy /E /I %OPEN_DYLAN_USER_REGISTRIES%\x86-win32\CVS %USER_REGISTRY%\x86-win32\CVS >nul
 
 :FINISH_BOOTSTRAP
 set OPEN_DYLAN_USER_REGISTRIES=%USER_REGISTRY%
