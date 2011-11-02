@@ -71,8 +71,9 @@ variable SDK4MEMORY_POOL_SYSTEM to <where you unpacked MPS>\\code.
 
 Please keep in mind that paths with whitespaces are not well supported.
 
-Go to admin\\builds and do a
- build-release.bat <target-dir> /source <git-checkout>\\sources /internal /target internal-release
+Go to admin\\builds and do a::
+
+  build-release.bat <target-dir> /source <git-checkout>\\sources /internal /target internal-release
 
 This will do a multi-stage bootstrap, in the end there will be a
 complete IDE in <target-dir>.
