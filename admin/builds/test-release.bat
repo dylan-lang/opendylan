@@ -13,7 +13,7 @@ echo -
 echo -
 echo -   Options:
 echo -     /target
-echo -       Specifies the target release name. [default: internal-release]
+echo -       Specifies the target release name. [default: test-basic-release]
 echo -     /exports
 echo -       Switches on generation of GNU exports [default: no exports]
 echo -     /dylan
@@ -32,7 +32,7 @@ echo - EXAMPLES:
 echo -
 echo -   test-release c:\dylan
 echo -
-echo -     Build a new internal release in c:\dylan
+echo -     Build a new release in c:\dylan
 echo -
 echo -   test-release c:\dylan /target pentium-dw
 echo -
@@ -54,7 +54,7 @@ If "%1%"=="/?" GOTO PRINT_USAGE
 set ERROR_MESSAGE=
 set OLD_RELEASE_ROOT=C:\Program Files\Open Dylan
 set OPEN_DYLAN_USER_SOURCES=
-set TEST_TARGET=test-basic-internal-release
+set TEST_TARGET=test-basic-release
 set CLEANUP=
 set EXPORTS=no
 set DEBUGGER=no

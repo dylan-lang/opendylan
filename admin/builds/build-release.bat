@@ -13,7 +13,7 @@ echo -
 echo -
 echo -   Options:
 echo -     /target
-echo -       Specifies the target release name. [default: minimal-internal-release]
+echo -       Specifies the target release name. [default: release]
 echo -     /generations
 echo -       Specifies the number of generations. [default: 3]
 echo -     /exports
@@ -67,7 +67,7 @@ echo - EXAMPLES:
 echo - 
 echo -   build-release c:\dylan
 echo -
-echo -     Build a new internal release in c:\dylan
+echo -     Build a new release in c:\dylan
 echo -
 echo -   build-release c:\dylan /target pentium-dw
 echo -
@@ -86,8 +86,8 @@ echo -     Note that if any pieces are missing, the build will fail.
 echo -     The build products will be stored in c:\dylan.
 echo -
 echo ----------------------------------------------------------------------------
-echo - BEWARE: only internal release is supported; you want to invoke:
-echo -   build-release.bat TARGET /sources SRC /internal /target internal-release
+echo - BEWARE: you want to invoke (/internal instead of /external to not strip runtime):
+echo -   build-release.bat TARGET /sources SRC /external
 echo -----------------------------------------------------------------------------
 goto END
 
@@ -376,7 +376,7 @@ if "%COMPILER_TARGET%"=="" set COMPILER_TARGET=minimal-console-compiler
 if "%FINAL_COMPILER_TARGET%"=="" set FINAL_COMPILER_TARGET=console-compiler console-scepter
 if "%COMPILER_FILENAME%"=="" set COMPILER_FILENAME=minimal-console-compiler.exe
 if "%FINAL_COMPILER_FILENAME%"=="" set FINAL_COMPILER_FILENAME=console-compiler.exe
-if "%RELEASE_TARGET%"=="" set RELEASE_TARGET=minimal-internal-release
+if "%RELEASE_TARGET%"=="" set RELEASE_TARGET=release
 goto setup_default_release_options
 
 REM //
@@ -387,7 +387,7 @@ if "%COMPILER_TARGET%"=="" set COMPILER_TARGET=minimal-compiler
 if "%FINAL_COMPILER_TARGET%"=="" set FINAL_COMPILER_TARGET=compiler console-scepter
 if "%COMPILER_FILENAME%"=="" set COMPILER_FILENAME=minimal-pentium-dw.exe
 if "%FINAL_COMPILER_FILENAME%"=="" set FINAL_COMPILER_FILENAME=pentium-dw.exe
-if "%RELEASE_TARGET%"=="" set RELEASE_TARGET=minimal-internal-release
+if "%RELEASE_TARGET%"=="" set RELEASE_TARGET=release
 goto setup_default_release_options
 
 REM //
@@ -439,8 +439,7 @@ if "%USE_ENVIRONMENT%"=="yes" set BUILD_OPTIONS=%BUILD_OPTIONS% -environment
 :SETUP_BOOTSTRAP_TARGETS
 if "%RELEASE_TARGET%"=="minimal-console-compiler" goto setup_minimal_builds
 if "%RELEASE_TARGET%"=="minimal-console-environment" goto setup_minimal_builds
-if "%RELEASE_TARGET%"=="minimal-win32-environment" goto setup_minimal_builds
-if "%RELEASE_TARGET%"=="minimal-internal-release" goto setup_minimal_builds
+if "%RELEASE_TARGET%"=="minimal-release" goto setup_minimal_builds
 goto build
 
 :SETUP_MINIMAL_BUILDS
