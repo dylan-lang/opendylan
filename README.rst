@@ -73,9 +73,9 @@ Please keep in mind that paths with whitespaces are not well supported.
 
 Go to admin\\builds and do a::
 
-  build-release.bat <target-dir> /source <git-checkout>\sources /internal /target internal-release
+  build-release.bat <target-dir> /source <git-checkout>\sources /external
 
-This will do a multi-stage bootstrap, in the end there will be a
+This will do a 4-stage bootstrap, in the end there will be a
 complete IDE in <target-dir>.
 
 [TODO: make the instructions about how to build an installer more comprehensible]
