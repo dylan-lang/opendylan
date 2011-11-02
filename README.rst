@@ -67,12 +67,12 @@ Download the MPS zip from http://www.ravenbrook.com/project/mps/
 and unpack that.
 
 Open a shell (windows command processor), there set the environment
-variable SDK4MEMORY_POOL_SYSTEM to <where you unpacked MPS>\code.
+variable SDK4MEMORY_POOL_SYSTEM to <where you unpacked MPS>\\code.
 
 Please keep in mind that paths with whitespaces are not well supported.
 
-Go to admin\builds and do a
- build-release.bat <target-dir> /source <git-checkout>\sources /internal /target internal-release
+Go to admin\\builds and do a
+ build-release.bat <target-dir> /source <git-checkout>\\sources /internal /target internal-release
 
 This will do a multi-stage bootstrap, in the end there will be a
 complete IDE in <target-dir>.
@@ -82,7 +82,7 @@ complete IDE in <target-dir>.
 This requires at least nsis from http://nsis.sf.net and the HTML help
 workshop (to generate the chm).
 
-To build an installer, use the fundev.nsi in packages\win32-nsis.
+To build an installer, use the fundev.nsi in packages\\win32-nsis.
 
 
 How to Build on Darwin or Mac OS X
