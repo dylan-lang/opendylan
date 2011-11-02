@@ -18,7 +18,7 @@ echo -     /exports
 echo -       Switches on generation of GNU exports [default: no exports]
 echo -     /dylan
 echo -       Specifies the Dylan directory.
-echo -        [default: C:\Program Files\Functional Objects\Functional Developer]
+echo -        [default: C:\Program Files\Open Dylan]
 echo -     /sources
 echo -       Specifies the location of the sources [default: under release]
 echo -     /warnings
@@ -52,7 +52,7 @@ If "%1%"=="-help" GOTO PRINT_USAGE
 If "%1%"=="?" GOTO PRINT_USAGE
 If "%1%"=="/?" GOTO PRINT_USAGE
 set ERROR_MESSAGE=
-set OLD_RELEASE_ROOT=C:\Program Files\Functional Objects\Functional Developer
+set OLD_RELEASE_ROOT=C:\Program Files\Open Dylan
 set OPEN_DYLAN_USER_SOURCES=
 set TEST_TARGET=test-basic-internal-release
 set CLEANUP=

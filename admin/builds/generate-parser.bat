@@ -69,7 +69,7 @@ set COMPILER=%DYLAN_RELEASE_ROOT%\Bin\parser-compiler.exe
 if exist "%COMPILER%" goto compiler_found
 set COMPILER=%OLD_RELEASE_ROOT%\Bin\parser-compiler.exe
 if exist "%COMPILER%" goto compiler_found
-set COMPILER=C:\Program Files\Functional Objects\Functional Developer\Bin\parser-compiler.exe
+set COMPILER=C:\Program Files\Open Dylan\bin\parser-compiler.exe
 
 :COMPILER_FOUND
 
@@ -80,7 +80,7 @@ set COMPILER_OPTIONS=%GRAMMAR_FILE% %DYLAN_DIRECTORY%\%DYLAN_FILE%.dylan
 :FIND_DEBUGGER
 set DEBUGGER=%DYLAN_RELEASE_ROOT%\bin\batch-debug.exe
 if exist "%DEBUGGER%" goto setup_debugging
-set DEBUGGER=C:\Program Files\Functional Objects\Functional Developer\bin\batch-debug.exe
+set DEBUGGER=C:\Program Files\Open Dylan\bin\batch-debug.exe
 if exist "%DEBUGGER%" goto setup_debugging
 set DEBUGGER=batch-debug
 
