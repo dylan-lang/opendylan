@@ -47,8 +47,6 @@ echo -     /debugger
 echo -       Runs the builds under batch-debug [default: no debugging]
 echo -     /fullcrt
 echo -       will build the pentium run time using full version of the C runtime
-echo -     /runtime-expiration YYYYMMDD
-echo -       sets the expiration date for the Dylan runtime to YYYYMMDD [default: none]
 echo -     /verbose
 echo -       Show more information during building
 echo - 
@@ -129,7 +127,6 @@ set RUNTIME_PREFIX=Dx
 set SANITIZE=no
 set USE_ENVIRONMENT=yes
 set USE_FULL_C_RUNTIME=no
-set RUNTIME_EXPIRATION=none
 set VERBOSE=no
 
 set OPEN_DYLAN_USER_SOURCES=
@@ -196,8 +193,6 @@ if "%1"=="-external"           GOTO SET_EXTERNAL
 if "%1"=="/external"           GOTO SET_EXTERNAL
 if "%1"=="-fullcrt"            GOTO SET_FULLCRT
 if "%1"=="/fullcrt"            GOTO SET_FULLCRT
-if "%1"=="/runtime-expiration" GOTO SET_RUNTIME_EXPIRATION
-if "%1"=="-runtime-expiration" GOTO SET_RUNTIME_EXPIRATION
 if "%1%"=="/verbose"           GOTO SET_VERBOSE
 if "%1%"=="-verbose"           GOTO SET_VERBOSE
 set ERROR_MESSAGE=Invalid command line argument %1
@@ -365,13 +360,6 @@ set USE_FULL_C_RUNTIME=yes
 shift
 goto PARAM_LOOP
 
-:SET_RUNTIME_EXPIRATION
-if "%2%"=="" GOTO NO_ARG
-set RUNTIME_EXPIRATION=%2%
-shift
-shift
-goto PARAM_LOOP
-
 :SET_VERBOSE
 set VERBOSE=yes
 shift
@@ -423,11 +411,6 @@ set OPEN_DYLAN_PLATFORM_NAME=x86-win32
 REM // Pentium runtime build options
 set PENTIUM_RUNTIME_OPTIONS=
 set QUOTED_PENTIUM_RUNTIME_OPTIONS=
-if "%RUNTIME_EXPIRATION%"=="none" goto skip_expiration_option
-set PENTIUM_RUNTIME_OPTIONS=EXPIRATION=%RUNTIME_EXPIRATION%
-set QUOTED_PENTIUM_RUNTIME_OPTIONS=PENTIUM_RUNTIME_OPTIONS="%PENTIUM_RUNTIME_OPTIONS%"
-
-:SKIP_EXPIRATION_OPTION
 if "%USE_FULL_C_RUNTIME%"=="no" goto setup_build_options
 set PENTIUM_RUNTIME_OPTIONS=%PENTIUM_RUNTIME_OPTIONS% fullcrt=yes
 set QUOTED_PENTIUM_RUNTIME_OPTIONS=PENTIUM_RUNTIME_OPTIONS="%PENTIUM_RUNTIME_OPTIONS%"

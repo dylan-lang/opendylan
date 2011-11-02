@@ -3,7 +3,7 @@
 # Author: Andy Armstrong
 #
 # Note: If you want to bootstrap the compiler, you should use the script
-# build-release.bat from this directory (dylan/admin/builds). It uses
+# build-release.bat from this directory (opendyaln/admin/builds). It uses
 # this makefile, but first sets up the environment variables correctly
 # and then builds multiple generations as required.
 #
