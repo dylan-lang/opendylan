@@ -7,7 +7,7 @@ Files:	  library
           database
           viewer
           main
-Start-Function: play-reversi
+Start-Function: main
 Linker-Options: $(guilflags)
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
