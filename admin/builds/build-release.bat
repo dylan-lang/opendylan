@@ -611,19 +611,9 @@ echo Generation 1 build completed at:
 call date /t
 call time /t
 
-:MAYBE_COPY_OLD_MANGLER
-REM This enables compiler-bootstrapping with new mangler scheme
-if exist "%DYLAN_RELEASE_ROOT%\bin\old-dfmc-mangling.dll" copy %DYLAN_RELEASE_ROOT%\bin\old-dfmc-mangling.dll %OPEN_DYLAN_USER_INSTALL%\bin >nul
-if exist "%DYLAN_RELEASE_ROOT%\bin\old-dfmc-mangling.dll" copy %DYLAN_RELEASE_ROOT%\bin\variable-search.dll %OPEN_DYLAN_USER_INSTALL%\bin >nul
-
-:MAYBE_COPY_OLD_VARIABLE_SEARCH
-REM This enables compiler-bootstrapping with new variable-searching
-if exist "%DYLAN_RELEASE_ROOT%\bin\old-variable-search.dll" copy %DYLAN_RELEASE_ROOT%\bin\old-variable-search.dll %OPEN_DYLAN_USER_INSTALL%\bin\variable-search.dll >nul
-
 if exist "%OPEN_DYLAN_USER_INSTALL%\bin\%OLD_RUNTIME_PREFIX%fundyl.dll" goto maybe_copy_bootstrap_registry
 if exist "%OPEN_DYLAN_USER_INSTALL%\bin\%RUNTIME_PREFIX%fundyl.dll" goto maybe_copy_bootstrap_registry
 echo Installing DLLs from old release %DYLAN_RELEASE_ROOT%
-copy %DYLAN_RELEASE_ROOT%\bin\equal-table.dll %OPEN_DYLAN_USER_INSTALL%\bin 1>nul 2>nul
 
 REM // Copy redistributable libraries (including those from a previous version)
 REM // Be careful not to wipe out redistributable libraries
