@@ -50,6 +50,6 @@ echo "cannot find release root"
 goto end
 
 :MAKENSIS
-makensis fundev.nsi
+makensis opendylan.nsi
 
 :END
