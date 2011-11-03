@@ -86,8 +86,8 @@ echo -     Note that if any pieces are missing, the build will fail.
 echo -     The build products will be stored in c:\dylan.
 echo -
 echo ----------------------------------------------------------------------------
-echo - BEWARE: you want to invoke (/internal instead of /external to not strip runtime):
-echo -   build-release.bat TARGET /sources SRC /external
+echo - BEWARE: you want to invoke
+echo -   build-release.bat TARGET /sources SRC /internal
 echo -----------------------------------------------------------------------------
 goto END
 

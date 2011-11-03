@@ -73,7 +73,7 @@ Please keep in mind that paths with whitespaces are not well supported.
 
 Go to admin\\builds and do a::
 
-  build-release.bat <target-dir> /source <git-checkout>\sources /external
+  build-release.bat <target-dir> /source <git-checkout>\sources /internal
 
 This will do a 4-stage bootstrap, in the end there will be a
 complete IDE in <target-dir>.
