@@ -3,7 +3,7 @@
 # Author: Andy Armstrong
 #
 # Note: If you want to bootstrap the compiler, you should use the script
-# build-release.bat from this directory (dylan/admin/builds). It uses
+# build-release.bat from this directory (opendyaln/admin/builds). It uses
 # this makefile, but first sets up the environment variables correctly
 # and then builds multiple generations as required.
 #
@@ -18,10 +18,9 @@
 #    nmake win32-environment        - build win32-environment.exe
 #    nmake console-debugger         - build the console debugger
 #
-#    nmake internal-release         - build the Internal Edition
-#    nmake releases                 - build all of the editions
+#    nmake release                  - build the release
 #
-#    nmake minimal-internal-release - build just the minimal release components
+#    nmake minimal-release          - build just the minimal release components
 #
 # To get a back trace, do nmake OPTIONS=/debugger target
 #
@@ -86,7 +85,6 @@ BUILD_MAKEFILE = dylanmakefile.mkf
 APP_DIRECTORY = $(SOURCES_DIRECTORY)\app
 EXAMPLES_DIRECTORY = $(SOURCES_DIRECTORY)\examples
 
-BENCHMARKS_DIRECTORY = $(SOURCES_DIRECTORY)\benchmarks
 COLLECTIONS_DIRECTORY = $(SOURCES_DIRECTORY)\collections
 CORBA_DIRECTORY = $(SOURCES_DIRECTORY)\corba
 CORBA_SERVICES_DIRECTORY = $(CORBA_DIRECTORY)\services
@@ -779,7 +777,7 @@ console-compiler-libraries: pentium-compiler-libraries environment-commands
 database-libraries: sql-odbc
 debugger: debugger-manager binary-manager coff-manager coff-debug devel-dbg-ui batch-debug
 duim-ole: duim-ole-container duim-ole-server duim-ole-control
-environment: deuce duim-deuce dfmc-environment environment-commands environment-application-commands environment-internal-commands environment-server environment-tools environment-property-pages environment-deuce environment-project-wizard environment-profiler debugger-manager target-application binary-manager coff-manager interactive-downloader environment-debugger win32-environment with-splash-screen
+environment: deuce duim-deuce environment-commands environment-application-commands environment-internal-commands environment-server environment-tools environment-property-pages environment-deuce environment-project-wizard environment-profiler debugger-manager target-application binary-manager coff-manager interactive-downloader environment-debugger win32-environment with-splash-screen
 ole-libraries: com ole-server ole-automation ole-control-framework ole-container ole-dialogs
 testworks-libraries: testworks testworks-specs gui-testworks
 user-libraries: dylan common-dylan functional-dylan c-ffi system collections io commands
@@ -868,19 +866,14 @@ basic-test-suites: test-suites
 enhanced-test-suites: basic-test-suites ole-test-suites database-test-suites
 
 test-basic-release: test-libraries test-win32-libraries test-duim test-deuce test-compiler test-environment
-test-internal-release: test-basic-release test-ole test-odbc test-corba
-test-minimal-internal-release: test-basic-release
-test-releases: test-internal-release
+test-release: test-basic-release test-ole test-odbc test-corba
+test-minimal-release: test-basic-release
 
 
 # Benchmark targets
 
 cn2: $(CN2)
 fft-test: $(FFT_TEST)
-
-basic-benchmarks: cn2 fft-test
-enhanced-benchmarks: basic-benchmarks
-internal-benchmarks: enhanced-benchmarks
 
 
 # Example project targets
@@ -1086,35 +1079,31 @@ network-examples: daytime-client daytime-server echo-client echo-client echo-ser
 
 release-info: $(RELEASE_INFO)
 compiler: pentium-dw-libraries release-info motley t-lists c-lexer console-scepter-libraries
-internal-compiler: compiler
 console-compiler-exe: $(CONSOLE_COMPILER)
 console-compiler: console-compiler-libraries release-info environment-internal-commands motley t-lists c-lexer console-scepter-libraries console-compiler-exe
 console-environment: $(CONSOLE_ENVIRONMENT)
 win32-environment: $(WIN32_ENVIRONMENT)
 with-splash-screen: $(WITH_SPLASH_SCREEN)
-internal-environment: console-environment win32-environment with-splash-screen
-internal-libraries: user-libraries win32-libraries duim ole-libraries duim-ole database-libraries network dylan-orb naming-client midi
-internal-example-projects: console-example-projects duim-example-projects win32-example-projects ole-example-projects duim-ole-example-projects network-example-projects corba-example-projects
-install-internal-examples: install-examples-css install-console-examples install-duim-examples install-win32-examples install-basic-doc-examples install-templates install-database-examples install-ole-examples install-duim-ole-examples install-network-examples install-corba-examples install-enhanced-doc-examples install-midi-examples
-internal-only-tools: testworks-libraries debugger map-statistics parser-compiler #testworks-report (depends on xml-parser)
-internal-tools: install-wdbgdylan dll-wrap minimal-dylan-playground dylan-playground gui-dylan-playground create-id console-scepter naming-service remote-debugger internal-only-tools
-internal-release: release-info console-compiler compiler internal-environment internal-libraries internal-tools install-runtime-dlls install-internal-examples
+rel-environment: console-environment win32-environment with-splash-screen
+libraries: user-libraries win32-libraries duim ole-libraries duim-ole database-libraries network dylan-orb naming-client midi
+example-projects: console-example-projects duim-example-projects win32-example-projects ole-example-projects duim-ole-example-projects network-example-projects corba-example-projects
+install-examples: install-examples-css install-console-examples install-duim-examples install-win32-examples install-basic-doc-examples install-templates install-database-examples install-ole-examples install-duim-ole-examples install-network-examples install-corba-examples install-enhanced-doc-examples install-midi-examples
+tools: install-wdbgdylan dll-wrap minimal-dylan-playground dylan-playground gui-dylan-playground create-id console-scepter naming-service remote-debugger testworks-libraries debugger map-statistics parser-compiler
+release: release-info console-compiler compiler environment rel-environment libraries tools install-runtime-dlls install-examples
 
-reinstall-internal-examples:
+reinstall-examples:
   $(REMOVE_DIRECTORY) $(EXAMPLES_INSTALL_DIRECTORY)
-  $(MAKE) install-internal-examples
+  $(MAKE) install-examples
 
 minimal-compiler: pentium-dw-libraries release-info
 minimal-console-compiler-exe: $(MINIMAL_CONSOLE_COMPILER)
 minimal-console-compiler: console-compiler-libraries release-info environment-internal-commands minimal-console-compiler-exe
 minimal-console-environment: $(MINIMAL_CONSOLE_ENVIRONMENT)
-minimal-internal-libraries: user-libraries win32-libraries duim
-minimal-internal-environment: minimal-console-environment with-splash-screen
-install-minimal-internal-examples: install-examples-css install-console-examples install-duim-examples install-win32-examples install-basic-doc-examples install-templates
-minimal-internal-tools: install-wdbgdylan dll-wrap minimal-dylan-playground dylan-playground gui-dylan-playground
-minimal-internal-release: release-info minimal-console-compiler minimal-compiler minimal-internal-environment minimal-internal-libraries minimal-internal-tools internal-only-tools install-runtime-dlls install-minimal-internal-examples
-
-releases: internal-release
+minimal-libraries: user-libraries win32-libraries duim
+minimal-environment: minimal-console-environment with-splash-screen
+install-minimal-examples: install-examples-css install-console-examples install-duim-examples install-win32-examples install-basic-doc-examples install-templates
+minimal-tools: install-wdbgdylan dll-wrap minimal-dylan-playground dylan-playground gui-dylan-playground
+minimal-release: release-info minimal-console-compiler minimal-compiler minimal-environment minimal-libraries minimal-tools testworks-libraries debugger map-statistics parser-compiler install-runtime-dlls install-minimal-examples
 
 #
 # Clean
@@ -2358,19 +2347,6 @@ test-environment-scripts:
   $(TEST_SCRIPT) interactivity
   $(TEST_SCRIPT) redefinition
   $(TEST_SCRIPT) profiling
-
-
-# Benchmarks
-
-$(CN2):
-  $(ENSURE_RUNTIME_LIBRARY) $(IO_DLL) io
-  $(ENSURE_SOURCES) benchmarks $(BENCHMARKS_DIRECTORY)
-  $(BUILD_APPLICATION) cn2
-
-$(FFT_TEST):
-  $(ENSURE_RUNTIME_LIBRARY) $(IO_DLL) io
-  $(ENSURE_SOURCES) benchmarks $(BENCHMARKS_DIRECTORY)
-  $(BUILD_APPLICATION) fft-test
 
 
 # Example projects

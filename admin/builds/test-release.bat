@@ -12,17 +12,15 @@ echo - USAGE:    test-release [Release Directory] {options}*
 echo -
 echo -
 echo -   Options:
-echo -     /target       
-echo -       Specifies the target release name. [default: internal-release]
+echo -     /target
+echo -       Specifies the target release name. [default: test-basic-release]
 echo -     /exports
 echo -       Switches on generation of GNU exports [default: no exports]
-echo -     /dylan        
+echo -     /dylan
 echo -       Specifies the Dylan directory.
-echo -        [default: C:\Program Files\Functional Objects\Functional Developer]
+echo -        [default: C:\Program Files\Open Dylan]
 echo -     /sources
 echo -       Specifies the location of the sources [default: under release]
-echo -     /branch       
-echo -       Specifies the CVS branch. [default: trunk]
 echo -     /warnings
 echo -       Shows a warning summary after each generation [default: none]
 echo -     /serious-warnings
@@ -31,10 +29,10 @@ echo -     /debugger
 echo -       Runs the builds under batch-debug [default: no debugging]
 echo -
 echo - EXAMPLES:
-echo - 
+echo -
 echo -   test-release c:\dylan
 echo -
-echo -     Build a new internal release in c:\dylan
+echo -     Build a new release in c:\dylan
 echo -
 echo -   test-release c:\dylan /target pentium-dw
 echo -
@@ -42,11 +40,8 @@ echo -     Build just the compiler
 echo -
 echo -   test-release c:\dylan /sources u:\andrewa\dylan
 echo -
-echo -     Build the release from the sources in u:\andrewa\dylan
-echo -     rather than checking them out from CVS. Note that if
-echo -     any pieces are missing, that they will get checked out
-echo -     as part of the build process [this may not be what you
-echo -     want, we should work on a solution if you need it].
+echo -     Build the release from the sources in u:\andrewa\dylan.
+echo -     Note that if any pieces are missing, it will fail.
 echo ------------------------------------------------------------------------
 goto END
 
@@ -57,10 +52,9 @@ If "%1%"=="-help" GOTO PRINT_USAGE
 If "%1%"=="?" GOTO PRINT_USAGE
 If "%1%"=="/?" GOTO PRINT_USAGE
 set ERROR_MESSAGE=
-set OLD_RELEASE_ROOT=C:\Program Files\Functional Objects\Functional Developer
+set OLD_RELEASE_ROOT=C:\Program Files\Open Dylan
 set OPEN_DYLAN_USER_SOURCES=
-set CVS_BRANCH=trunk
-set TEST_TARGET=test-basic-internal-release
+set TEST_TARGET=test-basic-release
 set CLEANUP=
 set EXPORTS=no
 set DEBUGGER=no
@@ -82,8 +76,6 @@ REM //
 if "%1%"==""                  GOTO PARAM_DONE
 If "%1%"=="-dylan"            GOTO SET_OLD_RELEASE_ROOT
 If "%1%"=="/dylan"            GOTO SET_OLD_RELEASE_ROOT
-If "%1%"=="-branch"           GOTO SET_CVS_BRANCH
-If "%1%"=="/branch"           GOTO SET_CVS_BRANCH
 if "%1%"=="-target"           GOTO SET_TEST_TARGET
 if "%1%"=="/target"           GOTO SET_TEST_TARGET
 if "%1%"=="-sources"          GOTO SET_SOURCES
@@ -109,13 +101,6 @@ REM //
 :SET_OLD_RELEASE_ROOT
 If "%2%"=="" GOTO NO_ARG
 set OLD_RELEASE_ROOT=%2%
-shift
-shift
-goto PARAM_LOOP
-
-:SET_CVS_BRANCH
-If "%2%"=="" GOTO NO_ARG
-set CVS_BRANCH=%2%
 shift
 shift
 goto PARAM_LOOP
@@ -185,7 +170,7 @@ set OPTIONS=/debugger
 set QUOTED_OPTIONS=OPTIONS=%OPTIONS%
 
 :SKIP_DEBUGGER_OPTION
-set BUILD_OPTIONS=-p %QA_RELEASE_ROOT% -s %RELEASE_ROOT% %COMMON_BUILD_OPTIONS% -sources %OPEN_DYLAN_USER_SOURCES% -branch %CVS_BRANCH% -nopath -environment
+set BUILD_OPTIONS=-p %QA_RELEASE_ROOT% -s %RELEASE_ROOT% %COMMON_BUILD_OPTIONS% -sources %OPEN_DYLAN_USER_SOURCES% -nopath -environment
 
 :TEST_RELEASE
 echo --------------------------------------------------

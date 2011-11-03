@@ -168,7 +168,7 @@ set COMPILER_OPTIONS=%COMPILER_OPTIONS% %DIRECTORY%\%IDL%.idl
 :FIND_DEBUGGER
 set DEBUGGER=%DYLAN_RELEASE_ROOT%\bin\batch-debug.exe
 if exist "%DEBUGGER%" goto setup_debugging
-set DEBUGGER=C:\Program Files\Functional Objects\Functional Developer\bin\batch-debug.exe
+set DEBUGGER=C:\Program Files\Open Dylan\bin\batch-debug.exe
 if exist "%DEBUGGER%" goto setup_debugging
 set DEBUGGER=batch-debug
 
