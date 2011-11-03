@@ -1,9 +1,5 @@
 @echo off
 
-:ENSURE_CVS_LOGS
-if exist "%OPEN_DYLAN_CVS_LOGS%" goto ensure_build_logs
-mkdir %OPEN_DYLAN_CVS_LOGS%
-
 :ENSURE_BUILD_LOGS
 if exist "%OPEN_DYLAN_BUILD_LOGS%" goto ensure_build
 mkdir %OPEN_DYLAN_BUILD_LOGS%

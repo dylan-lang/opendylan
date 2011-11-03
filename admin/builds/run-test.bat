@@ -62,7 +62,7 @@ set DEBUGGER=
 if "%DEBUG%"=="no" goto run_test
 set DEBUGGER=%OPEN_DYLAN_RELEASE_ROOT%\bin\batch-debug.exe
 if exist "%DEBUGGER%" goto run_test
-set DEBUGGER=C:\Program Files\Functional Objects\Functional Developer\bin\batch-debug.exe
+set DEBUGGER=C:\Program Files\Open Dylan\bin\batch-debug.exe
 if exist "%DEBUGGER%" goto run_test
 set DEBUGGER=batch-debug
 

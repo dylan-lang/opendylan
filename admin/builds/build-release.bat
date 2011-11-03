@@ -13,7 +13,7 @@ echo -
 echo -
 echo -   Options:
 echo -     /target
-echo -       Specifies the target release name. [default: minimal-internal-release]
+echo -       Specifies the target release name. [default: release]
 echo -     /generations
 echo -       Specifies the number of generations. [default: 3]
 echo -     /exports
@@ -25,8 +25,6 @@ echo -       Specifies the directory to build from (previous release)
 echo -       [default: C:\Program Files\Open Dylan]
 echo -     /sources
 echo -       Specifies the location of the sources [default: under release]
-echo -     /branch
-echo -       Specifies the CVS branch. [default: trunk]
 echo -     /rm-early-builds
 echo -       Cleans up build products of non-last generations.
 echo -     /warnings
@@ -49,8 +47,6 @@ echo -     /debugger
 echo -       Runs the builds under batch-debug [default: no debugging]
 echo -     /fullcrt
 echo -       will build the pentium run time using full version of the C runtime
-echo -     /runtime-expiration YYYYMMDD
-echo -       sets the expiration date for the Dylan runtime to YYYYMMDD [default: none]
 echo -     /verbose
 echo -       Show more information during building
 echo - 
@@ -62,7 +58,6 @@ echo -   - If you didn't install the Hacker Edition in the standard location
 echo -     you should use the /dylan argument to specify its location.
 echo -   - It's a good idea to also set OPEN_DYLAN_DEFAULT_ROOT to
 echo -     the same value passed as the /dylan argument.
-echo -   - You must set the CVSROOT environment variable appropriately.
 echo -   - Some options cause perl scripts to be invoked.  Have perl on your PATH.
 echo -   - VC++ 6 and the MSSDK should be installed.  Make sure that the VC++ directories
 echo -     appear before the MSSDK directories on your PATH, and after them on your
@@ -72,7 +67,7 @@ echo - EXAMPLES:
 echo - 
 echo -   build-release c:\dylan
 echo -
-echo -     Build a new internal release in c:\dylan
+echo -     Build a new release in c:\dylan
 echo -
 echo -   build-release c:\dylan /target pentium-dw
 echo -
@@ -86,16 +81,13 @@ echo -     to bootstrap.
 echo -
 echo -   build-release c:\dylan /sources u:\andrewa\dylan
 echo -
-echo -     Build the release from the sources in u:\andrewa\dylan
-echo -     rather than checking them out from CVS. Note that if
-echo -     any pieces are missing, that they will get checked out
-echo -     as part of the build process [this may not be what you
-echo -     want, we should work on a solution if you need it].
+echo -     Build the release from the sources in u:\andrewa\dylan.
+echo -     Note that if any pieces are missing, the build will fail.
 echo -     The build products will be stored in c:\dylan.
 echo -
 echo ----------------------------------------------------------------------------
-echo - BEWARE: only internal release is supported; you want to invoke:
-echo -   build-release.bat TARGET /sources SRC /internal /target internal-release
+echo - BEWARE: you want to invoke
+echo -   build-release.bat TARGET /sources SRC /internal
 echo -----------------------------------------------------------------------------
 goto END
 
@@ -112,13 +104,12 @@ set OLD_RELEASE_ROOT=%OPEN_DYLAN_DEFAULT_ROOT%
 set OPEN_DYLAN_USER_SOURCES=
 set SAVED_OPEN_DYLAN_LIBRARY_PACKS=%OPEN_DYLAN_LIBRARY_PACKS%
 set GENERATIONS=3
-set CVS_BRANCH=trunk
 set BOOTSTRAP_TARGET=
 set COMPILER_TARGET=
 set FINAL_COMPILER_TARGET=
 set COMPILER_FILENAME=
 set FINAL_COMPILER_FILENAME=
-set RELEASE_TARGET=
+set RELEASE_TARGET=release
 set CLEANUP=no
 set EXPORTS=no
 set DEBUGGING=no
@@ -133,10 +124,8 @@ set TIMINGS_ROOT=
 set STRIP_RUNTIME=no
 set OLD_RUNTIME_PREFIX=D3
 set RUNTIME_PREFIX=Dx
-set SANITIZE=no
 set USE_ENVIRONMENT=yes
 set USE_FULL_C_RUNTIME=no
-set RUNTIME_EXPIRATION=none
 set VERBOSE=no
 
 set OPEN_DYLAN_USER_SOURCES=
@@ -159,8 +148,6 @@ if "%1"=="-pentium-dw"         GOTO SET_USE_PENTIUM_DW
 if "%1"=="/pentium-dw"         GOTO SET_USE_PENTIUM_DW
 if "%1"=="-dylan"              GOTO SET_OLD_RELEASE_ROOT
 if "%1"=="/dylan"              GOTO SET_OLD_RELEASE_ROOT
-if "%1"=="-branch"             GOTO SET_CVS_BRANCH
-if "%1"=="/branch"             GOTO SET_CVS_BRANCH
 if "%1"=="-generations"        GOTO SET_GENERATIONS
 if "%1"=="/generations"        GOTO SET_GENERATIONS
 if "%1"=="-target"             GOTO SET_RELEASE_TARGET
@@ -197,16 +184,12 @@ if "%1"=="-test"               GOTO SET_TEST
 if "%1"=="/test"               GOTO SET_TEST
 if "%1"=="-strip-runtime"      GOTO SET_STRIP_RUNTIME
 if "%1"=="/strip-runtime"      GOTO SET_STRIP_RUNTIME
-if "%1"=="-sanitize"           GOTO SET_SANITIZE
-if "%1"=="/sanitize"           GOTO SET_SANITIZE
 if "%1"=="-internal"           GOTO SET_INTERNAL
 if "%1"=="/internal"           GOTO SET_INTERNAL
 if "%1"=="-external"           GOTO SET_EXTERNAL
 if "%1"=="/external"           GOTO SET_EXTERNAL
 if "%1"=="-fullcrt"            GOTO SET_FULLCRT
 if "%1"=="/fullcrt"            GOTO SET_FULLCRT
-if "%1"=="/runtime-expiration" GOTO SET_RUNTIME_EXPIRATION
-if "%1"=="-runtime-expiration" GOTO SET_RUNTIME_EXPIRATION
 if "%1%"=="/verbose"           GOTO SET_VERBOSE
 if "%1%"=="-verbose"           GOTO SET_VERBOSE
 set ERROR_MESSAGE=Invalid command line argument %1
@@ -228,13 +211,6 @@ goto PARAM_LOOP
 :SET_OLD_RELEASE_ROOT
 if "%2"=="" GOTO NO_ARG
 set OLD_RELEASE_ROOT=%2
-shift
-shift
-goto PARAM_LOOP
-
-:SET_CVS_BRANCH
-if "%2"=="" GOTO NO_ARG
-set CVS_BRANCH=%2
 shift
 shift
 goto PARAM_LOOP
@@ -343,11 +319,6 @@ set STRIP_RUNTIME=yes
 shift
 goto PARAM_LOOP
 
-:SET_SANITIZE
-set SANITIZE=yes
-shift
-goto PARAM_LOOP
-
 REM //
 REM // Setup the internal release options //
 REM //
@@ -381,13 +352,6 @@ set USE_FULL_C_RUNTIME=yes
 shift
 goto PARAM_LOOP
 
-:SET_RUNTIME_EXPIRATION
-if "%2%"=="" GOTO NO_ARG
-set RUNTIME_EXPIRATION=%2%
-shift
-shift
-goto PARAM_LOOP
-
 :SET_VERBOSE
 set VERBOSE=yes
 shift
@@ -412,7 +376,7 @@ if "%COMPILER_TARGET%"=="" set COMPILER_TARGET=minimal-console-compiler
 if "%FINAL_COMPILER_TARGET%"=="" set FINAL_COMPILER_TARGET=console-compiler console-scepter
 if "%COMPILER_FILENAME%"=="" set COMPILER_FILENAME=minimal-console-compiler.exe
 if "%FINAL_COMPILER_FILENAME%"=="" set FINAL_COMPILER_FILENAME=console-compiler.exe
-if "%RELEASE_TARGET%"=="" set RELEASE_TARGET=minimal-internal-release
+if "%RELEASE_TARGET%"=="" set RELEASE_TARGET=release
 goto setup_default_release_options
 
 REM //
@@ -423,7 +387,7 @@ if "%COMPILER_TARGET%"=="" set COMPILER_TARGET=minimal-compiler
 if "%FINAL_COMPILER_TARGET%"=="" set FINAL_COMPILER_TARGET=compiler console-scepter
 if "%COMPILER_FILENAME%"=="" set COMPILER_FILENAME=minimal-pentium-dw.exe
 if "%FINAL_COMPILER_FILENAME%"=="" set FINAL_COMPILER_FILENAME=pentium-dw.exe
-if "%RELEASE_TARGET%"=="" set RELEASE_TARGET=minimal-internal-release
+if "%RELEASE_TARGET%"=="" set RELEASE_TARGET=release
 goto setup_default_release_options
 
 REM //
@@ -439,11 +403,6 @@ set OPEN_DYLAN_PLATFORM_NAME=x86-win32
 REM // Pentium runtime build options
 set PENTIUM_RUNTIME_OPTIONS=
 set QUOTED_PENTIUM_RUNTIME_OPTIONS=
-if "%RUNTIME_EXPIRATION%"=="none" goto skip_expiration_option
-set PENTIUM_RUNTIME_OPTIONS=EXPIRATION=%RUNTIME_EXPIRATION%
-set QUOTED_PENTIUM_RUNTIME_OPTIONS=PENTIUM_RUNTIME_OPTIONS="%PENTIUM_RUNTIME_OPTIONS%"
-
-:SKIP_EXPIRATION_OPTION
 if "%USE_FULL_C_RUNTIME%"=="no" goto setup_build_options
 set PENTIUM_RUNTIME_OPTIONS=%PENTIUM_RUNTIME_OPTIONS% fullcrt=yes
 set QUOTED_PENTIUM_RUNTIME_OPTIONS=PENTIUM_RUNTIME_OPTIONS="%PENTIUM_RUNTIME_OPTIONS%"
@@ -472,22 +431,15 @@ set OPTIONS=%OPTIONS% /show-failure-log
 set QUOTED_OPTIONS=OPTIONS="%OPTIONS%"
 
 :SKIP_SHOW_FAILURE_LOG_OPTION
-set COMMON_BUILD_OPTIONS= -branch %CVS_BRANCH% -nopath
+set COMMON_BUILD_OPTIONS= -nopath
 set BUILD_OPTIONS=-p %NEW_RELEASE_ROOT% -s %OLD_RELEASE_ROOT% %COMMON_BUILD_OPTIONS%
 if not "%OPEN_DYLAN_USER_SOURCES%"=="" set BUILD_OPTIONS=%BUILD_OPTIONS% -sources %OPEN_DYLAN_USER_SOURCES%
 if "%USE_ENVIRONMENT%"=="yes" set BUILD_OPTIONS=%BUILD_OPTIONS% -environment
 
-REM // Source sanitizing options
-set CHECKOUT_OPTIONS=
-if "%SANITIZE%"=="no" goto setup_bootstrap_targets
-set CHECKOUT_OPTIONS=/sanitize
-set QUOTED_CHECKOUT_OPTIONS=CHECKOUT_OPTIONS=%CHECKOUT_OPTIONS%
-
 :SETUP_BOOTSTRAP_TARGETS
 if "%RELEASE_TARGET%"=="minimal-console-compiler" goto setup_minimal_builds
 if "%RELEASE_TARGET%"=="minimal-console-environment" goto setup_minimal_builds
-if "%RELEASE_TARGET%"=="minimal-win32-environment" goto setup_minimal_builds
-if "%RELEASE_TARGET%"=="minimal-internal-release" goto setup_minimal_builds
+if "%RELEASE_TARGET%"=="minimal-release" goto setup_minimal_builds
 goto build
 
 :SETUP_MINIMAL_BUILDS
@@ -659,19 +611,9 @@ echo Generation 1 build completed at:
 call date /t
 call time /t
 
-:MAYBE_COPY_OLD_MANGLER
-REM This enables compiler-bootstrapping with new mangler scheme
-if exist "%DYLAN_RELEASE_ROOT%\bin\old-dfmc-mangling.dll" copy %DYLAN_RELEASE_ROOT%\bin\old-dfmc-mangling.dll %OPEN_DYLAN_USER_INSTALL%\bin >nul
-if exist "%DYLAN_RELEASE_ROOT%\bin\old-dfmc-mangling.dll" copy %DYLAN_RELEASE_ROOT%\bin\variable-search.dll %OPEN_DYLAN_USER_INSTALL%\bin >nul
-
-:MAYBE_COPY_OLD_VARIABLE_SEARCH
-REM This enables compiler-bootstrapping with new variable-searching
-if exist "%DYLAN_RELEASE_ROOT%\bin\old-variable-search.dll" copy %DYLAN_RELEASE_ROOT%\bin\old-variable-search.dll %OPEN_DYLAN_USER_INSTALL%\bin\variable-search.dll >nul
-
 if exist "%OPEN_DYLAN_USER_INSTALL%\bin\%OLD_RUNTIME_PREFIX%fundyl.dll" goto maybe_copy_bootstrap_registry
 if exist "%OPEN_DYLAN_USER_INSTALL%\bin\%RUNTIME_PREFIX%fundyl.dll" goto maybe_copy_bootstrap_registry
 echo Installing DLLs from old release %DYLAN_RELEASE_ROOT%
-copy %DYLAN_RELEASE_ROOT%\bin\equal-table.dll %OPEN_DYLAN_USER_INSTALL%\bin 1>nul 2>nul
 
 REM // Copy redistributable libraries (including those from a previous version)
 REM // Be careful not to wipe out redistributable libraries
@@ -719,9 +661,7 @@ call ensure-directory %USER_REGISTRY%
 call ensure-directory %USER_REGISTRY%\generic
 call ensure-directory %USER_REGISTRY%\x86-win32
 copy %OPEN_DYLAN_USER_REGISTRIES%\generic\*.* %USER_REGISTRY%\generic >nul
-xcopy /E /I %OPEN_DYLAN_USER_REGISTRIES%\generic\CVS %USER_REGISTRY%\generic\CVS >nul
 copy %OPEN_DYLAN_USER_REGISTRIES%\x86-win32\*.* %USER_REGISTRY%\x86-win32 >nul
-xcopy /E /I %OPEN_DYLAN_USER_REGISTRIES%\x86-win32\CVS %USER_REGISTRY%\x86-win32\CVS >nul
 
 :FINISH_BOOTSTRAP
 set OPEN_DYLAN_USER_REGISTRIES=%USER_REGISTRY%
@@ -796,7 +736,7 @@ echo Final generation build starting at:
 call date /t
 call time /t
 call ensure-release-area
-%MAKE% %QUOTED_OPTIONS% %QUOTED_PENTIUM_RUNTIME_OPTIONS% %QUOTED_RUNTIME_OPTIONS% %QUOTED_CHECKOUT_OPTIONS% %RELEASE_TARGET%
+%MAKE% %QUOTED_OPTIONS% %QUOTED_PENTIUM_RUNTIME_OPTIONS% %QUOTED_RUNTIME_OPTIONS% %RELEASE_TARGET%
 if %ERRORLEVEL% NEQ 0 goto build_error
 if "%WARNINGS%"=="yes" call show-build-warnings %WARNINGS_OPTIONS%
 if "%TIMINGS%"=="yes" call generate-compiler-timings %OPEN_DYLAN_BUILD_LOGS%

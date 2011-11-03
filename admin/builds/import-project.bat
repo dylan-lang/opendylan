@@ -8,7 +8,7 @@ set DEBUGGING=no
 set DLL=no
 set EXT=
 set QUIET=yes
-if "%OPEN_DYLAN_DEFAULT_ROOT%"=="" set OPEN_DYLAN_DEFAULT_ROOT=C:\Program Files\Functional Objects\Functional Developer
+if "%OPEN_DYLAN_DEFAULT_ROOT%"=="" set OPEN_DYLAN_DEFAULT_ROOT=C:\Program Files\Open Dylan
 
 REM //
 REM // Loop through the command line arguments //

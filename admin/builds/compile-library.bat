@@ -247,7 +247,7 @@ if "%BUILD_COUNTS%"=="ignore" set OPEN_DYLAN_MAJOR_MINOR_CHECKS_ONLY=yes
 :FIND_DEBUGGER
 set DEBUGGER=%DYLAN_RELEASE_ROOT%\bin\batch-debug.exe
 if exist "%DEBUGGER%" goto setup_debugging
-set DEBUGGER=C:\Program Files\Functional Objects\Functional Developer\bin\batch-debug.exe
+set DEBUGGER=C:\Program Files\Open Dylan\bin\batch-debug.exe
 if exist "%DEBUGGER%" goto setup_debugging
 set DEBUGGER=batch-debug
 
