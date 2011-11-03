@@ -1,7 +1,7 @@
 ;;; TODO:
 ;;; - check copyrights throughout
 ;;; - add splash screen?
-;;; - add warning about nonempty install dir 
+;;; - add warning about nonempty install dir
 ;;; - check that there is a warning on overwrite
 ;;; - uninstaller:
 ;;;   - replace rmdir /r with smth more intelligent;
@@ -20,7 +20,7 @@
 ;;; Application defines
 ;;;
 !define APPNAME "Open Dylan"
-!define APPVERSION "1.0 Beta 5"
+!define APPVERSION "1.0.2011-11-02"
 !define APPNAMEANDVERSION "${APPNAME} ${APPVERSION}"
 
 ;;;-------------------------------------
@@ -29,7 +29,11 @@
 !define REGISTRY_KEY "Software\Open Dylan\${APPNAME}"
 
 !ifndef OUTFILE
-!define OUTFILE "opendylan-win32.exe"
+!define OUTFILE "opendylan-${APPVERSION}-win32.exe"
+!endif
+
+!ifndef LICENSE
+!define LICENSE "$%OPEN_DYLAN_RELEASE_SOURCES%\..\License.txt"
 !endif
 
 ;;;--------------------------------
@@ -51,7 +55,7 @@
 ;;; Install properties
 ;;;
 !insertmacro MUI_PAGE_WELCOME
-!insertmacro MUI_PAGE_LICENSE "..\..\License.txt"
+!insertmacro MUI_PAGE_LICENSE ${LICENSE}
 !insertmacro MUI_PAGE_COMPONENTS
 !insertmacro MUI_PAGE_DIRECTORY
 Page custom ChooseBuildScript
@@ -94,7 +98,7 @@ Name "${APPNAMEANDVERSION}"
 InstallDir "$PROGRAMFILES\${APPNAME}"
 InstallDirRegKey HKEY_LOCAL_MACHINE "${REGISTRY_KEY}\Install" "Install_Dir"
 BrandingText "Open Dylan - www.opendylan.org"
-LicenseData "..\..\License.txt"
+LicenseData ${LICENSE}
 ShowInstDetails show
 
 ;;;--------------------------------
@@ -110,13 +114,19 @@ Section "${APPNAME} Core" SecOpendylanCore
   SectionIn 1 2 RO
 
   SetOutPath "$INSTDIR\"
-  File ..\..\License.txt
-  File /r bin
-  File /r lib
-  File /r databases
-  File /r Templates
-  File /r Examples
-  File /r sources
+  File ${LICENSE}
+  SetOutPath "$INSTDIR\bin\"
+  File /r $%OPEN_DYLAN_RELEASE_ROOT%\bin\*.*
+  SetOutPath "$INSTDIR\lib\"
+  File /r $%OPEN_DYLAN_RELEASE_ROOT%\lib\*.*
+  SetOutPath "$INSTDIR\databases\"
+  File /r $%OPEN_DYLAN_RELEASE_ROOT%\databases\*.*
+  SetOutPath "$INSTDIR\Templates\"
+  File /r $%OPEN_DYLAN_RELEASE_ROOT%\Templates\*.*
+  SetOutPath "$INSTDIR\Examples\"
+  File /r $%OPEN_DYLAN_RELEASE_ROOT%\Examples\*.*
+  SetOutPath "$INSTDIR\source\"
+  File /r /x .git $%OPEN_DYLAN_RELEASE_SOURCES%\*.*
 
   WriteRegStr HKEY_LOCAL_MACHINE "${REGISTRY_KEY}\1.0" "Library-Packs" "0xffff"
   WriteRegStr HKEY_LOCAL_MACHINE "${REGISTRY_KEY}\1.0" "Console-Tools" "Yes"
@@ -135,7 +145,7 @@ Section "${APPNAME} Core" SecOpendylanCore
                                           "Field 5" "State"
   !insertmacro MUI_INSTALLOPTIONS_READ $4 "choose-build-script.ini" \
                                           "Field 6" "State"
-  
+
   ;; Display a messagebox if check box was checked
   StrCmp $0 "1" "" +2
     StrCpy $R0 "x86-win32-vc6-build.jam"
@@ -150,11 +160,11 @@ Section "${APPNAME} Core" SecOpendylanCore
 
   WriteRegStr HKCU "${REGISTRY_KEY}\1.0\Build-System" "build-script" \
               "$INSTDIR\lib\$R0"
-	
+
   ;; Write the uninstall keys for Windows
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Open Dylan" "DisplayName" "${APPNAMEANDVERSION} (remove only)"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Open Dylan" "UninstallString" '"$INSTDIR\uninstall.exe"'
-	
+
   WriteUninstaller "uninstall.exe"
 SectionEnd
 
@@ -163,15 +173,15 @@ Section "Install Documentation" SecDoc
 
   CreateDirectory "$INSTDIR\Documentation"
   SetOutPath "$INSTDIR\Documentation\"
-  File "..\..\..\documentation\opendylan\product\htmlhelp\opendylan.chm"
+  File "opendylan.chm"
 
   WriteRegStr HKLM "${REGISTRY_KEY}\1.0\OnlineHelp" "DocPath" "$INSTDIR\Documentation\opendylan.chm"
   WriteRegStr HKLM "${REGISTRY_KEY}\1.0\OnlineHelp" "DocType" "HTMLHelp"
 SectionEnd
-  
+
 Section "Associate .ddb files" SecAssocDDB
   SectionIn 1 2
-	
+
   WriteRegStr HKEY_CLASSES_ROOT ".ddb" "" "Developer.Database.File"
   WriteRegStr HKEY_CLASSES_ROOT "Developer.Database.File" "" \
               "Open Dylan Compiler Database"
@@ -183,7 +193,7 @@ SectionEnd
 
 Section "Associate .hdp files" SecAssocHDP
   SectionIn 1 2
-	
+
   WriteRegStr HKEY_CLASSES_ROOT ".hdp" "" "Developer.Project.File"
   WriteRegStr HKEY_CLASSES_ROOT "Developer.Project.File" "" \
               "Open Dylan Project"
@@ -200,7 +210,7 @@ SectionEnd
 
 Section "Associate .spec files" SecAssocSPEC
   SectionIn 1 2
-	
+
   WriteRegStr HKEY_CLASSES_ROOT ".spec" "" "Developer.ToolSpec.File"
   WriteRegStr HKEY_CLASSES_ROOT ".spec" "Content Type" "text/plain"
   WriteRegStr HKEY_CLASSES_ROOT "Developer.ToolSpec.File" "" \
@@ -219,7 +229,7 @@ SectionEnd
 
 Section "Associate .lid files" SecAssocLID
   SectionIn 1 2
-	
+
   WriteRegStr HKEY_CLASSES_ROOT ".lid" "" "Dylan.LID.File"
   WriteRegStr HKEY_CLASSES_ROOT ".lid" "Content Type" "text/plain"
   WriteRegStr HKEY_CLASSES_ROOT "Dylan.LID.File" "" "Dylan Library Interchange Description"
@@ -236,8 +246,8 @@ SectionEnd
 
 Section "Associate .dyl, .dylan files" SecAssocDYLAN
   SectionIn 1 2
-	
-  WriteRegStr HKEY_CLASSES_ROOT ".dyl" "" "Dylan.Source.File" 
+
+  WriteRegStr HKEY_CLASSES_ROOT ".dyl" "" "Dylan.Source.File"
   WriteRegStr HKEY_CLASSES_ROOT ".dyl" "Content Type" "text/plain"
   WriteRegStr HKEY_CLASSES_ROOT ".dylan" "" "Dylan.Source.File"
   WriteRegStr HKEY_CLASSES_ROOT ".dylan" "Content Type" "text/plain"
@@ -257,74 +267,22 @@ Section "Redistributable folder" SecRedistributable
   SectionIn 1 2
   AddSize 23000
   SetOutPath "$INSTDIR\Redistributable\"
-
-  CopyFiles "$INSTDIR\bin\dxbigint.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxcffi.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxchnnls.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxcmndyl.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxcnsc.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxcollns.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxcom.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxcommnd.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxdb.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxdeuce.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxdmdce.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxdocon.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxdolec.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxdoles.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxdood.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxduim.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxdylan.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxfundyl.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxgarith.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxguitst.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxhtmhlp.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxio.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxmidi.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxnetwrk.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxole.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxoleaut.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxolecfr.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxolecon.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxolectl.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxoledlg.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxolesvr.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxorb.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxsystem.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxtstspc.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxtstwks.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxw32cmn.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxw32ctl.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxw32dde.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxw32dlg.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxw32gdi.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxw32gl.dll"  "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxw32glu.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxw32knl.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxw32mm.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxw32red.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxw32reg.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxw32res.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxw32shl.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxw32usr.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxw32ver.dll" "$INSTDIR\Redistributable\"
-  CopyFiles "$INSTDIR\bin\dxwduim.dll" "$INSTDIR\Redistributable\"
-
+  File /r  $%OPEN_DYLAN_RELEASE_ROOT%\Redistributable\*.*
   WriteRegStr HKLM "${REGISTRY_KEY}\Install" "Redistributable folder created" "Yes"
 SectionEnd
 
 Section "Modify path" SecModifyPath
   SectionIn 1 2
-	
+
   Push "$INSTDIR\\bin"
   Call AddToPath
-	
+
   WriteRegStr HKLM "${REGISTRY_KEY}\Install" "Path modified" "Yes"
 SectionEnd
 
 Section "Start Menu Shortcuts" SecStartMenuShortcuts
   SectionIn 1 2
-  
+
   CreateDirectory "$SMPROGRAMS\Open Dylan"
   CreateShortCut "$SMPROGRAMS\Open Dylan\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
   Delete "$SMPROGRAMS\Open Dylan\${APPNAMEANDVERSION}.lnk" ; Delete older link if exists
@@ -374,41 +332,41 @@ SectionEnd
   !insertmacro MUI_DESCRIPTION_TEXT ${SecQuickLaunchShortcut} \
                "Create Quick Launch shortcut"
 !insertmacro MUI_FUNCTION_DESCRIPTION_END
- 
+
 ;;;--------------------------------
 ;;; Uninstaller Section
 ;;;
 Section "Uninstall"
 
   MessageBox MB_YESNO|MB_ICONEXCLAMATION "Warning: If you continue, the entire installation directory ($INSTDIR) will be deleted.$\nIf you have made any changes to the contents of the directory that you would like to preserve, please back them up before proceeding.$\nAre you sure you want to continue?" IDNO cancel
-  RMDir /r "$INSTDIR" 
+  RMDir /r "$INSTDIR"
 
   ;; Delete start menu stuff
   RMDir /r "$SMPROGRAMS\Open Dylan"
 
   ;; Delete desktop icons...
   Delete "$DESKTOP\${APPNAMEANDVERSION}.lnk"
-	
+
   ;; Delete quicklaunch icon
   Delete "$QUICKLAUNCH\${APPNAMEANDVERSION}.lnk"
 
   ;; Registry stuff
-  DeleteRegKey HKEY_CLASSES_ROOT ".ddb" 
-  DeleteRegKey HKEY_CLASSES_ROOT ".dyl" 
-  DeleteRegKey HKEY_CLASSES_ROOT ".dylan" 
-  DeleteRegKey HKEY_CLASSES_ROOT ".hdp" 
-  DeleteRegKey HKEY_CLASSES_ROOT ".lid" 
-  DeleteRegKey HKEY_CLASSES_ROOT ".spec" 
-  DeleteRegKey HKEY_CLASSES_ROOT "Developer.Database.File" 
-  DeleteRegKey HKEY_CLASSES_ROOT "Developer.Project.File" 
-  DeleteRegKey HKEY_CLASSES_ROOT "Developer.ToolSpec.File" 
-  DeleteRegKey HKEY_CLASSES_ROOT "Dylan.LID.File" 
-  DeleteRegKey HKEY_CLASSES_ROOT "Dylan.Source.File" 
-  DeleteRegKey HKEY_LOCAL_MACHINE "Software\Open Dylan" 
-  
+  DeleteRegKey HKEY_CLASSES_ROOT ".ddb"
+  DeleteRegKey HKEY_CLASSES_ROOT ".dyl"
+  DeleteRegKey HKEY_CLASSES_ROOT ".dylan"
+  DeleteRegKey HKEY_CLASSES_ROOT ".hdp"
+  DeleteRegKey HKEY_CLASSES_ROOT ".lid"
+  DeleteRegKey HKEY_CLASSES_ROOT ".spec"
+  DeleteRegKey HKEY_CLASSES_ROOT "Developer.Database.File"
+  DeleteRegKey HKEY_CLASSES_ROOT "Developer.Project.File"
+  DeleteRegKey HKEY_CLASSES_ROOT "Developer.ToolSpec.File"
+  DeleteRegKey HKEY_CLASSES_ROOT "Dylan.LID.File"
+  DeleteRegKey HKEY_CLASSES_ROOT "Dylan.Source.File"
+  DeleteRegKey HKEY_LOCAL_MACHINE "Software\Open Dylan"
+
   ;; Delete the uninstall keys for Windows
-  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Open Dylan" 
-  
+  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Open Dylan"
+
   ;; Remove bin dir from path
   Push "$INSTDIR\\bin"
   Call un.RemoveFromPath
