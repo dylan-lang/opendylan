@@ -125,7 +125,7 @@ Section "${APPNAME} Core" SecOpendylanCore
   File /r $%OPEN_DYLAN_RELEASE_ROOT%\Templates\*.*
   SetOutPath "$INSTDIR\Examples\"
   File /r $%OPEN_DYLAN_RELEASE_ROOT%\Examples\*.*
-  SetOutPath "$INSTDIR\source\"
+  SetOutPath "$INSTDIR\sources\"
   File /r /x .git $%OPEN_DYLAN_RELEASE_SOURCES%\*.*
 
   WriteRegStr HKEY_LOCAL_MACHINE "${REGISTRY_KEY}\1.0" "Library-Packs" "0xffff"
