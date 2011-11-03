@@ -777,7 +777,7 @@ console-compiler-libraries: pentium-compiler-libraries environment-commands
 database-libraries: sql-odbc
 debugger: debugger-manager binary-manager coff-manager coff-debug devel-dbg-ui batch-debug
 duim-ole: duim-ole-container duim-ole-server duim-ole-control
-environment: deuce duim-deuce dfmc-environment environment-commands environment-application-commands environment-internal-commands environment-server environment-tools environment-property-pages environment-deuce environment-project-wizard environment-profiler debugger-manager target-application binary-manager coff-manager interactive-downloader environment-debugger win32-environment with-splash-screen
+environment: deuce duim-deuce environment-commands environment-application-commands environment-internal-commands environment-server environment-tools environment-property-pages environment-deuce environment-project-wizard environment-profiler debugger-manager target-application binary-manager coff-manager interactive-downloader environment-debugger win32-environment with-splash-screen
 ole-libraries: com ole-server ole-automation ole-control-framework ole-container ole-dialogs
 testworks-libraries: testworks testworks-specs gui-testworks
 user-libraries: dylan common-dylan functional-dylan c-ffi system collections io commands
@@ -1084,12 +1084,12 @@ console-compiler: console-compiler-libraries release-info environment-internal-c
 console-environment: $(CONSOLE_ENVIRONMENT)
 win32-environment: $(WIN32_ENVIRONMENT)
 with-splash-screen: $(WITH_SPLASH_SCREEN)
-environment: console-environment win32-environment with-splash-screen
+rel-environment: console-environment win32-environment with-splash-screen
 libraries: user-libraries win32-libraries duim ole-libraries duim-ole database-libraries network dylan-orb naming-client midi
 example-projects: console-example-projects duim-example-projects win32-example-projects ole-example-projects duim-ole-example-projects network-example-projects corba-example-projects
 install-examples: install-examples-css install-console-examples install-duim-examples install-win32-examples install-basic-doc-examples install-templates install-database-examples install-ole-examples install-duim-ole-examples install-network-examples install-corba-examples install-enhanced-doc-examples install-midi-examples
 tools: install-wdbgdylan dll-wrap minimal-dylan-playground dylan-playground gui-dylan-playground create-id console-scepter naming-service remote-debugger testworks-libraries debugger map-statistics parser-compiler
-release: release-info console-compiler compiler environment libraries tools install-runtime-dlls install-examples
+release: release-info console-compiler compiler environment rel-environment libraries tools install-runtime-dlls install-examples
 
 reinstall-examples:
   $(REMOVE_DIRECTORY) $(EXAMPLES_INSTALL_DIRECTORY)
