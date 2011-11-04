@@ -52,7 +52,7 @@ define macro swank-function-definer
 end;
 
 define swank-function connection-info ()
-  list(#":pid", 23, 
+  list(#":pid", 23,
        #":style", #":fd-handler",
        #":lisp-implementation", list(#":type", "dylan",
                                      #":name", release-product-name(),
@@ -73,7 +73,7 @@ define swank-function list-all-package-names (t)
   let res = #();
   local method collect-project
             (dir :: <pathname>, filename :: <string>, type :: <file-type>)
-          if (type == #"file" & filename ~= "Open-Source-License.txt")
+          if (type == #"file")
             if (last(filename) ~= '~')
               res := pair(filename, res);
             end;
