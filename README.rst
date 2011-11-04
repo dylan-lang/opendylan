@@ -78,12 +78,14 @@ Go to admin\\builds and do a::
 This will do a 4-stage bootstrap, in the end there will be a
 complete IDE in <target-dir>.
 
-[TODO: make the instructions about how to build an installer more comprehensible]
+Building an installer:
 
-This requires at least nsis from http://nsis.sf.net and the HTML help
-workshop (to generate the chm).
+Requires nsis from http://nsis.sf.net and the HTML help workshop (to
+generate the chm).
 
-To build an installer, use the fundev.nsi in packages\\win32-nsis.
+Go to packages\\win32-nsis, read Build.txt and follow the
+instructions. Make sure you are using the same command shell as used
+for building Open Dylan.
 
 
 How to Build on Darwin or Mac OS X
