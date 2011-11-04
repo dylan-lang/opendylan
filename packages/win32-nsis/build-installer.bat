@@ -45,9 +45,19 @@ echo "cannot find release root"
 goto end
 
 :REDISTRIBUTABLE
-if exist "%OPEN_DYLAN_RELEASE_ROOT%\redistributable" goto makensis
+if exist "%OPEN_DYLAN_RELEASE_ROOT%\redistributable" goto version
 echo "cannot find release root"
 goto end
+
+:VERSION
+if exist "%OPEN_DYLAN_RELEASE_SOURCES%\lib\release-info\common-info.dylan" goto set_version
+echo "cannot find release-info\common-info.dylan"
+goto end
+
+:SET_VERSION
+for /F "tokens=6" %%A in ('findstr /c:"define constant $release-version" %OPEN_DYLAN_RELEASE_SOURCES%\lib\release-info\common-info.dylan') DO set OPEN_DYLAN_VERSION=%%A
+SET OPEN_DYLAN_VERSION=%OPEN_DYLAN_VERSION:";=%
+if "%OPEN_DYLAN_VERSION%"=="" goto end
 
 :MAKENSIS
 makensis opendylan.nsi
