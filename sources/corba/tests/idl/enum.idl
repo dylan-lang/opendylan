@@ -1,6 +1,5 @@
 // Author:    Keith Dennison
 // Copyright: Copyright (c) 1998.  Functional Objects, Inc.  All rights reserved.
-// Version:   $HopeName$
 
 enum Planet {Mercury, Venus, Earth, Mars, Jupiter,
              Saturn, Uranus, Neptune, Pluto};

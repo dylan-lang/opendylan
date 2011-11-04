@@ -5,8 +5,6 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-// $HopeName: DBdylan-odbc!macros.dylan(trunk.4) $
-
 define variable *trace-odbc-functions* = #f;
 
 define method succeeded(x)

@@ -1,8 +1,6 @@
 !Synopsis:  Additional translation rules for "commctrl.h" and "prsht.h".
 !Author:    David N. Gray
 !Copyright: 1996, 1997, 1998 Functional Objects, Inc.  All rights reserved.
-!Version:   $HopeName$
-!	    $Date: 2004/03/12 00:10:24 $
 
 export-slot:DUMMYUNIONNAME\J<d>\I=@export-slot{u$1}@end
 

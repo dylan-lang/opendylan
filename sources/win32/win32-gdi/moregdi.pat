@@ -3,10 +3,6 @@
 
 ! Copyright: 1998 Functional Objects, Inc.  All rights reserved.
 
-! $HopeName: D-lib-win32-gdi!moregdi.pat(trunk.1) $
-! $Date: 2004/03/12 00:10:25 $
-
-
 ! The special rules below for the DC_... and DM_... constants are because
 ! these are duplicates of definitions in "windef.h", so are already defined
 ! in the `Win32-common' library.

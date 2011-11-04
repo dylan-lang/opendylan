@@ -12,9 +12,6 @@
 # License:      See License.txt in this distribution for details.
 # Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-# $HopeName: D-win32-winsock2!make-sources(trunk.2) $
-# $Date: 2004/03/12 00:09:30 $
-
 
 WINSOCK2=winsock2.dylan qos.dylan mswsock.dylan module.dylan 
 

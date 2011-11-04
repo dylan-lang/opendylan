@@ -3,9 +3,6 @@ Synopsis:  Win32 API for window functions implemented in "USER32.DLL".
 %comment   This file is a template that is expanded to produce "library.dylan".
 Copyright: 1997, 1998 Functional Objects, Inc.  All rights reserved.
 
-%comment $HopeName: D-lib-win32-user!library.src(trunk.12) $
-%comment $Date: 2004/03/12 00:10:30 $
-
 define library Win32-user
   use Dylan;
   use C-FFI;

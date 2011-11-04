@@ -5,9 +5,6 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-// $HopeName: D-databases-sql-odbc!dbms.dylan(trunk.7) $
-
-
 //------------------------------------------------------------
 // As of version 1, the gc has a limitation in that objects
 // referenced only by a week table are not collected if the

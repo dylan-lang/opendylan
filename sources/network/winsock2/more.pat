@@ -2,9 +2,6 @@
 ! Additional special case rules for translating "winsock2.h".
 ! This version works with the header files from the 
 ! MSDN "Platform SDK" of October 1997 or January 1998.
-!
-! $HopeName: D-win32-winsock2!more.pat(D-kan.4) $
-! $Date: 2004/03/12 00:09:30 $
 
 @set-switch{t;1}@set-switch{w;1}
 

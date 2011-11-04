@@ -4,7 +4,6 @@
 #
 #		nmake -f NMakef 
 #
-# $Header: /scm/cvs/fundev/Sources/app/windows-resource-example/NMakef,v 1.1 2004/03/12 00:05:24 cgay Exp $
 
 all: example.exe
 

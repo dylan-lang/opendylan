@@ -2,10 +2,6 @@
 
 ! Copyright: 1996, 1998 Functional Objects, Inc.  All rights reserved.
 
-! $HopeName$
-! $Date: 2004/03/12 00:09:31 $
-
-
 ! input file:
 ARGV:-input <G>\n=@bind{heading;}@write{${.OUT};@imitate-collage{@read{$1}}}\
 	@unbind{heading}

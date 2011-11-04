@@ -5,8 +5,6 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-// $HopeName: !conditions.dylan(D-kan.3) $
-
 // When set to #t, a description of the condition will be printed to (??)
 // at the time  condition is detected.
 define variable *odbc-print-condition* :: <boolean> = #f;

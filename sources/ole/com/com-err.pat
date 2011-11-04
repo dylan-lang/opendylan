@@ -4,8 +4,6 @@
 ! Dylan definitions for them.
 
 ! Copyright: 1996, 1998 Functional Objects, Inc.  All rights reserved.
-! Version:   $HopeName$
-!	     $Date: 2004/03/12 00:09:31 $
 
 @set-switch{match;1}
 

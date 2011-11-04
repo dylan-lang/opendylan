@@ -4,7 +4,6 @@ Date:	   September 26, 1996, revised October 2, 1996, December 11, 1996,
 		July 22, 1997
 Status:    Describes what is currently checked in and working.
 Copyright: 1996, 1997 Functional Objects, Inc.  All rights reserved.
-Version:   $HopeName$
 
 See the file "~dylan/doc/lib/ole-utilities.text" for a user-level
 description of this library.

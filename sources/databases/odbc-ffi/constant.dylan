@@ -5,8 +5,6 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-// $HopeName: D-databases-odbc-ffi!constant.dylan(trunk.5) $
-
 define constant $ODBCVER                            = #x0300;
 define constant $SQL-MAX-NUMERIC-LEN                =   16;
 define constant $SQL-NULL-DATA                      =   -1;

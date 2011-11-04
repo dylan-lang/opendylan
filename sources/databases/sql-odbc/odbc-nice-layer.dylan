@@ -5,9 +5,6 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-// $HopeName: !odbc-nice-layer.dylan(D-kan.3) $
-
-
 
 define constant <return-code> = <integer>;
 define constant <environment-handle> = <sqlhenv>;

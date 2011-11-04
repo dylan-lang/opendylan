@@ -1,8 +1,6 @@
 // This file lists names that are only supported on Windows NT,
 // not on Windows 95.
 //
-// $HopeName: D-lib-win32-common!nt-only.text(trunk.1) $
-// $Date: 2004/03/12 00:10:22 $
 
 
 ReadFileScatter

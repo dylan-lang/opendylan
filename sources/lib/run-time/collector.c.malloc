@@ -1,6 +1,5 @@
 /* INTERIM DYLAN RUN-TIME SYSTEM INTERFACE
  *
- * $HopeName: D-lib-pentium-run-time!collector.c(trunk.59) $
  * Copyright (C) 1996 Functional Objects, Inc. All rights reserved
  *
  * This is the implementation of the interim interface between

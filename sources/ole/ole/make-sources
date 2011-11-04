@@ -10,8 +10,6 @@
 
 # Copyright: 1996, 1997 Functional Objects, Inc.  All rights reserved.
 
-# $Header: /scm/cvs/fundev/Sources/ole/ole/make-sources,v 1.1 2004/03/12 00:09:39 cgay Exp $
-
 # files automatically generated from the C++ headers:
 DYLAN_FILES=library.dylan ole-err.dylan ole-intf.dylan omisc.dylan
 C_FILES=c-ole.c

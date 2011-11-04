@@ -5,8 +5,6 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-//$HopeName: DBdylan-sql-odbc-test!datatype-tests.dylan(trunk.2) $
-
 define constant $a-thru-z-range = make(<range>, from: $a-value, to: $z-value);
 
 define generic float-equal(float-1 :: <float>, float-2 :: <float>)

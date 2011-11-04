@@ -1,7 +1,6 @@
 // Name: AccountLogo
 // Author: Jason Trenouth
 // Copyright: (c) 1999 Functional Objects, Inc. All rights reserved.
-// Version: $HopeName: D-corba-demos-bank-java-client!AccountDialog.java(trunk.1) $
 
 package BankingDemo;
 

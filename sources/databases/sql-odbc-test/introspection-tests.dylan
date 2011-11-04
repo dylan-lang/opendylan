@@ -5,7 +5,6 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-// $HopeName: D-databases-sql-odbc-test!introspection-tests.dylan(trunk.6) $
 define test resource-stress-test()
   let catalog-list = catalogs(connection: *introspection-connection*);
   for (catalog :: <odbc-catalog> in catalog-list)
