@@ -2,8 +2,6 @@ Module:    Dylan-user	%comment	-*- Mode: Dylan -*-
 Synopsis:  Win32 API for registry functions in "WINREG.H" and "ADVAPI32.DLL"
 Copyright: Copyright (c) 1996-2000 Functional Objects, Inc. All rights reserved.
 
-%comment $HopeName: D-lib-win32-registry!library.src(trunk.5) $
-
 define library Win32-Registry
   use Dylan;
   use functional-extensions;

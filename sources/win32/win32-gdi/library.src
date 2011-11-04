@@ -4,8 +4,6 @@ Synopsis:  Win32 API for "Graphics Device Interface" -
 	   corresponding to "WINGDI.H" and "GDI32.DLL".
 Copyright: Copyright (c) 1996-2000 Functional Objects, Inc. All rights reserved.
 
-%comment $HopeName: D-lib-win32-gdi!library.src(trunk.8) $
-
 define library Win32-GDI
   use Dylan;
   use C-FFI;

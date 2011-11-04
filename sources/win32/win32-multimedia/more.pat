@@ -2,9 +2,6 @@
 ! Additional special case rules for translating "mmsystem.h".
 ! This version works with the header files from the 
 ! MSDN "Platform SDK" of January 1998.
-!
-! $HopeName: D-win32-multi-media!more.pat(trunk.1) $
-! $Date: 2004/03/12 00:10:28 $
 
 @set-switch{t;1}@set-switch{w;1}
 

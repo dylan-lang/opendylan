@@ -1,6 +1,5 @@
 // Author:    Keith Dennison
 // Copyright: Copyright (c) 1998.  Functional Objects, Inc.  All rights reserved.
-// Version:   $HopeName$
 
 struct StructureA {
 //    short               a_short;

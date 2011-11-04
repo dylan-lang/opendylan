@@ -5,9 +5,6 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-//$HopeName: D-databases-sql-odbc-test!dml-tests.dylan(trunk.4) $
-
-
 // Destructures the first record returned from a query.
 define macro execute-singleton
   { execute-singleton(?body:*) }

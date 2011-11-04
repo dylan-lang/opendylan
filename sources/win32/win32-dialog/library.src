@@ -3,8 +3,6 @@ Synopsis:  Win32 API for common dialog boxes
 	   corresponding to "COMMDLG.H" and "COMDLG32.DLL"
 Copyright: Copyright (c) 1996-2000 Functional Objects, Inc. All rights reserved.
 
-%comment $HopeName: D-lib-win32-dialog!library.src(trunk.5) $
-
 define library Win32-dialog
   use Dylan;
   use C-FFI;

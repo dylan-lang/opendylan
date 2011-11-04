@@ -5,8 +5,6 @@ Copyright: Copyright (c) 1997-2000 Functional Objects, Inc. All rights reserved.
 
 %comment  This file, "library.src", is expanded to produce "library.dylan". 
 
-%comment $HopeName$
-
 define library Ole-Dialogs
   use Dylan;
   use C-FFI;

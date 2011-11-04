@@ -1,6 +1,5 @@
 /* impl.h.mpsw3: HARLEQUIN MEMORY POOL SYSTEM C INTERFACE, WINDOWS PART
  *
- * $HopeName: D-lib-pentium-run-time!mpsw3.h(trunk.4) $
  * Copyright (C) 1998 Functional Objects, Inc.  All rights reserved.
  *
  * .readership: customers, MPS developers.

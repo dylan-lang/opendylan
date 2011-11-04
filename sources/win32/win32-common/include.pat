@@ -2,8 +2,6 @@
 
 ! Copyright 1996 Functional Objects, Inc.  All rights reserved.
 
-! $Header: /scm/cvs/fundev/Sources/win32/win32-common/include.pat,v 1.1 2004/03/12 00:10:22 cgay Exp $
-
 ! case-insensitive
 @set-switch{i;1}
 

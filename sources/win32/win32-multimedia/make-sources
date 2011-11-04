@@ -9,10 +9,6 @@
 
 # Copyright: 1998 Functional Objects, Inc.  All rights reserved.
 
-# $HopeName: D-win32-multi-media!make-sources(trunk.1) $
-# $Date: 2004/03/12 00:10:28 $
-
-
 MMSYSTEM=mmsystem.dylan library.dylan
 
 all: $(MMSYSTEM)

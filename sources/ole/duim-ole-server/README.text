@@ -4,7 +4,6 @@ Date:	   September 19, 1996 - Original version.
 	   March 31, 1997 - Updated for new compiler.
 Status:    Preliminary version, specifications subject to change.
 Copyright: 1996, 1997 Functional Objects, Inc.  All rights reserved.
-Hope info: $Header: /scm/cvs/fundev/Sources/ole/duim-ole-server/README.text,v 1.1 2004/03/12 00:09:33 cgay Exp $
 
 This library can be used together with `DUIM' to easily create an
 application program that can be used as an OLE server.  In other words, the

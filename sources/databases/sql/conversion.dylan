@@ -5,8 +5,6 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-// $HopeName: D-databases-sql!conversion.dylan(trunk.5) $
-
 
 define open generic default-conversion(value :: <object>) 
  => (converted-value :: <object>);

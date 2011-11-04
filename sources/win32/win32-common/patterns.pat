@@ -8,9 +8,6 @@
 
 ! Copyright: 1996, 1997, 1998 Functional Objects, Inc.  All rights reserved.
 
-! $HopeName: D-lib-win32-common!patterns.pat(trunk.15) $
-! $Date: 2004/03/12 00:10:22 $
-
 @set-switch{t;1}@set-switch{w;1}
 @set-syntax{L;\-\.\(\)}
 @set-switch{match;1}

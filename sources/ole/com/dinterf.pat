@@ -4,9 +4,6 @@
 
 ! Copyright: 1996, 1997, 1998 Functional Objects, Inc.  All rights reserved.
 
-! $HopeName: D-lib-com!dinterf.pat(trunk.11) $
-! $Date: 2004/03/12 00:09:32 $
-
 
 @set-switch{t;1}@set-switch{w;1}
 @set-syntax{L;\-\.\(\)}

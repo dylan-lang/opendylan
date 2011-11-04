@@ -6,8 +6,6 @@
 
 # Copyright 1996, 1997, 1998 Functional Objects, Inc.  All rights reserved.
 
-# $HopeName: D-lib-win32-dialog!make-sources(trunk.5) $
-
 WIN32-DIALOG=commdlg.dylan dlgs.dylan cderr.dylan library.dylan
 
 all: $(WIN32-DIALOG)

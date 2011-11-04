@@ -5,8 +5,6 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-// $HopeName: D-databases-sql!transaction.dylan(trunk.6) $
-
 
 define open generic default-transaction-mode(connection :: <connection>)
  => (mode :: <transaction-mode>);

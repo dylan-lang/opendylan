@@ -2,8 +2,6 @@ Module:    Dylan-user	%comment  -*- Mode: Dylan -*-
 Synopsis:  Win32 API for "DDE"
 Copyright: Copyright (c) 1997-2000 Functional Objects, Inc. All rights reserved.
 
-%comment $HopeName: D-lib-win32-dde!library.src(trunk.4) $
-
 define library Win32-DDE
   use Dylan;
   use C-FFI;
