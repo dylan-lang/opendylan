@@ -1,7 +1,6 @@
 // Name: AccountDialog
 // Author: Jason Trenouth
 // Copyright: (c) 1999 Functional Objects, Inc. All rights reserved.
-// Version: $HopeName$
 
 package BankingDemo;
 

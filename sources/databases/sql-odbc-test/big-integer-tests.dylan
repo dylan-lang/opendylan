@@ -5,8 +5,6 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-//$HopeName: D-databases-sql-odbc-test!big-integer-tests.dylan(trunk.1) $
-
 define variable *big-int-connection* = #f;
 
 define constant $my-large-integer = 1073741823;

@@ -1,6 +1,4 @@
 // Additional names from "winbase.h" to be excluded.
-// $HopeName$
-// $Date: 2004/03/12 00:10:26 $
 
 
 // Declared but not defined or documented:

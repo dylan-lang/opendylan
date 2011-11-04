@@ -6,8 +6,6 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
-// $HopeName: D-databases-sql-odbc!introspection.dylan(trunk.13) $
-
 define constant $introspection-rowset-size :: <integer> = 10;
 
 define class <odbc-catalog> (<filtered-collection>,

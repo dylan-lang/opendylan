@@ -5,8 +5,6 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-//$HopeName: DBdylan-sql-odbc-test!creation-tests.dylan(trunk.1) $
-
 
 define test dbms-make-test()
   let dbms = make(*dbms-class*);

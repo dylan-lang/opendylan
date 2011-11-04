@@ -6,9 +6,6 @@
 
 # Copyright: 1996, 1998 Functional Objects, Inc.  All rights reserved.
 
-# $HopeName: !make-sources(D-kan.2) $
-
-
 WIN32_COMMON=windef.dylan winerror.dylan comlib.dylan
 
 all: $(WIN32_COMMON)

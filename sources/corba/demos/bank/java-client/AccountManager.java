@@ -1,7 +1,6 @@
 // Name: AccountManager
 // Author: Jason Trenouth, Clive Tong
 // Copyright: (c) 1999 Functional Objects, Inc. All rights reserved.
-// Version: $HopeName: D-corba-demos-bank-java-client!AccountManager.java(trunk.1) $
 
 // ---*** Use frame.setIconImage for frame icon
 // ---*** frame.getToolkit().getImage("filename")

@@ -5,8 +5,6 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-// $HopeName: !record.dylan(D-kan.1) $
-
 
 define open abstract class <record> (<database-collection>)
   constant slot indicator-policy :: <indicator-policy> = $null-value,

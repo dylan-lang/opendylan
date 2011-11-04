@@ -2,8 +2,6 @@ Module:    Dylan-user	%comment  -*- Mode: Dylan -*-
 Synopsis:  Win32 API for "rich edit" controls in "RICHEDIT.H", "RICHED32.DLL"
 Copyright: Copyright (c) 1996-2000 Functional Objects, Inc. All rights reserved.
 
-%comment $HopeName: D-lib-win32-rich-edit!library.src(trunk.6) $
-
 // Note: there isn't any "RICHED32.LIB"; the user needs to 
 //       do an explicit dynamic load of "RICHED32.DLL".
 

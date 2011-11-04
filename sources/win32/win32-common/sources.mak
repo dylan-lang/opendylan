@@ -4,9 +4,6 @@
 #
 # Copyright: 1998 Functional Objects, Inc.  All rights reserved.
 #
-# $HopeName: !sources.mak(D-kan.3) $
-# $Date: 2004/03/12 00:10:22 $
-
 
 # GEMA=/u/dylan/local/gema
 GEMA=gema

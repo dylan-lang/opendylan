@@ -3,9 +3,6 @@ Synopsis:  Win32 API for non-GUI system services in "KERNEL32.DLL"
 %comment   This file is a template that is expanded to produce "library.dylan".
 Copyright: 1996, 1997, 1998 Functional Objects, Inc.  All rights reserved.
 
-%comment $HopeName: D-lib-win32-kernel!library.src(trunk.12) $
-%comment $Date: 2004/03/12 00:10:27 $
-
 define library Win32-kernel
   use Dylan;
   use functional-extensions;

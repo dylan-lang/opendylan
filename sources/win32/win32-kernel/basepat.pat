@@ -2,9 +2,6 @@
 ! Author:    David N. Gray
 ! Copyright: 1996, 1998 Functional Objects, Inc.  All rights reserved.
 
-! $HopeName$
-! $Date: 2004/03/12 00:10:26 $
-
 ! This version has been tuned to work with the SDK files in the
 !  October 1997 MSDN distribution.
 

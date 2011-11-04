@@ -5,8 +5,6 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-// $HopeName: DBdylan-sql-odbc!odbc-rs-substrate.dylan(trunk.2) $
-
 
 define abstract sealed class <odbc-result-set> (<result-set-substrate>)
   slot %record :: <odbc-record>,

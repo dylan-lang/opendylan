@@ -5,8 +5,6 @@ Synopsis:  This is a Dylan library to act as an interface to OLE2.
 Author:    David N. Gray
 Copyright: Copyright (c) 1996-2000 Functional Objects, Inc. All rights reserved.
 
-%comment $HopeName: D-lib-ole!library.src(trunk.5) $
-
 %comment  This file is expanded by "include.pat" to create the real Dylan file.
 
 define library OLE

@@ -6,8 +6,6 @@
 
 # Copyright: 1998 Functional Objects, Inc.  All rights reserved.
 
-# $HopeName: D-win32-shell!make-sources(trunk.1) $
-
 WIN32-SHELL=shellapi.dylan library.dylan
 
 all: $(WIN32-SHELL)

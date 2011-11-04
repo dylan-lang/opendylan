@@ -4,9 +4,6 @@
 
 ! Copyright: 1998 Functional Objects, Inc.  All rights reserved.
 
-! $HopeName$
-! $Date: 2004/03/12 00:10:27 $
-
 ! Skip the part that has already been included in "win32-common":
 \#ifndef\ _WINNT_\n<U>\n\#ifndef\ WIN32_NO_STATUS\n=
 

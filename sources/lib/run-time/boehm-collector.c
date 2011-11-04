@@ -1,6 +1,5 @@
 /* INTERIM DYLAN RUN-TIME SYSTEM INTERFACE
  *
- * $HopeName: D-lib-pentium-run-time!boehm-collector.c(trunk.2) $
  * Copyright (C) 1996 Functional Objects, Inc. All rights reserved
  */
 

@@ -1,6 +1,5 @@
 // Author:    Keith Dennison
 // Copyright: Copyright (c) 1998.  Functional Objects, Inc.  All rights reserved.
-// Version:   $HopeName: D-corba-tests-idl!tree.idl(trunk.2) $
 
 typedef struct Tree {
   string label;

@@ -1,6 +1,5 @@
 /* impl.h.mm: DYLAN INTERIM MEMORY MANAGER INTERFACE
  *
- * $HopeName: D-lib-pentium-run-time!mm.h(trunk.6) $
  * Copyright (C) 1994,1995,1996,1998 Functional Objects, Inc. All rights reserved
  *
  * This file defines a temporary interface between the Dylan run-time

@@ -5,8 +5,6 @@
 
 
 ! Copyright: 1997, 1998 Functional Objects, Inc.  All rights reserved.
-! Version:   $HopeName: D-lib-ole-automation!auto-err.pat(trunk.3) $
-!	     $Date: 2004/03/12 00:09:45 $
 
 
 @set-switch{line;1}

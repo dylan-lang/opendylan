@@ -6,8 +6,6 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
-// $HopeName: D-databases-sql-odbc!record.dylan(trunk.4) $
-
 
 define concrete sealed class <odbc-record> (<record>)
   constant slot statement :: <odbc-sql-statement>,
