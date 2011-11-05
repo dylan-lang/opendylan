@@ -17,6 +17,24 @@ define command-line exit => <exit-command>
 end command-line exit;
 
 
+/// Version command
+define class <version-command> (<basic-command>)
+end class <version-command>;
+
+define command-line version => <version-command>
+    (summary:
+       "displays the version",
+     documentation:
+       "VERSION shows the current version of the compiler.\n")
+end command-line version;
+
+define sealed method do-execute-command
+    (context :: <server-context>, command :: <version-command>)
+ => ()
+  message(context, release-version())
+end method do-execute-command;
+
+
 /// Help command
 
 define class <help-command> (<basic-command>)
@@ -293,6 +311,7 @@ define command-group basic
     (summary: "basic commands",
      documentation: "The basic commands.")
   command help;
+  command version;
   command describe;
   command exit;
   alias quit = exit;
