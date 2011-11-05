@@ -50,13 +50,12 @@ echo "cannot find release root"
 goto end
 
 :VERSION
-if exist "%OPEN_DYLAN_RELEASE_SOURCES%\lib\release-info\common-info.dylan" goto set_version
-echo "cannot find release-info\common-info.dylan"
+if exist "%OPEN_DYLAN_RELEASE_ROOT%\bin\console-compiler" goto set_version
+echo "cannot find console-compiler"
 goto end
 
 :SET_VERSION
-for /F "tokens=6" %%A in ('findstr /c:"define constant $release-version" %OPEN_DYLAN_RELEASE_SOURCES%\lib\release-info\common-info.dylan') DO set OPEN_DYLAN_VERSION=%%A
-SET OPEN_DYLAN_VERSION=%OPEN_DYLAN_VERSION:";=%
+for /f %%X in ('%OPEN_DYLAN_RELEASE_ROOT%\bin\console-compiler /shortversion') DO SET OPEN_DYLAN_VERSION=%%X
 if "%OPEN_DYLAN_VERSION%"=="" goto end
 
 :MAKENSIS
