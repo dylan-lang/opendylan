@@ -19,6 +19,7 @@ define module command-lines
   use streams;
   use format;
   use locators;
+  use release-info;
 
   // Command line servers
   export <command-line-server>,
@@ -100,6 +101,7 @@ define module command-lines
   // Basic commands
   export $basic-command-group,
          <exit-command>,
+         <version-command>,
          <help-command>,
          display-help;
 

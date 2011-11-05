@@ -23,6 +23,8 @@ define abstract class <basic-main-command> (<basic-command>)
     init-keyword: help?:;
   constant slot %logo?          :: <boolean> = #t,
     init-keyword: logo?:;
+  constant slot %version?       :: <boolean> = #f,
+    init-keyword: version?:;
   constant slot %debugger?      :: <boolean> = #f,
     init-keyword: debugger?:;
   constant slot %import?        :: <boolean> = #f,
@@ -179,6 +181,17 @@ define method do-execute-command
       run(<help-command>, 
 	  command: command-line,
 	  title: as-uppercase(locator-base(filename)));
+      $success-exit-code
+    elseif (command.%version?)
+      let command-line
+	= select (command by instance?)
+	    <main-command> => $main-command-line;
+	    otherwise      => $internal-main-command-line;
+	  end;
+      let filename = as(<file-locator>, application-filename());
+      run(<version-command>,
+          command: command-line,
+          title: as-uppercase(locator-base(filename)));
       $success-exit-code
     else
       command.%logo? & message(context, dylan-banner());
