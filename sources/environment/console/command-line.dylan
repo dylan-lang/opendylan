@@ -25,6 +25,8 @@ define abstract class <basic-main-command> (<basic-command>)
     init-keyword: logo?:;
   constant slot %version?       :: <boolean> = #f,
     init-keyword: version?:;
+  constant slot %shortversion?  :: <boolean> = #f,
+    init-keyword: shortversion?:;
   constant slot %debugger?      :: <boolean> = #f,
     init-keyword: debugger?:;
   constant slot %import?        :: <boolean> = #f,
@@ -107,7 +109,7 @@ define method execute-main-command
     = command.%link-dll?  | command.%link-exe?;
   let build? = command.%build? | dw-options?;
   if (build? | command.%compile?)
-    run(<build-project-command>, 
+    run(<build-project-command>,
 	clean?:      command.%clean?,
 	save?:       command.%save?,
 	link?:       #f,
@@ -128,7 +130,7 @@ define method execute-main-command
 	      command.%link-dll? => #"dll";
 	      command.%link-exe? => #"executable";
 	    end;
-    run(<link-project-command>, 
+    run(<link-project-command>,
 	build-script: command.%build-script,
 	target:      target,
 	arch:        command.%arch,
@@ -145,7 +147,7 @@ define method execute-main-loop
   let echo-input? = command.%echo-input?;
   let profile-commands? = command.%profile-commands?;
   command-line-loop
-    (context.context-server, 
+    (context.context-server,
      debugger?:         command.%debugger?,
      echo-input?:       echo-input?,
      profile-commands?: profile-commands?);
@@ -167,24 +169,24 @@ define method do-execute-command
 	  end
 	end;
     local method run
-	      (class :: subclass(<command>), #rest arguments) => ()
-	    let command = apply(make, class, server: context, arguments);
-	    execute-command(command)
+	      (class :: subclass(<command>), #rest arguments)
+           => (success :: <integer>)
+            let command-line = $main-command-line;
+            let filename = as(<file-locator>, application-filename());
+	    let command = apply(make, class,
+                                server: context,
+                                command: command-line,
+                                title: as-uppercase(locator-base(filename)),
+                                arguments);
+	    execute-command(command);
+            $success-exit-code
 	  end method run;
     if (command.%help?)
-      let command-line = $main-command-line;
-      let filename = as(<file-locator>, application-filename());
-      run(<help-command>,
-	  command: command-line,
-	  title: as-uppercase(locator-base(filename)));
-      $success-exit-code
+      run(<help-command>)
     elseif (command.%version?)
-      let command-line = $main-command-line;
-      let filename = as(<file-locator>, application-filename());
-      run(<version-command>,
-          command: command-line,
-          title: as-uppercase(locator-base(filename)));
-      $success-exit-code
+      run(<version-command>)
+    elseif (command.%shortversion?)
+      run(<version-command>, short: "short")
     else
       command.%logo? & message(context, dylan-banner());
       let personal-root = command.%personal-root;

@@ -19,6 +19,8 @@ end command-line exit;
 
 /// Version command
 define class <version-command> (<basic-command>)
+  constant slot %short :: false-or(<string>) = #f,
+    init-keyword: short:;
 end class <version-command>;
 
 define command-line version => <version-command>
@@ -26,12 +28,18 @@ define command-line version => <version-command>
        "displays the version",
      documentation:
        "VERSION shows the current version of the compiler.\n")
+  optional short :: <string> = "print short version";
 end command-line version;
 
 define sealed method do-execute-command
     (context :: <server-context>, command :: <version-command>)
  => ()
-  message(context, release-version())
+  let ver = if (command.%short)
+              release-short-version()
+            else
+              release-version()
+            end;
+  message(context, ver)
 end method do-execute-command;
 
 
@@ -49,7 +57,7 @@ define class <help-command> (<basic-command>)
 end class <help-command>;
 
 define command-line help => <help-command>
-    (summary: 
+    (summary:
        "displays help for commands",
      documentation:
        "If specified with no arguments, HELP shows a list of all commands\n"

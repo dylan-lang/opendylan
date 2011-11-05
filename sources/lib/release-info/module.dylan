@@ -28,6 +28,7 @@ define module release-info
          release-contains-console-tools?,
          release-service-pack,
          release-version,
+         release-short-version,
          release-copyright,
          release-support-address,
          release-web-address,

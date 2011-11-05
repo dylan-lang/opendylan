@@ -185,7 +185,7 @@ define function collect-command-info
      end,
      group);
   if (sort?)
-    sort!(objects, 
+    sort!(objects,
 	  test: method (info1 :: <command-info>, info2 :: <command-info>)
 		  info1.command-info-title < info2.command-info-title
 		end)

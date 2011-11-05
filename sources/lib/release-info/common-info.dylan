@@ -26,7 +26,7 @@ define constant $help-filename                = "Documentation/opendylan.chm";
 /// Release constants
 define constant $release-product-name     = "Open Dylan";
 define constant $release-edition          = "Hacker Edition";
-define constant $release-version          = "Version 2011.1.pre3";
+define constant $release-version          = "2011.1.pre3";
 
 define constant $release-copyright
   = "Copyright (c) 1997-2004, Functional Objects, Inc.\n"
@@ -42,6 +42,10 @@ end method release-product-name;
 define method release-edition () => (edition :: <string>)
   $release-edition
 end method release-edition;
+
+define method release-short-version () => (version :: <string>)
+  $release-version
+end method release-short-version;
 
 define method release-version () => (version :: <string>)
   release-full-version($release-version)
@@ -204,7 +208,8 @@ define function release-full-version
   let service-pack-message  = release-service-pack-message();
   let console-tools-message = if (release-contains-console-tools?()) "Console Tools" end;
   let strings
-    = vector(version,
+    = vector("Version ",
+             version,
 	     service-pack-message  & format-to-string(" [%s]", service-pack-message),
 	     console-tools-message & format-to-string(" [%s]", console-tools-message));
   apply(concatenate-as, <string>, remove(strings, #f))
