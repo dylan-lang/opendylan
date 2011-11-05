@@ -7,7 +7,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library dfmc-browser-support
   use functional-dylan;
-  use release-info;
   use dood;
   use source-records;
   use dfmc-core;
@@ -315,7 +314,7 @@ define interface-module dfmc-interactive-execution (browser-used-modules)
 end interface-module dfmc-interactive-execution;
 
 define module dfmc-browser-back-end
-  create 
+  create
     context-back-end,
     back-end-symbolic-name-compiled-lambda,
     back-end-source-position-compiled-lambda,
@@ -329,7 +328,6 @@ end module;
 
 define module dfmc-browser-support
   use functional-dylan;
-  use release-info;
   use dfmc-imports;
   use dfmc-project-compilation;
   use dfmc-derived-information;
