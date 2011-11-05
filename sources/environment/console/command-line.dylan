@@ -172,22 +172,14 @@ define method do-execute-command
 	    execute-command(command)
 	  end method run;
     if (command.%help?)
-      let command-line
-	= select (command by instance?)
-	    <main-command> => $main-command-line;
-	    otherwise      => $internal-main-command-line;
-	  end;
+      let command-line = $main-command-line;
       let filename = as(<file-locator>, application-filename());
-      run(<help-command>, 
+      run(<help-command>,
 	  command: command-line,
 	  title: as-uppercase(locator-base(filename)));
       $success-exit-code
     elseif (command.%version?)
-      let command-line
-	= select (command by instance?)
-	    <main-command> => $main-command-line;
-	    otherwise      => $internal-main-command-line;
-	  end;
+      let command-line = $main-command-line;
       let filename = as(<file-locator>, application-filename());
       run(<version-command>,
           command: command-line,

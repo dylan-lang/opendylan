@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define constant $success-exit-code = 0;
 define constant $error-exit-code   = -1;
 
-define function main 
+define function main
     (arguments :: <string>)
   let input-stream = *standard-input*;
   let output-stream = *standard-output*;
@@ -17,7 +17,7 @@ define function main
     = make-environment-command-line-server
         (input-stream:   input-stream,
 	 output-stream:  output-stream);
-  let class = <internal-main-command>;
+  let class = <main-command>;
   let command
     = block ()
 	parse-command-line(server, arguments, class: class)

@@ -82,8 +82,6 @@ end method execute-main-command;
 
 
 /// Main command
-///
-/// This is the version used by external editions.
 
 define class <main-command> (<environment-main-command>)
 end class <main-command>;
@@ -91,52 +89,12 @@ end class <main-command>;
 define command-line main => <main-command>
     (summary:       "command-line version of Open Dylan",
      documentation: "Command-line version of Open Dylan.")
-  optional project :: <file-locator>  = "the project to be built";
-  keyword  arguments :: <string> = "arguments for the project's application";
-
-  keyword build-script :: <file-locator> = "the (Jam) build script to use";
-  keyword target :: <symbol> = "the target";
-  keyword arch :: <symbol> = "the architecture to build (e.g. i386 or x86_64)";
-
-  flag help          = "show this help summary";
-  flag logo          = "displays the copyright banner";
-  flag version       = "displays the version";
-  flag debugger      = "enter the debugger if this program crashes";
-  flag echo-input    = "echoes all input to the console";
-
-  flag import        = "import the project";
-  flag build         = "build the project";
-  flag compile       = "compile the project";
-  flag link          = "link the project";
-  flag clean         = "force a clean build of the project";
-  flag release       = "build a release for the project";
-  flag subprojects   = "build subprojects as well if necessary";
-  flag force         = "force relink the executable";
-
-  flag play          = "open and debug the playground project";
-  flag start         = "start the project's application";
-  flag debug         = "debug the project's application";
-  flag profile       = "profile the execution of the application";
-  flag share-console = "share the console with the application";
-end command-line main;
-
-
-/// Internal main command
-///
-/// This is the version used by the internal edition.
-
-define class <internal-main-command> (<environment-main-command>)
-end class <internal-main-command>;
-
-define command-line internal-main => <internal-main-command>
-    (summary:       "command-line version of Open Dylan",
-     documentation: "Command-line version of Open Dylan.")
   optional project :: <file-locator> = "the project to be built";
   keyword  arguments :: <string> = "arguments for the project's application";
 
-  keyword build-script :: <file-locator> = "the (Jam) build script to use";
-  keyword target :: <symbol> = "the type of executable to generate";
-  keyword arch :: <symbol> = "the architecture to build (e.g. i386 or x86_64)";
+  keyword build-script :: <file-locator> = "the (Jam) build script";
+  keyword target :: <symbol> = "the type of executable";
+  keyword arch :: <symbol> = "the architecture (e.g. i386 or x86_64)";
   keyword debug-info :: <symbol>  = "control the debug info generated";
 
   flag help             = "show this help summary";
@@ -175,4 +133,4 @@ define command-line internal-main => <internal-main-command>
   flag link-exe         = "link as an EXE";
   flag gnu-exports      = "link the GNU exports";
   keyword messages :: <symbol>  = "control the progress messages generated";
-end command-line internal-main;
+end command-line main;
