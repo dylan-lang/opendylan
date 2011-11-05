@@ -24,6 +24,7 @@ define command-line main => <main-command>
 
   flag help        = "show this help summary";
   flag logo        = "displays the copyright banner";
+  flag version     = "displays the version";
   flag debugger    = "enter the debugger if this program crashes";
   flag echo-input  = "echoes all input to the console";
 
@@ -57,6 +58,7 @@ define command-line internal-main => <internal-main-command>
 
   flag help             = "show this help summary";
   flag logo             = "displays the copyright banner";
+  flag version          = "displays the version";
   flag debugger         = "enter the debugger if this program crashes";
   flag echo-input       = "echoes all input to the console";
 

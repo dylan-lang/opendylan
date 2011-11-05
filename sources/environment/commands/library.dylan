@@ -15,6 +15,7 @@ define library environment-commands
   use environment-protocols;
   use environment-manager;
   use environment-reports;
+  use release-info;
   use source-control-manager;
 
   use dfmc-environment-projects;
