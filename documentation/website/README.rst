@@ -10,7 +10,7 @@ Before building this website, you will need a copy of Sphinx installed.
 The easiest way to do this is to get it from the `Python Package Index
 <http://pypi.python.org/pypi/Sphinx>`_ or to use ``easy_install``::
 
-    easy_install -U Sphinx
+    sudo easy_install -U Sphinx
 
 Building
 ========
