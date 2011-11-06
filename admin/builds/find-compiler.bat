@@ -38,6 +38,6 @@ if exist "%DYLAN_RELEASE_COMPILER%" goto compiler_found
 
 REM //... finally hope that we can find it on the path.
 REM //
-set DYLAN_RELEASE_COMPILER=fdbc.exe
+set DYLAN_RELEASE_COMPILER=console-compiler.exe
 
 :COMPILER_FOUND
