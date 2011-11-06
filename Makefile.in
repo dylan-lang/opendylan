@@ -280,13 +280,16 @@ clean:
 	rm -rf $(abs_builddir)/Bootstrap.2
 	rm -rf $(abs_builddir)/Bootstrap.3
 	rm -rf $(BOOTSTRAP_1_REGISTRY)
+	$(MAKE) -C $(rt_build) clean
 
 distclean: clean
+	-rm -f aclocal.m4
 	-rm -f configure
 	-rm -f config.log
 	-rm -f config.status
 	-rm -f config.status.lineno
-	-rm -f Makefile
+	-rm -f libtool
+	-rm -f Makefile sources/lib/run-time/pentium-linux/Makefile sources/lib/run-time/pentium-freebsd/Makefile sources/dfmc/c-run-time/Makefile
 	-rm -rf build-aux
 	-rm -rf autom4te.cache
 
