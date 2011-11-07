@@ -17,14 +17,16 @@ Building
 
 Building the documentation is easy on a system with ``make``::
 
-    make
+    make html
 
-If you are on Windows, there is a ``make.bat`` as well. It currently requires
-that you run it with an argument::
+If you are on Windows, there is a ``make.bat`` as well.
 
     make.bat html
 
 The generated site will be in ``build/html``.
+
+You can build other formats as well. Run ``make`` or ``make.bat`` without
+arguments to see which formats are available.
 
 Link Validation
 ---------------
