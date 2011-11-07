@@ -153,7 +153,9 @@ Command Tables <commands.htm#99799>`_) introduced you to the
 creating an instance of *<button>* actually creates an instance of
 *<push-button>* ).
 
-make(<push-button>, label: "Hello");
+.. code-block:: dylan
+
+    make(<push-button>, label: "Hello");
 
 Radio buttons let you choose one option out of a group of several. They
 are usually implemented in groups of several buttons (using the
@@ -162,7 +164,9 @@ in `See A push button, a radio button, and a check
 button <tour.htm#43717>`_. For more information about creating groups of
 radio buttons, see `See Button boxes <tour.htm#34577>`_.
 
-make(<radio-button>, label: "Hello");
+.. code-block:: dylan
+
+    make(<radio-button>, label: "Hello");
 
 Check buttons are buttons whose setting can be toggled on and off. Like
 radio buttons, they are often implemented in groups, although unlike
@@ -170,11 +174,11 @@ radio buttons, they are frequently used individually. For more
 information about creating groups of check buttons, see `See Button
 boxes <tour.htm#34577>`_.
 
-define variable \*my-check-button\*
+.. code-block:: dylan
 
-:= make(<check-button>, label: "Hello"
-
-value: #f);
+    define variable *my-check-button*
+      := make(<check-button>, label: "Hello"
+              value: #f);
 
 Remember that you can use *gadget-label* to set or return the label for
 any button. As demonstrated in the examples above, it is also good
@@ -184,13 +188,15 @@ init-keyword.
 Radio and check buttons have a *gadget-value* of *#t* or *#f*,
 depending on whether or not the button is selected. For example:
 
-gadget-value(\*my-check-button\*)
+.. code-block:: dylan
+
+    gadget-value(*my-check-button*)
 
 returns *#f* if the check button is not selected.
 
 You can set the *gadget-value* with the *:=* operator.
 
-gadget-value(\*my-check-button\*) := #t;
+    gadget-value(*my-check-button*) := #t;
 
 Supplying a value for a push button is a useful way of sending
 information to your application. The value of a push button can be used
@@ -203,13 +209,12 @@ displayed on the screen with a heavier border, and any callback defined
 for the button is invoked by pressing the RETURN key on the keyboard, as
 well as by clicking the button itself.
 
-define variable \*my-default-button\*
+.. code-block:: dylan
 
-:= make(<push-button>,
-
-label: "Click me or press Return",
-
-default?: #t));
+    define variable *my-default-button*
+      := make(<push-button>,
+              label: "Click me or press Return",
+              default?: #t));
 
 It is good practice to define a default button in most dialog boxes, so
 that the user can easily perform a default action. Generally, the *OK*
@@ -226,12 +231,16 @@ button fill all the available space, by setting it to the constant
 
 Thus, the button created by
 
-make(<button>, label: "Red");
+.. code-block:: dylan
+
+    make(<button>, label: "Red");
 
 will only be as wide as the label it is given—“Red”, in this case—but
 the button created by
 
-make(<button>, label: "Red", max-width: $fill);
+.. code-block:: dylan
+
+    make(<button>, label: "Red", max-width: $fill);
 
 will have a width that is determined by the sheet that it is a child of
 and will still have the same minimum width, so it cannot be resized too
@@ -362,11 +371,14 @@ button* may sometimes be called a *check box*.
 A *<radio-box>* is a button box that contains one or more radio buttons,
 only one of which may be selected at any time.
 
-define variable \*my-radio-box\* |image3|
+.. figure:: ../images/rbox.png
+   :align: right
 
-:= make(<radio-box>, items: #[1, 2, 3],
+.. code-block:: dylan
 
-value: 2);
+    define variable *my-radio-box*
+      := make(<radio-box>, items: #[1, 2, 3],
+              value: 2);
 
 Note the use of *value:* to choose the item initially selected when the
 box is created.
@@ -374,42 +386,55 @@ box is created.
 For all boxes, the *gadget-value* is the selected button. In the
 illustration above the *gadget-value* is 2.
 
-gadget-value(\*my-radio-box\*);
-
-*=> 2*
+::
+    gadget-value(*my-radio-box*);
+    *=> 2*
 
 You can set the *gadget-value* to 3 and the selected button changes to
 3:
 
-gadget-value(\*my-radio-box\*) := 3;
+.. code-block:: dylan
+
+    gadget-value(*my-radio-box*) := 3;
 
 As with all collection gadgets, use *gadget-items* to set or return the
 collection that defines the contents of a radio box.
 
-gadget-items(\*my-radio-box\*); *=> #[1, 2, 3]*
+::
+
+    gadget-items(*my-radio-box*);
+    *=> #[1, 2, 3]*
+
+.. figure:: ../images/rangebox.png
+   :align: right
 
 If you reset the *gadget-items* in a collection gadget, the gadget
 resizes accordingly:
 
-gadget-items(\*my-radio-box\*) := range(from: 5, to: 20, by: 5);
+.. code-block:: dylan
 
-.. figure:: ../images/rangebox.png
-   :align: center
+    gadget-items(*my-radio-box*) := range(from: 5, to: 20, by: 5);
 
 A check box, on the other hand, can have any number of buttons selected.
 The following code creates a check box. After creating it, select the
 buttons labelled 4 and 6, as shown below.
 
-define variable \*my-check-box\* |image4|
+.. figure:: ../images/cbox.png
+   :align: right
 
-:= make(<check-box>, items: #(4, 5, 6));
+.. code-block:: dylan
+
+    define variable *my-check-box*
+      := make(<check-box>, items: #(4, 5, 6));
 
 You can return the current selection, or set the selection, using
 *gadget-value*.
 
-gadget-value(\*my-check-box\*); *=> #[4, 6]*
+::
 
-gadget-value(\*my-check-box\*) := #[5, 6];
+    gadget-value(*my-check-box*);
+    *=> #[4, 6]*
+    gadget-value(*my-check-box*) := #[5, 6];
 
 Remember that for a multiple-selection collection gadget, the gadget
 value is a sequence consisting of the values of all the selected items.
@@ -447,7 +472,9 @@ Lists
 A *<list-box>*, although it has a different appearance than a
 *<radio-box>*, shares many of the same characteristics:
 
-make(<list-box>, items: #(1, 2, 3));
+.. code-block:: dylan
+
+    make(<list-box>, items: #(1, 2, 3));
 
 .. figure:: ../images/lbox.png
    :align: center
@@ -501,7 +528,9 @@ the current selection visible at any one time. In order to see the
 entire list, the user must click on an arrow displayed to the right of
 the field.
 
-make(<option-box>, items: #("&Red", "&Green", "&Blue"));
+.. code-block:: dylan
+
+    make(<option-box>, items: #("&Red", "&Green", "&Blue"));
 
 Notice the use of the & character to denote a keyboard shortcut.
 Pressing the R key when the option box has focus selects Red, pressing G
@@ -568,23 +597,17 @@ cannot be manipulated after the control has been created. In the example
 below, *$odd-icon* and *$even-icon* are assumed to be icons that have
 been defined.
 
-make(<tree-control>,
+.. code-block:: dylan
 
-roots: #[1],
-
-children-generator:
-
-method (x) vector(x \* 2, 1 + (x \* 2)) end,
-
-icon-function: method (item :: <integer>)
-
-case
-
-odd?(item) => $odd-icon;
-
-even?(item) => $even-icon;
-
-end);
+    make(<tree-control>,
+         roots: #[1],
+         children-generator:
+           method (x) vector(x * 2, 1 + (x * 2)) end,
+         icon-function: method (item :: <integer>)
+           case
+             odd?(item) => $odd-icon;
+             even?(item) => $even-icon;
+           end);
 
 Like list boxes and list controls, tree controls support the
 *scroll-bars:* init-keyword.
@@ -623,33 +646,22 @@ of which consists of a two element vector.
 The example assumes that you have already defined these callback
 functions elsewhere.
 
-make(<list-control>,
+.. code-block:: dylan
 
-items: vector(vector("Yes or No?", reply-yes-or-no),
-
-vector("Black or White?",
-
-reply-black-or-white),
-
-vector("Left or Right?", reply-left-or-right),
-
-vector("Top or Bottom?", reply-top-or-bottom),
-
-vector("North or South?",
-
-reply-north-or-south)),
-
-label-key: first,
-
-value-key: second,
-
-scroll-bars: #"none",
-
-activate-callback: method (sheet :: <sheet>)
-
-gadget-value(sheet)(sheet-frame(sheet))
-
-end);
+    make(<list-control>,
+         items: vector(vector("Yes or No?", reply-yes-or-no),
+                       vector("Black or White?",
+                              reply-black-or-white),
+                       vector("Left or Right?", reply-left-or-right),
+                       vector("Top or Bottom?", reply-top-or-bottom),
+                       vector("North or South?",
+                              reply-north-or-south)),
+         label-key: first,
+         value-key: second,
+         scroll-bars: #"none",
+         activate-callback: method (sheet :: <sheet>)
+             gadget-value(sheet)(sheet-frame(sheet))
+           end);
 
 In the example above, *first* is used to calculate the label that is
 used for each item in the list, and *second* specifies what the value
@@ -727,7 +739,9 @@ spin box can accept.
 
 Consider the following example:
 
-make(<spin-box>, items: range(from: 6, to: 24, by: 2));
+.. code-block:: dylan
+
+    make(<spin-box>, items: range(from: 6, to: 24, by: 2));
 
 This creates a spin box that accepts any even integer value between 6
 and 24.
@@ -784,7 +798,9 @@ can type text.
 .. figure:: ../images/textfld.png
    :align: center
 
-make(<text-field>, value-type: <integer>, text: "1234");
+.. code-block:: dylan
+
+    make(<text-field>, value-type: <integer>, text: "1234");
 
 Use the*x-alignment:* init-keyword to specify how text typed into the
 field should be aligned. This can be either *#"left"*, *#"center"*, or
@@ -808,7 +824,9 @@ columns (width) and the specified number of lines (height).
 In addition, text editors support the *scroll-bars:* init-keyword
 described in `See Lists <tour.htm#21075>`_.
 
-make(<text-editor>, lines: 10, fixed-height?: #t);
+.. code-block:: dylan
+
+    make(<text-editor>, lines: 10, fixed-height?: #t);
 
 Password fields
 ~~~~~~~~~~~~~~~
@@ -863,24 +881,22 @@ least. Because most gadgets that make use of scroll bars support the
 *scroll-bars:* init-keyword; you rarely need to explicitly create an
 instance of *<scroll-bar>* and attach it to another gadget.
 
-define variable \*my-scroll-bar\* :=
+.. code-block:: dylan
 
-contain(make(<scroll-bar>,
-
-value-range: range(from: 0, to: 50)));
+    define variable *my-scroll-bar* :=
+      contain(make(<scroll-bar>,
+                   value-range: range(from: 0, to: 50)));
 
 On the occasions when you do need to place scroll bars around a gadget
 explicitly, use the *scrolling* macro.
 
-scrolling (scroll-bars: #"vertical")
+.. code-block:: dylan
 
-make(<radio-box>,
-
-orientation: #"vertical",
-
-items: range(from: 1, to: 50))
-
-end
+    scrolling (scroll-bars: #"vertical")
+      make(<radio-box>,
+           orientation: #"vertical",
+           items: range(from: 1, to: 50))
+    end
 
 Sliders
 ~~~~~~~
@@ -900,13 +916,12 @@ you are advised to use a number that is natural to the user, such as 3,
 could confuse the user of your application, unless there is a compelling
 reason to do so.
 
-define variable \*my-slider\*
+.. code-block:: dylan
 
-:= make(<slider>,
-
-value-range: range(from: 0, to: 50)
-
-tick-marks: 10);
+    define variable *my-slider*
+      := make(<slider>,
+              value-range: range(from: 0, to: 50)
+              tick-marks: 10);
 
 Progress bars
 ~~~~~~~~~~~~~
@@ -941,17 +956,14 @@ classes you have seen so far are general instances of *<action-gadget>*
 The following code creates a push button that has an activate callback
 defined:
 
-make(<push-button>,
+.. code-block:: dylan
 
-label: "Hello",
-
-activate-callback: method (button)
-
-notify-user("Pressed button!",
-
-owner: button)
-
-end)));
+    make(<push-button>,
+         label: "Hello",
+         activate-callback: method (button)
+             notify-user("Pressed button!",
+             owner: button)
+           end)));
 
 The *notify-user* function is a useful function that lets you display a
 message in a dialog.
@@ -982,17 +994,14 @@ callback would be invoked once the user had finished typing and had
 returned the value to the gadget. For a text field, the value-changed
 callback is usually more useful than the value-changing callback.
 
-contain(make(<text-field>,
+.. code-block:: dylan
 
-value-changed-callback:
-
-method (gadget)
-
-notify-user
-
-("Changed to %=", gadget-value(gadget))
-
-end));
+    contain(make(<text-field>,
+     value-changed-callback:
+       method (gadget)
+         notify-user
+           ("Changed to %=", gadget-value(gadget))
+       end));
 
 A tour of layouts
 -----------------
@@ -1042,13 +1051,12 @@ Row layouts and column layouts
 
 Create a column layout containing three buttons as follows:
 
-contain(make(<column-layout>,
+.. code-block:: dylan
 
-children: vector(make(<push-button>, label: "One"),
-
-make(<push-button>, label: "Two"),
-
-make(<push-button>, label: "Three"))));
+    contain(make(<column-layout>,
+                 children: vector(make(<push-button>, label: "One"),
+                                  make(<push-button>, label: "Two"),
+                                  make(<push-button>, label: "Three"))));
 
 .. figure:: ../images/column.png
    :align: center
@@ -1111,21 +1119,16 @@ tab controls and wizards. In a stack layout, all children are placed on
 top of one another, with each child aligned at the top left corner by
 default.
 
-make(<stack-layout>,
+.. code-block:: dylan
 
-children: vector(make(<list-box>, label: "List 1"
-
-items: #("One", "Two",
-
-"Three", "Four"),
-
-make(<list-box>, label: "List 2"
-
-items: #("Five", "Six",
-
-"Seven", "Eight"),
-
-make(<push-button>, label: "Finish")));
+    make(<stack-layout>,
+         children: vector(make(<list-box>, label: "List 1"
+                               items: #("One", "Two",
+                                        "Three", "Four"),
+                          make(<list-box>, label: "List 2"
+                               items: #("Five", "Six",
+                                        "Seven", "Eight"),
+                          make(<push-button>, label: "Finish")));
 
 Pinboard layouts and fixed layouts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1141,21 +1144,16 @@ to determine its position in the layout. You have complete flexibility
 in positioning objects in a pinboard layout by giving each object
 coordinates, as shown in the following example:
 
-contain
+.. code-block:: dylan
 
-(make
-
-(<pinboard-layout>,
-
-children:
-
-vector (make(<push-button>, label: "One", x: 0, y: 0),
-
-make(<push-button>, label: "Two", x: 50,y: 50),
-
-make(<push-button>, label: "Three",
-
-x: 50, y: 100))));
+    contain
+      (make
+        (<pinboard-layout>,
+         children:
+           vector (make(<push-button>, label: "One", x: 0, y: 0),
+                   make(<push-button>, label: "Two", x: 50,y: 50),
+                   make(<push-button>, label: "Three",
+                        x: 50, y: 100))));
 
 .. figure:: ../images/pinboard.png
    :align: center
@@ -1186,22 +1184,26 @@ objects sequentially in a column layout or row layout. Using these
 macros, rather than creating layout objects explicitly, can lead to
 shorter and more readable code.
 
-horizontally () make(<push-button>, label: "One");
+.. code-block:: dylan
 
-make(<push-button>, label: "Two");
-
-make(<push-button>, label: "Three") end;
+    horizontally ()
+      make(<push-button>, label: "One");
+      make(<push-button>, label: "Two");
+      make(<push-button>, label: "Three")
+    end;
 
 .. figure:: ../images/row.png
    :align: center
 
    Three buttons arranged in a horizontal layout
 
-vertically () make(<push-button>, label: "One");
+.. code-block:: dylan
 
-make(<push-button>, label: "Two");
-
-make(<push-button>, label: "Three") end;
+    vertically ()
+      make(<push-button>, label: "One");
+      make(<push-button>, label: "Two");
+      make(<push-button>, label: "Three")
+    end;
 
 You can specify any init-keywords that you would specify for an instance
 of *<row-layout>* or *<column-layout>* using *vertically* and
@@ -1212,21 +1214,16 @@ label. In addition, the use of *max-width:* in the definitions of the
 two other buttons ensures that those buttons are sized so as to occupy
 the entire width of the row layout.
 
-vertically (equalize-widths?: #t)
+.. code-block:: dylan
 
-horizontally ()
-
-make(<button>, label: "Red", max-width: $fill);
-
-make(<button>, label: "Ultraviolet", max-width: $fill);
-
-end;
-
-make(<button>,
-
-label: "A button with a really really long label");
-
-end
+    vertically (equalize-widths?: #t)
+      horizontally ()
+        make(<button>, label: "Red", max-width: $fill);
+        make(<button>, label: "Ultraviolet", max-width: $fill);
+      end;
+      make(<button>,
+           label: "A button with a really really long label");
+    end
 
 A tour of sheets
 ----------------
@@ -1347,15 +1344,13 @@ that evaluates to a frame instance.
 For example, to create a simple frame that contains a single button, use
 the following code:
 
-start-frame(make(<simple-frame>,
+.. code-block:: dylan
 
-title: "Simple frame",
-
-layout:
-
-make(<push-button>,
-
-label: "A button on a simple frame")));
+    start-frame(make(<simple-frame>,
+                     title: "Simple frame",
+                     layout:
+                       make(<push-button>,
+                            label: "A button on a simple frame")));
 
 .. figure:: ../images/frame.png
    :align: center
@@ -1450,15 +1445,13 @@ default value of the slot is set to the current date and time using an
 init expression. So that you can provide an initial value for the slot,
 it is defined with an init-keyword of the same name.
 
-define frame <date-frame> (<simple-frame>)
+.. code-block:: dylan
 
-slot date :: <date> = current-date(),
-
-init-keyword: date:;
-
-// Other stuff here
-
-end class <date-frame>;
+    define frame <date-frame> (<simple-frame>)
+      slot date :: <date> = current-date(),
+        init-keyword: date:;
+      // Other stuff here
+    end class <date-frame>;
 
 Specifying panes for a new class of frame
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1473,11 +1466,13 @@ visual aspects of a frame class, including such things as:
 
 Typically, the definition for any pane has the following syntax:
 
-pane *pane-name* (*pane-owner* ) *pane-definition* ;
+::
+
+    pane *pane-name* (*pane-owner* ) *pane-definition* ;
 
 This breaks down into the following elements:
 
--  The reserved word *pane.*
+-  The reserved word *pane*.
 -  The name you wish to give the pane, which acts as a slot accessor for
    the frame, to let you retrieve the pane.
 -  A space in which you can bind the owner of the pane (usually the
@@ -1491,7 +1486,9 @@ include a tool bar, having created a pane called *app-tool-bar* that
 contains the definition of the tool bar itself, you need to include the
 following code at the end of the definition of the frame:
 
-tool-bar (frame) frame.app-tool-bar;
+.. code-block:: dylan
+
+    tool-bar (frame) frame.app-tool-bar;
 
 The major components that need to be activated in any frame definition
 are the top level layout, menu bar, tool bar, and status bar.
@@ -1506,76 +1503,55 @@ Three panes are defined:
 -  *main-layout* A column layout that consists of the *button* pane,
    together with a drawing pane.
 
-define frame <example-frame> (<simple-frame>)
+.. code-block:: dylan
 
-... other code here
+    define frame <example-frame> (<simple-frame>)
+      ... other code here
 
-// pane definitions
+      // pane definitions
+      pane button (frame)
+        make(<push-button>,
+             label: "Press",
+             activate-callback:
+               method (button)
+                 notify-user (format-to-string ("Pressed button"),
+                              owner: frame)
+               end);
 
-pane button (frame)
+      pane status (frame)
+        make(<status-bar>);
 
-make(<push-button>,
+      pane main-layout (frame)
+        vertically (spacing: 10)
+          horizontally (borders: 2, x-alignment: #"center")
+            frame.button;
+          end;
+          make(<drawing-pane>,
+               foreground: $red);
+        end;
 
-label: "Press",
+      ... other code here
 
-activate-callback:
+      // activate components of frame
+      layout (frame) frame.main-layout;
+      status-bar (frame) frame.status;
 
-method (button)
-
-notify-user (format-to-string ("Pressed button"),
-
-owner: frame)
-
-end);
-
-pane status (frame)
-
-make(<status-bar>);
-
-pane main-layout (frame)
-
-vertically (spacing: 10)
-
-horizontally (borders: 2, x-alignment: #"center")
-
-frame.button;
-
-end;
-
-make(<drawing-pane>,
-
-foreground: $red);
-
-end;
-
-... other code here
-
-// activate components of frame
-
-layout (frame) frame.main-layout;
-
-status-bar (frame) frame.status;
-
-// frame title
-
-keyword title: = "Example Frame";
-
-end frame <example-frame>;
+      // frame title
+      keyword title: = "Example Frame";
+    end frame <example-frame>;
 
 The following method creates an instance of an *<example-frame>*.
 
 The simplest way to create an example frame is by calling this method
 thus: *make-example-frame();*.
 
-define method make-example-frame => (frame :: <example-frame>)
+.. code-block:: dylan
 
-let frame
-
-= make(<example-frame>);
-
-start-frame(frame);
-
-end method make-example-frame;
+    define method make-example-frame => (frame :: <example-frame>)
+      let frame
+        = make(<example-frame>);
+      start-frame(frame);
+    end method make-example-frame;
 
 For a more complete example of how to define your own class of frame for
 use in an application, see the chapters that cover the development of
@@ -1616,19 +1592,15 @@ have already seen. This function provides you with a straightforward way
 of displaying an alert message on screen in whatever format is standard
 for the target operating system.
 
-contain(make(<push-button>,
+.. code-block:: dylan
 
-label: "Press me!",
-
-activate-callback:
-
-method (gadget)
-
-notify-user
-
-(format-to-string ("You pressed me!"))
-
-end));
+    contain(make(<push-button>,
+                 label: "Press me!",
+                 activate-callback:
+                   method (gadget)
+                     notify-user
+                       (format-to-string ("You pressed me!"))
+                   end));
 
 The example above creates a push button which, when pressed, calls
 *notify-user* to display message.
@@ -1639,9 +1611,10 @@ direction that distinguishes between the two types of dialog: thus, if
 the direction is *#"input"*, a file is opened, and if the direction is
 *#"output"* a file is saved.
 
-choose-file(title: "Open File", direction: #"input");
+.. code-block:: dylan
 
-choose-file(title: "Save File As", direction: #"input");
+    choose-file(title: "Open File", direction: #"input");
+    choose-file(title: "Save File As", direction: #"input");
 
 Note that DUIM provides default titles based on the specified direction,
 so you need only specify these titles if you want to supply a
@@ -1712,8 +1685,6 @@ From here, you can refer to two other sources of information.
 .. |image0| image:: ../images/pushmb.png
 .. |image1| image:: ../images/radiomb.png
 .. |image2| image:: ../images/checkmb.png
-.. |image3| image:: ../images/rbox.png
-.. |image4| image:: ../images/cbox.png
 .. |image5| image:: ../images/pushmbox.png
 .. |image6| image:: ../images/radiombx.png
 .. |image7| image:: ../images/checkmbx.png

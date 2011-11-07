@@ -302,7 +302,7 @@ files in the task list manager <callbacks.htm#78540>`_.
         make(<menu-button>, label: "Save As...",
              activate-callback: save-as-file,
              documentation:
-	       "Saves the current file with a new name.");
+               "Saves the current file with a new name.");
       pane exit-menu-button (frame)
         make(<menu-button>, label: "Exit",
              activate-callback: not-yet-implemented,
