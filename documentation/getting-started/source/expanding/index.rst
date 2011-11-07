@@ -58,8 +58,8 @@ Problems at compile time
 ========================
 
 In this section we look at how the compiler handles problems that it
-comes across in a project’s source code. When we rebuilt Reversi in `See
-Rebuilding the application <expanding.htm#38535>`_, the compiler
+comes across in a project’s source code. When we rebuilt Reversi in
+`Rebuilding the application`_, the compiler
 discovered nine problems in the project’s source code. It reported those
 problems and divided them into two categories: serious warnings and
 warnings.

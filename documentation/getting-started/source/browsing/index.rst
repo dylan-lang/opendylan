@@ -98,9 +98,9 @@ The browser appears.
 The browser arranges information about objects in a set of property
 pages, with the set of pages available varying according to the type of
 object being browsed. Though we do not describe all the possible pages
-here, nearly all have clear meanings. See `See List of property
-pages <browsing.htm#32018>`_ for a summary of the pages available in the
-browser. (Some of these pages also appear in the project window.)
+here, nearly all have clear meanings. See `List of property pages`_
+for a summary of the pages available in the browser. (Some of these
+pages also appear in the project window.)
 
 We now take a look at some of the pages available for *<reversi-square>*
 .
@@ -181,8 +181,7 @@ are qualified. For example, *<standard-input-mixin>* appears as::
 
     <standard-input-mixin>:duim-sheets-internals:duim-sheets
 
-We see more about this in `See Namespace issues in the
-browser <browsing.htm#26448>`_.
+We see more about this in `Namespace issues in the browser`_.
 
 We could continue traversing the class hierarchy by double-clicking on a
 superclass name to browse that class definition in its own right, or, by
@@ -233,10 +232,10 @@ again.
 
 Go to its Superclasses page.
 
-We saw this page in `See Moving from one object to
-another <browsing.htm#42001>`_. There, we said that the special naming
-format used for the superclasses here meant that they were not part of
-the *current module* of the *current library*.
+We saw this page in `Moving from one object to another`_.  There, we
+said that the special naming format used for the superclasses here
+meant that they were not part of the *current module* of the *current
+library*.
 
 To the browser, the current module is whatever module name is selected
 in the drop-down list box above the Object field (currently *reversi* )
@@ -337,8 +336,8 @@ If you double-click on a thread name in that list, Open Dylan opens
 a debugger window on the thread, or, if it already exists, raises the
 debugger window for the thread, thus pausing the application. Once in
 the debugger, you can browse the local variables and parameters in call
-frames in the usual way. See `See Browsing run-time values of variables
-and constants <browsing.htm#30866>`_.
+frames in the usual way. See `Browsing run-time values of variables
+and constants`_.
 
 Keeping browser displays up to date
 ===================================

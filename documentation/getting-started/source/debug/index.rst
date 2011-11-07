@@ -80,8 +80,8 @@ message could also describe an out-of-language error (for example in
 foreign code) or one of a number of application events upon which you
 can ask the debugger to pause the application, such as when a library is
 loaded. You can see a list of possible exceptions and the actions that
-will be taken upon them in the Debugger Options dialog. See `See
-Debugger options <debug.htm#17520>`_.
+will be taken upon them in the Debugger Options dialog. See
+`Debugger options`_.
 
 Stack pane
 ----------
@@ -109,8 +109,7 @@ addition, the menu commands **View > Expand**, **View > Expand All**,
    drop-down list settings).
 
 Choose the **View > Debugger Options** dialog’s Stack page in the debugger
-window to control the filtering rules. See `See Stack
-options <debug.htm#23810>`_ for details.
+window to control the filtering rules. See `Stack options`_ for details.
 
 You can select any item shown in a backtrace and right-click to produce
 a pop-up menu. The menu allows you to carry out other operations on
@@ -146,8 +145,8 @@ frame is listed first.
 
 Each call frame is represented by the name of the function or method
 whose call created the frame. If you select a name, the source code
-associated with it (if any) appears in the pane opposite. See `See
-Source pane <debug.htm#37874>`_ for details of this pane.
+associated with it (if any) appears in the pane opposite. See
+`Source pane`_ for details of this pane.
 
 Beside each frame name is an icon indicating the sort of call that
 created the frame:
@@ -187,7 +186,7 @@ applications.
 You can filter other frames out of the backtrace if you wish, according
 either to their type or to their names. For instance, you can filter out
 all foreign call frames or all frames whose names contain a particular
-string. See `See Stack options <debug.htm#23810>`_.
+string. See `Stack options`_.
 
 .. figure:: ../images/dbgbak.png
    :align: center
@@ -265,8 +264,7 @@ The interaction pane allows you to enter Dylan expressions for
 evaluation in the context of the paused thread. (In some language
 implementations, an interaction tool like this is called a *listener*.)
 
-See `See Interacting with an application <debug.htm#12196>`_ for a
-discussion of interaction.
+See `Interacting with an application`_ for a discussion of interaction.
 
 The interaction pane also logs thread events that the debugger noticed
 (such as DLL loading) and debugging messages explicitly output by the
@@ -331,8 +329,7 @@ the thread being debugged. In an editor window, the commands act upon
 the application of the active project. (Note that the **Application** menu
 is not available in the editor if the source file being edited is not
 part of the active project—the project whose name is visible in the main
-window’s drop-down list. See `See The active project <debug.htm#21333>`_
-for more details.)
+window’s drop-down list. See `The active project`_ for more details.)
 
 Starting and stopping applications
 ----------------------------------
@@ -370,8 +367,7 @@ are out-of-language events, that is, events not described completely in
 terms of the Dylan language). If the application stopped because of an
 unhandled condition or a call to *break* (both in-language events), you
 should instead use the items on the **Thread** menu to signal a Dylan
-restart. See `See Restarts <debug.htm#13526>`_ for information on the
-**Thread** menu.
+restart. See `Restarts`_ for information on the **Thread** menu.
 
 If you use **Application > Resume** to continue from an in-language event,
 your application may signal further errors because you did not use the
@@ -379,8 +375,7 @@ your application may signal further errors because you did not use the
 
 Any Dylan restarts which were available before you resumed the
 application should still be available, so you can continue by signalling
-a restart as before. See `See Restarts <debug.htm#13526>`_ for more
-details.
+a restart as before. See `Restarts`_ for more details.
 
 Restarting applications
 -----------------------
@@ -399,12 +394,10 @@ Interacting with applications
 **Application > Interact** (or the toolbar interact button (|image8|))
 pauses the execution of the application with which the window is
 associated and opens a debugger window on it. The behavior is exactly
-the same as **Application > Debug** (see `See Debugging
-techniques <debug.htm#13513>`_) except the stack and source panes of the
-debugger window are hidden.
+the same as **Application > Debug** (see `Debugging techniques`_)
+except the stack and source panes of the debugger window are hidden.
 
-See `See Interacting with an application <debug.htm#12196>`_ for a
-discussion of interaction.
+See `Interacting with an application`_ for a discussion of interaction.
 
 Debugging techniques
 ====================
@@ -412,8 +405,8 @@ Debugging techniques
 Because of the different characteristics of executable (EXE) files,
 DLLs, and OLE components, in each case there is a slightly different
 technique for invoking the debugger. This section covers these
-techniques. Debugging a client/server application is discussed in `See
-Debugging client/server applications <debug.htm#68512>`_.
+techniques. Debugging a client/server application is discussed in
+`Debugging client/server applications`_.
 
 Debugging executables
 ---------------------
@@ -454,9 +447,8 @@ useful point.
 Debugging DLLs
 --------------
 
-Debugging DLLs is similar to debugging executable (EXE) applications
-(see `See Debugging executables <debug.htm#20444>`_ above), but there
-are a couple of differences.
+Debugging DLLs is similar to debugging executable (EXE) applications (see
+`Debugging executables`_ above), but there are a couple of differences.
 
 One difference is that DLLs may not have a start function. Without a
 start function, there is nothing for the environment to place a
@@ -501,8 +493,8 @@ Debugging OLE components
 ------------------------
 
 To debug in-process OLE servers and OLE controls, which must be built as
-DLLs, you can use the same debugging processes as described in `See
-Debugging DLLs <debug.htm#33057>`_.
+DLLs, you can use the same debugging processes as described in
+`Debugging DLLs`_.
 
 If you want to test your server or control in a container application,
 simply enter the name of the application executable in the Executable
@@ -620,7 +612,7 @@ features to an application and even redefine parts of it, all while the
 application is still running.
 
 The size of the interaction pane differs according to the situation. See
-`See Changing the debugger layout <debug.htm#25241>`_ for details of the
+`Changing the debugger layout`_ for details of the
 different layouts and how to change them.
 
 Starting an interactive session with an application
@@ -631,8 +623,8 @@ The simplest way to start interacting with an application is to choose
 This starts the application if necessary, and then pauses it.
 
 If the application was started afresh, the pause occurs at the same
-point as it would with **Application > Debug** (see `See Debugging
-executables <debug.htm#20444>`_). Otherwise the application is paused in
+point as it would with **Application > Debug** (see `Debugging
+executables`_). Otherwise the application is paused in
 its current state. A debugger window then opens on the paused thread.
 
 Interaction basics using the Dylan playground
@@ -857,12 +849,11 @@ the result 32.
 Effects of interactive changes to application threads
 -----------------------------------------------------
 
-As stated in `See About the interaction pane <debug.htm#17939>`_,
-because the interaction pane compiles and executes the code you enter in
-the context of the paused thread to which the debugger is connected, it
-is possible to define new bindings, redefine existing bindings, and get
-and set values in an application. You can then resume execution to test
-your changes.
+As stated in `About the interaction pane`_, because the interaction pane
+compiles and executes the code you enter in the context of the paused
+thread to which the debugger is connected, it is possible to define new
+bindings, redefine existing bindings, and get and set values in an
+application. You can then resume execution to test your changes.
 
 The level of optimization that occurred when the application was
 originally built does, however, affect the kinds of things you can do
@@ -871,9 +862,8 @@ Development mode if you want to define and redefine classes and methods
 interactively. Even in that mode you may encounter some restrictions,
 particularly when trying to make changes in system libraries.
 
-As noted in `See An example interaction with
-Reversi <debug.htm#33511>`_, the results of compiling interactive
-changes to threads are added to a temporary layer of the compiler
+As noted in `An example interaction with Reversi`_, the results of compiling
+interactive changes to threads are added to a temporary layer of the compiler
 database for the application’s project. This allows you to browse the
 effects of your changes while the application remains running, but these
 changes are not saved to disk in the compiler database file, nor are
@@ -1000,7 +990,7 @@ completely.
 When Open Dylan encounters a breakpoint, it prints the breakpoint
 location in the debugger’s context pane, and also (if the breakpoint
 option *Print Message* is checked) adds it to the debugger’s interaction
-pane. See `See Breakpoint options <debug.htm#23683>`_.
+pane. See `Breakpoint options`_.
 
 Breakpoints are associated with the application’s project, rather than
 the compiled application itself. This means breakpoints only have an
@@ -1050,7 +1040,7 @@ When you set the breakpoint, a solid red circle appears to show that it
 is an enabled pausing breakpoint. You can toggle the breakpoint between
 enabled and disabled by clicking on the circle. You can also use the
 shortcut (right-click) menu to manipulate breakpoints on lines of code.
-See `See Breakpoint commands on the shortcut menu <debug.htm#11710>`_.
+See `Breakpoint commands on the shortcut menu`_.
 
 Browsing a project’s breakpoints
 --------------------------------
@@ -1060,8 +1050,8 @@ Breakpoints page. This shows the location of the breakpoint (the name of
 the function or the line of the source code file),
 
 You can also manipulate any breakpoint here by selecting it and using
-the commands on the shortcut (right-click) menu. See `See Breakpoint
-commands on the shortcut menu <debug.htm#11710>`_.
+the commands on the shortcut (right-click) menu. See `Breakpoint
+commands on the shortcut menu`_.
 
 Breakpoint commands on the shortcut menu
 ----------------------------------------
@@ -1118,8 +1108,8 @@ complete list of commands follows.
     Removes any breakpoint at the line the mouse pointer is on.
 
 Edit Breakpoint Options…
-    Pops up a dialog for editing breakpoint options. See `See Breakpoint
-    options <debug.htm#23683>`_.
+    Pops up a dialog for editing breakpoint options. See `Breakpoint
+    options`_.
 
     The dialog appears even if a breakpoint did not exist on the function
     or line.
@@ -1238,7 +1228,7 @@ Where execution was paused in the call to *second-movement*. Choosing
 **Thread > Step Over** does an implied **Thread > Step Out** too, so that if
 when you choose **Thread > Step Over** there is no more code, it steps out
 rather than continuing the application no longer under the debugger. See
-`See Step out <debug.htm#32830>`_ for details of **Thread > Step Out**.
+`Step out`_ for details of **Thread > Step Out**.
 
 Step into
 ---------
@@ -1254,9 +1244,9 @@ stack.
 **Thread > Step Into** does an implied **Thread > Step Over** (and hence an
 implied **Thread > Step Out** ), so that if you when choose **Thread > Step
 Into** and there is nothing to step into, it acts like a **Thread > Step
-Over** (or a **Thread > Step Out** once you leave the function). See `See
-Step over <debug.htm#12750>`_ for details of **Thread > Step Over** and
-`See Step out <debug.htm#32830>`_ for details of **Thread > Step Out**.
+Over** (or a **Thread > Step Out** once you leave the function). See
+`Step over`_ for details of **Thread > Step Over** and `Step out`_ for
+details of **Thread > Step Out**.
 
 Step out
 --------
@@ -1308,8 +1298,7 @@ Note that by default the action of starting a project will switch the
 active project, so the last project you start will be the active one by
 default. You can change this behavior in the main window with **Options >
 Environment Options…** so that the active project does not switch in this
-situation. See `See The active project <debug.htm#21333>`_ for more
-information.
+situation. See `The active project`_ for more information.
 
 If you need to rebuild a library shared between the client and server,
 you need to stop both running applications, since Windows forbids

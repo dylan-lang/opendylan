@@ -23,25 +23,27 @@ When Open Dylan starts, the *main window* appears:
 .. figure:: ../images/mainwin.png
    :align: center
 
-   The Open Dylan main window.
+   The Open Dylan main window
 
 The *initial dialog* also appears:
+
+.. _initial-dialog:
 
 .. figure:: ../images/initdlg.png
    :align: center
 
-   The initial dialog.
+   The initial dialog
 
 The main window will be present throughout your Open Dylan session.
 It provides a way to set environment-wide options and to control the
 display of all Dylan windows. To exit Open Dylan, choose **File >
 Exit** in the main window.
 
-The initial dialog (`See The initial dialog. <quick-start.htm#25162>`_)
-is there to help you get working quickly, whether by looking at an
-example project, creating a new project, opening an existing project or
-text file, or starting an interactive Dylan session in the *Dylan
-playground*. (See ` <debug.htm#42200>`_ for more information.)
+The initial dialog (:ref:`initial-dialog`) is there to help you get
+working quickly, whether by looking at an example project, creating
+a new project, opening an existing project or text file, or starting
+an interactive Dylan session in the *Dylan playground*. (See
+` <debug.htm#42200>`_ for more information.)
 
 We want to browse the example projects.
 
@@ -69,7 +71,7 @@ We are going to look at the example called Reversi, which is in the
 .. figure:: ../images/examples-dlg.png
    :align: center
 
-   The Open Dylan Examples dialog.
+   The Open Dylan Examples dialog
 
 Expand the “Documentation” category by clicking the *+* next to it.
 
@@ -174,13 +176,12 @@ warnings* while compiling the project sources, and to let us choose
 whether to go ahead with the “link” phase of building. The “link” phase
 creates the executable application for the project.
 
-Why are there serious warnings? Recall from `See The Reversi
-project <quick-start.htm#14321>`_ that we will be adding some more
-source files to the project later on. These files implement new game
-features that require debugging and will help to demonstrate the
-Open Dylan development environment further. Because we built the
-project without adding the extra files, the compiler detected that some
-code in the project refers to name bindings that were otherwise
+Why are there serious warnings? Recall from `The Reversi project`_ that
+we will be adding some more source files to the project later on. These
+files implement new game features that require debugging and will help
+to demonstrate the Open Dylan development environment further. Because
+we built the project without adding the extra files, the compiler detected
+that some code in the project refers to name bindings that were otherwise
 undefined, and issued the serious warnings.
 
 If there are serious warnings when compiling a project, we will usually

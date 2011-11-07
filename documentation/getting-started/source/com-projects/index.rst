@@ -21,8 +21,8 @@ You can invoke this type library tool from a Open Dylan project by
 including a *specification file* in the project. A specification file
 describes what type library to translate and in what way the translation
 will be used. Specification files have the extension .SPEC. You can find
-more details about specification files in section `See The type library
-tool and specification files <com-projects.htm#21058>`_.
+more details about specification files in section `The type library
+tool and specification files`_.
 
 To make using the tool easier, the New Project wizard allows you to
 create a project containing a specification file.

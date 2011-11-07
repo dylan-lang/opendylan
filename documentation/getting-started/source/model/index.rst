@@ -115,20 +115,19 @@ Subprojects
     we can call a project a *superproject* when describing it with reference
     to its subprojects.
 
-    See `See The build cycle <model.htm#24183>`_ for more on the
-    relationship between projects and their subprojects.
+    See `The build cycle`_ for more on the relationship between projects
+    and their subprojects.
 
 Version numbers
     Every project has a major and minor version number. The version numbers
     affect the build process for projects. See ` <../projects.htm#16457>`_
-    and `See The build cycle <model.htm#24183>`_.
+    and `The build cycle`_.
 
 Project settings
     Every project has settings. Among these settings are:
 
     - The list of source code files and their locations on disk.
-    - Compilation mode options. See `See Compilation
-      modes <model.htm#12475>`_.
+    - Compilation mode options. See `Compilation modes`_.
     - Debugging options. See ` <../debug.htm#17520>`_.
     - The list of subprojects the project uses.
     - The locations on disk of the subprojects.
@@ -169,7 +168,7 @@ The project folder contains the following files and subfolders:
 
   The folder also contains the *compiler database* file for the project.
   This file has the same name as the project and the extension .DDB. See
-  `See Compiler databases <model.htm#25398>`_ for more details.
+  `Compiler databases`_ for more details.
 
   You can remove the compiler database and intermediate files with
   **Project > Remove Build Products**. This forces a complete recompilation
@@ -263,9 +262,8 @@ including definitions and redefinitions, in a running program. Open
 Dylan offers interactive development via the debugger’s interaction
 pane. The object code produced during interactive development is not
 saved, but just patched into the running program and added to the
-in-memory *compiler database* (see page `See Compilation
-modes <model.htm#12475>`_). The object code is lost when the program
-terminates.
+in-memory *compiler database* (see `Compilation modes`_). The
+object code is lost when the program terminates.
 
 Compilation
 ===========

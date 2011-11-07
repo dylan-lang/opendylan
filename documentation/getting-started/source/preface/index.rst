@@ -71,32 +71,32 @@ the Open Dylan development tools. Later chapters examine those
 tools more directly, and provide a broader view of the development
 process in Open Dylan.
 
-`See Quick Start <quick-start.htm#34990>`_, shows how to build a
+:doc:`../quick-start/index`, shows how to build a
 standalone executable application in Open Dylan. It discusses the
 Open Dylan main window and the project window.
 
-` <expanding.htm#24929>`_, shows how to make changes to your application
+:doc:`../expanding/index`, shows how to make changes to your application
 sources and how to debug compile-time and run-time errors. It discusses
 the project window, the debugger, the editor, and the browser.
 
-` <model.htm#12798>`_, gives an overview of the programming model in
+:doc:`../model/index`, gives an overview of the programming model in
 Open Dylan.
 
-` <projects.htm#23024>`_, discusses the New Project wizard, and looks at
+:doc:`../projects/index`, discusses the New Project wizard, and looks at
 the project window in more detail.
 
-` <browsing.htm#36258>`_, shows how you can examine the sources of a
+:doc:`../browsing/index`, shows how you can examine the sources of a
 project, and run-time values in an application, using the browser.
 
-` <debug.htm#18907>`_, returns to the debugger and studies it in more
+:doc:`../debug/index`, returns to the debugger and studies it in more
 detail.
 
-` <remotedbg.htm#37646>`_, describes how to debug a Dylan application
+:doc:`../remotedbg/index`, describes how to debug a Dylan application
 running on another machine.
 
-` <coloring.htm#27192>`_, describes the editor’s facility for coloring
+:doc:`../coloring/index`, describes the editor’s facility for coloring
 source code to show the degree to which it has been optimized.
 
-` <delivery.htm#40190>`_, shows how you can package an application with
+:doc:`../delivery/index`, shows how you can package an application with
 everything necessary to deliver it to customers as a stand-alone
 product.

@@ -64,8 +64,8 @@ And for GUI applications that use the DUIM library, there can also be:
    application’s DUIM frame and a set of default menus.
 
 The *frame.dylan* file appears only if you ask for template code to be
-included in your project. We discuss this in `See Projects for GUI
-applications <projects.htm#35998>`_.
+included in your project. We discuss this in `Projects for GUI
+applications`_.
 
 For more information on DUIM, see *Building Applications Using DUIM* and
 the *DUIM Reference*.
@@ -105,9 +105,8 @@ Windows file names.
 
 In addition, the project name is used as the default name of the library
 and module that the project defines, so unless you change those names
-(with the *Advanced…* dialog; see `See Advanced project
-settings <projects.htm#15433>`_), the project name must also be a valid
-Dylan name.
+(with the *Advanced…* dialog; see `Advanced project settings`_), the
+project name must also be a valid Dylan name.
 
 Here we can also specify, using the “Include any available templates”
 check box, that the wizard should generate skeleton code for our project
@@ -198,11 +197,12 @@ the new Hello project and opens it.
 Examining the files in the Hello project
 ----------------------------------------
 
-`See The Hello project. <projects.htm#38662>`_ shows our new Hello
-project.
+:ref:`hello-project` shows our new Hello project.
 
 The default view shows the Sources page, where we can see the files
 *library.dylan*, *module.dylan*, and *Hello.dylan*.
+
+.. _hello-project:
 
 .. figure:: ../images/hellopr.png
    :align: center
@@ -217,8 +217,7 @@ uses various modules exported from the *harlequin-dylan* library.
 The *Hello.dylan* file is an initial file into which we can write the
 code for our project. It contains a default start function called *main*,
 and the last lines of the file call this *main* function. For more on
-the purpose of this function, see `See The project start
-function <projects.htm#25954>`_.
+the purpose of this function, see `The project start function`_.
 
 We can add further files to the project as we see fit. But our “Hello
 World” application is trivial: we can write the code into *Hello.dylan*
@@ -330,16 +329,16 @@ Click **Next**.
 
 Now the wizard offers different pages, which we don't explain here.
 We will keep clicking *Next* until we get to the last page of the wizard.
-This is the page for specifying source file headers, as we saw in `See
-The final page in the New Project wizard <projects.htm#27318>`_.
+This is the page for specifying source file headers, as we saw in
+`The final page in the New Project wizard`_.
 
 Click **Next** until the last page of the wizard appears.
 
 If you made any changes to this page last time, they will have been
 preserved. Whenever you click **Finish**, the wizard saves all these
 headers (except *Synopsis:* ) and some other details, and reinstates
-them next time you create a project. See `See Saving settings in the New
-Project wizard <projects.htm#23000>`_ for a list of the details that the
+them next time you create a project. See `Saving settings in the New
+Project wizard`_ for a list of the details that the
 wizard saves.
 
 Make any changes you want to here, and then click **Finish**.
@@ -428,8 +427,8 @@ Select “Core” in the Library Group list.
    Functional-Dylan is the default library for use in new projects.
 
 So, by default, a project would use the library Functional-Dylan. (Note
-that `See Functional-Dylan is the default library for use in new
-projects. Your copy of Open Dylan may have more library groups.
+that Functional-Dylan is the default library for use in new projects.
+Your copy of Open Dylan may have more library groups.)
 
 If we now select Functional-Dylan in the Library list, we can see which
 modules from the Functional-Dylan library a default project would
@@ -465,9 +464,9 @@ that are saved persistently are as follows.
 The parent folder is saved in the expectation that you will want to
 create several projects in sibling folders.
 
--  In the *Advanced…* dialog (see `See Advanced project
-   settings <projects.htm#15433>`_), the contents of the Start Function
-   box and the setting of Compilation Mode.
+-  In the *Advanced…* dialog (see `Advanced project settings`_),
+   the contents of the Start Function box and the setting of
+   Compilation Mode.
 -  The setting of the “Include any available templates” check-box.
 
 On the last wizard page:
@@ -493,8 +492,7 @@ is the name of the project.
 The remaining sections—Start Function, Version Information, Compilation
 Mode, and Windows Subsystem—all control settings that you can both set
 here and change after creating a project by choosing **Project >
-Settings…**. See `See Project settings <projects.htm#32945>`_ for
-details.
+Settings…**. See `Project settings`_ for details.
 
 Adding, moving, and deleting project sources
 ============================================
@@ -720,8 +718,7 @@ executable named in the Executable field and passes it the arguments
 from the Arguments field. Thus the values in these fields should form a
 valid MS-DOS command line when concatenated.
 
-See `See The project start function <projects.htm#25954>`_ for details
-of the start function.
+See `The project start function`_ for details of the start function.
 
 Another use of the Command Line section is to arrange to test and debug
 DLLs and OLE components. See ` <debug.htm#13513>`_ for a description of

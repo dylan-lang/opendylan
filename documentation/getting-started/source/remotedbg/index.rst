@@ -11,11 +11,11 @@ running on a remote machine—that is, a networked machine other than
 the one running the Open Dylan IDE.
 
 The ability to do these things on the remote machine is a simple
-extension of the standard features described in `See Debugging and
-Interactive Development <../debug.htm#18907>`_, which covers debugging
-and interaction techniques. The techniques for running, debugging, and
-interacting with a program are exactly the same as for the local
-machine, but there are a few initial configuration issues to cover.
+extension of the standard features described in :doc:`../debug/index`,
+which covers debugging and interaction techniques. The techniques for
+running, debugging, and interacting with a program are exactly the same
+as for the local machine, but there are a few initial configuration
+issues to cover.
 
 Installing the program and debugging server on the remote machine
 -----------------------------------------------------------------
