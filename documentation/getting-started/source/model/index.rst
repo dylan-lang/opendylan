@@ -8,7 +8,7 @@ model in Open Dylan, and to review the features of the development
 environment and the Dylan compiler.
 
 Projects
---------
+========
 
 In Open Dylan, all development work is done in terms of *projects*.
 Projects are the development environment and compiler’s way of
@@ -22,7 +22,7 @@ project, nearly all other programming tasks in Open Dylan take
 place within the context of a project.
 
 Projects and libraries
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 A project represents a single Dylan library. Think of a project as
 something that gathers together all the information Open Dylan
@@ -32,7 +32,7 @@ For example, earlier in this manual, we worked with the Reversi project.
 The Reversi project represents a single Dylan library, called Reversi.
 
 Projects and deliverables
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 You can create deliverable applications, libraries, and components from
 projects. Projects can be built into executable (.EXE) or dynamic-link
@@ -46,7 +46,7 @@ but we could just as easily have built a DLL. See
 ` <../projects.htm#32945>`_ for details.
 
 Creating new projects
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 Open Dylan includes a New Project wizard for creating new projects.
 
@@ -61,7 +61,7 @@ project file and opened in a project window. (This process does not
 modify the original LID file on disk.) See ` <../projects.htm#33260>`_.
 
 Project files
-~~~~~~~~~~~~~
+-------------
 
 Open Dylan stores projects on disk in *project files*. Project
 files have the same name as the project, with the extension *.* HDP.
@@ -78,69 +78,63 @@ files. For example, if you add a new source file to a project, the
 change is saved to disk immediately.
 
 Project components
-~~~~~~~~~~~~~~~~~~
+------------------
 
 We now describe the components of a project in more detail. Every
 project consists of:
 
 A Dylan library
-
-Every project defines a single Dylan library. We call this library the
-“library of the project” or, for clarity, the *main* library of the
-project, to distinguish it from other libraries that the project uses.
+    Every project defines a single Dylan library. We call this library the
+    “library of the project” or, for clarity, the *main* library of the
+    project, to distinguish it from other libraries that the project uses.
 
 A project name
-
-Every project has a name. When you create a new project with the New
-Project wizard, the wizard uses this name to generate default names for
-initial files, libraries and modules in the new project. The compiler
-uses the project name to generate default names for the executables and
-other files it produces during compilation. In both cases, you can
-override the defaults.
+    Every project has a name. When you create a new project with the New
+    Project wizard, the wizard uses this name to generate default names for
+    initial files, libraries and modules in the new project. The compiler
+    uses the project name to generate default names for the executables and
+    other files it produces during compilation. In both cases, you can
+    override the defaults.
 
 Source code files, and other files
+    Every project includes source code files. Projects created with the New
+    Project wizard will have a *library.dylan* file (which defines the
+    project’s library); a *module.dylan* file (which defines the modules of
+    the library); and at least one other Dylan source code file containing
+    definitions and expressions.
 
-Every project includes source code files. Projects created with the New
-Project wizard will have a *library.dylan* file (which defines the
-project’s library); a *module.dylan* file (which defines the modules of
-the library); and at least one other Dylan source code file containing
-definitions and expressions.
-
-Projects can also include Windows resource files, static libraries (.LIB
-files), and text files. The compiler ignores any file it does not
-recognize. This flexibility allows such things as including README files
-in a project.
+    Projects can also include Windows resource files, static libraries (.LIB
+    files), and text files. The compiler ignores any file it does not
+    recognize. This flexibility allows such things as including README files
+    in a project.
 
 Subprojects
+    A project can have *subprojects*. Subprojects are other projects that
+    are included in a project; they define their own main library, contain
+    their own source files and may have subprojects themselves. For clarity,
+    we can call a project a *superproject* when describing it with reference
+    to its subprojects.
 
-A project can have *subprojects*. Subprojects are other projects that
-are included in a project; they define their own main library, contain
-their own source files and may have subprojects themselves. For clarity,
-we can call a project a *superproject* when describing it with reference
-to its subprojects.
-
-See `See The build cycle <model.htm#24183>`_ for more on the
-relationship between projects and their subprojects.
+    See `See The build cycle <model.htm#24183>`_ for more on the
+    relationship between projects and their subprojects.
 
 Version numbers
-
-Every project has a major and minor version number. The version numbers
-affect the build process for projects. See ` <../projects.htm#16457>`_
-and `See The build cycle <model.htm#24183>`_.
+    Every project has a major and minor version number. The version numbers
+    affect the build process for projects. See ` <../projects.htm#16457>`_
+    and `See The build cycle <model.htm#24183>`_.
 
 Project settings
+    Every project has settings. Among these settings are:
 
-Every project has settings. Among these settings are:
-
--  The list of source code files and their locations on disk.
--  Compilation mode options. See `See Compilation
-   modes <model.htm#12475>`_.
--  Debugging options. See ` <../debug.htm#17520>`_.
--  The list of subprojects the project uses.
--  The locations on disk of the subprojects.
+    - The list of source code files and their locations on disk.
+    - Compilation mode options. See `See Compilation
+      modes <model.htm#12475>`_.
+    - Debugging options. See ` <../debug.htm#17520>`_.
+    - The list of subprojects the project uses.
+    - The locations on disk of the subprojects.
 
 Projects on disk
-~~~~~~~~~~~~~~~~
+----------------
 
 A project consists of several files and folders on disk.
 
@@ -157,52 +151,47 @@ subprojects and used libraries are stored.
 
 The project folder contains the following files and subfolders:
 
-The project file. (.HDP file.)
+- The project file. (.HDP file.)
+- The source code files. (.DYLAN files)
+- The *bin* folder.
 
-The source code files. (.DYLAN files)
+  This folder holds the executable (.EXE) or DLL (.DLL) file produced from
+  the project.
 
-The *bin* folder.
+  In addition, the DLLs of the project’s subprojects are automatically
+  copied into this folder, so that they can be found when you execute your
+  project’s application.
+- The *project* *-build* folder.
 
-This folder holds the executable (.EXE) or DLL (.DLL) file produced from
-the project.
+  This folder, whose name begins with the name of the project, holds a
+  number of intermediate files produced during builds. You will never have
+  to do anything with these intermediate files.
 
-In addition, the DLLs of the project’s subprojects are automatically
-copied into this folder, so that they can be found when you execute your
-project’s application.
+  The folder also contains the *compiler database* file for the project.
+  This file has the same name as the project and the extension .DDB. See
+  `See Compiler databases <model.htm#25398>`_ for more details.
 
-The *project* *-build* folder.
+  You can remove the compiler database and intermediate files with
+  *Project > Remove Build Products*. This forces a complete recompilation
+  of a project next time you build it.
+- The *lib* folder.
 
-This folder, whose name begins with the name of the project, holds a
-number of intermediate files produced during builds. You will never have
-to do anything with these intermediate files.
+  This folder holds the *linker* file for the project. This file has the
+  same name as the project and the extension .LIB or .DEFS. This file is
+  needed for other projects to be able to link against the project, a
+  process that is part of using a project as a subproject.
 
-The folder also contains the *compiler database* file for the project.
-This file has the same name as the project and the extension .DDB. See
-`See Compiler databases <model.htm#25398>`_ for more details.
+  The extension is .LIB if you are using the Microsoft linker, or .DEFS if
+  you are using the GNU linker.
+- The *release* folder.
 
-You can remove the compiler database and intermediate files with
-*Project > Remove Build Products*. This forces a complete recompilation
-of a project next time you build it.
-
-The *lib* folder.
-
-This folder holds the *linker* file for the project. This file has the
-same name as the project and the extension .LIB or .DEFS. This file is
-needed for other projects to be able to link against the project, a
-process that is part of using a project as a subproject.
-
-The extension is .LIB if you are using the Microsoft linker, or .DEFS if
-you are using the GNU linker.
-
-The *release* folder.
-
-This folder holds a stand-alone version of the project’s application,
-suitable for redistribution to customers or other third parties without
-a copy of Open Dylan on their system. It is created when you choose
-the *Project > Make Release* command.
+  This folder holds a stand-alone version of the project’s application,
+  suitable for redistribution to customers or other third parties without
+  a copy of Open Dylan on their system. It is created when you choose
+  the *Project > Make Release* command.
 
 Projects in the development environment
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------------
 
 The Open Dylan development environment offers a variety of ways to
 examine and manipulate projects. You can view a single project in
@@ -233,7 +222,7 @@ Open Dylan offers:
    of a project.
 
 Development models
-------------------
+==================
 
 The process of development in Open Dylan can be much the same as in
 interactive development environments for other languages. Applications
@@ -257,7 +246,7 @@ before committing to a rebuild.
    “Dynamic” development model.
 
 Interactive and incremental development
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------------
 
 Open Dylan offers both interactive and incremental development
 features. It is important to distinguish them clearly:
@@ -279,14 +268,14 @@ modes <model.htm#12475>`_). The object code is lost when the program
 terminates.
 
 Compilation
------------
+===========
 
 This section discusses compilation modes, compiler databases,
 optimization (including loose and tight binding), the build cycle
 algorithm, and linkers.
 
 Compiler databases
-~~~~~~~~~~~~~~~~~~
+------------------
 
 When compiling a project, Open Dylan produces a compiler database
 which models the project. The database provides a rich source of
@@ -317,7 +306,7 @@ database is read into memory from the disk file, if it exists.
 Compiler database files have a .DDB suffix.
 
 Compilation modes
-~~~~~~~~~~~~~~~~~
+-----------------
 
 The Dylan language encourages programmers to write programs that can be
 compiled as efficiently as programs written in static languages. By
@@ -369,7 +358,7 @@ refreshing the coloring after rebuilding the project. See
 ` <../coloring.htm#27192>`_.
 
 Versioning
-~~~~~~~~~~
+----------
 
 A project can have major and minor version numbers that will be recorded
 in the DLL or EXE that the project builds. You can enter these numbers
@@ -393,7 +382,7 @@ was used at compile time. If the library is different, a run-time error
 is signalled even if the version is the same.
 
 Binding
-~~~~~~~
+-------
 
 Interactive Development mode and Production mode are in fact
 combinations of some lower-level compiler modes. Open Dylan
@@ -432,7 +421,7 @@ they are tightly bound internally, and therefore libraries that use them
 are tightly bound to them.
 
 The build cycle
-~~~~~~~~~~~~~~~
+---------------
 
 Building an application or DLL from a project consists of up to three
 phases:
@@ -474,7 +463,7 @@ should always increment the major version number of a project after
 altering any macro definitions in it.
 
 Linkers
-~~~~~~~
+-------
 
 Open Dylan offers you a choice of linkers to use to link your Dylan
 programs. The default linker is a GNU linker. If you own Microsoft
@@ -482,14 +471,14 @@ Developer Studio, you can use Microsoft’s linker instead. See the Linker
 page of the main window’s *Options > Environment Options…* dialog.
 
 Executing programs
-------------------
+==================
 
 This section discusses running applications within Open Dylan (and
 the benefits of doing so), and the process of library initialization in
 an application.
 
 Starting applications up from within Open Dylan
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------------------
 
 An application written in Dylan cannot be started and later connected to
 Open Dylan and its project. If you want to be able to debug an
@@ -501,7 +490,7 @@ application and the capabilities necessary to control its execution and
 to interact with it.
 
 Application and library initialization
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------------
 
 When a Dylan application starts up, it begins by loading the libraries
 that it uses. Each library performs its own initialization when it is
@@ -529,7 +518,7 @@ appear in the project, and the last expression in a project should be a
 call to a project’s start function.
 
 Source, database, and run-time views
-------------------------------------
+====================================
 
 We have seen that Open Dylan provides several tools to allow us to
 view projects in different ways. Some tools can look at the source

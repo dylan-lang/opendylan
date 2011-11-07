@@ -24,7 +24,7 @@ Release folder, and using Open Dylan’s stand-alone run-time library
 installer.
 
 Building a release folder
--------------------------
+=========================
 
 To create a single folder containing everything necessary for your
 application to run on a customer’s machine, use the *Project > Make
@@ -40,7 +40,7 @@ application. Read the Open Dylan license agreement for details of
 the legal side of redistributing the Open Dylan run-time libraries.
 
 Using the run-time library installer
-------------------------------------
+====================================
 
 An alternative to building a single release folder is to use Open
 Dylan’s run-time library installer, a self-extracting executable that
@@ -49,8 +49,9 @@ location.
 
 The default location is
 
-C:\\Program Files\\Common Files\\Harlequin\\System
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+::
+
+    C:\Program Files\Common Files\Harlequin\System
 
 The run-time library installer also sets the PATH environment variable
 to include this folder.
@@ -65,7 +66,7 @@ Web site. You can distribute the run-time installer to customers, or
 allow them to download it themselves.
 
 About the run-time library DLLs
--------------------------------
+===============================
 
 The run-time library DLLs have 8.3 format names and include a version
 number. This version number will be incremented for new releases of the

@@ -3,7 +3,7 @@ Creating COM Projects
 *********************
 
 Working with COM type libraries
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+===============================
 
 Microsoft COM interfaces and implementations of those interfaces are
 described on disk by *type libraries*. Type libraries can reside in
@@ -28,7 +28,7 @@ To make using the tool easier, the New Project wizard allows you to
 create a project containing a specification file.
 
 An example COM server and client
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+================================
 
 The following example explains how the type library tool works and how
 to use the New Project wizard features that support it.
@@ -39,7 +39,7 @@ simple client to that interface. In order to make things simpler, we
 have provided a COM type library describing the encryption interface.
 
 Creating the server stubs library
-'''''''''''''''''''''''''''''''''
+---------------------------------
 
 First we use the New Project wizard to create a Dylan library defining
 server-side stubs for the encryption interface.
@@ -250,7 +250,7 @@ Note that the *define* *coclass* is within a comment, since you may want
 to define a COM class based on a subclass of *<IRotNExample>*.
 
 Creating the server
-'''''''''''''''''''
+-------------------
 
 Now we create the actual server application.
 
@@ -463,7 +463,7 @@ During the build, you will be prompted for the location of the project
 file *RotNExample-server-stubs.hdp*.
 
 Creating the client stubs library
-'''''''''''''''''''''''''''''''''
+---------------------------------
 
 Now we create a project for the client-side stubs of the encryption
 interface.
@@ -575,7 +575,7 @@ This function creates an instance of the RotNExample COM class, and
 returns its default (and only) interface.
 
 Creating the client
-'''''''''''''''''''
+-------------------
 
 Now we create the actual client application.
 
@@ -651,7 +651,7 @@ During the build, you will be prompted for the location of the project
 file *RotNExample-client-stubs.hdp*.
 
 Testing the client and server pair
-''''''''''''''''''''''''''''''''''
+----------------------------------
 
 The best way to test the client and server pair is from within the
 Open Dylan environment, so that we can use the debugger if either
@@ -711,7 +711,7 @@ The client should execute, and print something like this::
     Client releasing server.
 
 Creating vtable and dual interfaces
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+===================================
 
 The New Project wizard can generate custom (vtable) and dual (vtable and
 dispatch) COM interfaces. They are available on the wizard’s
@@ -740,7 +740,7 @@ classes with suffix” box is not checked, no client classes are
 generated, and client methods specialize on *<C-Interface>* instead.
 
 The type library tool and specification files
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+=============================================
 
 The type library tool is invoked any time you build a project which
 includes a a type library tool specification, or .SPEC, file. This is a
@@ -756,135 +756,125 @@ has been modified more recently then the last build.
 Type library tool specification files can contain the following
 keywords:
 
-Type-library:
-=============
+**Type-library**:
+    SPEC file keyword
 
-SPEC file keyword
------------------
+    ::
 
-Type-library: *typelibrary-path*
+        Type-library: *typelibrary-path*
 
-Required. Specifies the pathname of the type library to translate. If
-*typelibrary-path* is a relative path, it is considered to be relative
-to the location of the specification file.
+    Required. Specifies the pathname of the type library to translate. If
+    *typelibrary-path* is a relative path, it is considered to be relative
+    to the location of the specification file.
 
-Module-file:
-============
+**Module-file**:
+    SPEC file keyword
 
-SPEC file keyword
------------------
+    ::
 
-Module-file: *module-file-to-generate*
+        Module-file: *module-file-to-generate*
 
-Required. Specifies the pathname of the module file to generate. The
-file will be created, if necessary, and added to the project, if
-necessary.
+    Required. Specifies the pathname of the module file to generate. The
+    file will be created, if necessary, and added to the project, if
+    necessary.
 
-Module:
-=======
+**Module**:
+    SPEC file keyword
 
-SPEC file keyword
------------------
+    ::
 
-Module: *module-name-to-generate*
+        Module: *module-name-to-generate*
 
-Required. The name of the module definition to generate. This module
-definition is placed in the file *module-file-to-generate*.
+    Required. The name of the module definition to generate. This module
+    definition is placed in the file *module-file-to-generate*.
 
-Stub-file:
-==========
+**Stub-file**:
+    SPEC file keyword
 
-SPEC file keyword
------------------
+    ::
 
-Stub-file: *stub-file-to-generate*
+        Stub-file: *stub-file-to-generate*
 
-Required. Specifies the pathname of the Dylan source file to generate.
-This file will be created, if necessary, and added to the project, if
-necessary.
+    Required. Specifies the pathname of the Dylan source file to generate.
+    This file will be created, if necessary, and added to the project, if
+    necessary.
 
-Generate:
-=========
+**Generate**:
+    SPEC file keyword
 
-SPEC file keyword
------------------
+    ::
 
-Generate: *type-of-stubs*
+        Generate: *type-of-stubs*
 
-Required. Determines what type of stubs are generated in the file
-specified using *Stub-file:*. Possible values of *type-of-stubs* are:
+    Required. Determines what type of stubs are generated in the file
+    specified using *Stub-file:*. Possible values of *type-of-stubs* are:
 
-*dispatch-clients*
-    Dispatch client code is generated, using *define* *dispatch-client*.
+    *dispatch-clients*
+        Dispatch client code is generated, using *define* *dispatch-client*.
 
-*dispatch-servers*
-    Dispatch server code is generated, using *define*
-    *dispatch-interface*.
+    *dispatch-servers*
+        Dispatch server code is generated, using *define*
+        *dispatch-interface*.
 
-*vtable-interfaces*
+    *vtable-interfaces*
+        Custom (vtable) interfaces are generated, using *define*
+        *vtable-interface*. The names of server interfaces are affected by
+        the value of *Server-suffix:* (below). The names of client interfaces
+        and whether client interfaces are generated are affected by the
+        presence and the value of *Client-suffix:* (below).
 
-    Custom (vtable) interfaces are generated, using *define*
-    *vtable-interface*. The names of server interfaces are affected by
-    the value of *Server-suffix:* (below). The names of client interfaces
-    and whether client interfaces are generated are affected by the
-    presence and the value of *Client-suffix:* (below).
+    *dual-interfaces*
+        Dual (vtable and dispatch) interfaces are generated, using *define*
+        *vtable-interface*. The names of server interfaces are affected by
+        the value of *Server-suffix:*. The names of client interfaces and
+        whether client interfaces are generated are affected by the presence
+        and the value of *Client-suffix:*.
 
-*dual-interfaces*
+**Server-suffix**:
+    SPEC file keyword
 
-    Dual (vtable and dispatch) interfaces are generated, using *define*
-    *vtable-interface*. The names of server interfaces are affected by
-    the value of *Server-suffix:*. The names of client interfaces and
-    whether client interfaces are generated are affected by the presence
-    and the value of *Client-suffix:*.
+    ::
 
-Server-suffix:
-==============
+        Server-suffix: *server-suffix*
 
-SPEC file keyword
------------------
+    Optional. Only meaningful when *Generate:* ’s *type-of-stubs* argument
+    is *vtable-interfaces* or *dual-interfaces*. Specifies a suffix which
+    is appended to generated server interface names. If no value is provided
+    or the *Server-suffix:* keyword is omitted then no suffix is appended.
 
-Server-suffix: *server-suffix*
+**Client-suffix**:
+    SPEC file keyword
 
-Optional. Only meaningful when *Generate:* ’s *type-of-stubs* argument
-is *vtable-interfaces* or *dual-interfaces*. Specifies a suffix which
-is appended to generated server interface names. If no value is provided
-or the *Server-suffix:* keyword is omitted then no suffix is appended.
+    ::
 
-Client-suffix:
-==============
+        Client-suffix: *client-suffix*
 
-SPEC file keyword
------------------
+    Optional. Only meaningful when *Generate:* ’s *type-of-stubs* argument
+    is *vtable-interfaces* or *dual-interfaces*. Specifies a suffix which
+    is appended to generated client interface names. If the *Client-suffix:*
+    keyword is omitted then client classes are not generated (the
+    client-class clause is not provided to the define vtable-interfaces or
+    define dual-interfaces macro invocation). To generate client classes but
+    not append a suffix, an empty value must be provided to the
+    *Client-suffix:* keyword. For example::
 
-Client-suffix: *client-suffix*
+        Client-suffix:
 
-Optional. Only meaningful when *Generate:* ’s *type-of-stubs* argument
-is *vtable-interfaces* or *dual-interfaces*. Specifies a suffix which
-is appended to generated client interface names. If the *Client-suffix:*
-keyword is omitted then client classes are not generated (the
-client-class clause is not provided to the define vtable-interfaces or
-define dual-interfaces macro invocation). To generate client classes but
-not append a suffix, an empty value must be provided to the
-*Client-suffix:* keyword. For example:
+**Interfaces**:
+    SPEC file keyword
 
-Client-suffix:
+    ::
 
-Interfaces:
-===========
+        Interfaces: *interfaces-and-coclasses-to-translate*
 
-SPEC file keyword
------------------
+    Optional. If provided, specifies the names of the interfaces and COM
+    classes to translate. If not provided, all interfaces and COM classes
+    are translated. All interfaces or COM classes after the first listed
+    should be provided on a new line, preceded by a tab or spaces. For
+    example::
 
-Interfaces: *interfaces-and-coclasses-to-translate*
-
-Optional. If provided, specifies the names of the interfaces and COM
-classes to translate. If not provided, all interfaces and COM classes
-are translated. All interfaces or COM classes after the first listed
-should be provided on a new line, preceded by a tab or spaces. For
-example::
-
-    Interfaces: IInterfaceOne
-                InterfaceOneCoclass
-                IInterfaceTwo
-                InterfaceTwoCoclass
+        Interfaces: IInterfaceOne
+                    InterfaceOneCoclass
+                    IInterfaceTwo
+                    InterfaceTwoCoclass
 

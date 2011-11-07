@@ -3,7 +3,7 @@ Remote Debugging
 ****************
 
 Running a Dylan application on a remote machine
------------------------------------------------
+===============================================
 
 Open Dylan offers a facility for running, debugging, and interacting
 with a Dylan application, DLL, or OLE control (“program” hereafter)
@@ -18,7 +18,7 @@ interacting with a program are exactly the same as for the local
 machine, but there are a few initial configuration issues to cover.
 
 Installing the program and debugging server on the remote machine
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------------------------------------
 
 To do anything with a Dylan program on a remote machine, the program has
 to be installed there. It may be there already—if, for instance, you are
@@ -28,23 +28,20 @@ the program on that machine.
 To install the debugging server and your program on a remote machine,
 perform these steps on the target machine:
 
-Install the Open Dylan runtime system.
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#. Install the Open Dylan runtime system.
 
-The runtime installer executable, the name of which begins “*hdrun* …”,
-resides in the *Extras* folder at the top-level of your Dylan CD-ROM.
+   The runtime installer executable, the name of which begins “*hdrun* …”,
+   resides in the *Extras* folder at the top-level of your Dylan CD-ROM.
 
-Install the debugging server application.
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#. Install the debugging server application.
 
-The debugging server installer executable, the name of which begins with
-“*hddbg* …”, also resides in the *Extras* folder.
+   The debugging server installer executable, the name of which begins with
+   “*hddbg* …”, also resides in the *Extras* folder.
 
-Copy the *bin* folder for your project onto the remote machine.
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#. Copy the *bin* folder for your project onto the remote machine.
 
 Starting the debugging server
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 Whenever you try to invoke the program on the remote machine, Open
 Dylan expects to be able to talk to the debugging server application on
@@ -82,7 +79,7 @@ At this point, you can return to the machine running the Open Dylan
 IDE, where you will be ready to run Dylan programs remotely.
 
 Starting an application remotely
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------
 
 Running and debugging an application on a remote machine is identical in
 almost every respect to using your local machine. You can use the three
@@ -91,54 +88,50 @@ menu items *Application > Start*, *Application > Debug* and
 The only difference is that for remote startup you must specify a remote
 machine in the project’s debug settings.
 
-Select *Project > Settings…* and select the Debug page.
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#. Select *Project > Settings…* and select the Debug page.
 
-In the “Remote machine” section, an option box displays the name of the
-machine on which the project’s application is to be run. By default, the
-selection will be the local machine. Before you can select a remote
-machine, you must first establish a debugging connection.
+   In the “Remote machine” section, an option box displays the name of the
+   machine on which the project’s application is to be run. By default, the
+   selection will be the local machine. Before you can select a remote
+   machine, you must first establish a debugging connection.
 
-Click the *Open New Connection…* button.
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#. Click the *Open New Connection…* button.
 
-In the dialog that appears, enter the network address of the machine to
-which you wish to connect, and enter the password for the debugging
-server (if one is set), and click *OK*.
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#. In the dialog that appears, enter the network address of the machine to
+   which you wish to connect, and enter the password for the debugging
+   server (if one is set), and click *OK*.
 
-The address is whatever the Windows operating system needs to identify
-the machine on the network. A computer hostname is likely to be
-sufficient.
+   The address is whatever the Windows operating system needs to identify
+   the machine on the network. A computer hostname is likely to be
+   sufficient.
 
-The password is the password established when you first started the
-debugging server (see ` <remotedbg.htm#35532>`_).
+   The password is the password established when you first started the
+   debugging server (see ` <remotedbg.htm#35532>`_).
 
-If the connection is successful, the newly connected machine is added to
-those listed in the “Remote machine” option box. You can now select this
-machine.
+   If the connection is successful, the newly connected machine is added to
+   those listed in the “Remote machine” option box. You can now select this
+   machine.
 
-If the connection does not succeed, you should ensure that you have
-successfully started the debug server program on the remote machine.
-(See ` <remotedbg.htm#35532>`_ above.)
+   If the connection does not succeed, you should ensure that you have
+   successfully started the debug server program on the remote machine.
+   (See ` <remotedbg.htm#35532>`_ above.)
 
-Select the remote machine in the option box.
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#. Select the remote machine in the option box.
 
-Having selected a remote machine, you must also ensure that Open
-Dylan can locate the program (EXE or DLL) on the filesystem of the
-remote machine.
+   Having selected a remote machine, you must also ensure that Open
+   Dylan can locate the program (EXE or DLL) on the filesystem of the
+   remote machine.
 
-Specify the path to the program in the “Command line” section of the
-Debug page.
+#. Specify the path to the program in the “Command line” section of the
+   Debug page.
 
-The path should be fully qualified, including the name of the remote
-machine. For example::
+   The path should be fully qualified, including the name of the remote
+   machine. For example::
 
-    \\\\spiral\\c\_drive\\apps\\reversi\\release\\reversi.exe
+       \\\\spiral\\c\_drive\\apps\\reversi\\release\\reversi.exe
 
-where *spiral* is a machine name, and *c\_drive* is the share name of
-the drive containing the program *release* folder.
+   where *spiral* is a machine name, and *c\_drive* is the share name of
+   the drive containing the program *release* folder.
 
 You are now ready to run and debug the application remotely.
 *Application > Start* starts your application running on the remote
@@ -150,7 +143,7 @@ with the project. Open Dylan tries to re-establish the remote
 connection automatically when you next open and try to run the project.
 
 Attaching to running processes
-------------------------------
+==============================
 
 The three commands *Application > Start*, *Application > Debug* and
 *Application > Interact* are all used to launch a program from within
@@ -163,14 +156,14 @@ Open Dylan allows you to “attach” to such a running process, thereby
 bringing it under Open Dylan’s control just as if it had been started
 by the environment. It is very simple to do this:
 
-Open the project whose application, DLL, or control is running.
+#. Open the project whose application, DLL, or control is running.
 
-Choose *Application > Attach…* from the project window, or choose *Tools
-> Attach Debugger…* from the main window.
+#. Choose *Application > Attach…* from the project window, or choose *Tools
+   > Attach Debugger…* from the main window.
 
-A dialog listing all available running processes appears.
+   A dialog listing all available running processes appears.
 
-Select the process to which you want to attach, and click *OK*.
+#. Select the process to which you want to attach, and click *OK*.
 
 After a few moments, the debugger attaches to the running process, and
 all the normal debugging and interaction facilities become available,

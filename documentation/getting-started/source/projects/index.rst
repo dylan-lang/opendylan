@@ -9,7 +9,7 @@ options and settings associated with projects, and some of the features
 of the project window.
 
 Creating a new project
-----------------------
+======================
 
 We now create a new project for a simple “Hello World” application that
 will run in an MS-DOS console window.
@@ -71,7 +71,7 @@ For more information on DUIM, see *Building Applications Using DUIM* and
 the *DUIM Reference*.
 
 Specifying the type of the project
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------
 
 The first page in the New Project wizard asks us to specify the kind of
 target we want to build from the project.
@@ -87,7 +87,7 @@ Click *Next*.
 We now move to the second page.
 
 Specifying the project name and location
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------------
 
 The second page in the New Project wizard asks us to supply a name for
 our project, and to specify a location for the automatically generated
@@ -135,7 +135,7 @@ Click *Next*.
 We now move to the third page.
 
 Choosing the libraries that the project uses
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------------------
 
 The next stage in creating our project is to decide which libraries and
 modules it is going to use. The third page of the wizard offers three
@@ -169,7 +169,7 @@ Click *Next*.
 We now move to the final page.
 
 The final page in the New Project wizard
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------------
 
 The final page of the New Project wizard gives us the option of
 supplying text for the documentation keywords *Synopsis:*, *Author:*,
@@ -196,7 +196,7 @@ Now we have supplied all the information the wizard asks for, it creates
 the new Hello project and opens it.
 
 Examining the files in the Hello project
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------------
 
 `See The Hello project. <projects.htm#38662>`_ shows our new Hello
 project.
@@ -253,7 +253,7 @@ wizard. See ` <model.htm#32022>`_ for more details of where build
 products reside.
 
 Projects for GUI applications
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 In this section, we define a more typical project. This project will be
 a for GUI application. To do this, we take a different path through the
@@ -261,7 +261,7 @@ New Project wizard. We look at the project files that the wizard
 creates, then build and run our GUI application.
 
 Creating a GUI project
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 First, we create the new project for our GUI application.
 
@@ -347,7 +347,7 @@ Make any changes you want to here, and then click *Finish*.
 The wizard creates the new GUI-App project and opens it.
 
 Examining and building the new GUI project
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------------
 
 Now, we examine the template code that the wizard has set up for us in
 the GUI-App project sources.
@@ -389,7 +389,7 @@ About* command uses some of the constants from *GUI-App-info.dylan* to
 identify the application as “GUI-App Version 1.0”.
 
 Creating a project using the Custom library option
---------------------------------------------------
+==================================================
 
 The New Project wizard’s Use Libraries page has a Custom option which
 allows complete control over the libraries and modules a project will
@@ -453,7 +453,7 @@ interfaces into your application, but the delivered application will not
 be any smaller on disk, or in memory when it is running.
 
 Saving settings in the New Project wizard
------------------------------------------
+=========================================
 
 Whenever you click *Finish* on the last page of the New Project wizard,
 the wizard stores some of the choices and text-field settings you made
@@ -481,7 +481,7 @@ project.
 Nothing from the first page is saved.
 
 Advanced project settings
--------------------------
+=========================
 
 The *Advanced...* button on the first page of the New Project wizard
 leads to the Advanced Project Settings dialog. The dialog has five
@@ -498,13 +498,13 @@ Settings…*. See `See Project settings <projects.htm#32945>`_ for
 details.
 
 Adding, moving, and deleting project sources
---------------------------------------------
+============================================
 
 In this section we discuss how to insert files into a project, how
 re-order them, and how to delete them from the project.
 
 Inserting files into a project
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 To insert a new file or subproject into a project, choose *Project >
 Insert File...* in the project window. The project window prompts you
@@ -527,14 +527,14 @@ need to edit the library and module definitions in your project to
 import from the new subproject.
 
 Moving the position of a file within a project
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------------------
 
 To move a file to a new position in a project, select the file in the
 Sources page and use *Project > Move File Up* and *Project > Move File
 Down*.
 
 Deleting files from a project
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 To delete a file from a project, select the file in the Sources page and
 choose *Project > Remove File*. You could also select *Edit > Cut*,
@@ -553,7 +553,7 @@ Definitions page until you rebuild the project, which causes the
 compiler database to be updated.
 
 The project start function
---------------------------
+==========================
 
 The New Project wizard always adds a *start function* to the end of the
 last file in the project.
@@ -630,14 +630,14 @@ definitions could behave in unexpected ways. See ` <model.htm#10988>`_
 for more information on this topic.
 
 Project settings
-----------------
+================
 
 The *Project > Settings...* dialog allows you to set options for
 compiling, linking, and debugging projects. There are separate pages for
 each category, each described below.
 
 Compile page
-~~~~~~~~~~~~
+------------
 
 The *Project > Settings…* dialog’s Compile page controls the compilation
 mode setting for the current project. Any project can be compiled in one
@@ -645,7 +645,7 @@ of two modes: Interactive Development mode, and Production mode. See
 ` <model.htm#12475>`_ for details of the modes.
 
 Link page
-~~~~~~~~~
+---------
 
 The *Project > Settings…* dialog’s Link page controls whether a project
 is linked as an executable or as a DLL, and what its name will be. It
@@ -659,7 +659,7 @@ instead. To change the default linker, go to the main window and choose
 page.
 
 Target File section of the Link page
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------
 
 The *Project > Settings…* dialog’s Link page has a Target File section
 that contains the name of the project target and the type of the target.
@@ -668,7 +668,7 @@ that the name will always end in .EXE or .DLL according to the target
 type, regardless of any extension you give to the target’s name.
 
 Base Address section of the Link page
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------------
 
 The *Project > Settings…* dialog’s Link page has a Base Address section
 that allows you to specify a base address for your target file. This is
@@ -682,7 +682,7 @@ loaded at a particular location. The value should be specified in
 hexadecimal, using Dylan’s *#x* prefix: for example, *#x1000000*.
 
 Version Information section of the Link page
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------------------
 
 The *Project > Settings…* dialog’s Link page has a Version Information
 section that allows you to add major and minor version numbers to a DLL
@@ -692,7 +692,7 @@ time to determine if compatible versions of Dylan libraries are in use.
 See ` <model.htm#14494>`_ for details.
 
 Windows Subsystem section of the Link page
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------------
 
 The *Project > Settings…* dialog’s Link page has a Win32 Subsystem
 section that allows you to specify that the target should run in the
@@ -706,7 +706,7 @@ while the default for a project created as a “GUI Application (EXE)” is
 to run in the “Windows GUI” (WINDOWS) subsystem.
 
 Debug page
-~~~~~~~~~~
+----------
 
 The *Project > Settings…* dialog’s Debug page allows you to specify a
 command line with which to execute the project target, and the start
@@ -729,7 +729,7 @@ DLLs and OLE components. See ` <debug.htm#13513>`_ for a description of
 these debugging techniques.
 
 Project files and LID files
----------------------------
+===========================
 
 Open Dylan’s project files can be exported in a portable library
 interface format called LID (library interchange description). Harlequin
@@ -740,7 +740,7 @@ text format for ease of interchange between different Dylan systems. The
 format. LID files must have the extension .LID.
 
 Opening a LID file as a project
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 When you open a LID file in the development environment, it is converted
 into a project file and opened in a project window. (This process does
@@ -751,7 +751,7 @@ file using *File > Open* and select the file type filter “Dylan Library
 Interchange Descriptions (as text)” before clicking *Open*.
 
 Exporting a project into a LID file
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------
 
 To export a project as a LID file for use in other Dylan
 implementations, use *File > Save As* and choose the file type “Dylan

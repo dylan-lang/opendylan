@@ -6,7 +6,7 @@ This first chapter is a quick introduction to building applications with
 Open Dylan.
 
 Starting work with Open Dylan
-----------------------------------
+=============================
 
 In this section, you will start Open Dylan’s development
 environment, and choose one of several supplied examples to work with.
@@ -81,7 +81,7 @@ The project window is one of four programming tools in Open Dylan.
 The other tools are the browser, the editor, and the debugger.
 
 The project window
-------------------
+==================
 
 In the project window you can see the project that you are working on. A
 *project* represents a Dylan library under development. We look at
@@ -116,7 +116,7 @@ In short, the project window is a focal point for work in Open
 Dylan.
 
 The Reversi project
--------------------
+===================
 
 The project window that is now on your screen has several pages of
 information about the project Reversi. This project represents a Dylan
@@ -131,7 +131,7 @@ exports—*library.dylan* and *module.dylan* respectively. Later, we will
 add some more files to the project to implement new game features.
 
 Building an executable application
-----------------------------------
+==================================
 
 We can use the project window to build an executable application from
 the Reversi project.
@@ -143,7 +143,7 @@ project. We will see more about where projects and their build products
 reside on disk in ` <model.htm#32022>`_.
 
 Building Reversi
-~~~~~~~~~~~~~~~~
+----------------
 
 To build an executable application for a project, choose *Project >
 Build* in its project window.
@@ -204,7 +204,7 @@ Click *Yes* in the link warning dialog.
 Open Dylan links an executable for Reversi.
 
 Running Reversi
-~~~~~~~~~~~~~~~
+---------------
 
 Now that the application is built, we can run it. The project window
 menu command *Application > Start* runs the most recently built
@@ -231,7 +231,7 @@ so that you can examine it. We will learn more about the debugger later,
 in ` <expanding.htm#35733>`_ and also in ` <debug.htm#18907>`_.
 
 Three ways of running Dylan applications
-----------------------------------------
+========================================
 
 There are three ways we can run the Reversi application we have just
 built. The first is to choose *Application > Start* from the Reversi
@@ -254,7 +254,7 @@ crash the application, which we would not be able to pause and interact
 with in the paused context.
 
 Looking at definitions and expressions
---------------------------------------
+======================================
 
 Each file listed on the Sources page of the Reversi project window is
 now preceded by a *+* symbol. This means we can now expand a file name
@@ -310,7 +310,7 @@ compiler database and ` <browsing.htm#36258>`_ for details of the
 browser.
 
 Building DLLs
--------------
+=============
 
 By default, Open Dylan projects are built into executable
 applications (.EXE files), but with a simple setting we make them be
@@ -323,7 +323,7 @@ for console applications. For more details, see
 ` <projects.htm#32945>`_.
 
 Making changes to an application
---------------------------------
+================================
 
 We will now make a change to the Reversi application. We are going to
 add a new feature that allows someone playing Reversi to change the

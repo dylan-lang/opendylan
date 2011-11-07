@@ -31,7 +31,7 @@ with the menus and options, you can more effectively use the editor to
 perform advanced operations.
 
 Invoking the editor and displaying files
-----------------------------------------
+========================================
 
 The editor window lets you read and edit text files stored in your
 filesystem. You can invoke the Open Dylan editor in a variety of
@@ -60,7 +60,7 @@ in an editor window.
    Editor window showing the game.dylan file from the Reversi project.
 
 Display conventions
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 The editor separates each definition in a source file with a gray line.
 Printed in the middle of each line is the name of the definition below
@@ -87,7 +87,7 @@ binding and you have opened the source from the project window’s
 Warnings tab page, the binding in question is highlighted.
 
 Changing the editor options and layout
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------------
 
 By default the editor uses Windows-style defaults and therefore
 associates each opened file with a new editor window. However, you can
@@ -115,7 +115,7 @@ layout.
    .
 
 The editor window’s context: the active project
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------------------
 
 In an editor window, the toolbar and menu commands act upon the
 application of the active project. For instance, the *Project*, *Build*,
@@ -125,7 +125,7 @@ name is visible in the main window’s drop-down list. See `See The active
 project <../debug.htm#21333>`_ for more details.
 
 Menu commands and special features
-----------------------------------
+==================================
 
 The editor offers all of the standard *File* and *Edit* menu commands a
 user expects to find on a text editing window (such as New, Open, Cut,
@@ -176,7 +176,7 @@ a *SourceSafe* menu. This menu is Open Dylan’s interface to source
 control. For more information, see ` <editopt.htm#33650>`_.
 
 Shortcut menus
-~~~~~~~~~~~~~~
+--------------
 
 The editor provides a shortcut menu whose items vary depending on where
 your cursor is when you right-click. The most basic shortcut menu pops
@@ -226,7 +226,7 @@ column indicate lines where you could add a breakpoint (see
 ` <editopt.htm#43811>`_).
 
 Using the editor for interactive development
---------------------------------------------
+============================================
 
 You will recall from `See An example interaction with
 Reversi <../debug.htm#33511>`_ that we were able to change the shapes of
@@ -276,7 +276,7 @@ interaction thread that it chooses automatically. This prevents
 unnecessary tampering with user threads.
 
 Source control with Visual SourceSafe
--------------------------------------
+=====================================
 
 To simplify the process of working with files under source control, the
 Open Dylan editor provides an interface to Microsoft’s Visual
@@ -285,7 +285,7 @@ describes the editor interface to Visual SourceSafe. (For information on
 using Visual SourceSafe, see Visual SourceSafe documentation.)
 
 What is the editor’s source control interface?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------------------
 
 A source code control system provides one or more repositories
 (databases) where developers place source code and related files for a
@@ -315,7 +315,7 @@ installed in order to see the *SourceSafe* menu.
    The SourceSafe menu on a Open Dylan editor window.
 
 The SourceSafe menu commands
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 The *SourceSafe* menu provides the following commands:
 
@@ -365,7 +365,7 @@ Show Differences…
    is checked into the database.
 
 Using the editor’s source control interface
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------------------
 
 The first time you choose one of the *SourceSafe* menu items, the editor
 prompts you for the name of the SourceSafe database, as shown in

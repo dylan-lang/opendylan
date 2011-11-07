@@ -7,13 +7,13 @@ manual. It discusses the purpose of the manual and the conventions it
 uses. It also gives a brief description of each chapter in the manual.
 
 Assumptions
------------
+===========
 
 We assume that you are familiar with the basics of one of the Windows
 NT, Windows ’95, and Windows ’98 operating systems.
 
 About this guide
-----------------
+================
 
 This guide explains how to use Open Dylan to develop and deliver
 Dylan applications.
@@ -23,7 +23,7 @@ Reversi. We use this example to illustrate all aspects of development in
 Open Dylan.
 
 Conventions in this guide
--------------------------
+=========================
 
 This guide uses only a few special conventions.
 
@@ -55,14 +55,14 @@ Check the “Make a personal copy” box.
 Select the “Maximize interactor” radio button.
 
 The Dylan Reference Manual
---------------------------
+==========================
 
 The *Dylan Reference Manual* (Shalit, 1996) is published by Addison
 Wesley Developers’ Press, ISBN 0-201-44211-6. In this guide, we refer to
 the *Dylan Reference Manual* as “the DRM”.
 
 Chapters in this guide
-----------------------
+======================
 
 The early chapters in this guide give you a quick tour of the
 application development cycle under Open Dylan, using the Reversi

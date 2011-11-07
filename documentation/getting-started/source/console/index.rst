@@ -8,7 +8,7 @@ environment. This appendix describes the console environment, which is
 called *console-dylan*.
 
 About the Dylan console environment
------------------------------------
+===================================
 
 The Open Dylan console environment is an executable application
 called *console-dylan.exe*. You can find it in the *bin* folder of your
@@ -20,7 +20,7 @@ Dylan environment. You can use it as a batch compiler, or you can
 develop and debug applications using the interactive mode interface.
 
 Using console-dylan in batch mode
----------------------------------
+=================================
 
 To use the Open Dylan console environment in batch mode, go to an
 MS-DOS prompt, and enter *console-dylan*, followed by command options
@@ -147,7 +147,7 @@ turn flags off, precede the option with “*/no* …”, for instance:
 */nologo* and */nosubprojects*.
 
 Using console-dylan interactively
----------------------------------
+=================================
 
 The interactive mode of the console environment allows you to carry out
 multiple development tasks over a period of time without having to
@@ -285,7 +285,7 @@ COUNT - number of frames to move down
 To exit the console environment, use the command *:exit*.
 
 An example of console-dylan interactive functionality
------------------------------------------------------
+=====================================================
 
 The following example demonstrates the console environment’s interactive
 functionality. In the example, the user starts console-dylan in

@@ -13,7 +13,7 @@ we must correct before the feature will work properly. In doing so, we
 will see the editor, debugger, and browser tools.
 
 Rebuilding the application
---------------------------
+==========================
 
 There is another prepared Dylan source file with the changes we need to
 implement the game-saving facility.
@@ -55,7 +55,7 @@ In the next section, we look at what serious warnings and warnings are,
 and how the environment helps us deal with them.
 
 Problems at compile time
-------------------------
+========================
 
 In this section we look at how the compiler handles problems that it
 comes across in a project’s source code. When we rebuilt Reversi in `See
@@ -201,7 +201,7 @@ the missing semi-colon have gone away. In addition, the single ordinary
 warning was removed by the *end* -clause fix.
 
 Controlling the compiler’s treatment of warnings
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------------------
 
 We have seen that serious warnings are caused by code that, if executed,
 would lead to a run-time exception. Some programming language compilers
@@ -220,7 +220,7 @@ are serious warnings“, and “Don’t link if there are serious warnings”.
 setting.
 
 Problems at run time
---------------------
+====================
 
 Now we have taken a brief look at how Open Dylan treats
 compile-time problems, we will look at how it lets us debug problems
@@ -307,7 +307,7 @@ icon represents the current location of the stack pointer—that is, the
 call at which the thread was paused.
 
 Searching the stack backtrace for the cause of the error
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------------------------------
 
 In this section we examine the backtrace and see what events led up to
 the unhandled exception.
@@ -467,7 +467,7 @@ the squares being represented by integers, and the file stream being
 composed of byte characters.
 
 Browsing local variables
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 In this section we use the Open Dylan browser to help confirm the
 cause of the unhandled Dylan exception.
@@ -579,7 +579,7 @@ from. However, we have yet to check what goes on in
 elements in the *reversi-board-squares* sequence into integers?
 
 Browsing definitions
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 In this section, we browse the definition of *reversi-square-write-data*
 to see whether it converts the board squares into integers.
@@ -628,7 +628,7 @@ that the board square representations are converted into integers. This
 is where the integer that caused the exception came from.
 
 Fixing the error
-~~~~~~~~~~~~~~~~
+----------------
 
 In this section, we fix the Reversi project source code to eliminate the
 cause of the exception we have been tracking down.
@@ -740,7 +740,7 @@ Start the application again, and try to save a game.
 The save operation now works without raising an unhandled exception.
 
 Loading the saved game back in
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 The next step is to test the code for loading a saved game. To test this
 we need to change the state of the board from what it was like when we

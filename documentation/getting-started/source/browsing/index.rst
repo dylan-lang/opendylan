@@ -5,7 +5,7 @@ Learning More About an Application
 In this chapter, we examine the browser in detail.
 
 The browser
------------
+===========
 
 The Open Dylan browser is a tool for examining the contents and
 properties of the different kinds of objects we deal with in Open
@@ -17,7 +17,7 @@ instances, but we can also browse libraries, modules, and even running
 applications, their threads, and run-time values in those threads.
 
 Similarities between the browser and World Wide Web browsers
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------------------------------
 
 The way the browser works is similar to a World Wide Web browser. Just
 as a web browser shows one page of HTML at a time, the browser describes
@@ -31,7 +31,7 @@ you to move back and forth between objects you have browsed by clicking
 on Back (|image0|) and Forward (|image1|) toolbar buttons.
 
 Compiler databases and the browser
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------
 
 The browser gets some of its information from the compiler database for
 the project. See ` <model.htm#25398>`_ and ` <model.htm#16835>`_ for
@@ -39,7 +39,7 @@ details of how compiler databases are derived, and how they fit in to
 the overall view of a project that Open Dylan presents.
 
 Browsing a project in source and run-time contexts
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------------------------
 
 The browser allows you to look at projects in both source and run-time
 contexts. That is, the browser can show you information gathered from
@@ -64,7 +64,7 @@ command, the browser is able to locate the source code definition of the
 variable’s class.
 
 Browsing Reversi
-----------------
+================
 
 In this section, we use the Open Dylan browser to explore Reversi.
 
@@ -106,7 +106,7 @@ We now take a look at some of the pages available for *<reversi-square>*
 .
 
 The Source page
-~~~~~~~~~~~~~~~
+---------------
 
 The browser provides a Source page for any object that has a definition
 in source code. For *<reversi-square>*, we can see the source code
@@ -126,7 +126,7 @@ We now move on to look at some of the other pages of information about
 *<reversi-square>*.
 
 The General page
-~~~~~~~~~~~~~~~~
+----------------
 
 The browser provides a General page for every object it can browse. The
 General page gives an overview of the object being browsed: its name,
@@ -145,13 +145,13 @@ module of the *reversi* library, and that it has two slots.
    General details about the *<reversi-square>* class definition.
 
 Navigation in the browser
--------------------------
+=========================
 
 This section explains how to navigate through objects in the browser,
 and explains the browser history mechanism.
 
 Moving from one object to another
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------
 
 The object information displayed in browser pages often has its own
 properties and contents that we might also want to browse. With a simple
@@ -190,7 +190,7 @@ clicking on the *+* signs, we could expand the names to reveal their
 superclasses.
 
 Using the history feature
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 As soon as the browser has displayed more than one object, its history
 feature is enabled. You can access the browser history by choosing an
@@ -205,7 +205,7 @@ The browser returns to browsing the *<reversi-square>* definition.
 Notice that the browser remembers which property page you were browsing.
 
 Browsing a project’s library
-----------------------------
+==============================
 
 To browse the current project’s library definition, choose *Go >
 Library* or the Browse Library (|image5|) button.
@@ -226,7 +226,7 @@ libraries that Reversi uses. Expanding those library names shows the
 libraries they use, and so on.
 
 Namespace issues in the browser
--------------------------------
+===============================
 
 Move through the browser history to find the *<simple-pane>* object
 again.
@@ -264,7 +264,7 @@ browser needs to be able to make it clear when a name is not from the
 current library and module.
 
 Browsing run-time values of variables and constants
----------------------------------------------------
+===================================================
 
 You can browse the values of variables and constants in running
 applications. The browser shows the run-time value of a variable or
@@ -313,7 +313,7 @@ The value is now *#"square"*. This reflects the internal change to the
 variable that our menu selection caused.
 
 Browsing local variables and parameters on the stack
-----------------------------------------------------
+====================================================
 
 You can browse the contents of the local variables and function
 parameter values in call frames, as seen in the debugger. These are
@@ -323,7 +323,7 @@ contents. See `See Browsing local variables <expanding.htm#13818>`_ for
 an example of browsing local variable and parameter values.
 
 Browsing paused application threads
------------------------------------
+===================================
 
 Browsing functionality for paused application threads is done in the
 debugger, not the browser. Think of the debugger as a specialized
@@ -341,7 +341,7 @@ frames in the usual way. See `See Browsing run-time values of variables
 and constants <browsing.htm#30866>`_.
 
 Keeping browser displays up to date
------------------------------------
+===================================
 
 Because the browser shows values either gathered at a point in program
 execution or during compilation, there are opportunities for the
@@ -356,7 +356,7 @@ information displayed on a browser page to get out of date:
    sure you are seeing the most up-to-date value.
 
 List of property pages
-----------------------
+======================
 
 The following is a list of property pages supported in the browser. Some
 of these pages can also be seen in the project window.
