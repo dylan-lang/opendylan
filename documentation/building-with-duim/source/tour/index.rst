@@ -360,13 +360,13 @@ and *<radio-box>* (groups of radio buttons). In addition, *<push-box>*
 
    A push box
 
-*Note:* You should be aware of the distinction between the use of the
-term “box” in DUIM, and the use of the term “box” in some other
-development documentation (such as Microsoft’s interface guidelines).
-*In the context of DUIM, a box always refers to a group containing
-several gadgets* (usually buttons). In other documentation, a box may
-just be a GUI element that looks like a box. For example, a *check
-button* may sometimes be called a *check box*.
+.. note:: You should be aware of the distinction between the use of the
+   term “box” in DUIM, and the use of the term “box” in some other
+   development documentation (such as Microsoft’s interface guidelines).
+   *In the context of DUIM, a box always refers to a group containing
+   several gadgets* (usually buttons). In other documentation, a box may
+   just be a GUI element that looks like a box. For example, a *check
+   button* may sometimes be called a *check box*.
 
 A *<radio-box>* is a button box that contains one or more radio buttons,
 only one of which may be selected at any time.

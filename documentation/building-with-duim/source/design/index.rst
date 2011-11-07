@@ -155,7 +155,7 @@ In the last few steps, you have exclusively used *horizontally* and
 if you create instances of *<row-layout>* and *<column-layout>*
 explicitly using *make*.
 
-*Note:* You may have to resize the window to see everything.
+.. note:: You may have to resize the window to see everything.
 
 Adding a radio box
 ~~~~~~~~~~~~~~~~~~

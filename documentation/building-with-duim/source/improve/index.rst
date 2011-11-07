@@ -97,8 +97,8 @@ end method start-task;
 This method is provided as a convenient way to create the frame and then
 start its event loop. It returns when the event loop shuts down.
 
-*Note:* Obviously, you should not call this method until you have
-defined a frame class called *<task-frame>*.
+.. note:: Obviously, you should not call this method until you have
+   defined a frame class called *<task-frame>*.
 
 Finally, you can start the application with the following method, and
 its subsequent call:
@@ -828,12 +828,12 @@ new task.
 
 Add this method to *frame.dylan*.
 
-*Note:* The definition of the *prompt-for-task* method uses the
-*<priority>* type. Note that this type is defined in `See Defining the
-underlying data structures for tasks <callbacks.htm#71186>`_. Until the
-relevant code in `See Defining the underlying data structures for
-tasks <callbacks.htm#71186>`_ is added to your project, any attempt to
-build it will generate a serious warning.
+.. note: The definition of the *prompt-for-task* method uses the
+   *<priority>* type. Note that this type is defined in `See Defining the
+   underlying data structures for tasks <callbacks.htm#71186>`_. Until the
+   relevant code in `See Defining the underlying data structures for
+   tasks <callbacks.htm#71186>`_ is added to your project, any attempt to
+   build it will generate a serious warning.
 
 define method prompt-for-task
 
