@@ -193,10 +193,10 @@ properties of the interface:
 
 .. code-block:: dylan
 
-    /\* Dispatch interface: IRotNExample version 0.0
-     \* GUID: {822ED42A-3EB1-11D2-A3CA-0060B0572A7F}
-     \* Description: An example interface for Open Dylan's Getting
-     \* Started manual. \*/
+    /* Dispatch interface: IRotNExample version 0.0
+     * GUID: {822ED42A-3EB1-11D2-A3CA-0060B0572A7F}
+     * Description: An example interface for Open Dylan's Getting
+     * Started manual. */
 
     define open dispatch-interface <IRotNExample> (<simple-dispatch>)
       uuid "{822ED42A-3EB1-11D2-A3CA-0060B0572A7F}";
@@ -231,20 +231,20 @@ from the type library:
 
 .. code-block:: dylan
 
-    /\* COM class: RotNExample version 0.0
-     \* GUID: {C44502DB-3EB1-11D2-A3CA-0060B0572A7F}
-     \* Description: Implementation of IRotNExample.
-     \*/
+    /* COM class: RotNExample version 0.0
+     * GUID: {C44502DB-3EB1-11D2-A3CA-0060B0572A7F}
+     * Description: Implementation of IRotNExample.
+     */
 
     define constant $RotNExample-class-id = as(<REFCLSID>,
                                                "{C44502DB-3EB1-11D2-A3CA-0060B0572A7F}");
-    /\* You should define your coclass something like this:
+    /* You should define your coclass something like this:
     define coclass $RotNExample-type-info
       name "RotNExample";
       uuid $RotNExample-class-id;
       default interface <IRotNExample>;
     end coclass;
-    \*/
+    */
 
 Note that the *define* *coclass* is within a comment, since you may want
 to define a COM class based on a subclass of *<IRotNExample>*.

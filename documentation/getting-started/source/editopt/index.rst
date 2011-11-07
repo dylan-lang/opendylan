@@ -251,13 +251,13 @@ Find the variable definition:
 
 .. code-block:: dylan
 
-    define variable \*reversi-piece-shape\* = #"circle";
+    define variable *reversi-piece-shape* = #"circle";
 
 Change the word *circle* to *square*, so that the line reads:
 
 .. code-block:: dylan
 
-    define variable \*reversi-piece-shape\* = #"square";
+    define variable *reversi-piece-shape* = #"square";
 
 Select the line of code and choose *Project > Compile Selection*.
 
