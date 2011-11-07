@@ -172,7 +172,7 @@ The project folder contains the following files and subfolders:
   `See Compiler databases <model.htm#25398>`_ for more details.
 
   You can remove the compiler database and intermediate files with
-  *Project > Remove Build Products*. This forces a complete recompilation
+  **Project > Remove Build Products**. This forces a complete recompilation
   of a project next time you build it.
 - The *lib* folder.
 
@@ -188,7 +188,7 @@ The project folder contains the following files and subfolders:
   This folder holds a stand-alone version of the project’s application,
   suitable for redistribution to customers or other third parties without
   a copy of Open Dylan on their system. It is created when you choose
-  the *Project > Make Release* command.
+  the **Project > Make Release** command.
 
 Projects in the development environment
 ---------------------------------------
@@ -298,8 +298,8 @@ project.
 Open Dylan stores project files on disk for persistence between
 sessions. When you close a project, the development environment checks
 whether the database has changed since it was last saved, and if it has
-it asks you if you want to save the database. (You can use *File > Save
-Compiler Database* from the project window to save the compiler database
+it asks you if you want to save the database. (You can use **File > Save
+Compiler Database** from the project window to save the compiler database
 at other times, if necessary.) When you re-open the project later, the
 database is read into memory from the disk file, if it exists.
 
@@ -322,8 +322,8 @@ expense of debugging information and compilation speed.
 
 Like other compilation systems, Open Dylan allows you to switch
 between both styles of compilation. For any project, you can specify the
-style of compilation to perform by choosing *Project > Settings* in any
-window with a *Project* menu, and then choosing the Compile property
+style of compilation to perform by choosing **Project > Settings** in any
+window with a **Project** menu, and then choosing the Compile property
 page.
 
 That page offers two mode choices:
@@ -362,7 +362,7 @@ Versioning
 
 A project can have major and minor version numbers that will be recorded
 in the DLL or EXE that the project builds. You can enter these numbers
-on the *Project > Settings…* dialog’s Link page.
+on the **Project > Settings…** dialog’s Link page.
 
 Open Dylan uses version numbers at compile time and run time to
 determine if compatible versions of Dylan libraries are in use.
@@ -426,11 +426,9 @@ The build cycle
 Building an application or DLL from a project consists of up to three
 phases:
 
-Building the subprojects.
-
-Compiling some or all of the project source code.
-
-Linking the project.
+#. Building the subprojects.
+#. Compiling some or all of the project source code.
+#. Linking the project.
 
 For efficiency, when the compiler is asked to build a project it
 minimizes the number of these phases that it performs, using the
@@ -440,8 +438,8 @@ following decision rules:
 -  A *clean build* always performs all phases for the project and its
    subprojects.
 
-You can ask for a clean build by choosing *Project > Clean Build* in any
-window that has a *Project* menu.
+You can ask for a clean build by choosing **Project > Clean Build** in any
+window that has a **Project** menu.
 
 -  A build command is always recursively performed on subprojects (phase
    1).
@@ -458,9 +456,9 @@ window that has a *Project* menu.
 -  If the project or any of its subprojects has changed, then the
    project is relinked.
 
-*Note:* To ensure change propagation according to these rules, you
-should always increment the major version number of a project after
-altering any macro definitions in it.
+.. note:: To ensure change propagation according to these rules, you
+   should always increment the major version number of a project after
+   altering any macro definitions in it.
 
 Linkers
 -------
@@ -468,7 +466,7 @@ Linkers
 Open Dylan offers you a choice of linkers to use to link your Dylan
 programs. The default linker is a GNU linker. If you own Microsoft
 Developer Studio, you can use Microsoft’s linker instead. See the Linker
-page of the main window’s *Options > Environment Options…* dialog.
+page of the main window’s **Options > Environment Options…** dialog.
 
 Executing programs
 ==================
@@ -484,7 +482,7 @@ An application written in Dylan cannot be started and later connected to
 Open Dylan and its project. If you want to be able to debug an
 application and browse its compiler database within Open Dylan, you
 must start it up by opening its project and starting it with
-*Application > Start*. This starts the application up under the
+**Application > Start**. This starts the application up under the
 debugger, providing the development environment with a connection to the
 application and the capabilities necessary to control its execution and
 to interact with it.
@@ -567,5 +565,3 @@ change will not be reflected in the browser Superclasses page for that
 definition until you rebuild. And if you add new definitions to the
 project sources, they will also not be visible until you build the
 project again.
-
-

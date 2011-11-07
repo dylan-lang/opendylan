@@ -13,8 +13,8 @@ environment, and choose one of several supplied examples to work with.
 
 Start the Open Dylan environment.
 
-You can do this by choosing the Start menu shortcut *Start* *>*
-*Programs* *>* *Open Dylan* *>* *Dylan*. Open Dylan will also
+You can do this by choosing the Start menu shortcut **Start >
+Programs > Open Dylan > Open Dylan**. Open Dylan will also
 start if you open any file associated with it, such as a Dylan source
 file.
 
@@ -34,8 +34,8 @@ The *initial dialog* also appears:
 
 The main window will be present throughout your Open Dylan session.
 It provides a way to set environment-wide options and to control the
-display of all Dylan windows. To exit Open Dylan, choose *File >
-Exit* in the main window.
+display of all Dylan windows. To exit Open Dylan, choose **File >
+Exit** in the main window.
 
 The initial dialog (`See The initial dialog. <quick-start.htm#25162>`_)
 is there to help you get working quickly, whether by looking at an
@@ -45,7 +45,7 @@ playground*. (See ` <debug.htm#42200>`_ for more information.)
 
 We want to browse the example projects.
 
-Select the “Example project” option and click *OK*.
+Select the “Example project” option and click **OK**.
 
 The Open Example Project dialog appears.
 
@@ -73,7 +73,7 @@ We are going to look at the example called Reversi, which is in the
 
 Expand the “Documentation” category by clicking the *+* next to it.
 
-Select “Reversi”, then click *OK*.
+Select “Reversi”, then click **OK**.
 
 A *project window* appears.
 
@@ -145,10 +145,10 @@ reside on disk in ` <model.htm#32022>`_.
 Building Reversi
 ----------------
 
-To build an executable application for a project, choose *Project >
-Build* in its project window.
+To build an executable application for a project, choose **Project >
+Build** in its project window.
 
-Choose *Project > Build* in the Reversi project window.
+Choose **Project > Build** in the Reversi project window.
 
 Open Dylan starts building the application. A progress indicator
 window appears.
@@ -195,11 +195,11 @@ until the files containing their definitions are included in the project
 and the project is rebuilt. So there is no harm in building an
 executable for Reversi.
 
-If we click *Yes* in the link warning dialog, an executable is created;
-if we click *No*, building stops. In either case, the serious warnings
+If we click **Yes** in the link warning dialog, an executable is created;
+if we click **No**, building stops. In either case, the serious warnings
 are recorded in the project window’s Warnings page.
 
-Click *Yes* in the link warning dialog.
+Click **Yes** in the link warning dialog.
 
 Open Dylan links an executable for Reversi.
 
@@ -207,10 +207,10 @@ Running Reversi
 ---------------
 
 Now that the application is built, we can run it. The project window
-menu command *Application > Start* runs the most recently built
+menu command **Application > Start** runs the most recently built
 executable for that window’s project.
 
-Choose *Application > Start*.
+Choose **Application > Start**.
 
 The Reversi application window appears.
 
@@ -221,11 +221,11 @@ The Reversi application window appears.
 
 The Reversi application is now up and running.
 
-When you choose *Application > Start*, the executable starts, runs, and
+When you choose **Application > Start**, the executable starts, runs, and
 terminates normally, but at the same time it has an invisible connection
 to the Open Dylan debugger. This means you can pause execution at
 any time to debug the application and even interact with it. (Use
-*Application > Pause* to do this.) In addition, if there is an unhandled
+**Application > Pause** to do this.) In addition, if there is an unhandled
 error inside the application, the debugger will catch it automatically
 so that you can examine it. We will learn more about the debugger later,
 in ` <expanding.htm#35733>`_ and also in ` <debug.htm#18907>`_.
@@ -234,14 +234,14 @@ Three ways of running Dylan applications
 ========================================
 
 There are three ways we can run the Reversi application we have just
-built. The first is to choose *Application > Start* from the Reversi
+built. The first is to choose **Application > Start** from the Reversi
 project window, as we have just seen. This menu command is also
 available in the Open Dylan debugger and editor.
 
 The second way to run the application is to click the “Start/Resume”
 button (|image0|) on the project window’s toolbar. Again, we can do
 this in the Open Dylan debugger and editor too. And again like
-*Application > Start*, running an application this way connects it to
+**Application > Start**, running an application this way connects it to
 the debugger, so that any unhandled errors are caught and we can pause
 and interact with the application.
 
@@ -263,13 +263,13 @@ in that file.
 
 In the Reversi project window, select the Sources page.
 
-Expand the *algorithms.dylan* item by clicking the *+* next to it.
+Expand the *algorithms.dylan* item by clicking the **+** next to it.
 
 The definitions and expressions are sorted alphabetically under the file
 name in which they appear. Definitions are the Dylan name bindings
 created by compiling top-level definitions in the source code that the
-file contains. Thus *define* *class* causes a class name to appear in
-the list of definitions, *define* *method* a method name, and so on, but
+file contains. Thus *define class* causes a class name to appear in
+the list of definitions, *define method* a method name, and so on, but
 the names of accessors on a class’s slots do not appear.
 
 The expressions in the list are, roughly speaking, anything that appears
@@ -317,7 +317,7 @@ applications (.EXE files), but with a simple setting we make them be
 built into dynamic-link libraries (.DLL files).
 
 This option is just one that we can change in the project window’s
-*Project > Settings* dialog. From that dialog we can also set compiler
+**Project > Settings** dialog. From that dialog we can also set compiler
 optimizations, project version information, and command-line arguments
 for console applications. For more details, see
 ` <projects.htm#32945>`_.
@@ -338,11 +338,11 @@ with the changes we need for this new piece-shapes code. It is not yet a
 part of the project, so to incorporate it into our Reversi application,
 we must add it to the project.
 
-Exit Reversi by selecting *File > Exit* from the Reversi application
+Exit Reversi by selecting **File > Exit** from the Reversi application
 window.
 
 You can also tell the environment to terminate a running application
-using *Application > Stop* or the project window’s stop button (|image3|
+using **Application > Stop** or the project window’s stop button (|image3|
 ). When you ask to terminate an application in this way, the environment
 asks you for confirmation, to prevent application state being lost by
 accident.
@@ -364,19 +364,19 @@ list. We want the file we are going to add to appear between
 
 Select *board.dylan*.
 
-Choose *Project > Insert File*.
+Choose **Project > Insert File**.
 
 The Insert File into Project dialog appears.
 
 In the Insert File into Project dialog, select *piece-shapes.dylan* and
-click *Open*.
+click **Open**.
 
 Open Dylan adds *piece-shapes.dylan* below *board.dylan*.
 
 Now that *piece-shapes.dylan* is part of the sources that will be used
 to build the Reversi application, we can rebuild the executable.
 
-Choose *Project > Build* in the Reversi project window.
+Choose **Project > Build** in the Reversi project window.
 
 Open Dylan builds the application again.
 
@@ -396,11 +396,11 @@ When compilation of *piece-shapes.dylan* is complete, there are still
 some serious warnings. The link warning dialog appears to ask you to
 confirm that you want to link an executable for Reversi.
 
-Click *Yes* in the link warning dialog.
+Click **Yes** in the link warning dialog.
 
 We can now run the new version of Reversi.
 
-Choose *Application > Start* in the Reversi project window.
+Choose **Application > Start** in the Reversi project window.
 
 A new Reversi application window appears.
 
@@ -414,7 +414,7 @@ Thanks to our compiling the changes to the project, the *Circles*,
 
    The Reversi application’s *Options* menu after the code changes.
 
-Choose *Squares*.
+Choose **Squares**.
 
 The Reversi application updates the board, laying the pieces out again
 as squares rather than circles.

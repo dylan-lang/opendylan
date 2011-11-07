@@ -74,7 +74,7 @@ not see the separators. The compiler also ignores them.
 
 When you add a new definition, or a new *begin* … *end* top-level form,
 the code separators will only be updated if you manually refresh the
-editor window (*View > Refresh* ), move the cursor past an existing
+editor window (**View > Refresh** ), move the cursor past an existing
 separator, or perform some other operation that forces the editor to
 redisplay.
 
@@ -92,7 +92,7 @@ Changing the editor options and layout
 By default the editor uses Windows-style defaults and therefore
 associates each opened file with a new editor window. However, you can
 change this and edit many different files at once in the same editor by
-using the *View > Editor Options…* Display tab page. Alternatively, you
+using the **View > Editor Options…** Display tab page. Alternatively, you
 can use the Restore tab page to switch to Emacs defaults, which changes
 this default (and others). For details about the Editor Options dialog,
 its tab pages and settings, see
@@ -103,23 +103,22 @@ layout.
 
 -  The status bar, located at the bottom of the editor window, lets you
    examine any output messages from the environment. You can show or
-   hide the status bar using *View > Status Bar*. This is where you
+   hide the status bar using **View > Status Bar**. This is where you
    will see messages displayed about your interactive development, such
    as “Compiling definition…” when you compile a selection.
--  The standard Dylan toolbar can be viewed or hidden with *View >
-   Toolbar*.
+-  The standard Dylan toolbar can be viewed or hidden with **View >
+   Toolbar**.
 -  The color dispatch optimizations feature, as described in `See
    Dispatch Optimization Coloring in the
    Editor <../coloring.htm#27192>`_, shows you where and how to optimize
-   your code and is controlled by *View > Color Dispatch Optimizations*
-   .
+   your code and is controlled by **View > Color Dispatch Optimizations**.
 
 The editor window’s context: the active project
 -----------------------------------------------
 
 In an editor window, the toolbar and menu commands act upon the
-application of the active project. For instance, the *Project*, *Build*,
-and *Application* menus are not available in the editor if the source
+application of the active project. For instance, the **Project**, **Build**,
+and **Application** menus are not available in the editor if the source
 file being edited is not part of the active project—the project whose
 name is visible in the main window’s drop-down list. See `See The active
 project <../debug.htm#21333>`_ for more details.
@@ -127,31 +126,31 @@ project <../debug.htm#21333>`_ for more details.
 Menu commands and special features
 ==================================
 
-The editor offers all of the standard *File* and *Edit* menu commands a
+The editor offers all of the standard **File** and **Edit** menu commands a
 user expects to find on a text editing window (such as New, Open, Cut,
 Copy, Paste, Find/Replace, and so forth). The editor also has the
-standard Open Dylan menus, such as *Go*, *Project*, *Application*,
-and *Window*. This section describes the additional menu commands
+standard Open Dylan menus, such as **Go**, **Project**, **Application**,
+and **Window**. This section describes the additional menu commands
 provided by the Open Dylan editor.
 
-The *Go* menu commands open an appropriate window, usually the browser
+The **Go** menu commands open an appropriate window, usually the browser
 or the project window, to show you the corresponding item. For instance,
-*Go > Breakpoints* opens the project window for the active project and
-displays the Breakpoints tab page. Likewise, when you choose *Go > Edit
-Compiler Warnings* an editor window opens on the source code
+**Go > Breakpoints** opens the project window for the active project and
+displays the Breakpoints tab page. Likewise, when you choose **Go > Edit
+Compiler Warnings** an editor window opens on the source code
 corresponding to the first compiler warning for the project. The cursor
 is automatically positioned at the problem area in the code. In Emacs
 mode, you can use Ctrl+. (Ctrl+ period) to view the source for the next
 compiler warning, and so forth.
 
-The *Object* menu commands require that you place the cursor in an
+The **Object** menu commands require that you place the cursor in an
 element name in the editor window. The commands then allow you to browse
 that element or edit the related code. For instance, if the cursor is
-placed in a class name, *Object > Edit Subclasses* opens an editor
+placed in a class name, **Object > Edit Subclasses** opens an editor
 window to display a composite buffer containing the subclasses of that
 class.
 
-The editor’s *Project* menu contains two special commands beyond the
+The editor’s **Project** menu contains two special commands beyond the
 standard Project commands on other Dylan windows:
 
 Compile Selection
@@ -163,16 +162,16 @@ Compile Selection
 Macroexpand Selection
    When the cursor is placed in a macro in the editor window, choosing
    this command expands the macro code in the buffer so that you can see
-   the actions it performs. Use *Edit > Undo* (or the toolbar/keyboard
+   the actions it performs. Use **Edit > Undo** (or the toolbar/keyboard
    equivalents) to return to the original contents of the buffer.
 
-The editor’s *Application* menu is the same as for the debugger or the
+The editor’s **Application** menu is the same as for the debugger or the
 project window, except that it contains extra breakpoint commands. These
 breakpoint commands are also part of the shortcut menu. See `See
 Breakpoint options <../debug.htm#23683>`_ for details.
 
 If you have Microsoft Visual SourceSafe installed, the editor displays
-a *SourceSafe* menu. This menu is Open Dylan’s interface to source
+a **SourceSafe** menu. This menu is Open Dylan’s interface to source
 control. For more information, see ` <editopt.htm#33650>`_.
 
 Shortcut menus
@@ -180,7 +179,7 @@ Shortcut menus
 
 The editor provides a shortcut menu whose items vary depending on where
 your cursor is when you right-click. The most basic shortcut menu pops
-up if you right-click in a file when the cursor is *not* in the middle
+up if you right-click in a file when the cursor is **not** in the middle
 of a code element (like a method or a class name). This menu contains
 the items: Edit Source, Cut, Copy, Paste, Delete.
 
@@ -235,12 +234,12 @@ providing new definitions in the interactor. Now imagine that you were
 developing the Reversi application and wanted to interact with it as you
 coded the sources. The Open Dylan editor allows you to compile
 pieces of your code and see the results in the running application by
-using *Project > Compile Selection*.
+using **Project > Compile Selection**.
 
 In the following example we interact with the Reversi application from
 an editor window opened on one of the Reversi sources.
 
-Open the Reversi project, and choose *Application > Start*.
+Open the Reversi project, and choose **Application > Start**.
 
 Make some moves on the board.
 
@@ -259,7 +258,7 @@ Change the word *circle* to *square*, so that the line reads:
 
     define variable *reversi-piece-shape* = #"square";
 
-Select the line of code and choose *Project > Compile Selection*.
+Select the line of code and choose **Project > Compile Selection**.
 
 Notice that the status bar says “Compiling region…” and then
 “\*reversi-piece-shape\* successfully downloaded“.
@@ -305,9 +304,9 @@ the source control system’s native interface.
 
 Open Dylan detects a Visual SourceSafe installation on a machine
 and automatically makes its interface to source control available by
-creating an additional *SourceSafe* menu on editor windows (see
+creating an additional **SourceSafe** menu on editor windows (see
 ` <editopt.htm#57280>`_). Therefore, you must have Visual SourceSafe
-installed in order to see the *SourceSafe* menu.
+installed in order to see the **SourceSafe** menu.
 
 .. figure:: editopt-6.gif
    :align: center
@@ -317,7 +316,7 @@ installed in order to see the *SourceSafe* menu.
 The SourceSafe menu commands
 ----------------------------
 
-The *SourceSafe* menu provides the following commands:
+The **SourceSafe** menu provides the following commands:
 
 Get Latest Version…
    Copies the latest version of a file in the database onto the
@@ -367,7 +366,7 @@ Show Differences…
 Using the editor’s source control interface
 -------------------------------------------
 
-The first time you choose one of the *SourceSafe* menu items, the editor
+The first time you choose one of the **SourceSafe** menu items, the editor
 prompts you for the name of the SourceSafe database, as shown in
 ` <editopt.htm#51518>`_.
 
@@ -397,8 +396,8 @@ SourceSafe database. In ` <editopt.htm#59619>`_ the developer has
 selected a project three levels below the root.
 
 When using Visual SourceSafe, you may omit the file name in all
-operations (except for *SourceSafe > Add to Source Control…* and *Remove
-from Source Control…* ) to cause the operation to be performed on all
+operations (except for **SourceSafe > Add to Source Control…** and **Remove
+from Source Control…** ) to cause the operation to be performed on all
 files in the project. For instance, to check out all the files in a
 project, leave the File field empty in the Select Project and File
 dialog.

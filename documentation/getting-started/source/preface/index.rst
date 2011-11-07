@@ -29,30 +29,30 @@ This guide uses only a few special conventions.
 
 Menus and menu items are printed in bold type as follows:
 
-*Save As*
+    **Save As**
 
 Instructions involving menu selection are given like this:
 
-Choose *Build* *>* *Run*.
+    Choose **Build > Run**.
 
-This means “Choose *Run* from the *Build* menu”.
+This means “Choose **Run** from the **Build** menu”.
 
 Where submenus are involved, the convention is the same:
 
-Choose *Start* *>* *Programs* *>* *>* *Open* *Dylan*
+    Choose **Start > Programs > > Open Dylan**
 
 This means “Choose the Start menu, then the Programs submenu, and then
 choose Open Dylan.”
 
 Instructions involving buttons are given like this:
 
-Click *Cancel*.
+    Click **Cancel**.
 
 Instructions involving radio buttons or check boxes are given like this:
 
-Check the “Make a personal copy” box.
+    Check the “Make a personal copy” box.
 
-Select the “Maximize interactor” radio button.
+    Select the “Maximize interactor” radio button.
 
 The Dylan Reference Manual
 ==========================

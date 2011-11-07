@@ -5,8 +5,8 @@ Dispatch Optimization Coloring in the Editor
 This chapter is about source-code coloring in the editor that shows
 where and how optimizations have taken place.
 
-*Note:* Optimization work is best done in Production mode. See `See
-Project settings <projects.htm#32945>`_.
+.. note:: Optimization work is best done in Production mode. See `See
+   Project settings <projects.htm#32945>`_.
 
 About dispatch optimizations
 ============================
@@ -46,7 +46,7 @@ project. It also records cases where compile-time optimization was for
 one reason or another not possible.
 
 The Open Dylan editor provides a way to see this information, by
-choosing *View > Color Dispatch Optimizations*. This command colors a
+choosing **View > Color Dispatch Optimizations**. This command colors a
 source code file so that you can see where the compiler managed to
 optimize method dispatch, and also places where you may be able to make
 changes that will make dispatch optimizations possible next time you
@@ -66,11 +66,11 @@ you edit colored source code, the changes you make could affect the
 optimizations the compiler can carry out upon it the next time you
 compile the project.
 
-For this reason, when *View > Color Dispatch Optimizations* is on and
+For this reason, when **View > Color Dispatch Optimizations** is on and
 you edit a colored line, the editor resets the entire line to black. All
 the other lines in the file keep their color.
 
-In this situation, you can re-color the line by doing *View > Refresh*.
+In this situation, you can re-color the line by doing **View > Refresh**.
 Note that once you have edited the text, the coloring information may no
 longer fit it, but you may still find it useful. Alternatively you may
 prefer to turn off coloring altogether once the coloring information for
@@ -153,23 +153,23 @@ possible.
 
 Open the Reversi project.
 
-#. Choose *Project > Settings* and, on the Compile page, set the
+#. Choose **Project > Settings** and, on the Compile page, set the
    compilation mode to “Production mode”.
-#. Choose *Project > Clean Build*.
+#. Choose **Project > Clean Build**.
 #. When the build is complete, go to the Sources page and open the file
    *game.dylan*.
 
 An editor window showing *game.dylan* appears.
 
-#. In the editor window, turn on the *View > Color Dispatch
-   Optimizations* check item.
+#. In the editor window, turn on the **View > Color Dispatch
+   Optimizations** check item.
 
 We can now see color information showing how dispatch optimizations were
 or were not carried out during the last build.
 
 #. Go to the definition of the method *<reversi-game>*.
 
-You can use *Edit > Find* or the “binoculars” toolbar button to do this.
+You can use **Edit > Find** or the “binoculars” toolbar button to do this.
 
 This is the definition of *<reversi-game>* :
 
@@ -240,9 +240,9 @@ the method selection itself.
 
 We can recompile the application to see what effect our change has had.
 
-#. Save *game.dylan* with *File > Save*.
+#. Save *game.dylan* with **File > Save**.
 #. Rebuild the application, and refresh the color information for
-   *game.dylan* with *View > Refresh*.
+   *game.dylan* with **View > Refresh**.
 
 The refreshed coloring shows the call to *make* on *<reversi-board>* in
 the *reversi-game-board* slot definition in light gray. This coloring
@@ -318,9 +318,9 @@ being made.
 #. Go to the definition of *<reversi-board>*.
 #. Change the type of *reversi-board-squares* to be
    *<simple-object-vector>*.
-#. Save *game.dylan* with *File > Save*.
+#. Save *game.dylan* with **File > Save**.
 #. Rebuild the application, and refresh the color information for
-   *game.dylan* with *View > Refresh*.
+   *game.dylan* with **View > Refresh**.
 #. Go back to the definition of *initialize-board*.
 
 The *size(squares)* call is now colored green. Green coloring means the

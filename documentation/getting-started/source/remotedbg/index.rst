@@ -55,8 +55,8 @@ server installer.) Of course, if the remote machine already has the
 Open Dylan installed on it, you do not need to install the debugging
 server.
 
-To start the debugging server choose *Start > Programs > Open Dylan
-> Start Debug Server*. You can also invoke it with
+To start the debugging server choose **Start > Programs > Open Dylan >
+Start Debug Server**. You can also invoke it with
 *debugger-server.exe*, which is available in the *Bin* subfolder of the
 Open Dylan installation folder.
 
@@ -69,10 +69,10 @@ connected to the server. A status bar at the bottom of the window
 displays a summary.
 
 You can set (and later change) a password for the debugging server by
-using the *Change Password* button on the Debugger Server window. The
+using the **Change Password** button on the Debugger Server window. The
 password can be anything. By default, no password is required.
 
-To exit the Debugging Server, click the *Exit* button or simply close
+To exit the Debugging Server, click the **Exit** button or simply close
 the window.
 
 At this point, you can return to the machine running the Open Dylan
@@ -83,23 +83,23 @@ Starting an application remotely
 
 Running and debugging an application on a remote machine is identical in
 almost every respect to using your local machine. You can use the three
-menu items *Application > Start*, *Application > Debug* and
-*Application > Interact* to launch the application in the normal way.
+menu items **Application > Start**, **Application > Debug** and
+**Application > Interact** to launch the application in the normal way.
 The only difference is that for remote startup you must specify a remote
 machine in the project’s debug settings.
 
-#. Select *Project > Settings…* and select the Debug page.
+#. Select **Project > Settings…** and select the Debug page.
 
    In the “Remote machine” section, an option box displays the name of the
    machine on which the project’s application is to be run. By default, the
    selection will be the local machine. Before you can select a remote
    machine, you must first establish a debugging connection.
 
-#. Click the *Open New Connection…* button.
+#. Click the **Open New Connection…** button.
 
 #. In the dialog that appears, enter the network address of the machine to
    which you wish to connect, and enter the password for the debugging
-   server (if one is set), and click *OK*.
+   server (if one is set), and click **OK**.
 
    The address is whatever the Windows operating system needs to identify
    the machine on the network. A computer hostname is likely to be
@@ -134,7 +134,7 @@ machine in the project’s debug settings.
    the drive containing the program *release* folder.
 
 You are now ready to run and debug the application remotely.
-*Application > Start* starts your application running on the remote
+**Application > Start** starts your application running on the remote
 machine. All the usual debugging and interaction facilities will now be
 available.
 
@@ -145,8 +145,8 @@ connection automatically when you next open and try to run the project.
 Attaching to running processes
 ==============================
 
-The three commands *Application > Start*, *Application > Debug* and
-*Application > Interact* are all used to launch a program from within
+The three commands **Application > Start**, **Application > Debug** and
+**Application > Interact** are all used to launch a program from within
 Open Dylan. But if the program is running already, perhaps even
 before you started up the Open Dylan environment, the environment
 does not know about the process and therefore it has no visible presence
@@ -158,28 +158,28 @@ by the environment. It is very simple to do this:
 
 #. Open the project whose application, DLL, or control is running.
 
-#. Choose *Application > Attach…* from the project window, or choose *Tools
-   > Attach Debugger…* from the main window.
+#. Choose **Application > Attach…** from the project window, or choose
+   **Tools > Attach Debugger…** from the main window.
 
    A dialog listing all available running processes appears.
 
-#. Select the process to which you want to attach, and click *OK*.
+#. Select the process to which you want to attach, and click **OK**.
 
 After a few moments, the debugger attaches to the running process, and
 all the normal debugging and interaction facilities become available,
-just as with *Application > Start*.
+just as with **Application > Start**.
 
-*Note:* Open Dylan does not currently offer any facility for
-detaching from a process. Once it has been attached to the Open
-Dylan debugger, and all of your debugging work is finished, you will
-need to close the program down using the *Application > Stop* command.
+.. note:: Open Dylan does not currently offer any facility for
+   detaching from a process. Once it has been attached to the Open
+   Dylan debugger, and all of your debugging work is finished, you will
+   need to close the program down using the **Application > Stop** command.
 
 The process to which you attach need not be running on the local
 machine. You can also attach to a process that is running on a remote
 machine provided that the debugging server application (see
 ` <remotedbg.htm#35532>`_) is running on that machine. The process list
 dialog has an option box that allows you to select the machine whose
-process list you want to view. There is also an *Open New Connection…*
+process list you want to view. There is also an **Open New Connection…**
 button for creating new connections to remote machines, which works in
 the same way as described in ` <remotedbg.htm#34289>`_.
 

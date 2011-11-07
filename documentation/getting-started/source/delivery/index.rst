@@ -11,8 +11,7 @@ are normal Win32 DLLs, stored in the top-level installation folder
 When you run an application on a machine where Open Dylan is
 installed, the libraries will be found in *Redistributable*, whether
 you run the application from the command line or from within the
-Open Dylan environment using commands such as *Application > Start*
-.
+Open Dylan environment using commands such as **Application > Start**.
 
 But to deliver your Dylan application to a customer or other third
 party, you will need to include in your distribution the Open Dylan
@@ -27,8 +26,8 @@ Building a release folder
 =========================
 
 To create a single folder containing everything necessary for your
-application to run on a customer’s machine, use the *Project > Make
-Release* command in the project window.
+application to run on a customer’s machine, use the **Project > Make
+Release** command in the project window.
 
 This command takes the compiled application files associated with the
 project, and whichever Open Dylan run-time libraries (DLLs) are

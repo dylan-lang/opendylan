@@ -198,7 +198,7 @@ object from the Object combo box, or from the *Go* menu. In addition,
 the Back (|image3|) and Forward (|image4|) buttons allow you to
 navigate the browser history.
 
-Choose *Go > Back* or click on the Back button.
+Choose **Go > Back** or click on the Back button.
 
 The browser returns to browsing the *<reversi-square>* definition.
 
@@ -207,8 +207,8 @@ Notice that the browser remembers which property page you were browsing.
 Browsing a project’s library
 ==============================
 
-To browse the current project’s library definition, choose *Go >
-Library* or the Browse Library (|image5|) button.
+To browse the current project’s library definition, choose **Go >
+Library** or the Browse Library (|image5|) button.
 
 Click the Browse Library button.
 
@@ -276,8 +276,8 @@ The values are shown in a table. Thread variables (variables local to a
 particular application thread) are shown with an entry for each thread
 containing a variable of that name. Constants and global variables only
 ever have one value across all threads, so this is shown as a single
-table entry entitled “All threads“. You can update the value shown in
-the browser with *View > Refresh*.
+table entry entitled “All threads”. You can update the value shown in
+the browser with **View > Refresh**.
 
 We will browse Reversi’s *\*reversi-piece-shape\** variable to show how
 we can monitor the value of a variable while an application is running.
@@ -300,9 +300,9 @@ The value of *\*reversi-piece-shape\** is shown as *#"circle"* for all
 threads. This is what we expected. Reversi has only a single thread, and
 we expected some value that would represent a circle.
 
-Choose *Options > Squares* in the running Reversi application.
+Choose **Options > Squares** in the running Reversi application.
 
-Choose *View > Refresh* in the browser.
+Choose **View > Refresh** in the browser.
 
 .. figure:: ../images/values-square.png
    :align: center
@@ -331,7 +331,7 @@ browser for paused application threads.
 
 However, you can browse a list of current application threads in the
 browser, along with a text message describing their state, by choosing
-*Go > Threads* in the project window, editor, or debugger.
+**Go > Threads** in the project window, editor, or debugger.
 
 If you double-click on a thread name in that list, Open Dylan opens
 a debugger window on the thread, or, if it already exists, raises the
@@ -350,9 +350,9 @@ information displayed on a browser page to get out of date:
 -  If you are browsing a definition and you have edited its source, you
    must recompile it to ensure that the compiler database is up to date.
 -  Even when you have recompiled a definition, you must make sure that
-   the browser display is refreshed with *View > Refresh*.
+   the browser display is refreshed with **View > Refresh**.
 -  If you are browsing a run-time object, that object might have since
-   changed. Refresh the browser display with *View > Refresh* to make
+   changed. Refresh the browser display with **View > Refresh** to make
    sure you are seeing the most up-to-date value.
 
 List of property pages

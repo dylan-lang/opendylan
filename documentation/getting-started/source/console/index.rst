@@ -359,7 +359,7 @@ d:\\users\\dylan\\builds>
 
 The commands described in this appendix can also be used in the Command
 Line window within the regular Open Dylan development environment.
-Choose *File > Command Line…* from the main window and use commands at
+Choose **File > Command Line…** from the main window and use commands at
 the *?* prompt.
 
 

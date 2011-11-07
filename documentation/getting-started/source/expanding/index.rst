@@ -4,8 +4,8 @@ Fixing Bugs
 
 Though we can play Reversi, we cannot save games in progress and resume
 play at a later date. In this section, we add a save feature to the
-game, available through *Save*, *Save As* and *Open* commands on the
-*File* menu. (If you look at the version of Reversi we have at the
+game, available through **Save**, **Save As** and **Open** commands on the
+**File** menu. (If you look at the version of Reversi we have at the
 moment, you will see that those items are disabled.)
 
 The code we will add to implement the save feature has a small bug that
@@ -21,22 +21,22 @@ implement the game-saving facility.
 In the Reversi project window, go to the Sources page and select
 *piece-shapes.dylan*.
 
-Choose *Project > Insert File*.
+Choose **Project > Insert File**.
 
 The Insert File into Project dialog appears.
 
-In the dialog, select *saving.dylan* and click *Open*.
+In the dialog, select *saving.dylan* and click **Open**.
 
 Open Dylan puts *saving.dylan* below *piece-shapes.dylan* in the
 list of project sources.
 
 Now we can rebuild the executable Reversi application.
 
-Choose *Project > Build* in the Reversi project window.
+Choose **Project > Build** in the Reversi project window.
 
 Open Dylan builds the application again.
 
-If you are still running Reversi when you choose *Project > Build*, you
+If you are still running Reversi when you choose **Project > Build**, you
 will be asked to confirm that you want to stop running it and go ahead
 with the build.
 
@@ -44,7 +44,7 @@ Towards the end of the build, the link warning dialog appears again,
 asking whether we want to link the application executable despite there
 being serious warnings. Again, we do want to link the application.
 
-Click *Yes* in the link warning dialog.
+Click **Yes** in the link warning dialog.
 
 Notice the message in the status bar at the bottom of the Reversi
 project window after rebuilding Reversi::
@@ -70,7 +70,7 @@ warnings are Dylan syntax errors, references to undefined bindings, and
 calls to functions with the wrong number or type of arguments.
 
 For code with only cosmetic problems, such as a method definition that
-ends with *end* *class* instead of *end* *method*, the compiler issues
+ends with *end class* instead of *end method*, the compiler issues
 a *warning*.
 
 You can see a table of any warnings or serious warnings that were
@@ -132,7 +132,7 @@ not see the separators. They are ignored by the compiler.
 
 When you add a new definition, or a new *begin* … *end* top-level form,
 the code separators will only be updated if you manually refresh the
-editor window (*View > Refresh* ), move the cursor past an existing
+editor window (**View > Refresh**), move the cursor past an existing
 separator, or perform some other operation that forces the editor to
 redisplay.
 
@@ -166,8 +166,7 @@ Add the missing semi-colon so that the last line of the definition
 
 While we are editing the file, we can fix the non-serious warning. It is
 caused by a mismatched *end* clause in *reversi-game-write-data*. It is
-a method, but the *end* clause says *end* *class* instead of *end*
-*method*.
+a method, but the *end* clause says *end class* instead of *end method*.
 
 Locate the definition of the *reversi-game-write-data* method in
 *saving.dylan*.
@@ -176,7 +175,7 @@ Change the last line of the definition so that it appears as follows::
 
     end method reversi-game-write-data;
 
-Choose *File > Save* in the editor.
+Choose **File > Save** in the editor.
 
 Open Dylan saves the file, first making a backup of the previous
 version in *saving.dylan~* —that is, in a file of the same name, but
@@ -186,7 +185,7 @@ it is a backup file.
 Having attended to the cause of the serious warnings and warnings, we
 can rebuild the application and try out the new version.
 
-Choose *Project* *>* *Build*.
+Choose **Project > Build**.
 
 You can choose this in either the editor or the project window.
 
@@ -210,7 +209,7 @@ grounds that the code ought to be fixed before it is executed.
 
 In Open Dylan, we can choose to go ahead and link in this
 situation. The choice is controlled from the main window, under the
-Build page of the *Options > Environment Options* dialog.
+Build page of the **Options > Environment Options** dialog.
 
 The option “Always link, even if there are serious warnings” forces the
 compiler to link an executable file or DLL for a project regardless of
@@ -226,21 +225,21 @@ Now we have taken a brief look at how Open Dylan treats
 compile-time problems, we will look at how it lets us debug problems
 that only emerge as exceptions at run time.
 
-*Note:* The numbered example steps in this section lead us through a
-possible debugging scenario. In places the example is a little
-unrealistic. This is because usually you are familiar with at least some
-of the code you are debugging, and also because the main purpose of the
-example is to introduce features of Open Dylan.
+.. note:: The numbered example steps in this section lead us through a
+   possible debugging scenario. In places the example is a little
+   unrealistic. This is because usually you are familiar with at least some
+   of the code you are debugging, and also because the main purpose of the
+   example is to introduce features of Open Dylan.
 
 With the rebuilt version of Reversi that compiled with no warnings,
-start a new game, with *Application > Start*.
+start a new game, with **Application > Start**.
 
-After a couple of moves, save the new game by choosing *File > Save* in
+After a couple of moves, save the new game by choosing **File > Save** in
 the Reversi window.
 
 The Save dialog appears.
 
-Choose a file to save into, and click *Save*.
+Choose a file to save into, and click **Save**.
 
 An application error dialog appears.
 
@@ -254,7 +253,7 @@ unhandled Dylan exception in the Reversi application. Something is wrong
 with the game-saving code. We must start up a debugger window to see
 what went wrong.
 
-Choose Debug reversi.exe and click *OK* to enter the debugger.
+Choose Debug reversi.exe and click **OK** to enter the debugger.
 
 The Open Dylan debugger appears. We discuss the debugger in detail
 in ` <debug.htm#18907>`_.
@@ -376,8 +375,8 @@ Filtered local frames
 
 The “Filtered…” settings do not, by default, show foreign function
 calls, cleanup frames, and frames of unknown type, whereas the “All…”
-settings show everything. You can set the filtering rules using *View >
-Debugger Options…*, see ` <debug.htm#23810>`_ for details.
+settings show everything. You can set the filtering rules using **View >
+Debugger Options…**, see ` <debug.htm#23810>`_ for details.
 
 .. figure:: ../images/unfilterederrstack2-0.png
    :align: center
@@ -721,19 +720,19 @@ Fix the definition of *reversi-game-save-game*.
 The *element-type:* keyword in the call to *make* on *<file-stream>*
 should take *<byte>*, not *<byte-character>*.
 
-Choose *File > Save* in the editor.
+Choose **File > Save** in the editor.
 
 Before we can rebuild the application we need to stop the current
 version running.
 
-Choose *Application > Stop* in the editor.
+Choose **Application > Stop** in the editor.
 
 A dialog appears asking you to confirm that you want to stop the
 application.
 
-Click *OK*.
+Click **OK**.
 
-Rebuild the application with *Project > Build*.
+Rebuild the application with **Project > Build**.
 
 Start the application again, and try to save a game.
 
@@ -746,11 +745,11 @@ The next step is to test the code for loading a saved game. To test this
 we need to change the state of the board from what it was like when we
 saved the game.
 
-Clear the Reversi board by clicking *New Game* in the Reversi
+Clear the Reversi board by clicking **New Game** in the Reversi
 application.
 
-Choose *File > Open* in the Reversi application, select the file you
-saved the game into, and click *Open*.
+Choose **File > Open** in the Reversi application, select the file you
+saved the game into, and click **Open**.
 
 Reversi now shows the state of the game you saved earlier.
 

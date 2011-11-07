@@ -15,7 +15,7 @@ We now create a new project for a simple “Hello World” application that
 will run in an MS-DOS console window.
 
 We create the project by clicking the New Project (|image0|) button in
-the main window, or by choosing *File > New* in any window.
+the main window, or by choosing **File > New** in any window.
 
 Click the New Project button in the main window.
 
@@ -82,7 +82,7 @@ application, so we need to change this option setting from the default.
 
 Select “Console Application (EXE)” in the Project type box.
 
-Click *Next*.
+Click **Next**.
 
 We now move to the second page.
 
@@ -122,7 +122,7 @@ subsequent questions that the wizard asks.
 Since we want to develop a simple “Hello World” application, we are
 going to call the project Hello.
 
-Type *Hello* in the Name box.
+Type **Hello** in the Name box.
 
 As you type Hello, the Location box fills in a folder for the
 automatically generated project and source files.
@@ -130,7 +130,7 @@ automatically generated project and source files.
 The New Project wizard will create the folder in the Location box
 automatically if it does not already exist.
 
-Click *Next*.
+Click **Next**.
 
 We now move to the third page.
 
@@ -162,9 +162,9 @@ Functional-Dylan library contains a function to do this, so for our
 project we can select the Minimal button and move on to the next page in
 the wizard.
 
-Select *Minimal* in the Use Libraries box.
+Select **Minimal** in the Use Libraries box.
 
-Click *Next*.
+Click **Next**.
 
 We now move to the final page.
 
@@ -190,7 +190,7 @@ additional one that Open Dylan accepts.
 Change the default keyword text as you wish, or turn the keywords off
 altogether.
 
-Click *Finish*.
+Click **Finish**.
 
 Now we have supplied all the information the wizard asks for, it creates
 the new Hello project and opens it.
@@ -235,13 +235,13 @@ Add the following code in the definition of *main*:
 
     format-out("Hello World\\n");
 
-Choose *File > Save* to save the change to *Hello.dylan*.
+Choose **File > Save** to save the change to *Hello.dylan*.
 
 Now we can build our “Hello World” application.
 
-Choose *Project > Build* in the project window.
+Choose **Project > Build** in the project window.
 
-Test the application by choosing *Project > Start*.
+Test the application by choosing **Project > Start**.
 
 An MS-DOS console window appears, into which “Hello World” is written.
 Then a notifier dialog appears to confirm that the console application
@@ -271,7 +271,7 @@ On the first page, we want to specify the project type.
 
 Select “GUI Application (EXE)” in the Project type box.
 
-Click *Next*.
+Click **Next**.
 
 We now move to the second page of the wizard.
 
@@ -288,9 +288,9 @@ if we check the “Include any available templates” box.
 
 Make sure the “Include any available templates” box is checked.
 
-We ignore the *Advanced…* button again.
+We ignore the **Advanced…** button again.
 
-Click *Next*.
+Click **Next**.
 
 We now move to the third page of the wizard.
 
@@ -300,7 +300,7 @@ use other libraries for access to the native window system.
 
 Select “Simple” in the Use Libraries box.
 
-Click *Next*.
+Click **Next**.
 
 We now proceed through a series of pages allowing us to specify our
 project requirements in high-level terms, without knowing the names of
@@ -316,7 +316,7 @@ On the first page we can specify the what I/O and system support we want
 in our project. For each option, the wizard shows which libraries the
 project will use.
 
-Leave the default settings on this page as they are, and click *Next*.
+Leave the default settings on this page as they are, and click **Next**.
 
 The next page is for specifying GUI support details. Here, we can decide
 whether we want to do the window programming for the application by
@@ -326,23 +326,23 @@ reference. We want to use DUIM in this project.
 
 Select “Dylan User Interface Manager (DUIM)”.
 
-Click *Next*.
+Click **Next**.
 
 Now the wizard offers different pages, which we don't explain here.
 We will keep clicking *Next* until we get to the last page of the wizard.
 This is the page for specifying source file headers, as we saw in `See
 The final page in the New Project wizard <projects.htm#27318>`_.
 
-Click *Next* until the last page of the wizard appears.
+Click **Next** until the last page of the wizard appears.
 
 If you made any changes to this page last time, they will have been
-preserved. Whenever you click *Finish*, the wizard saves all these
+preserved. Whenever you click **Finish**, the wizard saves all these
 headers (except *Synopsis:* ) and some other details, and reinstates
 them next time you create a project. See `See Saving settings in the New
 Project wizard <projects.htm#23000>`_ for a list of the details that the
 wizard saves.
 
-Make any changes you want to here, and then click *Finish*.
+Make any changes you want to here, and then click **Finish**.
 
 The wizard creates the new GUI-App project and opens it.
 
@@ -369,9 +369,9 @@ windows. More knowledge of DUIM is necessary to understand the code in
 actually does when we build the project. All projects including template
 code can be built without requiring any further work.
 
-Choose *Project > Build* in the GUI-App project window.
+Choose **Project > Build** in the GUI-App project window.
 
-Choose *Application > Start*.
+Choose **Application > Start**.
 
 An application window appears.
 
@@ -382,10 +382,10 @@ An application window appears.
 
 We can see from the window that the template code creates a skeleton
 application with File, Edit, and Help menus. There is even some
-functionality attached to the basic application. If we choose *File >
-New*, an editor pane is initialized, into which we can type. The other
-*File* and *Edit* menu commands have their standard effects. The *Help >
-About* command uses some of the constants from *GUI-App-info.dylan* to
+functionality attached to the basic application. If we choose **File >
+New**, an editor pane is initialized, into which we can type. The other
+**File** and **Edit** menu commands have their standard effects. The **Help >
+About** command uses some of the constants from *GUI-App-info.dylan* to
 identify the application as “GUI-App Version 1.0”.
 
 Creating a project using the Custom library option
@@ -455,7 +455,7 @@ be any smaller on disk, or in memory when it is running.
 Saving settings in the New Project wizard
 =========================================
 
-Whenever you click *Finish* on the last page of the New Project wizard,
+Whenever you click **Finish** on the last page of the New Project wizard,
 the wizard stores some of the choices and text-field settings you made
 so that they are available next time you create a project. The details
 that are saved persistently are as follows.
@@ -472,8 +472,7 @@ create several projects in sibling folders.
 
 On the last wizard page:
 
--  The contents of the Source File Headers boxes, except for *Synopsis:*
-   .
+-  The contents of the Source File Headers boxes, except for *Synopsis:*.
 
 *Synopsis:* is not saved because it is likely to change with each new
 project.
@@ -493,8 +492,8 @@ is the name of the project.
 
 The remaining sections—Start Function, Version Information, Compilation
 Mode, and Windows Subsystem—all control settings that you can both set
-here and change after creating a project by choosing *Project >
-Settings…*. See `See Project settings <projects.htm#32945>`_ for
+here and change after creating a project by choosing **Project >
+Settings…**. See `See Project settings <projects.htm#32945>`_ for
 details.
 
 Adding, moving, and deleting project sources
@@ -506,8 +505,8 @@ re-order them, and how to delete them from the project.
 Inserting files into a project
 ------------------------------
 
-To insert a new file or subproject into a project, choose *Project >
-Insert File...* in the project window. The project window prompts you
+To insert a new file or subproject into a project, choose **Project >
+Insert File...** in the project window. The project window prompts you
 with the *Insert File into Project* dialog, through which you can find a
 file to insert.
 
@@ -530,27 +529,27 @@ Moving the position of a file within a project
 ----------------------------------------------
 
 To move a file to a new position in a project, select the file in the
-Sources page and use *Project > Move File Up* and *Project > Move File
-Down*.
+Sources page and use **Project > Move File Up** and **Project > Move File
+Down**.
 
 Deleting files from a project
 -----------------------------
 
 To delete a file from a project, select the file in the Sources page and
-choose *Project > Remove File*. You could also select *Edit > Cut*,
-*Edit > Delete*, or the scissors toolbar icon.
+choose **Project > Remove File**. You could also select **Edit > Cut**,
+**Edit > Delete**, or the scissors toolbar icon.
 
 Open Dylan asks you if you are sure you want to delete the file
 from the project, because you cannot undo the operation. Note that the
 file is not deleted from disk, just removed from the Sources list in the
-project. You can always put it back with *Project > Insert File*.
+project. You can always put it back with **Project > Insert File**.
 
-*Note:* The project window’s Definitions page shows the definitions that
-were part of the project when it was last compiled. The list is taken
-from the current compiler database for the project. If you delete a
-source file from the project, the definitions from that file stay on the
-Definitions page until you rebuild the project, which causes the
-compiler database to be updated.
+.. note:: The project window’s Definitions page shows the definitions that
+   were part of the project when it was last compiled. The list is taken
+   from the current compiler database for the project. If you delete a
+   source file from the project, the definitions from that file stay on the
+   Definitions page until you rebuild the project, which causes the
+   compiler database to be updated.
 
 The project start function
 ==========================
@@ -596,7 +595,7 @@ with this expression:
     end;
 
 The name of the Start Function is one of the project settings you can
-change in the *Project > Settings…* dialog. It appears on the Debug page
+change in the **Project > Settings…** dialog. It appears on the Debug page
 in the Start Function section. The default name is *main*, but you can
 change it to any valid Dylan name you like. If you do so, make sure to
 replace the call to *main* with a call to your new start function. The
@@ -604,14 +603,14 @@ source file is not updated automatically.
 
 Note that you can make the wizard use a different start function name in
 new project files by changing the default setting in the Advanced
-Project Settings dialog. Click *Advanced…* on the second wizard page to
+Project Settings dialog. Click **Advanced…** on the second wizard page to
 produce the dialog. In this case, the generated project code will call
 the correct new name without requiring you to make a change by hand.
 
 The debugger uses the start function name to know where to pause a
-program that you start up in interaction mode with *Application >
-Interact* or the Interact (|image2|) toolbar button, or in debugging
-mode with *Application > Debug*. When you start a program either way,
+program that you start up in interaction mode with **Application >
+Interact** or the Interact (|image2|) toolbar button, or in debugging
+mode with **Application > Debug**. When you start a program either way,
 the debugger allows the program to execute normally, but sets a
 breakpoint on the start function so that interaction or debugging begins
 at a point where the entire program has already been initialized.
@@ -620,26 +619,26 @@ If no start function is nominated for a project, the program pauses
 precisely before it exits but after everything in it has executed. This
 is usually what we want for a DLL, but not for an application.
 
-*Note:* To be sure that you can access all the definitions in your
-application when you start it up in interaction mode, the call to *main*
-must come after all the definitions in the project. Typically, this
-means the call must be the last expression in the last file listed in
-the project. Otherwise, the application will be paused before all its
-definitions have been initialized, and interactions involving its
-definitions could behave in unexpected ways. See ` <model.htm#10988>`_
-for more information on this topic.
+.. note:: To be sure that you can access all the definitions in your
+   application when you start it up in interaction mode, the call to *main*
+   must come after all the definitions in the project. Typically, this
+   means the call must be the last expression in the last file listed in
+   the project. Otherwise, the application will be paused before all its
+   definitions have been initialized, and interactions involving its
+   definitions could behave in unexpected ways. See ` <model.htm#10988>`_
+   for more information on this topic.
 
 Project settings
 ================
 
-The *Project > Settings...* dialog allows you to set options for
+The **Project > Settings...** dialog allows you to set options for
 compiling, linking, and debugging projects. There are separate pages for
 each category, each described below.
 
 Compile page
 ------------
 
-The *Project > Settings…* dialog’s Compile page controls the compilation
+The **Project > Settings…** dialog’s Compile page controls the compilation
 mode setting for the current project. Any project can be compiled in one
 of two modes: Interactive Development mode, and Production mode. See
 ` <model.htm#12475>`_ for details of the modes.
@@ -647,21 +646,21 @@ of two modes: Interactive Development mode, and Production mode. See
 Link page
 ---------
 
-The *Project > Settings…* dialog’s Link page controls whether a project
+The **Project > Settings…** dialog’s Link page controls whether a project
 is linked as an executable or as a DLL, and what its name will be. It
 also allows you to specify version information for the target, a base
 address for it, and the Windows subsystem it runs in.
 
-*Note:* The default linker used in Open Dylan is a GNU linker. If
-you own Microsoft Developer Studio, you can use the Microsoft linker
-instead. To change the default linker, go to the main window and choose
-*Options > Environment Options* *…*, then choose that dialog’s Build
-page.
+.. note:: The default linker used in Open Dylan is a GNU linker. If
+   you own Microsoft Developer Studio, you can use the Microsoft linker
+   instead. To change the default linker, go to the main window and choose
+   **Options > Environment Options…**, then choose that dialog’s Build
+   page.
 
 Target File section of the Link page
 ------------------------------------
 
-The *Project > Settings…* dialog’s Link page has a Target File section
+The **Project > Settings…** dialog’s Link page has a Target File section
 that contains the name of the project target and the type of the target.
 The default target name is derived from the name of the project. Note
 that the name will always end in .EXE or .DLL according to the target
@@ -670,7 +669,7 @@ type, regardless of any extension you give to the target’s name.
 Base Address section of the Link page
 -------------------------------------
 
-The *Project > Settings…* dialog’s Link page has a Base Address section
+The **Project > Settings…** dialog’s Link page has a Base Address section
 that allows you to specify a base address for your target file. This is
 the address at which the target will be loaded into memory.
 
@@ -684,7 +683,7 @@ hexadecimal, using Dylan’s *#x* prefix: for example, *#x1000000*.
 Version Information section of the Link page
 --------------------------------------------
 
-The *Project > Settings…* dialog’s Link page has a Version Information
+The **Project > Settings…** dialog’s Link page has a Version Information
 section that allows you to add major and minor version numbers to a DLL
 or EXE. The values in this section are recorded in the DLL or EXE that
 the project builds. Open Dylan uses them at compile time and run
@@ -694,7 +693,7 @@ See ` <model.htm#14494>`_ for details.
 Windows Subsystem section of the Link page
 ------------------------------------------
 
-The *Project > Settings…* dialog’s Link page has a Win32 Subsystem
+The **Project > Settings…** dialog’s Link page has a Win32 Subsystem
 section that allows you to specify that the target should run in the
 “Windows GUI” (WINDOWS) subsystem or the “Windows Console” (CONSOLE)
 subsystem. You may wish to change this value if you change the code of a
@@ -708,7 +707,7 @@ to run in the “Windows GUI” (WINDOWS) subsystem.
 Debug page
 ----------
 
-The *Project > Settings…* dialog’s Debug page allows you to specify a
+The **Project > Settings…** dialog’s Debug page allows you to specify a
 command line with which to execute the project target, and the start
 function for the project.
 
@@ -747,14 +746,14 @@ into a project file and opened in a project window. (This process does
 not modify the original LID file on disk.)
 
 In order to open a LID file as a text file in an editor, open the LID
-file using *File > Open* and select the file type filter “Dylan Library
-Interchange Descriptions (as text)” before clicking *Open*.
+file using **File > Open** and select the file type filter “Dylan Library
+Interchange Descriptions (as text)” before clicking **Open**.
 
 Exporting a project into a LID file
 -----------------------------------
 
 To export a project as a LID file for use in other Dylan
-implementations, use *File > Save As* and choose the file type “Dylan
+implementations, use **File > Save As** and choose the file type “Dylan
 Library Interchange Descriptions”.
 
 Note that a LID file created by export will list source files by name
