@@ -218,6 +218,8 @@ are serious warnings“, and “Don’t link if there are serious warnings”.
 “Ask whether to link if there are serious warnings” is the default
 setting.
 
+.. _problems-at-run-time:
+
 Problems at run time
 ====================
 

@@ -627,6 +627,8 @@ point as it would with **Application > Debug** (see `Debugging
 executables`_). Otherwise the application is paused in
 its current state. A debugger window then opens on the paused thread.
 
+.. _interaction-basics-using-the-dylan-playground:
+
 Interaction basics using the Dylan playground
 ---------------------------------------------
 

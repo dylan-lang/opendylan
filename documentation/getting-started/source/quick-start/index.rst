@@ -11,83 +11,84 @@ Starting work with Open Dylan
 In this section, you will start Open Dylan’s development
 environment, and choose one of several supplied examples to work with.
 
-Start the Open Dylan environment.
+#. Start the Open Dylan environment.
 
-You can do this by choosing the Start menu shortcut **Start >
-Programs > Open Dylan > Open Dylan**. Open Dylan will also
-start if you open any file associated with it, such as a Dylan source
-file.
+   You can do this by choosing the Start menu shortcut **Start >
+   Programs > Open Dylan > Open Dylan**. Open Dylan will also
+   start if you open any file associated with it, such as a Dylan source
+   file.
 
-When Open Dylan starts, the *main window* appears:
+   When Open Dylan starts, the *main window* appears:
 
-.. figure:: ../images/mainwin.png
-   :align: center
+   .. figure:: ../images/mainwin.png
+      :align: center
 
-   The Open Dylan main window
+      The Open Dylan main window
 
-The *initial dialog* also appears:
+   The *initial dialog* also appears:
 
-.. _initial-dialog:
+   .. _initial-dialog:
 
-.. figure:: ../images/initdlg.png
-   :align: center
+   .. figure:: ../images/initdlg.png
+      :align: center
 
-   The initial dialog
+      The initial dialog
 
-The main window will be present throughout your Open Dylan session.
-It provides a way to set environment-wide options and to control the
-display of all Dylan windows. To exit Open Dylan, choose **File >
-Exit** in the main window.
+   The main window will be present throughout your Open Dylan session.
+   It provides a way to set environment-wide options and to control the
+   display of all Dylan windows. To exit Open Dylan, choose **File >
+   Exit** in the main window.
 
-The initial dialog (:ref:`initial-dialog`) is there to help you get
-working quickly, whether by looking at an example project, creating
-a new project, opening an existing project or text file, or starting
-an interactive Dylan session in the *Dylan playground*. (See
-` <debug.htm#42200>`_ for more information.)
+   :ref:`initial-dialog` is there to help you get
+   working quickly, whether by looking at an example project, creating
+   a new project, opening an existing project or text file, or starting
+   an interactive Dylan session in the *Dylan playground*. (See
+   :ref:`interaction-basics-using-the-dylan-playground` for more
+   information.)
 
-We want to browse the example projects.
+   We want to browse the example projects.
 
-Select the “Example project” option and click **OK**.
+#. Select the “Example project” option and click **OK**.
 
-The Open Example Project dialog appears.
+   The Open Example Project dialog appears.
 
-The Open Example Project dialog shows several categories of example
-Dylan project. If you expand a category you can see the examples
-offered.
+   The Open Example Project dialog shows several categories of example
+   Dylan project. If you expand a category you can see the examples
+   offered.
 
-The “Getting Started” category contains two very simple projects to help
-you start programming in Dylan and using the libraries included with
-Open Dylan. The “Documentation” category contains examples from the
-Open Dylan documentation set.
+   The “Getting Started” category contains two very simple projects to help
+   you start programming in Dylan and using the libraries included with
+   Open Dylan. The “Documentation” category contains examples from the
+   Open Dylan documentation set.
 
-The source files for the example projects are stored under the top-level
-Open Dylan installation folder, in the subfolder *Examples*. Each
-example has its own project folder. The files that Open Dylan
-creates when building a project are also stored under this folder.
+   The source files for the example projects are stored under the top-level
+   Open Dylan installation folder, in the subfolder *Examples*. Each
+   example has its own project folder. The files that Open Dylan
+   creates when building a project are also stored under this folder.
 
-We are going to look at the example called Reversi, which is in the
-“Documentation” category.
+   We are going to look at the example called Reversi, which is in the
+   “Documentation” category.
 
-.. figure:: ../images/examples-dlg.png
-   :align: center
+   .. figure:: ../images/examples-dlg.png
+      :align: center
 
-   The Open Dylan Examples dialog
+      The Open Dylan Examples dialog
 
-Expand the “Documentation” category by clicking the *+* next to it.
+#. Expand the “Documentation” category by clicking the *+* next to it.
 
-Select “Reversi”, then click **OK**.
+#. Select “Reversi”, then click **OK**.
 
-A *project window* appears.
+   A *project window* appears.
 
-The project window is one of four programming tools in Open Dylan.
-The other tools are the browser, the editor, and the debugger.
+   The project window is one of four programming tools in Open Dylan.
+   The other tools are the browser, the editor, and the debugger.
 
 The project window
 ==================
 
 In the project window you can see the project that you are working on. A
 *project* represents a Dylan library under development. We look at
-projects in more detail in ` <projects.htm#23024>`_.
+projects in more detail in :doc:`../projects/index`.
 
 .. figure:: ../images/motproj.png
    :align: center
@@ -142,7 +143,7 @@ This will be a normal Windows executable file with an EXE extension.
 Open Dylan puts the files it builds in a subfolder of your
 top-level Open Dylan installation folder, devoted to the Reversi
 project. We will see more about where projects and their build products
-reside on disk in ` <model.htm#32022>`_.
+reside on disk in :ref:`projects-on-disk`.
 
 Building Reversi
 ----------------
@@ -211,9 +212,7 @@ Now that the application is built, we can run it. The project window
 menu command **Application > Start** runs the most recently built
 executable for that window’s project.
 
-Choose **Application > Start**.
-
-The Reversi application window appears.
+Choose **Application > Start** and the Reversi application window appears.
 
 .. figure:: ../images/othgame.png
    :align: center
@@ -229,7 +228,7 @@ any time to debug the application and even interact with it. (Use
 **Application > Pause** to do this.) In addition, if there is an unhandled
 error inside the application, the debugger will catch it automatically
 so that you can examine it. We will learn more about the debugger later,
-in ` <expanding.htm#35733>`_ and also in ` <debug.htm#18907>`_.
+in :ref:`problems-at-run-time` and also in :doc:`../debug/index`.
 
 Three ways of running Dylan applications
 ========================================
@@ -262,9 +261,8 @@ now preceded by a *+* symbol. This means we can now expand a file name
 to reveal a list of all the Dylan definitions and top-level expressions
 in that file.
 
-In the Reversi project window, select the Sources page.
-
-Expand the *algorithms.dylan* item by clicking the **+** next to it.
+#. In the Reversi project window, select the Sources page.
+#. Expand the *algorithms.dylan* item by clicking the **+** next to it.
 
 The definitions and expressions are sorted alphabetically under the file
 name in which they appear. Definitions are the Dylan name bindings
@@ -306,8 +304,8 @@ However, when we open the Reversi project in future sessions, Open
 Dylan will read in the database from disk.
 
 Compiler databases are mostly used by the *browser* tool, which we will
-look at later. See ` <model.htm#25398>`_ for more details of the
-compiler database and ` <browsing.htm#36258>`_ for details of the
+look at later. See :ref:`compiler-databases` for more details of the
+compiler database and :doc:`../browsing/index` for details of the
 browser.
 
 Building DLLs
@@ -320,8 +318,7 @@ built into dynamic-link libraries (.DLL files).
 This option is just one that we can change in the project window’s
 **Project > Settings** dialog. From that dialog we can also set compiler
 optimizations, project version information, and command-line arguments
-for console applications. For more details, see
-` <projects.htm#32945>`_.
+for console applications. For more details, see :ref:`project-settings`.
 
 Making changes to an application
 ================================
@@ -339,86 +336,86 @@ with the changes we need for this new piece-shapes code. It is not yet a
 part of the project, so to incorporate it into our Reversi application,
 we must add it to the project.
 
-Exit Reversi by selecting **File > Exit** from the Reversi application
-window.
+#. Exit Reversi by selecting **File > Exit** from the Reversi application
+   window.
 
-You can also tell the environment to terminate a running application
-using **Application > Stop** or the project window’s stop button (|image3|
-). When you ask to terminate an application in this way, the environment
-asks you for confirmation, to prevent application state being lost by
-accident.
+   You can also tell the environment to terminate a running application
+   using **Application > Stop** or the project window’s stop button (|image3|).
+   When you ask to terminate an application in this way, the environment
+   asks you for confirmation, to prevent application state being lost by
+   accident.
 
-In the Reversi project window, select the Sources page.
+#. In the Reversi project window, select the Sources page.
 
-The positions of files in the sources list are important. The last file
-in the list should always be the file that contains the code that starts
-the application running. Unlike C or Java, Dylan does not require us to
-write a function of a predetermined name in order to start an
-application. We simply make the last piece of code in the last source
-file an expression that does something with all the Dylan definitions
-that the source files contain.
+   The positions of files in the sources list are important. The last file
+   in the list should always be the file that contains the code that starts
+   the application running. Unlike C or Java, Dylan does not require us to
+   write a function of a predetermined name in order to start an
+   application. We simply make the last piece of code in the last source
+   file an expression that does something with all the Dylan definitions
+   that the source files contain.
 
-In the Reversi project, *start-reversi.dylan* contains the code that
-starts the application and so must be at the bottom of the source file
-list. We want the file we are going to add to appear between
-*board.dylan* and *start-reversi.dylan*.
+   In the Reversi project, *start-reversi.dylan* contains the code that
+   starts the application and so must be at the bottom of the source file
+   list. We want the file we are going to add to appear between
+   *board.dylan* and *start-reversi.dylan*.
 
-Select *board.dylan*.
+#. Select *board.dylan*.
 
-Choose **Project > Insert File**.
+#. Choose **Project > Insert File**.
 
-The Insert File into Project dialog appears.
+   The Insert File into Project dialog appears.
 
-In the Insert File into Project dialog, select *piece-shapes.dylan* and
-click **Open**.
+#. In the Insert File into Project dialog, select *piece-shapes.dylan* and
+   click **Open**.
 
-Open Dylan adds *piece-shapes.dylan* below *board.dylan*.
+   Open Dylan adds *piece-shapes.dylan* below *board.dylan*.
 
-Now that *piece-shapes.dylan* is part of the sources that will be used
-to build the Reversi application, we can rebuild the executable.
+   Now that *piece-shapes.dylan* is part of the sources that will be used
+   to build the Reversi application, we can rebuild the executable.
 
-Choose **Project > Build** in the Reversi project window.
+#. Choose **Project > Build** in the Reversi project window.
 
-Open Dylan builds the application again.
+   Open Dylan builds the application again.
 
-This time, Open Dylan compiles only one file: *piece-shapes.dylan*.
-No changes had been made to the existing source files, so it did not
-need to recompile them. It simply linked the existing compiled files
-with the new one to make the new executable.
+   This time, Open Dylan compiles only one file: *piece-shapes.dylan*.
+   No changes had been made to the existing source files, so it did not
+   need to recompile them. It simply linked the existing compiled files
+   with the new one to make the new executable.
 
-This incremental compilation feature can save a lot of time during
-development, when you want to rebuild your application after a small
-change in order to test its effects. Open Dylan automatically works
-out which files it needs to recompile and which it does not. The
-compiler also updates a project’s database during incremental
-compilation.
+   This incremental compilation feature can save a lot of time during
+   development, when you want to rebuild your application after a small
+   change in order to test its effects. Open Dylan automatically works
+   out which files it needs to recompile and which it does not. The
+   compiler also updates a project’s database during incremental
+   compilation.
 
-When compilation of *piece-shapes.dylan* is complete, there are still
-some serious warnings. The link warning dialog appears to ask you to
-confirm that you want to link an executable for Reversi.
+   When compilation of *piece-shapes.dylan* is complete, there are still
+   some serious warnings. The link warning dialog appears to ask you to
+   confirm that you want to link an executable for Reversi.
 
-Click **Yes** in the link warning dialog.
+#. Click **Yes** in the link warning dialog.
 
-We can now run the new version of Reversi.
+   We can now run the new version of Reversi.
 
-Choose **Application > Start** in the Reversi project window.
+#. Choose **Application > Start** in the Reversi project window.
 
-A new Reversi application window appears.
+   A new Reversi application window appears.
 
-In the Reversi application, select the *Options* menu.
+#. In the Reversi application, select the *Options* menu.
 
-Thanks to our compiling the changes to the project, the *Circles*,
-*Squares*, and *Triangles* items are now available:
+   Thanks to our compiling the changes to the project, the *Circles*,
+   *Squares*, and *Triangles* items are now available:
 
-.. figure:: ../images/othmen.png
-   :align: center
+   .. figure:: ../images/othmen.png
+      :align: center
 
-   The Reversi application’s *Options* menu after the code changes.
+      The Reversi application’s *Options* menu after the code changes.
 
-Choose **Squares**.
+#. Choose **Squares**.
 
-The Reversi application updates the board, laying the pieces out again
-as squares rather than circles.
+   The Reversi application updates the board, laying the pieces out again
+   as squares rather than circles.
 
 .. figure:: ../images/othsquares.png
    :align: center

@@ -132,6 +132,8 @@ Project settings
     - The list of subprojects the project uses.
     - The locations on disk of the subprojects.
 
+.. _projects-on-disk:
+
 Projects on disk
 ----------------
 
@@ -271,6 +273,8 @@ Compilation
 This section discusses compilation modes, compiler databases,
 optimization (including loose and tight binding), the build cycle
 algorithm, and linkers.
+
+.. _compiler-databases:
 
 Compiler databases
 ------------------

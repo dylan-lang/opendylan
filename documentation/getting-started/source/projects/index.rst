@@ -626,6 +626,8 @@ is usually what we want for a DLL, but not for an application.
    definitions could behave in unexpected ways. See ` <model.htm#10988>`_
    for more information on this topic.
 
+.. _project-settings:
+
 Project settings
 ================
 

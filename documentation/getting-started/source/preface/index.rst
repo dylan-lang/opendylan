@@ -39,7 +39,7 @@ This means “Choose **Run** from the **Build** menu”.
 
 Where submenus are involved, the convention is the same:
 
-    Choose **Start > Programs > > Open Dylan**
+    Choose **Start > Programs > Open Dylan**
 
 This means “Choose the Start menu, then the Programs submenu, and then
 choose Open Dylan.”
