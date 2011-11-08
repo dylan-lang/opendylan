@@ -9,7 +9,6 @@
 
 #define THREADS_RUN_TIME_LIB
 
-#define USE_STDIO_H
 #include "posix-threads.h"
 
 #include <assert.h>

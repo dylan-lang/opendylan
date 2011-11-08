@@ -1281,13 +1281,6 @@ extern DMINT primitive_machine_word_unsigned_double_shift_right_high(DMINT, DMIN
 extern DMINT primitive_machine_word_unsigned_double_shift_right(DMINT, DMINT, DMINT);
 
 /* FLOATS */
-    
-/* SunOS' and Solaris' <math.h> include <stdio.h> to get the definition of FILE (Sigh) */
-#ifndef USE_STDIO_H
-#define _STDIO_H
-#define FILE void
-#endif
-
 #include <math.h>
 
 /* SunOS and Solaris also don't include single precision functions in <math.h> (Sigh)
@@ -1476,20 +1469,6 @@ extern D primitive_engine_node_apply_with_optionals (D engD, D gfD, D args);
 /* VALUES PRIMITIVES */
 
 extern D primitive_values (D v);
-
-/* TERMINAL PRIMITIVES */
-
-#ifdef USE_STDIO_H
-#include <stdio.h>
-#else
-/* Explicit declarations to avoid <stdio.h> which would make it impossible to
-   call rename from the File System library due to conflicting declarations */
-extern D   fopen (DBSTR name, DBSTR direction);
-extern int getchar (void);
-extern int putchar (int);
-extern int fflush (D fd);
-extern int fclose (D fd);
-#endif
 
 /* OPERATING SYSTEM PRIMITIVES */
 
