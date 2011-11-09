@@ -738,6 +738,9 @@ interface to generate the client class name. If the “Generate client
 classes with suffix” box is not checked, no client classes are
 generated, and client methods specialize on *<C-Interface>* instead.
 
+.. index:: .SPEC files
+   single: file extensions; .SPEC
+
 The type library tool and specification files
 =============================================
 

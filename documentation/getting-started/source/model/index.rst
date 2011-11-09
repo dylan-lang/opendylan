@@ -7,6 +7,8 @@ Reversi application, we take a step back to look at the programming
 model in Open Dylan, and to review the features of the development
 environment and the Dylan compiler.
 
+.. index:: projects
+
 Projects
 ========
 
@@ -45,6 +47,9 @@ When we worked with the Reversi project, we built an executable from it,
 but we could just as easily have built a DLL. See
 ` <../projects.htm#32945>`_ for details.
 
+.. index::
+   single: projects; creating new
+
 Creating new projects
 ---------------------
 
@@ -59,6 +64,10 @@ Description (LID) file for it. LID files have a .LID extension. When you
 open a LID file in the development environment, it is converted into a
 project file and opened in a project window. (This process does not
 modify the original LID file on disk.) See ` <../projects.htm#33260>`_.
+
+.. index:: .HDP files
+   single: file extensions; .HDP
+   single: projects; profile files
 
 Project files
 -------------
@@ -274,6 +283,8 @@ This section discusses compilation modes, compiler databases,
 optimization (including loose and tight binding), the build cycle
 algorithm, and linkers.
 
+.. index:: .DDB files, Compiler databases
+   single: file extensions; .DDB
 .. _compiler-databases:
 
 Compiler databases
@@ -307,6 +318,8 @@ database is read into memory from the disk file, if it exists.
 
 Compiler database files have a .DDB suffix.
 
+.. index:: compilation modes
+
 Compilation modes
 -----------------
 
@@ -333,6 +346,9 @@ That page offers two mode choices:
 -  Interactive Development mode
 -  Production mode
 
+.. index:: interactive development mode
+   single: compilation modes; interactive development mode
+
 You should do the majority of your work on a project in Interactive
 Development mode. When compiling a project in this mode, the compiler
 does not perform as many optimizations as it can, and is not as strict
@@ -344,6 +360,9 @@ debugging work easier. Also, if your project was compiled in this mode
 you will be able to do more interactive work in the debugger’s
 interaction pane, including redefinition. However, compiled code will
 not be as fast as it can be.
+
+.. index:: production mode
+   single: compilation modes; production mode
 
 When your project work is nearing completion, and you want to see the
 compiled version running as fast as possible, switch to compiling the
@@ -383,6 +402,10 @@ numbers and checks whether the used library is the very same one that
 was used at compile time. If the library is different, a run-time error
 is signalled even if the version is the same.
 
+.. index:: loose binding, tight binding
+   single: binding; loose and tight
+   single: compilation modes; relationship to loose and tight binding
+
 Binding
 -------
 
@@ -421,6 +444,9 @@ loosely bound internally, and therefore libraries that use them will be
 loosely bound to them. When libraries are compiled in Production mode,
 they are tightly bound internally, and therefore libraries that use them
 are tightly bound to them.
+
+.. index:: build cycle
+   single: applications; build cycle
 
 The build cycle
 ---------------
@@ -477,6 +503,9 @@ This section discusses running applications within Open Dylan (and
 the benefits of doing so), and the process of library initialization in
 an application.
 
+.. index::
+   single: applications; running
+
 Starting applications up from within Open Dylan
 -----------------------------------------------
 
@@ -488,6 +517,9 @@ must start it up by opening its project and starting it with
 debugger, providing the development environment with a connection to the
 application and the capabilities necessary to control its execution and
 to interact with it.
+
+.. index::
+   single: applications; initialization
 
 Application and library initialization
 --------------------------------------
@@ -516,6 +548,9 @@ run-time values; in these cases, forward references may not be allowed.
 Expressions in a Dylan library are executed in the order in which they
 appear in the project, and the last expression in a project should be a
 call to a project’s start function.
+
+.. index::
+   single: Compiler databases; relationship to source and run-time views
 
 Source, database, and run-time views
 ====================================

@@ -2,6 +2,8 @@
 Open Dylan Console Environment
 ***********************************
 
+.. index:: console environment
+
 In Open Dylan, you can develop Dylan applications using the
 interactive development environment or the Open Dylan console
 environment. This appendix describes the console environment, which is
@@ -9,6 +11,8 @@ called *console-dylan*.
 
 About the Dylan console environment
 ===================================
+
+.. index:: console-dylan.exe, minimal-dylan-compiler, console-compiler.exe
 
 The Open Dylan console environment is an executable application
 called *console-dylan.exe*. You can find it in the *bin* folder of your
@@ -283,6 +287,8 @@ Arguments:
 COUNT - number of frames to move down
 
 To exit the console environment, use the command *:exit*.
+
+.. index:: command line
 
 An example of console-dylan interactive functionality
 =====================================================

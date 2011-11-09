@@ -145,6 +145,9 @@ top-level Open Dylan installation folder, devoted to the Reversi
 project. We will see more about where projects and their build products
 reside on disk in :ref:`projects-on-disk`.
 
+.. index::
+   single: applications; building
+
 Building Reversi
 ----------------
 
@@ -229,6 +232,9 @@ any time to debug the application and even interact with it. (Use
 error inside the application, the debugger will catch it automatically
 so that you can examine it. We will learn more about the debugger later,
 in :ref:`problems-at-run-time` and also in :doc:`../debug/index`.
+
+.. index::
+   single: applications; running
 
 Three ways of running Dylan applications
 ========================================

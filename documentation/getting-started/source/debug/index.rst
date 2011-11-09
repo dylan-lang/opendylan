@@ -231,6 +231,9 @@ or the backtrace’s root node, the debugger leaves the source pane empty,
 writes “No source available” in the field above the source pane, and
 makes the Edit Source button unavailable.
 
+.. index::
+   single: arrow; green
+
 The source pane shows the same green arrow (|image3|) seen in the stack
 pane. This *current location* arrow shows the point to which execution
 within that call frame had proceeded before the application was paused.
@@ -311,6 +314,8 @@ By default, this option is not set. When turned on, the rules above are
 ignored and every open debugger window is refreshed whenever the
 application pauses.
 
+.. index:: Application menu
+
 Controlling execution
 =====================
 
@@ -331,6 +336,10 @@ is not available in the editor if the source file being edited is not
 part of the active project—the project whose name is visible in the main
 window’s drop-down list. See `The active project`_ for more details.)
 
+.. index::
+   single: applications; starting
+   single: applications; stopping
+
 Starting and stopping applications
 ----------------------------------
 
@@ -350,6 +359,10 @@ termination that loses valuable application state.
 
 After you have stopped an application in this way, you can start it
 again with **Application > Start**.
+
+.. index::
+   single: applications; pausing
+   single: applications; resuming
 
 Pausing and resuming execution of applications
 ----------------------------------------------
@@ -388,6 +401,9 @@ Since restarting an application logically consists of stopping it and
 starting it again, choosing this command is equivalent to choosing
 **Application > Stop**, then **Application > Start**.
 
+.. index::
+   single: applications; interacting with
+
 Interacting with applications
 -----------------------------
 
@@ -407,6 +423,11 @@ DLLs, and OLE components, in each case there is a slightly different
 technique for invoking the debugger. This section covers these
 techniques. Debugging a client/server application is discussed in
 `Debugging client/server applications`_.
+
+.. index::
+   single: applications; debugging
+   single: debugging; applications
+   single: debugging; executables
 
 Debugging executables
 ---------------------
@@ -540,6 +561,10 @@ you are using DUIM for your application’s GUI, note that DUIM frames
 normally provide *<abort>* handlers in the event loop, so that aborting
 while processing an event will proceed to process the next event. See
 the DUIM documentation for *start-frame* and *start-dialog*.
+
+.. index::
+   single: applications; debugging a specific thread
+   single: debugging; choosing a thread to debug
 
 Choosing an application thread to debug
 =======================================
@@ -903,6 +928,9 @@ list of available commands, and documentation for each command, with the
     default if not otherwise specified. Using this command is equivalent to
     using the context drop-down list on the debugger/interactor toolbar.
 
+.. index:: active project
+   single: projects; active project
+
 The active project
 ==================
 
@@ -938,6 +966,9 @@ window’s **Options > Environment Options…** dialog has two options on the
 General page controlling when projects become active automatically:
 “Project becomes active when opened” and “Project becomes active when
 application started“.
+
+.. index:: breakpoints
+   single: debugging; breakpoints
 
 Breakpoints
 ===========
@@ -1274,6 +1305,9 @@ Consider this stack backtrace::
 The selected frame is *andante*. Choosing **Thread > Step Out** resumes
 execution of the thread until *andante* returns.
 
+.. index:: client/server applications
+   single: debugging; client/server applications
+
 Debugging client/server applications
 ====================================
 
@@ -1318,6 +1352,10 @@ the debugger correctly opens up on the appropriate project as the
 breakpoints are reached. However, you cannot set the same breakpoint in
 both projects at once. Instead you have to go into each project and set
 the breakpoint separately.
+
+.. index:: bug report, compiler warnings report
+   single: reports, generating; bug
+   single: reports, generating; compiler warnings
 
 Exporting a bug report or a compiler warnings report
 ====================================================

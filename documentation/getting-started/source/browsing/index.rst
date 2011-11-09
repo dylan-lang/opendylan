@@ -4,6 +4,9 @@ Learning More About an Application
 
 In this chapter, we examine the browser in detail.
 
+.. index:: browser tool
+   single: tools; browser
+
 The browser
 ===========
 
@@ -188,6 +191,9 @@ superclass name to browse that class definition in its own right, or, by
 clicking on the *+* signs, we could expand the names to reveal their
 superclasses.
 
+.. index::
+   single: browsing; history feature
+
 Using the history feature
 -------------------------
 
@@ -203,8 +209,11 @@ The browser returns to browsing the *<reversi-square>* definition.
 
 Notice that the browser remembers which property page you were browsing.
 
+.. index::
+   single: browsing; library definitions
+
 Browsing a project’s library
-==============================
+============================
 
 To browse the current project’s library definition, choose **Go >
 Library** or the Browse Library (|image5|) button.
@@ -223,6 +232,9 @@ The Usage page gives a tree view of the library usage relationships for
 the current library. The first level of expansion shows the names of the
 libraries that Reversi uses. Expanding those library names shows the
 libraries they use, and so on.
+
+.. index:: namespace qualifier format
+   single: browsing; namespace qualifier format
 
 Namespace issues in the browser
 ===============================
@@ -261,6 +273,9 @@ current module in an unambiguous fashion is important, because while
 browsing you may come across names not defined in your library. The
 browser needs to be able to make it clear when a name is not from the
 current library and module.
+
+.. index::
+   single: browsing; run-time values
 
 Browsing run-time values of variables and constants
 ===================================================
@@ -311,6 +326,10 @@ Choose **View > Refresh** in the browser.
 The value is now *#"square"*. This reflects the internal change to the
 variable that our menu selection caused.
 
+.. index::
+   single: browsing; function parameters
+   single: browsing; local variables
+
 Browsing local variables and parameters on the stack
 ====================================================
 
@@ -320,6 +339,9 @@ values on the stack in a paused application thread. Simply double-click
 on one in the debugger stack pane, and the browser will display its
 contents. See `See Browsing local variables <expanding.htm#13818>`_ for
 an example of browsing local variable and parameter values.
+
+.. index::
+   single: browsing; paused threads
 
 Browsing paused application threads
 ===================================
@@ -339,6 +361,9 @@ the debugger, you can browse the local variables and parameters in call
 frames in the usual way. See `Browsing run-time values of variables
 and constants`_.
 
+.. index::
+   single: browsing; keeping browser up to date
+
 Keeping browser displays up to date
 ===================================
 
@@ -353,6 +378,9 @@ information displayed on a browser page to get out of date:
 -  If you are browsing a run-time object, that object might have since
    changed. Refresh the browser display with **View > Refresh** to make
    sure you are seeing the most up-to-date value.
+
+.. index::
+   single: browser tool; list of property pages
 
 List of property pages
 ======================

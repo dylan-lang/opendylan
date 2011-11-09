@@ -167,6 +167,11 @@ Click **Next**.
 
 We now move to the final page.
 
+.. index::
+   single: Author: interchange format keyword, setting default
+   single: Copyright: interchange format keyword, setting default
+   single: interchange keywords, setting defaults for new projects
+
 The final page in the New Project wizard
 ----------------------------------------
 
@@ -549,6 +554,9 @@ project. You can always put it back with **Project > Insert File**.
    Definitions page until you rebuild the project, which causes the
    compiler database to be updated.
 
+.. index:: start function
+   single: applications; start function
+
 The project start function
 ==========================
 
@@ -725,6 +733,9 @@ See `The project start function`_ for details of the start function.
 Another use of the Command Line section is to arrange to test and debug
 DLLs and OLE components. See ` <debug.htm#13513>`_ for a description of
 these debugging techniques.
+
+.. index:: .LID files
+   single: file extensions; .LID
 
 Project files and LID files
 ===========================

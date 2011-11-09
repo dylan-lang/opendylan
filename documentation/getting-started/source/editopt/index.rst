@@ -224,6 +224,8 @@ Breakpoint options <../debug.htm#23683>`_). Underscores in the leftmost
 column indicate lines where you could add a breakpoint (see
 ` <editopt.htm#43811>`_).
 
+.. index:: Compile Selection editor command
+
 Using the editor for interactive development
 ============================================
 

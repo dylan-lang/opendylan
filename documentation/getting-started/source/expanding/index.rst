@@ -64,14 +64,22 @@ discovered nine problems in the project’s source code. It reported those
 problems and divided them into two categories: serious warnings and
 warnings.
 
+.. index:: serious warnings
+   single: warnings; serious warnings
+
 The compiler issues a *serious warning* for code that would lead to an
 exception at run time if it was executed. Among the causes of serious
 warnings are Dylan syntax errors, references to undefined bindings, and
 calls to functions with the wrong number or type of arguments.
 
+.. index:: warnings
+
 For code with only cosmetic problems, such as a method definition that
 ends with *end class* instead of *end method*, the compiler issues
 a *warning*.
+
+.. index::
+   single: warnings; browsing
 
 You can see a table of any warnings or serious warnings that were
 generated the last time a project was compiled by choosing the Warnings
@@ -199,6 +207,10 @@ addressed, all the other serious warnings that were follow-on effects of
 the missing semi-colon have gone away. In addition, the single ordinary
 warning was removed by the *end* -clause fix.
 
+.. index::
+   single: warnings; linking with serious warnings
+   single: linking; by ignoring serious warnings
+
 Controlling the compiler’s treatment of warnings
 ------------------------------------------------
 
@@ -298,6 +310,9 @@ debugger. The default filter setting is “Filtered visible frames”.
 Each item in the list is a call frame on the stack for the thread being
 debugged. We call this list of call frames a stack backtrace or simply a
 *backtrace*.
+
+.. index::
+   single: arrow; green
 
 The backtrace shows frames in the order they were created, with the most
 recent at the top of the list. The frames are represented by the names

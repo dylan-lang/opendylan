@@ -142,6 +142,8 @@ Details about the connection to a remote machine are stored and saved
 with the project. Open Dylan tries to re-establish the remote
 connection automatically when you next open and try to run the project.
 
+.. index:: Attach Debugger... menu command on main window
+
 Attaching to running processes
 ==============================
 

@@ -8,6 +8,10 @@ where and how optimizations have taken place.
 .. note:: Optimization work is best done in Production mode. See `See
    Project settings <projects.htm#32945>`_.
 
+.. index::
+   single: applications; optimization
+   single: optimization; coloring in the editor
+
 About dispatch optimizations
 ============================
 
@@ -36,6 +40,8 @@ Depending on the circumstances, these *dispatch optimizations* can
 consist of replacing the generic function call with a direct call to the
 correct method; replacing the generic function call with a class slot
 access; or inlining the call completely.
+
+.. index:: Color Dispatch Optimizations menu command
 
 Optimization coloring
 =====================
