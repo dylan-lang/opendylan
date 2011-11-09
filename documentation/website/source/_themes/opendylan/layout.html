@@ -7,6 +7,7 @@
 #}
 {% extends "basic/layout.html" %}
 {% set css_files = css_files + ['_static/css/bootstrap/1.4.0/bootstrap.min.css'] %}
+{% set script_files = script_files + ['_static/js/bootstrap-scrollspy.js'] %}
 
 {% set navigation_bar = [
     ('index', 'Home'),
@@ -30,7 +31,7 @@
 {% endblock %}
 
 {% block header %}
-   <div class="topbar">
+   <div class="topbar" data-scrollspy="scrollspy">
      <div class="fill">
        <div class="container">
          <a class="brand" href="{{ pathto('index') }}">Open Dylan</a>
