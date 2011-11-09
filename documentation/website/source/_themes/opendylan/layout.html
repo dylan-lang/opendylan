@@ -1,0 +1,96 @@
+{#
+    opendylan/layout.html
+    ~~~~~~~~~~~~~~~~~
+
+    :copyright: Copyright 2011 by the Dylan Hackers.
+    :license: MIT.
+#}
+{% extends "basic/layout.html" %}
+{% set css_files = css_files + ['_static/css/bootstrap/1.4.0/bootstrap.min.css'] %}
+
+{% set navigation_bar = [
+    ('index', 'Home'),
+    ('about/index', 'About'),
+    ('news/index', 'News'),
+    ('documentation/index', 'Documentation'),
+    ('community/index', 'Community'),
+    ('download/index', 'Download'),
+] -%}
+{% set active_page = pagename|default('index') -%}
+
+{% block extrahead %}
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <style type="text/css">
+      body {
+        padding-top: 50px;
+      }
+    </style>
+{% endblock %}
+
+{% block header %}
+   <div class="topbar">
+     <div class="fill">
+       <div class="container">
+         <a class="brand" href="{{ pathto('index') }}">Open Dylan</a>
+         <ul id="nav">
+         {% for page, caption in navigation_bar %}
+           <li{% if page == active_page %} class="active"{% endif
+           %}><a href="{{ pathto(page) }}">{{ caption|e }}</a></li>
+         {% endfor %}
+         </ul>
+       </div>
+     </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+      {% if pagename == 'index' %}
+      <div class="hero-unit">
+        <p>Open Dylan is ... wonderful and awesome.</p>
+        <p>We'll put a nice image over there on the right.</p>
+        <div>
+          <div class="pull-left"><a href="{{ pathto('documentation/index') }}" class="btn primary large">Learn more &raquo;</a></div>
+          <div class="pull-right"><a href="{{ pathto('download/index') }}" class="btn primary large">Get it now &raquo;</a></div>
+        </div>
+      </div>
+      {% endif %}
+      {%- block document %}
+        {{ super() }}
+      {%- endblock %}
+      <div class="clearer"></div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    <footer class="container">
+      <div class="pull-left">
+        {%- if show_source and has_source and sourcename %}
+          <a href="{{ pathto('_sources/' + sourcename, true)|e }}"
+             rel="nofollow">{{ _('Show Source') }}</a>
+        {%- endif %}
+      </div>
+
+      <div class="pull-right">
+        {%- if show_copyright %}
+          {%- if hasdoc('copyright') %}
+            {% trans path=pathto('copyright'), copyright=copyright|e %}&copy; <a href="{{ path }}">Copyright</a> {{ copyright }}.{% endtrans %}
+          {%- else %}
+            {% trans copyright=copyright|e %}&copy; Copyright {{ copyright }}.{% endtrans %}
+          {%- endif %}
+        {%- endif %}
+        {%- if last_updated %}
+          {% trans last_updated=last_updated|e %}Last updated on {{ last_updated }}.{% endtrans %}
+        {%- endif %}
+        {%- if show_sphinx %}
+          {% trans sphinx_version=sphinx_version|e %}Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> {{ sphinx_version }}.{% endtrans %}
+        {%- endif %}
+      </div>
+      <div class="clearer"></div>
+    </footer>
+{% endblock %}
+
+{% block relbar1 %}{% endblock %}
+{% block relbar2 %}{% endblock %}
