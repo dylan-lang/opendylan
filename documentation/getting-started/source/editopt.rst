@@ -10,7 +10,7 @@ the editor is *interactive*.
 
 You can use the editor in one of two styles: Emacs or Windows. Using the
 editor options, as described in
-` <../../../../../../../ldisk2/doc/dylan/product/guide/environment/src/appx.htm#52521>`_,
+` <../../../../../../ldisk2/doc/dylan/product/guide/environment/src/appx.htm#52521>`_,
 you can choose from either an Emacs or Windows style keyboard layout and
 default settings.
 
@@ -54,7 +54,7 @@ wish, then save it back to the original file (assuming that you have
 permission to write to it). ` <editopt.htm#43811>`_ shows a file opened
 in an editor window.
 
-.. figure:: ../images/editorgm.png
+.. figure:: images/editorgm.png
    :align: center
 
    Editor window showing the game.dylan file from the Reversi project.
@@ -96,7 +96,7 @@ using the **View > Editor Options…** Display tab page. Alternatively, you
 can use the Restore tab page to switch to Emacs defaults, which changes
 this default (and others). For details about the Editor Options dialog,
 its tab pages and settings, see
-` <../../../../../../../ldisk2/doc/dylan/product/guide/environment/src/appx.htm#52521>`_.
+` <../../../../../../ldisk2/doc/dylan/product/guide/environment/src/appx.htm#52521>`_.
 
 The editor offers a number of different viewing options for the window’s
 layout.
@@ -110,7 +110,7 @@ layout.
    Toolbar**.
 -  The color dispatch optimizations feature, as described in `See
    Dispatch Optimization Coloring in the
-   Editor <../coloring.htm#27192>`_, shows you where and how to optimize
+   Editor <coloring.htm#27192>`_, shows you where and how to optimize
    your code and is controlled by **View > Color Dispatch Optimizations**.
 
 The editor window’s context: the active project
@@ -121,7 +121,7 @@ application of the active project. For instance, the **Project**, **Build**,
 and **Application** menus are not available in the editor if the source
 file being edited is not part of the active project—the project whose
 name is visible in the main window’s drop-down list. See `See The active
-project <../debug.htm#21333>`_ for more details.
+project <debug.htm#21333>`_ for more details.
 
 Menu commands and special features
 ==================================
@@ -168,7 +168,7 @@ Macroexpand Selection
 The editor’s **Application** menu is the same as for the debugger or the
 project window, except that it contains extra breakpoint commands. These
 breakpoint commands are also part of the shortcut menu. See `See
-Breakpoint options <../debug.htm#23683>`_ for details.
+Breakpoint options <debug.htm#23683>`_ for details.
 
 If you have Microsoft Visual SourceSafe installed, the editor displays
 a **SourceSafe** menu. This menu is Open Dylan’s interface to source
@@ -216,11 +216,11 @@ Show Documentation
 If you right-click when the cursor is in a method name, the shortcut
 menu also contains tracing commands and breakpoint manipulation
 commands. For details about these shortcut commands, see `See Breakpoint
-options <../debug.htm#23683>`_.
+options <debug.htm#23683>`_.
 
 Breakpoint commands are also available if you right-click when your
 mouse pointer is over the leftmost column of the editor window (see `See
-Breakpoint options <../debug.htm#23683>`_). Underscores in the leftmost
+Breakpoint options <debug.htm#23683>`_). Underscores in the leftmost
 column indicate lines where you could add a breakpoint (see
 ` <editopt.htm#43811>`_).
 
@@ -230,7 +230,7 @@ Using the editor for interactive development
 ============================================
 
 You will recall from `See An example interaction with
-Reversi <../debug.htm#33511>`_ that we were able to change the shapes of
+Reversi <debug.htm#33511>`_ that we were able to change the shapes of
 the Reversi game pieces while the application was running simply by
 providing new definitions in the interactor. Now imagine that you were
 developing the Reversi application and wanted to interact with it as you
@@ -310,7 +310,7 @@ creating an additional **SourceSafe** menu on editor windows (see
 ` <editopt.htm#57280>`_). Therefore, you must have Visual SourceSafe
 installed in order to see the **SourceSafe** menu.
 
-.. figure:: editopt-6.gif
+.. figure:: images/editopt-6.gif
    :align: center
 
    The SourceSafe menu on a Open Dylan editor window.
@@ -372,7 +372,7 @@ The first time you choose one of the **SourceSafe** menu items, the editor
 prompts you for the name of the SourceSafe database, as shown in
 ` <editopt.htm#51518>`_.
 
-.. figure:: editopt-7.gif
+.. figure:: images/editopt-7.gif
    :align: center
 
    The Select Database dialog.
@@ -386,7 +386,7 @@ The editor then requests the identity of the file (or files) to be
 manipulated by a source control operation, as shown in
 ` <editopt.htm#59619>`_.
 
-.. figure:: editopt-8.gif
+.. figure:: images/editopt-8.gif
    :align: center
 
    The Select Project and File dialog.

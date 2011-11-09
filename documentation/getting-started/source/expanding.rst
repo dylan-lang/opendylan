@@ -87,7 +87,7 @@ page in the project window. After a build where there were warnings or
 serious warnings, like this one, the Warnings page is selected
 automatically.
 
-.. figure:: ../images/warnings2-0b1.png
+.. figure:: images/warnings2-0b1.png
    :align: center
 
    The project window’s Warnings page.
@@ -144,7 +144,7 @@ editor window (**View > Refresh**), move the cursor past an existing
 separator, or perform some other operation that forces the editor to
 redisplay.
 
-.. figure:: ../images/editor.png
+.. figure:: images/editor.png
    :align: center
 
    The Open Dylan editor.
@@ -257,7 +257,7 @@ Choose a file to save into, and click **Save**.
 
 An application error dialog appears.
 
-.. figure:: ../images/error2-0.png
+.. figure:: images/error2-0.png
    :align: center
 
    A Dylan run-time application error.
@@ -302,7 +302,7 @@ and so it is convenient to hide them. You can change the filtering with
 the drop-down list available directly above the thread pane in the
 debugger. The default filter setting is “Filtered visible frames”.
 
-.. figure:: ../images/errstack2-0.png
+.. figure:: images/errstack2-0.png
    :align: center
 
    The Reversi application stack after a game-saving error.
@@ -395,7 +395,7 @@ calls, cleanup frames, and frames of unknown type, whereas the “All…”
 settings show everything. You can set the filtering rules using **View >
 Debugger Options…**, see ` <debug.htm#23810>`_ for details.
 
-.. figure:: ../images/unfilterederrstack2-0.png
+.. figure:: images/unfilterederrstack2-0.png
    :align: center
 
    Stack pane showing call frames from all modules.
@@ -494,7 +494,7 @@ We can now see the values of the local variables in this frame. The
 arguments are listed first: *board* and *stream*, followed by the
 *squares* sequence and iteration variable *square*.
 
-.. figure:: ../images/locvars.png
+.. figure:: images/locvars.png
    :align: center
 
    Local variables in the *reversi-board-write-data* call frame.
@@ -517,7 +517,7 @@ Double-click on the *board* item.
 
 The browser appears.
 
-.. figure:: ../images/firstbrowse.png
+.. figure:: images/firstbrowse.png
    :align: center
 
    Browsing an instance of *<reversi-board>*.
@@ -555,7 +555,7 @@ to browsing them.
 
 Double-click on the *reversi-board-squares* item.
 
-.. figure:: ../images/collsquares.png
+.. figure:: images/collsquares.png
    :align: center
 
    Browsing the elements of a collection.
@@ -770,6 +770,6 @@ saved the game into, and click **Open**.
 
 Reversi now shows the state of the game you saved earlier.
 
-.. |image0| image:: ../images/editsrc.png
-.. |image1| image:: ../images/brow-left.png
-.. |image2| image:: ../images/editsrc.png
+.. |image0| image:: images/editsrc.png
+.. |image1| image:: images/brow-left.png
+.. |image2| image:: images/editsrc.png

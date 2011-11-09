@@ -21,7 +21,7 @@ Click the New Project button in the main window.
 
 The New Project wizard appears.
 
-.. figure:: ../images/pwiz.png
+.. figure:: images/pwiz.png
    :align: center
 
    The New Project wizard.
@@ -93,7 +93,7 @@ The second page in the New Project wizard asks us to supply a name for
 our project, and to specify a location for the automatically generated
 project and source files.
 
-.. figure:: ../images/pwiz2.png
+.. figure:: images/pwiz2.png
    :align: center
 
    The New Project wizard’s second page.
@@ -186,7 +186,7 @@ are defined as part of the Dylan interchange format, on page 23 of the
 DRM. *Synopsis:* is a not a standard Dylan interchange keyword, but an
 additional one that Open Dylan accepts.
 
-.. figure:: ../images/pwiz3.png
+.. figure:: images/pwiz3.png
    :align: center
 
    The New Project wizard’s third page.
@@ -209,7 +209,7 @@ The default view shows the Sources page, where we can see the files
 
 .. _hello-project:
 
-.. figure:: ../images/hellopr.png
+.. figure:: images/hellopr.png
    :align: center
 
    The Hello project.
@@ -379,7 +379,7 @@ Choose **Application > Start**.
 
 An application window appears.
 
-.. figure:: ../images/gui-app.png
+.. figure:: images/gui-app.png
    :align: center
 
    The GUI-App skeleton application.
@@ -426,7 +426,7 @@ used in a default project.
 
 Select “Core” in the Library Group list.
 
-.. figure:: ../images/p2frag2-0.png
+.. figure:: images/p2frag2-0.png
    :align: center
 
    Functional-Dylan is the default library for use in new projects.
@@ -441,7 +441,7 @@ include.
 
 Select “Functional-Dylan” in the Library list.
 
-.. figure:: ../images/p2frag2_2-0.png
+.. figure:: images/p2frag2_2-0.png
    :align: center
 
    Default modules from Functional-Dylan for use in new projects.
@@ -772,6 +772,6 @@ project settings, any files that are not Dylan source files (.DYLAN
 files), and any information about whether the project was created as a
 console application.
 
-.. |image0| image:: ../images/newproj.png
-.. |image1| image:: ../images/newproj.png
-.. |image2| image:: ../images/interact.png
+.. |image0| image:: images/newproj.png
+.. |image1| image:: images/newproj.png
+.. |image2| image:: images/interact.png

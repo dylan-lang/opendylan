@@ -60,7 +60,7 @@ Type Libraries section of the window. You can select a type library from
 the list, or click **Browse…** in the Location pane to select a type
 library file from disk.
 
-.. figure:: ../images/motwiz.png
+.. figure:: images/motwiz.png
    :align: center
 
    Choosing a type library file to convert.
@@ -78,7 +78,7 @@ It is usually *C:\\Program Files\\Open Dylan\\Examples*.
    *RotNExample.tlb* file.
 #. Click **Next** to continue to the next page of the wizard.
 
-.. figure:: ../images/motstub.png
+.. figure:: images/motstub.png
    :align: center
 
    Choosing the kind of skeleton code to generate.
@@ -101,7 +101,7 @@ generate dispatch server skeleton code.
 #. Select “Dispatch server skeletons”.
 #. Click **Next** to continue to the next page of the wizard.
 
-.. figure:: ../images/motinters.png
+.. figure:: images/motinters.png
    :align: center
 
    Choosing interfaces and classes from the type library.
@@ -146,7 +146,7 @@ We are now at the final page of the New Project wizard.
 
 The new project appears.
 
-.. figure:: ../images/motproj.png
+.. figure:: images/motproj.png
    :align: center
 
    The server stubs project.
@@ -723,7 +723,7 @@ client interfaces do not collide. Thus when either of these is selected
 an additional page appears for specifying suffixes for the names of the
 generated interfaces.
 
-.. figure:: ../images/motcust.png
+.. figure:: images/motcust.png
    :align: center
 
    Custom and dual interface class suffix selection.

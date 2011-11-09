@@ -41,11 +41,11 @@ projects. Projects can be built into executable (.EXE) or dynamic-link
 library (.DLL) files.
 
 Use the *Project* menu for project building. See
-` <../delivery.htm#40190>`_, for details of delivery to customers.
+` <delivery.htm#40190>`_, for details of delivery to customers.
 
 When we worked with the Reversi project, we built an executable from it,
 but we could just as easily have built a DLL. See
-` <../projects.htm#32945>`_ for details.
+` <projects.htm#32945>`_ for details.
 
 .. index::
    single: projects; creating new
@@ -57,13 +57,13 @@ Open Dylan includes a New Project wizard for creating new projects.
 
 The New Project wizard asks questions about what you are going to
 develop, and then creates a new project configured to help you get
-working quickly. See ` <../projects.htm#11353>`_.
+working quickly. See ` <projects.htm#11353>`_.
 
 You can also create a project if you have a Dylan Library Interchange
 Description (LID) file for it. LID files have a .LID extension. When you
 open a LID file in the development environment, it is converted into a
 project file and opened in a project window. (This process does not
-modify the original LID file on disk.) See ` <../projects.htm#33260>`_.
+modify the original LID file on disk.) See ` <projects.htm#33260>`_.
 
 .. index:: .HDP files
    single: file extensions; .HDP
@@ -129,7 +129,7 @@ Subprojects
 
 Version numbers
     Every project has a major and minor version number. The version numbers
-    affect the build process for projects. See ` <../projects.htm#16457>`_
+    affect the build process for projects. See ` <projects.htm#16457>`_
     and `The build cycle`_.
 
 Project settings
@@ -137,7 +137,7 @@ Project settings
 
     - The list of source code files and their locations on disk.
     - Compilation mode options. See `Compilation modes`_.
-    - Debugging options. See ` <../debug.htm#17520>`_.
+    - Debugging options. See ` <debug.htm#17520>`_.
     - The list of subprojects the project uses.
     - The locations on disk of the subprojects.
 
@@ -239,7 +239,7 @@ interactive development environments for other languages. Applications
 written in Dylan can be developed in the same way as applications
 written in static languages like C and C++, for instance.
 
-.. figure:: model-2.gif
+.. figure:: images/model-2.gif
    :align: center
 
    “Static” development model.
@@ -250,7 +250,7 @@ with a running application. With these dynamic, interactive features,
 you can test bug fixes on the fly and keep your application running
 before committing to a rebuild.
 
-.. figure:: model-4.gif
+.. figure:: images/model-4.gif
    :align: center
 
    “Dynamic” development model.
@@ -376,7 +376,7 @@ code. This feature colors source code so that you can see where
 optimizations did and did not occur. Adding type declarations and
 sealing will secure new optimizations, which you can verify by
 refreshing the coloring after rebuilding the project. See
-` <../coloring.htm#27192>`_.
+` <coloring.htm#27192>`_.
 
 Versioning
 ----------

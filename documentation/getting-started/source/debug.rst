@@ -36,7 +36,7 @@ application, exit it now.
 
 Choose **Application > Debug** in the Reversi project window.
 
-.. figure:: ../images/debugger.png
+.. figure:: images/debugger.png
    :align: center
 
    The debugger.
@@ -52,7 +52,7 @@ pane gives an overview of the state of the application thread to which
 the debugger is attached. You can hide the context pane by using **View >
 Context Window**.
 
-.. figure:: ../images/dbgctxt.png
+.. figure:: images/dbgctxt.png
    :align: center
 
    The debugger’s context pane.
@@ -151,24 +151,24 @@ associated with it (if any) appears in the pane opposite. See
 Beside each frame name is an icon indicating the sort of call that
 created the frame:
 
-.. figure:: ../images/blue-m.png
+.. figure:: images/blue-m.png
    :align: center
 
 This was a call to a method selected through run-time dispatch.
 
-.. figure:: ../images/grey-f.png
+.. figure:: images/grey-f.png
    :align: center
 
 This was a direct call, either to a method whose dispatch details were
 all worked out at compile time, or to a method constant (a function).
 
-.. figure:: ../images/grey-question.png
+.. figure:: images/grey-question.png
    :align: center
 
 This was a call to a foreign (non-Dylan) function. Some of the calls
 that the Dylan run-time system makes are foreign calls.
 
-.. figure:: ../images/green-arrow.png
+.. figure:: images/green-arrow.png
    :align: center
 
 This arrow denotes the position of the stack pointer in the thread. It
@@ -188,7 +188,7 @@ either to their type or to their names. For instance, you can filter out
 all foreign call frames or all frames whose names contain a particular
 string. See `Stack options`_.
 
-.. figure:: ../images/dbgbak.png
+.. figure:: images/dbgbak.png
    :align: center
 
    The debugger’s stack pane.
@@ -245,7 +245,7 @@ Often, the arrow is located at a point where a function has called
 another function that has not yet returned, or at the point at which
 execution will resume when a function returns.
 
-.. figure:: ../images/source.png
+.. figure:: images/source.png
    :align: center
 
    The current location arrow in the debugger’s source pane.
@@ -785,7 +785,7 @@ for its getter, and one for the method *main*. Thus we see two
 interactively created definitions alongside one definition created at
 compile time.
 
-.. figure:: ../images/interact-objs.png
+.. figure:: images/interact-objs.png
    :align: center
 
    Interactively created definitions alongside a compile-time definition.
@@ -800,7 +800,7 @@ At the interaction pane prompt, enter::
 
 The code is compiled and run and a DUIM window opens.
 
-.. figure:: ../images/duimhello.png
+.. figure:: images/duimhello.png
    :align: center
 
    Window created interactively with the Dylan User Interface Manager.
@@ -1376,7 +1376,7 @@ supplemental text.
    find in the Open Dylan environment. The debugger cannot introspect
    on the development environment’s threads.
 
-.. figure:: ../images/export.png
+.. figure:: images/export.png
    :align: center
 
    The Export… dialog.
@@ -1538,19 +1538,19 @@ Dylan debugger window appears. The debugger provides a full description
 of the state of the program at the point of the crash. You can then
 start to debug the application in the normal way.
 
-.. |image0| image:: ../images/pause.png
-.. |image1| image:: ../images/yellow-star.png
-.. |image2| image:: ../images/editsrc.png
-.. |image3| image:: ../images/green-arrow.png
-.. |image4| image:: ../images/start.png
-.. |image5| image:: ../images/stopbutton.png
-.. |image6| image:: ../images/pause.png
-.. |image7| image:: ../images/start.png
-.. |image8| image:: ../images/interact.png
-.. |image9| image:: ../images/debug.png
-.. |image10| image:: ../images/interact.png
-.. |image11| image:: ../images/interact.png
-.. |image12| image:: ../images/playground.png
-.. |image13| image:: ../images/green-arrow.png
-.. |image14| image:: ../images/green-arrow.png
-.. |image15| image:: ../images/green-arrow.png
+.. |image0| image:: images/pause.png
+.. |image1| image:: images/yellow-star.png
+.. |image2| image:: images/editsrc.png
+.. |image3| image:: images/green-arrow.png
+.. |image4| image:: images/start.png
+.. |image5| image:: images/stopbutton.png
+.. |image6| image:: images/pause.png
+.. |image7| image:: images/start.png
+.. |image8| image:: images/interact.png
+.. |image9| image:: images/debug.png
+.. |image10| image:: images/interact.png
+.. |image11| image:: images/interact.png
+.. |image12| image:: images/playground.png
+.. |image13| image:: images/green-arrow.png
+.. |image14| image:: images/green-arrow.png
+.. |image15| image:: images/green-arrow.png

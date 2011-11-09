@@ -93,7 +93,7 @@ list to show only Classes.
 
 The browser appears.
 
-.. figure:: ../images/browser.png
+.. figure:: images/browser.png
    :align: center
 
    The Open Dylan browser.
@@ -142,7 +142,7 @@ The General page for *<reversi-square>* shows that it is a class from
 the source file *board.dylan*, that it is defined in the *reversi*
 module of the *reversi* library, and that it has two slots.
 
-.. figure:: ../images/browgen.png
+.. figure:: images/browgen.png
    :align: center
 
    General details about the *<reversi-square>* class definition.
@@ -305,7 +305,7 @@ variable *\*reversi-piece-shape\**.
 
 In the browser, choose the Values page.
 
-.. figure:: ../images/values.png
+.. figure:: images/values.png
    :align: center
 
    Browsing values in a running application thread.
@@ -318,7 +318,7 @@ Choose **Options > Squares** in the running Reversi application.
 
 Choose **View > Refresh** in the browser.
 
-.. figure:: ../images/values-square.png
+.. figure:: images/values-square.png
    :align: center
 
    Updated variable value after changing state of application.
@@ -420,9 +420,9 @@ of these pages can also be seen in the project window.
 -  Values The run-time values of constants and variables.
 -  Warnings The compiler warnings associated with a source form.
 
-.. |image0| image:: ../images/brow-left.png
-.. |image1| image:: ../images/brow-right.png
-.. |image2| image:: ../images/editsrc.png
-.. |image3| image:: ../images/brow-left.png
-.. |image4| image:: ../images/brow-right.png
-.. |image5| image:: ../images/library.png
+.. |image0| image:: images/brow-left.png
+.. |image1| image:: images/brow-right.png
+.. |image2| image:: images/editsrc.png
+.. |image3| image:: images/brow-left.png
+.. |image4| image:: images/brow-right.png
+.. |image5| image:: images/library.png

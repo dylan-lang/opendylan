@@ -71,32 +71,32 @@ the Open Dylan development tools. Later chapters examine those
 tools more directly, and provide a broader view of the development
 process in Open Dylan.
 
-:doc:`../quick-start/index`, shows how to build a
+:doc:`quick-start`, shows how to build a
 standalone executable application in Open Dylan. It discusses the
 Open Dylan main window and the project window.
 
-:doc:`../expanding/index`, shows how to make changes to your application
+:doc:`expanding`, shows how to make changes to your application
 sources and how to debug compile-time and run-time errors. It discusses
 the project window, the debugger, the editor, and the browser.
 
-:doc:`../model/index`, gives an overview of the programming model in
+:doc:`model`, gives an overview of the programming model in
 Open Dylan.
 
-:doc:`../projects/index`, discusses the New Project wizard, and looks at
+:doc:`projects`, discusses the New Project wizard, and looks at
 the project window in more detail.
 
-:doc:`../browsing/index`, shows how you can examine the sources of a
+:doc:`browsing`, shows how you can examine the sources of a
 project, and run-time values in an application, using the browser.
 
-:doc:`../debug/index`, returns to the debugger and studies it in more
+:doc:`debug`, returns to the debugger and studies it in more
 detail.
 
-:doc:`../remotedbg/index`, describes how to debug a Dylan application
+:doc:`remotedbg`, describes how to debug a Dylan application
 running on another machine.
 
-:doc:`../coloring/index`, describes the editor’s facility for coloring
+:doc:`coloring`, describes the editor’s facility for coloring
 source code to show the degree to which it has been optimized.
 
-:doc:`../delivery/index`, shows how you can package an application with
+:doc:`delivery`, shows how you can package an application with
 everything necessary to deliver it to customers as a stand-alone
 product.

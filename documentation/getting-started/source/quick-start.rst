@@ -20,7 +20,7 @@ environment, and choose one of several supplied examples to work with.
 
    When Open Dylan starts, the *main window* appears:
 
-   .. figure:: ../images/mainwin.png
+   .. figure:: images/mainwin.png
       :align: center
 
       The Open Dylan main window
@@ -29,7 +29,7 @@ environment, and choose one of several supplied examples to work with.
 
    .. _initial-dialog:
 
-   .. figure:: ../images/initdlg.png
+   .. figure:: images/initdlg.png
       :align: center
 
       The initial dialog
@@ -69,7 +69,7 @@ environment, and choose one of several supplied examples to work with.
    We are going to look at the example called Reversi, which is in the
    “Documentation” category.
 
-   .. figure:: ../images/examples-dlg.png
+   .. figure:: images/examples-dlg.png
       :align: center
 
       The Open Dylan Examples dialog
@@ -88,9 +88,9 @@ The project window
 
 In the project window you can see the project that you are working on. A
 *project* represents a Dylan library under development. We look at
-projects in more detail in :doc:`../projects/index`.
+projects in more detail in :doc:`projects`.
 
-.. figure:: ../images/motproj.png
+.. figure:: images/motproj.png
    :align: center
 
    The Open Dylan project window.
@@ -159,7 +159,7 @@ Choose **Project > Build** in the Reversi project window.
 Open Dylan starts building the application. A progress indicator
 window appears.
 
-.. figure:: ../images/prog-dlg.png
+.. figure:: images/prog-dlg.png
    :align: center
 
    The build progress indicator.
@@ -170,7 +170,7 @@ finished, it links the compiled files together with the system libraries
 that the application uses, and creates an executable file. Before it
 does that, however, a dialog appears.
 
-.. figure:: ../images/linkqn.png
+.. figure:: images/linkqn.png
    :align: center
 
    The link warning dialog.
@@ -217,7 +217,7 @@ executable for that window’s project.
 
 Choose **Application > Start** and the Reversi application window appears.
 
-.. figure:: ../images/othgame.png
+.. figure:: images/othgame.png
    :align: center
 
    The Reversi application.
@@ -231,7 +231,7 @@ any time to debug the application and even interact with it. (Use
 **Application > Pause** to do this.) In addition, if there is an unhandled
 error inside the application, the debugger will catch it automatically
 so that you can examine it. We will learn more about the debugger later,
-in :ref:`problems-at-run-time` and also in :doc:`../debug/index`.
+in :ref:`problems-at-run-time` and also in :doc:`debug`.
 
 .. index::
    single: applications; running
@@ -311,7 +311,7 @@ Dylan will read in the database from disk.
 
 Compiler databases are mostly used by the *browser* tool, which we will
 look at later. See :ref:`compiler-databases` for more details of the
-compiler database and :doc:`../browsing/index` for details of the
+compiler database and :doc:`browsing` for details of the
 browser.
 
 Building DLLs
@@ -413,7 +413,7 @@ we must add it to the project.
    Thanks to our compiling the changes to the project, the *Circles*,
    *Squares*, and *Triangles* items are now available:
 
-   .. figure:: ../images/othmen.png
+   .. figure:: images/othmen.png
       :align: center
 
       The Reversi application’s *Options* menu after the code changes.
@@ -423,12 +423,12 @@ we must add it to the project.
    The Reversi application updates the board, laying the pieces out again
    as squares rather than circles.
 
-.. figure:: ../images/othsquares.png
+.. figure:: images/othsquares.png
    :align: center
 
    The Reversi application with square pieces.
 
-.. |image0| image:: ../images/play.png
-.. |image1| image:: ../images/constant.png
-.. |image2| image:: ../images/expression.png
-.. |image3| image:: ../images/stopbutton.png
+.. |image0| image:: images/play.png
+.. |image1| image:: images/constant.png
+.. |image2| image:: images/expression.png
+.. |image3| image:: images/stopbutton.png
