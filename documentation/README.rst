@@ -42,7 +42,7 @@ Section Header Markup
 
 We are following the `Sphinx suggestions
 <http://sphinx.pocoo.org/rest.html#sections>` for header markup, which
-are as follows::
+are as follows:
     
     * # with overline, for parts
     * * with overline, for chapters
