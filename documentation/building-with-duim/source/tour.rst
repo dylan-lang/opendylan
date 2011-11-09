@@ -1691,6 +1691,6 @@ From here, you can refer to two other sources of information.
 .. |image8| image:: images/obox.png
 .. |image9| image:: images/listcont.png
 .. |image10| image:: images/tablecnt.png
-.. |image11| image:: tour-20.gif
+.. |image11| image:: images/tour-20.gif
 .. |image12| image:: images/slider.png
 .. |image13| image:: images/progress.png
