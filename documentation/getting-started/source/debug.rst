@@ -415,6 +415,8 @@ except the stack and source panes of the debugger window are hidden.
 
 See `Interacting with an application`_ for a discussion of interaction.
 
+.. _debugging-techniques:
+
 Debugging techniques
 ====================
 
@@ -447,8 +449,7 @@ libraries it uses to initialize completely before the debugger pauses
 it. To do this, you need to specify the application’s *start function*.
 A start function is a function that the application calls upon startup
 to set things running, such as a call to start an event loop in a
-windowing application. See `See The project start
-function <projects.htm#25954>`_ for details.
+windowing application. See :ref:`start-function` for details.
 
 You can specify a start function on the Debug page of the **Project >
 Settings…** dialog. When you use **Application > Debug** or **Application >
@@ -1161,8 +1162,7 @@ The **Go > Breakpoints** command, chosen from the project window, shows
 the Breakpoints page. Chosen from the debugger, it raises the project
 window for the application being debugged and shows its Breakpoints
 page. Chosen from the editor, it raises the project window for the
-active project (see `See The project start
-function <projects.htm#25954>`_) and shows its Breakpoints page.
+active project (see :ref:`start-function`) and shows its Breakpoints page.
 
 The **Application > New Breakpoint** command sets a breakpoint on a
 generic function (and all its methods) or a non-generic function. It

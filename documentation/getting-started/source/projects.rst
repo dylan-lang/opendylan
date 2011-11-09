@@ -253,7 +253,7 @@ has terminated.
 
 You can find the *hello.exe* file in the *bin* subfolder of the *Hello*
 project folder we specified on the second page of the New Project
-wizard. See ` <model.htm#32022>`_ for more details of where build
+wizard. See :ref:`projects-on-disk` for more details of where build
 products reside.
 
 Projects for GUI applications
@@ -557,6 +557,8 @@ project. You can always put it back with **Project > Insert File**.
 .. index:: start function
    single: applications; start function
 
+.. _start-function:
+
 The project start function
 ==========================
 
@@ -631,7 +633,8 @@ is usually what we want for a DLL, but not for an application.
    means the call must be the last expression in the last file listed in
    the project. Otherwise, the application will be paused before all its
    definitions have been initialized, and interactions involving its
-   definitions could behave in unexpected ways. See ` <model.htm#10988>`_
+   definitions could behave in unexpected ways.
+   See :ref:`application-and-library-initialization`
    for more information on this topic.
 
 .. _project-settings:
@@ -649,7 +652,7 @@ Compile page
 The **Project > Settings…** dialog’s Compile page controls the compilation
 mode setting for the current project. Any project can be compiled in one
 of two modes: Interactive Development mode, and Production mode. See
-` <model.htm#12475>`_ for details of the modes.
+:ref:`compilation-modes` for details of the modes.
 
 Link page
 ---------
@@ -696,7 +699,7 @@ section that allows you to add major and minor version numbers to a DLL
 or EXE. The values in this section are recorded in the DLL or EXE that
 the project builds. Open Dylan uses them at compile time and run
 time to determine if compatible versions of Dylan libraries are in use.
-See ` <model.htm#14494>`_ for details.
+See :ref:`versioning` for details.
 
 Windows Subsystem section of the Link page
 ------------------------------------------
@@ -731,8 +734,8 @@ valid MS-DOS command line when concatenated.
 See `The project start function`_ for details of the start function.
 
 Another use of the Command Line section is to arrange to test and debug
-DLLs and OLE components. See ` <debug.htm#13513>`_ for a description of
-these debugging techniques.
+DLLs and OLE components. See :ref:`debugging-techniques` for a description
+of these debugging techniques.
 
 .. index:: .LID files
    single: file extensions; .LID

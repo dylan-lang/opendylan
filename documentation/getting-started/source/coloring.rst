@@ -5,8 +5,8 @@ Dispatch Optimization Coloring in the Editor
 This chapter is about source-code coloring in the editor that shows
 where and how optimizations have taken place.
 
-.. note:: Optimization work is best done in Production mode. See `See
-   Project settings <projects.htm#32945>`_.
+.. note:: Optimization work is best done in Production mode.
+   See :ref:`project-settings`.
 
 .. index::
    single: applications; optimization

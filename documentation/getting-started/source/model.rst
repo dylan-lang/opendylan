@@ -319,6 +319,7 @@ database is read into memory from the disk file, if it exists.
 Compiler database files have a .DDB suffix.
 
 .. index:: compilation modes
+.. _compilation-modes:
 
 Compilation modes
 -----------------
@@ -377,6 +378,8 @@ optimizations did and did not occur. Adding type declarations and
 sealing will secure new optimizations, which you can verify by
 refreshing the coloring after rebuilding the project. See
 ` <coloring.htm#27192>`_.
+
+.. _versioning:
 
 Versioning
 ----------
@@ -520,6 +523,7 @@ to interact with it.
 
 .. index::
    single: applications; initialization
+.. _application-and-library-initialization:
 
 Application and library initialization
 --------------------------------------
