@@ -49,10 +49,10 @@ the remote machine. If this server is not running on the remote machine,
 it is not possible to run the Dylan program there either.
 
 The debugging server must be started manually on the remote machine
-itself, so it is worth installing it there. (See
-` <remotedbg.htm#61300>`_ for information about using the debugging
-server installer.) Of course, if the remote machine already has the
-Open Dylan installed on it, you do not need to install the debugging
+itself, so it is worth installing it there. (See `Installing the program
+and debugging server on the remote machine`_ for information about using
+the debugging server installer.) Of course, if the remote machine already
+has the Open Dylan installed on it, you do not need to install the debugging
 server.
 
 To start the debugging server choose **Start > Programs > Open Dylan >
@@ -106,7 +106,7 @@ machine in the project’s debug settings.
    sufficient.
 
    The password is the password established when you first started the
-   debugging server (see ` <remotedbg.htm#35532>`_).
+   debugging server (see `Starting the debugging server`_).
 
    If the connection is successful, the newly connected machine is added to
    those listed in the “Remote machine” option box. You can now select this
@@ -114,7 +114,7 @@ machine in the project’s debug settings.
 
    If the connection does not succeed, you should ensure that you have
    successfully started the debug server program on the remote machine.
-   (See ` <remotedbg.htm#35532>`_ above.)
+   (See `Starting the debugging server`_ above.)
 
 #. Select the remote machine in the option box.
 
@@ -128,7 +128,7 @@ machine in the project’s debug settings.
    The path should be fully qualified, including the name of the remote
    machine. For example::
 
-       \\\\spiral\\c\_drive\\apps\\reversi\\release\\reversi.exe
+       \\spiral\c_drive\apps\reversi\release\reversi.exe
 
    where *spiral* is a machine name, and *c\_drive* is the share name of
    the drive containing the program *release* folder.
@@ -179,10 +179,10 @@ just as with **Application > Start**.
 The process to which you attach need not be running on the local
 machine. You can also attach to a process that is running on a remote
 machine provided that the debugging server application (see
-` <remotedbg.htm#35532>`_) is running on that machine. The process list
-dialog has an option box that allows you to select the machine whose
+`Starting the debugging server`_) is running on that machine. The process
+list dialog has an option box that allows you to select the machine whose
 process list you want to view. There is also an **Open New Connection…**
 button for creating new connections to remote machines, which works in
-the same way as described in ` <remotedbg.htm#34289>`_.
+the same way as described in `Starting an application remotely`_.
 
 
