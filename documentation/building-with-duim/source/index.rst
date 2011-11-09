@@ -7,15 +7,15 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   preface/index
-   intro/index
-   design/index
-   improve/index
-   menus/index
-   callbacks/index
-   commands/index
-   tour/index
-   source/index
+   preface.rst
+   intro.rst
+   design.rst
+   improve.rst
+   menus.rst
+   callbacks.rst
+   commands.rst
+   tour.rst
+   source.rst
 
 
 Indices and tables

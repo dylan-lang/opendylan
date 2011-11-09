@@ -42,7 +42,7 @@ Documentation category of the Open Example Project dialog.
 
 The Task List Manager Application
 
-.. figure:: ../images/tasklist.png
+.. figure:: images/tasklist.png
    :align: center
 
 The task list manager is very simple to use. You create a list of things

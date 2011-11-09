@@ -810,7 +810,7 @@ dialog, rather than calling the *not-yet-implemented* function.
 
 The dialog box created by the prompt-for-task method
 
-.. figure:: ../images/new-task.png
+.. figure:: images/new-task.png
    :align: center
 
 The method takes two keyword arguments: a title, which is assigned a

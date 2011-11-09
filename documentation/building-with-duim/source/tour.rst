@@ -141,7 +141,7 @@ DUIM provides three standard button gadget classes:
 -  *<check-button>* Sometimes referred to as *check box* in Microsoft
    documentation.
 
-.. figure:: tour-3.gif
+.. figure:: images/tour-3.gif
    :align: center
 
    A push button, a radio button, and a check button
@@ -355,7 +355,7 @@ common types of button box are *<check-box>* (groups of check buttons)
 and *<radio-box>* (groups of radio buttons). In addition, *<push-box>*
 (groups of push buttons) can be used.
 
-.. figure:: ../images/pushbox.png
+.. figure:: images/pushbox.png
    :align: center
 
    A push box
@@ -371,7 +371,7 @@ and *<radio-box>* (groups of radio buttons). In addition, *<push-box>*
 A *<radio-box>* is a button box that contains one or more radio buttons,
 only one of which may be selected at any time.
 
-.. figure:: ../images/rbox.png
+.. figure:: images/rbox.png
    :align: right
 
 .. code-block:: dylan
@@ -405,7 +405,7 @@ collection that defines the contents of a radio box.
     gadget-items(*my-radio-box*);
     *=> #[1, 2, 3]*
 
-.. figure:: ../images/rangebox.png
+.. figure:: images/rangebox.png
    :align: right
 
 If you reset the *gadget-items* in a collection gadget, the gadget
@@ -419,7 +419,7 @@ A check box, on the other hand, can have any number of buttons selected.
 The following code creates a check box. After creating it, select the
 buttons labelled 4 and 6, as shown below.
 
-.. figure:: ../images/cbox.png
+.. figure:: images/cbox.png
    :align: right
 
 .. code-block:: dylan
@@ -476,7 +476,7 @@ A *<list-box>*, although it has a different appearance than a
 
     make(<list-box>, items: #(1, 2, 3));
 
-.. figure:: ../images/lbox.png
+.. figure:: images/lbox.png
    :align: center
 
    A list box
@@ -570,7 +570,7 @@ relationship between the objects. A number of slots are available to
 control the information that is displayed in the control, and the
 appearance of that information.
 
-.. figure:: ../images/tree.png
+.. figure:: images/tree.png
    :align: center
 
    A tree control
@@ -701,7 +701,7 @@ for the first column in the control, and the first function in the
 and so on for each element in each sequence, as shown in `See Defining
 column headings and contents in table controls <tour.htm#68215>`_.
 
-.. figure:: tour-19.gif
+.. figure:: images/tour-19.gif
    :align: center
 
    Defining column headings and contents in table controls
@@ -795,7 +795,7 @@ The *<text-field>* class is a single line edit control, and is the most
 basic type of text gadget, consisting of a single line into which you
 can type text.
 
-.. figure:: ../images/textfld.png
+.. figure:: images/textfld.png
    :align: center
 
 .. code-block:: dylan
@@ -813,7 +813,7 @@ The *<text-editor>* class is a multiple line edit control, used when
 more complex editing controls and several lines of text are needed by
 the user.
 
-.. figure:: ../images/texted.png
+.. figure:: images/texted.png
    :align: center
 
 The *columns:* and *lines:* init-keywords control the size of a text
@@ -839,7 +839,7 @@ identical to a text field. However, when text is typed into a password
 field, it is not displayed on the screen; a series of asterisks may be
 used instead.
 
-.. figure:: ../images/passwd.png
+.. figure:: images/passwd.png
    :align: center
 
 Range gadgets
@@ -867,7 +867,7 @@ as shown in `See Returning or setting the gadget-value of a
 scroll-bar <tour.htm#35517>`_, which illustrates this behavior for a
 scroll bar.
 
-.. figure:: tour-24.gif
+.. figure:: images/tour-24.gif
    :align: center
 
    Returning or setting the gadget-value of a scroll-bar
@@ -971,7 +971,7 @@ message in a dialog.
 Now when you click on the button, a notification pops up saying “Pressed
 button!”
 
-.. figure:: ../images/notify.png
+.. figure:: images/notify.png
    :align: center
 
    Simple behavior of notify-user
@@ -1058,7 +1058,7 @@ Create a column layout containing three buttons as follows:
                                   make(<push-button>, label: "Two"),
                                   make(<push-button>, label: "Three"))));
 
-.. figure:: ../images/column.png
+.. figure:: images/column.png
    :align: center
 
    Three button arranged in a column layout
@@ -1155,7 +1155,7 @@ coordinates, as shown in the following example:
                    make(<push-button>, label: "Three",
                         x: 50, y: 100))));
 
-.. figure:: ../images/pinboard.png
+.. figure:: images/pinboard.png
    :align: center
 
    Three buttons arranged in a pinboard layout
@@ -1192,7 +1192,7 @@ shorter and more readable code.
       make(<push-button>, label: "Three")
     end;
 
-.. figure:: ../images/row.png
+.. figure:: images/row.png
    :align: center
 
    Three buttons arranged in a horizontal layout
@@ -1352,7 +1352,7 @@ the following code:
                        make(<push-button>,
                             label: "A button on a simple frame")));
 
-.. figure:: ../images/frame.png
+.. figure:: images/frame.png
    :align: center
 
    A simple frame
@@ -1682,15 +1682,15 @@ From here, you can refer to two other sources of information.
    about how you should use DUIM, and the organization of the DUIM class
    hierarchy.
 
-.. |image0| image:: ../images/pushmb.png
-.. |image1| image:: ../images/radiomb.png
-.. |image2| image:: ../images/checkmb.png
-.. |image5| image:: ../images/pushmbox.png
-.. |image6| image:: ../images/radiombx.png
-.. |image7| image:: ../images/checkmbx.png
-.. |image8| image:: ../images/obox.png
-.. |image9| image:: ../images/listcont.png
-.. |image10| image:: ../images/tablecnt.png
+.. |image0| image:: images/pushmb.png
+.. |image1| image:: images/radiomb.png
+.. |image2| image:: images/checkmb.png
+.. |image5| image:: images/pushmbox.png
+.. |image6| image:: images/radiombx.png
+.. |image7| image:: images/checkmbx.png
+.. |image8| image:: images/obox.png
+.. |image9| image:: images/listcont.png
+.. |image10| image:: images/tablecnt.png
 .. |image11| image:: tour-20.gif
-.. |image12| image:: ../images/slider.png
-.. |image13| image:: ../images/progress.png
+.. |image12| image:: images/slider.png
+.. |image13| image:: images/progress.png
