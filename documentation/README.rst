@@ -36,3 +36,20 @@ are valid.  You can run the link checker by::
 
     make linkcheck
 
+
+Section Header Markup
+=====================
+
+We are following the `Sphinx suggestions
+<http://sphinx.pocoo.org/rest.html#sections>` for header markup, which
+are as follows::
+    
+    * # with overline, for parts
+    * * with overline, for chapters
+    * =, for sections
+    * -, for subsections
+    * ^, for subsubsections
+    * ", for paragraphs
+
+Note that most files will correspond to a chapter and hence will start
+with "*".  By convention we use over *and* under markup at this level.
