@@ -6,8 +6,8 @@
     :license: MIT.
 #}
 {% extends "basic/layout.html" %}
-{% set css_files = css_files + ['_static/css/bootstrap/1.4.0/bootstrap.min.css'] %}
-{% set script_files = script_files + ['_static/js/bootstrap-scrollspy.js'] %}
+{% set css_files = css_files + ['_static/opendylan.org/css/bootstrap/1.4.0/bootstrap.min.css'] %}
+{% set script_files = script_files + ['_static/opendylan.org/js/bootstrap-scrollspy.js'] %}
 
 {% set navigation_bar = [
     ('index', 'Home'),
@@ -21,7 +21,7 @@
 
 {% block extrahead %}
     <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+      <script src="{{ pathto('_static/opendylan.org/js/html5shim/html5.js', 1) }}"></script>
     <![endif]-->
     <style type="text/css">
       body {
@@ -38,7 +38,7 @@
    <div class="topbar" data-scrollspy="scrollspy">
      <div class="fill">
        <div class="container">
-         <img class="logo" src="{{ pathto('_static/images/dylan-squares.png', 1) }}">
+         <img class="logo" src="{{ pathto('_static/opendylan.org/images/dylan-squares.png', 1) }}">
          <a class="brand" href="{{ pathto('index') }}">Open Dylan</a>
          <ul id="nav">
          {% for page, caption in navigation_bar %}
