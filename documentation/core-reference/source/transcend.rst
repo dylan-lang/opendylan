@@ -3,7 +3,7 @@ The Transcendentals Module
 **************************
 
 Introduction
-------------
+============
 
 The Transcendentals module, exported from the Common Extensions library,
 provides a set of open generic functions for ANSI C-like behavior over
@@ -27,7 +27,7 @@ foreign libraries:
    precision results)
 
 The Transcendentals module
---------------------------
+==========================
 
 This section contains a reference entry for each item exported from the
 Common Extensions library’s *transcendentals* module.
@@ -36,7 +36,7 @@ Common Extensions library’s *transcendentals* module.
 ~
 
 G.f. method
-^^^^^^^^^^^
+-----------
 
 Summary
        
@@ -84,10 +84,10 @@ See also
 See the function `exp`_.
 
 acos
-~~~~
+----
 
 G.f. method
-^^^^^^^^^^^
+-----------
 
 Summary
        
@@ -126,10 +126,10 @@ See also
 See the functions `asin`_ and `atan`_.
 
 acosh
-~~~~~
+-----
 
 G.f. method
-^^^^^^^^^^^
+-----------
 
 Summary
        
@@ -167,10 +167,10 @@ See also
 See the functions `asinh`_ and `atanh`_.
 
 asin
-~~~~
+----
 
 G.f. method
-^^^^^^^^^^^
+-----------
 
 Summary
        
@@ -209,10 +209,10 @@ See also
 See the functions `acos`_ and `atan`_.
 
 asinh
-~~~~~
+-----
 
 G.f. method
-^^^^^^^^^^^
+-----------
 
 Summary
        
@@ -250,10 +250,10 @@ See also
 See the functions `acosh`_ and `atanh`_.
 
 atan
-~~~~
+----
 
 G.f. method
-^^^^^^^^^^^
+-----------
 
 Summary
        
@@ -292,10 +292,10 @@ See also
 See the functions `acos`_ and `asin`_.
 
 atan2
-~~~~~
+-----
 
 G.f. method
-^^^^^^^^^^^
+-----------
 
 Summary
        
@@ -334,10 +334,10 @@ The floating point precision of the result is given by the precision of
 *x* /y. The result is a single-float if *x/y* is an integer.
 
 atanh
-~~~~~
+-----
 
 G.f. method
-^^^^^^^^^^^
+-----------
 
 Summary
        
@@ -375,10 +375,10 @@ See also
 See the functions `acosh`_ and `asinh`_.
 
 cos
-~~~
+---
 
 G.f. method
-^^^^^^^^^^^
+-----------
 
 Summary
        
@@ -416,10 +416,10 @@ See also
 See the functions `sin`_ and `tan`_.
 
 cosh
-~~~~
+----
 
 G.f. method
-^^^^^^^^^^^
+-----------
 
 Summary
        
@@ -457,10 +457,10 @@ See also
 See the functions `sinh`_ and `tanh`_.
 
 $double-e
-~~~~~~~~~
+---------
 
 Constant
-^^^^^^^^
+--------
 
 Summary
        
@@ -491,10 +491,10 @@ See also
 See the constant `$single-e`_.
 
 $double-pi
-~~~~~~~~~~
+----------
 
 Constant
-^^^^^^^^
+--------
 
 Summary
        
@@ -525,10 +525,10 @@ See also
 See the constant `$single-pi`_.
 
 exp
-~~~
+---
 
 G.f. method
-^^^^^^^^^^^
+-----------
 
 Summary
        
@@ -566,10 +566,10 @@ See also
 See the functions `^`_ and `log`_.
 
 isqrt
-~~~~~
+-----
 
 G.f. method
-^^^^^^^^^^^
+-----------
 
 Summary
        
@@ -607,10 +607,10 @@ See also
 See the function `sqrt`_.
 
 log
-~~~
+---
 
 G.f. method
-^^^^^^^^^^^
+-----------
 
 Summary
        
@@ -649,10 +649,10 @@ See also
 See also `exp`_, and `logn`_.
 
 logn
-~~~~
+----
 
 G.f. method
-^^^^^^^^^^^
+-----------
 
 Summary
        
@@ -687,10 +687,10 @@ See also
 See also `log`_, and `exp`_.
 
 sin
-~~~
+---
 
 G.f. method
-^^^^^^^^^^^
+-----------
 
 Summary
        
@@ -728,10 +728,10 @@ See also
 See the functions `cos`_ and `tan`_.
 
 $single-e
-~~~~~~~~~
+---------
 
 Constant
-^^^^^^^^
+--------
 
 Summary
        
@@ -763,10 +763,10 @@ See also
 See the constant `$double-e`_.
 
 $single-pi
-~~~~~~~~~~
+----------
 
 Constant
-^^^^^^^^
+--------
 
 Summary
        
@@ -798,10 +798,10 @@ See also
 See the constant `$double-pi`_.
 
 sinh
-~~~~
+----
 
 G.f. method
-^^^^^^^^^^^
+-----------
 
 Summary
        
@@ -839,10 +839,10 @@ See also
 See the functions `cosh`_ and `tanh`_.
 
 sqrt
-~~~~
+----
 
 G.f. method
-^^^^^^^^^^^
+-----------
 
 Summary
        
@@ -880,10 +880,10 @@ See also
 See the function `isqrt`_.
 
 tan
-~~~
+---
 
 G.f. method
-^^^^^^^^^^^
+-----------
 
 Summary
        
@@ -916,10 +916,10 @@ result is given by the precision of *x*. The result is a single-float
 if *x* is an integer.
 
 tanh
-~~~~
+----
 
 G.f. method
-^^^^^^^^^^^
+-----------
 
 Summary
        

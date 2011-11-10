@@ -3,7 +3,7 @@ The Common Dylan Library
 ************************
 
 Introduction
-------------
+============
 
 The Common Dylan library contains the Common Extensions library and the
 Dylan library. It provides a number of features that were either omitted
@@ -34,18 +34,18 @@ Miscellaneous extensions to the Dylan language.
    values.
 
 General language extensions
----------------------------
+===========================
 
 The *common-extensions* module contains a variety of useful basic
 extensions to the Dylan language.
 
 The Common Dylan extensions are:
 
--  Collection model extensions: `<stretchy-sequence>`_, `<string-table>`_,
+-  Collection model extensions: `\<stretchy-sequence\>`_, `\<string-table\>`_,
    `difference`_, `fill-table!`_, `find-element`_, `position`_,
    `remove-all-keys!`_, and `define table`_.
--  Condition system extensions: `<format-string-condition>`_,
-   `<simple-condition>`_, and `condition-to-string`_.
+-  Condition system extensions: `\<format-string-condition\>`_,
+   `\<simple-condition\>`_, and `condition-to-string`_.
 -  Program constructs: `iterate`_ and `when`_.
 -  Application development conveniences: `iterate`_, `debug-message`_,
    `ignore`_, `ignorable`_, *profiling*, `timing`_, `$unsupplied`_,
@@ -57,7 +57,7 @@ The Common Dylan extensions are:
 See `The COMMON-EXTENSIONS module`_ for reference descriptions of these items.
 
 Simple formatting and printing
-------------------------------
+==============================
 
 Common Dylan provides several libraries relevant to formatting and
 printing strings, or otherwise using strings for output. These libraries
@@ -76,13 +76,13 @@ See `The SIMPLE-FORMAT module`_ for reference
 descriptions of *format-out* and *format-string*.
 
 Simple random number generation
--------------------------------
+===============================
 
 Common Dylan provides a simple facility for generating sequences of
 pseudo-random integers via the *simple-random* module exported from the
 *common-extensions* library.
 
-Instances of the sealed class `<random>`_
+Instances of the sealed class `\<random\>`_
 generate pseudo-random integers. Given an instance of *<random>*, the
 function `random`_ will return a
 pseudo-random integer. See `The SIMPLE-RANDOM
@@ -90,7 +90,7 @@ module`_ for reference descriptions of *random*
 and *<random>*.
 
 Finalization
-------------
+============
 
 Common Dylan provides a finalization interface in the *finalization*
 module of *common-extensions*. This section explains finalization, the
@@ -99,7 +99,7 @@ applications. See `The FINALIZATION module`_
 for reference descriptions of the interface.
 
 What is finalization?
-^^^^^^^^^^^^^^^^^^^^^
+---------------------
 
 Common Dylan’s Memory Management Reference defines finalization as
 follows:
@@ -123,13 +123,13 @@ may be necessary to free the memory resources of the foreign object when
 the Dylan object is reclaimed.
 
 How the finalization interface works
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+------------------------------------
 
 The following sections give a broad overview of how finalization works
 and how to use the interface.
 
 Registering objects for finalization
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+------------------------------------
 
 Finalization works through cooperation with the garbage collector.
 Objects that are no longer referenced by the application that created
@@ -157,7 +157,7 @@ The garbage collector will not reclaim the objects until they have been
 finalized.
 
 Draining the finalization queue
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------
 
 Objects in the finalization queue wait there until the application
 drains it by calling the function `
@@ -174,7 +174,7 @@ up a thread to do so.
    about finalization ordering.
 
 Finalizers
-^^^^^^^^^^
+----------
 
 The `drain-finalization-queue`_ function
 finalizes each object in the finalization queue by calling the generic
@@ -210,7 +210,7 @@ for all finalizers to call *next-method*, a practice that we strongly
 encourage. See `Writing finalizers`_.
 
 After finalization
-^^^^^^^^^^^^^^^^^^
+------------------
 
 Once an object in the finalization queue has been finalized, it
 typically becomes available for reclamation by the garbage collector.
@@ -222,7 +222,7 @@ register, it will not be queued up for finalization again.
    resurrecting objects`_.
 
 Upon application exit
-^^^^^^^^^^^^^^^^^^^^^
+---------------------
 
 There are no guarantees that objects which are registered for
 finalization will actually be finalized before the application exits.
@@ -233,7 +233,7 @@ Where it is necessary to guarantee an action at the time the application
 exits, you should use a more explicit mechanism.
 
 The effects of multiple registrations
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------
 
 Sometimes objects are registered for finalization more than once. The
 effects of multiple registration are defined as follows:
@@ -254,7 +254,7 @@ idempotent: that is, the effect of multiple *finalize* calls on an
 object should is the same as the effect of a single call.
 
 The effects of resurrecting objects
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-----------------------------------
 
 If a finalizer makes an object reachable again, by storing a reference
 to the object in a variable, slot, or collection, we say it has
@@ -274,7 +274,7 @@ If you do resurrect objects, note that they will not be finalized again
 unless you re-register them.
 
 The effects of finalizing objects directly
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+------------------------------------------
 
 Any object that has been finalized directly, through the application
 itself calling *finalize* on it, may not yet be unreachable. Like any
@@ -284,7 +284,7 @@ using *finalize-when-unreachable*, it can end up being finalized again
 via the queue mechanism.
 
 Finalization and weak tables
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+----------------------------
 
 If an object is both registered for finalization and is weakly referred
 to from a weak table, finalization occurs *first*, with weak references
@@ -292,10 +292,10 @@ being removed afterwards. That is, reachability is defined in terms of
 strong references only, as far as finalization is concerned. Weak
 references die only when an object’s storage is finally reclaimed.
 
-For more on weak tables, see `Weak tables <language.htm#30495>`_.
+For more on weak tables, see `Weak tables <language.htm#30495\>`_.
 
 Writing finalizers
-^^^^^^^^^^^^^^^^^^
+------------------
 
 Because the default `finalize`_ method, on
 *<object>*, does nothing, you must define your own `
@@ -304,7 +304,7 @@ finalization interface. This section contains useful information about
 writing finalizers.
 
 Class-based finalization
-^^^^^^^^^^^^^^^^^^^^^^^^
+------------------------
 
 If your application defines a class for which all instances require
 finalization, call `
@@ -312,7 +312,7 @@ finalize-when-unreachable`_ in its *initialize*
 method.
 
 Parallels with INITIALIZE methods
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+---------------------------------
 
 The default method on *<object>* is provided to make it safe to call
 *next-method* in all finalizers. This situation is parallel to that for
@@ -324,7 +324,7 @@ By contrast, finalizers should call *next-method* last, in case they
 depend on the superclass finalizer not being run.
 
 Simplicity and robustness
-^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------
 
 Write finalizers that are simple and robust. They might be called in any
 context, including within other threads; with careful design, your
@@ -351,20 +351,20 @@ graph (in some graph-specific well-ordered fashion) and call the
 *finalize* method for each object in the graph requiring finalization.
 
 Singleton finalizers
-^^^^^^^^^^^^^^^^^^^^
+--------------------
 
 Do not write singleton methods on `
 finalize`_. The singleton method itself would
 refer to the object, and hence prevent it from becoming unreachable.
 
 Using finalization in applications
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+----------------------------------
 
 This section answers questions about using finalization in an
 application.
 
 How can my application drain the finalization queue automatically?
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+------------------------------------------------------------------
 
 If you would prefer the queue to be drained asynchronously, use the
 automatic finalization interface. For more details, see `
@@ -381,20 +381,20 @@ should always behave correctly if they are used in an application that
 does use it.
 
 When should my application drain the finalization queue?
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+--------------------------------------------------------
 
 If you do not use automatic finalization, drain the queue synchronously
 at useful points in your application, such as whenever you call `
 finalize-when-unreachable`_ on an object.
 
 The COMMON-EXTENSIONS module
-----------------------------
+============================
 
 This section contains a reference entry for each item exported from the
 Common Extensions library’s *common-extensions* module.
 
 assert
-~~~~~~
+------
 
 Statement macro
 '''''''''''''''
@@ -455,7 +455,7 @@ See also
 `debug-assert`_
 
 <byte-character>
-~~~~~~~~~~~~~~~~
+----------------
 
 Sealed class
 ''''''''''''
@@ -485,7 +485,7 @@ The class of 8-bit characters that instances of *<byte-string>* can
 contain.
 
 concatenate!
-~~~~~~~~~~~~
+------------
 
 Open generic function
 '''''''''''''''''''''
@@ -560,7 +560,7 @@ Example
  
 
 condition-to-string
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 Open generic function
 '''''''''''''''''''''
@@ -593,11 +593,11 @@ Description
 
 Returns a string representation of a general instance of *<condition>*.
 There is a method on `
-<format-string-condition>`_ and method on
+<format-string-condition\>`_ and method on
 *<type-error>*.
 
 debug-assert
-~~~~~~~~~~~~
+------------
 
 Statement macro
 '''''''''''''''
@@ -657,7 +657,7 @@ The *format-string* is a format string as defined on page 112 of the
 DRM.
 
 debug-message
-~~~~~~~~~~~~~
+-------------
 
 Function
 ''''''''
@@ -697,7 +697,7 @@ The *format-string* is a format string as defined on page 112 of the
 DRM.
 
 default-handler
-~~~~~~~~~~~~~~~
+---------------
 
 G.f. method
 '''''''''''
@@ -790,7 +790,7 @@ See also
 *default-handler*, page 361 of the DRM.
 
 default-last-handler
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 Function
 ''''''''
@@ -864,7 +864,7 @@ See also
 library *win32-user* and module *win32-default-handler*.
 
 define table
-~~~~~~~~~~~~
+------------
 
 Definition macro
 ''''''''''''''''
@@ -922,7 +922,7 @@ define table $colors :: <object-table>
                    
 
 difference
-~~~~~~~~~~
+----------
 
 Open generic function
 '''''''''''''''''''''
@@ -977,7 +977,7 @@ Example
  
 
 false-or
-~~~~~~~~
+--------
 
 Function
 ''''''''
@@ -1028,7 +1028,7 @@ type-union(singleton(#f), *t* *1*, *t* *2*, ..)
                                                  
 
 fill-table!
-~~~~~~~~~~~
+-----------
 
 Function
 ''''''''
@@ -1079,7 +1079,7 @@ contains an odd number of elements, *fill-table!* ignores the last
 element (which would have been treated as a key).
 
 find-element
-~~~~~~~~~~~~
+------------
 
 Open generic function
 '''''''''''''''''''''
@@ -1127,7 +1127,7 @@ element that satisfies *predicate* rather than the key that corresponds
 to the element.
 
 float-to-string
-~~~~~~~~~~~~~~~
+---------------
 
 Function
 ''''''''
@@ -1162,7 +1162,7 @@ Formats a floating-point number to a string. It uses scientific notation
 where necessary.
 
 <format-string-condition>
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 Sealed instantiable class
 '''''''''''''''''''''''''
@@ -1198,7 +1198,7 @@ See also
 The Format library.
 
 found?
-~~~~~~
+------
 
 Function
 ''''''''
@@ -1236,7 +1236,7 @@ $unfound`_, and false otherwise.
 It uses *\\=* as the equivalence predicate.
 
 ignore
-~~~~~~
+------
 
 Function
 ''''''''
@@ -1314,7 +1314,7 @@ See also
 `ignorable`_
 
 ignorable
-~~~~~~~~~
+---------
 
 Function
 ''''''''
@@ -1393,7 +1393,7 @@ See also
 `ignore`_
 
 integer-to-string
-~~~~~~~~~~~~~~~~~
+-----------------
 
 Function
 ''''''''
@@ -1440,7 +1440,7 @@ character. If the string is already larger than *size* then it is not
 truncated.
 
 iterate
-~~~~~~~
+-------
 
 Statement macro
 '''''''''''''''
@@ -1491,7 +1491,7 @@ iterate another step. The form evaluates by calling the new function
 with the initial values specified.
 
 last-handler-definer
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 Definition macro
 ''''''''''''''''
@@ -1587,7 +1587,7 @@ See also
 library *win32-user* and module *win32-default-handler*.
 
 one-of
-~~~~~~
+------
 
 Function
 ''''''''
@@ -1633,7 +1633,7 @@ type-union(singleton(*x*), singleton(*y*), singleton(*z*))
                                                              
 
 position
-~~~~~~~~
+--------
 
 Open generic function
 '''''''''''''''''''''
@@ -1686,7 +1686,7 @@ function: *position* ignores the first *skip* elements that match
 returns *#f*.
 
 remove-all-keys!
-~~~~~~~~~~~~~~~~
+----------------
 
 Open generic function
 '''''''''''''''''''''
@@ -1724,7 +1724,7 @@ Modifies *mutable-collection* by removing all its keys and leaving it
 empty. There is a predefined method on *<table>*.
 
 <simple-condition>
-~~~~~~~~~~~~~~~~~~
+------------------
 
 Sealed instantiable class
 '''''''''''''''''''''''''
@@ -1763,7 +1763,7 @@ Example
        
 
 <stretchy-sequence>
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 Open abstract class
 '''''''''''''''''''
@@ -1791,7 +1791,7 @@ Description
 The class of stretchy sequences.
 
 <string-table>
-~~~~~~~~~~~~~~
+--------------
 
 Sealed instantiable class
 '''''''''''''''''''''''''
@@ -1830,7 +1830,7 @@ to a *<string-table>*. The effects of modification are not defined.
    of the *table-extensions* library.
 
 string-to-integer
-~~~~~~~~~~~~~~~~~
+-----------------
 
 Function
 ''''''''
@@ -1894,7 +1894,7 @@ value for *default*, this function signals an error.
 This function is similar to C’s *strtod* function.
 
 subclass
-~~~~~~~~
+--------
 
 Function
 ''''''''
@@ -2140,7 +2140,7 @@ Making an <A>
                  
 
 supplied?
-~~~~~~~~~
+---------
 
 Function
 ''''''''
@@ -2189,7 +2189,7 @@ See also
 `$unsupplied`_
 
 timing
-~~~~~~
+------
 
 Statement macro
 '''''''''''''''
@@ -2252,7 +2252,7 @@ end;
            
 
 $unfound
-~~~~~~~~
+--------
 
 Constant
 ''''''''
@@ -2290,7 +2290,7 @@ See also
 `unfound`_
 
 unfound
-~~~~~~~
+-------
 
 Function
 ''''''''
@@ -2335,7 +2335,7 @@ See also
 `$unfound`_
 
 unfound?
-~~~~~~~~
+--------
 
 Function
 ''''''''
@@ -2381,7 +2381,7 @@ See also
 `unfound`_
 
 $unsupplied
-~~~~~~~~~~~
+-----------
 
 Constant
 ''''''''
@@ -2419,7 +2419,7 @@ See also
 `unsupplied?`_
 
 unsupplied
-~~~~~~~~~~
+----------
 
 Function
 ''''''''
@@ -2467,7 +2467,7 @@ See also
 `unsupplied?`_
 
 unsupplied?
-~~~~~~~~~~~
+-----------
 
 Function
 ''''''''
@@ -2513,7 +2513,7 @@ See also
 `unsupplied`_
 
 when
-~~~~
+----
 
 Statement macro
 '''''''''''''''
@@ -2567,13 +2567,13 @@ end;
     
 
 The SIMPLE-FORMAT module
-------------------------
+========================
 
 This section contains a reference entry for each item exported from the
 Harlequin-extensions library’s *simple-format* module.
 
 format-out
-~~~~~~~~~~
+----------
 
 Function
 ''''''''
@@ -2616,7 +2616,7 @@ This function does not use the *\*standard-output\** stream defined by
 the Standard-IO library.
 
 format-to-string
-~~~~~~~~~~~~~~~~
+----------------
 
 Function
 ''''''''
@@ -2667,13 +2667,13 @@ The *format-string* must be a Dylan format string as described on pages
 112–114 of the DRM.
 
 The SIMPLE-RANDOM module
-------------------------
+========================
 
 This section contains a reference entry for each item exported from the
 Harlequin-extensions library’s *simple-random* module.
 
 <random>
-~~~~~~~~
+--------
 
 Sealed instantiable class
 '''''''''''''''''''''''''
@@ -2708,7 +2708,7 @@ Example
        
 
 random
-~~~~~~
+------
 
 Function
 ''''''''
@@ -2750,14 +2750,14 @@ Returns a pseudorandomly generated number greater than or equal to zero
 and less than *range*.
 
 The FINALIZATION module
------------------------
+=======================
 
 This section contains a reference description for each item in the
 finalization interface. These items are exported from the
 *common-extensions* library in a module called *finalization*.
 
 automatic-finalization-enabled?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 Function
 ''''''''
@@ -2801,7 +2801,7 @@ See also
 `finalize`_
 
 automatic-finalization-enabled?-setter
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------------
 
 Function
 ''''''''
@@ -2851,7 +2851,7 @@ See also
 `finalize`_
 
 drain-finalization-queue
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 Function
 ''''''''
@@ -2907,7 +2907,7 @@ See also
 `automatic-finalization-enabled?-setter`_
 
 finalize-when-unreachable
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 Function
 ''''''''
@@ -2961,7 +2961,7 @@ See also
 `automatic-finalization-enabled?-setter`_
 
 finalize
-~~~~~~~~
+--------
 
 Open generic function
 '''''''''''''''''''''
@@ -3033,7 +3033,7 @@ See also
 `automatic-finalization-enabled?-setter`_
 
 finalize
-~~~~~~~~
+--------
 
 G.f. method
 '''''''''''

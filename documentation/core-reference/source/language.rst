@@ -3,7 +3,7 @@ Dylan Language Extensions
 *************************
 
 Introduction
-------------
+============
 
 The Dylan language is described in *The Dylan Reference Manual* by
 Andrew Shalit (Addison-Wesley, 1996). We call this book “the DRM”
@@ -25,7 +25,7 @@ separate library, *common-extensions*. This chapter is an introduction
 to the language extensions.
 
 Using Harlequin Dylan’s language extensions
--------------------------------------------
+===========================================
 
 There are a number of ways to use Harlequin Dylan’s language extensions
 in your applications.
@@ -43,95 +43,77 @@ Harlequin Dylan provides a convenience library, *common-dylan*, that
 combines the *dylan* and *common-extensions* libraries to provide a
 convenient “dialect” of Dylan, exported from the module *common-dylan* :
 
-define library common-dylan
-                           
+.. code-block:: dylan
 
-use dylan, export: all;
+    define library common-dylan
+      use dylan, export: all;
+      use common-extensions, export: all;
 
-use common-extensions, export: all;
+      export common-dylan;
+    end module;
 
-export common-dylan;
-
-end module;
-           
-
-define module common-dylan
-                          
-
-use dylan, export: all;
-
-use common-extensions, export: all;
-
-end module;
-           
+    define module common-dylan
+      use dylan, export: all;
+      use common-extensions, export: all;
+    end module;
 
 The core of the common extensions
----------------------------------
+=================================
 
 This section describes the common language extensions, that is,
 extensions made to the Dylan library as it is defined in DRM. These
 extensions are available to applications in the *dylan* library’s
 *dylan* module.
 
-All the other language extensions are described in
-` <extensions.htm#13965>`_.
+All the other language extensions are described in ` <extensions.htm#13965\>`_.
 
 DEFINE FUNCTION
-^^^^^^^^^^^^^^^
+---------------
 
-The *define* *function* definition macro provides a convenient way to
+The *define function* definition macro provides a convenient way to
 define functions that have no generic properties and hence are not
-suitable for definition with *define* *generic* or *define* *method*.
+suitable for definition with *define generic* or *define method*.
 This extension has been accepted as part of the language since the DRM
 was published.
 
-The *define* *function* macro provides a way of defining a function that
+The *define function* macro provides a way of defining a function that
 says clearly to other programmers that the function is not part of any
 generic operation; furthermore, the function will not be extended as a
 generic function, and calling it need not involve any generic dispatch.
 Without this macro, programmers who wanted to do so would have to turn
-to *define* *constant*. With *define* *function*, programmer intent is
+to *define constant*. With *define function*, programmer intent is
 more explicit and it relays more information to future maintainers of a
 piece of code.
 
-The language definition of *define* *function* explicitly *does not*
+The language definition of *define function* explicitly *does not*
 specify what it expands into, so that Dylan implementations have
 latitude to support this definer in the best way suited to the
 implementation.
 
 define function
-~~~~~~~~~~~~~~~
+---------------
 
 Definition macro
-''''''''''''''''
 
 Summary
-       
 
 Defines a constant binding in the current module and initializes it to a
 new function.
 
 Macro call
-          
 
 define {*adjective* }\* function *name* *parameter-list*
-                                                        
-
 [ *body* ]
-
 end [ function ] [ *name* ]
-                           
 
 Arguments
-         
 
--  *adjective* A Dylan unreserved-name*bnf*.
--  *name* A Dylan variable-name*bnf*.
--  *parameter-list* A Dylan parameter-list*bnf*.
--  *body* A Dylan body*bnf*.
+-  *adjective* A Dylan unreserved-name *bnf*.
+-  *name* A Dylan variable-name *bnf*.
+-  *parameter-list* A Dylan parameter-list *bnf*.
+-  *body* A Dylan body *bnf*.
 
 Description
-           
 
 Creates a constant module binding with the name *name*, and initializes
 it to a new function described by *parameter-list*, *options*, and any
@@ -144,24 +126,20 @@ arguments and return values. It is an error to supply *#next* in the
 parameter list, and there is no implicit *#next* parameter.
 
 Operations
-          
 
 The following functions return the same values as they would if the
 function had been defined as a bare method with the same signature:
 
 function-specializers
-                     
 
 function-arguments
 
 function-return-values
-                      
 
 Calling some of the following reflective operations on a function
-defined with *define* *function* may be an error:
+defined with *define function* may be an error:
 
 generic-function-methods
-                        
 
 add-method
 
@@ -177,36 +155,32 @@ applicable-method?
                   
 
 Extensions to the FOR iteration construct
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-----------------------------------------
 
 We have also made two extensions to the *for* iteration construct: a
 *keyed-by* clause and *in* … *using* clauses.
 
 The *keyed-by* clause allows iteration over table elements:
 
-for (my-element keyed-by my-key in my-table)
-                                            
+.. code-block:: dylan
 
-…
-
-end;
-    
+    for (my-element keyed-by my-key in my-table)
+      …
+    end;
 
 The *in* … *using* clause allows you to specify a iteration protocol
 other than the default (*forward-iteration-protocol*):
 
-for (element in my-sequence using backward-iteration-protocol)
-                                                              
+.. code-block:: dylan
 
-…
-
-end;
-    
+    for (element in my-sequence using backward-iteration-protocol)
+      …
+    end;
 
 Weak tables
-^^^^^^^^^^^
+-----------
 
-We have extended *define* *table* to incorporate *weak references*
+We have extended *define table* to incorporate *weak references*
 through keys and values.
 
 A weak reference is an reference that the garbage collector treats as
@@ -228,11 +202,13 @@ because the table object itself has a reference to the entry’s key or
 value.
 
 Common Dylan provides weakness options for instances of *<table>*. A
-table can have *weak* *keys* or *weak* *values* :
+table can have *weak keys* or *weak values*:
 
-make(<table>, weak: #"key"); // makes a weak-key table
+.. code-block:: dylan
 
-make(<table>, weak: #"value"); // makes a weak-value table
+    make(<table>, weak: #"key"); // makes a weak-key table
+
+    make(<table>, weak: #"value"); // makes a weak-value table
 
 In a weak-keyed table, if a key is no longer referenced from anywhere
 else in the program (apart from weak references, including from the same
@@ -260,38 +236,28 @@ used then you would eventually expect the garbage collector to clean it
 out. Any future request would then have to re-load all the bitmaps.
 
 Inlining adjectives for methods, constants, functions, and slots
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+----------------------------------------------------------------
 
 To *inline* a value is to replace, at compile time, a reference to a
 variable with the value of that variable. Such inlining often allows
 compile-time evaluation (“constant folding”) or partial evaluation.
 
 The Harlequin Dylan compiler can perform inlining on generic function
-methods, constants, class slots, and functions (created with *define*
-*function* —see `DEFINE FUNCTION`_). We have
-extended the Dylan language specification of *define* *method*,
-*define* *constant*, and class slots with inlining definition
-adjectives and have included those same adjectives in our language
-extension *define* *function*. The adjectives are:
+methods, constants, class slots, and functions (created with *define
+function* —see `DEFINE FUNCTION`_). We have extended the Dylan language
+specification of *define method*, *define constant*, and class slots with
+inlining definition adjectives and have included those same adjectives in
+our language extension *define function*. The adjectives are:
 
-*not-inline* Never inline this item.
-                                    
+- *not-inline* Never inline this item.
+- *default-inline* (default)
+  Inline this item within a library, at the compiler’s discretion. Never
+  inline a cross-library reference.
+- *may-inline* Inline this item within or between libraries, at the
+  compiler’s discretion.
+- *inline* Inline this item wherever the compiler can do so.
 
-*default-inline* (default)
-                          
-
-Inline this item within a library, at the compiler’s discretion. Never
-inline a cross-library reference.
-                                                                                                        
-
-*may-inline* Inline this item within or between libraries, at the
-compiler’s discretion.
-                                                                                        
-
-*inline* Inline this item wherever the compiler can do so.
-                                                          
-
-In addition, *define* *constant* and *define* *function* permit the
+In addition, *define constant* and *define function* permit the
 adjective *inline-only*, which forces every reference to the constant
 or function to be inlined.
 
@@ -300,10 +266,10 @@ or function to be inlined.
    of the variables, client libraries may need to be recompiled.
 
 Language differences
---------------------
+====================
 
 Tables
-^^^^^^
+------
 
 For efficiency, Common Dylan adopts a slightly different table protocol
 to that described by the DRM. Hashing functions take an additional
@@ -317,50 +283,41 @@ protocol.
 
 This section describes the items that have been changed. We also provide
 a Table-extensions module, which you can read about in
-` <table-extensions.htm#40635>`_.
+` <table-extensions.htm#40635\>`_.
 
 table-protocol
-~~~~~~~~~~~~~~
+--------------
 
 Open generic function
-'''''''''''''''''''''
 
 Summary
-       
 
 Returns functions used to implement the iteration protocol for tables.
 
 Signature
-         
 
-table-protocol *table* => *test-function* *hash-function*
-                                                         
+.. code-block:: dylan
+
+    table-protocol *table* => *test-function* *hash-function*
 
 Arguments
-         
 
 -  *table* An instance of *<table>*.
 
 Values
-      
 
--  *test-function* An instance of *<function>*.
--  *hash-function* An instance of *<function>*.
+- *test-function* An instance of *<function>*.
+- *hash-function* An instance of *<function>*.
 
 Library
-       
 
 dylan
-     
 
 Module
-      
 
 dylan
-     
 
 Description
-           
 
 Returns the functions used to iterate over tables. These functions are
 in turn used to implement the other collection operations on *<table>*.
@@ -371,13 +328,11 @@ equivalence predicate, the keys are members of the same equivalence
 class. Its signature must be:
 
 test-function *key1* *key2* => *boolean*
-                                        
 
 The *hash-function* argument is for the table hash function, which
 computes the hash code of a key. Its signature must be:
 
 hash-function *key* *initial-state* => *id* *result-state*
-                                                          
 
 In this signature, *initial-state* is an instance of *<hash-state>*.
 The hash function computes the hash code of *key*, using the hash
@@ -389,36 +344,31 @@ The *result-state* may or may not be == to *initial-state*. The
 *initial-state* could be modified by this operation.
 
 merge-hash-ids
-~~~~~~~~~~~~~~
+--------------
 
 Function
-''''''''
 
 Summary
-       
 
 Returns a hash ID created by merging two hash IDs.
 
 Signature
-         
 
-merge-hash-ids *id1* *id2* #key *ordered* => *merged-id*
-                                                        
+.. code-block:: dylan
+
+    merge-hash-ids *id1* *id2* #key *ordered* => *merged-id*
 
 Arguments
-         
 
--  *id1* An instance of *<integer>*.
--  *id2* An instance of *<integer>*.
--  *ordered* An instance of *<boolean>*. Default value: *#f*.
+- *id1* An instance of *<integer>*.
+- *id2* An instance of *<integer>*.
+- *ordered* An instance of *<boolean>*. Default value: *#f*.
 
 Values
-      
 
 -  *merged-id* An instance of *<integer>*.
 
 Description
-           
 
 Computes a new hash ID by merging the argument hash IDs in some
 implementation-dependent way. This can be used, for example, to generate
@@ -439,36 +389,31 @@ the hash function to violate the second constraint on hash functions,
 described on page 123 of the DRM.
 
 object-hash
-~~~~~~~~~~~
+-----------
 
 Function
-''''''''
 
 Summary
-       
 
 The hash function for the equivalence predicate ==.
 
 Signature
-         
 
-object-hash *object* *initial-state* => *hash-id* *result-state*
-                                                                
+.. code-block:: dylan
+
+    object-hash *object* *initial-state* => *hash-id* *result-state*
 
 Arguments
-         
 
--  *object* An instance of *<integer>*.
--  *initial-state* An instance of *<hash-state>*.
+- *object* An instance of *<integer>*.
+- *initial-state* An instance of *<hash-state>*.
 
 Values
-      
 
--  *hash-id* An instance of *<integer>*.
--  *result-state* An instance of *<hash-state>*.
+- *hash-id* An instance of *<integer>*.
+- *result-state* An instance of *<hash-state>*.
 
 Description
-           
 
 Returns a hash code for *object* that corresponds to the equivalence
 predicate ==.
@@ -480,5 +425,3 @@ the hash code.
 It returns a hash ID (an integer) and the result of merging the initial
 state with the associated hash state for the object, computed in some
 implementation-dependent manner.
-
-

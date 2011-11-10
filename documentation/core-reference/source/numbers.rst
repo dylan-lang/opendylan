@@ -3,7 +3,7 @@ Integers
 ********
 
 Introduction
-------------
+============
 
 This chapter describes the Common Dylan implementation of arithmetic
 functions, especially integer arithmetic. It describes a number of
@@ -88,7 +88,7 @@ the Dylan library. In particular, it removes extended integers, ratios,
 and rectangular complex numbers.
 
 Extensions to the Dylan library
--------------------------------
+===============================
 
 This section describes the extensions to the Dylan library that provide
 the arithmetic operations available as standard to your applications.
@@ -102,19 +102,19 @@ Note that the Common-Dylan library also has these extensions because it
 uses the Dylan library.
 
 Ranges
-^^^^^^
+------
 
 The initialization arguments for *<range>* must all be instances of
 *<machine-number>* rather than *<real>*.
 
 Specific constructors
-^^^^^^^^^^^^^^^^^^^^^
+---------------------
 
 The following specific constructors are available for use with the class
 *<integer>*.
 
 limited
-~~~~~~~
+-------
 
 G.f. method
 '''''''''''
@@ -145,7 +145,7 @@ arguments are instances of *<integer>*. The range of *<integer>* is
 bounded by default.
 
 range
-~~~~~
+-----
 
 Function
 ''''''''
@@ -169,7 +169,7 @@ Description
 All of the supplied arguments must be instances of *<machine-number>*.
 
 Equality comparisons
-^^^^^^^^^^^^^^^^^^^^
+--------------------
 
 The *=* function compares two objects and returns *#t* if the values of
 the two objects are equal to each other, that is of the same magnitude.
@@ -200,7 +200,7 @@ Value
 Other available methods are described in the *Dylan Reference Manual*.
 
 Magnitude comparisons
-^^^^^^^^^^^^^^^^^^^^^
+---------------------
 
 The Dylan library provides the following interfaces for testing the
 magnitude of two numbers:
@@ -226,13 +226,13 @@ Signature
 Other available methods are described in the *Dylan Reference Manual*.
 
 Properties of numbers
-^^^^^^^^^^^^^^^^^^^^^
+---------------------
 
 Various number properties can be tested using the following predicates
 in the Dylan library:
 
 odd?
-~~~~
+----
 
 Open generic function, Sealed domain, G.f. method
 '''''''''''''''''''''''''''''''''''''''''''''''''
@@ -250,7 +250,7 @@ odd? *object* => *boolean* (*Open generic function*)
  odd? *integer* => *boolean* (*G.f. method*)
 
 even?
-~~~~~
+-----
 
 Open generic function, Sealed domain, G.f. method
 '''''''''''''''''''''''''''''''''''''''''''''''''
@@ -372,7 +372,7 @@ integral? *machine-number* => *boolean*
 Tests whether the argument supplied represents an integral value.
 
 Arithmetic operations
-^^^^^^^^^^^^^^^^^^^^^
+---------------------
 
 The following arithmetic operations are available in the Dylan library:
 
@@ -850,14 +850,14 @@ gcd *integer1* *integer2* => *integer*
 Returns the greatest common divisor of its two arguments.
 
 Collections
-^^^^^^^^^^^
+-----------
 
 The keys for sequences are always instances of *<integer>*. This means
 that certain kinds of collections cannot be sequences; very large (or
 unbounded) sparse arrays are an example.
 
 The table protocol
-^^^^^^^^^^^^^^^^^^
+------------------
 
 The following functions in the Dylan library are extended. Note that the
 hash IDs for tables are always instances of *<integer>*.
@@ -889,7 +889,7 @@ The hash function for the equivalence predicate *==*. The return values
 are of the same types as the return values of *merge-hash-codes*.
 
 Iteration constructs
-^^^^^^^^^^^^^^^^^^^^
+--------------------
 
 for
    
@@ -901,7 +901,7 @@ The *start*, *bound*, and *increment* expressions in a numeric clause
 must evaluate to instances of *<machine-number>* for this macro.
 
 The Generic-Arithmetic library
-------------------------------
+==============================
 
 The Generic-Arithmetic library exports the functions described in this
 section from an exported module called *generic-arithmetic*.
@@ -956,7 +956,7 @@ See `Using special arithmetic features`_ for an example of how to use
 an implementation library with Generic-Arithmetic.
 
 Ranges
-^^^^^^
+------
 
 The Generic-Arithmetic library defines the class *<range>*, which is in
 most respects functionally equivalent to *<range>#Dylan*, but uses
@@ -965,13 +965,13 @@ initialization arguments can be instances of *<real>*, rather than
 being restricted to *<machine-number>*.
 
 Classes
-^^^^^^^
+-------
 
 The class *<abstract-integer>* is imported and re-exported under the
 name *<integer>#generic-arithmetic*.
 
 Specific constructors
-^^^^^^^^^^^^^^^^^^^^^
+---------------------
 
 range
      
@@ -985,7 +985,7 @@ This function is identical to the function *range#Dylan*, except that
 all of the supplied arguments must be instances of *<real>*.
 
 Arithmetic operations
-^^^^^^^^^^^^^^^^^^^^^
+---------------------
 
 The following functions all apply *function* *#Dylan* to the arguments
 and return the results, where *function* is the appropriate function
@@ -1044,7 +1044,7 @@ gcd *abstract-integer1* *abstract-integer2* => *abstract-integer*
                                                                  
 
 Iteration constructs
-^^^^^^^^^^^^^^^^^^^^
+--------------------
 
 While a programmer could make use of generic arithmetic in a *for* loop
 by using explicit-step clauses, this approach leads to a loss of
@@ -1063,7 +1063,7 @@ must evaluate to instances of *<machine-number>* for this macro.
 Otherwise, this macro is similar to *for#Dylan*.
 
 Exported modules from the Generic-Arithmetic library
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+----------------------------------------------------
 
 The Generic-Arithmetic library exports several modules that are provided
 for the convenience of programmers who wish to create additional modules
@@ -1071,7 +1071,7 @@ based on the *dylan* module plus various combinations of the arithmetic
 models.
 
 The Dylan-Excluding-Arithmetic module
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------
 
 The Dylan-Excluding-Arithmetic module imports and re-exports all of the
 interfaces exported by the *dylan* module from the Dylan library, except
@@ -1107,14 +1107,14 @@ for
    
 
 The Dylan-Arithmetic module
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+---------------------------
 
 The Dylan-Arithmetic module imports and re-exports all of the interfaces
 exported by the *dylan* module from the Dylan library which are excluded
 by the *dylan-excluding-arithmetic* module.
 
 The Generic-Arithmetic-Dylan module
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-----------------------------------
 
 The Generic-Arithmetic-Dylan module imports and reexports all of the
 interfaces exported by the *dylan-excluding-arithmetic* module and the
@@ -1128,7 +1128,7 @@ is to provide a standard environment in which generic arithmetic is the
 norm, for those programmers who might want that.
 
 Using special arithmetic features
----------------------------------
+=================================
 
 As noted in `The Generic-Arithmetic library`_, the Generic-Arithmetic
 library provides an extensible protocol for adding specialized arithmetic
@@ -1259,7 +1259,7 @@ use dylan-arithmetic, prefix: "dylan/"; //use any prefix you like
                                                                  
 
 The Big-Integers library
-------------------------
+========================
 
 The Big-Integers library exports a module called *big-integers*, which
 imports and re-exports all of the interfaces exported by the
@@ -1269,7 +1269,7 @@ The Big-Integers library modifies the behavior of functions provided by
 the Dylan library as described in this section.
 
 Specific constructors
-^^^^^^^^^^^^^^^^^^^^^
+---------------------
 
 The Big-Integers library extends the functionality of specific
 constructors in the Dylan library as follows:
@@ -1298,7 +1298,7 @@ The Limited Integer Type Protocol is extended to account for limited
 
 Instances and subtypes in the Big-Integers library
 
-:: todo Fix header style here^^^
+:: todo Fix header style here---
                                                   
 
 This is true if and only if …
@@ -1356,7 +1356,7 @@ subtype?
 (x <= z)
 
 Type-equivalence in the Big-Integers library
-:: todo Fix header style here^^^
+:: todo Fix header style here---
                                                   
                                             
 
@@ -1405,7 +1405,7 @@ integer type is disjoint from the range of *<integer>* (that is, from
 *$minimum-integer* to *$maximum-integer*).
 
 Equality comparisons
-^^^^^^^^^^^^^^^^^^^^
+--------------------
 
 The behavior of equality comparisons in the Dylan library is modified by
 the Big-Integers library as follows:
@@ -1415,7 +1415,7 @@ the Big-Integers library as follows:
  = *float* *abstract-integer* => *boolean*
 
 Magnitude comparisons
-^^^^^^^^^^^^^^^^^^^^^
+---------------------
 
 The behavior of magnitude comparisons in the Dylan library is modified
 by the Big-Integers library as follows:
@@ -1425,7 +1425,7 @@ by the Big-Integers library as follows:
  < *float* *abstract-integer* => *boolean*
 
 Properties of numbers
-^^^^^^^^^^^^^^^^^^^^^
+---------------------
 
 The behavior of number property tests in the Dylan library is modified
 by the Big-Integers library as follows:
@@ -1438,7 +1438,7 @@ odd? *abstract-integer* => *boolean
  integral? *abstract-integer* => *boolean*
 
 Arithmetic operations
-^^^^^^^^^^^^^^^^^^^^^
+---------------------
 
 The Big-Integers library modifies the behavior of the functions provided
 by the Generic-Arithmetic library as described below.

@@ -3,7 +3,7 @@ The Machine Words Module
 ************************
 
 Introduction
-------------
+============
 
 This chapter describes the Harlequin Dylan implementation of machine
 words. It describes a number of extensions to the Dylan language, which
@@ -24,7 +24,7 @@ disjoint from all other classes specified by the Dylan language.
 The *\\==* function compares instances of *<machine-word>* by value.
 
 Useful functions from the Dylan module
---------------------------------------
+======================================
 
 This section describes additional methods defined in the Dylan module
 that pertain to *<machine-word>*. Note that this section only describes
@@ -217,13 +217,13 @@ of *<abstract-integer>*, in which case they are coerced to instances of
 *<machine-word>* as if by using *as*.
 
 The MACHINE-WORDS module
-------------------------
+========================
 
 This section contains a reference entry for each item exported from the
 Machine-Words module, which is exported by the Common Dylan library.
 
 <machine-word>
-~~~~~~~~~~~~~~
+--------------
 
 Sealed Class
 ''''''''''''
@@ -270,7 +270,7 @@ The *<machine-words>* class provides the operations described below and
 in `Useful functions from the Dylan module`_.
 
 Variables
-^^^^^^^^^
+---------
 
 The following variables are exported from the Machine-Words module.
 
@@ -344,7 +344,7 @@ instance of *<abstract-integer>*, then the result of that conversion is
 converted to type *t* using *as*.
 
 Basic and signed single word operations
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+---------------------------------------
 
 For all of the following functions, all arguments that are specified as
 being specialized to *<machine-word>* accept an instance of
@@ -603,7 +603,7 @@ Arithmetic right shift of *m* by *count*. An error is signaled unless
 *0 <= count < $machine-word-size*.
 
 Overflow signalling operations
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+------------------------------
 
 For all of the following functions, all arguments that are specified as
 being specialized to *<machine-word>* accept an instance of
@@ -682,7 +682,7 @@ Arithmetic left shift of *m* by *count*. An error is signaled unless *0
 <= count < $machine-word-size*. An error is signaled on overflow.
 
 Signed double word operations
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-----------------------------
 
 For all of the following functions, all arguments that are specified as
 being specialized to *<machine-word>* accept an instance of
@@ -774,7 +774,7 @@ divisor is zero or if the correct value for the quotient exceeds the
 machine word range.
 
 Unsigned single word operations
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------
 
 For all of the following functions, all arguments that are specified as
 being specialized to *<machine-word>* accept an instance of
@@ -901,7 +901,7 @@ u%< (m1 :: *machine-word*, m2 :: *machine-word*) => (smaller? ::
 Unsigned comparison.
 
 Unsigned double word operations
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------
 
 For all of the following functions, all arguments that are specified as
 being specialized to *<machine-word>* accept an instance of

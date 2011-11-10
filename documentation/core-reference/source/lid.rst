@@ -3,7 +3,7 @@ Library Interchange
 *******************
 
 Introduction
-------------
+============
 
 This chapter is about the library interchange definition format, *LID*.
 
@@ -27,7 +27,7 @@ port applications from one environment to another.
    window.
 
 LID files
----------
+=========
 
 LID works by supplementing each set of library sources with a LID file.
 A *LID file* describes a Dylan library using a set of keyword
@@ -46,33 +46,33 @@ Every file referred to by a LID file must reside in the same folder
 (directory) as the LID file.
 
 LID keyword statements
-----------------------
+======================
 
 A LID file consists of a series of keyword/value statements, just like
 the Dylan source file interchange format described in DRM (page 21.) In
 this section, we describe the standard LID keywords.
 
 Library:
-^^^^^^^^
+--------
 
 LID file keyword
-''''''''''''''''
 
-Library: *library-name*
-                       
+.. code-block:: dylan
+
+    Library: *library-name*
 
 Names the Dylan library being described. The *library-name* must be the
 name of the Dylan library that the LID file describes. This keyword is
 required in every LID file, and it may appear only once per LID file.
 
 Files:
-^^^^^^
+------
 
 LID file keyword
-''''''''''''''''
 
-Files: *file-designators*
-                         
+.. code-block:: dylan
+
+    Files: *file-designators*
 
 Associates a set of files with the library named by the *Library:*
 keyword. This keyword can appear one or more times per LID file. Every
@@ -91,81 +91,81 @@ All the files specified must reside in the same folder (directory) as
 the LID file.
 
 Synopsis:
-^^^^^^^^^
+---------
 
 LID file keyword
-''''''''''''''''
 
-Synopsis: *arbitrary text*
-                          
+.. code-block:: dylan
+
+    Synopsis: *arbitrary text*
 
 A concise description of the library.
 
 Keywords:
-^^^^^^^^^
+---------
 
 LID file keyword
-''''''''''''''''
 
-Keywords: *comma-separated phrases*
-                                   
+.. code-block:: dylan
+
+    Keywords: *comma-separated phrases*
 
 Any number of phrases, separated by commas, that are relevant to the
 description or use of the library.
 
 Author:
-^^^^^^^
+-------
 
 LID file keyword
-''''''''''''''''
 
-Author: *arbitrary text*
-                        
+.. code-block:: dylan
+
+    Author: *arbitrary text*
 
 The name of the library’s author.
 
 Version:
-^^^^^^^^
+--------
 
 LID file keyword
-''''''''''''''''
 
-Version: *arbitrary text*
-                         
+.. code-block:: dylan
+
+    Version: *arbitrary text*
 
 The current version number of the library.
 
 Description:
-^^^^^^^^^^^^
+------------
 
 LID file keyword
-''''''''''''''''
 
-Description: *arbitrary text*
-                             
+.. code-block:: dylan
+
+    Description: *arbitrary text*
 
 A description of the library. The intention of this keyword is to
 provide a fuller, less concise description than that given by the
 *Synopsis:* keyword.
 
 Comment:
-^^^^^^^^
+--------
 
 LID file keyword
-''''''''''''''''
 
-Comment: *arbitrary text*
-                         
+.. code-block:: dylan
+
+    Comment: *arbitrary text*
 
 Any additional comments about the library.
 
 Common Dylan’s LID extensions
------------------------------
+=============================
 
 This section contains extensions to LID that Common Dylan supports.
 
 Specifying foreign files and resource files
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------------------
 
 The following keywords allow you to specify that files of foreign source
 code and resource files are a part of the library.
@@ -174,10 +174,10 @@ C-Source-Files:
 ^^^^^^^^^^^^^^^
 
 LID file keyword
-''''''''''''''''
 
-C-Source-Files: *c-source-files*
-                                
+.. code-block:: dylan
+
+    C-Source-Files: *c-source-files*
 
 Identifies one or more C source files which are to be included as part
 of the library. Dylan environments copy these files to their build area
@@ -188,10 +188,10 @@ C-Header-Files:
 ^^^^^^^^^^^^^^^
 
 LID file keyword
-''''''''''''''''
 
-C-Header-Files: *c-header-files*
-                                
+.. code-block:: dylan
+
+    C-Header-Files: *c-header-files*
 
 Identifies one or more C header files included as part of the library.
 Dylan environments copy these files to their build area and ensure that
@@ -204,10 +204,10 @@ C-Object-Files:
 ^^^^^^^^^^^^^^^
 
 LID file keyword
-''''''''''''''''
 
-C-Object-Files: *c-object-files*
-                                
+.. code-block:: dylan
+
+    C-Object-Files: *c-object-files*
 
 Identifies one or more C object files included as part of the library.
 Dylan environments copy these files to their build area and ensure that
@@ -219,10 +219,10 @@ RC-Files:
 ^^^^^^^^^
 
 LID file keyword
-''''''''''''''''
 
-RC-Files: *resource-files*
-                          
+.. code-block:: dylan
+
+    RC-Files: *resource-files*
 
 Identifies one or more resource files to be included as part of the
 library. Dylan environments copy these files to their build area and
@@ -235,10 +235,10 @@ C-Libraries:
 ^^^^^^^^^^^^
 
 LID file keyword
-''''''''''''''''
 
-C-Libraries: *c-lib-files*
-                          
+.. code-block:: dylan
+
+    C-Libraries: *c-lib-files*
 
 Identifies one or more C libraries to be included in the link phase when
 building the *.DLL* or *.EXE* for the library. You can use this keyword
@@ -248,14 +248,14 @@ Unlike the other keywords described in this section, the *C-Libraries:*
 keyword propagates to dependent libraries. For example, suppose library
 A uses library B, and the LID file or library B specifies
 
-C-Libraries: foo.lib
-                    
+.. code-block:: dylan
 
-In this case, both library A and library B are linked against *foo.lib*
-.
+    C-Libraries: foo.lib
+
+In this case, both library A and library B are linked against *foo.lib*.
 
 Specifying compilation details
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 The following keywords control aspects of compilation for the library.
 
@@ -263,10 +263,10 @@ Executable:
 ^^^^^^^^^^^
 
 LID keyword
-'''''''''''
 
-Executable: *name*
-                  
+.. code-block:: dylan
+
+    Executable: *name*
 
 Specifies the name of the executable (that is, *.DLL* or *.EXE*) file
 to be generated for this library.
@@ -284,10 +284,10 @@ Base-Address:
 ^^^^^^^^^^^^^
 
 LID keyword
-'''''''''''
 
-Base-Address: *address*
-                       
+.. code-block:: dylan
+
+    Base-Address: *address*
 
 Specifies the base address of the DLL built from this Dylan library. The
 *address* must be a hexadecimal value. For convenience, you can use
@@ -310,10 +310,10 @@ Linker-Options:
 ^^^^^^^^^^^^^^^
 
 LID keyword
-'''''''''''
 
-Linker-Options: *options*
-                         
+.. code-block:: dylan
+
+    Linker-Options: *options*
 
 Specifies additional options and libraries to be passed to the linker
 when building this DLL or EXE. Unlike the C-Libraries: keyword, the
@@ -321,7 +321,7 @@ options and libraries specified here apply only to this Dylan library;
 they are not propagated to any libraries which use this library.
 
 File naming conventions
------------------------
+=======================
 
 In practice, importing a source distribution into a Dylan program
 involves unpacking the source distribution into its own subtree and then
@@ -332,25 +332,18 @@ designating the source files associated with, each library.
 
 Importing a Dylan program into the environment in this way requires two
 things:
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-That the LID files in the distribution can be identified.
-                                                         
-
-That the file designators supplied to the *Files:* keyword in LID files
-can be mapped to the corresponding source filenames on disk.
-                                                                                                                                    
+#. That the LID files in the distribution can be identified.
+#. That the file designators supplied to the *Files:* keyword in LID files
+   can be mapped to the corresponding source filenames on disk.
 
 If you are importing files from a platform that does not insist on, or
 conventionally use, standard filename suffixes to identify the filetype
 (such as MacOS), then you must rename your source files as follows:
 
-LID files must be given filenames with the suffix *.lid*.
-                                                          
-
-Dylan source files must be given filenames with the suffix *.dylan* or
-*.dyl*.
-                                                                               
+- LID files must be given filenames with the suffix *.lid*.
+- Dylan source files must be given filenames with the suffix *.dylan* or
+  *.dyl*.
 
 The file designators that appear in LID files may be a string of
 characters of any length, constructed from the set of hyphen,
@@ -367,7 +360,7 @@ used to organize multi-library systems as long as the files directly
 associated with each library are in a single directory.
 
 Application example
--------------------
+===================
 
 This section contains an example of a complete Dylan application that
 uses a generic factorial calculation routine to return the value of the
@@ -378,134 +371,96 @@ routine and returns the appropriate result.
 
 File: *fact.lid*. LID file describing the components of the *factorial*
 library.
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-Library: factorial
-                  
+.. code-block:: dylan
 
-Synopsis: Provides a naive implementation of the factorial
-
-function
-
-Keywords: factorial, integer, simple, recursive
-
-Files: fact-def
-
-fact
-    
+    Library: factorial
+    Synopsis: Provides a naive implementation of the factorial
+              function
+    Keywords: factorial, integer, simple, recursive
+    Files: fact-def
+           fact
 
 File: *fact-def.dyl*. Defines the *factorial* library and its one
 module.
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-Module: dylan-user
-                  
+.. code-block:: dylan
 
-define library factorial
+    Module: dylan-user
 
-use dylan;
+    define library factorial
+      use dylan;
+      export factorial;
+    end;
 
-export factorial;
-
-end;
-
-define module factorial
-
-export fact;
-
-end;
-    
+    define module factorial
+      export fact;
+    end;
 
 File: *fact.dyl*. Defines the method for calculating a factorial.
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-Module: factorial
-                 
+.. code-block:: dylan
 
-define generic fact(n);
+    Module: factorial
 
-define method fact(n == 0)
+    define generic fact(n);
 
-1;
+    define method fact(n == 0)
+      1;
+    end;
 
-end;
-
-define method fact(n)
-
-n \* fact(n - 1);
-
-end;
-    
+    define method fact(n)
+      n * fact(n - 1);
+    end;
 
 File: *app.lid*. LID file describing the components of the
 *factorial-application* library.
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-Library: factorial-application
-                              
+.. code-block:: dylan
 
-Synopsis: Computes factorial 100
-
-Files: appdef
-
-app
-
-Start-Module: factorial-application
-
-Start-Function: main
-                    
+    Library: factorial-application
+    Synopsis: Computes factorial 100
+    Files: appdef
+           app
+    Start-Module: factorial-application
+    Start-Function: main
 
 File: *appdef.dyl*. Defines the *factorial-application* library and its
 one module.
 
-Module: dylan-user
+.. code-block:: dylan
 
-define library factorial-application
+    Module: dylan-user
 
-use dylan;
+    define library factorial-application
+      use dylan;
+      use factorial;
+    end library;
 
-use factorial;
-
-end library;
-
-define module factorial-application
-
-use dylan;
-
-use factorial;
-
-end module;
-           
+    define module factorial-application
+      use dylan;
+      use factorial;
+    end module;
 
 File: *app.dyl*. Defines a routine that calls the factorial routine.
 
-Module: factorial-application
-                             
+.. code-block:: dylan
 
-define method main (#rest ignore)
+    Module: factorial-application
 
-fact(100);
-
-end method;
-           
+    define method main (#rest ignore)
+      fact(100);
+    end method;
 
 The following example demonstrates how files of foreign source code and
 resource files can be integrated into a Dylan library:
 
-Library: app-with-foreign-code
-                              
+.. code-block:: dylan
 
-Synopsis: Uses some C code and resources
-
-Files: dylan-code
-
-C-Source-Files: first.c
-
-second.c
-
-C-Header-Files: headers.h
-
-RC-Files: extra-resources.rc
-                            
-
-
+    Library: app-with-foreign-code
+    Synopsis: Uses some C code and resources
+    Files: dylan-code
+    C-Source-Files: first.c
+      second.c
+    C-Header-Files: headers.h
+    RC-Files: extra-resources.rc

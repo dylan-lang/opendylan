@@ -3,7 +3,7 @@ The Threads Library
 *******************
 
 Introduction
-------------
+============
 
 The Threads library provides a portable threads interface for Dylan. The
 Threads library is designed to map easily and efficiently onto the
@@ -13,7 +13,7 @@ The Threads library is called *threads*. All documented bindings are
 exported from the module *threads*.
 
 Multi-thread semantics
-----------------------
+======================
 
 The Threads library provides multiple threads of control within a single
 space of objects and module variables. Each thread runs in its own
@@ -25,7 +25,7 @@ thread. Neither is there a mechanism to signal an exception on a thread
 other than the current thread.
 
 Atomicity
-^^^^^^^^^
+---------
 
 In general, the Threads library guarantees that assignments to slots and
 variables are atomic. That is, after an assignment, but before
@@ -60,7 +60,7 @@ Programmers should guard against the possibility of undefined values by
 using explicit inter-thread synchronization.
 
 Ordering
-^^^^^^^^
+--------
 
 The ordering of visibility of side effects performed in other threads is
 undefined, unless explicit synchronization is used. Implementations of
@@ -81,7 +81,7 @@ effects on other threads — for example, common sub-expression
 elimination, or changing the order of evaluation.
 
 Explicit synchronization
-^^^^^^^^^^^^^^^^^^^^^^^^
+------------------------
 
 The Threads library provides low-level synchronization functions which
 control the ordering of operations with respect to other threads, and
@@ -109,7 +109,7 @@ low-level libraries, are discussed in `Thread safety in client
 libraries`_.
 
 Conditional update
-^^^^^^^^^^^^^^^^^^
+------------------
 
 In addition to the synchronization primitives, the library provides a
 conditional update mechanism which is not synchronized, but which tests
@@ -138,7 +138,7 @@ blocking function from the Threads library should be used within the
 loop.
 
 The dynamic environment
-^^^^^^^^^^^^^^^^^^^^^^^
+-----------------------
 
 Dylan has an implicit notion of a *dynamic environment*, corresponding
 to language constructs with *dynamic extent*. For example, the *block*
@@ -167,7 +167,7 @@ variables are in general potentially global, you may need to explicitly
 synchronize accesses to them.
 
 Thread variables
-^^^^^^^^^^^^^^^^
+----------------
 
 The Threads library provides a new type of variable: a *thread*
 variable, also known as a *thread-local* variable. These variables are
@@ -186,7 +186,7 @@ See page `thread`_ for details of the *thread* adjective to
 *define variable*.
 
 Dynamic binding
-^^^^^^^^^^^^^^^
+---------------
 
 The Threads library exports a macro for dynamic binding. A *binding* is
 a mapping between a variable and a*value-cell* which holds the
@@ -209,7 +209,7 @@ not pursued in this library, but they might be an interesting area for
 future research.
 
 Thread safety in client libraries
----------------------------------
+=================================
 
 If an application uses multiple threads, then there may be thread safety
 requirements for any library that can be called simultaneously by
@@ -220,7 +220,7 @@ This section is about thread safety in any library that is designed to
 be used in a multi-threaded application.
 
 General requirements
-^^^^^^^^^^^^^^^^^^^^
+--------------------
 
 A library’s designer is responsible for documenting which features of
 the library offer built-in synchronization and which do not. While there
@@ -244,7 +244,7 @@ it may be more efficient to rely on explicit synchronization by the
 client. Library designers should always document the choice they make.
 
 Effects on the Dylan library
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+----------------------------
 
 The definition of the Dylan library is not changed with the addition of
 the Threads library. The implementation ensures that all hidden global
@@ -270,7 +270,7 @@ guaranteed, clients should guard against unexpected behavior by using
 explicit synchronization, as appropriate.
 
 The Threads class hierarchy
----------------------------
+===========================
 
 .. figure:: images/threads-2.gif
    :align: center
@@ -278,16 +278,16 @@ The Threads class hierarchy
    Threads class hierarchy.
                         
 Basic features
---------------
+==============
 
 This section documents basic features of the Threads library: operations
 on threads and low-level synchronization.
 
 Low-level synchronization
-^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------
 
 sequence-point
-~~~~~~~~~~~~~~
+--------------
 
 Function
 ''''''''
@@ -329,7 +329,7 @@ relative to the call. This function may disallow compiler optimizations,
 leading to less efficient code — even for strongly ordered machines.
 
 synchronize-side-effects
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 Function
 ''''''''
@@ -421,7 +421,7 @@ define method lazy-value (lv :: <lazy-value>)
 if (lv.internal-guard)
                       
 
-// Don’t yet have a value -- so compute it now;
+// Don’t yet have a value == so compute it now;
                                                
 
 let value = lv.thunk();
@@ -484,10 +484,10 @@ end if;
 end method;
 
 Operations on threads
-^^^^^^^^^^^^^^^^^^^^^
+---------------------
 
 <thread>
-~~~~~~~~
+--------
 
 Sealed instantiable class
 '''''''''''''''''''''''''
@@ -551,7 +551,7 @@ convenience purposes, such as debugging.
 Operations
           
 
-The class `<thread>`_ provides the following
+The class `\<thread\>`_ provides the following
 operations:
 
 -  `thread-name`_ Returns the name of a thread, or *#f* if no name was
@@ -560,7 +560,7 @@ operations:
    and returns the values of its function.
 
 thread-name
-~~~~~~~~~~~
+-----------
 
 Function
 ''''''''
@@ -578,7 +578,7 @@ thread-name *thread* => *name-or-false*
 Arguments
          
 
--  *thread* An instance of `<thread>`_.
+-  *thread* An instance of `\<thread\>`_.
 
 Values
       
@@ -593,7 +593,7 @@ Returns the name of *thread* as a string. If *thread* does not have a
 name, this function returns *#f*.
 
 join-thread
-~~~~~~~~~~~
+-----------
 
 Function
 ''''''''
@@ -612,13 +612,13 @@ join-thread *thread* #rest *threads* => *thread-joined* #rest *results*
 Arguments
          
 
--  *thread* An instance of `<thread>`_. A thread to join.
--  *threads* Instances of `<thread>`_. More threads to join.
+-  *thread* An instance of `\<thread\>`_. A thread to join.
+-  *threads* Instances of `\<thread\>`_. More threads to join.
 
 Values
       
 
--  *thread-joined* An instance of `<thread>`_. The thread that was joined.
+-  *thread-joined* An instance of `\<thread\>`_. The thread that was joined.
 -  *results* Zero or more instances of *<object>*. The values returned
    from the thread that was joined.
 
@@ -659,7 +659,7 @@ thread to *join-thread* if that thread is also being processed by
 another simultaneous call to *join-thread* from another thread.
 
 thread-yield
-~~~~~~~~~~~~
+------------
 
 Function
 ''''''''
@@ -684,7 +684,7 @@ effect of allowing other threads to run, and may be essential to avoid
 deadlock in a co-operative scheduling environment.
 
 current-thread
-~~~~~~~~~~~~~~
+--------------
 
 Function
 ''''''''
@@ -707,7 +707,7 @@ None.
 Values
       
 
--  *thread* An instance of `<thread>`_.
+-  *thread* An instance of `\<thread\>`_.
 
 Description
            
@@ -715,13 +715,13 @@ Description
 Returns the current thread.
 
 Synchronization protocol
-------------------------
+========================
 
 Basic features
-^^^^^^^^^^^^^^
+--------------
 
 <synchronization>
-~~~~~~~~~~~~~~~~~
+-----------------
 
 Open abstract class
 '''''''''''''''''''
@@ -770,7 +770,7 @@ The class *<synchronization>* provides the following operations:
 -  Returns the name of the synchronization object.
 
 wait-for
-~~~~~~~~
+--------
 
 Open generic function
 '''''''''''''''''''''
@@ -788,7 +788,7 @@ wait-for *object* #key *timeout* => *success*
 Arguments
          
 
--  *object* An instance of `<synchronization>`_.
+-  *object* An instance of `\<synchronization\>`_.
 -  *timeout* Time-out interval. If the value is *#f* (the default), the
    time-out interval never elapses. Otherwise the value should be a
    *<real>*, corresponding to the desired interval in seconds.
@@ -812,7 +812,7 @@ The function returns *#t* if synchronization is achieved before the
 timeout interval elapses; otherwise it returns *#f.*
 
 release
-~~~~~~~
+-------
 
 Open generic function
 '''''''''''''''''''''
@@ -830,7 +830,7 @@ release *object* #key => ()
 Arguments
          
 
--  *object* An instance of `<synchronization>`_.
+-  *object* An instance of `\<synchronization\>`_.
 
 Values
       
@@ -843,11 +843,11 @@ Description
 Releases the supplied synchronization object, *object*, potentially
 making it available to other threads. Individual methods describe what
 this means for each class of synchronization. This function does not
-block for any of the subclasses of `<synchronization>`_ provided by the
+block for any of the subclasses of `\<synchronization\>`_ provided by the
 library.
 
 synchronization-name
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 Open generic function
 '''''''''''''''''''''
@@ -865,7 +865,7 @@ synchronization-name *object* => *name-or-false*
 Arguments
          
 
--  *object* An instance of `<synchronization>`_.
+-  *object* An instance of `\<synchronization\>`_.
 
 Values
       
@@ -880,10 +880,10 @@ Returns the name of the synchronization object, *object*, if it was
 created with the *name* init-keyword. Otherwise *#f* is returned.
 
 Locks
-^^^^^
+-----
 
 <lock>
-~~~~~~
+------
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
@@ -896,7 +896,7 @@ The class of locks.
 Superclasses
             
 
-`<synchronization>`_
+`\<synchronization\>`_
 
 Description
            
@@ -926,7 +926,7 @@ The class *<lock>* provides the following operations:
    `release`_ operations.
 
 with-lock
-~~~~~~~~~
+---------
 
 Statement macro
 '''''''''''''''
@@ -952,7 +952,7 @@ end
 Arguments
          
 
--  *lock* An instance of `<lock>`_.
+-  *lock* An instance of `\<lock\>`_.
 -  *keys* Zero or more of the keywords provided by *`wait-for`_*.
 -  *body* A body of Dylan code.
 
@@ -1014,10 +1014,10 @@ end if
       
 
 Semaphores
-^^^^^^^^^^
+----------
 
 <semaphore>
-~~~~~~~~~~~
+-----------
 
 Open instantiable primary class
 '''''''''''''''''''''''''''''''
@@ -1061,7 +1061,7 @@ Init-keywords
    not be smaller than 10000.
 
 wait-for
-~~~~~~~~
+--------
 
 Sealed method
 '''''''''''''
@@ -1079,7 +1079,7 @@ wait-for *object* #key *timeout* => *success*
 Arguments
          
 
--  *object* An instance of `<semaphore>`_. The semaphore object to wait for.
+-  *object* An instance of `\<semaphore\>`_. The semaphore object to wait for.
 -  *timeout* Time-out interval. If the value is *#f* (the default), the
    time-out interval never elapses. Otherwise the value should be a
    *<real>*, corresponding to the desired interval in seconds.
@@ -1101,7 +1101,7 @@ See also
 `wait-for`_.
 
 release
-~~~~~~~
+-------
 
 Sealed method
 '''''''''''''
@@ -1119,7 +1119,7 @@ release *object* #key => ()
 Arguments
          
 
--  *object* An instance of `<semaphore>`_.
+-  *object* An instance of `\<semaphore\>`_.
 
 Values
       
@@ -1136,7 +1136,7 @@ condition of the following class, which is a subclass of *<error>* :
                         
 
 -  This may be signalled when an attempt is made to release a
-   `<semaphore>`_ when the internal counter is
+   `\<semaphore\>`_ when the internal counter is
    already at its maximum count.
 
 Description
@@ -1150,10 +1150,10 @@ See also
 `release`_.
 
 Exclusive locks
-^^^^^^^^^^^^^^^
+---------------
 
 <exclusive-lock>
-~~~~~~~~~~~~~~~~
+----------------
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
@@ -1185,7 +1185,7 @@ cause that thread to block. It is an error for a thread to release an
 *<exclusive-lock>* if another thread owns it.
 
 *<exclusive-lock>* has no direct instances; calling *make* on
-*<exclusive-lock>* returns an instance of `<simple-lock>`_.
+*<exclusive-lock>* returns an instance of `\<simple-lock\>`_.
 
 Operations
           
@@ -1195,7 +1195,7 @@ The class *<exclusive-lock>* provides the following operations:
 -  `owned?`_ Tests to see if the lock has been claimed by the current thread.
 
 release
-~~~~~~~
+-------
 
 Protocol
 ''''''''
@@ -1213,7 +1213,7 @@ release *object* #key => ()
 Arguments
          
 
--  *object* An instance of `<exclusive-lock>`_.
+-  *object* An instance of `\<exclusive-lock\>`_.
 
 Values
       
@@ -1223,7 +1223,7 @@ Values
 Exceptions
           
 
-Implementations of *release* methods for subclasses of `<exclusive-lock>`_
+Implementations of *release* methods for subclasses of `\<exclusive-lock\>`_
 are permitted to signal a condition of the following class, which is a
 subclass of *<error>* :
 
@@ -1231,7 +1231,7 @@ subclass of *<error>* :
                    
 
 -  This may be signalled when an attempt is made to release an
-   `<exclusive-lock>`_ when the lock is not owned by the current thread.
+   `\<exclusive-lock\>`_ when the lock is not owned by the current thread.
 
 Description
            
@@ -1240,12 +1240,12 @@ Releases a lock that is owned by the calling thread. It is an error if
 the lock is not owned.
 
 The Threads library does not provide a method on *release* for
-`<exclusive-lock>`_, which is an open abstract class. Each concrete
+`\<exclusive-lock\>`_, which is an open abstract class. Each concrete
 subclass will have an applicable method which may signal errors
 according to the protocol described above.
 
 owned?
-~~~~~~
+------
 
 Open generic function
 '''''''''''''''''''''
@@ -1263,7 +1263,7 @@ owned? *object* => *owned?*
 Arguments
          
 
--  *object* An instance of `<exclusive-lock>`_.
+-  *object* An instance of `\<exclusive-lock\>`_.
 
 Values
       
@@ -1276,10 +1276,10 @@ Description
 Tests whether the exclusive lock has been claimed by the current thread.
 
 Recursive locks
-^^^^^^^^^^^^^^^
+---------------
 
 <recursive-lock>
-~~~~~~~~~~~~~~~~
+----------------
 
 Open instantiable primary class
 '''''''''''''''''''''''''''''''
@@ -1292,7 +1292,7 @@ The class of locks that can be locked recursively.
 Superclasses
             
 
-`<exclusive-lock>`_
+`\<exclusive-lock\>`_
 
 Description
            
@@ -1302,7 +1302,7 @@ the lock must later be released the same number of times. The lock will
 be freed on the last of these releases.
 
 wait-for
-~~~~~~~~
+--------
 
 Sealed method
 '''''''''''''
@@ -1320,7 +1320,7 @@ wait-for *object* #key *timeout* => *success*
 Arguments
          
 
--  *object* An instance of `<recursive-lock>`_.
+-  *object* An instance of `\<recursive-lock\>`_.
 -  *timeout* Time-out interval. If the value is *#f* (the default), the
    time-out interval never elapses. Otherwise the value should be a
    *<real>*, corresponding to the desired interval in seconds.
@@ -1341,7 +1341,7 @@ See also
 `wait-for`_.
 
 release
-~~~~~~~
+-------
 
 Sealed method
 '''''''''''''
@@ -1359,7 +1359,7 @@ release *object* #key => ()
 Arguments
          
 
--  *object* An instance of `<recursive-lock>`_.
+-  *object* An instance of `\<recursive-lock\>`_.
 
 Values
       
@@ -1373,7 +1373,7 @@ Releases a recursive lock, and makes it available if it has been
 released as many times as it was claimed with `wait-for`_.
 
 owned?
-~~~~~~
+------
 
 Sealed method
 '''''''''''''
@@ -1391,7 +1391,7 @@ owned? *object* => *owned?*
 Arguments
          
 
--  *object* An instance of `<recursive-lock>`_.
+-  *object* An instance of `\<recursive-lock\>`_.
 
 Values
       
@@ -1404,10 +1404,10 @@ Description
 Tests whether a recursive lock has been claimed by the current thread.
 
 Simple locks
-^^^^^^^^^^^^
+------------
 
 <simple-lock>
-~~~~~~~~~~~~~
+-------------
 
 Open instantiable primary class
 '''''''''''''''''''''''''''''''
@@ -1420,7 +1420,7 @@ A simple and efficient lock.
 Superclasses
             
 
-`<exclusive-lock>`_
+`\<exclusive-lock\>`_
 
 Description
            
@@ -1431,7 +1431,7 @@ mutual exclusion synchronization primitive. It is an error to lock a
 error being signalled, or deadlock occurring.
 
 wait-for
-~~~~~~~~
+--------
 
 Sealed method
 '''''''''''''
@@ -1449,7 +1449,7 @@ wait-for *object* #key *timeout* => *success*
 Arguments
          
 
--  *object* An instance of `<simple-lock>`_.
+-  *object* An instance of `\<simple-lock\>`_.
 -  *timeout* Time-out interval. If the value is *#f* (the default), the
    time-out interval never elapses. Otherwise the value should be a
    *<real>*, corresponding to the desired interval in seconds.
@@ -1470,7 +1470,7 @@ See also
 `wait-for`_.
 
 release
-~~~~~~~
+-------
 
 Sealed method
 '''''''''''''
@@ -1488,7 +1488,7 @@ release *object* #key => ()
 Arguments
          
 
--  *object* An instance of `<simple-lock>`_.
+-  *object* An instance of `\<simple-lock\>`_.
 
 Values
       
@@ -1506,7 +1506,7 @@ See also
 `release`_.
 
 owned?
-~~~~~~
+------
 
 Sealed method
 '''''''''''''
@@ -1524,7 +1524,7 @@ owned? *object* => *owned?*
 Arguments
          
 
--  *object* An instance of `<simple-lock>`_.
+-  *object* An instance of `\<simple-lock\>`_.
 
 Values
       
@@ -1537,10 +1537,10 @@ Description
 Tests whether a simple lock has been claimed by the current thread.
 
 Multiple reader / single writer locks
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------
 
 <read-write-lock>
-~~~~~~~~~~~~~~~~~
+-----------------
 
 Open instantiable primary class
 '''''''''''''''''''''''''''''''
@@ -1553,7 +1553,7 @@ The class of locks that can have multiple readers but only one writer.
 Superclasses
             
 
-`<exclusive-lock>`_
+`\<exclusive-lock\>`_
 
 Description
            
@@ -1582,7 +1582,7 @@ efficient and convenient means to protect data that is frequently read
 and may occasionally be written by multiple concurrent threads.
 
 wait-for
-~~~~~~~~
+--------
 
 Sealed method
 '''''''''''''
@@ -1600,7 +1600,7 @@ wait-for *object* #key *timeout* *mode*
 Arguments
          
 
--  *object* An instance of `<read-write-lock>`_.
+-  *object* An instance of `\<read-write-lock\>`_.
 -  *timeout* Time-out interval. If the value is *#f* (the default), the
    time-out interval never elapses. Otherwise the value should be a
    *<real>*, corresponding to the desired interval in seconds.
@@ -1629,7 +1629,7 @@ If the claim is successful, this method returns true; otherwise it
 returns false.
 
 release
-~~~~~~~
+-------
 
 Sealed method
 '''''''''''''
@@ -1647,7 +1647,7 @@ release object #key => ()
 Arguments
          
 
--  *object* An instance of `<read-write-lock>`_.
+-  *object* An instance of `\<read-write-lock\>`_.
 
 Values
       
@@ -1666,7 +1666,7 @@ is an error to release the lock, and an implementation is permitted to
 signal a *<not-owned-error>* condition.
 
 owned?
-~~~~~~
+------
 
 Sealed method
 '''''''''''''
@@ -1685,7 +1685,7 @@ owned? *object* => *owned?*
 Arguments
          
 
--  *object* An instance of `<read-write-lock>`_.
+-  *object* An instance of `\<read-write-lock\>`_.
 
 Values
       
@@ -1699,10 +1699,10 @@ Tests whether a read-write lock is owned — that is, has been locked in
 write mode — by the current thread.
 
 Notifications
-^^^^^^^^^^^^^
+-------------
 
 <notification>
-~~~~~~~~~~~~~~
+--------------
 
 Sealed instantiable class
 '''''''''''''''''''''''''
@@ -1721,7 +1721,7 @@ Superclasses
 Init-keywords
              
 
--  *lock:* An instance of `<simple-lock>`_.
+-  *lock:* An instance of `\<simple-lock\>`_.
    Required.
 
 Description
@@ -1731,7 +1731,7 @@ The class of objects that can be used to notify threads of a change of
 state elsewhere in the program. Notifications are used in association
 with locks, and are sometimes called *condition variables*. They may be
 used to support the sharing of data between threads using *monitors*.
-Each *<notification>* is permanently associated with a `<simple-lock>`_,
+Each *<notification>* is permanently associated with a `\<simple-lock\>`_,
 although the same lock may be associated with many notifications.
 
 The required *lock* is associated with the notification, and it is only
@@ -1829,7 +1829,7 @@ end method;
            
 
 associated-lock
-~~~~~~~~~~~~~~~
+---------------
 
 Function
 ''''''''
@@ -1847,12 +1847,12 @@ associated-lock *notification* => *lock*
 Arguments
          
 
--  *notification* An instance of `<notification>`_.
+-  *notification* An instance of `\<notification\>`_.
 
 Values
       
 
--  *lock* An instance of `<simple-lock>`_.
+-  *lock* An instance of `\<simple-lock\>`_.
 
 Description
            
@@ -1861,7 +1861,7 @@ Returns the lock associated with the notification object *notification*
 .
 
 wait-for
-~~~~~~~~
+--------
 
 Sealed method
 '''''''''''''
@@ -1879,7 +1879,7 @@ wait-for *notification* #key *timeout* => *success*
 Arguments
          
 
--  *notification* An instance of `<notification>`_.
+-  *notification* An instance of `\<notification\>`_.
 -  *timeout* Time-out interval. If the value is *#f* (the default), the
    time-out interval never elapses. Otherwise the value should be a
    *<real>*, corresponding to the desired interval in seconds.
@@ -1921,7 +1921,7 @@ condition of the following class, which is a subclass of *<error>* :
    current thread.
 
 release
-~~~~~~~
+-------
 
 Sealed method
 '''''''''''''
@@ -1940,7 +1940,7 @@ release *notification* #key => ()
 Arguments
          
 
--  *notification* An instance of `<notification>`_.
+-  *notification* An instance of `\<notification\>`_.
 
 Values
       
@@ -1970,7 +1970,7 @@ unblocked immediately, because it must first claim ownership of the
 notification’s associated lock.
 
 release-all
-~~~~~~~~~~~
+-----------
 
 Function
 ''''''''
@@ -1989,7 +1989,7 @@ release-all *notification* => ()
 Arguments
          
 
--  *notification* An instance of `<notification>`_.
+-  *notification* An instance of `\<notification\>`_.
 
 Exceptions
           
@@ -2013,10 +2013,10 @@ necessarily have to compete for the lock associated with the
 notification.
 
 Timers
-------
+======
 
 sleep
-~~~~~
+-----
 
 Function
 ''''''''
@@ -2048,10 +2048,10 @@ Blocks the current thread for the number of seconds specified in
 *interval*.
 
 Thread variables
-----------------
+================
 
 thread
-~~~~~~
+------
 
 Variable definition adjective
 '''''''''''''''''''''''''''''
@@ -2087,10 +2087,10 @@ define thread variable \*standard-output\*
                                  
 
 Dynamic binding
----------------
+===============
 
 dynamic-bind
-~~~~~~~~~~~~
+------------
 
 Statement macro
 '''''''''''''''
@@ -2156,7 +2156,7 @@ end
    
 
 An extended form of dynamic-bind
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+--------------------------------
 
 Some implementations of the Threads library may provide an extended form
 of *dynamic-bind* for binding places other than variables. The
@@ -2171,7 +2171,7 @@ portable code should not depend upon this feature.
 The extended form is described below.
 
 dynamic-bind
-~~~~~~~~~~~~
+------------
 
 Statement macro
 '''''''''''''''
@@ -2232,10 +2232,10 @@ object)
        
 
 Locked variables
-----------------
+================
 
 locked
-~~~~~~
+------
 
 Variable definition adjective
 '''''''''''''''''''''''''''''
@@ -2274,10 +2274,10 @@ Example
 define locked variable \*number-detected\* = 0;
 
 Conditional update
-------------------
+==================
 
 conditional-update!
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 Statement macro
 '''''''''''''''
@@ -2375,7 +2375,7 @@ end until
          
 
 atomic-increment!
-~~~~~~~~~~~~~~~~~
+-----------------
 
 Function macro
 ''''''''''''''
@@ -2434,7 +2434,7 @@ and returns the incremented value.
 atomic-increment!(\*number-detected\*, 2);
 
 atomic-decrement!
-~~~~~~~~~~~~~~~~~
+-----------------
 
 Function macro
 ''''''''''''''
@@ -2472,7 +2472,7 @@ same semantics as *atomic-increment!* with the exception that the
 *place* is decremented.
 
 An extended form of conditional-update!
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+---------------------------------------
 
 Some implementations of the Threads library may provide an extended form
 of *conditional-update!* for updating places other than locked
@@ -2486,7 +2486,7 @@ implementations are not mandated to implement the extended form of
 feature.
 
 conditional-update!
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 Statement macro
 '''''''''''''''
