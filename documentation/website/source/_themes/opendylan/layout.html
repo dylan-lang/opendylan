@@ -46,6 +46,12 @@
            %}><a href="{{ pathto(page) }}">{{ caption|e }}</a></li>
          {% endfor %}
          </ul>
+         <div class="pull-right">
+           <form method="GET" action="http://search.yahoo.com/search">
+             <input type="text" name="va" size="16" maxlength="255" value="" placeholder="Search">
+             <input type="hidden" name="vs" value="opendylan.org">
+           </form>
+         </div>
        </div>
      </div>
     </div>
