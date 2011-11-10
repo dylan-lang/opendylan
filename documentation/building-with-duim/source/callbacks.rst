@@ -16,12 +16,11 @@ button or choosing a menu command consists of two things:
 For each gadget in the GUI, you need to specify which callbacks to use.
 There are several different types of callback, depending on the type of
 event for which you want to define behavior.
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-#. You need to define the callback functions themselves. These are the
-   functions that are invoked when a particular callback type is
-   detected, and are the functions you use to define the correct
-   behavior for your application.
+You need to define the callback functions themselves. These are the
+functions that are invoked when a particular callback type is
+detected, and are the functions you use to define the correct behavior
+for your application.
 
 In addition, you need to set up the basic data structures that allow you
 to work with tasks in your application.
@@ -49,7 +48,7 @@ different input devices or notification of low resources). If you are
 just using gadgets, then you only ever need to use callbacks.
 
 Defining the underlying data structures for tasks
--------------------------------------------------
+=================================================
 
 Before defining any real callbacks, it is time to consider how you can
 represent task lists, and the information contained in them. This is
@@ -66,27 +65,24 @@ way to represent these is by defining a *<task-list>* class and a
 The definition of *<task-list>*, below, contains three slots:
 
 *task-list-tasks*
-'''''''''''''''''
 
--  This slot specifies a sequence of tasks that are contained in the
+   This slot specifies a sequence of tasks that are contained in the
    task list. Each object in the sequence will be an instance of
    *<task>*. The default for new task lists is an empty stretchy
    vector. An init-keyword has been specified so that this slot can be
    set when an instance of the class is initialized.
 
 *task-list-filename*
-''''''''''''''''''''
 
--  This slot specifies the file on disk to which the task list has been
+   This slot specifies the file on disk to which the task list has been
    saved, if it has been saved at all. The default for new task lists is
    *#f*, since the task list has not yet been saved to disk. An
    init-keyword has been specified so that this slot can be set when an
    instance of the class is initialized.
 
 *task-list-modified?*
-'''''''''''''''''''''
 
--  The purpose for this slot is less obvious. It is useful to flag
+   The purpose for this slot is less obvious. It is useful to flag
    whether or not a task list has been modified so that, for instance,
    the *Save* command in the application can be disabled if the task
    list is unmodified. There is no init-keyword defined for this class,
@@ -199,7 +195,7 @@ definition. This is described in `See Updating the user
 interface <callbacks.htm#94307>`_.
 
 Specifying a callback in the definition of each gadget
-------------------------------------------------------
+======================================================
 
 As you have already seen when using the *not-yet-implemented* callback,
 providing a callback for a gadget is just a matter of specifying another
@@ -208,7 +204,6 @@ that you can specify the callback function to use.
 
 If you wish, you can define the callback function inline, making the
 definition itself the value part of the keyword-value pair.
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 This can be useful for a simple callback function that you only need to
 invoke from a single callback type in a single pane. However, if several
@@ -216,9 +211,9 @@ panes, or several types of callback, need to invoke the same callback
 function, you need to define the function explicitly in each gadget that
 uses it.
 
-#. Alternatively, you can define a callback function explicitly in your
-   application code, and then refer to it by name in the keyword-value
-   pair.
+Alternatively, you can define a callback function explicitly in your
+application code, and then refer to it by name in the keyword-value
+pair.
 
 This method is best for portability and reusability of your code, since
 the same callback function can be referred to by name in as many gadgets
@@ -333,7 +328,7 @@ callback functions listed above. These other functions and methods are
 called by some of the callbacks themselves.
 
 Defining the callbacks
-----------------------
+======================
 
 This section shows you how to define the callbacks that are necessary in
 the task list manager, as well as any other associated functions and
@@ -356,7 +351,7 @@ produce code that is more easily reusable, either in other parts of a
 developing application, or in completely different applications.
 
 Handling files in the task list manager
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------------
 
 To begin with, you will define the functions and methods that let you
 save files to disk and load them back into the task list manager. Once
@@ -400,7 +395,7 @@ The following sections present and explain the code for each of these
 methods and functions in turn.
 
 The open-file method
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 The code for open-file is shown below. Add this code to *frame.dylan*.
 
@@ -556,7 +551,7 @@ correctly displayed on the screen. The method *refresh-task-frame* is
 described in `See Updating the user interface <callbacks.htm#94307>`_.
 
 The save-file method
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 The code for *save-file* is as follows:
 
@@ -602,7 +597,7 @@ Notice that the second of these arguments may be *#f*, if the task list
 has not previously been saved to disk.
 
 The save-as-file method
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 The code for *save-as-file* is as follows:
 
@@ -729,7 +724,7 @@ function <callbacks.htm#88460>`_ and the method *refresh-task-frame* is
 described in `See Updating the user interface <callbacks.htm#94307>`_.
 
 The load-task-list function
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 The code for *load-task-list* is shown below. Because this function does
 not use any DUIM code, it is described only briefly.
@@ -811,7 +806,7 @@ technique to use when you wish to save and load symbol information in an
 application.
 
 The save-task-list function
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 The code for *save-task-list* is shown below. Because this function does
 not use any DUIM code, it is described only briefly.
@@ -871,27 +866,30 @@ Finally, *save-task-list* returns *#t* to indicate that the file has
 been successfully saved.
 
 Adding and removing tasks from the task list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------------------
 
 This section describes the functions and methods necessary for adding to
 the task list and removing tasks from the task list. A total of two
 methods and two functions are necessary.
 
 *frame-add-task*
-''''''''''''''''
 
--  This prompts the user for the details of a new task and adds it to
+   This prompts the user for the details of a new task and adds it to
    the list.
 
 *frame-remove-task*
-'''''''''''''''''''
 
--  This removes the currently selected task from the list, prompting the
+   This removes the currently selected task from the list, prompting the
    user before removing it completely.
--  *add-task* This adds an instance of *<task>* to an instance of
+
+*add-task*
+
+   This adds an instance of *<task>* to an instance of *<task-list>*.
+
+*remove-task*
+
+   This removes an instance of *<task>* from an instance of
    *<task-list>*.
--  *remove-task* This removes an instance of *<task>* from an instance
-   of *<task-list>*.
 
 As with the file handling code, DUIM code and non-DUIM code has been
 separated. The methods beginning with *frame-* deal with the GUI-related
@@ -902,7 +900,7 @@ Add the definitions of the methods to *frame.dylan*, and the
 definitions of the functions to *task-list.dylan*.
 
 DUIM support for adding and removing tasks
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------------
 
 This section describes the methods necessary to provide support in the
 task list manager GUI for adding and removing tasks.
@@ -962,10 +960,8 @@ for the method, repeated below, is executed.
 This consists of four expressions around which is wrapped an *if*
 statement.
 
-The first expression creates a new task from the values of the *name*
-and *priority* local variables.
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-
+#. The first expression creates a new task from the values of the *name*
+   and *priority* local variables.
 #. The second expression adds the new task to task list, by calling the
    *add-task* function.
 #. The third expression refreshes the display of the task list in the
@@ -1057,7 +1053,7 @@ is described in `See Updating the user
 interface <callbacks.htm#94307>`_.
 
 Non-DUIM support for adding and removing tasks
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------------------
 
 This section describes the functions necessary for adding an instance of
 *<task>* to a *<task-list>*, and removing a *<task>* from a
@@ -1101,7 +1097,7 @@ and returns no values. The function first removes the *<task>* from the
 that a change in the *<task-list>* has occurred.
 
 Updating the user interface
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 This section describes a number of miscellaneous methods that are
 required for smooth operation of the task list manager. Each of the
@@ -1116,39 +1112,35 @@ section, together with a brief description of each one:
    Initializing a new instance of <task-frame> <callbacks.htm#84277>`_.
 
 *frame-selected-task*
-'''''''''''''''''''''
 
--  This method returns the task that is currently selected in the task
+   This method returns the task that is currently selected in the task
    list manager. This method is described in `See Determining and
    setting the selected task <callbacks.htm#98481>`_.
 
 *frame-selected-task-setter*
-''''''''''''''''''''''''''''
 
--  This is a setter method for frame-selected-task, and is used to
+   This is a setter method for frame-selected-task, and is used to
    select or deselect item in the task list manager. This method is
    described in `See Determining and setting the selected
    task <callbacks.htm#98481>`_.
 
 *note-task-selection-change*
-''''''''''''''''''''''''''''
 
--  Two methods are defined that deal with updating the GUI whenever a
+   Two methods are defined that deal with updating the GUI whenever a
    change is made to the task selection state. This method is described
    in `See Enabling and disabling buttons in the
    interface <callbacks.htm#42654>`_.
 
 *refresh-task-frame*
-''''''''''''''''''''
 
--  This method can be called to refresh the task frame at any time. This
+   This method can be called to refresh the task frame at any time. This
    method is described in `See Refreshing the list of
    tasks <callbacks.htm#28478>`_.
 
 Each of these methods should be added to the file *frame.dylan*.
 
 Initializing a new instance of <task-frame>
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------------------
 
 The code below provides an *initialize* method for the class
 *<task-frame>*. This simply ensures that the display in a
@@ -1172,7 +1164,7 @@ the task list manager by double-clicking on a file of tasks.
 Add the code for this method to *frame.dylan*.
 
 Determining and setting the selected task
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------------
 
 Two methods are used to determine which task is selected in the task
 list manager, and to set a specific task in the task list manager:
@@ -1244,7 +1236,7 @@ tasks <callbacks.htm#29566>`_.
 Add the code for these methods to *frame.dylan*.
 
 Enabling and disabling buttons in the interface
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------------------
 
 The two methods for *note-task-selection-change* make a number of
 changes to the GUI of the task list manager, to ensure that the correct
@@ -1400,7 +1392,7 @@ to give a final definition for this pane as follows:
 Add the code for these methods to *frame.dylan*.
 
 Refreshing the list of tasks
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 The *refresh-task-frame* method is called whenever the list of tasks
 needs to be refreshed for whatever reason. This happens most commonly
@@ -1491,7 +1483,7 @@ by calling *note-task-selection-change*.
 Add the code for this method to *frame.dylan*.
 
 Creating an information dialog
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 The following function displays a simple dialog box that provides
 information about the application. This dialog is displayed when you
@@ -1504,7 +1496,7 @@ choose the *Help > About* menu command.
     end function about-task;
 
 Exiting the task list manager
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 The *exit-task* method allows you to exit the task list manager. It is
 invoked by choosing *File > Exit*. The definition of this method is
@@ -1538,7 +1530,7 @@ to disk. This ensures that the user does not lose any work. Next, the
 window.
 
 Enhancing the task list manager
--------------------------------
+===============================
 
 This concludes the tutorial on building application with DUIM. At this
 point, you can build and run a functional task list manager, but it is a
