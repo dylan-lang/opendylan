@@ -119,24 +119,18 @@ define constant $o_rdwr   = 2;
 define constant $o_creat
   = select ($os-name)
       #"linux"              =>   64;
-      #"Solaris2", #"IRIX5" =>  256;
-      #"SunOS4", #"OSF3"    =>  512;
       #"freebsd", #"darwin" => #x200;
     end;
 
 define constant $o_trunc
   = select ($os-name)
-      #"Solaris2", #"IRIX5",  #"linux" =>  512;
-      #"SunOS4", #"OSF3"               => 1024;
-      #"freebsd", #"darwin"            => #x400;
+      #"linux"              =>   512;
+      #"freebsd", #"darwin" => #x400;
     end;
 
 define constant $o_sync
   = select ($os-name)
-      #"Solaris2", #"IRIX5" =>    16;
       #"linux"              =>  4096;
-      #"SunOS4"             =>  8192;
-      #"OSF3"               => 16384;
       #"freebsd", #"darwin" => #x80;
     end;
 

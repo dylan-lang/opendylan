@@ -112,7 +112,7 @@ define function make-jam-state
     select($os-name)
       #"win32" =>
         jam-variable(state, "NT") := #["true"];
-      #"linux", #"freebsd", #"solaris", #"osf3", #"darwin" =>
+      #"linux", #"freebsd", #"darwin" =>
         jam-variable(state, "UNIX") := #["true"];
     end select;
     

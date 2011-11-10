@@ -1290,9 +1290,8 @@ extern DMINT primitive_machine_word_unsigned_double_shift_right(DMINT, DMINT, DM
 
 #include <math.h>
 
-/* SunOS and Solaris also don't include single precision functions in <math.h> (Sigh)
-   Win32 only defines the single precision functions for C++ (Huh?) */
-#if defined(sun) || defined(WIN32)
+/* Win32 only defines the single precision functions for C++ (Huh?) */
+#if defined(WIN32)
 #define sqrtf(x)  (DSFLT)sqrt((DDFLT)x)
 #define logf(x)   (DSFLT)log((DDFLT)x)
 #define expf(x)   (DSFLT)exp((DDFLT)x)
