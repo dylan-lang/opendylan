@@ -15,7 +15,7 @@ define function main(name, arguments)
   select($os-name)
     #"win32" =>
       jam-variable(state, "NT") := #["true"];
-    #"linux", #"freebsd", #"solaris", #"osf3" =>
+    #"linux", #"freebsd", #"darwin" =>
       jam-variable(state, "UNIX") := #["true"];
   end select;
 

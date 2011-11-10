@@ -568,21 +568,6 @@ DMINT primitive_unwrap_abstract_integer(D x) {
 }
 #endif
 
-/* SunOS4 doesn't include ldiv and friends in <stdlib.h> (Sigh) */
-#if defined(sun) && !defined(__svr4__)
-typedef struct ldiv_t {
-  long quot;
-  long rem;
-} ldiv_t;
-
-ldiv_t ldiv(long x, long y) {
-  ldiv_t z;
-  z.quot = x / y;
-  z.rem = x % y;
-  return(z);
-}
-#endif
-
 DMINT primitive_machine_word_divide(DMINT x, DMINT y) {
   ldiv_t z = ldiv(x, y);
   MV2((DMINT)z.quot, (DMINT)z.rem);
