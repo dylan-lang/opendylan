@@ -27,6 +27,10 @@
       body {
         padding-top: 50px;
       }
+      .topbar .logo {
+        float: left;
+        padding: 5px 5px;
+      }
     </style>
 {% endblock %}
 
@@ -34,6 +38,7 @@
    <div class="topbar" data-scrollspy="scrollspy">
      <div class="fill">
        <div class="container">
+         <img class="logo" src="{{ pathto('_static/images/dylan-squares.png', 1) }}">
          <a class="brand" href="{{ pathto('index') }}">Open Dylan</a>
          <ul id="nav">
          {% for page, caption in navigation_bar %}
