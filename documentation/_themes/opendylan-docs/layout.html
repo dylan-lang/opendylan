@@ -1,0 +1,102 @@
+{#
+    opendylan/layout.html
+    ~~~~~~~~~~~~~~~~~
+
+    :copyright: Copyright 2011 by the Dylan Hackers.
+    :license: MIT.
+#}
+{% extends "basic/layout.html" %}
+{% set css_files = css_files + ['_static/opendylan.org/css/bootstrap/1.4.0/bootstrap.min.css',
+                                '_static/opendylan.org/css/opendylan-docs.css'] %}
+{% set script_files = script_files + ['_static/opendylan.org/js/bootstrap-scrollspy.js'] %}
+
+{% set navigation_bar = [
+    ('index', 'Home'),
+    ('about/index', 'About'),
+    ('news/index', 'News'),
+    ('documentation/index', 'Documentation'),
+    ('community/index', 'Community'),
+    ('download/index', 'Download'),
+] -%}
+{% set active_page = pagename|default('index') -%}
+
+{% block extrahead %}
+    <!--[if lt IE 9]>
+      <script src="{{ pathto('_static/opendylan.org/js/html5shim/html5.js', 1) }}"></script>
+    <![endif]-->
+{% endblock %}
+
+{% block header %}
+   <div class="topbar" data-scrollspy="scrollspy">
+     <div class="fill">
+       <div class="container">
+         <img class="logo" src="{{ pathto('_static/opendylan.org/images/dylan-squares.png', 1) }}">
+         <a class="brand" href="http://new.opendylan.org/">Open Dylan</a>
+         <ul id="nav">
+         {% for page, caption in navigation_bar %}
+           <li{% if page == 'documentation/index' %} class="active"{% endif
+           %}><a href="http://new.opendylan.org/{{ page }}.html">{{ caption|e }}</a></li>
+         {% endfor %}
+         </ul>
+         <div class="pull-right">
+           <form class="search" action="search.html" method="get">
+             <input type="text" name="q" placeholder="Search this document" />
+             <input type="submit" value="Go" />
+             <input type="hidden" name="check_keywords" value="yes" />
+             <input type="hidden" name="area" value="default" />
+           </form>
+         </div>
+       </div>
+     </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+      <div class="row">
+        <div class="content span12">
+        {%- block document %}
+          {{ super() }}
+        {%- endblock %}
+        </div>
+        <div class="doc-sidebar span4">
+          {%- block sidebartoc %}
+          <h3>{{ _('Table Of Contents') }}</h3>
+          {{ toctree() }}
+          {%- endblock %}
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    <footer class="container">
+      <div class="pull-left">
+        {%- if show_source and has_source and sourcename %}
+          <a href="{{ pathto('_sources/' + sourcename, true)|e }}"
+             rel="nofollow">{{ _('Show Source') }}</a>
+        {%- endif %}
+      </div>
+
+      <div class="pull-right">
+        {%- if show_copyright %}
+          {%- if hasdoc('copyright') %}
+            {% trans path=pathto('copyright'), copyright=copyright|e %}&copy; <a href="{{ path }}">Copyright</a> {{ copyright }}.{% endtrans %}
+          {%- else %}
+            {% trans copyright=copyright|e %}&copy; Copyright {{ copyright }}.{% endtrans %}
+          {%- endif %}
+        {%- endif %}
+        {%- if last_updated %}
+          {% trans last_updated=last_updated|e %}Last updated on {{ last_updated }}.{% endtrans %}
+        {%- endif %}
+        {%- if show_sphinx %}
+          {% trans sphinx_version=sphinx_version|e %}Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> {{ sphinx_version }}.{% endtrans %}
+        {%- endif %}
+      </div>
+      <div class="clearer"></div>
+    </footer>
+{% endblock %}
+
+{% block relbar1 %}{% endblock %}
+{% block relbar2 %}{% endblock %}
