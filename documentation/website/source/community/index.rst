@@ -68,5 +68,5 @@ Social Media
 ============
 
 - `Twitter <https://twitter.com/DylanLanguage>`_
-- Google and Facebook pages coming soon!
+- `Google Plus <https://plus.google.com/109036375650377247852>`_
 
