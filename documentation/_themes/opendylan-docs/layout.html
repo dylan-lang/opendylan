@@ -24,6 +24,22 @@
     <!--[if lt IE 9]>
       <script src="{{ pathto('_static/opendylan.org/js/html5shim/html5.js', 1) }}"></script>
     <![endif]-->
+    <script>
+      (function($) {
+        $(function() {
+          var int_sideheight = $(window).height() - $('.topbar').height() - 10;
+          $('.pinned').css('height', int_sideheight+'px');
+          $(window).scroll(function() {
+            if ($(this).scrollTop() > 0) {
+              $('.pinned').addClass('pin-set').css('height','100%');
+            } else {
+              var int_sideheight = $(window).height() - 10;
+              $('.pinned').removeClass('pin-set').css('height', int_sideheight+'px');
+            }
+          });
+        });
+      })(jQuery);
+    </script>
 {% endblock %}
 
 {% block header %}
@@ -60,10 +76,12 @@
         {%- endblock %}
         </div>
         <div class="doc-sidebar span4">
-          {%- block sidebartoc %}
-          <h3>{{ _('Table Of Contents') }}</h3>
-          {{ toctree() }}
-          {%- endblock %}
+          <div class="pinned">
+            {%- block sidebartoc %}
+            <h3>{{ _('Table Of Contents') }}</h3>
+            {{ toctree() }}
+            {%- endblock %}
+          </div>
         </div>
       </div>
       <div class="clearer"></div>
