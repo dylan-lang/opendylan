@@ -61,12 +61,12 @@ manager:
       menu-item "Open" = open-file,
         accelerator: make-keyboard-gesture(#"o", #"control"),
         documentation: "Opens an existing file.";
-    menu-item "Save" = save-file,
+      menu-item "Save" = save-file,
         accelerator: make-keyboard-gesture(#"s", #"control"),
         documentation: "Saves the current file to disk.";
-    menu-item "Save As..." = save-as-file,
+      menu-item "Save As..." = save-as-file,
         documentation: "Saves the current file with a new name.";
-    menu-item "Exit" = exit-task,
+      menu-item "Exit" = exit-task,
         accelerator: make-keyboard-gesture(#"f4", #"alt"),
         documentation: "Exits the application.";
     end command-table *file-command-table*;
