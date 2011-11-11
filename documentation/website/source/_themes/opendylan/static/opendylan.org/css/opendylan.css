@@ -1,0 +1,10 @@
+body {
+  padding-top: 50px;
+}
+.topbar .logo {
+  float: left;
+  padding: 5px 5px;
+  height: 30px;
+  width: 32px;
+}
+

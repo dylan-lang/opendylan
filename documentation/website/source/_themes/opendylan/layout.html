@@ -6,7 +6,8 @@
     :license: MIT.
 #}
 {% extends "basic/layout.html" %}
-{% set css_files = css_files + ['_static/opendylan.org/css/bootstrap/1.4.0/bootstrap.min.css'] %}
+{% set css_files = css_files + ['_static/opendylan.org/css/bootstrap/1.4.0/bootstrap.min.css',
+                                '_static/opendylan.org/css/opendylan.css'] %}
 {% set script_files = script_files + ['_static/opendylan.org/js/bootstrap-scrollspy.js'] %}
 
 {% set navigation_bar = [
@@ -23,15 +24,6 @@
     <!--[if lt IE 9]>
       <script src="{{ pathto('_static/opendylan.org/js/html5shim/html5.js', 1) }}"></script>
     <![endif]-->
-    <style type="text/css">
-      body {
-        padding-top: 50px;
-      }
-      .topbar .logo {
-        float: left;
-        padding: 5px 5px;
-      }
-    </style>
 {% endblock %}
 
 {% block header %}
