@@ -5,6 +5,12 @@ Community
 Here are some resources for keeping up with what's going on in the Dylan hacker
 community...
 
+Development
+===========
+
+- `All of our repositories on GitHub <https://github.com/dylan-lang/>`_
+- `Open bugs for Open Dylan <https://github.com/dylan-lang/opendylan/issues>`_
+
 The #dylan IRC channel
 ======================
 
@@ -57,3 +63,10 @@ interest and involvement:
 __ https://lists.opendylan.org/pipermail/hackers/
 __ https://lists.opendylan.org/pipermail/announce/
 __ https://lists.opendylan.org/pipermail/chatter/
+
+Social Media
+============
+
+- `Twitter <https://twitter.com/DylanLanguage>`_
+- Google and Facebook pages coming soon!
+
