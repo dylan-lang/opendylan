@@ -8,17 +8,12 @@ Binary Releases
 .. warning:: These builds are quite old. We're working hard to have new builds posted
    soon, hopefully by the end of November, 2011.
 
-Open Dylan on Linux, Mac OS X and FreeBSD
------------------------------------------
+Open Dylan IDE
+--------------
 
-The README file inside the tarball describes installation and basic
-usage. The easiest way is extracting the tarball in /usr/local. The
-Linux platform should have binutils installed, in order to allow
-linking. Note that these versions only have a command-line compiler
-and no IDE.
-
-Open Dylan on Windows
----------------------
+.. note:: This is currently only available on Windows. Other platforms need
+   to use the command line tools. The Windows IDE installer also includes
+   the command line tools.
 
 For installation, double-click on the installer, and follow instructions.
 You need to have either the PellesC linker or the linker of VC++ 6.0, 7.0
@@ -29,6 +24,19 @@ or the current .NET platform SDK installed.
 +=======================+====================+====================+=============+
 | `Windows (32 bit)`_   | 1.0beta5           | June 21, 2009      | ...         |
 +-----------------------+--------------------+--------------------+-------------+
+
+Open Dylan Command Line Tools
+-----------------------------
+
+The README file inside the tarball describes installation and basic
+usage. The easiest way is extracting the tarball in /usr/local. The
+Linux platform should have binutils installed, in order to allow
+linking. Note that these versions only have a command-line compiler
+and no IDE.
+
++-----------------------+--------------------+--------------------+-------------+
+| Platform              | Version            | Date Released      | Revision ID |
++=======================+====================+====================+=============+
 | `Mac OS X (Intel)`_   | 1.0beta4           | April 29, 2007     | ...         |
 +-----------------------+--------------------+--------------------+-------------+
 | `Mac OS X (PowerPC)`_ | 1.0beta4           | July 10, 2007      | ...         |
