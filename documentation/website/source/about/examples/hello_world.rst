@@ -6,7 +6,7 @@ The canonical "Hello World" program in Dylan.
 
 File library.dylan:
 
-.. code-block::dylan
+.. code-block:: dylan
 
   Module: dylan-user
 
@@ -20,7 +20,7 @@ File library.dylan:
 
 File hello.dylan:
 
-.. code-block::dylan
+.. code-block:: dylan
 
   Module: hello
 
