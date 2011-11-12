@@ -443,13 +443,12 @@ defining the overall layout of the panes in a frame class. You need to
 create the tool bar as a pane in the frame definition, and then
 incorporate it using the ``tool-bar`` clause, as shown below:
 
-pane task-tool-bar (frame)
+.. code-block:: dylan
 
-make(<tool-bar>, child: ...);
-
-// more definitions here
-
-tool-bar (frame) frame.task-tool-bar;
+    pane task-tool-bar (frame)
+      make(<tool-bar>, child: ...);
+      // ...more definitions here...
+      tool-bar (frame) frame.task-tool-bar;
 
 A tool bar has a layout as its child, and each button in the tool bar is
 defined as a child of that layout. You can either define each button
@@ -465,56 +464,41 @@ to do this, DUIM attempts to use the same buttons in two different parts
 of the interface, with undefined results.) A complete definition of a
 simple tool bar containing two buttons is as follows:
 
-pane task-tool-bar (frame)
+.. code-block:: dylan
 
-make(<tool-bar>, child: horizontally ()
-
-frame.add-button;
-
-frame.remove-button
-
-end);
-
-// more definitions here
-
-tool-bar (frame) frame.task-tool-bar;
+    pane task-tool-bar (frame)
+      make(<tool-bar>,
+	   child: horizontally ()
+		    frame.add-button;
+		    frame.remove-button
+		  end);
+      // ...more definitions here...
+      tool-bar (frame) frame.task-tool-bar;
 
 A tool bar that only contains two buttons is on the lean side, however,
 so let’s add two more buttons to open a file and save a file to disk.
 
-pane open-button (frame)
+.. code-block:: dylan
 
-make(<push-button>, label: "Open file",
-
-activate-callback: not-yet-implemented);
-
-pane save-button (frame)
-
-make(<push-button>, label: "Save file",
-
-activate-callback: not-yet-implemented);
-
-// more definitions here
-
-pane task-tool-bar (frame)
-
-make(<tool-bar>,
-
-child: horizontally ()
-
-frame.open-button;
-
-frame.save-button;
-
-frame.add-button;
-
-frame.remove-button
-
-end);
-
-// more definitions here
-
-tool-bar (frame) frame.task-tool-bar;
+    pane open-button (frame)
+      make(<push-button>,
+           label: "Open file",
+           activate-callback: not-yet-implemented);
+    pane save-button (frame)
+      make(<push-button>,
+           label: "Save file",
+           activate-callback: not-yet-implemented);
+    // ...more definitions here...
+    pane task-tool-bar (frame)
+      make(<tool-bar>,
+           child: horizontally ()
+                    frame.open-button;
+                    frame.save-button;
+                    frame.add-button;
+                    frame.remove-button
+                  end);
+    // ...more definitions here...
+    tool-bar (frame) frame.task-tool-bar;
 
 More commonly, an icon is used to label buttons in a tool bar, rather
 than a text label. You can do this by supplying an instance of ``<image>``
@@ -548,13 +532,12 @@ to adding a tool bar: you need to define a pane that describes the
 status bar, and then you need to incorporate it using the ``status-bar``
 clause.
 
-pane task-status-bar (frame)
+.. code-block:: dylan
 
-make(<status-bar>, label: "Task Manager");
-
-// more definitions here
-
-status-bar (frame) frame.task-status-bar;
+    pane task-status-bar (frame)
+      make(<status-bar>, label: "Task Manager");
+      // ...more definitions here...
+      status-bar (frame) frame.task-status-bar;
 
 Now you have added a status bar to the application. The next step is to
 glue all the pieces together once again to create your modified frame
@@ -618,7 +601,7 @@ The *label key* is a function which is passed an entry from the sequence
 and returns a string to use as the label.
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-Assigning *first* to the label key of *priority-box* ensures that the
+Assigning ``first`` to the label key of ``priority-box`` ensures that the
 first element from each sub-list of ``$priority-items`` (the string) is
 used as the label for the appropriate item. Thus, the first button in
 priority box is labeled “Low”.
@@ -627,28 +610,28 @@ The *value key* is a function which is passed an entry and returns the
 logical value of the entry.
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-Assigning *second* to the value key of *priority-box* ensures that the
+Assigning ``second`` to the value key of ``priority-box`` ensures that the
 second element from each sub-list of ``$priority-items`` (the symbol) is
 used as the value for the appropriate item. Thus, the first button in
 priority box has the value ``#"low"``.
 
-Lastly, *priority-box* is given a default value: ``#"medium"``. This
+Lastly, ``priority-box`` is given a default value: ``#"medium"``. This
 ensures that the button labeled “Medium” is selected by default whenever
-*priority-box* is first created.
+``priority-box`` is first created.
 
-The definitions for *add-button*, *remove-button*, and *task-list*
+The definitions for ``add-button``, ``remove-button``, and ``task-list``
 remain unchanged from the initial design. In addition, you need to add
-the definitions for *open-button* and *save-button* described in `See
+the definitions for ``open-button`` and ``save-button`` described in `See
 Adding a tool bar <improve.htm#32725>`_.
 
 You also need to add in the definitions for the tool bar and status bar
 themselves, as described in `See Adding a tool bar <improve.htm#32725>`_
 and `See Adding a status bar <improve.htm#26367>`_.
 
-The definition for *task-layout* has become much simpler. Because you
+The definition for ``task-layout`` has become much simpler. Because you
 have added buttons to the tool bar, the main layout for the application
-has reduced to a single column layout whose children are *task-list* and
-*priority-box*.
+has reduced to a single column layout whose children are ``task-list`` and
+``priority-box``.
 
 The definition for the new design of the frame class now looks as
 follows (button definitions vary slightly for the Task List 2 project,
@@ -758,7 +741,7 @@ keyword title: = "Task List Manager";
 
 end frame <task-frame>;
 
-Note that this definition does not incorporate the original *task-text*
+Note that this definition does not incorporate the original ``task-text``
 pane defined in `See Defining a new frame class <improve.htm#66956>`_.
 In fact, this part of the original interface is handled differently in
 the final design, and is re-implemented in `See Creating a dialog for
@@ -767,7 +750,7 @@ adding new items <improve.htm#89811>`_.
 Creating a dialog for adding new items
 --------------------------------------
 
-You may be wondering what has happened to *task-text*, the text field
+You may be wondering what has happened to ``task-text``, the text field
 in which you typed the text of each new task. In the new design, this is
 moved to a new dialog box that is popped up whenever you choose a
 command to add a new task to the list. This section shows you how to
@@ -775,7 +758,7 @@ define this dialog.
 
 The method ``prompt-for-task`` below creates and displays a dialog that
 asks the user to type the text for a new task. The definition of
-*task-text* is very similar to the definition you provided in the
+``task-text`` is very similar to the definition you provided in the
 initial design, with the exception that the activate callback exits the
 dialog, rather than calling the ``not-yet-implemented`` function.
 
@@ -869,6 +852,6 @@ specifically for this dialog.
 Note also that *OK* and *Cancel* buttons are generated automatically for
 a dialog box; you do not need to define them explicitly.
 
-Later on, the activate callback you define for the *add-button* pane
+Later on, the activate callback you define for the ``add-button`` pane
 calls this method, then inserts the return value into the list
-*task-list*.
+``task-list``.

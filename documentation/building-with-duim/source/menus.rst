@@ -6,8 +6,8 @@ Now it is time to consider adding some menus to your application. There
 are two basic ways that you can create a system of menus for your
 application:
 
--  Design a hierarchical series of panes using the *<menu-bar>*,
-   *<menu>*, and various menu buttons classes, and glue the elements of
+-  Design a hierarchical series of panes using the ``<menu-bar>``,
+   ``<menu>``, and various menu buttons classes, and glue the elements of
    this design together in the correct order.
 -  Use a command table.
 
@@ -52,7 +52,7 @@ level in the menu hierarchy is the menu bar itself. The menu bar
 contains each menu defined for the application and each menu contains
 the menu commands that themselves perform operations. Once the panes
 have been defined, the menu bar needs to be included in the frame using
-the *menu-bar* clause.
+the ``menu-bar`` clause.
 
 First of all, you can create a pane that defines the menu bar itself as
 follows:
@@ -90,11 +90,11 @@ Next, define the File and Tasks menus themselves:
            children: vector(frame.about-menu-button));
 
 Finally, you need to define the menu commands themselves. A command that
-appears on a menu is defined as an instance of *<menu-button>*, and so
+appears on a menu is defined as an instance of ``<menu-button>``, and so
 there is a strong similarity between these buttons and some of the
 buttons already defined. DUIM also generates mnemonics for each menu
 item; thus, the items appear as *File* and *Edit*, and so forth. (Note
-that the *make-keyboard-gesture* function that appears below is defined
+that the ``make-keyboard-gesture`` function that appears below is defined
 in `See Keyboard accelerators <menus.htm#34519>`_.)
 
 .. code-block:: dylan
@@ -176,9 +176,9 @@ Documentation strings
 
 Documentation strings let you provide brief online help for gadgets such
 as menu buttons. You can specify a documentation string for any gadget
-using the *documentation:* init-keyword. Although you can make whatever
-use you want of these strings, using the *gadget-documentation* and
-*gadget-documentation-setter* methods, documentation strings for menu
+using the ``documentation:`` init-keyword. Although you can make whatever
+use you want of these strings, using the ``gadget-documentation`` and
+``gadget-documentation-setter`` methods, documentation strings for menu
 buttons are used in status bars without any need for special action on
 your part. If you display a menu and move the mouse pointer over the
 items in the menu, then the documentation string defined for each item
@@ -200,7 +200,7 @@ To specify a keyboard accelerator, you need to specify an alphanumeric
 character, or a function key, together with any modifier keys (such as
 the CONTROL or ALT keys) that should be held down while the alphanumeric
 character is pressed. You actually create a keyboard accelerator by
-calling the *make* method on *<keyboard-gesture>*, though to make it a
+calling the ``make`` method on ``<keyboard-gesture>``, though to make it a
 little easier, define the function below, which is used in the
 definition of each menu button.
 
@@ -235,19 +235,19 @@ Gluing the final design together
 --------------------------------
 
 You can now add the definitions of the menu bar, menus, and menu
-buttons, to the definition of the *<task-frame>* class, to give the code
+buttons, to the definition of the ``<task-frame>`` class, to give the code
 shown below. At this stage, the only thing missing from the final
 application are real callback functions. Callbacks are dealt with in
 `See Adding Callbacks to the Application <callbacks.htm#15598>`_.
 
-Note that the final definition of *<task-frame>* includes the definition
-of a slot: *frame-task-list*. This takes an instance of the class
-*<task-list>* as a value, the default value being an empty *<task-list>*.
+Note that the final definition of ``<task-frame>`` includes the definition
+of a slot: ``frame-task-list``. This takes an instance of the class
+``<task-list>`` as a value, the default value being an empty ``<task-list>``.
 Although it has not been referred to so far, this class will be used
 as the basic data structure in which task lists are stored, and a more
 complete description of these data structures is given in `See Defining
 the underlying data structures for tasks <callbacks.htm#71186>`_. It
-transpires that defining the *frame-task-list* slot is essential for
+transpires that defining the ``frame-task-list`` slot is essential for
 some of the file handling routines that are described in `See Handling
 files in the task list manager <callbacks.htm#78540>`_.
 

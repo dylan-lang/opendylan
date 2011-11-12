@@ -116,11 +116,11 @@ The following code creates the necessary row layout:
       make (<push-button>, label: "Add task");
     end
 
-Note that the macro *horizontally* has been used here. This macro takes
+Note that the macro ``horizontally`` has been used here. This macro takes
 any expressions that are passed to it and creates a row layout from the
-results of evaluating those expressions. The macro *vertically* works in
+results of evaluating those expressions. The macro ``vertically`` works in
 a similar way, creating a column layout from its arguments. Use
-*vertically* to combine the row layout you just created with the *Remove
+``vertically`` to combine the row layout you just created with the *Remove
 task* button that still needs to be incorporated:
 
 .. code-block:: dylan
@@ -150,10 +150,10 @@ hierarchy containing the buttons and text field is on the right:
       end;
     end
 
-In the last few steps, you have exclusively used *horizontally* and
-*vertically*. In fact, it does not matter if you use these macros, or
-if you create instances of *<row-layout>* and *<column-layout>*
-explicitly using *make*.
+In the last few steps, you have exclusively used ``horizontally`` and
+``vertically``. In fact, it does not matter if you use these macros, or
+if you create instances of ``<row-layout>`` and ``<column-layout>``
+explicitly using ``make``.
 
 .. note:: You may have to resize the window to see everything.
 
@@ -176,12 +176,12 @@ The code to create the radio box is as follows:
           items: #("High", "Medium", "Low"),
           orientation: #"vertical");
 
-Notice that the *orientation:* init-keyword can be used to ensure that
+Notice that the ``orientation:`` init-keyword can be used to ensure that
 each item is displayed one above the other.
 
 It is probably best to place the radio box immediately below the *Remove
 task* button. To do this, you need to add the definition for the radio
-box at the appropriate position in the call to *vertically*.
+box at the appropriate position in the call to ``vertically``.
 
 .. code-block:: dylan
 
@@ -201,21 +201,21 @@ box at the appropriate position in the call to *vertically*.
 Using contain to run examples interactively
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can use the function *contain* to run any of the examples above
+You can use the function ``contain`` to run any of the examples above
 using the interactor available in the Dylan environment. This function
 lets you see the results of your work immediately, without the need to
 compile any source code or build a project, and is extremely useful for
 experimenting interactively when you are developing your initial ideas
 for a GUI design.
 
-The *contain* function takes any expression that describes a hierarchy
+The ``contain`` function takes any expression that describes a hierarchy
 of sheets as an argument. It creates a frame which contains this sheet
 hierarchy, and displays the resulting frame on the screen.
 
 Thus, to run any of the code segments shown in this chapter, simply pass
-them to *contain* as an argument. Here are two examples, adapted from
+them to ``contain`` as an argument. Here are two examples, adapted from
 earlier examples in this chapter, as illustrations of how to use
-*contain*.
+``contain``.
 
 .. code-block:: dylan
 
@@ -226,5 +226,5 @@ earlier examples in this chapter, as illustrations of how to use
     contain (make (<text-field>, label: "Task text:"));
 
 At this point, take a few minutes to go back over this chapter and
-practice using *contain* to run the code fragments that have already
+practice using ``contain`` to run the code fragments that have already
 been discussed.
