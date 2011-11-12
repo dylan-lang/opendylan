@@ -1,0 +1,3 @@
+[submodule "sphinx-extensions"]
+	path = sphinx-extensions
+	url = git://github.com/dylan-lang/sphinx-extensions.git
