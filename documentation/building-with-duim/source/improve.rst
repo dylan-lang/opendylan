@@ -2,7 +2,7 @@
 Improving The Design
 ********************
 
-The simple layout hierarchy described in `See Creating the basic sheet
+The simple layout hierarchy described in `Creating the basic sheet
 hierarchy <design.htm#23252>`_ has a number of problems associated with
 it, all of which revolve around the fact that the task list manager does
 not yet look very much like a standard Windows application. Although it
@@ -42,9 +42,9 @@ so that you can load the code straight into the environment if you wish.
 These are available in the Open Example Project dialog, in the
 Documentation category. You can display this dialog by choosing *Tools >
 Open Example Project* from the environment. The two versions included
-represent the state of the task list manager at the end of `See Adding
+represent the state of the task list manager at the end of `Adding
 Callbacks to the Application <callbacks.htm#15598>`_, and at the end of
-`See Using Command Tables <commands.htm#99799>`_. *Please note that both
+`Using Command Tables <commands.htm#99799>`_. *Please note that both
 projects have the same name within the source code—* ``task-list`` *—and
 you should not load them both into the environment at the same time.*
 
@@ -80,7 +80,7 @@ methods that let you run the application in a clean way. Add these
 methods to ``frame.dylan``.
 
 The frame class that is used to implement the task list manager is
-called ``<task-frame>``. This class will be introduced in `See Defining a
+called ``<task-frame>``. This class will be introduced in `Defining a
 new frame class <improve.htm#66956>`_. You can define a method to create
 an instance of ``<task-frame>`` as follows:
 
@@ -162,7 +162,7 @@ defining it as the activate callback for each gadget. There are several
 types of callback, and this is the type that is used most in the task
 list manager. You can define the activate callback for any gadget using
 the ``activate-callback:`` init-keyword. More information about callbacks
-is given in `See Adding Callbacks to the
+is given in `Adding Callbacks to the
 Application <callbacks.htm#15598>`_, in which some real callbacks are
 defined, to make the task list manager do something more substantial.
 
@@ -254,7 +254,7 @@ make(<list-box>, items: #(), lines: 15,
 activate-callback: not-yet-implemented);
 
 Note that the definition of each element is identical to the definitions
-included in the original layout described in `See Creating the basic
+included in the original layout described in `Creating the basic
 sheet hierarchy <design.htm#23252>`_ (except that activate callbacks
 have been added to the code). Adding ``(frame)`` immediately after the
 name of each pane lets you refer to the frame itself within the frame
@@ -266,7 +266,7 @@ to layout each pane in the frame itself.
 
 In addition, you need to define the layout in which to place these
 panes. This is itself just another pane, and its definition is again
-identical to the original layout described in `See Creating the basic
+identical to the original layout described in `Creating the basic
 sheet hierarchy <design.htm#23252>`_, with one exception; rather than
 defining each element explicitly, you just include a reference to the
 relevant pane that you have already defined using normal slot syntax,
@@ -412,7 +412,7 @@ robust, making it easier to modify and, eventually, maintain.
 
 If you want to try running your code, remember that you need to define
 some additional methods to create a frame instance and exit it cleanly.
-Methods for doing this were provided in `See Starting the
+Methods for doing this were provided in `Starting the
 application <improve.htm#17910>`_. If you define these methods now, you
 can create running versions of each successive generation of the
 application as it is developed.
@@ -508,7 +508,7 @@ instance of ``<string>``.
 So now the application has a tool bar. Somewhat oddly, it does not yet
 have a menu bar or a system of menus — most tool bars represent a subset
 of the commands already available from the application’s menu system. A
-menu system is added to the task list manager in `See Adding Menus To
+menu system is added to the task list manager in `Adding Menus To
 The Application <menus.htm#81811>`_.
 
 Adding a status bar
@@ -625,8 +625,8 @@ the definitions for ``open-button`` and ``save-button`` described in `See
 Adding a tool bar <improve.htm#32725>`_.
 
 You also need to add in the definitions for the tool bar and status bar
-themselves, as described in `See Adding a tool bar <improve.htm#32725>`_
-and `See Adding a status bar <improve.htm#26367>`_.
+themselves, as described in `Adding a tool bar <improve.htm#32725>`_
+and `Adding a status bar <improve.htm#26367>`_.
 
 The definition for ``task-layout`` has become much simpler. Because you
 have added buttons to the tool bar, the main layout for the application
@@ -635,7 +635,7 @@ has reduced to a single column layout whose children are ``task-list`` and
 
 The definition for the new design of the frame class now looks as
 follows (button definitions vary slightly for the Task List 2 project,
-see `See A task list manager using command tables <source.htm#52969>`_):
+see `A task list manager using command tables <source.htm#52969>`_):
 
 define frame <task-frame> (<simple-frame>)
 
@@ -742,9 +742,9 @@ keyword title: = "Task List Manager";
 end frame <task-frame>;
 
 Note that this definition does not incorporate the original ``task-text``
-pane defined in `See Defining a new frame class <improve.htm#66956>`_.
+pane defined in `Defining a new frame class <improve.htm#66956>`_.
 In fact, this part of the original interface is handled differently in
-the final design, and is re-implemented in `See Creating a dialog for
+the final design, and is re-implemented in `Creating a dialog for
 adding new items <improve.htm#89811>`_.
 
 Creating a dialog for adding new items
@@ -783,9 +783,9 @@ new task.
 Add this method to ``frame.dylan``.
 
 .. note: The definition of the ``prompt-for-task`` method uses the
-   ``<priority>`` type. Note that this type is defined in `See Defining the
+   ``<priority>`` type. Note that this type is defined in `Defining the
    underlying data structures for tasks <callbacks.htm#71186>`_. Until the
-   relevant code in `See Defining the underlying data structures for
+   relevant code in `Defining the underlying data structures for
    tasks <callbacks.htm#71186>`_ is added to your project, any attempt to
    build it will generate a serious warning.
 

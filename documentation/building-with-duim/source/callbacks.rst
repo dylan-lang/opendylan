@@ -3,7 +3,7 @@ Adding Callbacks to the Application
 ***********************************
 
 At this point, the task list manager still does very little. If you try
-running the code (as described in `See Starting the
+running the code (as described in `Starting the
 application <improve.htm#17910>`_), and interacting with any of the
 elements in the GUI (clicking on a button, choosing a menu command, and
 so on), then only the “not yet implemented” message is displayed. This
@@ -142,7 +142,7 @@ ensure that information about tasks is passed to the ``task-list`` pane
 correctly. Make these changes to the existing definition in the file
 ``frame.dylan``.
 
-In `See Gluing the final design together <menus.htm#70705>`_, the
+In `Gluing the final design together <menus.htm#70705>`_, the
 definition of ``task-list`` was given as:
 
 .. code-block:: dylan
@@ -191,7 +191,7 @@ This gives the following new definition for the ``task-list`` pane:
             activate-callback: not-yet-implemented);
 
 There is one final change that still needs to be made to this pane
-definition. This is described in `See Updating the user
+definition. This is described in `Updating the user
 interface <callbacks.htm#94307>`_.
 
 Specifying a callback in the definition of each gadget
@@ -509,7 +509,7 @@ a format that is readable by the application, in the line that reads
 
     let task-list = load-task-list(filename);
 
-The function ``load-task-list`` is described in `See The load-task-list
+The function ``load-task-list`` is described in `The load-task-list
 function <callbacks.htm#37927>`_.
 
 The clause
@@ -548,7 +548,7 @@ The line
 calls a method that refreshes the list of tasks displayed in the task
 list manager, so that the contents of the newly loaded file are
 correctly displayed on the screen. The method ``refresh-task-frame`` is
-described in `See Updating the user interface <callbacks.htm#94307>`_.
+described in `Updating the user interface <callbacks.htm#94307>`_.
 
 The save-file method
 --------------------
@@ -719,9 +719,9 @@ As well as providing a test for whether the task list frame should be
 updated, it actually performs the save operation, by calling the
 function ``save-task-list`` with the required arguments.
 
-The function ``save-task-list`` is described in `See The save-task-list
+The function ``save-task-list`` is described in `The save-task-list
 function <callbacks.htm#88460>`_ and the method ``refresh-task-frame`` is
-described in `See Updating the user interface <callbacks.htm#94307>`_.
+described in `Updating the user interface <callbacks.htm#94307>`_.
 
 The load-task-list function
 ---------------------------
@@ -789,7 +789,7 @@ itself. Note that the ``task-list-modified?`` slot of the ``<task-list>`` is
 set to ``#f``, reflecting the fact that the task list is loaded, but
 unchanged. This does not have to be done explicitly by ``load-task-list``,
 since ``#f`` is the default value of this slot, as you can see from its
-definition in `See Defining the underlying data structures for
+definition in `Defining the underlying data structures for
 tasks <callbacks.htm#71186>`_.
 
 The file is opened for reading using the ``with-open-file`` macro. It is
@@ -940,7 +940,7 @@ As with other DUIM methods you have seen, ``frame`` and ``task-list`` are
 specified using known slot values about the gadget supplied to
 ``frame-add-task``, and the frame that contains the gadget. The ``name``
 and ``priority`` values are specified by calling the ``prompt-for-task``
-method defined in `See Creating a dialog for adding new
+method defined in `Creating a dialog for adding new
 items <improve.htm#89811>`_. This method displays a dialog into which
 the user types the text for the new task and chooses the priority, both
 of which values are returned from ``prompt-for-task``.
@@ -969,12 +969,12 @@ statement.
    once it has been added.
 #. The fourth expression ensures that the new task is selected in the
    task list manager. The frame-selected--task method is described in
-   `See Updating the user interface <callbacks.htm#94307>`_.
+   `Updating the user interface <callbacks.htm#94307>`_.
 
 The ``if`` statement ensures that all the information needed to construct
 the new task is specified before the new task is created.
 
-The ``add-task`` function is described in `See Non-DUIM support for adding
+The ``add-task`` function is described in `Non-DUIM support for adding
 and removing tasks <callbacks.htm#59071>`_.
 
 The code for ``frame-remove-task`` is as follows:
@@ -1008,7 +1008,7 @@ menu of the application) or ``remove-button`` (on the tool bar). The
    This identifies the instance of ``<task-list>`` from which a task is to
    be removed.
 
-The method ``frame-selected-task`` is described in `See Updating the user
+The method ``frame-selected-task`` is described in `Updating the user
 interface <callbacks.htm#94307>`_.
 
 Once these local variables have been set, the rest of the code goes
@@ -1047,9 +1047,9 @@ executed:
 
 The methods defined for ``frame-selected-task`` are described in `See
 Updating the user interface <callbacks.htm#94307>`_. The function
-``remove-task`` is described in `See Non-DUIM support for adding and
+``remove-task`` is described in `Non-DUIM support for adding and
 removing tasks <callbacks.htm#59071>`_. The ``refresh-task-frame`` method
-is described in `See Updating the user
+is described in `Updating the user
 interface <callbacks.htm#94307>`_.
 
 Non-DUIM support for adding and removing tasks
@@ -1114,27 +1114,27 @@ section, together with a brief description of each one:
 ``frame-selected-task``
 
    This method returns the task that is currently selected in the task
-   list manager. This method is described in `See Determining and
+   list manager. This method is described in `Determining and
    setting the selected task <callbacks.htm#98481>`_.
 
 ``frame-selected-task-setter``
 
    This is a setter method for frame-selected-task, and is used to
    select or deselect item in the task list manager. This method is
-   described in `See Determining and setting the selected
+   described in `Determining and setting the selected
    task <callbacks.htm#98481>`_.
 
 ``note-task-selection-change``
 
    Two methods are defined that deal with updating the GUI whenever a
    change is made to the task selection state. This method is described
-   in `See Enabling and disabling buttons in the
+   in `Enabling and disabling buttons in the
    interface <callbacks.htm#42654>`_.
 
 ``refresh-task-frame``
 
    This method can be called to refresh the task frame at any time. This
-   method is described in `See Refreshing the list of
+   method is described in `Refreshing the list of
    tasks <callbacks.htm#28478>`_.
 
 Each of these methods should be added to the file ``frame.dylan``.
@@ -1230,7 +1230,7 @@ The ``frame-selected-task-setter`` method is called by two other methods:
 ``frame-add-task`` (to ensure that the task added is subsequently
 selected) and ``frame-remove-task`` (to ensure that no tasks are selected
 once a task has been removed from the list). These methods are described
-in `See DUIM support for adding and removing
+in `DUIM support for adding and removing
 tasks <callbacks.htm#29566>`_.
 
 Add the code for these methods to ``frame.dylan``.
@@ -1256,7 +1256,7 @@ method requires a slightly different definition, and the second method
 is not required at all.
 
 The ``note-task-selection-change`` method defined on ``<task-frame>`` is
-called by ``refresh-task-frame``, described on page `See The
+called by ``refresh-task-frame``, described on page `The
 refresh-task-frame method is called whenever the list of tasks needs to
 be refreshed for whatever reason. This happens most commonly after
 adding or removing a task from the list, or loading in a new task list
@@ -1523,7 +1523,7 @@ of local variables:
 -  ``frame`` The frame that the gadget argument belongs to.
 -  ``task-list`` The task list associated with ``frame``.
 
-The method begins by calling the ``save-file`` method (defined in `See The
+The method begins by calling the ``save-file`` method (defined in `The
 save-file method <callbacks.htm#98742>`_) to save the current task list
 to disk. This ensures that the user does not lose any work. Next, the
 ``exit-frame`` generic function is invoked to exit the task list manager
@@ -1534,10 +1534,10 @@ Enhancing the task list manager
 
 This concludes the tutorial on building application with DUIM. At this
 point, you can build and run a functional task list manager, but it is a
-very basic application. `See Using Command
+very basic application. `Using Command
 Tables <commands.htm#99799>`_, introduces command tables as a way of
 defining hierarchies of menu commands. To do this, it re-implements the
-menu hierarchy you defined in `See Adding Menus To The
+menu hierarchy you defined in `Adding Menus To The
 Application <menus.htm#81811>`_, but does not add any new functionality
 to the application.
 
@@ -1563,7 +1563,7 @@ functionality you might like to add. A few ideas are listed below:
 -  Allow users to add text memos to any task.
 
 This is only a very limited list of ideas. After learning about command
-tables in `See Using Command Tables <commands.htm#99799>`_, read through
-`See A Tour of the DUIM Libraries <tour.htm#93265>`_ to learn more about
+tables in `Using Command Tables <commands.htm#99799>`_, read through
+`A Tour of the DUIM Libraries <tour.htm#93265>`_ to learn more about
 the features that DUIM provides. Then, using the *DUIM Reference Manual*
 as your reference source, get coding!

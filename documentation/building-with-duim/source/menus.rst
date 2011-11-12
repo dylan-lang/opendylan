@@ -12,7 +12,7 @@ application:
 -  Use a command table.
 
 In this chapter, the first of these methods is demonstrated. For
-information about command tables, refer to `See Using Command
+information about command tables, refer to `Using Command
 Tables <commands.htm#99799>`_. Before discussing the first method listed
 above, the overall design of the menu system for the task list manager
 is discussed.
@@ -95,7 +95,7 @@ there is a strong similarity between these buttons and some of the
 buttons already defined. DUIM also generates mnemonics for each menu
 item; thus, the items appear as *File* and *Edit*, and so forth. (Note
 that the ``make-keyboard-gesture`` function that appears below is defined
-in `See Keyboard accelerators <menus.htm#34519>`_.)
+in `Keyboard accelerators <menus.htm#34519>`_.)
 
 .. code-block:: dylan
 
@@ -238,17 +238,17 @@ You can now add the definitions of the menu bar, menus, and menu
 buttons, to the definition of the ``<task-frame>`` class, to give the code
 shown below. At this stage, the only thing missing from the final
 application are real callback functions. Callbacks are dealt with in
-`See Adding Callbacks to the Application <callbacks.htm#15598>`_.
+`Adding Callbacks to the Application <callbacks.htm#15598>`_.
 
 Note that the final definition of ``<task-frame>`` includes the definition
 of a slot: ``frame-task-list``. This takes an instance of the class
 ``<task-list>`` as a value, the default value being an empty ``<task-list>``.
 Although it has not been referred to so far, this class will be used
 as the basic data structure in which task lists are stored, and a more
-complete description of these data structures is given in `See Defining
+complete description of these data structures is given in `Defining
 the underlying data structures for tasks <callbacks.htm#71186>`_. It
 transpires that defining the ``frame-task-list`` slot is essential for
-some of the file handling routines that are described in `See Handling
+some of the file handling routines that are described in `Handling
 files in the task list manager <callbacks.htm#78540>`_.
 
 .. code-block:: dylan

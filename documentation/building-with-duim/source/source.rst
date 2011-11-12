@@ -5,10 +5,10 @@ Source Code For The Task List Manager
 For completeness, here is the full source code for both versions of the
 task list manager. If you have followed the example given in
 ` <design.htm#77027>`_ through ` <commands.htm#99799>`_ from the
-beginning, then your code should be the same as the code given in `See A
+beginning, then your code should be the same as the code given in `A
 task list manager using menu gadgets <source.htm#60987>`_. The source
 code for the second version of the task list manager, using command
-tables, is given in `See A task list manager using command
+tables, is given in `A task list manager using command
 tables <source.htm#52969>`_. *Please note that both projects have the
 same name within the source code—* *task-list* *—and you should not load
 them both into the environment at the same time.*
@@ -482,7 +482,7 @@ The command tables used in this implementation are described in
 and ` <callbacks.htm#15598>`_, for a full description of the rest of the
 code shown here. Note that, apart from code specific to command tables
 and callbacks, the code listed in this section is a repeat of code
-listed in `See A task list manager using menu
+listed in `A task list manager using menu
 gadgets <source.htm#60987>`_.
 
 Contents of the file *frame.dylan* :
@@ -819,6 +819,6 @@ Contents of the file *frame.dylan* :
 Contents of the file *task-list.dylan* :
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The file *task-list.dylan* is identical to the listing shown in `See A
+The file *task-list.dylan* is identical to the listing shown in `A
 task list manager using menu gadgets <source.htm#60987>`_, and so is not
 repeated here.

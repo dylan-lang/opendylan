@@ -34,7 +34,7 @@ a task list manager is familiar to the majority of readers, so you can
 study the code and the programming model, without having to spend time
 figuring out what the application itself is supposed to do.
 
-The final task list manager is shown in `See The Task List Manager
+The final task list manager is shown in `The Task List Manager
 Application <design.htm#21629>`_. To load the code for the final design
 into the environment, choose *Tools > Open Example Project* from any
 window in the environment, and load the Task List 1 project from the

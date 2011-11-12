@@ -126,10 +126,10 @@ scope of the sheet hierarchy, such as mouse button clicks or textual
 input. These callback functions encapsulate the behavior of the
 application.
 
-` <design.htm#77027>`_, to `See Using Command
-Tables <commands.htm#99799>`_, provide an extended tutorial that
-illustrates the basic and most common principles involved in building a
-GUI for a simple application.
+The chapters `Designing a Simple DUIM Application <design.html>`_ to
+`Using Command Tables <commands.html>`_ provide an extended tutorial
+that illustrates the basic and most common principles involved in
+building a GUI for a simple application.
 
 As well as a rich set of GUI controls, DUIM provides support for the
 following features that are required in GUI design:

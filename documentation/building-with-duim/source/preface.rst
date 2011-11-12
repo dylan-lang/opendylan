@@ -20,16 +20,16 @@ This manual is divided into several parts:
 `Introduction <intro.html>`_ provides an introduction to the concepts
 behind the DUIM libraries, and their intended use.
 
-`Designing a Simple DUIM Application <design.html>`_ through to
-`Adding Callbacks to the Application <callbacks.html>`_ provide an
-extended example of how to use DUIM to design the user interface to an
-application. A simple working application is developed from first
-principles, and this is used as an illustration of some of the most
-useful features provided by the DUIM libraries. `Designing a Simple
-DUIM Application <design.html>`_ provides an initial design for the
-application, `Improving The Design <improve.html>`_ improves on this
-initial design. `Adding Menus To The Application <menus.html>`_ shows
-you how you can add a menu system to an application and `Adding
+The chapters `Designing a Simple DUIM Application <design.html>`_
+through to `Adding Callbacks to the Application <callbacks.html>`_
+provide an extended example of how to use DUIM to design the user
+interface to an application. A simple working application is developed
+from first principles, and this is used as an illustration of some of
+the most useful features provided by the DUIM libraries. `Designing a
+Simple DUIM Application <design.html>`_ provides an initial design for
+the application, `Improving The Design <improve.html>`_ improves on
+this initial design. `Adding Menus To The Application <menus.html>`_
+shows you how you can add a menu system to an application and `Adding
 Callbacks to the Application <callbacks.html>`_ demonstrates how to
 give the application some useful functionality. `Using Command Tables
 <commands.html>`_ introduces the concept of command tables, by
