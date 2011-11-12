@@ -12,10 +12,7 @@ Recent News
 .. toctree::
    :maxdepth: 1
    :hidden:
+   :glob:
 
-   About <about/index>
-   News <news/index>
-   Download <download/index>
-   Documentation <documentation/index>
-   Community <community/index>
+   */*
 
