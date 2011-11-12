@@ -3,14 +3,14 @@ Multiple Return Values
 **********************
 
 Any Dylan expression may return multiple values and those values can
-be captured by ``let``:
+be captured by ``let`` (using :drm:`round` as an example):
 
 .. code-block:: dylan
 
   let (integer, remainder) = round(3.2);
 
-``integer`` is bound to the ``<integer>`` value 3 and ``remainder`` is
-bound to the ``<real>`` value 0.2.
+``integer`` is bound to the :drm:`<integer>` value 3 and ``remainder`` is
+bound to the :drm:`<real>` value 0.2.
 
 ----
 
@@ -48,7 +48,7 @@ in place of the missing values.
 
 ----
 
-Sometimes you may have a ``<sequence>`` of known values and want to
+Sometimes you may have a :drm:`<sequence>` of known values and want to
 bind them to variables temporarily:
 
 .. code-block:: dylan
@@ -59,7 +59,7 @@ bind them to variables temporarily:
 ----
 
 You may bind multiple trailing values to a single variable by using
-``#rest``.  In the following example ``more`` will be bound to ``#(3,
+:drm:`#rest <Parameter_Lists>`.  In the following example ``more`` will be bound to ``#(3,
 4, 5)``.
 
 .. code-block:: dylan
