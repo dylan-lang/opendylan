@@ -17,42 +17,41 @@ Open Dylan* before reading this manual in any depth.
 
 This manual is divided into several parts:
 
-`See Introduction <intro.htm#92880>`_, provides an introduction to the
-concepts behind the DUIM libraries, and their intended use.
+`Introduction <intro.html>`_ provides an introduction to the concepts
+behind the DUIM libraries, and their intended use.
 
-` <design.htm#77027>`_, through to `See Adding Callbacks to the
-Application <callbacks.htm#15598>`_, provide an extended example of how
-to use DUIM to design the user interface to an application. A simple
-working application is developed from first principles, and this is used
-as an illustration of some of the most useful features provided by the
-DUIM libraries. ` <design.htm#77027>`_ provides an initial design for
-the application, `See Improving The Design <improve.htm#63710>`_
-improves on this initial design. `See Adding Menus To The
-Application <menus.htm#81811>`_ shows you how you can add a menu system
-to an application and `See Adding Callbacks to the
-Application <callbacks.htm#15598>`_ demonstrates how to give the
-application some useful functionality. `See Using Command
-Tables <commands.htm#99799>`_, introduces the concept of command tables,
-by re-implementing some of the functionality already described in `See
-Adding Menus To The Application <menus.htm#81811>`_. For reference, the
-full source code of the application described in these chapters is
-provided in `See Source Code For The Task List
-Manager <source.htm#77017>`_.
+`Designing a Simple DUIM Application <design.html>`_ through to
+`Adding Callbacks to the Application <callbacks.html>`_ provide an
+extended example of how to use DUIM to design the user interface to an
+application. A simple working application is developed from first
+principles, and this is used as an illustration of some of the most
+useful features provided by the DUIM libraries. `Designing a Simple
+DUIM Application <design.html>`_ provides an initial design for the
+application, `Improving The Design <improve.html>`_ improves on this
+initial design. `Adding Menus To The Application <menus.html>`_ shows
+you how you can add a menu system to an application and `Adding
+Callbacks to the Application <callbacks.html>`_ demonstrates how to
+give the application some useful functionality. `Using Command Tables
+<commands.html>`_ introduces the concept of command tables, by
+re-implementing some of the functionality already described in `Adding
+Menus To The Application <menus.html>`_. For reference, the full
+source code of the application described in these chapters is provided
+in `Source Code For The Task List Manager <source.html>`_.
 
-`See A Tour of the DUIM Libraries <tour.htm#93265>`_, provides an
-overall tour of what is available in the suite of DUIM libraries. It
-provides much less detail than the chapters covering application
-development, but covers a broader spectrum of functionality. This
-chapter can be seen as a general introduction to the material covered in
-the *DUIM Reference Manual*.
+`A Tour of the DUIM Libraries <tour.html>`_ provides an overall tour
+of what is available in the suite of DUIM libraries. It provides much
+less detail than the chapters covering application development, but
+covers a broader spectrum of functionality. This chapter can be seen
+as a general introduction to the material covered in the *DUIM
+Reference Manual*.
 
-The material provided in `See A Tour of the DUIM
-Libraries <tour.htm#93265>`_ is reasonably independent from the material
-provided in Chapters ` <design.htm#77027>`_ to `See Adding Callbacks to
-the Application <callbacks.htm#15598>`_, and if you wish, you can read
-through the tour before looking at the example application. Whichever
-order you approach them in, you should expect some repetition of subject
-matter, however.
+The material provided in `A Tour of the DUIM Libraries <tour.html>`_
+is reasonably independent from the material provided in Chapters
+`Designing a Simple DUIM Application <design.html>`_ to `Adding
+Callbacks to the Application <callbacks.html>`_, and if you wish, you
+can read through the tour before looking at the example
+application. Whichever order you approach them in, you should expect
+some repetition of subject matter, however.
 
 Running examples in this manual
 -------------------------------
