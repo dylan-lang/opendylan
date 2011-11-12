@@ -186,7 +186,7 @@ define function %copy-file
   end;
   run-application
     (concatenate
-       (if ($os-name = #"osf3") "cp -pf" else "cp -p" end,
+       ("cp -p",
         " ",
         as(<string>, source),
         " ",

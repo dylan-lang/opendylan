@@ -56,17 +56,16 @@ manager:
 
 .. code-block:: dylan
 
-    define command-table *file-command-table*
-        (*global-command-table*)
+    define command-table *file-command-table* (*global-command-table*)
       menu-item "Open" = open-file,
         accelerator: make-keyboard-gesture(#"o", #"control"),
         documentation: "Opens an existing file.";
-    menu-item "Save" = save-file,
+      menu-item "Save" = save-file,
         accelerator: make-keyboard-gesture(#"s", #"control"),
         documentation: "Saves the current file to disk.";
-    menu-item "Save As..." = save-as-file,
+      menu-item "Save As..." = save-as-file,
         documentation: "Saves the current file with a new name.";
-    menu-item "Exit" = exit-task,
+      menu-item "Exit" = exit-task,
         accelerator: make-keyboard-gesture(#"f4", #"alt"),
         documentation: "Exits the application.";
     end command-table *file-command-table*;
@@ -86,8 +85,7 @@ This is done in the clause
 
 .. code-block:: dylan
 
-    define command-table *file-command-table*
-        (*global-command-table*)
+    define command-table *file-command-table* (*global-command-table*)
 
 above. This is analogous to the way that the superclasses of any frame
 class are listed in the frame’s definition.
@@ -155,8 +153,7 @@ below.
         documentation: "Paste the selection in the clipboard at the current position.";
     end command-table *edit-command-table*;
 
-    define command-table *task-command-table*
-        (*global-command-table*)
+    define command-table *task-command-table* (*global-command-table*)
       menu-item "Add..." = frame-add-task,
         accelerator: make-keyboard-gesture(#"a", #"control", #"shift"),
         documentation: "Add a new task.";
@@ -188,8 +185,7 @@ command table as an option in the definition of ``<task-frame>``.
 
 .. code-block:: dylan
 
-    define command-table *task-list-command-table*
-        (*global-command-table*)
+    define command-table *task-list-command-table* (*global-command-table*)
       menu-item "File" = *file-command-table*;
       menu-item "Edit" = *edit-command-table*;
       menu-item "Task" = *task-command-table*;
