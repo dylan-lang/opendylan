@@ -55,7 +55,7 @@ then the first method will be called because the first argument is a :drm:`<list
 which is a :drm:`<sequence>` but is not a :drm:`<vector>`.
 
 Very often, the compiler can figure out which method to call and so no run-time
-overhead for dispatch is incurred in those cases.  (The {{Open Dylan}} IDE has a
+overhead for dispatch is incurred in those cases.  (The Open Dylan IDE has a
 tool to show whether method dispatch was optimized.)
 
 Note that the second method above has a more specific return type.  This

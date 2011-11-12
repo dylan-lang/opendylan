@@ -28,7 +28,7 @@ element:
 
     define constant <int-vector> = limited(<vector>, of: <integer>);
 
-{{Open Dylan}} will optimize accesses into an ``<int-vector>`` defined
+Open Dylan will optimize accesses into an ``<int-vector>`` defined
 as above.
 
 A Dylan compiler can avoid doing bounds checking or
