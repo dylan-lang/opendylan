@@ -5,15 +5,15 @@ Generic Functions
 Methods in Dylan aren't tied directly to a particular class like they are in many other languages.
 Instead a method belongs to a generic function (GF).  Which method actually gets called is 
 decided by the types of all of the required arguments passed to the GF.  Consider the built-in
-{{drm: add}} generic function:
+:drm:`add` generic function:
 
 .. code-block:: dylan
 
     define open generic add (seq :: <sequence>, new-element) => (new-seq :: <sequence>);
 
-This says that any method defined on {{drm: add}} must accept two required arguments.
-The first argument must be a {{drm: <sequence>}} and the second can be anything, since
-no type was declared for it.  The methods must return a single value which is a {{drm: <sequence>}}.
+This says that any method defined on :drm:`add` must accept two required arguments.
+The first argument must be a :drm:`<sequence>` and the second can be anything, since
+no type was declared for it.  The methods must return a single value which is a :drm:`<sequence>`.
 
 Also:
 

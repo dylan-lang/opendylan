@@ -2,8 +2,7 @@ Welcome to Open Dylan!
 ======================
 
 For more on the background and goals of the Dylan language, see the
-excellent `Introduction to the Dylan Reference Manual
-<http://opendylan.org/books/drm/drm_6.html>`_.
+excellent :drm:`Introduction to the Dylan Reference Manual <drm_6>`.
 
 Recent News
 ===========
