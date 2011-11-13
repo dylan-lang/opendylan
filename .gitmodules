@@ -13,3 +13,6 @@
 [submodule "sources/qa/gui-testworks"]
 	path = sources/qa/gui-testworks
 	url = git@github.com:dylan-lang/gui-testworks.git
+[submodule "documentation/sphinx-extensions"]
+	path = documentation/sphinx-extensions
+	url = git://github.com/dylan-lang/sphinx-extensions.git
