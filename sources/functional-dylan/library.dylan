@@ -18,7 +18,6 @@ define library functional-dylan
     functional-dylan,
     functional-extensions,
     simple-format,
-    patching-kludges,
     functional-locators-protocol;
 end library;
 
@@ -63,11 +62,6 @@ define module simple-format
   use simple-io,
     export: { format-out };
 end module simple-format;
-
-define module patching-kludges
-  use dylan-extensions,
-    export: { *permissibly-ambiguous-generics* };
-end module patching-kludges;
 
 define module functional-locators-protocol
   use locators-protocol,
