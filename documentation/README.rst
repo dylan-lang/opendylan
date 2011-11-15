@@ -19,11 +19,11 @@ Building the documentation is easy on a system with ``make``::
 
     make html
 
-If you are on Windows, there is a ``make.bat`` as well.
+If you are on Windows, there is a ``make.bat`` as well::
 
     make.bat html
 
-The generated site will be in ``build/html``.
+The generated documentation will be in ``build/html``.
 
 You can build other formats as well. Run ``make`` or ``make.bat`` without
 arguments to see which formats are available.
