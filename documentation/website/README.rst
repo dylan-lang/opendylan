@@ -12,6 +12,11 @@ The easiest way to do this is to get it from the `Python Package Index
 
     sudo easy_install -U Sphinx
 
+You will also need ``html5lib`` installed so that the RSS feed generator
+can work::
+
+    sudo easy_install html5lib
+
 Building
 ========
 
@@ -45,6 +50,13 @@ New Binary Release
 
 New News Entry
 --------------
+
+#. Create an article about it (even if very short) in the appropriate date
+   hierarchy in ``source/news``. The hierarchy should be ``year/month/day``.
+   This article must have 2 metadata fields in it::
+
+       :Author: Hannes Mehnert
+       :Date: 2001-08-11 09:00:00
 
 #. Add it to ``source/news/recent.rst.inc``
 #. If there are too many entries in that file, move some
