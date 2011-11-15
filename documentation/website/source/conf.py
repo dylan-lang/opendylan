@@ -172,3 +172,7 @@ htmlhelp_basename = 'OpenDylandoc'
 
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {'http://docs.python.org/': None}
+
+# -- Options for the feed generator
+
+feed_base_url = 'http://new.opendylan.org/'
