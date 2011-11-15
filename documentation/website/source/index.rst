@@ -15,4 +15,5 @@ Recent News
    :glob:
 
    */*
+   news/*/*/*/*
 

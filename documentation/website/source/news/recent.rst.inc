@@ -1,16 +1,17 @@
-2011-11-15:
 
-    **New website!**
+**New Documentation**
+*2011-11-22*
 
-    As part of recharging Open Dylan development, we've re-done the
-    website and cleaned up a lot of the old, out-dated material here.
+We're revitalizing our documentation.
 
-    If you're looking for some of the old material, it can be found
-    over at `<http://old.opendylan.org/>`_.
+:doc:`More... </news/2011/11/22/new_documentation>`
 
-2011-11-15:
+**Welcome to the New Website!**
+*2011-11-22*
 
-    **Open Dylan 2011.0.3 released.**
+As part of recharging Open Dylan development, we've re-done the
+website and cleaned up a lot of the old, out-dated material here.
 
-    Put something here.
+If you're looking for some of the old material, it can be found
+over at `<http://old.opendylan.org/>`_.
 
