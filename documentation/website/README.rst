@@ -17,6 +17,11 @@ can work::
 
     sudo easy_install html5lib
 
+You may also need ``python-dateutil``. If so, make sure you install version
+1.5 if you are using Python 2.x::
+
+    sudo easy_install python-dateutil==1.5
+
 Building
 ========
 
