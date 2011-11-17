@@ -17,12 +17,20 @@ To explain these long call chain, we need some more understanding of the differe
 
 The big picture is pretty simple: management drives the different libraries, some are the front-end (reader, macro-expander) translating into definitions; some intermediate language (conversion, optimization, typist) which work on the flow-graph; others are back-end, including linker. There is some support needed for the actual runtime, which is sketched in modeling (parts of which are put into the dylan runtime library), namespace (which handles namespaces and defines the dylan library and its modules).
 
-First we need to introduce some terminology and recapitulate some conventions: a unit of compilation is a single dylan library. The metadata of a library is stored via DOOD, the dylan object-oriented database.
+First we need to introduce some terminology and recapitulate some conventions:
+
+* the unit of compilation is a single dylan library
+* the metadata of a library is stored in DOOD, the dylan object-oriented database
+* loose (development) vs tight (production): loose mode allows runtime updates of definitions, like adding generic function into a sealed domain, subclassing sealed classes - production mode has stricter checks
+* batch compilation: when invoked from command line, or building a complete library
+* interactive compilation: IDE feature to play around, adding a single definition to a library
+
+In general it is well structured, but sadly some libraries use each others, which they shouldn't (typist, conversion, optimization).
 
 dfmc-management
 -----------------
 
-The library dfmc-management drives the compilation process, prints general information what is happening at the moment (progress, warnings) and takes care of some global settings. This library specifically needs to treat an interactive compilation differently from a batch compilation. Also, loose and tight modes are handled differently.
+The library dfmc-management drives the compilation process, prints general information what is happening at the moment (progress, warnings) and takes care of some global settings like opening and closing source records, etc.
 
 The main external entry point is compile-library-from-definitions in world.dylan. This requires that the source has already been parsed (really? but it calls compute-library-definitions itself!).
 
@@ -35,6 +43,10 @@ The reader library defines the ``read-top-level-fragment``, the definitions libr
 The method ``ensure-library-compiled`` computes, finishes and checks the data models. Afterwards the code models are generated (the control flow graph), then type inference is done and the optimizer is run. Finally the heaps are generated. These are methods defined in ``compilation-driver.dylan``, calling out to the modeling, conversion, flow-graph, typist and optimizer libraries.
 
 Finally the glue is emitted (in ``back-end-driver.dylan``) and the database is saved, which contains metadata of each library (like type information, code models, etc.).
+
+Some global warnings for libraries are defined and checked for in the management library.
+
+The unused file ``interface.dylan`` compares module and binding definitions, in order to judge whether the public API of a library/module has changed between two versions. Usage of this would allow lazy recompilation: only recompile if the API has changed of a linked library.
 
 dfmc-reader
 -----------
@@ -84,6 +96,11 @@ dfmc-definitions
 
    In this library, the signature parser was extended to recognize
    type variables as well as function types.
+
+dfmc-macro-expander
+-------------------
+
+Expands macros. Who calls it?
 
 dfmc-convert
 ------------
