@@ -1,3 +1,7 @@
+*********
+Copyright
+*********
+
 Copyright &copy; 1995-2000 Functional Objects, Inc.
 
 Portions copyright &copy; 2011 Dylan Hackers.
