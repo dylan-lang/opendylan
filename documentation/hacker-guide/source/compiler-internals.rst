@@ -5,48 +5,124 @@ Open Dylan Compiler Internals
 Introduction
 ------------
 
-This chapter is an overview of the compiler, information was gathered while hacking on the compiler. It focusses only on DFMC, the Dylan Flow Machine Compiler, located in source/dfmc of the opendylan repository.
+This chapter is an overview of the compiler, information was gathered
+while hacking on the compiler. It focusses only on DFMC, the Dylan
+Flow Machine Compiler, located in source/dfmc of the opendylan
+repository.
 
-But first look how to get there: lets consider the command-line compiler, invoked with ``-build hello-world``. This is parsed by the executable (in ``environment/console/command-line.dylan``, in method ``execute-main-command``: this has some code like ``if (build?) run(<build-project-command>, ...``.
+But first look how to get there: lets consider the command-line
+compiler, invoked with ``-build hello-world``. This is parsed by the
+executable (in ``environment/console/command-line.dylan``, in method
+``execute-main-command``: this has some code like ``if (build?)
+run(<build-project-command>, ...``.
 
-This ``<build-project-command>`` is defined in ``environment/commands/build.dylan``, there a method ``do-execute-command`` is specified with a ``<build-project-command>`` as argument. This runs the method ``build-project``, defined in ``environment/dfmc/projects/projects.dylan``, calling ``compile-library``.
+This ``<build-project-command>`` is defined in
+``environment/commands/build.dylan``, there a method
+``do-execute-command`` is specified with a ``<build-project-command>``
+as argument. This runs the method ``build-project``, defined in
+``environment/dfmc/projects/projects.dylan``, calling
+``compile-library``.
 
-This is defined in ``project-manager/projects/compilation.dylan`` and calls ``parse-and-compile``, which calls ``parse-project-sources`` (defined in ``dfmc/management/definitions-driver``) and ``compile-project-definitions``, which is defined in ``dfmc/browser-support/glue-routines.dylan``, calling ``dfmc-compile-library-from-definitions``, finally defined in ``dfmc/management/world.dylan`` (here under the name ``compile-library-from-definitions``).
+This is defined in ``project-manager/projects/compilation.dylan`` and
+calls ``parse-and-compile``, which calls ``parse-project-sources``
+(defined in ``dfmc/management/definitions-driver``) and
+``compile-project-definitions``, which is defined in
+``dfmc/browser-support/glue-routines.dylan``, calling
+``dfmc-compile-library-from-definitions``, finally defined in
+``dfmc/management/world.dylan`` (here under the name
+``compile-library-from-definitions``).
 
-To explain these long call chain, we need some more understanding of the different libraries of the compiler: environment is the public API, project-manager is a bunch of hacks to care about finding the project (by using the registry) and calling the compiler, and the linker (to create a dll/so and executable) afterwards. The libraries ``dfmc/browser-support`` and ``environment/dfmc`` are the glue from environment to dfmc.
+To explain these long call chain, we need some more understanding of
+the different libraries of the compiler: environment is the public
+API, project-manager is a bunch of hacks to care about finding the
+project (by using the registry) and calling the compiler, and the
+linker (to create a dll/so and executable) afterwards. The libraries
+``dfmc/browser-support`` and ``environment/dfmc`` are the glue from
+environment to dfmc.
 
-The big picture is pretty simple: management drives the different libraries, some are the front-end (reader, macro-expander) translating into definitions; some intermediate language (conversion, optimization, typist) which work on the flow-graph; others are back-end, including linker. There is some support needed for the actual runtime, which is sketched in modeling (parts of which are put into the dylan runtime library), namespace (which handles namespaces and defines the dylan library and its modules).
+The big picture is pretty simple: management drives the different
+libraries, some are the front-end (reader, macro-expander) translating
+into definitions; some intermediate language (conversion,
+optimization, typist) which work on the flow-graph; others are
+back-end, including linker. There is some support needed for the
+actual runtime, which is sketched in modeling (parts of which are put
+into the dylan runtime library), namespace (which handles namespaces
+and defines the dylan library and its modules).
 
-First we need to introduce some terminology and recapitulate some conventions:
+First we need to introduce some terminology and recapitulate some
+conventions:
 
 * the unit of compilation is a single dylan library
-* the metadata of a library is stored in DOOD, the dylan object-oriented database
-* loose (development) vs tight (production): loose mode allows runtime updates of definitions, like adding generic function into a sealed domain, subclassing sealed classes - production mode has stricter checks
-* batch compilation: when invoked from command line, or building a complete library
-* interactive compilation: IDE feature to play around, adding a single definition to a library
+* the metadata of a library
+   is stored in DOOD, the dylan object-oriented database
+* loose (development) vs tight (production): loose mode allows runtime
+   updates of definitions, like adding generic function into a sealed
+   domain, subclassing sealed classes - production mode has stricter
+   checks
+* batch compilation: when invoked from command line, or building a
+   complete library
+* interactive compilation: IDE feature to play around, adding a single
+   definition to a library
 
-In general it is well structured, but sadly some libraries use each others, which they shouldn't (typist, conversion, optimization).
+DFMC is well structured, but sadly some libraries use each others,
+which they shouldn't (typist, conversion, optimization).
+
+In the remainder of this guide, we will focus on a simple example,
+which prints 11 lines, ``Hello 0`` to ``Hello 10``:
+
+.. code-block:: dylan
+
+    define method hello-world (x :: <integer>) => ()
+      do(curry(format-out, "Hello %d\n"), range(to: x))
+    end
 
 dfmc-management
 -----------------
 
-The library dfmc-management drives the compilation process, prints general information what is happening at the moment (progress, warnings) and takes care of some global settings like opening and closing source records, etc.
+The library dfmc-management drives the compilation process, prints
+general information what is happening at the moment (progress,
+warnings) and takes care of some global settings like opening and
+closing source records, etc.
 
-The main external entry point is compile-library-from-definitions in world.dylan. This requires that the source has already been parsed (really? but it calls compute-library-definitions itself!).
+The main external entry point is compile-library-from-definitions in
+world.dylan. This requires that the source has already been parsed
+(really? but it calls compute-library-definitions itself!).
 
-It then calls in sequence ``compute-library-definitions``, ``ensure-library-compiled``, ``ensure-library-glue-linked``, ``ensure-library-stripped`` and ``ensure-database-saved``, apart from console output (warnings, stats).
+It then calls in sequence ``compute-library-definitions``,
+``ensure-library-compiled``, ``ensure-library-glue-linked``,
+``ensure-library-stripped`` and ``ensure-database-saved``, apart from
+console output (warnings, stats).
 
-The very first method, ``compute-library-definitions``, calls ``ensure-library-definitions-installed``, which calls ``update-compilation-record-definitions``, which mainly calls ``compute-source-record-top-level-forms``. This opens the compilation record as a stream and calls ``read-top-level-fragment`` to get a fragment and then ``top-level-convert-forms``.
+The very first method, ``compute-library-definitions``, calls
+``ensure-library-definitions-installed``, which calls
+``update-compilation-record-definitions``, which mainly calls
+``compute-source-record-top-level-forms``. This opens the compilation
+record as a stream and calls ``read-top-level-fragment`` to get a
+fragment and then ``top-level-convert-forms``.
 
-The reader library defines the ``read-top-level-fragment``, the definitions library the ``top-level-convert-forms``. Thus, a fragment is read and converted into definitions.
+The reader library defines the ``read-top-level-fragment``, the
+definitions library the ``top-level-convert-forms``. Thus, a fragment
+is read and converted into definitions.
 
-The method ``ensure-library-compiled`` computes, finishes and checks the data models. Afterwards the code models are generated (the control flow graph), then type inference is done and the optimizer is run. Finally the heaps are generated. These are methods defined in ``compilation-driver.dylan``, calling out to the modeling, conversion, flow-graph, typist and optimizer libraries.
+The method ``ensure-library-compiled`` computes, finishes and checks
+the data models. Afterwards the code models are generated (the control
+flow graph), then type inference is done and the optimizer is run.
+Finally the heaps are generated. These are methods defined in
+``compilation-driver.dylan``, calling out to the modeling, conversion,
+flow-graph, typist and optimizer libraries.
 
-Finally the glue is emitted (in ``back-end-driver.dylan``) and the database is saved, which contains metadata of each library (like type information, code models, etc.).
+Finally the glue is emitted (in ``back-end-driver.dylan``) and the
+database is saved, which contains metadata of each library (like type
+information, code models, etc.).
 
-Some global warnings for libraries are defined and checked for in the management library.
+Some global warnings for libraries are defined and checked for in the
+management library.
 
-The unused file ``interface.dylan`` compares module and binding definitions, in order to judge whether the public API of a library/module has changed between two versions. Usage of this would allow lazy recompilation: only recompile if the API has changed of a linked library.
+The unused file ``interface.dylan`` compares module and binding
+definitions, in order to judge whether the public API of a
+library/module has changed between two versions. Usage of this would
+allow lazy recompilation: only recompile if the API has changed of a
+linked library.
 
 dfmc-reader
 -----------
