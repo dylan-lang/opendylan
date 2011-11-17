@@ -58,8 +58,8 @@ The command-line options are stored in <basic-main-command> or its subclass
 
 Libraries_________Storage_______________________In file_______________________
 
-MC,  CC    <basic-main-command>          command-line.dylan
-ME,  CE    <environment-main-command>    environment-command-line.dylan
+MC,  CC    <main-command>          command-line.dylan
+ME,  CE    <main-command>    environment-command-line.dylan
 ______________________________________________________________________________
 
 The options are converted into <command> objects and executed in
