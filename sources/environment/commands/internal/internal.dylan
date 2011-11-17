@@ -60,32 +60,6 @@ define method set-property
   context.context-server.server-profile-commands? := profile-commands?
 end method set-property;
 
-// Patching property
-
-define class <patching-property> (<environment-property>)
-end class <patching-property>;
-
-define command-property patching => <patching-property>
-  (summary:       "Patching property",
-   documentation: "Property to specify whether to build patch DLLs",
-   type:          <boolean>)
-end command-property patching;
-
-define method show-property
-    (context :: <environment-context>, property :: <patching-property>)
- => ()
-  message(context, "Patching: %s",
-	  if (environment-variable("OPEN_DYLAN_SYSTEM_DEVELOPER") = "yes") "on" else "off" end)
-end method show-property;
-
-define method set-property
-    (context :: <environment-context>, property :: <patching-property>,
-     patching? :: <boolean>,
-     #key save?)
- => ()
-  environment-variable("OPEN_DYLAN_SYSTEM_DEVELOPER") := if (patching?) "yes" else "" end;
-end method set-property;
-
 
 /// Registry commands
 
@@ -93,6 +67,5 @@ define command-group internal into environment
     (summary: "miscellaneous internal commands",
      documentation: "Miscellaneous internal-only commands.")
   property debugger;
-  property patching;
   property profile-commands;
 end command-group internal;
