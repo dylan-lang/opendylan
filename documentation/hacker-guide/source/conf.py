@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Hacker Guide for Open Dylan documentation build configuration file, created by
+# Open Dylan Hacker's Guide documentation build configuration file, created by
 # sphinx-quickstart on Wed Nov 16 14:43:12 2011.
 #
 # This file is execfile()d with the current directory set to its containing dir.
@@ -40,7 +40,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Hacker Guide for Open Dylan'
+project = u'Open Dylan Hacker\'s Guide'
 copyright = u'2011, Dylan Hackers'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -103,7 +103,7 @@ html_theme_path = ['../../_themes']
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
-html_title = 'Hacker Guide for Open Dylan'
+html_title = 'Open Dylan Hacker\'s Guide'
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #html_short_title = None
@@ -164,7 +164,7 @@ html_static_path = ['_static']
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'HackerGuideforOpenDylandoc'
+htmlhelp_basename = 'OpenDylanHackersGuide'
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -183,7 +183,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'HackerGuideforOpenDylan.tex', u'Hacker Guide for Open Dylan Documentation',
+  ('index', 'OpenDylanHackersGuide.tex', u'Open Dylan Hacker\'s Guide Documentation',
    u'Dylan Hackers', 'manual'),
 ]
 
@@ -213,7 +213,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'hackerguideforopendylan', u'Hacker Guide for Open Dylan Documentation',
+    ('index', 'hackerguideforopendylan', u'Open Dylan Hacker\'s Guide Documentation',
      [u'Dylan Hackers'], 1)
 ]
 
@@ -227,8 +227,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'HackerGuideforOpenDylan', u'Hacker Guide for Open Dylan Documentation',
-   u'Dylan Hackers', 'HackerGuideforOpenDylan', 'One line description of project.',
+  ('index', 'OpenDylanHackersGuide', u'Open Dylan Hacker\'s Guide Documentation',
+   u'Dylan Hackers', 'OpenDylanHackersGuide', 'One line description of project.',
    'Miscellaneous'),
 ]
 
@@ -244,7 +244,7 @@ texinfo_documents = [
 # -- Options for Epub output ---------------------------------------------------
 
 # Bibliographic Dublin Core info.
-epub_title = u'Hacker Guide for Open Dylan'
+epub_title = u'Open Dylan Hacker\'s Guide'
 epub_author = u'Dylan Hackers'
 epub_publisher = u'Dylan Hackers'
 epub_copyright = u'2011, Dylan Hackers'

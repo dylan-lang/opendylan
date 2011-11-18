@@ -1,13 +1,13 @@
-**************************************
-Welcome to Hacker Guide for Open Dylan
-**************************************
+*************************
+Open Dylan Hacker's Guide
+*************************
 
 Contents:
 
 .. toctree::
    :maxdepth: 2
 
-   compiler-internals.rst
+   compiler-internals
 
 
 
@@ -15,6 +15,5 @@ Indices and tables
 ==================
 
 * :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`
 
