@@ -11,9 +11,7 @@ Files:	 common-library
 	 emitted-object
          model-properties
 	 common
-         native-common
 	 numbered-object
-	 probabilities
          compilation-records
          top-level-forms
          compilation-pass
