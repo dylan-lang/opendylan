@@ -108,9 +108,9 @@ Notes on the translations
 The Win32-Common module re-exports some names from the C-FFI module that
 its user may need to use directly, without needing to use (or know
 about) the C-FFI module itself. These names are: *null-pointer*,
-*null-pointer?*, *pointer-address*, *pointer-value*,
-*pointer-value-setter*, *pointer-cast*, *<C-string>*,
-*<C-unicode-string>*, *destroy*, and *with-stack-structure.*
+*null-pointer?*, *pointer-address*, ``pointer-value``,
+``pointer-value``, *pointer-cast*, ``<C-string>``,
+``<C-unicode-string>``, *destroy*, and *with-stack-structure.*
 
 Names that are documented as being obsolete and/or included in Win32
 only for compatibility with Win16, are generally not defined in the
@@ -131,14 +131,14 @@ Simple naming conventions
 -------------------------
 
 Type names are enclosed in angle brackets. For example, *HANDLE* becomes
-*<HANDLE>*.
+``<HANDLE>``.
 
 Names of constants are prefixed by *$*. For example, *OPAQUE* becomes
 *$OPAQUE*.
 
 Underscores are replaced by hyphens. Thus, a constant called *NO\_ERROR*
 becomes *$NO-ERROR* and a class called *LIST\_ENTRY* becomes
-*<LIST-ENTRY>*.
+``<LIST-ENTRY>``.
 
 Hyphens will *not* be inserted between capitalized words (for example,
 *CreateWindow* does not become *Create-Window*) since that is a less
@@ -148,46 +148,46 @@ between Dylan code and Windows documentation.
 Mapping the null value
 ----------------------
 
-In place of *NULL*, there are several constants providing null values
+In place of ``NULL``, there are several constants providing null values
 for frequently used types, such as *$NULL-HANDLE*, *$NULL-RECT*, and
 *$NULL-STRING*. Null values for other pointer types may be designated
 by the expression *null-pointer(<FOO>)*. Use the function
 *null-pointer?* to test whether a value is null. Do not use the
 expression *if(ptr)...* as is often done in C, since a null pointer is
-not the same as *#f*. There are also functions *null-handle* and
+not the same as ``#f``. There are also functions *null-handle* and
 *null-handle?* for creating and testing handles, since conceptually they
 are not necessarily pointers.
 
 Mapping C types onto Dylan classes
 ----------------------------------
 
-The multitude of integer data types in C code (*int*, *long*,
-*unsigned*, *ULONG*, *DWORD*, *LRESULT*, and so on) are all
-designated as *<integer>* (or some appropriate subrange thereof) in
-Dylan method argument types. However, a *<machine-word>* needs to be
+The multitude of integer data types in C code (``int``, ``long``,
+``unsigned``, ``ULONG``, ``DWORD``, ``LRESULT``, and so on) are all
+designated as ``<integer>`` (or some appropriate subrange thereof) in
+Dylan method argument types. However, a ``<machine-word>`` needs to be
 used to represent values that do not fit in the signed 30-bit
 representation of an integer.
 
-Names such as *<DWORD>* should not be used in application code because
+Names such as ``<DWORD>`` should not be used in application code because
 they refer to the FFI designation of the C value representation, not to
 a Dylan data type.
 
-The C types *BOOL* and *BOOLEAN* are both mapped to *<boolean>* in
-Dylan. Use *#t* and *#f* instead of *TRUE* and *FALSE*.
+The C types ``BOOL`` and ``BOOLEAN`` are both mapped to ``<boolean>`` in
+Dylan. Use ``#t`` and ``#f`` instead of ``TRUE`` and ``FALSE``.
 
 .. note:: Beware that some functions, such as *TranslateAccelerator*,
-   though documented to return *TRUE* or *FALSE*, actually return *int*
-   instead of *BOOL* ; in such a case, you will have to compare the result
+   though documented to return ``TRUE`` or ``FALSE``, actually return ``int``
+   instead of ``BOOL`` ; in such a case, you will have to compare the result
    to 0.
 
-   Similarly, watch out for cases where C code passes *TRUE* or *FALSE* as
+   Similarly, watch out for cases where C code passes ``TRUE`` or ``FALSE`` as
    an integer argument. To handle one common case, the Dylan implementation
-   of *MAKELPARAM* accepts either an *<integer>* or *<boolean>* as the
+   of *MAKELPARAM* accepts either an ``<integer>`` or ``<boolean>`` as the
    first argument.
 
-The C types *CHAR*, *WCHAR*, and *TCHAR* are all mapped to
-*<character>* in Dylan. However, *UCHAR* is mapped to *<integer>* since
-that is how it is actually used.
+The C types ``CHAR``, ``WCHAR``, and ``TCHAR`` are all mapped to
+``<character>`` in Dylan. However, ``UCHAR`` is mapped to ``<integer>``
+since that is how it is actually used.
 
 Most of the pointer types in the Windows API have several names; for
 example: *PRECT*, *NPRECT*, and *LPRECT*. In 16-bit code, these
@@ -201,10 +201,10 @@ the *<P...>* and *<LP...>* names even though they have identical values.
 The *NP...* names are not defined in Dylan since they are not as
 commonly used.
 
-Values of type *char\** in C are represented as instances of class
-*<C-string>* in Dylan. This is a subclass of *<string>*, so all of the
+Values of type ``char*`` in C are represented as instances of class
+``<C-string>`` in Dylan. This is a subclass of ``<string>``, so all of the
 normal string operations can be used directly. C function parameters of
-type *char\** will also accept an instance of *<byte-string>* ; a C
+type *char\** will also accept an instance of ``<byte-string>`` ; a C
 pointer is created to point to the characters of the Dylan data, so the
 string does not need to be copied. (Dylan byte strings maintain a NUL
 character at the end in order to allow them to be used directly by C.)
@@ -214,13 +214,13 @@ string at run time, but the need for copying is intended to be removed
 later.
 
 The *TEXT* function can also be used to coerce a string literal to a
-*<C-string>*. This usage is consistent with the Win32 *TEXT* macro,
+``<C-string>``. This usage is consistent with the Win32 *TEXT* macro,
 although the current purpose is different.
 
 The Dylan declarations for C types will generally follow the *strict*
 alternative versions of the C declarations. This means, for example,
-that the various handle types such as *<hmenu>* and *<hwnd>* are
-disjoint subclasses of *<handle>*, instead of all being equivalent.
+that the various handle types such as ``<hmenu>`` and ``<hwnd>`` are
+disjoint subclasses of ``<handle>``, instead of all being equivalent.
 
 Creating methods from Windows alias functions
 ---------------------------------------------
@@ -229,8 +229,8 @@ Consider a Windows function called *Foo* which is an alias for either
 *FooA* (an 8-bit character version) or *FooW* (a 16-bit character
 version). In Dylan, only the name *Foo* will be defined, but it will be
 a generic function with separate methods for arguments of types
-*<C-string>*, *<C-unicode-string>*, *<byte-string>* or
-*<unicode-string>*. (Only the 8-bit versions will be supported in the
+``<C-string>``, ``<C-unicode-string>``, ``<byte-string>`` or
+``<unicode-string>``. (Only the 8-bit versions will be supported in the
 initial implementation, both because the compiler is not ready to handle
 Unicode and because it will not work on Windows 95.)
 
@@ -288,21 +288,21 @@ Similarly, this function returns multiple values instead of a structure:
 Defining callback functions
 ===========================
 
-The Win32-common library provides a *define callback* macro to make it
+The Win32-common library provides a ``define callback`` macro to make it
 easy to define callback functions without the application programmer
-needing to use the FFI *define c-callable-wrapper* macro directly. It is
+needing to use the FFI ``define c-callable-wrapper`` macro directly. It is
 used like this:
 
 .. code-block:: dylan
 
     define callback WndProc :: <WNDPROC> = my-window-function;
 
-This says that *WndProc* is being defined as a C function pointer of
-type *<WNDPROC>*, which when called from C causes the Dylan function
-*my-window-function* to be run. The Dylan function will be defined
-normally using *define method* or *define function*, and it is the
+This says that ``WndProc`` is being defined as a C function pointer of
+type ``<WNDPROC>``, which when called from C causes the Dylan function
+``my-window-function`` to be run. The Dylan function will be defined
+normally using ``define method`` or ``define function``, and it is the
 responsibility of the programmer to ensure that its argument signature
-is consistent with what *<WNDPROC>* requires. For example:
+is consistent with what ``<WNDPROC>`` requires. For example:
 
 .. code-block:: dylan
 
@@ -315,18 +315,18 @@ is consistent with what *<WNDPROC>* requires. For example:
       ...
 
 Note that the *uParam* and *lParam* arguments might receive values of
-either type *<integer>* or *<machine-word>*, so it may be best not to
+either type ``<integer>`` or ``<machine-word>``, so it may be best not to
 specialize them. Often these values are not used directly anyway, but
 are passed to other functions (such as *LOWORD* and *HIWORD*) which
 have methods for handling either representation.
 
-The other types of function supported by *define callback* are dialog
-functions (*<DLGPROC>*) and dialog hooks (*<LP...HOOKPROC>*), both of
+The other types of function supported by ``define callback`` are dialog
+functions (``<DLGPROC>``) and dialog hooks (*<LP...HOOKPROC>*), both of
 which have the same argument types as a window function, but return a
-*<boolean>*. (The dialog hook functions are actually declared in
+``<boolean>``. (The dialog hook functions are actually declared in
 *COMMDLG.H* as returning a *UINT*, but the value is always supposed to
-be *TRUE* or *FALSE*, so the Dylan callback interface has been
-implemented using *BOOL* instead.)
+be ``TRUE`` or ``FALSE``, so the Dylan callback interface has been
+implemented using ``BOOL`` instead.)
 
 Error messages
 ==============
@@ -342,7 +342,7 @@ Function
 
     win32-error-message *error-code* => *message*
 
-The *error-code* is an instance of *<integer>* or *<machine-word>* (type
+The *error-code* is an instance of ``<integer>`` or ``<machine-word>`` (type
 unioned).
 
 The *error-code* argument is either a Windows a Windows error code (such
@@ -350,7 +350,7 @@ as returned by *GetLastError*) or an *SCODE* (also known as an
 *HRESULT*) value (such as returned by most OLE/COM functions).
 
 The function returns a text message (in a string) corresponding to the
-error code, *#f* if the code is not recognized. The returned string
+error code, ``#f`` if the code is not recognized. The returned string
 might have more than one line but does not have a newline at the end.
 For example:
 
@@ -382,7 +382,7 @@ Function
 
     check-win32-result *name* *result*
 
-Many Windows functions return *#f* or *NULL* to mean failure. The
+Many Windows functions return ``#f`` or ``NULL`` to mean failure. The
 function *check-win32-result* checks the result to see if it indicates
 failure, and if so it calls `report-win32-error`_.
 For example,
@@ -408,7 +408,7 @@ Handling Dylan conditions in a Win32 application
 
 The Win32-User library exports from its Win32-Default-Handler module a
 handler utility function called *win32-last-handler*, defined on
-objects of class *<serious-condition>*.
+objects of class ``<serious-condition>``.
 
 win32-last-handler
 ------------------
@@ -512,14 +512,14 @@ Combining bit mask constants
 
 Where C code would use the *\|* operator to combine bit mask constants,
 Dylan code usually uses the *logior* function. However, a few such
-constants have values of type *<machine-word>* when they will not fit in
-a small integer, and *logior* only works on instances of *<integer>*.
+constants have values of type ``<machine-word>`` when they will not fit in
+a small integer, and *logior* only works on instances of ``<integer>``.
 Because of this, the *win32-common* library exports a *%logior* function
 which is used like *logior* except that it accepts values of either type
-*<integer>* or *<machine-word>* and returns a *<machine-word>* result.
+``<integer>`` or ``<machine-word>`` and returns a ``<machine-word>`` result.
 It can be used in most places that accept a bit mask (C types *DWORD*,
 *ULONG*, *LPARAM*, and so on), but must be used if any of the
-arguments are a *<machine-word>*. The contexts where this is likely to
+arguments are a ``<machine-word>``. The contexts where this is likely to
 occur are:
 
 -  Window style parameter of *CreateWindow ($WS-...)*
@@ -536,12 +536,12 @@ occur are:
 Other minor details
 ===================
 
-The types *<FARPROC>* and *<PROC>* are defined as equivalent to
-*<C-function-pointer>*, so any C function wrapper object can be passed
-to a routine taking a *<FARPROC>* without needing to do any type
+The types ``<FARPROC>`` and ``<PROC>`` are defined as equivalent to
+``<C-function-pointer>``, so any C function wrapper object can be passed
+to a routine taking a ``<FARPROC>`` without needing to do any type
 conversion like that needed in C.
 
-Type casts between handles and integers (*<integer>* or *<machine-word>*
+Type casts between handles and integers (``<integer>`` or ``<machine-word>``
 ) can be done by using *as*. For example:
 
 .. code-block:: dylan
@@ -557,7 +557,7 @@ For type casts from one pointer type to another, use the function
 structure pointed to, while *pointer-cast* operates on just the pointer
 itself.
 
-The Dylan function *pointer-value* can be used to convert between a
+The Dylan function ``pointer-value`` can be used to convert between a
 Dylan integer and a *LARGE-INTEGER* or *ULARGE-INTEGER*. For example:
 
 .. code-block:: dylan
@@ -580,7 +580,7 @@ split a parameter into two signed numbers. For example:
 
     let ( x, y ) = LPARAM-TO-XY(lParam);
 
-In Dylan, *<RECTL>* is an alias of *<RECT>* instead of being a distinct
+In Dylan, ``<RECTL>`` is an alias of ``<RECT>`` instead of being a distinct
 type. (In Win32, they are structurally equivalent but were separate
 types for the sake of source code compatibility with Win16; there is no
 need to maintain that artificial distinction in Dylan.)
