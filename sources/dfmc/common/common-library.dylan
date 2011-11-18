@@ -102,10 +102,6 @@ define module dfmc-common
     references;
 
   export
-    <serial-numbered-object>,
-      object-serial-number;
-
-  export
     <emitted-object>,
     emitted-name,  emitted-name-setter;
 
