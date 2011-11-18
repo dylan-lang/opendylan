@@ -37,9 +37,12 @@ Compiler databases and the browser
 ----------------------------------
 
 The browser gets some of its information from the compiler database for
-the project. See ` <model.htm#25398>`_ and ` <model.htm#16835>`_ for
-details of how compiler databases are derived, and how they fit in to
-the overall view of a project that Open Dylan presents.
+the project. See :ref:`compiler-databases` and
+:ref:`source-database-runtime-views` for details of how compiler databases
+are derived, and how they fit in to the overall view of a project that
+Open Dylan presents.
+
+.. _browsing-project-source-runtime-contexts:
 
 Browsing a project in source and run-time contexts
 --------------------------------------------------
@@ -337,7 +340,7 @@ You can browse the contents of the local variables and function
 parameter values in call frames, as seen in the debugger. These are
 values on the stack in a paused application thread. Simply double-click
 on one in the debugger stack pane, and the browser will display its
-contents. See `See Browsing local variables <expanding.htm#13818>`_ for
+contents. See :ref:`browsing-local-variables` for
 an example of browsing local variable and parameter values.
 
 .. index::

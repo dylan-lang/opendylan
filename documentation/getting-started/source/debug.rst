@@ -104,9 +104,8 @@ addition, the menu commands **View > Expand**, **View > Expand All**,
    frames for Dylan functions defined in or imported into the thread’s
    current module appear in the stack pane. This default setting is
    indicated by “Filtered visible frames”, which appears in the stack pane
-   filtering drop-down list (see `See Searching the stack backtrace for the
-   cause of the error <expanding.htm#47774>`_ for information about the
-   drop-down list settings).
+   filtering drop-down list (see :ref:`searching-stack-backtrace-for-cause`
+   for information about the drop-down list settings).
 
 Choose the **View > Debugger Options** dialog’s Stack page in the debugger
 window to control the filtering rules. See `Stack options`_ for details.
@@ -135,6 +134,8 @@ number by incrementing the value used for the previous thread, and a
 title derived according to the scheme above.
 
 In Reversi, there is only one thread, the master thread.
+
+.. _call-frames:
 
 Call frames
 ^^^^^^^^^^^
@@ -809,6 +810,8 @@ The code is compiled and run and a DUIM window opens.
 For more information about creating GUI interfaces with Open Dylan,
 see the *Building Applications Using DUIM* and *DUIM Reference* manuals.
 
+.. _example-interaction-reversi:
+
 An example interaction with Reversi
 -----------------------------------
 
@@ -931,6 +934,7 @@ list of available commands, and documentation for each command, with the
 
 .. index:: active project
    single: projects; active project
+.. _active-project:
 
 The active project
 ==================
@@ -1172,6 +1176,8 @@ The **Application > Enable All Breakpoints** command sets enables all
 disabled breakpoints. **Application > Disable All Breakpoints** disables
 all enabled breakpoints.
 
+.. _breakpoint-options:
+
 Breakpoint options
 ------------------
 
@@ -1381,6 +1387,8 @@ supplemental text.
 
    The Export… dialog.
 
+.. _debugger-options:
+
 Debugger options
 ================
 
@@ -1389,6 +1397,8 @@ the options for the debugger. This dialog has three property pages:
 Stack, Exceptions, and Misc. The options on these pages apply on a
 per-thread basis—you can have different settings for different threads’
 debuggers.
+
+.. _stack-options:
 
 Stack options
 -------------
@@ -1455,7 +1465,7 @@ The Misc page presents miscellaneous, high-level debugger options.
 -  When checked (the default), presents an application error dialog
    asking if you want to abort the current application, continue with a
    selected restart, debug the application or exit the application. See
-   `See A Dylan run-time application error. <expanding.htm#81640>`_.
+   :ref:`dylan-runtime-application-error`.
 
 Expand stack backtrace when first opening debugger
 
@@ -1508,8 +1518,8 @@ to a DUIM application takes slightly longer. DUIM applications have a
 *default-handler* method that displays a standard dialog describing the
 unhandled Dylan error, and offering the chance to terminate the
 application (*Yes* button), ignore the error (*No* button), or debug the
-application (*Cancel* button). This is the dialog that we saw in `See
-Problems at run time <expanding.htm#35733>`_.
+application (*Cancel* button). This is the dialog that we saw in
+:ref:`problems-at-run-time`.
 
 To attach the debugger in this situation, click **Cancel**. Because the
 application is not running under a debugger already, the error falls

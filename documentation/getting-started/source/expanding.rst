@@ -258,6 +258,8 @@ Choose a file to save into, and click **Save**.
 
 An application error dialog appears.
 
+.. _dylan-runtime-application-error:
+
 .. figure:: images/error2-0.png
    :align: center
 
@@ -271,7 +273,7 @@ what went wrong.
 Choose Debug reversi.exe and click **OK** to enter the debugger.
 
 The Open Dylan debugger appears. We discuss the debugger in detail
-in ` <debug.htm#18907>`_.
+in :doc:`debug`.
 
 In its uppermost pane, the debugger shows the error that it caught. It
 will be::
@@ -286,7 +288,7 @@ master thread of the Reversi application. This tells us that the
 exception was raised in that thread. (In Reversi’s case, there happens
 to be only one thread, but other applications might have multiple
 threads, and knowing the thread that raised the exception is useful. See
-` <debug.htm#18907>`_ for more information about debugger options.)
+:doc:`debug` for more information about debugger options.)
 
 When expanded, the tree item shows the current state of the call stack
 for Reversi’s master thread. When the debugger is invoked on a thread,
@@ -318,10 +320,12 @@ debugged. We call this list of call frames a stack backtrace or simply a
 The backtrace shows frames in the order they were created, with the most
 recent at the top of the list. The frames are represented by the names
 of the functions whose call created them, and are accompanied by an icon
-denoting the sort of call it was. See ` <debug.htm#21078>`_ for details
+denoting the sort of call it was. See :ref:`call-frames` for details
 of the icons and their meanings, but note for now that the green arrow
 icon represents the current location of the stack pointer—that is, the
 call at which the thread was paused.
+
+.. _searching-stack-backtrace-for-cause:
 
 Searching the stack backtrace for the cause of the error
 --------------------------------------------------------
@@ -393,7 +397,7 @@ Filtered local frames
 The “Filtered…” settings do not, by default, show foreign function
 calls, cleanup frames, and frames of unknown type, whereas the “All…”
 settings show everything. You can set the filtering rules using **View >
-Debugger Options…**, see ` <debug.htm#23810>`_ for details.
+Debugger Options…**, see :ref:`stack-options` for details.
 
 .. figure:: images/unfilterederrstack2-0.png
    :align: center
@@ -481,6 +485,8 @@ are being written to (*stream* ), have incompatible element types, with
 the squares being represented by integers, and the file stream being
 composed of byte characters.
 
+.. _browsing-local-variables:
+
 Browsing local variables
 ------------------------
 
@@ -545,7 +551,8 @@ The Source field shows a source file name for anything the compiler saw
 during compilation, such as a definition. We are browsing an instance,
 not a compiler record, so it is not relevant to associate the instance
 with a source location. For more on the browser’s distinction between
-run-time and compile-time objects, see ` <browsing.htm#40077>`_.
+run-time and compile-time objects, see
+:ref:`browsing-project-source-runtime-contexts`.
 
 Choose the Contents page.
 

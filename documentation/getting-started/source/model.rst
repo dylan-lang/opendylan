@@ -40,12 +40,12 @@ You can create deliverable applications, libraries, and components from
 projects. Projects can be built into executable (.EXE) or dynamic-link
 library (.DLL) files.
 
-Use the *Project* menu for project building. See
-` <delivery.htm#40190>`_, for details of delivery to customers.
+Use the *Project* menu for project building. See :doc:`delivery`,
+for details of delivery to customers.
 
 When we worked with the Reversi project, we built an executable from it,
-but we could just as easily have built a DLL. See
-` <projects.htm#32945>`_ for details.
+but we could just as easily have built a DLL. See :ref:`project-settings`
+for details.
 
 .. index::
    single: projects; creating new
@@ -57,13 +57,14 @@ Open Dylan includes a New Project wizard for creating new projects.
 
 The New Project wizard asks questions about what you are going to
 develop, and then creates a new project configured to help you get
-working quickly. See ` <projects.htm#11353>`_.
+working quickly. See :ref:`creating-new-project`.
 
 You can also create a project if you have a Dylan Library Interchange
 Description (LID) file for it. LID files have a .LID extension. When you
 open a LID file in the development environment, it is converted into a
 project file and opened in a project window. (This process does not
-modify the original LID file on disk.) See ` <projects.htm#33260>`_.
+modify the original LID file on disk.) See
+:ref:`project-files-and-lid-files`.
 
 .. index:: .HDP files
    single: file extensions; .HDP
@@ -129,15 +130,15 @@ Subprojects
 
 Version numbers
     Every project has a major and minor version number. The version numbers
-    affect the build process for projects. See ` <projects.htm#16457>`_
-    and `The build cycle`_.
+    affect the build process for projects. See :ref:`link-page` and
+    `The build cycle`_.
 
 Project settings
     Every project has settings. Among these settings are:
 
     - The list of source code files and their locations on disk.
     - Compilation mode options. See `Compilation modes`_.
-    - Debugging options. See ` <debug.htm#17520>`_.
+    - Debugging options. See :ref:`debugger-options`.
     - The list of subprojects the project uses.
     - The locations on disk of the subprojects.
 
@@ -377,7 +378,7 @@ code. This feature colors source code so that you can see where
 optimizations did and did not occur. Adding type declarations and
 sealing will secure new optimizations, which you can verify by
 refreshing the coloring after rebuilding the project. See
-` <coloring.htm#27192>`_.
+:doc:`coloring`.
 
 .. _versioning:
 
@@ -555,6 +556,7 @@ call to a project’s start function.
 
 .. index::
    single: Compiler databases; relationship to source and run-time views
+.. _source-database-runtime-views:
 
 Source, database, and run-time views
 ====================================

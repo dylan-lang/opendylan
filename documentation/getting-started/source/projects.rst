@@ -8,6 +8,8 @@ Open Dylan’s New Project wizard. We also look at some of the
 options and settings associated with projects, and some of the features
 of the project window.
 
+.. _creating-new-project:
+
 Creating a new project
 ======================
 
@@ -654,6 +656,8 @@ mode setting for the current project. Any project can be compiled in one
 of two modes: Interactive Development mode, and Production mode. See
 :ref:`compilation-modes` for details of the modes.
 
+.. _link-page:
+
 Link page
 ---------
 
@@ -739,6 +743,7 @@ of these debugging techniques.
 
 .. index:: .LID files
    single: file extensions; .LID
+.. _project-files-and-lid-files:
 
 Project files and LID files
 ===========================

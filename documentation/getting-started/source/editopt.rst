@@ -51,8 +51,10 @@ ways:
 When the editor opens, a buffer containing the text of the current file
 is displayed, and you can move around it and change its contents as you
 wish, then save it back to the original file (assuming that you have
-permission to write to it). ` <editopt.htm#43811>`_ shows a file opened
-in an editor window.
+permission to write to it). :ref:`editor-window-with-reversi` shows a
+file opened in an editor window.
+
+.. _editor-window-with-reversi:
 
 .. figure:: images/editorgm.png
    :align: center
@@ -108,20 +110,19 @@ layout.
    as “Compiling definition…” when you compile a selection.
 -  The standard Dylan toolbar can be viewed or hidden with **View >
    Toolbar**.
--  The color dispatch optimizations feature, as described in `See
-   Dispatch Optimization Coloring in the
-   Editor <coloring.htm#27192>`_, shows you where and how to optimize
+-  The color dispatch optimizations feature, as described in 
+   :doc:`coloring`, shows you where and how to optimize
    your code and is controlled by **View > Color Dispatch Optimizations**.
 
 The editor window’s context: the active project
 -----------------------------------------------
 
 In an editor window, the toolbar and menu commands act upon the
-application of the active project. For instance, the **Project**, **Build**,
-and **Application** menus are not available in the editor if the source
-file being edited is not part of the active project—the project whose
-name is visible in the main window’s drop-down list. See `See The active
-project <debug.htm#21333>`_ for more details.
+application of the active project. For instance, the **Project**,
+**Build**, and **Application** menus are not available in the editor
+if the source file being edited is not part of the active project—the
+project whose name is visible in the main window’s drop-down list. See
+:ref:`active-project` for more details.
 
 Menu commands and special features
 ==================================
@@ -157,7 +158,8 @@ Compile Selection
    Allows you to compile a selection of code independently while an
    application is running. This is one of the editor’s special
    interactive capabilities. For details and an example of interactive
-   development using Compile Selection, see ` <editopt.htm#41268>`_.
+   development using Compile Selection, see
+   `Using the editor for interactive development`_.
 
 Macroexpand Selection
    When the cursor is placed in a macro in the editor window, choosing
@@ -167,12 +169,12 @@ Macroexpand Selection
 
 The editor’s **Application** menu is the same as for the debugger or the
 project window, except that it contains extra breakpoint commands. These
-breakpoint commands are also part of the shortcut menu. See `See
-Breakpoint options <debug.htm#23683>`_ for details.
+breakpoint commands are also part of the shortcut menu. See
+:ref:`breakpoint-options` for details.
 
 If you have Microsoft Visual SourceSafe installed, the editor displays
 a **SourceSafe** menu. This menu is Open Dylan’s interface to source
-control. For more information, see ` <editopt.htm#33650>`_.
+control. For more information, see `Source control with Visual SourceSafe`_.
 
 Shortcut menus
 --------------
@@ -215,28 +217,27 @@ Show Documentation
 
 If you right-click when the cursor is in a method name, the shortcut
 menu also contains tracing commands and breakpoint manipulation
-commands. For details about these shortcut commands, see `See Breakpoint
-options <debug.htm#23683>`_.
+commands. For details about these shortcut commands, see
+:ref:`breakpoint-options`.
 
 Breakpoint commands are also available if you right-click when your
-mouse pointer is over the leftmost column of the editor window (see `See
-Breakpoint options <debug.htm#23683>`_). Underscores in the leftmost
+mouse pointer is over the leftmost column of the editor window (see
+:ref:`breakpoint-options`). Underscores in the leftmost
 column indicate lines where you could add a breakpoint (see
-` <editopt.htm#43811>`_).
+:ref:`editor-window-with-reversi`).
 
 .. index:: Compile Selection editor command
 
 Using the editor for interactive development
 ============================================
 
-You will recall from `See An example interaction with
-Reversi <debug.htm#33511>`_ that we were able to change the shapes of
-the Reversi game pieces while the application was running simply by
-providing new definitions in the interactor. Now imagine that you were
-developing the Reversi application and wanted to interact with it as you
-coded the sources. The Open Dylan editor allows you to compile
-pieces of your code and see the results in the running application by
-using **Project > Compile Selection**.
+You will recall from :ref:`example-interaction-reversi` that we were
+able to change the shapes of the Reversi game pieces while the
+application was running simply by providing new definitions in the
+interactor. Now imagine that you were developing the Reversi application
+and wanted to interact with it as you coded the sources. The Open Dylan
+editor allows you to compile pieces of your code and see the results in
+the running application by using **Project > Compile Selection**.
 
 In the following example we interact with the Reversi application from
 an editor window opened on one of the Reversi sources.
@@ -301,14 +302,16 @@ more developers are making changes to the same files at the same time.
 
 The Open Dylan source control interface provides access to a subset
 of Visual SourceSafe features, which are described in
-` <editopt.htm#13586>`_. To perform more complex actions, you must use
+`The SourceSafe menu commands`_. To perform more complex actions, you must use
 the source control system’s native interface.
 
 Open Dylan detects a Visual SourceSafe installation on a machine
 and automatically makes its interface to source control available by
 creating an additional **SourceSafe** menu on editor windows (see
-` <editopt.htm#57280>`_). Therefore, you must have Visual SourceSafe
+:ref:`sourcesafe-menu`). Therefore, you must have Visual SourceSafe
 installed in order to see the **SourceSafe** menu.
+
+.. _sourcesafe-menu:
 
 .. figure:: images/editopt-6.gif
    :align: center
@@ -370,7 +373,9 @@ Using the editor’s source control interface
 
 The first time you choose one of the **SourceSafe** menu items, the editor
 prompts you for the name of the SourceSafe database, as shown in
-` <editopt.htm#51518>`_.
+:ref:`select-database-dialog`.
+
+.. _select-database-dialog:
 
 .. figure:: images/editopt-7.gif
    :align: center
@@ -384,7 +389,9 @@ default.)
 
 The editor then requests the identity of the file (or files) to be
 manipulated by a source control operation, as shown in
-` <editopt.htm#59619>`_.
+:ref:`select-project-file-dialog`.
+
+.. _select-project-file-dialog:
 
 .. figure:: images/editopt-8.gif
    :align: center
@@ -394,8 +401,8 @@ manipulated by a source control operation, as shown in
 SourceSafe organizes its database into a hierarchical collection of
 projects. Each project can hold both files and projects (in other words,
 subprojects). The project named *$/* refers to the root of the
-SourceSafe database. In ` <editopt.htm#59619>`_ the developer has
-selected a project three levels below the root.
+SourceSafe database. In :ref:`select-project-file-dialog` the developer
+has selected a project three levels below the root.
 
 When using Visual SourceSafe, you may omit the file name in all
 operations (except for **SourceSafe > Add to Source Control…** and **Remove
