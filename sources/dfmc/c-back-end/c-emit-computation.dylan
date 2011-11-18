@@ -79,7 +79,7 @@ define constant $loop-shadow-tmp-suffix = "T";
 
 define method emit-local-tmp-definition 
     (back-end :: <c-back-end>, stream :: <stream>, tmp :: <temporary>) => ()
-  format-emit*(back-end, stream, "\t");
+  format-emit*(back-end, stream, "\tvolatile ");
   let type = type-estimate(tmp); // lookup-type(tmp, current-css(), tmp.generator);
   emit-parameter-type(back-end, stream, type);
   // if (tmp.cell?)
@@ -104,13 +104,13 @@ define method emit-local-tmp-definition
   // let type = lookup-type(tmp, current-css(), tmp.generator); // ***** WRONG?
   let type = type-estimate(tmp);
   for (i from 0 below required-values(tmp))
-    format-emit*(back-end, stream, "\t");
+    format-emit*(back-end, stream, "\tvolatile ");
     emit-parameter-type(back-end, stream, type, index: i);
     format-emit*(back-end, stream, " %_~;\n", tmp, i);
   end for;
   if (required-values(tmp) = 0
       | tmp.rest-values?)
-    format-emit*(back-end, stream, "\t");
+    format-emit*(back-end, stream, "\tvolatile ");
     emit-parameter-type(back-end, stream, type);
     format-emit*(back-end, stream, " %;\n", tmp);
   end if;    
@@ -125,11 +125,11 @@ define method emit-local-definition
     (back-end :: <c-back-end>, stream :: <stream>, 
      tmp :: <stack-vector-temporary>) => ()
   if (tmp.number-values = 0)
-    format-emit* (back-end, stream, "\t");
+    format-emit* (back-end, stream, "\tvolatile ");
     emit-parameter-type(back-end, stream, dylan-value(#"<object>"));
     format-emit*(back-end, stream, " % = @;\n", tmp, #[]);
   else
-    format-emit*(back-end, stream, "\t");
+    format-emit*(back-end, stream, "\tvolatile ");
     // TODO: integrate this with the real object dumper
     let class = &object-class(#[]);
     let wrapper = ^class-mm-wrapper(class);
@@ -1062,7 +1062,7 @@ define method emit-computation
       if (i = 0)  // special case for 0 again
 	format-emit(b, s, d, "\t#", lhs-temp);   // temp = 
       else
-	format-emit(b,s,d,"\t");
+	format-emit(b,s,d,"\tvolatile ");
       end if;
 // want to index into rhs by how much has been extracted already, 
 // but can't (1st param must be a vector, with a size slot).
