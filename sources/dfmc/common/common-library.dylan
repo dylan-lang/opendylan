@@ -88,12 +88,7 @@ define module dfmc-common
     name, name-setter,
     named?,
     coerce-name;
-  
-  export
-    <numbered-object>,
-    id, id-setter,
-    make-next-id;
-    
+      
   export
     <referenced-object>,
     users, users-setter,
