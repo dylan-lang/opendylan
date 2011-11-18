@@ -75,7 +75,7 @@ calls to functions with the wrong number or type of arguments.
 .. index:: warnings
 
 For code with only cosmetic problems, such as a method definition that
-ends with *end class* instead of *end method*, the compiler issues
+ends with ``end class`` instead of ``end method``, the compiler issues
 a *warning*.
 
 .. index::
@@ -173,8 +173,9 @@ Add the missing semi-colon so that the last line of the definition
     end method number-for-piece;
 
 While we are editing the file, we can fix the non-serious warning. It is
-caused by a mismatched *end* clause in *reversi-game-write-data*. It is
-a method, but the *end* clause says *end class* instead of *end method*.
+caused by a mismatched ``end`` clause in *reversi-game-write-data*. It is
+a method, but the ``end`` clause says ``end class`` instead of
+``end method``.
 
 Locate the definition of the *reversi-game-write-data* method in
 *saving.dylan*.
@@ -331,39 +332,38 @@ the unhandled exception.
 Looking at the top of the backtrace, we can see that the most recent
 call activity in the Reversi master thread concerned catching the
 unhandled exception and invoking the debugger. The calls to
-*primitive\_invoke\_debugger*, *default-handler*, and *error* were all
-part of this. But if we move down the backtrace to the point below the
-call to *error*, we can examine the sequence of calls that led to the
-unhandled exception and find out how to fix the error.
+``primitive_invoke_debugger``, ``default-handler``, and ``error`` were
+all part of this. But if we move down the backtrace to the point below
+the call to ``error``, we can examine the sequence of calls that led to
+the unhandled exception and find out how to fix the error.
 
-The first interesting call for us is the one to *write-element*. This
+The first interesting call for us is the one to ``write-element``. This
 is the last of the calls appearing in the stack frame that Reversi made
 before the unhandled exception.
 
-Select the call frame for *write-element*.
+#. Select the call frame for ``write-element``.
 
-The source code definition of *write-element* appears in the pane
-opposite. This source code pane is read only; if we wanted to edit a
-definition shown in it we would click on the Edit Source (|image0|)
-button above the source code pane, which would open the file containing
-the definition in an editor window.
+   The source code definition of ``write-element`` appears in the pane
+   opposite. This source code pane is read only; if we wanted to edit a
+   definition shown in it we would click on the Edit Source (|image0|)
+   button above the source code pane, which would open the file containing
+   the definition in an editor window.
 
-Looking at the source code for *write-element*, the green arrow icon
-points to an assignment to *sb.buffer-next*. Here, the green arrow is
-showing the point at which execution would resume in that call frame if
-the application’s execution was continued. What we do not know is
-whether the preceding call, to *coerce-from-element*, returned. It may
-be that the call failed (because the arguments were not what
-*coerce-from-element* was expecting) or that it succeeded but does not
-appear in the stack pane because of the default filtering.
+   Looking at the source code for ``write-element``, the green arrow icon
+   points to an assignment to ``sb.buffer-next``. Here, the green arrow is
+   showing the point at which execution would resume in that call frame if
+   the application’s execution was continued. What we do not know is
+   whether the preceding call, to ``coerce-from-element``, returned. It may
+   be that the call failed (because the arguments were not what
+   ``coerce-from-element`` was expecting) or that it succeeded but does not
+   appear in the stack pane because of the default filtering.
 
-To work out what has happened, we can examine the stack pane filtering
-with the filtering drop-down list.
+   To work out what has happened, we can examine the stack pane filtering
+   with the filtering drop-down list.
 
-Choose “Filtered frames” from the stack pane filtering drop-down list
-(which by default is set to “Filtered visible frames”).
-
-The stack pane updates itself.
+#. Choose “Filtered frames” from the stack pane filtering drop-down list
+   (which by default is set to “Filtered visible frames”).  
+   The stack pane updates itself.
 
 The six settings available from the stack pane filtering drop-down list
 provide a quick way of changing what you view in the stack pane:
@@ -400,81 +400,80 @@ Debugger Options…**, see ` <debug.htm#23810>`_ for details.
 
    Stack pane showing call frames from all modules.
 
-So the question is whether the call to *coerce-from-element* failed, or
+So the question is whether the call to ``coerce-from-element`` failed, or
 whether it succeeded, but comes from a module that Reversi does not
 explicitly use. The stack pane now shows a frame for the call to
-*coerce-from-element*. The name has the suffix
-*streams-internals:streams*. This means that *coerce-from-element* is a
-name from the *streams-internals* module of the *streams* library.
+``coerce-from-element``. The name has the suffix
+``streams-internals:streams``. This means that ``coerce-from-element`` is a
+name from the ``streams-internals`` module of the ``streams`` library.
 
-This *name* :*module* :*library* form of printing Dylan names is used in
+This *name*:*module*:*library* form of printing Dylan names is used in
 a number of different places in Open Dylan. It shows that *name* is
 not part of the module, or module and library, that a tool is currently
 focused on. (The debugger and browser both have a toolbar pop-up where
 you can change the current module.)
 
-Returning to our example, we now know that *write-element* ’s call to
-*coerce-from-element* succeeded, because it created a call frame. We can
-see that *coerce-from-element* is now the last frame on the stack before
-the call to *error*.
+Returning to our example, we now know that ``write-element``’s call to
+``coerce-from-element`` succeeded, because it created a call frame. We can
+see that ``coerce-from-element`` is now the last frame on the stack before
+the call to ``error``.
 
-Select the call frame for *coerce-from-element*.
+3. Select the call frame for ``coerce-from-element``.
 
-The green arrow in the source code definition for *coerce-from-element*
-points to an assignment containing a call to *byte-char-to-byte*.
-Notice that this call does not appear in the backtrace. Because the
-backtrace is now showing call frames from all modules, we know that the
-exception must have been raised while attempting to call this function,
-before a call frame was created for it.
+   The green arrow in the source code definition for ``coerce-from-element``
+   points to an assignment containing a call to ``byte-char-to-byte``.
+   Notice that this call does not appear in the backtrace. Because the
+   backtrace is now showing call frames from all modules, we know that the
+   exception must have been raised while attempting to call this function,
+   before a call frame was created for it.
 
-Since the error dialog told us that the exception was caused by
-something being of the wrong type, there is a good chance that the value
-of *elt*, the argument to *byte-char-to-byte*, is of the wrong type.
-Notice too that *elt* ’s type is not specified in the signature of
-*coerce-from-element*.
+   Since the error dialog told us that the exception was caused by
+   something being of the wrong type, there is a good chance that the value
+   of *elt*, the argument to ``byte-char-to-byte``, is of the wrong type.
+   Notice too that *elt* ’s type is not specified in the signature of
+   ``coerce-from-element``.
 
-We need to know the value passed to *elt*. We can find out by expanding
-the *coerce-from-element* call frame: a call frame preceded by a *+* can
-be expanded to show the values of its arguments and local variables.
+   We need to know the value passed to *elt*. We can find out by expanding
+   the ``coerce-from-element`` call frame: a call frame preceded by a *+* can
+   be expanded to show the values of its arguments and local variables.
 
-Expand the call frame for *coerce-from-element*.
+#. Expand the call frame for ``coerce-from-element``.
 
-We can now see the value that was passed for *elt*. It is an integer
-value, either 0, 1, or 2. It is this value that caused the error that
-occurred. This is the message again::
+   We can now see the value that was passed for *elt*. It is an integer
+   value, either 0, 1, or 2. It is this value that caused the error that
+   occurred. This is the message again::
 
-    Dylan error: *n* is not of type {<class>: <BYTE-CHARACTER>}
+       Dylan error: *n* is not of type {<class>: <BYTE-CHARACTER>}
 
-where *n* is either 0, 1, or 2.
+   where *n* is either 0, 1, or 2.
 
-Our next task is to find out why *coerce-from-element* was sent an
-integer instead of a byte character. To do this, we can simply move down
-the backtrace and examine earlier calls.
+   Our next task is to find out why ``coerce-from-element`` was sent an
+   integer instead of a byte character. To do this, we can simply move down
+   the backtrace and examine earlier calls.
 
-Select the call frame for *write-element*.
+#. Select the call frame for ``write-element``.
 
-We can see here that the value passed to *elt* in *coerce-from-element*
-is the value of one of *write-element* ’s parameters, also called *elt*
-.
+   We can see here that the value passed to *elt* in ``coerce-from-element``
+   is the value of one of ``write-element`` ’s parameters, also called *elt*.
 
-We need to move further down the stack to the *reversi-board-write-data*
-call.
+   We need to move further down the stack to the ``reversi-board-write-data``
+   call.
 
-Select the call frame for *reversi-board-write-data*.
+#. Select the call frame for ``reversi-board-write-data``.
 
-The *reversi-board-write-data* method takes an instance of
-*<reversi-board>* and an instance of *<file-stream>* as arguments. A
-*<reversi-board>* instance is what the application uses to represent the
-state of the board during a game. A *<file-stream>* is what Reversi is
+The ``reversi-board-write-data`` method takes an instance of
+``<reversi-board>`` and an instance of ``<file-stream>`` as arguments. A
+``<reversi-board>`` instance is what the application uses to represent the
+state of the board during a game. A ``<file-stream>`` is what Reversi is
 using to write the state of the board out into a file that can be
 re-loaded later.
 
-We can see that this method calls *reversi-board-squares* on the
-*<reversi-board>* instance and then iterates over the value returned,
+We can see that this method calls ``reversi-board-squares`` on the
+``<reversi-board>`` instance and then iterates over the value returned,
 apparently writing each element to the stream with
-*reversi-square-write-data*. (Notice that *reversi-square-write-data*
+``reversi-square-write-data``. (Notice that ``reversi-square-write-data``
 does not appear on the stack—this is because it contains only a tail
-call to *write-element*, and so is optimized away.)
+call to ``write-element``, and so is optimized away.)
 
 We are closing in on the bug. It is looking like the value representing
 the Reversi board squares (*squares* ), and the file stream the squares
@@ -488,7 +487,7 @@ Browsing local variables
 In this section we use the Open Dylan browser to help confirm the
 cause of the unhandled Dylan exception.
 
-Expand the call frame for *reversi-board-write-data*.
+Expand the call frame for ``reversi-board-write-data``.
 
 We can now see the values of the local variables in this frame. The
 arguments are listed first: *board* and *stream*, followed by the
@@ -497,7 +496,7 @@ arguments are listed first: *board* and *stream*, followed by the
 .. figure:: images/locvars.png
    :align: center
 
-   Local variables in the *reversi-board-write-data* call frame.
+   Local variables in the ``reversi-board-write-data`` call frame.
 
 The notation
 
@@ -505,11 +504,11 @@ The notation
 
     board = {<reversi-board>}
 
-means that *board* is an instance of *<reversi-board>* —an actual
+means that *board* is an instance of ``<reversi-board>`` —an actual
 instance in the paused application. The curly braces mean that this is
 an instance of the class rather than the class definition itself.
 
-We can look at this *<reversi-board>* instance in the *browser*, which
+We can look at this ``<reversi-board>`` instance in the *browser*, which
 allows us to examine the contents and properties of all kinds of things
 we come across in Open Dylan.
 
@@ -520,10 +519,10 @@ The browser appears.
 .. figure:: images/firstbrowse.png
    :align: center
 
-   Browsing an instance of *<reversi-board>*.
+   Browsing an instance of ``<reversi-board>``.
 
 The browser shows us in its Object field that we are browsing an
-instance of *<reversi-board>*. Like the debugger, the browser uses the
+instance of ``<reversi-board>``. Like the debugger, the browser uses the
 curly braces notation to depict an *instance* of a class as opposed to
 its definition.
 
@@ -539,8 +538,8 @@ gives an overview of the currently browsed object.
 
 Choose the General page.
 
-The fields on the General page for our *<reversi-board>* value tell us
-that it is an instance of type *<reversi-board>* and that it has two
+The fields on the General page for our ``<reversi-board>`` value tell us
+that it is an instance of type ``<reversi-board>`` and that it has two
 slots. The third field, Source, is labeled “n/a” for “not applicable“.
 The Source field shows a source file name for anything the compiler saw
 during compilation, such as a definition. We are browsing an instance,
@@ -563,16 +562,16 @@ Double-click on the *reversi-board-squares* item.
 Now we can see the elements of the *reversi-board-squares* collection.
 
 Click on the Back (|image1|) button to return to browsing *board*, the
-*<reversi-board>* instance.
+``<reversi-board>`` instance.
 
 Going back to the bug we are tracking down, two more useful pieces of
-information have emerged from seeing the *<reversi-board>* instance in
+information have emerged from seeing the ``<reversi-board>`` instance in
 the browser.
 
 First, we can tell from the Contents page, which shows the slot values
 in the instance, that the call to *reversi-board-squares* in
-*reversi-board-write-data*, below, is clearly just a call to the
-default accessor on the *<reversi-board>* slot of the same name.
+``reversi-board-write-data``, below, is clearly just a call to the
+default accessor on the ``<reversi-board>`` slot of the same name.
 
 .. code-block:: dylan
 
@@ -586,18 +585,18 @@ default accessor on the *<reversi-board>* slot of the same name.
     end method reversi-board-write-data;
 
 Second, we can see that the *reversi-board-squares* slot holds a
-sequence, and that the sequence does not have an *<integer>* element
+sequence, and that the sequence does not have an ``<integer>`` element
 type.
 
 So we still do not know where the integer that caused the exception came
 from. However, we have yet to check what goes on in
-*reversi-square-write-data* ; perhaps that method is converting the
+``reversi-square-write-data``; perhaps that method is converting the
 elements in the *reversi-board-squares* sequence into integers?
 
 Browsing definitions
 --------------------
 
-In this section, we browse the definition of *reversi-square-write-data*
+In this section, we browse the definition of ``reversi-square-write-data``
 to see whether it converts the board squares into integers.
 
 To browse the definition, we have the option of locating it on the
@@ -605,12 +604,12 @@ project window Definitions page or (more efficiently) moving it directly
 in the browser.
 
 Delete the text in the browser’s Object field and type
-*reversi-square-write-data* in its place.
+``reversi-square-write-data`` in its place.
 
 Press Return.
 
 The browser switches to the definition of the
-*reversi-square-write-data* method. When we browse a definition as
+``reversi-square-write-data`` method. When we browse a definition as
 opposed to an instance, the browser usually shows a larger set of
 property pages that supply a lot of information about the definition and
 the relationships between it and other definitions in a project. The
@@ -628,18 +627,18 @@ Here is the code:
     end method reversi-square-write-data
 
 So *number-for-piece* is most likely returning the integer value that
-was passed to *write-element* (and that we can see on the stack as the
-*elt* local variable). The square value has type *<piece>* —this, then,
+was passed to ``write-element`` (and that we can see on the stack as the
+*elt* local variable). The square value has type ``<piece>`` —this, then,
 is the element type of the sequence used to represent the state of the
 board.
 
-Browse the definition of *number-for-piece*.
+Browse the definition of ``number-for-piece``.
 
 You can do this either by typing the name into the Object field, or by
 clicking on the name on the Source page and selecting *Browse* from the
 right-click popup menu.
 
-The definition of *number-for-piece* completes the story. It is here
+The definition of ``number-for-piece`` completes the story. It is here
 that the board square representations are converted into integers. This
 is where the integer that caused the exception came from.
 
@@ -652,17 +651,17 @@ cause of the exception we have been tracking down.
 This is what we have learned about the error so far:
 
 -  It occurred when trying to save a Reversi game.
--  It was caused in a call to *coerce-from-element*, which attempted to
+-  It was caused in a call to ``coerce-from-element``, which attempted to
    pass an integer to *byte-char-to-byte*, a method which expects an
-   instance of *<byte-character>*.
--  The *coerce-from-element* method received the integer from
-   *write-element*, which received the integer from
-   *reversi-square-write-data*.
--  The *reversi-square-write-data* method uses the *number-for-piece*
-   method to translate board square representations (type *<piece>* )
-   into instances of *<integer>*. The *<piece>* values are either *#f*
-   (no piece on this square), *#"white"* (a white piece on this square),
-   or *#"black"* (a black piece on this square); those values are
+   instance of ``<byte-character>``.
+-  The ``coerce-from-element`` method received the integer from
+   ``write-element``, which received the integer from
+   ``reversi-square-write-data``.
+-  The ``reversi-square-write-data`` method uses the ``number-for-piece``
+   method to translate board square representations (type ``<piece>`` )
+   into instances of ``<integer>``. The ``<piece>`` values are either ``#f``
+   (no piece on this square), ``#"white"`` (a white piece on this square),
+   or ``#"black"`` (a black piece on this square); those values are
    translated into 0, 1, and 2 respectively. That is why *n* could have
    been either 0, 1, or 2 in the error message::
 
@@ -673,26 +672,26 @@ written.
 
 In addition:
 
--  The *write-element* generic function is from the Open Dylan
+-  The ``write-element`` generic function is from the Open Dylan
    Streams library. It is part of that library’s protocol for writing to
    streams.
--  The stack shows that the *write-element* method tried to coerce an
+-  The stack shows that the ``write-element`` method tried to coerce an
    integer to a byte character, and that the attempt failed.
 
 So we know that Reversi is trying to write integer values to a file
-stream with a *<byte-character>* element type, and the exception occurs
+stream with a ``<byte-character>`` element type, and the exception occurs
 during the attempt to coerce an integer into a byte character.
 
-We could simply change the file stream’s element type to *<integer>*.
+We could simply change the file stream’s element type to ``<integer>``.
 
 In fact, we have not yet looked at the call that created the file
-stream. That call is *reversi-game-save-game*.
+stream. That call is ``reversi-game-save-game``.
 
 Return to the debugger and select the call frame for
-*reversi-game-save-game*.
+``reversi-game-save-game``.
 
 As expected, the source pane shows that the file stream is created with
-an element type of *<byte-character>*. The relevant code fragment is:
+an element type of ``<byte-character>``. The relevant code fragment is:
 
 .. code-block:: dylan
 
@@ -705,15 +704,15 @@ Click the Edit Source (|image2|) button above the source code pane.
 An editor window opens on *saving.dylan*.
 
 We now have *saving.dylan* in the editor, and the insertion point is
-positioned at the start of the definition for *reversi-game-save-game*.
-We can make the change to *<integer>*, but should first check
-*reversi-game-load-game*, the method that loads games saved by
-*reversi-game-save-game*, to see what sort of file-stream elements it
+positioned at the start of the definition for ``reversi-game-save-game``.
+We can make the change to ``<integer>``, but should first check
+``reversi-game-load-game``, the method that loads games saved by
+``reversi-game-save-game``, to see what sort of file-stream elements it
 expects to read back.
 
 That definition is located directly below that of
-*reversi-game-save-game*. It shows that the file-stream element type
-expected is *<byte>*.
+``reversi-game-save-game``. It shows that the file-stream element type
+expected is ``<byte>``.
 
 .. code-block:: dylan
 
@@ -721,21 +720,21 @@ expected is *<byte>*.
                            direction: #"input",
                            element-type: <byte>);
 
-The class *<byte>* is actually a constant value, defined:
+The class ``<byte>`` is actually a constant value, defined:
 
 .. code-block:: dylan
 
     define constant <byte> = limited(<integer>, min: 0, max: 255);
 
-So there is no harm in changing the *element-type:* argument in
-*reversi-game-save-game* ’s call to *make* from *<byte-character>* to
-*<integer>* (because 0, 1, and 2 are all within the defined range for
-*<byte>* ), but for symmetry we may as well change it to *<byte>*.
+So there is no harm in changing the ``element-type:`` argument in
+``reversi-game-save-game``’s call to ``make`` from ``<byte-character>`` to
+``<integer>`` (because 0, 1, and 2 are all within the defined range for
+``<byte>``), but for symmetry we may as well change it to ``<byte>``.
 
-Fix the definition of *reversi-game-save-game*.
+Fix the definition of ``reversi-game-save-game``.
 
-The *element-type:* keyword in the call to *make* on *<file-stream>*
-should take *<byte>*, not *<byte-character>*.
+The ``element-type:`` keyword in the call to ``make`` on ``<file-stream>``
+should take ``<byte>``, not ``<byte-character>``.
 
 Choose **File > Save** in the editor.
 

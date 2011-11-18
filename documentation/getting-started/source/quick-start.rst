@@ -273,15 +273,15 @@ in that file.
 The definitions and expressions are sorted alphabetically under the file
 name in which they appear. Definitions are the Dylan name bindings
 created by compiling top-level definitions in the source code that the
-file contains. Thus *define class* causes a class name to appear in
-the list of definitions, *define method* a method name, and so on, but
+file contains. Thus ``define class`` causes a class name to appear in
+the list of definitions, ``define method`` a method name, and so on, but
 the names of accessors on a class’s slots do not appear.
 
 The expressions in the list are, roughly speaking, anything that appears
 at top level in the source file but is not a definition. Typically such
 expressions are assignments to global variables or function calls. For
 example, in the listing for *algorithms.dylan*, there are several
-top-level calls to the method *install-algorithm*, which stores values
+top-level calls to the method ``install-algorithm``, which stores values
 in a globally visible table. Expressions that are part of a larger
 expression, or part of a definition, are not shown.
 

@@ -173,11 +173,11 @@ An editor window showing *game.dylan* appears.
 We can now see color information showing how dispatch optimizations were
 or were not carried out during the last build.
 
-#. Go to the definition of the method *<reversi-game>*.
+#. Go to the definition of the method ``<reversi-game>``.
 
 You can use **Edit > Find** or the “binoculars” toolbar button to do this.
 
-This is the definition of *<reversi-game>* :
+This is the definition of ``<reversi-game>`` :
 
 .. code-block:: dylan
 
@@ -202,7 +202,7 @@ function *always*, a Dylan language built-in function, is in light
 gray. That means the call has been eliminated completely from the
 compiled application. A call to the function *always* is defined to
 return a function object that always returns the value passed in the
-call to *always*. So here, the function object would always return *#f*.
+call to *always*. So here, the function object would always return ``#f``.
 Unsurprisingly, the compiler evaluated this call completely, avoiding
 the need for run-time method dispatch.
 
@@ -215,24 +215,23 @@ Again, the need for run-time method dispatch was averted.
 Investigation shows that there is only one method on
 *default-algorithm-for-player*, which makes blue optimization simple
 here. The generic function for *default-algorithm-for-player* is defined
-implicitly, in the single *define* *method*
-*default-algorithm-for-player* call. Recall from the DRM (chapter 6)
-that implicitly defined generic functions are sealed by default. That
-fact allows the compiler to conclude that this method is the only method
-there will ever be on *default-algorithm-for-player*, making the
-optimization possible.
+implicitly, in the single ``define method default-algorithm-for-player``
+call. Recall from the DRM (chapter 6) that implicitly defined generic
+functions are sealed by default. That fact allows the compiler to conclude
+that this method is the only method there will ever be on
+*default-algorithm-for-player*, making the optimization possible.
 
-The third coloring is magenta, in the call to *make* on
-*<reversi-board>*, in the *reversi-game-board* slot definition. Here,
+The third coloring is magenta, in the call to ``make`` on
+``<reversi-board>``, in the *reversi-game-board* slot definition. Here,
 then, is a generic function call that was not optimized. Magenta
-coloring means that for this call to *make*, the compiler could not
+coloring means that for this call to ``make``, the compiler could not
 determine the complete set of methods from which it could attempt to
 select the appropriate method to call. We will now make changes to the
 Reversi sources to optimize this call.
 
 The problem here is that the compiler cannot be sure that additional
-methods on *make* might not be added at run time. By defining a sealed
-domain on make for *<reversi-board>*, we can clear this up.
+methods on ``make`` might not be added at run time. By defining a sealed
+domain on make for ``<reversi-board>``, we can clear this up.
 
 #. Add the following to *game.dylan* :
 
@@ -241,7 +240,7 @@ domain on make for *<reversi-board>*, we can clear this up.
     define sealed domain make(subclass(<reversi-board>));
 
 With this information, the compiler knows it has access to the complete
-set of methods on *make* for this class, and therefore can attempt to do
+set of methods on ``make`` for this class, and therefore can attempt to do
 the method selection itself.
 
 We can recompile the application to see what effect our change has had.
@@ -250,14 +249,14 @@ We can recompile the application to see what effect our change has had.
 #. Rebuild the application, and refresh the color information for
    *game.dylan* with **View > Refresh**.
 
-The refreshed coloring shows the call to *make* on *<reversi-board>* in
+The refreshed coloring shows the call to ``make`` on ``<reversi-board>`` in
 the *reversi-game-board* slot definition in light gray. This coloring
-means that the compiler determined which *make* method to call, computed
-the result of the call—a *<reversi-board>* object—and inlined the
+means that the compiler determined which ``make`` method to call, computed
+the result of the call—a ``<reversi-board>`` object—and inlined the
 object.
 
 Looking further down *game.dylan*, notice that the definition of
-*reversi-game-size-setter* also calls *make* on *<reversi-board>*, a
+*reversi-game-size-setter* also calls ``make`` on ``<reversi-board>``, a
 call that is also colored light gray.
 
 We can now look at other possible optimizations in *game.dylan*.
@@ -280,7 +279,7 @@ The definition of *initialize-board* is:
     end method initialize-board;
 
 In this method there is a green-colored call to *reversi-board-squares*
-on the parameter *board*, an instance of *<reversi-board>*. Green
+on the parameter *board*, an instance of ``<reversi-board>``. Green
 coloring denotes an access to a slot whose position in a class is fixed.
 This optimization was possible because the *reversi-board-squares*
 method is just the implicitly defined accessor for the slot
@@ -301,7 +300,7 @@ implicitly define a generic function if one does not already exist; such
 a generic function is sealed because implicitly defined generic
 functions are sealed by default.) Second, the compiler knew the type of
 *board* in the call to the accessor method. Third, the compiler knew
-that the class *<reversi-board>* was sealed, because classes are sealed
+that the class ``<reversi-board>`` was sealed, because classes are sealed
 by default.
 
 We can now move on to some other optimization. The call *size(squares)*
@@ -310,20 +309,20 @@ magenta colorings in *game.dylan*, where the compiler could not
 optimize a method call on the value returned from
 *reversi-board-squares* : calls to *element*, *element-setter*,
 *empty?*, and *size*. In all cases this is because the type of
-*reversi-board-squares* is *<sequence>*, which is an open class.
+*reversi-board-squares* is ``<sequence>``, which is an open class.
 
-We could seal domains on *<sequence>* to get optimizations here. But the
-DRM defines *<sequence>* as an open class, and it is not good practice
+We could seal domains on ``<sequence>`` to get optimizations here. But the
+DRM defines ``<sequence>`` as an open class, and it is not good practice
 to seal protocols that do not belong to your library or libraries.
 However, we can change the type of *reversi-board-squares* to be in a
 domain which is already sealed. Changing the slot type to
-*<simple-object-vector>* gives us a sealed type as well as preserving
+``<simple-object-vector>`` gives us a sealed type as well as preserving
 the protocol in use, so that we do not have to change any of the calls
 being made.
 
-#. Go to the definition of *<reversi-board>*.
+#. Go to the definition of ``<reversi-board>``.
 #. Change the type of *reversi-board-squares* to be
-   *<simple-object-vector>*.
+   ``<simple-object-vector>``.
 #. Save *game.dylan* with **File > Save**.
 #. Rebuild the application, and refresh the color information for
    *game.dylan* with **View > Refresh**.
@@ -337,8 +336,8 @@ need for run-time method dispatch by replacing the call with code to
 access the location that would contain the slot value.
 
 This particular optimization was possible because *size* is a slot
-accessor for instances of *<simple-object-vector>*, and, of course,
-because *<simple-object-vector>* is sealed.
+accessor for instances of ``<simple-object-vector>``, and, of course,
+because ``<simple-object-vector>`` is sealed.
 
 You could examine the effects of this change on other calls that use the
 return value of *reversi-board-squares*. Some calls turn blue. Some

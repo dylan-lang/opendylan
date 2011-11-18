@@ -86,7 +86,7 @@ relationships between them.
 
 Expand “library reversi”, and then “module reversi”.
 
-Double-click on *<reversi-square>* in the list of definitions.
+Double-click on ``<reversi-square>`` in the list of definitions.
 
 To find this definition easily, you can use the Definitions page’s popup
 list to show only Classes.
@@ -105,28 +105,28 @@ here, nearly all have clear meanings. See `List of property pages`_
 for a summary of the pages available in the browser. (Some of these
 pages also appear in the project window.)
 
-We now take a look at some of the pages available for *<reversi-square>*
+We now take a look at some of the pages available for ``<reversi-square>``
 .
 
 The Source page
 ---------------
 
 The browser provides a Source page for any object that has a definition
-in source code. For *<reversi-square>*, we can see the source code
+in source code. For ``<reversi-square>``, we can see the source code
 definition in *board.dylan* that created it.
 
 The Source page shows the definition in a read-only source code pane. If
 we wanted to edit the definition, we could click the Edit Source
 (|image2|) button above the source code pane. That would open an editor
 window on *board.dylan*, with the insertion point positioned at the
-start of the definition of *<reversi-square>*.
+start of the definition of ``<reversi-square>``.
 
 For objects that have a representation in the project sources, the
 Source page will always be the first page that you see when the browser
 displays the object for the first time.
 
 We now move on to look at some of the other pages of information about
-*<reversi-square>*.
+``<reversi-square>``.
 
 The General page
 ----------------
@@ -136,16 +136,16 @@ General page gives an overview of the object being browsed: its name,
 the type of object it is, the source file containing its definition (if
 any), and so on.
 
-Select the *<reversi-square>* definition’s General page.
+Select the ``<reversi-square>`` definition’s General page.
 
-The General page for *<reversi-square>* shows that it is a class from
+The General page for ``<reversi-square>`` shows that it is a class from
 the source file *board.dylan*, that it is defined in the *reversi*
 module of the *reversi* library, and that it has two slots.
 
 .. figure:: images/browgen.png
    :align: center
 
-   General details about the *<reversi-square>* class definition.
+   General details about the ``<reversi-square>`` class definition.
 
 Navigation in the browser
 =========================
@@ -161,26 +161,26 @@ properties and contents that we might also want to browse. With a simple
 double-click on the information we are interested in, we can move on to
 browsing other objects.
 
-Go to *<reversi-square>* ’s Superclasses page.
+Go to ``<reversi-square>`` ’s Superclasses page.
 
 The Superclasses page shows a class’s superclasses in a tree view. In
-this case, we see a single expandable item, the class *<simple-pane>*,
-meaning that *<simple-pane>* is *<reversi-square>* ’s only superclass.
+this case, we see a single expandable item, the class ``<simple-pane>``,
+meaning that ``<simple-pane>`` is ``<reversi-square>`` ’s only superclass.
 
-If we want to browse the definition of *<simple-pane>*, all we need to
+If we want to browse the definition of ``<simple-pane>``, all we need to
 do is double-click on it.
 
-Double-click on *<simple-pane>*.
+Double-click on ``<simple-pane>``.
 
 The browser switches to browsing the definition of the class
-*<simple-pane>*. The default view is again the Source page.
+``<simple-pane>``. The default view is again the Source page.
 
 Select the Superclasses page again.
 
-The Superclasses page now shows the four superclasses of *<simple-pane>*.
+The Superclasses page now shows the four superclasses of ``<simple-pane>``.
 Notice that the superclass names are not directly visible in the
 current module (*reversi*, as selected in the toolbar pop-up) and so
-are qualified. For example, *<standard-input-mixin>* appears as::
+are qualified. For example, ``<standard-input-mixin>`` appears as::
 
     <standard-input-mixin>:duim-sheets-internals:duim-sheets
 
@@ -205,7 +205,7 @@ navigate the browser history.
 
 Choose **Go > Back** or click on the Back button.
 
-The browser returns to browsing the *<reversi-square>* definition.
+The browser returns to browsing the ``<reversi-square>`` definition.
 
 Notice that the browser remembers which property page you were browsing.
 
@@ -239,7 +239,7 @@ libraries they use, and so on.
 Namespace issues in the browser
 ===============================
 
-Move through the browser history to find the *<simple-pane>* object
+Move through the browser history to find the ``<simple-pane>`` object
 again.
 
 Go to its Superclasses page.
@@ -255,11 +255,11 @@ and the current library is the library defined by the project.
 
 Change the selected value in the drop-down list to *dylan:dylan*.
 
-The name *<simple-pane>* in the Object list changes to
-*<simple-pane>:duim-layouts:duim-layouts*.
+The name ``<simple-pane>`` in the Object list changes to
+``<simple-pane>:duim-layouts:duim-layouts``.
 
-This new representation of the *<simple-pane>* name says that
-*<simple-pane>* is found in the *duim-layouts* module of the
+This new representation of the ``<simple-pane>`` name says that
+``<simple-pane>`` is found in the *duim-layouts* module of the
 *duim-layouts* library. This browser uses this special *name* :*module*
 :*library* naming format whenever *name* is not exported by the current
 module of the current library.

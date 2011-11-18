@@ -211,7 +211,7 @@ Where *value* is displayed in a summarizing notation, which defaults to
 the value’s class enclosed in curly braces if there is no simple printed
 representation. For example, basic numeric types, strings, booleans, and
 sequences thereof can be printed literally, but an instance of
-*<reversi-frame>* cannot.
+``<reversi-frame>`` cannot.
 
 Source pane
 -----------
@@ -549,17 +549,17 @@ application has paused because you used **Application > Pause**. (Use
 To select a restart to be signalled, choose **Thread > Continue…**, which
 displays a dialog listing all available restarts.
 
-For convenience, there are two other menu items for signalling *<abort>*
+For convenience, there are two other menu items for signalling ``<abort>``
 restarts, which are defined to mean “terminate the current computation”.
 
-**Thread > Abort** signals the innermost available *<abort>* restart—that
+**Thread > Abort** signals the innermost available ``<abort>`` restart—that
 is, it aborts as little as possible—whereas **Thread > Abort All** signals
-the outermost *<abort>* restart—that is, it aborts as much as possible.
+the outermost ``<abort>`` restart—that is, it aborts as much as possible.
 
-Although the meaning of *<abort>* restarts is part of the Dylan
+Although the meaning of ``<abort>`` restarts is part of the Dylan
 language, your application must provide handlers to implement them. If
 you are using DUIM for your application’s GUI, note that DUIM frames
-normally provide *<abort>* handlers in the event loop, so that aborting
+normally provide ``<abort>`` handlers in the event loop, so that aborting
 while processing an event will proceed to process the next event. See
 the DUIM documentation for *start-frame* and *start-dialog*.
 
@@ -719,7 +719,7 @@ history variable, *$1*, bound to that result.
 We can define new classes and methods interactively simply by entering
 their definitions.
 
-Enter the following definition of *<my-class>* at the interaction pane
+Enter the following definition of ``<my-class>`` at the interaction pane
 prompt.
 
 .. code-block:: dylan
@@ -781,7 +781,7 @@ In the playground’s project window, go to the Definitions page.
 Expand *library dylan-playground* and then *module dylan-playground*.
 
 Three definitions are listed under *module dylan-playground* : one for
-*\*obj\**, one for *<my-class>*, one for the *my-slot* accessor, one
+*\*obj\**, one for ``<my-class>``, one for the *my-slot* accessor, one
 for its getter, and one for the method *main*. Thus we see two
 interactively created definitions alongside one definition created at
 compile time.

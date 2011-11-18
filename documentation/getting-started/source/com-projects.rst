@@ -219,10 +219,10 @@ properties of the interface:
       arg-pre :: <string>) => (result :: <HRESULT>, arg-result ::
       <string>);
 
-This defines a class *<IRotNExample>* which implements the given
+This defines a class ``<IRotNExample>`` which implements the given
 interface. The implementation is not complete until methods are provided
 for the generics. This can be done by adding methods in the same
-library, or by defining a subclass of *<IRotNExample>* in another
+library, or by defining a subclass of ``<IRotNExample>`` in another
 library and defining methods on the subclass. We will take the latter
 approach.
 
@@ -246,8 +246,8 @@ from the type library:
     end coclass;
     */
 
-Note that the *define* *coclass* is within a comment, since you may want
-to define a COM class based on a subclass of *<IRotNExample>*.
+Note that the ``define coclass`` is within a comment, since you may want
+to define a COM class based on a subclass of ``<IRotNExample>``.
 
 Creating the server
 -------------------
@@ -284,18 +284,18 @@ from the start of this chapter.
 The RotNExample-server project window appears.
 
 #. In the new project’s window, edit *library.dylan*, and add to the
-   *define library* declaration the following line:
+   ``define library`` declaration the following line:
 
 .. code-block:: dylan
 
     use RotNExample-server-stubs;
 
-#. Add the same line to the *define* *module* declaration in
+#. Add the same line to the ``define module`` declaration in
    *module.dylan*.
 
 To implement the IRotNExample interface, we will create a subclass of
-*<IRotNExample>*. Because *<IRotNExample>* was created with *define*
-*dispatch-interface*, we must use *define* *COM-interface* to create
+``<IRotNExample>``. Because ``<IRotNExample>`` was created with ``define
+dispatch-interface``, we must use ``define COM-interface`` to create
 the subclass.
 
 .. note:: The remainder of this section of the example involves adding
@@ -320,14 +320,14 @@ call to *main*.
 
 We provide here an implementation for the *IRotNExample/key* slot, which
 was defined as a virtual slot in the superclass. This slot must accept
-the *<machine-word>* type, since any 32-bit integer which does not fit
-in the range of a Dylan *<integer>* will be passed as a *<machine-word>*
-.
+the ``<machine-word>`` type, since any 32-bit integer which does not fit
+in the range of a Dylan ``<integer>`` will be passed as a
+``<machine-word>``.
 
 The next task is to define the *IRotNExample/encrypt* and
 *IRotNExample/decrypt* methods. Although it is not obvious from the
-definition of *<IRotNExample>*, these methods must take as their first
-parameter the instance of *<IRotN-implementation>* they operate on, and
+definition of ``<IRotNExample>``, these methods must take as their first
+parameter the instance of ``<IRotN-implementation>`` they operate on, and
 return as a first result a COM error code.
 
 #. Add the following code to *RotNExample-server.dylan*.
@@ -363,7 +363,7 @@ return as a first result a COM error code.
     end;
 
 Note that this code is careful not to crash when *IRotNExample/key* is a
-*<machine-word>*. *$S-OK* represents success. *$E-INVALIDARG* is a
+``<machine-word>``. ``$S-OK`` represents success. ``$E-INVALIDARG`` is a
 generic failure representing some kind of invalid argument value.
 
 The above method uses the *rot-char-by-n* function, which we must also
@@ -398,7 +398,7 @@ In order to create our server, we must also create a COM class for it.
 
 #. Add the following code to *RotNExample-server.dylan*.
 
-You may want to copy the *define* *coclass* code from *stubs.dylan* in
+You may want to copy the ``define coclass`` code from *stubs.dylan* in
 the *RotNExample-server-stubs* project and modify it.
 
 .. code-block:: dylan
@@ -412,7 +412,7 @@ the *RotNExample-server-stubs* project and modify it.
 Now we simply have to add a Windows event loop as the main body of the
 server program.
 
-#. Modify the *main* method in *RotNExample-server.dylan* to look like
+#. Modify the ``main`` method in *RotNExample-server.dylan* to look like
    the following.
 
 .. code-block:: dylan
@@ -435,8 +435,8 @@ server program.
     end method main;
 
 With this code in place, if the server is invoked from the command line
-with */RegServer* as an argument, *OLE-util-register-only?* will return
-*#t*. The call to *register-coclass* creates a type library (with
+with */RegServer* as an argument, ``OLE-util-register-only?`` will return
+``#t``. The call to ``register-coclass`` creates a type library (with
 extension .TLB) and registers the type library and the server itself in
 the Windows registry.
 
@@ -454,8 +454,8 @@ created, but it will suffice for our example.
       PostQuitMessage(0); // Cause main event loop to terminate.
     end;
 
-The *PostQuitMessage* call causes the next call to *GetMessage* (in the
-main event loop) to return *#f*, and thus cause the program to exit.
+The ``PostQuitMessage`` call causes the next call to ``GetMessage`` (in
+the main event loop) to return ``#f``, and thus cause the program to exit.
 
 #. Build the project with **Project > Build**.
 
@@ -548,7 +548,7 @@ interface:
         (arg-result :: <string>), name: "decrypt", disp-id: 24577;
     end dispatch-client <IRotNExample>;
 
-This defines a class *<IRotNExample>* which allows a client to use the
+This defines a class ``<IRotNExample>`` which allows a client to use the
 described interface.
 
 There is also generated code corresponding to the COM class RotNExample
@@ -594,14 +594,14 @@ The New Project wizard appears.
 #. Choose the Simple libraries option, and choose the “Standard IO
    streams and string formatting” and “OLE Automation” options.
 #. Proceed to the last page of the wizard and click **Finish**.
-#. In the new project, edit *library.dylan*, and add to the *define*
-   *library* declaration the following line:
+#. In the new project, edit *library.dylan*, and add to the ``define
+   library`` declaration the following line:
 
 .. code-block:: dylan
 
     use RotNExample-client-stubs;
 
-#. Add the same line to the *define* *module* declaration in
+#. Add the same line to the ``define module`` declaration in
    *module.dylan*.
 
 We now add code to make the client encrypt and decrypt a simple string
@@ -615,7 +615,7 @@ with the default key of 13 and with the key set to 3.
    may want to copy that file into place in your project folder rather than
    typing code in.
 
-#. Modify the *main* method in *RotNExample-client.dylan* to look like
+#. Modify the ``main`` method in *RotNExample-client.dylan* to look like
    the following.
 
 .. code-block:: dylan
@@ -641,7 +641,7 @@ with the default key of 13 and with the key set to 3.
       end with-ole;
     end method main;
 
-The *with-ole* macro initializes OLE at entry and uninitializes it at
+The ``with-ole`` macro initializes OLE at entry and uninitializes it at
 exit.
 
 #. Build the project with **Project > Build**.
@@ -659,8 +659,8 @@ application fails.
 First we must register the server with the system, so that COM knows
 where to find the server and what interfaces it supports. In order to do
 this, we must execute the server with the */RegServer* command line
-flag. This will cause the server’s call *OLE-util-register-only?* to
-return *#t*, and the server to call *register-coclass*.
+flag. This will cause the server’s call ``OLE-util-register-only?`` to
+return ``#t``, and the server to call ``register-coclass``.
 
 Open the RotNExample-server project and build it.
 
@@ -731,12 +731,12 @@ generated interfaces.
 The server class suffix is appended to the name of the interface when
 generating the server class name. For example, if the server class
 suffix is *-server* then the server class for an interface *IBar* is
-named *<IBar-server>*.
+named ``<IBar-server>``.
 
 The supplied client class suffix is appended to the name of the
 interface to generate the client class name. If the “Generate client
 classes with suffix” box is not checked, no client classes are
-generated, and client methods specialize on *<C-Interface>* instead.
+generated, and client methods specialize on ``<C-Interface>`` instead.
 
 .. index:: .SPEC files
    single: file extensions; .SPEC
@@ -812,22 +812,22 @@ keywords:
     specified using *Stub-file:*. Possible values of *type-of-stubs* are:
 
     *dispatch-clients*
-        Dispatch client code is generated, using *define* *dispatch-client*.
+        Dispatch client code is generated, using ``define dispatch-client``.
 
     *dispatch-servers*
-        Dispatch server code is generated, using *define*
-        *dispatch-interface*.
+        Dispatch server code is generated, using ``define
+        dispatch-interface``.
 
     *vtable-interfaces*
-        Custom (vtable) interfaces are generated, using *define*
-        *vtable-interface*. The names of server interfaces are affected by
+        Custom (vtable) interfaces are generated, using ``define
+        vtable-interface``. The names of server interfaces are affected by
         the value of *Server-suffix:* (below). The names of client interfaces
         and whether client interfaces are generated are affected by the
         presence and the value of *Client-suffix:* (below).
 
     *dual-interfaces*
-        Dual (vtable and dispatch) interfaces are generated, using *define*
-        *vtable-interface*. The names of server interfaces are affected by
+        Dual (vtable and dispatch) interfaces are generated, using ``define
+        vtable-interface``. The names of server interfaces are affected by
         the value of *Server-suffix:*. The names of client interfaces and
         whether client interfaces are generated are affected by the presence
         and the value of *Client-suffix:*.
