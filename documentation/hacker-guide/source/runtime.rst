@@ -1734,421 +1734,253 @@ initial value.
 Simple Runtime Primitives
 =========================
 
-primitive\_allocate
+.. c:function:: D primitive_allocate(int size)
+
+    This is the interface to the memory allocator which might be dependent
+    on the garbage collector. It takes a size in bytes as a parameter, and
+    returns some freshly allocated memory which the run-time system knows
+    how to memory-manage.
 
-[Function]
+.. c:function:: D primitive_byte_allocate(int word-size, int byte-size)
 
-Signature:
+    This is built on the same mechanism as `primitive_allocate`:c:func:,
+    but it is specifically designed for allocating objects which have Dylan
+    slots, but also have a repeated slot of byte-sized elements, such as a
+    byte string, or a byte vector. It takes two parameters, a size in ‘words’
+    for the object slots (e.g., one for ‘class’ and a second for ‘size’),
+    followed by the number of bytes for the vector. The value returned from
+    the primitive is the freshly allocated memory making up the string.
 
-D primitive\_allocate(int size)
+.. c:function:: D primitive_fill_E_ (D storage[], int size, D value)
+
+    (The odd name is a result of name mangling from ``primitive-fill!``).
+    This takes a Dylan object (or a pointer to the middle of one), a size,
+    and a value. It inserts the value into as many slots as are specified by
+    *size*.
 
-Implementation:
-
-This is the interface to the memory allocator which might be dependent
-on the garbage collector. It takes a size in bytes as a parameter, and
-returns some freshly allocated memory which the run-time system knows
-how to memory-manage.
-
-primitive\_byte\_allocate
-
-[Function]
-
-Signature:
-
-D primitive\_byte\_allocate(int word-size, int byte-size)
-
-Implementation:
-
-This is built on the same mechanism as *primitive\_allocate*, but it is
-specifically designed for allocating objects which have Dylan slots, but
-also have a repeated slot of byte-sized elements, such as a byte string,
-or a byte vector. It takes two parameters, a size in ‘words’ for the
-object slots (e.g., one for ‘class’ and a second for ‘size’), followed
-by the number of bytes for the vector. The value returned from the
-primitive is the freshly allocated memory making up the string.
-
-primitive\_fill\_E\_
-
-[Function]
-
-Signature:
-
-D primitive\_fill\_E\_ (D storage[], int size, D value)
-
-Implementation:
-
-(The odd name is a result of name mangling from *primitive-fill!*).
-This takes a Dylan object (or a pointer to the middle of one), a size,
-and a value. It inserts the value into as many slots as are specified by
-*size*.
-
-primitive\_replace\_E\_
-
-[Function]
-
-Signature:
-
-D primitive\_replace\_E\_ (D dst[], D src[], int size)
-
-Implementation:
-
-(See *primitive\_fill\_E\_* re. name). This copies from the source
-vector into the destination vector as many values as are specified in
-the *size* parameter.
-
-primitive\_replace\_vector\_E\_
-
-[Function]
-
-Signature:
-
-D primitive\_replace\_vector\_E\_ (SOV\* dest, SOV\* source)
-
-Implementation:
-
-This is related to *primitive\_replace\_E\_*, except that the two
-arguments are guaranteed to be simple object vectors, and they are
-self-sizing. It takes two parameters, ‘dest’, and ‘source’, and the data
-from ‘source’ is copied into ‘dest’. ‘Dest’ is returned.
-
-primitive\_allocate\_vector
-
-[Function]
-
-Signature:
-
-D primitive\_allocate\_vector (int size)
-
-Implementation:
-
-This is related to *primitive\_allocate*, except that it takes a ‘size’
-argument, which is the size of repeated slots in a simple object vector
-(SOV). An object which is big enough to hold the specified indices is
-allocated, and appropriately initialized, so that the ‘class’ field
-shows that it is an SOV, and the ‘size’ field shows how big it is.
-
-primitive\_copy\_vector
-
-[Function]
-
-Signature:
-
-D primitive\_copy\_vector(D vector)
-
-Implementation:
-
-This takes a SOV as a parameter, and allocates a fresh SOV of the same
-size. It copies all the data that was supplied from the old one to the
-new one, and returns the new one.
-
-primitive\_initialize\_vector\_from\_buffer
-
-[Function]
-
-Signature:
-
-D primitive\_initialize\_vector\_from\_buffer (SOV \* vector, int size,
-D\* buffer)
-
-Implementation:
-
-This primitive takes a pre-existing vector, and copies data into it from
-a buffer so as to initialize an SOV. The primitive takes a SOV to be
-updated, a ‘size’ parameter (the specified size of the SOV), and a
-pointer to a buffer which will supply the necessary data. The class and
-size values for the new SOV are set, and the data written to the rest of
-the SOV. The SOV is returned.
-
-primitive\_make\_string
-
-[Function]
-
-Signature:
-
-D primitive\_make\_string(char \* string)
-
-Implementation:
-
-This takes as a parameter a ‘C’ string with is zero-terminated, and
-returns a Dylan string with the same data inside it.
-
-primitive\_continue\_unwind
-
-[Function]
-
-Signature:
-
-D primitive\_continue\_unwind ()
-
-Implementation:
-
-This is used as the last thing to be done at the end of an
-unwind-protect cleanup. It is responsible for determining why the
-cleanup is being called, and thus taking appropriate action afterwards.
-
-It handles 2 basic cases:
-
--  a non-local exit
--  a normal unwind-protect
-
-In the first case we wish to transfer control back to some other
-location, but there is a cleanup that needs to be done first. In this
-case there will be an unwind-protect frame on the stack which contains a
-marker to identify the target of the non-local exit. Control can thus be
-transferred, possibly invoking another unwind-protect on the way.
-
-Alternatively, no transfer of control may be required, and
-unwind-protect can proceed normally. As a result of evaluating our
-protected forms, the multiple values of these forms are stored in the
-unwind-protect frame. These values are put back in the multiple values
-area, and control is returned.
-
-primitive\_nlx
-
-[Function]
-
-Signature:
-
-D primitive\_nlx (Bind\_exit\_frame\* target, SOV\* arguments)
-
-Implementation:
-
-This takes two parameters: a bind-exit frame which is put on the stack
-whenever a bind-exit frame is bound, and an SOV of the multiple values
-that we wish to return to that bind-exit point. We then step to the
-bind-exit frame target, while checking to see if there are any
-intervening unwind-protect frames. If there are, we put the marker for
-our ultimate destination into the unwind-protect frame that has been
-detected on the stack between us and our destination. The multiple
-values we wish to return are put into the unwind-protect frame. The
-relevant cleanup code is invoked, and at the end of this a
-primitive\_continue\_unwind should be called. This should detect that
-there is further to go, and insert the multiple values into any
-intervening frames.
-
-primitive\_inlined\_nlx
-
-[Function]
-
-Signature:
-
-D primitive\_inlined\_nlx (Bind\_exit\_frame\* target, D
-first\_argument)
-
-Implementation:
-
-This is similar to *primitive\_nlx*, except that it is used when the
-compiler has been able to gain more information about the circumstances
-in which the non-local-exit call is happening. In particular it is used
-when it is possible to in-line the call, so that the multiple values
-that are being passed are known to be in the multiple values area,
-rather than having been created as an SOV. An SOV has to be built up
-from these arguments.
-
-primitive\_make\_box
-
-[Function]
-
-Signature:
-
-D\* primitive\_make\_box(D object)
-
-Implementation:
-
-A box is a value-cell that is used for closed-over variables which are
-subject to assignment. The function takes a Dylan object, and returns a
-value-cell box which contains the object. The compiler deals with the
-extra level of indirection needed to get the value out of the box.
-
-primitive\_make\_environment
-
-[Function]
-
-Signature:
-
-D\* primitive\_make\_environment(int size, …)
-
-Implementation:
-
-This is the function which makes the vector which is used in a closure.
-The arguments to this are either boxes, or normal Dylan objects. This
-takes an argument of ‘size’ for the initial arguments to be closed over,
-plus the arguments themselves. ‘Size’ arguments are built up into an SOV
-which is used as an environment.
+.. c:function:: D primitive_replace_E_ (D dst[], D src[], int size)
+
+    (See `primitive_fill_E_`:c:func: re. name). This copies from the source
+    vector into the destination vector as many values as are specified in
+    the *size* parameter.
+
+.. c:function:: D primitive_replace_vector_E_ (SOV* dest, SOV* source)
+
+    This is related to `primitive_replace_E_`:c:func:, except that the two
+    arguments are guaranteed to be simple object vectors, and they are
+    self-sizing. It takes two parameters, ‘dest’, and ‘source’, and the data
+    from ‘source’ is copied into ‘dest’. ‘Dest’ is returned.
+
+.. c:function:: D primitive_allocate_vector (int size)
+
+    This is related to `primitive_allocate`:c:func:, except that it takes
+    a ‘size’ argument, which is the size of repeated slots in a simple object
+    vector (SOV). An object which is big enough to hold the specified indices
+    is allocated, and appropriately initialized, so that the ‘class’ field
+    shows that it is an SOV, and the ‘size’ field shows how big it is.
+
+.. c:function:: D primitive_copy_vector(D vector)
+
+    This takes a SOV as a parameter, and allocates a fresh SOV of the same
+    size. It copies all the data that was supplied from the old one to the
+    new one, and returns the new one.
+
+.. c:function:: D primitive_initialize_vector_from_buffer (SOV * vector, int size, D* buffer)
+
+    This primitive takes a pre-existing vector, and copies data into it from
+    a buffer so as to initialize an SOV. The primitive takes a SOV to be
+    updated, a ‘size’ parameter (the specified size of the SOV), and a
+    pointer to a buffer which will supply the necessary data. The class and
+    size values for the new SOV are set, and the data written to the rest of
+    the SOV. The SOV is returned.
+
+.. c:function:: D primitive_make_string(char * string)
+
+   This takes as a parameter a ‘C’ string with is zero-terminated, and
+   returns a Dylan string with the same data inside it.
+
+.. c:function:: D primitive_continue_unwind ()
+
+   This is used as the last thing to be done at the end of an
+   unwind-protect cleanup. It is responsible for determining why the
+   cleanup is being called, and thus taking appropriate action afterwards.
+
+   It handles 2 basic cases:
+
+   -  a non-local exit
+   -  a normal unwind-protect
+
+   In the first case we wish to transfer control back to some other
+   location, but there is a cleanup that needs to be done first. In this
+   case there will be an unwind-protect frame on the stack which contains a
+   marker to identify the target of the non-local exit. Control can thus be
+   transferred, possibly invoking another unwind-protect on the way.
+
+   Alternatively, no transfer of control may be required, and
+   unwind-protect can proceed normally. As a result of evaluating our
+   protected forms, the multiple values of these forms are stored in the
+   unwind-protect frame. These values are put back in the multiple values
+   area, and control is returned.
+
+.. c:function:: D primitive_nlx (Bind_exit_frame* target, SOV* arguments)
+
+    This takes two parameters: a bind-exit frame which is put on the stack
+    whenever a bind-exit frame is bound, and an SOV of the multiple values
+    that we wish to return to that bind-exit point. We then step to the
+    bind-exit frame target, while checking to see if there are any
+    intervening unwind-protect frames. If there are, we put the marker for
+    our ultimate destination into the unwind-protect frame that has been
+    detected on the stack between us and our destination. The multiple
+    values we wish to return are put into the unwind-protect frame. The
+    relevant cleanup code is invoked, and at the end of this a
+    `primitive_continue_unwind`:c:func: should be called. This should
+    detect that there is further to go, and insert the multiple values
+    into any intervening frames.
+
+.. c:function:: D primitive_inlined_nlx (Bind_exit_frame* target, D first_argument)
+
+    This is similar to `primitive_nlx`:c:func:, except that it is used when the
+    compiler has been able to gain more information about the circumstances
+    in which the non-local-exit call is happening. In particular it is used
+    when it is possible to in-line the call, so that the multiple values
+    that are being passed are known to be in the multiple values area,
+    rather than having been created as an SOV. An SOV has to be built up
+    from these arguments.
+
+.. c:function:: D* primitive_make_box(D object)
+
+    A box is a value-cell that is used for closed-over variables which are
+    subject to assignment. The function takes a Dylan object, and returns a
+    value-cell box which contains the object. The compiler deals with the
+    extra level of indirection needed to get the value out of the box.
+
+.. c:function:: D* primitive_make_environment(int size, …)
+
+    This is the function which makes the vector which is used in a closure.
+    The arguments to this are either boxes, or normal Dylan objects. This
+    takes an argument of ‘size’ for the initial arguments to be closed over,
+    plus the arguments themselves. ‘Size’ arguments are built up into an SOV
+    which is used as an environment.
 
 Entry Point Functions
 =====================
 
-xep\_ 0 … xep\_9
+.. c:function:: D xep_0 (FN* function, int argument_count)
+.. c:function:: D xep_1 (FN* function, int argument_count)
+.. c:function:: D xep_2 (FN* function, int argument_count)
+.. c:function:: D xep_3 (FN* function, int argument_count)
+.. c:function:: D xep_4 (FN* function, int argument_count)
+.. c:function:: D xep_5 (FN* function, int argument_count)
+.. c:function:: D xep_6 (FN* function, int argument_count)
+.. c:function:: D xep_7 (FN* function, int argument_count)
+.. c:function:: D xep_8 (FN* function, int argument_count)
+.. c:function:: D xep_9 (FN* function, int argument_count)
 
-[Function]
+    These are the XEP entry-point handlers for those Dylan functions which
+    do not accept optional parameters. Each Dylan function has an external
+    (safe) entry point with full checking. After checking, this calls the
+    internal entry point, which is the most efficient available.
 
-Signature:
+    The compiler itself only ever generates code for the internal entry
+    point. Any value put into the external entry point field of an object is
+    a shared value provided by the runtime system. If the function takes no
+    parameters, the value will be ``xep0``; if it takes a single required
+    parameter it will be ``xep1``, and so on. There are values available for
+    ``xep0`` to ``xep9``. For more than nine required parameters, the
+    `xep`:c:func: function is used.
 
-D xep\_0 (FN\* function, int argument\_count)
+.. c:function:: xep (FN* function, int argument_count, …)
 
-Implementation:
+    If the function takes more than nine required parameters, then the
+    function will simply be called ``xep``, the general function which will
+    work in all such cases. The arguments are passed as ‘varargs’. This
+    function will check the number of arguments, raising an error if it is
+    wrong. It then sets the calling convention for calling the internal
+    entry point. This basically means that the function register is
+    appropriately set, and the implementation ‘mlist’ parameter is set to
+    ``#f``.
 
-These are the XEP entry-point handlers for those Dylan functions which
-do not accept optional parameters. Each Dylan function has an external
-(safe) entry point with full checking. After checking, this calls the
-internal entry point, which is the most efficient available.
+.. c:function:: D optional_xep (FN* function, int argument_count, …)
 
-The compiler itself only ever generates code for the internal entry
-point. Any value put into the external entry point field of an object is
-a shared value provided by the runtime system. If the function takes no
-parameters, the value will be ‘xep0’; if it takes a single required
-parameter it will be ‘xep1’, and so on. There are values available for
-‘xep0’ to ‘xep9’. For more than nine required parameters, the next
-function (below) is used.
+    This function is used as the XEP code for any Dylan function which has
+    optional parameters. In this case, the external entry point conventions
+    do not require the caller to have any knowledge of where the optionals
+    start. The XEP code is thus responsible for separating the code into
+    those which are required parameters, to be passed via the normal machine
+    conventions, and those which are optionals. to be passed as a Dylan SOV.
+    If the function object takes keywords, all the information about which
+    keywords are accepted is stored in the function itself. The vector of
+    optional parameters is scanned by the XEP code to see if any appropriate
+    ones have been supplied. If one is found, then the associated value is
+    taken and used as an implicit parameter to the internal entry point. If
+    a value is not supplied, then a suitable default parameter which is
+    stored inside the function object is passed instead.
 
-xep
+.. c:function:: D gf_xep_0(FN* function, int argument_count)
+.. c:function:: D gf_xep_1(FN* function, int argument_count)
+.. c:function:: D gf_xep_2(FN* function, int argument_count)
+.. c:function:: D gf_xep_3(FN* function, int argument_count)
+.. c:function:: D gf_xep_4(FN* function, int argument_count)
+.. c:function:: D gf_xep_5(FN* function, int argument_count)
+.. c:function:: D gf_xep_6(FN* function, int argument_count)
+.. c:function:: D gf_xep_7(FN* function, int argument_count)
+.. c:function:: D gf_xep_8(FN* function, int argument_count)
+.. c:function:: D gf_xep_9(FN* function, int argument_count)
 
-[Function]
+    These primitives are similar to `xep_0`:c:func: through `xep_9`:c:func:,
+    but deal with the entry points for generic functions. Generic functions
+    do not require the ‘mlist’ parameter to be set, so a special optimized
+    entry point is provided. These versions are for 0 - 9 required
+    parameters.  These functions call the internal entry point.
 
-Signature:
+.. c:function:: D gf_xep (FN* function, int argument_count, …)
 
-xep (FN\* function, int argument\_count, …)
+    This primitive is similar to `xep`:c:func:, but deals with the entry
+    points for generic functions. Generic functions do not require the
+    ‘mlist’ parameter to be set, so a special optimized entry point is
+    provided. This is the general version for functions which do not
+    take optional arguments. This function calls the internal entry point.
 
-Implementation:
+.. c:function:: D gf_optional_xep (FN* function, int argument_count, …)
 
-If the function takes more than nine required parameters, then the
-function will simply be called *xep*, the general function which will
-work in all such cases. The arguments are passed as ‘varargs’. This
-function will check the number of arguments, raising an error if it is
-wrong. It then sets the calling convention for calling the internal
-entry point. This basically means that the function register is
-appropriately set, and the implementation ‘mlist’ parameter is set to
-*#f*.
+    This is used for all generic functions which take optional arguments.
+    This function calls the internal entry point.
 
-optional\_xep
+.. c:function:: D primitive_basic_iep_apply (FN* f, int argument_count, D a[])
 
-[Function]
+    This is used to call internal entry points. It takes three parameters: a
+    Dylan function object (where the iep is stored in a slot), an argument
+    count of the number of arguments that we are passing to the iep, and a
+    vector of all of these arguments. This is a ‘basic’ IEP apply because is
+    does no more than check the argument count, and call the IEP with the
+    appropriate number of Dylan parameters. It does not bother to set any
+    implementation parameters. Implementation parameters which could be set
+    in by other primitives are ‘function’, and a ‘mlist’ (the list of
+    next-methods) . Not all IEPs care about the ‘function’ or ‘mlist’
+    parameters, but when the compiler calls `primitive_basic_iep_apply`:c:func:,
+    it has to make sure that any necessary ‘function’ or ‘mlist’ parameters
+    have been set up.
 
-Signature:
+.. c:function:: D primitive_iep_apply (FN* f, int argument_count, D a[])
 
-D optional\_xep (FN\* function, int argument\_count, …)
+    This is closely related to `primitive_basic_iep_apply`:c:func:. It takes
+    the same number of parameters, but it sets the explicit,
+    implementation-dependent function parameter which is usually set to the
+    first argument, and also sets the ‘mlist’ argument to ‘false’. This is
+    the normal case when a method object is being called directly, rather
+    than as part of a generic function.
 
-Implementation:
+.. c:function:: D primitive_xep_apply (FN* f, int argument_count, D a[])
 
-This function is used as the XEP code for any Dylan function which has
-optional parameters. In this case, the external entry point conventions
-do not require the caller to have any knowledge of where the optionals
-start. The XEP code is thus responsible for separating the code into
-those which are required parameters, to be passed via the normal machine
-conventions, and those which are optionals. to be passed as a Dylan SOV.
-If the function object takes keywords, all the information about which
-keywords are accepted is stored in the function itself. The vector of
-optional parameters is scanned by the XEP code to see if any appropriate
-ones have been supplied. If one is found, then the associated value is
-taken and used as an implicit parameter to the internal entry point. If
-a value is not supplied, then a suitable default parameter which is
-stored inside the function object is passed instead.
-
-gf\_xep\_0 … gf\_xep\_9
-
-[Function]
-
-Signature:
-
-D gf\_xep\_0(FN\* function, int argument\_count)
-
-Implementation:
-
-These primitives are similar to *xep\_0* through *xep\_9*, but deal
-with the entry points for generic functions. Generic functions do not
-require the ‘mlist’ parameter to be set, so a special optimized entry
-point is provided. These versions are for 0 - 9 required parameters.
-These functions call the internal entry point.
-
-gf\_xep
-
-[Function]
-
-Signature:
-
-D gf\_xep (FN\* function, int argument\_count, …)
-
-Implementation:
-
-This primitive is similar to *xep*, but deals with the entry points for
-generic functions. Generic functions do not require the ‘mlist’
-parameter to be set, so a special optimized entry point is provided.
-This is the general version for functions which do not take optional
-arguments. This function calls the internal entry point.
-
-gf\_optional\_xep
-
-[Function]
-
-Signature:
-
-D gf\_optional\_xep (FN\* function, int argument\_count, …)
-
-Implementation:
-
-This is used for all generic functions which take optional arguments.
-This function calls the internal entry point.
-
-primitive\_basic\_iep\_apply
-
-[Function]
-
-Signature:
-
-D primitive\_basic\_iep\_apply (FN\* f, int argument\_count, D a[])
-
-Implementation:
-
-This is used to call internal entry points. It takes three parameters: a
-Dylan function object (where the iep is stored in a slot), an argument
-count of the number of arguments that we are passing to the iep, and a
-vector of all of these arguments. This is a ‘basic’ IEP apply because is
-does no more than check the argument count, and call the IEP with the
-appropriate number of Dylan parameters. It does not bother to set any
-implementation parameters. Implementation parameters which could be set
-in by other primitives are ‘function’, and a ‘mlist’ (the list of
-next-methods) . Not all IEPs care about the ‘function’ or ‘mlist’
-parameters, but when the compiler calls ‘primitive\_basic\_iep\_apply’,
-it has to make sure that any necessary ‘function’ or ‘mlist’ parameters
-have been set up.
-
-primitive\_iep\_apply
-
-[Function]
-
-Signature:
-
-D primitive\_iep\_apply (FN\* f, int argument\_count, D a[])
-
-Implementation:
-
-This is closely related to *primitive\_basic\_iep\_apply*. It takes the
-same number of parameters, but it sets the explicit,
-implementation-dependent function parameter which is usually set to the
-first argument, and also sets the ‘mlist’ argument to ‘false’. This is
-the normal case when a method object is being called directly, rather
-than as part of a generic function.
-
-primitive\_xep\_apply
-
-[Function]
-
-Signature:
-
-D primitive\_xep\_apply (FN\* f, int argument\_count, D a[])
-
-Implementation:
-
-This is a more usual usage of apply, i.e., the standard Dylan calling
-convention being invoked by *apply*. It takes three parameters: the
-Dylan function to be called, the number of arguments being passed, and a
-vector containing all those arguments. This primitive relates to the
-external entry point for the function, and guarantees full type checking
-and argument count checking. This primitive does all that is necessary
-to conform with the xep calling convention of Dylan: i.e., it sets the
-‘function’ parameter, it sets the argument count, and then calls the XEP
-for the function.
+    This is a more usual usage of apply, i.e., the standard Dylan calling
+    convention being invoked by *apply*. It takes three parameters: the
+    Dylan function to be called, the number of arguments being passed, and a
+    vector containing all those arguments. This primitive relates to the
+    external entry point for the function, and guarantees full type checking
+    and argument count checking. This primitive does all that is necessary
+    to conform with the xep calling convention of Dylan: i.e., it sets the
+    ‘function’ parameter, it sets the argument count, and then calls the XEP
+    for the function.
 
 Compiler Primitives
 *******************
