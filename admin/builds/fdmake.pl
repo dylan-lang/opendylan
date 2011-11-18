@@ -257,7 +257,7 @@ sub library_products {
 
     my @products;
 
-    if ($Config{'osname'} eq 'MSWin32') {
+    if ($platform_name =~ /-win32$/) {
         if (!defined $header->{'target-type'}
             || lc($header->{'target-type'}) eq 'dll') {
 	    push(@products,
@@ -272,7 +272,7 @@ sub library_products {
 	}
     }
     else {
-        my $so = ($Config{'osname'} eq 'darwin') ? 'dylib' : 'so';
+        my $so = ($platform_name =~ /-darwin$/) ? 'dylib' : 'so';
         push(@products,
              File::Spec->catfile($user_root, 'lib', "lib${library}.${so}"));
 
