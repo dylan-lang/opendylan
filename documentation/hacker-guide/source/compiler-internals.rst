@@ -6,7 +6,7 @@ Introduction
 ------------
 
 This chapter is an overview of the compiler, information was gathered
-while hacking on the compiler. It focusses only on DFMC, the Dylan
+while hacking on the compiler. It focuses only on DFMC, the Dylan
 Flow Machine Compiler, located in source/dfmc of the opendylan
 repository.
 
@@ -32,13 +32,13 @@ calls ``parse-and-compile``, which calls ``parse-project-sources``
 ``dfmc/management/world.dylan`` (here under the name
 ``compile-library-from-definitions``).
 
-To explain these long call chain, we need some more understanding of
+To explain these long call chains, we need some more understanding of
 the different libraries of the compiler: environment is the public
 API, project-manager is a bunch of hacks to care about finding the
 project (by using the registry) and calling the compiler, and the
 linker (to create a dll/so and executable) afterwards. The libraries
 ``dfmc/browser-support`` and ``environment/dfmc`` are the glue from
-environment to dfmc.
+environment to DFMC.
 
 The big picture is pretty simple: management drives the different
 libraries, some are the front-end (reader, macro-expander) translating
@@ -53,16 +53,16 @@ First we need to introduce some terminology and recapitulate some
 conventions:
 
 * the unit of compilation is a single dylan library
-* the metadata of a library
-   is stored in DOOD, the dylan object-oriented database
+* the metadata of a library is stored in DOOD, the dylan object-oriented
+  database
 * loose (development) vs tight (production): loose mode allows runtime
-   updates of definitions, like adding generic function into a sealed
-   domain, subclassing sealed classes - production mode has stricter
-   checks
+  updates of definitions, like adding generic function into a sealed
+  domain, subclassing sealed classes - production mode has stricter
+  checks
 * batch compilation: when invoked from command line, or building a
-   complete library
+  complete library
 * interactive compilation: IDE feature to play around, adding a single
-   definition to a library
+  definition to a library
 
 DFMC is well structured, but sadly some libraries use each others,
 which they shouldn't (typist, conversion, optimization).
@@ -84,7 +84,7 @@ general information what is happening at the moment (progress,
 warnings) and takes care of some global settings like opening and
 closing source records, etc.
 
-The main external entry point is compile-library-from-definitions in
+The main external entry point is ``compile-library-from-definitions`` in
 world.dylan. This requires that the source has already been parsed
 (really? but it calls compute-library-definitions itself!).
 
@@ -141,53 +141,54 @@ more tokens were required).
 Every ``<fragment>``, the base class of the abstract syntax tree, has
 a compilation-record and a source-position.
 
-So, ``read-top-level-fragment`` returns the following parse tree:
-<body-definition-fragment>:
-  fragment-macro: <simple-variable-name-fragment>
-                                       fragment-name: #"method-definer"
-  fragment-modifiers: #()
-  fragment-body-fragment:
-    <simple-variable-name-fragment>:
-      fragment-name: #"hello-world"
-    <parens-fragment>:
-      fragment-left-delimiter: <lparen-fragment>
-      fragment-nested-fragments:
+So, ``read-top-level-fragment`` returns the following parse tree::
+
+    <body-definition-fragment>:
+      fragment-macro: <simple-variable-name-fragment>
+                                           fragment-name: #"method-definer"
+      fragment-modifiers: #()
+      fragment-body-fragment:
         <simple-variable-name-fragment>:
-          fragment-name: #"x"
-        <colon-colon-fragment>
-        <simple-variable-name-fragment>:
-          fragment-name: #"<integer>"
-      fragment-right-delimiter: <rparen-fragment>
-    <simple-variable-name-fragment>:
-      fragment-name: #"do"
-    <parens-fragment>:
-      fragment-left-delimiter: <lparen-fragment>
-      fragment-nested-fragments:
-        <simple-variable-name-fragment>:
-          fragment-name: #"curry"
+          fragment-name: #"hello-world"
         <parens-fragment>:
           fragment-left-delimiter: <lparen-fragment>
           fragment-nested-fragments:
-            <simple-variable-name-fragment>:
-              fragment-name: #"format-out"
-            <comma-fragment>
-            <string-fragment>:
-              fragment-value: "Hello %d\n"
-          fragment-right-delimiter: <rparen-fragment>
-        <comma-fragment>
-        <simple-variable-name-fragment>:
-          fragment-name: #"range"
-        <parens-fragment>:
-          fragment-left-delimiter: <lparen-fragment>
-          fragment-nested-fragments:
-            <fragment-syntax-symbol-fragment>:
-              fragment-value: #"to"
             <simple-variable-name-fragment>:
               fragment-name: #"x"
+            <colon-colon-fragment>
+            <simple-variable-name-fragment>:
+              fragment-name: #"<integer>"
           fragment-right-delimiter: <rparen-fragment>
-      fragment-right-delimiter: <rparen-fragment>
-    <semicolon-fragment>
-
+        <simple-variable-name-fragment>:
+          fragment-name: #"do"
+        <parens-fragment>:
+          fragment-left-delimiter: <lparen-fragment>
+          fragment-nested-fragments:
+            <simple-variable-name-fragment>:
+              fragment-name: #"curry"
+            <parens-fragment>:
+              fragment-left-delimiter: <lparen-fragment>
+              fragment-nested-fragments:
+                <simple-variable-name-fragment>:
+                  fragment-name: #"format-out"
+                <comma-fragment>
+                <string-fragment>:
+                  fragment-value: "Hello %d\n"
+              fragment-right-delimiter: <rparen-fragment>
+            <comma-fragment>
+            <simple-variable-name-fragment>:
+              fragment-name: #"range"
+            <parens-fragment>:
+              fragment-left-delimiter: <lparen-fragment>
+              fragment-nested-fragments:
+                <fragment-syntax-symbol-fragment>:
+                  fragment-value: #"to"
+                <simple-variable-name-fragment>:
+                  fragment-name: #"x"
+              fragment-right-delimiter: <rparen-fragment>
+          fragment-right-delimiter: <rparen-fragment>
+        <semicolon-fragment>
+    
 NB: the type hierarchy for <body-definition-fragment> is: <definition-fragment>, <macro-call-fragment>, <compund-fragment>, <fragment>, <object>
 
 
@@ -203,7 +204,7 @@ own class, inheriting from ``<top-level-form>`` (defined in
 common/top-level-forms.dylan). A top level form at least contains
 information about its compilation record, source location, parent
 form, sequence number and dependencies and referenced variables.
-Additional information availble are adjectives, the word defined, its
+Additional information available are adjectives, the word defined, its
 library, original library, top level methods. As a side note,
 dependency tracking is also defined in
 ``common/top-level-forms.dylan``.
@@ -231,42 +232,43 @@ instantiates a ``<method-definition>`` object.
 
 For our small example, ``do-define-method`` creates a single object:
 
-The result of our small example is:
-<method-definition>
-  private-form-body: <body-fragment>
-    fragment-constituents: <prefix-call-fragment>
-      fragment-arguments:
-        <prefix-call-fragment>
+The result of our small example is::
+
+    <method-definition>
+      private-form-body: <body-fragment>
+        fragment-constituents: <prefix-call-fragment>
           fragment-arguments:
-            <simple-variable-name-fragment>
-              fragment-name: #"format-out"
-            <string-fragment>
-              fragment-value: "Hello %d\n"
+            <prefix-call-fragment>
+              fragment-arguments:
+                <simple-variable-name-fragment>
+                  fragment-name: #"format-out"
+                <string-fragment>
+                  fragment-value: "Hello %d\n"
+              fragment-function: <simple-variable-name-fragment>
+                fragment-name: #"curry"
+            <prefix-call-fragment>
+              fragment-arguments:
+                <keyword-syntax-symbol-fragment>
+                  fragment-value: #"to"
+                <simple-variable-name-fragment>
+                  fragment-name: #"x"
+              fragment-function: <simple-variable-name-fragment>
+                fragment-name: #"range"
           fragment-function: <simple-variable-name-fragment>
-            fragment-name: #"curry"
-        <prefix-call-fragment>
-          fragment-arguments:
-            <keyword-syntax-symbol-fragment>
-              fragment-value: #"to"
-            <simple-variable-name-fragment>
-              fragment-name: #"x"
-          fragment-function: <simple-variable-name-fragment>
-            fragment-name: #"range"
-      fragment-function: <simple-variable-name-fragment>
-        fragment-name: #"do"
-  private-form-signature: <method-requires-signature-spec>
-    private-spec-argument-next-variable-specs: <next-variable-spec>
-      private-spec-variable-name: <simple-variable-name-fragment>
-        fragment-name: #"next-method"
-    private-spec-argument-required-variable-specs: <typed-required-variable-spec>
-      private-spec-type-expression: <simple-variable-name-fragment>
-        fragment-name: #"<integer>"
-      private-spec-variable-name: <simple-variable-name-fragment>
-        fragment-name: #"x"
-  private-form-signature-and-body-fragment: <sequence-fragment>
-    <parens-fragment>, <simple-variable-name-fragment>, <parens-fragment>, <semicolon-fragment>
-  private-form-variable-name-or-names: <simple-variable-name-fragment>
-    fragment-name: #"hello-world"
+            fragment-name: #"do"
+      private-form-signature: <method-requires-signature-spec>
+        private-spec-argument-next-variable-specs: <next-variable-spec>
+          private-spec-variable-name: <simple-variable-name-fragment>
+            fragment-name: #"next-method"
+        private-spec-argument-required-variable-specs: <typed-required-variable-spec>
+          private-spec-type-expression: <simple-variable-name-fragment>
+            fragment-name: #"<integer>"
+          private-spec-variable-name: <simple-variable-name-fragment>
+            fragment-name: #"x"
+      private-form-signature-and-body-fragment: <sequence-fragment>
+        <parens-fragment>, <simple-variable-name-fragment>, <parens-fragment>, <semicolon-fragment>
+      private-form-variable-name-or-names: <simple-variable-name-fragment>
+        fragment-name: #"hello-world"
 
 It is noteworthy that still no intra-library information is present,
 this is top-level Dylan code without any context. All macros are
@@ -283,8 +285,8 @@ dfmc-convert
    Converts definition objects to model objects. In order to fulfill
    this task, it looks up bindings to objects from other
    libraries. Also converts the bodies of definitions to a flow
-   graph. Does some initial evaluation, for example "limited(<vector>,
-   of: <string>)" gets converted to a "<&limited-vector-type>"
+   graph. Does some initial evaluation, for example ``limited(<vector>,
+   of: <string>)`` gets converted to a ``<&limited-vector-type>``
    instance. Thus, it contains a poor-mans eval.
 
    Also, creates init-expressions, which may be needed for the
@@ -301,7 +303,7 @@ dfmc-convert
    After Dylan code is converted, it is in a representation which can
    be passed to a backend to generate code. Modeling objects have
    corresponding compile and run time objects, and are prefixed with
-   an ampersand (<&object>).
+   an ampersand (``<&object>``).
 
 dfmc-modeling
 -------------
@@ -309,51 +311,51 @@ dfmc-modeling
    Contains modeling of runtime and compile time objects. Since some
    calls are tried to be done at compile time rather than at runtime,
    it provides these compile time methods with a mechanism to override
-   the runtime methods ("define &override-function"). An example for
-   this is "^instance?", compile time methods are prefixed with a "^",
-   while compile and runtime class definitions are prefixed with "&",
-   like "define &class <type>".
+   the runtime methods (``define &override-function``). An example for
+   this is ``^instance?``, compile time methods are prefixed with a ``^``,
+   while compile and runtime class definitions are prefixed with ``&``,
+   like ``define &class <type>``.
 
-   Also, dood (a persistent object store) models and proxies for
+   Also, DOOD (a persistent object store) models and proxies for
    compile time definitions are available in this library, in order to
    load definitions of dependent libraries.
 
-   This library was extended with "<type-variable>" class hierarchy as
-   well as "^limited(<function>)" and "<limited-function-type>" were
+   This library was extended with ``<type-variable>`` class hierarchy as
+   well as ``^limited(<function>)`` and ``<limited-function-type>`` were
    introduced.
 
 dfmc-flow-graph
 ---------------
 
-   The flow graph consists of instances of the "<computation>" class,
-   like "<if>", "<loop-call>", "<assignment>", "<merge>". The flow
+   The flow graph consists of instances of the ``<computation>`` class,
+   like ``<if>``, ``<loop-call>``, ``<assignment>``, ``<merge>``. The flow
    graph is in a (pseudo) single state assignment form. Every time any
    algorithm alters the flow graph, it disconnects the deprecated
    computation and inserts new computations. New temporaries are
    introduced if a binding is assigned to a new value. Subclasses of
-   <computation> model control flow, <temporary> (as well as
-   <referenced-object>) data flow.
+   ``<computation>`` model control flow, ``<temporary>`` (as well as
+   ``<referenced-object>``) data flow.
 
    Computations are a doubly-linked list, with special cases for merge
    nodes, loops, if, bind-exit and unwind-protect. Every computation
    may have computation-type field, which is bound to a
-   <type-variable>. It also may have a temporary slot, which is its
+   ``<type-variable>``. It also may have a temporary slot, which is its
    return value. Several cases, single and multiple return values, are
    supported. The temporary has a link to its generator, a list of
    users and a reference to its value.
 
    Additional (data flow) information is kept in special slots, test
-   in <if>, arguments of a <call>, etc. These are all
-   <referenced-object>, or more specially <value-reference>,
-   <object-reference>, etc. <object-reference> contains a binding to
-   its actual value.
+   in ``<if>``, arguments of a ``<call>``, etc. These are all
+   ``<referenced-object>``, or more specially ``<value-reference>``,
+   ``<object-reference>``, etc. ``<object-reference>`` contains a binding
+   to its actual value.
 
-   "<temporary>" and "<environment>" classes are defined in this
+   ``<temporary>`` and ``<environment>`` classes are defined in this
    library.
 
-   "join-2x1" etc. are the operations on the flow graph.
+   ``join-2x1`` etc. are the operations on the flow graph.
 
-   Thid was extended by "<lexical-required-type-variable>", instances
+   This was extended by ``<lexical-required-type-variable>``, instances
    of this class are put into the lexical environment.
 
 dfmc-typist
@@ -362,24 +364,24 @@ dfmc-typist
    This library contains runtime type algebra as well as a type
    inference algorithm.
 
-   Main entry point is type-estimate, which calls
-   type-estimate-in-cache. Each library contains a type-cache, mapping
+   Main entry point is ``type-estimate``, which calls
+   ``type-estimate-in-cache``. Each library contains a type-cache, mapping
    from method definitions, etc. to type-variables.
 
    Type variables contain an actual type estimate as well as
    justifications (supporters and supportees), used for propagation of
    types.
 
-   converts types to <type-estimate> objects
+   converts types to ``<type-estimate>`` objects
 
-   type-estimate-function-from-signature calls type-estimate-body if
-   available (instead of using types of the signature), call chain is
-   type-estimate-call-from-site -> type-estimate-call-stupidly-from-fn
-   -> function-valtype
+   ``type-estimate-function-from-signature`` calls ``type-estimate-body``
+   if available (instead of using types of the signature), call chain is
+   ``type-estimate-call-from-site`` -> ``type-estimate-call-stupidly-from-fn``
+   -> ``function-valtype``
 
 
-   contains hard-coded hacks for make, element, element-setter (in
-   type-estimate-call-from-site)
+   contains hard-coded hacks for ``make``, ``element``, ``element-setter``
+   (in ``type-estimate-call-from-site``)
 
    typist/typist-inference.dylan:poor-mans-check-type-intersection 
      if #f (the temp), optimizer has determined that type check is superfluous
@@ -400,19 +402,19 @@ dfmc-optimization
    constant folding, common subexpression elimination, inlining,
    dispatch upgrading and tail call analyzation.
 
-   Main entry point from management is really-run-compilation-passes.
-   This loops over all lambdas ín the given code fragment, converts
-   assigned variables to a <cell> representation, renames temporaries
+   Main entry point from management is ``really-run-compilation-passes``.
+   This loops over all lambdas in the given code fragment, converts
+   assigned variables to a ``<cell>`` representation, renames temporaries
    in conditionals, then runs the "optimizer". This builds an
    optimization queue, initially containing all computations. It calls
    do-optimize on each element of the optimization-queue, as long as
-   it returns #f (protocol is, that, if an optmization was successful,
-   it returns #t, if it was not successful, #f). For different types
+   it returns ``#f`` (protocol is, that, if an optimization was successful,
+   it returns ``#t``, if it was not successful, ``#f``). For different types
    of computations different optimizations are run. Default
    optimizations are deletion of useless computations and constant
-   folding. <bind> is skipped, for <function-call> additionally
+   folding. ``<bind>`` is skipped, for ``<function-call>`` additionally
    upgrade (analyzes the call, tries to get rid of gf dispatch) and
-   inlining is done. <primitive-call> are optimized by analyze-calls.
+   inlining is done. ``<primitive-call>`` are optimized by ``analyze-calls``.
 
    constant folds (constant-folding.dylan):
     // The following is because we seem to have a bogus class hierarchy
@@ -427,6 +429,4 @@ dfmc-optimization
    optimization/assignment: here happens the "occurence typing"
       (type inference for instance?)...
    <constrain-type> is only for the instance? and conditionals hack
-
-
 
