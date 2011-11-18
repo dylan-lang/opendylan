@@ -1,4 +1,3 @@
-#define USE_STDIO_H
 #include "run-time.h"
 #include <stdio.h>
 #include <stdlib.h>
