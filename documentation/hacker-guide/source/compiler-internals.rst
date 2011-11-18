@@ -68,7 +68,7 @@ DFMC is well structured, but sadly some libraries use each others,
 which they shouldn't (typist, conversion, optimization).
 
 In the remainder of this guide, we will focus on a simple example,
-which prints 11 lines, ``Hello 0`` to ``Hello 10``:
+which prints ``Hello`` x times:
 
 .. code-block:: dylan
 
@@ -134,6 +134,56 @@ dfmc-reader
    parser.dylgram, which is basically the BNF notation of Dylan from
    DRM.
 
+So, ``read-top-level-fragment`` returns the following parse tree:
+<body-definition-fragment>:
+  fragment-macro: <simple-variable-name-fragment>
+                                       fragment-name: #"method-definer"
+  fragment-modifiers: #()
+  fragment-body-fragment:
+    <simple-variable-name-fragment>: 
+      fragment-name: #"hello-world"
+    <parens-fragment>:
+      fragment-left-delimiter: <lparen-fragment>
+      fragment-nested-fragments:
+        <simple-variable-name-fragment>:
+          fragment-name: #"x"
+        <colon-colon-fragment>
+        <simple-variable-name-fragment>:
+          fragment-name: #"<integer>"
+      fragment-right-delimiter: <rparen-fragment>
+    <simple-variable-name-fragment>:
+      fragment-name: #"do"
+    <parens-fragment>:
+      fragment-left-delimiter: <lparen-fragment>
+      fragment-nested-fragments:
+        <simple-variable-name-fragment>:
+          fragment-name: #"curry"
+        <parens-fragment>:
+          fragment-left-delimiter: <lparen-fragment>
+          fragment-nested-fragments:
+            <simple-variable-name-fragment>:
+              fragment-name: #"format-out"
+            <comma-fragment>
+            <string-fragment>:
+              fragment-value: "Hello %d\n"
+          fragment-right-delimiter: <rparen-fragment>
+        <comma-fragment>
+        <simple-variable-name-fragment>:
+          fragment-name: #"range"
+        <parens-fragment>:
+          fragment-left-delimiter: <lparen-fragment>
+          fragment-nested-fragments:
+            <fragment-syntax-symbol-fragment>:
+              fragment-value: #"to"
+            <simple-variable-name-fragment>:
+              fragment-name: #"x"
+          fragment-right-delimiter: <rparen-fragment>          
+      fragment-right-delimiter: <rparen-fragment>
+    <semicolon-fragment>
+
+NB: the type hierarchy for <body-definition-fragment> is: <definition-fragment>, <macro-call-fragment>, <compund-fragment>, <fragment>, <object>
+
+
 dfmc-definitions
 ----------------
 
@@ -170,8 +220,43 @@ dfmc-definitions
    balancing?) and invalid definition statement, are reported in the
    definitions library. (XXX: more examples!)
 
-   In this library, the signature parser was extended to recognize
-   type variables as well as function types.
+The result of our small example is:
+<method-definition>
+  private-form-body: <body-fragment>
+    fragment-constituents: <prefix-call-fragment>
+      fragment-arguments:
+        <prefix-call-fragment>
+          fragment-arguments:
+            <simple-variable-name-fragment>
+              fragment-name: #"format-out"
+            <string-fragment>
+              fragment-value: "Hello %d\n"
+          fragment-function: <simple-variable-name-fragment>
+            fragment-name: #"curry"
+        <prefix-call-fragment>
+          fragment-arguments:
+            <keyword-syntax-symbol-fragment>
+              fragment-value: #"to"
+            <simple-variable-name-fragment>
+              fragment-name: #"x"
+          fragment-function: <simple-variable-name-fragment>
+            fragment-name: #"range"
+      fragment-function: <simple-variable-name-fragment>
+        fragment-name: #"do"
+  private-form-signature: <method-requires-signature-spec>
+    private-spec-argument-next-variable-specs: <next-variable-spec>
+      private-spec-variable-name: <simple-variable-name-fragment>
+        fragment-name: #"next-method"
+    private-spec-argument-required-variable-specs: <typed-required-variable-spec>
+      private-spec-type-expression: <simple-variable-name-fragment>
+        fragment-name: #"<integer>"
+      private-spec-variable-name: <simple-variable-name-fragment>
+        fragment-name: #"x"
+  private-form-signature-and-body-fragment: <sequence-fragment>
+    <parens-fragment>, <simple-variable-name-fragment>, <parens-fragment>, <semicolon-fragment>
+  private-form-variable-name-or-names: <simple-variable-name-fragment>
+    fragment-name: #"hello-world"
+
 
 dfmc-macro-expander
 -------------------
