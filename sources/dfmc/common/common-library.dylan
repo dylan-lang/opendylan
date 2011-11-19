@@ -62,23 +62,8 @@ define module dfmc-imports
   use ppml, export: all;
 end module;
 
-define module dfmc-probabilities
-  use functional-dylan;
-  export
-    <probability>,
-
-    $probability-false,
-    $probability-maybe,
-    $probability-true,
-
-    probability-not,
-    probability-and,
-    probability-or;    
-end module dfmc-probabilities;
-
 define module dfmc-common
   use functional-dylan;
-  use dfmc-probabilities, export: all;
   use dfmc-imports;
 
   export 
@@ -103,22 +88,13 @@ define module dfmc-common
     name, name-setter,
     named?,
     coerce-name;
-  
-  export
-    <numbered-object>,
-    id, id-setter,
-    make-next-id;
-    
+      
   export
     <referenced-object>,
     users, users-setter,
     used?, used-once?, 
     add-user!, remove-user!, 
     references;
-
-  export
-    <serial-numbered-object>,
-      object-serial-number;
 
   export
     <emitted-object>,
@@ -422,8 +398,4 @@ define module dfmc-common
   // GTS Debugging
   export
     gts-debug, *gts-debug*;
-
-  export
-    lookup-keyword-value;
-
 end module;

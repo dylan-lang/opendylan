@@ -59,8 +59,6 @@ define module dfmc-management
     macroexpand-source,
     execute-definition-removal,
 
-    <template-source-record>,
-
     *retract-models-after-compilation?*,
     *retract-types-after-compilation?*,
     // trace-pass,

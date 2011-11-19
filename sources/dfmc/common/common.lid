@@ -7,13 +7,9 @@ Files:	 common-library
 	 names
 	 named-object
 	 referenced-object
-	 serial-numbered-object
 	 emitted-object
          model-properties
 	 common
-         native-common
-	 numbered-object
-	 probabilities
          compilation-records
          top-level-forms
          compilation-pass

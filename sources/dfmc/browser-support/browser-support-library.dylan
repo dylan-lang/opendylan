@@ -282,8 +282,7 @@ define interface-module dfmc-project-compilation (browser-used-modules)
     condition-database-name,
     <library-pack-not-installed>,
     condition-project,
-    condition-library-pack,
-    <template-source-record> = <template-source-record>;
+    condition-library-pack;
   export // Callouts
     used-library-context = used-library-context,
     project-record-id-source-record = project-record-id-source-record,
