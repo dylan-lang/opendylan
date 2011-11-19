@@ -617,7 +617,6 @@ define function run-application
 
           environment :: false-or(<explicit-key-collection>),
           working-directory :: false-or(<pathname>) = #f,
-     
           input :: type-union(one-of(#"inherit", #"null", #"stream"),
                               <pathname>) = #"inherit",
           if-input-does-not-exist :: one-of(#"signal", #"create") = #"signal",
@@ -831,6 +830,7 @@ define function run-application
         if (outputter)
           // Close the pipe output handle now so that we can detect
           // end-of-file on the other end of the pipe
+          close-handles := remove(close-handles, output-pipe);
           win32-close-handle(output-pipe);
 
           // Read from the input pipe handle and call the outputter
