@@ -11,8 +11,6 @@ define class <registry> (<object>)
     required-init-keyword: root:;
   constant slot registry-personal? :: <boolean>, 
     required-init-keyword: personal?:;
-  slot registry-settings-date = #f;
-  slot registry-settings      = #f;
 end class <registry>;
 
 define method print-object (registry :: <registry>, stream :: <stream>)
@@ -29,8 +27,7 @@ define class <registry-project-layout> (<project-layout>)
   slot project-registry :: <registry>,
     init-keyword: registry:;
   slot project-personal-library? :: <boolean>,
-    init-keyword: personal-library?:,
-    setter: project-personal-library?-slot-setter;
+    init-keyword: personal-library?:;
 end;
 
 define method initialize (project :: <registry-project-layout>, #rest keys,
@@ -73,17 +70,6 @@ define method initialize (project :: <registry-project-layout>, #rest keys,
   end;
 end method;
 
-// XXX this is only needed for bootstrapping in the emulator
-define method project-personal-library?-setter
-    (flag, project :: <registry-project-layout>)
-  if (flag)
-    project.project-personal-library?-slot := #t;
-  else
-    project.project-build-location := #f;
-    project.project-personal-library?-slot := #f;
-  end;
-end method;
-
 define open class <registry-project> (<registry-project-layout>, <lid-project>)
   // slot project-loaded? :: <boolean> = #f;
 end class;
@@ -96,8 +82,6 @@ end method project-location;
 define method initialize (project :: <registry-project>, #rest keys,
 			  #key key, #all-keys)
   next-method();
-  // XXX should we do that ?
-  read-registry-properties(project);
   unless (project-lid-library-name(project) == key)
     user-warning("Library in project %s is actually called %s.\n",
 		 key, project-lid-library-name(project));
@@ -154,13 +138,13 @@ define method update-project-location(project :: <registry-project>)
   project.project-registry := registry;
   project.project-personal-library? := personal?;
   project.project-lid-location := lid-location;
-  let (builds-dir, db-dir) = project-build-locations(project);
+  let (builds-dir, db-dir, profile-dir) = project-build-locations(project);
   project-build-location(project) := 
     personal? & library-build-locator(builds-dir, key);
   project-database-location(project) := 
     library-database-locator(db-dir, key);
   project-profile-location(project) := 
-    library-profile-locator(db-dir, key);
+    library-profile-locator(profile-dir, key);
 end;
 
 // Compute the sources records to give the compiler.
@@ -205,35 +189,9 @@ define method project-source-location
   project.project-lid-location.locator-directory
 end;
 
-define function read-registry-properties (project :: <registry-project>) => ()
-  let registry = project.project-registry;
-  let locator
-    = make(<file-locator>,
-	   directory: registry.registry-location,
-	   name: "overrides.lid");
-  when (file-exists?(locator))
-    let date = file-property(locator, #"write-date");
-    let settings
-      = if (registry.registry-settings-date ~= date)
-	  let settings = read-file-header(locator);
-	  registry.registry-settings-date := date;
-	  registry.registry-settings      := settings;
-	else 
-	  registry.registry-settings;
-	end if;
-    for (property keyed-by key in settings)
-      project-keyword-property(project, key) := property;
-      when (key == #"compilation-mode" & instance?(head(property), <string>))
-	project-compilation-mode(project) := as(<symbol>, head(property));
-      end when;
-    end for;
-  end when;
-end function;
-
 define method update-project-files (project :: <registry-project>) => ();
   // TODO: this needs to update database location if library-name
   // has changed 
-  read-registry-properties(project);
   let lid-location = project.project-lid-location;
   let lid-date = file-property(lid-location, #"write-date");
   unless (project.project-lid-date = lid-date)

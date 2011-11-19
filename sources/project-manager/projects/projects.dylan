@@ -375,12 +375,11 @@ define method project-build-property-setter(property,
 end;
 
 // Return the default target processor and os.
-define open generic default-platform-info (c :: subclass(<project>))
+define open generic default-platform-info ()
  => (processor, operating-system);
 
 // Change the default target processor and os.
-define open generic set-default-platform-info (c :: subclass(<project>),
-					       processor,
+define open generic set-default-platform-info (processor,
 					       operating-system);
 
 // Called when the default target platform gets changed.

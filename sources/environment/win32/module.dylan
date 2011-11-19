@@ -51,6 +51,7 @@ define module win32-environment
     exclude: { application-arguments };
   use environment-framework;
   use environment-tools;
+  use environment-internal-commands;
   use editor-manager;
   use source-control-manager;
   use environment-debugger;

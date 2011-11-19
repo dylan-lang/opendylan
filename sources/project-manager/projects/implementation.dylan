@@ -56,16 +56,6 @@ define function project-remove-owner(project :: <project>,
   project.%project-owners
 end;
 
-define function project-register-as-owner(project :: <project>)
- => (project :: <project>);
-//  map(method(%project)
-//	  debug-message("Project: %s\n\towners: %s\n", %project.project-name,
-//		        map(project-name, %project.%project-owners))
-//      end,
-//      project.all-used-projects);
-  project
-end;
-
 define function project-top-level?(project :: <project>) => (yes :: <boolean>);
   project.%project-top-level?
 end;
@@ -73,7 +63,6 @@ end;
 define function project-top-level?-setter
     (value :: <boolean>, project :: <project>) 
  => (value :: <boolean>);
-  project-register-as-owner(project);
   project.%project-top-level? := #t
 end;
 
@@ -133,28 +122,6 @@ define macro
 		   (method () 
 		      project-dynamic-environment(#"compiler-transaction") := #t;
 		      ?body 
-		    end)
-	       end with-used-project-cache
-	     end)
-	   }
-end macro;
-
-define macro 
-    with-browsing-transaction
-      { with-browsing-transaction(?project:expression) ?:body end }
-	=> 
-	{ %with-compiler-lock
-	    (method ()
-	       with-used-project-cache
-		 do-with-dynamic-environment
-		   (method () 
-		      project-dynamic-environment(#"browsing-transaction") := #t;
-		      if(?project.ensure-project-database)
-			?body 
-		      else
-			debug-assert("Invalid database query: project %s not compiled",
-				     ?project.project-name)
-		      end;
 		    end)
 	       end with-used-project-cache
 	     end)
@@ -304,7 +271,7 @@ define method make-project
   with-lock($pm-lock)
   with-used-project-cache
     unless (processor & operating-system)
-      let (default-processor, default-os) = default-platform-info(c);
+      let (default-processor, default-os) = default-platform-info();
       unless (processor) processor := default-processor end;
       unless (operating-system) operating-system := default-os end;
     end;
@@ -918,18 +885,18 @@ define function platform-namestring-info (platform) => (processor, os)
 end function;
 
 define function target-platform-name ()
-  let (processor, os) = default-platform-info(*default-project-class*);
+  let (processor, os) = default-platform-info();
   platform-namestring(processor, os);
 end function;
 
 define function target-platform-name-setter (platform)
-  let (old-processor, old-os) = default-platform-info(*default-project-class*);
+  let (old-processor, old-os) = default-platform-info();
   let (new-processor, new-os) = platform-namestring-info(platform);
   unless (new-processor == old-processor & new-os == old-os)
     for (project in *all-open-projects*)
       note-platform-change(project, new-processor, new-os);
     end;
-    set-default-platform-info(*default-project-class*, new-processor, new-os);
+    set-default-platform-info(new-processor, new-os);
   end;
 end function;
 

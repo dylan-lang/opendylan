@@ -130,7 +130,7 @@ define sealed domain initialize(<user-project>);
 define function %set-target-values(c, processor, operating-system)
  => (processor, operating-system);
   unless (processor & operating-system)
-    let (default-processor, default-os) = default-platform-info(c);
+    let (default-processor, default-os) = default-platform-info();
     unless (processor) processor := default-processor end;
     unless (operating-system) operating-system := default-os end;
   end;
@@ -400,14 +400,13 @@ end;
 //
 *default-project-class* := <project>;
 
-define sideways method set-default-platform-info (c :: subclass(<project>),
-					processor, operating-system)
+define sideways method set-default-platform-info (processor, operating-system)
   let platform = platform-namestring(processor, operating-system);
   environment-variable("OPEN_DYLAN_PLATFORM_NAME") := platform
 end method;
 
-define sideways method default-platform-info 
-    (c :: subclass(<project>)) => (processor-name, os-name)
+define sideways method default-platform-info
+    () => (processor-name, os-name)
   let platform = environment-variable("OPEN_DYLAN_PLATFORM_NAME");
   unless (platform) platform := $platform-name end;
   platform-namestring-info(platform)
