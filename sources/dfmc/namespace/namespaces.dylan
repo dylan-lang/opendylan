@@ -33,39 +33,39 @@ end class <export-clause>;
 //// Namespaces.
 
 // <Namespace> is an abstract class providing a partial implementation
-// of namespaces, capturing the commonality in this area between Dylan's 
+// of namespaces, capturing the commonality in this area between Dylan's
 // libraries and modules. Namespaces are considered to be environments
-// which inherit names through filtering and have a distingushed 
+// which inherit names through filtering and have a distingushed
 // interface for clients, extending the environment protocol. The
 // environment protocol itself is used to lookup names from "within"
 // the namespace.
 
-// When a namespace is created, all its imports are collected and 
+// When a namespace is created, all its imports are collected and
 // consistency checking is performed. This information is then discarded
 // and bindings looked up and cached lazily from then on. The only
 // motivation behind this is to try to keep the size of binding tables
-// down - duplicating the binding table for all the exports of some 
+// down - duplicating the binding table for all the exports of some
 // framework plus Dylan in every module could prove expensive. If this
-// turns out to be a false economy we can simply keep around all the 
-// information we compute at checking time. 
+// turns out to be a false economy we can simply keep around all the
+// information we compute at checking time.
 
 //// Caching.
 
 // One big lose in the way things are done structurally, particularly
 // during the checking phases, is that an exported name collection is
-// returned for a used namespace, and then each of those names is 
+// returned for a used namespace, and then each of those names is
 // looked up for its value in turn. Using a once-computed table or
 // sequence with the name/value relationship intact so that you can
 // iterate over both together would save a lot of time.
 
 // The <namespace> class is subclassed, but only within this library.
 
-define abstract dood-class <namespace> 
+define abstract dood-class <namespace>
     (<dood-mapped-and-owned-object>, <environment>)
   slot debug-name = #f,
     init-keyword: debug-name:;
   // Names defined locally.
-  lazy constant slot namespace-local-bindings :: <dood-lazy-symbol-table> 
+  lazy constant slot namespace-local-bindings :: <dood-lazy-symbol-table>
     = make(<dood-lazy-symbol-table>);
   // Referenced names imported from used namespaces.  This is used by
   // namespace redefinition to know which names were referenced, so it's
@@ -92,7 +92,7 @@ define abstract dood-class <full-namespace> (<namespace>)
     init-keyword: create-clauses:;
   // Set of those external names which were created.
   lazy slot created-names :: <set> = make(<set>);
-  lazy slot export-clauses = #[], 
+  lazy slot export-clauses = #[],
     init-keyword: export-clauses:;
   // Derived information: use filters, the set of exported names.
   weak slot cached-uses = #f,
@@ -110,7 +110,7 @@ define inline method namespace-original-library
   form-original-library(namespace-definition(space));
 end method;
 
-define inline method namespace-library-description 
+define inline method namespace-library-description
     (space :: <full-namespace>) => (ld :: <library-description>)
   form-library(namespace-definition(space));
 end method;
@@ -126,32 +126,32 @@ end method;
 
 // Lookup the value of an implicitly-exported name. An error is signaled
 // if the name is not implicitly exported (<name-not-implicitly-exported>)
-// unless a default value is supplied, in which case that value is 
+// unless a default value is supplied, in which case that value is
 // returned.
 
-define generic lookup-implicitly-exported-name 
+define generic lookup-implicitly-exported-name
     (space :: <namespace>, name :: <name>, #key) => (value);
 
-// Return a collection containing all the names implicitly exported by 
+// Return a collection containing all the names implicitly exported by
 // the namespace (i.e. accessible through lookup-implicitly-exported-name).
 
 define generic implicitly-exported-name-collection
     (space :: <namespace>) => (name-sequence);
 
 // Return a collection containing all the values of the names implicitly
-// exported by the namespace (i.e. accessible through 
+// exported by the namespace (i.e. accessible through
 // lookup-implicitly-exported-name).
 
-define generic implicitly-exported-value-collection 
+define generic implicitly-exported-value-collection
     (space :: <namespace>) => (name-sequence);
 
-//// Methods on these generic functions should be filled-in by 
+//// Methods on these generic functions should be filled-in by
 //// superclasses.
 
-define generic created-name-value 
+define generic created-name-value
     (space :: <namespace>, name :: <name>) => (value);
 
-define generic exported-name-value 
+define generic exported-name-value
     (space :: <namespace>, name :: <name>) => (value);
 
 define generic resolve-used-namespace
@@ -175,9 +175,9 @@ define generic all-used-namespaces
 
 define function uses (space :: <full-namespace>)
   space.cached-uses |
-    (space.cached-uses 
+    (space.cached-uses
        := map(method(clause)
-                apply(make, <filter>, 
+                apply(make, <filter>,
                       namespace: clause.used-name,
                       clause: clause,
                       clause.options)
@@ -202,41 +202,41 @@ end function;
 
 define function update-exports! (space :: <full-namespace>, imports :: <table>)
   local method do-clause (clause :: <export-or-create-clause>, kind)
-	  for (name in clause.names)
-	    let value = element(imports, name, default: not-found());
-	    if (found?(value))
-	      note(select (kind)
-		     #"created" =>  <create-import-conflict>;
-		     #"exported" => <export-import-conflict>;
-		   end,
-                   source-location: 
+          for (name in clause.names)
+            let value = element(imports, name, default: not-found());
+            if (found?(value))
+              note(select (kind)
+                     #"created" =>  <create-import-conflict>;
+                     #"exported" => <export-import-conflict>;
+                   end,
+                   source-location:
                      form-source-location(namespace-definition(space)),
-		   namespace: space,
-		   clause: clause,
-		   name: name,
-		   import: value);
-	      // Note that name has been referenced.
-	      define-name-in-cache(space.imported-name-cache, name, value);
-	      // TODO: Should re-exported instead, but there's no easy way to
-	      // do that (it's hidden in filters).
-	    else
-	      if (~defined-name?(space, name))
-		let value = select (kind)
-			      #"created" =>  created-name-value(space, name);
-			      #"exported" => exported-name-value(space, name);
-			    end;
-		define-name(space, name, value);
-	      end;
-	      export-name(space, name, kind);
-	    end if;
-	  end for;
-	end method;
+                   namespace: space,
+                   clause: clause,
+                   name: name,
+                   import: value);
+              // Note that name has been referenced.
+              define-name-in-cache(space.imported-name-cache, name, value);
+              // TODO: Should re-exported instead, but there's no easy way to
+              // do that (it's hidden in filters).
+            else
+              if (~defined-name?(space, name))
+                let value = select (kind)
+                              #"created" =>  created-name-value(space, name);
+                              #"exported" => exported-name-value(space, name);
+                            end;
+                define-name(space, name, value);
+              end;
+              export-name(space, name, kind);
+            end if;
+          end for;
+        end method;
   do(method (clause) do-clause(clause, #"exported") end, space.export-clauses);
   do(method (clause) do-clause(clause, #"created") end, space.create-clauses);
 end function;
 
 define method make-namespace (class :: subclass(<full-namespace>), #rest initargs,
-			      #key, #all-keys)
+                              #key, #all-keys)
  => (space :: <full-namespace>)
   let space :: <full-namespace> = apply(make, class, initargs);
   let imports = compute-imports(space);
@@ -261,7 +261,7 @@ define function exported-name? (space :: <namespace>, name) => (value :: <boolea
 end function;
 
 define method name-definition (space :: <namespace>,
-			       name, #key default = unsupplied())
+                               name, #key default = unsupplied())
   if (supplied?(default))
     element(space.namespace-local-bindings, name, default: default)
   else
@@ -276,14 +276,14 @@ end function;
 // Caller is responsible for checking for imported names.
 define method define-name (space :: <full-namespace>, name :: <name>, value) => ()
   debug-assert(~defined-name?(space, name),
-	       "Unexpected define of defined name");
+               "Unexpected define of defined name");
   undefine-name-in-caches(space, name);
   space.namespace-local-bindings[name] := value;
 end method;
 
 define method undefine-name (space :: <full-namespace>, name :: <name>) => ()
   debug-assert(defined-name?(space, name),
-	       "Unexpected undefine of undefined name");
+               "Unexpected undefine of undefined name");
   undefine-name-in-caches(space, name);
   remove-key!(space.namespace-local-bindings, name);
 end method;
@@ -293,7 +293,7 @@ define inline function lookup-name-in-cache
   element(cache, name, default: not-found());
 end function;
 
-define inline function define-name-in-cache 
+define inline function define-name-in-cache
     (cache :: <mutable-explicit-key-collection>, name, value) => (value)
   element(cache, name) := value;
 end function;
@@ -307,20 +307,20 @@ define method lookup-imported-name (space :: <full-namespace>, name :: <name>)
     for (use in space.uses)
       let used-name = unfilter-name(use, name);
       if (used-name)
-	let used-space
-	  = resolve-used-namespace(space, use.namespace, default: #f);
-	if (used-space)
-	  let value = lookup-exported-name(used-space, used-name,
-					   default: not-found());
-	  if (found?(value)) return(value) end;
-	end if;
+        let used-space
+          = resolve-used-namespace(space, use.namespace, default: #f);
+        if (used-space)
+          let value = lookup-exported-name(used-space, used-name,
+                                           default: not-found());
+          if (found?(value)) return(value) end;
+        end if;
       end;
     end for;
     not-found()
   end block;
 end;
 
-define function lookup-exported-name 
+define function lookup-exported-name
     (space :: <namespace>, name :: <name>, #key default = unsupplied())
       => (value)
   if (exported-name?(space, name))
@@ -334,7 +334,7 @@ end function;
 
 define constant $name-not-imported = #"name-not-imported";
 
-define method lookup-name 
+define method lookup-name
     (space :: <full-namespace>, name :: <name>,
      #key default = unsupplied(), exported? = #f) => (value)
   block (return)
@@ -345,21 +345,21 @@ define method lookup-name
     if (found?(defined-value)) return(defined-value) end;
     if (space.cached-exported-imports-table)
       let reexported-value
-	= lookup-name-in-cache(space.cached-exported-imports-table, name);
+        = lookup-name-in-cache(space.cached-exported-imports-table, name);
       if (found?(reexported-value)) return(reexported-value) end;
     end;
     let cached-value = lookup-name-in-cache(space.imported-name-cache, name);
     if (found?(cached-value))
       if (cached-value == $name-not-imported)
-	if (supplied?(default)) return(default) end;
+        if (supplied?(default)) return(default) end;
       else
-	return(cached-value)
+        return(cached-value)
       end;
     end;
     let imported-value = lookup-imported-name(space, name);
     define-name-in-cache(space.imported-name-cache, name,
-			 if (found?(imported-value)) imported-value
-			 else $name-not-imported end);
+                         if (found?(imported-value)) imported-value
+                         else $name-not-imported end);
     case
       found?(imported-value) => imported-value;
       supplied?(default)     => default;
@@ -439,7 +439,7 @@ define method do-imported-names (action :: <function>,
     end;
   end;
 end method;
-  
+
 //// Consistency checking.
 
 // We can grossly categorise consistency problems as follows:
@@ -454,9 +454,9 @@ end method;
 define program-warning <namespace-warning>
   slot condition-namespace = #f,
     init-keyword: namespace:;
-  slot condition-clause = #f, 
+  slot condition-clause = #f,
     init-keyword: clause:;
-  slot condition-option = #f, 
+  slot condition-option = #f,
     init-keyword: option:;
 end program-warning;
 
@@ -518,7 +518,7 @@ define program-warning <create-import-conflict> (<namespace-warning>)
     name, namespace, import;
 end program-warning;
 
-define method update-imports 
+define method update-imports
     (space :: <namespace>, filter :: <filter>, imports :: <table>)
  => (resolved? :: <boolean>)
   let clause = filter.clause;
