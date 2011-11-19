@@ -78,7 +78,6 @@ define module projects
     show-compiler-messages?, show-compiler-messages?-setter,
     show-internal-compiler-messages?, show-internal-compiler-messages?-setter,
     \with-compiler-transaction,
-    \with-browsing-transaction,
     \with-project-manager-transaction,
     *default-inter-library-binding*,
     *default-library-major-version*,
