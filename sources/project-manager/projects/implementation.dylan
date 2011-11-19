@@ -128,28 +128,6 @@ define macro
 	   }
 end macro;
 
-define macro 
-    with-browsing-transaction
-      { with-browsing-transaction(?project:expression) ?:body end }
-	=> 
-	{ %with-compiler-lock
-	    (method ()
-	       with-used-project-cache
-		 do-with-dynamic-environment
-		   (method () 
-		      project-dynamic-environment(#"browsing-transaction") := #t;
-		      if(?project.ensure-project-database)
-			?body 
-		      else
-			debug-assert("Invalid database query: project %s not compiled",
-				     ?project.project-name)
-		      end;
-		    end)
-	       end with-used-project-cache
-	     end)
-	   }
-end macro;
-
 define macro with-project-manager-transaction
   { with-project-manager-transaction ?:body end }
     => {with-lock($pm-lock, timeout: 10.0)

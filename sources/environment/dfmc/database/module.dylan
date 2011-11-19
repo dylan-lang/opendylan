@@ -28,7 +28,6 @@ define module dfmc-environment-database
 	      project-source-records,
 	      project-dylan-sources,
 	      project-source-canonical-source-record,
-	      \with-browsing-transaction,
 	      project-canonical-source-records,
 	      project-browsing-context,
 	      project-interaction-allowed?,
