@@ -7,7 +7,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //// Useful timing macros.
 
 define macro timing-compilation-phase
-  { timing-compilation-phase (?phase:expression of ?ld:expression, ?keys:*) 
+  { timing-compilation-phase (?phase:expression of ?ld:expression, ?keys:*)
       ?:body
     end }
     => { do-timing-compilation-phase(?ld, ?phase, method () ?body end, ?keys) }
@@ -28,21 +28,21 @@ define function float-amount-to-string (amount :: <float>)
 end function;
 
 define class <profile-snap> (<object>)
-  slot snap-time :: <float>, 
+  slot snap-time :: <float>,
     required-init-keyword: time:;
-  slot snap-time-string :: <string>, 
+  slot snap-time-string :: <string>,
     required-init-keyword: time-string:;
-  slot snap-space :: <float>, 
+  slot snap-space :: <float>,
     required-init-keyword: space:;
-  slot snap-space-string :: <string>, 
+  slot snap-space-string :: <string>,
     required-init-keyword: space-string:;
-  constant slot snap-phase  :: <string>, 
+  constant slot snap-phase  :: <string>,
     required-init-keyword: phase:;
 end class;
 
 define variable *dfmc-profile-allocation?* = #f;
 
-define function do-timing-compilation-phase 
+define function do-timing-compilation-phase
     (ld :: <compilation-context>, phase, body :: <function>,
      #key progress? = #f, accumulate?, #all-keys)
   progress? & progress-line("%s of %s timing begun.", phase, ld);
@@ -78,7 +78,7 @@ define function do-timing-compilation-phase
     snap.snap-space-string := float-amount-to-string(allocated-space);
   else
     snap :=
-        make(<profile-snap>, 
+        make(<profile-snap>,
 	     time:  elapsed-time,
 	     time-string: integer-amount-to-string
 	       (elapsed-seconds, elapsed-microseconds),
@@ -102,7 +102,7 @@ define function do-timing-compilation-phase
   values();
 end function;
 
-define function uniquify-timing-properties 
+define function uniquify-timing-properties
     (props :: <sequence>) => (new-props :: <sequence>)
   let seen = make(<object-table>);
   let rprops = reverse(props);
@@ -118,7 +118,7 @@ define function uniquify-timing-properties
   end;
 end function;
 
-define function compilation-source-line-count 
+define function compilation-source-line-count
     (ld :: <compilation-context>) => (count :: <integer>)
   collecting (as <integer>)
     for (cr in compilation-context-records(ld))
@@ -145,7 +145,7 @@ define function platform-floop-mark ()
         progress-line("Computing platform floop mark...");
         let (secs, msecs)
           = timing ()
-              for (i from 0 below 50000) 
+              for (i from 0 below 50000)
                 make(<vector>, size: 1024);
               end;
             end;
@@ -191,7 +191,7 @@ define function dump-timings-for (ld :: <compilation-context>) => ()
     progress-line("  --");
     let lpm = (lines / total-time) * 60.0;
     let bps = float-amount-to-string(total-space / total-time);
-    progress-line("  Compiled %d lines at a rate of %d lines per minute, %s Mb per second.", 
+    progress-line("  Compiled %d lines at a rate of %d lines per minute, %s Mb per second.",
                   lines, lpm, bps);
     let dood      = instance?(ld, <project-library-description>) & library-description-dood(ld);
     let dood-size = if (dood) dood-size(dood) else 0 end;
@@ -222,7 +222,7 @@ define function display-integer(number :: <integer>, field :: <integer>)
   iterate process-integer (num :: <integer> = number, exponent :: <integer> = 1)
     let (quotient :: <integer>, remainder :: <integer>) = truncate/(num, 10);
     let digit :: <byte-character> = number-characters[remainder];
-    
+
     if (quotient = 0)
       let index = field - (exponent + truncate/(exponent - 1, 3));
       if (index < 0)
@@ -266,7 +266,7 @@ end function;
 
 //// Top level parsing.
 
-define constant $empty-compilation-record-vector 
+define constant $empty-compilation-record-vector
   = as(<compilation-record-vector>, #[]);
 
 // TODO: want to switch over to limited compilation-record vectors
@@ -299,7 +299,7 @@ define function compute-source-compilation-records
 		cr.compilation-record-sequence-number := #f;
 		cr
 	      else
-		table[sr] := make(<compilation-record>, 
+		table[sr] := make(<compilation-record>,
 				  library: ld, source-record: sr);
 	      end if;
 	    end method;
@@ -432,7 +432,7 @@ define function ensure-library-definitions-installed (ld :: <compilation-context
       retract-non-incremental-caches(ld);
       // Because we want to be able to compile lazily from definitions,
       // we force the installation of any models that can be reached
-      // directly, rather than via name lookup, now so that they get 
+      // directly, rather than via name lookup, now so that they get
       // claimed appropriately.
       if (compiling-dylan-library?() & ld.library-description-defined?)
 	install-dylan-boot-constants(ld)
@@ -440,7 +440,7 @@ define function ensure-library-definitions-installed (ld :: <compilation-context
     end;
   end unless;
 end;
-  
+
 // This is called at the end of parsing and installing definitions.
 define method mark-definitions-installed (ld :: <compilation-context>)
   if (*interactive-compilation-layer*)
@@ -476,7 +476,7 @@ define function mark-project-definitions-installed
 end function;
 
 // Must agree with same in boot.dylan
-define constant $library-build-count-wildcard = -1; 
+define constant $library-build-count-wildcard = -1;
 define constant $library-build-count-wildcard-body-double = 17;
 define constant $library-build-count-only-wildcard = -2;
 define constant $library-build-count-only-wildcard-body-double = 31;
@@ -643,7 +643,7 @@ define sideways method record-all-booted-model-properties
       let (model-object, computed?) =
 	untracked-binding-model-object-if-computed(binding);
       when (computed?)
-	let properties 
+	let properties
 	  = lookup-owned-model-properties-in(ld, model-object);
 	record-booted-model-properties(ld, model-object, properties);
       end when;
@@ -651,7 +651,7 @@ define sideways method record-all-booted-model-properties
   end for;
 end method;
 
-define sideways method install-dylan-boot-constants 
+define sideways method install-dylan-boot-constants
     (ld :: <dylan-library-description>, #key force?)
   debug-assert(~*interactive-compilation-layer*);
   if (compiled-to-definitions?(ld))
@@ -743,7 +743,7 @@ end function update-compilation-record-definitions;
 
 define method compute-source-record-top-level-forms (cr :: <compilation-record>)
     with-dependent ($top-level-processing of cr)
-      let module 
+      let module
         = lookup-compilation-record-module(cr, warn?: #f);
       compilation-record-module(cr) := module;
       if (~module)
@@ -769,7 +769,7 @@ define method compute-source-record-top-level-forms (cr :: <compilation-record>)
             let (fragment, new-state)
               = read-top-level-fragment(stream, cr, state);
             let fragment-forms
-              = if (fragment) 
+              = if (fragment)
                   top-level-convert-forms(cr, fragment)
                 else
                   #()
@@ -779,7 +779,7 @@ define method compute-source-record-top-level-forms (cr :: <compilation-record>)
             // an undefined module context, switch to the module if it's
             // now become defined.
             if (~module
-                   & ~empty?(fragment-forms) 
+                   & ~empty?(fragment-forms)
                    & instance?
                        (first(fragment-forms), <namespace-defining-form>))
               let new-module = lookup-module(cr-name, default: #f);
@@ -808,7 +808,7 @@ define method compute-source-record-top-level-forms (cr :: <compilation-record>)
           // TODO: The db is inconsistent here for two reasons: the main
           // is that library/macro definitions get installed as they are
           // parsed, before they get recorded in cr-top-level-forms, so
-          // there is no way to retract them!  Second is that parsing 
+          // there is no way to retract them!  Second is that parsing
           // introduces
           // dependencies of the cr on syntax of bindings, but we assume
           // that cr's with no cr-top-level-forms have no dependencies, so
@@ -819,7 +819,7 @@ define method compute-source-record-top-level-forms (cr :: <compilation-record>)
           with-inconsistent-definitions (current-library-description())
             let (final-state, record-forms) = read(#f, #());
             compilation-record-top-level-forms(cr) := record-forms;
-            compilation-record-source-line-count(cr) 
+            compilation-record-source-line-count(cr)
 	      := (final-state & source-lines-read(final-state)) | 0;
           end with-inconsistent-definitions;
         end with-input-from-source-record;
@@ -827,7 +827,7 @@ define method compute-source-record-top-level-forms (cr :: <compilation-record>)
     end with-dependent;
 end method;
 
-define sideways method install-top-level-forms 
+define sideways method install-top-level-forms
     (forms :: <top-level-form-sequence>) => ()
   for (form in forms)
     unless (form-top-level-installed?(form))

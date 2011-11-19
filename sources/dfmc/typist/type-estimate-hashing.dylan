@@ -43,8 +43,6 @@ define type-estimate-hash-rules
                                    otherwise => apply(type-estimate-hash-reduce,
                                                       #t, hash-state, s);
                                  end;
-  o :: <serial-numbered-object>, hash-state
-    <- values(object-serial-number(o), hash-state);
   t :: <type-estimate-top>, hash-state    
     <- begin 
          unless (*top-hash*)

@@ -7,22 +7,22 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define sideways method dood-dfmc-initial-segments
     (class :: subclass(<dfmc-dood>)) => (segments, default-segment);
   let segments
-    = vector(make(<dood-typed-segment>, 
+    = vector(make(<dood-typed-segment>,
 		  name: "namespace",
-		  type: type-union(<library-description>, 
-				   <namespace>, 
+		  type: type-union(<library-description>,
+				   <namespace>,
 				   <module-binding>)),
-	     make(<dood-typed-segment>, 
+	     make(<dood-typed-segment>,
 		  name: "definitions",
 		  type: type-union(<top-level-form>)),
-	     make(<dood-typed-segment>, 
+	     make(<dood-typed-segment>,
 		  name: "models",
 		  type: type-union(<model-properties>)),
-	     make(<dood-typed-segment>, 
+	     make(<dood-typed-segment>,
 		  name: "code",
-		  type: type-union(<lexical-environment>, 
-				   <computation>, 
-				   <value-reference>, 
+		  type: type-union(<lexical-environment>,
+				   <computation>,
+				   <value-reference>,
 				   <body-fragment>)),
 	     make(<dood-typed-segment>,
 		  name: "debug-info",
@@ -57,7 +57,7 @@ define function conditions-for (description :: <library-description>,
 	  for (condition in element(cond-tab, key, default: #[]))
 	    if (test(condition))
 	      when (print-conditions?)
-		if (print-context) 
+		if (print-context)
 		  format(stream, "//\n// Conditions for %s:\n//\n\n", print-context);
                   print-context := #f;
 	        end;
@@ -82,7 +82,7 @@ define function conditions-for (description :: <library-description>,
 
   // TODO: At the moment conditions with no associated library do not get
   // retracted.  As a temporary measure we zap them here.
-  remove-key!(cond-tab, #f); 
+  remove-key!(cond-tab, #f);
 
   print-context := description;
   dump(description);
@@ -133,7 +133,7 @@ ignore(abort-compilation-warnings-count);
 define method ensure-library-compiled (description :: <project-library-description>,
 				       #rest flags,
 				       #key skip-heaping?,
-				       abort-on-all-warnings?, 
+				       abort-on-all-warnings?,
 				       abort-on-serious-warnings?,
 				       #all-keys)
  => (warning-count, serious-warning-count, error-count, data-size, code-size);
@@ -153,7 +153,7 @@ define method ensure-library-compiled (description :: <project-library-descripti
   with-stage-progress("Performing type analysis of", $typist-stage-time)
     ensure-library-type-estimated(description)
   end;
-  with-stage-progress("Optimizing", $optimize-stage-time)  
+  with-stage-progress("Optimizing", $optimize-stage-time)
     ensure-library-optimized(description)
   end;
 
@@ -163,7 +163,7 @@ define method ensure-library-compiled (description :: <project-library-descripti
     progress-line("Dumping conditions to %s.log",
 		  as-lowercase(as(<string>,
 				  library-description-emit-name(description))));
-    let (warnings, serious-warnings, errors) = 
+    let (warnings, serious-warnings, errors) =
       dump-conditions-for(description);
     warning-count := warnings;
     serious-warning-count := serious-warnings;
@@ -174,7 +174,7 @@ define method ensure-library-compiled (description :: <project-library-descripti
 	 |
 	 (abort-on-serious-warnings? & (serious-warning-count > 0)))
       progress-line("Aborting compilation");
-      library-progress-text(description, 
+      library-progress-text(description,
 			    "There were %d warnings, %d serious warnings and %d errors.",
 			    warning-count, serious-warning-count, error-count);
 
@@ -210,12 +210,12 @@ define open generic note-definitions-updated(ld);
 // Note that turning this on effectively disables incremental compilation.
 define variable *retract-models-after-compilation?* = #f;
 
-define open generic compile-library-from-definitions 
+define open generic compile-library-from-definitions
   (description, #key, #all-keys);
 
 define variable *retract-types-after-compilation?* = #t;
 
-define method compile-library-from-definitions 
+define method compile-library-from-definitions
     (description :: <project-library-description>,
      #rest flags, #key compile-if-built?, compile-all?,
                        abort-on-all-warnings?, abort-on-serious-warnings?,
@@ -243,7 +243,7 @@ define method compile-library-from-definitions
             // TODO: need to verify used libraries
             if (description.library-description-stripped?)
 	      // Can't just compile stripped library, since info needed from
-	      // definitions may have been stripped. 
+	      // definitions may have been stripped.
 	      timing-compilation-phase("Recomputing full definitions" of description)
 	        retract-library-parsing(description);
 	        compute-library-definitions(description);
@@ -275,10 +275,10 @@ define method compile-library-from-definitions
 	      if (strip?)
 	        description.library-description-stripped? := #"pending";
 	      end;
-	      let (warning-count, serious-warning-count, error-count, 
-		   data-size, code-size) = 
+	      let (warning-count, serious-warning-count, error-count,
+		   data-size, code-size) =
 	        apply(ensure-library-compiled, description, flags);
-	      
+
 	      unless (skip-link?)
 	        with-stage-progress("Linking object files for", $linking-stage-time)
 		  ensure-library-glue-linked(description, flags);
@@ -286,7 +286,7 @@ define method compile-library-from-definitions
 	        end;
 	      end;
               description.library-description-compilation-aborted? := #f;
-  
+
 	      if (strip?)
 	        ensure-library-stripped(description);
 	      end;
@@ -366,7 +366,7 @@ define function ensure-library-stripped (ld :: <project-library-description>)
 	with-library-context (ld)
 	  if (ld.compilation-from-definitions-started?)
 	    // Have to recompute heaps so can find all owned models.
-	    // Have to do it up front so can retract any dependencies it 
+	    // Have to do it up front so can retract any dependencies it
 	    // generates, or models it recomputes, or any other side-effects.
 	    maybe-recompute-library-heaps(ld);
 	  end;
@@ -533,12 +533,12 @@ end method;
 define compiler-sideways method dood-disk-object
     (dood :: <dfmc-namespace-dood>, object :: <top-level-form>) => (object)
   // format-out("DDOF %s\n", debug-name(object-class(object)));
-  let res = 
+  let res =
   if (slow-instance?(object, "<module-definition>")
 	| slow-instance?(object, "<library-definition>")
 	| slow-instance?(object, "<macro-definition>")
 	| (slow-instance?(object, "<literal-value-constant-definition>")
-	     & without-dependency-tracking 
+	     & without-dependency-tracking
 		 let var = form-variable-name(object);
 	         let bnd = lookup-binding(var);
 		 let mod = binding-model-object(bnd, default: #f);
@@ -576,7 +576,7 @@ define sideways method ensure-export-only (ld :: <library-description>)
 	    let def = untracked-binding-definition(binding, default: #f);
 	    instance?(def, <macro-definition>) & def
 	  end method,
-	  method scan-macro-references 
+	  method scan-macro-references
 	      (queue :: <object-deque>, binding :: <module-binding>, def)
 	    format-out(" SCANNING MACRO %=\n", def);
 	    let object           = form-macro-object(def);
@@ -585,11 +585,11 @@ define sideways method ensure-export-only (ld :: <library-description>)
 	      let binding = untracked-lookup-binding(name); // TODO: want binding here
 	      unless (visible-binding?(binding))
 		format-out("   QUEUEING MREF %=\n", binding);
-		push-last(queue, binding); 
+		push-last(queue, binding);
 	      end unless;
 	    end for;
 	  end method,
-	  method export-binding 
+	  method export-binding
 	      (queue :: <object-deque>, binding :: <module-binding>)
 	    let macro-def = macro-binding?(binding);
 	    if (macro-def)
@@ -597,9 +597,9 @@ define sideways method ensure-export-only (ld :: <library-description>)
 	    end if;
 	    make-visible-binding(binding);
 	  end method,
-	  method maybe-export-binding 
+	  method maybe-export-binding
 	      (queue :: <object-deque>, binding :: <module-binding>)
-	    format-out("  CONSIDERING %= DEF? %= IMP? %=\n", 
+	    format-out("  CONSIDERING %= DEF? %= IMP? %=\n",
 		       binding, defined?(binding), binding-imported-into-library?(binding));
 	    if (defined?(binding) & ~binding-imported-into-library?(binding))
 	      format-out("  VISIBLE %=\n", binding);
@@ -630,7 +630,7 @@ define sideways method ensure-export-only (ld :: <library-description>)
 	end unless;
       end for;
       remove-all-keys!(imported-name-cache(object));
-    end for; 
+    end for;
   end without-dependency-tracking;
   imported-bindings-tables(library) := make(<dood-lazy-table>);
   remove-all-keys!(library-definer-references(library));

@@ -242,9 +242,6 @@ define method finish-method-model-forms (form :: <generic-definition>,
            end)
 end method;
 
-define constant $system-developer-environment-variable-name
-  = "OPEN_DYLAN_SYSTEM_DEVELOPER";
-
 define constant $major-minor-checks-only-environment-variable-name
   = "OPEN_DYLAN_MAJOR_MINOR_CHECKS_ONLY";
 
@@ -252,13 +249,9 @@ define function library-description-build-count
     (ld :: <project-library-description>) => (build-count :: <integer>)
   let change-count
     = library-description-change-count(ld);
-  let developer?
-    = environment-variable($system-developer-environment-variable-name);
   let major-minor-checks-only?
     = environment-variable($major-minor-checks-only-environment-variable-name);
-  if (developer?)
-    $library-build-count-wildcard
-  elseif (major-minor-checks-only?)
+  if (major-minor-checks-only?)
     $library-build-count-only-wildcard
   else
     change-count
