@@ -29,8 +29,7 @@ define class <registry-project-layout> (<project-layout>)
   slot project-registry :: <registry>,
     init-keyword: registry:;
   slot project-personal-library? :: <boolean>,
-    init-keyword: personal-library?:,
-    setter: project-personal-library?-slot-setter;
+    init-keyword: personal-library?:;
 end;
 
 define method initialize (project :: <registry-project-layout>, #rest keys,
@@ -70,17 +69,6 @@ define method initialize (project :: <registry-project-layout>, #rest keys,
       error("There is no source and no database to load for the project %s",
 	    key)
     end
-  end;
-end method;
-
-// XXX this is only needed for bootstrapping in the emulator
-define method project-personal-library?-setter
-    (flag, project :: <registry-project-layout>)
-  if (flag)
-    project.project-personal-library?-slot := #t;
-  else
-    project.project-build-location := #f;
-    project.project-personal-library?-slot := #f;
   end;
 end method;
 
