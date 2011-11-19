@@ -31,7 +31,7 @@ define method set-property
      root :: <directory-locator>,
      #key save?)
  => ()
-  maybe-set-roots(context, personal-root: root)
+  maybe-set-roots(personal-root: root)
 end method set-property;
 
 
@@ -58,9 +58,34 @@ define method set-property
      root :: <directory-locator>,
      #key save?)
  => ()
-  maybe-set-roots(context, system-root: root)
+  maybe-set-roots(system-root: root)
 end method set-property;
 
+// Build-root property
+
+define class <build-root-property> (<environment-property>)
+end class <build-root-property>;
+
+define command-property build-root => <build-root-property>
+  (summary:       "Build root directory",
+   documentation: "The root directory of the build products.",
+   type:          <directory-locator>)
+end command-property build-root;
+
+define method show-property
+    (context :: <environment-context>, property :: <build-root-property>)
+ => ()
+  message(context, "Build root: %s",
+          environment-variable("OPEN_DYLAN_USER_ROOT"))
+end method show-property;
+
+define method set-property
+    (context :: <environment-context>, property :: <build-root-property>,
+     root :: <directory-locator>,
+     #key save?)
+ => ()
+  maybe-set-roots(build-root: root)
+end method set-property;
 
 // Registries property
 
@@ -100,8 +125,8 @@ define constant $system-directories
       #("OPEN_DYLAN_RELEASE_REGISTRIES", "sources", "registry"));
 
 define method maybe-set-roots
-    (context :: <server-context>,
-     #key personal-root :: false-or(<directory-locator>),
+    (#key build-root :: false-or(<directory-locator>),
+          personal-root :: false-or(<directory-locator>),
           system-root :: false-or(<directory-locator>))
  => ()
   local method set-variable
@@ -123,7 +148,16 @@ define method maybe-set-roots
       let subdirectories = directory-info.tail;
       set-variable(variable, system-root, subdirectories)
     end
-  end
+  end;
+  if (build-root)
+    for (directory-info :: <list> in $personal-directories)
+      let variable       = directory-info.head;
+      let subdirectories = directory-info.tail;
+      if (~ any?(curry(\=, "sources"), subdirectories))
+        set-variable(variable, build-root, subdirectories)
+      end
+    end
+  end;
 end method maybe-set-roots;
 
 
@@ -134,5 +168,6 @@ define command-group registry into environment
      documentation: "Registry commands.")
   property personal-root;
   property system-root;
+  property build-root;
   property registries;
 end command-group registry;

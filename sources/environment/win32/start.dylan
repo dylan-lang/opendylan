@@ -6,64 +6,12 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-/// Registry hacking (yuck!)
-
-define constant $personal-directories
-  = #(#("OPEN_DYLAN_USER_ROOT"),
-      #("OPEN_DYLAN_USER_BUILD",      "build"),
-      #("OPEN_DYLAN_USER_INSTALL"),
-      #("OPEN_DYLAN_USER_SOURCES",    "sources"),
-      #("OPEN_DYLAN_USER_REGISTRIES", "sources", "registry"));
-
-define constant $system-directories
-  = #(#("OPEN_DYLAN_RELEASE_ROOT"),
-      #("OPEN_DYLAN_RELEASE_BUILD",      "build"),
-      #("OPEN_DYLAN_RELEASE_INSTALL"),
-      #("OPEN_DYLAN_RELEASE_SOURCES",    "sources"),
-      #("OPEN_DYLAN_RELEASE_REGISTRIES", "sources", "registry"));
-
-define method maybe-set-roots
-    (#key personal-root :: false-or(<directory-locator>),
-          system-root :: false-or(<directory-locator>),
-          user-root :: false-or(<directory-locator>))
- => ()
-  local method set-variable
-            (variable :: <string>, directory :: <directory-locator>,
-             subdirectories :: <sequence>)
-          let subdirectory = apply(subdirectory-locator, directory, subdirectories);
-          environment-variable(variable) := as(<string>, subdirectory)
-        end method set-variable;
-  if (personal-root)
-    for (directory-info :: <list> in $personal-directories)
-      let variable       = directory-info.head;
-      let subdirectories = directory-info.tail;
-      set-variable(variable, personal-root, subdirectories)
-    end
-  end;
-  if (system-root)
-    for (directory-info :: <list> in $system-directories)
-      let variable       = directory-info.head;
-      let subdirectories = directory-info.tail;
-      set-variable(variable, system-root, subdirectories)
-    end
-  end;
-  if (user-root)
-    for (directory-info :: <list> in $personal-directories)
-      let variable       = directory-info.head;
-      let subdirectories = directory-info.tail;
-      if (~ any?(curry(\=, "sources"), subdirectories))
-        set-variable(variable, user-root, subdirectories)
-      end;
-    end;
-  end;
-end method maybe-set-roots;
-
 define method process-arguments
     (arguments :: <sequence>)
  => (filename :: false-or(<file-locator>))
   let personal-root = #f;
   let system-root   = #f;
-  let user-root     = #f;
+  let build-root    = #f;
   let filename      = #f;
   let arguments     = as(<deque>, arguments);
   while (~empty?(arguments))
@@ -71,7 +19,7 @@ define method process-arguments
     if (argument[0] == '/')
       select (copy-sequence(argument, start: 1) by \=)
         "personal" => personal-root := as(<directory-locator>, pop(arguments));
-        "user-root" => user-root    := as(<directory-locator>, pop(arguments));
+        "build-root" => build-root  := as(<directory-locator>, pop(arguments));
         "system" => system-root     := as(<directory-locator>, pop(arguments));
         otherwise  => #f;
       end
@@ -88,7 +36,7 @@ define method process-arguments
   end;
   maybe-set-roots(personal-root: personal-root,
 		  system-root:   system-root,
-		  user-root:     user-root);
+		  build-root:    build-root);
   filename
 end method process-arguments;
 

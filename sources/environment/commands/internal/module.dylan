@@ -56,4 +56,6 @@ define module environment-internal-commands
   use build-system;
   use dood;
   use dfmc-derived-information;
+
+  export maybe-set-roots;
 end module environment-internal-commands;
