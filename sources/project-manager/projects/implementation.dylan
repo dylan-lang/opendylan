@@ -271,7 +271,7 @@ define method make-project
   with-lock($pm-lock)
   with-used-project-cache
     unless (processor & operating-system)
-      let (default-processor, default-os) = default-platform-info(c);
+      let (default-processor, default-os) = default-platform-info();
       unless (processor) processor := default-processor end;
       unless (operating-system) operating-system := default-os end;
     end;
@@ -885,18 +885,18 @@ define function platform-namestring-info (platform) => (processor, os)
 end function;
 
 define function target-platform-name ()
-  let (processor, os) = default-platform-info(*default-project-class*);
+  let (processor, os) = default-platform-info();
   platform-namestring(processor, os);
 end function;
 
 define function target-platform-name-setter (platform)
-  let (old-processor, old-os) = default-platform-info(*default-project-class*);
+  let (old-processor, old-os) = default-platform-info();
   let (new-processor, new-os) = platform-namestring-info(platform);
   unless (new-processor == old-processor & new-os == old-os)
     for (project in *all-open-projects*)
       note-platform-change(project, new-processor, new-os);
     end;
-    set-default-platform-info(*default-project-class*, new-processor, new-os);
+    set-default-platform-info(new-processor, new-os);
   end;
 end function;
 

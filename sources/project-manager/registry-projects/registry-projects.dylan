@@ -140,13 +140,13 @@ define method update-project-location(project :: <registry-project>)
   project.project-registry := registry;
   project.project-personal-library? := personal?;
   project.project-lid-location := lid-location;
-  let (builds-dir, db-dir) = project-build-locations(project);
+  let (builds-dir, db-dir, profile-dir) = project-build-locations(project);
   project-build-location(project) := 
     personal? & library-build-locator(builds-dir, key);
   project-database-location(project) := 
     library-database-locator(db-dir, key);
   project-profile-location(project) := 
-    library-profile-locator(db-dir, key);
+    library-profile-locator(profile-dir, key);
 end;
 
 // Compute the sources records to give the compiler.

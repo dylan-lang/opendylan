@@ -50,8 +50,7 @@ define module environment-internal-commands
   use registry-projects,
     import: { find-registries };
   use projects-implementation,
-    import: { *default-project-class*,
-              default-platform-info };
+    import: { default-platform-info };
 
   use build-system;
   use dood;
