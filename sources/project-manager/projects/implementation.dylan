@@ -56,16 +56,6 @@ define function project-remove-owner(project :: <project>,
   project.%project-owners
 end;
 
-define function project-register-as-owner(project :: <project>)
- => (project :: <project>);
-//  map(method(%project)
-//	  debug-message("Project: %s\n\towners: %s\n", %project.project-name,
-//		        map(project-name, %project.%project-owners))
-//      end,
-//      project.all-used-projects);
-  project
-end;
-
 define function project-top-level?(project :: <project>) => (yes :: <boolean>);
   project.%project-top-level?
 end;
@@ -73,7 +63,6 @@ end;
 define function project-top-level?-setter
     (value :: <boolean>, project :: <project>) 
  => (value :: <boolean>);
-  project-register-as-owner(project);
   project.%project-top-level? := #t
 end;
 
