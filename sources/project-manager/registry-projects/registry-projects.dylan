@@ -11,8 +11,6 @@ define class <registry> (<object>)
     required-init-keyword: root:;
   constant slot registry-personal? :: <boolean>, 
     required-init-keyword: personal?:;
-  slot registry-settings-date = #f;
-  slot registry-settings      = #f;
 end class <registry>;
 
 define method print-object (registry :: <registry>, stream :: <stream>)
