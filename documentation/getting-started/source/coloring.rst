@@ -312,7 +312,7 @@ optimize a method call on the value returned from
 *reversi-board-squares* is ``<sequence>``, which is an open class.
 
 We could seal domains on ``<sequence>`` to get optimizations here. But the
-DRM defines ``<sequence>`` as an open class, and it is not good practice
+DRM defines :drm:`<sequence>` as an open class, and it is not good practice
 to seal protocols that do not belong to your library or libraries.
 However, we can change the type of *reversi-board-squares* to be in a
 domain which is already sealed. Changing the slot type to
