@@ -1,6 +1,10 @@
-***********
-Cheat Sheet
-***********
+*****************
+Dylan Cheat Sheet
+*****************
+
+* `Literals`_
+* `Naming Conventions`_
+* `Operators`_
 
 Literals
 ========
@@ -75,3 +79,33 @@ Naming Conventions
 |             | Setter functions end    |                          |
 |             | in ``-setter``.         |                          |
 +-------------+-------------------------+--------------------------+
+
+Operators
+=========
+
++-------------+------------------------------------+--------------------+
+| Class       | Dylan Code                         | Documentation      |
++=============+====================================+====================+
+| Equality &  | .. code-block:: dylan              | * :drm:`<`         |
+| Comparison  |                                    | * :drm:`>`         |
+|             |  (a < b)   // a less than b?       | * :drm:`=`         |
+|             |  (a > b)   // a greater than b?    | * :drm:`~=`        |
+|             |  (a = b)   // a equal to b?        | * :drm:`==`        |
+|             |  (a ~= b)  // a not equal b        | * :drm:`~==`       |
+|             |  (a == b)  // a identical to b     |                    |
+|             |  (a ~== b) // a not identical to b |                    |
+|             |  ~a        // logical negation     |                    |
++-------------+------------------------------------+--------------------+
+| Arithmetic  | .. code-block:: dylan              | * :drm:`+`         |
+|             |                                    | * :drm:`*`         |
+|             |  a + b        // add a and b       | * :drm:`-`         |
+|             |  a * b        // mulitply a and b  | * :drm:`/`         |
+|             |  a - b        // subtract b from a | * :drm:`modulo`    |
+|             |  a / b        // divide a by b     | * :drm:`negative`  |
+|             |  modulo(a, b) // modulus of a by b |                    |
+|             |  negative(a)  // negative of a     |                    |
++-------------+------------------------------------+--------------------+
+| Collection  | .. code-block:: dylan              | * :drm:`empty?`    |
+|             |                                    |                    |
+|             |  my-list.empty? // is this empty?  |                    |
++-------------+------------------------------------+--------------------+
