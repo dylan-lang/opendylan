@@ -185,11 +185,11 @@ convert it automatically to its C equivalent.
 
     ? example.data;
     {<C-char> pointer #xff5e00}
-    ? instance?(example.data, <C-char\*>);
+    ? instance?(example.data, <C-char*>);
     #t
     ? example.next;
     {<Example> pointer #xff5f00}
-    ? instance?(example.next, <Example\*>);
+    ? instance?(example.next, <Example*>);
     #t
 
 The interactions above show that accessing structure slots with a
@@ -544,7 +544,7 @@ The abstract superclass of all designator classes. It is a subclass of
 you cannot use it when designating a transition between C and Dylan.
 
 This class is only useful in that it is the *referenced-type* for
-*<C-void\*>.*
+``<C-void*>``.
 
 size-of
 ^^^^^^^
@@ -784,7 +784,7 @@ these classes.
    classes in `The integer designator classes and their
    mappings.`_, but are not listed here. To form the name
    of the pointer designator class for a particular designator class,
-   append a “\*” to the part of the name enclosed in angle brackets. Thus
+   append a ``*`` to the part of the name enclosed in angle brackets. Thus
    for ``<C-int>`` the pointer designator class is ``<C-int*>``.
 
 <C-pointer>
@@ -1792,7 +1792,7 @@ Signature
 
 .. code-block:: dylan
 
-    define [*modifiers* \*] C-subtype name (superclasses)
+    define [*modifiers* *] C-subtype name (superclasses)
       [*slot-spec* ; …] [;]
       [*type-options* ] [;]
     end [C-subtype] [*name* ]
@@ -1838,7 +1838,7 @@ Some example C declarations:
 
 .. code-block:: c
 
-    typedef void \*Handle;
+    typedef void *Handle;
 
     typedef Handle WindowHandle;
     typedef Handle StreamHandle;
@@ -2054,14 +2054,14 @@ string-header.h
 
     module: my-module
 
-    define C-mapped-subtype <C-example-string> (<C-char\*>, <string>)
+    define C-mapped-subtype <C-example-string> (<C-char*>, <string>)
       export-map type-union(<byte-string>,
                             <C-example-string>),
       export-function: c-string-exporter;
     end;
 
     define method c-string-exporter
-        (s :: <byte-string>) => (result :: <C-char\*>)
+        (s :: <byte-string>) => (result :: <C-char*>)
       as(<C-example-string>, s)
     end;
 
@@ -2257,12 +2257,12 @@ Example FFI definition:
     end C-struct;
 
     define C-function one-point
-      result point :: <Point\*>;
+      result point :: <Point*>;
       c-name: “OnePoint”;
     end C-function;
 
     define C-function point-array
-      result array :: <Point\*>;
+      result array :: <Point*>;
       c-name: “PointArray”;
     end C-function;
 
@@ -2562,30 +2562,22 @@ as an output parameter.
 
 Example of *output* parameter definition:
 
-define C-function mix-it-up
-                           
+.. code-block:: dylan
 
-output parameter out1 :: <some-struct\*>;
+    define C-function mix-it-up
+      output parameter out1 :: <some-struct*>;
+      output parameter out2 :: <C-int*>;
+      result value :: <C-int>;
+      c-name: "mix_it_up";
+    end C-function mix-it-up;
 
-output parameter out2 :: <C-int\*>;
+Example transaction::
 
-result value :: <C-int>;
+    ? mix-it-up();
+    1
 
-c-name: "mix\_it\_up";
-
-end C-function mix-it-up;
-                         
-
-Example transaction:
-
-? mix-it-up();
-              
-
-1
-
-{<some-struct> pointer #xfefe770}
-
-42
+    {<some-struct> pointer #xfefe770}
+    42
 
 If both *input* and *output* are supplied, they specify that the
 argument value to the C function is used to identify a location from
@@ -2602,27 +2594,19 @@ function will be ``#f``.
 
 Example of *input* *output* parameter definition:
 
-define C-function mix-it-up
-                           
+.. code-block:: dylan
 
-input output parameter inout :: <C-int\*>;
+    define C-function mix-it-up
+      input output parameter inout :: <C-int\*>;
+      result value :: <C-int>;
+      c-name: "mix\_it\_up";
+    end C-function mix-it-up;
 
-result value :: <C-int>;
+Example transaction::
 
-c-name: "mix\_it\_up";
-
-end C-function mix-it-up;
-                         
-
-Example transaction:
-
-? mix-it-up(7);
-               
-
-1
-
-14
-  
+    ? mix-it-up(7);
+    1
+    14
 
 Note that neither *output* nor *input* *output* affects the declared
 type of an argument: it must have the same type it has in C and so,
@@ -2803,7 +2787,7 @@ function. Given a compatible *extern* declaration, this allows C code to
 call Dylan code simply by invoking a named function. The *export:*
 option takes the values ``#t`` or ``#f`` and indicates whether the c-name
 for the generated *C-callable-wrapper* function is to be exported from
-the library’s *.dll*. ``#t`` means it is exported,``#f`` means it is not.
+the library’s *.dll*. ``#t`` means it is exported, ``#f`` means it is not.
 The default is #f. The *c-modifiers:* option is the same as in the
 *c-function* macro, except that the modifiers apply to the C function
 wrapper which is generated. See `define
@@ -3504,7 +3488,7 @@ Open abstract class
 Description
            
 
-A mapped subclass of *<C-char\*>* and ``<string>``. On export the Dylan
+A mapped subclass of ``<C-char*>`` and ``<string>``. On export the Dylan
 types ``<C-string>``, or ``<byte-string>`` may be passed to C. On import
 all values are mapped to ``<C-string>``. A ``<byte-string>`` may be passed
 to C directly and no copying takes place. The value in C will be a
@@ -3703,9 +3687,9 @@ Open abstract class
 Description
            
 
-A mapped subclass of *<C-void\*>*. Objects of this type correspond to
+A mapped subclass of ``<C-void*>``. Objects of this type correspond to
 specific Dylan objects. The Dylan type for import and export is
-``<C-Dylan-Object>``. The C type is *void\**.
+``<C-Dylan-Object>``. The C type is ``void*``.
 
 To pass a reference to an arbitrary Dylan object to C, the Dylan object
 first must be registered using `See
