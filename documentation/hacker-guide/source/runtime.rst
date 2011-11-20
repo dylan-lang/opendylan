@@ -582,7 +582,7 @@ to the following rules:
 +------+----------+---------------+
 | *~*  | *\_SG\_* | squiggle      |
 +------+----------+---------------+
-| * *  | *\_SP\_* | space         |
+|      | *\_SP\_* | space         |
 +------+----------+---------------+
 
 Finally, the fully mangled name is created by concatenating the
@@ -590,7 +590,7 @@ processed library, module, and identifier names respectively, separated
 by ``X``.
 
 For example, the Dylan identifier ``add-new!`` in module ``internal`` of
-library ``dylan`` would be mangled as ``dylanXinternalXadd\_new\_E\_``.
+library ``dylan`` would be mangled as ``dylanXinternalXadd_new_E_``.
 
 In-line Call Caches
 *******************
