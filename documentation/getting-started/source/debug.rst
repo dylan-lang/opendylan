@@ -72,7 +72,7 @@ If the application paused because of some other event,
 -  the context pane for the debugger on the thread that caused the pause
    shows a message explaining why that thread paused the application.
 -  the context pane in all other open debuggers shows the message
-   “Stopped in Thread *x* ”, where *x* is the name of the thread that
+   “Stopped in Thread *x*”, where *x* is the name of the thread that
    has stopped.
 
 Often the message describes an unhandled Dylan error or breakpoint. The
@@ -795,10 +795,12 @@ compile time.
 We can also use the interactor to make a GUI window by using the Dylan
 User Interface Manager (DUIM) capabilities. For example:
 
-At the interaction pane prompt, enter::
+At the interaction pane prompt, enter:
+
+.. code-block:: dylan
 
     contain(make(<push-button>,
-    label: "Hello World! This is my DUIM window."));
+                 label: "Hello World! This is my DUIM window."));
 
 The code is compiled and run and a DUIM window opens.
 
