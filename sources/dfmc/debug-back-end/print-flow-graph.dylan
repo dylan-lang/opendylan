@@ -87,10 +87,6 @@ define method print-temporary-properties (stream, o :: <temporary>)
   if (instance?(o, <stack-vector-temporary>))
     format(stream, "V");
   end if;
-  if (*printing-lexical-environment*
-      & o.environment ~== *printing-lexical-environment*)
-    format(stream, "e%d:", o.environment.id);
-  end if;
 end method;
 
 define method print-temporary-properties

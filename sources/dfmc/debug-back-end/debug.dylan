@@ -18,7 +18,6 @@ end method;
 
 //// FUNCTIONS
 
-define thread variable *printing-lexical-environment* = #f;
 define thread variable *lambdas-in-progress* = #();
 
 define compiler-sideways method print-object (o :: <&iep>, stream :: <stream>) => ()
@@ -56,8 +55,7 @@ define method print-object (o :: <&iep>, stream :: <stream>) => ()
   // ??? print-named-object(stream, o);
   // ??? format(stream, "%= [%=]", o.id, o.environment.id);
   if (*verbose-computations?* & ~member?(o, *lambdas-in-progress*))
-    dynamic-bind (*printing-lexical-environment* = o.environment,
-		  *lambdas-in-progress* = pair(o, *lambdas-in-progress*))
+    dynamic-bind (*lambdas-in-progress* = pair(o, *lambdas-in-progress*))
       label!(o);
       format(stream, " (");
       for (parameter in o.parameters, first? = #t then #f)
