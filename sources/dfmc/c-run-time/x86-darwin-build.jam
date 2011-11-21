@@ -49,11 +49,11 @@ DEFINES += _POSIX_C_SOURCE GC_DEBUG ;
 # Runtime
 #
 
-RTOBJS ?= posix-threads.o
+RTOBJS ?= dummy-threads.o
 	  debug-print.o
 	  run-time.o ;
 
-rtlibs ?= $(SYSTEM_LIBDIR)/runtime/$(RTOBJS) -lgc -lpthread -ldl -lm ;
+rtlibs ?= $(SYSTEM_LIBDIR)/runtime/$(RTOBJS) -lgc -ldl -lm ;
 
 guilflags ?= ;
 

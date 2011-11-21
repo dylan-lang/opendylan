@@ -26,8 +26,7 @@ CFLAGS		= -DGC_LINUX_THREADS=1 -D_REENTRANT=1 -DGC_DEBUG=1 -fPIC \
 
 OBJS		= dummy-threads.o \
 		  debug-print.o \
-		  run-time.o \
-		  posix-threads.o
+		  run-time.o
 
 RUNTIMELIBDEST	 = $(LIBDEST)/runtime/
 
