@@ -84,7 +84,7 @@ Operators
 =========
 
 +-------------+------------------------------------+--------------------+
-| Class       | Dylan Code                         | Documentation      |
+| Class       | Dylan Syntax                       | Learn More...      |
 +=============+====================================+====================+
 | Equality &  | .. code-block:: dylan              | * :drm:`<`         |
 | Comparison  |                                    | * :drm:`>`         |
