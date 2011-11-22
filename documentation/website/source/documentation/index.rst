@@ -19,6 +19,10 @@ Online Books
 Guides
 ======
 
+`Dylan Cheat Sheet <cheatsheet.html>`_
+
+    A cheat sheet to get you started with the basics of Dylan syntax.
+
 `Getting Started with Open Dylan
 <http://opendylan.org/documentation/opendylan/env/index.htm>`_
 
