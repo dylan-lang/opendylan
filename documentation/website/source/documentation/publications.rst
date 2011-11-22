@@ -122,5 +122,5 @@ Publications about Dylan
     developers is also given, followed by some proposed improvements.
 
 
-`Bibliography in bibtex format <publications.bib>`_
+`Bibliography in bibtex format <../_static/documentation/publications.bib>`_
 
