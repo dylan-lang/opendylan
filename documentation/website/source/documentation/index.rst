@@ -28,6 +28,10 @@ Guides
 
     Describes Open Dylan's interactive development environment.
 
+`Dylan Style Guide <style-guide/index.html>`_
+
+    Notes and thoughts on how to format your Dylan code.
+
 `Building Applications Using DUIM
 <http://opendylan.org/documentation/opendylan/dguide/index.htm>`_
 
@@ -38,6 +42,11 @@ Guides
 <http://opendylan.org/documentation/opendylan/corba/index.htm>`_
 
     A tutorial and reference for CORBA interoperability using the Functional Developer ORB.
+
+`Open Dylan Hacker's Guide
+<hacker-guide/index.html>`_
+
+    A work in progress to help out people who are hacking on Open Dylan itself.
 
 Publications
 ============
