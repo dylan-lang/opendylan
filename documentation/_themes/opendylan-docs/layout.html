@@ -54,7 +54,7 @@
      <div class="fill">
        <div class="container">
          <img class="logo" src="{{ pathto('_static/opendylan.org/images/dylan-squares.png', 1) }}">
-         <a class="brand" href="http://new.opendylan.org/">Open Dylan</a>
+         <a class="brand" href="http://opendylan.org/">Open Dylan</a>
          <ul id="nav">
          {% for page, caption, children in navigation_bar -%}
            {% if children -%}
@@ -62,13 +62,13 @@
                                       {% if subpage == active_page -%} active{% endif -%}
                                    {% endfor -%}"><a href="#" class="dropdown-toggle">{{ caption|e }}</a>
            {% else -%}
-             <li{% if page == active_page %} class="active"{% endif %}><a href="http://new.opendylan.org/{{ page }}.html">{{ caption|e }}</a>
+             <li{% if page == active_page %} class="active"{% endif %}><a href="http://opendylan.org/{{ page }}.html">{{ caption|e }}</a>
            {% endif -%}
            {% if children -%}
              <ul class="dropdown-menu">
              {% for subpage, static, subcaption in children
                %}<li{% if subpage == active_page %} class="active"{% endif
-               %}><a href="{% if static %}{{ subpage }}{% else %}http://new.opendylan.org/{{ subpage }}.html{% endif %}">{{ subcaption|e }}</a></li>
+               %}><a href="{% if static %}{{ subpage }}{% else %}http://opendylan.org/{{ subpage }}.html{% endif %}">{{ subcaption|e }}</a></li>
              {% endfor %}
              </ul>
              {% endif -%}</li>
