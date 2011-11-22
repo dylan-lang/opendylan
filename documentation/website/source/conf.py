@@ -175,4 +175,4 @@ intersphinx_mapping = {'http://docs.python.org/': None}
 
 # -- Options for the feed generator
 
-feed_base_url = 'http://new.opendylan.org/'
+feed_base_url = 'http://opendylan.org/'
