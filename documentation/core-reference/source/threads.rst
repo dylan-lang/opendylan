@@ -1,21 +1,21 @@
 *******************
-The Threads Library
+The Threads Module
 *******************
 
 Introduction
 ============
 
-The Threads library provides a portable threads interface for Dylan. The
-Threads library is designed to map easily and efficiently onto the
+The Threads module provides a portable threads interface for Dylan. The
+Threads module is designed to map easily and efficiently onto the
 threads facilities provided by all common operating systems.
 
-The Threads library is called *threads*. All documented bindings are
-exported from the module *threads*.
+All documented bindings are exported from the module *threads* in the
+*dylan* library.
 
 Multi-thread semantics
 ======================
 
-The Threads library provides multiple threads of control within a single
+The Threads module provides multiple threads of control within a single
 space of objects and module variables. Each thread runs in its own
 independent stack. The mechanism by which the threads are scheduled is
 not specified, and it is not possible to determine how the execution of
@@ -27,14 +27,14 @@ other than the current thread.
 Atomicity
 ---------
 
-In general, the Threads library guarantees that assignments to slots and
+In general, the Threads module guarantees that assignments to slots and
 variables are atomic. That is, after an assignment, but before
 synchronization, another thread will see either the old value or the new
 value of the location. There is no possibility of seeing a half-way
 state.
 
 In some circumstances, when a slot or a variable is specialized to be of
-a particularly constrained type, the Threads library does not guarantee
+a particularly constrained type, the Threads module does not guarantee
 atomicity of assignments. Such a type may include a subtype of
 *<double-float>* or a subtype of *<extended-float>*. It may not include
 any other type that is either defined in the current specification of
@@ -64,12 +64,12 @@ Ordering
 
 The ordering of visibility of side effects performed in other threads is
 undefined, unless explicit synchronization is used. Implementations of
-the library may guarantee that the visibility of side-effects performed
+the module may guarantee that the visibility of side-effects performed
 by another thread is ordered according to the control flow of the other
 thread (*strong ordering*), but multi-processor implementations might
 not be strongly ordered. Portable code should not assume strong
 ordering, and should use explicit synchronization where the order of
-side effects is important. There is currently no library introspection
+side effects is important. There is currently no module introspection
 facility to determine if the implementation is strongly or weakly
 ordered.
 
@@ -83,12 +83,12 @@ elimination, or changing the order of evaluation.
 Explicit synchronization
 ------------------------
 
-The Threads library provides low-level synchronization functions which
+The Threads module provides low-level synchronization functions which
 control the ordering of operations with respect to other threads, and
 control when the side effects that have been performed within one thread
 become visible within other threads.
 
-At a higher level, the Threads library provides a variety of
+At a higher level, the Threads module provides a variety of
 synchronization facilities, described below. These facilities include
 mutual-exclusion locks, semaphores and notifications. Each facility
 guarantees that when synchronization has been achieved, all the side
@@ -102,7 +102,7 @@ function which assigns to two slots of an object may require the use of
 a lock to guarantee that other threads never observe the object in a
 partly updated state.
 
-It is up to library designers to document when synchronization is not
+It is up to module designers to document when synchronization is not
 performed internally, and when synchronization protocols must be used by
 clients. The implications for the Dylan library, and some other
 low-level libraries, are discussed in `Thread safety in client
@@ -111,7 +111,7 @@ libraries`_.
 Conditional update
 ------------------
 
-In addition to the synchronization primitives, the library provides a
+In addition to the synchronization primitives, the module provides a
 conditional update mechanism which is not synchronized, but which tests
 whether the value in a variable or slot has changed and atomically
 updates it if not.
@@ -134,7 +134,7 @@ other threads from running. Normally, conditional update should be used
 only when it is expected to succeed. If it is likely that the
 conditional update might fail multiple times around the loop, then
 either the number of times around the loop should be limited, or a
-blocking function from the Threads library should be used within the
+blocking function from the Threads module should be used within the
 loop.
 
 The dynamic environment
@@ -156,7 +156,7 @@ another thread.
 Although the binding of condition handlers only affects the dynamic
 environment of the current thread, unhandled conditions are passed to
 the global generic function *default-handler*. This function might
-*call the debugger*. The Threads library does not define what calling
+*call the debugger*. The Threads module does not define what calling
 the debugger means.
 
 Note that in Dylan, unlike in C and C++, *lexical* variables (that is
@@ -169,7 +169,7 @@ synchronize accesses to them.
 Thread variables
 ----------------
 
-The Threads library provides a new type of variable: a *thread*
+The Threads module provides a new type of variable: a *thread*
 variable, also known as a *thread-local* variable. These variables are
 similar to normal module variables in the sense that they are visible
 according to the same scoping rules and have the same semantics in a
@@ -188,7 +188,7 @@ See page `thread`_ for details of the *thread* adjective to
 Dynamic binding
 ---------------
 
-The Threads library exports a macro for dynamic binding. A *binding* is
+The Threads module exports a macro for dynamic binding. A *binding* is
 a mapping between a variable and a*value-cell* which holds the
 variable’s value. A *dynamic* binding is a binding which has dynamic
 extent, and shadows any outermost bindings. Dynamic bindings can be
@@ -205,7 +205,7 @@ optimal for all problem domains. For instance a shared, global,
 outermost binding may be desirable, or alternatively, a thread may want
 to inherit current bindings from the parent thread at creation time,
 giving a “fork”-type model of state inheritance. These alternatives are
-not pursued in this library, but they might be an interesting area for
+not pursued in this module, but they might be an interesting area for
 future research.
 
 Thread safety in client libraries
@@ -247,7 +247,7 @@ Effects on the Dylan library
 ----------------------------
 
 The definition of the Dylan library is not changed with the addition of
-the Threads library. The implementation ensures that all hidden global
+the Threads module. The implementation ensures that all hidden global
 state (such as the symbol table and any generic function caches) is
 implicitly synchronized. Those functions in the Dylan library which are
 defined to modify the state of objects are not defined to provide
@@ -280,7 +280,7 @@ The Threads class hierarchy
 Basic features
 ==============
 
-This section documents basic features of the Threads library: operations
+This section documents basic features of the Threads module: operations
 on threads and low-level synchronization.
 
 Low-level synchronization
@@ -367,7 +367,7 @@ visible to other threads before side effects performed before the call.
 On a strongly ordered machine, this function might legitimately be
 performed as a null operation.
 
-Some of the standard synchronization functions in the Threads library
+Some of the standard synchronization functions in the Threads module
 also ensure the visibility of side effects and act as sequence points,
 as if by a call to this function. This is defined to happen as follows:
 
@@ -375,9 +375,9 @@ as if by a call to this function. This is defined to happen as follows:
    with `join-thread`_
 -  Before `thread-yield`_ yields control
 -  After `wait-for`_ achieves synchronization (for all methods provided
-   by the Threads library)
+   by the Threads module)
 -  Upon entry to `release`_ (for all methods provided by the Threads
-   library)
+   module)
 -  Upon entry to `release-all`_
 
 Example
@@ -527,7 +527,7 @@ The optional *priority* keyword provides a scheduling priority for the
 thread. The higher the value, the greater the priority. The default
 value is zero, which is also the value of the constant
 *$normal-priority*, one of several constants that correspond to useful
-priority levels. The library offers no way to change the priority of a
+priority levels. The module offers no way to change the priority of a
 thread dynamically.
 
 The following constants, listed in order of increasing value, may be
@@ -746,7 +746,7 @@ Description
 
 The class of objects that are used for inter-thread synchronization.
 
-There is no explicit mechanism in the library to block on a number of
+There is no explicit mechanism in the module to block on a number of
 synchronization objects simultaneously, until synchronization can be
 achieved with one of them. This mechanism can be implemented by creating
 a new thread to wait for each synchronization object, and arranging for
@@ -803,7 +803,7 @@ Description
 
 Blocks until a synchronization object is available.
 
-This function is the basic blocking primitive of the Threads library. It
+This function is the basic blocking primitive of the Threads module. It
 blocks until *object* is available and synchronization can be achieved,
 or the *timeout* interval has expired. A non-blocking synchronization
 may be attempted by specifying a *timeout* of zero. Individual methods
@@ -844,7 +844,7 @@ Releases the supplied synchronization object, *object*, potentially
 making it available to other threads. Individual methods describe what
 this means for each class of synchronization. This function does not
 block for any of the subclasses of `\<synchronization\>`_ provided by the
-library.
+module.
 
 synchronization-name
 --------------------
@@ -1239,7 +1239,7 @@ Description
 Releases a lock that is owned by the calling thread. It is an error if
 the lock is not owned.
 
-The Threads library does not provide a method on *release* for
+The Threads module does not provide a method on *release* for
 `\<exclusive-lock\>`_, which is an open abstract class. Each concrete
 subclass will have an applicable method which may signal errors
 according to the protocol described above.
@@ -1577,7 +1577,7 @@ incremented. This counter is decremented each time a read-mode lock is
 released. The lock is freed when the counter becomes zero.
 
 The *<read-write-lock>* class is less efficient than the other lock
-classes defined in the Threads library. However, it provides an
+classes defined in the Threads module. However, it provides an
 efficient and convenient means to protect data that is frequently read
 and may occasionally be written by multiple concurrent threads.
 
@@ -2158,7 +2158,7 @@ end
 An extended form of dynamic-bind
 --------------------------------
 
-Some implementations of the Threads library may provide an extended form
+Some implementations of the Threads module may provide an extended form
 of *dynamic-bind* for binding places other than variables. The
 implementation of this extended form requires the use of non-standard
 features in the Dylan macro system, and hence cannot be written as a
@@ -2205,7 +2205,7 @@ function with no parameters whose body is the *body of* the
 *dynamic-bind*. The extended form also permits the other “*.* ” and
 “*[]* ”syntaxes for function calls.
 
-There are no features in the current version of the Threads library
+There are no features in the current version of the Threads module
 which make use of the extended form of *dynamic-bind*.
 
 Example
@@ -2474,7 +2474,7 @@ same semantics as *atomic-increment!* with the exception that the
 An extended form of conditional-update!
 ---------------------------------------
 
-Some implementations of the Threads library may provide an extended form
+Some implementations of the Threads module may provide an extended form
 of *conditional-update!* for updating places other than locked
 variables. The implementation of this extended form requires the use of
 non-standard features in the Dylan macro system, and hence cannot be
