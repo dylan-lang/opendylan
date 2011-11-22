@@ -320,10 +320,6 @@ dfmc-modeling
    compile time definitions are available in this library, in order to
    load definitions of dependent libraries.
 
-   This library was extended with ``<type-variable>`` class hierarchy as
-   well as ``^limited(<function>)`` and ``<limited-function-type>`` were
-   introduced.
-
 dfmc-flow-graph
 ---------------
 
@@ -354,9 +350,6 @@ dfmc-flow-graph
    library.
 
    ``join-2x1`` etc. are the operations on the flow graph.
-
-   This was extended by ``<lexical-required-type-variable>``, instances
-   of this class are put into the lexical environment.
 
 dfmc-typist
 -----------
@@ -392,8 +385,6 @@ dfmc-typist
        // Dylan Torah, p. 48: te1 = te2 iff te1 <= te2 & te2 <= te1
        let (sub?-1, known?-1) = type-estimate-subtype?(te1, te2);
        let (sub?-2, known?-2) = type-estimate-subtype?(te1, te2);
-
-   This complete library has been rewritten.
 
 dfmc-optimization
 -----------------
