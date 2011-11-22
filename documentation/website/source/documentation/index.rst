@@ -35,6 +35,12 @@ Guides
 
     A tutorial and reference for CORBA interoperability using the Functional Developer ORB.
 
+Publications
+============
+
+`See publications page <publications.html>`_
+
+
 References
 ==========
 
