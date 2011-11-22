@@ -36,7 +36,7 @@
    <div class="topbar" data-scrollspy="scrollspy" data-dropdown="dropdown">
      <div class="fill">
        <div class="container">
-         <img class="logo" src="{{ pathto('_static/opendylan.org/images/dylan-squares.png', 1) }}">
+         <img class="logo" src="{{ pathto('_static/opendylan.org/images/dylan-squares.png', 1) }}" alt="Dylan Logo" />
          <a class="brand" href="{{ pathto('index') }}">Open Dylan</a>
          <ul id="nav">
          {% for page, caption, children in navigation_bar -%}
@@ -58,10 +58,12 @@
          {% endfor -%}
          </ul>
          <div class="pull-right">
-           <form method="GET" action="http://search.yahoo.com/search">
-             <input type="text" name="va" size="16" maxlength="255" value="" placeholder="Search">
-             <input type="hidden" name="vs" value="opendylan.org">
-           </form>
+           <p>
+             <form method="get" action="http://search.yahoo.com/search">
+               <input type="text" name="va" size="16" maxlength="255" value="" placeholder="Search" />
+               <input type="hidden" name="vs" value="opendylan.org" />
+             </form>
+           </p>
          </div>
        </div>
      </div>
