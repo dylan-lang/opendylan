@@ -57,7 +57,7 @@
            {% if children -%}
                <li class="dropdown {% for subpage, static, subcaption in children -%}
                                       {% if subpage == active_page -%} active{% endif -%}
-                                   {% endfor -%}"><a href="#" class="dropdown-toggle">{{ caption|e }}</a>
+                                   {% endfor -%}"><a href="http::/opendylan.org/{{ page }}.html" class="dropdown-toggle">{{ caption|e }}</a>
            {% else -%}
              <li{% if page == active_page %} class="active"{% endif %}><a href="http://opendylan.org/{{ page }}.html">{{ caption|e }}</a>
            {% endif -%}
