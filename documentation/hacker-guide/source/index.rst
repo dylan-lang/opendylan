@@ -9,8 +9,9 @@ Contents:
 
    copyright
    compiler-internals
+   compiler-design
    runtime
-
+   glossary
 
 
 Indices and tables
