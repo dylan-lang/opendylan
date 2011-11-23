@@ -698,8 +698,9 @@ void update_runtime_thread_count(int increment)
 
 MMError dylan_mm_register_thread(void *stackBot)
 {
+#ifndef BOEHM_GC
   mps_res_t res;
-
+#endif
   gc_teb_t gc_teb = current_gc_teb();
 
   update_runtime_thread_count(1);
@@ -796,8 +797,11 @@ MMError dylan_init_thread(void **rReturn, void *(*f)(void *, size_t), void *p, s
   gc_teb->gc_teb_inside_tramp = 0;
 
   EXCEPTION_POSTAMBLE()
-
+#ifdef BOEHM_GC
+  return 0;
+#else
   return MPS_RES_OK;
+#endif
 }
 
 
@@ -2352,8 +2356,9 @@ void primitive_mps_end_ramp_alloc_all()
 #endif
 }
 
-
+#ifndef BOEHM_GC
 mps_message_t message;
+#endif
 
 RUN_TIME_API
 void primitive_mps_enable_gc_messages()
@@ -2420,7 +2425,10 @@ void* primitive_mps_finalization_queue_first()
 }
 
 /* Support for Location Dependencies */
-
+#ifdef BOEHM_GC
+typedef void* d_hs_t;
+typedef void* mps_addr_t;
+#else
 typedef struct d_hs_s      *d_hs_t;     /* Dylan Hash State */
 
 typedef struct d_hs_s         /* Dylan Hash State object */
@@ -2428,7 +2436,7 @@ typedef struct d_hs_s         /* Dylan Hash State object */
   void *dylan_wrapper;
   mps_ld_s internal_state;
 } d_hs_s;
-
+#endif
 
 
 void primitive_mps_ld_reset(d_hs_t d_hs)
@@ -2595,8 +2603,10 @@ MMError dylan_init_memory_manager()
   if (Prunning_under_dylan_debuggerQ == FALSE)
     set_CONSOLE_CTRL_HANDLER(&DylanBreakControlHandler, TRUE);
 
+#ifndef BOEHM_GC
   assert(!gc_teb->gc_teb_inside_tramp);
   assert(TARG_CHECK);
+#endif
 
 #ifndef BOEHM_GC
   {
