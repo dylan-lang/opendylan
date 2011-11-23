@@ -6,6 +6,9 @@
     :license: MIT.
 #}
 {% extends "basic/layout.html" %}
+{% block doctype %}
+<!DOCTYPE html>
+{% endblock %}
 {% set css_files = css_files + ['_static/opendylan.org/css/bootstrap/1.4.0/bootstrap.min.css',
                                 '_static/opendylan.org/css/opendylan.css'] -%}
 {% set script_files = script_files + ['_static/opendylan.org/js/bootstrap-scrollspy.js',
