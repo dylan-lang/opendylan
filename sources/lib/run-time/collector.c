@@ -89,6 +89,7 @@ void force_reference_to_spy_interface()
 #endif
 
 #ifdef BOEHM_GC
+#define GC_PTHREADS
 #include <gc/gc.h>
 #define MAX_BOEHM_HEAP_SIZE (1024 * 1024 * 1024)
 /* #define INITIAL_BOEHM_HEAP_SIZE (50 * 1024 * 1024) */
@@ -96,19 +97,20 @@ void force_reference_to_spy_interface()
 #endif
 
 #include "mm.h"        /* Dylan Interface */
+#ifdef BOEHM_GC
+#include "boehm.h"
+#else
 #include "mps.h"        /* MPS Interface */
 #include "mpscmv.h"     /* MPS pool class MV */
 #include "mpscamc.h"    /* MPS pool class AMC */
 #include "mpsavm.h"     /* MPS arena class */
-#ifndef BOEHM_GC
 #ifndef LINUX_PLATFORM
 #include "mpsw3.h"
 #endif
-#else
-#include "boehm.h"
-#endif
 #include "fmtdy.h"      /* Dylan object format */
 #include "mpslib.h"     /* plinth interface */
+#endif
+
 #include <memory.h>
 #include <stddef.h>
 #include <stdio.h>
@@ -133,8 +135,8 @@ extern mps_res_t mps_root_create_table_masked(mps_root_t *, mps_space_t,
                                               mps_addr_t *, size_t,
                                               mps_word_t);
 #endif
-#else
-#include "mpscawl.h"    /* MPS pool class AWL */
+//#else
+//#include "mpscawl.h"    /* MPS pool class AWL */
 #endif /* NO_WEAKNESS */
 
 #ifdef NO_LEAF_OBJECT
@@ -153,7 +155,7 @@ extern mps_res_t mps_root_create_table_masked(mps_root_t *, mps_space_t,
 #define MISCMAXSIZE     ((size_t)65536)
 
 
-typedef mps_word_t              word;
+typedef void* /*mps_word_t*/              word;
 typedef unsigned char           byte_char;
 typedef unsigned short          half_word;
 typedef _int64                  double_word;
@@ -161,7 +163,7 @@ typedef float                   single_float;
 typedef double                  double_float;
 typedef void* 	                dylan_object;
 
-
+#ifndef BOEHM_GC
 #define TARG_CHECK (MPS_RES_OK == MMSUCCESS && \
                     MPS_RES_FAIL == MMFAILURE && \
                     MPS_RES_RESOURCE == MMRESOURCE && \
@@ -169,12 +171,17 @@ typedef void* 	                dylan_object;
                     MPS_RES_LIMIT == MMLIMIT && \
                     MPS_RES_UNIMPL == MMUNIMPLEMENTED && \
                     MPS_RES_IO == MMIO)
-
+#endif
 
 
 void report_runtime_error (char* header, char* message)
 {
-#ifndef BOEHM_GC
+#ifdef BOEHM_GC
+  fputs(header, stderr);
+  fputs(message, stderr);
+  fputc('\n', stderr);
+  abort();
+#else
   mps_lib_FILE *stream = mps_lib_get_stderr();  
   mps_lib_fputs(header, stream);
   mps_lib_fputs(message, stream);
@@ -225,6 +232,11 @@ static void defaultHandler(MMError e, const char *opName, size_t size)
           opName, (int)e, (unsigned long)size);
   */
 #ifndef BOEHM_GC
+  fputs("\nError: ", stderr);
+  fputs(opName, stderr);
+  fputs(" - Request to allocate failed -- aborting\n", stderr);
+  abort();
+@else
   mps_lib_FILE *stream = mps_lib_get_stderr();  
   mps_lib_fputs("\nError: ", stream);
   mps_lib_fputs(opName, stream);
@@ -232,6 +244,8 @@ static void defaultHandler(MMError e, const char *opName, size_t size)
   mps_lib_abort();
 #endif
 }
+
+#ifndef BOEHM_GC
 
 mps_arena_t arena;
 mps_chain_t chain;
@@ -251,6 +265,7 @@ static mps_gen_param_s gc_default_gen_param[genCOUNT] = {
   { 8 * 1024, 0.45 },
   { MAXIMUM_HEAP_SIZE/1024 - 8 * 1024, 0.99 }
 };
+#endif
 
 static MMAllocHandler main_handler = defaultHandler;
 static MMAllocHandler weak_awl_handler = defaultHandler;
@@ -267,6 +282,15 @@ static MMAllocHandler misc_handler = defaultHandler;
 // hold the TEB pointer
 __thread void* teb;
 
+#endif
+
+#ifdef BOEHM_GC
+  /* luc: typedefs for compatability with MPS */
+  typedef int mps_bool_t;
+  typedef void* mps_root_t;
+  typedef void* mps_ap_t;
+  typedef void* mps_thr_t;
+  typedef void *(*mps_tramp_t)(void *, size_t);
 #endif
 
 typedef struct gc_teb_s {       /* GC Thread Environment block descriptor */
@@ -321,8 +345,8 @@ int primitive_end_heap_alloc_stats(char *buffer)
     display_wrapper_stats();
   dylan_streamQ = FALSE;
   heap_alloc_statsQ = FALSE;
-  return(dylan_buffer_pos);
 #endif 
+  return(dylan_buffer_pos);
 }
 
 extern_CRITICAL_SECTION(class_breakpoint_lock);
@@ -2191,8 +2215,12 @@ MMError MMRootStatic(void *base, void *limit)
 
 MMError MMRootImmut(void *base, void *limit)
 {
+#ifndef BOEHM_GC
   mps_root_t root;
   return  MMRegisterRootImmut(&root, base, limit);
+#else
+  return 0;
+#endif
 }
 
 MMError MMRootAmbig(void *base, void *limit)
@@ -2557,7 +2585,9 @@ get_gen_params(const char *spec,
 
 MMError dylan_init_memory_manager()
 {
+#ifndef BOEHM_GC
   mps_res_t res;
+#endif
   size_t max_heap_size = MAXIMUM_HEAP_SIZE;
 
   gc_teb_t gc_teb = current_gc_teb();

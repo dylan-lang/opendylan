@@ -8,11 +8,12 @@
 /* flag to select Linux */
 #define LINUX_PLATFORM
 #define X86_LINUX_PLATFORM
-//#define BOEHM_GC
 
-
+#ifdef BOEHM_GC
+#include "boehm-collector.c"
+#else
 #include "collector.c"
-
+#endif
 
 /* HACK -- Implement GC_malloc and GC_free
  *
@@ -81,6 +82,7 @@ extern void tlv_set_value(int key, void *value)
 
 /* Heap stat stuff */
 
+#ifndef BOEHM_GC
 void clear_wrapper_stats ()
 {
 }
@@ -111,4 +113,4 @@ void display_wrapper_breakpoints()
 }
 
 #include "break.c"
-
+#endif

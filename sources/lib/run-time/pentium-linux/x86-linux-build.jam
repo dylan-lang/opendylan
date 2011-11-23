@@ -44,7 +44,7 @@ RTOBJS ?= runtime.o
 
 SUPOBJS ?= $(SYSTEM_LIBDIR)/runtime/dylan-support.o ;
 
-rtlibs  ?= $(SYSTEM_LIBDIR)/runtime/$(RTOBJS) -lmmdw -lmpsplan -lpthread -ldl ;
+rtlibs  ?= $(SYSTEM_LIBDIR)/runtime/$(RTOBJS) -lgc -lpthread -ldl ;
 
 guilflags ?= ;
 

@@ -8,6 +8,11 @@
 #define BOEHM_GC
 
 #include "wrapper-stats.h"
+
+#define NO_LEAF_OBJECT
+/* maybe? */
+#define NO_WEAKNESS
+
 #include "collector.c"
 
 
