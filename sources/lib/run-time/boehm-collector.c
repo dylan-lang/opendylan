@@ -5,7 +5,7 @@
 
 
 /* flag to select Boehm GC */
-#define BOEHM_GC
+//#define BOEHM_GC
 
 #include "wrapper-stats.h"
 
