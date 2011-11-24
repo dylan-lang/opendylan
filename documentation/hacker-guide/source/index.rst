@@ -8,6 +8,7 @@ Contents:
    :maxdepth: 2
 
    copyright
+   build-system
    compiler-internals
    compiler-design
    runtime
