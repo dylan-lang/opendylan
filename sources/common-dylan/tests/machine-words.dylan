@@ -66,11 +66,35 @@ define machine-words function-test %logbit? ()
 end function-test %logbit?;
 
 define machine-words function-test %count-low-zeros ()
-  //---*** Fill this in...
+  check-equal("%count-low-zeros of <integer> 0",
+              $machine-word-size, %count-low-zeros(0));
+  check-equal("%count-low-zeros of <machine-word> 0",
+              $machine-word-size, %count-low-zeros(as(<machine-word>, 0)));
+  check-equal("%count-low-zeros of <integer> -1",
+              0, %count-low-zeros(-1));
+  check-equal("%count-low-zeros of <machine-word> -1",
+              0, as(<machine-word>, %count-low-zeros(-1)));
+  check-equal("%count-low-zeros of <integer> 4096",
+              12, %count-low-zeros(4096));
+  check-equal("%count-low-zeros of <machine-word> 4096",
+              12, %count-low-zeros(as(<machine-word>, 4096)));
 end function-test %count-low-zeros;
 
 define machine-words function-test %count-high-zeros ()
-  //---*** Fill this in...
+  check-equal("%count-high-zeros of <integer> 0",
+              $machine-word-size, %count-high-zeros(0));
+  check-equal("%count-high-zeros of <machine-word> 0",
+              $machine-word-size, %count-high-zeros(as(<machine-word>, 0)));
+  check-equal("%count-high-zeros of <integer> -1",
+              0, %count-high-zeros(-1));
+  check-equal("%count-high-zeros of <machine-word> -1",
+              0, as(<machine-word>, %count-high-zeros(-1)));
+  check-equal("%count-high-zeros of <integer> 4096",
+              $machine-word-size - 13,
+              %count-high-zeros(4096));
+  check-equal("%count-high-zeros of <machine-word> 4096",
+              $machine-word-size - 13,
+              %count-high-zeros(as(<machine-word>, 4096)));
 end function-test %count-high-zeros;
 
 define machine-words function-test \%+ ()
