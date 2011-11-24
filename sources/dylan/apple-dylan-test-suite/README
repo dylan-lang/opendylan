@@ -1,0 +1,259 @@
+Docuemnt: Dylan Test Suite Guide
+
+Author: Shri Amit(amit)
+
+Synopsis: The following document explains the
+          Dylan Test Suite - its design and
+	  execution.
+---------------------------------------------------------------
+NOTE: It is suggested that changes made to this suite be 
+      noted and explained in this document which is intended 
+      to accompany the suite. Such a document can be of much
+      value to the maintainer of this code
+
+Revision History:
+         o August 24 1996 by amit. First submission after
+          conversion to new Testworks protocol.
+-----------------------------------------------------------
+
+Historical Note:
+	This test suite was initially designed and coded by
+programmers at Apple Computers Inc. After the code was
+acquired by Harlequin, James Kirsch who designed and wrote
+the new version of Testworks started to convert these to be
+compatible with the new Testworks. The task was soon taken
+over by Shri Amit and was completed on August 24 1996.
+
+How to use these Suites:
+-----------------------
+	Any of these suites can be run from a dylan prompt,
+after loading, by the following command:
+	dylan> perform-suite(test-SUITENAME-suite);
+
+where, SUITNAME is the name of the suite. An example:
+	dylan> perform-suite(test-array-suite);
+
+shall execute the array-suite. The output can be seen on
+the screen from where the lispworks image was invoked (that
+is assuming you are running a lispworks emulator image). Each
+of the tests can also be individually run by the command:
+	dylan> perform-test(testname);
+
+For more details on how to use and modify these suites, consult
+testworks documentation.
+
+Other Useful Documentation to consult:
+-------------------------------------
+	o Testworks Users Documentation - James Kirsch
+	    This is sufficient if someone desires to use
+	    and modify these test suites only.
+	    (Can be found in Notes or D-lib-testworks)
+
+	o Testworks Programmers Documentation - James Kirsch
+	    If you need more implementation information on
+	    Testworks, this is the place to look for.
+	    (Can be found in Notes or D-lib-testworks)
+
+Issues:
+-------
+	The following is a list of outstanding issues relating to
+the Dylan Test Suite being complied in the lispworks emulator. When
+each of these are resolved or any development is made in this regard,
+please document it here. 
+
+ o The following checks/tests are potential bugs
+     + instance? problems:
+	. aref-setter does not return #t for <generic-function>
+	. Limited integers do not test true to their limitations
+	   . Suite TEST-CLASS-SUITE
+	       . Test LIMITED-INTEGERS
+	       . Test LIMITED-COLLECTIONS
+	       . Test UNION-ON-TYPES
+	       . Test UNION-ON-LIMITED-TYPES
+	. singleton(99) does not return #t for <singleton>:
+	   . Suite TEST-CLASS-SUITE
+	       . Test INSTANCE?-2
+	       . Test SINGLETON-0
+	. <table> does not test true for any of its superclasses
+	   . Suite TEST-CLASS-SUITE
+	       . Test INSTANCE?-3
+	. <array> does not test true for any of its superclasses
+	   . Suite TEST-CLASS-SUITE
+	       . Test INSTANCE?-4
+	. <byte-string> does not test true for its superclasses
+	   . Suite TEST-CLASS-SUITE
+	       . Test INSTANCE?-10
+	. <complex> does not test true for <number>
+	   . Suite TEST-CLASS-SUITE
+	       . Test INSTANCE?-16
+	. object-class does not test true for <function>
+	   . Suite TEST-CLASS-SUITE
+	       . Test OBJECT-CLASS-TYPE
+	. method tests as an instance of <generic-function> whereas
+	  it should not as its superclass is <function> only
+	. final-state is some function unlisted in DRM which tests
+	  true for function but not for generic-function. According
+	  to the original test it should?? A whole bunch of tests
+	  fail due to the same. I am curious if this is defunct or what?
+ 
+     + Suite TEST-COLLECTION-SUITE Test MAP-AS-8 failed. 
+	. Check (#1) failed [#t != #f]
+	    Seems like a straightforward function and so looks like
+	    a bug to me. In test-collection.dylan
+
+     + Suite TEST-COLLECTION-SUITE Test FIND-KEY-0 failed. 
+        . Check (#1) failed [4 != #t]
+	    Seems like a straightforward function and so looks like
+	    a bug to me. In test-collection.dylan
+
+     + make (<complex>) causes some kind of Size is not in legal range error
+	. Suite TEST-CLASS-SUITE
+	   . Test CLASS-FOR-COPY-0
+	   . Test INSTANCE?-16
+	   . Test INSTANCE?-23 (commented out cuz wont compile)
+	. Suite TEST-COLLECTION-SUITE
+	   . Test =-<COMPLEX>
+	   . Test p=complex
+	   . Test =hash-complex
+	. Suite TEST-NUMBER-SUITE
+	   . Test zero-0? check #8, #9
+
+     + The = operation sets values out of limitation scope
+	. Suite TEST-CLASS-SUITE
+	   . Test TYPE-SURVIVE-ASSIGNMENT-2
+
+     + slot superclasses: of <class>:
+	 . Suite TEST-CLASS-SUITE
+	    . Test MAKE-<CLASS>-INDIRECT : this slot keeps looking
+              for type <list> as its argument whereas DRM says that
+              it should look for <object> or <sequence>
+
+     + type-union returns <object> whereas DRM says that it should 
+          return <type>
+
+     + Suite TEST-COMPARISON-SUITE, The very second check is the
+	  wierdest thing I have seen to signal a bus error
+
+     + Suite TEST-CONTROL-SUITE has 3 tests: cond-3, and-2 and or-3
+	which are failing and they look like bugs to me.
+
+     + Suite TEST-DEFINES-SUITE has 2 interesting problems:
+	. a variable test-variable is unrecognized even though
+	  it is defined in test-preamble which is in the lib-file
+	  refer test defines
+	. test define-like-bind-1a does not error even when it sets
+	  a declared integer variable to a string expression
+
+     + Reverse seems to have a problem in Suite test-function-suite
+	check #1, it refuses a sequence with no applicable method
+
+     + keyword? seems to be recognizing unique strings also as an
+       instance of <keyword> - probably a bug. Also note that
+       <keyword> is not mentioned in DRM
+
+     + A couple of \+ operations in Suite test-intro-mop not only
+       fail but also return an instance of <ratio> which is really
+       bizzare cuz ratio is not defined. Do run this suite for
+       sure as there are a bunch of interlocked problems including
+       the problem with values - I have put comments to show where
+       the problems are.
+
+     + In Suite TEST-NUMBER-SUITE a whole bunch of functions should
+	be accepting <object>'s but refuse to take anything but
+	<number>'s , they are:  Test +-0,  Test *-0, Test Q--1
+
+ o The following checks/tests are due to some unimplemented function
+     + class <ratio>: (commented out as they hampered compilation)
+	. Suite TEST-CLASS-SUITE
+	   . Test INSTANCE?-18
+	   . Test INSTANCE?-23
+	. Suite TEST-COMPARISON-SUITE
+	   . =-0, qw, p=hash, q, w>
+	. Suite TEST-NUMBER-SUITE - a whole bunch of stuff commented
+	  out because of the fact
+     + pairs:
+	. Suite TEST-COLLECTION-SUITE
+	   . a=-1, p=-1, =hash-1
+	. Suite TEST-LIST-SUITE
+	   . commented out pair-0 because it wont compile
+     + Creation of unicode strings is not supported in the emulator.
+	. Suite TEST-CLASS-SUITE
+	   . Test AS-SEQUENCE-PERMUTATIONS, check #1
+	   . Test CLASS-FOR-COPY-1, check #1
+	   . Test CLASS-FOR-COPY-2
+	   . Test CLASS-FOR-COPY-3
+	   . Test INSTANCE?-4
+	   . Test INSTANCE?-9
+	. Suite TEST-ITERATION-SUITE
+	   . Test  INITIAL-STATE-EMPTY-COLLECTIONS , check #1
+
+     + make-read-only() could not find it in DRM but there was the
+       test for it which did not compile Suite TEST-CLASS-SUITE
+       Test MAKE-READ-ONLY
+	. Suite TEST-FUNCTION-SUITE, Check make-read-only type also.
+
+     + seal : could not find any generic-function of this name,
+       again there were tests in Suite TEST-CLASS-SUITE for this???
+
+     + Suite TEST-COLLECTION-SUITE failed. Test MAP-11 failed. Check 1 
+	It does not have an applicable method for this case..weird!
+	
+     + Suite TEST-COMPARISON-SUITE has a variety of things that are unbound:
+	&, &=, binary= and =hash. Run the suite for more details.
+	   . Suite Test-control-suite has the same problem with Test not-type-0
+	   . Suite Test-range-suite does not recognize binary=
+
+     + <abort> and abort() are undefined - Suite TEST-CONDITION check abort-0
+
+     + type-error-slots is undefined, Suite TEST-CONDITION Check type-error-slots
+
+     + Suite test-control-suite has a for-each() test which does not compile
+
+     + add-method seems to be unimplemented:
+	. Suite TEST-FUNCTION-SUITE
+	   . Test AMBIGUOUS-METHOD-1, 2
+	. Suite TEST-INTRO-MOP SUITE
+	   . Test GENERIC-FCN-VALUES-2A
+
+     + remove-method also is the same:
+	. Suite TEST-FUNCTION-SUITE
+	   . Test REMOVE-METHOD-TYPE 
+
+     + other ones in test-function suite were withdraw and applicable-method?
+
+     + In test-number-suite.dylan has a plethora of functions that are
+	unimplemented: binary, unary, log, trig stuff etc etc.
+
+ o Unclassified glitches:
+	+ Unable to compile test-sequence-lib.dylan. The error is:
+	Error: Tried to call non-function {instance of <test>} (bound to 
+        DYLAN+DYLAN/INTERNAL::INTERSECTION) with arguments (NIL NIL 
+        :TEST #<Function DYLAN-EQ>)
+	As a result of this I have been unable to execute and test the
+	suite. It is really huge and would be very painful to try to do the
+	tests individually. Although, all the other files compile individually.
+        
+	+ In test-class2.dylan , test make-<class> signals a bus error
+	when executed. It compiles but just does not execute - dunno why?
+
+	+ Any number say 4 for instance(in test-class2.dylan) does not
+	test #t as a <complex>, but isnt it just a complex number with
+	a zero imaginary part or was this a design decision to keep it
+	this way??
+	
+	+ Suite TEST-COLLECTION-SUITE, Tests any-9? and any-10? in
+	test-collection2.dylan just does not compile and I cant
+	figure out why? - err..hate when that happens!
+
+	+ If something is say an Open Generic Function then should it
+	also test true as an instance of <function>. If not then check
+	out test-comparison.dylan =-type test
+	
+	+ Some signals and stuff in test-condition suite have been failing with
+	wrong condition for eg: Test CERROR-2 failed.
+    	(#1) Check  raised the wrong condition failed [#<SIMPLE-ERROR 100AFE9C> 
+	!= {the class SIMPLE-ERROR}] I did not think this was very critical. Or
+	maybe it is?
+
+	+ The whole handler chunk in test-condition suite simply fails to
+	compile with a bus error. I dont understand what is wrong.
