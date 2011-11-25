@@ -1019,6 +1019,7 @@ define function run-outputter
       end if;
     end iterate;
   end;
+  win32-close-handle(input-pipe)
 end function;
 
 define inline function win32-close-handle
