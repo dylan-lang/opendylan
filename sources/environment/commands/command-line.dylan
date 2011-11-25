@@ -320,7 +320,7 @@ define function display-condition
 	end
       end;
   message(context, "");
-  message(context, "%s: %s", prefix, error-message)
+  message(context, "%s%s", prefix, error-message)
 end function display-condition;
 
 define method tokenize-string
