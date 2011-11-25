@@ -420,6 +420,7 @@ define function run-outputter
       loop();
     end if;
   end iterate;
+  unix-close(outputter-read-fd)
 end function;
 
 define function wait-for-application-process
