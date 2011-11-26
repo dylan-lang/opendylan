@@ -18,7 +18,7 @@ arch_flag	= @arch_flag@
 
 fdmake		= @PERL@ $(srcdir)/admin/builds/fdmake.pl
 
-FDCOMPILE	= @FDCOMPILE@
+DYLANCOMPILER	= @DYLANCOMPILER@
 
 library_srcdir	= @with_library_source@
 
@@ -41,7 +41,7 @@ all:	@bootstrap_target@
 
 3-stage-bootstrap:
 	$(MAKE) 3-stage-bootstrap-reentry \
-	  BOOTSTRAP_2_COMPILER="$(abs_builddir)/Bootstrap.1/bin/minimal-console-compiler $(arch_flag) -build"
+	  BOOTSTRAP_2_COMPILER="$(abs_builddir)/Bootstrap.1/bin/dylan-compiler $(arch_flag) -build"
 3-stage-bootstrap-reentry: bootstrap-stage-1 bootstrap-stage-2 bootstrap-stage-3
 
 ###
@@ -50,7 +50,7 @@ all:	@bootstrap_target@
 
 2-stage-bootstrap:
 	$(MAKE) 2-stage-bootstrap-reentry \
-	  BOOTSTRAP_2_COMPILER="$(abs_builddir)/Bootstrap.1/bin/minimal-console-compiler $(arch_flag) -build"
+	  BOOTSTRAP_2_COMPILER="$(abs_builddir)/Bootstrap.1/bin/dylan-compiler $(arch_flag) -build"
 2-stage-bootstrap-reentry: bootstrap-stage-1 bootstrap-stage-2
 
 ###
@@ -59,15 +59,15 @@ all:	@bootstrap_target@
 
 1-stage-bootstrap:
 	$(MAKE) 1-stage-bootstrap-reentry \
-	  BOOTSTRAP_2_COMPILER="$(FDCOMPILE)"
+	  BOOTSTRAP_2_COMPILER="$(DYLANCOMPILER)"
 1-stage-bootstrap-reentry: bootstrap-stage-2
 
 ###
 # Stage 1 builds a compiler that can understand new primitives used in the
 # BOOTSTRAP_1_PRIMITIVE_LIBS libraries. An existing compiler won't understand
 # the new stuff, so until a new compiler is built, existing libs are used
-# instead. Note that the stage 1 minimal-console-compiler loads a mix of
-# existing and stage 1 libraries.
+# instead. Note that the stage 1 dylan-compiler loads a mix of existing and
+# stage 1 libraries.
 
 BOOTSTRAP_1_PRIMITIVE_LIBS = \
 	dylan functional-extensions machine-word byte-vector \
@@ -119,17 +119,17 @@ $(BOOTSTRAP_1_REGISTRY):
 	  rm -f $(BOOTSTRAP_1_REGISTRY)/$(fd_build)/$$lib; \
 	done
 
-$(abs_builddir)/Bootstrap.1/bin/minimal-console-compiler:
+$(abs_builddir)/Bootstrap.1/bin/dylan-compiler:
 	@echo Building Open Dylan bootstrap stage 1...
 	@OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.1 \
 	  $(MAKE) -C $(rt_build) clean install
 	@$(BOOTSTRAP_1_ENV) \
-	  $(fdmake) --compiler="$(FDCOMPILE)" minimal-console-compiler
+	  $(fdmake) --compiler="$(DYLANCOMPILER)" dylan-compiler
 
 bootstrap-stage-1: \
 		$(abs_builddir)/Bootstrap.1 \
 		$(BOOTSTRAP_1_REGISTRY) \
-		$(abs_builddir)/Bootstrap.1/bin/minimal-console-compiler
+		$(abs_builddir)/Bootstrap.1/bin/dylan-compiler
 
 ###
 # Stage 2 bootstrap builds altered libraries and compiler and does not link to
@@ -159,18 +159,18 @@ $(abs_builddir)/Bootstrap.2:
 	mkdir $(abs_builddir)/Bootstrap.2/build 
 	mkdir $(abs_builddir)/Bootstrap.2/build/logs
 
-$(abs_builddir)/Bootstrap.2/bin/minimal-console-compiler:
+$(abs_builddir)/Bootstrap.2/bin/dylan-compiler:
 	@echo Building Open Dylan bootstrap stage 2...
 	@unset $(BOOTSTRAP_2_UNSET_ENV) ; \
 	  OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.2 \
 	  $(MAKE) -C $(rt_build) clean install
 	@unset $(BOOTSTRAP_2_UNSET_ENV) ; \
 	  $(BOOTSTRAP_2_ENV) \
-	  $(fdmake) --compiler="$(BOOTSTRAP_2_COMPILER)" minimal-console-compiler
+	  $(fdmake) --compiler="$(BOOTSTRAP_2_COMPILER)" dylan-compiler
 
 bootstrap-stage-2: \
 		$(abs_builddir)/Bootstrap.2 \
-		$(abs_builddir)/Bootstrap.2/bin/minimal-console-compiler
+		$(abs_builddir)/Bootstrap.2/bin/dylan-compiler
 
 ###
 # Stage 3 builds libraries and compiler using stage 2 products, taking
@@ -191,12 +191,12 @@ BOOTSTRAP_3_ENV = \
 	OPEN_DYLAN_USER_REGISTRIES=$(abs_srcdir)/sources/registry:$(library_srcdir)/registry \
 	OPEN_DYLAN_USER_SOURCES=$(abs_srcdir)/sources
 
-BOOTSTRAP_3_LIBRARIES = minimal-console-compiler
+BOOTSTRAP_3_LIBRARIES = dylan-compiler
 
 BOOTSTRAP_3_LIBRARY_PACKS = @LIBRARY_PACKS@
 
 BOOTSTRAP_3_COMPILER = \
-	$(abs_builddir)/Bootstrap.2/bin/minimal-console-compiler $(arch_flag) -build
+	$(abs_builddir)/Bootstrap.2/bin/dylan-compiler $(arch_flag) -build
 
 $(abs_builddir)/Bootstrap.3:
 	mkdir $(abs_builddir)/Bootstrap.3
@@ -238,12 +238,12 @@ INSTALL_ENV = \
 	OPEN_DYLAN_USER_REGISTRIES=$(prefix)/sources/registry:$(library_srcdir)/registry \
 	OPEN_DYLAN_USER_SOURCES=$(prefix)/sources
 
-INSTALL_LIBRARIES = minimal-console-compiler dswank
+INSTALL_LIBRARIES = dylan-compiler dswank
 
 INSTALL_LIBRARY_PACKS = @LIBRARY_PACKS@
 
 INSTALL_COMPILER = \
-	$(abs_builddir)/Bootstrap.2/bin/minimal-console-compiler -build
+	$(abs_builddir)/Bootstrap.2/bin/dylan-compiler -build
 
 
 $(prefix)/sources:
@@ -329,7 +329,7 @@ CHECK_ENV = \
 check:	bootstrap-stage-$(CHECK_COMPILER_STAGE)
 	@$(CHECK_ENV) \
 	  $(fdmake) \
-	  --compiler="$(abs_builddir)/Bootstrap.$(CHECK_COMPILER_STAGE)/bin/minimal-console-compiler -build -save" \
+	  --compiler="$(abs_builddir)/Bootstrap.$(CHECK_COMPILER_STAGE)/bin/dylan-compiler -build -save" \
 	  $(CHECK_APPS) && \
 	  for app in $(CHECK_APPS); do \
 	    $(abs_builddir)/Bootstrap.$(CHECK_STAGE)/bin/$$app; \

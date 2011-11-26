@@ -365,28 +365,16 @@ REM //
 call :fixup_PATHS "%OLD_RELEASE_ROOT%"
 if "%OPEN_DYLAN_USER_SOURCES%"=="" set OPEN_DYLAN_USER_SOURCES=%NEW_RELEASE_ROOT%\Sources
 set OPEN_DYLAN_USER_REGISTRIES=%OPEN_DYLAN_USER_SOURCES%\registry
-if "%USE_ENVIRONMENT%"=="no" goto setup_dw_default_build_options
 goto setup_environment_default_build_options
 
 REM //
 REM // Setup the default build options for the environment/console compiler build //
 REM //
 :SETUP_ENVIRONMENT_DEFAULT_BUILD_OPTIONS
-if "%COMPILER_TARGET%"=="" set COMPILER_TARGET=minimal-console-compiler
-if "%FINAL_COMPILER_TARGET%"=="" set FINAL_COMPILER_TARGET=console-compiler console-scepter
-if "%COMPILER_FILENAME%"=="" set COMPILER_FILENAME=minimal-console-compiler.exe
-if "%FINAL_COMPILER_FILENAME%"=="" set FINAL_COMPILER_FILENAME=console-compiler.exe
-if "%RELEASE_TARGET%"=="" set RELEASE_TARGET=release
-goto setup_default_release_options
-
-REM //
-REM // Setup the default build options for the pentium-dw build //
-REM //
-:SETUP_DW_DEFAULT_BUILD_OPTIONS
-if "%COMPILER_TARGET%"=="" set COMPILER_TARGET=minimal-compiler
-if "%FINAL_COMPILER_TARGET%"=="" set FINAL_COMPILER_TARGET=compiler console-scepter
-if "%COMPILER_FILENAME%"=="" set COMPILER_FILENAME=minimal-pentium-dw.exe
-if "%FINAL_COMPILER_FILENAME%"=="" set FINAL_COMPILER_FILENAME=pentium-dw.exe
+if "%COMPILER_TARGET%"=="" set COMPILER_TARGET=dylan-compiler
+if "%FINAL_COMPILER_TARGET%"=="" set FINAL_COMPILER_TARGET=dylan-compiler-with-tools console-scepter
+if "%COMPILER_FILENAME%"=="" set COMPILER_FILENAME=dylan-compiler.exe
+if "%FINAL_COMPILER_FILENAME%"=="" set FINAL_COMPILER_FILENAME=dylan-compiler-with-tools.exe
 if "%RELEASE_TARGET%"=="" set RELEASE_TARGET=release
 goto setup_default_release_options
 
@@ -437,8 +425,6 @@ if not "%OPEN_DYLAN_USER_SOURCES%"=="" set BUILD_OPTIONS=%BUILD_OPTIONS% -source
 if "%USE_ENVIRONMENT%"=="yes" set BUILD_OPTIONS=%BUILD_OPTIONS% -environment
 
 :SETUP_BOOTSTRAP_TARGETS
-if "%RELEASE_TARGET%"=="minimal-console-compiler" goto setup_minimal_builds
-if "%RELEASE_TARGET%"=="minimal-console-environment" goto setup_minimal_builds
 if "%RELEASE_TARGET%"=="minimal-release" goto setup_minimal_builds
 goto build
 

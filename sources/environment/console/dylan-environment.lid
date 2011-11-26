@@ -1,8 +1,8 @@
-Library:   minimal-console-environment
+Library:   dylan-environment
 Synopsis:  The command line version of the environment
 Author:	   Andy Armstrong
-Files: minimal-environment-library
-       module
+Files: environment-library
+       environment-module
        command-line
        environment-command-line
        start

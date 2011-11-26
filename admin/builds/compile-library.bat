@@ -43,8 +43,6 @@ If "%1%"=="/clean"            GOTO SET_CLEAN
 If "%1%"=="/maybe"            GOTO SET_MAYBE
 If "%1%"=="/dll"              GOTO SET_DLL
 If "%1%"=="/exe"              GOTO SET_EXE
-If "%1%"=="/gnu"              GOTO SET_GNU
-If "%1%"=="/microsoft"        GOTO SET_MICROSOFT
 If "%1%"=="/exports"          GOTO SET_EXPORTS
 If "%1%"=="/noexports"        GOTO SET_NOEXPORTS
 If "%1%"=="/warnings"         GOTO SET_WARNINGS
@@ -146,16 +144,6 @@ set EXT=exe
 shift
 goto PARAM_LOOP
 
-:SET_GNU
-set GNU=yes
-shift
-goto PARAM_LOOP
-
-:SET_MICROSOFT
-set GNU=no
-shift
-goto PARAM_LOOP
-
 :SET_EXPORTS
 set EXPORTS=yes
 shift
@@ -237,8 +225,6 @@ if "%DLL%"=="yes" set COMPILER_OPTIONS=/link-dll %COMPILER_OPTIONS%
 if "%DLL%"=="yes" set OPERATION=%OPERATION% library
 if "%EXE%"=="yes" set COMPILER_OPTIONS=/link-exe %COMPILER_OPTIONS%
 if "%EXE%"=="yes" set OPERATION=%OPERATION% application
-if "%GNU%"=="yes" set COMPILER_OPTIONS=/gnu %COMPILER_OPTIONS%
-if "%GNU%"=="no" set COMPILER_OPTIONS=/microsoft %COMPILER_OPTIONS%
 if "%EXPORTS%"=="yes" set COMPILER_OPTIONS=/gnu-exports %COMPILER_OPTIONS%
 if "%DEBUG%"=="min" set COMPILER_OPTIONS=/debug:min %COMPILER_OPTIONS%
 if "%DEBUG%"=="no" set COMPILER_OPTIONS=/debug:none %COMPILER_OPTIONS%

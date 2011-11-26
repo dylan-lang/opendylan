@@ -42,7 +42,7 @@ Build the MPS (see below).
   make
 
 Your new Dylan compiler will be in
-$BUILDDIR/Bootstrap.2/bin/minimal-console-compiler
+$BUILDDIR/Bootstrap.2/bin/dylan-compiler
 
 
 [1] Note that the directory --with-mps wants here is the one containing the
@@ -146,7 +146,7 @@ you have installed a compatible Boehm garbage collection library, include the
 In addition, you will need to include the -arch x86_64 option whenever you build
 a Dylan library::
 
-  minimal-console-compiler -build -arch x86_64 my-project.lid
+  dylan-compiler -build -arch x86_64 my-project.lid
 
 
 

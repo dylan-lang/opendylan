@@ -1,11 +1,11 @@
-Library:   minimal-console-compiler
+Library:   dylan-environment-with-tools
 Synopsis:  The command line version of the environment
 Author:	   Andy Armstrong
 Target-Type:	executable
-Files: minimal-compiler-library
-       compiler-module
+Files: tools-environment-library
+       environment-module
        command-line
-       compiler-command-line
+       environment-command-line
        start
 RC-Files:       console.rc
 C-Header-Files: console.ico
