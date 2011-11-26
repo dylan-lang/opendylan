@@ -2103,7 +2103,7 @@ define method maybe-vector-element-references
 end method;
 
 define method maybe-vector-object-element-references
-    (object :: <simple-object-vector>) => (res :: false-or(<argument-sequence>))
+    (object :: <sequence>) => (res :: false-or(<argument-sequence>))
   map-as(<argument-sequence>, 
          method (elt) make(<object-reference>, value: elt) end,
          object);
