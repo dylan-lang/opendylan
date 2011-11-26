@@ -216,7 +216,7 @@ define method generate-binding-defining-fragment
   end;
 end method;
 
-define method generate-type-binding (spec :: <required-variable-spec>)
+define method generate-type-binding (spec :: <variable-spec>)
   let name = spec-variable-name(spec);
   #{ "_" ## ?name ## "-type_" }
 end method;
