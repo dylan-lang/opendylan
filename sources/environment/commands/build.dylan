@@ -331,28 +331,28 @@ define method do-execute-command
 end method do-execute-command;
 
 
-/// Remove Build Products command
+/// clean command
 
-define class <remove-build-products-command> (<project-command>)
+define class <clean-command> (<project-command>)
   constant slot %project :: false-or(<project-object>) = #f,
     init-keyword: project:;
   constant slot %subprojects? :: <boolean> = #f,
     init-keyword: subprojects?:;
-end class <remove-build-products-command>;
+end class <clean-command>;
 
-define command-line remove-build-products => <remove-build-products-command>
+define command-line clean => <clean-command>
     (summary:       "remove the project's build products",
      documentation: "Removes the build products for a project.")
   optional project :: <project-object> = "the project";
   flag subprojects = "remove the build products for subprojects as well [off by default]";
-end command-line remove-build-products;
+end command-line clean;
 
 define method do-execute-command
-    (context :: <environment-context>, 
-     command :: <remove-build-products-command>)
+    (context :: <environment-context>,
+     command :: <clean-command>)
  => ()
   let project = command.%project | context.context-project;
-  remove-project-build-products
+  clean-project
     (project,
      process-subprojects?: command.%subprojects?,
      error-handler:        curry(compiler-condition-handler, context))
@@ -363,7 +363,6 @@ end method do-execute-command;
 
 /*
   compile-library
-  remove-build-products
   make-release
   profile (the compiler)
   heap-statistics
@@ -385,5 +384,5 @@ define command-group build
   property build-script;
   command  build;
   command  link;
-  command  remove-build-products;
+  command  clean;
 end command-group build;

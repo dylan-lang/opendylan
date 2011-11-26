@@ -696,7 +696,7 @@ define method frame-remove-build-products
 	   project,
 	   include: <object-browser>);
 	block ()
-	  remove-project-build-products
+	  clean-project
 	    (project, process-subprojects?: process-subprojects?);
 	cleanup
 	  refresh-frame(frame)

@@ -875,7 +875,7 @@ define method frame-remove-build-products
 	     (project-window, process-subprojects?: process-subprojects?)
 	 end)
     else
-      remove-project-build-products
+      clean-project
 	(project, process-subprojects?: process-subprojects?);
     end
   end
@@ -1332,7 +1332,7 @@ define command-table *build-command-table* (*global-command-table*)
   menu-item "Advanced Build..."     = frame-advanced-build-dialog,
     accelerator:   make-keyboard-gesture(#"f7", #"shift"),
     documentation: $advanced-build-doc;
-  menu-item "Remove Build Products" = frame-remove-build-products,
+  menu-item "Clean" = frame-remove-build-products,
     documentation: $remove-build-products-doc;
 end command-table *build-command-table*;
 
