@@ -38,7 +38,7 @@ mmtuneflags =
 
 CC	 = $(cc)
 LINKLIB	 = $(implib) /nologo /out:
-CFLAGS	 = $(cflags) $(cvarsmt) $(cdebug) /I$(INCLUDEDEST) /I. /I.. /I$(SDK4MEMORY_POOL_SYSTEM) $(OPEN_DYLAN_C_FLAGS) $(mmtuneflags)
+CFLAGS	 = $(cflags) $(cvarsmt) $(cdebug) /I$(INCLUDEDEST) /I. /I.. /I$(SDK4MEMORY_POOL_SYSTEM)\code $(OPEN_DYLAN_C_FLAGS) $(mmtuneflags)
 HEAPOBJS = heap-display.obj heap-utils.obj heap-trail.obj heap-order1.obj heap-order2.obj heap-table.obj
 OBJS	 = collector.obj $(HEAPOBJS) runtime.obj win32-threads-primitives.obj spy-interfaces.obj
 LIBFILE	 = pentium-run-time.lib
@@ -62,8 +62,8 @@ NOWEAKLIBFILE	 = no-weakness-pentium-run-time.lib
 BOEHMOBJS	 = boehm-collector.obj $(HEAPOBJS) runtime.obj win32-threads-primitives.obj spy-interfaces.obj
 BOEHMLIBFILE	 = boehm-pentium-run-time.lib
 
-RELEASEMMDW     = $(SDK4MEMORY_POOL_SYSTEM)\w3i3mv\hi\mmdw.lib
-RELEASEPLINTH	  = $(SDK4MEMORY_POOL_SYSTEM)\w3i3mv\hi\mpsplan.lib
+RELEASEMMDW     = $(SDK4MEMORY_POOL_SYSTEM)\code\w3i3mv\hi\mmdw.lib
+RELEASEPLINTH	  = $(SDK4MEMORY_POOL_SYSTEM)\code\w3i3mv\hi\mpsplan.lib
 
 DEBUGMMDW        = debug-mmdw.lib
 DEBUGPLINTH	 = debug-mpsplan.lib
@@ -84,7 +84,7 @@ boehm-collector.obj:	..\boehm-collector.c ..\collector.c
 	$(CC) $(CFLAGS) /c ..\boehm-collector.c
 
 !if defined(fullcrt)
-$(MINCRT): 
+$(MINCRT):
 !else
 $(MINCRT): minvcrt.def rtsyms.obj
 	$(LINKLIB)$(MINCRT) /def:minvcrt.def /machine:ix86
@@ -168,7 +168,7 @@ install-ansi-plinth: $(SYMBOLICPLINTH)
 
 install-debug-ansi-plinth: $(DEBUGPLINTH)
   echo Building pentium run time: install-debug-ansi-plinth
- 	if exist $(PLINTHDEST) del /q /f $(PLINTHDEST)
+	if exist $(PLINTHDEST) del /q /f $(PLINTHDEST)
 	copy $(DEBUGPLINTH) $(PLINTHDEST)
 
 install-plinth: install-dylan-plinth
@@ -180,7 +180,7 @@ install-mincrt:
    echo Building pentium run time: install-mincrt (fullcrt)
 !else
 install-mincrt: $(MINCRT)
-  echo Building pentium run time: install-mincrt 
+  echo Building pentium run time: install-mincrt
 	if exist $(MINCRTDEST) del /q /f $(MINCRTDEST)
 	copy $(MINCRT) $(MINCRTDEST)
 !endif
@@ -188,16 +188,15 @@ install-mincrt: $(MINCRT)
 
 make-mmdw:
   echo Building pentium run time: make-mmdw
-  pushd $(SDK4MEMORY_POOL_SYSTEM) \
+  pushd $(SDK4MEMORY_POOL_SYSTEM)\code \
     & $(MAKE) /k /f w3i3mv.nmk mmdw.lib > $(BUILD_LOGS)\make-mmdw.log \
     & popd
 
-install-mmdw: 
+install-mmdw:
   echo Building pentium run time: install-mmdw
 	if exist $(MMDWDEST) del /q /f $(MMDWDEST)
 	if not exist $(RELEASEMMDW) make-mmdw
   copy $(RELEASEMMDW) $(MMDWDEST)
-	
 
 install-symbolic-mmdw: $(SYMBOLICMMDW)
   echo Building pentium run time: install-symbolic-mmdw

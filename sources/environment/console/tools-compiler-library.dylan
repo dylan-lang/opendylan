@@ -6,7 +6,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define library minimal-console-environment
+define library dylan-compiler-with-tools
   use functional-dylan;
   use system;
   use io;
@@ -17,11 +17,14 @@ define library minimal-console-environment
 
   use environment-protocols;
   use environment-commands;
-  use environment-application-commands;
   use environment-internal-commands;
 
   // Back-ends
   use dfmc-back-end-implementations;
 
+  // Project manager plug-ins
+  use motley;
+  use tool-scepter;
+
   export console-environment;
-end library minimal-console-environment;
+end library dylan-compiler-with-tools;

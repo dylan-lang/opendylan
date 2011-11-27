@@ -60,13 +60,12 @@ $module is required to build Open Dylan])
   AC_MSG_RESULT(yes)
 done
 
-AC_CHECK_PROGS(FDCOMPILE, opendylan fdcompile minimal-console-compiler, no)
-test "$FDCOMPILE" = no && AC_MSG_ERROR([
-opendylan, fdcompile or minimal-console-compiler is required to bootstrap Open Dylan])
-test "$FDCOMPILE" = fdcompile && FDCOMPILE="$FDCOMPILE -save"
-test "$FDCOMPILE" = minimal-console-compiler && FDCOMPILE="$FDCOMPILE -build"
-test "$FDCOMPILE" = opendylan && FDCOMPILE="$FDCOMPILE -build"
-AC_SUBST(FDCOMPILE)
+AC_CHECK_PROGS(DYLANCOMPILER, dylan-compiler minimal-console-compiler, no)
+test "$DYLANCOMPILER" = no && AC_MSG_ERROR([
+dylan-compiler or minimal-console-compiler is required to bootstrap Open Dylan])
+test "$DYLANCOMPILER" = dylan-compiler && DYLANCOMPILER="$DYLANCOMPILER -build"
+test "$DYLANCOMPILER" = minimal-console-compiler && DYLANCOMPILER="$DYLANCOMPILER -build"
+AC_SUBST(DYLANCOMPILER)
 
 # TODO: figure out the bootstrap type given the fdcompile version
 bootstrap_target=1-stage-bootstrap
