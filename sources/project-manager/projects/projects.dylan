@@ -214,9 +214,8 @@ define method project-canonical-source-records(project :: <project>)
   if(context)  compilation-context-sources(context) else #() end
 end;
 
-define open 
-  generic project-remove-build-products(project :: <base-project>,
-					#key recursive?);
+define open generic project-remove-build-products
+    (project :: <base-project>, #key recursive?);
 
 define class <system-project-not-usable> (<simple-error>)
 end;

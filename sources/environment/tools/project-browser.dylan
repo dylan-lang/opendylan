@@ -104,7 +104,7 @@ define constant $project-modification-commands
 	   frame-build-project,
 	   frame-clean-build-project,
 	   frame-advanced-build-dialog,
-	   frame-remove-build-products,
+	   frame-clean-project,
 	   frame-build-release);
 
 define method handle-event
@@ -683,10 +683,10 @@ end method frame-edit-options;
 
 /// Build commands
 
-define method frame-remove-build-products
+define method frame-clean-project
     (frame :: <project-browser>, #key process-subprojects? = #t) => ()
   let project = frame.frame-project;
-  if (frame-confirm-remove-build-products(frame, project))
+  if (frame-confirm-clean-project(frame, project))
     if (project-can-be-built?(project))
       unless (frame-warn-if-application-tethered(frame, project))
 	do-project-frames
@@ -696,7 +696,7 @@ define method frame-remove-build-products
 	   project,
 	   include: <object-browser>);
 	block ()
-	  remove-project-build-products
+	  clean-project
 	    (project, process-subprojects?: process-subprojects?);
 	cleanup
 	  refresh-frame(frame)
@@ -714,7 +714,7 @@ define method frame-remove-build-products
 	 owner: frame)
     end
   end
-end method frame-remove-build-products;
+end method frame-clean-project;
 
 
 /// Project sources commands

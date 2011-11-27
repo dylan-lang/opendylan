@@ -105,12 +105,12 @@ define sealed method build-project
   error("You cannot build an executable-only project!")
 end method build-project;
 
-define sealed method remove-project-build-products
+define sealed method clean-project
     (project-object :: <exe-project>,
      #key error-handler, process-subprojects? = #t)
  => ()
   error("You cannot remove build products for executable-only projects!")
-end method remove-project-build-products;
+end method clean-project;
 
 define sealed method link-project
     (project-object :: <exe-project>,

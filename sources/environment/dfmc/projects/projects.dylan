@@ -369,7 +369,7 @@ define sealed method build-project
   end
 end method build-project;
 
-define sealed method remove-project-build-products
+define sealed method clean-project
     (project-object :: <dfmc-project-object>,
      #key error-handler, process-subprojects? = #t)
  => ()
@@ -379,7 +379,7 @@ define sealed method remove-project-build-products
     clear-project-warnings(project-object);
     project-object.project-compiler-database := #f
   end;
-end method remove-project-build-products;
+end method clean-project;
 
 define function note-project-compilation-started
     (project-object :: <dfmc-project-object>) => ()
