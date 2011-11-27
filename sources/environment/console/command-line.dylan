@@ -59,14 +59,8 @@ define abstract class <basic-main-command> (<basic-command>)
     init-keyword: link-dll?:;
   constant slot %link-exe? :: <boolean> = #f,
     init-keyword: link-exe?:;
-  constant slot %gnu-exports? :: <boolean> = #f,
-    init-keyword: gnu-exports?:;
   constant slot %arch :: false-or(<symbol>) = #f,
     init-keyword: arch:;
-  constant slot %debug-info :: <symbol> = #"full",
-    init-keyword: debug-info:;
-  constant slot %messages :: false-or(<symbol>) = #f,
-    init-keyword: messages:;
   constant slot %harp?          :: <boolean> = #f,
     init-keyword: harp?:;
   constant slot %assemble?                   = #f,
@@ -81,9 +75,6 @@ define abstract class <basic-main-command> (<basic-command>)
   let libraries :: <sequence> = make(<stretchy-vector>);
 */
 end class <basic-main-command>;
-
-//---*** We need to implement these...
-ignore(%gnu-exports?, %debug-info, %messages);
 
 define method execute-main-command
     (context :: <server-context>, command :: <basic-main-command>)

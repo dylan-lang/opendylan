@@ -95,7 +95,6 @@ define command-line main => <main-command>
   keyword build-script :: <file-locator> = "the (Jam) build script";
   keyword target :: <symbol> = "the type of executable";
   keyword arch :: <symbol> = "the architecture (e.g. i386 or x86_64)";
-  keyword debug-info :: <symbol>  = "control the debug info generated";
 
   flag help             = "show this help summary";
   flag logo             = "displays the copyright banner";
@@ -132,6 +131,4 @@ define command-line main => <main-command>
   flag save             = "save compiler databases";
   flag link-dll         = "link as a DLL";
   flag link-exe         = "link as an EXE";
-  flag gnu-exports      = "link the GNU exports";
-  keyword messages :: <symbol>  = "control the progress messages generated";
 end command-line main;
