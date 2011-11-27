@@ -6,7 +6,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define library console-compiler
+define library dylan-compiler
   use functional-dylan;
   use system;
   use io;
@@ -22,9 +22,5 @@ define library console-compiler
   // Back-ends
   use dfmc-back-end-implementations;
 
-  // Project manager plug-ins
-  use motley;
-  use tool-scepter;
-
   export console-environment;
-end library console-compiler;
+end library dylan-compiler;

@@ -1,11 +1,11 @@
-Library:   console-environment
+Library:   dylan-compiler
 Synopsis:  The command line version of the environment
 Author:	   Andy Armstrong
 Target-Type:	executable
-Files: environment-library
-       module
+Files: compiler-library
+       compiler-module
        command-line
-       environment-command-line
+       compiler-command-line
        start
 RC-Files:       console.rc
 C-Header-Files: console.ico

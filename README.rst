@@ -42,7 +42,7 @@ Build the MPS (see below).
   make
 
 Your new Dylan compiler will be in
-$BUILDDIR/Bootstrap.2/bin/minimal-console-compiler
+$BUILDDIR/Bootstrap.2/bin/dylan-compiler
 
 
 [1] Note that the directory --with-mps wants here is the one containing the
@@ -67,7 +67,7 @@ Download the MPS zip from http://www.ravenbrook.com/project/mps/
 and unpack that.
 
 Open a shell (windows command processor), there set the environment
-variable SDK4MEMORY_POOL_SYSTEM to <where you unpacked MPS>\\code.
+variable SDK4MEMORY_POOL_SYSTEM to <where you unpacked MPS>.
 
 Please keep in mind that paths with whitespaces are not well supported.
 
@@ -146,7 +146,7 @@ you have installed a compatible Boehm garbage collection library, include the
 In addition, you will need to include the -arch x86_64 option whenever you build
 a Dylan library::
 
-  minimal-console-compiler -build -arch x86_64 my-project.lid
+  dylan-compiler -build -arch x86_64 my-project.lid
 
 
 

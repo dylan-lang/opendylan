@@ -18,7 +18,7 @@ my $build_logs = $ENV{'OPEN_DYLAN_BUILD_LOGS'};
 
 my $verbose;
 my $debugger;
-my $compiler = 'fdcompile';
+my $compiler = 'dylan-compile';
 my @library_packs;
 &GetOptions('verbose' => \$verbose,
             'debugger' => \$debugger,
@@ -70,7 +70,7 @@ sub build_library {
 
         pop(@directories) =~ /\bregistry$/i or die;
 
-        # abstract://dylan/environment/console/minimal-console-compiler.lid
+        # abstract://dylan/environment/console/dylan-compiler.lid
         $line =~ s|^abstract://dylan/||;
         ($dir, $lidfile) = ($line =~ m|(.*)/(.*)|);
         push @directories, File::Spec::Unix->splitdir($dir);

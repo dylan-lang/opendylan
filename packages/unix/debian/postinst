@@ -26,8 +26,6 @@ case "$1" in
     configure)
     echo "/usr/lib/opendylan/lib" > /etc/ld.so.conf.d/opendylan.conf
     ldconfig
-    cd /usr/bin
-    ln -s ../lib/opendylan/bin/minimal-console-compiler opendylan
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)

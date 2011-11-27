@@ -14,8 +14,6 @@ echo -
 echo -   Options:
 echo -     /target
 echo -       Specifies the target release name. [default: test-basic-release]
-echo -     /exports
-echo -       Switches on generation of GNU exports [default: no exports]
 echo -     /dylan
 echo -       Specifies the Dylan directory.
 echo -        [default: C:\Program Files\Open Dylan]
@@ -56,7 +54,6 @@ set OLD_RELEASE_ROOT=C:\Program Files\Open Dylan
 set OPEN_DYLAN_USER_SOURCES=
 set TEST_TARGET=test-basic-release
 set CLEANUP=
-set EXPORTS=no
 set DEBUGGER=no
 set WARNINGS=no
 set WARNINGS_OPTIONS=
@@ -82,8 +79,6 @@ if "%1%"=="-sources"          GOTO SET_SOURCES
 if "%1%"=="/sources"          GOTO SET_SOURCES
 if "%1%"=="-rm-early-builds"  GOTO SET_CLEANUP
 if "%1%"=="/rm-early-builds"  GOTO SET_CLEANUP
-if "%1%"=="-exports"          GOTO SET_EXPORTS
-if "%1%"=="/exports"          GOTO SET_EXPORTS
 if "%1%"=="-debugger"         GOTO SET_DEBUGGER
 if "%1%"=="/debugger"         GOTO SET_DEBUGGER
 if "%1%"=="-warnings"         GOTO SET_WARNINGS
@@ -122,11 +117,6 @@ goto PARAM_LOOP
 
 :SET_CLEANUP
 set CLEANUP="yes"
-shift
-goto PARAM_LOOP
-
-:SET_EXPORTS
-set EXPORTS="yes"
 shift
 goto PARAM_LOOP
 

@@ -42,9 +42,9 @@ PENTIUM_RUNTIME_OPTIONS =
 #
 
 IMPORT_PROJECT = import-project $(OPTIONS)
-BUILD_LIBRARY = build-library /nowarnings $(OPTIONS)
+BUILD_LIBRARY = compile-library /dll /nowarnings $(OPTIONS)
 BUILD_RUNTIME_LIBRARY = $(BUILD_LIBRARY) $(RUNTIME_OPTIONS)
-BUILD_APPLICATION = build-application /nowarnings $(OPTIONS)
+BUILD_APPLICATION = compile-library /exe /nowarnings $(OPTIONS)
 ENSURE_RELEASE_AREA = ensure-release-area
 ENSURE_DIRECTORY = ensure-directory
 ENSURE_SOURCES = ensure-sources
@@ -369,11 +369,11 @@ C_RUN_TIME = $(LIB_DIRECTORY)\c-run-time.lib
 WIN32_SUPPORT = $(LIB_DIRECTORY)\Win32Support.lib
 HTMLHELP = $(INSTALL_LIB_DIRECTORY)\htmlhelp.lib
 
-MINIMAL_CONSOLE_COMPILER = $(INSTALL_BIN_DIRECTORY)\minimal-console-compiler.exe
-MINIMAL_CONSOLE_ENVIRONMENT = $(INSTALL_BIN_DIRECTORY)\minimal-console-environment.exe
+DYLAN_COMPILER = $(INSTALL_BIN_DIRECTORY)\dylan-compiler.exe
+DYLAN_ENVIRONMENT = $(INSTALL_BIN_DIRECTORY)\dylan-environment.exe
 BATCH_DEBUG = $(INSTALL_BIN_DIRECTORY)\batch-debug.exe
-CONSOLE_COMPILER = $(INSTALL_BIN_DIRECTORY)\console-compiler.exe
-CONSOLE_ENVIRONMENT = $(INSTALL_BIN_DIRECTORY)\console-environment.exe
+DYLAN_COMPILER_WITH_TOOLS = $(INSTALL_BIN_DIRECTORY)\dylan-compiler-with-tools.exe
+DYLAN_ENVIRONMENT_WITH_TOOLS = $(INSTALL_BIN_DIRECTORY)\dylan-environment-with-tools.exe
 CREATE_ID = $(INSTALL_BIN_DIRECTORY)\create-id.exe
 DEVEL_DBG_UI = $(INSTALL_BIN_DIRECTORY)\devel-dbg-ui.exe
 DLL_WRAP = $(INSTALL_BIN_DIRECTORY)\dll-wrap.exe
@@ -1079,31 +1079,31 @@ network-examples: daytime-client daytime-server echo-client echo-client echo-ser
 
 release-info: $(RELEASE_INFO)
 compiler: pentium-dw-libraries release-info motley t-lists c-lexer console-scepter-libraries
-console-compiler-exe: $(CONSOLE_COMPILER)
-console-compiler: console-compiler-libraries release-info environment-internal-commands motley t-lists c-lexer console-scepter-libraries console-compiler-exe
-console-environment: $(CONSOLE_ENVIRONMENT)
+dylan-compiler-with-tools-exe: $(DYLAN_COMPILER_WITH_TOOLS)
+dylan-compiler-with-toold: console-compiler-libraries release-info environment-internal-commands motley t-lists c-lexer console-scepter-libraries dylan-compiler-with-tools-exe
+dylan-environment-with-tools: $(DYLAN_ENVIRONMENT_WITH_TOOLS)
 win32-environment: $(WIN32_ENVIRONMENT)
 with-splash-screen: $(WITH_SPLASH_SCREEN)
-rel-environment: console-environment win32-environment with-splash-screen
+rel-environment: dylan-environment-with-tools win32-environment with-splash-screen
 libraries: user-libraries win32-libraries duim ole-libraries duim-ole database-libraries network dylan-orb naming-client midi
 example-projects: console-example-projects duim-example-projects win32-example-projects ole-example-projects duim-ole-example-projects network-example-projects corba-example-projects
 install-examples: install-examples-css install-console-examples install-duim-examples install-win32-examples install-basic-doc-examples install-templates install-database-examples install-ole-examples install-duim-ole-examples install-network-examples install-corba-examples install-enhanced-doc-examples install-midi-examples
 tools: install-wdbgdylan dll-wrap minimal-dylan-playground dylan-playground gui-dylan-playground create-id console-scepter naming-service remote-debugger testworks-libraries debugger map-statistics parser-compiler
-release: release-info console-compiler compiler environment rel-environment libraries tools install-runtime-dlls install-examples
+release: release-info dylan-compiler-with-tools compiler environment rel-environment libraries tools install-runtime-dlls install-examples
 
 reinstall-examples:
   $(REMOVE_DIRECTORY) $(EXAMPLES_INSTALL_DIRECTORY)
   $(MAKE) install-examples
 
 minimal-compiler: pentium-dw-libraries release-info
-minimal-console-compiler-exe: $(MINIMAL_CONSOLE_COMPILER)
-minimal-console-compiler: console-compiler-libraries release-info environment-internal-commands minimal-console-compiler-exe
-minimal-console-environment: $(MINIMAL_CONSOLE_ENVIRONMENT)
+dylan-compiler-exe: $(DYLAN_COMPILER)
+dylan-compiler: console-compiler-libraries release-info environment-internal-commands dylan-compiler-exe
+dylan-environment: $(DYLAN_ENVIRONMENT)
 minimal-libraries: user-libraries win32-libraries duim
-minimal-environment: minimal-console-environment with-splash-screen
+minimal-environment: dylan-environment with-splash-screen
 install-minimal-examples: install-examples-css install-console-examples install-duim-examples install-win32-examples install-basic-doc-examples install-templates
 minimal-tools: install-wdbgdylan dll-wrap minimal-dylan-playground dylan-playground gui-dylan-playground
-minimal-release: release-info minimal-console-compiler minimal-compiler minimal-environment minimal-libraries minimal-tools testworks-libraries debugger map-statistics parser-compiler install-runtime-dlls install-minimal-examples
+minimal-release: release-info dylan-compiler minimal-compiler minimal-environment minimal-libraries minimal-tools testworks-libraries debugger map-statistics parser-compiler install-runtime-dlls install-minimal-examples
 
 #
 # Clean
@@ -2002,34 +2002,34 @@ $(PARSER_COMPILER):
   $(ENSURE_SOURCES) parser-compiler $(PARSER_COMPILER_SOURCE)
   $(BUILD_APPLICATION) parser-compiler
 
-$(MINIMAL_CONSOLE_COMPILER):
+$(DYLAN_COMPILER):
   $(ENSURE_LIBRARY) environment-commands
   $(ENSURE_LIBRARY) environment-internal-commands
   $(ENSURE_LIBRARY) release-info
-  $(BUILD_APPLICATION) minimal-console-compiler
+  $(BUILD_APPLICATION) dylan-compiler
 
-$(MINIMAL_CONSOLE_ENVIRONMENT):
+$(DYLAN_ENVIRONMENT):
   $(ENSURE_LIBRARY) environment-application-commands
   $(ENSURE_LIBRARY) environment-internal-commands
   $(ENSURE_LIBRARY) release-info
-  $(BUILD_APPLICATION) minimal-console-environment
+  $(BUILD_APPLICATION) dylan-environment
 
-$(CONSOLE_COMPILER):
+$(DYLAN_COMPILER_WITH_TOOLS):
   $(ENSURE_LIBRARY) environment-commands
   $(ENSURE_LIBRARY) environment-internal-commands
   $(ENSURE_LIBRARY) motley
   $(ENSURE_LIBRARY) tool-scepter
   $(ENSURE_LIBRARY) release-info
-  $(BUILD_APPLICATION) console-compiler
+  $(BUILD_APPLICATION) dylan-compiler-with-tools
 
-$(CONSOLE_ENVIRONMENT):
+$(DYLAN_ENVIRONMENT_WITH_TOOLS):
   $(ENSURE_LIBRARY) environment-application-commands
   $(ENSURE_LIBRARY) environment-internal-commands
   $(ENSURE_LIBRARY) motley
   $(ENSURE_LIBRARY) tool-scepter
   $(ENSURE_LIBRARY) remote-access-path
   $(ENSURE_LIBRARY) release-info
-  $(BUILD_APPLICATION) console-environment
+  $(BUILD_APPLICATION) dylan-environment-with-tools
 
 $(WIN32_ENVIRONMENT):
   $(ENSURE_RUNTIME_LIBRARY) $(WIN32_SHELL_DLL) win32-shell
@@ -2353,15 +2353,15 @@ test-environment-scripts:
 
 $(HELLO_WORLD_PROJECT):
   $(ENSURE_SOURCES) hello-world $(HELLO_WORLD_SOURCE)
-  $(IMPORT_PROJECT) /loose hello-world $(HELLO_WORLD_SOURCE)
+  $(IMPORT_PROJECT) hello-world $(HELLO_WORLD_SOURCE)
 
 $(FACTORIAL_SMALL_PROJECT):
   $(ENSURE_SOURCES) factorial $(FACTORIAL_SOURCE)
-  $(IMPORT_PROJECT) /loose factorial-small $(FACTORIAL_SOURCE)
+  $(IMPORT_PROJECT) factorial-small $(FACTORIAL_SOURCE)
 
 $(FACTORIAL_BIG_PROJECT):
   $(ENSURE_SOURCES) factorial $(FACTORIAL_SOURCE)
-  $(IMPORT_PROJECT) /loose factorial-big $(FACTORIAL_SOURCE)
+  $(IMPORT_PROJECT) factorial-big $(FACTORIAL_SOURCE)
 
 
 $(WINDOWS_FFI_EXAMPLE_PROJECT):
@@ -2379,73 +2379,73 @@ $(WINDOWS_RESOURCE_EXAMPLE_PROJECT):
 
 $(DUIM_GL_DEMO_PROJECT):
   $(ENSURE_SOURCES) duim-gl-demo $(DUIM_GL_DEMO_SOURCE)
-  $(IMPORT_PROJECT) /loose duim-gl-demo $(DUIM_GL_DEMO_SOURCE)
+  $(IMPORT_PROJECT) duim-gl-demo $(DUIM_GL_DEMO_SOURCE)
 
 $(DUIM_GUI_TEST_SUITE_PROJECT):
   $(ENSURE_SOURCES) duim-tests $(DUIM_GUI_TEST_SUITE_SOURCE)
-  $(IMPORT_PROJECT) /tight duim-gui-test-suite $(DUIM_GUI_TEST_SUITE_SOURCE) win32-duim-gui-test-suite
+  $(IMPORT_PROJECT) duim-gui-test-suite $(DUIM_GUI_TEST_SUITE_SOURCE) win32-duim-gui-test-suite
 
 $(DUIM_RESOURCE_EXAMPLE_PROJECT):
   $(ENSURE_SOURCES) duim-examples $(DUIM_RESOURCE_EXAMPLE_SOURCE)
-  $(IMPORT_PROJECT) /loose duim-resource-example $(DUIM_RESOURCE_EXAMPLE_SOURCE) duim-resource-example
+  $(IMPORT_PROJECT) duim-resource-example $(DUIM_RESOURCE_EXAMPLE_SOURCE) duim-resource-example
 
 $(FLYING_SQUARES_PROJECT):
   $(ENSURE_SOURCES) flying-squares $(FLYING_SQUARES_SOURCE)
-  $(IMPORT_PROJECT) /tight flying-squares $(FLYING_SQUARES_SOURCE)
+  $(IMPORT_PROJECT) flying-squares $(FLYING_SQUARES_SOURCE)
 
 $(INTERFACE_BUILDER_PROJECT):
   $(ENSURE_SOURCES) duim-examples $(INTERFACE_BUILDER_SOURCE)
-  $(IMPORT_PROJECT) /loose interface-builder $(INTERFACE_BUILDER_SOURCE) win32-interface-builder
+  $(IMPORT_PROJECT) interface-builder $(INTERFACE_BUILDER_SOURCE) win32-interface-builder
 
 $(LIFE_PROJECT):
   $(ENSURE_SOURCES) duim-examples $(LIFE_SOURCE)
-  $(IMPORT_PROJECT) /tight life $(LIFE_SOURCE) win32-life
+  $(IMPORT_PROJECT) life $(LIFE_SOURCE) win32-life
 
 $(REVERSI_PROJECT):
   $(ENSURE_SOURCES) duim-examples $(REVERSI_SOURCE)
-  $(IMPORT_PROJECT) /loose reversi $(REVERSI_SOURCE) win32-reversi
+  $(IMPORT_PROJECT) reversi $(REVERSI_SOURCE) win32-reversi
 
 $(SCRIBBLE_PROJECT):
   $(ENSURE_SOURCES) duim-examples $(SCRIBBLE_SOURCE)
-  $(IMPORT_PROJECT) /loose scribble $(SCRIBBLE_SOURCE) win32-scribble
+  $(IMPORT_PROJECT) scribble $(SCRIBBLE_SOURCE) win32-scribble
 
 $(PENTE_PROJECT):
   $(ENSURE_SOURCES) duim-examples $(PENTE_SOURCE)
-  $(IMPORT_PROJECT) /loose pente $(PENTE_SOURCE) win32-pente
+  $(IMPORT_PROJECT) pente $(PENTE_SOURCE) win32-pente
 
 $(STANDALONE_DEUCE_PROJECT):
   $(ENSURE_SOURCES) deuce $(DEUCE_SOURCE)
-  $(IMPORT_PROJECT) /tight standalone-deuce $(STANDALONE_DEUCE_SOURCE) win32-standalone-deuce
+  $(IMPORT_PROJECT) standalone-deuce $(STANDALONE_DEUCE_SOURCE) win32-standalone-deuce
 
 $(TETRIS_PROJECT):
   $(ENSURE_SOURCES) duim-examples $(TETRIS_SOURCE)
-  $(IMPORT_PROJECT) /loose tetris $(TETRIS_SOURCE) win32-tetris
+  $(IMPORT_PROJECT) tetris $(TETRIS_SOURCE) win32-tetris
 
 $(TIC_TAC_TOE_PROJECT):
   $(ENSURE_SOURCES) duim-examples $(TIC_TAC_TOE_SOURCE)
-  $(IMPORT_PROJECT) /loose tic-tac-toe $(TIC_TAC_TOE_SOURCE) win32-tic-tac-toe
+  $(IMPORT_PROJECT) tic-tac-toe $(TIC_TAC_TOE_SOURCE) win32-tic-tac-toe
 
 $(WIN32_DUIM_GUI_TEST_SUITE_PROJECT):
   $(ENSURE_SOURCES) duim-tests $(WIN32_DUIM_GUI_TEST_SUITE_SOURCE)
-  $(IMPORT_PROJECT) /loose win32-duim-gui-test-suite $(WIN32_DUIM_GUI_TEST_SUITE_SOURCE)
+  $(IMPORT_PROJECT) win32-duim-gui-test-suite $(WIN32_DUIM_GUI_TEST_SUITE_SOURCE)
 
 $(WIN32_SCRIBBLE_PROJECT):
   $(ENSURE_SOURCES) duim-examples $(SCRIBBLE_SOURCE)
-  $(IMPORT_PROJECT) /loose win32-scribble $(WIN32_SCRIBBLE_SOURCE)
+  $(IMPORT_PROJECT) win32-scribble $(WIN32_SCRIBBLE_SOURCE)
 
 
 $(PLONKER_PROJECT):
   $(ENSURE_SOURCES) plonker $(PLONKER_SOURCE)
-  $(IMPORT_PROJECT) /loose plonker $(PLONKER_SOURCE)
+  $(IMPORT_PROJECT) plonker $(PLONKER_SOURCE)
 
 
 $(DATABASE_STRESS_TOOL_PROJECT):
   $(ENSURE_SOURCES) database-stress-tool $(DATABASE_STRESS_TOOL_SOURCE)
-  $(IMPORT_PROJECT) /tight database-stress-tool $(DATABASE_STRESS_TOOL_SOURCE)
+  $(IMPORT_PROJECT) database-stress-tool $(DATABASE_STRESS_TOOL_SOURCE)
 
 $(DATABASE_VIEWER_PROJECT):
   $(ENSURE_SOURCES) database-viewer $(DATABASE_VIEWER_SOURCE)
-  $(IMPORT_PROJECT) /loose database-viewer $(DATABASE_VIEWER_SOURCE) win32-database-viewer
+  $(IMPORT_PROJECT) database-viewer $(DATABASE_VIEWER_SOURCE) win32-database-viewer
 
 
 $(SAMPLE_AUTOMATION_CONTROLLER_PROJECT):
@@ -2479,24 +2479,24 @@ $(WIN32_OLE_SERVER_PROJECT):
 
 $(BUTTON_OCX_PROJECT):
   $(ENSURE_SOURCES) ole-examples $(OLE_EXAMPLES_DIRECTORY)
-  $(IMPORT_PROJECT) /tight /dll button-ocx $(BUTTON_OCX_SOURCE)
+  $(IMPORT_PROJECT) button-ocx $(BUTTON_OCX_SOURCE)
 
 $(OLE_SCRIBBLE_PROJECT):
   $(ENSURE_SOURCES) ole-examples $(OLE_EXAMPLES_DIRECTORY)
-  $(IMPORT_PROJECT) /loose ole-scribble $(OLE_SCRIBBLE_SOURCE)
+  $(IMPORT_PROJECT) ole-scribble $(OLE_SCRIBBLE_SOURCE)
 
 $(OCX_SCRIBBLE_PROJECT):
   $(ENSURE_SOURCES) ole-examples $(OLE_EXAMPLES_DIRECTORY)
-  $(IMPORT_PROJECT) /tight /dll ocx-scribble $(OCX_SCRIBBLE_SOURCE)
+  $(IMPORT_PROJECT) ocx-scribble $(OCX_SCRIBBLE_SOURCE)
 
 $(SAMPLE_DUIM_CONTAINER_PROJECT):
   $(ENSURE_SOURCES) ole-examples $(OLE_EXAMPLES_DIRECTORY)
-  $(IMPORT_PROJECT) /loose sample-duim-container $(SAMPLE_DUIM_CONTAINER_SOURCE)
+  $(IMPORT_PROJECT) sample-duim-container $(SAMPLE_DUIM_CONTAINER_SOURCE)
 
 
 $(DOC_REVERSI_PROJECT):
   $(ENSURE_SOURCES) doc-examples $(DOC_REVERSI_SOURCE)
-  $(IMPORT_PROJECT) /loose reversi $(DOC_REVERSI_SOURCE) win32-reversi
+  $(IMPORT_PROJECT) reversi $(DOC_REVERSI_SOURCE) win32-reversi
 
 
 # Install software

@@ -10,12 +10,8 @@ set QUIET=yes
 set SAVE=yes
 set CLEAN=no
 set MAYBE=no
-set DLL=no
-set EXE=no
-set GNU=no
 set PROJECT=
 set EXT=
-set EXPORTS=no
 set WARNINGS=yes
 set WARNINGS_OPTIONS=
 set DEBUG_FAILURE=no
@@ -43,10 +39,6 @@ If "%1%"=="/clean"            GOTO SET_CLEAN
 If "%1%"=="/maybe"            GOTO SET_MAYBE
 If "%1%"=="/dll"              GOTO SET_DLL
 If "%1%"=="/exe"              GOTO SET_EXE
-If "%1%"=="/gnu"              GOTO SET_GNU
-If "%1%"=="/microsoft"        GOTO SET_MICROSOFT
-If "%1%"=="/exports"          GOTO SET_EXPORTS
-If "%1%"=="/noexports"        GOTO SET_NOEXPORTS
 If "%1%"=="/warnings"         GOTO SET_WARNINGS
 If "%1%"=="/nowarnings"       GOTO SET_NOWARNINGS
 If "%1%"=="/serious-warnings" GOTO SET_SERIOUS_WARNINGS
@@ -134,35 +126,12 @@ shift
 goto PARAM_LOOP
 
 :SET_DLL
-set DLL=yes
 set EXT=dll
 shift
 goto PARAM_LOOP
 
-REM Need this line to make the shell recognize the SET_EXE label
 :SET_EXE
-set EXE=yes
 set EXT=exe
-shift
-goto PARAM_LOOP
-
-:SET_GNU
-set GNU=yes
-shift
-goto PARAM_LOOP
-
-:SET_MICROSOFT
-set GNU=no
-shift
-goto PARAM_LOOP
-
-:SET_EXPORTS
-set EXPORTS=yes
-shift
-goto PARAM_LOOP
-
-:SET_NOEXPORTS
-set EXPORTS=no
 shift
 goto PARAM_LOOP
 
@@ -194,15 +163,6 @@ shift
 goto PARAM_LOOP
 
 :PARAM_DONE
-if "%GNU%"=="yes" goto ensure_no_exports
-if "%EXT%"=="exe" goto ensure_no_exports
-goto maybe_clean
-
-:ENSURE_NO_EXPORTS
-set EXPORTS=no
-
-:MAYBE_CLEAN
-
 if "%CLEAN%"=="no" goto maybe_compile
 
 :REMOVE_LIBRARY
@@ -230,16 +190,13 @@ call find-compiler
 set LOG=%OPEN_DYLAN_BUILD_LOGS%\compile-%LIBRARY%.log
 set BUILD=%DYLAN_RELEASE_ROOT%\bin\build
 set OPERATION=Building
-set COMPILER_OPTIONS=/messages:internal
+set COMPILER_OPTIONS=/build
 if "%SAVE%"=="yes" set COMPILER_OPTIONS=/save %COMPILER_OPTIONS%
 if "%SAVE%"=="no" set OPERATION=Building (but not saving)
-if "%DLL%"=="yes" set COMPILER_OPTIONS=/link-dll %COMPILER_OPTIONS%
-if "%DLL%"=="yes" set OPERATION=%OPERATION% library
-if "%EXE%"=="yes" set COMPILER_OPTIONS=/link-exe %COMPILER_OPTIONS%
-if "%EXE%"=="yes" set OPERATION=%OPERATION% application
-if "%GNU%"=="yes" set COMPILER_OPTIONS=/gnu %COMPILER_OPTIONS%
-if "%GNU%"=="no" set COMPILER_OPTIONS=/microsoft %COMPILER_OPTIONS%
-if "%EXPORTS%"=="yes" set COMPILER_OPTIONS=/gnu-exports %COMPILER_OPTIONS%
+if "%EXT%"=="dll" set COMPILER_OPTIONS=/target dll %COMPILER_OPTIONS%
+if "%EXT%"=="dll" set OPERATION=%OPERATION% library
+if "%EXT%"=="exe" set COMPILER_OPTIONS=/target executable %COMPILER_OPTIONS%
+if "%EXT%"=="exe" set OPERATION=%OPERATION% application
 if "%DEBUG%"=="min" set COMPILER_OPTIONS=/debug:min %COMPILER_OPTIONS%
 if "%DEBUG%"=="no" set COMPILER_OPTIONS=/debug:none %COMPILER_OPTIONS%
 if "%BUILD_COUNTS%"=="ignore" set OPEN_DYLAN_MAJOR_MINOR_CHECKS_ONLY=yes
