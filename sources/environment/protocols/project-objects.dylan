@@ -350,7 +350,7 @@ define open generic build-project
           save-databases?, copy-sources?, process-subprojects?, messages)
  => (built? :: <boolean>);
 
-define open generic remove-project-build-products
+define open generic clean-project
     (project :: <project-object>,
      #key error-handler, process-subprojects?)
  => ();

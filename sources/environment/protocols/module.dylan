@@ -484,7 +484,7 @@ define module environment-protocols
          open-project-compiler-database,
          parse-project-source,
          build-project,
-         remove-project-build-products,
+         clean-project,
          default-build-script, default-build-script-setter,
          link-project,
          note-user-project-opened;

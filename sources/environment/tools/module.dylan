@@ -251,7 +251,7 @@ define module environment-tools
          frame-advanced-build-dialog,
          frame-build-project,
 	 frame-clean-build-project,
-	 frame-remove-build-products,
+	 frame-clean-project,
          frame-build-release,
 	 frame-note-project-rebuilt,
 	 frame-note-project-warnings-updated,
