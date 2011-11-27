@@ -1080,7 +1080,7 @@ network-examples: daytime-client daytime-server echo-client echo-client echo-ser
 release-info: $(RELEASE_INFO)
 compiler: pentium-dw-libraries release-info motley t-lists c-lexer console-scepter-libraries
 dylan-compiler-with-tools-exe: $(DYLAN_COMPILER_WITH_TOOLS)
-dylan-compiler-with-toold: console-compiler-libraries release-info environment-internal-commands motley t-lists c-lexer console-scepter-libraries dylan-compiler-with-tools-exe
+dylan-compiler-with-tools: console-compiler-libraries release-info environment-internal-commands motley t-lists c-lexer console-scepter-libraries dylan-compiler-with-tools-exe
 dylan-environment-with-tools: $(DYLAN_ENVIRONMENT_WITH_TOOLS)
 win32-environment: $(WIN32_ENVIRONMENT)
 with-splash-screen: $(WITH_SPLASH_SCREEN)
