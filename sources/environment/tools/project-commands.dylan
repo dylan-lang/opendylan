@@ -671,7 +671,7 @@ define open generic frame-build-project
     (frame :: <environment-frame>, #key process-subprojects?) => ();
 define open generic frame-clean-build-project
     (frame :: <environment-frame>, #key process-subprojects?) => ();
-define open generic frame-remove-build-products
+define open generic frame-clean-project
     (frame :: <environment-frame>, #key process-subprojects?) => ();
 
 define open generic frame-build-release
@@ -849,7 +849,7 @@ define method frame-clean-build-project
 			 process-subprojects?: process-subprojects?)
 end method frame-clean-build-project;
 
-define method frame-confirm-remove-build-products
+define method frame-confirm-clean-project
     (frame :: <environment-frame>, project :: <project-object>)
  => (confirm? :: <boolean>)
   environment-question
@@ -860,18 +860,18 @@ define method frame-confirm-remove-build-products
      owner: frame,
      style: #"warning",
      exit-style: #"ok-cancel")
-end method frame-confirm-remove-build-products;
+end method frame-confirm-clean-project;
 
-define method frame-remove-build-products
+define method frame-clean-project
     (frame :: <environment-frame>, #key process-subprojects? = #t) => ()
   let project = frame.ensure-frame-project;
-  if (frame-confirm-remove-build-products(frame, project))
+  if (frame-confirm-clean-project(frame, project))
     let project-window = find-project-browser-showing-project(project);
     if (project-window)
       call-in-frame
 	(project-window,
 	 method ()
-	   frame-remove-build-products
+	   frame-clean-project
 	     (project-window, process-subprojects?: process-subprojects?)
 	 end)
     else
@@ -879,7 +879,7 @@ define method frame-remove-build-products
 	(project, process-subprojects?: process-subprojects?);
     end
   end
-end method frame-remove-build-products;
+end method frame-clean-project;
 
 
 define method frame-do-build-project
@@ -952,7 +952,7 @@ define constant $build-related-commands
 	   frame-build-project,
 	   frame-clean-build-project,
 	   frame-advanced-build-dialog,
-	   frame-remove-build-products,
+	   frame-clean-project,
 	   frame-build-release,
 
 	   // Application menu
@@ -1303,7 +1303,7 @@ define constant $debug-doc
 define constant $interact-doc
   = "Finds interactor window, starting or pausing executable as necessary.";
 
-define constant $remove-build-products-doc
+define constant $clean-project-doc
   = "Removes all files produced by earlier builds.";
 /*---*** andrewa: not used at the moment
 define constant $run-doc
@@ -1332,8 +1332,8 @@ define command-table *build-command-table* (*global-command-table*)
   menu-item "Advanced Build..."     = frame-advanced-build-dialog,
     accelerator:   make-keyboard-gesture(#"f7", #"shift"),
     documentation: $advanced-build-doc;
-  menu-item "Clean" = frame-remove-build-products,
-    documentation: $remove-build-products-doc;
+  menu-item "Clean" = frame-clean-project,
+    documentation: $clean-project-doc;
 end command-table *build-command-table*;
 
 define command-table *build-release-command-table* (*global-command-table*)
