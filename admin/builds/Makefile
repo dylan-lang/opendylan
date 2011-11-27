@@ -42,9 +42,9 @@ PENTIUM_RUNTIME_OPTIONS =
 #
 
 IMPORT_PROJECT = import-project $(OPTIONS)
-BUILD_LIBRARY = build-library /nowarnings $(OPTIONS)
+BUILD_LIBRARY = compile-library /dll /nowarnings $(OPTIONS)
 BUILD_RUNTIME_LIBRARY = $(BUILD_LIBRARY) $(RUNTIME_OPTIONS)
-BUILD_APPLICATION = build-application /nowarnings $(OPTIONS)
+BUILD_APPLICATION = compile-library /exe /nowarnings $(OPTIONS)
 ENSURE_RELEASE_AREA = ensure-release-area
 ENSURE_DIRECTORY = ensure-directory
 ENSURE_SOURCES = ensure-sources
@@ -2353,15 +2353,15 @@ test-environment-scripts:
 
 $(HELLO_WORLD_PROJECT):
   $(ENSURE_SOURCES) hello-world $(HELLO_WORLD_SOURCE)
-  $(IMPORT_PROJECT) /loose hello-world $(HELLO_WORLD_SOURCE)
+  $(IMPORT_PROJECT) hello-world $(HELLO_WORLD_SOURCE)
 
 $(FACTORIAL_SMALL_PROJECT):
   $(ENSURE_SOURCES) factorial $(FACTORIAL_SOURCE)
-  $(IMPORT_PROJECT) /loose factorial-small $(FACTORIAL_SOURCE)
+  $(IMPORT_PROJECT) factorial-small $(FACTORIAL_SOURCE)
 
 $(FACTORIAL_BIG_PROJECT):
   $(ENSURE_SOURCES) factorial $(FACTORIAL_SOURCE)
-  $(IMPORT_PROJECT) /loose factorial-big $(FACTORIAL_SOURCE)
+  $(IMPORT_PROJECT) factorial-big $(FACTORIAL_SOURCE)
 
 
 $(WINDOWS_FFI_EXAMPLE_PROJECT):
@@ -2379,73 +2379,73 @@ $(WINDOWS_RESOURCE_EXAMPLE_PROJECT):
 
 $(DUIM_GL_DEMO_PROJECT):
   $(ENSURE_SOURCES) duim-gl-demo $(DUIM_GL_DEMO_SOURCE)
-  $(IMPORT_PROJECT) /loose duim-gl-demo $(DUIM_GL_DEMO_SOURCE)
+  $(IMPORT_PROJECT) duim-gl-demo $(DUIM_GL_DEMO_SOURCE)
 
 $(DUIM_GUI_TEST_SUITE_PROJECT):
   $(ENSURE_SOURCES) duim-tests $(DUIM_GUI_TEST_SUITE_SOURCE)
-  $(IMPORT_PROJECT) /tight duim-gui-test-suite $(DUIM_GUI_TEST_SUITE_SOURCE) win32-duim-gui-test-suite
+  $(IMPORT_PROJECT) duim-gui-test-suite $(DUIM_GUI_TEST_SUITE_SOURCE) win32-duim-gui-test-suite
 
 $(DUIM_RESOURCE_EXAMPLE_PROJECT):
   $(ENSURE_SOURCES) duim-examples $(DUIM_RESOURCE_EXAMPLE_SOURCE)
-  $(IMPORT_PROJECT) /loose duim-resource-example $(DUIM_RESOURCE_EXAMPLE_SOURCE) duim-resource-example
+  $(IMPORT_PROJECT) duim-resource-example $(DUIM_RESOURCE_EXAMPLE_SOURCE) duim-resource-example
 
 $(FLYING_SQUARES_PROJECT):
   $(ENSURE_SOURCES) flying-squares $(FLYING_SQUARES_SOURCE)
-  $(IMPORT_PROJECT) /tight flying-squares $(FLYING_SQUARES_SOURCE)
+  $(IMPORT_PROJECT) flying-squares $(FLYING_SQUARES_SOURCE)
 
 $(INTERFACE_BUILDER_PROJECT):
   $(ENSURE_SOURCES) duim-examples $(INTERFACE_BUILDER_SOURCE)
-  $(IMPORT_PROJECT) /loose interface-builder $(INTERFACE_BUILDER_SOURCE) win32-interface-builder
+  $(IMPORT_PROJECT) interface-builder $(INTERFACE_BUILDER_SOURCE) win32-interface-builder
 
 $(LIFE_PROJECT):
   $(ENSURE_SOURCES) duim-examples $(LIFE_SOURCE)
-  $(IMPORT_PROJECT) /tight life $(LIFE_SOURCE) win32-life
+  $(IMPORT_PROJECT) life $(LIFE_SOURCE) win32-life
 
 $(REVERSI_PROJECT):
   $(ENSURE_SOURCES) duim-examples $(REVERSI_SOURCE)
-  $(IMPORT_PROJECT) /loose reversi $(REVERSI_SOURCE) win32-reversi
+  $(IMPORT_PROJECT) reversi $(REVERSI_SOURCE) win32-reversi
 
 $(SCRIBBLE_PROJECT):
   $(ENSURE_SOURCES) duim-examples $(SCRIBBLE_SOURCE)
-  $(IMPORT_PROJECT) /loose scribble $(SCRIBBLE_SOURCE) win32-scribble
+  $(IMPORT_PROJECT) scribble $(SCRIBBLE_SOURCE) win32-scribble
 
 $(PENTE_PROJECT):
   $(ENSURE_SOURCES) duim-examples $(PENTE_SOURCE)
-  $(IMPORT_PROJECT) /loose pente $(PENTE_SOURCE) win32-pente
+  $(IMPORT_PROJECT) pente $(PENTE_SOURCE) win32-pente
 
 $(STANDALONE_DEUCE_PROJECT):
   $(ENSURE_SOURCES) deuce $(DEUCE_SOURCE)
-  $(IMPORT_PROJECT) /tight standalone-deuce $(STANDALONE_DEUCE_SOURCE) win32-standalone-deuce
+  $(IMPORT_PROJECT) standalone-deuce $(STANDALONE_DEUCE_SOURCE) win32-standalone-deuce
 
 $(TETRIS_PROJECT):
   $(ENSURE_SOURCES) duim-examples $(TETRIS_SOURCE)
-  $(IMPORT_PROJECT) /loose tetris $(TETRIS_SOURCE) win32-tetris
+  $(IMPORT_PROJECT) tetris $(TETRIS_SOURCE) win32-tetris
 
 $(TIC_TAC_TOE_PROJECT):
   $(ENSURE_SOURCES) duim-examples $(TIC_TAC_TOE_SOURCE)
-  $(IMPORT_PROJECT) /loose tic-tac-toe $(TIC_TAC_TOE_SOURCE) win32-tic-tac-toe
+  $(IMPORT_PROJECT) tic-tac-toe $(TIC_TAC_TOE_SOURCE) win32-tic-tac-toe
 
 $(WIN32_DUIM_GUI_TEST_SUITE_PROJECT):
   $(ENSURE_SOURCES) duim-tests $(WIN32_DUIM_GUI_TEST_SUITE_SOURCE)
-  $(IMPORT_PROJECT) /loose win32-duim-gui-test-suite $(WIN32_DUIM_GUI_TEST_SUITE_SOURCE)
+  $(IMPORT_PROJECT) win32-duim-gui-test-suite $(WIN32_DUIM_GUI_TEST_SUITE_SOURCE)
 
 $(WIN32_SCRIBBLE_PROJECT):
   $(ENSURE_SOURCES) duim-examples $(SCRIBBLE_SOURCE)
-  $(IMPORT_PROJECT) /loose win32-scribble $(WIN32_SCRIBBLE_SOURCE)
+  $(IMPORT_PROJECT) win32-scribble $(WIN32_SCRIBBLE_SOURCE)
 
 
 $(PLONKER_PROJECT):
   $(ENSURE_SOURCES) plonker $(PLONKER_SOURCE)
-  $(IMPORT_PROJECT) /loose plonker $(PLONKER_SOURCE)
+  $(IMPORT_PROJECT) plonker $(PLONKER_SOURCE)
 
 
 $(DATABASE_STRESS_TOOL_PROJECT):
   $(ENSURE_SOURCES) database-stress-tool $(DATABASE_STRESS_TOOL_SOURCE)
-  $(IMPORT_PROJECT) /tight database-stress-tool $(DATABASE_STRESS_TOOL_SOURCE)
+  $(IMPORT_PROJECT) database-stress-tool $(DATABASE_STRESS_TOOL_SOURCE)
 
 $(DATABASE_VIEWER_PROJECT):
   $(ENSURE_SOURCES) database-viewer $(DATABASE_VIEWER_SOURCE)
-  $(IMPORT_PROJECT) /loose database-viewer $(DATABASE_VIEWER_SOURCE) win32-database-viewer
+  $(IMPORT_PROJECT) database-viewer $(DATABASE_VIEWER_SOURCE) win32-database-viewer
 
 
 $(SAMPLE_AUTOMATION_CONTROLLER_PROJECT):
@@ -2479,24 +2479,24 @@ $(WIN32_OLE_SERVER_PROJECT):
 
 $(BUTTON_OCX_PROJECT):
   $(ENSURE_SOURCES) ole-examples $(OLE_EXAMPLES_DIRECTORY)
-  $(IMPORT_PROJECT) /tight /dll button-ocx $(BUTTON_OCX_SOURCE)
+  $(IMPORT_PROJECT) button-ocx $(BUTTON_OCX_SOURCE)
 
 $(OLE_SCRIBBLE_PROJECT):
   $(ENSURE_SOURCES) ole-examples $(OLE_EXAMPLES_DIRECTORY)
-  $(IMPORT_PROJECT) /loose ole-scribble $(OLE_SCRIBBLE_SOURCE)
+  $(IMPORT_PROJECT) ole-scribble $(OLE_SCRIBBLE_SOURCE)
 
 $(OCX_SCRIBBLE_PROJECT):
   $(ENSURE_SOURCES) ole-examples $(OLE_EXAMPLES_DIRECTORY)
-  $(IMPORT_PROJECT) /tight /dll ocx-scribble $(OCX_SCRIBBLE_SOURCE)
+  $(IMPORT_PROJECT) ocx-scribble $(OCX_SCRIBBLE_SOURCE)
 
 $(SAMPLE_DUIM_CONTAINER_PROJECT):
   $(ENSURE_SOURCES) ole-examples $(OLE_EXAMPLES_DIRECTORY)
-  $(IMPORT_PROJECT) /loose sample-duim-container $(SAMPLE_DUIM_CONTAINER_SOURCE)
+  $(IMPORT_PROJECT) sample-duim-container $(SAMPLE_DUIM_CONTAINER_SOURCE)
 
 
 $(DOC_REVERSI_PROJECT):
   $(ENSURE_SOURCES) doc-examples $(DOC_REVERSI_SOURCE)
-  $(IMPORT_PROJECT) /loose reversi $(DOC_REVERSI_SOURCE) win32-reversi
+  $(IMPORT_PROJECT) reversi $(DOC_REVERSI_SOURCE) win32-reversi
 
 
 # Install software

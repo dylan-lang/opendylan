@@ -67,7 +67,7 @@ Download the MPS zip from http://www.ravenbrook.com/project/mps/
 and unpack that.
 
 Open a shell (windows command processor), there set the environment
-variable SDK4MEMORY_POOL_SYSTEM to <where you unpacked MPS>\\code.
+variable SDK4MEMORY_POOL_SYSTEM to <where you unpacked MPS>.
 
 Please keep in mind that paths with whitespaces are not well supported.
 

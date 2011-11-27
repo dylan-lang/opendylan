@@ -5,8 +5,6 @@ rem echo "in import-project: %1, %2, %3, %4, %5 "
 setlocal
 
 set DEBUGGING=no
-set DLL=no
-set EXT=
 set QUIET=yes
 if "%OPEN_DYLAN_DEFAULT_ROOT%"=="" set OPEN_DYLAN_DEFAULT_ROOT=C:\Program Files\Open Dylan
 
@@ -17,16 +15,8 @@ REM //
 If "%1%"==""                  GOTO PARAM_DONE
 If "%1%"=="/debugger"         GOTO SET_DEBUGGING
 If "%1%"=="/nodebugger"       GOTO SET_NODEBUGGING
-If "%1%"=="/dll"              GOTO IGNORE_ARG
-If "%1%"=="/exe"              GOTO IGNORE_ARG
-If "%1%"=="/loose"            GOTO IGNORE_ARG
-If "%1%"=="/tight"            GOTO IGNORE_ARG
 If "%1%"=="/quiet"            GOTO SET_QUIET
 If "%1%"=="/verbose"          GOTO SET_VERBOSE
-If "%1%"=="/exports"          GOTO IGNORE_ARG
-If "%1%"=="/noexports"        GOTO IGNORE_ARG
-If "%1%"=="/debug-failure"    GOTO IGNORE_ARG
-If "%1%"=="/show-failure-log" GOTO IGNORE_ARG
 set PROJECT=%1%
 set DIRECTORY=%2%
 set LID=%3%
@@ -47,12 +37,6 @@ set DEBUGGING=no
 shift
 goto PARAM_LOOP
 
-:SET_DLL
-set DLL=yes
-set EXT=dll
-shift
-goto PARAM_LOOP
-
 :SET_QUIET
 set QUIET=yes
 shift
@@ -60,10 +44,6 @@ goto PARAM_LOOP
 
 :SET_VERBOSE
 set QUIET=no
-shift
-goto PARAM_LOOP
-
-:IGNORE_ARG
 shift
 goto PARAM_LOOP
 

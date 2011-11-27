@@ -16,8 +16,6 @@ echo -     /target
 echo -       Specifies the target release name. [default: release]
 echo -     /generations
 echo -       Specifies the number of generations. [default: 3]
-echo -     /exports
-echo -       Switches on generation of GNU exports [default: no exports]
 echo -     /strip-runtime
 echo -       Strips out debug information from the runtime DLLs [default: no]
 echo -     /dylan
@@ -111,7 +109,6 @@ set COMPILER_FILENAME=
 set FINAL_COMPILER_FILENAME=
 set RELEASE_TARGET=release
 set CLEANUP=no
-set EXPORTS=no
 set DEBUGGING=no
 set WARNINGS=no
 set WARNINGS_OPTIONS=/nonits
@@ -158,10 +155,6 @@ if "%1"=="-sources"            GOTO SET_SOURCES
 if "%1"=="/sources"            GOTO SET_SOURCES
 if "%1"=="-rm-early-builds"    GOTO SET_CLEANUP
 if "%1"=="/rm-early-builds"    GOTO SET_CLEANUP
-if "%1"=="-exports"            GOTO SET_EXPORTS
-if "%1"=="/exports"            GOTO SET_EXPORTS
-if "%1"=="/exports:yes"        GOTO SET_EXPORTS
-if "%1"=="/exports:no"         GOTO RESET_EXPORTS
 if "%1"=="-debugger"           GOTO SET_DEBUGGING
 if "%1"=="/debugger"           GOTO SET_DEBUGGING
 if "%1"=="-debug-failure"      GOTO SET_DEBUG_FAILURE
@@ -248,16 +241,6 @@ set CLEANUP=yes
 shift
 goto PARAM_LOOP
 
-:SET_EXPORTS
-set EXPORTS=yes
-shift
-goto PARAM_LOOP
-
-:RESET_EXPORTS
-set EXPORTS=no
-shift
-goto PARAM_LOOP
-
 :SET_DEBUGGING
 set DEBUGGING=yes
 shift
@@ -324,7 +307,6 @@ REM // Setup the internal release options //
 REM //
 :SET_INTERNAL
 set GENERATIONS=4
-set EXPORTS=yes
 set STRIP_RUNTIME=no
 set WARNINGS=yes
 set TIMINGS=yes
@@ -338,7 +320,6 @@ REM // Setup the external release options //
 REM //
 :SET_EXTERNAL
 set GENERATIONS=4
-set EXPORTS=yes
 set STRIP_RUNTIME=yes
 set WARNINGS=yes
 set TIMINGS=yes
@@ -695,18 +676,6 @@ set /a GENERATION+=1
 goto build_next_generation
 
 :BUILD_RELEASE
-REM // Switch on GNU exports if requested
-if "%EXPORTS%"=="no" goto handle_runtime_options
-if "%OPTIONS%"=="" goto set_exports_only
-set OPTIONS=%OPTIONS% /exports
-set QUOTED_OPTIONS=OPTIONS="%OPTIONS%"
-goto handle_runtime_options
-
-:SET_EXPORTS_ONLY
-set OPTIONS=/exports
-set QUOTED_OPTIONS=OPTIONS=%OPTIONS%
-
-:HANDLE_RUNTIME_OPTIONS
 if "%STRIP_RUNTIME%"=="no" goto no_runtime_stripping
 set QUOTED_RUNTIME_OPTIONS=RUNTIME_OPTIONS="/debug-min /build-counts ignore"
 goto start_build
