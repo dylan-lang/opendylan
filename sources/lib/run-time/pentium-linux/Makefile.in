@@ -26,11 +26,12 @@ CFLAGS		= -DGC_LINUX_THREADS=1 -D_REENTRANT=1 \
 		  -I$(MPS)/code -I$(srcdir) -I$(runtime_srcdir)
 
 OBJS		= x86-linux-collector.o \
-		  $(srcdir)/runtime.o \
-		  $(srcdir)/dylan-support.o \
 		  x86-linux-threads-primitives.o \
 		  linux-spy-interfaces.o \
 		  linux-support.o
+
+SRCOBJS		= $(srcdir)/runtime.o \
+		  $(srcdir)/dylan-support.o \
 
 RUNTIMELIBDEST	 = $(LIBDEST)/runtime/
 
@@ -78,13 +79,13 @@ install-build: $(LIBDEST)/libmmdw.a $(LIBDEST)/libmpsplan.a \
 	       $(LIBDEST)/x86-linux-build.jam $(LIBDEST)/mini-jambase.jam \
                $(LIBDEST)/dylan-elf-dll.script $(LIBDEST)/dylan-elf-exe.script
 
-install-runtime: $(OBJS)
-	cp -fp $(OBJS) $(RUNTIMELIBDEST)
+install-runtime: $(OBJS) $(SRCOBJS)
+	cp -fp $(OBJS) $(SRCOBJS) $(RUNTIMELIBDEST)
 
 install: install-runtime install-build
 
 clean:
-	rm -f *.o
+	rm -f $(OBJS)
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	cd $(top_builddir) && ./config.status $(subdir)/Makefile
