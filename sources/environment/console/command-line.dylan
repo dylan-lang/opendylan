@@ -51,14 +51,8 @@ define abstract class <basic-main-command> (<basic-command>)
     init-keyword: force?:;
   constant slot %unify? :: <boolean> = #f,
     init-keyword: unify?:;
-  constant slot %not-recursive? :: <boolean> = #f,
-    init-keyword: not-recursive?:;
   constant slot %save? :: <boolean> = #t,
     init-keyword: save?:;
-  constant slot %link-dll? :: <boolean> = #f,
-    init-keyword: link-dll?:;
-  constant slot %link-exe? :: <boolean> = #f,
-    init-keyword: link-exe?:;
   constant slot %arch :: false-or(<symbol>) = #f,
     init-keyword: arch:;
   constant slot %harp?          :: <boolean> = #f,
@@ -96,16 +90,14 @@ define method execute-main-command
   else
     run(<open-project-command>, file: filename)
   end;
-  let dw-options?
-    = command.%link-dll?  | command.%link-exe?;
-  let build? = command.%build? | dw-options?;
+  let build? = command.%build?;
   if (build? | command.%compile?)
     run(<build-project-command>,
 	clean?:      command.%clean?,
 	save?:       command.%save?,
 	link?:       #f,
 	release?:    command.%release?,
-	subprojects: command.%subprojects? & ~command.%not-recursive?,
+	subprojects: command.%subprojects?,
         output:      begin
                        let output = make(<stretchy-object-vector>);
                        if (command.%assemble?) add!(output, #"assembler") end;
@@ -115,18 +107,13 @@ define method execute-main-command
                      end)
   end;
   if (build? | command.%link?)
-    let target
-      = command.%target
-          | case
-	      command.%link-dll? => #"dll";
-	      command.%link-exe? => #"executable";
-	    end;
+    let target = command.%target;
     run(<link-project-command>,
 	build-script: command.%build-script,
 	target:      target,
 	arch:        command.%arch,
 	force?:      command.%force? | command.%clean?,
-	subprojects: command.%subprojects? & ~command.%not-recursive?,
+	subprojects: command.%subprojects?,
 	unify?:      command.%unify?)
   end;
   $success-exit-code;

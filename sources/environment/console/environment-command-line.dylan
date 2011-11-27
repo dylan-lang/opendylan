@@ -125,10 +125,10 @@ define command-line main => <main-command>
                         = "show debug messages (e.g. for linker,project-manager)";
   flag unify            = "combine the libraries into a single executable";
   flag profile-commands = "profile the execution of each command";
+  flag harp             = "generate HARP output";
+  flag assemble         = "generate assembly-language output";
+  flag dfm              = "generate Dylan Flow Machine output";
 
   // Backwards-compatibility options for pentium-dw users
-  flag not-recursive    = "don't build subprojects as well";
   flag save             = "save compiler databases";
-  flag link-dll         = "link as a DLL";
-  flag link-exe         = "link as an EXE";
 end command-line main;

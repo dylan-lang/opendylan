@@ -47,10 +47,5 @@ define command-line main => <main-command>
   flag dfm              = "generate Dylan Flow Machine output";
 
   // Backwards-compatibility options for pentium-dw users
-  flag not-recursive    = "don't build subprojects as well";
-  flag microsoft        = "use the Microsoft linker";
-  flag gnu              = "use the GNU linker";
   flag save             = "save compiler databases";
-  flag link-dll         = "link as a DLL";
-  flag link-exe         = "link as an EXE";
 end command-line main;
