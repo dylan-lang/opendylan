@@ -2,7 +2,11 @@
 Publications about Dylan
 ************************
 
-`Extending Dylan's type system for better type inference and error detection - Hannes Mehnert - ILC 2010 <http://www.itu.dk/~hame/ilc2010.pdf>`_
+**Extending Dylan's type system for better type inference and error
+detection**
+(by Hannes Mehnert at ILC 2010
+`pdf <http://www.itu.dk/~hame/ilc2010.pdf>`__
+`bib <../_static/documentation/mehnert2010.bib>`__)
 
     Whereas dynamic typing enables rapid prototyping and easy
     experimentation, static typing provides early error detection and
@@ -23,7 +27,10 @@ Publications about Dylan
 
     https://dl.acm.org/citation.cfm?id=1869643.1869645
 
-`Automatically generated type-safe GTK+ binding for Dylan - Hannes Mehnert - ILC 2009 <http://www.itu.dk/~hame/ilc09.pdf>`_
+**Automatically generated type-safe GTK+ binding for Dylan**
+(by Hannes Mehnert at ILC 2009
+`pdf <http://www.itu.dk/~hame/ilc09.pdf>`__
+`bib <../_static/documentation/mehnert2009.bib>`__)
 
     We present an automated way to get language bindings for GTK+ for
     Dylan, an object-oriented functional programming language related
@@ -33,7 +40,10 @@ Publications about Dylan
     is type-safe, no up- and downcasts are needed.
 
 
-`A domain-specific language for manipulation of binary data in Dylan - Hannes Mehnert and Andreas Bogk - ILC 2007 <http://www.itu.dk/~hame/ilc07-final.pdf>`_
+**A domain-specific language for manipulation of binary data in Dylan**
+(by Hannes Mehnert and Andreas Bogk at ILC 2007
+`pdf <http://www.itu.dk/~hame/ilc07-final.pdf>`__
+`bib <../_static/documentation/mehnert2007.bib>`__)
 
     We present a domain specific language for manipulation of binary
     data, or structured byte sequences, as they appear in everyday
@@ -46,7 +56,10 @@ Publications about Dylan
 
     https://dl.acm.org/citation.cfm?id=1622123.1622148
 
-`Efficient Compression of Generic Function Dispatch Tables - Eric Kidd   - Technical Report Dartmouth College Hanover, NH, USA ©2001 <http://www.cs.dartmouth.edu/reports/TR2001-404.pdf>`_
+**Efficient Compression of Generic Function Dispatch Tables**
+(by Eric Kidd  - Technical Report Dartmouth College 2001
+`pdf <http://www.cs.dartmouth.edu/reports/TR2001-404.pdf>`__
+`bib <../_static/documentation/kidd2001.bib>`__)
 
     A generic function is similar to an overloaded operator, but
     provides a way to select an appropriate behavior at run-time
@@ -62,7 +75,10 @@ Publications about Dylan
 
     https://dl.acm.org/citation.cfm?id=867862
 
-`Partial Dispatch: Optimizing Dynamically-Dispatched Multimethod Calls with Compile-Time Types and Runtime Feedback - Jonathan Bachrach and Glenn Burke - Technical Report 2000 <http://people.csail.mit.edu/jrb/Projects/pd.pdf>`_
+**Partial Dispatch: Optimizing Dynamically-Dispatched Multimethod Calls with Compile-Time Types and Runtime Feedback**
+(by Jonathan Bachrach and Glenn Burke - Technical Report 2000
+`pdf <http://people.csail.mit.edu/jrb/Projects/pd.pdf>`__
+`bib <../_static/documentation/bachrach2000.bib>`__)
 
     We presented an approach to gaining back complete class hierarchy
     information by delaying the construction of dispatch caches until
@@ -79,7 +95,10 @@ Publications about Dylan
     components, multi-threaded runtime, incremental development, “pay
     as you go philosophy”, and interoperability with standard tools.
 
-`D-Expressions: Lisp Power, Dylan Style - Jonathan Bachrach and Keith Playford - Technical Report 1999 <http://people.csail.mit.edu/jrb/Projects/dexprs.pdf>`_
+**D-Expressions: Lisp Power, Dylan Style**
+(by Jonathan Bachrach and Keith Playford - Technical Report 1999
+`pdf <http://people.csail.mit.edu/jrb/Projects/dexprs.pdf>`__
+`bib <../_static/documentation/bachrach1999.bib>`__)
 
     This paper aims to demonstrate that it is possible for a language
     with a rich, conventional syntax to provide Lisp-style macro power
@@ -90,7 +109,11 @@ Publications about Dylan
     syntax, the approach taken to describe and represent that syntax
     is distinctly Lisp-like in philosophy.
 
-`A Monotonic Superclass Linearization for Dylan - Kim Barrett and Bob Cassels and Paul Haahr and David A. Moon and Keith Playford and P. Tucker Withington - OOPSLA 1996 <http://192.220.96.201/dylan/linearization-oopsla96.html>`_
+**A Monotonic Superclass Linearization for Dylan**
+(by Kim Barrett and Bob Cassels and Paul Haahr and David A. Moon and
+Keith Playford and P. Tucker Withington at OOPSLA 1996
+`html <http://192.220.96.201/dylan/linearization-oopsla96.html>`__
+`bib <../_static/documentation/barrett1996.bib>`__)
 
     Object-oriented languages with multiple inheritance and automatic
     conflict resolution typically use a linearization of superclasses
@@ -110,7 +133,10 @@ Publications about Dylan
 
     https://dl.acm.org/citation.cfm?id=236337.236343
 
-`Discovering the way programmers think about new programming environments - Joseph Dumas and Paige Parsons - Communications of the ACM June 1995 <https://dl.acm.org/citation.cfm?id=203253>`_
+**Discovering the way programmers think about new programming environments**
+(by Joseph Dumas and Paige Parsons - Communications of the ACM June
+1995
+`bib <../_static/documentation/dumas1995.bib>`__)
 
     An interesting usability study of a prototype development
     environment for the Dylan programming language is presented
@@ -121,6 +147,7 @@ Publications about Dylan
     how effectively the prototype conveys these innovations to Dylan
     developers is also given, followed by some proposed improvements.
 
+    https://dl.acm.org/citation.cfm?id=203253
 
 `Bibliography in bibtex format <../_static/documentation/publications.bib>`_
 
