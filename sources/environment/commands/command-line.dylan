@@ -770,20 +770,8 @@ define method command-line-loop
     write(output-stream, banner);
     force-output(output-stream);
   end if;
-  let handler (<serious-condition>)
-    = method (condition :: <serious-condition>, next-handler :: <function>)
-	case
-	  server.server-debugger? =>
-	    next-handler();
-	  instance?(condition, <keyboard-interrupt>) =>
-	    message(context, "Operation aborted");
-	    abort();
-	  otherwise =>
-	    display-condition(context, condition);
-	    abort();
-	end
-      end;
-  iterate loop ()
+  let exit? = #f;
+  while (~ exit?)
     block ()
       unless (server.server-incomplete-command-line)
 	new-line(output-stream);
@@ -795,12 +783,17 @@ define method command-line-loop
 	~command-line =>
 	  #f;
 	otherwise =>
-	  unless (execute-command-line(server, command-line))
-	    loop()
-	  end;
+	  exit? := execute-command-line(server, command-line);
       end
-    exception (<abort>)
-      loop()
+    exception (condition :: <serious-condition>)
+      case
+        server.server-debugger? =>
+          next-handler();
+        instance?(condition, <keyboard-interrupt>) =>
+          message(context, "Operation aborted");
+        otherwise =>
+          display-condition(context, condition);
+      end
     end
   end
 end method command-line-loop;
