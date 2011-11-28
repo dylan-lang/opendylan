@@ -6,7 +6,7 @@
 #include <math.h>
 #include <gc/gc.h>
 
-#if defined(__alpha) || defined(__mips64) || defined(__x86_64__)
+#if defined(__x86_64__)
 #define NO_LONGLONG 1
 #define LONG_BIT 64
 #define WORD_BIT 32
@@ -522,13 +522,8 @@ DMINT primitive_unwrap_abstract_integer(D x) {
 
 /*---*** NOTE: Here's the correct implementation of the above three functions */
 #ifdef NOTYET
-#if defined(__alpha) || defined(__mips64)
-#define HIGH_BITS 0xC000000000000000L
-#define HIGH_BITS_AND_SIGN 0xE000000000000000L
-#else
 #define HIGH_BITS 0xC0000000L
 #define HIGH_BITS_AND_SIGN 0xE0000000L
-#endif
 
 D primitive_wrap_abstract_integer(DMINT x) {
   DUMINT hs = (DUMINT)x & HIGH_BITS_AND_SIGN;
