@@ -89,18 +89,18 @@ define sealed method update-application
 end method update-application;
 
 define sealed method parse-project-source
-    (project-object :: <exe-project>, 
-     #key warning-callback, progress-callback, error-handler, 
-          process-subprojects?) 
+    (project-object :: <exe-project>,
+     #key warning-callback, progress-callback, error-handler,
+          process-subprojects?)
  => (well? :: <boolean>)
   error("You cannot parse an executable-only project!")
 end method parse-project-source;
 
-define sealed method build-project 
+define sealed method build-project
     (project :: <exe-project>,
-     #key clean?, link? = #t, release?, output = #[], 
-          warning-callback, progress-callback, error-handler, 
-          save-databases?, copy-sources?, process-subprojects?, messages)
+     #key clean?, link? = #t, release?, output = #[],
+          warning-callback, progress-callback, error-handler,
+          save-databases?, process-subprojects?, messages)
  => (well? :: <boolean>)
   error("You cannot build an executable-only project!")
 end method build-project;

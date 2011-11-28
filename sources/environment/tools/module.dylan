@@ -362,7 +362,6 @@ define module environment-tools
   // Environment settings
   export environment-default-save-databases,
 	 environment-default-save-databases,
-	 environment-default-copy-sources,
 	 environment-default-link-mode,
 	 environment-default-upgrade-warnings,
 	 environment-application-confirm-stop?,

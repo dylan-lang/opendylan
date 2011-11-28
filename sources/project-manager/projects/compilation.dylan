@@ -29,11 +29,11 @@ define method link-library (key, #rest keys, #key, #all-keys)
   end;
 end method;
 
-define open generic save-project(project :: <project>, 
-				 #rest keys, #key save-db? = #f, #all-keys);
+define open generic save-project(project :: <project>,
+                                 #rest keys, #key save-db? = #f, #all-keys);
 
-define method save-project(project :: <project>, 
-			   #rest keys, #key save-db? = #f, flush?, #all-keys)
+define method save-project(project :: <project>,
+                           #rest keys, #key save-db? = #f, flush?, #all-keys)
   let context = project-current-compilation-context(project);
   if (save-db? & context)
     save-project-database(project, flush?: flush?)
@@ -45,7 +45,7 @@ define method save-project-database (project :: <project>, #key flush?) => ()
   //---*** this should really take part in the progress properly.
   let context = project-current-compilation-context(project);
   assert(context,
-	 "Attempting to save database for project with no context!");
+         "Attempting to save database for project with no context!");
   with-walk-progress (internal-message("Walked %d", count))
     save-compilation-context(context, flush?: flush?)
   end;
@@ -58,43 +58,43 @@ define method project-build-info(project :: <string>)
   let project = lookup-named-project(project, create?: #f);
   if (project)
     values(#t,
-	   project.project-personal-library?,
-	   project.project-build-location);
+           project.project-personal-library?,
+           project.project-build-location);
   end if;
 end method;
 
 define method link-library(project :: <project>, #rest keys,
-			   #key target-type, 
-			        arch,
-			        extent = #"changes",
+                           #key target-type,
+                                arch,
+                                extent = #"changes",
                                 build-script,
                                 progress-callback = ignore,
-			        mode, release?,
-			   #all-keys)
+                                mode, release?,
+                           #all-keys)
  => (linked? :: <boolean>)
   let type = target-type | project-target-type(project);
   let build-options
     = concatenate(select (type)
-		    #"exports"    => #["exports"];
-		    #"dll"        =>
-		      select (mode)
-			#"combine" => #["unify-dll"];
-			otherwise => #["dll"];
-		      end;
-		    #"executable" =>
-		      select (mode)
-			#"combine" => #["unify-exe"];
-			otherwise => #["exe"];
-		      end;
-		  end,
-		  if (release?) #["release"] else #[] end);
+                    #"exports"    => #["exports"];
+                    #"dll"        =>
+                      select (mode)
+                        #"combine" => #["unify-dll"];
+                        otherwise => #["dll"];
+                      end;
+                    #"executable" =>
+                      select (mode)
+                        #"combine" => #["unify-exe"];
+                        otherwise => #["exe"];
+                      end;
+                  end,
+                  if (release?) #["release"] else #[] end);
   let build-location = project-build-location(project);
   build-system(build-options,
-	       directory: build-location,
-	       build-script: build-script,
-	       arch: arch,
+               directory: build-location,
+               build-script: build-script,
+               arch: arch,
                progress-callback: progress-callback,
-	       project-build-info: project-build-info,
+               project-build-info: project-build-info,
                force?: extent == #"all")
 end method;
 
@@ -121,14 +121,14 @@ define function lookup-named-project (key, #key create? = #t)
     key
   else
     let key = as(<symbol>, key);
-    let project = 
+    let project =
       choose-project(rcurry(project-key?, key));
 
     if(project)
       verify-project-database(project);
-      if(project.%database-in-memory & 
-	   ~project-dynamic-environment(#"compiler-transaction"))
-	project.project-top-level? := #t
+      if(project.%database-in-memory &
+           ~project-dynamic-environment(#"compiler-transaction"))
+        project.project-top-level? := #t
       end;
       project
     elseif(create?)
@@ -148,12 +148,12 @@ define function ensure-project-database(project :: <project>, #key parse? = #f)
     parse-project-sources(project.project-current-compilation-context);
    end
   end;
-  let context = project.%database-in-memory & 
+  let context = project.%database-in-memory &
           project.project-current-compilation-context;
-  values(context, 
-	 project.%database-in-memory,
-	 project.%database-in-memory-current,
-	 project.%database-saved)
+  values(context,
+         project.%database-in-memory,
+         project.%database-in-memory-current,
+         project.%database-saved)
 end;
 
 define function resignal-project-warning(c :: <condition>, #key abort?)
@@ -161,10 +161,10 @@ define function resignal-project-warning(c :: <condition>, #key abort?)
   apply(internal-message, c.condition-format-string, c.condition-format-arguments);
   if (abort?)
     user-warning("Aborting compilation due to errors");
-    signal(make(<abort-compilation>, 
-		warnings: 0,
-		serious-warnings: 0,
-		errors: 1))
+    signal(make(<abort-compilation>,
+                warnings: 0,
+                serious-warnings: 0,
+                errors: 1))
   end;
   // in case the signal is not caught
   #()
@@ -180,10 +180,10 @@ define function project-load-namespace (project :: <project>, #rest keys)
       debug-out(#"driver", "project-load-namespace %s, %s\n", project, keys);
       debug-message("project-load-namespace of %s, %s", project.project-name, keys);
       project-stage-text(project, "Loading namespace for library %s",
-			 as(<string>, project.project-library-name));	 
+                         as(<string>, project.project-library-name));
 
       if(project-dynamic-environment(#"compiler-transaction"))
-	remove-all-personal-owners(project);
+        remove-all-personal-owners(project);
       end;
       apply(canonicalize-project-sources, project, keys);
       project.project-top-level? := #t;
@@ -195,10 +195,10 @@ define function project-load-namespace (project :: <project>, #rest keys)
       let context = project-current-compilation-context(project);
       let all-used-contexts = all-known-compilation-contexts(context);
       let personal-contexts = choose(method (c)
-				       let p = c.compilation-context-project;
-				       project-personal-library?(p)
-				     end,
-				     all-used-contexts);
+                                       let p = c.compilation-context-project;
+                                       project-personal-library?(p)
+                                     end,
+                                     all-used-contexts);
       project.project-namespace-loaded := #t;
       personal-contexts
     exception(c :: <source-record-error>)
@@ -209,10 +209,10 @@ define function project-load-namespace (project :: <project>, #rest keys)
 end;
 
 define function parse-project(project :: <project>,
-			      #rest keys,
-			      #key force-parse?, 
-			      update-used? = #t,
-			      force-parse-used?)
+                              #rest keys,
+                              #key force-parse?,
+                              update-used? = #t,
+                              force-parse-used?)
  => (aborted? :: <boolean>);
   debug-assert(~%project-closed?(project), "Attempt to compile closed project");
   block()
@@ -220,38 +220,38 @@ define function parse-project(project :: <project>,
     #f
   exception(c :: <abort-compilation>)
     internal-message("Aborting compilation of %s due to warnings",
-		     project.project-name);
+                     project.project-name);
     project-progress-text(project, "Aborting compilation of %s due to warnings",
-			  project.project-name);
-    #t  
+                          project.project-name);
+    #t
   end;
 end;
 
 define function %database-invalidated(project :: <project>)
   let already-seen :: <object-table> = make(<object-table>);
   local method note-invalid
-	    (project :: <project>)
-	  unless (element(already-seen, project, default: #f))
-	    note-database-invalidated(project);
-	    already-seen[project] := #t;
-	    do(note-invalid, project.project-owners)
-	  end
-	end method note-invalid;
+            (project :: <project>)
+          unless (element(already-seen, project, default: #f))
+            note-database-invalidated(project);
+            already-seen[project] := #t;
+            do(note-invalid, project.project-owners)
+          end
+        end method note-invalid;
   note-invalid(project)
 end;
 
 define function %parse-project(project :: <project>,
-			       #key force-parse?, 
-			       update-used? = #t,
-			       force-parse-used?)
+                               #key force-parse?,
+                               update-used? = #t,
+                               force-parse-used?)
  => (compilation-contexts-to-recompile :: <sequence>);
   block()
-    let personal-contexts = 
+    let personal-contexts =
       project-load-namespace(project,
-			     update-sources?: #t,
-			     force-parse?: force-parse?,
-			     update-used?: update-used?,
-			     force-parse-used?: force-parse-used?);
+                             update-sources?: #t,
+                             force-parse?: force-parse?,
+                             update-used?: update-used?,
+                             force-parse-used?: force-parse-used?);
     close-unused-projects();
     for (subcontext in personal-contexts using backward-iteration-protocol)
       let parsed? = parse-project-sources(subcontext);
@@ -275,25 +275,25 @@ define function parse-and-compile
     let project = compilation-context-project(context);
     let settings = project-build-settings(project);
     let strip? = if (strip-policy == #"tight")
-		   project-compilation-mode(project) == #"tight"
-		 else
-		   strip-policy
-		 end;
+                   project-compilation-mode(project) == #"tight"
+                 else
+                   strip-policy
+                 end;
     note-compiling-definitions(project);
     with-project-progress(project)
       let parsed? = parse? & parse-project-sources(context);
       debug-message("Parse-project-sources returned %s", parsed?);
       parsed? & %database-invalidated(project);
-      let status = 
-	apply(compile-project-definitions,
-	      context,
-	      build-settings: settings,
-	      strip?: strip?,
-	      keys);
+      let status =
+        apply(compile-project-definitions,
+              context,
+              build-settings: settings,
+              strip?: strip?,
+              keys);
       if(status) note-compiled-definitions(project)
-      else 
-	debug-message("Compile-project-definitions for project %s returned #f",
-		      project.project-name)
+      else
+        debug-message("Compile-project-definitions for project %s returned #f",
+                      project.project-name)
       end;
     end;
   exception(c :: <source-record-error>)
@@ -302,19 +302,18 @@ define function parse-and-compile
 end function;
 
 define method compile-library (project :: <project>,
-			       #rest flags,
-			       #key force-compile? = #f,
-			            force-parse?   = #f,
-			            abort-on-all-warnings?     = #f,
-			            abort-on-serious-warnings? = #f,
-			            default-binding = #f,
-			            strip? = *strip-default-policy*,
-			            save?  = #f,
-				    copy-sources? = #f,
-				    // More fine-grained forcing controls..
-				    force-batch? = force-compile?,
-				    force-objects? = force-compile?,
-			       #all-keys)
+                               #rest flags,
+                               #key force-compile? = #f,
+                                    force-parse?   = #f,
+                                    abort-on-all-warnings?     = #f,
+                                    abort-on-serious-warnings? = #f,
+                                    default-binding = #f,
+                                    strip? = *strip-default-policy*,
+                                    save?  = #f,
+                                    // More fine-grained forcing controls..
+                                    force-batch? = force-compile?,
+                                    force-objects? = force-compile?,
+                               #all-keys)
  => (aborted? :: <boolean>);
   debug-assert(~%project-closed?(project), "Attempt to compile closed project");
   debug-assert(project.project-personal-library?, "Attempt to compile read-only project");
@@ -323,163 +322,160 @@ define method compile-library (project :: <project>,
   let context = project-current-compilation-context(project);
   with-used-project-cache
 
-      %parse-project(project, 
-		     force-parse?: force-parse?, 
-		     update-used?: #t,
-		     force-parse-used?: #f);
+      %parse-project(project,
+                     force-parse?: force-parse?,
+                     update-used?: #t,
+                     force-parse-used?: #f);
       block(finish)
-	apply(parse-and-compile, 
-	      context, strip?, #f,
-	      compile-all?: force-batch?,
-	      compile-if-built?: force-objects?,
-	      flags);
-	  #f
+        apply(parse-and-compile,
+              context, strip?, #f,
+              compile-all?: force-batch?,
+              compile-if-built?: force-objects?,
+              flags);
+          #f
       exception(c :: <abort-compilation>)
-	internal-message("Aborting compilation of %s due to warnings",
-			 project.project-name);
-	project-progress-text(project, "Aborting compilation of %s due to warnings",
-			      project.project-name);
-	#t
+        internal-message("Aborting compilation of %s due to warnings",
+                         project.project-name);
+        project-progress-text(project, "Aborting compilation of %s due to warnings",
+                              project.project-name);
+        #t
       end;
 
   end;
 end method;
 
 define method build-project(project :: <project>,
-			    #key force? = #f,
-				 save?  = #f,
-				 copy-sources? = #f,
-				 abort-on-all-warnings?     = #f,
-				 abort-on-serious-warnings? = #f,
-				 default-binding = #f,
-				 assembler-output? = unsupplied(), harp-output? = #f,
-				 debug-info? = #t, gc? = #f, gc-stats? = #f,
-				 recursive? = #t)
+                            #key force? = #f,
+                                 save?  = #f,
+                                 abort-on-all-warnings?     = #f,
+                                 abort-on-serious-warnings? = #f,
+                                 default-binding = #f,
+                                 assembler-output? = unsupplied(), harp-output? = #f,
+                                 debug-info? = #t, gc? = #f, gc-stats? = #f,
+                                 recursive? = #t)
 
 end;
 
 define thread variable *contexts-to-recompile* = #f;
 
 define method update-libraries (project :: <project>,
-				#key force? = #f,
-				     save?  = #f,
-				     copy-sources? = #f,
-				     abort-on-all-warnings?     = #f,
-			             abort-on-serious-warnings? = #f,
-				     continue-after-abort? = #f,
-				     default-binding = #f,
-				     strip? = *strip-default-policy*,
-				     assembler-output? = unsupplied(),
-				     harp-output? = #f, dfm-output? = #f,
-				     debug-info? = #t, gc? = #f, gc-stats? = #f,
-				     flush? = #f,
-				     // More fine-grained forcing controls..
-				     force-parse?   = force?,
-				     force-compile? = force?,
-				     force-batch?   = force-compile?,
-				     // This isn't very useful yet...
-				     force-objects? = force-compile?,
-				     recursive? = #t)
+                                #key force? = #f,
+                                     save?  = #f,
+                                     abort-on-all-warnings?     = #f,
+                                     abort-on-serious-warnings? = #f,
+                                     continue-after-abort? = #f,
+                                     default-binding = #f,
+                                     strip? = *strip-default-policy*,
+                                     assembler-output? = unsupplied(),
+                                     harp-output? = #f, dfm-output? = #f,
+                                     debug-info? = #t, gc? = #f, gc-stats? = #f,
+                                     flush? = #f,
+                                     // More fine-grained forcing controls..
+                                     force-parse?   = force?,
+                                     force-compile? = force?,
+                                     force-batch?   = force-compile?,
+                                     // This isn't very useful yet...
+                                     force-objects? = force-compile?,
+                                     recursive? = #t)
  => (aborted? :: <boolean>);
   if (gc-stats?) enable-gc-messages() end;
   debug-assert(~%project-closed?(project), "Attempt to compile closed project");
-  debug-assert(project.project-personal-library?, 
-	       "Attempt to compile read-only project");
+  debug-assert(project.project-personal-library?,
+               "Attempt to compile read-only project");
   project-dynamic-environment(#"default-binding") := default-binding;
   let aborted? = #f;
   with-used-project-cache
     with-progress-reports
       block(finish)
-	let handler <abort-compilation> = 
-	  method(c, next)
-	      internal-message("Aborting compilation of %s due to errors",
-			       project.project-name);
-	      project-progress-text(project, 
-				    "Aborting compilation of %s due to errors",
-				    project.project-name);
-	      aborted? := #t;
-	      finish()
-	  end;
-	let context = project-current-compilation-context(project);
+        let handler <abort-compilation> =
+          method(c, next)
+              internal-message("Aborting compilation of %s due to errors",
+                               project.project-name);
+              project-progress-text(project,
+                                    "Aborting compilation of %s due to errors",
+                                    project.project-name);
+              aborted? := #t;
+              finish()
+          end;
+        let context = project-current-compilation-context(project);
         let all-contexts-to-recompile =
           project-load-namespace(project, force-parse?: force-parse?,
-				 update-sources?: #t, update-used?: #t);
-	close-unused-projects();
-	let contexts-to-recompile =
-	  if (recursive?)
-	    all-contexts-to-recompile;
-	  else
-	    list(context);
-	  end if;
-	if (*contexts-to-recompile*)
-	  *contexts-to-recompile* :=
-	    reduce(method (contexts, context)
-		     pair(as-lowercase(as(<string>, context.compilation-context-project.project-library-name)), 
-			  contexts)
-		   end method,
-		   #(),
-		   contexts-to-recompile);
-	end if;
+                                 update-sources?: #t, update-used?: #t);
+        close-unused-projects();
+        let contexts-to-recompile =
+          if (recursive?)
+            all-contexts-to-recompile;
+          else
+            list(context);
+          end if;
+        if (*contexts-to-recompile*)
+          *contexts-to-recompile* :=
+            reduce(method (contexts, context)
+                     pair(as-lowercase(as(<string>, context.compilation-context-project.project-library-name)),
+                          contexts)
+                   end method,
+                   #(),
+                   contexts-to-recompile);
+        end if;
 
-	let count = contexts-to-recompile.size;
-	dynamic-bind (*number-of-libraries-for-operation* = count)
-	  internal-progress-text(context, 
-			       "Number of libraries to compile: %d", count);
+        let count = contexts-to-recompile.size;
+        dynamic-bind (*number-of-libraries-for-operation* = count)
+          internal-progress-text(context,
+                               "Number of libraries to compile: %d", count);
 
-	  let skip-heaping = #f;
-	  if(empty?(contexts-to-recompile))
-	    aborted? := #t;
-	    finish()
-	  end;
-	  for (cc in contexts-to-recompile using backward-iteration-protocol)
-	    block (continue)
-	      let proj = compilation-context-project(cc);
-	      let handler <abort-compilation> = 
-		method(c, next)
-		    internal-message("Aborting compilation of %s due to warnings",
-				     proj.project-name);
-		    project-progress-text(proj, 
-					  "Aborting compilation of %s due to warnings",
-					  proj.project-name);
-		    aborted? := #t;
-		    if(continue-after-abort?)
-		      skip-heaping := #t;
-		      continue()
-		    else
-		      finish()
-		    end
-		end;
-	      parse-and-compile(cc, strip?, #t,
-				copy-sources?: copy-sources?,
-				abort-on-all-warnings?: abort-on-all-warnings?,
-				abort-on-serious-warnings?: abort-on-serious-warnings?,
-				skip-heaping?: skip-heaping,
-				compile-all?: force-batch?,
-				compile-if-built?: force-objects?,
-				assembler-output?: assembler-output?,
-				harp-output?: harp-output?,
-				dfm-output?: dfm-output?,
-				debug-info?: debug-info?,
-				gc?: gc?, gc-stats?: gc-stats?,
-				save?: save?,
-				flush?: flush?);
-	      if(save?)
-		proj.%database-saved := #t;
-		note-database-saved(proj) 
-	      end;
+          let skip-heaping = #f;
+          if(empty?(contexts-to-recompile))
+            aborted? := #t;
+            finish()
+          end;
+          for (cc in contexts-to-recompile using backward-iteration-protocol)
+            block (continue)
+              let proj = compilation-context-project(cc);
+              let handler <abort-compilation> =
+                method(c, next)
+                    internal-message("Aborting compilation of %s due to warnings",
+                                     proj.project-name);
+                    project-progress-text(proj,
+                                          "Aborting compilation of %s due to warnings",
+                                          proj.project-name);
+                    aborted? := #t;
+                    if(continue-after-abort?)
+                      skip-heaping := #t;
+                      continue()
+                    else
+                      finish()
+                    end
+                end;
+              parse-and-compile(cc, strip?, #t,
+                                abort-on-all-warnings?: abort-on-all-warnings?,
+                                abort-on-serious-warnings?: abort-on-serious-warnings?,
+                                skip-heaping?: skip-heaping,
+                                compile-all?: force-batch?,
+                                compile-if-built?: force-objects?,
+                                assembler-output?: assembler-output?,
+                                harp-output?: harp-output?,
+                                dfm-output?: dfm-output?,
+                                debug-info?: debug-info?,
+                                gc?: gc?, gc-stats?: gc-stats?,
+                                save?: save?,
+                                flush?: flush?);
+              if(save?)
+                proj.%database-saved := #t;
+                note-database-saved(proj)
+              end;
 
-	    end block;
-	  end for;
-	end dynamic-bind;
+            end block;
+          end for;
+        end dynamic-bind;
     cleanup
       do(method(p)
-	     p.project-personal-library? &
-	     compilation-definitions-inconsistent?(p.project-current-compilation-context) &
-	     %database-invalidated(p)
-	 end,
-	 // TO DO: cannot ask for used contexts I think
-	 // should unset namespace loaded ?
-	 *all-open-projects*)
+             p.project-personal-library? &
+             compilation-definitions-inconsistent?(p.project-current-compilation-context) &
+             %database-invalidated(p)
+         end,
+         // TO DO: cannot ask for used contexts I think
+         // should unset namespace loaded ?
+         *all-open-projects*)
       end block;
     end with-progress-reports;
   end with-used-project-cache;
@@ -497,73 +493,73 @@ end method;
 
 
 define function compile-project-with-gc(project,
-					compile-project :: <function>,
-					compile-subproject :: <function>,
-					#rest keys)
+                                        compile-project :: <function>,
+                                        compile-subproject :: <function>,
+                                        #rest keys)
   local method projects-to-recompile(projects :: <list>, last-project :: <string>)
-	  iterate process-projects(projects :: <list> = projects)
-	    if (projects.empty?) projects
-	    else
-	      let project :: <string> = projects.first;
-	      if (project = last-project)
-		projects.tail
-	      else
-		process-projects(projects.tail)
-	      end if;
-	    end if;
-	  end iterate;
-	end method;
+          iterate process-projects(projects :: <list> = projects)
+            if (projects.empty?) projects
+            else
+              let project :: <string> = projects.first;
+              if (project = last-project)
+                projects.tail
+              else
+                process-projects(projects.tail)
+              end if;
+            end if;
+          end iterate;
+        end method;
   local method compile-subprojects-with-gc(subprojects :: <list>,
-					   projects-canonicalized? :: <boolean>)
-	  // format-out("\n### projects-to-compile %=\n", subprojects);
-	  let no-of-projects :: <integer> = subprojects.size;
-	  unless (no-of-projects = 0)
+                                           projects-canonicalized? :: <boolean>)
+          // format-out("\n### projects-to-compile %=\n", subprojects);
+          let no-of-projects :: <integer> = subprojects.size;
+          unless (no-of-projects = 0)
           let done? =
-	  block()
-	    let subproject :: <string> = subprojects.first;
-	    if (no-of-projects = 1)
-	      let toplevel? = ~ projects-canonicalized?;
-	      apply(compile-project, subproject,
-		    recursive?: toplevel?, keys);
-	    else
-	      apply(compile-subproject, subproject, keys);
-	    end if;
-	    #t
-	  exception(c :: <garbage-collection>)
-	    let last-project :: <string> = c.garbage-collection-info;
+          block()
+            let subproject :: <string> = subprojects.first;
+            if (no-of-projects = 1)
+              let toplevel? = ~ projects-canonicalized?;
+              apply(compile-project, subproject,
+                    recursive?: toplevel?, keys);
+            else
+              apply(compile-subproject, subproject, keys);
+            end if;
+            #t
+          exception(c :: <garbage-collection>)
+            let last-project :: <string> = c.garbage-collection-info;
 
             // do any outstanding projects stuff here ...
-	    note-compiled-definitions(last-project);
+            note-compiled-definitions(last-project);
 
-	    unless (projects-canonicalized?)
-	      *contexts-to-recompile* :=
-		projects-to-recompile(*contexts-to-recompile*, last-project);
-	    end unless;
+            unless (projects-canonicalized?)
+              *contexts-to-recompile* :=
+                projects-to-recompile(*contexts-to-recompile*, last-project);
+            end unless;
 
-	    close-all-projects();
-	    // format-out("\n### SIZE OF HEAP BEFORE COLLECTION: %=\n", room());
+            close-all-projects();
+            // format-out("\n### SIZE OF HEAP BEFORE COLLECTION: %=\n", room());
 
             // Now uses the full GC ramp
-	    // collect-garbage!();
+            // collect-garbage!();
 
-	    // format-out("\n### SIZE OF HEAP AFTER COLLECTION: %=\n", room());
-	    #f
-	  end block;
-	  if (done?)
-	    compile-subprojects-with-gc
-	      (subprojects.tail, projects-canonicalized?)
-	  else
-	    compile-subprojects-with-gc
-	      (if (projects-canonicalized?)
-		 subprojects.tail
-	       else
-		 let contexts = *contexts-to-recompile*;
-		 *contexts-to-recompile* := #f;
-		 contexts
-	       end if,
-	       #t);
-	  end if;
-	  end unless;
+            // format-out("\n### SIZE OF HEAP AFTER COLLECTION: %=\n", room());
+            #f
+          end block;
+          if (done?)
+            compile-subprojects-with-gc
+              (subprojects.tail, projects-canonicalized?)
+          else
+            compile-subprojects-with-gc
+              (if (projects-canonicalized?)
+                 subprojects.tail
+               else
+                 let contexts = *contexts-to-recompile*;
+                 *contexts-to-recompile* := #f;
+                 contexts
+               end if,
+               #t);
+          end if;
+          end unless;
   end method;
 
   dynamic-bind (*contexts-to-recompile* = #())
@@ -581,13 +577,13 @@ define function maybe-dump-combined-sources (project :: <project>)
   let dir = project.project-build-location;
   when (objects.size == 1 & sources.size > 1 & dir)
     let file = make(<file-locator>,
-		    directory: dir,
-		    base:      objects.first,
-		    extension: "dylan");
+                    directory: dir,
+                    base:      objects.first,
+                    extension: "dylan");
     with-open-file (stream = file, direction: #"output")
       for (sr in sources)
-	for (i from 0 below sr.source-record-start-line) new-line(stream) end;
-	write(stream, source-record-contents(sr));
+        for (i from 0 below sr.source-record-start-line) new-line(stream) end;
+        write(stream, source-record-contents(sr));
       end;
     end with-open-file;
   end;

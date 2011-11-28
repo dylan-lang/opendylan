@@ -93,9 +93,7 @@ define module user-projects
     $driver-debug,
     $pm-debug,
     %debug-pm,
-    project-source-record-location,
-    *copy-canonical-sources?*;
-
+    project-source-record-location;
 end module;
 
 define module project-manager-interface
