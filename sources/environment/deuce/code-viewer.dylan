@@ -124,6 +124,9 @@ define pane <code-viewer-displayer> (<displayer-mixin>)
                end
              end
            end method);
+  //let that here although I removed the code which called this part, because
+  //I think it might be a good starting point if someone wants to integrate a
+  //source control system again on top of that...
   pane %source-type-box (pane)
     make(<radio-box>,
          value: $code-viewer-default-source-type,
@@ -157,17 +160,9 @@ define pane <code-viewer-displayer> (<displayer-mixin>)
   slot %canonical-source-button = #f;
   layout (pane)
     vertically (spacing: 2)
-      if (environment-default-copy-sources())
-        horizontally (spacing: 8)		// same as $tool-bar-group-spacing
-          pane.%source-type-box;
-          pane.%edit-source-button;
-          pane.%current-location-gadget;
-        end;
-      else
-        horizontally (spacing: 8)		// same as $tool-bar-group-spacing
-          pane.%edit-source-button;
-          pane.%current-location-gadget;
-        end;
+      horizontally (spacing: 8)		// same as $tool-bar-group-spacing
+        pane.%edit-source-button;
+        pane.%current-location-gadget;
       end;
       scrolling (scroll-bars: #"both")
         pane.%code-viewer

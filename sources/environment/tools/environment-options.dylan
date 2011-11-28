@@ -19,7 +19,6 @@ define settings <environment-settings> (<open-dylan-user-settings>)
   slot start-dialog-action      :: <symbol>  = #"example";
   slot about-box-action         :: <symbol>  = #"initial";
   slot default-save-databases   :: <boolean> = #t;
-  slot default-copy-sources     :: <boolean> = #f;
   //FIXME: this should be reverted to #"ask" once library dylan
   //builds without serious warnings
   slot default-link-mode        :: <symbol>  = #"force";
@@ -61,11 +60,6 @@ define function environment-default-save-databases
     () => (save? :: <boolean>)
   $environment-settings.default-save-databases
 end function environment-default-save-databases;
-
-define function environment-default-copy-sources
-    () => (copy? :: <boolean>)
-  $environment-settings.default-copy-sources
-end function environment-default-copy-sources;
 
 define function environment-default-link-mode
     () => (mode :: <symbol>)
@@ -184,8 +178,6 @@ end pane <environment-general-options-page>;
 define pane <environment-build-options-page> ()
   sealed slot %build-script :: <file-locator>,
     required-init-keyword: build-script:;
-  sealed slot %copy-sources? :: <boolean>,
-    required-init-keyword: copy-sources?:;
   sealed slot %save-databases? :: <boolean>,
     required-init-keyword: save-databases?:;
   sealed slot %link-mode :: <link-mode>,
@@ -224,16 +216,7 @@ define pane <environment-build-options-page> ()
       pane.%build-script-field;
       pane.%build-script-browse-button;
     end;
-    
-  /* ---*** Removed for 2.0 Beta 1 -- put it back in later
-  pane %copy-sources-pane (pane)
-    make(<check-button>,
-	 label: "Sa&ve 'canonical' sources in the build area for builds",
-	 value: pane.%copy-sources?,
-	 value-changed-callback:
-	   method (b)
-	     pane.%copy-sources? := gadget-value(b)
-	   end method); */
+
   pane %save-databases-pane (pane)
     make(<check-button>,
 	 label: "&Save compiler databases after builds",
@@ -274,7 +257,6 @@ define pane <environment-build-options-page> ()
       make(<group-box>,
            label: "Database options",
            child: vertically (spacing: 8)
-                    /* pane.%copy-sources-pane; */
                     pane.%save-databases-pane;
 		    pane.%save-databases-now-pane;
                   end);
@@ -348,7 +330,6 @@ define method frame-edit-options (frame :: <environment-frame>) => ()
     let build-page
       = make(<environment-build-options-page>,
 	     save-databases?:   environment-default-save-databases(),
-	     copy-sources?:     environment-default-copy-sources(),
              build-script:      default-build-script(),
 	     link-mode:         environment-default-link-mode(),
 	     upgrade-warnings?: environment-default-upgrade-warnings());
@@ -370,7 +351,6 @@ define method frame-edit-options (frame :: <environment-frame>) => ()
 	    settings.opened-project-active    := general-page.%active-on-opening?;
 	    settings.started-project-active   := general-page.%active-on-starting?;
 	    settings.default-save-databases   := build-page.%save-databases?;
-	    settings.default-copy-sources     := build-page.%copy-sources?;
 	    settings.default-link-mode        := build-page.%link-mode;
 	    settings.default-upgrade-warnings := build-page.%upgrade-warnings?;
 	    settings.auto-raise-all-frames    := windows-page.%raise-frames;

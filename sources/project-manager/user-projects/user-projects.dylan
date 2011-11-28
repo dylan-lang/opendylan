@@ -816,32 +816,16 @@ define method project-name
   as(<symbol>, locator-base(project.project-file-location))
 end method project-name;
 
-define variable *copy-canonical-sources?* = #f;
-
 define method project-compiler-source-files
     (project :: <user-project>)
  => (location :: false-or(<sequence>));
-  if(*copy-canonical-sources?*)
-    let build-directory = project.project-build-location;
-    map(method (f :: <file-locator>)
-          make(<file-locator>,
-               directory: build-directory,
-               name:      f.locator-name)
-        end,
-        project.project-source-files)
-  else
-    project.project-source-files;
-  end;
+  project.project-source-files;
 end;
 
 define method project-compiler-source-location
     (project :: <user-project>)
  => (location :: <directory-locator>);
-  if(*copy-canonical-sources?*)
-    project.project-build-location;
-  else
-    project.project-source-location;
-  end;
+  project.project-source-location;
 end;
 
 define generic project-source-record-location(project :: <project>,
@@ -857,15 +841,7 @@ end;
 define method project-source-record-location(project :: <user-project>,
                                              sr :: <file-source-record>)
  => (location :: false-or(<file-locator>));
-  if(*copy-canonical-sources?*)
-    let sr-name = sr.source-record-name;
-    sr-name & any?(method(sr)
-                       sr.source-record-name = sr-name & sr.source-record-location
-                   end,
-                   compute-project-source-records(project));
-  else
-    sr.source-record-location
-  end;
+  sr.source-record-location
 end;
 
 define function project-id-source-record(project :: <user-project>, id) => sr;
@@ -879,61 +855,7 @@ define function project-id-source-record(project :: <user-project>, id) => sr;
                            project-source-location(project), id))
 end function;
 
-define function compute-project-source-records(project :: <user-project>)
- => sr*;
-  local method id-source-record (id) => sr;
-          project-id-source-record(project, id)
-        end method;
-
-  let new-user-records =
-      project-files-to-source-records(project,
-                                      directory: project.project-source-location,
-                                      files: project.project-source-files,
-                                      id-source-record: id-source-record);
-  new-user-records
-end;
-
-define method project-verify-source-records(project :: <user-project>)
- => (records :: <sequence>);
-  if(*copy-canonical-sources?*)
-    block()
-      compute-project-source-records(project)
-    exception(e :: <source-record-error>)
-      apply(user-error, e.condition-format-string, e.condition-format-arguments);
-      #()
-    end;
-  else
-    next-method()
-  end
-end;
-
 define method update-project-files (project :: <user-project>) => ();
-  if(*copy-canonical-sources?*)
-    let new-user-records = compute-project-source-records(project);
-
-    let changed-records = choose(method(r)
-                                     ~member?(r, project.%compiled-source-records)
-                                 end,
-                                 new-user-records);
-    unless(empty?(changed-records))
-      let build-directory = project.project-build-location;
-      for (sr in changed-records)
-        let source-file = source-record-location(sr);
-        let target-file
-          = make(<file-locator>,
-                 directory: build-directory,
-                 name: locator-name(source-file));
-        debug-message("  Copying %s to build area", as(<string>, source-file));
-
-        block()
-          copy-file(source-file, target-file, if-exists: #"replace")
-        exception(e :: <file-system-error>)
-          debug-assert(#f, condition-format-string(e), condition-format-arguments(e))
-        end block;
-      end;
-      project.%compiled-source-records := new-user-records;
-    end;
-  end;
   // do nothing - we don't allow for changes of HDP files
   // outside of the environment
   // well, now we do ;-)

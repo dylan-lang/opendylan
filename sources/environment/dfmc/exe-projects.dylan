@@ -100,7 +100,7 @@ define sealed method build-project
     (project :: <exe-project>,
      #key clean?, link? = #t, release?, output = #[],
           warning-callback, progress-callback, error-handler,
-          save-databases?, copy-sources?, process-subprojects?, messages)
+          save-databases?, process-subprojects?, messages)
  => (well? :: <boolean>)
   error("You cannot build an executable-only project!")
 end method build-project;

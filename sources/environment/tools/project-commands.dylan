@@ -885,7 +885,7 @@ end method frame-clean-project;
 define method frame-do-build-project
     (frame :: <environment-frame>,
      #key parse?, compile?, link?, clean? = #f, release? = #f,
-          save-databases? = $unsupplied, copy-sources? = $unsupplied,
+          save-databases? = $unsupplied,
           process-subprojects? = #t,
           start? = #f, startup-option = #"start",
           finish-function = #f,
@@ -894,9 +894,6 @@ define method frame-do-build-project
   let project = frame.ensure-frame-project;
   when (unsupplied?(save-databases?))
     save-databases? := environment-default-save-databases()
-  end;
-  when (unsupplied?(copy-sources?))
-    copy-sources? := environment-default-copy-sources()
   end;
   let timeout = $project-compilation-timeout;
   let project-name = environment-object-primitive-name(project, project);
@@ -921,7 +918,6 @@ define method frame-do-build-project
                 clean?:   clean?,
                 process-subprojects?: process-subprojects?,
                 save-databases?:      save-databases?,
-                copy-sources?:        copy-sources?,
                 link-mode:            link-mode,
                 upgrade-warnings?:    upgrade?,
                 start?:                 start?,
@@ -976,7 +972,7 @@ end method compilation-commands-enabled?-setter;
 define method frame-do-build-project-1
     (frame :: <environment-frame>, project :: <project-object>,
      #key parse?, compile?, link?, clean? = #f, release?,
-          save-databases? = #t, copy-sources? = #f,
+          save-databases? = #t,
           process-subprojects? = #t,
           link-mode = #"ask", upgrade-warnings? = #f,
           start? = #f, startup-option = #"start",
@@ -1043,7 +1039,6 @@ define method frame-do-build-project-1
                           progress-callback:    note-compiler-progress,
                           error-handler:        condition-handler,
                           save-databases?:      save-databases?,
-                          copy-sources?:        copy-sources?,
                           process-subprojects?: process-subprojects?);
         end;
     record-breakpoint-source-locations(project);

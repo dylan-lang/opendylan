@@ -66,8 +66,6 @@ define frame <compiler-progress-window>
     init-keyword: build-operation:;
   sealed slot %clean-build? :: <boolean> = #f,
     init-keyword: clean-build?:;
-  sealed slot %copy-sources? :: <boolean> = #f,
-    init-keyword: copy-sources?:;
   sealed slot %save-databases? :: <boolean> = #t,
     init-keyword: save-databases?:;
   sealed slot %process-subprojects? :: <boolean> = #t,
@@ -111,16 +109,6 @@ define frame <compiler-progress-window>
              frame.%clean-build? := gadget-value(b)
            end method,
          documentation: "Compile all source files rather than only changed ones.");
-  /* ---*** Removed for 2.0 Beta 1 -- put it back in later
-  pane %copy-sources-pane (frame)
-    make(<check-button>,
-         label: "Sa&ve 'canonical' sources in the build area for the build",
-         value: frame.%copy-sources?,
-         value-changed-callback:
-           method (b)
-             frame.%copy-sources? := gadget-value(b)
-           end method,
-         documentation: "Choose whether to copy canonical sources to the build area before building."); */
   pane %save-databases-pane (frame)
     make(<check-button>,
          label: "&Save compiler databases after build",
@@ -221,7 +209,6 @@ define frame <compiler-progress-window>
              child: vertically (spacing: 8)
                       frame.%build-operation-pane;
                       frame.%clean-build-pane;
-                      /* frame.%copy-sources-pane; */
                       frame.%save-databases-pane;
                       frame.%process-subprojects-pane;
                     end);
@@ -259,7 +246,6 @@ define method initialize
     (frame :: <compiler-progress-window>,
      #rest initargs,
      #key save-databases?   = $unsupplied,
-          copy-sources?     = $unsupplied,
           link-mode         = $unsupplied,
           upgrade-warnings? = $unsupplied,
           heading-label :: <string>  = "",
@@ -269,9 +255,6 @@ define method initialize
   when (unsupplied?(save-databases?))
     save-databases? := environment-default-save-databases()
   end;
-  when (unsupplied?(copy-sources?))
-    copy-sources? := environment-default-copy-sources()
-  end;
   when (unsupplied?(link-mode))
     link-mode := environment-default-link-mode()
   end;
@@ -280,7 +263,6 @@ define method initialize
   end;
   apply(next-method, frame,
         save-databases?:   save-databases?,
-        copy-sources?:     copy-sources?,
         link-mode:         link-mode,
         upgrade-warnings?: upgrade-warnings?,
         initargs);
@@ -324,7 +306,7 @@ define method set-compiler-progress-state
     (window :: <compiler-progress-window>,
      #key parse? = $unsupplied, compile? = $unsupplied, link? = $unsupplied,
           clean? = $unsupplied,
-          save-databases? = $unsupplied, copy-sources? = $unsupplied,
+          save-databases? = $unsupplied,
           process-subprojects? = $unsupplied) => ()
   when (supplied?(parse?) | supplied?(compile?) | supplied?(link?))
     let operation
@@ -355,12 +337,6 @@ define method set-compiler-progress-state
     window.%save-databases? := save-databases?;
     unless (window.%lightweight?)
       gadget-value(window.%save-databases-pane, do-callback?: #t) := save-databases?
-    end
-  end;
-  when (supplied?(copy-sources?))
-    window.%copy-sources? := copy-sources?;
-    unless (window.%lightweight?)
-      /* gadget-value(window.%copy-sources-pane, do-callback?: #t) := copy-sources? */
     end
   end;
 end method set-compiler-progress-state;
@@ -499,7 +475,6 @@ define method start-build-in-progress-window
                         clean?:   window.%clean-build?,
                         process-subprojects?: window.%process-subprojects?,
                         save-databases?:      window.%save-databases?,
-                        copy-sources?:        window.%copy-sources?,
                         link-mode:            window.%link-mode,
                         upgrade-warnings?:    window.%upgrade-warnings?,
                         note-compiler-progress: note-compiler-progress,

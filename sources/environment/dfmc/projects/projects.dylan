@@ -308,11 +308,10 @@ define sealed method build-project
      #key clean? = #f, link? = #t, release? = #f, output = #[],
           warning-callback :: false-or(<function>),
           progress-callback :: false-or(<function>), error-handler,
-          save-databases? = #f, copy-sources? = #f,
+          save-databases? = #f,
           process-subprojects? = #t,
           messages = #"external")
  => (built? :: <boolean>)
-  let old-copy-sources? = *copy-canonical-sources?*;
   block ()
     let project = project-object.ensure-project-proxy;
     let assembler-output? = member?(#"assembler", output) | unsupplied();
@@ -320,7 +319,6 @@ define sealed method build-project
     let harp-output?      = member?(#"harp", output);
     note-project-compilation-started(project-object);
     *progress-internal?*      := (messages == #"internal");
-    *copy-canonical-sources?* := copy-sources?;
     let aborted?
       = with-progress-reporting
             (project-object, progress-callback,
@@ -331,7 +329,6 @@ define sealed method build-project
                 update-libraries(project,
                                  force?: clean?,
                                  save?:  save-databases?,
-                                 copy-sources?: copy-sources?,
                                  abort-on-all-warnings?:     #f,
                                  abort-on-serious-warnings?: #f,
                                  assembler-output?: assembler-output?,
@@ -342,7 +339,6 @@ define sealed method build-project
                                 force-parse?:   clean?,
                                 force-compile?: clean?,
                                 save?: save-databases?,
-                                copy-sources?: copy-sources?,
                                 abort-on-all-warnings?:     #f,
                                 abort-on-serious-warnings?: #f,
                                 assembler-output?: assembler-output?,
@@ -365,7 +361,6 @@ define sealed method build-project
     //--- We do this in a cleanup since the database is changed even
     //--- if the compile is aborted.
     note-project-compilation-finished(project-object);
-    *copy-canonical-sources?* := old-copy-sources?;
   end
 end method build-project;
 
