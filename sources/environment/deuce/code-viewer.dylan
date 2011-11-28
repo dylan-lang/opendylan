@@ -56,7 +56,7 @@ define method buffer-section-separator-style
 end method buffer-section-separator-style;
 
 
-define pane <code-viewer-displayer> (<displayer-mixin>) 
+define pane <code-viewer-displayer> (<displayer-mixin>)
   constant slot %project :: <project-object>,
     required-init-keyword: project:;
   constant slot %read-only? :: <boolean> = #t,
@@ -64,110 +64,110 @@ define pane <code-viewer-displayer> (<displayer-mixin>)
   pane %code-viewer (pane)
     begin
       let window = make(<code-viewer>,		// no tooltip, it's too intrusive
-			project: pane.%project);
+                        project: pane.%project);
       dynamic-bind (*editor-frame* = window)
-	inc!(*code-viewer-buffer-count*);
+        inc!(*code-viewer-buffer-count*);
         let name   = format-to-string("Gadget %d", *code-viewer-buffer-count*);
-	let buffer = make-empty-buffer(<code-viewer-buffer>,
-				       name: name,
-				       major-mode: find-mode(<dylanworks-mode>),
-				       read-only?: pane.%read-only?,
-				       anonymous?: #t);
-	dynamic-bind (*buffer* = buffer)
-	  select-buffer(window, buffer)
-	end
+        let buffer = make-empty-buffer(<code-viewer-buffer>,
+                                       name: name,
+                                       major-mode: find-mode(<dylanworks-mode>),
+                                       read-only?: pane.%read-only?,
+                                       anonymous?: #t);
+        dynamic-bind (*buffer* = buffer)
+          select-buffer(window, buffer)
+        end
       end;
       window
     end;
   pane %edit-source-button (pane)
     make(<push-button>,
-	 label: $edit-source-bitmap,
-	 documentation: "Edit newest source",
-	 activate-callback:
-	   method (button)
-	     // let frame  = sheet-frame(button);
-	     // let viewer = pane.%code-viewer;
-	     // let object = code-viewer-definition(viewer);
-	     // frame-edit-object(frame, object)
-	     let frame      = sheet-frame(button);
-	     let viewer     = pane.%code-viewer;
-	     let definition = code-viewer-definition(viewer);
-	     when (definition)
-	       // This is more complicated than it should be so that we
-	       // get to the right interactive source if somebody compiled
-	       // a definition from an editor buffer
-	       //---*** 'frame-edit-object' should do this somehow...
-	       let project  = ensure-frame-project(frame);
-	       let location = environment-object-source-location(project, definition);
-	       let record   = location & source-location-source-record(location);
-	       let library  = record & find-source-record-library(project, record);
-	       let project  = library & library-project(project, library);
-	       let section 
-		 = project 
-		   & find-section-for-definition(project, definition, source-type: #"newest");
-	       let buffer
-		 = section & section-home-buffer(section, editor: $environment-editor);
-	       let locator = buffer & buffer-locator(buffer);
-	       if (locator)
-		 dynamic-bind (*buffer* = buffer)
-		   let start-line
-		     = if (code-viewer-current-line(viewer))
-			 line->line-index(buffer, code-viewer-current-line(viewer))
-		       else
-			 //--- The '+ 1' to get past the Dylan divider line...
-			 line->line-index(buffer, section-start-line(section)) + 1
-		       end;
-		 editor-open-file(locator, start-line: start-line)
-		 end
-	       else
-		 frame-edit-object(frame, definition)
-	       end
-	     end
-	   end method);
+         label: $edit-source-bitmap,
+         documentation: "Edit newest source",
+         activate-callback:
+           method (button)
+             // let frame  = sheet-frame(button);
+             // let viewer = pane.%code-viewer;
+             // let object = code-viewer-definition(viewer);
+             // frame-edit-object(frame, object)
+             let frame      = sheet-frame(button);
+             let viewer     = pane.%code-viewer;
+             let definition = code-viewer-definition(viewer);
+             when (definition)
+               // This is more complicated than it should be so that we
+               // get to the right interactive source if somebody compiled
+               // a definition from an editor buffer
+               //---*** 'frame-edit-object' should do this somehow...
+               let project  = ensure-frame-project(frame);
+               let location = environment-object-source-location(project, definition);
+               let record   = location & source-location-source-record(location);
+               let library  = record & find-source-record-library(project, record);
+               let project  = library & library-project(project, library);
+               let section
+                 = project
+                   & find-section-for-definition(project, definition, source-type: #"newest");
+               let buffer
+                 = section & section-home-buffer(section, editor: $environment-editor);
+               let locator = buffer & buffer-locator(buffer);
+               if (locator)
+                 dynamic-bind (*buffer* = buffer)
+                   let start-line
+                     = if (code-viewer-current-line(viewer))
+                         line->line-index(buffer, code-viewer-current-line(viewer))
+                       else
+                         //--- The '+ 1' to get past the Dylan divider line...
+                         line->line-index(buffer, section-start-line(section)) + 1
+                       end;
+                 editor-open-file(locator, start-line: start-line)
+                 end
+               else
+                 frame-edit-object(frame, definition)
+               end
+             end
+           end method);
   pane %source-type-box (pane)
     make(<radio-box>,
-	 value: $code-viewer-default-source-type,
-	 value-changed-callback:
-	   method (box)
-	     let frame  = sheet-frame(box);
-	     let viewer = pane.%code-viewer;
-	     code-viewer-source-type(viewer) := gadget-value(box);
-	     update-current-location-gadget(frame, pane, code-viewer-definition(viewer))
-	   end method,
-	 child: make(<row-layout>,
-		     spacing: 0,
-		     children:
-		       vector(pane.%newest-source-button
-				:= make(<radio-button>,
-					label: $current-source-bitmap | "N",
-					value: #"newest", id: #"newest",
-					button-style: #"push-button",
-					documentation: "Show the newest source"),
-			      pane.%canonical-source-button
-				:= make(<radio-button>,
-					label: $canonical-source-bitmap | "C",
-					value: #"canonical", id: #"canonical",
-					button-style: #"push-button",
-					documentation: "Show the canonical source"))));
+         value: $code-viewer-default-source-type,
+         value-changed-callback:
+           method (box)
+             let frame  = sheet-frame(box);
+             let viewer = pane.%code-viewer;
+             code-viewer-source-type(viewer) := gadget-value(box);
+             update-current-location-gadget(frame, pane, code-viewer-definition(viewer))
+           end method,
+         child: make(<row-layout>,
+                     spacing: 0,
+                     children:
+                       vector(pane.%newest-source-button
+                                := make(<radio-button>,
+                                        label: $current-source-bitmap | "N",
+                                        value: #"newest", id: #"newest",
+                                        button-style: #"push-button",
+                                        documentation: "Show the newest source"),
+                              pane.%canonical-source-button
+                                := make(<radio-button>,
+                                        label: $canonical-source-bitmap | "C",
+                                        value: #"canonical", id: #"canonical",
+                                        button-style: #"push-button",
+                                        documentation: "Show the canonical source"))));
   pane %current-location-gadget (pane)
     make(<text-field>,
-	 read-only?: #t, text: "",
-	 documentation: "Source location");
+         read-only?: #t, text: "",
+         documentation: "Source location");
   slot %newest-source-button    = #f;
   slot %canonical-source-button = #f;
   layout (pane)
     vertically (spacing: 2)
       if (environment-default-copy-sources())
-	horizontally (spacing: 8)		// same as $tool-bar-group-spacing
-	  pane.%source-type-box;
-	  pane.%edit-source-button;
-	  pane.%current-location-gadget;
-	end;
+        horizontally (spacing: 8)		// same as $tool-bar-group-spacing
+          pane.%source-type-box;
+          pane.%edit-source-button;
+          pane.%current-location-gadget;
+        end;
       else
-	horizontally (spacing: 8)		// same as $tool-bar-group-spacing
-	  pane.%edit-source-button;
-	  pane.%current-location-gadget;
-	end;
+        horizontally (spacing: 8)		// same as $tool-bar-group-spacing
+          pane.%edit-source-button;
+          pane.%current-location-gadget;
+        end;
       end;
       scrolling (scroll-bars: #"both")
         pane.%code-viewer
@@ -178,13 +178,13 @@ end pane <code-viewer-displayer>;
 define sideways method make-code-viewer
     (#rest initargs,
      #key project, frame, read-only? = #t,
-	  foreground, background, text-style,
-	  class = <code-viewer>, scroll-bars = #"vertical", #all-keys)
+          foreground, background, text-style,
+          class = <code-viewer>, scroll-bars = #"vertical", #all-keys)
  => (displayer :: <code-viewer-displayer>, viewer :: <code-viewer>)
   ignore(frame, foreground, background, text-style, scroll-bars);
   let displayer
     = make(<code-viewer-displayer>,
-	   project: project, read-only?: read-only?);
+           project: project, read-only?: read-only?);
   values(displayer, displayer.%code-viewer)
 end method make-code-viewer;
 
@@ -223,9 +223,9 @@ define method update-code-viewer-definition
     let project    = code-viewer-project(window);
     let definition = code-viewer-definition(window);
     let section
-      = definition 
+      = definition
         & find-section-for-definition(project, definition,
-				      source-type: code-viewer-source-type(window));
+                                      source-type: code-viewer-source-type(window));
     let old-section
       = buffer-start-node(buffer) & node-section(buffer-start-node(buffer));
     // Two different stack frames might be running the same function,
@@ -239,19 +239,19 @@ define method update-code-viewer-definition
       // Build the code viewer's buffer up from scratch
       // Start by cleaning out all current nodes
       for (node = buffer-start-node(buffer) then buffer-start-node(buffer),
-	   while: node)
-	let section = node-section(node);
-	when (section)
-	  section-nodes(section) := remove!(section-nodes(section), node);
-	end;
-	remove-node!(buffer, node)
+           while: node)
+        let section = node-section(node);
+        when (section)
+          section-nodes(section) := remove!(section-nodes(section), node);
+        end;
+        remove-node!(buffer, node)
       end;
       let node
-	= if (section)
-	    make-section-node(buffer, section, node-class: <dylan-definition-node>)
-	  else
-	    make-empty-section-node(buffer)
-	  end;
+        = if (section)
+            make-section-node(buffer, section, node-class: <dylan-definition-node>)
+          else
+            make-empty-section-node(buffer)
+          end;
       node-buffer(node)         := buffer;
       buffer-start-node(buffer) := node;
       buffer-end-node(buffer)   := node;
@@ -259,7 +259,7 @@ define method update-code-viewer-definition
       initialize-redisplay-for-buffer(window, buffer);
       queue-redisplay(window, $display-all);
       when (redisplay? & sheet-mapped?(window))
-	redisplay-window(window)
+        redisplay-window(window)
       end
     end
   end
@@ -286,14 +286,14 @@ define method code-viewer-current-location-setter
       // Flush the marker for the old line, if it's visible
       let dline = old-line & find-display-line(window, old-line);
       when (dline)
-	queue-redisplay(window, $display-line, line: old-line, index: 0);
-	redisplay-window(window)
+        queue-redisplay(window, $display-line, line: old-line, index: 0);
+        redisplay-window(window)
       end;
       // Move the point to ensure the new line gets scrolled into view
       when (new-line)
-	move-point!(new-line, index: 0, window: window);
-	queue-redisplay(window, $display-line, line: new-line, index: 0, centering: 0);
-	redisplay-window(window)
+        move-point!(new-line, index: 0, window: window);
+        queue-redisplay(window, $display-line, line: new-line, index: 0, centering: 0);
+        redisplay-window(window)
       end
     end
   end;
@@ -325,10 +325,10 @@ define method do-handle-presentation-event
      line :: <basic-line>, type == deuce/<dylan-breakpoint>,
      #rest keys,
      #key bp, x, y, button, modifiers, event-type,
-	  menu-function = dylanworks-breakpoint-menu) => ()
+          menu-function = dylanworks-breakpoint-menu) => ()
   ignore(bp, x, y, button, modifiers, event-type);
   apply(next-method, mode, window, line, type,
-	menu-function: menu-function, keys)
+        menu-function: menu-function, keys)
 end method do-handle-presentation-event;
 
 define method do-handle-presentation-event
@@ -336,10 +336,10 @@ define method do-handle-presentation-event
      nothing, type == <blank-area>,
      #rest keys,
      #key bp, x, y, button, modifiers, event-type,
-	  menu-function = dylanworks-default-editor-menu) => ()
+          menu-function = dylanworks-default-editor-menu) => ()
   ignore(bp, x, y, button, modifiers, event-type);
   apply(next-method, mode, window, nothing, type,
-	menu-function: menu-function, keys)
+        menu-function: menu-function, keys)
 end method do-handle-presentation-event;
 
 
@@ -352,14 +352,14 @@ define constant $code-viewer-interactive-code-message :: <byte-string>
   = "Interactive source code";
 
 define method refresh-frame-property-page
-    (frame :: <environment-frame>, displayer :: <code-viewer-displayer>, 
+    (frame :: <environment-frame>, displayer :: <code-viewer-displayer>,
      definition :: <environment-object>, type == #"source",
      #key clean? = #f, new-thread? = #t) => ()
   let window   = displayer.%code-viewer;
   let changed? = (code-viewer-definition(window) ~== definition);
   let project  = ensure-frame-project(frame);
   let location = instance?(definition, <stack-frame-object>)
-		 & stack-frame-source-location(project, definition);
+                 & stack-frame-source-location(project, definition);
   code-viewer-definition(window, redisplay?: #f) := definition;
   code-viewer-current-location(window)           := location;
   redisplay-window(window);
@@ -370,7 +370,7 @@ define method refresh-frame-property-page
 end method refresh-frame-property-page;
 
 define method update-current-location-gadget
-    (frame :: <environment-frame>, displayer :: <code-viewer-displayer>, 
+    (frame :: <environment-frame>, displayer :: <code-viewer-displayer>,
      definition :: false-or(<environment-object>)) => ()
   when (definition)
     let window   = displayer.%code-viewer;
@@ -380,45 +380,45 @@ define method update-current-location-gadget
     let record   = location & source-location-source-record(location);
     let interactive?
       = select (record by instance?)
-	  <file-source-record> => #f;
-	  <source-record>      => #t;
-	  otherwise            => #f;
-	end;
+          <file-source-record> => #f;
+          <source-record>      => #t;
+          otherwise            => #f;
+        end;
     // This next bit is cribbed from 'find-section-for-source-location'
     let library = record  & find-source-record-library(project, record);
     let project = library & library-project(project, library);
     let (newest, canonical)
       = case
-	  interactive? =>
-	    // If it's a piece of interactive code that came from using c-sh-C
-	    // out of a file buffer, go to the file buffer
-	    let definition = code-viewer-definition(window);
-	    let section
-	      = definition 
-	          & find-section-for-definition(project, definition, source-type: #"newest");
-	    let buffer
-	      = section & section-home-buffer(section, editor: $environment-editor);
-	    let container
-	      = buffer & file-buffer?(buffer) & buffer-source-container(buffer);
-	    values(container & as(<string>, container-pathname(container)),
-		   #f);
-	  record =>
-	    let locator = source-record-location(record);
-	    let newest
-	      = locator & merge-locators(locator, project-directory(project));
-	    let canonical = newest & project-canonical-filename(project, newest);
-	    values(newest, canonical);
-	  otherwise =>
-	    values(#f, #f);
-	end;
+          interactive? =>
+            // If it's a piece of interactive code that came from using c-sh-C
+            // out of a file buffer, go to the file buffer
+            let definition = code-viewer-definition(window);
+            let section
+              = definition
+                  & find-section-for-definition(project, definition, source-type: #"newest");
+            let buffer
+              = section & section-home-buffer(section, editor: $environment-editor);
+            let container
+              = buffer & file-buffer?(buffer) & buffer-source-container(buffer);
+            values(container & as(<string>, container-pathname(container)),
+                   #f);
+          record =>
+            let locator = source-record-location(record);
+            let newest
+              = locator & merge-locators(locator, project-directory(project));
+            let canonical = newest & project-canonical-filename(project, newest);
+            values(newest, canonical);
+          otherwise =>
+            values(#f, #f);
+        end;
     let newest?    = newest    & file-exists?(newest);
     let canonical? = canonical & file-exists?(canonical);
     let (filename, edit?)
       = select (type)
-	  #"newest"    => values(newest, newest?);
-	  #"canonical" => if (canonical?) values(canonical, canonical?)
-			  else values(newest, newest?) end;
-	end;
+          #"newest"    => values(newest, newest?);
+          #"canonical" => if (canonical?) values(canonical, canonical?)
+                          else values(newest, newest?) end;
+        end;
     displayer.%edit-source-button
       & (gadget-enabled?(displayer.%edit-source-button)      := edit?);
     displayer.%newest-source-button
@@ -427,10 +427,10 @@ define method update-current-location-gadget
       & (gadget-enabled?(displayer.%canonical-source-button) := canonical?);
     gadget-text(displayer.%current-location-gadget)
       := case
-	   edit?        => as(<string>, filename);
-	   interactive? => $code-viewer-interactive-code-message;
-	   otherwise    => $code-viewer-no-source-message;
-	 end
+           edit?        => as(<string>, filename);
+           interactive? => $code-viewer-interactive-code-message;
+           otherwise    => $code-viewer-no-source-message;
+         end
   end
 end method update-current-location-gadget;
 
@@ -446,6 +446,6 @@ define method refresh-frame-property-page
   redisplay-window(window);
   displayer.%edit-source-button
     & (gadget-enabled?(displayer.%edit-source-button) := #f);
-  gadget-text(displayer.%current-location-gadget) 
+  gadget-text(displayer.%current-location-gadget)
     := $code-viewer-no-source-message;
 end method refresh-frame-property-page;

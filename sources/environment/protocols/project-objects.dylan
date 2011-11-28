@@ -13,7 +13,7 @@ define constant <server-path-type>
 
 define constant $first-numeric-id = 10000;
 
-define open abstract primary class <project-object> 
+define open abstract primary class <project-object>
     (<server>, <environment-object>)
   slot project-proxy = #f,
     init-keyword: proxy:;
@@ -58,7 +58,7 @@ define open generic project-sources-changed?(project :: <project-object>)
 define open generic open-project
     (locator :: <file-locator>) => (project :: false-or(<project-object>));
 
-// find-project should either find the project in the work space, or open 
+// find-project should either find the project in the work space, or open
 // a project if not found.
 
 define open generic find-project
@@ -179,7 +179,7 @@ define open generic project-build-directory
  => (directory :: false-or(<directory-locator>));
 
 define open generic project-bin-directory
-    (project :: <project-object>) 
+    (project :: <project-object>)
 => (directory :: <directory-locator>);
 
 define open generic project-release-directory
@@ -196,8 +196,8 @@ define open generic project-reorder-source-records
     (project :: <project-object>, compare-function :: <function>) => ();
 
 define open generic save-project
-    (project :: <project-object>, 
-     #key save-database? :: <boolean> = #f, 
+    (project :: <project-object>,
+     #key save-database? :: <boolean> = #f,
           filename :: false-or(<file-locator>) = #f) => ();
 
 define open generic save-project-database
@@ -216,7 +216,7 @@ define open generic do-used-projects
  => ();
 
 define open generic project-bind-variable
-    (server :: <server>, variable-name :: <string>, 
+    (server :: <server>, variable-name :: <string>,
      object :: <application-object>,
      #key module)
  => (success? :: <boolean>);
@@ -242,10 +242,10 @@ define open generic project-compilation-mode-setter
  => (mode :: <compilation-mode>);
 
 define open generic project-compiler-back-end
-	  (project :: <project-object>) => (back-end :: <symbol>);
+          (project :: <project-object>) => (back-end :: <symbol>);
 
 define open generic project-compiler-back-end-setter
-    (back-end :: <symbol>, project :: <project-object>) 
+    (back-end :: <symbol>, project :: <project-object>)
  => (back-end :: <symbol>);
 
 define open generic project-target-type
@@ -319,7 +319,7 @@ define open generic executable-file-extension
 
 define variable *current-project* :: false-or(<project-object>) = #f;
 
-define function current-project 
+define function current-project
     () => (project :: false-or(<project-object>))
   *current-project*
 end function current-project;
@@ -339,14 +339,14 @@ define open generic open-project-compiler-database
 
 define open generic parse-project-source
     (project :: <project-object>,
-     #key warning-callback, progress-callback, error-handler, 
+     #key warning-callback, progress-callback, error-handler,
           process-subprojects?)
  => (well? :: <boolean>);
 
 define open generic build-project
     (project :: <project-object>,
-     #key clean?, link?, release?, output, 
-          warning-callback, progress-callback, error-handler, 
+     #key clean?, link?, release?, output,
+          warning-callback, progress-callback, error-handler,
           save-databases?, copy-sources?, process-subprojects?, messages)
  => (built? :: <boolean>);
 
@@ -357,15 +357,15 @@ define open generic clean-project
 
 define open generic link-project
     (project :: <project-object>,
-     #key progress-callback, 
-          error-handler, 
+     #key progress-callback,
+          error-handler,
           process-subprojects?,
           build-script, target, arch, force?, unify?, release?, messages)
  => ();
 
 define open generic default-build-script
     () => (build-script :: <file-locator>);
-define open generic default-build-script-setter 
+define open generic default-build-script-setter
     (build-script :: <file-locator>) => (build-script :: <file-locator>);
 
 
@@ -453,7 +453,7 @@ define method open-project
     otherwise =>
       error("Internal error: open-project called on '%s' with non-project extension %=",
             locator,
-	    locator.locator-extension);
+            locator.locator-extension);
   end
 end method open-project;
 
@@ -507,7 +507,7 @@ define method lookup-environment-object-by-id
 end method lookup-environment-object-by-id;
 
 define method cache-environment-object-with-id
-    (project :: <project-object>, id :: <id>, 
+    (project :: <project-object>, id :: <id>,
      object :: <environment-object-with-id>)
  => (object :: <environment-object-with-id>)
   object
@@ -536,7 +536,7 @@ define method lookup-environment-object-by-id
 end method lookup-environment-object-by-id;
 
 define method cache-environment-object-with-id
-    (project :: <project-object>, id :: <unique-id>, 
+    (project :: <project-object>, id :: <unique-id>,
      object :: <environment-object-with-id>)
  => (object :: <environment-object-with-id>)
   let table = project-object-table(project);
@@ -550,18 +550,18 @@ define sealed generic lookup-environment-object
     (class :: subclass(<environment-object>),
      #key project :: <project-object>,
           id :: false-or(<id-or-integer>),
-          application-object-proxy, 
+          application-object-proxy,
           compiler-object-proxy)
- => (object :: false-or(<environment-object>), 
+ => (object :: false-or(<environment-object>),
      id :: false-or(<id-or-integer>));
 
 define method lookup-environment-object
     (class :: subclass(<application-object>),
      #key project :: <project-object>,
           id :: false-or(<id-or-integer>),
-          application-object-proxy: proxy, 
+          application-object-proxy: proxy,
           compiler-object-proxy)
- => (object :: false-or(<application-object>), 
+ => (object :: false-or(<application-object>),
      id :: false-or(<id-or-integer>))
   ignore(compiler-object-proxy);
   let application = project-application(project);
@@ -574,20 +574,20 @@ define method lookup-environment-object
     subtype?(class, <environment-object-with-id>) =>
       let id = id | application-proxy-id(application, proxy);
       if (id)
-	values(lookup-environment-object-by-id(project, id), id)
+        values(lookup-environment-object-by-id(project, id), id)
       else
-	values(#f, generate-unique-id(project))
+        values(#f, generate-unique-id(project))
       end;
     otherwise =>
       values(#f, #f);
   end
 end method lookup-environment-object;
-  
+
 define method lookup-environment-object
     (class :: subclass(<compiler-object>),
      #key project :: <project-object>,
           id :: false-or(<id-or-integer>),
-          application-object-proxy, 
+          application-object-proxy,
           compiler-object-proxy: proxy)
  => (object :: false-or(<compiler-object>),
      id :: false-or(<id-or-integer>))
@@ -602,9 +602,9 @@ define method lookup-environment-object
     subtype?(class, <environment-object-with-id>) =>
       let id = id | compiler-database-proxy-id(database, proxy);
       if (id)
-	values(lookup-environment-object-by-id(project, id), id)
+        values(lookup-environment-object-by-id(project, id), id)
       else
-	values(#f, generate-unique-id(project))
+        values(#f, generate-unique-id(project))
       end;
     otherwise =>
       values(#f, #f);
@@ -614,7 +614,7 @@ end method lookup-environment-object;
 define method lookup-environment-object
     (class :: subclass(<application-and-compiler-object>),
      #key project :: <project-object>,
-          id :: false-or(<id-or-integer>), 
+          id :: false-or(<id-or-integer>),
           application-object-proxy,
           compiler-object-proxy)
  => (object :: false-or(<application-and-compiler-object>),
@@ -623,33 +623,33 @@ define method lookup-environment-object
   let database = project-compiler-database(project);
   block (return)
     local method maybe-return (object) => ()
-	    object
-	      & return(object, id | environment-object-id(project, object))
-	  end method maybe-return;
+            object
+              & return(object, id | environment-object-id(project, object))
+          end method maybe-return;
     maybe-return
       (application
-	 & application-object-proxy
-	 & lookup-environment-object-by-proxy(application, application-object-proxy));
+         & application-object-proxy
+         & lookup-environment-object-by-proxy(application, application-object-proxy));
     maybe-return
       (database
-	 & compiler-object-proxy
-	 & lookup-environment-object-by-proxy(database, compiler-object-proxy));
+         & compiler-object-proxy
+         & lookup-environment-object-by-proxy(database, compiler-object-proxy));
     if (subtype?(class, <environment-object-with-id>))
       let id
-	= case
-	    id =>
-	      id;
-	    application-object-proxy =>
-	      application-proxy-id(application, application-object-proxy);
-	    compiler-object-proxy =>
-	      compiler-database-proxy-id(database, compiler-object-proxy);
-	    otherwise =>
-	      error("lookup-environment-object called with no id or proxies");
-	  end;
+        = case
+            id =>
+              id;
+            application-object-proxy =>
+              application-proxy-id(application, application-object-proxy);
+            compiler-object-proxy =>
+              compiler-database-proxy-id(database, compiler-object-proxy);
+            otherwise =>
+              error("lookup-environment-object called with no id or proxies");
+          end;
       if (id)
-	values(lookup-environment-object-by-id(project, id), id)
+        values(lookup-environment-object-by-id(project, id), id)
       else
-	values(#f, generate-unique-id(project))
+        values(#f, generate-unique-id(project))
       end
     else
       values(#f, #f)
@@ -676,7 +676,7 @@ define sealed generic make-environment-object
      #key project :: <project-object>,
           library :: false-or(<library-object>),
           id :: false-or(<id-or-integer>),
-          application-object-proxy, 
+          application-object-proxy,
           compiler-object-proxy)
  => (object :: <environment-object>);
 
@@ -686,68 +686,68 @@ define method make-environment-object
      #key project :: <project-object>,
           library :: false-or(<library-object>),
           id :: false-or(<id-or-integer>),
-          application-object-proxy: proxy, 
+          application-object-proxy: proxy,
           compiler-object-proxy)
  => (object :: <application-object>)
   ignore(compiler-object-proxy);
   let application = project-application(project);
-  debug-assert(application, 
-	       "Project %= has no application", project);
-  debug-assert(id | proxy, 
-	       "make-environment-object called with no id or proxy");
-  let (object, id) 
+  debug-assert(application,
+               "Project %= has no application", project);
+  debug-assert(id | proxy,
+               "make-environment-object called with no id or proxy");
+  let (object, id)
     = lookup-environment-object
         (class,
-	 project: project, id: id, application-object-proxy: proxy);
+         project: project, id: id, application-object-proxy: proxy);
   let object
     = if (instance?(object, class))
-	let old-proxy = application-object-proxy(object);
-	debug-assert(~old-proxy | old-proxy == proxy,
-		     "Environment object %= found for two proxies: %=, %=",
-		     object, old-proxy, proxy);
-	application-object-proxy(object) := proxy;
-	object
+        let old-proxy = application-object-proxy(object);
+        debug-assert(~old-proxy | old-proxy == proxy,
+                     "Environment object %= found for two proxies: %=, %=",
+                     object, old-proxy, proxy);
+        application-object-proxy(object) := proxy;
+        object
       else
-	make(class, application-object-proxy: proxy, 
-	     id: id, library: library)
+        make(class, application-object-proxy: proxy,
+             id: id, library: library)
       end;
   id & cache-environment-object-with-id(project, id, object);
   cache-environment-object(application, proxy, object)
 end method make-environment-object;
-  
+
 define method make-environment-object
     (class :: subclass(<compiler-object>),
      #rest args,
      #key project :: <project-object>,
           library :: false-or(<library-object>),
           id :: false-or(<id-or-integer>),
-          application-object-proxy, 
+          application-object-proxy,
           compiler-object-proxy: proxy)
  => (object :: <compiler-object>)
   ignore(application-object-proxy);
   let database = project-compiler-database(project);
-  debug-assert(database, 
-	       "Project %= has no compiler database %=", project);
-  debug-assert(id | proxy, 
-	       "make-environment-object called with no id or proxy");
-  let (object, id) 
+  debug-assert(database,
+               "Project %= has no compiler database %=", project);
+  debug-assert(id | proxy,
+               "make-environment-object called with no id or proxy");
+  let (object, id)
     = lookup-environment-object
         (class,
-	 project: project, id: id, compiler-object-proxy: proxy);
+         project: project, id: id, compiler-object-proxy: proxy);
   let object
     = if (instance?(object, class))
-	let old-proxy = compiler-object-proxy(object);
-	/*---*** Need to work out why this fails sometimes...
-	debug-assert(~old-proxy | old-proxy == proxy,
-		     "Environment object %= found for two proxies: %=, %=",
-		     object, old-proxy, proxy);
+        let old-proxy = compiler-object-proxy(object);
+        /*---*** Need to work out why this fails sometimes...
+        debug-assert(~old-proxy | old-proxy == proxy,
+                     "Environment object %= found for two proxies: %=, %=",
+                     object, old-proxy, proxy);
         */
-	unless (~old-proxy | old-proxy == proxy)
-	  debug-message("Environment object %= found for two proxies: %=, %=",
-			object, old-proxy, proxy)
-	end;
-	compiler-object-proxy(object) := proxy;
-	object
+        unless (~old-proxy | old-proxy == proxy)
+          debug-message("Environment object %= found for two proxies: %=, %=",
+                        object, old-proxy, proxy)
+        end;
+        compiler-object-proxy(object) := proxy;
+        object
       else
         make(class, compiler-object-proxy: proxy, id: id, library: library)
       end;
@@ -760,38 +760,38 @@ define method make-environment-object
      #rest args,
      #key project :: <project-object>,
           library :: false-or(<library-object>),
-          id :: false-or(<id-or-integer>), 
+          id :: false-or(<id-or-integer>),
           application-object-proxy,
           compiler-object-proxy)
  => (object :: <application-and-compiler-object>)
   let application = project-application(project);
   let database = project-compiler-database(project);
-  let (object, id) 
+  let (object, id)
     = lookup-environment-object
         (class,
-	 project: project, id: id,
-	 application-object-proxy: application-object-proxy,
-	 compiler-object-proxy: compiler-object-proxy);
+         project: project, id: id,
+         application-object-proxy: application-object-proxy,
+         compiler-object-proxy: compiler-object-proxy);
   let object
     = if (instance?(object, class))
-	object
+        object
       else
-	make(class,
-	     application-object-proxy: application-object-proxy, 
-	     compiler-object-proxy: compiler-object-proxy,
-	     id: id, library: library)
+        make(class,
+             application-object-proxy: application-object-proxy,
+             compiler-object-proxy: compiler-object-proxy,
+             id: id, library: library)
       end;
   id & cache-environment-object-with-id(project, id, object);
   if (application & application-object-proxy)
     cache-environment-object(application, application-object-proxy, object)
   end;
-  if (database & compiler-object-proxy) 
+  if (database & compiler-object-proxy)
     cache-environment-object(database, compiler-object-proxy, object)
   end;
-  if (application-object-proxy) 
+  if (application-object-proxy)
     application-object-proxy(object) := application-object-proxy
   end;
-  if (compiler-object-proxy) 
+  if (compiler-object-proxy)
     compiler-object-proxy(object) := compiler-object-proxy
   end;
   object
@@ -861,30 +861,30 @@ define method choose-server
  => (server :: false-or(<server>))
   let database = project-compiler-database(project);
   let application = project-application(project);
-  local method maybe-application 
-	    () => (application :: false-or(<application>))
-	  ensure-application-proxy(application, object) & application
-	end method maybe-application;
+  local method maybe-application
+            () => (application :: false-or(<application>))
+          ensure-application-proxy(application, object) & application
+        end method maybe-application;
   local method maybe-compiler-database
-	    () => (database :: false-or(<compiler-database>))
-	  ensure-database-proxy(database, object) & database
-	end method maybe-compiler-database;
+            () => (database :: false-or(<compiler-database>))
+          ensure-database-proxy(database, object) & database
+        end method maybe-compiler-database;
   let server
     = case
-	database & application =>
-	  let server-path = default-server | project-server-path(project);
-	  select (server-path)
-	    #"compiler"    => maybe-compiler-database() | maybe-application();
-	    #"application" => maybe-application() | maybe-compiler-database();
-	    // #"both"     => ???;
-	    otherwise      => unknown-server-path-error(server-path);
-	  end;
-	database    => maybe-compiler-database();
-	application => maybe-application();
-	otherwise   => #f;
+        database & application =>
+          let server-path = default-server | project-server-path(project);
+          select (server-path)
+            #"compiler"    => maybe-compiler-database() | maybe-application();
+            #"application" => maybe-application() | maybe-compiler-database();
+            // #"both"     => ???;
+            otherwise      => unknown-server-path-error(server-path);
+          end;
+        database    => maybe-compiler-database();
+        application => maybe-application();
+        otherwise   => #f;
       end;
   case
-    ~database & ~application => 
+    ~database & ~application =>
       error? & closed-server-error(object);
     server =>
       server;
@@ -990,31 +990,31 @@ end function unknown-server-path-error;
 define method closed-server-error
     (object :: <application-object>)
   error(make(<closed-server-error>,
-	     format-string: "Attempting to query %= from closed application",
-	     format-arguments: vector(object)))
+             format-string: "Attempting to query %= from closed application",
+             format-arguments: vector(object)))
 end method closed-server-error;
 
 define method closed-server-error
     (object :: <compiler-object>)
   error(make(<closed-server-error>,
-	     format-string: "Attempting to query %= from closed project",
-	     format-arguments: vector(object)))
+             format-string: "Attempting to query %= from closed project",
+             format-arguments: vector(object)))
 end method closed-server-error;
 
 define method closed-server-error
     (object :: <application-and-compiler-object>)
   error(make(<closed-server-error>,
-	     format-string: "Attempting to query %= from closed application or project",
-	     format-arguments: vector(object)))
+             format-string: "Attempting to query %= from closed application or project",
+             format-arguments: vector(object)))
 end method closed-server-error;
 
 define function invalid-object-error
     (project :: <project-object>, object :: <environment-object>)
   error(make(<invalid-object-error>,
-	     format-string: "Querying obsolete object %=",
-	     format-arguments: vector(object),
-	     project: project,
-	     object: object))
+             format-string: "Querying obsolete object %=",
+             format-arguments: vector(object),
+             project: project,
+             object: object))
 end function invalid-object-error;
 
 
@@ -1062,11 +1062,11 @@ end method invalidate-compiler-proxy;
 /// Source record stuff
 
 define method source-record-top-level-forms
-    (project :: <project-object>, sr :: <source-record>, 
+    (project :: <project-object>, sr :: <source-record>,
      #key project: subproject)
  => (source-forms :: <sequence>)
   let database = project-compiler-database(project);
-  if (database) 
+  if (database)
     source-record-top-level-forms(database, sr, project: subproject)
   else
     #[]
@@ -1114,13 +1114,13 @@ define method project-canonical-source-record
   let canonical-sources = project-canonical-sources(project);
   block (return)
     for (source in canonical-sources)
-      if (source == record) 
-	return(source)
+      if (source == record)
+        return(source)
       end
     end;
     for (source in canonical-sources)
       if (source-record-name(source) = source-record-name(record))
-	return(source)
+        return(source)
       end
     end
   end
@@ -1131,9 +1131,9 @@ define method project-canonical-filename
  => (canonical-filename :: false-or(<file-locator>))
   if (~project-read-only?(project))
     make(<native-file-locator>,
-	 directory: project.project-build-directory,
-	 base:      file.locator-base,
-	 extension: file.locator-extension)
+         directory: project.project-build-directory,
+         base:      file.locator-base,
+         extension: file.locator-extension)
   end
 end method project-canonical-filename;
 
@@ -1145,8 +1145,8 @@ define method do-project-used-libraries
      project :: <project-object>)
  => ()
   assert(server = project,
-	 "Querying used libraries for %= using different server %=",
-	 project, server);
+         "Querying used libraries for %= using different server %=",
+         project, server);
   let database = project-compiler-database(project);
   database & do-project-used-libraries(function, database, project)
 end method do-project-used-libraries;
@@ -1158,7 +1158,7 @@ define function project-used-libraries
 end function project-used-libraries;
 
 define method do-project-file-libraries
-    (function :: <function>, project :: <project-object>, 
+    (function :: <function>, project :: <project-object>,
      file :: <file-locator>)
  => ()
   let database = project-compiler-database(project);
@@ -1170,7 +1170,7 @@ end method do-project-file-libraries;
 
 define variable *active-project* :: false-or(<project-object>) = #f;
 
-define function active-project 
+define function active-project
     () => (project :: false-or(<project-object>))
   *active-project*
 end function active-project;
@@ -1181,9 +1181,9 @@ define function active-project-setter
   *active-project* := project;
   let message
     = if (project)
-	make(<project-now-active-message>, project: project);
+        make(<project-now-active-message>, project: project);
       else
-	make(<no-active-project-message>)
+        make(<no-active-project-message>)
       end;
   broadcast($project-channel, message);
   project
@@ -1205,18 +1205,18 @@ define method find-environment-object
  => (object :: false-or(<environment-object>))
   lookup-environment-object-by-id(project, id)
     | begin
-	let server-path = project-server-path(project);
-	let database = project-compiler-database(project);
-	//---*** andrewa: don't query the application server for now
-	let application = #f; // project-application(project);
-	let server :: false-or(<server>)
-	  = select (server-path)
-	      #"compiler"    => database | application;
-	      #"application" => application | database;
-	      // #"both"     => ???;
-	      otherwise      => unknown-server-path-error(server-path);
-	    end;
-	server & apply(find-environment-object, server, id, keys)
+        let server-path = project-server-path(project);
+        let database = project-compiler-database(project);
+        //---*** andrewa: don't query the application server for now
+        let application = #f; // project-application(project);
+        let server :: false-or(<server>)
+          = select (server-path)
+              #"compiler"    => database | application;
+              #"application" => application | database;
+              // #"both"     => ???;
+              otherwise      => unknown-server-path-error(server-path);
+            end;
+        server & apply(find-environment-object, server, id, keys)
       end
 end method find-environment-object;
 
@@ -1245,10 +1245,10 @@ define method find-machine
   block (return)
     do-machine-connections
       (method (machine :: <machine>)
-	 if (address = machine-network-address(machine))
-	   return(machine)
-	 end
-       end, 
+         if (address = machine-network-address(machine))
+           return(machine)
+         end
+       end,
        include-local?: #f);
     #f
   end
@@ -1260,19 +1260,19 @@ define method project-debug-machine
   if (address)
     find-machine(address)
       | block ()
-	  make(<machine>, network-address: address)
-	exception (<remote-connection-failed-error>)
-	  #f
-	end
+          make(<machine>, network-address: address)
+        exception (<remote-connection-failed-error>)
+          #f
+        end
   end
 end method project-debug-machine;
 
 define method project-debug-machine-setter
     (machine :: false-or(<machine>), project :: <project-object>)
  => (machine :: false-or(<machine>))
-  let name 
+  let name
     = if (machine & machine ~== environment-host-machine())
-	machine-network-address(machine)
+        machine-network-address(machine)
       end;
   project-debug-machine-address(project) := name;
   machine
@@ -1322,10 +1322,10 @@ define function playground-application-filename
   if (lid-filename)
     let filename
       = make(<file-locator>,
-	     directory: lid-filename.locator-directory,
-	     name:      project.project-build-filename.locator-name);
-    debug-message("Playground filename: %s", 
-		  as(<string>, filename));
+             directory: lid-filename.locator-directory,
+             name:      project.project-build-filename.locator-name);
+    debug-message("Playground filename: %s",
+                  as(<string>, filename));
     file-exists?(filename) & filename
   end
 end function playground-application-filename;

@@ -9,13 +9,13 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // already deals with locking of the compiler.
 define variable *compiling?* :: <boolean> = #f;
 
-define sealed abstract primary class <dfmc-project-object> 
+define sealed abstract primary class <dfmc-project-object>
     (<native-project-object>)
   sealed slot %library-name :: <string>, init-keyword: library-name:;
   sealed slot %user-project? :: <boolean> = #f, init-keyword: user-project?:;
   sealed slot %database-current? :: <boolean> = #f;
   sealed slot %database-saved? :: <boolean> = #f;
-  sealed slot %warnings :: <stretchy-object-vector> 
+  sealed slot %warnings :: <stretchy-object-vector>
     = make(<stretchy-object-vector>);
 end class <dfmc-project-object>;
 
@@ -34,7 +34,7 @@ end function project-opened?;
 
 define sealed method find-open-project
     (key :: <project>) => (project :: false-or(<project-object>))
-  any?(method (project-object :: <project-object>) 
+  any?(method (project-object :: <project-object>)
          (project-object.project-proxy == key) & project-object
        end,
        open-projects())
@@ -42,9 +42,9 @@ end method find-open-project;
 
 define sealed method find-open-project
     (key :: <symbol>) => (project :: false-or(<project-object>))
-  any?(method (project-object :: <project-object>) 
+  any?(method (project-object :: <project-object>)
          project-opened?(project-object)
-           & (project-object.project-proxy.project-library-name == key) 
+           & (project-object.project-proxy.project-library-name == key)
            & project-object
        end,
        open-projects())
@@ -155,7 +155,7 @@ show-compiler-messages?() := #f;
 
 define function update-project-progress () => ()
   *progress-callback*
-    & *progress-callback*(*progress-position*, *progress-range*, 
+    & *progress-callback*(*progress-position*, *progress-range*,
                           heading-label:  *progress-section*,
                           item-label:     *progress-message*)
 end function update-project-progress;
@@ -212,7 +212,7 @@ define sealed sideways method project-progress-report
 end method project-progress-report;
 
 define function start-progress-reporting
-    (project-object :: <project-object>, 
+    (project-object :: <project-object>,
      progress-callback :: false-or(<function>),
      #key section :: false-or(<string>),
           warning-callback :: false-or(<function>))
@@ -235,7 +235,7 @@ define function stop-progress-reporting () => ()
 end function stop-progress-reporting;
 
 define macro with-progress-reporting
-  { with-progress-reporting 
+  { with-progress-reporting
         (?project:expression, ?callback:expression, ?options:*)
       ?body:body
     end }
@@ -248,12 +248,12 @@ define macro with-progress-reporting
 end macro with-progress-reporting;
 
 define sealed method project-condition-handler
-    (project :: <project-object>, condition :: <condition>, 
+    (project :: <project-object>, condition :: <condition>,
      handler :: <function>, next-handler :: <function>)
   select (condition by instance?)
     <project-not-found> =>
       let name = condition.condition-project-name;
-      let filename 
+      let filename
         = handler(#"project-not-found", as(<string>, name));
       if (filename)
         let location = as(<file-locator>, filename);
@@ -263,7 +263,7 @@ define sealed method project-condition-handler
       end;
     <cannot-open-project-file-condition> =>
       let location = condition.condition-project-file-location;
-      let filename 
+      let filename
         = handler(#"project-file-not-found", as(<string>, location));
       filename & as(<file-locator>, filename);
     <duplicate-project-condition> =>
@@ -282,7 +282,7 @@ define sealed method project-condition-handler
       record-project-warning(project, condition);
       //---*** andrewa: let's try going without the handler
       // handler(#"warning", condition-to-string(condition));
-    otherwise => 
+    otherwise =>
       next-handler();
   end
 end method project-condition-handler;
@@ -305,7 +305,7 @@ end macro with-project-location-handler;
 
 define sealed method build-project
     (project-object :: <dfmc-project-object>,
-     #key clean? = #f, link? = #t, release? = #f, output = #[], 
+     #key clean? = #f, link? = #t, release? = #f, output = #[],
           warning-callback :: false-or(<function>),
           progress-callback :: false-or(<function>), error-handler,
           save-databases? = #f, copy-sources? = #f,
@@ -322,14 +322,14 @@ define sealed method build-project
     *progress-internal?*      := (messages == #"internal");
     *copy-canonical-sources?* := copy-sources?;
     let aborted?
-      = with-progress-reporting 
+      = with-progress-reporting
             (project-object, progress-callback,
              warning-callback: warning-callback)
           with-compiler-transaction
             with-project-location-handler (project-object, error-handler)
               if (process-subprojects?)
-                update-libraries(project, 
-                                 force?: clean?, 
+                update-libraries(project,
+                                 force?: clean?,
                                  save?:  save-databases?,
                                  copy-sources?: copy-sources?,
                                  abort-on-all-warnings?:     #f,
@@ -338,9 +338,9 @@ define sealed method build-project
                                  dfm-output?:       dfm-output?,
                                  harp-output?:      harp-output?)
               else
-                compile-library(project, 
+                compile-library(project,
                                 force-parse?:   clean?,
-                                force-compile?: clean?, 
+                                force-compile?: clean?,
                                 save?: save-databases?,
                                 copy-sources?: copy-sources?,
                                 abort-on-all-warnings?:     #f,
@@ -353,7 +353,7 @@ define sealed method build-project
           end
         end;
     if (~aborted? & link?)
-      link-project(project-object, 
+      link-project(project-object,
                    progress-callback: progress-callback,
                    error-handler: error-handler,
                    process-subprojects?: process-subprojects?,
@@ -418,19 +418,19 @@ define function note-database-updated
 end function note-database-updated;
 
 define sealed method parse-project-source
-    (project-object :: <dfmc-project-object>, 
+    (project-object :: <dfmc-project-object>,
      #key warning-callback :: false-or(<function>),
           progress-callback :: false-or(<function>), error-handler,
-          process-subprojects? = #t) 
+          process-subprojects? = #t)
  => (parsed? :: <boolean>);
   block ()
     note-project-compilation-started(project-object);
     with-compiler-transaction
       let project = project-object.ensure-project-proxy;
-      with-progress-reporting 
+      with-progress-reporting
           (project-object, progress-callback,
            warning-callback: warning-callback)
-        let aborted? 
+        let aborted?
           = with-project-location-handler (project-object, error-handler)
               load-library(project-object.%library-name)
             end;
@@ -553,7 +553,7 @@ define sealed method link-project
             otherwise             => #"changes";
           end;
       with-project-location-handler (project-object, error-handler)
-        link-library(project, 
+        link-library(project,
                      progress-callback: link-project-progress,
                      extent:      extent,
                      mode:        if (unify?) #"combine" end,
@@ -582,7 +582,7 @@ define sealed method env/close-project
     (project-object :: <dfmc-project-object>) => ()
   let project = project-object.project-proxy;
   dynamic-bind(*closing-project* = project)
-    let closed? 
+    let closed?
       = if (project)
           close-project(project);
         else
@@ -593,7 +593,7 @@ define sealed method env/close-project
       remove!(*open-projects*, project-object);
       if (project-object.project-proxy)
         project-object.project-proxy := #f;
-        // debug-message("dfmc-projects: setting proxy of %s to %f", 
+        // debug-message("dfmc-projects: setting proxy of %s to %f",
         //             project.project-name)
       end
     end;
@@ -602,8 +602,8 @@ define sealed method env/close-project
     if (project-object == active-project())
       active-project()
         := any?(method (project-object :: <project-object>)
-                  project-opened?(project-object) 
-                    & project-object.project-can-be-debugged? 
+                  project-opened?(project-object)
+                    & project-object.project-can-be-debugged?
                     & project-object
                 end,
                 open-projects())
@@ -612,7 +612,7 @@ define sealed method env/close-project
 end method env/close-project;
 
 define sealed method project-sources
-    (project-object :: <dfmc-project-object>, #key error-handler = #f) 
+    (project-object :: <dfmc-project-object>, #key error-handler = #f)
  => (sources :: <sequence>)
   let project = project-object.ensure-project-proxy;
   with-project-manager-transaction
@@ -623,7 +623,7 @@ define sealed method project-sources
       end;
       records
     else
-      with-project-location-handler(project-object, 
+      with-project-location-handler(project-object,
                                     error-handler | method(#rest args) end)
         let records = project-source-records(project);
         records
@@ -705,14 +705,14 @@ define sealed method project-release-directory
 end method project-release-directory;
 
 define sealed method get-environment-object-primitive-name
-    (server :: <dfmc-project-object>, 
+    (server :: <dfmc-project-object>,
      project-object :: <dfmc-lid-project-object>)
  => (name :: false-or(<string>))
   as-lowercase(project-object.%library-name)
 end method get-environment-object-primitive-name;
 
 define sealed method get-environment-object-primitive-name
-    (server :: <dfmc-project-object>, 
+    (server :: <dfmc-project-object>,
      project-object :: <dfmc-hdp-project-object>)
  => (name :: false-or(<string>))
   let locator = project-object.%project-location;
@@ -915,8 +915,8 @@ define sealed method project-interface-type
  => (interface-type :: <project-interface-type>)
   let project = project-object.ensure-project-proxy;
   let linker-options = project-build-property(project, #"linker-options");
-  let gui-type? 
-    = linker-options 
+  let gui-type?
+    = linker-options
         & member?($gui-linker-option, linker-options, test: \=);
   case
     gui-type? => #"gui";
@@ -925,7 +925,7 @@ define sealed method project-interface-type
 end method project-interface-type;
 
 define sealed method project-interface-type-setter
-    (interface-type :: <project-interface-type>, 
+    (interface-type :: <project-interface-type>,
      project-object :: <dfmc-project-object>)
  => (interface-type :: <project-interface-type>)
   unless (project-object.project-interface-type == interface-type)
@@ -1070,7 +1070,7 @@ define sealed method %do-used-projects
         indirect? => project.all-used-projects;
         otherwise => project.directly-used-projects;
       end;
-  let used-projects 
+  let used-projects
     = if (extra-projects)
         remove-duplicates(concatenate(extra-projects, used-projects))
       else
@@ -1099,7 +1099,7 @@ define function abort-project-opening
 end function abort-project-opening;
 
 define sealed method open-project-compiler-database
-    (project-object :: <dfmc-project-object>, 
+    (project-object :: <dfmc-project-object>,
      #key warning-callback :: false-or(<function>),
           error-handler :: false-or(<function>))
  => (database :: false-or(<compiler-database>))
@@ -1210,7 +1210,7 @@ define method note-project-sources-updated
 end method note-project-sources-updated;
 
 define sealed method project-add-source-record
-    (project :: <dfmc-project-object>, 
+    (project :: <dfmc-project-object>,
      record :: type-union(<string>, <file-locator>))
  => ()
   project-add-file(project.ensure-project-proxy, record);
@@ -1232,7 +1232,7 @@ define sealed method project-reorder-source-records
 end method project-reorder-source-records;
 
 define sealed method env/save-project
-    (project-object :: <dfmc-project-object>, 
+    (project-object :: <dfmc-project-object>,
      #key save-database? :: <boolean>,
           filename :: false-or(<file-locator>))
  => ()
@@ -1271,7 +1271,7 @@ end method env/save-project-database;
 define sealed method project-bin-location
     (project :: <project>) => (location :: <directory-locator>)
   case
-    $personal-bin => 
+    $personal-bin =>
       $personal-bin;
     project-read-only?(project) =>
       let release-locator = system-release-path();
@@ -1293,7 +1293,7 @@ define sealed method source-location-environment-object
   if (subproject)
     let database = project-object.project-compiler-database;
     let start-offset = location.source-location-start-line;
-    database 
+    database
       & source-record-environment-object(database, subproject, record, start-offset)
   end
 end method source-location-environment-object;
@@ -1334,7 +1334,7 @@ define sealed method clear-project-warnings
 end method clear-project-warnings;
 
 define method do-compiler-warnings
-    (function :: <function>, project-object :: <dfmc-project-object>, 
+    (function :: <function>, project-object :: <dfmc-project-object>,
      object :: <project-object>,
      #key client)
  => ()
@@ -1417,7 +1417,7 @@ define sealed sideways method project-condition-report
     let callback = *warning-callback*;
     if (callback)
       let library = project-library(project-object);
-      library 
+      library
         & do-program-notes
             (callback, project-object, library, vector(condition))
     end
@@ -1467,7 +1467,7 @@ define sealed method compiler-warning-full-message
   let condition :: <project-warning> = warning.environment-object-proxy;
   condition-to-string(condition)
 end method compiler-warning-full-message;
-    
+
 define sealed method compiler-warning-short-message
     (server :: <dfmc-project-object>, warning :: <project-warning-object>)
  => (message :: <string>)
@@ -1475,14 +1475,14 @@ define sealed method compiler-warning-short-message
   let message = compiler-warning-full-message(server, warning);
   first-line(message)
 end method compiler-warning-short-message;
-    
+
 define sealed method get-environment-object-primitive-name
     (server :: <dfmc-project-object>, warning :: <project-warning-object>)
  => (message :: <string>)
   compiler-warning-short-message(server, warning)
 end method get-environment-object-primitive-name;
 
-define function first-line 
+define function first-line
     (string :: <string>) => (line :: <string>)
   let newline-key
     = find-key(string,
@@ -1499,5 +1499,3 @@ define function first-line
     string
   end
 end function first-line;
-
-
