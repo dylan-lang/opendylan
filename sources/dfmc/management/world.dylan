@@ -135,11 +135,9 @@ define method ensure-library-compiled (description :: <project-library-descripti
 				       #key skip-heaping?,
 				       abort-on-all-warnings?,
 				       abort-on-serious-warnings?,
-				       compile-until-type-inferred?,
 				       #all-keys)
  => (warning-count, serious-warning-count, error-count, data-size, code-size);
   let (warning-count, serious-warning-count, error-count) = values(0,0,0);
-  let (data-size, code-size) = values(0,0);
   verify-library-before-compile(description);
   with-stage-progress("Computing data models for", $models-stage-time)
     ensure-library-models-computed(description);
@@ -179,28 +177,26 @@ define method ensure-library-compiled (description :: <project-library-descripti
       library-progress-text(description,
 			    "There were %d warnings, %d serious warnings and %d errors.",
 			    warning-count, serious-warning-count, error-count);
-	signal(make(<abort-compilation>,
-		    warnings: warning-count,
-		    serious-warnings: serious-warning-count,
-		    errors: error-count))
-      end;
-      
-    end;
-    
-    if(skip-heaping?)
+
       signal(make(<abort-compilation>,
-		  warnings: 0,
-		  serious-warnings: 0,
-		  errors: 0))
+	     warnings: warning-count,
+	     serious-warnings: serious-warning-count,
+	     errors: error-count))
     end;
 
-    let (data-size1, code-size1)
-      = with-stage-progress("Generating code for", $heaping-stage-time)
-	  ensure-library-heaps-computed(description, flags)
-	end;
-    data-size := data-size1;
-    code-size := code-size1;
   end;
+
+  if(skip-heaping?)
+    signal(make(<abort-compilation>,
+	   warnings: 0,
+	   serious-warnings: 0,
+	   errors: 0))
+  end;
+
+  let (data-size, code-size)
+    = with-stage-progress("Generating code for", $heaping-stage-time)
+	ensure-library-heaps-computed(description, flags)
+      end;
   values(warning-count, serious-warning-count, error-count, data-size, code-size);
 end method;
 

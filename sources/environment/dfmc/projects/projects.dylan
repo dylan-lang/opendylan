@@ -221,14 +221,21 @@ define sealed sideways method project-progress-report
   update-project-progress()
 end method project-progress-report;
 
-define function start-progress-reporting
+define method start-progress-reporting
     (project-object :: <project-object>,
+     progress-callback :: false-or(<function>),
+     #rest keys, #key, #all-keys) => ()
+  let project = project-object.ensure-project-proxy;
+  apply(start-progress-reporting, project, keys)
+end;
+
+define method start-progress-reporting
+    (project :: <project>,
      progress-callback :: false-or(<function>),
      #key section :: false-or(<string>),
           warning-callback :: false-or(<function>),
           visualization-callback :: false-or(<function>))
  => ()
-  let project = project-object.ensure-project-proxy;
   *warning-callback*  := warning-callback;
   *progress-callback* := progress-callback;
   *visualization-callback* := visualization-callback;
