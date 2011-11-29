@@ -56,7 +56,6 @@ end module;
 
 define module-with-models dfmc-modeling
   use functional-dylan;
-  // use patching-kludges;	// to get at *permissibly-ambiguous-generics*
   use dylan-extensions,
     import: { $machine-word-size, immutable-vector };
   use machine-word-lowlevel,
