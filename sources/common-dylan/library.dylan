@@ -11,8 +11,7 @@ define library common-dylan
   use dylan,
     export: { dylan, 
 	      finalization,
-	      threads, 
-	      threads-extensions };
+	      threads };
   export 
     common-dylan,
     common-extensions,
