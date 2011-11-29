@@ -11,7 +11,6 @@ end library;
 
 define module dfmc-mangling
   use functional-dylan;
-  use simple-format;
   export 
     <mangler>,
     <mangler-with-options>,
