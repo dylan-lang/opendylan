@@ -788,7 +788,7 @@ define method command-line-loop
     exception (condition :: <serious-condition>)
       case
         server.server-debugger? =>
-          next-handler();
+          signal(condition);
         instance?(condition, <keyboard-interrupt>) =>
           message(context, "Operation aborted");
         otherwise =>
