@@ -203,7 +203,7 @@ define generic binding-accessible-to-other-libraries?
 
 define method binding-compilation-record
     (binding :: <module-binding>) => (cr :: false-or(<compilation-record>))
-  let definition = untracked-binding-definition(binding, default: not-found());
+  let definition = untracked-binding-definition(binding, default: $unfound);
   found?(definition) & form-compilation-record(definition)
 end method;
 
@@ -233,14 +233,14 @@ end method;
 
 define method add-definition (name, definition) => ()
   let binding = lookup-binding(name, reference?: #f);
-  let old = untracked-binding-definition(binding, default: not-found());
+  let old = untracked-binding-definition(binding, default: $unfound);
   binding-defined?(binding) := #t;
   if (binding-imported-into-library?(binding))
     note(<imported-binding-definition>, 
          source-location: form-source-location(definition),
          binding: binding);
     add-local-duplicate-definition(binding, definition);
-  elseif (not-found?(old))
+  elseif (unfound?(old))
     note-adding-definition(binding, definition);
     binding.binding-active-definition := definition;
   elseif (form-incremental?(definition))
@@ -480,7 +480,7 @@ define function binding-constant-type-model-object
  => (model-object, found? :: <boolean>)
   let model-object =
     binding-type-model-object
-      (binding, default: not-found(),
+      (binding, default: $unfound,
          error-if-circular?: error-if-circular?);
     if (found?(model-object)) // & ~instance?(model-object, <unknown>)
       values(model-object, #t)
@@ -677,7 +677,7 @@ define method lookup-model-object
   let binding = lookup-binding (name, reference?: reference?);
   let model-object =
     binding-model-object
-      (binding, default: not-found(), error-if-circular?: error-if-circular?);
+      (binding, default: $unfound, error-if-circular?: error-if-circular?);
   if (found?(model-object))
     model-object
   else
@@ -1179,18 +1179,18 @@ define method defined? (binding :: <module-binding>) => (value :: <boolean>)
   note-binding-dependency(binding, dep$defined?);
   binding-defined?(binding)
     | begin
-	let def = untracked-binding-definition(binding, default: not-found());
+	let def = untracked-binding-definition(binding, default: $unfound);
 	found?(def) & ~instance?(def, <missing-variable-defining-form>)
       end 
 end method;
 
 define method constant? (binding :: <module-binding>) => (value :: <boolean>)
-  let definition = binding-definition(binding, default: not-found());
+  let definition = binding-definition(binding, default: $unfound);
   found?(definition) & constant?(definition)
 end method;
 
 define method compile-stage-only? (binding :: <module-binding>) => (value :: <boolean>)
-  let definition = binding-definition(binding, default: not-found());
+  let definition = binding-definition(binding, default: $unfound);
   found?(definition) & form-compile-stage-only?(definition)
 end method;
 
@@ -1231,19 +1231,19 @@ end method;
 
 define method binding-thread? 
     (binding :: <module-binding>) => (value :: <boolean>)
-  let definition = binding-definition(binding, default: not-found());
+  let definition = binding-definition(binding, default: $unfound);
   found?(definition) & form-thread?(definition)
 end method;
 
 define method binding-locked? 
     (binding :: <module-binding>) => (value :: <boolean>)
-  let definition = binding-definition(binding, default: not-found());
+  let definition = binding-definition(binding, default: $unfound);
   found?(definition) & form-locked?(definition)
 end method;
 
 define method binding-atomic? 
     (binding :: <module-binding>) => (value :: <boolean>)
-  let definition = binding-definition(binding, default: not-found());
+  let definition = binding-definition(binding, default: $unfound);
   found?(definition) & form-atomic?(definition)
 end method;
 

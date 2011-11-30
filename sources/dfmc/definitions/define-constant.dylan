@@ -61,7 +61,7 @@ define method form-models-evaluated?
   // a weird return value convention, so until that's fixed, use a hammer..
   without-dependency-tracking
   every?(method (var)
-	   found?(binding-model-object(var, default: not-found()))
+	   found?(binding-model-object(var, default: $unfound))
 	 end,
 	 vars)
   end;

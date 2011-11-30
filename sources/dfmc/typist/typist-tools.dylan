@@ -87,8 +87,8 @@ define function table=?
     when (t1 == t2) bail(#t) end;                             // Cheap EQ check
     map-table(t1, 
               method (key1, val1)
-                let val2 = element(t2, key1, default: not-found());
-                when (not-found?(val2) | ~val=?(val1, val2))  // or different
+                let val2 = element(t2, key1, default: $unfound);
+                when (unfound?(val2) | ~val=?(val1, val2))  // or different
                   bail (#f)                                   // so fail.
                 end
               end);

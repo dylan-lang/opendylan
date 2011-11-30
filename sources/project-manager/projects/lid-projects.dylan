@@ -134,7 +134,7 @@ define method project-keyword-property (project :: <lid-project>,
 					#key default = unsupplied())
  => (value);
   let properties = project-lid-file-info(project);
-  let value = element(properties, key, default: not-found());
+  let value = element(properties, key, default: $unfound);
   if (found?(value))
     value
   else

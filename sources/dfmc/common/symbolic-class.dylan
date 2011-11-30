@@ -33,7 +33,7 @@ slot:
   { constant slot ?:name :: ?:expression, ?stuff:* }
     => { constant slot ?name :: ?expression, ?stuff }
   { symbolic slot ?:name, required-init-keyword: ?keyword:token }
-    => { // slot "%" ## ?name, init-value: not-found() ; 
+    => { // slot "%" ## ?name, init-value: $unfound ; 
          constant slot ?name ## "-name" :: <symbol>, 
            required-init-keyword: ?keyword
            // required-init-keyword: coagulate(?name ## "-name")
@@ -51,7 +51,7 @@ define macro symbolic-accessors-definer
     => { define sideways method ?name (object) => (res)
            /*
            let value = "%" ## ?name (object);
-           if (not-found?(value))
+           if (unfound?(value))
              "%" ## ?name (object) := ?resolver(?name ## "-name" (object))
            else
              value

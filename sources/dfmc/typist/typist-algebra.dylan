@@ -1249,7 +1249,7 @@ define function ^classes-guaranteed-disjoint?(c1 :: <&class>, c2 :: <&class>)
   let disjoint-cache :: <type-estimate-pair-match-table> 
                     = library-type-estimate-disjoint?-cache(current-library-description());
   let cache-key1    = pair(c1, c2);
-  let cache-element = element(disjoint-cache, cache-key1, default: not-found());
+  let cache-element = element(disjoint-cache, cache-key1, default: $unfound);
   if (found?(cache-element))
     // Found it in the cache.
     values(cache-element, #t)
@@ -1499,8 +1499,8 @@ define method type-estimate-subtype?-2(t1 :: <type-estimate-class>,
           unless (c1s-checked ~== #f)
             c1s-checked := make(<table>)
           end;
-          let c1-check = element(c1s-checked, c1, default: not-found());
-          if (c1-check ~== not-found())
+          let c1-check = element(c1s-checked, c1, default: $unfound);
+          if (found?(c1-check))
             // We've been here before, so we already know the answer.
             c1-check
           else

@@ -14,6 +14,6 @@ define functional-extensions constant-test $unsupplied ()
 end constant-test $unsupplied;
 
 define functional-extensions constant-test $unfound ()
-  check-true("not-found?($unfound)", not-found?($unfound));
+  check-true("unfound?($unfound)", unfound?($unfound));
   check-false("found?($unfound) is false", found?($unfound));
 end constant-test $unfound;

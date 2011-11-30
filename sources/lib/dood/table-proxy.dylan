@@ -103,8 +103,8 @@ end method;
 define sealed method element
     (table :: <dood-lazy-table>, key, #key default = unsupplied()) => (value)
   dood-lazy-table-ensure-copied(table);
-  let value = element(dood-lazy-table-data(table), key, default: not-found());
-  if (not-found?(value))
+  let value = element(dood-lazy-table-data(table), key, default: $unfound);
+  if (unfound?(value))
     if (supplied?(default))
       default
     else
@@ -521,7 +521,7 @@ define sealed method element
      #key default = unsupplied()) 
  => (value)
   dood-lazy-table-ensure-copied(table);
-  let value = element(dood-lazy-table-data(table), key, default: not-found());
+  let value = element(dood-lazy-table-data(table), key, default: $unfound);
   local method defaulted-value ()
 	  if (supplied?(default))
 	    default
@@ -529,7 +529,7 @@ define sealed method element
 	    error("%= is not present as a key for %=.", key, table);
 	  end if
         end method;
-  if (not-found?(value))
+  if (unfound?(value))
     if (dood-lazy-table-resolved?(table))
       defaulted-value();
     else
@@ -569,7 +569,7 @@ define sealed method dood-lazy-table-resolve
     with-dood-state (dood, state)
       for (key in keys, i from 0)
 	if (key) // loaded?
-	  when (found?(element(table, key, default: not-found()))) 
+	  when (found?(element(table, key, default: $unfound))) 
 	    keys[i] := #f; // value loaded already
 	  end when;
 	else
