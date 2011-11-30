@@ -49,10 +49,6 @@ define module functional-extensions
               pack-boolean,   unpack-boolean,
               packed-slots-end-count,
               $end-count-<object> };
-  create \timing,
-         \repeatable,
-         set-class-breakpoint, display-class-breakpoints,
-         clear-class-breakpoint, clear-class-breakpoints;
 end module functional-extensions;
 
 define module simple-format
@@ -82,10 +78,3 @@ define module functional-dylan
   use functional-extensions,
     export: all;
 end module;
-
-define module functional-dylan-internals
-  use functional-dylan;
-  use dylan-extensions;
-  use dylan-direct-c-ffi;
-  use functional-objects-extras;
-end module functional-dylan-internals;

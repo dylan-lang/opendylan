@@ -496,11 +496,15 @@ define common-extensions function-test unfound ()
 end function-test unfound;
 
 define common-extensions function-test unfound? ()
-  //---*** Fill this in...
+  check-true("unfound?($unfound)", unfound?($unfound));
+  check-false("unfound?(#f) == #f", unfound?(#f));
+  check-false("unfound?(#t) == #f", unfound?(#t));
 end function-test unfound?;
 
 define common-extensions function-test found? ()
-  //---*** Fill this in...
+  check-false("found?($unfound) is false", found?($unfound));
+  check-true("found?(#f)", found?(#f));
+  check-true("found?(#t)", found?(#t));
 end function-test found?;
 
 define common-extensions function-test unsupplied ()
@@ -508,7 +512,9 @@ define common-extensions function-test unsupplied ()
 end function-test unsupplied;
 
 define common-extensions function-test unsupplied? ()
-  //---*** Fill this in...
+  check-true("unsupplied?($unsupplied)", unsupplied?($unsupplied));
+  check-false("unsupplied?(#f) == #f", unsupplied?(#f));
+  check-false("unsupplied?(#t) == #f", unsupplied?(#t));
 end function-test unsupplied?;
 
 define common-extensions function-test supplied? ()
