@@ -21,6 +21,17 @@ define macro table-definer
     => { the-table[ ?key ] := ?value; ... }
 end macro table-definer;
 
+/// Simple timing macro
+
+define macro timing
+  { timing ()
+      ?body:body
+    end }
+    => { primitive-start-timer();
+	 ?body;
+	 let elapsed-time = primitive-stop-timer();
+	 values(elapsed-time[0], elapsed-time[1]) }
+end macro timing;
 
 /// Generic profiling macro
 

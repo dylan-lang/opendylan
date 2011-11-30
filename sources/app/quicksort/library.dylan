@@ -14,5 +14,6 @@ define module quicksort
   use functional-dylan;
   use simple-format;
   use simple-random;
+  use simple-profiling;
 end module quicksort;
 

@@ -19,6 +19,7 @@ define module life
   use functional-dylan;
   use simple-format;		// exported from functional-dylan
   use simple-random;		// exported from functional-dylan
+  use simple-profiling;
   use operating-system;         // exported from system
   use threads;
 

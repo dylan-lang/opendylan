@@ -27,6 +27,8 @@ define library common-dylan
 end library common-dylan;
 
 define module simple-profiling
+  create \timing;
+
   create \profiling,
          <profiling-state>,
          start-profiling-type,

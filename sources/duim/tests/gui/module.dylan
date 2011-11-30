@@ -8,6 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module duim-gui-test-suite
   use functional-dylan;
+  use simple-profiling;
   use dylan-extensions,
     import: { debug-name };
   use simple-format;

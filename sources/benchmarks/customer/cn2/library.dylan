@@ -20,6 +20,7 @@ define module cn2
   use format;
   use format-out;
   use transcendentals;
+  use simple-profiling;
 
   export load-cn2, run-cn2, cn2;
 end module cn2;

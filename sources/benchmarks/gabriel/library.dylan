@@ -19,4 +19,5 @@ define module gabriel-benchmarks
     import: { dynamic-bind };
   use simple-format;
   use simple-random;
+  use simple-profiling;
 end module gabriel-benchmarks;

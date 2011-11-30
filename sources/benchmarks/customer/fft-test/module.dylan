@@ -12,6 +12,7 @@ define module fft-test
   use dylan-extensions, import: { \without-bounds-checks };
   use simple-format;
   use simple-random;
+  use simple-profiling;
   use transcendentals;
 
   // Add binding exports here.
