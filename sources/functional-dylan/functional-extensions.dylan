@@ -5,11 +5,6 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-//---*** Remove these when we are sure nobody is using them
-define inline constant not-found  = method () $unfound end;
-define inline constant not-found? = method (x) x == $unfound; end;
-
-
 /// Support for breakpoints on class allocation
 
 define function set-class-breakpoint

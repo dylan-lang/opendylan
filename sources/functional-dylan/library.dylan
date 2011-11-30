@@ -49,8 +49,7 @@ define module functional-extensions
               pack-boolean,   unpack-boolean,
               packed-slots-end-count,
               $end-count-<object> };
-  create not-found, not-found?,		//---*** Kept until code is fixed
-         \timing,
+  create \timing,
          \repeatable,
          set-class-breakpoint, display-class-breakpoints,
          clear-class-breakpoint, clear-class-breakpoints;
