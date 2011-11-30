@@ -149,7 +149,7 @@ define module ir-client
 end module;
 
 define module corba-tests-client
-  use generic-arithmetic-functional-dylan;
+  use generic-arithmetic-common-dylan;
   use dylan-orb;
   use dylan-orb-internals;
                                 // ---*** behind the scenes access for

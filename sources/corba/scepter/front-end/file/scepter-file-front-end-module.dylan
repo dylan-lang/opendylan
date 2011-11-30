@@ -7,7 +7,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module scepter-file-front-end
   use date;
-  use generic-arithmetic-functional-dylan;
+  use generic-arithmetic-common-dylan;
   use file-system;
   use format;
   use streams;

@@ -16,7 +16,7 @@ define library corba-dylan
 end library;
 
 define module corba-dylan
-  use generic-arithmetic-functional-dylan,
+  use generic-arithmetic-common-dylan,
     export: all;
   use dylan-arithmetic,
     export: all,

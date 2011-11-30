@@ -345,9 +345,7 @@ begin
        id: #"generic-arithmetic",
        library-packs: library-packs(#[#"Core"]),
        modules: #[#"generic-arithmetic",
-		  #(#"dylan-excluding-arithmetic"),
-		  #(#"dylan-arithmetic"),
-		  #(#"generic-arithmetic-functional-dylan"),
+		  #(#"generic-arithmetic-common-dylan"),
 		  #(#"generic-arithmetic-dylan")],
        documentation: "Generic arithmetic, allowing various implementations"
 		      " but providing none");

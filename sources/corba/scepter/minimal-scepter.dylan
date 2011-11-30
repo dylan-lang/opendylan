@@ -17,7 +17,7 @@ define library minimal-scepter
 end library;
 
 define module scepter
-  use generic-arithmetic-functional-dylan, exclude: {<union>};
+  use generic-arithmetic-common-dylan, exclude: {<union>};
 
   use scepter-error,
     export: { <idl-condition>,

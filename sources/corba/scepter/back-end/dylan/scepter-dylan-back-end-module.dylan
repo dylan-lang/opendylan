@@ -9,7 +9,7 @@ define module scepter-dylan-back-end
   use date;
   use file-system;
   use format;
-  use generic-arithmetic-functional-dylan;
+  use generic-arithmetic-common-dylan;
   use locators;
   use streams;
   use threads;

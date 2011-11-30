@@ -39,7 +39,7 @@ end module;
   
 
 define module sql-odbc-test-bignums
-  use generic-arithmetic-functional-dylan;
+  use generic-arithmetic-common-dylan;
   use memory-manager;
   use threads;
   use sql-odbc;

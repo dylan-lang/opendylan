@@ -16,7 +16,7 @@ define library disk-usage
 end library disk-usage;
 
 define module disk-usage
-  use generic-arithmetic-functional-dylan;
+  use generic-arithmetic-common-dylan;
   use simple-format;
   use operating-system;
   use file-system;

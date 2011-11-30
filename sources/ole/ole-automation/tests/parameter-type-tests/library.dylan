@@ -24,7 +24,7 @@ define module parameter-type-tests
   use simple-format;
   use simple-random;
   use big-integers;
-  use generic-arithmetic-functional-dylan;
+  use generic-arithmetic-common-dylan;
   use c-ffi;
   use com;
   use ole-automation;
