@@ -4,6 +4,7 @@ Author:       Peter S. Housel
 Files:        llvm-asm-parser-library
 	      llvm-asm-parser
 	      llvm-asm-reader
+Other-Files:  llvm-asm-parser.spec
 Target-Type:  dll
 Copyright:    Original Code is Copyright 2009-2010 Gwydion Dylan Maintainers
               All rights reserved.

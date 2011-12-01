@@ -16,4 +16,5 @@ Makefile
 /sources/corba/services/naming/naming-protocol/
 /sources/corba/services/naming/naming-skeletons/
 /sources/corba/services/naming/naming-stubs/
+/sources/lib/llvm/llvm-asm-parser.dylan
 /sources/dfmc/c-run-time/*.o
