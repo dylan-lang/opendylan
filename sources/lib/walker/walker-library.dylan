@@ -6,15 +6,17 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library walker
-  use functional-dylan;
+  use dylan;
   use collections;
   use io;
+  use common-dylan, import: { common-extensions };
   export walker;
 end library;
 
 define module walker
-  use functional-dylan;
+  use dylan;
   use dylan-extensions;
+  use common-extensions, import: { $unfound, found? };
   use format-out;
   use byte-vector;
   use collectors;

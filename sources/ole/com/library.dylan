@@ -13,7 +13,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define library COM
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use C-FFI;
   use Win32-common;
   use Win32-kernel;
@@ -29,13 +30,12 @@ define module COM-internal
 end;
 
 define module COM
-  use functional-dylan;
+  use common-dylan;
   use streams-protocol;
   use Dylan-extensions, import: {<byte>,
 				 <byte-character>,
 				 element-type => collection-element-type
 				};
-  use simple-format, import: { format-to-string };
   use C-FFI, export: { null-pointer, null-pointer?, pointer-address,
 			pointer-value, pointer-value-setter,
 			<C-pointer>, <C-string>, <C-unicode-string>,

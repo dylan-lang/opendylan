@@ -6,7 +6,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library dood-test-suite
-  use functional-dylan;
+  use common-dylan;
   use io;
   use dood;
   use testworks;
@@ -15,7 +15,7 @@ define library dood-test-suite
 end library;
 
 define module dood-test-suite
-  use functional-dylan;
+  use common-dylan, exclude: { format-to-string };
   use streams;
   use standard-io;
   use format;

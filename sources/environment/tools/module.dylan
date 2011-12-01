@@ -7,7 +7,9 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module environment-tools
-  use environment-imports;	// this gets functional-dylan
+  use environment-imports;	// this gets common-dylan
+
+  use dylan-extensions, import: { \last-handler-definer };
 
   use duim-internals,
     exclude: { position, string-pluralize,

@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define library disasm-test
-  use functional-dylan;
+  use common-dylan;
   use io;
   use disasm;
 
@@ -16,7 +16,7 @@ define library disasm-test
 end library;
 
 define module disasm-test
-  use functional-dylan;
+  use common-dylan, exclude: { format-to-string };
   use byte-vector;
   use format;
   use format-out;

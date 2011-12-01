@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define library interactive-symbol-table
-  use functional-dylan;
+  use common-dylan;
   use collections;
   use io;
   use access-path;
@@ -17,7 +17,7 @@ define library interactive-symbol-table
 end library;
 
 define module interactive-symbol-table
-  use functional-dylan;
+  use common-dylan;
   use table-extensions, import: {<string-table>};
   use access-path;
   create
@@ -97,7 +97,7 @@ define module interactive-symbol-table
 end module;
 
 define module ist-implementation
-  use functional-dylan;
+  use common-dylan, exclude: { format-to-string };
   use table-extensions, import: {<string-table>};
   use format;
   use format-out;

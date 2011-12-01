@@ -6,7 +6,7 @@ Copyright: Copyright (c) 1997-2000 Functional Objects, Inc. All rights reserved.
 %comment  This file, "library.src", is expanded to produce "library.dylan". 
 
 define library OLE-Controls
-  use functional-dylan;
+  use common-dylan;
   use C-FFI;
   use Win32-Common;
   use Win32-User;

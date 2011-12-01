@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library gctest
-  use functional-dylan;
+  use common-dylan;
   use io;
 
   // Add any more module exports here.

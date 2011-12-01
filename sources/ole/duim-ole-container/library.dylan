@@ -8,7 +8,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library DUIM-OLE-Container
-  use functional-dylan;
+  use common-dylan;
   use OLE-Container;
   use C-FFI;
   use Win32-common;
@@ -22,7 +22,7 @@ define library DUIM-OLE-Container
 end library;
 
 define module DUIM-OLE-Container
-  use functional-dylan;
+  use common-dylan;
   use OLE-Container,
     export: { document-ole-object, document-class-id, document-file-name };
   use C-FFI;

@@ -5,7 +5,9 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module parser-generator
-  use functional-dylan;
+  use dylan;
+  use dylan-extensions;
+  use common-extensions, exclude: { format-to-string };
   use streams;
   use format;
   use standard-io;

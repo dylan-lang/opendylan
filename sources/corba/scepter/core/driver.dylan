@@ -33,8 +33,8 @@ end class;
 define open generic declarator-imported? (declarator :: <scepter-declarator>) => (imported? :: <boolean>);
 
 
-define constant $default-dylan-orb-runtime-libraries = vector("functional-dylan", "dylan-orb");
-define constant $default-dylan-orb-runtime-modules = vector("functional-dylan", "dylan-orb", "dylan-orb-internals");
+define constant $default-dylan-orb-runtime-libraries = vector("common-dylan", "dylan-orb");
+define constant $default-dylan-orb-runtime-modules = vector("common-dylan", "dylan-orb", "dylan-orb-internals");
 
 define constant <failure-mode> =
   one-of(#f,

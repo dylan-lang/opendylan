@@ -14,15 +14,16 @@ define module standalone-deuce
 end module standalone-deuce;
 
 define module standalone-deuce-internals
-  use functional-dylan,
-    exclude: { position, position-if };
+  use common-dylan,
+    exclude: { position, position-if, format-to-string };
   use threads;
   use plists;
   use streams-internals,
     rename: { <buffer>       => streams/<buffer>,
 	      read-character => streams/read-character };
 
-  use simple-format;
+  use format;
+  use format-out;
 
   use operating-system;
 

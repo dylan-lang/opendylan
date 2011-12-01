@@ -6,7 +6,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module scepter-ast
-  use generic-arithmetic-common-dylan, exclude: { union };
+  use generic-arithmetic-common-dylan, exclude: { union, format-to-string };
   use streams;
   use format;
   use table-extensions, exclude: { table };

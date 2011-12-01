@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library status-buttons
-  use functional-dylan;
+  use common-dylan;
   use io;
   use collections;
   use duim;

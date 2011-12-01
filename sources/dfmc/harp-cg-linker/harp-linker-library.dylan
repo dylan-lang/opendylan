@@ -6,7 +6,8 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library dfmc-harp-cg-linker
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
 
   use dfmc-harp-cg;
   use dfmc-linker;
@@ -15,7 +16,7 @@ define library dfmc-harp-cg-linker
 end library;
 
 define module dfmc-harp-cg-linker
-  use functional-dylan;
+  use common-dylan, exclude: { format-to-string };
   use machine-word-lowlevel,
     import: { machine-word-unsigned-shift-left,
               machine-word-unsigned-shift-right };

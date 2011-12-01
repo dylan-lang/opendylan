@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library dfmc-pentium-harp-cg
 
- use functional-dylan;
+ use common-dylan;
  use io;
 
  use pentium-harp;
@@ -24,7 +24,7 @@ end library dfmc-pentium-harp-cg;
 
 define module dfmc-pentium-harp-cg
 
- use functional-dylan;
+ use common-dylan, exclude: { format-to-string };
  use streams-internals;
 
  use pentium-harp,

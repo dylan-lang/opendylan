@@ -7,17 +7,17 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library gabriel-benchmarks
-  use functional-dylan;
+  use common-dylan;
   export gabriel-benchmarks;
 end library gabriel-benchmarks;
 
 define module gabriel-benchmarks
-  use functional-dylan;
+  use common-dylan;
   use transcendentals,
     import: { sin, cos, $single-pi, $double-pi };
   use threads,
     import: { dynamic-bind };
-  use simple-format;
+  use simple-io;
   use simple-random;
   use simple-profiling;
 end module gabriel-benchmarks;

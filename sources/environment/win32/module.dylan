@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module win32-environment
-  use environment-imports;	// this gets functional-dylan
+  use environment-imports;	// this gets common-dylan
   use operating-system,
     import: { application-name,
 	      application-arguments,

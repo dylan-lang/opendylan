@@ -7,14 +7,14 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library helpmate
-  use functional-dylan;
+  use common-dylan;
   use duim;
   use io;
   export helpmate;
 end library;
 
 define module helpmate
-  use functional-dylan;
+  use common-dylan, exclude: { format-to-string };
   use duim;
   use format;
 end module;

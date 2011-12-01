@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 /* Automatically generated from "library.src"; do not edit. */
 
 define library Win32-multimedia
-  use functional-dylan;
+  use dylan;
   use C-FFI;
   use Win32-common;
   use Win32-user;

@@ -545,7 +545,7 @@ define function new-user-project
            extension: *dylan-source-suffix*);
   with-open-file(stream = library-locator, direction: #"output")
     format(stream,
-           "Module: dylan-user\n\ndefine library %s\n\tuse functional-dylan;\nexport %s;\nend library;\n\ndefine module %s\n\tuse functional-dylan;\nend module;\n",
+           "Module: dylan-user\n\ndefine library %s\n\tuse common-dylan;\nexport %s;\nend library;\n\ndefine module %s\n\tuse common-dylan;\nend module;\n",
            name, name, name);
   end;
   make-project(<user-project>, project-file: project-location);

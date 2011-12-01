@@ -6,7 +6,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library registry-projects
-  use functional-dylan;
+  use dylan;
   // Probably don't need all this, sort it out later...
   use collections;
   use io;
@@ -22,7 +22,9 @@ define library registry-projects
 end library;
 
 define module registry-projects-internal
-  use functional-dylan;
+  use dylan;
+  use dylan-extensions;
+  use simple-debugging;
   // Probably don't need all this, sort it out later...
   use collectors;
   use set;

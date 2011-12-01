@@ -7,7 +7,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library scepter-ir-back-end-test-suite
 
-  use functional-dylan;
+  use common-dylan;
   use system;
   use dylan-orb;
   use scepter-core;

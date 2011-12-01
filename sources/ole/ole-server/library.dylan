@@ -8,7 +8,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library OLE-Server
-  use functional-dylan;
+  use common-dylan;
   use OLE;
   use Win32-common;
   use Win32-GDI;
@@ -22,7 +22,7 @@ end;
 
 define module OLE-Server
   use Dylan;
-  use functional-extensions,
+  use common-extensions,
     import: { \assert, false-or, \function-definer, ignore };
   use OLE,
     export: { make-GUID, <REFGUID>, <REFCLSID>,

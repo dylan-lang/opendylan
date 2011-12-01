@@ -11,7 +11,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //  interface libraries to the Win32 API.
 
 define library windows-resource-example
-  use functional-dylan;
+  use common-dylan;
   use equal-table;
   use Win32-common;
   use Win32-user;
@@ -23,7 +23,7 @@ define library windows-resource-example
 end;
 
 define module example-support
-  use functional-dylan;
+  use common-dylan;
   use equal-table;
   use Win32-common;
   use Win32-user;
@@ -45,7 +45,7 @@ define module example-support
 end;
 
 define module windows-resource-example
-  use functional-dylan;
+  use common-dylan;
   use Win32-common;
   use Win32-user;
   use Win32-GDI;

@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library bank-client
-  use functional-dylan;
+  use common-dylan;
   use dylan-orb;
   use bank-stubs;
   use naming-client;

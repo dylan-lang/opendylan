@@ -38,7 +38,7 @@ define module corba-server
 end module;
 
 define module corba-server-implementation
-  use functional-dylan;
+  use common-dylan;
   use dylan-orb;
   use streams;
   use chat-skeletons;
@@ -47,7 +47,7 @@ define module corba-server-implementation
 end module;
 
 define module chat-server-implementation
-  use functional-dylan;
+  use common-dylan, exclude: { format-to-string };
   use dylan-orb;
   use format;
   use chat-stubs;
@@ -56,7 +56,7 @@ define module chat-server-implementation
 end module;
 
 define module chat-server-gui
-  use functional-dylan;
+  use common-dylan, exclude: { format-to-string };
   use format;
   use duim;
   use threads;

@@ -5,7 +5,6 @@ Copyright: 1996, 1997, 1998 Functional Objects, Inc.  All rights reserved.
 
 define library Win32-kernel
   use Dylan;
-  use functional-extensions;
   use C-FFI;
   use Win32-common;
   export Win32-kernel;
@@ -13,7 +12,7 @@ end;
 
 define module Win32-kernel
   use Dylan;
-  use functional-extensions, import: { false-or };
+  use dylan-extensions, import: { false-or };
   use C-FFI;
   use Win32-common,
     /* have to export here names that are used as structure accessors in

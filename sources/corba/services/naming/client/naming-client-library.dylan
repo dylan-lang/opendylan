@@ -6,7 +6,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library naming-client
-  use functional-dylan;
+  use common-dylan;
   use dylan-orb;
   use naming-stubs;
   export
@@ -14,7 +14,7 @@ define library naming-client
 end library naming-client;
 
 define module naming-client
-  use functional-dylan;
+  use common-dylan;
   use dylan-orb;
   use naming-stubs,
     export: all;

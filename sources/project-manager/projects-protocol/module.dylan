@@ -152,7 +152,7 @@ define module project-templates
 end module project-templates;
 
 define module projects-protocol-internals
-  use functional-dylan;
+  use common-dylan, exclude: { format-to-string };
   use machine-words;
   use operating-system;
   use file-system;

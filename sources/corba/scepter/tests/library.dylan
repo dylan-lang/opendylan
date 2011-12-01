@@ -6,7 +6,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library scepter-tests
-  use functional-dylan;
+  use coomon-dylan;
   use io;
   use system;
   use parser-run-time; 
@@ -22,7 +22,7 @@ define module scepter-tests
   use standard-io;
   use print;
   use format;
-  use functional-extensions, exclude: {<union>};
+  use common-extensions, exclude: {format-to-string, <union>};
   use parser-run-time;
   use c-lexer,
     rename: { constant-value => lexer-value, $eoi-token => $lexer-eoi-token };

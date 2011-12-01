@@ -5,7 +5,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library dfmc-c-back-end
-  use functional-dylan;
+  use common-dylan;
   use io;
   use dfmc-core;
   use dfmc-back-end;
@@ -17,7 +17,8 @@ define library dfmc-c-back-end
 end library;
 
 define module dfmc-c-back-end
-  use functional-dylan;
+  use common-dylan, exclude: { format-to-string };
+  use format;
   use streams-internals;
   use dfmc-core;
   use dfmc-imports;

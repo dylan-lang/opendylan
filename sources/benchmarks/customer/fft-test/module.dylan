@@ -8,9 +8,9 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module fft-test
   use finalization;
-  use functional-dylan;
+  use common-dylan;
   use dylan-extensions, import: { \without-bounds-checks };
-  use simple-format;
+  use simple-io;
   use simple-random;
   use simple-profiling;
   use transcendentals;

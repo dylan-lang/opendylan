@@ -14,7 +14,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define library OLE
-  use functional-dylan;
+  use common-dylan;
   use C-FFI;
   use COM;
   use Win32-common;
@@ -24,7 +24,7 @@ define library OLE
 end;
 
 define module OLE
-  use functional-dylan;
+  use common-dylan;
   use C-FFI;
   use machine-words, import: { \%+ };
   use COM, export: all;

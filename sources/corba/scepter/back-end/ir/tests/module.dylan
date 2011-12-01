@@ -7,7 +7,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module scepter-ir-back-end-test-suite
 
-  use functional-dylan;
+  use common-dylan;
   use dylan-orb;
   use scepter-ast;
   use scepter-driver;

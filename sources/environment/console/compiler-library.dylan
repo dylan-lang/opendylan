@@ -7,7 +7,8 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library dylan-compiler
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use system;
   use io;
   use commands;

@@ -7,8 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module duim-gl-demo
-  use functional-dylan;
-  use simple-format;
+  use common-dylan;
   use duim;
   use duim-internals, exclude: { position };
   use win32-duim;

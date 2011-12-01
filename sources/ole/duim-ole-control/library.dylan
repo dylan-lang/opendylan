@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library DUIM-OLE-Control
-  use functional-dylan;
+  use common-dylan;
   use Win32-common;
   use Win32-User;
   use Win32-GDI;
@@ -22,7 +22,7 @@ end;
 
 define module DUIM-OLE-Control
   use Dylan;
-  use functional-extensions, import: { false-or, $unsupplied, ignore };
+  use common-extensions, import: { false-or, $unsupplied, ignore };
   use Win32-common;
   use Win32-User, prefix: "w/";
   use Win32-GDI, prefix: "w/";

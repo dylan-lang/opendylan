@@ -5,7 +5,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library dfmc-back-end
-  use functional-dylan;
+  use dylan;
   use dfmc-core;
   use dfmc-conversion;
   use dfmc-reader;
@@ -16,7 +16,7 @@ define library dfmc-back-end
 end library;
 
 define module dfmc-back-end
-  use functional-dylan;
+  use dylan;
   use dfmc-core;
   use dfmc-imports;
   use dfmc-conversion;

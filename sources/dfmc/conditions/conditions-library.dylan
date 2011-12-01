@@ -7,14 +7,14 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library dfmc-conditions
-  use functional-dylan;
+  use dylan;
   use dfmc-common;
   export dfmc-conditions;
 end library dfmc-conditions;
 
 
 define module dfmc-conditions
-  use functional-dylan;
+  use dylan;
   use dfmc-common;
   use dfmc-imports;
 
@@ -112,17 +112,9 @@ end module dfmc-conditions;
 
 define module dfmc-conditions-implementation
   // things we use in the implementation
-  use functional-dylan;
+  use dylan;
   use dfmc-common;
   use dfmc-imports;
   // the interface we define
   use dfmc-conditions;
 end module dfmc-conditions-implementation;
-
-
-
-
-
-
-
-

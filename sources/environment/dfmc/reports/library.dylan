@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library dfmc-environment-reports
-  use functional-dylan;
+  use common-dylan;
   use io;
 
   use dfmc-browser-support;

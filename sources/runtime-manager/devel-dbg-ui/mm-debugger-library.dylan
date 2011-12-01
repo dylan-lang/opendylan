@@ -7,7 +7,8 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library mm-debugger
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use collections;
   use c-ffi;
   use system;
@@ -32,7 +33,7 @@ define library mm-debugger
 end library;
 
 define module devel-dbg-ui
-  use functional-dylan;
+  use common-dylan, exclude: { format-to-string };
   use collectors;
   use c-ffi;
   use operating-system, 

@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define library pentium-linux-rtg
-  use functional-dylan;
+  use common-dylan;
   use pentium-harp;
   use native-rtg;
   use linux-rtg;

@@ -8,7 +8,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define library harp 
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use generic-arithmetic;
   use big-integers;
   use harp-cg-back-end;

@@ -8,7 +8,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define library binary-outputter
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use generic-arithmetic;
   use big-integers;
   use collections;
@@ -23,7 +24,7 @@ end library;
 
 
 define module binary-outputter
-  use functional-dylan;
+  use common-dylan, exclude: { format-to-string };
   use dylan-extensions;
   use byte-vector;
   use table-extensions, import: {<string-table>};

@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library win32-scribble
-  use functional-dylan;
+  use common-dylan;
   use duim;
 
   use c-ffi;
@@ -21,7 +21,7 @@ define library win32-scribble
 end library win32-scribble;
 
 define module win32-scribble
-  use functional-dylan;
+  use common-dylan;
   use duim;
   use win32-duim;
   use duim-internals,

@@ -332,14 +332,15 @@ end module deuce;
 
 // Implementation and extension module
 define module deuce-internals
-  use functional-dylan,
-    exclude: { position, position-if, count };
+  use common-dylan,
+    exclude: { position, position-if, count, format-to-string };
   use dylan-extensions,
     import: { \without-bounds-checks,
 	      element-no-bounds-check,
 	      element-no-bounds-check-setter,
 	      element-range-error };
-  use simple-format;
+  use format;
+  use format-out;
   use threads;
   use table-extensions, exclude: { table };
   use plists;

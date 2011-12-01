@@ -6,7 +6,8 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library dfmc-harp-cg
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use io;
   use big-integers;
   use dfmc-core;
@@ -25,7 +26,7 @@ define library dfmc-harp-cg
 end library;
 
 define module dfmc-harp-cg
-  use functional-dylan;
+  use common-dylan, exclude: { format-to-string };
   use dylan-extensions,
     import: {decode-single-float, decode-double-float,
 	     <machine-word>, <double-integer>, $minimum-unsigned-machine-word},

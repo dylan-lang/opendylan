@@ -17,7 +17,8 @@ define module win32-duim
   use win32-core;
   use dylan-extensions,
    import: { <abstract-integer>, <big-integer>,
-            <double-integer>, %double-integer-low, %double-integer-high };
+            <double-integer>, %double-integer-low, %double-integer-high,
+             \last-handler-definer };
 
   export check-result,
          report-error,

@@ -7,7 +7,8 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library midi
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use win32-common;
   use win32-multimedia;
   use c-ffi;

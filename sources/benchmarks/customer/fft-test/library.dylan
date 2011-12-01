@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library fft-test
-  use functional-dylan;
+  use common-dylan;
 
   // Add any more module exports here.
   export fft-test;

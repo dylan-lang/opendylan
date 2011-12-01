@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module access-path
   
-   use functional-dylan;
+   use common-dylan;
 
    create
 
@@ -528,7 +528,7 @@ define module access-path-nub
 end module;
 
 define module access-path-implementation
-  use functional-dylan;
+  use common-dylan, exclude: { format-to-string };
   use dylan-extensions,
      import: {<machine-word>, 
               <double-integer>, 

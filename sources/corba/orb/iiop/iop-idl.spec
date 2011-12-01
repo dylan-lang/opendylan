@@ -4,5 +4,5 @@ Prefix: iop
 Protocol:      yes
 Stubs:	no
 Skeletons: no
-Libraries: functional-dylan,corba-protocol
-Modules: functional-dylan,corba-protocol
+Libraries: common-dylan,corba-protocol
+Modules: common-dylan,corba-protocol

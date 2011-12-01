@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library life
-  use functional-dylan;
+  use common-dylan;
   use system;
   use duim;
 
@@ -16,9 +16,8 @@ end library life;
 
 
 define module life
-  use functional-dylan;
-  use simple-format;		// exported from functional-dylan
-  use simple-random;		// exported from functional-dylan
+  use common-dylan;
+  use simple-random;		// exported from common-dylan
   use simple-profiling;
   use operating-system;         // exported from system
   use threads;

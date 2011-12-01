@@ -7,7 +7,8 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library build-system
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use io;
   use system;
   use file-source-records;
@@ -20,7 +21,7 @@ define library build-system
 end library build-system;
 
 define module build-system
-  use functional-dylan;
+  use common-dylan, exclude: { format-to-string };
   use dylan-primitives;
   use threads;
   use operating-system;

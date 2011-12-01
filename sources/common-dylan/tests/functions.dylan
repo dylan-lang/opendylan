@@ -530,7 +530,7 @@ define common-extensions function-test false? ()
 end function-test false?;
 
 
-/// simple-format module
+/// simple-io module
 
 define simple-io function-test format-out ()
   check-false("format-out doesn't crash", format-out("Hello"));

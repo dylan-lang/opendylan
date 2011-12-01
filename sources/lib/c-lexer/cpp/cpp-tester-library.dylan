@@ -6,7 +6,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library cpp-tester
-  use functional-dylan;
+  use common-dylan;
   use system;
   use io;
   use c-lexer;
@@ -14,7 +14,7 @@ end library;
 
   
 define module cpp-tester
-  use functional-dylan;
+  use common-dylan, exclude: { format-to-string };
   use standard-io;
   use c-lexer;
   use c-lexer-test-interface;

@@ -7,7 +7,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define module type-library-module
-  use functional-dylan;
+  use common-dylan;
   use ole-automation;
   use c-ffi;
   export <VSSFlags>, $VSSFLAG-USERRONO, $VSSFLAG-USERROYES, 

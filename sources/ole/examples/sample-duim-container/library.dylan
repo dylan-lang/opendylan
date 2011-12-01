@@ -7,14 +7,16 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library sample-duim-container
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use duim;
   use duim-ole-container;
   export sample-duim-container;
 end library sample-duim-container;
 
 define module sample-duim-container
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use duim;
   use duim-ole-container;
 end module sample-duim-container;

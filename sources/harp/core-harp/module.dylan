@@ -8,7 +8,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define module common-harp-imports
-  use functional-extensions,
+  use common-extensions,
+    exclude: { format-to-string },
     rename: { <stretchy-object-vector> => <stretchy-vector> },
     export: all;
   use dylan-extensions, 
@@ -21,7 +22,7 @@ define module common-harp-imports
               \limited-stretchy-vector-definer,
               <double-integer>, $minimum-unsigned-machine-word, %double-integer-low,
               \packed-slots-definer, initialize-packed-slots,
-              integer-as-raw },
+              $end-count-<object>, integer-as-raw },
     export: all;
   use big-integers,
     prefix: "generic-",

@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library generic-test-suite
-  use functional-dylan;
+  use common-dylan;
   use testworks;
   use libraries-test-suite;
   use deuce-test-suite;
@@ -18,7 +18,7 @@ define library generic-test-suite
 end;
 
 define module generic-test-suite
-  use functional-dylan;
+  use common-dylan;
   use testworks;
   use libraries-test-suite;
   use deuce-test-suite;

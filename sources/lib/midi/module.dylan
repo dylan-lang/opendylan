@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module midi
-  use functional-dylan;
+  use dylan;
   use win32-common;
   use win32-multimedia;
   use c-ffi;
@@ -15,7 +15,6 @@ define module midi
   use table-extensions;
   use machine-words;
   use finalization;
-  use simple-format;
   use simple-random;
 
   // Raw MIDI spec

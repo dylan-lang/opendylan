@@ -6,7 +6,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library t-lists
-  use functional-dylan;
+  use common-dylan;
   use io;
   export t-lists;
 end library;
@@ -15,7 +15,7 @@ end library;
 define module t-lists
   create 
     <t-list>;
-  use functional-dylan,
+  use common-dylan,
     export: 
     {find-method, forward-iteration-protocol, as, element, element-setter, 
      push, pop, push-last, pop-last, empty?, size, last, last-setter, 
@@ -24,7 +24,7 @@ end module;
 
 // Main implementation module
 define module t-lists-internal
-  use functional-dylan, exclude: {close};
+  use common-dylan, exclude: {close, format-to-string};
   use streams;
   use print;
   use format;

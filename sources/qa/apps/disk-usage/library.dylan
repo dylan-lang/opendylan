@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library disk-usage
-  use functional-dylan;
+  use common-dylan;
   use io;
   use system;
   use generic-arithmetic;
@@ -17,7 +17,7 @@ end library disk-usage;
 
 define module disk-usage
   use generic-arithmetic-common-dylan;
-  use simple-format;
+  use simple-io;
   use operating-system;
   use file-system;
   use locators;

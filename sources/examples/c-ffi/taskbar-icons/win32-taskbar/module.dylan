@@ -14,8 +14,7 @@ define module win32-taskbar
   use table-extensions;
   use machine-words;
   use finalization;
-  use functional-dylan;
-  use simple-format;
+  use common-dylan;
   use simple-random;
 
   export

@@ -8,7 +8,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define library coff-manager
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use generic-arithmetic;
   use big-integers;
   use io;

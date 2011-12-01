@@ -6,7 +6,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library dylan-orb
-  use functional-dylan;
+  use common-dylan;
   use corba-dylan;
   use corba-protocol;
   use portableserver-protocol;
@@ -24,7 +24,7 @@ define library dylan-orb
 end library;
 
 define module dylan-orb-internals
-  use functional-dylan;
+  use common-dylan;
   use corba-protocol, export: all; // ---*** stubs etc need <struct-typecode> etc
   use iop-protocol, export: all;
   use orb-utilities, export: all; // ---*** test suite uses architecture-little-endian?
@@ -33,7 +33,7 @@ define module dylan-orb-internals
 end module;
 
 define module dylan-orb
-  use functional-dylan;
+  use common-dylan;
   use corba-protocol-externals, export: all;
   use portableserver-protocol, export: all;
   use orb-ir, export: all;
@@ -41,7 +41,7 @@ define module dylan-orb
 end module;
 
 define module dylan-orb-without-ir
-  use functional-dylan;
+  use common-dylan;
   use corba-protocol, export: all;
   use portableserver-protocol, export: all;
   use orb-ir-without-ir, export: all;

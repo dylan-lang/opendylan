@@ -5,12 +5,15 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library grammar-compiler
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   export grammar-compiler;
 end;
 
 define module grammar-compiler
-  use functional-dylan;
+  use dylan;
+  use dylan-extensions;
+  use common-extensions, import: { concatenate! };
 
   export compile-grammar-rules;
 

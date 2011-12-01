@@ -5,7 +5,8 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library dfmc-conversion
-  use functional-dylan;
+  use dylan;
+  use common-dylan, import: { transcendentals };
   use generic-arithmetic;
   use big-integers;
   use dfmc-core;
@@ -17,7 +18,7 @@ define library dfmc-conversion
 end library;
 
 define module dfmc-conversion
-  use functional-dylan;
+  use dylan;
   use generic-arithmetic,
     prefix: "generic/";
   use transcendentals;

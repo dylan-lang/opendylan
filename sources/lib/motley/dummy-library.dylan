@@ -8,13 +8,13 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library motley
-  use functional-dylan;
+  use dylan;
   //use tools-interface;
   export motley;
 end library motley;
 
 define module motley
-  use functional-dylan;
+  use dylan;
   //use tools-interface;
 
   //export get-registry-type-libraries, <registry-type-library-info>, 

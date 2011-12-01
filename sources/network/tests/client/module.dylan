@@ -7,9 +7,8 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module sockets-tests-client
-  use functional-dylan;
+  use common-dylan;
   use testworks;
-  use simple-format;
   use threads;
   use sockets;
   use streams;

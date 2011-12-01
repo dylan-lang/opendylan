@@ -6,12 +6,12 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library inproc-dual
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use OLE-Automation;
 end library;
 
 define module inproc-dual
-  use functional-dylan;
-  use simple-format;
+  use common-dylan;
   use OLE-Automation;
 end module;

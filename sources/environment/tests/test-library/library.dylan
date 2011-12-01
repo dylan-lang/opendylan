@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library environment-test-library
-  use functional-dylan;
+  use common-dylan;
   use duim;
 
   export environment-test-library;

@@ -12,13 +12,14 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define library Win32-common
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use C-FFI;
   export Win32-common;
 end;
 
 define module Win32-common
-  use functional-dylan;
+  use common-dylan;
   use C-FFI , export: { null-pointer, null-pointer?, pointer-address,
 		        pointer-value, pointer-value-setter, size-of,
 		        <C-void*>, <C-pointer>, <C-string>, <C-unicode-string>,

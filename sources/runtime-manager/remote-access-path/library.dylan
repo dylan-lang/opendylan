@@ -8,7 +8,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define library remote-access-path
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use big-integers;
   use collections;
   use io;
