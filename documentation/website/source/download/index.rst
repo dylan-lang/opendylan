@@ -62,6 +62,8 @@ Source Code
 All of our source code is available in the `"dylan-lang" organization on GitHub
 <https://github.com/dylan-lang/>`_.
 
+We also have a `continuous build server <https://jenkins.opendylan.org/>`_.
+
 
 .. _Windows (32 bit): http://opendylan.org/downloads/opendylan/1.0beta5/opendylan-1.0beta5-win32-r12284.exe
 .. _Mac OS X (Intel): http://opendylan.org/downloads/opendylan/1.0beta4/opendylan-1.0beta4-x86-darwin.tar.bz2
