@@ -91,6 +91,15 @@ define method subtype? (t :: <type>, u :: <union>) => (result :: <boolean>)
   subtype?(t, u.union-type1) | subtype?(t, u.union-type2)
 end method;
 
+// disambiguating methods
+define method subtype? (s :: <singleton>, u :: <union>) => (result :: <boolean>)
+  let so = s.singleton-object;
+  instance?(so, u.union-type1) | instance?(so, u.union-type2)
+end method;
+
+define method subtype? (u :: <union>, s :: <singleton>) => (result :: <boolean>)
+  subtype?(u.union-type1, s) & subtype?(u.union-type2, s)
+end method;
 
 define method subjunctive-subtype? (u :: <union>, t :: <type>,
 				    scu :: <subjunctive-class-universe>) 

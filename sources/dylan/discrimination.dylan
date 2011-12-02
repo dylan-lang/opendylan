@@ -730,8 +730,7 @@ define function compute-terminal-engine-node (ds :: <dispatch-state>)
   dbg("Terminal engine node:  ordered methods = %=, ambig = %=", ordered, ambig);
   let ans = transmogrify-method-list-grounded
     (ds, ordered, ambig, keys,
-     *gracefully-dispatch-to-ambiguous-methods*
-       | member?(%ds-gf(ds), *permissibly-ambiguous-generics*));
+     *gracefully-dispatch-to-ambiguous-methods*);
   dbg("Terminal engine node = %=", ans);
   let parent
     = %ds-parent(ds);
@@ -775,7 +774,7 @@ define patchable-constant transmogrify-method-list-grounded
 	dbg("Trying to salvage ambiguous methods");
 	let (nordered :: <list>, nambig :: <list>)
 	  = sort-applicable-methods-desperately(ambig, args);
-	unless (nordered == #() | member?(%ds-gf(ds), *permissibly-ambiguous-generics*))
+	unless (nordered == #())
 	  let args = reconstruct-args-from-mepargs(gf, args);
 	  dispwarn(make(<ambiguous-methods-warning>,
 			generic: gf, arguments: args, ambiguous: ambig,
@@ -988,9 +987,6 @@ define variable *gracefully-dispatch-to-ambiguous-methods* = #t;
 // comes first in the generic-function-methods) and on the preservation of this
 // ordering through the discrimination pruning (which is also done).
 define variable *gracefully-ignore-duplicate-methods* = #t;
-
-define variable *permissibly-ambiguous-generics* :: <list>
-  = list(subtype?, As);
 
 
 define abstract class <ambiguous-methods> (<simple-condition>)
