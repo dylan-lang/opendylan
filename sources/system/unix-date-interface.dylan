@@ -11,73 +11,82 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// From <time.h> ...
 
+define system-offset tm-sec () 0;
+define system-offset tm-min () 4;
+define system-offset tm-hour () 8;
+define system-offset tm-mday () 12;
+define system-offset tm-mon () 16;
+define system-offset tm-year () 20;
+define system-offset tm-isdst () 32;
+
+/// GNUish extensions (says the manpage)
+define system-offset tm-gmtoff (x86_64-linux 40, amd64-freebsd 40) 36;
+define system-offset tm-zone (x86_64-linux 48, amd64-freebsd 48) 40;
+
 define inline-only function tm-seconds (tm :: <machine-word>) => (seconds :: <integer>)
   raw-as-integer
     (primitive-c-signed-int-at(primitive-unwrap-machine-word(tm),
 			       integer-as-raw(0),
-			       integer-as-raw(0)))
+			       integer-as-raw($tm-sec-offset)))
 end function tm-seconds;
 
 define inline-only function tm-minutes (tm :: <machine-word>) => (minutes :: <integer>)
   raw-as-integer
     (primitive-c-signed-int-at(primitive-unwrap-machine-word(tm),
-			       integer-as-raw(1),
-			       integer-as-raw(0)))
+			       integer-as-raw(0),
+			       integer-as-raw($tm-min-offset)))
 end function tm-minutes;
 
 define inline-only function tm-hours (tm :: <machine-word>) => (hours :: <integer>)
   raw-as-integer
     (primitive-c-signed-int-at(primitive-unwrap-machine-word(tm),
-			       integer-as-raw(2),
-			       integer-as-raw(0)))
+			       integer-as-raw(0),
+			       integer-as-raw($tm-hour-offset)))
 end function tm-hours;
 
 define inline-only function tm-day (tm :: <machine-word>) => (day :: <integer>)
   raw-as-integer
     (primitive-c-signed-int-at(primitive-unwrap-machine-word(tm),
-			       integer-as-raw(3),
-			       integer-as-raw(0)))
+			       integer-as-raw(0),
+			       integer-as-raw($tm-mday-offset)))
 end function tm-day;
 
 define inline-only function tm-month (tm :: <machine-word>) => (month :: <integer>)
   1				// UNIX returns a zero-based month (ugh)
   + raw-as-integer
       (primitive-c-signed-int-at(primitive-unwrap-machine-word(tm),
-				 integer-as-raw(4),
-				 integer-as-raw(0)))
+				 integer-as-raw(0),
+				 integer-as-raw($tm-mon-offset)))
 end function tm-month;
 
 define inline-only function tm-year (tm :: <machine-word>) => (year :: <integer>)
   1900				// UNIX returns years since 1900
   + raw-as-integer
       (primitive-c-signed-int-at(primitive-unwrap-machine-word(tm),
-				 integer-as-raw(5),
-				 integer-as-raw(0)))
+				 integer-as-raw(0),
+				 integer-as-raw($tm-year-offset)))
 end function tm-year;
 
 define inline-only function tm-dst? (tm :: <machine-word>) => (dst? :: <boolean>)
   primitive-raw-as-boolean
     (primitive-c-signed-int-at(primitive-unwrap-machine-word(tm),
-			       integer-as-raw(8),
-			       integer-as-raw(0)))
+			       integer-as-raw(0),
+			       integer-as-raw($tm-isdst-offset)))
 end function tm-dst?;
-
-define system-offset tm-tz (x86_64-linux 5, amd64-freebsd 5) 9;
-define system-offset tm-tz-name (x86_64-linux 6, amd64-freebsd 6) 10;
 
 define inline-only function tm-tz-offset (tm :: <machine-word>) => (tz-offset :: <integer>)
   truncate/(raw-as-integer
 	      (primitive-c-signed-long-at(primitive-unwrap-machine-word(tm),
-					  integer-as-raw($tm-tz-offset),
-					  integer-as-raw(0))),
+					  integer-as-raw(0),
+					  integer-as-raw($tm-gmtoff-offset))),
 	    60)			// UNIX returns time zone offset in seconds
 end function tm-tz-offset;
 
 define inline-only function tm-tz-name (tm :: <machine-word>) => (tz-name :: <byte-string>)
   primitive-raw-as-string
   (primitive-c-pointer-at(primitive-unwrap-machine-word(tm),
-			  integer-as-raw($tm-tz-name-offset),
-			  integer-as-raw(0)))
+			  integer-as-raw(0),
+			  integer-as-raw($tm-zone-offset)))
 end function tm-tz-name;
 
 

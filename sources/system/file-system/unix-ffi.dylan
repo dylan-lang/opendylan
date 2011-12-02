@@ -45,18 +45,17 @@ define constant $EROFS   = 30;
 
 /// From <sys/stat.h> ...
 
-define system-offset stat-size (x86-linux 22, ppc-linux 22, x86-freebsd 24, amd64-freebsd 15, x86-darwin 24, ppc-darwin 24, x86_64-linux 18) 18;
-define system-offset st-mode (x86-linux 4, ppc-linux 4, x86-freebsd 2, amd64-freebsd 1, x86-darwin 2, ppc-darwin 2, x86_64-linux 6) 2;
-//XXX: st-uid is 12 on FreeBSD-amd64, so it should be 1.5 here...
-define system-offset st-uid (x86-linux 6, ppc-linux 6, x86-freebsd 3, amd64-freebsd 2, x86-darwin 3, ppc-darwin 3, x86_64-linux 7) 4;
-define system-offset st-gid (x86-linux 7, ppc-linux 7, x86-freebsd 4, amd64-freebsd 2, x86-darwin 4, ppc-darwin 4, x86_64-linux 8) 5;
-define system-offset st-size (x86-linux 11, ppc-linux 11, x86-freebsd 12, amd64-freebsd 9, x86-darwin 12, ppc-darwin 12, x86_64-linux 6) 7;
-define system-offset st-atime (x86-linux 14, ppc-linux 14, x86-freebsd 6, amd64-freebsd 3, x86-darwin 6, ppc-darwin 6, x86_64-linux 16) 8;
-define system-offset st-mtime (x86-linux 16, ppc-linux 16, x86-freebsd 8, amd64-freebsd 5, x86-darwin 8, ppc-darwin 8, x86_64-linux 22) 10;
-define system-offset st-ctime (x86-linux 18, ppc-linux 18, x86-freebsd 10, amd64-freebsd 7, x86-darwin 10, ppc-darwin 10, x86_64-linux 26) 12;
+define system-offset stat-size (x86-linux 88, ppc-linux 88, x86-freebsd 96, amd64-freebsd 120, x86-darwin 96, ppc-darwin 96, x86_64-linux 144) 72;
+define system-offset st-mode (x86-linux 16, ppc-linux 16, x86-freebsd 8, amd64-freebsd 8, x86-darwin 8, ppc-darwin 8, x86_64-linux 24) 8;
+define system-offset st-uid (x86-linux 24, ppc-linux 24, x86-freebsd 12, amd64-freebsd 12, x86-darwin 12, ppc-darwin 12, x86_64-linux 28) 16;
+define system-offset st-gid (x86-linux 28, ppc-linux 28, x86-freebsd 16, amd64-freebsd 16, x86-darwin 16, ppc-darwin 16, x86_64-linux 32) 20;
+define system-offset st-size (x86-linux 44, ppc-linux 44, x86-freebsd 48, amd64-freebsd 72, x86-darwin 48, ppc-darwin 48, x86_64-linux 48) 28;
+define system-offset st-atime (x86-linux 56, ppc-linux 56, x86-freebsd 24, amd64-freebsd 24, x86-darwin 24, ppc-darwin 24, x86_64-linux 72) 32;
+define system-offset st-mtime (x86-linux 64, ppc-linux 64, x86-freebsd 32, amd64-freebsd 40, x86-darwin 32, ppc-darwin 32, x86_64-linux 88) 40;
+define system-offset st-ctime (x86-linux 72, ppc-linux 72, x86-freebsd 40, amd64-freebsd 56, x86-darwin 40, ppc-darwin 40, x86_64-linux 104) 48;
 
 define constant $STAT_SIZE = 
-  $stat-size-offset * raw-as-integer(primitive-word-size());
+  $stat-size-offset;
 
 define macro with-stack-stat
   { with-stack-stat (?st:name, ?file:expression) ?:body end }
@@ -66,51 +65,51 @@ end macro with-stack-stat;
 define inline-only function st-mode (st :: <machine-word>) => (mode :: <integer>)
   raw-as-integer
   (primitive-c-unsigned-int-at(primitive-unwrap-machine-word(st),
-			       integer-as-raw($st-mode-offset),
-			       integer-as-raw(0)))
+			       integer-as-raw(0),
+			       integer-as-raw($st-mode-offset)))
 end function st-mode;
 
 define inline-only function st-uid (st :: <machine-word>) => (uid :: <integer>)
   raw-as-integer
   (primitive-c-unsigned-int-at(primitive-unwrap-machine-word(st),
-			       integer-as-raw($st-uid-offset),
-			       integer-as-raw(0)))
+			       integer-as-raw(0),
+			       integer-as-raw($st-uid-offset)))
 end function st-uid;
 
 define inline-only function st-gid (st :: <machine-word>) => (gid :: <integer>)
   raw-as-integer
   (primitive-c-unsigned-int-at(primitive-unwrap-machine-word(st),
-			       integer-as-raw($st-gid-offset),
-			       integer-as-raw(0)))
+			       integer-as-raw(0),
+			       integer-as-raw($st-gid-offset)))
 end function st-gid;
 ignore(st-gid);
 
 define inline-only function st-size (st :: <machine-word>) => (size :: <abstract-integer>)
   raw-as-abstract-integer
   (primitive-c-signed-long-at(primitive-unwrap-machine-word(st),
-			      integer-as-raw($st-size-offset),
-			      integer-as-raw(0)))
+			       integer-as-raw(0),
+			      integer-as-raw($st-size-offset)))
 end function st-size;
 
 define inline-only function st-atime (st :: <machine-word>) => (atime :: <abstract-integer>)
   raw-as-abstract-integer
   (primitive-c-signed-int-at(primitive-unwrap-machine-word(st),
-			     integer-as-raw($st-atime-offset),
-			     integer-as-raw(0)))
+		         integer-as-raw(0),
+			     integer-as-raw($st-atime-offset)))
 end function st-atime;
 
 define inline-only function st-mtime (st :: <machine-word>) => (mtime :: <abstract-integer>)
   raw-as-abstract-integer
   (primitive-c-signed-int-at(primitive-unwrap-machine-word(st),
-			     integer-as-raw($st-mtime-offset),
-			     integer-as-raw(0)))
+			     integer-as-raw(0),
+			     integer-as-raw($st-mtime-offset)))
 end function st-mtime;
 
 define inline-only function st-ctime (st :: <machine-word>) => (ctime :: <abstract-integer>)
   raw-as-abstract-integer
   (primitive-c-signed-int-at(primitive-unwrap-machine-word(st),
-			     integer-as-raw($st-ctime-offset),
-			     integer-as-raw(0)))
+			     integer-as-raw(0),
+			     integer-as-raw($st-ctime-offset)))
 end function st-ctime;
 
 
@@ -119,20 +118,20 @@ end function st-ctime;
 /// From <pwd.h> ...
 
 define system-offset passwd-name () 0;
-define system-offset passwd-dir (alpha-linux 4, x86-freebsd 7, x86-darwin 7, ppc-darwin 7) 5;
+define system-offset passwd-dir (alpha-linux 32, x86-freebsd 28, x86-darwin 28, ppc-darwin 28, x86_64-linux 32) 20;
 
 define inline-only function passwd-name (passwd :: <machine-word>) => (name :: <byte-string>)
   primitive-raw-as-string
     (primitive-c-pointer-at(primitive-unwrap-machine-word(passwd),
-			    integer-as-raw($passwd-name-offset),
-			    integer-as-raw(0)))
+			    integer-as-raw(0),
+			    integer-as-raw($passwd-name-offset)))
 end function passwd-name;
 
 define inline-only function passwd-dir (passwd :: <machine-word>) => (dir :: <byte-string>)
   primitive-raw-as-string
     (primitive-c-pointer-at(primitive-unwrap-machine-word(passwd),
-			    integer-as-raw($passwd-dir-offset),
-			    integer-as-raw(0)))
+			    integer-as-raw(0),
+			    integer-as-raw($passwd-dir-offset)))
 end function passwd-dir;
 
 
@@ -152,13 +151,13 @@ end function group-name;
 
 /// From <dirent.h> ...
 
-define system-offset dirent-name (x86-linux 11, ppc-linux 11, x86-freebsd 8, x86-darwin 8, ppc-darwin 8) 8;
+define system-offset dirent-name (x86-linux 11, ppc-linux 11, x86-freebsd 8, x86-darwin 8, ppc-darwin 8, x86_64-linux 19) 8;
 
 define inline-only function dirent-name (dirent :: <machine-word>) => (name :: <byte-string>)
   primitive-raw-as-string
     (primitive-cast-raw-as-pointer
        (primitive-machine-word-add(primitive-unwrap-machine-word(dirent),
-				   integer-as-raw($dirent-name-offset))))
+                                  integer-as-raw($dirent-name-offset))))
 end function dirent-name;
 
 /// Error handling
