@@ -84,11 +84,13 @@ rule DylanLibrary image : version {
   # Link a Dylan library as a shared library or executable image.
 
   local _dll = [ FDLLName $(image) ] ;
+  local _lib = [ FLIBName $(image) ] ;
   local _exe = [ FEXEName $(image) ] ;
 
   # Here we save the name and search directory of the DLL for this library.
   
   _dll_$(image[1]:L) = $(_dll) ;
+  _lib_$(image[1]:L) = $(_lib) ;
   if ! $(SYSTEM) && ! $(PERSONAL_ROOT) {
     _dir_$(image[1]:L) = $(LIBDIR) ;
   }
@@ -126,7 +128,7 @@ rule DylanLibrary image : version {
  
   Cc $(_obj) : $(_c) ;
   Depends $(_exe) : $(_dll) ;
-  LINKLIBS on $(_exe) += -l$(image[1]:L) ;
+  LINKLIBS on $(_exe) += $(_lib) ;
   LinkEXE $(_exe) : $(_obj) ;
 
   # If this is the top-level project, make the dll, exe, and clean
@@ -340,7 +342,8 @@ rule DylanLibraryClosure image : libraries {
     if ! $(_i) in $(_use_$(image[1]:L)) {
       _use_$(image[1]:L) += $(_i) ;
       Depends $(_dll) $(_exe) : $(_dll_$(_i)) ;
-      LINKLIBS on $(_dll) $(_exe) += -l$(_i) ;
+
+      LINKLIBS on $(_dll) $(_exe) += $(_lib_$(_i)) ;
 
       LIBPATH on $(_dll) $(_exe) += $(_dir_$(_i)) ;
 
@@ -374,7 +377,19 @@ actions together LinkEXE bind NEEDLIBS {
 #
 
 rule FDLLName {
-  return lib$(<[1]:LS=$(SUFDLL)) ;
+  if $(<[2]) {
+    return lib$(<[2]:LS=$(SUFDLL)) ;
+  } else {
+    return lib$(<[1]:LS=$(SUFDLL)) ;
+  }
+}
+
+rule FLIBName {
+  if $(<[2]) {
+    return -l$(<[2]:L) ;
+  } else {
+    return -l$(<[1]:L) ;
+  }
 }
 
 rule FEXEName {

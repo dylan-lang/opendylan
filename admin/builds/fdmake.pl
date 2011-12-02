@@ -274,7 +274,7 @@ sub library_products {
     else {
         my $so = ($platform_name =~ /-darwin$/) ? 'dylib' : 'so';
         push(@products,
-             File::Spec->catfile($user_root, 'lib', "lib${library}.${so}"));
+             File::Spec->catfile($user_root, 'lib', "lib${executable}.${so}"));
 
         if (!defined $header->{'target-type'}
             || lc($header->{'target-type'}) eq 'executable') {
