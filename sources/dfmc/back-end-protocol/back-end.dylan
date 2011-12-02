@@ -63,7 +63,7 @@ define function find-back-end-object (name :: <symbol>,
       *cached-back-end* := make(back-end-class(first(entries)));
       *cached-back-end-name* := name;
     else
-      error("Invalid back-end %s", name);
+      error("Compiler back-end %s is not available for %s-%s", name, architecture, os);
     end;
   end;
   *cached-back-end*
