@@ -3384,9 +3384,9 @@ extern D Ddirect_object_mm_wrappersVKi;
     MONOMORPHICDISCRIMINATOR* d_ = (MONOMORPHICDISCRIMINATOR*)Pfunction_; \
     D parent_ = Pnext_methods_; \
     DWORD key = (DWORD)(FI(MONO_WRAPPER_KEY(ARGUMENTNAME##_argnum))); \
-    ENGINE* newengine_ = (ENGINE*)(key == d_->key) \
+    ENGINE* newengine_ = (ENGINE*)((key == d_->key) \
 				    ? d_->nextnode \
-				    : Dabsent_engine_nodeVKg; \
+				    : Dabsent_engine_nodeVKg);	\
     DLFN ncb_ = newengine_->entry_point; \
     Pfunction_ = (FN*)newengine_; \
     Pnext_methods_ = parent_; \
