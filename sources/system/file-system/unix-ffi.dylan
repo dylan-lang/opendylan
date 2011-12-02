@@ -47,7 +47,6 @@ define constant $EROFS   = 30;
 
 define system-offset stat-size (x86-linux 88, ppc-linux 88, x86-freebsd 96, amd64-freebsd 120, x86-darwin 96, ppc-darwin 96, x86_64-linux 144) 72;
 define system-offset st-mode (x86-linux 16, ppc-linux 16, x86-freebsd 8, amd64-freebsd 8, x86-darwin 8, ppc-darwin 8, x86_64-linux 24) 8;
-//XXX: st-uid is 12 on FreeBSD-amd64, so it should be 1.5 here...
 define system-offset st-uid (x86-linux 24, ppc-linux 24, x86-freebsd 12, amd64-freebsd 12, x86-darwin 12, ppc-darwin 12, x86_64-linux 28) 16;
 define system-offset st-gid (x86-linux 28, ppc-linux 28, x86-freebsd 16, amd64-freebsd 16, x86-darwin 16, ppc-darwin 16, x86_64-linux 32) 20;
 define system-offset st-size (x86-linux 44, ppc-linux 44, x86-freebsd 48, amd64-freebsd 72, x86-darwin 48, ppc-darwin 48, x86_64-linux 48) 28;
