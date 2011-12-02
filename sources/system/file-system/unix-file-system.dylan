@@ -635,7 +635,7 @@ end function %working-directory-setter;
 define variable *temp-directory* = #f;
 
 define function %temp-directory
-    () => (temp-directory :: false-or(<posix-directory-locator>))
+    () => (temp-directory :: <posix-directory-locator>)
   *temp-directory*
     | (*temp-directory* :=
 	 begin
@@ -655,6 +655,8 @@ define function %temp-directory
 		      (primitive-cast-raw-as-pointer
 			 (primitive-unwrap-machine-word(tmpdir))));
 	     locator-directory(file)
+           else
+             error("error in call to tmpnam - no temporary directory found")
 	   end
 	 end)
 end function %temp-directory;

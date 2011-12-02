@@ -131,12 +131,16 @@ end;
 define function user-root-path()
  => (path :: <directory-locator>);
   let path = read-environment-variable("OPEN_DYLAN_USER_ROOT");
-  let default = 
-    subdirectory-locator(
+  if (path)
+    as(<directory-locator>, path)
+  else
+    let path =
       if ($os-name == #"win32")
-      as(<directory-locator>, read-environment-variable("APPDATA"))
-    else
-      home-directory()
-    end, "Open-Dylan");
-  (path & as(<directory-locator>, path)) | default;
+        let appdata = read-environment-variable("APPDATA");
+        if (appdata)
+          as(<directory-locator>, appdata);
+        end;
+      end;
+    subdirectory-locator(path | home-directory() | temp-directory(), "Open-Dylan")
+  end
 end;
