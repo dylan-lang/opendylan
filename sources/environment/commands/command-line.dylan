@@ -779,12 +779,12 @@ define method command-line-loop
         force-output(output-stream);
       end;
       let command-line = read-line(input-stream, on-end-of-stream: #f);
-      case
-	~command-line =>
-	  #f;
-	otherwise =>
-	  exit? := execute-command-line(server, command-line);
-      end
+      exit? := case
+                 ~command-line =>
+                   #t;
+                 otherwise =>
+                   execute-command-line(server, command-line);
+               end
     exception (condition :: <serious-condition>)
       case
         server.server-debugger? =>
