@@ -173,6 +173,11 @@ from Ravenbrook at http://www.ravenbrook.com/project/mps/ and extract
 it to some directory.  cd to the 'code' subdirectory in the MPS
 sources and build the mmdw target:
 
+Windows:
+
+  nmake /k /f w3i3mv.nmk mmdw.lib
+  copy *.h+w3i3mv\ci\mmdw.lib %OPENDYLAN%\sources\lib\run-time\pentium-win32
+
 Linux::
 
   make -f lii4gc.gmk mmdw.a mpsplan.a
