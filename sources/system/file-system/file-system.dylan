@@ -475,7 +475,7 @@ end method working-directory-setter;
 
 
 ///
-define function temp-directory () => (temp-directory :: false-or(<pathname>))
+define function temp-directory () => (temp-directory :: <pathname>)
   %temp-directory()
 end function temp-directory;
 

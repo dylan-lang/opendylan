@@ -540,7 +540,7 @@ end function %working-directory-setter;
 
 ///
 define function %temp-directory
-    () => (temp-directory :: false-or(<microsoft-directory-locator>))
+    () => (temp-directory :: <microsoft-directory-locator>)
   with-stack-path (path-buffer)
     let path-size = raw-as-integer
                       (%call-c-function ("GetTempPathA", c-modifiers: "__stdcall")
