@@ -6,6 +6,10 @@
 #include <math.h>
 #include <gc/gc.h>
 
+#ifndef WIN32
+#include <signal.h>
+#endif
+
 #if defined(__x86_64__)
 #define NO_LONGLONG 1
 #define LONG_BIT 64
@@ -67,8 +71,14 @@ void primitive_break() {
   extern void __stdcall DebugBreak(void);
   DebugBreak();
 #else
+#ifdef SIGTRAP
+  raise(SIGTRAP);
+#else
   int *ptr = (int*)0;
+  puts("Breaking into debugger.");
+  fflush(stdout);
   *ptr = 0; /* generate a memory fault */
+#endif
 #endif
 }
 
