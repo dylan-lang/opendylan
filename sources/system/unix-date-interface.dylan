@@ -9,20 +9,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Used instead of define C-struct to avoid relying on the C-FFI library ...
 
-/// From <time.h> ...
-
-define system-offset tm-sec () 0;
-define system-offset tm-min () 4;
-define system-offset tm-hour () 8;
-define system-offset tm-mday () 12;
-define system-offset tm-mon () 16;
-define system-offset tm-year () 20;
-define system-offset tm-isdst () 32;
-
-/// GNUish extensions (says the manpage)
-define system-offset tm-gmtoff (x86_64-linux 40, amd64-freebsd 40) 36;
-define system-offset tm-zone (x86_64-linux 48, amd64-freebsd 48) 40;
-
 define inline-only function tm-seconds (tm :: <machine-word>) => (seconds :: <integer>)
   raw-as-integer
     (primitive-c-signed-int-at(primitive-unwrap-machine-word(tm),

@@ -366,7 +366,7 @@ define function accessible?
 	   (primitive-string-as-raw(as(<byte-string>, file)), abstract-integer-as-raw(mode))
 	 end))
     let errno = unix-errno();
-    unless (errno = $EACCESS | errno = $EROFS | errno = $ETXTBSY)
+    unless (errno = $EACCES | errno = $EROFS | errno = $ETXTBSY)
       unix-file-error("determine access to", "%s (errno = %=)", file, errno)
     end;
     #f
