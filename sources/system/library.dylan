@@ -67,8 +67,7 @@ define module operating-system
 	 create-application-event,
 	 wait-for-application-event,
 	 signal-application-event,
-	 load-library,
-	 \system-offset-definer, \system-offset-value;
+	 load-library;
 
   create command-line-option-prefix;
 end module operating-system;

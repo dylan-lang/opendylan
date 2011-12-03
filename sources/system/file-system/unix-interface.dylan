@@ -76,9 +76,6 @@ end function unix-raw-read;
 
 /// HIGHER LEVEL INTERFACE
 
-/// This value is overkill, actually ...
-define constant $stat-size = 128 * raw-as-integer(primitive-word-size());
-
 define thread variable *stat-buffer* = make(<byte-vector>, size: $stat-size, fill: as(<byte>, '\0'));
 
 define function unix-file-exists? (path :: <byte-string>) => (exists? :: <boolean>)
