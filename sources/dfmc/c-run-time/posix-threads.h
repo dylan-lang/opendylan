@@ -10,8 +10,9 @@
 
 #include "run-time.h"
 
-#include <pthread.h>
+#include <stdint.h>
 
+#include <pthread.h>
 
 #ifndef THREADS_RUN_TIME_H
 #define THREADS_RUN_TIME_H
@@ -65,7 +66,7 @@
 #define JOINED    4u
 
 /* Macros for tagged integers */
-#define IS_ZINT(X)      (((int)(X) & 0x03) == 0x01)
+#define IS_ZINT(X)      (((intptr_t)(X) & 0x03) == 0x01)
 
 /*****************************************************************************/
 /* Type Definitions                                                          */

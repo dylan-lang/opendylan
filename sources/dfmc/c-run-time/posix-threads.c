@@ -48,7 +48,7 @@ TLV_VECTOR       default_tlv_vector = NULL;
 pthread_mutex_t  tlv_vector_list_lock;
 TLV_VECTOR_LIST  tlv_vector_list;
 
-int  TLV_vector_offset = 2;
+intptr_t  TLV_vector_offset = 2;
 
 
 /*****************************************************************************/
@@ -160,7 +160,7 @@ void copy_tlv_vector(TLV_VECTOR destination, TLV_VECTOR source)
 {
   int  i, limit;
 
-  limit = ((int)(source[1]) >> 2) + 2;
+  limit = ((intptr_t)(source[1]) >> 2) + 2;
   for (i = 2; i<limit; i++)
     destination[i] = source[i];
 }
@@ -261,7 +261,7 @@ void *trampoline (void *arg)
   remove_tlv_vector(thread);
 
   pthread_mutex_lock(&thread_join_lock);
-  thread->handle1 = (void *)((unsigned int)thread->handle1 | COMPLETED);
+  thread->handle1 = (void *)((uintptr_t)thread->handle1 | COMPLETED);
   pthread_cond_broadcast(&thread_exit_event);
   pthread_mutex_unlock(&thread_join_lock);
 
@@ -334,7 +334,7 @@ D primitive_destroy_thread(D t)
 D primitive_thread_join_single(D t)
 {
   DTHREAD       *thread = t;
-  unsigned int   state, completed;
+  uintptr_t      state, completed;
 
   assert(thread != NULL);
 
@@ -343,7 +343,7 @@ D primitive_thread_join_single(D t)
     return GENERAL_ERROR;
   }
 
-  state = (unsigned int)thread->handle1;
+  state = (uintptr_t)thread->handle1;
   if (state & MARKED || state & JOINED) {
     pthread_mutex_unlock(&thread_join_lock);
     MSG0("thread-join-single: duplicate join error\n");
@@ -357,11 +357,11 @@ D primitive_thread_join_single(D t)
       MSG0("thread-join-single: error waiting for thread exit event\n");
       return GENERAL_ERROR;
     }
-    completed = (unsigned int)thread->handle1 & COMPLETED;
+    completed = (uintptr_t)thread->handle1 & COMPLETED;
   }
 
 
-  thread->handle1 = (void *)((unsigned int)thread->handle1 ^ (JOINED | MARKED));
+  thread->handle1 = (void *)((uintptr_t)thread->handle1 ^ (JOINED | MARKED));
 
   if (pthread_mutex_unlock(&thread_join_lock) != 0) {
     MSG0("thread-join-single: error releasing thread join lock\n");
@@ -377,13 +377,13 @@ D primitive_thread_join_multiple(D v)
 {
   SOV           *thread_vector = v;
   DTHREAD      **threads, *joined_thread = NULL;
-  int            i, result, size;
-  unsigned int   state;
+  int            i, result;
+  uintptr_t      size, state;
 
   assert(thread_vector != NULL);
   assert(IS_ZINT(thread_vector->size));
 
-  size  = ((int)(thread_vector->size)) >> 2;
+  size  = ((uintptr_t)(thread_vector->size)) >> 2;
   threads = (DTHREAD **)(thread_vector->data);
 
   if (pthread_mutex_lock(&thread_join_lock)) {
@@ -393,7 +393,7 @@ D primitive_thread_join_multiple(D v)
    * part of a join operation
    */
   for (i = 0; i < size; i++) {
-    state = (unsigned int)threads[i]->handle1;
+    state = (uintptr_t)threads[i]->handle1;
     if (state & MARKED || state & JOINED) {
       return GENERAL_ERROR;
     }
@@ -402,12 +402,12 @@ D primitive_thread_join_multiple(D v)
   /* Now mark the threads as being part of a join
    */
   for (i = 0; i < size; i++) {
-    state = (unsigned int)threads[i]->handle1;
+    state = (uintptr_t)threads[i]->handle1;
     threads[i]->handle1 = (void *)(state | MARKED);
   }
 
   for (i = 0; i < size; i++) {
-    state = (unsigned int)threads[i]->handle1;
+    state = (uintptr_t)threads[i]->handle1;
     if (state & COMPLETED) {
       joined_thread = threads[i];
       break;
@@ -420,18 +420,18 @@ D primitive_thread_join_multiple(D v)
       return GENERAL_ERROR;
     }
     for (i = 0; i < size; i++) {
-      if ((unsigned int)threads[i]->handle1 & COMPLETED) {
+      if ((uintptr_t)threads[i]->handle1 & COMPLETED) {
 	joined_thread = threads[i];
 	break;
       }
     }
   }
 
-  state = (unsigned int)joined_thread->handle1;
+  state = (uintptr_t)joined_thread->handle1;
   joined_thread->handle1 = (void *)(state | JOINED);
 
   for (i = 0; i < size; i++) {
-    state = (unsigned int)threads[i]->handle1;
+    state = (uintptr_t)threads[i]->handle1;
     threads[i]->handle1 = (void *)(state ^ MARKED);
   }
 
@@ -570,7 +570,8 @@ D primitive_wait_for_notification(D n, D l)
   CONTAINER     *lock = (CONTAINER *)l;
   NOTIFICATION  *notification;
   SIMPLELOCK    *slock;
-  int            owned, error;
+  int            error;
+  uintptr_t      owned;
 
   assert(notif != NULL);
   assert(notif->handle != NULL);
@@ -581,7 +582,7 @@ D primitive_wait_for_notification(D n, D l)
   slock = lock->handle;
 
   // make sure thread owns the simple lock
-  owned = (int)primitive_owned_simple_lock(lock) >> 2;
+  owned = (uintptr_t)primitive_owned_simple_lock(lock) >> 2;
   if (owned == 0) {
     MSG0("wait-for-notification: Don't own associated lock\n");
     return NOT_LOCKED;
@@ -763,7 +764,8 @@ D primitive_wait_for_notification_timed(D n, D l, D m)
   DWORD          start, current;
   NOTIFICATION  *notification;
   SIMPLELOCK    *slock;
-  int            milsecs, secs, owned, timeout;
+  int            milsecs, secs, timeout;
+  uintptr_t      owned;
   struct timespec limit;
 
   assert(notif != NULL);
@@ -782,7 +784,7 @@ D primitive_wait_for_notification_timed(D n, D l, D m)
   milsecs = milsecs % 1000;
   limit.tv_nsec = milsecs * 1000000L;
 
-  owned = (int)primitive_owned_simple_lock(lock) >> 2;
+  owned = (uintptr_t)primitive_owned_simple_lock(lock) >> 2;
   if (owned == 0) {
     MSG0("wait-for-notification-timed: Don't own associated lock\n");
     return NOT_LOCKED;
@@ -904,7 +906,7 @@ D primitive_release_notification(D n, D l)
   CONTAINER     *lock = (CONTAINER *)l;
   NOTIFICATION  *notification;
   SIMPLELOCK    *slock;
-  int            owned;
+  uintptr_t      owned;
 
   assert(notif != NULL);
   assert(notif->handle != NULL);
@@ -913,7 +915,7 @@ D primitive_release_notification(D n, D l)
 
   notification = notif->handle;
   slock = lock->handle;
-  owned = (int)primitive_owned_simple_lock(lock) >> 2;
+  owned = (uintptr_t)primitive_owned_simple_lock(lock) >> 2;
   if (owned == 0) {
     MSG0("release-notification: Don't own associated lock\n");
     return NOT_LOCKED;
@@ -937,7 +939,7 @@ D primitive_release_all_notification(D n, D l)
   CONTAINER     *lock = (CONTAINER *)l;
   NOTIFICATION  *notification;
   SIMPLELOCK    *slock;
-  int            owned;
+  uintptr_t      owned;
 
   assert(notif != NULL);
   assert(notif->handle != NULL);
@@ -946,7 +948,7 @@ D primitive_release_all_notification(D n, D l)
 
   notification = notif->handle;
   slock = lock->handle;
-  owned = (int)primitive_owned_simple_lock(lock) >> 2;
+  owned = (uintptr_t)primitive_owned_simple_lock(lock) >> 2;
   if (owned == 0) {
     MSG0("release-all-notification: Don't own associated lock\n");
     return NOT_LOCKED;
@@ -1229,7 +1231,7 @@ primitive_conditional_update_memory(void * * location, Z newval, Z oldval)
 D primitive_allocate_thread_variable(D v)
 {
   pthread_key_t  key;
-  int variable_offset, size, limit;
+  uintptr_t variable_offset, size, limit;
 
   pthread_mutex_lock(&tlv_vector_list_lock);
 
@@ -1240,7 +1242,7 @@ D primitive_allocate_thread_variable(D v)
   TLV_vector_offset++;
 
   // First check if we need to grow the TLV vectors
-  size = (int)(default_tlv_vector[1]) >> 2;
+  size = (uintptr_t)(default_tlv_vector[1]) >> 2;
   limit = size + 2;
   if (variable_offset >= limit)
     grow_all_tlv_vectors(size+size);  // double the size each time we grow
@@ -1264,13 +1266,13 @@ D primitive_read_thread_variable(D h)
 {
   TLV_VECTOR   tlv_vector;
   D            value;
-  int          offset;
+  uintptr_t    offset;
 
   pthread_mutex_lock(&tlv_vector_list_lock);
 
   // The variable handle is the byte offset where the variable's value is
   // stored in the TLV.
-  offset = (int)h;
+  offset = (uintptr_t)h;
   tlv_vector = get_tlv_vector();
   value = tlv_vector[offset];
 
@@ -1285,13 +1287,13 @@ D primitive_write_thread_variable(D h, D nv)
 {
   TLV_VECTOR   tlv_vector;
   D           *destination;
-  int          offset;
+  uintptr_t    offset;
 
   pthread_mutex_lock(&tlv_vector_list_lock);
 
   // The variable handle is the byte offset where the variable's value is
   // stored in the TLV.
-  offset = (int)h;
+  offset = (uintptr_t)h;
   tlv_vector = get_tlv_vector();
   destination = tlv_vector[offset] = nv;
 
@@ -1306,7 +1308,7 @@ D primitive_initialize_current_thread(D t, DBOOL synchronize)
 {
   DTHREAD     *thread = (DTHREAD *)t;
   TLV_VECTOR   tlv_vector;
-  int          size;
+  uintptr_t    size;
 
   assert(thread != NULL);
 
@@ -1319,7 +1321,7 @@ D primitive_initialize_current_thread(D t, DBOOL synchronize)
   pthread_mutex_lock(&tlv_vector_list_lock);
 
   // Now set up a vector for the Dylan thread variables
-  size = (int)(default_tlv_vector[1]) >> 2;
+  size = (uintptr_t)(default_tlv_vector[1]) >> 2;
   tlv_vector = make_dylan_vector(size);
   set_tlv_vector(tlv_vector);
 
