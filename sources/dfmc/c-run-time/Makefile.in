@@ -54,6 +54,7 @@ install-build:
 	-cp -fp $(runtime_srcdir)/x86-linux-build.jam $(LIBDEST)
 	-cp -fp $(runtime_srcdir)/x86_64-linux-build.jam $(LIBDEST)
 	-cp -fp $(runtime_srcdir)/x86-darwin-build.jam $(LIBDEST)
+	-cp -fp $(runtime_srcdir)/x86_64-darwin-build.jam $(LIBDEST)
 	-cp -fp $(runtime_srcdir)/ppc-darwin-build.jam $(LIBDEST)
 
 install-header:	$(runtime_srcdir)/run-time.h $(INCDEST)
