@@ -151,7 +151,7 @@ define function type-estimate=?(te1 :: <type-estimate>, te2 :: <type-estimate>)
   => (e? :: <boolean>, known? :: <boolean>)
   // Dylan Torah, p. 48: te1 = te2 iff te1 <= te2 & te2 <= te1
   let (sub?-1, known?-1) = type-estimate-subtype?(te1, te2);
-  let (sub?-2, known?-2) = type-estimate-subtype?(te1, te2);
+  let (sub?-2, known?-2) = type-estimate-subtype?(te2, te1);
   if (known?-1 & known?-2)                               // Both answers known
     values(sub?-1 & sub?-2, #t) 
   elseif ((known?-1 & ~ sub?-1) | (known?-2 & ~ sub?-2)) // At least 1 known=#f
