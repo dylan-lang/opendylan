@@ -38,9 +38,7 @@ extern OBJECT KPfalseVKi;
 pthread_mutex_t thread_join_lock = PTHREAD_MUTEX_INITIALIZER;
 pthread_cond_t thread_exit_event = PTHREAD_COND_INITIALIZER;
 
-pthread_key_t thread_key;
-pthread_key_t thread_handle_key;
-pthread_key_t tlv_vector_key;
+pthread_key_t teb_key;
 
 pthread_mutex_t  tlv_vector_lock = PTHREAD_MUTEX_INITIALIZER;
 TLV_VECTOR       default_tlv_vector = NULL;
@@ -73,9 +71,46 @@ void initialize_threads_primitives()
 {
   MSG0("Initializing threads primitives\n");
   default_tlv_vector = make_dylan_vector(TLV_VECTOR_INITIAL_SIZE);
-  pthread_key_create(&thread_key, NULL);
-  pthread_key_create(&thread_handle_key, NULL);
-  pthread_key_create(&tlv_vector_key, NULL);
+  pthread_key_create(&teb_key, NULL);
+}
+
+__attribute__((pure))
+TEB* get_teb()
+{
+	return (TEB*)pthread_getspecific(teb_key);
+}
+
+void set_teb(TEB* teb)
+{
+	pthread_setspecific(teb_key, (void*)teb);
+}
+
+TEB* make_teb()
+{
+	TEB* teb = (TEB*)malloc(sizeof(TEB));
+	char* tebs = ((char*)teb);
+	char* tebe = ((char*)teb + sizeof(TEB));
+
+	teb->uwp_frame = Ptop_unwind_protect_frame;
+
+	GC_add_roots(tebs, tebe);
+
+	set_teb(teb);
+
+	return teb;
+}
+
+void free_teb()
+{
+	TEB* teb = get_teb();
+	char* tebs = ((char*)teb);
+	char* tebe = ((char*)teb + sizeof(TEB));
+
+	set_teb(NULL);
+
+	GC_remove_roots(tebs, tebe);
+
+	free(teb);
 }
 
 void *make_dylan_vector(int n)
@@ -90,32 +125,32 @@ void *make_dylan_vector(int n)
 
 void *get_tlv_vector()
 {
-  return pthread_getspecific(tlv_vector_key);
+  return get_teb()->tlv_vector;
 }
 
 void set_tlv_vector(void *vector)
 {
-  pthread_setspecific(tlv_vector_key, vector);
+  get_teb()->tlv_vector = vector;
 }
 
 void *get_current_thread()
 {
-  return pthread_getspecific(thread_key);
+  return get_teb()->thread;
 }
 
 void set_current_thread(void *thread)
 {
-  pthread_setspecific(thread_key, thread);
+  get_teb()->thread = thread;
 }
 
 void *get_current_thread_handle()
 {
-  return pthread_getspecific(thread_handle_key);
+  return get_teb()->thread_handle;
 }
 
 void set_current_thread_handle(void *handle)
 {
-  pthread_setspecific(thread_handle_key, handle);
+  get_teb()->thread_handle = handle;
 }
 
 
@@ -249,6 +284,7 @@ remove_tlv_vector(DTHREAD *thread)
 
 void *trampoline (void *arg)
 {
+  TEB*     teb = make_teb();
   D        result, f;
   DTHREAD *thread = (DTHREAD *)arg;
 
@@ -264,6 +300,8 @@ void *trampoline (void *arg)
   thread->handle1 = (void *)((uintptr_t)thread->handle1 | COMPLETED);
   pthread_cond_broadcast(&thread_exit_event);
   pthread_mutex_unlock(&thread_join_lock);
+
+  free_teb();
 
   return result;
 }
@@ -305,7 +343,7 @@ D primitive_make_thread(D t, D n, D p, D f, DBOOL s)
 //    return CREATE_ERROR;
 //  }
 
-  if (pthread_create(&thread->tid, &attr, trampoline, thread)) {
+  if (GC_pthread_create(&thread->tid, &attr, trampoline, thread)) {
     MSG0("make-thread: error creating thread\n");
     return CREATE_ERROR;
   }
@@ -359,7 +397,6 @@ D primitive_thread_join_single(D t)
     }
     completed = (uintptr_t)thread->handle1 & COMPLETED;
   }
-
 
   thread->handle1 = (void *)((uintptr_t)thread->handle1 ^ (JOINED | MARKED));
 
@@ -449,7 +486,7 @@ void primitive_detach_thread(D t)
   DTHREAD* thread = t;
   assert(thread != NULL);
 
-  pthread_detach(thread->tid);
+  GC_pthread_detach(thread->tid);
 }
 
 /* 5 */
@@ -1345,8 +1382,6 @@ D primitive_initialize_current_thread(D t, DBOOL synchronize)
 D primitive_initialize_special_thread(D t)
 {
   MSG1("Initializing special thread %p\n", t);
-  if (default_tlv_vector == NULL)
-    initialize_threads_primitives();
   return primitive_initialize_current_thread(t, 0);
 }
 

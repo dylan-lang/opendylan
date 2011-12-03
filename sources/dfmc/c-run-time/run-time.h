@@ -355,8 +355,6 @@ typedef struct _mv {
   D   value[VALUES_MAX];
 } MV;
 
-extern MV Preturn_values;	/* should be per-thread mv return area */
-
 #define	MV_GET_ELT(n) \
   (Preturn_values.count > (n) ? Preturn_values.value[n] : DFALSE)
 #define	MV_GET_ELT_KNOWN(n)     (Preturn_values.value[n])
@@ -401,6 +399,8 @@ typedef struct _unwind_protect_frame {
   struct _unwind_protect_frame* previous_unwind_protect_frame;
 } Unwind_protect_frame;
 
+extern Unwind_protect_frame* Ptop_unwind_protect_frame;
+
 extern D MAKE_EXIT_FRAME (); 
 extern D MAKE_UNWIND_FRAME (); 
 extern D FRAME_DEST (D);
@@ -408,19 +408,51 @@ extern D FRAME_RETVAL (D);
 extern D FALL_THROUGH_UNWIND (D); 
 extern D CONTINUE_UNWIND ();
 extern D NLX (Bind_exit_frame*, D);
-extern Unwind_protect_frame* Pcurrent_unwind_protect_frame;
 
-/* CALLING CONVENTION REGISTERS */
+/* PER-THREAD CONTEXT */
 
-extern FN* Pfunction_;
-extern int Pargument_count_;
-extern D   Pnext_methods_;
+#define MAX_ARGUMENTS 256
+
+typedef struct _teb {
+	/* dispatch context (used together, keep close) */
+	FN *function;
+	int argument_count;
+	D   next_methods;
+
+	/* return values (for multiple values) */
+	MV  return_values;
+
+	/* unwinding state */
+	Unwind_protect_frame* uwp_frame;
+
+	/* thread state */
+	void *thread;
+	void *thread_handle;
+	void *tlv_vector;
+
+	/* argument buffers (used in dispatch, primitives...) */
+	D arguments[MAX_ARGUMENTS];
+	D new_arguments[MAX_ARGUMENTS];
+	D a[MAX_ARGUMENTS];
+	D iep_a[MAX_ARGUMENTS];
+	D apply_buffer[MAX_ARGUMENTS];
+	D buffer[MAX_ARGUMENTS];
+} TEB;
+
+/* these are accessed directly by the compiler and this file */
+#define Pfunction_ get_teb()->function
+#define Pargument_count_ get_teb()->argument_count
+#define Pnext_methods_ get_teb()->next_methods
+#define Preturn_values get_teb()->return_values
+
+__attribute__((pure)) TEB* get_teb();
+TEB* make_teb();
+
+/* CALLING CONVENTION ENTRY POINTS */
 
 extern D XEP(FN*, int, ...);
 
 extern D topI();
-
-/* CALLING CONVENTION ENTRY POINTS */
 
 extern D xep_0 (FN*,int);
 extern D xep_1 (FN*,int,D);
@@ -1514,6 +1546,8 @@ extern D MAKE_DDFLT_CELL(DDFLT);
 
 #define CONDITIONAL_UPDATE(var, new_val, old_val) \
   ((old_val) == (var) ? (var = (new_val), DTRUE) : DFALSE)
+
+extern void initialize_threads_primitives();
 
 extern D primitive_release_simple_lock(D l);
 extern D primitive_release_semaphore(D s);
