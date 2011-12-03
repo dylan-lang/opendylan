@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library deuce-test-suite
-  use functional-dylan;
+  use common-dylan;
   use deuce;
 
   use io;
@@ -17,9 +17,9 @@ define library deuce-test-suite
 end library deuce-test-suite;
 
 define module deuce-test-suite
-  use functional-dylan,
-    exclude: { position, position-if };
-  use simple-format;
+  use common-dylan,
+    exclude: { position, position-if, format-to-string };
+  use format;
   use threads;
   use deuce-internals;
 

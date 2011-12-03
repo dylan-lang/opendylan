@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library environment-server
-  use functional-dylan;
+  use common-dylan;
 
   use channels;
   use environment-manager;
@@ -19,7 +19,7 @@ end library environment-server;
 /// All external servers, plus commands and the call hooks.
 
 define module environment-server
-  use functional-dylan;
+  use common-dylan;
   use channels;
   use environment-manager;
 

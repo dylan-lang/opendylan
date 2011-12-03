@@ -5,7 +5,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library dispatch-profiler
-  use functional-dylan;
+  use dylan;
   use generic-arithmetic;
   use big-integers;
   use io;
@@ -14,7 +14,7 @@ define library dispatch-profiler
 end library;
 
 define module dispatch-profiler
-  use functional-dylan;
+  use dylan;
   use dylan-extensions;
   use dylan-primitives;
   use dispatch-engine;

@@ -6,7 +6,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module any-client
-  use functional-dylan;
+  use dylan;
   use dylan-orb;
   use dylan-orb-internals;
   use testworks;
@@ -16,7 +16,7 @@ define module any-client
 end module any-client;
 
 define module array-client
-  use functional-dylan;
+  use dylan;
   use dylan-orb;
   use dylan-orb-internals;
   use testworks;
@@ -26,7 +26,7 @@ define module array-client
 end module array-client;
 
 define module bank-client
-  use functional-dylan;
+  use dylan;
   use dylan-orb;
   use dylan-orb-internals;
   use corba-tests-stubs;
@@ -36,7 +36,7 @@ define module bank-client
 end module;
 
 define module chat-client
-  use functional-dylan;
+  use dylan;
   use dylan-orb;
   use dylan-orb-internals;
   use format;
@@ -47,7 +47,7 @@ define module chat-client
 end module chat-client;
 
 define module constant-client
-  use functional-dylan;
+  use dylan;
   use dylan-orb;
   use testworks;
   use corba-tests-stubs;
@@ -56,7 +56,7 @@ define module constant-client
 end module constant-client;
 
 define module enum-client
-  use functional-dylan;
+  use dylan;
   use dylan-orb;
   use dylan-orb-internals;
   use format;
@@ -67,7 +67,7 @@ define module enum-client
 end module enum-client;
 
 define module grid-client
-  use functional-dylan;
+  use dylan;
   use dylan-orb;
   use dylan-orb-internals;
   use testworks;
@@ -77,7 +77,7 @@ define module grid-client
 end module;
 
 define module pragma-client
-  use functional-dylan;
+  use dylan;
   use dylan-orb;
   use testworks;
   use corba-tests-protocol;
@@ -86,7 +86,7 @@ define module pragma-client
 end module pragma-client;
 
 define module pseudo-objects-client
-  use functional-dylan;
+  use dylan;
   use dylan-orb;
   use dylan-orb-internals;
   use testworks;
@@ -96,7 +96,7 @@ define module pseudo-objects-client
 end module pseudo-objects-client;
 
 define module sequence-client
-  use functional-dylan;
+  use dylan;
   use dylan-orb;
   use dylan-orb-internals;
   use testworks;
@@ -106,7 +106,7 @@ define module sequence-client
 end module sequence-client;
 
 define module struct-client
-  use functional-dylan;
+  use dylan;
   use dylan-orb;
   use dylan-orb-internals;
   use testworks;
@@ -116,7 +116,7 @@ define module struct-client
 end module struct-client;
 
 define module tree-client
-  use functional-dylan;
+  use dylan;
   use dylan-orb;
   use dylan-orb-internals;
   use testworks;
@@ -128,7 +128,7 @@ define module tree-client
 end module tree-client;
 
 define module union-client
-  use functional-dylan;
+  use dylan;
   use dylan-orb;
   use dylan-orb-internals;
   use testworks;
@@ -138,7 +138,7 @@ define module union-client
 end module;
 
 define module ir-client
-  use functional-dylan;
+  use dylan;
   use dylan-orb;
   use dylan-orb-internals;
   use testworks;
@@ -149,7 +149,7 @@ define module ir-client
 end module;
 
 define module corba-tests-client
-  use generic-arithmetic-functional-dylan;
+  use generic-arithmetic-common-dylan;
   use dylan-orb;
   use dylan-orb-internals;
                                 // ---*** behind the scenes access for

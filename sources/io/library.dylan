@@ -7,7 +7,9 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library io
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
+
   export
     streams,
     streams-internals,
@@ -24,9 +26,7 @@ define module streams
   use streams-protocol,
     export: all;
   use dylan-extensions,
-    export: { <byte> };
-  use functional-dylan,
-    export: { <byte-character>, <unicode-character> };
+    export: { <byte>, <byte-character>, <unicode-character> };
   use byte-vector,
     export: { <byte-vector> };
 
@@ -118,9 +118,9 @@ define module streams
 end module streams;
 
 define module streams-internals
-  use functional-dylan;
-  use functional-locators-protocol;
-  use simple-format;
+  use common-dylan;
+  use locators-protocol;
+  use functional-objects-extras;
   use dylan-extensions;
   use dylan-direct-c-ffi;
   use byte-vector;
@@ -283,8 +283,9 @@ define module print
 end module print;
 
 define module print-internals
-  use functional-dylan;
-  use functional-locators-protocol;
+  use common-dylan;
+  use locators-protocol;
+  use functional-objects-extras;
   use transcendentals;
   use threads;
   use dylan-extensions;
@@ -311,7 +312,7 @@ define module format
 end module format;
 
 define module format-internals
-  use functional-dylan,
+  use common-dylan,
     exclude: { format-to-string };
   use dylan-extensions;
   use transcendentals;
@@ -333,7 +334,7 @@ define module format-out
 end module format-out;
 
 define module io-internals
-  use functional-dylan,
+  use common-dylan,
     exclude: { format-to-string };
   use dylan-direct-c-ffi;
   use threads;

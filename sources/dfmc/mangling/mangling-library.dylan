@@ -5,13 +5,17 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library dfmc-mangling
-  use functional-dylan;
+  use dylan;
+  use common-dylan, import: { common-extensions };
   export dfmc-mangling;
 end library;
 
 define module dfmc-mangling
-  use functional-dylan;
-  use simple-format;
+  use dylan;
+  use common-extensions,
+    import: { \table-definer, false-or,
+              concatenate!, string-to-integer };
+  use dylan-extensions, import: { <byte-character>, iterate };
   export 
     <mangler>,
     <mangler-with-options>,

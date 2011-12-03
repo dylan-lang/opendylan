@@ -12,7 +12,7 @@ define module debugger-server
   use threads;
   use byte-vector;
   use finalization;
-  use functional-dylan;
+  use common-dylan, exclude: { format-to-string };
   use machine-words;
   use simple-random;
   use transcendentals;

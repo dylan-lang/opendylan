@@ -371,8 +371,8 @@ define function lookup-in-top-level-environment
     (name :: <variable-name-fragment>, default, reference?)
  => (binding, type, environment)
   let env = outer-lexical-environment();
-  let val = if (env) element(env, name, default: not-found())
-	    else not-found() end;
+  let val = if (env) element(env, name, default: $unfound)
+	    else $unfound end;
   if (found?(val))
     values(make(<interactor-binding>, name: name, interactor-id: val), #f, #f);
   // TODO: Remove the following clause - for testing only.

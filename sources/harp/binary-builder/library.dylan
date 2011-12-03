@@ -8,7 +8,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define library binary-builder
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use generic-arithmetic;
   use big-integers;
   use collections;
@@ -22,7 +23,7 @@ end library;
 
 define module dylan-and-big-ints
   use dylan, export: all;
-  use functional-extensions, export: {unsupplied, supplied?, not-found, not-found?};
+  use common-extensions, export: {unsupplied, supplied?, not-found, not-found?};
   use dylan-extensions, export: all;
   use big-integers, prefix: "generic-", export: all;
 end module;
@@ -31,7 +32,6 @@ define module binary-builder
   use dylan-and-big-ints;
   use byte-vector;
   use table-extensions, import: {<string-table>};
-  use simple-format, import: { format-out };
   use format;
   use streams;
   use locators;

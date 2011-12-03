@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library OLE-Control-Framework
-  use functional-dylan;
+  use common-dylan;
   use COM;
   use OLE;
   use OLE-Server;
@@ -24,7 +24,7 @@ define library OLE-Control-Framework
 end library;
 
 define module OLE-Control-Framework
-  use functional-dylan;
+  use common-dylan;
   use OLE,
     export: {$OLEMISC-RECOMPOSEONRESIZE, $OLEMISC-ONLYICONIC,
 	     $OLEMISC-INSERTNOTREPLACE, $OLEMISC-STATIC,

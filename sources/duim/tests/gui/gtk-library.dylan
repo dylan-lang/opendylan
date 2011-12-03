@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library gtk-duim-gui-test-suite
-  use functional-dylan;
+  use common-dylan;
   use duim-core;
   use duim-extended-geometry;
   use duim-recording;

@@ -7,7 +7,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define library OLE-Automation
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use C-FFI;
   use COM;
   use win32-automation;
@@ -19,7 +20,7 @@ define library OLE-Automation
 end;
 
 define module OLE-Automation
-  use functional-dylan;
+  use common-dylan;
   use Dylan-extensions,
     import: {<abstract-integer>, <big-integer>, <double-integer>,
 	     <simple-byte-vector>, <simple-double-byte-vector>,
@@ -28,7 +29,6 @@ define module OLE-Automation
 	     <simple-byte-array>, <simple-double-byte-array>,
 	     <simple-integer-array>, <simple-machine-word-array>,
 	     <simple-single-float-array> };
-  use simple-format;
   use finalization;
   use C-FFI,
     // Export C type designators mentioned in the user documentation

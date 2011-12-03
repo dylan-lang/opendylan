@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library duim-gl-demo
-  use functional-dylan;
+  use common-dylan;
   use duim;
   use win32-duim;
   // use duim-gl;

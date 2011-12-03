@@ -7,7 +7,8 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library debugger-manager
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use big-integers;
   use collections;
   use access-path;
@@ -21,7 +22,7 @@ define library debugger-manager
 end library debugger-manager;
 
 define module debugger-manager
-  use functional-dylan;
+  use common-dylan;
   use table-extensions,
     import: {<string-table>};
   use access-path,
@@ -360,11 +361,10 @@ define module debugger-manager
 end module debugger-manager;
 
 define module dm-internals
-  use functional-dylan;
+  use common-dylan;
   use threads, rename: {thread-name => thread-name-internal};
-  use dylan-extensions, import: {<double-integer>};
+  use dylan-extensions, import: {<double-integer>, <set>};
   use table-extensions, import: {<string-table>};
-  use simple-format;
   use access-path,
     import: { kill-application => kill };
   use debugger-manager;

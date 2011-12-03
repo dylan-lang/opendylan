@@ -5,7 +5,8 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library bank-server
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use duim;
   use ole-automation;
   use bank-interface;
@@ -13,8 +14,8 @@ define library bank-server
 end library bank-server;
 
 define module bank-server
-  use functional-dylan;
-  use simple-format;
+  use dylan;
+  use common-dylan;
   use duim;
   use ole-automation;
   use bank-interface;

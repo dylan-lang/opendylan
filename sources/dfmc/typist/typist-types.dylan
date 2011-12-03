@@ -128,7 +128,7 @@ end;
 ///     type variables or structures thereof.
 ///   - SLOT2-CACHE is a real slot to hold the value of the type variable, or 
 ///     structure copy containing the type variable values.  When not valid, 
-///     it contains a distinguished "not-found" value (functional-extensions).
+///     it contains a distinguished "$unfound" value (common-extensions).
 ///   - SLOT2 is a constant virtual slot.  On reads, it reads slot2-cache and
 ///     refreshes it if necessary by copying & dereferencing from 
 ///     slot2-variable-internal.  It is not writeable.
@@ -159,7 +159,7 @@ slots:
 aslot:
   { type-slot ?sname:name ## "-VARIABLE" ?stuff:* }      // type slot
     => { constant slot ?sname ## "-VARIABLE-INTERNAL" ?stuff;     // where type var lives
-         slot ?sname ## "-CACHE" = not-found() }         //  cache for estimate
+         slot ?sname ## "-CACHE" = $unfound }         //  cache for estimate
   { ?sadjs:* slot ?stuff:* } => { ?sadjs slot ?stuff }   // ordinary slot
   { keyword ?stuff:* }       => { keyword ?stuff }       // keyword decl
 methods:
@@ -182,7 +182,7 @@ define macro type-class-accessors-definer
          end;
          define inline method ?sname ## "-VARIABLE-SETTER"
              (x :: ?cname, new-value)
-           ?sname ## "-CACHE"(x) := not-found();          // Writer invalidates
+           ?sname ## "-CACHE"(x) := $unfound;          // Writer invalidates
            ?sname ## "-VARIABLE-INTERNAL"(x) := new-value //   the cache
          end;
          */

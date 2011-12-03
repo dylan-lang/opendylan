@@ -1,7 +1,7 @@
 module: dylan-user
 
 define library ssl-network
-  use functional-dylan;
+  use common-dylan;
   use C-FFI;
   use IO;
   use system, import: { file-system };
@@ -45,7 +45,7 @@ define module openssl-wrapper
 end;
 
 define module ssl-sockets
-  use functional-dylan;
+  use common-dylan;
   use c-ffi;
   use streams-internals;
   use file-system, import: { file-exists?, file-property, <pathname> };

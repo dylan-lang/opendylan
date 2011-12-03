@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library collections-test-suite
-  use functional-dylan;
+  use common-dylan;
   use testworks;
   use testworks-specs;
   use collections;
@@ -16,8 +16,8 @@ define library collections-test-suite
 end library collections-test-suite;
 
 define module collections-test-suite
-  use functional-dylan;
-  use simple-format;
+  use common-dylan;
+  use simple-io;
   use testworks;
   use testworks-specs;
 

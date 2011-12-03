@@ -6,7 +6,8 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library sql
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use generic-arithmetic;
   use c-ffi;
   use io;
@@ -659,7 +660,8 @@ define module sql
 end module;
 
 define module result-set-implementation
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use generic-arithmetic, prefix: "big/";
   use dylan-extensions;
   use machine-words;
@@ -674,7 +676,8 @@ define module result-set-implementation
 end module; 
 
 define module sql-implementation
-  use functional-dylan;
+  use dylan;
+  use common-dylan, exclude: { format-to-string };
   use threads;
   use finalization;
   use sql;

@@ -7,10 +7,13 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library collections
-  use functional-dylan;
+  use dylan;
   use common-dylan,
     import: { byte-vector },
     export: all;
+  use common-dylan,
+    import: { machine-words, common-extensions };
+
   export
     bit-vector,
     bit-set,
@@ -87,9 +90,10 @@ define module table-extensions
 end module table-extensions;
 
 define module collections-internals
-  use functional-dylan;
+  use dylan;
   use dylan-extensions;
   use dylan-primitives;
+  use common-extensions;
   use machine-words;
   use byte-vector;
   use bit-set;

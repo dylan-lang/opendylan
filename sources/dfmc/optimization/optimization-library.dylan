@@ -5,7 +5,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library dfmc-optimization
-  use functional-dylan;
+  use dylan;
   use dfmc-core;
   use dfmc-reader;
   use dfmc-macro-expander;
@@ -16,7 +16,7 @@ define library dfmc-optimization
 end library;
 
 define module dfmc-optimization
-  use functional-dylan;
+  use dylan;
   use dfmc-core;
   use dfmc-imports;
   use dfmc-reader;

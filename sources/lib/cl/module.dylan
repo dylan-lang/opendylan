@@ -55,7 +55,7 @@ define module CL-strings
 end module CL-strings;
 
 define module CL-internals
-  use functional-dylan;
+  use common-dylan, exclude: { format-to-string };
   use format;
 
   use CL-macros, export: all;

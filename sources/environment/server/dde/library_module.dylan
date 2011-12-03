@@ -7,7 +7,8 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library environment-dde-server
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
 
   use channels;
   use environment-manager;
@@ -21,8 +22,10 @@ define library environment-dde-server
 end library environment-dde-server;
 
 define module environment-dde-server
-  use functional-dylan;
+  use common-dylan;
   use threads;
+
+  use dylan-extensions, import: { <byte-character> };
 
   use channels;
   use environment-manager;

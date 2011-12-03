@@ -6,14 +6,14 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library win32-util-test
-  use functional-dylan;
+  use common-dylan;
   use Win32-common; 
   use C-FFI;
   use testworks;
 end library;
 
 define module win32-util-test
-  use functional-dylan;
+  use common-dylan;
   use simple-format;
   use machine-words;
   use Dylan-extensions,

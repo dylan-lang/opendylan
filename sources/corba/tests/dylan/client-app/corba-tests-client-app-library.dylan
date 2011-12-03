@@ -6,7 +6,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library corba-tests-client-app
-  use functional-dylan;
+  use dylan;
   use io;
   use corba-tests-client;
   use corba-tests-server;    // For server co-location testing
@@ -14,7 +14,7 @@ define library corba-tests-client-app
 end library; 
 
 define module corba-tests-client-app
-  use functional-dylan;
+  use dylan;
   use format-out;
   use corba-tests-client;
   use testworks;

@@ -7,7 +7,8 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library system
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use io;
   export
     operating-system,
@@ -44,7 +45,7 @@ define module simple-xml
 end module simple-xml;
 
 define module operating-system
-  use functional-extensions,
+  use common-extensions,
     import: { application-name,
               application-filename,
               application-arguments,
@@ -110,7 +111,9 @@ end module date;
 ///---*** (If so, we'll need stubs on other platforms)
 
 define module locators
-  use functional-locators-protocol,
+  use locators-protocol,
+    export: all;
+  use functional-objects-extras,
     export: all;
 
   // Protocol functions
@@ -174,12 +177,11 @@ define module locators
 end module locators;
 
 define module locators-internals
-  use functional-dylan;
+  use common-dylan;
   use dylan-direct-c-ffi;
   use dylan-extensions,
     import: { \copy-down-method-definer };
   use streams-protocol;
-  use functional-locators-protocol, export: all;
   use locators, export: all;
 
   // Useful utilities
@@ -347,11 +349,12 @@ define module settings-internals
 end module settings-internals;
 
 define module system-internals
-  use functional-dylan;
+  use common-dylan, exclude: { format-to-string };
   use dylan-extensions;
   use dylan-direct-c-ffi;
   use threads;
-  use simple-format;
+  use format;
+  use format-out;
   use streams-internals;
   use operating-system, export: all;
   use date, export: all;

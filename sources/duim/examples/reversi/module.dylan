@@ -7,9 +7,9 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module reversi
-  use functional-dylan;
-  use simple-format;		// exported from functional-dylan
-  use simple-random;		// exported from functional-dylan
+  use common-dylan;
+  use simple-io;		// exported from common-dylan
+  use simple-random;		// exported from common-dylan
   use operating-system;		// exported from system
   use file-system;		// exported from system
   use streams;			// exported from io

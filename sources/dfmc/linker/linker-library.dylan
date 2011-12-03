@@ -5,14 +5,14 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library dfmc-linker
-  use functional-dylan;
+  use dylan;
   use dfmc-core;
   use dfmc-back-end;
   export dfmc-linker;
 end library;
 
 define module dfmc-linker
-  use functional-dylan;
+  use dylan;
   use dfmc-core;
   use dfmc-back-end;
   use dfmc-imports;

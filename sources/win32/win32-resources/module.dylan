@@ -48,7 +48,7 @@ define module win32-resources
 end module win32-resources;
 
 define module win32-resources-internal
-  use functional-dylan,
+  use common-dylan,
     exclude: { debug-message };
   use threads;
   use table-extensions,
@@ -61,7 +61,7 @@ define module win32-resources-internal
   use win32-kernel,
     exclude: { sleep };
 
-  use simple-format;
+  use simple-io;
 
   use win32-resources;
 end module win32-resources-internal;

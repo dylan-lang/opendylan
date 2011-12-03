@@ -41,6 +41,18 @@ define common-extensions macro-test table-definer-test ()
 	       & $test-table[2] == #"two")
 end macro-test table-definer-test;
 
+define simple-profiling macro-test timing-test ()
+  check-true("timing macro returns two integer values",
+	     begin
+	       let (seconds, microseconds)
+		 = timing ()
+		     for (i from 0 to 200) end
+	           end;
+	       instance?(seconds, <integer>)
+	         & instance?(microseconds, <integer>)
+	     end)
+end macro-test timing-test;
+
 define simple-profiling macro-test profiling-test ()
   check-true("profiling macro returns two integer values",
 	     begin

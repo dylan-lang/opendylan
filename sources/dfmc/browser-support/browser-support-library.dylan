@@ -6,7 +6,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library dfmc-browser-support
-  use functional-dylan;
+  use dylan;
   use dood;
   use source-records;
   use dfmc-core;
@@ -31,8 +31,6 @@ define library dfmc-browser-support
     dfmc-interactive-execution,
     dfmc-derived-information,
     dfmc-browser-back-end;
-
-
 end library;
 
 define module browser-used-modules
@@ -217,7 +215,7 @@ define interface-module dfmc-derived-information (browser-used-modules)
 end interface-module dfmc-derived-information;
 
 define module dfmc-progress-reports
-  use functional-dylan;
+  use dylan;
   use dfmc-management,
     export: {
 	     // Progress reporting API
@@ -326,7 +324,7 @@ define module dfmc-browser-back-end
 end module;
 
 define module dfmc-browser-support
-  use functional-dylan;
+  use dylan;
   use dfmc-imports;
   use dfmc-project-compilation;
   use dfmc-derived-information;

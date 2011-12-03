@@ -6,7 +6,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library environment-project-wizard
-  use functional-dylan;
+  use common-dylan;
   use duim;
   use win32-duim;
   use win32-user;

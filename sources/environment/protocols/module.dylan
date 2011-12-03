@@ -9,11 +9,12 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //--- Useful module so that all of the environment libraries see the
 //--- same set of names, and get the same exclusions.
 define module environment-imports
-  use functional-dylan,
+  use common-dylan,
     exclude: { slot-setter, slot-getter, slot-type, slot-allocation,
 	       range-by, range-to,
                method-specializers,
-               application-filename, application-arguments },
+               application-filename, application-arguments,
+               format-to-string },
     export: all;
   use streams, export: all;
   use format,  export: all;

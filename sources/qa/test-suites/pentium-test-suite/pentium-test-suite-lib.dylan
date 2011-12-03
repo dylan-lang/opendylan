@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library pentium-test-suite
-  use functional-dylan;
+  use common-dylan;
   use testworks;
 
   // Include all the pc specific test-suites
@@ -20,7 +20,7 @@ define library pentium-test-suite
 end;
 
 define module pentium-test-suite
-  use functional-dylan;
+  use common-dylan;
   use testworks;
   use win32-test-suite;
   use threads-test-suite;

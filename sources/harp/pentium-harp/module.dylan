@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define module pentium-harp
-  use functional-dylan;
+  use common-dylan, exclude: { format-to-string };
   use dylan-extensions,  import: {<abstract-integer>, <simple-integer-vector>};
   use big-integers, prefix: "generic-";
   use streams;

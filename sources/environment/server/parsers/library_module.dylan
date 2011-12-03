@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library environment-server-parsers
-  use functional-dylan;
+  use common-dylan;
   use io;
 
   use channels;
@@ -26,7 +26,7 @@ end library environment-server-parsers;
 /// Command parsers.
 
 define module parser-interface
-  use functional-dylan;
+  use common-dylan;
   use threads;
 
   export parse-then-call,
@@ -40,7 +40,7 @@ end module parser-interface;
 // They should rely on the definition of parser-user for an interface.
 
 define module string-parser
-  use functional-dylan;
+  use common-dylan, exclude: { format-to-string };
   use threads;
   use format;
 

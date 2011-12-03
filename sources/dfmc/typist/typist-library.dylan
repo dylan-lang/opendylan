@@ -12,7 +12,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library dfmc-typist
   // Library for the type inference tool.
-  use functional-dylan;
+  use dylan;
   use dfmc-core;
   use dfmc-reader;
 
@@ -21,7 +21,7 @@ end;
 
 define module dfmc-typist
   // Module for the typist.
-  use functional-dylan,
+  use dylan,
     rename: { make => dylan/make };
   use dfmc-core;
   use dfmc-reader;

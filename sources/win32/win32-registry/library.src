@@ -4,7 +4,6 @@ Copyright: Copyright (c) 1996-2000 Functional Objects, Inc. All rights reserved.
 
 define library Win32-Registry
   use Dylan;
-  use functional-extensions;
   use C-FFI;
   use Win32-common;
   use Win32-Kernel;
@@ -13,7 +12,7 @@ end;
 
 define module Win32-Registry
   use Dylan;
-  use functional-extensions, import: { false-or };
+  use dylan-extensions, import: { false-or };
   use C-FFI;
   use Win32-common, export: { $ERROR-SUCCESS, <LPSTR>, <LPCSTR>,
 			      <LPDWORD>, <PLONG>, <LPBYTE> };

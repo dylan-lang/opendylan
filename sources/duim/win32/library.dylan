@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library win32-duim
-  use functional-dylan;
+  use dylan;
 
   use duim-utilities;
   use duim-core;

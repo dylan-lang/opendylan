@@ -6,17 +6,15 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library dfmc-back-end-protocol
-  use functional-dylan;
-  use system;
-  use io;
+  use dylan;
   use dfmc-mangling;
   use dfmc-common;
   export dfmc-back-end-protocol;
 end library;
 
 define module dfmc-back-end-protocol
-  use format-out;
-  use functional-dylan;
+  use dylan;
+  use dylan-extensions, import: { false-or };
   use dfmc-common;
   use dfmc-mangling, export: all;
   

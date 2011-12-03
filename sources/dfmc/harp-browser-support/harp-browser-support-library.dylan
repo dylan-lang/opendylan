@@ -9,7 +9,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 /* start with a library definition which is very similar to that in dfmc-browser-support */
 
 define library dfmc-harp-browser-support
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use source-records;
   use dfmc-core;
   use dfmc-namespace;
@@ -32,7 +33,7 @@ end module;
 
 
 define module dfmc-harp-browser-support
-  use functional-dylan;
+  use common-dylan, exclude: { format-to-string };
   use dylan-extensions, import: {case-insensitive-equal};
   use dfmc-imports, 
     exclude: { source-record-start-line, source-record-end-line };

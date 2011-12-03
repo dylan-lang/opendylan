@@ -5,11 +5,11 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library pentium-freebsd-runtime-generator
-  use functional-dylan;
+  use dylan;
   use pentium-linux-rtg;
 end library;
 
 define module pentium-freebsd-runtime-generator
-  use functional-dylan;
+  use dylan;
   use pentium-linux-rtg;
 end module;

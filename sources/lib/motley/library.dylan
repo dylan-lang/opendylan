@@ -8,8 +8,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library motley
-  export motley;
-  use functional-dylan;
+  use common-dylan;
   use com;
   use ole-automation;
   use win32-kernel;
@@ -19,15 +18,12 @@ define library motley
   use c-ffi;
   use system;
   use tools-interface;
+
+  export motley;
 end library motley;
 
 define module motley
-  export get-registry-type-libraries, <registry-type-library-info>, 
-	 registry-type-library-name, registry-type-library-path;
-  export get-type-library-short-name;	// DEPRECATED
-  export get-type-library-information;
-
-  use functional-dylan;
+  use common-dylan, exclude: { format-to-string };
   use com;
   use ole-automation;
   use win32-kernel;
@@ -43,4 +39,9 @@ define module motley
   use date;
   use locators;
   use tools-interface;
+
+  export get-registry-type-libraries, <registry-type-library-info>,
+	 registry-type-library-name, registry-type-library-path;
+  export get-type-library-short-name;	// DEPRECATED
+  export get-type-library-information;
 end module motley;

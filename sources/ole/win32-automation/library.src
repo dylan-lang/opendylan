@@ -2,7 +2,8 @@ Module:    Dylan-user	%comment	-*- Mode: Dylan -*-
 Copyright: Copyright (c) 1996-2000 Functional Objects, Inc. All rights reserved.
 
 define library win32-automation
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use c-ffi;
   use com;
   use win32-common;
@@ -12,7 +13,7 @@ define library win32-automation
 end;
 
 define module win32-automation
-  use functional-dylan;
+  use common-dylan;
   use Dylan-extensions,
     import: {<abstract-integer>, <big-integer>, <double-integer>,
 	     <simple-byte-vector>, <simple-double-byte-vector>,

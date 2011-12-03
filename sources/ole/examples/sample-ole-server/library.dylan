@@ -17,7 +17,8 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library sample-OLE-server
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use C-FFI;
   use OLE;
   use Win32-common;
@@ -27,7 +28,8 @@ define library sample-OLE-server
 end;
 
 define module sample-OLE-server
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use simple-format;
   use C-FFI;
   use OLE;

@@ -6,7 +6,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library win32-glu
-  use functional-dylan;
+  use common-dylan;
   use C-FFI;
   use win32-common;
   use win32-gl;

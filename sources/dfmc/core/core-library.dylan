@@ -5,7 +5,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library dfmc-core
-  use functional-dylan;
+  use dylan;
   use dfmc-common, export: { dfmc-imports };
   use dfmc-flow-graph;
   use dfmc-definitions;
@@ -16,7 +16,7 @@ define library dfmc-core
 end library;
 
 define module dfmc-core
-  use functional-dylan;
+  use dylan;
   use dfmc-common, export: all;
   use dfmc-flow-graph, export: all;
   use dfmc-definitions, export: all;

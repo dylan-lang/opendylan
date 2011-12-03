@@ -8,9 +8,9 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // Implementation module
 define module duim-test-suite
-  use functional-dylan,
+  use common-dylan,
     exclude: { position };
-  use simple-format;
+  use simple-io;
   use threads;
 
   use testworks;

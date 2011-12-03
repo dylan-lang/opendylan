@@ -7,14 +7,14 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library scribble
-  use functional-dylan;
+  use common-dylan;
   use duim;
 
   export scribble;
 end library scribble;
 
 define module scribble
-  use functional-dylan;
+  use common-dylan;
   use duim;
 
   export <scribble-pane>,

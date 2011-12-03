@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module bank-server
-  use functional-dylan;
+  use common-dylan, exclude: { format-to-string };
   use dylan-orb;
   use bank-skeletons;
   use naming-client;

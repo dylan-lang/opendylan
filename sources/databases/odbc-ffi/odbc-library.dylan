@@ -6,7 +6,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library odbc-ffi
-  use functional-dylan;
+  use dylan;
   use c-ffi;
   use io;
 	
@@ -14,7 +14,7 @@ define library odbc-ffi
 end library;
 
 define module odbc-ffi
-  use functional-dylan;
+  use dylan;
   use c-ffi;
   use format-out;
 

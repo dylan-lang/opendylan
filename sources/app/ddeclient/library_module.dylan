@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library ddeclient
-  use functional-dylan;
+  use common-dylan;
   use system;
   use io;
 
@@ -17,7 +17,7 @@ define library ddeclient
 end library;
 
 define module ddeclient
-  use functional-dylan;
+  use common-dylan;
   use operating-system;
   use format-out;
 

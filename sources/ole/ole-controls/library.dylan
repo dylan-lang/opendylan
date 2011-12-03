@@ -12,7 +12,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define library OLE-Controls
-  use functional-dylan;
+  use common-dylan;
   use C-FFI;
   use Win32-Common;
   use Win32-User;
@@ -24,7 +24,7 @@ define library OLE-Controls
 end;
 
 define module OLE-Controls
-  use functional-dylan;
+  use common-dylan;
   use C-FFI;
   use machine-words;
   use Win32-common, // need:  <BOOL>, <COLORREF>, <DWORD>, $FFFFFFFF,

@@ -38,11 +38,12 @@ define module duim-deuce
 end module duim-deuce;
 
 define module duim-deuce-internals
-  use functional-dylan,
-    exclude: { position, position-if };
-  use simple-format;
+  use common-dylan,
+    exclude: { position, position-if, format-to-string };
   use threads;
   use plists;
+
+  use format;
 
   use byte-vector;
   use streams-internals,

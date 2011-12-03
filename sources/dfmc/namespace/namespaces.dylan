@@ -203,7 +203,7 @@ end function;
 define function update-exports! (space :: <full-namespace>, imports :: <table>)
   local method do-clause (clause :: <export-or-create-clause>, kind)
           for (name in clause.names)
-            let value = element(imports, name, default: not-found());
+            let value = element(imports, name, default: $unfound);
             if (found?(value))
               note(select (kind)
                      #"created" =>  <create-import-conflict>;
@@ -270,7 +270,7 @@ define method name-definition (space :: <namespace>,
 end method;
 
 define function defined-name? (space :: <namespace>, name) => (value)
-  found?(name-definition(space, name, default: not-found()))
+  found?(name-definition(space, name, default: $unfound))
 end function;
 
 // Caller is responsible for checking for imported names.
@@ -290,7 +290,7 @@ end method;
 
 define inline function lookup-name-in-cache
     (cache :: <mutable-explicit-key-collection>, name) => (cached-value)
-  element(cache, name, default: not-found());
+  element(cache, name, default: $unfound);
 end function;
 
 define inline function define-name-in-cache
@@ -311,12 +311,12 @@ define method lookup-imported-name (space :: <full-namespace>, name :: <name>)
           = resolve-used-namespace(space, use.namespace, default: #f);
         if (used-space)
           let value = lookup-exported-name(used-space, used-name,
-                                           default: not-found());
+                                           default: $unfound);
           if (found?(value)) return(value) end;
         end if;
       end;
     end for;
-    not-found()
+    $unfound
   end block;
 end;
 
@@ -341,7 +341,7 @@ define method lookup-name
     if (exported?)
       return(lookup-exported-name(space, name, default: default))
     end;
-    let defined-value = name-definition(space, name, default: not-found());
+    let defined-value = name-definition(space, name, default: $unfound);
     if (found?(defined-value)) return(defined-value) end;
     if (space.cached-exported-imports-table)
       let reexported-value
@@ -535,8 +535,8 @@ define method update-imports
     local method update-name (original-name, new)
 	    let local-names = filter-name(filter, original-name);
 	    for (local-name in local-names)
-	      let old = element(imports, local-name, default: not-found());
-	      if (not-found?(old))
+	      let old = element(imports, local-name, default: $unfound);
+	      if (unfound?(old))
 		imports[local-name] := new;
 	      elseif (old ~== new)
 		note(<imported-name-clash>,

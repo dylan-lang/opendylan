@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module access-path
   
-   use functional-dylan;
+   use commone-dylan, exclude: { format-to-string };
    use format;
 
    create
@@ -278,8 +278,8 @@ end module;
 
 define module access-path-implementation
 
-       use functional-dylan;
-       use format;
+       use common-dylan;
+       use format, exclude: { format-to-string };
        use access-path;
 
 end module;

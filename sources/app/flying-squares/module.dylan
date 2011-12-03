@@ -7,8 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module flying-squares
-  use functional-dylan;
-  use simple-format;
+  use common-dylan;
   use simple-random;
   use transcendentals;
   use threads;

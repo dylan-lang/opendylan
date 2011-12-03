@@ -6,7 +6,8 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library projects
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use memory-manager;
   use build-system;
   use release-info;
@@ -143,7 +144,8 @@ define module projects
 end module;
 
 define module projects-implementation
-  use functional-dylan;
+  use dylan;
+  use common-extensions, exclude: { format-to-string };
   use threads;
   use memory-manager;
   use build-system;
@@ -237,7 +239,8 @@ define module projects-implementation
 end module;
 
 define module lid-projects
-  use functional-dylan;
+  use dylan;
+  use common-extensions, exclude: { format-to-string };
   // Probably don't need all this, sort it out later...
   use locators;
   use format;

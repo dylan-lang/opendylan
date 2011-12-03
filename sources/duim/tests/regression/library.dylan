@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library win32-duim-regression-test-suite
-  use functional-dylan;
+  use common-dylan;
 
   use duim;
   use win32-duim;

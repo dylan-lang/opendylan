@@ -11,8 +11,7 @@ define library common-dylan
   use dylan,
     export: { dylan, 
 	      finalization,
-	      threads, 
-	      threads-extensions };
+	      threads };
   export 
     common-dylan,
     common-extensions,
@@ -28,6 +27,8 @@ define library common-dylan
 end library common-dylan;
 
 define module simple-profiling
+  create \timing;
+
   create \profiling,
          <profiling-state>,
          start-profiling-type,

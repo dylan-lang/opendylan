@@ -7,7 +7,8 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library parameter-type-tests
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use big-integers;
   use generic-arithmetic;
   use c-ffi;
@@ -21,10 +22,10 @@ end library parameter-type-tests;
 
 define module parameter-type-tests
   use machine-words;
-  use simple-format;
+  use simple-io;
   use simple-random;
   use big-integers;
-  use generic-arithmetic-functional-dylan;
+  use generic-arithmetic-common-dylan;
   use c-ffi;
   use com;
   use ole-automation;

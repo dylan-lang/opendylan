@@ -6,7 +6,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library c-lexer
-  use functional-dylan;
+  use common-dylan;
   use collections;
   use io;
   use system;
@@ -37,7 +37,7 @@ define module c-lexer-utilities
 end module;
 
 define module c-lexer-utilities-internal
-  use functional-dylan, exclude: {<union>, clex-digit?};
+  use common-dylan, exclude: { <union>, clex-digit?, format-to-string };
   use streams;			
   use standard-io;      
   use print;
@@ -122,7 +122,7 @@ define module C-lexer
 end module;
 
 define module C-lexer-internal
-  use functional-dylan; //  exclude: {<union>, close, clex-digit?}
+  use common-dylan, exclude: { format-to-string }; //  exclude: {<union>, close, clex-digit?}
   use streams, export: {read-element, unread-element};			
   use standard-io; 
   use print;
@@ -152,7 +152,7 @@ define module cpp
 end module cpp;
 
 define module cpp-internal
-  use functional-dylan, exclude: {<union>};
+  use common-dylan, exclude: { <union>, format-to-string };
   use table-extensions, exclude: { table };
   use streams, export: {read-element, unread-element};			
   use standard-io; 

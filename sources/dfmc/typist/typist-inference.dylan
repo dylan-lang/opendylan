@@ -1369,7 +1369,7 @@ define type-inference-rules type-infer-variables
            // Further weirdness: optimizers might have removed an assignment,
            // leaving behind a model object.  So initial type should be type of
            // model object or bottom if none.
-           let model = binding-model-object(mb, default: not-found(),
+           let model = binding-model-object(mb, default: $unfound,
                                             error-if-circular?: #f);
            type-union-with-sources(case
                                      found?(model) =>

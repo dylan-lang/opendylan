@@ -18,7 +18,7 @@ define module duim-graphing
 end module duim-graphing;
 
 define module duim-graphing-internals
-  use functional-dylan;
+  use common-dylan;
   use duim-internals;
   use duim-graphing;
 end module duim-graphing-internals;

@@ -178,7 +178,7 @@ define method add-program-condition (condition :: <program-condition>) => ()
       // Make sure this matches, for now.  See TODO above.
       condition-program-note-creator(condition) := creator;
       let table = lib.library-conditions-table;
-      let q = element(table, creator, default: not-found());
+      let q = element(table, creator, default: $unfound);
       if (found?(q))
         push-last(q, condition)
       else
@@ -197,7 +197,7 @@ define method remove-program-conditions-from!(table, key, stages) => ()
 	    dependency-stage-match?(condition-compilation-stage(cond), stages)
 	end;
 
-  let q = element(table, key, default: not-found());
+  let q = element(table, key, default: $unfound);
 
   if (found?(q))
     remove!(q, stages, test: matching-condition?);

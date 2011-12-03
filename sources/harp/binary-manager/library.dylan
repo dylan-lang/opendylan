@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define library binary-manager
-  use functional-dylan;
+  use common-dylan;
   use generic-arithmetic;
   use big-integers;
   use collections;
@@ -20,9 +20,8 @@ end library;
 
 
 define module binary-manager
-  use functional-dylan,
+  use common-dylan,
     exclude: { format-to-string };
-  use dylan-extensions;
   use byte-vector;
   use table-extensions, import: {<string-table>};
   use format;

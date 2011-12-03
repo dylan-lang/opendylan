@@ -5,12 +5,12 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library metering
-  use functional-dylan;
+  use dylan;
   export metering;
 end library;
 
 define module metering
-  use functional-dylan;
+  use dylan;
   export
     \with-metering, do-with-metering,
     metering-set-definer, make-metering-set;

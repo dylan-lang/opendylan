@@ -43,7 +43,7 @@ define sealed method element (seq :: <compiler-source-record-sequence>,
 			      #key default = unsupplied())
  => (res :: dfmc-<source-record>)
   if (supplied?(default))
-    let cr = element(seq.source-sequence-records, index, default: not-found());
+    let cr = element(seq.source-sequence-records, index, default: $unfound);
     if (found?(cr)) cr.dfmc-compilation-record-source-record else default end
   else
     seq.source-sequence-records[index].dfmc-compilation-record-source-record

@@ -8,15 +8,25 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define library tools-interface
-  export tools-interface;
-
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use system;
   use io;
+
+  export tools-interface;
 end library tools-interface;
 
 
 define module tools-interface
+  use dylan;
+  use common-extensions, exclude: { format-to-string };
+  use machine-words;
+  use format;
+  use format-out;
+  use locators;
+  use streams;
+  use file-system;
+
   export tool-register, tool-name-from-specification, tool-find;
   export <tool-yes-no-question>, tool-ask-yes-no-question;
   export <tool-warning-condition>, tool-warning-serious?,
@@ -54,12 +64,4 @@ define module tools-interface
   export <keyword-file-element>, 
   	 keyword-file-element-value, keyword-file-element-value-setter,
   	 keyword-file-element-line, keyword-file-element-line-setter;
-
-  use functional-dylan;
-  use machine-words;
-  use format;
-  use format-out;
-  use locators;
-  use streams;
-  use file-system;
 end module tools-interface;

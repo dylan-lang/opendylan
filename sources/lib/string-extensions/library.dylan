@@ -33,7 +33,7 @@ copyright: see below
 
 
 define library string-extensions
-  use functional-dylan;
+  use dylan;
   // use collection-extensions;
   // use table-extensions;
   export
@@ -51,7 +51,8 @@ end library string-extensions;
 // the C library ctype.
 //
 define module character-type
-  use functional-dylan;
+  use dylan;
+  use dylan-extensions, import: { <byte-character> };
   // use extensions;
   // use %Hash-Tables, export: {uppercase?};
   export
@@ -74,7 +75,8 @@ end module character-type;
 // For internal use and for use by the regexp library
 //
 define module %parse-string
-  use functional-dylan;
+  use dylan;
+  use dylan-extensions, import: { false-or };
   // use extensions;
   export
     <parse-string>,
@@ -90,7 +92,8 @@ end module %parse-string;
 // Contains various useful string and character functions
 //
 define module string-hacking
-  use functional-dylan;
+  use dylan;
+  use dylan-extensions, import: { false-or, one-of, <byte-character> };
   // use extensions;
   use character-type;
   use %parse-string;
@@ -110,7 +113,7 @@ end module string-hacking;
 // Also contains an "as" method for converting a character to a string.
 //
 define module string-conversions
-  use functional-dylan,
+  use dylan,
     export: {
       string-to-integer,
       integer-to-string
@@ -126,7 +129,8 @@ end module string-conversions;
 // For internal use and for use by the regexp library
 //
 define module %do-replacement
-  use functional-dylan;
+  use dylan;
+  use dylan-extensions, import: { false-or };
   // use extensions;
   use character-type;
   use string-conversions;
@@ -137,7 +141,8 @@ end module %do-replacement;
 // Robert's Boyer-Moore implementation
 //
 define module substring-search
-  use functional-dylan;
+  use dylan;
+  use dylan-extensions, import: { false-or };
   use character-type; // KJP: added
   use string-hacking;
   use %do-replacement;

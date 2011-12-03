@@ -229,7 +229,7 @@ end method;
 
 define inline function maybe-do-deep-copy
      (copier :: <copier>, object) => (value)
-  let copy = walked(copier, object, default: not-found());
+  let copy = walked(copier, object, default: $unfound);
   if (found?(copy))
     copy
   else

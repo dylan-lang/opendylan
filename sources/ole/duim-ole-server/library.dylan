@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library DUIM-OLE-server
-  use functional-dylan;
+  use common-dylan;
   use Win32-common;
   use Win32-kernel;
   use Win32-user;
@@ -31,7 +31,7 @@ define module DUIM-OLE-server-internals
 end;
 
 define module DUIM-OLE-server
-  use functional-dylan;
+  use common-dylan;
   use Win32-common;  // $NULL-HWND, <HDC>, <HMENU>, <HWND>, etc.
   use Win32-kernel;  // need OutputDebugString, <PFILETIME>, GetLastError,
 		     //	     GlobalUnlock, GlobalLock, GlobalAlloc, $GHND

@@ -6,7 +6,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module naming-service-test-suite
-  use functional-dylan;
+  use dylan;
   use dylan-orb;
   use naming-stubs;
   use testworks;

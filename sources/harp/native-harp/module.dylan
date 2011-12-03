@@ -10,7 +10,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define module native-standard-imports
-  use functional-dylan, 
+  use common-dylan, 
     exclude: {<stretchy-vector>}, 
     rename: {<stretchy-object-vector> => <stretchy-vector>}, 
     export: all;

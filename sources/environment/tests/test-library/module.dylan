@@ -7,8 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module environment-test-library
-  use functional-dylan;
-  use simple-format;
+  use common-dylan;
   use threads;
   use duim;
 
@@ -18,7 +17,7 @@ define module environment-test-library
 end module environment-test-library;
 
 define module internal-module
-  use functional-dylan;
+  use common-dylan;
 
   export no-such-definition;
 end module internal-module;

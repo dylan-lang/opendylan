@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define module corba-hello-world-server
   use byte-vector;
   use finalization;
-  use functional-dylan;
+  use common-dylan, exclude: { format-to-string };
   use machine-words;
   use simple-random;
   use transcendentals;

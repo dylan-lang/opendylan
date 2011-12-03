@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library test-editor-manager-common
-  use functional-dylan;
+  use common-dylan;
   use io;
   use gui-testworks; //-plus;
 
@@ -19,8 +19,7 @@ define library test-editor-manager-common
 end library test-editor-manager-common;
 
 define module test-editor-manager-common
-  use functional-dylan;
-  use simple-format;
+  use common-dylan;
   use gui-testworks; //-plus;
 
   use environment-to-editor-hacker;

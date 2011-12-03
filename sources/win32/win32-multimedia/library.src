@@ -3,7 +3,7 @@ Synopsis:  Win32 API for multimedia from "MMSYSTEM.H" and "WINMM.DLL"
 Copyright: Copyright (c) 1998-2000 Functional Objects, Inc. All rights reserved.
 
 define library Win32-multimedia
-  use functional-dylan;
+  use dylan;
   use C-FFI;
   use Win32-common;
   use Win32-user;

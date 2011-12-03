@@ -192,8 +192,6 @@ FLYING_SQUARES_INSTALL_DIRECTORY = $(DUIM_EXAMPLES_INSTALL_DIRECTORY)\flying-squ
 GENERIC_ARITHMETIC_SOURCE = $(LIB_DIRECTORY)\generic-arithmetic
 GRAMMAR_COMPILER_SOURCE = $(LIB_DIRECTORY)\grammar-compiler
 GUI_TESTWORKS_SOURCE = $(QA_DIRECTORY)\gui-testworks
-FUNCTIONAL_DYLAN_SOURCE = $(SOURCES_DIRECTORY)\functional-dylan
-FUNCTIONAL_DYLAN_TESTS_SOURCE = $(FUNCTIONAL_DYLAN_SOURCE)\tests
 HARP_SOURCE = $(SOURCES_DIRECTORY)\harp
 HELLO_WORLD_SOURCE = $(APP_DIRECTORY)\hello-world
 HELLO_WORLD_INSTALL_DIRECTORY = $(CONSOLE_EXAMPLES_INSTALL_DIRECTORY)\hello-world
@@ -401,7 +399,6 @@ DUIM_OLE_SERVER_DLL = $(RUNTIME_PREFIX)doles
 DYLAN_DLL = $(RUNTIME_PREFIX)dylan
 DYLAN_ORB_DLL = $(RUNTIME_PREFIX)orb
 GUI_TESTWORKS_DLL = $(RUNTIME_PREFIX)guitst
-FUNCTIONAL_DYLAN_DLL = $(RUNTIME_PREFIX)fundyl
 IO_DLL = $(RUNTIME_PREFIX)io
 MIDI_DLL = $(RUNTIME_PREFIX)midi
 NAMING_CLIENT_DLL = $(RUNTIME_PREFIX)cnsc
@@ -440,7 +437,6 @@ COMMANDS = $(INSTALL_BIN_DIRECTORY)\$(COMMANDS_DLL).dll
 COMMON_DYLAN = $(INSTALL_BIN_DIRECTORY)\$(COMMON_DYLAN_DLL).dll
 DOOD = $(INSTALL_BIN_DIRECTORY)\$(DOOD_DLL).dll
 DYLAN = $(INSTALL_BIN_DIRECTORY)\$(DYLAN_DLL).dll
-FUNCTIONAL_DYLAN = $(INSTALL_BIN_DIRECTORY)\$(FUNCTIONAL_DYLAN_DLL).dll
 IO = $(INSTALL_BIN_DIRECTORY)\$(IO_DLL).dll
 SYSTEM = $(INSTALL_BIN_DIRECTORY)\$(SYSTEM_DLL).dll
 
@@ -567,8 +563,6 @@ COMMON_DYLAN_TEST_SUITE_APP = $(INSTALL_BIN_DIRECTORY)\common-dylan-test-suite-a
 COMMON_DYLAN_TEST_SUITE = $(INSTALL_BIN_DIRECTORY)\common-dylan-test-suite.dll
 DYLAN_TEST_SUITE = $(INSTALL_BIN_DIRECTORY)\dylan-test-suite.dll
 DYLAN_TEST_SUITE_APP = $(INSTALL_BIN_DIRECTORY)\dylan-test-suite-app.exe
-FUNCTIONAL_DYLAN_TEST_SUITE = $(INSTALL_BIN_DIRECTORY)\functional-dylan-test-suite.dll
-FUNCTIONAL_DYLAN_TEST_SUITE_APP = $(INSTALL_BIN_DIRECTORY)\functional-dylan-test-suite-app.exe
 TESTWORKS_TEST_SUITE = $(INSTALL_BIN_DIRECTORY)\testworks-test-suite.dll
 C_FFI_TEST_SUITE_APP = $(INSTALL_BIN_DIRECTORY)\c-ffi-test-suite-app.exe
 LIBRARIES_TEST_SUITE = $(INSTALL_BIN_DIRECTORY)\libraries-test-suite.dll
@@ -666,7 +660,6 @@ c-ffi: $(C_FFI)
 collections: $(COLLECTIONS)
 common-dylan: $(COMMON_DYLAN)
 dylan: $(DYLAN)
-functional-dylan: $(FUNCTIONAL_DYLAN)
 io: $(IO)
 network: $(NETWORK)
 system: $(SYSTEM)
@@ -780,7 +773,7 @@ duim-ole: duim-ole-container duim-ole-server duim-ole-control
 environment: deuce duim-deuce environment-commands environment-application-commands environment-internal-commands environment-server environment-tools environment-property-pages environment-deuce environment-project-wizard environment-profiler debugger-manager target-application binary-manager coff-manager interactive-downloader environment-debugger win32-environment with-splash-screen
 ole-libraries: com ole-server ole-automation ole-control-framework ole-container ole-dialogs
 testworks-libraries: testworks testworks-specs gui-testworks
-user-libraries: dylan common-dylan functional-dylan c-ffi system collections io commands
+user-libraries: dylan common-dylan c-ffi system collections io commands
 win32-libraries: win32-common win32-kernel win32-gdi win32-user win32-dde win32-dialog win32-controls win32-gl win32-glu win32-html-help win32-multimedia win32-registry win32-resources win32-rich-edit win32-version win32-shell
 remote-debugger: remote-nub debugger-server
 
@@ -820,8 +813,6 @@ common-dylan-test-suite-app: $(COMMON_DYLAN_TEST_SUITE_APP)
 common-dylan-test-suite: $(COMMON_DYLAN_TEST_SUITE)
 dylan-test-suite-app: $(DYLAN_TEST_SUITE_APP)
 dylan-test-suite: $(DYLAN_TEST_SUITE)
-functional-dylan-test-suite-app: $(FUNCTIONAL_DYLAN_TEST_SUITE_APP)
-functional-dylan-test-suite: $(FUNCTIONAL_DYLAN_TEST_SUITE)
 io-test-suite: $(IO_TEST_SUITE)
 libraries-test-suite-app: $(LIBRARIES_TEST_SUITE_APP)
 libraries-test-suite: $(LIBRARIES_TEST_SUITE)
@@ -1170,9 +1161,6 @@ dylan-sources:
 common-dylan-sources:
   $(ENSURE_SOURCES) common-dylan $(COMMON_DYLAN_SOURCE)
 
-functional-dylan-sources:
-  $(ENSURE_SOURCES) functional-dylan $(FUNCTIONAL_DYLAN_SOURCE)
-
 c-ffi-sources:
   $(ENSURE_SOURCES) c-ffi $(C_FFI_SOURCE)
 
@@ -1240,33 +1228,28 @@ $(COMMON_DYLAN):
   $(MAKE) common-dylan-sources
   $(BUILD_RUNTIME_LIBRARY) common-dylan $(COMMON_DYLAN_DLL)
 
-$(FUNCTIONAL_DYLAN):
-  $(ENSURE_RUNTIME_LIBRARY) $(COMMON_DYLAN_DLL) common-dylan
-  $(MAKE) functional-dylan-sources
-  $(BUILD_RUNTIME_LIBRARY) functional-dylan $(FUNCTIONAL_DYLAN_DLL)
-
 $(BIG_INTEGERS):
-  $(ENSURE_RUNTIME_LIBRARY) $(FUNCTIONAL_DYLAN_DLL) functional-dylan
+  $(ENSURE_RUNTIME_LIBRARY) $(COMMON_DYLAN_DLL) common-dylan
   $(MAKE) big-integers-sources
   $(BUILD_RUNTIME_LIBRARY) big-integers $(BIG_INTEGERS_DLL)
 
 $(C_FFI):
-  $(ENSURE_RUNTIME_LIBRARY) $(FUNCTIONAL_DYLAN_DLL) functional-dylan
+  $(ENSURE_RUNTIME_LIBRARY) $(COMMON_DYLAN_DLL) common-dylan
   $(MAKE) c-ffi-sources
   $(BUILD_RUNTIME_LIBRARY) c-ffi $(C_FFI_DLL)
 
 $(CHANNELS):
-  $(ENSURE_RUNTIME_LIBRARY) $(FUNCTIONAL_DYLAN_DLL) functional-dylan
+  $(ENSURE_RUNTIME_LIBRARY) $(COMMON_DYLAN_DLL) common-dylan
   $(ENSURE_SOURCES) channels $(CHANNELS_SOURCE)
   $(BUILD_RUNTIME_LIBRARY) channels $(CHANNELS_DLL)
 
 $(COLLECTIONS):
-  $(ENSURE_RUNTIME_LIBRARY) $(FUNCTIONAL_DYLAN_DLL) functional-dylan
+  $(ENSURE_RUNTIME_LIBRARY) $(COMMON_DYLAN_DLL) common-dylan
   $(MAKE) collections-sources
   $(BUILD_RUNTIME_LIBRARY) collections $(COLLECTIONS_DLL)
 
 $(COMMANDS):
-  $(ENSURE_RUNTIME_LIBRARY) $(FUNCTIONAL_DYLAN_DLL) functional-dylan
+  $(ENSURE_RUNTIME_LIBRARY) $(COMMON_DYLAN_DLL) common-dylan
   $(ENSURE_SOURCES) commands $(COMMANDS_SOURCE)
   $(BUILD_RUNTIME_LIBRARY) commands $(COMMANDS_DLL)
 
@@ -1281,7 +1264,7 @@ $(DOOD):
   $(BUILD_RUNTIME_LIBRARY) dood $(DOOD_DLL)
 
 $(IO):
-  $(ENSURE_RUNTIME_LIBRARY) $(FUNCTIONAL_DYLAN_DLL) functional-dylan
+  $(ENSURE_RUNTIME_LIBRARY) $(COMMON_DYLAN_DLL) common-dylan
   $(MAKE) io-sources
   $(BUILD_RUNTIME_LIBRARY) io $(IO_DLL)
 
@@ -1292,7 +1275,7 @@ $(NETWORK):
   $(BUILD_RUNTIME_LIBRARY) network $(NETWORK_DLL)
 
 $(SYSTEM):
-  $(ENSURE_RUNTIME_LIBRARY) $(FUNCTIONAL_DYLAN_DLL) functional-dylan
+  $(ENSURE_RUNTIME_LIBRARY) $(COMMON_DYLAN_DLL) common-dylan
   $(ENSURE_RUNTIME_LIBRARY) $(IO_DLL) io
   $(MAKE) system-sources
   $(BUILD_RUNTIME_LIBRARY) system $(SYSTEM_DLL)
@@ -1392,7 +1375,7 @@ $(C_LEXER):
   $(BUILD_LIBRARY) c-lexer
 
 $(GRAMMAR_COMPILER):
-  $(ENSURE_RUNTIME_LIBRARY) $(FUNCTIONAL_DYLAN_DLL) functional-dylan
+  $(ENSURE_RUNTIME_LIBRARY) $(COMMON_DYLAN_DLL) common-dylan
   $(ENSURE_SOURCES) grammar-compiler $(GRAMMAR_COMPILER_SOURCE)
   $(BUILD_LIBRARY) grammar-compiler
 
@@ -1403,7 +1386,7 @@ $(MIDI):
   $(BUILD_RUNTIME_LIBRARY) midi $(MIDI_DLL)
 
 $(PARSER_RUN_TIME):
-  $(ENSURE_RUNTIME_LIBRARY) $(FUNCTIONAL_DYLAN_DLL) functional-dylan
+  $(ENSURE_RUNTIME_LIBRARY) $(COMMON_DYLAN_DLL) common-dylan
   $(ENSURE_SOURCES) parser-run-time $(PARSER_RUN_TIME_SOURCE)
   $(BUILD_LIBRARY) parser-run-time
 
@@ -1521,7 +1504,7 @@ $(SQL_ODBC):
 #
 
 $(TESTWORKS):
-  $(ENSURE_RUNTIME_LIBRARY) $(FUNCTIONAL_DYLAN_DLL) functional-dylan
+  $(ENSURE_RUNTIME_LIBRARY) $(COMMON_DYLAN_DLL) common-dylan
   $(ENSURE_SOURCES) testworks $(TESTWORKS_SOURCE)
   $(BUILD_RUNTIME_LIBRARY) testworks $(TESTWORKS_DLL)
 
@@ -1635,12 +1618,12 @@ $(FILE_SOURCE_RECORDS):
   $(BUILD_LIBRARY) file-source-records
 
 $(METERING):
-  $(ENSURE_RUNTIME_LIBRARY) $(FUNCTIONAL_DYLAN_DLL) functional-dylan
+  $(ENSURE_RUNTIME_LIBRARY) $(COMMON_DYLAN_DLL) common-dylan
   $(ENSURE_SOURCES) metering $(METERING_SOURCE)
   $(BUILD_LIBRARY) metering
 
 $(MOTLEY):
-  $(ENSURE_RUNTIME_LIBRARY) $(FUNCTIONAL_DYLAN_DLL) functional-dylan
+  $(ENSURE_RUNTIME_LIBRARY) $(COMMON_DYLAN_DLL) common-dylan
   $(ENSURE_RUNTIME_LIBRARY) $(IO_DLL) io
   $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
   $(ENSURE_RUNTIME_LIBRARY) $(WIN32_REGISTRY_DLL) win32-registry
@@ -1665,14 +1648,14 @@ $(TOOL_PARSER_GENERATOR):
   $(BUILD_LIBRARY) tool-parser-generator
 
 $(TOOLS_INTERFACE):
-  $(ENSURE_RUNTIME_LIBRARY) $(FUNCTIONAL_DYLAN_DLL) functional-dylan
+  $(ENSURE_RUNTIME_LIBRARY) $(COMMON_DYLAN_DLL) common-dylan
   $(ENSURE_RUNTIME_LIBRARY) $(IO_DLL) io
   $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
   $(ENSURE_SOURCES) project-manager $(PROJECT_MANAGER_SOURCE)
   $(BUILD_LIBRARY) tools-interface
 
 $(USER_PROJECTS):
-  $(ENSURE_RUNTIME_LIBRARY) $(FUNCTIONAL_DYLAN_DLL) functional-dylan
+  $(ENSURE_RUNTIME_LIBRARY) $(COMMON_DYLAN_DLL) common-dylan
   $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
   $(ENSURE_LIBRARY) build-system
   $(ENSURE_LIBRARY) tools-interface
@@ -1691,13 +1674,13 @@ $(DISASM):
   $(BUILD_LIBRARY) disasm
 
 $(DISPATCH_PROFILER):
-  $(ENSURE_RUNTIME_LIBRARY) $(FUNCTIONAL_DYLAN_DLL) functional-dylan
+  $(ENSURE_RUNTIME_LIBRARY) $(COMMON_DYLAN_DLL) common-dylan
   $(ENSURE_RUNTIME_LIBRARY) $(BIG_INTEGERS_DLL) big-integers
   $(ENSURE_SOURCES) dispatch-profiler $(DISPATCH_PROFILER_SOURCE)
   $(BUILD_LIBRARY) dispatch-profiler
 
 $(DEBUGGER_MANAGER): debugger-nub install-dbghelp
-  $(ENSURE_RUNTIME_LIBRARY) $(FUNCTIONAL_DYLAN_DLL) functional-dylan
+  $(ENSURE_RUNTIME_LIBRARY) $(COMMON_DYLAN_DLL) common-dylan
   $(ENSURE_RUNTIME_LIBRARY) $(IO_DLL) io
   $(ENSURE_SOURCES) runtime-manager $(RUNTIME_MANAGER_SOURCE)
   $(BUILD_LIBRARY) debugger-manager
@@ -1825,14 +1808,14 @@ $(DYLAN_ORB):
 $(IOP_PROTOCOL):
   $(ENSURE_LIBRARY) corba-protocol
   $(ENSURE_SOURCES) orb $(ORB_SOURCE)
-  $(GENERATE_IDL_BINDINGS) /libmod functional-dylan /libmod corba-protocol /prefix iop /protocol $(ORB_SOURCE) iop
+  $(GENERATE_IDL_BINDINGS) /libmod common-dylan /libmod corba-protocol /prefix iop /protocol $(ORB_SOURCE) iop
   $(BUILD_RUNTIME_LIBRARY) iop-protocol
 
 $(IR_STUBS):
   $(ENSURE_LIBRARY) corba-protocol
   $(ENSURE_LIBRARY) orb-core
   $(ENSURE_SOURCES) orb $(ORB_SOURCE)
-  $(GENERATE_IDL_BINDINGS) /prefix ir /libmod functional-dylan /libmod corba-protocol /libmod orb-core /protocol /stubs /main /include $(ORB_SOURCE) $(ORB_SOURCE) ir
+  $(GENERATE_IDL_BINDINGS) /prefix ir /libmod common-dylan /libmod corba-protocol /libmod orb-core /protocol /stubs /main /include $(ORB_SOURCE) $(ORB_SOURCE) ir
   $(BUILD_RUNTIME_LIBRARY) ir-stubs
 
 $(ORB_CONNECTIONS):
@@ -1918,7 +1901,7 @@ $(TOOL_SCEPTER):
   $(BUILD_LIBRARY) tool-scepter
 
 $(REMOTE_ACCESS_PATH):
-  $(ENSURE_RUNTIME_LIBRARY) $(FUNCTIONAL_DYLAN_DLL) functional-dylan
+  $(ENSURE_RUNTIME_LIBRARY) $(COMMON_DYLAN_DLL) common-dylan
   $(ENSURE_RUNTIME_LIBRARY) $(IO_DLL) io
   $(ENSURE_LIBRARY) remote-nub-client
   $(ENSURE_SOURCES) runtime-manager $(RUNTIME_MANAGER_SOURCE)
@@ -1994,7 +1977,7 @@ $(GUI_DYLAN_PLAYGROUND):
   $(BUILD_APPLICATION) gui-dylan-playground
 
 $(PARSER_COMPILER):
-  $(ENSURE_RUNTIME_LIBRARY) $(FUNCTIONAL_DYLAN_DLL) functional-dylan
+  $(ENSURE_RUNTIME_LIBRARY) $(COMMON_DYLAN_DLL) common-dylan
   $(ENSURE_RUNTIME_LIBRARY) $(IO_DLL) io
   $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
   $(ENSURE_LIBRARY) grammar-compiler
@@ -2050,14 +2033,14 @@ $(WITH_SPLASH_SCREEN):
   $(BUILD_APPLICATION) with-splash-screen
 
 $(MAP_STATISTICS):
-  $(ENSURE_RUNTIME_LIBRARY) $(FUNCTIONAL_DYLAN_DLL) functional-dylan
+  $(ENSURE_RUNTIME_LIBRARY) $(COMMON_DYLAN_DLL) common-dylan
   $(ENSURE_RUNTIME_LIBRARY) $(IO_DLL) io
   $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
   $(ENSURE_SOURCES) map-statistics $(MAP_STATISTICS_SOURCE)
   $(BUILD_APPLICATION) map-statistics
 
 $(TESTWORKS_REPORT):
-  $(ENSURE_RUNTIME_LIBRARY) $(FUNCTIONAL_DYLAN_DLL) functional-dylan
+  $(ENSURE_RUNTIME_LIBRARY) $(COMMON_DYLAN_DLL) common-dylan
   $(ENSURE_RUNTIME_LIBRARY) $(IO_DLL) io
   $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
   $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_DLL) testworks
@@ -2067,7 +2050,7 @@ $(TESTWORKS_REPORT):
 # Test Suites
 
 $(DYLAN_TEST_SUITE):
-  $(ENSURE_RUNTIME_LIBRARY) $(FUNCTIONAL_DYLAN_DLL) functional-dylan
+  $(ENSURE_RUNTIME_LIBRARY) $(COMMON_DYLAN_DLL) common-dylan
   $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_SPECS_DLL) testworks-specs
   $(ENSURE_SOURCES) dylan-test-suite $(DYLAN_TEST_SUITE_SOURCE)
   $(BUILD_LIBRARY) dylan-test-suite
@@ -2089,18 +2072,6 @@ $(COMMON_DYLAN_TEST_SUITE_APP):
   $(ENSURE_SOURCES) test-apps $(TEST_APPS_SOURCE)
   $(BUILD_APPLICATION) common-dylan-test-suite-app
 
-$(FUNCTIONAL_DYLAN_TEST_SUITE):
-  $(ENSURE_LIBRARY) dylan-test-suite
-  $(ENSURE_LIBRARY) common-dylan-test-suite
-  $(ENSURE_SOURCES) functional-dylan-test-suite $(FUNCTIONAL_DYLAN_TESTS_SOURCE)
-  $(BUILD_LIBRARY) functional-dylan-test-suite
-
-$(FUNCTIONAL_DYLAN_TEST_SUITE_APP):
-  $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_DLL) testworks
-  $(ENSURE_LIBRARY) functional-dylan-test-suite
-  $(ENSURE_SOURCES) test-apps $(TEST_APPS_SOURCE)
-  $(BUILD_APPLICATION) functional-dylan-test-suite-app
-
 $(COLLECTIONS_TEST_SUITE):
   $(ENSURE_RUNTIME_LIBRARY) $(COLLECTIONS_DLL) collections
   $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_SPECS_DLL) testworks-specs
@@ -2120,11 +2091,10 @@ $(IO_TEST_SUITE):
   $(BUILD_LIBRARY) io-test-suite
 
 $(LIBRARIES_TEST_SUITE):
-  $(ENSURE_RUNTIME_LIBRARY) $(FUNCTIONAL_DYLAN_DLL) functional-dylan
+  $(ENSURE_RUNTIME_LIBRARY) $(COMMON_DYLAN_DLL) common-dylan
   $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_DLL) testworks
   $(ENSURE_LIBRARY) dylan-test-suite
   $(ENSURE_LIBRARY) common-dylan-test-suite
-  $(ENSURE_LIBRARY) functional-dylan-test-suite
   $(ENSURE_LIBRARY) collections-test-suite
   $(ENSURE_LIBRARY) system-test-suite
   $(ENSURE_LIBRARY) io-test-suite
@@ -2855,7 +2825,7 @@ $(DOC_TASK_LIST_2_INSTALL_DIRECTORY):
 # Build examples
 
 $(HELLO_WORLD):
-  $(ENSURE_RUNTIME_LIBRARY) $(FUNCTIONAL_DYLAN_DLL) functional-dylan
+  $(ENSURE_RUNTIME_LIBRARY) $(COMMON_DYLAN_DLL) common-dylan
   $(ENSURE_SOURCES) hello-world $(HELLO_WORLD_SOURCE)
   $(BUILD_APPLICATION) hello-world
 
@@ -2871,7 +2841,7 @@ $(FACTORIAL_BIG):
   $(BUILD_APPLICATION) factorial-big
 
 $(TOWERS_OF_HANOI):
-  $(ENSURE_RUNTIME_LIBRARY) $(FUNCTIONAL_DYLAN_DLL) functional-dylan
+  $(ENSURE_RUNTIME_LIBRARY) $(COMMON_DYLAN_DLL) common-dylan
   $(ENSURE_SOURCES) console $(CONSOLE_EXAMPLES_SOURCE)
   $(BUILD_APPLICATION) $(TOWERS_OF_HANOI_SOURCE)\towers-of-hanoi.hdp
 

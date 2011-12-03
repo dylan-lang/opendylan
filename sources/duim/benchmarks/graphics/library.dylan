@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library duim-graphics-benchmarks
-  use functional-dylan;
+  use common-dylan;
   use duim;
 
   export duim-graphics-benchmarks

@@ -7,11 +7,10 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library libraries-test-suite
-  use functional-dylan;
+  use common-dylan;
   use testworks;
   use dylan-test-suite;
   use common-dylan-test-suite;
-  use functional-dylan-test-suite;
   use collections-test-suite;
   use system-test-suite;
   use io-test-suite;
@@ -21,11 +20,10 @@ define library libraries-test-suite
 end library libraries-test-suite;
 
 define module libraries-test-suite
-  use functional-dylan;
+  use common-dylan;
   use testworks;
   use dylan-test-suite;
   use common-dylan-test-suite;
-  use functional-dylan-test-suite;
   use collections-test-suite;
   use system-test-suite;
   use io-test-suite;

@@ -466,7 +466,7 @@ end function;
 
 define function shallow-read-object (dood :: <dood>) => (found?, object-or-address)
   let address = dood-read(dood);
-  let object  = peek-pointer(dood, address, not-found());
+  let object  = peek-pointer(dood, address, $unfound);
   if (found?(object))
     values(#t, object)
   else 

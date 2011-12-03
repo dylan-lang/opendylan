@@ -5,7 +5,8 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library c-ffi
-  use functional-dylan;
+  use dylan;
+  use common-dylan, import: { machine-words, simple-io };
   export c-ffi;
   export win32-core;
 end;
@@ -234,10 +235,10 @@ end;
 define module c-ffi-implementation
   use c-ffi;
   use win32-core;
-  use functional-dylan;
+  use dylan;
   use dylan-extensions;
   use dylan-primitives;
   use dylan-c-ffi;
   use machine-words;
-  use simple-format;
+  use simple-io;
 end;

@@ -8,7 +8,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library OLE-Container
-  use functional-dylan;
+  use common-dylan;
   use OLE;
   use OLE-Dialogs;
   use Win32-common;
@@ -20,8 +20,7 @@ define library OLE-Container
 end;
 
 define module OLE-Container
-  use functional-dylan;
-  use simple-format;
+  use common-dylan;
   use OLE,
     export: {$OLEIVERB-PRIMARY, $OLEIVERB-SHOW, $OLEIVERB-OPEN,
 	     $OLEIVERB-HIDE, $OLEIVERB-UIACTIVATE,

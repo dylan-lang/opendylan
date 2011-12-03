@@ -235,7 +235,7 @@ end method;
 
 define function untracked-lookup-binding-in
     (m :: <module>, name, #key default = unsupplied()) => (binding)
-  let canonical-binding = lookup-name(m, name, default: not-found());
+  let canonical-binding = lookup-name(m, name, default: $unfound);
   if (found?(canonical-binding))
     local-binding-in-requesting-library(canonical-binding)
   elseif (supplied?(default))
@@ -550,7 +550,7 @@ end method;
 define method undefine-module! (module :: <full-module>) => ()
   let library :: <full-library> = home-library(module);
   let name = namespace-name(module);
-  let binding = lookup-name(library, name, default: not-found());
+  let binding = lookup-name(library, name, default: $unfound);
   if (found?(binding) & defined?(binding) 
 	& (binding.library-binding-value == module))
     binding.library-binding-value := #f;
@@ -670,13 +670,13 @@ end method;
 define function dylan-value (name) => (model)
   let cache 
     = library-description-dylan-value-cache(dylan-library-description());
-  let value = element(cache, name, default: not-found());
+  let value = element(cache, name, default: $unfound);
   if (found?(value))
     value
   else
     // format-out("Cache miss on %=\n", name);
     let binding = dylan-binding(name);
-    let model = binding-model-object(binding, default: not-found());
+    let model = binding-model-object(binding, default: $unfound);
     debug-assert(found?(model), "No model for dylan-value(%=)!", name);
     element(cache, name) := model;
   end;

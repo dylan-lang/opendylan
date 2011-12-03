@@ -18,35 +18,3 @@ major-version: 2
 minor-version: 1
 compilation-mode:	tight
 target-type:	executable
-comment:	the information below is based on the last compile
-used-projects:	format
-	system-registry
-	system
-	dylan
-	system-registry
-	system
-	format-out
-	system-registry
-	system
-	c-ffi
-	system-registry
-	system
-	functional-dylan
-	system-registry
-	system
-	threads
-	system-registry
-	system
-canonical-sources:	library.dylan	19980623T151502Z
-	sql.dylan	19980619T152636Z
-	datatypes.dylan	19980623T142922Z
-	conditions.dylan	19971010T170402Z
-	transaction.dylan	19971010T170408Z
-	macros.dylan	19980220T144016Z
-	make.dylan	19971010T170406Z
-	result-set.dylan	19980702T144952Z
-	record.dylan	19971010T170406Z
-	conversion.dylan	19980601T141122Z
-	introspection.dylan	19980619T185240Z
-	diagnostic.dylan	19980629T203232Z
-comment:	additional keywords
