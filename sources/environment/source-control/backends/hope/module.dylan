@@ -7,8 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module source-control-hope-backend
-  use functional-dylan;
-  use simple-format;
+  use common-dylan;
   use threads;
   use operating-system,
     import: { run-application };

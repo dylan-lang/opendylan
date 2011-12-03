@@ -8,7 +8,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library win32-ole-server
-  use functional-dylan;
+  use common-dylan;
   use Win32-common;
   use Win32-kernel;
   use Win32-GDI;
@@ -20,7 +20,7 @@ define library win32-ole-server
 end library;
 
 define module sample-OLE-server
-  use functional-dylan;
+  use common-dylan;
   use Win32-common;
   use Win32-kernel;
   use Win32-GDI;

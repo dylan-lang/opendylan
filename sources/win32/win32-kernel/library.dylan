@@ -10,14 +10,14 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define library Win32-kernel
-  use functional-dylan;
+  use common-dylan;
   use C-FFI;
   use Win32-common;
   export Win32-kernel;
 end;
 
 define module Win32-kernel
-  use functional-dylan;
+  use common-dylan;
   use C-FFI;
   use Win32-common,
     /* have to export here names that are used as structure accessors in

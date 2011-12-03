@@ -7,10 +7,10 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module duim-gui-test-suite
-  use functional-dylan;
+  use common-dylan;
+  use simple-profiling;
   use dylan-extensions,
     import: { debug-name };
-  use simple-format;
   use simple-random;
   use threads;
 

@@ -6,7 +6,8 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library console-scepter
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use io;
   use system;
   use scepter;
@@ -14,7 +15,7 @@ define library console-scepter
 end library;
 
 define module console-scepter
-  use functional-dylan;
+  use common-dylan, exclude: { format-to-string };
   use simple-debugging;
   use file-system;
   use format;

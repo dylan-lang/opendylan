@@ -6,7 +6,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library CL
-  use functional-dylan;
+  use common-dylan;
   use io;
 
   export CL-macros;

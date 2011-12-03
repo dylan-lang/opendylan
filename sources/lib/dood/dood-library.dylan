@@ -7,7 +7,8 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library dood
-  use functional-dylan;
+  use common-dylan;
+  use dylan;
   use system;
   use collections;
   use io;
@@ -17,7 +18,7 @@ define library dood
 end library;
 
 define module dood
-  use functional-dylan;
+  use common-dylan, exclude: { format-to-string };
   use dylan-extensions;
   use dylan-primitives;
   use dylan-incremental;

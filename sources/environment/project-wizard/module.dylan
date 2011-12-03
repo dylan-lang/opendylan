@@ -6,7 +6,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module utilities
-  use functional-dylan;
+  use common-dylan;
   use duim;                     // for <medium>, text-size
   use locators;
   use file-system;
@@ -51,7 +51,7 @@ define module utilities
 end module;
 
 define module repository
-  use functional-dylan;
+  use common-dylan, exclude: { format-to-string };
   use duim-internals,	 // for string-capitalize
     exclude: { position };
   use release-info;
@@ -101,7 +101,7 @@ define module repository
 end module;
 
 define module environment-project-wizard
-  use functional-dylan;
+  use common-dylan, exclude: { format-to-string };
   use duim;
   use win32-duim;
   use duim-internals,	 // for port-default-frame-manager, string-capitalize

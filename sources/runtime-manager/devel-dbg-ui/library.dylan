@@ -7,7 +7,8 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library devel-dbg-ui
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use collections;
   use c-ffi;
   use system;
@@ -34,8 +35,9 @@ define library devel-dbg-ui
 end library;
 
 define module devel-dbg-ui
-  use functional-dylan,
-     rename: { application-filename => os-application-filename };
+  use common-dylan,
+    exclude: { format-to-string },
+    rename: { application-filename => os-application-filename };
   use dylan-extensions,
     import: { *class-profiling-enabled?*,
 	      <keyboard-interrupt>,

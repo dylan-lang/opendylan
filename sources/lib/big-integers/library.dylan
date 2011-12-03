@@ -7,8 +7,10 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 /// See the Integers proposal in Dylan Notebook\DylanWorks\Runtime\Integers\Integers ...
 
 define library big-integers
-  use functional-dylan;
+  use dylan;
   use generic-arithmetic;
+  use common-dylan, import: { common-extensions };
+
   export big-integers;
 end library big-integers;
 
@@ -27,6 +29,6 @@ define module big-integers-internal
     rename: {generic-binary-logior => binary-logior,
 	     generic-binary-logxor => binary-logxor,
 	     generic-binary-logand => binary-logand};
-  use functional-extensions,
+  use common-extensions,
     import: {number-to-string, machine-word-to-string};
 end module big-integers-internal;

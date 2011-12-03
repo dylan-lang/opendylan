@@ -46,9 +46,8 @@ end module commands;
 
 // Implementation module
 define module commands-internals
-  use functional-dylan;
-  use simple-format;
-  use threads;
+  use dylan;
+  use common-extensions;
   use commands, export: all;
 
   export command-pattern-string,

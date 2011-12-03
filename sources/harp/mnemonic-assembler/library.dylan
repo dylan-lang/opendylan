@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define library mnemonic-assembler
-  use functional-dylan;
+  use common-dylan;
   use collections;
   use io;
   use generic-arithmetic;
@@ -21,7 +21,7 @@ end library;
 
 define module mnemonic-assembler
   use generic-arithmetic-dylan;
-  use functional-extensions;
+  use common-extensions, exclude: { format-to-string };
   use byte-vector;
   use format;
   use format-out;

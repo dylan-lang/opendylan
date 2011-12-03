@@ -10,7 +10,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define library Win32-Registry
-  use functional-dylan;
+  use dylan;
   use C-FFI;
   use Win32-common;
   use Win32-Kernel;
@@ -18,7 +18,8 @@ define library Win32-Registry
 end;
 
 define module Win32-Registry
-  use functional-dylan;
+  use dylan;
+  use dylan-extensions, import: { false-or };
   use C-FFI;
   use Win32-common, export: { $ERROR-SUCCESS, <LPSTR>, <LPCSTR>,
 			      <LPDWORD>, <PLONG>, <LPBYTE> };

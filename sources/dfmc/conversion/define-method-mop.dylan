@@ -205,7 +205,7 @@ end method;
 define method ^method-generic-function (object :: <&method>)
   let binding = model-variable-binding(object);
   when (binding)
-    let model = binding-model-object(binding, default: not-found());
+    let model = binding-model-object(binding, default: $unfound);
     debug-assert(found?(model), "method GF not found");
     model
   end when;

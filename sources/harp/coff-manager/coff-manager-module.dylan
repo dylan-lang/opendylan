@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define library coff-manager
-  use functional-dylan;
+  use common-dylan;
   use io;
   use system;
 

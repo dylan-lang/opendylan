@@ -6,7 +6,8 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library dfmc-flow-graph
-  use functional-dylan;
+  use dylan;
+  use common-dylan, import: { transcendentals };
   use dfmc-common;
   use dfmc-definitions;
   use dfmc-modeling;
@@ -16,7 +17,7 @@ define library dfmc-flow-graph
 end library;
 
 define module dfmc-flow-graph
-  use functional-dylan;
+  use dylan;
   use transcendentals;
   use dfmc-common;
   use dfmc-definitions;

@@ -8,7 +8,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define library gnu-outputter
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use collections;
   use io;
   use big-integers;
@@ -22,7 +23,7 @@ define library gnu-outputter
 end library;
 
 define module gnu-outputter
-  use functional-dylan;
+  use common-dylan, exclude: { format-to-string };
   use dylan-extensions;
   use byte-vector;
   use format;

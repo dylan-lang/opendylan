@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library access-path
 
-       use functional-dylan;
+       use common-dylan;
        use io;
 
        export

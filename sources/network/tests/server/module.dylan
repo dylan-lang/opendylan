@@ -7,8 +7,8 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module sockets-tests-server
-  use functional-dylan;
-  use simple-format;
+  use common-dylan;
+  use simple-io;
   use threads;
   use sockets;
   use date;

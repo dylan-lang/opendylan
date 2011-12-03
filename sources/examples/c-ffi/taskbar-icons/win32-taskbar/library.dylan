@@ -11,7 +11,7 @@ define library win32-taskbar
   use win32-user;
   use c-ffi;
   use collections;
-  use functional-dylan;
+  use common-dylan;
 
   export win32-taskbar;
 end library win32-taskbar;

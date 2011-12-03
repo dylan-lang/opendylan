@@ -5,7 +5,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library dfmc-macro-expander
-  use functional-dylan;
+  use dylan;
   use dfmc-common;
   use dfmc-conditions;
   use dfmc-reader;
@@ -13,7 +13,7 @@ define library dfmc-macro-expander
 end library;
 
 define module dfmc-macro-expander
-  use functional-dylan;
+  use dylan;
   use dfmc-imports,
     export: { &definition-definer,
               &converter-definer,

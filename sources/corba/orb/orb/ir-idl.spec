@@ -5,5 +5,5 @@ Prefix: ir
 Protocol:      no
 Stubs:	yes
 Skeletons: no
-Libraries: functional-dylan,corba-protocol,orb-core
-Modules: functional-dylan,corba-protocol,orb-core
+Libraries: common-dylan,corba-protocol,orb-core
+Modules: common-dylan,corba-protocol,orb-core

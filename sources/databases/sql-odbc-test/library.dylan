@@ -6,7 +6,8 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library sql-odbc-test
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use memory-manager;
   use sql-odbc; 
 
@@ -39,7 +40,7 @@ end module;
   
 
 define module sql-odbc-test-bignums
-  use generic-arithmetic-functional-dylan;
+  use generic-arithmetic-common-dylan;
   use memory-manager;
   use threads;
   use sql-odbc;
@@ -58,7 +59,8 @@ define module sql-odbc-test-bignums
 end module;
 
 define module sql-odbc-test
-  use functional-dylan;
+  use dylan;
+  use common-dylan, exclude: { format-to-string };
   use memory-manager;
   use threads;
   use sql-odbc;

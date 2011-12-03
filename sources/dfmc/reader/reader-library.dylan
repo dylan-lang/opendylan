@@ -5,7 +5,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library dfmc-reader
-  use functional-dylan;
+  use dylan;
   use parser-run-time;
   use big-integers;
   use io;
@@ -16,7 +16,7 @@ define library dfmc-reader
 end library;
 
 define module dfmc-reader
-  use functional-dylan;
+  use dylan;
   use dylan-extensions,
     import: { vector-element, vector-element-setter, \without-bounds-checks,
 	      make-symbol };

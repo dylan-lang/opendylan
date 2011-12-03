@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // Implementation module
 define module web-browser
-  use functional-dylan;
+  use common-dylan, exclude: { format-to-string };
   use file-system;
   use streams;
   use format;

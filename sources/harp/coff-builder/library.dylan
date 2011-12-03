@@ -8,7 +8,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define library coff-builder
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use generic-arithmetic;
   use big-integers;
   use coff-manager;
@@ -23,7 +24,7 @@ end library;
 
 define module dylan-and-big-ints
   use dylan, export: all;
-  use functional-extensions, export: {unsupplied, supplied?};
+  use common-extensions, export: {unsupplied, supplied?};
   use dylan-extensions, export: all;
   use big-integers, prefix: "generic-", export: all;
 end module;

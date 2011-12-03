@@ -6,14 +6,13 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library com-test
-  use functional-dylan;
+  use common-dylan;
   use com;
   use testworks;
 end library com-test;
 
 define module test
-  use functional-dylan;
-  use simple-format;
+  use common-dylan;
   use streams-protocol;
   use com;
   use testworks;

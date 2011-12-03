@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library dfmc-modeling
-  use functional-dylan;
+  use dylan;
   use generic-arithmetic;
   use big-integers;
   use dfmc-common;
@@ -55,8 +55,7 @@ define module make/initialize-aliases
 end module;
 
 define module-with-models dfmc-modeling
-  use functional-dylan;
-  // use patching-kludges;	// to get at *permissibly-ambiguous-generics*
+  use dylan;
   use dylan-extensions,
     import: { $machine-word-size, immutable-vector };
   use machine-word-lowlevel,

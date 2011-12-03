@@ -10,7 +10,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define library Win32-user
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use C-FFI;
   use Win32-common;
   use Win32-GDI;
@@ -22,7 +23,7 @@ end library Win32-user;
 
 
 define module Win32-user
-  use functional-dylan;
+  use common-dylan;
   use C-FFI;
   use Win32-common,
     /* have to export here names that are used as structure accessors in
@@ -947,11 +948,12 @@ end module Win32-user;
 
 
 define module Win32-default-handler
-  use functional-dylan;
+  use common-dylan;
+  use dylan-extensions, import: { \last-handler-definer };
   use Win32-common;
   use Win32-user;
   use Win32-kernel;
-  use simple-format;
+  use simple-io;
   export
     *error-module-handle*,
     win32-last-handler;

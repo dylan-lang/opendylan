@@ -6,7 +6,8 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library sql-example
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use sql-odbc;
   use io;
 
@@ -14,7 +15,8 @@ define library sql-example
 end library;
 
 define module sql-example
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use sql-odbc;
   use format-out;
 end module;

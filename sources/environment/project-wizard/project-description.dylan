@@ -278,7 +278,7 @@ define function libraries-from-project-type
       add-new-library-choice(#"ole");
       add-new-library-choice(#"c-ffi");
     #"motley" =>
-      add-new-library-choice(#"functional-dylan");
+      add-new-library-choice(#"common-dylan");
       add-new-library-choice(#"ole-automation");
       add-new-library-choice(#"c-ffi");
     #"scepter" =>
@@ -294,7 +294,7 @@ define function libraries-from-use-path
   select (gadget-value(wizard.project-library-use-type))
     #"minimal" =>
       let libraries
-        = vector(make-repository-choice($project-libraries[#"functional-dylan"]));
+        = vector(make-repository-choice($project-libraries[#"common-dylan"]));
       libraries;
     #"simple" =>
       let library-group-choices = repository-as-choices();
@@ -1045,11 +1045,7 @@ define method do-write-project-from-description
     for (library-choice in libraries)
       for (module-choice in library-choice.choice-children)
 	let module-name = module-choice.choice-object;
-	//---*** andrewa: heavy handed hack!
-	let exclude?
-	  = (module-name == #"simple-format")
-	      & ~project-use-simple-format?(description);
-	when (module-choice.choice-included? & ~exclude?)
+	when (module-choice.choice-included?)
 	  format(stream, "  use %s;\n", module-name);
 	end;
       end;
@@ -1200,29 +1196,3 @@ define method do-write-project-from-description
   projects
 end method do-write-project-from-description;
 
-//---*** andrewa: there has to be a simpler way to write this,
-//---*** but at least this will work.
-// hughg: We allow use of the simple-format module from functional-dylan
-// unless we've used the "io" library and used one or both of the "format"
-// and "format-out" modules from it.  Ick.
-define function project-use-simple-format?
-    (description :: <custom-project-description>)
- => (use-it? :: <boolean>)
-  let libraries = description.project-used-libraries;
-  block (return)
-    for (library-choice in libraries)
-      let library-name = library-choice.choice-object.repository-object-id;
-      when (library-name == #"io")
-	for (module-choice in library-choice.choice-children)
-	  when (module-choice.choice-included?)
-	    let module-name = module-choice.choice-object;
-	    when (module-name = #"format" | module-name = #"format-out")
-	      return(#f);
-	    end;
-	  end;
-	end;
-      end;
-    end;
-    #t
-  end
-end function project-use-simple-format?;

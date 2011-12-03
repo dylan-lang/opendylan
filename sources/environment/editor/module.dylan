@@ -39,8 +39,7 @@ define module editor-manager
 end module editor-manager;
 
 define module editor-manager-internals
-  use functional-dylan;
-  use simple-format;
+  use common-dylan;
   use threads;
   use commands;
   use editor-manager, export: all;

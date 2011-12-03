@@ -6,7 +6,8 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library sql-odbc
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use generic-arithmetic;
   use sql, 
     import: {sql};
@@ -173,7 +174,8 @@ end module;
 
 define module sql-odbc-nice-layer
   //+++ Once the FFI is stable, I hope to do away with this module
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use c-ffi;
   use sql;
   use odbc-ffi;
@@ -221,7 +223,7 @@ end module;
 
 
 define module sql-odbc-conditions
-  use functional-dylan;
+  use dylan;
   use format-out;
   use sql;
   use odbc-ffi;
@@ -230,7 +232,8 @@ define module sql-odbc-conditions
 end module;
 
 define module sql-odbc-implementation
-  use functional-dylan;
+  use dylan;
+  use common-dylan, exclude: { format-to-string };
   use generic-arithmetic, prefix: "big/";
   use dylan-extensions;
   use machine-words;

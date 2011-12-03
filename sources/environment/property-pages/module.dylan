@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module environment-property-pages
-  use environment-imports;	// this gets functional-dylan
+  use environment-imports;	// this gets common-dylan
   use operating-system,
     import: { environment-variable };
   use file-system;

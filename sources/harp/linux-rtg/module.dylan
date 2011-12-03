@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define module linux-rtg
-  use functional-dylan;
+  use common-dylan, exclude: { format-to-string };
   use streams;
   use format;
   use print;

@@ -5,7 +5,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library dfmc-debug-back-end
-  use functional-dylan;
+  use dylan;
   use dfmc-core;
   use dfmc-optimization;
   use dfmc-back-end;
@@ -17,7 +17,7 @@ define library dfmc-debug-back-end
 end library;
 
 define module dfmc-debug-back-end
-  use functional-dylan;
+  use dylan;
   use dfmc-core;
   use dfmc-imports;
   use dfmc-optimization;

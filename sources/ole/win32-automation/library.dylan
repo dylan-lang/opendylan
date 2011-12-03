@@ -8,7 +8,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 /* Automatically generated from "library.src"; do not edit. */
 
 define library win32-automation
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use c-ffi;
   use com;
   use win32-common;
@@ -18,7 +19,7 @@ define library win32-automation
 end;
 
 define module win32-automation
-  use functional-dylan;
+  use common-dylan;
   use Dylan-extensions,
     import: {<abstract-integer>, <big-integer>, <double-integer>,
 	     <simple-byte-vector>, <simple-double-byte-vector>,
@@ -27,7 +28,6 @@ define module win32-automation
 	     <simple-byte-array>, <simple-double-byte-array>,
 	     <simple-integer-array>, <simple-machine-word-array>,
 	     <simple-single-float-array> };
-  use simple-format;
   use finalization;
   use C-FFI;
   use COM;

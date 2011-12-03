@@ -9,7 +9,8 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library win32-OLE-container
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use OLE-Container;
   use Win32-common;
   use Win32-GDI;
@@ -18,8 +19,8 @@ define library win32-OLE-container
 end;
 
 define module sample-OLE-container
-  use functional-dylan;
-  use simple-format;
+  use dylan;
+  use common-dylan;
   use OLE-Container;
   use Win32-common;
   use Win32-GDI;

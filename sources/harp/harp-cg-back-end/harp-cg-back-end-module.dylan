@@ -7,14 +7,14 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library harp-cg-back-end
-  use functional-dylan;
+  use common-dylan;
   use dfmc-back-end-protocol;
   use collections;
   export harp-cg-back-end;
 end library harp-cg-back-end;
 
 define module harp-cg-back-end
-  use functional-dylan;
+  use common-dylan;
   use dfmc-back-end-protocol, 
     import: {<back-end>, <local-variable>, <lambda-compiled-data>},
     export: all;

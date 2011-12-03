@@ -18,7 +18,6 @@ define &library dylan
   export dylan-direct-c-ffi;
   export dylan-incremental;
   export threads;
-  export threads-extensions;
   export threads-primitives;
   export finalization;
   export dispatch-engine;
@@ -1889,21 +1888,12 @@ define &module threads
     \conditional-update-aux, // HACK: HYGIENE GLITCH
     \atomic-increment!,
     \atomic-decrement!,
-    <conditional-update-error>
-
-end &module;
-
-
-define &module threads-extensions
-  create
+    <conditional-update-error>,
 
     // Conditional set variable
     \conditional-set-variable!
-    
+
 end &module;
-
-
-
 
 define &module threads-primitives
   use dylan-primitives, export: all;
@@ -1949,7 +1939,6 @@ define &module threads-internal
   use dylan-extensions;
   use finalization;
   use threads;
-  use threads-extensions;
   use threads-primitives;
   use simple-debugging;
 end &module;
@@ -2341,7 +2330,6 @@ define &module dispatch-engine-internal
   use dylan-primitives;
   use dispatch-engine;
   use threads;
-  use threads-extensions;
   use threads-primitives;
   use machine-word-lowlevel;
   use simple-debugging;
@@ -2359,7 +2347,6 @@ define &module internal
   use dylan-incremental;
   use simple-debugging;
   use threads;
-  use threads-extensions;
   use threads-primitives;
   use machine-word-lowlevel;
   use dispatch-engine,

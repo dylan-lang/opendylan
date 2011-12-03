@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library environment-property-pages
-  use functional-dylan;
+  use common-dylan;
   use system;
   use duim-core;
 

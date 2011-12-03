@@ -8,14 +8,14 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define library create-id
-  use functional-dylan;
+  use common-dylan;
   use system;
   use COM;
 end library;
 
 define module create-id
-  use functional-dylan;
+  use common-dylan;
   use operating-system;
-  use simple-format;
+  use simple-io;
   use COM;
 end module;

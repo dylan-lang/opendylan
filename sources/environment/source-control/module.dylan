@@ -63,8 +63,8 @@ define module source-control-manager
 end module source-control-manager;
 
 define module source-control-manager-internals
-  use functional-dylan;
-  use simple-format;
+  use dylan;
+  use common-extensions, exclude: { format-to-string };
   use threads;
   use locators;
   use settings;

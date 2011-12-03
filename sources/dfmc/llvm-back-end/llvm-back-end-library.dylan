@@ -6,7 +6,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library dfmc-llvm-back-end
-  use functional-dylan;
+  use common-dylan;
   use generic-arithmetic;
   use big-integers;
   use dfmc-core;
@@ -18,7 +18,7 @@ define library dfmc-llvm-back-end
 end library;
 
 define module dfmc-llvm-back-end
-  use functional-dylan;
+  use common-dylan, exclude: { format-to-string };
   use generic-arithmetic,
     prefix: "generic/";
   use dfmc-core;

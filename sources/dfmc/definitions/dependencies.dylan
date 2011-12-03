@@ -502,8 +502,8 @@ define function retract-record-compilation (cr :: <compilation-record>)
     end;
     debug-assert(begin // Make sure retracting conditions would be a noop
 		   let q = element(cr.compilation-record-library.library-conditions-table,
-				   cr, default: not-found());
-		   not-found?(q)
+				   cr, default: $unfound);
+		   unfound?(q)
 		     | every?(method (c)
 				c.condition-compilation-stage ~== $compilation
 			      end, q)

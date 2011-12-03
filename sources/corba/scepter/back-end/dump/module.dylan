@@ -7,7 +7,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module scepter-dump-back-end
   use date;
-  use generic-arithmetic-functional-dylan;
+  use generic-arithmetic-common-dylan,
+    exclude: { format-to-string };
   use format;
   use streams;
   use file-system;

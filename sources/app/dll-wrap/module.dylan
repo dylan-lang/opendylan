@@ -11,7 +11,7 @@ define module dll-wrap
   use format-out;
   use format;
   use finalization;
-  use functional-dylan;
+  use common-dylan;
   use simple-random;
   use operating-system;
 end module dll-wrap;

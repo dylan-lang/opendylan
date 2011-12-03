@@ -7,7 +7,8 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library ole-scribble
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use duim;
   use duim-ole-server;
   use dood;
@@ -16,7 +17,8 @@ define library ole-scribble
 end library ole-scribble;
 
 define module scribble
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use duim;
   use duim-ole-server;
   use dood;

@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library environment-manager
-  use functional-dylan;
+  use dylan;
   use system;
   use channels;
 

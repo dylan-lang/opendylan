@@ -6,7 +6,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library dfmc-llvm-linker
-  use functional-dylan;
+  use common-dylan;
   use system;
   use dfmc-core;
   use dfmc-conversion;
@@ -21,7 +21,7 @@ define library dfmc-llvm-linker
 end library;
 
 define module dfmc-llvm-linker
-  use functional-dylan;
+  use common-dylan, exclude: { format-to-string };
   use dfmc-core;
   use dfmc-imports;
   use dfmc-conversion;

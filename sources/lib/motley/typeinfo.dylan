@@ -908,7 +908,7 @@ define method write-module
     format(s, ";\n");
   end method write-exclude;
   format(s, "define module %s\n", module);
-  format(s, "  use functional-dylan;\n");
+  format(s, "  use common-dylan;\n");
   format(s, "  use ole-automation"); write-exclude();
   format(s, "  use c-ffi"); write-exclude();
   for (interface in this.contents)

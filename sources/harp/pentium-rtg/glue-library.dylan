@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define library pentium-glue-rtg
-  use functional-dylan;
+  use common-dylan;
   use io;
   use system;
   use dfmc-back-end-protocol;

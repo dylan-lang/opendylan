@@ -3651,7 +3651,7 @@ define compiler-sideways method binding-constant-model-object
   if (constant?(binding))
     let model-object =
       binding-model-object(binding,
-			   default: not-found(),
+			   default: $unfound,
 			   error-if-circular?: error-if-circular?);
     if (found?(model-object) & ~instance?(model-object, <unknown>))
       values(model-object, #t)

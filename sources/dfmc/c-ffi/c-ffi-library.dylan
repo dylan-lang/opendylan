@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define library dfmc-c-ffi
-  use functional-dylan;
+  use dylan;
   use dfmc-core;
   use dfmc-reader;
   use dfmc-macro-expander;
@@ -19,7 +19,7 @@ end library;
 
 
 define module dfmc-c-ffi
-  use functional-dylan;
+  use dylan;
   use dfmc-core;
   use dfmc-imports;
   use dfmc-reader;

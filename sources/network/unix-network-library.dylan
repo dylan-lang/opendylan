@@ -6,7 +6,8 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library network
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use C-FFI;
   use IO;
   export unix-sockets,
@@ -14,8 +15,8 @@ define library network
 end;
 
 define module unix-sockets
-  use functional-dylan,
-    exclude: { close };
+  use common-dylan,
+    exclude: { close, format-to-string };
   use C-FFI;
 
   // Misc
@@ -257,7 +258,8 @@ define module sockets
 end module sockets;
 
 define module sockets-internals
-  use functional-dylan;
+  use dylan;
+  use common-extensions, exclude: { format-to-string };
   use dylan-extensions;
   use machine-words;
   use C-FFI;

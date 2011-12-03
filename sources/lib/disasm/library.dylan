@@ -8,7 +8,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define library disasm
-  use functional-dylan;
+  use common-dylan;
+  use dylan;
   use collections;
   use io;
   use generic-arithmetic;
@@ -19,7 +20,8 @@ end library;
 
 define module disasm
   use generic-arithmetic-dylan;
-  use functional-extensions;
+  use common-extensions, exclude: { format-to-string };
+  use dylan-extensions, import: { <byte-character> };
   use byte-vector;
   use format;
   use format-out;

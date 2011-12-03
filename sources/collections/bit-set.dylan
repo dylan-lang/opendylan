@@ -89,7 +89,7 @@ define sealed method member?
     set.member-vector-pad = 1;
   end if;
   // ALTERNATIVE?
-  // element(set, i, default: not-found()) = i;
+  // element(set, i, default: $unfound) = i;
 end method;
 
 
@@ -212,7 +212,7 @@ end method;
 define sealed method element
     (set :: <bit-set>, key :: <integer>, #key default = unsupplied())
  => (element)
-  let bit = element(set.member-vector, key, default: not-found());
+  let bit = element(set.member-vector, key, default: $unfound);
   if (found?(bit))
     bit == 1
   elseif (set.infinite?)

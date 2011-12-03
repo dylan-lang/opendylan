@@ -6,7 +6,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library minimal-scepter
-  use functional-dylan;
+  use dylan;
   use generic-arithmetic;
   use big-integers;
   use scepter-core;
@@ -17,7 +17,7 @@ define library minimal-scepter
 end library;
 
 define module scepter
-  use generic-arithmetic-functional-dylan, exclude: {<union>};
+  use generic-arithmetic-common-dylan, exclude: {<union>};
 
   use scepter-error,
     export: { <idl-condition>,

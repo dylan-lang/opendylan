@@ -8,22 +8,19 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module duim-imports
   // Export useful functionality that DUIM needs from other libraries
-  use functional-extensions,
+  use common-extensions,
     exclude: { position },
     export: all;
   use dylan-extensions,
-    import: { <keyboard-interrupt>,
+    import: { <byte-character>,
+              <keyboard-interrupt>,
 	      \without-bounds-checks,
 	      element-no-bounds-check,
 	      element-no-bounds-check-setter,
 	      element-range-error },
-    export: { <keyboard-interrupt>,
-	      \without-bounds-checks,
-	      element-no-bounds-check,
-	      element-no-bounds-check-setter,
-	      element-range-error };
+    export: all;
   use simple-debugging, export: all;
-  use simple-format, export: all;
+  use simple-io, export: all;
   use threads, export: all;
   use transcendentals, export: all;
   use table-extensions, exclude: { table }, export: all;

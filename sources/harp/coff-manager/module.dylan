@@ -10,7 +10,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define module dylan-and-big-integers
   use dylan, export: all;
   use dylan-extensions, export: all;
-  use functional-extensions, export: {unsupplied, supplied?};
+  use common-extensions, export: {unsupplied, supplied?};
   use big-integers, prefix: "generic-", export: all;
 end module;
 

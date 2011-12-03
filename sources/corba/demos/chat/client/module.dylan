@@ -38,7 +38,7 @@ define module chat-client
 end module chat-client;
 
 define module chat-client-callback
-  use functional-dylan;
+  use common-dylan;
   use dylan-orb;
   use chat-skeletons;
   use chat-client;
@@ -49,7 +49,7 @@ define module chat-client-callback
 end module;
 
 define module chat-client-implementation
-  use functional-dylan;
+  use common-dylan;
   use dylan-orb;
   use streams;
   use chat-stubs;
@@ -58,7 +58,7 @@ define module chat-client-implementation
 end module;
 
 define module chat-client-gui
-  use functional-dylan;
+  use common-dylan, exclude: { format-to-string };
   use duim;
   use threads;
   use operating-system;

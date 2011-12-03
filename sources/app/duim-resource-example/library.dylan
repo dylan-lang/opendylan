@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library duim-resource-example
-  use functional-dylan;
+  use common-dylan;
   use io;
   use system;
   use win32-user;		//---*** Just for debugging
@@ -17,7 +17,7 @@ define library duim-resource-example
 end library duim-examples;
 
 define module duim-resource-example
-  use functional-dylan;
+  use common-dylan, exclude: { format-to-string };
   use format;
   use format-out;
   use operating-system;

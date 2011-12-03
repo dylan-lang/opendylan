@@ -6,7 +6,8 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library network
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use C-FFI;
   use IO;
   export WinSock2,
@@ -15,7 +16,7 @@ end;
 
 
 define module WinSock2
-  use functional-dylan;
+  use common-dylan;
   use C-FFI, export: { <C-both-unsigned-long*>, <C-char*>,
 		       <C-int*>, <C-unsigned-short*>, <C-string> };
   use win32-core, export: { <HANDLE>, <HWND> };
@@ -519,7 +520,7 @@ define module sockets
 end module sockets;
 
 define module sockets-internals
-  use functional-dylan;
+  use common-dylan, exclude: { format-to-string };
   use dylan-extensions;
   use machine-words;
   use C-FFI;

@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // A DUIM user to make it easy to write sample code
 define library duim-user
-  use functional-dylan;
+  use common-dylan;
 
   // Commonly useful libraries
   use io;

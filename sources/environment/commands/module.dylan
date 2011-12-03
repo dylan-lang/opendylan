@@ -7,7 +7,8 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module command-lines
-  use functional-dylan;
+  use dylan;
+  use common-extensions, exclude: { format-to-string };
   use dylan-extensions,
     import: { <keyboard-interrupt>,
 	      keyboard-interrupt?, keyboard-interrupt?-setter,

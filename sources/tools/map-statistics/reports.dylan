@@ -228,8 +228,8 @@ define constant $windows-libraries
       #"mmdw", #"user32", #"win32main");
 
 define constant $dylan-runtime-libraries
-  = #(#"c-ffi", #"dylan", #"equal-table", #"functional-dylan",
-      #"functional-extensions", #"machine-word", #"pentium-run-time",
+  = #(#"c-ffi", #"dylan", #"equal-table", #"common-dylan",
+      #"machine-word", #"pentium-run-time",
       #"threads", #"run-time", #"gc");
 
 define constant $standard-libraries

@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library dfmc-native-harp-cg
 
- use functional-dylan;
+ use common-dylan;
  use io;
 
  use native-harp;
@@ -23,7 +23,7 @@ end library dfmc-native-harp-cg;
 
 define module dfmc-native-harp-cg
 
- use functional-dylan;
+ use common-dylan, exclude: { format-to-string };
  use streams-internals;
 
  use native-harp,

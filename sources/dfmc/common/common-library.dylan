@@ -5,7 +5,8 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library dfmc-common
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use collections;
   use walker;
   use io;
@@ -41,7 +42,7 @@ define module dfmc-imports
 	     <ordered-object-table>,
 	     <ordered-object-set> },
     export: all;
-  use functional-extensions, export: all;
+  use common-extensions, exclude: { format-to-string }, export: all;
   use threads, export: all;
   use collectors, export: all;
   use set, export: all;
@@ -63,7 +64,7 @@ define module dfmc-imports
 end module;
 
 define module dfmc-common
-  use functional-dylan;
+  use dylan;
   use dfmc-imports;
 
   export 

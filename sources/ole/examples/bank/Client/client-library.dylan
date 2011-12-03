@@ -5,14 +5,16 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library bank-client
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use duim;
   use com;
   use bank-interface;
 end library bank-client;
 
 define module bank-client
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use duim;
   use com;
   use bank-interface;

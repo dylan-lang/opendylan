@@ -7,7 +7,8 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library environment-protocols
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use io;
   use source-records;
   use file-source-records;

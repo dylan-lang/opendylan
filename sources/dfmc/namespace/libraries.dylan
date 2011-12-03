@@ -599,7 +599,7 @@ end function;
 
 define method lookup-module-in 
     (library :: <library>, name, #key default = unsupplied()) => (module)
-  let binding = lookup-name(library, name, default: not-found());
+  let binding = lookup-name(library, name, default: $unfound);
   if (found?(binding) & defined?(binding))
     binding.library-binding-value
   elseif (supplied?(default))

@@ -7,8 +7,9 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
-define library native-harp 
-  use functional-dylan;
+define library native-harp
+  use dylan;
+  use common-dylan;
   use harp;
 
   export native-harp;                // The interface for native-harp clients

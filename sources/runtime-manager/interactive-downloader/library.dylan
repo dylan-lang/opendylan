@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define library interactive-downloader
-  use functional-dylan;
+  use common-dylan;
   use io;
   use collections;
   use access-path;
@@ -22,7 +22,7 @@ define library interactive-downloader
 end library;
 
 define module interactive-downloader
-  use functional-dylan, rename: {table => hqnex-table};
+  use common-dylan, exclude: { format-to-string }, rename: {table => hqnex-table};
   use format;
   use format-out;
   use access-path;
@@ -38,7 +38,7 @@ define module interactive-downloader
 end module;
 
 define module interactive-downloader-internals
-  use functional-dylan, rename: {table => hqnex-table};
+  use common-dylan, exclude: { format-to-string }, rename: {table => hqnex-table};
   use format;
   use format-out;
   use access-path;

@@ -680,7 +680,7 @@ define function merge-interactive-layer (layer :: <interactive-layer>, tid)
     // TODO: would we ever need to remove conditions?
     let conditions = ld.library-conditions-table;
     for (new-q keyed-by key in layer.conditions-layer)
-      let q = element(conditions, key, default: not-found());
+      let q = element(conditions, key, default: $unfound);
       let lkey = if (key == #f) tid else key end;
       conditions[lkey] := if (found?(q)) concatenate!(q, new-q) else new-q end;
     end;

@@ -7,7 +7,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define library sample-automation-controller
-  use functional-dylan;
+  use dylan;
+  use comon-dylan;
   use OLE-Automation;
   use Win32-common;
   use Win32-GDI;
@@ -17,7 +18,8 @@ define library sample-automation-controller
 end;
 
 define module sample-automation-controller
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use OLE-Automation;
   use Win32-common;
   use Win32-GDI;

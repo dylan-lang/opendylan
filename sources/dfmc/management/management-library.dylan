@@ -5,7 +5,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library dfmc-management
-  use functional-dylan;
+  use dylan;
   use memory-manager;
   use dfmc-core;
   use dfmc-reader;
@@ -20,7 +20,7 @@ define library dfmc-management
 end library;
 
 define module dfmc-management
-  use functional-dylan;
+  use dylan;
   use memory-manager;
   use dfmc-core;
   use dfmc-imports;

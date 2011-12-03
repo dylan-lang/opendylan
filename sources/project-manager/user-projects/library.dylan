@@ -6,7 +6,8 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library user-projects
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use io;
   use system;
   use build-system;
@@ -24,7 +25,8 @@ define library user-projects
 end library;
 
 define module user-projects
-  use functional-dylan;
+  use dylan;
+  use common-extensions, exclude: { format-to-string };
   use threads;
   use machine-word-lowlevel,
     import: { machine-word-unsigned-shift-left, machine-word-unsigned-shift-right };
