@@ -1,4 +1,5 @@
 Library:      system
+Executable:   odsystem
 Synopsis:     Portable operating system APIs
 Author:       Gail Zacharias
 Major-Version: 2

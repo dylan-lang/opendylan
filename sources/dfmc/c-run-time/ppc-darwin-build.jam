@@ -2,15 +2,15 @@
 # Configuration variables
 #
 
-CC      ?= gcc ;
+CC	?= gcc ;
 
-MKF     ?= dylanmakefile.mkf ;
+MKF	?= dylanmakefile.mkf ;
 
-SUFOBJ  ?= .o ;                 # object files suffix
-SUFASM  ?= .s ;                 # assembly source files suffix
-SUFLIB  ?= .a ;                 # static library suffix
-SUFDLL  ?= .dylib ;     # shared library suffix
-SUFMKF  ?= .mkf ;   # build-system files
+SUFOBJ	?= .o ;			# object files suffix
+SUFASM	?= .s ;			# assembly source files suffix
+SUFLIB	?= .a ;			# static library suffix
+SUFDLL	?= .dylib ;	# shared library suffix
+SUFMKF	?= .mkf ;   # build-system files
 
 {
   local _lib = lib ;
@@ -40,7 +40,7 @@ SUFMKF  ?= .mkf ;   # build-system files
 ARCHFLAG ?= -arch $(TARGET_OSPLAT:E=ppc) ;
 
 CCFLAGS ?= -fno-strict-aliasing -fPIC -g $(ARCHFLAG) ;
- 
+
 LINKFLAGS ?= $(ARCHFLAG) ;
 
 DEFINES += _POSIX_C_SOURCE GC_DEBUG ;
@@ -49,11 +49,11 @@ DEFINES += _POSIX_C_SOURCE GC_DEBUG ;
 # Runtime
 #
 
-RTOBJS ?= posix-threads.o
-          debug-print.o
-          run-time.o ;
+RTOBJS ?= dummy-threads.o
+	  debug-print.o
+	  run-time.o ;
 
-rtlibs ?= $(SYSTEM_LIBDIR)/runtime/$(RTOBJS) -lgc -lpthread -ldl -lm ;
+rtlibs ?= $(SYSTEM_LIBDIR)/runtime/$(RTOBJS) -lgc -ldl -lm ;
 
 guilflags ?= ;
 
@@ -84,11 +84,13 @@ rule DylanLibrary image : version {
   # Link a Dylan library as a shared library or executable image.
 
   local _dll = [ FDLLName $(image) ] ;
+  local _lib = [ FLIBName $(image) ] ;
   local _exe = [ FEXEName $(image) ] ;
 
   # Here we save the name and search directory of the DLL for this library.
   
   _dll_$(image[1]:L) = $(_dll) ;
+  _lib_$(image[1]:L) = $(_lib) ;
   if ! $(SYSTEM) && ! $(PERSONAL_ROOT) {
     _dir_$(image[1]:L) = $(LIBDIR) ;
   }
@@ -126,7 +128,7 @@ rule DylanLibrary image : version {
  
   Cc $(_obj) : $(_c) ;
   Depends $(_exe) : $(_dll) ;
-  LINKLIBS on $(_exe) += -l$(image[1]:L) ;
+  LINKLIBS on $(_exe) += $(_lib) ;
   LinkEXE $(_exe) : $(_obj) ;
 
   # If this is the top-level project, make the dll, exe, and clean
@@ -214,9 +216,9 @@ rule DylanLibraryCLibraries image : libraries {
       case -L* : LINKLIBS on $(_dll) += $(lib) ;
       case -l* : LINKLIBS on $(_dll) += $(lib) ;
       case *.a : lib = [ FGristFiles $(lib) ] ;
-                 SEARCH on $(lib) = $(SEARCH_SOURCE) ;
-                 Depends $(_dll) : $(lib) ;
-                 NEEDLIBS on $(_dll) += $(lib) ;
+		 SEARCH on $(lib) = $(SEARCH_SOURCE) ;
+		 Depends $(_dll) : $(lib) ;
+		 NEEDLIBS on $(_dll) += $(lib) ;
       case * :   Exit Unknown C library $(lib) ;
     }
   }
@@ -252,7 +254,6 @@ rule DylanLibraryCSources image : sources {
       Cc $(_obj) : $(_i) ;
       
       LinkDLL $(_dll) : $(_obj) ;
-      LinkEXE $(_exe) : $(_obj) ;
     }
   }
 }
@@ -309,18 +310,18 @@ rule DylanLibraryUses image : library : dir {
     }
     else {
       # Another personal library; read its mkf from its build directory.
-        
+	
       local SEARCH_SOURCE LOCATE_SOURCE LOCATE_TARGET
         = $(dir:R=$(LOCATE_TARGET:E=$(DOT))) ;
       local SOURCE_GRIST ;
 
       local LIBDIR BINDIR ;
       {
-        local _lib = lib ;
-        local _bin = bin ;
+	local _lib = lib ;
+	local _bin = bin ;
 
-        LIBDIR = $(_lib:P=$(PERSONAL_ROOT:E=$(LOCATE_TARGET:P))) ;
-        BINDIR = $(_bin:P=$(PERSONAL_ROOT:E=$(LOCATE_TARGET:P))) ;
+	LIBDIR = $(_lib:P=$(PERSONAL_ROOT:E=$(LOCATE_TARGET:P))) ;
+	BINDIR = $(_bin:P=$(PERSONAL_ROOT:E=$(LOCATE_TARGET:P))) ;
       }
 
       local _mkf = $(MKF:G=$(library:L)) ;
@@ -341,7 +342,8 @@ rule DylanLibraryClosure image : libraries {
     if ! $(_i) in $(_use_$(image[1]:L)) {
       _use_$(image[1]:L) += $(_i) ;
       Depends $(_dll) $(_exe) : $(_dll_$(_i)) ;
-      LINKLIBS on $(_dll) $(_exe) += -l$(_i) ;
+
+      LINKLIBS on $(_dll) $(_exe) += $(_lib_$(_i)) ;
 
       LIBPATH on $(_dll) $(_exe) += $(_dir_$(_i)) ;
 
@@ -375,7 +377,19 @@ actions together LinkEXE bind NEEDLIBS {
 #
 
 rule FDLLName {
-  return lib$(<[1]:LS=$(SUFDLL)) ;
+  if $(<[2]) {
+    return lib$(<[2]:LS=$(SUFDLL)) ;
+  } else {
+    return lib$(<[1]:LS=$(SUFDLL)) ;
+  }
+}
+
+rule FLIBName {
+  if $(<[2]) {
+    return -l$(<[2]:L) ;
+  } else {
+    return -l$(<[1]:L) ;
+  }
 }
 
 rule FEXEName {
