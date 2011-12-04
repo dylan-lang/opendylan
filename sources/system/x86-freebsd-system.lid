@@ -6,6 +6,7 @@ Minor-Version: 1
 Target-Type:   dll
 Files: library
        operating-system
+       x86-freebsd-magic-numbers
        x86-freebsd-operating-system
        unix-operating-system
        tokenize-variable

@@ -32,34 +32,12 @@ define constant    $X_OK = #o1;
 define constant    $W_OK = #o2;
 define constant    $R_OK = #o4;
 
-/// From <errno.h>
-define constant $ENOENT  =  2;
-define constant $EINTR   =  4;
-define constant $EACCESS = 13;
-define constant $EINVAL  = 22;
-define constant $ETXTBSY = 26;
-define constant $EROFS   = 30;
-
 
 /// Used instead of define C-struct to avoid relying on the C-FFI library ...
 
-/// From <sys/stat.h> ...
-
-define system-offset stat-size (x86-linux 88, ppc-linux 88, x86-freebsd 96, amd64-freebsd 120, x86-darwin 96, ppc-darwin 96, x86_64-linux 144) 72;
-define system-offset st-mode (x86-linux 16, ppc-linux 16, x86-freebsd 8, amd64-freebsd 8, x86-darwin 8, ppc-darwin 8, x86_64-linux 24) 8;
-define system-offset st-uid (x86-linux 24, ppc-linux 24, x86-freebsd 12, amd64-freebsd 12, x86-darwin 12, ppc-darwin 12, x86_64-linux 28) 16;
-define system-offset st-gid (x86-linux 28, ppc-linux 28, x86-freebsd 16, amd64-freebsd 16, x86-darwin 16, ppc-darwin 16, x86_64-linux 32) 20;
-define system-offset st-size (x86-linux 44, ppc-linux 44, x86-freebsd 48, amd64-freebsd 72, x86-darwin 48, ppc-darwin 48, x86_64-linux 48) 28;
-define system-offset st-atime (x86-linux 56, ppc-linux 56, x86-freebsd 24, amd64-freebsd 24, x86-darwin 24, ppc-darwin 24, x86_64-linux 72) 32;
-define system-offset st-mtime (x86-linux 64, ppc-linux 64, x86-freebsd 32, amd64-freebsd 40, x86-darwin 32, ppc-darwin 32, x86_64-linux 88) 40;
-define system-offset st-ctime (x86-linux 72, ppc-linux 72, x86-freebsd 40, amd64-freebsd 56, x86-darwin 40, ppc-darwin 40, x86_64-linux 104) 48;
-
-define constant $STAT_SIZE = 
-  $stat-size-offset;
-
 define macro with-stack-stat
   { with-stack-stat (?st:name, ?file:expression) ?:body end }
-  => { with-storage (?st, $STAT_SIZE) ?body end }
+  => { with-storage (?st, $stat-size) ?body end }
 end macro with-stack-stat;
 
 define inline-only function st-mode (st :: <machine-word>) => (mode :: <integer>)
@@ -113,52 +91,36 @@ define inline-only function st-ctime (st :: <machine-word>) => (ctime :: <abstra
 end function st-ctime;
 
 
-/// Used instead of define C-struct to avoid relying on the C-FFI library ...
-
-/// From <pwd.h> ...
-
-define system-offset passwd-name () 0;
-define system-offset passwd-dir (alpha-linux 32, x86-freebsd 28, x86-darwin 28, ppc-darwin 28, x86_64-linux 32) 20;
-
 define inline-only function passwd-name (passwd :: <machine-word>) => (name :: <byte-string>)
   primitive-raw-as-string
     (primitive-c-pointer-at(primitive-unwrap-machine-word(passwd),
 			    integer-as-raw(0),
-			    integer-as-raw($passwd-name-offset)))
+			    integer-as-raw($pw-name-offset)))
 end function passwd-name;
 
 define inline-only function passwd-dir (passwd :: <machine-word>) => (dir :: <byte-string>)
   primitive-raw-as-string
     (primitive-c-pointer-at(primitive-unwrap-machine-word(passwd),
 			    integer-as-raw(0),
-			    integer-as-raw($passwd-dir-offset)))
+			    integer-as-raw($pw-dir-offset)))
 end function passwd-dir;
 
-
-/// From <grp.h> ...
-
-define system-offset group-name () 0;
 
 define inline-only function group-name (group :: <machine-word>) => (name :: <byte-string>)
   primitive-raw-as-string
     (primitive-c-pointer-at(primitive-unwrap-machine-word(group),
-			    integer-as-raw($group-name-offset),
+			    integer-as-raw($gr-name-offset),
 			    integer-as-raw(0)))
 end function group-name;
 
-
-/// Used instead of define C-struct to avoid relying on the C-FFI library ...
-
-/// From <dirent.h> ...
-
-define system-offset dirent-name (x86-linux 11, ppc-linux 11, x86-freebsd 8, x86-darwin 8, ppc-darwin 8, x86_64-linux 19) 8;
 
 define inline-only function dirent-name (dirent :: <machine-word>) => (name :: <byte-string>)
   primitive-raw-as-string
     (primitive-cast-raw-as-pointer
        (primitive-machine-word-add(primitive-unwrap-machine-word(dirent),
-                                  integer-as-raw($dirent-name-offset))))
+                                  integer-as-raw($d-name-offset))))
 end function dirent-name;
+
 
 /// Error handling
 
