@@ -207,19 +207,15 @@ define function get-location-as-sexp (search, env-obj)
       = source-line-location(location.source-location-source-record,
                              location.source-location-start-line);
     let column = location.source-location-start-column;
-    let hname = environment-object-home-name(*project*, env-obj);
-    let name =  if (hname)
-                  environment-object-primitive-name(*project*, hname);
-                else
-                  "unknown"
-                end;
 
-    list(name,
+    let snipp = snippet(env-obj) | search;
+
+    list(snipp | name,
          list(#":location",
               list(#":file", as(<string>, source-name)),
               list(#":line", lineno, column),
               if (search)
-                list(#":snippet", search)
+                list (#"snippet", search)
               else
                 #()
               end));
@@ -236,6 +232,63 @@ end;
 define swank-function listener-eval (arg)
   run-compiler(*server*, arg);
   list(#":values", "Done.")
+end;
+
+define function get-name (o :: <environment-object>) => (res :: <string>)
+  block ()
+    environment-object-primitive-name
+      (*project*,
+       environment-object-home-name(*project*, o))
+  exception (c :: <condition>)
+    environment-object-display-name(*project*, o, #f, qualify-name?: #f)
+  end;
+end;
+
+define method snippet (o :: <object>) => (res :: <string>)
+  get-name(o);
+end;
+
+define method snippet (function :: <dylan-function-object>) => (res :: <string>)
+  let required = function-parameters(*project*, function);
+  concatenate("M ", next-method(), " (",
+              if (empty?(required))
+                ""
+              else
+                reduce1(method(a, b) concatenate(a, ", ", b) end,
+                        map(compose(get-name, parameter-type), required))
+              end,
+              ")")
+end;
+
+define method snippet (generic :: <generic-function-object>) => (res :: <string>)
+  concatenate("G ", generic.get-name)
+end;
+
+define method snippet (domain :: <domain-object>) => (res :: <string>)
+  let specializers = domain-specializers(*project*, domain);
+  concatenate("D ", domain.get-name, " (",
+              if (empty?(specializers))
+                ""
+              else
+                reduce1(method(a, b) concatenate(a, ", ", b) end,
+                        map(get-name, specializers))
+              end, ")")
+end;
+
+define method snippet (class :: <class-object>) => (res :: <string>)
+  let supers = make(<stretchy-vector>);
+  do-direct-superclasses(compose(curry(add!, supers), get-name), *project*, class);
+  concatenate("C ", class.get-name, " (",
+              if (empty?(supers))
+                ""
+              else
+                reduce1(method(a, b) concatenate(a, ", ", b) end,
+                        supers)
+              end, ")")
+end;
+
+define method snippet (zlot :: <slot-object>) => (res :: <string>)
+  concatenate("S ", zlot.get-name, " :: ", slot-type(*project*, zlot).get-name)
 end;
 
 define swank-function xref (quoted-arg, quoted-name)
@@ -309,12 +362,12 @@ end;
 
 define swank-function operator-arglist (symbol, package)
   let env-obj = get-environment-object(symbol);
-  if (instance?(env-obj, <function-object>))
+  if (env-obj)
     concatenate(print-function-parameters(*project*, env-obj, *module*),
                 " => ", print-function-values(*project*, env-obj, *module*));
   else
     #"nil"
-  end;
+  end
 end;
 
 define function get-names (env-objs)
