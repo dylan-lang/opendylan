@@ -23,7 +23,7 @@ How to Build on Linux
 =====================
 
 Install the latest binary release of Open Dylan from
-http://www.opendylan.org/downloading.phtml
+http://opendylan.org/download/index.html
 ::
 
   git clone git@github.com:dylan-lang/opendylan.git --recursive   # get submodules too
