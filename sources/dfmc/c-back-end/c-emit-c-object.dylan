@@ -35,9 +35,19 @@ define method emit-lambda-body-using-function
 	write(stream, ";\n");
       end;
     end;
+
+    let volatile?
+      = block (result)
+          for-computations (c in o)
+            if (instance?(c, <block>) & ~c.entry-state.local-entry-state?)
+              result(#t);
+            end if;
+          end for-computations;
+          #f
+        end block; 
     for (tmp in o.environment.temporaries)
       if (used?(tmp))
-	emit-local-definition(back-end, stream, tmp);
+	emit-local-definition(back-end, stream, tmp, volatile?);
       end if;
     end for;
     unless (empty?(o.environment.closure))

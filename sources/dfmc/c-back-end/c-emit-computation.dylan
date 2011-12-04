@@ -78,8 +78,10 @@ end method;
 define constant $loop-shadow-tmp-suffix = "T";
 
 define method emit-local-tmp-definition 
-    (back-end :: <c-back-end>, stream :: <stream>, tmp :: <temporary>) => ()
-  format-emit*(back-end, stream, "\tvolatile ");
+    (back-end :: <c-back-end>, stream :: <stream>,
+     tmp :: <temporary>, volatile? :: <boolean>) => ()
+  format-emit*(back-end, stream, "\t");
+  if (volatile?) format-emit*(back-end, stream, "volatile ") end;
   let type = type-estimate(tmp); // lookup-type(tmp, current-css(), tmp.generator);
   emit-parameter-type(back-end, stream, type);
   // if (tmp.cell?)
@@ -96,7 +98,7 @@ end method;
 
 define method emit-local-tmp-definition 
     (back-end :: <c-back-end>, stream :: <stream>, 
-     tmp :: <multiple-value-temporary>) 
+     tmp :: <multiple-value-temporary>, volatile? :: <boolean>) 
     => ()
   // define a var for each required element of local mv-temp.
   // note that there is no need for a variable for the mv-temp 
@@ -104,32 +106,37 @@ define method emit-local-tmp-definition
   // let type = lookup-type(tmp, current-css(), tmp.generator); // ***** WRONG?
   let type = type-estimate(tmp);
   for (i from 0 below required-values(tmp))
-    format-emit*(back-end, stream, "\tvolatile ");
+    format-emit*(back-end, stream, "\t");
+    if (volatile?) format-emit*(back-end, stream, "volatile ") end;
     emit-parameter-type(back-end, stream, type, index: i);
     format-emit*(back-end, stream, " %_~;\n", tmp, i);
   end for;
   if (required-values(tmp) = 0
       | tmp.rest-values?)
-    format-emit*(back-end, stream, "\tvolatile ");
+    format-emit*(back-end, stream, "\t");
+    if (volatile?) format-emit*(back-end, stream, "volatile ") end;
     emit-parameter-type(back-end, stream, type);
     format-emit*(back-end, stream, " %;\n", tmp);
   end if;    
 end method;
 
 define method emit-local-definition 
-    (back-end :: <c-back-end>, stream :: <stream>, tmp :: <temporary>) => ()
-  emit-local-tmp-definition(back-end, stream, tmp);
+    (back-end :: <c-back-end>, stream :: <stream>,
+     tmp :: <temporary>, volatile? :: <boolean>) => ()
+  emit-local-tmp-definition(back-end, stream, tmp, volatile?);
 end method;
 
 define method emit-local-definition 
     (back-end :: <c-back-end>, stream :: <stream>, 
-     tmp :: <stack-vector-temporary>) => ()
+     tmp :: <stack-vector-temporary>, volatile? :: <boolean>) => ()
   if (tmp.number-values = 0)
-    format-emit* (back-end, stream, "\tvolatile ");
+    format-emit* (back-end, stream, "\t");
+    if (volatile?) format-emit*(back-end, stream, "volatile ") end;
     emit-parameter-type(back-end, stream, dylan-value(#"<object>"));
     format-emit*(back-end, stream, " % = @;\n", tmp, #[]);
   else
-    format-emit*(back-end, stream, "\tvolatile ");
+    format-emit*(back-end, stream, "\t");
+    if (volatile?) format-emit*(back-end, stream, "volatile ") end;
     // TODO: integrate this with the real object dumper
     let class = &object-class(#[]);
     let wrapper = ^class-mm-wrapper(class);
@@ -141,13 +148,13 @@ end method;
 
 define method emit-local-definition 
     (back-end :: <c-back-end>, stream :: <stream>, 
-     tmp :: <lexical-local-variable>) => ()
-  emit-local-tmp-definition(back-end, stream, tmp);
+     tmp :: <lexical-local-variable>, volatile? :: <boolean>) => ()
+  emit-local-tmp-definition(back-end, stream, tmp, volatile?);
 end method;
 
 define method emit-local-definition
     (back-end :: <c-back-end>, stream :: <stream>,
-     tmp :: <lexical-variable>) => ()
+     tmp :: <lexical-variable>, volatile? :: <boolean>) => ()
 //   if (tmp.cell?)
 //     format-emit*
 //       (back-end, stream, "\t~* % = ~(tmp_%);\n", 
@@ -1062,7 +1069,7 @@ define method emit-computation
       if (i = 0)  // special case for 0 again
 	format-emit(b, s, d, "\t#", lhs-temp);   // temp = 
       else
-	format-emit(b,s,d,"\tvolatile ");
+	format-emit(b,s,d, "\t");
       end if;
 // want to index into rhs by how much has been extracted already, 
 // but can't (1st param must be a vector, with a size slot).
