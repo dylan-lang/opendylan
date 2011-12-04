@@ -60,10 +60,11 @@ $module is required to build Open Dylan])
   AC_MSG_RESULT(yes)
 done
 
-AC_CHECK_PROGS(DYLANCOMPILER, dylan-compiler minimal-console-compiler, no)
+AC_CHECK_PROGS(DYLANCOMPILER, dylan-compiler opendylan minimal-console-compiler, no)
 test "$DYLANCOMPILER" = no && AC_MSG_ERROR([
-dylan-compiler or minimal-console-compiler is required to bootstrap Open Dylan])
+dylan-compiler, opendylan or minimal-console-compiler is required to bootstrap Open Dylan])
 test "$DYLANCOMPILER" = dylan-compiler && DYLANCOMPILER="$DYLANCOMPILER -build"
+test "$DYLANCOMPILER" = opendylan && DYLANCOMPILER="$DYLANCOMPILER -build"
 test "$DYLANCOMPILER" = minimal-console-compiler && DYLANCOMPILER="$DYLANCOMPILER -build"
 AC_SUBST(DYLANCOMPILER)
 
