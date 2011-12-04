@@ -10,18 +10,18 @@ define constant $EACCES = 13;
 define constant $EINVAL = 22;
 define constant $ETXTBSY = 26;
 define constant $EROFS = 30;
-define constant $stat-size = 108;
-define constant $st-mode-offset = 4;
-define constant $st-uid-offset = 16;
-define constant $st-gid-offset = 20;
-define constant $st-size-offset = 60;
-define constant $st-atime-offset = 28;
-define constant $st-mtime-offset = 36;
-define constant $st-ctime-offset = 44;
+define constant $stat-size = 96;
+define constant $st-mode-offset = 8;
+define constant $st-uid-offset = 12;
+define constant $st-gid-offset = 16;
+define constant $st-size-offset = 48;
+define constant $st-atime-offset = 24;
+define constant $st-mtime-offset = 32;
+define constant $st-ctime-offset = 40;
 define constant $pw-name-offset = 0;
 define constant $pw-dir-offset = 28;
 define constant $gr-name-offset = 0;
-define constant $d-name-offset = 21;
+define constant $d-name-offset = 8;
 
 // Used by unix-date-interface.dylan
 define constant $tm-sec-offset = 0;
