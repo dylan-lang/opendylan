@@ -1,5 +1,5 @@
 module: dswank
-synopsis: swank support for opendylan. swank is the protocol of SLIME 
+synopsis: swank support for opendylan. swank is the protocol of SLIME
 author: Andreas Bogk and Hannes Mehnert
 copyright: (c) 2008; All rights reversed.
 
@@ -195,13 +195,13 @@ end;
 
 define function get-location-as-sexp (search, env-obj)
   let location = environment-object-source-location(*project*, env-obj);
-    
+
 
   if (location)
     let source-name
       = print-environment-object-location(*project*,
-					  env-obj,
-					  absolute-path?: #t); 
+                                          env-obj,
+                                          absolute-path?: #t);
 
     let (name, lineno)
       = source-line-location(location.source-location-source-record,
@@ -209,10 +209,10 @@ define function get-location-as-sexp (search, env-obj)
     let column = location.source-location-start-column;
     let hname = environment-object-home-name(*project*, env-obj);
     let name =  if (hname)
-		  environment-object-primitive-name(*project*, hname);
-		else
-		  "unknown"
-		end;
+                  environment-object-primitive-name(*project*, hname);
+                else
+                  "unknown"
+                end;
 
     list(name,
          list(#":location",
@@ -319,12 +319,12 @@ end;
 
 define function get-names (env-objs)
   let module = if (instance?(*module*, <string>))
-		 find-module(*project*, *module*)
-	       else
-		 *module*
-	       end;
+                 find-module(*project*, *module*)
+               else
+                 *module*
+               end;
   sort!(map(rcurry(curry(environment-object-display-name, *project*),
-		   module, qualify-names?: #t), env-objs));
+                   module, qualify-names?: #t), env-objs));
 end;
 
 define swank-function dylan-subclasses (symbols)
@@ -369,8 +369,8 @@ define function main(args)
           block ()
             let socket = make(<server-socket>, port: port);
             format(*standard-output*,
-		   "Waiting for connection on port %d\n",
-		   port);
+                   "Waiting for connection on port %d\n",
+                   port);
             if (tmpfile)
               with-open-file (file = tmpfile, direction: #"output")
                 write(file, integer-to-string(port));
@@ -386,8 +386,8 @@ define function main(args)
   let stream = accept(socket);
   *server* := start-compiler(stream);
   let greeting = concatenate("Welcome to dswank - the ",
-			     release-full-name(),
-			     " SLIME interface\n");
+                             release-full-name(),
+                             " SLIME interface\n");
   write-to-emacs(stream, list(#":write-string", greeting));
   while(#t)
     let length = string-to-integer(read(stream, 6), base: 16);
