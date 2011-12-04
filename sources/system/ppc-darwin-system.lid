@@ -7,6 +7,7 @@ Minor-Version: 1
 Target-Type:   dll
 Files: library
        operating-system
+       ppc-darwin-magic-numbers
        ppc-darwin-operating-system
        unix-operating-system
        tokenize-variable
