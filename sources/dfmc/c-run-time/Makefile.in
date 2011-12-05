@@ -24,7 +24,7 @@ CFLAGS		= -DGC_LINUX_THREADS=1 -D_REENTRANT=1 -DGC_DEBUG=1 -fPIC \
 		  $(arch_flag) -O2 -g -I$(srcdir) -I$(runtime_srcdir) \
 		  -I$(gc_prefix)/include -L$(gc_prefix)/lib
 
-OBJS		= dummy-threads.o \
+OBJS		= posix-threads.o \
 		  debug-print.o \
 		  run-time.o
 
@@ -33,6 +33,8 @@ RUNTIMELIBDEST	 = $(LIBDEST)/runtime/
 all:	$(OBJS)
 
 dummy-threads.o:       $(runtime_srcdir)/dummy-threads.c
+
+posix-threads.o:       $(runtime_srcdir)/posix-threads.c
 
 debug-print.o:  $(runtime_srcdir)/debug-print.c
 
