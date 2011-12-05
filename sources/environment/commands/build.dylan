@@ -1,6 +1,6 @@
 Module:    environment-commands
 Synopsis:  The commands provided by the environment
-Author:	   Andy Armstrong
+Author:    Andy Armstrong
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.
@@ -51,10 +51,10 @@ define method show-property
  => ()
   let project = context.context-project;
   message(context, "Compilation mode: %s",
-	  select (project.project-compilation-mode)
-	    #"loose"  => "development [Interactive development mode]";
-	    #"tight"  => "production  [Production mode]";
-	  end)
+          select (project.project-compilation-mode)
+            #"loose"  => "development [Interactive development mode]";
+            #"tight"  => "production  [Production mode]";
+          end)
 end method show-property;
 
 define method set-property
@@ -67,10 +67,10 @@ define method set-property
   let project = context.context-project;
   let compilation-mode
     = select (compilation-mode)
-	#"tight", #"production"  => #"tight";
-	#"loose", #"development" => #"loose";
-	otherwise =>
-	  set-error("Unrecognised compilation mode: %s", compilation-mode);
+        #"tight", #"production"  => #"tight";
+        #"loose", #"development" => #"loose";
+        otherwise =>
+          set-error("Unrecognised compilation mode: %s", compilation-mode);
       end;
   project.project-compilation-mode := compilation-mode
 end method set-property;
@@ -94,15 +94,15 @@ define method show-property
   let project-context = context.context-project-context;
   let build-script
     = if (project-context)
-	project-context.context-build-script
+        project-context.context-build-script
       else
-	default-build-script()
+        default-build-script()
       end;
   message(context, "Build script: %s", build-script);
 end method show-property;
 
 define method set-property
-    (context :: <environment-context>, property :: <build-script-property>, 
+    (context :: <environment-context>, property :: <build-script-property>,
      build-script :: <file-locator>,
      #key save?)
  => ()
@@ -157,7 +157,7 @@ define command-line build => <build-project-command>
   flag release       = "build a standalone release [off by default]";
   flag subprojects   = "build subprojects as well if necessary [on by default]";
   keyword build-script :: <file-locator> = "the (Jam) build script to use";
-  keyword target :: <symbol> = "the target [dll or exe]";
+  keyword target :: <symbol> = "the target [dll or executable]";
   flag force         = "force relink the executable [off by default]";
   flag unify         = "combine the libraries into a single executable [off by default]";
 end command-line build;
@@ -169,31 +169,31 @@ define method do-execute-command
   let messages = #"internal";
   block ()
     if (build-project
-	  (project,
-	   process-subprojects?: command.%subprojects?, 
-	   clean?:               command.%clean?,
-	   link?:                #f,
-	   save-databases?:      command.%save?,
-	   messages:             messages,
-	   output:               command.%output,
-	   progress-callback:    curry(note-build-progress, context),
-	   warning-callback:     curry(note-compiler-warning, context),
-	   error-handler:        curry(compiler-condition-handler, context)))
+          (project,
+           process-subprojects?: command.%subprojects?,
+           clean?:               command.%clean?,
+           link?:                #f,
+           save-databases?:      command.%save?,
+           messages:             messages,
+           output:               command.%output,
+           progress-callback:    curry(note-build-progress, context),
+           warning-callback:     curry(note-compiler-warning, context),
+           error-handler:        curry(compiler-condition-handler, context)))
       if (command.%link?)
-	let project-context = context.context-project-context;
-	let build-script
+        let project-context = context.context-project-context;
+        let build-script
           = command.%build-script | project-context.context-build-script;
-	link-project
-	  (project,
-	   build-script:         build-script,
-	   target:               command.%target,
-	   release?:             command.%release?,
-	   force?:               command.%force?,
-	   process-subprojects?: command.%subprojects?,
-	   unify?:               command.%unify?,
-	   messages:             messages,
-	   progress-callback:    curry(note-build-progress, context),
-	   error-handler:        curry(compiler-condition-handler, context))
+        link-project
+          (project,
+           build-script:         build-script,
+           target:               command.%target,
+           release?:             command.%release?,
+           force?:               command.%force?,
+           process-subprojects?: command.%subprojects?,
+           unify?:               command.%unify?,
+           messages:             messages,
+           progress-callback:    curry(note-build-progress, context),
+           error-handler:        curry(compiler-condition-handler, context))
       end;
       message(context, "Build of '%s' completed", project.project-name)
     else
@@ -205,8 +205,8 @@ define method do-execute-command
 end method do-execute-command;
 
 define method note-build-progress
-    (context :: <environment-context>, 
-     position :: <integer>, range :: <integer>, 
+    (context :: <environment-context>,
+     position :: <integer>, range :: <integer>,
      #key heading-label, item-label)
  => ()
   let project-context = context.context-project-context;
@@ -234,7 +234,7 @@ end method note-compiler-warning;
 
 define method compiler-condition-handler
     (context :: <environment-context>,
-     handler-type == #"project-not-found", 
+     handler-type == #"project-not-found",
      library :: <string>)
  => (filename :: false-or(<file-locator>))
   ignore(handler-type);
@@ -243,7 +243,7 @@ end method compiler-condition-handler;
 
 define method compiler-condition-handler
     (context :: <environment-context>,
-     handler-type == #"project-file-not-found", 
+     handler-type == #"project-file-not-found",
      filename :: <string>)
  => (filename :: false-or(<file-locator>))
   ignore(handler-type);
@@ -256,8 +256,8 @@ define function choose-missing-project
           library :: false-or(<string>))
  => (filename :: false-or(<file-locator>))
   let prompt
-    = format-to-string("Project file for missing '%s':", 
-		       filename | library | "unknown");
+    = format-to-string("Project file for missing '%s':",
+                       filename | library | "unknown");
   command-line-choose-file(context.context-server, prompt: prompt)
 end function choose-missing-project;
 
@@ -284,7 +284,7 @@ end method compiler-condition-handler;
 
 define method compiler-condition-handler
     (context :: <environment-context>,
-     handler-type == #"yes-no", 
+     handler-type == #"yes-no",
      message :: <string>)
  => (yes? :: <boolean>)
   command-line-question(context.context-server, message)
@@ -303,7 +303,7 @@ define command-line link => <link-project-command>
      documentation: "Links the executable for a project.")
   optional project :: <project-object> = "the project to link";
   keyword build-script :: <file-locator> = "the (Jam) build script to use";
-  keyword target :: <symbol> = "the target [dll or exe]";
+  keyword target :: <symbol> = "the target [dll or executable]";
   keyword arch :: <symbol> = "the architecture to build (e.g. i386 or x86_64)";
   flag force       = "force relink the executable [off by default]";
   flag subprojects = "link subprojects as well if necessary [on by default]";
@@ -319,15 +319,15 @@ define method do-execute-command
     = command.%build-script | project-context.context-build-script;
   let messages = #"internal";
   link-project(project,
-	       build-script:         build-script,
-	       target:               command.%target,
-	       arch:                 command.%arch,
-	       force?:               command.%force?,
-	       process-subprojects?: command.%subprojects?,
-	       unify?:               command.%unify?,
-	       progress-callback:    curry(note-build-progress, context),
-	       error-handler:        curry(compiler-condition-handler, context),
-	       messages:             messages)
+               build-script:         build-script,
+               target:               command.%target,
+               arch:                 command.%arch,
+               force?:               command.%force?,
+               process-subprojects?: command.%subprojects?,
+               unify?:               command.%unify?,
+               progress-callback:    curry(note-build-progress, context),
+               error-handler:        curry(compiler-condition-handler, context),
+               messages:             messages)
 end method do-execute-command;
 
 

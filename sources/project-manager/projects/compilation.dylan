@@ -75,7 +75,6 @@ define method link-library(project :: <project>, #rest keys,
   let type = target-type | project-target-type(project);
   let build-options
     = concatenate(select (type)
-                    #"exports"    => #["exports"];
                     #"dll"        =>
                       select (mode)
                         #"combine" => #["unify-dll"];
@@ -86,6 +85,8 @@ define method link-library(project :: <project>, #rest keys,
                         #"combine" => #["unify-exe"];
                         otherwise => #["exe"];
                       end;
+                    otherwise =>
+                      user-error("invalid target: %s", type)
                   end,
                   if (release?) #["release"] else #[] end);
   let build-location = project-build-location(project);
