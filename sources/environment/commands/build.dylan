@@ -157,7 +157,7 @@ define command-line build => <build-project-command>
   flag release       = "build a standalone release [off by default]";
   flag subprojects   = "build subprojects as well if necessary [on by default]";
   keyword build-script :: <file-locator> = "the (Jam) build script to use";
-  keyword target :: <symbol> = "the target [dll or exe]";
+  keyword target :: <symbol> = "the target [dll or executable]";
   flag force         = "force relink the executable [off by default]";
   flag unify         = "combine the libraries into a single executable [off by default]";
 end command-line build;
@@ -303,7 +303,7 @@ define command-line link => <link-project-command>
      documentation: "Links the executable for a project.")
   optional project :: <project-object> = "the project to link";
   keyword build-script :: <file-locator> = "the (Jam) build script to use";
-  keyword target :: <symbol> = "the target [dll or exe]";
+  keyword target :: <symbol> = "the target [dll or executable]";
   keyword arch :: <symbol> = "the architecture to build (e.g. i386 or x86_64)";
   flag force       = "force relink the executable [off by default]";
   flag subprojects = "link subprojects as well if necessary [on by default]";

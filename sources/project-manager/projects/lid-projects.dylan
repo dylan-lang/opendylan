@@ -438,7 +438,11 @@ define method reinitialize-lid-project(project :: <lid-project>,
 // those two slots are defaulted in the class definition
   let target-type = element(properties, #"target-type", default: #f);
   if(target-type)
-    project-target-type-slot(project) := as(<symbol>, first(target-type))
+    let target = as(<symbol>, first(target-type));
+    unless (instance?(target, <project-target-type>))
+      user-warning("Ignoring invalid target type %s, using default", target);
+    end;
+    project-target-type-slot(project) := target;
   end;
 
   let loose-bindings = element(properties, #"loose-library-bindings", default: #());
