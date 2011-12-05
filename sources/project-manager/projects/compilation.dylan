@@ -86,7 +86,7 @@ define method link-library(project :: <project>, #rest keys,
                         otherwise => #["exe"];
                       end;
                     otherwise =>
-                      user-error("invalid target: %s", type)
+                      user-fatal-error("invalid target: %s", type)
                   end,
                   if (release?) #["release"] else #[] end);
   let build-location = project-build-location(project);

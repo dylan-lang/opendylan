@@ -439,10 +439,13 @@ define method reinitialize-lid-project(project :: <lid-project>,
   let target-type = element(properties, #"target-type", default: #f);
   if(target-type)
     let target = as(<symbol>, first(target-type));
-    unless (instance?(target, <project-target-type>))
-      user-warning("Ignoring invalid target type %s, using default", target);
+    if (instance?(target, <project-target-type>))
+      project-target-type-slot(project) := target;
+    else
+      //XXX: should be some user-warning or user-error, but that doesn't seem
+      // to produce output to the user -- hannes 12/2011
+      debug-message("Ignoring invalid target type %s, using default", target);
     end;
-    project-target-type-slot(project) := target;
   end;
 
   let loose-bindings = element(properties, #"loose-library-bindings", default: #());
