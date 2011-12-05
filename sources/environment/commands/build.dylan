@@ -290,6 +290,22 @@ define method compiler-condition-handler
   command-line-question(context.context-server, message)
 end method compiler-condition-handler;
 
+define method compiler-condition-handler
+    (context :: <environment-context>,
+     handler-type == #"warning",
+     warning-message :: <string>)
+ => (yes? :: <boolean>)
+  message(context, "warning: %s", handler-type, warning-message)
+end method compiler-condition-handler;
+
+define method compiler-condition-handler
+    (context :: <environment-context>,
+     handler-type :: <symbol>,
+     warning-message :: <string>)
+ => (yes? :: <boolean>)
+  message(context, "missing handler for %s: %s", handler-type, warning-message)
+end method compiler-condition-handler;
+
 
 /// Link command
 

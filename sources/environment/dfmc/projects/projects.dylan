@@ -281,7 +281,7 @@ define sealed method project-condition-handler
     <project-warning> =>
       record-project-warning(project, condition);
       //---*** andrewa: let's try going without the handler
-      // handler(#"warning", condition-to-string(condition));
+      handler(#"warning", condition-to-string(condition));
     otherwise =>
       next-handler();
   end
