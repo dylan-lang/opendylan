@@ -573,25 +573,3 @@ define function compile-project-with-gc(project,
     compile-subprojects-with-gc(list(project), #f);
   end dynamic-bind;
 end function;
-
-
-// If using combined object files, dump the canonical source
-// as a single file.
-define function maybe-dump-combined-sources (project :: <project>)
-  let context = project.project-current-compilation-context;
-  let objects = compilation-context-object-names(context);
-  let sources = compilation-context-sources(context);
-  let dir = project.project-build-location;
-  when (objects.size == 1 & sources.size > 1 & dir)
-    let file = make(<file-locator>,
-                    directory: dir,
-                    base:      objects.first,
-                    extension: "dylan");
-    with-open-file (stream = file, direction: #"output")
-      for (sr in sources)
-        for (i from 0 below sr.source-record-start-line) new-line(stream) end;
-        write(stream, source-record-contents(sr));
-      end;
-    end with-open-file;
-  end;
-end function maybe-dump-combined-sources;

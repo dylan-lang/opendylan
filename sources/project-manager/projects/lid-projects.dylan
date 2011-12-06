@@ -610,8 +610,6 @@ define method note-compiled-definitions (project :: <lid-project>)
   copy-extra-records(project, build-settings: project.project-build-settings);
   // This is just for emacs support (not used by environment).
   project-dump-emacs-dispatch-colors(project);
-  // This is just for windbg support (not used by environment).
-  maybe-dump-combined-sources(project);
 end;
 
 define method copy-extra-records (project :: <lid-project>,

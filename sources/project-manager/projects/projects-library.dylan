@@ -72,7 +72,6 @@ define module projects
     project-condition-report,
     project-dump-conditions,
     project-dump-emacs-dispatch-colors,
-    maybe-dump-combined-sources,
     <project-warning>,
     <project-serious-warning>,
     <project-fatal-error>,
