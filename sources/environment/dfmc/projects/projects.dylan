@@ -475,7 +475,7 @@ define function %make-project-object
               otherwise      => <dfmc-lid-project-object>;
             end;
         let project-object = make(class, proxy: project, library-name: name);
-        open-project-compiler-database(project-object);
+        open-project-compiler-database(project-object, warning-callback: *warning-callback*);
         project-object
       end
 end function %make-project-object;
@@ -1099,6 +1099,7 @@ define sealed method open-project-compiler-database
           error-handler :: false-or(<function>))
  => (database :: false-or(<compiler-database>))
   let opened? = project-object.project-proxy ~== #f;
+  let old-warning-callback = *warning-callback*;
   block ()
     *warning-callback* := warning-callback;
     project-object.project-compiler-database
@@ -1112,7 +1113,7 @@ define sealed method open-project-compiler-database
           project-object.project-compiler-database
         end
   cleanup
-    *warning-callback* := #f
+    *warning-callback* := old-warning-callback
   end
 end method open-project-compiler-database;
 
@@ -1400,7 +1401,9 @@ end method register-unprocessed-warnings;
 
 define sealed sideways method project-condition-report
     (project :: <project>, condition :: <program-condition>)
-  let project-object = find-open-project(project);
+  // was find-open-project, but this leads to the fact that subproject
+  // warnings aren't displayed in console - hannes 12/2011
+  let project-object = %make-project-object(project);
   if (project-object)
     local method note-new-warning
               (project-object :: <project-object>)
