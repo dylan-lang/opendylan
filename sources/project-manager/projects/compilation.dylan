@@ -318,6 +318,9 @@ define method compile-library (project :: <project>,
  => (aborted? :: <boolean>);
   debug-assert(~%project-closed?(project), "Attempt to compile closed project");
   debug-assert(project.project-personal-library?, "Attempt to compile read-only project");
+  if (project.project-read-only?)
+    user-fatal-error("Attempt to compile read-only project %s", project.project-name);
+  end;
   project-dynamic-environment(#"default-binding") := default-binding;
 
   let context = project-current-compilation-context(project);
@@ -383,6 +386,9 @@ define method update-libraries (project :: <project>,
   debug-assert(~%project-closed?(project), "Attempt to compile closed project");
   debug-assert(project.project-personal-library?,
                "Attempt to compile read-only project");
+  if (project.project-read-only?)
+    user-fatal-error("Attempt to compile read-only project %s", project.project-name);
+  end;
   project-dynamic-environment(#"default-binding") := default-binding;
   let aborted? = #f;
   with-used-project-cache
