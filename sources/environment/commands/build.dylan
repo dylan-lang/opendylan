@@ -295,7 +295,7 @@ define method compiler-condition-handler
      handler-type == #"warning",
      warning-message :: <string>)
  => (yes? :: <boolean>)
-  message(context, "warning: %s", handler-type, warning-message)
+  message(context, "warning: %s", warning-message)
 end method compiler-condition-handler;
 
 define method compiler-condition-handler
