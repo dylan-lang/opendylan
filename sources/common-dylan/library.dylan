@@ -179,31 +179,6 @@ end module streams-protocol;
 define module transcendentals
   use dylan;
   use dylan-primitives;
-  create $single-pi, $double-pi, // $extended-pi,
-         $single-e,  $double-e,  // $extended-e,
-	 sqrt,
-         isqrt,
-         log,
-         exp,
-         logn,
-         sin,
-         cos,
-         tan,
-         asin,
-         acos,
-         atan,
-         atan2,
-	 sinh,
-	 cosh,
-	 tanh,
-	 asinh,
-	 acosh,
-	 atanh;
-end module transcendentals;
-
-define module transcendentals
-  use dylan;
-  use dylan-primitives;
   export $single-pi, $double-pi, // $extended-pi,
          $single-e,  $double-e,  // $extended-e,
 	 sqrt,
