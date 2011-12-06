@@ -930,7 +930,13 @@ define method command-line-choose-file
       empty?(filename) => values(#f, #f);
         
       file-exists?(filename) =>
-        values(as(<file-locator>, filename), #f);
+        let locator = as(<file-locator>, filename);
+        values(if (locator-relative?(locator))
+                 merge-locators(locator, working-directory())
+               else
+                 locator
+               end,
+               #f);
 
       otherwise =>
         message(server.server-context, "File %s does not exist", filename);

@@ -75,6 +75,9 @@ define method verify-project-layout(project :: <user-disk-project-layout>,
   let project-location = project-file.locator-directory;
   let project-name = locator-base(project-file);
 
+  unless (project-location)
+    user-fatal-error("Cannot find project location for %s!", project-name)
+  end;
   user-disk-project-source(project) := project-location;
 
   let build-location =
