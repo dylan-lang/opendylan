@@ -185,17 +185,12 @@ install-mincrt: $(MINCRT)
 	copy $(MINCRT) $(MINCRTDEST)
 !endif
 
-
-make-mmdw:
-  echo Building pentium run time: make-mmdw
-  pushd $(SDK4MEMORY_POOL_SYSTEM)\code \
-    & $(MAKE) /k /f w3i3mv.nmk mmdw.lib > $(BUILD_LOGS)\make-mmdw.log \
-    & popd
-
 install-mmdw:
   echo Building pentium run time: install-mmdw
 	if exist $(MMDWDEST) del /q /f $(MMDWDEST)
-	if not exist $(RELEASEMMDW) make-mmdw
+	if not exist $(RELEASEMMDW) pushd $(SDK4MEMORY_POOL_SYSTEM)\code \
+	& $(MAKE) /k /f w3i3mv.nmk mmdw.lib > $(BUILD_LOGS)\make-mmdw.log \
+	& popd
   copy $(RELEASEMMDW) $(MMDWDEST)
 
 install-symbolic-mmdw: $(SYMBOLICMMDW)
