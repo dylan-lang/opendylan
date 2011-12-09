@@ -2,7 +2,7 @@
 # Configuration variables
 #
 
-CC     ?= gcc -fPIC ;
+CC     ?= gcc -g -fPIC ;
 
 MKF    ?= dylanmakefile.mkf ;
 
