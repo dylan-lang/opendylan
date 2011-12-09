@@ -309,9 +309,6 @@ REM //
 set GENERATIONS=4
 set STRIP_RUNTIME=no
 set WARNINGS=yes
-set TIMINGS=yes
-set COMPARE_TIMINGS=yes
-set TIMINGS_ROOT=/ORR
 shift
 goto PARAM_LOOP
 
@@ -322,9 +319,6 @@ REM //
 set GENERATIONS=4
 set STRIP_RUNTIME=yes
 set WARNINGS=yes
-set TIMINGS=yes
-set COMPARE_TIMINGS=yes
-set TIMINGS_ROOT=/ORR
 shift
 goto PARAM_LOOP
 
