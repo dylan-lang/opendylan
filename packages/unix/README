@@ -13,10 +13,10 @@ your hands is the attempt of a group of enthusiasts calling themselves
 the "Dylan Hackers" to bundle up this code, and publish it in a form
 useful for the general public.
 
-This release is Open Dylan 2011.1. We expect this release
-to have bugs.  We're interested in getting your feedback, in order to
-improve this product.  Write to hackers@opendylan.org, or use the bug
-tracker on http://www.opendylan.org, if you find any.
+This release is Open Dylan 2011.1. We expect this release to have bugs.
+We're interested in getting your feedback, in order to improve this product.
+Write to hackers@opendylan.org or report a bug via github (https://github.com/dylan-lang/opendylan/issues). We can also help via IRC,
+just drop by on irc.freenode.net in channel #dylan .
 
 
 Requirements
@@ -101,13 +101,14 @@ Documentation is still scattered around a number of places.  One of the
 most important documents is certainly the Dylan Reference Manual,
 specifying the language standard:
 
-  http://www.opendylan.org/books/drm/
+  http://opendylan.org/books/drm/
 
 Documentation for language extensions and libraries can be found at
 the Open Dylan website too:
 
-  http://www.opendylan.org/documentation
+  http://opendylan.org/documentation
 
-Still more documentation can be found on github:
+Still more documentation can be found on github (especially in the
+documentation repository):
 
   https://github.com/dylan-lang/
