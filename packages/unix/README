@@ -35,8 +35,7 @@ Installation
 ============
 
 This tarball is set up to be extracted in /opt, resulting in the
-creation of a directory /opt/opendylan-2011.1.  Assuming you
-installed in this location you just have to add
+creation of a directory /opt/opendylan-2011.1.  You just have to add
 /opt/opendylan-2011.1/bin to your PATH:
 
   $ export PATH=/opt/opendylan-2011.1/bin:$PATH    # for bash
@@ -44,15 +43,6 @@ installed in this location you just have to add
 or
 
   $ setenv PATH /opt/opendylan-2011.1/bin:$PATH    # for tcsh
-
-If you choose any other installation location, you have to make sure
-the shared libraries required by the compiler are found.  You can do
-this either by setting the LD_LIBRARY_PATH environment variable:
-
-  $ export LD_LIBRARY_PATH=/where/ever/opendylan-2011.1/lib:$LD_LIBRARY_PATH
-
-or by adding the path to /etc/ld.so.conf, and re-running ldconfig.  You
-have to do this as root, of course.
 
 
 Usage
