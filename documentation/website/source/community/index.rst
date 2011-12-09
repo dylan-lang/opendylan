@@ -56,7 +56,7 @@ interest and involvement:
     this list.
 
 `chatter@lists.opendylan.org <mailto:chatter-request@lists.opendylan.org>`_ (`Archives`__)
-    This list contains nothing but Git commit messages and Bugzilla output.
+    This list contains nothing but Git commit messages.
     It's for developers who want to know everything that's going on.
 
 
