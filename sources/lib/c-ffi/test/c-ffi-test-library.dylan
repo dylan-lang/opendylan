@@ -6,6 +6,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library c-ffi-test
+  use dylan;
   use common-dylan;
   use c-ffi;
   use testworks;
@@ -15,11 +16,12 @@ end;
 
 define module c-ffi-test
   use common-dylan;
+  use dylan-extensions, import: { <byte-character> };
   use testworks;
   use machine-words;
   use c-ffi;
 //    exclude: { test-function };
-  use simple-format;
+  use simple-io;
 
   export c-ffi-suite
 end;
