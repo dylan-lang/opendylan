@@ -257,8 +257,7 @@ define method emit-computations
      c :: <computation>, last)
   iterate loop (c = c)
     if (c & c ~== last)
-      // TODO: Turn on source locations.
-      // emit-source-location(b, s, c);
+      emit-source-location(b, s, d, c);
       emit-computation(b, s, d, c);
       loop(next-computation(c))
     end if;
@@ -1427,11 +1426,21 @@ end method;
 
 // SOURCE LOCATIONS
 
-/* TODO: Plug back in one day when we can make the C compilers understand.
-
-define method emit-source-location 
-    (b :: <c-back-end>, s :: <stream>, c :: <computation>) => ()
+define method emit-source-location
+    (b :: <c-back-end>, s :: <stream>, d :: <integer>, c :: <computation>)
+ => ()
   let loc = dfm-source-location(c);
+  if (instance?(loc, <source-location>))
+    let record = source-location-source-record(loc);
+    let start-offset = source-location-start-offset(loc);
+    let start-line = source-offset-line(start-offset);
+    let (file-name, adjusted-line) = source-line-location(record, start-line);
+    format-emit(b, s, d, "\t// ");
+    format(s, "%s:%d\n",
+           source-record-location(record),
+           start-line + source-record-start-line(record));
+  end if;
+/* TODO: Plug back in one day when we can make the C compilers understand.
   if (loc & instance?(loc, <source-location>))
     let record = source-location-source-record(loc);
     let start-offset = source-location-start-offset(loc);
@@ -1440,12 +1449,11 @@ define method emit-source-location
     // format-out("#line %d \"%s\"\n", adjusted-line, file-name);
     format(s, "#line %d \"%s\"\n", adjusted-line, file-name);
   end;
+*/
 end method;
 
 // Computation can be #f sometimes for empty bodies.
 
 define method emit-source-location 
-    (b :: <c-back-end>, s :: <stream>, c) => ()
+    (b :: <c-back-end>, s :: <stream>, d :: <integer>, c) => ()
 end method;
-
-*/
