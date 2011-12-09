@@ -13,12 +13,10 @@ your hands is the attempt of a group of enthusiasts calling themselves
 the "Dylan Hackers" to bundle up this code, and publish it in a form
 useful for the general public.
 
-This release is Open Dylan 1.0beta5. Naturally, we expect this release
+This release is Open Dylan 2011.1. We expect this release
 to have bugs.  We're interested in getting your feedback, in order to
-improve this product.  Write to bugs@opendylan.org, or use the bug
+improve this product.  Write to hackers@opendylan.org, or use the bug
 tracker on http://www.opendylan.org, if you find any.
-
-This build corresponds to revision 11623 in svn repository.
 
 
 Requirements
@@ -36,22 +34,22 @@ minimum requirements are:
 Installation
 ============
 
-This tarball is set up to be extracted in /usr/local, resulting in the
-creation of a directory /usr/local/opendylan-1.0beta5.  Assuming you
+This tarball is set up to be extracted in /opt, resulting in the
+creation of a directory /opt/opendylan-2011.1.  Assuming you
 installed in this location you just have to add
-/usr/local/opendylan-1.0beta5/bin to your PATH:
+/opt/opendylan-2011.1/bin to your PATH:
 
-  $ export PATH=/usr/local/opendylan-1.0beta5/bin:$PATH    # for bash
+  $ export PATH=/opt/opendylan-2011.1/bin:$PATH    # for bash
 
 or
 
-  $ setenv PATH /usr/local/opendylan-1.0beta5/bin:$PATH    # for tcsh
+  $ setenv PATH /opt/opendylan-2011.1/bin:$PATH    # for tcsh
 
 If you choose any other installation location, you have to make sure
 the shared libraries required by the compiler are found.  You can do
 this either by setting the LD_LIBRARY_PATH environment variable:
 
-  $ export LD_LIBRARY_PATH=/where/ever/opendylan-1.0beta5/lib:$LD_LIBRARY_PATH
+  $ export LD_LIBRARY_PATH=/where/ever/opendylan-2011.1/lib:$LD_LIBRARY_PATH
 
 or by adding the path to /etc/ld.so.conf, and re-running ldconfig.  You
 have to do this as root, of course.
@@ -62,7 +60,7 @@ Usage
 
 You're now set to use the compiler:
 
-  $ opendylan -build hello-world
+  $ dylan-compiler -build hello-world
 
 This will build the hello-world application, provided with this
 distribution, together with all dependent libraries, from source.
@@ -82,16 +80,16 @@ Provided that ~/Open-Dylan/bin is in your path, you can try it out:
 If you wish to change the place where files are kept, you can set an
 environment variable to have it leave the files somewhere else:
 
-  $ export OPEN_DYLAN_USER_ROOT=/home/me/opendylan-build
+  $ export OPEN_DYLAN_USER_ROOT=~/opendylan-build
 
 For generating the initial boilerplate for a new Dylan project, a perl
 script named make-dylan-app is provided.  It takes one argument, the
-name of the new library, and generates a a set of Dylan files that you
+name of the new library, and generates a set of Dylan files that you
 can then modify.
 
   $ make-dylan-app my-lib
   $ cd my-lib
-  $ opendylan -build my-lib.lid
+  $ dylan-compiler -build my-lib.lid
   $ my-lib
   Hello, world!
 
@@ -108,8 +106,8 @@ specifying the language standard:
 Documentation for language extensions and libraries can be found at
 the Open Dylan website too:
 
-  http://www.opendylan.org/documentation.phtml
+  http://www.opendylan.org/documentation
 
-Still more documentation can be found in the Subversion repository:
+Still more documentation can be found on github:
 
-  $ svn co svn://svn.opendylan.org/scm/svn/dylan/trunk/documentation
+  https://github.com/dylan-lang/

@@ -1,56 +1,17 @@
-Index: README-freebsd.diff
-===================================================================
---- README-freebsd.diff	(revision 11769)
-+++ README-freebsd.diff	(working copy)
-@@ -1,18 +0,0 @@
----- README	Sun Apr 29 21:37:36 2007
--+++ /usr/local/opendylan-1.0beta4/README	Sun Apr 29 22:52:07 2007
--@@ -23,14 +23,8 @@
-- Requirements
-- ============
-- 
---This tarball contains the port of Open Dylan to Linux on x86 CPUs.  So,
--+This tarball contains the port of Open Dylan to FreeBSD-6 on x86 CPUs.  So,
-- you should have that, or an emulation thereof, to run this distribution.
---More specifically, due to the usage of thread-local storage, the
---minimum requirements are:
---
--- * Linux kernel 2.6 (or newer)
--- * glibc 2.3 (or newer)
---
-- 
-- Installation
-- ============
-Index: README
-===================================================================
---- README	(revision 11769)
-+++ README	(working copy)
-@@ -23,15 +23,23 @@
+--- README.old	2011-12-09 11:13:51.000000000 -0500
++++ README	2011-12-09 11:14:18.000000000 -0500
+@@ -22,13 +22,8 @@
  Requirements
  ============
  
 -This tarball contains the port of Open Dylan to Linux on x86 CPUs.  So,
-+This tarball contains the port of Open Dylan to FreeBSD-6 on x86 CPUs.  So,
++This tarball contains the port of Open Dylan to FreeBSD-8 on x86 CPUs.  So,
  you should have that, or an emulation thereof, to run this distribution.
 -More specifically, due to the usage of thread-local storage, the
 -minimum requirements are:
- 
+-
 - * Linux kernel 2.6 (or newer)
 - * glibc 2.3 (or newer)
-+You need to set the sysctl vm.max_proc_mmap to 0 (to disable it) in
-+/etc/sysctl.conf to compile the whole compiler. This sysctl specifies
-+the maximum number of mmap()'d spaces (discrete vm_map_entry's in the
-+process). The garbage collector uses a lot of mmap()'d spaces with
-+different protection bits. (See discussion on
-+freebsd-current@lists.freebsd.org from 16 Feb 2000 with the title
-+"Heads up, vm.max_proc_mmap sysctl added" for more details).
  
-+Otherwise you'll get the following error message:
-+MPS ASSERTION FAILURE: addr == (void *)base
-+vmfr.c
-+273
  
-+
  Installation
- ============
- 
