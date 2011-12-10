@@ -39,7 +39,7 @@ SUFMKF	?= .mkf ;   # build-system files
 
 ARCHFLAG ?= -arch $(TARGET_OSPLAT:E=i386) ;
 
-CCFLAGS ?= -fno-strict-aliasing -fPIC -g $(ARCHFLAG) ;
+CCFLAGS ?= -fno-strict-aliasing -fPIC -g $(ARCHFLAG) -I/opt/opendylan-2011.1/include ;
 
 LINKFLAGS ?= $(ARCHFLAG) ;
 
