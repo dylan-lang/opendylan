@@ -1,0 +1,17 @@
+--- README.old
++++ README
+@@ -22,13 +22,8 @@ just drop by on irc.freenode.net in channel #dylan .
+ Requirements
+ ============
+ 
+-This tarball contains the port of Open Dylan to Linux on x86 CPUs.  So,
++This tarball contains the port of Open Dylan to Mac OS X.  So,
+ you should have that, or an emulation thereof, to run this distribution.
+-More specifically, due to the usage of thread-local storage, the
+-minimum requirements are:
+-
+- * Linux kernel 2.6 (or newer)
+- * glibc 2.3 (or newer)
+ 
+ 
+ Installation
