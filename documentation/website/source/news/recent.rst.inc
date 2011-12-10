@@ -1,4 +1,11 @@
 
+**New release: 2011.1**
+*2011-12-10*
+
+We just released Open Dylan 2011.1
+
+:doc:`Read more... </news/2011/12/10/new_release>`
+
 **New Documentation**
 *2011-11-22*
 
