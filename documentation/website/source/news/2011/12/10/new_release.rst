@@ -1,8 +1,10 @@
 :Author: Hannes Mehnert
 :Date: 2011-12-10 02:00:00
 
+Open Dylan 2011.1 released
+==========================
+
 Dear Dylan Hacker,
-==================
 
 It is a pleasure for us to finally announce a release of Open Dylan.
 
