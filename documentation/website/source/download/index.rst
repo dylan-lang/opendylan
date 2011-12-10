@@ -5,9 +5,6 @@ Download
 Binary Releases
 ===============
 
-.. warning:: These builds are quite old. We're working hard to have new builds posted
-   soon, within the first half of December, 2011.
-
 Open Dylan IDE
 --------------
 
