@@ -33,8 +33,8 @@ define function default-random-seed () => (seed :: <integer>)
     (primitive-cast-raw-as-pointer(primitive-string-as-raw(*time-buffer*)))
   end;
   logior(as(<integer>, *time-buffer*[0]),
-	 ash(as(<integer>, *time-buffer*[1]), 8),
-	 ash(as(<integer>, *time-buffer*[2]), 16))
+         ash(as(<integer>, *time-buffer*[1]), 8),
+         ash(as(<integer>, *time-buffer*[2]), 16))
     + as(<integer>, *time-buffer*[3])
 end function default-random-seed;
 
@@ -62,7 +62,7 @@ define function darwin-sysctl
       (primitive-cast-raw-as-pointer(primitive-string-as-raw(rmib)),
         integer-as-raw(0), integer-as-raw(i * wsize)) := integer-as-raw(mib[i])
   end for;
-  
+
   // get the size of the available data
   when (raw-as-integer(%call-c-function ("sysctl")
     (mib :: <raw-byte-string>, cnt :: <raw-c-unsigned-int>,
@@ -74,16 +74,16 @@ define function darwin-sysctl
      primitive-string-as-raw(rosize),
      primitive-unwrap-machine-word($machine-word-zero),
      primitive-unwrap-machine-word($machine-word-zero)) end) >= 0)
-     
+
     let osize = raw-as-integer(primitive-c-unsigned-long-at
       (primitive-cast-raw-as-pointer(primitive-string-as-raw(rosize)),
        integer-as-raw(0), integer-as-raw(0))) + 1;
     let out = make(<byte-string>, size: osize, fill: '\0');
-    
+
     primitive-c-unsigned-long-at(primitive-cast-raw-as-pointer
       (primitive-string-as-raw(rosize)), integer-as-raw(0), integer-as-raw(0))
-      := integer-as-raw(osize); 
-    
+      := integer-as-raw(osize);
+
     // do the actual sysctl
     when(raw-as-integer(%call-c-function ("sysctl")
       (mib :: <raw-byte-string>, cnt :: <raw-c-unsigned-int>,
@@ -92,7 +92,7 @@ define function darwin-sysctl
       => (ret :: <raw-c-signed-int>)
       (primitive-string-as-raw(rmib), integer-as-raw(size(mib)),
        primitive-string-as-raw(out), primitive-string-as-raw(rosize),
-       primitive-unwrap-machine-word($machine-word-zero), 
+       primitive-unwrap-machine-word($machine-word-zero),
        primitive-unwrap-machine-word($machine-word-zero)) end) >= 0)
       out
     end when;
@@ -100,7 +100,7 @@ define function darwin-sysctl
 end function;
 
 /// This code uses one sysctl() to get the process arguments, and another
-/// to get the process's filename. It only works on OS X > 10.3. 
+/// to get the process's filename. It only works on OS X > 10.3.
 /// The data format returned by KERN_PROCARGS2 is:
 /// [int32] <--- argc
 /// [string] <--- cmd name
@@ -116,7 +116,7 @@ define inline-only function ensure-application-name-filename-and-arguments () =>
       = raw-as-integer(%call-c-function ("getpid") () => (pid :: <raw-c-signed-int>) () end);
     let cmdline = darwin-sysctl(vector($CTL_KERN, $KERN_PROCARGS2, pid));
     when (cmdline)
-      let argc = 
+      let argc =
         raw-as-integer(primitive-c-signed-int-at
           (primitive-cast-raw-as-pointer(primitive-string-as-raw(cmdline)),
            integer-as-raw(0), integer-as-raw(0)));
@@ -130,7 +130,7 @@ define inline-only function ensure-application-name-filename-and-arguments () =>
         while ((_start < _end) & (cmdline[_start] = '\0'))
           _start := _start + 1;
         end;
-        
+
         let token = make(<byte-string>);
         while ((_start < _end) & cmdline[_start] ~= '\0')
           token := add(token, cmdline[_start]);
@@ -143,7 +143,7 @@ define inline-only function ensure-application-name-filename-and-arguments () =>
       end while;
       *application-name* := tokens[0];
       *application-filename* := binary-location();
-      *application-arguments* 
+      *application-arguments*
         := apply(vector, copy-sequence(tokens, start: 2, end: argc + 1));
     end when;
   end unless;
@@ -155,29 +155,29 @@ define function binary-location
   let size = primitive-wrap-machine-word
     (primitive-cast-pointer-as-raw
        (%call-c-function ("GC_malloc")
-	  (nbytes :: <raw-c-unsigned-long>) => (p :: <raw-c-pointer>)
-	  (integer-as-raw(4))
+          (nbytes :: <raw-c-unsigned-long>) => (p :: <raw-c-pointer>)
+          (integer-as-raw(4))
        end));
   let err = -1;
   block (return)
     while (err == -1)
       let buffer = make(<byte-string>, size: bufsiz, fill: '\0');
       primitive-c-unsigned-int-at-setter(integer-as-raw(bufsiz), size,
-					 integer-as-raw(0), integer-as-raw(0));
+                                         integer-as-raw(0), integer-as-raw(0));
       if (raw-as-integer
-	    (%call-c-function ("_NSGetExecutablePath")
-	       (buf :: <raw-byte-string>, siz :: <raw-c-pointer> /* uint32_t */)
-	       => (result :: <raw-c-signed-int>)
-	       (primitive-string-as-raw(buffer), size)
-	    end) == 0)
-	let real-size = raw-as-integer(primitive-c-unsigned-int-at
-					 (size,
-					  integer-as-raw(0),
-					  integer-as-raw(0)));
+            (%call-c-function ("_NSGetExecutablePath")
+               (buf :: <raw-byte-string>, siz :: <raw-c-pointer> /* uint32_t */)
+               => (result :: <raw-c-signed-int>)
+               (primitive-string-as-raw(buffer), size)
+            end) == 0)
+        let real-size = raw-as-integer(primitive-c-unsigned-int-at
+                                         (size,
+                                          integer-as-raw(0),
+                                          integer-as-raw(0)));
         return(copy-sequence(buffer, end: real-size))
       else
         bufsiz := raw-as-integer(primitive-c-unsigned-int-at
-				   (size, integer-as-raw(0), integer-as-raw(0)));
+                                   (size, integer-as-raw(0), integer-as-raw(0)));
       end
     end;
     #f
@@ -228,38 +228,38 @@ define function tokenize-command-line (line :: <byte-string>)
   let _end :: <integer> = size(line);
   let token = make(<stretchy-vector>);
   local method next-token () => (token :: false-or(<byte-string>))
-	  _start := skip-whitespace(line, _start, _end);
-	  if (_start < _end)
-	    let escaped? :: <boolean> = #f;
-	    let quoted? :: false-or(<character>) = #f;
-	    let done? :: <boolean> = #f;
-	    token.size := 0;
-	    while (_start < _end & ~done?)
-	      let c :: <character> = line[_start];
-	      case
-		escaped? =>
-		  add!(token, c);
-		  escaped? := #f;
-		quoted? & whitespace?(c) =>
-		  add!(token, c);
-		quoted? = c =>
-		  quoted? := #f;
-		c = '\\' =>
-		  escaped? := #t;
-		c = '"' | c = '\'' =>
-		  quoted? := c;
-		whitespace?(c) =>
-		  done? := #t;
-		otherwise =>
-		  add!(token, c);
-	      end;
-	      _start := _start + 1
-	    end;
-	    concatenate-as(<byte-string>, token)
-	  else
-	    #f
-	  end
-	end method next-token;
+          _start := skip-whitespace(line, _start, _end);
+          if (_start < _end)
+            let escaped? :: <boolean> = #f;
+            let quoted? :: false-or(<character>) = #f;
+            let done? :: <boolean> = #f;
+            token.size := 0;
+            while (_start < _end & ~done?)
+              let c :: <character> = line[_start];
+              case
+                escaped? =>
+                  add!(token, c);
+                  escaped? := #f;
+                quoted? & whitespace?(c) =>
+                  add!(token, c);
+                quoted? = c =>
+                  quoted? := #f;
+                c = '\\' =>
+                  escaped? := #t;
+                c = '"' | c = '\'' =>
+                  quoted? := c;
+                whitespace?(c) =>
+                  done? := #t;
+                otherwise =>
+                  add!(token, c);
+              end;
+              _start := _start + 1
+            end;
+            concatenate-as(<byte-string>, token)
+          else
+            #f
+          end
+        end method next-token;
   while (_start < _end)
     let token = next-token();
     if (token)
