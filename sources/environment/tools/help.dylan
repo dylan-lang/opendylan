@@ -184,7 +184,7 @@ end method help-credits;
 /// Web site command tables
 
 define constant $download-doc-page
-  = format-to-string("%s/%s", release-web-address(), "documentation.phtml");
+  = format-to-string("%s/%s", release-web-address(), "documentation");
 
 define function frame-open-dylan-web-page
     (frame :: <frame>, #key page = release-web-address()) => ()
