@@ -10,8 +10,7 @@ Development
 
 - `All of our repositories on GitHub <https://github.com/dylan-lang/>`_
 - `Open bugs for Open Dylan <https://github.com/dylan-lang/opendylan/issues>`_
-- We use `Vincent Driessen's branching model <http://nvie.com/posts/a-successful-git-branching-model/>`_, supported by `gitflow <https://github.com/nvie/gitflow/>`_
-- We also emphasize `this note about git commit messages <http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html>`_
+- `How to contribute </documentation/hacker-guide/contribute.html>`_
 
 The #dylan IRC channel
 ======================
