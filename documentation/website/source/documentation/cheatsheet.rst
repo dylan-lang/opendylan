@@ -88,12 +88,12 @@ Operators
 +=============+====================================+====================+
 | Equality &  | .. code-block:: dylan              | * :drm:`<`         |
 | Comparison  |                                    | * :drm:`>`         |
-|             |  (a < b)   // a less than b?       | * :drm:`=`         |
-|             |  (a > b)   // a greater than b?    | * :drm:`~=`        |
-|             |  (a = b)   // a equal to b?        | * :drm:`==`        |
-|             |  (a ~= b)  // a not equal b        | * :drm:`~==`       |
-|             |  (a == b)  // a identical to b     |                    |
-|             |  (a ~== b) // a not identical to b |                    |
+|             |   a < b    // a less than b?       | * :drm:`=`         |
+|             |   a > b    // a greater than b?    | * :drm:`~=`        |
+|             |   a = b    // a equal to b?        | * :drm:`==`        |
+|             |   a ~= b   // a not equal b        | * :drm:`~==`       |
+|             |   a == b   // a identical to b     |                    |
+|             |   a ~== b  // a not identical to b |                    |
 |             |  ~a        // logical negation     |                    |
 +-------------+------------------------------------+--------------------+
 | Arithmetic  | .. code-block:: dylan              | * :drm:`+`         |
