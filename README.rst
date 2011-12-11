@@ -92,7 +92,7 @@ How to Build on Darwin or Mac OS X
 ==================================
 
 Install the latest binary release of Open Dylan from
-http://www.opendylan.org/downloads/opendylan. Ensure the release's bin
+http://www.opendylan.org/downloads/opendylan/. Ensure the release's bin
 directory is in your path.
 
 Install the expat library, followed by the XML::Parser Perl module. For the
