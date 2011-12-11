@@ -7,7 +7,8 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
-define inline-only function get-application-commandline () => (res :: <string>)
+define inline-only function get-application-commandline
+ () => (res :: <string>, arguments == #f)
   let pid
     = raw-as-integer(%call-c-function("getpid")
 		       () => (pid :: <raw-c-signed-int>)
@@ -56,7 +57,7 @@ define inline-only function get-application-commandline () => (res :: <string>)
       end
     end
   end;
-  cmdline
+  values(cmdline, #f)
 end;
 
 define inline-only function get-application-filename

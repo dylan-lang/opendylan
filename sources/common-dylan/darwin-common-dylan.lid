@@ -7,6 +7,7 @@ Files: library
        macros
        common-extensions
        darwin-common-extensions
+       unix-common-extensions
        locators-protocol
        streams-protocol
        random

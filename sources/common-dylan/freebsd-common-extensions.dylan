@@ -6,7 +6,8 @@ Copyright:    Original Code is Copyright (c) 2008 Dylan Hackers
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define inline-only function get-application-commandline () => (res :: <string>)
+define inline-only function get-application-commandline
+    () => (res :: <string>, arguments == #f)
   let cursize = 128;
   let len = 128;
   let buffer = #f;
@@ -21,7 +22,7 @@ define inline-only function get-application-commandline () => (res :: <string>)
 			      integer-as-raw(cursize))
 			 end);
   end;
-  copy-sequence(buffer, end: len);
+  values(copy-sequence(buffer, end: len), #f);
 end;
 
 define inline-only function get-application-filename () => (res :: <string>)
