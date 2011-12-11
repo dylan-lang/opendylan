@@ -12,6 +12,11 @@ Open Dylan IDE
    to use the command line tools. The Windows IDE installer also includes
    the command line tools.
 
+.. warning:: The 32 bit version of Open Dylan does NOT work on 64 bit Windows.
+   There is no workaround at this time, unfortunately. We hope to resolve this
+   in an upcoming release.
+   :class: alert-message warning
+
 For installation, double-click on the installer, and follow instructions.
 You need to have either the PellesC linker or the linker of VC++ 6.0, 7.0
 or the current .NET platform SDK installed.
