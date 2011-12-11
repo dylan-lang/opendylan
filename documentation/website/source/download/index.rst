@@ -46,7 +46,7 @@ and no IDE.
    +-----------------------+--------------------+--------------------+-------------+
    | `Linux (x86)`_        | 2011.1             | December 10, 2011  | 23f8ab5878  |
    +-----------------------+--------------------+--------------------+-------------+
-   | `Linux (x86-64)`_     | 1.0beta5           | January 16, 2009   | ...         |
+   | `Linux (x86-64)`_     | 2011.1             | December 11, 2011  | 23f8ab5878  |
    +-----------------------+--------------------+--------------------+-------------+
    | `FreeBSD (x86)`_      | 2011.1             | December 10, 2011  | 23f8ab5878  |
    +-----------------------+--------------------+--------------------+-------------+
@@ -66,6 +66,6 @@ We also have a `continuous build server <https://jenkins.opendylan.org/>`_.
 .. _Mac OS X (Intel): http://opendylan.org/downloads/opendylan/2011.1/opendylan-2011.1-x86-darwin.tar.bz2
 .. _Mac OS X (PowerPC): http://opendylan.org/downloads/opendylan/2011.1/opendylan-2011.1-ppc-darwin.tar.bz2
 .. _Linux (x86): http://opendylan.org/downloads/opendylan/2011.1/opendylan-2011.1-x86-linux.tar.bz2
-.. _Linux (x86-64): http://opendylan.org/downloads/opendylan/1.0beta5/opendylan-1.0beta5-x86_64-linux.tar.bz2
+.. _Linux (x86-64): http://opendylan.org/downloads/opendylan/2011.1/opendylan-2011.1-x86_64-linux.tar.bz2
 .. _FreeBSD (x86): http://opendylan.org/downloads/opendylan/2011.1/opendylan-2011.1-x86-FreeBSD.tar.bz2
 .. _FreeBSD (x86-64): http://opendylan.org/downloads/opendylan/1.0beta5/opendylan-1.0beta5-r11990-amd64-FreeBSD7.tar.bz2
