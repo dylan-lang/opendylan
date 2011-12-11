@@ -6,7 +6,7 @@ language, plus a large number of assorted libraries.
 
 This release is Open Dylan 2011.1. We expect this release to have bugs.
 We're interested in getting your feedback, in order to improve this product.
-Write to hackers@opendylan.org or report a bug via github (https://github.com/dylan-lang/opendylan/issues). We can also help via IRC,
+Write to hackers@opendylan.org or report a bug via GitHub (https://github.com/dylan-lang/opendylan/issues). We can also help via IRC,
 just drop by on irc.freenode.net in channel #dylan .
 
 
@@ -89,7 +89,7 @@ the Open Dylan website too:
 
   http://opendylan.org/documentation
 
-Still more documentation can be found on github (especially in the
+Still more documentation can be found on GitHub (especially in the
 documentation repository):
 
   https://github.com/dylan-lang/
