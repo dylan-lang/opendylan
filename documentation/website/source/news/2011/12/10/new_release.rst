@@ -176,7 +176,7 @@ developed commercially, but is no longer.
 
 The amount of applications for the command-line compiler has been
 decreased from eight to four, namely dylan-compiler, dylan-environment
-(including execution and debugging) and dylan-*-with-tools, which
+(including execution and debugging) and dylan-\*-with-tools, which
 includes the tools interface (remote debugging, scepter, OLE).
 
 Also, the old pentium-dw (DylanWorks) application was removed since it
