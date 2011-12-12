@@ -5,6 +5,7 @@ Dylan Cheat Sheet
 * `Literals`_
 * `Naming Conventions`_
 * `Operators`_
+* `String Formatting`_
 
 Literals
 ========
