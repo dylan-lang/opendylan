@@ -29,7 +29,7 @@ Literals
 +----------------+----------------------------------------+---------------------------+
 | Strings        | .. code-block:: dylan                  |                           |
 |                |                                        | * :drm:`<string>`         |
-|                |  'a'       // A character              |                           |
+|                |  'a'       // A character              | * :drm:`<character>`      |
 |                |  "Hello"   // A simple string          |                           |
 |                |  "Hello\n" // An escape sequence       |                           |
 +----------------+----------------------------------------+---------------------------+
@@ -48,6 +48,8 @@ Literals
 
 Naming Conventions
 ==================
+
+These are *conventions* only; they have no semantic value to the compiler.
 
 +-------------+-------------------------+--------------------------+
 | Classes     | Class names begin / end | .. code-block:: dylan    |
@@ -69,20 +71,18 @@ Naming Conventions
 |             | ``let``.                |                          |
 +-------------+-------------------------+--------------------------+
 | Predicate   | Predicate functions     | .. code-block:: dylan    |
-| Functions   | return true / false     |                          |
-|             | values. They end in     |  even?                   |
-|             | ``?``.                  |  instance?               |
+| Functions   | return #t or #f.  They  |                          |
+|             | end in ``?``.           |  even?                   |
+|             |                         |  instance?               |
 +-------------+-------------------------+--------------------------+
-| Getters &   | Getters return a value  | .. code-block:: dylan    |
-| Setters     | while setters allow you |                          |
-|             | modify that value. The  |  window.size := 3        |
-|             | compiler uses this      |  size-setter(3, window)  |
+| Getters &   | Getters read a value    | .. code-block:: dylan    |
+| Setters     | while setters write a   |                          |
+|             | value.  Setter functions|  window.size := 3        |
+|             | end in ``-setter``.     |  size-setter(3, window)  |
+|             | The compiler uses this  |                          |
 |             | convention to find the  |                          |
 |             | function to call for    |                          |
 |             | ``:=``.                 |                          |
-|             |                         |                          |
-|             | Setter functions end    |                          |
-|             | in ``-setter``.         |                          |
 +-------------+-------------------------+--------------------------+
 
 Operators
