@@ -298,8 +298,6 @@ sub invoke_tool {
 
     my $origin = $header->{'origin'};
 
-    print "Invoking the $origin tool for the $library library\n";
-
     if ($origin =~ /\A\s*parser\s*\Z/i) {
         my $source = File::Spec->catfile($dir, $header->{'parser'});
         my $output = File::Spec->catfile($dir, $header->{'output'});
@@ -310,6 +308,7 @@ sub invoke_tool {
 	    my $parser_compiler
 		= File::Spec->catfile($user_root, 'bin', 'parser-compiler');
 
+	    print "Invoking the $origin tool for the $library library\n";
 	    system "$parser_compiler $source >$output";
 	    if($? !=0 || ! -f $output) {
 		print STDERR "\nfdmake: Unable to build parser file\n";
@@ -386,6 +385,7 @@ sub invoke_tool {
 		= File::Spec->catfile($user_root,
 				      'bin', 'minimal-console-scepter');
 
+	    print "Invoking the $origin tool for the $library library\n";
 	    system($scepter, @options, $idlfile);
 	    if ($? != 0) {
 		print STDERR "\nfdmake: Unable to build $origin\n";
