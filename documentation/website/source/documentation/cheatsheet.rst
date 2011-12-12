@@ -28,11 +28,15 @@ Literals
 +----------------+----------------------------------------+---------------------------+
 | Strings        | .. code-block:: dylan                  |                           |
 |                |                                        | * :drm:`<string>`         |
-|                |  'a'       // A character              | * :drm:`<symbol>`         |
+|                |  'a'       // A character              |                           |
 |                |  "Hello"   // A simple string          |                           |
 |                |  "Hello\n" // An escape sequence       |                           |
-|                |  #"hello"  // A symbol, unique string  |                           |
-|                |  hello:    // A symbol, keyword        |                           |
++----------------+----------------------------------------+---------------------------+
+| Symbols        | .. code-block:: dylan                  | * :drm:`<symbol>`         |
+|                |                                        |                           |
+|                |  #"hello"  // A symbol                 |                           |
+|                |  #"HELLO"  // The same symbol          |                           |
+|                |  hello:    // Again, in keyword syntax |                           |
 +----------------+----------------------------------------+---------------------------+
 | Collections    | .. code-block:: dylan                  | * :drm:`<pair>`           |
 |                |                                        | * :drm:`<list>`           |
@@ -83,29 +87,65 @@ Naming Conventions
 Operators
 =========
 
-+-------------+------------------------------------+--------------------+
-| Class       | Dylan Syntax                       | Learn More...      |
-+=============+====================================+====================+
-| Equality &  | .. code-block:: dylan              | * :drm:`<`         |
-| Comparison  |                                    | * :drm:`>`         |
-|             |   a < b    // a less than b?       | * :drm:`=`         |
-|             |   a > b    // a greater than b?    | * :drm:`~=`        |
-|             |   a = b    // a equal to b?        | * :drm:`==`        |
-|             |   a ~= b   // a not equal b        | * :drm:`~==`       |
-|             |   a == b   // a identical to b     |                    |
-|             |   a ~== b  // a not identical to b |                    |
-|             |  ~a        // logical negation     |                    |
-+-------------+------------------------------------+--------------------+
-| Arithmetic  | .. code-block:: dylan              | * :drm:`+`         |
-|             |                                    | * :drm:`*`         |
-|             |  a + b        // add a and b       | * :drm:`-`         |
-|             |  a * b        // mulitply a and b  | * :drm:`/`         |
-|             |  a - b        // subtract b from a | * :drm:`modulo`    |
-|             |  a / b        // divide a by b     | * :drm:`negative`  |
-|             |  modulo(a, b) // modulus of a by b |                    |
-|             |  negative(a)  // negative of a     |                    |
-+-------------+------------------------------------+--------------------+
-| Collection  | .. code-block:: dylan              | * :drm:`empty?`    |
-|             |                                    |                    |
-|             |  my-list.empty? // is this empty?  |                    |
-+-------------+------------------------------------+--------------------+
++--------------------+---------------------------------------+--------------------------+
+| Class              | Dylan Syntax                          | Learn More...            |
++====================+=======================================+==========================+
+| Equality &         | .. code-block:: dylan                 | * :drm:`<`               |
+| Comparison         |                                       | * :drm:`>`               |
+|                    |   a < b    // a less than b?          | * :drm:`=`               |
+|                    |   a > b    // a greater than b?       | * :drm:`~=`              |
+|                    |   a = b    // a equal to b?           | * :drm:`==`              |
+|                    |   a ~= b   // a not equal b           | * :drm:`~==`             |
+|                    |   a == b   // a identical to b        |                          |
+|                    |   a ~== b  // a not identical to b    |                          |
+|                    |  ~a        // logical negation        |                          |
++--------------------+---------------------------------------+--------------------------+
+| Arithmetic         | .. code-block:: dylan                 | * :drm:`+`               |
+|                    |                                       | * :drm:`*`               |
+|                    |  a + b        // add a and b          | * :drm:`-`               |
+|                    |  a * b        // mulitply a and b     | * :drm:`/`               |
+|                    |  a - b        // subtract b from a    | * :drm:`modulo`          |
+|                    |  a / b        // divide a by b        | * :drm:`negative`        |
+|                    |  modulo(a, b) // modulus of a by b    |                          |
+|                    |  negative(a)  // negative of a        |                          |
++--------------------+---------------------------------------+--------------------------+
+| :drm:`Collections` | .. code-block:: dylan                 | * :drm:`<collection>`    |
+|                    |                                       |                          |
+|                    |  c[k]       // elem. k of col. c      | * :drm:`element`         |
+|                    |  c[k] := x  // set elem. k of col. c  | * :drm:`element-setter`  |
+|                    |  c.empty?   // is c empty?            | * :drm:`empty?`          |
+|                    |  c.size     // how big is c?          | * :drm:`size`            |
++--------------------+---------------------------------------+--------------------------+
+| Sequence           | .. code-block:: dylan                 | * :drm:`<sequence>`      |
+|                    |                                       |                          |
+|                    |  add(c, x)    // add x to copy of c   | * :drm:`add`             |
+|                    |  remove(c, x) // rem x from copy of c | * :drm:`remove`          |
+|                    |  sort(c)      // copy of c, sorted    | * :drm:`sort`            |
+|                    |  reverse(c)   // copy of c, reversed  | * :drm:`reverse`         |
++--------------------+---------------------------------------+--------------------------+
+
+
+String Formatting
+=================
+
++-------------+------------------+-----------------------+
+| Directive   | Argument Type    | Description           |
++=============+==================+=======================+
+| %d          | <integer>        | decimal number        |
++-------------+------------------+-----------------------+
+| %b          | <integer>        | binary number         |
++-------------+------------------+-----------------------+
+| %o          | <integer>        | octal number          |
++-------------+------------------+-----------------------+
+| %x          | <integer>        | hexadecimal number    |
++-------------+------------------+-----------------------+
+| %c          | <character>      | character, no quotes  |
++-------------+------------------+-----------------------+
+| %s          | <string>         | string, no quotes     |
++-------------+------------------+-----------------------+
+| %s          | <condition>      | condition message     |
++-------------+------------------+-----------------------+
+| %=          | <object>         | any object            |
++-------------+------------------+-----------------------+
+| %%          | None             | literal %             |
++-------------+------------------+-----------------------+
