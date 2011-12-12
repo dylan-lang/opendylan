@@ -76,7 +76,7 @@ fixes both problems:
       slot serial-number :: <integer>,
         required-init-keyword: sn:;
       slot owner :: <string>,
-        init-keyword: owner:, // optional
+        init-keyword: owner:,  // optional
         init-value: "Northern Motors";
     end class <vehicle>;
 
@@ -119,7 +119,7 @@ These functions may be invoked as follows:
 
 .. code-block:: dylan
 
-    owner(sample-vehicle);// returns owner
+    owner(sample-vehicle);  // returns owner
     owner-setter("Faisal", sample-vehicle);
 
 Dylan also provides some convenient "syntactic sugar"
@@ -127,7 +127,7 @@ for these two functions. They may also be written as:
 
 .. code-block:: dylan
 
-    sample-vehicle.owner;// returns owner
+    sample-vehicle.owner;  // returns owner
     sample-vehicle.owner := "Faisal";
 
 .. _generic-functions-objects:

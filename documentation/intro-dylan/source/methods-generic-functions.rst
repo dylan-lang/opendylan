@@ -56,12 +56,9 @@ would appear something like the following in Dylan:
 .. code-block:: dylan
 
     define method printf(format-string :: <string>, #rest arguments) => ();
-      // Print the format string, extracting
-      // one at a time from "arguments". Note
-      // that Dylan actually allows us to
-      // verify the types of variables,
-      // preventing those nasty printf errors,
-      // such as using %d instead of %ld.
+      // Print the format string, extracting one at a time from "arguments".
+      // Note that Dylan actually allows us to verify the types of variables,
+      // preventing those nasty printf errors, such as using %d instead of %ld.
       // ...
     end method printf;
 
@@ -103,24 +100,24 @@ the value of the last expression in its body.
 .. code-block:: dylan
 
     define method foo() => sample :: <string>;
-      "Sample string.";// return string
+      "Sample string.";  // return string
     end;
 
     define method bar() => my-untyped-value;
      if (weekend-day?(today()))
-        "Let's party!";// return string
+        "Let's party!";  // return string
      else
-        make(<excuse>);// return object
+        make(<excuse>);  // return object
       end if;
     end method;
 
     define method moby( )
       =>sample :: <string>, my-untyped-value;
-      values( foo(), bar() ); // return both!
+      values( foo(), bar() );  // return both!
     end;
 
     define method baz( ) => ( );
-      let (x,y) = moby( );// assign both
+      let (x,y) = moby( );  // assign both
     end;
 
 Bare Methods
@@ -182,12 +179,12 @@ bound in a local method, allowing some interesting techniques:
       local method string-putter()
               puts(string);
             end;
-      string-putter; // return local method
+      string-putter;  // return local method
     end;
 
     define method print-hello() => ();
       let f = build-put("Hello!");
-      f();// print "Hello!"
+      f();  // print "Hello!"
     end;
 
 Local functions which contain bound variables in the above
@@ -233,7 +230,7 @@ executing. This makes it possible to define methods like:
 
     define method display(c :: <collection>)
       for (item in c)
-        display(item); // runtime dispatch
+        display(item);  // runtime dispatch
       end;
     end;
 

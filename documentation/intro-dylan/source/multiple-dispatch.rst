@@ -20,12 +20,12 @@ function:
     end;
 
     define method inspect-vehicle(car :: <car>, i :: <inspector>) => ();
-      next-method(); // perform vehicle inspection
+      next-method();  // perform vehicle inspection
       check-seat-belts(car);
     end;
 
     define method inspect-vehicle(truck :: <truck>, i :: <inspector>) => ();
-      next-method(); // perform vehicle inspection
+      next-method();  // perform vehicle inspection
       check-cargo-attachments(truck);
     end;
 
@@ -37,7 +37,7 @@ another method to the generic function ``inspect-vehicle``:
 .. code-block:: dylan
 
     define method inspect-vehicle(car :: <car>, i :: <state-inspector>) => ();
-      next-method(); // perform car inspection
+      next-method();  // perform car inspection
       check-insurance(car);
     end;
 
