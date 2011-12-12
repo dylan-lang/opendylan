@@ -19,6 +19,12 @@ Online Books
 Guides
 ======
 
+`An Introduction to Dylan <intro-dylan/index.html>`_
+
+    This tutorial is written primarily for those with solid programming
+    experience in C++ or another object-oriented static language. It
+    provides a gentler introduction to Dylan than does the DRM.
+
 `Dylan Cheat Sheet <cheatsheet.html>`_
 
     A cheat sheet to get you started with the basics of Dylan syntax.
