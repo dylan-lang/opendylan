@@ -73,18 +73,16 @@ exact same thing.
 
 .. code-block:: dylan
 
-    let x = 2; // creates x and binds it to 2
+    let x = 2;  // creates x and binds it to 2
     x := 3;    // rebinds x to the value 3
-    let y = x; // creates y, and binds it to
-               // whatever x is bound to
+    let y = x;  // creates y, and binds it to whatever x is bound to
 
 If two variables are bound to one object with internal
 structure, the results may surprise C and Pascal programmers.
 
 .. code-block:: dylan
 
-    let car1 = make(<car>); // bind car1 to a
-                                  // new car object
+    let car1 = make(<car>);  // bind car1 to a new car object
     car1.odometer := 10000;       // set odometer
     let car2 = car1;              // bind new name
     car2.odometer := 0;           // reset odometer
@@ -133,19 +131,19 @@ operators in actual use.
     let car2 = make(<car>);
     let car3 = car2;
 
-    car2 = car3;// #t
-    car1 = car2;// ??? (see below)
-    car2 == car3;// #t
-    car1 == car2;// #f
+    car2 = car3;  // #t
+    car1 = car2;  // ??? (see below)
+    car2 == car3;  // #t
+    car1 == car2;  // #f
 
-    car2 := car1;// rebind
-    car1 == car2;// #t
+    car2 := car1;  // rebind
+    car1 == car2;  // #t
 
     let x = 2;
     let y = 2;
 
-    x = y;// #t
-    x == y;// #t (only one 2!)
+    x = y;  // #t
+    x == y;  // #t (only one 2!)
 
 Two of the examples merit further explanation. First, we don't
 know whether ``car1 = car2``, because we don't know if
@@ -189,8 +187,8 @@ compile time. To take advantage of this feature, use the ``::`` operator:
 
     let x :: <integer> = 2;
     let vehicle :: <vehicle> = make(<car>);
-    let y :: <number> = 3; // any numeric class
-    let z :: <integer> = vehicle; // error!
+    let y :: <number> = 3;  // any numeric class
+    let z :: <integer> = vehicle;  // error!
 
 As seen in the example, a variable may be bound to values of its
 declared type or to values of subclasses of its declared type. Type
