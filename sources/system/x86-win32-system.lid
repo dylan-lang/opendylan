@@ -23,7 +23,6 @@ Files: library
        file-system/win32-interface
        file-system/posix-locators
        file-system/microsoft-locators
-       file-system/macintosh-locators
        file-system/native-microsoft-locators
        xml
        settings/settings
