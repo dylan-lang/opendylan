@@ -272,8 +272,8 @@ See `Interacting with an application`_ for a discussion of interaction.
 
 The interaction pane also logs thread events that the debugger noticed
 (such as DLL loading) and debugging messages explicitly output by the
-thread (for example via the Functional-Extensions library’s
-*debug-message* function).
+thread (for example via the Dylan library’s
+*debug-message* function in the ``simple-debugging`` module).
 
 The pane does not collect ordinary output from the application being
 debugged. Such output continues to go to its ordinary destination, such
