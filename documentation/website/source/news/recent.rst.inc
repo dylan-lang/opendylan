@@ -1,4 +1,12 @@
 
+**Dswank - a SLIME back-end**
+*2011-12-12*
+
+We developed a back-end for SLIME, the superior lisp interaction
+mode for emacs.
+
+:doc:`Read more... </news/2011/12/12/dswank>`
+
 **New release: 2011.1**
 *2011-12-10*
 
