@@ -141,7 +141,7 @@ DUIM provides three standard button gadget classes:
 -  ``<check-button>`` Sometimes referred to as *check box* in Microsoft
    documentation.
 
-.. figure:: images/tour-3.gif
+.. figure:: images/tour-3.png
    :align: center
 
    A push button, a radio button, and a check button
@@ -701,7 +701,7 @@ for the first column in the control, and the first function in the
 and so on for each element in each sequence, as shown in `Defining
 column headings and contents in table controls <tour.htm#68215>`_.
 
-.. figure:: images/tour-19.gif
+.. figure:: images/table-headings-and-contents.png
    :align: center
 
    Defining column headings and contents in table controls
@@ -867,7 +867,7 @@ as shown in `Returning or setting the gadget-value of a
 scroll-bar <tour.htm#35517>`_, which illustrates this behavior for a
 scroll bar.
 
-.. figure:: images/tour-24.gif
+.. figure:: images/tour-24.png
    :align: center
 
    Returning or setting the gadget-value of a scroll-bar
@@ -1691,6 +1691,6 @@ From here, you can refer to two other sources of information.
 .. |image8| image:: images/obox.png
 .. |image9| image:: images/listcont.png
 .. |image10| image:: images/tablecnt.png
-.. |image11| image:: images/tour-20.gif
+.. |image11| image:: images/tour-20.png
 .. |image12| image:: images/slider.png
 .. |image13| image:: images/progress.png
