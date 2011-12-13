@@ -336,8 +336,13 @@ The exported streams class heterarchy includes the classes shown in `
 Streams module classes. <streams.htm#49178>`_. Classes shown in bold are
 all instantiable.
 
-.. figure:: images/streams-2.gif
+.. figure:: images/streams.png
    :align: center
+
+* s - sealed  | o - open
+* p - primary | f - free
+* c - concrete | a - abstract
+* u - uninstantiable | i - instantiable
 
    Streams module classes.
 
