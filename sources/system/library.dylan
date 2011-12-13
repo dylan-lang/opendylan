@@ -253,13 +253,6 @@ define module file-system
          <microsoft-directory-locator>,
          <microsoft-file-locator>;
 
-  // Macintosh locators
-  create <macintosh-server-locator>,
-         <macintosh-volume-locator>,
-         <macintosh-file-system-locator>,
-         <macintosh-directory-locator>,
-         <macintosh-file-locator>;
-
   // Native locators
   create <native-file-system-locator>;
 
