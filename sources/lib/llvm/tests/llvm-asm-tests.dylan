@@ -88,8 +88,14 @@ define function make-llvm-test-function
 
   let marked-not?
     = with-open-file(stream = merged-file-locator)
-        peek(stream, on-end-of-stream: #f) == ';'
-          & subsequence-position(read-line(stream) | "", "; RUN: not ")
+        block (result)
+          while (peek(stream, on-end-of-stream: #f) == ';')
+            if (subsequence-position(read-line(stream) | "", "; RUN: not "))
+              result(#t);
+            end if;
+          end while;
+          #f
+        end block
       end with-open-file;
 
   if (marked-not?)
