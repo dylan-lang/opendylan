@@ -1586,6 +1586,8 @@ D primitive_xep_apply (FN* fn, int n, D a[]) {
   case 8: return(xep(fn,n,a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7]));
   case 9: return(xep(fn,n,a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7],a[8]));
   default:
+  if (n > 64)
+    primitive_break();
   return(xep(fn,n,
              a[ 0],a[ 1],a[ 2],a[ 3],a[ 4],a[ 5],a[ 6],a[ 7],a[ 8],a[ 9],
              a[10],a[11],a[12],a[13],a[14],a[15],a[16],a[17],a[18],a[19],
@@ -1654,6 +1656,8 @@ D primitive_mep_apply_with_optionals (FN* fn, D new_next_methods, D args) {
   case  8: return(mep(v[0],v[1],v[2],v[3],v[4],v[5],v[6],v[7]));
   case  9: return(mep(v[0],v[1],v[2],v[3],v[4],v[5],v[6],v[7],v[8]));
   default:
+    if (Pargument_count_ > 64)
+      primitive_break();
     COPY_WORDS(a, v, Pargument_count_);
     return(mep(a[ 0],a[ 1],a[ 2],a[ 3],a[ 4],a[ 5],a[ 6],a[ 7],a[ 8],a[ 9],
 	       a[10],a[11],a[12],a[13],a[14],a[15],a[16],a[17],a[18],a[19],
@@ -1773,6 +1777,8 @@ D iep_apply (DLFN iep, int n, D a[]) {
   case 8: return(iep(a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7]));
   case 9: return(iep(a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7],a[8]));
   default:
+  if (n > 64)
+    primitive_break();
   return(iep(a[ 0],a[ 1],a[ 2],a[ 3],a[ 4],a[ 5],a[ 6],a[ 7],a[ 8],a[ 9],
              a[10],a[11],a[12],a[13],a[14],a[15],a[16],a[17],a[18],a[19],
 	     a[20],a[21],a[22],a[23],a[24],a[25],a[26],a[27],a[28],a[29],
