@@ -313,7 +313,7 @@ installed in order to see the **SourceSafe** menu.
 
 .. _sourcesafe-menu:
 
-.. figure:: images/editopt-6.gif
+.. figure:: images/menu.png
    :align: center
 
    The SourceSafe menu on a Open Dylan editor window.
@@ -377,7 +377,7 @@ prompts you for the name of the SourceSafe database, as shown in
 
 .. _select-database-dialog:
 
-.. figure:: images/editopt-7.gif
+.. figure:: images/login.png
    :align: center
 
    The Select Database dialog.
@@ -393,7 +393,7 @@ manipulated by a source control operation, as shown in
 
 .. _select-project-file-dialog:
 
-.. figure:: images/editopt-8.gif
+.. figure:: images/checkout.png
    :align: center
 
    The Select Project and File dialog.

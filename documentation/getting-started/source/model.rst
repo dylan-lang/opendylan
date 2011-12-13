@@ -240,7 +240,7 @@ interactive development environments for other languages. Applications
 written in Dylan can be developed in the same way as applications
 written in static languages like C and C++, for instance.
 
-.. figure:: images/model-2.gif
+.. figure:: images/model-2.png
    :align: center
 
    “Static” development model.
@@ -251,7 +251,7 @@ with a running application. With these dynamic, interactive features,
 you can test bug fixes on the fly and keep your application running
 before committing to a rebuild.
 
-.. figure:: images/model-4.gif
+.. figure:: images/model-4.png
    :align: center
 
    “Dynamic” development model.
