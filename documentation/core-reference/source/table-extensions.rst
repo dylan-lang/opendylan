@@ -10,7 +10,7 @@ language’s standard table features. It is available to applications as
 the *table-extensions* module.
 
 .. note:: Common Dylan provides a slightly different table implementation
-   from that described by the DRM. See `Tables <language.htm#10138\>`_
+   from that described by the DRM. See :ref:`language-differences`
    for details of these differences.
 
 Basics
@@ -57,7 +57,7 @@ Weak tables
 -----------
 
 Common Dylan allows all general instances of the built-in class
-*<table>* to be *weak*. See `Weak tables <language.htm#30495\>`_ of
+*<table>* to be *weak*. See :ref:`weak tables <weak-tables>` of
 this volume for information about weakness.
 
 You can create weak tables with the *<table>* class’s *weak:*

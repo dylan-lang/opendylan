@@ -65,10 +65,10 @@ extensions made to the Dylan library as it is defined in DRM. These
 extensions are available to applications in the *dylan* library’s
 *dylan* module.
 
-All the other language extensions are described in ` <extensions.htm#13965\>`_.
+All the other language extensions are described in :doc:`extensions`.
 
-DEFINE FUNCTION
----------------
+Function Definition
+-------------------
 
 The *define function* definition macro provides a convenient way to
 define functions that have no generic properties and hence are not
@@ -177,6 +177,8 @@ other than the default (*forward-iteration-protocol*):
       …
     end;
 
+.. _weak-tables:
+
 Weak tables
 -----------
 
@@ -244,7 +246,7 @@ compile-time evaluation (“constant folding”) or partial evaluation.
 
 The Harlequin Dylan compiler can perform inlining on generic function
 methods, constants, class slots, and functions (created with *define
-function* —see `DEFINE FUNCTION`_). We have extended the Dylan language
+function* —see `Function Definition`_). We have extended the Dylan language
 specification of *define method*, *define constant*, and class slots with
 inlining definition adjectives and have included those same adjectives in
 our language extension *define function*. The adjectives are:
@@ -265,6 +267,8 @@ or function to be inlined.
    *may-inline*, *inline*, or *inline-only*, and then change the values
    of the variables, client libraries may need to be recompiled.
 
+.. _language-differences:
+
 Language differences
 ====================
 
@@ -283,7 +287,7 @@ protocol.
 
 This section describes the items that have been changed. We also provide
 a Table-extensions module, which you can read about in
-` <table-extensions.htm#40635\>`_.
+:doc:`table-extensions`.
 
 table-protocol
 --------------

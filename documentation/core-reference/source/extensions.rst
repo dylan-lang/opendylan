@@ -12,14 +12,10 @@ developers have found useful in a broad range of situations.
 
 The Common Dylan library exports the following modules:
 
-*common-extensions*
-                   
-
-Miscellaneous extensions to the Dylan language.
-                                               
-
+-  *common-extensions*
+   Miscellaneous extensions to the Dylan language.
 -  *harlequin-extensions*
-    Provided for backward compatibility.
+   Provided for backward compatibility.
 -  *simple-format* Simple formatting facilities. For more flexible
    formatting and printing, consider the separate Format and Print
    libraries.
@@ -27,10 +23,10 @@ Miscellaneous extensions to the Dylan language.
    integers.
 -  *finalization* An object finalization interface.
 -  *transcendentals*
-    A set of open generic functions for ANSI C-like behavior over real
+   A set of open generic functions for ANSI C-like behavior over real
    numbers.
 -  *machine-words*
-    A set of functions for representing a limited range of integral
+   A set of functions for representing a limited range of integral
    values.
 
 General language extensions
@@ -51,8 +47,8 @@ The Common Dylan extensions are:
    `ignore`_, `ignorable`_, *profiling*, `timing`_, `$unsupplied`_,
    `unsupplied?`_, `unsupplied`_, `when`_, `$unfound`_, `one-of`_,
    `unfound?`_, and `found?`_.
--  Type conversion functions: `
-   integer-to-string`_, `string-to-integer`_, and `float-to-string`_.
+-  Type conversion functions: `integer-to-string`_, `string-to-integer`_,
+   and `float-to-string`_.
 
 See `The COMMON-EXTENSIONS module`_ for reference descriptions of these items.
 
@@ -101,20 +97,18 @@ for reference descriptions of the interface.
 What is finalization?
 ---------------------
 
-Common Dylan’s Memory Management Reference defines finalization as
-follows:
+The `Memory Management Reference <http://www.memorymanagement.org>`_ defines
+finalization as follows:
 
-In garbage-collected languages, it is often necessary to perform actions
-on some objects after they are no longer in use and before their memory
-can be recycled. These actions are known as finalization or termination.
+    In garbage-collected languages, it is often necessary to perform actions
+    on some objects after they are no longer in use and before their memory
+    can be recycled. These actions are known as finalization or termination.
 
-A common use of finalization is to release a resource when the
-corresponding “proxy” object dies. For example, an open file might be
-represented by a stream object. When the stream object has no references
-and can be collected, it is certain that the file is no longer in use by
-the [application] and can be closed.
-
-(See *<URL:http://www.harlequin.com/mm/>* for the entire Reference.)
+    A common use of finalization is to release a resource when the
+    corresponding “proxy” object dies. For example, an open file might be
+    represented by a stream object. When the stream object has no references
+    and can be collected, it is certain that the file is no longer in use by
+    the [application] and can be closed.
 
 Finalization is also commonly required when interfacing Dylan code with
 foreign code that does not have automatic memory management. If an
@@ -143,8 +137,7 @@ collector.
 
 The garbage collector maintains a register of objects requiring
 finalization before being reclaimed. To add an object to the register,
-call the function `
-finalize-when-unreachable`_ on the object.
+call the function `finalize-when-unreachable`_ on the object.
 Objects on the register are said to be *finalizable*.
 
 If the garbage collector discovers that a finalizable object is no
@@ -160,12 +153,11 @@ Draining the finalization queue
 -------------------------------
 
 Objects in the finalization queue wait there until the application
-drains it by calling the function `
-drain-finalization-queue`_. This function
+drains it by calling the function `drain-finalization-queue`_. This function
 finalizes every object in the queue.
 
-The finalization queue is not normally drained automatically. See `
-How can my application drain the finalization queue
+The finalization queue is not normally drained automatically. See
+`How can my application drain the finalization queue
 automatically?`_ for details of how you can set
 up a thread to do so.
 
@@ -183,10 +175,9 @@ methods for `finalize`_ on those classes
 whose instances may require finalization. These methods are called
 *finalizers*.
 
-The recommended interface to finalization is through `
-finalize-when-unreachable`_ and `
-drain-finalization-queue`_, but calling `
-finalize`_ on an object directly is also
+The recommended interface to finalization is through
+`finalize-when-unreachable`_ and `drain-finalization-queue`_, but
+calling `finalize`_ on an object directly is also
 permitted. If you are certain you are finished with an object, it may be
 desirable to do so. For example, you might want to finalize an object
 created in a local binding before it goes out of scope.
@@ -292,14 +283,14 @@ being removed afterwards. That is, reachability is defined in terms of
 strong references only, as far as finalization is concerned. Weak
 references die only when an object’s storage is finally reclaimed.
 
-For more on weak tables, see `Weak tables <language.htm#30495\>`_.
+For more on weak tables, see :ref:`Weak tables <weak-tables>`.
 
 Writing finalizers
 ------------------
 
 Because the default `finalize`_ method, on
-*<object>*, does nothing, you must define your own `
-finalize`_ methods to get results from the
+*<object>*, does nothing, you must define your own
+`finalize`_ methods to get results from the
 finalization interface. This section contains useful information about
 writing finalizers.
 
@@ -307,8 +298,7 @@ Class-based finalization
 ------------------------
 
 If your application defines a class for which all instances require
-finalization, call `
-finalize-when-unreachable`_ in its *initialize*
+finalization, call `finalize-when-unreachable`_ in its *initialize*
 method.
 
 Parallels with INITIALIZE methods
@@ -353,9 +343,9 @@ graph (in some graph-specific well-ordered fashion) and call the
 Singleton finalizers
 --------------------
 
-Do not write singleton methods on `
-finalize`_. The singleton method itself would
-refer to the object, and hence prevent it from becoming unreachable.
+Do not write singleton methods on `finalize`_. The singleton method
+itself would refer to the object, and hence prevent it from becoming
+unreachable.
 
 Using finalization in applications
 ----------------------------------
@@ -367,13 +357,13 @@ How can my application drain the finalization queue automatically?
 ------------------------------------------------------------------
 
 If you would prefer the queue to be drained asynchronously, use the
-automatic finalization interface. For more details, see `
-automatic-finalization-enabled?`_ and `
-automatic-finalization-enabled?-setter`_.
+automatic finalization interface. For more details, see
+`automatic-finalization-enabled?`_ and
+`automatic-finalization-enabled?-setter`_.
 
 Libraries that do not wish to depend on automatic finalization should
-not use those functions. They should call `
-drain-finalization-queue`_ synchronously at
+not use those functions. They should call
+`drain-finalization-queue`_ synchronously at
 useful times, such as whenever they call *finalize-when-unreachable*.
 
 Libraries that are not written to depend on automatic finalization
@@ -384,8 +374,8 @@ When should my application drain the finalization queue?
 --------------------------------------------------------
 
 If you do not use automatic finalization, drain the queue synchronously
-at useful points in your application, such as whenever you call `
-finalize-when-unreachable`_ on an object.
+at useful points in your application, such as whenever you call
+`finalize-when-unreachable`_ on an object.
 
 The COMMON-EXTENSIONS module
 ============================
@@ -592,8 +582,7 @@ Description
            
 
 Returns a string representation of a general instance of *<condition>*.
-There is a method on `
-<format-string-condition\>`_ and method on
+There is a method on `<format-string-condition\>`_ and method on
 *<type-error>*.
 
 debug-assert
@@ -730,15 +719,13 @@ Description
            
 
 Prints the message of a warning instance to the Harlequin Dylan debugger
-window’s messages pane. It uses `
-debug-message`_, to do so.
+window’s messages pane. It uses `debug-message`_, to do so.
 
 This method is a required, predefined method in the Dylan language,
 described on page 361 of the DRM as printing the warning’s message in an
 implementation-defined way. We document this method here because our
-implementation of it uses the function `
-debug-message`_, which is defined in the
-Harlequin-Extensions library. Thus to use this *default-handler* method
+implementation of it uses the function `debug-message`_, which is defined
+in the Harlequin-Extensions library. Thus to use this *default-handler* method
 on *<warning>*, your library needs to use the Harlequin-Extensions
 library or a library that uses it (such as Harlequin-Dylan), rather than
 simply using the Dylan library.
@@ -1206,8 +1193,7 @@ Function
 Summary
        
 
-Returns true if *object* is not equal to `
-$unfound`_, and false otherwise.
+Returns true if *object* is not equal to `$unfound`_, and false otherwise.
 
 Signature
          
@@ -1230,8 +1216,7 @@ Values
 Description
            
 
-Returns true if *object* is not equal to `
-$unfound`_, and false otherwise.
+Returns true if *object* is not equal to `$unfound`_, and false otherwise.
 
 It uses *\\=* as the equivalence predicate.
 
@@ -1356,12 +1341,10 @@ values returned by, a function, method, or macro. The function has the
 same extent as a *let* ; that is, it applies to the smallest enclosing
 implicit body.
 
-The *ignorable* function is similar to `
-ignore`_. However, unlike `
-ignore`_, it does not issue a warning if you
-subsequently reference *variable* within the extent of the *ignorable*
-declaration. You might prefer *ignorable* to `
-ignore`_ if you are not concerned about such
+The *ignorable* function is similar to `ignore`_. However, unlike
+`ignore`_, it does not issue a warning if you subsequently reference
+*variable* within the extent of the *ignorable* declaration. You might
+prefer *ignorable* to `ignore`_ if you are not concerned about such
 violations and do not wish to be warned about them.
 
 Example
@@ -2298,8 +2281,7 @@ Function
 Summary
        
 
-Returns the unique “unfound” value, `
-$unfound`_.
+Returns the unique “unfound” value, `$unfound`_.
 
 Signature
          
@@ -2322,8 +2304,7 @@ Values
 Description
            
 
-Returns the unique “unfound” value, `
-$unfound`_.
+Returns the unique “unfound” value, `$unfound`_.
 
 See also
         
@@ -2367,8 +2348,8 @@ Values
 Description
            
 
-Returns true if *object* is equal to the unique “unfound” value, `
-$unfound`_, and false if it is not. It uses *\\=*
+Returns true if *object* is equal to the unique “unfound” value,
+`$unfound`_, and false if it is not. It uses *\\=*
 as the equivalence predicate.
 
 See also
@@ -2427,8 +2408,7 @@ Function
 Summary
        
 
-Returns the unique “unsupplied” value, `
-$unsupplied`_.
+Returns the unique “unsupplied” value, `$unsupplied`_.
 
 Signature
          
@@ -2454,8 +2434,7 @@ The value `$unsupplied`_.
 Description
            
 
-Returns the unique “unsupplied” value, `
-$unsupplied`_.
+Returns the unique “unsupplied” value, `$unsupplied`_.
 
 See also
         
@@ -2834,10 +2813,9 @@ Description
 Sets the automatic finalization system state to *newval*.
 
 The initial state is *#f*. If the state changes from *#f* to *#t*, a
-new thread is created which regularly calls `
-drain-finalization-queue`_ inside an empty
-dynamic environment (that is, no dynamic condition handlers). If the
-state changes from *#t* to *#f*, the thread exits.
+new thread is created which regularly calls `drain-finalization-queue`_
+inside an empty dynamic environment (that is, no dynamic condition
+handlers). If the state changes from *#t* to *#f*, the thread exits.
 
 See also
         
@@ -2943,9 +2921,8 @@ is added to the finalization queue rather than being immediately
 reclaimed.
 
 *Object* waits in the finalization queue until the application calls
-`drain-finalization-queue`_, which processes
-each object in the queue by calling the generic function `
-finalize`_ on it.
+`drain-finalization-queue`_, which processes each object in the queue
+by calling the generic function `finalize`_ on it.
 
 The function returns its argument.
 
@@ -2996,15 +2973,12 @@ Finalizes *object*.
 You can define methods on *finalize* to perform class-specific
 finalization procedures. These methods are called *finalizers*.
 
-A default `finalize`_ method on *<object>* is
-provided.
+A default `finalize`_ method on *<object>* is provided.
 
-The main interface to finalization is the function `
-drain-finalization-queue`_, which calls
-*finalize* on each object awaiting finalization. Objects join the
+The main interface to finalization is the function `drain-finalization-queue`_,
+which calls *finalize* on each object awaiting finalization. Objects join the
 finalization queue if they become unreachable after being registered for
-finalization with `
-finalize-when-unreachable`_. However, you can
+finalization with `finalize-when-unreachable`_. However, you can
 call *finalize* directly if you wish.
 
 Once finalized, *object* is available for reclamation by the garbage
@@ -3015,8 +2989,7 @@ the garbage collector’s finalization register, it will not be added to
 the finalization queue again, unless it is resurrected. However, it
 might still appear in the queue if it was registered more than once.
 
-Do not write singleton methods on `
-finalize`_. A singleton method would itself
+Do not write singleton methods on `finalize`_. A singleton method would itself
 reference the object, and hence prevent it from becoming unreachable.
 
 See also

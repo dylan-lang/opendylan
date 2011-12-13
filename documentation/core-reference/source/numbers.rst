@@ -217,11 +217,12 @@ Summary
 Returns #t if its first argument is less than its second argument.
 
 Signature
-         
 
-< *object1* *object2* => *boolean* (*Generic function*)*
-* < *complex1* *complex2* (*Sealed domain*)
- < *machine-number1* *machine-number2* => *boolean* (*G.f. method*)
+::
+
+    < *object1* *object2* => *boolean* (*Generic function*)*
+    < *complex1* *complex2* (*Sealed domain*)
+    < *machine-number1* *machine-number2* => *boolean* (*G.f. method*)
 
 Other available methods are described in the *Dylan Reference Manual*.
 
@@ -243,11 +244,12 @@ Summary
 Tests whether the argument supplied represents an odd value.
 
 Signature
-         
 
-odd? *object* => *boolean* (*Open generic function*)
- odd? *complex* => *boolean* (*Sealed domain*)
- odd? *integer* => *boolean* (*G.f. method*)
+::
+
+    odd? *object* => *boolean* (*Open generic function*)
+    odd? *complex* => *boolean* (*Sealed domain*)
+    odd? *integer* => *boolean* (*G.f. method*)
 
 even?
 -----
@@ -261,11 +263,12 @@ Summary
 Tests whether the argument supplied represents an even value
 
 Signature
-         
 
-even? *object* => *boolean* (*Open generic function*)
- even? *complex* *=>* *boolean* (*Sealed domain*)
- even? *integer* => *boolean* (*G.f. method*)
+::
+
+    even? *object* => *boolean* (*Open generic function*)
+    even? *complex* *=>* *boolean* (*Sealed domain*)
+    even? *integer* => *boolean* (*G.f. method*)
 
 zero?
      
@@ -607,12 +610,12 @@ floor/
       
 
 Function
-        
 
-floor/ *machine-number1* *machine-number2* => *integer* *machine-number*
- floor/ *integer1* *integer2* => *integer* *integer*
- floor/ *machine-number1* *machine-number2* => *integer*
-*machine-number*
+::
+
+    floor/ *machine-number1* *machine-number2* => *integer* *machine-number*
+    floor/ *integer1* *integer2* => *integer* *integer*
+    floor/ *machine-number1* *machine-number2* => *integer* *machine-number*
 
 Divides the first argument into the second and truncates the result
 toward negative infinity. The integer part is returned as *integer*,
@@ -623,13 +626,12 @@ ceiling/
         
 
 Function
-        
 
-ceiling/ *machine-number1* *machine-number2* => *integer*
-*machine-number*
- ceiling/ *integer1* *integer2* => *integer* *integer*
- ceiling/ *machine-number1* *machine-number2* => *integer*
-*machine-number*
+::
+
+    ceiling/ *machine-number1* *machine-number2* => *integer* *machine-number*
+    ceiling/ *integer1* *integer2* => *integer* *integer*
+    ceiling/ *machine-number1* *machine-number2* => *integer* *machine-number*
 
 Divides the first argument into the second and truncates the result
 toward positive infinity. The integer part is returned as *integer*,
@@ -640,12 +642,12 @@ round/
       
 
 Function
-        
 
-round/ *machine-number1* *machine-number2* => *integer* *machine-number*
- round/ *integer1* *integer2* => *integer* *integer*
- round/ *machine-number1* *machine-number2* => *integer*
-*machine-number*
+::
+
+    round/ *machine-number1* *machine-number2* => *integer* *machine-number*
+    round/ *integer1* *integer2* => *integer* *integer*
+    round/ *machine-number1* *machine-number2* => *integer* *machine-number*
 
 Divides the first argument into the second and rounds the result toward
 the nearest mathematical integer. The integer part is returned as
@@ -656,13 +658,12 @@ truncate/
          
 
 Function
-        
 
-truncate/ *machine-number1* *machine-number2* => *integer*
-*machine-number*
- truncate/ *integer1* *integer* 2 => *integer* *integer*
- truncate/ *machine-number1* *machine-number2* => *integer*
-*machine-number*
+::
+
+    truncate/ *machine-number1* *machine-number2* => *integer* *machine-number*
+    truncate/ *integer1* *integer* 2 => *integer* *integer*
+    truncate/ *machine-number1* *machine-number2* => *integer* *machine-number*
 
 Divides the first argument into the second and truncates the result
 toward zero. The integer part is returned as *integer*, the type of the
@@ -673,11 +674,12 @@ modulo
       
 
 Function
-        
 
-modulo *machine-number1* *machine-number2* => *machine-number*
- modulo *integer1* *integer2* => *integer*
- modulo *machine-number1* *machine-number2* => *machine-number*
+::
+
+    modulo *machine-number1* *machine-number2* => *machine-number*
+    modulo *integer1* *integer2* => *integer*
+    modulo *machine-number1* *machine-number2* => *machine-number*
 
 Returns the second value of *floor/ (* *arg1* *,* *arg2* *)*. The
 actual type of the second value is determined by the contagion rules
@@ -687,11 +689,12 @@ remainder
          
 
 Function
-        
 
-remainder *machine-number1* *machine-number2* => *machine-number*
- remainder *integer1* *integer2* => *integer*
- remainder *machine-number1* *machine-number2* => *machine-number*
+::
+
+    remainder *machine-number1* *machine-number2* => *machine-number*
+    remainder *integer1* *integer2* => *integer*
+    remainder *machine-number1* *machine-number2* => *machine-number*
 
 Returns the second value of *truncate/ (* *arg1* *,* *arg2* *)*.The
 actual type of the second value is determined by the contagion rules
@@ -1408,34 +1411,34 @@ Equality comparisons
 --------------------
 
 The behavior of equality comparisons in the Dylan library is modified by
-the Big-Integers library as follows:
+the Big-Integers library as follows::
 
-= *abstract-integer1* *abstract-integer2* => *boolean*
- = *abstract-integer* *float* => *boolean*
- = *float* *abstract-integer* => *boolean*
+    = *abstract-integer1* *abstract-integer2* => *boolean*
+    = *abstract-integer* *float* => *boolean*
+    = *float* *abstract-integer* => *boolean*
 
 Magnitude comparisons
 ---------------------
 
 The behavior of magnitude comparisons in the Dylan library is modified
-by the Big-Integers library as follows:
+by the Big-Integers library as follows::
 
-< *abstract-integer1* *abstract-integer2* => *boolean
-* < *abstract-integer* *float* => *boolean*
- < *float* *abstract-integer* => *boolean*
+    < *abstract-integer1* *abstract-integer2* => *boolean
+    < *abstract-integer* *float* => *boolean*
+    < *float* *abstract-integer* => *boolean*
 
 Properties of numbers
 ---------------------
 
 The behavior of number property tests in the Dylan library is modified
-by the Big-Integers library as follows:
+by the Big-Integers library as follows::
 
-odd? *abstract-integer* => *boolean
-* even? *abstract-integer* => *boolean*
- zero? *abstract-integer* => *boolean*
- positive? *abstract-integer* => *boolean*
- negative? *abstract-integer* => *boolean*
- integral? *abstract-integer* => *boolean*
+    odd? *abstract-integer* => *boolean*
+    even? *abstract-integer* => *boolean*
+    zero? *abstract-integer* => *boolean*
+    positive? *abstract-integer* => *boolean*
+    negative? *abstract-integer* => *boolean*
+    integral? *abstract-integer* => *boolean*
 
 Arithmetic operations
 ---------------------
@@ -1446,96 +1449,88 @@ by the Generic-Arithmetic library as described below.
 The actual type of the return value for all the following interfaces is
 determined by the contagion rules when applied to the arguments.
 
-+ *abstract-integer1* *abstract-integer2* => *abstract-integer
-* + *abstract-integer* *float1* => *float*
- + *float1* *abstract-integer* => *float*
+::
 
-- *abstract-integer1* *abstract-integer2* => *abstract-integer
-* - *abstract-integer* *float1* => *float*
- - *float1* *abstract-integer* => *float*
+    + *abstract-integer1* *abstract-integer2* => *abstract-integer*
+    + *abstract-integer* *float1* => *float*
+    + *float1* *abstract-integer* => *float*
 
-\* *abstract-integer1* *abstract-integer2* => *abstract-integer
-* \* *abstract-integer* *float1* => *float*
- \* *float1* *abstract-integer* => *float*
+    - *abstract-integer1* *abstract-integer2* => *abstract-integer*
+    - *abstract-integer* *float1* => *float*
+    - *float1* *abstract-integer* => *float*
+
+   \* *abstract-integer1* *abstract-integer2* => *abstract-integer*
+   \* *abstract-integer* *float1* => *float*
+   \* *float1* *abstract-integer* => *float*
 
 The return value of the following interface is of the same float format
-as the argument.
+as the argument::
 
-negative *abstract-integer* => *negative-abstract-integer*
-
-The second return value of all the following interfaces is of the same
-float format as the argument.
-
-floor *abstract-integer* => *abstract-integer1* *abstract-integer2
-* floor *float1* => *abstract-integer* *float*
-
-ceiling *abstract-integer* => *abstract-integer1* *abstract-integer2
-* ceiling *float1* => *abstract-integer* *float*
-
-round *abstract-integer* => *abstract-integer1* *abstract-integer2
-* round *float1* => *abstract-integer* *float*
-
-truncate *abstract-integer* => *abstract-integer1* *abstract-integer2
-* truncate *float1* => *abstract-integer* *float*
+    negative *abstract-integer* => *negative-abstract-integer*
 
 The second return value of all the following interfaces is of the same
-float format as the first argument.
+float format as the argument::
 
-floor/ *abstract-integer1* *abstract-integer2* => *abstract-integer3*
-*abstract-integer4
-* floor/ *float1* *abstract-integer1* => *abstract-integer2* *float2*
+    floor *abstract-integer* => *abstract-integer1* *abstract-integer2*
+    floor *float1* => *abstract-integer* *float*
 
-ceiling/ *abstract-integer1* *abstract-integer2*
- => *abstract-integer3* *abstract-integer4*
- ceiling/ *float1* *abstract-integer1* => *abstract-integer2* *float2*
+    ceiling *abstract-integer* => *abstract-integer1* *abstract-integer2*
+    ceiling *float1* => *abstract-integer* *float*
 
-round/ *abstract-integer1* *abstract-integer2* => *abstract-integer3*
-*abstract-integer4
-* round/ *float1* *abstract-integer1* => *abstract-integer2* *float2*
+    round *abstract-integer* => *abstract-integer1* *abstract-integer2*
+    round *float1* => *abstract-integer* *float*
 
-truncate/ *abstract-integer1* *abstract-integer2*
- => *abstract-integer3* *abstract-integer4
-* truncate/ *float1* *abstract-integer1* => *abstract-integer2* *float2*
+    truncate *abstract-integer* => *abstract-integer1* *abstract-integer2*
+    truncate *float1* => *abstract-integer* *float*
+
+The second return value of all the following interfaces is of the same
+float format as the first argument::
+
+    floor/ *abstract-integer1* *abstract-integer2* => *abstract-integer3* *abstract-integer4*
+    floor/ *float1* *abstract-integer1* => *abstract-integer2* *float2*
+
+    ceiling/ *abstract-integer1* *abstract-integer2* => *abstract-integer3* *abstract-integer4*
+    ceiling/ *float1* *abstract-integer1* => *abstract-integer2* *float2*
+
+    round/ *abstract-integer1* *abstract-integer2* => *abstract-integer3* *abstract-integer4*
+    round/ *float1* *abstract-integer1* => *abstract-integer2* *float2*
+
+    truncate/ *abstract-integer1* *abstract-integer2* => *abstract-integer3* *abstract-integer4
+    truncate/ *float1* *abstract-integer1* => *abstract-integer2* *float2*
 
 The second return value of the following interfaces is of the same float
-format as the second argument.
+format as the second argument::
 
-floor/ *abstract-integer1* *float1* => *abstract-integer2* *float2*
-
-ceiling/ *abstract-integer1* *float1* => *abstract-integer2* *float2*
-
-round/ *abstract-integer1* *float1* => *abstract-integer2* *float2*
-
-truncate/ *abstract-integer1* *float1* => *abstract-integer2* *float2*
+    floor/ *abstract-integer1* *float1* => *abstract-integer2* *float2*
+    ceiling/ *abstract-integer1* *float1* => *abstract-integer2* *float2*
+    round/ *abstract-integer1* *float1* => *abstract-integer2* *float2*
+    truncate/ *abstract-integer1* *float1* => *abstract-integer2* *float2*
 
 The return value of the following interfaces is of the same float format
-as the first argument.
+as the first argument::
 
-modulo *float1* *abstract-integer* => *float*
-
-remainder *float1* *abstract-integer* => *float*
+    modulo *float1* *abstract-integer* => *float*
+    remainder *float1* *abstract-integer* => *float*
 
 The return value of the following interfaces is of the same float format
-as the second argument.
+as the second argument::
 
-modulo *abstract-integer1* *abstract-integer2* => *abstract-integer
-* modulo *abstract-integer* *float1* => *float*
-
-remainder *abstract-integer1* *abstract-integer2* => *abstract-integer
-* remainder *abstract-integer* *float1* => *float*
+    modulo *abstract-integer1* *abstract-integer2* => *abstract-integer*
+    modulo *abstract-integer* *float1* => *float*
+    remainder *abstract-integer1* *abstract-integer2* => *abstract-integer*
+    remainder *abstract-integer* *float1* => *float*
 
 The behavior of the following miscellaneous interfaces is also modified
-by the Big-Integers library.
+by the Big-Integers library::
 
-^ *abstract-integer1* *integer* => *abstract-integer
-* abs *abstract-integer1* => *abstract-integer*
- logior #rest *abstract-integer1* => *abstract-integer*
- logxor #rest *abstract-integer1* => *abstract-integer*
- logand #rest *abstract-integer1* => *abstract-integer*
- lognot *abstract-integer1* => *abstract-integer*
- logbit? *integer* *abstract-integer* => *boolean*
- ash *abstract-integer1* *integer* => *abstract-integer*
- lcm *abstract-integer1* *abstract-integer2* => *abstract-integer*
- gcd *abstract-integer1* *abstract-integer2* => *abstract-integer*
-
+    ^ *abstract-integer1* *integer* => *abstract-integer
+    abs *abstract-integer1* => *abstract-integer*
+    logior #rest *abstract-integer1* => *abstract-integer*
+    logxor #rest *abstract-integer1* => *abstract-integer*
+    logand #rest *abstract-integer1* => *abstract-integer*
+    lognot *abstract-integer1* => *abstract-integer*
+    logbit? *integer* *abstract-integer* => *boolean*
+    ash *abstract-integer1* *integer* => *abstract-integer*
+    lcm *abstract-integer1* *abstract-integer2* => *abstract-integer*
+    gcd *abstract-integer1* *abstract-integer2* => *abstract-integer*
 

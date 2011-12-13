@@ -583,8 +583,7 @@ Arguments
 Values
       
 
--  *name-or-false* An instance of *type-union(<string>,
-    singleton(#f))*.
+-  *name-or-false* An instance of *type-union(<string>, singleton(#f))*.
 
 Description
            
@@ -870,8 +869,7 @@ Arguments
 Values
       
 
--  *name-or-false* An instance of *type-union(<string>,
-    singleton(#f))*.
+-  *name-or-false* An instance of *type-union(<string>, singleton(#f))*.
 
 Description
            
@@ -2289,12 +2287,13 @@ Performs an atomic test-and-set operation.
 
 Macro call
           
+::
 
-conditional-update!(*local-name* = *place*)
- *body
-* [success *success-expr* ]
- [failure *failure-expr* ]
- end
+    conditional-update!(*local-name* = *place*)
+      *body*
+      [success *success-expr* ]
+      [failure *failure-expr* ]
+    end
 
 Arguments
          
@@ -2497,16 +2496,16 @@ Summary
 Performs an atomic test-and-set operation.
 
 Macro call
-          
 
-conditional-update!(*local-name* = *place*)
- *body
-* [success *success-expr* ]
- [failure *failure-expr* ]
- end
+::
+
+    conditional-update!(*local-name* = *place*)
+      *body*
+      [success *success-expr* ]
+      [failure *failure-expr* ]
+    end
 
 Arguments
-         
 
 -  *local-name* A Dylan variable-name*bnf*.
 -  *place* A Dylan variable-namebnf or a function call.
