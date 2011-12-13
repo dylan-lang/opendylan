@@ -5,7 +5,7 @@ The Machine Words Module
 Introduction
 ============
 
-This chapter describes the Harlequin Dylan implementation of machine
+This chapter describes the Open Dylan implementation of machine
 words. It describes a number of extensions to the Dylan language, which
 are available from the Dylan library.
 

@@ -7,7 +7,7 @@ Introduction
 
 The Common Dylan library contains the Common Extensions library and the
 Dylan library. It provides a number of features that were either omitted
-from the Dylan language described in the DRM, or that Harlequin’s Dylan
+from the Dylan language described in the DRM, or that Open Dylan's
 developers have found useful in a broad range of situations.
 
 The Common Dylan library exports the following modules:
@@ -639,7 +639,7 @@ testing conditions in program code.
 This macro is identical to *assert*, except that the assert is defined
 to take place only while debugging.
 
-The Harlequin compiler removes debug-assertions when it compiles code in
+The Open Dylan compiler removes debug-assertions when it compiles code in
 “production” mode as opposed to “debugging” mode.
 
 The *format-string* is a format string as defined on page 112 of the
@@ -694,7 +694,7 @@ G.f. method
 Summary
        
 
-Prints the message of a warning instance to the Harlequin Dylan debugger
+Prints the message of a warning instance to the Open Dylan debugger
 window’s messages pane.
 
 Syntax
@@ -718,7 +718,7 @@ Values
 Description
            
 
-Prints the message of a warning instance to the Harlequin Dylan debugger
+Prints the message of a warning instance to the Open Dylan debugger
 window’s messages pane. It uses `debug-message`_, to do so.
 
 This method is a required, predefined method in the Dylan language,

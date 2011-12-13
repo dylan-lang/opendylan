@@ -9,11 +9,11 @@ The Dylan language is described in *The Dylan Reference Manual* by
 Andrew Shalit (Addison-Wesley, 1996). We call this book “the DRM”
 hereafter.
 
-Harlequin Dylan provides an implementation of the Dylan language
+Open Dylan provides an implementation of the Dylan language
 described by the DRM, with a few exceptions that are documented in
 `Language differences`_ of this chapter.
 
-Harlequin Dylan provides the Dylan language in the *dylan* module of the
+Open Dylan provides the Dylan language in the *dylan* module of the
 *dylan* library.
 
 As of the 2.0 release, Harlequin Dylan has joined forces with the other
@@ -24,10 +24,10 @@ are either built in to the *dylan* library or are available in a
 separate library, *common-extensions*. This chapter is an introduction
 to the language extensions.
 
-Using Harlequin Dylan’s language extensions
-===========================================
+Using Open Dylan’s language extensions
+======================================
 
-There are a number of ways to use Harlequin Dylan’s language extensions
+There are a number of ways to use Open Dylan’s language extensions
 in your applications.
 
 A few extensions have become part of the *dylan* library. You can read
@@ -39,7 +39,7 @@ smaller modules that contain other basic facilities such as simplified
 formatting (*simple-format*), pseudo-random integer generation
 (*simple-random*), and object finalization (*finalization*).
 
-Harlequin Dylan provides a convenience library, *common-dylan*, that
+Open Dylan provides a convenience library, *common-dylan*, that
 combines the *dylan* and *common-extensions* libraries to provide a
 convenient “dialect” of Dylan, exported from the module *common-dylan* :
 
@@ -244,7 +244,7 @@ To *inline* a value is to replace, at compile time, a reference to a
 variable with the value of that variable. Such inlining often allows
 compile-time evaluation (“constant folding”) or partial evaluation.
 
-The Harlequin Dylan compiler can perform inlining on generic function
+The Open Dylan compiler can perform inlining on generic function
 methods, constants, class slots, and functions (created with *define
 function* —see `Function Definition`_). We have extended the Dylan language
 specification of *define method*, *define constant*, and class slots with

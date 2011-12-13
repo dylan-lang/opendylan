@@ -21,7 +21,7 @@ port applications from one environment to another.
 
 .. note:: LID is a convention, and not an extension to the Dylan language.
 
-.. note:: The Harlequin Dylan environment can convert LID files to its own
+.. note:: The Open Dylan environment can convert LID files to its own
    internal project file format, the *.hdp* file. It can also save project
    files as LID files with the *File > Save As* command in the project
    window.
