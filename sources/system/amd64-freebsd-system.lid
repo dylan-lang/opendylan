@@ -25,7 +25,6 @@ Files: library
        file-system/unix-file-accessor
        file-system/posix-locators
        file-system/microsoft-locators
-       file-system/macintosh-locators
        file-system/native-posix-locators
        xml
        settings/settings
