@@ -87,7 +87,7 @@ Dylan object) contains a pointer to the class of the object it is
 wrapping, as well as some encoded information for the garbage collector
 about which slots should be traced.
 
-.. figure:: images/runtime-2.gif
+.. figure:: images/runtime-2.png
    :align: center
 
 Boxed Objects
@@ -117,7 +117,7 @@ tracing data of the wrapper so that the memory manager knows how to
 trace the repeated data. For example, an instance of the ``<byte-string>``
 *"foo"* is represented as in:.
 
-.. figure:: images/runtime-3.gif
+.. figure:: images/runtime-3.png
    :align: center
 
    An Instance of ``<byte-string>``
