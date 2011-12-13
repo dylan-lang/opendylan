@@ -272,8 +272,13 @@ explicit synchronization, as appropriate.
 The Threads class hierarchy
 ===========================
 
-.. figure:: images/threads-2.gif
+.. figure:: images/threads.png
    :align: center
+
+* s - sealed  | o - open
+* p - primary | f - free
+* c - concrete | a - abstract
+* u - uninstantiable | i - instantiable
 
    Threads class hierarchy.
                         
