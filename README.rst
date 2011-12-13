@@ -33,7 +33,7 @@ Compilation on UNIX
 
 Please note that on 64 bit Linux we need a big stack, the default
 stack is too small, please increase with ulimit -s before (safe is
-to increate by one order of magnitude)
+to double its value)
 
 * Get MPS or boehm-gc, depending on your platform:
 * Linux x86 or FreeBSD x86 (HARP) -> MPS
