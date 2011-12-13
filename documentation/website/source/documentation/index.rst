@@ -20,6 +20,7 @@ Guides
 ======
 
 `An Introduction to Dylan <intro-dylan/index.html>`_
+[`pdf <intro-dylan/IntroductiontoDylan.pdf>`__]
 
     This tutorial is written primarily for those with solid programming
     experience in C++ or another object-oriented static language. It
@@ -31,15 +32,18 @@ Guides
 
 `Getting Started with Open Dylan
 <http://opendylan.org/documentation/opendylan/env/index.htm>`_
+[`pdf <getting-started/GettingStartedWithOpenDylan.pdf>`__]
 
     Describes Open Dylan's interactive development environment.
 
 `Dylan Style Guide <style-guide/index.html>`_
+[`pdf <style-guide/StyleGuide.pdf>`__]
 
     Notes and thoughts on how to format your Dylan code.
 
 `Building Applications Using DUIM
 <http://opendylan.org/documentation/opendylan/dguide/index.htm>`_
+[`pdf <building-with-duim/BuildingApplicationsWithDUIM.pdf>`__]
 
     Describes how to use DUIM (Dylan User Interface Manager),
     the portable window programming toolkit.
@@ -51,6 +55,7 @@ Guides
 
 `Open Dylan Hacker's Guide
 <hacker-guide/index.html>`_
+[`pdf <hacker-guide/OpenDylanHackersGuide.pdf>`__]
 
     A work in progress to help out people who are hacking on Open Dylan itself.
 
@@ -65,6 +70,7 @@ References
 
 `Common Dylan and Functional Extensions library reference
 <http://opendylan.org/documentation/opendylan/core/index.htm>`_
+[`pdf <core-reference/CoreReference.pdf>`__]
 
     Describes the Open Dylan implementation of the Dylan language, a
     common set of Dylan libraries, and a library interchange mechanism.
@@ -73,6 +79,7 @@ References
 
 `System and I/O library reference
 <http://opendylan.org/documentation/opendylan/io/index.htm>`_
+[`pdf <io-reference/SystemAndIOReference.pdf>`__]
 
     Describes Open Dylan's printing and output formatting modules,
     a streams module, a sockets module, and modules providing an
@@ -88,6 +95,7 @@ References
 
 `C FFI and Win32 library reference
 <http://opendylan.org/documentation/opendylan/interop1/index.htm>`_
+[`pdf <cffi-win32-reference/C-FFIandWin32Reference.pdf>`__]
 
     Describes a foreign function interface library for interoperation
     with C programs, and several libraries providing a low-level interface
