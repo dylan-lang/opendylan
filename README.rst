@@ -1,156 +1,96 @@
 Welcome to Open Dylan!
 ======================
 
-This file is intended to give you a basic hint as to how to start
-hacking on Open Dylan and what is and is not included in the Open
-Source version.
+Open Dylan is a compiler for the Dylan programming language. It has two
+back-ends, HARP (which translates to native x86 code) and a C back-end.
 
+The HARP back-end uses the Memory Pool System (MPS) from Ravenbrook,
+Limited to do its memory management.  The MPS is available from
+Ravenbrook at http://www.ravenbrook.com/project/mps/ and must be
+downloaded and built separately.
 
+The C back-end uses Boehm-Demers-Weiser conservative C/C++ garbage
+collector, available at https://github.com/ivmai/bdwgc
 
-What Was Open Sourced
-=====================
+Open Dylan is written in Dylan, thus a Dylan compiler is needed to
+bootstrap it. Binary releases are available from
+http://opendylan.org/download/
 
-Everything except for the files necessary to build Windows installers
-has been Open Sourced.
-
-Open Dylan uses the Memory Pool System (MPS) from Ravenbrook, Limited
-to do its memory management.  The MPS is available from Ravenbrook at
-http://www.ravenbrook.com/project/mps/ and must be downloaded and
-built separately.
-
-
-How to Build on Linux
-=====================
-
-Install the latest binary release of Open Dylan from
-http://opendylan.org/download/index.html
+Once installed, the following command-line will produce a binary in
+~/Open-Dylan/bin/hello-world
 ::
 
-  git clone git@github.com:dylan-lang/opendylan.git --recursive   # get submodules too
-  export SRCDIR=`pwd`/opendylan        # must be absolute path!
-  export BUILDDIR=<your build dir>
+  dylan-compiler -build hello-world
 
-Build the MPS (see below).
+
+Compilation of the compiler itself
+==================================
+
+* clone this git repository.
+
+Compilation on UNIX
+===================
+
+* Get MPS or boehm-gc, depending on your platform:
+* Linux x86 or FreeBSD x86 (HARP) -> MPS
+* Mac OS X and all 64 bit (C) -> boehm-gc
+* Get XML::Parser
+
 ::
 
-  cd $SRCDIR
   ./autogen.sh
-
-  cd $BUILDDIR
-  $SRCDIR/configure --with-mps=/path/to/mps-kit                   [1][2]
-              # you must call configure with absolute path!
+  ./configure \
+     --with-mps=/path/to/mps-kit \  # if using the HARP back-end
+     --with-gc=/path/to/gc \ # if using the C back-end
+     --prefix=/opt/opendylan-current
   make
+  sudo make install
 
-Your new Dylan compiler will be in
-$BUILDDIR/Bootstrap.2/bin/dylan-compiler
-
-
-[1] Note that the directory --with-mps wants here is the one containing the
-    "code" directory.  If you downloaded the MPS kit from Ravenbrook this
-    would be, for example, "--with-mps=/path/to/mps-kit-1.106.2".
-
-[2] Ubuntu note: In Ubuntu 6.06 I (cgay) had to install the XML::Parser module via
-    "cpan -i XML::Parser", which blew up because expat.h was not found, so
-    first "sudo apt-get install libexpat-dev".  --cgay 20061104
+The first generation will be in Bootstrap.2/bin/dylan-compiler ,
+and a second generation will be in /opt/opendylan-current/bin/dylan-compiler
 
 
-
-How to Build on Windows
+Compilation on Windows
 =======================
 
-Make sure to have required tools installed: namely Debugging tools for
-Windows, a C compiler (PellesC or VC6) and Microsoft Platform SDK.
+* Get MPS
 
-You also need to have opendylan installed.
+* Make sure to have required tools installed: namely Debugging tools for
+  Windows, a C compiler (PellesC or VC6) and Microsoft Platform SDK.
 
-Download the MPS zip from http://www.ravenbrook.com/project/mps/
-and unpack that.
+* Open a shell (windows command processor), there set the environment
+  variable SDK4MEMORY_POOL_SYSTEM to <where you unpacked MPS>.
 
-Open a shell (windows command processor), there set the environment
-variable SDK4MEMORY_POOL_SYSTEM to <where you unpacked MPS>.
+* Please keep in mind that paths with whitespaces are not well supported.
 
-Please keep in mind that paths with whitespaces are not well supported.
-
-Go to admin\\builds and do a::
+* Go to admin\\builds and do a::
 
   build-release.bat <target-dir> /sources <git-checkout>\sources /internal
 
 This will do a 4-stage bootstrap, in the end there will be a
 complete IDE in <target-dir>.
 
-Building an installer:
+* Building an installer:
 
-Requires nsis from http://nsis.sf.net and the HTML help workshop (to
-generate the chm).
+* Get NSIS from http://nsis.sf.net and the HTML help workshop (from
+  Microsoft, to generate the chm).
 
-Go to packages\\win32-nsis, read Build.txt and follow the
-instructions. Make sure you are using the same command shell as used
-for building Open Dylan.
-
-
-How to Build on Darwin or Mac OS X
-==================================
-
-Install the latest binary release of Open Dylan from
-http://www.opendylan.org/downloads/opendylan/. Ensure the release's bin
-directory is in your path.
-
-Install the expat library, followed by the XML::Parser Perl module. For the
-expat library, you can use a package manager like MacPorts or Fink. For the
-XML::Parser module, use CPAN::
-
-  sudo cpan XML::Parser
-
-Install the Boehm garbage collection library. On the Mac, Open Dylan uses that
-instead of the MPS library. You can use a package manager or download, make,
-and install it directly. I (agent) have used the following configure settings::
-
-  ./configure --enable-parallel-mark --enable-threads=posix
-    --enable-large-config --enable-gc-debug USE_I686_PREFETCH=1
-
-Download the Open Dylan source tree, containing this file and the "sources"
-directory, from github.com, as described on http://www.opendylan.org/repository.phtml.
-
-In the directory of the downloaded source tree, run these commands (set the
-prefix to whatever you want, and set the correct path to the Boehm GC
-libraries)::
-
-  ./autogen.sh
-  ./configure --prefix=/usr/local/opendylan --with-gc=/usr/local
-  make
-  sudo make install
-
-Ignore any errors printed by autogen.sh. The build process may freeze or crash.
-If several minutes pass without any progress, cancel the build with ^C. Simply
-re-run the last command to resume building. After installation is complete,
-don't forget to remove the binary release's bin directory from your path.
-
-To avoid installing the release in the prefix location, replace the "sudo make
-install" command with "make bootstrap-stage-3". The final compiler will be put
-in the Bootstrap.3 directory in your source tree.
-
-
-General Build Instructions
-==========================
-
-If you encounter problems during the build, please refer to the log
-files that are written in the 'logs' directory under each bootstrap
-stage build directory.
+* Go to packages\\win32-nsis, read Build.txt and follow the
+  instructions. Make sure you are using the same command shell as used
+  for building Open Dylan (to retain environment variables).
 
 
 Building the MPS
 ================
 
-The Open Dylan garbage collector is the Memory Pool System (MPS), from
-Ravenbrook, Ltd.  Download version 1.100.1 (or greater) of the MPS
-from Ravenbrook at http://www.ravenbrook.com/project/mps/ and extract
-it to some directory.  cd to the 'code' subdirectory in the MPS
-sources and build the mmdw target:
+This is not required anymore since it is part of building the runtime.
+
+Go to the 'code' subdirectory in the MPS sources and build the mmdw
+target:
 
 Windows::
 
    nmake /k /f w3i3mv.nmk mmdw.lib
-   copy *.h+w3i3mv\ci\mmdw.lib %OPENDYLAN%\sources\lib\run-time\pentium-win32
 
 Linux::
 
@@ -158,10 +98,6 @@ Linux::
 
   The actual makefile you use may differ depending on your platform.
   See the readme.txt file in the MPS distribution for a list.
-
-  The build products will be picked up by
-  opendylan/sources/lib/run-time/pentium-linux/Makefile.in
-  assuming you pass the appropriate value for --with-mps.
 
   glibc >=2.3 and linux kernel >= 2.6 required
 
