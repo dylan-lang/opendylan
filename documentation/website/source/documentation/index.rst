@@ -71,8 +71,8 @@ References
     The common libraries provide many language extensions, a threads
     interface, and object finalization.
 
-`System and I/O library reference <io-reference/index.html>`_
-[`pdf <io-reference/SystemAndIOReference.pdf>`__]
+`System and I/O library reference <system-io-reference/index.html>`_
+[`pdf <system-io-reference/SystemAndIOReference.pdf>`__]
 [`old HTML <http://opendylan.org/documentation/opendylan/io/index.htm>`__]
 
     Describes Open Dylan's printing and output formatting modules,
