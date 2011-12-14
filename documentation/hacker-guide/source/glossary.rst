@@ -23,11 +23,22 @@ compiler database
 component
    a native DLL or EXE file.
 
+DFMC
+  the Dylan Flow Machine Compiler, the intermediate representation
+  on which type inference and optimization (dispatch, inline, dynamic
+  extent, common subexpression elimination) is done. Source of data
+  and control flow elements is in *dfmc/flow-graph*.
+
 execution context
    the compiler-derived information about a process, such as the
    namespaces of known runtime components, installed definitions, etc.
    Initialized from the compilation contexts of the preloaded runtime
    components and subsequently updated by interactive execution.
+
+HARP
+  Harlequin Abstract RISC Machine, the native back-end of Open Dylan.
+  On this representation register allocation etc is done: input DFM,
+  output: assembly. Source is in *harp* subdirectory.
 
 interactive execution
    a mechanism for exploratory programming by which the user can
