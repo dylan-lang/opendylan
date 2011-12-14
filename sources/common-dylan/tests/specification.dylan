@@ -322,9 +322,9 @@ define module-spec transcendentals ()
   /// The core classes
   /// Functions
 
-  open generic-function sin(<real>) => (<float>);
-  open generic-function cos(<real>) => (<float>);
-  open generic-function tan(<real>) => (<float>);
+  open generic-function sin(<number>) => (<number>);
+  open generic-function cos(<number>) => (<number>);
+  open generic-function tan(<number>) => (<number>);
 
 // Returns the sine, cosine, or tangent of _x_, respectively.  _x_ is
 // given in radians.
@@ -332,11 +332,11 @@ define module-spec transcendentals ()
 // The floating point precision of the result is given by the precision
 // of _x_.  The result will be a <single-float> if _x_ is an integer.
 
-  open generic-function asin(<real>) => (<float>); // -1 <= y <= +1
-  open generic-function acos(<real>) => (<float>); // -1 <= y <= +1
+  open generic-function asin(<number>) => (<number>); // -1 <= y <= +1
+  open generic-function acos(<number>) => (<number>); // -1 <= y <= +1
 
-  open generic-function atan(<real>) => (<float>); // -1 <= y <= +1
-  open generic-function atan2(<real>, <real>) => (<float>); // -1 <= y <= +1
+  open generic-function atan(<number>) => (<number>); // -1 <= y <= +1
+  open generic-function atan2(<number>, <number>) => (<number>); // -1 <= y <= +1
 
 // Returns the arc sine or arc cosine of _y_, in radians.  If _y_ is not
 // in the range [-1, +1], an error is signalled.
@@ -344,9 +344,9 @@ define module-spec transcendentals ()
 // The floating point precision of the result is given by the precision
 // of _y_.  The result will be a <single-float> if _y_ is an integer.
 
-  open generic-function sinh (<real>) => (<float>);
-  open generic-function cosh (<real>) => (<float>);
-  open generic-function tanh (<real>) => (<float>);
+  open generic-function sinh (<number>) => (<number>);
+  open generic-function cosh (<number>) => (<number>);
+  open generic-function tanh (<number>) => (<number>);
 
 // Returns the hyperbolic sine, hyperbolic cosine, or hyperbolic tangent
 // of _x_, respectively.
@@ -354,9 +354,9 @@ define module-spec transcendentals ()
 // The floating point precision of the result is given by the precision
 // of _x_.  The result will be a <single-float> if _x_ is an integer.
 
-  open generic-function asinh (<real>) => (<float>);
-  open generic-function acosh (<real>) => (<float>);
-  open generic-function atanh (<real>) => (<float>);
+  open generic-function asinh (<number>) => (<number>);
+  open generic-function acosh (<number>) => (<number>);
+  open generic-function atanh (<number>) => (<number>);
 
 // Returns the hyperbolic arc sine, hyperbolic arc cosine, or hyperbolic
 // arc tangent of _y_, respectively.
@@ -365,7 +365,7 @@ define module-spec transcendentals ()
 // of _y_.  The result will be a <single-float> if _y_ is an integer.
 
 
-  open generic-function log (<real>) => (<float>); //  x > 0
+  open generic-function log (<number>) => (<number>); //  x > 0
 
 // Returns the natural logarithm of _x_ in base _e_.  If _x_ <= 0, an
 // error is signalled.
@@ -373,15 +373,14 @@ define module-spec transcendentals ()
 // The floating point precision of the result is given by the precision
 // of _x_.  The result will be a <single-float> if _x_ is an integer.
 
-  open generic-function exp (<real>) => (<float>);
+  open generic-function exp (<number>) => (<number>);
 
 // Returns e raised to the power _x_.
 
 // The floating point precision of the result is given by the precision
 // of _x_.
 
-
-  open generic-function logn (<real>, <real>) => (<float>);
+  function logn (<number>, <number>) => (<number>);
   // x > 0, b > 1
 
 // Returns the logarithm of _x_ in base _b_.  If _b_ <= 1 or _x_ <= 0, an
@@ -391,7 +390,7 @@ define module-spec transcendentals ()
 // of _x_.  The result will be a <single-float> if _x_ is an integer.
 
 
-  open generic-function \^ (<real>, <real>) => (<float>);
+  open generic-function \^ (<number>, <number>) => (<number>);
 
 // Returns _b_ raised to the power _x_.  If _b_ is 0 and _x_ is not
 // positive, an error is signalled.  If _b_ is negative and _x_ is not
@@ -409,15 +408,14 @@ define module-spec transcendentals ()
 // negative, an error is signalled.
 
 
-  open generic-function sqrt (<real>) => (<float>); // x >= 0
+  open generic-function sqrt (<number>) => (<number>); // x >= 0
 
 // Returns the square root of _x_.  If _x_ < 0, an error is signalled.
 
 // The floating point precision of the result is given by the precision
 // of _x_.  The result will be a <single-float> if _x_ is an integer.
 
-
-  open generic-function isqrt (<integer>) => (<integer>); // x >= 0
+  function isqrt (<integer>) => (<integer>); // x >= 0
 
   /// Constructing and initializing instances
   /// Equality and comparison functions

@@ -50,7 +50,11 @@ end macro unary-transcendental-definer;
 
 define unary-transcendental exp (x) end;
 
-define unary-transcendental log (x) end;
+define unary-transcendental log (x)
+  if (negative?(x))
+    error("LOG would produce a complex number")
+  end
+end;
 
 define may-inline function logn (x :: <number>, base :: <number>) => (result :: <number>)
   log(x) / log(base)
@@ -58,12 +62,12 @@ end function logn;
 
 define unary-transcendental sqrt (x)
   if (negative?(x))
-    error("SQRT would produce complex number")
+    error("SQRT would produce a complex number")
   end
 end unary-transcendental sqrt;
 
 define may-inline function isqrt (x :: <integer>) => (result :: <integer>)
-  round(sqrt(x))
+  floor(sqrt(x))
 end function isqrt;
 
 define unary-transcendental sin (x) end;
