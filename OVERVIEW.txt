@@ -118,8 +118,9 @@ sources
     core                - Module imports and re-exports.
     debugger            - Debugger GUI.
     deuce               - Deuce customizations for IDE.
-    dfmc                - Introspection and IDE interactor.
+    dfmc                - Introspection and IDE interactor - glue between DFM and environment
     dummy               - Interactor environment.
+    dswank              - SLIME back-end for Open Dylan
     editor              - External editor support.
     framework           - Generic GUI elements.
     manager             - Client/server communication.
@@ -166,7 +167,6 @@ sources
   common-dylan          - Common language extensions shared by Open Dylan and
                           Gwydion Dylan.
   dylan                 - Dylan Reference Manual implementation.
-  functional-dylan      - Open Dylan-specific language extensions.
   lib
     big-integers        - Mathematical library for big integers (> 28 bits).
     generic-arithmetic  - Arithmetic prototypes for all numeric libraries.
