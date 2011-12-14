@@ -24,10 +24,11 @@ component
    a native DLL or EXE file.
 
 DFMC
-  the Dylan Flow Machine Compiler, the intermediate representation
-  on which type inference and optimization (dispatch, inline, dynamic
-  extent, common subexpression elimination) is done. Source of data
-  and control flow elements is in *dfmc/flow-graph*.
+  the Dylan Flow Machine Compiler, the intermediate representation on
+  which type inference and optimization (dispatch, inline, dynamic
+  extent, common subexpression elimination, constant folding, dead
+  code removal) is done. Source of data and control flow elements is
+  in *dfmc/flow-graph*.
 
 execution context
    the compiler-derived information about a process, such as the
