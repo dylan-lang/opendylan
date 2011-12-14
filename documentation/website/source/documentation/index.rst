@@ -2,6 +2,12 @@
 Documentation
 *************
 
+.. warning:: We are in the process of converting over to a new documentation
+   publishing system. Some documents are not entirely correct yet. We've
+   retained links to the 'Old HTML' where relevant. These will be going away
+   in the near future.
+   :class: alert-message warning
+
 Online Books
 ============
 
