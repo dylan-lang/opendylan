@@ -48,11 +48,6 @@ Guides
     Describes how to use DUIM (Dylan User Interface Manager),
     the portable window programming toolkit.
 
-`Developing Component Software with CORBA
-<http://opendylan.org/documentation/opendylan/corba/index.htm>`_
-
-    A tutorial and reference for CORBA interoperability using the Functional Developer ORB.
-
 `Open Dylan Hacker's Guide
 <hacker-guide/index.html>`_
 [`pdf <hacker-guide/OpenDylanHackersGuide.pdf>`__]
@@ -100,6 +95,14 @@ References
     Describes a foreign function interface library for interoperation
     with C programs, and several libraries providing a low-level interface
     to the Microsoft Win32 API.
+
+Old, Out of Date Documentation
+==============================
+
+`Developing Component Software with CORBA
+<http://opendylan.org/documentation/opendylan/corba/index.htm>`_
+
+    A tutorial and reference for CORBA interoperability using the Open Dylan ORB.
 
 `OLE, COM, ActiveX and DBMS library reference
 <http://opendylan.org/documentation/opendylan/interop2/index.htm>`_
