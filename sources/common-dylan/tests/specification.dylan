@@ -27,6 +27,24 @@ define module-spec common-extensions ()
   // Numerics
   function integer-length (<integer>) => (<integer>);
 
+  function decode-float (<float>) => (<float>, <integer>, <float>);
+  function scale-float (<float>, <integer>) => (<float>);
+  function float-radix (<float>) => (<integer>);
+  function float-digits (<float>) => (<integer>);
+  function float-precision (<float>) => (<integer>);
+  //function integer-decode-float (<float>) => (<float>, <integer>, <float>);
+
+  constant $single-float-epsilon :: <single-float>;
+  constant $double-float-epsilon :: <double-float>;
+  //constant $extended-float-epsilon :: <extended-float>;
+
+  constant $minimum-single-float-exponent :: <integer>;
+  constant $maximum-single-float-exponent :: <integer>;
+  constant $minimum-double-float-exponent :: <integer>;
+  constant $maximum-double-float-exponent :: <integer>;
+  //constant $minimum-extended-float-exponent :: <integer>;
+  //constant $maximum-extended-float-exponent :: <integer>;
+
   // Unsupplied, unfound
   constant $unsupplied :: <object>;
   function unsupplied () => (<object>);

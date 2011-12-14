@@ -685,3 +685,134 @@ define common-extensions function-test integer-length ()
                 i + 1, integer-length(v4));
   end for;
 end function-test integer-length;
+
+// Ensure that a number is written to memory in order to dispose of
+// any hidden bits in floating-point intermediate values
+
+define variable *temp* :: <float> = 0.0;
+
+define not-inline function store-float (x :: <float>) => (the-x :: <float>)
+  *temp* := x;
+  sequence-point();
+  *temp*;
+end function;
+
+define common-extensions function-test float-radix ()
+  // Based on the algorithm in:
+  //   Malcolm, M. A. Algorithms to reveal properties of floating-point
+  //   arithmetic. Comm. ACM 15, 11 (Nov. 1972), 949-951.
+  //   http://doi.acm.org/10.1145/355606.361870
+  // with improvements (namely the use of store-float) suggested in:
+  //   Gentlemen, W. Morven, Scott B. Marovich. More on algorithms
+  //   that reveal properties of floating point arithmetic units.
+  //   Comm. ACM 17, 5 (May 1974), 276-277.
+  //   http://doi.acm.org/10.1145/360980.361003
+
+  with-test-unit ("float-radix on <single-float>")
+    // Test successive powers of two until we find the first one in
+    // the region where integers are no longer exactly representable
+    let a :: <single-float>
+      = for (a :: <single-float> = 1.0s0 then a + a,
+             while: store-float(store-float(a + 1.0s0) - a) = 1.0s0)
+        finally
+          a
+        end for;
+    // Add successive powers of two to a until we find the successor
+    // floating point number beyond a; a and its successor differ by
+    // beta
+    let ibeta :: <integer>
+      = for (b :: <single-float> = 1.0s0 then b + b,
+             while: zero?(store-float(store-float(a + b) - a)))
+        finally
+          floor(store-float(store-float(a + b) - a))
+        end;
+
+    check-equal("float-radix for <single-float> matches ibeta",
+                ibeta, float-radix(1.0s0));
+  end with-test-unit;
+
+  with-test-unit ("float-radix on <double-float>")
+    // Test successive powers of two until we find the first one in
+    // the region where integers are no longer exactly representable
+    let a :: <double-float>
+      = for (a :: <double-float> = 1.0d0 then a + a,
+             while: store-float(store-float(a + 1.0d0) - a) = 1.0d0)
+        finally
+          a
+        end for;
+    // Add successive powers of two to a until we find the successor
+    // floating point number beyond a; a and its successor differ by
+    // beta
+    let ibeta :: <integer>
+      = for (b :: <double-float> = 1.0d0 then b + b,
+             while: zero?(store-float(store-float(a + b) - a)))
+        finally
+          floor(store-float(store-float(a + b) - a))
+        end;
+
+    check-equal("float-radix for <double-float> matches ibeta",
+                ibeta, float-radix(1.0d0));
+  end with-test-unit;
+end function-test float-radix;
+
+define common-extensions function-test float-digits ()
+  check-true("float-digits(1.0d0) is at least as much as float-digits(1.0s0)",
+             float-digits(1.0d0) >= float-digits(1.0s0));
+end function-test float-digits;
+
+define common-extensions function-test float-precision ()
+  check-true("float-precision(0.0s0) is zero", zero?(float-precision(0.0s0)));
+  check-true("float-precision(0.0d0) is zero", zero?(float-precision(0.0d0)));
+  check-equal("float-precision and float-digits are the same"
+                " for normalized single floats",
+              float-precision(1.0s0), float-digits(1.0s0));
+  check-equal("float-precision and float-digits are the same"
+                " for normalized double floats",
+              float-precision(1.0d0), float-digits(1.0d0));
+end function-test float-precision;
+
+define common-extensions function-test decode-float ()
+  let single-beta :: <single-float> = as(<single-float>, float-radix(1.0s0));
+
+  with-test-unit ("decode-float of <single-float> radix")
+    let (significand :: <single-float>,
+         exponent :: <integer>,
+         sign :: <single-float>) = decode-float(single-beta);
+    check-equal("significand for <single-float> radix = 1 / radix",
+                1.0s0 / single-beta, significand);
+    check-equal("exponent for <single-float> radix = 2",
+                2, exponent);
+    check-equal("sign for <single-float> radix = 1.0s0",
+                1.0s0, sign);
+  end with-test-unit;
+
+  let double-beta :: <double-float> = as(<double-float>, float-radix(1.0d0));
+
+  with-test-unit ("decode-float of <double-float> radix")
+    let (significand :: <double-float>,
+         exponent :: <integer>,
+         sign :: <double-float>) = decode-float(double-beta);
+    check-equal("significand for <double-float> radix = 1 / radix",
+                1.0d0 / double-beta, significand);
+    check-equal("exponent for <double-float> radix = 2",
+                2, exponent);
+    check-equal("sign for <double-float> radix = 1.0d0",
+                1.0d0, sign);
+  end with-test-unit;
+
+end function-test decode-float;
+
+define common-extensions function-test scale-float ()
+  check-equal("scale-float(1.0s0, 1) is float-radix(1.0s0)",
+              as(<single-float>, float-radix(1.0s0)),
+              scale-float(1.0s0, 1));
+  check-equal("scale-float(-1.0s0, 1) is -float-radix(1.0s0)",
+              as(<single-float>, -float-radix(1.0s0)),
+              scale-float(-1.0s0, 1));
+  check-equal("scale-float(1.0d0, 1) is float-radix(1.0d0)",
+              as(<double-float>, float-radix(1.0d0)),
+              scale-float(1.0d0, 1));
+  check-equal("scale-float(-1.0d0, 1) is -float-radix(1.0d0)",
+              as(<double-float>, -float-radix(1.0d0)),
+              scale-float(-1.0d0, 1));
+end function-test scale-float;
