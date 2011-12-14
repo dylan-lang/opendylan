@@ -30,9 +30,9 @@ Guides
 
     A cheat sheet to get you started with the basics of Dylan syntax.
 
-`Getting Started with Open Dylan
-<http://opendylan.org/documentation/opendylan/env/index.htm>`_
+`Getting Started with Open Dylan <getting-started/index.html>`_
 [`pdf <getting-started/GettingStartedWithOpenDylan.pdf>`__]
+[`old HTML <http://opendylan.org/documentation/opendylan/env/index.htm>`__]
 
     Describes Open Dylan's interactive development environment.
 
@@ -41,15 +41,14 @@ Guides
 
     Notes and thoughts on how to format your Dylan code.
 
-`Building Applications Using DUIM
-<http://opendylan.org/documentation/opendylan/dguide/index.htm>`_
+`Building Applications Using DUIM <building-with-duim/index.html>`_
 [`pdf <building-with-duim/BuildingApplicationsWithDUIM.pdf>`__]
+[`old HTML <http://opendylan.org/documentation/opendylan/dguide/index.htm>`__]
 
     Describes how to use DUIM (Dylan User Interface Manager),
     the portable window programming toolkit.
 
-`Open Dylan Hacker's Guide
-<hacker-guide/index.html>`_
+`Open Dylan Hacker's Guide <hacker-guide/index.html>`_
 [`pdf <hacker-guide/OpenDylanHackersGuide.pdf>`__]
 
     A work in progress to help out people who are hacking on Open Dylan itself.
@@ -63,18 +62,18 @@ Publications
 References
 ==========
 
-`Common Dylan and Functional Extensions library reference
-<http://opendylan.org/documentation/opendylan/core/index.htm>`_
+`Common Dylan and Functional Extensions library reference <core-reference/index.html>`_
 [`pdf <core-reference/CoreReference.pdf>`__]
+[`old HTML <http://opendylan.org/documentation/opendylan/core/index.htm>`__]
 
     Describes the Open Dylan implementation of the Dylan language, a
     common set of Dylan libraries, and a library interchange mechanism.
     The common libraries provide many language extensions, a threads
     interface, and object finalization.
 
-`System and I/O library reference
-<http://opendylan.org/documentation/opendylan/io/index.htm>`_
+`System and I/O library reference <io-reference/index.html>`_
 [`pdf <io-reference/SystemAndIOReference.pdf>`__]
+[`old HTML <http://opendylan.org/documentation/opendylan/io/index.htm>`__]
 
     Describes Open Dylan's printing and output formatting modules,
     a streams module, a sockets module, and modules providing an
@@ -88,9 +87,9 @@ References
     the portable window programming toolkit. It complements
     Building Applications Using DUIM.
 
-`C FFI and Win32 library reference
-<http://opendylan.org/documentation/opendylan/interop1/index.htm>`_
+`C FFI and Win32 library reference <cffi-win32-reference/index.html>`_
 [`pdf <cffi-win32-reference/C-FFIandWin32Reference.pdf>`__]
+[`old HTML <http://opendylan.org/documentation/opendylan/interop1/index.htm>`__]
 
     Describes a foreign function interface library for interoperation
     with C programs, and several libraries providing a low-level interface
