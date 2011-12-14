@@ -62,7 +62,7 @@ Publications
 References
 ==========
 
-`Common Dylan and Functional Extensions library reference <core-reference/index.html>`_
+`Common Dylan library reference <core-reference/index.html>`_
 [`pdf <core-reference/CoreReference.pdf>`__]
 [`old HTML <http://opendylan.org/documentation/opendylan/core/index.htm>`__]
 
