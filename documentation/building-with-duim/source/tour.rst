@@ -12,11 +12,9 @@ in the more general context of application development.
 
 To gain an understanding of how different pieces of DUIM functionality
 can be glued together to create a working application, you should follow
-the extended example given in this manual in `Designing A Simple
-DUIM Application <design.htm#77027>`_ through `Adding Callbacks to
-the Application <callbacks.htm#15598>`_. If you need more complete
-information on any particular aspect of DUIM, you should refer to the
-DUIM Reference Manual.
+the extended example given in this manual in :doc:`design` through
+:doc:`callbacks`. If you need more complete information on any particular
+aspect of DUIM, you should refer to the DUIM Reference Manual.
 
 The most important DUIM classes are as follows:
 
@@ -35,20 +33,20 @@ DUIM class.
 This chapter introduces you to the most important and useful of all
 these elements.
 
--  `A tour of gadgets <tour.htm#54586>`_ describes many of the
+-  `A tour of gadgets`_ describes many of the
    gadgets available in DUIM. A wide variety of different gadgets are
    available in DUIM, to enable you to create applications that utilize
    all of the controls for the target operating system.
--  `A tour of layouts <tour.htm#99071>`_ describes layouts. These
+-  `A tour of layouts`_ describes layouts. These
    are classes that allow you to group together other sheets
    hierarchically (typically gadgets and other layouts) in order to put
    together the elements in any window.
--  `A tour of sheets <tour.htm#12388>`_ introduces you to the more
+-  `A tour of sheets`_ introduces you to the more
    general concept of sheets. If you intend defining your own sheet
    classes (for instance, to design your own controls), then you will
    need to understand how to handle sheets on a more general level than
    is needed to use gadgets or layouts.
--  `A tour of frames <tour.htm#20992>`_ introduces the different
+-  `A tour of frames`_ introduces the different
    kinds of frame available. There are two basic types of frame: normal
    windows and dialog boxes. This section also describes how to create
    your own classes of frame.
@@ -118,8 +116,8 @@ function that is invoked when a particular event occurs that is
 associated with a given gadget, such as pressing a button. It is the
 primary technique you use to make your applications “do something”. Like
 gadget properties, different classes of gadget can have different
-callback types available. For an introduction to callbacks, see `See
-Assigning callbacks to gadgets <tour.htm#77603>`_.
+callback types available. For an introduction to callbacks, see
+`Assigning callbacks to gadgets`_.
 
 Button gadgets
 ~~~~~~~~~~~~~~
@@ -141,14 +139,15 @@ DUIM provides three standard button gadget classes:
 -  ``<check-button>`` Sometimes referred to as *check box* in Microsoft
    documentation.
 
+.. _three-buttons:
+
 .. figure:: images/tour-3.png
    :align: center
 
    A push button, a radio button, and a check button
 
-The chapters covering the task list manager application (chapters `See
-Designing A Simple DUIM Application <design.htm#77027>`_ to `Using
-Command Tables <commands.htm#99799>`_) introduced you to the
+The chapters covering the task list manager application (chapters
+:doc:`design` to :doc:`commands`) introduced you to the
 ``<push-button>`` class. This is the default type of button (that is,
 creating an instance of ``<button>`` actually creates an instance of
 ``<push-button>`` ).
@@ -160,9 +159,8 @@ creating an instance of ``<button>`` actually creates an instance of
 Radio buttons let you choose one option out of a group of several. They
 are usually implemented in groups of several buttons (using the
 ``<radio-box>`` class), although they can also be created singly, as shown
-in `A push button, a radio button, and a check
-button <tour.htm#43717>`_. For more information about creating groups of
-radio buttons, see `Button boxes <tour.htm#34577>`_.
+in :ref:`three-buttons`.  For more information about creating groups of
+radio buttons, see `Button boxes`_.
 
 .. code-block:: dylan
 
@@ -172,7 +170,7 @@ Check buttons are buttons whose setting can be toggled on and off. Like
 radio buttons, they are often implemented in groups, although unlike
 radio buttons, they are frequently used individually. For more
 information about creating groups of check buttons, see `Button
-boxes <tour.htm#34577>`_.
+boxes`_.
 
 .. code-block:: dylan
 
@@ -249,7 +247,7 @@ small.
 Menu buttons
 ~~~~~~~~~~~~
 
-`Standard buttons <tour.htm#41055>`_ described buttons that are all
+`Standard buttons`_ described buttons that are all
 displayed in windows on the screen. For each of those buttons, there is
 an analogous type of button that is displayed as an item in a menu.
 
@@ -272,7 +270,7 @@ small dot to the left of the command name on the menu.
 
 As with radio buttons, radio menu buttons are most useful when used in
 group form. The class ``<radio-menu-box>`` is provided for this purpose.
-See `Menu boxes <tour.htm#44083>`_ for more details.
+See `Menu boxes`_ for more details.
 
 |image2| The ``<check-menu-button>`` class is used to create a menu item
 that has the properties of a check button. The value of a check menu
@@ -283,8 +281,7 @@ number may be on at any one time.
 In appearance, a selected check menu button is usually shown with a
 check mark to the left of the command name on the menu.
 
-For more information about creating menus, see `Adding Menus To The
-Application <menus.htm#81811>`_.
+For more information about creating menus, see :doc:`menus`.
 
 Collection gadgets
 ~~~~~~~~~~~~~~~~~~
@@ -463,8 +460,7 @@ useful to use push menu boxes to group together related menu commands
 such as *Cut*, *Copy*, and *Paste*, where the operations performed by
 the commands are related, even though the commands themselves do not act
 as a group. Note that you can also use command tables to create and
-group related menu commands. See `Using Command
-Tables <commands.htm#99799>`_ for more details.
+group related menu commands. See :doc:`commands` for more details.
 
 Lists
 ~~~~~
@@ -698,8 +694,7 @@ create the contents of a table control, based on the control’s items.
 Thus, the first element of the ``headings:`` sequence contains the heading
 for the first column in the control, and the first function in the
 ``generators:`` sequence is used to generate the contents of that column,
-and so on for each element in each sequence, as shown in `Defining
-column headings and contents in table controls <tour.htm#68215>`_.
+and so on for each element in each sequence, as shown here:
 
 .. figure:: images/table-headings-and-contents.png
    :align: center
@@ -822,7 +817,7 @@ and the resulting text editor has the specified number of character
 columns (width) and the specified number of lines (height).
 
 In addition, text editors support the ``scroll-bars:`` init-keyword
-described in `Lists <tour.htm#21075>`_.
+described in `Lists`_.
 
 .. code-block:: dylan
 
@@ -863,9 +858,10 @@ value range gadget is the set of integers from 0 to 100.
 When first created, the value of a range gadget is the minimum value of
 the ``gadget-value-range`` of the gadget, unless ``value:`` is specified. As
 with all other gadgets, use ``gadget-value`` to return or set this value,
-as shown in `Returning or setting the gadget-value of a
-scroll-bar <tour.htm#35517>`_, which illustrates this behavior for a
-scroll bar.
+as shown in :ref:`gadget-value-scroll-bar`, which
+illustrates this behavior for a scroll bar.
+
+.. _gadget-value-scroll-bar:
 
 .. figure:: images/tour-24.png
    :align: center
@@ -1155,6 +1151,8 @@ coordinates, as shown in the following example:
                    make(<push-button>, label: "Three",
                         x: 50, y: 100))));
 
+.. _three-buttons-pinboard-layout:
+
 .. figure:: images/pinboard.png
    :align: center
 
@@ -1164,17 +1162,16 @@ Any child in a pinboard layout obeys any size constraints that may apply
 to it, whether those constraints have been specified by you, or
 calculated by DUIM. For instance, any button you place on a pinboard
 layout will always be large enough to display all the text in its label,
-as shown in `Three buttons arranged in a pinboard
-layout <tour.htm#35716>`_. The ``<fixed-layout>`` class takes
-generalization of layouts a step further, by requiring that you specify
-not only the position of every child, but also its size, so that DUIM
-performs no constraint calculation at all.This class of layout should
-only be used if you know exactly what size and position every child in
-the layout should have. It might be useful, for instance, if you were
-setting up a resource database in which the sizes and positions of a
-number of sheets were specified, and were to be read directly into your
-application code from this database. For most situations, however, you
-will not need to use the ``<fixed-layout>`` class.
+as shown in :ref:`three-buttons-pinboard-layout`. The ``<fixed-layout>``
+class takes generalization of layouts a step further, by requiring that
+you specify not only the position of every child, but also its size, so
+that DUIM performs no constraint calculation at all. This class of layout
+should only be used if you know exactly what size and position every child
+in the layout should have. It might be useful, for instance, if you were
+setting up a resource database in which the sizes and positions of a number
+of sheets were specified, and were to be read directly into your application
+code from this database. For most situations, however, you will not need to
+use the ``<fixed-layout>`` class.
 
 Using horizontally and vertically macros
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1237,8 +1234,8 @@ sheets in any application.
 For basic DUIM applications, you do not need to be aware of sheet
 protocols, and you do not need to define your own sheet classes, since
 most of the sheet classes you need to use have been implemented for you
-in the form of gadgets (`A tour of gadgets <tour.htm#54586>`_) and
-layouts (`A tour of layouts <tour.htm#99071>`_).
+in the form of gadgets (`A tour of gadgets`_) and layouts
+(`A tour of layouts`_).
 
 Basic properties of sheets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1368,11 +1365,9 @@ You can specify a wide variety of properties for any instance or class
 of frame. This section describes some of the most common properties you
 might want to use. Naturally, when you create your own classes of frame
 by subclassing ``<simple-frame>``, you can define new properties as well.
-For more information on creating your own frame classes, see `See
-Defining new classes of frame <tour.htm#34210>`_, and review the
-description of the task list manager in `Improving The
-Design <improve.htm#63710>`_ and `Adding Menus To The
-Application <menus.htm#81811>`_.
+For more information on creating your own frame classes, see
+`Defining new classes of frame`_, and review the description of the task
+list manager in :doc:`improve` and :doc:`menus`.
 
 The ``frame-pane`` property is used to define every discrete element in a
 frame class. Exactly what constitutes a discrete element is, to a large
@@ -1555,9 +1550,8 @@ thus: ``make-example-frame();``.
 
 For a more complete example of how to define your own class of frame for
 use in an application, see the chapters that cover the development of
-the Task List Manager in this manual (Chapters `Designing A Simple
-DUIM Application <design.htm#77027>`_ to `Using Command
-Tables <commands.htm#99799>`_).
+the Task List Manager in this manual (Chapters :doc:`design` to
+:doc:`commands`).
 
 Overview of dialogs
 ~~~~~~~~~~~~~~~~~~~
@@ -1572,7 +1566,7 @@ task, you should provide a dialog to gather information.
 For general purposes, you can create your own custom dialog boxes using
 frames: the class ``<dialog-frame>`` is provided as a straightforward way
 of designing frames specifically for use as dialogs. See `A tour of
-frames <tour.htm#20992>`_ for an introduction to frames.
+frames`_ for an introduction to frames.
 
 For commonly used dialog boxes, DUIM provides you with a number of
 convenience functions that let you use predefined dialogs in your
@@ -1665,15 +1659,13 @@ provided to for defining your own sheets and handling events.
 From here, you can refer to two other sources of information.
 
 -  If you have not already done so, go back and study the chapters that
-   cover the development of the Task List Manager application (`See
-   Designing A Simple DUIM Application <design.htm#77027>`_ to `See
-   Adding Callbacks to the Application <callbacks.htm#15598>`_
-   inclusive). Try building the project in the development environment,
-   experiment with the code, and extend the application in any way you
-   wish.
+   cover the development of the Task List Manager application (:doc:`design`
+   to :doc:`callbacks` inclusive). Try building the project in the
+   development environment, experiment with the code, and extend the
+   application in any way you wish.
 -  A number of DUIM examples are supplied with Open Dylan, in
    addition to those discussed in this book. In the environment, choose
-   *Tools > Open Example Project* to display the Open Example Project
+   **Tools > Open Example Project** to display the Open Example Project
    dialog, and try some of the examples listed under the DUIM category.
 -  For complete information on everything provided by DUIM, look at the
    *DUIM Reference Manual*. This contains a complete description of

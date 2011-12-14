@@ -34,11 +34,10 @@ a task list manager is familiar to the majority of readers, so you can
 study the code and the programming model, without having to spend time
 figuring out what the application itself is supposed to do.
 
-The final task list manager is shown in `The Task List Manager
-Application <design.htm#21629>`_. To load the code for the final design
-into the environment, choose *Tools > Open Example Project* from any
-window in the environment, and load the Task List 1 project from the
-Documentation category of the Open Example Project dialog.
+The final task list manager is shown in :doc:`design`. To load the code
+for the final design into the environment, choose **Tools > Open Example
+Project** from any window in the environment, and load the Task List 1
+project from the Documentation category of the Open Example Project dialog.
 
 The Task List Manager Application
 
@@ -164,9 +163,8 @@ There is one aspect of the initial design that you have not yet
 incorporated into the structure: the radio box. This serves two purposes
 in the application:
 
-It lets you choose the priority for a new task.
-
-It displays the priority of any task selected in the list.
+#. It lets you choose the priority for a new task.
+#. It displays the priority of any task selected in the list.
 
 The code to create the radio box is as follows:
 

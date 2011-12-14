@@ -25,9 +25,9 @@ Command tables are best used in the following situations:
    application state changes).
 
 In other cases, you should define your menu hierarchy by defining panes
-that combine specific gadgets, as demonstrated in `Adding Menus To
-The Application <menus.htm#81811>`_. Using a combination of command
-tables and standard menu definitions in a GUI design is not recommended.
+that combine specific gadgets, as demonstrated in :doc:`menus`. Using a
+combination of command tables and standard menu definitions in a GUI
+design is not recommended.
 
 The task list manager application does not use check or radio buttons in
 any of its menu commands, and the menu bar is not context sensitive.
@@ -38,14 +38,14 @@ This chapter provides an introduction to command tables by showing you
 how to re-implement the menu system of the task list manager as a set of
 command tables. It does not provide a complete copy of all the source
 code necessary to implement the task list manager. For a complete copy
-of the code, please refer to `Source Code For The Task List
-Manager <source.htm#77017>`_. To load the code into the environment,
-choose *Tools > Open Example Project* from any window in the
+of the code, please refer to :doc:`source`. To load the code into the
+environment, choose **Tools > Open Example Project** from any window in the
 environment, and load the Task List 2 project from the Documentation
-category of the Open Example Project dialog. *Please note that this
-project, like the Task List 1 project, is called* ``task-list`` *within
-the source code, and you should not load them both into the environment
-at the same time.*
+category of the Open Example Project dialog.
+
+.. note:: Please note that this project, like the Task List 1 project,
+   is called ``task-list`` within the source code, and you should not
+   load them both into the environment at the same time.
 
 Implementing a command table
 ----------------------------
@@ -74,10 +74,9 @@ This defines a command table, called ``*file-command-table*``, that
 contains all the menu commands required in the *File* menu of the task
 list manager. It replaces the definition of each menu button, as well as
 the definition of the *File* menu itself, in the original implementation
-of the task list manager application that was given in `Adding Menus
-To The Application <menus.htm#81811>`_. As you can see, this definition
-is considerably shorter than the individual definitions of the menu and
-menu buttons previously required,
+of the task list manager application that was given in :doc:`menus`.
+As you can see, this definition is considerably shorter than the individual
+definitions of the menu and menu buttons previously required,
 
 When defining a command table, you should provide a list of other
 command tables from which the command table you are defining inherits.
@@ -102,8 +101,7 @@ command table.
 Each menu item is introduced using the ``menu-item`` option, and a command
 is specified for each menu item immediately after the ``=`` sign. Each
 command is just the activate callback that was defined for the
-equivalent menu button gadget in `Adding Callbacks to the
-Application <callbacks.htm#15598>`_.
+equivalent menu button gadget in :doc:`callbacks`.
 
 Notice that you can use the ``accelerator:`` and ``documentation:``
 init-keywords to specify a keyboard accelerator and a documentation
@@ -117,13 +115,11 @@ Re-implementing the menus of the task list manager
 
 The code below provides definitions for the entire menu hierarchy of the
 task list manager, using the same activate callbacks that are described
-and implemented in `Adding Callbacks to the
-Application <callbacks.htm#15598>`_. Note that the labels, documentation
+and implemented in :doc:`callbacks`. Note that the labels, documentation
 strings, and keyboard accelerators for each menu item are identical to
 the ones used in the original implementation of the task list manager.
 For completeness, the definition of ``*file-command-table*``, described
-in `Implementing a command table <commands.htm#97241>`_, is repeated
-below.
+in :doc:`commands`, is repeated below.
 
 .. code-block:: dylan
 
@@ -211,26 +207,22 @@ with
     command-table (frame) *task-list-command-table*;
 
 A complete listing of the implementation of ``<task-frame>`` using command
-tables is given in `Source Code For The Task List
-Manager <source.htm#77017>`_.
+tables is given in :doc:`source`.
 
 Changes required to run Task List 2
 -----------------------------------
 
 In order for the Task List 2 project to run properly, you must modify
-some of the definitions you constructed in `Adding Callbacks to the
-Application <callbacks.htm#15598>`_. This section outlines the required
-changes. For your convenience, the complete source code for both of the
-Task List projects is provided in `Source Code For The Task List
-Manager <source.htm#77017>`_.
+some of the definitions you constructed in :doc:`callbacks`. This section
+outlines the required changes. For your convenience, the complete source
+code for both of the Task List projects is provided in :doc:`source`.
 
 Changes to button definitions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The definition of each button in the definition of ``<task-frame>`` needs
 to be modified compared to their definition in the Task List 1 project,
-as described in `Gluing the new design
-together <improve.htm#70170>`_.
+as described in `Gluing the new design together <improve.htm#70170>`_.
 
 Broadly speaking, you need to update the ``command:`` keyword/argument
 pair for each button gadget, and you need to redefine the activate

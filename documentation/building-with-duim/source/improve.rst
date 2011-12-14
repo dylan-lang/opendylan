@@ -40,13 +40,14 @@ is the default setting).
 Two versions of the task list manager are included with Open Dylan,
 so that you can load the code straight into the environment if you wish.
 These are available in the Open Example Project dialog, in the
-Documentation category. You can display this dialog by choosing *Tools >
-Open Example Project* from the environment. The two versions included
-represent the state of the task list manager at the end of `Adding
-Callbacks to the Application <callbacks.htm#15598>`_, and at the end of
-`Using Command Tables <commands.htm#99799>`_. *Please note that both
-projects have the same name within the source code—* ``task-list`` *—and
-you should not load them both into the environment at the same time.*
+Documentation category. You can display this dialog by choosing **Tools >
+Open Example Project** from the environment. The two versions included
+represent the state of the task list manager at the end of
+:doc:`callbacks`, and at the end of :doc:`commands`.
+
+.. note:: Please note that both projects have the same name within the
+   source code— ``task-list`` —and you should not load them both into
+   the environment at the same time.
 
 The number of source code files in a given project, and the names you
 give them, is entirely up to you. For the purposes of this example, you
@@ -81,18 +82,15 @@ methods to ``frame.dylan``.
 
 The frame class that is used to implement the task list manager is
 called ``<task-frame>``. This class will be introduced in `Defining a
-new frame class <improve.htm#66956>`_. You can define a method to create
-an instance of ``<task-frame>`` as follows:
+new frame class`_. You can define a method to create an instance of
+``<task-frame>`` as follows:
 
-define method start-task () => ()
+.. code-block:: dylan
 
-let frame
-
-= make(<task-frame>);
-
-start-frame(frame);
-
-end method start-task;
+    define method start-task () => ()
+      let frame = make(<task-frame>);
+      start-frame(frame);
+    end method start-task;
 
 This method is provided as a convenient way to create the frame and then
 start its event loop. It returns when the event loop shuts down.
@@ -103,19 +101,16 @@ start its event loop. It returns when the event loop shuts down.
 Finally, you can start the application with the following method, and
 its subsequent call:
 
-define method main (arguments :: <sequence>) => ()
+.. code-block:: dylan
 
-// handle the arguments
+    define method main (arguments :: <sequence>) => ()
+      // handle the arguments
+      start-task();
+    end method main;
 
-start-task();
-
-end method main;
-
-begin
-
-main(application-arguments()) // Start the application!
-
-end;
+    begin
+      main(application-arguments()) // Start the application!
+    end;
 
 Make sure that this is the very last definition in the file
 ``frame.dylan``, and remember that ``frame.dylan`` should itself be the
@@ -149,11 +144,11 @@ behavior for the application.
 The definition of the function that gives you this default behavior is
 as follows:
 
-define function not-yet-implemented (gadget :: <gadget>) => ()
+.. code-block:: dylan
 
-notify-user("Not yet implemented!", owner: sheet-frame(gadget))
-
-end function not-yet-implemented;
+    define function not-yet-implemented (gadget :: <gadget>) => ()
+      notify-user("Not yet implemented!", owner: sheet-frame(gadget))
+    end function not-yet-implemented;
 
 Add this function to ``frame.dylan``.
 
@@ -162,8 +157,7 @@ defining it as the activate callback for each gadget. There are several
 types of callback, and this is the type that is used most in the task
 list manager. You can define the activate callback for any gadget using
 the ``activate-callback:`` init-keyword. More information about callbacks
-is given in `Adding Callbacks to the
-Application <callbacks.htm#15598>`_, in which some real callbacks are
+is given in :doc:`callbacks`, in which some real callbacks are
 defined, to make the task list manager do something more substantial.
 
 Defining a new frame class
@@ -183,11 +177,11 @@ options normally available to ``define class``. Each of these extra
 options lets you describe a particular aspect of the user interface. To
 define the new frame class, use the following structure:
 
-define frame <task-frame> (<simple-frame>)
+.. code-block:: dylan
 
-// definitions of frame slots and options go here
-
-end frame <task-frame>;
+    define frame <task-frame> (<simple-frame>)
+      // definitions of frame slots and options go here
+    end frame <task-frame>;
 
 In this case, ``<task-frame>`` is the name of the new class of frame,
 and``<simple-frame>`` is its superclass. Like ordinary Dylan classes,
@@ -219,39 +213,25 @@ definition to refer to the surrounding frame.
 The following code fragment defines the two buttons, the text field, the
 radio box, and the list box from the initial design:
 
-pane add-button (frame)
+.. code-block:: dylan
 
-make(<push-button>, label: "Add task",
-
-activate-callback: not-yet-implemented);
-
-pane remove-button (frame)
-
-make(<push-button>, label: "Remove task",
-
-activate-callback: not-yet-implemented);
-
-pane task-text (frame)
-
-make(<text-field>, label: "Task text:",
-
-activate-callback: not-yet-implemented);
-
-pane priority-box (frame)
-
-make (<radio-box>, label: "Priority:",
-
-items: #("High", "Medium", "Low"),
-
-orientation: #"vertical",
-
-activate-callback: not-yet-implemented);
-
-pane task-list (frame)
-
-make(<list-box>, items: #(), lines: 15,
-
-activate-callback: not-yet-implemented);
+    pane add-button (frame)
+      make(<push-button>, label: "Add task",
+           activate-callback: not-yet-implemented);
+    pane remove-button (frame)
+      make(<push-button>, label: "Remove task",
+           activate-callback: not-yet-implemented);
+    pane task-text (frame)
+      make(<text-field>, label: "Task text:",
+           activate-callback: not-yet-implemented);
+    pane priority-box (frame)
+      make (<radio-box>, label: "Priority:",
+            items: #("High", "Medium", "Low"),
+            orientation: #"vertical",
+            activate-callback: not-yet-implemented);
+    pane task-list (frame)
+      make(<list-box>, items: #(), lines: 15,
+           activate-callback: not-yet-implemented);
 
 Note that the definition of each element is identical to the definitions
 included in the original layout described in `Creating the basic
@@ -276,14 +256,14 @@ thus:
 
     pane task-layout (frame)
       horizontally ()
-	frame.task-list;
-	vertically ()
-	  horizontally ()
-	    frame.task-text;
-	    frame.add-button;
-	  end;
-	frame.remove-button;
-	frame.priority-box;
+        frame.task-list;
+        vertically ()
+          horizontally ()
+            frame.task-text;
+            frame.add-button;
+          end;
+        frame.remove-button;
+        frame.priority-box;
       end;
     end;
 
@@ -313,9 +293,9 @@ definition of ``task-layout`` is just as valid as the one above:
   pane task-layout (frame)
     make(<row-layout>,
          children: vector(frame.task-list,
-	                  make(<column-layout>,
-			       children: vector(make(<row-layout>,
-			                        children: vector(frame.task-text, frame.add-button))))));
+                          make(<column-layout>,
+                               children: vector(make(<row-layout>,
+                                                children: vector(frame.task-text, frame.add-button))))));
 
 Notice that this construct is rather more complicated than the one using
 macros!
@@ -326,79 +306,47 @@ It is good practice to keep this sequence in mind when writing your own
 frame-based code:
 
 #. Define the content panes
-
 #. Define the layout panes
-
 #. Use the ``layout`` option
 
 If you glue all the code defined in this section together, you end up
 with the following complete definition of a frame class.
 
-define frame <task-frame> (<simple-frame>)
+.. code-block:: dylan
 
-pane add-button (frame)
-
-make(<push-button>, label: "Add task",
-
-activate-callback: not-yet-implemented);
-
-pane remove-button (frame)
-
-make(<push-button>, label: "Remove task",
-
-activate-callback: not-yet-implemented);
-
-pane task-text (frame)
-
-make(<text-field>, label: "Task text:",
-
-activate-callback: not-yet-implemented);
-
-pane priority-box (frame)
-
-make(<radio-box>, label: "Priority:",
-
-items: #("High", "Medium", "Low"),
-
-orientation: #"vertical",
-
-activate-callback: not-yet-implemented);
-
-pane task-list (frame)
-
-make (<list-box>, items: #(), lines: 15,
-
-activate-callback: not-yet-implemented);
-
-pane task-layout (frame)
-
-horizontally ()
-
-frame.task-list;
-
-vertically ()
-
-horizontally ()
-
-frame.task-text;
-
-frame.add-button;
-
-end;
-
-frame.remove-button;
-
-frame.priority-box;
-
-end;
-
-end;
-
-layout (frame) frame.task-layout;
-
-keyword title: = "Task List Manager";
-
-end frame <task-frame>;
+    define frame <task-frame> (<simple-frame>)
+      pane add-button (frame)
+        make(<push-button>, label: "Add task",
+             activate-callback: not-yet-implemented);
+      pane remove-button (frame)
+        make(<push-button>, label: "Remove task",
+             activate-callback: not-yet-implemented);
+      pane task-text (frame)
+        make(<text-field>, label: "Task text:",
+             activate-callback: not-yet-implemented);
+      pane priority-box (frame)
+        make(<radio-box>, label: "Priority:",
+             items: #("High", "Medium", "Low"),
+             orientation: #"vertical",
+             activate-callback: not-yet-implemented);
+      pane task-list (frame)
+        make (<list-box>, items: #(), lines: 15,
+              activate-callback: not-yet-implemented);
+      pane task-layout (frame)
+        horizontally ()
+          frame.task-list;
+          vertically ()
+            horizontally ()
+              frame.task-text;
+              frame.add-button;
+            end;
+            frame.remove-button;
+            frame.priority-box;
+          end;
+        end;
+      layout (frame) frame.task-layout;
+      keyword title: = "Task List Manager";
+    end frame <task-frame>;
 
 Note the addition of a ``title:`` keyword at the end of the definition.
 This can be used to give any instance of the frame class a title that is
@@ -413,7 +361,7 @@ robust, making it easier to modify and, eventually, maintain.
 If you want to try running your code, remember that you need to define
 some additional methods to create a frame instance and exit it cleanly.
 Methods for doing this were provided in `Starting the
-application <improve.htm#17910>`_. If you define these methods now, you
+application`_. If you define these methods now, you
 can create running versions of each successive generation of the
 application as it is developed.
 
@@ -468,10 +416,10 @@ simple tool bar containing two buttons is as follows:
 
     pane task-tool-bar (frame)
       make(<tool-bar>,
-	   child: horizontally ()
-		    frame.add-button;
-		    frame.remove-button
-		  end);
+           child: horizontally ()
+                    frame.add-button;
+                    frame.remove-button
+                  end);
       // ...more definitions here...
       tool-bar (frame) frame.task-tool-bar;
 
@@ -508,8 +456,7 @@ instance of ``<string>``.
 So now the application has a tool bar. Somewhat oddly, it does not yet
 have a menu bar or a system of menus — most tool bars represent a subset
 of the commands already available from the application’s menu system. A
-menu system is added to the task list manager in `Adding Menus To
-The Application <menus.htm#81811>`_.
+menu system is added to the task list manager in :doc:`menus`.
 
 Adding a status bar
 -------------------
@@ -563,12 +510,12 @@ the radio box.
 
     pane priority-box (frame)
       make(<radio-box>,
-	   items: $priority-items,
-	   orientation: #"horizontal",
-	   label-key: first,
-	   value-key: second,
-	   value: #"medium",
-	   activate-callback: not-yet-implemented);
+           items: $priority-items,
+           orientation: #"horizontal",
+           label-key: first,
+           value-key: second,
+           value: #"medium",
+           activate-callback: not-yet-implemented);
 
 Notice that the orientation is no longer constrained to be vertical. In
 the new design, a horizontal radio box looks better. By default, the
@@ -587,8 +534,8 @@ of this constant is as follows:
 
     define constant $priority-items
       = #(#("Low", #"low"),
-	  #("Medium", #"medium"),
-	  #("High", #"high"));
+          #("Medium", #"medium"),
+          #("High", #"high"));
 
 Add the definition for this constant to ``frame.dylan``.
 
@@ -597,23 +544,21 @@ values to the individual components of the radio box elegantly, in
 conjunction with the other improvements to the definition of
 ``priority-box``.
 
-The *label key* is a function which is passed an entry from the sequence
-and returns a string to use as the label.
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+- The *label key* is a function which is passed an entry from the sequence
+  and returns a string to use as the label.
 
-Assigning ``first`` to the label key of ``priority-box`` ensures that the
-first element from each sub-list of ``$priority-items`` (the string) is
-used as the label for the appropriate item. Thus, the first button in
-priority box is labeled “Low”.
+  Assigning ``first`` to the label key of ``priority-box`` ensures that the
+  first element from each sub-list of ``$priority-items`` (the string) is
+  used as the label for the appropriate item. Thus, the first button in
+  priority box is labeled “Low”.
 
-The *value key* is a function which is passed an entry and returns the
-logical value of the entry.
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+- The *value key* is a function which is passed an entry and returns the
+  logical value of the entry.
 
-Assigning ``second`` to the value key of ``priority-box`` ensures that the
-second element from each sub-list of ``$priority-items`` (the symbol) is
-used as the value for the appropriate item. Thus, the first button in
-priority box has the value ``#"low"``.
+  Assigning ``second`` to the value key of ``priority-box`` ensures that the
+  second element from each sub-list of ``$priority-items`` (the symbol) is
+  used as the value for the appropriate item. Thus, the first button in
+  priority box has the value ``#"low"``.
 
 Lastly, ``priority-box`` is given a default value: ``#"medium"``. This
 ensures that the button labeled “Medium” is selected by default whenever
@@ -621,12 +566,12 @@ ensures that the button labeled “Medium” is selected by default whenever
 
 The definitions for ``add-button``, ``remove-button``, and ``task-list``
 remain unchanged from the initial design. In addition, you need to add
-the definitions for ``open-button`` and ``save-button`` described in `See
-Adding a tool bar <improve.htm#32725>`_.
+the definitions for ``open-button`` and ``save-button`` described in
+`Adding a tool bar`_.
 
 You also need to add in the definitions for the tool bar and status bar
-themselves, as described in `Adding a tool bar <improve.htm#32725>`_
-and `Adding a status bar <improve.htm#26367>`_.
+themselves, as described in `Adding a tool bar`_
+and `Adding a status bar`_.
 
 The definition for ``task-layout`` has become much simpler. Because you
 have added buttons to the tool bar, the main layout for the application
@@ -637,115 +582,65 @@ The definition for the new design of the frame class now looks as
 follows (button definitions vary slightly for the Task List 2 project,
 see `A task list manager using command tables <source.htm#52969>`_):
 
-define frame <task-frame> (<simple-frame>)
+.. code-block:: dylan
 
-// definition of buttons
-
-pane add-button (frame)
-
-make(<push-button>, label: "Add task",
-
-activate-callback: not-yet-implemented);
-
-pane remove-button (frame)
-
-make(<push-button>, label: "Remove task",
-
-activate-callback: not-yet-implemented);
-
-pane open-button (frame)
-
-make(<push-button>, label: "Open file",
-
-activate-callback: not-yet-implemented);
-
-pane save-button (frame)
-
-make(<push-button>, label: "Save file",
-
-activate-callback: not-yet-implemented);
-
-// definition of radio box
-
-pane priority-box (frame)
-
-make (<radio-box>,
-
-items: $priority-items,
-
-orientation: #"horizontal",
-
-label-key: first,
-
-value-key: second,
-
-value: #"medium",
-
-activate-callback: not-yet-implemented);
-
-// definition of tool bar
-
-pane task-tool-bar (frame)
-
-make(<tool-bar>,
-
-child: horizontally ()
-
-frame.open-button;
-
-frame.save-button;
-
-frame.add-button;
-
-frame.remove-button
-
-end);
-
-// definition of status bar
-
-pane task-status-bar (frame)
-
-make(<status-bar>, label: "Task Manager");
-
-// definition of list
-
-pane task-list (frame)
-
-make (<list-box>, items: #(), lines: 15,
-
-activate-callback: not-yet-implemented);
-
-// main layout
-
-pane task-layout (frame)
-
-vertically ()
-
-frame.task-list;
-
-frame.priority-box;
-
-end;
-
-// activation of frame elements
-
-layout (frame) frame.task-layout;
-
-tool-bar (frame) frame.task-tool-bar;
-
-status-bar (frame) frame.task-status-bar;
-
-// frame title
-
-keyword title: = "Task List Manager";
-
-end frame <task-frame>;
+    define frame <task-frame> (<simple-frame>)
+      // definition of buttons
+      pane add-button (frame)
+        make(<push-button>, label: "Add task",
+             activate-callback: not-yet-implemented);
+      pane remove-button (frame)
+        make(<push-button>, label: "Remove task",
+             activate-callback: not-yet-implemented);
+      pane open-button (frame)
+        make(<push-button>, label: "Open file",
+             activate-callback: not-yet-implemented);
+      pane save-button (frame)
+        make(<push-button>, label: "Save file",
+             activate-callback: not-yet-implemented);
+      // definition of radio box
+      pane priority-box (frame)
+        make (<radio-box>,
+              items: $priority-items,
+              orientation: #"horizontal",
+              label-key: first,
+              value-key: second,
+              value: #"medium",
+              activate-callback: not-yet-implemented);
+      // definition of tool bar
+      pane task-tool-bar (frame)
+        make(<tool-bar>,
+             child: horizontally ()
+               frame.open-button;
+               frame.save-button;
+               frame.add-button;
+               frame.remove-button
+             end);
+      // definition of status bar
+      pane task-status-bar (frame)
+        make(<status-bar>, label: "Task Manager");
+      // definition of list
+      pane task-list (frame)
+        make (<list-box>, items: #(), lines: 15,
+              activate-callback: not-yet-implemented);
+      // main layout
+      pane task-layout (frame)
+        vertically ()
+          frame.task-list;
+          frame.priority-box;
+        end;
+      // activation of frame elements
+      layout (frame) frame.task-layout;
+      tool-bar (frame) frame.task-tool-bar;
+      status-bar (frame) frame.task-status-bar;
+      // frame title
+      keyword title: = "Task List Manager";
+    end frame <task-frame>;
 
 Note that this definition does not incorporate the original ``task-text``
-pane defined in `Defining a new frame class <improve.htm#66956>`_.
-In fact, this part of the original interface is handled differently in
-the final design, and is re-implemented in `Creating a dialog for
-adding new items <improve.htm#89811>`_.
+pane defined in `Defining a new frame class`_. In fact, this part of the
+original interface is handled differently in the final design, and is
+re-implemented in `Creating a dialog for adding new items`_.
 
 Creating a dialog for adding new items
 --------------------------------------
@@ -789,59 +684,32 @@ Add this method to ``frame.dylan``.
    tasks <callbacks.htm#71186>`_ is added to your project, any attempt to
    build it will generate a serious warning.
 
-define method prompt-for-task
+.. code-block:: dylan
 
-(#key title = "Type text of new task", owner)
-
-=> (name :: false-or(<string>),
-
-priority :: false-or(<priority>))
-
-let task-text
-
-= make(<text-field>,
-
-label: "Task text:",
-
-activate-callback: exit-dialog);
-
-let priority-field
-
-= make(<radio-box>,
-
-items: $priority-items,
-
-label-key: first,
-
-value-key: second,
-
-value: #"medium");
-
-let frame-add-task-dialog
-
-= make(<dialog-frame>,
-
-title: title,
-
-owner: owner,
-
-layout: vertically ()
-
-task-text;
-
-priority-field
-
-end,
-
-input-focus: task-text);
-
-if (start-dialog(frame-add-task-dialog))
-
-values(gadget-value(task-text), gadget-value(priority-field))
-
-end
-
-end method prompt-for-task;
+    define method prompt-for-task
+        (#key title = "Type text of new task", owner)
+     => (name :: false-or(<string>),
+      priority :: false-or(<priority>))
+      let task-text = make(<text-field>,
+                           label: "Task text:",
+                           activate-callback: exit-dialog);
+      let priority-field = make(<radio-box>,
+                                items: $priority-items,
+                                label-key: first,
+                                value-key: second,
+                                value: #"medium");
+      let frame-add-task-dialog = make(<dialog-frame>,
+                                       title: title,
+                                       owner: owner,
+                                       layout: vertically ()
+                                         task-text;
+                                         priority-field
+                                       end,
+                                       input-focus: task-text);
+      if (start-dialog(frame-add-task-dialog))
+        values(gadget-value(task-text), gadget-value(priority-field))
+      end
+    end method prompt-for-task;
 
 Notice that the dialog used in the ``prompt-for-task`` method is created
 inline within the method definition. In this particular case, the dialog

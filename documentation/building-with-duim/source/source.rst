@@ -3,26 +3,25 @@ Source Code For The Task List Manager
 *************************************
 
 For completeness, here is the full source code for both versions of the
-task list manager. If you have followed the example given in
-` <design.htm#77027>`_ through ` <commands.htm#99799>`_ from the
-beginning, then your code should be the same as the code given in `A
-task list manager using menu gadgets <source.htm#60987>`_. The source
-code for the second version of the task list manager, using command
-tables, is given in `A task list manager using command
-tables <source.htm#52969>`_. *Please note that both projects have the
-same name within the source code—* *task-list* *—and you should not load
-them both into the environment at the same time.*
+task list manager. If you have followed the example given in :doc:`design`
+through :doc:`commands` from the beginning, then your code should be the
+same as the code given in `A task list manager using menu gadgets`_. The
+source code for the second version of the task list manager, using command
+tables, is given in `A task list manager using command tables`_.
+
+.. note: Please note that both projects have the same name within the source
+   code— *task-list* —and you should not load them both into the environment
+   at the same time.*
 
 A task list manager using menu gadgets
 --------------------------------------
 
 This section contains the complete source code to the first complete
-design of the task list manager, described in Chapters
-` <improve.htm#63710>`_ to ` <callbacks.htm#15598>`_. To load this code
-into the environment, choose *Tools > Open Example Project* from any
-window in the environment. The code in this section can be loaded by
-choosing Task List 1 in the Documentation category of the Open Example
-Project dialog.
+design of the task list manager, described in Chapters :doc:`improve`
+to :doc:`callbacks`. To load this code into the environment, choose
+**Tools > Open Example Project** from any window in the environment. The
+code in this section can be loaded by choosing Task List 1 in the
+Documentation category of the Open Example Project dialog.
 
 Contents of the file *frame.dylan* :
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -473,17 +472,16 @@ A task list manager using command tables
 This section contains the complete source code of the task list manager
 when command tables have been used to implement the menu system, rather
 than explicit menu gadgets. To load this code into the environment,
-choose *Tools > Open Example Project* from any window in the
+choose **Tools > Open Example Project** from any window in the
 environment. The code in this section can be loaded by choosing Task
 List 2 in the Documentation category of the Open Example Project dialog.
 
 The command tables used in this implementation are described in
-` <commands.htm#99799>`_. You should refer to ` <improve.htm#63710>`_,
-and ` <callbacks.htm#15598>`_, for a full description of the rest of the
-code shown here. Note that, apart from code specific to command tables
-and callbacks, the code listed in this section is a repeat of code
-listed in `A task list manager using menu
-gadgets <source.htm#60987>`_.
+:doc:`commands`. You should refer to :doc:`improve` and :doc:`callbacks`,
+for a full description of the rest of the code shown here. Note that,
+apart from code specific to command tables and callbacks, the code listed
+in this section is a repeat of code listed in `A task list manager using
+menu gadgets`_.
 
 Contents of the file *frame.dylan* :
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -820,5 +818,4 @@ Contents of the file *task-list.dylan* :
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The file *task-list.dylan* is identical to the listing shown in `A
-task list manager using menu gadgets <source.htm#60987>`_, and so is not
-repeated here.
+task list manager using menu gadgets`_, and so is not repeated here.

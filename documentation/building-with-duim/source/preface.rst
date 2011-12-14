@@ -17,39 +17,32 @@ Open Dylan* before reading this manual in any depth.
 
 This manual is divided into several parts:
 
-`Introduction <intro.html>`_ provides an introduction to the concepts
+:doc:`intro` provides an introduction to the concepts
 behind the DUIM libraries, and their intended use.
 
-The chapters `Designing a Simple DUIM Application <design.html>`_
-through to `Adding Callbacks to the Application <callbacks.html>`_
+The chapters :doc:`design` through to :doc:`callbacks`
 provide an extended example of how to use DUIM to design the user
 interface to an application. A simple working application is developed
 from first principles, and this is used as an illustration of some of
-the most useful features provided by the DUIM libraries. `Designing a
-Simple DUIM Application <design.html>`_ provides an initial design for
-the application, `Improving The Design <improve.html>`_ improves on
-this initial design. `Adding Menus To The Application <menus.html>`_
-shows you how you can add a menu system to an application and `Adding
-Callbacks to the Application <callbacks.html>`_ demonstrates how to
-give the application some useful functionality. `Using Command Tables
-<commands.html>`_ introduces the concept of command tables, by
-re-implementing some of the functionality already described in `Adding
-Menus To The Application <menus.html>`_. For reference, the full
-source code of the application described in these chapters is provided
-in `Source Code For The Task List Manager <source.html>`_.
+the most useful features provided by the DUIM libraries. :doc:`design`
+provides an initial design for the application, :doc:`improve` improves
+on this initial design. :doc:`menus` shows you how you can add a menu
+system to an application and :doc:`callbacks` demonstrates how to
+give the application some useful functionality. :doc:`commands`
+introduces the concept of command tables, by re-implementing some of
+the functionality already described in :doc:`menus`. For reference, the
+full source code of the application described in these chapters is provided
+in :doc:`source`.
 
-`A Tour of the DUIM Libraries <tour.html>`_ provides an overall tour
-of what is available in the suite of DUIM libraries. It provides much
-less detail than the chapters covering application development, but
-covers a broader spectrum of functionality. This chapter can be seen
-as a general introduction to the material covered in the *DUIM
-Reference Manual*.
+:doc:`tour` provides an overall tour of what is available in the
+suite of DUIM libraries. It provides much less detail than the
+chapters covering application development, but covers a broader
+spectrum of functionality. This chapter can be seen as a general
+introduction to the material covered in the *DUIM Reference Manual*.
 
-The material provided in `A Tour of the DUIM Libraries <tour.html>`_
-is reasonably independent from the material provided in Chapters
-`Designing a Simple DUIM Application <design.html>`_ to `Adding
-Callbacks to the Application <callbacks.html>`_, and if you wish, you
-can read through the tour before looking at the example
+The material provided in :doc:`tour` is reasonably independent from
+the material provided in Chapters :doc:`design` to :doc:`callbacks`,
+and if you wish, you can read through the tour before looking at the example
 application. Whichever order you approach them in, you should expect
 some repetition of subject matter, however.
 
@@ -73,19 +66,19 @@ modules that use the DUIM library, and any other relevant libraries are
 created for you. You may also like to use the Dylan Playground to
 experiment safely with your development code while keeping your
 project-specific modules clean. You can open the Dylan Playground by
-choosing *Tools > Open Playground* from the Dylan the main window.
+choosing **Tools > Open Playground** from the Dylan the main window.
 
 The full source code for both versions of the application is provided as
 part of the Open Dylan installation. To load them into the
-environment, choose *Tools > Open Example Project* and look in the
+environment, choose **Tools > Open Example Project** and look in the
 Documentation category, at the examples labeled Task List.
 
 Further reading
 ---------------
 
-For more information about DUIM, you should refer to the *DUIM Reference
-Manual*. This provides complete reference material on all the libraries
+For more information about DUIM, you should refer to the **DUIM Reference
+Manual**. This provides complete reference material on all the libraries
 and modules provided by DUIM. A wide variety of examples are also
 provided as part of the standard installation. These can be loaded into
-the environment by choosing *Tools > Open Example Project* from the main
+the environment by choosing **Tools > Open Example Project** from the main
 window.

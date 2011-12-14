@@ -12,10 +12,9 @@ application:
 -  Use a command table.
 
 In this chapter, the first of these methods is demonstrated. For
-information about command tables, refer to `Using Command
-Tables <commands.htm#99799>`_. Before discussing the first method listed
-above, the overall design of the menu system for the task list manager
-is discussed.
+information about command tables, refer to :doc:`commands`. Before
+discussing the first method listed above, the overall design of the
+menu system for the task list manager is discussed.
 
 A description of the menu system
 --------------------------------
@@ -26,18 +25,22 @@ list manager comprises four menus: a *File* menu, *Edit* menu, *Task*
 menu, and *Help*. Each of these menus contains a number of commands, as
 follows:
 
--  *File* menu The *File* menu contains four commands that operate on
+-  *File* menu
+   The *File* menu contains four commands that operate on
    the files loaded into the task list manager. The *Open* command opens
    a new file. The *Save* command saves the currently loaded file to
    disk. The *Save As* command saves the currently loaded file to disk
    under a new name. The *Exit* command quits the task application
    completely.
--  *Edit* menu The *Edit* menu contains the standard clipboard commands:
+-  *Edit* menu
+   The *Edit* menu contains the standard clipboard commands:
    *Cut*, *Copy*, and *Paste*.
--  *Task* menu The *Task* menu contains two commands that operate on
+-  *Task* menu
+   The *Task* menu contains two commands that operate on
    individual tasks. The *Add* command adds a new task to the list. The
    *Remove* command removes the selected task from the list.
--  *Help* menu In a full-blown application, you would use commands in
+-  *Help* menu
+   In a full-blown application, you would use commands in
    the *Help* menu as one hook into your online help system (other hooks
    being provided by buttons in dialog boxes and the F1 key). In this
    application, the *Help* menu contains a single command that simply
@@ -95,7 +98,7 @@ there is a strong similarity between these buttons and some of the
 buttons already defined. DUIM also generates mnemonics for each menu
 item; thus, the items appear as *File* and *Edit*, and so forth. (Note
 that the ``make-keyboard-gesture`` function that appears below is defined
-in `Keyboard accelerators <menus.htm#34519>`_.)
+in `Keyboard accelerators`_.)
 
 .. code-block:: dylan
 
@@ -238,7 +241,7 @@ You can now add the definitions of the menu bar, menus, and menu
 buttons, to the definition of the ``<task-frame>`` class, to give the code
 shown below. At this stage, the only thing missing from the final
 application are real callback functions. Callbacks are dealt with in
-`Adding Callbacks to the Application <callbacks.htm#15598>`_.
+:doc:`callbacks`.
 
 Note that the final definition of ``<task-frame>`` includes the definition
 of a slot: ``frame-task-list``. This takes an instance of the class
