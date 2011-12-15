@@ -11,19 +11,14 @@
 {% endblock %}
 {% set css_files = css_files + ['_static/opendylan.org/css/bootstrap/1.4.0/bootstrap.min.css',
                                 '_static/opendylan.org/css/opendylan.css'] -%}
-{% set script_files = script_files + ['_static/opendylan.org/js/bootstrap-scrollspy.js',
-                                      '_static/opendylan.org/js/bootstrap-dropdown.js'] -%}
+{% set script_files = script_files + ['_static/opendylan.org/js/bootstrap-scrollspy.js'] -%}
 {% set navigation_bar = [
-    ('index', 'Home', []),
-    ('about/index', 'About', []),
-    ('news/index', 'News', []),
-    ('documentation/index', 'Documentation', [
-      ('http://opendylan.org/books/drm/', true, 'Language Specification'),
-      ('documentation/index', false, 'Guides & References'),
-      ('documentation/cheatsheet', false, 'Cheat Sheet')
-    ]),
-    ('community/index', 'Community', []),
-    ('download/index', 'Download', []),
+    ('index', 'Home'),
+    ('about/index', 'About'),
+    ('news/index', 'News'),
+    ('documentation/index', 'Documentation'),
+    ('community/index', 'Community'),
+    ('download/index', 'Download'),
 ] -%}
 {% set active_page = pagename|default('index') -%}
 
@@ -42,22 +37,8 @@
          <img class="logo" src="{{ pathto('_static/opendylan.org/images/dylan-squares.png', 1) }}" alt="Dylan Logo" />
          <a class="brand" href="{{ pathto('index') }}">Open Dylan</a>
          <ul id="nav">
-         {% for page, caption, children in navigation_bar -%}
-           {% if children -%}
-               <li class="dropdown {% for subpage, static, subcaption in children -%}
-                                      {% if subpage == active_page -%} active{% endif -%}
-                                   {% endfor -%}"><a href="{{ pathto(page) }}" class="dropdown-toggle">{{ caption|e }}</a>
-           {% else -%}
-             <li{% if page == active_page %} class="active"{% endif %}><a href="{{ pathto(page) }}">{{ caption|e }}</a>
-           {% endif -%}
-           {% if children -%}
-             <ul class="dropdown-menu">
-             {% for subpage, static, subcaption in children
-               %}<li{% if subpage == active_page %} class="active"{% endif
-               %}><a href="{% if static %}{{ subpage }}{% else %}{{ pathto(subpage) }}{% endif %}">{{ subcaption|e }}</a></li>
-             {% endfor %}
-             </ul>
-             {% endif -%}</li>
+         {% for page, caption in navigation_bar -%}
+           <li{% if page == active_page %} class="active"{% endif %}><a href="{{ pathto(page) }}">{{ caption|e }}</a>
          {% endfor -%}
          </ul>
          <div class="pull-right">
