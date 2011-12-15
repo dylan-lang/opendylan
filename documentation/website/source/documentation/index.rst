@@ -74,9 +74,20 @@ Documentation
       <p>Featured articles and blog postings.</p>
     </div>
 
+    <h3>Learning Dylan</h3>
+
+`Procedural Dylan <../articles/procedural-dylan/index.html>`_ by Paul Haahr.
+
+    This essay explores Dylan from the perspective of a programmer used to
+    traditional procedural languages, such as Pascal or C.
+
+.. raw:: html
+
     <h3>Tools</h3>
 
-* `Development inside emacs using SLIME <../news/2011/12/12/dswank.html>`_
+`Development inside emacs using SLIME <../news/2011/12/12/dswank.html>`_
+
+    An exciting look at using SLIME and emacs for Dylan development.
 
 .. raw:: html
 
