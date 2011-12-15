@@ -8,22 +8,20 @@ Documentation
    in the near future.
    :class: alert-message warning
 
-Online Books
-============
+.. raw:: html
 
-`Dylan Reference Manual
-<http://opendylan.org/books/drm/>`_ (`Errata
-<http://opendylan.org/books/drm/drm_errata.html>`_)
+   <div class="row">
+     <div class="span8">
 
-    The official definition of the Dylan language and standard library.
+     <h2>Learning Dylan</h2>
 
-`Dylan Programming
-<http://opendylan.org/books/dpg/>`_
-
-    A good Dylan tutorial by several Harlequin employees.
-
-Guides
-======
+     <div class="alert-message block-message success">
+       <p>Just getting started with Open Dylan?  We recommend that
+       you read the <a href="intro-dylan/">Introduction to Dylan</a>
+       to get a feel for the language. After that, you can broaden
+       your knowledge with the <a href="../books/dpg/">Dylan Programming</a>
+       book.</p>
+     </div>
 
 `An Introduction to Dylan <intro-dylan/index.html>`_
 [`pdf <intro-dylan/IntroductiontoDylan.pdf>`__]
@@ -32,20 +30,20 @@ Guides
     experience in C++ or another object-oriented static language. It
     provides a gentler introduction to Dylan than does the DRM.
 
-`Dylan Cheat Sheet <cheatsheet.html>`_
+`Dylan Programming <http://opendylan.org/books/dpg/>`_
 
-    A cheat sheet to get you started with the basics of Dylan syntax.
+    A good, book length Dylan tutorial by several Harlequin employees.
+
+`Dylan Style Guide <style-guide/index.html>`_
+[`pdf <style-guide/StyleGuide.pdf>`__]
+
+    Notes and thoughts on how to format your Dylan code.
 
 `Getting Started with Open Dylan <getting-started/index.html>`_
 [`pdf <getting-started/GettingStartedWithOpenDylan.pdf>`__]
 [`old HTML <http://opendylan.org/documentation/opendylan/env/index.htm>`__]
 
     Describes Open Dylan's interactive development environment.
-
-`Dylan Style Guide <style-guide/index.html>`_
-[`pdf <style-guide/StyleGuide.pdf>`__]
-
-    Notes and thoughts on how to format your Dylan code.
 
 `Building Applications Using DUIM <building-with-duim/index.html>`_
 [`pdf <building-with-duim/BuildingApplicationsWithDUIM.pdf>`__]
@@ -54,19 +52,49 @@ Guides
     Describes how to use DUIM (Dylan User Interface Manager),
     the portable window programming toolkit.
 
-`Open Dylan Hacker's Guide <hacker-guide/index.html>`_
-[`pdf <hacker-guide/OpenDylanHackersGuide.pdf>`__]
+.. raw:: html
 
-    A work in progress to help out people who are hacking on Open Dylan itself.
+     <hr>
+     <h2>Cheat Sheets</h2>
 
-Publications
-============
+     <div class="alert-message block-message info">
+       <p>Quick one-page sheets for common tasks.</p>
+     </div>
 
-`See publications page <publications.html>`_
+`Dylan Cheat Sheet <cheatsheet.html>`_
 
+    A cheat sheet to get you started with the basics of Dylan syntax.
 
-References
-==========
+.. raw:: html
+
+     <hr>
+     <h2>Articles</h2>
+
+    <div class="alert-message block-message info">
+      <p>Featured articles and blog postings.</p>
+    </div>
+
+    <h3>Tools</h3>
+
+* `Development inside emacs using SLIME <../news/2011/12/12/dswank.html>`_
+
+.. raw:: html
+
+     </div>
+     <div class="span8">
+
+     <h2>References</h2>
+
+     <div class="alert-message block-message info">
+       <p>These are some lengthier reference materials. While they
+       make for dry reading, they're full of invaluable information!</p>
+     </div>
+
+`Dylan Reference Manual
+<http://opendylan.org/books/drm/>`_ (`Errata
+<http://opendylan.org/books/drm/drm_errata.html>`_)
+
+    The official definition of the Dylan language and standard library.
 
 `Common Dylan library reference <core-reference/index.html>`_
 [`pdf <core-reference/CoreReference.pdf>`__]
@@ -101,8 +129,39 @@ References
     with C programs, and several libraries providing a low-level interface
     to the Microsoft Win32 API.
 
-Old, Out of Date Documentation
-==============================
+.. raw:: html
+
+     <hr>
+     <h2>Open Dylan Developers</h2>
+
+     <div class="alert-message block-message info">
+       <p>Notes and materials useful to those working on
+       Open Dylan itself or have an interest in the low
+       level details.</p>
+     </div>
+
+`Open Dylan Hacker's Guide <hacker-guide/index.html>`_
+[`pdf <hacker-guide/OpenDylanHackersGuide.pdf>`__]
+
+    A work in progress to help out people who are hacking on Open Dylan itself.
+
+.. raw:: html
+
+     <hr>
+     <h2>Publications</h2>
+
+`See our publications page <publications.html>`_.
+
+.. raw:: html
+
+      <hr>
+      <h2>Archived Documentation</h2>
+
+      <div class="alert-message block-message warning">
+        <p>This is old documentation that we don't plan to
+        bring forward. Let us know if there's interest in this
+        material.</p>
+      </div>
 
 `Developing Component Software with CORBA
 <http://opendylan.org/documentation/opendylan/corba/index.htm>`_
@@ -115,3 +174,8 @@ Old, Out of Date Documentation
     Describes high and low level interfaces to COM, OLE, and
     ActiveX component technology, and generic DBMS support, through
     SQL with an ODBC backend.
+
+.. raw:: html
+
+      </div>
+    </div>
