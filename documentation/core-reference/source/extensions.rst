@@ -1629,7 +1629,7 @@ Returns the key at which a particular value occurs in a sequence.
 Signature
          
 
-position *sequence* *value* #key *predicate* *skip* => *key*
+position *sequence* *target* #key *test* *start* *end* *skip* *count* => *position*
                                                             
 
 Arguments
@@ -1638,35 +1638,47 @@ Arguments
 *sequence* An instance of *<sequence>*.
                                         
 
-*value* An instance of *<object>*.
+*target* An instance of *<object>*.
                                    
 
-*predicate* An instance of *<function>*. Default value: *\\==*.
+*test* An instance of *<function>*. Default value: *\\==*.
                                                                  
 
+*start* An instance of *<integer>*. Default value: 0.
+
+
+*end* An instance of *<object>*. Default value: #f.
+
+
 *skip* An instance of *<integer>*. Default value: 0.
+
+
+*count* An instance of *<object>*. Default value: #f.
                                                      
 
 Values
       
 
-*key* An instance of *<object>*.
+*position* An instance of *false-or(<integer>)*.
                                  
 
 Description
            
 
-Returns the key at which *value* occurs in *sequence*.
+Returns the position at which *target* occurs in *sequence*.
 
-If *predicate* is supplied, *position* uses it as an equivalence
-predicate for comparing *sequence* ’s elements to *value*. It should
+If *test* is supplied, *position* uses it as an equivalence
+predicate for comparing *sequence* ’s elements to *target*. It should
 take two objects and return a boolean. The default predicate used is
 *\\==*.
 
 The *skip* argument is interpreted as it is by Dylan’s *find-key*
 function: *position* ignores the first *skip* elements that match
-*value*, and if *skip* or fewer elements satisfy *predicate*, it
+*target*, and if *skip* or fewer elements satisfy *test*, it
 returns *#f*.
+
+The *start* and *end* arguments indicate, if supplied, which subrange
+of the *sequence* is used for the search.
 
 remove-all-keys!
 ----------------
