@@ -34,11 +34,6 @@ Documentation
 
     A good, book length Dylan tutorial by several Harlequin employees.
 
-`Dylan Style Guide <style-guide/index.html>`_
-[`pdf <style-guide/StyleGuide.pdf>`__]
-
-    Notes and thoughts on how to format your Dylan code.
-
 `Getting Started with Open Dylan <getting-started/index.html>`_
 [`pdf <getting-started/GettingStartedWithOpenDylan.pdf>`__]
 [`old HTML <http://opendylan.org/documentation/opendylan/env/index.htm>`__]
@@ -155,6 +150,12 @@ Documentation
 [`pdf <hacker-guide/OpenDylanHackersGuide.pdf>`__]
 
     A work in progress to help out people who are hacking on Open Dylan itself.
+
+`Dylan Style Guide <style-guide/index.html>`_
+[`pdf <style-guide/StyleGuide.pdf>`__]
+
+    Notes and thoughts on how to format your Dylan code. This is the style
+    guide that we aspire to adhere to in the Open Dylan sources.
 
 .. raw:: html
 
