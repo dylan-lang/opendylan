@@ -58,7 +58,7 @@ for the "is not equal to" relationship, Dylan is very similar to Pascal
 for the operations needed in this function. The operator ``:=`` is used
 for assignment to an existing variable (as opposed to ``=``, which is
 used for setting the initial value for a variable created with ``let``)
-and the notation *array*``[``*index*``]`` is used for subscripting. As
+and the notation ``*array*[*index*]`` is used for subscripting. As
 with ``if``, the ``while`` statement is always ended with ``end``, and
 no explicit ``begin`` is needed.
 
@@ -179,14 +179,14 @@ would have to happen to terminate the loop.
 
 The value specified by ``below`` in the loop is also a new construct,
 ``x.size``. This is a Dylan shorthand for calling a function of one
-argument. That is, *expression``.``function-name* is the same thing as
-*function-name``(``expression``)``*. So the expression here is exactly
+argument. That is, ``expression.function-name`` is the same thing as
+``function-name(expression)``. So the expression here is exactly
 the same as ``size(x)``, just written somewhat differently. (The
 hecklers in the audience might observe that it isn't much of a
 shorthand: just one fewer character.)
 
 Pascal and C programmers, among others, are used to using the syntax
-*expression*``.``*name* for referring to fields of a compound object
+``expression.name`` for referring to fields of a compound object
 like a record. It makes sense to wonder why this notation was chosen for
 something else in Dylan, especially when that something else -- calling
 functions -- already had a perfectly reasonable syntax. The reason is

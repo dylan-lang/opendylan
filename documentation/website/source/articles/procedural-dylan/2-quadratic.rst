@@ -229,7 +229,6 @@ predicates end in question marks, as we can see from ``negative?`` and
 
 --------------
 
-`Back -- A Simple Function: Distance <1-distance.html>`_
- `Next -- Iteration and Sequences: Dot Product <3-dot-product.html>`_
+`Back -- A Simple Function: Distance <1-distance.html>`_ | `Next -- Iteration and Sequences: Dot Product <3-dot-product.html>`_
 
 Copyright © 1995 Paul Haahr. All rights reserved.
