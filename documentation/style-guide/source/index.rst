@@ -11,9 +11,15 @@ Purpose of this document
 ========================
 
 This document describes a coding style that the Dylan group recommends.
-There are style some areas of disagreement, and there is still room to
+There are still some areas of disagreement, and there is still room to
 change this style guide. In some places the Dylan book group decided to
 use a different style, which is noted in this guide.
+
+.. Google's style guides are broken down into language rules (e.g.,
+   "do not rely on the atomicity of built in types") and style issues
+   (e.g., "use 80 columns").  I like the distinction.  Also, they
+   clearly show code examples labelled *Yes:* and *No:*.  --cgay
+
 
 Controversial comments
 ======================
@@ -64,6 +70,8 @@ A broader pattern I tend to go for is consistency of indentation within
 a group of forms. If the shape of one or two forms in a group force a
 long-form indentation I'll often reformat the rest to give them a
 consistent look. For example, here is a sequence of ``let`` bindings.
+
+.. This whole document needs to be converted to third person.  --cgay
 
 .. code-block:: dylan
 
@@ -160,6 +168,16 @@ Use end words for everything (e.g., ``if``, ``block``, ...)
 Use name as well (e.g., method, class, ...) except you can abbreviate
 both to allow for inlined expressions.
 
+.. I strongly disagree with this.  End words are too verbose to appear
+   everywhere.  I don't even like to see them at the end of top-level
+   definitions if the definition is less than, say, 10 lines.  I DO
+   like to see them on longer definitions, both at the end of the
+   definition and at the end of particularly large blocks therein.  I
+   think they would be even less needed if we used > 2 space indent.
+   --cgay
+   
+
+
 Semicolons
 ==========
 
@@ -182,18 +200,35 @@ think a little more.
       new-vector
     end method add;
 
-*Dylan book* group is still discussing semicolons.
+.. Personally I would like to say this style is *recommended*.  It also
+   indicates the authors *intent*, for example if they neglected to
+   specify a return values list for the method.  It also looks cleaner
+   since it often means it's possible to leave the semicolons off the
+   last 3 or 4 nested blocks if they're all in return position.
 
 General indentation
 ===================
 
 Avoid boxing your code and having big right column:
 
+**No:**
+
 .. code-block:: dylan
 
     define method yukyukyukyukyukyukyuk (blahblahblahblahblah :: <foo>,
                                          tolosetrack :: <bar>,
                                          concerned? :: <boolean>)
+      ...
+    end method yukyukyukyukyukyukyuk;
+
+**Yes:**
+
+.. code-block:: dylan
+
+    define method yukyukyukyukyukyukyuk
+        (blahblahblahblahblah :: <foo>, tolosetrack :: <bar>,
+         concerned? :: <boolean>)
+      ...
     end method yukyukyukyukyukyukyuk;
 
 Use two space indentation:
@@ -208,11 +243,8 @@ Use two space indentation:
 Operators on newline
 ====================
 
-.. code-block:: dylan
-
-    a | b
-
-Put operator on new line and indent two spaces:
+In long expressions where line breaks are necessary, put operators on
+a new line and indent two spaces:
 
 .. code-block:: dylan
 
@@ -220,21 +252,23 @@ Put operator on new line and indent two spaces:
       | wasthatashovelfull
       | ofraisensorsyrup
 
-Parentheses
-===========
+    superfragilisticespealidoscious
+      := somereallylongexpressionthatdoesnotfitabove;
 
-Indent past parenthesis + operator rule:
+    define variable lilgirlscryalldatime
+      = bigboysdontcry;
 
-.. code-block:: dylan
+    let superfragilisticespealidoscious
+      = someexpressionthatclearlydoesnotfitabove;
 
-    (x + y + z
-       + a + b + c)
 
 Calls
 -----
 
-Usual is on same line with arguments single spaced and no space between
-the function and its argument list:
+Usually is on same line with arguments single spaced and no space
+between the function and its argument list:
+
+**Yes:**
 
 .. code-block:: dylan
 
@@ -262,6 +296,11 @@ Function name more than 6 characters break to newline:
     redirect-computations!
       (old-c, new-c, previous-computations, next-computations);
 
+.. This is **insane**.  It utterly depends on how many args and how
+   long they are.  What is the terrible fear of "right columns" that
+   may or may not result from keeping the paren on the same line as
+   the function name?  --cgay
+
 More arguments:
 
 .. code-block:: dylan
@@ -269,6 +308,13 @@ More arguments:
     redirect-computations!
       (old-c, new-c, previous-computations, next-computations,
        areallylongidthatrequireswrappingtheargs);
+
+.. I would much rather see this:
+
+   redirect-computations!(old-c, new-c, previous-computations,
+                          next-computations,
+                          areallylongidthatrequireswrappingtheargs);
+   --cgay
 
 if then else
 ============
@@ -292,22 +338,16 @@ Abbreviated use:
 let
 ===
 
-Same indentation level:
+``let`` statements should generally have the smallest scope necessary.
+They do not increase the indentation level:
 
 .. code-block:: dylan
 
     let x = xxxxx;
     let y = yyyyy;
-    inc!(x, z);
     let z = f!(x, y);
+    inc!(x, z);
     z + z;
-
-Big names and initialization:
-
-.. code-block:: dylan
-
-    let superfragilisticespealidoscious
-      = someexpressionthatclearlydoesnotfitabove;
 
 select and case
 ===============
@@ -337,9 +377,8 @@ Long expression:
 
 .. code-block:: dylan
 
-    select
-        (supercalifragilisticexbealidocious
-           + someexpressionthatclearlydoesnotfitabove)
+    select (supercalifragilisticexbealidocious
+            + someexpressionthatclearlydoesnotfitabove)
       1 => 2;
       2 => 3;
     end select;
@@ -370,24 +409,10 @@ Macros
         => { }
     end macro;
 
-Assignments broken over two lines
-=================================
-
-.. code-block:: dylan
-
-    superfragilisticespealidoscious
-      := somereallylongexpressionthatdoesnotfitabove;
-
-Definitions broken over two lines
-=================================
-
-.. code-block:: dylan
-
-    define variable lilgirlscryalldatime
-      = bigboysdontcry;
-
 for loop
 ========
+
+Put each iteration clause on a line by itself:
 
 .. code-block:: dylan
 
@@ -396,7 +421,7 @@ for loop
       ...
     end for
 
-Abbreviated use:
+If the iteration clauses are utterly trivial, they may be on one line:
 
 .. code-block:: dylan
 
@@ -455,11 +480,8 @@ A single recursive method:
       stripchars(y)
     end method;
 
-Parameter lists (style A)
-=========================
-
-The *Dylan book style* differs for parameters lists and return values.
-See `Parameters and return values, Dylan book style`_.
+Parameter lists
+===============
 
 Right after function name:
 
@@ -478,30 +500,22 @@ Indentation, style A:
       remove-duplicates(concatenate(seq-1, seq-2), test: test)
     end method union;
 
-    define method f01234567890123456789
-        (a0123456789, b0123456789, c0123456789, d0123456789,
-         e0123456789, f0123456789, g0123456789)
-      body-starts-here
-    end method f01234567890123456789;
-
-Optional parameters: Use the same aesthetic applied to indenting binary
-operators continued across lines, indent # names as follows:
+Optional parameters: Use the same aesthetic applied to indenting
+operators continued across lines, indent #key names as follows:
 
 .. code-block:: dylan
 
     define method print
         (object :: <multiple-value-combination>,
-          #key stream = *standard-output*, verbose?)
+         #key stream = *standard-output*, verbose? :: <boolean> = #t,
+              depth :: false-or(<integer>))
       ...
     end method print;
 
-Return values (style A)
-=======================
+Return values
+=============
 
-The *Dylan book style* differs for parameters lists and return values.
-See `Parameters and return values, Dylan book style`_.
-
-No semicolon
+No semicolon.
 
 Parenthesis notation.
 
@@ -587,148 +601,16 @@ exactly to the return value name
       ...
     end method first;
 
-Parameters and return values, Dylan book style
-==============================================
-
-The Dylan book style diverges on indentation of parameter lists and
-return values.
-
-Parameter lists, Dylan book style
----------------------------------
-
-Right after function name:
-
-.. code-block:: dylan
-
-    define method vector (#rest rest)
-      rest
-    end method vector;
-
-Indentation, style A:
-
-.. code-block:: dylan
-
-    define method union
-        (seq-1 :: <sequence>, seq-2 :: <sequence>, #key test = \==)
-      remove-duplicates(concatenate(seq-1, seq-2), test: test)
-    end method union;
-
-    define method f01234567890123456789
-        (a0123456789, b0123456789, c0123456789, d0123456789,
-         e0123456789, f0123456789, g0123456789)
-      body-starts-here
-    end method f01234567890123456789;
-
-Optional parameters: Treat as a stacked list.
-
-.. code-block:: dylan
-
-    define method print
-        (object :: <multiple-value-combination>,
-         #key stream = *standard-output*, verbose?)
-      ...
-    end method print;
-
-Return values, Dylan book style
--------------------------------
-
-No semicolon
-
-Parenthesis notation.
-
-If both parameter list and return values fit on the first line:
-
-.. code-block:: dylan
-
-    define method past? (time :: <offset>) => (result :: <boolean>)
-      time.total-seconds < 0;
-    end method past?;
-
-If parameter list and return values do not both fit on the first line:
-
-.. code-block:: dylan
-
-    define method element-setter
-      (new-value, list :: <list>, key :: <small-integer>) => (new-value)
-    end method element-setter;
-
-If parameter list and return values do not both fit on the same line:
-
-.. code-block:: dylan
-
-    define method decode-total-seconds
-        (time :: <time-of-day>)
-     => (hour :: <integer>, min :: <integer>, sec :: <integer>)
-      decode-total-seconds(time.total-seconds);
-    end method decode-total-seconds;
-
-    define method convert-expressions
-        (env :: <environment>, argument-forms)
-      => (first :: <computation>, last :: <computation>, temporaries)
-    end method convert-expressions;
-
-Optional parameters split across a line:
-
-.. code-block:: dylan
-
-    define method fill!
-        (sequence :: <mutable-sequence>, value :: <object>,
-         #key start: first = 0, end: last)
-      => (sequence :: <mutable-sequence>)
-    end method fill!;
-
-Complicated cases
-
-The following is preferred:
-
-.. code-block:: dylan
-
-    define method \<
-        (a :: <double-float>, b :: <ratio>) => (res :: <boolean>)
-      a < as(<double-float>, b)
-    end method \<;
-
-Over this, which we do not do in the book:
-
-.. code-block:: dylan
-
-    define method \< (a :: <double-float>, b :: <ratio>)
-        => (res :: <boolean>)
-      a < as(<double-float>, b)
-    end method \<;
-
-Use other return value name to convey more meaning if possible.
-
-.. code-block:: dylan
-
-    define method reverse! (list :: <list>) => (list :: <list>)
-      ...
-    end method reverse!;
-
-    define generic munge (list :: <list>) => (new-list :: <list>);
-
-    define generic munge! (list :: <list>) => (list :: <list>);
-
-In the Dylan book, we do not use ``_`` for poetry impaired or where
-the function name corresponds exactly to the return value name
-
-Non generic function methods
-============================
+Method constants
+================
 
 .. code-block:: dylan
 
     define constant curry
       = method (...) => (...)
-      ...
-    end method curry;
+          ...
+        end method;
 
-Abbreviated use:
-
-.. code-block:: dylan
-
-    define constant make-region-union = method (#rest regions)
-      make(<region-union>, regions: concatenate-as(<vector>, regions))
-    end method make-region-union;
 
 Generic function definitions
 ============================
@@ -736,11 +618,11 @@ Generic function definitions
 .. code-block:: dylan
 
     define open generic choose
-      (pred :: <function>, seq :: <sequence>) => (elts :: <sequence>);
+        (pred :: <function>, seq :: <sequence>) => (elts :: <sequence>);
 
     define open generic choose-by
-      (pred :: <function>, test-seq :: <sequence>, val-seq :: sequence>)
-     => ( _ :: <sequence>);
+        (pred :: <function>, test-seq :: <sequence>, val-seq :: sequence>)
+     => (_ :: <sequence>);
 
 Class definitions
 =================
@@ -750,23 +632,11 @@ Lots of direct superclasses:
 .. code-block:: dylan
 
     define class <z>
-      (<a>, <b>, <c>)
+        (<a>, <b>, <c>)
       ...
     end class <z>;
 
 Long slot initializations:
-
-.. code-block:: dylan
-
-    define class <entry-state> (<temporary>)
-      slot name, init-keyword: name:;
-      slot me-block, init-keyword: block:;
-      slot exits :: <stretchy-vector>,
-        init-function: curry(make, <stretchy-vector>),
-        init-keyword: exits:;
-    end class;
-
-Or even better:
 
 .. code-block:: dylan
 
