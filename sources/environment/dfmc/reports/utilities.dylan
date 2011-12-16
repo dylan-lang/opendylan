@@ -32,7 +32,9 @@ define function keyword-name (keyword) => (name :: <symbol>)
   if (instance?(keyword, <symbol>))
     key
   else
-//  debug-message("Error: %= is not an instance of <symbol>", keyword);
+//    debug-out(#"dfmc-environment-reports",
+//              "Error: %= is not an instance of <symbol>",
+//              keyword);
     // Two formats are possible: '#P{ #"keyword" }' '#P{ keyword: }'
     let name = format-to-string("%=", keyword);
     let key-start = subsequence-position(name, "\"");

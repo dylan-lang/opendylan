@@ -23,6 +23,7 @@ define module duim-graphics-benchmarks
 	      <basic-frame>,
 	      do-command-menu-gadgets,
 	      do-copy-area,
+              duim-debug-message,
 
               // Scrolling
 	      <scrolling-sheet-mixin>,

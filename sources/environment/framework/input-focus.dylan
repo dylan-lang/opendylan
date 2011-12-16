@@ -16,7 +16,7 @@ define open generic note-frame-input-focus-changed
 
 define method note-frame-input-focus-changed
     (frame :: <frame-input-focus-mixin>) => ()
-  debug-message("Updating availability of focus commands...");
+  duim-debug-message("Updating availability of focus commands...");
   update-command-availability(frame, <frame-focus-command>)
 end method note-frame-input-focus-changed;
 

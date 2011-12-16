@@ -8,9 +8,9 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define method main
     (arguments :: <sequence>) => (status-code :: <integer>)
-  debug-message("Starting DUIM GUI tests with arguments %=", arguments);
+  duim-debug-message("Starting DUIM GUI tests with arguments %=", arguments);
   let status-code = start-tests();
-  debug-message("Exiting DUIM GUI tests with status code %d", status-code);
+  duim-debug-message("Exiting DUIM GUI tests with status code %d", status-code);
   status-code
 end method main;
 

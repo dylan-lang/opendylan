@@ -223,9 +223,10 @@ define sealed method do-namespace-names
           //              browse anyway.
           if (~variable-active-definition(context, variable))
 	    let (name, module) = variable-name(variable);
-            debug-message("do-namespace-names: Variable '%s' has no definition in '%s'",
-                          name-to-string(name),
-			  name-to-string(module))
+            debug-out(#"dfmc-environment-database",
+                      "do-namespace-names: Variable '%s' has no definition in '%s'",
+                      name-to-string(name),
+                      name-to-string(module))
           else
             let environment-name
               = make-environment-object(<binding-name-object>,

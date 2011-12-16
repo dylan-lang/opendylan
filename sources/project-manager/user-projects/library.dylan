@@ -91,10 +91,6 @@ define module user-projects
     project-interaction-allowed?,
     project-flush-caches,
     library-name-from-file,
-    %debugging,
-    $driver-debug,
-    $pm-debug,
-    %debug-pm,
     project-source-record-location;
 end module;
 

@@ -236,7 +236,7 @@ define method construct-component-name-table
                    end if
                  end method,
                  path);
-              debug-message("Did not match a <remote-library> to %=", bx);
+              debug-out(#"debugger-manager", "Did not match a <remote-library> to %=", bx);
               return(application.application-executable);
             end block;
           end if;
@@ -320,8 +320,9 @@ define method construct-component-name-table
     application.library-component-names["dylan"] :=
       application.application-dylan-library;
   else
-    debug-message("Resolving %s yielded %=, which is not an object table.",
-                   $runtime-module-variable-name, object-table);
+    debug-out(#"debugger-manager",
+              "Resolving %s yielded %=, which is not an object table.",
+              $runtime-module-variable-name, object-table);
   end if;
 end method;
 

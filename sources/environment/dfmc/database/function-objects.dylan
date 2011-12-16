@@ -30,19 +30,18 @@ define sealed method function-parameters
     let (req-types, rest-type, next-type, key-types, value-types, rest-value-type)
       = functional-parameter-types(function-definition);
     let (keys, all-keys?) = functional-keys(function-definition);
-    if (#f) //---*** TESTING
-      debug-message("req-vars:  %=\n           req-types: %=\n           "
-		    "rest-var:  %=\n           rest-type: %=\n           "
-		    "next-var:  %=\n           next-type: %=\n           "
-		    "key-vars:  %=\n           key-types: %=\n           "
-		    "keys:      %=\n           all-keys?: %=\n           "
-		    "value-vars:  %=\n           value-types: %=\n           "
-		    "rest-value-var:  %=\n           rest-value-type: %=",
-		    req-vars, req-types, rest-var, rest-type,
-		    next-var, next-type, key-vars, key-types,
-		    keys, all-keys?,
-		    value-vars, value-types, rest-value-var, rest-value-type);
-    end; //---*** TESTING
+    debug-out(#"dfmc-environment-database",
+              "req-vars:  %=\n           req-types: %=\n           "
+                "rest-var:  %=\n           rest-type: %=\n           "
+                "next-var:  %=\n           next-type: %=\n           "
+                "key-vars:  %=\n           key-types: %=\n           "
+                "keys:      %=\n           all-keys?: %=\n           "
+                "value-vars:  %=\n           value-types: %=\n           "
+                "rest-value-var:  %=\n           rest-value-type: %=",
+              req-vars, req-types, rest-var, rest-type,
+              next-var, next-type, key-vars, key-types,
+              keys, all-keys?,
+              value-vars, value-types, rest-value-var, rest-value-type);
     local method make-parameter
               (var, type :: <type-expression>)
            => (parameter :: <parameter>)

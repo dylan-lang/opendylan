@@ -113,7 +113,7 @@ end frame <multiple-values-dialog>;
 
 define method multiple-values-help
     (#rest args)
-  debug-message("Help: %=\n", args);
+  duim-debug-message("Help: %=\n", args);
 end method multiple-values-help;
 
 define method multiple-values-dialog-values

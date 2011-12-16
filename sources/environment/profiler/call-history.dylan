@@ -32,7 +32,7 @@ define method refresh-profiler-page
   let project = frame.ensure-frame-project;
   let thread = frame.frame-current-thread;
   let displayer = frame.call-history-displayer;
-  debug-message("Refreshing call history page (clean?: %=)", clean?);
+  debug-out(#"environment-profiler", "Refreshing call history page (clean?: %=)", clean?);
   unless (~thread & ~displayer.displayer-object)
     displayer-object(displayer, clean?: clean?, new-thread?: new-thread?)
       := thread

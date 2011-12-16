@@ -53,7 +53,7 @@ end method environment-startup-error;
 //---*** We need to flesh out the argument handling
 define method main 
     (name :: <string>, arguments :: <sequence>) => ()
-  debug-message("Starting environment: %s with arguments '%='...\n", 
+  duim-debug-message("Starting environment: %s with arguments '%='...\n", 
                 name, arguments);
   initialize-bitmaps();
   initialize-deuce();
@@ -67,7 +67,7 @@ define method main
       environment-startup-error("File '%s' does not exist", filename)
     end
   cleanup
-    debug-message("Goodbye.\n")
+    duim-debug-message("Goodbye.\n")
   end
 end method main;
 

@@ -44,15 +44,16 @@ end;
 define function find-registries-internal
     (processor, os)
  => (registries :: <sequence>);
-  debug-message("Finding registries");
+  debug-out(#"project-manager", "Finding registries");
   let platform = platform-namestring(processor, os);
   let generic-personal-registries = #();
   let platform-personal-registries = #();
   let personal-path = lookup-personal-registries();
   personal-path &
     map(method (path :: <directory-locator>)
-	  debug-message("Making personal registries for %s",
-			as(<string>, path));
+	  debug-out(#"project-manager",
+                    "Making personal registries for %s",
+                    as(<string>, path));
 	  let (platform-registry, generic-registry)
 	    = make-registry-from-path(path, platform, personal?: #t);
 	  platform-personal-registries 
@@ -65,8 +66,9 @@ define function find-registries-internal
   let generic-system-registries = #();
   let platform-system-registries = #();
   map(method (path :: <directory-locator>) 
-	debug-message("Making system registries for %s",
-		      as(<string>, path));
+	debug-out(#"project-manager",
+                  "Making system registries for %s",
+                  as(<string>, path));
 	let (platform-registry, generic-registry) 
 	  = make-registry-from-path(path, platform, personal?: #t);
         //XXX: set to #f here to prevent rebuilds all over the place

@@ -278,7 +278,7 @@ define sealed method debugger-zoom-setter
   unless (debugger.debugger-zoom == zoom)
     with-busy-cursor (debugger)
       unless (zoom == #"zoom-debugging" | zoom == #"zoom-interacting")
-	debug-message("Invalid debugger zoom setting: %=", zoom);
+	debug-out(#"environment-debugger", "Invalid debugger zoom setting: %=", zoom);
 	zoom := #"zoom-debugging";
       end;
       // Keep the point in a sensible place after switching layouts

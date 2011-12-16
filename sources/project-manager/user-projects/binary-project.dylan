@@ -49,7 +49,9 @@ define function find-binary-project
     |
     (release-path & %db-location(release-path));
 
-  database-locator & debug-message("Found database: %s", as(<string>, database-locator));
+  database-locator & debug-out(#"project-manager",
+                               "Found database: %s",
+                               as(<string>, database-locator));
       
   database-locator & make(<binary-project>, 
 			  database: database-locator,
