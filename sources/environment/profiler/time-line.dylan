@@ -26,7 +26,7 @@ define method refresh-profiler-page
   let project = frame.ensure-frame-project;
   let thread = frame.frame-current-thread;
   let profile = project.project-last-profile;
-  debug-message("Refreshing time line page (clean?: %=)", clean?);
+  debug-out(#"environment-profiler", "Refreshing time line page (clean?: %=)", clean?);
   refresh-time-line-pane
     (pane, profile: profile, thread: thread, clean?: clean?)
 */

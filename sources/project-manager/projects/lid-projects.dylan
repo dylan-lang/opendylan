@@ -571,9 +571,9 @@ end;
 define function project-files-to-source-records
     (project :: <lid-project>, #key directory, files, id-source-record)
  => sr*;
-  //debug-message("to-source-records: directory: %s, files: %s",
-  //    as(<string>, directory),
-  //	map(curry(as, <string>), files));
+  //debug-out(#"project-manager", "to-source-records: directory: %s, files: %s",
+  //          as(<string>, directory),
+  //          map(curry(as, <string>), files));
   let sr-class = project.project-source-record-class;
   local
     method add-file (srs-so-far, file)
@@ -624,7 +624,9 @@ define method copy-extra-records (project :: <lid-project>,
                           c-libraries = #())
           local method do-one-set (source-files)
                   for (source-file in source-files)
-                    debug-message("  Copying %s to build area", as(<string>, source-file));
+                    debug-out(#"project-manager",
+                              "  Copying %s to build area",
+                              as(<string>, source-file));
                     let target-file
                       = make(<file-locator>,
                              directory: project.project-build-location,
@@ -639,7 +641,9 @@ define method copy-extra-records (project :: <lid-project>,
                 end method do-one-set;
           if (~empty?(c-source-files) | ~empty?(c-header-files) | ~empty?(c-object-files)
                 | ~empty?(rc-files))
-            debug-message("Copying extra files for: %s", project);
+            debug-out(#"project-manager",
+                      "Copying extra files for: %s",
+                      project);
             do-one-set(c-source-files);
             do-one-set(c-header-files);
             do-one-set(c-object-files);

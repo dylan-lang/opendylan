@@ -163,7 +163,7 @@ define method note-project-loaded (project :: <user-project>)
     let symbol-name :: <symbol> = as(<symbol>, name);
     unless(symbol-name == old-name)
       project.project-lid-library-name := symbol-name;
-      debug-message("Changing library name keyword to %s", name);
+      debug-out(#"project-manager", "Changing library name keyword to %s", name);
     end;
   end;
 end method;
@@ -174,7 +174,7 @@ define constant $replace-project-string =
 define function %project-replace-project-ask(project :: <project>,
                                              close? :: <boolean>)
  => (yes-or-no :: <boolean>, project :: false-or(<project>));
-  debug-message("Asking if to replace %= %s", project, project.project-name);
+  debug-out(#"project-manager", "Asking if to replace %= %s", project, project.project-name);
   let key = project.project-library-name;
   let text = format-to-string($replace-project-string,
                               key, project.project-location);
@@ -231,8 +231,9 @@ define method project-replace-project-with?(c == <user-project>,
  => (yes-or-no :: <boolean>, project :: false-or(<project>));
 
   if(project.user-disk-project-file = project-file)
-    debug-message("project file %s is the same as %s",
-                  project-file, project.user-disk-project-file);
+    debug-out(#"project-manager",
+              "project file %s is the same as %s",
+              project-file, project.user-disk-project-file);
     values(#f, project)
   else
     %project-replace-project-ask(project, close?)
@@ -327,8 +328,9 @@ define method replace-project-with?(c :: subclass(<project>),
   // TO DO: when replacing project the new one will not have an owner
   // until next compilation - is this a problem ?
   if(project)
-    debug-message("Deciding if %= %s should be replaced",
-                  project, project.project-name);
+    debug-out(#"project-manager",
+              "Deciding if %= %s should be replaced",
+              project, project.project-name);
     if(force?)
       // 'force?' implies 'close?'
       %close-project(project);
@@ -570,7 +572,6 @@ define method import-lid-project
           let p = %import-lid-project(lid-location, to-file: project-location);
           p
         else
-          debug-message("Importing of %s aborted, returning opened project", lid-location);
           user-warning("Project %s has not been imported", lid-location);
           project
         end
@@ -607,8 +608,9 @@ define method %import-lid-project(lid-location :: <file-locator>,
     end;
 
   if(ok?)
-    debug-message("Importing %s to %s", as(<string>, lid-location),
-                  as(<string>, project-location));
+    debug-out(#"project-manager",
+              "Importing %s to %s", as(<string>, lid-location),
+              as(<string>, project-location));
 
     apply(make-method, <user-project>, project-file: project-location, keys);
   else
@@ -708,10 +710,13 @@ define function open-hdp-project
           let project = make-project(<user-project>, project-file: project-location);
           project
         else
-          debug-message("Open-project: returning already opened project %= %s",
-                        opened-project, opened-project & opened-project.project-name);
+          debug-out(#"project-manager",
+                    "Open-project: returning already opened project %= %s",
+                    opened-project, opened-project & opened-project.project-name);
           if(opened-project)
-            debug-message("The project is already open as %s ", project-location)
+            debug-out(#"project-manager",
+                      "The project is already open as %s ",
+                      project-location)
           else
             user-warning("Couldn't open project in %s ", project-location)
           end;
@@ -860,23 +865,6 @@ define method update-project-files (project :: <user-project>) => ();
   // outside of the environment
   // well, now we do ;-)
 end;
-
-define function test-tool(file :: <file-locator>,
-                          project-file :: <file-locator>,
-                          last-run :: false-or(<date>))
- => (success? :: <boolean>, hdp-modified? :: <boolean>, new-projects :: <sequence>);
-  debug-message("Test tool processing file %s last run: %s",
-                as(<string>, file), last-run & as-iso8601-string(last-run));
-  let key = project-data-from-file(project-file);
-  let project = lookup-named-project(key, create?: #f);
-  // let's see if the project file will be read in again
-  project-add-list-property(project, #"other-files", "foo.bar");
-  save-project(project);
-  project-remove-list-property(project, #"other-files", "foo.bar");
-  values(#t, #t, #[])
-end;
-
-tool-register(#".foo", test-tool);
 
 define method note-loading-namespace(project :: <user-project>) => ();
   if(project-dynamic-environment(#"compiler-transaction"))
@@ -1035,26 +1023,3 @@ define method project-remove-keyword(project :: <user-project>, key :: <symbol>)
 end;
 
 */
-
-define constant $driver-debug = #"driver";
-define constant $pm-debug = #"project-manager";
-
-define method %debug-pm() => foo;
-  %debugging(#"project-manager")
-end;
-
-define method %debugging(subsystem-string :: type-union(<string>, <symbol>), #key on :: <boolean> = #t)
- => (status :: <boolean>);
-  let subsystem :: <symbol> = as(<symbol>, subsystem-string);
-  if(on)
-    *debug-out* := pair(as(<symbol>, subsystem), *debug-out*)
-  else
-    *debug-out* := remove(*debug-out*, as(<symbol>, subsystem))
-  end;
-  if(~empty?(*debug-out*))
-    debug-message("Debugging subsystems: %s", *debug-out*);
-    #t
-  else
-    #f
-  end;
-end;

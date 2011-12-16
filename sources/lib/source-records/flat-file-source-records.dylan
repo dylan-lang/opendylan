@@ -178,13 +178,6 @@ define method call-with-source-record-input-stream
     // if we are not checking the date we have to check if file exists
     source-record-location(sr, check-if-exists?: ~check-date?);
   unless (~check-date? | ~source-record-modified?(sr))
-    debug-message("Source record modified: original %s on disk %s",
-		  sr.source-record-unique-id, 
-		  if(source-record-removed?(sr))
-		    "missing"
-		  else
-		    unique-file-id(sr.source-record-location-slot)
-		  end);
     signal(make(<source-record-missing>,
 		source-record: sr,
 		format-string: "%s was unexpectedly modified during compilation.",

@@ -9,6 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //--- Useful module so that all of the environment libraries see the
 //--- same set of names, and get the same exclusions.
 define module environment-imports
+  use simple-debugging, import: { debug-out }, export: all;
   use common-dylan,
     exclude: { slot-setter, slot-getter, slot-type, slot-allocation,
 	       range-by, range-to,
@@ -341,11 +342,7 @@ define module environment-protocols
          failed-connection,
          failed-network-address,
          failed-password,
-         <attempted-to-close-local-connection>,
-
-         debug-iterator;   // A function that calls debug-message("%=", x)
-                           // for any argument x. From the debugger, this
-                           // can be used to test DO-xxx protocols.
+         <attempted-to-close-local-connection>;
 
   // Processes
   export <process>,

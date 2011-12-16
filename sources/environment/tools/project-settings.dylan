@@ -426,14 +426,6 @@ define method valid-project-settings?
     (dialog :: <project-settings-dialog>)
  => (valid? :: <boolean>)
   let link-page = dialog.project-settings-link-page;
-/*
-            debug-message("mode = %=, type = %=, base = %=, major = %=, minor = %=",
-                          dialog.project-settings-compile-page.%compilation-mode,
-                          link-page.%target-type,
-                          link-page.%base-address,
-                          link-page.%major-version,
-                          link-page.%minor-version);
-*/
   block (return)
     local method validate (valid? :: <boolean>, message :: <string>)
 	    unless (valid?)

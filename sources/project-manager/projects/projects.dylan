@@ -280,7 +280,7 @@ end;
 define open generic note-database-invalidated(project :: <base-project>);
 
 define method note-database-invalidated (project :: <base-project>) 
-  debug-message("Database for project %s has changed", project.project-name)
+  debug-out(#"project-manager", "Database for project %s has changed", project.project-name)
 end;
 
 // [Optional] Hook to allow projects to have different names ("keys")

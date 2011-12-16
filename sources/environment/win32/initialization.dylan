@@ -263,10 +263,10 @@ define method frame-shell-execute
         #"open"  => $open-action;
         #"print" => $print-action;
       end;
-  debug-message("Action: %sing %s", action-name, locator);
+  duim-debug-message("Action: %sing %s", action-name, locator);
   let sheet = top-level-sheet(frame);
   if (sheet)
-    debug-message("Really %sing %s", action-name, locator);
+    duim-debug-message("Really %sing %s", action-name, locator);
     let handle = window-handle(sheet);
     with-c-string (action-name = action-name)
       with-c-string (filename = as(<string>, locator))

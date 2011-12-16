@@ -78,7 +78,9 @@ define method do-report-type (report :: <report>, type :: <type-expression>) => 
     = block ()
         variable-name(type)
       exception (err :: <error>)
-        debug-message("Exception \"%=\" in variable-name(%=)", err, type);
+        debug-out(#"dfmc-environment-reports",
+                  "Exception \"%=\" in variable-name(%=)",
+                  err, type);
         #"#error#"
       end block;
   format-to-report(report, "%s", as-string(type-name));
@@ -118,8 +120,9 @@ define method do-report-variable
         = block ()
             source-form-variable-type(definition, variable)
           exception (err :: <error>)
-            debug-message("Exception \"%=\" in source-form-variable-type(%=, %=)",
-                          err, definition, variable);
+            debug-out(#"dfmc-environment-reports",
+                      "Exception \"%=\" in source-form-variable-type(%=, %=)",
+                      err, definition, variable);
             #f
           end block;
       format-to-report(report, "Type: ");
@@ -234,7 +237,9 @@ define generic do-report-source-form
 //---*** cpage: I'm not sure whether this should ever happen.
 define method do-report-source-form
     (report :: <report>, source-form :: <source-form>) => ()
-  debug-message("Error: Unexpected source form class encountered %=", source-form);
+  debug-out(#"dfmc-environment-reports",
+            "Error: Unexpected source form class encountered %=",
+            source-form);
   do-report-source-form-source(report, source-form);
 end method do-report-source-form;
 
@@ -643,9 +648,9 @@ define method do-report-source-form
     let getter-method = block () //---*** cpage: Virtual slots raise an exception.
                           slot-definition-getter(definition)
                         exception (err :: <error>)
-                          debug-message("Exception \"%=\" in slot-definition-getter(%=)",
-                                        err,
-                                        definition);
+                          debug-out(#"dfmc-environment-reports",
+                                    "Exception \"%=\" in slot-definition-getter(%=)",
+                                    err, definition);
                           #f
                         end block;
     format-to-report(report, "Getter: ");

@@ -27,6 +27,7 @@ define module duim-gui-test-suite
 	      <basic-frame>,
 	      do-command-menu-gadgets,
 	      do-copy-area,
+              duim-debug-message,
 
               // Cursors
               pointer-cursor-override, pointer-cursor-override-setter,

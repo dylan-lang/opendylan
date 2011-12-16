@@ -24,8 +24,9 @@ define method search-for-subproject(project :: <user-project>, key :: <symbol>,
     used-project-location 
       := merge-locators(project-location, project.user-disk-project-file.locator-directory);
     unless(file-exists?(used-project-location))
-      debug-message("Used Project file: %s no longer accessible",
-		    as(<string>, used-project-location));
+      debug-out(#"project-manager",
+                "Used Project file: %s no longer accessible",
+                as(<string>, used-project-location));
       user-warning("Used Project file: %s no longer accessible",
 		   as(<string>, used-project-location));
       used-project-location := signal(make(<cannot-open-project-file-condition>,
@@ -194,7 +195,9 @@ end function cache-file-location;
 
 define function %remove-caches(project :: <user-project>) => ();
   let cache-locator = cache-file-location(project);
-  debug-message("Flushing caches for project %s", project.project-name);
+  debug-out(#"project-manager",
+            "Flushing caches for project %s",
+            project.project-name);
   block()
     delete-file(cache-locator);
   exception(<file-system-error>)
@@ -277,7 +280,9 @@ define function project-initialize-caches(project :: <user-project>)
       exception(<file-does-not-exist-error>)
 	project.%used-projects-cache := make(<table>);
 	project.%tools-cache := make(<table>);
-	debug-message("Couldn't find cache file: %s", as(<string>, cache-locator))
+	debug-out(#"project-manager",
+                  "Couldn't find cache file: %s",
+                  as(<string>, cache-locator))
       end;
     end;
   end;
@@ -298,8 +303,9 @@ define method make-used-project (project :: <user-project>,
       // of the compiler, i.e. the environment in which the project was run
       // previously has to be the same as the current environment
       // i.e. if HD_USER_BUILD was set it has to be set now and to the same value
-      debug-message("Project: %s found subproject %s in cache", 
-		    project.project-name, key);
+      debug-out(#"project-manager",
+                "Project: %s found subproject %s in cache", 
+                project.project-name, key);
       
       let used-project = 
 	make-project-from-file(subproject-location,
@@ -309,8 +315,6 @@ define method make-used-project (project :: <user-project>,
 			       processor: processor, operating-system: os);
       used-project
     exception(<file-does-not-exist-error>)
-      debug-message("Cannot open project in location: %s",
-		    as(<string>, subproject-location));
       // this is extraneous, since it's been checked in search-for-subproject
       user-warning("Cannot open project in location: %s",
 		   as(<string>, subproject-location));
@@ -335,6 +339,6 @@ define method make-used-project (project :: <system-project>,
   // TO DO:
   // this may be an incorrect assumption
   // i.e. that <system-project>s cannot use <user-project>s
-  // debug-message("Project: %s making used project: %s", project, key);
+  // debug-out(#"project-manager", "Project: %s making used project: %s", project, key);
   make-project(<project>, parent: project, key: key, processor: processor, operating-system: os)
 end method;

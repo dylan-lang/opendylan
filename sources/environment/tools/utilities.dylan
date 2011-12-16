@@ -637,7 +637,7 @@ define method handle-event
   let (x-offset, y-offset) = frame-cascade-offset(framem, frame);
   if (x + x-offset = next-x & y + y-offset = next-y)
     set-frame-cascade-position(frame, x, y);
-    debug-message("Reverted cascade position to %=, %=", x, y);
+    duim-debug-message("Reverted cascade position to %=, %=", x, y);
   end;
   next-method();
 end method handle-event;
@@ -659,7 +659,7 @@ define method frame-position-fully-on-screen?
   let (width, height) = frame-size(frame);
   let width-on-screen?  = x + width < screen-width;
   let height-on-screen? = y + height < screen-height;
-  debug-message("On screen?: %= & %=: [%=,%=,%=,%=, screen: %=,%=]",
+  duim-debug-message("On screen?: %= & %=: [%=,%=,%=,%=, screen: %=,%=]",
 		width-on-screen?, height-on-screen?,
 		x, y, width, height,
 		screen-width, screen-height);
@@ -680,7 +680,7 @@ define method cascade-frame
       end;
   let framem = frame-manager(frame);
   let (x-offset, y-offset) = frame-cascade-offset(framem, frame);
-  debug-message("Putting new frame %= at %=, %=", frame, x, y);
+  duim-debug-message("Putting new frame %= at %=, %=", frame, x, y);
   set-frame-position(frame, x, y);
   set-frame-cascade-position(frame, x + x-offset, y + y-offset)
 end method cascade-frame;

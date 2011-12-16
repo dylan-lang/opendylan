@@ -94,7 +94,7 @@ end;
 
 define sideways method library-progress-report(context, sofar :: <float>, 
 					       #key abort-safe? :: <boolean>)
-//  debug-message("Progress %d", round(100 * sofar));
+//  debug-out(#"project-manager", "Progress %d", round(100 * sofar));
   project-progress-report(context.compilation-context-project,
 			  round(100 * sofar),
 			  abort-safe?)

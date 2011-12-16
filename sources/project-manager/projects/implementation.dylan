@@ -354,16 +354,11 @@ define function project-open-compilation-context (project :: <project>,
     debug-out(#"project-manager",
 	      "Open compilation context for project %s (load-namespace? %s)\n",
 	      project.project-name, load-namespace?);
-    if (project.project-dylan-library?)
-      debug-message("Opening compilation context for the Dylan library")
-    end;
     let handler <library-pack-not-installed> = 
       method (cond, next-handler)
 	let project-name = as(<string>, cond.condition-project.project-name);
 	let library-pack = cond.condition-library-pack;
 	let library-pack-name = library-pack-full-name(library-pack);
-	debug-message("You must install %s in order to use the library %s",
-		      library-pack-name, project-name);
 	user-fatal-error("You must install %s in order to use the library %s",
 			 library-pack-name, project-name);
 	signal(make(<abort-compilation>, 
@@ -373,19 +368,25 @@ define function project-open-compilation-context (project :: <project>,
       end;
     let handler <database-corruption-warning> = 
       method (cond, next-handler)
-	apply(debug-message, cond.condition-format-string, cond.condition-format-arguments);
+	debug-out(#"project-manager",
+                  cond.condition-format-string,
+                  cond.condition-format-arguments);
 	user-warning("Discarding corrupted compiler database: %s", 
 		     as(<string>, condition-database-name(cond)))
       end;
     let handler <database-version-warning> = 
       method (cond, next-handler)
-	apply(debug-message, cond.condition-format-string, cond.condition-format-arguments);
+	debug-out(#"project-manager",
+                  cond.condition-format-string,
+                  cond.condition-format-arguments);
 	user-warning("Discarding incompatible compiler database: %s", 
 		     as(<string>, condition-database-name(cond)))
       end;
     let handler <database-user-version-warning> = 
       method (cond, next-handler)
-	apply(debug-message, cond.condition-format-string, cond.condition-format-arguments);
+	debug-out(#"project-manager",
+                  cond.condition-format-string,
+                  cond.condition-format-arguments);
 	user-warning("Discarding incompatible compiler database %s", 
 		     as(<string>, condition-database-name(cond)))
       end;
@@ -400,7 +401,7 @@ define function project-open-compilation-context (project :: <project>,
 					     ~project-personal-library?(project),
 					   load-namespace?: load-namespace?);
     if (project.project-dylan-library?)
-      debug-message("  Opened compilation context for the Dylan library")
+      debug-out(#"project-manager", "  Opened compilation context for the Dylan library")
     end;
     // we have to set the context in either case, 
     // otherwise project closing code won't work
@@ -577,7 +578,7 @@ define method close-project (project :: <project>, #key system? = #f)
 	*all-open-projects*);
     closed?
   else
-    debug-message("Closing non top level project %s", project.project-name);
+    debug-out(#"project-manager", "Closing non top level project %s", project.project-name);
     empty?(project.project-owners) & %close-project(project)
   end
 end method;
@@ -605,7 +606,7 @@ define function project-reset-database(project :: <project>)
     let (mj, mn) = compilation-context-version(context);
     install-project-sources(context, make(<source-record-vector>, size: 0), mj, mn);
     note-database-invalidated(project);
-    debug-message("Reset database for project %s", project.project-name);
+    debug-out(#"project-manager", "Reset database for project %s", project.project-name);
   end;
 end;
 
@@ -629,7 +630,7 @@ define function project-remove-database(project :: <project>) => ()
     project-close-compilation-contexts(project);
     let db = project.project-database-location;
     %delete-file-if-exists(db);
-    debug-message("Removed database for project %s", project.project-name);
+    debug-out(#"project-manager", "Removed database for project %s", project.project-name);
     project-open-compilation-context(project, load-namespace?: #f);
     project-set-compilation-parameters(project);
     
@@ -712,7 +713,9 @@ define function canonicalize-project-sources
 		let compiler-sources = compilation-context-sources(context);
 		if(empty?(compiler-sources))
 		  // fixup
-		  debug-message("Fixing up sources for %s", project.project-name);
+		  debug-out(#"project-manager",
+                            "Fixing up sources for %s",
+                            project.project-name);
 		  values(project-current-source-records(project),
 			 project-major-version(project),
 			 project-minor-version(project))
@@ -753,8 +756,9 @@ define sideways method used-library-context
 	                   make-used-project(project, key, processor, os);
 	let subcontext = project-current-compilation-context(subproject);
         if (~subcontext)
-	  debug-message("Project %s: subproject %s with empty subcontext\n", 
-			project.project-name, subproject.project-name);
+	  debug-out(#"project-manager",
+                    "Project %s: subproject %s with empty subcontext\n", 
+                    project.project-name, subproject.project-name);
 	  subcontext := project-open-compilation-context(subproject);
 	end;
         if (canonicalize?)
@@ -854,7 +858,7 @@ define function choose-project (test :: <function>)
 end function;
 
 define function find-platform-project (key, processor, os)
-  //  debug-message("looking up project %s:%s:%s \n", key, processor, os);
+  //  debug-out(#"project-manager", "looking up project %s:%s:%s \n", key, processor, os);
   let project = 
     choose-project(method(project)
 		       project-key?(project, key) &
@@ -864,7 +868,7 @@ define function find-platform-project (key, processor, os)
 			  project-compiler-setting(project, operating-system:) == os)
 		   end);
   //  unless(project)
-  //    debug-message("Not found: creating new project\n");
+  //    debug-out(#"project-manager", "Not found: creating new project\n");
   //  end;
   project
 end function;

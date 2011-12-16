@@ -65,9 +65,11 @@ define sealed method slot-type
   let type-expression = slot-definition-type(slot-definition);
   //---*** cpage: 1997.12.18 Testing code you can use to see when the
   //              database uses #f vs. <object>.
-  /* if (~type-expression)
-         debug-message("slot-type: type unavailable for slot %=", slot-definition)
-       end;
+  /*
+  if (~type-expression)
+    debug-out(#"dfmc-environment-database",
+              "slot-type: type unavailable for slot %=", slot-definition)
+  end;
   */
   make-environment-object-for-type-expression(server, type-expression)
 end method slot-type;

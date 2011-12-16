@@ -18,8 +18,9 @@ define method environment-handler
   block ()
     do-environment-handler(condition, next-handler);
   exception (condition :: <serious-condition>)
-    debug-message("Internal error in environment error handler: %s",
-		  safe-condition-to-string(condition));
+    debug-out(#"environment-framework",
+              "Internal error in environment error handler: %s",
+              safe-condition-to-string(condition));
     default-handler(condition)
   end block;
 end method environment-handler;

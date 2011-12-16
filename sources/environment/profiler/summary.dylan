@@ -34,7 +34,7 @@ define method refresh-profiler-page
   let profile = frame.profiler-application-profile;
   let thread = frame.frame-current-thread;
   let layout = frame.summary-layout;
-  debug-message("Refreshing summary page (clean?: %=)", clean?);
+  debug-out(#"environment-profiler", "Refreshing summary page (clean?: %=)", clean?);
   if (clean? | ~frame.%valid?)
     let property-gadgets = make(<stretchy-vector>);
     let group-items :: <stretchy-vector> = make(<stretchy-vector>);

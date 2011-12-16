@@ -137,7 +137,9 @@ define method type-expression-to-definition
       let definition
 	= variable-active-definition(context, type-expression);
       unless (definition)
-	debug-message("No active definition found for %=", type-expression)
+	debug-out(#"dfmc-environment-database",
+                  "No active definition found for %=",
+                  type-expression)
       end;
       definition;
   end case
@@ -150,10 +152,11 @@ define method type-expression-to-definition
   //              in the past. Since there's a trivial work-around,
   //              let's do it here for the short-term until we verify
   //              that this case no longer occurs.
-  debug-message("make-environment-object-for-type-expression:"
-		" The type expression %= is a <class-definition>"
-		" when it should be a <variable>",
-		type-expression);
+  debug-out(#"dfmc-environment-database",
+            "make-environment-object-for-type-expression:"
+              " The type expression %= is a <class-definition>"
+              " when it should be a <variable>",
+            type-expression);
   type-expression
 end method type-expression-to-definition;
 

@@ -133,7 +133,7 @@ define function exit-playground-dialog (#rest args) => ()
   ignore(args);
   with-lock ($starting-playground-dialog-lock)
     let playground-dialog = *starting-playground-dialog*;
-    debug-message("playground-dialog = %=", playground-dialog);
+    duim-debug-message("playground-dialog = %=", playground-dialog);
     //---*** hughg, 1998/11/05: This "when" protection shouldn't be needed, but
     // sometimes callbacks aren't tuned-out properly so we end up with some of
     // them registered twice (on the second use of the playground), so this
@@ -142,11 +142,11 @@ define function exit-playground-dialog (#rest args) => ()
     // all channel receivers?  That *should* be safe.
     when (playground-dialog)
       *starting-playground-dialog* := #f;
-      debug-message("*starting-playground-dialog* = %=",
+      duim-debug-message("*starting-playground-dialog* = %=",
 		    *starting-playground-dialog*);
       call-in-frame(playground-dialog,
 		    method ()
-		      debug-message("Exiting dialog");
+		      duim-debug-message("Exiting dialog");
 		      exit-dialog(playground-dialog);
 		    end);
     end;
@@ -186,11 +186,11 @@ end function;
 define function playground-opening-project-callback
     (message :: <frame-found-message>) => ()
   let frame = message.message-frame;
-  debug-message("'Opening project' callback got 'frame found' message.");
+  duim-debug-message("'Opening project' callback got 'frame found' message.");
   when (instance?(frame, <environment-frame>)
 	& frame.environment-frame-class-name = #"project-browser"
 	& playground-project?(frame.frame-current-project, just-name?: #t))
-    debug-message("'Opening project' callback tuned-out.");
+    duim-debug-message("'Opening project' callback tuned-out.");
     // Tune out this callback.
     tune-out($project-channel, playground-opening-project-callback);
     // (Callback for application startup finishing will be tuned-in
@@ -230,7 +230,7 @@ define function playground-application-started-callback
     // Tune-in a callback for when the interactor has been found.
     tune-in($environment-channel, playground-interactor-opened-callback,
 	    message-type: <frame-found-message>);
-    debug-message("'Interactor opened' callback tuned-in.");
+    duim-debug-message("'Interactor opened' callback tuned-in.");
     // Note success or failure.
     if (instance?(message, <run-application-failed-message>))
       error-playground-not-started();
@@ -258,7 +258,7 @@ define function playground-interactor-opened-callback
     make(<thread>, name: "Closing playground startup dialog...",
 	 function: method ()
 		     sleep(2);
-		     debug-message("Calling exit-playground-dialog");
+		     duim-debug-message("Calling exit-playground-dialog");
 		     exit-playground-dialog();
 		   end);
   end;

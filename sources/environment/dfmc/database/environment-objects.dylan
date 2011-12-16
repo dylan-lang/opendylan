@@ -21,7 +21,9 @@ define sealed method find-environment-object
 				project: server.server-project,
 				compiler-object-proxy: proxy);
       otherwise =>
-	debug-message("Failed to make environment object for %=", proxy);
+	debug-out(#"dfmc-environment-database",
+                  "Failed to make environment object for %=",
+                  proxy);
 	#f;
     end
   end

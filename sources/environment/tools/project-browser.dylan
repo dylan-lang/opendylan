@@ -429,8 +429,8 @@ end method frame-sheet-with-selection;
 define method refresh-frame (frame :: <project-browser>) => ()
   next-method();
   unless (frame-mapped?(frame))
-    debug-message("refresh-frame called on unmapped frame %=",
-                  frame.frame-title);
+    duim-debug-message("refresh-frame called on unmapped frame %=",
+                       frame.frame-title);
   end;
   refresh-frame-view(frame)
 end method refresh-frame;

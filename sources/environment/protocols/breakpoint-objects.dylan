@@ -83,8 +83,9 @@ define method environment-object-library
 	  let library = environment-object-library(server, object);
 	  breakpoint.breakpoint-library := library
 	else
-	  debug-message("Breakpoint %= has unexpected object %=",
-			breakpoint, object)
+	  debug-out(#"environment-protocols",
+                    "Breakpoint %= has unexpected object %=",
+                    breakpoint, object)
 	end
       end
 end method environment-object-library;

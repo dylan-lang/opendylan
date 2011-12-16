@@ -12,9 +12,10 @@ define method parser-generator-invoke
     #key clean-build? :: <boolean> = #f)
  => (success? :: <boolean>, modified-projects :: <sequence> /* of: <locator> */)
 
-  debug-message("Parser Generator Tool invoked.  Grammar: %=, project: %=, last: %=, clean: %=\n",
-  		spec-file, project-file, last-run & date-as-string(last-run),
-		clean-build?);
+  debug-out(#"parser-generator",
+            "Parser Generator Tool invoked.  Grammar: %=, project: %=, last: %=, clean: %=\n",
+            spec-file, project-file, last-run & date-as-string(last-run),
+            clean-build?);
 
   let keyval = keyword-file-element-value;
   let keyline = keyword-file-element-line;
@@ -84,7 +85,7 @@ define method parser-generator-invoke
     let files = project.project-information-files;
     let ab-output-file = relative-locator(output-file, project-file);
     unless (member?(ab-output-file, files, test: \=))
-      debug-message("Adding parser generator output file to project");
+      debug-out(#"parser-generator", "Adding parser generator output file to project");
       project.project-information-files := concatenate!(files, list(ab-output-file));
       write-project-file(project-file, project);
       modified-projects := add(modified-projects, project-file);

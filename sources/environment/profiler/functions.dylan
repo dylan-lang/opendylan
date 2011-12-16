@@ -43,7 +43,7 @@ define method refresh-profiler-page
   let project = frame.ensure-frame-project;
   let displayer = frame.functions-displayer;
   let thread = frame.frame-current-thread;
-  debug-message("Refreshing functions page (clean?: %=)", clean?);
+  debug-out(#"environment-profiler", "Refreshing functions page (clean?: %=)", clean?);
   unless (~thread & ~displayer.displayer-object)
     displayer-object(displayer, clean?: clean?, new-thread?: new-thread?)
       := thread
@@ -110,7 +110,7 @@ define method frame-profile-info
     let amount = wrapper.wrapper-amount;
     wrapper.wrapper-percentage := percentage(amount, total)
   end;
-  debug-message("Found %d frames", wrappers.size);
+  debug-out(#"environment-profiler", "Found %d frames", wrappers.size);
   wrappers
 end method frame-profile-info;
 

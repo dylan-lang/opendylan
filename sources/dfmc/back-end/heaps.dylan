@@ -1891,14 +1891,16 @@ define function maybe-merge-literal (object)
 	// to point to the new one....
 	when (object.model-has-definition?)
 	  if (std-object.model-has-definition?)
-	    debug-message("######### Fudging MODEL DEF %s into %s\n",
-			  format-to-string("%s", object.model-definition),
-			  format-to-string("%s", std-object.model-definition));
+	    debug-out(#"heap",
+                      "######### Fudging MODEL DEF %s into %s\n",
+                      format-to-string("%s", object.model-definition),
+                      format-to-string("%s", std-object.model-definition));
 	    // Patch so external references to object get the correct name
 	    object.model-definition := std-object.model-definition;
 	  else
-	    debug-message("######### Fudging MODEL DEF %s into anonymous\n",
-			  format-to-string("%s", object.model-definition));
+	    debug-out(#"heap",
+                      "######### Fudging MODEL DEF %s into anonymous\n",
+                      format-to-string("%s", object.model-definition));
 	    std-object.model-definition := object.model-definition;
 	  end;
 	end;

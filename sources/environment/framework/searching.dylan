@@ -472,7 +472,7 @@ define method handle-event
     (frame :: <search-target-frame-mixin>, event :: <frame-focus-in-event>) => ()
   next-method();
   //---*** Enabled for debugging only...
-  debug-message("handle-event: Search target frame got the focus: %=", frame.frame-title);
+  duim-debug-message("handle-event: Search target frame got the focus: %=", frame.frame-title);
   current-search-target-frame() := frame;
 end method handle-event;
 
@@ -480,7 +480,7 @@ end method handle-event;
 define function reset-current-search-target-frame
     (old-target-frame :: <search-target-frame-mixin>) => ()
   when (old-target-frame == current-search-target-frame())
-    //debug-message("handle-event:   The current target frame was exited");
+    //duim-debug-message("handle-event:   The current target frame was exited");
     //--- cpage: 1998.08.11 Ideally, we could just reset this to #f and the next
     //           frame to get the focus would set it. However, the next frame to
     //           get the focus isn't necessarily a search target frame. This can
@@ -501,8 +501,8 @@ define function reset-current-search-target-frame
 		    end method,
 		    z-order: #"top-down");
 	end block;
-    //debug-message("Resetting search target frame to: %=",
-    //              new-target-frame & new-target-frame.frame-title);
+    //duim-debug-message("Resetting search target frame to: %=",
+    //                   new-target-frame & new-target-frame.frame-title);
     current-search-target-frame() := new-target-frame;
   end;
 end function reset-current-search-target-frame;
@@ -511,7 +511,8 @@ end function reset-current-search-target-frame;
 define method handle-event
     (frame :: <search-target-frame-mixin>, event :: <frame-exited-event>) => ()
   next-method();
-  //debug-message("handle-event: Search target frame was exited: %=", frame.frame-title);
+  //duim-debug-message("handle-event: Search target frame was exited: %=",
+  //                   frame.frame-title);
   reset-current-search-target-frame(frame);
 end method handle-event;
 
@@ -522,14 +523,16 @@ end method handle-event;
 define method handle-event
     (frame :: <search-target-frame-mixin>, event :: <frame-unmapped-event>) => ()
   next-method();
-  //debug-message("handle-event: Search target frame was unmapped: %=", frame.frame-title);
+  //duim-debug-message("handle-event: Search target frame was unmapped: %=",
+  //                   frame.frame-title);
   reset-current-search-target-frame(frame);
 end method handle-event;
 
 define method handle-event
     (frame :: <search-target-frame-mixin>, event :: <frame-destroyed-event>) => ()
   next-method();
-  //debug-message("handle-event: Search target frame was destroyed: %=", frame.frame-title);
+  //duim-debug-message("handle-event: Search target frame was destroyed: %=",
+  //                   frame.frame-title);
   reset-current-search-target-frame(frame);
 end method handle-event;
 // END DELETE
@@ -1405,8 +1408,8 @@ end method current-search-target-from-selection?;
 
 define method current-search-target-from-selection?-setter
     (from-selection? :: <boolean>) => (from-selection? :: <boolean>)
-  //debug-message("*current-search-target-from-selection?* := %=, was = %=",
-  //              from-selection?, *current-search-target-from-selection?*);
+  //duim-debug-message("*current-search-target-from-selection?* := %=, was = %=",
+  //                   from-selection?, *current-search-target-from-selection?*);
   *current-search-target-from-selection?* := from-selection?;
   from-selection?
 end method current-search-target-from-selection?-setter;
