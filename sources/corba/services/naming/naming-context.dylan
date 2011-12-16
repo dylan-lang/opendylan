@@ -17,7 +17,7 @@ define method name-component-hash (component :: CosNaming/<NameComponent>, initi
   values-hash(string-hash, initial-state, id, kind);
 end method;
 
-define method table-protocol (table :: <name-component-table>)
+define method table-protocol (ntable :: <name-component-table>)
  => (test-fn :: <function>, hash-fn :: <function>)
   values(\=, name-component-hash);
 end method;

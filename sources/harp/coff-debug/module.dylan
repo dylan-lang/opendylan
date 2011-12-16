@@ -10,7 +10,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module coff-reader
   use dylan;
-  use dylan-extensions;
   use big-integers, prefix: "generic-";
   use streams, exclude: {count, name}, export: all;
   use standard-io, import: {*standard-output*}, export: all;

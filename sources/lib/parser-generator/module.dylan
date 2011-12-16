@@ -7,6 +7,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define module parser-generator
   use dylan;
   use dylan-extensions;
+  use simple-debugging, import: { debug-out };
   use common-extensions, exclude: { format-to-string };
   use streams;
   use format;

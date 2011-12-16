@@ -75,7 +75,6 @@ define module OLE-Control-Framework
 	     $DISPID-PICT-WIDTH, $DISPID-PICT-HEIGHT, $DISPID-PICT-RENDER
 	     };
 
-  use simple-format; // `format-to-string' used in `register-ole-control'
   use Win32-common;
   use Win32-user;
   use Win32-GDI;

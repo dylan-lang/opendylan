@@ -1685,7 +1685,7 @@ define function import-lid-file
   when (filename)
     let project = import-project-from-file(filename);
     //--- cpage: 1997.09.10 We need to add a real error message.
-    duim-debug-assert(project, "Cannot convert %= to a project", project);
+    debug-assert(project, "Cannot convert %= to a project", project);
     if (frame)
       frame-open-project(frame, project);
     else

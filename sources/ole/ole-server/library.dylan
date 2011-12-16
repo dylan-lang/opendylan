@@ -23,7 +23,7 @@ end;
 define module OLE-Server
   use Dylan;
   use common-extensions,
-    import: { \assert, false-or, \function-definer, ignore };
+    import: { \assert, false-or, \function-definer, ignore, format-to-string };
   use OLE,
     export: { make-GUID, <REFGUID>, <REFCLSID>,
 	     // Export names that may be needed by application methods on 
@@ -60,7 +60,6 @@ define module OLE-Server
 	     // internal debug aid:
 	     Output-Debug-String
 	     };
-  use simple-format; // need format-to-string
   use Win32-common, export: { pointer-cast };
   use Win32-kernel;  // need OutputDebugString, <PFILETIME>, GetLastError
   use Win32-user;

@@ -23,7 +23,6 @@ define module Win32-multimedia
 	     pointer-value, pointer-value-setter, size-of,
 	     pointer-cast, destroy, \with-stack-structure,
 	     c-type-cast};
-  use machine-words;
   use Win32-common,
     export: {// data types used as arguments and fields:
 	     <HANDLE>, <HDC>, <HMODULE>, <HTASK>, <HWND>, 

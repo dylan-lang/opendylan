@@ -7,6 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library batch-debug
+  use dylan;
   use common-dylan;
   use collections;
   use c-ffi;
