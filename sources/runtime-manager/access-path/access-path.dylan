@@ -315,7 +315,7 @@ define function debugger-message
       // force-output(*debugger-stream*);
     else
       // apply(format-out, concatenate("\n### ", string, "\n"), args);
-      apply(debug-message, string, args)
+      apply(nub-debug-message, string, args)
     end if;
   end if;
 

@@ -799,20 +799,22 @@ define sealed method debugger-sheet-with-focus
     // Get sheet with focus and check it's one we care about in this frame.
     let _port = port(frame);
     let sheet = frame-input-focus(frame);
-    // debug-message("Frame input focus: %=", sheet);
+    // debug-out(#"environment-debugger", "Frame input focus: %=", sheet);
     sheet := sheet
-	     & sheet-mapped?(sheet) // & (debug-message("Mapped") | #t)
-	     & (sheet-frame(sheet) = frame) // & (debug-message("Frame OK") | #t)
+	     & sheet-mapped?(sheet) // & (debug-out(#"environment-debugger", "Mapped") | #t)
+	     & (sheet-frame(sheet) = frame)
+             //& (debug-out(#"environment-debugger", "Frame OK") | #t)
 	     & any?(method (pane-getter)
-		      /* debug-message("Checking %=: %=",
-				    pane-getter, pane-getter(frame)); */
+		      /* debug-out(#"environment-debugger",
+                                "Checking %=: %=",
+                                pane-getter, pane-getter(frame)); */
 		      when (sheet = pane-getter(frame))
-		        // debug-message("Matched");
+		        // debug-out(#"environment-debugger", "Matched");
 			sheet
 		      end;
 		    end,
 		    $debugger-focus-panes);
-    // debug-message("debugger-sheet-with-focus: %=", sheet);
+    // debug-out(#"environment-debugger", "debugger-sheet-with-focus: %=", sheet);
     sheet
   end;
 end method;

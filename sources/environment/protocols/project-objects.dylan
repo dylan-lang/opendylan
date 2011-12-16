@@ -743,8 +743,9 @@ define method make-environment-object
                      object, old-proxy, proxy);
         */
         unless (~old-proxy | old-proxy == proxy)
-          debug-message("Environment object %= found for two proxies: %=, %=",
-                        object, old-proxy, proxy)
+          debug-out(#"environment-protocols",
+                    "Environment object %= found for two proxies: %=, %=",
+                    object, old-proxy, proxy)
         end;
         compiler-object-proxy(object) := proxy;
         object
@@ -1324,8 +1325,9 @@ define function playground-application-filename
       = make(<file-locator>,
              directory: lid-filename.locator-directory,
              name:      project.project-build-filename.locator-name);
-    debug-message("Playground filename: %s",
-                  as(<string>, filename));
+    debug-out(#"environment-protocols",
+              "Playground filename: %s",
+              as(<string>, filename));
     file-exists?(filename) & filename
   end
 end function playground-application-filename;

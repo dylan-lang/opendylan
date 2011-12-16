@@ -275,7 +275,7 @@ define method apply-thread-stepping-control
   // message.
 
   if (count > $max-stepping-locations)
-    debug-message("ACCESS PATH STEPPER: Can't track %d destinations.", count);
+    nub-debug-message("ACCESS PATH STEPPER: Can't track %d destinations.", count);
     count := $max-stepping-locations;
   end if;
 

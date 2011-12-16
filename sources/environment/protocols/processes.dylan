@@ -7,13 +7,6 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
-///// DEBUG-ITERATOR
-
-define method debug-iterator (x :: <object>) => ()
-  debug-message("Debug iterator: %=", x);
-end method;
-
-
 ///// <PROCESS>
 //    The abstract class that describes a running process on a particular
 //    machine.

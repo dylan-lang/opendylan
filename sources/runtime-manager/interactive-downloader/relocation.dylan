@@ -80,8 +80,8 @@ define method perform-coff-relocation-in-section
     perform-coff-relocation
       (access-path, relocation-address, symbolic-address, relative?: #t);
   else
-    debug-message("+++ WARNING: Reference to unresolved symbol %s\n",
-                     symbolic-name)
+    nub-debug-message("+++ WARNING: Reference to unresolved symbol %s\n",
+                      symbolic-name)
   end if
 end method;
 
@@ -105,8 +105,8 @@ define method perform-coff-relocation-in-section
     perform-coff-relocation
       (access-path, relocation-address, symbolic-address, relative?: #f);
   else
-    debug-message("+++ WARNING: Reference to unresolved symbol %s\n",
-                     symbolic-name)
+    nub-debug-message("+++ WARNING: Reference to unresolved symbol %s\n",
+                      symbolic-name)
   end if
 end method;
 

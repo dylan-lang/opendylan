@@ -82,26 +82,12 @@ define test name-parsing-test ()
 	      parse-environment-object-name("library dylan"),
 	      $dylan-library-id);
   check-equal("module name parsing",
-	      begin
-		let id
-		  = parse-environment-object-name
-		      (format-to-string("module %s", $test-module-name),
-		       library: test-library-id());
-		debug-message("ID: %s:%s",
-			      id-name(id),
-			      id-name(id-library(id)));
-		id
-	      end,
+              parse-environment-object-name
+                (format-to-string("module %s", $test-module-name),
+                 library: test-library-id()),
 	      test-module-id());
   check-equal("qualified module name parsing",
-	      begin
-		let id
-		  = parse-environment-object-name("module dylan:dylan");
-		debug-message("ID: %s:%s",
-			      id-name(id),
-			      id-name(id-library(id)));
-		id
-	      end,
+              parse-environment-object-name("module dylan:dylan"),
 	      $dylan-module-id);
   check-equal("definition name parsing",
 	      parse-environment-object-name("<object>:dylan:dylan"),

@@ -262,9 +262,10 @@ define constant $cache-extension = "cache";
 
 define function save-project-caches(project :: <user-project>) => ();
   let cache-file = cache-file-location(project);
-  debug-message("Saving caches for project %s in %s",
-		project.project-name,
-		as(<string>, cache-file));
+  debug-out(#"project-manager",
+            "Saving caches for project %s in %s",
+            project.project-name,
+            as(<string>, cache-file));
   with-open-file(stream = cache-file, direction: #"output")
     write-comment(stream, 
 		  "the information below is based on the last compile");

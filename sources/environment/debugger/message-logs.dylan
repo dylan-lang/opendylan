@@ -113,7 +113,7 @@ define sealed method print-application-message
     end;
     redisplay-section(section, editor: $environment-editor, centering: 1.0)
   else
-    debug-message("Ignoring application message: %s", message)
+    debug-out(#"environment-debugger", "Ignoring application message: %s", message)
   end
 end method print-application-message;
 
@@ -126,5 +126,5 @@ define sealed method print-application-message
       else
 	environment-object-display-name(project, project, #f)
       end if;
-  debug-message("%s: %s\n", thread-prefix, message)
+  debug-out(#"environment-debugger", "%s: %s\n", thread-prefix, message)
 end method print-application-message;

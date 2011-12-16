@@ -19,8 +19,8 @@ define sealed method reorder-mirror
     (_port  :: <win32-port>,
      sheet  :: <sheet>, mirror :: <window-mirror>, where  :: <mirror-order>) => ()
   local method dbg-msg (where-to :: <string>) => ()
-          debug-message("reorder-mirror: placing mirror for frame \"%s\" %s",
-                        mirror.mirror-sheet.sheet-frame.frame-title, where-to);
+          duim-debug-message("reorder-mirror: placing mirror for frame \"%s\" %s",
+                             mirror.mirror-sheet.sheet-frame.frame-title, where-to);
         end method;
   let where-handle
     = case
@@ -40,9 +40,9 @@ define sealed method reorder-mirror
   //---*** cpage: 1998.07.07 Experiment with this flag.
   let activate-flag = if (where = #"top") 0 else $SWP-NOACTIVATE end;
   if (activate-flag = 0)
-    debug-message("                Activating (activate-flag = 0)")
+    duim-debug-message("                Activating (activate-flag = 0)")
   else
-    debug-message("                Not activating (activate-flag = $SWP-NOACTIVATE)")
+    duim-debug-message("                Not activating (activate-flag = $SWP-NOACTIVATE)")
   end;
   //--- cpage: 1998.07.20 Let's try using SetForegroundWindow or SetActiveWindow
   //           for the front window.

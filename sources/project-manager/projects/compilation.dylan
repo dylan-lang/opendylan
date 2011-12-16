@@ -179,7 +179,9 @@ define function project-load-namespace (project :: <project>, #rest keys)
   with-used-project-cache
     block()
       debug-out(#"driver", "project-load-namespace %s, %s\n", project, keys);
-      debug-message("project-load-namespace of %s, %s", project.project-name, keys);
+      debug-out(#"project-manager",
+                "project-load-namespace of %s, %s",
+                project.project-name, keys);
       project-stage-text(project, "Loading namespace for library %s",
                          as(<string>, project.project-library-name));
 
@@ -283,7 +285,7 @@ define function parse-and-compile
     note-compiling-definitions(project);
     with-project-progress(project)
       let parsed? = parse? & parse-project-sources(context);
-      debug-message("Parse-project-sources returned %s", parsed?);
+      debug-out(#"project-manager", "Parse-project-sources returned %s", parsed?);
       parsed? & %database-invalidated(project);
       let status =
         apply(compile-project-definitions,
@@ -293,8 +295,9 @@ define function parse-and-compile
               keys);
       if(status) note-compiled-definitions(project)
       else
-        debug-message("Compile-project-definitions for project %s returned #f",
-                      project.project-name)
+        debug-out(#"project-manager",
+                  "Compile-project-definitions for project %s returned #f",
+                  project.project-name)
       end;
     end;
   exception(c :: <source-record-error>)

@@ -247,8 +247,9 @@ define method environment-object-content-counts
 	<method-object>           => method-count   := method-count + 1;
 	<domain-object>           => domain-count   := domain-count + 1;
 	<environment-object>      =>
-	  debug-message("Unexpected definition %= when counting -- ignored",
-			definition);
+	  debug-out(#"environment-protocols",
+                    "Unexpected definition %= when counting -- ignored",
+                    definition);
       end
     end method do-definition;
 

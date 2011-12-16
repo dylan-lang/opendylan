@@ -103,10 +103,10 @@ define function lookup-and-coerced-apply
 
   let coerced-args = copy-sequence(args); // As args may be immutable.
 
-  debug-message
-    ("lookup-and-coerced-apply: calling %=\n"
-     "  requiring %=\n  with args %=",
-     func, types, coerced-args);
+  debug-out(#"environment-manager",
+            "lookup-and-coerced-apply: calling %=\n"
+              "  requiring %=\n  with args %=",
+            func, types, coerced-args);
 
   block(return)
     // Convert the required args and leave any #rest args alone.
@@ -125,8 +125,8 @@ define function lookup-and-coerced-apply
                types[i])));
       end if;
     end for;
-    debug-message
-      ("lookup-and-coerced-apply: coerced args to %=", coerced-args);
+    debug-out(#"environment-manager",
+              "lookup-and-coerced-apply: coerced args to %=", coerced-args);
 
     if ( apply(applicable-method?, func, coerced-args) )
       // There should always be an applicable method here, since we used

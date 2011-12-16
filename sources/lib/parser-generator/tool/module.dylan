@@ -7,6 +7,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module tool-parser-generator
   use common-dylan, exclude: { format-to-string };
+  use simple-debugging, import: { debug-out };
   use date;
   use file-system;
   use format;

@@ -8,9 +8,9 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define method main
     (arguments :: <sequence>) => (status-code :: <integer>)
-  debug-message("Starting benchmarks with arguments %=", arguments);
+  duim-debug-message("Starting benchmarks with arguments %=", arguments);
   let status-code = start-benchmarks();
-  debug-message("Exiting benchmarks with status code %d", status-code);
+  duim-debug-message("Exiting benchmarks with status code %d", status-code);
   status-code
 end method main;
 

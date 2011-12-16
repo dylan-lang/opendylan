@@ -80,7 +80,7 @@ define method try-inlining-call (c :: <simple-call>, code :: <&iep>)
             // & ~member?(fun, call-inlining-stack(c))
 	    & call-inlining-depth(c) < $max-inlining-depth)
 	// when (lambda-inlineable?(fun))
-	//   debug-message("AUTO INLINING %= INTO %=\n", fun, c.environment.lambda);
+	//   debug-out(#"inlining", "AUTO INLINING %= INTO %=\n", fun, c.environment.lambda);
 	// end when;
 	inline-call-copied(c, code);
       end if;
@@ -293,7 +293,7 @@ define method inline-call-copied (c :: <function-call>, f :: <&iep>)
     end dynamic-bind;
   else
     lambda-inlineable?(code) := #f;
-    debug-message("LOST %='s BODY FOR INLINING", code);
+    debug-out(#"inlining", "LOST %='s BODY FOR INLINING", code);
   end if; 
 end method;
 

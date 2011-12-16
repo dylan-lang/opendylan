@@ -179,10 +179,12 @@ define method function-entry-callback
 		= runtime-proxy-to-remote-value(application, proxy);
 	      remote-generic-function-inspect(target, function-value)
 	    else
-	      debug-message("Failed to find proxy for method or generic!")
+	      debug-out(#"dfmc-environment-application",
+                        "Failed to find proxy for method or generic!")
 	    end;
 	  otherwise =>
-	    debug-message("Failed to find generic proxy!");
+	    debug-out(#"dfmc-environment-application",
+                      "Failed to find generic proxy!");
 	end
       end;
   let (required-values, rest-value, keyword-values)
@@ -196,7 +198,8 @@ define method function-entry-callback
 	       rest & constructor(rest),
 	       keywords & map(constructor, keywords))
       else
-	debug-message("No signature for breakpoint function!");
+	debug-out(#"dfmc-environment-application",
+                  "No signature for breakpoint function!");
 	values(#[], #f, #[])
       end;
   breakpoint-info(application, breakpoint)

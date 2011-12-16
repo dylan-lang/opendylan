@@ -123,8 +123,10 @@ define method project-add-file-of-type(type :: $project-file-types,
   let project-locator = merge-locators(file-locator, project-directory);
   add-new!(project.%subproject-files, project-locator, test: \=);
 
-  debug-message("Adding file %s to project %s", as(<string>, file-locator),
-		project.project-name);
+  debug-out(#"project-manager",
+            "Adding file %s to project %s",
+            as(<string>, file-locator),
+            project.project-name);
   block()
     let subproject = 
       open-project-from-file(project-locator, 
@@ -165,7 +167,7 @@ end;
 
 define method project-remove-file(p :: <user-project>, 
 				  file-locator :: <file-locator>)
-  debug-message("Removing file: %s\n", as(<string>, file-locator));
+  debug-out(#"project-manager", "Removing file: %s\n", as(<string>, file-locator));
   let extension = locator-extension(file-locator);
   let file-type = 
     if (extension)
@@ -186,10 +188,11 @@ define method project-remove-file-of-type(type == $dylan-file-type,
   let base-name = locator-base(file-locator);
   p.project-source-files := remove!(p.project-source-files, base-name, 
 				    test: method(f, name) 
-					      debug-message("? %s(%s) = %s", 
-							    as(<string>, f),
-							    locator-base(f),
-							    name);
+					      debug-out(#"project-manager",
+                                                        "? %s(%s) = %s", 
+                                                        as(<string>, f),
+                                                        locator-base(f),
+                                                        name);
 					      locator-base(f) = name
 					  end, 
 				    count: 1);
@@ -250,7 +253,7 @@ define method project-remove-file-of-type(type,
   project-remove-list-property(p, #"other-files", 
 			       project-relative-file(p, file-locator));
 
-  debug-message("New list: %s", project-build-property(p, #"other-files"));
+  debug-out(#"project-manager", "New list: %s", project-build-property(p, #"other-files"));
 end;
 
 ///

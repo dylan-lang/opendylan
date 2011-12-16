@@ -5,9 +5,6 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define constant my-debug-message :: <function> = always(#t);
-// define constant my-debug-message :: <function> = debug-message;
-
 /// $DEBUGGER-STACK-DOC
 
 define constant $debugger-stack-doc :: <string> = "Stack";
@@ -150,7 +147,7 @@ define function update-debugger-stack-pane
 		debugger-select-first-call-frame
 		  (debugger, expand?: expand-first-call-frame? | stepping?)
 	      else
-		debug-message("Not selecting first call frame!")
+		debug-out(#"environment-debugger", "Not selecting first call frame!")
 	      end
 	    end method select-first-call-frame;
       if (displayer.displayer-object == project)
@@ -188,22 +185,22 @@ define function debugger-select-first-call-frame
 	if (frame-node)
 	  expand-node(stack-gadget, frame-node)
 	else
-	  debug-message("Failed to find a frame node!")
+	  debug-out(#"environment-debugger", "Failed to find a frame node!")
 	end
       else
 	if (expand?)
-	  debug-message("Failed to find the first call frame index!")
+	  debug-out(#"environment-debugger", "Failed to find the first call frame index!")
 	end
       end;
       unless (first-call-frame-wrapper)
-	debug-message("Failed to find first call frame wrapper!")
+	debug-out(#"environment-debugger", "Failed to find first call frame wrapper!")
       end;
       gadget-value(stack-gadget, do-callback?: #t) := first-call-frame-wrapper
     else
       let project = debugger.ensure-frame-project;
-      debug-message
-	("Failed to find node for thread '%s' -- not selecting first frame",
-	 frame-default-object-name(debugger, thread))
+      debug-out(#"environment-debugger",
+                "Failed to find node for thread '%s' -- not selecting first frame",
+                frame-default-object-name(debugger, thread))
     end
   end
 end function debugger-select-first-call-frame;
@@ -245,8 +242,9 @@ define function stack-frame-function-name-visibility
   let generic-function
     = if (instance?(function, <method-object>))
 	let generic-function = method-generic-function(project, function);
-	my-debug-message("  Method has %s GF",
-			 if (generic-function) "a" else "no" end);
+        debug-out(#"environment-debugger",
+                  "  Method has %s GF",
+                  if (generic-function) "a" else "no" end);
 	generic-function
       end;
   let function = generic-function | function;
@@ -259,14 +257,14 @@ define function stack-frame-function-name-visibility
   // 'home-name' will be non-#f iff 'function' has a name in some module.
   let home-name :: false-or(<name-object>)
     = environment-object-home-name(project, function);
-  my-debug-message
-    ("  Home-name: %s",
-     if (home-name) environment-object-primitive-name(project, home-name)
-     else "none" end);
-  my-debug-message
-    ("  Name: %s",
-     if (name) environment-object-primitive-name(project, name)
-     else "none" end);
+  debug-out(#"environment-debugger",
+            "  Home-name: %s",
+            if (home-name) environment-object-primitive-name(project, home-name)
+            else "none" end);
+  debug-out(#"environment-debugger",
+            "  Name: %s",
+            if (name) environment-object-primitive-name(project, name)
+            else "none" end);
   let local? = name & current-module == name-namespace(project, name);
   case
     local?    => #"local";
@@ -284,8 +282,9 @@ define function show-stack-frame-type?
  => (show? :: <boolean>)
   let type = wrapper.wrapper-type;
   let show-types = $debugger-settings.stack-show-frame-types;
-  my-debug-message("  Type: %= [show types %=]",
-		   type, show-types);
+  debug-out(#"environment-debugger",
+            "  Type: %= [show types %=]",
+            type, show-types);
   member?(type, show-types)
     | type == #"initialization-call"
 end function show-stack-frame-type?;
@@ -660,8 +659,9 @@ define function debugger-stepping-out-stack-frame
     if (unfiltered-key & ~zero?(unfiltered-key))
       let wrapper = stack[unfiltered-key - 1];
       let function = wrapper.wrapper-object;
-      my-debug-message("Stepping out to %s",
-		       stack-pane-node-label(debugger, wrapper));
+      debug-out(#"environment-debugger",
+                "Stepping out to %s",
+                stack-pane-node-label(debugger, wrapper));
       function
     end
   end

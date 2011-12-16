@@ -240,6 +240,7 @@ end module;
 define module lid-projects
   use dylan;
   use common-extensions, exclude: { format-to-string };
+  use simple-debugging, import: { debug-out };
   // Probably don't need all this, sort it out later...
   use locators;
   use format;

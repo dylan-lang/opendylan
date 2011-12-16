@@ -84,40 +84,6 @@ define method handle-environment-startup
   end
 end method handle-environment-startup;
 
-
-/// Initial about box
-
-/*---*** andrewa: currently we've decided not to use this...
-define constant $build-date
-  = make(<date>,
-	 day:   20,
-	 month: 5,
-	 year:  1998);
-
-//---*** This is a fake, we should add it for real to release-info!
-define function release-build-date
-    () => (date :: <date>)
-  $build-date
-end function release-build-date;
-
-define function six-months-after-build?
-    () => (six-months? :: <boolean>)
-  let date = current-date();
-  let build-date = release-build-date();
-  let six-month-date = build-date + make(<duration>, months: 6);
-  local method debug-show-date
-	    (name :: <string>, date :: <date>) => ()
-	  debug-message
-	    ("%s: %=/%=/%=",
-	     name, date.date-day, date.date-month, date.date-year)
-	end method debug-show-date;
-  debug-show-date("Current date", date);
-  debug-show-date("  build date", build-date);
-  debug-show-date("  six months", six-month-date);
-  date >= six-month-date
-end function six-months-after-build?;
-*/
-
 /// Project browser startup
 
 //---*** cpage: 97.08.13 Note that status codes will eventually be replaced by

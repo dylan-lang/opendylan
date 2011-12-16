@@ -43,10 +43,11 @@ define function find-library-locator (library-name, registries)
 	    end;
 	return(filename, registry)
       else
-	debug-message("Failed to find %s [%s under %s]",
-		      as(<string>, locator),
-		      name,
-		      as(<string>, registry.registry-location))
+	debug-out(#"project-manager",
+                  "Failed to find %s [%s under %s]",
+                  as(<string>, locator),
+                  name,
+                  as(<string>, registry.registry-location))
       end
     end;
     values(#f, #f)

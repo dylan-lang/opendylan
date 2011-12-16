@@ -108,15 +108,17 @@ define sealed sideways method note-database-invalidated
     // We really should only invalidate the proxies that
     // are from this particular project...
     if (database)
-      debug-message("Invalidating database for '%s'",
-                    environment-object-primitive-name
-                      (project-object, project-object));
+      debug-out(#"dfmc-environment-projects",
+                "Invalidating database for '%s'",
+                environment-object-primitive-name
+                  (project-object, project-object));
       invalidate-compiler-database(database);
       project-compiler-database(project-object) := #f
     else
-      debug-message("Database for '%s' already invalidated",
-                    environment-object-primitive-name
-                      (project-object, project-object))
+      debug-out(#"dfmc-environment-projects",
+                "Database for '%s' already invalidated",
+                environment-object-primitive-name
+                  (project-object, project-object))
     end;
     clear-project-warnings(project-object);
     if (compiling?)
@@ -588,8 +590,9 @@ define sealed method env/close-project
       remove!(*open-projects*, project-object);
       if (project-object.project-proxy)
         project-object.project-proxy := #f;
-        // debug-message("dfmc-projects: setting proxy of %s to %f",
-        //             project.project-name)
+        // debug-out(#"dfmc-environment-projects",
+        //           "dfmc-projects: setting proxy of %s to %f",
+        //           project.project-name)
       end
     end;
     let message = make(<project-closed-message>, project: project-object);
@@ -1088,8 +1091,11 @@ end method %do-used-projects;
 
 define function abort-project-opening
     (name :: <string>)
-  debug-message("Internal error: failed to open project %=", name);
-  debug-message("  Aborting from opening of project...");
+  debug-out(#"dfmc-environment-projects",
+            "Internal error: failed to open project %=",
+            name);
+  debug-out(#"dfmc-environment-projects",
+            "  Aborting from opening of project...");
   abort()
 end function abort-project-opening;
 

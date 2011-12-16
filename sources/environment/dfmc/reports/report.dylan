@@ -79,7 +79,7 @@ define macro report-indent-one
              ?body
 //	   exception (condition :: <condition>)
 	     // Prevent errors from stopping the report
-//	     debug-message("Condition: %=", condition);
+//	     debug-out(#"dfmc-environment-reports", "Condition: %=", condition);
 	   end;
            ?report.report-indent-depth := save-indent-depth;
          end }

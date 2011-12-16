@@ -88,7 +88,7 @@ end method widget-attributes;
 define method do-compose-space
     (gadget :: <gtk-gadget-mixin>, #key width, height)
  => (space-req :: <space-requirement>)
-  debug-message("do-compose-space(%= , %d, %d)", gadget, width, height);
+  duim-debug-message("do-compose-space(%= , %d, %d)", gadget, width, height);
   let mirror = sheet-direct-mirror(gadget);
   if (mirror)
     let widget = mirror-widget(mirror);
@@ -1443,7 +1443,7 @@ end;
 define method do-compose-space
     (gadget :: <scrolled-mixin>, #key width, height)
  => (space-req :: <space-requirement>)
-  debug-message("do-compose-space(%= , %d, %d)", gadget, width, height);
+  duim-debug-message("do-compose-space(%= , %d, %d)", gadget, width, height);
   let mirror = sheet-direct-mirror(gadget);
   if (mirror)
     let widget = scrolled-window(mirror);

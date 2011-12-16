@@ -1469,7 +1469,7 @@ define method raise-all-frames
     (frame :: <environment-frame>) => ()
   // TESTING: Check whether this case ever arises
   when (*raising-all-frames?*)
-    debug-message("raise-all-frames: Prevented Recursion");
+    duim-debug-message("raise-all-frames: Prevented Recursion");
   end;
   unless (*raising-all-frames?*)
     block ()
@@ -1502,7 +1502,7 @@ define method minimize-all-frames
     (frame :: <environment-frame>) => ()
   when (*minimizing-or-restoring-all-frames?*)
     // TESTING: Check whether this case ever arises
-    debug-message("minimize-all-frames: Prevented Recursion");
+    duim-debug-message("minimize-all-frames: Prevented Recursion");
   end;
   unless (*minimizing-or-restoring-all-frames?*)
     block ()
@@ -1518,7 +1518,7 @@ define method undo-minimize-all-frames
     (frame :: <environment-frame>) => ()
   when (*minimizing-or-restoring-all-frames?*)
     // TESTING: Check whether this case ever arises
-    debug-message("undo-minimize-all-frames: Prevented Recursion");
+    duim-debug-message("undo-minimize-all-frames: Prevented Recursion");
   end;
   unless (*minimizing-or-restoring-all-frames?*)
     block ()
@@ -1685,7 +1685,7 @@ define function import-lid-file
   when (filename)
     let project = import-project-from-file(filename);
     //--- cpage: 1997.09.10 We need to add a real error message.
-    debug-assert(project, "Cannot convert %= to a project", project);
+    duim-debug-assert(project, "Cannot convert %= to a project", project);
     if (frame)
       frame-open-project(frame, project);
     else
