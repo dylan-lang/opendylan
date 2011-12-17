@@ -46,23 +46,25 @@ Mailing Lists
 There are several mailing lists.  Which ones you join depends on your level of
 interest and involvement:
 
-`hackers@lists.opendylan.org <mailto:hackers-request@lists.opendylan.org>`_ (`Archives`__)
+`hackers@lists.opendylan.org`__ (`Archives`__)
     The public development list.  This is a good place to start if you have
     a question or would like to contribute.  Lurkers are also welcome!
     Very low traffic.
 
-`announce@lists.opendylan.org <mailto:announce-request@lists.opendylan.org>`_ (`Archives`__)
+`announce@lists.opendylan.org`__ (`Archives`__)
     Find out about new releases! This is an extremely low-traffic list
     reserved for announcements.  If you subscribe to hackers@, you are on
     this list.
 
-`chatter@lists.opendylan.org <mailto:chatter-request@lists.opendylan.org>`_ (`Archives`__)
+`chatter@lists.opendylan.org`__ (`Archives`__)
     This list contains nothing but Git commit messages.
     It's for developers who want to know everything that's going on.
 
-
+__ https://lists.opendylan.org/mailman/listinfo/hackers
 __ https://lists.opendylan.org/pipermail/hackers/
+__ https://lists.opendylan.org/mailman/listinfo/announce
 __ https://lists.opendylan.org/pipermail/announce/
+__ https://lists.opendylan.org/mailman/listinfo/chatter
 __ https://lists.opendylan.org/pipermail/chatter/
 
 Social Media
