@@ -35,6 +35,7 @@ Welcome to Open Dylan!
 
 .. raw:: html
 
+       <div class="pull-right"><a href="news/index.html" class="btn primary large">All news &raquo;</a></div>
      </div>
      <div class="span8">
 
