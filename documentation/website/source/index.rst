@@ -26,8 +26,9 @@ Welcome to Open Dylan!
 
      <div class="alert-message block-message info">
        <p>Keep up to date by subscribing to our <a href="rss.xml">RSS
-       Feed</a> or joining our <a href="community/index#mailing-lists">
-       mailing lists</a>.</p>
+       Feed <img src="_static/feed-icon-14x14.png" alt=""></a> or
+       joining our <a href="community/index#mailing-lists">mailing
+       lists</a>.</p>
      </div>
 
 .. include:: news/recent.rst.inc
