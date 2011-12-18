@@ -1,6 +1,15 @@
+:copyright: Copyright © 2011 Dustin Voss, All Rights Reserved.
+
 .. default-role:: samp
 .. highlight:: none
-.. _macro-types:
+.. sidebar:: Navigation
+
+   :Next:   :doc:`patterns`
+   :Prev:   :doc:`background-overview`
+   :Top:    :doc:`index`
+   
+   .. contents::
+      :local:
 
 
 ***********
@@ -11,8 +20,7 @@ There are four types of macro.
 
 `Body-style definition macro`:dfn:
       This kind of macro lets you create `define x … end` syntax. This is the
-      most popular kind of macro. This type of macro can only be used at the top
-      level of source code.
+      most popular kind of macro.
 
 `List-style definition macro`:dfn:
       This kind of macro lets you create `define x …` syntax, such as `define
@@ -29,6 +37,36 @@ There are four types of macro.
       complicated than a normal function call, or if there is additional setup
       needed around a normal function call.
 
+
+Macro definitions
+=================
+
+All macros are defined by the `define macro` macro, which follows this general
+syntax, with optional parts in brackets::
+
+      define macro MACRO-NAME
+         MAIN-RULE-SET
+         [AUXILIARY-RULE-SETS]
+      end macro MACRO-NAME
+
+`{MACRO-NAME}`
+      For statement and function macros, this is the macro's distinguishing
+      word. For body-style and list-style definition macros, though, it is the
+      distinguishing word plus `-definer`.
+
+`{MAIN-RULE-SET}`
+      One or more pattern/template pairs. The syntax that the patterns all
+      follow determine the type of the macro, and are described `below
+      <main-rules>`_. The patterns are matched in order; see :doc:`patterns`.
+
+`{AUXILIARY-RULE-SETS}`
+      One or more auxiliary rule sets, described in more detail in
+      :doc:`auxiliary-rules`. Each rule set has a name (which is syntactically a
+      symbol) and one or more pattern/template pairs. The name may be written as
+      `my-aux-ruleset:` or `#"my-aux-ruleset"`; both are the same.
+
+      
+.. _`main-rules`:
 
 Main rules
 ==========
@@ -100,7 +138,7 @@ Statement macro
 The main rules' patterns must follow this syntax, with optional parts in
 brackets::
 
-      { DISTINGUISHING-WORD [`{BODY-PATTERNS}`] [;] end }
+      { DISTINGUISHING-WORD [BODY-PATTERNS] [;] end }
 
 `{BODY-PATTERNS}`
       One or more sets of code fragments and pattern variables separated by

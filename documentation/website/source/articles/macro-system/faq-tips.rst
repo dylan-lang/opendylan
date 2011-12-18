@@ -1,12 +1,18 @@
 .. default-role:: samp
 .. highlight:: none
-.. _faq-tips:
+.. sidebar:: Navigation
+
+   :Next:   
+   :Prev:   :doc:`hygiene`
+   :Top:    :doc:`index`
+   
+   .. contents::
+      :local:
 
 
 ************
 FAQ and Tips
 ************ 
-
 
 General advice and troubleshooting
 ==================================
@@ -29,21 +35,22 @@ General advice and troubleshooting
 How can I combine multiple names into one?
 ==========================================
 
-This template will not work::
+There is no real way to do this for names or symbols. The concatenating
+substitution forms do not scale, so this template will not work::
 
    { define ?name-1 ## "-" ## ?name-2 ## "-function" () }
    
-What you want is easily done for the `?"{name}"` substitution form by taking
-advantage of adjacent string concatenation::
+However, you can easily combine multiple names into a string by taking advantage
+of adjacent string concatenation::
 
    { format-out(?"name-1" "-" ?"name-2" "-function") }
 
-But this will not work for the `?{name}` or `?#"{name}"` substitution forms. For
-those, you have to use an auxiliary macro to construct a name.
+Your best bet may be to do some sort of string-based introspection, or create
+anonymous definitions stored in a table keyed by a string.
 
 
-How can I do macros that follow a BNF-like syntax?
-==================================================
+How can I write macros that follow a BNF-like syntax?
+=====================================================
 
 Macros are designed to follow Dylan language conventions, so you may not be able
 to support arbitrary BNF-based syntax. But here are some tricks to help with
@@ -103,21 +110,34 @@ common BNF forms.
 I can't make a bare list!
 =========================
 
-A macro that makes a bare list can't do anything useful. For example, this will
-not compile::
+A macro that makes a bare list (by which I mean a simple list of comma-separated
+names) cannot do anything useful with it. Macros build cohesive code fragments,
+and a bare list is not such a code fragment.
 
-      define macro setter-names
-        { setter-names(?names) } => { ?names }
-      names:
-        { ?:name, ... } => { ?name ## "-setter", ... }
-      end macro;
-   
-      vector(setter-names(alpha, beta, gamma, delta))
+For example, this will not compile::
+
+   define macro setter-names
+     { setter-names(?names) } => { ?names }
+   names:
+     { ?:name, ... } => { ?name ## "-setter", ... }
+   end macro;
+
+   vector(setter-names(alpha, beta, gamma, delta))
 
 It does not compile because the expansion of `setter-names` is wrapped in a
-begin…end::
+begin…end, resulting in this invalid syntax::
 
-      vector(begin alpha-setter, beta-setter, gamma-setter, delta-setter end)
+   vector(begin alpha-setter, beta-setter, gamma-setter, delta-setter end)
 
-This is invalid syntax. You need to do something with the list in the macro
-itself.
+Instead, do something with the list in the macro itself:
+
+.. code-block:: dylan
+   :emphasize-lines: 2, 7
+   
+   define macro setter-vector
+     { setter-vector(?names) } => { vector(?names) }
+   names:
+     { ?:name, ... } => { ?name ## "-setter", ... }
+   end macro;
+   
+   setter-vector(alpha, beta, gamma, delta)

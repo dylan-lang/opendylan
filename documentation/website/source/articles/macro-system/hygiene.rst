@@ -1,6 +1,15 @@
+:copyright: Copyright © 2011 Dustin Voss, All Rights Reserved.
+
 .. default-role:: samp
 .. highlight:: dylan
-.. _hygiene:
+.. sidebar:: Navigation
+
+   :Next:   :doc:`faq-tips`
+   :Prev:   :doc:`auxiliary-rules`
+   :Top:    :doc:`index`
+   
+   .. contents::
+      :local:
 
 
 *******
@@ -11,24 +20,38 @@ Let us say we have two macros A and B. The expansion of A calls B. The following
 diagram shows the sources or lexical scopes of a binding used in the expansion
 of A and B.
 
-.. code-block:: none
+.. raw:: html
 
-   +--------------------------------+    +-------------------------------------+
-   | [1] Module or local scope of   |    | [4] Module containing definition of |
-   | the call to macro A            |    | macro A                             |
-   |                                |    |                                     |
-   |  +--------------------------+  |    +-------------------------------------+
-   |  | [2] Expansion of A       |  | 
-   |  |                          |  |    +-------------------------------------+ 
-   |  |  +--------------------+  |  |    | [5] Module containing definition of | 
-   |  |  | [3] Expansion of B |  |  |    | macro B                             | 
-   |  |  |                    |  |  |    |                                     | 
-   |  |  +--------------------+  |  |    +-------------------------------------+ 
-   |  |                          |  | 
-   |  +--------------------------+  | 
-   |                                | 
-   +--------------------------------+
+   <pre style="line-height: 1em; font-family: Andale Mono, Courier New">
+   ╒═════════════════════════════════════╕
+   │ [1] Module or local scope of a call │    
+   │     to macro A                      │    
+   │                                     │    
+   │  ┌───────────────────────────────┐  │
+   │  │ [2] Expansion of A            │  │    
+   │  │                               │  │     
+   │  │  ┌─────────────────────────┐  │  │     
+   │  │  │ [3] Expansion of B      │  │  │     
+   │  │  │                         │  │  │     
+   │  │  └─────────────────────────┘  │  │     
+   │  │                               │  │ 
+   │  └───────────────────────────────┘  │ 
+   │                                     │ 
+   ╘═════════════════════════════════════╛
 
+   ╒═════════════════════════════════════╕
+   │ [4] Module containing definition of │
+   │     macro A                         │
+   │                                     │
+   ╘═════════════════════════════════════╛
+   
+   ╒═════════════════════════════════════╕
+   │ [5] Module containing definition of │
+   │     macro B                         │
+   │                                     │
+   ╘═════════════════════════════════════╛
+   </pre>
+   
 Macro expansions are hygienic, meaning:
 
 - Bindings from boxes 2 or 4 are visible in box 2.
@@ -54,10 +77,10 @@ Breaking hygiene
 
 A template can prefix a binding with `?=`. This makes the binding come from
 and be visible in the macro's caller. This can be illustrated by an example from
-`Dylan Programming`:title:.
+:title:`Dylan Programming`.
 
-Say macro A is defined in box 4 as [rep]_. Code in box 1 can call the macro as
-follows:
+Say macro A defined in box 4 is `Definition 1`_, and the macro call in box 1 is
+the following:
 
 .. code-block:: dylan
 
@@ -67,25 +90,25 @@ follows:
      i := i + 1;
    end
 
-The `?=stop!` substitution in line 3 of the macro expands (in box 2) to a
+The `?=stop!` substitution in line 3 of the macro becomes a reference to a
 binding visible in boxes 1 and 2. In box 1, the binding is visible as `stop!`.
-In box 2 (the expansion itself), the binding is visible as `?=stop!` and if it
-were a function, the macro template could contain code fragments like this:
+In box 2 (the expansion itself), the binding is visible as `?=stop!` and can be
+used like any other binding (e.g. `format-out`) as shown by the highlighted
+line.
 
-.. code-block:: dylan
+Note that that a macro expansion cannot create a new binding visible outside of
+the macro call itself (except by way of a top-level `define` statement). In
+other words, box 2 cannot create a local binding for use elsewhere in box 1.
 
-   ?=stop!(arg-1, arg-2)
-
-Note that a macro expansion cannot create a new binding visible outside of the
-macro call in box 1. For example, given a macro like [dofoo]_, one might expect
-the macro call [dofoo-call]_ would print "Hello" twice, but it will not work.
-Because every macro expansion is implicitly surrounded by begin…end as described
-in `background-overview`:ref:, the example expands into [dofoo-exp]_. After the
+For example, given the macro in `Definition 2`_, one might expect the macro call
+in `Call 2`_ would print "Hello" twice, but the code does not compile. Because
+every macro expansion is implicitly surrounded by begin…end as described in
+:doc:`background-overview`, the example expands into `Expansion 2`_. After the
 macro call, `foo` is no longer in scope.
 
 ----------
 
-.. [rep] *Repeat macro*
+_`Definition 1`:
 
    .. code-block:: dylan
       :linenos:
@@ -99,7 +122,7 @@ macro call, `foo` is no longer in scope.
                end }
       end macro
 
-.. [dofoo] *Do-then-foo macro*
+_`Definition 2`:
 
    .. code-block:: dylan
       :linenos:
@@ -109,14 +132,14 @@ macro call, `foo` is no longer in scope.
           => { let ?=foo = ?expression; ?body }
       end macro
 
-.. [dofoo-call] *Calling do-then-foo*
+_`Call 2`:
 
    .. code-block:: dylan
  
       do-then-foo("Hello\n") format-out(foo) end;
       format-out(foo)
 
-.. [dofoo-exp] *Expansion of do-then-foo*
+_`Expansion 2`:
 
    .. code-block:: dylan
    

@@ -1,3 +1,11 @@
+:copyright: Copyright © 2011 Dustin Voss, All Rights Reserved.
+
+.. sectionauthor:: Dustin Voss <d_j_v@me.com>
+.. sidebar:: Navigation
+
+   :Next:   :doc:`background-overview`
+
+
 ######################
 The Dylan Macro System
 ######################
@@ -10,8 +18,8 @@ complicated jobs get hard fast.
 
 This document describes how the Dylan macro system works and some techniques you
 can use when writing your own macros. I gloss over some of the implementation
-details and present this information more informally than the `Dylan
-Reference Manual`:title: does.
+details and present this information more informally than the :title:`Dylan
+Reference Manual` does.
 
 .. toctree::
    :maxdepth: 2

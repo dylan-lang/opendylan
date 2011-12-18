@@ -1,6 +1,15 @@
+:copyright: Copyright © 2011 Dustin Voss, All Rights Reserved.
+
 .. default-role:: dfn
 .. highlight:: dylan
-.. _background-overview:
+.. sidebar:: Navigation
+
+   :Next:   :doc:`macro-types`
+   :Prev:   :doc:`index`
+   :Top:    :doc:`index`
+   
+   .. contents::
+      :local:
 
 
 ***********************
@@ -58,13 +67,15 @@ combined fragments and substitutions form the macro's `expansion`, which
 replaces the original code fragment.
 
 This happens recursively: after a macro is expanded, its expansion is scanned
-for additional macro call code fragments, and those are expanded in turn. Macros
-are recognized by way of a `distinguishing word` and a certain syntactic style.
+for additional macro call code fragments, and those are expanded in turn. The
+parser recognizes a macro call code fragment by way of a `distinguishing word`
+and the type of syntax associated with the macro (discussed further in
+:doc:`macro-types`).
 
-Let us examine a function macro [defn]_. This macro might be called by the code
-[orig]_, but the actual call fragment [frag]_ is what the parser will attempt to
-match. The macro's expansion will be [exp]_ and the original code will then
-become [new]_.
+Let us examine `Function Macro`_. This macro might be called by the code
+`Original Code`_, but the actual call fragment `Call Fragment`_ is what the
+parser will attempt to match. The macro's expansion will be `Expansion`_ and the
+original code will then become `Replacement Code`_.
 
 Here are the parts of the macro:
 
@@ -81,14 +92,14 @@ Here are the parts of the macro:
   ``?table-contents``, ``?rest``, ``?key``, and ``?value``.
 - The substitutions in this macro include those same names.
 
-Note that the expansion [new]_ is surrounded by ``begin`` and ``end``. Macro
-expansions are always surrounded by a begin…end block. This helps with macro
-hygiene (i.e. preventing bindings outside of a macro call from being affected by
-bindings used in a macro's expansion). I discuss hygiene `later <hygiene>`:ref:.
+Note that the expansion is surrounded by ``begin`` and ``end``. Macro expansions
+are always surrounded by a begin…end block. This helps with macro hygiene (i.e.
+preventing bindings outside of a macro call from being affected by bindings used
+in a macro's expansion). I discuss hygiene :doc:`here <hygiene>`.
 
 ----------
 
-.. [defn] *Definition*
+_`Function Macro`:
 
    .. code-block:: dylan
       :linenos:
@@ -104,25 +115,25 @@ bindings used in a macro's expansion). I discuss hygiene `later <hygiene>`:ref:.
           => { ht[?key] := ?value; ... }
       end macro table
 
-.. [orig] *Original code*
+_`Original Code`:
    
    .. code-block:: dylan
    
       let lights = table(<string-table>, "red" => "stop", "green" => "go");
 
-.. [frag] *Call fragment*
+_`Call Fragment`:
 
    .. code-block:: dylan
    
       table(<string-table>, "red" => "stop", "green" => "go")
 
-.. [exp] *Expansion*
+_`Expansion`:
 
    .. code-block:: dylan
    
       let ht = make(<string-table>); ht["red"] := "stop"; ht["green"] := "go"; ht;
 
-.. [new] *Replacement code*
+_`Replacement Code`:
 
    .. code-block:: dylan
    

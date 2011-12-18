@@ -1,6 +1,15 @@
+:copyright: Copyright © 2011 Dustin Voss, All Rights Reserved.
+
 .. default-role:: samp
 .. highlight:: none
-.. _pattern-variables:
+.. sidebar:: Navigation
+
+   :Next:   :doc:`substitutions`
+   :Prev:   :doc:`patterns`
+   :Top:    :doc:`index`
+   
+   .. contents::
+      :local:
 
 
 *****************
@@ -89,7 +98,7 @@ Property list pattern variables
         part of `{prop-1}:` or `{prop-2}:`. The substitution for
         `??{prop-1}` is several code fragments, each being the value part of a
         `{prop-1}:` property. The substitution may use a separator between each
-        code fragment as described in the `substitutions`:ref: section.
+        code fragment as described in :doc:`substitutions`.
 
         For example, consider this pattern::
 
@@ -223,16 +232,17 @@ Body and macro pattern variables
         variable and cannot be followed by a comma or semicolon.
 
 `?{name}:macro`
-        This matches any macro call. This includes calls to definition macros,
-        which normally only appear at the top level source code. The
-        substitution will be the expanded macro, without the begin…end block
-        that normally surrounds macro expansions.
+        This matches any macro call. The substitution will be the expanded
+        macro, without the begin…end block that normally surrounds macro
+        expansions.
 
         While you can use the `?:expression` and `?:body` pattern variable
-        constraints to match function and statement macro calls, but they cannot
+        constraints to match function and statement macro calls, they cannot
         match definition macro calls, and their substitutions will include the
         begin…end wrapper.
 
+
+.. _wildcard-variables:
 
 Wildcard pattern variables
 ==========================
@@ -270,7 +280,7 @@ Wildcard pattern variables
 
                 { ?first:*, ?second:* }
 
-        As described in `patterns`:ref:, it will match any of the following::
+        As described in :doc:`patterns`, it will match any of the following::
 
                 alpha, beta
                 alpha, beta, gamma
@@ -288,7 +298,7 @@ Auxiliary rule set pattern variables
 `?my-aux-rules`
         This syntax can only be used when there is an auxiliary rule set named
         the same as the pattern variable. It is equivalent to
-        `?my-aux-rule:*`. See `auxiliary-rules`:ref:.
+        `?my-aux-rule:*`. See :doc:`auxiliary-rules`.
 
 `...`
         This syntax can only be used within an auxiliary rule set. If the rule

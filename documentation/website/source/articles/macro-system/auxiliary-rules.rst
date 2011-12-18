@@ -1,18 +1,30 @@
+:copyright: Copyright © 2011 Dustin Voss, All Rights Reserved.
+
 .. default-role:: samp
 .. highlight:: dylan
-.. _auxiliary-rules:
+.. sidebar:: Navigation
+
+   :Next:   :doc:`hygiene`
+   :Prev:   :doc:`substitutions`
+   :Top:    :doc:`index`
+   
+   .. contents::
+      :local:
 
 
 ******************************
 Auxiliary Rules and Expansions
 ******************************
 
+Auxiliary Rules
+===============
+
 Auxiliary rules transform the code fragment contained in a pattern variable
 before it is substituted into a template.
 
-Auxiliary rule sets follow the syntax described in `patterns`:ref: and have the
+Auxiliary rule sets follow the syntax described in :doc:`patterns` and have the
 behaviors described on that page. They do not have the special elements like
-`define` or `{modifiers}` shown in `macro-types`:ref:, but the macro type does
+`define` or `{modifiers}` shown in :ref:`main-rules`, but the macro type does
 place certain *de facto* restrictions on what can appear in auxiliary rule
 patterns:
 
@@ -25,7 +37,7 @@ An auxiliary rule set comes into play when a pattern variable matches a code
 fragment and that pattern variable is named the same as the auxiliary rule set.
 Usually, the pattern variable is a wildcard variable written without a
 constraint, but the pattern variable can use any of the forms described in
-`patterns`:ref:, including the `#key` and `??{name}:{constraint}` forms.
+:doc:`patterns`, including the `#key` and `??{name}:{constraint}` forms.
 
 After the pattern variable matches and is set to a code fragment, that code
 fragment is matched against the rules of the auxiliary rule set. If a rule's
@@ -33,18 +45,29 @@ pattern matches the code fragment, that rule's template is expanded and replaces
 the code fragment contained by the pattern variable. If no rules match the code
 fragment, macro expansion fails.
 
-If the pattern variable named the same as the rule set is a ``??``-style pattern
+If the pattern variable named the same as the rule set is a `??`-style pattern
 variable, the process is similar, except each code fragment in the pattern
 variable is individually matched and transformed by the auxiliary rules.
 
 
-Expansion examples
-==================
+Expansions
+==========
 
-Consider a macro [ver1]_ that makes it easier to generate version numbers. The
-macro is called by [ver1-call]_ and expands to [ver1-exp]_.
+This section discusses expansions through a series of examples. The examples are
+all variations of a function macro named `version` that builds a version number
+in a specific format and sets it by calling a function `set-version`. The
+`set-version` function is declared like this::
 
-The `?type` pattern variable in line 1 of the macro definition matches ``alpha``
+      define function set-version (version-string :: <string>) => ()
+
+
+Simple expansion
+----------------
+
+First, let us consider the macro definition `Definition 1`_. The macro is called
+by `Call 1`_ and expands to `Expansion 1`_.
+
+The `?type` pattern variable in line 1 of the macro definition matches `alpha`
 in the call. After the variable matches, the `type:` auxiliary rule set in lines
 4–7 rewrite the contents of the pattern variable according to the matching rule
 in line 5. The matching rule expands to the string `"a"`, which replaces the
@@ -54,7 +77,7 @@ the expansion.
 
 ----------
 
-.. [ver1] *Version macro*
+_`Definition 1`:
 
    .. code-block:: dylan
       :linenos:
@@ -68,32 +91,35 @@ the expansion.
         { release } => { }
       end macro
 
-.. [ver1-call] *Macro call*
+_`Call 1`:
 
    .. code-block:: dylan
-   
+
       version("1.2", alpha)
 
-.. [ver1-exp] *Macro expansion*
+_`Expansion 1`:
 
    .. code-block:: dylan
-   
+
       set-version("1.2" "a")
+
+   .. tip:: Dylan compiles `"1.2" "a"` like `"1.2a"`.
 
 ----------
 
 Effect of constraints
----------------------
+^^^^^^^^^^^^^^^^^^^^^
 
-Now consider if the auxiliary rules were rewritten as [ver2]_. This macro might
-be intended to create a version number like `"1.0a1"` if called by [ver2-call]_.
-However, the macro will never succeed. `?type` in line 2 is constrained to
-always be a simple name. None of the patterns in the `type:` auxiliary rule set
-match a simple name (they all expect commas), so the macro expansion will fail.
+Now consider if the auxiliary rules were rewritten as `Definition 2`_. This
+macro is intended to be called by `Call 2`_ to create a version number like
+`"1.0a1"`. However, the macro will never succeed. `?type` in line 2 is
+constrained to always be a simple name. None of the patterns in the `type:`
+auxiliary rule set match a simple name (they all expect commas), so the macro
+expansion will fail.
 
 ----------
 
-.. [ver2] *Version macro 2*
+_`Definition 2`:
 
    .. code-block:: dylan
       :linenos:
@@ -108,7 +134,7 @@ match a simple name (they all expect commas), so the macro expansion will fail.
         { release, ?n:expression } => { }
       end macro
 
-.. [ver2-call] *Macro call*
+_`Call 2`:
 
    .. code-block:: dylan
    
@@ -116,30 +142,30 @@ match a simple name (they all expect commas), so the macro expansion will fail.
 
 ----------
 
-Missing code fragments
-----------------------
+Empty and missing code fragments
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 An auxiliary rule set can match against a missing code fragment. Consider the
-following code which calls [ver1]_:
+following code which calls either of the above `version` macros:
 
 .. code-block:: dylan
 
    version("1.0")
 
-With this macro call, the `?number` pattern variable would
-contain `"1.0"` and `?type` would be empty, as described in 
-`final-items`:ref:. The macro would fail to match this code
-fragment, since the `name`` constraint of the `?type` variable does not match
-a missing code fragment.
+With this macro call, the `?number` pattern variable would contain `"1.0"` and
+`?type` would be empty, as described in :ref:`final-items`. The macro would fail
+to match this code fragment, since the `name` constraint of the `?type`
+variable does not match a missing code fragment.
 
-If we changed the macro definition to include a wildcard constraint [ver3]_, the
-macro would still fail to match the code fragment because the `type:`
-auxiliary rule set does not have a pattern that matches a missing code fragment.
-We would also have to add that rule [ver4]_.
+If we changed the macro definition to include a wildcard constraint, as in
+`Definition 3`_, the macro would still fail to match the code fragment because
+the `type:` auxiliary rule set does not have a pattern that matches a missing
+code fragment. We would also have to add the rule highlighted in `Definition
+4`_.
 
 ----------
 
-.. [ver3] *Macro with wildcard*
+_`Definition 3`:
 
    .. code-block:: dylan
       :linenos:
@@ -154,11 +180,11 @@ We would also have to add that rule [ver4]_.
         { release } => { }
       end macro
 
-.. [ver4] *Macro with wildcard and empty pattern*
+_`Definition 4`:
 
    .. code-block:: dylan
       :linenos:
-      :emphasize-lines: 2,8
+      :emphasize-lines: 8
 
       define macro version
         { version(?number:expression, ?type:*) }
@@ -172,40 +198,72 @@ We would also have to add that rule [ver4]_.
 
 ----------
 
-Final exam
+
+Complex expansion
+-----------------
+
+Now suppose we wanted to support the syntax `Call 5`_. This macro should expand
+to `Expansion 5`_ to generate a version number like `"1.042a"`. The macro could
+be defined by the code `Definition 5`_.
+
 ----------
 
-Now suppose we wanted to support the syntax [ver5-call]_. This macro should
-expand to [ver5-exp]_ to generate a version number like "1.042a". The macro
-could be defined by the code [ver5]_. There are several interesting aspects to
-this version of the macro that I would like to point out.
+_`Definition 5`:
 
-Required and optional properties
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   .. code-block:: dylan
+      :linenos:
+
+      define macro version
+        { version(#key ?major:expression, ??rev:expression, ?type:name = none) }
+          => { set-version(concatenate(?major, ".", ??rev, ..., ?type)) }
+      major:
+        { ?rev } => { ?rev }
+      rev:
+        { ?:expression } => { format-to-string("%s", ?expression) }
+      type:
+        { alpha } => { "a" }
+        { beta } => { "b" }
+        { release } => { }
+        { none } => { }
+      end macro
+
+_`Call 5`:
+
+   .. code-block:: dylan
+
+      version(major: 1, rev: 0, rev: 4, rev: 2, type: alpha)
+
+_`Expansion 5`:
+
+   .. code-block:: dylan
+
+      set-version(concatenate("1", ".", "0", 4", "2", "a"))
+
+----------
+
+Property lists and optional properties
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The macro call must include the `major:` property, but the `rev:` and `type:`
-properties are optional. `rev:` is optional because it is a ``??``-type pattern
+properties are optional. `rev:` is optional because it is a `??`-type pattern
 variable, and `type:` is optional because the pattern variable includes a
 default value.
 
 If the macro call did not include any `rev:` properties, the substitution for
 `??rev, ...` would be empty. This would cause the comma after `"."` in line 3 to
 vanish. If the macro call did not include `type:`, the substitution for
-``?type`` in line 3 would be empty because the defaulted pattern variable
+`?type` in line 3 would be empty because the defaulted pattern variable
 matches the pattern of the auxiliary rule in line 12, and the template for that
 rule is empty. Because `?type` in line 3 would be empty, the comma after `??rev,
 ...` would vanish.
 
-Property symbols
-^^^^^^^^^^^^^^^^
+You may have noted that the `major:`, `rev:`, and `type:` auxiliary rule sets do
+not include the actual `major:`, `rev:`, or `type:` symbols found in the macro
+call. This is because `#key`-type pattern variables contain only the value parts
+of properties, not the symbol parts.
 
-The `major:`, `rev:`, and `type:` auxiliary rule sets do not include the actual
-`major:`, `rev:`, or `type:` symbols found in the macro call. This is because
-``#key``-type pattern variables contain only the value parts of properties, not
-the symbol parts.
-
-``??`` and ``?`` pattern variables
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+`??` and `?` pattern variables
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The main rule and the `major:` auxiliary rule set both contain a pattern
 variable named `rev`, though it is `??rev:expression` in the main rule (line 2)
@@ -229,7 +287,7 @@ individually. The `??rev, ...` substitution in line 3 then joins each of the
 transformed code fragments with a comma and includes the entire collection in
 the macro expansion.
 
-Empty ``??`` pattern variables
+Empty `??` pattern variables
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 In line 2, the `?type` variable has a default. If the macro call
@@ -242,115 +300,85 @@ fragment. Since the `rev:` rule does not include an empty pattern, you might
 expect the macro to fail.
 
 But the macro still works. The `rev:` rule will be applied to each code fragment
-in `??rev` individually because it is a ``??``-type pattern variable. Since
+in `??rev` individually because it is a `??`-type pattern variable. Since
 there are no code fragments in `??rev`, the `rev:` is not even applied once, so
 its lack of an empty pattern is irrelevant.
 
-----------
-
-.. [ver5-call] *Complex syntax call*
-
-   .. code-block:: dylan
-
-      version(major: 1, rev: 0, rev: 4, rev: 2, type: alpha)
-
-.. [ver5-exp] *Complex expansion*
-
-   .. code-block:: dylan
-
-      set-version(concatenate("1", ".", "0", 4", "2", "a"))
-
-.. [ver5] *Complex macro definition*
-
-   .. code-block:: dylan
-      :linenos:
-
-      define macro version
-        { version(#key ?major:expression, ??rev:expression, ?type:name = none) }
-          => { set-version(concatenate(?major, ".", ??rev, ..., ?type)) }
-      major:
-        { ?rev } => { ?rev }
-      rev:
-        { ?:expression } => { format-to-string("%s", ?expression) }
-      type:
-        { alpha } => { "a" }
-        { beta } => { "b" }
-        { release } => { }
-        { none } => { }
-      end macro
-
-----------
 
 Recursive expansion
-===================
+-------------------
 
 Any pattern variable named the same as an auxiliary rule is processed by that
 rule. That includes pattern variables in the auxiliary rule itself. This
 recursive behavior is useful for processing lists of items.
 
 The `...` pattern variable and substitution syntaxes draw attention to a
-recursive rule. Using that syntax, the macros [rec1]_ and [rec2]_ are
-equivalent. But I feel there is a good argument for avoiding that syntax for
-clarity's sake.
+recursive rule. Using that syntax, the macros `Definition 6`_ and `Definition
+7`_ are equivalent. But I feel there is a good argument for avoiding that syntax
+for clarity's sake.
 
-Tracing a call of the macro [rec1-call]_ shows how macro recursion works.
+Tracing this call of the macro shows how macro recursion works::
 
-1. The main rule pattern matches. ``?steps`` is set to ``north 5, east 3, south
-   1, east 2``.
-#. The contents of ``?steps`` is rewritten by the *steps* auxiliary rule set.
+      let (x, y) = path(north 5, east 3, south 1, east 2)
 
-   a. The "north" rule is matched against ``north 5, east 3, south 1, east 2``.
+The patterns and templates will be evaluated as follows:
+
+1. The main rule pattern matches. `?steps` is set to
+   `north 5, east 3, south 1, east 2`.
+#. The contents of `?steps` is rewritten by the `steps:` auxiliary rule set.
+
+   a. The "north" rule is matched against `north 5, east 3, south 1, east 2`.
       The pattern is a comma-separated pattern, which matches the code fragment.
-      The word ``north`` and the token ``5`` match. As described in
-      `final-items`:ref:, the ``?steps`` pattern variable belonging to this
-      pattern-match operation is set to ``east 3, south 1, east 2``.
-   #. The contents of this rule's ``?steps`` variable is rewritten by the *steps*
+      The word `north` and the token `5` match. As described in
+      :ref:`final-items`, the `?steps` pattern variable belonging to this
+      pattern-match operation is set to `east 3, south 1, east 2`.
+   #. The contents of this rule's `?steps` variable is rewritten by the `steps:`
       auxiliary rule set.
       
-      i. The "north," "south," and "west" rules fail to match against ``east 3,
-         south 1, east 2``.
-      #. The "east" rule matches and the ``?steps`` pattern variable of this
-         pattern-match operation (different from any other ``?steps`` variable
-         being dealt with) is set to ``south 1, east 2``.
-      #. ``?steps`` is rewritten by another pass through the *steps* rule set.
+      i. The "north," "south," and "west" rules fail to match against
+         `east 3, south 1, east 2`.
+      #. The "east" rule matches and the `?steps` pattern variable of this
+         pattern-match operation (different from any other `?steps` variable
+         being dealt with) is set to `south 1, east 2`.
+      #. `?steps` is rewritten by another pass through the `steps:` rule set.
       
-         1. The "south" rule matches and its ``?steps`` is set to ``east 2``.
-         #. ``?steps`` is rewritten.
+         1. The "south" rule matches and its `?steps` is set to `east 2`.
+         #. `?steps` is rewritten.
          
             a. The "north," "south," and "west" rules fail to match.
-            #. The "east" rule is matched against ``east 2``. The word ``east`` and
-               the token ``2`` match. The code fragment does not contain a comma, but
-               the pattern matches the code fragment without the comma per
-               `final-items`:ref:. The ``?steps`` pattern variable will contain an
+            #. The "east" rule is matched against `east 2`. The word `east` and
+               the token `2` match. The code fragment does not contain a comma,
+               but the pattern matches the code fragment without the comma per
+               :ref:`final-items`. The `?steps` pattern variable will contain an
                empty code fragment.
-            #. Even though ``?steps`` contains an empty code fragment, it is still
-               rewritten by the *steps* auxiliary rule set.
+            #. Even though `?steps` contains an empty code fragment, it is still
+               rewritten by the `steps:` auxiliary rule set.
                
-               i. The "north," "south," "west," and "east" rules fail to match against
-                  an empty code fragment.
+               i. The "north," "south," "west," and "east" rules fail to match
+                  against an empty code fragment.
                #. The empty pattern matches. Its expansion is an empty fragment.
                
-            #. The ``?steps`` pattern variable of the "east" rule is set to the
+            #. The `?steps` pattern variable of the "east" rule is set to the
                expansion of the auxiliary rule set, i.e., an empty fragment.
-            #. The rule's expansion is therefore ``x := x + 2``.
+            #. The rule's expansion is therefore `x := x + 2`.
             
-         #. The ``?steps`` pattern variable of the "south" rule is set to ``x := x +
-            2``.
-         #. The rule's expansion is therefore ``y := y + 1; x := x + 2``.
+         #. The `?steps` pattern variable of the "south" rule is set to
+            `x := x + 2`.
+         #. The rule's expansion is therefore `y := y + 1; x := x + 2`.
          
-      #. The ``?steps`` pattern variable of the "east" rule is set to ``y := y + 1;
-         x := x + 2``.
-      #. The rule's expansion is therefore ``x := x + 3; y := y + 1; x := x + 2``
+      #. The `?steps` pattern variable of the "east" rule is set to
+         `y := y + 1; x := x + 2`.
+      #. The rule's expansion is therefore `x := x + 3; y := y + 1; x := x + 2`
 
 …and so on. The key ideas to note are:
 
-- The rule set has to have a non-recursing rule (in this case, ``{ } => { }``)
-- Each rule's matching and expansion has its own ``?token`` and ``?steps``
+- The rule set has to have a non-recursing rule (in this case, `{ } => { }`)
+- Each rule's matching and expansion has its own `?token` and `?steps`
   pattern variable.
 
 ----------
 
-.. [rec1] *Recursive macro*
+_`Definition 6`:
 
    .. code-block:: dylan
       :linenos:
@@ -365,7 +393,7 @@ Tracing a call of the macro [rec1-call]_ shows how macro recursion works.
         { } => { }
       end macro
 
-.. [rec2] *Recursive macro with ellipses*
+_`Definition 7`:
 
    .. code-block:: dylan
       :linenos:
@@ -380,9 +408,3 @@ Tracing a call of the macro [rec1-call]_ shows how macro recursion works.
         { east ?:token, ... } => { x := x + ?token; ... }
         { } => { }
       end macro
-
-.. [rec1-call] *Recursive macro call*
-
-   .. code-block:: dylan
-
-      let (x, y) = path(north 5, east 3, south 1, east 2)

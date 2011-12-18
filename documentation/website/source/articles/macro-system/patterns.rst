@@ -1,6 +1,15 @@
+:copyright: Copyright © 2011 Dustin Voss, All Rights Reserved.
+
 .. default-role:: samp
 .. highlight:: none
-.. _patterns:
+.. sidebar:: Navigation
+
+   :Next:   :doc:`pattern-variables`
+   :Prev:   :doc:`macro-types`
+   :Top:    :doc:`index`
+   
+   .. contents::
+      :local:
 
 
 ********
@@ -25,7 +34,7 @@ Subdivisions
 ============
 
 A main rule pattern has elements like `define` and `end` as described in
-`macro-types`:ref:, but in general, a pattern is a list of fragments or
+:doc:`macro-types`, but in general, a pattern is a list of fragments or
 pattern variables separated at the highest level by semicolons, then by commas.
 That is, a pattern has this syntax::
 
@@ -58,23 +67,11 @@ example::
         { ?name:name, { ?true-expr:expression; ?false-expr:expression }, ?final:name }
 
 Such a pattern will only match a code fragment with matching bracket characters.
-The above pattern will match [#]_ but not [#]_.
+The above pattern will match the first line of the following, but not the
+second::
 
-----------
-
-.. [#]
-   
-   .. code-block:: none
-   
       alpha, {#t; #f;}, beta
-
-.. [#]
-   
-   .. code-block:: none
-   
       alpha, (#t; #f;), beta
-
-----------
 
 
 .. _final-items:
@@ -83,7 +80,7 @@ Final items
 ===========
 
 A pattern with at least two list items treats the last item specially. For
-example, the pattern [list1]_ will match any of the code fragments of [frags]_
+example, the pattern `Pattern 1`_ will match any of `Code Fragments`_ and set
 and set the pattern variables as follows:
 
 ========  =======  =======  =======================
@@ -95,26 +92,26 @@ Line 3    `alpha`  `beta`   `gamma, delta, epsilon`
 ========  =======  =======  =======================
 
 This special behavior is usually only relevant when the last item in the list is
-a wildcard pattern variable (see `pattern-variables`:ref:). If the pattern were
-[list2]_ instead, the only matching code fragment would be line 1, because
+a wildcard pattern variable (see :ref:`wildcard-variables`). If the pattern were
+`Pattern 2`_ instead, the only matching code fragment would be line 1, because
 neither an empty fragment (from line 2) nor `gamma, delta, epsilon` (from line
 3) match the `name` constraint of `?item-3`.
 
 ----------
 
-.. [list1] *Pattern ending in wildcard*
+_`Pattern 1`:
 
    .. code-block:: none
 
       { ?item-1:*, ?item-2:*, ?item-3:* }
 
-.. [list2] *Pattern ending in name*
+_`Pattern 2`:
 
    .. code-block:: none
 
       { ?item-1:*, ?item-2:*, ?item-3:name }
 
-.. [frags] *Code fragments*
+_`Code Fragments`:
 
    .. code-block:: none
       :linenos:
@@ -136,7 +133,7 @@ The end of a comma-separated list of pattern fragments can include `#rest`,
 
 If you write a pattern that contains `#all-keys`, you must also include `#key`.
 There are several variations on this syntax; they are described in
-`pattern-variables`:ref:.
+:ref:`proplist-variables`.
 
 `#rest`, `#key`, and `#all-keys` must be the only pattern fragments in their
 comma-separated sub-pattern, and that sub-pattern must be the last of several

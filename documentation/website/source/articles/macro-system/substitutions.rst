@@ -1,6 +1,15 @@
+:copyright: Copyright © 2011 Dustin Voss, All Rights Reserved.
+
 .. default-role:: samp
 .. highlight:: none
-.. _substitutions:
+.. sidebar:: Navigation
+
+   :Next:   :doc:`auxiliary-rules`
+   :Prev:   :doc:`pattern-variables`
+   :Top:    :doc:`index`
+   
+   .. contents::
+      :local:
 
 
 *************
@@ -21,24 +30,24 @@ preceding separator is removed. For example, consider this template::
         { ?alpha, ?beta }
 
 If `?alpha` contains `a` and `?beta` is empty, the expansion will not be
-[exp1]_, but will instead be [exp2]_. This special case applies with any of the
-separators [seps]_ in place of the comma.
+`Expansion 1`_, but will instead be `Expansion 2`_. This special case applies
+with any of the separators listed in `Separators`_ in place of the comma.
 
 ----------
 
-.. [exp1] *Expansion 1*
+_`Expansion 1`:
 
    .. code-block:: none
    
       a,
 
-.. [exp2] *Expansion 2*
+_`Expansion 2`:
 
    .. code-block:: none
 
       a
 
-.. [seps] *Separators*
+_`Separators`:
 
    .. code-block:: none
    
@@ -53,7 +62,7 @@ Simple substitutions
 `?{name}`
         This is the basic substitution. The pattern variable's code fragment is
         inserted into the expansion according to the syntax used in the pattern,
-        as described in `pattern-variables`:ref:.
+        as described in :doc:`pattern-variables`.
 
 
 Conversion substitutions
@@ -149,4 +158,4 @@ Unhygienic reference
 
 `?={binding}`
         This is not a substitution, but a way to refer to a binding in the
-        macro's caller. See `hygiene`:ref:.
+        macro's caller. See :doc:`hygiene`.
