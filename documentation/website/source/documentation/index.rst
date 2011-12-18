@@ -27,8 +27,9 @@ Documentation
 [`pdf <intro-dylan/IntroductiontoDylan.pdf>`__]
 
     This tutorial is written primarily for those with solid programming
-    experience in C++ or another object-oriented static language. It
-    provides a gentler introduction to Dylan than does the DRM.
+    experience in C++ or another object-oriented, static language. It
+    provides a gentler introduction to Dylan than does the Dylan Reference
+    Manual (DRM).
 
 `Dylan Programming <http://opendylan.org/books/dpg/>`_
 
@@ -102,13 +103,13 @@ Documentation
 
     The official definition of the Dylan language and standard library.
 
-`Common Dylan library reference <core-reference/index.html>`_
+`Core library reference <core-reference/index.html>`_
 [`pdf <core-reference/CoreReference.pdf>`__]
 [`old HTML <http://opendylan.org/documentation/opendylan/core/index.htm>`__]
 
     Describes the Open Dylan implementation of the Dylan language, a
-    common set of Dylan libraries, and a library interchange mechanism.
-    The common libraries provide many language extensions, a threads
+    core set of Dylan libraries, and a library interchange mechanism.
+    The core libraries provide many language extensions, a threads
     interface, and object finalization.
 
 `System and I/O library reference <system-io-reference/index.html>`_
@@ -138,11 +139,11 @@ Documentation
 .. raw:: html
 
      <hr>
-     <h2>Open Dylan Developers</h2>
+     <h2>For Open Dylan Developers</h2>
 
      <div class="alert-message block-message info">
        <p>Notes and materials useful to those working on
-       Open Dylan itself or have an interest in the low
+       Open Dylan itself or those who have an interest in the low
        level details.</p>
      </div>
 
