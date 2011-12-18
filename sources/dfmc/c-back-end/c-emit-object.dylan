@@ -113,7 +113,8 @@ end method;
 
 define method emit-object
     (back-end :: <c-back-end>, stream :: <stream>, c :: <integer>) => ()
-  format(stream, "I(%d)", c);
+  write(stream, "(D) ");
+  print-raw-object(generic-logior(generic-ash(c, 2), 1), stream);
 end method;
 
 define method print-raw-object (o :: <double-integer>, stream :: <stream>) => ()

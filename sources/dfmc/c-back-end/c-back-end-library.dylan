@@ -5,6 +5,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library dfmc-c-back-end
+  use big-integers;
   use common-dylan;
   use io;
   use dfmc-core;
@@ -17,6 +18,7 @@ define library dfmc-c-back-end
 end library;
 
 define module dfmc-c-back-end
+  use big-integers, prefix: "generic-";
   use common-dylan, exclude: { format-to-string };
   use format;
   use streams-internals;
