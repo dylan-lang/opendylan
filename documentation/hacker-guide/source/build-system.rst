@@ -8,7 +8,7 @@ Introduction
 ============
 
 The purpose of the Open Dylan ``build-system`` is to
-coördinate the final stages in the building of a Dylan library project.
+coordinate the final stages in the building of a Dylan library project.
 The Open Dylan compiler takes a Dylan library in the form of
 Dylan source files, and directly generates x86 or PPC machine language
 object files (in either COFF or ELF format, depending on the target
