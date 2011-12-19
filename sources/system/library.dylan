@@ -112,8 +112,6 @@ end module date;
 define module locators
   use locators-protocol,
     export: all;
-  use functional-objects-extras,
-    export: all;
 
   // Protocol functions
   create locator-host,
