@@ -174,10 +174,15 @@ define method %float-exponent
   let (decoded-low :: <machine-word>, decoded-high :: <machine-word>)
     = decode-double-float(float);
   let raw-exponent :: <machine-word>
-    = %logand(u%shift-right
-                (decoded-high,
-                 $ieee-754-double-float-digits - 1 - $machine-word-size),
-              #x7FF);
+    = if ($machine-word-size = 32)
+        %logand(u%shift-right
+                  (decoded-high,
+                   $ieee-754-double-float-digits - 1 - 32),
+                #x7FF)
+      else
+        %logand(u%shift-right(decoded-low, $ieee-754-double-float-digits - 1),
+                #x7FF)
+      end if;
   as(<integer>, raw-exponent) - ($ieee-754-double-float-exponent-bias - 1);
 end method;
 
@@ -186,31 +191,57 @@ define method decode-float
  => (significand :: <double-float>, exponent :: <integer>,
      sign :: <double-float>);
   let sign :: <double-float> = if (negative?(float)) -1.0d0 else 1.0d0 end;
+  let exponent = %float-exponent(float);
   let (decoded-low :: <machine-word>, decoded-high :: <machine-word>)
     = decode-double-float(float);
-  let significand-high-bits :: <machine-word> = %logand(decoded-high, #xFFFFF);
 
-  let exponent = %float-exponent(float);  
-  case
-    exponent < $minimum-double-float-exponent => // Zero or denormal
-      if (zero?(significand-high-bits) & zero?(decoded-low))
-        values(0.0d0, 0, sign)
-      else
-        error("Not handling denormals yet");
-      end if;
+  if ($machine-word-size = 32)
+    let significand-high-bits :: <machine-word>
+      = %logand(decoded-high, #xFFFFF);
 
-    exponent > $maximum-double-float-exponent => // Infinity or NaN
-      error("Can't decode-float infinity or NaN");
+    case
+      exponent < $minimum-double-float-exponent => // Zero or denormal
+        if (zero?(significand-high-bits) & zero?(decoded-low))
+          values(0.0d0, 0, sign)
+        else
+          error("Not handling denormals yet");
+        end if;
 
-    otherwise =>
-      let raw-high-significand :: <machine-word>
-        = %logior(u%shift-left($ieee-754-double-float-exponent-bias - 1,
-                               $ieee-754-double-float-digits - 1
-                                 - $machine-word-size),
-                  significand-high-bits);
-      values(encode-double-float(decoded-low, raw-high-significand),
-             exponent, sign)
-  end case;
+      exponent > $maximum-double-float-exponent => // Infinity or NaN
+        error("Can't decode-float infinity or NaN");
+
+      otherwise =>
+        let raw-high-significand :: <machine-word>
+          = %logior(u%shift-left($ieee-754-double-float-exponent-bias - 1,
+                                 $ieee-754-double-float-digits - 1 - 32),
+                    significand-high-bits);
+        values(encode-double-float(decoded-low, raw-high-significand),
+               exponent, sign)
+    end case
+  else
+    let significand-bits :: <machine-word>
+      = %logand(decoded-low,
+                \%-(%shift-left(1, $ieee-754-double-float-digits - 1), 1));
+    case
+      exponent < $minimum-double-float-exponent => // Zero or denormal
+        if (zero?(significand-bits))
+          values(0.0d0, 0, sign)
+        else
+          error("Not handling denormals yet");
+        end if;
+
+      exponent > $maximum-double-float-exponent => // Infinity or NaN
+        error("Can't decode-float infinity or NaN");
+
+      otherwise =>
+        let raw-significand :: <machine-word>
+          = %logior(u%shift-left($ieee-754-double-float-exponent-bias - 1,
+                                 $ieee-754-double-float-digits - 1),
+                    significand-bits);
+        values(encode-double-float(decoded-low, $machine-word-zero),
+               exponent, sign)
+    end case
+  end if;
 end;
 
 define method scale-float
@@ -218,7 +249,6 @@ define method scale-float
  => (result :: <double-float>);
   let (decoded-low :: <machine-word>, decoded-high :: <machine-word>)
     = decode-double-float(float);
-  let significand-high-bits :: <machine-word> = %logand(decoded-high, #xFFFFF);
   let exponent = %float-exponent(float);
   let scaled-exponent = exponent + scale;
 
@@ -229,12 +259,19 @@ define method scale-float
 
     scaled-exponent > $maximum-double-float-exponent =>
       // Result overflow: Infinity: exponent = #x7FF, significand = 0
-      let raw-high-result :: <machine-word>
-        = %logior(%logand(decoded-high, $sign-bit-mask),
-                  u%shift-left(#x7FF,
-                               $ieee-754-double-float-digits - 1
-                                 - $machine-word-size));
-      encode-double-float($machine-word-zero, raw-high-result);
+      if ($machine-word-size = 32)
+        let raw-high-result :: <machine-word>
+          = %logior(%logand(decoded-high, $sign-bit-mask),
+                    u%shift-left(#x7FF,
+                                 $ieee-754-double-float-digits - 1 - 32));
+        encode-double-float($machine-word-zero, raw-high-result);
+      else
+        let raw-result :: <machine-word>
+          = %logior(%logand(decoded-high, $sign-bit-mask),
+                    u%shift-left(#x7FF,
+                                 $ieee-754-double-float-digits - 1));
+        encode-double-float($machine-word-zero);
+      end if;
 
     scaled-exponent < $minimum-double-float-exponent =>
       // Result will be denormal: Use multiplication
@@ -242,14 +279,28 @@ define method scale-float
         * scale-float(1.0d0, $minimum-double-float-exponent - 1);
 
     otherwise =>
-      let raw-high-result :: <machine-word>
-        = %logior(%logand(decoded-high, $sign-bit-mask),
-                  u%shift-left(scaled-exponent
-                                 + ($ieee-754-double-float-exponent-bias - 1),
-                               $ieee-754-double-float-digits - 1
-                                 - $machine-word-size),
-                  significand-high-bits);
-      encode-double-float(decoded-low, raw-high-result)
+      if ($machine-word-size = 32)
+        let significand-high-bits :: <machine-word>
+          = %logand(decoded-high, #xFFFFF);
+        let raw-high-result :: <machine-word>
+          = %logior(%logand(decoded-high, $sign-bit-mask),
+                    u%shift-left(scaled-exponent
+                                   + ($ieee-754-double-float-exponent-bias - 1),
+                                 $ieee-754-double-float-digits - 1 - 32),
+                    significand-high-bits);
+        encode-double-float(decoded-low, raw-high-result)
+      else
+        let significand-bits :: <machine-word>
+          = %logand(decoded-low,
+                    \%-(%shift-left(1, $ieee-754-double-float-digits - 1), 1));
+        let raw-result :: <machine-word>
+          = %logior(%logand(decoded-high, $sign-bit-mask),
+                    u%shift-left(scaled-exponent
+                                   + ($ieee-754-double-float-exponent-bias - 1),
+                                 $ieee-754-double-float-digits - 1),
+                    significand-bits);
+        encode-double-float(raw-result, $machine-word-zero)
+      end if;
   end case
 end method;
 
