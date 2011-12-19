@@ -233,8 +233,6 @@ define module projects-implementation
     \with-used-project-cache, do-with-used-project-cache,
     canonicalize-project-sources,
     find-platform-project;
-  export
-    compile-project-with-gc;
 end module;
 
 define module lid-projects
