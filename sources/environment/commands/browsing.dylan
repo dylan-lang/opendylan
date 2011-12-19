@@ -228,8 +228,6 @@ end command-line macroexpand;
 define method command-complete?
     (context :: <environment-context>, command :: <macroexpand-code-command>)
  => (complete? :: <boolean>)
-  let project = context.context-project;
-  let module  = context.context-project-context.context-module;
   //---*** We have no way to determine this yet!
   let complete? = #t;
   complete?
