@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define constant $dylan-database-suffix = "ddb";
 define constant $dylan-profile-suffix  = "prf";
-define variable *dylan-source-suffix*  = "dylan";
+define constant $dylan-source-suffix  = "dylan";
 
 define constant $standard-lid-keyword = #[#"comment",
                                           #"library",
@@ -547,7 +547,7 @@ define function read-lid-data (lid-location :: <file-locator>)
                        merge-locators(make(<file-locator>,
                                            directory: relative-file.locator-directory,
                                            base:      relative-file.locator-base,
-                                           extension: *dylan-source-suffix*),
+                                           extension: $dylan-source-suffix),
                                       lid-location.locator-directory)
                      end,
            file-names);

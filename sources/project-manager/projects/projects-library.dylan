@@ -257,7 +257,7 @@ define module lid-projects
     <lid-project>,
     $standard-lid-keyword,
     <project-layout>,
-    *dylan-source-suffix*,
+    $dylan-source-suffix,
     $dylan-database-suffix,
     $dylan-profile-suffix,
     project-registered-name,
