@@ -671,71 +671,72 @@ C type.
 `The integer designator classes and their mappings.`_ shows all raw, plain,
 and unsafe integer designator types exported from the C-FFI module.
 
-The integer designator classes and their mappings.
+.. table:: The integer designator classes and their mappings.
+   :name: The integer designator classes and their mappings.
 
-+-------------------------------+--------------------+--------------------+
-| Designator name               | C type             | Dylan type(s)      |
-+===============================+====================+====================+
-| ``<C-int>``                   | ``int``            | ``<integer>``      |
-+-------------------------------+--------------------+--------------------+
-| ``<C-raw-int>``               | ``int``            | ``<machine-word>`` |
-+-------------------------------+--------------------+--------------------+
-| ``<C-unsafe-int>``            | ``int``            | ``<integer>``      |
-+-------------------------------+--------------------+--------------------+
-| ``<C-raw-signed-int>``        | ``signed int``     | ``<machine-word>`` |
-+-------------------------------+--------------------+--------------------+
-| ``<C-unsafe-signed int>``     | ``signed int``     | ``<integer>``      |
-+-------------------------------+--------------------+--------------------+
-| ``<C-signed-int>``            | ``signed int``     | ``<integer>``      |
-+-------------------------------+--------------------+--------------------+
-| ``<C-raw-unsigned-int>``      | ``unsigned int``   | ``<machine-word>`` |
-+-------------------------------+--------------------+--------------------+
-| ``<C-unsafe-unsigned-int>``   | ``unsigned int``   | ``<integer>``      |
-+-------------------------------+--------------------+--------------------+
-| ``<C-unsigned-int>``          | ``unsigned int``   | ``<integer>``      |
-+-------------------------------+--------------------+--------------------+
-| ``<C-unsigned-long>``         | ``unsigned long``  | ``<integer>``      |
-+-------------------------------+--------------------+--------------------+
-| ``<C-signed-long>``           | ``signed long``    | ``<integer>``      |
-+-------------------------------+--------------------+--------------------+
-| ``<C-unsafe-unsigned-long>``  | ``unsigned long``  | ``<integer>``      |
-+-------------------------------+--------------------+--------------------+
-| ``<C-unsafe-signed-long>``    | ``signed long``    | ``<integer>``      |
-+-------------------------------+--------------------+--------------------+
-| ``<C-raw-unsigned-long>``     | ``unsigned long``  | ``<machine-word>`` |
-+-------------------------------+--------------------+--------------------+
-| ``<C-raw-signed-long>``       | ``signed long``    | ``<machine-word>`` |
-+-------------------------------+--------------------+--------------------+
-| ``<C-unsigned-short>``        | ``unsigned short`` | ``<integer>``      |
-+-------------------------------+--------------------+--------------------+
-| ``<C-signed-short>``          | ``signed short``   | ``<integer>``      |
-+-------------------------------+--------------------+--------------------+
-| ``<C-unsafe-unsigned-short>`` | ``unsigned short`` | ``<integer>``      |
-+-------------------------------+--------------------+--------------------+
-| ``<C-unsafe-signed-short>``   | ``signed short``   | ``<integer>``      |
-+-------------------------------+--------------------+--------------------+
-| ``<C-raw-unsigned-short>``    | ``unsigned short`` | ``<machine-word>`` |
-+-------------------------------+--------------------+--------------------+
-| ``<C-raw-signed-short>``      | ``signed short``   | ``<machine-word>`` |
-+-------------------------------+--------------------+--------------------+
-| ``<C-unsigned-char>``         | ``unsigned char``  | ``<integer>``      |
-+-------------------------------+--------------------+--------------------+
-| ``<C-signed-char>``           | ``signed char``    | ``<integer>``      |
-+-------------------------------+--------------------+--------------------+
-| ``<C-unsafe-unsigned-char>``  | ``unsigned char``  | ``<integer>``      |
-+-------------------------------+--------------------+--------------------+
-| ``<C-unsafe-signed-char>``    | ``signed char``    | ``<integer>``      |
-+-------------------------------+--------------------+--------------------+
-| ``<C-raw-unsigned-char>``     | ``unsigned char``  | ``<machine-word>`` |
-+-------------------------------+--------------------+--------------------+
-| ``<C-raw-signed-char>``       | ``signed char``    | ``<machine-word>`` |
-+-------------------------------+--------------------+--------------------+
-| ``<C-char>``                  | ``char``           | ``<integer>``      |
-+-------------------------------+--------------------+--------------------+
-| ``<C-unsafe-char>``           | ``char``           | ``<integer>``      |
-+-------------------------------+--------------------+--------------------+
-| ``<C-raw-char>``              | ``char``           | ``<machine-word>`` |
-+-------------------------------+--------------------+--------------------+
+   +-------------------------------+--------------------+--------------------+
+   | Designator name               | C type             | Dylan type(s)      |
+   +===============================+====================+====================+
+   | ``<C-int>``                   | ``int``            | ``<integer>``      |
+   +-------------------------------+--------------------+--------------------+
+   | ``<C-raw-int>``               | ``int``            | ``<machine-word>`` |
+   +-------------------------------+--------------------+--------------------+
+   | ``<C-unsafe-int>``            | ``int``            | ``<integer>``      |
+   +-------------------------------+--------------------+--------------------+
+   | ``<C-raw-signed-int>``        | ``signed int``     | ``<machine-word>`` |
+   +-------------------------------+--------------------+--------------------+
+   | ``<C-unsafe-signed int>``     | ``signed int``     | ``<integer>``      |
+   +-------------------------------+--------------------+--------------------+
+   | ``<C-signed-int>``            | ``signed int``     | ``<integer>``      |
+   +-------------------------------+--------------------+--------------------+
+   | ``<C-raw-unsigned-int>``      | ``unsigned int``   | ``<machine-word>`` |
+   +-------------------------------+--------------------+--------------------+
+   | ``<C-unsafe-unsigned-int>``   | ``unsigned int``   | ``<integer>``      |
+   +-------------------------------+--------------------+--------------------+
+   | ``<C-unsigned-int>``          | ``unsigned int``   | ``<integer>``      |
+   +-------------------------------+--------------------+--------------------+
+   | ``<C-unsigned-long>``         | ``unsigned long``  | ``<integer>``      |
+   +-------------------------------+--------------------+--------------------+
+   | ``<C-signed-long>``           | ``signed long``    | ``<integer>``      |
+   +-------------------------------+--------------------+--------------------+
+   | ``<C-unsafe-unsigned-long>``  | ``unsigned long``  | ``<integer>``      |
+   +-------------------------------+--------------------+--------------------+
+   | ``<C-unsafe-signed-long>``    | ``signed long``    | ``<integer>``      |
+   +-------------------------------+--------------------+--------------------+
+   | ``<C-raw-unsigned-long>``     | ``unsigned long``  | ``<machine-word>`` |
+   +-------------------------------+--------------------+--------------------+
+   | ``<C-raw-signed-long>``       | ``signed long``    | ``<machine-word>`` |
+   +-------------------------------+--------------------+--------------------+
+   | ``<C-unsigned-short>``        | ``unsigned short`` | ``<integer>``      |
+   +-------------------------------+--------------------+--------------------+
+   | ``<C-signed-short>``          | ``signed short``   | ``<integer>``      |
+   +-------------------------------+--------------------+--------------------+
+   | ``<C-unsafe-unsigned-short>`` | ``unsigned short`` | ``<integer>``      |
+   +-------------------------------+--------------------+--------------------+
+   | ``<C-unsafe-signed-short>``   | ``signed short``   | ``<integer>``      |
+   +-------------------------------+--------------------+--------------------+
+   | ``<C-raw-unsigned-short>``    | ``unsigned short`` | ``<machine-word>`` |
+   +-------------------------------+--------------------+--------------------+
+   | ``<C-raw-signed-short>``      | ``signed short``   | ``<machine-word>`` |
+   +-------------------------------+--------------------+--------------------+
+   | ``<C-unsigned-char>``         | ``unsigned char``  | ``<integer>``      |
+   +-------------------------------+--------------------+--------------------+
+   | ``<C-signed-char>``           | ``signed char``    | ``<integer>``      |
+   +-------------------------------+--------------------+--------------------+
+   | ``<C-unsafe-unsigned-char>``  | ``unsigned char``  | ``<integer>``      |
+   +-------------------------------+--------------------+--------------------+
+   | ``<C-unsafe-signed-char>``    | ``signed char``    | ``<integer>``      |
+   +-------------------------------+--------------------+--------------------+
+   | ``<C-raw-unsigned-char>``     | ``unsigned char``  | ``<machine-word>`` |
+   +-------------------------------+--------------------+--------------------+
+   | ``<C-raw-signed-char>``       | ``signed char``    | ``<machine-word>`` |
+   +-------------------------------+--------------------+--------------------+
+   | ``<C-char>``                  | ``char``           | ``<integer>``      |
+   +-------------------------------+--------------------+--------------------+
+   | ``<C-unsafe-char>``           | ``char``           | ``<integer>``      |
+   +-------------------------------+--------------------+--------------------+
+   | ``<C-raw-char>``              | ``char``           | ``<machine-word>`` |
+   +-------------------------------+--------------------+--------------------+
 
 For each of the fundamental integer designator types, *<C-* *xxx* *>*,
 there is also a type designating pointers to that type called *<C-*
@@ -2256,58 +2257,36 @@ Example FFI definition:
 
     define C-function one-point
       result point :: <Point*>;
-      c-name: “OnePoint”;
+      c-name: "OnePoint";
     end C-function;
 
     define C-function point-array
       result array :: <Point*>;
-      c-name: “PointArray”;
+      c-name: "PointArray";
     end C-function;
 
-Example transactions:
-                     
+Example transactions::
 
-? define variable p = one-point();
-                                  
+    ? define variable p = one-point();
+    // Defined p.
 
-// Defined p.
-             
+    ? values(p.x, p.y);
+    100
+    50
 
-? values(p.x, p.y);
-                   
+    ? define variable array = point-array();
+    // Defined array.
 
-100
+    ? array[5].object-class; // implicit conversion to
+    // the pointer type
+    {<Point> pointer #xff5e00}
 
-50
-  
+    ? begin array[5].x := 10; array[5].y := 20 end;
+    20
 
-? define variable array = point-array();
-                                        
-
-// Defined array.
-                 
-
-? array[5].object-class; // implicit conversion to
-                                                  
-
-// the pointer type
-
-{<Point> pointer #xff5e00}
-                          
-
-? begin array[5].x := 10; array[5].y := 20 end;
-                                               
-
-20
-  
-
-? values(array[5].x, array[5].y)
-                                
-
-10
-
-20
-  
+    ? values(array[5].x, array[5].y)
+    10
+    20
 
 Describing union types
 ----------------------
@@ -2316,34 +2295,26 @@ define C-union
 ^^^^^^^^^^^^^^
 
 Definition macro
-''''''''''''''''
 
 Summary
-       
 
 Describes C union types to the *c-ffi*.
 
 Signature
 
-define C-union *name*
-                     
+.. code-block:: dylan
 
-[*slot-spec* ; ...] [;]
-
-[*type-options* ] [;]
-
-end [C-union] [*name* ]
-                       
+    define C-union *name*
+      [*slot-spec* ; ...] [;]
+      [*type-options* ] [;]
+    end [C-union] [*name* ]
 
 Arguments
-         
-
 -  *name* A Dylan variable name.
 -  *slot-spec*
--  t*ype-options* A property list.
+-  *type-options* A property list.
 
 Description
-           
 
 Describes C union types to the C-FFI. The syntax for the macro and its
 use are similar to ``define c-struct`` except that bitfield slots are not
@@ -2358,8 +2329,8 @@ Example C declaration:
 .. code-block:: c
 
     union Num {
-      int int\_value;
-      double double\_value;
+      int int_value;
+      double double_value;
     };
 
     Num *OneNum(); /* Returns a pointer to a Num */
@@ -3041,7 +3012,7 @@ collector, so we provide a manual means of freeing this storage with the
 function *destroy*.
 
 make *subclass(<C-pointer>)*
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+----------------------------
 
 G.f. method
 
@@ -3130,7 +3101,7 @@ before returning it.
         extra-bytes: 10 * size-of(<C-int>));
 
 destroy
-^^^^^^^
+-------
 
 Open generic function
 
@@ -3165,7 +3136,7 @@ deallocator should be passed to *destroy*.
 There is a default method for destroy on ``<C-statically-typed-pointer>``.
 
 with-stack-structure
-^^^^^^^^^^^^^^^^^^^^
+--------------------
 
 Statement macro
 
@@ -3236,7 +3207,7 @@ The following designator classes are defined for convenience purposes
 using ``define c-mapped-subtype``.
 
 <C-boolean>
-^^^^^^^^^^^
+-----------
 
 Open abstract class
 
@@ -3248,7 +3219,7 @@ A mapped subclass of ``<C-int>`` that provides an analogue to Dylan’s
 to ``#f`` in Dylan, and all other values are mapped to ``#t``.
 
 <C-string>
-^^^^^^^^^^
+----------
 
 Open abstract class
 
@@ -3267,7 +3238,7 @@ A ``<byte-string>`` may only be safely passed to a C function if its value
 is never stored and used after the call returns.
 
 <C-character>
-^^^^^^^^^^^^^
+-------------
 
 Open abstract class
 
@@ -3278,7 +3249,7 @@ designator that allows instances of <character> to be passed to and from
 C.
 
 with-c-string
-^^^^^^^^^^^^^
+-------------
 
 Statement macro
 
@@ -3313,7 +3284,7 @@ refers to the contents of the string returned by
    garbage collector can no longer keep track of it.
 
 clear-memory!
-^^^^^^^^^^^^^
+-------------
 
 Function
 
@@ -3325,7 +3296,7 @@ Signature
 
 ::
 
-    clear-memory!*pointer*, *size* => ()
+    clear-memory! *pointer*, *size* => ()
 
 Arguments
 
@@ -3340,7 +3311,7 @@ Stores zeros into *size* bytes of memory beginning at *pointer*. The
 space is assumed to be a whole number of words and word-aligned.
 
 copy-bytes!
-^^^^^^^^^^^
+-----------
 
 Function
 
@@ -3352,7 +3323,7 @@ Signature
 
 ::
 
-    copy-bytes!*destination-pointer*, *source-pointer*, *size* => ()
+    copy-bytes! *destination-pointer*, *source-pointer*, *size* => ()
 
 Arguments
 
@@ -3368,7 +3339,7 @@ copying whole words.
 See also `copy-into!`_.
 
 copy-into!
-^^^^^^^^^^
+----------
 
 Function
 
@@ -3399,7 +3370,7 @@ pointers are word-aligned and that the two storage areas do not overlap.
 See also `copy-bytes!`_.
 
 equal-memory?
-^^^^^^^^^^^^^
+-------------
 
 Function
 
@@ -3423,11 +3394,11 @@ Arguments
 Description
 
 Returns ``#t`` if the *size* bytes of memory starting at pointer *ptr1*
-have the same contents as the memory starting at *ptr2,* else *#f.* The
+have the same contents as the memory starting at *ptr2,* else ``#f``. The
 space is assumed to be a whole number of words and word-aligned.
 
 <C-Dylan-object>
-^^^^^^^^^^^^^^^^
+----------------
 
 Open abstract class
 
@@ -3440,14 +3411,14 @@ specific Dylan objects. The Dylan type for import and export is
 To pass a reference to an arbitrary Dylan object to C, the Dylan object
 first must be registered using `register-C-Dylan-object`_.  Then a
 ``<C-Dylan-object>`` *handle* to the object can be created using
-the function *export-C-Dylan-object*.  The handle can then be passed
+the function `export-C-Dylan-object`_.  The handle can then be passed
 directly to any C transition point designated as ``<C-Dylan-object>``.
 Any object received by Dylan from a transition point designated as
-``<C-Dylan-object>`` may be passed to *import-C-Dylan-object* to
+``<C-Dylan-object>`` may be passed to `import-C-Dylan-object`_ to
 get the Dylan object for which it was a handle.
 
 register-C-Dylan-object
-^^^^^^^^^^^^^^^^^^^^^^^
+-----------------------
 
 Function
 
@@ -3479,7 +3450,7 @@ point of view) by the memory manager.
 See also `unregister-C-Dylan-object`_.
 
 unregister-C-Dylan-object
-^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------
 
 Function
 
@@ -3500,16 +3471,16 @@ Arguments
 Description
 
 Deallocates an object. When the handle is no longer needed from C, you
-call *unregister-C-Dylan-object* to allow the object to be normally
-reclaimed by the memory manager. Calls to *register-C-Dylan-object* and
-*unregister-C-Dylan-object* on the same object nest or interleave
-without interference. That is, if *register-C-Dylan-object* is called
-exactly twice on an object then *unregister-C-Dylan-object* must be
+call ``unregister-C-Dylan-object`` to allow the object to be normally
+reclaimed by the memory manager. Calls to ``register-C-Dylan-object`` and
+``unregister-C-Dylan-object`` on the same object nest or interleave
+without interference. That is, if ``register-C-Dylan-object`` is called
+exactly twice on an object then ``unregister-C-Dylan-object`` must be
 called exactly twice before the memory manager can reclaim the space for
 the object as it normally would.
 
 export-C-Dylan-object
-^^^^^^^^^^^^^^^^^^^^^
+---------------------
 
 Function
 
@@ -3533,7 +3504,7 @@ Description
 Fetches the ``<C-Dylan-object>`` handle for a Dylan object.
 
 import-C-Dylan-object
-^^^^^^^^^^^^^^^^^^^^^
+---------------------
 
 Function
 
