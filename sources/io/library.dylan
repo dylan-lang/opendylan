@@ -120,7 +120,6 @@ end module streams;
 define module streams-internals
   use common-dylan;
   use locators-protocol;
-  use functional-objects-extras;
   use dylan-extensions;
   use dylan-direct-c-ffi;
   use byte-vector;
@@ -285,7 +284,6 @@ end module print;
 define module print-internals
   use common-dylan;
   use locators-protocol;
-  use functional-objects-extras;
   use transcendentals;
   use threads;
   use dylan-extensions;

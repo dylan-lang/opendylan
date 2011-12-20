@@ -17,10 +17,7 @@ end class <closable-object>;
 define open abstract class <stream> (<closable-object>)
 end class <stream>;
 
-define open abstract class <locator-defaults> (<object>)
-end class <locator-defaults>;
-
-define open abstract class <locator> (<locator-defaults>)
+define open abstract class <locator> (<object>)
 end class <locator>;
 
 define open abstract class <server-locator> (<locator>)
