@@ -22,8 +22,7 @@ define library common-dylan
     simple-profiling,
     simple-io,
     byte-vector,
-    transcendentals,
-    functional-objects-extras;
+    transcendentals;
 end library common-dylan;
 
 define module simple-profiling
@@ -141,6 +140,9 @@ define module locators-protocol
          open-locator,
          supports-list-locator?,
          list-locator;
+
+  create <server-locator>,
+	 <physical-locator>;
 end module locators-protocol;
 
 define module streams-protocol
@@ -265,20 +267,8 @@ define module machine-words
          ud%shift-right;
 end module machine-words;
 
-define module functional-objects-extras
-  use common-extensions,
-    import: { <closable-object> },
-    export: all;
-  create default-last-handler,
-	 <locator-defaults>,
-         <server-locator>,
-	 <physical-locator>,
-         write-console;
-end module functional-objects-extras;
-
 define module common-dylan-internals
   use common-dylan;
-  use functional-objects-extras;
   use dylan-extensions;
   use dylan-direct-c-ffi;
   use machine-word-lowlevel;
