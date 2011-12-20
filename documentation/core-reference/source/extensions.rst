@@ -69,7 +69,7 @@ function converts its arguments into a format string and then returns
 that format string.
 
 See `The SIMPLE-FORMAT module`_ for reference
-descriptions of *format-out* and *format-string*.
+descriptions of ``format-out`` and ``format-to-string``.
 
 Simple random number generation
 ===============================
@@ -79,11 +79,11 @@ pseudo-random integers via the *simple-random* module exported from the
 *common-extensions* library.
 
 Instances of the sealed class `\<random\>`_
-generate pseudo-random integers. Given an instance of *<random>*, the
+generate pseudo-random integers. Given an instance of ``<random>``, the
 function `random`_ will return a
 pseudo-random integer. See `The SIMPLE-RANDOM
-module`_ for reference descriptions of *random*
-and *<random>*.
+module`_ for reference descriptions of ``random``
+and ``<random>``.
 
 Finalization
 ============
@@ -190,14 +190,14 @@ created in a local binding before it goes out of scope.
 The `drain-finalization-queue`_ function
 makes each call to `finalize`_ inside
 whatever dynamic handler environment is present when
-*drain-finalization-queue* is called. If the call to
-*drain-finalization-queue* is aborted via a non-local exit during a call
-to *finalize*, the finalization queue retains all the objects that had
-been added to it but which had not been passed to *finalize*.
+``drain-finalization-queue`` is called. If the call to
+``drain-finalization-queue`` is aborted via a non-local exit during a call
+to ``finalize``, the finalization queue retains all the objects that had
+been added to it but which had not been passed to ``finalize``.
 
 There is a default method for `finalize`_ on
-*<object>*. The method does nothing. It is available so that it is safe
-for all finalizers to call *next-method*, a practice that we strongly
+``<object>``. The method does nothing. It is available so that it is safe
+for all finalizers to call ``next-method``, a practice that we strongly
 encourage. See `Writing finalizers`_.
 
 After finalization
@@ -241,7 +241,7 @@ at least once whenever an object has ben determined to be unreachable by
 the garbage collector.
 
 To remain robust under multiple registration, finalizers should be
-idempotent: that is, the effect of multiple *finalize* calls on an
+idempotent: that is, the effect of multiple ``finalize`` calls on an
 object should is the same as the effect of a single call.
 
 The effects of resurrecting objects
@@ -259,7 +259,7 @@ their resources, it is common for finalization to render objects
 unusable. We do not recommend resurrection if there is any possibility
 of the object being left in an unusable state, or if the object
 references any other objects whose transitive closure might include an
-object left in such a state by another call to *finalize*.
+object left in such a state by another call to ``finalize``.
 
 If you do resurrect objects, note that they will not be finalized again
 unless you re-register them.
@@ -268,10 +268,10 @@ The effects of finalizing objects directly
 ------------------------------------------
 
 Any object that has been finalized directly, through the application
-itself calling *finalize* on it, may not yet be unreachable. Like any
+itself calling ``finalize`` on it, may not yet be unreachable. Like any
 normal object it only becomes eligible for reclamation when it is
 unreachable. If such an object was also registered for finalization
-using *finalize-when-unreachable*, it can end up being finalized again
+using ``finalize-when-unreachable``, it can end up being finalized again
 via the queue mechanism.
 
 Finalization and weak tables
@@ -289,7 +289,7 @@ Writing finalizers
 ------------------
 
 Because the default `finalize`_ method, on
-*<object>*, does nothing, you must define your own
+``<object>``, does nothing, you must define your own
 `finalize`_ methods to get results from the
 finalization interface. This section contains useful information about
 writing finalizers.
@@ -298,19 +298,19 @@ Class-based finalization
 ------------------------
 
 If your application defines a class for which all instances require
-finalization, call `finalize-when-unreachable`_ in its *initialize*
+finalization, call `finalize-when-unreachable`_ in its ``initialize``
 method.
 
 Parallels with INITIALIZE methods
 ---------------------------------
 
-The default method on *<object>* is provided to make it safe to call
-*next-method* in all finalizers. This situation is parallel to that for
-class *initialize* methods, which call *next-method* before performing
-their own initializations. By doing so, *initialize* methods guarantee
+The default method on ``<object>`` is provided to make it safe to call
+``next-method`` in all finalizers. This situation is parallel to that for
+class ``initialize`` methods, which call ``next-method`` before performing
+their own initializations. By doing so, ``initialize`` methods guarantee
 that the most specific initializations occur last.
 
-By contrast, finalizers should call *next-method* last, in case they
+By contrast, finalizers should call ``next-method`` last, in case they
 depend on the superclass finalizer not being run.
 
 Simplicity and robustness
@@ -323,7 +323,7 @@ finalizers will work in most or all possible situations.
 A finalizer might be called on the same object more than once. This
 could occur if the object was registered for finalization more than
 once, or if your application registered the object for finalization and
-also called *finalize* on it directly. To account for this, write
+also called ``finalize`` on it directly. To account for this, write
 finalizers that are idempotent: that is, the effect of multiple calls is
 the same as the effect of a single call. See `The effects of
 multiple registrations`_ for more on the effects
@@ -338,7 +338,7 @@ interestingly connected graphs of objects. If guarantees about
 finalization in graphs of objects are important, we suggest registering
 a root object for finalization and making its finalizer traverse the
 graph (in some graph-specific well-ordered fashion) and call the
-*finalize* method for each object in the graph requiring finalization.
+``finalize`` method for each object in the graph requiring finalization.
 
 Singleton finalizers
 --------------------
@@ -364,7 +364,7 @@ automatic finalization interface. For more details, see
 Libraries that do not wish to depend on automatic finalization should
 not use those functions. They should call
 `drain-finalization-queue`_ synchronously at
-useful times, such as whenever they call *finalize-when-unreachable*.
+useful times, such as whenever they call ``finalize-when-unreachable``.
 
 Libraries that are not written to depend on automatic finalization
 should always behave correctly if they are used in an application that
@@ -395,39 +395,30 @@ Summary
 Signals an error if the expression passed to it evaluates to false.
 
 Macro call (1)
-              
 
-assert *expression* *format-string* [*format-arg* ]\* => *false*
-                                                                
+.. code-block:: dylan
+
+    assert *expression* *format-string* [*format-arg* ]* => *false*
 
 Macro call (2)
-              
 
-assert *expression* => *false*
-                              
+.. code-block:: dylan
+
+    assert *expression* => *false*
 
 Arguments
-         
 
-*expression* A Dylan expression*bnf*.
-                                      
-
-*format-string* A Dylan expression*bnf*.
-                                         
-
-*format-arg* A Dylan expression*bnf*.
-                                      
+- *expression* A Dylan expression *bnf*.
+- *format-string* A Dylan expression *bnf*.
+- *format-arg* A Dylan expression *bnf*.
 
 Values
-      
 
-*false* *#f*.
-              
+    *false* *#f*.
 
 Description
-           
 
-Signals an error if *expression* evaluates to *#f*.
+Signals an error if *expression* evaluates to ``#f``.
 
 An assertion or “assert” is a simple tool for testing that conditions
 hold in program code.
@@ -436,11 +427,10 @@ The *format-string* is a format string as defined on page 112 of the
 DRM. If *format-string* is supplied, the error is formatted accordingly,
 along with any instances of *format-arg*.
 
-If *expression* is not *#f*, *assert* does not evaluate *format-string*
+If *expression* is not ``#f``, ``assert`` does not evaluate *format-string*
 or any instances of *format-arg*.
 
 See also
-        
 
 `debug-assert`_
 
@@ -451,7 +441,6 @@ Sealed class
 ''''''''''''
 
 Summary
-       
 
 The class of 8-bit characters that instances of *<byte-string>* can
 contain.

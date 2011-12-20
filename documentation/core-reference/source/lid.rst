@@ -22,8 +22,8 @@ port applications from one environment to another.
 .. note:: LID is a convention, and not an extension to the Dylan language.
 
 .. note:: The Open Dylan environment can convert LID files to its own
-   internal project file format, the *.hdp* file. It can also save project
-   files as LID files with the *File > Save As* command in the project
+   internal project file format, the ``.hdp`` file. It can also save project
+   files as LID files with the **File > Save As** command in the project
    window.
 
 LID files
@@ -40,7 +40,7 @@ containing the library source code.
 Thus a LID file performs a similar function to the *makefile* used in
 some C and C++ development environments.
 
-LID files have the file extension *.lid*.
+LID files have the file extension ``.lid``.
 
 Every file referred to by a LID file must reside in the same folder
 (directory) as the LID file.
@@ -182,7 +182,7 @@ LID file keyword
 Identifies one or more C source files which are to be included as part
 of the library. Dylan environments copy these files to their build area
 and ensure that they are compiled by the appropriate batch file. The
-filenames specified must include the *.c* suffix.
+filenames specified must include the ``.c`` suffix.
 
 C-Header-Files:
 ^^^^^^^^^^^^^^^
@@ -198,7 +198,7 @@ Dylan environments copy these files to their build area and ensure that
 they are compiled by the appropriate batch file. Any files specified
 using the *C-Source-Files:* or *RC-Files:* keywords depend on these
 header files in order to decide when they need to be recompiled. The
-file names given here must include the *.h* suffix.
+file names given here must include the ``.h`` suffix.
 
 C-Object-Files:
 ^^^^^^^^^^^^^^^
@@ -212,8 +212,8 @@ LID file keyword
 Identifies one or more C object files included as part of the library.
 Dylan environments copy these files to their build area and ensure that
 they are compiled by the appropriate batch file and included in the
-final output as *.DLL* or *.EXE* files. The file names given here must
-include the *.obj* suffix.
+final output as ``.DLL`` or ``.EXE`` files. The file names given here must
+include the ``.obj`` suffix on Windows or ``.o`` on other platforms.
 
 RC-Files:
 ^^^^^^^^^
@@ -227,8 +227,8 @@ LID file keyword
 Identifies one or more resource files to be included as part of the
 library. Dylan environments copy these files to their build area and
 ensure that they are compiled by the appropriate batch file. The
-resulting resource object files are included in the *.DLL* or *.EXE*
-built for the library. The file names given here must include the *.rc*
+resulting resource object files are included in the ``.DLL`` or ``.EXE``
+built for the library. The file names given here must include the ``.rc``
 suffix.
 
 C-Libraries:
@@ -291,10 +291,10 @@ LID keyword
 
 Specifies the base address of the DLL built from this Dylan library. The
 *address* must be a hexadecimal value. For convenience, you can use
-either Dylan (*#xNNNNNNNN*) or C (*0xNNNNNNNN*) notations when
+either Dylan (``#xNNNNNNNN``) or C (``0xNNNNNNNN``) notations when
 specifying the address.
 
-This base address is ignored when building a *.EXE* file.
+This base address is ignored when building a ``.EXE`` file.
 
 If this keyword is not specified, the compiler will compute a default
 base address for the library. However, it is possible for more than one
@@ -341,9 +341,9 @@ If you are importing files from a platform that does not insist on, or
 conventionally use, standard filename suffixes to identify the filetype
 (such as MacOS), then you must rename your source files as follows:
 
-- LID files must be given filenames with the suffix *.lid*.
-- Dylan source files must be given filenames with the suffix *.dylan* or
-  *.dyl*.
+- LID files must be given filenames with the suffix ``.lid``.
+- Dylan source files must be given filenames with the suffix ``.dylan`` or
+  ``.dyl``.
 
 The file designators that appear in LID files may be a string of
 characters of any length, constructed from the set of hyphen,
