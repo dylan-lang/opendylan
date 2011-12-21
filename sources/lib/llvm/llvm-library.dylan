@@ -460,6 +460,7 @@ define module llvm-internals
   use locators;
   use machine-words;
   use byte-vector;
+  use bit-set;
   use operating-system;
   use threads;
   use big-integers,

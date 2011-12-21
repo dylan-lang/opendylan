@@ -299,32 +299,97 @@ define function refine-partitions
   end iterate;
 end function;
 
+// Sort partitions to ensure that the appearance of a partition
+// precedes any partitions that reference it, with the possible
+// exception of "delayable" partitions, which can be used to break
+// cycles when necessary.
 define function topological-sort-partitions
-    (partitions :: <stretchy-vector>,
+    (partitions :: <vector>,
      offset :: <integer>,
      partition-table :: <mutable-explicit-key-collection>,
-     reference-partitions-function :: <function>)
- => (new-partitions :: <stretchy-vector>);
-  let new-partitions = make(<stretchy-object-vector>);
-  local
-    method traverse-partition (index :: <integer>)
-      if (index >= offset & partitions[index - offset])
-        let instances = partitions[index - offset];
-        partitions[index - offset] := #f;
+     reference-partitions-function :: <function>,
+     #key delay-partition-function :: false-or(<function>) = #f)
+ => (new-partitions :: <vector>);
+  // Sets of available partitions (offset)
+  let ready-partitions = make(<bit-set>);
+  let delayable-partitions = make(<bit-set>);
 
-        do(traverse-partition, reference-partitions-function(instances.first));
+  // Invert the reference relation and identify initially ready and
+  // delayable partitions
+  let referencing-partition-sets
+    = make(<simple-object-vector>, size: partitions.size);
+  for (i from 0 below partitions.size)
+    referencing-partition-sets[i] := make(<bit-set>);
+    set-add!(ready-partitions, i);
+  end for;
 
-        let new-index = new-partitions.size + offset;
-        add!(new-partitions, instances);
-        do (method (instance)
-              partition-table[instance] := new-index;
-            end,
-            instances);
+  let referenced-partitions
+    = make(<simple-object-vector>, size: partitions.size);
+  for (index from offset below partitions.size + offset)
+    let instances = partitions[index - offset];
+    referenced-partitions[index - offset]
+      := reference-partitions-function(instances.first);
+    for (referenced-index in referenced-partitions[index - offset])
+      if (referenced-index >= offset)
+        // Referenced partitions aren't ready yet
+        set-add!(referencing-partition-sets[referenced-index - offset],
+                 index - offset);
+        set-remove!(ready-partitions, referenced-index - offset);
       end if;
+    end for;
+
+    if (delay-partition-function & delay-partition-function(instances.first))
+      set-add!(delayable-partitions, index - offset);
+    end if;
+  end for;
+
+  // Get the next available partition index
+  local
+    method pick-index (set :: <bit-set>) => (index :: false-or(<integer>));
+      let (initial-state :: <object>, limit :: <object>,
+           next-state :: <function>, finished-state? :: <function>,
+           current-key :: <function>) = forward-iteration-protocol(set);
+      if (finished-state?(set, initial-state, limit))
+        #f
+      else
+        current-key(set, initial-state) + offset
+      end if
     end method;
 
-  for (index from offset below partitions.size + offset)
-    traverse-partition(index);
+  // Assign new partitions based on the reference constraints
+  let new-partitions
+    = make(<stretchy-object-vector>, size: partitions.size);
+  for (new-index from partitions.size + offset - 1 to offset by -1)
+    // Get the next ready or delayable partition
+    let index
+      = pick-index(ready-partitions)
+      | pick-index(delayable-partitions)
+      | error("unbreakable cycle, no topological sort possible");
+
+    referencing-partition-sets[index - offset] := #f;
+    set-remove!(ready-partitions, index - offset);
+    set-remove!(delayable-partitions, index - offset);
+
+    // Remove restrictions and note newly ready partitions
+    for (referenced-index in referenced-partitions[index - offset])
+      if (referenced-index >= offset)
+        let referencing
+          = referencing-partition-sets[referenced-index - offset];
+        if (referencing)
+          set-remove!(referencing, index - offset);
+          if (empty?(referencing))
+            referencing-partition-sets[referenced-index - offset] := #f;
+            set-add!(ready-partitions, referenced-index - offset);
+          end if;
+        end if;
+      end if;
+    end for;
+
+    // Assign new partition indices
+    new-partitions[new-index - offset] := partitions[index - offset];
+    for (instance in partitions[index - offset])
+      partition-table[instance] := new-index;
+    end for;
   end for;
 
   new-partitions
