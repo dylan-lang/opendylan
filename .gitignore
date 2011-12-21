@@ -7,7 +7,6 @@ Makefile
 /configure
 /build-aux/
 /autom4te*.cache/
-/libtool
 /sources/bootstrap1-registry/
 /sources/corba/scepter/front-end/file/parser.dylan
 /sources/corba/orb/iop-protocol/
