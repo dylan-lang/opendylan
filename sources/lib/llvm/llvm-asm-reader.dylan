@@ -625,26 +625,66 @@ define function llvm-asm-parse
         else
           values(token-class, as(<string>, characters))
         end if;
-      //elseif (ch == '\\')
-      //  lexer-quote-backslash(characters, token-class)
+      elseif (ch == '\\')
+        lexer-quote-backslash(characters, token-class)
       else
         add!(characters, ch);
         lexer-quote(characters, token-class)
       end if;
     end method,
-
-    // method lexer-quote-backslash
-    //     (characters :: <stretchy-object-vector>, token-class)
-    //  => (token-class, token-value);
-    //   let ch = read-element(stream, on-end-of-stream: #f);
-    //   if (ch == '\\')
-    //     add!(characters, ch);
-    //     lexer-quote(characters, token-class);
-    //   else
-    //     error("No hex escapes yet please");
-    //   end if;
-    // end method;
-
+    
+    method lexer-quote-backslash
+        (characters :: <stretchy-object-vector>, token-class)
+     => (token-class, token-value);
+      let ch = read-element(stream, on-end-of-stream: #f);
+      if (ch == '\\')
+        add!(characters, ch);
+        lexer-quote(characters, token-class);
+      elseif (('0' <= ch & ch <= '9')
+                | ('a' <= ch & ch <= 'f')
+                | ('A' <= ch & ch <= 'F'))
+        lexer-quote-backslash-hex(characters, token-class, ch);
+      else
+        error("bad \\xx in quoted string");  
+      end if;
+    end method,
+    
+    method hex-digit-value (ch :: <character>) => (v :: <integer>);
+      select (ch)
+        '0'      => 0;
+        '1'      => 1;
+        '2'      => 2;
+        '3'      => 3;
+        '4'      => 4;
+        '5'      => 5;
+        '6'      => 6;
+        '7'      => 7;
+        '8'      => 8;
+        '9'      => 9;
+        'A', 'a' => 10;
+        'B', 'b' => 11;
+        'C', 'c' => 12;
+        'D', 'd' => 13;
+        'E', 'e' => 14;
+        'F', 'f' => 15;
+      end select
+    end method,
+    
+    method lexer-quote-backslash-hex
+        (characters :: <stretchy-object-vector>, token-class, first-digit)
+     => (token-class, token-value);
+      let ch = read-element(stream, on-end-of-stream: #f);
+      if (('0' <= ch & ch <= '9')
+            | ('a' <= ch & ch <= 'f')
+            | ('A' <= ch & ch <= 'F'))
+        let value = hex-digit-value(first-digit) * 16 + hex-digit-value(ch);
+        add!(characters, as(<character>, value));
+        lexer-quote(characters, token-class);
+      else
+        error("bad \\xx in quoted string");  
+      end if;
+    end method,
+    
     method lexer-dot
         () => (token-class, token-value);
       let ch = peek(stream, on-end-of-stream: #f);

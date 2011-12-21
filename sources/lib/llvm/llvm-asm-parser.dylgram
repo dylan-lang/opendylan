@@ -202,27 +202,10 @@ define function string-constant-contents
   iterate loop (i = 0)
     if (i < string-constant-size)
       let ch = string-constant[i];
-      if (ch == '\\')
-        if (i + 1 < string-constant-size & string-constant[i + 1] == '\\')
-          add!(contents, make(<llvm-integer-constant>,
-                              type: $llvm-i8-type,
-                              integer: as(<integer>, '\\')));
-          loop(i + 2);
-        elseif (i + 2 < string-constant-size)
-          let hex-value
-            = string-to-integer(string-constant, base: 16,
-                                start: i + 1, end: i + 3);
-          add!(contents, make(<llvm-integer-constant>,
-                              type: $llvm-i8-type,
-                              integer: hex-value));
-          loop(i + 3);
-        end if;
-      else
-        add!(contents, make(<llvm-integer-constant>,
-                            type: $llvm-i8-type,
-                            integer: as(<integer>, ch)));
-        loop(i + 1);
-      end if;
+      add!(contents, make(<llvm-integer-constant>,
+                          type: $llvm-i8-type,
+                          integer: as(<integer>, ch)));
+      loop(i + 1);
     end if;
   end iterate;
   
