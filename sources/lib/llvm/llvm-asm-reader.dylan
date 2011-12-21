@@ -487,7 +487,8 @@ define function llvm-asm-parse
         read-element(stream);
         values($%LABELSTR-token, as(<string>, characters))
       else
-        values($%FPVAL-token, 0.0d0); // FIXME
+        values($%FPVAL-token,
+               atof(as(<string>, characters)));
       end if;
     end method,
 
@@ -515,7 +516,8 @@ define function llvm-asm-parse
         add!(characters, read-element(stream));
         lexer-exponent-sign(characters);
       else
-        values($%FPVAL-token, 0.0d0); // FIXME
+        values($%FPVAL-token,
+               atof(as(<string>, characters)));
       end if;
     end method,
 
@@ -837,3 +839,166 @@ define function generic-string-to-integer
     end if;
   end block;
 end function generic-string-to-integer;
+
+// This lame implementation is "borrowed" from dfmc-reader; it does a
+// poor job of preserving precision, but at least it doesn't require
+// bignums.
+define constant $max-mantissa-digits = 18;
+
+define method atof
+    (string :: <byte-string>,
+     #key start :: <integer> = 0,
+          end: finish :: <integer> = string.size)
+ => (value :: <float>);
+  let class = #f;
+  let posn = start;
+  let sign = 1;
+  let mantissa = 0;
+  let scale = #f;
+  let exponent-sign = 1;
+  let exponent = 0;
+  let exponent-shift = 0;
+  let digits = 0;
+
+  // Parse the optional sign.
+  if (posn < finish)
+    let char = string[posn];
+    if (char == '-')
+      posn := posn + 1;
+      sign := -1;
+    elseif (char == '+')
+      posn := posn + 1;
+    end if;
+  end if;
+
+  block (return)
+    block (parse-exponent)
+      // Parse the mantissa.
+      while (posn < finish)
+        let char = string[posn];
+        posn := posn + 1;
+        if (char >= '0' & char <= '9')
+          if (digits < $max-mantissa-digits)
+            let digit = as(<integer>, char) - as(<integer>, '0');
+            mantissa := generic-+(generic-*(mantissa, 10), digit);
+            if (scale)
+              scale := generic-*(scale, 10);
+            end if;
+          else
+            // If we're after the decimal point, we can just ignore
+            // the digit. If before, we have to remember that we've
+            // been multiplied.
+            if (~scale)
+              exponent-shift := generic-+(exponent-shift, 1);
+            end;
+          end;
+          digits := digits + 1;
+        elseif (char == '.')
+          if (scale)
+            error("bogus float.");
+          end if;
+          scale := 1;
+        elseif (char == 'e' | char == 'E')
+          parse-exponent();
+        elseif (char == 'd' | char == 'D')
+          class := #"double";
+          parse-exponent();
+        elseif (char == 's' | char == 'S')
+          class := #"single";
+          parse-exponent();
+        elseif (char == 'x' | char == 'X')
+          class := #"extended";
+          parse-exponent();
+        else
+          error("bogus float.");
+        end if;
+      end while;
+      return();
+    end block;
+
+    // Parse the exponent.
+    if (posn < finish)
+      let char = string[posn];
+      if (char == '-')
+        exponent-sign := -1;
+        posn := posn + 1;
+      elseif (char == '+')
+        posn := posn + 1;
+      end if;
+
+      while (posn < finish)
+        let char = string[posn];
+        if (char >= '0' & char <= '9')
+          let digit = as(<integer>, char) - as(<integer>, '0');
+          exponent := generic-+(generic-*(exponent, 10), digit);
+        else
+          error("bogus float");
+        end if;
+        posn := posn + 1;
+      end while;
+    end if;
+  end block;
+
+  exponent := generic-+(exponent, exponent-shift);
+
+  // TODO: CORRECTNESS: Decide how to maintain precision and representation,
+  // since we lose it here. (CMU used a ratio representation).
+  // TODO: CORRECTNESS: Handle overflows reasonably gracefully.
+  // TODO: CORRECTNESS: Note that we don't have extended floats.
+
+  let (mantissa, base, scale)
+    = select (class)
+        #f          => values(as(<double-float>, mantissa),
+                              as(<double-float>, 10),
+                              as(<double-float>, scale | 1));
+        #"single"   => values(as(<single-float>, mantissa),
+                              as(<single-float>, 10),
+                              as(<single-float>, scale | 1));
+        #"double"   => values(as(<double-float>, mantissa),
+                              as(<double-float>, 10),
+                              as(<double-float>, scale | 1));
+        #"extended" => values(as(<extended-float>, mantissa),
+                              as(<extended-float>, 10),
+                              as(<extended-float>, scale | 1));
+      end;
+
+  let result
+    = if (exponent = 0)
+        generic-/(mantissa, scale)
+      else
+        let scaled-mantissa = generic-/(mantissa, scale);
+        // NOTE: Floating point exponentiation loses precision for some
+        // suprisingly small exponents so we'll use successive multiplications.
+        //---*** NOTE: Revisit this as it may be costly w.r.t. consing and
+        //---*** there must be a better way (rationals?).
+        local
+          method power-of-10 () => (power :: <float>);
+            let iterate?
+              = select (base by instance?)
+                  <single-float> => exponent > 15;
+                  // Yes, <double-float> exponentation is never accurate!
+                  <double-float> => #t;
+                  //---*** NOTE: We don't have <extended-float>s yet ...
+                  <extended-float> => #t;
+                end;
+            if (iterate?)
+              for (i from 1 below exponent)
+                base := generic-*(base, 10.0)
+              end;
+              base
+            else
+              generic-^(base, exponent)
+            end
+          end method power-of-10;
+        if (exponent-sign = 1)
+          generic-*(scaled-mantissa, power-of-10())
+        else
+          generic-/(scaled-mantissa, power-of-10())
+        end
+      end;
+  if (sign = -1)
+    -result
+  else
+    result
+  end if
+end method atof;
