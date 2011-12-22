@@ -26,7 +26,11 @@ Once installed, the following command-line will produce a binary in
 Compilation of the compiler itself
 ==================================
 
-* clone this git repository.
+* clone this git repository:
+
+::
+
+  git clone git://github.com/dylan-lang/opendylan.git --recursive
 
 Compilation on UNIX
 ===================
