@@ -25,7 +25,7 @@ class hierarchy for the DUIM-DCs library`_.
 Overall class hierarchy for the DUIM-DCs library
                                                 
 
-.. figure:: dcs-2.png
+.. figure:: images/dcs-2.png
    :align: center
    :alt: 
 
@@ -2211,7 +2211,7 @@ be looked up with *find-color*.
 Common color names
                   
 
-.. figure:: dcs-2.png
+.. figure:: images/dcs-2.png
    :align: center
    :alt: 
 alice-blue
