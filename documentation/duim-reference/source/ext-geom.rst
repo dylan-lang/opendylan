@@ -10,7 +10,7 @@ the DUIM-Geometry library, and provides more extensive support for
 coordinate geometry that is only required for more specialist uses. The
 library contains a single module, *duim-extended-geometry*, from which
 all the interfaces described in this chapter are exposed. `See
-DUIM-Extended-Geometry Module <ext-geom.htm#32467>`_ contains complete
+DUIM-Extended-Geometry Module`_ contains complete
 reference entries for each exposed interface.
 
 The class hierarchy for DUIM-Extended-Geometry
@@ -83,7 +83,7 @@ Arguments
          
 
 -  *function* An instance of type *<function>*.
--  *polygon* An instance of type `See <polygon> <ext-geom.htm#24799>`_.
+-  *polygon* An instance of type `<polygon>`_.
 
 Values
       
@@ -100,7 +100,7 @@ coordinates of the vertex. *do-polygon-coordinates* returns *#f*.
 See also
         
 
-`See do-polygon-segments <ext-geom.htm#21726>`_
+`do-polygon-segments`_
 
 do-polygon-segments
 -------------------
@@ -122,7 +122,7 @@ Arguments
          
 
 -  *function* An instance of type *<function>*.
--  *polygon* An instance of type `See <polygon> <ext-geom.htm#24799>`_.
+-  *polygon* An instance of type `<polygon>`_.
 
 Values
       
@@ -144,7 +144,7 @@ The function *do-polygon-segments* returns *#f*.
 See also
         
 
-`See do-polygon-coordinates <ext-geom.htm#77912>`_
+`do-polygon-coordinates`_
 
 draw-design
 -----------
@@ -199,7 +199,7 @@ Init-keywords
 
 -  *center-x:* An instance of type *<real>*.
 -  *center-y:* An instance of type *<real>*.
--  *center-point:* An instance of type `See <point> <geom.htm#15734>`_.
+-  *center-point:* An instance of type `<point> <geom.htm#15734>`_.
 -  *radius-1-dx:* An instance of type *<real>*
 -  *radius-1-dy:* An instance of type *<real>*
 -  *radius-2-dx:* An instance of type *<real>*
@@ -280,25 +280,25 @@ Operations
 The following operations are exported from the *DUIM-Extended-Geometry*
 module.
 
-`See draw-design <ext-geom.htm#88093>`_ `See
-ellipse? <ext-geom.htm#97289>`_ `See
-ellipse-center-point <ext-geom.htm#80133>`_ `See
-ellipse-center-position <ext-geom.htm#46139>`_ `See
-ellipse-end-angle <ext-geom.htm#34063>`_ `See
-ellipse-radii <ext-geom.htm#35464>`_ `See
-ellipse-start-angle <ext-geom.htm#61946>`_
+`draw-design`_ `See
+ellipse?`_ `See
+ellipse-center-point`_ `See
+ellipse-center-position`_ `See
+ellipse-end-angle`_ `See
+ellipse-radii`_ `See
+ellipse-start-angle`_
 
 The following operations are exported from the *DUIM-Geometry* module.
 
-`See box-edges <geom.htm#52858>`_ `See
+`box-edges <geom.htm#52858>`_ `See
 transform-region <geom.htm#33126>`_
 
 See also
         
 
-`See <area> <geom.htm#53450>`_
+`<area> <geom.htm#53450>`_
 
-`See make-ellipse <ext-geom.htm#64594>`_
+`make-ellipse`_
 
 ellipse?
 --------
@@ -334,7 +334,7 @@ Returns *#t* if *object* is an ellipse, otherwise returns *#f.*
 See Also
         
 
-`See <ellipse> <ext-geom.htm#18828>`_
+`<ellipse>`_
 
 ellipse-center-point
 --------------------
@@ -356,13 +356,13 @@ Arguments
          
 
 -  *elliptical-object* An instance of type *type-union(`See
-   <ellipse> <ext-geom.htm#18828>`_, `See
-   <elliptical-arc> <ext-geom.htm#65659>`_)*.
+   <ellipse>`_, `See
+   <elliptical-arc>`_)*.
 
 Values
       
 
--  *point* An instance of type `See <point> <geom.htm#15734>`_.
+-  *point* An instance of type `<point> <geom.htm#15734>`_.
 
 Description
            
@@ -372,7 +372,7 @@ Returns the center point of *ellipse-object* as** a *<point>* object.
 See also
         
 
-`See make-ellipse <ext-geom.htm#64594>`_
+`make-ellipse`_
 
 ellipse-center-position
 -----------------------
@@ -395,8 +395,8 @@ Arguments
          
 
 -  *elliptical-object* An instance of type *type-union(`See
-   <ellipse> <ext-geom.htm#18828>`_, `See
-   <elliptical-arc> <ext-geom.htm#65659>`_)*.
+   <ellipse>`_, `See
+   <elliptical-arc>`_)*.
 
 Values
       
@@ -415,7 +415,7 @@ center of the elliptical object, respectively.
 See also
         
 
-`See make-ellipse <ext-geom.htm#64594>`_
+`make-ellipse`_
 
 ellipse-end-angle
 -----------------
@@ -437,8 +437,8 @@ Arguments
          
 
 -  *elliptical-object* An instance of type *type-union(`See
-   <ellipse> <ext-geom.htm#18828>`_, `See
-   <elliptical-arc> <ext-geom.htm#65659>`_)*.
+   <ellipse>`_, `See
+   <elliptical-arc>`_)*.
 
 Values
       
@@ -456,7 +456,7 @@ equal to *2p*.
 See also
         
 
-`See make-ellipse <ext-geom.htm#64594>`_
+`make-ellipse`_
 
 ellipse-radii
 -------------
@@ -479,8 +479,8 @@ Arguments
          
 
 -  *elliptical-object* An instance of type *type-union(`See
-   <ellipse> <ext-geom.htm#18828>`_, `See
-   <elliptical-arc> <ext-geom.htm#65659>`_)*.
+   <ellipse>`_, `See
+   <elliptical-arc>`_)*.
 
 Values
       
@@ -500,7 +500,7 @@ so may not be the same as the values passed to the constructor function.
 See also
         
 
-`See make-ellipse <ext-geom.htm#64594>`_
+`make-ellipse`_
 
 ellipse-start-angle
 -------------------
@@ -522,8 +522,8 @@ Arguments
          
 
 -  *elliptical-object* An instance of type *type-union(`See
-   <ellipse> <ext-geom.htm#18828>`_, `See
-   <elliptical-arc> <ext-geom.htm#65659>`_)*.
+   <ellipse>`_, `See
+   <elliptical-arc>`_)*.
 
 Values
       
@@ -541,7 +541,7 @@ and less than *2p*.
 See also
         
 
-`See make-ellipse <ext-geom.htm#64594>`_
+`make-ellipse`_
 
 <elliptical-arc>
 ----------------
@@ -565,7 +565,7 @@ Init-keywords
 
 -  *center-x:* An instance of type *<real>*.
 -  *center-y:* An instance of *<real>*.
--  *center-point:* An instance of type `See <point> <geom.htm#15734>`_.
+-  *center-point:* An instance of type `<point> <geom.htm#15734>`_.
 -  *radius-1-dx:* An instance of *<real>*.
 -  *radius-1-dy:* An instance of *<real>*.
 -  *radius-2-dx:* An instance of *<real>*.
@@ -586,25 +586,25 @@ Operations
 The following operations are exported from the *DUIM-Extended-Geometry*
 module.
 
-`See draw-design <ext-geom.htm#88093>`_ `See
-ellipse-center-point <ext-geom.htm#80133>`_ `See
-ellipse-center-position <ext-geom.htm#46139>`_ `See
-ellipse-end-angle <ext-geom.htm#34063>`_ `See
-ellipse-radii <ext-geom.htm#35464>`_ `See
-ellipse-start-angle <ext-geom.htm#61946>`_ `See
-elliptical-arc? <ext-geom.htm#39895>`_
+`draw-design`_ `See
+ellipse-center-point`_ `See
+ellipse-center-position`_ `See
+ellipse-end-angle`_ `See
+ellipse-radii`_ `See
+ellipse-start-angle`_ `See
+elliptical-arc?`_
 
 The following operations are exported from the *DUIM-Geometry* module.
 
-`See box-edges <geom.htm#52858>`_ `See
+`box-edges <geom.htm#52858>`_ `See
 transform-region <geom.htm#33126>`_
 
 See also
         
 
-`See elliptical-arc? <ext-geom.htm#39895>`_
+`elliptical-arc?`_
 
-`See make-elliptical-arc <ext-geom.htm#12460>`_
+`make-elliptical-arc`_
 
 elliptical-arc?
 ---------------
@@ -640,7 +640,7 @@ Returns *#t* if *object* is an elliptical arc, otherwise returns *#f*.
 See also
         
 
-`See <elliptical-arc> <ext-geom.htm#65659>`_
+`<elliptical-arc>`_
 
 <line>
 ------
@@ -665,7 +665,7 @@ Init-keywords
 -  *start-y:* An instance of *<real>*.
 -  *end-x:* An instance of *<real>*.
 -  *end-y:* An instance of *<real>*.
--  *points:* Instances of `See <point> <geom.htm#15734>`_.
+-  *points:* Instances of `<point> <geom.htm#15734>`_.
 
 Description
            
@@ -681,28 +681,28 @@ Operations
 The following operations are exported from the *DUIM-Extended-Geometry*
 module.
 
-`See do-polygon-coordinates <ext-geom.htm#77912>`_ `See
-do-polygon-segments <ext-geom.htm#21726>`_ `See
-draw-design <ext-geom.htm#88093>`_ `See line? <ext-geom.htm#45120>`_
-`See line-end-point <ext-geom.htm#89761>`_ `See
-line-end-position <ext-geom.htm#26663>`_ `See
-line-start-point <ext-geom.htm#55978>`_ `See
-line-start-position <ext-geom.htm#94563>`_ `See
-polygon-coordinates <ext-geom.htm#41304>`_ `See
-polygon-points <ext-geom.htm#39099>`_ `See
-polyline-closed? <ext-geom.htm#26106>`_
+`do-polygon-coordinates`_ `See
+do-polygon-segments`_ `See
+draw-design`_ `line?`_
+`line-end-point`_ `See
+line-end-position`_ `See
+line-start-point`_ `See
+line-start-position`_ `See
+polygon-coordinates`_ `See
+polygon-points`_ `See
+polyline-closed?`_
 
 The following operations are exported from the *DUIM-Geometry* module.
 
-`See box-edges <geom.htm#52858>`_ `See
+`box-edges <geom.htm#52858>`_ `See
 transform-region <geom.htm#33126>`_
 
 See also
         
 
-`See <path> <geom.htm#44109>`_
+`<path> <geom.htm#44109>`_
 
-`See make-line <ext-geom.htm#59981>`_
+`make-line`_
 
 line?
 -----
@@ -759,7 +759,7 @@ Arguments
 Values
       
 
--  *point* An instance of type `See <point> <geom.htm#15734>`_.
+-  *point* An instance of type `<point> <geom.htm#15734>`_.
 
 Description
            
@@ -769,7 +769,7 @@ Returns the ending point of *line* as a *<point>* object.
 See also
         
 
-`See line-start-point <ext-geom.htm#55978>`_
+`line-start-point`_
 
 line-end-position
 -----------------
@@ -810,7 +810,7 @@ of the line, respectively.
 See also
         
 
-`See line-start-position <ext-geom.htm#94563>`_
+`line-start-position`_
 
 line-start-point
 ----------------
@@ -836,7 +836,7 @@ Arguments
 Values
       
 
--  *point* An instance of type `See <point> <geom.htm#15734>`_.
+-  *point* An instance of type `<point> <geom.htm#15734>`_.
 
 Description
            
@@ -846,7 +846,7 @@ Returns the starting point of *line* as a *<point>* object.
 See also
         
 
-`See line-end-point <ext-geom.htm#89761>`_
+`line-end-point`_
 
 line-start-position
 -------------------
@@ -887,7 +887,7 @@ of the line, respectively.
 See also
         
 
-`See line-end-position <ext-geom.htm#26663>`_
+`line-end-position`_
 
 make-ellipse
 ------------
@@ -926,12 +926,12 @@ The following arguments are specific to *make-ellipse*.
 
 The following argument is specific to *make-ellipse*.
 
--  *center-point* An instance of type `See <point> <geom.htm#15734>`_.
+-  *center-point* An instance of type `<point> <geom.htm#15734>`_.
 
 Values
       
 
--  *ellipse* An instance of type *`See <ellipse> <ext-geom.htm#18828>`_*
+-  *ellipse* An instance of type *`<ellipse>`_*
    .
 
 Description
@@ -965,7 +965,7 @@ a loss of performance.
 See also
         
 
-See the class `See <ellipse> <ext-geom.htm#18828>`_.
+See the class `<ellipse>`_.
 
 make-elliptical-arc
 -------------------
@@ -1004,13 +1004,13 @@ The following arguments are specific to *make-elliptical-arc*.
 
 The following argument is specific to *make-elliptical-arc\**.
 
--  *center-point* An instance of type `See <point> <geom.htm#15734>`_.
+-  *center-point* An instance of type `<point> <geom.htm#15734>`_.
 
 Values
       
 
 -  *arc* An instance of type *`See
-   <elliptical-arc> <ext-geom.htm#65659>`_*.
+   <elliptical-arc>`_*.
 
 Description
            
@@ -1042,7 +1042,7 @@ using this function may lead to a loss of performance.
 See also
         
 
-See the class `See <elliptical-arc> <ext-geom.htm#65659>`_.
+See the class `<elliptical-arc>`_.
 
 make-line
 ---------
@@ -1069,8 +1069,8 @@ Arguments
 -  *start-y* An instance of type *<real>*.
 -  *end-x* An instance of type *<real>*.
 -  *end-y* An instance of type *<real>*.
--  *start-point* An instance of type `See <point> <geom.htm#15734>`_.
--  *end-point* An instance of type `See <point> <geom.htm#15734>`_.
+-  *start-point* An instance of type `<point> <geom.htm#15734>`_.
+-  *end-point* An instance of type `<point> <geom.htm#15734>`_.
 
 Values
       
@@ -1117,7 +1117,7 @@ The following argument is specific to *make-polygon\**.
 Values
       
 
--  *polygon* An instance of type `See <polygon> <ext-geom.htm#24799>`_.
+-  *polygon* An instance of type `<polygon>`_.
 
 Description
            
@@ -1170,7 +1170,7 @@ Values
       
 
 -  *polyline* An instance of type *`See
-   <polyline> <ext-geom.htm#22516>`_*.
+   <polyline>`_*.
 
 Description
            
@@ -1295,29 +1295,29 @@ Operations
 The following operations are exported from the *DUIM-Extended-Geometry*
 module.
 
-`See do-polygon-coordinates <ext-geom.htm#77912>`_ `See
-do-polygon-segments <ext-geom.htm#21726>`_ `See
-draw-design <ext-geom.htm#88093>`_ `See polygon? <ext-geom.htm#31499>`_
-`See polygon-coordinates <ext-geom.htm#41304>`_ `See
-polygon-points <ext-geom.htm#39099>`_
+`do-polygon-coordinates`_ `See
+do-polygon-segments`_ `See
+draw-design`_ `polygon?`_
+`polygon-coordinates`_ `See
+polygon-points`_
 
 The following operations are exported from the *DUIM-Geometry* module.
 
-`See box-edges <geom.htm#52858>`_ `See
+`box-edges <geom.htm#52858>`_ `See
 transform-region <geom.htm#33126>`_
 
 See also
         
 
-`See <area> <geom.htm#53450>`_
+`<area> <geom.htm#53450>`_
 
-`See make-polygon <ext-geom.htm#62078>`_
+`make-polygon`_
 
-`See polygon? <ext-geom.htm#31499>`_
+`polygon?`_
 
-`See polygon-coordinates <ext-geom.htm#41304>`_
+`polygon-coordinates`_
 
-`See polygon-points <ext-geom.htm#39099>`_
+`polygon-points`_
 
 polygon?
 --------
@@ -1355,11 +1355,11 @@ Returns *#t* if *object* is a polygon, otherwise returns
 See also
         
 
-`See <polygon> <ext-geom.htm#24799>`_
+`<polygon>`_
 
-`See polygon-coordinates <ext-geom.htm#41304>`_
+`polygon-coordinates`_
 
-`See polygon-points <ext-geom.htm#39099>`_
+`polygon-points`_
 
 polygon-coordinates
 -------------------
@@ -1385,8 +1385,8 @@ Arguments
                      
 
 -  An instance of type *type-union(* `See
-   <polygon> <ext-geom.htm#24799>`_*, `See
-   <polyline> <ext-geom.htm#22516>`_)*.
+   <polygon>`_*, `See
+   <polyline>`_)*.
 
 Values
       
@@ -1402,11 +1402,11 @@ Returns a sequence of coordinate pairs that specify the segments in
 See also
         
 
-`See <polygon> <ext-geom.htm#24799>`_
+`<polygon>`_
 
-`See polygon? <ext-geom.htm#31499>`_
+`polygon?`_
 
-`See polygon-points <ext-geom.htm#39099>`_
+`polygon-points`_
 
 polygon-points
 --------------
@@ -1432,8 +1432,8 @@ Arguments
                      
 
 -  An instance of type *type-union(* `See
-   <polygon> <ext-geom.htm#24799>`_*, `See
-   <polyline> <ext-geom.htm#22516>`_)*.
+   <polygon>`_*, `See
+   <polyline>`_)*.
 
 Values
       
@@ -1450,11 +1450,11 @@ Returns a sequence of points that specify the segments in
 See also
         
 
-`See <polygon> <ext-geom.htm#24799>`_
+`<polygon>`_
 
-`See polygon? <ext-geom.htm#31499>`_
+`polygon?`_
 
-`See polygon-coordinates <ext-geom.htm#41304>`_
+`polygon-coordinates`_
 
 <polyline>
 ----------
@@ -1504,29 +1504,29 @@ Operations
 The following operations are exported from the *DUIM-Extended-Geometry*
 module.
 
-`See do-polygon-coordinates <ext-geom.htm#77912>`_ `See
-do-polygon-segments <ext-geom.htm#21726>`_ `See
-draw-design <ext-geom.htm#88093>`_ `See
-polygon-coordinates <ext-geom.htm#41304>`_ `See
-polygon-points <ext-geom.htm#39099>`_ `See
-polyline? <ext-geom.htm#64198>`_ `See
-polyline-closed? <ext-geom.htm#26106>`_
+`do-polygon-coordinates`_ `See
+do-polygon-segments`_ `See
+draw-design`_ `See
+polygon-coordinates`_ `See
+polygon-points`_ `See
+polyline?`_ `See
+polyline-closed?`_
 
 The following operations are exported from the *DUIM-Geometry* module.
 
-`See box-edges <geom.htm#52858>`_ `See
+`box-edges <geom.htm#52858>`_ `See
 transform-region <geom.htm#33126>`_
 
 See also
         
 
-`See <path> <geom.htm#44109>`_
+`<path> <geom.htm#44109>`_
 
-`See make-polyline <ext-geom.htm#46392>`_
+`make-polyline`_
 
-`See polyline? <ext-geom.htm#64198>`_
+`polyline?`_
 
-`See polyline-closed? <ext-geom.htm#26106>`_
+`polyline-closed?`_
 
 polyline?
 ---------
@@ -1564,9 +1564,9 @@ Returns *#t* if *object* is a polyline, otherwise returns
 See also
         
 
-`See <polyline> <ext-geom.htm#22516>`_
+`<polyline>`_
 
-`See polyline-closed? <ext-geom.htm#26106>`_
+`polyline-closed?`_
 
 polyline-closed?
 ----------------
@@ -1588,7 +1588,7 @@ Arguments
          
 
 -  *polyline* An instance of type *`See
-   <polyline> <ext-geom.htm#22516>`_*.
+   <polyline>`_*.
 
 Values
       
@@ -1605,9 +1605,9 @@ polygons.
 See also
         
 
-`See <polyline> <ext-geom.htm#22516>`_
+`<polyline>`_
 
-`See polyline? <ext-geom.htm#64198>`_
+`polyline?`_
 
 <rectangle>
 -----------
@@ -1639,7 +1639,7 @@ Description
            
 
 The protocol class that corresponds to a rectangle. This is a subclass
-of `See <polygon> <ext-geom.htm#24799>`_.
+of `<polygon>`_.
 
 Rectangles whose edges are parallel to the coordinate axes are a special
 case of polygon that can be specified completely by four real numbers
@@ -1653,50 +1653,50 @@ Operations
 The following operations are exported from the *DUIM-Extended-Geometry*
 module.
 
-`See do-polygon-coordinates <ext-geom.htm#77912>`_ `See
-do-polygon-segments <ext-geom.htm#21726>`_ `See
-draw-design <ext-geom.htm#88093>`_ `See
-polygon-coordinates <ext-geom.htm#41304>`_ `See
-polygon-points <ext-geom.htm#39099>`_ `See
-rectangle? <ext-geom.htm#49199>`_ `See
-rectangle-edges <ext-geom.htm#83383>`_ `See
-rectangle-height <ext-geom.htm#96239>`_ `See
-rectangle-max-point <ext-geom.htm#17612>`_ `See
-rectangle-max-position <ext-geom.htm#44768>`_ `See
-rectangle-min-point <ext-geom.htm#35015>`_ `See
-rectangle-min-position <ext-geom.htm#67691>`_ `See
-rectangle-size <ext-geom.htm#50143>`_ `See
-rectangle-width <ext-geom.htm#35417>`_
+`do-polygon-coordinates`_ `See
+do-polygon-segments`_ `See
+draw-design`_ `See
+polygon-coordinates`_ `See
+polygon-points`_ `See
+rectangle?`_ `See
+rectangle-edges`_ `See
+rectangle-height`_ `See
+rectangle-max-point`_ `See
+rectangle-max-position`_ `See
+rectangle-min-point`_ `See
+rectangle-min-position`_ `See
+rectangle-size`_ `See
+rectangle-width`_
 
 The following operations are exported from the *DUIM-Geometry* module.
 
-`See box-edges <geom.htm#52858>`_ `See
+`box-edges <geom.htm#52858>`_ `See
 transform-region <geom.htm#33126>`_
 
 See also
         
 
-`See <polygon> <ext-geom.htm#24799>`_
+`<polygon>`_
 
-`See make-rectangle <ext-geom.htm#94627>`_
+`make-rectangle`_
 
-`See rectangle? <ext-geom.htm#49199>`_
+`rectangle?`_
 
-`See rectangle-edges <ext-geom.htm#83383>`_
+`rectangle-edges`_
 
-`See rectangle-height <ext-geom.htm#96239>`_
+`rectangle-height`_
 
-`See rectangle-max-point <ext-geom.htm#17612>`_
+`rectangle-max-point`_
 
-`See rectangle-max-position <ext-geom.htm#44768>`_
+`rectangle-max-position`_
 
-`See rectangle-min-point <ext-geom.htm#35015>`_
+`rectangle-min-point`_
 
-`See rectangle-min-position <ext-geom.htm#67691>`_
+`rectangle-min-position`_
 
-`See rectangle-size <ext-geom.htm#50143>`_
+`rectangle-size`_
 
-`See rectangle-width <ext-geom.htm#35417>`_
+`rectangle-width`_
 
 rectangle?
 ----------
@@ -1732,23 +1732,23 @@ Returns *#t* if *object* is a rectangle, otherwise returns *#f*.
 See also
         
 
-`See <rectangle> <ext-geom.htm#71465>`_
+`<rectangle>`_
 
-`See rectangle-edges <ext-geom.htm#83383>`_
+`rectangle-edges`_
 
-`See rectangle-height <ext-geom.htm#96239>`_
+`rectangle-height`_
 
-`See rectangle-max-point <ext-geom.htm#17612>`_
+`rectangle-max-point`_
 
-`See rectangle-max-position <ext-geom.htm#44768>`_
+`rectangle-max-position`_
 
-`See rectangle-min-point <ext-geom.htm#35015>`_
+`rectangle-min-point`_
 
-`See rectangle-min-position <ext-geom.htm#67691>`_
+`rectangle-min-position`_
 
-`See rectangle-size <ext-geom.htm#50143>`_
+`rectangle-size`_
 
-`See rectangle-width <ext-geom.htm#35417>`_
+`rectangle-width`_
 
 rectangle-edges
 ---------------
@@ -1801,23 +1801,23 @@ of the rectangle.
 See also
         
 
-`See <rectangle> <ext-geom.htm#71465>`_
+`<rectangle>`_
 
-`See rectangle? <ext-geom.htm#49199>`_
+`rectangle?`_
 
-`See rectangle-height <ext-geom.htm#96239>`_
+`rectangle-height`_
 
-`See rectangle-max-point <ext-geom.htm#17612>`_
+`rectangle-max-point`_
 
-`See rectangle-max-position <ext-geom.htm#44768>`_
+`rectangle-max-position`_
 
-`See rectangle-min-point <ext-geom.htm#35015>`_
+`rectangle-min-point`_
 
-`See rectangle-min-position <ext-geom.htm#67691>`_
+`rectangle-min-position`_
 
-`See rectangle-size <ext-geom.htm#50143>`_
+`rectangle-size`_
 
-`See rectangle-width <ext-geom.htm#35417>`_
+`rectangle-width`_
 
 rectangle-height
 ----------------
@@ -1854,23 +1854,23 @@ maximum *y* and its minimum *y*.
 See also
         
 
-`See <rectangle> <ext-geom.htm#71465>`_
+`<rectangle>`_
 
-`See rectangle? <ext-geom.htm#49199>`_
+`rectangle?`_
 
-`See rectangle-edges <ext-geom.htm#83383>`_
+`rectangle-edges`_
 
-`See rectangle-max-point <ext-geom.htm#17612>`_
+`rectangle-max-point`_
 
-`See rectangle-max-position <ext-geom.htm#44768>`_
+`rectangle-max-position`_
 
-`See rectangle-min-point <ext-geom.htm#35015>`_
+`rectangle-min-point`_
 
-`See rectangle-min-position <ext-geom.htm#67691>`_
+`rectangle-min-position`_
 
-`See rectangle-size <ext-geom.htm#50143>`_
+`rectangle-size`_
 
-`See rectangle-width <ext-geom.htm#35417>`_
+`rectangle-width`_
 
 rectangle-max-point
 -------------------
@@ -1896,7 +1896,7 @@ Arguments
 Values
       
 
--  *point* An instance of type `See <point> <geom.htm#15734>`_.
+-  *point* An instance of type `<point> <geom.htm#15734>`_.
 
 Description
            
@@ -1906,23 +1906,23 @@ Returns the bottom right point of the rectangle.
 See also
         
 
-`See <rectangle> <ext-geom.htm#71465>`_
+`<rectangle>`_
 
-`See rectangle? <ext-geom.htm#49199>`_
+`rectangle?`_
 
-`See rectangle-edges <ext-geom.htm#83383>`_
+`rectangle-edges`_
 
-`See rectangle-height <ext-geom.htm#96239>`_
+`rectangle-height`_
 
-`See rectangle-max-position <ext-geom.htm#44768>`_
+`rectangle-max-position`_
 
-`See rectangle-min-point <ext-geom.htm#35015>`_
+`rectangle-min-point`_
 
-`See rectangle-min-position <ext-geom.htm#67691>`_
+`rectangle-min-position`_
 
-`See rectangle-size <ext-geom.htm#50143>`_
+`rectangle-size`_
 
-`See rectangle-width <ext-geom.htm#35417>`_
+`rectangle-width`_
 
 rectangle-max-position
 ----------------------
@@ -1961,23 +1961,23 @@ rectangle.
 See also
         
 
-`See <rectangle> <ext-geom.htm#71465>`_
+`<rectangle>`_
 
-`See rectangle? <ext-geom.htm#49199>`_
+`rectangle?`_
 
-`See rectangle-edges <ext-geom.htm#83383>`_
+`rectangle-edges`_
 
-`See rectangle-height <ext-geom.htm#96239>`_
+`rectangle-height`_
 
-`See rectangle-max-point <ext-geom.htm#17612>`_
+`rectangle-max-point`_
 
-`See rectangle-min-point <ext-geom.htm#35015>`_
+`rectangle-min-point`_
 
-`See rectangle-min-position <ext-geom.htm#67691>`_
+`rectangle-min-position`_
 
-`See rectangle-size <ext-geom.htm#50143>`_
+`rectangle-size`_
 
-`See rectangle-width <ext-geom.htm#35417>`_
+`rectangle-width`_
 
 rectangle-min-point
 -------------------
@@ -2003,7 +2003,7 @@ Arguments
 Values
       
 
--  *point* An instance of type `See <point> <geom.htm#15734>`_.
+-  *point* An instance of type `<point> <geom.htm#15734>`_.
 
 Description
            
@@ -2013,23 +2013,23 @@ Returns the left top point of the rectangle.
 See also
         
 
-`See <rectangle> <ext-geom.htm#71465>`_
+`<rectangle>`_
 
-`See rectangle? <ext-geom.htm#49199>`_
+`rectangle?`_
 
-`See rectangle-edges <ext-geom.htm#83383>`_
+`rectangle-edges`_
 
-`See rectangle-height <ext-geom.htm#96239>`_
+`rectangle-height`_
 
-`See rectangle-max-point <ext-geom.htm#17612>`_
+`rectangle-max-point`_
 
-`See rectangle-max-position <ext-geom.htm#44768>`_
+`rectangle-max-position`_
 
-`See rectangle-min-position <ext-geom.htm#67691>`_
+`rectangle-min-position`_
 
-`See rectangle-size <ext-geom.htm#50143>`_
+`rectangle-size`_
 
-`See rectangle-width <ext-geom.htm#35417>`_
+`rectangle-width`_
 
 rectangle-min-position
 ----------------------
@@ -2066,23 +2066,23 @@ Returns the *x* and *y* coordinates of the left top of the rectangle.
 See also
         
 
-`See <rectangle> <ext-geom.htm#71465>`_
+`<rectangle>`_
 
-`See rectangle? <ext-geom.htm#49199>`_
+`rectangle?`_
 
-`See rectangle-edges <ext-geom.htm#83383>`_
+`rectangle-edges`_
 
-`See rectangle-height <ext-geom.htm#96239>`_
+`rectangle-height`_
 
-`See rectangle-max-point <ext-geom.htm#17612>`_
+`rectangle-max-point`_
 
-`See rectangle-max-position <ext-geom.htm#44768>`_
+`rectangle-max-position`_
 
-`See rectangle-min-point <ext-geom.htm#35015>`_
+`rectangle-min-point`_
 
-`See rectangle-size <ext-geom.htm#50143>`_
+`rectangle-size`_
 
-`See rectangle-width <ext-geom.htm#35417>`_
+`rectangle-width`_
 
 rectangle-size
 --------------
@@ -2119,23 +2119,23 @@ Returns two values, the width and the height.
 See also
         
 
-`See <rectangle> <ext-geom.htm#71465>`_
+`<rectangle>`_
 
-`See rectangle? <ext-geom.htm#49199>`_
+`rectangle?`_
 
-`See rectangle-edges <ext-geom.htm#83383>`_
+`rectangle-edges`_
 
-`See rectangle-height <ext-geom.htm#96239>`_
+`rectangle-height`_
 
-`See rectangle-max-point <ext-geom.htm#17612>`_
+`rectangle-max-point`_
 
-`See rectangle-max-position <ext-geom.htm#44768>`_
+`rectangle-max-position`_
 
-`See rectangle-min-point <ext-geom.htm#35015>`_
+`rectangle-min-point`_
 
-`See rectangle-min-position <ext-geom.htm#67691>`_
+`rectangle-min-position`_
 
-`See rectangle-width <ext-geom.htm#35417>`_
+`rectangle-width`_
 
 rectangle-width
 ---------------
@@ -2172,22 +2172,22 @@ between the maximum *x* and its minimum *x*.
 See also
         
 
-`See <rectangle> <ext-geom.htm#71465>`_
+`<rectangle>`_
 
-`See rectangle? <ext-geom.htm#49199>`_
+`rectangle?`_
 
-`See rectangle-edges <ext-geom.htm#83383>`_
+`rectangle-edges`_
 
-`See rectangle-height <ext-geom.htm#96239>`_
+`rectangle-height`_
 
-`See rectangle-max-point <ext-geom.htm#17612>`_
+`rectangle-max-point`_
 
-`See rectangle-max-position <ext-geom.htm#44768>`_
+`rectangle-max-position`_
 
-`See rectangle-min-point <ext-geom.htm#35015>`_
+`rectangle-min-point`_
 
-`See rectangle-min-position <ext-geom.htm#67691>`_
+`rectangle-min-position`_
 
-`See rectangle-size <ext-geom.htm#50143>`_
+`rectangle-size`_
 
 

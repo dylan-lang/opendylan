@@ -16,7 +16,7 @@ buttons, and check boxes. The library also provides the necessary
 functions, generic functions, and macros for creating and manipulating
 these classes. The library contains a single module, *duim-gadgets*,
 from which all the interfaces described in this chapter are exposed.
-`See DUIM-Gadgets Module <gadgets.htm#12360>`_ contains complete
+`DUIM-Gadgets Module`_ contains complete
 reference entries for each exposed interface.
 
 Gadgets are the basic behavioral GUI element (above the level of
@@ -65,8 +65,8 @@ Some of the more important types of gadget are as follows:
 
 Each of these types of gadget is described in more detail in subsequent
 sections, and full reference entries for every interface exposed in the
-DUIM-Gadgets library are available in `See DUIM-Gadgets
-Module <gadgets.htm#12360>`_. For a more general introduction to the
+DUIM-Gadgets library are available in `DUIM-Gadgets
+Module`_. For a more general introduction to the
 gadgets provided in DUIM, see the tour in the *Building Applications
 using DUIM* book. See the same book for a more practical example of
 implementing an application using the DUIM library.
@@ -103,7 +103,7 @@ handle-event <silica.htm#94892>`_.
 
 In Dylan, you use events in order to create new kinds of class. If you
 were creating a new kind of button, you would need to define a new
-method for `See handle-event <silica.htm#94892>`_ in order to describe
+method for `handle-event <silica.htm#94892>`_ in order to describe
 what happens when you click on an instance of that button. You would
 then write callbacks to deal with particular instance of the new class
 of button.
@@ -167,15 +167,15 @@ In each table below, classes that support the *items* protocol are
 displayed in *bold text*, and classes that support the activate
 protocol are displayed using *italic text*.
 
-*Note:* In `See Subclasses of the <collection-gadget>
-class <gadgets.htm#61652>`_, every subclass shown supports the *items*
+*Note:* In `Subclasses of the <collection-gadget>
+class`_, every subclass shown supports the *items*
 protocol, though for clarity, no bold is used.
 
 All subclasses of *<value-gadget>* support the *value* protocol. These
-are described in `See Subclasses of
-<value-gadget> <gadgets.htm#84188>`_, `See Subclasses of
-<button> <gadgets.htm#83918>`_, and `See Subclasses of
-<collection-gadget> <gadgets.htm#85055>`_.
+are described in `Subclasses of
+<value-gadget>`_, `Subclasses of
+<button>`_, and `Subclasses of
+<collection-gadget>`_.
 
 The <gadget> class and its subclasses
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -185,11 +185,11 @@ which is itself a subclass of *<object>*. All other DUIM gadgets are
 subclasses of *<gadget>*, with the exception of *<list-item>*,
 *<tree-node>*, and *<table-item>*.
 
-The immediate subclasses of *<gadget>* are shown in `See Overall class
-hierarchy for the DUIM-Gadgets library <gadgets.htm#80940>`_. Only
+The immediate subclasses of *<gadget>* are shown in `Overall class
+hierarchy for the DUIM-Gadgets library`_. Only
 *<value-gadget>* and *<page>* have any subclasses defined. See `See
-Subclasses of <value-gadget> <gadgets.htm#84188>`_ and `See Subclasses
-of <value-gadget> <gadgets.htm#84188>`_ for details of these subclasses.
+Subclasses of <value-gadget>`_ and `Subclasses
+of <value-gadget>`_ for details of these subclasses.
 
 The *<gadget>* class provides a number of subclasses that allow
 particular parts of a user interface to be created:
@@ -197,8 +197,8 @@ particular parts of a user interface to be created:
 -  *<menu>* Use this class to add a menu to the menu bar of any
    application frame. Menus themselves contain commands created using
    the menu-specific button and collection gadgets described in `See
-   Subclasses of <button> <gadgets.htm#83918>`_ and `See Subclasses of
-   <collection-gadget> <gadgets.htm#85055>`_.
+   Subclasses of <button>`_ and `Subclasses of
+   <collection-gadget>`_.
 -  *<tool-bar>* This class is used to add a tool bar to an application
    frame. A tool bar is a row of buttons that duplicates the
    functionality of the most commonly used menu commands, thereby
@@ -216,7 +216,7 @@ particular parts of a user interface to be created:
 
 The *<gadget>* class provides a number of subclasses that allow general
 spatial and grouping capability, in addition to the layout functionality
-described in `See DUIM-Layouts Library <layouts.htm#21962>`_. These are
+described in `DUIM-Layouts Library <layouts.htm#21962>`_. These are
 as follows:
 
 -  *<label>* This class is used to assign label to many other types of
@@ -248,7 +248,7 @@ Overall class hierarchy for the DUIM-Gadgets library
 
 <value-gadget>
 
-See `See Subclasses of <value-gadget> <gadgets.htm#84188>`_
+See `Subclasses of <value-gadget>`_
 
 <label>
 
@@ -272,7 +272,7 @@ See `See Subclasses of <value-gadget> <gadgets.htm#84188>`_
 
 <page>
 
-See `See Subclasses of <page> <gadgets.htm#31084>`_
+See `Subclasses of <page>`_
 
 <list-item>
 
@@ -288,7 +288,7 @@ Any gadget that can take a value of some sort is a subclass of
 the gadgets in the DUIM-Gadgets library.
 
 Every subclass of *<value-gadget>* supports the *value* protocol, as
-described in `See Overview <gadgets.htm#66610>`_.
+described in `Overview`_.
 
 Several subclasses of *<value-gadget>* themselves have a number of
 subclasses defined. These include:
@@ -303,15 +303,15 @@ subclasses defined. These include:
 -  Value gadgets whose value can vary within a known range, such as
    scroll bars.
 -  *<button>* Any button, such as a radio button, check button, or push
-   button. See `See Subclasses of <button> <gadgets.htm#83918>`_ for
+   button. See `Subclasses of <button>`_ for
    more details about the classes of button available.
 
 *<collection-gadget>*
                      
 
 -  Any gadget whose contents form a collection, such as a list, a tree
-   control, or a group of buttons. See `See Subclasses of
-   <collection-gadget> <gadgets.htm#85055>`_ for more details about the
+   control, or a group of buttons. See `Subclasses of
+   <collection-gadget>`_ for more details about the
    classes of collection gadget available.
 
 Also provided are the following specific GUI elements:
@@ -326,8 +326,8 @@ Also provided are the following specific GUI elements:
    displayed within the same window. Clicking on any of the tabs
    displayed in a tab control displays a new page of information.
 
-The subclasses of *<value-gadget>* are as shown in `See Subclasses of
-the <value-gadget> class <gadgets.htm#38678>`_.
+The subclasses of *<value-gadget>* are as shown in `Subclasses of
+the <value-gadget> class`_.
 
 Subclasses of the *<value-gadget>* class
                                         
@@ -355,7 +355,7 @@ Subclasses of the *<value-gadget>* class
 
 <button>
 
-See `See Subclasses of <button> <gadgets.htm#83918>`_
+See `Subclasses of <button>`_
 
 *<menu-bar>*
 
@@ -365,7 +365,7 @@ See `See Subclasses of <button> <gadgets.htm#83918>`_
 
 <collection-gadget>
 
-See `See Subclasses of <collection-gadget> <gadgets.htm#85055>`_
+See `Subclasses of <collection-gadget>`_
 
 Subclasses of <page>
 ^^^^^^^^^^^^^^^^^^^^
@@ -376,8 +376,8 @@ itself optionally containing other layouts or gadgets. Pages are used in
 situations where different sets of information (the pages themselves)
 need to be displayed in a common parent.
 
-The subclasses of *<page>* are as shown in `See Subclasses of the <page>
-class <gadgets.htm#51596>`_.
+The subclasses of *<page>* are as shown in `Subclasses of the <page>
+class`_.
 
 Subclasses of the *<page>* class
                                 
@@ -440,8 +440,8 @@ A tab control page
 Subclasses of <button>
 ^^^^^^^^^^^^^^^^^^^^^^
 
-The subclasses of *<button>* are as shown in `See Subclasses of the
-<button> class <gadgets.htm#69101>`_. These subclasses include not only
+The subclasses of *<button>* are as shown in `Subclasses of the
+<button> class`_. These subclasses include not only
 buttons that can appear in any sheet, but also their equivalent classes
 of menu item. Thus, an instance of *<check-button>* represents a button
 whose state can toggle a specific value on and off, and an instance of
@@ -450,7 +450,7 @@ specific value on and off in the same way.
 
 Since all the subclasses of *<button>* are themselves value gadgets,
 each one supports the *value* protocol, as described in `See
-Overview <gadgets.htm#66610>`_.
+Overview`_.
 
 Subclasses of the *<button>* class
                                   
@@ -477,8 +477,8 @@ Subclasses of the *<button>* class
 Subclasses of <collection-gadget>
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The subclasses of *<collection-gadget>* are as shown in `See Subclasses
-of the <collection-gadget> class <gadgets.htm#61652>`_. All of these
+The subclasses of *<collection-gadget>* are as shown in `Subclasses
+of the <collection-gadget> class`_. All of these
 subclasses support the *items* protocol, even though they are not
 displayed in bold.
 
@@ -570,7 +570,7 @@ information:
 
 Since all the subclasses of *<collection-gadget>* are themselves value
 gadgets, each one supports the *value* protocol, as described in `See
-Overview <gadgets.htm#66610>`_.
+Overview`_.
 
 Button gadgets
 ==============
@@ -662,8 +662,8 @@ A variety of value range gadgets
    :alt: 
 Sliders, scroll bars, and scroll bars are all examples of value range
 gadgets. Value range gadgets provide immediate visual feedback of the
-value of the gadget at any time, as shown in `See A variety of value
-range gadgets <gadgets.htm#29716>`_. In the case of sliders and scroll
+value of the gadget at any time, as shown in `A variety of value
+range gadgets`_. In the case of sliders and scroll
 bars, the user can set the *gadget-value* by dragging the appropriate
 part of the gadget to a new point on the scale. Progress bars are
 typically used only to provide the user with feedback about the progress
@@ -785,8 +785,8 @@ A tab control
    :alt: 
 This children of a tab control are the pages of information themselves.
 Each child should be an instance of the *<page>* class. The various
-types of page available are described in `See Page
-gadgets <gadgets.htm#14448>`_.
+types of page available are described in `Page
+gadgets`_.
 
 Group boxes
 ^^^^^^^^^^^
@@ -818,7 +818,7 @@ The protocol class for gadgets that have action callbacks.
 Superclasses
             
 
-*`See <gadget> <gadgets.htm#34543>`_*
+*`<gadget>`_*
 
 Init-keywords
              
@@ -839,13 +839,13 @@ can only be activated when they are enabled.
 Operations
           
 
-`See gadget-activate-callback <gadgets.htm#76803>`_ `See
-gadget-activate-callback-setter <gadgets.htm#71631>`_
+`gadget-activate-callback`_ `See
+gadget-activate-callback-setter`_
 
 See also
         
 
-*`See <gadget> <gadgets.htm#34543>`_*
+*`<gadget>`_*
 
 activate-gadget
 ---------------
@@ -866,7 +866,7 @@ activate-gadget *gadget* => ()
 Arguments
          
 
--  *gadget* An instance of type `See <gadget> <gadgets.htm#34543>`_.
+-  *gadget* An instance of type `<gadget>`_.
 
 Values
       
@@ -900,9 +900,9 @@ Arguments
          
 
 -  *table* An instance of type `See
-   <table-control> <gadgets.htm#60899>`_.
+   <table-control>`_.
 -  *heading* An instance of type *type-union(<string>,* `See
-   <label> <gadgets.htm#68802>`_*)*.
+   <label>`_*)*.
 -  *generator* An instance of type *<function>*.
 -  *index* An instance of type *<integer>*.
 
@@ -922,7 +922,7 @@ column order the new column should be added.
 See also
         
 
-*`See remove-column <gadgets.htm#38008>`_*
+*`remove-column`_*
 
 add-item
 --------
@@ -944,46 +944,46 @@ Arguments
          
 
 -  *list-or-table* An instance of *type-union(
-    `See <list-control> <gadgets.htm#70984>`_, `See
-   <table-control> <gadgets.htm#60899>`_)*.
+    `<list-control>`_, `See
+   <table-control>`_)*.
 -  *item* An instance of type *type-union(`See
-   <list-item> <gadgets.htm#64269>`_,`See
-   <table-item> <gadgets.htm#14438>`_)*.
+   <list-item>`_,`See
+   <table-item>`_)*.
 -  *after* An instance of type *type-union(`See
-   <list-item> <gadgets.htm#64269>`_,`See
-   <table-item> <gadgets.htm#14438>`_)*.
+   <list-item>`_,`See
+   <table-item>`_)*.
 
 Values
       
 
 -  *item* An instance of type *type-union(`See
-   <list-item> <gadgets.htm#64269>`_, `See
-   <table-item> <gadgets.htm#14438>`_)*.
+   <list-item>`_, `See
+   <table-item>`_)*.
 
 Description
            
 
 Adds an *item* to the specified *list-or-table*. The new item is
-created via a call to *`See make-item <gadgets.htm#94667>`_*.
+created via a call to *`make-item`_*.
 
 The *after* argument indicates which item to place the new item after.
 
 See also
         
 
-`See find-item <gadgets.htm#76255>`_
+`find-item`_
 
-`See <list-control> <gadgets.htm#70984>`_
+`<list-control>`_
 
-`See <list-item> <gadgets.htm#64269>`_
+`<list-item>`_
 
-*`See make-item <gadgets.htm#94667>`_*
+*`make-item`_*
 
-*`See remove-item <gadgets.htm#57619>`_*
+*`remove-item`_*
 
-`See <table-control> <gadgets.htm#60899>`_
+`<table-control>`_
 
-`See <table-item> <gadgets.htm#14438>`_
+`<table-item>`_
 
 add-node
 --------
@@ -1004,17 +1004,17 @@ add-node *tree parent node* #key *after setting-roots?* => *node*
 Arguments
          
 
--  *tree* An instance of *`See <tree-control> <gadgets.htm#65053>`_*.
--  *parent* An instance of *`See <tree-control> <gadgets.htm#65053>`_*.
--  *node* An instance of type *`See <tree-node> <gadgets.htm#24070>`_*.
--  *after* An instance of type *`See <tree-node> <gadgets.htm#24070>`_*
+-  *tree* An instance of *`<tree-control>`_*.
+-  *parent* An instance of *`<tree-control>`_*.
+-  *node* An instance of type *`<tree-node>`_*.
+-  *after* An instance of type *`<tree-node>`_*
    .
 -  *setting-roots?* An instance of type *<boolean>*.
 
 Values
       
 
--  *node* An instance of type *`See <tree-node> <gadgets.htm#24070>`_*.
+-  *node* An instance of type *`<tree-node>`_*.
 
 Description
            
@@ -1029,13 +1029,13 @@ If *setting-roots?* is true, then the new node is added at the root of
 See also
         
 
-*`See find-node <gadgets.htm#17539>`_*
+*`find-node`_*
 
-`See make-node <gadgets.htm#68945>`_
+`make-node`_
 
-`See remove-node <gadgets.htm#65790>`_
+`remove-node`_
 
-`See <tree-control> <gadgets.htm#65053>`_
+`<tree-control>`_
 
 <border>
 --------
@@ -1051,7 +1051,7 @@ The class of bordering gadgets.
 Superclasses
             
 
-*`See <gadget> <gadgets.htm#34543>`_ `See
+*`<gadget>`_ `See
 <single-child-composite-pane> <layouts.htm#47412>`_*
 
 Init-keywords
@@ -1086,7 +1086,7 @@ Different types of border
    :align: center
    :alt: 
 Borders are usually created using the `See
-with-border <gadgets.htm#20731>`_ macro, rather than by making direct
+with-border`_ macro, rather than by making direct
 instances of this class.
 
 Operations
@@ -1097,9 +1097,9 @@ Operations
 See also
         
 
-*`See <group-box> <gadgets.htm#72291>`_*
+*`<group-box>`_*
 
-*`See with-border <gadgets.htm#20731>`_*
+*`with-border`_*
 
 <button>
 --------
@@ -1115,7 +1115,7 @@ The class of all button gadgets.
 Superclasses
             
 
-*`See <value-gadget> <gadgets.htm#98877>`_*
+*`<value-gadget>`_*
 
 Init-keywords
              
@@ -1244,19 +1244,19 @@ end
 See also
         
 
-`See <button-box> <gadgets.htm#56976>`_
+`<button-box>`_
 
-`See <check-button> <gadgets.htm#24883>`_
+`<check-button>`_
 
-`See $fill <layouts.htm#86272>`_
+`$fill <layouts.htm#86272>`_
 
-`See gadget-accelerator <gadgets.htm#65771>`_
+`gadget-accelerator`_
 
-`See <menu-button> <gadgets.htm#57932>`_
+`<menu-button>`_
 
-`See <radio-button> <gadgets.htm#71819>`_
+`<radio-button>`_
 
-`See <space-requirement> <layouts.htm#38351>`_
+`<space-requirement> <layouts.htm#38351>`_
 
 <button-box>
 ------------
@@ -1272,7 +1272,7 @@ A class that groups buttons.
 Superclasses
             
 
-`See <collection-gadget> <gadgets.htm#86427>`_ `See
+`<collection-gadget>`_ `See
 <multiple-child-composite-pane> <layouts.htm#45992>`_
 
 Init-keywords
@@ -1293,8 +1293,8 @@ Description
            
 
 The class of grouped buttons; the superclass of *`See
-<check-box> <gadgets.htm#14754>`_* and *`See
-<radio-box> <gadgets.htm#53534>`_*.
+<check-box>`_* and *`See
+<radio-box>`_*.
 
 The *rows:* and *columns:* init-keywords allow you to specify how many
 rows or columns should be used to lay out the buttons. In addition, you
@@ -1370,11 +1370,11 @@ rows: 2));
 See also
         
 
-*`See <check-box> <gadgets.htm#14754>`_*
+*`<check-box>`_*
 
-*`See <push-box> <gadgets.htm#25725>`_*
+*`<push-box>`_*
 
-*`See <radio-box> <gadgets.htm#53534>`_*
+*`<radio-box>`_*
 
 <check-box>
 -----------
@@ -1390,8 +1390,8 @@ The class of check boxes, or groups of check buttons.
 Superclasses
             
 
-*`See <button-box> <gadgets.htm#56976>`_ `See
-<action-gadget> <gadgets.htm#84011>`_*
+*`<button-box>`_ `See
+<action-gadget>`_*
 
 Init-keywords
              
@@ -1436,11 +1436,11 @@ rows: 2));
 See also
         
 
-`See <group-box> <gadgets.htm#72291>`_
+`<group-box>`_
 
-*`See <push-box> <gadgets.htm#25725>`_*
+*`<push-box>`_*
 
-*`See <radio-box> <gadgets.htm#53534>`_*
+*`<radio-box>`_*
 
 <check-button>
 --------------
@@ -1456,8 +1456,8 @@ The class of check buttons.
 Superclasses
             
 
-`See <button> <gadgets.htm#20680>`_ `See
-<action-gadget> <gadgets.htm#84011>`_
+`<button>`_ `See
+<action-gadget>`_
 
 Init-keywords
              
@@ -1486,11 +1486,11 @@ contain(make(<check-button>, label: "Check button"));
 See also
         
 
-`See <check-menu-button> <gadgets.htm#78597>`_
+`<check-menu-button>`_
 
-`See <push-button> <gadgets.htm#99081>`_
+`<push-button>`_
 
-`See <radio-button> <gadgets.htm#71819>`_
+`<radio-button>`_
 
 <check-menu-box>
 ----------------
@@ -1506,8 +1506,8 @@ The class of groups of check buttons displayed in a menu.
 Superclasses
             
 
-*`See <menu-box> <gadgets.htm#39323>`_ `See
-<action-gadget> <gadgets.htm#84011>`_*
+*`<menu-box>`_ `See
+<action-gadget>`_*
 
 Init-keywords
              
@@ -1553,11 +1553,11 @@ items:
 See also
         
 
-*`See <menu-box> <gadgets.htm#39323>`_*
+*`<menu-box>`_*
 
-*`See <push-menu-box> <gadgets.htm#28367>`_*
+*`<push-menu-box>`_*
 
-*`See <radio-menu-box> <gadgets.htm#18445>`_*
+*`<radio-menu-box>`_*
 
 <check-menu-button>
 -------------------
@@ -1573,7 +1573,7 @@ The class of check buttons that can be displayed in a menu.
 Superclasses
             
 
-`See <menu-button> <gadgets.htm#57932>`_
+`<menu-button>`_
 
 Init-keywords
              
@@ -1615,9 +1615,9 @@ notify-user(format-to-string
 See also
         
 
-`See <check-button> <gadgets.htm#24883>`_
+`<check-button>`_
 
-`See <radio-menu-button> <gadgets.htm#35746>`_
+`<radio-menu-button>`_
 
 <collection-gadget>
 -------------------
@@ -1633,7 +1633,7 @@ The class of all gadgets that contain collections.
 Superclasses
             
 
-*`See <value-gadget> <gadgets.htm#98877>`_*
+*`<value-gadget>`_*
 
 Init-keywords
              
@@ -1682,7 +1682,7 @@ by default.
 
 By default, the value key returns the collection gadget itself.
 
-Note also that the `See gadget-value <gadgets.htm#64375>`_** method for
+Note also that the `gadget-value`_** method for
 collection gadgets is different for single and multiple selection
 gadgets. For single selection, the item that is selected is returned.
 For multiple selection, a sequence of the selected items is returned.
@@ -1691,67 +1691,67 @@ The *test:* init-keyword is the function used to test whether two items
 of the collection are considered identical.
 
 The *selection:* init-keyword is available only to those subclasses of
-`See <collection-gadget> <gadgets.htm#86427>`_ that contain items that
+`<collection-gadget>`_ that contain items that
 may be selected. The selection is a collection containing the selected
 keys from the items collection.
 
 Subclasses of *<collection-gadget>* that can have selections are: `See
-<list-box> <gadgets.htm#88459>`_, `See
-<option-box> <gadgets.htm#48340>`_, `See
-<list-control> <gadgets.htm#70984>`_, `See
-<tree-control> <gadgets.htm#65053>`_, `See
-<table-control> <gadgets.htm#60899>`_, `See
-<radio-box> <gadgets.htm#53534>`_, `See
-<check-box> <gadgets.htm#14754>`_, `See
-<check-menu-box> <gadgets.htm#99468>`_, `See
-<radio-menu-box> <gadgets.htm#18445>`_, `See
-<combo-box> <gadgets.htm#34294>`_.
+<list-box>`_, `See
+<option-box>`_, `See
+<list-control>`_, `See
+<tree-control>`_, `See
+<table-control>`_, `See
+<radio-box>`_, `See
+<check-box>`_, `See
+<check-menu-box>`_, `See
+<radio-menu-box>`_, `See
+<combo-box>`_.
 
 The *key-press-callback:* init-keyword lets you specify a key-press
 callback. This type of callback is invoked whenever a key on the
 keyboard is pressed while the gadget has focus. It applies only to graph
 controls, list controls, tab controls, and table controls. See `See
-gadget-key-press-callback <gadgets.htm#76610>`_, for a fuller
+gadget-key-press-callback`_, for a fuller
 description of key-press callbacks.
 
 Operations
           
 
-`See gadget-items <gadgets.htm#45083>`_ `See
-gadget-items-setter <gadgets.htm#59420>`_ `See
-gadget-key-press-callback <gadgets.htm#76610>`_ `See
-gadget-key-press-callback-setter <gadgets.htm#10874>`_ `See
-gadget-label-key <gadgets.htm#43855>`_ `See
-gadget-selection <gadgets.htm#29830>`_ `See
-gadget-selection-mode <gadgets.htm#50708>`_
- `See gadget-selection-setter <gadgets.htm#80179>`_ `See
-gadget-test <gadgets.htm#40136>`_ `See
-gadget-value-key <gadgets.htm#25297>`_
+`gadget-items`_ `See
+gadget-items-setter`_ `See
+gadget-key-press-callback`_ `See
+gadget-key-press-callback-setter`_ `See
+gadget-label-key`_ `See
+gadget-selection`_ `See
+gadget-selection-mode`_
+ `gadget-selection-setter`_ `See
+gadget-test`_ `See
+gadget-value-key`_
 
 See also
         
 
-`See <button-box> <gadgets.htm#56976>`_
+`<button-box>`_
 
-`See <check-box> <gadgets.htm#14754>`_
+`<check-box>`_
 
-`See <check-menu-box> <gadgets.htm#99468>`_
+`<check-menu-box>`_
 
-`See <combo-box> <gadgets.htm#34294>`_
+`<combo-box>`_
 
-`See <list-box> <gadgets.htm#88459>`_
+`<list-box>`_
 
-`See <list-control> <gadgets.htm#70984>`_
+`<list-control>`_
 
-`See <option-box> <gadgets.htm#48340>`_
+`<option-box>`_
 
-`See <radio-box> <gadgets.htm#53534>`_
+`<radio-box>`_
 
-`See <radio-menu-box> <gadgets.htm#18445>`_
+`<radio-menu-box>`_
 
-`See <table-control> <gadgets.htm#60899>`_
+`<table-control>`_
 
-`See <tree-control> <gadgets.htm#65053>`_
+`<tree-control>`_
 
 <combo-box>
 -----------
@@ -1767,9 +1767,9 @@ The class of combo boxes, which combine options boxes with text fields.
 Superclasses
             
 
-*`See <collection-gadget> <gadgets.htm#86427>`_ `See
-<action-gadget> <gadgets.htm#84011>`_ `See
-<text-gadget> <gadgets.htm#82407>`_*
+*`<collection-gadget>`_ `See
+<action-gadget>`_ `See
+<text-gadget>`_*
 
 Init-keywords
              
@@ -1795,7 +1795,7 @@ list of options available. A combo box is often used to specify text in
 a Find dialog box, for example, and any previous search terms can be
 recalled by choosing them from the list. If you wish to provide this
 functionality, then you can do so using a combination of `See
-add-item <gadgets.htm#54092>`_ and `See find-item <gadgets.htm#76255>`_,
+add-item`_ and `find-item`_,
 to search for the presence of an item and add it if it does not already
 exist.
 
@@ -1825,9 +1825,9 @@ items: range(from: 1 to: 5)));
 See also
         
 
-`See <option-box> <gadgets.htm#48340>`_
+`<option-box>`_
 
-`See <text-field> <gadgets.htm#44511>`_
+`<text-field>`_
 
 contract-node
 -------------
@@ -1849,8 +1849,8 @@ Arguments
          
 
 -  *tree-control* An instance of `See
-   <tree-control> <gadgets.htm#65053>`_.
--  *node* An instance of type `See <tree-node> <gadgets.htm#24070>`_.
+   <tree-control>`_.
+-  *node* An instance of type `<tree-node>`_.
 
 Values
       
@@ -1866,7 +1866,7 @@ children of the node that were displayed.
 See also
         
 
-`See expand-node <gadgets.htm#65082>`_
+`expand-node`_
 
 display-menu
 ------------
@@ -1887,7 +1887,7 @@ display-menu *menu* #key *x y* => ()
 Arguments
          
 
--  *menu* An instance of type `See <menu> <gadgets.htm#81833>`_.
+-  *menu* An instance of type `<menu>`_.
 -  *x* An instance of type *false-or(<integer>)*. Default value: *#f*.
 -  *y* An instance of type *false-or(<integer>)*. Default value: *#f*.
 
@@ -1908,7 +1908,7 @@ The function returns when the menu has been popped down again.
 See also
         
 
-`See <menu> <gadgets.htm#81833>`_
+`<menu>`_
 
 expand-node
 -----------
@@ -1930,8 +1930,8 @@ Arguments
          
 
 -  *tree-control* An instance of `See
-   <tree-control> <gadgets.htm#65053>`_.
--  *node* An instance of type `See <tree-node> <gadgets.htm#24070>`_.
+   <tree-control>`_.
+-  *node* An instance of type `<tree-node>`_.
 
 Values
       
@@ -1951,9 +1951,9 @@ function on the node.
 See also
         
 
-`See contract-node <gadgets.htm#70428>`_
+`contract-node`_
 
-`See tree-control-children-generator <gadgets.htm#28570>`_
+`tree-control-children-generator`_
 
 find-item
 ---------
@@ -1975,16 +1975,16 @@ Arguments
          
 
 -  *list-or-table* An instance of *type-union
-    (`See <list-control> <gadgets.htm#70984>`_*, `See
-   <table-control> <gadgets.htm#60899>`_).
+    (`<list-control>`_*, `See
+   <table-control>`_).
 -  *object* An instance of type *<object>*.
 
 Values
       
 
 -  *found-item* An instance of type *type-union(* `See
-   <list-item> <gadgets.htm#64269>`_, `See
-   <table-item> <gadgets.htm#14438>`_*, #f)*.
+   <list-item>`_, `See
+   <table-item>`_*, #f)*.
 
 Description
            
@@ -1995,19 +1995,19 @@ Finds the item in a list control or a table control that corresponds to
 See also
         
 
-`See add-item <gadgets.htm#54092>`_
+`add-item`_
 
-`See <list-control> <gadgets.htm#70984>`_
+`<list-control>`_
 
-`See <list-item> <gadgets.htm#64269>`_
+`<list-item>`_
 
-*`See make-item <gadgets.htm#94667>`_*
+*`make-item`_*
 
-*`See remove-item <gadgets.htm#57619>`_*
+*`remove-item`_*
 
-`See <table-control> <gadgets.htm#60899>`_
+`<table-control>`_
 
-`See <table-item> <gadgets.htm#14438>`_
+`<table-item>`_
 
 find-node
 ---------
@@ -2028,16 +2028,16 @@ find-item *tree* *object* #key *parent-node* => *found-item*
 Arguments
          
 
--  *tree* An instance of *`See <tree-control> <gadgets.htm#65053>`_*.
+-  *tree* An instance of *`<tree-control>`_*.
 -  *object* An instance of *<object>*.
 -  *parent-node* An instance of type *`See
-   <tree-node> <gadgets.htm#24070>`_*.
+   <tree-node>`_*.
 
 Values
       
 
 -  *found-item* An instance of type *`See
-   <tree-node> <gadgets.htm#24070>`_*.
+   <tree-node>`_*.
 
 Description
            
@@ -2047,13 +2047,13 @@ Finds the item in a tree control that corresponds to *object*.
 See also
         
 
-`See add-node <gadgets.htm#31316>`_
+`add-node`_
 
-`See make-node <gadgets.htm#68945>`_
+`make-node`_
 
-`See remove-node <gadgets.htm#65790>`_
+`remove-node`_
 
-`See <tree-control> <gadgets.htm#65053>`_
+`<tree-control>`_
 
 <gadget>
 --------
@@ -2108,7 +2108,7 @@ end select;
 
 Note, however, that specifying *id:* is not generally necessary. The
 *id:* init-keyword is useful in the case of tab controls, where it is
-returned by *`See gadget-value <gadgets.htm#64375>`_*.
+returned by *`gadget-value`_*.
 
 Every gadget has a *client:* that is specified when the gadget is
 created. Typically, *client:* is a frame or a composite sheet.
@@ -2141,62 +2141,62 @@ it: only the values cannot be changed.
 Operations
           
 
-`See activate-gadget <gadgets.htm#75932>`_ `See
+`activate-gadget`_ `See
 choose-from-dialog <silica.htm#89621>`_ `See
-gadget-accelerator <gadgets.htm#65771>`_
- `See gadget-accelerator-setter <gadgets.htm#80239>`_
- `See gadget-client <gadgets.htm#75388>`_ `See
-gadget-client-setter <gadgets.htm#91068>`_ `See
-gadget-command <gadgets.htm#39838>`_
- `See gadget-command-setter <gadgets.htm#66876>`_ `See
-gadget-default? <gadgets.htm#70614>`_ `See
-gadget-default?-setter <gadgets.htm#10512>`_ `See
-gadget-documentation <gadgets.htm#18024>`_
- `See gadget-documentation-setter <gadgets.htm#98242>`_ `See
-gadget-value-changing-callback <gadgets.htm#68379>`_ `See
-gadget-value-changing-callback-setter <gadgets.htm#40216>`_
- `See gadget-enabled? <gadgets.htm#34174>`_ `See
-gadget-enabled?-setter <gadgets.htm#96568>`_ `See
-gadget-id <gadgets.htm#23536>`_
- `See gadget-id-setter <gadgets.htm#14357>`_ `See
-gadget-label <gadgets.htm#17236>`_ `See
-gadget-label-setter <gadgets.htm#41377>`_ `See
-gadget-mnemonic <gadgets.htm#58356>`_ `See
-gadget-mnemonic-setter <gadgets.htm#22623>`_
- `See gadget-orientation <gadgets.htm#89587>`_ `See
-gadget-popup-menu-callback <gadgets.htm#26661>`_
- `See gadget-popup-menu-callback-setter <gadgets.htm#48643>`_ `See
-gadget-read-only? <gadgets.htm#49519>`_ `See
-gadget-scrolling-horizontally? <gadgets.htm#28874>`_
- `See gadget-scrolling-vertically? <gadgets.htm#88312>`_ `See
-update-gadget <gadgets.htm#34300>`_
+gadget-accelerator`_
+ `gadget-accelerator-setter`_
+ `gadget-client`_ `See
+gadget-client-setter`_ `See
+gadget-command`_
+ `gadget-command-setter`_ `See
+gadget-default?`_ `See
+gadget-default?-setter`_ `See
+gadget-documentation`_
+ `gadget-documentation-setter`_ `See
+gadget-value-changing-callback`_ `See
+gadget-value-changing-callback-setter`_
+ `gadget-enabled?`_ `See
+gadget-enabled?-setter`_ `See
+gadget-id`_
+ `gadget-id-setter`_ `See
+gadget-label`_ `See
+gadget-label-setter`_ `See
+gadget-mnemonic`_ `See
+gadget-mnemonic-setter`_
+ `gadget-orientation`_ `See
+gadget-popup-menu-callback`_
+ `gadget-popup-menu-callback-setter`_ `See
+gadget-read-only?`_ `See
+gadget-scrolling-horizontally?`_
+ `gadget-scrolling-vertically?`_ `See
+update-gadget`_
 
 See also
         
 
-`See <action-gadget> <gadgets.htm#84011>`_
+`<action-gadget>`_
 
-`See <border> <gadgets.htm#43021>`_
+`<border>`_
 
-`See gadget-value <gadgets.htm#64375>`_
+`gadget-value`_
 
-`See <group-box> <gadgets.htm#72291>`_
+`<group-box>`_
 
-`See <label> <gadgets.htm#68802>`_
+`<label>`_
 
-`See <menu> <gadgets.htm#81833>`_
+`<menu>`_
 
-`See <page> <gadgets.htm#93333>`_
+`<page>`_
 
-`See <separator> <gadgets.htm#26082>`_
+`<separator>`_
 
-`See <spacing> <gadgets.htm#12504>`_
+`<spacing>`_
 
-`See <tool-bar> <gadgets.htm#58915>`_
+`<tool-bar>`_
 
-`See <value-gadget> <gadgets.htm#98877>`_
+`<value-gadget>`_
 
-`See <viewport> <gadgets.htm#65377>`_
+`<viewport>`_
 
 gadget?
 -------
@@ -2246,7 +2246,7 @@ gadget?(\*gadget\*);
 See also
         
 
-`See <gadget> <gadgets.htm#34543>`_
+`<gadget>`_
 
 gadget-accelerator
 ------------------
@@ -2267,7 +2267,7 @@ gadget-accelerator *gadget* => *accelerator*
 Arguments
          
 
--  *gadget* An instance of type `See <gadget> <gadgets.htm#34543>`_.
+-  *gadget* An instance of type `<gadget>`_.
 
 Values
       
@@ -2288,13 +2288,13 @@ button gadgets.
 See also
         
 
-`See <button> <gadgets.htm#20680>`_
+`<button>`_
 
-`See gadget-accelerator-setter <gadgets.htm#80239>`_
+`gadget-accelerator-setter`_
 
-`See <gesture> <silica.htm#76256>`_
+`<gesture> <silica.htm#76256>`_
 
-`See <menu-button> <gadgets.htm#57932>`_
+`<menu-button>`_
 
 gadget-accelerator-setter
 -------------------------
@@ -2317,7 +2317,7 @@ Arguments
 
 -  *accelerator* An instance of type `See
    <gesture> <silica.htm#76256>`_.
--  *gadget* An instance of type `See <gadget> <gadgets.htm#34543>`_.
+-  *gadget* An instance of type `<gadget>`_.
 
 Values
       
@@ -2338,13 +2338,13 @@ button gadgets.
 See also
         
 
-`See <button> <gadgets.htm#20680>`_
+`<button>`_
 
-`See gadget-accelerator <gadgets.htm#65771>`_
+`gadget-accelerator`_
 
-`See <gesture> <silica.htm#76256>`_
+`<gesture> <silica.htm#76256>`_
 
-`See <menu-button> <gadgets.htm#57932>`_
+`<menu-button>`_
 
 gadget-activate-callback
 ------------------------
@@ -2366,7 +2366,7 @@ Arguments
          
 
 -  *gadget* An instance of type `See
-   <action-gadget> <gadgets.htm#84011>`_.
+   <action-gadget>`_.
 
 Values
       
@@ -2385,7 +2385,7 @@ activate callback for the gadget.
 See also
         
 
-`See gadget-activate-callback-setter <gadgets.htm#71631>`_
+`gadget-activate-callback-setter`_
 
 gadget-activate-callback-setter
 -------------------------------
@@ -2409,7 +2409,7 @@ Arguments
 
 -  *activate-callback* An instance of type *false-or(<function>)*.
 -  *gadget* An instance of type `See
-   <action-gadget> <gadgets.htm#84011>`_.
+   <action-gadget>`_.
 
 Values
       
@@ -2424,7 +2424,7 @@ Sets the activate callback for *gadget* to *function*.
 See also
         
 
-`See gadget-activate-callback <gadgets.htm#76803>`_
+`gadget-activate-callback`_
 
 gadget-client
 -------------
@@ -2445,7 +2445,7 @@ gadget-client *gadget* => *client*
 Arguments
          
 
--  *gadget* An instance of type `See <gadget> <gadgets.htm#34543>`_.
+-  *gadget* An instance of type `<gadget>`_.
 
 Values
       
@@ -2470,7 +2470,7 @@ example, in the case of a radio box, the client of each button in the
 radio box is the radio box itself. At the implementation level, the
 radio box is not the immediate parent of the buttons that it contains,
 since there is an intervening layout object that arranges the buttons
-within the box. See `See <action-gadget> <gadgets.htm#84011>`_, for more
+within the box. See `<action-gadget>`_, for more
 details.
 
 Gadget clients enable you to pass messages between the gadget and its
@@ -2479,7 +2479,7 @@ client when a callback is received.
 See also
         
 
-`See gadget-client-setter <gadgets.htm#91068>`_
+`gadget-client-setter`_
 
 gadget-client-setter
 --------------------
@@ -2501,7 +2501,7 @@ Arguments
          
 
 -  *client* An instance of type *<object>*.
--  *gadget* An instance of type `See <gadget> <gadgets.htm#34543>`_.
+-  *gadget* An instance of type `<gadget>`_.
 
 Values
       
@@ -2516,7 +2516,7 @@ Sets the *client* of the specified *gadget*.
 The client is often a frame, but it could be another gadget (for
 example, in the case of a push button that is contained in a radio box,
 the client of the button could be the radio box). See `See
-<action-gadget> <gadgets.htm#84011>`_, for more details.
+<action-gadget>`_, for more details.
 
 Gadget clients enable you to pass messages between the gadget and its
 client when a callback is received.
@@ -2524,7 +2524,7 @@ client when a callback is received.
 See also
         
 
-`See gadget-client <gadgets.htm#75388>`_
+`gadget-client`_
 
 gadget-command
 --------------
@@ -2545,7 +2545,7 @@ gadget-command *gadget* => *command*
 Arguments
          
 
--  *gadget* An instance of type `See <gadget> <gadgets.htm#34543>`_.
+-  *gadget* An instance of type `<gadget>`_.
 
 Values
       
@@ -2565,7 +2565,7 @@ user chooses the relevant menu command.
 See also
         
 
-`See gadget-command-setter <gadgets.htm#66876>`_
+`gadget-command-setter`_
 
 gadget-command-setter
 ---------------------
@@ -2587,7 +2587,7 @@ Arguments
          
 
 -  *command* An instance of type *false-or(` <frames.htm#40934>`_)*.
--  *gadget* An instance of type `See <gadget> <gadgets.htm#34543>`_.
+-  *gadget* An instance of type `<gadget>`_.
 
 Values
       
@@ -2607,7 +2607,7 @@ user chooses the relevant menu command.
 See also
         
 
-`See gadget-command <gadgets.htm#39838>`_
+`gadget-command`_
 
 gadget-default?
 ---------------
@@ -2628,7 +2628,7 @@ gadget-default? *gadget* => *default?*
 Arguments
          
 
--  *gadget* An instance of type `See <gadget> <gadgets.htm#34543>`_.
+-  *gadget* An instance of type `<gadget>`_.
 
 Values
       
@@ -2651,7 +2651,7 @@ default gesture is usually pressing the RETURN button.
 See also
         
 
-`See gadget-default?-setter <gadgets.htm#10512>`_
+`gadget-default?-setter`_
 
 gadget-default?-setter
 ----------------------
@@ -2674,7 +2674,7 @@ Arguments
          
 
 -  *default?* An instance of type *<boolean>*.
--  *button* An instance of type `See <button> <gadgets.htm#20680>`_.
+-  *button* An instance of type `<button>`_.
 
 Values
       
@@ -2699,7 +2699,7 @@ default gesture is usually pressing the RETURN button.
 See also
         
 
-`See gadget-default? <gadgets.htm#70614>`_
+`gadget-default?`_
 
 gadget-documentation
 --------------------
@@ -2720,7 +2720,7 @@ gadget-documentation *gadget* => *documentation*
 Arguments
          
 
--  *gadget* An instance of type `See <gadget> <gadgets.htm#34543>`_.
+-  *gadget* An instance of type `<gadget>`_.
 
 Values
       
@@ -2748,7 +2748,7 @@ presentation, you should keep them as short as possible.
 See also
         
 
-`See gadget-documentation-setter <gadgets.htm#98242>`_
+`gadget-documentation-setter`_
 
 gadget-documentation-setter
 ---------------------------
@@ -2770,7 +2770,7 @@ Arguments
          
 
 -  *documentation* An instance of type *<string>*.
--  *gadget* An instance of type `See <gadget> <gadgets.htm#34543>`_.
+-  *gadget* An instance of type `<gadget>`_.
 
 Values
       
@@ -2798,9 +2798,9 @@ presentation, you should keep them as short as possible.
 See also
         
 
-*`See gadget-documentation <gadgets.htm#18024>`_*
+*`gadget-documentation`_*
 
-*`See <status-bar> <gadgets.htm#50900>`_*
+*`<status-bar>`_*
 
 gadget-enabled?
 ---------------
@@ -2821,7 +2821,7 @@ gadget-enabled? *gadget* => *enabled?*
 Arguments
          
 
--  *gadget* An instance of type `See <gadget> <gadgets.htm#34543>`_.
+-  *gadget* An instance of type `<gadget>`_.
 
 Values
       
@@ -2857,9 +2857,9 @@ gadget-enabled?(\*gadget\*);
 See also
         
 
-*`See <gadget> <gadgets.htm#34543>`_*
+*`<gadget>`_*
 
-*`See gadget-enabled?-setter <gadgets.htm#96568>`_*
+*`gadget-enabled?-setter`_*
 
 gadget-enabled?-setter
 ----------------------
@@ -2881,7 +2881,7 @@ Arguments
          
 
 -  *enabled?* An instance of type *<boolean>*.
--  *gadget* An instance of type `See <gadget> <gadgets.htm#34543>`_.
+-  *gadget* An instance of type `<gadget>`_.
 
 Values
       
@@ -2919,9 +2919,9 @@ gadget-enabled?(\*gadget\*) := #f;
 See also
         
 
-*`See <gadget> <gadgets.htm#34543>`_*
+*`<gadget>`_*
 
-*`See gadget-enabled? <gadgets.htm#34174>`_*
+*`gadget-enabled?`_*
 
 gadget-id
 ---------
@@ -2942,7 +2942,7 @@ gadget-id *gadget* => *id*
 Arguments
          
 
--  *gadget* An instance of type `See <gadget> <gadgets.htm#34543>`_.
+-  *gadget* An instance of type `<gadget>`_.
 
 Values
       
@@ -2991,11 +2991,11 @@ gadget-id(\*gadget\*);
 See also
         
 
-*`See gadget-id-setter <gadgets.htm#14357>`_*
+*`gadget-id-setter`_*
 
-*`See gadget-value <gadgets.htm#64375>`_*
+*`gadget-value`_*
 
-*`See <tab-control> <gadgets.htm#21648>`_*
+*`<tab-control>`_*
 
 gadget-id-setter
 ----------------
@@ -3017,7 +3017,7 @@ Arguments
          
 
 -  *id* An instance of type *<object>*.
--  *gadget* An instance of type `See <gadget> <gadgets.htm#34543>`_.
+-  *gadget* An instance of type `<gadget>`_.
 
 Values
       
@@ -3054,11 +3054,11 @@ gadget-id(\*gadget\*);
 See also
         
 
-*`See gadget-id <gadgets.htm#23536>`_*
+*`gadget-id`_*
 
-*`See gadget-value <gadgets.htm#64375>`_*
+*`gadget-value`_*
 
-*`See <tab-control> <gadgets.htm#21648>`_*
+*`<tab-control>`_*
 
 gadget-items
 ------------
@@ -3080,7 +3080,7 @@ Arguments
          
 
 -  *gadget* An instance of type `See
-   <collection-gadget> <gadgets.htm#86427>`_.
+   <collection-gadget>`_.
 
 Values
       
@@ -3127,13 +3127,13 @@ This returns the symbol: *#(#"one", #"two", #"three")*.
 See also
         
 
-*`See gadget-items-setter <gadgets.htm#59420>`_*
+*`gadget-items-setter`_*
 
-*`See gadget-label-key <gadgets.htm#43855>`_*
+*`gadget-label-key`_*
 
-*`See gadget-selection <gadgets.htm#29830>`_*
+*`gadget-selection`_*
 
-*`See gadget-value-key <gadgets.htm#25297>`_*
+*`gadget-value-key`_*
 
 gadget-items-setter
 -------------------
@@ -3156,7 +3156,7 @@ Arguments
 
 -  *items* An instance of type *<sequence>*.
 -  *gadget* An instance of type `See
-   <collection-gadget> <gadgets.htm#86427>`_.
+   <collection-gadget>`_.
 
 Values
       
@@ -3185,7 +3185,7 @@ gadget-items(\*gadget\*) := range(from: 0, to: 15);
 See also
         
 
-*`See gadget-items <gadgets.htm#45083>`_*
+*`gadget-items`_*
 
 gadget-key-press-callback
 -------------------------
@@ -3207,7 +3207,7 @@ Arguments
          
 
 -  *gadget* An instance of type `See
-   <collection-gadget> <gadgets.htm#86427>`_.
+   <collection-gadget>`_.
 
 Values
       
@@ -3234,15 +3234,15 @@ matches that typed.
 See also
         
 
-*`See gadget-key-press-callback-setter <gadgets.htm#10874>`_*
+*`gadget-key-press-callback-setter`_*
 
-*`See <list-control> <gadgets.htm#70984>`_*
+*`<list-control>`_*
 
-*`See <tab-control> <gadgets.htm#21648>`_*
+*`<tab-control>`_*
 
-*`See <table-control> <gadgets.htm#60899>`_*
+*`<table-control>`_*
 
-*`See <tree-control> <gadgets.htm#65053>`_*
+*`<tree-control>`_*
 
 gadget-key-press-callback-setter
 --------------------------------
@@ -3271,7 +3271,7 @@ An instance of type *false-or(` <frames.htm#40934>`_, <function>)*.
                                                                     
 
 -  *gadget* An instance of type `See
-   <collection-gadget> <gadgets.htm#86427>`_.
+   <collection-gadget>`_.
 
 Values
       
@@ -3298,15 +3298,15 @@ matches that typed.
 See also
         
 
-*`See gadget-key-press-callback <gadgets.htm#76610>`_*
+*`gadget-key-press-callback`_*
 
-*`See <list-control> <gadgets.htm#70984>`_*
+*`<list-control>`_*
 
-*`See <tab-control> <gadgets.htm#21648>`_*
+*`<tab-control>`_*
 
-*`See <table-control> <gadgets.htm#60899>`_*
+*`<table-control>`_*
 
-*`See <tree-control> <gadgets.htm#65053>`_*
+*`<tree-control>`_*
 
 gadget-label
 ------------
@@ -3327,7 +3327,7 @@ gadget-label *gadget* => *label*
 Arguments
          
 
--  *gadget* An instance of type `See <gadget> <gadgets.htm#34543>`_.
+-  *gadget* An instance of type `<gadget>`_.
 
 Values
       
@@ -3352,9 +3352,9 @@ gadget-label(\*gadget\*);
 See also
         
 
-*`See gadget-label-key <gadgets.htm#43855>`_*
+*`gadget-label-key`_*
 
-*`See gadget-label-setter <gadgets.htm#41377>`_*
+*`gadget-label-setter`_*
 
 gadget-label-key
 ----------------
@@ -3377,7 +3377,7 @@ Arguments
          
 
 -  *gadget* An instance of type `See
-   <collection-gadget> <gadgets.htm#86427>`_.
+   <collection-gadget>`_.
 
 Values
       
@@ -3426,11 +3426,11 @@ gadget-label-key(\*gadget\*);
 See also
         
 
-*`See gadget-label <gadgets.htm#17236>`_*
+*`gadget-label`_*
 
-*`See gadget-label-setter <gadgets.htm#41377>`_*
+*`gadget-label-setter`_*
 
-*`See gadget-value-key <gadgets.htm#25297>`_*
+*`gadget-value-key`_*
 
 gadget-label-setter
 -------------------
@@ -3453,7 +3453,7 @@ Arguments
 
 -  *label* An instance of type *type-union(<string>,* `See
    <image> <dcs.htm#51234>`_*)*.
--  *gadget* An instance of type `See <gadget> <gadgets.htm#34543>`_.
+-  *gadget* An instance of type `<gadget>`_.
 
 Values
       
@@ -3465,7 +3465,7 @@ Description
            
 
 Sets the label for *gadget* to *label*. The *label* must be *#f*, a
-string, or an instance of `See <image> <dcs.htm#51234>`_. Changing the
+string, or an instance of `<image> <dcs.htm#51234>`_. Changing the
 label of a gadget may result in invoking the layout protocol on the
 gadget and its ancestor sheets, if the new label occupies a different
 amount of space than the old label.
@@ -3482,9 +3482,9 @@ gadget-label(\*gadget\*) := "Hello world";
 See also
         
 
-*`See gadget-label <gadgets.htm#17236>`_*
+*`gadget-label`_*
 
-*`See gadget-label-key <gadgets.htm#43855>`_*
+*`gadget-label-key`_*
 
 gadget-mnemonic
 ---------------
@@ -3505,7 +3505,7 @@ gadget-mnemonic *gadget* => *mnemonic*
 Arguments
          
 
--  *gadget* An instance of type `See <gadget> <gadgets.htm#34543>`_.
+-  *gadget* An instance of type `<gadget>`_.
 
 Values
       
@@ -3523,9 +3523,9 @@ focus.
 See also
         
 
-*`See gadget-accelerator <gadgets.htm#65771>`_*
+*`gadget-accelerator`_*
 
-*`See gadget-mnemonic-setter <gadgets.htm#22623>`_*
+*`gadget-mnemonic-setter`_*
 
 gadget-mnemonic-setter
 ----------------------
@@ -3547,7 +3547,7 @@ Arguments
          
 
 -  *mnemonic* An instance of type *false-or(<character>)*.
--  *gadget* An instance of type `See <gadget> <gadgets.htm#34543>`_.
+-  *gadget* An instance of type `<gadget>`_.
 
 Values
       
@@ -3565,9 +3565,9 @@ focus.
 See also
         
 
-*`See gadget-accelerator-setter <gadgets.htm#80239>`_*
+*`gadget-accelerator-setter`_*
 
-*`See gadget-mnemonic <gadgets.htm#58356>`_*
+*`gadget-mnemonic`_*
 
 gadget-orientation
 ------------------
@@ -3588,7 +3588,7 @@ gadget-orientation *gadget* => *orientation*
 Arguments
          
 
--  *gadget* An instance of type `See <gadget> <gadgets.htm#34543>`_.
+-  *gadget* An instance of type `<gadget>`_.
 
 Values
       
@@ -3640,7 +3640,7 @@ gadget-popup-menu-callback *gadget* => *popup-menu-callback*
 Arguments
          
 
--  *gadget* An instance of type `See <gadget> <gadgets.htm#34543>`_.
+-  *gadget* An instance of type `<gadget>`_.
 
 Values
       
@@ -3662,7 +3662,7 @@ gadget.
 See also
         
 
-*`See gadget-popup-menu-callback-setter <gadgets.htm#48643>`_*
+*`gadget-popup-menu-callback-setter`_*
 
 gadget-popup-menu-callback-setter
 ---------------------------------
@@ -3691,7 +3691,7 @@ Arguments
 An instance of type *<function>*.
                                   
 
--  *gadget* An instance of type `See <gadget> <gadgets.htm#34543>`_.
+-  *gadget* An instance of type `<gadget>`_.
 
 Values
       
@@ -3713,7 +3713,7 @@ right-clicking on the gadget.
 See also
         
 
-*`See gadget-popup-menu-callback <gadgets.htm#26661>`_*
+*`gadget-popup-menu-callback`_*
 
 gadget-ratios
 -------------
@@ -3766,7 +3766,7 @@ gadget-read-only? *gadget* => *read-only?*
 Arguments
          
 
--  *gadget* An instance of type `See <gadget> <gadgets.htm#34543>`_.
+-  *gadget* An instance of type `<gadget>`_.
 
 Values
       
@@ -3782,7 +3782,7 @@ gadget is of most use with text gadgets.
 See also
         
 
-*`See gadget-enabled? <gadgets.htm#34174>`_*
+*`gadget-enabled?`_*
 
 gadget-scrolling-horizontally?
 ------------------------------
@@ -3804,7 +3804,7 @@ gadget-scrolling-horizontally? *gadget* => *horizontal?*
 Arguments
          
 
--  *gadget* An instance of type `See <gadget> <gadgets.htm#34543>`_.
+-  *gadget* An instance of type `<gadget>`_.
 
 Values
       
@@ -3820,7 +3820,7 @@ false otherwise.
 See also
         
 
-*`See gadget-scrolling-vertically? <gadgets.htm#88312>`_*
+*`gadget-scrolling-vertically?`_*
 
 gadget-scrolling-vertically?
 ----------------------------
@@ -3842,7 +3842,7 @@ gadget-scrolling-vertically? *gadget* => *vertical?*
 Arguments
          
 
--  *gadget* An instance of type `See <gadget> <gadgets.htm#34543>`_.
+-  *gadget* An instance of type `<gadget>`_.
 
 Values
       
@@ -3858,7 +3858,7 @@ false otherwise.
 See also
         
 
-*`See gadget-scrolling-horizontally? <gadgets.htm#28874>`_*
+*`gadget-scrolling-horizontally?`_*
 
 gadget-selection
 ----------------
@@ -3880,7 +3880,7 @@ Arguments
          
 
 -  *gadget* An instance of type `See
-   <collection-gadget> <gadgets.htm#86427>`_.
+   <collection-gadget>`_.
 
 Values
       
@@ -3892,7 +3892,7 @@ Description
            
 
 Returns the keys for the currently selected items of *gadget*.
-Generally, you should use `See gadget-value <gadgets.htm#64375>`_ to
+Generally, you should use `gadget-value`_ to
 return the selected item, rather than *gadget-selection*, which is best
 used for handling repeated items.
 
@@ -3921,13 +3921,13 @@ gadget-selection(\*radio\*);
 See also
         
 
-*`See gadget-items <gadgets.htm#45083>`_*
+*`gadget-items`_*
 
-*`See gadget-selection-mode <gadgets.htm#50708>`_*
+*`gadget-selection-mode`_*
 
-*`See gadget-selection-setter <gadgets.htm#80179>`_*
+*`gadget-selection-setter`_*
 
-*`See gadget-value <gadgets.htm#64375>`_*
+*`gadget-value`_*
 
 gadget-selection-mode
 ---------------------
@@ -3949,7 +3949,7 @@ Arguments
          
 
 -  *gadget* An instance of type `See
-   <collection-gadget> <gadgets.htm#86427>`_.
+   <collection-gadget>`_.
 
 Values
       
@@ -3989,13 +3989,13 @@ selected at a time, the selection mode returned is *#"single"*.
 See also
         
 
-*`See <button-box> <gadgets.htm#56976>`_*
+*`<button-box>`_*
 
-*`See gadget-selection <gadgets.htm#29830>`_*
+*`gadget-selection`_*
 
-*`See gadget-selection-setter <gadgets.htm#80179>`_*
+*`gadget-selection-setter`_*
 
-*`See <list-box> <gadgets.htm#88459>`_*
+*`<list-box>`_*
 
 gadget-selection-setter
 -----------------------
@@ -4020,7 +4020,7 @@ Arguments
 -  *selection* An instance of type *limited(<sequence>, of: <integer>)*
    .
 -  *gadget* An instance of type `See
-   <collection-gadget> <gadgets.htm#86427>`_.
+   <collection-gadget>`_.
 -  *do-callback?* An instance of type *<boolean>*. Default value: *#f*
    .
 
@@ -4040,10 +4040,10 @@ set multiple items in a single selection mode gadget.
 If *do-callback?* is true, the selection callback for *gadget* is
 invoked.
 
-As with `See gadget-selection <gadgets.htm#29830>`_, you should usually
-use `See gadget-value-setter <gadgets.htm#43472>`_ to set the selected
+As with `gadget-selection`_, you should usually
+use `gadget-value-setter`_ to set the selected
 item, rather than *gadget-selection-setter*, which is best used for
-handling repeated items. See `See gadget-selection <gadgets.htm#29830>`_
+handling repeated items. See `gadget-selection`_
 for more details.
 
 Example
@@ -4069,11 +4069,11 @@ programmatically (assuming that such a callback has been defined).
 See also
         
 
-*`See gadget-selection <gadgets.htm#29830>`_*
+*`gadget-selection`_*
 
-*`See gadget-selection-mode <gadgets.htm#50708>`_*
+*`gadget-selection-mode`_*
 
-*`See gadget-value-setter <gadgets.htm#43472>`_*
+*`gadget-value-setter`_*
 
 gadget-slug-size
 ----------------
@@ -4094,7 +4094,7 @@ gadget-slug-size *gadget* => *slug-size*
 Arguments
          
 
--  *gadget* An instance of type `See <scroll-bar> <gadgets.htm#25622>`_.
+-  *gadget* An instance of type `<scroll-bar>`_.
 
 Values
       
@@ -4106,7 +4106,7 @@ Description
 
 Returns the slug size of *gadget*. The slug is the part of *gadget*
 that can be dragged using the mouse. The value returned uses the same
-units as those used for `See gadget-value-range <gadgets.htm#73219>`_.
+units as those used for `gadget-value-range`_.
 
 *Note:* The Microsoft Windows Interface Guidelines refer to the slug as
 a *scroll-box*, and the area in which the slug can slide as the
@@ -4116,9 +4116,9 @@ those guidelines as a reference.
 See also
         
 
-*`See gadget-slug-size-setter <gadgets.htm#68297>`_*
+*`gadget-slug-size-setter`_*
 
-`See gadget-value-range <gadgets.htm#73219>`_
+`gadget-value-range`_
 
 gadget-slug-size-setter
 -----------------------
@@ -4140,7 +4140,7 @@ Arguments
          
 
 -  *slug-size* An instance of type *<real>*.
--  *gadget* An instance of type `See <gadget> <gadgets.htm#34543>`_.
+-  *gadget* An instance of type `<gadget>`_.
 
 Values
       
@@ -4151,7 +4151,7 @@ Description
            
 
 Sets the slug size of *gadget*. The value should use the same units as
-those used for `See gadget-value-range <gadgets.htm#73219>`_.
+those used for `gadget-value-range`_.
 
 *Note:* The Microsoft Windows Interface Guidelines refer to the slug as
 a *scroll-box*, and the area in which the slug can slide as the
@@ -4161,7 +4161,7 @@ those guidelines as a reference.
 See also
         
 
-*`See gadget-slug-size <gadgets.htm#30961>`_*
+*`gadget-slug-size`_*
 
 gadget-test
 -----------
@@ -4183,7 +4183,7 @@ Arguments
          
 
 -  *gadget* An instance of type `See
-   <collection-gadget> <gadgets.htm#86427>`_.
+   <collection-gadget>`_.
 
 Values
       
@@ -4217,7 +4217,7 @@ Arguments
          
 
 -  *gadget* An instance of type `See
-   <text-gadget> <gadgets.htm#82407>`_.
+   <text-gadget>`_.
 
 Values
       
@@ -4250,9 +4250,9 @@ gadget-text(\*g\*);
 See also
         
 
-`See gadget-text-setter <gadgets.htm#76443>`_
+`gadget-text-setter`_
 
-`See <text-gadget> <gadgets.htm#82407>`_
+`<text-gadget>`_
 
 gadget-text-setter
 ------------------
@@ -4275,7 +4275,7 @@ Arguments
 
 -  *gadget-text* An instance of type *<string>*.
 -  *gadget* An instance of type `See
-   <text-gadget> <gadgets.htm#82407>`_.
+   <text-gadget>`_.
 
 Values
       
@@ -4307,9 +4307,9 @@ gadget-text-setter("Hello world", \*g\*);
 See also
         
 
-`See gadget-text <gadgets.htm#25679>`_
+`gadget-text`_
 
-`See <text-gadget> <gadgets.htm#82407>`_
+`<text-gadget>`_
 
 gadget-value
 ------------
@@ -4331,7 +4331,7 @@ Arguments
          
 
 -  *gadget* An instance of type `See
-   <value-gadget> <gadgets.htm#98877>`_.
+   <value-gadget>`_.
 
 Values
       
@@ -4346,15 +4346,15 @@ Returns the gadget value of the specified gadget.
 The interpretation of the value varies from gadget to gadget. Most
 gadgets conceptually have “raw” values that can be determined directly
 using the generic function appropriate to the gadget class concerned
-(`See gadget-text <gadgets.htm#25679>`_ for an instance of `See
-<text-gadget> <gadgets.htm#82407>`_, `See
-gadget-selection <gadgets.htm#29830>`_for an instance of `See
-<collection-gadget> <gadgets.htm#86427>`_, and so on). These gadget
+(`gadget-text`_ for an instance of `See
+<text-gadget>`_, `See
+gadget-selection`_for an instance of `See
+<collection-gadget>`_, and so on). These gadget
 classes also have a convenience method on *gadget-value* that wraps up
 the raw value in some useful way. So, text gadgets have a method on
 *gadget-value* that converts the `See
-gadget-text <gadgets.htm#25679>`_based on the `See
-gadget-value-type <gadgets.htm#95659>`_, for example converting the
+gadget-text`_based on the `See
+gadget-value-type`_, for example converting the
 string to an integer for *value-type: <integer>*.
 
 The *gadget-value* method for collection gadgets is different for single
@@ -4387,17 +4387,17 @@ selected, *gadget-value* returns *#f*.
 See also
         
 
-`See <gadget> <gadgets.htm#34543>`_
+`<gadget>`_
 
-*`See gadget-id <gadgets.htm#23536>`_*
+*`gadget-id`_*
 
-*`See gadget-value-key <gadgets.htm#25297>`_*
+*`gadget-value-key`_*
 
-*`See gadget-value-range <gadgets.htm#73219>`_*
+*`gadget-value-range`_*
 
-*`See gadget-value-setter <gadgets.htm#43472>`_*
+*`gadget-value-setter`_*
 
-*`See gadget-value-type <gadgets.htm#95659>`_*
+*`gadget-value-type`_*
 
 gadget-value-changed-callback
 -----------------------------
@@ -4420,7 +4420,7 @@ Arguments
          
 
 -  *gadget* An instance of type `See
-   <value-gadget> <gadgets.htm#98877>`_.
+   <value-gadget>`_.
 
 Values
       
@@ -4447,7 +4447,7 @@ changed callback for *gadget*.
 See also
         
 
-*`See gadget-value-changed-callback-setter <gadgets.htm#92728>`_*
+*`gadget-value-changed-callback-setter`_*
 
 gadget-value-changed-callback-setter
 ------------------------------------
@@ -4470,7 +4470,7 @@ Arguments
          
 
 -  *callback* An instance of type *false-or(<function>)*.
--  *gadget* An instance of type `See <gadget> <gadgets.htm#34543>`_.
+-  *gadget* An instance of type `<gadget>`_.
 
 Values
       
@@ -4490,7 +4490,7 @@ gadget.
 See also
         
 
-*`See gadget-value-changed-callback <gadgets.htm#69800>`_*
+*`gadget-value-changed-callback`_*
 
 gadget-value-changing-callback
 ------------------------------
@@ -4512,7 +4512,7 @@ gadget-value-changing-callback *gadget*
 Arguments
          
 
--  *gadget* An instance of type `See <gadget> <gadgets.htm#34543>`_.
+-  *gadget* An instance of type `<gadget>`_.
 
 Values
       
@@ -4534,7 +4534,7 @@ value.
 See also
         
 
-*`See gadget-value-changing-callback-setter <gadgets.htm#40216>`_*
+*`gadget-value-changing-callback-setter`_*
 
 gadget-value-changing-callback-setter
 -------------------------------------
@@ -4562,7 +4562,7 @@ Arguments
 An instance of type *<function>*.
                                   
 
--  *gadget* An instance of type `See <gadget> <gadgets.htm#34543>`_.
+-  *gadget* An instance of type `<gadget>`_.
 
 Values
       
@@ -4584,7 +4584,7 @@ value.
 See also
         
 
-*`See gadget-value-changing-callback <gadgets.htm#68379>`_*
+*`gadget-value-changing-callback`_*
 
 gadget-value-key
 ----------------
@@ -4607,7 +4607,7 @@ Arguments
          
 
 -  *gadget* An instance of type `See
-   <collection-gadget> <gadgets.htm#86427>`_.
+   <collection-gadget>`_.
 
 Values
       
@@ -4656,9 +4656,9 @@ gadget-value-key(\*list\*);
 See also
         
 
-*`See gadget-label-key <gadgets.htm#43855>`_*
+*`gadget-label-key`_*
 
-*`See gadget-value <gadgets.htm#64375>`_*
+*`gadget-value`_*
 
 gadget-value-range
 ------------------
@@ -4680,7 +4680,7 @@ Arguments
          
 
 -  *gadget* An instance of type `See
-   <value-range-gadget> <gadgets.htm#10542>`_.
+   <value-range-gadget>`_.
 
 Values
       
@@ -4702,7 +4702,7 @@ range (from: 10, to: 0, by: -2)
 In this case, the value range is the elements 10, 8, 6, 4, 2, 0.
 
 The units in which the range is specified are also used for *`See
-gadget-slug-size <gadgets.htm#30961>`_*.
+gadget-slug-size`_*.
 
 Example
        
@@ -4729,11 +4729,11 @@ which in this case returns *{range -20 through 20, by 5}*.
 See also
         
 
-*`See gadget-slug-size <gadgets.htm#30961>`_*
+*`gadget-slug-size`_*
 
-*`See gadget-value <gadgets.htm#64375>`_*
+*`gadget-value`_*
 
-*`See gadget-value-range-setter <gadgets.htm#16520>`_*
+*`gadget-value-range-setter`_*
 
 gadget-value-range-setter
 -------------------------
@@ -4756,7 +4756,7 @@ Arguments
 
 -  *range* An instance of type *<range>*.
 -  *gadget* An instance of type `See
-   <value-range-gadget> <gadgets.htm#10542>`_.
+   <value-range-gadget>`_.
 
 Values
       
@@ -4788,7 +4788,7 @@ gadget-value-range(\*slider\*) :=
 See also
         
 
-*`See gadget-value-range <gadgets.htm#73219>`_*
+*`gadget-value-range`_*
 
 gadget-value-setter
 -------------------
@@ -4812,7 +4812,7 @@ Arguments
 
 -  *gadget-value* An instance of type *<object>*.
 -  *gadget* An instance of type `See
-   <value-gadget> <gadgets.htm#98877>`_.
+   <value-gadget>`_.
 -  *do-callback?* An instance of type *<boolean>*. Default value: *#f*
    .
 
@@ -4858,7 +4858,7 @@ Setting the gadget value to *#t* selects the button, and setting it to
 See also
         
 
-*`See gadget-value <gadgets.htm#64375>`_*
+*`gadget-value`_*
 
 gadget-value-type
 -----------------
@@ -4880,7 +4880,7 @@ Arguments
          
 
 -  *gadget* An instance of type `See
-   <value-gadget> <gadgets.htm#98877>`_.
+   <value-gadget>`_.
 
 Values
       
@@ -4913,7 +4913,7 @@ gadget-value-type(\*numeric\*);
 See also
         
 
-*`See gadget-value <gadgets.htm#64375>`_*
+*`gadget-value`_*
 
 gadget-x-alignment
 ------------------
@@ -4934,7 +4934,7 @@ gadget-x-alignment *gadget* => *alignment*
 Arguments
          
 
--  *gadget* An instance of type `See <gadget> <gadgets.htm#34543>`_.
+-  *gadget* An instance of type `<gadget>`_.
 
 Values
       
@@ -4952,7 +4952,7 @@ using the *x-alignment:* init-keyword.
 See also
         
 
-*`See gadget-y-alignment <gadgets.htm#95100>`_*
+*`gadget-y-alignment`_*
 
 gadget-y-alignment
 ------------------
@@ -4973,7 +4973,7 @@ gadget-x-alignment *gadget* => *alignment*
 Arguments
          
 
--  *gadget* An instance of type `See <gadget> <gadgets.htm#34543>`_.
+-  *gadget* An instance of type `<gadget>`_.
 
 Values
       
@@ -4991,7 +4991,7 @@ using the *y-alignment:* init-keyword.
 See also
         
 
-*`See gadget-x-alignment <gadgets.htm#63153>`_*
+*`gadget-x-alignment`_*
 
 <group-box>
 -----------
@@ -5007,12 +5007,12 @@ The class of gadgets that group their children using a labelled border.
 Superclasses
             
 
-`See <gadget> <gadgets.htm#34543>`_
+`<gadget>`_
 
 Init-keywords
              
 
--  *label:* An instance of type `See <label> <gadgets.htm#68802>`_.
+-  *label:* An instance of type `<label>`_.
 
 *label-position:*
                  
@@ -5067,13 +5067,13 @@ label: "Select integer:"));
 See also
         
 
-`See <border> <gadgets.htm#43021>`_
+`<border>`_
 
-`See <check-box> <gadgets.htm#14754>`_
+`<check-box>`_
 
-*`See <push-box> <gadgets.htm#25725>`_*
+*`<push-box>`_*
 
-`See <radio-box> <gadgets.htm#53534>`_
+`<radio-box>`_
 
 item-object
 -----------
@@ -5096,8 +5096,8 @@ Arguments
          
 
 -  *item* An instance of type *type-union(`See
-   <list-item> <gadgets.htm#64269>`_, `See
-   <table-item> <gadgets.htm#14438>`_)*.
+   <list-item>`_, `See
+   <table-item>`_)*.
 
 Values
       
@@ -5124,7 +5124,7 @@ The class of label gadgets.
 Superclasses
             
 
-`See <gadget> <gadgets.htm#34543>`_
+`<gadget>`_
 
 Init-keywords
              
@@ -5146,8 +5146,8 @@ Internally, this class maps into the Windows static control.
 Operations
           
 
-`See gadget-label <gadgets.htm#17236>`_ `See
-gadget-label-setter <gadgets.htm#41377>`_ ` <frames.htm#74637>`_
+`gadget-label`_ `See
+gadget-label-setter`_ ` <frames.htm#74637>`_
 ` <frames.htm#10131>`_ ` <frames.htm#68823>`_ ` <frames.htm#14565>`_
 
 Example
@@ -5159,7 +5159,7 @@ contain(make(<label>, label: "Hello"));
 See also
         
 
-*`See labelling <gadgets.htm#90160>`_*
+*`labelling`_*
 
 labelling
 ---------
@@ -5195,7 +5195,7 @@ Creates *pane* with a label assigned to it, taking into account any of
 the specified *options*.
 
 The options specified may be any of the legal init-keywords used to
-specify an instance of *`See <label> <gadgets.htm#68802>`_*. If no
+specify an instance of *`<label>`_*. If no
 options are specified, then the default label is used.
 
 The *pane* is an expression whose return value is the sheet to which the
@@ -5215,7 +5215,7 @@ end;
 See also
         
 
-*`See <label> <gadgets.htm#68802>`_*
+*`<label>`_*
 
 <list-box>
 ----------
@@ -5231,8 +5231,8 @@ The class of list boxes.
 Superclasses
             
 
-`See <collection-gadget> <gadgets.htm#86427>`_ `See
-<action-gadget> <gadgets.htm#84011>`_
+`<collection-gadget>`_ `See
+<action-gadget>`_
 
 Init-keywords
              
@@ -5295,9 +5295,9 @@ scroll-bars: #f));
 See also
         
 
-`See <list-control> <gadgets.htm#70984>`_
+`<list-control>`_
 
-*`See <list-item> <gadgets.htm#64269>`_*
+*`<list-item>`_*
 
 <list-control>
 --------------
@@ -5313,15 +5313,15 @@ The class of list controls.
 Superclasses
             
 
-`See <collection-gadget> <gadgets.htm#86427>`_ `See
-<action-gadget> <gadgets.htm#84011>`_
+`<collection-gadget>`_ `See
+<action-gadget>`_
 
 Init-keywords
              
 
 -  *icon-function:* An instance of type *<function>*.
 -  *view:* An instance of type `See
-   <list-control-view> <gadgets.htm#32228>`_. Default value: *#"list"*.
+   <list-control-view>`_. Default value: *#"list"*.
 -  *borders:* An instance of type *one-of(#f, #"none", #"flat",
    #"sunken", #"raised", #"ridge", #"groove", #"input", #"output")*.
    Default value: *#f*.
@@ -5346,7 +5346,7 @@ Description
 
 |image6| The class of list controls. These are controls that can list
 items in a number of different ways, using a richer format than the `See
-<list-box> <gadgets.htm#88459>`_** class. Examples of list controls are
+<list-box>`_** class. Examples of list controls are
 the main panels in the Windows Explorer, or the Macintosh Finder. List
 controls can also be seen in the standard Windows 95 Open File dialog
 box.
@@ -5386,7 +5386,7 @@ items in the list control.
 The *key-press-callback:* init-keyword lets you specify a key-press
 callback. This type of callback is invoked whenever a key on the
 keyboard is pressed while the gadget has focus. See `See
-gadget-key-press-callback <gadgets.htm#76610>`_, for a fuller
+gadget-key-press-callback`_, for a fuller
 description of key-press callbacks.
 
 Internally, this class maps into the Windows list view control.
@@ -5394,21 +5394,21 @@ Internally, this class maps into the Windows list view control.
 Operations
           
 
-`See add-item <gadgets.htm#54092>`_ `See find-item <gadgets.htm#76255>`_
-`See list-control-view <gadgets.htm#37259>`_ `See
-list-control-view-setter <gadgets.htm#53148>`_ `See
-make-item <gadgets.htm#94667>`_ `See remove-item <gadgets.htm#57619>`_
+`add-item`_ `find-item`_
+`list-control-view`_ `See
+list-control-view-setter`_ `See
+make-item`_ `remove-item`_
 
 See also
         
 
-*`See add-item <gadgets.htm#54092>`_*
+*`add-item`_*
 
-*`See list-control-view <gadgets.htm#37259>`_*
+*`list-control-view`_*
 
-*`See make-item <gadgets.htm#94667>`_*
+*`make-item`_*
 
-*`See remove-item <gadgets.htm#57619>`_*
+*`remove-item`_*
 
 ** list-control-icon-function
 -----------------------------
@@ -5430,7 +5430,7 @@ Arguments
          
 
 -  *list-control* An instance of `See
-   <list-control> <gadgets.htm#70984>`_.
+   <list-control>`_.
 
 Values
       
@@ -5455,9 +5455,9 @@ can be changed once the list control has been created.
 See also
         
 
-`See <list-control> <gadgets.htm#70984>`_
+`<list-control>`_
 
-*`See list-control-icon-function-setter <gadgets.htm#37578>`_*
+*`list-control-icon-function-setter`_*
 
 ** list-control-icon-function-setter
 ------------------------------------
@@ -5481,7 +5481,7 @@ Arguments
 
 -  *icon-function* An instance of type *<function>*.
 -  *list-control* An instance of `See
-   <list-control> <gadgets.htm#70984>`_.
+   <list-control>`_.
 
 Values
       
@@ -5506,9 +5506,9 @@ can be changed once the list control has been created.
 See also
         
 
-`See <list-control> <gadgets.htm#70984>`_
+`<list-control>`_
 
-*`See list-control-icon-function <gadgets.htm#29531>`_*
+*`list-control-icon-function`_*
 
 <list-control-view>
 -------------------
@@ -5540,7 +5540,7 @@ Description
            
 
 This type represents the acceptable values for the view arguments to
-operators of `See <list-control> <gadgets.htm#70984>`_. You should not
+operators of `<list-control>`_. You should not
 attempt to redefine this type in any way.
 
 There are three possible values, corresponding to the view options that
@@ -5556,11 +5556,11 @@ will be familiar to most users of GUI-based operating systems:
 See also
         
 
-`See <list-control> <gadgets.htm#70984>`_
+`<list-control>`_
 
-`See list-control-view <gadgets.htm#37259>`_
+`list-control-view`_
 
-`See <table-control-view> <gadgets.htm#30182>`_
+`<table-control-view>`_
 
 list-control-view
 -----------------
@@ -5582,13 +5582,13 @@ Arguments
          
 
 -  *list-control* An instance of `See
-   <list-control> <gadgets.htm#70984>`_.
+   <list-control>`_.
 
 Values
       
 
 -  *view* An instance of type `See
-   <list-control-view> <gadgets.htm#32228>`_.
+   <list-control-view>`_.
 
 Description
            
@@ -5598,7 +5598,7 @@ list control are displayed. Three views are available; items are
 accompanied either by a small icon or a large icon. In addition, items
 can be listed vertically, and additional details can be displayed for
 each item. For more details, see the description for `See
-<list-control-view> <gadgets.htm#32228>`_.
+<list-control-view>`_.
 
 Example
        
@@ -5627,11 +5627,11 @@ list-control-view(\*list\*);
 See also
         
 
-`See <list-control> <gadgets.htm#70984>`_
+`<list-control>`_
 
-`See <list-control-view> <gadgets.htm#32228>`_
+`<list-control-view>`_
 
-*`See list-control-view-setter <gadgets.htm#53148>`_*
+*`list-control-view-setter`_*
 
 list-control-view-setter
 ------------------------
@@ -5653,15 +5653,15 @@ Arguments
          
 
 -  *view* An instance of type `See
-   <list-control-view> <gadgets.htm#32228>`_.
+   <list-control-view>`_.
 -  *list-control* An instance of `See
-   <list-control> <gadgets.htm#70984>`_.
+   <list-control>`_.
 
 Values
       
 
 -  *view* An instance of type `See
-   <list-control-view> <gadgets.htm#32228>`_.
+   <list-control-view>`_.
 
 Description
            
@@ -5671,7 +5671,7 @@ list control are displayed. Three views are available; items are
 accompanied either by a small icon or a large icon. In addition, items
 can be listed vertically, and additional details can be displayed for
 each item. For more details, see the description for `See
-<list-control-view> <gadgets.htm#32228>`_.
+<list-control-view>`_.
 
 Example
        
@@ -5696,11 +5696,11 @@ list-control-view(\*list\*) := #"view";
 See also
         
 
-`See <list-control> <gadgets.htm#70984>`_
+`<list-control>`_
 
-`See <list-control-view> <gadgets.htm#32228>`_
+`<list-control-view>`_
 
-*`See list-control-view <gadgets.htm#37259>`_*
+*`list-control-view`_*
 
 <list-item>
 -----------
@@ -5731,16 +5731,16 @@ The class that represents an item in a list control.
 Operations
           
 
--  `See add-item <gadgets.htm#54092>`_ `See
-   item-object <gadgets.htm#66568>`_ `See
-   remove-item <gadgets.htm#57619>`_
+-  `add-item`_ `See
+   item-object`_ `See
+   remove-item`_
 
 See also
         
 
-`See <list-control> <gadgets.htm#70984>`_
+`<list-control>`_
 
-`See <table-item> <gadgets.htm#14438>`_
+`<table-item>`_
 
 make-item
 ---------
@@ -5763,8 +5763,8 @@ Arguments
          
 
 -  *list-or-table* An instance of *type-union
-    (`See <list-control> <gadgets.htm#70984>`_, `See
-   <table-control> <gadgets.htm#60899>`_)*.
+    (`<list-control>`_, `See
+   <table-control>`_)*.
 -  *object* An instance of type *<object>*.
 -  *frame-manager* An instance of type `See
    <frame-manager> <silica.htm#32466>`_.
@@ -5772,16 +5772,16 @@ Arguments
 Values
       
 
--  *item* An instance of type *`See <list-item> <gadgets.htm#64269>`_*.
+-  *item* An instance of type *`<list-item>`_*.
 
 Description
            
 
 Creates an item that represents *object* which can be inserted in the
 specified *list-or-table*. To insert the item in the list control or
-table control, *`See add-item <gadgets.htm#54092>`_* is used. You would
+table control, *`add-item`_* is used. You would
 not normally call *make-item* explicitly: just use *`See
-add-item <gadgets.htm#54092>`_* and the item is created automatically
+add-item`_* and the item is created automatically
 before it is added to the list or table control.
 
 If the *frame-manager* argument is specified, then this is used instead
@@ -5790,19 +5790,19 @@ of the default frame manager.
 See also
         
 
-*`See add-item <gadgets.htm#54092>`_*
+*`add-item`_*
 
-*`See find-item <gadgets.htm#76255>`_*
+*`find-item`_*
 
-`See <list-control> <gadgets.htm#70984>`_
+`<list-control>`_
 
-`See <list-item> <gadgets.htm#64269>`_
+`<list-item>`_
 
-*`See remove-item <gadgets.htm#57619>`_*
+*`remove-item`_*
 
-*`See <table-control> <gadgets.htm#60899>`_*
+*`<table-control>`_*
 
-`See <table-item> <gadgets.htm#14438>`_
+`<table-item>`_
 
 make-menu-from-items
 --------------------
@@ -5827,7 +5827,7 @@ Arguments
 -  *framem* An instance of type `See
    <frame-manager> <silica.htm#32466>`_.
 -  *items* An instance of type *<sequence>*.
--  *owner* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *owner* An instance of type `<sheet> <silica.htm#13118>`_.
 -  *title* An instance of type *<string>*.
 -  *label-key* An instance of *<function>*. Default value: *identity*.
 -  *value-key* An instance of *<function>*. Default value: *identity*.
@@ -5835,12 +5835,12 @@ Arguments
    <ink> <dcs.htm#15007>`_*)*. Default value: *#f*.
 -  *background* An instance of type *false-or(* `See
    <ink> <dcs.htm#15007>`_*)*. Default value: *#f*.
--  *text-style* An instance of type `See <text-style> <dcs.htm#85385>`_.
+-  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
 
 Values
       
 
--  *menu* An instance of type *`See <menu> <gadgets.htm#81833>`_*.
+-  *menu* An instance of type *`<menu>`_*.
 
 Description
            
@@ -5857,8 +5857,8 @@ You can specify a *title*, if desired.
 
 The *label-key* and *value-key* can be functions used to compute the
 label and value for each item in the menu, respectively. For more
-information, see *`See gadget-label-key <gadgets.htm#43855>`_*, or
-*`See gadget-value-key <gadgets.htm#25297>`_*. In general, the label
+information, see *`gadget-label-key`_*, or
+*`gadget-value-key`_*. In general, the label
 key can be trusted to “do the right thing” by default.
 
 The *text-style* argument specified a text style for the menu. The
@@ -5869,7 +5869,7 @@ the menu, and *background* for the menu itself.
 See also
         
 
-`See display-menu <gadgets.htm#75087>`_
+`display-menu`_
 
 make-node
 ---------
@@ -5890,34 +5890,34 @@ make-node *tree object* #key #all-keys => *node*
 Arguments
          
 
--  *tree* An instance of *`See <tree-control> <gadgets.htm#65053>`_*.
+-  *tree* An instance of *`<tree-control>`_*.
 -  *object* An instance of type *<object>*.
 
 Values
       
 
--  *node* An instance of type *`See <tree-node> <gadgets.htm#24070>`_*.
+-  *node* An instance of type *`<tree-node>`_*.
 
 Description
            
 
 Creates a node that represents *object* which can be inserted in the
 specified *tree*. To insert the item in the tree control, *`See
-add-node <gadgets.htm#31316>`_* is used. You would not normally call
-*make-node* explicitly: just use *`See add-node <gadgets.htm#31316>`_*
+add-node`_* is used. You would not normally call
+*make-node* explicitly: just use *`add-node`_*
 and the node is created automatically before it is added to the tree
 control.
 
 See also
         
 
-*`See add-node <gadgets.htm#31316>`_*
+*`add-node`_*
 
-*`See find-node <gadgets.htm#17539>`_*
+*`find-node`_*
 
-*`See remove-node <gadgets.htm#65790>`_*
+*`remove-node`_*
 
-*`See <tree-control> <gadgets.htm#65053>`_*
+*`<tree-control>`_*
 
 <menu>
 ------
@@ -5933,7 +5933,7 @@ The class of menu gadgets.
 Superclasses
             
 
-`See <gadget> <gadgets.htm#34543>`_ `See
+`<gadget>`_ `See
 <multiple-child-composite-pane> <layouts.htm#45992>`_
 
 Init-keywords
@@ -5945,7 +5945,7 @@ Init-keywords
 An instance of type *false-or(<function>)*.
                                             
 
--  *owner:* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *owner:* An instance of type `<sheet> <silica.htm#13118>`_.
 -  *mnemonic:* An instance of type *false-or(<character>)*. Default
    value: *#f*.
 -  *command:* An instance of *false-or(` <frames.htm#40934>`_)*.
@@ -5963,7 +5963,7 @@ is displayed. This callback is free to make changes to the contents of
 the menu, which will then appear when the update callback is complete.
 Note that you can also supply an update callback to any menu box which
 forms a part of the menu, using the relevant init-keyword to `See
-<menu-box> <gadgets.htm#39323>`_.
+<menu-box>`_.
 
 The *owner:* argument is used to specify which sheet owns the menu. If
 you fail to supply this, then the menu will be owned by the entire
@@ -5985,10 +5985,10 @@ Internally, this class maps into the menu Windows control.
 Operations
           
 
-` <frames.htm#89020>`_ `See choose-from-dialog <silica.htm#89621>`_ `See
+` <frames.htm#89020>`_ `choose-from-dialog <silica.htm#89621>`_ `See
 choose-from-menu <silica.htm#30973>`_
- `See display-menu <gadgets.htm#75087>`_ `See
-menu-owner <gadgets.htm#80164>`_
+ `display-menu`_ `See
+menu-owner`_
 
 Example
        
@@ -5996,7 +5996,7 @@ Example
 The following code creates a menu, *Hello*, that contains a single
 button, *World*. Notice how using *contain* creates a menu bar for you
 automatically. You should note that using `See
-display-menu <gadgets.htm#75087>`_ would not have this effect.
+display-menu`_ would not have this effect.
 
 \*menu\* := contain(make(<menu>,
                                 
@@ -6015,9 +6015,9 @@ label: "World"))));
 See also
         
 
-`See display-menu <gadgets.htm#75087>`_
+`display-menu`_
 
-`See make-menu-from-items <gadgets.htm#43312>`_
+`make-menu-from-items`_
 
 <menu-bar>
 ----------
@@ -6033,7 +6033,7 @@ The class of menu bar gadgets.
 Superclasses
             
 
-*`See <value-gadget> <gadgets.htm#98877>`_* `See
+*`<value-gadget>`_* `See
 <multiple-child-composite-pane> <layouts.htm#45992>`_
 
 Init-keywords
@@ -6061,7 +6061,7 @@ Example
        
 
 The following example is similar to the example for `See
-<menu> <gadgets.htm#81833>`_, except that here, the menu bar object is
+<menu>`_, except that here, the menu bar object is
 explicitly defined. In the example for *<menu>*, it is created
 automatically by using *contain* :
 
@@ -6086,7 +6086,7 @@ label: "World")
 See also
         
 
-`See <menu> <gadgets.htm#81833>`_
+`<menu>`_
 
 <menu-box>
 ----------
@@ -6102,7 +6102,7 @@ A class that groups menu buttons.
 Superclasses
             
 
-`See <collection-gadget> <gadgets.htm#86427>`_
+`<collection-gadget>`_
 
 Init-keywords
              
@@ -6117,7 +6117,7 @@ Description
            
 
 A class that groups menu buttons. Like the `See
-<button-box> <gadgets.htm#56976>`_ class, you can use this class to
+<button-box>`_ class, you can use this class to
 create groups of menu buttons that are related in some way. A visual
 separator is displayed in the menu in which a menu box is inserted,
 separating the menu buttons defined in the menu box from other menu
@@ -6157,11 +6157,11 @@ items: range
 See also
         
 
-*`See <check-menu-box> <gadgets.htm#99468>`_*
+*`<check-menu-box>`_*
 
-*`See <push-menu-box> <gadgets.htm#28367>`_*
+*`<push-menu-box>`_*
 
-*`See <radio-menu-box> <gadgets.htm#18445>`_*
+*`<radio-menu-box>`_*
 
 <menu-button>
 -------------
@@ -6177,7 +6177,7 @@ The class of all buttons that can appear in menus.
 Superclasses
             
 
-`See <button> <gadgets.htm#20680>`_
+`<button>`_
 
 Init-keywords
              
@@ -6196,7 +6196,7 @@ The class of all buttons that can appear on menus.
 You should take special care to define keyboard accelerators and
 keyboard mnemonics for any menu buttons you create. For a full
 discussion on this, see the entry for `See
-<button> <gadgets.htm#20680>`_
+<button>`_
 
 Internally, this class maps into the menu item Windows control.
 
@@ -6229,15 +6229,15 @@ owner: gadget) end));
 See also
         
 
-`See <check-menu-button> <gadgets.htm#78597>`_
+`<check-menu-button>`_
 
-`See gadget-accelerator <gadgets.htm#65771>`_
+`gadget-accelerator`_
 
-*`See <menu-box> <gadgets.htm#39323>`_*
+*`<menu-box>`_*
 
-*`See <push-menu-button> <gadgets.htm#26330>`_*
+*`<push-menu-button>`_*
 
-*`See <radio-menu-button> <gadgets.htm#35746>`_*
+*`<radio-menu-button>`_*
 
 menu-owner
 ----------
@@ -6258,12 +6258,12 @@ menu-owner *menu* => *sheet*
 Arguments
          
 
--  *menu* An instance of type `See <menu> <gadgets.htm#81833>`_.
+-  *menu* An instance of type `<menu>`_.
 
 Values
       
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet> <silica.htm#13118>`_.
 
 Description
            
@@ -6294,13 +6294,13 @@ Arguments
          
 
 -  *tree-node* An instance of type `See
-   <tree-node> <gadgets.htm#24070>`_.
+   <tree-node>`_.
 
 Values
       
 
 -  *children* An instance of type *limited(<sequence>, of: `See
-   <tree-node> <gadgets.htm#24070>`_)*.
+   <tree-node>`_)*.
 
 Description
            
@@ -6310,13 +6310,13 @@ Returns the children of *tree-node* in a tree control.
 See also
         
 
-*`See node-children-setter <gadgets.htm#40966>`_*
+*`node-children-setter`_*
 
-*`See node-parents <gadgets.htm#37785>`_*
+*`node-parents`_*
 
-*`See tree-control-children-generator <gadgets.htm#28570>`_*
+*`tree-control-children-generator`_*
 
-*`See <tree-node> <gadgets.htm#24070>`_*
+*`<tree-node>`_*
 
 node-children-setter
 --------------------
@@ -6338,15 +6338,15 @@ Arguments
          
 
 -  *children* An instance of type *limited(<sequence>, of: `See
-   <tree-node> <gadgets.htm#24070>`_)*.
+   <tree-node>`_)*.
 -  *tree-node* An instance of type `See
-   <tree-node> <gadgets.htm#24070>`_.
+   <tree-node>`_.
 
 Values
       
 
 -  *children* An instance of type *limited(<sequence>, of: `See
-   <tree-node> <gadgets.htm#24070>`_)*.
+   <tree-node>`_)*.
 
 Description
            
@@ -6356,13 +6356,13 @@ Sets the children of *tree-node* in a tree control.
 See also
         
 
-*`See node-children <gadgets.htm#97625>`_*
+*`node-children`_*
 
-*`See node-parents <gadgets.htm#37785>`_*
+*`node-parents`_*
 
-*`See tree-control-children-generator <gadgets.htm#28570>`_*
+*`tree-control-children-generator`_*
 
-*`See <tree-node> <gadgets.htm#24070>`_*
+*`<tree-node>`_*
 
 node-expanded?
 --------------
@@ -6384,7 +6384,7 @@ Arguments
          
 
 -  *tree-node* An instance of type `See
-   <tree-node> <gadgets.htm#24070>`_.
+   <tree-node>`_.
 
 Values
       
@@ -6400,7 +6400,7 @@ children are displayed in the tree control.
 See also
         
 
-*`See <tree-node> <gadgets.htm#24070>`_*
+*`<tree-node>`_*
 
 node-object
 -----------
@@ -6422,7 +6422,7 @@ Arguments
          
 
 -  *tree-node* An instance of type `See
-   <tree-node> <gadgets.htm#24070>`_.
+   <tree-node>`_.
 
 Values
       
@@ -6437,7 +6437,7 @@ Returns the object that *tree-node* represents.
 See also
         
 
-*`See <tree-node> <gadgets.htm#24070>`_*
+*`<tree-node>`_*
 
 node-parents
 ------------
@@ -6459,7 +6459,7 @@ Arguments
          
 
 -  *tree-node* An instance of type `See
-   <tree-node> <gadgets.htm#24070>`_.
+   <tree-node>`_.
 
 Values
       
@@ -6474,9 +6474,9 @@ Returns the parents of *tree-node* in a tree control.
 See also
         
 
-*`See node-children <gadgets.htm#97625>`_*
+*`node-children`_*
 
-*`See <tree-node> <gadgets.htm#24070>`_*
+*`<tree-node>`_*
 
 node-state
 ----------
@@ -6498,7 +6498,7 @@ Arguments
          
 
 -  *tree-node* An instance of type `See
-   <tree-node> <gadgets.htm#24070>`_.
+   <tree-node>`_.
 
 Values
       
@@ -6516,9 +6516,9 @@ tree-node does not exist.
 See also
         
 
-*`See node-expanded? <gadgets.htm#76505>`_*
+*`node-expanded?`_*
 
-*`See <tree-node> <gadgets.htm#24070>`_*
+*`<tree-node>`_*
 
 <option-box>
 ------------
@@ -6534,7 +6534,7 @@ The class of option boxes.
 Superclasses
             
 
-`See <collection-gadget> <gadgets.htm#86427>`_
+`<collection-gadget>`_
 
 Init-keywords
              
@@ -6571,7 +6571,7 @@ Operations
 See also
         
 
-*`See <combo-box> <gadgets.htm#34294>`_*
+*`<combo-box>`_*
 
 <page>
 ------
@@ -6587,7 +6587,7 @@ The class that represents a page in a tab control.
 Superclasses
             
 
-`See <gadget> <gadgets.htm#34543>`_
+`<gadget>`_
 
 Init-keywords
              
@@ -6615,7 +6615,7 @@ See also
 
 ` <frames.htm#93333>`_
 
-`See <tab-control-page> <gadgets.htm#47108>`_
+`<tab-control-page>`_
 
 ` <frames.htm#87607>`_
 
@@ -6633,7 +6633,7 @@ The class of text fields that do not echo typed text.
 Superclasses
             
 
-*`See <text-field> <gadgets.htm#44511>`_*
+*`<text-field>`_*
 
 Init-keywords
              
@@ -6645,7 +6645,7 @@ Description
 
 |image7| The class of text fields that do not echo typed text. This
 class of gadgets are very similar in appearance to the *`See
-<text-field> <gadgets.htm#44511>`_* gadget, except that any text typed
+<text-field>`_* gadget, except that any text typed
 by the user is hidden in some way, rather than being echoed to the
 screen in the normal way.
 
@@ -6666,7 +6666,7 @@ Example
 See also
         
 
-*`See <text-field> <gadgets.htm#44511>`_*
+*`<text-field>`_*
 
 <progress-bar>
 --------------
@@ -6682,7 +6682,7 @@ The class of progress bar windows.
 Superclasses
             
 
-*`See <value-range-gadget> <gadgets.htm#10542>`_*
+*`<value-range-gadget>`_*
 
 Init-keywords
              
@@ -6732,7 +6732,7 @@ for (i from 0 to 100) gadget-value(\*prog\*) := i end;
 See also
         
 
-*`See <slider> <gadgets.htm#93753>`_*
+*`<slider>`_*
 
 <push-box>
 ----------
@@ -6748,8 +6748,8 @@ The class of grouped push buttons.
 Superclasses
             
 
-*`See <button-box> <gadgets.htm#56976>`_ `See
-<action-gadget> <gadgets.htm#84011>`_*
+*`<button-box>`_ `See
+<action-gadget>`_*
 
 Init-keywords
              
@@ -6764,7 +6764,7 @@ The class of grouped push buttons.
 .. figure:: gadgets-28.gif
    :align: center
    :alt: 
-The `See gadget-value <gadgets.htm#64375>`_ of a push box is always the
+The `gadget-value`_ of a push box is always the
 gadget value of the last push button in the box to be pressed. You
 should use the gadget value of a push box as the way of determining
 which button has been pressed in a callback for the push box.
@@ -6788,11 +6788,11 @@ items: range(from: 0, to: 5)));
 See also
         
 
-*`See <check-box> <gadgets.htm#14754>`_*
+*`<check-box>`_*
 
-`See <group-box> <gadgets.htm#72291>`_
+`<group-box>`_
 
-*`See <radio-box> <gadgets.htm#53534>`_*
+*`<radio-box>`_*
 
 <push-button>
 -------------
@@ -6808,8 +6808,8 @@ The class of push buttons.
 Superclasses
             
 
-`See <button> <gadgets.htm#20680>`_ `See
-<action-gadget> <gadgets.htm#84011>`_
+`<button>`_ `See
+<action-gadget>`_
 
 Init-keywords
              
@@ -6828,7 +6828,7 @@ press-to-activate switch behavior.
 When the button is activated (by releasing the pointer button over it),
 its activate callback is invoked.
 
-If you supply a `See gadget-value <gadgets.htm#64375>`_ for a push
+If you supply a `gadget-value`_ for a push
 button, this can be used by any callback defined on the push button.
 This is especially useful in the case of push boxes, where this value
 can be used to test which button in the push box has been pressed.
@@ -6872,9 +6872,9 @@ owner: gadget) end));
 See also
         
 
-*`See <check-button> <gadgets.htm#24883>`_*
+*`<check-button>`_*
 
-*`See <radio-button> <gadgets.htm#71819>`_*
+*`<radio-button>`_*
 
 <push-menu-box>
 ---------------
@@ -6890,8 +6890,8 @@ The class of grouped push buttons in menus.
 Superclasses
             
 
-*`See <menu-box> <gadgets.htm#39323>`_ `See
-<action-gadget> <gadgets.htm#84011>`_*
+*`<menu-box>`_ `See
+<action-gadget>`_*
 
 Init-keywords
              
@@ -6925,11 +6925,11 @@ items: range(from: 0, to: 5)));
 See also
         
 
-*`See <check-menu-box> <gadgets.htm#99468>`_*
+*`<check-menu-box>`_*
 
-*`See <menu-box> <gadgets.htm#39323>`_*
+*`<menu-box>`_*
 
-*`See <radio-menu-box> <gadgets.htm#18445>`_*
+*`<radio-menu-box>`_*
 
 <push-menu-button>
 ------------------
@@ -6945,7 +6945,7 @@ The class of push buttons that appear on menus.
 Superclasses
             
 
-`See <push-menu-button> <gadgets.htm#26330>`_
+`<push-menu-button>`_
 
 Init-keywords
              
@@ -6973,11 +6973,11 @@ Operations
 See also
         
 
-*`See <check-menu-button> <gadgets.htm#78597>`_*
+*`<check-menu-button>`_*
 
-*`See <menu-button> <gadgets.htm#57932>`_*
+*`<menu-button>`_*
 
-*`See <radio-menu-button> <gadgets.htm#35746>`_*
+*`<radio-menu-button>`_*
 
 <radio-box>
 -----------
@@ -6993,8 +6993,8 @@ The class of radio boxes, or groups of mutually exclusive radio buttons.
 Superclasses
             
 
-*`See <button-box> <gadgets.htm#56976>`_ `See
-<action-gadget> <gadgets.htm#84011>`_*
+*`<button-box>`_ `See
+<action-gadget>`_*
 
 Init-keywords
              
@@ -7050,11 +7050,11 @@ item) end));
 See also
         
 
-*`See <check-box> <gadgets.htm#14754>`_*
+*`<check-box>`_*
 
-`See <group-box> <gadgets.htm#72291>`_
+`<group-box>`_
 
-*`See <push-box> <gadgets.htm#25725>`_*
+*`<push-box>`_*
 
 <radio-button>
 --------------
@@ -7070,8 +7070,8 @@ The class of radio buttons.
 Superclasses
             
 
-`See <button> <gadgets.htm#20680>`_ *`See
-<action-gadget> <gadgets.htm#84011>`_*
+`<button>`_ *`See
+<action-gadget>`_*
 
 Init-keywords
              
@@ -7101,13 +7101,13 @@ contain(make(<radio-button>, label: "Hello"));
 See also
         
 
-`See <button> <gadgets.htm#20680>`_
+`<button>`_
 
-*`See <check-button> <gadgets.htm#24883>`_*
+*`<check-button>`_*
 
-*`See <menu-button> <gadgets.htm#57932>`_*
+*`<menu-button>`_*
 
-*`See <radio-box> <gadgets.htm#53534>`_*
+*`<radio-box>`_*
 
 <radio-menu-box>
 ----------------
@@ -7123,8 +7123,8 @@ The class of grouped radio buttons that can appear in menus.
 Superclasses
             
 
-*`See <menu-box> <gadgets.htm#39323>`_ `See
-<action-gadget> <gadgets.htm#84011>`_*
+*`<menu-box>`_ `See
+<action-gadget>`_*
 
 Init-keywords
              
@@ -7200,11 +7200,11 @@ items: #(1, 2, 3)))
 See also
         
 
-*`See <menu-box> <gadgets.htm#39323>`_*
+*`<menu-box>`_*
 
-*`See <push-menu-box> <gadgets.htm#28367>`_*
+*`<push-menu-box>`_*
 
-*`See <radio-menu-button> <gadgets.htm#35746>`_*
+*`<radio-menu-button>`_*
 
 <radio-menu-button>
 -------------------
@@ -7220,7 +7220,7 @@ The class of radio buttons that can appear in menus.
 Superclasses
             
 
-`See <menu-button> <gadgets.htm#57932>`_
+`<menu-button>`_
 
 Init-keywords
              
@@ -7250,11 +7250,11 @@ contain(make(<radio-menu-button>, label: "Hello"));
 See also
         
 
-*`See <menu-button> <gadgets.htm#57932>`_*
+*`<menu-button>`_*
 
-*`See <push-menu-button> <gadgets.htm#26330>`_*
+*`<push-menu-button>`_*
 
-*`See <radio-menu-box> <gadgets.htm#18445>`_*
+*`<radio-menu-box>`_*
 
 remove-column
 -------------
@@ -7276,7 +7276,7 @@ Arguments
          
 
 -  *table* An instance of type `See
-   <table-control> <gadgets.htm#60899>`_.
+   <table-control>`_.
 -  *index* An instance of type *<integer>*.
 
 Values
@@ -7292,7 +7292,7 @@ Removes a column from *table*.
 See also
         
 
-*`See add-column <gadgets.htm#19551>`_*
+*`add-column`_*
 
 remove-item
 -----------
@@ -7314,9 +7314,9 @@ Arguments
          
 
 -  *list-or-table* An instance of *type-union(`See
-   <list-control> <gadgets.htm#70984>`_, `See
-   <table-control> <gadgets.htm#60899>`_)*.
--  *item* An instance of type *`See <list-item> <gadgets.htm#64269>`_*.
+   <list-control>`_, `See
+   <table-control>`_)*.
+-  *item* An instance of type *`<list-item>`_*.
 
 Values
       
@@ -7331,19 +7331,19 @@ Removes *item* from *list-or-table*.
 See also
         
 
-*`See add-item <gadgets.htm#54092>`_*
+*`add-item`_*
 
-*`See find-item <gadgets.htm#76255>`_*
+*`find-item`_*
 
-`See <list-control> <gadgets.htm#70984>`_
+`<list-control>`_
 
-`See <list-item> <gadgets.htm#64269>`_
+`<list-item>`_
 
-*`See make-item <gadgets.htm#94667>`_*
+*`make-item`_*
 
-*`See <table-control> <gadgets.htm#60899>`_*
+*`<table-control>`_*
 
-`See <table-item> <gadgets.htm#14438>`_
+`<table-item>`_
 
 remove-node
 -----------
@@ -7364,8 +7364,8 @@ remove-node *tree node* => ()
 Arguments
          
 
--  *tree* An instance of `See <tree-control> <gadgets.htm#65053>`_.
--  *node* An instance of type *`See <tree-node> <gadgets.htm#24070>`_*.
+-  *tree* An instance of `<tree-control>`_.
+-  *node* An instance of type *`<tree-node>`_*.
 
 Values
       
@@ -7380,13 +7380,13 @@ Removes *node* from *tree*.
 See also
         
 
-*`See add-node <gadgets.htm#31316>`_*
+*`add-node`_*
 
-*`See find-node <gadgets.htm#17539>`_*
+*`find-node`_*
 
-*`See make-node <gadgets.htm#68945>`_*
+*`make-node`_*
 
-`See <tree-control> <gadgets.htm#65053>`_
+`<tree-control>`_
 
 <scroll-bar>
 ------------
@@ -7402,7 +7402,7 @@ The class of scroll bars.
 Superclasses
             
 
-*`See <value-range-gadget> <gadgets.htm#10542>`_*
+*`<value-range-gadget>`_*
 
 Init-keywords
              
@@ -7459,8 +7459,8 @@ Internally, this class maps into the Windows scroll bar control.
 Operations
           
 
--  `See gadget-slug-size <gadgets.htm#30961>`_ `See
-   gadget-slug-size-setter <gadgets.htm#68297>`_
+-  `gadget-slug-size`_ `See
+   gadget-slug-size-setter`_
 
 Example
        
@@ -7488,7 +7488,7 @@ slug-size: 20));
 See also
         
 
-*`See <slider> <gadgets.htm#93753>`_*
+*`<slider>`_*
 
 scrolling
 ---------
@@ -7532,7 +7532,7 @@ The *pane* is an expression whose return value is the sheet to which the
 scroll bars should be attached.
 
 The options can be used to specify the properties of the scroll bars. As
-well as all the properties of `See <gadget> <gadgets.htm#34543>`_, these
+well as all the properties of `<gadget>`_, these
 include a *scroll-bars:* init-keyword, which may take one of the
 following values: *#f, #"none", #"horizontal", #"vertical", #"both",
 #"dynamic"*. If no options are specified, then both vertical and
@@ -7559,11 +7559,11 @@ end
 See also
         
 
-`See <scroll-bar> <gadgets.htm#25622>`_
+`<scroll-bar>`_
 
-*`See scroll-position <gadgets.htm#50508>`_*
+*`scroll-position`_*
 
-*`See set-scroll-position <gadgets.htm#55381>`_*
+*`set-scroll-position`_*
 
 scroll-position
 ---------------
@@ -7584,7 +7584,7 @@ scroll-position *sheet* => *x y*
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet> <silica.htm#13118>`_.
 
 Values
       
@@ -7597,7 +7597,7 @@ Description
 
 Returns the position of the scroll bar slug in *sheet*. Note that this
 generic function only returns the position of scroll bar slugs that have
-been created using the *`See scrolling <gadgets.htm#42120>`_* macro. It
+been created using the *`scrolling`_* macro. It
 does not work on gadgets with scroll bars defined explicitly.
 
 *Note:* The Microsoft Windows Interface Guidelines refer to the slug as
@@ -7611,9 +7611,9 @@ Example
 See also
         
 
-*`See scrolling <gadgets.htm#42120>`_*
+*`scrolling`_*
 
-*`See set-scroll-position <gadgets.htm#55381>`_*
+*`set-scroll-position`_*
 
 <separator>
 -----------
@@ -7629,7 +7629,7 @@ The class of gadgets used as a visual separator.
 Superclasses
             
 
-`See <gadget> <gadgets.htm#34543>`_
+`<gadget>`_
 
 Init-keywords
              
@@ -7681,7 +7681,7 @@ end);
 See also
         
 
-*`See <spacing> <gadgets.htm#12504>`_*
+*`<spacing>`_*
 
 set-scroll-position
 -------------------
@@ -7702,7 +7702,7 @@ set-scroll-position *sheet x y* => ()
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet> <silica.htm#13118>`_.
 -  *x* An instance of type *<integer>*.
 -  *y* An instance of type *<integer>*.
 
@@ -7717,7 +7717,7 @@ Description
 Scrolls the window on *sheet* by setting the position of the scroll bar
 slug. Note that this generic function only sets the position of scroll
 bar slugs that have been created using the *`See
-scrolling <gadgets.htm#42120>`_* macro. It does not work on gadgets with
+scrolling`_* macro. It does not work on gadgets with
 scroll bars defined explicitly.
 
 *Note:* The Microsoft Windows Interface Guidelines refer to the slug as
@@ -7728,9 +7728,9 @@ those guidelines as a reference.
 See also
         
 
-*`See scroll-position <gadgets.htm#50508>`_*
+*`scroll-position`_*
 
-*`See scrolling <gadgets.htm#42120>`_*
+*`scrolling`_*
 
 sheet-viewport
 --------------
@@ -7751,13 +7751,13 @@ sheet-viewport *sheet* => *viewport*
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet> <silica.htm#13118>`_.
 
 Values
       
 
 -  *viewport* An instance of type *false-or(* `See
-   <viewport> <gadgets.htm#65377>`_*)*.
+   <viewport>`_*)*.
 
 Description
            
@@ -7767,9 +7767,9 @@ Returns the viewport that is clipping *sheet*.
 See also
         
 
-*`See sheet-viewport-region <gadgets.htm#63140>`_*
+*`sheet-viewport-region`_*
 
-*`See <viewport> <gadgets.htm#65377>`_*
+*`<viewport>`_*
 
 sheet-viewport-region
 ---------------------
@@ -7791,7 +7791,7 @@ sheet-viewport-region *sheet* => *region*
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet> <silica.htm#13118>`_.
 
 Values
       
@@ -7807,9 +7807,9 @@ has no viewport, it returns *sheet* ’s own region.
 See also
         
 
-*`See sheet-viewport <gadgets.htm#94297>`_*
+*`sheet-viewport`_*
 
-*`See <viewport> <gadgets.htm#65377>`_*
+*`<viewport>`_*
 
 <slider>
 --------
@@ -7825,7 +7825,7 @@ The class of slider gadgets.
 Superclasses
             
 
-*`See <value-range-gadget> <gadgets.htm#10542>`_*
+*`<value-range-gadget>`_*
 
 Init-keywords
              
@@ -7899,9 +7899,9 @@ range(from: -20, to: 20, by: 5)));
 See also
         
 
-`See <scroll-bar> <gadgets.htm#25622>`_
+`<scroll-bar>`_
 
-`See <spin-box> <gadgets.htm#11196>`_
+`<spin-box>`_
 
 <spacing>
 ---------
@@ -7917,7 +7917,7 @@ The class of gadgets that can be used to provide spacing around a sheet.
 Superclasses
             
 
-`See <gadget> <gadgets.htm#34543>`_
+`<gadget>`_
 
 Init-keywords
              
@@ -7938,7 +7938,7 @@ The *thickness:* init-keyword specifies the thickness of the spacing
 required.
 
 It is usually clearer to use the *`See
-with-spacing <gadgets.htm#78138>`_* macro, rather than to create an
+with-spacing`_* macro, rather than to create an
 instance of *<spacing>* explicitly.
 
 Operations
@@ -7971,11 +7971,11 @@ end);
 See also
         
 
-*`See <null-pane> <layouts.htm#65339>`_*
+*`<null-pane> <layouts.htm#65339>`_*
 
-*`See <separator> <gadgets.htm#26082>`_*
+*`<separator>`_*
 
-*`See with-spacing <gadgets.htm#78138>`_*
+*`with-spacing`_*
 
 <spin-box>
 ----------
@@ -7991,7 +7991,7 @@ The class of spin box gadgets.
 Superclasses
             
 
-`See <collection-gadget> <gadgets.htm#86427>`_
+`<collection-gadget>`_
 
 Init-keywords
              
@@ -8038,7 +8038,7 @@ items: range(from: 1, to: 10)));
 See also
         
 
-`See <slider> <gadgets.htm#93753>`_
+`<slider>`_
 
 <splitter>
 ----------
@@ -8152,7 +8152,7 @@ The class of status bars.
 Superclasses
             
 
-*`See <value-range-gadget> <gadgets.htm#10542>`_*
+*`<value-range-gadget>`_*
 
 Init-keywords
              
@@ -8160,11 +8160,11 @@ Init-keywords
 -  *label:* An instance of type *type-union(<string>,* `See
    <image> <dcs.htm#51234>`_*)*.
 -  *label-pane:* An instance of *false-or(`See
-   <gadget> <gadgets.htm#34543>`_)*. Default value: *#f*.
+   <gadget>`_)*. Default value: *#f*.
 -  *progress-bar?:* An instance of type *<boolean>*. Default value:
    *#f*.
 -  *progress-bar:* An instance of *false-or(`See
-   <progress-bar> <gadgets.htm#14398>`_)*. Default value: *#f*.
+   <progress-bar>`_)*. Default value: *#f*.
 -  *value:* An instance of type *<object>*.
 -  *value-range:* An instance of type *<range>*.
 
@@ -8234,7 +8234,7 @@ user with miscellaneous feedback about the application state, such as
 online documentation for menu commands, or the current position of the
 cursor. Generally speaking, if you need to provide pane in which to
 display information, you should define instances of `See
-<label> <gadgets.htm#68802>`_ for each piece of information you want to
+<label>`_ for each piece of information you want to
 use. However, if you wish you can add any type of gadget to your status
 bar in order to create a more interactive status bar. For instance, many
 word processors include gadgets in the status bar that let you select
@@ -8254,8 +8254,8 @@ Operations
           
 
 ` <frames.htm#32720>`_ ` <frames.htm#56600>`_ `See
-status-bar-label-pane <gadgets.htm#73200>`_ `See
-status-bar-progress-bar <gadgets.htm#21779>`_
+status-bar-label-pane`_ `See
+status-bar-progress-bar`_
 
 Example
        
@@ -8280,11 +8280,11 @@ See also
 
 *` <frames.htm#36830>`_*
 
-*`See gadget-documentation <gadgets.htm#18024>`_*
+*`gadget-documentation`_*
 
-*`See status-bar-label-pane <gadgets.htm#73200>`_*
+*`status-bar-label-pane`_*
 
-*`See status-bar-progress-bar <gadgets.htm#21779>`_*
+*`status-bar-progress-bar`_*
 
 status-bar-label-pane
 ---------------------
@@ -8306,13 +8306,13 @@ Arguments
          
 
 -  *status-bar* An instance of type *`See
-   <status-bar> <gadgets.htm#50900>`_*.
+   <status-bar>`_*.
 
 Values
       
 
 -  *label* An instance of type *false-or(* `See
-   <label> <gadgets.htm#68802>`_*)*.
+   <label>`_*)*.
 
 Description
            
@@ -8343,9 +8343,9 @@ status-bar-label-pane(\*status\*);
 See also
         
 
-*`See <status-bar> <gadgets.htm#50900>`_*
+*`<status-bar>`_*
 
-*`See status-bar-progress-bar <gadgets.htm#21779>`_*
+*`status-bar-progress-bar`_*
 
 status-bar-progress-bar
 -----------------------
@@ -8367,13 +8367,13 @@ Arguments
          
 
 -  *status-bar* An instance of type *`See
-   <status-bar> <gadgets.htm#50900>`_*.
+   <status-bar>`_*.
 
 Values
       
 
 -  *progress-bar* An instance of type *false-or(`See
-   <progress-bar> <gadgets.htm#14398>`_)*.
+   <progress-bar>`_)*.
 
 Description
            
@@ -8383,7 +8383,7 @@ Returns the progress bar for *status-bar*, if there is one.
 See also
         
 
-*`See <progress-bar> <gadgets.htm#14398>`_*
+*`<progress-bar>`_*
 
 <tab-control>
 -------------
@@ -8399,13 +8399,13 @@ The class of tab controls.
 Superclasses
             
 
-*`See <value-gadget> <gadgets.htm#98877>`_*
+*`<value-gadget>`_*
 
 Init-keywords
              
 
 -  *pages:* An instance of type *limited(<sequence>, of: `See
-   <page> <gadgets.htm#93333>`_)*.
+   <page>`_)*.
 -  *current-page:* An instance of type *false-or(`See
    <sheet> <silica.htm#13118>`_)*.
 
@@ -8427,7 +8427,7 @@ can be displayed by clicking on the appropriate tab.
 
 The *pages:* init-keyword is used to define the pages that the tab
 control contains. Each page in the tab control is an instance of the
-class *`See <page> <gadgets.htm#93333>`_*.
+class *`<page>`_*.
 
 The *current-page:* init-keyword specifies which tab is visible when the
 tab control is first displayed.
@@ -8437,23 +8437,23 @@ callback. This type of callback is invoked whenever a key on the
 keyboard is pressed while the gadget has focus. In a tab control, a
 key-press callback might be used as a quick way to display each page in
 the tab control. See `See
-gadget-key-press-callback <gadgets.htm#76610>`_, for a fuller
+gadget-key-press-callback`_, for a fuller
 description of key-press callbacks.
 
-The `See gadget-id <gadgets.htm#23536>`_ of a tab control is
+The `gadget-id`_ of a tab control is
 particularly useful, because it is returned by *`See
-gadget-value <gadgets.htm#64375>`_*.
+gadget-value`_*.
 
 Internally, this class maps into the Windows tab control.
 
 Operations
           
 
-`See tab-control-current-page <gadgets.htm#92424>`_ `See
-tab-control-current-page-setter <gadgets.htm#14907>`_ `See
-tab-control-labels <gadgets.htm#11528>`_ `See
-tab-control-pages <gadgets.htm#49853>`_
- `See tab-control-pages-setter <gadgets.htm#59799>`_
+`tab-control-current-page`_ `See
+tab-control-current-page-setter`_ `See
+tab-control-labels`_ `See
+tab-control-pages`_
+ `tab-control-pages-setter`_
 
 Example
        
@@ -8490,7 +8490,7 @@ items:
 See also
         
 
-`See <page> <gadgets.htm#93333>`_
+`<page>`_
 
 tab-control-current-page
 ------------------------
@@ -8512,12 +8512,12 @@ Arguments
          
 
 -  *tab-control* An instance of type `See
-   <tab-control> <gadgets.htm#21648>`_.
+   <tab-control>`_.
 
 Values
       
 
--  *visible-page* An instance of type `See <page> <gadgets.htm#93333>`_.
+-  *visible-page* An instance of type `<page>`_.
 
 Description
            
@@ -8568,13 +8568,13 @@ tab-control-current-page(\*tab\*);
 See also
         
 
-`See <page> <gadgets.htm#93333>`_
+`<page>`_
 
-*`See <tab-control> <gadgets.htm#21648>`_*
+*`<tab-control>`_*
 
-*`See tab-control-current-page-setter <gadgets.htm#14907>`_*
+*`tab-control-current-page-setter`_*
 
-*`See tab-control-pages <gadgets.htm#49853>`_*
+*`tab-control-pages`_*
 
 tab-control-current-page-setter
 -------------------------------
@@ -8596,14 +8596,14 @@ tab-control-current-page-setter *visible-page tab-control*
 Arguments
          
 
--  *visible-page* An instance of type `See <page> <gadgets.htm#93333>`_.
+-  *visible-page* An instance of type `<page>`_.
 -  *tab-control* An instance of type `See
-   <tab-control> <gadgets.htm#21648>`_.
+   <tab-control>`_.
 
 Values
       
 
--  *visible-page* An instance of type `See <page> <gadgets.htm#93333>`_.
+-  *visible-page* An instance of type `<page>`_.
 
 Description
            
@@ -8660,11 +8660,11 @@ tab-control-current-page(\*tab\*) := \*page\*;
 See also
         
 
-`See <page> <gadgets.htm#93333>`_
+`<page>`_
 
-*`See <tab-control> <gadgets.htm#21648>`_*
+*`<tab-control>`_*
 
-*`See tab-control-current-page <gadgets.htm#92424>`_*
+*`tab-control-current-page`_*
 
 tab-control-labels
 ------------------
@@ -8686,19 +8686,19 @@ Arguments
          
 
 -  *tab-control* An instance of type `See
-   <tab-control> <gadgets.htm#21648>`_.
+   <tab-control>`_.
 
 Values
       
 
 -  *labels* An instance of type *limited(<sequence>, of: `See
-   <label> <gadgets.htm#68802>`_*.
+   <label>`_*.
 
 Description
            
 
 Returns the tab labels of *tab-control*, as a sequence. Each element in
-*labels* is an instance of `See <label> <gadgets.htm#68802>`_.
+*labels* is an instance of `<label>`_.
 
 Example
        
@@ -8743,9 +8743,9 @@ tab-control-labels(\*tab\*);
 See also
         
 
-*`See <tab-control> <gadgets.htm#21648>`_*
+*`<tab-control>`_*
 
-*`See tab-control-pages <gadgets.htm#49853>`_*
+*`tab-control-pages`_*
 
 <tab-control-page>
 ------------------
@@ -8761,7 +8761,7 @@ The class that represents a page in a tab control.
 Superclasses
             
 
-`See <page> <gadgets.htm#93333>`_
+`<page>`_
 
 Init-keywords
              
@@ -8791,9 +8791,9 @@ Operations
 See also
         
 
-`See <page> <gadgets.htm#93333>`_
+`<page>`_
 
-`See <tab-control> <gadgets.htm#21648>`_
+`<tab-control>`_
 
 ` <frames.htm#93333>`_
 
@@ -8819,13 +8819,13 @@ Arguments
          
 
 -  *tab-control* An instance of type `See
-   <tab-control> <gadgets.htm#21648>`_.
+   <tab-control>`_.
 
 Values
       
 
 -  *pages* An instance of type *limited(<sequence>, of: `See
-   <page> <gadgets.htm#93333>`_)*. Default value: *#[]*.
+   <page>`_)*. Default value: *#[]*.
 
 Description
            
@@ -8875,15 +8875,15 @@ tab-control-pages(\*tab\*);
 See also
         
 
-`See <page> <gadgets.htm#93333>`_
+`<page>`_
 
-*`See <tab-control> <gadgets.htm#21648>`_*
+*`<tab-control>`_*
 
-*`See tab-control-current-page <gadgets.htm#92424>`_*
+*`tab-control-current-page`_*
 
-*`See tab-control-labels <gadgets.htm#11528>`_*
+*`tab-control-labels`_*
 
-*`See tab-control-pages-setter <gadgets.htm#59799>`_*
+*`tab-control-pages-setter`_*
 
 tab-control-pages-setter
 ------------------------
@@ -8909,16 +8909,16 @@ Arguments
          
 
 -  *pages* An instance of type *limited(<sequence>, of: `See
-   <page> <gadgets.htm#93333>`_)*.
+   <page>`_)*.
 -  *tab-control* An instance of `See
-   <tab-control> <gadgets.htm#21648>`_.
--  *page* An instance of *`See <page> <gadgets.htm#93333>`_*.
+   <tab-control>`_.
+-  *page* An instance of *`<page>`_*.
 
 Values
       
 
 -  *pages* An instance of type *limited(<sequence>, of: `See
-   <page> <gadgets.htm#93333>`_)*.
+   <page>`_)*.
 
 Description
            
@@ -8940,11 +8940,11 @@ tab-control-pages(my-tab-control, page: my-page)
 See also
         
 
-`See <page> <gadgets.htm#93333>`_
+`<page>`_
 
-*`See <tab-control> <gadgets.htm#21648>`_*
+*`<tab-control>`_*
 
-*`See tab-control-pages <gadgets.htm#49853>`_*
+*`tab-control-pages`_*
 
 <table-column>
 --------------
@@ -9001,7 +9001,7 @@ Example
 See also
         
 
-`See <table-control> <gadgets.htm#60899>`_
+`<table-control>`_
 
 <table-control>
 ---------------
@@ -9017,8 +9017,8 @@ The class of table controls.
 Superclasses
             
 
-`See <collection-gadget> <gadgets.htm#86427>`_ `See
-<action-gadget> <gadgets.htm#84011>`_
+`<collection-gadget>`_ `See
+<action-gadget>`_
 
 Init-keywords
              
@@ -9027,7 +9027,7 @@ Init-keywords
 -  *generators:* An instance of type *limited(<sequence>, of:
    <function>)*.
 -  *view:* An instance of type `See
-   <table-control-view> <gadgets.htm#30182>`_. Default value: *#"table"*
+   <table-control-view>`_. Default value: *#"table"*
    .
 -  *borders:* An instance of type *one-of(#f, #"none", #"flat",
    #"sunken", #"raised", #"ridge", #"groove", #"input", #"output")*.
@@ -9060,7 +9060,7 @@ The class of table controls.
    :alt: 
 The *view:* init-keyword can be used to specify how the items in the
 table control are displayed. See `See
-<table-control-view> <gadgets.htm#30182>`_, for more details.
+<table-control-view>`_, for more details.
 
 The *borders:* init-keyword lets you specify a border around the table
 control. If specified, a border of the appropriate type is drawn around
@@ -9079,7 +9079,7 @@ The *key-press-callback:* init-keyword lets you specify a key-press
 callback. This type of callback is invoked whenever a key on the
 keyboard is pressed while the gadget has focus. In a table control, a
 key-press callback might be used as a quick way to select an item in the
-control. See `See gadget-key-press-callback <gadgets.htm#76610>`_, for a
+control. See `gadget-key-press-callback`_, for a
 fuller description of key-press callbacks.
 
 The *headings:* and *generators:* init-keywords can be used to specify
@@ -9094,8 +9094,8 @@ so on. Similarly, the first function in the sequence of generators is
 invoked on each item in the control, thereby generating the contents of
 the first column, the second is used to generate the contents of the
 second column by invoking it on each item in the control, and so on.
-This is illustrated in `See Defining column headings and contents in
-table controls <gadgets.htm#68215>`_.
+This is illustrated in `Defining column headings and contents in
+table controls`_.
 
 Defining column headings and contents in table controls
                                                        
@@ -9109,7 +9109,7 @@ Defining column headings and contents in table controls
    :alt: 
 If you do not specify both of these init-keywords, you must supply
 columns for the table control, using the `See
-<table-column> <gadgets.htm#95311>`_ class.
+<table-column>`_ class.
 
 The *widths:* init-keyword lets you specify the width of each column in
 the table control. It takes a sequence of integers, each of which
@@ -9122,17 +9122,17 @@ LVS-REPORT style.
 Operations
           
 
-`See add-column <gadgets.htm#19551>`_ `See
-remove-column <gadgets.htm#38008>`_ `See
-table-control-view <gadgets.htm#85938>`_ `See
-table-control-view-setter <gadgets.htm#24581>`_
+`add-column`_ `See
+remove-column`_ `See
+table-control-view`_ `See
+table-control-view-setter`_
 
 See also
         
 
-`See <table-column> <gadgets.htm#95311>`_
+`<table-column>`_
 
-`See <table-control-view> <gadgets.htm#30182>`_
+`<table-control-view>`_
 
 <table-control-view>
 --------------------
@@ -9164,7 +9164,7 @@ Description
            
 
 This type represents the acceptable values for the view arguments to
-operators of `See <table-control> <gadgets.htm#60899>`_.
+operators of `<table-control>`_.
 
 There are four possible values, corresponding to the view options that
 will be familiar to most users of GUI-based operating systems:
@@ -9188,11 +9188,11 @@ will be familiar to most users of GUI-based operating systems:
 See also
         
 
-`See <list-control-view> <gadgets.htm#32228>`_
+`<list-control-view>`_
 
-`See <table-control> <gadgets.htm#60899>`_
+`<table-control>`_
 
-`See table-control-view <gadgets.htm#85938>`_
+`table-control-view`_
 
 table-control-view
 ------------------
@@ -9214,27 +9214,27 @@ Arguments
          
 
 -  *table-control* An instance of type `See
-   <table-control> <gadgets.htm#60899>`_.
+   <table-control>`_.
 
 Values
       
 
 -  *view* An instance of type `See
-   <table-control-view> <gadgets.htm#30182>`_.
+   <table-control-view>`_.
 
 Description
            
 
 Returns the current view of *table-control*. The available views are
 described in the entry for `See
-<table-control-view> <gadgets.htm#30182>`_.
+<table-control-view>`_.
 
 See also
         
 
-`See <table-control-view> <gadgets.htm#30182>`_
+`<table-control-view>`_
 
-`See table-control-view-setter <gadgets.htm#24581>`_
+`table-control-view-setter`_
 
 table-control-view-setter
 -------------------------
@@ -9256,15 +9256,15 @@ Arguments
          
 
 -  *view* An instance of type `See
-   <table-control-view> <gadgets.htm#30182>`_.
+   <table-control-view>`_.
 -  *table-control* An instance of type `See
-   <table-control> <gadgets.htm#60899>`_.
+   <table-control>`_.
 
 Values
       
 
 -  *view* An instance of type `See
-   <table-control-view> <gadgets.htm#30182>`_.
+   <table-control-view>`_.
 
 Description
            
@@ -9277,9 +9277,9 @@ table control are displayed.
 See also
         
 
-`See <table-control-view> <gadgets.htm#30182>`_
+`<table-control-view>`_
 
-`See table-control-view <gadgets.htm#85938>`_
+`table-control-view`_
 
 <table-item>
 ------------
@@ -9318,15 +9318,15 @@ Operations
 See also
         
 
-`See add-item <gadgets.htm#54092>`_
+`add-item`_
 
-`See find-item <gadgets.htm#76255>`_
+`find-item`_
 
-`See make-item <gadgets.htm#94667>`_
+`make-item`_
 
-`See remove-item <gadgets.htm#57619>`_
+`remove-item`_
 
-`See <table-control> <gadgets.htm#60899>`_
+`<table-control>`_
 
 <text-editor>
 -------------
@@ -9342,7 +9342,7 @@ The class of multiple line text editors.
 Superclasses
             
 
-*`See <text-field> <gadgets.htm#44511>`_*
+*`<text-field>`_*
 
 Init-keywords
              
@@ -9397,7 +9397,7 @@ make(<text-editor>, lines: 10, fixed-height?: #t);
 See also
         
 
-*`See <text-field> <gadgets.htm#44511>`_*
+*`<text-field>`_*
 
 <text-field>
 ------------
@@ -9413,7 +9413,7 @@ The class of single line text fields.
 Superclasses
             
 
-*`See <text-gadget> <gadgets.htm#82407>`_*
+*`<text-gadget>`_*
 
 Init-keywords
              
@@ -9486,7 +9486,7 @@ owner: gadget) end));
 See also
         
 
-*`See <password-field> <gadgets.htm#97600>`_*
+*`<password-field>`_*
 
 <text-gadget>
 -------------
@@ -9502,8 +9502,8 @@ The class of all text gadgets.
 Superclasses
             
 
-*`See <value-gadget> <gadgets.htm#98877>`_ `See
-<action-gadget> <gadgets.htm#84011>`_*
+*`<value-gadget>`_ `See
+<action-gadget>`_*
 
 Init-keywords
              
@@ -9531,21 +9531,21 @@ the text gadget, which by default is *<string>*. Other supported types
 are *<integer>* and *<symbol>*. The string entered in the text gadget
 is parsed, and converted to the appropriate type automatically.
 
-Text gadgets have a method on `See gadget-value <gadgets.htm#64375>`_
-that converts the `See gadget-text <gadgets.htm#25679>`_ based on the
-`See gadget-value-type <gadgets.htm#95659>`_, for example converting the
+Text gadgets have a method on `gadget-value`_
+that converts the `gadget-text`_ based on the
+`gadget-value-type`_, for example converting the
 string to an integer for *value-type: <integer>*.
 
-The `See gadget-text <gadgets.htm#25679>`_ generic function always
+The `gadget-text`_ generic function always
 returns the exact text typed into a text gadget. However, `See
-gadget-value <gadgets.htm#64375>`_ always returns a “parsed” value of
+gadget-value`_ always returns a “parsed” value of
 the appropriate type, depending on the value of `See
-gadget-value-type <gadgets.htm#95659>`_. If the string contains any
+gadget-value-type`_. If the string contains any
 characters that are not appropriate to the `See
-gadget-value-type <gadgets.htm#95659>`_ (for example, if the string
+gadget-value-type`_ (for example, if the string
 contains any non-integers, and the `See
-gadget-value-type <gadgets.htm#95659>`_ is *<integer>*), then `See
-gadget-value <gadgets.htm#64375>`_ returns *#f*.
+gadget-value-type`_ is *<integer>*), then `See
+gadget-value`_ returns *#f*.
 
 Setting the gadget value “prints” the value and inserts the appropriate
 text into the text field.
@@ -9566,7 +9566,7 @@ for the platform that you are writing for, and is not configurable.
 Operations
           
 
--  `See gadget-text <gadgets.htm#25679>`_
+-  `gadget-text`_
 
 Example
        
@@ -9580,15 +9580,15 @@ text: "1234"));
 See also
         
 
-`See <combo-box> <gadgets.htm#34294>`_
+`<combo-box>`_
 
-`See gadget-value-type <gadgets.htm#95659>`_
+`gadget-value-type`_
 
-`See <password-field> <gadgets.htm#97600>`_
+`<password-field>`_
 
-`See <text-editor> <gadgets.htm#38974>`_
+`<text-editor>`_
 
-`See <text-field> <gadgets.htm#44511>`_
+`<text-field>`_
 
 <tool-bar>
 ----------
@@ -9604,7 +9604,7 @@ The class of tool bars.
 Superclasses
             
 
-*`See <gadget> <gadgets.htm#34543>`_ `See
+*`<gadget>`_ `See
 <multiple-child-composite-pane> <layouts.htm#45992>`_*
 
 Init-keywords
@@ -9651,9 +9651,9 @@ Operations
 See also
         
 
-*`See <button-box> <gadgets.htm#56976>`_*
+*`<button-box>`_*
 
-*`See <status-bar> <gadgets.htm#50900>`_*
+*`<status-bar>`_*
 
 <tree-control>
 --------------
@@ -9669,7 +9669,7 @@ The class of tree controls.
 Superclasses
             
 
-`See <collection-gadget> <gadgets.htm#86427>`_
+`<collection-gadget>`_
 
 Init-keywords
              
@@ -9757,7 +9757,7 @@ The *key-press-callback:* init-keyword lets you specify a key-press
 callback. This type of callback is invoked whenever a key on the
 keyboard is pressed while the gadget has focus. For tree controls, a
 typical key-press callback might select an item in the control. See `See
-gadget-key-press-callback <gadgets.htm#76610>`_, for a fuller
+gadget-key-press-callback`_, for a fuller
 description of key-press callbacks.
 
 The *roots:* init-keyword is used to specify any roots for the tree
@@ -9768,14 +9768,14 @@ Internally, this class maps into the Windows tree view control.
 Operations
           
 
-`See contract-node <gadgets.htm#70428>`_ `See
-expand-node <gadgets.htm#65082>`_ `See
-tree-control-children-predicate <gadgets.htm#27636>`_ `See
-tree-control-children-predicate-setter <gadgets.htm#97188>`_ `See
-tree-control-children-generator <gadgets.htm#28570>`_ `See
-tree-control-children-generator-setter <gadgets.htm#71814>`_ `See
-tree-control-roots <gadgets.htm#55562>`_ `See
-tree-control-roots-setter <gadgets.htm#34400>`_
+`contract-node`_ `See
+expand-node`_ `See
+tree-control-children-predicate`_ `See
+tree-control-children-predicate-setter`_ `See
+tree-control-children-generator`_ `See
+tree-control-children-generator-setter`_ `See
+tree-control-roots`_ `See
+tree-control-roots-setter`_
 
 Example
        
@@ -9803,13 +9803,13 @@ end);
 See also
         
 
-*`See add-node <gadgets.htm#31316>`_*
+*`add-node`_*
 
-*`See find-node <gadgets.htm#17539>`_*
+*`find-node`_*
 
-`See make-node <gadgets.htm#68945>`_
+`make-node`_
 
-*`See remove-node <gadgets.htm#65790>`_*
+*`remove-node`_*
 
 tree-control-children-predicate
 -------------------------------
@@ -9832,7 +9832,7 @@ Arguments
          
 
 -  *tree-control* An instance of type `See
-   <tree-control> <gadgets.htm#65053>`_.
+   <tree-control>`_.
 
 Values
       
@@ -9847,11 +9847,11 @@ Returns the children predicate function of *tree-control*.
 See also
         
 
-*`See <tree-control> <gadgets.htm#65053>`_*
+*`<tree-control>`_*
 
-*`See tree-control-children-predicate-setter <gadgets.htm#97188>`_*
+*`tree-control-children-predicate-setter`_*
 
-*`See tree-control-children-generator <gadgets.htm#28570>`_*
+*`tree-control-children-generator`_*
 
 tree-control-children-predicate-setter
 --------------------------------------
@@ -9876,7 +9876,7 @@ Arguments
 
 -  *children-predicate* An instance of type *<function>*.
 -  *tree-control* An instance of type `See
-   <tree-control> <gadgets.htm#65053>`_.
+   <tree-control>`_.
 
 Values
       
@@ -9891,11 +9891,11 @@ Sets the children predicate function of *tree-control*.
 See also
         
 
-*`See <tree-control> <gadgets.htm#65053>`_*
+*`<tree-control>`_*
 
-*`See tree-control-children-predicate <gadgets.htm#27636>`_*
+*`tree-control-children-predicate`_*
 
-*`See tree-control-children-generator-setter <gadgets.htm#71814>`_*
+*`tree-control-children-generator-setter`_*
 
 tree-control-children-generator
 -------------------------------
@@ -9919,7 +9919,7 @@ Arguments
          
 
 -  *tree-control* An instance of type `See
-   <tree-control> <gadgets.htm#65053>`_.
+   <tree-control>`_.
 
 Values
       
@@ -9936,11 +9936,11 @@ root of *tree-control*.
 See also
         
 
-*`See <tree-control> <gadgets.htm#65053>`_*
+*`<tree-control>`_*
 
-*`See tree-control-children-predicate <gadgets.htm#27636>`_*
+*`tree-control-children-predicate`_*
 
-*`See tree-control-children-generator-setter <gadgets.htm#71814>`_*
+*`tree-control-children-generator-setter`_*
 
 tree-control-children-generator-setter
 --------------------------------------
@@ -9966,7 +9966,7 @@ Arguments
 
 -  *children-generator* An instance of type *<function>*.
 -  *tree-control* An instance of type `See
-   <tree-control> <gadgets.htm#65053>`_.
+   <tree-control>`_.
 
 Values
       
@@ -9983,11 +9983,11 @@ is the function that is used to generate the children below the root of
 See also
         
 
-*`See <tree-control> <gadgets.htm#65053>`_*
+*`<tree-control>`_*
 
-*`See tree-control-children-predicate-setter <gadgets.htm#97188>`_*
+*`tree-control-children-predicate-setter`_*
 
-*`See tree-control-children-generator <gadgets.htm#28570>`_*
+*`tree-control-children-generator`_*
 
 tree-control-icon-function
 --------------------------
@@ -10009,7 +10009,7 @@ Arguments
          
 
 -  *tree-control* An instance of `See
-   <tree-control> <gadgets.htm#65053>`_.
+   <tree-control>`_.
 
 Values
       
@@ -10034,9 +10034,9 @@ cannot be changed once the list control has been created.
 See also
         
 
-*`See list-control-icon-function <gadgets.htm#29531>`_*
+*`list-control-icon-function`_*
 
-`See <tree-control> <gadgets.htm#65053>`_
+`<tree-control>`_
 
 tree-control-initial-depth
 --------------------------
@@ -10058,7 +10058,7 @@ Arguments
          
 
 -  *tree-control* An instance of type `See
-   <tree-control> <gadgets.htm#65053>`_.
+   <tree-control>`_.
 
 Values
       
@@ -10078,9 +10078,9 @@ the top level are displayed, but no others).
 See also
         
 
-*`See <tree-control> <gadgets.htm#65053>`_*
+*`<tree-control>`_*
 
-*`See tree-control-initial-depth-setter <gadgets.htm#86242>`_*
+*`tree-control-initial-depth-setter`_*
 
 tree-control-initial-depth-setter
 ---------------------------------
@@ -10104,7 +10104,7 @@ Arguments
 
 -  *initial-depth* An instance of type *<integer>*.
 -  *tree-control* An instance of type `See
-   <tree-control> <gadgets.htm#65053>`_.
+   <tree-control>`_.
 
 Values
       
@@ -10124,9 +10124,9 @@ the top level are displayed, but no others).
 See also
         
 
-*`See <tree-control> <gadgets.htm#65053>`_*
+*`<tree-control>`_*
 
-*`See tree-control-initial-depth <gadgets.htm#38241>`_*
+*`tree-control-initial-depth`_*
 
 tree-control-roots
 ------------------
@@ -10147,7 +10147,7 @@ tree-control-roots *tree* => *roots*
 Arguments
          
 
--  *tree* An instance of type `See <tree-control> <gadgets.htm#65053>`_.
+-  *tree* An instance of type `<tree-control>`_.
 
 Values
       
@@ -10186,9 +10186,9 @@ tree-control-roots(\*tree\*);
 See also
         
 
-*`See <tree-control> <gadgets.htm#65053>`_*
+*`<tree-control>`_*
 
-*`See tree-control-roots-setter <gadgets.htm#34400>`_*
+*`tree-control-roots-setter`_*
 
 tree-control-roots-setter
 -------------------------
@@ -10210,7 +10210,7 @@ Arguments
          
 
 -  *roots* An instance of type *<sequence>*.
--  *tree* An instance of type `See <tree-control> <gadgets.htm#65053>`_.
+-  *tree* An instance of type `<tree-control>`_.
 -  *frame-manager* An instance of type `See
    <frame-manager> <silica.htm#32466>`_.
 
@@ -10251,9 +10251,9 @@ The tree control is updated on the screen to reflect this change.
 See also
         
 
-*`See <tree-control> <gadgets.htm#65053>`_*
+*`<tree-control>`_*
 
-*`See tree-control-roots <gadgets.htm#55562>`_*
+*`tree-control-roots`_*
 
 <tree-node>
 -----------
@@ -10303,16 +10303,16 @@ this might be a directory on disk.
 Operations
           
 
-`See contract-node <gadgets.htm#70428>`_ `See
-expand-node <gadgets.htm#65082>`_ `See
-node-children <gadgets.htm#97625>`_ `See
-node-expanded? <gadgets.htm#76505>`_ `See
-node-parents <gadgets.htm#37785>`_
+`contract-node`_ `See
+expand-node`_ `See
+node-children`_ `See
+node-expanded?`_ `See
+node-parents`_
 
 See also
         
 
-*`See <tree-control> <gadgets.htm#65053>`_*
+*`<tree-control>`_*
 
 update-gadget
 -------------
@@ -10333,7 +10333,7 @@ update-gadget *gadget* => ()
 Arguments
          
 
--  *gadget* An instance of type `See <gadget> <gadgets.htm#34543>`_.
+-  *gadget* An instance of type `<gadget>`_.
 
 Values
       
@@ -10361,7 +10361,7 @@ The class of gadgets that can have values.
 Superclasses
             
 
-`See <gadget> <gadgets.htm#34543>`_
+`<gadget>`_
 
 Init-keywords
              
@@ -10391,11 +10391,11 @@ in a text field have been committed by pressing the RETURN key.
 Operations
           
 
-`See gadget-value <gadgets.htm#64375>`_ `See
-gadget-value-changed-callback <gadgets.htm#69800>`_ `See
-gadget-value-changed-callback-setter <gadgets.htm#92728>`_ `See
-gadget-value-setter <gadgets.htm#43472>`_ `See
-gadget-value-type <gadgets.htm#95659>`_
+`gadget-value`_ `See
+gadget-value-changed-callback`_ `See
+gadget-value-changed-callback-setter`_ `See
+gadget-value-setter`_ `See
+gadget-value-type`_
 
 Example
        
@@ -10403,9 +10403,9 @@ Example
 See also
         
 
-*`See gadget-value <gadgets.htm#64375>`_*
+*`gadget-value`_*
 
-*`See gadget-value-changed-callback <gadgets.htm#69800>`_*
+*`gadget-value-changed-callback`_*
 
 <value-range-gadget>
 --------------------
@@ -10421,7 +10421,7 @@ The class of all value gadgets with ranges.
 Superclasses
             
 
-*`See <value-gadget> <gadgets.htm#98877>`_*
+*`<value-gadget>`_*
 
 Init-keywords
              
@@ -10446,8 +10446,8 @@ messages being downloaded.
 Operations
           
 
-`See gadget-value-range <gadgets.htm#73219>`_ `See
-gadget-value-range-setter <gadgets.htm#16520>`_
+`gadget-value-range`_ `See
+gadget-value-range-setter`_
 
 Example
        
@@ -10463,13 +10463,13 @@ range(from: -20, to: 20, by: 5)));
 See also
         
 
-`See <progress-bar> <gadgets.htm#14398>`_
+`<progress-bar>`_
 
-`See <scroll-bar> <gadgets.htm#25622>`_
+`<scroll-bar>`_
 
-`See <slider> <gadgets.htm#93753>`_
+`<slider>`_
 
-`See <value-gadget> <gadgets.htm#98877>`_
+`<value-gadget>`_
 
 <viewport>
 ----------
@@ -10485,7 +10485,7 @@ The class of viewports.
 Superclasses
             
 
-`See <gadget> <gadgets.htm#34543>`_ `See
+`<gadget>`_ `See
 <single-child-composite-pane> <layouts.htm#47412>`_
 
 Init-keywords
@@ -10494,14 +10494,14 @@ Init-keywords
 *horizontal-scroll-bar:*
                         
 
-An instance of type *false-or(`See <scroll-bar> <gadgets.htm#25622>`_)*
+An instance of type *false-or(`<scroll-bar>`_)*
 . Default value: *#f*.
                                                                                                
 
 *vertical-scroll-bar:*
                       
 
-An instance of type *false-or(`See <scroll-bar> <gadgets.htm#25622>`_)*
+An instance of type *false-or(`<scroll-bar>`_)*
 . Default value: *#f*.
                                                                                                
 
@@ -10534,18 +10534,18 @@ common:
 Operations
           
 
--  `See viewport-region <gadgets.htm#79790>`_
+-  `viewport-region`_
 
 See also
         
 
-*`See sheet-viewport <gadgets.htm#94297>`_*
+*`sheet-viewport`_*
 
-*`See sheet-viewport-region <gadgets.htm#63140>`_*
+*`sheet-viewport-region`_*
 
-*`See viewport? <gadgets.htm#11158>`_*
+*`viewport?`_*
 
-*`See viewport-region <gadgets.htm#79790>`_*
+*`viewport-region`_*
 
 viewport?
 ---------
@@ -10589,11 +10589,11 @@ viewport?(\*gadget\*);
 See also
         
 
-`See <viewport> <gadgets.htm#65377>`_
+`<viewport>`_
 
-*`See <button-box> <gadgets.htm#56976>`_*
+*`<button-box>`_*
 
-`See <border> <gadgets.htm#43021>`_
+`<border>`_
 
 viewport-region
 ---------------
@@ -10614,7 +10614,7 @@ viewport-region *viewport* => *region*
 Arguments
          
 
--  *viewport* An instance of type `See <viewport> <gadgets.htm#65377>`_.
+-  *viewport* An instance of type `<viewport>`_.
 
 Values
       
@@ -10637,7 +10637,7 @@ viewport-region(\*viewer\*);
 See also
         
 
-`See <viewport> <gadgets.htm#65377>`_
+`<viewport>`_
 
 with-border
 -----------
@@ -10673,7 +10673,7 @@ Creates *pane* with a border around it, taking into account any of the
 specified *options*.
 
 The options specified may be any of the legal init-keywords used to
-specify an instance of *`See <border> <gadgets.htm#43021>`_*. If no
+specify an instance of *`<border>`_*. If no
 options are specified, then the default border is used.
 
 The pane is an expression whose return value is the sheet around which a
@@ -10695,11 +10695,11 @@ label: "Hello") end);
 See also
         
 
-*`See <border> <gadgets.htm#43021>`_*
+*`<border>`_*
 
-*`See labelling <gadgets.htm#90160>`_*
+*`labelling`_*
 
-*`See with-spacing <gadgets.htm#78138>`_*
+*`with-spacing`_*
 
 with-spacing
 ------------
@@ -10735,7 +10735,7 @@ Creates *pane* with spacing around it, taking into account any of the
 specified *options*.
 
 The options specified may be any of the legal init-keywords used to
-specify an instance of *`See <spacing> <gadgets.htm#12504>`_*. If no
+specify an instance of *`<spacing>`_*. If no
 options are specified, then the default spacing is used.
 
 The pane is an expression whose return value is the sheet around which
@@ -10763,11 +10763,11 @@ end);
 See also
         
 
-*`See <null-pane> <layouts.htm#65339>`_*
+*`<null-pane> <layouts.htm#65339>`_*
 
-*`See <spacing> <gadgets.htm#12504>`_*
+*`<spacing>`_*
 
-*`See with-border <gadgets.htm#20731>`_*
+*`with-border`_*
 
 .. |image0| image:: gadgets-15.gif
 .. |image1| image:: gadgets-17.gif

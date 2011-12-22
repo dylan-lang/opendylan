@@ -8,8 +8,8 @@ Overview
 The DUIM-Graphics library contains interfaces that define a wide variety
 drawing operations for use in your GUI applications, as well as two
 classes. The library contains a single module, *duim-graphics*, from
-which all the interfaces described in this chapter are exposed. `See
-DUIM-Graphics Module <graphics.htm#55585>`_ contains complete reference
+which all the interfaces described in this chapter are exposed.
+`DUIM-Graphics Module`_ contains complete reference
 entries for each exposed interface.
 
 The DUIM graphic drawing model is an idealized model of graphical
@@ -209,8 +209,8 @@ X11:
    considered to be inside the shape if the inside of the shape is
    immediately below the center point of the pixel (that is, an
    increasing y direction on the display device). This situation is
-   illustrated in `See How pixels are defined to be “inside” and
-   “outside” shapes <graphics.htm#51633>`_.
+   illustrated in `How pixels are defined to be “inside” and
+   “outside” shapes`_.
 -  An unfilled idealized geometric shape is drawn by calculating an
    artificial area for the shape, and then deciding which pixels are
    inside or outside that area, using the rules described above. The
@@ -229,8 +229,8 @@ directions. It is worth considering the motivations for these
 conventions.
 
 When two shapes share a common edge, it is important that only one of
-the shapes own any pixel. The two triangles in `See Two
-triangles <graphics.htm#95284>`_ illustrate this. The pixels along the
+the shapes own any pixel. The two triangles in `Two
+triangles`_ illustrate this. The pixels along the
 diagonal belong to the lower figure. When the decision point of the
 pixel (its center) lies to one side of the line or the other, there is
 no issue. When the boundary passes through a decision point, which side
@@ -271,8 +271,8 @@ Choosing any two of the shaded pixels causes asymmetry
 If all four boundary points had been chosen instead, the result would be
 a symmetrical figure. However, since this figure is symmetrical about a
 whole pixel, it is one pixel wider than it ought to be. The problem with
-this can be seen clearly in `See Two forms of a circle inscribed in a
-square <graphics.htm#82286>`_, in which a circle is drawn over a square.
+this can be seen clearly in `Two forms of a circle inscribed in a
+square`_, in which a circle is drawn over a square.
 In the left-hand figure, the decision point is at the center of the
 pixel, but in the right-hand figure, it is not.
 
@@ -287,8 +287,8 @@ Two forms of a circle inscribed in a square
    :align: center
    :alt: 
 It is for this reason that the decision point is at the center of the
-pixel. This draws circles that look like the one in `See An
-aesthetically pleasing circle <graphics.htm#17533>`_.
+pixel. This draws circles that look like the one in `An
+aesthetically pleasing circle`_.
 
 An aesthetically pleasing circle
                                 
@@ -319,7 +319,7 @@ Permissible alternatives during rendering
 
 Some platforms may distinguish between lines of the minimum thinness
 from lines that are thicker than that. The two rasterizations depicted
-in `See Two examples of lines of thickness 1 <graphics.htm#56170>`_ are
+in `Two examples of lines of thickness 1`_ are
 both perfectly reasonable rasterizations of tilted lines that are a
 single device unit wide. The right-hand line is drawn as a tilted
 rectangle, the left as the “thinnest visible” line.
@@ -338,8 +338,8 @@ For thick lines, a platform may choose to draw the exact tilted
 fractional rectangle, or the coordinates of that rectangle might be
 rounded so that it is distorted into another polygonal shape. The latter
 case may be prove to be faster on some platforms. The two rasterizations
-depicted in `See Two examples of lines of thickness
-2 <graphics.htm#95242>`_ are both reasonable.
+depicted in `Two examples of lines of thickness
+2`_ are both reasonable.
 
 Two examples of lines of thickness 2
                                     
@@ -355,8 +355,8 @@ The decision about which side of the shape to take when a boundary line
 passes through the decision point is made arbitrarily, although this is
 compatible with the X11 definition. This is not necessarily the most
 convenient decision. The main problem with this is illustrated by the
-case of a horizontal line (see `See Two possible definitions of
-horizontal lines. Left figure is X11 definition <graphics.htm#49968>`_).
+case of a horizontal line (see `Two possible definitions of
+horizontal lines. Left figure is X11 definition`_).
 The DUIM definition draws the rectangular slice above the coordinates,
 since those pixels are the ones whose centers have the figure
 immediately above them. This definition makes it simpler to draw
@@ -388,9 +388,9 @@ Create a new path using *start-path*.
 #. Define the appearance of the path using any combination of *line-to*
    , *move-to*, *curve-to*, and *arc-to*.
 #. Optionally, use *close-path* to create a closed path from the
-   segments defined in step `See Define the appearance of the path using
+   segments defined in step `Define the appearance of the path using
    any combination of line-to, move-to, curve-to, and
-   arc-to. <graphics.htm#32102>`_ above.
+   arc-to.`_ above.
 #. End the current path definition using *end-path* (if you have not
    already used *close-path*).
 #. Render the outline of the path to the drawable object using
@@ -400,8 +400,8 @@ Create a new path using *start-path*.
 
 Each of these functions is described in a little more in the following
 sections. For full details about each individual function, refer to its
-full reference entry in `See DUIM-Graphics
-Module <graphics.htm#55585>`_.
+full reference entry in `DUIM-Graphics
+Module`_.
 
 Functions for controlling the definition of a path
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -482,7 +482,7 @@ fill-path *drawable* => ()
 
 Uses the current brush to fill the current path on *drawable*. Only
 closed paths can be filled. If the path has not already been closed
-using `See close-path <graphics.htm#93626>`_, it is closed
+using `close-path`_, it is closed
 automatically.
 
 stroke-path
@@ -611,7 +611,7 @@ Arguments
          
 
 -  *drawable* An instance of type *type-union(`See
-   <sheet> <silica.htm#13118>`_, `See <medium> <silica.htm#60437>`_)*.
+   <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
 
 Values
       
@@ -622,17 +622,17 @@ Description
            
 
 Aborts the current path on *drawable*. Any operations that have been
-performed since the last call to `See start-path <graphics.htm#88171>`_
+performed since the last call to `start-path`_
 are discarded.
 
 See also
         
 
-`See close-path <graphics.htm#93626>`_
+`close-path`_
 
-`See end-path <graphics.htm#17265>`_
+`end-path`_
 
-`See start-path <graphics.htm#88171>`_
+`start-path`_
 
 arc-to
 ------
@@ -658,7 +658,7 @@ Arguments
          
 
 -  *drawable* An instance of type *type-union(`See
-   <sheet> <silica.htm#13118>`_, `See <medium> <silica.htm#60437>`_)*.
+   <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
 -  *radius-1-dx* An instance of type *<real>*.
 -  *radius-1-dy* An instance of type *<real>*.
 -  *radius-2-dx* An instance of type *<real>*.
@@ -673,7 +673,7 @@ The following arguments are specific to *arc-to*.
 
 The following argument is specific to *arc-to\**.
 
--  *center* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *center* An instance of type `<transform> <geom.htm#33417>`_.
 
 Values
       
@@ -686,10 +686,10 @@ Description
 Draws an arc in the current path on the specified drawable.
 
 This function is used, in combination with `See
-line-to <graphics.htm#92428>`_, `See curve-to <graphics.htm#33334>`_,
-and `See move-to <graphics.htm#83384>`_, to define a path. The function
-`See start-path <graphics.htm#88171>`_ should be used to start the
-definition of the path, and `See end-path <graphics.htm#17265>`_ can be
+line-to`_, `curve-to`_,
+and `move-to`_, to define a path. The function
+`start-path`_ should be used to start the
+definition of the path, and `end-path`_ can be
 used to finish the definition.
 
 The center of the arc is defined by (*center-x*, *center-y*), and the
@@ -719,15 +719,15 @@ performance.
 See also
         
 
-`See curve-to <graphics.htm#33334>`_
+`curve-to`_
 
-`See draw-bezier-curve <graphics.htm#62628>`_
+`draw-bezier-curve`_
 
-`See draw-line <graphics.htm#67791>`_
+`draw-line`_
 
-`See line-to <graphics.htm#92428>`_
+`line-to`_
 
-`See move-to <graphics.htm#83384>`_
+`move-to`_
 
 close-path
 ----------
@@ -749,7 +749,7 @@ Arguments
          
 
 -  *drawable* An instance of type *type-union(`See
-   <sheet> <silica.htm#13118>`_, `See <medium> <silica.htm#60437>`_)*.
+   <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
 
 Values
       
@@ -763,22 +763,22 @@ Closes the current path on the *drawable*: that is, creates a closed
 figure from the elements already defined.
 
 For example, if you create a path that has four connected lines (using
-`See line-to <graphics.htm#92428>`_), you can use *close-path* to join
+`line-to`_), you can use *close-path* to join
 the first and last lines in the path to create a closed, five-sided
 figure.
 
 Only closed paths can be filled, although `See
-fill-path <graphics.htm#38731>`_ will close a non-closed path
+fill-path`_ will close a non-closed path
 automatically.
 
 See also
         
 
-`See abort-path <graphics.htm#49050>`_
+`abort-path`_
 
-`See end-path <graphics.htm#17265>`_
+`end-path`_
 
-`See start-path <graphics.htm#88171>`_
+`start-path`_
 
 copy-area
 ---------
@@ -800,7 +800,7 @@ copy-area *medium from-x from-y width height to-x to-y* #key *function*
 Arguments
          
 
--  *medium* An instance of type *`See <medium> <silica.htm#60437>`_*.
+-  *medium* An instance of type *`<medium> <silica.htm#60437>`_*.
 -  *from-x* An instance of type *<coordinate>*.
 -  *from-y* An instance of type *<coordinate>*.
 -  *width* An instance of type *<integer>*.
@@ -828,9 +828,9 @@ done by *medium-copy-copy*.
 See also
         
 
-`See copy-from-pixmap <graphics.htm#64636>`_
+`copy-from-pixmap`_
 
-`See copy-to-pixmap <graphics.htm#28334>`_
+`copy-to-pixmap`_
 
 copy-from-pixmap
 ----------------
@@ -853,7 +853,7 @@ medium-y* #key *function* => ()
 Arguments
          
 
--  *pixmap* An instance of type `See <pixmap> <graphics.htm#45866>`_.
+-  *pixmap* An instance of type `<pixmap>`_.
 -  *pixmap-x* An instance of type *<coordinate>*.
 -  *pixmap-y* An instance of type *<coordinate>*.
 -  *width* An instance of type *<integer>*.
@@ -882,11 +882,11 @@ transformation. The copying must be done by *medium-copy-copy*.
 See also
         
 
-`See copy-area <graphics.htm#62343>`_
+`copy-area`_
 
-`See copy-to-pixmap <graphics.htm#28334>`_
+`copy-to-pixmap`_
 
-`See <pixmap> <graphics.htm#45866>`_
+`<pixmap>`_
 
 copy-to-pixmap
 --------------
@@ -909,12 +909,12 @@ pixmap-y* #key *function* => ()
 Arguments
          
 
--  *medium* An instance of type *`See <medium> <silica.htm#60437>`_*.
+-  *medium* An instance of type *`<medium> <silica.htm#60437>`_*.
 -  *medium-x* An instance of type *<coordinate>*.
 -  *medium-y* An instance of type *<coordinate>*.
 -  *width* An instance of type *<integer>*.
 -  *height* An instance of type *<integer>*.
--  *pixmap* An instance of type `See <pixmap> <graphics.htm#45866>`_.
+-  *pixmap* An instance of type `<pixmap>`_.
 -  *pixmap-x* An instance of type *<coordinate>*.
 -  *pixmap-y* An instance of type *<coordinate>*.
 -  *function* An instance of type *<function>*. Default value: `See
@@ -940,9 +940,9 @@ If *pixmap* is not supplied, a new pixmap will be allocated.
 See also
         
 
-`See copy-area <graphics.htm#62343>`_
+`copy-area`_
 
-`See copy-from-pixmap <graphics.htm#64636>`_
+`copy-from-pixmap`_
 
 curve-to
 --------
@@ -967,7 +967,7 @@ Arguments
          
 
 -  *drawable* An instance of type *type-union(`See
-   <sheet> <silica.htm#13118>`_, `See <medium> <silica.htm#60437>`_)*.
+   <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
 
 The following arguments are specific to *curve-to*.
 
@@ -980,9 +980,9 @@ The following arguments are specific to *curve-to*.
 
 The following arguments are specific to *curve-to\**.
 
--  *point1* An instance of type `See <transform> <geom.htm#33417>`_.
--  *point2* An instance of type `See <transform> <geom.htm#33417>`_.
--  *point3* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *point1* An instance of type `<transform> <geom.htm#33417>`_.
+-  *point2* An instance of type `<transform> <geom.htm#33417>`_.
+-  *point3* An instance of type `<transform> <geom.htm#33417>`_.
 
 Values
       
@@ -997,10 +997,10 @@ current position, and passing through (*x1*,*y1*), (*x2*, *y2*), and
 (*x3*, *y3*).
 
 This function is used, in combination with `See
-line-to <graphics.htm#92428>`_, `See move-to <graphics.htm#83384>`_, and
-`See arc-to <graphics.htm#33456>`_, to define a path. The function `See
-start-path <graphics.htm#88171>`_ should be used to start the definition
-of the path, and `See end-path <graphics.htm#17265>`_ can be used to
+line-to`_, `move-to`_, and
+`arc-to`_, to define a path. The function `See
+start-path`_ should be used to start the definition
+of the path, and `end-path`_ can be used to
 finish the definition.
 
 The function *curve-to\** is identical to *curve-to*, except that it
@@ -1011,15 +1011,15 @@ loss of performance.
 See also
         
 
-`See arc-to <graphics.htm#33456>`_
+`arc-to`_
 
-`See draw-bezier-curve <graphics.htm#62628>`_
+`draw-bezier-curve`_
 
-`See draw-line <graphics.htm#67791>`_
+`draw-line`_
 
-`See line-to <graphics.htm#92428>`_
+`line-to`_
 
-`See move-to <graphics.htm#83384>`_
+`move-to`_
 
 destroy-pixmap
 --------------
@@ -1040,7 +1040,7 @@ destroy-pixmap *pixmap* => ()
 Arguments
          
 
--  *pixmap* An instance of type `See <pixmap> <graphics.htm#45866>`_.
+-  *pixmap* An instance of type `<pixmap>`_.
 
 Values
       
@@ -1055,7 +1055,7 @@ Destroys *pixmap*.
 See also
         
 
-`See draw-pixmap <graphics.htm#15200>`_
+`draw-pixmap`_
 
 do-with-output-to-pixmap
 ------------------------
@@ -1077,7 +1077,7 @@ clear?* => *pixmap*
 Arguments
          
 
--  *medium* An instance of type *`See <medium> <silica.htm#60437>`_*.
+-  *medium* An instance of type *`<medium> <silica.htm#60437>`_*.
 -  *continuation* An instance of type *<function>*.
 -  *width* An instance of type *<integer>*.
 -  *height* An instance of type *<integer>*.
@@ -1086,13 +1086,13 @@ Arguments
 Values
       
 
--  *pixmap* An instance of type `See <pixmap> <graphics.htm#45866>`_.
+-  *pixmap* An instance of type `<pixmap>`_.
 
 Description
            
 
 Returns a pixmap for the specified medium. This function is called by
-`See with-output-to-pixmap <graphics.htm#77076>`_ and returns the pixmap
+`with-output-to-pixmap`_ and returns the pixmap
 that is operated on. If you are subclassing `See
 <medium> <silica.htm#60437>`_, you must define new methods on this
 function.
@@ -1100,12 +1100,12 @@ function.
 The *width* and *height* are integers that give the width and height of
 the pixmap. If they are unsupplied, the result pixmap will be large
 enough to contain all of the output done by the body of code executed by
-`See with-output-to-pixmap <graphics.htm#77076>`_.
+`with-output-to-pixmap`_.
 
 See also
         
 
-`See with-output-to-pixmap <graphics.htm#77076>`_
+`with-output-to-pixmap`_
 
 draw-arrow
 ----------
@@ -1131,7 +1131,7 @@ Arguments
          
 
 -  *drawable* An instance of type *type-union(`See
-   <sheet> <silica.htm#13118>`_, `See <medium> <silica.htm#60437>`_)*.
+   <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
 -  *from-head?* An instance of type *<boolean>*. Default value: *#f*.
 -  *to-head?* An instance of type *<boolean>*. Default value: *#t*.
 -  *head-length* An instance of type *<integer>*. Default value: *10*.
@@ -1146,8 +1146,8 @@ The following arguments are specific to *draw-arrow*.
 
 The following arguments are specific to *draw-arrow\**.
 
--  *point1* An instance of type `See <transform> <geom.htm#33417>`_.
--  *point2* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *point1* An instance of type `<transform> <geom.htm#33417>`_.
+-  *point2* An instance of type `<transform> <geom.htm#33417>`_.
 
 Values
       
@@ -1182,7 +1182,7 @@ loss of performance.
 See also
         
 
-`See draw-line <graphics.htm#67791>`_
+`draw-line`_
 
 draw-bezier-curve
 -----------------
@@ -1209,14 +1209,14 @@ Arguments
 
 The following arguments are specific to *draw-bezier-curve*.
 
--  *sheet* An instance of type *`See <sheet> <silica.htm#13118>`_*.
+-  *sheet* An instance of type *`<sheet> <silica.htm#13118>`_*.
 -  *coord-seq* An instance of type *limited(<sequence>, of:
    <coordinate>)*.
 
 The following arguments are specific to *draw-bezier-curve\**.
 
 -  *drawable* An instance of type *type-union(`See
-   <sheet> <silica.htm#13118>`_, `See <medium> <silica.htm#60437>`_)*.
+   <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
 -  *points* An instance of type *limited(<sequence>, of: `See
    <point> <geom.htm#15734>`_)*.
 
@@ -1243,9 +1243,9 @@ function may lead to a loss of performance.
 See also
         
 
-`See curve-to <graphics.htm#33334>`_
+`curve-to`_
 
-`See draw-line <graphics.htm#67791>`_
+`draw-line`_
 
 draw-circle
 -----------
@@ -1271,7 +1271,7 @@ Arguments
          
 
 -  *drawable* An instance of type *type-union(`See
-   <sheet> <silica.htm#13118>`_, `See <medium> <silica.htm#60437>`_)*.
+   <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
 -  *radius* An instance of type *<real>*.
 -  *start-angle* An instance of type *false-or(<real>)*.
 -  *end-angle* An instance of type *false-or(<real>)*.
@@ -1284,7 +1284,7 @@ The following arguments are specific to *draw-circle*.
 
 The following argument is specific to *draw-circle\**.
 
--  *center* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *center* An instance of type `<transform> <geom.htm#33417>`_.
 
 Values
       
@@ -1311,9 +1311,9 @@ loss of performance.
 See also
         
 
-`See draw-ellipse <graphics.htm#13339>`_
+`draw-ellipse`_
 
-`See draw-oval <graphics.htm#61678>`_
+`draw-oval`_
 
 draw-ellipse
 ------------
@@ -1339,7 +1339,7 @@ Arguments
          
 
 -  *drawable* An instance of type *type-union(`See
-   <sheet> <silica.htm#13118>`_, `See <medium> <silica.htm#60437>`_)*.
+   <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
 -  *radius-1-dx* An instance of type *<real>*.
 -  *radius-1-dy* An instance of type *<real>*.
 -  *radius-2-dx* An instance of type *<real>*.
@@ -1355,7 +1355,7 @@ The following arguments are specific to *draw-ellipse*.
 
 The following argument is specific to *draw-ellipse\**.
 
--  *center* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *center* An instance of type `<transform> <geom.htm#33417>`_.
 
 Values
       
@@ -1398,9 +1398,9 @@ a loss of performance.
 See also
         
 
-`See draw-circle <graphics.htm#29186>`_
+`draw-circle`_
 
-`See draw-oval <graphics.htm#61678>`_
+`draw-oval`_
 
 draw-image
 ----------
@@ -1424,8 +1424,8 @@ Arguments
          
 
 -  *drawable* An instance of type *type-union(`See
-   <sheet> <silica.htm#13118>`_, `See <medium> <silica.htm#60437>`_)*.
--  *image* An instance of type `See <image> <dcs.htm#51234>`_.
+   <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
+-  *image* An instance of type `<image> <dcs.htm#51234>`_.
 
 The following arguments are specific to *draw-image*.
 
@@ -1434,7 +1434,7 @@ The following arguments are specific to *draw-image*.
 
 The following argument is specific to *draw-image\**.
 
--  *point* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *point* An instance of type `<transform> <geom.htm#33417>`_.
 
 Values
       
@@ -1454,9 +1454,9 @@ loss of performance.
 See also
         
 
-`See draw-pixmap <graphics.htm#15200>`_
+`draw-pixmap`_
 
-`See draw-text <graphics.htm#17442>`_
+`draw-text`_
 
 draw-line
 ---------
@@ -1480,7 +1480,7 @@ Arguments
          
 
 -  *drawable* An instance of type *type-union(`See
-   <sheet> <silica.htm#13118>`_, `See <medium> <silica.htm#60437>`_)*.
+   <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
 
 The following arguments are specific to *draw-line*.
 
@@ -1491,8 +1491,8 @@ The following arguments are specific to *draw-line*.
 
 The following arguments are specific to *draw-line\**.
 
--  *point1* An instance of type `See <transform> <geom.htm#33417>`_.
--  *point2* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *point1* An instance of type `<transform> <geom.htm#33417>`_.
+-  *point2* An instance of type `<transform> <geom.htm#33417>`_.
 
 Values
       
@@ -1513,17 +1513,17 @@ loss of performance.
 See also
         
 
-`See curve-to <graphics.htm#33334>`_
+`curve-to`_
 
-`See draw-arrow <graphics.htm#21115>`_
+`draw-arrow`_
 
-`See draw-bezier-curve <graphics.htm#62628>`_
+`draw-bezier-curve`_
 
-`See draw-lines <graphics.htm#73313>`_
+`draw-lines`_
 
-`See draw-point <graphics.htm#82363>`_
+`draw-point`_
 
-`See line-to <graphics.htm#92428>`_
+`line-to`_
 
 draw-lines
 ----------
@@ -1547,7 +1547,7 @@ Arguments
          
 
 -  *drawable* An instance of type *type-union(`See
-   <sheet> <silica.htm#13118>`_, `See <medium> <silica.htm#60437>`_)*.
+   <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
 
 The following argument is specific to *draw-lines*.
 
@@ -1594,11 +1594,11 @@ vector(100, 150,
 See also
         
 
-`See draw-line <graphics.htm#67791>`_
+`draw-line`_
 
-`See draw-points <graphics.htm#77171>`_
+`draw-points`_
 
-`See draw-rectangles <graphics.htm#68937>`_
+`draw-rectangles`_
 
 draw-oval
 ---------
@@ -1623,7 +1623,7 @@ Arguments
          
 
 -  *drawable* An instance of type *type-union(`See
-   <sheet> <silica.htm#13118>`_, `See <medium> <silica.htm#60437>`_)*.
+   <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
 -  *x-radius* An instance of type *<real>*.
 -  *y-radius* An instance of type *<real>*.
 -  *filled?* An instance of type *<boolean>*. Default value: *#t*.
@@ -1635,7 +1635,7 @@ The following arguments are specific to *draw-oval*.
 
 The following argument is specific to *draw-oval\**.
 
--  *center* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *center* An instance of type `<transform> <geom.htm#33417>`_.
 
 Values
       
@@ -1664,9 +1664,9 @@ loss of performance.
 See also
         
 
-`See draw-circle <graphics.htm#29186>`_
+`draw-circle`_
 
-`See draw-ellipse <graphics.htm#13339>`_
+`draw-ellipse`_
 
 draw-pixmap
 -----------
@@ -1690,8 +1690,8 @@ Arguments
          
 
 -  *drawable* An instance of type *type-union(`See
-   <sheet> <silica.htm#13118>`_, `See <medium> <silica.htm#60437>`_)*.
--  *pixmap* An instance of type `See <pixmap> <graphics.htm#45866>`_.
+   <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
+-  *pixmap* An instance of type `<pixmap>`_.
 -  *function* An instance of type *<function>*. Default value: `See
    $boole-1 <dcs.htm#36174>`_.
 
@@ -1702,7 +1702,7 @@ The following arguments are specific to *draw-pixmap*.
 
 The following argument is specific to *draw-pixmap\**.
 
--  *point* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *point* An instance of type `<transform> <geom.htm#33417>`_.
 
 Values
       
@@ -1722,13 +1722,13 @@ loss of performance.
 See also
         
 
-`See destroy-pixmap <graphics.htm#81195>`_
+`destroy-pixmap`_
 
-`See draw-image <graphics.htm#64653>`_
+`draw-image`_
 
-`See draw-text <graphics.htm#17442>`_
+`draw-text`_
 
-`See make-pixmap <graphics.htm#55252>`_
+`make-pixmap`_
 
 draw-point
 ----------
@@ -1752,7 +1752,7 @@ Arguments
          
 
 -  *drawable* An instance of type *type-union(`See
-   <sheet> <silica.htm#13118>`_, `See <medium> <silica.htm#60437>`_)*.
+   <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
 
 The following arguments are specific to *draw-point*.
 
@@ -1761,7 +1761,7 @@ The following arguments are specific to *draw-point*.
 
 The following argument is specific to *draw-point\**.
 
--  *point* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *point* An instance of type `<transform> <geom.htm#33417>`_.
 
 Values
       
@@ -1781,9 +1781,9 @@ loss of performance.
 See also
         
 
-`See draw-line <graphics.htm#67791>`_
+`draw-line`_
 
-`See draw-points <graphics.htm#77171>`_
+`draw-points`_
 
 draw-points
 -----------
@@ -1807,7 +1807,7 @@ Arguments
          
 
 -  *drawable* An instance of type *type-union(`See
-   <sheet> <silica.htm#13118>`_, `See <medium> <silica.htm#60437>`_)*.
+   <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
 
 The following argument is specific to *draw-points*.
 
@@ -1837,11 +1837,11 @@ loss of performance.
 See also
         
 
-`See draw-lines <graphics.htm#73313>`_
+`draw-lines`_
 
-`See draw-point <graphics.htm#82363>`_
+`draw-point`_
 
-`See draw-rectangles <graphics.htm#68937>`_
+`draw-rectangles`_
 
 draw-polygon
 ------------
@@ -1865,7 +1865,7 @@ Arguments
          
 
 -  *drawable* An instance of type *type-union(`See
-   <sheet> <silica.htm#13118>`_, `See <medium> <silica.htm#60437>`_)*.
+   <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
 -  *closed?* An instance of type *<boolean>*. Default value: *#t*.
 -  *filled?* An instance of type *<boolean>*. Default value: *#t*.
 
@@ -1905,11 +1905,11 @@ a loss of performance.
 See also
         
 
-`See draw-rectangle <graphics.htm#84651>`_
+`draw-rectangle`_
 
-`See draw-regular-polygon <graphics.htm#71486>`_
+`draw-regular-polygon`_
 
-`See draw-triangle <graphics.htm#64798>`_
+`draw-triangle`_
 
 draw-rectangle
 --------------
@@ -1933,7 +1933,7 @@ Arguments
          
 
 -  *drawable* An instance of type *type-union(`See
-   <sheet> <silica.htm#13118>`_, `See <medium> <silica.htm#60437>`_)*.
+   <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
 -  *filled?* An instance of type *<boolean>*. Default value: *#t*.
 
 The following arguments are specific to *draw-rectangle*.
@@ -1945,8 +1945,8 @@ The following arguments are specific to *draw-rectangle*.
 
 The following arguments are specific to *draw-rectangle\**.
 
--  *point1* An instance of type `See <transform> <geom.htm#33417>`_.
--  *point2* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *point1* An instance of type `<transform> <geom.htm#33417>`_.
+-  *point2* An instance of type `<transform> <geom.htm#33417>`_.
 
 Values
       
@@ -1977,13 +1977,13 @@ function may lead to a loss of performance.
 See also
         
 
-`See draw-polygon <graphics.htm#85474>`_
+`draw-polygon`_
 
-`See draw-rectangles <graphics.htm#68937>`_
+`draw-rectangles`_
 
-`See draw-regular-polygon <graphics.htm#71486>`_
+`draw-regular-polygon`_
 
-`See draw-triangle <graphics.htm#64798>`_
+`draw-triangle`_
 
 draw-rectangles
 ---------------
@@ -2007,7 +2007,7 @@ Arguments
          
 
 -  *drawable* An instance of type *type-union(`See
-   <sheet> <silica.htm#13118>`_, `See <medium> <silica.htm#60437>`_)*.
+   <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
 -  *filled?* An instance of type *<boolean>*. Default value: *#t*.
 
 The following argument is specific to *draw-rectangles*.
@@ -2043,11 +2043,11 @@ function may lead to a loss of performance.
 See also
         
 
-`See draw-lines <graphics.htm#73313>`_
+`draw-lines`_
 
-`See draw-points <graphics.htm#77171>`_
+`draw-points`_
 
-`See draw-rectangle <graphics.htm#84651>`_
+`draw-rectangle`_
 
 draw-regular-polygon
 --------------------
@@ -2074,7 +2074,7 @@ Arguments
          
 
 -  *drawable* An instance of type *type-union(`See
-   <sheet> <silica.htm#13118>`_, `See <medium> <silica.htm#60437>`_)*.
+   <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
 -  *nsides* An instance of type *<integer>*.
 -  *handedness* Default value: *#"left"*.
 -  *closed?* An instance of type *<boolean>*. Default value: *#t*.
@@ -2089,8 +2089,8 @@ The following arguments are specific to *draw-regular-polygon*.
 
 The following arguments are specific to *draw-regular-polygon\**.
 
--  *point1* An instance of type `See <transform> <geom.htm#33417>`_.
--  *point2* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *point1* An instance of type `<transform> <geom.htm#33417>`_.
+-  *point2* An instance of type `<transform> <geom.htm#33417>`_.
 
 Values
       
@@ -2118,11 +2118,11 @@ using this function may lead to a loss of performance.
 See also
         
 
-`See draw-polygon <graphics.htm#85474>`_
+`draw-polygon`_
 
-`See draw-rectangle <graphics.htm#84651>`_
+`draw-rectangle`_
 
-`See draw-triangle <graphics.htm#64798>`_
+`draw-triangle`_
 
 draw-text
 ---------
@@ -2148,7 +2148,7 @@ Arguments
          
 
 -  *drawable* An instance of type *type-union(`See
-   <sheet> <silica.htm#13118>`_, `See <medium> <silica.htm#60437>`_)*.
+   <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
 -  *text* An instance of type *type-union(<string>, <character>)*.
 -  *start* An instance of type *<integer>*. Default value: 0.
 -  *end* An instance of type *<integer>*. Default value: *size(* *text*
@@ -2172,7 +2172,7 @@ The following arguments are specific to *draw-text\**.
 
 -  *towards-point* An instance of type `See
    <transform> <geom.htm#33417>`_.
--  *point* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *point* An instance of type `<transform> <geom.htm#33417>`_.
 
 Values
       
@@ -2223,9 +2223,9 @@ loss of performance.
 See also
         
 
-`See draw-image <graphics.htm#64653>`_
+`draw-image`_
 
-`See draw-pixmap <graphics.htm#15200>`_
+`draw-pixmap`_
 
 draw-triangle
 -------------
@@ -2249,7 +2249,7 @@ Arguments
          
 
 -  *drawable* An instance of type *type-union(`See
-   <sheet> <silica.htm#13118>`_, `See <medium> <silica.htm#60437>`_)*.
+   <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
 -  *filled?* An instance of type *<boolean>*. Default value: *#t*.
 
 The following arguments are specific to *draw-triangle*.
@@ -2263,9 +2263,9 @@ The following arguments are specific to *draw-triangle*.
 
 The following arguments are specific to *draw-triangle\**.
 
--  *p1* An instance of type `See <transform> <geom.htm#33417>`_.
--  *p2* An instance of type `See <transform> <geom.htm#33417>`_.
--  *p3* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *p1* An instance of type `<transform> <geom.htm#33417>`_.
+-  *p2* An instance of type `<transform> <geom.htm#33417>`_.
+-  *p3* An instance of type `<transform> <geom.htm#33417>`_.
 
 Values
       
@@ -2293,11 +2293,11 @@ a loss of performance.
 See also
         
 
-`See draw-polygon <graphics.htm#85474>`_
+`draw-polygon`_
 
-`See draw-rectangle <graphics.htm#84651>`_
+`draw-rectangle`_
 
-`See draw-regular-polygon <graphics.htm#71486>`_
+`draw-regular-polygon`_
 
 end-path
 --------
@@ -2320,7 +2320,7 @@ Arguments
          
 
 -  *drawable* An instance of type *type-union(`See
-   <sheet> <silica.htm#13118>`_, `See <medium> <silica.htm#60437>`_)*.
+   <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
 
 Values
       
@@ -2332,20 +2332,20 @@ Description
 
 Ends the definition of the current path in *drawable*. Once the
 definition has been ended, the path can be rendered to the drawable
-using `See fill-path <graphics.htm#38731>`_ or `See
-stroke-path <graphics.htm#37942>`_.
+using `fill-path`_ or `See
+stroke-path`_.
 
-The function `See close-path <graphics.htm#93626>`_ can also be used to
+The function `close-path`_ can also be used to
 end the definition of a path.
 
 See also
         
 
-`See abort-path <graphics.htm#49050>`_
+`abort-path`_
 
-`See close-path <graphics.htm#93626>`_
+`close-path`_
 
-`See start-path <graphics.htm#88171>`_
+`start-path`_
 
 fill-path
 ---------
@@ -2368,7 +2368,7 @@ Arguments
          
 
 -  *drawable* An instance of type *type-union(`See
-   <sheet> <silica.htm#13118>`_, `See <medium> <silica.htm#60437>`_)*.
+   <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
 
 Values
       
@@ -2380,14 +2380,14 @@ Description
 
 Uses the current brush to fill the current path on *drawable*. If the
 path has not already been closed using `See
-close-path <graphics.htm#93626>`_, it is closed automatically.
+close-path`_, it is closed automatically.
 
 See also
         
 
-`See stroke-path <graphics.htm#37942>`_
+`stroke-path`_
 
-`See close-path <graphics.htm#93626>`_
+`close-path`_
 
 line-to
 -------
@@ -2411,7 +2411,7 @@ Arguments
          
 
 -  *drawable* An instance of type *type-union(`See
-   <sheet> <silica.htm#13118>`_, `See <medium> <silica.htm#60437>`_)*.
+   <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
 
 The following arguments are specific to *line-to*.
 
@@ -2420,7 +2420,7 @@ The following arguments are specific to *line-to*.
 
 The following argument is specific to *line-to\**.
 
--  *point* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *point* An instance of type `<transform> <geom.htm#33417>`_.
 
 Values
       
@@ -2433,10 +2433,10 @@ Description
 Draws a line from the current position in the path to (*x*,*y*).
 
 This function is used, in combination with `See
-move-to <graphics.htm#83384>`_, `See curve-to <graphics.htm#33334>`_,
-and `See arc-to <graphics.htm#33456>`_, to define a path. The function
-`See start-path <graphics.htm#88171>`_ should be used to start the
-definition of the path, and `See end-path <graphics.htm#17265>`_ can be
+move-to`_, `curve-to`_,
+and `arc-to`_, to define a path. The function
+`start-path`_ should be used to start the
+definition of the path, and `end-path`_ can be
 used to finish the definition.
 
 The function *line-to\** is identical to *line-to*, except that it
@@ -2447,15 +2447,15 @@ loss of performance.
 See also
         
 
-`See arc-to <graphics.htm#33456>`_
+`arc-to`_
 
-`See curve-to <graphics.htm#33334>`_
+`curve-to`_
 
-`See draw-bezier-curve <graphics.htm#62628>`_
+`draw-bezier-curve`_
 
-`See draw-line <graphics.htm#67791>`_
+`draw-line`_
 
-`See move-to <graphics.htm#83384>`_
+`move-to`_
 
 make-pixmap
 -----------
@@ -2476,14 +2476,14 @@ make-pixmap *medium width height* => *pixmap*
 Arguments
          
 
--  *medium* An instance of type *`See <medium> <silica.htm#60437>`_*.
+-  *medium* An instance of type *`<medium> <silica.htm#60437>`_*.
 -  *width* An instance of type *<integer>*.
 -  *height* An instance of type *<integer>*.
 
 Values
       
 
--  *pixmap* An instance of type `See <pixmap> <graphics.htm#45866>`_.
+-  *pixmap* An instance of type `<pixmap>`_.
 
 Description
            
@@ -2494,11 +2494,11 @@ by *width* and *height*.
 See also
         
 
-`See draw-pixmap <graphics.htm#15200>`_
+`draw-pixmap`_
 
-`See <pixmap> <graphics.htm#45866>`_
+`<pixmap>`_
 
-`See pixmap? <graphics.htm#21897>`_
+`pixmap?`_
 
 move-to
 -------
@@ -2522,7 +2522,7 @@ Arguments
          
 
 -  *drawable* An instance of type *type-union(`See
-   <sheet> <silica.htm#13118>`_, `See <medium> <silica.htm#60437>`_)*.
+   <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
 
 The following arguments are specific to *move-to*.
 
@@ -2531,7 +2531,7 @@ The following arguments are specific to *move-to*.
 
 The following argument is specific to *move-to\**.
 
--  *point* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *point* An instance of type `<transform> <geom.htm#33417>`_.
 
 Values
       
@@ -2544,10 +2544,10 @@ Description
 Move the position in the current path on *drawable* to (*x*,*y*).
 
 This function is used, in combination with `See
-line-to <graphics.htm#92428>`_, `See curve-to <graphics.htm#33334>`_,
-and `See arc-to <graphics.htm#33456>`_, to define a path. The function
-`See start-path <graphics.htm#88171>`_ should be used to start the
-definition of the path, and `See end-path <graphics.htm#17265>`_ can be
+line-to`_, `curve-to`_,
+and `arc-to`_, to define a path. The function
+`start-path`_ should be used to start the
+definition of the path, and `end-path`_ can be
 used to finish the definition.
 
 The function *move-to* can be used several times within the definition
@@ -2562,11 +2562,11 @@ loss of performance.
 See also
         
 
-`See arc-to <graphics.htm#33456>`_
+`arc-to`_
 
-`See curve-to <graphics.htm#33334>`_
+`curve-to`_
 
-`See line-to <graphics.htm#92428>`_
+`line-to`_
 
 <pixmap>
 --------
@@ -2582,7 +2582,7 @@ The class of pixmap objects.
 Superclasses
             
 
-`See <image> <dcs.htm#51234>`_
+`<image> <dcs.htm#51234>`_
 
 Init-keywords
              
@@ -2601,31 +2601,31 @@ associated with some display device that can then be rapidly drawn on a
 real display device. For example, an electrical CAD system might
 generate a pixmap that corresponds to a complex, frequently used part in
 a VLSI schematic, and then use `See
-copy-from-pixmap <graphics.htm#64636>`_ to draw the part as needed.
+copy-from-pixmap`_ to draw the part as needed.
 
 Operations
           
 
 The following operation is exported from the *DUIM-Graphics* module.
 
-`See copy-from-pixmap <graphics.htm#64636>`_ `See
-destroy-pixmap <graphics.htm#81195>`_ `See
-draw-image <graphics.htm#64653>`_
- `See draw-pixmap <graphics.htm#15200>`_ `See
-pixmap? <graphics.htm#21897>`_
+`copy-from-pixmap`_ `See
+destroy-pixmap`_ `See
+draw-image`_
+ `draw-pixmap`_ `See
+pixmap?`_
 
 The following operation is exported from the *DUIM-DCs* module.
 
-`See image-height <dcs.htm#44679>`_ `See image-width <dcs.htm#32781>`_
+`image-height <dcs.htm#44679>`_ `image-width <dcs.htm#32781>`_
 
 See also
         
 
-`See draw-pixmap <graphics.htm#15200>`_
+`draw-pixmap`_
 
-`See make-pixmap <graphics.htm#55252>`_
+`make-pixmap`_
 
-`See pixmap? <graphics.htm#21897>`_
+`pixmap?`_
 
 pixmap?
 -------
@@ -2661,7 +2661,7 @@ Returns true if *object* is a pixmap.
 See also
         
 
-`See <pixmap> <graphics.htm#45866>`_
+`<pixmap>`_
 
 <pixmap-medium>
 ---------------
@@ -2677,7 +2677,7 @@ The class of pixmap mediums.
 Superclasses
             
 
-*`See <medium> <silica.htm#60437>`_*
+*`<medium> <silica.htm#60437>`_*
 
 Init-keywords
              
@@ -2693,14 +2693,14 @@ a pixmap.
 Operations
           
 
--  `See with-output-to-pixmap <graphics.htm#77076>`_
+-  `with-output-to-pixmap`_
 
 See also
         
 
-`See <medium> <silica.htm#60437>`_
+`<medium> <silica.htm#60437>`_
 
-`See with-output-to-pixmap <graphics.htm#77076>`_
+`with-output-to-pixmap`_
 
 restore-clipping-region
 -----------------------
@@ -2725,7 +2725,7 @@ Arguments
          
 
 -  *drawable* An instance of type *type-union(`See
-   <sheet> <silica.htm#13118>`_, `See <medium> <silica.htm#60437>`_)*.
+   <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
 
 Values
       
@@ -2736,25 +2736,25 @@ Description
            
 
 Starts a new path on *drawable*. The path can be created with any
-number of calls to `See line-to <graphics.htm#92428>`_, `See
-curve-to <graphics.htm#33334>`_ and `See move-to <graphics.htm#83384>`_.
+number of calls to `line-to`_, `See
+curve-to`_ and `move-to`_.
 Its appearance can also be manipulated using `See
-fill-path <graphics.htm#38731>`_ and `See
-stroke-path <graphics.htm#37942>`_.
+fill-path`_ and `See
+stroke-path`_.
 
 After creating the path, use either `See
-close-path <graphics.htm#93626>`_ or `See
-end-path <graphics.htm#17265>`_ to finish the path, or `See
-abort-path <graphics.htm#49050>`_ to abandon it altogether.
+close-path`_ or `See
+end-path`_ to finish the path, or `See
+abort-path`_ to abandon it altogether.
 
 See also
         
 
-`See abort-path <graphics.htm#49050>`_
+`abort-path`_
 
-`See close-path <graphics.htm#93626>`_
+`close-path`_
 
-`See end-path <graphics.htm#17265>`_
+`end-path`_
 
 stroke-path
 -----------
@@ -2777,7 +2777,7 @@ Arguments
          
 
 -  *drawable* An instance of type *type-union(`See
-   <sheet> <silica.htm#13118>`_, `See <medium> <silica.htm#60437>`_)*.
+   <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
 
 Values
       
@@ -2789,15 +2789,15 @@ Description
 
 Uses the current pen to draw the current path on *drawable*. Note that
 the path must not have been previously filled. This function does not
-close the path: you must use `See close-path <graphics.htm#93626>`_ if
+close the path: you must use `close-path`_ if
 you wish to do this.
 
 See also
         
 
-`See close-path <graphics.htm#93626>`_
+`close-path`_
 
-`See fill-path <graphics.htm#38731>`_
+`fill-path`_
 
 with-output-to-pixmap
 ---------------------
@@ -2820,14 +2820,14 @@ Arguments
          
 
 -  *medium* An instance of type `See
-   <pixmap-medium> <graphics.htm#46456>`_.
+   <pixmap-medium>`_.
 -  *options* An instance of type *<object>*.
 -  *body* An instance of type *<object>*.
 
 Values
       
 
--  *pixmap* An instance of type `See <pixmap> <graphics.htm#45866>`_.
+-  *pixmap* An instance of type `<pixmap>`_.
 
 Description
            
@@ -2840,13 +2840,13 @@ medium supports the medium output protocol, including all of the
 graphics functions.
 
 The returned value is a pixmap that can be drawn onto *medium* using
-`See copy-from-pixmap <graphics.htm#64636>`_.
+`copy-from-pixmap`_.
 
 See also
         
 
-`See do-with-output-to-pixmap <graphics.htm#69389>`_
+`do-with-output-to-pixmap`_
 
-`See <pixmap-medium> <graphics.htm#46456>`_
+`<pixmap-medium>`_
 
 

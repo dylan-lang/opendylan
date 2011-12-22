@@ -9,7 +9,7 @@ The DUIM-Geometry library provides basic support for coordinate
 geometry. This allows the position of elements in a window object to be
 determined correctly. The library contains a single module,
 *duim-geometry*, from which all the interfaces described in this
-chapter are exposed. `See DUIM-Geometry Module <geom.htm#19112>`_
+chapter are exposed. `DUIM-Geometry Module`_
 contains complete reference entries for each exposed interface.
 
 The class hierarchy for DUIM-Geometry
@@ -22,7 +22,7 @@ direct subclasses.
 
 -  ``<transform>`` The superclass of all transforms. A transform describes
    the mapping of one set of points onto another. There are one or more
-   subclasses of `See <transform> <geom.htm#33417>`_ that implement
+   subclasses of `<transform>`_ that implement
    transforms. These subclasses have implementation-dependent names
    which are explicitly unspecified. All of the instantiable
    transformation classes provided by DUIM are immutable.
@@ -34,8 +34,8 @@ The <region> class and its subclasses
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The DUIM-Geometry library exposes the <region> class and its subclasses
-as shown in Table `See The <region> class and its
-subclasses <geom.htm#80575>`_. None of these subclasses have any further
+as shown in Table `The <region> class and its
+subclasses`_. None of these subclasses have any further
 subclasses exposed in the DUIM-Geometry library, although the
 DUIM-Extended-Geometry library exposes some subclasses of *<area>* and
 *<path>*.
@@ -77,8 +77,8 @@ Error classes provided by DUIM-Geometry
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The DUIM-Geometry library exposes a number of errors that can be
-signalled in certain circumstances. They are shown in Table `See The
-<transform-error> class and its subclasses <geom.htm#91566>`_. All the
+signalled in certain circumstances. They are shown in Table `The
+<transform-error> class and its subclasses`_. All the
 errors shown are subclasses of the *<error>* class. Note that the
 subclasses of *<transform-error>* are all specific to particular errors.
 
@@ -153,8 +153,8 @@ Arguments
 
 -  *region1* An instance of type *<region>*.
 -  *region2* An instance of type *<region>*.
--  *transform1* An instance of type `See <transform> <geom.htm#33417>`_.
--  *transform2* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *transform1* An instance of type `<transform>`_.
+-  *transform2* An instance of type `<transform>`_.
 
 Values
       
@@ -207,12 +207,12 @@ Operations
 
 The following operation is exported from the *DUIM-Geometry* module.
 
--  `See area? <geom.htm#40071>`_
+-  `area?`_
 
 See also
         
 
-`See area? <geom.htm#40071>`_
+`area?`_
 
 area?
 -----
@@ -248,7 +248,7 @@ Returns *#t* if *object* is an area, otherwise returns *#f*
 See also
         
 
-`See <area> <geom.htm#53450>`_
+`<area>`_
 
 <bounding-box>
 --------------
@@ -295,26 +295,26 @@ Operations
 
 The following operations are exported from the *DUIM-Geometry* module.
 
-`See bounding-box? <geom.htm#39724>`_ `See box-edges <geom.htm#52858>`_
-`See region-contains-position? <geom.htm#86487>`_ `See
-region-contains-region? <geom.htm#75581>`_ `See
-region-difference <geom.htm#60525>`_ `See
-region-empty? <geom.htm#64270>`_ `See
-region-intersection <geom.htm#91553>`_ `See
-region-intersects-region? <geom.htm#39735>`_ `See
-region-union <geom.htm#86722>`_ `See set-box-edges <geom.htm#54944>`_
-`See set-box-position <geom.htm#92764>`_ `See
-set-box-size <geom.htm#54554>`_ `See transform-region <geom.htm#33126>`_
-`See untransform-region <geom.htm#22517>`_
+`bounding-box?`_ `box-edges`_
+`region-contains-position?`_ `See
+region-contains-region?`_ `See
+region-difference`_ `See
+region-empty?`_ `See
+region-intersection`_ `See
+region-intersects-region?`_ `See
+region-union`_ `set-box-edges`_
+`set-box-position`_ `See
+set-box-size`_ `transform-region`_
+`untransform-region`_
 
 See also
         
 
-`See bounding-box? <geom.htm#39724>`_
+`bounding-box?`_
 
-`See bounding-box <geom.htm#42063>`_
+`bounding-box`_
 
-`See box-edges <geom.htm#52858>`_
+`box-edges`_
 
 bounding-box?
 -------------
@@ -351,11 +351,11 @@ bounding box protocol), otherwise returns *#f.*
 See also
         
 
-`See <bounding-box> <geom.htm#13662>`_
+`<bounding-box>`_
 
-`See bounding-box <geom.htm#42063>`_
+`bounding-box`_
 
-`See box-edges <geom.htm#52858>`_
+`box-edges`_
 
 bounding-box
 ------------
@@ -378,12 +378,12 @@ Arguments
 
 -  *region* An instance of type *<region>*.
 -  *into* An instance of type *false-or(`See
-   <bounding-box> <geom.htm#13662>`_)*.
+   <bounding-box>`_)*.
 
 Values
       
 
--  *box* An instance of type *`See <bounding-box> <geom.htm#13662>`_*.
+-  *box* An instance of type *`<bounding-box>`_*.
 
 Description
            
@@ -401,11 +401,11 @@ modified to contain the result.
 See also
         
 
-`See <bounding-box> <geom.htm#13662>`_
+`<bounding-box>`_
 
-`See bounding-box? <geom.htm#39724>`_
+`bounding-box?`_
 
-`See box-edges <geom.htm#52858>`_
+`box-edges`_
 
 box-bottom
 ----------
@@ -444,11 +444,11 @@ or some other object that obeys the bounding box protocol.
 See also
         
 
-`See box-left <geom.htm#94111>`_
+`box-left`_
 
-`See box-right <geom.htm#27009>`_
+`box-right`_
 
-`See box-top <geom.htm#95737>`_
+`box-top`_
 
 box-edges
 ---------
@@ -502,11 +502,11 @@ the inequalities
 See also
         
 
-`See <bounding-box> <geom.htm#13662>`_
+`<bounding-box>`_
 
-`See bounding-box? <geom.htm#39724>`_
+`bounding-box?`_
 
-`See bounding-box <geom.htm#42063>`_
+`bounding-box`_
 
 box-height
 ----------
@@ -546,11 +546,11 @@ protocol.
 See also
         
 
-`See box-position <geom.htm#70302>`_
+`box-position`_
 
-`See box-size <geom.htm#27591>`_
+`box-size`_
 
-`See box-width <geom.htm#98761>`_
+`box-width`_
 
 box-left
 --------
@@ -589,11 +589,11 @@ other object that obeys the bounding box protocol, such as a sheet.
 See also
         
 
-`See box-bottom <geom.htm#67843>`_
+`box-bottom`_
 
-`See box-right <geom.htm#27009>`_
+`box-right`_
 
-`See box-top <geom.htm#95737>`_
+`box-top`_
 
 box-position
 ------------
@@ -631,11 +631,11 @@ position of a bounding box is specified by its top left point.
 See also
         
 
-`See box-height <geom.htm#74173>`_
+`box-height`_
 
-`See box-size <geom.htm#27591>`_
+`box-size`_
 
-`See box-width <geom.htm#98761>`_
+`box-width`_
 
 box-right
 ---------
@@ -674,11 +674,11 @@ some other object that obeys the bounding box protocol, such as a sheet.
 See also
         
 
-`See box-bottom <geom.htm#67843>`_
+`box-bottom`_
 
-`See box-left <geom.htm#94111>`_
+`box-left`_
 
-`See box-top <geom.htm#95737>`_
+`box-top`_
 
 box-size
 --------
@@ -718,11 +718,11 @@ other object that obeys the bounding box protocol, such as a sheet.
 See also
         
 
-`See box-height <geom.htm#74173>`_
+`box-height`_
 
-`See box-position <geom.htm#70302>`_
+`box-position`_
 
-`See box-width <geom.htm#98761>`_
+`box-width`_
 
 box-top
 -------
@@ -761,11 +761,11 @@ other object that obeys the bounding box protocol.
 See also
         
 
-`See box-bottom <geom.htm#67843>`_
+`box-bottom`_
 
-`See box-left <geom.htm#94111>`_
+`box-left`_
 
-`See box-right <geom.htm#27009>`_
+`box-right`_
 
 box-width
 ---------
@@ -805,11 +805,11 @@ protocol, such as a sheet.
 See also
         
 
-`See box-height <geom.htm#74173>`_
+`box-height`_
 
-`See box-position <geom.htm#70302>`_
+`box-position`_
 
-`See box-size <geom.htm#27591>`_
+`box-size`_
 
 compose-rotation-with-transform
 -------------------------------
@@ -831,15 +831,15 @@ Signature
 Arguments
          
 
--  *transform* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *transform* An instance of type `<transform>`_.
 -  *angle* An instance of type *<real>*.
--  *origin* An instance of type `See <point> <geom.htm#15734>`_. Default
+-  *origin* An instance of type `<point>`_. Default
    value: (0, 0).
 
 Values
       
 
--  *transform* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *transform* An instance of type `<transform>`_.
 
 Description
            
@@ -856,7 +856,7 @@ transforms.
 See also
         
 
-`See make-rotation-transform <geom.htm#22270>`_
+`make-rotation-transform`_
 
 compose-scaling-with-transform
 ------------------------------
@@ -878,16 +878,16 @@ Signature
 Arguments
          
 
--  *transform* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *transform* An instance of type `<transform>`_.
 -  *scale-x* An instance of type *<real>*.
 -  *scale-y* An instance of type *<real>*.
--  *origin* An instance of type `See <point> <geom.htm#15734>`_. Default
+-  *origin* An instance of type `<point>`_. Default
    value: (0, 0).
 
 Values
       
 
--  *transform* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *transform* An instance of type `<transform>`_.
 
 Description
            
@@ -913,7 +913,7 @@ transforms.
 See also
         
 
-`See make-scaling-transform <geom.htm#43348>`_
+`make-scaling-transform`_
 
 compose-transforms
 ------------------
@@ -935,13 +935,13 @@ Signature
 Arguments
          
 
--  *transform1* An instance of type `See <transform> <geom.htm#33417>`_.
--  *transform2* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *transform1* An instance of type `<transform>`_.
+-  *transform2* An instance of type `<transform>`_.
 
 Values
       
 
--  *transform* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *transform* An instance of type `<transform>`_.
 
 Description
            
@@ -954,7 +954,7 @@ followed by the transform *transform1*.
 See also
         
 
-`See compose-transform-with-rotation <geom.htm#80113>`_
+`compose-transform-with-rotation`_
 
 compose-transform-with-rotation
 -------------------------------
@@ -976,15 +976,15 @@ Signature
 Arguments
          
 
--  *transform* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *transform* An instance of type `<transform>`_.
 -  *angle* An instance of type *<real>*.
--  *origin* An instance of type `See <point> <geom.htm#15734>`_. Default
+-  *origin* An instance of type `<point>`_. Default
    value: (0,0).
 
 Values
       
 
--  *transform* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *transform* An instance of type `<transform>`_.
 
 Description
            
@@ -1007,9 +1007,9 @@ transforms.
 See also
         
 
-`See compose-transforms <geom.htm#95447>`_
+`compose-transforms`_
 
-`See make-rotation-transform <geom.htm#22270>`_
+`make-rotation-transform`_
 
 compose-transform-with-scaling
 ------------------------------
@@ -1031,16 +1031,16 @@ Signature
 Arguments
          
 
--  *transform* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *transform* An instance of type `<transform>`_.
 -  *scale-x* An instance of type *<real>*.
 -  *scale-y* An instance of type *<real>*.
--  o*rigin* An instance of type `See <point> <geom.htm#15734>`_. Default
+-  o*rigin* An instance of type `<point>`_. Default
    value: (0,0).
 
 Values
       
 
--  *transform* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *transform* An instance of type `<transform>`_.
 
 Description
            
@@ -1066,9 +1066,9 @@ transforms.
 See also
         
 
-`See compose-transforms <geom.htm#95447>`_.
+`compose-transforms`_.
 
-`See make-scaling-transform <geom.htm#43348>`_
+`make-scaling-transform`_
 
 compose-transform-with-translation
 ----------------------------------
@@ -1091,14 +1091,14 @@ Signature
 Arguments
          
 
--  *transform* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *transform* An instance of type `<transform>`_.
 -  *dx* An instance of type *<real>*.
 -  *dy* An instance of type *<real>*.
 
 Values
       
 
--  *transform* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *transform* An instance of type `<transform>`_.
 
 Description
            
@@ -1121,8 +1121,8 @@ transforms.
 See also
         
 
-See the functions `See make-translation-transform <geom.htm#45959>`_ and
-`See compose-transforms <geom.htm#95447>`_.
+See the functions `make-translation-transform`_ and
+`compose-transforms`_.
 
 compose-translation-with-transform
 ----------------------------------
@@ -1145,14 +1145,14 @@ Signature
 Arguments
          
 
--  *transform* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *transform* An instance of type `<transform>`_.
 -  *dx* An instance of type *<real>*.
 -  *dy* An instance of type *<real>*.
 
 Values
       
 
--  *transform* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *transform* An instance of type `<transform>`_.
 
 Description
            
@@ -1175,8 +1175,8 @@ transforms.
 See also
         
 
-See the functions `See make-translation-transform <geom.htm#45959>`_ and
-`See compose-transforms <geom.htm#95447>`_.
+See the functions `make-translation-transform`_ and
+`compose-transforms`_.
 
 do-coordinates
 --------------
@@ -1312,7 +1312,7 @@ Signature
 Arguments
          
 
--  *transform* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *transform* An instance of type `<transform>`_.
 
 Values
       
@@ -1353,7 +1353,7 @@ drawing plane.
 See also
         
 
-`See $nowhere <geom.htm#77397>`_
+`$nowhere`_
 
 fix-coordinate
 --------------
@@ -1401,7 +1401,7 @@ transform, that is, the transform that does nothing.
 Type
     
 
-`See <transform> <geom.htm#33417>`_
+`<transform>`_
 
 Description
            
@@ -1412,7 +1412,7 @@ transform, that is, the transform that does nothing.
 See also
         
 
-`See identity-transform? <geom.htm#63353>`_
+`identity-transform?`_
 
 identity-transform?
 -------------------
@@ -1434,7 +1434,7 @@ Signature
 Arguments
          
 
--  *transform* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *transform* An instance of type `<transform>`_.
 
 Values
       
@@ -1450,7 +1450,7 @@ Returns *#t* if the transform *transform* is equal (in the sense of
 See also
         
 
-`See $identity-transform <geom.htm#70198>`_
+`$identity-transform`_
 
 invert-transform
 ----------------
@@ -1471,18 +1471,18 @@ Signature
 Arguments
          
 
--  *transform* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *transform* An instance of type `<transform>`_.
 
 Values
       
 
--  *transform* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *transform* An instance of type `<transform>`_.
 
 Exceptions
           
 
 If *transform* is singular, *invert-transform* signals the *`See
-<singular-transform> <geom.htm#69681>`_* error.
+<singular-transform>`_* error.
 
 *Note:* With finite-precision arithmetic there are several low-level
 conditions that might occur during the attempt to invert a singular or
@@ -1502,7 +1502,7 @@ identity transform.
 See also
         
 
-`See invertible-transform? <geom.htm#50889>`_
+`invertible-transform?`_
 
 invertible-transform?
 ---------------------
@@ -1523,7 +1523,7 @@ Signature
 Arguments
          
 
--  *transform* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *transform* An instance of type `<transform>`_.
 
 Values
       
@@ -1539,7 +1539,7 @@ returns *#f*.
 See also
         
 
-`See invert-transform <geom.htm#33377>`_
+`invert-transform`_
 
 $largest-coordinate
 -------------------
@@ -1565,7 +1565,7 @@ The largest valid coordinate.
 See also
         
 
-`See $smallest-coordinate <geom.htm#12594>`_
+`$smallest-coordinate`_
 
 make-3-point-transform
 ----------------------
@@ -1608,23 +1608,23 @@ The following arguments are specific to *make-3-point-transform*.
 
 The following arguments are specific to *make-3-point-transform\**.
 
--  *point-1* An instance of type `See <point> <geom.htm#15734>`_.
--  *point-2* An instance of type `See <point> <geom.htm#15734>`_.
--  *point-3* An instance of type `See <point> <geom.htm#15734>`_.
--  *point-1-image* An instance of type `See <point> <geom.htm#15734>`_.
--  *point-2-image* An instance of type `See <point> <geom.htm#15734>`_.
--  *point-3-image* An instance of type `See <point> <geom.htm#15734>`_.
+-  *point-1* An instance of type `<point>`_.
+-  *point-2* An instance of type `<point>`_.
+-  *point-3* An instance of type `<point>`_.
+-  *point-1-image* An instance of type `<point>`_.
+-  *point-2-image* An instance of type `<point>`_.
+-  *point-3-image* An instance of type `<point>`_.
 
 Values
       
 
--  *transform* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *transform* An instance of type `<transform>`_.
 
 Exceptions
           
 
 If *point-1*, *point-2* and *point-3* are colinear, the*`See
-<transform-underspecified> <geom.htm#34390>`_* error is signalled. If
+<transform-underspecified>`_* error is signalled. If
 *point-1-image*,*point-2-image* and *point-3-image* are colinear, the
 resulting transform will be singular (that is, will have no inverse) but
 this is not an error.
@@ -1669,12 +1669,12 @@ Arguments
 Values
       
 
--  *box* An instance of type *`See <bounding-box> <geom.htm#13662>`_*.
+-  *box* An instance of type *`<bounding-box>`_*.
 
 Description
            
 
-Returns an object of the class *`See <bounding-box> <geom.htm#13662>`_*
+Returns an object of the class *`<bounding-box>`_*
 with the edges specified by *x1, y1, x2*, and *y2. x1, y1, x2*, and
 *y2* are canonicalized in the following way. The min point of the box
 has an *x* coordinate that is the smaller of *x1* and *x2* and a *y*
@@ -1686,7 +1686,7 @@ and *y2* correspond to the left, top, right, and bottom edges of the
 box, respectively.)
 
 This is a convenient shorthand function for *make(`See
-<bounding-box> <geom.htm#13662>`_, left: top: right: bottom:)*
+<bounding-box>`_, left: top: right: bottom:)*
 
 make-point
 ----------
@@ -1713,7 +1713,7 @@ Arguments
 Values
       
 
--  *point* An instance of type `See <point> <geom.htm#15734>`_.
+-  *point* An instance of type `<point>`_.
 
 Description
            
@@ -1752,15 +1752,15 @@ The following arguments are specific to *make-reflection-transform*.
 
 The following arguments are specific to *make-reflection-transform\**.
 
--  *point1* An instance of type `See <point> <geom.htm#15734>`_. The
+-  *point1* An instance of type `<point>`_. The
    first point.
--  *point2* An instance of type `See <point> <geom.htm#15734>`_. The
+-  *point2* An instance of type `<point>`_. The
    second point.
 
 Values
       
 
--  *transform* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *transform* An instance of type `<transform>`_.
    The resultant transformation.
 
 Description
@@ -1787,15 +1787,15 @@ that using this function may lead to a loss of performance.
 See also
         
 
-`See make-rotation-transform <geom.htm#22270>`_
+`make-rotation-transform`_
 
-`See make-scaling-transform <geom.htm#43348>`_
+`make-scaling-transform`_
 
-`See make-transform <geom.htm#35120>`_
+`make-transform`_
 
-`See make-translation-transform <geom.htm#45959>`_
+`make-translation-transform`_
 
-`See <reflection-underspecified> <geom.htm#39961>`_
+`<reflection-underspecified>`_
 
 make-rotation-transform
 -----------------------
@@ -1830,13 +1830,13 @@ The following arguments are specific to *make-rotation-transform*.
 
 The following argument is specific to *make-reflection-transform\**.
 
--  *origin* An instance of type `See <point> <geom.htm#15734>`_. Default
+-  *origin* An instance of type `<point>`_. Default
    value: (0, 0).
 
 Values
       
 
--  *transform* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *transform* An instance of type `<transform>`_.
 
 Description
            
@@ -1857,13 +1857,13 @@ that using this function may lead to a loss of performance.
 See also
         
 
-`See make-reflection-transform <geom.htm#90832>`_
+`make-reflection-transform`_
 
-`See make-scaling-transform <geom.htm#43348>`_
+`make-scaling-transform`_
 
-`See make-transform <geom.htm#35120>`_
+`make-transform`_
 
-`See make-translation-transform <geom.htm#45959>`_
+`make-translation-transform`_
 
 make-scaling-transform
 ----------------------
@@ -1900,12 +1900,12 @@ The following arguments are specific to *make-scaling-transform*.
 
 The following argument is specific to *make-scaling-transform\**.
 
--  *origin* An instance of type `See <point> <geom.htm#15734>`_.
+-  *origin* An instance of type `<point>`_.
 
 Values
       
 
--  *transform* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *transform* An instance of type `<transform>`_.
    The resultant transformation.
 
 Description
@@ -1939,13 +1939,13 @@ that using this function may lead to a loss of performance.
 See also
         
 
-`See make-reflection-transform <geom.htm#90832>`_
+`make-reflection-transform`_
 
-`See make-rotation-transform <geom.htm#22270>`_
+`make-rotation-transform`_
 
-`See make-transform <geom.htm#35120>`_
+`make-transform`_
 
-`See make-translation-transform <geom.htm#45959>`_
+`make-translation-transform`_
 
 make-transform
 --------------
@@ -1976,7 +1976,7 @@ Arguments
 Values
       
 
--  *transform* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *transform* An instance of type `<transform>`_.
 
 Description
            
@@ -1995,18 +1995,18 @@ and *x'* and *y'* are the coordinates of the corresponding point after.
 All of the arguments to *make-transform* must be real numbers.
 
 This is a convenient shorthand for *make(* `See
-<transform> <geom.htm#33417>`_*...).*
+<transform>`_*...).*
 
 See also
         
 
-`See make-reflection-transform <geom.htm#90832>`_
+`make-reflection-transform`_
 
-`See make-rotation-transform <geom.htm#22270>`_
+`make-rotation-transform`_
 
-`See make-scaling-transform <geom.htm#43348>`_
+`make-scaling-transform`_
 
-`See make-translation-transform <geom.htm#45959>`_
+`make-translation-transform`_
 
 make-translation-transform
 --------------------------
@@ -2034,7 +2034,7 @@ Arguments
 Values
       
 
--  *transform* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *transform* An instance of type `<transform>`_.
 
 Description
            
@@ -2054,13 +2054,13 @@ orientation of all geometric entities.
 See also
         
 
-`See make-reflection-transform <geom.htm#90832>`_
+`make-reflection-transform`_
 
-`See make-rotation-transform <geom.htm#22270>`_
+`make-rotation-transform`_
 
-`See make-scaling-transform <geom.htm#43348>`_
+`make-scaling-transform`_
 
-`See make-transform <geom.htm#35120>`_
+`make-transform`_
 
 $nowhere
 --------
@@ -2071,7 +2071,7 @@ Constant
 Summary
        
 
-The empty region, the opposite of `See $everywhere <geom.htm#58430>`_.
+The empty region, the opposite of `$everywhere`_.
 
 Type
     
@@ -2081,12 +2081,12 @@ Type
 Description
            
 
-The empty region, the opposite of `See $everywhere <geom.htm#58430>`_.
+The empty region, the opposite of `$everywhere`_.
 
 See also
         
 
-`See $everywhere <geom.htm#58430>`_
+`$everywhere`_
 
 <path>
 ------
@@ -2126,12 +2126,12 @@ Operations
 
 The following operation is exported from the *DUIM-Geometry* module.
 
--  `See path? <geom.htm#99824>`_
+-  `path?`_
 
 See also
         
 
-`See path? <geom.htm#99824>`_
+`path?`_
 
 path?
 -----
@@ -2167,7 +2167,7 @@ Returns *#t* if *object* is a path, otherwise returns *#f*.
 See also
         
 
-`See <path> <geom.htm#44109>`_
+`<path>`_
 
 <point>
 -------
@@ -2203,14 +2203,14 @@ Operations
 
 The following operations are exported from the *DUIM-Geometry* module.
 
-`See = <geom.htm#82321>`_ `See box-edges <geom.htm#52858>`_ `See
-point? <geom.htm#18806>`_ `See point-position <geom.htm#41755>`_ `See
-point-x <geom.htm#43102>`_ `See point-y <geom.htm#88574>`_ `See
-region-contains-position? <geom.htm#86487>`_ `See
-region-contains-region? <geom.htm#75581>`_ `See
-region-intersection <geom.htm#91553>`_ `See
-region-intersects-region? <geom.htm#39735>`_
- `See transform-region <geom.htm#33126>`_
+`=`_ `box-edges`_ `See
+point?`_ `point-position`_ `See
+point-x`_ `point-y`_ `See
+region-contains-position?`_ `See
+region-contains-region?`_ `See
+region-intersection`_ `See
+region-intersects-region?`_
+ `transform-region`_
 
 point?
 ------
@@ -2262,7 +2262,7 @@ Signature
 Arguments
          
 
--  *point* An instance of type `See <point> <geom.htm#15734>`_.
+-  *point* An instance of type `<point>`_.
 
 Values
       
@@ -2279,9 +2279,9 @@ values.
 See also
         
 
-`See point-x <geom.htm#43102>`_
+`point-x`_
 
-`See point-y <geom.htm#88574>`_
+`point-y`_
 
 point-x
 -------
@@ -2302,7 +2302,7 @@ Signature
 Arguments
          
 
--  *point* An instance of type `See <point> <geom.htm#15734>`_.
+-  *point* An instance of type `<point>`_.
 
 Values
       
@@ -2317,9 +2317,9 @@ Returns the *x* coordinate of *point*.
 See also
         
 
-`See point-position <geom.htm#41755>`_
+`point-position`_
 
-`See point-y <geom.htm#88574>`_
+`point-y`_
 
 point-y
 -------
@@ -2340,7 +2340,7 @@ Signature
 Arguments
          
 
--  *point* An instance of type `See <point> <geom.htm#15734>`_.
+-  *point* An instance of type `<point>`_.
 
 Values
       
@@ -2355,9 +2355,9 @@ Returns the *y* coordinate of *point*.
 See also
         
 
-`See point-position <geom.htm#41755>`_
+`point-position`_
 
-`See point-x <geom.htm#43102>`_
+`point-x`_
 
 rectilinear-transform?
 ----------------------
@@ -2379,7 +2379,7 @@ Signature
 Arguments
          
 
--  *transform* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *transform* An instance of type `<transform>`_.
 
 Values
       
@@ -2420,7 +2420,7 @@ Signature
 Arguments
          
 
--  *transform* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *transform* An instance of type `<transform>`_.
 
 Values
       
@@ -2457,7 +2457,7 @@ Superclasses
 Init-keywords
              
 
--  *points:* Instances of type `See <point> <geom.htm#15734>`_.
+-  *points:* Instances of type `<point>`_.
 
 Description
            
@@ -2474,7 +2474,7 @@ Operations
 See also
         
 
-`See make-reflection-transform <geom.htm#90832>`_
+`make-reflection-transform`_
 
 <region>
 --------
@@ -2511,22 +2511,22 @@ Operations
 
 The following operations are exported from the *DUIM-Geometry* module.
 
-`See = <geom.htm#82321>`_ `See do-regions <geom.htm#61471>`_ `See
-region? <geom.htm#32123>`_ `See
-region-contains-position? <geom.htm#86487>`_ `See
-region-contains-region? <geom.htm#75581>`_ `See
-region-difference <geom.htm#60525>`_ `See
-region-empty? <geom.htm#64270>`_ `See region-equal <geom.htm#63464>`_
-`See region-intersection <geom.htm#91553>`_ `See
-region-intersects-region? <geom.htm#39735>`_ `See
-region-set-function <geom.htm#21062>`_ `See
-region-set-regions <geom.htm#94248>`_ `See
-region-union <geom.htm#86722>`_
+`=`_ `do-regions`_ `See
+region?`_ `See
+region-contains-position?`_ `See
+region-contains-region?`_ `See
+region-difference`_ `See
+region-empty?`_ `region-equal`_
+`region-intersection`_ `See
+region-intersects-region?`_ `See
+region-set-function`_ `See
+region-set-regions`_ `See
+region-union`_
 
 See also
         
 
-`See region? <geom.htm#32123>`_
+`region?`_
 
 region?
 -------
@@ -2562,7 +2562,7 @@ Returns *#t* if *object* is a region, otherwise returns*#f*.
 See also
         
 
-`See <region> <geom.htm#79228>`_
+`<region>`_
 
 region-contains-position?
 -------------------------
@@ -2602,7 +2602,7 @@ otherwise returns *#f*. Since regions in DUIM are closed, this returns
 See also
         
 
-`See region-contains-region? <geom.htm#75581>`_
+`region-contains-region?`_
 
 region-contains-region?
 -----------------------
@@ -2643,7 +2643,7 @@ the point *x,y*.
 See also
         
 
-`See region-contains-position? <geom.htm#86487>`_.
+`region-contains-position?`_.
 
 region-difference
 -----------------
@@ -2802,7 +2802,7 @@ region set.
 See also
         
 
-`See region-union <geom.htm#86722>`_
+`region-union`_
 
 region-intersects-region?
 -------------------------
@@ -2869,20 +2869,20 @@ Operations
 
 The following operations are exported from the *DUIM-Geometry* module.
 
-`See box-edges <geom.htm#52858>`_ `See do-regions <geom.htm#61471>`_
-`See region-contains-position? <geom.htm#86487>`_ `See
-region-contains-region? <geom.htm#75581>`_ `See
-region-difference <geom.htm#60525>`_ `See
-region-empty? <geom.htm#64270>`_ `See
-region-intersection <geom.htm#91553>`_ `See
-region-set-function <geom.htm#21062>`_ `See
-region-set-regions <geom.htm#94248>`_ `See
-region-union <geom.htm#86722>`_ `See transform-region <geom.htm#33126>`_
+`box-edges`_ `do-regions`_
+`region-contains-position?`_ `See
+region-contains-region?`_ `See
+region-difference`_ `See
+region-empty?`_ `See
+region-intersection`_ `See
+region-set-function`_ `See
+region-set-regions`_ `See
+region-union`_ `transform-region`_
 
 See also
         
 
-`See region-set? <geom.htm#41957>`_
+`region-set?`_
 
 region-set?
 -----------
@@ -2918,7 +2918,7 @@ Returns *#t* if *object* is a region set, otherwise returns *#f*.
 See also
         
 
-`See <region-set> <geom.htm#48728>`_
+`<region-set>`_
 
 region-set-function
 -------------------
@@ -3048,7 +3048,7 @@ set.
 See also
         
 
-`See region-intersection <geom.htm#91553>`_
+`region-intersection`_
 
 rigid-transform?
 ----------------
@@ -3070,7 +3070,7 @@ Signature
 Arguments
          
 
--  *transform* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *transform* An instance of type `<transform>`_.
 
 Values
       
@@ -3108,7 +3108,7 @@ Signature
 Arguments
          
 
--  *transform* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *transform* An instance of type `<transform>`_.
 
 Values
       
@@ -3141,7 +3141,7 @@ Signature
 Arguments
          
 
--  *box* An instance of type *`See <bounding-box> <geom.htm#13662>`_*.
+-  *box* An instance of type *`<bounding-box>`_*.
 -  *left* An instance of type *<integer>*.
 -  *top* An instance of type *<integer>*.
 -  *right* An instance of type *<integer>*.
@@ -3150,7 +3150,7 @@ Arguments
 Values
       
 
--  *box* An instance of type *`See <bounding-box> <geom.htm#13662>`_*.
+-  *box* An instance of type *`<bounding-box>`_*.
 
 Description
            
@@ -3178,14 +3178,14 @@ Signature
 Arguments
          
 
--  *box* An instance of type *`See <bounding-box> <geom.htm#13662>`_*.
+-  *box* An instance of type *`<bounding-box>`_*.
 -  *x* An instance of type *<real>*.
 -  *y* An instance of type *<real>*.
 
 Values
       
 
--  *box* An instance of type *`See <bounding-box> <geom.htm#13662>`_*.
+-  *box* An instance of type *`<bounding-box>`_*.
 
 Description
            
@@ -3212,14 +3212,14 @@ Signature
 Arguments
          
 
--  *box* An instance of type *`See <bounding-box> <geom.htm#13662>`_*.
+-  *box* An instance of type *`<bounding-box>`_*.
 -  *width* An instance of type <*integer* >.
 -  *height* An instance of type <*integer* >
 
 Values
       
 
--  *box* An instance of type *`See <bounding-box> <geom.htm#13662>`_*.
+-  *box* An instance of type *`<bounding-box>`_*.
 
 Description
            
@@ -3265,7 +3265,7 @@ Operations
 See also
         
 
-`See invert-transform <geom.htm#33377>`_
+`invert-transform`_
 
 $smallest-coordinate
 --------------------
@@ -3292,7 +3292,7 @@ The smallest valid coordinate. Coordinates must be instances of type
 See also
         
 
-`See $largest-coordinate <geom.htm#14135>`_
+`$largest-coordinate`_
 
 <transform>
 -----------
@@ -3324,7 +3324,7 @@ Description
            
 
 The superclass of all transforms. There are one or more subclasses of
-`See <transform> <geom.htm#33417>`_ with implementation-dependent names
+`<transform>`_ with implementation-dependent names
 that implement transforms. The exact names of these classes is
 explicitly unspecified.
 
@@ -3336,36 +3336,36 @@ Operations
 
 The following operations are exported from the *DUIM-Geometry* module.
 
-`See = <geom.htm#82321>`_ `See
-compose-rotation-with-transform <geom.htm#63690>`_ `See
-compose-scaling-with-transform <geom.htm#32626>`_ `See
-compose-transforms <geom.htm#95447>`_ `See
-compose-transform-with-translation <geom.htm#57177>`_ `See
-compose-translation-with-transform <geom.htm#58516>`_ `See
-even-scaling-transform? <geom.htm#81227>`_ `See
-identity-transform? <geom.htm#63353>`_ `See
-invert-transform <geom.htm#33377>`_ `See
-invertible-transform? <geom.htm#50889>`_
- `See rectilinear-transform? <geom.htm#49538>`_ `See
-reflection-transform? <geom.htm#87249>`_ `See
-rigid-transform? <geom.htm#98670>`_ `See
-scaling-transform? <geom.htm#16556>`_ `See transform? <geom.htm#31378>`_
-`See transform-angles <geom.htm#38466>`_ `See
-transform-box <geom.htm#43927>`_ `See
-transform-distance <geom.htm#93350>`_ `See
-transform-position <geom.htm#65509>`_ `See
-transform-region <geom.htm#33126>`_ `See
-translation-transform? <geom.htm#82888>`_ `See
-untransform-angles <geom.htm#46591>`_ `See
-untransform-box <geom.htm#53203>`_
- `See untransform-distance <geom.htm#21472>`_ `See
-untransform-position <geom.htm#58790>`_
- `See untransform-region <geom.htm#22517>`_
+`=`_ `See
+compose-rotation-with-transform`_ `See
+compose-scaling-with-transform`_ `See
+compose-transforms`_ `See
+compose-transform-with-translation`_ `See
+compose-translation-with-transform`_ `See
+even-scaling-transform?`_ `See
+identity-transform?`_ `See
+invert-transform`_ `See
+invertible-transform?`_
+ `rectilinear-transform?`_ `See
+reflection-transform?`_ `See
+rigid-transform?`_ `See
+scaling-transform?`_ `transform?`_
+`transform-angles`_ `See
+transform-box`_ `See
+transform-distance`_ `See
+transform-position`_ `See
+transform-region`_ `See
+translation-transform?`_ `See
+untransform-angles`_ `See
+untransform-box`_
+ `untransform-distance`_ `See
+untransform-position`_
+ `untransform-region`_
 
 See also
         
 
-`See transform? <geom.htm#31378>`_
+`transform?`_
 
 transform?
 ----------
@@ -3401,7 +3401,7 @@ Returns *#t* if *object* is a transform, otherwise returns *#f*.
 See also
         
 
-`See <transform> <geom.htm#33417>`_
+`<transform>`_
 
 transform-angles
 ----------------
@@ -3424,7 +3424,7 @@ Signature
 Arguments
          
 
--  *transform* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *transform* An instance of type `<transform>`_.
 -  *start-angle* An instance of type *<real>*.
 -  *end-angle* An instance of type *<real>*.
 
@@ -3461,7 +3461,7 @@ bottom*
 Arguments
          
 
--  *transform* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *transform* An instance of type `<transform>`_.
 -  *x1* An instance of type *<real>*.
 -  *y1* An instance of type *<real>*.
 -  *x2* An instance of type *<real>*.
@@ -3480,7 +3480,7 @@ Description
 
 Applies the transform *transform* to the rectangle specified by the four
 coordinate arguments. *transform-box* is the spread version of `See
-transform-region <geom.htm#33126>`_ in the case where the transform is
+transform-region`_ in the case where the transform is
 rectilinear and the region is a rectangle.
 
 The arguments *x1*, *y1*, *x2*, and *y2* are canonicalized and the
@@ -3489,7 +3489,7 @@ transformed rectangle in the order *left*, *top*, *right*, and
 *bottom*.
 
 An error is signalled if *transform* does not satisfy `See
-rectilinear-transform? <geom.htm#49538>`_.
+rectilinear-transform?`_.
 
 transform-distance
 ------------------
@@ -3511,7 +3511,7 @@ Signature
 Arguments
          
 
--  *transform* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *transform* An instance of type `<transform>`_.
 -  *dx* An instance of type *<real>*.
 -  *dy* An instance of type *<real>*.
 
@@ -3555,9 +3555,9 @@ Description
            
 
 The class that is the superclass of three error conditions, *`See
-<transform-underspecified> <geom.htm#34390>`_*,
- `See <reflection-underspecified> <geom.htm#39961>`_*,* and
- `See <singular-transform> <geom.htm#69681>`_.
+<transform-underspecified>`_*,
+ `<reflection-underspecified>`_*,* and
+ `<singular-transform>`_.
 
 Operations
           
@@ -3583,7 +3583,7 @@ Signature
 Arguments
          
 
--  *transform* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *transform* An instance of type `<transform>`_.
 -  *x* An instance of type *<real>*
 -  *y* An instance of type *<real>*
 
@@ -3598,7 +3598,7 @@ Description
 
 Applies the transform *transform* } to the point whose coordinates are
 *x* and *y*.*transform-position* is the *spread* version of `See
-transform-region <geom.htm#33126>`_ in the case where the region is a
+transform-region`_ in the case where the region is a
 point.
 
 transform-region
@@ -3620,7 +3620,7 @@ Signature
 Arguments
          
 
--  *transform* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *transform* An instance of type `<transform>`_.
 -  *region* An instance of type *<region>*.
 
 Values
@@ -3671,7 +3671,7 @@ Operations
 See also
         
 
-`See make-3-point-transform <geom.htm#85358>`_
+`make-3-point-transform`_
 
 translation-transform?
 ----------------------
@@ -3694,7 +3694,7 @@ Signature
 Arguments
          
 
--  *transform* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *transform* An instance of type `<transform>`_.
 
 Values
       
@@ -3730,7 +3730,7 @@ Signature
 Arguments
          
 
--  *transform* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *transform* An instance of type `<transform>`_.
 -  *start-angle* An instance of type *<real>*.
 -  *end-angle* An instance of type *<real>*.
 
@@ -3775,7 +3775,7 @@ Signature
 Arguments
          
 
--  *transform* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *transform* An instance of type `<transform>`_.
 -  *x1* An instance of type *<real>*.
 -  *y1* An instance of type *<real>*.
 -  *x2* An instance of type *<real>*.
@@ -3824,7 +3824,7 @@ Signature
 Arguments
          
 
--  *transform* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *transform* An instance of type `<transform>`_.
 -  *dx* An instance of type *<real>*.
 -  *dy* An instance of type *<real>*.
 
@@ -3868,7 +3868,7 @@ Signature
 Arguments
          
 
--  *transform* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *transform* An instance of type `<transform>`_.
 -  *x* An instance of type *<real>*.
 -  *y* An instance of type *<real>*.
 
@@ -3912,7 +3912,7 @@ Signature
 Arguments
          
 
--  *transform* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *transform* An instance of type `<transform>`_.
 -  *region2* An instance of type *<region>*. The region to untransform.
 
 Values

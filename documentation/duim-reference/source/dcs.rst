@@ -7,8 +7,8 @@ Overview
 
 The DUIM-DCs library provides color support to the DUIM library. The
 library contains a single module, *duim-dcs*, from which all the
-interfaces described in this chapter are exposed. `See DUIM-DCs
-Module <dcs.htm#71301>`_ contains complete reference entries for each
+interfaces described in this chapter are exposed. `DUIM-DCs
+Module`_ contains complete reference entries for each
 exposed interface.
 
 Throughout this chapter, a *drawing context* consists of the combination
@@ -19,8 +19,8 @@ The class hierarchy for DUIM-DCs
 ================================
 
 A number of base classes are exposed in the DUIM-DCs library, each of
-which is a subclass of *<object>*. They are shown in Table `See Overall
-class hierarchy for the DUIM-DCs library <dcs.htm#80940>`_.
+which is a subclass of *<object>*. They are shown in Table `Overall
+class hierarchy for the DUIM-DCs library`_.
 
 Overall class hierarchy for the DUIM-DCs library
                                                 
@@ -39,7 +39,7 @@ Overall class hierarchy for the DUIM-DCs library
 
 <ink>
 
-See `See Subclasses of <ink> <dcs.htm#98762>`_
+See `Subclasses of <ink>`_
 
 <text-style>
 
@@ -57,8 +57,8 @@ See `See Subclasses of <ink> <dcs.htm#98762>`_
    used by a given pen or brush. That is, the pen and brush define the
    drawing style (outlining or filling, respectively), and an ink is
    used to describe the color or pattern that is drawn. This class has a
-   number of subclasses, described in `See Subclasses of
-   <ink> <dcs.htm#98762>`_.
+   number of subclasses, described in `Subclasses of
+   <ink>`_.
 -  *<text-style>* The protocol class for text styles. A text style is a
    portable way of describing the appearance of a piece of text on
    screen (its font family, size, weight, and so on) in an abstract
@@ -135,16 +135,16 @@ Signature
 
 Arguments
 
--  *color1* An instance of type `See <color> <dcs.htm#55341>`_.
--  *color2* An instance of type `See <color> <dcs.htm#55341>`_.
--  *pen1* An instance of type `See <pen> <dcs.htm#41757>`_.
--  *pen2* An instance of type `See <pen> <dcs.htm#41757>`_.
--  *brush1* An instance of type `See <brush> <dcs.htm#29492>`_.
--  *brush2* An instance of type `See <brush> <dcs.htm#29492>`_.
+-  *color1* An instance of type `<color>`_.
+-  *color2* An instance of type `<color>`_.
+-  *pen1* An instance of type `<pen>`_.
+-  *pen2* An instance of type `<pen>`_.
+-  *brush1* An instance of type `<brush>`_.
+-  *brush2* An instance of type `<brush>`_.
 -  *text-style1* An instance of type `See
-   <text-style> <dcs.htm#85385>`_.
+   <text-style>`_.
 -  *text-style2* An instance of type `See
-   <text-style> <dcs.htm#85385>`_.
+   <text-style>`_.
 
 Values
 
@@ -174,13 +174,13 @@ Signature
 Arguments
          
 
--  *palette* An instance of type `See <palette> <dcs.htm#11494>`_.
--  *colors* Instances of type `See <color> <dcs.htm#55341>`_.
+-  *palette* An instance of type `<palette>`_.
+-  *colors* Instances of type `<color>`_.
 
 Values
       
 
--  *palette* An instance of type `See <palette> <dcs.htm#11494>`_.
+-  *palette* An instance of type `<palette>`_.
 
 Description
            
@@ -201,7 +201,7 @@ An indirect ink that uses the medium's background design.
 Type
     
 
-`See <ink> <dcs.htm#15007>`_
+`<ink>`_
                             
 
 Description
@@ -212,9 +212,9 @@ An indirect ink that uses the medium's background design.
 See also
         
 
-`See <palette> <dcs.htm#22591>`_
+`<palette>`_
 
-`See image-height <dcs.htm#44679>`_
+`image-height`_
 
 $black
 ------
@@ -230,7 +230,7 @@ The usual definition of black.
 Type
     
 
-`See <color> <dcs.htm#55341>`_
+`<color>`_
                               
 
 Description
@@ -242,7 +242,7 @@ color model, its value is *000*.
 See also
         
 
-`See <color> <dcs.htm#55341>`_
+`<color>`_
 
 $blue
 -----
@@ -258,7 +258,7 @@ The usual definition of the color blue.
 Type
     
 
-`See <color> <dcs.htm#55341>`_
+`<color>`_
                               
 
 Description
@@ -269,7 +269,7 @@ The usual definition of the color blue.
 See also
         
 
-`See <color> <dcs.htm#55341>`_
+`<color>`_
 
 $boole-clr
 ----------
@@ -682,7 +682,7 @@ and vertical lines in the pattern of the mortar in a brick wall.
 See also
         
 
-`See brush-stipple <dcs.htm#15280>`_
+`brush-stipple`_
 
 <brush>
 -------
@@ -704,8 +704,8 @@ Superclasses
 Init-keywords
              
 
--  *foreground:* An instance of type `See <ink> <dcs.htm#15007>`_.
--  *background:* An instance of type `See <ink> <dcs.htm#15007>`_.
+-  *foreground:* An instance of type `<ink>`_.
+-  *background:* An instance of type `<ink>`_.
 -  *mode:* An instance of type *<integer>*.
 -  *fill-style:* An instance of type *false-or(<integer>)*. Default
    value: *#f*.
@@ -728,19 +728,19 @@ Operations
 
 The following operations are exported from the *DUIM-DCs* module.
 
-`See = <dcs.htm#33460>`_ `See brush? <dcs.htm#22718>`_ `See
-brush-background <dcs.htm#14082>`_ `See
-brush-fill-rule <dcs.htm#18072>`_ `See
-brush-fill-style <dcs.htm#50315>`_ `See
-brush-foreground <dcs.htm#65828>`_ `See brush-mode <dcs.htm#64704>`_
-`See brush-stipple <dcs.htm#15280>`_ `See
-brush-stretch-mode <dcs.htm#45680>`_ `See brush-tile <dcs.htm#85529>`_
-`See brush-ts-x <dcs.htm#99193>`_ `See brush-ts-y <dcs.htm#12940>`_
+`=`_ `brush?`_ `See
+brush-background`_ `See
+brush-fill-rule`_ `See
+brush-fill-style`_ `See
+brush-foreground`_ `brush-mode`_
+`brush-stipple`_ `See
+brush-stretch-mode`_ `brush-tile`_
+`brush-ts-x`_ `brush-ts-y`_
 
 See also
         
 
-`See make <dcs.htm#81960>`_
+`make`_
 
 brush?
 ------
@@ -794,12 +794,12 @@ Signature
 Arguments
          
 
--  *brush* An instance of type `See <brush> <dcs.htm#29492>`_.
+-  *brush* An instance of type `<brush>`_.
 
 Values
       
 
--  *ink* An instance of type `See <ink> <dcs.htm#15007>`_.
+-  *ink* An instance of type `<ink>`_.
 
 Description
            
@@ -809,7 +809,7 @@ Returns the *ink* that is the background color of *brush*.
 See also
         
 
-`See brush-fill-rule <dcs.htm#18072>`_
+`brush-fill-rule`_
 
 brush-fill-rule
 ---------------
@@ -831,7 +831,7 @@ Signature
 Arguments
          
 
--  *brush* An instance of type `See <brush> <dcs.htm#29492>`_.
+-  *brush* An instance of type `<brush>`_.
 
 Values
       
@@ -847,7 +847,7 @@ fill rule.
 See also
         
 
-`See brush-fill-style <dcs.htm#50315>`_
+`brush-fill-style`_
 
 brush-fill-style
 ----------------
@@ -869,7 +869,7 @@ Signature
 Arguments
          
 
--  *brush* An instance of type `See <brush> <dcs.htm#29492>`_.
+-  *brush* An instance of type `<brush>`_.
 
 Values
       
@@ -885,7 +885,7 @@ fill style.
 See also
         
 
-`See brush-fill-rule <dcs.htm#18072>`_.
+`brush-fill-rule`_.
 
 brush-foreground
 ----------------
@@ -907,12 +907,12 @@ Signature
 Arguments
          
 
--  *brush* An instance of type `See <brush> <dcs.htm#29492>`_.
+-  *brush* An instance of type `<brush>`_.
 
 Values
       
 
--  *ink* An instance of type `See <ink> <dcs.htm#15007>`_.
+-  *ink* An instance of type `<ink>`_.
 
 Description
            
@@ -922,7 +922,7 @@ Returns the *ink* that is the foreground color of *brush*.
 See also
         
 
-`See brush-stipple <dcs.htm#55088>`_.
+`brush-stipple`_.
 
 brush-mode
 ----------
@@ -944,7 +944,7 @@ Signature
 Arguments
          
 
--  *brush* An instance of type `See <brush> <dcs.htm#29492>`_.
+-  *brush* An instance of type `<brush>`_.
 
 Values
       
@@ -960,7 +960,7 @@ Returns an integer representing the drawing mode of *brush*.
 See also
         
 
-`See $boole-1 <dcs.htm#36174>`_.
+`$boole-1`_.
 
 brush-stipple
 -------------
@@ -982,7 +982,7 @@ Signature
 Arguments
          
 
--  *brush* An instance of type `See <brush> <dcs.htm#29492>`_.
+-  *brush* An instance of type `<brush>`_.
 
 Values
       
@@ -997,11 +997,11 @@ Returns the stipple pattern of *brush*.
 See also
         
 
-`See brush-tile <dcs.htm#85529>`_
+`brush-tile`_
 
-`See brush-fill-rule <dcs.htm#81564>`_
+`brush-fill-rule`_
 
-`See brush-fill-style <dcs.htm#50315>`_
+`brush-fill-style`_
 
 brush-stretch-mode
 ------------------
@@ -1023,7 +1023,7 @@ Signature
 Arguments
          
 
--  *brush* An instance of type `See <brush> <dcs.htm#29492>`_.
+-  *brush* An instance of type `<brush>`_.
 
 Values
       
@@ -1055,7 +1055,7 @@ Signature
 Arguments
          
 
--  *brush* An instance of type `See <brush> <dcs.htm#29492>`_.
+-  *brush* An instance of type `<brush>`_.
 
 Values
       
@@ -1070,9 +1070,9 @@ Returns the tile pattern of *brush*.
 See also
         
 
-`See brush-stipple <dcs.htm#15280>`_.
+`brush-stipple`_.
 
-`See brush-ts-x <dcs.htm#99193>`_ and `See brush-ts-y <dcs.htm#12940>`_.
+`brush-ts-x`_ and `brush-ts-y`_.
 
 brush-ts-x
 ----------
@@ -1095,7 +1095,7 @@ Signature
 Arguments
          
 
--  *brush* An instance of type `See <brush> <dcs.htm#29492>`_.
+-  *brush* An instance of type `<brush>`_.
 
 Values
       
@@ -1112,7 +1112,7 @@ pattern, *brush-ts-x* returns *#f.*
 See also
         
 
-`See brush-ts-y <dcs.htm#12940>`_.
+`brush-ts-y`_.
 
 brush-ts-y
 ----------
@@ -1135,7 +1135,7 @@ Signature
 Arguments
          
 
--  *brush* An instance of type `See <brush> <dcs.htm#29492>`_.
+-  *brush* An instance of type `<brush>`_.
 
 Values
       
@@ -1152,7 +1152,7 @@ pattern, *brush-ts-y* returns *#f.*
 See also
         
 
-`See brush-ts-x <dcs.htm#99193>`_.
+`brush-ts-x`_.
 
 <color>
 -------
@@ -1168,7 +1168,7 @@ The protocol class for colors.
 Superclasses
             
 
-`See <ink> <dcs.htm#15007>`_
+`<ink>`_
                             
 
 Init-keywords
@@ -1187,7 +1187,7 @@ Description
            
 
 The *<color>* class is the protocol class for a color, and is a subclass
-of `See <ink> <dcs.htm#15007>`_. A member of the class *<color>* is an
+of `<ink>`_. A member of the class *<color>* is an
 ink that represents the intuitive definition of color: white, black,
 red, pale yellow, and so forth. The visual appearance of a single point
 is completely described by its color. Drawing a color sets the color of
@@ -1236,26 +1236,26 @@ Operations
 
 The following operations are exported from the *DUIM-DCs* module.
 
-`See = <dcs.htm#33460>`_ `See color? <dcs.htm#29100>`_ `See
-color-rgb <dcs.htm#57760>`_ `See color-ihs <dcs.htm#59844>`_ `See
-color-luminosity <dcs.htm#89130>`_
+`=`_ `color?`_ `See
+color-rgb`_ `color-ihs`_ `See
+color-luminosity`_
 
 See also
         
 
-`See color? <dcs.htm#29100>`_
+`color?`_
 
-`See color-ihs <dcs.htm#59844>`_
+`color-ihs`_
 
-`See color-luminosity <dcs.htm#89130>`_
+`color-luminosity`_
 
-`See <color-not-found> <dcs.htm#38318>`_
+`<color-not-found>`_
 
-`See color-palette? <dcs.htm#60680>`_
+`color-palette?`_
 
-`See color-rgb <dcs.htm#57760>`_
+`color-rgb`_
 
-`See <ink> <dcs.htm#15007>`_
+`<ink>`_
 
 color?
 ------
@@ -1292,17 +1292,17 @@ Returns *#t* if object is a color, otherwise returns *#f*.
 See also
         
 
-`See <color> <dcs.htm#55341>`_
+`<color>`_
 
-`See color-ihs <dcs.htm#59844>`_
+`color-ihs`_
 
-`See color-luminosity <dcs.htm#89130>`_
+`color-luminosity`_
 
-`See <color-not-found> <dcs.htm#38318>`_
+`<color-not-found>`_
 
-`See color-palette? <dcs.htm#60680>`_
+`color-palette?`_
 
-`See color-rgb <dcs.htm#57760>`_
+`color-rgb`_
 
 color-ihs
 ---------
@@ -1325,7 +1325,7 @@ Signature
 Arguments
          
 
--  *color* An instance of type `See <color> <dcs.htm#55341>`_.
+-  *color* An instance of type `<color>`_.
 
 Values
       
@@ -1347,15 +1347,15 @@ values are real numbers between *0* and *1* (inclusive).
 See also
         
 
-`See <color> <dcs.htm#55341>`_
+`<color>`_
 
-`See color? <dcs.htm#29100>`_
+`color?`_
 
-`See color-luminosity <dcs.htm#89130>`_
+`color-luminosity`_
 
-`See color-palette? <dcs.htm#60680>`_
+`color-palette?`_
 
-`See color-rgb <dcs.htm#57760>`_
+`color-rgb`_
 
 color-luminosity
 ----------------
@@ -1377,7 +1377,7 @@ Signature
 Arguments
          
 
--  *color* An instance of type `See <color> <dcs.htm#55341>`_.
+-  *color* An instance of type `<color>`_.
 
 Values
       
@@ -1394,15 +1394,15 @@ perception of the color by the human retina.
 See also
         
 
-`See <color> <dcs.htm#55341>`_
+`<color>`_
 
-`See color? <dcs.htm#29100>`_
+`color?`_
 
-`See color-ihs <dcs.htm#59844>`_
+`color-ihs`_
 
-`See color-palette? <dcs.htm#60680>`_
+`color-palette?`_
 
-`See color-rgb <dcs.htm#57760>`_
+`color-rgb`_
 
 <color-not-found>
 -----------------
@@ -1431,7 +1431,7 @@ Superclasses
 Init-keywords
              
 
--  *color:* An instance of type `See <color> <dcs.htm#55341>`_.
+-  *color:* An instance of type `<color>`_.
 
 Description
            
@@ -1448,11 +1448,11 @@ Operations
 See also
         
 
-`See <color> <dcs.htm#55341>`_
+`<color>`_
 
-`See find-color <dcs.htm#33969>`_
+`find-color`_
 
-`See remove-colors <dcs.htm#25018>`_`See find-color <dcs.htm#33969>`_
+`remove-colors`_`find-color`_
 
 color-palette?
 --------------
@@ -1474,7 +1474,7 @@ Signature
 Arguments
          
 
--  *palette* An instance of type `See <palette> <dcs.htm#11494>`_.
+-  *palette* An instance of type `<palette>`_.
 
 Values
       
@@ -1489,15 +1489,15 @@ Returns *#t* if the stream or medium supports color.
 See also
         
 
-`See <color> <dcs.htm#55341>`_
+`<color>`_
 
-`See color? <dcs.htm#29100>`_
+`color?`_
 
-`See color-ihs <dcs.htm#59844>`_
+`color-ihs`_
 
-`See color-luminosity <dcs.htm#89130>`_
+`color-luminosity`_
 
-`See color-rgb <dcs.htm#57760>`_
+`color-rgb`_
 
 color-rgb
 ---------
@@ -1520,7 +1520,7 @@ Signature
 Arguments
          
 
--  *color* An instance of type `See <color> <dcs.htm#55341>`_.
+-  *color* An instance of type `<color>`_.
 
 Values
       
@@ -1540,15 +1540,15 @@ and 1 (inclusive).
 See also
         
 
-`See <color> <dcs.htm#55341>`_
+`<color>`_
 
-`See color? <dcs.htm#29100>`_
+`color?`_
 
-`See color-ihs <dcs.htm#59844>`_
+`color-ihs`_
 
-`See color-luminosity <dcs.htm#89130>`_
+`color-luminosity`_
 
-`See color-palette? <dcs.htm#60680>`_
+`color-palette?`_
 
 contrasting-colors-limit
 ------------------------
@@ -1590,9 +1590,9 @@ protocol must implement a method for this generic function.
 See also
         
 
-`See contrasting-dash-patterns-limit <dcs.htm#18054>`_
+`contrasting-dash-patterns-limit`_
 
-`See make-contrasting-colors <dcs.htm#31494>`_
+`make-contrasting-colors`_
 
 contrasting-dash-patterns-limit
 -------------------------------
@@ -1631,9 +1631,9 @@ can generate.
 See also
         
 
-`See contrasting-colors-limit <dcs.htm#43277>`_
+`contrasting-colors-limit`_
 
-`See make-contrasting-dash-patterns <dcs.htm#23504>`_
+`make-contrasting-dash-patterns`_
 
 $cross-hatch
 ------------
@@ -1662,7 +1662,7 @@ solid and dashed lines.
 See also
         
 
-`See <color> <dcs.htm#55341>`_.
+`<color>`_.
 
 $cyan
 -----
@@ -1678,7 +1678,7 @@ The usual definition for the color cyan.
 Type
     
 
-`See <color> <dcs.htm#55341>`_
+`<color>`_
                               
 
 Description
@@ -1689,7 +1689,7 @@ The usual definition for the color cyan.
 See also
         
 
-`See <color> <dcs.htm#55341>`_.
+`<color>`_.
 
 $dash-dot-dot-pen
 -----------------
@@ -1705,7 +1705,7 @@ A pen that draws a line with two dots between each dash.
 Type
     
 
-`See <pen> <dcs.htm#41757>`_
+`<pen>`_
                             
 
 Description
@@ -1717,15 +1717,15 @@ is *1* and *dashes:* is *#[4, 1, 1, 1, 1, 1]*.
 See also
         
 
-`See <pen> <dcs.htm#41757>`_
+`<pen>`_
 
-`See $solid-pen <dcs.htm#80297>`_
+`$solid-pen`_
 
-`See $magenta <dcs.htm#41161>`_
+`$magenta`_
 
-`See $dash-dot-pen <dcs.htm#55453>`_
+`$dash-dot-pen`_
 
-`See $dotted-pen <dcs.htm#76677>`_
+`$dotted-pen`_
 
 $dash-dot-pen
 -------------
@@ -1741,7 +1741,7 @@ A pen that draws a dashed and dotted line.
 Type
     
 
-`See <pen> <dcs.htm#41757>`_
+`<pen>`_
                             
 
 Description
@@ -1753,15 +1753,15 @@ A pen that draws a dashed and dotted line. The line width is *1* and
 See also
         
 
-`See <pen> <dcs.htm#41757>`_
+`<pen>`_
 
-`See $solid-pen <dcs.htm#80297>`_
+`$solid-pen`_
 
-`See $magenta <dcs.htm#41161>`_
+`$magenta`_
 
-`See $dash-dot-pen <dcs.htm#55453>`_
+`$dash-dot-pen`_
 
-`See $dotted-pen <dcs.htm#76677>`_
+`$dotted-pen`_
 
 $dashed-pen
 -----------
@@ -1777,7 +1777,7 @@ A pen that draws a dashed line.
 Type
     
 
-`See <pen> <dcs.htm#41757>`_
+`<pen>`_
                             
 
 Description
@@ -1789,15 +1789,15 @@ A pen that draws a dashed line. The line width is *1* and *dashes:* is
 See also
         
 
-`See <pen> <dcs.htm#41757>`_
+`<pen>`_
 
-`See $solid-pen <dcs.htm#57039>`_
+`$solid-pen`_
 
-`See $magenta <dcs.htm#41161>`_
+`$magenta`_
 
-`See $dash-dot-pen <dcs.htm#55453>`_
+`$dash-dot-pen`_
 
-`See $dotted-pen <dcs.htm#76677>`_
+`$dotted-pen`_
 
 default-background
 ------------------
@@ -1824,7 +1824,7 @@ Arguments
 Values
       
 
--  *background* An instance of type `See <ink> <dcs.htm#15007>`_.
+-  *background* An instance of type `<ink>`_.
 
 Description
            
@@ -1834,11 +1834,11 @@ Returns the ink that is the default background of its argument.
 See also
         
 
-`See brush-fill-style <dcs.htm#50315>`_.
+`brush-fill-style`_.
 
-`See default-background-setter <dcs.htm#32743>`_.
+`default-background-setter`_.
 
-`See default-foreground <dcs.htm#40602>`_
+`default-foreground`_
 
 default-background-setter
 -------------------------
@@ -1860,13 +1860,13 @@ Signature
 Arguments
          
 
--  *background* An instance of type `See <ink> <dcs.htm#15007>`_.
+-  *background* An instance of type `<ink>`_.
 -  *object* An instance of type *<object>*.
 
 Values
       
 
--  *background* An instance of type `See <ink> <dcs.htm#15007>`_.
+-  *background* An instance of type `<ink>`_.
 
 Description
            
@@ -1876,11 +1876,11 @@ Sets the default background for *object*.
 See also
         
 
-`See brush-fill-style <dcs.htm#50315>`_.
+`brush-fill-style`_.
 
-`See default-background <dcs.htm#19900>`_.
+`default-background`_.
 
-`See default-foreground-setter <dcs.htm#48231>`_
+`default-foreground-setter`_
 
 default-foreground
 ------------------
@@ -1907,7 +1907,7 @@ Arguments
 Values
       
 
--  *foreground* An instance of type `See <ink> <dcs.htm#15007>`_.
+-  *foreground* An instance of type `<ink>`_.
 
 Description
            
@@ -1917,11 +1917,11 @@ Returns the ink that is the default foreground of its argument.
 See also
         
 
-`See brush-fill-rule <dcs.htm#18072>`_.
+`brush-fill-rule`_.
 
-`See default-background <dcs.htm#19900>`_
+`default-background`_
 
-`See default-foreground-setter <dcs.htm#48231>`_
+`default-foreground-setter`_
 
 default-foreground-setter
 -------------------------
@@ -1943,13 +1943,13 @@ Signature
 Arguments
          
 
--  *foreground* An instance of type `See <ink> <dcs.htm#15007>`_.
+-  *foreground* An instance of type `<ink>`_.
 -  *object* An instance of type *<object>*.
 
 Values
       
 
--  *foreground* An instance of type `See <ink> <dcs.htm#15007>`_.
+-  *foreground* An instance of type `<ink>`_.
 
 Description
            
@@ -1959,11 +1959,11 @@ Sets the default foreground for *object*.
 See also
         
 
-`See brush-fill-rule <dcs.htm#18072>`_.
+`brush-fill-rule`_.
 
-`See default-background-setter <dcs.htm#32743>`_
+`default-background-setter`_
 
-`See default-foreground <dcs.htm#40602>`_
+`default-foreground`_
 
 default-text-style
 ------------------
@@ -2002,7 +2002,7 @@ style is specified.
 See also
         
 
-`See default-text-style-setter <dcs.htm#34503>`_.
+`default-text-style-setter`_.
 
 default-text-style-setter
 -------------------------
@@ -2040,7 +2040,7 @@ Sets the default text style.
 See also
         
 
-`See default-text-style <dcs.htm#95321>`_
+`default-text-style`_
 
 <device-font>
 -------------
@@ -2078,7 +2078,7 @@ Operations
 See also
         
 
-`See <text-style> <dcs.htm#85385>`_.
+`<text-style>`_.
 
 $diagonal-hatch-down
 --------------------
@@ -2108,7 +2108,7 @@ space, and the second line starting with a space followed by a dash.
 See also
         
 
-`See brush-stipple <dcs.htm#15280>`_.
+`brush-stipple`_.
 
 $diagonal-hatch-up
 ------------------
@@ -2138,7 +2138,7 @@ dash, and the second line starting with a dash followed by a space.
 See also
         
 
-`See brush-stipple <dcs.htm#15280>`_.
+`brush-stipple`_.
 
 $dotted-pen
 -----------
@@ -2154,7 +2154,7 @@ A pen that draws a dotted line.
 Type
     
 
-`See <pen> <dcs.htm#41757>`_
+`<pen>`_
                             
 
 Description
@@ -2166,11 +2166,11 @@ A pen that draws a dotted line. The line width is *1* and *dashes:* is
 See also
         
 
-`See <pen> <dcs.htm#41757>`_
+`<pen>`_
 
-`See $solid-pen <dcs.htm#57039>`_
+`$solid-pen`_
 
-`See $dash-dot-pen <dcs.htm#55453>`_
+`$dash-dot-pen`_
 
 find-color
 ----------
@@ -2193,19 +2193,19 @@ Arguments
          
 
 -  *name* An instance of type *<string>*.
--  *palette* An instance of type `See <palette> <dcs.htm#11494>`_.
+-  *palette* An instance of type `<palette>`_.
 -  *error?* An instance of type *<boolean>*. Default value: *#f*.
 
 Values
       
 
--  *color* An instance of type `See <color> <dcs.htm#55341>`_.
+-  *color* An instance of type `<color>`_.
 
 Description
            
 
-Looks up and returns a color by name. `See Common color
-names <dcs.htm#29308>`_ lists the commonly provided color names that can
+Looks up and returns a color by name. `Common color
+names`_ lists the commonly provided color names that can
 be looked up with *find-color*.
 
 Common color names
@@ -2479,21 +2479,21 @@ anything special about these particular colors.
 See also
         
 
-`See $black <dcs.htm#37036>`_
+`$black`_
 
-`See stencil? <dcs.htm#21344>`_
+`stencil?`_
 
-`See $red <dcs.htm#17333>`_
+`$red`_
 
-`See $yellow <dcs.htm#11828>`_
+`$yellow`_
 
-`See $green <dcs.htm#23573>`_
+`$green`_
 
-`See $blue <dcs.htm#10318>`_
+`$blue`_
 
-`See $magenta <dcs.htm#41161>`_
+`$magenta`_
 
-`See contrasting-dash-patterns-limit <dcs.htm#18054>`_
+`contrasting-dash-patterns-limit`_
 
 $foreground
 -----------
@@ -2509,7 +2509,7 @@ An indirect ink that uses the medium's foreground design.
 Type
     
 
-`See <ink> <dcs.htm#15007>`_
+`<ink>`_
                             
 
 Description
@@ -2520,9 +2520,9 @@ An indirect ink that uses the medium's foreground design.
 See also
         
 
-`See <ink> <dcs.htm#15007>`_
+`<ink>`_
 
-`See <palette> <dcs.htm#11494>`_
+`<palette>`_
 
 fully-merged-text-style?
 ------------------------
@@ -2559,7 +2559,7 @@ Returns *#t* if the specified text style is completely specified.
 See also
         
 
-`See merge-text-styles <dcs.htm#14653>`_
+`merge-text-styles`_
 
 $green
 ------
@@ -2575,7 +2575,7 @@ The usual definition of the color green.
 Type
     
 
-`See <color> <dcs.htm#55341>`_
+`<color>`_
                               
 
 Description
@@ -2586,7 +2586,7 @@ The usual definition of the color green.
 See also
         
 
-`See <color> <dcs.htm#55341>`_
+`<color>`_
 
 $hearts-stipple
 ---------------
@@ -2615,7 +2615,7 @@ heart shape.
 See also
         
 
-`See brush-stipple <dcs.htm#15280>`_
+`brush-stipple`_
 
 $horizontal-hatch
 -----------------
@@ -2644,7 +2644,7 @@ horizontal rows of lines and spaces.
 See also
         
 
-`See brush-stipple <dcs.htm#15280>`_.
+`brush-stipple`_.
 
 <image>
 -------
@@ -2660,7 +2660,7 @@ The class for objects that are images.
 Superclasses
             
 
-`See <ink> <dcs.htm#15007>`_
+`<ink>`_
                             
 
 Init-keywords
@@ -2678,7 +2678,7 @@ Operations
 
 The following operation is exported from the *DUIM-DCs* module.
 
-`See image? <dcs.htm#81196>`_
+`image?`_
 
 The following operation is exported from the *DUIM-Graphics* module.
 
@@ -2687,15 +2687,15 @@ The following operation is exported from the *DUIM-Graphics* module.
 See also
         
 
-`See image? <dcs.htm#81196>`_
+`image?`_
 
-`See image-depth <dcs.htm#12153>`_
+`image-depth`_
 
-`See image-height <dcs.htm#44679>`_
+`image-height`_
 
-`See image-width <dcs.htm#32781>`_
+`image-width`_
 
-`See <ink> <dcs.htm#15007>`_
+`<ink>`_
 
 image?
 ------
@@ -2732,13 +2732,13 @@ Returns *#t* if its argument is an image.
 See also
         
 
-`See <image> <dcs.htm#51234>`_
+`<image>`_
 
-`See image-depth <dcs.htm#12153>`_
+`image-depth`_
 
-`See image-height <dcs.htm#44679>`_
+`image-height`_
 
-`See image-width <dcs.htm#32781>`_
+`image-width`_
 
 image-depth
 -----------
@@ -2775,13 +2775,13 @@ Returns the depth of the image *image*.
 See also
         
 
-`See <image> <dcs.htm#51234>`_
+`<image>`_
 
-`See image? <dcs.htm#81196>`_
+`image?`_
 
-`See image-height <dcs.htm#44679>`_
+`image-height`_
 
-`See image-width <dcs.htm#32781>`_
+`image-width`_
 
 image-height
 ------------
@@ -2818,13 +2818,13 @@ Returns the height of the image *image*.
 See also
         
 
-`See <image> <dcs.htm#51234>`_
+`<image>`_
 
-`See image? <dcs.htm#81196>`_
+`image?`_
 
-`See image-depth <dcs.htm#12153>`_
+`image-depth`_
 
-`See image-width <dcs.htm#32781>`_
+`image-width`_
 
 image-width
 -----------
@@ -2861,13 +2861,13 @@ Returns the width of the image *image*.
 See also
         
 
-`See <image> <dcs.htm#51234>`_
+`<image>`_
 
-`See image? <dcs.htm#81196>`_
+`image?`_
 
-`See image-depth <dcs.htm#12153>`_
+`image-depth`_
 
-`See image-height <dcs.htm#44679>`_
+`image-height`_
 
 <ink>
 -----
@@ -2906,12 +2906,12 @@ Operations
 
 The following operation is exported from the *DUIM-DCs* module.
 
-`See ink? <dcs.htm#59035>`_
+`ink?`_
 
 See also
         
 
-`See ink? <dcs.htm#59035>`_
+`ink?`_
 
 ink?
 ----
@@ -2948,7 +2948,7 @@ Returns *#t* if *object* is an ink, otherwise returns *#f*.
 See also
         
 
-`See <ink> <dcs.htm#15007>`_
+`<ink>`_
 
 $magenta
 --------
@@ -2964,7 +2964,7 @@ The usual definition of the color magenta.
 Type
     
 
-`See <color> <dcs.htm#55341>`_
+`<color>`_
                               
 
 Description
@@ -2975,7 +2975,7 @@ The usual definition of the color magenta.
 See also
         
 
-`See <color> <dcs.htm#55341>`_
+`<color>`_
 
 make
 ----
@@ -3003,7 +3003,7 @@ Signature
 Arguments
          
 
--  *(class==<pen>)* The class `See <pen> <dcs.htm#41757>`_.
+-  *(class==<pen>)* The class `<pen>`_.
 -  *width* An instance of type *<pen-width>*. Default value: *1*.
 -  *units* An instance of type *<pen-units>*. Default value:
    *#"normal"*.
@@ -3012,10 +3012,10 @@ Arguments
    value: *#"miter"*.
 -  *cap-shape* An instance of type *<pen-cap-shape>*. Default value:
    *#"butt"*.
--  *(class==<brush>)* The class `See <brush> <dcs.htm#29492>`_.
--  *foreground* An instance of type `See <ink> <dcs.htm#15007>`_.
+-  *(class==<brush>)* The class `<brush>`_.
+-  *foreground* An instance of type `<ink>`_.
    Default value: *$foreground*.
--  *background* An instance of type `See <ink> <dcs.htm#15007>`_.
+-  *background* An instance of type `<ink>`_.
    Default value: *$background*.
 -  *mode* An instance of type *<integer>*. Default value: *$boole-1*.
 -  *fill-style* A *(fill-style)* or *#f*.** Default value: *#f*.
@@ -3028,8 +3028,8 @@ Arguments
 Values
       
 
--  *pen* An instance of type `See <pen> <dcs.htm#41757>`_.
--  *brush* An instance of type `See <brush> <dcs.htm#29492>`_.
+-  *pen* An instance of type `<pen>`_.
+-  *brush* An instance of type `<brush>`_.
 
 Description
            
@@ -3042,9 +3042,9 @@ defaults.
 See also
         
 
-`See <brush> <dcs.htm#29492>`_
+`<brush>`_
 
-`See <pen> <dcs.htm#41757>`_
+`<pen>`_
 
 make-color-for-contrasting-color
 --------------------------------
@@ -3066,12 +3066,12 @@ Signature
 Arguments
          
 
--  *ink* An instance of type `See <ink> <dcs.htm#15007>`_.
+-  *ink* An instance of type `<ink>`_.
 
 Values
       
 
--  *color* An instance of type `See <color> <dcs.htm#55341>`_.
+-  *color* An instance of type `<color>`_.
 
 Description
            
@@ -3081,7 +3081,7 @@ Returns a color that is recognizably different from the main color.
 See also
         
 
-`See make-contrasting-colors <dcs.htm#31494>`_
+`make-contrasting-colors`_
 
 make-contrasting-colors
 -----------------------
@@ -3110,7 +3110,7 @@ Values
       
 
 -  *colors* An instance of type *limited(<sequence>, of:* `See
-   <color> <dcs.htm#55341>`_*)*.
+   <color>`_*)*.
 
 Description
            
@@ -3135,13 +3135,13 @@ depending on whether the output medium supports color.
 See also
         
 
-`See contrasting-colors-limit <dcs.htm#43277>`_
+`contrasting-colors-limit`_
 
-`See $green <dcs.htm#23573>`_
+`$green`_
 
-`See make-color-for-contrasting-color <dcs.htm#44647>`_
+`make-color-for-contrasting-color`_
 
-`See make-contrasting-dash-patterns <dcs.htm#23504>`_
+`make-contrasting-dash-patterns`_
 
 make-contrasting-dash-patterns
 ------------------------------
@@ -3188,9 +3188,9 @@ indicating the pattern to use.
 See also
         
 
-`See contrasting-dash-patterns-limit <dcs.htm#18054>`_
+`contrasting-dash-patterns-limit`_
 
-`See make-contrasting-colors <dcs.htm#31494>`_
+`make-contrasting-colors`_
 
 make-device-font
 ----------------
@@ -3262,7 +3262,7 @@ Arguments
 Values
       
 
--  *color* An instance of type `See <color> <dcs.htm#55341>`_.
+-  *color* An instance of type `<color>`_.
 
 Description
            
@@ -3276,9 +3276,9 @@ black, and the values in between are shades of gray.
 See also
         
 
-`See make-ihs-color <dcs.htm#15839>`_
+`make-ihs-color`_
 
-`See make-rgb-color <dcs.htm#73122>`_
+`make-rgb-color`_
 
 make-ihs-color
 --------------
@@ -3311,7 +3311,7 @@ Arguments
 Values
       
 
--  *color* An instance of type `See <color> <dcs.htm#55341>`_.
+-  *color* An instance of type `<color>`_.
 
 Description
            
@@ -3323,9 +3323,9 @@ number between *0* and sqrt(*3*) (inclusive). The *hue* and
 See also
         
 
-`See make-gray-color <dcs.htm#14505>`_
+`make-gray-color`_
 
-`See make-rgb-color <dcs.htm#73122>`_
+`make-rgb-color`_
 
 make-palette
 ------------
@@ -3352,12 +3352,12 @@ Arguments
 Values
       
 
--  *palette* An instance of type `See <palette> <dcs.htm#11494>`_.
+-  *palette* An instance of type `<palette>`_.
 
 Description
            
 
-Returns a member of the class `See <palette> <dcs.htm#11494>`_.
+Returns a member of the class `<palette>`_.
 
 make-pattern
 ------------
@@ -3381,7 +3381,7 @@ Arguments
 
 -  *array* An instance of type *<array>*.
 -  *colors* An instance of type *limited(<sequence>, of:* `See
-   <color> <dcs.htm#55341>`_*)*.
+   <color>`_*)*.
 
 Values
       
@@ -3452,7 +3452,7 @@ Arguments
 Values
       
 
--  *color* An instance of type `See <color> <dcs.htm#55341>`_.
+-  *color* An instance of type `<color>`_.
 
 Description
            
@@ -3467,9 +3467,9 @@ When all three color components are 0, the resulting color is black.
 See also
         
 
-`See make-gray-color <dcs.htm#14505>`_
+`make-gray-color`_
 
-`See make-ihs-color <dcs.htm#15839>`_
+`make-ihs-color`_
 
 make-stencil
 ------------
@@ -3570,7 +3570,7 @@ and size.
 See also
         
 
-`See $solid-pen <dcs.htm#57039>`_.
+`$solid-pen`_.
 
 merge-text-styles
 -----------------
@@ -3620,7 +3620,7 @@ of sizes, from smallest to largest, is *#"tiny"*, *#"very-small"*,
 See also
         
 
-`See default-background-setter <dcs.htm#32743>`_.
+`default-background-setter`_.
 
 <palette>
 ---------
@@ -3658,7 +3658,7 @@ Operations
 See also
         
 
-`See palette? <dcs.htm#12981>`_
+`palette?`_
 
 palette?
 --------
@@ -3696,7 +3696,7 @@ map that maps 16 bit colors into a, for example, 8 bit display.
 See also
         
 
-`See <palette> <dcs.htm#11494>`_
+`<palette>`_
 
 <palette-full>
 --------------
@@ -3728,7 +3728,7 @@ The class for errors that are signalled when a color palette is full.
 See also
         
 
-`See <palette> <dcs.htm#11494>`_
+`<palette>`_
 
 $parquet-stipple
 ----------------
@@ -3757,7 +3757,7 @@ a parquet floor.
 See also
         
 
-`See brush-stipple <dcs.htm#15280>`_.
+`brush-stipple`_.
 
 <pattern>
 ---------
@@ -3780,7 +3780,7 @@ Init-keywords
              
 
 -  *colors:* An instance of type *limited(<sequence> of: `See
-   <color> <dcs.htm#55341>`_)*.
+   <color>`_)*.
 
 Description
            
@@ -3794,14 +3794,14 @@ Operations
 
 The following operation is exported from the *DUIM-DCs* module.
 
--  `See pattern? <dcs.htm#58212>`_
+-  `pattern?`_
 
 See also
         
 
-`See <stencil> <dcs.htm#33266>`_
+`<stencil>`_
 
-`See make-pattern <dcs.htm#40408>`_
+`make-pattern`_
 
 pattern?
 --------
@@ -3838,7 +3838,7 @@ Returns *#t* if *object* is a pattern.
 See also
         
 
-`See make-pattern <dcs.htm#40408>`_
+`make-pattern`_
 
 <pen>
 -----
@@ -3880,29 +3880,29 @@ Operations
 
 The following operations are exported from the *DUIM-DCs* module.
 
-`See = <dcs.htm#33460>`_ `See pen? <dcs.htm#89472>`_ `See
-pen-cap-shape <dcs.htm#61017>`_ `See pen-dashes <dcs.htm#37198>`_ `See
-pen-joint-shape <dcs.htm#78125>`_ `See pen-units <dcs.htm#10169>`_ `See
-pen-width <dcs.htm#16848>`_
+`=`_ `pen?`_ `See
+pen-cap-shape`_ `pen-dashes`_ `See
+pen-joint-shape`_ `pen-units`_ `See
+pen-width`_
 
 See also
         
 
-`See <ink> <dcs.htm#15007>`_
+`<ink>`_
 
-`See make <dcs.htm#81960>`_
+`make`_
 
-`See pen? <dcs.htm#89472>`_
+`pen?`_
 
-`See pen-cap-shape <dcs.htm#61017>`_
+`pen-cap-shape`_
 
-`See pen-dashes <dcs.htm#37198>`_
+`pen-dashes`_
 
-`See pen-joint-shape <dcs.htm#78125>`_
+`pen-joint-shape`_
 
-`See pen-units <dcs.htm#10169>`_
+`pen-units`_
 
-`See pen-width <dcs.htm#16848>`_
+`pen-width`_
 
 pen?
 ----
@@ -3939,17 +3939,17 @@ Returns *#t* if *object* is a pen, otherwise returns *#f*.
 See also
         
 
-`See <pen> <dcs.htm#41757>`_
+`<pen>`_
 
-`See pen-cap-shape <dcs.htm#61017>`_
+`pen-cap-shape`_
 
-`See pen-dashes <dcs.htm#37198>`_
+`pen-dashes`_
 
-`See pen-joint-shape <dcs.htm#78125>`_
+`pen-joint-shape`_
 
-`See pen-units <dcs.htm#10169>`_
+`pen-units`_
 
-`See pen-width <dcs.htm#16848>`_
+`pen-width`_
 
 pen-cap-shape
 -------------
@@ -3971,7 +3971,7 @@ Signature
 Arguments
          
 
--  *pen* An instance of type `See <pen> <dcs.htm#41757>`_.
+-  *pen* An instance of type `<pen>`_.
 
 Values
       
@@ -3987,19 +3987,19 @@ Returns the shape of the end of a line or an arc drawn by *pen*.
 See also
         
 
-`See make-contrasting-dash-patterns <dcs.htm#23504>`_
+`make-contrasting-dash-patterns`_
 
-`See <pen> <dcs.htm#41757>`_
+`<pen>`_
 
-`See pen? <dcs.htm#89472>`_
+`pen?`_
 
-`See pen-dashes <dcs.htm#37198>`_
+`pen-dashes`_
 
-`See pen-joint-shape <dcs.htm#78125>`_
+`pen-joint-shape`_
 
-`See pen-units <dcs.htm#10169>`_
+`pen-units`_
 
-`See pen-width <dcs.htm#16848>`_
+`pen-width`_
 
 pen-dashes
 ----------
@@ -4021,7 +4021,7 @@ Signature
 Arguments
          
 
--  *pen* An instance of type `See <pen> <dcs.htm#41757>`_.
+-  *pen* An instance of type `<pen>`_.
 
 Values
       
@@ -4040,17 +4040,17 @@ the gaps between dashes.
 See also
         
 
-`See <pen> <dcs.htm#41757>`_
+`<pen>`_
 
-`See pen? <dcs.htm#89472>`_
+`pen?`_
 
-`See pen-cap-shape <dcs.htm#61017>`_
+`pen-cap-shape`_
 
-`See pen-joint-shape <dcs.htm#78125>`_
+`pen-joint-shape`_
 
-`See pen-units <dcs.htm#10169>`_
+`pen-units`_
 
-`See pen-width <dcs.htm#16848>`_
+`pen-width`_
 
 pen-joint-shape
 ---------------
@@ -4073,7 +4073,7 @@ Signature
 Arguments
          
 
--  *pen* An instance of type `See <pen> <dcs.htm#41757>`_.
+-  *pen* An instance of type `<pen>`_.
 
 Values
       
@@ -4090,19 +4090,19 @@ unfilled figure drawn by *pen*.
 See also
         
 
-`See make-contrasting-dash-patterns <dcs.htm#23504>`_
+`make-contrasting-dash-patterns`_
 
-`See <pen> <dcs.htm#41757>`_
+`<pen>`_
 
-`See pen? <dcs.htm#89472>`_
+`pen?`_
 
-`See pen-cap-shape <dcs.htm#61017>`_
+`pen-cap-shape`_
 
-`See pen-dashes <dcs.htm#37198>`_
+`pen-dashes`_
 
-`See pen-units <dcs.htm#10169>`_
+`pen-units`_
 
-`See pen-width <dcs.htm#16848>`_
+`pen-width`_
 
 pen-units
 ---------
@@ -4124,7 +4124,7 @@ Signature
 Arguments
          
 
--  *pen* An instance of type `See <pen> <dcs.htm#41757>`_.
+-  *pen* An instance of type `<pen>`_.
 
 Values
       
@@ -4142,19 +4142,19 @@ comfortably visible thin line.
 See also
         
 
-`See make-contrasting-dash-patterns <dcs.htm#84915>`_
+`make-contrasting-dash-patterns`_
 
-`See <pen> <dcs.htm#41757>`_
+`<pen>`_
 
-`See pen? <dcs.htm#89472>`_
+`pen?`_
 
-`See pen-cap-shape <dcs.htm#61017>`_
+`pen-cap-shape`_
 
-`See pen-dashes <dcs.htm#37198>`_
+`pen-dashes`_
 
-`See pen-joint-shape <dcs.htm#78125>`_
+`pen-joint-shape`_
 
-`See pen-width <dcs.htm#16848>`_
+`pen-width`_
 
 pen-width
 ---------
@@ -4177,7 +4177,7 @@ Signature
 Arguments
          
 
--  *pen* An instance of type `See <pen> <dcs.htm#41757>`_.
+-  *pen* An instance of type `<pen>`_.
 
 Values
       
@@ -4195,19 +4195,19 @@ Returns the pen width, that is how wide a stroke the pen draws, of *pen*
 See also
         
 
-`See make-contrasting-dash-patterns <dcs.htm#84915>`_
+`make-contrasting-dash-patterns`_
 
-`See <pen> <dcs.htm#41757>`_
+`<pen>`_
 
-`See pen? <dcs.htm#89472>`_
+`pen?`_
 
-`See pen-cap-shape <dcs.htm#61017>`_
+`pen-cap-shape`_
 
-`See pen-dashes <dcs.htm#37198>`_
+`pen-dashes`_
 
-`See pen-joint-shape <dcs.htm#78125>`_
+`pen-joint-shape`_
 
-`See pen-units <dcs.htm#10169>`_
+`pen-units`_
 
 read-image
 ----------
@@ -4248,7 +4248,7 @@ Reads an image from the location *resource-id*. This function calls
 See also
         
 
-`See read-image-as <dcs.htm#12647>`_.
+`read-image-as`_.
 
 read-image-as
 -------------
@@ -4291,7 +4291,7 @@ of.
 See also
         
 
-`See read-image <dcs.htm#65313>`_
+`read-image`_
 
 $red
 ----
@@ -4307,7 +4307,7 @@ The usual definition of the color red.
 Type
     
 
-`See <color> <dcs.htm#55341>`_
+`<color>`_
                               
 
 Description
@@ -4318,7 +4318,7 @@ The usual definition of the color red.
 See also
         
 
-See the class `See $blue <dcs.htm#10318>`_.
+See the class `$blue`_.
 
 remove-colors
 -------------
@@ -4341,8 +4341,8 @@ Signature
 Arguments
          
 
--  *palette* An instance of type `See <palette> <dcs.htm#11494>`_.
--  *colors* Instances of type `See <color> <dcs.htm#55341>`_.
+-  *palette* An instance of type `<palette>`_.
+-  *colors* Instances of type `<color>`_.
 
 Values
       
@@ -4368,7 +4368,7 @@ A pen that draws a solid line.
 Type
     
 
-`See <pen> <dcs.htm#41757>`_
+`<pen>`_
                             
 
 Description
@@ -4380,9 +4380,9 @@ A pen that draws a solid line. The width of the line is *1*, and
 See also
         
 
-See the class `See <pen> <dcs.htm#41757>`_ and the constants `See
-make <dcs.htm#81960>`_, `See $dash-dot-pen <dcs.htm#55453>`_, and `See
-$dotted-pen <dcs.htm#76677>`_.
+See the class `<pen>`_ and the constants `See
+make`_, `$dash-dot-pen`_, and `See
+$dotted-pen`_.
 
 <stencil>
 ---------
@@ -4405,7 +4405,7 @@ Init-keywords
              
 
 -  *array:* An instance of type *<array>*. Required.
--  *transform:* An instance of type `See <transform> <geom.htm#33417>`_.
+-  *transform:* An instance of type `<transform> <geom.htm#33417>`_.
    Default value: *#f*.
 
 Description
@@ -4419,21 +4419,21 @@ Operations
 
 The following operations are exported from the *DUIM-DCs* module.
 
-`See image-height <dcs.htm#44679>`_ `See image-width <dcs.htm#32781>`_
-`See stencil? <dcs.htm#21344>`_
+`image-height`_ `image-width`_
+`stencil?`_
 
 The following operation is exported from the *DUIM-Geometry* module.
 
-`See box-edges <geom.htm#52858>`_
+`box-edges <geom.htm#52858>`_
 
 See also
         
 
-`See <image> <dcs.htm#51234>`_
+`<image>`_
 
-`See make-pattern <dcs.htm#32293>`_
+`make-pattern`_
 
-`See stencil? <dcs.htm#21344>`_
+`stencil?`_
 
 stencil?
 --------
@@ -4470,9 +4470,9 @@ Returns *#t* if its argument is a stencil.
 See also
         
 
-`See make-pattern <dcs.htm#32293>`_.
+`make-pattern`_.
 
-`See <stencil> <dcs.htm#33266>`_
+`<stencil>`_
 
 <text-style>
 ------------
@@ -4532,16 +4532,16 @@ Operations
 
 The following operations are exported from the *DUIM-DCs* module.
 
-`See = <dcs.htm#33460>`_ `See fully-merged-text-style? <dcs.htm#67988>`_
-`See merge-text-styles <dcs.htm#14653>`_ `See
-text-style? <dcs.htm#15159>`_ `See
-text-style-components <dcs.htm#90000>`_ `See
-text-style-family <dcs.htm#33560>`_ `See
-text-style-size <dcs.htm#84983>`_ `See
-text-style-slant <dcs.htm#93572>`_ `See
-text-style-strikeout? <dcs.htm#10272>`_ `See
-text-style-underline? <dcs.htm#34228>`_ `See
-text-style-weight <dcs.htm#41015>`_
+`=`_ `fully-merged-text-style?`_
+`merge-text-styles`_ `See
+text-style?`_ `See
+text-style-components`_ `See
+text-style-family`_ `See
+text-style-size`_ `See
+text-style-slant`_ `See
+text-style-strikeout?`_ `See
+text-style-underline?`_ `See
+text-style-weight`_
 
 The following operations are exported from the *DUIM-Sheets* module.
 
@@ -4552,21 +4552,21 @@ The following operations are exported from the *DUIM-Sheets* module.
 See also
         
 
-`See text-style? <dcs.htm#15159>`_
+`text-style?`_
 
-`See text-style-components <dcs.htm#90000>`_
+`text-style-components`_
 
-`See text-style-family <dcs.htm#88936>`_
+`text-style-family`_
 
-`See text-style-size <dcs.htm#84983>`_
+`text-style-size`_
 
-`See text-style-slant <dcs.htm#93572>`_
+`text-style-slant`_
 
-`See text-style-strikeout? <dcs.htm#10272>`_
+`text-style-strikeout?`_
 
-`See text-style-underline? <dcs.htm#34228>`_
+`text-style-underline?`_
 
-`See text-style-weight <dcs.htm#41015>`_
+`text-style-weight`_
 
 text-style?
 -----------
@@ -4603,21 +4603,21 @@ Returns *#t* if its argument is a text-style.
 See also
         
 
-`See <text-style> <dcs.htm#85385>`_
+`<text-style>`_
 
-`See text-style-components <dcs.htm#90000>`_
+`text-style-components`_
 
-`See text-style-family <dcs.htm#88936>`_
+`text-style-family`_
 
-`See text-style-size <dcs.htm#84983>`_
+`text-style-size`_
 
-`See text-style-slant <dcs.htm#93572>`_
+`text-style-slant`_
 
-`See text-style-strikeout? <dcs.htm#10272>`_
+`text-style-strikeout?`_
 
-`See text-style-underline? <dcs.htm#34228>`_
+`text-style-underline?`_
 
-`See text-style-weight <dcs.htm#41015>`_
+`text-style-weight`_
 
 text-style-components
 ---------------------
@@ -4669,21 +4669,21 @@ family, face, slant, size, underline and strikeout.
 See also
         
 
-`See <text-style> <dcs.htm#85385>`_
+`<text-style>`_
 
-`See text-style? <dcs.htm#15159>`_
+`text-style?`_
 
-`See text-style-family <dcs.htm#88936>`_
+`text-style-family`_
 
-`See text-style-size <dcs.htm#84983>`_
+`text-style-size`_
 
-`See text-style-slant <dcs.htm#93572>`_
+`text-style-slant`_
 
-`See text-style-strikeout? <dcs.htm#10272>`_
+`text-style-strikeout?`_
 
-`See text-style-underline? <dcs.htm#34228>`_
+`text-style-underline?`_
 
-`See text-style-weight <dcs.htm#41015>`_
+`text-style-weight`_
 
 text-style-family
 -----------------
@@ -4721,21 +4721,21 @@ Returns the family component of the specified text style.
 See also
         
 
-`See <text-style> <dcs.htm#85385>`_
+`<text-style>`_
 
-`See text-style? <dcs.htm#15159>`_
+`text-style?`_
 
-`See text-style-components <dcs.htm#90000>`_
+`text-style-components`_
 
-`See text-style-size <dcs.htm#84983>`_
+`text-style-size`_
 
-`See text-style-slant <dcs.htm#93572>`_
+`text-style-slant`_
 
-`See text-style-strikeout? <dcs.htm#10272>`_
+`text-style-strikeout?`_
 
-`See text-style-underline? <dcs.htm#34228>`_
+`text-style-underline?`_
 
-`See text-style-weight <dcs.htm#41015>`_
+`text-style-weight`_
 
 text-style-size
 ---------------
@@ -4775,21 +4775,21 @@ Returns the style component of the specified text style.
 See also
         
 
-`See <text-style> <dcs.htm#85385>`_
+`<text-style>`_
 
-`See text-style? <dcs.htm#15159>`_
+`text-style?`_
 
-`See text-style-components <dcs.htm#90000>`_
+`text-style-components`_
 
-`See text-style-family <dcs.htm#88936>`_
+`text-style-family`_
 
-`See text-style-slant <dcs.htm#93572>`_
+`text-style-slant`_
 
-`See text-style-strikeout? <dcs.htm#10272>`_
+`text-style-strikeout?`_
 
-`See text-style-underline? <dcs.htm#34228>`_
+`text-style-underline?`_
 
-`See text-style-weight <dcs.htm#41015>`_
+`text-style-weight`_
 
 text-style-slant
 ----------------
@@ -4827,21 +4827,21 @@ Returns the slant component of the specified text style.
 See also
         
 
-`See <text-style> <dcs.htm#85385>`_
+`<text-style>`_
 
-`See text-style? <dcs.htm#15159>`_
+`text-style?`_
 
-`See text-style-components <dcs.htm#90000>`_
+`text-style-components`_
 
-`See text-style-family <dcs.htm#88936>`_
+`text-style-family`_
 
-`See text-style-size <dcs.htm#84983>`_
+`text-style-size`_
 
-`See text-style-strikeout? <dcs.htm#10272>`_
+`text-style-strikeout?`_
 
-`See text-style-underline? <dcs.htm#34228>`_
+`text-style-underline?`_
 
-`See text-style-weight <dcs.htm#41015>`_
+`text-style-weight`_
 
 text-style-strikeout?
 ---------------------
@@ -4880,21 +4880,21 @@ out.
 See also
         
 
-`See <text-style> <dcs.htm#85385>`_
+`<text-style>`_
 
-`See text-style? <dcs.htm#15159>`_
+`text-style?`_
 
-`See text-style-components <dcs.htm#90000>`_
+`text-style-components`_
 
-`See text-style-family <dcs.htm#88936>`_
+`text-style-family`_
 
-`See text-style-size <dcs.htm#84983>`_
+`text-style-size`_
 
-`See text-style-slant <dcs.htm#93572>`_
+`text-style-slant`_
 
-`See text-style-underline? <dcs.htm#34228>`_
+`text-style-underline?`_
 
-`See text-style-weight <dcs.htm#41015>`_
+`text-style-weight`_
 
 text-style-underline?
 ---------------------
@@ -4931,21 +4931,21 @@ Returns *#t* if the text style is underlined.
 See also
         
 
-`See <text-style> <dcs.htm#85385>`_
+`<text-style>`_
 
-`See text-style? <dcs.htm#15159>`_
+`text-style?`_
 
-`See text-style-components <dcs.htm#90000>`_
+`text-style-components`_
 
-`See text-style-family <dcs.htm#88936>`_
+`text-style-family`_
 
-`See text-style-size <dcs.htm#84983>`_
+`text-style-size`_
 
-`See text-style-slant <dcs.htm#93572>`_
+`text-style-slant`_
 
-`See text-style-strikeout? <dcs.htm#10272>`_
+`text-style-strikeout?`_
 
-`See text-style-weight <dcs.htm#41015>`_
+`text-style-weight`_
 
 text-style-weight
 -----------------
@@ -4984,21 +4984,21 @@ Returns the weight component of the text style.
 See also
         
 
-`See <text-style> <dcs.htm#85385>`_
+`<text-style>`_
 
-`See text-style? <dcs.htm#15159>`_
+`text-style?`_
 
-`See text-style-components <dcs.htm#90000>`_
+`text-style-components`_
 
-`See text-style-family <dcs.htm#88936>`_
+`text-style-family`_
 
-`See text-style-size <dcs.htm#84983>`_
+`text-style-size`_
 
-`See text-style-slant <dcs.htm#93572>`_
+`text-style-slant`_
 
-`See text-style-strikeout? <dcs.htm#10272>`_
+`text-style-strikeout?`_
 
-`See text-style-underline? <dcs.htm#34228>`_
+`text-style-underline?`_
 
 $tiles-stipple
 --------------
@@ -5027,7 +5027,7 @@ spaces suggesting tiles
 See also
         
 
-`See brush-stipple <dcs.htm#15280>`_.
+`brush-stipple`_.
 
 $vertical-hatch
 ---------------
@@ -5056,7 +5056,7 @@ vertical columns of lines and spaces.
 See also
         
 
-`See brush-stipple <dcs.htm#15280>`_.
+`brush-stipple`_.
 
 $white
 ------
@@ -5072,7 +5072,7 @@ The usual definition of white.
 Type
     
 
-`See <color> <dcs.htm#55341>`_
+`<color>`_
                               
 
 Description
@@ -5084,7 +5084,7 @@ The usual definition of white. In the *rgb* color model, its value is
 See also
         
 
-`See <color> <dcs.htm#55341>`_
+`<color>`_
 
 write-image
 -----------
@@ -5133,7 +5133,7 @@ A standard brush with the drawing property of *$boole-xor*.
 Type
     
 
-`See <brush> <dcs.htm#29492>`_
+`<brush>`_
                               
 
 Description
@@ -5155,7 +5155,7 @@ The usual definition of the color yellow.
 Type
     
 
-`See <color> <dcs.htm#55341>`_
+`<color>`_
                               
 
 Description
@@ -5166,6 +5166,6 @@ The usual definition of the color yellow.
 See also
         
 
-`See <color> <dcs.htm#55341>`_
+`<color>`_
 
 

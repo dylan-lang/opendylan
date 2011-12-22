@@ -10,7 +10,7 @@ of frames for use in your GUI applications, as well as the necessary
 functions, generic functions, and macros for creating and manipulating
 them. The library contains a single module, *duim-frames*, from which
 all the interfaces described in this chapter are exposed. `See
-DUIM-Frames Module <frames.htm#67162>`_ contains complete reference
+DUIM-Frames Module`_ contains complete reference
 entries for each exposed interface.
 
 Frames are the basic components used to display DUIM objects on-screen.
@@ -25,7 +25,7 @@ Frames exist on windows and contain sheets, which can be instances of
 *<layout>* or *<gadget>*, or any of their subclasses, and an event
 loop. The event loop associated with a frame is represented by an
 instance of a subclass of *<event>*. An overview of these subclasses is
-provided in `See Subclasses of <frame-event> <frames.htm#13076>`_.
+provided in `Subclasses of <frame-event>`_.
 
 The class hierarchy for DUIM-Frames
 ===================================
@@ -41,7 +41,7 @@ The base class for all DUIM frames is the *<frame>* class, which is
 itself a subclass of *<object>*. In addition, there are a number of
 classes related to commands that are subclasses of *<object>*, together
 with a number of classes related to events that occur in frames. `See
-Overall class hierarchy for the DUIM-Frames library <frames.htm#80940>`_
+Overall class hierarchy for the DUIM-Frames library`_
 shows the overall class hierarchy for the base classes exported by the
 DUIM-Frames library.
 
@@ -57,17 +57,17 @@ Overall class hierarchy for the DUIM-Frames library
 
 <page>
 
-See `See Subclasses of <page> <frames.htm#69648>`_
+See `Subclasses of <page>`_
 
 <frame>
 
-See `See Subclasses of <frame> <frames.htm#92798>`_
+See `Subclasses of <frame>`_
 
 <event>
 
 <frame-event>
 
-See `See Subclasses of <frame-event> <frames.htm#13076>`_
+See `Subclasses of <frame-event>`_
 
 <simple-command>
 
@@ -78,15 +78,15 @@ See `See Subclasses of <frame-event> <frames.htm#13076>`_
 <command-table-menu-item>
 
 The *<frame>* class represents the base class for all types of frame. An
-introduction to the subclasses available is given in `See Subclasses of
-<frame> <frames.htm#92798>`_.
+introduction to the subclasses available is given in `Subclasses of
+<frame>`_.
 
 The *<event>* class represents the base class for all events that can
 occur. Although this class and the *<frame-event>* subclass are exposed
 by the DUIM-Sheets library, the subclasses of *<frame-event>* itself are
-exposed by the DUIM-Frames library. See `See Subclasses of
-<frame-event> <frames.htm#13076>`_ for an introduction to these
-subclasses. See `See DUIM-Sheets Library <silica.htm#90521>`_, for a
+exposed by the DUIM-Frames library. See `Subclasses of
+<frame-event>`_ for an introduction to these
+subclasses. See `DUIM-Sheets Library <silica.htm#90521>`_, for a
 complete description of the DUIM-Sheets library.
 
 The remaining four classes exposed by the DUIM-Frames library relate to
@@ -124,7 +124,7 @@ Subclasses of <frame>
 
 A number of subclasses of *<frame>* are provided to allow you to create
 a variety of common types of frame. These subclasses are shown in `See
-Subclasses of the <frame> class <frames.htm#69101>`_.
+Subclasses of the <frame> class`_.
 
 Subclasses of the *<frame>* class
                                  
@@ -169,7 +169,7 @@ Subclasses of <frame-event>
 
 The *<frame-event>* class provides a number of subclasses that describe
 various events that can occur in frames. These subclasses are shown in
-`See Subclasses of the <frame-event> class <frames.htm#30750>`_.
+`Subclasses of the <frame-event> class`_.
 
 Subclasses of the *<frame-event>* class
                                        
@@ -222,7 +222,7 @@ Subclasses of <page>
 Although the *<page>* class is itself a subclass of *<gadget>*, and is
 exposed by the DUIM-Gadgets library, two of its subclasses are exposed
 by the DUIM-Frames library: *<wizard-page>* and *<property-page>*. See
-`See Subclasses of <page> <gadgets.htm#31084>`_ for an introduction to
+`Subclasses of <page> <gadgets.htm#31084>`_ for an introduction to
 these classes.
 
 DUIM-Commands Library
@@ -272,8 +272,8 @@ Signature
 Arguments
          
 
--  *command1* An instance of type `See <command> <frames.htm#40934>`_.
--  *command2* An instance of type `See <command> <frames.htm#40934>`_.
+-  *command1* An instance of type `<command>`_.
+-  *command2* An instance of type `<command>`_.
 
 Values
       
@@ -306,9 +306,9 @@ Arguments
          
 
 -  *command-table* An instance of type `See
-   <command-table> <frames.htm#27705>`_.
+   <command-table>`_.
 -  *command* An instance of type *type-union(`See
-   <command> <frames.htm#40934>`_, <function>)*.
+   <command>`_, <function>)*.
 -  *name* An instance of type *false-or(<string>)*.
 -  *menu* An instance of type *false-or(* `See
    <menu> <gadgets.htm#81833>`_*)*.
@@ -356,7 +356,7 @@ The argument *menu* is a menu for *command*.
    keyword-value pairs. Each keyword-value pair is itself a list. The
    valid keywords are *after:*, *documentation:*, and *text-style:*,
    which are interpreted as for `See
-   add-command-table-menu-item <frames.htm#44746>`_.
+   add-command-table-menu-item`_.
 
 You can supply an image that will appear on the menu next to the command
 name using the *image* argument. When supplying an image, bear in mind
@@ -379,7 +379,7 @@ before creating the new one.
 See also
         
 
-`See remove-command <frames.htm#63668>`_
+`remove-command`_
 
 add-command-table-menu-item
 ---------------------------
@@ -403,7 +403,7 @@ Arguments
          
 
 -  *command-table* An instance of type `See
-   <command-table> <frames.htm#27705>`_.
+   <command-table>`_.
 -  *string* An instance of type *false-or(<string>)*.
 -  *type* An instance of type *one-of(#"command", #"function", #"menu",
    #"divider")*.
@@ -415,7 +415,7 @@ Arguments
    <gesture> <silica.htm#76256>`_*)*.
 -  *mnemonic* An instance of type *false-or(* `See
    <gesture> <silica.htm#76256>`_*)*.
--  *text-style* An instance of type `See <text-style> <dcs.htm#85385>`_.
+-  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
 -  *error?* An instance of type *<boolean>*. Default value: *#t*.
 -  *items* An instance of type *limited(<sequence>, of: )*.
 -  *label-key* An instance of type *<function>*.
@@ -427,7 +427,7 @@ Values
       
 
 -  *menu-item* An instance of type `See
-   <command-table-menu-item> <frames.htm#88128>`_.
+   <command-table-menu-item>`_.
 
 Description
            
@@ -533,9 +533,9 @@ character case of *string* is ignored when searching the command table.
 See also
         
 
-`See <command-table-menu-item> <frames.htm#88128>`_
+`<command-table-menu-item>`_
 
-`See remove-command-table-menu-item <frames.htm#87199>`_
+`remove-command-table-menu-item`_
 
 <application-exited-event>
 --------------------------
@@ -551,7 +551,7 @@ The class of events signalled when an application exits.
 Superclasses
             
 
-`See <frame-exited-event> <frames.htm#20261>`_
+`<frame-exited-event>`_
 
 Init-keywords
              
@@ -573,9 +573,9 @@ Operations
 See also
         
 
-`See exit-frame <frames.htm#83467>`_
+`exit-frame`_
 
-`See <frame-exited-event> <frames.htm#20261>`_
+`<frame-exited-event>`_
 
 apply-in-frame
 --------------
@@ -597,7 +597,7 @@ apply-in-frame *frame function arg* #rest *args* => ()
 Arguments
          
 
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 -  *function* An instance of type *<function>*.
 -  *arg* An instance of type *<object>*.
 -  *args* Instances of type *<object>*.
@@ -617,7 +617,7 @@ optionally supply as many additional arguments as you like.
 See also
         
 
-`See call-in-frame <frames.htm#81408>`_
+`call-in-frame`_
 
 call-in-frame
 -------------
@@ -639,7 +639,7 @@ call-in-frame *frame function* #rest *args* => ()
 Arguments
          
 
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 -  *function* An instance of type *<function>*.
 -  *args* Instances of type *<object>*.
 
@@ -657,7 +657,7 @@ Calls *function* with the given arguments in the main thread of *frame*
 See also
         
 
-`See apply-in-frame <frames.htm#23324>`_
+`apply-in-frame`_
 
 cancel-dialog
 -------------
@@ -679,7 +679,7 @@ Arguments
          
 
 -  *dialog* An instance of type `See
-   <dialog-frame> <frames.htm#82173>`_.
+   <dialog-frame>`_.
 -  *destroy?* An instance of type *<boolean>*. Default value: *#t*.
 
 Values
@@ -745,13 +745,13 @@ start-frame(\*dialog\*);
 See also
         
 
-`See dialog-cancel-callback <frames.htm#78756>`_
+`dialog-cancel-callback`_
 
-`See <dialog-frame> <frames.htm#82173>`_
+`<dialog-frame>`_
 
-`See start-dialog <frames.htm#17267>`_
+`start-dialog`_
 
-`See exit-dialog <frames.htm#48986>`_
+`exit-dialog`_
 
 clear-progress-note
 -------------------
@@ -817,13 +817,13 @@ in a command table to form the set of commands available to an
 application (available, for example, from the menu bar of the
 application). The resulting command object can then be executed by
 calling
- `See execute-command <frames.htm#30054>`_.
+ `execute-command`_.
 
 The *function:* init-keyword is the command function that is called by
 the command object. A command function is rather like a callback to a
 *<command>* object: a command can be executed via *execute-command*,
 which then invokes the command function. Command functions take at least
-one argument: a `See <frame> <frames.htm#16922>`_ object.
+one argument: a `<frame>`_ object.
 
 The *arguments:* init-keyword are the arguments passed to the command
 function.
@@ -831,34 +831,34 @@ function.
 Operations
           
 
-`See = <frames.htm#81281>`_ `See add-command <frames.htm#89020>`_ `See
-command-arguments <frames.htm#54962>`_ `See
-command-enabled? <frames.htm#15723>`_
- `See command-enabled?-setter <frames.htm#96906>`_ `See
-command-function <frames.htm#76885>`_ `See
-command-undoable? <frames.htm#94391>`_ `See
-dialog-cancel-callback-setter <frames.htm#60781>`_ `See
-dialog-exit-callback-setter <frames.htm#44923>`_ `See
-execute-command <frames.htm#30054>`_ `See
+`=`_ `add-command`_ `See
+command-arguments`_ `See
+command-enabled?`_
+ `command-enabled?-setter`_ `See
+command-function`_ `See
+command-undoable?`_ `See
+dialog-cancel-callback-setter`_ `See
+dialog-exit-callback-setter`_ `See
+execute-command`_ `See
 gadget-command <gadgets.htm#39838>`_ `See
 gadget-command-setter <gadgets.htm#66876>`_ `See
 gadget-key-press-callback-setter <gadgets.htm#10874>`_ `See
-redo-command <frames.htm#26421>`_ `See
-remove-command <frames.htm#63668>`_ `See
-undo-command <frames.htm#95470>`_
+redo-command`_ `See
+remove-command`_ `See
+undo-command`_
 
 See also
         
 
-`See command? <frames.htm#38357>`_
+`command?`_
 
-`See command-arguments <frames.htm#54962>`_
+`command-arguments`_
 
-`See command-function <frames.htm#76885>`_
+`command-function`_
 
-`See execute-command <frames.htm#30054>`_
+`execute-command`_
 
-`See <simple-command> <frames.htm#20328>`_
+`<simple-command>`_
 
 command?
 --------
@@ -890,12 +890,12 @@ Description
            
 
 Returns true if *object* is an instance of `See
-<command> <frames.htm#40934>`_.
+<command>`_.
 
 See also
         
 
-`See <command> <frames.htm#40934>`_
+`<command>`_
 
 command-arguments
 -----------------
@@ -916,7 +916,7 @@ command-arguments *command* => *arguments*
 Arguments
          
 
--  *command* An instance of type `See <command> <frames.htm#40934>`_.
+-  *command* An instance of type `<command>`_.
 
 Values
       
@@ -931,7 +931,7 @@ Returns the arguments to *command*.
 See also
         
 
-`See <command> <frames.htm#40934>`_
+`<command>`_
 
 command-enabled?
 ----------------
@@ -953,9 +953,9 @@ Arguments
          
 
 -  *command* An instance of type *type-union(`See
-   <command> <frames.htm#40934>`_, `See
-   <command-table> <frames.htm#27705>`_)*.
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+   <command>`_, `See
+   <command-table>`_)*.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
@@ -970,9 +970,9 @@ Returns true if *command* in *frame* is enabled.
 See also
         
 
-`See <command> <frames.htm#40934>`_
+`<command>`_
 
-`See command-enabled?-setter <frames.htm#96906>`_
+`command-enabled?-setter`_
 
 command-enabled?-setter
 -----------------------
@@ -995,9 +995,9 @@ Arguments
 
 -  *enabled?* An instance of type *<boolean>*.
 -  *command* An instance of type *type-union(`See
-   <command> <frames.htm#40934>`_, `See
-   <command-table> <frames.htm#27705>`_)*.
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+   <command>`_, `See
+   <command-table>`_)*.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
@@ -1020,7 +1020,7 @@ has been modified.
 See also
         
 
-`See command-enabled? <frames.htm#15723>`_
+`command-enabled?`_
 
 command-function
 ----------------
@@ -1041,7 +1041,7 @@ command-function *command* => *function*
 Arguments
          
 
--  *command* An instance of type `See <command> <frames.htm#40934>`_.
+-  *command* An instance of type `<command>`_.
 
 Values
       
@@ -1055,14 +1055,14 @@ Returns the function associated with *command*. A command function is
 the function that is called by a *<command>* object. Command functions
 are similar to callbacks, in that they are user functions that are
 invoked in order to perform some action. Command functions take at least
-one argument: a `See <frame> <frames.htm#16922>`_ object.
+one argument: a `<frame>`_ object.
 
 See also
         
 
-`See <command> <frames.htm#40934>`_
+`<command>`_
 
-`See execute-command <frames.htm#30054>`_
+`execute-command`_
 
 <command-table>
 ---------------
@@ -1102,8 +1102,8 @@ table.
 The *inherit-from:* init-keyword is a sequence of command tables whose
 behavior the current command table should inherit. All command tables
 inherit the behavior of the command table specified by `See
-\*global-command-table\* <frames.htm#45627>`_, and can also inherit the
-behavior specified by `See \*user-command-table\* <frames.htm#50463>`_.
+\*global-command-table\*`_, and can also inherit the
+behavior specified by `\*user-command-table\*`_.
 
 You do not normally need to specify a unique *resource-id:* yourself. As
 with most other DUIM classes, the *name:* init-keyword serves as a
@@ -1112,19 +1112,19 @@ sufficient unique identifier.
 Operations
           
 
-`See add-command <frames.htm#89020>`_ `See
-add-command-table-menu-item <frames.htm#44746>`_ `See
-command-table-accelerators <frames.htm#24006>`_ `See
-command-table-commands <frames.htm#63436>`_ `See
-command-table-menu <frames.htm#42334>`_ `See
-command-table-name <frames.htm#44693>`_ `See
-frame-command-table-setter <frames.htm#22356>`_ `See
-make <frames.htm#56600>`_ `See
-make-menu-from-command-table-menu <frames.htm#74637>`_ `See
-make-menus-from-command-table <frames.htm#10131>`_ `See
-remove-command <frames.htm#63668>`_
- `See remove-command-table <frames.htm#46964>`_ `See
-remove-command-table-menu-item <frames.htm#87199>`_
+`add-command`_ `See
+add-command-table-menu-item`_ `See
+command-table-accelerators`_ `See
+command-table-commands`_ `See
+command-table-menu`_ `See
+command-table-name`_ `See
+frame-command-table-setter`_ `See
+make`_ `See
+make-menu-from-command-table-menu`_ `See
+make-menus-from-command-table`_ `See
+remove-command`_
+ `remove-command-table`_ `See
+remove-command-table-menu-item`_
 
 Example
        
@@ -1156,9 +1156,9 @@ end command-table \*clipboard-command-table\*;
 See also
         
 
-`See \*global-command-table\* <frames.htm#45627>`_
+`\*global-command-table\*`_
 
-`See \*user-command-table\* <frames.htm#50463>`_
+`\*user-command-table\*`_
 
 command-table?
 --------------
@@ -1194,7 +1194,7 @@ Returns true if *object* is a command table.
 See also
         
 
-`See <command-table> <frames.htm#27705>`_
+`<command-table>`_
 
 command-table-accelerators
 --------------------------
@@ -1216,7 +1216,7 @@ Arguments
          
 
 -  *command-table* An instance of type `See
-   <command-table> <frames.htm#27705>`_.
+   <command-table>`_.
 
 Values
       
@@ -1232,7 +1232,7 @@ Returns the keyboard accelerators for *command-table*.
 See also
         
 
-`See command-table-commands <frames.htm#63436>`_
+`command-table-commands`_
 
 command-table-commands
 ----------------------
@@ -1254,13 +1254,13 @@ Arguments
          
 
 -  *command-table* An instance of type `See
-   <command-table> <frames.htm#27705>`_.
+   <command-table>`_.
 
 Values
       
 
 -  *commands* An instance of type *limited(<sequence>, of:* `See
-   <command> <frames.htm#40934>`_*)*.
+   <command>`_*)*.
 
 Description
            
@@ -1270,9 +1270,9 @@ Returns the commands defined for *command-table*.
 See also
         
 
-`See command-table-accelerators <frames.htm#24006>`_
+`command-table-accelerators`_
 
-`See command-table-menu <frames.htm#42334>`_
+`command-table-menu`_
 
 command-table-menu
 ------------------
@@ -1294,7 +1294,7 @@ Arguments
          
 
 -  *command-table* An instance of type `See
-   <command-table> <frames.htm#27705>`_.
+   <command-table>`_.
 
 Values
       
@@ -1309,9 +1309,9 @@ Returns the menu items in *command-table*.
 See also
         
 
-`See command-table-commands <frames.htm#63436>`_
+`command-table-commands`_
 
-`See command-table-name <frames.htm#44693>`_
+`command-table-name`_
 
 <command-table-menu-item>
 -------------------------
@@ -1391,18 +1391,18 @@ keyboard accelerator and mnemonic for the menu item.
 Operations
           
 
-`See add-command-table-menu-item <frames.htm#44746>`_ `See
-menu-item-accelerator <frames.htm#93465>`_ `See
-menu-item-mnemonic <frames.htm#11803>`_ `See
-menu-item-name <frames.htm#61623>`_ `See
-menu-item-options <frames.htm#17133>`_ `See
-menu-item-type <frames.htm#85114>`_ `See
-menu-item-value <frames.htm#39869>`_
+`add-command-table-menu-item`_ `See
+menu-item-accelerator`_ `See
+menu-item-mnemonic`_ `See
+menu-item-name`_ `See
+menu-item-options`_ `See
+menu-item-type`_ `See
+menu-item-value`_
 
 See also
         
 
-`See add-command-table-menu-item <frames.htm#44746>`_
+`add-command-table-menu-item`_
 
 command-table-name
 ------------------
@@ -1424,7 +1424,7 @@ Arguments
          
 
 -  *command-table* An instance of type `See
-   <command-table> <frames.htm#27705>`_.
+   <command-table>`_.
 
 Values
       
@@ -1435,14 +1435,14 @@ Description
            
 
 Returns the name of *command-table*, as defined by the *name:*
-init-keyword for `See <command-table> <frames.htm#27705>`_.
+init-keyword for `<command-table>`_.
 
 See also
         
 
-`See <command-table> <frames.htm#27705>`_
+`<command-table>`_
 
-`See command-table-menu <frames.htm#42334>`_
+`command-table-menu`_
 
 command-undoable?
 -----------------
@@ -1463,7 +1463,7 @@ command-undoable? *command* => *undoable?*
 Arguments
          
 
--  *command* An instance of type `See <command> <frames.htm#40934>`_.
+-  *command* An instance of type `<command>`_.
 
 Values
       
@@ -1480,7 +1480,7 @@ Undo*) that will reverse the effects of command.
 See also
         
 
-`See undo-command <frames.htm#95470>`_
+`undo-command`_
 
 complete-from-generator
 -----------------------
@@ -1528,7 +1528,7 @@ Description
 Completes *string* chunk-wise against a list of possibilities derived
 from *generator*, using the specified *delimiters* to break both
 *string* and the generated possibilities into chunks. This function is
-identical to `See complete-from-sequence <frames.htm#13217>`_, except
+identical to `complete-from-sequence`_, except
 that the list of possibilities is derived from the *generator* function,
 rather than passed explicitly. The *generator* is a function of two
 arguments: the string to be completed and a continuation co-routine to
@@ -1578,7 +1578,7 @@ end method, #[' ', '-'])
 See also
         
 
-`See complete-from-sequence <frames.htm#13217>`_
+`complete-from-sequence`_
 
 complete-from-sequence
 ----------------------
@@ -1680,7 +1680,7 @@ value-key: identity)
 See also
         
 
-`See complete-from-generator <frames.htm#62027>`_
+`complete-from-generator`_
 
 compute-next-page
 -----------------
@@ -1702,7 +1702,7 @@ Arguments
          
 
 -  *dialog* An instance of type `See
-   <wizard-frame> <frames.htm#29315>`_.
+   <wizard-frame>`_.
 
 Values
       
@@ -1718,9 +1718,9 @@ Returns the next page in *dialog*, which must be a wizard.
 See also
         
 
-`See compute-previous-page <frames.htm#10058>`_
+`compute-previous-page`_
 
-`See <wizard-frame> <frames.htm#29315>`_
+`<wizard-frame>`_
 
 compute-previous-page
 ---------------------
@@ -1742,7 +1742,7 @@ Arguments
          
 
 -  *dialog* An instance of type `See
-   <wizard-frame> <frames.htm#29315>`_.
+   <wizard-frame>`_.
 
 Values
       
@@ -1758,9 +1758,9 @@ Returns the previous page in *dialog*, which must be a wizard.
 See also
         
 
-`See compute-next-page <frames.htm#72732>`_
+`compute-next-page`_
 
-`See <wizard-frame> <frames.htm#29315>`_
+`<wizard-frame>`_
 
 contain
 -------
@@ -1784,14 +1784,14 @@ Arguments
 
 -  *object* An instance of type *type-union(`See
    <sheet> <silica.htm#13118>`_, <class>, `See
-   <frame> <frames.htm#16922>`_)*.
+   <frame>`_)*.
 -  *initargs* Instances of type *<object>*.
 
 Values
       
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *sheet* An instance of type `<sheet> <silica.htm#13118>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Description
            
@@ -1895,7 +1895,7 @@ None
 Values
       
 
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_
+-  *frame* An instance of type `<frame>`_
 
 Description
            
@@ -1942,7 +1942,7 @@ The *supers* argument specifies a comma-separated list of command tables
 from which the command table you are creating should inherit. If you are
 not explicitly inheriting the behavior of other command tables, then
 *supers* should have the value `See
-\*global-command-table\* <frames.htm#45627>`_.
+\*global-command-table\*`_.
 
 Each one of the *options* supplied describes a command for the command
 table. This can be either a menu item, a separator, or another command
@@ -1972,8 +1972,8 @@ menu-item *label* = *command-function*
 *command-function*
                   
 
--  An instance of *type-union(`See <command> <frames.htm#40934>`_, `See
-   <command-table> <frames.htm#27705>`_, <function>)*. The command
+-  An instance of *type-union(`<command>`_, `See
+   <command-table>`_, <function>)*. The command
    function is the callback that is invoked to perform the intended
    operation for the menu item. Note that this can itself be a command
    table.
@@ -2071,7 +2071,7 @@ end command-table \*application-command-table\*;
 See also
         
 
-`See \*global-command-table\* <frames.htm#45627>`_
+`\*global-command-table\*`_
 
 define frame
 ------------
@@ -2110,8 +2110,8 @@ additional options.
 
 The *supers* argument lets you specify any classes from which the frame
 you are creating should inherit. You must include at least one concrete
-frame class, such as `See <simple-frame> <frames.htm#80902>`_ or `See
-<dialog-frame> <frames.htm#82173>`_.
+frame class, such as `<simple-frame>`_ or `See
+<dialog-frame>`_.
 
 The *slots-panes-options* supplied describe the state variables of the
 frame class; that is, the total composition of the frame. This includes,
@@ -2162,7 +2162,7 @@ must evaluate to an instance of a layout.
 *command-table* defines a command table for the frame. The default is to
 create a command table with the same name as the frame. The value of
 this option must evaluate to an instance of `See
-<command-table> <frames.htm#27705>`_.
+<command-table>`_.
 
 *menu-bar* is used to specify the commands that will in the menu bar of
 the frame. The default is *#t*. If used, it typically specifies the
@@ -2178,12 +2178,12 @@ A command table
 
 -  The menu bar for the frame is defined by this command table.
 -  A body of code This is interpreted the same way as the *menu-item*
-   options to `See define command-table <frames.htm#19167>`_.
+   options to `define command-table`_.
 
 *disabled-commands* is used to specify a list of command names that are
 initially disabled in the application frame. The default is *#[]*. The
 set of enabled and disabled commands can be modified via `See
-command-enabled?-setter <frames.htm#96906>`_.
+command-enabled?-setter`_.
 
 *tool-bar* is used to specify a tool bar for the frame. The default is
 *#f*. The value of this option must evaluate to an instance of `See
@@ -2195,7 +2195,7 @@ a function to be called to execute the top-level loop. The function must
 take at least one argument, which is the frame itself. The rest of the
 list consists of additional arguments to be passed to the function.
 
-*icon* specifies an `See <image> <dcs.htm#51234>`_*<image>* to be used
+*icon* specifies an `<image> <dcs.htm#51234>`_*<image>* to be used
 in the window decoration for the frame. This icon may be used in the
 title bar of the frame, or when the frame is iconized, for example.
 
@@ -2300,9 +2300,9 @@ end frame <multiple-values-dialog>;
 See also
         
 
-`See <simple-frame> <frames.htm#80902>`_
+`<simple-frame>`_
 
-`See <wizard-frame> <frames.htm#29315>`_
+`<wizard-frame>`_
 
 deiconify-frame
 ---------------
@@ -2323,7 +2323,7 @@ deiconify-frame *frame* => ()
 Arguments
          
 
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
@@ -2359,13 +2359,13 @@ deiconify-frame(\*frame\*);
 See also
         
 
-`See destroy-frame <frames.htm#31128>`_
+`destroy-frame`_
 
-`See exit-frame <frames.htm#83467>`_
+`exit-frame`_
 
-`See frame-icon <frames.htm#77216>`_
+`frame-icon`_
 
-`See iconify-frame <frames.htm#53025>`_
+`iconify-frame`_
 
 destroy-frame
 -------------
@@ -2386,7 +2386,7 @@ destroy-frame *frame* => ()
 Arguments
          
 
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
@@ -2398,24 +2398,24 @@ Description
 
 Unmaps *frame* from the screen and destroys it. Generally, you should
 not need to call this function explicitly, since `See
-exit-frame <frames.htm#83467>`_ performs all necessary operations in the
+exit-frame`_ performs all necessary operations in the
 correct order, including calling *destroy-frame* if the *destroy?*
-argument to `See exit-frame <frames.htm#83467>`_ is true.
+argument to `exit-frame`_ is true.
 
 See also
         
 
-`See deiconify-frame <frames.htm#10654>`_
+`deiconify-frame`_
 
-`See exit-frame <frames.htm#83467>`_
+`exit-frame`_
 
-`See <frame-destroyed-event> <frames.htm#27782>`_
+`<frame-destroyed-event>`_
 
-`See iconify-frame <frames.htm#53025>`_
+`iconify-frame`_
 
-`See lower-frame <frames.htm#85200>`_
+`lower-frame`_
 
-`See raise-frame <frames.htm#28075>`_
+`raise-frame`_
 
 dialog-apply-button
 -------------------
@@ -2437,7 +2437,7 @@ Arguments
          
 
 -  *dialog* An instance of type `See
-   <dialog-frame> <frames.htm#82173>`_.
+   <dialog-frame>`_.
 
 Values
       
@@ -2456,13 +2456,13 @@ dialog from the screen itself.
 See also
         
 
-`See dialog-cancel-button <frames.htm#57282>`_
+`dialog-cancel-button`_
 
-`See dialog-apply-button-setter <frames.htm#56017>`_
+`dialog-apply-button-setter`_
 
-`See dialog-apply-callback <frames.htm#42604>`_
+`dialog-apply-callback`_
 
-`See dialog-help-button <frames.htm#66958>`_
+`dialog-help-button`_
 
 dialog-apply-button-setter
 --------------------------
@@ -2486,7 +2486,7 @@ Arguments
 -  *apply-button* An instance of type *false-or(`See
    <button> <gadgets.htm#20680>`_)*.
 -  *dialog* An instance of type `See
-   <dialog-frame> <frames.htm#82173>`_.
+   <dialog-frame>`_.
 
 Values
       
@@ -2505,13 +2505,13 @@ dialog from the screen itself.
 See also
         
 
-`See dialog-cancel-button <frames.htm#57282>`_
+`dialog-cancel-button`_
 
-`See dialog-apply-button <frames.htm#80546>`_
+`dialog-apply-button`_
 
-`See dialog-apply-callback <frames.htm#42604>`_
+`dialog-apply-callback`_
 
-`See dialog-help-button <frames.htm#66958>`_
+`dialog-help-button`_
 
 dialog-apply-callback
 ---------------------
@@ -2534,13 +2534,13 @@ Arguments
          
 
 -  *dialog* An instance of type `See
-   <dialog-frame> <frames.htm#82173>`_.
+   <dialog-frame>`_.
 
 Values
       
 
 -  *callback* An instance of type *false-or(type-nonfunctional>, `See
-   <command> <frames.htm#40934>`_))*.
+   <command>`_))*.
 
 Description
            
@@ -2556,13 +2556,13 @@ appear.
 See also
         
 
-`See dialog-cancel-button <frames.htm#57282>`_
+`dialog-cancel-button`_
 
-`See dialog-apply-button <frames.htm#80546>`_
+`dialog-apply-button`_
 
-`See dialog-apply-button-setter <frames.htm#56017>`_
+`dialog-apply-button-setter`_
 
-`See dialog-help-button <frames.htm#66958>`_
+`dialog-help-button`_
 
 dialog-back-button
 ------------------
@@ -2584,7 +2584,7 @@ Arguments
          
 
 -  *dialog* An instance of type `See
-   <dialog-frame> <frames.htm#82173>`_.
+   <dialog-frame>`_.
 
 Values
       
@@ -2603,13 +2603,13 @@ through the sequence of pages that comprise the dialog.
 See also
         
 
-`See dialog-back-button-setter <frames.htm#56015>`_
+`dialog-back-button-setter`_
 
-`See dialog-back-callback <frames.htm#45311>`_
+`dialog-back-callback`_
 
-`See dialog-exit-button <frames.htm#34792>`_
+`dialog-exit-button`_
 
-`See dialog-help-button <frames.htm#66958>`_
+`dialog-help-button`_
 
 dialog-back-button-setter
 -------------------------
@@ -2633,7 +2633,7 @@ Arguments
 -  *back-button* An instance of type `See
    <button> <gadgets.htm#20680>`_.
 -  *dialog* An instance of type `See
-   <dialog-frame> <frames.htm#82173>`_.
+   <dialog-frame>`_.
 
 Values
       
@@ -2652,13 +2652,13 @@ comprise the dialog.
 See also
         
 
-`See dialog-back-button <frames.htm#34490>`_
+`dialog-back-button`_
 
-`See dialog-back-callback <frames.htm#45311>`_
+`dialog-back-callback`_
 
-`See dialog-exit-button-setter <frames.htm#37806>`_
+`dialog-exit-button-setter`_
 
-`See dialog-help-button <frames.htm#66958>`_
+`dialog-help-button`_
 
 dialog-back-callback
 --------------------
@@ -2681,13 +2681,13 @@ Arguments
          
 
 -  *dialog* An instance of type `See
-   <dialog-frame> <frames.htm#82173>`_.
+   <dialog-frame>`_.
 
 Values
       
 
 -  *callback* An instance of type *false-or(type-nonfunctional>, `See
-   <command> <frames.htm#40934>`_))*.
+   <command>`_))*.
 
 Description
            
@@ -2706,13 +2706,13 @@ the dialog.
 See also
         
 
-`See dialog-back-button <frames.htm#34490>`_
+`dialog-back-button`_
 
-`See dialog-back-button-setter <frames.htm#56015>`_
+`dialog-back-button-setter`_
 
-`See dialog-exit-callback <frames.htm#37233>`_
+`dialog-exit-callback`_
 
-`See dialog-help-button <frames.htm#66958>`_
+`dialog-help-button`_
 
 dialog-cancel-button
 --------------------
@@ -2734,7 +2734,7 @@ Arguments
          
 
 -  *dialog* An instance of type `See
-   <dialog-frame> <frames.htm#82173>`_.
+   <dialog-frame>`_.
 
 Values
       
@@ -2750,13 +2750,13 @@ Returns the Cancel button in *dialog*.
 See also
         
 
-`See dialog-cancel-button-setter <frames.htm#24406>`_
+`dialog-cancel-button-setter`_
 
-`See dialog-cancel-callback <frames.htm#78756>`_
+`dialog-cancel-callback`_
 
-`See dialog-exit-button <frames.htm#34792>`_
+`dialog-exit-button`_
 
-`See dialog-help-button <frames.htm#66958>`_
+`dialog-help-button`_
 
 dialog-cancel-button-setter
 ---------------------------
@@ -2781,7 +2781,7 @@ Arguments
 -  *cancel-button* An instance of type `See
    <button> <gadgets.htm#20680>`_.
 -  *dialog* An instance of type `See
-   <dialog-frame> <frames.htm#82173>`_.
+   <dialog-frame>`_.
 
 Values
       
@@ -2837,13 +2837,13 @@ start-frame(\*dialog\*);
 See also
         
 
-`See dialog-cancel-button <frames.htm#57282>`_
+`dialog-cancel-button`_
 
-`See dialog-cancel-callback <frames.htm#78756>`_
+`dialog-cancel-callback`_
 
-`See dialog-exit-button-setter <frames.htm#37806>`_
+`dialog-exit-button-setter`_
 
-`See dialog-help-button-setter <frames.htm#48310>`_
+`dialog-help-button-setter`_
 
 dialog-cancel-callback
 ----------------------
@@ -2866,13 +2866,13 @@ Arguments
          
 
 -  *dialog* An instance of type `See
-   <dialog-frame> <frames.htm#82173>`_.
+   <dialog-frame>`_.
 
 Values
       
 
 -  *callback* An instance of type *false-or(type-union(`See
-   <command> <frames.htm#40934>`_, <function>))*.
+   <command>`_, <function>))*.
 
 Library
        
@@ -2888,20 +2888,20 @@ Description
            
 
 Returns the function invoked when the cancel button is clicked in
-*dialog*. This defaults to `See cancel-dialog <frames.htm#36260>`_.
+*dialog*. This defaults to `cancel-dialog`_.
 
 See also
         
 
-`See cancel-dialog <frames.htm#36260>`_
+`cancel-dialog`_
 
-`See dialog-cancel-button <frames.htm#57282>`_
+`dialog-cancel-button`_
 
-`See dialog-cancel-button-setter <frames.htm#24406>`_
+`dialog-cancel-button-setter`_
 
-`See dialog-exit-callback <frames.htm#37233>`_
+`dialog-exit-callback`_
 
-`See dialog-help-callback <frames.htm#95489>`_
+`dialog-help-callback`_
 
 dialog-cancel-callback-setter
 -----------------------------
@@ -2924,16 +2924,16 @@ Arguments
          
 
 -  *callback* An instance of type *false-or(`See
-   <command> <frames.htm#40934>`_, <function>)*. Default value: `See
-   cancel-dialog <frames.htm#36260>`_.
+   <command>`_, <function>)*. Default value: `See
+   cancel-dialog`_.
 -  *dialog* An instance of type `See
-   <dialog-frame> <frames.htm#82173>`_.
+   <dialog-frame>`_.
 
 Values
       
 
 -  *callback* An instance of type *false-or(`See
-   <command> <frames.htm#40934>`_, <function>)*.
+   <command>`_, <function>)*.
 
 Library
        
@@ -2954,13 +2954,13 @@ Sets the function invoked when the cancel button is clicked in *dialog*
 See also
         
 
-`See dialog-cancel-button <frames.htm#57282>`_
+`dialog-cancel-button`_
 
-`See dialog-cancel-button-setter <frames.htm#24406>`_
+`dialog-cancel-button-setter`_
 
-`See dialog-exit-callback <frames.htm#37233>`_
+`dialog-exit-callback`_
 
-`See dialog-help-callback <frames.htm#95489>`_
+`dialog-help-callback`_
 
 dialog-current-page
 -------------------
@@ -2982,7 +2982,7 @@ Arguments
          
 
 -  *dialog* An instance of type `See
-   <dialog-frame> <frames.htm#82173>`_.
+   <dialog-frame>`_.
 
 Values
       
@@ -3008,7 +3008,7 @@ Returns the current page in *dialog*.
 See also
         
 
-`See dialog-current-page-setter <frames.htm#20241>`_
+`dialog-current-page-setter`_
 
 dialog-current-page-setter
 --------------------------
@@ -3029,14 +3029,14 @@ dialog-current-page-setter *page* *dialog* => *page*
 Arguments
          
 
--  *page* An instance of type *`See <page> <gadgets.htm#93333>`_*.
+-  *page* An instance of type *`<page> <gadgets.htm#93333>`_*.
 -  *dialog* An instance of type `See
-   <dialog-frame> <frames.htm#82173>`_.
+   <dialog-frame>`_.
 
 Values
       
 
--  *page* An instance of type *`See <page> <gadgets.htm#93333>`_*.
+-  *page* An instance of type *`<page> <gadgets.htm#93333>`_*.
 
 Library
        
@@ -3056,7 +3056,7 @@ Sets the current page in *dialog*.
 See also
         
 
-`See dialog-current-page <frames.htm#75972>`_
+`dialog-current-page`_
 
 dialog-exit-button
 ------------------
@@ -3078,7 +3078,7 @@ Arguments
          
 
 -  *dialog* An instance of type `See
-   <dialog-frame> <frames.htm#82173>`_.
+   <dialog-frame>`_.
 
 Values
       
@@ -3097,15 +3097,15 @@ Next and Back buttons).
 See also
         
 
-`See dialog-cancel-button <frames.htm#57282>`_
+`dialog-cancel-button`_
 
-`See dialog-exit-button-setter <frames.htm#37806>`_
+`dialog-exit-button-setter`_
 
-`See dialog-exit-enabled? <frames.htm#26857>`_
+`dialog-exit-enabled?`_
 
-`See dialog-exit-callback <frames.htm#37233>`_
+`dialog-exit-callback`_
 
-`See dialog-help-button <frames.htm#66958>`_
+`dialog-help-button`_
 
 dialog-exit-button-setter
 -------------------------
@@ -3129,7 +3129,7 @@ Arguments
 -  *exit-button* An instance of type `See
    <button> <gadgets.htm#20680>`_.
 -  *dialog* An instance of type `See
-   <dialog-frame> <frames.htm#82173>`_.
+   <dialog-frame>`_.
 
 Values
       
@@ -3188,15 +3188,15 @@ start-frame(\*dialog\*);
 See also
         
 
-`See dialog-cancel-button-setter <frames.htm#24406>`_
+`dialog-cancel-button-setter`_
 
-`See dialog-exit-button <frames.htm#34792>`_
+`dialog-exit-button`_
 
-`See dialog-exit-enabled? <frames.htm#26857>`_
+`dialog-exit-enabled?`_
 
-`See dialog-exit-callback <frames.htm#37233>`_
+`dialog-exit-callback`_
 
-`See dialog-help-button-setter <frames.htm#48310>`_
+`dialog-help-button-setter`_
 
 dialog-exit-callback
 --------------------
@@ -3219,14 +3219,14 @@ Arguments
          
 
 -  *dialog* An instance of type `See
-   <dialog-frame> <frames.htm#82173>`_.
+   <dialog-frame>`_.
 
 Values
       
 
 -  *callback* An instance of type *false-or(type-union(`See
-   <command> <frames.htm#40934>`_, <function>))*. Default value: `See
-   exit-dialog <frames.htm#48986>`_.
+   <command>`_, <function>))*. Default value: `See
+   exit-dialog`_.
 
 Library
        
@@ -3249,15 +3249,15 @@ navigate through the sequence using Next and Back buttons).
 See also
         
 
-`See dialog-cancel-callback <frames.htm#78756>`_
+`dialog-cancel-callback`_
 
-`See dialog-exit-button <frames.htm#34792>`_
+`dialog-exit-button`_
 
-`See dialog-exit-button-setter <frames.htm#37806>`_
+`dialog-exit-button-setter`_
 
-`See dialog-exit-callback-setter <frames.htm#44923>`_
+`dialog-exit-callback-setter`_
 
-`See dialog-help-callback <frames.htm#95489>`_
+`dialog-help-callback`_
 
 dialog-exit-callback-setter
 ---------------------------
@@ -3280,15 +3280,15 @@ Arguments
          
 
 -  *callback* An instance of type *false-or(type-union(`See
-   <command> <frames.htm#40934>`_, <function>))*.
+   <command>`_, <function>))*.
 -  *dialog* An instance of type `See
-   <dialog-frame> <frames.htm#82173>`_.
+   <dialog-frame>`_.
 
 Values
       
 
 -  *callback* An instance of type *false-or(type-union(`See
-   <command> <frames.htm#40934>`_, <function>))*.
+   <command>`_, <function>))*.
 
 Library
        
@@ -3318,15 +3318,15 @@ all.
 See also
         
 
-`See dialog-cancel-callback-setter <frames.htm#60781>`_
+`dialog-cancel-callback-setter`_
 
-`See dialog-exit-button <frames.htm#34792>`_
+`dialog-exit-button`_
 
-`See dialog-exit-button-setter <frames.htm#37806>`_
+`dialog-exit-button-setter`_
 
-`See dialog-exit-callback <frames.htm#37233>`_
+`dialog-exit-callback`_
 
-`See dialog-help-callback <frames.htm#95489>`_
+`dialog-help-callback`_
 
 dialog-exit-enabled?
 --------------------
@@ -3349,7 +3349,7 @@ Arguments
          
 
 -  *dialog* An instance of type `See
-   <dialog-frame> <frames.htm#82173>`_.
+   <dialog-frame>`_.
 
 Values
       
@@ -3367,13 +3367,13 @@ through the sequence using Next and Back buttons).
 See also
         
 
-`See dialog-exit-button <frames.htm#34792>`_
+`dialog-exit-button`_
 
-`See dialog-exit-button-setter <frames.htm#37806>`_
+`dialog-exit-button-setter`_
 
-`See dialog-exit-enabled?-setter <frames.htm#93568>`_
+`dialog-exit-enabled?-setter`_
 
-`See dialog-exit-callback <frames.htm#37233>`_
+`dialog-exit-callback`_
 
 dialog-exit-enabled?-setter
 ---------------------------
@@ -3396,7 +3396,7 @@ Arguments
 
 -  *enabled?* An instance of type *<boolean>*.
 -  *dialog* An instance of type `See
-   <dialog-frame> <frames.htm#82173>`_.
+   <dialog-frame>`_.
 
 Values
       
@@ -3449,13 +3449,13 @@ start-frame(\*dialog\*);
 See also
         
 
-`See dialog-exit-button <frames.htm#34792>`_
+`dialog-exit-button`_
 
-`See dialog-exit-button-setter <frames.htm#37806>`_
+`dialog-exit-button-setter`_
 
-`See dialog-exit-enabled? <frames.htm#26857>`_
+`dialog-exit-enabled?`_
 
-`See dialog-exit-callback <frames.htm#37233>`_
+`dialog-exit-callback`_
 
 <dialog-frame>
 --------------
@@ -3471,7 +3471,7 @@ The class of dialog frames.
 Superclasses
             
 
-`See <simple-frame> <frames.htm#80902>`_
+`<simple-frame>`_
 
 Init-keywords
              
@@ -3479,8 +3479,8 @@ Init-keywords
 -  *mode:* An instance of type *one-of("modal", #"modeless",
    #"system-modal")*. Default value: *#"modal"*.
 -  *exit-callback:* An instance of type *false-or(type-union(`See
-   <command> <frames.htm#40934>`_, <function>))*. Default value: `See
-   exit-dialog <frames.htm#48986>`_.
+   <command>`_, <function>))*. Default value: `See
+   exit-dialog`_.
 -  *exit-button:* An instance of type *false-or(`See
    <button> <gadgets.htm#20680>`_)*. Default value: *#f*.
 -  *exit-enabled?:* An instance of type *<boolean>*. Default value:
@@ -3490,12 +3490,12 @@ Init-keywords
                  
 
 -  An instance of type *false-or(type-union(`See
-   <command> <frames.htm#40934>`_, <function>))*. Default value: `See
-   cancel-dialog <frames.htm#36260>`_.
+   <command>`_, <function>))*. Default value: `See
+   cancel-dialog`_.
 -  *cancel-button:* An instance of type *false-or(`See
    <button> <gadgets.htm#20680>`_)*. Default value: *#f*.
 -  *help-callback:* An instance of type *false-or(type-union(`See
-   <command> <frames.htm#40934>`_, <function>))*. Default value: *#f*.
+   <command>`_, <function>))*. Default value: *#f*.
 -  *help-button:* An instance of type *false-or(`See
    <button> <gadgets.htm#20680>`_)*. Default value: *#f*.
 
@@ -3607,23 +3607,23 @@ Operations
 
 The following operations are exported from the *DUIM-Frames* module.
 
-`See cancel-dialog <frames.htm#36260>`_ `See
-dialog-cancel-button <frames.htm#57282>`_
- `See dialog-cancel-button-setter <frames.htm#24406>`_ `See
-dialog-cancel-callback <frames.htm#78756>`_ `See
-dialog-cancel-callback-setter <frames.htm#60781>`_ `See
-dialog-exit-button <frames.htm#34792>`_
- `See dialog-exit-button-setter <frames.htm#37806>`_ `See
-dialog-exit-callback <frames.htm#37233>`_ `See
-dialog-exit-callback-setter <frames.htm#44923>`_ `See
-dialog-exit-enabled? <frames.htm#26857>`_ `See
-dialog-exit-enabled?-setter <frames.htm#93568>`_ `See
-dialog-exit-callback <frames.htm#37233>`_ `See
-dialog-exit-callback-setter <frames.htm#44923>`_ `See
-dialog-help-button <frames.htm#66958>`_ `See
-dialog-help-button-setter <frames.htm#48310>`_ `See
-dialog-help-callback <frames.htm#95489>`_ `See
-exit-dialog <frames.htm#48986>`_ `See start-dialog <frames.htm#17267>`_
+`cancel-dialog`_ `See
+dialog-cancel-button`_
+ `dialog-cancel-button-setter`_ `See
+dialog-cancel-callback`_ `See
+dialog-cancel-callback-setter`_ `See
+dialog-exit-button`_
+ `dialog-exit-button-setter`_ `See
+dialog-exit-callback`_ `See
+dialog-exit-callback-setter`_ `See
+dialog-exit-enabled?`_ `See
+dialog-exit-enabled?-setter`_ `See
+dialog-exit-callback`_ `See
+dialog-exit-callback-setter`_ `See
+dialog-help-button`_ `See
+dialog-help-button-setter`_ `See
+dialog-help-callback`_ `See
+exit-dialog`_ `start-dialog`_
 
 Example
        
@@ -3659,15 +3659,15 @@ start-frame(\*dialog\*);
 See also
         
 
-`See cancel-dialog <frames.htm#36260>`_
+`cancel-dialog`_
 
-`See exit-dialog <frames.htm#48986>`_
+`exit-dialog`_
 
-`See <property-frame> <frames.htm#40547>`_
+`<property-frame>`_
 
-`See <simple-frame> <frames.htm#80902>`_
+`<simple-frame>`_
 
-`See <wizard-frame> <frames.htm#29315>`_
+`<wizard-frame>`_
 
 dialog-help-button
 ------------------
@@ -3689,7 +3689,7 @@ Arguments
          
 
 -  *dialog* An instance of type `See
-   <dialog-frame> <frames.htm#82173>`_.
+   <dialog-frame>`_.
 
 Values
       
@@ -3707,13 +3707,13 @@ system for the application.
 See also
         
 
-`See dialog-cancel-button <frames.htm#57282>`_
+`dialog-cancel-button`_
 
-`See dialog-exit-button <frames.htm#34792>`_
+`dialog-exit-button`_
 
-`See dialog-help-button-setter <frames.htm#48310>`_
+`dialog-help-button-setter`_
 
-`See dialog-help-callback <frames.htm#95489>`_
+`dialog-help-callback`_
 
 dialog-help-button-setter
 -------------------------
@@ -3737,7 +3737,7 @@ Arguments
 -  *help-button* An instance of type *false-or(`See
    <button> <gadgets.htm#20680>`_)*.
 -  *dialog* An instance of type `See
-   <dialog-frame> <frames.htm#82173>`_.
+   <dialog-frame>`_.
 
 Values
       
@@ -3807,13 +3807,13 @@ start-frame(\*dialog\*);
 See also
         
 
-`See dialog-cancel-button-setter <frames.htm#24406>`_
+`dialog-cancel-button-setter`_
 
-`See dialog-exit-button-setter <frames.htm#37806>`_
+`dialog-exit-button-setter`_
 
-`See dialog-help-button <frames.htm#66958>`_
+`dialog-help-button`_
 
-`See dialog-help-callback <frames.htm#95489>`_
+`dialog-help-callback`_
 
 dialog-help-callback
 --------------------
@@ -3836,13 +3836,13 @@ Arguments
          
 
 -  *dialog* An instance of type `See
-   <dialog-frame> <frames.htm#82173>`_.
+   <dialog-frame>`_.
 
 Values
       
 
 -  *help-callback* An instance of type *false-or(type-union(`See
-   <command> <frames.htm#40934>`_, <function>))*.
+   <command>`_, <function>))*.
 
 Library
        
@@ -3868,13 +3868,13 @@ button present in the dialog.
 See also
         
 
-`See dialog-cancel-callback <frames.htm#78756>`_
+`dialog-cancel-callback`_
 
-`See dialog-exit-callback <frames.htm#37233>`_
+`dialog-exit-callback`_
 
-`See dialog-help-button <frames.htm#66958>`_
+`dialog-help-button`_
 
-`See dialog-help-button-setter <frames.htm#48310>`_
+`dialog-help-button-setter`_
 
 dialog-next-button
 ------------------
@@ -3896,7 +3896,7 @@ Arguments
          
 
 -  *dialog* An instance of type `See
-   <dialog-frame> <frames.htm#82173>`_.
+   <dialog-frame>`_.
 
 Values
       
@@ -3915,13 +3915,13 @@ through the sequence of pages that comprise the dialog.
 See also
         
 
-`See dialog-back-button <frames.htm#34490>`_
+`dialog-back-button`_
 
-`See dialog-exit-button <frames.htm#34792>`_
+`dialog-exit-button`_
 
-`See dialog-next-button-setter <frames.htm#91817>`_
+`dialog-next-button-setter`_
 
-`See dialog-next-callback <frames.htm#69284>`_
+`dialog-next-callback`_
 
 dialog-next-button-setter
 -------------------------
@@ -3945,7 +3945,7 @@ Arguments
 -  *next-button* An instance of type *false-or(`See
    <button> <gadgets.htm#20680>`_)*.
 -  *dialog* An instance of type `See
-   <dialog-frame> <frames.htm#82173>`_.
+   <dialog-frame>`_.
 
 Values
       
@@ -3964,13 +3964,13 @@ and backward through the sequence of pages that comprise the dialog.
 See also
         
 
-`See dialog-back-button-setter <frames.htm#56015>`_
+`dialog-back-button-setter`_
 
-`See dialog-exit-button <frames.htm#34792>`_
+`dialog-exit-button`_
 
-`See dialog-next-button <frames.htm#20955>`_
+`dialog-next-button`_
 
-`See dialog-next-callback <frames.htm#69284>`_
+`dialog-next-callback`_
 
 dialog-next-callback
 --------------------
@@ -3993,13 +3993,13 @@ Arguments
          
 
 -  *dialog* An instance of type `See
-   <dialog-frame> <frames.htm#82173>`_.
+   <dialog-frame>`_.
 
 Values
       
 
 -  *callback* An instance of type *false-or(type-union(`See
-   <command> <frames.htm#40934>`_, <function>))*.
+   <command>`_, <function>))*.
 
 Description
            
@@ -4017,20 +4017,20 @@ describing how the user can navigate through the sequence of pages in
 the dialog.
 
 The default value for this callback is `See
-move-to-next-page <frames.htm#15851>`_.
+move-to-next-page`_.
 
 See also
         
 
-`See dialog-back-button <frames.htm#34490>`_
+`dialog-back-button`_
 
-`See dialog-exit-callback <frames.htm#37233>`_
+`dialog-exit-callback`_
 
-`See dialog-next-button <frames.htm#20955>`_
+`dialog-next-button`_
 
-`See dialog-next-button-setter <frames.htm#91817>`_
+`dialog-next-button-setter`_
 
-`See move-to-next-page <frames.htm#15851>`_
+`move-to-next-page`_
 
 dialog-next-enabled?
 --------------------
@@ -4053,7 +4053,7 @@ Arguments
          
 
 -  *dialog* An instance of type `See
-   <dialog-frame> <frames.htm#82173>`_.
+   <dialog-frame>`_.
 
 Values
       
@@ -4072,15 +4072,15 @@ comprise the dialog.
 See also
         
 
-`See <dialog-frame> <frames.htm#82173>`_
+`<dialog-frame>`_
 
-`See dialog-next-button <frames.htm#20955>`_
+`dialog-next-button`_
 
-`See dialog-next-button-setter <frames.htm#91817>`_
+`dialog-next-button-setter`_
 
-`See dialog-next-enabled?-setter <frames.htm#46237>`_
+`dialog-next-enabled?-setter`_
 
-`See dialog-next-callback <frames.htm#69284>`_
+`dialog-next-callback`_
 
 dialog-next-enabled?-setter
 ---------------------------
@@ -4103,7 +4103,7 @@ Arguments
 
 -  *enabled?* An instance of type *<boolean>*.
 -  *dialog* An instance of type `See
-   <dialog-frame> <frames.htm#82173>`_.
+   <dialog-frame>`_.
 
 Values
       
@@ -4123,7 +4123,7 @@ It is useful to be able to enable and disable the Next button at any
 point in order to ensure that the user supplies all necessary
 information before proceeding to the next page of the dialog. You can do
 this by testing to see if the information on the page has been specified
-with `See dialog-page-complete? <frames.htm#97380>`_, and then enabling
+with `dialog-page-complete?`_, and then enabling
 or disabling the Next button as appropriate.
 
 Example
@@ -4132,13 +4132,13 @@ Example
 See also
         
 
-`See dialog-next-button <frames.htm#20955>`_
+`dialog-next-button`_
 
-`See dialog-next-button-setter <frames.htm#91817>`_
+`dialog-next-button-setter`_
 
-`See dialog-next-callback <frames.htm#69284>`_
+`dialog-next-callback`_
 
-`See dialog-next-enabled? <frames.htm#92006>`_
+`dialog-next-enabled?`_
 
 dialog-next-page
 ----------------
@@ -4160,7 +4160,7 @@ Arguments
          
 
 -  *dialog* An instance of type `See
-   <dialog-frame> <frames.htm#82173>`_.
+   <dialog-frame>`_.
 
 Values
       
@@ -4184,15 +4184,15 @@ dynamically change it as the state of the dialog changes.
 See also
         
 
-`See dialog-next-button <frames.htm#20955>`_
+`dialog-next-button`_
 
-`See dialog-next-button-setter <frames.htm#91817>`_
+`dialog-next-button-setter`_
 
-`See dialog-next-callback <frames.htm#69284>`_
+`dialog-next-callback`_
 
-`See dialog-next-page-setter <frames.htm#88015>`_
+`dialog-next-page-setter`_
 
-`See dialog-previous-page <frames.htm#55319>`_
+`dialog-previous-page`_
 
 dialog-next-page-setter
 -----------------------
@@ -4216,7 +4216,7 @@ Arguments
 -  *next-page* An instance of type *false-or(`See
    <page> <gadgets.htm#93333>`_)*.
 -  *dialog* An instance of type `See
-   <dialog-frame> <frames.htm#82173>`_.
+   <dialog-frame>`_.
 
 Values
       
@@ -4240,15 +4240,15 @@ dynamically change it as the state of the dialog changes.
 See also
         
 
-`See dialog-next-button <frames.htm#20955>`_
+`dialog-next-button`_
 
-`See dialog-next-button-setter <frames.htm#91817>`_
+`dialog-next-button-setter`_
 
-`See dialog-next-callback <frames.htm#69284>`_
+`dialog-next-callback`_
 
-`See dialog-next-page <frames.htm#44061>`_
+`dialog-next-page`_
 
-`See dialog-previous-page-setter <frames.htm#89408>`_
+`dialog-previous-page-setter`_
 
 dialog-page-changed-callback
 ----------------------------
@@ -4270,13 +4270,13 @@ Arguments
          
 
 -  *dialog* An instance of type `See
-   <dialog-frame> <frames.htm#82173>`_.
+   <dialog-frame>`_.
 
 Values
       
 
 -  *callback* An instance of type *false-or(type-union(`See
-   <command> <frames.htm#40934>`_, <function>))*.
+   <command>`_, <function>))*.
 
 Description
            
@@ -4290,13 +4290,13 @@ dialog is displayed.
 See also
         
 
-`See <dialog-frame> <frames.htm#82173>`_
+`<dialog-frame>`_
 
-`See dialog-page-changed-callback-setter <frames.htm#48591>`_
+`dialog-page-changed-callback-setter`_
 
-`See <property-frame> <frames.htm#40547>`_
+`<property-frame>`_
 
-`See <wizard-frame> <frames.htm#29315>`_
+`<wizard-frame>`_
 
 dialog-page-changed-callback-setter
 -----------------------------------
@@ -4319,15 +4319,15 @@ Arguments
          
 
 -  *callback* An instance of type *false-or(type-union(`See
-   <command> <frames.htm#40934>`_, <function>))*.
+   <command>`_, <function>))*.
 -  *dialog* An instance of type `See
-   <dialog-frame> <frames.htm#82173>`_.
+   <dialog-frame>`_.
 
 Values
       
 
 -  *callback* An instance of type *false-or(type-union(`See
-   <command> <frames.htm#40934>`_, <function>))*.
+   <command>`_, <function>))*.
 
 Description
            
@@ -4341,13 +4341,13 @@ dialog is displayed.
 See also
         
 
-`See <dialog-frame> <frames.htm#82173>`_
+`<dialog-frame>`_
 
-`See dialog-page-changed-callback <frames.htm#93093>`_
+`dialog-page-changed-callback`_
 
-`See <property-frame> <frames.htm#40547>`_
+`<property-frame>`_
 
-`See <wizard-frame> <frames.htm#29315>`_
+`<wizard-frame>`_
 
 dialog-page-complete?
 ---------------------
@@ -4370,7 +4370,7 @@ Arguments
          
 
 -  *dialog* An instance of type `See
-   <dialog-frame> <frames.htm#82173>`_.
+   <dialog-frame>`_.
 
 Values
       
@@ -4394,7 +4394,7 @@ uses:
 See also
         
 
-`See dialog-page-complete?-setter <frames.htm#99359>`_
+`dialog-page-complete?-setter`_
 
 dialog-page-complete?-setter
 ----------------------------
@@ -4418,7 +4418,7 @@ Arguments
 
 -  *complete?* An instance of type *<boolean>*.
 -  *dialog* An instance of type `See
-   <dialog-frame> <frames.htm#82173>`_.
+   <dialog-frame>`_.
 
 Values
       
@@ -4442,7 +4442,7 @@ has two uses:
 See also
         
 
-`See dialog-page-complete? <frames.htm#97380>`_
+`dialog-page-complete?`_
 
 dialog-pages
 ------------
@@ -4464,7 +4464,7 @@ Arguments
          
 
 -  *dialog* An instance of type `See
-   <dialog-frame> <frames.htm#82173>`_.
+   <dialog-frame>`_.
 
 Values
       
@@ -4476,18 +4476,18 @@ Description
            
 
 Returns the pages of *dialog*. Each of the items in sequence is an
-instance of `See <page> <gadgets.htm#93333>`_.
+instance of `<page> <gadgets.htm#93333>`_.
 
 See also
         
 
-`See <dialog-frame> <frames.htm#82173>`_
+`<dialog-frame>`_
 
-`See dialog-pages-setter <frames.htm#65708>`_
+`dialog-pages-setter`_
 
-`See <property-frame> <frames.htm#40547>`_
+`<property-frame>`_
 
-`See <wizard-frame> <frames.htm#29315>`_
+`<wizard-frame>`_
 
 dialog-pages-setter
 -------------------
@@ -4511,7 +4511,7 @@ Arguments
 -  *pages* An instance of type *limited(<sequence>, of: `See
    <page> <gadgets.htm#93333>`_)*.
 -  *dialog* An instance of type `See
-   <dialog-frame> <frames.htm#82173>`_.
+   <dialog-frame>`_.
 
 Values
       
@@ -4523,18 +4523,18 @@ Description
            
 
 Sets the pages of *dialog*. Each of the items in sequence must be an
-instance of `See <page> <gadgets.htm#93333>`_.
+instance of `<page> <gadgets.htm#93333>`_.
 
 See also
         
 
-`See <dialog-frame> <frames.htm#82173>`_
+`<dialog-frame>`_
 
-`See dialog-pages <frames.htm#13113>`_
+`dialog-pages`_
 
-`See <property-frame> <frames.htm#40547>`_
+`<property-frame>`_
 
-`See <wizard-frame> <frames.htm#29315>`_
+`<wizard-frame>`_
 
 dialog-previous-page
 --------------------
@@ -4557,7 +4557,7 @@ Arguments
          
 
 -  *dialog* An instance of type `See
-   <dialog-frame> <frames.htm#82173>`_.
+   <dialog-frame>`_.
 
 Values
       
@@ -4581,15 +4581,15 @@ dynamically change it as the state of the dialog changes.
 See also
         
 
-`See dialog-back-button <frames.htm#34490>`_
+`dialog-back-button`_
 
-`See dialog-back-button-setter <frames.htm#56015>`_
+`dialog-back-button-setter`_
 
-`See dialog-back-callback <frames.htm#45311>`_
+`dialog-back-callback`_
 
-`See dialog-next-page <frames.htm#44061>`_
+`dialog-next-page`_
 
-`See dialog-previous-page-setter <frames.htm#89408>`_
+`dialog-previous-page-setter`_
 
 dialog-previous-page-setter
 ---------------------------
@@ -4615,7 +4615,7 @@ Arguments
 -  *previous-page* An instance of type *false-or(`See
    <page> <gadgets.htm#93333>`_)*.
 -  *dialog* An instance of type `See
-   <dialog-frame> <frames.htm#82173>`_.
+   <dialog-frame>`_.
 
 Values
       
@@ -4639,15 +4639,15 @@ dynamically change it as the state of the dialog changes.
 See also
         
 
-`See dialog-back-button <frames.htm#34490>`_
+`dialog-back-button`_
 
-`See dialog-back-button-setter <frames.htm#56015>`_
+`dialog-back-button-setter`_
 
-`See dialog-back-callback <frames.htm#45311>`_
+`dialog-back-callback`_
 
-`See dialog-next-page-setter <frames.htm#88015>`_
+`dialog-next-page-setter`_
 
-`See dialog-previous-page <frames.htm#55319>`_
+`dialog-previous-page`_
 
 display-progress-note
 ---------------------
@@ -4707,7 +4707,7 @@ Arguments
          
 
 -  *event* An instance of type *`See
-   <frame-exit-event> <frames.htm#25227>`_*.
+   <frame-exit-event>`_*.
 
 Values
       
@@ -4722,7 +4722,7 @@ Returns information about the frame was destroyed in *event*.
 See also
         
 
-*`See <frame-exit-event> <frames.htm#25227>`_*
+*`<frame-exit-event>`_*
 
 event-status-code
 -----------------
@@ -4744,7 +4744,7 @@ Arguments
          
 
 -  *event* An instance of type *`See
-   <frame-exited-event> <frames.htm#20261>`_*.
+   <frame-exited-event>`_*.
 
 Values
       
@@ -4759,7 +4759,7 @@ Returns the status code of *event*.
 See also
         
 
-*`See <frame-exited-event> <frames.htm#20261>`_*
+*`<frame-exited-event>`_*
 
 execute-command
 ---------------
@@ -4780,8 +4780,8 @@ execute-command *command* *frame* => #rest *values*
 Arguments
          
 
--  *command* An instance of type `See <command> <frames.htm#40934>`_.
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *command* An instance of type `<command>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
@@ -4814,7 +4814,7 @@ Arguments
          
 
 -  *dialog* An instance of type `See
-   <dialog-frame> <frames.htm#82173>`_.
+   <dialog-frame>`_.
 -  *destroy?* An instance of type *<boolean>*. Default value: *#t*.
 
 Values
@@ -4887,11 +4887,11 @@ start-frame(\*dialog\*);
 See also
         
 
-`See cancel-dialog <frames.htm#36260>`_
+`cancel-dialog`_
 
-`See <dialog-frame> <frames.htm#82173>`_
+`<dialog-frame>`_
 
-`See start-dialog <frames.htm#17267>`_
+`start-dialog`_
 
 exit-frame
 ----------
@@ -4912,7 +4912,7 @@ exit-frame *frame* #key *destroy?* => ()
 Arguments
          
 
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 -  *destroy?* An instance of type *<boolean>*. Default value: *#t*.
 
 Values
@@ -4925,7 +4925,7 @@ Description
 
 Unmaps *frame*, removing the associated sheet and its children from the
 screen. If *destroy?* is true, then the frame is destroyed completely,
-via a call to `See destroy-frame <frames.htm#31128>`_.
+via a call to `destroy-frame`_.
 
 If *destroy?* is *#t*, then dialog is destroyed.
 
@@ -4951,17 +4951,17 @@ exit-frame(\*frame\*);*RETURN*
 See also
         
 
-`See destroy-frame <frames.htm#31128>`_
+`destroy-frame`_
 
-`See frame-can-exit? <frames.htm#85539>`_
+`frame-can-exit?`_
 
-`See <frame-exited-event> <frames.htm#20261>`_
+`<frame-exited-event>`_
 
-`See <frame-exit-event> <frames.htm#25227>`_
+`<frame-exit-event>`_
 
-`See frame-mapped?-setter <frames.htm#26036>`_
+`frame-mapped?-setter`_
 
-`See start-frame <frames.htm#76573>`_
+`start-frame`_
 
 find-frame
 ----------
@@ -4988,7 +4988,7 @@ Arguments
 -  *create?* An instance of type *<boolean>*. Default value: *#t*.
 -  *activate?* An instance of type *<boolean>*. Default value: *#t*.
 -  *own-thread?* An instance of type *<boolean>*. Default value: *#t*.
--  *port* An instance of type `See <port> <silica.htm#11606>`_.
+-  *port* An instance of type `<port> <silica.htm#11606>`_.
 -  *frame-manager* An instance of type `See
    <frame-manager> <silica.htm#32466>`_.
 -  *test* An instance of type *<function>*. Default value: *identity*.
@@ -4996,7 +4996,7 @@ Arguments
 Values
       
 
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Description
            
@@ -5029,7 +5029,7 @@ frame to match successfully.
 See also
         
 
-`See <frame> <frames.htm#16922>`_
+`<frame>`_
 
 <frame>
 -------
@@ -5058,7 +5058,7 @@ Init-keywords
 *default-button:*
                  
 
--  An instance of type *false-or(`See <button> <gadgets.htm#20680>`_)*.
+-  An instance of type *false-or(`<button> <gadgets.htm#20680>`_)*.
    Default value: *#f*.
 -  *x:* An instance of type *<integer>*.
 -  *y:* An instance of type *<integer>*.
@@ -5073,9 +5073,9 @@ Init-keywords
 *top-level-sheet:*
                   
 
--  An instance of type *false-or(`See <sheet> <silica.htm#13118>`_)*.
+-  An instance of type *false-or(`<sheet> <silica.htm#13118>`_)*.
    Default value: *#f*.
--  *layout:* An instance of type `See <layout> <layouts.htm#13344>`_.
+-  *layout:* An instance of type `<layout> <layouts.htm#13344>`_.
 -  *icon:* An instance of type *false-or(`See
    <image> <dcs.htm#51234>`_)*.
 -  *title:* An instance of type *false-or(<string>)*. Default value:
@@ -5117,7 +5117,7 @@ The *mode:* init-keyword lets you specify the mode for the frame. By
 default, frames are modeless, that is, they do not take over control of
 the whole application when they are mapped, and the user can interact
 with other frames in the application normally. Modal frames, on the
-other hand, behave like a `See <dialog-frame> <frames.htm#82173>`_,
+other hand, behave like a `<dialog-frame>`_,
 restricting the user’s interaction with other frames in the application
 until the modal frame has been dismissed.
 
@@ -5174,54 +5174,54 @@ Operations
 
 The following operations are exported from the *DUIM-Frames* module.
 
-`See apply-in-frame <frames.htm#23324>`_ `See
-call-in-frame <frames.htm#81408>`_ `See
-command-enabled? <frames.htm#15723>`_
- `See command-enabled?-setter <frames.htm#96906>`_ `See
-deiconify-frame <frames.htm#10654>`_ `See
-destroy-frame <frames.htm#31128>`_ `See
-execute-command <frames.htm#30054>`_ `See
-exit-frame <frames.htm#83467>`_ `See frame? <frames.htm#91174>`_
- `See frame-accelerators <frames.htm#24082>`_ `See
-frame-accelerators-setter <frames.htm#27887>`_ `See
-frame-can-exit? <frames.htm#85539>`_ `See
-frame-default-button <frames.htm#53318>`_ `See
-frame-default-button-setter <frames.htm#70888>`_ `See
-frame-event-queue <frames.htm#77471>`_ `See
-frame-icon <frames.htm#77216>`_ `See
-frame-icon-setter <frames.htm#41789>`_ `See
-frame-input-focus <frames.htm#82930>`_ `See
-frame-input-focus-setter <frames.htm#46746>`_ `See
-frame-mapped? <frames.htm#79938>`_ `See
-frame-mapped?-setter <frames.htm#26036>`_ `See
-frame-mode <frames.htm#14573>`_ `See frame-owner <frames.htm#71432>`_
-`See frame-palette <frames.htm#27073>`_ `See
-frame-palette-setter <frames.htm#29202>`_ `See
-frame-position <frames.htm#51156>`_ `See frame-size <frames.htm#33975>`_
-`See frame-state <frames.htm#31597>`_ `See
-frame-thread <frames.htm#30891>`_ `See frame-title <frames.htm#98115>`_
-`See frame-title-setter <frames.htm#91083>`_ `See
-iconify-frame <frames.htm#53025>`_ `See lower-frame <frames.htm#85200>`_
-`See layout-frame <frames.htm#72207>`_ `See
-raise-frame <frames.htm#28075>`_ `See redo-command <frames.htm#26421>`_
-`See set-frame-position <frames.htm#70153>`_ `See
-set-frame-size <frames.htm#96736>`_ `See
-layout-frame <frames.htm#72207>`_ `See undo-command <frames.htm#95470>`_
+`apply-in-frame`_ `See
+call-in-frame`_ `See
+command-enabled?`_
+ `command-enabled?-setter`_ `See
+deiconify-frame`_ `See
+destroy-frame`_ `See
+execute-command`_ `See
+exit-frame`_ `frame?`_
+ `frame-accelerators`_ `See
+frame-accelerators-setter`_ `See
+frame-can-exit?`_ `See
+frame-default-button`_ `See
+frame-default-button-setter`_ `See
+frame-event-queue`_ `See
+frame-icon`_ `See
+frame-icon-setter`_ `See
+frame-input-focus`_ `See
+frame-input-focus-setter`_ `See
+frame-mapped?`_ `See
+frame-mapped?-setter`_ `See
+frame-mode`_ `frame-owner`_
+`frame-palette`_ `See
+frame-palette-setter`_ `See
+frame-position`_ `frame-size`_
+`frame-state`_ `See
+frame-thread`_ `frame-title`_
+`frame-title-setter`_ `See
+iconify-frame`_ `lower-frame`_
+`layout-frame`_ `See
+raise-frame`_ `redo-command`_
+`set-frame-position`_ `See
+set-frame-size`_ `See
+layout-frame`_ `undo-command`_
 
 The following operations are exported from the *DUIM-Sheets* module.
 
-`See beep <silica.htm#60172>`_ `See display <silica.htm#56987>`_ `See
+`beep <silica.htm#60172>`_ `display <silica.htm#56987>`_ `See
 force-display <silica.htm#98525>`_ `See
 frame-manager <silica.htm#15759>`_ `See
 handle-event <silica.htm#94892>`_
 
 The following operations are exported from the *DUIM-DCs* module.
 
-`See default-background <dcs.htm#19900>`_ `See
+`default-background <dcs.htm#19900>`_ `See
 default-foreground <dcs.htm#40602>`_ `See
-default-text-style <dcs.htm#95321>`_ `See find-color <dcs.htm#33969>`_
-`See port <silica.htm#51457>`_ `See queue-event <silica.htm#94000>`_
-`See synchronize-display <silica.htm#16560>`_ `See
+default-text-style <dcs.htm#95321>`_ `find-color <dcs.htm#33969>`_
+`port <silica.htm#51457>`_ `queue-event <silica.htm#94000>`_
+`synchronize-display <silica.htm#16560>`_ `See
 top-level-sheet <silica.htm#60884>`_
 
 frame?
@@ -5260,9 +5260,9 @@ on it.
 See also
         
 
-`See current-frame <frames.htm#78942>`_
+`current-frame`_
 
-`See <frame> <frames.htm#16922>`_
+`<frame>`_
 
 frame-accelerators
 ------------------
@@ -5283,13 +5283,13 @@ frame-accelerators *frame* => *accelerators*
 Arguments
          
 
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
 
 -  *accelerators* An instance of type *false-or(limited(<sequence>, of:
-   `See <gesture> <silica.htm#76256>`_))*.
+   `<gesture> <silica.htm#76256>`_))*.
 
 Description
            
@@ -5299,7 +5299,7 @@ Returns the keyboard accelerators defined for *frame*.
 See also
         
 
-`See frame-accelerators-setter <frames.htm#27887>`_
+`frame-accelerators-setter`_
 
 frame-accelerators-setter
 -------------------------
@@ -5321,14 +5321,14 @@ Arguments
          
 
 -  *accelerators* An instance of type *false-or(limited(<sequence>, of:
-   `See <gesture> <silica.htm#76256>`_))*.
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+   `<gesture> <silica.htm#76256>`_))*.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
 
 -  *accelerators* An instance of type *false-or(limited(<sequence>, of:
-   `See <gesture> <silica.htm#76256>`_))*.
+   `<gesture> <silica.htm#76256>`_))*.
 
 Description
            
@@ -5338,7 +5338,7 @@ Defines the keyboard accelerators for *frame*.
 See also
         
 
-`See frame-accelerators <frames.htm#24082>`_
+`frame-accelerators`_
 
 frame-can-exit?
 ---------------
@@ -5359,7 +5359,7 @@ frame-can-exit? *frame* => *can-exit?*
 Arguments
          
 
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
@@ -5395,7 +5395,7 @@ end method frame-can-exit?;
 See also
         
 
-`See exit-frame <frames.htm#83467>`_
+`exit-frame`_
 
 frame-command-table
 -------------------
@@ -5416,13 +5416,13 @@ frame-command-table *frame* => *command-table*
 Arguments
          
 
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
 
 -  *command-table* An instance of type *false-or(* `See
-   <command-table> <frames.htm#27705>`_*)*.
+   <command-table>`_*)*.
 
 Description
            
@@ -5432,7 +5432,7 @@ Returns the command table associated with *frame*.
 See also
         
 
-`See frame-command-table-setter <frames.htm#22356>`_
+`frame-command-table-setter`_
 
 frame-command-table-setter
 --------------------------
@@ -5455,14 +5455,14 @@ Arguments
          
 
 -  *command-table* An instance of type `See
-   <command-table> <frames.htm#27705>`_.
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+   <command-table>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
 
 -  *command-table* An instance of type `See
-   <command-table> <frames.htm#27705>`_.
+   <command-table>`_.
 
 Description
            
@@ -5472,7 +5472,7 @@ Specifies the command table associated with *frame*.
 See also
         
 
-`See frame-command-table <frames.htm#64443>`_
+`frame-command-table`_
 
 <frame-created-event>
 ---------------------
@@ -5488,7 +5488,7 @@ The class of events that indicate a frame has been created.
 Superclasses
             
 
-`See <frame-event> <silica.htm#96445>`_
+`<frame-event> <silica.htm#96445>`_
 
 Init-keywords
              
@@ -5510,9 +5510,9 @@ Operations
 See also
         
 
-`See <frame-destroyed-event> <frames.htm#27782>`_
+`<frame-destroyed-event>`_
 
-`See <frame-exited-event> <frames.htm#20261>`_
+`<frame-exited-event>`_
 
 <frame-destroyed-event>
 -----------------------
@@ -5528,7 +5528,7 @@ The class of events that indicate a frame has been destroyed.
 Superclasses
             
 
-`See <frame-event> <silica.htm#96445>`_
+`<frame-event> <silica.htm#96445>`_
 
 Init-keywords
              
@@ -5550,11 +5550,11 @@ Operations
 See also
         
 
-`See destroy-frame <frames.htm#31128>`_
+`destroy-frame`_
 
-`See <frame-created-event> <frames.htm#53985>`_
+`<frame-created-event>`_
 
-`See <frame-exited-event> <frames.htm#20261>`_
+`<frame-exited-event>`_
 
 frame-default-button
 --------------------
@@ -5575,7 +5575,7 @@ frame-default-button *frame* => *default-button*
 Arguments
          
 
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
@@ -5591,7 +5591,7 @@ Returns the default button associated with *frame*.
 See also
         
 
-`See frame-default-button-setter <frames.htm#70888>`_
+`frame-default-button-setter`_
 
 frame-default-button-setter
 ---------------------------
@@ -5614,7 +5614,7 @@ Arguments
 
 -  *default-button* An instance of type *false-or(`See
    <button> <gadgets.htm#20680>`_)*.
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
@@ -5630,7 +5630,7 @@ Sets the default button associated with *frame*.
 See also
         
 
-`See frame-default-button <frames.htm#53318>`_
+`frame-default-button`_
 
 frame-event-queue
 -----------------
@@ -5651,7 +5651,7 @@ frame-event-queue *frame* => *event-queue*
 Arguments
          
 
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
@@ -5666,7 +5666,7 @@ Returns the event queue that *frame* is running in.
 See also
         
 
-`See <frame> <frames.htm#16922>`_
+`<frame>`_
 
 <frame-exited-event>
 --------------------
@@ -5682,7 +5682,7 @@ The class of events that indicate a frame has been exited.
 Superclasses
             
 
-`See <frame-event> <silica.htm#96445>`_
+`<frame-event> <silica.htm#96445>`_
 
 Init-keywords
              
@@ -5713,13 +5713,13 @@ exited.
 See also
         
 
-`See <application-exited-event> <frames.htm#34931>`_
+`<application-exited-event>`_
 
-`See exit-frame <frames.htm#83467>`_
+`exit-frame`_
 
-`See <frame-created-event> <frames.htm#53985>`_
+`<frame-created-event>`_
 
-`See <frame-destroyed-event> <frames.htm#27782>`_
+`<frame-destroyed-event>`_
 
 <frame-exit-event>
 ------------------
@@ -5735,7 +5735,7 @@ The class of events distributed when a frame is about to exit.
 Superclasses
             
 
-`See <frame-event> <silica.htm#96445>`_
+`<frame-event> <silica.htm#96445>`_
 
 Init-keywords
              
@@ -5749,10 +5749,10 @@ Description
            
 
 The class of events distributed when a frame is about to exit. Contrast
-this with `See <frame-exited-event> <frames.htm#20261>`_, which is
+this with `<frame-exited-event>`_, which is
 passed after the frame is exited.
 
-The default method uses `See frame-can-exit? <frames.htm#85539>`_ to
+The default method uses `frame-can-exit?`_ to
 decide whether or not to exit.
 
 If *destroy-frame?:* is *#t*, then the frame is destroyed.
@@ -5765,11 +5765,11 @@ Operations
 See also
         
 
-`See event-destroy-frame? <frames.htm#34033>`_
+`event-destroy-frame?`_
 
-`See frame-can-exit? <frames.htm#85539>`_
+`frame-can-exit?`_
 
-`See <frame-exited-event> <frames.htm#20261>`_
+`<frame-exited-event>`_
 
 <frame-focus-event>
 -------------------
@@ -5785,7 +5785,7 @@ The class of events distributed when a frame receives focus.
 Superclasses
             
 
-`See <frame-event> <silica.htm#96445>`_
+`<frame-event> <silica.htm#96445>`_
 
 Init-keywords
              
@@ -5805,11 +5805,11 @@ Operations
 See also
         
 
-`See event-destroy-frame? <frames.htm#34033>`_
+`event-destroy-frame?`_
 
-`See frame-can-exit? <frames.htm#85539>`_
+`frame-can-exit?`_
 
-`See <frame-exited-event> <frames.htm#20261>`_
+`<frame-exited-event>`_
 
 frame-fixed-height?
 -------------------
@@ -5830,7 +5830,7 @@ frame-fixed-width? *frame* => *fixed-height?*
 Arguments
          
 
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
@@ -5848,9 +5848,9 @@ Example
 See also
         
 
-`See frame-fixed-width? <frames.htm#55505>`_
+`frame-fixed-width?`_
 
-`See frame-resizable? <frames.htm#76905>`_
+`frame-resizable?`_
 
 frame-fixed-width?
 ------------------
@@ -5871,7 +5871,7 @@ frame-fixed-width? *frame* => *fixed-width?*
 Arguments
          
 
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
@@ -5889,9 +5889,9 @@ Example
 See also
         
 
-`See frame-fixed-height? <frames.htm#57616>`_
+`frame-fixed-height?`_
 
-`See frame-resizable? <frames.htm#76905>`_
+`frame-resizable?`_
 
 frame-icon
 ----------
@@ -5912,12 +5912,12 @@ frame-icon *frame* => *icon*
 Arguments
          
 
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
 
--  *icon* An instance of type *false-or(`See <image> <dcs.htm#51234>`_)*
+-  *icon* An instance of type *false-or(`<image> <dcs.htm#51234>`_)*
    .
 
 Description
@@ -5931,11 +5931,11 @@ bar of the frame when it is not iconized.
 See also
         
 
-`See deiconify-frame <frames.htm#10654>`_
+`deiconify-frame`_
 
-`See frame-icon-setter <frames.htm#41789>`_
+`frame-icon-setter`_
 
-`See iconify-frame <frames.htm#53025>`_
+`iconify-frame`_
 
 frame-icon-setter
 -----------------
@@ -5958,7 +5958,7 @@ Arguments
 
 -  *icon* An instance of type *false-or(* `See
    <image> <dcs.htm#51234>`_*)*.
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
@@ -5976,7 +5976,7 @@ on the left hand side of the title bar of the frame.
 See also
         
 
-`See frame-icon <frames.htm#77216>`_
+`frame-icon`_
 
 frame-input-focus
 -----------------
@@ -5997,7 +5997,7 @@ frame-input-focus *frame* => *focus*
 Arguments
          
 
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
@@ -6013,7 +6013,7 @@ Returns the sheet in *frame* that has the input focus.
 See also
         
 
-`See frame-input-focus-setter <frames.htm#46746>`_
+`frame-input-focus-setter`_
 
 frame-input-focus-setter
 ------------------------
@@ -6036,7 +6036,7 @@ Arguments
 
 -  *focus* An instance of type *false-or(`See
    <sheet> <silica.htm#13118>`_)*.
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
@@ -6052,7 +6052,7 @@ Sets which sheet in *frame* has the input focus.
 See also
         
 
-`See frame-input-focus <frames.htm#82930>`_
+`frame-input-focus`_
 
 frame-layout
 ------------
@@ -6073,7 +6073,7 @@ frame-layout *frame* => *layout*
 Arguments
          
 
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
@@ -6089,7 +6089,7 @@ Returns the layout used in *frame*.
 See also
         
 
-`See frame-layout-setter <frames.htm#92673>`_
+`frame-layout-setter`_
 
 frame-layout-setter
 -------------------
@@ -6112,7 +6112,7 @@ Arguments
 
 -  *layout* An instance of type *false-or(`See
    <sheet> <silica.htm#13118>`_)*.
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
@@ -6128,7 +6128,7 @@ Specifies the layout used in *frame*.
 See also
         
 
-`See frame-layout <frames.htm#61754>`_
+`frame-layout`_
 
 frame-mapped?
 -------------
@@ -6149,7 +6149,7 @@ frame-mapped? *frame* => *mapped?*
 Arguments
          
 
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
@@ -6200,7 +6200,7 @@ frame-mapped?(\*frame\*);*RETURN*
 See also
         
 
-`See frame-mapped?-setter <frames.htm#26036>`_
+`frame-mapped?-setter`_
 
 <frame-mapped-event>
 --------------------
@@ -6216,7 +6216,7 @@ The class of events that indicate a frame has been mapped.
 Superclasses
             
 
-`See <frame-event> <silica.htm#96445>`_
+`<frame-event> <silica.htm#96445>`_
 
 Init-keywords
              
@@ -6258,7 +6258,7 @@ end method handle-event;
 See also
         
 
-`See <frame-unmapped-event> <frames.htm#49435>`_
+`<frame-unmapped-event>`_
 
 frame-mapped?-setter
 --------------------
@@ -6280,7 +6280,7 @@ Arguments
          
 
 -  *mapped?* An instance of type *<boolean>*.
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
@@ -6301,8 +6301,8 @@ Example
 
 The following example creates a simple frame, then displays it and
 unmaps it using *frame-mapped?-setter* rather than `See
-start-frame <frames.htm#76573>`_ and `See
-exit-frame <frames.htm#83467>`_. You should run this code in the
+start-frame`_ and `See
+exit-frame`_. You should run this code in the
 interactor, pressing the RETURN key at the points indicated.
 
 define variable \*frame\* =
@@ -6320,11 +6320,11 @@ frame-mapped?-setter(#f, \*frame\*);*RETURN*
 See also
         
 
-`See exit-frame <frames.htm#83467>`_
+`exit-frame`_
 
-`See frame-mapped? <frames.htm#79938>`_
+`frame-mapped?`_
 
-`See start-frame <frames.htm#76573>`_
+`start-frame`_
 
 frame-menu-bar
 --------------
@@ -6345,7 +6345,7 @@ frame-menu-bar *frame* => *menu-bar*
 Arguments
          
 
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
@@ -6361,7 +6361,7 @@ Returns the menu bar used in *frame*.
 See also
         
 
-`See frame-menu-bar-setter <frames.htm#63229>`_
+`frame-menu-bar-setter`_
 
 frame-menu-bar-setter
 ---------------------
@@ -6384,7 +6384,7 @@ Arguments
 
 -  *menu-bar* An instance of type *false-or(`See
    <menu-bar> <gadgets.htm#30138>`_)*.
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
@@ -6400,7 +6400,7 @@ Sets the menu bar used in *frame*.
 See also
         
 
-`See frame-menu-bar <frames.htm#95467>`_
+`frame-menu-bar`_
 
 frame-mode
 ----------
@@ -6421,7 +6421,7 @@ frame-mode *frame* => *mode*
 Arguments
          
 
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
@@ -6457,7 +6457,7 @@ The mode cannot subsequently be changed.
 See also
         
 
-`See <frame> <frames.htm#16922>`_
+`<frame>`_
 
 frame-owner
 -----------
@@ -6478,13 +6478,13 @@ frame-owner *frame* => *owner*
 Arguments
          
 
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
 
 -  *owner* An instance of type *false-or(`See
-   <frame> <frames.htm#16922>`_)*.
+   <frame>`_)*.
 
 Description
            
@@ -6514,12 +6514,12 @@ frame-palette *frame* => *palette*
 Arguments
          
 
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
 
--  *palette* An instance of type `See <palette> <dcs.htm#11494>`_.
+-  *palette* An instance of type `<palette> <dcs.htm#11494>`_.
 
 Description
            
@@ -6529,7 +6529,7 @@ Returns the palette used in *frame*.
 See also
         
 
-`See frame-palette-setter <frames.htm#29202>`_
+`frame-palette-setter`_
 
 frame-palette-setter
 --------------------
@@ -6550,13 +6550,13 @@ frame-palette-setter *palette* *frame* => *palette*
 Arguments
          
 
--  *palette* An instance of type `See <palette> <dcs.htm#11494>`_.
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *palette* An instance of type `<palette> <dcs.htm#11494>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
 
--  *palette* An instance of type `See <palette> <dcs.htm#11494>`_.
+-  *palette* An instance of type `<palette> <dcs.htm#11494>`_.
 
 Description
            
@@ -6566,7 +6566,7 @@ Sets the palette used in *frame*.
 See also
         
 
-`See frame-palette <frames.htm#27073>`_
+`frame-palette`_
 
 frame-position
 --------------
@@ -6587,7 +6587,7 @@ frame-position *frame* => *x* *y*
 Arguments
          
 
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
@@ -6624,11 +6624,11 @@ frame-position(\*frame\*);*RETURN*
 See also
         
 
-`See frame-size <frames.htm#33975>`_
+`frame-size`_
 
-`See frame-state <frames.htm#31597>`_
+`frame-state`_
 
-`See set-frame-position <frames.htm#70153>`_
+`set-frame-position`_
 
 frame-resizable?
 ----------------
@@ -6649,7 +6649,7 @@ frame-resizable? *frame* => *resizable?*
 Arguments
          
 
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
@@ -6668,9 +6668,9 @@ Example
 See also
         
 
-`See frame-fixed-height? <frames.htm#57616>`_
+`frame-fixed-height?`_
 
-`See frame-fixed-width? <frames.htm#55505>`_
+`frame-fixed-width?`_
 
 frame-size
 ----------
@@ -6691,7 +6691,7 @@ frame-size *frame* => *width* *height*
 Arguments
          
 
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
@@ -6726,11 +6726,11 @@ frame-size(\*frame\*);*RETURN*
 See also
         
 
-`See frame-position <frames.htm#51156>`_
+`frame-position`_
 
-`See frame-state <frames.htm#31597>`_
+`frame-state`_
 
-`See set-frame-size <frames.htm#96736>`_
+`set-frame-size`_
 
 frame-state
 -----------
@@ -6751,7 +6751,7 @@ frame-state *frame* => *state*
 Arguments
          
 
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
@@ -6793,9 +6793,9 @@ frame-state(\*frame\*);*RETURN*
 See also
         
 
-`See frame-position <frames.htm#51156>`_
+`frame-position`_
 
-`See frame-size <frames.htm#33975>`_
+`frame-size`_
 
 frame-status-bar
 ----------------
@@ -6816,7 +6816,7 @@ frame-status-bar *frame* => *status-bar*
 Arguments
          
 
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
@@ -6832,7 +6832,7 @@ Returns the status bar used in *frame*.
 See also
         
 
-`See frame-status-bar-setter <frames.htm#32720>`_
+`frame-status-bar-setter`_
 
 frame-status-bar-setter
 -----------------------
@@ -6855,7 +6855,7 @@ Arguments
 
 -  *status-bar* An instance of type *`See
    <status-bar> <gadgets.htm#50900>`_*.
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
@@ -6871,7 +6871,7 @@ Sets the status bar used in *frame*.
 See also
         
 
-`See frame-status-bar <frames.htm#12376>`_
+`frame-status-bar`_
 
 frame-status-message
 --------------------
@@ -6892,7 +6892,7 @@ frame-status-message *frame* => *status-message*
 Arguments
          
 
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
@@ -6909,11 +6909,11 @@ not set, this this function returns false.
 See also
         
 
-`See frame-status-bar <frames.htm#12376>`_
+`frame-status-bar`_
 
-`See frame-status-message-setter <frames.htm#81567>`_
+`frame-status-message-setter`_
 
-`See <status-bar> <gadgets.htm#50900>`_
+`<status-bar> <gadgets.htm#50900>`_
 
 frame-status-message-setter
 ---------------------------
@@ -6935,7 +6935,7 @@ Arguments
          
 
 -  *status-message* An instance of type *false-or(<string>)*.
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
@@ -6952,11 +6952,11 @@ set the label fails silently.
 See also
         
 
-`See frame-status-bar-setter <frames.htm#32720>`_
+`frame-status-bar-setter`_
 
-`See frame-status-message <frames.htm#36830>`_
+`frame-status-message`_
 
-`See <status-bar> <gadgets.htm#50900>`_
+`<status-bar> <gadgets.htm#50900>`_
 
 frame-thread
 ------------
@@ -6977,7 +6977,7 @@ frame-thread *frame* => *thread*
 Arguments
          
 
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
@@ -7011,7 +7011,7 @@ frame-title *frame* => *title*
 Arguments
          
 
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
@@ -7029,7 +7029,7 @@ removed from the frame or not is platform dependent.
 See also
         
 
-`See frame-title-setter <frames.htm#91083>`_
+`frame-title-setter`_
 
 frame-title-setter
 ------------------
@@ -7051,7 +7051,7 @@ Arguments
          
 
 -  *title* An instance of type *false-or(<string>)*.
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
@@ -7068,7 +7068,7 @@ to remove the title bar from the frame, if possible.
 See also
         
 
-`See frame-title <frames.htm#98115>`_
+`frame-title`_
 
 frame-tool-bar
 --------------
@@ -7089,7 +7089,7 @@ frame-tool-bar *frame* => *tool-bar*
 Arguments
          
 
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
@@ -7105,7 +7105,7 @@ Returns the tool bar used in *frame*.
 See also
         
 
-`See frame-tool-bar-setter <frames.htm#88622>`_
+`frame-tool-bar-setter`_
 
 frame-tool-bar-setter
 ---------------------
@@ -7128,7 +7128,7 @@ Arguments
 
 -  *tool-bar* An instance of type *false-or(`See
    <tool-bar> <gadgets.htm#58915>`_)*.
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
@@ -7144,7 +7144,7 @@ Sets the tool bar used in *frame*.
 See also
         
 
-`See frame-tool-bar <frames.htm#39877>`_
+`frame-tool-bar`_
 
 frame-top-level
 ---------------
@@ -7165,7 +7165,7 @@ frame-top-level *frame* => *top-level*
 Arguments
          
 
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
@@ -7179,12 +7179,12 @@ Returns the top level loop function for *frame*. The top level loop
 function for a frame is the “command loop” for the frame.
 
 The default method for *frame-top-level* calls *read-event* and then
-*`See handle-event <silica.htm#94892>`_*.
+*`handle-event <silica.htm#94892>`_*.
 
 See also
         
 
-*`See handle-event <silica.htm#94892>`_*
+*`handle-event <silica.htm#94892>`_*
 
 <frame-unmapped-event>
 ----------------------
@@ -7200,7 +7200,7 @@ The class of events that indicate a frame has been unmapped.
 Superclasses
             
 
-`See <frame-event> <silica.htm#96445>`_
+`<frame-event> <silica.htm#96445>`_
 
 Init-keywords
              
@@ -7244,7 +7244,7 @@ end method handle-event;
 See also
         
 
-`See <frame-mapped-event> <frames.htm#43736>`_
+`<frame-mapped-event>`_
 
 \*global-command-table\*
 ------------------------
@@ -7260,7 +7260,7 @@ The command table inherited by all new command tables.
 Type
     
 
-`See <command-table> <frames.htm#27705>`_
+`<command-table>`_
 
 Description
            
@@ -7274,9 +7274,9 @@ translators into this command table.
 See also
         
 
-`See <command-table> <frames.htm#27705>`_
+`<command-table>`_
 
-`See \*user-command-table\* <frames.htm#50463>`_
+`\*user-command-table\*`_
 
 iconify-frame
 -------------
@@ -7297,7 +7297,7 @@ iconify-frame *frame* => ()
 Arguments
          
 
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
@@ -7336,17 +7336,17 @@ iconify-frame(\*frame\*);*RETURN*
 See also
         
 
-`See deiconify-frame <frames.htm#10654>`_
+`deiconify-frame`_
 
-`See destroy-frame <frames.htm#31128>`_
+`destroy-frame`_
 
-`See exit-frame <frames.htm#83467>`_
+`exit-frame`_
 
-`See frame-icon <frames.htm#77216>`_
+`frame-icon`_
 
-`See lower-frame <frames.htm#85200>`_
+`lower-frame`_
 
-`See raise-frame <frames.htm#28075>`_
+`raise-frame`_
 
 layout-frame
 ------------
@@ -7368,7 +7368,7 @@ layout-frame *frame* #key *width height* => ()
 Arguments
          
 
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 -  *width* An instance of type *false-or(<integer>)*.
 -  *height* An instance of type *false-or(<integer>)*.
 
@@ -7414,7 +7414,7 @@ lower-frame *frame* => ()
 Arguments
          
 
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
@@ -7451,15 +7451,15 @@ lower-frame(\*frame\*);
 See also
         
 
-`See deiconify-frame <frames.htm#10654>`_
+`deiconify-frame`_
 
-`See destroy-frame <frames.htm#31128>`_
+`destroy-frame`_
 
-`See exit-frame <frames.htm#83467>`_
+`exit-frame`_
 
-`See iconify-frame <frames.htm#53025>`_
+`iconify-frame`_
 
-`See raise-frame <frames.htm#28075>`_
+`raise-frame`_
 
 make
 ----
@@ -7487,7 +7487,7 @@ make *(class* == <frame>*)*
 Arguments
          
 
--  *class* The class *`See <frame> <frames.htm#16922>`_*.
+-  *class* The class *`<frame>`_*.
 -  *top-level* An instance of type *false-or(`See
    <sheet> <silica.htm#13118>`_)*. Default value: *#f*.
 -  *command-queue* An instance of type *false-or(<event-queue>)*.
@@ -7502,7 +7502,7 @@ Arguments
 
 -  An instance of type *false-or(<string>)*. Default value: *#f*.
 -  *command-table* An instance of type *false-or(* `See
-   <command-table> <frames.htm#27705>`_*)*. Default value: *#f*.
+   <command-table>`_*)*. Default value: *#f*.
 -  *menu-bar* An instance of type *false-or(* `See
    <menu-bar> <gadgets.htm#30138>`_*)*. Default value: *#f*.
 -  *tool-bar* An instance of type *false-or(* `See
@@ -7512,7 +7512,7 @@ Arguments
 -  *title* An instance of type *false-or(<string>)*. Default value:
    *#f*.
 -  *calling-frame* An instance of type *false-or(`See
-   <frame> <frames.htm#16922>`_)*. Default value: *#f*.
+   <frame>`_)*. Default value: *#f*.
 -  *state* An instance of type *one-of(#"detached", #"unmapped",
    #"mapped", #"iconified")*. Default value: *#"detached"*.
 -  *geometry* An instance of type *<vector>*. Default value:
@@ -7536,17 +7536,17 @@ Arguments
 -  *drop-shadow?* An instance of type *<boolean>*. Default value: *#f*
    .
 -  *dialog-for* An instance of type `See
-   <dialog-frame> <frames.htm#82173>`_.
+   <dialog-frame>`_.
 
 Values
       
 
--  *simple-frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *simple-frame* An instance of type `<frame>`_.
 
 Description
            
 
-Creates and returns an instance of `See <frame> <frames.htm#16922>`_ or
+Creates and returns an instance of `<frame>`_ or
 one of its subclasses.
 
 The *top-level* argument specifies the top-level command-loop in which
@@ -7602,7 +7602,7 @@ frame, and *palette* specifies a color palette for the frame.
 See also
         
 
-`See <frame> <frames.htm#16922>`_
+`<frame>`_
 
 make-menu-from-command-table-menu
 ---------------------------------
@@ -7630,12 +7630,12 @@ Arguments
                           
 
 -  An instance of type *<sequence>*.
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 -  *framem* An instance of type `See
    <frame-manager> <silica.htm#32466>`_.
 -  *command-table* An instance of type `See
-   <command-table> <frames.htm#27705>`_.
--  *label* An instance of type `See <label> <gadgets.htm#68802>`_.
+   <command-table>`_.
+-  *label* An instance of type `<label> <gadgets.htm#68802>`_.
 -  *mnemonic* An instance of type *false-or(* `See
    <gesture> <silica.htm#76256>`_*)*.
 -  *item-callback* An instance of type *<function>*.
@@ -7643,21 +7643,21 @@ Arguments
 Values
       
 
--  *menu* An instance of type `See <menu> <gadgets.htm#81833>`_.
+-  *menu* An instance of type `<menu> <gadgets.htm#81833>`_.
 
 Description
            
 
 Returns a menu from the menu definition in the specified command table.
 This function is used by `See
-make-menus-from-command-table <frames.htm#10131>`_ to individually
+make-menus-from-command-table`_ to individually
 create each menu defined in the command table. The function `See
-make-menus-from-command-table <frames.htm#10131>`_ then puts each of the
+make-menus-from-command-table`_ then puts each of the
 menus created together in the appropriate way.
 
 The *command-table-menu-items* argument defines the items that are to be
 placed in the menu. It is a sequence of instances of `See
-<command-table-menu-item> <frames.htm#88128>`_.
+<command-table-menu-item>`_.
 
 The *frame* and *framem* arguments define the frame and the frame
 manager in which the menu created is to be placed.
@@ -7673,7 +7673,7 @@ created.
 See also
         
 
-`See make-menus-from-command-table <frames.htm#10131>`_
+`make-menus-from-command-table`_
 
 make-menus-from-command-table
 -----------------------------
@@ -7697,11 +7697,11 @@ Arguments
          
 
 -  *command-table* An instance of type `See
-   <command-table> <frames.htm#27705>`_.
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+   <command-table>`_.
+-  *frame* An instance of type `<frame>`_.
 -  *framem* An instance of type `See
    <frame-manager> <silica.htm#32466>`_.
--  *label* An instance of type `See <label> <gadgets.htm#68802>`_.
+-  *label* An instance of type `<label> <gadgets.htm#68802>`_.
 
 Values
       
@@ -7722,7 +7722,7 @@ The *label* argument lets you specify a label for the set of menus.
 See also
         
 
-`See make-menu-from-command-table-menu <frames.htm#74637>`_
+`make-menu-from-command-table-menu`_
 
 menu-item-accelerator
 ---------------------
@@ -7744,7 +7744,7 @@ Arguments
          
 
 -  *menu-item* An instance of type `See
-   <command-table-menu-item> <frames.htm#88128>`_.
+   <command-table-menu-item>`_.
 
 Values
       
@@ -7761,7 +7761,7 @@ must be defined in a command table.
 See also
         
 
-`See menu-item-mnemonic <frames.htm#11803>`_
+`menu-item-mnemonic`_
 
 menu-item-mnemonic
 ------------------
@@ -7783,7 +7783,7 @@ Arguments
          
 
 -  *menu-item* An instance of type `See
-   <command-table-menu-item> <frames.htm#88128>`_.
+   <command-table-menu-item>`_.
 
 Values
       
@@ -7799,7 +7799,7 @@ Returns the keyboard mnemonic for *menu-item*.
 See also
         
 
-`See menu-item-accelerator <frames.htm#93465>`_
+`menu-item-accelerator`_
 
 menu-item-name
 --------------
@@ -7821,7 +7821,7 @@ Arguments
          
 
 -  *menu-item* An instance of type `See
-   <command-table-menu-item> <frames.htm#88128>`_.
+   <command-table-menu-item>`_.
 
 Values
       
@@ -7836,11 +7836,11 @@ Returns the name of *menu-item*.
 See also
         
 
-`See menu-item-options <frames.htm#17133>`_
+`menu-item-options`_
 
-`See menu-item-type <frames.htm#85114>`_
+`menu-item-type`_
 
-`See menu-item-value <frames.htm#39869>`_
+`menu-item-value`_
 
 menu-item-options
 -----------------
@@ -7862,7 +7862,7 @@ Arguments
          
 
 -  *menu-item* An instance of type `See
-   <command-table-menu-item> <frames.htm#88128>`_.
+   <command-table-menu-item>`_.
 
 Values
       
@@ -7877,11 +7877,11 @@ Returns the options for *menu-item*.
 See also
         
 
-`See menu-item-name <frames.htm#61623>`_
+`menu-item-name`_
 
-`See menu-item-type <frames.htm#85114>`_
+`menu-item-type`_
 
-`See menu-item-value <frames.htm#39869>`_
+`menu-item-value`_
 
 menu-item-type
 --------------
@@ -7903,7 +7903,7 @@ Arguments
          
 
 -  *menu-item* An instance of type `See
-   <command-table-menu-item> <frames.htm#88128>`_.
+   <command-table-menu-item>`_.
 
 Values
       
@@ -7918,11 +7918,11 @@ Returns the type of *menu-item*.
 See also
         
 
-`See menu-item-name <frames.htm#61623>`_
+`menu-item-name`_
 
-`See menu-item-options <frames.htm#17133>`_
+`menu-item-options`_
 
-`See menu-item-value <frames.htm#39869>`_
+`menu-item-value`_
 
 menu-item-value
 ---------------
@@ -7944,7 +7944,7 @@ Arguments
          
 
 -  *menu-item* An instance of type `See
-   <command-table-menu-item> <frames.htm#88128>`_.
+   <command-table-menu-item>`_.
 
 Values
       
@@ -7959,11 +7959,11 @@ Returns the value of *menu-item*.
 See also
         
 
-`See menu-item-name <frames.htm#61623>`_
+`menu-item-name`_
 
-`See menu-item-options <frames.htm#17133>`_
+`menu-item-options`_
 
-`See menu-item-type <frames.htm#85114>`_
+`menu-item-type`_
 
 move-to-next-page
 -----------------
@@ -7985,7 +7985,7 @@ Arguments
          
 
 -  *wizard* An instance of type `See
-   <wizard-frame> <frames.htm#29315>`_.
+   <wizard-frame>`_.
 
 Values
       
@@ -8001,9 +8001,9 @@ callback for the Next button in a wizard frame.
 See also
         
 
-`See dialog-next-callback <frames.htm#69284>`_
+`dialog-next-callback`_
 
-`See <wizard-frame> <frames.htm#29315>`_
+`<wizard-frame>`_
 
 move-to-previous-page
 ---------------------
@@ -8025,7 +8025,7 @@ Arguments
          
 
 -  *wizard* An instance of type `See
-   <wizard-frame> <frames.htm#29315>`_.
+   <wizard-frame>`_.
 
 Values
       
@@ -8041,9 +8041,9 @@ callback for the Back button in a wizard frame.
 See also
         
 
-`See dialog-back-callback <frames.htm#45311>`_
+`dialog-back-callback`_
 
-`See <wizard-frame> <frames.htm#29315>`_
+`<wizard-frame>`_
 
 note-progress
 -------------
@@ -8068,8 +8068,8 @@ Arguments
 -  *numerator* An instance of type *<integer>*.
 -  *denominator* An instance of type *<integer>*.
 -  *note* An instance of type *<progress-note>*. Default value: `See
-   \*progress-note\* <frames.htm#65500>`_.
--  *label* An instance of type `See <label> <gadgets.htm#68802>`_.
+   \*progress-note\*`_.
+-  *label* An instance of type `<label> <gadgets.htm#68802>`_.
 -  *pointer-cursor* An instance of type `See
    <pointer> <silica.htm#85241>`_.
 
@@ -8093,9 +8093,9 @@ is placed over the owner frame.
 See also
         
 
-`See noting-progress <frames.htm#14565>`_
+`noting-progress`_
 
-`See \*progress-note\* <frames.htm#65500>`_
+`\*progress-note\*`_
 
 noting-progress
 ---------------
@@ -8131,13 +8131,13 @@ Description
 Performs a body of code, noting its progress, for the specified sheet.
 
 The sheet argument is an expression that evaluates to an instance of
-`See <sheet> <silica.htm#13118>`_. The label argument is an expression
+`<sheet> <silica.htm#13118>`_. The label argument is an expression
 that evaluates to an instance of *<string>*.
 
 See also
         
 
-`See note-progress <frames.htm#68823>`_
+`note-progress`_
 
 \*progress-note\*
 -----------------
@@ -8169,7 +8169,7 @@ progress note is explicitly specified.
 See also
         
 
-`See note-progress <frames.htm#68823>`_
+`note-progress`_
 
 <property-frame>
 ----------------
@@ -8185,7 +8185,7 @@ The class of property frames.
 Superclasses
             
 
-`See <dialog-frame> <frames.htm#82173>`_
+`<dialog-frame>`_
 
 Init-keywords
              
@@ -8201,7 +8201,7 @@ Init-keywords
    <button> <gadgets.htm#20680>`_*)*. Default value: *#f*.
 
 *Note:* The following two useful init-keywords are inherited from `See
-<dialog-frame> <frames.htm#82173>`_:
+<dialog-frame>`_:
 
 -  *pages:* An instance of type *false-or(<sequence>)*. Default value:
    *#f*.
@@ -8245,30 +8245,30 @@ Operations
 
 The following operations are exported from the *DUIM-Frames* module.
 
-`See dialog-apply-button <frames.htm#80546>`_ `See
-dialog-apply-button-setter <frames.htm#56017>`_
- `See dialog-apply-callback <frames.htm#42604>`_ `See
-dialog-current-page <frames.htm#75972>`_
- `See dialog-current-page-setter <frames.htm#20241>`_
- `See dialog-page-changed-callback <frames.htm#93093>`_ `See
-dialog-page-changed-callback-setter <frames.htm#48591>`_ `See
-dialog-page-complete? <frames.htm#97380>`_ `See
-dialog-page-complete?-setter <frames.htm#99359>`_ `See
-dialog-pages <frames.htm#13113>`_ `See
-dialog-pages-setter <frames.htm#65708>`_
+`dialog-apply-button`_ `See
+dialog-apply-button-setter`_
+ `dialog-apply-callback`_ `See
+dialog-current-page`_
+ `dialog-current-page-setter`_
+ `dialog-page-changed-callback`_ `See
+dialog-page-changed-callback-setter`_ `See
+dialog-page-complete?`_ `See
+dialog-page-complete?-setter`_ `See
+dialog-pages`_ `See
+dialog-pages-setter`_
 
 See also
         
 
-`See dialog-apply-button <frames.htm#80546>`_
+`dialog-apply-button`_
 
-`See dialog-apply-callback <frames.htm#42604>`_
+`dialog-apply-callback`_
 
-`See <dialog-frame> <frames.htm#82173>`_
+`<dialog-frame>`_
 
-`See <property-page> <frames.htm#93333>`_
+`<property-page>`_
 
-`See <wizard-frame> <frames.htm#29315>`_
+`<wizard-frame>`_
 
 <property-page>
 ---------------
@@ -8284,7 +8284,7 @@ The class of property pages.
 Superclasses
             
 
-`See <page> <gadgets.htm#93333>`_
+`<page> <gadgets.htm#93333>`_
 
 Init-keywords
              
@@ -8295,7 +8295,7 @@ Description
            
 
 The class of property pages. These are pages that can be displayed in an
-instance of `See <property-frame> <frames.htm#40547>`_.
+instance of `<property-frame>`_.
 
 A property page
                
@@ -8317,15 +8317,15 @@ Operations
 See also
         
 
-`See <page> <gadgets.htm#93333>`_
+`<page> <gadgets.htm#93333>`_
 
-`See <property-frame> <frames.htm#40547>`_
+`<property-frame>`_
 
-`See <property-page> <frames.htm#93333>`_
+`<property-page>`_
 
-`See <tab-control-page> <gadgets.htm#47108>`_
+`<tab-control-page> <gadgets.htm#47108>`_
 
-`See <wizard-page> <frames.htm#87607>`_
+`<wizard-page>`_
 
 raise-frame
 -----------
@@ -8346,7 +8346,7 @@ raise-frame *frame* => ()
 Arguments
          
 
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
@@ -8386,15 +8386,15 @@ raise-frame(\*frame\*);*RETURN*
 See also
         
 
-`See deiconify-frame <frames.htm#10654>`_
+`deiconify-frame`_
 
-`See destroy-frame <frames.htm#31128>`_
+`destroy-frame`_
 
-`See exit-frame <frames.htm#83467>`_
+`exit-frame`_
 
-`See iconify-frame <frames.htm#53025>`_
+`iconify-frame`_
 
-`See lower-frame <frames.htm#85200>`_
+`lower-frame`_
 
 redo-command
 ------------
@@ -8415,8 +8415,8 @@ redo-command *command* *frame* => #rest *values*
 Arguments
          
 
--  *command* An instance of type `See <command> <frames.htm#40934>`_.
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *command* An instance of type `<command>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
@@ -8427,7 +8427,7 @@ Description
            
 
 Performs *command* again. The command is the command that was last
-executed using `See execute-command <frames.htm#30054>`_.
+executed using `execute-command`_.
 
 Note that the command described by *command* must be undoable.
 
@@ -8436,7 +8436,7 @@ You can both specialize this function and call it directly in your code.
 See also
         
 
-`See execute-command <frames.htm#30054>`_
+`execute-command`_
 
 remove-command
 --------------
@@ -8458,8 +8458,8 @@ Arguments
          
 
 -  *command-table* An instance of type `See
-   <command-table> <frames.htm#27705>`_.
--  *command* An instance of type `See <command> <frames.htm#40934>`_.
+   <command-table>`_.
+-  *command* An instance of type `<command>`_.
 
 Values
       
@@ -8474,7 +8474,7 @@ Removes *command* from *command-table*.
 See also
         
 
-`See add-command <frames.htm#89020>`_
+`add-command`_
 
 remove-command-table
 --------------------
@@ -8496,7 +8496,7 @@ Arguments
          
 
 -  *command-table* An instance of type `See
-   <command-table> <frames.htm#27705>`_.
+   <command-table>`_.
 
 Values
       
@@ -8528,7 +8528,7 @@ Arguments
          
 
 -  *command-table* An instance of type `See
-   <command-table> <frames.htm#27705>`_.
+   <command-table>`_.
 -  *string* An instance of type *<string>*.
 
 Values
@@ -8544,7 +8544,7 @@ Removes the menu item identified by *string* from *command-table*.
 See also
         
 
-`See add-command-table-menu-item <frames.htm#44746>`_
+`add-command-table-menu-item`_
 
 set-frame-position
 ------------------
@@ -8565,7 +8565,7 @@ set-frame-position *frame* *x* *y* => ()
 Arguments
          
 
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 -  *x* An instance of type *<integer>*.
 -  *y* An instance of type *<integer>*.
 
@@ -8583,9 +8583,9 @@ from the top left of the screen, measured in pixels.
 See also
         
 
-`See frame-position <frames.htm#51156>`_
+`frame-position`_
 
-`See set-frame-size <frames.htm#96736>`_
+`set-frame-size`_
 
 set-frame-size
 --------------
@@ -8606,7 +8606,7 @@ set-frame-size *frame* *width* *height* => ()
 Arguments
          
 
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 -  *width* An instance of type *<integer>*.
 -  *height* An instance of type *<integer>*.
 
@@ -8640,9 +8640,9 @@ set-frame-size(\*frame\*, 100, 500);*RETURN*
 See also
         
 
-`See frame-size <frames.htm#33975>`_
+`frame-size`_
 
-`See set-frame-position <frames.htm#70153>`_
+`set-frame-position`_
 
 <simple-command>
 ----------------
@@ -8682,7 +8682,7 @@ None.
 See also
         
 
-`See <command> <frames.htm#40934>`_
+`<command>`_
 
 <simple-frame>
 --------------
@@ -8698,7 +8698,7 @@ The class of simple frames.
 Superclasses
             
 
-`See <frame> <frames.htm#16922>`_
+`<frame>`_
 
 Init-keywords
              
@@ -8708,7 +8708,7 @@ Init-keywords
 -  *layout:* An instance of type *false-or(* `See
    <sheet> <silica.htm#13118>`_*)*. Default value: *#f*.
 -  *command-table:* An instance of type *false-or(* `See
-   <command-table> <frames.htm#27705>`_*)*. Default value: *#f*.
+   <command-table>`_*)*. Default value: *#f*.
 -  *menu-bar:* An instance of type *false-or(* `See
    <menu-bar> <gadgets.htm#30138>`_*)*. Default value: *#f*.
 -  *tool-bar:* An instance of type *false-or(* `See
@@ -8740,20 +8740,20 @@ Operations
 
 The following operations are exported from the *DUIM-Frames* module.
 
-`See frame-command-table <frames.htm#64443>`_ `See
-frame-command-table-setter <frames.htm#22356>`_ `See
-frame-layout <frames.htm#61754>`_ `See
-frame-layout-setter <frames.htm#92673>`_ `See
-frame-menu-bar <frames.htm#95467>`_ `See
-frame-menu-bar-setter <frames.htm#63229>`_ `See
-frame-status-bar <frames.htm#12376>`_ `See
-frame-status-bar-setter <frames.htm#32720>`_ `See
-frame-status-message <frames.htm#36830>`_ `See
-frame-status-message-setter <frames.htm#81567>`_ `See
-frame-tool-bar <frames.htm#39877>`_ `See
-frame-tool-bar-setter <frames.htm#88622>`_ `See
-frame-top-level <frames.htm#83816>`_ `See
-start-frame <frames.htm#76573>`_
+`frame-command-table`_ `See
+frame-command-table-setter`_ `See
+frame-layout`_ `See
+frame-layout-setter`_ `See
+frame-menu-bar`_ `See
+frame-menu-bar-setter`_ `See
+frame-status-bar`_ `See
+frame-status-bar-setter`_ `See
+frame-status-message`_ `See
+frame-status-message-setter`_ `See
+frame-tool-bar`_ `See
+frame-tool-bar-setter`_ `See
+frame-top-level`_ `See
+start-frame`_
 
 <simple-undoable-command>
 -------------------------
@@ -8775,7 +8775,7 @@ Init-keywords
              
 
 -  *undo-command:* An instance of type `See
-   <command> <frames.htm#40934>`_.
+   <command>`_.
 
 Description
            
@@ -8793,7 +8793,7 @@ Operations
 See also
         
 
-`See <simple-command> <frames.htm#20328>`_
+`<simple-command>`_
 
 start-dialog
 ------------
@@ -8815,7 +8815,7 @@ Arguments
          
 
 -  *dialog* An instance of type `See
-   <dialog-frame> <frames.htm#82173>`_.
+   <dialog-frame>`_.
 
 Values
       
@@ -8839,13 +8839,13 @@ debuggers.
 See also
         
 
-`See cancel-dialog <frames.htm#36260>`_
+`cancel-dialog`_
 
-`See <dialog-frame> <frames.htm#82173>`_
+`<dialog-frame>`_
 
-`See exit-dialog <frames.htm#48986>`_
+`exit-dialog`_
 
-`See start-frame <frames.htm#76573>`_
+`start-frame`_
 
 start-frame
 -----------
@@ -8866,9 +8866,9 @@ start-frame *frame* #key *owner* *mode* => *status-code*
 Arguments
          
 
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *frame* An instance of type `<frame>`_.
 -  *owner* An instance of type *false-or(`See
-   <frame> <frames.htm#16922>`_)*. Default value: *#f*.
+   <frame>`_)*. Default value: *#f*.
 -  *mode* An instance of type *one-of("modal", #"modeless",
    #"system-modal")*. Default value: *#f*.
 
@@ -8912,11 +8912,11 @@ start-frame(\*frame\*);*RETURN*
 See also
         
 
-`See exit-frame <frames.htm#83467>`_
+`exit-frame`_
 
-`See frame-mapped?-setter <frames.htm#26036>`_
+`frame-mapped?-setter`_
 
-`See start-dialog <frames.htm#17267>`_
+`start-dialog`_
 
 undo-command
 ------------
@@ -8937,8 +8937,8 @@ undo-command *command* *frame* => #rest *values*
 Arguments
          
 
--  *command* An instance of type `See <command> <frames.htm#40934>`_.
--  *frame* An instance of type `See <frame> <frames.htm#16922>`_.
+-  *command* An instance of type `<command>`_.
+-  *frame* An instance of type `<frame>`_.
 
 Values
       
@@ -8957,7 +8957,7 @@ specialize it.
 See also
         
 
-`See command-undoable? <frames.htm#94391>`_
+`command-undoable?`_
 
 \*user-command-table\*
 ----------------------
@@ -8974,7 +8974,7 @@ tables.
 Type
     
 
-`See <command-table> <frames.htm#27705>`_
+`<command-table>`_
 
 Description
            
@@ -8989,9 +8989,9 @@ specified by this variable.
 See also
         
 
-`See <command-table> <frames.htm#27705>`_
+`<command-table>`_
 
-`See \*global-command-table\* <frames.htm#45627>`_
+`\*global-command-table\*`_
 
 <wizard-frame>
 --------------
@@ -9007,12 +9007,12 @@ The class of wizard frames.
 Superclasses
             
 
-`See <dialog-frame> <frames.htm#82173>`_
+`<dialog-frame>`_
 
 Init-keywords
              
 
--  *page:* An instance of type `See <page> <gadgets.htm#93333>`_.
+-  *page:* An instance of type `<page> <gadgets.htm#93333>`_.
 -  *pages:* An instance of type *false-or(limited(<sequence>, of:* `See
    <page> <gadgets.htm#93333>`_*)*. Default value: *#f*.
 
@@ -9024,7 +9024,7 @@ Init-keywords
    <button> <gadgets.htm#20680>`_*)*. Default value: *#f*.
 
 Note that the following two useful init-keywords are inherited from `See
-<dialog-frame> <frames.htm#82173>`_:
+<dialog-frame>`_:
 
 -  *pages:* An instance of type *false-or(<sequence>)*. Default value:
    *#f*.
@@ -9074,30 +9074,30 @@ Operations
 
 The following operations are exported from the *DUIM-Frames* module.
 
-`See compute-next-page <frames.htm#72732>`_ `See
-compute-previous-page <frames.htm#10058>`_ `See
-dialog-back-button <frames.htm#34490>`_ `See
-dialog-back-button-setter <frames.htm#56015>`_ `See
-dialog-back-callback <frames.htm#45311>`_ `See
-dialog-current-page <frames.htm#75972>`_ `See
-dialog-current-page-setter <frames.htm#20241>`_ `See
-dialog-next-button <frames.htm#20955>`_ `See
-dialog-next-button-setter <frames.htm#91817>`_ `See
-dialog-next-callback <frames.htm#69284>`_ `See
-dialog-next-enabled? <frames.htm#92006>`_
- `See dialog-next-enabled?-setter <frames.htm#46237>`_ `See
-dialog-next-page <frames.htm#44061>`_ `See
-dialog-next-page-setter <frames.htm#88015>`_ `See
-dialog-page-changed-callback <frames.htm#93093>`_ `See
-dialog-page-changed-callback-setter <frames.htm#48591>`_ `See
-dialog-page-complete? <frames.htm#97380>`_ `See
-dialog-page-complete?-setter <frames.htm#99359>`_ `See
-dialog-pages <frames.htm#13113>`_ `See
-dialog-pages-setter <frames.htm#65708>`_ `See
-dialog-previous-page <frames.htm#55319>`_ `See
-dialog-previous-page-setter <frames.htm#89408>`_ `See
-move-to-next-page <frames.htm#15851>`_ `See
-move-to-previous-page <frames.htm#82656>`_
+`compute-next-page`_ `See
+compute-previous-page`_ `See
+dialog-back-button`_ `See
+dialog-back-button-setter`_ `See
+dialog-back-callback`_ `See
+dialog-current-page`_ `See
+dialog-current-page-setter`_ `See
+dialog-next-button`_ `See
+dialog-next-button-setter`_ `See
+dialog-next-callback`_ `See
+dialog-next-enabled?`_
+ `dialog-next-enabled?-setter`_ `See
+dialog-next-page`_ `See
+dialog-next-page-setter`_ `See
+dialog-page-changed-callback`_ `See
+dialog-page-changed-callback-setter`_ `See
+dialog-page-complete?`_ `See
+dialog-page-complete?-setter`_ `See
+dialog-pages`_ `See
+dialog-pages-setter`_ `See
+dialog-previous-page`_ `See
+dialog-previous-page-setter`_ `See
+move-to-next-page`_ `See
+move-to-previous-page`_
 
 Example
        
@@ -9187,11 +9187,11 @@ end frame <my-wizard>;
 See also
         
 
-`See <dialog-frame> <frames.htm#82173>`_
+`<dialog-frame>`_
 
-`See <property-frame> <frames.htm#40547>`_
+`<property-frame>`_
 
-`See <wizard-page> <frames.htm#87607>`_
+`<wizard-page>`_
 
 <wizard-page>
 -------------
@@ -9207,7 +9207,7 @@ The class of wizard pages.
 Superclasses
             
 
-`See <page> <gadgets.htm#93333>`_
+`<page> <gadgets.htm#93333>`_
 
 Init-keywords
              
@@ -9218,7 +9218,7 @@ Description
            
 
 The class of wizard pages. These are pages that can be displayed in an
-instance of `See <wizard-frame> <frames.htm#29315>`_, and are used for a
+instance of `<wizard-frame>`_, and are used for a
 single dialog in the structured task that the wizard guides the user
 through.
 
@@ -9240,12 +9240,12 @@ Operations
 See also
         
 
-`See <page> <gadgets.htm#93333>`_
+`<page> <gadgets.htm#93333>`_
 
-`See <property-page> <frames.htm#93333>`_
+`<property-page>`_
 
-`See <tab-control-page> <gadgets.htm#47108>`_
+`<tab-control-page> <gadgets.htm#47108>`_
 
-`See <wizard-frame> <frames.htm#29315>`_
+`<wizard-frame>`_
 
 

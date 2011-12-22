@@ -38,7 +38,7 @@ events occurring within those classes.
 
 The DUIM-Sheets library contains a single module, *duim-sheets*, from
 which all the interfaces described in this chapter are exposed. `See
-DUIM-Sheets Module <silica.htm#18449>`_ contains complete reference
+DUIM-Sheets Module`_ contains complete reference
 entries for each exposed interface.
 
 A sheet is the basic unit in a DUIM window. Inside any window, sheets
@@ -158,9 +158,9 @@ additional subclasses of *<object>* are also exposed.
 
 The base classes exposed by the DUIM-Sheets library are shown in `See
 Overall class hierarchy for the DUIM-Sheets
-library <silica.htm#43384>`_. Only *<sheet>*, and *<event>* have any
+library`_. Only *<sheet>*, and *<event>* have any
 subclasses defined. An *<event>* is an object representing some sort of
-event. See `See Subclasses of <event> <silica.htm#65253>`_ for details
+event. See `Subclasses of <event>`_ for details
 of the subclasses of *<event>*.
 
 Overall class hierarchy for the DUIM-Sheets library
@@ -226,8 +226,8 @@ Overall class hierarchy for the DUIM-Sheets library
    pointing device is pressed down as well. The effects of this event
    are rather like a combination of the *<button-press-event>* and
    *<pointer-motion-event>* classes. For more information about these
-   and other pointer event classes, see `See Subclasses of
-   <device-event> <silica.htm#75251>`_.
+   and other pointer event classes, see `Subclasses of
+   <device-event>`_.
 
 *<pointer-enter-event>*
                        
@@ -235,7 +235,7 @@ Overall class hierarchy for the DUIM-Sheets library
 -  This event is used to describe the event where the pointer for the
    pointing device enters a specified area of the screen, such as a
    sheet. For more information about these and other pointer event
-   classes, see `See Subclasses of <device-event> <silica.htm#75251>`_.
+   classes, see `Subclasses of <device-event>`_.
 -  *<medium>* A medium represents a destination for drawn or written
    output. It has several items associated with it, such as a drawing
    plane, foreground and background colors, and default line and text
@@ -254,7 +254,7 @@ Overall class hierarchy for the DUIM-Sheets library
 Subclasses of <event>
 ^^^^^^^^^^^^^^^^^^^^^
 
-`See Subclasses of the <event> class <silica.htm#69101>`_ shows the
+`Subclasses of the <event> class`_ shows the
 subclasses of the *<event>* class that are exposed by the DUIM-Sheets
 library.
 
@@ -276,7 +276,7 @@ Subclasses of the *<event>* class
 
 <device-event>
 
-See `See Subclasses of <device-event> <silica.htm#75251>`_
+See `Subclasses of <device-event>`_
 
 <window-event>
 
@@ -307,7 +307,7 @@ Subclasses of *<sheet-event>* fall into two categories:
 
 -  Device events that occur to devices attached to the computer
    (typically the keyboard and the pointing device). These are described
-   in `See Subclasses of <device-event> <silica.htm#75251>`_.
+   in `Subclasses of <device-event>`_.
 -  Window events that occur in a window.
 
 Events that occur in a window are subclasses of *<window-event>*. Two
@@ -337,7 +337,7 @@ such events are supplied:
 Subclasses of <device-event>
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-`See Subclasses of the <device-event> class <silica.htm#48764>`_ shows
+`Subclasses of the <device-event> class`_ shows
 the subclasses of the *<device-event>* class that are exposed by the
 DUIM-Sheets library. Device events, broadly speaking, describe any event
 that can occur on a device connected to the computer.
@@ -397,7 +397,7 @@ the keyboard is pressed or released, respectively.
 There are three classes of pointer event, some of which provide a number
 of subclasses. Note that there are another two classes of pointer event
 that are immediate subclasses of *<object>*. These are described in
-`See The base classes in the DUIM-Sheets library <silica.htm#92188>`_.
+`The base classes in the DUIM-Sheets library`_.
 
 *<pointer-button-event>*
                         
@@ -484,8 +484,8 @@ Signature
 Arguments
          
 
--  *gesture1* An instance of type `See <gesture> <silica.htm#76256>`_.
--  *gesture2* An instance of type `See <gesture> <silica.htm#76256>`_.
+-  *gesture1* An instance of type `<gesture>`_.
+-  *gesture2* An instance of type `<gesture>`_.
 
 Values
       
@@ -500,7 +500,7 @@ Returns true if *gesture1* and *gesture2* are the same.
 See also
         
 
-`See gesture-spec-equal <silica.htm#99017>`_
+`gesture-spec-equal`_
 
 add-child
 ---------
@@ -522,14 +522,14 @@ add-child *sheet* *child* #key *index* => *sheet*
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
--  *child* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet>`_.
+-  *child* An instance of type `<sheet>`_.
 -  *index* An instance of type *false-or(<integer>)*.
 
 Values
       
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet>`_.
 
 Description
            
@@ -539,9 +539,9 @@ Adds a child to *sheet*.
 See also
         
 
-`See remove-child <silica.htm#65868>`_
+`remove-child`_
 
-`See replace-child <silica.htm#20893>`_
+`replace-child`_
 
 add-clipboard-data
 ------------------
@@ -563,7 +563,7 @@ add-clipboard-data *clipboard* *data* => *success?*
 Arguments
          
 
--  *clipboard* An instance of `See <clipboard> <silica.htm#16197>`_.
+-  *clipboard* An instance of `<clipboard>`_.
 -  *data* An instance of *<object>*.
 
 Values
@@ -598,7 +598,7 @@ Arguments
          
 
 -  *type* An instance of *type-union(<symbol>,* *<type>)*.
--  *clipboard* An instance of `See <clipboard> <silica.htm#16197>`_.
+-  *clipboard* An instance of `<clipboard>`_.
 -  *data* An instance of *<object>*.
 
 Values
@@ -634,7 +634,7 @@ Type
 Value
      
 
-`See $meta-key <silica.htm#42593>`_
+`$meta-key`_
 
 Description
            
@@ -646,23 +646,23 @@ is not present on the keyboard.
 See also
         
 
-`See $control-key <silica.htm#45666>`_
+`$control-key`_
 
-`See $hyper-key <silica.htm#79857>`_
+`$hyper-key`_
 
-`See $meta-key <silica.htm#42593>`_
+`$meta-key`_
 
-`See modifier-key-index <silica.htm#80162>`_
+`modifier-key-index`_
 
-`See modifier-key-index-name <silica.htm#47802>`_
+`modifier-key-index-name`_
 
-`See $modifier-keys <silica.htm#84477>`_
+`$modifier-keys`_
 
-`See $option-key <silica.htm#18942>`_
+`$option-key`_
 
-`See $shift-key <silica.htm#25626>`_
+`$shift-key`_
 
-`See $super-key <silica.htm#26334>`_
+`$super-key`_
 
 beep
 ----
@@ -683,7 +683,7 @@ Arguments
          
 
 -  *drawable* An instance of type *type-union(`See
-   <sheet> <silica.htm#13118>`_, `See <medium> <silica.htm#60437>`_)*.
+   <sheet>`_, `<medium>`_)*.
 
 Values
       
@@ -713,7 +713,7 @@ boundary-event-kind *event* => *symbol*
 Arguments
          
 
--  *event* An instance of type `See <event> <silica.htm#40564>`_.
+-  *event* An instance of type `<event>`_.
 
 Values
       
@@ -730,7 +730,7 @@ detail members for X11 enter and exit events.
 See also
         
 
-`See <pointer-boundary-event> <silica.htm#87082>`_
+`<pointer-boundary-event>`_
 
 button-index
 ------------
@@ -769,9 +769,9 @@ either 0, 1, or 2, for the left, middle, or right buttons, respectively.
 See also
         
 
-`See button-index-name <silica.htm#83097>`_
+`button-index-name`_
 
-`See $pointer-buttons <silica.htm#19926>`_
+`$pointer-buttons`_
 
 button-index-name
 -----------------
@@ -812,9 +812,9 @@ respectively.
 See also
         
 
-`See button-index <silica.htm#55673>`_
+`button-index`_
 
-`See $pointer-buttons <silica.htm#19926>`_
+`$pointer-buttons`_
 
 <button-press-event>
 --------------------
@@ -830,7 +830,7 @@ The class of events representing button presses.
 Superclasses
             
 
-`See <pointer-button-event> <silica.htm#82437>`_
+`<pointer-button-event>`_
                                                 
 
 Init-keywords
@@ -856,9 +856,9 @@ Operations
 See also
         
 
-`See <button-release-event> <silica.htm#54869>`_
+`<button-release-event>`_
 
-`See <double-click-event> <silica.htm#38700>`_
+`<double-click-event>`_
 
 <button-release-event>
 ----------------------
@@ -874,7 +874,7 @@ The class of events representing button releases.
 Superclasses
             
 
-`See <pointer-button-event> <silica.htm#82437>`_
+`<pointer-button-event>`_
                                                 
 
 Init-keywords
@@ -897,7 +897,7 @@ Operations
 See also
         
 
-`See <button-press-event> <silica.htm#75428>`_
+`<button-press-event>`_
 
 <caret>
 -------
@@ -920,7 +920,7 @@ Init-keywords
              
 
 -  *sheet:* An instance of type *false-or(`See
-   <sheet> <silica.htm#13118>`_)*.
+   <sheet>`_)*.
 -  *x:* An instance of type *<integer>*. Default value: 0.
 -  *y:* An instance of type *<integer>*. Default value: 0.
 -  *width:* An instance of type *<integer>*. Default value: 0.
@@ -946,25 +946,25 @@ Operations
 
 The following operations are exported from the *DUIM-Sheets* module.
 
-`See caret-position <silica.htm#58548>`_ `See
-caret-sheet <silica.htm#80655>`_ `See caret-size <silica.htm#12555>`_
-`See caret-visible? <silica.htm#63894>`_ `See
-caret-visible?-setter <silica.htm#88525>`_ `See
-display <silica.htm#56987>`_ `See port <silica.htm#51457>`_ `See
-set-caret-position <silica.htm#65711>`_
+`caret-position`_ `See
+caret-sheet`_ `caret-size`_
+`caret-visible?`_ `See
+caret-visible?-setter`_ `See
+display`_ `port`_ `See
+set-caret-position`_
 
 See also
         
 
-`See caret-position <silica.htm#58548>`_
+`caret-position`_
 
-`See caret-sheet <silica.htm#80655>`_
+`caret-sheet`_
 
-`See caret-size <silica.htm#12555>`_
+`caret-size`_
 
-`See caret-visible? <silica.htm#63894>`_
+`caret-visible?`_
 
-`See <cursor> <silica.htm#53643>`_
+`<cursor>`_
 
 caret-position
 --------------
@@ -986,7 +986,7 @@ cursor-position *caret* => *x y*
 Arguments
          
 
--  *caret* An instance of type `See <caret> <silica.htm#98362>`_.
+-  *caret* An instance of type `<caret>`_.
 
 Values
       
@@ -1002,9 +1002,9 @@ Returns the position of *caret*.
 See also
         
 
-`See caret-sheet <silica.htm#80655>`_
+`caret-sheet`_
 
-`See caret-size <silica.htm#12555>`_
+`caret-size`_
 
 caret-sheet
 -----------
@@ -1026,12 +1026,12 @@ cursor-sheet *caret* => *sheet*
 Arguments
          
 
--  *caret* An instance of type `See <caret> <silica.htm#98362>`_.
+-  *caret* An instance of type `<caret>`_.
 
 Values
       
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet>`_.
 
 Description
            
@@ -1041,9 +1041,9 @@ Returns the sheet that owns *caret*.
 See also
         
 
-`See caret-position <silica.htm#58548>`_
+`caret-position`_
 
-`See caret-size <silica.htm#12555>`_
+`caret-size`_
 
 caret-size
 ----------
@@ -1065,7 +1065,7 @@ cursor-size *caret* => *width height*
 Arguments
          
 
--  *caret* An instance of type `See <caret> <silica.htm#98362>`_.
+-  *caret* An instance of type `<caret>`_.
 
 Values
       
@@ -1081,9 +1081,9 @@ Returns the size of *caret*.
 See also
         
 
-`See caret-position <silica.htm#58548>`_
+`caret-position`_
 
-`See caret-sheet <silica.htm#80655>`_
+`caret-sheet`_
 
 caret-visible?
 --------------
@@ -1105,7 +1105,7 @@ cursor-visible? *caret* => *visible?*
 Arguments
          
 
--  *caret* An instance of type `See <caret> <silica.htm#98362>`_.
+-  *caret* An instance of type `<caret>`_.
 
 Values
       
@@ -1120,9 +1120,9 @@ Returns true if *caret* is visible.
 See also
         
 
-`See <cursor> <silica.htm#53643>`_
+`<cursor>`_
 
-`See caret-visible?-setter <silica.htm#88525>`_
+`caret-visible?-setter`_
 
 caret-visible?-setter
 ---------------------
@@ -1145,7 +1145,7 @@ Arguments
          
 
 -  *visible?* An instance of type *<boolean>*.
--  *caret* An instance of type `See <caret> <silica.htm#98362>`_.
+-  *caret* An instance of type `<caret>`_.
 
 Values
       
@@ -1160,9 +1160,9 @@ Specifies whether or not *caret* is visible.
 See also
         
 
-`See <cursor> <silica.htm#53643>`_
+`<cursor>`_
 
-`See caret-visible? <silica.htm#63894>`_
+`caret-visible?`_
 
 child-containing-position
 -------------------------
@@ -1185,7 +1185,7 @@ child-containing-position *sheet x y* => *value*
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet>`_.
 -  *x* An instance of type *<real>*.
 -  *y* An instance of type *<real>*.
 
@@ -1193,7 +1193,7 @@ Values
       
 
 -  *value* An instance of type *false-or(`See
-   <sheet> <silica.htm#13118>`_)*.
+   <sheet>`_)*.
 
 Description
            
@@ -1205,9 +1205,9 @@ the coordinate system used by *sheet*.
 See also
         
 
-`See children-overlapping-region <silica.htm#63430>`_
+`children-overlapping-region`_
 
-`See do-children-containing-position <silica.htm#10860>`_
+`do-children-containing-position`_
 
 children-overlapping-region
 ---------------------------
@@ -1230,14 +1230,14 @@ children-overlapping-region *sheet region* => *sheets*
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
--  *region* An instance of type `See <region> <geom.htm#79228>`_.
+-  *sheet* An instance of type `<sheet>`_.
+-  *region* An instance of type `<region> <geom.htm#79228>`_.
 
 Values
       
 
 -  *sheets* An instance of type *limited(<sequence>, of: `See
-   <sheet> <silica.htm#13118>`_)*.
+   <sheet>`_)*.
 
 Description
            
@@ -1248,9 +1248,9 @@ overlaps *region*.
 See also
         
 
-`See child-containing-position <silica.htm#38324>`_
+`child-containing-position`_
 
-`See do-children-overlapping-region <silica.htm#31462>`_
+`do-children-overlapping-region`_
 
 choose-color
 ------------
@@ -1275,7 +1275,7 @@ Arguments
 
 -  *frame* An instance of type ` <frames.htm#16922>`_. Default value:
    *#f*.
--  *owner* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *owner* An instance of type `<sheet>`_.
    Default value: *#f*.
 -  *title* An instance of type *<string>*.
 -  *documentation* An instance of type *<string>*.
@@ -1286,7 +1286,7 @@ Arguments
 Values
       
 
--  *color* An instance of type `See <color> <dcs.htm#55341>`_.
+-  *color* An instance of type `<color> <dcs.htm#55341>`_.
 
 Description
            
@@ -1359,11 +1359,11 @@ end frame <color-dialog-frame>;
 See also
         
 
-`See choose-directory <silica.htm#71400>`_
+`choose-directory`_
 
-`See choose-file <silica.htm#82284>`_
+`choose-file`_
 
-`See notify-user <silica.htm#88440>`_
+`notify-user`_
 
 choose-directory
 ----------------
@@ -1388,7 +1388,7 @@ Arguments
 
 -  *frame* An instance of type ` <frames.htm#16922>`_. Default value:
    *#f*.
--  *owner* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *owner* An instance of type `<sheet>`_.
    Default value: *#f*.
 -  *title* An instance of type *<string>*.
 -  *documentation* An instance of type *<string>*.
@@ -1474,11 +1474,11 @@ end frame <directory-dialog-frame>;
 See also
         
 
-`See choose-color <silica.htm#93965>`_
+`choose-color`_
 
-`See choose-file <silica.htm#82284>`_
+`choose-file`_
 
-`See notify-user <silica.htm#88440>`_
+`notify-user`_
 
 choose-file
 -----------
@@ -1503,7 +1503,7 @@ Arguments
 
 -  *frame* An instance of type ` <frames.htm#16922>`_. Default value:
    *#f*.
--  *owner* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *owner* An instance of type `<sheet>`_.
    Default value: *#f*.
 -  *title* An instance of type *<string>*.
 -  *documentation* An instance of type *<string>*.
@@ -1658,11 +1658,11 @@ end frame <open-save-dialog-frame>;
 See also
         
 
-`See choose-color <silica.htm#93965>`_
+`choose-color`_
 
-`See choose-directory <silica.htm#71400>`_
+`choose-directory`_
 
-`See notify-user <silica.htm#88440>`_
+`notify-user`_
 
 choose-from-dialog
 ------------------
@@ -1693,7 +1693,7 @@ Arguments
    ` <gadgets.htm#81833>`_*)*.
 -  *frame* An instance of type ` <frames.htm#16922>`_. Default value:
    *#f*.
--  *owner* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *owner* An instance of type `<sheet>`_.
    Default value: *#f*.
 -  *title* An instance of type *<string>*.
 -  *default-item* An instance of type *<object>*.
@@ -1705,9 +1705,9 @@ Arguments
    *#"single"*.
 -  *gadget-class* An instance of type ` <gadgets.htm#34543>`_.
 -  *gadget-options* An instance of type *<sequence>*.
--  *foreground* An instance of type `See <ink> <dcs.htm#15007>`_.
--  *background* An instance of type `See <ink> <dcs.htm#15007>`_.
--  *text-style* An instance of type `See <text-style> <dcs.htm#85385>`_.
+-  *foreground* An instance of type `<ink> <dcs.htm#15007>`_.
+-  *background* An instance of type `<ink> <dcs.htm#15007>`_.
+-  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
 
 Values
       
@@ -1765,7 +1765,7 @@ display the menu items.
 See also
         
 
-`See choose-from-menu <silica.htm#30973>`_
+`choose-from-menu`_
 
 choose-from-menu
 ----------------
@@ -1795,7 +1795,7 @@ Arguments
    ` <gadgets.htm#81833>`_*)*.
 -  *frame* An instance of type ` <frames.htm#16922>`_. Default value:
    *#f*.
--  *owner* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *owner* An instance of type `<sheet>`_.
    Default value: *#f*.
 -  *title* An instance of type *<string>*. Default value: *#f*.
 -  *default-item* An instance of type *<object>*.
@@ -1803,9 +1803,9 @@ Arguments
    *identity*.
 -  *value-key* An instance of type *<function>*. Default value:
    *identity*.
--  *foreground* An instance of type `See <ink> <dcs.htm#15007>`_.
--  *background* An instance of type `See <ink> <dcs.htm#15007>`_.
--  *text-style* An instance of type `See <text-style> <dcs.htm#85385>`_.
+-  *foreground* An instance of type `<ink> <dcs.htm#15007>`_.
+-  *background* An instance of type `<ink> <dcs.htm#15007>`_.
+-  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
 
 Values
       
@@ -1852,7 +1852,7 @@ font to display the menu items.
 See also
         
 
-`See choose-from-dialog <silica.htm#89621>`_
+`choose-from-dialog`_
 
 choose-text-style
 -----------------
@@ -1877,7 +1877,7 @@ Arguments
 
 -  *frame* An instance of type ` <frames.htm#16922>`_. Default value:
    *#f*.
--  *owner* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *owner* An instance of type `<sheet>`_.
    Default value: *#f*.
 -  *title* An instance of type *<string>*. Default value: *#f*.
 
@@ -1926,7 +1926,7 @@ Arguments
          
 
 -  *drawable* An instance of type *type-union(* `See
-   <sheet> <silica.htm#13118>`_*, `See <medium> <silica.htm#60437>`_)*.
+   <sheet>`_*, `<medium>`_)*.
 
 The following arguments are specific to *clear-box*.
 
@@ -1937,7 +1937,7 @@ The following arguments are specific to *clear-box*.
 
 The following argument is specific to *clear-box\**.
 
--  *region* An instance of type `See <region> <geom.htm#79228>`_.
+-  *region* An instance of type `<region> <geom.htm#79228>`_.
 
 Values
       
@@ -2016,25 +2016,25 @@ handled automatically by the macro *with-clipboard*.
 See also
         
 
-`See add-clipboard-data <silica.htm#10767>`_
+`add-clipboard-data`_
 
-`See add-clipboard-data-as <silica.htm#16308>`_
+`add-clipboard-data-as`_
 
-`See clear-clipboard <silica.htm#12151>`_
+`clear-clipboard`_
 
-`See clipboard-data-available? <silica.htm#21339>`_
+`clipboard-data-available?`_
 
-`See clipboard-sheet <silica.htm#20573>`_
+`clipboard-sheet`_
 
-`See clipboard-owner <silica.htm#30268>`_
+`clipboard-owner`_
 
-`See close-clipboard <silica.htm#36090>`_
+`close-clipboard`_
 
-`See get-clipboard-data-as <silica.htm#12605>`_
+`get-clipboard-data-as`_
 
-`See open-clipboard <silica.htm#32040>`_
+`open-clipboard`_
 
-`See with-clipboard <silica.htm#29917>`_
+`with-clipboard`_
 
 clipboard-data-available?
 -------------------------
@@ -2074,13 +2074,13 @@ clipboard. The argument *type* is an instance of *type-union(<symbol>,*
 See also
         
 
-`See add-clipboard-data <silica.htm#10767>`_
+`add-clipboard-data`_
 
-`See add-clipboard-data-as <silica.htm#16308>`_
+`add-clipboard-data-as`_
 
-`See <clipboard> <silica.htm#16197>`_
+`<clipboard>`_
 
-`See get-clipboard-data-as <silica.htm#12605>`_
+`get-clipboard-data-as`_
 
 clipboard-sheet
 ---------------
@@ -2114,7 +2114,7 @@ Returns the sheet with the clipboard lock.
 See also
         
 
-`See <clipboard> <silica.htm#16197>`_
+`<clipboard>`_
 
 clipboard-owner
 ---------------
@@ -2151,7 +2151,7 @@ Returns the sheet that owns the current clipboard data.
 See also
         
 
-`See <clipboard> <silica.htm#16197>`_
+`<clipboard>`_
 
 close-clipboard
 ---------------
@@ -2195,9 +2195,9 @@ lock for you.
 See also
         
 
-`See <clipboard> <silica.htm#16197>`_
+`<clipboard>`_
 
-`See with-clipboard <silica.htm#29917>`_
+`with-clipboard`_
 
 $control-key
 ------------
@@ -2230,23 +2230,23 @@ A constant that represents the CONTROL key on the keyboard.
 See also
         
 
-`See $alt-key <silica.htm#74132>`_
+`$alt-key`_
 
-`See $hyper-key <silica.htm#79857>`_
+`$hyper-key`_
 
-`See $meta-key <silica.htm#42593>`_
+`$meta-key`_
 
-`See modifier-key-index <silica.htm#80162>`_
+`modifier-key-index`_
 
-`See modifier-key-index-name <silica.htm#47802>`_
+`modifier-key-index-name`_
 
-`See $modifier-keys <silica.htm#84477>`_
+`$modifier-keys`_
 
-`See $option-key <silica.htm#18942>`_
+`$option-key`_
 
-`See $shift-key <silica.htm#25626>`_
+`$shift-key`_
 
-`See $super-key <silica.htm#26334>`_
+`$super-key`_
 
 <cursor>
 --------
@@ -2262,7 +2262,7 @@ The class of cursor objects.
 Equivalent
           
 
-*type-union(<symbol>,* `See <image> <dcs.htm#51234>`_*)*
+*type-union(<symbol>,* `<image> <dcs.htm#51234>`_*)*
                                                         
 
 Init-keywords
@@ -2281,16 +2281,16 @@ actually be any instance of *<symbol>* or any instance of `See
 Operations
           
 
-`See pointer-cursor-setter <silica.htm#41026>`_ `See
-set-caret-position <silica.htm#65711>`_ `See
-sheet-pointer-cursor-setter <silica.htm#67697>`_
+`pointer-cursor-setter`_ `See
+set-caret-position`_ `See
+sheet-pointer-cursor-setter`_
 
 See also
         
 
-`See <caret> <silica.htm#98362>`_
+`<caret>`_
 
-`See cursor? <silica.htm#82228>`_
+`cursor?`_
 
 cursor?
 -------
@@ -2329,7 +2329,7 @@ cursor from any instance of *<symbol>* or `See
 See also
         
 
-`See <cursor> <silica.htm#53643>`_
+`<cursor>`_
 
 default-port
 ------------
@@ -2358,7 +2358,7 @@ Values
       
 
 -  *port* An instance of type *false-or(`See
-   <port> <silica.htm#11606>`_)*.
+   <port>`_)*.
 
 Description
            
@@ -2368,9 +2368,9 @@ Returns the default port for server specified by *server-path*.
 See also
         
 
-`See default-port-setter <silica.htm#36020>`_
+`default-port-setter`_
 
-`See destroy-port <silica.htm#28704>`_
+`destroy-port`_
 
 default-port-setter
 -------------------
@@ -2392,13 +2392,13 @@ default-port-setter *port* => *port*
 Arguments
          
 
--  *port* An instance of type `See <port> <silica.htm#11606>`_. Default
+-  *port* An instance of type `<port>`_. Default
    value: *#f*.
 
 Values
       
 
--  *port* An instance of type `See <port> <silica.htm#11606>`_.
+-  *port* An instance of type `<port>`_.
 
 Description
            
@@ -2408,9 +2408,9 @@ Sets the default port.
 See also
         
 
-`See default-port <silica.htm#24674>`_
+`default-port`_
 
-`See destroy-port <silica.htm#28704>`_
+`destroy-port`_
 
 destroy-port
 ------------
@@ -2432,7 +2432,7 @@ destroy-port *port* => ()
 Arguments
          
 
--  *port* An instance of type `See <port> <silica.htm#11606>`_.
+-  *port* An instance of type `<port>`_.
 
 Values
       
@@ -2447,9 +2447,9 @@ Destroys *port*.
 See also
         
 
-`See default-port <silica.htm#24674>`_
+`default-port`_
 
-`See default-port-setter <silica.htm#36020>`_
+`default-port-setter`_
 
 destroy-sheet
 -------------
@@ -2471,7 +2471,7 @@ destroy-sheet *sheet* => ()
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet>`_.
 
 Values
       
@@ -2497,13 +2497,13 @@ The class of device events.
 Superclasses
             
 
-`See <sheet-event> <silica.htm#58778>`_
+`<sheet-event>`_
                                        
 
 Init-keywords
              
 
--  *sheet:* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet:* An instance of type `<sheet>`_.
 -  *modifier-state:* An instance of type *<integer>*. Default value: 0.
 
 Description
@@ -2519,7 +2519,7 @@ Operations
 
 The following operation is exported from the *DUIM-Sheets* module.
 
--  `See event-modifier-state <silica.htm#46549>`_
+-  `event-modifier-state`_
 
 <display>
 ---------
@@ -2535,7 +2535,7 @@ The class of displays.
 Superclasses
             
 
-`See <sheet> <silica.htm#13118>`_
+`<sheet>`_
                                  
 
 Init-keywords
@@ -2553,7 +2553,7 @@ The class of displays. An instance of *<display>* is an object that
 represents a single display (or screen) on some display server. Any
 sheet can be attached to an instance of *<display>*, and a display, and
 all the sheets attached to it, are associated with a `See
-<port> <silica.htm#11606>`_ that is a connection to a display server.
+<port>`_ that is a connection to a display server.
 
 The *orientation:* init-keyword is used to specify the orientation of a
 display.
@@ -2567,38 +2567,38 @@ Operations
 
 The following operations are exported from the *DUIM-Sheets* module.
 
-`See display <silica.htm#56987>`_ `See display? <silica.htm#69593>`_
-`See display-depth <silica.htm#23219>`_ `See
-display-height <silica.htm#29540>`_ `See
-display-mm-height <silica.htm#67062>`_ `See
-display-mm-width <silica.htm#14531>`_ `See
-display-orientation <silica.htm#59882>`_
- `See display-pixel-height <silica.htm#18820>`_ `See
-display-pixels-per-point <silica.htm#29862>`_ `See
-display-pixel-width <silica.htm#89267>`_ `See
-display-units <silica.htm#52404>`_ `See
-display-width <silica.htm#78452>`_
+`display`_ `display?`_
+`display-depth`_ `See
+display-height`_ `See
+display-mm-height`_ `See
+display-mm-width`_ `See
+display-orientation`_
+ `display-pixel-height`_ `See
+display-pixels-per-point`_ `See
+display-pixel-width`_ `See
+display-units`_ `See
+display-width`_
 
 See also
         
 
-`See display <silica.htm#56987>`_
+`display`_
 
-`See display? <silica.htm#69593>`_
+`display?`_
 
-`See display-depth <silica.htm#23219>`_
+`display-depth`_
 
-`See display-height <silica.htm#29540>`_
+`display-height`_
 
-`See display-orientation <silica.htm#59882>`_
+`display-orientation`_
 
-`See display-units <silica.htm#52404>`_
+`display-units`_
 
-`See display-width <silica.htm#78452>`_
+`display-width`_
 
-`See <port> <silica.htm#11606>`_
+`<port>`_
 
-`See <sheet> <silica.htm#13118>`_
+`<sheet>`_
 
 display
 -------
@@ -2626,7 +2626,7 @@ Values
       
 
 -  *display* An instance of type *false-or(`See
-   <display> <silica.htm#77659>`_)*.
+   <display>`_)*.
 
 Description
            
@@ -2636,11 +2636,11 @@ Returns the display used to display *object*.
 See also
         
 
-`See <display> <silica.htm#77659>`_
+`<display>`_
 
-`See frame-manager <silica.htm#15759>`_
+`frame-manager`_
 
-`See port <silica.htm#51457>`_
+`port`_
 
 display?
 --------
@@ -2677,7 +2677,7 @@ Returns true if *object* is a display.
 See also
         
 
-`See <display> <silica.htm#77659>`_
+`<display>`_
 
 display-depth
 -------------
@@ -2699,7 +2699,7 @@ display-depth *display* => *depth*
 Arguments
          
 
--  *display* An instance of type *`See <display> <silica.htm#77659>`_*.
+-  *display* An instance of type *`<display>`_*.
 
 Values
       
@@ -2715,11 +2715,11 @@ any display is assumed to be 8.
 See also
         
 
-`See display-height <silica.htm#29540>`_
+`display-height`_
 
-`See display-orientation <silica.htm#59882>`_
+`display-orientation`_
 
-`See display-width <silica.htm#78452>`_
+`display-width`_
 
 display-height
 --------------
@@ -2741,7 +2741,7 @@ display-height *display* #key *units* => *height*
 Arguments
          
 
--  *display* An instance of type *`See <display> <silica.htm#77659>`_*.
+-  *display* An instance of type *`<display>`_*.
 -  *units* An instance of *one-of(#"device", #"mm", #"pixels")*.
    Default value: *#"device"*.
 
@@ -2760,17 +2760,17 @@ appropriate type of units.
 See also
         
 
-`See display-depth <silica.htm#23219>`_
+`display-depth`_
 
-`See display-mm-height <silica.htm#67062>`_
+`display-mm-height`_
 
-`See display-orientation <silica.htm#59882>`_
+`display-orientation`_
 
-`See display-pixel-height <silica.htm#18820>`_
+`display-pixel-height`_
 
-`See display-units <silica.htm#52404>`_
+`display-units`_
 
-`See display-width <silica.htm#78452>`_
+`display-width`_
 
 display-mm-height
 -----------------
@@ -2792,7 +2792,7 @@ display-mm-height *display* => *height*
 Arguments
          
 
--  *display* An instance of type *`See <display> <silica.htm#77659>`_*.
+-  *display* An instance of type *`<display>`_*.
 
 Values
       
@@ -2803,19 +2803,19 @@ Description
            
 
 Returns the height of *display* in millimeters. This is equivalent to
-calling `See display-height <silica.htm#29540>`_ with the *units*
+calling `display-height`_ with the *units*
 argument set to *#"mm"*.
 
 See also
         
 
-`See display-height <silica.htm#29540>`_
+`display-height`_
 
-`See display-mm-width <silica.htm#14531>`_
+`display-mm-width`_
 
-`See display-pixel-height <silica.htm#18820>`_
+`display-pixel-height`_
 
-`See display-units <silica.htm#52404>`_
+`display-units`_
 
 display-mm-width
 ----------------
@@ -2837,7 +2837,7 @@ display-mm-width *display* => *width*
 Arguments
          
 
--  *display* An instance of type *`See <display> <silica.htm#77659>`_*.
+-  *display* An instance of type *`<display>`_*.
 
 Values
       
@@ -2848,19 +2848,19 @@ Description
            
 
 Returns the width of *display* in millimeters. This is equivalent to
-calling `See display-width <silica.htm#78452>`_ with the *units*
+calling `display-width`_ with the *units*
 argument set to *#"mm"*.
 
 See also
         
 
-`See display-mm-height <silica.htm#67062>`_
+`display-mm-height`_
 
-`See display-pixel-width <silica.htm#89267>`_
+`display-pixel-width`_
 
-`See display-units <silica.htm#52404>`_
+`display-units`_
 
-`See display-width <silica.htm#78452>`_
+`display-width`_
 
 display-orientation
 -------------------
@@ -2882,7 +2882,7 @@ display-orientation *display* => *orientation*
 Arguments
          
 
--  *display* An instance of type *`See <display> <silica.htm#77659>`_*.
+-  *display* An instance of type *`<display>`_*.
 
 Values
       
@@ -2899,11 +2899,11 @@ orientation of any display is *#"default"*.
 See also
         
 
-`See display-depth <silica.htm#23219>`_
+`display-depth`_
 
-`See display-height <silica.htm#29540>`_
+`display-height`_
 
-`See display-width <silica.htm#78452>`_
+`display-width`_
 
 display-pixel-height
 --------------------
@@ -2925,7 +2925,7 @@ display-pixel-height *display* => *height*
 Arguments
          
 
--  *display* An instance of type *`See <display> <silica.htm#77659>`_*.
+-  *display* An instance of type *`<display>`_*.
 
 Values
       
@@ -2936,19 +2936,19 @@ Description
            
 
 Returns the height of *display* in pixels. This is equivalent to calling
-`See display-height <silica.htm#29540>`_ with the *units* argument set
+`display-height`_ with the *units* argument set
 to *#"pixels"*.
 
 See also
         
 
-`See display-height <silica.htm#29540>`_
+`display-height`_
 
-`See display-mm-height <silica.htm#67062>`_
+`display-mm-height`_
 
-`See display-pixel-width <silica.htm#89267>`_
+`display-pixel-width`_
 
-`See display-units <silica.htm#52404>`_
+`display-units`_
 
 display-pixels-per-point
 ------------------------
@@ -2970,7 +2970,7 @@ display-pixels-per-point *display* => *number*
 Arguments
          
 
--  *display* An instance of type *`See <display> <silica.htm#77659>`_*.
+-  *display* An instance of type *`<display>`_*.
 
 Values
       
@@ -2985,11 +2985,11 @@ Returns the number of pixels per point for *display*.
 See also
         
 
-`See display-pixel-height <silica.htm#18820>`_
+`display-pixel-height`_
 
-`See display-pixel-width <silica.htm#89267>`_
+`display-pixel-width`_
 
-`See display-units <silica.htm#52404>`_
+`display-units`_
 
 display-pixel-width
 -------------------
@@ -3011,7 +3011,7 @@ display-pixel-width *display* => *width*
 Arguments
          
 
--  *display* An instance of type *`See <display> <silica.htm#77659>`_*.
+-  *display* An instance of type *`<display>`_*.
 
 Values
       
@@ -3022,19 +3022,19 @@ Description
            
 
 Returns the height of *display* in pixels. This is equivalent to calling
-`See display-width <silica.htm#78452>`_ with the *units* argument set to
+`display-width`_ with the *units* argument set to
 *#"pixels"*.
 
 See also
         
 
-`See display-mm-width <silica.htm#14531>`_
+`display-mm-width`_
 
-`See display-pixel-height <silica.htm#18820>`_
+`display-pixel-height`_
 
-`See display-units <silica.htm#52404>`_
+`display-units`_
 
-`See display-width <silica.htm#78452>`_
+`display-width`_
 
 display-units
 -------------
@@ -3056,7 +3056,7 @@ display-units *display* => *value*
 Arguments
          
 
--  *display* An instance of type *`See <display> <silica.htm#77659>`_*.
+-  *display* An instance of type *`<display>`_*.
 
 Values
       
@@ -3075,9 +3075,9 @@ measurement as far as possible.
 See also
         
 
-`See display-height <silica.htm#29540>`_
+`display-height`_
 
-`See display-width <silica.htm#78452>`_
+`display-width`_
 
 display-width
 -------------
@@ -3099,7 +3099,7 @@ display-width *display* #key *units* => *width*
 Arguments
          
 
--  *display* An instance of type *`See <display> <silica.htm#77659>`_*.
+-  *display* An instance of type *`<display>`_*.
 -  *units* An instance of *one-of(#"device", #"mm", #"pixels")*.
    Default value: *#"device"*.
 
@@ -3118,17 +3118,17 @@ type of units.
 See also
         
 
-`See display-depth <silica.htm#23219>`_
+`display-depth`_
 
-`See display-height <silica.htm#29540>`_
+`display-height`_
 
-`See display-mm-width <silica.htm#14531>`_
+`display-mm-width`_
 
-`See display-orientation <silica.htm#59882>`_
+`display-orientation`_
 
-`See display-pixel-width <silica.htm#89267>`_
+`display-pixel-width`_
 
-`See display-units <silica.htm#52404>`_
+`display-units`_
 
 do-children-containing-position
 -------------------------------
@@ -3152,7 +3152,7 @@ Arguments
          
 
 -  *function* An instance of type *<function>*.
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet>`_.
 -  *x* An instance of type *<real>*.
 -  *y* An instance of type *<real>*.
 
@@ -3166,15 +3166,15 @@ Description
 
 Invokes *function* on any children that occupy position *(* *x* *,* *y*
 *)* in *sheet*. This is used by `See
-child-containing-position <silica.htm#38324>`_ to ascertain which
+child-containing-position`_ to ascertain which
 children occupy the position. The function `See
-child-containing-position <silica.htm#38324>`_ then decides which of the
+child-containing-position`_ then decides which of the
 children returned is the topmost direct enabled child.
 
 See also
         
 
-`See child-containing-position <silica.htm#38324>`_
+`child-containing-position`_
 
 do-children-overlapping-region
 ------------------------------
@@ -3198,8 +3198,8 @@ Arguments
          
 
 -  *function* An instance of type *<function>*.
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
--  *region* An instance of type `See <region> <geom.htm#79228>`_.
+-  *sheet* An instance of type `<sheet>`_.
+-  *region* An instance of type `<region> <geom.htm#79228>`_.
 
 Values
       
@@ -3211,15 +3211,15 @@ Description
 
 Invokes *function* on any children of *sheet* whose regions overlap
 *region*. This is used by `See
-children-overlapping-region <silica.htm#63430>`_ to ascertain which
+children-overlapping-region`_ to ascertain which
 children overlap *region*.
 
 See also
         
 
-`See children-overlapping-region <silica.htm#63430>`_
+`children-overlapping-region`_
 
-`See do-children-containing-position <silica.htm#10860>`_
+`do-children-containing-position`_
 
 do-displays
 -----------
@@ -3242,7 +3242,7 @@ Arguments
          
 
 -  *function* An instance of type *<function>*.
--  *port* An instance of type `See <port> <silica.htm#11606>`_.
+-  *port* An instance of type `<port>`_.
 
 Values
       
@@ -3276,9 +3276,9 @@ Arguments
          
 
 -  *function* An instance of type *<function>*.
--  *port* An instance of type `See <port> <silica.htm#11606>`_.
+-  *port* An instance of type `<port>`_.
 -  *frame-manager* An instance of type `See
-   <frame-manager> <silica.htm#32466>`_.
+   <frame-manager>`_.
 
 Values
       
@@ -3345,7 +3345,7 @@ Arguments
          
 
 -  *function* An instance of type *<function>*.
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet>`_.
 
 Values
       
@@ -3356,13 +3356,13 @@ Description
            
 
 Runs *function* on all the immediate children of *sheet*. This function
-calls `See sheet-children <silica.htm#87730>`_ to find the children of
+calls `sheet-children`_ to find the children of
 *sheet*.
 
 See also
         
 
-`See sheet-children <silica.htm#87730>`_
+`sheet-children`_
 
 do-sheet-tree
 -------------
@@ -3386,7 +3386,7 @@ Arguments
          
 
 -  *function* An instance of type *<function>*.
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet>`_.
 
 Values
       
@@ -3414,7 +3414,7 @@ The class of double-click events on the pointer device.
 Superclasses
             
 
-`See <button-press-event> <silica.htm#75428>`_
+`<button-press-event>`_
                                               
 
 Init-keywords
@@ -3429,7 +3429,7 @@ The class of double-click events on the pointer device. An instance of
 this class is generated when a button press is detected within a certain
 (small) amount of time after a previous button press. If a double click
 event is generated, the clock is reset, so that the next press generated
-is an instance of `See <button-press-event> <silica.htm#75428>`_.
+is an instance of `<button-press-event>`_.
 
 Operations
           
@@ -3439,7 +3439,7 @@ Operations
 See also
         
 
-`See <button-press-event> <silica.htm#75428>`_
+`<button-press-event>`_
 
 do-with-drawing-options
 -----------------------
@@ -3463,14 +3463,14 @@ Arguments
          
 
 -  *drawable* An instance of type *type-union(* `See
-   <sheet> <silica.htm#13118>`_*, `See <medium> <silica.htm#60437>`_)*.
+   <sheet>`_*, `<medium>`_)*.
 -  *function* An instance of type *<function>*.
--  *brush* An instance of type `See <brush> <dcs.htm#29492>`_.
--  *pen* An instance of type `See <pen> <dcs.htm#41757>`_.
--  *text-style* An instance of type `See <text-style> <dcs.htm#85385>`_.
+-  *brush* An instance of type `<brush> <dcs.htm#29492>`_.
+-  *pen* An instance of type `<pen> <dcs.htm#41757>`_.
+-  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
 -  *clipping-region* An instance of type `See
    <region> <geom.htm#79228>`_.
--  *transform* An instance of type `See <transform> <geom.htm#54995>`_.
+-  *transform* An instance of type `<transform> <geom.htm#54995>`_.
 
 Values
       
@@ -3481,22 +3481,22 @@ Description
            
 
 Runs some code on a drawable in a given drawing context. This function
-is called by the macro `See with-drawing-options <silica.htm#39215>`_,
+is called by the macro `with-drawing-options`_,
 and you should define new methods on it for new classes of drawable.
 
 The *function* passed to *do-with-drawing-options* is the result of
 encapsulating the body passed to `See
-with-drawing-options <silica.htm#39215>`_ as a stand-alone method.
+with-drawing-options`_ as a stand-alone method.
 
 The values returned are the values that are returned from `See
-with-drawing-options <silica.htm#39215>`_.
+with-drawing-options`_.
 
 The various keywords specify a drawing context in which function is run.
 
 See also
         
 
-`See with-drawing-options <silica.htm#39215>`_
+`with-drawing-options`_
 
 do-with-pointer-grabbed
 -----------------------
@@ -3518,8 +3518,8 @@ do-with-pointer-grabbed *port sheet continuation* #key => #rest *values*
 Arguments
          
 
--  *port* An instance of type `See <port> <silica.htm#11606>`_.
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *port* An instance of type `<port>`_.
+-  *sheet* An instance of type `<sheet>`_.
 -  *continuation* An instance of type *<function>*.
 
 Values
@@ -3535,14 +3535,14 @@ events to *sheet*, even if the pointer leaves the sheet-region of
 *sheet*. The argument continuation is an instance of *<function>*.
 
 This function is called by `See
-with-pointer-grabbed <silica.htm#90496>`_, and *continuation* is
+with-pointer-grabbed`_, and *continuation* is
 actually the result of creating a stand-alone method from the body of
 code passed to *with-pointer-grabbed*.
 
 See also
         
 
-`See with-pointer-grabbed <silica.htm#90496>`_
+`with-pointer-grabbed`_
 
 do-with-sheet-medium
 --------------------
@@ -3564,7 +3564,7 @@ do-with-sheet-medium *sheet continuation* => #rest *values*
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet>`_.
 -  *continuation* An instance of type *<function>*.
 
 Values
@@ -3580,7 +3580,7 @@ Runs a continuation function on a sheet.
 See also
         
 
-`See with-sheet-medium <silica.htm#69022>`_
+`with-sheet-medium`_
 
 do-with-text-style
 ------------------
@@ -3603,9 +3603,9 @@ Arguments
          
 
 -  *drawable* An instance of type *type-union(* `See
-   <sheet> <silica.htm#13118>`_*, `See <medium> <silica.htm#60437>`_)*.
+   <sheet>`_*, `<medium>`_)*.
 -  *function* An instance of type *<function>*.
--  *text-style* An instance of type `See <text-style> <dcs.htm#85385>`_.
+-  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
 
 Values
       
@@ -3620,7 +3620,7 @@ Runs some code on a drawable in the context of a given text style.
 See also
         
 
-`See with-text-style <silica.htm#35971>`_
+`with-text-style`_
 
 do-with-transform
 -----------------
@@ -3644,9 +3644,9 @@ Arguments
          
 
 -  *drawable* An instance of type *type-union(* `See
-   <sheet> <silica.htm#13118>`_*, `See <medium> <silica.htm#60437>`_)*.
+   <sheet>`_*, `<medium>`_)*.
 -  *function* An instance of type *<function>*.
--  *transform* An instance of type `See <transform> <geom.htm#54995>`_.
+-  *transform* An instance of type `<transform> <geom.htm#54995>`_.
 
 Values
       
@@ -3658,15 +3658,15 @@ Description
 
 Returns the result of running a function in a transform defined on a
 specified medium. Methods on this function are called by `See
-with-transform <silica.htm#23809>`_, which in turn is used by the
-similar macros `See with-rotation <silica.htm#11677>`_, `See
-with-scaling <silica.htm#75646>`_, and
- `See with-translation <silica.htm#60546>`_.
+with-transform`_, which in turn is used by the
+similar macros `with-rotation`_, `See
+with-scaling`_, and
+ `with-translation`_.
 
 See also
         
 
-`See with-transform <silica.htm#23809>`_
+`with-transform`_
 
 <event>
 -------
@@ -3704,16 +3704,16 @@ Operations
 
 The following operations are exported from the *DUIM-Sheets* module.
 
-`See event? <silica.htm#36736>`_ `See
-event-matches-gesture? <silica.htm#72877>`_ `See
-handle-event <silica.htm#94892>`_ `See queue-event <silica.htm#94000>`_
+`event?`_ `See
+event-matches-gesture?`_ `See
+handle-event`_ `queue-event`_
 
 See also
         
 
-`See <frame-event> <silica.htm#96445>`_
+`<frame-event>`_
 
-`See <sheet-event> <silica.htm#58778>`_
+`<sheet-event>`_
 
 event?
 ------
@@ -3746,12 +3746,12 @@ Description
            
 
 Returns true if *object* is an instance of `See
-<event> <silica.htm#40564>`_ or one of its subclasses.
+<event>`_ or one of its subclasses.
 
 See also
         
 
-`See <event> <silica.htm#40564>`_
+`<event>`_
 
 event-button
 ------------
@@ -3774,7 +3774,7 @@ event-button *event* => *integer*
 Arguments
          
 
--  *event* An instance of type `See <event> <silica.htm#40564>`_.
+-  *event* An instance of type `<event>`_.
 
 Values
       
@@ -3785,26 +3785,26 @@ Description
            
 
 Returns an integer corresponding to the mouse button that was pressed or
-released, which will be one of `See $left-button <silica.htm#61603>`_,
-`See $middle-button <silica.htm#27963>`_, or `See
-$right-button <silica.htm#90175>`_.
+released, which will be one of `$left-button`_,
+`$middle-button`_, or `See
+$right-button`_.
 
 *Note:* The function *event-button* records the button state at the time
 that the event occurred, and hence can be different from `See
-pointer-button-state <silica.htm#72598>`_.
+pointer-button-state`_.
 
 See also
         
 
-`See $left-button <silica.htm#61603>`_
+`$left-button`_
 
-`See $middle-button <silica.htm#27963>`_
+`$middle-button`_
 
-`See <pointer-button-event> <silica.htm#82437>`_
+`<pointer-button-event>`_
 
-`See pointer-button-state <silica.htm#72598>`_
+`pointer-button-state`_
 
-`See $right-button <silica.htm#90175>`_
+`$right-button`_
 
 event-character
 ---------------
@@ -3826,7 +3826,7 @@ event-character *event* => *value*
 Arguments
          
 
--  *event* An instance of type `See <event> <silica.htm#40564>`_.
+-  *event* An instance of type `<event>`_.
 
 Values
       
@@ -3842,9 +3842,9 @@ any.
 See also
         
 
-`See event-key-name <silica.htm#26334>`_
+`event-key-name`_
 
-`See <keyboard-event> <silica.htm#22152>`_
+`<keyboard-event>`_
 
 event-key-name
 --------------
@@ -3867,7 +3867,7 @@ event-key-name *event* => name
 Arguments
          
 
--  *event* An instance of type `See <event> <silica.htm#40564>`_.
+-  *event* An instance of type `<event>`_.
 
 Values
       
@@ -3884,9 +3884,9 @@ port.
 See also
         
 
-`See event-character <silica.htm#85746>`_
+`event-character`_
 
-`See <keyboard-event> <silica.htm#22152>`_
+`<keyboard-event>`_
 
 event-matches-gesture?
 ----------------------
@@ -3908,9 +3908,9 @@ event-matches-gesture? *event gesture-name* => *matches?*
 Arguments
          
 
--  *event* An instance of type `See <event> <silica.htm#40564>`_.
+-  *event* An instance of type `<event>`_.
 -  *gesture-name* An instance of type *type-union(`See
-   <gesture> <silica.htm#76256>`_, <character>)*.
+   <gesture>`_, <character>)*.
 
 Values
       
@@ -3943,7 +3943,7 @@ event-modifier-state *event* => *integer*
 Arguments
          
 
--  *event* An instance of type `See <event> <silica.htm#40564>`_.
+-  *event* An instance of type `<event>`_.
 
 Values
       
@@ -3955,21 +3955,21 @@ Description
 
 Returns an integer value that encodes the state of all the modifier keys
 on the keyboard. This is a mask consisting of the *logior* of `See
-$shift-key <silica.htm#25626>`_, `See $control-key <silica.htm#45666>`_,
-`See $meta-key <silica.htm#42593>`_, `See
-$super-key <silica.htm#26334>`_, and `See
-$hyper-key <silica.htm#79857>`_.
+$shift-key`_, `$control-key`_,
+`$meta-key`_, `See
+$super-key`_, and `See
+$hyper-key`_.
 
 See also
         
 
-`See event-sheet <silica.htm#95184>`_
+`event-sheet`_
 
-`See gesture-modifier-state <silica.htm#78871>`_
+`gesture-modifier-state`_
 
-`See make-modifier-state <silica.htm#64660>`_
+`make-modifier-state`_
 
-`See port-modifier-state <silica.htm#63508>`_
+`port-modifier-state`_
 
 event-pointer
 -------------
@@ -3991,12 +3991,12 @@ event-pointer *event* => *pointer*
 Arguments
          
 
--  *event* An instance of type `See <event> <silica.htm#40564>`_.
+-  *event* An instance of type `<event>`_.
 
 Values
       
 
--  *pointer* An instance of type `See <pointer> <silica.htm#85241>`_.
+-  *pointer* An instance of type `<pointer>`_.
 
 Description
            
@@ -4006,11 +4006,11 @@ Returns the pointer object to which *event* refers.
 See also
         
 
-`See <pointer> <silica.htm#85241>`_
+`<pointer>`_
 
-`See event-x <silica.htm#81763>`_
+`event-x`_
 
-`See event-y <silica.htm#73684>`_
+`event-y`_
 
 event-region
 ------------
@@ -4032,12 +4032,12 @@ event-region *event* => *region*
 Arguments
          
 
--  *event* An instance of type `See <event> <silica.htm#40564>`_.
+-  *event* An instance of type `<event>`_.
 
 Values
       
 
--  *region* An instance of type `See <region> <geom.htm#79228>`_.
+-  *region* An instance of type `<region> <geom.htm#79228>`_.
 
 Description
            
@@ -4047,11 +4047,11 @@ Returns the region of the sheet that is affected by *event*.
 See also
         
 
-`See event-x <silica.htm#81763>`_
+`event-x`_
 
-`See event-y <silica.htm#73684>`_
+`event-y`_
 
-`See <window-event> <silica.htm#12513>`_
+`<window-event>`_
 
 event-sheet
 -----------
@@ -4073,12 +4073,12 @@ event-sheet *event* => *sheet*
 Arguments
          
 
--  *event* An instance of type `See <event> <silica.htm#40564>`_.
+-  *event* An instance of type `<event>`_.
 
 Values
       
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet>`_.
 
 Description
            
@@ -4088,7 +4088,7 @@ Returns the sheet associated with *event*.
 See also
         
 
-`See event-modifier-state <silica.htm#46549>`_
+`event-modifier-state`_
 
 event-x
 -------
@@ -4110,7 +4110,7 @@ event-x *event* => *x*
 Arguments
          
 
--  *event* An instance of type `See <event> <silica.htm#40564>`_.
+-  *event* An instance of type `<event>`_.
 
 Values
       
@@ -4126,11 +4126,11 @@ the coordinate system of the sheet that received the event.
 See also
         
 
-`See event-pointer <silica.htm#97610>`_
+`event-pointer`_
 
-`See event-region <silica.htm#95678>`_
+`event-region`_
 
-`See event-y <silica.htm#73684>`_
+`event-y`_
 
 event-y
 -------
@@ -4152,7 +4152,7 @@ event-y *event* => *y*
 Arguments
          
 
--  *event* An instance of type `See <event> <silica.htm#40564>`_.
+-  *event* An instance of type `<event>`_.
 
 Values
       
@@ -4168,11 +4168,11 @@ the coordinate system of the sheet that received the event.
 See also
         
 
-`See event-pointer <silica.htm#97610>`_
+`event-pointer`_
 
-`See event-region <silica.htm#95678>`_
+`event-region`_
 
-`See event-x <silica.htm#81763>`_
+`event-x`_
 
 find-display
 ------------
@@ -4197,7 +4197,7 @@ Arguments
 
 -  *server-path* An instance of type *<symbol>*. Default value:
    *#(#"local")*.
--  *port* An instance of type `See <port> <silica.htm#11606>`_.
+-  *port* An instance of type `<port>`_.
 -  *orientation* An instance of type *one-of(#"default")*. Default
    value: *#"default"*.
 -  *units* An instance of type *one-of(#"device", #"pixels", #"mm")*.
@@ -4206,7 +4206,7 @@ Arguments
 Values
       
 
--  *display* An instance of type *`See <display> <silica.htm#77659>`_*.
+-  *display* An instance of type *`<display>`_*.
 
 Description
            
@@ -4220,7 +4220,7 @@ orientation and display units that the returned *display* needs to use.
 See also
         
 
-`See find-port <silica.htm#58370>`_
+`find-port`_
 
 find-frame-manager
 ------------------
@@ -4244,16 +4244,16 @@ Arguments
          
 
 -  *options* An instance of type *<object>*.
--  *port* An instance of type `See <port> <silica.htm#11606>`_.
+-  *port* An instance of type `<port>`_.
 -  *server-path* An instance of type *<object>*.
 -  *class* An instance of type *<type>*.
--  *palette* An instance of type `See <palette> <dcs.htm#11494>`_.
+-  *palette* An instance of type `<palette> <dcs.htm#11494>`_.
 
 Values
       
 
 -  *framem* An instance of type `See
-   <frame-manager> <silica.htm#32466>`_.
+   <frame-manager>`_.
 
 Description
            
@@ -4292,7 +4292,7 @@ Arguments
 Values
       
 
--  *port* An instance of type `See <port> <silica.htm#11606>`_.
+-  *port* An instance of type `<port>`_.
 
 Description
            
@@ -4302,7 +4302,7 @@ Returns a suitable port for the specified server-path.
 See also
         
 
-`See find-display <silica.htm#15057>`_
+`find-display`_
 
 fixed-width-font?
 -----------------
@@ -4324,8 +4324,8 @@ fixed-width-font? *text-style port* #key *character-set* => *fixed?*
 Arguments
          
 
--  *text-style* An instance of type `See <text-style> <dcs.htm#85385>`_.
--  *port* An instance of type `See <port> <silica.htm#11606>`_.
+-  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
+-  *port* An instance of type `<port>`_.
 -  *character-set* An instance of type *<object>*. Default value:
    *$standard-character-set*.
 
@@ -4359,8 +4359,8 @@ font-ascent *text-style port* #key *character-set* => *ascent*
 Arguments
          
 
--  *text-style* An instance of type `See <text-style> <dcs.htm#85385>`_.
--  *port* An instance of type `See <port> <silica.htm#11606>`_.
+-  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
+-  *port* An instance of type `<port>`_.
 -  *character-set* An instance of type *<object>*. Default value:
    *$standard-character-set*.
 
@@ -4377,13 +4377,13 @@ Returns the ascent of the font in the *text-style* on *port*.
 See also
         
 
-`See font-descent <silica.htm#26061>`_
+`font-descent`_
 
-`See font-height <silica.htm#19634>`_
+`font-height`_
 
-`See font-metrics <silica.htm#96248>`_
+`font-metrics`_
 
-`See font-width <silica.htm#20511>`_
+`font-width`_
 
 font-descent
 ------------
@@ -4405,8 +4405,8 @@ font-descent *text-style port* #key *character-set* => *descent*
 Arguments
          
 
--  *text-style* An instance of type `See <text-style> <dcs.htm#85385>`_.
--  *port* An instance of type `See <port> <silica.htm#11606>`_.
+-  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
+-  *port* An instance of type `<port>`_.
 -  *character-set* An instance of type *<object>*.
 
 Values
@@ -4422,13 +4422,13 @@ Returns the descent of the font in the *text-style* on *port*.
 See also
         
 
-`See font-ascent <silica.htm#47453>`_
+`font-ascent`_
 
-`See font-height <silica.htm#19634>`_
+`font-height`_
 
-`See font-metrics <silica.htm#96248>`_
+`font-metrics`_
 
-`See font-width <silica.htm#20511>`_
+`font-width`_
 
 font-height
 -----------
@@ -4450,8 +4450,8 @@ font-height *text-style port* #key *character-set* => *height*
 Arguments
          
 
--  *text-style* An instance of type `See <text-style> <dcs.htm#85385>`_.
--  *port* An instance of type `See <port> <silica.htm#11606>`_.
+-  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
+-  *port* An instance of type `<port>`_.
 -  *character-set* An instance of type *<object>*.
 
 Values
@@ -4467,13 +4467,13 @@ Returns the height of the font in the *text-style* on *port*.
 See also
         
 
-`See font-ascent <silica.htm#47453>`_
+`font-ascent`_
 
-`See font-descent <silica.htm#26061>`_
+`font-descent`_
 
-`See font-metrics <silica.htm#96248>`_
+`font-metrics`_
 
-`See font-width <silica.htm#20511>`_
+`font-width`_
 
 font-metrics
 ------------
@@ -4496,8 +4496,8 @@ height ascent descent*
 Arguments
          
 
--  *text-style* An instance of type `See <text-style> <dcs.htm#85385>`_.
--  *port* An instance of type `See <port> <silica.htm#11606>`_.
+-  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
+-  *port* An instance of type `<port>`_.
 -  *character-set* An instance of type *<object>*.
 
 Values
@@ -4517,13 +4517,13 @@ Returns the metrics of the font in the *text-style* on *port*.
 See also
         
 
-`See font-ascent <silica.htm#47453>`_
+`font-ascent`_
 
-`See font-descent <silica.htm#26061>`_
+`font-descent`_
 
-`See font-height <silica.htm#19634>`_
+`font-height`_
 
-`See font-width <silica.htm#20511>`_
+`font-width`_
 
 font-width
 ----------
@@ -4545,8 +4545,8 @@ font-width *text-style port* #key *character-set* => *width*
 Arguments
          
 
--  *text-style* An instance of type `See <text-style> <dcs.htm#85385>`_.
--  *port* An instance of type `See <port> <silica.htm#11606>`_.
+-  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
+-  *port* An instance of type `<port>`_.
 -  *character-set* An instance of type *<object>*.
 
 Values
@@ -4562,13 +4562,13 @@ Returns the with of the font in the *text-style* on *port*.
 See also
         
 
-`See font-ascent <silica.htm#47453>`_
+`font-ascent`_
 
-`See font-descent <silica.htm#26061>`_
+`font-descent`_
 
-`See font-height <silica.htm#19634>`_
+`font-height`_
 
-`See font-metrics <silica.htm#96248>`_
+`font-metrics`_
 
 force-display
 -------------
@@ -4591,7 +4591,7 @@ Arguments
          
 
 -  *drawable* An instance of type *type-union(* `See
-   <sheet> <silica.htm#13118>`_*, `See <medium> <silica.htm#60437>`_)*.
+   <sheet>`_*, `<medium>`_)*.
 
 Values
       
@@ -4617,7 +4617,7 @@ The class of events that occur in frames.
 Superclasses
             
 
-`See <event> <silica.htm#40564>`_
+`<event>`_
                                  
 
 Init-keywords
@@ -4696,19 +4696,19 @@ Thus, the frame manager decides the following:
 -  How much spacing to use in various conventional layouts.
 
 In addition, a frame manager maps dialog functions such as `See
-choose-file <silica.htm#82284>`_ to their appropriate native dialogs.
+choose-file`_ to their appropriate native dialogs.
 
 Operations
           
 
 The following operations are exported from the *DUIM-Sheets* module.
 
-`See display <silica.htm#56987>`_ `See
-frame-manager? <silica.htm#73661>`_ `See
-frame-manager-frames <silica.htm#20004>`_ `See
-frame-manager-palette <silica.htm#45885>`_ `See
-frame-manager-palette-setter <silica.htm#39992>`_ `See
-port <silica.htm#51457>`_
+`display`_ `See
+frame-manager?`_ `See
+frame-manager-frames`_ `See
+frame-manager-palette`_ `See
+frame-manager-palette-setter`_ `See
+port`_
 
 The following operations are exported from the *DUIM-Frames* module.
 
@@ -4716,14 +4716,14 @@ The following operations are exported from the *DUIM-Frames* module.
 
 The following operation is exported from the *DUIM-DCs* module.
 
-`See find-color <dcs.htm#33969>`_
+`find-color <dcs.htm#33969>`_
 
 See also
         
 
-`See frame-manager <silica.htm#15759>`_
+`frame-manager`_
 
-`See frame-manager? <silica.htm#73661>`_
+`frame-manager?`_
 
 frame-manager
 -------------
@@ -4751,7 +4751,7 @@ Values
       
 
 -  *value* An instance of type *false-or
-    (`See <frame-manager> <silica.htm#32466>`_)*.
+    (`<frame-manager>`_)*.
 
 Description
            
@@ -4762,13 +4762,13 @@ display of *object*.
 See also
         
 
-`See display <silica.htm#56987>`_
+`display`_
 
-`See <frame-manager> <silica.htm#32466>`_
+`<frame-manager>`_
 
-`See frame-manager? <silica.htm#73661>`_
+`frame-manager?`_
 
-`See port <silica.htm#51457>`_
+`port`_
 
 frame-manager?
 --------------
@@ -4805,9 +4805,9 @@ Returns true if *object* is a frame manager.
 See also
         
 
-`See <frame-manager> <silica.htm#32466>`_
+`<frame-manager>`_
 
-`See frame-manager <silica.htm#15759>`_
+`frame-manager`_
 
 frame-manager-frames
 --------------------
@@ -4830,7 +4830,7 @@ Arguments
          
 
 -  *framem* An instance of type `See
-   <frame-manager> <silica.htm#32466>`_.
+   <frame-manager>`_.
 
 Values
       
@@ -4864,12 +4864,12 @@ Arguments
          
 
 -  *framem* An instance of type `See
-   <frame-manager> <silica.htm#32466>`_.
+   <frame-manager>`_.
 
 Values
       
 
--  *palette* An instance of type `See <palette> <dcs.htm#11494>`_.
+-  *palette* An instance of type `<palette> <dcs.htm#11494>`_.
 
 Description
            
@@ -4879,7 +4879,7 @@ Returns the palette used by *framem*.
 See also
         
 
-`See frame-manager-palette-setter <silica.htm#39992>`_
+`frame-manager-palette-setter`_
 
 frame-manager-palette-setter
 ----------------------------
@@ -4901,14 +4901,14 @@ frame-manager-palette-setter *palette framem* => *palette*
 Arguments
          
 
--  *palette* An instance of type `See <palette> <dcs.htm#11494>`_.
+-  *palette* An instance of type `<palette> <dcs.htm#11494>`_.
 -  *framem* An instance of type `See
-   <frame-manager> <silica.htm#32466>`_.
+   <frame-manager>`_.
 
 Values
       
 
--  *palette* An instance of type `See <palette> <dcs.htm#11494>`_.
+-  *palette* An instance of type `<palette> <dcs.htm#11494>`_.
 
 Description
            
@@ -4918,7 +4918,7 @@ Sets the palette used by *framem*.
 See also
         
 
-`See frame-manager-palette <silica.htm#45885>`_
+`frame-manager-palette`_
 
 <gesture>
 ---------
@@ -4954,16 +4954,16 @@ Operations
           
 
 ` <frames.htm#89020>`_ ` <frames.htm#44746>`_ `See
-event-matches-gesture? <silica.htm#72877>`_ ` <gadgets.htm#80239>`_ `See
-gesture-modifier-state <silica.htm#78871>`_ `See
-gesture-spec-equal <silica.htm#99017>`_
+event-matches-gesture?`_ ` <gadgets.htm#80239>`_ `See
+gesture-modifier-state`_ `See
+gesture-spec-equal`_
 
 See also
         
 
-`See <keyboard-gesture> <silica.htm#28517>`_
+`<keyboard-gesture>`_
 
-`See <pointer-gesture> <silica.htm#86571>`_
+`<pointer-gesture>`_
 
 gesture-button
 --------------
@@ -4986,7 +4986,7 @@ Arguments
          
 
 -  *pointer-gesture* An instance of type `See
-   <pointer-gesture> <silica.htm#86571>`_.
+   <pointer-gesture>`_.
 
 Values
       
@@ -5001,7 +5001,7 @@ Returns the button associated with *pointer-gesture*.
 See also
         
 
-`See <pointer-gesture> <silica.htm#86571>`_
+`<pointer-gesture>`_
 
 gesture-keysym
 --------------
@@ -5024,7 +5024,7 @@ Arguments
          
 
 -  *keyboard-gesture* An instance of type `See
-   <keyboard-gesture> <silica.htm#28517>`_.
+   <keyboard-gesture>`_.
 
 Values
       
@@ -5039,7 +5039,7 @@ Returns the keysym associated with *keyboard-gesture*.
 See also
         
 
-`See <keyboard-gesture> <silica.htm#28517>`_
+`<keyboard-gesture>`_
 
 gesture-modifier-state
 ----------------------
@@ -5061,7 +5061,7 @@ gesture-modifier-state *gesture* => *modifier-state*
 Arguments
          
 
--  *gesture* An instance of type `See <gesture> <silica.htm#76256>`_.
+-  *gesture* An instance of type `<gesture>`_.
 
 Values
       
@@ -5076,13 +5076,13 @@ Returns the modifier-state associated with *gesture*.
 See also
         
 
-`See event-modifier-state <silica.htm#46549>`_
+`event-modifier-state`_
 
-`See <keyboard-gesture> <silica.htm#28517>`_
+`<keyboard-gesture>`_
 
-`See make-modifier-state <silica.htm#64660>`_
+`make-modifier-state`_
 
-`See port-modifier-state <silica.htm#63508>`_
+`port-modifier-state`_
 
 gesture-spec-equal
 ------------------
@@ -5104,8 +5104,8 @@ gesture-spec-equal *gesture1 gesture2* => *equal?*
 Arguments
          
 
--  *gesture1* An instance of type `See <gesture> <silica.htm#76256>`_.
--  *gesture2* An instance of type `See <gesture> <silica.htm#76256>`_.
+-  *gesture1* An instance of type `<gesture>`_.
+-  *gesture2* An instance of type `<gesture>`_.
 
 Values
       
@@ -5120,7 +5120,7 @@ Returns true if *gesture1* and *gesture2* are equivalent.
 See also
         
 
-`See = <silica.htm#81281>`_
+`=`_
 
 get-clipboard-data-as
 ---------------------
@@ -5143,7 +5143,7 @@ Arguments
          
 
 -  *type* An instance of *type-union(<symbol>,* *<type>)*.
--  *clipboard* An instance of `See <clipboard> <silica.htm#16197>`_.
+-  *clipboard* An instance of `<clipboard>`_.
 
 Values
       
@@ -5159,13 +5159,13 @@ argument *type* is an instance of *type-union(<symbol>, <type>)*.
 See also
         
 
-`See add-clipboard-data <silica.htm#10767>`_
+`add-clipboard-data`_
 
-`See add-clipboard-data-as <silica.htm#16308>`_
+`add-clipboard-data-as`_
 
-`See <clipboard> <silica.htm#16197>`_
+`<clipboard>`_
 
-`See clipboard-data-available? <silica.htm#21339>`_
+`clipboard-data-available?`_
 
 get-default-background
 ----------------------
@@ -5187,14 +5187,14 @@ get-default-background *port sheet* #key *background* => *background*
 Arguments
          
 
--  *port* An instance of type `See <port> <silica.htm#11606>`_.
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
--  *background* An instance of type `See <ink> <dcs.htm#15007>`_.
+-  *port* An instance of type `<port>`_.
+-  *sheet* An instance of type `<sheet>`_.
+-  *background* An instance of type `<ink> <dcs.htm#15007>`_.
 
 Values
       
 
--  *background* An instance of type `See <ink> <dcs.htm#15007>`_.
+-  *background* An instance of type `<ink> <dcs.htm#15007>`_.
 
 Description
            
@@ -5206,9 +5206,9 @@ If *background* is specified, then this is used instead of the default.
 See also
         
 
-`See get-default-foreground <silica.htm#98508>`_
+`get-default-foreground`_
 
-`See get-default-text-style <silica.htm#79269>`_
+`get-default-text-style`_
 
 get-default-foreground
 ----------------------
@@ -5230,14 +5230,14 @@ get-default-foreground *port sheet* #key *foreground* => *foreground*
 Arguments
          
 
--  *port* An instance of type `See <port> <silica.htm#11606>`_.
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
--  *foreground* An instance of type `See <ink> <dcs.htm#15007>`_.
+-  *port* An instance of type `<port>`_.
+-  *sheet* An instance of type `<sheet>`_.
+-  *foreground* An instance of type `<ink> <dcs.htm#15007>`_.
 
 Values
       
 
--  *foreground* An instance of type `See <ink> <dcs.htm#15007>`_.
+-  *foreground* An instance of type `<ink> <dcs.htm#15007>`_.
 
 Description
            
@@ -5249,9 +5249,9 @@ If *foreground* is specified, then this is used instead of the default.
 See also
         
 
-`See get-default-background <silica.htm#19822>`_
+`get-default-background`_
 
-`See get-default-text-style <silica.htm#79269>`_
+`get-default-text-style`_
 
 get-default-text-style
 ----------------------
@@ -5273,14 +5273,14 @@ get-default-text-style *port sheet* #key *text-style* => *text-style*
 Arguments
          
 
--  *port* An instance of type `See <port> <silica.htm#11606>`_.
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
--  *text-style* An instance of type `See <text-style> <dcs.htm#85385>`_.
+-  *port* An instance of type `<port>`_.
+-  *sheet* An instance of type `<sheet>`_.
+-  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
 
 Values
       
 
--  *text-style* An instance of type `See <text-style> <dcs.htm#85385>`_.
+-  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
 
 Description
            
@@ -5292,9 +5292,9 @@ If *text-style* is specified, then this is used instead of the default.
 See also
         
 
-`See get-default-background <silica.htm#19822>`_
+`get-default-background`_
 
-`See get-default-foreground <silica.htm#98508>`_
+`get-default-foreground`_
 
 handle-event
 ------------
@@ -5317,8 +5317,8 @@ handle-event *sheet event* => ()
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
--  *event* An instance of type `See <event> <silica.htm#40564>`_.
+-  *sheet* An instance of type `<sheet>`_.
+-  *event* An instance of type `<event>`_.
 
 Values
       
@@ -5351,9 +5351,9 @@ to *next-method* is actually required.
 See also
         
 
-`See handle-repaint <silica.htm#28833>`_
+`handle-repaint`_
 
-`See queue-event <silica.htm#94000>`_
+`queue-event`_
 
 handle-repaint
 --------------
@@ -5375,9 +5375,9 @@ handle-repaint *sheet medium region* => ()
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
--  *medium* An instance of type *`See <medium> <silica.htm#60437>`_*.
--  *region* An instance of type `See <region> <geom.htm#79228>`_.
+-  *sheet* An instance of type `<sheet>`_.
+-  *medium* An instance of type *`<medium>`_*.
+-  *region* An instance of type `<region> <geom.htm#79228>`_.
 
 Values
       
@@ -5414,13 +5414,13 @@ See also
 
 ` <layouts.htm#40953>`_
 
-`See queue-repaint <silica.htm#64571>`_
+`queue-repaint`_
 
-`See repaint-sheet <silica.htm#74601>`_
+`repaint-sheet`_
 
 ` <layouts.htm#78056>`_
 
-`See <window-repaint-event> <silica.htm#87946>`_
+`<window-repaint-event>`_
 
 $hyper-key
 ----------
@@ -5453,23 +5453,23 @@ A constant that represents the HYPER key on the keyboard.
 See also
         
 
-`See $alt-key <silica.htm#74132>`_
+`$alt-key`_
 
-`See $control-key <silica.htm#45666>`_
+`$control-key`_
 
-`See $meta-key <silica.htm#42593>`_
+`$meta-key`_
 
-`See modifier-key-index <silica.htm#80162>`_
+`modifier-key-index`_
 
-`See modifier-key-index-name <silica.htm#47802>`_
+`modifier-key-index-name`_
 
-`See $modifier-keys <silica.htm#84477>`_
+`$modifier-keys`_
 
-`See $option-key <silica.htm#18942>`_
+`$option-key`_
 
-`See $shift-key <silica.htm#25626>`_
+`$shift-key`_
 
-`See $super-key <silica.htm#26334>`_
+`$super-key`_
 
 <keyboard-event>
 ----------------
@@ -5485,7 +5485,7 @@ The base class of all keyboard events.
 Superclasses
             
 
-`See <device-event> <silica.htm#89921>`_
+`<device-event>`_
                                         
 
 Init-keywords
@@ -5512,20 +5512,20 @@ Operations
 
 The following operations are exported from the *DUIM-Sheets* module.
 
--  `See event-character <silica.htm#85746>`_ `See
-   event-key-name <silica.htm#26334>`_ `See
-   event-matches-gesture? <silica.htm#72877>`_
+-  `event-character`_ `See
+   event-key-name`_ `See
+   event-matches-gesture?`_
 
 See also
         
 
-`See event-character <silica.htm#85746>`_
+`event-character`_
 
-`See event-key-name <silica.htm#26334>`_
+`event-key-name`_
 
-`See <key-press-event> <silica.htm#87129>`_
+`<key-press-event>`_
 
-`See <key-release-event> <silica.htm#32571>`_
+`<key-release-event>`_
 
 <keyboard-gesture>
 ------------------
@@ -5541,7 +5541,7 @@ The base class of all keyboard gestures.
 Superclasses
             
 
-`See <gesture> <silica.htm#76256>`_
+`<gesture>`_
                                    
 
 Init-keywords
@@ -5561,14 +5561,14 @@ the *modifier-state:* init-keyword represents its modifier state.
 Operations
           
 
--  `See gesture-keysym <silica.htm#58782>`_
+-  `gesture-keysym`_
 
 See also
         
 
-`See gesture-keysym <silica.htm#58782>`_
+`gesture-keysym`_
 
-`See gesture-modifier-state <silica.htm#78871>`_
+`gesture-modifier-state`_
 
 <key-press-event>
 -----------------
@@ -5584,7 +5584,7 @@ The class of events passed when a key is pressed.
 Superclasses
             
 
-`See <keyboard-event> <silica.htm#22152>`_
+`<keyboard-event>`_
                                           
 
 Init-keywords
@@ -5605,9 +5605,9 @@ Operations
 See also
         
 
-`See <keyboard-event> <silica.htm#22152>`_
+`<keyboard-event>`_
 
-`See <key-release-event> <silica.htm#32571>`_
+`<key-release-event>`_
 
 <key-release-event>
 -------------------
@@ -5623,7 +5623,7 @@ The class of events passed when a key is released.
 Superclasses
             
 
-`See <keyboard-event> <silica.htm#22152>`_
+`<keyboard-event>`_
                                           
 
 Init-keywords
@@ -5644,9 +5644,9 @@ Operations
 See also
         
 
-`See <keyboard-event> <silica.htm#22152>`_
+`<keyboard-event>`_
 
-`See <key-press-event> <silica.htm#87129>`_
+`<key-press-event>`_
 
 $left-button
 ------------
@@ -5681,11 +5681,11 @@ device.
 See also
         
 
-`See $middle-button <silica.htm#27963>`_
+`$middle-button`_
 
-`See $pointer-buttons <silica.htm#19926>`_
+`$pointer-buttons`_
 
-`See $right-button <silica.htm#90175>`_
+`$right-button`_
 
 lower-sheet
 -----------
@@ -5708,7 +5708,7 @@ lower-sheet *sheet* => ()
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet>`_.
 
 Values
       
@@ -5727,7 +5727,7 @@ See also
 
 ` <frames.htm#28075>`_
 
-`See raise-sheet <silica.htm#23199>`_
+`raise-sheet`_
 
 make-frame-manager
 ------------------
@@ -5749,14 +5749,14 @@ make-frame-manager *port* #key *palette* => *framem*
 Arguments
          
 
--  *port* An instance of type `See <port> <silica.htm#11606>`_.
--  *palette* An instance of type `See <palette> <dcs.htm#11494>`_.
+-  *port* An instance of type `<port>`_.
+-  *palette* An instance of type `<palette> <dcs.htm#11494>`_.
 
 Values
       
 
 -  *framem* An instance of type `See
-   <frame-manager> <silica.htm#32466>`_.
+   <frame-manager>`_.
 
 Description
            
@@ -5767,7 +5767,7 @@ palette described by *palette* is used.
 See also
         
 
-`See <frame-manager> <silica.htm#32466>`_
+`<frame-manager>`_
 
 make-modifier-state
 -------------------
@@ -5805,11 +5805,11 @@ Returns a modifier state for *modifiers*.
 See also
         
 
-`See event-modifier-state <silica.htm#46549>`_
+`event-modifier-state`_
 
-`See gesture-modifier-state <silica.htm#78871>`_
+`gesture-modifier-state`_
 
-`See port-modifier-state <silica.htm#63508>`_
+`port-modifier-state`_
 
 make-pane
 ---------
@@ -5836,12 +5836,12 @@ Arguments
 -  *pane-class* An instance of type *<class>*.
 -  *pane-options* Instances of type *<object>*.
 -  *frame-manager* An instance of type `See
-   <frame-manager> <silica.htm#32466>`_.
+   <frame-manager>`_.
 
 Values
       
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet>`_.
 
 Description
            
@@ -5897,37 +5897,37 @@ Operations
 
 The following operations are exported from the *DUIM-Sheets* module.
 
-`See beep <silica.htm#60172>`_ `See clear-box <silica.htm#64848>`_ `See
-display <silica.htm#56987>`_ `See
-do-with-drawing-options <silica.htm#84773>`_ `See
-do-with-text-style <silica.htm#85037>`_ `See
-do-with-transform <silica.htm#37600>`_ `See
-force-display <silica.htm#98525>`_ `See
-handle-repaint <silica.htm#28833>`_ `See medium? <silica.htm#97943>`_
-`See medium-background <silica.htm#41977>`_ `See
-medium-background-setter <silica.htm#64546>`_ `See
-medium-brush <silica.htm#53620>`_ `See
-medium-brush-setter <silica.htm#87094>`_ `See
-medium-clipping-region <silica.htm#92720>`_ `See
-medium-clipping-region-setter <silica.htm#52130>`_ `See
-medium-default-text-style <silica.htm#48888>`_ `See
-medium-default-text-style-setter <silica.htm#31424>`_ `See
-medium-drawable <silica.htm#52034>`_ `See
-medium-drawable-setter <silica.htm#26818>`_ `See
-medium-foreground <silica.htm#61762>`_ `See
-medium-foreground-setter <silica.htm#72601>`_ `See
-medium-merged-text-style <silica.htm#57960>`_ `See
-medium-pen <silica.htm#13619>`_ `See
-medium-pen-setter <silica.htm#45752>`_ `See
-medium-pixmap <silica.htm#16385>`_ `See
-medium-pixmap-setter <silica.htm#52845>`_ `See
-medium-sheet <silica.htm#79411>`_ `See
-medium-text-style <silica.htm#72989>`_ `See
-medium-text-style-setter <silica.htm#18962>`_ `See
-medium-transform <silica.htm#99944>`_ `See
-medium-transform-setter <silica.htm#86075>`_ `See
-port <silica.htm#51457>`_`See synchronize-display <silica.htm#16560>`_
-`See text-size <silica.htm#92482>`_
+`beep`_ `clear-box`_ `See
+display`_ `See
+do-with-drawing-options`_ `See
+do-with-text-style`_ `See
+do-with-transform`_ `See
+force-display`_ `See
+handle-repaint`_ `medium?`_
+`medium-background`_ `See
+medium-background-setter`_ `See
+medium-brush`_ `See
+medium-brush-setter`_ `See
+medium-clipping-region`_ `See
+medium-clipping-region-setter`_ `See
+medium-default-text-style`_ `See
+medium-default-text-style-setter`_ `See
+medium-drawable`_ `See
+medium-drawable-setter`_ `See
+medium-foreground`_ `See
+medium-foreground-setter`_ `See
+medium-merged-text-style`_ `See
+medium-pen`_ `See
+medium-pen-setter`_ `See
+medium-pixmap`_ `See
+medium-pixmap-setter`_ `See
+medium-sheet`_ `See
+medium-text-style`_ `See
+medium-text-style-setter`_ `See
+medium-transform`_ `See
+medium-transform-setter`_ `See
+port`_`synchronize-display`_
+`text-size`_
 
 The following operations are exported from the *DUIM-Graphics* module.
 
@@ -5939,12 +5939,12 @@ The following operations are exported from the *DUIM-Graphics* module.
 The following operations are exported from the *DUIM-Extended-Geometry*
 module.
 
-`See draw-design <ext-geom.htm#88093>`_
+`draw-design <ext-geom.htm#88093>`_
 
 See also
         
 
-`See medium? <silica.htm#97943>`_
+`medium?`_
 
 ` <graphics.htm#46456>`_
 
@@ -5983,9 +5983,9 @@ Returns true if *object* is a medium.
 See also
         
 
-`See <medium> <silica.htm#60437>`_
+`<medium>`_
 
-`See sheet? <silica.htm#14427>`_
+`sheet?`_
 
 medium-background
 -----------------
@@ -6007,12 +6007,12 @@ medium-background *medium* => *ink*
 Arguments
          
 
--  *medium* An instance of type *`See <medium> <silica.htm#60437>`_*.
+-  *medium* An instance of type *`<medium>`_*.
 
 Values
       
 
--  *ink* An instance of type `See <ink> <dcs.htm#15007>`_.
+-  *ink* An instance of type `<ink> <dcs.htm#15007>`_.
 
 Description
            
@@ -6022,9 +6022,9 @@ Returns the background for *medium*.
 See also
         
 
-`See medium-background-setter <silica.htm#64546>`_
+`medium-background-setter`_
 
-`See medium-foreground <silica.htm#61762>`_
+`medium-foreground`_
 
 medium-background-setter
 ------------------------
@@ -6046,13 +6046,13 @@ medium-background-setter *background medium* => *background*
 Arguments
          
 
--  *background* An instance of type `See <ink> <dcs.htm#15007>`_.
--  *medium* An instance of type *`See <medium> <silica.htm#60437>`_*.
+-  *background* An instance of type `<ink> <dcs.htm#15007>`_.
+-  *medium* An instance of type *`<medium>`_*.
 
 Values
       
 
--  *background* An instance of type `See <ink> <dcs.htm#15007>`_.
+-  *background* An instance of type `<ink> <dcs.htm#15007>`_.
 
 Description
            
@@ -6062,9 +6062,9 @@ Sets the background for *medium*.
 See also
         
 
-`See medium-background <silica.htm#41977>`_
+`medium-background`_
 
-`See medium-foreground-setter <silica.htm#72601>`_
+`medium-foreground-setter`_
 
 medium-brush
 ------------
@@ -6086,12 +6086,12 @@ medium-brush *medium* => *brush*
 Arguments
          
 
--  *medium* An instance of type *`See <medium> <silica.htm#60437>`_*.
+-  *medium* An instance of type *`<medium>`_*.
 
 Values
       
 
--  *brush* An instance of type `See <brush> <dcs.htm#29492>`_.
+-  *brush* An instance of type `<brush> <dcs.htm#29492>`_.
 
 Description
            
@@ -6102,9 +6102,9 @@ painting operations on *medium*.
 See also
         
 
-`See medium-brush-setter <silica.htm#87094>`_
+`medium-brush-setter`_
 
-`See medium-pen <silica.htm#13619>`_
+`medium-pen`_
 
 medium-brush-setter
 -------------------
@@ -6126,13 +6126,13 @@ medium-brush-setter *brush medium* => *brush*
 Arguments
          
 
--  *brush* An instance of type `See <brush> <dcs.htm#29492>`_.
--  *medium* An instance of type *`See <medium> <silica.htm#60437>`_*.
+-  *brush* An instance of type `<brush> <dcs.htm#29492>`_.
+-  *medium* An instance of type *`<medium>`_*.
 
 Values
       
 
--  *brush* An instance of type `See <brush> <dcs.htm#29492>`_.
+-  *brush* An instance of type `<brush> <dcs.htm#29492>`_.
 
 Description
            
@@ -6143,9 +6143,9 @@ painting operations on *medium*.
 See also
         
 
-`See medium-brush <silica.htm#53620>`_
+`medium-brush`_
 
-`See medium-pen-setter <silica.htm#45752>`_
+`medium-pen-setter`_
 
 medium-clipping-region
 ----------------------
@@ -6167,12 +6167,12 @@ medium-clipping-region *medium* => *region*
 Arguments
          
 
--  *medium* An instance of type *`See <medium> <silica.htm#60437>`_*.
+-  *medium* An instance of type *`<medium>`_*.
 
 Values
       
 
--  *region* An instance of type `See <region> <geom.htm#79228>`_.
+-  *region* An instance of type `<region> <geom.htm#79228>`_.
 
 Description
            
@@ -6182,7 +6182,7 @@ Returns the clipping region for *medium*.
 See also
         
 
-`See medium-clipping-region-setter <silica.htm#52130>`_
+`medium-clipping-region-setter`_
 
 medium-clipping-region-setter
 -----------------------------
@@ -6204,13 +6204,13 @@ medium-clipping-region-setter *region medium* => *region*
 Arguments
          
 
--  *region* An instance of type `See <region> <geom.htm#79228>`_.
--  *medium* An instance of type *`See <medium> <silica.htm#60437>`_*.
+-  *region* An instance of type `<region> <geom.htm#79228>`_.
+-  *medium* An instance of type *`<medium>`_*.
 
 Values
       
 
--  *region* An instance of type `See <region> <geom.htm#79228>`_.
+-  *region* An instance of type `<region> <geom.htm#79228>`_.
 
 Description
            
@@ -6220,7 +6220,7 @@ Sets the clipping region for *medium*.
 See also
         
 
-`See medium-clipping-region <silica.htm#92720>`_
+`medium-clipping-region`_
 
 medium-default-text-style
 -------------------------
@@ -6242,12 +6242,12 @@ medium-default-text-style *medium* => *text-style*
 Arguments
          
 
--  *medium* An instance of type *`See <medium> <silica.htm#60437>`_*.
+-  *medium* An instance of type *`<medium>`_*.
 
 Values
       
 
--  *text-style* An instance of type `See <text-style> <dcs.htm#85385>`_.
+-  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
 
 Description
            
@@ -6258,11 +6258,11 @@ subsequent text that is written to *medium*.
 See also
         
 
-`See medium-default-text-style-setter <silica.htm#31424>`_
+`medium-default-text-style-setter`_
 
-`See medium-merged-text-style <silica.htm#57960>`_
+`medium-merged-text-style`_
 
-`See medium-text-style <silica.htm#72989>`_
+`medium-text-style`_
 
 medium-default-text-style-setter
 --------------------------------
@@ -6284,13 +6284,13 @@ medium-default-text-style-setter *text-style medium* => *text-style*
 Arguments
          
 
--  *text-style* An instance of type `See <text-style> <dcs.htm#85385>`_.
--  *medium* An instance of type *`See <medium> <silica.htm#60437>`_*.
+-  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
+-  *medium* An instance of type *`<medium>`_*.
 
 Values
       
 
--  *text-style* An instance of type `See <text-style> <dcs.htm#85385>`_.
+-  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
 
 Description
            
@@ -6301,9 +6301,9 @@ subsequent text that is written to *medium*.
 See also
         
 
-`See medium-default-text-style <silica.htm#48888>`_
+`medium-default-text-style`_
 
-`See medium-text-style-setter <silica.htm#18962>`_
+`medium-text-style-setter`_
 
 medium-drawable
 ---------------
@@ -6325,7 +6325,7 @@ medium-drawable *medium* => *drawable*
 Arguments
          
 
--  *medium* An instance of type *`See <medium> <silica.htm#60437>`_*.
+-  *medium* An instance of type *`<medium>`_*.
 
 Values
       
@@ -6340,7 +6340,7 @@ Returns the drawable for *medium*.
 See also
         
 
-`See medium-drawable-setter <silica.htm#26818>`_
+`medium-drawable-setter`_
 
 medium-drawable-setter
 ----------------------
@@ -6363,8 +6363,8 @@ Arguments
          
 
 -  *drawable* An instance of type *type-union(* `See
-   <sheet> <silica.htm#13118>`_*, `See <medium> <silica.htm#60437>`_)*.
--  *medium* An instance of type *`See <medium> <silica.htm#60437>`_*.
+   <sheet>`_*, `<medium>`_)*.
+-  *medium* An instance of type *`<medium>`_*.
 
 Values
       
@@ -6379,7 +6379,7 @@ Sets the drawable for *medium*.
 See also
         
 
-`See medium-drawable <silica.htm#52034>`_
+`medium-drawable`_
 
 medium-foreground
 -----------------
@@ -6401,12 +6401,12 @@ medium-foreground *medium* => *ink*
 Arguments
          
 
--  *medium* An instance of type *`See <medium> <silica.htm#60437>`_*.
+-  *medium* An instance of type *`<medium>`_*.
 
 Values
       
 
--  *ink* An instance of type `See <ink> <dcs.htm#15007>`_.
+-  *ink* An instance of type `<ink> <dcs.htm#15007>`_.
 
 Description
            
@@ -6416,9 +6416,9 @@ Returns the foreground of *medium*.
 See also
         
 
-`See medium-background <silica.htm#41977>`_
+`medium-background`_
 
-`See medium-foreground-setter <silica.htm#72601>`_
+`medium-foreground-setter`_
 
 medium-foreground-setter
 ------------------------
@@ -6440,13 +6440,13 @@ medium-foreground-setter *foreground medium* => *foreground*
 Arguments
          
 
--  *foreground* An instance of type `See <ink> <dcs.htm#15007>`_.
--  *medium* An instance of type *`See <medium> <silica.htm#60437>`_*.
+-  *foreground* An instance of type `<ink> <dcs.htm#15007>`_.
+-  *medium* An instance of type *`<medium>`_*.
 
 Values
       
 
--  *foreground* An instance of type `See <ink> <dcs.htm#15007>`_.
+-  *foreground* An instance of type `<ink> <dcs.htm#15007>`_.
 
 Description
            
@@ -6456,9 +6456,9 @@ Sets the foreground of *medium*.
 See also
         
 
-`See medium-background-setter <silica.htm#64546>`_
+`medium-background-setter`_
 
-`See medium-foreground <silica.htm#61762>`_
+`medium-foreground`_
 
 medium-merged-text-style
 ------------------------
@@ -6480,12 +6480,12 @@ medium-merged-text-style *medium* => *text-style*
 Arguments
          
 
--  *medium* An instance of type *`See <medium> <silica.htm#60437>`_*.
+-  *medium* An instance of type *`<medium>`_*.
 
 Values
       
 
--  *text-style* An instance of type `See <text-style> <dcs.htm#85385>`_.
+-  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
 
 Description
            
@@ -6495,9 +6495,9 @@ Returns the merged text style of *medium*.
 See also
         
 
-`See medium-default-text-style <silica.htm#48888>`_
+`medium-default-text-style`_
 
-`See medium-text-style <silica.htm#72989>`_
+`medium-text-style`_
 
 medium-pen
 ----------
@@ -6519,12 +6519,12 @@ medium-pen *medium* => *pen*
 Arguments
          
 
--  *medium* An instance of type *`See <medium> <silica.htm#60437>`_*.
+-  *medium* An instance of type *`<medium>`_*.
 
 Values
       
 
--  *pen* An instance of type `See <pen> <dcs.htm#41757>`_.
+-  *pen* An instance of type `<pen> <dcs.htm#41757>`_.
 
 Description
            
@@ -6535,9 +6535,9 @@ drawing operations on *medium*.
 See also
         
 
-`See medium-brush <silica.htm#53620>`_
+`medium-brush`_
 
-`See medium-pen-setter <silica.htm#45752>`_
+`medium-pen-setter`_
 
 medium-pen-setter
 -----------------
@@ -6559,13 +6559,13 @@ medium-pen-setter *pen medium* => *pen*
 Arguments
          
 
--  *pen* An instance of type `See <pen> <dcs.htm#41757>`_.
--  *medium* An instance of type *`See <medium> <silica.htm#60437>`_*.
+-  *pen* An instance of type `<pen> <dcs.htm#41757>`_.
+-  *medium* An instance of type *`<medium>`_*.
 
 Values
       
 
--  *pen* An instance of type `See <pen> <dcs.htm#41757>`_.
+-  *pen* An instance of type `<pen> <dcs.htm#41757>`_.
 
 Description
            
@@ -6576,9 +6576,9 @@ operations on *medium*.
 See also
         
 
-`See medium-brush-setter <silica.htm#87094>`_
+`medium-brush-setter`_
 
-`See medium-pen <silica.htm#13619>`_
+`medium-pen`_
 
 medium-pixmap
 -------------
@@ -6600,7 +6600,7 @@ medium-pixmap *medium* => *value*
 Arguments
          
 
--  *medium* An instance of type *`See <medium> <silica.htm#60437>`_*.
+-  *medium* An instance of type *`<medium>`_*.
 
 Values
       
@@ -6616,7 +6616,7 @@ pixmap operations on *medium*.
 See also
         
 
-`See medium-pixmap-setter <silica.htm#52845>`_
+`medium-pixmap-setter`_
 
 medium-pixmap-setter
 --------------------
@@ -6639,7 +6639,7 @@ Arguments
          
 
 -  *pixmap* An instance of type ` <graphics.htm#45866>`_.
--  *medium* An instance of type *`See <medium> <silica.htm#60437>`_*.
+-  *medium* An instance of type *`<medium>`_*.
 
 Values
       
@@ -6655,7 +6655,7 @@ pixmap operations on *medium*.
 See also
         
 
-`See medium-pixmap <silica.htm#16385>`_
+`medium-pixmap`_
 
 medium-sheet
 ------------
@@ -6677,13 +6677,13 @@ medium-sheet *medium* => *sheet*
 Arguments
          
 
--  *medium* An instance of type *`See <medium> <silica.htm#60437>`_*.
+-  *medium* An instance of type *`<medium>`_*.
 
 Values
       
 
 -  *sheet* An instance of type *false-or(* `See
-   <sheet> <silica.htm#13118>`_*)*.
+   <sheet>`_*)*.
 
 Description
            
@@ -6710,12 +6710,12 @@ medium-text-style *medium* => *text-style*
 Arguments
          
 
--  *medium* An instance of type *`See <medium> <silica.htm#60437>`_*.
+-  *medium* An instance of type *`<medium>`_*.
 
 Values
       
 
--  *text-style* An instance of type `See <text-style> <dcs.htm#85385>`_.
+-  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
 
 Description
            
@@ -6725,11 +6725,11 @@ Returns the text style for *medium*.
 See also
         
 
-`See medium-default-text-style <silica.htm#48888>`_
+`medium-default-text-style`_
 
-`See medium-merged-text-style <silica.htm#57960>`_
+`medium-merged-text-style`_
 
-`See medium-text-style-setter <silica.htm#18962>`_
+`medium-text-style-setter`_
 
 medium-text-style-setter
 ------------------------
@@ -6751,13 +6751,13 @@ medium-text-style-setter *text-style medium* => *text-style*
 Arguments
          
 
--  *text-style* An instance of type `See <text-style> <dcs.htm#85385>`_.
--  *medium* An instance of type *`See <medium> <silica.htm#60437>`_*.
+-  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
+-  *medium* An instance of type *`<medium>`_*.
 
 Values
       
 
--  *text-style* An instance of type `See <text-style> <dcs.htm#85385>`_.
+-  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
 
 Description
            
@@ -6767,9 +6767,9 @@ Sets the text style for *medium*.
 See also
         
 
-`See medium-default-text-style-setter <silica.htm#31424>`_
+`medium-default-text-style-setter`_
 
-`See medium-text-style <silica.htm#72989>`_
+`medium-text-style`_
 
 medium-transform
 ----------------
@@ -6791,12 +6791,12 @@ medium-transform *medium* => *transform*
 Arguments
          
 
--  *medium* An instance of type *`See <medium> <silica.htm#60437>`_*.
+-  *medium* An instance of type *`<medium>`_*.
 
 Values
       
 
--  *transform* An instance of type `See <transform> <geom.htm#54995>`_.
+-  *transform* An instance of type `<transform> <geom.htm#54995>`_.
 
 Description
            
@@ -6806,9 +6806,9 @@ Returns the transform for *medium*.
 See also
         
 
-`See medium-transform-setter <silica.htm#86075>`_
+`medium-transform-setter`_
 
-`See sheet-transform <silica.htm#78332>`_
+`sheet-transform`_
 
 medium-transform-setter
 -----------------------
@@ -6830,13 +6830,13 @@ medium-transform-setter *transform medium* => *transform*
 Arguments
          
 
--  *transform* An instance of type `See <transform> <geom.htm#54995>`_.
--  *medium* An instance of type *`See <medium> <silica.htm#60437>`_*.
+-  *transform* An instance of type `<transform> <geom.htm#54995>`_.
+-  *medium* An instance of type *`<medium>`_*.
 
 Values
       
 
--  *transform* An instance of type `See <transform> <geom.htm#54995>`_.
+-  *transform* An instance of type `<transform> <geom.htm#54995>`_.
 
 Description
            
@@ -6846,9 +6846,9 @@ Sets the transform for *medium*.
 See also
         
 
-`See medium-transform <silica.htm#99944>`_
+`medium-transform`_
 
-`See sheet-transform-setter <silica.htm#62851>`_
+`sheet-transform-setter`_
 
 $meta-key
 ---------
@@ -6878,28 +6878,28 @@ Description
 
 A constant that represents the META key on the keyboard, if it exists.
 To deal with the case where there is no META key, the value of the
-constant `See $alt-key <silica.htm#74132>`_ is bound to this constant.
+constant `$alt-key`_ is bound to this constant.
 
 See also
         
 
-`See $alt-key <silica.htm#74132>`_
+`$alt-key`_
 
-`See $control-key <silica.htm#45666>`_
+`$control-key`_
 
-`See $hyper-key <silica.htm#79857>`_
+`$hyper-key`_
 
-`See modifier-key-index <silica.htm#80162>`_
+`modifier-key-index`_
 
-`See modifier-key-index-name <silica.htm#47802>`_
+`modifier-key-index-name`_
 
-`See $modifier-keys <silica.htm#84477>`_
+`$modifier-keys`_
 
-`See $option-key <silica.htm#18942>`_
+`$option-key`_
 
-`See $shift-key <silica.htm#25626>`_
+`$shift-key`_
 
-`See $super-key <silica.htm#26334>`_
+`$super-key`_
 
 $middle-button
 --------------
@@ -6934,11 +6934,11 @@ device.
 See also
         
 
-`See $left-button <silica.htm#61603>`_
+`$left-button`_
 
-`See $pointer-buttons <silica.htm#19926>`_
+`$pointer-buttons`_
 
-`See $right-button <silica.htm#90175>`_
+`$right-button`_
 
 modifier-key-index
 ------------------
@@ -6972,30 +6972,30 @@ Description
 
 Returns the index number of the specified modifier key. The *key-name*
 specified may be any of the elements of `See
-$modifier-keys <silica.htm#84477>`_
+$modifier-keys`_
 
 The returned index value is either 0, 1, 2, 3, or 4.
 
 See also
         
 
-`See $alt-key <silica.htm#74132>`_
+`$alt-key`_
 
-`See $control-key <silica.htm#45666>`_
+`$control-key`_
 
-`See $hyper-key <silica.htm#79857>`_
+`$hyper-key`_
 
-`See $meta-key <silica.htm#42593>`_
+`$meta-key`_
 
-`See modifier-key-index-name <silica.htm#47802>`_
+`modifier-key-index-name`_
 
-`See $modifier-keys <silica.htm#84477>`_
+`$modifier-keys`_
 
-`See $option-key <silica.htm#18942>`_
+`$option-key`_
 
-`See $shift-key <silica.htm#25626>`_
+`$shift-key`_
 
-`See $super-key <silica.htm#26334>`_
+`$super-key`_
 
 modifier-key-index-name
 -----------------------
@@ -7031,28 +7031,28 @@ Returns the key name of the specified modifier key index. The *index*
 specified is either 0, 1, 2, 3, or 4.
 
 The *key-name* returned may be any of the elements of `See
-$modifier-keys <silica.htm#84477>`_
+$modifier-keys`_
 
 See also
         
 
-`See $alt-key <silica.htm#74132>`_
+`$alt-key`_
 
-`See $control-key <silica.htm#45666>`_
+`$control-key`_
 
-`See $hyper-key <silica.htm#79857>`_
+`$hyper-key`_
 
-`See $meta-key <silica.htm#42593>`_
+`$meta-key`_
 
-`See modifier-key-index <silica.htm#80162>`_
+`modifier-key-index`_
 
-`See $modifier-keys <silica.htm#84477>`_
+`$modifier-keys`_
 
-`See $option-key <silica.htm#18942>`_
+`$option-key`_
 
-`See $shift-key <silica.htm#25626>`_
+`$shift-key`_
 
-`See $super-key <silica.htm#26334>`_
+`$super-key`_
 
 $modifier-keys
 --------------
@@ -7086,23 +7086,23 @@ keyboard accelerators and mnemonics.
 See also
         
 
-`See $alt-key <silica.htm#74132>`_
+`$alt-key`_
 
-`See $control-key <silica.htm#45666>`_
+`$control-key`_
 
-`See $hyper-key <silica.htm#79857>`_
+`$hyper-key`_
 
-`See $meta-key <silica.htm#42593>`_
+`$meta-key`_
 
-`See modifier-key-index <silica.htm#80162>`_
+`modifier-key-index`_
 
-`See modifier-key-index-name <silica.htm#47802>`_
+`modifier-key-index-name`_
 
-`See $option-key <silica.htm#18942>`_
+`$option-key`_
 
-`See $shift-key <silica.htm#25626>`_
+`$shift-key`_
 
-`See $super-key <silica.htm#26334>`_
+`$super-key`_
 
 notify-user
 -----------
@@ -7128,7 +7128,7 @@ Arguments
 -  *message-string* An instance of type *<string>*.
 -  *frame* An instance of type ` <frames.htm#16922>`_. Default value:
    *` <frames.htm#78942>`_()*.
--  *owner* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *owner* An instance of type `<sheet>`_.
 -  *title* An instance of type *<string>*.
 -  *documentation* An instance of type *false-or(<string>)*. Default
    value: *#f*.
@@ -7190,11 +7190,11 @@ message text.
 See also
         
 
-`See choose-color <silica.htm#93965>`_
+`choose-color`_
 
-`See choose-directory <silica.htm#71400>`_
+`choose-directory`_
 
-`See choose-file <silica.htm#82284>`_
+`choose-file`_
 
 open-clipboard
 --------------
@@ -7216,32 +7216,32 @@ open-clipboard *port sheet* => *clipboard*
 Arguments
          
 
--  *port* An instance of `See <port> <silica.htm#11606>`_.
--  *sheet* An instance of `See <sheet> <silica.htm#13118>`_.
+-  *port* An instance of `<port>`_.
+-  *sheet* An instance of `<sheet>`_.
 
 Values
       
 
--  *clipboard* An instance of `See <clipboard> <silica.htm#16197>`_.
+-  *clipboard* An instance of `<clipboard>`_.
 
 Description
            
 
 Creates a clipboard lock for *sheet* on *port*. Once a clipboard lock
 has been created, you can manipulate the clipboard contents safely. An
-instance of `See <clipboard> <silica.htm#16197>`_ is returned, which is
+instance of `<clipboard>`_ is returned, which is
 used to hold the clipboard contents.
 
 You should not normally call *open-clipboard* yourself to create a
-clipboard lock. Use the macro `See with-clipboard <silica.htm#29917>`_
+clipboard lock. Use the macro `with-clipboard`_
 to create and free the lock for you.
 
 See also
         
 
-`See <clipboard> <silica.htm#16197>`_
+`<clipboard>`_
 
-`See with-clipboard <silica.htm#29917>`_
+`with-clipboard`_
 
 $option-key
 -----------
@@ -7263,7 +7263,7 @@ Type
 Value
      
 
-`See $super-key <silica.htm#26334>`_
+`$super-key`_
                                     
 
 Description
@@ -7276,23 +7276,23 @@ OPTION key is not present on the keyboard.
 See also
         
 
-`See $alt-key <silica.htm#74132>`_
+`$alt-key`_
 
-`See $control-key <silica.htm#45666>`_
+`$control-key`_
 
-`See $hyper-key <silica.htm#79857>`_
+`$hyper-key`_
 
-`See $meta-key <silica.htm#42593>`_
+`$meta-key`_
 
-`See modifier-key-index <silica.htm#80162>`_
+`modifier-key-index`_
 
-`See modifier-key-index-name <silica.htm#47802>`_
+`modifier-key-index-name`_
 
-`See $modifier-keys <silica.htm#84477>`_
+`$modifier-keys`_
 
-`See $shift-key <silica.htm#25626>`_
+`$shift-key`_
 
-`See $super-key <silica.htm#26334>`_
+`$super-key`_
 
 <pointer>
 ---------
@@ -7314,7 +7314,7 @@ Superclasses
 Init-keywords
              
 
--  *port:* An instance of type `See <port> <silica.htm#11606>`_.
+-  *port:* An instance of type `<port>`_.
 
 Description
            
@@ -7326,18 +7326,18 @@ Operations
 
 The following operations are exported from the *DUIM-Sheets* module.
 
-`See display <silica.htm#56987>`_ `See pointer? <silica.htm#15609>`_
-`See pointer-button-state <silica.htm#72598>`_ `See
-pointer-cursor <silica.htm#51275>`_ `See
-pointer-cursor-setter <silica.htm#41026>`_ `See
-pointer-position <silica.htm#47721>`_ `See
-pointer-sheet <silica.htm#45855>`_ `See port <silica.htm#51457>`_ `See
-set-pointer-position <silica.htm#93322>`_
+`display`_ `pointer?`_
+`pointer-button-state`_ `See
+pointer-cursor`_ `See
+pointer-cursor-setter`_ `See
+pointer-position`_ `See
+pointer-sheet`_ `port`_ `See
+set-pointer-position`_
 
 See also
         
 
-`See pointer? <silica.htm#15609>`_
+`pointer?`_
 
 pointer?
 --------
@@ -7374,7 +7374,7 @@ Returns true if *object* is a pointer.
 See also
         
 
-`See <pointer> <silica.htm#85241>`_
+`<pointer>`_
 
 <pointer-boundary-event>
 ------------------------
@@ -7391,7 +7391,7 @@ sheet boundary.
 Superclasses
             
 
-`See <pointer-motion-event> <silica.htm#62834>`_
+`<pointer-motion-event>`_
                                                 
 
 Init-keywords
@@ -7415,16 +7415,16 @@ Operations
 
 The following operation is exported from the *DUIM-Sheets* module.
 
--  `See boundary-event-kind <silica.htm#61149>`_
+-  `boundary-event-kind`_
 
 See also
         
 
-`See boundary-event-kind <silica.htm#61149>`_
+`boundary-event-kind`_
 
-`See <pointer-enter-event> <silica.htm#17587>`_
+`<pointer-enter-event>`_
 
-`See <pointer-exit-event> <silica.htm#65255>`_
+`<pointer-exit-event>`_
 
 <pointer-button-event>
 ----------------------
@@ -7440,16 +7440,16 @@ The class of events that occur when mouse buttons are pressed.
 Superclasses
             
 
-`See <pointer-event> <silica.htm#44124>`_
+`<pointer-event>`_
                                          
 
 Init-keywords
              
 
 -  *button:* An instance of type *one-of(`See
-   $left-button <silica.htm#61603>`_, `See
-   $middle-button <silica.htm#27963>`_, `See
-   $right-button <silica.htm#90175>`_)*.
+   $left-button`_, `See
+   $middle-button`_, `See
+   $right-button`_)*.
 
 Description
            
@@ -7461,24 +7461,24 @@ Operations
 
 The following operations are exported from the *DUIM-Sheets* module.
 
--  `See event-button <silica.htm#20305>`_ `See
-   event-matches-gesture? <silica.htm#72877>`_ `See
-   handle-event <silica.htm#94892>`_
+-  `event-button`_ `See
+   event-matches-gesture?`_ `See
+   handle-event`_
 
 See also
         
 
-`See event-button <silica.htm#20305>`_
+`event-button`_
 
-`See $left-button <silica.htm#61603>`_
+`$left-button`_
 
-`See $middle-button <silica.htm#27963>`_
+`$middle-button`_
 
-`See pointer-button-state <silica.htm#72598>`_
+`pointer-button-state`_
 
-`See <pointer-drag-event> <silica.htm#81468>`_
+`<pointer-drag-event>`_
 
-`See $right-button <silica.htm#90175>`_
+`$right-button`_
 
 $pointer-buttons
 ----------------
@@ -7511,22 +7511,22 @@ attached to the computer, typically a mouse. Up to three buttons are
 provided for.
 
 The order of the elements in this sequence must match the order of the
-values of `See $left-button <silica.htm#61603>`_, `See
-$middle-button <silica.htm#27963>`_, and `See
-$right-button <silica.htm#90175>`_
+values of `$left-button`_, `See
+$middle-button`_, and `See
+$right-button`_
 
 See also
         
 
-`See button-index <silica.htm#55673>`_
+`button-index`_
 
-`See button-index-name <silica.htm#83097>`_
+`button-index-name`_
 
-`See $left-button <silica.htm#61603>`_
+`$left-button`_
 
-`See $middle-button <silica.htm#27963>`_
+`$middle-button`_
 
-`See $right-button <silica.htm#90175>`_
+`$right-button`_
 
 pointer-button-state
 --------------------
@@ -7548,7 +7548,7 @@ pointer-button-state *pointer* => *integer*
 Arguments
          
 
--  *pointer* An instance of type `See <pointer> <silica.htm#85241>`_.
+-  *pointer* An instance of type `<pointer>`_.
 
 Values
       
@@ -7580,12 +7580,12 @@ pointer-cursor *pointer* => *cursor*
 Arguments
          
 
--  *pointer* An instance of type `See <pointer> <silica.htm#85241>`_.
+-  *pointer* An instance of type `<pointer>`_.
 
 Values
       
 
--  *cursor* An instance of type `See <cursor> <silica.htm#53643>`_.
+-  *cursor* An instance of type `<cursor>`_.
 
 Description
            
@@ -7595,7 +7595,7 @@ Returns the cursor used for *pointer*.
 See also
         
 
-`See pointer-cursor-setter <silica.htm#41026>`_
+`pointer-cursor-setter`_
 
 pointer-cursor-setter
 ---------------------
@@ -7617,13 +7617,13 @@ pointer-cursor-setter *cursor pointer* => cursor
 Arguments
          
 
--  *cursor* An instance of type `See <cursor> <silica.htm#53643>`_.
--  *pointer* An instance of type `See <pointer> <silica.htm#85241>`_.
+-  *cursor* An instance of type `<cursor>`_.
+-  *pointer* An instance of type `<pointer>`_.
 
 Values
       
 
--  *cursor* An instance of type `See <cursor> <silica.htm#53643>`_.
+-  *cursor* An instance of type `<cursor>`_.
 
 Description
            
@@ -7633,7 +7633,7 @@ Sets the cursor used for *pointer*.
 See also
         
 
-`See pointer-cursor <silica.htm#51275>`_
+`pointer-cursor`_
 
 <pointer-drag-event>
 --------------------
@@ -7649,28 +7649,28 @@ The class of events describing drag movements.
 Superclasses
             
 
-*`See <pointer-motion-event> <silica.htm#62834>`_ `See
-<pointer-button-event> <silica.htm#82437>`_*
+*`<pointer-motion-event>`_ `See
+<pointer-button-event>`_*
                                                                                                    
 
 Init-keywords
              
 
 -  *button:* An instance of type *one-of(`See
-   $left-button <silica.htm#61603>`_, `See
-   $middle-button <silica.htm#27963>`_, `See
-   $right-button <silica.htm#90175>`_)*.
+   $left-button`_, `See
+   $middle-button`_, `See
+   $right-button`_)*.
 
 Description
            
 
 The class of events describing drag movements. This is the same as `See
-<pointer-motion-event> <silica.htm#62834>`_, except that a button on the
+<pointer-motion-event>`_, except that a button on the
 attached pointing device must also be held down as the pointer is
 moving.
 
 The *button:* init-keyword is inherited from the superclass `See
-<pointer-button-event> <silica.htm#82437>`_.
+<pointer-button-event>`_.
 
 Operations
           
@@ -7680,7 +7680,7 @@ Operations
 See also
         
 
-`See <pointer-motion-event> <silica.htm#62834>`_
+`<pointer-motion-event>`_
 
 <pointer-enter-event>
 ---------------------
@@ -7697,7 +7697,7 @@ sheet.
 Superclasses
             
 
-`See <pointer-boundary-event> <silica.htm#87082>`_
+`<pointer-boundary-event>`_
                                                   
 
 Init-keywords
@@ -7719,7 +7719,7 @@ Operations
 See also
         
 
-`See <pointer-exit-event> <silica.htm#65255>`_
+`<pointer-exit-event>`_
 
 <pointer-event>
 ---------------
@@ -7735,7 +7735,7 @@ The base class of events occurring on pointers.
 Superclasses
             
 
-`See <device-event> <silica.htm#89921>`_
+`<device-event>`_
                                         
 
 Init-keywords
@@ -7743,7 +7743,7 @@ Init-keywords
 
 -  *x:* An instance of type *<real>*.
 -  *y:* An instance of type *<real>*.
--  *pointer:* An instance of type `See <pointer> <silica.htm#85241>`_.
+-  *pointer:* An instance of type `<pointer>`_.
 
 Description
            
@@ -7762,11 +7762,11 @@ Operations
 See also
         
 
-`See <pointer-button-event> <silica.htm#82437>`_
+`<pointer-button-event>`_
 
-`See <pointer-exit-event> <silica.htm#65255>`_
+`<pointer-exit-event>`_
 
-`See <pointer-motion-event> <silica.htm#62834>`_
+`<pointer-motion-event>`_
 
 <pointer-exit-event>
 --------------------
@@ -7783,7 +7783,7 @@ sheet.
 Superclasses
             
 
-`See <pointer-boundary-event> <silica.htm#87082>`_
+`<pointer-boundary-event>`_
                                                   
 
 Init-keywords
@@ -7805,11 +7805,11 @@ Operations
 See also
         
 
-`See <pointer-button-event> <silica.htm#82437>`_
+`<pointer-button-event>`_
 
-`See <pointer-enter-event> <silica.htm#17587>`_
+`<pointer-enter-event>`_
 
-`See <pointer-motion-event> <silica.htm#62834>`_
+`<pointer-motion-event>`_
 
 <pointer-gesture>
 -----------------
@@ -7825,7 +7825,7 @@ The class of all gestures that occur on pointers.
 Superclasses
             
 
-`See <gesture> <silica.htm#76256>`_
+`<gesture>`_
                                    
 
 Init-keywords
@@ -7846,7 +7846,7 @@ init-keyword specifies the modifier-state of the gesture.
 Operations
           
 
--  `See gesture-button <silica.htm#45938>`_
+-  `gesture-button`_
 
 <pointer-motion-event>
 ----------------------
@@ -7862,7 +7862,7 @@ The class of events that describe a pointer that is moving.
 Superclasses
             
 
-`See <pointer-event> <silica.htm#44124>`_
+`<pointer-event>`_
                                          
 
 Init-keywords
@@ -7883,15 +7883,15 @@ Operations
 See also
         
 
-`See <pointer-button-event> <silica.htm#82437>`_
+`<pointer-button-event>`_
 
-`See <pointer-drag-event> <silica.htm#81468>`_
+`<pointer-drag-event>`_
 
-`See <pointer-enter-event> <silica.htm#17587>`_
+`<pointer-enter-event>`_
 
-`See <pointer-event> <silica.htm#44124>`_
+`<pointer-event>`_
 
-`See <pointer-exit-event> <silica.htm#65255>`_
+`<pointer-exit-event>`_
 
 pointer-position
 ----------------
@@ -7913,8 +7913,8 @@ pointer-position *pointer* #key *sheet* => *x y*
 Arguments
          
 
--  *pointer* An instance of type `See <pointer> <silica.htm#85241>`_.
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *pointer* An instance of type `<pointer>`_.
+-  *sheet* An instance of type `<sheet>`_.
 
 Values
       
@@ -7931,9 +7931,9 @@ then the pointer must be over it.
 See also
         
 
-`See pointer-sheet <silica.htm#45855>`_
+`pointer-sheet`_
 
-`See set-pointer-position <silica.htm#93322>`_
+`set-pointer-position`_
 
 pointer-sheet
 -------------
@@ -7955,13 +7955,13 @@ pointer-sheet *pointer* => *sheet*
 Arguments
          
 
--  *pointer* An instance of type `See <pointer> <silica.htm#85241>`_.
+-  *pointer* An instance of type `<pointer>`_.
 
 Values
       
 
 -  *sheet* An instance of type *false-or(* `See
-   <sheet> <silica.htm#13118>`_*)*.
+   <sheet>`_*)*.
 
 Description
            
@@ -7972,7 +7972,7 @@ pointer.
 See also
         
 
-`See pointer-position <silica.htm#47721>`_
+`pointer-position`_
 
 <port>
 ------
@@ -8012,32 +8012,32 @@ Operations
 
 The following operations are exported from the *DUIM-Sheets* module.
 
-`See beep <silica.htm#60172>`_ `See
-default-port-setter <silica.htm#36020>`_ `See
-destroy-port <silica.htm#28704>`_ `See
-force-display <silica.htm#98525>`_ `See
-get-default-background <silica.htm#19822>`_ `See
-get-default-foreground <silica.htm#98508>`_ `See
-get-default-text-style <silica.htm#79269>`_ `See
-port <silica.htm#51457>`_ `See port? <silica.htm#49604>`_ `See
-port-modifier-state <silica.htm#63508>`_ `See
-port-pointer <silica.htm#23406>`_ `See
-port-server-path <silica.htm#11032>`_ `See
-synchronize-display <silica.htm#16560>`_ `See
-text-size <silica.htm#92482>`_ `See
-text-style-mapping <silica.htm#39545>`_ `See
-text-style-mapping-setter <silica.htm#79518>`_
+`beep`_ `See
+default-port-setter`_ `See
+destroy-port`_ `See
+force-display`_ `See
+get-default-background`_ `See
+get-default-foreground`_ `See
+get-default-text-style`_ `See
+port`_ `port?`_ `See
+port-modifier-state`_ `See
+port-pointer`_ `See
+port-server-path`_ `See
+synchronize-display`_ `See
+text-size`_ `See
+text-style-mapping`_ `See
+text-style-mapping-setter`_
 
 The following operation is exported from the *DUIM-DCs* module.
 
-`See find-color <dcs.htm#33969>`_
+`find-color <dcs.htm#33969>`_
 
 See also
         
 
-`See <display> <silica.htm#77659>`_
+`<display>`_
 
-`See <sheet> <silica.htm#13118>`_
+`<sheet>`_
 
 port
 ----
@@ -8065,7 +8065,7 @@ Values
       
 
 -  *value* An instance of type *false-or(* `See
-   <port> <silica.htm#11606>`_*)*.
+   <port>`_*)*.
 
 Description
            
@@ -8075,13 +8075,13 @@ Returns the port used to display *object*.
 See also
         
 
-`See display <silica.htm#56987>`_
+`display`_
 
-`See frame-manager <silica.htm#15759>`_
+`frame-manager`_
 
-`See <port> <silica.htm#11606>`_
+`<port>`_
 
-`See port? <silica.htm#49604>`_
+`port?`_
 
 port?
 -----
@@ -8118,9 +8118,9 @@ Returns true if *object* is a port.
 See also
         
 
-`See <port> <silica.htm#11606>`_
+`<port>`_
 
-`See <port> <silica.htm#11606>`_
+`<port>`_
 
 port-modifier-state
 -------------------
@@ -8142,7 +8142,7 @@ port-modifier-state *port* => *integer*
 Arguments
          
 
--  *port* An instance of type `See <port> <silica.htm#11606>`_.
+-  *port* An instance of type `<port>`_.
 
 Values
       
@@ -8157,19 +8157,19 @@ Returns the modifier state of *port*.
 See also
         
 
-`See event-modifier-state <silica.htm#46549>`_
+`event-modifier-state`_
 
-`See gesture-modifier-state <silica.htm#78871>`_
+`gesture-modifier-state`_
 
-`See make-modifier-state <silica.htm#64660>`_
+`make-modifier-state`_
 
-`See port-name <silica.htm#49145>`_
+`port-name`_
 
-`See port-pointer <silica.htm#23406>`_
+`port-pointer`_
 
-`See port-server-path <silica.htm#11032>`_
+`port-server-path`_
 
-`See port-type <silica.htm#25130>`_
+`port-type`_
 
 port-name
 ---------
@@ -8191,7 +8191,7 @@ port-name *port* => *name*
 Arguments
          
 
--  *port* An instance of type `See <port> <silica.htm#11606>`_.
+-  *port* An instance of type `<port>`_.
 
 Values
       
@@ -8206,13 +8206,13 @@ Returns the name of *port*.
 See also
         
 
-`See port-modifier-state <silica.htm#63508>`_
+`port-modifier-state`_
 
-`See port-pointer <silica.htm#23406>`_
+`port-pointer`_
 
-`See port-server-path <silica.htm#11032>`_
+`port-server-path`_
 
-`See port-type <silica.htm#25130>`_
+`port-type`_
 
 port-pointer
 ------------
@@ -8234,12 +8234,12 @@ port-pointer *port* => *pointer*
 Arguments
          
 
--  *port* An instance of type `See <port> <silica.htm#11606>`_.
+-  *port* An instance of type `<port>`_.
 
 Values
       
 
--  *pointer* An instance of type `See <pointer> <silica.htm#85241>`_.
+-  *pointer* An instance of type `<pointer>`_.
 
 Description
            
@@ -8249,13 +8249,13 @@ Returns the pointer used on *port*.
 See also
         
 
-`See port-modifier-state <silica.htm#63508>`_
+`port-modifier-state`_
 
-`See port-name <silica.htm#49145>`_
+`port-name`_
 
-`See port-server-path <silica.htm#11032>`_
+`port-server-path`_
 
-`See port-type <silica.htm#25130>`_
+`port-type`_
 
 port-server-path
 ----------------
@@ -8277,7 +8277,7 @@ port-server-path *port* => *object*
 Arguments
          
 
--  *port* An instance of type `See <port> <silica.htm#11606>`_.
+-  *port* An instance of type `<port>`_.
 
 Values
       
@@ -8292,13 +8292,13 @@ Returns the server path of *port*.
 See also
         
 
-`See port-modifier-state <silica.htm#63508>`_
+`port-modifier-state`_
 
-`See port-name <silica.htm#49145>`_
+`port-name`_
 
-`See port-pointer <silica.htm#23406>`_
+`port-pointer`_
 
-`See port-type <silica.htm#25130>`_
+`port-type`_
 
 <port-terminated-event>
 -----------------------
@@ -8355,7 +8355,7 @@ port-type *port* => *type*
 Arguments
          
 
--  *port* An instance of type `See <port> <silica.htm#11606>`_.
+-  *port* An instance of type `<port>`_.
 
 Values
       
@@ -8370,13 +8370,13 @@ Returns the type of *port*.
 See also
         
 
-`See port-modifier-state <silica.htm#63508>`_
+`port-modifier-state`_
 
-`See port-name <silica.htm#49145>`_
+`port-name`_
 
-`See port-pointer <silica.htm#23406>`_
+`port-pointer`_
 
-`See port-server-path <silica.htm#11032>`_
+`port-server-path`_
 
 queue-event
 -----------
@@ -8398,8 +8398,8 @@ queue-event *sheet event* => ()
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
--  *event* An instance of type `See <event> <silica.htm#40564>`_.
+-  *sheet* An instance of type `<sheet>`_.
+-  *event* An instance of type `<event>`_.
 
 Values
       
@@ -8414,7 +8414,7 @@ Queues *event* on the event-queue for *sheet*.
 See also
         
 
-`See handle-event <silica.htm#94892>`_
+`handle-event`_
 
 queue-repaint
 -------------
@@ -8436,8 +8436,8 @@ queue-repaint *sheet region* => ()
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
--  *region* An instance of type `See <region> <geom.htm#79228>`_.
+-  *sheet* An instance of type `<sheet>`_.
+-  *region* An instance of type `<region> <geom.htm#79228>`_.
 
 Values
       
@@ -8452,11 +8452,11 @@ Queues a repaint for the area** of *sheet* defined by *region*.
 See also
         
 
-`See handle-repaint <silica.htm#28833>`_
+`handle-repaint`_
 
-`See repaint-sheet <silica.htm#74601>`_
+`repaint-sheet`_
 
-`See <window-repaint-event> <silica.htm#87946>`_
+`<window-repaint-event>`_
 
 raise-sheet
 -----------
@@ -8479,7 +8479,7 @@ raise-sheet *sheet* => ()
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet>`_.
 
 Values
       
@@ -8496,7 +8496,7 @@ See also
 
 ` <frames.htm#85200>`_
 
-`See lower-sheet <silica.htm#60047>`_
+`lower-sheet`_
 
 ` <frames.htm#28075>`_
 
@@ -8520,13 +8520,13 @@ remove-child *sheet child* => *sheet*
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
--  *child* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet>`_.
+-  *child* An instance of type `<sheet>`_.
 
 Values
       
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet>`_.
 
 Description
            
@@ -8537,9 +8537,9 @@ laid out again appropriately.
 See also
         
 
-`See add-child <silica.htm#90156>`_
+`add-child`_
 
-`See replace-child <silica.htm#20893>`_
+`replace-child`_
 
 repaint-sheet
 -------------
@@ -8561,9 +8561,9 @@ repaint-sheet *sheet region* #key *medium* => ()
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
--  *region* An instance of type `See <region> <geom.htm#79228>`_.
--  *medium* An instance of type *`See <medium> <silica.htm#60437>`_*.
+-  *sheet* An instance of type `<sheet>`_.
+-  *region* An instance of type `<region> <geom.htm#79228>`_.
+-  *medium* An instance of type *`<medium>`_*.
 
 Values
       
@@ -8579,11 +8579,11 @@ appropriate *medium* is used.
 See also
         
 
-`See handle-repaint <silica.htm#28833>`_
+`handle-repaint`_
 
-`See queue-repaint <silica.htm#64571>`_
+`queue-repaint`_
 
-`See <window-repaint-event> <silica.htm#87946>`_
+`<window-repaint-event>`_
 
 replace-child
 -------------
@@ -8605,14 +8605,14 @@ replace-child *sheet old-child new-child* => *sheet*
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet>`_.
 -  *old-child* An instance of type *<object>*.
 -  *new-child* An instance of type *<object>*.
 
 Values
       
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet>`_.
 
 Description
            
@@ -8623,9 +8623,9 @@ sheet are laid out again appropriately.
 See also
         
 
-`See add-child <silica.htm#90156>`_
+`add-child`_
 
-`See remove-child <silica.htm#65868>`_
+`remove-child`_
 
 $right-button
 -------------
@@ -8660,11 +8660,11 @@ device.
 See also
         
 
-`See $left-button <silica.htm#61603>`_
+`$left-button`_
 
-`See $middle-button <silica.htm#27963>`_
+`$middle-button`_
 
-`See $pointer-buttons <silica.htm#19926>`_
+`$pointer-buttons`_
 
 set-caret-position
 ------------------
@@ -8686,7 +8686,7 @@ set-cursor-position *cursor x y* => ()
 Arguments
          
 
--  *cursor* An instance of type `See <caret> <silica.htm#98362>`_.
+-  *cursor* An instance of type `<caret>`_.
 -  *x* An instance of type *<real>*.
 -  *y* An instance of type *<real>*.
 
@@ -8703,9 +8703,9 @@ Sets the position of *cursor* to *(* *x* *,* *y* *)*.
 See also
         
 
-`See caret-position <silica.htm#58548>`_
+`caret-position`_
 
-`See set-pointer-position <silica.htm#93322>`_
+`set-pointer-position`_
 
 set-pointer-position
 --------------------
@@ -8727,10 +8727,10 @@ set-pointer-position *pointer x y* #key *sheet* => ()
 Arguments
          
 
--  *pointer* An instance of type `See <pointer> <silica.htm#85241>`_.
+-  *pointer* An instance of type `<pointer>`_.
 -  *x* An instance of type *<real>*.
 -  *y* An instance of type *<real>*.
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet>`_.
 
 Values
       
@@ -8746,9 +8746,9 @@ top left corner of *sheet*, if specified. Units are measured in pixels.
 See also
         
 
-`See pointer-position <silica.htm#47721>`_
+`pointer-position`_
 
-`See set-pointer-position <silica.htm#93322>`_
+`set-pointer-position`_
 
 set-sheet-edges
 ---------------
@@ -8770,7 +8770,7 @@ set-sheet-edges *sheet left top right bottom* => ()
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet>`_.
 -  *left* An instance of type *<integer>*.
 -  *top* An instance of type *<integer>*.
 -  *right* An instance of type *<integer>*.
@@ -8791,11 +8791,11 @@ of *sheet*. The layout of *sheet* is recalculated automatically.
 See also
         
 
-`See set-sheet-position <silica.htm#78753>`_
+`set-sheet-position`_
 
-`See set-sheet-size <silica.htm#38000>`_
+`set-sheet-size`_
 
-`See sheet-edges <silica.htm#14564>`_
+`sheet-edges`_
 
 set-sheet-position
 ------------------
@@ -8817,7 +8817,7 @@ set-sheet-position *sheet x y* => ()
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet>`_.
 -  *x* An instance of type *<real>*.
 -  *y* An instance of type *<real>*.
 
@@ -8836,11 +8836,11 @@ automatically.
 See also
         
 
-`See set-sheet-edges <silica.htm#94663>`_
+`set-sheet-edges`_
 
-`See set-sheet-size <silica.htm#38000>`_
+`set-sheet-size`_
 
-`See sheet-position <silica.htm#27540>`_
+`sheet-position`_
 
 set-sheet-size
 --------------
@@ -8862,7 +8862,7 @@ set-sheet-size *sheet width height* => ()
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet>`_.
 -  *width* An instance of type *<integer>*.
 -  *height* An instance of type *<integer>*.
 
@@ -8880,9 +8880,9 @@ automatically.
 See also
         
 
-`See set-sheet-edges <silica.htm#94663>`_
+`set-sheet-edges`_
 
-`See set-sheet-position <silica.htm#78753>`_
+`set-sheet-position`_
 
 <sheet>
 -------
@@ -8904,12 +8904,12 @@ Superclasses
 Init-keywords
              
 
--  *region:* An instance of type `See <region> <geom.htm#79228>`_.
+-  *region:* An instance of type `<region> <geom.htm#79228>`_.
    Default value *$nowhere*.
--  *transform:* An instance of type `See <transform> <geom.htm#54995>`_.
-   Default value *`See $identity-transform <geom.htm#70198>`_*.
+-  *transform:* An instance of type `<transform> <geom.htm#54995>`_.
+   Default value *`$identity-transform <geom.htm#70198>`_*.
 -  *port:* An instance of type *false-or(* `See
-   <port> <silica.htm#11606>`_*)*. Default value *#f*.
+   <port>`_*)*. Default value *#f*.
 
 *style-descriptor:*
                    
@@ -8934,11 +8934,11 @@ Init-keywords
                  
 
 -  An instance of type *<boolean>*. Default value: *#t*.
--  *cursor:* An instance of type `See <cursor> <silica.htm#53643>`_.
+-  *cursor:* An instance of type `<cursor>`_.
 -  *caret:* An instance of type *type-union(<caret>, one-of(#f, #t))*.
    Default value: *#f*.
--  *foreground:* An instance of type `See <ink> <dcs.htm#15007>`_.
--  *background:* An instance of type `See <ink> <dcs.htm#15007>`_.
+-  *foreground:* An instance of type `<ink> <dcs.htm#15007>`_.
+-  *background:* An instance of type `<ink> <dcs.htm#15007>`_.
 -  *text-style:* An instance of type `See
    <text-style> <dcs.htm#85385>`_.
 -  *fixed-width?:* An instance of type *<boolean>*.
@@ -8997,83 +8997,83 @@ Operations
 
 The following operations are exported from the *DUIM-Sheets* module.
 
-`See add-child <silica.htm#90156>`_ `See beep <silica.htm#60172>`_ `See
-child-containing-position <silica.htm#38324>`_ `See
-children-overlapping-region <silica.htm#63430>`_ `See
-clear-box <silica.htm#64848>`_ ` <graphics.htm#33334>`_ `See
-destroy-sheet <silica.htm#82579>`_ `See display <silica.htm#56987>`_
+`add-child`_ `beep`_ `See
+child-containing-position`_ `See
+children-overlapping-region`_ `See
+clear-box`_ ` <graphics.htm#33334>`_ `See
+destroy-sheet`_ `display`_
 
-`See do-children-containing-position <silica.htm#10860>`_ `See
-do-children-overlapping-region <silica.htm#31462>`_ `See
-do-sheet-children <silica.htm#17112>`_ `See
-do-sheet-tree <silica.htm#53959>`_ `See
-do-with-drawing-options <silica.htm#84773>`_ `See
-do-with-pointer-grabbed <silica.htm#43584>`_ `See
-do-with-sheet-medium <silica.htm#25978>`_ `See
-do-with-text-style <silica.htm#85037>`_ `See
-do-with-transform <silica.htm#37600>`_
+`do-children-containing-position`_ `See
+do-children-overlapping-region`_ `See
+do-sheet-children`_ `See
+do-sheet-tree`_ `See
+do-with-drawing-options`_ `See
+do-with-pointer-grabbed`_ `See
+do-with-sheet-medium`_ `See
+do-with-text-style`_ `See
+do-with-transform`_
 
-`See force-display <silica.htm#98525>`_ `See
-frame-manager <silica.htm#15759>`_
+`force-display`_ `See
+frame-manager`_
 
-`See get-default-background <silica.htm#19822>`_ `See
-get-default-foreground <silica.htm#98508>`_ `See
-get-default-text-style <silica.htm#79269>`_
+`get-default-background`_ `See
+get-default-foreground`_ `See
+get-default-text-style`_
 
-`See handle-event <silica.htm#94892>`_ `See
-handle-repaint <silica.htm#28833>`_
+`handle-event`_ `See
+handle-repaint`_
 
-`See medium-background <silica.htm#41977>`_ `See
-medium-background-setter <silica.htm#64546>`_ `See
-medium-brush <silica.htm#53620>`_ `See
-medium-brush-setter <silica.htm#87094>`_ `See
-medium-clipping-region <silica.htm#92720>`_ `See
-medium-clipping-region-setter <silica.htm#52130>`_ `See
-medium-default-text-style <silica.htm#48888>`_ `See
-medium-default-text-style-setter <silica.htm#31424>`_ `See
-medium-foreground <silica.htm#61762>`_ `See
-medium-foreground-setter <silica.htm#72601>`_ `See
-medium-pen <silica.htm#13619>`_ `See
-medium-pen-setter <silica.htm#45752>`_ `See
-medium-text-style <silica.htm#72989>`_
- `See medium-text-style-setter <silica.htm#18962>`_ `See
-medium-transform <silica.htm#99944>`_ `See
-medium-transform-setter <silica.htm#86075>`_ `See
-port <silica.htm#51457>`_
+`medium-background`_ `See
+medium-background-setter`_ `See
+medium-brush`_ `See
+medium-brush-setter`_ `See
+medium-clipping-region`_ `See
+medium-clipping-region-setter`_ `See
+medium-default-text-style`_ `See
+medium-default-text-style-setter`_ `See
+medium-foreground`_ `See
+medium-foreground-setter`_ `See
+medium-pen`_ `See
+medium-pen-setter`_ `See
+medium-text-style`_
+ `medium-text-style-setter`_ `See
+medium-transform`_ `See
+medium-transform-setter`_ `See
+port`_
 
-`See queue-event <silica.htm#94000>`_ `See
-queue-repaint <silica.htm#64571>`_
+`queue-event`_ `See
+queue-repaint`_
 
-`See raise-sheet <silica.htm#23199>`_ `See
-remove-child <silica.htm#65868>`_ `See
-repaint-sheet <silica.htm#74601>`_ `See
-replace-child <silica.htm#20893>`_
+`raise-sheet`_ `See
+remove-child`_ `See
+repaint-sheet`_ `See
+replace-child`_
 
-`See set-sheet-edges <silica.htm#94663>`_ `See
-set-sheet-position <silica.htm#78753>`_ `See
-set-sheet-size <silica.htm#38000>`_ `See sheet? <silica.htm#14427>`_
+`set-sheet-edges`_ `See
+set-sheet-position`_ `See
+set-sheet-size`_ `sheet?`_
 
-`See sheet-ancestor? <silica.htm#93609>`_ `See
-sheet-child <silica.htm#31074>`_ `See
-sheet-children <silica.htm#87730>`_ `See
-sheet-children-setter <silica.htm#63718>`_ `See
-sheet-child-setter <silica.htm#68597>`_ `See
-sheet-edges <silica.htm#14564>`_ `See sheet-frame <silica.htm#51677>`_
-`See sheet-mapped? <silica.htm#25462>`_ `See
-sheet-mapped?-setter <silica.htm#18162>`_ `See
-sheet-medium <silica.htm#38848>`_
- `See sheet-parent <silica.htm#12120>`_ `See
-sheet-parent-setter <silica.htm#36813>`_ `See
-sheet-position <silica.htm#27540>`_ `See
-sheet-region <silica.htm#71990>`_ `See
-sheet-region-setter <silica.htm#33935>`_ `See
-sheet-size <silica.htm#85127>`_ `See sheet-state <silica.htm#73025>`_
-`See sheet-transform <silica.htm#78332>`_ `See
-sheet-transform-setter <silica.htm#62851>`_ ` <gadgets.htm#94297>`_
-` <gadgets.htm#63140>`_ `See sheet-withdrawn? <silica.htm#83754>`_
+`sheet-ancestor?`_ `See
+sheet-child`_ `See
+sheet-children`_ `See
+sheet-children-setter`_ `See
+sheet-child-setter`_ `See
+sheet-edges`_ `sheet-frame`_
+`sheet-mapped?`_ `See
+sheet-mapped?-setter`_ `See
+sheet-medium`_
+ `sheet-parent`_ `See
+sheet-parent-setter`_ `See
+sheet-position`_ `See
+sheet-region`_ `See
+sheet-region-setter`_ `See
+sheet-size`_ `sheet-state`_
+`sheet-transform`_ `See
+sheet-transform-setter`_ ` <gadgets.htm#94297>`_
+` <gadgets.htm#63140>`_ `sheet-withdrawn?`_
 
-`See synchronize-display <silica.htm#16560>`_ `See
-text-size <silica.htm#92482>`_ `See top-level-sheet <silica.htm#60884>`_
+`synchronize-display`_ `See
+text-size`_ `top-level-sheet`_
 
 The following operations are exported from the *DUIM-Gadgets* module.
 
@@ -9112,18 +9112,18 @@ The following operations are exported from the *DUIM-Graphics* module.
 
 The following operations are exported from the *DUIM-DCS* module.
 
-`See default-background <dcs.htm#19900>`_ `See
+`default-background <dcs.htm#19900>`_ `See
 default-foreground <dcs.htm#40602>`_ `See
 default-text-style <dcs.htm#95321>`_
 
 The following operations are exported from the *DUIM-Geometry* module.
 
-`See box-edges <geom.htm#52858>`_
+`box-edges <geom.htm#52858>`_
 
 The following operations are exported from the *DUIM-Extended-Geometry*
 module.
 
-`See draw-design <ext-geom.htm#88093>`_
+`draw-design <ext-geom.htm#88093>`_
 
 Examples
         
@@ -9136,9 +9136,9 @@ make(<text-editor>, lines: 10, fixed-height?: #t);
 See also
         
 
-`See <display> <silica.htm#77659>`_
+`<display>`_
 
-`See <port> <silica.htm#11606>`_
+`<port>`_
 
 sheet?
 ------
@@ -9175,7 +9175,7 @@ Returns true if *object* is a sheet.
 See also
         
 
-`See medium? <silica.htm#97943>`_
+`medium?`_
 
 sheet-ancestor?
 ---------------
@@ -9197,9 +9197,9 @@ sheet-ancestor? *sheet putative-ancestor* => *boolean*
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet>`_.
 -  *putative-ancestor* An instance of type `See
-   <sheet> <silica.htm#13118>`_.
+   <sheet>`_.
 
 Values
       
@@ -9214,7 +9214,7 @@ Returns true if *putative-ancestor* is an ancestor of *sheet*.
 See also
         
 
-`See sheet? <silica.htm#14427>`_
+`sheet?`_
 
 sheet-child
 -----------
@@ -9236,13 +9236,13 @@ sheet-child *sheet* => *child*
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet>`_.
 
 Values
       
 
 -  *child* An instance of type *false-or(* `See
-   <sheet> <silica.htm#13118>`_*)*.
+   <sheet>`_*)*.
 
 Description
            
@@ -9252,9 +9252,9 @@ Returns the child of *sheet*.
 See also
         
 
-`See sheet-children <silica.htm#87730>`_
+`sheet-children`_
 
-`See sheet-child-setter <silica.htm#68597>`_
+`sheet-child-setter`_
 
 sheet-children
 --------------
@@ -9276,13 +9276,13 @@ sheet-children *sheet* => *sheets*
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet>`_.
 
 Values
       
 
 -  *sheets* An instance of type *limited(<sequence>, of:* `See
-   <sheet> <silica.htm#13118>`_*)*.
+   <sheet>`_*)*.
 
 Description
            
@@ -9294,11 +9294,11 @@ sheet-children is a list of one element.
 See also
         
 
-`See do-sheet-children <silica.htm#17112>`_
+`do-sheet-children`_
 
-`See sheet-child <silica.htm#31074>`_
+`sheet-child`_
 
-`See sheet-children-setter <silica.htm#63718>`_
+`sheet-children-setter`_
 
 sheet-children-setter
 ---------------------
@@ -9321,14 +9321,14 @@ Arguments
          
 
 -  *children* An instance of type *limited(<sequence>, of:* `See
-   <sheet> <silica.htm#13118>`_*)*.
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+   <sheet>`_*)*.
+-  *sheet* An instance of type `<sheet>`_.
 
 Values
       
 
 -  *children* An instance of type *limited(<sequence>, of:* `See
-   <sheet> <silica.htm#13118>`_*)*.
+   <sheet>`_*)*.
 
 Description
            
@@ -9339,9 +9339,9 @@ child; in this case, *children* is a list of one element.
 See also
         
 
-`See sheet-children <silica.htm#87730>`_
+`sheet-children`_
 
-`See sheet-child-setter <silica.htm#68597>`_
+`sheet-child-setter`_
 
 sheet-child-setter
 ------------------
@@ -9363,14 +9363,14 @@ sheet-child-setter *child sheet* => *child*
 Arguments
          
 
--  *child* An instance of type `See <sheet> <silica.htm#13118>`_.
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *child* An instance of type `<sheet>`_.
+-  *sheet* An instance of type `<sheet>`_.
 
 Values
       
 
 -  *child* An instance of type *false-or(* `See
-   <sheet> <silica.htm#13118>`_*)*.
+   <sheet>`_*)*.
 
 Description
            
@@ -9380,9 +9380,9 @@ Sets the child of *sheet*.
 See also
         
 
-`See sheet-child <silica.htm#31074>`_
+`sheet-child`_
 
-`See sheet-children-setter <silica.htm#63718>`_
+`sheet-children-setter`_
 
 sheet-edges
 -----------
@@ -9404,7 +9404,7 @@ sheet-edges *sheet* => *left top right bottom*
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet>`_.
 
 Values
       
@@ -9423,13 +9423,13 @@ corresponding edge of the parent of *sheet*.
 See also
         
 
-`See set-sheet-edges <silica.htm#94663>`_
+`set-sheet-edges`_
 
-`See sheet-position <silica.htm#27540>`_
+`sheet-position`_
 
-`See sheet-size <silica.htm#85127>`_
+`sheet-size`_
 
-`See sheet-transform <silica.htm#78332>`_
+`sheet-transform`_
 
 <sheet-event>
 -------------
@@ -9445,14 +9445,14 @@ The class of events that can occur in sheets.
 Superclasses
             
 
-`See <event> <silica.htm#40564>`_
+`<event>`_
                                  
 
 Init-keywords
              
 
 -  *sheet:* An instance of type *false-or(`See
-   <sheet> <silica.htm#13118>`_)*. Required.
+   <sheet>`_)*. Required.
 
 Description
            
@@ -9467,12 +9467,12 @@ Operations
 
 The following operation is exported from the *DUIM-Sheets* module.
 
--  `See event-sheet <silica.htm#95184>`_
+-  `event-sheet`_
 
 See also
         
 
-`See <device-event> <silica.htm#89921>`_
+`<device-event>`_
 
 sheet-event-mask
 ----------------
@@ -9494,7 +9494,7 @@ sheet-event-mask *sheet* => *integer*
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet>`_.
 
 Values
       
@@ -9509,9 +9509,9 @@ Returns the event mask of *sheet*.
 See also
         
 
-`See sheet-event-mask-setter <silica.htm#50127>`_
+`sheet-event-mask-setter`_
 
-`See sheet-event-queue <silica.htm#14927>`_
+`sheet-event-queue`_
 
 sheet-event-mask-setter
 -----------------------
@@ -9534,7 +9534,7 @@ Arguments
          
 
 -  *mask* An instance of type *<integer>*.
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet>`_.
 
 Values
       
@@ -9549,7 +9549,7 @@ Sets the event mask of *sheet*.
 See also
         
 
-`See sheet-event-mask <silica.htm#37636>`_
+`sheet-event-mask`_
 
 sheet-event-queue
 -----------------
@@ -9571,7 +9571,7 @@ sheet-event-queue *sheet* => *event-queue*
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet>`_.
 
 Values
       
@@ -9587,7 +9587,7 @@ that are currently queued ready for execution.
 See also
         
 
-`See sheet-event-mask <silica.htm#37636>`_
+`sheet-event-mask`_
 
 sheet-frame
 -----------
@@ -9609,7 +9609,7 @@ sheet-frame *sheet* => *frame*
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet>`_.
 
 Values
       
@@ -9624,9 +9624,9 @@ Returns the frame associated with *sheet*.
 See also
         
 
-`See sheet-medium <silica.htm#38848>`_
+`sheet-medium`_
 
-`See sheet-parent <silica.htm#12120>`_
+`sheet-parent`_
 
 sheet-mapped?
 -------------
@@ -9648,7 +9648,7 @@ sheet-mapped? *sheet* => *mapped?*
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet>`_.
 
 Values
       
@@ -9664,9 +9664,9 @@ of occluding windows notwithstanding).
 See also
         
 
-`See sheet-mapped?-setter <silica.htm#18162>`_
+`sheet-mapped?-setter`_
 
-`See sheet-withdrawn? <silica.htm#83754>`_
+`sheet-withdrawn?`_
 
 sheet-mapped?-setter
 --------------------
@@ -9689,7 +9689,7 @@ Arguments
          
 
 -  *mapped?* An instance of type *<boolean>*.
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet>`_.
 
 Values
       
@@ -9706,7 +9706,7 @@ mapped, if *#f*, it is not.
 See also
         
 
-`See sheet-mapped? <silica.htm#25462>`_
+`sheet-mapped?`_
 
 sheet-medium
 ------------
@@ -9728,13 +9728,13 @@ sheet-medium *sheet* => *medium*
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet>`_.
 
 Values
       
 
 -  *medium* An instance of type *false-or(`See
-   <medium> <silica.htm#60437>`_)*.
+   <medium>`_)*.
 
 Description
            
@@ -9744,7 +9744,7 @@ Returns the medium associated with *sheet*.
 See also
         
 
-`See sheet-frame <silica.htm#51677>`_
+`sheet-frame`_
 
 sheet-parent
 ------------
@@ -9766,13 +9766,13 @@ sheet-parent *sheet* => *parent*
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet>`_.
 
 Values
       
 
 -  *parent* An instance of type *false-or(* `See
-   <sheet> <silica.htm#13118>`_*)*.
+   <sheet>`_*)*.
 
 Description
            
@@ -9782,11 +9782,11 @@ Returns the parent of *sheet*.
 See also
         
 
-`See sheet-medium <silica.htm#38848>`_
+`sheet-medium`_
 
-`See sheet-parent-setter <silica.htm#36813>`_
+`sheet-parent-setter`_
 
-`See sheet-position <silica.htm#27540>`_
+`sheet-position`_
 
 sheet-parent-setter
 -------------------
@@ -9809,14 +9809,14 @@ Arguments
          
 
 -  *parent* An instance of type *false-or(* `See
-   <sheet> <silica.htm#13118>`_*)*.
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+   <sheet>`_*)*.
+-  *sheet* An instance of type `<sheet>`_.
 
 Values
       
 
 -  *value* An instance of type *false-or(* `See
-   <sheet> <silica.htm#13118>`_*)*.
+   <sheet>`_*)*.
 
 Description
            
@@ -9826,7 +9826,7 @@ Sets the parent of *sheet*.
 See also
         
 
-`See sheet-parent <silica.htm#12120>`_
+`sheet-parent`_
 
 sheet-pointer-cursor
 --------------------
@@ -9848,12 +9848,12 @@ sheet-pointer-cursor *sheet* => *cursor*
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet>`_.
 
 Values
       
 
--  *cursor* An instance of type `See <cursor> <silica.htm#53643>`_.
+-  *cursor* An instance of type `<cursor>`_.
 
 Description
            
@@ -9865,9 +9865,9 @@ the boundary of *sheet*.
 See also
         
 
-`See sheet-pointer-cursor-setter <silica.htm#67697>`_
+`sheet-pointer-cursor-setter`_
 
-`See sheet-text-cursor <silica.htm#99362>`_
+`sheet-text-cursor`_
 
 sheet-pointer-cursor-setter
 ---------------------------
@@ -9889,13 +9889,13 @@ sheet-pointer-cursor-setter *cursor sheet* => *cursor*
 Arguments
          
 
--  *cursor* An instance of type `See <cursor> <silica.htm#53643>`_.
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *cursor* An instance of type `<cursor>`_.
+-  *sheet* An instance of type `<sheet>`_.
 
 Values
       
 
--  *cursor* An instance of type `See <cursor> <silica.htm#53643>`_.
+-  *cursor* An instance of type `<cursor>`_.
 
 Description
            
@@ -9907,7 +9907,7 @@ the boundary of *sheet*.
 See also
         
 
-`See sheet-pointer-cursor <silica.htm#25137>`_
+`sheet-pointer-cursor`_
 
 sheet-position
 --------------
@@ -9929,7 +9929,7 @@ sheet-position *sheet* => *x y*
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet>`_.
 
 Values
       
@@ -9947,15 +9947,15 @@ relative to the top left of the screen if *sheet* has no parent.
 See also
         
 
-`See set-sheet-position <silica.htm#78753>`_
+`set-sheet-position`_
 
-`See sheet-edges <silica.htm#14564>`_
+`sheet-edges`_
 
-`See sheet-parent <silica.htm#12120>`_
+`sheet-parent`_
 
-`See sheet-size <silica.htm#85127>`_
+`sheet-size`_
 
-`See sheet-transform <silica.htm#78332>`_
+`sheet-transform`_
 
 sheet-region
 ------------
@@ -9977,24 +9977,24 @@ sheet-region *sheet* => *region*
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet>`_.
 
 Values
       
 
--  *region* An instance of type `See <region> <geom.htm#79228>`_.
+-  *region* An instance of type `<region> <geom.htm#79228>`_.
 
 Description
            
 
-Returns an instance of `See <region> <geom.htm#79228>`_ that represents
+Returns an instance of `<region> <geom.htm#79228>`_ that represents
 the set of points to which *sheet* refers. The region is expressed in
 the same coordinate system as *sheet*.
 
 See also
         
 
-`See sheet-region-setter <silica.htm#33935>`_
+`sheet-region-setter`_
 
 sheet-region-setter
 -------------------
@@ -10016,25 +10016,25 @@ sheet-region-setter *region sheet* => *region*
 Arguments
          
 
--  *region* An instance of type `See <region> <geom.htm#79228>`_.
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *region* An instance of type `<region> <geom.htm#79228>`_.
+-  *sheet* An instance of type `<sheet>`_.
 
 Values
       
 
--  *region* An instance of type `See <region> <geom.htm#79228>`_.
+-  *region* An instance of type `<region> <geom.htm#79228>`_.
 
 Description
            
 
-Creates or modifies an instance of `See <region> <geom.htm#79228>`_ that
+Creates or modifies an instance of `<region> <geom.htm#79228>`_ that
 represents the set of points to which *sheet* refers. The region is
 expressed in the same coordinate system as *sheet*.
 
 See also
         
 
-`See sheet-region <silica.htm#71990>`_
+`sheet-region`_
 
 sheet-size
 ----------
@@ -10056,7 +10056,7 @@ sheet-size *sheet* => *width height*
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet>`_.
 
 Values
       
@@ -10068,19 +10068,19 @@ Description
            
 
 Returns the width and height of the specified sheet. Use `See
-set-sheet-size <silica.htm#38000>`_ to set or modify the size of a
+set-sheet-size`_ to set or modify the size of a
 sheet.
 
 See also
         
 
-`See set-sheet-size <silica.htm#38000>`_
+`set-sheet-size`_
 
-`See sheet-edges <silica.htm#14564>`_
+`sheet-edges`_
 
-`See sheet-position <silica.htm#27540>`_
+`sheet-position`_
 
-`See sheet-transform <silica.htm#78332>`_
+`sheet-transform`_
 
 sheet-state
 -----------
@@ -10102,7 +10102,7 @@ sheet-state *sheet* => *value*
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet>`_.
 
 Values
       
@@ -10137,13 +10137,13 @@ sheet-text-cursor *sheet* => *text-cursor*
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet>`_.
 
 Values
       
 
 -  *text-cursor* An instance of type *false-or(`See
-   <cursor> <silica.htm#53643>`_)*.
+   <cursor>`_)*.
 
 Description
            
@@ -10160,7 +10160,7 @@ text cursor.
 See also
         
 
-`See sheet-pointer-cursor <silica.htm#25137>`_
+`sheet-pointer-cursor`_
 
 sheet-transform
 ---------------
@@ -10182,12 +10182,12 @@ sheet-transform *sheet* => *transform*
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet>`_.
 
 Values
       
 
--  *transform* An instance of type `See <transform> <geom.htm#54995>`_.
+-  *transform* An instance of type `<transform> <geom.htm#54995>`_.
 
 Description
            
@@ -10197,13 +10197,13 @@ Returns the transform associated with *sheet*.
 See also
         
 
-`See medium-transform <silica.htm#99944>`_
+`medium-transform`_
 
-`See sheet-edges <silica.htm#14564>`_
+`sheet-edges`_
 
-`See sheet-position <silica.htm#27540>`_
+`sheet-position`_
 
-`See sheet-size <silica.htm#85127>`_
+`sheet-size`_
 
 sheet-transform-setter
 ----------------------
@@ -10225,13 +10225,13 @@ sheet-transform-setter *transform sheet* => *transform*
 Arguments
          
 
--  *transform* An instance of type `See <transform> <geom.htm#54995>`_.
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *transform* An instance of type `<transform> <geom.htm#54995>`_.
+-  *sheet* An instance of type `<sheet>`_.
 
 Values
       
 
--  *transform* An instance of type `See <transform> <geom.htm#54995>`_.
+-  *transform* An instance of type `<transform> <geom.htm#54995>`_.
 
 Description
            
@@ -10241,7 +10241,7 @@ Sets or modifies the transform associated with *sheet*.
 See also
         
 
-`See medium-transform-setter <silica.htm#86075>`_
+`medium-transform-setter`_
 
 sheet-withdrawn?
 ----------------
@@ -10263,7 +10263,7 @@ sheet-withdrawn? *sheet* => *withdrawn?*
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet>`_.
 
 Values
       
@@ -10279,7 +10279,7 @@ longer mapped.
 See also
         
 
-`See sheet-mapped? <silica.htm#25462>`_
+`sheet-mapped?`_
 
 $shift-key
 ----------
@@ -10312,23 +10312,23 @@ A constant that represents the SHIFT key on the keyboard.
 See also
         
 
-`See $alt-key <silica.htm#74132>`_
+`$alt-key`_
 
-`See $control-key <silica.htm#45666>`_
+`$control-key`_
 
-`See $hyper-key <silica.htm#79857>`_
+`$hyper-key`_
 
-`See $meta-key <silica.htm#42593>`_
+`$meta-key`_
 
-`See modifier-key-index <silica.htm#80162>`_
+`modifier-key-index`_
 
-`See modifier-key-index-name <silica.htm#47802>`_
+`modifier-key-index-name`_
 
-`See $modifier-keys <silica.htm#84477>`_
+`$modifier-keys`_
 
-`See $option-key <silica.htm#18942>`_
+`$option-key`_
 
-`See $super-key <silica.htm#26334>`_
+`$super-key`_
 
 $super-key
 ----------
@@ -10358,29 +10358,29 @@ Description
 
 A constant that represents the SUPER key on the keyboard, if it exists.
 To deal with the case where there is no SUPER key, the value of the
-constant `See $option-key <silica.htm#18942>`_ is bound to this
+constant `$option-key`_ is bound to this
 constant.
 
 See also
         
 
-`See $alt-key <silica.htm#74132>`_
+`$alt-key`_
 
-`See $control-key <silica.htm#45666>`_
+`$control-key`_
 
-`See $hyper-key <silica.htm#79857>`_
+`$hyper-key`_
 
-`See $meta-key <silica.htm#42593>`_
+`$meta-key`_
 
-`See modifier-key-index <silica.htm#80162>`_
+`modifier-key-index`_
 
-`See modifier-key-index-name <silica.htm#47802>`_
+`modifier-key-index-name`_
 
-`See $modifier-keys <silica.htm#84477>`_
+`$modifier-keys`_
 
-`See $option-key <silica.htm#18942>`_
+`$option-key`_
 
-`See $shift-key <silica.htm#25626>`_
+`$shift-key`_
 
 synchronize-display
 -------------------
@@ -10403,7 +10403,7 @@ Arguments
          
 
 -  *drawable* An instance of type *type-union(* `See
-   <sheet> <silica.htm#13118>`_*, `See <medium> <silica.htm#60437>`_)*.
+   <sheet>`_*, `<medium>`_)*.
 
 Values
       
@@ -10437,9 +10437,9 @@ text-size *medium text* #key *text-style start end do-newlines?* =>
 Arguments
          
 
--  *medium* An instance of type *`See <medium> <silica.htm#60437>`_*.
+-  *medium* An instance of type *`<medium>`_*.
 -  *text* An instance of type *type-union(<string>, <character>)*.
--  *text-style* An instance of type `See <text-style> <dcs.htm#85385>`_.
+-  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
 -  *start* An instance of type *<integer>*. Default value: 0.
 -  *end* An instance of type *<integer>*. Default value: *size(* *text*
    *)*.
@@ -10495,8 +10495,8 @@ text-style-mapping *port text-style* #key *character-set* => *font*
 Arguments
          
 
--  *port* An instance of type `See <port> <silica.htm#11606>`_.
--  *text-style* An instance of type `See <text-style> <dcs.htm#85385>`_.
+-  *port* An instance of type `<port>`_.
+-  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
 -  *character-set* An instance of type *<object>*.
 
 Values
@@ -10520,11 +10520,11 @@ of the default. This is most useful for non-English displays.
 See also
         
 
-`See text-style-mapping-exists? <silica.htm#66055>`_
+`text-style-mapping-exists?`_
 
-`See text-style-mapping-setter <silica.htm#79518>`_
+`text-style-mapping-setter`_
 
-`See <undefined-text-style-mapping> <silica.htm#86792>`_
+`<undefined-text-style-mapping>`_
 
 text-style-mapping-exists?
 --------------------------
@@ -10548,8 +10548,8 @@ exact-size?* => *boolean*
 Arguments
          
 
--  *port* An instance of type `See <port> <silica.htm#11606>`_.
--  *text-style* An instance of type `See <text-style> <dcs.htm#85385>`_.
+-  *port* An instance of type `<port>`_.
+-  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
 -  *character-set* An instance of type *<object>*.
 -  *exact-size?* An instance of type *<boolean>*. Default value: *#f*.
 
@@ -10571,11 +10571,11 @@ existing mappings are not overwritten.
 See also
         
 
-`See text-style-mapping <silica.htm#39545>`_
+`text-style-mapping`_
 
-`See text-style-mapping-setter <silica.htm#79518>`_
+`text-style-mapping-setter`_
 
-`See <undefined-text-style-mapping> <silica.htm#86792>`_
+`<undefined-text-style-mapping>`_
 
 text-style-mapping-setter
 -------------------------
@@ -10599,8 +10599,8 @@ Arguments
          
 
 -  *font* An instance of type *<object>*.
--  *port* An instance of type `See <port> <silica.htm#11606>`_.
--  *text-style* An instance of type `See <text-style> <dcs.htm#85385>`_.
+-  *port* An instance of type `<port>`_.
+-  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
 -  *character-set* An instance of type *<object>*.
 
 Values
@@ -10625,11 +10625,11 @@ of the default. This is most useful for non-English displays.
 See also
         
 
-`See text-style-mapping <silica.htm#39545>`_
+`text-style-mapping`_
 
-`See text-style-mapping-exists? <silica.htm#66055>`_
+`text-style-mapping-exists?`_
 
-`See <undefined-text-style-mapping> <silica.htm#86792>`_
+`<undefined-text-style-mapping>`_
 
 <timer-event>
 -------------
@@ -10645,7 +10645,7 @@ The class of timed events.
 Superclasses
             
 
-`See <frame-event> <silica.htm#96445>`_
+`<frame-event>`_
                                        
 
 Init-keywords
@@ -10689,7 +10689,7 @@ Values
       
 
 -  *top-level-sheet* An instance of type *false-or(* `See
-   <sheet> <silica.htm#13118>`_*)*.
+   <sheet>`_*)*.
 
 Description
            
@@ -10717,7 +10717,7 @@ Superclasses
 Init-keywords
              
 
--  *port:* An instance of type `See <port> <silica.htm#11606>`_.
+-  *port:* An instance of type `<port>`_.
    Required.
 -  *text-style:* An instance of type `See
    <text-style> <dcs.htm#85385>`_. Required.
@@ -10736,11 +10736,11 @@ Operations
 See also
         
 
-`See text-style-mapping <silica.htm#39545>`_
+`text-style-mapping`_
 
-`See text-style-mapping-exists? <silica.htm#66055>`_
+`text-style-mapping-exists?`_
 
-`See text-style-mapping-setter <silica.htm#79518>`_
+`text-style-mapping-setter`_
 
 <window-configuration-event>
 ----------------------------
@@ -10756,7 +10756,7 @@ The class of events involving changes to the window configuration.
 Superclasses
             
 
-`See <window-event> <silica.htm#12513>`_
+`<window-event>`_
                                         
 
 Init-keywords
@@ -10777,7 +10777,7 @@ Operations
 See also
         
 
-`See <window-repaint-event> <silica.htm#87946>`_
+`<window-repaint-event>`_
 
 <window-event>
 --------------
@@ -10799,7 +10799,7 @@ Superclasses
 Init-keywords
              
 
--  *region:* An instance of type `See <region> <geom.htm#79228>`_.
+-  *region:* An instance of type `<region> <geom.htm#79228>`_.
    Required.
 
 Description
@@ -10818,16 +10818,16 @@ Operations
 
 The following operation is exported from the *DUIM-Sheets* module.
 
--  `See event-region <silica.htm#95678>`_
+-  `event-region`_
 
 See also
         
 
-`See event-region <silica.htm#95678>`_
+`event-region`_
 
-`See <window-configuration-event> <silica.htm#92650>`_
+`<window-configuration-event>`_
 
-`See <window-repaint-event> <silica.htm#87946>`_
+`<window-repaint-event>`_
 
 <window-repaint-event>
 ----------------------
@@ -10843,7 +10843,7 @@ The class of events involving repainting of a window.
 Superclasses
             
 
-`See <window-event> <silica.htm#12513>`_
+`<window-event>`_
                                         
 
 Init-keywords
@@ -10864,13 +10864,13 @@ Operations
 See also
         
 
-`See handle-repaint <silica.htm#28833>`_
+`handle-repaint`_
 
-`See queue-repaint <silica.htm#64571>`_
+`queue-repaint`_
 
-`See repaint-sheet <silica.htm#74601>`_
+`repaint-sheet`_
 
-`See <window-configuration-event> <silica.htm#92650>`_
+`<window-configuration-event>`_
 
 with-brush
 ----------
@@ -10907,13 +10907,13 @@ Description
 Executes *body* using the brush characteristics specified by
 *brush-initargs*, and applies the results to *medium*. The *medium*
 specified should be an instance of type `See
-<medium> <silica.htm#60437>`_. The *brush-initargs* can be any valid
-arguments that specify an instance of `See <brush> <dcs.htm#29492>`_.
+<medium>`_. The *brush-initargs* can be any valid
+arguments that specify an instance of `<brush> <dcs.htm#29492>`_.
 
 See also
         
 
-`See with-pen <silica.htm#58376>`_
+`with-pen`_
 
 with-clipboard
 --------------
@@ -10953,7 +10953,7 @@ the clipboard.
 The macro grabs a lock on the clipboard, using *open-clipboard*, and
 then executes *body*. Once the results of evaluating *body* have been
 sent to the clipboard, the clipboard lock is freed using `See
-close-clipboard <silica.htm#36090>`_. The *clipboard* argument is a
+close-clipboard`_. The *clipboard* argument is a
 Dylan variable-name*bnf* used locally in the call to *with-clipboard*.
 The *sheet* argument is a Dylan variable-name*bnf* that evaluates to the
 sheet associated with *clipboard*.
@@ -10970,7 +10970,7 @@ string representation for other tools applications to see.
 See also
         
 
-`See <clipboard> <silica.htm#16197>`_
+`<clipboard>`_
 
 with-clipping-region
 --------------------
@@ -11006,8 +11006,8 @@ Description
 
 Executes *body* using the clipping region specified by *region*, and
 applies the results to *medium*. The *region* and *medium* expressions
-should evaluate to instances of *`See <region> <geom.htm#79228>`_* and
-*`See <medium> <silica.htm#60437>`_*, respectively.
+should evaluate to instances of *`<region> <geom.htm#79228>`_* and
+*`<medium>`_*, respectively.
 
 with-cursor-visible
 -------------------
@@ -11047,7 +11047,7 @@ the pointer cursor associated with *sheet* is visible throughout the
 operation. If *visible?* is false, then the pointer cursor is hidden.
 
 The expression *sheet* should evaluate to an instance of `See
-<sheet> <silica.htm#13118>`_. The expression *visible?* should evaluate
+<sheet>`_. The expression *visible?* should evaluate
 to a boolean value.
 
 with-drawing-options
@@ -11084,16 +11084,16 @@ Description
 
 Runs a body of code in the context of a set of drawing options. The
 options specified are passed to the function `See
-do-with-drawing-options <silica.htm#84773>`_ for execution.
+do-with-drawing-options`_ for execution.
 
 The *medium* expression should evaluate to an instance of *`See
-<medium> <silica.htm#60437>`_*.
+<medium>`_*.
 
 Note that when using *with-drawing-options* in conjunction with a loop.
 it is computationally much quicker to use a medium (as shown here)
 rather than a sheet, and to place the call to with-drawing-options
 outside the loop. If necessary, use `See
-with-sheet-medium <silica.htm#69022>`_ to associate the sheet with the
+with-sheet-medium`_ to associate the sheet with the
 medium, thus:
 
 with-sheet-medium (medium = sheet)
@@ -11130,9 +11130,9 @@ end;
 See also
         
 
-`See do-with-drawing-options <silica.htm#84773>`_
+`do-with-drawing-options`_
 
-`See with-sheet-medium <silica.htm#69022>`_
+`with-sheet-medium`_
 
 withdraw-sheet
 --------------
@@ -11154,7 +11154,7 @@ withdraw-sheet *sheet* => ()
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet>`_.
 
 Values
       
@@ -11215,7 +11215,7 @@ this macro.
 See also
         
 
-`See <frame-manager> <silica.htm#32466>`_
+`<frame-manager>`_
 
 with-identity-transform
 -----------------------
@@ -11251,7 +11251,7 @@ Description
 Executes *body* while retaining the current transform for *medium*.
 
 The *medium* expression should evaluate to an instance of *`See
-<medium> <silica.htm#60437>`_*.
+<medium>`_*.
 
 with-pen
 --------
@@ -11289,13 +11289,13 @@ Executes *body* using the pen characteristics specified by
 *pen-initargs*, and applies the results to the expression *medium*.
 
 The *medium* specified should be an instance of type `See
-<medium> <silica.htm#60437>`_. The *pen-initargs* can be any valid
-arguments that specify an instance of `See <pen> <dcs.htm#41757>`_.
+<medium>`_. The *pen-initargs* can be any valid
+arguments that specify an instance of `<pen> <dcs.htm#41757>`_.
 
 See also
         
 
-`See with-brush <silica.htm#69024>`_
+`with-brush`_
 
 with-pointer-grabbed
 --------------------
@@ -11340,7 +11340,7 @@ as the code that is run by *do-with-pointer-grabbed*.
 See also
         
 
-`See do-with-pointer-grabbed <silica.htm#43584>`_
+`do-with-pointer-grabbed`_
 
 with-rotation
 -------------
@@ -11376,20 +11376,20 @@ Description
 
 Executes a body of code with a specified rotation. The rotation occurs
 within the expression *medium*. This macro calls `See
-with-transform <silica.htm#23809>`_ to perform the rotation.
+with-transform`_ to perform the rotation.
 
 The *medium* specified should be an instance of type `See
-<medium> <silica.htm#60437>`_. The *angle* should evaluate to an
+<medium>`_. The *angle* should evaluate to an
 instance of type *<real>*.
 
 See also
         
 
-`See with-scaling <silica.htm#75646>`_
+`with-scaling`_
 
-`See with-transform <silica.htm#23809>`_
+`with-transform`_
 
-`See with-translation <silica.htm#60546>`_
+`with-translation`_
 
 with-scaling
 ------------
@@ -11426,21 +11426,21 @@ Description
 
 Executes a body of code with a specified scaling, denoted by *scale-x*
 and *scale-y*. The scaling occurs within the expression *medium*. This
-macro calls `See with-transform <silica.htm#23809>`_ to perform the
+macro calls `with-transform`_ to perform the
 scaling.
 
 The *medium* specified should be an instance of type `See
-<medium> <silica.htm#60437>`_. The *scale-x* and*scale-y* should
+<medium>`_. The *scale-x* and*scale-y* should
 evaluate to an instance of type *<real>*.
 
 See also
         
 
-`See with-rotation <silica.htm#11677>`_
+`with-rotation`_
 
-`See with-transform <silica.htm#23809>`_
+`with-transform`_
 
-`See with-translation <silica.htm#60546>`_
+`with-translation`_
 
 with-sheet-medium
 -----------------
@@ -11478,7 +11478,7 @@ Associates a sheet with a medium.
 
 Within *body*, the variable *medium* is bound to the medium allocated
 to *sheet*. The *sheet* specified should be an instance of type `See
-<sheet> <silica.htm#13118>`_. If *sheet* does not have a medium
+<sheet>`_. If *sheet* does not have a medium
 permanently allocated, one is allocated and associated with *sheet* for
 the duration of *body*, and then unassociated from *sheet* and
 deallocated when *body* has been exited. The values of the last form of
@@ -11519,9 +11519,9 @@ end
 See also
         
 
-`See do-with-sheet-medium <silica.htm#25978>`_
+`do-with-sheet-medium`_
 
-`See with-drawing-options <silica.htm#39215>`_
+`with-drawing-options`_
 
 with-text-style
 ---------------
@@ -11559,17 +11559,17 @@ Executes *body* using the text style characteristics specified by
 *style-initargs*, and applies the results to *medium*.
 
 The *medium* specified should be an instance of type `See
-<medium> <silica.htm#60437>`_. The *style-initargs* can be any valid
+<medium>`_. The *style-initargs* can be any valid
 arguments that specify an instance of `See
 <text-style> <dcs.htm#85385>`_.
 
-Methods for `See do-with-text-style <silica.htm#85037>`_ are invoked to
+Methods for `do-with-text-style`_ are invoked to
 run the code.
 
 See also
         
 
-`See do-with-text-style <silica.htm#85037>`_
+`do-with-text-style`_
 
 with-transform
 --------------
@@ -11605,25 +11605,25 @@ Description
 
 Executes a body of code with a specified *transform*. The transform
 occurs within *medium*. This macro is used by `See
-with-rotation <silica.htm#11677>`_, `See
-with-scaling <silica.htm#75646>`_, and `See
-with-translation <silica.htm#60546>`_, and calls methods for `See
-do-with-transform <silica.htm#37600>`_.
+with-rotation`_, `See
+with-scaling`_, and `See
+with-translation`_, and calls methods for `See
+do-with-transform`_.
 
 The *medium* specified should be an instance of type `See
-<medium> <silica.htm#60437>`_. The *transform* specified should be an
-instance of type `See <transform> <geom.htm#33417>`_.
+<medium>`_. The *transform* specified should be an
+instance of type `<transform> <geom.htm#33417>`_.
 
 See also
         
 
-`See do-with-transform <silica.htm#37600>`_
+`do-with-transform`_
 
-`See with-rotation <silica.htm#11677>`_
+`with-rotation`_
 
-`See with-scaling <silica.htm#75646>`_
+`with-scaling`_
 
-`See with-translation <silica.htm#60546>`_
+`with-translation`_
 
 with-translation
 ----------------
@@ -11660,19 +11660,19 @@ Description
 
 Executes a body of code with a specified translation, denoted by *dx*
 and *dy*. The translation occurs within *medium*. This macro calls
-`See with-transform <silica.htm#23809>`_ to perform the translation.
+`with-transform`_ to perform the translation.
 
 The *medium* specified should be an instance of type `See
-<medium> <silica.htm#60437>`_. The *dx* and*dy* should evaluate to an
+<medium>`_. The *dx* and*dy* should evaluate to an
 instance of type *<real>*.
 
 See also
         
 
-`See with-rotation <silica.htm#11677>`_
+`with-rotation`_
 
-`See with-scaling <silica.htm#75646>`_
+`with-scaling`_
 
-`See with-transform <silica.htm#23809>`_
+`with-transform`_
 
 

@@ -10,7 +10,7 @@ layouts for use in your GUI applications, as well as the necessary
 functions, generic functions, and macros for creating, manipulating, and
 calculating them automatically. The library contains a single module,
 *duim-layouts*, from which all the interfaces described in this chapter
-are exposed. `See DUIM-Layouts Module <layouts.htm#39431>`_ contains
+are exposed. `DUIM-Layouts Module`_ contains
 complete reference entries for each exposed interface.
 
 Layouts are sheet objects that determine how the interface elements are
@@ -32,11 +32,11 @@ which is itself a subclass of *<sheet>*. All other layout-oriented
 classes are subclasses of *<sheet>*.
 
 The immediate subclasses of *<sheet>* that are exposed by the
-DUIM-Layouts library are shown in `See Overall class hierarchy for the
-DUIM-Layouts library <layouts.htm#80940>`_. Only
+DUIM-Layouts library are shown in `Overall class hierarchy for the
+DUIM-Layouts library`_. Only
 *<basic-composite-pane>*, *<leaf-pane>*, and *<layout>* have any
-subclasses defined. See `See Subclasses of
-<layout> <layouts.htm#74728>`_ for details of the subclasses of
+subclasses defined. See `Subclasses of
+<layout>`_ for details of the subclasses of
 *<layout>*.
 
 Overall class hierarchy for the DUIM-Layouts library
@@ -55,7 +55,7 @@ Overall class hierarchy for the DUIM-Layouts library
 
 <layout>
 
-See `See Subclasses of <layout> <layouts.htm#74728>`_
+See `Subclasses of <layout>`_
 
 <leaf-pane>
 
@@ -69,7 +69,7 @@ See `See Subclasses of <layout> <layouts.htm#74728>`_
 
 All the actual layouts provided by the DUIM-Layouts library are
 subclasses of the base *<layout>* class, and are described in `See
-Subclasses of <layout> <layouts.htm#74728>`_. In addition, a number of
+Subclasses of <layout>`_. In addition, a number of
 different types of pane are supplied by the DUIM-Layouts library.
 
 *<basic-composite-pane>*
@@ -86,8 +86,8 @@ different types of pane are supplied by the DUIM-Layouts library.
 -  This type of pane is used to create sheets on which geometric objects
    are drawn, for example, using the function provided by the
    DUIM-Geometry module or the DUIM-Graphics module. For more
-   information on these modules, see `See DUIM-Geometry
-   Library <geom.htm#31148>`_, and `See DUIM-Graphics
+   information on these modules, see `DUIM-Geometry
+   Library <geom.htm#31148>`_, and `DUIM-Graphics
    Library <graphics.htm#46330>`_, respectively.
 
 *<top-level-sheet>*
@@ -105,8 +105,8 @@ different types of pane are supplied by the DUIM-Layouts library.
 Subclasses of <layout>
 ^^^^^^^^^^^^^^^^^^^^^^
 
-The subclasses of *<layout>* are shown in `See Subclasses of the
-<layout> class <layouts.htm#69101>`_.
+The subclasses of *<layout>* are shown in `Subclasses of the
+<layout> class`_.
 
 Subclasses of the *<layout>* class
                                   
@@ -205,7 +205,7 @@ allocate-space *pane* *width height* => ()
 Arguments
          
 
--  *pane* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *pane* An instance of type `<sheet> <silica.htm#13118>`_.
 -  *width* An instance of type *<integer>*.
 -  *height* An instance of type *<integer>*.
 
@@ -222,20 +222,20 @@ allocation pass, a composite pane arranges its children within the
 available space and allocates space to them according to their space
 requirements and its own composition rules by calling *allocate-space*
 on each of the child panes. For example, `See
-<column-layout> <layouts.htm#22240>`_ arranges all its children in a
+<column-layout>`_ arranges all its children in a
 vertical column. The *width* and *height* arguments are the width and
 height of *pane* in device units, that is, pixels. These arguments give
 the amount of space into which all children must fit.
 
 This function actually calls `See
-do-allocate-space <layouts.htm#78360>`_ to perform the calculations.
-Client code may specialize `See do-allocate-space <layouts.htm#78360>`_,
+do-allocate-space`_ to perform the calculations.
+Client code may specialize `do-allocate-space`_,
 but not call it. Call *allocate-space* instead.
 
 See also
         
 
-`See do-allocate-space <layouts.htm#78360>`_
+`do-allocate-space`_
 
 <basic-user-pane>
 -----------------
@@ -257,10 +257,10 @@ Superclasses
 Init-keywords
              
 
--  *region:* An instance of type `See <region> <geom.htm#79228>`_.
-   Default value: *`See $nowhere <geom.htm#77397>`_*.
--  *transform:* An instance of type `See <transform> <geom.htm#33417>`_.
-   Default value: `See $identity-transform <geom.htm#70198>`_.
+-  *region:* An instance of type `<region> <geom.htm#79228>`_.
+   Default value: *`$nowhere <geom.htm#77397>`_*.
+-  *transform:* An instance of type `<transform> <geom.htm#33417>`_.
+   Default value: `$identity-transform <geom.htm#70198>`_.
 -  *port:* An instance of type *false-or(`See
    <port> <silica.htm#11606>`_)*. Default value: *#f*.
 
@@ -277,7 +277,7 @@ Description
            
 
 The class of basic user panes. This is the class that gets subclassed by
-`See define pane <layouts.htm#26910>`_.
+`define pane`_.
 
 You specify where on the screen the pane is to be displayed using the
 *region:* init-keyword. The region specified should be relative to the
@@ -310,7 +310,7 @@ Operations
 See also
         
 
-`See define pane <layouts.htm#26910>`_
+`define pane`_
 
 <column-layout>
 ---------------
@@ -326,7 +326,7 @@ The class of column layouts.
 Superclasses
             
 
-`See <layout> <layouts.htm#13344>`_
+`<layout>`_
                                    
 
 Init-keywords
@@ -439,17 +439,17 @@ ratios: #(1, 3)));
 See also
         
 
-`See <grid-layout> <layouts.htm#43132>`_
+`<grid-layout>`_
 
-`See <layout> <layouts.htm#13344>`_
+`<layout>`_
 
-`See <row-layout> <layouts.htm#32870>`_
+`<row-layout>`_
 
-`See <stack-layout> <layouts.htm#99774>`_
+`<stack-layout>`_
 
-`See <table-layout> <layouts.htm#88129>`_
+`<table-layout>`_
 
-`See vertically <layouts.htm#98018>`_
+`vertically`_
 
 compose-space
 -------------
@@ -472,7 +472,7 @@ compose-space *pane* #key *width height* => *space-req*
 Arguments
          
 
--  *pane* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *pane* An instance of type `<sheet> <silica.htm#13118>`_.
 -  *width* An instance of type *<integer>>*.
 -  *height* An instance of type *<integer>*.
 
@@ -480,7 +480,7 @@ Values
       
 
 -  *space-req* An instance of type `See
-   <space-requirement> <layouts.htm#38351>`_.
+   <space-requirement>`_.
 
 Description
            
@@ -489,12 +489,12 @@ Returns the amount of space required for *pane*, which is a child of a
 composite pane. During the space composition pass, a composite pane will
 typically ask each of its children how much space it requires by calling
 *compose-space*. They answer by returning instances of `See
-<space-requirement> <layouts.htm#38351>`_. The composite pane then forms
+<space-requirement>`_. The composite pane then forms
 its own space requirement by composing the space requirements of its
 children according to its own rules for laying out its children.
 
 The value returned by *compose-space* is an instance of `See
-<space-requirement> <layouts.htm#38351>`_ that represents how much space
+<space-requirement>`_ that represents how much space
 *pane* requires.
 
 The *width* and *height* arguments are real numbers that the
@@ -502,17 +502,17 @@ The *width* and *height* arguments are real numbers that the
 the width and height of the pane. These are used to drive top-down
 layout.
 
-This function actually calls `See do-compose-space <layouts.htm#46699>`_
+This function actually calls `do-compose-space`_
 to perform the space calculations. Client code may specialize `See
-do-compose-space <layouts.htm#46699>`_ but should not call it. Call
+do-compose-space`_ but should not call it. Call
 *compose-space* instead.
 
 See also
         
 
-`See do-compose-space <layouts.htm#46699>`_
+`do-compose-space`_
 
-`See <space-requirement> <layouts.htm#38351>`_
+`<space-requirement>`_
 
 current-pane
 ------------
@@ -539,7 +539,7 @@ None.
 Values
       
 
--  *pane* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *pane* An instance of type `<sheet> <silica.htm#13118>`_.
 
 Description
            
@@ -631,7 +631,7 @@ Open generic function
 Summary
        
 
-Called by `See allocate-space <layouts.htm#93434>`_ to calculate space
+Called by `allocate-space`_ to calculate space
 requirements for a pane.
 
 Signature
@@ -643,7 +643,7 @@ do-allocate-space *pane width height* => ()
 Arguments
          
 
--  *pane* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *pane* An instance of type `<sheet> <silica.htm#13118>`_.
 -  *width* An instance of type *<integer>*.
 -  *height* An instance of type *<integer>*.
 
@@ -655,7 +655,7 @@ None.
 Description
            
 
-This function is called by `See allocate-space <layouts.htm#93434>`_ to
+This function is called by `allocate-space`_ to
 calculate space requirements for a pane. When calculating space
 requirements for classes of pane you have defined yourself, you should
 add methods to this function, but not call it directly. Call
@@ -664,7 +664,7 @@ add methods to this function, but not call it directly. Call
 See also
         
 
-`See allocate-space <layouts.htm#93434>`_
+`allocate-space`_
 
 do-compose-space
 ----------------
@@ -675,7 +675,7 @@ Open generic function
 Summary
        
 
-Called by `See compose-space <layouts.htm#58068>`_ to calculate space
+Called by `compose-space`_ to calculate space
 requirements for a child.
 
 Signature
@@ -687,7 +687,7 @@ do-compose-space *pane* #key *width height* => *space-req*
 Arguments
          
 
--  *pane* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *pane* An instance of type `<sheet> <silica.htm#13118>`_.
 -  *width* An instance of type *<integer>*.
 -  *height* An instance of type *<integer>*.
 
@@ -695,17 +695,17 @@ Values
       
 
 -  *space-req* An instance of type `See
-   <space-requirement> <layouts.htm#38351>`_.
+   <space-requirement>`_.
 
 Description
            
 
-This function is called by *`See compose-space <layouts.htm#58068>`_* to
+This function is called by *`compose-space`_* to
 calculate space requirements for a child. When calculating space
 requirements for children in classes of pane you have defined yourself,
 you should specialize this function by adding methods for it. However,
 you should not call *do-compose-space* explicitly: call *`See
-compose-space <layouts.htm#58068>`_* instead.
+compose-space`_* instead.
 
 Example
        
@@ -767,7 +767,7 @@ end method do-compose-space;
 See also
         
 
-`See compose-space <layouts.htm#58068>`_
+`compose-space`_
 
 <drawing-pane>
 --------------
@@ -783,7 +783,7 @@ The class of drawing panes.
 Superclasses
             
 
-`See <layout> <layouts.htm#13344>`_
+`<layout>`_
                                    
 
 Init-keywords
@@ -813,11 +813,11 @@ Operations
 See also
         
 
-`See handle-repaint <silica.htm#28833>`_
+`handle-repaint <silica.htm#28833>`_
 
-`See pane-display-function <layouts.htm#40953>`_
+`pane-display-function`_
 
-`See <simple-pane> <layouts.htm#78056>`_
+`<simple-pane>`_
 
 $fill
 -----
@@ -856,7 +856,7 @@ or *min-height:* init-keywords are specified explicitly.
 See also
         
 
-`See make <layouts.htm#94127>`_
+`make`_
 
 <fixed-layout>
 --------------
@@ -872,7 +872,7 @@ The class of fixed layouts.
 Superclasses
             
 
-`See <layout> <layouts.htm#13344>`_
+`<layout>`_
                                    
 
 Init-keywords
@@ -906,9 +906,9 @@ Operations
 See also
         
 
-`See <layout> <layouts.htm#13344>`_
+`<layout>`_
 
-`See <pinboard-layout> <layouts.htm#63980>`_
+`<pinboard-layout>`_
 
 <grid-layout>
 -------------
@@ -924,7 +924,7 @@ The class of grid layouts.
 Superclasses
             
 
-`See <table-layout> <layouts.htm#88129>`_
+`<table-layout>`_
                                          
 
 Init-keywords
@@ -933,7 +933,7 @@ Init-keywords
 *cell-space-requirement:*
                          
 
--  An instance of type `See <space-requirement> <layouts.htm#38351>`_.
+-  An instance of type `<space-requirement>`_.
 
 Description
            
@@ -953,13 +953,13 @@ Operations
 See also
         
 
-`See <column-layout> <layouts.htm#22240>`_
+`<column-layout>`_
 
-`See <row-layout> <layouts.htm#32870>`_
+`<row-layout>`_
 
-`See <stack-layout> <layouts.htm#99774>`_
+`<stack-layout>`_
 
-`See <table-layout> <layouts.htm#88129>`_
+`<table-layout>`_
 
 horizontally
 ------------
@@ -997,7 +997,7 @@ necessary layouts for you automatically.
 
 The *options* are passed directly to the row layout, and thus can be any
 legitimate combinations of init-keywords for `See
-<row-layout> <layouts.htm#32870>`_. If no options are specified, then
+<row-layout>`_. If no options are specified, then
 the default values for row layout are used.
 
 The *panes* argument consists of a number of Dylan expressions, each of
@@ -1020,11 +1020,11 @@ end);
 See also
         
 
-`See <row-layout> <layouts.htm#32870>`_
+`<row-layout>`_
 
-`See tabling <layouts.htm#57015>`_
+`tabling`_
 
-`See vertically <layouts.htm#98018>`_
+`vertically`_
 
 <layout>
 --------
@@ -1040,7 +1040,7 @@ The superclass class of all layout classes.
 Superclasses
             
 
-`See <sheet> <silica.htm#13118>`_
+`<sheet> <silica.htm#13118>`_
                                  
 
 Init-keywords
@@ -1049,16 +1049,16 @@ Init-keywords
 *space-requirement:*
                     
 
--  An instance of type `See <space-requirement> <layouts.htm#38351>`_.
+-  An instance of type `<space-requirement>`_.
    Required.
 -  *width:* An instance of type *<integer>*. Required.
 -  *height:* An instance of type *<integer>*. Required.
 -  *min-width:* An instance of type *<integer>*. Default value: 0.
 -  *min-height:* An instance of type *<integer>*. Default value: 0.
 -  *max-width:* An instance of type *<integer>*. Default value: `See
-   $fill <layouts.htm#86272>`_.
+   $fill`_.
 -  *max-height:* An instance of type *<integer>*. Default value: `See
-   $fill <layouts.htm#86272>`_.
+   $fill`_.
 -  *resizable?:* An instance of type *<boolean>*. Default value: *#t*.
 -  *fixed-width?:* An instance of type *<boolean>*. Default value: *#f*
    .
@@ -1100,17 +1100,17 @@ Operations
 See also
         
 
-`See <column-layout> <layouts.htm#22240>`_
+`<column-layout>`_
 
-`See <grid-layout> <layouts.htm#43132>`_
+`<grid-layout>`_
 
-`See <pinboard-layout> <layouts.htm#63980>`_
+`<pinboard-layout>`_
 
-`See <row-layout> <layouts.htm#32870>`_
+`<row-layout>`_
 
-`See <stack-layout> <layouts.htm#99774>`_
+`<stack-layout>`_
 
-`See <table-layout> <layouts.htm#88129>`_
+`<table-layout>`_
 
 layout-border
 -------------
@@ -1133,11 +1133,11 @@ Arguments
          
 
 -  *layout* An instance of type *type-union(
-    `See <row-layout> <layouts.htm#32870>`_, `See
-   <column-layout> <layouts.htm#22240>`_, `See
-   <table-layout> <layouts.htm#88129>`_,* `See
-   <grid-layout> <layouts.htm#43132>`_*,
-    `See <stack-layout> <layouts.htm#99774>`_)*.
+    `<row-layout>`_, `See
+   <column-layout>`_, `See
+   <table-layout>`_,* `See
+   <grid-layout>`_*,
+    `<stack-layout>`_)*.
 
 Values
       
@@ -1157,7 +1157,7 @@ control of the programmer.
 See also
         
 
-*`See layout-border-setter <layouts.htm#40941>`_*
+*`layout-border-setter`_*
 
 layout-border-setter
 --------------------
@@ -1181,11 +1181,11 @@ Arguments
 
 -  *border* An instance of type *<integer>*.
 -  *layout* An instance of type *type-union(
-    `See <row-layout> <layouts.htm#32870>`_, `See
-   <column-layout> <layouts.htm#22240>`_, `See
-   <table-layout> <layouts.htm#88129>`_,* `See
-   <grid-layout> <layouts.htm#43132>`_*,
-    `See <stack-layout> <layouts.htm#99774>`_)*.
+    `<row-layout>`_, `See
+   <column-layout>`_, `See
+   <table-layout>`_,* `See
+   <grid-layout>`_*,
+    `<stack-layout>`_)*.
 
 Values
       
@@ -1208,7 +1208,7 @@ control of the programmer.
 See also
         
 
-*`See layout-border <layouts.htm#61612>`_*
+*`layout-border`_*
 
 layout-equalize-heights?
 ------------------------
@@ -1232,8 +1232,8 @@ Arguments
          
 
 -  *layout* An instance of type *type-union(
-    `See <row-layout> <layouts.htm#32870>`_, `See
-   <column-layout> <layouts.htm#22240>`_)*.
+    `<row-layout>`_, `See
+   <column-layout>`_)*.
 
 Values
       
@@ -1253,7 +1253,7 @@ function.
 See also
         
 
-*`See layout-equalize-widths? <layouts.htm#74637>`_*
+*`layout-equalize-widths?`_*
 
 layout-equalize-widths?
 -----------------------
@@ -1277,8 +1277,8 @@ Arguments
          
 
 -  *layout* An instance of type *type-union(
-    `See <row-layout> <layouts.htm#32870>`_, `See
-   <column-layout> <layouts.htm#22240>`_)*.
+    `<row-layout>`_, `See
+   <column-layout>`_)*.
 
 Values
       
@@ -1298,7 +1298,7 @@ function.
 See also
         
 
-*`See layout-equalize-heights? <layouts.htm#34608>`_*
+*`layout-equalize-heights?`_*
 
 <leaf-pane>
 -----------
@@ -1314,7 +1314,7 @@ The class of leaf panes.
 Superclasses
             
 
-`See <sheet> <silica.htm#13118>`_
+`<sheet> <silica.htm#13118>`_
                                  
 
 Init-keywords
@@ -1366,15 +1366,15 @@ Arguments
          
 
 -  *space-requirement-class* The class `See
-   <space-requirement> <layouts.htm#38351>`_.
+   <space-requirement>`_.
 -  *width* An instance of type *<integer>*. Default value: `See
-   $fill <layouts.htm#86272>`_.
+   $fill`_.
 -  *min-width* An instance of type *<integer>*. Default value: *width*
    .
 -  *max-width* An instance of type *<integer>*. Default value: *width*
    .
 -  *height* An instance of type *<integer>*. Default value: `See
-   $fill <layouts.htm#86272>`_.
+   $fill`_.
 -  *min-height* An instance of type *<integer>*. Default value:
    *height*.
 -  *max-height* An instance of type *<integer>*. Default value:
@@ -1384,7 +1384,7 @@ Values
       
 
 -  *space-req* An instance of type `See
-   <space-requirement> <layouts.htm#38351>`_.
+   <space-requirement>`_.
 
 Description
            
@@ -1393,17 +1393,17 @@ Creates an instance of *<space-requirement>*.
 
 The various width and height arguments let you control the values of
 corresponding init-keywords to
- `See <space-requirement> <layouts.htm#38351>`_, thereby control the
+ `<space-requirement>`_, thereby control the
 width and height of a layout under various circumstances. See `See
-<space-requirement> <layouts.htm#38351>`_, for a full description of
+<space-requirement>`_, for a full description of
 this behavior.
 
 See also
         
 
-`See $fill <layouts.htm#86272>`_
+`$fill`_
 
-`See <space-requirement> <layouts.htm#38351>`_
+`<space-requirement>`_
 
 <multiple-child-composite-pane>
 -------------------------------
@@ -1419,7 +1419,7 @@ The class of composite panes that can have multiple children.
 Superclasses
             
 
-`See <layout> <layouts.htm#13344>`_
+`<layout>`_
                                    
 
 Init-keywords
@@ -1442,7 +1442,7 @@ Operations
 See also
         
 
-`See <single-child-composite-pane> <layouts.htm#47412>`_
+`<single-child-composite-pane>`_
 
 <null-pane>
 -----------
@@ -1458,7 +1458,7 @@ The class of null panes.
 Superclasses
             
 
-`See <leaf-pane> <layouts.htm#24047>`_
+`<leaf-pane>`_
                                       
 
 Init-keywords
@@ -1504,7 +1504,7 @@ pane-display-function *pane* => *pane-display-function*
 Arguments
          
 
--  *pane* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *pane* An instance of type `<sheet> <silica.htm#13118>`_.
 
 Values
       
@@ -1524,13 +1524,13 @@ returned by *pane-display-function* is the value of the
 
 The display function gets called by the `See
 handle-repaint <silica.htm#28833>`_ method for `See
-<simple-pane> <layouts.htm#78056>`_ and `See
-<drawing-pane> <layouts.htm#68254>`_.
+<simple-pane>`_ and `See
+<drawing-pane>`_.
 
 See also
         
 
-`See <drawing-pane> <layouts.htm#68254>`_
+`<drawing-pane>`_
 
 pane-layout
 -----------
@@ -1552,23 +1552,23 @@ pane-layout *pane* => *layout-pane*
 Arguments
          
 
--  *pane* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *pane* An instance of type `<sheet> <silica.htm#13118>`_.
 
 Values
       
 
--  *layout-pane* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *layout-pane* An instance of type `<sheet> <silica.htm#13118>`_.
 
 Description
            
 
-Returns the layout that contains the specified pane in `See define
-pane <layouts.htm#26910>`_.
+Returns the layout that contains the specified pane in `define
+pane`_.
 
 See also
         
 
-`See define pane <layouts.htm#26910>`_
+`define pane`_
 
 <pinboard-layout>
 -----------------
@@ -1584,7 +1584,7 @@ The class of pinboard layouts.
 Superclasses
             
 
-`See <layout> <layouts.htm#13344>`_
+`<layout>`_
                                    
 
 Init-keywords
@@ -1635,9 +1635,9 @@ Operations
 See also
         
 
-`See <fixed-layout> <layouts.htm#68624>`_
+`<fixed-layout>`_
 
-`See <layout> <layouts.htm#13344>`_
+`<layout>`_
 
 relayout-children
 -----------------
@@ -1659,7 +1659,7 @@ relayout-children *sheet* #key *port-did-it?* => ()
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet> <silica.htm#13118>`_.
 -  *port-did-it?* An instance of type *<boolean>*. Default value: *#f*
    .
 
@@ -1676,7 +1676,7 @@ Lays out the children of *sheet* again.
 See also
         
 
-`See relayout-parent <layouts.htm#15793>`_
+`relayout-parent`_
 
 relayout-parent
 ---------------
@@ -1698,7 +1698,7 @@ relayout-parent *sheet* #key *width height* => ()
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet> <silica.htm#13118>`_.
 -  *width* An instance of type *<integer>*.
 -  *height* An instance of type *<integer>*.
 
@@ -1717,7 +1717,7 @@ dimensions.
 See also
         
 
-`See relayout-children <layouts.htm#49008>`_
+`relayout-children`_
 
 <row-layout>
 ------------
@@ -1733,7 +1733,7 @@ The class of row layouts.
 Superclasses
             
 
-`See <layout> <layouts.htm#13344>`_
+`<layout>`_
                                    
 
 Init-keywords
@@ -1838,17 +1838,17 @@ children: buttons))
 See also
         
 
-`See <column-layout> <layouts.htm#22240>`_
+`<column-layout>`_
 
-`See horizontally <layouts.htm#53885>`_
+`horizontally`_
 
-`See <layout> <layouts.htm#13344>`_
+`<layout>`_
 
-`See <grid-layout> <layouts.htm#43132>`_
+`<grid-layout>`_
 
-`See <stack-layout> <layouts.htm#99774>`_
+`<stack-layout>`_
 
-`See <table-layout> <layouts.htm#88129>`_
+`<table-layout>`_
 
 <simple-pane>
 -------------
@@ -1864,7 +1864,7 @@ The class of simple panes.
 Superclasses
             
 
-`See <layout> <layouts.htm#13344>`_
+`<layout>`_
                                    
 
 Init-keywords
@@ -1892,11 +1892,11 @@ Operations
 See also
         
 
-`See <drawing-pane> <layouts.htm#68254>`_
+`<drawing-pane>`_
 
-`See handle-repaint <silica.htm#28833>`_
+`handle-repaint <silica.htm#28833>`_
 
-`See pane-display-function <layouts.htm#40953>`_
+`pane-display-function`_
 
 <single-child-composite-pane>
 -----------------------------
@@ -1912,7 +1912,7 @@ The class of composite panes that can only have one child.
 Superclasses
             
 
-`See <layout> <layouts.htm#13344>`_
+`<layout>`_
                                    
 
 Init-keywords
@@ -1933,7 +1933,7 @@ Operations
 See also
         
 
-`See <multiple-child-composite-pane> <layouts.htm#45992>`_
+`<multiple-child-composite-pane>`_
 
 <space-requirement>
 -------------------
@@ -1956,13 +1956,13 @@ Init-keywords
              
 
 -  *width:* An instance of type *<integer>*. Default value: `See
-   $fill <layouts.htm#86272>`_.
+   $fill`_.
 -  *min-width:* An instance of type *<integer>*. Default value: *width*
    .
 -  *max-width:* An instance of type *<integer>*. Default value: *width*
    .
 -  *height:* An instance of type *<integer>*. Default value: `See
-   $fill <layouts.htm#86272>`_.
+   $fill`_.
 -  *min-height:* An instance of type *<integer>*. Default value:
    *height*.
 -  *max-height:* An instance of type *<integer>*. Default value:
@@ -1999,7 +1999,7 @@ min-width: <= width: <= max-width:
 
 If either *min-width:* or *min-height:* is 0, the object is “infinitely
 shrinkable” in that direction. If either *max-width:* or *max-height:*
-is `See $fill <layouts.htm#86272>`_, the object is “infinitely
+is `$fill`_, the object is “infinitely
 stretchable” in that direction. The latter is a particularly useful way
 of ensuring that objects fill the available width, and can be used, say,
 to ensure that a series of buttons fill the entire width of the layout
@@ -2015,12 +2015,12 @@ the preferred width and height.
 Operations
           
 
-`See space-requirement-height <layouts.htm#25115>`_ `See
-space-requirement-max-height <layouts.htm#38366>`_ `See
-space-requirement-max-width <layouts.htm#82762>`_ `See
-space-requirement-min-height <layouts.htm#23614>`_ `See
-space-requirement-min-width <layouts.htm#67986>`_
- `See space-requirement-width <layouts.htm#52993>`_
+`space-requirement-height`_ `See
+space-requirement-max-height`_ `See
+space-requirement-max-width`_ `See
+space-requirement-min-height`_ `See
+space-requirement-min-width`_
+ `space-requirement-width`_
 
 Example
        
@@ -2036,7 +2036,7 @@ define class <basic-test-button>
 end class <basic-test-button>;
                               
 
-The following method for `See do-compose-space <layouts.htm#46699>`_
+The following method for `do-compose-space`_
 creates the necessary space requirements to accommodate the new button
 class in a layout.
 
@@ -2061,7 +2061,7 @@ end method do-compose-space;
 See also
         
 
-`See $fill <layouts.htm#86272>`_
+`$fill`_
 
 space-requirement?
 ------------------
@@ -2094,12 +2094,12 @@ Description
            
 
 Returns true if *object* is an instance of `See
-<space-requirement> <layouts.htm#38351>`_.
+<space-requirement>`_.
 
 See also
         
 
-`See <space-requirement> <layouts.htm#38351>`_
+`<space-requirement>`_
 
 space-requirement-height
 ------------------------
@@ -2121,9 +2121,9 @@ space-requirement-height *sheet* *space-req* => *height*
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet> <silica.htm#13118>`_.
 -  *space-req* An instance of type `See
-   <space-requirement> <layouts.htm#38351>`_.
+   <space-requirement>`_.
 
 Values
       
@@ -2139,9 +2139,9 @@ Returns preferred the height of *space-req*. This is the value of the
 See also
         
 
-`See space-requirement-max-height <layouts.htm#38366>`_
+`space-requirement-max-height`_
 
-`See space-requirement-min-height <layouts.htm#23614>`_
+`space-requirement-min-height`_
 
 space-requirement-max-height
 ----------------------------
@@ -2163,9 +2163,9 @@ space-requirement-max-height *sheet* *space-req* => *max-height*
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet> <silica.htm#13118>`_.
 -  *space-req* An instance of type `See
-   <space-requirement> <layouts.htm#38351>`_.
+   <space-requirement>`_.
 
 Values
       
@@ -2182,9 +2182,9 @@ created.
 See also
         
 
-`See space-requirement-height <layouts.htm#25115>`_
+`space-requirement-height`_
 
-`See space-requirement-min-height <layouts.htm#23614>`_
+`space-requirement-min-height`_
 
 space-requirement-max-width
 ---------------------------
@@ -2206,9 +2206,9 @@ space-requirement-max-width *sheet* *space-req* => *max-width*
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet> <silica.htm#13118>`_.
 -  *space-req* An instance of type `See
-   <space-requirement> <layouts.htm#38351>`_.
+   <space-requirement>`_.
 
 Values
       
@@ -2225,9 +2225,9 @@ created.
 See also
         
 
-`See space-requirement-min-width <layouts.htm#67986>`_
+`space-requirement-min-width`_
 
-`See space-requirement-width <layouts.htm#52993>`_
+`space-requirement-width`_
 
 space-requirement-min-height
 ----------------------------
@@ -2249,9 +2249,9 @@ space-requirement-min-height *sheet* *space-req* => *min-height*
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet> <silica.htm#13118>`_.
 -  *space-req* An instance of type `See
-   <space-requirement> <layouts.htm#38351>`_.
+   <space-requirement>`_.
 
 Values
       
@@ -2268,9 +2268,9 @@ created.
 See also
         
 
-`See space-requirement-height <layouts.htm#25115>`_
+`space-requirement-height`_
 
-`See space-requirement-max-height <layouts.htm#38366>`_
+`space-requirement-max-height`_
 
 space-requirement-min-width
 ---------------------------
@@ -2292,9 +2292,9 @@ space-requirement-min-width *sheet* *space-req* => *min-width*
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet> <silica.htm#13118>`_.
 -  *space-req* An instance of type `See
-   <space-requirement> <layouts.htm#38351>`_.
+   <space-requirement>`_.
 
 Values
       
@@ -2311,9 +2311,9 @@ created.
 See also
         
 
-`See space-requirement-max-width <layouts.htm#82762>`_
+`space-requirement-max-width`_
 
-`See space-requirement-width <layouts.htm#52993>`_
+`space-requirement-width`_
 
 space-requirement-width
 -----------------------
@@ -2335,9 +2335,9 @@ space-requirement-width *sheet* *space-req* => *width*
 Arguments
          
 
--  *sheet* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *sheet* An instance of type `<sheet> <silica.htm#13118>`_.
 -  *space-req* An instance of type `See
-   <space-requirement> <layouts.htm#38351>`_.
+   <space-requirement>`_.
 
 Values
       
@@ -2353,9 +2353,9 @@ Returns the preferred width of *space-req*. This is the value of the
 See also
         
 
-`See space-requirement-max-width <layouts.htm#82762>`_
+`space-requirement-max-width`_
 
-`See space-requirement-min-width <layouts.htm#67986>`_
+`space-requirement-min-width`_
 
 <stack-layout>
 --------------
@@ -2371,7 +2371,7 @@ The class of stack layouts.
 Superclasses
             
 
-`See <layout> <layouts.htm#13344>`_
+`<layout>`_
                                    
 
 Init-keywords
@@ -2411,15 +2411,15 @@ Operations
 See also
         
 
-`See <column-layout> <layouts.htm#22240>`_
+`<column-layout>`_
 
-`See <grid-layout> <layouts.htm#43132>`_
+`<grid-layout>`_
 
-`See <layout> <layouts.htm#13344>`_
+`<layout>`_
 
-`See <row-layout> <layouts.htm#32870>`_
+`<row-layout>`_
 
-`See <table-layout> <layouts.htm#88129>`_
+`<table-layout>`_
 
 stack-layout-mapped-page
 ------------------------
@@ -2507,12 +2507,12 @@ Arguments
          
 
 -  *table* An instance of type `See
-   <table-layout> <layouts.htm#88129>`_.
+   <table-layout>`_.
 
 Values
       
 
--  *contents* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *contents* An instance of type `<sheet> <silica.htm#13118>`_.
 
 Description
            
@@ -2522,7 +2522,7 @@ Returns the contents of *table*.
 See also
         
 
-`See table-contents-setter <layouts.htm#35965>`_
+`table-contents-setter`_
 
 table-contents-setter
 ---------------------
@@ -2544,14 +2544,14 @@ table-contents-setter *contents table* => *contents*
 Arguments
          
 
--  *contents* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *contents* An instance of type `<sheet> <silica.htm#13118>`_.
 -  *table* An instance of type `See
-   <table-layout> <layouts.htm#88129>`_.
+   <table-layout>`_.
 
 Values
       
 
--  *contents* An instance of type `See <sheet> <silica.htm#13118>`_.
+-  *contents* An instance of type `<sheet> <silica.htm#13118>`_.
 
 Description
            
@@ -2561,7 +2561,7 @@ Sets the contents of *table*.
 See also
         
 
-`See table-contents <layouts.htm#43067>`_
+`table-contents`_
 
 <table-layout>
 --------------
@@ -2577,7 +2577,7 @@ The class of table layouts.
 Superclasses
             
 
-`See <layout> <layouts.htm#13344>`_
+`<layout>`_
                                    
 
 Init-keywords
@@ -2677,8 +2677,8 @@ center, using the *y-alignment:* keyword.
 Operations
           
 
--  `See table-contents <layouts.htm#43067>`_ `See
-   table-contents-setter <layouts.htm#35965>`_
+-  `table-contents`_ `See
+   table-contents-setter`_
 
 Example
        
@@ -2702,17 +2702,17 @@ children: \*t\*, columns: 3));
 See also
         
 
-`See <column-layout> <layouts.htm#22240>`_
+`<column-layout>`_
 
-`See <grid-layout> <layouts.htm#43132>`_
+`<grid-layout>`_
 
-`See <layout> <layouts.htm#13344>`_
+`<layout>`_
 
-`See <row-layout> <layouts.htm#32870>`_
+`<row-layout>`_
 
-`See <stack-layout> <layouts.htm#99774>`_
+`<stack-layout>`_
 
-`See tabling <layouts.htm#57015>`_
+`tabling`_
 
 tabling
 -------
@@ -2750,7 +2750,7 @@ necessary layouts for you automatically.
 
 The *options* are passed directly to the table layout, and thus can be
 any legitimate combinations of init-keywords for `See
-<table-layout> <layouts.htm#88129>`_. If no options are specified, then
+<table-layout>`_. If no options are specified, then
 the default values for table layout are used.
 
 The *panes* argument consists of a number of Dylan expressions, each of
@@ -2760,11 +2760,11 @@ in the vertical layout.
 See also
         
 
-`See horizontally <layouts.htm#53885>`_
+`horizontally`_
 
-`See <table-layout> <layouts.htm#88129>`_
+`<table-layout>`_
 
-`See vertically <layouts.htm#98018>`_
+`vertically`_
 
 <top-level-sheet>
 -----------------
@@ -2780,7 +2780,7 @@ The class of top level sheets.
 Superclasses
             
 
-`See <layout> <layouts.htm#13344>`_
+`<layout>`_
                                    
 
 Init-keywords
@@ -2791,7 +2791,7 @@ Init-keywords
 -  *frame:* An instance of type *false-or(* ` <frames.htm#16922>`_*)*.
    Default value: *#f*.
 -  *frame-manager:* An instance of type
-    *false-or(* `See <frame-manager> <silica.htm#32466>`_*)*. Default
+    *false-or(* `<frame-manager> <silica.htm#32466>`_*)*. Default
    value: *#f*.
 -  *container:* An instance of type *false-or(<object>)*. Default
    value: *#f*.
@@ -2799,7 +2799,7 @@ Init-keywords
 *container-region:*
                    
 
--  An instance of type *false-or(`See <region> <geom.htm#79228>`_)*.
+-  An instance of type *false-or(`<region> <geom.htm#79228>`_)*.
    Default value: *#f*.
 
 Description
@@ -2855,7 +2855,7 @@ necessary column layout for you automatically.
 
 The *options* are passed directly to the column layout, and thus can be
 any legitimate combinations of init-keywords for `See
-<column-layout> <layouts.htm#22240>`_. If no options are specified, then
+<column-layout>`_. If no options are specified, then
 the default values for table layout are used.
 
 The *panes* argument consists of a number of Dylan expressions, each of
@@ -2878,10 +2878,10 @@ end);
 See also
         
 
-`See <column-layout> <layouts.htm#22240>`_
+`<column-layout>`_
 
-`See horizontally <layouts.htm#53885>`_
+`horizontally`_
 
-`See tabling <layouts.htm#57015>`_
+`tabling`_
 
 
