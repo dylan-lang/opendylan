@@ -41,6 +41,10 @@ define function llvm-attribute-stack-alignment
   %shift-left(integer-length(alignment), 26)
 end function;
 
+define constant $llvm-attribute-returns-twice   = %shift-left(1, 29);
+define constant $llvm-attribute-uwtable         = %shift-left(1, 30);
+define constant $llvm-attribute-non-lazy-bind   = %shift-left(1, 31);
+
 define constant llvm-attribute-merge = %logior;
 
 define class <llvm-attribute-list> (<object>)

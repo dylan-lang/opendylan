@@ -115,6 +115,9 @@ define abstract class <llvm-aggregate-type> (<llvm-type>)
 end class;
 
 define class <llvm-struct-type> (<llvm-aggregate-type>)
+  constant slot llvm-struct-type-name
+      :: type-union(singleton(#f), <integer>, <string>),
+    init-value: #f, init-keyword: name:;
   constant slot llvm-struct-type-packed? :: <boolean>,
     init-value: #f, init-keyword: packed?:;
   constant slot llvm-struct-type-elements :: <sequence>,
@@ -124,9 +127,15 @@ end class;
 define method type-partition-key
     (type :: <llvm-struct-type>)
  => (key :: <vector>, splittable? :: <boolean>);
-  values(vector(<llvm-struct-type>,
-                type.llvm-struct-type-packed?,
-                type.llvm-struct-type-elements.size),
+  values(if (type.llvm-struct-type-name)
+           // Identified struct type, not uniqued
+           vector(<llvm-struct-type>, type)
+         else
+           // Literal struct type, uniqued by contents
+           vector(<llvm-struct-type>,
+                  type.llvm-struct-type-packed?,
+                  type.llvm-struct-type-elements.size)
+         end if,
          #t)
 end method;
 
@@ -237,43 +246,6 @@ define method llvm-constrain-type
   end if;
 end method;
 
-// Upval types
-
-define class <llvm-upval-type> (<llvm-placeholder-type>)
-  constant slot llvm-upval-type-index :: <integer>,
-    required-init-keyword: index:;
-end class;
-
-define method llvm-type-resolve-upvals
-    (root-type :: <llvm-type>)
- => (root-type :: <llvm-type>);
-  local
-    method traverse-type (type :: <llvm-type>, up-types :: <list>) => ();
-      if (instance?(type, <llvm-upval-type>))
-        let index = type.llvm-upval-type-index;
-        type.llvm-placeholder-type-forward := up-types[index - 1];
-      elseif (~instance?(type, <llvm-placeholder-type>))
-        let inner-up-types = pair(type, up-types);
-        for (referenced-type in type-referenced-types(type))
-          traverse-type(referenced-type, inner-up-types);
-        end for;
-      end if;
-    end method;
-
-  traverse-type(root-type, #());
-  root-type
-end method;
-
-define method type-forward
-    (type :: <llvm-upval-type>)
- => (type :: <llvm-type>);
-  if (slot-initialized?(type, llvm-placeholder-type-forward))
-    type-forward(type.llvm-placeholder-type-forward)
-  else
-    error("upval \\%d was not resolved", type.llvm-upval-type-index);
-  end if
-end method;
-
 define class <llvm-symbolic-type> (<llvm-placeholder-type>)
   constant slot llvm-symbolic-type-name :: type-union(<string>, <integer>),
     required-init-keyword: name:;
@@ -290,6 +262,9 @@ define method type-forward
 end method;
 
 define class <llvm-opaque-type> (<llvm-placeholder-type>)
+  constant slot llvm-opaque-type-name
+      :: type-union(singleton(#f), <integer>, <string>),
+    init-value: #f, init-keyword: name:;
 end class;
 
 define method type-partition-key

@@ -43,9 +43,6 @@ define module llvm
 
     llvm-constrain-type,
 
-    <llvm-upval-type>,
-    llvm-type-resolve-upvals,
-
     <llvm-opaque-type>,
 
     <llvm-symbolic-type>,
@@ -132,6 +129,9 @@ define module llvm
     $llvm-attribute-naked,
     $llvm-attribute-inlinehint,
     llvm-attribute-stack-alignment,
+    $llvm-attribute-returns-twice,
+    $llvm-attribute-uwtable,
+    $llvm-attribute-non-lazy-bind,
     llvm-attribute-merge,
     <llvm-attribute-list>,
 
@@ -184,9 +184,16 @@ define module llvm
     <llvm-unreachable-instruction>,
     <llvm-indirect-branch-instruction>,
     <llvm-phi-node>,
+    <llvm-landingpad-instruction>,
+    <llvm-resume-instruction>,
     <llvm-alloca-instruction>,
     <llvm-load-instruction>,
     <llvm-store-instruction>,
+    <llvm-atomic-load-instruction>,
+    <llvm-atomic-store-instruction>,
+    <llvm-fence-instruction>,
+    <llvm-cmpxchg-instruction>,
+    <llvm-atomicrmw-instruction>,
     <llvm-call-instruction>,
     <llvm-va-arg-instruction>,
     <llvm-extract-value-instruction>,

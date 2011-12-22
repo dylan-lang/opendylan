@@ -118,9 +118,28 @@ end class;
 
 define abstract class <llvm-cmp-instruction> (<llvm-instruction>,
                                               <llvm-cmp-mixin>)
-  constant slot llvm-value-type :: <llvm-type> = make(<llvm-opaque-type>),
+  slot %llvm-value-type :: <llvm-type>,
     init-keyword: type:;
 end class;
+
+define method llvm-value-type
+    (value :: <llvm-cmp-instruction>)
+ => (type :: <llvm-type>);
+  if (slot-initialized?(value, %llvm-value-type))
+    value.%llvm-value-type
+  else
+    let operands = value.llvm-instruction-operands;
+    let operand-type = type-forward(llvm-value-type(operands[0]));
+    if (instance?(operand-type, <llvm-vector-type>))
+      value.%llvm-value-type
+        := make(<llvm-vector-type>,
+                size: operand-type.llvm-vector-type-size,
+                element-type: $llvm-i1-type)
+    else
+      value.%llvm-value-type := $llvm-i1-type
+    end if
+  end if
+end method;
 
 define class <llvm-icmp-instruction> (<llvm-cmp-instruction>,
                                       <llvm-icmp-mixin>)
@@ -166,6 +185,9 @@ end class;
 define class <llvm-indirect-branch-instruction> (<llvm-terminator-instruction>)
 end class;
 
+define class <llvm-resume-instruction> (<llvm-terminator-instruction>)
+end class;
+
 define class <llvm-phi-node> (<llvm-instruction>)
 end class;
 
@@ -175,6 +197,13 @@ define method llvm-value-type
   llvm-value-type(value.llvm-instruction-operands[0])
 end method;
 
+define class <llvm-landingpad-instruction> (<llvm-instruction>)
+  constant slot llvm-value-type :: <llvm-type>,
+    required-init-keyword: type:;
+  constant slot llvm-landingpad-instruction-cleanup? :: <boolean>,
+    init-value: #f, init-keyword: cleanup?:;
+end class;
+
 define class <llvm-alloca-instruction> (<llvm-instruction>)
   constant slot llvm-value-type :: <llvm-type>,
     required-init-keyword: type:;
@@ -182,11 +211,14 @@ define class <llvm-alloca-instruction> (<llvm-instruction>)
     init-value: 0, init-keyword: alignment:;
 end class;
 
-define abstract class <llvm-memory-instruction> (<llvm-instruction>)
+define abstract class <llvm-volatile-instruction> (<llvm-instruction>)
+  constant slot llvm-instruction-volatile? :: <boolean>,
+    init-value: #f, init-keyword: volatile?:;
+end class;
+
+define abstract class <llvm-memory-instruction> (<llvm-volatile-instruction>)
   constant slot llvm-memory-instruction-alignment :: <integer>,
     init-value: 0, init-keyword: alignment:;
-  constant slot llvm-memory-instruction-volatile? :: <boolean>,
-    init-value: #f, init-keyword: volatile?:;
 end class;
 
 define class <llvm-load-instruction> (<llvm-memory-instruction>)
@@ -207,6 +239,80 @@ define method llvm-value-type
     (value :: <llvm-store-instruction>)
  => (type :: <llvm-type>);
   $llvm-void-type
+end method;
+
+define constant <llvm-synchronization-scope>
+  = one-of(#"single-thread", #"cross-thread");
+define constant <llvm-atomic-ordering>
+  = one-of(#"not-atomic",
+           #"unordered",
+           #"monotonic",
+           #"acquire",
+           #"release",
+           #"acquire-release",
+           #"sequentially-consistent");
+
+define abstract class <llvm-atomic-instruction> (<llvm-instruction>)
+  constant slot llvm-atomic-instruction-scope :: <llvm-synchronization-scope>,
+    init-value: #"cross-thread", init-keyword: scope:;
+  constant slot llvm-atomic-instruction-ordering :: <llvm-atomic-ordering>,
+    init-value: #"not-atomic", init-keyword: ordering:;
+end class;
+
+define class <llvm-atomic-load-instruction> (<llvm-load-instruction>,
+                                             <llvm-atomic-instruction>)
+end class;
+
+define class <llvm-atomic-store-instruction> (<llvm-store-instruction>,
+                                              <llvm-atomic-instruction>)
+end class;
+
+define class <llvm-fence-instruction> (<llvm-atomic-instruction>)
+end class;
+
+define method llvm-value-type
+    (value :: <llvm-fence-instruction>)
+ => (type :: <llvm-type>);
+  $llvm-void-type
+end method;
+
+define class <llvm-cmpxchg-instruction> (<llvm-atomic-instruction>,
+                                         <llvm-volatile-instruction>)
+end class;
+
+define method llvm-value-type
+    (value :: <llvm-cmpxchg-instruction>)
+ => (type :: <llvm-type>);
+  let pointer-type
+    = type-forward(llvm-value-type(value.llvm-instruction-operands[0]));
+  type-forward(pointer-type.llvm-pointer-type-pointee)
+end method;
+
+define constant <llvm-atomicrmw-operation>
+  = one-of(#"xchg",
+           #"add",
+           #"sub",
+           #"and",
+           #"nand",
+           #"or",
+           #"xor",
+           #"max",
+           #"min",
+           #"umax",
+           #"umin");
+
+define class <llvm-atomicrmw-instruction> (<llvm-atomic-instruction>,
+                                           <llvm-volatile-instruction>)
+  constant slot llvm-atomicrmw-instruction-operation :: <llvm-atomicrmw-operation>,
+    required-init-keyword: operation:;
+end class;
+
+define method llvm-value-type
+    (value :: <llvm-atomicrmw-instruction>)
+ => (type :: <llvm-type>);
+  let pointer-type
+    = type-forward(llvm-value-type(value.llvm-instruction-operands[0]));
+  type-forward(pointer-type.llvm-pointer-type-pointee)
 end method;
 
 define class <llvm-call-instruction> (<llvm-instruction>)

@@ -112,6 +112,7 @@ define method initialize-type-table
   let placeholder = make(<llvm-opaque-type>);
   t["Wrapper"]
     := make(<llvm-struct-type>,
+            name: "Wrapper",
             elements: vector(// Wrapper-Wrapper
                              placeholder,
                              // Class pointer
@@ -204,7 +205,8 @@ define method llvm-class-type
       end if;
     end for;
 
-    element(type-table, name) := make(<llvm-struct-type>, elements: elements)
+    element(type-table, name)
+      := make(<llvm-struct-type>, name: name, elements: elements)
   end if
 end method;
 

@@ -16,11 +16,12 @@ define bitcode-block $MODULE_BLOCK = 8
   record DEPLIB      = 6;    // DEPLIB:      [strchr x N]
 
   // GLOBALVAR: [pointer type, isconst, initid,
-  //             linkage, alignment, section, visibility, threadlocal]
+  //             linkage, alignment, section, visibility, threadlocal,
+  //             unnamed_addr]
   record GLOBALVAR   = 7;
 
   // FUNCTION:  [type, callingconv, isproto, linkage, paramattrs, alignment,
-  //             section, visibility]
+  //             section, visibility, gc, unnamed_addr]
   record FUNCTION    = 8;
 
   // ALIAS: [alias type, aliasee val#, linkage]
@@ -38,28 +39,6 @@ end bitcode-block;
 define bitcode-block $PARAMATTR_BLOCK = 9
   // ENTRY: [paramidx0, attr0, paramidx1, attr1...
   record ENTRY = 1;
-end bitcode-block;
-
-define bitcode-block $TYPE_BLOCK = 10
-  record NUMENTRY =  1;   // NUMENTRY: [numentries]
-
-  // Type Codes
-  record VOID     =  2;   // VOID
-  record FLOAT    =  3;   // FLOAT
-  record DOUBLE   =  4;   // DOUBLE
-  record LABEL    =  5;   // LABEL
-  record OPAQUE   =  6;   // OPAQUE
-  record INTEGER  =  7;   // INTEGER: [width]
-  record POINTER  =  8;   // POINTER: [pointee type, address space]
-  record FUNCTION =  9;   // FUNCTION: [vararg, retty, paramty x N]
-  record STRUCT   = 10;   // STRUCT: [ispacked, eltty x N]
-  record ARRAY    = 11;   // ARRAY: [numelts, eltty]
-  record VECTOR   = 12;   // VECTOR: [numelts, eltty]
-  record X86_FP80 = 13;   // X86 LONG DOUBLE
-  record FP128    = 14;   // LONG DOUBLE (112 bit mantissa)
-  record PPC_FP128 = 15;  // PPC LONG DOUBLE (2 doubles)
-  record METADATA = 16;   // METADATA
-  record X86_MMX  = 17;   // X86 MMX
 end bitcode-block;
 
 define bitcode-block $CONSTANTS_BLOCK = 11
@@ -110,11 +89,8 @@ define bitcode-block $FUNCTION_BLOCK = 12
   record INST_FREE        = 18; // FREE:       [opty, op]
   record INST_ALLOCA      = 19; // ALLOCA:     [instty, op, align]
   record INST_LOAD        = 20; // LOAD:       [opty, op, align, vol]
-  record INST_STORE       = 21; // STORE:      [valty,val,ptr, align, vol]
-  record INST_CALL        = 22; // CALL:       [attr, fnty, fnid, args...]
   record INST_VAARG       = 23; // VAARG:      [valistty, valist, instty]
-  record INST_STORE2      = 24; // STORE:      [ptrty,ptr,val, align, vol]
-  record INST_GETRESULT   = 25; // GETRESULT:  [ty, opval, n]
+  record INST_STORE       = 24; // STORE:      [ptrty,ptr,val, align, vol]
   record INST_EXTRACTVAL  = 26; // EXTRACTVAL: [n x operands]
   record INST_INSERTVAL   = 27; // INSERTVAL:  [n x operands]
   record INST_CMP2        = 28; // CMP2:       [opty, opval, opval, pred]
@@ -122,14 +98,16 @@ define bitcode-block $FUNCTION_BLOCK = 12
   record INST_INBOUNDS_GEP = 30; // INBOUNDS_GEP: [n x operands]
   record INST_INDIRECTBR  = 31; // INDIRECTBR: [opty, op0, op1, ...]
 
-  record DEBUG_LOC        = 32; // DEBUG_LOC with potentially invalid metadata
   record DEBUG_LOC_AGAIN  = 33; // DEBUG_LOC_AGAIN
-  record INST_CALL2       = 34; // CALL2:      [attr, fnty, fnid, args...]
-  record DEBUG_LOC2       = 35; // DEBUG_LOC2: [Line,Col,ScopeVal, IAVal]
-end bitcode-block;
-
-define bitcode-block $TYPE_SYMTAB_BLOCK = 13
-  record ENTRY = 1;     // ENTRY: [typeid, namechar x N]
+  record INST_CALL        = 34; // CALL:       [attr, fnty, fnid, args...]
+  record DEBUG_LOC        = 35; // DEBUG_LOC:  [Line,Col,ScopeVal, IAVal]
+  record INST_FENCE       = 36; // FENCE:      [ordering, synchscope]
+  record INST_CMPXCHG     = 37; // CMPXCHG:    [ptrty,ptr,cmp,new, align, vol, ordering, synchscope]
+  record INST_ATOMICRMW   = 38; // ATOMICRMW:  [ptrty,ptr,val, operation, align, vol, ordering, synchscope]
+  record INST_RESUME      = 39; // RESUME:     [opval]
+  record INST_LANDINGPAD  = 40; // LANDINGPAD: [ty,val,val,num,id0,val0...]
+  record INST_LOADATOMIC  = 41; // LOAD:       [opty, op, align, vol, ordering, synchscope]
+  record INST_STOREATOMIC = 42; // STORE:      [ptrty,ptr,val, align, vol, ordering, synchscope]
 end bitcode-block;
 
 define bitcode-block $VALUE_SYMTAB_BLOCK = 14
@@ -139,20 +117,42 @@ end bitcode-block;
 
 define bitcode-block $METADATA_BLOCK = 15
   record STRING        = 1;   // MDSTRING:      [values]
-  record NODE          = 2;   // NODE with potentially invalid metadata
-  record FN_NODE       = 3;   // FN_NODE with potentially invalid metadata
   record NAME          = 4;   // STRING:        [values]
-  record NAMED_NODE    = 5;   // NAMED_NODE with potentially invalid metadata
   record KIND          = 6;   // [n x [id, name]]
-  record NODE2         = 8;   // NODE2:         [n x (type num, value num)]
-  record FN_NODE2      = 9;   // FN_NODE2:      [n x (type num, value num)]
-  record NAMED_NODE2   = 10;  // NAMED_NODE2:   [n x mdnodes]
+  record NODE          = 8;   // NODE:         [n x (type num, value num)]
+  record FN_NODE       = 9;   // FN_NODE:      [n x (type num, value num)]
+  record NAMED_NODE    = 10;  // NAMED_NODE:   [n x mdnodes]
 end bitcode-block;
 
 define bitcode-block $METADATA_ATTACHMENT = 16
-  record ATTACHMENT    = 7;   // ATTACHMENT with potentially invalid metadata
-  record ATTACHMENT2   = 11;  // [m x [value, [n x [id, mdnode]]]
+  record ATTACHMENT    = 11;  // [m x [value, [n x [id, mdnode]]]
 end bitcode-block;
+
+define bitcode-block $TYPE_BLOCK = 17
+  record NUMENTRY    =  1;   // NUMENTRY: [numentries]
+
+  // Type Codes
+  record VOID        =  2;   // VOID
+  record FLOAT       =  3;   // FLOAT
+  record DOUBLE      =  4;   // DOUBLE
+  record LABEL       =  5;   // LABEL
+  record OPAQUE      =  6;   // OPAQUE [ispacked]
+  record INTEGER     =  7;   // INTEGER: [width]
+  record POINTER     =  8;   // POINTER: [pointee type, address space]
+  record FUNCTION    =  9;   // FUNCTION: [vararg, retty, paramty x N]
+  record ARRAY       = 11;   // ARRAY: [numelts, eltty]
+  record VECTOR      = 12;   // VECTOR: [numelts, eltty]
+  record X86_FP80    = 13;   // X86 LONG DOUBLE
+  record FP128       = 14;   // LONG DOUBLE (112 bit mantissa)
+  record PPC_FP128   = 15;   // PPC LONG DOUBLE (2 doubles)
+  record METADATA    = 16;   // METADATA
+  record X86_MMX     = 17;   // X86 MMX
+
+  record STRUCT_ANON = 18;   // STRUCT_ANON: [ispacked, eltty x N]
+  record STRUCT_NAME = 19;   // STRUCT_NAME: [strchr x N]
+  record STRUCT_NAMED = 20;  // STRUCT_NAMED: [ispacked, eltty x N]
+end bitcode-block;
+
 
 
 /// Value and type enumeration
@@ -236,14 +236,9 @@ define function initial-traverse-type
     // Record the partition assignment
     type-partition-table[type] := partition-index;
     
-    // Record this type instance if the partition is subject to
-    // splitting, or if it is the first one seen in this partition
-    let partition-other-types
-      = element(partition-types, partition-index, default: #());
-    if (splittable? | empty?(partition-other-types))
-      partition-types[partition-index]
-        := add(partition-other-types, type);
-    end if;
+    // Record this type instance
+    partition-types[partition-index]
+      := add(element(partition-types, partition-index, default: #()), type);
     
     // Traverse referenced types
     if (splittable?)
@@ -611,14 +606,16 @@ define function enumerate-types-constants-metadata-attributes
   end for;
 
   // Refine type partitions until they are stable
+  local
+    method type-referenced-partitions(type :: <llvm-type>)
+      map(method (referenced-type :: <llvm-type>)
+            type-partition-table[type-forward(referenced-type)]
+          end,
+          type-referenced-types(type))
+    end;
   refine-partitions(partition-types, 0,
                     type-partition-table,
-                    method (type :: <llvm-type>)
-                      map(method (referenced-type :: <llvm-type>)
-                            type-partition-table[type-forward(referenced-type)]
-                          end,
-                          type-referenced-types(type))
-                    end);
+                    type-referenced-partitions);
 
   // Split constant value partitions based on types
   refine-partitions(partition-constants, first-constant-index,
@@ -642,6 +639,19 @@ define function enumerate-types-constants-metadata-attributes
   refine-partitions(partition-metadata, 0,
                     value-partition-table,
                     value-referenced-partitions);
+
+  // Topologically sort types
+  local
+    method type-partition-delay (type :: <llvm-type>)
+      instance?(type, <llvm-struct-type>)
+        & type.llvm-struct-type-name
+    end method;
+  let partition-types
+    = topological-sort-partitions(partition-types, 0,
+                                  type-partition-table,
+                                  type-referenced-partitions,
+                                  delay-partition-function:
+                                    type-partition-delay);
 
   // Topologically sort constant values
   let partition-constants
@@ -904,31 +914,44 @@ define method write-type-record
      type :: <llvm-function-type>)
  => ();
   let return-type = type-forward(type.llvm-function-type-return-type);
-  apply(write-record, stream, #"FUNCTION",
-        if (type.llvm-function-type-varargs?) 1 else 0 end, // vararg
-        0,                                                  // ignored
-        type-partition-table[return-type],                  // retty
-        map(method (type) type-partition-table[type-forward(type)] end,
-            type.llvm-function-type-parameter-types))
+  write-record(stream, #"FUNCTION",
+               if (type.llvm-function-type-varargs?) 1 else 0 end, // vararg
+               0,                                                  // ignored
+               type-partition-table[return-type],                  // retty
+               map(method (type) type-partition-table[type-forward(type)] end,
+                   type.llvm-function-type-parameter-types));
 end method;
 
 define method write-type-record
     (stream :: <bitcode-stream>, type-partition-table :: <object-table>,
      type :: <llvm-struct-type>)
  => ();
-  apply(write-record, stream, #"STRUCT",
-        if (type.llvm-struct-type-packed?) 1 else 0 end,
-        map(method (type) type-partition-table[type-forward(type)] end,
-            type.llvm-struct-type-elements))
+  let element-indices
+    = map(method (type) type-partition-table[type-forward(type)] end,
+          type.llvm-struct-type-elements);
+  if (type.llvm-struct-type-name)
+    // Identified struct type: write as STRUCT_NAME followed by STRUCT_NAMED
+    if (instance?(type.llvm-struct-type-name, <string>))
+      write-record(stream, #"STRUCT_NAME", type.llvm-struct-type-name);
+    end if;
+    write-record(stream, #"STRUCT_NAMED",
+                 if (type.llvm-struct-type-packed?) 1 else 0 end,
+                 element-indices);
+  else
+    // Literal struct type: write as STRUCT_ANON
+    write-record(stream, #"STRUCT_ANON",
+                 if (type.llvm-struct-type-packed?) 1 else 0 end,
+                 element-indices);
+  end if;
 end method;
 
 define method write-type-record
     (stream :: <bitcode-stream>, type-partition-table :: <object-table>,
      type :: <llvm-union-type>)
  => ();
-  apply(write-record, stream, #"UNION",
-        map(method (type) type-partition-table[type-forward(type)] end,
-            type.llvm-union-type-elements))
+  write-record(stream, #"UNION",
+               map(method (type) type-partition-table[type-forward(type)] end,
+                   type.llvm-union-type-elements))
 end method;
 
 define method write-type-record
@@ -955,7 +978,14 @@ define method write-type-record
     (stream :: <bitcode-stream>, type-partition-table :: <object-table>,
      type :: <llvm-opaque-type>)
  => ();
-  write-record(stream, #"OPAQUE");
+  if (type.llvm-opaque-type-name)
+    if (instance?(type.llvm-opaque-type-name, <string>))
+      write-record(stream, #"STRUCT_NAME", type.llvm-opaque-type-name);
+    end if;
+    write-record(stream, #"OPAQUE", 0);
+  else
+    error("Reference to non-identified opaque type");
+  end if;
 end method;
 
 
@@ -1291,9 +1321,9 @@ define method write-metadata-record
   end for;
   write-record(stream,
                if (value.llvm-metadata-function-local?)
-                 #"FN_NODE2"
+                 #"FN_NODE"
                else
-                 #"NODE2"
+                 #"NODE"
                end, 
                operands);
 end method;
@@ -1323,7 +1353,7 @@ define function write-metadata-table
         write-record(stream, #"NAME",
                      map-as(<vector>, curry(as, <integer>),
                             named.llvm-named-metadata-name));
-        write-record(stream, #"NAMED_NODE2",
+        write-record(stream, #"NAMED_NODE",
                      map(method (operand)
                            value-partition-table[value-forward(operand)]
                          end,
@@ -1678,6 +1708,50 @@ define method write-instruction-record
      type-partition-table :: <object-table>,
      value-partition-table :: <explicit-key-collection>,
      attributes-index-table :: <encoding-sequence-table>,
+     value :: <llvm-resume-instruction>)
+ => ();
+  let operands = make(<stretchy-object-vector>);
+  add-value-type(operands, instruction-index,
+                 type-partition-table, value-partition-table,
+                 value.llvm-instruction-operands[0]);
+  write-record(stream, #"INST_RESUME", operands);
+end method;
+
+define method write-instruction-record
+    (stream :: <bitcode-stream>,
+     instruction-index :: <integer>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
+     attributes-index-table :: <encoding-sequence-table>,
+     value :: <llvm-landingpad-instruction>)
+ => ();
+  let operands = make(<stretchy-object-vector>);
+  add!(operands, type-partition-table[type-forward(llvm-value-type(value))]);
+  add-value-type(operands, instruction-index,
+                 type-partition-table, value-partition-table,
+                 value.llvm-instruction-operands[0]);
+  add!(operands, if (value.llvm-landingpad-instruction-cleanup?) 1 else 0 end);
+  add!(operands, value.llvm-instruction-operands.size - 1);
+  for (i from 1 below value.llvm-instruction-operands.size)
+    let operand = value.llvm-instruction-operands[i];
+    if (instance?(type-forward(llvm-value-type(operand)), <llvm-array-type>))
+      add!(operands, 1);        // Filter
+    else
+      add!(operands, 0);        // Catch
+    end if;
+    add-value-type(operands, instruction-index,
+                   type-partition-table, value-partition-table,
+                   operand);
+  end for;
+  write-record(stream, #"INST_LANDINGPAD", operands);
+end method;
+
+define method write-instruction-record
+    (stream :: <bitcode-stream>,
+     instruction-index :: <integer>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
+     attributes-index-table :: <encoding-sequence-table>,
      value :: <llvm-alloca-instruction>)
  => ();
   let operands = make(<stretchy-object-vector>);
@@ -1685,7 +1759,10 @@ define method write-instruction-record
             value.llvm-instruction-operands[0]);
   add!(operands, alignment-encoding(value.llvm-alloca-instruction-alignment));
   write-record(stream, #"INST_ALLOCA",
-               type-partition-table[type-forward(llvm-value-type(value))],
+               type-partition-table
+                 [type-forward(llvm-value-type(value))],
+               type-partition-table
+                 [type-forward(llvm-value-type(value.llvm-instruction-operands[0]))],
                operands);
 end method;
 
@@ -1702,7 +1779,7 @@ define method write-instruction-record
                  type-partition-table, value-partition-table,
                  value.llvm-instruction-operands[0]);
   add!(operands, alignment-encoding(value.llvm-memory-instruction-alignment));
-  add!(operands, if (value.llvm-memory-instruction-volatile?) 1 else 0 end);
+  add!(operands, if (value.llvm-instruction-volatile?) 1 else 0 end);
   write-record(stream, #"INST_LOAD", operands);
 end method;
 
@@ -1721,8 +1798,146 @@ define method write-instruction-record
   add-value(operands, value-partition-table,
             value.llvm-instruction-operands[0]);
   add!(operands, alignment-encoding(value.llvm-memory-instruction-alignment));
-  add!(operands, if (value.llvm-memory-instruction-volatile?) 1 else 0 end);
-  write-record(stream, #"INST_STORE2", operands);
+  add!(operands, if (value.llvm-instruction-volatile?) 1 else 0 end);
+  write-record(stream, #"INST_STORE", operands);
+end method;
+
+define function atomic-ordering-encoding
+    (ordering :: <llvm-atomic-ordering>)
+ => (encoding :: <integer>);
+  select (ordering)
+    #"not-atomic"              => 0;
+    #"unordered"               => 1;
+    #"monotonic"               => 2;
+    #"acquire"                 => 3;
+    #"release"                 => 4;
+    #"acquire-release"         => 5;
+    #"sequentially-consistent" => 6;
+  end
+end function;
+
+define function atomic-scope-encoding
+    (scope :: <llvm-synchronization-scope>)
+ => (encoding :: <integer>);
+  select (scope)
+    #"single-thread" => 0;
+    #"cross-thread"  => 1;
+  end
+end function;
+
+define method write-instruction-record
+    (stream :: <bitcode-stream>,
+     instruction-index :: <integer>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
+     attributes-index-table :: <encoding-sequence-table>,
+     value :: <llvm-atomic-load-instruction>)
+ => ();
+  let operands = make(<stretchy-object-vector>);
+  add-value-type(operands, instruction-index,
+                 type-partition-table, value-partition-table,
+                 value.llvm-instruction-operands[0]);
+  add!(operands, alignment-encoding(value.llvm-memory-instruction-alignment));
+  add!(operands, if (value.llvm-instruction-volatile?) 1 else 0 end);
+  add!(operands,
+       atomic-ordering-encoding(value.llvm-atomic-instruction-ordering));
+  add!(operands, atomic-scope-encoding(value.llvm-atomic-instruction-scope));
+  write-record(stream, #"INST_LOADATOMIC", operands);
+end method;
+
+define method write-instruction-record
+    (stream :: <bitcode-stream>,
+     instruction-index :: <integer>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
+     attributes-index-table :: <encoding-sequence-table>,
+     value :: <llvm-atomic-store-instruction>)
+ => ();
+  let operands = make(<stretchy-object-vector>);
+  add-value-type(operands, instruction-index,
+                 type-partition-table, value-partition-table,
+                 value.llvm-instruction-operands[1]);
+  add-value(operands, value-partition-table,
+            value.llvm-instruction-operands[0]);
+  add!(operands, alignment-encoding(value.llvm-memory-instruction-alignment));
+  add!(operands, if (value.llvm-instruction-volatile?) 1 else 0 end);
+  add!(operands, atomic-ordering-encoding(value.llvm-atomic-instruction-ordering));
+  add!(operands, atomic-scope-encoding(value.llvm-atomic-instruction-scope));
+  write-record(stream, #"INST_STOREATOMIC", operands);
+end method;
+
+define method write-instruction-record
+    (stream :: <bitcode-stream>,
+     instruction-index :: <integer>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
+     attributes-index-table :: <encoding-sequence-table>,
+     value :: <llvm-fence-instruction>)
+ => ();
+  write-record(stream, #"INST_FENCE",
+               atomic-ordering-encoding(value.llvm-atomic-instruction-ordering),
+               atomic-scope-encoding(value.llvm-atomic-instruction-scope));
+end method;
+
+define function atomicrmw-operation-encoding
+    (operation :: <llvm-atomicrmw-operation>)
+ => (encoding :: <integer>);
+  select (operation)
+    #"xchg" => 0;
+    #"add"  => 1;
+    #"sub"  => 2;
+    #"and"  => 3;
+    #"nand" => 4;
+    #"or"   => 5;
+    #"xor"  => 6;
+    #"max"  => 7;
+    #"min"  => 8;
+    #"umax" => 9;
+    #"umin" => 10;
+  end
+end;
+
+define method write-instruction-record
+    (stream :: <bitcode-stream>,
+     instruction-index :: <integer>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
+     attributes-index-table :: <encoding-sequence-table>,
+     value :: <llvm-atomicrmw-instruction>)
+ => ();
+  let operands = make(<stretchy-object-vector>);
+  add-value-type(operands, instruction-index,
+                 type-partition-table, value-partition-table,
+                 value.llvm-instruction-operands[0]);
+  add-value(operands, value-partition-table,
+            value.llvm-instruction-operands[1]);
+  add!(operands, atomicrmw-operation-encoding(value.llvm-atomicrmw-instruction-operation));
+  add!(operands, if (value.llvm-instruction-volatile?) 1 else 0 end);
+  add!(operands, atomic-ordering-encoding(value.llvm-atomic-instruction-ordering));
+  add!(operands, atomic-scope-encoding(value.llvm-atomic-instruction-scope));
+  write-record(stream, #"INST_ATOMICRMW", operands);
+end method;
+
+define method write-instruction-record
+    (stream :: <bitcode-stream>,
+     instruction-index :: <integer>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
+     attributes-index-table :: <encoding-sequence-table>,
+     value :: <llvm-cmpxchg-instruction>)
+ => ();
+  let operands = make(<stretchy-object-vector>);
+  add-value-type(operands, instruction-index,
+                 type-partition-table, value-partition-table,
+                 value.llvm-instruction-operands[0]);
+  add-value(operands, value-partition-table,
+            value.llvm-instruction-operands[1]);
+  add-value(operands, value-partition-table,
+            value.llvm-instruction-operands[2]);
+  add!(operands, if (value.llvm-instruction-volatile?) 1 else 0 end);
+  add!(operands, atomic-ordering-encoding(value.llvm-atomic-instruction-ordering));
+  add!(operands, atomic-scope-encoding(value.llvm-atomic-instruction-scope));
+  write-record(stream, #"INST_CMPXCHG", operands);
 end method;
 
 define method write-instruction-record
@@ -1763,7 +1978,7 @@ define method write-instruction-record
     end for;
   end if;
 
-  write-record(stream, #"INST_CALL2",
+  write-record(stream, #"INST_CALL",
                attributes-index-table[attribute-list-encoding],
                logior(ash(value.llvm-call-instruction-calling-convention, 1),
                       if(value.llvm-call-instruction-tail-call?) 1 else 0 end),
@@ -1909,7 +2124,7 @@ define function write-function
               add!(operands, kind);
               add!(operands, value-partition-table[value-forward(value)]);
             end for;
-            write-record(stream, #"ATTACHMENT2", index, operands);
+            write-record(stream, #"ATTACHMENT", index, operands);
           end for;
         end;
       end unless;
@@ -2053,6 +2268,11 @@ define function write-module
                        1
                      else
                        0
+                     end,
+                     if (global.llvm-global-unnamed-address?)
+                       1
+                     else
+                       0
                      end);
       end for;
 
@@ -2081,7 +2301,12 @@ define function write-module
                        gc-index-table[function.llvm-function-garbage-collector]
                      else
                        0
-                     end if);
+                     end if,
+                     if (function.llvm-global-unnamed-address?)
+                       1
+                     else
+                       0
+                     end);
       end for;
 
       // Aliases
@@ -2135,17 +2360,6 @@ define function write-module
           write-record(stream, #"KIND", index, name);
         end for;
       end;
-    end unless;
-
-    // Write the type symbol table
-    unless (empty?(m.llvm-type-table))
-      with-block-output (stream, $TYPE_SYMTAB_BLOCK, 3)
-        for (type keyed-by name in m.llvm-type-table)
-          write-record(stream, #"ENTRY",
-                       type-partition-table[type-forward(type)],
-                       name);
-        end for;
-      end with-block-output;
     end unless;
 
     // Write the value symbol table

@@ -36,6 +36,7 @@ define table $llvm-keywords :: <string-table>
      "extern_weak" => $%EXTERN_WEAK-token,
      "external" => $%EXTERNAL-token,
      "thread_local" => $%THREAD_LOCAL-token,
+     "unnamed_addr" => $%UNNAMED_ADDR-token,
      "zeroinitializer" => $%ZEROINITIALIZER-token,
      "undef" => $%UNDEF-token,
      "null" => $%NULL-token,
@@ -45,7 +46,17 @@ define table $llvm-keywords :: <string-table>
      "triple" => $%TRIPLE-token,
      "deplibs" => $%DEPLIBS-token,
      "datalayout" => $%DATALAYOUT-token,
+
      "volatile" => $%VOLATILE-token,
+     "atomic" => $%ATOMIC-token,
+     "unordered" => $%UNORDERED-token,
+     "monotonic" => $%MONOTONIC-token,
+     "acquire" => $%ACQUIRE-token,
+     "release" => $%RELEASE-token,
+     "acq_rel" => $%ACQ_REL-token,
+     "seq_cst" => $%SEQ_CST-token,
+     "singlethread" => $%SINGLETHREAD-token,
+
      "nuw" => $%NUW-token,
      "nsw" => $%NSW-token,
      "exact" => $%EXACT-token,
@@ -98,6 +109,9 @@ define table $llvm-keywords :: <string-table>
      "noredzone" => $%NOREDZONE-token,
      "noimplicitfloat" => $%NOIMPLICITFLOAT-token,
      "naked" => $%NAKED-token,
+     "uwtable" => $%UWTABLE-token,
+     "returns_twice" => $%RETURNS_TWICE-token,
+     "nonlazybind" => $%NONLAZYBIND-token,
      
      "type" => $%TYPE-token,
      "opaque" => $%OPAQUE-token,
@@ -122,9 +136,21 @@ define table $llvm-keywords :: <string-table>
      "uno" => $%UNO-token,
      "ueq" => $%UEQ-token,
      "une" => $%UNE-token,
+
+     "xchg" => $%XCHG-token,
+     "nand" => $%NAND-token,
+     "max" => $%MAX-token,
+     "min" => $%MIN-TOKEN,
+     "umax" => $%UMAX-token,
+     "umin" => $%UMIN-token,
      
      "x" => $%X-token,
      "blockaddress" => $%BLOCKADDRESS-token,
+
+     "personality" => $%PERSONALITY-token,
+     "cleanup" => $%CLEANUP-token,
+     "catch" => $%CATCH-token,
+     "filter" => $%FILTER-token,
 
      "void" => $%VOID-token,
      "float" => $%FLOAT-token,
@@ -182,10 +208,11 @@ define table $llvm-keywords :: <string-table>
      "unreachable" => $%UNREACHABLE-token,
 
      "alloca" => $%ALLOCA-token,
-     "malloc" => $%MALLOC-token,
-     "free" => $%FREE-token,
      "load" => $%LOAD-token,
      "store" => $%STORE-token,
+     "cmpxchg" => $%CMPXCHG-token,
+     "atomicrmw" => $%ATOMICRMW-token,
+     "fence" => $%FENCE-token,
      "getelementptr" => $%GETELEMENTPTR-token,
 
      "extractelement" => $%EXTRACTELEMENT-token,
@@ -194,6 +221,8 @@ define table $llvm-keywords :: <string-table>
      "getresult" => $%GETRESULT-token,
      "extractvalue" => $%EXTRACTVALUE-token,
      "insertvalue" => $%INSERTVALUE-token,
+     "landingpad" => $%LANDINGPAD-token,
+     "resume" => $%RESUME-token,
     };
 
 define function llvm-identifier-character?
@@ -298,8 +327,6 @@ define function llvm-asm-parse
           values($%COMMA-token, #f);
         '*' =>
           values($%STAR-token, #f);
-        '\\' =>
-          values($%UPVAL-token, #f);
 
         otherwise =>
           if ('0' <= ch & ch <= '9')
