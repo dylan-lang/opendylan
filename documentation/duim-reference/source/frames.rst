@@ -48,7 +48,7 @@ DUIM-Frames library.
 Overall class hierarchy for the DUIM-Frames library
                                                    
 
-.. figure:: frames-2.gif
+.. figure:: frames-2.png
    :align: center
    :alt: 
 <object>
@@ -129,7 +129,7 @@ Subclasses of the <frame> class`_.
 Subclasses of the *<frame>* class
                                  
 
-.. figure:: frames-2.gif
+.. figure:: frames-2.png
    :align: center
    :alt: 
 <frame>
@@ -174,7 +174,7 @@ various events that can occur in frames. These subclasses are shown in
 Subclasses of the *<frame-event>* class
                                        
 
-.. figure:: frames-2.gif
+.. figure:: frames-2.png
    :align: center
    :alt: 
 <frame-event>
@@ -3524,11 +3524,11 @@ right-aligned.
 A typical dialog
                 
 
-.. figure:: frames-2.gif
+.. figure:: frames-2.png
    :align: center
    :alt: 
 
-.. figure:: frames-4.gif
+.. figure:: frames-4.png
    :align: center
    :alt: 
 By default, all dialogs are modal, that is, when displayed, they take
@@ -8221,11 +8221,11 @@ several pages, each presented as a label in a tab control.
 A property frame
                 
 
-.. figure:: frames-2.gif
+.. figure:: frames-2.png
    :align: center
    :alt: 
 
-.. figure:: frames-5.gif
+.. figure:: frames-5.png
    :align: center
    :alt: 
 The *pages:* init-keyword defines the pages available for the property
@@ -8300,11 +8300,11 @@ instance of `<property-frame>`_.
 A property page
                
 
-.. figure:: frames-2.gif
+.. figure:: frames-2.png
    :align: center
    :alt: 
 
-.. figure:: frames-6.gif
+.. figure:: frames-6.png
    :align: center
    :alt: 
 Internally, this class maps into the Windows property page control.
@@ -9044,11 +9044,11 @@ through a structured task, such as installing an application.
 A wizard frame
               
 
-.. figure:: frames-2.gif
+.. figure:: frames-2.png
    :align: center
    :alt: 
 
-.. figure:: frames-7.gif
+.. figure:: frames-7.png
    :align: center
    :alt: 
 A wizard frame is a multi-page dialog, in which the user specifies
@@ -9225,11 +9225,11 @@ through.
 A wizard page
              
 
-.. figure:: frames-2.gif
+.. figure:: frames-2.png
    :align: center
    :alt: 
 
-.. figure:: frames-8.gif
+.. figure:: frames-8.png
    :align: center
    :alt: 
 Operations

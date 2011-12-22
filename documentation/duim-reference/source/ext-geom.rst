@@ -228,7 +228,7 @@ center point and two vectors that describe a bounding parallelogram of
 the ellipse. The bounding parallelogram is made by adding and
 subtracting the vectors from the center point in the following manner:
 
-.. figure:: ext-geom-2.gif
+.. figure:: ext-geom-2.png
    :align: center
    :alt: 
 

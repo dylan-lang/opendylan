@@ -237,7 +237,7 @@ as follows:
 Overall class hierarchy for the DUIM-Gadgets library
                                                     
 
-.. figure:: gadgets-2.gif
+.. figure:: gadgets-2.png
    :align: center
    :alt: 
 <object>
@@ -332,7 +332,7 @@ the <value-gadget> class`_.
 Subclasses of the *<value-gadget>* class
                                         
 
-.. figure:: gadgets-2.gif
+.. figure:: gadgets-2.png
    :align: center
    :alt: 
 <value-gadget>
@@ -382,7 +382,7 @@ class`_.
 Subclasses of the *<page>* class
                                 
 
-.. figure:: gadgets-2.gif
+.. figure:: gadgets-2.png
    :align: center
    :alt: 
 <page>
@@ -399,11 +399,11 @@ associated with each tab in a tab control.
 A tab control page
                   
 
-.. figure:: gadgets-2.gif
+.. figure:: gadgets-2.png
    :align: center
    :alt: 
 
-.. figure:: gadgets-3.gif
+.. figure:: gadgets-3.png
    :align: center
    :alt: 
 The *<property-page>* class performs a similar job for property frames
@@ -415,11 +415,11 @@ display the user-configurable properties of an application.
 A property page
                
 
-.. figure:: gadgets-2.gif
+.. figure:: gadgets-2.png
    :align: center
    :alt: 
 
-.. figure:: gadgets-4.gif
+.. figure:: gadgets-4.png
    :align: center
    :alt: 
 The *<wizard-page>* class is used to define the elements in each page of
@@ -430,11 +430,11 @@ user in a strict order.
 A tab control page
                   
 
-.. figure:: gadgets-2.gif
+.. figure:: gadgets-2.png
    :align: center
    :alt: 
 
-.. figure:: gadgets-5.gif
+.. figure:: gadgets-5.png
    :align: center
    :alt: 
 Subclasses of <button>
@@ -455,7 +455,7 @@ Overview`_.
 Subclasses of the *<button>* class
                                   
 
-.. figure:: gadgets-2.gif
+.. figure:: gadgets-2.png
    :align: center
    :alt: 
 <button>
@@ -485,7 +485,7 @@ displayed in bold.
 Subclasses of the *<collection-gadget>* class
                                              
 
-.. figure:: gadgets-2.gif
+.. figure:: gadgets-2.png
    :align: center
    :alt: 
 <collection-gadget>
@@ -584,11 +584,11 @@ menu items.
 A selection of button and equivalent menu buttons
                                                  
 
-.. figure:: gadgets-2.gif
+.. figure:: gadgets-2.png
    :align: center
    :alt: 
 
-.. figure:: gadgets-6.gif
+.. figure:: gadgets-6.png
    :align: center
    :alt: 
 Text gadgets
@@ -637,11 +637,11 @@ same menu.
 A variety of simple collection gadgets
                                       
 
-.. figure:: gadgets-2.gif
+.. figure:: gadgets-2.png
    :align: center
    :alt: 
 
-.. figure:: gadgets-10.gif
+.. figure:: gadgets-10.png
    :align: center
    :alt: 
 Value range gadgets
@@ -653,11 +653,11 @@ Dylan range.
 A variety of value range gadgets
                                 
 
-.. figure:: gadgets-2.gif
+.. figure:: gadgets-2.png
    :align: center
    :alt: 
 
-.. figure:: gadgets-11.gif
+.. figure:: gadgets-11.png
    :align: center
    :alt: 
 Sliders, scroll bars, and scroll bars are all examples of value range
@@ -699,11 +699,11 @@ page available:
 A tab control page, a property page, and a wizard page
                                                       
 
-.. figure:: gadgets-2.gif
+.. figure:: gadgets-2.png
    :align: center
    :alt: 
 
-.. figure:: gadgets-12.gif
+.. figure:: gadgets-12.png
    :align: center
    :alt: 
 *Note:* The *<wizard-page>* and *<property-page>* classes are actually
@@ -752,11 +752,11 @@ take a number of children.
 A status bar
             
 
-.. figure:: gadgets-2.gif
+.. figure:: gadgets-2.png
    :align: center
    :alt: 
 
-.. figure:: gadgets-13.gif
+.. figure:: gadgets-13.png
    :align: center
    :alt: 
 In word processing applications, the status bar may also display the
@@ -776,11 +776,11 @@ displayed by clicking on the appropriate tab along the top of the sheet.
 A tab control
              
 
-.. figure:: gadgets-2.gif
+.. figure:: gadgets-2.png
    :align: center
    :alt: 
 
-.. figure:: gadgets-14.gif
+.. figure:: gadgets-14.png
    :align: center
    :alt: 
 This children of a tab control are the pages of information themselves.
@@ -1078,11 +1078,11 @@ or groove. Input and output borders represent “logical” borders.
 Different types of border
                          
 
-.. figure:: gadgets-2.gif
+.. figure:: gadgets-2.png
    :align: center
    :alt: 
 
-.. figure:: gadgets-16.gif
+.. figure:: gadgets-16.png
    :align: center
    :alt: 
 Borders are usually created using the `See
@@ -5031,11 +5031,11 @@ items visually.
 A group box
            
 
-.. figure:: gadgets-2.gif
+.. figure:: gadgets-2.png
    :align: center
    :alt: 
 
-.. figure:: gadgets-22.gif
+.. figure:: gadgets-22.png
    :align: center
    :alt: 
 The *label:* init-keyword specifies a string or icon that is to be used
@@ -5249,7 +5249,7 @@ Description
 
 The class of list boxes.
 
-.. figure:: gadgets-23.gif
+.. figure:: gadgets-23.png
    :align: center
    :alt: 
 The *borders:* init-keyword lets you specify a border around the list
@@ -6551,7 +6551,7 @@ Description
 
 The class of option boxes.
 
-.. figure:: gadgets-25.gif
+.. figure:: gadgets-25.png
    :align: center
    :alt: 
 The *borders:* init-keyword lets you specify a border around the option
@@ -6695,7 +6695,7 @@ Description
 
 The class of progress bar windows.
 
-.. figure:: gadgets-27.gif
+.. figure:: gadgets-27.png
    :align: center
    :alt: 
 The *orientation:* init-keyword lets you specify whether the progress
@@ -6761,7 +6761,7 @@ Description
 
 The class of grouped push buttons.
 
-.. figure:: gadgets-28.gif
+.. figure:: gadgets-28.png
    :align: center
    :alt: 
 The `gadget-value`_ of a push box is always the
@@ -6822,7 +6822,7 @@ Description
 The class of push buttons.The push button gadget provides
 press-to-activate switch behavior.
 
-.. figure:: gadgets-29.gif
+.. figure:: gadgets-29.png
    :align: center
    :alt: 
 When the button is activated (by releasing the pointer button over it),
@@ -6903,7 +6903,7 @@ Description
 
 The class of grouped push buttons in menus.
 
-.. figure:: gadgets-30.gif
+.. figure:: gadgets-30.png
    :align: center
    :alt: 
 Internally, this class maps into the menu Windows control.
@@ -6957,7 +6957,7 @@ Description
 
 The class of push buttons that appear on menus.
 
-.. figure:: gadgets-31.gif
+.. figure:: gadgets-31.png
    :align: center
    :alt: 
 The *default?:* init-keyword sets the default value for the push menu
@@ -7139,11 +7139,11 @@ The class of grouped radio buttons that can appear in menus.
 A radio menu box
                 
 
-.. figure:: gadgets-2.gif
+.. figure:: gadgets-2.png
    :align: center
    :alt: 
 
-.. figure:: gadgets-34.gif
+.. figure:: gadgets-34.png
    :align: center
    :alt: 
 Internally, this class maps into the menu Windows control.
@@ -7645,11 +7645,11 @@ The class of gadgets used as a visual separator.
 A separator
            
 
-.. figure:: gadgets-2.gif
+.. figure:: gadgets-2.png
    :align: center
    :alt: 
 
-.. figure:: gadgets-37.gif
+.. figure:: gadgets-37.png
    :align: center
    :alt: 
 The *orientation:* init-keyword specifies whether the separator is
@@ -8776,11 +8776,11 @@ The class that represents a page in a tab control.
 A tab control page
                   
 
-.. figure:: gadgets-2.gif
+.. figure:: gadgets-2.png
    :align: center
    :alt: 
 
-.. figure:: gadgets-42.gif
+.. figure:: gadgets-42.png
    :align: center
    :alt: 
 Operations
@@ -9055,7 +9055,7 @@ Description
 
 The class of table controls.
 
-.. figure:: gadgets-43.gif
+.. figure:: gadgets-43.png
    :align: center
    :alt: 
 The *view:* init-keyword can be used to specify how the items in the
@@ -9100,11 +9100,11 @@ table controls`_.
 Defining column headings and contents in table controls
                                                        
 
-.. figure:: gadgets-2.gif
+.. figure:: gadgets-2.png
    :align: center
    :alt: 
 
-.. figure:: gadgets-44.gif
+.. figure:: gadgets-44.png
    :align: center
    :alt: 
 If you do not specify both of these init-keywords, you must supply
@@ -9360,7 +9360,7 @@ Description
 
 The class of multiple line text editors.
 
-.. figure:: gadgets-45.gif
+.. figure:: gadgets-45.png
    :align: center
    :alt: 
 The *columns:* and *lines:* init-keywords specify the number of columns
@@ -9430,7 +9430,7 @@ Description
 
 The class of single line text fields.
 
-.. figure:: gadgets-46.gif
+.. figure:: gadgets-46.png
    :align: center
    :alt: 
 The *x-alignment:* init-keyword is used to align the text in the text
@@ -9628,11 +9628,11 @@ clicking the button performs.
 A tool bar
           
 
-.. figure:: gadgets-2.gif
+.. figure:: gadgets-2.png
    :align: center
    :alt: 
 
-.. figure:: gadgets-47.gif
+.. figure:: gadgets-47.png
    :align: center
    :alt: 
 A tool bar is often placed underneath the menu bar of an application,
@@ -9717,7 +9717,7 @@ Description
 
 The class of tree controls.
 
-.. figure:: gadgets-48.gif
+.. figure:: gadgets-48.png
    :align: center
    :alt: 
 The *children-generator:* is the function that is used to generate the
@@ -10769,18 +10769,18 @@ See also
 
 *`with-border`_*
 
-.. |image0| image:: gadgets-15.gif
-.. |image1| image:: gadgets-17.gif
-.. |image2| image:: gadgets-18.gif
-.. |image3| image:: gadgets-19.gif
-.. |image4| image:: gadgets-20.gif
-.. |image5| image:: gadgets-21.gif
-.. |image6| image:: gadgets-24.gif
-.. |image7| image:: gadgets-26.gif
-.. |image8| image:: gadgets-32.gif
-.. |image9| image:: gadgets-33.gif
-.. |image10| image:: gadgets-35.gif
-.. |image11| image:: gadgets-36.gif
-.. |image12| image:: gadgets-38.gif
-.. |image13| image:: gadgets-39.gif
-.. |image14| image:: gadgets-41.gif
+.. |image0| image:: gadgets-15.png
+.. |image1| image:: gadgets-17.png
+.. |image2| image:: gadgets-18.png
+.. |image3| image:: gadgets-19.png
+.. |image4| image:: gadgets-20.png
+.. |image5| image:: gadgets-21.png
+.. |image6| image:: gadgets-24.png
+.. |image7| image:: gadgets-26.png
+.. |image8| image:: gadgets-32.png
+.. |image9| image:: gadgets-33.png
+.. |image10| image:: gadgets-35.png
+.. |image11| image:: gadgets-36.png
+.. |image12| image:: gadgets-38.png
+.. |image13| image:: gadgets-39.png
+.. |image14| image:: gadgets-41.png

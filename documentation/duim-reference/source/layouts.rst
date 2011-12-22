@@ -42,7 +42,7 @@ subclasses defined. See `Subclasses of
 Overall class hierarchy for the DUIM-Layouts library
                                                     
 
-.. figure:: layouts-2.gif
+.. figure:: layouts-2.png
    :align: center
    :alt: 
 <sheet>
@@ -111,7 +111,7 @@ The subclasses of *<layout>* are shown in `Subclasses of the
 Subclasses of the *<layout>* class
                                   
 
-.. figure:: layouts-2.gif
+.. figure:: layouts-2.png
    :align: center
    :alt: 
 <layout>
@@ -172,11 +172,11 @@ In addition to the basic types of layout described above, a subclass of
 Column, row, and pinboard layouts
                                  
 
-.. figure:: layouts-2.gif
+.. figure:: layouts-2.png
    :align: center
    :alt: 
 
-.. figure:: layouts-3.gif
+.. figure:: layouts-3.png
    :align: center
    :alt: 
 DUIM-Layouts Module
@@ -367,11 +367,11 @@ within the specified parameters.
 Three buttons arranged in a column layout
                                          
 
-.. figure:: layouts-2.gif
+.. figure:: layouts-2.png
    :align: center
    :alt: 
 
-.. figure:: layouts-4.gif
+.. figure:: layouts-4.png
    :align: center
    :alt: 
 The *border:* init-keyword provides a border of whitespace around the
@@ -407,7 +407,7 @@ claim a sixth of the available vertical space, the second child would
 claim a third of the vertical space, and the third child would claim
 half the vertical space, as shown in the diagram below.
 
-.. figure:: layouts-5.gif
+.. figure:: layouts-5.png
    :align: center
    :alt: 
 Operations
@@ -1605,11 +1605,11 @@ of them.
 Three buttons arranged in a pinboard layout
                                            
 
-.. figure:: layouts-2.gif
+.. figure:: layouts-2.png
    :align: center
    :alt: 
 
-.. figure:: layouts-6.gif
+.. figure:: layouts-6.png
    :align: center
    :alt: 
 A pinboard layout leaves the subsequent positions of any children placed
@@ -1773,11 +1773,11 @@ the specified parameters.
 Three buttons arranged in a row layout
                                       
 
-.. figure:: layouts-2.gif
+.. figure:: layouts-2.png
    :align: center
    :alt: 
 
-.. figure:: layouts-7.gif
+.. figure:: layouts-7.png
    :align: center
    :alt: 
 The *border:* init-keyword provides a border of whitespace around the
@@ -1813,7 +1813,7 @@ sixth of the available horizontal space, the second child would claim a
 third of the horizontal space, and the third child would claim half the
 horizontal space, as shown in the diagram below.
 
-.. figure:: layouts-8.gif
+.. figure:: layouts-8.png
    :align: center
    :alt: 
 Operations
@@ -2646,7 +2646,7 @@ space, the second column would claim a third of the horizontal space,
 and the third column would claim half the horizontal space, as shown in
 the diagram below.
 
-.. figure:: layouts-9.gif
+.. figure:: layouts-9.png
    :align: center
    :alt: 
 Alternatively, if the value *#(1, 2, 3)* is specified for the
@@ -2656,14 +2656,14 @@ vertical space, the second row would claim a third of the vertical
 space, and the third row would claim half the vertical space, as shown
 in the diagram below.
 
-.. figure:: layouts-10.gif
+.. figure:: layouts-10.png
    :align: center
    :alt: 
 Finally, if both the *x-ratios:* and *y-ratios:* init-keywords are
 specified, then each child in the layout is affected individually, as
 shown in the diagram below.
 
-.. figure:: layouts-11.gif
+.. figure:: layouts-11.png
    :align: center
    :alt: 
 By default, all the children of a table layout are left-aligned. You can

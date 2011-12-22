@@ -43,7 +43,7 @@ DUIM-Extended-Geometry library exposes some subclasses of *<area>* and
 The <region> class and its subclasses
                                      
 
-.. figure:: geom-2.gif
+.. figure:: geom-2.png
    :align: center
    :alt: 
 <region>
@@ -85,7 +85,7 @@ subclasses of *<transform-error>* are all specific to particular errors.
 The <transform-error> class and its subclasses
                                               
 
-.. figure:: geom-2.gif
+.. figure:: geom-2.png
    :align: center
    :alt: 
 <transform-error>

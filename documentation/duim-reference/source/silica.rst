@@ -166,7 +166,7 @@ of the subclasses of *<event>*.
 Overall class hierarchy for the DUIM-Sheets library
                                                    
 
-.. figure:: silica-2.gif
+.. figure:: silica-2.png
    :align: center
    :alt: 
 <object>
@@ -261,7 +261,7 @@ library.
 Subclasses of the *<event>* class
                                  
 
-.. figure:: silica-2.gif
+.. figure:: silica-2.png
    :align: center
    :alt: 
 <event>
@@ -345,7 +345,7 @@ that can occur on a device connected to the computer.
 Subclasses of the *<device-event>* class
                                         
 
-.. figure:: silica-2.gif
+.. figure:: silica-2.png
    :align: center
    :alt: 
 <device-event>
@@ -1298,11 +1298,11 @@ environment the application is running in.
 The standard Choose Color dialog
                                 
 
-.. figure:: silica-2.gif
+.. figure:: silica-2.png
    :align: center
    :alt: 
 
-.. figure:: silica-3.gif
+.. figure:: silica-3.png
    :align: center
    :alt: 
 If the *frame* argument is specified, the top-level sheet of *frame*
@@ -1530,11 +1530,11 @@ the file chosen by the user.
 Typical appearance of a choose-file dialog
                                           
 
-.. figure:: silica-2.gif
+.. figure:: silica-2.png
    :align: center
    :alt: 
 
-.. figure:: silica-4.gif
+.. figure:: silica-4.png
    :align: center
    :alt: 
 If the *frame* argument is specified, the top-level sheet of *frame*
@@ -7158,11 +7158,11 @@ user.
 Simple output from notify-user
                               
 
-.. figure:: silica-2.gif
+.. figure:: silica-2.png
    :align: center
    :alt: 
 
-.. figure:: silica-5.gif
+.. figure:: silica-5.png
    :align: center
    :alt: 
 The *message-string* is the message that is displayed in the dialog. The

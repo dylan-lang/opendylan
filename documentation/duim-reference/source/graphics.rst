@@ -239,11 +239,11 @@ the inside of the figure is on is used to decide.
 Two triangles
              
 
-.. figure:: graphics-2.gif
+.. figure:: graphics-2.png
    :align: center
    :alt: 
 
-.. figure:: graphics-4.gif
+.. figure:: graphics-4.png
    :align: center
    :alt: 
 The reason for choosing the decision point half a pixel offset from the
@@ -261,11 +261,11 @@ points, leading to an undesirable lopsided figure.
 Choosing any two of the shaded pixels causes asymmetry
                                                       
 
-.. figure:: graphics-2.gif
+.. figure:: graphics-2.png
    :align: center
    :alt: 
 
-.. figure:: graphics-5.gif
+.. figure:: graphics-5.png
    :align: center
    :alt: 
 If all four boundary points had been chosen instead, the result would be
@@ -279,11 +279,11 @@ pixel, but in the right-hand figure, it is not.
 Two forms of a circle inscribed in a square
                                            
 
-.. figure:: graphics-2.gif
+.. figure:: graphics-2.png
    :align: center
    :alt: 
 
-.. figure:: graphics-6.gif
+.. figure:: graphics-6.png
    :align: center
    :alt: 
 It is for this reason that the decision point is at the center of the
@@ -293,11 +293,11 @@ aesthetically pleasing circle`_.
 An aesthetically pleasing circle
                                 
 
-.. figure:: graphics-2.gif
+.. figure:: graphics-2.png
    :align: center
    :alt: 
 
-.. figure:: graphics-7.gif
+.. figure:: graphics-7.png
    :align: center
    :alt: 
 A consequence of these rendering conventions is that, when the start or
@@ -327,11 +327,11 @@ rectangle, the left as the “thinnest visible” line.
 Two examples of lines of thickness 1
                                     
 
-.. figure:: graphics-2.gif
+.. figure:: graphics-2.png
    :align: center
    :alt: 
 
-.. figure:: graphics-8.gif
+.. figure:: graphics-8.png
    :align: center
    :alt: 
 For thick lines, a platform may choose to draw the exact tilted
@@ -344,11 +344,11 @@ depicted in `Two examples of lines of thickness
 Two examples of lines of thickness 2
                                     
 
-.. figure:: graphics-2.gif
+.. figure:: graphics-2.png
    :align: center
    :alt: 
 
-.. figure:: graphics-9.gif
+.. figure:: graphics-9.png
    :align: center
    :alt: 
 The decision about which side of the shape to take when a boundary line
@@ -366,11 +366,11 @@ Two possible definitions of horizontal lines. Left figure is X11
 definition
                                                                            
 
-.. figure:: graphics-2.gif
+.. figure:: graphics-2.png
    :align: center
    :alt: 
 
-.. figure:: graphics-10.gif
+.. figure:: graphics-10.png
    :align: center
    :alt: 
 Drawing using path related functions
@@ -559,11 +559,11 @@ Draws an arc in the current path on *drawable*.
 Description of the arguments for arc-to
                                        
 
-.. figure:: graphics-2.gif
+.. figure:: graphics-2.png
    :align: center
    :alt: 
 
-.. figure:: graphics-11.gif
+.. figure:: graphics-11.png
    :align: center
    :alt: 
 The center of the arc is defined by (*center-x*, *center-y*), the
@@ -705,7 +705,7 @@ Please note that *arc-to* does not currently support arcs whose
 orientation is not axis-aligned ellipses. For all practical purposes,
 this means that *radius-1-dy* and *radius-2-dx* must always be 0.
 
-.. figure:: graphics-12.gif
+.. figure:: graphics-12.png
    :align: center
    :alt: 
 The arguments *start-angle* and *end-angle* define the extent of the arc
@@ -1171,7 +1171,7 @@ arrow is drawn.
 The arguments *head-length* and *head-width* specify the length and
 width of the arrow-head respectively, in pixels.
 
-.. figure:: graphics-13.gif
+.. figure:: graphics-13.png
    :align: center
    :alt: 
 The function *draw-arrow\** is identical to *draw-arrow*, except that
@@ -1381,7 +1381,7 @@ Please note that *draw-ellipse* does not currently support
 non-axis-aligned ellipses. For all practical purposes, this means that
 *radius-1-dy* and *radius-2-dx* must always be 0.
 
-.. figure:: graphics-14.gif
+.. figure:: graphics-14.png
    :align: center
    :alt: 
 The arguments *start-angle* and *end-angle* let you draw just a section
@@ -1650,7 +1650,7 @@ radii defined by *x-radius* and *y-radius*, using the current pen.
 
 Ovals are similar to ellipses, except that they have straight edges.
 
-.. figure:: graphics-15.gif
+.. figure:: graphics-15.png
    :align: center
    :alt: 
 If *filled?* is *#t* then the oval will be filled, using the current
@@ -1963,7 +1963,7 @@ dashing at the starting point of the first segment.
 Note that the specified points could represent either top or bottom
 corners: only one rectangle is possible between and pair of points.
 
-.. figure:: graphics-16.gif
+.. figure:: graphics-16.png
    :align: center
    :alt: 
 If *filled?* is *#t* then the rectangle will be filled, using the
@@ -2104,7 +2104,7 @@ Draws a regular polygon on *drawable*, using the current pen, that
 touches the specified points, and has the specified number of sides.
 Dashed lines start dashing at the starting point of the first segment.
 
-.. figure:: graphics-17.gif
+.. figure:: graphics-17.png
    :align: center
    :alt: 
 If *filled?* is *#t* then the polygon will be filled, using the current
@@ -2185,7 +2185,7 @@ Description
 Draws text from *text* on *drawable* at (*x*,*y*). Text is drawn in
 the direction of the point (*towards-x*,*towards-y*).
 
-.. figure:: graphics-18.gif
+.. figure:: graphics-18.png
    :align: center
    :alt: 
 If *start* and *end* are specified, then only a section of text is
@@ -2279,7 +2279,7 @@ Draws a triangle on *drawable* between the specified points, using the
 current pen. Dashed lines start dashing at the starting point of the
 first segment.
 
-.. figure:: graphics-19.gif
+.. figure:: graphics-19.png
    :align: center
    :alt: 
 If *filled?* is *#t* then the triangle will be filled, using the current
