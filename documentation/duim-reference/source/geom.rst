@@ -15,12 +15,12 @@ contains complete reference entries for each exposed interface.
 The class hierarchy for DUIM-Geometry
 =====================================
 
-The base classes for classes in the DUIM-Geometry library are *<region>*
-and *<transform>*, both of which are subclasses of *<object>*. While
-the *<region>* class has a number of subclasses, *<transform>* has no
+The base classes for classes in the DUIM-Geometry library are ``<region>``
+and ``<transform>``, both of which are subclasses of ``<object>``. While
+the ``<region>`` class has a number of subclasses, ``<transform>`` has no
 direct subclasses.
 
--  *<transform>* The superclass of all transforms. A transform describes
+-  ``<transform>`` The superclass of all transforms. A transform describes
    the mapping of one set of points onto another. There are one or more
    subclasses of `See <transform> <geom.htm#33417>`_ that implement
    transforms. These subclasses have implementation-dependent names
@@ -28,7 +28,7 @@ direct subclasses.
    transformation classes provided by DUIM are immutable.
 
 In addition, there are a number of error classes which may be signalled.
-These are all subclasses of *<error>*.
+These are all subclasses of ``<error>``.
 
 The <region> class and its subclasses
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
