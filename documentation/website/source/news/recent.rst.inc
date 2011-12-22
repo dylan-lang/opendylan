@@ -1,9 +1,9 @@
 
-**Dswank - a SLIME back-end**
+**Dswank - emacs and SLIME**
 *2011-12-12*
 
-We developed a back-end for SLIME, the superior lisp interaction
-mode for emacs. Now, you can browse the class hierarchy, get
+We developed DIME, the Dylan interaction mode for emacs, based
+on SLIME. Now, you can browse the class hierarchy, get
 argument lists, locate definitions, compile, view warnings and
 more, all from within emacs!
 

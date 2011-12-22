@@ -81,9 +81,9 @@ Documentation
 
     <h3>Tools</h3>
 
-`Development inside emacs using SLIME <../news/2011/12/12/dswank.html>`_
+`Development inside emacs using DIME <../news/2011/12/12/dswank.html>`_
 
-    An exciting look at using SLIME and emacs for Dylan development.
+    An exciting look at using DIME and emacs for Dylan development.
 
 .. raw:: html
 
