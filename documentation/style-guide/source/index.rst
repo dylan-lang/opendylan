@@ -24,12 +24,6 @@ use a different style, which is noted in this guide.
 Controversial comments
 ======================
 
--  return values indented two spaces like case (present in this guide,
-   but not used in Dylan book style.)
--  ``#key`` indented two spaces like binary operators (present in this
-   guide, but not used in Dylan book style.
--  keith likes a shorter local methods style than jonathan is willing to
-   accept.
 -  scott thinks that matching definition names (e.g., *end class <bolt>*)
    are a bad idea because they are hard to maintain in the face of
    name changes.
@@ -163,19 +157,32 @@ example in a slot specification or in a parameter list:
 End words
 =========
 
-Use end words for everything (e.g., ``if``, ``block``, ...)
+"End words" are the optional text that follows ``end`` in statements.
+End words should always be used for top-level definitions, but
+otherwise it is up to the programmer.  This section provides some
+guidelines for how to decide when to use them and when not to.  If in
+doubt, err on the side of using them.
 
-Use name as well (e.g., method, class, ...) except you can abbreviate
-both to allow for inlined expressions.
+Generally speaking, end words should be used if the beginning of the
+block they terminate is more than about 15 lines away.  They become
+more useful the more deeply nested the code is.  Sometimes this might
+indicate a need to break the code down into multiple (possibly local)
+functions.
 
-.. I strongly disagree with this.  End words are too verbose to appear
-   everywhere.  I don't even like to see them at the end of top-level
-   definitions if the definition is less than, say, 10 lines.  I DO
-   like to see them on longer definitions, both at the end of the
-   definition and at the end of particularly large blocks therein.  I
-   think they would be even less needed if we used > 2 space indent.
-   --cgay
-   
+**Pros:**
+
+* The compiler warns when end words don't match.  This could alert
+  the programmer to mistakes in nesting.
+
+* When reading source code in a flat file, the end word gives more
+  context by telling you what the previous definition is.
+
+**Cons:**
+
+* The compiler warns when end words don't match.  This sometimes
+  results in otherwise unnecessary maintenance.
+
+* End words increase verbosity of the code.
 
 
 Semicolons
