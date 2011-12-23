@@ -52,19 +52,19 @@ functions like the following:
 
 .. code-block:: dylan
 
-    define method shoe-size(person :: <string>)
+    define method shoe-size (person :: <string>)
       if (person = "Larry")
-        14;
+        14
       else
-        11;
-      end if;
+        11
+      end if
     end method;
 
 The function ``shoe-size`` has one argument,
 a string, and an untyped return value. (If this function didn't link
 against external code, the compiler could easily infer the return
 type.)  If ``person`` equals ``"Larry"``,
-then the ``if`` statement evaluates to 14, otherwise
+then the ``if`` statement returns 14, otherwise
 it returns 11. Since no other statements follow the ``if``,
 its return value is used as the return value of the entire
 function.
@@ -79,7 +79,7 @@ more :term:`imperative` idiom:
       if (person = "Joe")
         the-size := 14;
       end if;
-      the-size;
+      the-size
     end method;
 
 Algebraic Infix Syntax
@@ -87,7 +87,7 @@ Algebraic Infix Syntax
 
 Languages based on LISP typically use a notation called
 :term:`fully-parenthesized prefix syntax`. This consists
-of innumerable nested parentheses, as seen in the following Scheme
+of nested parentheses, as seen in the following Scheme
 version of the ``shoe-size`` function:
 
 .. code-block:: scheme
@@ -134,7 +134,7 @@ Languages with :term:`garbage collection` have no need of a ``free`` or
 ``delete`` operator, because unused heap memory gets reclaimed automatically
 by the language runtime. This reduces the complexity of source code,
 eliminates the need of keeping reference counts for shared objects,
-and prevents most memory allocation bugs and all memory leaks.
+and prevents most memory allocation bugs and a major source of memory leaks.
 
 Over the years, garbage collection has gained a reputation for
 inefficiency. A large, object-oriented LISP program performed
@@ -162,9 +162,9 @@ time needlessly copying data.
 Why Not Dylan?
 ==============
 
-Dylan's greatest weakness is the lack of a battle-hardened compiler
-and IDE.
-
-Even when good Dylan environments become available, experience
-suggests that Dylan applications will use more RAM than programs
-written in traditional languages.
+Dylan's greatest weaknesses are its lack of a battle-hardened compiler
+and IDE, and a large user base (and hence a large set of libraries).
+However, the compiler and IDE themselves are written in Dylan so there
+*is* somewhere around one million lines of Dylan code.  You probably
+want to consider very carefully before using Open Dylan for mission
+critical code.
