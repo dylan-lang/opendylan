@@ -2,11 +2,11 @@
 An Introduction to Dylan
 ########################
 
-An Introduction to Dylan introduces the Dylan
-programming language. Dylan is a object-oriented dynamic language
-designed for efficient compilation. It uses an algebraic infix syntax
-similar to Pascal or C, but supports an object model not unlike the
-Common Lisp Object System (CLOS).
+This document introduces the Dylan programming language. Dylan is an
+object-oriented dynamic language designed for efficient
+compilation. It uses an algebraic infix syntax similar to Pascal or C,
+but supports an object model not unlike the Common Lisp Object System
+(CLOS).
 
 This tutorial is written primarily for those with solid
 programming experience in C++ or another object-oriented static
