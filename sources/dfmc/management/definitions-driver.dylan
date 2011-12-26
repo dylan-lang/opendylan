@@ -47,7 +47,7 @@ define function do-timing-compilation-phase
      #key progress? = #f, accumulate?, #all-keys)
   progress? & progress-line("%s of %s timing begun.", phase, ld);
   let (elapsed-seconds, elapsed-microseconds, allocated-space) = values(#f, #f, #f);
-  profiling(cpu-time-seconds, cpu-time-microseconds) //, allocation)
+  profiling(cpu-time-seconds, cpu-time-microseconds, allocation)
     if (*dfmc-profile-allocation?*)
       profiling(allocation-stats =
 		  list(description: format-to-string
@@ -60,9 +60,8 @@ define function do-timing-compilation-phase
   results
     elapsed-seconds := cpu-time-seconds;
     elapsed-microseconds := cpu-time-microseconds;
-    //allocated-space := allocation / 1000000.0;
+    allocated-space := allocation / 1000000.0;
   end;
-  allocated-space := 1.0;
   let elapsed-time = elapsed-seconds + elapsed-microseconds / 1000000.0;
   let snap =
     accumulate? &

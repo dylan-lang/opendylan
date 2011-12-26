@@ -3823,7 +3823,7 @@ end method;
 // Must be a type.
 define method ^top-level-eval-type (fragment, #key on-failure = #f)
   // Try quickie top level eval.
-  let result 
+  let result
     = ^top-level-eval(fragment, on-failure: on-failure);
   // Try harder if the above failed.
   let result
@@ -3885,21 +3885,21 @@ define function parse-parameters-into
         end,
         method insert-rest-variable! (name)
           push-variable!(name,
-			 make(<lexical-rest-variable>,
-			      name: name,
-			      environment: lambda-env));
-	end;
+                         make(<lexical-rest-variable>,
+                              name: name,
+                              environment: lambda-env));
+        end;
   for (var-spec in required-specs)
     let name = spec-variable-name(var-spec);
     push-variable!(name,
-		   make(<lexical-required-variable>,
-			name:
-			  name,
-			environment: 
-			  lambda-env,
-			// TODO: dynamic type expressions
-			specializer: 
-			  &eval(env, spec-type-expression(var-spec))));
+                   make(<lexical-required-variable>,
+                        name:
+                          name,
+                        environment:
+                          lambda-env,
+                        // TODO: dynamic type expressions
+                        specializer:
+                          &eval(env, spec-type-expression(var-spec))));
   end;
   if (spec-rest?)
     insert-rest-variable!

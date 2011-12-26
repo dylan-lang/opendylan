@@ -105,8 +105,6 @@ define open generic library-progress-report(context,
 define open generic library-condition-report(context, 
                                              condition :: <condition>);
 
-define open generic visualization-report (key :: <symbol>, data);
-
 // this macro is called by clients to reset the progress
 // we cannot synchronize in case of recursive invocations
 define macro with-progress-reports

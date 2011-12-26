@@ -146,8 +146,6 @@ define constant $default-progress-message = "";
 
 define variable *warning-callback* :: false-or(<function>) = #f;
 define variable *progress-callback* :: false-or(<function>) = #f;
-define variable *visualization-callback* :: false-or(<function>) = #f;
-
 define variable *progress-section* :: <string> = "";
 define variable *progress-message* :: <string> = "";
 define variable *progress-internal?* :: <boolean> = #f;
@@ -156,12 +154,6 @@ define variable *progress-range* :: <integer> = 100;
 
 // Switch off all compiler messages
 show-compiler-messages?() := #f;
-
-define sealed sideways method visualization-report (key :: <symbol>, data)
-  if (*visualization-callback*)
-    *visualization-callback*(key, data);
-  end;
-end;
 
 define function update-project-progress () => ()
   *progress-callback*
@@ -226,19 +218,17 @@ define method start-progress-reporting
      progress-callback :: false-or(<function>),
      #rest keys, #key, #all-keys) => ()
   let project = project-object.ensure-project-proxy;
-  apply(start-progress-reporting, project, keys)
+  apply(start-progress-reporting, project, progress-callback, keys)
 end;
 
 define method start-progress-reporting
     (project :: <project>,
      progress-callback :: false-or(<function>),
      #key section :: false-or(<string>),
-          warning-callback :: false-or(<function>),
-          visualization-callback :: false-or(<function>))
+          warning-callback :: false-or(<function>))
  => ()
   *warning-callback*  := warning-callback;
   *progress-callback* := progress-callback;
-  *visualization-callback* := visualization-callback;
   *progress-position* := 0;
   *progress-range*    := 100;
   if (section)
@@ -329,7 +319,8 @@ define sealed method build-project
           progress-callback :: false-or(<function>), error-handler,
           save-databases? = #f,
           process-subprojects? = #t,
-          messages = #"external")
+          messages = #"external",
+          visualization = #f)
  => (built? :: <boolean>)
   block ()
     let project = project-object.ensure-project-proxy;
@@ -352,7 +343,8 @@ define sealed method build-project
                                  abort-on-serious-warnings?: #f,
                                  assembler-output?: assembler-output?,
                                  dfm-output?:       dfm-output?,
-                                 harp-output?:      harp-output?)
+                                 harp-output?:      harp-output?,
+                                 visualization:     visualization)
               else
                 compile-library(project,
                                 force-parse?:   clean?,
@@ -362,7 +354,8 @@ define sealed method build-project
                                 abort-on-serious-warnings?: #f,
                                 assembler-output?: assembler-output?,
                                 dfm-output?:       dfm-output?,
-                                harp-output?:      harp-output?)
+                                harp-output?:      harp-output?,
+                                visualization:     visualization)
               end
             end
           end

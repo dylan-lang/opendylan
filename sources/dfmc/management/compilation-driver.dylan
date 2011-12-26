@@ -569,7 +569,7 @@ define function ensure-library-dfm-computed (ld :: <compilation-context>)
   debug-out(#"internal", "DFM generation: %s\n", ld);
   timing-compilation-phase ("DFM generation" of ld)
     for-library-method ("Computing code models for", $compilation of m in ld)
-      visualization-report(#"beginning", pair(m, #("initial DFM models")));
+      *dump-dfm-method* & *dump-dfm-method*(#"beginning", pair(m, #("initial DFM models")));
       ensure-method-dfm-or-heap(m);
     end;
   end;

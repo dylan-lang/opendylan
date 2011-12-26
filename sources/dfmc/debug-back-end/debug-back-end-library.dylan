@@ -11,7 +11,7 @@ define library dfmc-debug-back-end
   use dfmc-back-end;
   use dfmc-reader;
   use dfmc-conversion;
-  use dfmc-management;
+//  use dfmc-management;
   use dfmc-typist;
   export dfmc-debug-back-end;
 end library;
@@ -24,7 +24,7 @@ define module dfmc-debug-back-end
   use dfmc-back-end;
   use dfmc-reader;
   use dfmc-conversion;
-  use dfmc-management;
+//  use dfmc-management;
   use dfmc-typist;
 
   export

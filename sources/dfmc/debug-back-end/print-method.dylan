@@ -51,7 +51,9 @@ end method;
 
 define compiler-sideways method print-method (stream :: <stream>, 
       o :: <&method>, #key css, output-format, header-only)
-  list(list(#"method", "foo", 0, #(), #()))
+  if (output-format == #"sexp")
+    list(list(#"method", "foo", 0, #(), #()))
+  end
 end;
 
 define compiler-sideways method print-method (stream :: <stream>, 
@@ -219,42 +221,28 @@ end;
 
 define method output-computation-sexp
     (c :: <computation>)
-  let res = #();
   let str = make(<string-stream>, direction: #"output");
-  print-computation(str, c);
-  res := add!(res, str.stream-contents);
-  add!(res, c.computation-id);
+  print-computation-sexp(str, c);
+  list(c.computation-id, str.stream-contents)
 end method;
 
 define method output-computation-sexp
     (c :: <loop>)
-  let res = #();
-  res := add!(res, #()); //get-computation-ids(c.loop-body, c.next-computation));
-  res := add!(res, #"LOOP");
-  add!(res, c.computation-id);
+  list(c.computation-id, #"LOOP", #())
 end method;
 
 define method output-computation-sexp
     (c :: <loop-call>)
-  let res = #();
-  //res := add!(res, computation-id(loop-call-loop(c)));
-  res := add!(res, 0);
-  res := add!(res, #"LOOP-CALL");
-  add!(res, c.computation-id);
+  list(c.computation-id, #"LOOP-CALL", 0)
 end method;
 
 define method output-computation-sexp
     (c :: <if>)
-  let res = #();
-  res := add!(res, #()); //get-computation-ids(c.alternative, c.next-computation));
-  res := add!(res, #()); //get-computation-ids(c.consequent, c.next-computation));
-  res := add!(res, list(format-to-string("%=", c.test)));
-  res := add!(res, #"IF");
-  add!(res, c.computation-id);
+  list(c.computation-id, #"IF", list(format-to-string("%=", c.test)), #(), #())
 end method;
 
 define method output-computation-sexp
-    (c :: <bind-exit>) 
+    (c :: <bind-exit>)
   let res = #();
   res := add!(res, get-computation-ids(c.body, c.next-computation));
   //res := add!(res, c.entry-state.temporary-id);
@@ -263,7 +251,7 @@ define method output-computation-sexp
 end method;
 
 define method output-computation-sexp
-    (c :: <unwind-protect>) 
+    (c :: <unwind-protect>)
   let res = #();
   res := add!(res, get-computation-ids(c.cleanups, c.next-computation));
   res := add!(res, get-computation-ids(c.body, c.next-computation));

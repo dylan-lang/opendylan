@@ -229,7 +229,6 @@ define module dfmc-progress-reports
 	     internal-progress-text,
 	     library-progress-report,
 	     library-condition-report,
-             visualization-report,
 	     conditions-for,
 
 	     // Needed for macro hygiene in the emulator
