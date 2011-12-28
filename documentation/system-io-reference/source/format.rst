@@ -90,11 +90,11 @@ Signature
 
 Arguments
 
--  *stream* An instance of ``<stream>``. The stream to which formatted
+-  *stream* An instance of *<stream>*. The stream to which formatted
    output should be sent.
--  *control-string* An instance of ``<string>``. A string containing
+-  *control-string* An instance of *<string>*. A string containing
    format directives.
--  *arguments* Instances of ``<object>``.
+-  *arguments* Instances of *<object>*.
 
 Values
 
@@ -122,9 +122,9 @@ Outputs a control string to a stream.
 
 Arguments
 
--  *stream* An instance of ``<stream>``.
--  *control-string* An instance of ``<byte-string>``.
--  *arguments* Instances of ``<object>``.
+-  *stream* An instance of *<stream>*.
+-  *control-string* An instance of *<byte-string>*.
+-  *arguments* Instances of *<object>*.
 
 Values
 
@@ -133,7 +133,7 @@ None.
 Description
 
 There is one method for *format*, and it is specialized to
-``<byte-string>``.
+*<byte-string>*.
 
 format-to-string
 ----------------
@@ -146,12 +146,12 @@ Returns a formatted string based on a format control string.
 
 Arguments
 
--  *control-string* An instance of ``<string>``.
--  *arguments* Instances of ``<object>``.
+-  *control-string* An instance of *<string>*.
+-  *arguments* Instances of *<object>*.
 
 Values
 
--  *result* An instance of ``<string>``.
+-  *result* An instance of *<string>*.
 
 Description
 
@@ -169,17 +169,17 @@ Returns a formatted string based on a format control string.
 
 Arguments
 
--  *control-string* An instance of ``<byte-string>``.
--  *arguments* Instances of ``<object>``.
+-  *control-string* An instance of *<byte-string>*.
+-  *arguments* Instances of *<object>*.
 
 Values
 
--  *result* An instance of ``<byte-string>``.
+-  *result* An instance of *<byte-string>*.
 
 Description
 
 There is one method for *format-to-string*. The *control-string*
-argument must be a ``<byte-string>``. Result is a ``<byte-string>``.
+argument must be a *<byte-string>*. Result is a *<byte-string>*.
 
 print-message
 -------------
@@ -192,8 +192,8 @@ Prints an object to a stream.
 
 Arguments
 
--  *object* An instance of ``<object>``.
--  *stream* An instance of ``<stream>``.
+-  *object* An instance of *<object>*.
+-  *stream* An instance of *<stream>*.
 
 Values
 
@@ -232,8 +232,8 @@ Prints a condition to a stream as an error message.
 
 Arguments
 
--  *condition* An instance of ``<condition>``.
--  *stream* An instance of ``<stream>``.
+-  *condition* An instance of *<condition>*.
+-  *stream* An instance of *<stream>*.
 
 Values
 
@@ -243,7 +243,7 @@ Description
 
 Prints *condition* as an error message, as described for the Dylan *%S*
 format directive. You should not specialize the *print-message* protocol
-for subclasses of ``<condition>``, but instead extend the *print-message*
+for subclasses of *<condition>*, but instead extend the *print-message*
 protocol to new condition objects by specializing methods on
 *report-condition*.
 
@@ -264,8 +264,8 @@ Signature
 
 Arguments
 
--  *symbol* An instance of ``<symbol>``.
--  *stream* An instance of ``<stream>``.
+-  *symbol* An instance of *<symbol>*.
+-  *stream* An instance of *<stream>*.
 
 Values
 
@@ -295,7 +295,7 @@ Signature
 Arguments
 
 -  *object* An instance of *type-union(<string>, <character>)*.
--  *stream* An instance of ``<stream>``.
+-  *stream* An instance of *<stream>*.
 
 Values
 

@@ -39,8 +39,8 @@ Signature
 
 Arguments
 
-- *control-string* An instance of ``<string>``.
-- *arguments* Instances of ``<object>``.
+- *control-string* An instance of *<string>*.
+- *arguments* Instances of *<object>*.
 
 Values
 
@@ -72,8 +72,8 @@ Signature
 
 Arguments
 
-- *control-string* An instance of ``<byte-string>``.
-- *arguments* Instances of ``<object>``.
+- *control-string* An instance of *<byte-string>*.
+- *arguments* Instances of *<object>*.
 
 Values
 
@@ -82,4 +82,4 @@ None.
 Description
 
 Formats its arguments on the standard output. There is one method for
-*format-out*, and it is specialized to instances of ``<byte-string>``.
+*format-out*, and it is specialized to instances of *<byte-string>*.

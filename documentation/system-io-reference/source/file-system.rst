@@ -18,21 +18,21 @@ Types specific to file system operations
 The File-System module contains a number of types specifically designed
 for use by interfaces in the module.
 
-Firstly, the type ``<file-type>`` represents the types of entity that may
+Firstly, the type *<file-type>* represents the types of entity that may
 be present on a given file system. Three entities are allowed: a file, a
 directory, and a link to a file or directory located elsewhere in the
 file system. Together, these represent any entity that can be placed on
-a file system mounted on the local machine. The ``<file-type>`` type is
+a file system mounted on the local machine. The *<file-type>* type is
 defined as
 
 one-of(#"file", #"directory", #"link")
                                       
 
-The type ``<pathname>`` represents the set of classes that may be used to
+The type *<pathname>* represents the set of classes that may be used to
 represent pathnames that indicate entities on the file system. It is
-defined as a type alias of ``<string>``.
+defined as a type alias of *<string>*.
 
-Lastly, the type ``<copy/rename-disposition>`` represents the possible
+Lastly, the type *<copy/rename-disposition>* represents the possible
 values of the *if-exists:* keyword to the functions *rename-file* and
 *copy-file* described in `Manipulating
 files <file-system.htm#92027>`_. It is defined as
@@ -109,7 +109,7 @@ specified by the value of *key*, which must be one of the following:
 The type of *new-value* (and hence the type of the return value of
 *file-property-setter*), is determined by the value of *key*. For
 example, if *key* is *#"readable?"*, then *new-value* should be an
-instance of ``<boolean>``. For full details, see `
+instance of *<boolean>*. For full details, see `
 file-property-setter <file-system.htm#16395>`_.
 
 Manipulating directories
@@ -179,7 +179,7 @@ The *function* must have the following signature:
                                           
 
 where *directory* is the name of the directory specified to
-*do-directory*, *name* is an instance of ``<byte-string>``, and *type*
+*do-directory*, *name* is an instance of *<byte-string>*, and *type*
 is an instance of `<file-type> <file-system.htm#48717>`_.
 
 Within *function*, you can concatenate the values of *directory* and
@@ -215,7 +215,7 @@ Function
 home-directory () => *home-directory*
                                      
 
-Returns the ``<pathname>`` of the current value of the home directory. You
+Returns the *<pathname>* of the current value of the home directory. You
 can use the return value of *home-directory* in conjunction with
 *concatenate* to specify the pathname of any entity in the home
 directory.
@@ -241,7 +241,7 @@ Function
 temp-directory () => *temp-directory*
                                      
 
-Returns the ``<pathname>`` of the temporary directory in use on the local
+Returns the *<pathname>* of the temporary directory in use on the local
 machine. If no temporary directory is defined, this function returns
 false. You can use the return value of *temp-directory* in conjunction
 with *concatenate* to specify pathnames of entities in the temporary
@@ -256,7 +256,7 @@ Function
 working-directory () => *working-directory*
                                            
 
-Returns the ``<pathname>`` of the current working directory in the current
+Returns the *<pathname>* of the current working directory in the current
 process on the local machine. You can use the return value of
 *working-directory* in conjunction with *concatenate* to specify
 pathnames of entities in the working directory.
@@ -292,7 +292,7 @@ file-properties *file* => *properties*
                                       
 
 Returns all the properties of the specified file. The properties are
-returned as a concrete subclass of ``<explicit-key-collection>``.
+returned as a concrete subclass of *<explicit-key-collection>*.
 
 file-property
 '''''''''''''
@@ -318,7 +318,7 @@ file-type *file* => *file-type*
                                
 
 Returns the file type of the entity specified by *file*, as an instance
-of ``<file-type>``. A given entity can either be a file, a directory, or
+of *<file-type>*. A given entity can either be a file, a directory, or
 a link to a file or directory.
 
 The FILE-SYSTEM module
@@ -447,7 +447,7 @@ Arguments
          
 
 -  *parent* An instance of `<pathname> <file-system.htm#95733>`_.
--  *name* An instance of ``<string>``.
+-  *name* An instance of *<string>*.
 
 Values
       
@@ -561,7 +561,7 @@ do-directory *function* *directory* => ()
 Arguments
          
 
--  *function* An instance of ``<function>``.
+-  *function* An instance of *<function>*.
 -  *directory* An instance of `<pathname> <file-system.htm#95733>`_.
 
 Values
@@ -581,7 +581,7 @@ The signature of *function* is
 
 where *directory* is an instance of `
 <pathname> <file-system.htm#95733>`_, *name* is an instance of
-``<byte-string>``, and *type* is an instance of `
+*<byte-string>*, and *type* is an instance of `
 <file-type> <file-system.htm#48717>`_.
 
 Within *function*, the values of *directory* and *name* can be
@@ -629,7 +629,7 @@ Arguments
 Values
       
 
--  *created?* An instance of ``<boolean>``.
+-  *created?* An instance of *<boolean>*.
 
 Description
            
@@ -690,7 +690,7 @@ Arguments
 Values
       
 
--  *exists?* An instance of ``<boolean>``.
+-  *exists?* An instance of *<boolean>*.
 
 Description
            
@@ -724,7 +724,7 @@ Values
       
 
 -  *properties* An instance of a concrete subclass of
-   ``<explicit-key-collection>``.
+   *<explicit-key-collection>*.
 
 Description
            
@@ -792,7 +792,7 @@ Return value types of *file-property*
 +========================+===============================+
 | *#"author"*            | *false-or(<string>)*          |
 +------------------------+-------------------------------+
-| *#"size"*              | ``<integer>``                 |
+| *#"size"*              | *<integer>*                   |
 +------------------------+-------------------------------+
 | *#"creation-date"*     | `<date> <date.htm#54319>`_    |
 +------------------------+-------------------------------+
@@ -802,11 +802,11 @@ Return value types of *file-property*
 +------------------------+-------------------------------+
 | *#"write-date"*        | `<date> <date.htm#54319>`_    |
 +------------------------+-------------------------------+
-| *#"readable?"*         | ``<boolean>``                 |
+| *#"readable?"*         | *<boolean>*                   |
 +------------------------+-------------------------------+
-| *#"writeable?"*        | ``<boolean>``                 |
+| *#"writeable?"*        | *<boolean>*                   |
 +------------------------+-------------------------------+
-| *#"executable?"*       | ``<boolean>``                 |
+| *#"executable?"*       | *<boolean>*                   |
 +------------------------+-------------------------------+
 
 Not all platforms implement all of the above keys. Some platforms may
@@ -873,7 +873,7 @@ New value types of *file-property-setter*
 +========================+===============================+
 | *#"author"*            | *false-or(<string>)*          |
 +------------------------+-------------------------------+
-| *#"size"*              | ``<integer>``                 |
+| *#"size"*              | *<integer>*                   |
 +------------------------+-------------------------------+
 | *#"creation-date"*     | `<date> <date.htm#54319>`_    |
 +------------------------+-------------------------------+
@@ -883,11 +883,11 @@ New value types of *file-property-setter*
 +------------------------+-------------------------------+
 | *#"write-date"*        | `<date> <date.htm#54319>`_    |
 +------------------------+-------------------------------+
-| *#"readable?"*         | ``<boolean>``                 |
+| *#"readable?"*         | *<boolean>*                   |
 +------------------------+-------------------------------+
-| *#"writeable?"*        | ``<boolean>``                 |
+| *#"writeable?"*        | *<boolean>*                   |
 +------------------------+-------------------------------+
-| *#"executable?"*       | ``<boolean>``                 |
+| *#"executable?"*       | *<boolean>*                   |
 +------------------------+-------------------------------+
 
 Note that *file-property-setter* returns the value that was set, and so
@@ -922,7 +922,7 @@ signal an error.
 Superclasses
             
 
-``<error>`` and ``<simple-condition>``
+*<error>* and *<simple-condition>*
 
 Init-keywords
              
@@ -1172,7 +1172,7 @@ Arguments
 Values
       
 
--  *roots* An instances of ``<sequence>``.
+-  *roots* An instances of *<sequence>*.
 
 Description
            
@@ -1251,7 +1251,7 @@ An instance of `<pathname> <file-system.htm#95733>`_.
 Description
            
 
-Returns the ``<pathname>`` of the current working directory in the current
+Returns the *<pathname>* of the current working directory in the current
 process on the local machine. You can use the return value of
 *working-directory* in conjunction with *concatenate* to specify
 pathnames of entities in the working directory.

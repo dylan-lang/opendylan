@@ -15,10 +15,10 @@ module contains.
 Representing dates and times
 ----------------------------
 
-The Date module contains a single class, ``<date>``, an instance of which
+The Date module contains a single class, *<date>*, an instance of which
 can represent any date between 1 Jan 1800 00:00:00 and 31 Dec 2199
 23:59:59, Greenwich Mean Time. You can create a date object by calling
-the function *encode-date* or using the *make* method for ``<date>``.
+the function *encode-date* or using the *make* method for *<date>*.
 
 <date>
       
@@ -26,8 +26,8 @@ the function *encode-date* or using the *make* method for ``<date>``.
 Sealed class
             
 
-The class of all date objects. It is a subclass of ``<number>``. Note
-that there is no method for *make* defined on ``<date>``. The function
+The class of all date objects. It is a subclass of *<number>*. Note
+that there is no method for *make* defined on *<date>*. The function
 *encode-date* should be used instead.
 
 make *date-class*
@@ -53,13 +53,13 @@ encode-date *year month day hours minutes seconds
 * #key*microseconds time-zone-offset* => *date*
                                                  
 
-Creates a ``<date>`` object from a set of ``<integer>`` values.
+Creates a *<date>* object from a set of *<integer>* values.
 
 Each of the arguments to *encode-date* and to the *make* method on
-``<date>`` is an instance of ``<integer>`` (except for the *iso8601-string*
+*<date>* is an instance of *<integer>* (except for the *iso8601-string*
 keyword for the *make* method, which is a string) that is passed as an
-init-keyword value to the ``<date>`` object. Each init-keyword takes an
-instance of ``<integer>``, limited to the natural range for that
+init-keyword value to the *<date>* object. Each init-keyword takes an
+instance of *<integer>*, limited to the natural range for that
 attribute. For example, *month:* can only take values between 1 and 12.
 
 You must specify values, via *encode-date*, for at least the *year:*,
@@ -69,7 +69,7 @@ values for *hours:*, *minutes:*, *seconds:*, *microseconds:*, and
 these init-keywords is 0.
 
 The *time-zone-offset:* init-keyword is used to represent time zones in
-the Date module as ``<integer>`` values representing the offset in minutes
+the Date module as *<integer>* values representing the offset in minutes
 from Greenwich Mean Time (GMT). Positive values are used for time zones
 East of Greenwich; negative values represent time zones to the west of
 Greenwich.
@@ -77,11 +77,11 @@ Greenwich.
 For example, the value -300 (-5 hours) is U.S. Eastern Standard Time and
 the value -240 (-4 hours) is U.S. Eastern Daylight Savings Time.
 
-If you wish, a ``<date>`` can be specified completely by using the
+If you wish, a *<date>* can be specified completely by using the
 *iso8601-string:* init-keyword. This init-keyword takes an instance of
-``<string>``, which should be a valid ISO8601 format date. If you use the
+*<string>*, which should be a valid ISO8601 format date. If you use the
 *iso8601-string:* init-keyword, there is no need to specify any other
-init-keywords to a call to *make* on ``<date>``.
+init-keywords to a call to *make* on *<date>*.
 
 current-date
             
@@ -92,7 +92,7 @@ Function
 current-date () => *date*
                          
 
-Returns the current date on your local machine as a ``<date>`` object.
+Returns the current date on your local machine as a *<date>* object.
 
 <day-of-week>
              
@@ -104,7 +104,7 @@ one-of(#"Sunday", #"Monday", #"Tuesday", #"Wednesday",
  #"Thursday", #"Friday", #"Saturday")
                                                       
 
-Days of the week can be represented using the ``<day-of-week>`` type.
+Days of the week can be represented using the *<day-of-week>* type.
 
 You can extract the day of the week of a specified date using
 *date-day-of-week*. See `Extracting information from
@@ -117,15 +117,15 @@ Date/time intervals, called durations, are modeled in a style quite
 similar to that of SQL. There are two, effectively disjoint, classes of
 duration: one with a resolution of months (for example, 3 years, 2
 months) and the other with a resolution of microseconds (for example, 50
-days, 6 hours, 23 minutes). The first is ``<year/month-duration>`` and the
-second ``<day/time-duration>``.
+days, 6 hours, 23 minutes). The first is *<year/month-duration>* and the
+second *<day/time-duration>*.
 
-An important distinction between ``<day/time-duration>`` and
-``<year/month-duration>`` is that a given instance of
-``<day/time-duration>`` is always a fixed unit of a fixed length, whereas
-a ``<year/month-duration>`` follows the vagaries of the calendar. So if
-you have a ``<date>`` that represents, for example, the 5th of some month,
-adding a ``<year/month-duration>`` of 1 month to that will always take you
+An important distinction between *<day/time-duration>* and
+*<year/month-duration>* is that a given instance of
+*<day/time-duration>* is always a fixed unit of a fixed length, whereas
+a *<year/month-duration>* follows the vagaries of the calendar. So if
+you have a *<date>* that represents, for example, the 5th of some month,
+adding a *<year/month-duration>* of 1 month to that will always take you
 to the 5th of the following month, whether that is an interval of 28,
 29, 30, or 31 days.
 
@@ -136,7 +136,7 @@ Sealed abstract instantiable class
                                   
 
 This class is the used to represent durations. It is a subclass of
-``<number>``, and it has two subclasses, described below.
+*<number>*, and it has two subclasses, described below.
 
 <year/month-duration>
                      
@@ -145,7 +145,7 @@ Sealed class
             
 
 Represents durations in units of calendar months. It is a subclass of
-``<duration>``.
+*<duration>*.
 
 <day/time-duration>
                    
@@ -154,7 +154,7 @@ Sealed class
             
 
 Represents durations in units of microseconds. It is a subclass of
-``<duration>``.
+*<duration>*.
 
 The following functions and methods are available for creating
 durations, and decoding them into their constituent integer parts.
@@ -168,7 +168,7 @@ Function
 encode-year/month-duration *years* *months* => *duration*
                                                          
 
-Creates an instance of ``<year/month-duration>``.
+Creates an instance of *<year/month-duration>*.
 
 encode-day/time-duration
                         
@@ -181,7 +181,7 @@ encode-day/time-duration *days* *hours* *minutes* *seconds*
  => *duration*
                                                                           
 
-Creates an instance of ``<day/time-duration>``.
+Creates an instance of *<day/time-duration>*.
 
 decode-duration
                
@@ -192,9 +192,9 @@ Sealed generic function
 decode-duration *duration* => #rest *components*
                                                 
 
-Decodes an instance of ``<duration>`` into its constituent parts. There
+Decodes an instance of *<duration>* into its constituent parts. There
 are methods for this generic function that specialize on
-``<year/month-duration>`` and ``<day/time-duration>`` respectively, as
+*<year/month-duration>* and *<day/time-duration>* respectively, as
 described below.
 
 decode-duration
@@ -206,7 +206,7 @@ Sealed method
 decode-duration *duration* => *years* *months*
                                               
 
-Decodes an instance of ``<year/month-duration>`` into its constituent
+Decodes an instance of *<year/month-duration>* into its constituent
 parts.
 
 decode-duration
@@ -219,7 +219,7 @@ decode-duration *duration* => *days* *hours* *minutes* *seconds*
 *microseconds*
                                                                                
 
-Decodes an instance of ``<day/time-duration>`` into its constituent parts.
+Decodes an instance of *<day/time-duration>* into its constituent parts.
 
 Performing operations on dates and durations
 --------------------------------------------
@@ -317,107 +317,107 @@ Return value
 
 #. *+*
 
-#. ``<duration>``
+#. *<duration>*
 
-#. ``<duration>``
+#. *<duration>*
 
-#. ``<duration>``
-
-#. *+*
-
-#. ``<year/month-duration>``
-
-#. ``<year/month-duration>``
-
-#. ``<year/month-duration>``
+#. *<duration>*
 
 #. *+*
 
-#. ``<day/time-duration>``
+#. *<year/month-duration>*
 
-#. ``<day/time-duration>``
+#. *<year/month-duration>*
 
-#. ``<day/time-duration>``
-
-#. *+*
-
-#. ``<date>``
-
-#. ``<duration>``
-
-#. ``<date>``
+#. *<year/month-duration>*
 
 #. *+*
 
-#. ``<duration>``
+#. *<day/time-duration>*
 
-#. ``<date>``
+#. *<day/time-duration>*
 
-#. ``<date>``
+#. *<day/time-duration>*
 
-#. *-*
+#. *+*
 
-#. ``<duration>``
+#. *<date>*
 
-#. ``<duration>``
+#. *<duration>*
 
-#. ``<duration>``
+#. *<date>*
 
-#. *-*
+#. *+*
 
-#. ``<year/month-duration>``
+#. *<duration>*
 
-#. ``<year/month-duration>``
+#. *<date>*
 
-#. ``<year/month-duration>``
-
-#. *-*
-
-#. ``<day/time-duration>``
-
-#. ``<day/time-duration>``
-
-#. ``<day/time-duration>``
+#. *<date>*
 
 #. *-*
 
-#. ``<date>``
+#. *<duration>*
 
-#. ``<duration>``
+#. *<duration>*
 
-#. ``<date>``
+#. *<duration>*
 
 #. *-*
 
-#. ``<date>``
+#. *<year/month-duration>*
 
-#. ``<date>``
+#. *<year/month-duration>*
 
-#. ``<day/time-duration>``
+#. *<year/month-duration>*
+
+#. *-*
+
+#. *<day/time-duration>*
+
+#. *<day/time-duration>*
+
+#. *<day/time-duration>*
+
+#. *-*
+
+#. *<date>*
+
+#. *<duration>*
+
+#. *<date>*
+
+#. *-*
+
+#. *<date>*
+
+#. *<date>*
+
+#. *<day/time-duration>*
 
 #. *\**
 
-#. ``<duration>``
+#. *<duration>*
 
-#. ``<real>``
+#. *<real>*
 
-#. ``<duration>``
+#. *<duration>*
 
 #. *\**
 
-#. ``<real>``
+#. *<real>*
 
-#. ``<duration>``
+#. *<duration>*
 
-#. ``<duration>``
+#. *<duration>*
 
 #. */*
 
-#. ``<duration>``
+#. *<duration>*
 
-#. ``<real>``
+#. *<real>*
 
-#. ``<duration>``
+#. *<duration>*
 
 Dealing with time-zones
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -449,7 +449,7 @@ local-time-zone-offset () => *time-zone-offset*
 Returns the offset of the time-zone from Greenwich Mean Time, expressed
 as a number of minutes. A positive number represents an offset ahead of
 GMT, and a negative number represents an offset behind GMT. The return
-value is an instance of ``<integer>`` (for example, -300 represents the
+value is an instance of *<integer>* (for example, -300 represents the
 offset for EST, which is 5 hours behind GMT). The return value
 incorporates daylight savings time when necessary.
 
@@ -468,7 +468,7 @@ Extracting information from dates
 ---------------------------------
 
 A number of functions are available to return discrete pieces of
-information from a specified ``<date>`` object. These are useful to allow
+information from a specified *<date>* object. These are useful to allow
 you to deconstruct a given date in order to retrieve useful information
 from it.
 
@@ -485,17 +485,17 @@ decode-date *date* => *year month day hours minutes seconds
 * *day-of-week time-zone-offset*
                                                            
 
-Decodes a ``<date>`` into its constituent parts. This function is the
-companion of *encode-date*, in that it takes a ``<date>`` object and
+Decodes a *<date>* into its constituent parts. This function is the
+companion of *encode-date*, in that it takes a *<date>* object and
 returns all of its constituent parts. Note, however, that in contrast to
 *encode-date*, it does not return any millisecond component to the
 date, but it does return the day of the week of the specified date.
 
 A number of other functions exist to extract individual components from
-a ``<date>`` object. Each of these functions is listed below. Each
-function takes a single argument, a ``<date>`` object, and returns the
+a *<date>* object. Each of these functions is listed below. Each
+function takes a single argument, a *<date>* object, and returns the
 component of the date referred to in the function name. For example,
-*date-month* takes a ``<date>`` object as an argument, and returns the
+*date-month* takes a *<date>* object as an argument, and returns the
 month that the date refers to.
 
 `date-year <date.htm#67898>`_
@@ -519,13 +519,13 @@ month that the date refers to.
                                              
 
 For each function except *date-day-of-week*, the value returned is an
-instance of ``<integer>``. The *date-day-of-week* function returns an
-object of type ``<day-of-week>``. For more information, please refer to
+instance of *<integer>*. The *date-day-of-week* function returns an
+object of type *<day-of-week>*. For more information, please refer to
 the reference entries of each function. See also the function `
 date-time-zone-offset-setter <date.htm#29004>`_, which allows you to set
-the time-zone offset of a ``<date>`` explicitly.
+the time-zone offset of a *<date>* explicitly.
 
-To return an ISO 8601 format date from a ``<date>`` object, use the
+To return an ISO 8601 format date from a *<date>* object, use the
 function *as-iso8601-string*.
 
 as-iso8601-string
@@ -537,7 +537,7 @@ Function
 as-iso8601-string *date* #key *precision* => *iso8601-string*
                                                              
 
-Returns an instance of ``<string>`` representing a date in ISO 8601
+Returns an instance of *<string>* representing a date in ISO 8601
 format. The *precision* keyword, if present, is an integer representing
 the number of decimal places to which the second should be specified in
 the result.
@@ -573,7 +573,7 @@ Arguments
 Values
       
 
--  *equal?* An instance of ``<boolean>``.
+-  *equal?* An instance of *<boolean>*.
 
 Description
            
@@ -611,7 +611,7 @@ Arguments
 Values
       
 
--  *equal?* An instance of ``<boolean>``.
+-  *equal?* An instance of *<boolean>*.
 
 Description
            
@@ -651,7 +651,7 @@ Arguments
 Values
       
 
--  *before?* An instance of ``<boolean>``.
+-  *before?* An instance of *<boolean>*.
 
 Description
            
@@ -689,7 +689,7 @@ Arguments
 Values
       
 
--  *less-than?* An instance of ``<boolean>``.
+-  *less-than?* An instance of *<boolean>*.
 
 Description
            
@@ -754,35 +754,35 @@ Methods defined for addition of dates and durations
 
 *sum*
 
-#. ``<duration>``
+#. *<duration>*
 
-#. ``<duration>``
+#. *<duration>*
 
-#. ``<duration>``
+#. *<duration>*
 
-#. ``<year/month-duration>``
+#. *<year/month-duration>*
 
-#. ``<year/month-duration>``
+#. *<year/month-duration>*
 
-#. ``<year/month-duration>``
+#. *<year/month-duration>*
 
-#. ``<day/time-duration>``
+#. *<day/time-duration>*
 
-#. ``<day/time-duration>``
+#. *<day/time-duration>*
 
-#. ``<day/time-duration>``
+#. *<day/time-duration>*
 
-#. ``<date>``
+#. *<date>*
 
-#. ``<duration>``
+#. *<duration>*
 
-#. ``<date>``
+#. *<date>*
 
-#. ``<duration>``
+#. *<duration>*
 
-#. ``<date>``
+#. *<date>*
 
-#. ``<date>``
+#. *<date>*
 
 See also
         
@@ -815,7 +815,7 @@ Arguments
 -  *arg1* An instance of `<date> <date.htm#54319>`_ or `
    <duration> <date.htm#58206>`_. See description for details.
 -  *arg2* An instance of `<duration> <date.htm#58206>`_, or an
-   instance of `<date> <date.htm#54319>`_ if *arg1* is a ``<date>``.
+   instance of `<date> <date.htm#54319>`_ if *arg1* is a *<date>*.
    See description for details.
 
 Values
@@ -843,29 +843,29 @@ Methods defined for subtraction of dates and durations
 
 *diff*
 
-#. ``<year/month-duration>``
+#. *<year/month-duration>*
 
-#. ``<year/month-duration>``
+#. *<year/month-duration>*
 
-#. ``<year/month-duration>``
+#. *<year/month-duration>*
 
-#. ``<day/time-duration>``
+#. *<day/time-duration>*
 
-#. ``<day/time-duration>``
+#. *<day/time-duration>*
 
-#. ``<day/time-duration>``
+#. *<day/time-duration>*
 
-#. ``<date>``
+#. *<date>*
 
-#. ``<duration>``
+#. *<duration>*
 
-#. ``<date>``
+#. *<date>*
 
-#. ``<date>``
+#. *<date>*
 
-#. ``<date>``
+#. *<date>*
 
-#. ``<day/time-duration>``
+#. *<day/time-duration>*
 
 See also
         
@@ -897,7 +897,7 @@ Arguments
          
 
 -  *duration* An instance of `<duration> <date.htm#58206>`_.
--  *scale* An instance of ``<real>``.
+-  *scale* An instance of *<real>*.
 
 *Note:* These arguments can be expressed in any order.
 
@@ -944,7 +944,7 @@ Arguments
          
 
 -  *duration* An instance of `<duration> <date.htm#58206>`_.
--  *scale* An instance of ``<real>``.
+-  *scale* An instance of *<real>*.
 
 Values
       
@@ -992,13 +992,13 @@ as-iso8601-string *date* #key *precision* => *iso8601-string*
 Arguments
          
 
--  *date* An instance of ``<date>``.
--  *precision* An instance of ``<integer>``. Default value: 0.
+-  *date* An instance of *<date>*.
+-  *precision* An instance of *<integer>*. Default value: 0.
 
 Values
       
 
--  *iso8601-string* An instance of ``<string>``.
+-  *iso8601-string* An instance of *<string>*.
 
 Description
            
@@ -1042,7 +1042,7 @@ Arguments
 Values
       
 
--  *date* An instance of ``<date>``.
+-  *date* An instance of *<date>*.
 
 Description
            
@@ -1063,7 +1063,7 @@ The class of objects representing dates.
 Superclasses
             
 
-``<number>``
+*<number>*
 
 Init-keywords
              
@@ -1081,7 +1081,7 @@ Init-keywords
    Default value: 0.
 -  *microseconds* An instance of *limited(<integer>, min: 0, max:
    999999)*. Default value: 0.
--  *time-zone-offset* An instance of ``<integer>``. Default value: 0.
+-  *time-zone-offset* An instance of *<integer>*. Default value: 0.
 
 Description
            
@@ -1089,11 +1089,11 @@ Description
 Represents a date and time between 1 Jan 1800 00:00:00 and 31 Dec 2199
 23:59:59, Greenwich Mean Time (GMT).
 
-A ``<date>`` can be specified to microsecond precision and includes a time
+A *<date>* can be specified to microsecond precision and includes a time
 zone indication.
 
 If supplied, the *iso8601-string:* init-keyword completely specifies the
-value of the ``<date>``. Otherwise, the *year:*, *month:*, and *day:*
+value of the *<date>*. Otherwise, the *year:*, *month:*, and *day:*
 init-keywords must be supplied. Note that, although you can supply ISO
 8601 strings that represent any time zone specification, the related
 function `as-iso8601-string <date.htm#12302>`_ always returns an ISO
@@ -1101,7 +1101,7 @@ function `as-iso8601-string <date.htm#12302>`_ always returns an ISO
 
 For the *time-zone-offset* init-keyword, a positive number represents an
 offset ahead of GMT, in minutes, and a negative number represents an
-offset behind GMT. The value returned is an instance of ``<integer>`` (for
+offset behind GMT. The value returned is an instance of *<integer>* (for
 example, -300 represents the offset for EST, which is 5 hours behind
 GMT).
 
@@ -1146,12 +1146,12 @@ date-day *date* => *day*
 Arguments
          
 
--  *date* An instance of ``<date>``.
+-  *date* An instance of *<date>*.
 
 Values
       
 
--  *day* An instance of ``<integer>``.
+-  *day* An instance of *<integer>*.
 
 Description
            
@@ -1200,12 +1200,12 @@ date-day-of-week *date* => *day-of-week*
 Arguments
          
 
--  *date* An instance of ``<date>``.
+-  *date* An instance of *<date>*.
 
 Values
       
 
--  *day-of-week* An object of type ``<day-of-week>``.
+-  *day-of-week* An object of type *<day-of-week>*.
 
 Description
            
@@ -1254,12 +1254,12 @@ date-hours *date* => *hour*
 Arguments
          
 
--  *date* An instance of ``<date>``.
+-  *date* An instance of *<date>*.
 
 Values
       
 
--  *hour* An instance of ``<integer>``.
+-  *hour* An instance of *<integer>*.
 
 Description
            
@@ -1307,12 +1307,12 @@ date-microseconds *date* => *microseconds*
 Arguments
          
 
--  *date* An instance of ``<date>``.
+-  *date* An instance of *<date>*.
 
 Values
       
 
--  *microseconds* An instance of ``<integer>``.
+-  *microseconds* An instance of *<integer>*.
 
 Description
            
@@ -1362,12 +1362,12 @@ date-minutes *date* => *minutes*
 Arguments
          
 
--  *date* An instance of ``<date>``.
+-  *date* An instance of *<date>*.
 
 Values
       
 
--  *minutes* An instance of ``<integer>``.
+-  *minutes* An instance of *<integer>*.
 
 Description
            
@@ -1414,12 +1414,12 @@ date-month *date* => *month*
 Arguments
          
 
--  *date* An instance of ``<date>``.
+-  *date* An instance of *<date>*.
 
 Values
       
 
--  *month* An instance of ``<integer>``.
+-  *month* An instance of *<integer>*.
 
 Description
            
@@ -1466,12 +1466,12 @@ date-seconds *date* => *seconds*
 Arguments
          
 
--  *date* An instance of ``<date>``.
+-  *date* An instance of *<date>*.
 
 Values
       
 
--  *seconds* An instance of ``<integer>``.
+-  *seconds* An instance of *<integer>*.
 
 Description
            
@@ -1521,12 +1521,12 @@ date-time-zone-offset *date* => *time-zone-offset*
 Arguments
          
 
--  *date* An instance of ``<date>``.
+-  *date* An instance of *<date>*.
 
 Values
       
 
--  *time-zone-offset* An instance of ``<integer>``.
+-  *time-zone-offset* An instance of *<integer>*.
 
 Description
            
@@ -1536,7 +1536,7 @@ other components of *date* reflect this time zone.
 
 A positive number represents an offset ahead of GMT, in minutes, and a
 negative number represents an offset behind GMT. The value returned is
-an instance of ``<integer>`` (for example, -300 represents the offset for
+an instance of *<integer>* (for example, -300 represents the offset for
 EST, which is 5 hours behind GMT).
 
 See also
@@ -1586,10 +1586,10 @@ Arguments
 *new-time-zone-offset*
                       
 
-An instance of ``<integer>``.
+An instance of *<integer>*.
                             
 
--  *date* An instance of ``<date>``.
+-  *date* An instance of *<date>*.
 
 Values
       
@@ -1597,7 +1597,7 @@ Values
 *new-time-zone-offset*
                       
 
-An instance of ``<integer>``.
+An instance of *<integer>*.
                             
 
 Description
@@ -1636,12 +1636,12 @@ date-year *date* => *year*
 Arguments
          
 
--  *date* An instance of ``<date>``.
+-  *date* An instance of *<date>*.
 
 Values
       
 
--  *year* An instance of ``<integer>``.
+-  *year* An instance of *<integer>*.
 
 Description
            
@@ -1731,11 +1731,11 @@ Superclasses
 Init-keywords
              
 
--  *days* An instance of ``<integer>``.
--  *hours* An instance of ``<integer>``. Default value: 0.
--  *minutes* An instance of ``<integer>``. Default value: 0.
--  *seconds* An instance of ``<integer>``. Default value: 0.
--  *microseconds* An instance of ``<integer>``. Default value: 0.
+-  *days* An instance of *<integer>*.
+-  *hours* An instance of *<integer>*. Default value: 0.
+-  *minutes* An instance of *<integer>*. Default value: 0.
+-  *seconds* An instance of *<integer>*. Default value: 0.
+-  *microseconds* An instance of *<integer>*. Default value: 0.
 
 Description
            
@@ -1781,26 +1781,26 @@ decode-date *date*
 Arguments
          
 
--  *date* An instance of ``<date>``.
+-  *date* An instance of *<date>*.
 
 Values
       
 
--  *year* An instance of ``<integer>``.
--  *month* An instance of ``<integer>``.
--  *day* An instance of ``<integer>``.
--  *hours* An instance of ``<integer>``.
--  *minutes* An instance of ``<integer>``.
--  *seconds* An instance of ``<integer>``.
--  *day-of-week* An instance of ``<day-of-week>``.
--  *time-zone-offset* An instance of ``<integer>``.
+-  *year* An instance of *<integer>*.
+-  *month* An instance of *<integer>*.
+-  *day* An instance of *<integer>*.
+-  *hours* An instance of *<integer>*.
+-  *minutes* An instance of *<integer>*.
+-  *seconds* An instance of *<integer>*.
+-  *day-of-week* An instance of *<day-of-week>*.
+-  *time-zone-offset* An instance of *<integer>*.
 
 Description
            
 
 Returns the date and time stored in *date*. Note that it does not
-return the millisecond component of a ``<date>``, but it does return the
-appropriate ``<day-of-week>``.
+return the millisecond component of a *<date>*, but it does return the
+appropriate *<day-of-week>*.
 
 See also
         
@@ -1831,14 +1831,14 @@ Arguments
 Values
       
 
--  *components* Instances of ``<integer>``.
+-  *components* Instances of *<integer>*.
 
 Description
            
 
-Decodes an instance of ``<duration>`` into its constituent parts. There
+Decodes an instance of *<duration>* into its constituent parts. There
 are methods for this generic function that specialize on
-``<year/month-duration>`` and ``<day/time-duration>`` respectively, as
+*<year/month-duration>* and *<day/time-duration>* respectively, as
 described below.
 
 See also
@@ -1874,16 +1874,16 @@ Arguments
 Values
       
 
--  *days* An instance of ``<integer>``.
--  *hours* An instance of ``<integer>``.
--  *minutes* An instance of ``<integer>``.
--  *seconds* An instance of ``<integer>``.
--  *microseconds* An instance of ``<integer>``.
+-  *days* An instance of *<integer>*.
+-  *hours* An instance of *<integer>*.
+-  *minutes* An instance of *<integer>*.
+-  *seconds* An instance of *<integer>*.
+-  *microseconds* An instance of *<integer>*.
 
 Description
            
 
-Decodes an instance of ``<day/time-duration>`` into its constituent parts.
+Decodes an instance of *<day/time-duration>* into its constituent parts.
 
 See also
         
@@ -1919,13 +1919,13 @@ Arguments
 Values
       
 
--  *years* An instance of ``<integer>``.
--  *months* An instance of ``<integer>``.
+-  *years* An instance of *<integer>*.
+-  *months* An instance of *<integer>*.
 
 Description
            
 
-Decodes an instance of ``<year/month-duration>`` into its constituent
+Decodes an instance of *<year/month-duration>* into its constituent
 parts.
 
 See also
@@ -1951,7 +1951,7 @@ The class of objects representing durations.
 Superclasses
             
 
-``<number>``
+*<number>*
 
 Init-keywords
              
@@ -1970,13 +1970,13 @@ Init-keywords
    Default value: 0.
 -  *microseconds* An instance of *limited(<integer>, min: 0, max:
    999999)*. Default value: 0.
--  *time-zone-offset* An instance of ``<integer>``. Default value: 0.
+-  *time-zone-offset* An instance of *<integer>*. Default value: 0.
 
 Description
            
 
 This class is the used to represent durations. It is a subclass of
-``<number>``, and it has two subclasses.
+*<number>*, and it has two subclasses.
 
 Operations
           
@@ -2012,25 +2012,25 @@ encode-date *year month day hours minutes seconds
 Arguments
          
 
--  *year* An instance of ``<integer>``.
--  *month* An instance of ``<integer>``.
--  *day* An instance of ``<integer>``.
--  *hours* An instance of ``<integer>``.
--  *minutes* An instance of ``<integer>``.
--  *seconds* An instance of ``<integer>``.
--  *microseconds* An instance of ``<integer>``. Default value: 0.
--  *time-zone-offset* An instance of ``<integer>``. Default value:
+-  *year* An instance of *<integer>*.
+-  *month* An instance of *<integer>*.
+-  *day* An instance of *<integer>*.
+-  *hours* An instance of *<integer>*.
+-  *minutes* An instance of *<integer>*.
+-  *seconds* An instance of *<integer>*.
+-  *microseconds* An instance of *<integer>*. Default value: 0.
+-  *time-zone-offset* An instance of *<integer>*. Default value:
    *local-time-zone-offset()*.
 
 Values
       
 
--  *date* An instance of ``<date>``.
+-  *date* An instance of *<date>*.
 
 Description
            
 
-Creates a ``<date>`` object for the specified date and time.
+Creates a *<date>* object for the specified date and time.
 
 See also
         
@@ -2061,11 +2061,11 @@ encode-day/time-duration *days* *hours* *minutes* *seconds
 Arguments
          
 
--  *days* An instance of ``<integer>``.
--  *hours* An instance of ``<integer>``.
--  *minutes* An instance of ``<integer>``.
--  *seconds* An instance of ``<integer>``.
--  *microseconds* An instance of ``<integer>``.
+-  *days* An instance of *<integer>*.
+-  *hours* An instance of *<integer>*.
+-  *minutes* An instance of *<integer>*.
+-  *seconds* An instance of *<integer>*.
+-  *microseconds* An instance of *<integer>*.
 
 Values
       
@@ -2076,7 +2076,7 @@ Values
 Description
            
 
-Creates an instance of ``<day/time-duration>``.
+Creates an instance of *<day/time-duration>*.
 
 See also
         
@@ -2104,8 +2104,8 @@ encode-year/month-duration *years* *months* => *duration*
 Arguments
          
 
--  *years* An instance of ``<integer>``.
--  *months* An instance of ``<integer>``.
+-  *years* An instance of *<integer>*.
+-  *months* An instance of *<integer>*.
 
 Values
       
@@ -2116,7 +2116,7 @@ Values
 Description
            
 
-Creates an instance of ``<year/month-duration>``.
+Creates an instance of *<year/month-duration>*.
 
 See also
         
@@ -2149,7 +2149,7 @@ Arguments
 Values
       
 
--  *dst?* An instance of ``<boolean>``.
+-  *dst?* An instance of *<boolean>*.
 
 Description
            
@@ -2181,7 +2181,7 @@ Arguments
 Values
       
 
--  *time-zone-name* An instance of ``<string>``.
+-  *time-zone-name* An instance of *<string>*.
 
 Description
            
@@ -2214,7 +2214,7 @@ Arguments
 Values
       
 
--  *time-zone-offset* An instance of ``<integer>``.
+-  *time-zone-offset* An instance of *<integer>*.
 
 Description
            
@@ -2222,7 +2222,7 @@ Description
 Returns the offset of the time-zone from Greenwich Mean Time, expressed
 as a number of minutes. A positive number represents an offset ahead of
 GMT, and a negative number represents an offset behind GMT. The return
-value is an instance of ``<integer>`` (for example, -300 represents the
+value is an instance of *<integer>* (for example, -300 represents the
 offset for EST, which is 5 hours behind GMT). The return value
 incorporates daylight savings time when necessary.
 
@@ -2261,7 +2261,7 @@ Arguments
    Default value: 0.
 -  *microseconds* An instance of *limited(<integer>, min: 0, max:
    999999)*. Default value: 0.
--  *time-zone-offset* An instance of ``<integer>``. Default value: 0.
+-  *time-zone-offset* An instance of *<integer>*. Default value: 0.
 
 Values
       
@@ -2312,8 +2312,8 @@ Superclasses
 Init-keywords
              
 
--  *year* An instance of ``<integer>``.
--  *month* An instance of ``<integer>``.
+-  *year* An instance of *<integer>*.
+-  *month* An instance of *<integer>*.
 
 Description
            

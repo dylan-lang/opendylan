@@ -54,7 +54,7 @@ specific error condition is not stated in the documentation. Consider
 the following hypothetical example, which states that an implementation
 must signal an error, but does not say what error must be signaled:
 
-When *index* is a ``<stream-index>``, if it is invalid for some reason,
+When *index* is a *<stream-index>*, if it is invalid for some reason,
 this function signals an error.
 
 By contrast, the following example names the class of which the
@@ -199,7 +199,7 @@ read-element(stream);
 
 The following example returns a string. The first ten characters are the
 fill characters for the underlying sequence of the stream. The fill
-character for ``<string>`` is “** “ (the space character), so in the
+character for *<string>* is “** “ (the space character), so in the
 example below, the first ten characters are spaces.
 
 let stream = make(<string-stream>, direction: #"output");
@@ -215,7 +215,7 @@ stream-contents(stream);
 You can request a sequence containing all of the elements of a
 positionable stream by calling `
 stream-contents <streams.htm#24606>`_ on it. If the positionable stream
-is a ``<file-stream>``, then it must be readable. Otherwise, it must be a
+is a *<file-stream>*, then it must be readable. Otherwise, it must be a
 sequence stream. The sequence returned never shares structure with any
 underlying sequence that might be used in the future by the stream. For
 instance, the string returned by calling `
@@ -263,7 +263,7 @@ this may not be what the user intended.
 To guarantee that other references to a sequence used in an output `
 <sequence-stream> <streams.htm#41852>`_ will have access to any elements
 written to the sequence via the stream, supply a stretchy collection
-(such as a ``<stretchy-vector>``) to *make*. A stream over a stretchy
+(such as a *<stretchy-vector>*) to *make*. A stream over a stretchy
 vector will use the same stretchy vector throughout the stream’s
 existence.
 
@@ -352,7 +352,7 @@ all instantiable.
 *Open abstract class*
                      
 
-The superclass of all stream classes and a direct subclass of ``<object>``
+The superclass of all stream classes and a direct subclass of *<object>*
 .
 
 <positionable-stream>
@@ -443,7 +443,7 @@ the generic function `type-for-file-stream <streams.htm#47613>`_.
 
 The *locator:* init-keyword should be a string naming a file. If the
 Locators library is in use, *filename* should be an instance of
-``<locator>`` or a string that can be coerced to one.
+*<locator>* or a string that can be coerced to one.
 
 The *direction:* init-keyword specifies the direction of the stream.
 This can be one of *#"input"*, *#"output"*, or *#"input-output"*. The
@@ -595,8 +595,8 @@ There are *make* methods on the following stream classes:
 -  `<byte-string-stream> <streams.htm#57476>`_
 -  `<unicode-string-stream> <streams.htm#75284>`_
 
-Rather than creating direct instances of ``<sequence-stream>`` or
-``<string-stream>``, the *make* methods for those classes might create an
+Rather than creating direct instances of *<sequence-stream>* or
+*<string-stream>*, the *make* methods for those classes might create an
 instance of a subclass determined by `
 type-for-sequence-stream <streams.htm#90813>`_.
 
@@ -617,10 +617,10 @@ instance of `<sequence-stream> <streams.htm#41852>`_. To determine
 the concrete subclass to be instantiated, this method calls the generic
 function `type-for-sequence-stream <streams.htm#90813>`_.
 
-The *contents:* init-keyword is a general instance of ``<sequence>`` which
+The *contents:* init-keyword is a general instance of *<sequence>* which
 is used as the input for an input stream, and as the initial storage for
 an output stream. If *contents* is a stretchy sequence (such as an
-instance of ``<stretchy-vector>``), then it is the only storage used by
+instance of *<stretchy-vector>*), then it is the only storage used by
 the stream.
 
 The *direction:* init-keyword specifies the direction of the stream. It
@@ -648,7 +648,7 @@ make <string-stream> #key contents direction start end
 Creates and opens a stream over a string, and returns an instance of
 `<string-stream> <streams.htm#31880>`_.
 
-If supplied, *contents:* must be an instance of ``<string>``. The
+If supplied, *contents:* must be an instance of *<string>*. The
 *direction:*, *start:*, and *end:* init-keywords are as for *make* on
 `<sequence-stream> <streams.htm#41852>`_.
 
@@ -667,7 +667,7 @@ make <byte-string-stream #key contents direction start end
 Creates and opens a stream over a byte string, and returns a new
 instance of `<byte-string-stream> <streams.htm#57476>`_.
 
-If supplied, *contents:* must be an instance of ``<string>``. The
+If supplied, *contents:* must be an instance of *<string>*. The
 *direction:*, *start:*, and *end:* init-keywords are as for *make* on
 `<sequence-stream> <streams.htm#41852>`_.
 
@@ -686,7 +686,7 @@ make <unicode-string-stream> #key contents direction start end
 Creates and opens a stream over a Unicode string, and returns a new
 instance of `<unicode-string-stream> <streams.htm#75284>`_.
 
-If supplied, *contents:* must be an instance of ``<string>``. The
+If supplied, *contents:* must be an instance of *<string>*. The
 *direction:*, *start:*, and *end:* init-keywords are as for *make* on
 `<sequence-stream> <streams.htm#41852>`_.
 
@@ -694,8 +694,8 @@ Closing streams
 ^^^^^^^^^^^^^^^
 
 It is important to call *close* on streams when you have finished with
-them. Typically, external streams such as ``<file-stream>`` and
-``<console-stream>`` allocate underlying system resources when they are
+them. Typically, external streams such as *<file-stream>* and
+*<console-stream>* allocate underlying system resources when they are
 created, and these resources are not recovered until the stream is
 closed. The total number of such streams that can be open at one time
 may be system dependent. It may be possible to add reasonable
@@ -724,7 +724,7 @@ of seriously degrading streams performance for all applications whose
 transaction models are different from the model implied by the chosen
 default locking scheme. Instead, the Streams module provides the user
 with a single, per instance slot, *stream-lock:*, which is inherited by
-all subclasses of ``<stream>``. You should use the generic functions
+all subclasses of *<stream>*. You should use the generic functions
 *stream-lock* and *stream-lock-setter*, together with other appropriate
 functions and macros from the Threads library, to implement a locking
 strategy appropriate to your application and its stream transaction
@@ -742,7 +742,7 @@ stream-lock *stream* => *lock*
                               
 
 Returns the *lock* for the specified *stream*, or *#f* if no lock has
-been set. The *lock* argument is of type ``<lock>``.
+been set. The *lock* argument is of type *<lock>*.
 
 stream-lock-setter
                   
@@ -754,10 +754,10 @@ stream-lock-setter *stream lock* => *lock*
                                           
 
 Sets the *lock* for the specified *stream*. The *lock* argument is of
-type ``<lock>``, or *#f*. If *lock* is *#f*, the lock for *stream* is
+type *<lock>*, or *#f*. If *lock* is *#f*, the lock for *stream* is
 freed.
 
-For full details on the ``<lock>`` class, see the documentation on the
+For full details on the *<lock>* class, see the documentation on the
 Threads library in the *Core Features and Mathematics* manual.
 
 Reading from and writing to streams
@@ -842,7 +842,7 @@ condition is signalled.
 
 The second of these is in some sense the most general behavior, in that
 the first and third cases could, in principle, be duplicated by using
-the second case, handling the signalled ``<incomplete-read-error>``, and
+the second case, handling the signalled *<incomplete-read-error>*, and
 returning appropriate results.
 
 A number of other functions are available for reading from streams. See
@@ -983,7 +983,7 @@ read-line *input-stream* #key *on-end-of-stream* => *string-or-eof*
 *newline?*
                                                                               
 
-Returns a newly allocated ``<string>`` containing all the input in
+Returns a newly allocated *<string>* containing all the input in
 *input-stream* up to the next newline. The string does not contain the
 newline itself.
 
@@ -993,7 +993,7 @@ read terminated because it came to the end of the stream.
 The type of the result string is chosen so that the string can contain
 characters of *input-stream* ’s element type. For example, if the
 element type is `<byte-character> <streams.htm#56420>`_, the string
-will be a ``<byte-string>``.
+will be a *<byte-string>*.
 
 write-line
           
@@ -1059,7 +1059,7 @@ Open generic function
 stream-element-type *stream* => *element-type*
                                               
 
-Returns the element type of *stream* as a Dylan ``<type>``.
+Returns the element type of *stream* as a Dylan *<type>*.
 
 stream-at-end?
               
@@ -1228,7 +1228,7 @@ A type representing limited integers in the range 0 to 255 inclusive.
 Type
     
 
-A type representing 8-bit characters that instances of ``<byte-string>``
+A type representing 8-bit characters that instances of *<byte-string>*
 can contain.
 
 <unicode-character>
@@ -1238,7 +1238,7 @@ Type
     
 
 A type representing Unicode characters that instances of
-``<unicode-string>`` can contain.
+*<unicode-string>* can contain.
 
 <byte-vector>
              
@@ -1246,7 +1246,7 @@ A type representing Unicode characters that instances of
 Type
     
 
-A subtype of ``<vector>`` whose element-type is `
+A subtype of *<vector>* whose element-type is `
 <byte> <streams.htm#47677>`_.
 
 Wrapper streams
@@ -1297,7 +1297,7 @@ write-element(ws.inner-stream, element)
 end method;
            
 
-Assuming that ``<io-wrapper-stream>`` delegates all other operations to
+Assuming that *<io-wrapper-stream>* delegates all other operations to
 its inner stream, the following would suffice to implement a 16-bit
 Unicode character stream wrapping an 8-bit character stream.
 
@@ -1377,10 +1377,10 @@ Wrapper streams and delegation
 
 One problem with wrapper streams is the need for a wrapper stream to
 intercept methods invoked by its inner stream. For example, consider two
-hypothetical streams, ``<interactive-stream>`` and ``<dialog-stream>``, the
+hypothetical streams, *<interactive-stream>* and *<dialog-stream>*, the
 latter a subclass of `<wrapper-stream> <streams.htm#54696>`_. Both
 of these classes have a method called *prompt*. The
-``<interactive-stream>`` class specializes `read <streams.htm#43521>`_
+*<interactive-stream>* class specializes `read <streams.htm#43521>`_
 thus:
 
 define method read (s :: <interactive-stream>,
@@ -1397,11 +1397,11 @@ next-method()
 end method;
            
 
-If a ``<dialog-stream>`` ** is used to wrap an ``<interactive-stream>`` then
+If a *<dialog-stream>* ** is used to wrap an *<interactive-stream>* then
 an invocation of `read <streams.htm#43521>`_ on the
-``<dialog-stream>`` will call *prompt* on the inner
- ``<interactive-stream>``, not on the ``<dialog-stream>``, as desired. The
-problem is that the ``<dialog-stream>`` delegates some tasks to its inner
+*<dialog-stream>* will call *prompt* on the inner
+ *<interactive-stream>*, not on the *<dialog-stream>*, as desired. The
+problem is that the *<dialog-stream>* delegates some tasks to its inner
 stream, but handles some other tasks itself.
 
 Delegation by inner-streams to outer-streams is implemented by the use
@@ -1514,8 +1514,8 @@ type-union(<stream-position>, <integer>)
                                         
 
 A type used to represent a position in a stream. In practice, positions
-within a stream are defined as instances of ``<integer>``, but this type,
-together with the ``<stream-position>`` class, allows for cases where this
+within a stream are defined as instances of *<integer>*, but this type,
+together with the *<stream-position>* class, allows for cases where this
 might not be possible.
 
 <stream-position>
@@ -1524,9 +1524,9 @@ might not be possible.
 Abstract class
               
 
-A direct subclass of ``<object>``. It is used in rare cases to represent
+A direct subclass of *<object>*. It is used in rare cases to represent
 positions within streams that cannot be represented as instances of
-``<integer>``, such as a stream that supports compression.
+*<integer>*, such as a stream that supports compression.
 
 stream-position
                
@@ -1572,7 +1572,7 @@ adjust-stream-position *positionable-stream* *delta* #key *from*
 
 Moves the position of *positionable-stream* to be offset *delta*
 elements from the position indicated by *from*. The new position is
-returned. The *delta* offset must be an instance of ``<integer>``.
+returned. The *delta* offset must be an instance of *<integer>*.
 
 The value of *from* can be one of the symbols *#"current"*, *#"start"*,
 and *#"end"*. The default is *#"current"*.
@@ -1591,7 +1591,7 @@ as *integer-class* *stream-position* => *integer*
                                                  
 
 Coerces a `<stream-position> <streams.htm#39170>`_ to an integer.
-The *integer-class* argument is the class ``<integer>``.
+The *integer-class* argument is the class *<integer>*.
 
 stream-size
            
@@ -1751,7 +1751,7 @@ Arguments
 An instance of `<positionable-stream> <streams.htm#65194>`_.
                                                                 
 
--  *delta* An instance of ``<integer>``.
+-  *delta* An instance of *<integer>*.
 -  *from* One of *#"current"*, *#"start"*, or *#"end"*. Default
    value: *#"current"*.
 
@@ -1784,7 +1784,7 @@ Example
 
 The following example returns a string, the first ten characters of
 which are the space character, which is the fill character for the
-sequence ``<string>``.
+sequence *<string>*.
 
 let stream = make(<string-stream>,
                                   
@@ -1822,20 +1822,20 @@ as *integer-class* *stream-position* => *integer*
 Arguments
          
 
--  *integer-class* The class ``<integer>``.
+-  *integer-class* The class *<integer>*.
 -  *stream-position* An instance of `
    <stream-position> <streams.htm#39170>`_.
 
 Values
       
 
--  *integer* An instance of ``<integer>``.
+-  *integer* An instance of *<integer>*.
 
 Description
            
 
 Coerces a `<stream-position> <streams.htm#39170>`_ to an integer.
-The *integer-class* argument is the class ``<integer>``.
+The *integer-class* argument is the class *<integer>*.
 
 See also
         
@@ -1851,30 +1851,30 @@ Sealed instantiable class
 Summary
        
 
-A subclass of ``<vector>`` whose *element-type* is `
+A subclass of *<vector>* whose *element-type* is `
 <byte> <streams.htm#47677>`_.
 
 Superclasses
             
 
-``<vector>``
+*<vector>*
 
 Init-keywords
              
 
--  *size:* An instance of ``<integer>`` specifying the size of the buffer.
+-  *size:* An instance of *<integer>* specifying the size of the buffer.
    Default value: 0.
--  *next:* An instance of ``<integer>``. For an input buffer, this is
+-  *next:* An instance of *<integer>*. For an input buffer, this is
    where the next input byte can be found. For an output buffer, this is
    where the next output byte should be written to. Default value: 0.
--  *end:* An instance of ``<integer>``. The value of this is one more
+-  *end:* An instance of *<integer>*. The value of this is one more
    than the last valid index in a buffer. For an input buffer, this
    represents the number of bytes read.
 
 Description
            
 
-A subclass of ``<vector>`` whose *element-type* is `
+A subclass of *<vector>* whose *element-type* is `
 <byte> <streams.htm#47677>`_.
 
 Instances of `<buffer> <streams.htm#77969>`_ contain a data vector
@@ -1908,7 +1908,7 @@ Superclasses
 Init-keywords
              
 
--  *buffer-size:* An instance of ``<integer>``. This is the size of the
+-  *buffer-size:* An instance of *<integer>*. This is the size of the
    buffer in bytes.
 
 Description
@@ -1942,7 +1942,7 @@ A type representing limited integers in the range 0 to 255 inclusive.
 Supertypes
           
 
-``<integer>``
+*<integer>*
 
 Init-keywords
              
@@ -1968,13 +1968,13 @@ Type
 Summary
        
 
-A type representing 8-bit characters that instances of ``<byte-string>``
+A type representing 8-bit characters that instances of *<byte-string>*
 can contain.
 
 Supertypes
           
 
-``<character>``
+*<character>*
 
 Init-keywords
              
@@ -1984,7 +1984,7 @@ None.
 Description
            
 
-A type representing 8-bit characters that instances of ``<byte-string>``
+A type representing 8-bit characters that instances of *<byte-string>*
 can contain.
 
 Operations
@@ -2011,14 +2011,14 @@ Superclasses
 Init-keywords
              
 
--  *contents:* A general instance of ``<sequence>``.
+-  *contents:* A general instance of *<sequence>*.
 -  *direction:* Specifies the direction of the stream. It must be one of
    *#"input"*, *#"output"*, or *#"input-output"*. Default value:
    *#"input"*.
--  *start:* An instance of ``<integer>``. This specifies the start
+-  *start:* An instance of *<integer>*. This specifies the start
    position of the byte string to be streamed over. Only valid when
    *direction:* is *#"input"*. Default value: 0.
--  *end:* An instance of ``<integer>``. This specifies the sequence
+-  *end:* An instance of *<integer>*. This specifies the sequence
    position immediately after the portion of the byte string to stream
    over. Only valid when *direction:* is *#"input"*. Default value:
    *contents.size*.
@@ -2060,13 +2060,13 @@ Sealed class
 Summary
        
 
-A subtype of ``<vector>`` whose element-type is `
+A subtype of *<vector>* whose element-type is `
 <byte> <streams.htm#47677>`_.
 
 Superclasses
             
 
-``<vector>``
+*<vector>*
 
 Init-keywords
              
@@ -2076,7 +2076,7 @@ See Superclasses.
 Description
            
 
-A subclass of ``<vector>`` whose element-type is `
+A subclass of *<vector>* whose element-type is `
 <byte> <streams.htm#47677>`_.
 
 Operations
@@ -2141,8 +2141,8 @@ Arguments
 
 -  *file-stream* An instance of `
    <file-stream> <streams.htm#43060>`_.
--  *abort?* An instance of ``<boolean>``. Default value: *#f*.
--  *wait?* An instance of ``<boolean>``.
+-  *abort?* An instance of *<boolean>*. Default value: *#f*.
+-  *wait?* An instance of *<boolean>*.
 
 Values
       
@@ -2256,7 +2256,7 @@ Error type signaled on reaching the end of an input stream.
 Superclasses
             
 
-``<error>``
+*<error>*
 
 Init-keywords
              
@@ -2267,7 +2267,7 @@ Description
            
 
 Signalled when one of the read functions reaches the end of an input
-stream. It is a subclass of ``<error>``.
+stream. It is a subclass of *<error>*.
 
 The *stream:* init-keyword has the value of the stream that caused the
 error to be signaled. Its accessor is *end-of-stream-error-stream*.
@@ -2350,18 +2350,18 @@ The base class for all errors related to file I/O.
 Superclasses
             
 
-``<error>``
+*<error>*
 
 Init-keywords
              
 
--  *locator:* An instance of ``<locator>``.
+-  *locator:* An instance of *<locator>*.
 
 Description
            
 
 The base class for all errors related to file I/O. It is a subclass of
-``<error>``.
+*<error>*.
 
 The *locator:* init-keyword indicates the locator of the file that
 caused the error to be signalled. Its accessor is *file-error-locator*.
@@ -2450,7 +2450,7 @@ Superclasses
 Init-keywords
              
 
--  *locator:* An instance of ``<string>`` or ``<locator>``. This specifies
+-  *locator:* An instance of *<string>* or *<locator>*. This specifies
    the file over which to stream.
 -  *direction:* Specifies the direction of the stream. It must be one of
    *#"input"*, *#"output"*, or *#"input-output"*. Default value:
@@ -2514,7 +2514,7 @@ Arguments
          
 
 -  *output-stream* An instance of `<stream> <streams.htm#97619>`_.
--  *synchronize?* An instance of ``<boolean>``. Default value: *#f*.
+-  *synchronize?* An instance of *<boolean>*. Default value: *#f*.
 
 Values
       
@@ -2556,8 +2556,8 @@ Superclasses
 Init-keywords
              
 
--  *sequence:* An instance of ``<sequence>``.
--  *count:* An instance of ``<integer>``.
+-  *sequence:* An instance of *<sequence>*.
+-  *count:* An instance of *<integer>*.
 
 Description
            
@@ -2758,11 +2758,11 @@ Arguments
 The class `<byte-string-stream> <streams.htm#57476>`_.
                                                           
 
--  *contents* An instance of ``<byte-string>``.
+-  *contents* An instance of *<byte-string>*.
 -  *direction* One of *#"input"*, *#"output"*, or *#"input-output"*.
    Default value: *#"input"*.
--  *start* An instance of ``<integer>``. Default value: 0.
--  *end* An instance of ``<integer>``. Default value: *contents* *.size*
+-  *start* An instance of *<integer>*. Default value: 0.
+-  *end* An instance of *<integer>*. Default value: *contents* *.size*
    .
 
 Values
@@ -2783,7 +2783,7 @@ This method returns a new instance of `
 <byte-string-stream> <streams.htm#57476>`_.
 
 If supplied, *contents* describes the contents of the stream, and must
-be an instance of ``<byte-string>``. The *direction*, *start*, and
+be an instance of *<byte-string>*. The *direction*, *start*, and
 *end* init-keywords are as for *make* on `
 <sequence-stream> <streams.htm#41852>`_.
 
@@ -2827,7 +2827,7 @@ Arguments
 
 -  *file-stream-class* The class `
    <file-stream> <streams.htm#43060>`_.
--  *filename* An instance of ``<object>``.
+-  *filename* An instance of *<object>*.
 -  *direction* One of *#"input"*, *#"output"*, or *#"input-output"*.
    The default is *#"input"*.
 -  *if-exists* One of *#f*, *#"new-version"*, *#"overwrite"*,
@@ -2835,7 +2835,7 @@ Arguments
    value: *#f*.
 -  *if-does-not-exist* One of *#f*, *#"signal"*, or *#"create"*.
    Default value: depends on the value of *direction*.
--  *buffer-size* An instance of ``<integer>``.
+-  *buffer-size* An instance of *<integer>*.
 -  *element-type* One of `<byte-character> <streams.htm#56420>`_,
     `<unicode-character> <streams.htm#37656>`_, or `
    <byte> <streams.htm#47677>`_, or *#f*.
@@ -2862,7 +2862,7 @@ type-for-file-stream <streams.htm#47613>`_.
 
 The *filename* init-keyword should be a string naming a file. If the
 Locators library is in use, *filename* should be an instance of
-``<locator>`` or a string that can be coerced to one.
+*<locator>* or a string that can be coerced to one.
 
 The *direction* init-keyword specifies the direction of the stream.
 
@@ -2918,11 +2918,11 @@ Arguments
 The class `<sequence-stream> <streams.htm#41852>`_.
                                                        
 
--  *contents* An instance of ``<sequence>``.
+-  *contents* An instance of *<sequence>*.
 -  *direction* One of *#"input"*, *#"output"*, or *#"input-output"*.
    Default value: *#"input"*.
--  *start* An instance of ``<integer>``. Default value: 0.
--  *end* An instance of ``<integer>``. Default value: *contents* *.size*
+-  *start* An instance of *<integer>*. Default value: 0.
+-  *end* An instance of *<integer>*. Default value: *contents* *.size*
    .
 
 Values
@@ -2944,7 +2944,7 @@ This method returns a general instance of `
 subclass to be instantiated, this method calls the generic function `
 type-for-sequence-stream <streams.htm#90813>`_.
 
-The *contents* init-keyword is a general instance of ``<sequence>`` which
+The *contents* init-keyword is a general instance of *<sequence>* which
 is used as the input for input streams, and as the initial storage for
 an output stream. If *contents* is a stretchy vector, then it is the
 only storage used by the stream.
@@ -3008,11 +3008,11 @@ Arguments
 The class `<string-stream> <streams.htm#31880>`_.
                                                      
 
--  *contents* An instance of ``<string>``.
+-  *contents* An instance of *<string>*.
 -  *direction* One of *#"input"*, *#"output"*, or *#"input-output"*.
    Default value: *#"input"*.
--  *start* An instance of ``<integer>``. Default value: 0.
--  *end* An instance of ``<integer>``. Default value: *contents* *.size*
+-  *start* An instance of *<integer>*. Default value: 0.
+-  *end* An instance of *<integer>*. Default value: *contents* *.size*
    .
 
 Values
@@ -3078,11 +3078,11 @@ Arguments
 The class `<unicode-string-stream> <streams.htm#75284>`_.
                                                              
 
--  *contents* An instance of ``<unicode-string>``.
+-  *contents* An instance of *<unicode-string>*.
 -  *direction* One of *#"input"*, *#"output"*, or *#"input-output"*.
    Default value: *#"input"*.
--  *start* An instance of ``<integer>``. Default value: 0.
--  *end* An instance of ``<integer>``. Default value: *contents* *.size*
+-  *start* An instance of *<integer>*. Default value: 0.
+-  *end* An instance of *<integer>*. Default value: *contents* *.size*
    .
 
 Values
@@ -3102,7 +3102,7 @@ Creates and opens a stream over a Unicode string.
 This method returns a new instance of `
 <unicode-string-stream> <streams.htm#75284>`_. If supplied, *contents*
 describes the contents of the stream, and must be an instance of
-``<unicode-string>``. The *direction*, *start*, and *end* init-keywords
+*<unicode-string>*. The *direction*, *start*, and *end* init-keywords
 are as for *make* on `<sequence-stream> <streams.htm#41852>`_.
 
 See also
@@ -3257,12 +3257,12 @@ Arguments
          
 
 -  *input-stream* An instance of `<stream> <streams.htm#97619>`_.
--  *on-end-of-stream* An instance of ``<object>``.
+-  *on-end-of-stream* An instance of *<object>*.
 
 Values
       
 
--  *element-or-eof* An instance of ``<object>``, or *#f*.
+-  *element-or-eof* An instance of *<object>*, or *#f*.
 
 Description
            
@@ -3341,7 +3341,7 @@ Description
            
 
 A type used to represent a position in a stream. In practice, positions
-within a stream are defined as instances of ``<integer>``, but this type,
+within a stream are defined as instances of *<integer>*, but this type,
 together with the
  `<stream-position> <streams.htm#39170>`_ class, allows for cases
 where this might not be possible.
@@ -3371,14 +3371,14 @@ Arguments
          
 
 -  *input-stream* An instance of `<stream> <streams.htm#97619>`_.
--  *n* An instance of ``<integer>``.
--  *on-end-of-stream* An instance of ``<object>``.
+-  *n* An instance of *<integer>*.
+-  *on-end-of-stream* An instance of *<object>*.
 
 Values
       
 
--  *sequence-or-eof* An instance of ``<sequence>``, or an instance of
-   ``<object>`` if the end of stream is reached.
+-  *sequence-or-eof* An instance of *<sequence>*, or an instance of
+   *<object>* if the end of stream is reached.
 
 Description
            
@@ -3443,12 +3443,12 @@ Arguments
          
 
 -  *input-stream* An instance of `<stream> <streams.htm#97619>`_.
--  *on-end-of-stream* An instance of ``<object>``.
+-  *on-end-of-stream* An instance of *<object>*.
 
 Values
       
 
--  *element-or-eof* An instance of ``<object>``.
+-  *element-or-eof* An instance of *<object>*.
 
 Description
            
@@ -3513,16 +3513,16 @@ Arguments
          
 
 -  *input-stream* An instance of `<stream> <streams.htm#97619>`_.
--  *n* An instance of ``<integer>``.
--  *sequence* An instance of ``<mutable-sequence>``.
--  *start* An instance of ``<integer>``.
--  *on-end-of-stream* An instance of ``<object>``.
+-  *n* An instance of *<integer>*.
+-  *sequence* An instance of *<mutable-sequence>*.
+-  *start* An instance of *<integer>*.
+-  *on-end-of-stream* An instance of *<object>*.
 
 Values
       
 
--  *count-or-eof* An instance of ``<integer>``, or an instance of
-   ``<object>`` if the end of stream is reached..
+-  *count-or-eof* An instance of *<integer>*, or an instance of
+   *<object>* if the end of stream is reached..
 
 Description
            
@@ -3566,14 +3566,14 @@ Arguments
          
 
 -  *input-stream* An instance of `<stream> <streams.htm#97619>`_.
--  *on-end-of-stream* An instance of ``<object>``.
+-  *on-end-of-stream* An instance of *<object>*.
 
 Values
       
 
--  *string-or-eof* An instance of ``<string>``, or an instance of
-   ``<object>`` if the end of the stream is reached.
--  *newline?* An instance of ``<boolean>``.
+-  *string-or-eof* An instance of *<string>*, or an instance of
+   *<object>* if the end of the stream is reached.
+-  *newline?* An instance of *<boolean>*.
 
 ioDescription
              
@@ -3588,7 +3588,7 @@ the read terminated because it came to the end of the stream.
 The type of the result string is chosen so that the string can contain
 characters of *input-stream* ’s element type. For example, if the
 element type is `<byte-character> <streams.htm#56420>`_, the string
-will be a ``<byte-string>``.
+will be a *<byte-string>*.
 
 If *input-stream* is at its end immediately upon calling *read-line*
 (that is, the end of stream appears to be at the end of an empty line),
@@ -3625,23 +3625,23 @@ Arguments
          
 
 -  *input-stream* An instance of `<stream> <streams.htm#97619>`_.
--  *string* An instance of ``<string>``.
--  *start* An instance of ``<integer>``. Default value: 0.
--  *on-end-of-stream* An instance of ``<object>``.
--  *grow?* An instance of ``<boolean>``. Default value: *#f*.
+-  *string* An instance of *<string>*.
+-  *start* An instance of *<integer>*. Default value: 0.
+-  *on-end-of-stream* An instance of *<object>*.
+-  *grow?* An instance of *<boolean>*. Default value: *#f*.
 
 Values
       
 
--  *string-or-eof* An instance of ``<string>``, or an instance of
-   ``<object>`` if the end of the stream is reached.
--  *newline?* An instance of ``<boolean>``.
+-  *string-or-eof* An instance of *<string>*, or an instance of
+   *<object>* if the end of the stream is reached.
+-  *newline?* An instance of *<boolean>*.
 
 Description
            
 
 Fills *string* with all the input from *input-stream* up to the next
-newline sequence. The *string* must be a general instance of ``<string>``
+newline sequence. The *string* must be a general instance of *<string>*
 that can hold elements of the stream’s element type.
 
 The input is written into *string* starting at the position *start*. By
@@ -3694,16 +3694,16 @@ Arguments
          
 
 -  *input-stream* An instance of `<stream> <streams.htm#97619>`_.
--  *element* An instance of ``<object>``.
--  *on-end-of-stream* An instance of ``<object>``.
--  *test* An instance of ``<function>``. Default value: *==*.
+-  *element* An instance of *<object>*.
+-  *on-end-of-stream* An instance of *<object>*.
+-  *test* An instance of *<function>*. Default value: *==*.
 
 Values
       
 
--  *sequence-or-eof* An instance of ``<sequence>``, or an instance of
-   ``<object>`` if the end of the stream is reached.
--  *found?* An instance of ``<boolean>``.
+-  *sequence-or-eof* An instance of *<sequence>*, or an instance of
+   *<object>* if the end of the stream is reached.
+-  *found?* An instance of *<boolean>*.
 
 Description
            
@@ -3741,16 +3741,16 @@ Arguments
          
 
 -  *input-stream* An instance of `<stream> <streams.htm#97619>`_.
--  *element* An instance of ``<object>``.
--  *on-end-of-stream* An instance of ``<object>``.
--  *test* An instance of ``<function>``. Default value: *==*.
+-  *element* An instance of *<object>*.
+-  *on-end-of-stream* An instance of *<object>*.
+-  *test* An instance of *<function>*. Default value: *==*.
 
 Values
       
 
--  *sequence-or-eof* An instance of ``<sequence>``, or an instance of
-   ``<object>`` if the end of the stream is reached.
--  *found?* An instance of ``<boolean>``.
+-  *sequence-or-eof* An instance of *<sequence>*, or an instance of
+   *<object>* if the end of the stream is reached.
+-  *found?* An instance of *<boolean>*.
 
 Description
            
@@ -3803,7 +3803,7 @@ Arguments
 Values
       
 
--  *sequence* An instance of ``<sequence>``.
+-  *sequence* An instance of *<sequence>*.
 
 Description
            
@@ -3852,16 +3852,16 @@ Superclasses
 Init-keywords
              
 
--  *contents:* A general instance of ``<sequence>`` which is used as the
+-  *contents:* A general instance of *<sequence>* which is used as the
    input for an input stream, and as the initial storage for an output
    stream.
 -  *direction:* Specifies the direction of the stream. It must be one of
    *#"input"*, *#"output"*, or *#"input-output"*. Default value:
    *#"input"*.
--  *start:* An instance of ``<integer>``. This specifies the start
+-  *start:* An instance of *<integer>*. This specifies the start
    position of the sequence to be streamed over. Only valid when
    *direction:* is *#"input"*. Default value: 0.
--  *end:* An instance of ``<integer>``. This specifies the sequence
+-  *end:* An instance of *<integer>*. This specifies the sequence
    position immediately after the portion of the sequence to stream
    over. Only valid when *direction:* is *#"input"*. Default value:
    *contents.size*.
@@ -3923,13 +3923,13 @@ Arguments
          
 
 -  *input-stream* An instance of `<stream> <streams.htm#97619>`_.
--  *element* An instance of ``<object>``.
--  *test* An instance of ``<function>``. Default value: *==*.
+-  *element* An instance of *<object>*.
+-  *test* An instance of *<function>*. Default value: *==*.
 
 Values
       
 
--  *found?* An instance of ``<boolean>``.
+-  *found?* An instance of *<boolean>*.
 
 Description
            
@@ -3959,7 +3959,7 @@ The superclass of all stream classes.
 Superclasses
             
 
-``<object>``
+*<object>*
 
 Init-keywords
              
@@ -3970,7 +3970,7 @@ Init-keywords
 Description
            
 
-The superclass of all stream classes and a direct subclass of ``<object>``.
+The superclass of all stream classes and a direct subclass of *<object>*.
 It is not instantiable.
 
 The *outer-stream:* init-keyword should be used to delegate a task to
@@ -4028,7 +4028,7 @@ Arguments
 Values
       
 
--  *at-end?* An instance of ``<boolean>``.
+-  *at-end?* An instance of *<boolean>*.
 
 Description
            
@@ -4100,12 +4100,12 @@ Arguments
 An instance of `<positionable-stream> <streams.htm#65194>`_.
                                                                 
 
--  *clear-contents?* An instance of ``<boolean>``. Default value: *#t*.
+-  *clear-contents?* An instance of *<boolean>*. Default value: *#t*.
 
 Values
       
 
--  *sequence* An instance of ``<sequence>``.
+-  *sequence* An instance of *<sequence>*.
 
 Description
            
@@ -4187,12 +4187,12 @@ Arguments
 Values
       
 
--  *element-type* An instance of ``<type>``.
+-  *element-type* An instance of *<type>*.
 
 Description
            
 
-Returns the element type of *stream* as a Dylan ``<type>``.
+Returns the element type of *stream* as a Dylan *<type>*.
 
 stream-input-available?
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -4218,7 +4218,7 @@ Arguments
 Values
       
 
--  *available?* An instance of ``<boolean>``.
+-  *available?* An instance of *<boolean>*.
 
 Description
            
@@ -4264,7 +4264,7 @@ Arguments
 Values
       
 
--  *lock* An instance of ``<lock>``, or *#f*.
+-  *lock* An instance of *<lock>*, or *#f*.
 
 Description
            
@@ -4272,7 +4272,7 @@ Description
 Returns *lock* for the specified *stream*. You can use this function,
 in conjunction with `stream-lock-setter <streams.htm#21693>`_ to
 implement a basic stream locking facility. For full details on the
-``<lock>`` class, see the documentation on the Threads library in the
+*<lock>* class, see the documentation on the Threads library in the
 *Core Features and Mathematics* manual.
 
 See also
@@ -4300,12 +4300,12 @@ Arguments
          
 
 -  *stream* An instance of `<stream> <streams.htm#97619>`_.
--  *lock* An instance of ``<lock>``, or *#f*.
+-  *lock* An instance of *<lock>*, or *#f*.
 
 Values
       
 
--  *lock* An instance of ``<lock>``, or *#f*.
+-  *lock* An instance of *<lock>*, or *#f*.
 
 Description
            
@@ -4313,7 +4313,7 @@ Description
 Sets *lock* for the specified *stream*. If *lock* is *#f*, then the
 lock on *stream* is freed. You can use this function in conjunction with
 `stream-lock <streams.htm#74441>`_ to implement a basic stream
-locking facility. For full details on the ``<lock>`` class, see the
+locking facility. For full details on the *<lock>* class, see the
 documentation on the Threads library in the *Core Features and
 Mathematics* manual.
 
@@ -4346,7 +4346,7 @@ Arguments
 Values
       
 
--  *open?* An instance of ``<boolean>``.
+-  *open?* An instance of *<boolean>*.
 
 Description
            
@@ -4435,7 +4435,7 @@ The class representing non-integer stream positions.
 Superclasses
             
 
-``<object>``
+*<object>*
 
 Init-keywords
              
@@ -4445,14 +4445,14 @@ None.
 Description
            
 
-A direct subclass of ``<object>``. It is used in rare cases to represent
+A direct subclass of *<object>*. It is used in rare cases to represent
 positions within streams that cannot be represented by instances of
-``<integer>``. For example, a stream that supports compression will have
+*<integer>*. For example, a stream that supports compression will have
 some state associated with each position in the stream that a single
 integer is not sufficient to represent.
 
 The `<stream-position> <streams.htm#39170>`_ class is disjoint from
-the class ``<integer>``.
+the class *<integer>*.
 
 Operations
           
@@ -4499,7 +4499,7 @@ Values
 
 -  *new-position* An instance of `
    <stream-position> <streams.htm#39170>`_, or an instance of
-   ``<integer>``.
+   *<integer>*.
 
 Description
            
@@ -4508,8 +4508,8 @@ Changes the stream’s position for reading or writing to *position*.
 
 When it is an integer, if it is less than zero or greater than
 *positionable-stream* *.stream-size* this function signals an error. For
-file streams, a ``<stream-position-error>`` is signalled. For other types
-of stream, the error signalled is ``<simple-error>``.
+file streams, a *<stream-position-error>* is signalled. For other types
+of stream, the error signalled is *<simple-error>*.
 
 When *position* is a `<stream-position> <streams.htm#39170>`_, if it
 is invalid for some reason, this function signals an error. Streams are
@@ -4560,7 +4560,7 @@ An instance of `<positionable-stream> <streams.htm#65194>`_.
 Values
       
 
--  *size* An instance of ``<integer>``, or *#f*.
+-  *size* An instance of *<integer>*, or *#f*.
 
 Description
            
@@ -4606,13 +4606,13 @@ Superclasses
 Init-keywords
              
 
--  *contents:* A general instance of ``<sequence>``.
+-  *contents:* A general instance of *<sequence>*.
 -  *direction:* Specifies the direction of the stream. It must be one of
    *#"input"*, *#"output"*, or *#"input-output"* ; Default value:
    *#"input"*.
--  *start:* An instance of ``<integer>``. Only valid when *direction:* is
+-  *start:* An instance of *<integer>*. Only valid when *direction:* is
    *#"input"*. Default value: 0.
--  *end:* An instance of ``<integer>``. This specifies the string
+-  *end:* An instance of *<integer>*. This specifies the string
    position immediately after the portion of the string to stream over.
    Only valid when *direction:* is *#"input"*. Default value:
    *contents.size*.
@@ -4712,7 +4712,7 @@ type-for-file-stream *filename* *element-type* #rest #all-keys
 Arguments
          
 
--  *filename* An instance of ``<object>``.
+-  *filename* An instance of *<object>*.
 -  *element-type* One of `<byte-character> <streams.htm#56420>`_,
     `<unicode-character> <streams.htm#37656>`_, or `
    <byte> <streams.htm#47677>`_, or *#f*.
@@ -4720,7 +4720,7 @@ Arguments
 Values
       
 
--  *file-stream-type* An instance of ``<type>``.
+-  *file-stream-type* An instance of *<type>*.
 
 Description
            
@@ -4757,7 +4757,7 @@ type-for-sequence-stream *sequence* => *sequence-stream-type*
 Arguments
          
 
--  *sequence* An instance of ``<sequence>``.
+-  *sequence* An instance of *<sequence>*.
 
 Values
       
@@ -4765,7 +4765,7 @@ Values
 *sequence-stream-type*
                       
 
-An instance of ``<type>``.
+An instance of *<type>*.
                          
 
 Description
@@ -4802,7 +4802,7 @@ The type that represents Unicode characters.
 Supertypes
           
 
-``<character>``
+*<character>*
 
 Init-keywords
              
@@ -4813,7 +4813,7 @@ Description
            
 
 A type representing Unicode characters that instances of
-``<unicode-string>`` can contain.
+*<unicode-string>* can contain.
 
 Operations
           
@@ -4839,14 +4839,14 @@ Superclasses
 Init-keywords
              
 
--  *contents:* A general instance of ``<sequence>``.
+-  *contents:* A general instance of *<sequence>*.
 -  *direction:* Specifies the direction of the stream. It must be one of
    *#"input"*, *#"output"*, or *#"input-output"*. Default value:
    *#"input"*.
--  *start:* An instance of ``<integer>``. This specifies the start
+-  *start:* An instance of *<integer>*. This specifies the start
    position of the Unicode string to be streamed over. Only valid when
    *direction:* is *#"input"*. Default value: 0.
--  *end:* An instance of ``<integer>``. This specifies the sequence
+-  *end:* An instance of *<integer>*. This specifies the sequence
    position immediately after the portion of the Unicode string to
    stream over. Only valid when *direction:* is *#"input"*. Default
    value: *contents.size*.
@@ -4905,12 +4905,12 @@ Arguments
 An instance of `<positionable-stream> <streams.htm#65194>`_.
                                                                 
 
--  *element* An instance of ``<object>``.
+-  *element* An instance of *<object>*.
 
 Values
       
 
--  *element* An instance of ``<object>``.
+-  *element* An instance of *<object>*.
 
 Description
            
@@ -4953,7 +4953,7 @@ wait-for-io-completion *file-stream* => ()
 Arguments
          
 
--  *file-stream* An instance of ``<stream>``.
+-  *file-stream* An instance of *<stream>*.
 
 Description
            
@@ -4983,14 +4983,14 @@ Arguments
          
 
 -  *stream-var* An Dylan variable-name*bnf*.
--  *filename* An instance of ``<string>``.
--  *keys* Instances of ``<object>``.
+-  *filename* An instance of *<string>*.
+-  *keys* Instances of *<object>*.
 -  *body* A Dylan body*bnf*.
 
 Values
       
 
--  *values* Instances of ``<object>``.
+-  *values* Instances of *<object>*.
 
 Description
            
@@ -5101,7 +5101,7 @@ Operations
 Example
        
 
-In the example below, ``<io-wrapper-stream>``, a subclass of `
+In the example below, *<io-wrapper-stream>*, a subclass of `
 <wrapper-stream> <streams.htm#54696>`_, “passes on” functions such as
  `read-element <streams.htm#52501>`_ and `
 write-element <streams.htm#31863>`_ by simply delegating these
@@ -5131,7 +5131,7 @@ write-element(ws.inner-stream,element)
 end method;
            
 
-Assuming that ``<io-wrapper-stream>`` delegates all other operations to
+Assuming that *<io-wrapper-stream>* delegates all other operations to
 its inner stream, the following is sufficient to implement a 16-bit
 Unicode character stream wrapping an 8-bit character stream.
 
@@ -5229,9 +5229,9 @@ Arguments
          
 
 -  *output-stream* An instance of `<stream> <streams.htm#97619>`_.
--  *sequence* An instance of ``<sequence>``.
--  *start* An instance of ``<integer>``. Default value: 0.
--  *end* An instance of ``<integer>``. Default value: *sequence* *.size*
+-  *sequence* An instance of *<sequence>*.
+-  *start* An instance of *<integer>*. Default value: 0.
+-  *end* An instance of *<integer>*. Default value: *sequence* *.size*
    .
 
 Values
@@ -5246,7 +5246,7 @@ Writes the elements of *sequence* to *output-stream*, starting at the
 stream’s current position.
 
 The elements in *sequence* are accessed in the order defined by the
-forward iteration protocol on ``<sequence>``. This is effectively the
+forward iteration protocol on *<sequence>*. This is effectively the
 same as the following:
 
 do (method (elt) write-element(stream, elt)
@@ -5267,8 +5267,8 @@ advance the stream’s position to be beyond the last element written.
 
 *Implementation Note:* Buffered streams are intended to provide a very
 efficient implementation of `write <streams.htm#80743>`_,
-particularly when sequence is an instance of ``<byte-string>``,
-``<unicode-string>``, `<byte-vector> <streams.htm#46456>`_, or `
+particularly when sequence is an instance of *<byte-string>*,
+*<unicode-string>*, `<byte-vector> <streams.htm#46456>`_, or `
 <buffer> <streams.htm#77969>`_, and the stream’s element type is the
 same as the element type of sequence.
 
@@ -5325,7 +5325,7 @@ Arguments
          
 
 -  *output-stream* An instance of `<stream> <streams.htm#97619>`_.
--  *element* An instance of ``<object>``.
+-  *element* An instance of *<object>*.
 
 Values
       
@@ -5397,9 +5397,9 @@ Arguments
          
 
 -  *output-stream* An instance of `<stream> <streams.htm#97619>`_.
--  *string* An instance of ``<string>``.
--  *start* An instance of ``<integer>``. Default value: 0.
--  *end* An instance of ``<integer>``. Default value: *string* *.size*.
+-  *string* An instance of *<string>*.
+-  *start* An instance of *<integer>*. Default value: 0.
+-  *end* An instance of *<integer>*. Default value: *string* *.size*.
 
 Values
       
