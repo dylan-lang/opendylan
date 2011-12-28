@@ -17,14 +17,13 @@ define sideways method emit-mainfile
     without-dependency-tracking
       let call-application-exit-functions
         = ^iep(dylan-value(#"call-application-exit-functions"));
-      format-emit(back-end, stream, 1, "  extern ~ ^();\n", 
+      format-emit(back-end, stream, 1, "  extern ~ ^();\n",
                   $dylan-type-string, call-application-exit-functions);
-      
       format-emit(back-end, stream, 1, "  (void) ^();\n",
                   call-application-exit-functions);
     end;
     format(stream, "}\n\n");
-    
+
     format(stream, "main (int argc, char *argv[]) {\n");
     format(stream, "  extern void %s ();\n", glue-name(lib-name));
     format(stream, "  extern D %s;\n", command-arguments-name());
@@ -74,9 +73,9 @@ define sideways method emit-gluefile
     if (dylan-library-library-description?(ld))
       without-dependency-tracking
         let install-boot-symbols = ^iep(dylan-value(#"%install-boot-symbols"));
-        format-emit(back-end, stream, 1, "    { extern ~ ^();\n", 
+        format-emit(back-end, stream, 1, "    { extern ~ ^();\n",
                     $dylan-type-string, install-boot-symbols);
-        format-emit(back-end, stream, 1, "      ^(); }\n", 
+        format-emit(back-end, stream, 1, "      ^(); }\n",
                     install-boot-symbols);
       end;
     end if;
@@ -96,16 +95,16 @@ end method;
 
 define method cr-init-name (ld, cr-name)
   concatenate(ld.library-description-glue-name, "_X_",
-	      c-local-mangle(cr-name))
+              c-local-mangle(cr-name))
 end method;
 
 define method cr-init-names (ld, cr-names)
   concatenate
-    (map(method (cr) 
+    (map(method (cr)
            concatenate(cr-init-name(ld, cr), $system-init-code-tag);
          end,
          cr-names),
-     map(method (cr) 
+     map(method (cr)
            concatenate(cr-init-name(ld, cr), $user-init-code-tag);
          end,
          cr-names))
