@@ -536,5 +536,12 @@ end function signal-application-event;
 
 define function load-library
     (name :: <string>) => (module)
-  #f
+  let module =
+    primitive-wrap-machine-word
+    (%call-c-function ("system_dlopen")
+       (name :: <raw-byte-string>)
+       => (handle :: <raw-c-pointer>)
+       (primitive-cast-raw-as-pointer(primitive-string-as-raw(name)))
+    end);
+  module
 end function load-library;

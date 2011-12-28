@@ -1,6 +1,7 @@
 #include <unistd.h>
 #include <signal.h>
 #include <errno.h>
+#include <dlfcn.h>
 
 #ifdef __APPLE__
 #include <crt_externs.h>
@@ -61,4 +62,9 @@ int system_spawn(char *program, char **argv, char **envp, char *dir,
 
   /* The exec didn't work, flame out. */
   _exit(127);
+}
+
+void *system_dlopen(const char *name)
+{
+  return dlopen(name, RTLD_NOW | RTLD_GLOBAL);
 }
