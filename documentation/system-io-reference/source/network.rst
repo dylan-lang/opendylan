@@ -17,16 +17,13 @@ using the Network library must call before *any* other call to the
 Network library API. It also covers the *with-socket-thread* macro which
 registers the current thread as a thread that will call a socket
 function that blocks.
-                                                                                                                                                                                                                                                                                                        
 
 start-sockets
-~~~~~~~~~~~~~
+^^^^^^^^^^^^~
 
 Function
-''''''''
 
 start-sockets () => ()
-                      
 
 Applications must call this function before using *any* other function
 or variable from the Network library.
@@ -52,29 +49,17 @@ to be called (directly or indirectly) before *any* other sockets API
 functions. A good place to do this is at the beginning of your start
 function (usually the *main* method). For example:
 
-define method main () => ();
-                            
+.. code-block:: dylan
 
-start-sockets();
-                
+    define method main () => ();
+      start-sockets();
+      let the-server = make(<TCP-server-socket>, port: 7);
+      ...
+    end;
 
-let the-server = make(<TCP-server-socket>, port: 7);
-                                                    
-
-...
-   
-
-end;
-    
-
-begin
-     
-
-main();
-       
-
-end;
-    
+    begin
+      main();
+    end;
 
 New start functions that call *start-sockets* and that are defined for
 DLL projects that use the Network library will inherit all of the
@@ -86,19 +71,15 @@ from a top-level form in a DLL project will result in unpredictable
 failures—probably access violations during initialization.
 
 with-socket-thread
-~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^
 
 Statement macro
-'''''''''''''''
 
 with-socket-thread (#key *server?*)
-                                    
 
 *body*
-      
 
 end;
-    
 
 Registers the current thread as a blocking socket thread, that is, a
 thread which will call a socket function that blocks, such as
@@ -119,20 +100,17 @@ Internet addresses
 ------------------
 
 This section covers Internet address protocols.
-                                               
 
 Basic Internet address protocol
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This section covers the class ``<internet-address>`` and related generic
 functions and constants.
-                                                                                               
 
 <internet-address>
-~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^
 
 Open abstract primary instantiable class
-''''''''''''''''''''''''''''''''''''''''
 
 Superclasses: ``<object>``
 
@@ -142,13 +120,15 @@ for peer-to-peer socket connections.
 To construct an ``<internet-address>`` object you must supply either the
 *name:* or *address:* keyword. For example:
 
-make (<internet-address>, name: "www.whatever.com")
-                                                   
+.. code-block:: dylan
+
+    make (<internet-address>, name: "www.whatever.com")
 
 or
 
-make (<internet-address>, address: "9.74.122.0")
-                                                
+.. code-block:: dylan
+
+    make (<internet-address>, address: "9.74.122.0")
 
 *make* on ``<internet-address>`` returns an instance of ``<ipv4-address>``.
 
@@ -161,17 +141,14 @@ Keywords:
    (see below).
 
 host-name
-~~~~~~~~~
+^^^^^^^^~
 
 Open generic function
-'''''''''''''''''''''
 
 host-name *internet-address* => *name*
-                                      
 
 Returns an instance of ``<string>`` containing a symbolic host name. The
-*internet-address* argument must be an instance of ``<internet-address>``
-.
+*internet-address* argument must be an instance of ``<internet-address>``.
 
 Usually the name returned is the canonical host name. Note, however,
 that the implementation is conservative about making DNS calls. Suppose
@@ -183,75 +160,66 @@ the one specified with the *name:* keyword, regardless of whether that
 is the canonical name or not.
 
 host-address
-~~~~~~~~~~~~
+^^^^^^^^^^^^
 
 Open generic function
-'''''''''''''''''''''
 
 host-address *internet-address* => *address*
-                                            
 
 Returns an instance of ``<string>`` containing the presentation form of
 the host address. In the case of multi-homed hosts this will usually be
 the same as:
 
-multi-homed-internet-address.all-addresses.first.host-address
-                                                             
+.. code-block:: dylan
+
+    multi-homed-internet-address.all-addresses.first.host-address
 
 In the case of an Internet address created using the *address:* keyword
 it will be either the keyword value or
 *all-addresses.first.host-address*.
 
 numeric-host-address
-~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^
 
 Open generic function
-'''''''''''''''''''''
 
 numeric-host-address *internet-address* => *numeric-address*
-                                                            
 
 Returns the host address as a ``<numeric-address>``.
 
 all-addresses
-~~~~~~~~~~~~~
+^^^^^^^^^^^^~
 
 Open generic function
-'''''''''''''''''''''
 
 all-addresses *internet-address* => *sequence*
-                                              
 
 Returns an instance of ``<sequence>`` whose elements are
 ``<internet-address>`` objects containing all known addresses for the
 host.
 
 aliases
-~~~~~~~
+^^^^^^~
 
 Open generic function
-'''''''''''''''''''''
 
 aliases *internet-address* => *sequence*
-                                        
 
 Returns an instance of ``<sequence>`` whose elements are instances of
 ``<string>`` representing alternative names for the host.
 
 $loopback-address
-~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^~
 
 Constant
-''''''''
 
 An instance of ``<internet-address>`` representing the loopback address:
 *"127.0.0.1"*.
 
 $local-host
-~~~~~~~~~~~
+^^^^^^^^^^~
 
 Constant
-''''''''
 
 An instance of ``<internet-address>`` representing the host on which the
 application using sockets is correctly running.
@@ -259,8 +227,9 @@ application using sockets is correctly running.
 Note that this value is not necessarily the same as would be created by
 the expression
 
-make (<internet-address>, name: "localhost")
-                                            
+.. code-block:: dylan
+
+    make (<internet-address>, name: "localhost")
 
 The address assigned to the symbolic name *localhost* is dependent on
 the configuration of DNS. In some cases this may be configured to be the
@@ -270,20 +239,17 @@ The <IPV6-ADDRESS> class
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
 This name is reserved for future development.
-                                             
 
 The <NUMERIC-ADDRESS> class
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This section describes numeric Internet representation and associated
 protocols.
-                                                                                
 
 <numeric-address>
-~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^~
 
 Sealed abstract primary class
-'''''''''''''''''''''''''''''
 
 Superclasses: ``<object>``
 
@@ -297,13 +263,11 @@ will be added when they are supported by Winsock2. In general
 are employed.
 
 network-order
-~~~~~~~~~~~~~
+^^^^^^^^^^^^~
 
 Sealed generic function
-'''''''''''''''''''''''
 
 network-order *address* => *network-order-address*
-                                                  
 
 Returns the value of the numeric address in network order. The argument
 is a general instance of ``<numeric-address>``. The class of the object
@@ -314,13 +278,11 @@ of ``<machine-word>``.
 *Network order* is big-endian byte order.
 
 host-order
-~~~~~~~~~~
+^^^^^^^^^^
 
 Sealed generic function
-'''''''''''''''''''''''
 
 host-order *address* => *host-order-address*
-                                            
 
 Like *network-order* but returns the value in host order.
 
@@ -331,10 +293,9 @@ IPV4 addresses
 ^^^^^^^^^^^^^^
 
 <ipv4-numeric-address>
-~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^
 
 Open abstract primary instantiable class
-''''''''''''''''''''''''''''''''''''''''
 
 Superclasses: ``<numeric-address>``
 
@@ -352,66 +313,60 @@ Keywords:
 -  *order:* One of *#"network-order"* or *#"host-order"*. Required.
 
 host-order
-~~~~~~~~~~
+^^^^^^^^^^
 
 G.f. method
-'''''''''''
 
 host-order *ip4-numeric-address* => *machine-word*
-                                                  
 
 Returns the numeric address in host order as an instance of
 ``<machine-word>``. The argument is an instance of
 ``<ip4-numeric-address>``.
 
 network-order
-~~~~~~~~~~~~~
+^^^^^^^^^^^^~
 
 G.f. method
-'''''''''''
 
 network-order *ipv4-numeric-address* => *machine-word*
-                                                      
 
 Returns the numeric address in network order as an instance of
 ``<machine-word>``. The argument is an instance of
 ``<ip4-numeric-address>``.
 
 as
-~~
+^^
 
 G.f. method
-'''''''''''
 
 as *string* *ipv4-numeric-address* => *string*
-                                              
 
 Returns the presentation (dotted string) form of an instance of
 ``<ip4-numeric-address>``.
 
 <ipv4-network-order-address>
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Sealed concrete class
-'''''''''''''''''''''
 
 Superclasses: ``<ipv4-numeric-address>``
 
 Concrete subclass for network-order numeric addresses.
 
-make(<ipv4-network-order-address>)
-                                  
+.. code-block:: dylan
+
+    make(<ipv4-network-order-address>)
 
 is equivalent to
 
-make(<ipv4-numeric-address>, order: network-order)
-                                                  
+.. code-block:: dylan
+
+    make(<ipv4-numeric-address>, order: network-order)
 
 <ipv4-host-order-address>
-~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^~
 
 Sealed concrete class
-'''''''''''''''''''''
 
 Superclasses: ``<ipv4-numeric-address>``
 
@@ -421,16 +376,14 @@ Sockets
 -------
 
 This section describes socket classes and protocols.
-                                                    
 
 The <ABSTRACT-SOCKET> class
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 <abstract-socket>
-~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^~
 
 Open abstract uninstantiable free class
-'''''''''''''''''''''''''''''''''''''''
 
 Superclasses: ``<object>``
 
@@ -440,7 +393,6 @@ client socket), ``<server-socket>`` and ``<socket-accessor>``.
 -  Keywords:
 
 *socket-descriptor:*
-                    
 
 -  A Windows handle or UNIX fd (file descriptor) for the socket. In
    general users of the sockets API should not need to use this keyword.
@@ -448,42 +400,35 @@ client socket), ``<server-socket>`` and ``<socket-accessor>``.
 
 Each subclass of ``<abstract-socket>`` must provide methods for *close*
 and for the following generic functions:
-                                                                                                              
 
 local-port
-~~~~~~~~~~
+^^^^^^^^^^
 
 Open generic function
-'''''''''''''''''''''
 
 local-port *socket* => *port-number*
-                                    
 
 Returns the local port number for an instance of ``<socket>``,
 ``<datagram-socket>`` or ``<server-socket>``. The return value is an
 instance of ``<integer>``.
 
 socket-descriptor
-~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^~
 
 Open generic function
-'''''''''''''''''''''
 
 socket-descriptor *socket* => descriptor
-                                        
 
 Returns the descriptor (handle or fd) for the socket. The argument is an
 instance of ``<abstract-socket>`` and the return value an instance of
 ``<accessor-socket-descriptor>``.
 
 local-host
-~~~~~~~~~~
+^^^^^^^^^^
 
 Open generic function
-'''''''''''''''''''''
 
 local-host *socket* => *host-address*
-                                     
 
 Returns the address of the local host. The argument is an instance of
 ``<abstract-socket>`` and the return value an instance of
@@ -493,10 +438,9 @@ The <SERVER-SOCKET> class
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
 <server-socket>
-~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^~
 
 Open abstract primary instantiable class
-''''''''''''''''''''''''''''''''''''''''
 
 Superclasses: ``<abstract-socket>``
 
@@ -521,13 +465,11 @@ be supplied.
    ``<tcp-server-socket>`` by default.
 
 accept
-~~~~~~
+^^^^^^
 
 Open generic function
-'''''''''''''''''''''
 
 accept *server-socket* #rest *args* #key => *result*
-                                                    
 
 Blocks until a connect request is received, then it returns a connected
 instance of ``<socket>``. The particular subclass of ``<socket>`` returned
@@ -541,19 +483,15 @@ from a UDP socket returned from *accept* the socket can be interrogated
 for the location of the sender using *remote-host* and *remote-port*.
 
 with-server-socket
-~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^
 
 Macro
-'''''
 
 with-server-socket (*server-var* [:: *server-class* ], *keywords*)
-                                                                   
 
 *body*
-      
 
 end;
-    
 
 Creates an instance of ``<server-socket>``, using the (optional)
 *server-class* argument and keyword arguments to make the
@@ -562,22 +500,14 @@ Creates an instance of ``<server-socket>``, using the (optional)
 the ``<server-socket>`` is closed after the body is executed.
 
 start-server
-~~~~~~~~~~~~
+^^^^^^^^^^^^
 
 Macro
-'''''
 
 start-server ([*server-var* = ]*socket-server-instance*,
-                                                         
-
 *socket-var* [, *keywords* ])
-                             
-
 *body*
-      
-
 end;
-    
 
 Enters an infinite *while(#t)* *accept* loop on the server socket. Each
 time accept succeeds the ``<socket>`` returned from accept is bound to
@@ -590,10 +520,9 @@ The <TCP-SERVER-SOCKET> class
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 <tcp-server-socket>
-~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^~
 
 Class
-'''''
 
 Superclass: ``<server-socket>``
 
@@ -613,30 +542,27 @@ Keywords:
    ``<byte-character>`` is used as the default *element-type*.
 
 accept
-~~~~~~
+^^^^^^
 
 G.f. method
-'''''''''''
 
 accept *server-socket* #rest *args* #key *element-type* =>
 *connected-socket*
-                                                                             
 
 This method on *accept* takes an instance of type ``<tcp-server-socket>``
 and returns a connected instance of ``<tcp-socket>``. The *element-type:*
 keyword controls the element type of the ``<tcp-socket>`` (stream)
 returned from *accept*. If the keyword is not supplied, the default
-value used is *#f*. The other keyword arguments are passed directly to
+value used is ``#f``. The other keyword arguments are passed directly to
 the creation of the ``<tcp-socket>`` instance.
 
 The <SOCKET> class
 ^^^^^^^^^^^^^^^^^^
 
 <socket>
-~~~~~~~~
+^^^^^^^^
 
 Open abstract free instantiable class
-'''''''''''''''''''''''''''''''''''''
 
 Superclasses: ``<abstract-socket>``, ``<external-stream>``
 
@@ -658,10 +584,9 @@ The <BUFFERED-SOCKET> class
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 <buffered-socket>
-~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^~
 
 Class
-'''''
 
 Superclasses: ``<socket>``, ``<double-buffered-stream>``
 
@@ -673,9 +598,8 @@ from ``<double-buffered-stream>``.
 Keywords:
 
 *force-output-before-read?:*
-                            
 
--  An instance of ``<boolean>``. Defaults value: *#t*. The methods which
+-  An instance of ``<boolean>``. Defaults value: ``#t``. The methods which
    implement the stream reading protocols (*read*, *read-line*,
    *read-element* and so on) for instances of ``<socket>`` call
    *force-output* by default before blocking. This is to ensure that any
@@ -686,20 +610,18 @@ Keywords:
    applications where one thread is reading and another thread is
    writing to the same socket, may wish to inhibit the default
    *force-output*. If the socket is created with
-   *force-output-before-read?:* as *#f*, *force-output* will not be
+   *force-output-before-read?:* as ``#f``, *force-output* will not be
    called before the read functions block.
 
 The <TCP-SOCKET> class
 ^^^^^^^^^^^^^^^^^^^^^^
 
 The class of TCP client sockets.
-                                
 
 <tcp-socket>
-~~~~~~~~~~~~
+^^^^^^^^^^^^
 
 Class
-'''''
 
 Superclasses: ``<buffered-socket>``
 
@@ -730,25 +652,21 @@ are required.
    an inherited streams class keyword. See :doc:`streams` for a full description.
 
 remote-port
-~~~~~~~~~~~
+^^^^^^^^^^~
 
 Open generic function
-'''''''''''''''''''''
 
 remote-port *socket* => *port-number*
-                                     
 
 Returns the remote port number for a ``<socket>``. The value returned is
 an instance of ``<integer>``.
 
 remote-host
-~~~~~~~~~~~
+^^^^^^^^^^~
 
 Open generic function
-'''''''''''''''''''''
 
 remote-host *socket* => *remote-host-address*
-                                             
 
 Returns the remote host for a ``<socket>``. The value returned is an
 instance of ``<internet-address>``.
@@ -757,13 +675,11 @@ The <UDP-SOCKET> class
 ^^^^^^^^^^^^^^^^^^^^^^
 
 The class of UDP client sockets.
-                                
 
 <udp-socket>
-~~~~~~~~~~~~
+^^^^^^^^^^^^
 
 Class
-'''''
 
 Superclasses: ``<buffered-socket>``
 
@@ -798,13 +714,11 @@ The <UDP-SERVER-SOCKET> class
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The class of UDP server sockets.
-                                
 
 <udp-server-socket>
-~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^~
 
 Class
-'''''
 
 Superclass: ``<server-socket>``
 
@@ -826,20 +740,17 @@ Socket conditions
 -----------------
 
 This section lists the socket condition classes in the Network library.
-                                                                       
 
 <socket-condition>
 ^^^^^^^^^^^^^^^^^^
 
 All socket conditions are general instances of ``<socket-condition>``.
 Some are recoverable and others are not.
-                                                                                                              
 
 <socket-condition>
-~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^
 
 Condition
-'''''''''
 
 Superclasses: ``<simple-condition>``
 
@@ -864,13 +775,11 @@ Slots:
 
 The class ``<socket-error>`` is the superclass of all unrecoverable socket
 conditions.
-                                                                                    
 
 <socket-error>
-~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^
 
 Condition
-'''''''''
 
 Superclasses: ``<socket-condition>``
 
@@ -881,13 +790,11 @@ The class of socket conditions from which no recovery is possible.
 
 The class ``<internal-socket-error>`` is the class of unexpected socket
 errors.
-                                                                             
 
 <internal-socket-error>
-~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^~
 
 Condition
-'''''''''
 
 Superclasses: ``<socket-error>``
 
@@ -903,13 +810,11 @@ information.
 The ``<recoverable-socket-condition>`` class is the general class of
 socket conditions for which an application may be able to take some
 remedial action.
-                                                                                                                                                       
 
 <recoverable-socket-condition>
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Condition
-'''''''''
 
 Superclasses: ``<socket-condition>``
 
@@ -928,10 +833,9 @@ connections.
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
 <network-not-responding>
-~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 Condition
-'''''''''
 
 Superclasses: ``<recoverable-socket-condition>``
 
@@ -941,10 +845,9 @@ The network — probably a local network — is down. Try again later.
 ^^^^^^^^^^^^^^^^^
 
 <invalid-address>
-~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^~
 
 Condition
-'''''''''
 
 Superclasses: ``<recoverable-socket-condition>``
 
@@ -955,10 +858,9 @@ make an ``<internet-address>``.
 ^^^^^^^^^^^^^^^^
 
 <host-not-found>
-~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^
 
 Condition
-'''''''''
 
 Superclasses: ``<recoverable-socket-condition>``
 
@@ -969,10 +871,9 @@ address. Try again with a different (correct) name or address.
 ^^^^^^^^^^^^^^^^^^^^^^^
 
 <server-not-responding>
-~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^~
 
 Condition
-'''''''''
 
 Superclasses: ``<recoverable-socket-condition>``
 
@@ -983,10 +884,9 @@ result. Try again.
 ^^^^^^^^^^^^^^^^^^
 
 <host-unreachable>
-~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^
 
 Condition
-'''''''''
 
 Superclasses: ``<recoverable-socket-condition>``
 
@@ -996,10 +896,9 @@ The remote host cannot be reached from this host at this time.
 ^^^^^^^^^^^^^^^
 
 <socket-closed>
-~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^~
 
 Condition
-'''''''''
 
 Superclasses: ``<recoverable-socket-condition>``
 
@@ -1013,10 +912,9 @@ instances of ``<socket-closed>``.
 ^^^^^^^^^^^^^^^^^^^
 
 <connection-failed>
-~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^~
 
 Condition
-'''''''''
 
 Superclasses: ``<recoverable-socket-condition>``
 
@@ -1029,10 +927,9 @@ not be reached.
 ^^^^^^^^^^^^^^^^^^^
 
 <connection-closed>
-~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^~
 
 Condition
-'''''''''
 
 Superclasses: ``<recoverable-socket-condition>``
 
@@ -1043,10 +940,9 @@ closed. To try again, open a new socket.
 ^^^^^^^^^^^^^^^^
 
 <address-in-use>
-~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^
 
 Condition
-'''''''''
 
 Superclasses: ``<recoverable-socket-condition>``
 
@@ -1059,10 +955,9 @@ without closing a socket.
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 <blocking-call-interrupted>
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^~
 
 Condition
-'''''''''
 
 Superclasses: ``<recoverable-socket-condition>``
 
@@ -1073,10 +968,9 @@ interrupted.
 ^^^^^^^^^^^^^^^^^^
 
 <out-of-resources>
-~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^
 
 Condition
-'''''''''
 
 Superclasses: ``<recoverable-socket-condition>``
 
@@ -1089,10 +983,9 @@ particularly small.
 ^^^^^^^^^^^^^^^^^^^^^^^
 
 <socket-accessor-error>
-~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^~
 
 Condition
-'''''''''
 
 Superclasses: ``<socket-error>``
 
@@ -1104,10 +997,9 @@ socket library. Usually instances of this class these appear in the
 ^^^^^^^^^^^^^^^^^^^^
 
 <win32-socket-error>
-~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^
 
 Condition
-'''''''''
 
 Superclasses: ``<socket-accessor-error>``
 
@@ -1118,13 +1010,11 @@ returned an error return code.
 Slots:
 
 *WSA-numeric-error-code*
-                        
 
 -  Contains the numeric error code that was returned. An instance of
    ``<integer>``.
 
 *WSA-symbolic-error-code*
-                         
 
 -  Contains an instance of ``<string>`` giving the symbolic
    (human-readable) form of the error code. For example, the string
@@ -1133,7 +1023,6 @@ Slots:
    ``<string>``.
 
 *calling-function*
-                  
 
 -  The name of Winsock2 FFI interface function which returned the error
    code. An instance of ``<string>``.

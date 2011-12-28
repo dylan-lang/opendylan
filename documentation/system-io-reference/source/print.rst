@@ -38,13 +38,10 @@ The Print module offers two functions for users to call to print
 objects, *print* and *print-to-string*.
 
 print
-'''''
 
 Function
-        
 
 print *object* *stream* #key *level length circle? pretty?* => ()
-                                                                 
 
 Prints *object* to *stream* according to the print request formed by the
 keyword arguments. A first call to *print* creates a printing stream to
@@ -59,7 +56,7 @@ handled by *print*. There is one exception which is described in `
 Pretty printing`_.
 
 The *level* keyword controls how deep into a nested data structure to
-print. The value *#f* indicates that there is no limit. The default,
+print. The value ``#f`` indicates that there is no limit. The default,
 *\*print-level\**, has no effect on recursive calls to *print*.
 Recursive calls to *print* may change the value of *print-level*
 explicitly, but *print* always uses a value to ensure the print request
@@ -69,7 +66,7 @@ recursive call specified a level of 4, the recursive call would only
 descend 2 more levels, not 4.
 
 The *length* keyword controls how many elements of a sequence to print
-before printing ellipsis notation (*...*). The value *#f* indicates
+before printing ellipsis notation (*...*). The value ``#f`` indicates
 that there is no limit. The *print-length* control can be interpreted
 loosely by some *print-object* methods to control how many *elements* of
 any kind of object to print; for example, the default ``<object>`` method
@@ -85,12 +82,12 @@ infinitely recurse through a data structure. Circular printing also tags
 objects that occur more than once when they are first printed, and later
 occurrences are printed as a reference to the previously emitted tag.
 The default, *\*print-circle?\**, has no effect on recursive calls to
-*print*. If *print-circle?* is already *#t*, then it remains *#t*
-throughout all recursive calls. If *print-circle?* is *#f*, then
-recursive calls to *print* can change the value to *#t* ; however, when
+*print*. If *print-circle?* is already ``#t``, then it remains ``#t``
+throughout all recursive calls. If *print-circle?* is ``#f``, then
+recursive calls to *print* can change the value to ``#t`` ; however, when
 printing exits the dynamic scope of the call that changed the value to
-*#t*, the value reverts back to *#f*. If the original call to *print*
-specifies *circle?* as *#f*, and dynamically distinct recursive calls
+``#t``, the value reverts back to ``#f``. If the original call to *print*
+specifies *circle?* as ``#f``, and dynamically distinct recursive calls
 turn circular printing on and off, all output generated while circular
 printing was on shares the same tagging space; that is, if *#1#* is
 printed twice, once from each of two distinct recursive calls to print,
@@ -100,33 +97,27 @@ The *pretty?* keyword indicates whether printing should attempt to
 insert line breaks and indentation to format objects according to how
 programmers tend to find it easier to read data. The default,
 *\*print-pretty?\**, has no effect on recursive calls to *print*. If
-*print-pretty?* is already *#t*, then it remains *#t* throughout all
-recursive calls. If *print-pretty?* is *#f*, then recursive calls to
-*print* can change the value to *#t* ; however, when printing exits the
-dynamic scope of the call that changed the value to *#t*, the value
-reverts back to *#f*.
+*print-pretty?* is already ``#t``, then it remains ``#t`` throughout all
+recursive calls. If *print-pretty?* is ``#f``, then recursive calls to
+*print* can change the value to ``#t`` ; however, when printing exits the
+dynamic scope of the call that changed the value to ``#t``, the value
+reverts back to ``#f``.
 
 print-to-string
-'''''''''''''''
 
 Function
-        
 
 print-to-string *object* #key *level length circle? pretty?* => *result*
-                                                                        
 
 Calls *print* to produce output according to the print request formed by
 the keyword arguments and returns the result as a string. The *level*,
 *length*, *circle?*, and *pretty?* keywords are as for *print*.
 
 print-object
-''''''''''''
 
 Open generic function
-                     
 
 print-object *object stream* => ()
-                                  
 
 Prints an *object* to a *stream*. You should extend the ability of
 *print* to print various objects by adding methods to the *print-object*
@@ -138,38 +129,30 @@ values for calls to the print function. Their values are
 implementation-dependent.
 
 \*print-level\*
-'''''''''''''''
 
 Variable
-        
 
 This is an ``<integer>`` that controls how deeply into a nested expression
 to print.
 
 \*print-length\*
-''''''''''''''''
 
 Variable
-        
 
 This is an ``<integer>`` that controls how many elements at a given level
 to print.
 
 \*print-circle?\*
-'''''''''''''''''
 
 Variable
-        
 
 A boolean that controls whether or not to print recursively. When
-*\*print-circle\** is *#f*, printing proceeds recursively and attempts
+*\*print-circle\** is ``#f``, printing proceeds recursively and attempts
 to print a circular structure results in failure to terminate.
 
 \*print-pretty\*
-''''''''''''''''
 
 Variable
-        
 
 A boolean that controls whether or not print does pretty-printing.
 
@@ -187,40 +170,32 @@ scope of a call to *pprint-logical-block* ; otherwise, the pretty
 printing functions are no-ops.
 
 The following interfaces are exported from the *pprint* module:
-                                                               
 
 \*default-line-length\*
-'''''''''''''''''''''''
 
 Variable
-        
 
 An integer that controls the line length used by the pretty printer to
 determine how much output will fit on a single line. The value must be
 an integer. The default is 80.
 
 \*print-miser-width\*
-'''''''''''''''''''''
 
 Variable
-        
 
 An integer that controls *miser mode*. Whenever a logical block (see
 *pprint-logical-block*) begins in a column of output that is greater
 than *\*default-line-length\* - \*print-miser-width\**, then pretty
-printing is in miser mode. The value must be an integer or *#f* (the
-default). *#f* indicates that the pretty printer should never enter
+printing is in miser mode. The value must be an integer or ``#f`` (the
+default). ``#f`` indicates that the pretty printer should never enter
 miser mode.
 
 pprint-logical-block
-''''''''''''''''''''
 
 Function
-        
 
 pprint-logical-block *stream* #key *prefix per-line-prefix body suffix
 column* => ()
-                                                                                    
 
 Groups printing into a logical block. The logical block provides
 boundaries for new levels of indentation, affects *#"linear"* newlines,
@@ -230,7 +205,7 @@ character position greater than the column in which *prefix* ends.
 Alternatively, *per-line-prefix* is a string to print on every line of
 the logical block. The *pprint-logical-block* function signals an error
 if it is called with both *prefix* and *per-line-prefix* supplied as
-non-*#f*.
+non-``#f``.
 
 The *suffix* keyword is a string to print at the end of the logical
 block.
@@ -254,13 +229,10 @@ call to *pprint-logical-block* ; otherwise, the pretty printing
 functions are no-ops.
 
 pprint-newline
-''''''''''''''
 
 Function
-        
 
 pprint-newline *kind stream* => ()
-                                  
 
 Announces a conditional newline to the pretty printer. The pretty
 printer emits a newline depending on the *kind* and the state of the
@@ -281,13 +253,10 @@ the following:
    *#"miser"* newlines will be emitted as appropriate.
 
 pprint-indent
-'''''''''''''
 
 Function
-        
 
 pprint-indent *relative-to n stream* => ()
-                                          
 
 Specifies the indentation to use within the current logical block. When
 *relative-to* is *#"block"*, then *pprint-indent* sets the indentation
@@ -297,13 +266,10 @@ indentation to the current column plus *n*. In both cases, *n* is a
 ``<fixed-integer>``.
 
 pprint-tab
-''''''''''
 
 Function
-        
 
 pprint-tab *kind colnum colinc stream* => ()
-                                            
 
 -  *kind* One of *#"line"*, *#"line-relative"*, *#"section"*,
    *#"section-relative"*.
@@ -321,7 +287,6 @@ following:
    line.
 
 *#"line-relative"*
-                  
 
 -  Output *colnum* spaces. Then output enough spaces to tab to a column
    that is a multiple of *colinc* from the beginning of the line.
@@ -330,7 +295,6 @@ following:
    beginning of the line.
 
 *#"section-relative"*
-                     
 
 -  This is similar to *#"line-relative"*, but column counting is
    relative to the beginning of the current *section* rather than the
@@ -345,30 +309,26 @@ This section contains a reference entry for each item exported from the
 IO library’s *print* module.
 
 print
-~~~~~
+^^^^~
 
 Function
 ^^^^^^^^
 
 Summary
-       
 
 Prints *object* to the specified stream.
 
 Signature
-         
 
 print *object* *stream* #key *level length circle? pretty?* => ()
-                                                                 
 
 Arguments
-         
 
 -  object An instance of ``<object>``.
 -  *stream* An instance of ``<stream>``.
--  *level* *#f* or an instance of ``<fixed-integer>``. Default value:
+-  *level* ``#f`` or an instance of ``<fixed-integer>``. Default value:
    *\*print-level\**.
--  *length* *#f* or an instance of ``<fixed-integer>``. Default value:
+-  *length* ``#f`` or an instance of ``<fixed-integer>``. Default value:
    *\*print-length\**.
 -  *circle?* An instance of ``<boolean>``. Default value:
    *\*print-circle?\**.
@@ -376,12 +336,10 @@ Arguments
    *\*print-pretty?\**.
 
 Values
-      
 
 -  None.
 
 Description
-           
 
 Prints *object* to *stream* according to the print request formed by the
 keyword arguments. A first call to *print* creates a printing stream to
@@ -396,7 +354,7 @@ handled by *print*. There is one exception, which is described in `
 Pretty printing`_.
 
 The *level* keyword controls how deep into a nested data structure to
-print. The value *#f* indicates that there is no limit. The default,
+print. The value ``#f`` indicates that there is no limit. The default,
 *\*print-level\**, has no effect on recursive calls to *print*.
 Recursive calls to *print* may change the value of *print-level*
 explicitly, but *print* always uses a value to ensure the print request
@@ -406,7 +364,7 @@ recursive call specified a level of 4, the recursive call would only
 descend 2 more levels, not 4.
 
 The *length* keyword controls how many elements of a sequence to print
-before printing ellipsis notation (*...*). The value *#f* indicates
+before printing ellipsis notation (*...*). The value ``#f`` indicates
 that there is no limit. The *print-length* control can be interpreted
 loosely by some *print-object* methods to control how many *elements* of
 any kind of object to print; for example, the default ``<object>`` method
@@ -422,12 +380,12 @@ infinitely recurse through a data structure. Circular printing also tags
 objects that occur more than once when they are first printed, and later
 occurrences are printed as a reference to the previously emitted tag.
 The default, *\*print-circle?\**, has no effect on recursive calls to
-*print*. If *print-circle?* is already *#t*, then it remains *#t*
-throughout all recursive calls. If *print-circle?* is *#f*, then
-recursive calls to *print* can change the value to *#t* ; however, when
+*print*. If *print-circle?* is already ``#t``, then it remains ``#t``
+throughout all recursive calls. If *print-circle?* is ``#f``, then
+recursive calls to *print* can change the value to ``#t`` ; however, when
 printing exits the dynamic scope of the call that changed the value to
-*#t*, the value reverts back to *#f*. If the original call to *print*
-specifies *circle?* as *#f*, and dynamically distinct recursive calls
+``#t``, the value reverts back to ``#f``. If the original call to *print*
+specifies *circle?* as ``#f``, and dynamically distinct recursive calls
 turn circular printing on and off, all output generated while circular
 printing was on shares the same tagging space; that is, if *#1#* is
 printed twice, once from each of two distinct recursive calls to print,
@@ -437,126 +395,105 @@ The *pretty?* keyword indicates whether printing should attempt to
 insert line breaks and indentation to format objects according to how
 programmers tend to find it easier to read data. The default,
 *\*print-pretty?\**, has no effect on recursive calls to *print*. If
-*print-pretty?* is already *#t*, then it remains *#t* throughout all
-recursive calls. If *print-pretty?* is *#f*, then recursive calls to
-*print* can change the value to *#t* ; however, when printing exits the
-dynamic scope of the call that changed the value to *#t*, the value
-reverts back to *#f*.
+*print-pretty?* is already ``#t``, then it remains ``#t`` throughout all
+recursive calls. If *print-pretty?* is ``#f``, then recursive calls to
+*print* can change the value to ``#t`` ; however, when printing exits the
+dynamic scope of the call that changed the value to ``#t``, the value
+reverts back to ``#f``.
 
 \*print-circle?\*
-~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^~
 
 Variable
 ^^^^^^^^
 
 Summary
-       
 
 Controls whether or not to print recursively.
 
 Type
-    
 
 <boolean>
-         
 
 Initial value
-             
 
 None.
 
 Description
-           
 
 Controls whether or not to print recursively. When *\*print-circle\** is
-*#f*, printing proceeds recursively and attempts to print a circular
+``#f``, printing proceeds recursively and attempts to print a circular
 structure results in failure to terminate.
 
 \*print-length\*
-~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^
 
 Variable
 ^^^^^^^^
 
 Summary
-       
 
 Controls the number of elements of an expression to print.
 
 Type
-    
 
 false-or(<integer>)
-                   
 
 Initial value
-             
 
 None.
 
 Description
-           
 
 Controls how many elements to print at a given level of a nested
 expression.
 
 \*print-level\*
-~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^~
 
 Variable
 ^^^^^^^^
 
 Summary
-       
 
 Controls how deeply into a nested expression to print.
 
 Type
-    
 
 false-or(<integer>)
-                   
 
 Initial value
-             
 
 None.
 
 Description
-           
 
 Controls how many levels of a nested expression to print.
 
 print-object
-~~~~~~~~~~~~
+^^^^^^^^^^^^
 
 Open generic function
 ^^^^^^^^^^^^^^^^^^^^^
 
 Summary
-       
 
 Prints an object to a stream.
 
 Signature
-         
 
 print-object *object stream* => ()
-                                  
 
 Arguments
-         
 
 -  *object* An instance of ``<object>``.
 -  *stream* An instance of ``<stream>``.
 
 Values
-      
 
 -  None.
 
 Description
-           
 
 Prints an object to a stream. You should extend the ability of *print*
 to print various objects by adding methods to the *print-object*
@@ -564,56 +501,47 @@ function. When *print* actually prints an object, it calls
 *print-object*. You should never call *print-object* directly.
 
 \*print-pretty\*
-~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^
 
 Variable
 ^^^^^^^^
 
 Summary
-       
 
 Controls whether or not pretty printing is used.
 
 Type
-    
 
 <boolean>
-         
 
 Initial value
-             
 
 None.
 
 Description
-           
 
 Controls whether or not *print* does pretty printing.
 
 print-to-string
-~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^~
 
 Function
 ^^^^^^^^
 
 Summary
-       
 
 Calls *print* on *object.* and returns the result as a string*.*
 
 Signature
-         
 
 print-to-string *object* #key *level length circle? pretty?* => *result*
-                                                                        
 
 Arguments
-         
 
 -  *object* An instance of ``<object>``.
--  *level* *#f* or an instance of ``<fixed-integer>``. Default value:
+-  *level* ``#f`` or an instance of ``<fixed-integer>``. Default value:
    *\*print-level\**.
--  *length* *#f* or an instance of ``<fixed-integer>``. Default value:
+-  *length* ``#f`` or an instance of ``<fixed-integer>``. Default value:
    *\*print-length\*.*
 -  circle? An instance of ``<boolean>``. Default value:
    *\*print-circle?\**.
@@ -621,12 +549,10 @@ Arguments
    *\*print-pretty?\*.*
 
 Values
-      
 
 -  *result* An instance of ``<byte-string>``.
 
 Description
-           
 
 Calls *print* to produce output according to the print request formed by
 the keyword arguments and returns the result as a string.
@@ -638,64 +564,53 @@ This section contains a reference entry for each item exported from the
 IO library’s *pprint* module.
 
 \*default-line-length\*
-~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^~
 
 Variable
 ^^^^^^^^
 
 Summary
-       
 
 Controls the default line length used by the pretty printer.
 
 Type
-    
 
 <integer>
-         
 
 Initial value
-             
 
 80
 
 Description
-           
 
 Controls the line length used by the pretty printer to determine how
 much output will fit on a single line. The value must be an integer.
 
 pprint-indent
-~~~~~~~~~~~~~
+^^^^^^^^^^^^~
 
 Function
 ^^^^^^^^
 
 Summary
-       
 
 Specifies the indentation to use within the current logical block.
 
 Signature
-         
 
 pprint-indent *relative-to n stream* => ()
-                                          
 
 Arguments
-         
 
 -  *relative-to* One of *#"block"* or *#"current"*.
 -  *n* An instance of ``<fixed-integer>``.
 -  *stream* An instance of ``<stream>``.
 
 Values
-      
 
 -  None.
 
 Description
-           
 
 Specifies the indentation to use within the current logical block. When
 *relative-to* is *#"block"*, then *pprint-indent* sets the indentation
@@ -704,40 +619,34 @@ When *relative-to* is *#"current"*, then *pprint-indent* sets the
 indentation to the current column plus *n*.
 
 pprint-logical-block
-~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^
 
 Function
 ^^^^^^^^
 
 Summary
-       
 
 Groups printing into a logical block.
 
 Signature
-         
 
 pprint-logical-block *stream* #key *prefix per-line-prefix body
- suffix column* => ()
-                                                               
+suffix column* => ()
 
 Arguments
-         
 
 -  *stream* An instance of ``<stream>``.
--  *prefix* *#f* or an instance of ``<byte-string>``.
--  *per-line-prefix* *#f* or an instance of ``<byte-string>``.
+-  *prefix* ``#f`` or an instance of ``<byte-string>``.
+-  *per-line-prefix* ``#f`` or an instance of ``<byte-string>``.
 -  *body* An instance of ``<function>``.
--  *suffix* *#f* or an instance of ``<byte-string>``.
+-  *suffix* ``#f`` or an instance of ``<byte-string>``.
 -  *column* A *limited* instance of ``<fixed-integer>``, minimum 0.
 
 Values
-      
 
 -  None.
 
 Description
-           
 
 Groups printing into a logical block. The logical block provides
 boundaries for new levels of indentation, affects *#"linear"* newlines,
@@ -746,7 +655,7 @@ block. The blocks indentation is automatically set to be one character
 position greater than the column in which *prefix* ends. Alternatively,
 *per-line-prefix* is a string to print on every line of the logical
 block. This function signals an error if it is called with both *prefix*
-and *per-line-prefix* supplied as non-*#f*. *Suffix* is a string to
+and *per-line-prefix* supplied as non-``#f``. *Suffix* is a string to
 print at the end of the logical block. *Column* advises the pretty
 printer as to the current column of the output stream (the default is
 zero). The *column* argument may be ignored entirely by some methods,
@@ -767,35 +676,29 @@ call to *pprint-logical-block* ; otherwise, the pretty printing
 functions are no-ops.
 
 pprint-newline
-~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^
 
 Function
 ^^^^^^^^
 
 Summary
-       
 
 Announces a conditional newline to the pretty printer.
 
 Signature
-         
 
 pprint-newline *kind stream* => ()
-                                  
 
 Arguments
-         
 
 -  *kind* One of *#"fill"*, *#"linear"*, *#"miser"*, *#"mandatory"*.
 -  *stream* An instance of ``<stream>``.
 
 Values
-      
 
 -  None.
 
 Description
-           
 
 Announces a conditional newline to the pretty printer. The pretty
 printer emits a newline depending on the *kind* and the state of the
@@ -816,24 +719,20 @@ the following meanings:
    *#"miser"* newlines will be emitted as appropriate.
 
 pprint-tab
-~~~~~~~~~~
+^^^^^^^^^^
 
 Function
 ^^^^^^^^
 
 Summary
-       
 
 Announces a tab to the pretty printer.
 
 Signature
-         
 
 pprint-tab *kind colnum colinc stream* => ()
-                                            
 
 Arguments
-         
 
 -  *kind* One of *#"line"*, *#"line-relative"*, *#"section"*,
    *#"section-relative"*.
@@ -842,12 +741,10 @@ Arguments
 -  *stream* An instance of ``<stream>``.
 
 Values
-      
 
 -  None.
 
 Description
-           
 
 Announces a tab to the pretty printer. The *colnum* and *colinc*
 arguments have meaning based on the value of *kind*:
@@ -858,7 +755,6 @@ arguments have meaning based on the value of *kind*:
    line.
 
 *#"line-relative"*
-                  
 
 -  Output *colnum* spaces. Then output enough spaces to tab to a column
    that is a multiple of *colinc* from the beginning of the line.
@@ -867,45 +763,38 @@ arguments have meaning based on the value of *kind*:
    of the line.
 
 *#"section-relative"*
-                     
 
 -  Similar to *#"line-relative"*, but column counting is relative to
    the beginning of the current *section* rather than the beginning of
    the line.
 
 \*print-miser-width\*
-~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^~
 
 Variable
 ^^^^^^^^
 
 Summary
-       
 
 Controls miser mode.
 
 Type
-    
 
 false-or(<integer>)
-                   
 
 Initial value
-             
 
 None.
 
 Description
-           
 
 Controls *miser mode*. Pretty printing is in miser mode whenever a
 logical block (see *pprint-logical-block*) begins in a column of output
 that is greater than
 
 \*default-line-length\* - \*print-miser-width\*
-                                               
 
-The value must be an integer or *#f* (the default); *#f* indicates that
+The value must be an integer or ``#f`` (the default); ``#f`` indicates that
 the pretty printer should never enter miser mode.
 
 

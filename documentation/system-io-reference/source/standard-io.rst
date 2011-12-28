@@ -25,28 +25,22 @@ The module consists of three variables, each of which is bound to a
 stream.
 
 \*standard-input\*
-''''''''''''''''''
 
 Variable
-        
 
 An input stream that reads data from the platform’s standard input
 location. It is equivalent to the Java stream *java.lang.System.in*.
 
 \*standard-output\*
-'''''''''''''''''''
 
 Variable
-        
 
 An output stream that sends data to the platform’s standard output
 location. It is equivalent to the Java stream *java.lang.System.out*.
 
 \*standard-error\*
-''''''''''''''''''
 
 Variable
-        
 
 An output stream that sends data to the platform’s standard error
 location. It is equivalent to the Java stream *java.lang.System.err*.
@@ -73,30 +67,25 @@ This section contains a complete reference of all the interfaces that
 are exported from the *standard-io* module.
 
 \*standard-input\*
-~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^
 
 Variable
 ^^^^^^^^
 
 Summary
-       
 
 The standard input stream.
 
 Type
-    
 
 <stream>
-        
 
 Initial value
-             
 
 The standard input stream for the platform on which the application is
 running.
 
 Description
-           
 
 This variable is bound to an input stream that reads data from the
 standard input location for the platform on which the application is
@@ -114,30 +103,25 @@ console window is used, and a new one is not created: a single console
 window is used for all variables in this module.
 
 \*standard-output\*
-~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^~
 
 Variable
 ^^^^^^^^
 
 Summary
-       
 
 The standard output stream.
 
 Type
-    
 
 <stream>
-        
 
 Initial value
-             
 
 The standard output stream for the platform on which the application is
 running.
 
 Description
-           
 
 This variable is bound to an output stream that sends normal output to
 the standard output location for the platform on which the application
@@ -155,30 +139,25 @@ then the existing console window is used, and a new one is not created:
 a single console window is used for all variables in this module.
 
 \*standard-error\*
-~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^
 
 Variable
 ^^^^^^^^
 
 Summary
-       
 
 The standard error stream.
 
 Type
-    
 
 <stream>
-        
 
 Initial value
-             
 
 The standard error stream for the platform on which the application is
 running.
 
 Description
-           
 
 This variable is bound to an output stream that sends error messages to
 the standard error location for the platform on which the application is

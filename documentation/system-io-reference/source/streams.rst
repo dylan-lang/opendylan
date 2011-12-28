@@ -305,28 +305,22 @@ all instantiable.
    Streams module classes.
 
 <stream>
-        
 
 *Open abstract class*
-                     
 
 The superclass of all stream classes and a direct subclass of ``<object>``
 .
 
 <positionable-stream>
-                     
 
 Open abstract class
-                   
 
 A subclass of `<stream>`_ supporting the
 Positionable Stream Protocol.
 
 <buffered-stream>
-                 
 
 Open abstract class
-                   
 
 A subclass of `<stream>`_ supporting the Stream
 Extension Protocol and the Buffer Access Protocol.
@@ -337,10 +331,8 @@ instantiated stream might not use this value: it is taken purely as a
 suggested value.
 
 <file-stream>
-             
 
 Open abstract instantiable class
-                                
 
 The class of single-buffered streams over disk files. The class supports
 several init-keywords: *locator:*, *direction:*, *if-exists:*, and
@@ -351,10 +343,8 @@ The file being streamed over is opened immediately upon creating the
 stream.
 
 <sequence-stream>
-                 
 
 Open class
-          
 
 The class of streams over sequences. The class supports several
 init-keywords: *contents:*, *direction:*, *start:*, and *end:*.
@@ -383,15 +373,12 @@ and parsing directory names, are provided by the File-System module: see
 subclass determined by `type-for-file-stream`_.
 
 make *file-stream-class*
-                        
 
 G.f method
-          
 
 make <file-stream> #key locator: direction: if-exists:
  if-does-not-exist: buffer-size: element-type:
  asynchronous?: share-mode => *file-stream-instance*
-                                                      
 
 Creates and opens a stream over a file, and returns a new instance of a
 concrete subclass of `<file-stream>`_ that
@@ -429,10 +416,8 @@ streams`_:
 -  *if-exists:* An action to take if the file already exists.
 
 *if-does-not-exist*:
-                     
 
 An action to take if the file does not already exist.
-                                                     
 
 -  *element-type:* How the elements of the underlying file are accessed.
 -  *asynchronous?:* Allows asynchronous writing of stream data to disk.
@@ -442,21 +427,18 @@ An action to take if the file does not already exist.
 The *if-exists:* init-keyword allows you to specify an action to take if
 the file named by *filename* already exists. The options are:
 
--  *#f* The file is opened with the stream position at the beginning.
+-  ``#f`` The file is opened with the stream position at the beginning.
    This is the default when the stream’s direction is *#"input"* or
    *#"input-output"*.
 
 *#"new-version"*
-                
 
 If the underlying file system supports file versioning, a new version of
 the file is created. This is the default when the stream’s direction is
 *#"output"*.
-                                                                                                                                                              
 
 If the file system does not support file versioning, the default is
 *#"replace"* when the direction of the stream is *#"output"*.
-                                                                                                                                  
 
 -  *#"overwrite"* Set the stream’s position to the beginning of the
    file, but preserve the current contents of the file. This is useful
@@ -474,7 +456,7 @@ If the file system does not support file versioning, the default is
 The *if-does-not-exist:* init-keyword allows you to specify an action to
 take if the file named by *filename* does not exist. The options are:
 
--  *#f* No action.
+-  ``#f`` No action.
 -  *#"signal"* ** Signal a `
    <file-does-not-exist-error>`_ condition. This is
    the default when the stream’s direction is *#"input"*.
@@ -498,31 +480,27 @@ treated as a single database record. The three possible element types
 are:
 
 `<byte-character>`_
-                                           
 
 The file is accessed as a sequence of 8-bit characters.
-                                                       
 
 `<unicode-character>`_
-                                              
 
 The file is accessed as a sequence of 16-bit Unicode characters.
-                                                                
 
 -  `<byte>`_ The file is accessed as a sequence
    of unsigned 8-bit integers.
 
 The *asynchronous?:* init-keyword allows asynchronous writing of stream
-data to disk. If *#f*, whenever the stream has to write a buffer to
+data to disk. If ``#f``, whenever the stream has to write a buffer to
 disk, the thread which triggered the write must wait for the write to
-complete. If *asynchronous?* is *#t*, the write proceeds in parallel
+complete. If *asynchronous?* is ``#t``, the write proceeds in parallel
 with the subsequent actions of the thread.
 
 Note that asynchronous writes complicate error handling a bit. Any write
 error which occurs most likely occurs after the call which triggered the
 write. If this happens, the error is stored in a queue, and the next
 operation on that stream signals the error. If you *close* the stream
-with the *wait?* flag *#f*, the close happens asynchronously (after all
+with the *wait?* flag ``#f``, the close happens asynchronously (after all
 queued writes complete) and errors may occur after *close* has returned.
 A method *wait-for-io-completion* is provided to catch any errors that
 may occur after *close* is called.
@@ -536,10 +514,8 @@ streams while the stream has it open. The possible values are:
    for reading.
 
 *#”share-read-write”*
-                     
 
 Allow other streams to be opened for writing or reading.
-                                                        
 
 -  *#”exclusive”* Do not allow other streams to be opened to this file.
 
@@ -559,16 +535,12 @@ instance of a subclass determined by `
 type-for-sequence-stream`_.
 
 make *sequence-stream-class*
-                            
 
 G.f. method
-           
 
 make <sequence-stream> #key contents direction start end
-                                                        
 
 => *sequence-stream-instance*
-                             
 
 Creates and opens a stream over a sequence, and returns a general
 instance of `<sequence-stream>`_. To determine
@@ -592,16 +564,12 @@ is to stream over the entire sequence: *start:* is by default 0, and
 *end:* is *contents.size*.
 
 make *string-stream-class*
-                          
 
 G.f. method
-           
 
 make <string-stream> #key contents direction start end
-                                                      
 
 => *string-stream-instance*
-                           
 
 Creates and opens a stream over a string, and returns an instance of
 `<string-stream>`_.
@@ -611,16 +579,12 @@ If supplied, *contents:* must be an instance of ``<string>``. The
 `<sequence-stream>`_.
 
 make *byte-string-stream-class*
-                               
 
 G.f. method
-           
 
 make <byte-string-stream #key contents direction start end
-                                                          
 
 => *byte-string-stream-instance*
-                                
 
 Creates and opens a stream over a byte string, and returns a new
 instance of `<byte-string-stream>`_.
@@ -630,16 +594,12 @@ If supplied, *contents:* must be an instance of ``<string>``. The
 `<sequence-stream>`_.
 
 make *unicode-string-stream-class*
-                                  
 
 G.f. method
-           
 
 make <unicode-string-stream> #key contents direction start end
-                                                              
 
 => *unicode-string-stream-instance*
-                                   
 
 Creates and opens a stream over a Unicode string, and returns a new
 instance of `<unicode-string-stream>`_.
@@ -691,28 +651,22 @@ safe, and make no guarantees about the atomicity of read and write
 operations.
 
 stream-lock
-           
 
 Open generic function
-                     
 
 stream-lock *stream* => *lock*
-                              
 
-Returns the *lock* for the specified *stream*, or *#f* if no lock has
+Returns the *lock* for the specified *stream*, or ``#f`` if no lock has
 been set. The *lock* argument is of type ``<lock>``.
 
 stream-lock-setter
-                  
 
 Open generic function
-                     
 
 stream-lock-setter *stream lock* => *lock*
-                                          
 
 Sets the *lock* for the specified *stream*. The *lock* argument is of
-type ``<lock>``, or *#f*. If *lock* is *#f*, the lock for *stream* is
+type ``<lock>``, or ``#f``. If *lock* is ``#f``, the lock for *stream* is
 freed.
 
 For full details on the ``<lock>`` class, see the documentation on the
@@ -732,13 +686,10 @@ Reading from streams
 The following are the basic functions for reading from streams.
 
 read-element
-            
 
 Open generic function
-                     
 
 read-element *input-stream* #key *on-end-of-stream* => *element-or-eof*
-                                                                       
 
 Returns the next element in *input-stream*. If the stream is not at its
 end, the stream is advanced in preparation for a subsequent read
@@ -756,13 +707,10 @@ read-element`_ waits until input becomes available.
 See also `unread-element`_.
 
 read
-    
 
 Open generic function
-                     
 
 read *input-stream* *n* #key *on-end-of-stream* => *sequence-or-eof*
-                                                                    
 
 Returns a sequence of the next *n* elements from *input-stream*.
 
@@ -817,51 +765,41 @@ were implemented in terms of the more primitive functions described in
 `Reading from streams`_.
 
 read-to
-       
 
 Function
-        
 
 read-to *input-stream* *element* #key *on-end-of-stream* *test*
-                                                               
 
 => *sequence-or-eof* *found?*
-                             
 
 Returns a new sequence containing the elements of *input-stream* from
 the stream’s current position to the first occurrence of *element*, but
 not *element* itself.
 
-*found?* is *#t* if the read terminated with *element*, or *#f* if the
+*found?* is ``#t`` if the read terminated with *element*, or ``#f`` if the
 read terminated by reaching the end of the stream’s source. The stream
 is left positioned after *element*.
 
 See also `read-through`_.
 
 read-to-end
-           
 
 Function
-        
 
 read-to-end *input-stream* => *sequence*
-                                        
 
 Returns a sequence of all the elements up to, and including, the last
 element of *input-stream*, starting from the stream’s current position.
 
 skip-through
-            
 
 Function
-        
 
 skip-through *input-stream* *element* #key *test* => *found?*
-                                                             
 
 Positions *input-stream* after the first occurrence of *element*,**
-starting from the stream’s current position. Returns *#t* if the element
-was found, or *#f* if the end of the stream was encountered. When `
+starting from the stream’s current position. Returns ``#t`` if the element
+was found, or ``#f`` if the end of the stream was encountered. When `
 skip-through`_ does not find the *element*, it
 leaves *input-stream* positioned at the end of the stream.
 
@@ -871,13 +809,10 @@ Writing to streams
 This section describes the basic functions for writing to streams.
 
 write-element
-             
 
 Open generic function
-                     
 
 write-element *output-stream* *element* => ()
-                                             
 
 Writes *element* to *output-stream* at the stream’s current position. It
 is an error if the type of *element* is inappropriate for the stream’s
@@ -888,13 +823,10 @@ write-element`_ overwrites the element at the
 current position and then advance the stream position.
 
 write
-     
 
 Open generic function
-                     
 
 write *output-stream* *sequence* #key *start* *end* => ()
-                                                         
 
 Writes the elements of *sequence* to *output-stream*, starting at the
 stream’s current position.
@@ -932,20 +864,17 @@ cause the *\\n* character to be written as the native newline sequence,
 unless *\\n* happens to *be* the native newline sequence.
 
 read-line
-         
 
 Open generic function
-                     
 
 read-line *input-stream* #key *on-end-of-stream* => *string-or-eof*
 *newline?*
-                                                                              
 
 Returns a newly allocated ``<string>`` containing all the input in
 *input-stream* up to the next newline. The string does not contain the
 newline itself.
 
-*newline?* is *#t* if the read terminated with a newline or *#f* if the
+*newline?* is ``#t`` if the read terminated with a newline or ``#f`` if the
 read terminated because it came to the end of the stream.
 
 The type of the result string is chosen so that the string can contain
@@ -954,13 +883,10 @@ element type is `<byte-character>`_, the string
 will be a ``<byte-string>``.
 
 write-line
-          
 
 Open generic function
-                     
 
 write-line *output-stream* *string* #key *start* *end* => ()
-                                                            
 
 Writes *string* followed by a newline sequence to *output-stream*.
 
@@ -973,13 +899,10 @@ If supplied, *start* and *end* delimit the portion of *string* to write
 to the stream. They default to 0 and *string* *.size* respectively.
 
 new-line
-        
 
 Open generic function
-                     
 
 new-line *output-stream* => ()
-                              
 
 Writes a newline sequence to *output-stream*.
 
@@ -996,43 +919,34 @@ The following functions can be used to determine various properties of a
 stream.
 
 stream-open?
-            
 
 Open generic function
-                     
 
 stream-open? *stream* => *open?*
-                                
 
-Returns *#f* if the stream has been closed, and *#t* otherwise. Note
+Returns ``#f`` if the stream has been closed, and ``#t`` otherwise. Note
 that an input stream which is at its end, but has not been closed, is
 still open and *stream-open?* will return #t.
 
 stream-element-type
-                   
 
 Open generic function
-                     
 
 stream-element-type *stream* => *element-type*
-                                              
 
 Returns the element type of *stream* as a Dylan ``<type>``.
 
 stream-at-end?
-              
 
 Open generic function
-                     
 
 stream-at-end? *stream* => *boolean*
-                                    
 
-Returns *#t* if the stream is at its end and *#f* if it is not. For
-input streams, it returns *#t* if a call to `
+Returns ``#t`` if the stream is at its end and ``#f`` if it is not. For
+input streams, it returns ``#t`` if a call to `
 read-element`_ with no supplied keyword arguments
 would signal an `<end-of-stream-error>`_. For
-output streams, this function always returns *#f*.
+output streams, this function always returns ``#f``.
 
 For output streams, note that you can determine if a stream is one place
 past the last written element by comparing `
@@ -1045,16 +959,13 @@ Using file streams
 The following operations can be performed on file streams.
 
 close
-     
 
 G.f. method
-           
 
 close *file-stream* #key *abort* *wait?* => ()
-                                              
 
 Closes a file stream. If the stream is asynchronous and *wait?* is false
-(its default value is *#t*), then a close request is merely enqueued to
+(its default value is ``#t``), then a close request is merely enqueued to
 be performed after all pending write operations; otherwise the file is
 closed immediately and all underlying system resources held on behalf of
 the stream are freed.
@@ -1062,34 +973,28 @@ the stream are freed.
 If *abort?*. is false (the default) all buffered data is written before
 closing; if *abort?* false, this data is discarded.
 
-If *synchronize?* (default value *#f*) is true, the file is flushed to
+If *synchronize?* (default value ``#f``) is true, the file is flushed to
 the physical disk before closing — this guarantees that no data is
 retained in the operating system’s write cache. Calling *close* with
-*synchronize?* *#t* is equivalent to calling *force-output* with
+*synchronize?* ``#t`` is equivalent to calling *force-output* with
 *synchronize?* true and then calling *close*.
 
 wait-for-io-completion
-                      
 
 Statement macro
-               
 
 wait-for-io-completion *file-stream* => ()
-                                          
 
 If *file-stream* is asynchronous, waits for all pending *write* or
 *close* operations to complete and signals any queued errors. If
 *file-stream* is not asynchronous, returns immediately.
 
 with-open-file
-              
 
 Statement macro
-               
 
 with-open-file (*stream-var* = *filename*, #rest *keys*) *body* end =>
 *values*
-                                                                                 
 
 This macro provides a safe mechanism for working with file streams. It
 creates a file stream and binds it to *stream-var*, evaluates a *body*
@@ -1105,17 +1010,14 @@ For example, the following expression yields the contents of file
 *foo.text* as a `<byte-vector>`_:
 
 with-open-file (fs = "foo.text", element-type: <byte>)
-                                                      
 
 read-to-end(fs)
 
 end;
-    
 
 It is roughly equivalent to:
 
 begin
-     
 
 let hidden-fs = #f; // In case the user bashes fs variable
 
@@ -1136,7 +1038,6 @@ if (hidden-fs) close(hidden-fs) end;
 end block;
 
 end;
-    
 
 Using buffered streams
 ----------------------
@@ -1173,36 +1074,28 @@ Useful types when using buffers
 The following types are used in operations that involve buffers.
 
 <byte>
-      
 
 Type
-    
 
 A type representing limited integers in the range 0 to 255 inclusive.
 
 <byte-character>
-                
 
 Type
-    
 
 A type representing 8-bit characters that instances of ``<byte-string>``
 can contain.
 
 <unicode-character>
-                   
 
 Type
-    
 
 A type representing Unicode characters that instances of
 ``<unicode-string>`` can contain.
 
 <byte-vector>
-             
 
 Type
-    
 
 A subtype of ``<vector>`` whose element-type is `
 <byte>`_.
@@ -1225,110 +1118,66 @@ The Streams module includes a base class called `
 <wrapper-stream>`_ upon which other wrapping streams
 can be implemented.
 
-A subclass of `<wrapper-stream>`_ can “pass on”
-functions such as
- `read-element`_ and `
-write-element`_ by simply delegating these
-operations to the inner stream, as shown below:
+A subclass of `<wrapper-stream>`_ can "pass on"
+functions such as `read-element`_ and `write-element`_
+by simply delegating these operations to the inner
+stream, as shown below:
 
-define method read-element (ws :: <io-wrapper-stream>,
-                                                      
+.. code-block:: dylan
 
-#key on-end-of-stream)
+    define method read-element (ws :: <io-wrapper-stream>,
+      #key on-end-of-stream)
+     => (element)
+      read-element(ws.inner-stream,
+                   on-end-of-stream: on-end-of-stream)
+      end method;
 
-=> (element)
-
-read-element(ws.inner-stream,
-
-on-end-of-stream: on-end-of-stream)
-
-end method;
-           
-
-define method write-element (ws :: <io-wrapper-stream>, element)
-                                                                
-
-=> ()
-
-write-element(ws.inner-stream, element)
-
-end method;
-           
+    define method write-element (ws :: <io-wrapper-stream>, element)
+     => ()
+      write-element(ws.inner-stream, element)
+    end method;
 
 Assuming that ``<io-wrapper-stream>`` delegates all other operations to
 its inner stream, the following would suffice to implement a 16-bit
 Unicode character stream wrapping an 8-bit character stream.
 
-define class <unicode-stream> (<io-wrapper-stream>) end class;
-                                                              
+.. code-block:: dylan
 
-define method read-element (s :: <unicode-stream>,
-                                                  
+    define class <unicode-stream> (<io-wrapper-stream>) end class;
 
-#key on-end-of-stream)
+    define method read-element (s :: <unicode-stream>,
+      #key on-end-of-stream)
+     => (ch :: <unicode-character>)
+      with-stream-locked (s)
+        let first-char = read-element(s.inner-stream,
+                                      on-end-of-stream);
+        let second-char = read-element(s.inner-stream,
+                                       on-end-of-stream)
+      end;
+      convert-byte-pair-to-unicode(first-char, second-char)
+    end method;
 
-=> (ch :: <unicode-character>)
+    define method write-element (s :: <unicode-stream>,
+      c :: <character>)
+     => ()
+      let (first-char, second-char) =
+      convert-unicode-to-byte-pair(c);
+      with-stream-locked (s)
+        write-element(s.inner-stream, first-char);
+        write-element(s.inner-stream, second-char)
+      end;
+      c
+    end method;
 
-with-stream-locked (s)
+    define method stream-position (s :: <unicode-stream>)
+     => p :: <integer>;
+      truncate/(stream-position(s.inner-stream), 2)
+    end method;
 
-let first-char = read-element(s.inner-stream,
-
-on-end-of-stream);
-
-let second-char = read-element(s.inner-stream,
-
-on-end-of-stream)
-
-end;
-
-convert-byte-pair-to-unicode(first-char, second-char)
-
-end method;
-           
-
-define method write-element (s :: <unicode-stream>,
-                                                   
-
-c :: <character>)
-
-=> ()
-
-let (first-char, second-char) =
-
-convert-unicode-to-byte-pair(c);
-
-with-stream-locked (s)
-
-write-element(s.inner-stream, first-char);
-
-write-element(s.inner-stream, second-char)
-
-end;
-
-c
-
-end method;
-           
-
-define method stream-position (s :: <unicode-stream>)
-                                                     
-
-=> p :: <integer>;
-
-truncate/(stream-position(s.inner-stream), 2)
-
-end method;
-           
-
-define method stream-position-setter (p :: <integer>,
-                                                     
-
-s :: <unicode-stream>);
-
-stream-position(s.inner-stream) := p \* 2
-
-end method;
-           
+    define method stream-position-setter (p :: <integer>,
+        s :: <unicode-stream>);
+      stream-position(s.inner-stream) := p \* 2
+    end method;
 
 Wrapper streams and delegation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1341,75 +1190,58 @@ of these classes have a method called *prompt*. The
 ``<interactive-stream>`` class specializes `read`_
 thus:
 
-define method read (s :: <interactive-stream>,
-                                              
+.. code-block:: dylan
 
-n :: <integer>,
-
-#key on-end-of-stream);
-
-prompt(s);
-
-next-method()
-
-end method;
-           
+    define method read (s :: <interactive-stream>,
+        n :: <integer>,
+        #key on-end-of-stream);
+      prompt(s);
+      next-method()
+    end method;
 
 If a ``<dialog-stream>`` ** is used to wrap an ``<interactive-stream>`` then
-an invocation of `read`_ on the
-``<dialog-stream>`` will call *prompt* on the inner
- ``<interactive-stream>``, not on the ``<dialog-stream>``, as desired. The
-problem is that the ``<dialog-stream>`` delegates some tasks to its inner
+an invocation of `read`_ on the ``<dialog-stream>`` will call *prompt* on
+the inner ``<interactive-stream>``, not on the ``<dialog-stream>``, as desired.
+The problem is that the ``<dialog-stream>`` delegates some tasks to its inner
 stream, but handles some other tasks itself.
 
 Delegation by inner-streams to outer-streams is implemented by the use
-of the `outer-stream`_ function. The `
-outer-stream`_ function is used instead of the
-stream itself whenever a stream invokes one of its other protocol
-methods.
+of the `outer-stream`_ function. The `outer-stream`_ function is used
+instead of the stream itself whenever a stream invokes one of its
+other protocol methods.
 
 A correct implementation of the `read`_ method
 in the example above would be as follows:
 
-define method read (stream :: <interactive-stream>,
-                                                   
+.. code-block:: dylan
 
-n :: <integer>,
-
-#key on-end-of-stream)
-
-prompt(s.outer-stream);
-
-next-method()
-
-end method;
-           
+    define method read (stream :: <interactive-stream>,
+        n :: <integer>,
+        #key on-end-of-stream)
+      prompt(s.outer-stream);
+      next-method()
+    end method;
 
 The *initialize* method on `<stream>`_ is
 defined to set the `outer-stream`_ slot to be
-the stream itself. The *initialize* method on `
-<wrapper-stream>`_ is specialized to set the `
-outer-stream`_ slot to be the “parent” stream:
+the stream itself. The *initialize* method on
+`<wrapper-stream>`_ is specialized to set the
+`outer-stream`_ slot to be the "parent" stream:
 
-define method initialize (stream :: <wrapper-stream>,
-                                                     
+.. code-block:: dylan
 
-#key on, #rest all-keys);
-
-an-inner-stream.outer-stream := stream;
-
-next-method()
-
-end method;
+    define method initialize (stream :: <wrapper-stream>,
+        #key on, #rest all-keys);
+      an-inner-stream.outer-stream := stream;
+      next-method()
+    end method;
 
 Conditions
 ----------
 
 The following classes are available for error conditions on streams.
-                                                                    
 
 `<end-of-stream-error>`_
-                                                
 
 `<incomplete-read-error>`_
 
@@ -1420,7 +1252,6 @@ The following classes are available for error conditions on streams.
 `<file-does-not-exist-error>`_
 
 `<invalid-file-permissions-error>`_
-                                                           
 
 There is no recovery protocol defined for any of these errors. Every
 condition that takes an init-keyword has a slot accessor for the value
@@ -1463,13 +1294,10 @@ However, for some types of streams, to do so might be slow, perhaps
 requiring the entire contents of the stream up to that point to be read.
 
 <position-type>
-               
 
 Type
-    
 
 type-union(<stream-position>, <integer>)
-                                        
 
 A type used to represent a position in a stream. In practice, positions
 within a stream are defined as instances of ``<integer>``, but this type,
@@ -1477,36 +1305,28 @@ together with the ``<stream-position>`` class, allows for cases where this
 might not be possible.
 
 <stream-position>
-                 
 
 Abstract class
-              
 
 A direct subclass of ``<object>``. It is used in rare cases to represent
 positions within streams that cannot be represented as instances of
 ``<integer>``, such as a stream that supports compression.
 
 stream-position
-               
 
 Open generic function
-                     
 
 stream-position *positionable-stream* => *position*
-                                                   
 
 Returns the current position of *positionable-stream* for reading or
 writing.
 
 stream-position-setter
-                      
 
 Open generic function
-                     
 
 stream-position-setter *position* *positionable-stream* =>
 *new-position*
-                                                                         
 
 Changes the stream’s position to *position*, for reading or writing.
 
@@ -1519,14 +1339,11 @@ the current last element of the stream: use `
 adjust-stream-position`_ instead.
 
 adjust-stream-position
-                      
 
 Open generic function
-                     
 
 adjust-stream-position *positionable-stream* *delta* #key *from*
  => *new-position*
-                                                                
 
 Moves the position of *positionable-stream* to be offset *delta*
 elements from the position indicated by *from*. The new position is
@@ -1540,25 +1357,19 @@ position of a stream to be beyond its current last element grows the
 underlying aggregate to a new size.
 
 as
-  
 
 G.f. method
-           
 
 as *integer-class* *stream-position* => *integer*
-                                                 
 
 Coerces a `<stream-position>`_ to an integer.
 The *integer-class* argument is the class ``<integer>``.
 
 stream-size
-           
 
 Open generic function
-                     
 
 stream-size *positionable-stream* => *size*
-                                           
 
 Returns the number of elements in *positionable-stream*.
 
@@ -1572,14 +1383,11 @@ added to the number of elements written past the end of the stream
 (regardless of any repositioning operations).
 
 stream-contents
-               
 
 Open generic function
-                     
 
 stream-contents *positionable-stream* #key *clear-contents?* =>
 *sequence*
-                                                                          
 
 Returns a sequence that contains all of *positionable-stream* ’s
 elements from its start to its end, regardless of its current position.
@@ -1587,7 +1395,7 @@ The type of the returned sequence is as for `
 read`_. See page `read`_.
 
 The *clear-contents?* argument only applies to writeable sequence
-streams. If clear-contents? is *#t* (the default for streams to which it
+streams. If clear-contents? is ``#t`` (the default for streams to which it
 is applicable), this function sets the size of the stream to zero, and
 the position to the stream’s start. Thus the next call to `
 stream-contents`_ will return only the elements
@@ -1600,16 +1408,13 @@ an error to apply it to input-only streams.
 streams.
 
 unread-element
-              
 
 Open generic function
-                     
 
 unread-element *positionable-stream* *element* => *element*
-                                                           
 
 Returns *element* to *positionable-stream* so that the next call to
- `read-element`_ returns *element*. It is an
+`read-element`_ returns *element*. It is an
 error if *element* was not the last element read from the stream. You
 may not call *unread-element* more than once without an intervening read
 operation (that is, you cannot unread more than one element at a time).
@@ -1622,33 +1427,25 @@ For information on using wrapper streams, see `Wrapper
 streams`_.
 
 <wrapper-stream>
-                
 
 Open instantiable class
-                       
 
 The class that implements the basic wrapper-stream functionality. A
 required init-keyword, *inner-stream:*, specifies the wrapped stream.
 
 inner-stream
-            
 
 Open generic function
-                     
 
 inner-stream *wrapper-stream* => *wrapped-stream*
-                                                 
 
 Returns the stream wrapped by *wrapper-stream*.
 
 inner-stream-setter
-                   
 
 Open generic function
-                     
 
 inner-stream-setter *stream* *wrapper-stream* => *stream*
-                                                         
 
 Wraps *stream* with *wrapper-stream*. It does so by setting the `
 inner-stream`_ slot of *wrapper-stream* to *stream*,
@@ -1656,24 +1453,18 @@ and the `outer-stream`_ slot of *stream* to
 *wrapper-stream*.
 
 outer-stream
-            
 
 Open generic function
-                     
 
 outer-stream *stream* => *wrapping-stream*
-                                          
 
 Returns the stream that is wrapping *stream*.
 
 outer-stream-setter
-                   
 
 Open generic function
-                     
 
 outer-stream-setter *wrapper-stream* *stream* => *wrapper-stream*
-                                                                 
 
 Sets the *outer-stream* slot of *stream* to *wrapper-stream*.
 
@@ -1684,43 +1475,35 @@ This section includes complete reference entries for all interfaces that
 are exported from the *streams* module.
 
 adjust-stream-position
-~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^
 
 Open generic function
-'''''''''''''''''''''
 
 Summary
-       
 
 Moves the position of a positionable stream by a specified amount.
 
 Signature
-         
 
 adjust-stream-position *positionable-stream* *delta* #key *from* =>
 *new-position*
 
 Arguments
-         
 
 *positionable-stream*
-                     
 
 An instance of `<positionable-stream>`_.
-                                                                
 
 -  *delta* An instance of ``<integer>``.
 -  *from* One of *#"current"*, *#"start"*, or *#"end"*. Default
    value: *#"current"*.
 
 Values
-      
 
 -  *new-position* An instance of `
    <stream-position>`_.
 
 Description
-           
 
 Moves the position of *positionable-stream* to be offset *delta*
 elements from the position indicated by *from*. The new position is
@@ -1738,87 +1521,70 @@ stream, the contents of the unwritten elements are the fill character
 for the underlying sequence.
 
 Example
-       
 
 The following example returns a string, the first ten characters of
 which are the space character, which is the fill character for the
 sequence ``<string>``.
 
-let stream = make(<string-stream>,
-                                  
+.. code-block:: dylan
 
-direction: #"output");
-
-adjust-stream-position(stream, 10);
-
-write(stream, "whoa!");
-
-stream-contents(stream);
-                        
+    let stream = make(<string-stream>,
+                      direction: #"output");
+    adjust-stream-position(stream, 10);
+    write(stream, "whoa!");
+    stream-contents(stream);
 
 See also
-        
 
 `stream-position-setter`_
 
 as
-~~
+^^
 
 G.f. method
-'''''''''''
 
 Summary
-       
 
 Coerces a `<stream-position>`_ to an integer.
 
 Signature
-         
 
 as *integer-class* *stream-position* => *integer*
 
 Arguments
-         
 
 -  *integer-class* The class ``<integer>``.
 -  *stream-position* An instance of `
    <stream-position>`_.
 
 Values
-      
 
 -  *integer* An instance of ``<integer>``.
 
 Description
-           
 
 Coerces a `<stream-position>`_ to an integer.
 The *integer-class* argument is the class ``<integer>``.
 
 See also
-        
 
 `as`_
 
 <buffer>
-~~~~~~~~
+^^^^^^^^
 
 Sealed instantiable class
-'''''''''''''''''''''''''
 
 Summary
-       
 
 A subclass of ``<vector>`` whose *element-type* is `
 <byte>`_.
 
 Superclasses
-            
 
 ``<vector>``
 
 Init-keywords
-             
 
 -  *size:* An instance of ``<integer>`` specifying the size of the buffer.
    Default value: 0.
@@ -1830,7 +1596,6 @@ Init-keywords
    represents the number of bytes read.
 
 Description
-           
 
 A subclass of ``<vector>`` whose *element-type* is `
 <byte>`_.
@@ -1847,30 +1612,25 @@ the *size:* init-keyword, that size is allocated, or, if that is not
 possible, an error is signalled, as with making any vector.
 
 ** <buffered-stream>
-~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^
 
 Open abstract class
-'''''''''''''''''''
 
 Summary
-       
 
 A subclass of `<stream>`_ supporting the Stream
 Extension and Buffer Access protocols.
 
 Superclasses
-            
 
 `<stream>`_
 
 Init-keywords
-             
 
 -  *buffer-size:* An instance of ``<integer>``. This is the size of the
    buffer in bytes.
 
 Description
-           
 
 A subclass of `<stream>`_ supporting the Stream
 Extension Protocol and the Buffer Access Protocol. It is not
@@ -1887,87 +1647,71 @@ In general, it should not be necessary to supply a value for the
 *buffer-size:* init-keyword.
 
 <byte>
-~~~~~~
+^^^^^^
 
 Type
-''''
 
 Summary
-       
 
 A type representing limited integers in the range 0 to 255 inclusive.
 
 Supertypes
-          
 
 ``<integer>``
 
 Init-keywords
-             
 
 None.
 
 Description
-           
 
 A type representing limited integers in the range 0 to 255 inclusive.
 
 Operations
-          
 
 `type-for-file-stream`_
 
 <byte-character>
-~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^
 
 Type
-''''
 
 Summary
-       
 
 A type representing 8-bit characters that instances of ``<byte-string>``
 can contain.
 
 Supertypes
-          
 
 ``<character>``
 
 Init-keywords
-             
 
 None.
 
 Description
-           
 
 A type representing 8-bit characters that instances of ``<byte-string>``
 can contain.
 
 Operations
-          
 
 `type-for-file-stream`_
 
 <byte-string-stream>
-~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^
 
 Open instantiable class
-'''''''''''''''''''''''
 
 Summary
-       
 
 The class of streams over byte strings.
 
 Superclasses
-            
 
 `<string-stream>`_
 
 Init-keywords
-             
 
 -  *contents:* A general instance of ``<sequence>``.
 -  *direction:* Specifies the direction of the stream. It must be one of
@@ -1982,7 +1726,6 @@ Init-keywords
    *contents.size*.
 
 Description
-           
 
 The class of streams over byte strings. It is a subclass of *`
 <string-stream>`_*.
@@ -1998,117 +1741,96 @@ string to create the stream over: *start:* is inclusive and *end:* is
 exclusive. The default is to stream over the entire byte string.
 
 Operations
-          
 
 `make byte-string-stream-class`_
 
 See also
-        
 
 `make byte-string-stream-class`_
 
 `<sequence-stream>`_
 
 <byte-vector>
-~~~~~~~~~~~~~
+^^^^^^^^^^^^~
 
 Sealed class
-''''''''''''
 
 Summary
-       
 
 A subtype of ``<vector>`` whose element-type is `
 <byte>`_.
 
 Superclasses
-            
 
 ``<vector>``
 
 Init-keywords
-             
 
 See Superclasses.
 
 Description
-           
 
 A subclass of ``<vector>`` whose element-type is `
 <byte>`_.
 
 Operations
-          
 
 None.
 
 See also
-        
 
 `<byte>`_
 
 close
-~~~~~
+^^^^~
 
 Open generic function
-'''''''''''''''''''''
 
 Summary
-       
 
 Closes a stream.
 
 Signature
-         
 
 close *stream* #key #all-keys => ()
 
 Arguments
-         
 
 -  *stream* An instance of `<stream>`_.
 
 Values
-      
 
 None.
 
 Description
-           
 
 -  Closes *stream*, an instance of `<stream>`_.
 
 close
-~~~~~
+^^^^~
 
 G.f. method
-'''''''''''
 
 Summary
-       
 
 Closes a file stream.
 
 Signature
-         
 
 close *file-stream* #key *abort?* *wait?* => ()
 
 Arguments
-         
 
 -  *file-stream* An instance of `
    <file-stream>`_.
--  *abort?* An instance of ``<boolean>``. Default value: *#f*.
+-  *abort?* An instance of ``<boolean>``. Default value: ``#f``.
 -  *wait?* An instance of ``<boolean>``.
 
 Values
-      
 
 None.
 
 Description
-           
 
 Closes a file stream. This method frees whatever it can of any
 underlying system resources held on behalf of the stream.
@@ -2118,33 +1840,27 @@ with the file’s destination. If *abort* is true, then any errors caused
 by closing the file are ignored.
 
 discard-input
-~~~~~~~~~~~~~
+^^^^^^^^^^^^~
 
 Open generic function
-'''''''''''''''''''''
 
 Summary
-       
 
 Discards input from an input stream.
 
 Signature
-         
 
 discard-input *input-stream* => ()
 
 Arguments
-         
 
 -  *input-stream* An instance of `<stream>`_.
 
 Values
-      
 
 -  None.
 
 Description
-           
 
 Discards any pending input from *input-stream*, both buffered input
 and, if possible, any input that might be at the stream’s source.
@@ -2156,38 +1872,31 @@ applications can call this function on any kind of stream. The default
 method does nothing.
 
 See also
-        
 
 `discard-output`_
 
 discard-output
-~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^
 
 Open generic function
-'''''''''''''''''''''
 
 Summary
-       
 
 Discards output to an output stream.
 
 Signature
-         
 
 discard-output *output-stream* => ()
 
 Arguments
-         
 
 -  *output-stream* An instance of `<stream>`_.
 
 Values
-      
 
 -  None.
 
 Description
-           
 
 Attempts to abort any pending output for *output-stream*.
 
@@ -2196,33 +1905,27 @@ that applications can call this function on any sort of stream. The
 default method does nothing.
 
 See also
-        
 
 `discard-input`_
 
 <end-of-stream-error>
-~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^~
 
 Error
-'''''
 
 Summary
-       
 
 Error type signaled on reaching the end of an input stream.
 
 Superclasses
-            
 
 ``<error>``
 
 Init-keywords
-             
 
 -  *stream:* An instance of `<stream>`_.
 
 Description
-           
 
 Signalled when one of the read functions reaches the end of an input
 stream. It is a subclass of ``<error>``.
@@ -2231,12 +1934,10 @@ The *stream:* init-keyword has the value of the stream that caused the
 error to be signaled. Its accessor is *end-of-stream-error-stream*.
 
 Operations
-          
 
 None.
 
 See also
-        
 
 `<file-does-not-exist-error>`_
 
@@ -2249,40 +1950,33 @@ See also
 `<invalid-file-permissions-error>`_
 
 <file-does-not-exist-error>
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^~
 
 Error
-'''''
 
 Summary
-       
 
 Error type signaled when attempting to read a file that does not exist.
 
 Superclasses
-            
 
 `<file-error>`_
 
 Init-keywords
-             
 
 -  See Superclasses.
 
 Description
-           
 
 Signaled when an input file stream creation function tries to read a
 file that does not exist. It is a subclass of `
 <file-error>`_.
 
 Operations
-          
 
 None.
 
 See also
-        
 
 `<end-of-stream-error>`_
 
@@ -2295,28 +1989,23 @@ See also
 `<invalid-file-permissions-error>`_
 
 <file-error>
-~~~~~~~~~~~~
+^^^^^^^^^^^^
 
 Error
-'''''
 
 Summary
-       
 
 The base class for all errors related to file I/O.
 
 Superclasses
-            
 
 ``<error>``
 
 Init-keywords
-             
 
 -  *locator:* An instance of ``<locator>``.
 
 Description
-           
 
 The base class for all errors related to file I/O. It is a subclass of
 ``<error>``.
@@ -2325,12 +2014,10 @@ The *locator:* init-keyword indicates the locator of the file that
 caused the error to be signalled. Its accessor is *file-error-locator*.
 
 Operations
-          
 
 None.
 
 See also
-        
 
 `<end-of-stream-error>`_
 
@@ -2343,40 +2030,33 @@ See also
 `<invalid-file-permissions-error>`_
 
 <file-exists-error>
-~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^~
 
 Error
-'''''
 
 Summary
-       
 
 Error type signaled when trying to create a file that already exists.
 
 Superclasses
-            
 
 `<file-error>`_
 
 Init-keywords
-             
 
 -  See Superclasses.
 
 Description
-           
 
 Signalled when an output file stream creation function tries to create a
 file that already exists. It is a subclass of `
 <file-error>`_.
 
 Operations
-          
 
 None.
 
 See also
-        
 
 `<end-of-stream-error>`_
 
@@ -2389,46 +2069,39 @@ See also
 `<invalid-file-permissions-error>`_
 
 <file-stream>
-~~~~~~~~~~~~~
+^^^^^^^^^^^^~
 
 Open abstract instantiable class
-''''''''''''''''''''''''''''''''
 
 Summary
-       
 
 The class of single-buffered streams over disk files.
 
 Superclasses
-            
 
 `<buffered-stream>`_ `
 <positionable-stream>`_
 
 Init-keywords
-             
 
 -  *locator:* An instance of ``<string>`` or ``<locator>``. This specifies
    the file over which to stream.
 -  *direction:* Specifies the direction of the stream. It must be one of
    *#"input"*, *#"output"*, or *#"input-output"*. Default value:
    *#"input"*.
--  *if-exists:* One of *#f*, *#"new-version"*, *#"overwrite"*,
+-  *if-exists:* One of ``#f``, *#"new-version"*, *#"overwrite"*,
    *#"replace"*, *#"append"*, *#"truncate"*, *#"signal"*. Default
-   value: *#f*.
+   value: ``#f``.
 
 *if-does-not-exist:*
-                    
 
-One of *#f*, *#"signal"*, or *#"create"*. Default value: depends on
+One of ``#f``, *#"signal"*, or *#"create"*. Default value: depends on
 the value of *direction:*.
-                                                                                                  
 
 -  *asynchronous?*: If *#t,* all writes on this stream are performed
-   asynchronously. Default value:*#f*.
+   asynchronously. Default value:``#f``.
 
 Description
-           
 
 The class of single-buffered streams over disk files. It is a subclass
 of `<positionable-stream>`_ and `
@@ -2442,45 +2115,37 @@ The class supports several init-keywords: *locator:*, *direction:*,
 *if-exists:*, and *if-does-not-exist:*.
 
 Operations
-          
 
 `close`_ `make
 file-stream-class`_
 
 See also
-        
 
 `make file-stream-class`_
 
 force-output
-~~~~~~~~~~~~
+^^^^^^^^^^^^
 
 Open generic function
-'''''''''''''''''''''
 
 Summary
-       
 
 Forces pending output from an output stream buffer to its destination.
 
 Signature
-         
 
 force-output *output-stream* #key *synchroniz?* e=> ()
 
 Arguments
-         
 
 -  *output-stream* An instance of `<stream>`_.
--  *synchronize?* An instance of ``<boolean>``. Default value: *#f*.
+-  *synchronize?* An instance of ``<boolean>``. Default value: ``#f``.
 
 Values
-      
 
 -  None.
 
 Description
-           
 
 Forces any pending output from *output-stream* ’s buffers to its
 destination. Even if the stream is asynchronous, this call waits for all
@@ -2490,35 +2155,29 @@ physically written to disk. This should only be needed if you’re
 concerned about system failure causing loss of data.
 
 See also
-        
 
 `synchronize-output`_
 
 <incomplete-read-error>
-~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^~
 
 Error
-'''''
 
 Summary
-       
 
 Error type signaled on encountering the end of a stream before reading
 the required number of elements.
 
 Superclasses
-            
 
 `<end-of-stream-error>`_
 
 Init-keywords
-             
 
 -  *sequence:* An instance of ``<sequence>``.
 -  *count:* An instance of ``<integer>``.
 
 Description
-           
 
 This error is signaled when input functions are reading a required
 number of elements, but the end of the stream is read before completing
@@ -2532,12 +2191,10 @@ The *count:* init-keyword contains the number of elements that were
 requested to be read. Its accessor is *incomplete-read-error-count*.
 
 Operations
-          
 
 None.
 
 See also
-        
 
 `<end-of-stream-error>`_
 
@@ -2550,39 +2207,32 @@ See also
 `<invalid-file-permissions-error>`_
 
 inner-stream
-~~~~~~~~~~~~
+^^^^^^^^^^^^
 
 Open generic function
-'''''''''''''''''''''
 
 Summary
-       
 
 Returns the stream being wrapped.
 
 Signature
-         
 
 inner-stream *wrapper-stream* => *wrapped-stream*
 
 Arguments
-         
 
 -  *wrapper-stream* An instance of `
    <wrapper-stream>`_.
 
 Values
-      
 
 -  *wrapped-stream* An instance of `<stream>`_.
 
 Description
-           
 
 Returns the stream wrapped by *wrapper-stream*.
 
 See also
-        
 
 `inner-stream-setter`_
 
@@ -2591,35 +2241,29 @@ See also
 `<wrapper-stream>`_
 
 inner-stream-setter
-~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^~
 
 Open generic function
-'''''''''''''''''''''
 
 Summary
-       
 
 Wraps a stream with a wrapper stream.
 
 Signature
-         
 
 inner-stream-setter *stream* *wrapper-stream* => *stream*
 
 Arguments
-         
 
 -  *stream* An instance of `<stream>`_.
 -  *wrapper-stream* An instance of `
    <wrapper-stream>`_.
 
 Values
-      
 
 -  *stream* An instance of `<stream>`_.
 
 Description
-           
 
 Wraps *stream* with *wrapper-stream*. It does so by setting the `
 inner-stream`_ slot of *wrapper-stream* to *stream*,
@@ -2633,48 +2277,40 @@ outer-stream`_ slots directly. The
 classes.
 
 See also
-        
 
 `inner-stream`_
 
 `outer-stream-setter`_
 
 <invalid-file-permissions-error>
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Error
-'''''
 
 Summary
-       
 
 Error type signalled when accessing a file in a way that conflicts with
 the permissions of the file.
 
 Superclasses
-            
 
 `<file-error>`_
 
 Init-keywords
-             
 
 -  See Superclasses.
 
 Description
-           
 
 Signalled when one of the file stream creation functions tries to access
 a file in a manner for which the user does not have permission. It is a
 subclass of `<file-error>`_.
 
 Operations
-          
 
 None.
 
 See also
-        
 
 `<end-of-stream-error>`_
 
@@ -2687,34 +2323,26 @@ See also
 `<incomplete-read-error>`_
 
 make *byte-string-stream-class*
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^~
 
 G.f. method
-'''''''''''
 
 Summary
-       
 
 Creates and opens a stream over a byte string.
 
 Signature
-         
 
 make *byte-string-stream-class* #key *contents* *direction* *start*
 *end*
-                                                                         
 
 => *byte-string-stream-instance*
-                                
 
 Arguments
-         
 
 *byte-string-stream-class*
-                          
 
 The class `<byte-string-stream>`_.
-                                                          
 
 -  *contents* An instance of ``<byte-string>``.
 -  *direction* One of *#"input"*, *#"output"*, or *#"input-output"*.
@@ -2724,16 +2352,12 @@ The class `<byte-string-stream>`_.
    .
 
 Values
-      
 
 *byte-string-stream-instance*
-                             
 
 An instance of `<byte-string-stream>`_.
-                                                               
 
 Description
-           
 
 Creates and opens a stream over a byte string.
 
@@ -2746,34 +2370,28 @@ be an instance of ``<byte-string>``. The *direction*, *start*, and
 <sequence-stream>`_.
 
 Example
-       
 
-let stream = make(<byte-string-stream>,
-                                       
+.. code-block:: dylan
 
-direction: #"output");
-                      
+    let stream = make(<byte-string-stream>,
+                      direction: #"output");
 
 See also
-        
 
 `<byte-string-stream>`_
 
 `make sequence-stream-class`_
 
 make *file-stream-class*
-~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 G.f method
-''''''''''
 
 Summary
-       
 
 Creates and opens a stream over a file.
 
 Signature
-         
 
 make *file-stream-class* #key *filename* *direction*
  *if-exists* *if-does-not-exist*
@@ -2781,34 +2399,29 @@ make *file-stream-class* #key *filename* *direction*
  => *file-stream-instance*
 
 Arguments
-         
 
 -  *file-stream-class* The class `
    <file-stream>`_.
 -  *filename* An instance of ``<object>``.
 -  *direction* One of *#"input"*, *#"output"*, or *#"input-output"*.
    The default is *#"input"*.
--  *if-exists* One of *#f*, *#"new-version"*, *#"overwrite"*,
+-  *if-exists* One of ``#f``, *#"new-version"*, *#"overwrite"*,
    *#"replace"*, *#"append"*, *#"truncate"*, *#"signal"*. Default
-   value: *#f*.
--  *if-does-not-exist* One of *#f*, *#"signal"*, or *#"create"*.
+   value: ``#f``.
+-  *if-does-not-exist* One of ``#f``, *#"signal"*, or *#"create"*.
    Default value: depends on the value of *direction*.
 -  *buffer-size* An instance of ``<integer>``.
 -  *element-type* One of `<byte-character>`_,
-    `<unicode-character>`_, or `
-   <byte>`_, or *#f*.
+   `<unicode-character>`_, or `
+   <byte>`_, or ``#f``.
 
 Values
-      
 
 *file-stream-instance*
-                      
 
 An instance of `<file-stream>`_.
-                                                        
 
 Description
-           
 
 Creates and opens a stream over a file.
 
@@ -2836,13 +2449,11 @@ The *element-type* init-keyword specifies the type of the elements in
 the file named by *filename*. This allows file elements to be
 represented abstractly; for instance, contiguous elements could be
 treated as a single database record. This init-keyword defaults to
-something useful, potentially based on the properties of the file; `
-<byte-character>`_ and
- `<unicode-character>`_ are likely choices. See
+something useful, potentially based on the properties of the file;
+`<byte-character>`_ and `<unicode-character>`_ are likely choices. See
 `Options when creating file streams`_.
 
 See also
-        
 
 `<buffered-stream>`_
 
@@ -2851,30 +2462,24 @@ See also
 `type-for-file-stream`_
 
 make *sequence-stream-class*
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 G.f. method
-'''''''''''
 
 Summary
-       
 
 Creates and opens a stream over a sequence.
 
 Signature
-         
 
 make *sequence-stream-class* #key *contents* *direction* *start* *end*
  => *sequence-stream-instance*
 
 Arguments
-         
 
 *sequence-stream-class*
-                       
 
 The class `<sequence-stream>`_.
-                                                       
 
 -  *contents* An instance of ``<sequence>``.
 -  *direction* One of *#"input"*, *#"output"*, or *#"input-output"*.
@@ -2884,16 +2489,12 @@ The class `<sequence-stream>`_.
    .
 
 Values
-      
 
 *sequence-stream-instance*
-                          
 
 An instance of `<sequence-stream>`_.
-                                                            
 
 Description
-           
 
 Creates and opens a stream over a sequence.
 
@@ -2915,56 +2516,42 @@ stream over: *start* is inclusive and *end* is exclusive. The default is
 to stream over the entire sequence.
 
 Example
-       
 
-let sv = make(<stretchy-vector>);
-                                 
+.. code-block:: dylan
 
-let stream = make(<sequence-stream>,
-
-contents: sv,
-
-direction: #"output");
-                      
-
-write(stream,#(1, 2, 3, 4, 5, 6, 7, 8, 9));
-
-write(stream,"ABCDEF");
-
-values(sv, stream-contents(stream));
+    let sv = make(<stretchy-vector>);
+    let stream = make(<sequence-stream>,
+                      contents: sv,
+                      direction: #"output");
+    write(stream,#(1, 2, 3, 4, 5, 6, 7, 8, 9));
+    write(stream,"ABCDEF");
+    values(sv, stream-contents(stream));
 
 See also
-        
 
 `<sequence-stream>`_
 
 `type-for-sequence-stream`_
 
 make *string-stream-class*
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 G.f. method
-'''''''''''
 
 Summary
-       
 
 Creates and opens a stream over a string.
 
 Signature
-         
 
 make *string-stream-class* #key *contents* *direction* *start* *end*
  => *string-stream-instance*
 
 Arguments
-         
 
 *string-stream-class*
-                     
 
 The class `<string-stream>`_.
-                                                     
 
 -  *contents* An instance of ``<string>``.
 -  *direction* One of *#"input"*, *#"output"*, or *#"input-output"*.
@@ -2974,16 +2561,12 @@ The class `<string-stream>`_.
    .
 
 Values
-      
 
 *string-stream-instance*
-                        
 
 An instance of `<string-stream>`_.
-                                                          
 
 Description
-           
 
 Creates and opens a stream over a string.
 
@@ -2994,47 +2577,38 @@ init-keywords are as for *make* on `
 <sequence-stream>`_.
 
 Example
-       
 
-let stream = make(<string-stream>,
-                                  
+.. code-block:: dylan
 
-contents: "here is a sequence");
-                                
+    let stream = make(<string-stream>,
+                      contents: "here is a sequence");
 
 See also
-        
 
 `make sequence-stream-class`_
 
 `<string-stream>`_
 
 make *unicode-string-stream-class*
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 G.f. method
-'''''''''''
 
 Summary
-       
 
 Creates and opens a stream over a Unicode string.
 
 Signature
-         
 
 make *unicode-string-stream-class* #key *contents* *direction* *start*
 *end*
- => *unicode-string-stream-instance*
+=> *unicode-string-stream-instance*
 
 Arguments
-         
 
 *unicode-string-stream-class*
-                             
 
 The class `<unicode-string-stream>`_.
-                                                             
 
 -  *contents* An instance of ``<unicode-string>``.
 -  *direction* One of *#"input"*, *#"output"*, or *#"input-output"*.
@@ -3044,16 +2618,12 @@ The class `<unicode-string-stream>`_.
    .
 
 Values
-      
 
 *unicode-string-stream-instance*
-                                
 
 An instance of `<unicode-string-stream>`_.
-                                                                  
 
 Description
-           
 
 Creates and opens a stream over a Unicode string.
 
@@ -3064,40 +2634,33 @@ describes the contents of the stream, and must be an instance of
 are as for *make* on `<sequence-stream>`_.
 
 See also
-        
 
 `make sequence-stream-class`_
 
 `<unicode-string-stream>`_
 
 new-line
-~~~~~~~~
+^^^^^^^^
 
 Open generic function
-'''''''''''''''''''''
 
 Summary
-       
 
 Writes a newline sequence to an output stream.
 
 Signature
-         
 
 new-line *output-stream* => ()
 
 Arguments
-         
 
 -  *output-stream* An instance of `<stream>`_.
 
 Values
-      
 
 -  None.
 
 Description
-           
 
 Writes a newline sequence to *output-stream*.
 
@@ -3106,39 +2669,32 @@ A method for `new-line`_ is defined on `
 the string stream.
 
 outer-stream
-~~~~~~~~~~~~
+^^^^^^^^^^^^
 
 Open generic function
-'''''''''''''''''''''
 
 Summary
-       
 
 Returns a stream’s wrapper stream.
 
 Signature
-         
 
 outer-stream *stream* => *wrapping-stream*
 
 Arguments
-         
 
 -  *stream* An instance of `<stream>`_.
 
 Values
-      
 
 -  *wrapping-stream* An instance of `
    <wrapper-stream>`_.
 
 Description
-           
 
 Returns the stream that is wrapping *stream*.
 
 See also
-        
 
 `inner-stream`_
 
@@ -3147,36 +2703,30 @@ See also
 `<wrapper-stream>`_
 
 outer-stream-setter
-~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^~
 
 Open generic function
-'''''''''''''''''''''
 
 Summary
-       
 
 Sets a stream’s wrapper stream.
 
 Signature
-         
 
 outer-stream-setter *wrapper-stream* *stream* => *wrapper-stream*
 
 Arguments
-         
 
 -  *wrapper-stream* An instance of `
    <wrapper-stream>`_.
 -  *stream* An instance of `<stream>`_.
 
 Values
-      
 
 -  *wrapper-stream* An instance of `
    <wrapper-stream>`_.
 
 Description
-           
 
 Sets the `outer-stream`_ slot of *stream* to
 *wrapper-stream*.
@@ -3188,158 +2738,130 @@ outer-stream-setter`_ function is for use only when
 implementing stream classes.
 
 See also
-        
 
 `inner-stream-setter`_
 
 `outer-stream`_
 
 peek
-~~~~
+^^^^
 
 Open generic function
-'''''''''''''''''''''
 
 Summary
-       
 
 Returns the next element of a stream without advancing the stream
 position.
 
 Signature
-         
 
 peek *input-stream* #key *on-end-of-stream* => *element-or-eof*
 
 Arguments
-         
 
 -  *input-stream* An instance of `<stream>`_.
 -  *on-end-of-stream* An instance of ``<object>``.
 
 Values
-      
 
--  *element-or-eof* An instance of ``<object>``, or *#f*.
+-  *element-or-eof* An instance of ``<object>``, or ``#f``.
 
 Description
-           
 
 This function behaves as `read-element`_ does,
 but the stream position is not advanced.
 
 See also
-        
 
 `read-element`_
 
 <positionable-stream>
-~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^~
 
 Open abstract class
-'''''''''''''''''''
 
 Summary
-       
 
 The class of positionable streams.
 
 Superclasses
-            
 
 `<stream>`_
 
 Init-keywords
-             
 
 See Superclasses.
 
 Description
-           
 
 A subclass of `<stream>`_ supporting the
 Positionable Stream Protocol. It is not instantiable.
 
 Operations
-          
 
-`adjust-stream-position`_ `
-stream-contents`_
- `stream-position`_ `
-stream-position-setter`_
- `unread-element`_
+`adjust-stream-position`_
+`stream-contents`_
+`stream-position`_
+`stream-position-setter`_
+`unread-element`_
 
 <position-type>
-~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^~
 
 Type
-''''
 
 Summary
-       
 
 A type representing positions in a stream.
 
 Equivalent
-          
 
 type-union(<stream-position>, <integer>)
 
 Supertypes
-          
 
 None.
 
 Init-keywords
-             
 
 None.
 
 Description
-           
 
 A type used to represent a position in a stream. In practice, positions
 within a stream are defined as instances of ``<integer>``, but this type,
-together with the
- `<stream-position>`_ class, allows for cases
-where this might not be possible.
+together with the `<stream-position>`_ class, allows for cases where
+this might not be possible.
 
 See also
-        
 
 `<stream-position>`_
 
 read
-~~~~
+^^^^
 
 Open generic function
-'''''''''''''''''''''
 
 Summary
-       
 
 Reads a number of elements from an input stream.
 
 Signature
-         
 
 read *input-stream* *n* #key *on-end-of-stream* => *sequence-or-eof*
 
 Arguments
-         
 
 -  *input-stream* An instance of `<stream>`_.
 -  *n* An instance of ``<integer>``.
 -  *on-end-of-stream* An instance of ``<object>``.
 
 Values
-      
 
 -  *sequence-or-eof* An instance of ``<sequence>``, or an instance of
    ``<object>`` if the end of stream is reached.
 
 Description
-           
 
 Returns a sequence of the next *n* elements from *input-stream*.
 
@@ -3372,7 +2894,6 @@ read, the behavior is as follows.
    <end-of-stream-error>`_ condition is signalled.
 
 ** See also
-           
 
 `<end-of-stream-error>`_
 
@@ -3381,35 +2902,29 @@ read, the behavior is as follows.
 `stream-element-type`_
 
 read-element
-~~~~~~~~~~~~
+^^^^^^^^^^^^
 
 Open generic function
-'''''''''''''''''''''
 
 Summary
-       
 
 Reads the next element in a stream.
 
 Signature
-         
 
 read-element *input-stream* #key *on-end-of-stream*
  => *element-or-eof*
 
 Arguments
-         
 
 -  *input-stream* An instance of `<stream>`_.
 -  *on-end-of-stream* An instance of ``<object>``.
 
 Values
-      
 
 -  *element-or-eof* An instance of ``<object>``.
 
 Description
-           
 
 Returns the next element in the stream. If the stream is not at its end,
 the stream is advanced so that the next call to `
@@ -3426,23 +2941,18 @@ If no input is available and the stream is not at its end, `
 read-element`_ waits until input becomes available.
 
 Example
-       
 
 The following piece of code applies *function* to all the elements of a
 sequence:
 
-let stream = make(<sequence-stream>, contents: seq);
-                                                    
+.. code-block:: dylan
 
-while (~stream-at-end?(stream))
-
-function(read-element(stream));
-
-end;
-    
+    let stream = make(<sequence-stream>, contents: seq);
+    while (~stream-at-end?(stream))
+      function(read-element(stream));
+    end;
 
 See also
-        
 
 `<end-of-stream-error>`_
 
@@ -3451,24 +2961,20 @@ See also
 `unread-element`_
 
 read-into!
-~~~~~~~~~~
+^^^^^^^^^^
 
 Open generic function
-'''''''''''''''''''''
 
 Summary
-       
 
 Reads a number of elements from a stream into a sequence.
 
 Signature
-         
 
 read-into! *input-stream* *n* *sequence* #key *start* *on-end-of-stream*
 => *count-or-eof*
 
 Arguments
-         
 
 -  *input-stream* An instance of `<stream>`_.
 -  *n* An instance of ``<integer>``.
@@ -3477,13 +2983,11 @@ Arguments
 -  *on-end-of-stream* An instance of ``<object>``.
 
 Values
-      
 
 -  *count-or-eof* An instance of ``<integer>``, or an instance of
    ``<object>`` if the end of stream is reached..
 
 Description
-           
 
 Reads the next *n* elements from *input-stream*, and inserts them into
 a mutable sequence starting at the position *start*. Returns the number
@@ -3499,48 +3003,41 @@ If the stream is not at its end, *read-into!* waits until input becomes
 available.
 
 ** See also
-           
 
 `read`_
 
 read-line
-~~~~~~~~~
+^^^^^^^^~
 
 Open generic function
-'''''''''''''''''''''
 
 Summary
-       
 
 Reads a stream up to the next newline.
 
 Signature
-         
 
 read-line *input-stream* #key *on-end-of-stream*
  => *string-or-eof* *newline?*
 
 Arguments
-         
 
 -  *input-stream* An instance of `<stream>`_.
 -  *on-end-of-stream* An instance of ``<object>``.
 
 Values
-      
 
 -  *string-or-eof* An instance of ``<string>``, or an instance of
    ``<object>`` if the end of the stream is reached.
 -  *newline?* An instance of ``<boolean>``.
 
 ioDescription
-             
 
 Returns a new string containing all the input in *input-stream* up to
 the next newline sequence.
 
 The resulting string does not contain the newline sequence. The second
-value returned is *#t* if the read terminated with a newline or *#f* if
+value returned is ``#t`` if the read terminated with a newline or ``#f`` if
 the read terminated because it came to the end of the stream.
 
 The type of the result string is chosen so that the string can contain
@@ -3554,49 +3051,41 @@ then the end-of-stream behavior and the interpretation of
 *on-end-of-stream* is as for `read-element`_.
 
 Example
-       
 
 See also
-        
 
 `read-element`_
 
 read-line-into!
-~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^~
 
 Open generic function
-'''''''''''''''''''''
 
 Summary
-       
 
 Reads a stream up to the next newline into a string.
 
 Signature
-         
 
 read-line-into! *input-stream* *string*
  #key *start* *on-end-of-stream* *grow?*
  => *string-or-eof* *newline?*
 
 Arguments
-         
 
 -  *input-stream* An instance of `<stream>`_.
 -  *string* An instance of ``<string>``.
 -  *start* An instance of ``<integer>``. Default value: 0.
 -  *on-end-of-stream* An instance of ``<object>``.
--  *grow?* An instance of ``<boolean>``. Default value: *#f*.
+-  *grow?* An instance of ``<boolean>``. Default value: ``#f``.
 
 Values
-      
 
 -  *string-or-eof* An instance of ``<string>``, or an instance of
    ``<object>`` if the end of the stream is reached.
 -  *newline?* An instance of ``<boolean>``.
 
 Description
-           
 
 Fills *string* with all the input from *input-stream* up to the next
 newline sequence. The *string* must be a general instance of ``<string>``
@@ -3605,51 +3094,46 @@ that can hold elements of the stream’s element type.
 The input is written into *string* starting at the position *start*. By
 default, *start* is the start of the stream.
 
-The second return value is *#t* if the read terminated with a newline,
-or *#f* if the read completed by getting to the end of the input stream.
+The second return value is ``#t`` if the read terminated with a newline,
+or ``#f`` if the read completed by getting to the end of the input stream.
 
-If *grow?* is *#t*, and *string* is not large enough to hold all of the
+If *grow?* is ``#t``, and *string* is not large enough to hold all of the
 input, *read-line-into!* creates a new string which it writes to and
 returns instead. The resulting string holds all the original elements of
 *string*, except where *read-line-into!* overwrites them with input
 from *input-stream*.
 
 In a manner consistent with the intended semantics of *grow?*, when
-*grow?* is *#t* and *start* is greater than or equal to *string* *.size*,
+*grow?* is ``#t`` and *start* is greater than or equal to *string* *.size*,
 *read-line-into!* grows *string* to accommodate the *start* index and
 the new input.
 
-If *grow?* is *#f* and *string* is not large enough to hold the input,
+If *grow?* is ``#f`` and *string* is not large enough to hold the input,
 the function signals an error.
 
 The end-of-stream behavior and the interpretation of *on-end-of-stream*
 is the same as that of `read-line`_.
 
 See also
-        
 
 `read-line`_
 
 read-through
-~~~~~~~~~~~~
+^^^^^^^^^^^^
 
 Function
-''''''''
 
 Summary
-       
 
 Returns a sequence containing the elements of the stream up to, and
 including, the first occurrence of a given element.
 
 Signature
-         
 
 read-through *input-stream* *element* #key *on-end-of-stream* *test*
  => *sequence-or-eof* *found?*
 
 Arguments
-         
 
 -  *input-stream* An instance of `<stream>`_.
 -  *element* An instance of ``<object>``.
@@ -3657,14 +3141,12 @@ Arguments
 -  *test* An instance of ``<function>``. Default value: *==*.
 
 Values
-      
 
 -  *sequence-or-eof* An instance of ``<sequence>``, or an instance of
    ``<object>`` if the end of the stream is reached.
 -  *found?* An instance of ``<boolean>``.
 
 Description
-           
 
 This function is the same as `read-to`_, except
 that *element* is included in the resulting sequence.
@@ -3673,30 +3155,25 @@ If the *element* is not found, the result does not contain it. The
 stream is left positioned after *element*.
 
 See also
-        
 
 `read-to`_
 
 read-to
-~~~~~~~
+^^^^^^~
 
 Function
-''''''''
 
 Summary
-       
 
 Returns a sequence containing the elements of the stream up to, but not
 including, the first occurrence of a given element.
 
 Signature
-         
 
 read-to *input-stream* *element* #key *on-end-of-stream* *test* =>
  *sequence-or-eof* *found?*
 
 Arguments
-         
 
 -  *input-stream* An instance of `<stream>`_.
 -  *element* An instance of ``<object>``.
@@ -3704,21 +3181,19 @@ Arguments
 -  *test* An instance of ``<function>``. Default value: *==*.
 
 Values
-      
 
 -  *sequence-or-eof* An instance of ``<sequence>``, or an instance of
    ``<object>`` if the end of the stream is reached.
 -  *found?* An instance of ``<boolean>``.
 
 Description
-           
 
 Returns a new sequence containing the elements of *input-stream* from
 the stream’s current position to the first occurrence of *element*. The
 result does not contain *element*.
 
-The second return value is *#t* if the read terminated with *element*,
-or *#f* if the read terminated by reaching the end of the stream’s
+The second return value is ``#t`` if the read terminated with *element*,
+or ``#f`` if the read terminated by reaching the end of the stream’s
 source. The “boundary” element is consumed, that is, the stream is left
 positioned after *element*.
 
@@ -3732,39 +3207,32 @@ read`_. The end-of-stream behavior is the same as
 that of `read-element`_.
 
 See also
-        
 
 `read-element`_
 
 read-to-end
-~~~~~~~~~~~
+^^^^^^^^^^~
 
 Function
-''''''''
 
 Summary
-       
 
 Returns a sequence containing all the elements up to, and including, the
 last element of the stream.
 
 Signature
-         
 
 read-to-end *input-stream* => *sequence*
 
 Arguments
-         
 
 -  *input-stream* An instance of `<stream>`_.
 
 Values
-      
 
 -  *sequence* An instance of ``<sequence>``.
 
 Description
-           
 
 Returns a sequence of all the elements up to, and including, the last
 element of *input-stream*, starting from the stream’s current position.
@@ -3774,41 +3242,32 @@ read`_. There is no special end-of-stream behavior;
 if the stream is already at its end, an empty collection is returned.
 
 Example
-       
 
-read-to-end(make(<string-stream>,
-                                 
+.. code-block:: dylan
 
-contents: "hello there, world",
-
-start: 6,
-
-end: 11));
-          
+    read-to-end(make(<string-stream>,
+                     contents: "hello there, world",
+                start: 6,
+                end: 11));
 
 See also
-        
 
 `read`_
 
 <sequence-stream>
-~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^~
 
 Open instantiable class
-'''''''''''''''''''''''
 
 Summary
-       
 
 The class of streams over sequences.
 
 Superclasses
-            
 
 `<positionable-stream>`_
 
 Init-keywords
-             
 
 -  *contents:* A general instance of ``<sequence>`` which is used as the
    input for an input stream, and as the initial storage for an output
@@ -3825,7 +3284,6 @@ Init-keywords
    *contents.size*.
 
 Description
-           
 
 The class of streams over sequences. It is a subclass of `
 <positionable-stream>`_.
@@ -3845,12 +3303,10 @@ sequence to create the stream over: *start:* is inclusive and *end:* is
 exclusive. The default is to stream over the entire sequence.
 
 Operations
-          
 
 `make sequence-stream-class`_
 
 See also
-        
 
 `<byte-string-stream>`_
 
@@ -3861,40 +3317,34 @@ See also
 `<unicode-string-stream>`_
 
 skip-through
-~~~~~~~~~~~~
+^^^^^^^^^^^^
 
 Function
-''''''''
 
 Summary
-       
 
 Skips through an input stream past the first occurrence of a given
 element.
 
 Signature
-         
 
 skip-through *input-stream* *element* #key *test* => *found?*
 
 Arguments
-         
 
 -  *input-stream* An instance of `<stream>`_.
 -  *element* An instance of ``<object>``.
 -  *test* An instance of ``<function>``. Default value: *==*.
 
 Values
-      
 
 -  *found?* An instance of ``<boolean>``.
 
 Description
-           
 
 Positions *input-stream* after the first occurrence of *element*,**
-starting from the stream’s current position. Returns *#t* if the element
-was found, or *#f* if the end of the stream was encountered. When `
+starting from the stream’s current position. Returns ``#t`` if the element
+was found, or ``#f`` if the end of the stream was encountered. When `
 skip-through`_ does not find *element*, it leaves
 *input-stream* positioned at the end.
 
@@ -3904,29 +3354,24 @@ function must accept two arguments. The order of the arguments is the
 element retrieved from the stream first and element second.
 
 <stream>
-~~~~~~~~
+^^^^^^^^
 
 *Open abstract class*
-'''''''''''''''''''''
 
 Summary
-       
 
 The superclass of all stream classes.
 
 Superclasses
-            
 
 ``<object>``
 
 Init-keywords
-             
 
 -  *outer-stream:* The name of the stream wrapping the stream. Default
    value: the stream itself (that is, the stream is not wrapped).
 
 Description
-           
 
 The superclass of all stream classes and a direct subclass of ``<object>``.
 It is not instantiable.
@@ -3936,63 +3381,43 @@ its wrapper stream. See `Wrapper streams and
 delegation`_ for more information.
 
 Operations
-          
 
-`close`_ `
-discard-input`_ `
-discard-output`_ `
-force-output`_
- `new-line`_ `
-outer-stream`_ `
-outer-stream-setter`_
- `peek`_ `read`_ `
-read-element`_ `read-into!`_
-`read-line`_
- `read-line-into!`_ `
-read-through`_ `read-to`_
-`read-to-end`_
- `skip-through`_ `
-stream-at-end?`_ `
-stream-element-type`_
- `stream-input-available?`_ `
-stream-lock`_
- `stream-lock-setter`_ `
-stream-open?`_ `
-synchronize-output`_
- ** `write`_ `
-write-element`_
+`close`_ `discard-input`_ `discard-output`_
+`force-output`_ `new-line`_ `outer-stream`_
+`outer-stream-setter`_ `peek`_ `read`_
+`read-element`_ `read-into!`_ `read-line`_
+`read-line-into!`_ `read-through`_ `read-to`_
+`read-to-end`_ `skip-through`_ `stream-at-end?`_
+`stream-element-type`_ `stream-input-available?`_
+`stream-lock`_ `stream-lock-setter`_
+`stream-open?`_ `synchronize-output`_
+`write`_ `write-element`_
 
 stream-at-end?
-~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^
 
 Open generic function
-'''''''''''''''''''''
 
 Summary
-       
 
 Tests whether a stream is at its end.
 
 Signature
-         
 
 stream-at-end? *stream* => *at-end?*
 
 Arguments
-         
 
 -  *stream* An instance of `<stream>`_.
 
 Values
-      
 
 -  *at-end?* An instance of ``<boolean>``.
 
 Description
-           
 
-Returns *#t* if the stream is at its end and *#f* if it is not. For
-input streams, it returns *#t* if a call to `
+Returns ``#t`` if the stream is at its end and ``#f`` if it is not. For
+input streams, it returns ``#t`` if a call to `
 read-element`_ with no supplied keyword arguments
 would signal an `<end-of-stream-error>`_.
 
@@ -4000,7 +3425,7 @@ This function differs from `
 stream-input-available?`_, which tests whether the
 stream can be read.
 
-For output-only streams, this function always returns *#f*.
+For output-only streams, this function always returns ``#f``.
 
 For output streams, note that you can determine if a stream is one place
 past the last written element by comparing `
@@ -4008,23 +3433,18 @@ stream-position`_ to `
 stream-size`_.
 
 Example
-       
 
 The following piece of code applies *function* to all the elements of a
 sequence:
 
-let stream = make(<sequence-stream>, contents: seq);
-                                                    
+.. code-block:: dylan
 
-while (~stream-at-end?(stream))
-
-function(read-element(stream));
-
-end;
-    
+    let stream = make(<sequence-stream>, contents: seq);
+    while (~stream-at-end?(stream))
+      function(read-element(stream));
+    end;
 
 See also
-        
 
 `<end-of-stream-error>`_
 
@@ -4033,40 +3453,32 @@ See also
 `stream-input-available?`_
 
 stream-contents
-~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^~
 
 Open generic function
-'''''''''''''''''''''
 
 Summary
-       
 
 Returns a sequence containing all the elements of a positionable stream.
 
 Signature
-         
 
 stream-contents *positionable-stream* #key *clear-contents?*
  => *sequence*
 
 Arguments
-         
 
 *positionable-stream*
-                     
 
 An instance of `<positionable-stream>`_.
-                                                                
 
--  *clear-contents?* An instance of ``<boolean>``. Default value: *#t*.
+-  *clear-contents?* An instance of ``<boolean>``. Default value: ``#t``.
 
 Values
-      
 
 -  *sequence* An instance of ``<sequence>``.
 
 Description
-           
 
 Returns a sequence that contains all of *positionable-stream* ’s
 elements from its start to its end, regardless of its current position.
@@ -4076,7 +3488,7 @@ read`_. See page `read`_.
 The *clear-contents?* argument is only applicable to writeable sequence
 streams, and is not defined for file-streams or any other external
 stream. It returns an error if applied to an input only stream. If
-clear-contents? is *#t* (the default for cases where the argument is
+clear-contents? is ``#t`` (the default for cases where the argument is
 defined), this function sets the size of the stream to zero, and the
 position to the stream’s start. Thus the next call to `
 stream-contents`_ will return only the elements
@@ -4091,141 +3503,114 @@ stream-contents`_ on an output `
 that being used to represent the string stream.
 
 Example
-       
 
 The following forms bind *stream* to an output stream over an empty
 string and create the string “I see!”, using the function `
 stream-contents`_ to access all of the stream’s
 elements.
 
-let stream = make(<byte-string-stream>,
-                                       
+.. code-block:: dylan
 
-direction: #"output");
-
-write-element(stream, ’I’);
-
-write-element(stream, ’ ’);
-
-write(stream, "see");
-
-write-element(stream, ’!’);
-
-stream-contents(stream);
-                        
+    let stream = make(<byte-string-stream>,
+                      direction: #"output");
+    write-element(stream, ’I’);
+    write-element(stream, ’ ’);
+    write(stream, "see");
+    write-element(stream, ’!’);
+    stream-contents(stream);
 
 See also
-        
 
 `read-to-end`_
 
 `stream-contents`_
 
 stream-element-type
-~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^~
 
 Open generic function
-'''''''''''''''''''''
 
 Summary
-       
 
 Returns the element-type of a stream.
 
 Signature
-         
 
 stream-element-type *stream* => *element-type*
 
 Arguments
-         
 
 -  *stream* An instance of `<stream>`_.
 
 Values
-      
 
 -  *element-type* An instance of ``<type>``.
 
 Description
-           
 
 Returns the element type of *stream* as a Dylan ``<type>``.
 
 stream-input-available?
-~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^~
 
 Open generic function
-'''''''''''''''''''''
 
 Summary
-       
 
 Tests if an input stream can be read.
 
 Signature
-         
 
 stream-input-available? *input-stream* => *available?*
 
 Arguments
-         
 
 -  *input-stream* An instance of `<stream>`_.
 
 Values
-      
 
 -  *available?* An instance of ``<boolean>``.
 
 Description
-           
 
-Returns *#t* if *input-stream* would not block on `
-read-element`_, otherwise it returns *#f*.
+Returns ``#t`` if *input-stream* would not block on `
+read-element`_, otherwise it returns ``#f``.
 
 This function differs from `stream-at-end?`_.
-When `stream-input-available?`_ returns *#t*,
+When `stream-input-available?`_ returns ``#t``,
 `read-element`_ will not block, but it may
 detect that it is at the end of the stream’s source, and consequently
 inspect the *on-end-of-stream* argument to determine how to handle the
 end of stream.
 
 See also
-        
 
 `read-element`_
 
 `stream-at-end?`_
 
 stream-lock
-~~~~~~~~~~~
+^^^^^^^^^^~
 
 Open generic function
-'''''''''''''''''''''
 
 Summary
-       
 
 Returns the lock for a stream.
 
 Signature
-         
 
 stream-lock *stream* => *lock*
 
 Arguments
-         
 
 -  *stream* An instance of `<stream>`_.
 
 Values
-      
 
--  *lock* An instance of ``<lock>``, or *#f*.
+-  *lock* An instance of ``<lock>``, or ``#f``.
 
 Description
-           
 
 Returns *lock* for the specified *stream*. You can use this function,
 in conjunction with `stream-lock-setter`_ to
@@ -4234,41 +3619,34 @@ implement a basic stream locking facility. For full details on the
 *Core Features and Mathematics* manual.
 
 See also
-        
 
 `stream-lock-setter`_
 
 stream-lock-setter
-~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^
 
 Open generic function
-'''''''''''''''''''''
 
 Summary
-       
 
 Sets a lock on a stream.
 
 Signature
-         
 
 stream-lock-setter *stream lock* => *lock*
 
 Arguments
-         
 
 -  *stream* An instance of `<stream>`_.
--  *lock* An instance of ``<lock>``, or *#f*.
+-  *lock* An instance of ``<lock>``, or ``#f``.
 
 Values
-      
 
--  *lock* An instance of ``<lock>``, or *#f*.
+-  *lock* An instance of ``<lock>``, or ``#f``.
 
 Description
-           
 
-Sets *lock* for the specified *stream*. If *lock* is *#f*, then the
+Sets *lock* for the specified *stream*. If *lock* is ``#f``, then the
 lock on *stream* is freed. You can use this function in conjunction with
 `stream-lock`_ to implement a basic stream
 locking facility. For full details on the ``<lock>`` class, see the
@@ -4276,78 +3654,62 @@ documentation on the Threads library in the *Core Features and
 Mathematics* manual.
 
 See also
-        
 
 `stream-lock`_
 
 stream-open?
-~~~~~~~~~~~~
+^^^^^^^^^^^^
 
 Open generic function
-'''''''''''''''''''''
 
 Summary
-       
 
 Generic function for testing whether a stream is open.
 
 Signature
-         
 
 stream-open? *stream* => *open?*
 
 Arguments
-         
 
 -  *stream* An instance of `<stream>`_.
 
 Values
-      
 
 -  *open?* An instance of ``<boolean>``.
 
 Description
-           
 
-Returns *#t* if *stream* is open and *#f* if it is not.
+Returns ``#t`` if *stream* is open and ``#f`` if it is not.
 
 See also
-        
 
 `close`_
 
 ** stream-position
-~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^
 
 Open generic function
-'''''''''''''''''''''
 
 Summary
-       
 
 Finds the current position of a positionable stream.
 
 Signature
-         
 
 stream-position *positionable-stream* => *position*
 
 Arguments
-         
 
 *positionable-stream*
-                     
 
 An instance of `<positionable-stream>`_.
-                                                                
 
 Values
-      
 
 -  *position* An instance of `<position-type>`_.
 
 Description
-           
 
 Returns the current position of *positionable-stream* for reading or
 writing.
@@ -4359,49 +3721,39 @@ stream’s element type. For instance, in a Unicode stream, a position of
 four means that four Unicode characters have been read.
 
 Example
-       
 
-The following example uses positioning to return the character “w” from
+The following example uses positioning to return the character "w" from
 a stream over the string *"hello world"*:
 
-let stream = make(<string-stream>,
-                                  
+.. code-block:: dylan
 
-contents: "hello world");
-
-stream-position(stream) := 6;
-
-read-element(stream);
-                     
+    let stream = make(<string-stream>,
+                      contents: "hello world");
+    stream-position(stream) := 6;
+    read-element(stream);
 
 See also
-        
 
 `<position-type>`_
 
 <stream-position>
-~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^~
 
 Abstract class
-''''''''''''''
 
 Summary
-       
 
 The class representing non-integer stream positions.
 
 Superclasses
-            
 
 ``<object>``
 
 Init-keywords
-             
 
 None.
 
 Description
-           
 
 A direct subclass of ``<object>``. It is used in rare cases to represent
 positions within streams that cannot be represented by instances of
@@ -4413,54 +3765,44 @@ The `<stream-position>`_ class is disjoint from
 the class ``<integer>``.
 
 Operations
-          
 
 `as`_ `
 stream-position-setter`_ `
 stream-size`_
 
 See also
-        
 
 `<position-type>`_
 
 stream-position-setter
-~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^
 
 Open generic function
-'''''''''''''''''''''
 
 Summary
-       
 
 Sets the position of a stream.
 
 Signature
-         
 
 stream-position-setter *position* *positionable-stream*
  => *new-position*
 
 Arguments
-         
 
 -  *position* An instance of `<position-type>`_.
 
 *positionable-stream*
-                     
 
 An instance of `<positionable-stream>`_.
-                                                                
 
 Values
-      
 
 -  *new-position* An instance of `
    <stream-position>`_, or an instance of
    ``<integer>``.
 
 Description
-           
 
 Changes the stream’s position for reading or writing to *position*.
 
@@ -4484,44 +3826,35 @@ the current last element of the stream: use `
 adjust-stream-position`_ instead.
 
 See also
-        
 
 `adjust-stream-position`_
 
 `<stream-position>`_
 
 stream-size
-~~~~~~~~~~~
+^^^^^^^^^^~
 
 Open generic function
-'''''''''''''''''''''
 
 Summary
-       
 
 Finds the number of elements in a stream.
 
 Signature
-         
 
 stream-size *positionable-stream* => *size*
 
 Arguments
-         
 
 *positionable-stream*
-                     
 
 An instance of `<positionable-stream>`_.
-                                                                
 
 Values
-      
 
--  *size* An instance of ``<integer>``, or *#f*.
+-  *size* An instance of ``<integer>``, or ``#f``.
 
 Description
-           
 
 Returns the number of elements in *positionable-stream*.
 
@@ -4546,23 +3879,19 @@ In such situations, the behavior of `
 stream-size`_ is undefined.
 
 <string-stream>
-~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^~
 
 Open instantiable class
-'''''''''''''''''''''''
 
 Summary
-       
 
 The class of streams over strings.
 
 Superclasses
-            
 
 `<sequence-stream>`_
 
 Init-keywords
-             
 
 -  *contents:* A general instance of ``<sequence>``.
 -  *direction:* Specifies the direction of the stream. It must be one of
@@ -4576,7 +3905,6 @@ Init-keywords
    *contents.size*.
 
 Description
-           
 
 The class of streams over strings.
 
@@ -4594,94 +3922,79 @@ to create the stream over: *start:* is inclusive and *end:* is
 exclusive. The default is to stream over the entire string.
 
 Example
-       
 
 `make string-stream-class`_
 
 See also
-        
 
 `make string-stream-class`_
 
 `<sequence-stream>`_
 
 synchronize-output
-~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^
 
 Open generic function
-'''''''''''''''''''''
 
 Summary
-       
 
 Synchronizes an output stream with the application state.
 
 Signature
-         
 
 synchronize-output *output-stream* => ()
 
 Arguments
-         
 
 -  *output-stream* An instance of `<stream>`_.
 
 Values
-      
 
 -  None.
 
 Description
-           
 
 Forces any pending output from *output-stream* ’s buffers to its
-destination. Before returning to its caller,
- `synchronize-output`_ also attempts to ensure
-that the output reaches the stream’s destination before, thereby
-synchronizing the output destination with the application state.
+destination. Before returning to its caller, `synchronize-output`_
+also attempts to ensure that the output reaches the stream’s
+destination before, thereby synchronizing the output destination
+with the application state.
 
 When creating new stream classes it may be necessary to add a method to
 the `synchronize-output`_ function, even though
 it is not part of the Stream Extension Protocol.
 
 See also
-        
 
 `force-output`_
 
 type-for-file-stream
-~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^
 
 Open generic function
-'''''''''''''''''''''
 
 Summary
-       
 
 Finds the type of file-stream class that needs to be instantiated for a
 given file.
 
 Signature
-         
 
 type-for-file-stream *filename* *element-type* #rest #all-keys
- => *file-stream-type*
+=> *file-stream-type*
 
 Arguments
-         
 
 -  *filename* An instance of ``<object>``.
 -  *element-type* One of `<byte-character>`_,
-    `<unicode-character>`_, or `
-   <byte>`_, or *#f*.
+   `<unicode-character>`_, or `
+   <byte>`_, or ``#f``.
 
 Values
-      
 
 -  *file-stream-type* An instance of ``<type>``.
 
 Description
-           
 
 Returns the kind of file-stream class to instantiate for a given file.
 The method for *make* on `<file-stream>`_ calls
@@ -4689,45 +4002,36 @@ this function to determine the class of which it should create an
 instance.
 
 See also
-        
 
 `<file-stream>`_
 
 `make file-stream-class`_
 
 type-for-sequence-stream
-~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 Open generic function
-'''''''''''''''''''''
 
 Summary
-       
 
 Finds the type of sequence-stream class that needs to be instantiated
 for a given sequence.
 
 Signature
-         
 
 type-for-sequence-stream *sequence* => *sequence-stream-type*
 
 Arguments
-         
 
 -  *sequence* An instance of ``<sequence>``.
 
 Values
-      
 
 *sequence-stream-type*
-                      
 
 An instance of ``<type>``.
-                         
 
 Description
-           
 
 Returns the sequence-stream class to instantiate over a given sequence
 object. The method for *make* on `
@@ -4740,62 +4044,51 @@ for each of the string object classes. These methods return a stream
 class object that the Streams module considers appropriate.
 
 See also
-        
 
 `make sequence-stream-class`_
 
 `<sequence-stream>`_
 
 <unicode-character>
-~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^~
 
 Type
-''''
 
 Summary
-       
 
 The type that represents Unicode characters.
 
 Supertypes
-          
 
 ``<character>``
 
 Init-keywords
-             
 
 None.
 
 Description
-           
 
 A type representing Unicode characters that instances of
 ``<unicode-string>`` can contain.
 
 Operations
-          
 
 `type-for-file-stream`_
 
 <unicode-string-stream>
-~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^~
 
 Open instantiable class
-'''''''''''''''''''''''
 
 Summary
-       
 
 The class of streams over Unicode strings.
 
 Superclasses
-            
 
 `<string-stream>`_
 
 Init-keywords
-             
 
 -  *contents:* A general instance of ``<sequence>``.
 -  *direction:* Specifies the direction of the stream. It must be one of
@@ -4810,7 +4103,6 @@ Init-keywords
    value: *contents.size*.
 
 Description
-           
 
 The class of streams over Unicode strings. It is a subclass of `
 <string-stream>`_.
@@ -4827,51 +4119,41 @@ string to create the stream over: *start:* is inclusive and *end:* is
 exclusive. The default is to stream over the entire Unicode string.
 
 Operations
-          
 
 `make unicode-string-stream-class`_
 
 See also
-        
 
 `make unicode-string-stream-class`_
 
 `<sequence-stream>`_
 
 unread-element
-~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^
 
 Open generic function
-'''''''''''''''''''''
 
 Summary
-       
 
 Returns an element that has been read back to a positionable stream.
 
 Signature
-         
 
 unread-element *positionable-stream* *element* => *element*
 
 Arguments
-         
 
 *positionable-stream*
-                     
 
 An instance of `<positionable-stream>`_.
-                                                                
 
 -  *element* An instance of ``<object>``.
 
 Values
-      
 
 -  *element* An instance of ``<object>``.
 
 Description
-           
 
 “Unreads” the last element from *positionable-stream*. That is, it
 returns *element* to the stream so that the next call to `
@@ -4888,57 +4170,47 @@ It is an error to do any of the following:
 -  To unread an element after explicitly setting the stream’s position.
 
 See also
-        
 
 `read-element`_
 
 wait-for-io-completion
-~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^
 
 G. f. method
-''''''''''''
 
 Summary
-       
 
 Waits for all pending operations on a stream to complete.
 
 Signature
-         
 
 wait-for-io-completion *file-stream* => ()
 
 Arguments
-         
 
 -  *file-stream* An instance of ``<stream>``.
 
 Description
-           
 
 If ** is asynchronous, waits for all pending write or close operations
 to complete and signals any queued errors. If *file-stream* is not
 asynchronous, returns immediately.
 
 with-open-file
-~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^
 
 Statement macro
-'''''''''''''''
 
 Summary
-       
 
 Runs a body of code within the context of a file stream.
 
 Macro call
-          
 
 with-open-file (*stream-var* = *filename*, #rest *keys*)
  *body* end => *values*
 
 Arguments
-         
 
 -  *stream-var* An Dylan variable-name*bnf*.
 -  *filename* An instance of ``<string>``.
@@ -4946,12 +4218,10 @@ Arguments
 -  *body* A Dylan body*bnf*.
 
 Values
-      
 
 -  *values* Instances of ``<object>``.
 
 Description
-           
 
 Provides a safe mechanism for working with file streams. The macro
 creates a file stream and binds it to *stream-var*, evaluates a *body*
@@ -4964,47 +4234,33 @@ Any *keys* are passed to the *make* method on `
 <file-stream>`_.
 
 Example
-       
 
 The following expression yields the contents of file *foo.text* as a
 `<byte-vector>`_:
 
-with-open-file (fs = "foo.text", element-type: <byte>)
-                                                      
+.. code-block:: dylan
 
-read-to-end(fs)
-
-end;
-    
+    with-open-file (fs = "foo.text", element-type: <byte>)
+      read-to-end(fs)
+    end;
 
 It is roughly equivalent to:
 
-begin
-     
+.. code-block:: dylan
 
-let hidden-fs = #f; // In case the user bashes fs variable
-
-block ()
-
-hidden-fs := make(<file-stream>,
-
-locator: "foo.text", element-type: <byte>);
-
-let fs = hidden-fs;
-
-read-to-end(fs);
-
-cleanup
-
-if (hidden-fs) close(hidden-fs) end;
-
-end block;
-
-end;
-    
+    begin
+      let hidden-fs = #f; // In case the user bashes fs variable
+      block ()
+        hidden-fs := make(<file-stream>,
+                          locator: "foo.text", element-type: <byte>);
+        let fs = hidden-fs;
+        read-to-end(fs);
+      cleanup
+        if (hidden-fs) close(hidden-fs) end;
+      end block;
+    end;
 
 See also
-        
 
 `close`_
 
@@ -5013,28 +4269,23 @@ See also
 `make file-stream-class`_
 
 <wrapper-stream>
-~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^
 
 Open instantiable class
-'''''''''''''''''''''''
 
 Summary
-       
 
 The class of wrapper-streams.
 
 Superclasses
-            
 
 `<stream>`_
 
 Init-keywords
-             
 
 -  *inner-stream:* An instance of `<stream>`_.
 
 Description
-           
 
 The class that implements the basic wrapper-stream functionality.
 
@@ -5048,7 +4299,6 @@ document. Each default method on `
 stream.
 
 Operations
-          
 
 `inner-stream`_
 
@@ -5057,148 +4307,94 @@ Operations
 `outer-stream-setter`_
 
 Example
-       
 
-In the example below, ``<io-wrapper-stream>``, a subclass of `
-<wrapper-stream>`_, “passes on” functions such as
- `read-element`_ and `
-write-element`_ by simply delegating these
+In the example below, ``<io-wrapper-stream>``, a subclass of
+`<wrapper-stream>`_, "passes on" functions such as
+`read-element`_ and `write-element`_ by simply delegating these
 operations to the inner stream:
 
-define method read-element (ws :: <io-wrapper-stream>,
-                                                      
+.. code-block:: dylan
 
-#key on-end-of-stream)
+    define method read-element (ws :: <io-wrapper-stream>,
+      #key on-end-of-stream)
+     => (element)
+      read-element(ws.inner-stream)
+    end method;
 
-=> (element)
-
-read-element(ws.inner-stream)
-
-end method;
-           
-
-define method write-element (ws :: <io-wrapper-stream>,
-                                                       
-
-element)
-
-=> ()
-
-write-element(ws.inner-stream,element)
-
-end method;
-           
+    define method write-element (ws :: <io-wrapper-stream>,
+      element)
+     => ()
+      write-element(ws.inner-stream,element)
+    end method;
 
 Assuming that ``<io-wrapper-stream>`` delegates all other operations to
 its inner stream, the following is sufficient to implement a 16-bit
 Unicode character stream wrapping an 8-bit character stream.
 
-define class <unicode-stream> (<io-wrapper-stream>)
-                                                   
+.. code-block:: dylan
 
-end class;
-          
+    define class <unicode-stream> (<io-wrapper-stream>)
+    end class;
 
-define method read-element (s :: <unicode-stream>,
-                                                  
+    define method read-element (s :: <unicode-stream>,
+      #key on-end-of-stream)
+     => (ch :: <unicode-character>)
+      with-stream-locked (s)
+        let first-char = read-element(s.inner-stream,
+                                      on-end-of-stream);
+        let second-char = read-element(s.inner-stream,
+                                       on-end-of-stream);
+      end;
+      convert-byte-pair-to-unicode(first-char, second-char)
+    end method;
 
-#key on-end-of-stream)
+    define method write-element (s :: <unicode-stream>,
+      c :: <character>)
+     => ()
+      let (first-char, second-char)
+        = convert-unicode-to-byte-pair(c);
+      with-stream-locked (s)
+        write-element(s.inner-stream, first-char);
+        write-element(s.inner-stream, second-char)
+      end;
+      c
+    end method;
 
-=> (ch :: <unicode-character>)
+    define method stream-position (s :: <unicode-stream>)
+     => (p :: <integer>)
+      truncate/(stream-position(s.inner-stream), 2)
+    end method;
 
-with-stream-locked (s)
-
-let first-char = read-element(s.inner-stream,
-
-on-end-of-stream);
-
-let second-char = read-element(s.inner-stream,
-
-on-end-of-stream);
-
-end;
-
-convert-byte-pair-to-unicode(first-char, second-char)
-
-end method;
-           
-
-define method write-element (s :: <unicode-stream>,
-                                                   
-
-c :: <character>)
-
-=> ()
-
-let (first-char, second-char)
-
-= convert-unicode-to-byte-pair(c);
-
-with-stream-locked (s)
-
-write-element(s.inner-stream, first-char);
-
-write-element(s.inner-stream, second-char)
-
-end;
-
-c
-
-end method;
-           
-
-define method stream-position (s :: <unicode-stream>)
-                                                     
-
-=> (p :: <integer>)
-
-truncate/(stream-position(s.inner-stream), 2)
-
-end method;
-           
-
-define method stream-position-setter (p :: <integer>,
-                                                     
-
-s :: <unicode-stream>);
-
-stream-position(s.inner-stream) := p \* 2
-
-end method;
-           
+    define method stream-position-setter (p :: <integer>,
+        s :: <unicode-stream>);
+      stream-position(s.inner-stream) := p \* 2
+    end method;
 
 write
-~~~~~
+^^^^~
 
 Open generic function
-'''''''''''''''''''''
 
 Summary
-       
 
 Writes the elements of a sequence to an output stream.
 
 Signature
-         
 
 write *output-stream* *sequence* #key *start* *end* => ()
 
 Arguments
-         
 
 -  *output-stream* An instance of `<stream>`_.
 -  *sequence* An instance of ``<sequence>``.
 -  *start* An instance of ``<integer>``. Default value: 0.
--  *end* An instance of ``<integer>``. Default value: *sequence* *.size*
-   .
+-  *end* An instance of ``<integer>``. Default value: *sequence.size*.
 
 Values
-      
 
 -  None.
 
-ioDescription
-             
+Description
 
 Writes the elements of *sequence* to *output-stream*, starting at the
 stream’s current position.
@@ -5207,13 +4403,11 @@ The elements in *sequence* are accessed in the order defined by the
 forward iteration protocol on ``<sequence>``. This is effectively the
 same as the following:
 
-do (method (elt) write-element(stream, elt)
-                                           
+.. code-block:: dylan
 
-end, sequence);
-
-sequence;
-         
+    do (method (elt) write-element(stream, elt)
+        end, sequence);
+    sequence;
 
 If supplied, *start* and *end* delimit the portion of *sequence* to
 write to the stream. The value of *start* is inclusive and that of *end*
@@ -5224,74 +4418,57 @@ write`_ overwrites elements in the stream and then
 advance the stream’s position to be beyond the last element written.
 
 *Implementation Note:* Buffered streams are intended to provide a very
-efficient implementation of `write`_,
-particularly when sequence is an instance of ``<byte-string>``,
-``<unicode-string>``, `<byte-vector>`_, or `
-<buffer>`_, and the stream’s element type is the
-same as the element type of sequence.
+efficient implementation of `write`_, particularly when sequence is an
+instance of ``<byte-string>``, ``<unicode-string>``, `<byte-vector>`_,
+or `<buffer>`_, and the stream’s element type is the same as the element
+type of sequence.
 
 Example
-       
 
 The following forms bind *stream* to an output stream over an empty
 string and create the string “I see!”, using the function `
 stream-contents`_ to access all of the stream’s
 elements.
 
-let stream = make(<byte-string-stream>,
-                                       
+.. code-block:: dylan
 
-direction: #"output");
-
-write-element(stream, ’I’);
-
-write-element(stream, ’ ’);
-
-write(stream, "see");
-
-write-element(stream, ’!’);
-
-stream-contents(stream);
-                        
+    let stream = make(<byte-string-stream>,
+                      direction: #"output");
+    write-element(stream, ’I’);
+    write-element(stream, ’ ’);
+    write(stream, "see");
+    write-element(stream, ’!’);
+    stream-contents(stream);
 
 See also
-        
 
 `read`_
-
 `write-element`_
-
 `write-line`_
 
 write-element
-~~~~~~~~~~~~~
+^^^^^^^^^^^^~
 
 Open generic function
-'''''''''''''''''''''
 
 Summary
-       
 
 Writes an element to an output stream.
 
 Signature
-         
 
 write-element *output-stream* *element* => ()
 
 Arguments
-         
 
 -  *output-stream* An instance of `<stream>`_.
 -  *element* An instance of ``<object>``.
 
 Values
-      
 
 -  None.
 
 Description
-           
 
 Writes *element* to *output-stream* at the stream’s current position.
 The output-stream must be either *#"output"* or *#"input-output"*. It
@@ -5303,56 +4480,42 @@ write-element`_ overwrites the element at the
 current position and then advances the stream position.
 
 Example
-       
 
 The following forms bind *stream* to an output stream over an empty
 string and create the string “I see!”, using the function `
 stream-contents`_ to access all of the stream’s
 elements.
 
-let stream = make(<byte-string-stream>,
-                                       
+.. code-block:: dylan
 
-direction: #"output");
-
-write-element(stream, ’I’);
-
-write-element(stream, ’ ’);
-
-write-element(stream, ’d’);
-
-write-element(stream, ’o’);
-
-stream-contents(stream);
-                        
+    let stream = make(<byte-string-stream>,
+                      direction: #"output");
+    write-element(stream, ’I’);
+    write-element(stream, ’ ’);
+    write-element(stream, ’d’);
+    write-element(stream, ’o’);
+    stream-contents(stream);
 
 See also
-        
 
 `read-element`_
-
 `write`_
-
 `write-line`_
 
 write-line
-~~~~~~~~~~
+^^^^^^^^^^
 
 Open generic function
-'''''''''''''''''''''
 
 Summary
-       
 
 Writes a string followed by a newline to an output stream.
 
 Signature
-         
 
 write-line *output-stream* *string* #key *start* *end* => ()
 
 Arguments
-         
 
 -  *output-stream* An instance of `<stream>`_.
 -  *string* An instance of ``<string>``.
@@ -5360,12 +4523,10 @@ Arguments
 -  *end* An instance of ``<integer>``. Default value: *string* *.size*.
 
 Values
-      
 
 -  None.
 
 Description
-           
 
 Writes *string* followed by a newline sequence to *output-stream*.
 
@@ -5377,12 +4538,9 @@ If supplied, *start* and *end* delimit the portion of *string* to write
 to the stream.
 
 See also
-        
 
 `read-line`_
-
 `write`_
-
 `write-element`_
 
 

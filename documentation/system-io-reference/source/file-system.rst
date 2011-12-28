@@ -55,34 +55,25 @@ the filesystem. You can rename, copy, or delete any file, and you can
 set any available properties for the file.
 
 delete-file
-'''''''''''
 
 Function
-        
 
 delete-file *file* => ()
-                        
 
 Use this function to delete a specified file. If *file* is actually a
 link, then the link is deleted, rather than the file it points to.
 
 rename-file
-'''''''''''
 
 Function
-        
 
 copy-file
-'''''''''
 
 Function
-        
 
 rename-file *old-file* *new-file* #key *if-exists* => ()
-                                                        
 
 copy-file *old-file* *new-file* #key *if-exists* => ()
-                                                      
 
 Renames or copies *old-file* to *new-file*.
 
@@ -92,20 +83,16 @@ depends on the value of *if-exists*, which is an instance of
 behavior is to prompt you before overwriting a file.
 
 file-property-setter
-''''''''''''''''''''
 
 Sealed generic function
-                       
 
 file-property-setter *new-value* *file* *key* => *new-value*
-                                                            
 
 Sets a property of *file* to *new-value*. The property that is set is
 specified by the value of *key*, which must be one of the following:
 
 #"author" #"size" #"creation-date" #"access-date" #"modification-date"
 #"write-date" #"readable?" #"writeable?" #"executable?"
-                                                                                                                              
 
 The type of *new-value* (and hence the type of the return value of
 *file-property-setter*), is determined by the value of *key*. For
@@ -122,13 +109,10 @@ file manipulation operations described in `Manipulating files`_ to
 perform file management tasks at any position in the file system.
 
 create-directory
-''''''''''''''''
 
 Function
-        
 
 create-directory *parent* *name* => *directory*
-                                               
 
 Creates a new directory *name* in the directory *parent*. The full
 pathname of the directory is returned, and you can use this return value
@@ -136,47 +120,37 @@ in conjunction with *concatenate* to create pathnames of any entities
 that you create in the new directory.
 
 delete-directory
-''''''''''''''''
 
 Function
-        
 
 delete-directory *directory* => ()
-                                  
 
 Deletes a directory specified by *directory*. Whether or not the
 directory needs to be empty before it can be deleted is determined by
 the platform on which you are running.
 
 ensure-directories-exist
-''''''''''''''''''''''''
 
 Function
-        
 
 ensure-directories-exist *file* => *created?*
-                                             
 
 Use this function when you want to guarantee that a particular directory
 structure has been created on disk. It ensures that the individual
 directories that constitute the pathname specified by *file* exist, and
 creates any that do not. If *ensure-directories-exist* actually creates
-any directories, then *#t* is returned.
+any directories, then ``#t`` is returned.
 
 do-directory
-''''''''''''
 
 Function
-        
 
 do-directory *function* *directory* => ()
-                                         
 
 Performs *function* once for every item in the specified *directory*.
 The *function* must have the following signature:
 
 *function* *directory* *name* *type* => ()
-                                          
 
 where *directory* is the name of the directory specified to
 *do-directory*, *name* is an instance of ``<byte-string>``, and *type*
@@ -187,13 +161,10 @@ Within *function*, you can concatenate the values of *directory* and
 for use by the other functions in the File-system module.
 
 working-directory-setter
-''''''''''''''''''''''''
 
 Function
-        
 
 working-directory-setter *directory* => *directory*
-                                                   
 
 Sets the working directory for the current process.
 
@@ -207,13 +178,10 @@ values can be use in conjunction with other functions to perform
 file-based operations relative to the directories involved.
 
 home-directory
-''''''''''''''
 
 Function
-        
 
 home-directory () => *home-directory*
-                                     
 
 Returns the ``<pathname>`` of the current value of the home directory. You
 can use the return value of *home-directory* in conjunction with
@@ -221,25 +189,19 @@ can use the return value of *home-directory* in conjunction with
 directory.
 
 root-directories
-''''''''''''''''
 
 Function
-        
 
 root-directories () => *roots*
-                              
 
 Returns a sequence containing the pathnames of the root directories of
 all the file systems connected to the local machine.
 
 temp-directory
-''''''''''''''
 
 Function
-        
 
 temp-directory () => *temp-directory*
-                                     
 
 Returns the ``<pathname>`` of the temporary directory in use on the local
 machine. If no temporary directory is defined, this function returns
@@ -248,13 +210,10 @@ with *concatenate* to specify pathnames of entities in the temporary
 directory.
 
 working-directory
-'''''''''''''''''
 
 Function
-        
 
 working-directory () => *working-directory*
-                                           
 
 Returns the ``<pathname>`` of the current working directory in the current
 process on the local machine. You can use the return value of
@@ -270,38 +229,29 @@ name is, or which directory it resides in, and you can find the current
 properties of the file.
 
 file-exists?
-''''''''''''
 
 Function
-        
 
 file-exists? *file* => *exists?*
-                                
 
 Returns true if *file* exists, false otherwise. If *file* is actually a
 link, then *file-exists* checks the target of the link, and returns true
 if the target exists.
 
 file-properties
-'''''''''''''''
 
 Function
-        
 
 file-properties *file* => *properties*
-                                      
 
 Returns all the properties of the specified file. The properties are
 returned as a concrete subclass of ``<explicit-key-collection>``.
 
 file-property
-'''''''''''''
 
 Sealed generic function
-                       
 
 file-property *file* *key* => *property*
-                                        
 
 Returns a particular property of the specified file. The property
 returned is dependent on the value of *key*, and as such, may be of a
@@ -309,13 +259,10 @@ number of types. For more information about the possible values of *key*,
 see `file-property-setter`_.
 
 file-type
-'''''''''
 
 Function
-        
 
 file-type *file* => *file-type*
-                               
 
 Returns the file type of the entity specified by *file*, as an instance
 of ``<file-type>``. A given entity can either be a file, a directory, or
@@ -328,24 +275,20 @@ This section contains a reference entry for each item included in the
 File-System module.
 
 copy-file
-~~~~~~~~~
+^^^^^^^^~
 
 Function
 ^^^^^^^^
 
 Summary
-       
 
 Creates a copy of a file.
 
 Signature
-         
 
 copy-file *old-file* *new-file* #key *if-exists* => ()
-                                                      
 
 Arguments
-         
 
 -  *old-file* An instance of `<pathname>`_.
 -  *new-file* An instance of `<pathname>`_.
@@ -353,54 +296,45 @@ Arguments
    value: *#"signal"*.
 
 Values
-      
 
 -  None
 
 Description
-           
 
 Copies *old-file* to *new-file*. If *new-file* already exists, the
 action of this function is controlled by the value of *if-exists*. The
 default is to prompt you before overwriting an existing file.
 
 See also
-        
 
 `<copy/rename-disposition>`_
 
 `rename-file`_
 
 <copy/rename-disposition>
-~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^~
 
 Type
 ^^^^
 
 Summary
-       
 
 The type that represents possible actions when overwriting existing
 files.
 
 Equivalent
-          
 
 one-of(#"signal", #"replace")
-                             
 
 Supertypes
-          
 
 None.
 
 Init-keywords
-             
 
 -  None.
 
 Description
-           
 
 This type represents the acceptable values for the *if-exists:* argument
 to the `copy-file`_ and `rename-file`_ functions. Only two values are
@@ -422,157 +356,130 @@ See also
 `rename-file`_
 
 create-directory
-~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^
 
 Function
 ^^^^^^^^
 
 Summary
-       
 
 Creates a new directory in the specified parent directory.
 
 Signature
-         
 
 create-directory *parent* *name* => *directory*
-                                               
 
 Arguments
-         
 
 -  *parent* An instance of `<pathname>`_.
 -  *name* An instance of ``<string>``.
 
 Values
-      
 
 -  *directory* An instance of `<pathname>`_.
 
 Description
-           
 
 Creates *directory* in the specified *parent* directory. The return
 value of this function can be used with *concatenate* to create
 pathnames of entities in the new directory.
 
 See also
-        
 
 `delete-directory`_
 
 delete-directory
-~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^
 
 Function
 ^^^^^^^^
 
 Summary
-       
 
 Deletes the specified directory.
 
 Signature
-         
 
 delete-directory *directory* => ()
-                                  
 
 Arguments
-         
 
 -  *directory* An instance of `<pathname>`_.
 
 Values
-      
 
 -  None.
 
 Description
-           
 
 Deletes the specified directory. Whether or not the directory must be
 empty before it can be deleted is platform dependent.
 
 See also
-        
 
 `create-directory`_
 
 `delete-file`_
 
 delete-file
-~~~~~~~~~~~
+^^^^^^^^^^~
 
 Function
 ^^^^^^^^
 
 Summary
-       
 
 Deletes the specified file system entity.
 
 Signature
-         
 
 delete-file *file* => ()
-                        
 
 Arguments
-         
 
 -  *file* An instance of `<pathname>`_.
 
 Values
-      
 
 -  None.
 
 Description
-           
 
 Deletes the file system entity specified by *file*. If *file* refers to
 a link, the link is removed, but the actual file that the link points to
 is not removed.
 
 do-directory
-~~~~~~~~~~~~
+^^^^^^^^^^^^
 
 Function
 ^^^^^^^^
 
 Summary
-       
 
 Executes the supplied function once for each entity in the specified
 directory.
 
 Signature
-         
 
 do-directory *function* *directory* => ()
-                                         
 
 Arguments
-         
 
 -  *function* An instance of ``<function>``.
 -  *directory* An instance of `<pathname>`_.
 
 Values
-      
 
 -  None.
 
 Description
-           
 
 Executes *function* once for each entity in *directory*.
 
 The signature of *function* is
 
 *function* *directory* *name* *type* => ()
-                                          
 
 where *directory* is an instance of `
 <pathname>`_, *name* is an instance of
@@ -586,48 +493,39 @@ suitable for use by the other functions in the module.
 The following calls are equivalent
 
 do-directory(my-function, "C:\\USERS\\JOHN\\FOO.TEXT")
-                                                      
 
 do-directory(my-function, "C:\\USERS\\JOHN\\")
-                                              
 
 as they both operate on the contents of *C:\\USERS\\JOHN*. The call
 
 do-directory(my-function, "C:\\USERS\\JOHN")
-                                            
 
 is not equivalent as it will operate on the contents of *C:\\USERS*.
 
 ensure-directories-exist
-~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 Function
 ^^^^^^^^
 
 Summary
-       
 
 Ensures that all the directories in the pathname leading to a file
 exist, creating any that do not, as needed.
 
 Signature
-         
 
 ensure-directories-exist *file* => *created?*
-                                             
 
 Arguments
-         
 
 -  *file* An instance of `<pathname>`_.
 
 Values
-      
 
 -  *created?* An instance of ``<boolean>``.
 
 Description
-           
 
 Ensures that all the directories in the pathname leading to a file
 exist, creating any that do not, as needed. The return value indicates
@@ -635,131 +533,113 @@ whether or not any directory was created.
 
 The following calls are equivalent
 
-ensure-directories-exist("C:\\USERS\\JOHN\\FOO.TEXT")
-                                                     
+.. code-block:: dylan
 
-ensure-directories-exist("C:\\USERS\\JOHN\\")
-                                             
+    ensure-directories-exist("C:\\USERS\\JOHN\\FOO.TEXT")
+    ensure-directories-exist("C:\\USERS\\JOHN\\")
 
 as they will both create the directories *USERS* and *JOHN* if needed.
 The call
 
-ensure-directories-exist("C:\\USERS\\JOHN")
-                                           
+.. code-block:: dylan
+
+    ensure-directories-exist("C:\\USERS\\JOHN")
 
 is not equivalent as it will only create *USERS* if needed.
 
 Example
-       
 
-ensure-directories-exist("C:\\USERS\\JOHN\\FOO.TEXT")
-                                                     
+.. code-block:: dylan
+
+    ensure-directories-exist("C:\\USERS\\JOHN\\FOO.TEXT")
 
 See also
-        
 
 `create-directory`_
 
 file-exists?
-~~~~~~~~~~~~
+^^^^^^^^^^^^
 
 Function
 ^^^^^^^^
 
 Summary
-       
 
-Returns *#t* if the specified file exists.
+Returns ``#t`` if the specified file exists.
 
 Signature
-         
 
 file-exists? *file* => *exists?*
-                                
 
 Arguments
-         
 
 -  *file* An instance of `<pathname>`_.
 
 Values
-      
 
 -  *exists?* An instance of ``<boolean>``.
 
 Description
-           
 
-Returns *#t* if *file* exists. If it refers to a link, the target of the
+Returns ``#t`` if *file* exists. If it refers to a link, the target of the
 link is checked.
 
 file-properties
-~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^~
 
 Function
 ^^^^^^^^
 
 Summary
-       
 
 Returns all the properties of a file system entity.
 
 Signature
-         
 
 file-properties *file* => *properties*
-                                      
 
 Arguments
-         
 
 -  *file* An instance of `<pathname>`_.
 
 Values
-      
 
 -  *properties* An instance of a concrete subclass of
    ``<explicit-key-collection>``.
 
 Description
-           
 
 Returns all the properties of *file*. The keys to the properties
 collection are the same as those use by `
 file-property`_, above.
 
 Example
-       
 
-file-properties() [#"size"]
-                           
+.. code-block:: dylan
+
+    file-properties() [#"size"]
 
 See also
-        
 
 `file-property`_
 
 `file-property-setter`_
 
 file-property
-~~~~~~~~~~~~~
+^^^^^^^^^^^^~
 
 Sealed generic function
 ^^^^^^^^^^^^^^^^^^^^^^^
 
 Summary
-       
 
 Returns the specified property of a file system entity.
 
 Signature
-         
 
 file-property *file* #key *key* => *property*
-                                             
 
 Arguments
-         
 
 -  *file* An instance of `<pathname>`_.
 -  *key* One of *#"author"*, *#"size"*, *#"creation-date"*,
@@ -767,14 +647,12 @@ Arguments
    *#"readable?"*, *#"writeable?"*, *#"executable?"*.
 
 Values
-      
 
 -  *property* The value of the property specified by *key*. The type of
    the value returned depends on the value of *key*: see the
    description for details.
 
 Description
-           
 
 Returns the property of *file* specified by *key*. The value returned
 depends on the value of *key*, as shown in Table `Return value
@@ -806,39 +684,34 @@ Return value types of *file-property*
 
 Not all platforms implement all of the above keys. Some platforms may
 support additional keys. The *#"author"* key is supported on all
-platforms but may return *#f* if it is not meaningful on a given
+platforms but may return ``#f`` if it is not meaningful on a given
 platform. The *#"modification-date"* and *#"write-date"* keys are
 identical. Use of an unsupported key signals an error.
 
 All keys listed above are implemented by Win32, though note that
-*#"author"* always returns *#f*.
+*#"author"* always returns ``#f``.
 
 See also
-        
 
 `file-property-setter`_
 
 `file-properties`_
 
 file-property-setter
-~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^
 
 Sealed generic function
 ^^^^^^^^^^^^^^^^^^^^^^^
 
 Summary
-       
 
 Sets the specified property of a file system entity to a given value.
 
 Signature
-         
 
 file-property-setter *new-value* *file* *key* => *new-value*
-                                                            
 
 Arguments
-         
 
 -  *new-value* The type of this depends on the value of *key*. See the
    description for details.
@@ -848,13 +721,11 @@ Arguments
    *#"readable?"*, *#"writeable?"*, *#"executable?"*.
 
 Values
-      
 
 -  *new-value* The type of this depends on the value of *key*. See the
    description for details.
 
 Description
-           
 
 Sets the property of *file* specified by *key* to *new-value*. The type
 of *new-value* depends on the property specified by key, as shown in
@@ -896,107 +767,89 @@ keys are identical. Use of an unsupported key signals an error.
 The only property that can be set on Win32 is *#"writeable?"*.
 
 See also
-        
 
 `file-property`_
 
 `file-properties`_
 
 <file-system-error>
-~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^~
 
 Error
 ^^^^^
 
 Summary
-       
 
 Error type signaled when any other functions in the File-System module
 signal an error.
 
 Superclasses
-            
 
 ``<error>`` and ``<simple-condition>``
 
 Init-keywords
-             
 
 Description
-           
 
 Signalled when one of the file system functions triggers an error, such
 as a permissions error when trying to delete or rename a file.
 
 Operations
-          
 
 None.
 
 file-type
-~~~~~~~~~
+^^^^^^^^~
 
 Function
 ^^^^^^^^
 
 Summary
-       
 
 Returns the type of the specified file system entity.
 
 Signature
-         
 
 file-type *file* => *file-type*
-                               
 
 Arguments
-         
 
 -  *file* An instance of `<pathname>`_.
 
 Values
-      
 
 -  *file-type* An instance of `
    <file-type>`_.
 
 Description
-           
 
 Returns the type of *file*, the specified file system entity. A file
 system entity can either be a file, a directory, or a link to another
 file or directory.
 
 <file-type>
-~~~~~~~~~~~
+^^^^^^^^^^~
 
 Type
 ^^^^
 
 Summary
-       
 
 The type representing all possible types of a file system entity.
 
 Equivalent
-          
 
 one-of(#"file", #"directory", #"link")
-                                      
 
 Supertypes
-          
 
 None.
 
 Init-keywords
-             
 
 -  None.
 
 Description
-           
 
 The type representing all possible types of a file system entity. An
 entity on the file system can either be a file, a directory or folder,
@@ -1005,127 +858,99 @@ refer to these different types of entity depends on the operating system
 you are working in.
 
 Operations
-          
 
 `do-directory`_
 
 home-directory
-~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^
 
 Function
 ^^^^^^^^
 
 Summary
-       
 
 Returns the current value of the home directory.
 
 Signature
-         
 
 home-directory () => *home-directory*
-                                     
 
 Arguments
-         
 
 -  None.
 
 Values
-      
 
 -  *home-directory* An instance of `
    <pathname>`_.
 
 Description
-           
 
 Returns the current value of the home directory. The return value of
 this function can be used with concatenate to create pathnames of
 entities in the home directory.
 
 <pathname>
-~~~~~~~~~~
+^^^^^^^^^^
 
 Type
 ^^^^
 
 Summary
-       
 
 The type representing a file system entity.
 
 Equivalent
-          
 
 <string>
-        
 
 Supertypes
-          
 
 None.
 
 Init-keywords
-             
 
 -  None.
 
 Description
-           
 
 A type that identifies a file system entity.
 
 Operations
-          
 
-`copy-file`_ `
-create-directory`_ `
-delete-directory`_
- `delete-file`_ `
-do-directory`_ `
-ensure-directories-exist`_ `
-file-exists?`_ `
-file-properties`_ `
-file-property`_
- `file-property-setter`_ `
-file-type`_ `
-home-directory`_
- `rename-file`_
+`copy-file`_ `create-directory`_ `delete-directory`_
+`delete-file`_ `do-directory`_ `ensure-directories-exist`_
+`file-exists?`_ `file-properties`_ `file-property`_
+`file-property-setter`_ `file-type`_ `home-directory`_
+`rename-file`_
 
 rename-file
-~~~~~~~~~~~
+^^^^^^^^^^~
 
 Function
 ^^^^^^^^
 
 Summary
-       
 
 Renames a specified file.
 
 Signature
-         
 
 rename-file *old-file* *new-file* #key *if-exists* => ()
-                                                        
 
 Arguments
-         
 
 -  *old-file* An instance of `<pathname>`_.
 -  *new-file* An instance of `<pathname>`_.
 -  *if-exists* An instance of
-    `<copy/rename-disposition>`_. Default
+   `<copy/rename-disposition>`_. Default
    value: *#"signal"*.
 
 Values
-      
 
 -  None
 
 Description
-           
 
 Renames *old-file* to *new-file*. If *new-file* already exists, the
 action of this function is controlled by the value of *if-exists*. The
@@ -1135,116 +960,95 @@ This operation may fail if the source and destination are not on the
 same file system.
 
 See also
-        
 
 `copy-file`_
 
 `<copy/rename-disposition>`_
 
 root-directories
-~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^
 
 Function
 ^^^^^^^^
 
 Summary
-       
 
 Returns a sequence containing the pathnames of the root directories of
 the file systems on the local machine.
 
 Signature
-         
 
 root-directories () => *roots*
-                              
 
 Arguments
-         
 
 -  None.
 
 Values
-      
 
 -  *roots* An instances of ``<sequence>``.
 
 Description
-           
 
 Returns a sequence containing the pathnames of the root directories of
 the file systems on the local machine.
 
 temp-directory
-~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^
 
 Function
 ^^^^^^^^
 
 Summary
-       
 
 Returns the pathname of the temporary directory in use.
 
 Signature
-         
 
 temp-directory () => *temp-directory*
-                                     
 
 Arguments
-         
 
 -  None.
 
 Values
-      
 
 -  *temp-directory* An instance of `
    <pathname>`_, or false.
 
 Description
-           
 
 Returns the pathname of the temporary directory in use. The return value
 of this function can be used with *concatenate* to create pathnames of
 entities in the temporary directory. If no temporary directory is
-defined, *temp-directory* returns *#f*. On Windows the temporary
+defined, *temp-directory* returns ``#f``. On Windows the temporary
 directory is specified by the *TMP* environment variable.
 
 working-directory
-~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^~
 
 Function
 ^^^^^^^^
 
 Summary
-       
 
 Returns the working directory for the current process.
 
 Signature
-         
 
 working-directory () => *working-directory*
-                                           
 
 Arguments
-         
 
 None.
 
 Values
-      
 
 *working-directory*
-                   
 
 An instance of `<pathname>`_.
-                                                         
 
 Description
-           
 
 Returns the ``<pathname>`` of the current working directory in the current
 process on the local machine. You can use the return value of
@@ -1252,66 +1056,58 @@ process on the local machine. You can use the return value of
 pathnames of entities in the working directory.
 
 See also
-        
 
 `working-directory-setter`_
 
 working-directory-setter
-~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 Function
 ^^^^^^^^
 
 Summary
-       
 
 Sets the working directory for the current process.
 
 Signature
-         
 
 working-directory-setter *directory* => *directory*
-                                                   
 
 Arguments
-         
 
 -  *directory* An instance of `<pathname>`_.
 
 Values
-      
 
 -  *directory* An instance of `<pathname>`_.
 
 Description
-           
 
 Sets the working directory for the current process.
 
 Note that the following calls are equivalent
 
-working-directory() := "C:\\USERS\\JOHN\\FOO.TEXT";
-                                                   
+.. code-block:: dylan
 
-working-directory() := "C:\\USERS\\JOHN\\";
-                                           
+    working-directory() := "C:\\USERS\\JOHN\\FOO.TEXT";
+    working-directory() := "C:\\USERS\\JOHN\\";
 
 as they will both set the working directory to *C:\\USERS\\JOHN*. The
 call
 
-working-directory() := "C:\\USERS\\JOHN";
-                                         
+.. code-block:: dylan
+
+    working-directory() := "C:\\USERS\\JOHN";
 
 is not equivalent as it sets the working directory to *C:\\USERS*.
 
 Example
-       
 
-working-directory() := "C:\\USERS\\JOHN\\";
-                                           
+.. code-block:: dylan
+
+    working-directory() := "C:\\USERS\\JOHN\\";
 
 See also
-        
 
 `working-directory`_
 
