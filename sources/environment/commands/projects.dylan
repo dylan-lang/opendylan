@@ -62,7 +62,9 @@ define method show-property
  => ()
   let project = context.context-project;
   if (project)
-    message(context, "Project: %s", project.project-name)
+    message(context, "Project: %s = %s",
+            project.project-name,
+            project.project-filename)
   else
     command-error("No open projects")
   end
@@ -92,8 +94,10 @@ define method show-property
  => ()
   let projects = open-projects();
   if (~empty?(projects))
+    let current-project = context.context-project;
     for (project :: <project-object> in projects)
-      message(context, "  %s = %s",
+      message(context, " %s %s = %s",
+              if (project = current-project) "*" else " " end,
               project.project-name,
               project.project-filename)
     end
@@ -174,7 +178,8 @@ define sealed method do-execute-command
                          module: module);
                 context.context-project-context := project-context
               end;
-      message(context, "Opened project %s", project.project-name);
+      message(context, "Opened project %s (%s)", project.project-name,
+              project.project-filename);
       project;
     invalid? =>
       command-error("Cannot open '%s' as it is not a project", filename);
