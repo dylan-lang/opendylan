@@ -321,11 +321,11 @@ instances of ``<byte-string>``.
 See also
         
 
-`application-filename`_
+`application-filename <operating-system.htm#34263>`_
 
-`application-name`_
+`application-name <operating-system.htm#78353>`_
 
-`tokenize-command-string`_
+`tokenize-command-string <operating-system.htm#69612>`_
 
 application-filename
 ~~~~~~~~~~~~~~~~~~~~
@@ -374,11 +374,11 @@ application:
 See also
         
 
-`application-arguments`_
+`application-arguments <operating-system.htm#69782>`_
 
-`application-name`_
+`application-name <operating-system.htm#29524>`_
 
-`tokenize-command-string`_
+`tokenize-command-string <operating-system.htm#69612>`_
 
 application-name
 ~~~~~~~~~~~~~~~~
@@ -428,11 +428,11 @@ the application name.
 See also
         
 
-`application-arguments`_
+`application-arguments <operating-system.htm#69782>`_
 
-`application-filename`_
+`application-filename <operating-system.htm#34263>`_
 
-`tokenize-command-string`_
+`tokenize-command-string <operating-system.htm#69612>`_
 
 environment-variable
 ~~~~~~~~~~~~~~~~~~~~
@@ -472,7 +472,7 @@ Returns the value of the environment variable specified by *name*, or
 See also
         
 
-`environment-variable-setter`_
+`environment-variable-setter <operating-system.htm#41256>`_
 
 environment-variable-setter
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -524,7 +524,7 @@ documentation for more details.
 See also
         
 
-`environment-variable`_
+`environment-variable <operating-system.htm#62898>`_
 
 exit-application
 ~~~~~~~~~~~~~~~~
@@ -565,7 +565,7 @@ window or Windows 95/NT shell.
 See also
         
 
-`run-application`_
+`run-application <operating-system.htm#15849>`_
 
 login-name
 ~~~~~~~~~~
@@ -605,7 +605,7 @@ the current machine, or *#f* if unavailable.
 See also
         
 
-`login-group`_
+`login-group <operating-system.htm#23810>`_
 
 login-group
 ~~~~~~~~~~~
@@ -640,7 +640,7 @@ is a member, or *#f* if the group is unavailable.
 See also
         
 
-`login-name`_
+`login-name <operating-system.htm#42695>`_
 
 $machine-name
 ~~~~~~~~~~~~~
@@ -678,13 +678,13 @@ Example
 See also
         
 
-`$os-name`_
+`$os-name <operating-system.htm#15312>`_
 
-`$os-variant`_
+`$os-variant <operating-system.htm#26099>`_
 
-`$os-version`_
+`$os-version <operating-system.htm#26717>`_
 
-`$platform-name`_
+`$platform-name <operating-system.htm#20095>`_
 
 $os-name
 ~~~~~~~~
@@ -722,13 +722,13 @@ Example
 See also
         
 
-`$machine-name`_
+`$machine-name <operating-system.htm#97185>`_
 
-`$os-variant`_
+`$os-variant <operating-system.htm#26099>`_
 
-`$os-version`_
+`$os-version <operating-system.htm#26717>`_
 
-`$platform-name`_
+`$platform-name <operating-system.htm#20095>`_
 
 $os-variant
 ~~~~~~~~~~~
@@ -763,13 +763,13 @@ has the same value as *$os-name*. On Windows, the possible values are
 See also
         
 
-`$machine-name`_
+`$machine-name <operating-system.htm#97185>`_
 
-`$os-name`_
+`$os-name <operating-system.htm#15312>`_
 
-`$os-version`_
+`$os-version <operating-system.htm#26717>`_
 
-`$platform-name`_
+`$platform-name <operating-system.htm#20095>`_
 
 $os-version
 ~~~~~~~~~~~
@@ -804,13 +804,13 @@ of the operating system. For Windows NT, a typical value would be
 See also
         
 
-`$machine-name`_
+`$machine-name <operating-system.htm#97185>`_
 
-`$os-name`_
+`$os-name <operating-system.htm#15312>`_
 
-`$os-variant`_
+`$os-variant <operating-system.htm#26099>`_
 
-`$platform-name`_
+`$platform-name <operating-system.htm#20095>`_
 
 owner-name
 ~~~~~~~~~~
@@ -914,8 +914,8 @@ Description
 
 This constant is a symbol that represents the both the operating system
 running on, and the type of hardware installed in, the host machine. It
-is a combination of the `$os-name`_ and
-`$machine-name`_ constants.
+is a combination of the `$os-name <operating-system.htm#15312>`_ and
+`$machine-name <operating-system.htm#97185>`_ constants.
 
 Example
        
@@ -925,9 +925,9 @@ Example
 See also
         
 
-`$machine-name`_
+`$machine-name <operating-system.htm#97185>`_
 
-`$os-name`_
+`$os-name <operating-system.htm#15312>`_
 
 run-application
 ~~~~~~~~~~~~~~~
@@ -996,7 +996,7 @@ default.
 See also
         
 
-`exit-application`_
+`exit-application <operating-system.htm#57525>`_
 
 tokenize-command-string
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -1041,8 +1041,8 @@ Arguments”.
 See also
         
 
-`application-arguments`_
+`application-arguments <operating-system.htm#69782>`_
 
-`application-name`_
+`application-name <operating-system.htm#78353>`_
 
 

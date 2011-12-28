@@ -24,11 +24,12 @@ components. Users should never call *print-object* directly.
 
 The IO library exports two modules for use with printing, *print* and
 *pprint*. Reference entries for the interfaces exported from the
-*print* module can be found in `The PRINT module`_, and reference
-entries for interfaces exported from the *pprint* module are in
-`The PPRINT module`_.
+*print* module can be found in `The PRINT
+module <print.htm#86222>`_, and reference entries for interfaces
+exported from the *pprint* module are in `The PPRINT
+module <print.htm#32575>`_.
 
-These modules uses the Streams module. See :doc:`streams` for
+These modules uses the Streams module. See ` <streams.htm#93942>`_ for
 full details of the Streams module.
 
 Print functions
@@ -56,7 +57,7 @@ inspection functions for querying the print request allow you to inspect
 any parameter of the print request, *print-object* methods should only
 need to call *print-length*. All other aspects of the print request are
 handled by *print*. There is one exception which is described in `
-Pretty printing`_.
+Pretty printing <print.htm#86451>`_.
 
 The *level* keyword controls how deep into a nested data structure to
 print. The value *#f* indicates that there is no limit. The default,
@@ -393,7 +394,7 @@ inspection functions for querying the print request allow you to inspect
 any parameter of the print request, *print-object* methods should only
 need to call *print-length*. All other aspects of the print request are
 handled by *print*. There is one exception, which is described in `
-Pretty printing`_.
+Pretty printing <print.htm#86451>`_.
 
 The *level* keyword controls how deep into a nested data structure to
 print. The value *#f* indicates that there is no limit. The default,

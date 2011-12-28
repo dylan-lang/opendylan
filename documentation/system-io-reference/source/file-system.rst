@@ -25,9 +25,8 @@ file system. Together, these represent any entity that can be placed on
 a file system mounted on the local machine. The ``<file-type>`` type is
 defined as
 
-.. code-block:: dylan
-
-    one-of(#"file", #"directory", #"link")
+one-of(#"file", #"directory", #"link")
+                                      
 
 The type ``<pathname>`` represents the set of classes that may be used to
 represent pathnames that indicate entities on the file system. It is
@@ -35,11 +34,11 @@ defined as a type alias of ``<string>``.
 
 Lastly, the type ``<copy/rename-disposition>`` represents the possible
 values of the *if-exists:* keyword to the functions *rename-file* and
-*copy-file* described in `Manipulating files`_. It is defined as
+*copy-file* described in `Manipulating
+files <file-system.htm#92027>`_. It is defined as
 
-.. code-block:: dylan
-
-    one-of (#"signal", #"replace")
+one-of (#"signal", #"replace")
+                              
 
 If the value of the keyword for either function is *#"signal"* (the
 default for both functions), then you are prompted before an existing
@@ -87,8 +86,8 @@ copy-file *old-file* *new-file* #key *if-exists* => ()
 Renames or copies *old-file* to *new-file*.
 
 For both functions, if *new-file* already exists, then the behavior
-depends on the value of *if-exists*, which is an instance of
-`<copy/rename-disposition>`_. The default
+depends on the value of *if-exists*, which is an instance of `
+<copy/rename-disposition> <file-system.htm#73023>`_. The default
 behavior is to prompt you before overwriting a file.
 
 file-property-setter
@@ -110,16 +109,17 @@ specified by the value of *key*, which must be one of the following:
 The type of *new-value* (and hence the type of the return value of
 *file-property-setter*), is determined by the value of *key*. For
 example, if *key* is *#"readable?"*, then *new-value* should be an
-instance of ``<boolean>``. For full details, see
-`file-property-setter`_.
+instance of ``<boolean>``. For full details, see `
+file-property-setter <file-system.htm#16395>`_.
 
 Manipulating directories
 ------------------------
 
 The File-System module contains a number of interfaces that let you
 create and delete directories. These can be used in conjunction with the
-file manipulation operations described in `Manipulating files`_ to
-perform file management tasks at any position in the file system.
+file manipulation operations described in `Manipulating
+files <file-system.htm#92027>`_ to perform file management tasks at any
+position in the file system.
 
 create-directory
 ''''''''''''''''
@@ -180,10 +180,10 @@ The *function* must have the following signature:
 
 where *directory* is the name of the directory specified to
 *do-directory*, *name* is an instance of ``<byte-string>``, and *type*
-is an instance of `<file-type>`_.
+is an instance of `<file-type> <file-system.htm#48717>`_.
 
 Within *function*, you can concatenate the values of *directory* and
-*name* to generate a `<pathname>`_ suitable
+*name* to generate a `<pathname> <file-system.htm#95733>`_ suitable
 for use by the other functions in the File-system module.
 
 working-directory-setter
@@ -306,7 +306,7 @@ file-property *file* *key* => *property*
 Returns a particular property of the specified file. The property
 returned is dependent on the value of *key*, and as such, may be of a
 number of types. For more information about the possible values of *key*,
-see `file-property-setter`_.
+see `file-property-setter <file-system.htm#16395>`_.
 
 file-type
 '''''''''
@@ -347,9 +347,10 @@ copy-file *old-file* *new-file* #key *if-exists* => ()
 Arguments
          
 
--  *old-file* An instance of `<pathname>`_.
--  *new-file* An instance of `<pathname>`_.
--  *if-exists* An instance of `<copy/rename-disposition>`_. Default
+-  *old-file* An instance of `<pathname> <file-system.htm#95733>`_.
+-  *new-file* An instance of `<pathname> <file-system.htm#95733>`_.
+-  *if-exists* An instance of
+    `<copy/rename-disposition> <file-system.htm#73023>`_. Default
    value: *#"signal"*.
 
 Values
@@ -367,9 +368,9 @@ default is to prompt you before overwriting an existing file.
 See also
         
 
-`<copy/rename-disposition>`_
+`<copy/rename-disposition> <file-system.htm#73023>`_
 
-`rename-file`_
+`rename-file <file-system.htm#56627>`_
 
 <copy/rename-disposition>
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -403,7 +404,8 @@ Description
            
 
 This type represents the acceptable values for the *if-exists:* argument
-to the `copy-file`_ and `rename-file`_ functions. Only two values are
+to the `copy-file <file-system.htm#62557>`_ and `
+rename-file <file-system.htm#56627>`_ functions. Only two values are
 acceptable:
 
 -  If *#"signal"* is used, then you are warned before a file is
@@ -412,14 +414,17 @@ acceptable:
    overwritten during a copy or move operation.
 
 Operations
+          
 
-`copy-file`_
-`rename-file`_
+`copy-file <file-system.htm#62557>`_ `
+rename-file <file-system.htm#56627>`_
 
 See also
+        
 
-`copy-file`_
-`rename-file`_
+`copy-file <file-system.htm#62557>`_
+
+`rename-file <file-system.htm#56627>`_
 
 create-directory
 ~~~~~~~~~~~~~~~~
@@ -441,13 +446,13 @@ create-directory *parent* *name* => *directory*
 Arguments
          
 
--  *parent* An instance of `<pathname>`_.
+-  *parent* An instance of `<pathname> <file-system.htm#95733>`_.
 -  *name* An instance of ``<string>``.
 
 Values
       
 
--  *directory* An instance of `<pathname>`_.
+-  *directory* An instance of `<pathname> <file-system.htm#95733>`_.
 
 Description
            
@@ -459,7 +464,7 @@ pathnames of entities in the new directory.
 See also
         
 
-`delete-directory`_
+`delete-directory <file-system.htm#20176>`_
 
 delete-directory
 ~~~~~~~~~~~~~~~~
@@ -481,7 +486,7 @@ delete-directory *directory* => ()
 Arguments
          
 
--  *directory* An instance of `<pathname>`_.
+-  *directory* An instance of `<pathname> <file-system.htm#95733>`_.
 
 Values
       
@@ -497,9 +502,9 @@ empty before it can be deleted is platform dependent.
 See also
         
 
-`create-directory`_
+`create-directory <file-system.htm#25429>`_
 
-`delete-file`_
+`delete-file <file-system.htm#77765>`_
 
 delete-file
 ~~~~~~~~~~~
@@ -521,7 +526,7 @@ delete-file *file* => ()
 Arguments
          
 
--  *file* An instance of `<pathname>`_.
+-  *file* An instance of `<pathname> <file-system.htm#95733>`_.
 
 Values
       
@@ -557,7 +562,7 @@ Arguments
          
 
 -  *function* An instance of ``<function>``.
--  *directory* An instance of `<pathname>`_.
+-  *directory* An instance of `<pathname> <file-system.htm#95733>`_.
 
 Values
       
@@ -575,12 +580,12 @@ The signature of *function* is
                                           
 
 where *directory* is an instance of `
-<pathname>`_, *name* is an instance of
+<pathname> <file-system.htm#95733>`_, *name* is an instance of
 ``<byte-string>``, and *type* is an instance of `
-<file-type>`_.
+<file-type> <file-system.htm#48717>`_.
 
 Within *function*, the values of *directory* and *name* can be
-concatenated to generate a `<pathname>`_
+concatenated to generate a `<pathname> <file-system.htm#95733>`_
 suitable for use by the other functions in the module.
 
 The following calls are equivalent
@@ -619,7 +624,7 @@ ensure-directories-exist *file* => *created?*
 Arguments
          
 
--  *file* An instance of `<pathname>`_.
+-  *file* An instance of `<pathname> <file-system.htm#95733>`_.
 
 Values
       
@@ -658,7 +663,7 @@ ensure-directories-exist("C:\\USERS\\JOHN\\FOO.TEXT")
 See also
         
 
-`create-directory`_
+`create-directory <file-system.htm#25429>`_
 
 file-exists?
 ~~~~~~~~~~~~
@@ -680,7 +685,7 @@ file-exists? *file* => *exists?*
 Arguments
          
 
--  *file* An instance of `<pathname>`_.
+-  *file* An instance of `<pathname> <file-system.htm#95733>`_.
 
 Values
       
@@ -713,7 +718,7 @@ file-properties *file* => *properties*
 Arguments
          
 
--  *file* An instance of `<pathname>`_.
+-  *file* An instance of `<pathname> <file-system.htm#95733>`_.
 
 Values
       
@@ -726,7 +731,7 @@ Description
 
 Returns all the properties of *file*. The keys to the properties
 collection are the same as those use by `
-file-property`_, above.
+file-property <file-system.htm#47498>`_, above.
 
 Example
        
@@ -737,9 +742,9 @@ file-properties() [#"size"]
 See also
         
 
-`file-property`_
+`file-property <file-system.htm#47498>`_
 
-`file-property-setter`_
+`file-property-setter <file-system.htm#16395>`_
 
 file-property
 ~~~~~~~~~~~~~
@@ -761,7 +766,7 @@ file-property *file* #key *key* => *property*
 Arguments
          
 
--  *file* An instance of `<pathname>`_.
+-  *file* An instance of `<pathname> <file-system.htm#95733>`_.
 -  *key* One of *#"author"*, *#"size"*, *#"creation-date"*,
    *#"access-date"*, *#"modification-date"*, *#"write-date"*,
    *#"readable?"*, *#"writeable?"*, *#"executable?"*.
@@ -778,7 +783,7 @@ Description
 
 Returns the property of *file* specified by *key*. The value returned
 depends on the value of *key*, as shown in Table `Return value
-types of file-property`_.
+types of file-property <file-system.htm#32600>`_.
 
 Return value types of *file-property*
                                      
@@ -816,9 +821,9 @@ All keys listed above are implemented by Win32, though note that
 See also
         
 
-`file-property-setter`_
+`file-property-setter <file-system.htm#16395>`_
 
-`file-properties`_
+`file-properties <file-system.htm#71762>`_
 
 file-property-setter
 ~~~~~~~~~~~~~~~~~~~~
@@ -842,7 +847,7 @@ Arguments
 
 -  *new-value* The type of this depends on the value of *key*. See the
    description for details.
--  *file* An instance of `<pathname>`_.
+-  *file* An instance of `<pathname> <file-system.htm#95733>`_.
 -  *key* One of *#"author"*, *#"size"*, *#"creation-date"*,
    *#"access-date"*, *#"modification-date"*, *#"write-date"*,
    *#"readable?"*, *#"writeable?"*, *#"executable?"*.
@@ -859,7 +864,7 @@ Description
 Sets the property of *file* specified by *key* to *new-value*. The type
 of *new-value* depends on the property specified by key, as shown in
 Table `New value types of
-file-property-setter`_ below.
+file-property-setter <file-system.htm#73198>`_ below.
 
 New value types of *file-property-setter*
                                             
@@ -898,9 +903,9 @@ The only property that can be set on Win32 is *#"writeable?"*.
 See also
         
 
-`file-property`_
+`file-property <file-system.htm#47498>`_
 
-`file-properties`_
+`file-properties <file-system.htm#71762>`_
 
 <file-system-error>
 ~~~~~~~~~~~~~~~~~~~
@@ -953,13 +958,13 @@ file-type *file* => *file-type*
 Arguments
          
 
--  *file* An instance of `<pathname>`_.
+-  *file* An instance of `<pathname> <file-system.htm#95733>`_.
 
 Values
       
 
 -  *file-type* An instance of `
-   <file-type>`_.
+   <file-type> <file-system.htm#48717>`_.
 
 Description
            
@@ -1007,7 +1012,7 @@ you are working in.
 Operations
           
 
-`do-directory`_
+`do-directory <file-system.htm#12243>`_
 
 home-directory
 ~~~~~~~~~~~~~~
@@ -1035,7 +1040,7 @@ Values
       
 
 -  *home-directory* An instance of `
-   <pathname>`_.
+   <pathname> <file-system.htm#95733>`_.
 
 Description
            
@@ -1079,19 +1084,19 @@ A type that identifies a file system entity.
 Operations
           
 
-`copy-file`_ `
-create-directory`_ `
-delete-directory`_
- `delete-file`_ `
-do-directory`_ `
-ensure-directories-exist`_ `
-file-exists?`_ `
-file-properties`_ `
-file-property`_
- `file-property-setter`_ `
-file-type`_ `
-home-directory`_
- `rename-file`_
+`copy-file <file-system.htm#62557>`_ `
+create-directory <file-system.htm#25429>`_ `
+delete-directory <file-system.htm#20176>`_
+ `delete-file <file-system.htm#77765>`_ `
+do-directory <file-system.htm#12243>`_ `
+ensure-directories-exist <file-system.htm#50234>`_ `
+file-exists? <file-system.htm#55287>`_ `
+file-properties <file-system.htm#71762>`_ `
+file-property <file-system.htm#47498>`_
+ `file-property-setter <file-system.htm#16395>`_ `
+file-type <file-system.htm#12684>`_ `
+home-directory <file-system.htm#73621>`_
+ `rename-file <file-system.htm#56627>`_
 
 rename-file
 ~~~~~~~~~~~
@@ -1113,10 +1118,10 @@ rename-file *old-file* *new-file* #key *if-exists* => ()
 Arguments
          
 
--  *old-file* An instance of `<pathname>`_.
--  *new-file* An instance of `<pathname>`_.
+-  *old-file* An instance of `<pathname> <file-system.htm#95733>`_.
+-  *new-file* An instance of `<pathname> <file-system.htm#95733>`_.
 -  *if-exists* An instance of
-    `<copy/rename-disposition>`_. Default
+    `<copy/rename-disposition> <file-system.htm#73023>`_. Default
    value: *#"signal"*.
 
 Values
@@ -1137,9 +1142,9 @@ same file system.
 See also
         
 
-`copy-file`_
+`copy-file <file-system.htm#62557>`_
 
-`<copy/rename-disposition>`_
+`<copy/rename-disposition> <file-system.htm#73023>`_
 
 root-directories
 ~~~~~~~~~~~~~~~~
@@ -1201,7 +1206,7 @@ Values
       
 
 -  *temp-directory* An instance of `
-   <pathname>`_, or false.
+   <pathname> <file-system.htm#95733>`_, or false.
 
 Description
            
@@ -1240,7 +1245,7 @@ Values
 *working-directory*
                    
 
-An instance of `<pathname>`_.
+An instance of `<pathname> <file-system.htm#95733>`_.
                                                          
 
 Description
@@ -1254,7 +1259,7 @@ pathnames of entities in the working directory.
 See also
         
 
-`working-directory-setter`_
+`working-directory-setter <file-system.htm#45018>`_
 
 working-directory-setter
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1276,12 +1281,12 @@ working-directory-setter *directory* => *directory*
 Arguments
          
 
--  *directory* An instance of `<pathname>`_.
+-  *directory* An instance of `<pathname> <file-system.htm#95733>`_.
 
 Values
       
 
--  *directory* An instance of `<pathname>`_.
+-  *directory* An instance of `<pathname> <file-system.htm#95733>`_.
 
 Description
            
@@ -1313,5 +1318,5 @@ working-directory() := "C:\\USERS\\JOHN\\";
 See also
         
 
-`working-directory`_
+`working-directory <file-system.htm#90472>`_
 

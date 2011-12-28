@@ -12,8 +12,8 @@ mirrors some of the functionality provided by the *Java.io* package in
 Java.
 
 For convenience, the Standard-IO module, together with the Format
-module, is repackaged by the Format-out module. See :doc:`format-out`
-for details.
+module, is repackaged by the Format-out module. See `The Format-Out
+Module <format-out.htm#47300>`_ for details.
 
 Handling standard input and output
 ----------------------------------
@@ -64,7 +64,8 @@ configuration settings set by the user. For example, the window is only
 scrollable if all console windows are configured to be scrollable on the
 machine running the application.
 
-For more information about streams, please refer to :doc:`streams`.
+For more information about streams, please refer to `The Streams
+Module <streams.htm#93942>`_.
 
 The STANDARD-IO module
 ----------------------

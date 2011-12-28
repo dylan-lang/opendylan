@@ -727,7 +727,8 @@ are required.
    connect to. Required unless *service:* is supplied.
 -  *element-type:* An instance of ``<class>``. Useful values for
    ``<tcp-streams>`` are ``<byte-character>`` and ``<byte>``. This keyword is
-   an inherited streams class keyword. See :doc:`streams` for a full description.
+   an inherited streams class keyword. See `The Streams
+   Module <streams.htm#93942>`_ for a full description.
 
 remote-port
 ~~~~~~~~~~~
@@ -791,8 +792,8 @@ are required.
    connect to. Required unless *service:* is supplied.
 -  *element-type:* An instance of ``<class>``. Useful values for
    ``<udp-socket>`` s are ``<byte-character>`` and ``<byte>``. This keyword
-   is an inherited streams class keyword. See :doc:`streams` for a full
-   description.
+   is an inherited streams class keyword. See `The Streams
+   Module <streams.htm#93942>`_ for a full description.
 
 The <UDP-SERVER-SOCKET> class
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
