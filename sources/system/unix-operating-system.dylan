@@ -12,25 +12,25 @@ define macro with-storage
   => { begin
          let ?name = primitive-wrap-machine-word(integer-as-raw(0));
          block ()
-	   ?name := primitive-wrap-machine-word
+           ?name := primitive-wrap-machine-word
                       (primitive-cast-pointer-as-raw
-		         (%call-c-function ("GC_malloc")
+                         (%call-c-function ("GC_malloc")
                             (nbytes :: <raw-c-unsigned-long>) => (p :: <raw-c-pointer>)
                             (integer-as-raw(?size))
                           end));
-	   if (primitive-machine-word-equal?
+           if (primitive-machine-word-equal?
                  (primitive-unwrap-machine-word(?name), integer-as-raw(0)))
              error("unable to allocate %d bytes of storage", ?size);
-	   end;
+           end;
            ?body
          cleanup
-	   if (primitive-machine-word-not-equal?
+           if (primitive-machine-word-not-equal?
                  (primitive-unwrap-machine-word(?name), integer-as-raw(0)))
-	     %call-c-function ("GC_free") (p :: <raw-c-pointer>) => (void :: <raw-c-void>)
-	       (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(?name)))
-	     end;
-	     #f
-	   end
+             %call-c-function ("GC_free") (p :: <raw-c-pointer>) => (void :: <raw-c-void>)
+               (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(?name)))
+             end;
+             #f
+           end
          end
        end }
 end macro with-storage;
@@ -48,9 +48,9 @@ end function command-line-option-prefix;
 define function login-name () => (name :: false-or(<string>))
   let value = primitive-wrap-machine-word
                 (primitive-cast-pointer-as-raw
-		   (%call-c-function ("getlogin") () => (name :: <raw-byte-string>) () end));
+                   (%call-c-function ("getlogin") () => (name :: <raw-byte-string>) () end));
   if (primitive-machine-word-not-equal?(primitive-unwrap-machine-word(value),
-					integer-as-raw(0)))
+                                        integer-as-raw(0)))
     primitive-raw-as-string
       (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(value)))
   else
@@ -63,12 +63,12 @@ define function login-group () => (group :: false-or(<string>))
                 (%call-c-function ("getgid") () => (gid :: <raw-c-unsigned-int>) () end);
   let value = primitive-wrap-machine-word
                 (primitive-cast-pointer-as-raw
-		   (%call-c-function ("getgrgid")
-			(gid :: <raw-c-unsigned-int>) => (group :: <raw-c-pointer>)
-		      (primitive-unwrap-machine-word(group))
-		    end));
+                   (%call-c-function ("getgrgid")
+                        (gid :: <raw-c-unsigned-int>) => (group :: <raw-c-pointer>)
+                      (primitive-unwrap-machine-word(group))
+                    end));
   if (primitive-machine-word-not-equal?(primitive-unwrap-machine-word(value),
-					integer-as-raw(0)))
+                                        integer-as-raw(0)))
     group-name(value)
   else
     #f
@@ -90,13 +90,13 @@ define constant $environment-variable-delimiter = ':';
 define function environment-variable
     (name :: <byte-string>) => (value :: false-or(<byte-string>))
   let value = primitive-wrap-machine-word
-		(primitive-cast-pointer-as-raw
-		   (%call-c-function ("getenv")
-		        (name :: <raw-byte-string>) => (value :: <raw-byte-string>)
-		      (primitive-string-as-raw(name))
-		    end));
+                (primitive-cast-pointer-as-raw
+                   (%call-c-function ("getenv")
+                        (name :: <raw-byte-string>) => (value :: <raw-byte-string>)
+                      (primitive-string-as-raw(name))
+                    end));
   if (primitive-machine-word-not-equal?(primitive-unwrap-machine-word(value),
-					integer-as-raw(0)))
+                                        integer-as-raw(0)))
     let value :: <byte-string>
       = primitive-raw-as-string
           (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(value)));
@@ -114,14 +114,14 @@ define function environment-variable-setter
   //--- NOTE: The string passed to putenv must be statically allocated
   //--- as it will remain in use after this function returns to its caller.
   let static-thing = primitive-wrap-machine-word
-		       (primitive-cast-pointer-as-raw
-			  (%call-c-function ("GC_malloc")
-			       (nbytes :: <raw-c-unsigned-long>) => (p :: <raw-c-pointer>)
-			     (integer-as-raw(size(thing) + 1))
-			   end));
+                       (primitive-cast-pointer-as-raw
+                          (%call-c-function ("GC_malloc")
+                               (nbytes :: <raw-c-unsigned-long>) => (p :: <raw-c-pointer>)
+                             (integer-as-raw(size(thing) + 1))
+                           end));
   if (primitive-machine-word-not-equal?(primitive-unwrap-machine-word(static-thing),
-					integer-as-raw(0)))
-    //--- NOTE: We can't use primitive-replace-bytes! as our 
+                                        integer-as-raw(0)))
+    //--- NOTE: We can't use primitive-replace-bytes! as our
     //--- first argument isn't a Dylan object.  (Sigh)
     %call-c-function ("strcpy")
         (dst :: <raw-c-pointer>, src :: <raw-c-pointer>)
@@ -188,7 +188,7 @@ define function run-application
 
           environment :: false-or(<explicit-key-collection>),
           working-directory :: false-or(<pathname>) = #f,
-     
+
           input :: type-union(one-of(#"inherit", #"null", #"stream"),
                               <pathname>) = #"inherit",
           if-input-does-not-exist :: one-of(#"signal", #"create") = #"signal",
@@ -215,7 +215,7 @@ define function run-application
         #"inherit" =>
           -1;
         #"null" =>
-          let read-fd 
+          let read-fd
             = unix-open($null-device, $O_RDONLY, $file_create_permissions);
           close-fds := add(close-fds, read-fd);
           read-fd;
@@ -361,7 +361,6 @@ define function run-application
                                integer-as-raw(argv-size - 1), integer-as-raw(0))
           := integer-as-raw(0);
 
-        
         raw-as-integer
           (%call-c-function("system_spawn")
              (program :: <raw-byte-string>,
@@ -396,7 +395,7 @@ define function run-application
     if (outputter)
       run-outputter(outputter, outputter-read-fd);
     end if;
-    
+
     let (return-pid, status-code) = %waitpid(pid, 0);
     let signal-code = logand(status-code, #o177);
     let exit-code = ash(status-code, -8);
@@ -537,5 +536,12 @@ end function signal-application-event;
 
 define function load-library
     (name :: <string>) => (module)
-  #f
+  let module =
+    primitive-wrap-machine-word
+    (%call-c-function ("system_dlopen")
+       (name :: <raw-byte-string>)
+       => (handle :: <raw-c-pointer>)
+       (primitive-cast-raw-as-pointer(primitive-string-as-raw(name)))
+    end);
+  module
 end function load-library;
