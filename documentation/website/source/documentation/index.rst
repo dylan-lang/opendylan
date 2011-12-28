@@ -25,6 +25,7 @@ Documentation
 
 `An Introduction to Dylan <intro-dylan/index.html>`_
 [`pdf <intro-dylan/IntroductiontoDylan.pdf>`__]
+[`epub <intro-dylan/IntroductiontoDylan.epub>`__]
 
     This tutorial is written primarily for those with solid programming
     experience in C++ or another object-oriented, static language. It
@@ -37,12 +38,14 @@ Documentation
 
 `Getting Started with Open Dylan <getting-started/index.html>`_
 [`pdf <getting-started/GettingStartedWithOpenDylan.pdf>`__]
+[`epub <getting-started/GettingStartedWithOpenDylan.epub>`__]
 [`old HTML <http://opendylan.org/documentation/opendylan/env/index.htm>`__]
 
     Describes Open Dylan's interactive development environment.
 
 `Building Applications Using DUIM <building-with-duim/index.html>`_
 [`pdf <building-with-duim/BuildingApplicationsWithDUIM.pdf>`__]
+[`epub <building-with-duim/BuildingApplicationsWithDUIM.epub>`__]
 [`old HTML <http://opendylan.org/documentation/opendylan/dguide/index.htm>`__]
 
     Describes how to use DUIM (Dylan User Interface Manager),
@@ -110,6 +113,7 @@ Documentation
 
 `Core library reference <core-reference/index.html>`_
 [`pdf <core-reference/CoreReference.pdf>`__]
+[`epub <core-reference/CoreReference.epub>`__]
 [`old HTML <http://opendylan.org/documentation/opendylan/core/index.htm>`__]
 
     Describes the Open Dylan implementation of the Dylan language, a
@@ -119,6 +123,7 @@ Documentation
 
 `System and I/O library reference <system-io-reference/index.html>`_
 [`pdf <system-io-reference/SystemAndIOReference.pdf>`__]
+[`epub <system-io-reference/SystemAndIOReference.epub>`__]
 [`old HTML <http://opendylan.org/documentation/opendylan/io/index.htm>`__]
 
     Describes Open Dylan's printing and output formatting modules,
@@ -135,6 +140,7 @@ Documentation
 
 `C FFI and Win32 library reference <cffi-win32-reference/index.html>`_
 [`pdf <cffi-win32-reference/C-FFIandWin32Reference.pdf>`__]
+[`epub <cffi-win32-reference/C-FFIandWin32Reference.epub>`__]
 [`old HTML <http://opendylan.org/documentation/opendylan/interop1/index.htm>`__]
 
     Describes a foreign function interface library for interoperation
@@ -154,11 +160,13 @@ Documentation
 
 `Open Dylan Hacker's Guide <hacker-guide/index.html>`_
 [`pdf <hacker-guide/OpenDylanHackersGuide.pdf>`__]
+[`epub <hacker-guide/OpenDylanHackersGuide.epub>`__]
 
     A work in progress to help out people who are hacking on Open Dylan itself.
 
 `Dylan Style Guide <style-guide/index.html>`_
 [`pdf <style-guide/StyleGuide.pdf>`__]
+[`epub <style-guide/StyleGuide.epub>`__]
 
     Notes and thoughts on how to format your Dylan code. This is the style
     guide that we aspire to adhere to in the Open Dylan sources.
