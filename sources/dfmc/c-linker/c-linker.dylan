@@ -67,7 +67,7 @@ define method link-all
     end for;
     write(stream, "\n/* SYSTEM INIT CODE */\n\n");
     emit-init-code-head(back-end, stream, cr, $system-init-code-tag);
-    format-emit(back-end, stream, 1, "extern ~ ^(~);\n",
+    format-emit(back-end, stream, 1, "\textern ~ ^(~);\n",
                 $dylan-type-string,
                 ^iep(dylan-value($symbol-fixup-name)),
                 $dylan-type-string);
@@ -202,12 +202,11 @@ end method;
 
 define method emit-fixups
     (back-end :: <c-back-end>, stream :: <stream>, object, refs)
-  write(stream, "{\n");
-  format-emit*(back-end, stream, "\t~ T0;\n\n", $dylan-type-string);
-  format-emit*(back-end, stream, "\tT0 = ");
+  format-emit*(back-end, stream, "\t{\n");
+  format-emit*(back-end, stream, "\t\t~ T0;\n\n", $dylan-type-string);
+  format-emit*(back-end, stream, "\t\tT0 = ");
   emit-resolve-for-fixup(back-end, stream, object);
-  write(stream, ";\n");
-  format-emit*(back-end, stream, "\tif (T0 != @) {\n", object);
+  format-emit*(back-end, stream, "\t\tif (T0 != @) {\n", object);
   let fixed-indirection-variable = #f;
   for (ref in refs)
     if (instance?(ref, <load-bound-code-reference>))
@@ -219,8 +218,8 @@ define method emit-fixups
       emit-fixup(back-end, stream, object, ref);
     end;
   end;
+  format-emit*(back-end, stream, "\t\t}\n");
   format-emit*(back-end, stream, "\t}\n");
-  write(stream, "}\n");
 end method;
 
 define method emit-fixup
@@ -230,13 +229,13 @@ end method;
 define method emit-fixup
     (back-end :: <c-back-end>, stream :: <stream>,
      object, ref :: <load-bound-code-reference>)
-  format-emit*(back-end, stream, "\t\t? = T0;\n", object);
+  format-emit*(back-end, stream, "\t\t\t? = T0;\n", object);
 end method;
 
 define method emit-fixup
     (back-end :: <c-back-end>, stream :: <stream>,
      object, ref :: <load-bound-binding-reference>)
-  format-emit*(back-end, stream, "\t\t^ = T0;\n",
+  format-emit*(back-end, stream, "\t\t\t^ = T0;\n",
                load-bound-referencing-binding(ref));
 end method;
 
@@ -248,7 +247,7 @@ define method emit-fixup
   let (primitive, offset)
     = fixed-slot-primitive-fixup-info
         (^object-class(referencing-object), slotd);
-  format-emit*(back-end, stream, "\t\t^(T0, @",
+  format-emit*(back-end, stream, "\t\t\t^(T0, @",
                primitive, referencing-object);
   format(stream, ", %d);\n", offset);
 end method;
@@ -262,7 +261,7 @@ define method emit-fixup
   let (primitive, base-offset)
     = repeated-slot-primitive-fixup-info
         (^object-class(referencing-object), slotd);
-  format-emit*(back-end, stream, "\t\t^(T0, @",
+  format-emit*(back-end, stream, "\t\t\t^(T0, @",
                primitive, referencing-object);
   format(stream, ", %d, %d);\n", base-offset, index);
 end method;
