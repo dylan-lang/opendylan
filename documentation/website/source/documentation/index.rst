@@ -25,7 +25,7 @@ Documentation
 
 `An Introduction to Dylan <intro-dylan/index.html>`_
 [`pdf <intro-dylan/IntroductiontoDylan.pdf>`__]
-[`epub <intro-dylan/IntroductiontoDylan.epub>`__]
+[`epub <intro-dylan/AnIntroductiontoDylan.epub>`__]
 
     This tutorial is written primarily for those with solid programming
     experience in C++ or another object-oriented, static language. It
@@ -123,7 +123,7 @@ Documentation
 
 `System and I/O library reference <system-io-reference/index.html>`_
 [`pdf <system-io-reference/SystemAndIOReference.pdf>`__]
-[`epub <system-io-reference/SystemAndIOReference.epub>`__]
+[`epub <system-io-reference/SystemandIOReference.epub>`__]
 [`old HTML <http://opendylan.org/documentation/opendylan/io/index.htm>`__]
 
     Describes Open Dylan's printing and output formatting modules,
