@@ -1,10 +1,10 @@
 Module:    environment-commands
 Synopsis:  The commands provided by the environment
-Author:	   Andy Armstrong
-Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
-              All rights reserved.
-License:      See License.txt in this distribution for details.
-Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
+Author:    Andy Armstrong
+Copyright: Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
+           All rights reserved.
+License:   See License.txt in this distribution for details.
+Warranty:  Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Project argument parsing
 
@@ -24,18 +24,18 @@ define method parse-next-argument
     block (return)
       let locator = as(<file-locator>, name);
       for (project :: <project-object> in open-projects())
-	if (environment-object-primitive-name(project, project) = name
-	      | project.project-filename = locator)
-	  return(project, next-index)
-	end
+        if (environment-object-primitive-name(project, project) = name
+              | project.project-filename = locator)
+          return(project, next-index)
+        end
       end;
       let command
-	= make(<open-project-command>, server: context, file: locator);
+        = make(<open-project-command>, server: context, file: locator);
       let project = execute-command(command);
       if (project)
-	values(project, next-index)
+        values(project, next-index)
       else
-	parse-error("File %s is not a project", name)
+        parse-error("File %s is not a project", name)
       end
     end
   else
@@ -62,14 +62,16 @@ define method show-property
  => ()
   let project = context.context-project;
   if (project)
-    message(context, "Project: %s", project.project-name)
+    message(context, "Project: %s = %s",
+            project.project-name,
+            project.project-filename)
   else
     command-error("No open projects")
   end
 end method show-property;
 
 define method set-property
-    (context :: <environment-context>, property :: <current-project-property>, 
+    (context :: <environment-context>, property :: <current-project-property>,
      project :: <project-object>,
      #key save?)
  => ()
@@ -92,10 +94,12 @@ define method show-property
  => ()
   let projects = open-projects();
   if (~empty?(projects))
+    let current-project = context.context-project;
     for (project :: <project-object> in projects)
-      message(context, "  %s = %s", 
-	      project.project-name,
-	      project.project-filename)
+      message(context, " %s %s = %s",
+              if (project = current-project) "*" else " " end,
+              project.project-name,
+              project.project-filename)
     end
   else
     message(context, "No open projects")
@@ -124,16 +128,16 @@ define function open-project-from-locator
   select (extension by \=)
     lid-file-extension() =>
       values(import-project-from-file(pathname), #f);
-    project-file-extension() => 
+    project-file-extension() =>
       values(open-project(pathname), #f);
     executable-file-extension() =>
       values(create-exe-project-from-file(pathname), #f);
     otherwise =>
       if (~extension)
-	let library-name = as(<symbol>, locator.locator-base);
-	values(find-project-for-library(library-name), #f)
+        let library-name = as(<symbol>, locator.locator-base);
+        values(find-project-for-library(library-name), #f)
       else
-	values(#f, #t)
+        values(#f, #t)
       end;
   end
 end function open-project-from-locator;
@@ -142,11 +146,11 @@ define function find-project-for-library
     (library-name :: <symbol>) => (project :: false-or(<project-object>))
   find-project(as(<string>, library-name))
     | begin
-	let library-info = find-library-info(library-name);
-	if (library-info)
-	  let location = info-location(library-info);
-	  location & open-project-from-locator(as(<file-locator>, location))
-	end
+        let library-info = find-library-info(library-name);
+        if (library-info)
+          let location = info-location(library-info);
+          location & open-project-from-locator(as(<file-locator>, location))
+        end
       end
 end function find-project-for-library;
 
@@ -158,23 +162,24 @@ define sealed method do-execute-command
   case
     project =>
       open-project-compiler-database
-	(project,
+        (project,
          warning-callback:     curry(note-compiler-warning, context),
          error-handler:        curry(compiler-condition-handler, context));
       project.project-opened-by-user? := #t;
       context.context-project := project;
       let project-context
-	= context.context-project-context
-	    | begin
-		let library = project.project-library;
-		let module = library & library-default-module(project, library);
-		let project-context
-		  = make(<project-context>, 
-			 project: project,
-			 module: module);
-		context.context-project-context := project-context
-	      end;
-      message(context, "Opened project %s", project.project-name);
+        = context.context-project-context
+            | begin
+                let library = project.project-library;
+                let module = library & library-default-module(project, library);
+                let project-context
+                  = make(<project-context>,
+                         project: project,
+                         module: module);
+                context.context-project-context := project-context
+              end;
+      message(context, "Opened project %s (%s)", project.project-name,
+              project.project-filename);
       project;
     invalid? =>
       command-error("Cannot open '%s' as it is not a project", filename);
@@ -230,16 +235,16 @@ define sealed method do-execute-command
     (context :: <environment-context>, command :: <close-project-command>)
  => ()
   local method close
-	    (project :: <project-object>) => ()
-	  if (project.application-tethered?)
-	    let application = project.project-application;
-	    let filename = application.application-filename.locator-name;
-	    close-application(project, wait-for-termination?: #t);
-	    message(context, "Closed application %s", filename)
-	  end;
-	  project.project-opened-by-user? := #f;
-	  close-project(project)
-	end;
+            (project :: <project-object>) => ()
+          if (project.application-tethered?)
+            let application = project.project-application;
+            let filename = application.application-filename.locator-name;
+            close-application(project, wait-for-termination?: #t);
+            message(context, "Closed application %s", filename)
+          end;
+          project.project-opened-by-user? := #f;
+          close-project(project)
+        end;
   let projects = open-projects();
   case
     empty?(projects) =>
@@ -253,7 +258,7 @@ define sealed method do-execute-command
       let name = project.project-name;
       close(project);
       if (project == context.context-project)
-	context.context-project := context.context-previous-project
+        context.context-project := context.context-previous-project
       end;
       message(context, "Closed project %s", name);
   end
