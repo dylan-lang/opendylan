@@ -80,16 +80,16 @@ Final items
 ===========
 
 A pattern with at least two list items treats the last item specially. For
-example, the pattern `Pattern 1`_ will match any of `Code Fragments`_ and set
-and set the pattern variables as follows:
+example, the pattern `Pattern 1`_ will match any of `Code Fragments`_, and will
+set the pattern variables as follows:
 
-========  =======  =======  =======================
-Fragment  ?item-1  ?item-2  ?item-3
-========  =======  =======  =======================
-Line 1    `alpha`  `beta`   `gamma`
-Line 2    `alpha`  `beta`   
-Line 3    `alpha`  `beta`   `gamma, delta, epsilon`
-========  =======  =======  =======================
+==============  =======  =======  =======================
+Code Fragments  ?item-1  ?item-2  ?item-3
+==============  =======  =======  =======================
+Line 1          `alpha`  `beta`   `gamma`
+Line 2          `alpha`  `beta`   
+Line 3          `alpha`  `beta`   `gamma, delta, epsilon`
+==============  =======  =======  =======================
 
 This special behavior is usually only relevant when the last item in the list is
 a wildcard pattern variable (see :ref:`wildcard-variables`). If the pattern were
@@ -131,23 +131,6 @@ The end of a comma-separated list of pattern fragments can include `#rest`,
 
         { …, #rest ?keys:token, #key ?alpha:token, ?beta:token, #all-keys }
 
-If you write a pattern that contains `#all-keys`, you must also include `#key`.
-There are several variations on this syntax; they are described in
-:ref:`proplist-variables`.
-
-`#rest`, `#key`, and `#all-keys` must be the only pattern fragments in their
-comma-separated sub-pattern, and that sub-pattern must be the last of several
-comma-separated sub-patterns. Here are some examples of when it is or is not
-valid to use this syntax in a pattern::
-
-        /* valid */   { #key ?alpha:token }
-        /* invalid */ { ?alpha:token #key ?beta:token }
-        /* valid */   { ?anything:*, #key ?alpha:token, #all-keys }
-        /* invalid */ { #key ?alpha:token, #all-keys, ?anything:* }
-        /* valid */   { #key ?alpha:token, #all-keys; ?anything:* }
-        /* invalid */ { #key ?alpha:token, #key ?beta-token }
-        /* valid */   { #key ?alpha:token; #key ?beta-token }
-
 This syntax is not used to match a code fragment that contains corresponding
 literal `#rest`, `#key`, and `#all-keys` fragments. Instead, this syntax
 matches a code fragment consisting of keyword/value pairs, called a `property
@@ -160,3 +143,20 @@ property list and `"a"` and `"b"` are the value parts.
 
 If you want to match literal `#rest`, `#key`, or `#all-keys` fragments, escape
 them in the pattern like `\#rest`, `\#key`, or `\#all-keys`.
+
+If you write a pattern that contains `#all-keys`, you must also include `#key`.
+There are several variations on this syntax; they are described in
+:ref:`proplist-variables`.
+
+`#rest`, `#key`, and `#all-keys` must be the only pattern fragments in their
+comma-separated sub-pattern, and that sub-pattern must be the last of several
+comma-separated sub-patterns. Here are some examples of when it **is** or **is
+not** valid to use this syntax in a pattern::
+
+        /* valid */     { #key ?alpha:token }
+        /* not valid */ { ?alpha:token #key ?beta:token }
+        /* valid */     { ?anything:*, #key ?alpha:token, #all-keys }
+        /* not valid */ { #key ?alpha:token, #all-keys, ?anything:* }
+        /* valid */     { #key ?alpha:token, #all-keys; ?anything:* }
+        /* not valid */ { #key ?alpha:token, #key ?beta-token }
+        /* valid */     { #key ?alpha:token; #key ?beta-token }

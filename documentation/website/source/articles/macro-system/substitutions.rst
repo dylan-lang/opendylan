@@ -18,10 +18,16 @@ Substitutions
 
 Pattern variables contain code fragments, which can be inserted into the macro
 expansion via a substitution. A substitution looks much like a pattern variable,
-but it are on the template side of the rule and has different syntax forms.
+but it is on the template side of the rule and has different syntax forms.
 
 A template can only use pattern variables from its corresponding pattern. It
 cannot use pattern variables from other rules' patterns.
+
+
+.. _finalitems-subst:
+
+Final items
+===========
 
 As a special case, if the template has a separator followed by any of the
 substitution forms below, and the substituted code fragment is empty, the
@@ -69,12 +75,12 @@ Conversion substitutions
 ========================
 
 `?#"{name}"`
-        The pattern variable's code fragment, which must be a simple name, is
-        turned into a symbol and inserted into the expansion.
+        The code fragment of the pattern variable `{name}`, which must be a
+        simple name, is turned into a symbol and inserted into the expansion.
 
 `?"{name}"`
-        The pattern variable's code fragment, which must be a simple name, is
-        turned into a string and inserted into the expansion.
+        The code fragment of the pattern variable `{name}`, which must be a
+        simple name, is turned into a string and inserted into the expansion.
 
 
 Concatenation substitutions
@@ -105,7 +111,13 @@ Concatenation substitutions
                 "alpha-function"
                 
 `"{prefix}" ## ?#"{name}" ## "{suffix}"`
-        As above, but results in a symbol.
+        As above, but results in a symbol::
+        
+                #"alpha-function"
+                
+        Or, equivalently::
+        
+                alpha-function:
 
 
 List substitutions
@@ -140,8 +152,8 @@ List substitutions
 
                 alpha
 
-        Any of the separators [seps]_ may be used in place of a comma in the
-        tempate.
+        Any of the separators `Separators`_ may be used in place of a comma in
+        the tempate.
 
 
 Auxiliary rule set substitution

@@ -66,7 +66,7 @@ syntax, with optional parts in brackets::
       `my-aux-ruleset:` or `#"my-aux-ruleset"`; both are the same.
 
       
-.. _`main-rules`:
+.. _main-rules:
 
 Main rules
 ==========

@@ -16,16 +16,20 @@
 Hygiene
 *******
 
+Macro expansions are hygienic, meaning there can be no name conflict between
+a local binding in scope that calls the macro and a local binding in the macro
+expansion.
+
 Let us say we have two macros A and B. The expansion of A calls B. The following
-diagram shows the sources or lexical scopes of a binding used in the expansion
-of A and B.
+diagram shows the lexical scopes of bindings used in A and B. The table after
+describes the scopes in more detail.
 
 .. raw:: html
 
    <pre style="line-height: 1em; font-family: Andale Mono, Courier New">
    ╒═════════════════════════════════════╕
-   │ [1] Module or local scope of a call │    
-   │     to macro A                      │    
+   │ [1] Module or lexical scope of a    │    
+   │     call to macro A                 │    
    │                                     │    
    │  ┌───────────────────────────────┐  │
    │  │ [2] Expansion of A            │  │    
@@ -52,24 +56,38 @@ of A and B.
    ╘═════════════════════════════════════╛
    </pre>
    
-Macro expansions are hygienic, meaning:
 
-- Bindings from boxes 2 or 4 are visible in box 2.
-- Bindings from boxes 3 or 5 are visible in box 3.
-- A binding from box 1 is not visible in box 2, but can be wrapped in a pattern
-  variable and manipulated in box 2.
-- A binding from box 2 is not visible in box 3, but can be wrapped in a pattern
-  variable and manipulated in box 3.
-- A binding from box 1 is not visible in box 3, but if box 2 wraps the binding
-  in a pattern variable and uses that pattern variable in the call of macro B,
-  and macro B wraps that pattern variable in a pattern variable of its own, then
-  box 3 can manipulate the binding via its pattern variable.
-
-New bindings created by `define` statements are not hygienic. Definition
-processing occurs after all macros have been expanded. A class defined in box 3
-can be used in boxes 2 and 1 and exported from the module of box 1. If there is
-another definition by that name in the other boxes, it is a duplicate definition
-and an error is reported.
++------------+---------------------+---------------------+---------------------+-------+--------+
+| Definition | Definition Location                                                              |
+| Visibility +---------------------+---------------------+---------------------+-------+--------+
+|            | Box 1               | Box 2               | Box 3               | Box 4 | Box 5  |
++============+=====================+=====================+=====================+=======+========+
+| Box 1      | All                 | Only if defined     | Only if defined     |       |        |
+|            |                     | with unhygienic     | with unhygienic     |       |        |
+|            |                     | reference to name   | reference to name   |       |        |
+|            |                     | from 1, captured by | from 1, captured by |       |        |
+|            |                     | pattern variable of | pattern variable of |       |        |
+|            |                     | A                   | A and recaptured by |       |        |
+|            |                     |                     | pattern variable of |       |        |
+|            |                     |                     | B                   |       |        |
++------------+---------------------+---------------------+---------------------+-------+--------+
+| Box 2      | Only if captured by | All                 | Only if defined     | All   |        |
+|            | pattern variable of |                     | with unhygienic     |       |        |
+|            | A                   |                     | reference to name   |       |        |
+|            |                     |                     | from 2, captured by |       |        |
+|            |                     |                     | pattern variable of |       |        |
+|            |                     |                     | B                   |       |        |
++------------+---------------------+---------------------+---------------------+-------+--------+
+| Box 3      | Only if captured by | Only if captured by | All                 |       | All    |
+|            | pattern variable of | pattern variable of |                     |       |        |
+|            | A and recaptured by | B                   |                     |       |        |
+|            | pattern variable of |                     |                     |       |        |
+|            | B                   |                     |                     |       |        |
++------------+---------------------+---------------------+---------------------+-------+--------+
+| Box 4      |                     |                     |                     | All   |        |
++------------+---------------------+---------------------+---------------------+-------+--------+
+| Box 5      |                     |                     |                     |       | All    |
++------------+---------------------+---------------------+---------------------+-------+--------+
 
 
 Breaking hygiene
@@ -96,9 +114,9 @@ In box 2 (the expansion itself), the binding is visible as `?=stop!` and can be
 used like any other binding (e.g. `format-out`) as shown by the highlighted
 line.
 
-Note that that a macro expansion cannot create a new binding visible outside of
-the macro call itself (except by way of a top-level `define` statement). In
-other words, box 2 cannot create a local binding for use elsewhere in box 1.
+Note that that a macro expansion cannot create a new name visible outside of the
+macro call itself. In other words, box 2 cannot create a binding for use
+elsewhere in box 1 unless box 1 supplies the name to be defined.
 
 For example, given the macro in `Definition 2`_, one might expect the macro call
 in `Call 2`_ would print "Hello" twice, but the code does not compile. Because

@@ -33,8 +33,6 @@ a given inner macro. An example of this is given in the discussion of the
 The scope of a pattern variable is the rule that uses it. Other rules or
 auxiliary rule sets cannot use the pattern variable.
 
-What follows is a categorized list of pattern variable syntaxes.
-
 
 Simple pattern variables
 ========================
@@ -46,14 +44,15 @@ Simple pattern variables
         This is a pattern variable where its constraint is also its name. For
         example, `?:expression` is equivalent to `?expression:expression`,
         that is, a pattern variable named `expression` with a constraint of
-        `expression.`
+        `expression`.
 
 `?{name}:name`
         This matches a name.
 
 `?{name}:token`
-        This matches a name, operator, or simple literal such as a string, character,
-        or number. It does not match vector literals or function calls.
+        This matches a name, operator, or simple literal such as a string,
+        character constant, or number. It does not match vector literals or
+        function calls.
 
 `?{name}:expression`
         This matches any expression, including vector literals, function calls,
@@ -65,10 +64,11 @@ Simple pattern variables
 
 `?{name}:name :: ?{specialization}:expression`
         This matches a variable name and optional specialization, like
-        `?:variable`, but lets you get each part. If the code fragment just
-        has the name part, the substitution for `?{specialization}` will be
-        `<object>`. Note that `?{specialization}` will not match every expression. It
-        will only match an expression that happens to be a type specialization.
+        `?:variable`, but lets you extract each part separately. If the code
+        fragment just has the name part, the substitution for
+        `?{specialization}` will be `<object>`. Note that `?{specialization}`
+        will not match every expression; it will only match an expression that
+        happens to also be a valied type specialization.
 
 
 .. _proplist-variables:
@@ -84,21 +84,21 @@ Property list pattern variables
 
 `#key ?{prop-1}:{constraint}, ?{prop-2}:{constraint}`
         This matches a property list that only includes the `{prop-1}:` and
-        `{prop-2}:` properties. If the property list includes any other
-        property such as `alpha:` or if either `{prop-1}:` or
-        `{prop-2}:` are missing, this pattern variable will not match.
-        Additionally, the properties' value parts have to meet the constraint.
-        If the constraint is `*`, any value part will match.
+        `{prop-2}:` properties. If the property list includes any other property
+        such as `alpha:` or if either `{prop-1}:` or `{prop-2}:` are missing,
+        this pattern variable will not match. Additionally, the properties'
+        value parts have to meet the constraints given. If the constraint is
+        `*`, any value part will match.
 
         The substitution for `?{prop-1}` is the value part of the `{prop-1}:`
         property.
 
 `#key ??{prop-1}:{constraint}, ??{prop-2}:{constraint}`
         This matches a property list that has several properties with a symbol
-        part of `{prop-1}:` or `{prop-2}:`. The substitution for
-        `??{prop-1}` is several code fragments, each being the value part of a
-        `{prop-1}:` property. The substitution may use a separator between each
-        code fragment as described in :doc:`substitutions`.
+        part of `{prop-1}:` or `{prop-2}:`. The substitution for `??{prop-1}` is
+        several code fragments, each being the value part of a `{prop-1}:`
+        property. The substitution may use one of the separators listed in
+        :ref:`finalitems-subst` between each code fragment.
 
         For example, consider this pattern::
 
@@ -124,7 +124,7 @@ Property list pattern variables
 
                 my-key: alpha, another-key: beta
 
-        This pattern would not match it::
+        This pattern would not match::
         
                 { #key ?my-key:name }
 
@@ -167,8 +167,8 @@ Body and macro pattern variables
         substitution will be `#f`. The substitution will wrap the code
         fragment in `begin` and `end` to make an expression.
 
-        A `?:body` pattern variable matches statements and expressions in a
-        code fragment until it reaches some word, called an `intermediate word`.
+        A `?:body` pattern variable matches statements and expressions in a code
+        fragment until it reaches some word, called an `intermediate word`:dfn:.
         You must ensure that all your `?:body` pattern variables are either
         followed by a word, or followed by a pattern variable referring to an
         auxiliary rule set whose rules all start with a word. Those word will
@@ -188,8 +188,8 @@ Body and macro pattern variables
                 { endif }
                 { else ?:body endif }
 
-        In this example, the macro will not work because the `?:body` variable
-        is not necessarily followed by a word::
+        In this example, the macro will not work because the pattern does not
+        include an intermediate word following the `?:body` variable::
 
                 { when (?:expression) ?:body }
 
@@ -236,10 +236,9 @@ Body and macro pattern variables
         macro, without the begin…end block that normally surrounds macro
         expansions.
 
-        While you can use the `?:expression` and `?:body` pattern variable
-        constraints to match function and statement macro calls, they cannot
-        match definition macro calls, and their substitutions will include the
-        begin…end wrapper.
+        While you can use `?:expression` and `?:body` pattern variables to match
+        macro calls, their substitutions will include a called macro's begin…end
+        wrapper, and `?:expression` can only match function macro calls.
 
 
 .. _wildcard-variables:
@@ -254,14 +253,15 @@ Wildcard pattern variables
 
                 { ?many-things:* ?:name }
 
-        `?many-things` will match everything up to but not including a name.
-        The substitution for `?many-things` will be everything except that
-        name name. If the code fragment only has a name, the substitution will
-        be empty.
+        `?many-things` will match everything up to but not including a name. The
+        substitution for `?many-things` will be everything except that name. If
+        the code fragment only has a name, the substitution for `?many-things`
+        will be empty.
 
-        There can only be one wildcard pattern variable in a sub-pattern. Each
-        must be separated from other wildcard variables by a semicolon or comma.
-        For example, this is not a legal pattern::
+        There can only be one wildcard pattern variable in a comma- or
+        semicolon-separated sub-pattern. Each must be separated from other
+        wildcards by a semicolon or comma. For example, this is not a legal
+        pattern::
 
                 { ?first:* ?second:* }
 
@@ -295,10 +295,10 @@ Wildcard pattern variables
 Auxiliary rule set pattern variables
 ====================================
 
-`?my-aux-rules`
+`?{aux-rules}`
         This syntax can only be used when there is an auxiliary rule set named
-        the same as the pattern variable. It is equivalent to
-        `?my-aux-rule:*`. See :doc:`auxiliary-rules`.
+        the same as the pattern variable. It is equivalent to `?{aux-rules}:*`.
+        See :doc:`auxiliary-rules`.
 
 `...`
         This syntax can only be used within an auxiliary rule set. If the rule
