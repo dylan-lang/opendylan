@@ -1,10 +1,10 @@
 Module:    command-lines
 Synopsis:  The commands provided by the environment
-Author:	   Andy Armstrong
-Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
-              All rights reserved.
-License:      See License.txt in this distribution for details.
-Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
+Author:    Andy Armstrong
+Copyright: Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
+           All rights reserved.
+License:   See License.txt in this distribution for details.
+Warranty:  Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Useful constants
 
@@ -42,7 +42,7 @@ define class <command-line-server> (<object>)
     init-keyword: profile-commands?:;
 end class <command-line-server>;
 
-define method initialize 
+define method initialize
     (server :: <command-line-server>, #key) => ()
   next-method();
   let context = server.server-context;
@@ -124,22 +124,22 @@ define macro command-group-definer
     end }
     => { define constant "$" ## ?name ## "-command-group"
            = make(<command-group>,
-		  ?options,
-		  name:     ?#"name",
-		  title:    as-uppercase(?"name"),
-		  contents: as(<stretchy-object-vector>, vector(?contents))) }
+                  ?options,
+                  name:     ?#"name",
+                  title:    as-uppercase(?"name"),
+                  contents: as(<stretchy-object-vector>, vector(?contents))) }
 
   { define command-group ?name:name into ?group:name (?options:*)
       ?contents:*
     end }
     => { define constant "$" ## ?name ## "-command-group"
            = make(<command-group>,
-		  ?options,
-		  name:     ?#"name",
-		  title:    as-uppercase(?"name"),
-		  contents: as(<stretchy-object-vector>, vector(?contents)));
+                  ?options,
+                  name:     ?#"name",
+                  title:    as-uppercase(?"name"),
+                  contents: as(<stretchy-object-vector>, vector(?contents)));
          add-command-group("$" ## ?group ## "-command-group",
-			   "$" ## ?name ## "-command-group") }
+                           "$" ## ?name ## "-command-group") }
 
  contents:
    { } => { }
@@ -152,9 +152,9 @@ define macro command-group-definer
      => { "$" ## ?name ## "-command-line" }
    { alias ?name:name = ?command-line:name }
      => { make(<command-line-alias>,
-	       name:  ?#"name",
-	       title: as-uppercase(?"name"),
-	       alias: "$" ## ?command-line ## "-command-line") }
+               name:  ?#"name",
+               title: as-uppercase(?"name"),
+               alias: "$" ## ?command-line ## "-command-line") }
    { group ?group:name }
      => { "$" ## ?group ## "-command-group" }
 end macro command-group-definer;
@@ -168,9 +168,9 @@ define method do-command-group-objects
   for (info :: <command-info> in contents)
     select (info by instance?)
       <command-group> =>
-	do-command-group-objects(function, info, type: type);
+        do-command-group-objects(function, info, type: type);
       otherwise =>
-	instance?(info, type) & function(info);
+        instance?(info, type) & function(info);
     end
   end
 end method do-command-group-objects;
@@ -186,9 +186,9 @@ define function collect-command-info
      group);
   if (sort?)
     sort!(objects,
-	  test: method (info1 :: <command-info>, info2 :: <command-info>)
-		  info1.command-info-title < info2.command-info-title
-		end)
+          test: method (info1 :: <command-info>, info2 :: <command-info>)
+                  info1.command-info-title < info2.command-info-title
+                end)
   else
     objects
   end
@@ -201,9 +201,9 @@ define function find-command-info
   block (return)
     do-command-group-objects
       (method (command-info :: <command-info>)
-	 if (name == command-info.command-info-name)
-	   return(command-info)
-	 end
+         if (name == command-info.command-info-name)
+           return(command-info)
+         end
        end,
        group, type: type);
     #f
@@ -218,7 +218,7 @@ define function command-line-aliases
   do-command-group-command-lines
     (method (line :: <command-line>)
        if (line.command-info-command-class == command-class & line ~== command-line)
-	 add!(aliases, line)
+         add!(aliases, line)
        end
      end,
      group);
@@ -263,16 +263,16 @@ end class <parse-error>;
 
 define method command-error
     (format-string :: <string>, #rest format-arguments)
-  error(make(<command-error>, 
-	     format-string: format-string,
-	     format-arguments: format-arguments))
+  error(make(<command-error>,
+             format-string: format-string,
+             format-arguments: format-arguments))
 end method command-error;
 
 define method parse-error
     (format-string :: <string>, #rest format-arguments)
-  error(make(<parse-error>, 
-	     format-string: format-string,
-	     format-arguments: format-arguments))
+  error(make(<parse-error>,
+             format-string: format-string,
+             format-arguments: format-arguments))
 end method parse-error;
 
 define open generic display-command-prompt
@@ -310,14 +310,14 @@ define function display-condition
  => ()
   let error-message :: <string>
     = block ()
-	condition-to-string(condition)
+        condition-to-string(condition)
       exception (error :: <error>)
-	block ()
-	  format-to-string("*** Crashed printing condition of class %=: %s",
-			   condition.object-class, error)
-	exception (<error>)
-	  "*** Crashed printing error, and then printing crash condition"
-	end
+        block ()
+          format-to-string("*** Crashed printing condition of class %=: %s",
+                           condition.object-class, error)
+        exception (<error>)
+          "*** Crashed printing error, and then printing crash condition"
+        end
       end;
   message(context, "");
   message(context, "%s%s", prefix, error-message)
@@ -342,12 +342,12 @@ define method tokenize-string
     if (position <= stop)
       let end-position = position;
       while (end-position > old-position & is-whitespace?(string[end-position - 1]))
-	end-position := end-position - 1
+        end-position := end-position - 1
       end;
       add!(tokens, copy-sequence(string, start: old-position, end: end-position));
       old-position := position + 1;
       while (old-position < stop & is-whitespace?(string[old-position]))
-	old-position := old-position + 1
+        old-position := old-position + 1
       end;
       position := old-position
     end;
@@ -380,10 +380,10 @@ define method command-line-for-command-class
   block (return)
     do-command-group-command-lines
       (method (command-line :: <command-line>)
-	 if (~instance?(command-line, <command-line-alias>)
-	       & command-class == command-line.command-info-command-class)
-	   return(command-line)
-	 end
+         if (~instance?(command-line, <command-line-alias>)
+               & command-class == command-line.command-info-command-class)
+           return(command-line)
+         end
        end,
        context.context-command-group);
     #f
@@ -427,8 +427,8 @@ define method parameter-name-and-type
   let type = parameter.parameter-type;
   let type-name
     = select (type)
-	<boolean> => #f;
-	otherwise => type.parameter-type-name | as-lowercase(name);
+        <boolean> => #f;
+        otherwise => type.parameter-type-name | as-lowercase(name);
       end;
   if (type-name)
     format-to-string("%c%s %s", $option-prefix, name, type-name)
@@ -467,27 +467,27 @@ define method execute-command-line
     end;
     let (command, complete?, string)
       = block ()
-	  parse-command-line(server, string)
-	exception (error :: <command-line-server-error>)
-	  display-command-line-server-error(context, error);
-	  return(#f);
-	end;
+          parse-command-line(server, string)
+        exception (error :: <command-line-server-error>)
+          display-command-line-server-error(context, error);
+          return(#f);
+        end;
     case
       ~complete? =>
-	server.server-incomplete-command-line := string;
-	#f;
+        server.server-incomplete-command-line := string;
+        #f;
       ~command =>
-	error("No command returned for '%s'", string);
-	#f;
+        error("No command returned for '%s'", string);
+        #f;
       instance?(command, <exit-command>) =>
-	#t;
+        #t;
       otherwise =>
-	block ()
-	  execute-server-command(server, command)
-	exception (error :: <command-line-server-error>)
-	  display-command-line-server-error(context, error)
-	end;
-	#f;
+        block ()
+          execute-server-command(server, command)
+        exception (error :: <command-line-server-error>)
+          display-command-line-server-error(context, error)
+        end;
+        #f;
     end
   end
 end method execute-command-line;
@@ -503,9 +503,9 @@ define method execute-server-command
       execute-command(command)
     results
       message(context, "Command took %d.%s seconds, and allocated %d bytes",
-	      cpu-time-seconds, 
-	      integer-to-string(floor/(cpu-time-microseconds, 1000), size: 3),
-	      allocation)
+              cpu-time-seconds,
+              integer-to-string(floor/(cpu-time-microseconds, 1000), size: 3),
+              allocation)
     end
   else
     execute-command(command)
@@ -524,38 +524,38 @@ define method parse-command-line
   end;
   let stop :: <integer> = text.size;
   local method skip-whitespace
-	    (start :: <integer>) => (next :: <integer>)
-	  while (start < stop & is-whitespace?(text[start]))
-	    start := start + 1
-	  end;
-	  start
-	end method skip-whitespace;
+            (start :: <integer>) => (next :: <integer>)
+          while (start < stop & is-whitespace?(text[start]))
+            start := start + 1
+          end;
+          start
+        end method skip-whitespace;
   let context = server.server-context;
   block (return)
     let (class, next-index)
       = if (class)
-	  values(class, 0)
-	else
-	  let start = skip-whitespace(0);
-	  if (start < text.size)
-	    class-for-command-line(context, text, start: start)
-	  else
-	    unless (last-command)
-	      parse-error("No previous command to execute")
-	    end;
+          values(class, 0)
+        else
+          let start = skip-whitespace(0);
+          if (start < text.size)
+            class-for-command-line(context, text, start: start)
+          else
+            unless (last-command)
+              parse-error("No previous command to execute")
+            end;
             //---*** andrewa: how can we get display the last command?
-	    // message(context, "Repeating: %s", last-command);
-	    return(last-command, #t, text)
-	  end
-	end;
+            // message(context, "Repeating: %s", last-command);
+            return(last-command, #t, text)
+          end
+        end;
     let (arguments, complete?)
       = parse-command-line-arguments(server, class, text, start: next-index);
     let command
       = if (complete?)
-	  apply(make, class,
-		server: context,
-		arguments)
-	end;
+          apply(make, class,
+                server: context,
+                arguments)
+        end;
     let complete? = complete? & command-complete?(context, command);
     values(command, complete?, text)
   end
@@ -569,13 +569,13 @@ define method class-for-command-line
   let (command-line, next-index)
     = parse-next-argument
         (context, <command-line>, command-line,
-	 start: start, end: stop);
+         start: start, end: stop);
   values(command-line.command-info-command-class, next-index)
 end method class-for-command-line;
 
 define inline method parse-next-word
-    (text :: <string>, 
-     #key start :: <integer> = 0, 
+    (text :: <string>,
+     #key start :: <integer> = 0,
           end: stop :: false-or(<integer>) = #f,
           separators :: <sequence> = $whitespace)
  => (word :: false-or(<string>), next-index :: <integer>)
@@ -588,15 +588,15 @@ define inline method parse-next-word
       next-index := next-index + 1
     end;
     values(if (start < next-index)
-	     copy-sequence(text, start: start, end: next-index)
-	   end,
-	   next-index)
+             copy-sequence(text, start: start, end: next-index)
+           end,
+           next-index)
   end
 end method parse-next-word;
 
 define inline method parse-next-string
-    (text :: <string>, 
-     #key start :: <integer> = 0, 
+    (text :: <string>,
+     #key start :: <integer> = 0,
           end: stop :: <integer> = text.size,
           separators :: <sequence> = $whitespace)
  => (word :: <string>, next-index :: <integer>)
@@ -608,16 +608,16 @@ define inline method parse-next-string
   end;
   unless (next-index < stop)
     parse-error("Missing closing quote in '%s'",
-		copy-sequence(text, start: start, end: stop))
+                copy-sequence(text, start: start, end: stop))
   end;
   values(copy-sequence(text, start: start + 1, end: next-index),
-	 next-index + 1)
+         next-index + 1)
 end method parse-next-string;
 
 define method parse-command-line-arguments
     (server :: <command-line-server>, class :: subclass(<command>),
      text :: <string>,
-     #key start :: <integer> = 0, 
+     #key start :: <integer> = 0,
           end: stop :: false-or(<integer>) = #f)
  => (results :: <stretchy-object-vector>, complete? :: <boolean>)
   let stop :: <integer> = stop | text.size;
@@ -625,12 +625,12 @@ define method parse-command-line-arguments
   let results :: <stretchy-object-vector> = make(<stretchy-object-vector>);
 
   local method skip-whitespace
-	    (start :: <integer>) => (next :: <integer>)
-	  while (start < stop & is-whitespace?(text[start]))
-	    start := start + 1
-	  end;
-	  start
-	end method skip-whitespace;
+            (start :: <integer>) => (next :: <integer>)
+          while (start < stop & is-whitespace?(text[start]))
+            start := start + 1
+          end;
+          start
+        end method skip-whitespace;
 
   let (arguments, optionals, keywords) = command-parameters(class);
   let arguments = as(<deque>, arguments);
@@ -640,37 +640,37 @@ define method parse-command-line-arguments
     let char :: <character> = text[start];
     let parameter :: false-or(<command-line-parameter>)
       = case
-	  ~empty?(arguments) => first(arguments);
-	  ~empty?(optionals) => first(optionals);
-	  otherwise          => #f;
-	end;
+          ~empty?(arguments) => first(arguments);
+          ~empty?(optionals) => first(optionals);
+          otherwise          => #f;
+        end;
     let (keyword :: <symbol>, value :: <object>, next-index :: <integer>)
       = case
-	  instance?(parameter, <optional-parameter>)
-	    & subtype?(parameter.parameter-type, <string>) =>
-	    let keyword = parameter.parameter-keyword;
-	    let type = parameter.parameter-type;
-	    let value
-	      = as(type, copy-sequence(text, start: start, end: stop));
-	    values(keyword, value, stop);
-	  char == $option-prefix | char == $standard-option-prefix =>
-	    parse-next-option
-	      (context, text, keywords, start: start + 1, end: stop);
-	  parameter =>
-	    case
-	      ~empty?(arguments) => pop(arguments);
-	      ~empty?(optionals) => pop(optionals);
-	    end;
-	    let keyword = parameter.parameter-keyword;
-	    let type = parameter.parameter-type;
-	    let (value, next-index)
-	      = parse-next-argument
-	          (context, type, text, start: start, end: stop);
-	    values(keyword, value, next-index);
-	  otherwise =>
-	    parse-error("Unexpected command argument: %s",
-			copy-sequence(text, start: start));
-	end;
+          instance?(parameter, <optional-parameter>)
+            & subtype?(parameter.parameter-type, <string>) =>
+            let keyword = parameter.parameter-keyword;
+            let type = parameter.parameter-type;
+            let value
+              = as(type, copy-sequence(text, start: start, end: stop));
+            values(keyword, value, stop);
+          char == $option-prefix | char == $standard-option-prefix =>
+            parse-next-option
+              (context, text, keywords, start: start + 1, end: stop);
+          parameter =>
+            case
+              ~empty?(arguments) => pop(arguments);
+              ~empty?(optionals) => pop(optionals);
+            end;
+            let keyword = parameter.parameter-keyword;
+            let type = parameter.parameter-type;
+            let (value, next-index)
+              = parse-next-argument
+                  (context, type, text, start: start, end: stop);
+            values(keyword, value, next-index);
+          otherwise =>
+            parse-error("Unexpected command argument: %s",
+                        copy-sequence(text, start: start));
+        end;
     add!(results, keyword);
     add!(results, value);
     start := skip-whitespace(next-index)
@@ -683,70 +683,70 @@ define method parse-next-option
      #key start :: <integer> = 0, end: stop = #f)
  => (keyword :: <symbol>, value :: <object>, next-index :: <integer>)
   local method skip-whitespace
-	    (start :: <integer>) => (next :: <integer>)
-	  while (start < stop & is-whitespace?(text[start]))
-	    start := start + 1
-	  end;
-	  start
-	end method skip-whitespace,
+            (start :: <integer>) => (next :: <integer>)
+          while (start < stop & is-whitespace?(text[start]))
+            start := start + 1
+          end;
+          start
+        end method skip-whitespace,
 
         method find-parameter-info
-	    (option-word :: <string>)
-	 => (keyword :: false-or(<symbol>), type :: false-or(<type>))
-	  block (return)
-	    for (parameter :: <keyword-parameter> in keywords)
-	      if (parameter.parameter-name = option-word)
-		let keyword = parameter.parameter-keyword;
-		let type = parameter.parameter-type;
-		return(keyword, type)
-	      end
-	    end;
-	    values(#f, #f)
-	  end
-	end method find-parameter-info;
+            (option-word :: <string>)
+         => (keyword :: false-or(<symbol>), type :: false-or(<type>))
+          block (return)
+            for (parameter :: <keyword-parameter> in keywords)
+              if (parameter.parameter-name = option-word)
+                let keyword = parameter.parameter-keyword;
+                let type = parameter.parameter-type;
+                return(keyword, type)
+              end
+            end;
+            values(#f, #f)
+          end
+        end method find-parameter-info;
 
   let (next-word, next-index) = parse-next-word(text, start: start, end: stop);
   let (option-word, option-next-index)
     = parse-next-word
-        (text, start: start, end: next-index, 
-	 separators: $option-argument-separators);
+        (text, start: start, end: next-index,
+         separators: $option-argument-separators);
   let option-word = as-uppercase(option-word);
   let (keyword, type) = find-parameter-info(option-word);
   let option-separator? = option-next-index ~== next-index;
   case
     keyword =>
       case
-	type == <boolean> & ~option-separator? =>
-	  values(keyword, #t, next-index);
-	option-separator? =>
-	  let start = option-next-index + 1;
-	  if (start == stop)
-	    parse-error("Missing argument to option '%s'",
-			option-word)
-	  end;
-	  let (value, option-next-index)
-	    = parse-next-argument
-	        (context, type, text, start: start, end: next-index);
-	  assert(next-index == option-next-index,
-		 "Unexpectedly didn't read all of option!");
-	  values(keyword, value, next-index);
-	otherwise =>
-	  let start = skip-whitespace(next-index);
-	  if (start == stop)
-	    parse-error("Missing argument to option '%s'",
-			option-word)
-	  end;
-	  let (value, next-index)
-	    = parse-next-argument
-		(context, type, text, start: start, end: stop);
-	  values(keyword, value, next-index);
+        type == <boolean> & ~option-separator? =>
+          values(keyword, #t, next-index);
+        option-separator? =>
+          let start = option-next-index + 1;
+          if (start == stop)
+            parse-error("Missing argument to option '%s'",
+                        option-word)
+          end;
+          let (value, option-next-index)
+            = parse-next-argument
+                (context, type, text, start: start, end: next-index);
+          assert(next-index == option-next-index,
+                 "Unexpectedly didn't read all of option!");
+          values(keyword, value, next-index);
+        otherwise =>
+          let start = skip-whitespace(next-index);
+          if (start == stop)
+            parse-error("Missing argument to option '%s'",
+                        option-word)
+          end;
+          let (value, next-index)
+            = parse-next-argument
+                (context, type, text, start: start, end: stop);
+          values(keyword, value, next-index);
       end;
     option-word.size > 2 & option-word[0] = 'N' & option-word[1] = 'O' =>
       let (keyword, type)
-	= find-parameter-info(copy-sequence(option-word, start: 2));
+        = find-parameter-info(copy-sequence(option-word, start: 2));
       select (type)
-	<boolean> => values(keyword, #f, next-index);
-	otherwise => parse-error("Unrecognized option '%s'", option-word);
+        <boolean> => values(keyword, #f, next-index);
+        otherwise => parse-error("Unrecognized option '%s'", option-word);
       end;
     otherwise =>
       parse-error("Unrecognized option '%s'", option-word);
@@ -774,7 +774,7 @@ define method command-line-loop
   while (~ exit?)
     block ()
       unless (server.server-incomplete-command-line)
-	new-line(output-stream);
+        new-line(output-stream);
         display-command-prompt(output-stream, context);
         force-output(output-stream);
       end;
@@ -803,7 +803,7 @@ define macro command-line-definer
       ?parameters:*
     end }
     => { define command-line-class ?name (?options) ?parameters end;
-         define command-line-constant ?name => "<" ## ?name ## "-command>" (?options) 
+         define command-line-constant ?name => "<" ## ?name ## "-command>" (?options)
            ?parameters
          end }
 
@@ -821,15 +821,15 @@ define macro command-line-constant-definer
     end }
     => { define constant "$" ## ?name ## "-command-line"
            = make(<basic-command-line>,
-		  ?options,
-		  command-class: ?command,
-		  name:          ?#"name",
-		  title:         as-uppercase(?"name"));
+                  ?options,
+                  command-class: ?command,
+                  name:          ?#"name",
+                  title:         as-uppercase(?"name"));
          define sideways method command-raw-parameters
-	     (class == ?command)
-	  => (parameters :: <sequence>)
-	   vector(?parameters)
-	 end }
+             (class == ?command)
+          => (parameters :: <sequence>)
+           vector(?parameters)
+         end }
 
  parameters:
    { } => { }
@@ -838,40 +838,40 @@ define macro command-line-constant-definer
  parameter:
    { argument ?name:name :: ?type:expression = ?summary:expression }
      => { make(<required-parameter>,
-	       name: as-uppercase(?"name"),
-	       keyword: ?#"name",
-	       type: ?type,
-	       summary: ?summary) }
+               name: as-uppercase(?"name"),
+               keyword: ?#"name",
+               type: ?type,
+               summary: ?summary) }
    { required ?name:name :: ?type:expression = ?summary:expression }
      => { make(<required-parameter>,
-	       name: as-uppercase(?"name"),
-	       keyword: ?#"name",
-	       type: ?type,
-	       summary: ?summary) }
+               name: as-uppercase(?"name"),
+               keyword: ?#"name",
+               type: ?type,
+               summary: ?summary) }
    { optional ?name:name :: ?type:expression = ?summary:expression }
      => { make(<optional-parameter>,
-	       name: as-uppercase(?"name"),
-	       keyword: ?#"name",
-	       type: ?type,
-	       summary: ?summary) }
+               name: as-uppercase(?"name"),
+               keyword: ?#"name",
+               type: ?type,
+               summary: ?summary) }
    { keyword ?name:name :: <boolean> = ?summary:expression }
      => { make(<keyword-parameter>,
-	       name: as-uppercase(?"name"),
-	       keyword: ?#"name" ## "?",
-	       type: <boolean>,
-	       summary: ?summary) }
+               name: as-uppercase(?"name"),
+               keyword: ?#"name" ## "?",
+               type: <boolean>,
+               summary: ?summary) }
    { keyword ?name:name :: ?type:expression = ?summary:expression }
      => { make(<keyword-parameter>,
-	       name: as-uppercase(?"name"),
-	       keyword: ?#"name",
-	       type: ?type,
-	       summary: ?summary) }
+               name: as-uppercase(?"name"),
+               keyword: ?#"name",
+               type: ?type,
+               summary: ?summary) }
    { flag ?name:name = ?summary:expression }
      => { make(<keyword-parameter>,
-	       name: as-uppercase(?"name"),
-	       keyword: ?#"name" ## "?",
-	       type: <boolean>,
-	       summary: ?summary) }
+               name: as-uppercase(?"name"),
+               keyword: ?#"name" ## "?",
+               type: <boolean>,
+               summary: ?summary) }
 end macro command-line-constant-definer;
 
 
@@ -926,9 +926,9 @@ define method command-line-choose-file
 
     case
       ~filename => values(#f, #f);
-        
+
       empty?(filename) => values(#f, #f);
-        
+
       file-exists?(filename) =>
         let locator = as(<file-locator>, filename);
         values(if (locator-relative?(locator))
@@ -976,12 +976,12 @@ define method parse-next-argument
   if (boolean)
     let true?
       = select (as-lowercase(boolean) by \=)
-	  "yes", "on" => #t;
-	  "no", "off" => #f;
-	  otherwise =>
-	    parse-error("Unrecognized option '%s' for boolean argument",
-			boolean);
-	end;
+          "yes", "on" => #t;
+          "no", "off" => #f;
+          otherwise =>
+            parse-error("Unrecognized option '%s' for boolean argument",
+                        boolean);
+        end;
     values(true?, next-index)
   else
     parse-error("Missing boolean argument")
@@ -1003,7 +1003,7 @@ define method parse-next-argument
   let stop :: <integer> = stop | text.size;
   if (stop > start)
     values(as(type, copy-sequence(text, start: start, end: stop)),
-	   stop)
+           stop)
   else
     parse-error("Missing argument")
   end
@@ -1096,7 +1096,7 @@ define method parse-next-argument
   let (keyword, next-index)
     = parse-next-word(text, start: start, end: stop);
   if (keyword)
-    let options 
+    let options
       = tokenize-string(text, $option-separator, start: start, end: stop);
     values(map(curry(as, <symbol>), options), next-index)
   else
@@ -1133,8 +1133,8 @@ define method parse-next-argument
       values(info, next-index)
     else
       parse-error("No %s named '%s'",
-		  command-info-class-title(type),
-		  name-string)
+                  command-info-class-title(type),
+                  name-string)
     end
   else
     parse-error("Missing %s argument", command-info-class-title(type))
