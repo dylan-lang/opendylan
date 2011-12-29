@@ -749,7 +749,7 @@ define method parse-next-option
         otherwise => parse-error("Unrecognized option '%s'", option-word);
       end;
     otherwise =>
-      parse-error("Unrecognized option '%s'", option-word);
+      parse-error("Unrecognized option '%s', try -help", option-word);
   end
 end method parse-next-option;
 
