@@ -62,20 +62,20 @@ end function;
 define compiler-sideways method dfm-context-id (env :: <environment>) => (context-id-or-false)
   let path = #f;
   block (return)
-    for (cursor = env then cursor.outer.lambda-environment, 
+    for (cursor = env then cursor.outer.lambda-environment,
          while: cursor & cursor.lambda)
       let debug-name = cursor.lambda.^debug-name;
       if (debug-name)
         let debug-string = as-lowercase(as(<string>, debug-name));
-        path := if (path) 
-                  concatenate(debug-string, ".", path) 
-                else 
+        path := if (path)
+                  concatenate(debug-string, ".", path)
+                else
                   debug-string
                 end;
       end;
       /*
       let def? = cursor.lambda.model-has-definition?;
-      if (def?) 
+      if (def?)
         return(cursor.lambda.^debug-name);
       end;
       */
@@ -83,11 +83,11 @@ define compiler-sideways method dfm-context-id (env :: <environment>) => (contex
       path;
     end
   exception (<error>)
-    #f; 
+    #f;
   end;
 end method;
 
-define compiler-sideways method dfm-context-id 
+define compiler-sideways method dfm-context-id
     (comp :: <computation>) => (context-id-or-false)
   dfm-context-id(comp.environment);
 end method;
@@ -141,18 +141,18 @@ define inline function pack-any-to-bool(x) => (z :: <integer>)
   pack-boolean(~ ( ~ x))
 end function;
 
-define leaf packed-slots mvc-properties 
+define leaf packed-slots mvc-properties
     (<multiple-value-context>, <object>)
   eval slot mvc-rest? = #t,
-    field-size: 1, 
+    field-size: 1,
     pack-function: pack-any-to-bool,
     unpack-function: unpack-boolean;
-  field slot mvc-num-values = 0, 
+  field slot mvc-num-values = 0,
     field-size: $max-number-values-field-size;
 end packed-slots;
 
 define method initialize
-    (context :: <multiple-value-context>, #rest all-keys, 
+    (context :: <multiple-value-context>, #rest all-keys,
      #key mvc-num-values, mvc-rest? = #"not")
   next-method();
   apply(initialize-packed-slots, context, all-keys);
@@ -168,7 +168,7 @@ define method make-mvc-cache
     (rest? :: <boolean>) => (res :: <simple-object-vector>)
   let cache = make(<simple-object-vector>, size: $max-number-values);
   for (i from 0 below $max-number-values)
-    cache[i] 
+    cache[i]
       := make(<multiple-value-context>, mvc-num-values: i, mvc-rest?: rest?);
   end for;
   cache
@@ -177,7 +177,7 @@ end method;
 define variable *mvc-caches-initialized?* = #f;
 
 define sealed method make
-    (class == <multiple-value-context>, 
+    (class == <multiple-value-context>,
      #key mvc-rest? = #f, mvc-num-values = 0, #all-keys)
  => (res :: <multiple-value-context>)
   if (*mvc-caches-initialized?*)
@@ -200,8 +200,8 @@ define method print-object(c :: <value-context>, s :: <stream>) => ()
   select (c by instance?)
     <ignore-value-context> => format(s, "$ignore");
     <single-value-context> => format(s, "$single");
-    <multiple-value-context> 
-      => format(s, "(%d,%s)", mvc-num-values(c), 
+    <multiple-value-context>
+      => format(s, "(%d,%s)", mvc-num-values(c),
           if (mvc-rest?(c)) "#rest" else "" end);
   end select;
 end method;
@@ -234,8 +234,8 @@ define method context-rest?(c :: <ignore-value-context>) => (ans :: <boolean>)
   #f
 end method;
 
-// define method make (class == <multiple-value-context>, #rest all-keys, 
-// 		    #key has-rest?, num-values, initial? = #f)
+// define method make (class == <multiple-value-context>, #rest all-keys,
+//                     #key has-rest?, num-values, initial? = #f)
 //   if ((~ local?) & has-rest? & (num-values = 0) & (~ initial?))
 //     $all-rest;
 //   else
@@ -244,8 +244,8 @@ end method;
 // end method;
 
 define constant $all-rest :: <multiple-value-context>
-  = make(<multiple-value-context>, mvc-rest?: #t, 
-	 mvc-num-values: 0);
+  = make(<multiple-value-context>, mvc-rest?: #t,
+         mvc-num-values: 0);
 
 define method do-convert
     (env :: <environment>, context :: <value-context>, object)
@@ -254,8 +254,8 @@ end method;
 
 define method do-convert
     (env :: <environment>, context :: <value-context>, f :: <fragment>)
-  with-parent-fragment (f) 
-    convert(env, context, f) 
+  with-parent-fragment (f)
+    convert(env, context, f)
   end;
 end method;
 
@@ -272,16 +272,16 @@ define generic convert-reference
 // object :: type-union(singleton(#f), <variable-reference>, <multiple-value-temporary>)
 define generic match-values-with-context
     (env :: <environment>, context :: <value-context>,
-     first :: false-or(<computation>), last :: false-or(<computation>), 
-     object)      
- => (first :: false-or(<computation>), last :: false-or(<computation>), 
+     first :: false-or(<computation>), last :: false-or(<computation>),
+     object)
+ => (first :: false-or(<computation>), last :: false-or(<computation>),
      temp :: false-or(<value-reference>));
 
 define method match-values-with-context
     (env :: <environment>, context :: <value-context>,
-     first :: false-or(<computation>), last :: false-or(<computation>), 
+     first :: false-or(<computation>), last :: false-or(<computation>),
      object)
- => (first :: false-or(<computation>), last :: false-or(<computation>), 
+ => (first :: false-or(<computation>), last :: false-or(<computation>),
      temp :: false-or(<value-reference>))
   format-out("XXXXX mvwc no matching specializers\n\tcontext=%=, obj=%=.\n", context, object);
   format-out("\t classes: context=%=, obj=%=.\n",
@@ -293,11 +293,11 @@ end method;
 
 define function record-context-in-mvt!
     (context :: <value-context>, mvt :: <multiple-value-temporary>) => ()
-  let (num-vals, rest?) = 
+  let (num-vals, rest?) =
     select (context by instance?)
       <ignore-value-context> => values(0, #f);
       <single-value-context> => values(1, #f);
-      <multiple-value-context> 
+      <multiple-value-context>
         => values(mvc-num-values(context), mvc-rest?(context));
   end select;
   mvt.required-values := num-vals;
@@ -309,9 +309,9 @@ end function;
 // ... and nothing is expected
 define method match-values-with-context
     (env :: <environment>, context :: <ignore-value-context>,
-     first :: false-or(<computation>), last :: false-or(<computation>), 
+     first :: false-or(<computation>), last :: false-or(<computation>),
      object :: <multiple-value-temporary>)
- => (first :: false-or(<computation>), last :: false-or(<computation>), 
+ => (first :: false-or(<computation>), last :: false-or(<computation>),
      temp :: false-or(<value-reference>))
   record-context-in-mvt!(context, object);
   values(first, last, #f)
@@ -320,9 +320,9 @@ end method;
 // ... and one thing is expected
 define method match-values-with-context
     (env :: <environment>, context :: <single-value-context>,
-     first :: false-or(<computation>), last :: false-or(<computation>), 
+     first :: false-or(<computation>), last :: false-or(<computation>),
      object :: <multiple-value-temporary>)
- => (first :: false-or(<computation>), last :: false-or(<computation>), 
+ => (first :: false-or(<computation>), last :: false-or(<computation>),
      temp :: false-or(<value-reference>))
   record-context-in-mvt!(context, object);
   let (extract-c, extract-t)
@@ -334,9 +334,9 @@ end method;
 // ... and multiple things are expected
 define method match-values-with-context
     (env :: <environment>, context :: <multiple-value-context>,
-     first :: false-or(<computation>), last :: false-or(<computation>), 
+     first :: false-or(<computation>), last :: false-or(<computation>),
      object :: <multiple-value-temporary>)
- => (first :: false-or(<computation>), last :: false-or(<computation>), 
+ => (first :: false-or(<computation>), last :: false-or(<computation>),
      temp :: false-or(<value-reference>))
   record-context-in-mvt!(context, object);
   values(first, last, object);
@@ -347,9 +347,9 @@ end method;
 // ... and nothing is expected
 define inline method match-values-with-context
     (env :: <environment>, context :: <ignore-value-context>,
-     first :: false-or(<computation>), last :: false-or(<computation>), 
+     first :: false-or(<computation>), last :: false-or(<computation>),
      object == #f)
- => (first :: false-or(<computation>), last :: false-or(<computation>), 
+ => (first :: false-or(<computation>), last :: false-or(<computation>),
      temp :: false-or(<value-reference>))
   values(first, last, #f)
 end method;
@@ -357,9 +357,9 @@ end method;
 // ... and one thing is expected
 define method match-values-with-context
     (env :: <environment>, context :: <single-value-context>,
-     first :: false-or(<computation>), last :: false-or(<computation>), 
+     first :: false-or(<computation>), last :: false-or(<computation>),
      object == #f)
- => (first :: false-or(<computation>), last :: false-or(<computation>), 
+ => (first :: false-or(<computation>), last :: false-or(<computation>),
      temp :: false-or(<value-reference>))
   // return ^#f
   values(first, last, make-object-reference(#f))
@@ -368,9 +368,9 @@ end method;
 // ... and multiple things are expected
 define method match-values-with-context
     (env :: <environment>, context :: <multiple-value-context>,
-     first :: false-or(<computation>), last :: false-or(<computation>), 
+     first :: false-or(<computation>), last :: false-or(<computation>),
      object == #f)
- => (first :: false-or(<computation>), last :: false-or(<computation>), 
+ => (first :: false-or(<computation>), last :: false-or(<computation>),
      temp :: false-or(<value-reference>))
   let mv = pad-multiple-values(env, context);  // fill with #f
   let (values-c, values-t) = convert-values(env, mv, #f);
@@ -378,7 +378,7 @@ define method match-values-with-context
 end method;
 
 define function pad-multiple-values
-    (env :: <environment>, context :: <value-context>, 
+    (env :: <environment>, context :: <value-context>,
      #rest references)
  => (res :: <simple-object-vector>)
   let required  = context-num-values(context);
@@ -401,9 +401,9 @@ end function;
 
 define inline method match-values-with-context
     (env :: <environment>, context :: <ignore-value-context>,
-     first :: false-or(<computation>), last :: false-or(<computation>), 
+     first :: false-or(<computation>), last :: false-or(<computation>),
      object :: <value-reference>)
- => (first :: false-or(<computation>), last :: false-or(<computation>), 
+ => (first :: false-or(<computation>), last :: false-or(<computation>),
      temp :: false-or(<value-reference>));
   values(first, last, #f)
 end method;
@@ -411,9 +411,9 @@ end method;
 // ... and one thing is expected
 define inline method match-values-with-context
     (env :: <environment>, context :: <single-value-context>,
-     first :: false-or(<computation>), last :: false-or(<computation>), 
+     first :: false-or(<computation>), last :: false-or(<computation>),
      object :: <value-reference>)
- => (first :: false-or(<computation>), last :: false-or(<computation>), 
+ => (first :: false-or(<computation>), last :: false-or(<computation>),
      temp :: false-or(<value-reference>));
   // how convenient
   values(first, last, object)
@@ -422,9 +422,9 @@ end method;
 // ... and multiple things are expected
 define inline method match-values-with-context
     (env :: <environment>, context :: <multiple-value-context>,
-     first :: false-or(<computation>), last :: false-or(<computation>), 
+     first :: false-or(<computation>), last :: false-or(<computation>),
      object :: <value-reference>)
- => (first :: false-or(<computation>), last :: false-or(<computation>), 
+ => (first :: false-or(<computation>), last :: false-or(<computation>),
      temp :: false-or(<value-reference>));
   let mv = pad-multiple-values(env, context, object);  // pad with #f
   let (values-c, values-t) = convert-values(env, mv, #f);
@@ -433,35 +433,35 @@ end method;
 
 /// TEMPORARY-VALUE-CONTEXT
 
-define method temporary-value-context 
+define method temporary-value-context
     (tmp :: <temporary>) => (res :: <value-context>)
  $single
 end method;
 
-define method temporary-value-context 
+define method temporary-value-context
     (tmp :: <multiple-value-temporary>) => (res :: <value-context>)
-  make(<multiple-value-context>, 
+  make(<multiple-value-context>,
        mvc-num-values: required-values(tmp),
        mvc-rest?: rest-values?(tmp));
 end method;
 
-define method temporary-value-context 
+define method temporary-value-context
     (tmp == #f) => (res :: <value-context>)
  $ignore
 end method;
 
 define inline function match-values-with-temporary
-    (env :: <environment>, temporary :: false-or(<temporary>), 
-     first :: false-or(<computation>), last :: false-or(<computation>), 
+    (env :: <environment>, temporary :: false-or(<temporary>),
+     first :: false-or(<computation>), last :: false-or(<computation>),
      object :: false-or(<value-reference>))
- => (first :: false-or(<computation>), last :: false-or(<computation>), 
+ => (first :: false-or(<computation>), last :: false-or(<computation>),
      temp :: false-or(<value-reference>))
   match-values-with-context
     (env, temporary-value-context(temporary), first, last, object)
 end function;
 
-define inline function convert-value-reference 
-    (env :: <environment>, context :: <value-context>, object, 
+define inline function convert-value-reference
+    (env :: <environment>, context :: <value-context>, object,
      class :: subclass(<value-reference>))
  => (first :: false-or(<computation>), last :: false-or(<computation>), ref :: false-or(<value-reference>))
   let value = if (context == $ignore) #f else object end;
@@ -480,7 +480,7 @@ define inline function convert-binding-value-reference
     (env, context, #f, #f, reference);
 end;
 
-define inline method convert-object-reference 
+define inline method convert-object-reference
     (env :: <environment>, context :: <value-context>, object)
  => (first :: false-or(<computation>), last :: false-or(<computation>), ref :: false-or(<value-reference>))
   convert-value-reference(env, context, object, <object-reference>)
@@ -521,7 +521,7 @@ end method;
 // TODO: MIGHT NOT BE NEEDED -- MORE OF A STOP-GAP FIRE-WALL
 
 define method convert-reference
-    (env :: <environment>, context :: <value-context>, 
+    (env :: <environment>, context :: <value-context>,
      object :: <&lambda-or-code>, #key)
  => (first :: false-or(<computation>), last :: false-or(<computation>), ref :: false-or(<value-reference>))
   convert-method-reference(env, context, object)
@@ -537,29 +537,25 @@ end serious-program-warning;
 define thread variable *generating-undefined-reference-warning* = #f;
 
 define method convert-reference
-    (env :: <environment>, context :: <value-context>, 
+    (env :: <environment>, context :: <value-context>,
      var :: <module-binding>, #key fragment)
- => (first :: false-or(<computation>), last :: false-or(<computation>), 
+ => (first :: false-or(<computation>), last :: false-or(<computation>),
        temp :: false-or(<value-reference>))
-  if (binding-definition-missing?(var) 
+  if (binding-definition-missing?(var)
         & ~*generating-undefined-reference-warning*)
     note(<undefined-binding-reference>,
-	 source-location: fragment & fragment-source-location(fragment),
-	 context-id:      dfm-context-id(env),
-	 variable-name:   var);
-    let restart-message
-      = concatenate("Retry reference to binding \"",
-	            as(<string>, fragment | binding-identifier(var)),
-                    "\".");
-    let error-message
-      = concatenate("Reference to undefined binding \"",
-	            as(<string>, fragment | binding-identifier(var)),
-                    "\".");
+         source-location: fragment & fragment-source-location(fragment),
+         context-id:      dfm-context-id(env),
+         variable-name:   var);
+    let binding-name = as(<string>, fragment | binding-identifier(var));
+    let restart-message = "Retry reference to binding \"%s\".";
+    let error-message = "Reference to undefined binding \"%s\".";
     let (check-first, check-last, check-t)
       = dynamic-bind (*generating-undefined-reference-warning* = #t)
-          do-convert(env, $single, 
+          do-convert(env, $single,
                      #{ while (?var == ?&unbound)
-                          cerror(?restart-message, ?error-message);
+                          cerror(?restart-message, ?error-message,
+                                 ?binding-name);
                         end;
                         ?var });
         end;
@@ -573,17 +569,17 @@ define method convert-reference
     // TODO: check inlining before doing this.
     if (found? & inlineable?)
       convert-object-reference(env, context, inline-object);
-    elseif (constant?(var)) 
+    elseif (constant?(var))
       convert-binding-value-reference(env, context, var)
     else
       if (context == $ignore)
-	convert-object-reference(env, context, #f)
-      else 
+        convert-object-reference(env, context, #f)
+      else
         let (computation, temporary)
-	  = make-with-temporary(env, <variable-reference>, value: var);
-	add-user!(var, computation);
-	match-values-with-context
-	  (env, context, computation, computation, temporary);
+          = make-with-temporary(env, <variable-reference>, value: var);
+        add-user!(var, computation);
+        match-values-with-context
+          (env, context, computation, computation, temporary);
       end if
     end
   end
@@ -598,8 +594,8 @@ define method convert-reference
     (env, context, #f, #f, reference);
 end method;
 
-define method convert-reference 
-    (env :: <environment>, context :: <value-context>, 
+define method convert-reference
+    (env :: <environment>, context :: <value-context>,
      ref :: <value-reference>, #key fragment)
  => (first :: false-or(<computation>), last :: false-or(<computation>), ref :: false-or(<value-reference>))
   if (context == $ignore)
@@ -621,8 +617,8 @@ define serious-program-warning <macro-value-reference> (<manual-parser-error>)
   format-arguments variable-name;
 end serious-program-warning;
 
-define method convert-reference 
-    (env :: <environment>, context :: <value-context>, 
+define method convert-reference
+    (env :: <environment>, context :: <value-context>,
      name :: <variable-name-fragment>, #key)
  => (first :: false-or(<computation>), last :: false-or(<computation>), ref :: false-or(<value-reference>))
   // TODO: DONT REGISTER DEPENDENCIES IF CONTEXT = $ignore
@@ -632,19 +628,19 @@ define method convert-reference
     // Doesn't return
   end;
   let (binding, type, found-env) = lookup(env, name);
-  if (binding 
+  if (binding
         & instance?(binding, <module-binding>)
-        & instance?(binding-definition(binding, default: #f), 
+        & instance?(binding-definition(binding, default: #f),
                       <expander-defining-form>))
     /*
     note(<macro-value-reference>,
          source-location: fragment-source-location(name),
          context-id:      dfm-context-id(env),
          variable-name:   name);
-    convert-error-call(env, context, 
-		       concatenate("Reference to macro \"",
-				   as(<string>, name),
-				   "\" as a run-time value."))
+    convert-error-call(env, context,
+                       concatenate("Reference to macro \"",
+                                   as(<string>, name),
+                                   "\" as a run-time value."))
     */
     convert-using-definition
       (env, context, binding-definition(binding), name);
@@ -652,14 +648,14 @@ define method convert-reference
     when (found-env) // NOT TOP LEVEL ENVIRONMENT
       let lambda-env = lambda-environment(env);
       when (lambda-env ~== lambda-environment(found-env))
-	lambda-has-free-references?(lambda(lambda-env)) := #t;
+        lambda-has-free-references?(lambda(lambda-env)) := #t;
       end when;
     end when;
-    if (found-env 
+    if (found-env
           & instance?(binding, <object-reference>)
           & instance?(reference-value(binding), <&macro>))
       format-out("Local reference macro.");
-      let expander 
+      let expander
         = macro-expander-function
             (expander-macro-object(reference-value(binding)));
       let expansion = expander(env, name);
@@ -710,7 +706,7 @@ define function extract-single-value
   if (t.multiple-values?)
     let (extract-c, extract-t)
       = make-with-temporary(last.environment, <extract-single-value>,
-			    value: t);
+                            value: t);
     if (t.generator == last)
       join-2x1-t!(first, last, extract-c, extract-t)
     else
@@ -723,14 +719,14 @@ define function extract-single-value
 end function;
 
 define method convert-values
-    (env :: <environment>, 
+    (env :: <environment>,
      required :: <simple-object-vector>, rest :: false-or(<value-reference>))
  => (values-c :: <values>, mv-t :: <multiple-value-temporary>)
   let (values-c, mv-t)
     = make-with-temporary(env, <values>,
-			  values:          required,
+                          values:          required,
                           rest-value:      rest,
-			  temporary-class: <multiple-value-temporary>);
+                          temporary-class: <multiple-value-temporary>);
   mv-t.required-values := size(required);
   mv-t.rest-values?    := rest ~== #f;
   values(values-c, mv-t)
@@ -766,7 +762,7 @@ define method primitive-temporary-class (primitive :: <&primitive>)
     select (^signature-number-values(signature))
       0         => #f;
       1         => <temporary>;
-      otherwise => <multiple-value-temporary>; 
+      otherwise => <multiple-value-temporary>;
     end
   end
 end method;
@@ -786,9 +782,9 @@ define function convert-primitive-call
   let (call, temporary)
     = make-with-temporary
         (env, class,
-	 temporary-class: temporary-class,
-	 primitive: primitive,
-	 arguments: temporaries);
+         temporary-class: temporary-class,
+         primitive: primitive,
+         arguments: temporaries);
   if (instance?(temporary, <multiple-value-temporary>))
     record-context-in-mvt!(context, temporary);
   end if;
@@ -814,7 +810,7 @@ end program-warning;
 define inline function side-effect-free-function? // used once
     (value :: <&function>) => (well? :: <boolean>)
   // Just = for now, since this is such a common special case. Note that we
-  // do this test here because we don't currently have a good way to 
+  // do this test here because we don't currently have a good way to
   // distinguish real not-used cases from "discovered" not-used cases
   // mid-optimization.
   value == dylan-value(#"=")
@@ -823,15 +819,15 @@ end function;
 define inline function unused-value-context? // used once
     (context :: <value-context>) => (well? :: <boolean>)
   // This doesn't seem to get canonicalized as you might hope...
-  context == $ignore 
+  context == $ignore
     | (instance?(context, <multiple-value-context>)
-	 & mvc-num-values(context) == 0
+         & mvc-num-values(context) == 0
          & ~mvc-rest?(context))
 end function;
 
 define function convert-function-call
     (env :: <environment>, context :: <value-context>,
-     class :: subclass(<function-call>), form, function-form, argument-forms, 
+     class :: subclass(<function-call>), form, function-form, argument-forms,
      #key temporary-class = context-temporary-class(context), typecheck-function? = #t)
  => (first :: <computation>, last :: <computation>, ref :: false-or(<value-reference>))
   let (first, function-last, function) = convert-1(env, function-form);
@@ -839,21 +835,21 @@ define function convert-function-call
   // assure callable at run-time
   let (cv?, value) = fast-constant-value?(function);   // e.g. function :: <method-reference>
 
-  let (first, last, fun-temp) = 
+  let (first, last, fun-temp) =
     if (typecheck-function?)
       if (cv?)
-	if (~instance?(value, <&function>))
-	  note(<operator-not-a-function>,
-	       source-location: fragment-source-location(function-form),
+        if (~instance?(value, <&function>))
+          note(<operator-not-a-function>,
+               source-location: fragment-source-location(function-form),
                context-id:      dfm-context-id(env),
-	       variable-name:   function);
-	  let (error-first, error-last, error-t)
-	    = convert-error-call(env, context, 
-				 format-to-string("Operator is not a function: \"%=\".", function));
-	  join-2x2-t!(first, function-last,
-		      error-first, error-last, error-t);
+               variable-name:   function);
+          let (error-first, error-last, error-t)
+            = convert-error-call(env, context,
+                                 format-to-string("Operator is not a function: \"%=\".", function));
+          join-2x2-t!(first, function-last,
+                      error-first, error-last, error-t);
         else
-          if (unused-value-context?(context) 
+          if (unused-value-context?(context)
                 & side-effect-free-function?(value))
             note(<function-call-result-not-used>,
                  source-location: fragment-source-location(function-form),
@@ -861,15 +857,15 @@ define function convert-function-call
                  variable-name:   value.model-variable-name);
           end;
           values(first, function-last, function);
-	end if;
+        end if;
       else  // if not constant, must check dynamically
-	let function-type-temp =
-	  make-object-reference(dylan-value(#"<function>"));
-	let (check-c, check-t) =
-	  make-with-temporary
-	    (env, <check-type>,
-	     value: function , type: function-type-temp);
-	join-2x1-t!(first, function-last, check-c, check-t);
+        let function-type-temp =
+          make-object-reference(dylan-value(#"<function>"));
+        let (check-c, check-t) =
+          make-with-temporary
+            (env, <check-type>,
+             value: function , type: function-type-temp);
+        join-2x1-t!(first, function-last, check-c, check-t);
       end if;
     else
       values(first, function-last, function);
@@ -898,9 +894,9 @@ define function convert-error-call
   let temporary = make-object-reference(error-string);
   let (call, temporary)
     = make-with-temporary(env, <simple-call>,
-			  temporary-class: context-temporary-class(context),
-			  function: function,
-			  arguments: vector(temporary));
+                          temporary-class: context-temporary-class(context),
+                          function: function,
+                          arguments: vector(temporary));
   if (instance?(temporary, <multiple-value-temporary>))
     record-context-in-mvt!(context, temporary);
   end if;
@@ -908,13 +904,13 @@ define function convert-error-call
     (env, context, call, call, temporary);
 end;
 
-define method convert-body 
+define method convert-body
     (env :: <environment>, context :: <value-context>, body)
  => (first :: false-or(<computation>), last :: false-or(<computation>), ref :: false-or(<value-reference>))
   convert-body(env, context, as-body(body))
 end method;
 
-define method convert-body 
+define method convert-body
     (env :: <environment>, context :: <value-context>, body :: <body-fragment>)
  => (first :: false-or(<computation>), last :: false-or(<computation>), ref :: false-or(<value-reference>))
   convert-body(env, context, body.fragment-constituents);
@@ -928,7 +924,7 @@ end method;
 
 define method convert-body
     (env :: <environment>, context :: <value-context>, forms :: <pair>)
- => (first :: false-or(<computation>), last :: false-or(<computation>), 
+ => (first :: false-or(<computation>), last :: false-or(<computation>),
      ref :: false-or(<value-reference>))
   iterate grovel (first = #f, last = #f, forms = forms)
     if (empty?(forms.tail))
@@ -1007,13 +1003,13 @@ define method convert-if
 
   let (merge, temporary)
     = make-with-temporary
-	(env, <if-merge>,
-	 temporary-class: merge-t-class,
-	 previous-computation: if-c,
-	 left-previous-computation:  then-last | if-c,
-	 right-previous-computation: else-last | if-c,
-	 left-value:  then-t,
-	 right-value: else-t);
+        (env, <if-merge>,
+         temporary-class: merge-t-class,
+         previous-computation: if-c,
+         left-previous-computation:  then-last | if-c,
+         right-previous-computation: else-last | if-c,
+         left-value:  then-t,
+         right-value: else-t);
   if (instance?(temporary, <multiple-value-temporary>))
     record-context-in-mvt!(context, temporary);
   end if;
@@ -1035,11 +1031,11 @@ define method convert-block
     (env :: <environment>, context :: <value-context>,
      class :: subclass(<block>), name, form)
  => (block-c :: <computation>, block-t :: <temporary>,
-     body-first :: false-or(<computation>), 
+     body-first :: false-or(<computation>),
      body-last :: false-or(<computation>),
      body-t :: type-union(<object-reference>, false-or(<temporary>)),
      entry-state :: <entry-state>)
-  let (block-c, block-t, es, body-env) 
+  let (block-c, block-t, es, body-env)
     = convert-entry-state(env, context, class, name);
   let (body-first, body-last, body-t) =
     do-convert(body-env, context, form);
@@ -1047,7 +1043,7 @@ define method convert-block
 end method convert-block;
 
 define method convert-entry-state
-    (env :: <environment>, context :: <value-context>, 
+    (env :: <environment>, context :: <value-context>,
      class :: subclass(<block>), name)
  => (block-c :: <computation>, block-t :: <temporary>,
      entry-state :: <entry-state>, new-env :: <environment>)
@@ -1067,11 +1063,11 @@ define method convert-entry-state
   entry-state.me-block := block-c;
   lambda-env.entries := add!(lambda-env.entries, entry-state);
   let new-env = if (name)
-		  make-local-lexical-environment
+                  make-local-lexical-environment
                     (name, entry-state, #f, env)
-		else
-		  env
-		end if;
+                else
+                  env
+                end if;
   values(block-c, block-t, entry-state, new-env)
 end method convert-entry-state;
 
@@ -1081,7 +1077,7 @@ end method convert-entry-state;
 // !@#$ THIS MIGHT JUST BE BETTER ACCOMPLISHED BY HAVING SEPARATE ENV
 // !@#$ BUT CURRENTLY THAT DOESN'T WORK BECAUSE OF BROKEN ENV MERGING CODE
 
-define thread variable *bind-exit-name-counter* = 0; 
+define thread variable *bind-exit-name-counter* = 0;
 
 // TODO: CORRECTNESS: What is the hygiene context of this generated variable?
 
@@ -1125,7 +1121,7 @@ define method convert-bind-exit
         (env, <bind-exit-merge>,
          left-value: block-t,
          left-previous-computation: block-c,
-	 right-value: body-t,
+         right-value: body-t,
          right-previous-computation: body-last,
          temporary-class: <multiple-value-temporary>);
   record-context-in-mvt!(context, merge-t);
@@ -1145,8 +1141,8 @@ define method convert-return-from
   let (exit, exit-temporary) // exit-temporary is vestigial
     = make-with-temporary
         (env, <exit>,
-	 entry-state: entry-state, value: mv-t,
-	 temporary-class: <multiple-value-temporary>);
+         entry-state: entry-state, value: mv-t,
+         temporary-class: <multiple-value-temporary>);
   record-context-in-mvt!(context, exit-temporary);
   add-user!(entry-state, exit);
   entry-state.exits := add!(entry-state.exits, exit);
@@ -1154,7 +1150,7 @@ define method convert-return-from
 end method convert-return-from;
 
 define method convert-unwind-protect
-    (env :: <environment>, context :: <value-context>, 
+    (env :: <environment>, context :: <value-context>,
      protected-forms, cleanup-forms)
   let (block-c, block-t, body-first, body-last, body-t, es)
     = convert-block(env, context, <unwind-protect>, #f, protected-forms);
@@ -1191,7 +1187,7 @@ end method;
 define program-warning <assignment-to-own-value>
   slot condition-variable-name,
     required-init-keyword: variable-name:;
-  format-string 
+  format-string
     "Suspicious assignment %s := %s of a variable to its own value.";
   format-arguments variable-name, variable-name again;
 end program-warning;
@@ -1201,16 +1197,16 @@ define program-warning <wrong-type-in-assignment>
     required-init-keyword: variable-name:;
   slot condition-type,
     required-init-keyword: type:;
-  slot condition-rhs, 
+  slot condition-rhs,
     required-init-keyword: rhs:;
   format-string    "Illegal assignment of variable \"%=\" of type %= to %=.";
   format-arguments variable-name, type, rhs;
 end program-warning;
 
 define method convert-dynamic-assignment-check
-    (env :: <environment>, context :: <value-context>, 
+    (env :: <environment>, context :: <value-context>,
        binding :: <binding>, the-name, value-temp)
- => (first :: false-or(<computation>), last :: false-or(<computation>), 
+ => (first :: false-or(<computation>), last :: false-or(<computation>),
        ref :: false-or(<value-reference>))
   // Punt.
   values(#f, #f, value-temp)
@@ -1218,13 +1214,13 @@ end method;
 
 /*
 define method convert-dynamic-assignment-check
-    (env :: <environment>, context :: <value-context>, 
+    (env :: <environment>, context :: <value-context>,
        binding :: <module-binding>, the-name, value-temp)
- => (first :: false-or(<computation>), last :: false-or(<computation>), 
+ => (first :: false-or(<computation>), last :: false-or(<computation>),
        ref :: false-or(<value-reference>))
   let type-temp
     = make(<type-reference>, binding: binding);
-  let (c, t) 
+  let (c, t)
     = make-with-temporary
         (env, <assignment-check-type>,
          value: value-temp , type: type-temp,
@@ -1234,7 +1230,7 @@ end method;
 */
 
 define method convert-assignment-with-binding
-    (env :: <environment>, context :: <value-context>, binding :: <binding>, 
+    (env :: <environment>, context :: <value-context>, binding :: <binding>,
        the-name, the-value, fragment)
  => (first :: <computation>, last :: <computation>, ref :: false-or(<value-reference>))
   ignore(fragment);
@@ -1245,12 +1241,12 @@ define method convert-assignment-with-binding
          // context-id: dfm-context-id(env),
          variable-name: the-name);
   end if;
-  let (first, last, temp, ok?) 
+  let (first, last, temp, ok?)
     = values(value-first, value-last, value-temp, #t);
 
   // check type of rhs
-  // STILL TO DO:  add support for dynamic types.  Currently, only constant 
-  //   types are dealt with.  
+  // STILL TO DO:  add support for dynamic types.  Currently, only constant
+  //   types are dealt with.
 
   let binding-type = binding-type(binding);
 
@@ -1268,14 +1264,14 @@ define method convert-assignment-with-binding
                  source-location: fragment-source-location(fragment));
             ok? := #f;
             convert-error-call
-              (env, context, 
+              (env, context,
                format-to-string("Illegal assignment of variable \"%=\" of type %= to %=.",
                the-name, binding-type, rhs-value))
           end if;
-	elseif (inlineable?(binding-type))// if rhs not a constant, gen. dynamic type check
-          let (type-first, type-last, type-temp) 
+        elseif (inlineable?(binding-type))// if rhs not a constant, gen. dynamic type check
+          let (type-first, type-last, type-temp)
             = convert-reference(env, $single, binding-type);
-          let (c, t) 
+          let (c, t)
             = make-with-temporary
                 (env, <assignment-check-type>,
                  value: value-temp , type: type-temp,
@@ -1291,12 +1287,12 @@ define method convert-assignment-with-binding
           (env, context, binding, the-name, value-temp);
       end if;
 
-  let (first, last, temp) 
+  let (first, last, temp)
     = join-2x2-t!(first, last, check-first, check-last, check-temp);
 
   let (assignment-c, temp)
     = if (ok?)
-        let (c, t) 
+        let (c, t)
           = make-with-temporary
               (env, <set!>, binding: binding, value: temp);
         record-binding-assignment(binding, c);
@@ -1341,8 +1337,8 @@ define program-warning <constant-binding-assignment>
   format-arguments variable-name;
 end program-warning;
 
-define method convert-assignment-with-binding 
-    (env :: <environment>, context :: <value-context>, 
+define method convert-assignment-with-binding
+    (env :: <environment>, context :: <value-context>,
      variable :: <module-binding>, the-name, the-value, fragment)
  => (first :: <computation>, last :: <computation>, ref :: false-or(<value-reference>))
   if (defined?(variable))
@@ -1350,23 +1346,23 @@ define method convert-assignment-with-binding
       next-method()
     else
       note(<constant-binding-assignment>,
-	   source-location: fragment-source-location(fragment),
-	   context-id:      dfm-context-id(env),
-	   variable-name:   variable);
+           source-location: fragment-source-location(fragment),
+           context-id:      dfm-context-id(env),
+           variable-name:   variable);
       convert-error-call(env, context,
-			 concatenate("Assignment to constant binding \"",
-				     as(<string>, the-name),
-				     "\"."))
+                         concatenate("Assignment to constant binding \"",
+                                     as(<string>, the-name),
+                                     "\"."))
     end
   else
     note(<undefined-binding-assignment>,
-	 source-location: fragment-source-location(fragment),
-	 context-id:      dfm-context-id(env),
-	 variable-name:   variable);
+         source-location: fragment-source-location(fragment),
+         context-id:      dfm-context-id(env),
+         variable-name:   variable);
     convert-error-call(env, context,
-		       concatenate("Assignment to undefined binding \"",
-				   as(<string>, the-name),
-				   "\"."))
+                       concatenate("Assignment to undefined binding \"",
+                                   as(<string>, the-name),
+                                   "\"."))
   end;
 end method;
 
@@ -1375,7 +1371,7 @@ define serious-program-warning <interactor-binding-assignment>
     required-init-keyword: variable-name:;
   format-string    "Assignment to the constant interactor binding %=.";
   format-arguments variable-name;
-end serious-program-warning;       
+end serious-program-warning;
 
 define method convert-assignment-with-binding
     (env :: <environment>, context :: <value-context>,
@@ -1388,8 +1384,7 @@ define method convert-assignment-with-binding
   convert-error-call
     (env, context, concatenate("Assignment to interactor binding \"",
                                as(<string>, the-name), "\"."));
-
-end method;       
+end method;
 
 define method convert-assignment
     (env :: <environment>, context :: <value-context>,
@@ -1418,26 +1413,26 @@ define function parse-parameters-into-d
     = 0;
   local method add-to-variables!(variable)
           variables[var-index] := variable;
-	  var-index := var-index + 1;
-	  variable
-	end,
-	method push-variable! (name, variable)
+          var-index := var-index + 1;
+          variable
+        end,
+        method push-variable! (name, variable)
           add-to-variables!(add-variable!(lambda-env, name, variable));
         end,
         method insert-rest-variable! (name)
           push-variable!(name,
-			 make(<lexical-rest-variable>,
-			      name: name,
-			      environment: lambda-env));
-	end;
+                         make(<lexical-rest-variable>,
+                              name: name,
+                              environment: lambda-env));
+        end;
   let object-type = dylan-value(#"<object>");
   for (var-spec in required-specs)
     let name = spec-variable-name(var-spec);
     push-variable!(name,
-		   make(<lexical-required-variable>,
-			name: name,
-			environment: lambda-env,
-			specializer: object-type));
+                   make(<lexical-required-variable>,
+                        name: name,
+                        environment: lambda-env,
+                        specializer: object-type));
   end;
   if (spec-rest?)
     insert-rest-variable!
@@ -1448,8 +1443,8 @@ define function parse-parameters-into-d
   end;
   for (key-spec in key-specs)
     add-to-variables!(make(<lexical-keyword-variable>,
-			   name: spec-variable-name(key-spec),
-			   environment: lambda-env));
+                           name: spec-variable-name(key-spec),
+                           environment: lambda-env));
   end;
   values(variables, keys-start)
 end;
@@ -1461,29 +1456,29 @@ define method implicit-rest-variable-name ()
 end method;
 
 define function bind-local-variable (env :: <environment>,
-				     name :: <variable-name-fragment>,
-				     type)
+                                     name :: <variable-name-fragment>,
+                                     type)
  => (new-env :: <local-lexical-environment>,
      variable :: <lexical-local-variable>)
   let type-value = if (instance?(type, <value-reference>))
-		     fast-constant-value(type)
-		   else
-		     type
-		   end;
+                     fast-constant-value(type)
+                   else
+                     type
+                   end;
   let variable = make(<lexical-local-variable>,
-		      name: name,
-		      specializer: instance?(type-value, <&type>) &
-			             type-value,
-		      environment: lambda-environment(env));
-  values(make-local-lexical-environment(name, variable,	type, env),
-	 variable)
+                      name: name,
+                      specializer: instance?(type-value, <&type>) &
+                                     type-value,
+                      environment: lambda-environment(env));
+  values(make-local-lexical-environment(name, variable,        type, env),
+         variable)
 end;
 
-define function make-key-variable-specifiers-vector 
-    (env :: <environment>, specs :: <variable-specs>) 
+define function make-key-variable-specifiers-vector
+    (env :: <environment>, specs :: <variable-specs>)
  => (vector :: <simple-object-vector>, shared-keys :: <object-table>)
   let key-counts = make(<object-table>);
-  for (spec in specs, index :: <integer> from 0) 
+  for (spec in specs, index :: <integer> from 0)
     let key = &eval(env, spec-keyword-expression(spec));
     let entry = element(key-counts, key, default: #f);
     if (entry)
@@ -1523,9 +1518,9 @@ define function convert-keyword-initialization-d
   let (key-literal?, key-literal-value) =
     if (instance?(default-expression, <literal-constant-fragment>))
       let key-literal-value =
-	make-compile-time-literal(fragment-value(default-expression));
+        make-compile-time-literal(fragment-value(default-expression));
       if (static-type & ^instance?(key-literal-value, static-type))
-	values(#t, key-literal-value)
+        values(#t, key-literal-value)
       end;
     end;
   let (new-env, new-keys-first, new-keys-last, defaulted-value) =
@@ -1533,24 +1528,24 @@ define function convert-keyword-initialization-d
       specifiers[j] := key;
       specifiers[j + 1] := key-literal-value;
       values(make-local-lexical-environment(name, variable, type-temp, env),
-	     keys-first, keys-last, variable)
+             keys-first, keys-last, variable)
     else
       // TODO: TIGHTEN UP EXTRACT AFTER WORKING
       specifiers[j] := key;
       specifiers[j + 1] := &unbound;
       let function =
-	make-dylan-reference(#"==");
-      let unbound-temp 
-	= make-object-reference(&unbound);
+        make-dylan-reference(#"==");
+      let unbound-temp
+        = make-object-reference(&unbound);
       let (call, temporary) =
-	make-with-temporary(env, <simple-call>,
-			    function: function,
-			    arguments: vector(variable, unbound-temp));
+        make-with-temporary(env, <simple-call>,
+                            function: function,
+                            arguments: vector(variable, unbound-temp));
       let (keys-first, keys-last)
-	= join-2x1!(keys-first, keys-last, call);
+        = join-2x1!(keys-first, keys-last, call);
 
       let (default-first, default-last, default-t) =
-	convert-1(env, default-expression);
+        convert-1(env, default-expression);
       // TODO: MOVE THIS INTO MERGE
       let (default-mt, default-mt-t) =
         // We mustn't eliminate the defaulting code if an input keyword
@@ -1568,27 +1563,27 @@ define function convert-keyword-initialization-d
              value: default-t);
         end;
       let (default-first, default-last)
-	= join-2x1!(default-first, default-last, default-mt);
+        = join-2x1!(default-first, default-last, default-mt);
       let (new-env, new-variable) =
-	bind-local-variable(env, name, #f);
+        bind-local-variable(env, name, #f);
       let if-c = make-in-environment
                    (env, <if>, test: temporary,
                     consequent: default-first, alternative: #f);
       let merge-c =
-	make-in-environment
+        make-in-environment
           (env, <if-merge>,
-	   left-value: default-mt-t,
-	   left-previous-computation: default-mt,
-	   right-value: variable,
-	   right-previous-computation: if-c,
-	   temporary: new-variable,
-	   previous-computation: if-c);
+           left-value: default-mt-t,
+           left-previous-computation: default-mt,
+           right-value: variable,
+           right-previous-computation: if-c,
+           temporary: new-variable,
+           previous-computation: if-c);
       new-variable.generator := merge-c;
       if-c.next-computation  := merge-c;
       if-c.alternative       := merge-c;
       default-mt.next-computation := merge-c;
       let (keys-first, keys-last)
-	= join-2x2!(keys-first, keys-last, if-c, merge-c);
+        = join-2x2!(keys-first, keys-last, if-c, merge-c);
       default-first.previous-computation := if-c;
       values(new-env, keys-first, keys-last, new-variable)
     end;
@@ -1597,8 +1592,8 @@ define function convert-keyword-initialization-d
     values(new-env, new-keys-first, new-keys-last)
   else
     let (new-keys-first, new-keys-last)
-      = join-2x2!(new-keys-first, new-keys-last, 
-		  type-first, type-last);
+      = join-2x2!(new-keys-first, new-keys-last,
+                  type-first, type-last);
     let (new-env, new-variable) =
       bind-local-variable(new-env, name, type-temp);
     let check-c =
@@ -1618,7 +1613,7 @@ end;
 // This method generates an environment for use in converting the
 // keyword defaults and body of the method. It returns the new
 // environment and the variable temporary for the name. The use
-// of this name is watched, and the code to initialize the 
+// of this name is watched, and the code to initialize the
 // next-method function generated only if necessary.
 
 define method bind-next-method
@@ -1631,7 +1626,7 @@ define method bind-next-method
   bind-local-variable(env, next-method-name, #f);
 end method;
 
-// This function is called if the next-method variable is referenced in 
+// This function is called if the next-method variable is referenced in
 // order to generate whatever code is necesary.
 
 // TODO: Lots of things. It may be that there should be a next-method
@@ -1641,7 +1636,7 @@ end method;
 // for testing, and generate only the appropriate code. I suspect that
 // most of the time we won't have to worry about making it look like #f
 // since people don't seem to do that test much in practice. If it is
-// tested we can "split" the temporary according to role if that makes 
+// tested we can "split" the temporary according to role if that makes
 // analysis easier. There's a generic optimisation behind this kind of
 // splitting that we should think about first, however.
 
@@ -1654,7 +1649,7 @@ define method convert-next-method-into
      next-ref :: <value-reference>)
  => ()
   f.^function-next? := #t;
-  let fragment 
+  let fragment
     = generate-next-method-function-fragment(f, signature-spec, next-ref);
   let (f-start, f-end, f-temp) = convert-1(env, fragment);
   insert-computations-after!(f.body, f-start, f-end);
@@ -1670,7 +1665,7 @@ end method;
 // could generate the next-method function with a fixed number of
 // arguments in most cases.
 
-define method rest-name 
+define method rest-name
     (f :: <&lambda>, signature-spec :: <signature-spec>) => (res)
   if (spec-argument-optionals?(signature-spec))
     let rest-spec = spec-argument-rest-variable-spec(signature-spec);
@@ -1682,7 +1677,7 @@ define method rest-name
   end;
 end method;
 
-define method generate-next-method-function-fragment 
+define method generate-next-method-function-fragment
     (f :: <&lambda>, sig-spec :: <signature-spec>, next-temp) => (fragment)
   let capture
     = #{ let _next-methods_ :: <list> = primitive-next-methods-parameter() };
@@ -1692,8 +1687,8 @@ define method generate-next-method-function-fragment
     = map(spec-variable-name, required-specs);
   let rest-name
     = rest-name(f, sig-spec);
-  let all-names 
-    = if (rest-name) 
+  let all-names
+    = if (rest-name)
         concatenate(required-names, list(rest-name));
       else
         required-names;
@@ -1705,8 +1700,8 @@ define method generate-next-method-function-fragment
     = #{ %method-apply
            (_next-methods_.head, _next-methods_.tail, _next-method-args_) };
   let fragment
-    = #{ ?capture; 
-         method (#rest _next-method-args_) 
+    = #{ ?capture;
+         method (#rest _next-method-args_)
            %dynamic-extent(_next-method-args_);
            if (_next-methods_ ~== #())
              if (empty?(_next-method-args_))
@@ -1766,11 +1761,11 @@ define method convert-copy-rest-into
  => ()
   lambda-rest?(f) := #t;
   let rest-name = rest-name(f, sig-spec);
-  let fragment 
-    = if (dynamic-extent?(rest-ref) == #t) 
-	#{ ?rest-name }
-      else 
-	#{ primitive-copy-vector(?rest-name) }
+  let fragment
+    = if (dynamic-extent?(rest-ref) == #t)
+        #{ ?rest-name }
+      else
+        #{ primitive-copy-vector(?rest-name) }
       end;
   let (f-start, f-end, f-temp) = convert-1(env, fragment);
   insert-computations-after!(f.body, f-start, f-end);
@@ -1780,7 +1775,7 @@ end method;
 //// Lambda body DFM generation.
 
 define function convert-lambda-into*-d
-    (env :: <environment>, function-t :: <value-reference>, 
+    (env :: <environment>, function-t :: <value-reference>,
      f :: <&lambda>, the-body)
   let sig-spec = signature-spec(f);
   let lambda-env = make(<lambda-lexical-environment>, outer: env, lambda: f);
@@ -1809,7 +1804,7 @@ define function convert-lambda-into*-d
   for (var-spec in spec-argument-required-variable-specs(sig-spec),
        index from 0)
     let (type-first, type-last, type-t) =
-      convert-required-type(lambda-env, function-t, index); 
+      convert-required-type(lambda-env, function-t, index);
     let (_vars-first, _vars-last)
       = join-2x2!(vars-first, vars-last, type-first, type-last);
     let (constant-type?, constant-type-value) = fast-constant-value?(type-t);
@@ -1833,11 +1828,11 @@ define function convert-lambda-into*-d
   end;
   let key-variable-specs = spec-argument-key-variable-specs(sig-spec);
   if (~empty?(key-variable-specs))
-    let (specifiers, key-counts) 
+    let (specifiers, key-counts)
       = make-key-variable-specifiers-vector(env, key-variable-specs);
     for (key-spec in key-variable-specs,
          key-var-index :: <integer> from keys-start,
-	 key-index :: <integer> from 0)
+         key-index :: <integer> from 0)
       // Does this key-spec share a key with other key specs, and
       // if so, is it the input variable they all share?
       let key = &eval(env, spec-keyword-expression(key-spec));
@@ -1846,14 +1841,14 @@ define function convert-lambda-into*-d
       let shared? = (entry.tail ~== 1);
       let input? = (shared-index == key-index);
       let var = variables[key-var-index];
-      let input-var 
-        = if (shared?) 
+      let input-var
+        = if (shared?)
             variables[keys-start + shared-index]
-          else 
+          else
             var
           end;
       let (new-env, new-vars-first, new-vars-last) =
-	convert-keyword-initialization-d
+        convert-keyword-initialization-d
           (inner-env, function-t, vars-first, vars-last, key-spec,
            key, input-var, shared?, input?, specifiers, key-index);
       inner-env := new-env;
@@ -1863,7 +1858,7 @@ define function convert-lambda-into*-d
   end if;
   let required-values
     = spec-value-required-variable-specs(sig-spec);
-  let rest-type      
+  let rest-type
     = spec-value-rest-variable-spec(sig-spec);
   let number-of-required-values
     = size(required-values);
@@ -1875,7 +1870,7 @@ define function convert-lambda-into*-d
     = make(<simple-object-vector>, size: number-of-required-values);
   for (i :: <integer> from 0 below number-of-required-values)
     let (type-first, type-last, type-temp) =
-      convert-value-type(lambda-env, function-t, i); 
+      convert-value-type(lambda-env, function-t, i);
     let (_types-first, _types-last)
       = join-2x2!(ret-types-first, ret-types-last, type-first, type-last);
     ret-types-first := _types-first;
@@ -1887,31 +1882,31 @@ define function convert-lambda-into*-d
     = if (rest-type)
         let (type-first, type-last, type-temp) =
           convert-rest-value-type(lambda-env, function-t);
-	let type-temp
-	  = type-checked-at-run-time?(fast-constant-value(type-temp)) & type-temp;
+        let type-temp
+          = type-checked-at-run-time?(fast-constant-value(type-temp)) & type-temp;
         join-2x2-t!(ret-types-first, ret-types-last, type-first, type-last, type-temp);
       else
         values(ret-types-first, ret-types-last, #f)
       end if;
   let (body-first, body-last, value-temp)
     = convert-body
-        (inner-env, make(<multiple-value-context>, 
-			 mvc-num-values: number-of-required-values, 
-			 mvc-rest?: rest-type), 
+        (inner-env, make(<multiple-value-context>,
+                         mvc-num-values: number-of-required-values,
+                         mvc-rest?: rest-type),
          the-body);
-  let (vars-first, body-last) 
+  let (vars-first, body-last)
     = join-2x2!(vars-first, ret-types-last, body-first, body-last);
 
-  let (types-first, adj-temp) = 
-    // if an exact signature (no #rest return), enforce the correct number of 
+  let (types-first, adj-temp) =
+    // if an exact signature (no #rest return), enforce the correct number of
     // returned values
     if (~ rest-type)
-      let (adj-c, adj-t) = 
+      let (adj-c, adj-t) =
         make-with-temporary
-	  (lambda-env, <adjust-multiple-values>,
-	   value: value-temp,
-	   number-of-required-values: number-of-required-values,
-	   temporary-class: <multiple-value-temporary>);
+          (lambda-env, <adjust-multiple-values>,
+           value: value-temp,
+           number-of-required-values: number-of-required-values,
+           temporary-class: <multiple-value-temporary>);
         mvt-transfer-values!(value-temp, adj-t);
         join-1x1!(body-last, adj-c);
         values(adj-c, adj-t);
@@ -1922,15 +1917,15 @@ define function convert-lambda-into*-d
   let (types-last, check-temp) =
     if (rest-type-temp)
       let (check-c, check-temp) =
-	make-with-temporary
-	  (lambda-env, <multiple-value-result-check-type-rest>,
-	   value:           adj-temp,
-	   types:           fixed-types,
-	   rest-type:       rest-type-temp,
-	   temporary-class: <multiple-value-temporary>);
+        make-with-temporary
+          (lambda-env, <multiple-value-result-check-type-rest>,
+           value:           adj-temp,
+           types:           fixed-types,
+           rest-type:       rest-type-temp,
+           temporary-class: <multiple-value-temporary>);
       mvt-transfer-values!(adj-temp, check-temp);
       let (types-first, types-last)
-	= join-1x1!(types-first, check-c);
+        = join-1x1!(types-first, check-c);
       values(types-last, check-temp)
     elseif (size(fixed-types) = 0 /* | (size(fixed-types) = 1 & ~fixed-types[0]) */)
       // no types to check
@@ -1945,14 +1940,14 @@ define function convert-lambda-into*-d
     //    values(types-last, value-temp)
     else
       let (check-c, check-temp) =
-	make-with-temporary
-	  (lambda-env, <multiple-value-result-check-type>,
-	   value:           adj-temp,
-	   types:           fixed-types,
-	   temporary-class: <multiple-value-temporary>);
+        make-with-temporary
+          (lambda-env, <multiple-value-result-check-type>,
+           value:           adj-temp,
+           types:           fixed-types,
+           temporary-class: <multiple-value-temporary>);
       mvt-transfer-values!(adj-temp, check-temp);
       let (types-first, types-last)
-	= join-1x1!(types-first, check-c);
+        = join-1x1!(types-first, check-c);
       values(types-last, check-temp);
     end;
   let return
@@ -1982,7 +1977,7 @@ end function convert-lambda-into*-d;
 define function function-temporary-make-closure
     (function-t :: <temporary>) => (res :: false-or(<make-closure>))
   let gen = generator(function-t);
-  if (instance?(gen, <make-closure>)) 
+  if (instance?(gen, <make-closure>))
     gen
   end if
 end function;
@@ -1992,25 +1987,25 @@ define inline method ^signature-type*
  => (type :: false-or(<&type>), found? :: <boolean>)
   let types = static-accessor(sig);
   let type  = if (index)
-		element(types, index)
-	      else
-		types
-	      end if;
+                element(types, index)
+              else
+                types
+              end if;
   let type? = instance?(type, <&type>);
   values(type? & type, type?)
 end method;
 
 define method ^function-signature-type*
-    (function-t :: <value-reference>, 
-     static-accessor :: <function>, dynamic-accessor :: <function>, 
+    (function-t :: <value-reference>,
+     static-accessor :: <function>, dynamic-accessor :: <function>,
      index :: false-or(<integer>))
  => (type :: false-or(<&type>), found? :: <boolean>)
   values(#f, #f)
 end method;
 
 define method ^function-signature-type*
-    (function-t :: <method-reference>, 
-     static-accessor :: <function>, dynamic-accessor :: <function>, 
+    (function-t :: <method-reference>,
+     static-accessor :: <function>, dynamic-accessor :: <function>,
      index :: false-or(<integer>))
  => (type :: false-or(<&type>), found? :: <boolean>)
   let sig = ^function-signature(reference-value(function-t));
@@ -2020,8 +2015,8 @@ define method ^function-signature-type*
 end method;
 
 define method ^function-signature-type*
-    (function-t :: <temporary>, 
-     static-accessor :: <function>, dynamic-accessor :: <function>, 
+    (function-t :: <temporary>,
+     static-accessor :: <function>, dynamic-accessor :: <function>,
      index :: false-or(<integer>))
  => (type :: false-or(<&type>), found? :: <boolean>)
   let mc = function-temporary-make-closure(function-t);
@@ -2029,23 +2024,23 @@ define method ^function-signature-type*
     let sig-t = computation-signature-value(mc);
     let (type, found?) =
       if (sig-t)
-	let type-ref = dynamic-accessor(sig-t, index);
-	let (type-constant?, type-value) = fast-constant-value?(type-ref);
-	values(type-value, type-constant?)
+        let type-ref = dynamic-accessor(sig-t, index);
+        let (type-constant?, type-value) = fast-constant-value?(type-ref);
+        values(type-value, type-constant?)
       else
-	let sig = ^function-signature(computation-closure-method(mc));
-	^signature-type*(sig, static-accessor, index);
+        let sig = ^function-signature(computation-closure-method(mc));
+        ^signature-type*(sig, static-accessor, index);
       end if;
     let type? = instance?(type, <&type>);
     values(type? & type, type? & found?)
-  else 
+  else
     values(#f, #f)
   end if;
 end method;
 
 define method ^make-signature-argument-reference
     (sig-t :: <temporary>, vector-index :: false-or(<integer>),
-     argument-index :: <integer>) 
+     argument-index :: <integer>)
  => (res :: <value-reference>)
   let arg = ^make-signature-argument(sig-t, argument-index);
   if (vector-index)
@@ -2104,20 +2099,20 @@ end method;
 
 define method maybe-vector-object-element-references
     (object :: <sequence>) => (res :: false-or(<argument-sequence>))
-  map-as(<argument-sequence>, 
+  map-as(<argument-sequence>,
          method (elt) make(<object-reference>, value: elt) end,
          object);
 end method;
 
 
-define inline method ^vector-element-reference 
-    (c, index :: <integer>) 
+define inline method ^vector-element-reference
+    (c, index :: <integer>)
  => (res :: false-or(<value-reference>))
   let refs = maybe-vector-element-references(c);
   refs & element(refs, index, default: #f)
 end method;
 
-define method ^make-signature-argument 
+define method ^make-signature-argument
     (sig-t :: <temporary>, index :: <integer>) => (res :: <value-reference>)
   let call = generator(sig-t);
   let args = arguments(call);
@@ -2133,7 +2128,7 @@ define method ^function-required-type*
     (function-t :: <value-reference>, index :: <integer>)
  => (type :: false-or(<&type>), found? :: <boolean>)
   ^function-signature-type*
-    (function-t, ^signature-required, 
+    (function-t, ^signature-required,
      rcurry(^make-signature-argument-reference, 1), index)
 end method;
 
@@ -2141,7 +2136,7 @@ define method ^function-value-type*
     (function-t :: <value-reference>, index :: <integer>)
  => (type :: false-or(<&type>), found? :: <boolean>)
   ^function-signature-type*
-    (function-t, ^signature-values, 
+    (function-t, ^signature-values,
      rcurry(^make-signature-argument-reference, 2), index)
 end method;
 
@@ -2149,7 +2144,7 @@ define method ^function-rest-value-type*
     (function-t :: <value-reference>, index)
  => (type :: false-or(<&type>), found? :: <boolean>)
   ^function-signature-type*
-    (function-t, ^signature-rest-value, 
+    (function-t, ^signature-rest-value,
      rcurry(^make-signature-argument-reference, 3), #f)
 end method;
 
@@ -2157,12 +2152,12 @@ define method ^function-key-type*
     (function-t :: <value-reference>, index :: <integer>)
  => (type :: false-or(<&type>), found? :: <boolean>)
   ^function-signature-type*
-    (function-t, ^signature-key-types, 
+    (function-t, ^signature-key-types,
      rcurry(^make-signature-argument-reference, 6), index)
 end method;
 
 define function convert-signature-type
-    (env :: <environment>, function-t :: <temporary>, 
+    (env :: <environment>, function-t :: <temporary>,
      name :: <symbol>, accessor :: <function>, index :: false-or(<integer>))
  => (first :: false-or(<computation>), last :: false-or(<computation>), ref :: <value-reference>)
   let (type-value, type-found?) = accessor(function-t, index);
@@ -2177,44 +2172,44 @@ define function convert-signature-type
     let (call, call-t) =
       make-with-temporary
         (env, <simple-call>,
-	 function:  function,
-	 arguments: if (index)
-		      vector(function-t, index-t)
-		    else
-		      vector(function-t)
-		    end if);
+         function:  function,
+         arguments: if (index)
+                      vector(function-t, index-t)
+                    else
+                      vector(function-t)
+                    end if);
     values(call, call, call-t)
   end if
 end;
 
-define function convert-required-type 
+define function convert-required-type
     (env :: <environment>, function-t :: <temporary>, index :: <integer>)
  => (first :: false-or(<computation>), last :: false-or(<computation>), ref :: <value-reference>)
   convert-signature-type(env,
-			 function-t,
-			 #"function-required-type",
-			 ^function-required-type*,
-			 index);
+                         function-t,
+                         #"function-required-type",
+                         ^function-required-type*,
+                         index);
 end;
 
-define function convert-key-type 
+define function convert-key-type
     (env :: <environment>, function-t :: <temporary>, index :: <integer>)
  => (first :: false-or(<computation>), last :: false-or(<computation>), ref :: <value-reference>)
   convert-signature-type(env,
-			 function-t,
-			 #"function-key-type",
-			 ^function-key-type*,
-			 index);
+                         function-t,
+                         #"function-key-type",
+                         ^function-key-type*,
+                         index);
 end;
 
-define function convert-value-type 
+define function convert-value-type
     (env :: <environment>, function-t :: <temporary>, index :: <integer>)
  => (first :: false-or(<computation>), last :: false-or(<computation>), ref :: <value-reference>)
   convert-signature-type(env,
-			 function-t,
-			 #"function-value-type",
-			 ^function-value-type*,
-			 index);
+                         function-t,
+                         #"function-value-type",
+                         ^function-value-type*,
+                         index);
 end;
 
 define function convert-rest-value-type
@@ -2222,13 +2217,13 @@ define function convert-rest-value-type
  => (first :: false-or(<computation>), last :: false-or(<computation>), ref :: <value-reference>)
   // TODO: EXTEND THIS FOR VALUES CASE
   convert-signature-type(env,
-			 function-t,
-			 #"function-rest-value-type",
-			 ^function-rest-value-type*,
-			 #f);
+                         function-t,
+                         #"function-rest-value-type",
+                         ^function-rest-value-type*,
+                         #f);
 end;
 
-define function spec-type-expression-checking 
+define function spec-type-expression-checking
     (spec :: <variable-spec>) => (type-expr :: <fragment>)
   check-signature-variable(*current-dependent*, spec, #f);
   spec-type-expression(spec);
@@ -2246,14 +2241,14 @@ define function convert-signature-types
         (env, variable-specs, form-extractor: spec-type-expression-checking);
     if (every?(method (t) instance?(fast-constant-value(t), <&type>) end, args))
       convert-object-reference-1
-        (env, 
+        (env,
          as-sig-types(map-as(<simple-object-vector>, fast-constant-value, args)))
     else
       let function =
-	make-dylan-reference(#"immutable-type-vector");
+        make-dylan-reference(#"immutable-type-vector");
       let (call, call-t) =
-	make-with-temporary
-	  (env, <simple-call>, function:  function, arguments: args);
+        make-with-temporary
+          (env, <simple-call>, function:  function, arguments: args);
       join-2x1-t!(args-first, args-last, call, call-t);
     end
   end
@@ -2283,13 +2278,13 @@ define method convert-signature
     else
       convert-object-reference-1(env, &false)
     end;
-  if (fast-constant-value?(req-t) 
+  if (fast-constant-value?(req-t)
         & (~key? | (fast-constant-value?(keys-t) & fast-constant-value?(key-t)))
-	& fast-constant-value?(val-t) & fast-constant-value?(rest-val-t))
+        & fast-constant-value?(val-t) & fast-constant-value?(rest-val-t))
     convert-object-reference-1
-      (env, 
+      (env,
        compute-signature-using-types
-         (sig-spec, 
+         (sig-spec,
           fast-constant-value(req-t),
           fast-constant-value(val-t),
           fast-constant-value(rest-val-t),
@@ -2300,35 +2295,35 @@ define method convert-signature
       make-object-reference(#t);
     let (sig-first, sig-last)
       = if (key?)
-	  let (sig-first, sig-last)
-	    = join-2x2!(req-first, req-last, key-first, key-last);
-	  join-2x2!(sig-first, sig-last, val-first, val-last);
-	else
-	  join-2x2!(req-first, req-last, val-first, val-last);
-	end;
+          let (sig-first, sig-last)
+            = join-2x2!(req-first, req-last, key-first, key-last);
+          join-2x2!(sig-first, sig-last, val-first, val-last);
+        else
+          join-2x2!(req-first, req-last, val-first, val-last);
+        end;
     let (sig-first, sig-last)
       = join-2x2!(sig-first, sig-last, rest-val-first, rest-val-last);
     let signature-properties =
       ^pack-signature-properties
-	(rest-value?:     spec-value-rest?(sig-spec),
-	 rest?:           spec-argument-rest?(sig-spec),
-	 all-keys?:       spec-argument-all-keys?(sig-spec),
-	 key?:            key?,
-	 number-values:   spec-value-number-required(sig-spec),
-	 number-required: spec-argument-number-required(sig-spec));
+        (rest-value?:     spec-value-rest?(sig-spec),
+         rest?:           spec-argument-rest?(sig-spec),
+         all-keys?:       spec-argument-all-keys?(sig-spec),
+         key?:            key?,
+         number-values:   spec-value-number-required(sig-spec),
+         number-required: spec-argument-number-required(sig-spec));
     let sig-prop-t =
       make-object-reference(signature-properties);
     let function =
       if (key?)
-	make-dylan-reference(#"make-<keyword-signature>")
+        make-dylan-reference(#"make-<keyword-signature>")
       else
-	make-dylan-reference(#"make-<signature>")
+        make-dylan-reference(#"make-<signature>")
       end if;
     let (call, call-t) =
       make-with-temporary
       (env, <simple-call>,
        function:  function,
-       arguments: 
+       arguments:
          if (key?) // NEXT MUST BE FIRST ARG FOR BELOW
            vector(next-t, req-t, val-t, rest-val-t, sig-prop-t, keys-t, key-t)
          else
@@ -2348,7 +2343,7 @@ define compiler-sideways method ^function-next?-setter
   else
     // SET NEXT? ARGUMENT TO MAKE-<SIGNATURE>
     let users    = users(x);
-    assert(size(users) == 1, 
+    assert(size(users) == 1,
            "size of users %= of dynamic lambda %= should be one",
            users, x);
     let make-c   = first(users);
@@ -2361,9 +2356,9 @@ define compiler-sideways method ^function-next?-setter
   end if;
 end method;
 
-define function convert-method-and-signature 
+define function convert-method-and-signature
     (env :: <environment>, sig-t :: <value-reference>, the-method :: <&method>)
- => (first :: false-or(<computation>), last :: false-or(<computation>), 
+ => (first :: false-or(<computation>), last :: false-or(<computation>),
      ref :: <value-reference>)
   let (sig-constant?, sig-constant-value) = fast-constant-value?(sig-t);
   if (sig-constant?)
@@ -2372,7 +2367,7 @@ define function convert-method-and-signature
       convert-method-reference(env, $single, the-method)
     else
       make-with-temporary*
-	(env, <make-closure>, method: the-method, signature: #f)
+        (env, <make-closure>, method: the-method, signature: #f)
     end if
   else
     make-with-temporary*
@@ -2381,18 +2376,18 @@ define function convert-method-and-signature
 end function;
 
 define function do-parse-local-method (method-form)
-  macro-case (fragment-argument(method-form)) 
+  macro-case (fragment-argument(method-form))
     { ?:name ?spec:* }
     => begin
-	 let (sig-spec, body) = parse-method-signature(name, spec);
-	 values(name, sig-spec, body)
+         let (sig-spec, body) = parse-method-signature(name, spec);
+         values(name, sig-spec, body)
        end;
   end;
 end;
 
 // TODO: warn if multiple uses of same name
 define function convert-labels
-    (env :: <environment>, context :: <value-context>, 
+    (env :: <environment>, context :: <value-context>,
      definitions :: <list>, the-body)
  => (first :: false-or(<computation>), last :: false-or(<computation>), ref :: false-or(<value-reference>))
   let labels-first = #f;
@@ -2401,16 +2396,16 @@ define function convert-labels
     for (definition in definitions)
       let (name, sig-spec, body) = do-parse-local-method(definition);
       let (sig-first, sig-last, sig-t) =
-	convert-signature(env, sig-spec);
+        convert-signature(env, sig-spec);
       let (_labels-first, _labels-last)
-	= join-2x2!(labels-first, labels-last, sig-first, sig-last);
+        = join-2x2!(labels-first, labels-last, sig-first, sig-last);
       let the-method =
-	compute-method-explicitly
- 	  (<&method>, #f, name, sig-spec, as-body(body));
+        compute-method-explicitly
+           (<&method>, #f, name, sig-spec, as-body(body));
       let (function-first, function-last, function-t) =
-	convert-method-and-signature(env, sig-t, the-method);
+        convert-method-and-signature(env, sig-t, the-method);
       let (_labels-first, _labels-last)
-	= join-2x2!(_labels-first, _labels-last, function-first, function-last);
+        = join-2x2!(_labels-first, _labels-last, function-first, function-last);
       labels-first := _labels-first;
       labels-last  := _labels-last;
       collect-into(names, name); collect-into(functions, function-t);
@@ -2420,26 +2415,26 @@ define function convert-labels
          the-method in collected(methods))
       if (instance?(function, <temporary>)) // make-closure?
         let make-closure-c = generator(function);
-        let init-closure-c 
+        let init-closure-c
           = make-in-environment
-              (env, <initialize-closure>, 
+              (env, <initialize-closure>,
                closure: function, method: the-method);
         computation-init-closure(make-closure-c) := init-closure-c;
-	let (_labels-first, _labels-last)
-	  = join-2x1!(labels-first, labels-last, init-closure-c);
+        let (_labels-first, _labels-last)
+          = join-2x1!(labels-first, labels-last, init-closure-c);
         labels-first := _labels-first;
         labels-last  := _labels-last;
       end if;
     end for;
     let inner-env = env;
     for (name in collected(names),
-	 function in collected(functions))
+         function in collected(functions))
       inner-env := make-local-lexical-environment(name, function, #f, inner-env);
     end for;
     for (function in collected(functions),
-	 the-method in collected(methods))
+         the-method in collected(methods))
       convert-lambda-into*-d
-	(inner-env, function, the-method, body-spec(the-method));
+        (inner-env, function, the-method, body-spec(the-method));
     end for;
     let (body-first, body-last, body-t) = convert-body(inner-env, context, the-body);
     let (labels-first, labels-last)
@@ -2448,32 +2443,32 @@ define function convert-labels
   end collecting;
 end function;
 
-define function do-parse-local-macro 
-    (macro-form :: <fragment>) 
+define function do-parse-local-macro
+    (macro-form :: <fragment>)
  => (name :: <variable-name-fragment>, rules :: <fragment>)
-  macro-case (fragment-argument(macro-form)) 
+  macro-case (fragment-argument(macro-form))
     { ?:name ?spec:* }
     => begin
-	 values(name, spec);
+         values(name, spec);
        end;
   end;
 end function;
 
 define function convert-macros
-    (env :: <environment>, context :: <value-context>, 
+    (env :: <environment>, context :: <value-context>,
        definitions :: <list>, the-body)
  => (first :: false-or(<computation>), last :: false-or(<computation>), ref :: false-or(<value-reference>))
   let inner-env = env;
   for (macro-def in definitions)
-    let (macro-name, macro-rules) 
+    let (macro-name, macro-rules)
       = do-parse-local-macro(macro-def);
-    let (descriptor, expander) 
+    let (descriptor, expander)
       = do-compile-macro
-          (macro-name, #(), macro-rules, 
+          (macro-name, #(), macro-rules,
              definition-context: pair(env, fragment-module(macro-name)));
     let object
-      = make(<&macro>, 
-             definition: *current-dependent*, 
+      = make(<&macro>,
+             definition: *current-dependent*,
              macro-object: descriptor);
     inner-env
       := make-local-lexical-environment
@@ -2489,7 +2484,7 @@ define method convert-initialization
   // typically variable references.
   let (init-first, init-last, init-t) = convert-1(env, the-value);
   let the-binding = lookup(env, the-name, reference?: #f);
-  let definition-class 
+  let definition-class
     = if (binding-previously-defined?(the-binding))
         <redefinition>
       else
@@ -2515,7 +2510,7 @@ define method convert-type-initialization
   // typically variable references.
   let (init-first, init-last, init-t) = convert-1(env, the-value);
   let the-binding = lookup(env, the-name, reference?: #f);
-  let definition-class 
+  let definition-class
     = if (binding-previously-defined?(the-binding))
         <type-redefinition>
       else
@@ -2564,8 +2559,8 @@ define program-warning <literal-reference-value-not-used>
 end program-warning;
 */
 
-define method convert 
-    (env :: <environment>, context :: <value-context>, 
+define method convert
+    (env :: <environment>, context :: <value-context>,
      form :: <literal-constant-fragment>)
  => (first :: false-or(<computation>), last :: false-or(<computation>), ref :: false-or(<value-reference>))
   let object = form.fragment-value;
@@ -2575,8 +2570,8 @@ define method convert
     /*
     if (unused-value-context?(context))
       note(<literal-reference-value-not-used>,
-	   source-location: fragment-source-location(form),
-	   literal: form);
+           source-location: fragment-source-location(form),
+           literal: form);
     end;
     */
     convert-object-reference(env, context, object)
@@ -2592,15 +2587,15 @@ define program-warning <variable-reference-value-not-used>
 end program-warning;
 */
 
-define method convert 
-    (env :: <environment>, context :: <value-context>, 
+define method convert
+    (env :: <environment>, context :: <value-context>,
      form :: <variable-name-fragment>)
  => (first :: false-or(<computation>), last :: false-or(<computation>), ref :: false-or(<value-reference>))
   /*
   if (unused-value-context?(context))
     note(<variable-reference-value-not-used>,
          source-location: fragment-source-location(form),
-	 variable-name: form);
+         variable-name: form);
   end;
   */
   convert-reference(env, context, form)
@@ -2609,8 +2604,8 @@ end method;
 define serious-program-warning <invalid-left-hand-side-for-assignment>
   slot condition-left-hand-side,
     required-init-keyword: left-hand-side:;
-  format-string 
-    "Invalid left hand side %s for assignment - only variables, function " 
+  format-string
+    "Invalid left hand side %s for assignment - only variables, function "
     "calls, and function macro calls may appear before the := operator.";
   format-arguments left-hand-side;
 end serious-program-warning;
@@ -2622,13 +2617,13 @@ define serious-program-warning <invalid-function-call-for-assignment>
     "Invalid function call %s for assignment - the function in the call "
     "must be a variable name from which the setter name can be derived.";
   format-arguments left-hand-side;
-end serious-program-warning;     
+end serious-program-warning;
 
 define &converter \:=
   { \:= (?lhs:expression, ?rhs:expression) }
     => select (lhs by instance?)
-	 <variable-name-fragment>
-	   => convert-assignment(env, context, lhs, rhs, form);
+         <variable-name-fragment>
+           => convert-assignment(env, context, lhs, rhs, form);
          <function-call-fragment>
            => let getter-name = fragment-function(lhs);
               let args = fragment-arguments(lhs);
@@ -2647,7 +2642,7 @@ define &converter \:=
                      context-id: dfm-context-id(env),
                      left-hand-side: lhs);
                 convert-error-fallback(env, context);
-              end;                            
+              end;
          <function-macro-fragment>
            => let getter-name = fragment-macro(lhs);
               let args = export-fragment-tokens(fragment-body-fragment(lhs));
@@ -2659,7 +2654,7 @@ define &converter \:=
                       ?getter-name ## "-setter" (_tmp, ?args);
                       _tmp
                     end });
-         otherwise 
+         otherwise
            => note(<invalid-left-hand-side-for-assignment>,
                    source-location: fragment-source-location(lhs),
                    context-id: dfm-context-id(env),
@@ -2676,10 +2671,10 @@ end &converter;
 define &converter \|
   { \| (?left:expression, ?more:*) }
     => convert(env, context,
-	       #{ begin 
-		    let _tmp = ?left; 
-		    if (_tmp) _tmp else ?more end; 
-		  end });
+               #{ begin
+                    let _tmp = ?left;
+                    if (_tmp) _tmp else ?more end;
+                  end });
 end &converter;
 
 define serious-program-warning <non-top-level-definition>
@@ -2692,7 +2687,7 @@ end serious-program-warning;
 define function non-top-level-definition
     (env :: <environment>, context :: <value-context>, form)
  => (first :: false-or(<computation>), last :: false-or(<computation>), ref :: false-or(<value-reference>))
-  note(<non-top-level-definition>, 
+  note(<non-top-level-definition>,
        source-location: fragment-source-location(form),
        context-id:      dfm-context-id(env),
        fragment: form);
@@ -2700,8 +2695,8 @@ define function non-top-level-definition
   convert-body(env, context, #());
 end function;
 
-define method convert 
-    (env :: <environment>, context :: <value-context>, 
+define method convert
+    (env :: <environment>, context :: <value-context>,
      form :: <macro-definition-fragment>)
  => (first :: false-or(<computation>), last :: false-or(<computation>), ref :: false-or(<value-reference>))
   non-top-level-definition(env, context, form)
@@ -2711,7 +2706,7 @@ end method;
 // calls.
 
 define method convert
-    (env :: <environment>, context :: <value-context>, 
+    (env :: <environment>, context :: <value-context>,
      form :: <function-call-fragment>)
  => (first :: false-or(<computation>), last :: false-or(<computation>), ref :: false-or(<value-reference>))
   let function-form = form.fragment-function;
@@ -2730,7 +2725,7 @@ define function operator-eval (env :: <environment>, form)
   end
 end;
 
-define inline method omitted-fragment? 
+define inline method omitted-fragment?
     (f :: <fragment>) => (well? :: <boolean>)
   instance?(f, <variable-name-fragment>) & fragment-name(f) == #"_"
 end method;
@@ -2739,8 +2734,8 @@ define method curried-arguments? (args :: <sequence>) => (well? :: <boolean>)
   any?(omitted-fragment?, args);
 end method;
 
-define method convert-using-object 
-    (env :: <environment>, context :: <value-context>, 
+define method convert-using-object
+    (env :: <environment>, context :: <value-context>,
        object :: <object>, form :: <function-call-fragment>)
  => (first :: <computation>, last :: <computation>, ref :: false-or(<value-reference>))
   let f = form.fragment-function;
@@ -2760,9 +2755,9 @@ define method convert-curried-function-call
     for (arg in args)
       if (omitted-fragment?(arg))
         count := count + 1;
-        let remaining-arg 
+        let remaining-arg
           = make-variable-name-like
-              (arg, 
+              (arg,
                name: as(<symbol>, format-to-string("curried %s", count)),
                source-location: fragment-source-location(arg));
         collect-last-into(remaining-args, remaining-arg);
@@ -2773,7 +2768,7 @@ define method convert-curried-function-call
     end;
     let remaining-args = collected(remaining-args);
     let all-args = collected(all-args);
-    // Manually constructing this call avoids issues with reparsing 
+    // Manually constructing this call avoids issues with reparsing
     // operator calls.
     let call = make(object-class(form),
                     source-location: fragment-source-location(form),
@@ -2784,8 +2779,8 @@ define method convert-curried-function-call
   end;
 end method;
 
-define method convert-using-object 
-    (env :: <environment>, context :: <value-context>, 
+define method convert-using-object
+    (env :: <environment>, context :: <value-context>,
      object :: <&primitive>, form :: <function-call-fragment>)
  => (first :: <computation>, last :: <computation>, ref :: false-or(<value-reference>))
   convert-primitive-call
@@ -2802,7 +2797,7 @@ end serious-program-warning;
 
 define method convert-error-fallback
     (env :: <environment>, context :: <value-context>)
- => (first :: false-or(<computation>), last :: false-or(<computation>), 
+ => (first :: false-or(<computation>), last :: false-or(<computation>),
      ref :: false-or(<value-reference>))
   convert-reference(env, context, &false)
 end method;
@@ -2836,7 +2831,7 @@ define function untrace-macro (name) => ()
 end function;
 
 define method convert-using-definition
-    (env :: <environment>, context :: <value-context>, 
+    (env :: <environment>, context :: <value-context>,
      def :: <expander-defining-form>, form :: <macro-call-fragment>)
  => (first :: false-or(<computation>), last :: false-or(<computation>), ref :: false-or(<value-reference>))
   handling-parse-errors
@@ -2846,7 +2841,7 @@ define method convert-using-definition
       format-out("Macro %s > %=\n", name, form);
     end;
     let expansion
-      = with-expansion-source-location 
+      = with-expansion-source-location
             (fragment-record(form), fragment-source-position(form))
           form-expander(def)(env, form);
         end;
@@ -2865,18 +2860,18 @@ define method convert-using-definition
 end method;
 
 define method convert-using-definition
-    (env :: <environment>, context :: <value-context>, 
+    (env :: <environment>, context :: <value-context>,
      def :: <&definition-definition>, form)
  => (first :: false-or(<computation>), last :: false-or(<computation>), ref :: false-or(<value-reference>))
   non-top-level-definition(env, context, form)
 end method;
 
 define method convert-using-definition
-    (env :: <environment>, context :: <value-context>, 
+    (env :: <environment>, context :: <value-context>,
      def :: <&converter-definition>, form :: <macro-call-fragment>)
  => (first :: false-or(<computation>), last :: false-or(<computation>), ref :: false-or(<value-reference>))
   handling-parse-errors
-    with-expansion-source-location 
+    with-expansion-source-location
         (fragment-record(form), fragment-source-position(form))
       form-expander(def)(env, context, form);
     end;
@@ -2925,11 +2920,11 @@ define function convert-type-expression (env :: <environment>, type)
       values(type-first, type-last, type-temp, constant-value)
     else
       let <type>-temp =
-	make-dylan-reference(#"<type>");
+        make-dylan-reference(#"<type>");
       let (check-c, check-temp) =
-	make-with-temporary
-	  (env, <check-type>, value: type-temp, type: <type>-temp);
-      let (f, l, t) = 
+        make-with-temporary
+          (env, <check-type>, value: type-temp, type: <type>-temp);
+      let (f, l, t) =
         join-2x1-t!(type-first, type-last, check-c, check-temp);
       values(f, l, t, #f);
     end
@@ -2939,7 +2934,7 @@ define function convert-type-expression (env :: <environment>, type)
   end;
 end;
 
-define function variable-name-fragment? 
+define function variable-name-fragment?
     (x) => (res :: false-or(<variable-name-fragment>))
   macro-case (x)
     { ?:name }   => name;
@@ -2948,7 +2943,7 @@ define function variable-name-fragment?
 end function;
 
 define function do-convert-single-value-let
-    (env :: <environment>, context :: <value-context>, 
+    (env :: <environment>, context :: <value-context>,
      name, type, expression, body)
  => (first :: false-or(<computation>), last :: false-or(<computation>), ref :: false-or(<value-reference>));
   let named-static-unchecked-type =
@@ -2956,8 +2951,8 @@ define function do-convert-single-value-let
       if (name)
         let type-model = lookup-constant-model-object(env, name);
         type-model &
-  	  ~type-checked-at-run-time?(type-model) &
-	  type-model
+            ~type-checked-at-run-time?(type-model) &
+          type-model
       end;
     end;
   let (body-env, value-first, value-last) =
@@ -2967,42 +2962,42 @@ define function do-convert-single-value-let
     if (named-static-unchecked-type)
       let (value-first, value-last, value-temp) = convert-1(env, expression);
       let (body-env, variable) =
-	bind-local-variable(env, name, named-static-unchecked-type);
+        bind-local-variable(env, name, named-static-unchecked-type);
       let value-computation = value-temp.generator;
       let (value-first, value-last) =
-	if (value-computation &
-	      value-temp.environment == variable.environment &
-	      ~instance?(value-temp, <binding>) &
-	      ~used?(value-temp) & empty?(value-temp.assignments))
-	  // if this is the result of some computation which is otherwise
-	  // unused, smash the value temporary to be the variable
-	  value-temp.generator := #f;
-	  value-computation.temporary := variable;
-	  variable.generator := value-computation;
-	  values(value-first, value-last)
-	else
-	  // do a temporary transfer
-	  let value-c = make-in-environment
+        if (value-computation &
+              value-temp.environment == variable.environment &
+              ~instance?(value-temp, <binding>) &
+              ~used?(value-temp) & empty?(value-temp.assignments))
+          // if this is the result of some computation which is otherwise
+          // unused, smash the value temporary to be the variable
+          value-temp.generator := #f;
+          value-computation.temporary := variable;
+          variable.generator := value-computation;
+          values(value-first, value-last)
+        else
+          // do a temporary transfer
+          let value-c = make-in-environment
                           (env, <temporary-transfer>,
-			   value: value-temp,
-			   temporary: variable);
-	  variable.generator := value-c;
-	  join-2x1!(value-first, value-last, value-c);
-	end;
+                           value: value-temp,
+                           temporary: variable);
+          variable.generator := value-c;
+          join-2x1!(value-first, value-last, value-c);
+        end;
       values(body-env, value-first, value-last)
     else
       let (type-first, type-last, type-temp) =
-	convert-type-expression(env, type);
+        convert-type-expression(env, type);
       let (value-first, value-last, value-temp) = convert-1(env, expression);
       let (first-c, last-c)
-	= join-2x2!(type-first, type-last, value-first, value-last);
+        = join-2x2!(type-first, type-last, value-first, value-last);
       let (body-env, variable) =
-	bind-local-variable(env, name, type-temp);
+        bind-local-variable(env, name, type-temp);
       let check-c =
-	make-in-environment
+        make-in-environment
           (env, <check-type>,
-	   value: value-temp, type: type-temp,
-	   temporary: variable);
+           value: value-temp, type: type-temp,
+           temporary: variable);
       let (first-c, last-c) = join-2x1!(first-c, last-c, check-c);
       variable.generator := check-c;
       values(body-env, first-c, last-c)
@@ -3012,55 +3007,55 @@ define function do-convert-single-value-let
 end;
 
 define function do-convert-let
-    (env :: <environment>, context :: <value-context>, 
+    (env :: <environment>, context :: <value-context>,
      parameters, expression, body)
- => (first :: false-or(<computation>), last :: false-or(<computation>), 
+ => (first :: false-or(<computation>), last :: false-or(<computation>),
      ref :: false-or(<value-reference>));
   let lambda-env = lambda-environment(env);
   let let-first = #f;
   let let-last  = #f;
   local method convert-type (spec)
-	  let type-expression = spec-type-expression(spec);
-	  let (type-first, type-last, type-temp) =
-	    convert-type-expression(env, type-expression);
-	  let (_let-first, _let-last)
-	    = join-2x2!(let-first, let-last, type-first, type-last);
-	  let-first := _let-first;
-	  let-last  := _let-last;
+          let type-expression = spec-type-expression(spec);
+          let (type-first, type-last, type-temp) =
+            convert-type-expression(env, type-expression);
+          let (_let-first, _let-last)
+            = join-2x2!(let-first, let-last, type-first, type-last);
+          let-first := _let-first;
+          let-last  := _let-last;
           type-temp
-	end;
+        end;
   let bindings-spec = parse-value-bindings(parameters);
   let fixed-variable-specs = spec-value-required-variable-specs(bindings-spec);
   let fixed-types = map-as(<vector>, convert-type, fixed-variable-specs);
   let rest-variable-spec = spec-value-rest-variable-spec(bindings-spec);
   let rest-type = rest-variable-spec & convert-type(rest-variable-spec);
   let let-context = make(<multiple-value-context>,
-			mvc-num-values: size(fixed-types), 
-			mvc-rest?: rest-type);
+                        mvc-num-values: size(fixed-types),
+                        mvc-rest?: rest-type);
   // format-out("converting let %=, with context = %=.\n", parameters, let-context);
-  let (value-first, value-last, value-temp) 
+  let (value-first, value-last, value-temp)
     = convert(env, let-context, expression);
   let (let-first, let-last)
     = join-2x2!(let-first, let-last, value-first, value-last);
   let (check-c, check-temp) =
     if (rest-variable-spec)
       make-with-temporary(lambda-env, <multiple-value-check-type-rest>,
-			  value: value-temp,
-			  types: map(method (fixed-type) 
+                          value: value-temp,
+                          types: map(method (fixed-type)
                                        type-checked-at-run-time?
                                          (fast-constant-value(fixed-type))
                                          & fixed-type
                                      end,
                                      fixed-types),
-			  rest-type: type-checked-at-run-time?
+                          rest-type: type-checked-at-run-time?
                                        (fast-constant-value(rest-type))
                                      & rest-type,
-			  temporary-class: <multiple-value-temporary>);
+                          temporary-class: <multiple-value-temporary>);
     else
       make-with-temporary(lambda-env, <multiple-value-check-type>,
-			  value: value-temp,
-			  types: fixed-types,
-			  temporary-class: <multiple-value-temporary>);
+                          value: value-temp,
+                          types: fixed-types,
+                          temporary-class: <multiple-value-temporary>);
     end;
   mvt-transfer-values!(value-temp, check-temp);
   let (let-first, let-last)
@@ -3071,7 +3066,7 @@ define function do-convert-let
        index from 0)
     let (new-env, variable) =
       bind-local-variable(body-env, spec-variable-name(spec), type);
-    let extract-c 
+    let extract-c
       = make-in-environment(body-env, <extract-single-value>,
                             value: check-temp,
                             index: index,
@@ -3087,7 +3082,7 @@ define function do-convert-let
     let (new-env, variable) =
       bind-local-variable
         (body-env, spec-variable-name(rest-variable-spec), rest-type);
-    let rest-c 
+    let rest-c
       = make-in-environment(body-env, <extract-rest-value>,
                             value: check-temp,
                             index: size(fixed-variable-specs),
@@ -3157,12 +3152,12 @@ end &converter;
 
 define &converter \constant-method
   { \constant-method (?form:expression) ?method-form:expression end }
-    => do-convert-method 
+    => do-convert-method
          (env, context, fragment-value(form), fragment-value(method-form), #f);
 end &converter;
 
-define method do-convert-method 
-    (env, context :: <value-context>, definition, form, 
+define method do-convert-method
+    (env, context :: <value-context>, definition, form,
      generic-method? :: <boolean>)
   let name = definition & form-variable-name(definition);
   let (sig-spec, body) = parse-method-signature(#f, form);
@@ -3182,11 +3177,11 @@ define method do-convert-method
   let (function-first, function-last)
     = if (instance?(function-t, <temporary>) // make-closure?
             & ~definition                 // but no definition
-	    )
+            )
         let make-closure-c = lambda-make-closure(the-method);
         let init-closure-c
           = make-in-environment
-              (env, <initialize-closure>, 
+              (env, <initialize-closure>,
                closure: single-function-t, method: the-method);
         computation-init-closure(make-closure-c) := init-closure-c;
         join-2x1!(function-first, function-last, init-closure-c)
@@ -3200,12 +3195,12 @@ define method do-convert-method
   values(first-c, last-c, function-t)
 end method;
 
-define function convert-method-to-model-as 
+define function convert-method-to-model-as
     (class :: <class>, name, form) => (model :: <&method>)
   let (sig-spec, body) = parse-method-signature(name, form);
   let signature
     = compute-signature(#f, sig-spec);
-  let body 
+  let body
     = as-body(body);
   let model
     = compute-method-explicitly
@@ -3280,7 +3275,7 @@ define &macro block
      => #{ ?ebody }
 
  ebody: // Left-recursive so leftmost clause is innermost
-  {   ... 
+  {   ...
     \exception (?excp:*, /* #rest */ ?options:*) // TODO: Use #rest.
       ?:body }
    => #{ %with-exception (?excp, ?options)
@@ -3289,7 +3284,7 @@ define &macro block
           ?body
         end }
   { ?abody \cleanup ?cleanup-body:body}
-    => #{ %with-cleanup 
+    => #{ %with-cleanup
            ?abody
          cleanup
            ?cleanup-body
@@ -3301,7 +3296,7 @@ define &macro block
   { ?main:body \afterwards ?after:body }
     => #{ %with-afterwards
            ?main
-         afterwards 
+         afterwards
            ?after
          end }
   { ?main:body }
@@ -3346,7 +3341,7 @@ define &macro %with-exception
     => #{ block (_unwind-exception_)
            let _original-handlers_ = *current-handlers*;
            local method _handler-function_ (?name :: ?type, _next-handler_)
-	     %dynamic-extent(_handler-function_);
+             %dynamic-extent(_handler-function_);
              *current-handlers* := _original-handlers_;
              let (#rest all-values) = begin ?handling end;
              apply(_unwind-exception_, all-values);
@@ -3364,7 +3359,7 @@ define &macro %with-exception
          end };
 end &macro;
 
-define method convert-dynamic-extent 
+define method convert-dynamic-extent
     (env :: <environment>, context :: <value-context>, name)
   let var = lookup(env, name);
   var.dynamic-extent? := #t;
@@ -3382,7 +3377,7 @@ define &converter %guarantee-type
     => convert-guarantee-type(env, context, expression, type);
 end &converter;
 
-define function convert-guarantee-type 
+define function convert-guarantee-type
     (env :: <environment>, context :: <value-context>, expression, type)
  => (first :: <computation>, last :: <computation>, ref :: <value-reference>);
   let (expr-first, expr-last, expr-t) = convert-1(env, expression);
@@ -3391,8 +3386,8 @@ define function convert-guarantee-type
     = join-2x2!(expr-first, expr-last, type-first, type-last);
   let (guarantee, guarantee-t) =
     make-with-temporary(env, <guarantee-type>,
-			value: expr-t,
-			type: type-t);
+                        value: expr-t,
+                        type: type-t);
   let (first-c, last-c)
     = join-2x1!(first-c, last-c, guarantee);
   match-values-with-context
@@ -3405,8 +3400,8 @@ define &converter %return-from
 end &converter;
 
 define &macro %let-handler
-  { %let-handler ((?type:expression, #rest ?options:*) = ?fn:expression) 
-      ?:body 
+  { %let-handler ((?type:expression, #rest ?options:*) = ?fn:expression)
+      ?:body
     end }
     => #{ let _original-handlers_ = *current-handlers*;
          block ()
@@ -3438,7 +3433,7 @@ define method convert-stack-vector
   let (call, temporary)
     = make-with-temporary(env, <stack-vector>,
                           temporary-class: <stack-vector-temporary>,
-			  arguments: temporaries);
+                          arguments: temporaries);
   let (first-c, last-c) = join-2x1!(arg-first, arg-last, call);
   temporary.number-values := size(argument-forms);
   match-values-with-context
@@ -3508,10 +3503,10 @@ end &converter;
 //       (?object:expression, ?slotd:expression, ?index:expression) }
 //     => #f;
 // end &converter;
-// 
+//
 // define &converter %repeated-slot-value-setter
 //   { %repeated-slot-value
-//       (?val:expression, 
+//       (?val:expression,
 //          ?object:expression, ?slotd:expression, ?index:expression) }
 //     => #f;
 // end &converter;
@@ -3540,7 +3535,7 @@ define &converter %conditional-update-variable
 end &converter;
 
 define method do-convert-condition-update-variable
-    (env :: <environment>, context :: <value-context>, 
+    (env :: <environment>, context :: <value-context>,
      name :: <name-fragment>, newval :: <fragment>, oldval :: <fragment>)
  => (first :: false-or(<computation>), last :: false-or(<computation>), ref :: <value-reference>);
   convert-condition-update-variable-using-binding
@@ -3569,7 +3564,7 @@ define program-warning <non-locked-binding-conditional-update>
 end program-warning;
 
 define method convert-condition-update-variable-using-binding
-    (env :: <environment>, context :: <value-context>, 
+    (env :: <environment>, context :: <value-context>,
      binding :: <binding>, name :: <name-fragment>,
      newval :: <fragment>, oldval :: <fragment>)
  => (first :: false-or(<computation>), last :: false-or(<computation>), ref :: <value-reference>);
@@ -3593,10 +3588,10 @@ define method convert-condition-update-variable-using-binding
          context-id:      dfm-context-id(env),
          variable-name:   name);
     convert-error-call
-      (env, context, 
+      (env, context,
        format-to-string
-	 ("Conditional update of undefined binding %=.", 
-	  as(<string>, name)));
+         ("Conditional update of undefined binding %=.",
+          as(<string>, name)));
   elseif (~binding-locked?(binding))
     note(<non-locked-binding-conditional-update>,
          source-location: fragment-source-location(name),
@@ -3605,8 +3600,8 @@ define method convert-condition-update-variable-using-binding
     convert-error-call
       (env, context,
        format-to-string
-	 ("Conditional update of binding %= not declared locked.", 
-	  as(<string>, name)));
+         ("Conditional update of binding %= not declared locked.",
+          as(<string>, name)));
   else
     let (value-first, value-last, value-temporary) = convert-1(env, newval);
     let (test-first, test-last, test-temporary) = convert-1(env, oldval);
@@ -3614,7 +3609,7 @@ define method convert-condition-update-variable-using-binding
       = join-2x2!(value-first, value-last, test-first, test-last);
     let (update-c, temp)
       = make-with-temporary
-          (env, <conditional-update!>, 
+          (env, <conditional-update!>,
            binding:    binding,
            value:      value-temporary,
            test-value: test-temporary);
@@ -3627,10 +3622,10 @@ end method;
 
 //// Conversion of top level initializers.
 
-define method convert-top-level-initializer 
+define method convert-top-level-initializer
     (form, #key debug-name = "top-level-initializer")
   // TODO: This works around the lack of true hygiene in the compiler
-  // at the moment. The template fed to convert-method-to... loses 
+  // at the moment. The template fed to convert-method-to... loses
   // context, so we have to set it up dynamically.
   with-fragment-info (form)
     let form = #{ () => () ?form };
@@ -3651,8 +3646,8 @@ define compiler-sideways method binding-constant-model-object
   if (constant?(binding))
     let model-object =
       binding-model-object(binding,
-			   default: $unfound,
-			   error-if-circular?: error-if-circular?);
+                           default: $unfound,
+                           error-if-circular?: error-if-circular?);
     if (found?(model-object) & ~instance?(model-object, <unknown>))
       values(model-object, #t)
     else
@@ -3701,18 +3696,18 @@ define method &top-level-eval
   &top-level-eval(as-expression(fragment), on-failure: on-failure);
 end method;
 
-define method &top-level-eval 
+define method &top-level-eval
     (fragment :: <&top>, #key on-failure = #f) => (vals)
   fragment
 end method;
 
-define method &top-level-eval 
-    (fragment :: <expression-fragment>, #key on-failure = #f) 
+define method &top-level-eval
+    (fragment :: <expression-fragment>, #key on-failure = #f)
  => (vals)
   on-failure
 end method;
 
-define method &top-level-eval 
+define method &top-level-eval
     (fragment :: <variable-name-fragment>, #key on-failure = #f) => (models)
   let binding = lookup(#f, fragment);
   if (binding)
@@ -3728,8 +3723,8 @@ define method &top-level-eval
   if (found?) model else on-failure end
 end method;
 
-define method &top-level-eval 
-    (fragment :: <literal-constant-fragment>, #key on-failure = #f) 
+define method &top-level-eval
+    (fragment :: <literal-constant-fragment>, #key on-failure = #f)
  => (models)
   let object = fragment-value(fragment);
   if (instance?(object, <module-binding>))
@@ -3739,8 +3734,8 @@ define method &top-level-eval
   end;
 end method;
 
-define method &top-level-eval 
-    (fragment :: <function-call-fragment>, #key on-failure = #f) 
+define method &top-level-eval
+    (fragment :: <function-call-fragment>, #key on-failure = #f)
       => (models)
   let function = ^top-level-eval(fragment-function(fragment));
   let override = lookup-compile-stage-function(function);
@@ -3767,8 +3762,8 @@ define method &top-level-eval
   let macro-form = fragment.fragment-macro;
   let definition = macro-definition(macro-form);
   if (definition &
-	~instance?(definition, <&converter-definition>) &
-	~instance?(definition, <&definition-definition>))
+        ~instance?(definition, <&converter-definition>) &
+        ~instance?(definition, <&definition-definition>))
     &top-level-eval(form-expander(definition)(#f, fragment));
   else
     on-failure
@@ -3828,10 +3823,10 @@ end method;
 // Must be a type.
 define method ^top-level-eval-type (fragment, #key on-failure = #f)
   // Try quickie top level eval.
-  let result 
+  let result
     = ^top-level-eval(fragment, on-failure: on-failure);
   // Try harder if the above failed.
-  let result 
+  let result
     = if (result == on-failure)
         ^top-level-eval-using-optimization(fragment, on-failure: on-failure)
       else
@@ -3844,7 +3839,7 @@ define method ^top-level-eval-type (fragment, #key on-failure = #f)
     on-failure
   else
     result
-  end;  
+  end;
 end method;
 
 // TODO: Lose these dummy definitions.
@@ -3863,7 +3858,7 @@ end method;
 ///////
 
 define function parse-parameters-into
-    (env :: <environment>, lambda-env :: <lambda-lexical-environment>, 
+    (env :: <environment>, lambda-env :: <lambda-lexical-environment>,
      sig-spec :: <signature-spec>)
   let required-specs
     = spec-argument-required-variable-specs(sig-spec);
@@ -3871,40 +3866,40 @@ define function parse-parameters-into
     = spec-argument-key-variable-specs(sig-spec);
   let spec-rest?
     = spec-argument-rest?(sig-spec);
-  let spec-key?      
+  let spec-key?
     = spec-argument-key?(sig-spec);
   let keys-start =
     size(required-specs)
       + if (spec-rest? | spec-key?) 1 else 0 end;
   let variables
     = make(<simple-object-vector>, size: keys-start + size(key-specs));
-  let var-index 
+  let var-index
     = 0;
   local method add-to-variables!(variable)
           variables[var-index] := variable;
-	  var-index := var-index + 1;
-	  variable
-	end,
-	method push-variable! (name, variable)
+          var-index := var-index + 1;
+          variable
+        end,
+        method push-variable! (name, variable)
           add-to-variables!(add-variable!(lambda-env, name, variable));
         end,
         method insert-rest-variable! (name)
           push-variable!(name,
-			 make(<lexical-rest-variable>,
-			      name: name,
-			      environment: lambda-env));
-	end;
+                         make(<lexical-rest-variable>,
+                              name: name,
+                              environment: lambda-env));
+        end;
   for (var-spec in required-specs)
     let name = spec-variable-name(var-spec);
     push-variable!(name,
-		   make(<lexical-required-variable>,
-			name:
-			  name,
-			environment: 
-			  lambda-env,
-			// TODO: dynamic type expressions
-			specializer: 
-			  &eval(env, spec-type-expression(var-spec))));
+                   make(<lexical-required-variable>,
+                        name:
+                          name,
+                        environment:
+                          lambda-env,
+                        // TODO: dynamic type expressions
+                        specializer:
+                          &eval(env, spec-type-expression(var-spec))));
   end;
   if (spec-rest?)
     insert-rest-variable!
@@ -3915,8 +3910,8 @@ define function parse-parameters-into
   end;
   for (key-spec in key-specs)
     add-to-variables!(make(<lexical-keyword-variable>,
-			   name: spec-variable-name(key-spec),
-			   environment: lambda-env));
+                           name: spec-variable-name(key-spec),
+                           environment: lambda-env));
   end;
   values(variables, keys-start)
 end;
@@ -3931,7 +3926,7 @@ define program-warning <bad-keyword-type>
 end;
 
 define function convert-keyword-initialization
-    (env :: <environment>, 
+    (env :: <environment>,
      keys-first :: false-or(<computation>),
      keys-last :: false-or(<computation>),
      key-spec :: <key-variable-spec>,
@@ -3948,7 +3943,7 @@ define function convert-keyword-initialization
   let name = spec-variable-name(key-spec);
   let default-expression = spec-default-expression(key-spec);
 
-  // TODO:  evaluate type expressions in the correct environment, 
+  // TODO:  evaluate type expressions in the correct environment,
   //        and handle dynamic types.
   let type = ^top-level-eval(spec-type-expression(key-spec));
   // (gts,98jan), change from simply error'ing
@@ -3958,29 +3953,29 @@ define function convert-keyword-initialization
     else
       let form = f & model-definition(f);
       note(<bad-keyword-type>,
-	   source-location: f & model-source-location(f),
-	   form: form,
-	   type-given: spec-type-expression(key-spec),
-	   more-info: if (type)
-			"cannot be evaluated at compile time"
-		      else
-			"is not a <type>"
-		      end if);
+           source-location: f & model-source-location(f),
+           form: form,
+           type-given: spec-type-expression(key-spec),
+           more-info: if (type)
+                        "cannot be evaluated at compile time"
+                      else
+                        "is not a <type>"
+                      end if);
       type := dylan-value(#"<object>");
       let (type-error-f, type-error-l, type-error-ref) =
-        convert-error-call(env, $ignore, 
+        convert-error-call(env, $ignore,
                            concatenate("Invalid keyword type \"",
-			               as(<string>, spec-type-expression(key-spec)),
-				       "\"."));
+                                       as(<string>, spec-type-expression(key-spec)),
+                                       "\"."));
       join-2x2!(keys-first, keys-last, type-error-f, type-error-l);
     end if;
 
   let (key-literal?, key-literal-value) =
     if (instance?(default-expression, <literal-constant-fragment>))
       let key-literal-value =
-	make-compile-time-literal(fragment-value(default-expression));
+        make-compile-time-literal(fragment-value(default-expression));
       if (^instance?(key-literal-value, type))
-	values(#t, key-literal-value)
+        values(#t, key-literal-value)
       end;
     end;
 
@@ -3989,24 +3984,24 @@ define function convert-keyword-initialization
       specifiers[j] := key;
       specifiers[j + 1] := key-literal-value;
       values(make-local-lexical-environment(name, variable, type, env),
-	     keys-first, keys-last, variable)
+             keys-first, keys-last, variable)
     else
       specifiers[j] := key;
       specifiers[j + 1] := &unbound;
       let function =
-	make-dylan-reference(#"==");
+        make-dylan-reference(#"==");
       let unbound-temp =
-	make-object-reference(&unbound);
-      // TODO: FIX AFTER WORKING 
+        make-object-reference(&unbound);
+      // TODO: FIX AFTER WORKING
       let (call, temporary) =
-	make-with-temporary(env, <simple-call>,
-			    function: function,
-			    arguments: vector(variable, unbound-temp));
+        make-with-temporary(env, <simple-call>,
+                            function: function,
+                            arguments: vector(variable, unbound-temp));
       let (keys-first, keys-last)
-	= join-2x1!(keys-first, keys-last, call);
+        = join-2x1!(keys-first, keys-last, call);
 
       let (default-first, default-last, default-t) =
-	convert-1(env, default-expression);
+        convert-1(env, default-expression);
       // TODO: MOVE INTO MERGE
       let (default-mt, default-mt-t) =
         // We mustn't eliminate the defaulting code if an input keyword
@@ -4024,26 +4019,26 @@ define function convert-keyword-initialization
              value: default-t);
         end;
       let (default-first, default-last)
-	= join-2x1!(default-first, default-last, default-mt);
+        = join-2x1!(default-first, default-last, default-mt);
       let (new-env, new-variable) =
-	bind-local-variable(env, name, #f);
+        bind-local-variable(env, name, #f);
       let if-c = make-in-environment
                    (env, <if>, test: temporary,
                     consequent: default-first, alternative: #f);
       let merge-c =
-	make-in-environment
+        make-in-environment
           (env, <if-merge>,
-	   left-value: default-mt-t,
-	   left-previous-computation: default-last,
-	   right-value: variable,
-	   right-previous-computation: if-c,
-	   temporary: new-variable,
-	   previous-computation: if-c);
+           left-value: default-mt-t,
+           left-previous-computation: default-last,
+           right-value: variable,
+           right-previous-computation: if-c,
+           temporary: new-variable,
+           previous-computation: if-c);
       new-variable.generator := merge-c;
       if-c.next-computation  := merge-c;
       if-c.alternative       := merge-c;
       let (keys-first, keys-last)
-	= join-2x2!(keys-first, keys-last, if-c, merge-c);
+        = join-2x2!(keys-first, keys-last, if-c, merge-c);
       default-first.previous-computation := if-c;
       default-last.next-computation := merge-c;
       values(new-env, keys-first, keys-last, new-variable)
@@ -4079,7 +4074,7 @@ end program-warning;
 ///
 /// DYLAN SPECIFIC RETURN TYPE RULES
 ///
-define function maybe-tighten-return-values 
+define function maybe-tighten-return-values
     (env :: <environment>, fn :: <&lambda>, fixed-types)
   when (^make-method?(fn))
     let sig = ^function-signature(fn);
@@ -4092,7 +4087,7 @@ define function maybe-tighten-return-values
         first(fixed-types) := type-temp;
       end unless;
     end when;
-  end when;  
+  end when;
 end function;
 
 define method convert-lambda-into*
@@ -4136,17 +4131,17 @@ define method convert-lambda-into*
       let shared? = (entry.tail ~== 1);
       let input? = (shared-index == key-index);
       let var = variables[key-var-index];
-      let input-var 
-        = if (shared?) 
+      let input-var
+        = if (shared?)
             variables[keys-start + shared-index]
-          else 
+          else
             var
           end;
       let (new-env, new-keys-first, new-keys-last) =
-	convert-keyword-initialization
-	  (inner-env,
-	   keys-first, keys-last, key-spec,
-	   key, input-var, shared?, input?, specifiers, key-index, f);
+        convert-keyword-initialization
+          (inner-env,
+           keys-first, keys-last, key-spec,
+           key, input-var, shared?, input?, specifiers, key-index, f);
       inner-env := new-env;
       keys-first := new-keys-first;
       keys-last  := new-keys-last;
@@ -4161,11 +4156,11 @@ define method convert-lambda-into*
     = size(required-values);
   let body-context
     = if (multiple-values?)
-	make(<multiple-value-context>, 
-	     mvc-num-values: number-of-required-values, 
-	     mvc-rest?:      rest-type)
+        make(<multiple-value-context>,
+             mvc-num-values: number-of-required-values,
+             mvc-rest?:      rest-type)
       else
-	$single
+        $single
       end if;
   let (body-first, body-last, value-temp)
     = convert-body(inner-env, body-context, the-body);
@@ -4173,79 +4168,79 @@ define method convert-lambda-into*
     = join-2x2!(keys-first, keys-last, body-first, body-last);
   let (body-last, value-temp)
     = if (multiple-values?)
-	let types-first = body-last;
-	let types-last  = body-last;
-	local method convert-type (variable-spec)
-		let (type-first, type-last, type-temp) =
-		  convert-type-expression
-		    (lambda-env, spec-type-expression(variable-spec));
-		let (_types-first, _types-last)
-		  = join-2x2!(types-first, types-last, type-first, type-last);
-		types-first := _types-first;
-		types-last  := _types-last;
-		type-checked-at-run-time?(fast-constant-value(type-temp)) &
-		  type-temp
-	      end;
-	let fixed-types = map(convert-type, required-values);
+        let types-first = body-last;
+        let types-last  = body-last;
+        local method convert-type (variable-spec)
+                let (type-first, type-last, type-temp) =
+                  convert-type-expression
+                    (lambda-env, spec-type-expression(variable-spec));
+                let (_types-first, _types-last)
+                  = join-2x2!(types-first, types-last, type-first, type-last);
+                types-first := _types-first;
+                types-last  := _types-last;
+                type-checked-at-run-time?(fast-constant-value(type-temp)) &
+                  type-temp
+              end;
+        let fixed-types = map(convert-type, required-values);
 
         // should probably just call match-values-with-context() for the following:
-        let (adj-c, adj-temp) = 
+        let (adj-c, adj-temp) =
 
 /***** gts 20nov97
   No longer do adjusts, because harp back-end does adjust after a function call.
   That is, for a computation such as:
      *t1 := call(f, ...)
   where *t1 has sig. (2, #rest) and f has sig. (#rest), the MV area will be
-  guarangeed to have at least two values (possibly #f's) before the next 
+  guarangeed to have at least two values (possibly #f's) before the next
   computation.
 
           if (~ rest-type)
-            // if an exact signature (no #rest return), enforce the exact number of 
+            // if an exact signature (no #rest return), enforce the exact number of
             // returned values
-            let(c, t) 
+            let(c, t)
               = make-with-temporary
-	          (lambda-env, <adjust-multiple-values>,
-		   value: value-temp,
-		   number-of-required-values: number-of-required-values,
-		   temporary-class: <multiple-value-temporary>);
+                  (lambda-env, <adjust-multiple-values>,
+                   value: value-temp,
+                   number-of-required-values: number-of-required-values,
+                   temporary-class: <multiple-value-temporary>);
              mvt-transfer-values!(value-temp, t);
              values(c, t);
-	  elseif (number-of-required-values > 0)
-	    // rest-spec and some required values:
-	    // ensure that there are enough values so that mv-check-type later
-	    // is ok -- do adj-mv-rest, a.k.a. "adjust up".
-            let(c, t) 
+          elseif (number-of-required-values > 0)
+            // rest-spec and some required values:
+            // ensure that there are enough values so that mv-check-type later
+            // is ok -- do adj-mv-rest, a.k.a. "adjust up".
+            let(c, t)
               = make-with-temporary
-	          (lambda-env, <adjust-multiple-values-rest>,
-		   value: value-temp,
-		   number-of-required-values: number-of-required-values,
-		   temporary-class: <multiple-value-temporary>);
-	    mvt-transfer-values!(value-temp, t);
-	    values(c, t);
-	  else  // rest-spec and no required values -- no adjusts needed
+                  (lambda-env, <adjust-multiple-values-rest>,
+                   value: value-temp,
+                   number-of-required-values: number-of-required-values,
+                   temporary-class: <multiple-value-temporary>);
+            mvt-transfer-values!(value-temp, t);
+            values(c, t);
+          else  // rest-spec and no required values -- no adjusts needed
  *****/
             values(#f, value-temp);
 /*****          end if;  *****/
 
         let type-temp = rest-type & convert-type(rest-type);
-        let (first, last, temp) 
+        let (first, last, temp)
           = join-1x1-t!(types-last, adj-c, adj-temp);
 
         let (check-c, check-t)
           = if (type-temp)
               let (check-c, check-temp) =
                 make-with-temporary
-		  (lambda-env, <multiple-value-result-check-type-rest>,
-		   value: temp,
-		   types: fixed-types,
-		   rest-type: type-temp,
-		   temporary-class: <multiple-value-temporary>);
+                  (lambda-env, <multiple-value-result-check-type-rest>,
+                   value: temp,
+                   types: fixed-types,
+                   rest-type: type-temp,
+                   temporary-class: <multiple-value-temporary>);
               mvt-transfer-values!(temp, check-temp);
-              values(check-c, check-temp);  
+              values(check-c, check-temp);
             elseif (size(fixed-types) > 0)
               maybe-tighten-return-values(env, f, fixed-types);
-              let (check-c, check-temp) = 
-                make-with-temporary(lambda-env, 
+              let (check-c, check-temp) =
+                make-with-temporary(lambda-env,
                   <multiple-value-result-check-type>,
                   value: temp,
                   types: fixed-types,
@@ -4259,13 +4254,13 @@ define method convert-lambda-into*
             = join-1x1-t!(last, check-c, check-t);
           values(last, temp);
       else  // not multiple-values?
-	if (number-of-required-values > 1 | rest-type)
+        if (number-of-required-values > 1 | rest-type)
            note(<multiple-values-declared-in-single-value-lambda>,
                 source-location: f & model-source-location(f),
                 context-id:      dfm-context-id(env),
                 expression:      f);
-	end if;
-	values(body-last, value-temp)
+        end if;
+        values(body-last, value-temp)
       end if;
   let return
     = make-in-environment
