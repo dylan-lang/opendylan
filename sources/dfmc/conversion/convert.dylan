@@ -547,19 +547,15 @@ define method convert-reference
          source-location: fragment & fragment-source-location(fragment),
          context-id:      dfm-context-id(env),
          variable-name:   var);
-    let restart-message
-      = concatenate("Retry reference to binding \"",
-                    as(<string>, fragment | binding-identifier(var)),
-                    "\".");
-    let error-message
-      = concatenate("Reference to undefined binding \"",
-                    as(<string>, fragment | binding-identifier(var)),
-                    "\".");
+    let binding-name = as(<string>, fragment | binding-identifier(var));
+    let restart-message = "Retry reference to binding \"%s\".";
+    let error-message = "Reference to undefined binding \"%s\".";
     let (check-first, check-last, check-t)
       = dynamic-bind (*generating-undefined-reference-warning* = #t)
           do-convert(env, $single,
                      #{ while (?var == ?&unbound)
-                          cerror(?restart-message, ?error-message);
+                          cerror(?restart-message, ?error-message,
+                                 ?binding-name);
                         end;
                         ?var });
         end;
