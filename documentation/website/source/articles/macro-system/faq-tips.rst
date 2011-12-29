@@ -76,7 +76,7 @@ common BNF forms.
            { z ... }
            { }
 
-`{x}? | {x}(, {x})*`
+`{x}? | {x} (, {x})*`
       This is a list that may have 0–*n* items. Handle this by calling out to an
       auxiliary rule that calls itself recursively like so::
       
@@ -89,7 +89,7 @@ common BNF forms.
       variable needs to be well-separated from the syntax that follows it by a
       semicolon or intermediate word.
 
-`{x}(, {x})*`
+`{x} (, {x})*`
       This is a list that may have 1–*n* items. You simply cannot do this in the
       general case; your best bet is design your macro to handle 0 items
       gracefully and then use a 0-*n* list.
