@@ -16,14 +16,14 @@ define function main
   let server
     = make-environment-command-line-server
         (input-stream:   input-stream,
-	 output-stream:  output-stream);
+         output-stream:  output-stream);
   let class = <main-command>;
   let command
     = block ()
-	parse-command-line(server, arguments, class: class)
+        parse-command-line(server, arguments, class: class)
       exception (error :: <parse-error>)
-	format(output-stream, "%s\n", error);
-	exit-application($error-exit-code)
+        format(output-stream, "%s\n", error);
+        exit-application($error-exit-code)
       end;
   let status-code :: <integer> = execute-command(command);
   exit-application(status-code)
@@ -32,16 +32,16 @@ end function main;
 define function dylan-banner
     () => (banner :: <string>)
   format-to-string("%s\n%s\n%s",
-		   release-name(),
-		   release-version(),
-		   release-copyright())
+                   release-name(),
+                   release-version(),
+                   release-copyright())
 end function dylan-banner;
 
 define function application-arguments-as-string
     () => (arguments :: <string>)
   with-output-to-string (stream)
     for (argument in application-arguments(),
-	 separator = "" then " ")
+         separator = "" then " ")
       write(stream, separator);
       write(stream, argument)
     end
