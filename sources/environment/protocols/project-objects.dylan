@@ -1285,7 +1285,6 @@ end method project-debug-machine-setter;
 /// This shouldn't be necessary, but the project manager lets us down
 ///---*** andrewa: aim to remove this one day...
 
-define constant $minimal-playground-project-name = "minimal-dylan-playground";
 define constant $playground-project-name         = "dylan-playground";
 define constant $gui-playground-project-name     = "gui-dylan-playground";
 
@@ -1293,10 +1292,8 @@ define function playground-project-name
     () => (name :: <string>)
   if (release-contains-library-pack?(#"GUI"))
     $gui-playground-project-name
-  elseif (release-contains-library-pack?(#"Core"))
-    $playground-project-name
   else
-    $minimal-playground-project-name;
+    $playground-project-name
   end
 end function playground-project-name;
 
