@@ -599,7 +599,6 @@ CORBA_TESTS_SERVER_APP = $(INSTALL_BIN_DIRECTORY)\corba-tests-server-app.exe
 CN2 = $(INSTALL_BIN_DIRECTORY)\cn2.exe
 FFT_TEST = $(INSTALL_BIN_DIRECTORY)\fft-test.exe
 
-MINIMAL_DYLAN_PLAYGROUND = $(INSTALL_BIN_DIRECTORY)\minimal-dylan-playground.exe
 DYLAN_PLAYGROUND = $(INSTALL_BIN_DIRECTORY)\dylan-playground.exe
 GUI_DYLAN_PLAYGROUND = $(INSTALL_BIN_DIRECTORY)\gui-dylan-playground.exe
 
@@ -1005,7 +1004,6 @@ install-enhanced-doc-examples: install-doc-rotnexample
 
 # Example targets
 
-minimal-dylan-playground: $(MINIMAL_DYLAN_PLAYGROUND)
 dylan-playground: $(DYLAN_PLAYGROUND)
 gui-dylan-playground: $(GUI_DYLAN_PLAYGROUND)
 
@@ -1079,7 +1077,7 @@ rel-environment: dylan-environment-with-tools win32-environment with-splash-scre
 libraries: user-libraries win32-libraries duim ole-libraries duim-ole database-libraries network dylan-orb naming-client midi
 example-projects: console-example-projects duim-example-projects win32-example-projects ole-example-projects duim-ole-example-projects network-example-projects corba-example-projects
 install-examples: install-examples-css install-console-examples install-duim-examples install-win32-examples install-basic-doc-examples install-templates install-database-examples install-ole-examples install-duim-ole-examples install-network-examples install-corba-examples install-enhanced-doc-examples install-midi-examples
-tools: install-wdbgdylan dll-wrap minimal-dylan-playground dylan-playground gui-dylan-playground create-id console-scepter naming-service remote-debugger testworks-libraries debugger map-statistics parser-compiler
+tools: install-wdbgdylan dll-wrap dylan-playground gui-dylan-playground create-id console-scepter naming-service remote-debugger testworks-libraries debugger map-statistics parser-compiler
 release: release-info dylan-compiler-with-tools compiler environment rel-environment libraries tools install-runtime-dlls install-examples
 
 reinstall-examples:
@@ -1093,7 +1091,7 @@ dylan-environment: $(DYLAN_ENVIRONMENT)
 minimal-libraries: user-libraries win32-libraries duim
 minimal-environment: dylan-environment with-splash-screen
 install-minimal-examples: install-examples-css install-console-examples install-duim-examples install-win32-examples install-basic-doc-examples install-templates
-minimal-tools: install-wdbgdylan dll-wrap minimal-dylan-playground dylan-playground gui-dylan-playground
+minimal-tools: install-wdbgdylan dll-wrap dylan-playground gui-dylan-playground
 minimal-release: release-info dylan-compiler minimal-compiler minimal-environment minimal-libraries minimal-tools testworks-libraries debugger map-statistics parser-compiler install-runtime-dlls install-minimal-examples
 
 #
@@ -1959,11 +1957,6 @@ $(DLL_WRAP):
   $(ENSURE_RUNTIME_LIBRARY) $(WIN32_KERNEL_DLL) win32-kernel
   $(ENSURE_SOURCES) dll-wrap $(DLL_WRAP_SOURCE)
   $(BUILD_APPLICATION) dll-wrap
-
-$(MINIMAL_DYLAN_PLAYGROUND):
-  $(MAKE) user-libraries
-  $(ENSURE_SOURCES) dylan-playground $(DYLAN_PLAYGROUND_SOURCE)
-  $(BUILD_APPLICATION) minimal-dylan-playground
 
 $(DYLAN_PLAYGROUND):
   $(MAKE) user-libraries
