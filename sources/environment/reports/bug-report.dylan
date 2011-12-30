@@ -84,12 +84,12 @@ define method write-report-as
             write-html-bug-report-section(stream, report, section-keyword)
           end method write-section;
     let project = report.report-project;
-    compute-bug-report-objects(report);
     do(write-section, $bug-report-sections);
     if (application-tethered?(project))
+      compute-bug-report-objects(report);
       do(write-section, $bug-report-application-sections)
+      do(write-section, $bug-report-extra-html-sections)
     end;
-    do(write-section, $bug-report-extra-html-sections)
   end
 end method write-report-as;
 
@@ -413,9 +413,13 @@ define method write-html-bug-report-section
   write-html-bug-report-names-and-values
     (stream, report,
      vector("Application", "Arguments", "Condition"),
-     vector(as(<string>, application.application-filename),
-            application.application-arguments,
-            application.application-stop-reason-message | "[None]"),
+     if (application)
+       vector(as(<string>, application.application-filename),
+              application.application-arguments,
+              application.application-stop-reason-message | "[None]")
+     else
+       vector("[not running]", "", "")
+     end,
      name-suffix: ": ")
 end method write-html-bug-report-section;
 
