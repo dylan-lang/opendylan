@@ -17,17 +17,17 @@ define sideways method emit-library-records
 end method;
 
 define sideways method emit-library-record
-    (back-end :: <c-back-end>, cr :: <compilation-record>, 
+    (back-end :: <c-back-end>, cr :: <compilation-record>,
      ld :: <library-description>, #rest flags, #key, #all-keys)
   if (compilation-record-needs-linking?(cr))
     let c-file = #f;
     with-dependent($compilation of cr)
       with-build-area-output
         (stream = ld, base: compilation-record-name(cr), type: "c")
-	let name = cr.compilation-record-source-record.source-record-name;
+        let name = cr.compilation-record-source-record.source-record-name;
         progress-line("Linking %s.dylan", name);
         link-all(back-end, stream, cr);
-	c-file := stream-locator(stream);
+        c-file := stream-locator(stream);
       end;
     end;
     compilation-record-needs-linking?(cr) := #f;
@@ -42,9 +42,9 @@ define constant $symbol-fixup-name = #"%resolve-symbol";
 define constant $system-init-code-tag = "for_system";
 define constant $user-init-code-tag = "for_user";
 
-define method link-all 
+define method link-all
     (back-end :: <c-back-end>, stream :: <stream>, cr :: <compilation-record>)
-  with-simple-abort-retry-restart 
+  with-simple-abort-retry-restart
       ("Abort the emission phase", "Restart the emission phase")
     let heap = cr.compilation-record-model-heap;
     write(stream, "#include \"run-time.h\"\n\n");
@@ -67,9 +67,9 @@ define method link-all
     end for;
     write(stream, "\n/* SYSTEM INIT CODE */\n\n");
     emit-init-code-head(back-end, stream, cr, $system-init-code-tag);
-    format-emit(back-end, stream, 1, "extern ~ ^(~);\n", 
+    format-emit(back-end, stream, 1, "\textern ~ ^(~);\n",
                 $dylan-type-string,
-                ^iep(dylan-value($symbol-fixup-name)), 
+                ^iep(dylan-value($symbol-fixup-name)),
                 $dylan-type-string);
     for (refs in heap.heap-load-bound-references)
       emit-fixups
@@ -86,16 +86,16 @@ define method link-all
 end method;
 
 define method emit-init-code-head
-    (back-end :: <c-back-end>, stream, 
+    (back-end :: <c-back-end>, stream,
        cr :: <compilation-record>, tag :: <string>)
  => ()
- format(stream, "void %s%s () {\n", 
+ format(stream, "void %s%s () {\n",
         cr-init-name(compilation-record-library(cr),
                      compilation-record-name(cr)),
         tag);
 end method;
 
-define method emit-init-code-body 
+define method emit-init-code-body
     (back-end :: <c-back-end>, stream, lambdas :: <sequence>) => ()
   for (code in lambdas)
     emit-definition(back-end, stream, code.^iep);
@@ -125,7 +125,7 @@ define method emit-data-definition
   emit-definition(back-end, stream, o);
 end method;
 
-define method emit-typedefs 
+define method emit-typedefs
     (back-end :: <c-back-end>, stream :: <stream>, cr :: <compilation-record>)
   write(stream, "/* Typedefs for referenced classes */\n\n");
   let heap = cr.compilation-record-model-heap;
@@ -147,11 +147,11 @@ end method;
 define method emit-heap-typedefs
     (back-end :: <c-back-end>, stream :: <stream>, heap, object :: <&class>)
   emit-typedef(back-end, stream, object);
-  let referenced-sizes 
-    = element(heap.heap-referenced-repeated-object-sizes, 
+  let referenced-sizes
+    = element(heap.heap-referenced-repeated-object-sizes,
               object, default: #());
-  let defined-sizes 
-    = element(heap.heap-defined-repeated-object-sizes, 
+  let defined-sizes
+    = element(heap.heap-defined-repeated-object-sizes,
               object, default: #());
   for (size in referenced-sizes)
     emit-repeated-struct-definer-name(back-end, stream, object, size);
@@ -166,7 +166,7 @@ define method emit-heap-typedefs
   write-element(stream, '\n');
 end method;
 
-define method emit-externs 
+define method emit-externs
     (back-end :: <c-back-end>, stream :: <stream>, cr :: <compilation-record>)
   write(stream, "/* Referenced object declarations */\n\n");
   let heap = cr.compilation-record-model-heap;
@@ -202,12 +202,11 @@ end method;
 
 define method emit-fixups
     (back-end :: <c-back-end>, stream :: <stream>, object, refs)
-  write(stream, "{\n");
-  format-emit*(back-end, stream, "\t~ T0;\n\n", $dylan-type-string);
-  format-emit*(back-end, stream, "\tT0 = ");
+  format-emit*(back-end, stream, "\t{\n");
+  format-emit*(back-end, stream, "\t\t~ T0;\n\n", $dylan-type-string);
+  format-emit*(back-end, stream, "\t\tT0 = ");
   emit-resolve-for-fixup(back-end, stream, object);
-  write(stream, ";\n");
-  format-emit*(back-end, stream, "\tif (T0 != @) {\n", object);
+  format-emit*(back-end, stream, "\t\tif (T0 != @) {\n", object);
   let fixed-indirection-variable = #f;
   for (ref in refs)
     if (instance?(ref, <load-bound-code-reference>))
@@ -219,8 +218,8 @@ define method emit-fixups
       emit-fixup(back-end, stream, object, ref);
     end;
   end;
+  format-emit*(back-end, stream, "\t\t}\n");
   format-emit*(back-end, stream, "\t}\n");
-  write(stream, "}\n");
 end method;
 
 define method emit-fixup
@@ -228,41 +227,41 @@ define method emit-fixup
 end method;
 
 define method emit-fixup
-    (back-end :: <c-back-end>, stream :: <stream>, 
+    (back-end :: <c-back-end>, stream :: <stream>,
      object, ref :: <load-bound-code-reference>)
-  format-emit*(back-end, stream, "\t\t? = T0;\n", object);
+  format-emit*(back-end, stream, "\t\t\t? = T0;\n", object);
 end method;
 
 define method emit-fixup
-    (back-end :: <c-back-end>, stream :: <stream>, 
+    (back-end :: <c-back-end>, stream :: <stream>,
      object, ref :: <load-bound-binding-reference>)
-  format-emit*(back-end, stream, "\t\t^ = T0;\n", 
+  format-emit*(back-end, stream, "\t\t\t^ = T0;\n",
                load-bound-referencing-binding(ref));
 end method;
 
 define method emit-fixup
-    (back-end :: <c-back-end>, stream :: <stream>, 
+    (back-end :: <c-back-end>, stream :: <stream>,
      object, ref :: <load-bound-instance-slot-reference>)
   let referencing-object = load-bound-referencing-object(ref);
   let slotd = load-bound-referencing-slot(ref);
-  let (primitive, offset) 
+  let (primitive, offset)
     = fixed-slot-primitive-fixup-info
         (^object-class(referencing-object), slotd);
-  format-emit*(back-end, stream, "\t\t^(T0, @", 
+  format-emit*(back-end, stream, "\t\t\t^(T0, @",
                primitive, referencing-object);
   format(stream, ", %d);\n", offset);
 end method;
 
 define method emit-fixup
-    (back-end :: <c-back-end>, stream :: <stream>, 
+    (back-end :: <c-back-end>, stream :: <stream>,
      object, ref :: <load-bound-repeated-slot-reference>)
   let referencing-object = load-bound-referencing-object(ref);
   let slotd = load-bound-referencing-slot(ref);
   let index = load-bound-referencing-slot-index(ref);
-  let (primitive, base-offset) 
+  let (primitive, base-offset)
     = repeated-slot-primitive-fixup-info
         (^object-class(referencing-object), slotd);
-  format-emit*(back-end, stream, "\t\t^(T0, @",
+  format-emit*(back-end, stream, "\t\t\t^(T0, @",
                primitive, referencing-object);
   format(stream, ", %d, %d);\n", base-offset, index);
 end method;
@@ -274,7 +273,7 @@ end method;
 
 define method emit-resolve-for-fixup
     (back-end :: <c-back-end>, stream :: <stream>, object :: <symbol>)
-  format-emit(back-end, stream, 1, "^(@);\n", 
+  format-emit(back-end, stream, 1, "^(@);\n",
               ^iep(dylan-value($symbol-fixup-name)), object);
   // format-emit*
   //  (back-end, stream, "~(@)", $primitive-resolve-symbol-string, object);
