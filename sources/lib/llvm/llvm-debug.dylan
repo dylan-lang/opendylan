@@ -178,10 +178,8 @@ define function llvm-make-dbg-function-type
      return-type :: false-or(<llvm-metadata-value>),
      parameter-types :: <sequence>)
  => (dbg-function-type :: <llvm-metadata-value>);
-  let i32-zero
-    = make(<llvm-integer-constant>, type: $llvm-i32-type, integer: 0);
-  let i64-zero
-    = make(<llvm-integer-constant>, type: $llvm-i64-type, integer: 0);
+  let i32-zero = i32(0);
+  let i64-zero = i64(0);
   let params
     = add(as(<list>, parameter-types), return-type);
   make(<llvm-metadata-node>,
@@ -380,3 +378,43 @@ define function llvm-make-dbg-derived-type
                            derived-from))
 end function;
 
+define function llvm-make-dbg-composite-type
+    (kind :: one-of(#"array", #"enum", #"struct", #"union", #"vector",
+                    #"function", #"inheritance"),
+     scope :: <llvm-metadata-value>, name :: <string>,
+     dbg-file :: false-or(<llvm-metadata-value>), line-number,
+     type-size :: <integer>, type-alignment :: <integer>,
+     elements :: <sequence>,
+     derived-from :: false-or(<llvm-metadata-value>))
+ => (dbg-composite-type :: <llvm-metadata-value>);
+  let i32-zero = i32(0);
+  let i64-zero = i64(0);
+  let tag
+    = select (kind)
+        #"array"       => $DW-TAG-array-type;
+        #"enum"        => $DW-TAG-enumeration-type;
+        #"struct"      => $DW-TAG-structure-type;
+        #"union"       => $DW-TAG-union-type;
+        #"vector"      => $DW-TAG-vector-type;
+        #"function"    => $DW-TAG-subroutine-type;
+        #"inheritance" => $DW-TAG-inheritance;
+      end select;
+
+  make(<llvm-metadata-node>,
+       function-local?: #f,
+       node-values: vector(i32($llvm-debug-version + tag),
+                           scope,
+                           make(<llvm-metadata-string>, string: name),
+                           dbg-file,
+                           i32(line-number | 0),
+                           i64(type-size),
+                           i64(type-alignment),
+                           i32-zero,
+                           i32-zero, // flags
+                           #f,
+                           make(<llvm-metadata-node>,
+                                function-local?: #f,
+                                node-values: elements),
+                           i32-zero, // runtime version
+                           #f))
+end function;

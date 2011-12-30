@@ -451,7 +451,8 @@ define module llvm-debug
     llvm-make-dbg-lexical-block,
     llvm-make-dbg-local-variable,
     llvm-make-dbg-basic-type,
-    llvm-make-dbg-derived-type;
+    llvm-make-dbg-derived-type,
+    llvm-make-dbg-composite-type;
 end module;
 
 define module llvm-internals
