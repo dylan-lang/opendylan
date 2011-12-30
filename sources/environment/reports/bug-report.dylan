@@ -128,6 +128,9 @@ define method write-bug-report-section
         end method record-property;
   let os-variant
     = select ($os-variant)
+        #"darwin"  => "Mac OS X";
+        #"freebsd" => "FreeBSD";
+        #"linux"   => "Linux";
         #"winxp"   => "Windows XP";
         #"win2000" => "Windows 2000";
         #"winnt"   => "Windows NT";
@@ -426,6 +429,9 @@ define method write-html-bug-report-section
         end method record-property;
   let os-variant
     = select ($os-variant)
+        #"darwin"  => "Mac OS X";
+        #"freebsd" => "FreeBSD";
+        #"linux"   => "Linux";
         #"winxp"   => "Windows XP";
         #"win2000" => "Windows 2000";
         #"winnt"   => "Windows NT";
