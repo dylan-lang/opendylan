@@ -39,7 +39,7 @@ define class <bug-report> (<project-report>)
 end class <bug-report>;
 
 install-report(#"bug-report", "Bug report", <bug-report>,
-	       formats: #[#"text", #"html"]);
+               formats: #[#"text", #"html"]);
 
 define constant $bug-report-sections
   = #[#["Failure Summary",           #"summary"],
@@ -55,13 +55,13 @@ define constant $bug-report-extra-html-sections
 define method write-report-as
     (stream :: <stream>, report :: <bug-report>, _format == #"text") => ()
   local method write-section
-	    (section :: <vector>) => ()
-	  let section-title   = section[0];
-	  let section-keyword = section[1];
-	  format(stream, "%s\n", $report-separator);
-	  format(stream, "%s:\n\n", as-uppercase(section-title));
-	  write-bug-report-section(stream, report, section-keyword)
-	end method write-section;
+            (section :: <vector>) => ()
+          let section-title   = section[0];
+          let section-keyword = section[1];
+          format(stream, "%s\n", $report-separator);
+          format(stream, "%s:\n\n", as-uppercase(section-title));
+          write-bug-report-section(stream, report, section-keyword)
+        end method write-section;
   let project = report.report-project;
   format(stream, "%s\n", $bug-report-first-line);
   do(write-section, $bug-report-sections);
@@ -77,19 +77,19 @@ define method write-report-as
   let title = format-to-string("%s Bug Report", release-product-name());
   with-html-output (stream, title)
     local method write-section
-	      (section :: <vector>) => ()
-	    let section-title   = section[0];
-	    let section-keyword = section[1];
-	    write-html(stream, #"h2", section-title, #"/h2", '\n', '\n');
-	    write-html-bug-report-section(stream, report, section-keyword)
-	  end method write-section;
+              (section :: <vector>) => ()
+            let section-title   = section[0];
+            let section-keyword = section[1];
+            write-html(stream, #"h2", section-title, #"/h2", '\n', '\n');
+            write-html-bug-report-section(stream, report, section-keyword)
+          end method write-section;
     let project = report.report-project;
-    compute-bug-report-objects(report);
     do(write-section, $bug-report-sections);
     if (application-tethered?(project))
+      compute-bug-report-objects(report);
       do(write-section, $bug-report-application-sections)
+      do(write-section, $bug-report-extra-html-sections)
     end;
-    do(write-section, $bug-report-extra-html-sections)
   end
 end method write-report-as;
 
@@ -106,12 +106,12 @@ define method write-bug-report-section
   let project = report.report-project;
   let application = project.project-application;
   write-bug-report-names-and-values
-    (stream, report, 
+    (stream, report,
      vector("Application", "Arguments", "Condition"),
      if (application)
        vector(as(<string>, application.application-filename),
-	      application.application-arguments,
-	      application.application-stop-reason-message | "[None]")
+              application.application-arguments,
+              application.application-stop-reason-message | "[None]")
      else
        vector("[not running]", "", "")
      end,
@@ -123,26 +123,29 @@ define method write-bug-report-section
  => ()
   let properties = make(<stretchy-vector>);
   local method record-property
-	    (title :: <string>, value :: <string>)
-	  add!(properties, pair(title, value))
-	end method record-property;
+            (title :: <string>, value :: <string>)
+          add!(properties, pair(title, value))
+        end method record-property;
   let os-variant
     = select ($os-variant)
-	#"winxp"   => "Windows XP";
-	#"win2000" => "Windows 2000";
-	#"winnt"   => "Windows NT";
-	#"win95"   => "Windows 95";
-	#"win98"   => "Windows 98";
-	#"winme"   => "Windows ME";
-	#"win3.1"  => "Windows 3.1"
+        #"darwin"  => "Mac OS X";
+        #"freebsd" => "FreeBSD";
+        #"linux"   => "Linux";
+        #"winxp"   => "Windows XP";
+        #"win2000" => "Windows 2000";
+        #"winnt"   => "Windows NT";
+        #"win95"   => "Windows 95";
+        #"win98"   => "Windows 98";
+        #"winme"   => "Windows ME";
+        #"win3.1"  => "Windows 3.1"
       end;
   let edition-name
     = format-to-string("%s %s", release-product-name(), release-edition());
   record-property("Software edition", edition-name);
   record-property("Software version", release-version());
-  record-property("Operating system", 
-		  format-to-string("%s %s", 
-				   os-variant, $os-version));
+  record-property("Operating system",
+                  format-to-string("%s %s",
+                                   os-variant, $os-version));
   write-bug-report-names-and-values
     (stream, report, map(head, properties), map(tail, properties),
      name-suffix: ": ")
@@ -156,16 +159,16 @@ define method write-bug-report-section
   format(stream, "Application components:\n\n");
   for (component in application.application-components)
     format(stream, "  Version %s: %s\n",
-	   component-version-string(project, component),
-	   component-image-filename(project, component))
+           component-version-string(project, component),
+           component-image-filename(project, component))
   end;
   format(stream, "\n");
   format(stream, "Active application threads:\n\n");
   for (thread in application.application-threads,
        index from 1)
     format(stream, "  %d. %s\n",
-	   index,
-	   environment-object-display-name(project, thread, #f))
+           index,
+           environment-object-display-name(project, thread, #f))
   end
 end method write-bug-report-section;
 
@@ -182,12 +185,12 @@ end method write-bug-report-section;
 
 define function write-bug-report-thread-backtrace
     (stream :: <stream>, report :: <bug-report>, thread :: <thread-object>,
-     #key start :: <integer> = 0, 
+     #key start :: <integer> = 0,
           end: stop :: false-or(<integer>) = #f)
  => ()
   let project = report.report-project;
   format(stream, "Backtrace for %s:\n\n",
-	 environment-object-display-name(project, thread, #f));
+         environment-object-display-name(project, thread, #f));
   let stack = thread-complete-stack-trace(project, thread);
   let stop :: <integer> = stop | stack.size;
   let show-internal-functions? = report.report-show-internal-functions?;
@@ -196,14 +199,14 @@ define function write-bug-report-thread-backtrace
     for (frame :: <stack-frame-object> in stack)
       if (index > stop) return() end;
       if (show-internal-functions?
-	    | ~instance?(stack-frame-function(project, frame),
-			 <internal-method-object>))
-	if (index >= start)
-	  format(stream, "#%d ", index);
-	  write-bug-report-stack-frame(stream, report, frame);
-	  format(stream, "\n")
-	end;
-	index := index + 1
+            | ~instance?(stack-frame-function(project, frame),
+                         <internal-method-object>))
+        if (index >= start)
+          format(stream, "#%d ", index);
+          write-bug-report-stack-frame(stream, report, frame);
+          format(stream, "\n")
+        end;
+        index := index + 1
       end
     end
   end
@@ -218,10 +221,10 @@ define function write-bug-report-stack-frame
   let override-name = stack-frame-override-name(project, frame);
   let function = stack-frame-function(project, frame);
   format(stream, "%s\n",
-	 override-name
-	   | environment-object-display-name
-	       (project, function | frame, #f, 
-		qualify-names?: qualify-names?));
+         override-name
+           | environment-object-display-name
+               (project, function | frame, #f,
+                qualify-names?: qualify-names?));
   write-bug-report-object-location(stream, report, frame, indentation: "  ");
   if (show-variables?)
     write-bug-report-frame-variables(stream, report, frame, indentation: "  ")
@@ -243,8 +246,8 @@ define function write-bug-report-object-location
     let offset = location.source-location-start-offset;
     let line   = offset.source-offset-line + record.source-record-start-line;
     format(stream, "Line %d of %s\n",
-	   line,
-	   locator | "interactive definition")
+           line,
+           locator | "interactive definition")
   else
     format(stream, "[Unknown source location]\n")
   end;
@@ -265,11 +268,11 @@ define function write-bug-report-frame-variables
       let table = report.report-objects;
       let index = element(table, value, default: #f);
       unless (index)
-	if (instance?(value, <composite-object>))
-	  let new-index = size(table) + 1;
-	  table[value] := new-index
-	end;
-	add!(new-values, variable)
+        if (instance?(value, <composite-object>))
+          let new-index = size(table) + 1;
+          table[value] := new-index
+        end;
+        add!(new-values, variable)
       end
     end
   end;
@@ -277,18 +280,18 @@ define function write-bug-report-frame-variables
     (stream, report, variables, variables,
      name-label-key:
        method (variable :: <local-variable-object>)
-	 print-environment-object-to-string
-	   (project, variable, qualify-names?: qualify-names?)
+         print-environment-object-to-string
+           (project, variable, qualify-names?: qualify-names?)
        end,
      value-write-function:
        method (stream :: <stream>, variable :: <local-variable-object>)
-	 let value = variable-value(project, variable);
-	 write-bug-report-object(stream, report, value)
+         let value = variable-value(project, variable);
+         write-bug-report-object(stream, report, value)
        end,
      indentation: concatenate("  ", indentation),
      separator:   " = ");
   write-bug-report-variable-contents
-    (stream, report, new-values, 
+    (stream, report, new-values,
      indentation: indentation)
 end function write-bug-report-frame-variables;
 
@@ -312,7 +315,7 @@ define function write-bug-report-variable-contents
     write-bug-report-object-index(stream, report, value);
     format(stream, "\n");
     write-bug-report-object-contents(stream, report, value,
-				     indentation: object-contents-indentation)
+                                     indentation: object-contents-indentation)
   end
 end function write-bug-report-variable-contents;
 
@@ -332,23 +335,23 @@ define function write-bug-report-object-contents
      separator: " = ",
      name-label-key:
        method (name)
-	 select (name by instance?)
-	   <environment-object> =>
-	     environment-object-display-name
-	       (project, name, #f, qualify-names?: qualify-names?);
-	   <string> =>
-	     name;
-	   otherwise =>
-	     format-to-string("%=", name)
-	 end
+         select (name by instance?)
+           <environment-object> =>
+             environment-object-display-name
+               (project, name, #f, qualify-names?: qualify-names?);
+           <string> =>
+             name;
+           otherwise =>
+             format-to-string("%=", name)
+         end
        end,
      value-write-function:
        method (stream :: <stream>, instance :: <environment-object>)
-	 write-bug-report-object(stream, report, instance)
+         write-bug-report-object(stream, report, instance)
        end);
   if (missing-size > 0)
-    format(stream, "%s... [%d more]\n", 
-	   indentation, missing-size)
+    format(stream, "%s... [%d more]\n",
+           indentation, missing-size)
   end
 end function write-bug-report-object-contents;
 
@@ -408,11 +411,15 @@ define method write-html-bug-report-section
   let project = report.report-project;
   let application = project.project-application;
   write-html-bug-report-names-and-values
-    (stream, report, 
+    (stream, report,
      vector("Application", "Arguments", "Condition"),
-     vector(as(<string>, application.application-filename),
-	    application.application-arguments,
-	    application.application-stop-reason-message | "[None]"),
+     if (application)
+       vector(as(<string>, application.application-filename),
+              application.application-arguments,
+              application.application-stop-reason-message | "[None]")
+     else
+       vector("[not running]", "", "")
+     end,
      name-suffix: ": ")
 end method write-html-bug-report-section;
 
@@ -421,26 +428,29 @@ define method write-html-bug-report-section
  => ()
   let properties = make(<stretchy-vector>);
   local method record-property
-	    (title :: <string>, value :: <string>)
-	  add!(properties, pair(title, value))
-	end method record-property;
+            (title :: <string>, value :: <string>)
+          add!(properties, pair(title, value))
+        end method record-property;
   let os-variant
     = select ($os-variant)
-	#"winxp"   => "Windows XP";
-	#"win2000" => "Windows 2000";
-	#"winnt"   => "Windows NT";
-	#"win95"   => "Windows 95";
-	#"win98"   => "Windows 98";
-	#"winme"   => "Windows ME";
-	#"win3.1"  => "Windows 3.1"
+        #"darwin"  => "Mac OS X";
+        #"freebsd" => "FreeBSD";
+        #"linux"   => "Linux";
+        #"winxp"   => "Windows XP";
+        #"win2000" => "Windows 2000";
+        #"winnt"   => "Windows NT";
+        #"win95"   => "Windows 95";
+        #"win98"   => "Windows 98";
+        #"winme"   => "Windows ME";
+        #"win3.1"  => "Windows 3.1"
       end;
   let edition-name
     = format-to-string("%s %s", release-product-name(), release-edition());
   record-property("Software edition", edition-name);
   record-property("Software version", release-version());
-  record-property("Operating system", 
-		  format-to-string("%s %s", 
-				   os-variant, $os-version));
+  record-property("Operating system",
+                  format-to-string("%s %s",
+                                   os-variant, $os-version));
   write-html-bug-report-names-and-values
     (stream, report, map(head, properties), map(tail, properties),
      name-suffix: ": ")
@@ -454,27 +464,27 @@ define method write-html-bug-report-section
   let components = application.application-components;
   let threads = application.application-threads;
   write-html(stream,
-	     #"p", "Application components:", '\n', '\n',
-	     #"ol", '\n');
+             #"p", "Application components:", '\n', '\n',
+             #"ol", '\n');
   for (component in components)
     let name = environment-object-display-name(project, component, #f);
     write-html(stream,
-	       #"li", name,
-	       #"/a", #"/li", '\n')
+               #"li", name,
+               #"/a", #"/li", '\n')
   end;
   write-html(stream,
-	     #"p", "Active application threads:", '\n', '\n',
-	     #"ol", '\n');
+             #"p", "Active application threads:", '\n', '\n',
+             #"ol", '\n');
   for (thread in threads,
        index :: <integer> from 1)
     let reference = format-to-string("#thread%d", index);
     let name = environment-object-display-name(project, thread, #f);
     write-html(stream,
-	       #"li", make(<html-reference>, name: reference), name,
-	       #"/a", #"/li", '\n')
+               #"li", make(<html-reference>, name: reference), name,
+               #"/a", #"/li", '\n')
   end;
   write-html(stream,
-	     #"/ol", '\n')
+             #"/ol", '\n')
 end method write-html-bug-report-section;
 
 define method write-html-bug-report-section
@@ -488,14 +498,14 @@ define method write-html-bug-report-section
     let anchor = format-to-string("thread%d", index);
     let name = environment-object-display-name(project, thread, #f);
     write-html(stream,
-	       #"h2", make(<html-anchor>, name: anchor),
-	       "Backtrace for ", name, #"/h2", '\n');
+               #"h2", make(<html-anchor>, name: anchor),
+               "Backtrace for ", name, #"/h2", '\n');
     write-html-bug-report-thread-backtrace(stream, report, thread)
   end
 end method write-html-bug-report-section;
 
 define method write-html-bug-report-section
-    (stream :: <html-wrapper-stream>, report :: <bug-report>, 
+    (stream :: <html-wrapper-stream>, report :: <bug-report>,
      section == #"object-contents")
  => ()
   let project = report.report-project;
@@ -518,16 +528,16 @@ define method write-html-bug-report-section
     write-html(stream, #"p", "[");
     case
       class =>
-	write-html(stream, "Instance of ");
-	print-environment-object-name
-	  (stream, project, class, qualify-names?: #f);
+        write-html(stream, "Instance of ");
+        print-environment-object-name
+          (stream, project, class, qualify-names?: #f);
       otherwise =>
-	write-html(stream, "Foreign object");
+        write-html(stream, "Foreign object");
     end;
     write-html(stream, "]", #"/p", '\n');
     if (instance?(value, <composite-object>))
       write-html-bug-report-object-contents
-	(stream, report, value, indentation: "  ")
+        (stream, report, value, indentation: "  ")
     end
   end
 end method write-html-bug-report-section;
@@ -545,20 +555,20 @@ define function write-html-bug-report-thread-backtrace
     for (frame :: <stack-frame-object> in stack)
       if (index > stop) return() end;
       if (show-internal-functions?
-	    | ~instance?(stack-frame-function(project, frame),
-			 <internal-method-object>))
-	if (index >= start)
-	  write-html-bug-report-stack-frame(stream, report, frame, index);
-	  new-line(stream)
-	end;
-	index := index + 1
+            | ~instance?(stack-frame-function(project, frame),
+                         <internal-method-object>))
+        if (index >= start)
+          write-html-bug-report-stack-frame(stream, report, frame, index);
+          new-line(stream)
+        end;
+        index := index + 1
       end
     end
   end
 end function write-html-bug-report-thread-backtrace;
 
 define function write-html-bug-report-stack-frame
-    (stream :: <html-wrapper-stream>, report :: <bug-report>, 
+    (stream :: <html-wrapper-stream>, report :: <bug-report>,
      frame :: <stack-frame-object>, index :: <integer>)
  => ()
   let project = report.report-project;
@@ -571,8 +581,8 @@ define function write-html-bug-report-stack-frame
         | environment-object-display-name
             (project, function | frame, #f, qualify-names?: qualify-names?);
   write-html(stream,
-	     #"h3", make(<html-anchor>, name: anchor),
-	     "#", index, " ", name, #"/h3", '\n');
+             #"h3", make(<html-anchor>, name: anchor),
+             "#", index, " ", name, #"/h3", '\n');
   write-html-bug-report-object-location(stream, report, frame, indentation: "  ");
   write-html-bug-report-frame-variables(stream, report, frame, indentation: "  ");
 end function write-html-bug-report-stack-frame;
@@ -609,15 +619,15 @@ define function write-html-bug-report-frame-variables
     (stream, report, variables, variables,
      name-label-key:
        method (variable :: <local-variable-object>)
-	 print-environment-object-to-string
-	   (project, variable, qualify-names?: qualify-names?)
+         print-environment-object-to-string
+           (project, variable, qualify-names?: qualify-names?)
        end,
      value-write-function:
-       method 
-	   (stream :: <html-wrapper-stream>,
-	    variable :: <local-variable-object>)
-	 let value = variable-value(project, variable);
-	 write-html-environment-object-reference(stream, report, value)
+       method
+           (stream :: <html-wrapper-stream>,
+            variable :: <local-variable-object>)
+         let value = variable-value(project, variable);
+         write-html-environment-object-reference(stream, report, value)
        end,
      indentation: concatenate("  ", indentation),
      separator:   " = ")
@@ -640,23 +650,23 @@ define function write-html-bug-report-object-contents
      separator: " = ",
      name-label-key:
        method (name)
-	 select (name by instance?)
-	   <environment-object> =>
-	     environment-object-display-name
-	       (project, name, #f, qualify-names?: qualify-names?);
-	   <string> =>
-	     name;
-	   otherwise =>
-	     format-to-string("%=", name)
-	 end
+         select (name by instance?)
+           <environment-object> =>
+             environment-object-display-name
+               (project, name, #f, qualify-names?: qualify-names?);
+           <string> =>
+             name;
+           otherwise =>
+             format-to-string("%=", name)
+         end
        end,
      value-write-function:
        method (stream :: <html-wrapper-stream>, instance :: <environment-object>)
-	 write-html-environment-object-reference(stream, report, instance)
+         write-html-environment-object-reference(stream, report, instance)
        end);
   if (missing-size > 0)
-    format(stream, "%s... [%d more]\n", 
-	   indentation, missing-size)
+    format(stream, "%s... [%d more]\n",
+           indentation, missing-size)
   end
 end function write-html-bug-report-object-contents;
 
@@ -677,10 +687,10 @@ define function write-html-bug-report-names-and-values
   for (name-label in name-labels,
        value in values)
     write-html(stream,
-	       indentation, #"li", name-label, name-suffix, separator);
+               indentation, #"li", name-label, name-suffix, separator);
     value-write-function(stream, value);
     write-html(stream,
-	       #"/li", '\n');
+               #"/li", '\n');
   end;
   write-html(stream, indentation, #"/ul", '\n')
 end function write-html-bug-report-names-and-values;
@@ -695,7 +705,7 @@ define function write-html-environment-object-reference
   if (index)
     let name = format-to-string("#object%d", index);
     write-html(stream,
-	       make(<html-reference>, name: name))
+               make(<html-reference>, name: name))
   end;
   print-environment-object
     (stream, project, object, qualify-names?: qualify-names?);
@@ -740,8 +750,8 @@ define method bug-report-object-contents
   let total = size(names);
   if (total > maximum-contents)
     values(copy-sequence(names,     end: maximum-contents),
-	   copy-sequence(instances, end: maximum-contents),
-	   total)
+           copy-sequence(instances, end: maximum-contents),
+           total)
   else
     values(names, instances, total)
   end
@@ -756,31 +766,31 @@ define method compute-bug-report-objects
     = report.report-threads
         | project.project-application.application-threads;
   local method maybe-record-object
-	    (object :: <environment-object>, depth :: <integer>)
-	  if (instance?(object, <composite-object>)
-		| instance?(object, <foreign-object>))
-	    let index = element(table, object, default: #f);
-	    unless (index)
-	      let new-index = size(table) + 1;
-	      table[object] := new-index;
-	      if (~describe-depth | depth < describe-depth)
-		let (names, values, total-size)
-		  = bug-report-object-contents(report, object);
-		ignore(names, total-size);
-		do(rcurry(maybe-record-object, depth + 1), values)
-	      end
-	    end
-	  end
-	end method maybe-record-object;
+            (object :: <environment-object>, depth :: <integer>)
+          if (instance?(object, <composite-object>)
+                | instance?(object, <foreign-object>))
+            let index = element(table, object, default: #f);
+            unless (index)
+              let new-index = size(table) + 1;
+              table[object] := new-index;
+              if (~describe-depth | depth < describe-depth)
+                let (names, values, total-size)
+                  = bug-report-object-contents(report, object);
+                ignore(names, total-size);
+                do(rcurry(maybe-record-object, depth + 1), values)
+              end
+            end
+          end
+        end method maybe-record-object;
   for (thread :: <thread-object> in threads)
     let stack = thread-complete-stack-trace(project, thread);
     for (frame :: <stack-frame-object> in stack,
-	 index :: <integer> from 1)
+         index :: <integer> from 1)
       let variables = stack-frame-local-variables(project, frame);
       let new-values = make(<stretchy-vector>);
       for (variable :: <local-variable-object> in variables)
-	let value = variable-value(project, variable);
-	maybe-record-object(value, 1)
+        let value = variable-value(project, variable);
+        maybe-record-object(value, 1)
       end
     end
   end
