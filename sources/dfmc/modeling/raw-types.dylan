@@ -246,8 +246,9 @@ define method compute-aggregate-size
   let running-size = 0;
   let running-bitfield-offset = 0;
   let running-alignment = 1;
-  let pack-option = getf(raw-type.raw-aggregate-options, #"pack",
-			 default: get-default-pack-option());
+  let pack-option
+    = get-property(raw-type.raw-aggregate-options, #"pack",
+                   default: get-default-pack-option());
   let force-new-member? = #t;
   let previous-member-size = 0;
   for (member in raw-type.raw-aggregate-members)
@@ -287,8 +288,9 @@ define method compute-aggregate-size
  => (size :: <integer>);
   let running-size = 0;
   let running-alignment = 1;
-  let pack-option = getf(raw-type.raw-aggregate-options, #"pack",
-			 default: get-default-pack-option());
+  let pack-option
+    = get-property(raw-type.raw-aggregate-options, #"pack",
+                   default: get-default-pack-option());
   for (member in raw-type.raw-aggregate-members)
     let member-type = member.member-raw-type;
     let member-size = compute-member-size(member);
@@ -304,8 +306,9 @@ define method compute-aggregate-alignment
     (raw-type :: <&raw-aggregate-type>)
  => (size :: <integer>)
   let running-alignment = 1;
-  let pack-option = getf(raw-type.raw-aggregate-options, #"pack",
-			 default: get-default-pack-option());
+  let pack-option
+    = get-property(raw-type.raw-aggregate-options, #"pack",
+                   default: get-default-pack-option());
   for (member in raw-type.raw-aggregate-members)
     let member-type = member.member-raw-type;
     let member-align = raw-type-alignment(member-type);
@@ -362,23 +365,6 @@ end;
 
 
 /// some utilities
-
-// !@#$ this belongs elsewhere...
-define method getf (keys :: <sequence>, key, #key default = #f)
-  block (return)
-    let limit = size(keys);
-    iterate loop (i = 0)
-      if (i >= limit)
-	return(default);
-      elseif (keys[i] == key)
-	return(keys[i + 1])
-      else
-	loop(i + 2)
-      end if
-    end iterate;
-    return(default)
-  end block;
-end method;
 
 define method make-raw-literal (object :: <boolean>)
   object

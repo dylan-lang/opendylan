@@ -115,8 +115,9 @@ define method compute-aggregate-alignment
     (raw-type :: <abstract-aggregate-raw-type>)
  => (i :: <integer>); 
   let running-alignment = 1;
-  let pack-option = getf(raw-type.raw-options, #"pack",
-			 default: get-default-pack-option());
+  let pack-option
+    = get-property(raw-type.raw-options, #"pack",
+                   default: get-default-pack-option());
   let fields = raw-type.raw-fields;
   for (field :: <abstract-aggregate-field-indicator> in raw-type.raw-fields)
     let field-type = field.field-raw-type;
@@ -143,8 +144,9 @@ define method compute-aggregate-size
   let running-size = 0;
   let running-bitfield-offset :: <integer> = 0;
   let running-alignment = 1;
-  let pack-option = getf(raw-type.raw-options, #"pack",
-                         default: get-default-pack-option());
+  let pack-option
+    = get-property(raw-type.raw-options, #"pack",
+                   default: get-default-pack-option());
   let force-new-field? = #t;
   let previous-field-size = 0;
   for (field :: <abstract-aggregate-field-indicator> in raw-type.raw-fields)
@@ -181,8 +183,9 @@ define method compute-aggregate-size
  => (size :: <integer>);
   let running-size = 0;
   let running-alignment = 1;
-  let pack-option = getf(raw-type.raw-options, #"pack",
-			 default: get-default-pack-option());
+  let pack-option
+    = get-property(raw-type.raw-options, #"pack",
+                   default: get-default-pack-option());
   for (field in raw-type.raw-fields)
     let field-type = field.field-raw-type;
     let field-size = compute-field-size(field);
@@ -216,8 +219,9 @@ define method compute-aggregate-field-offset
       let running-offset = 0;
       let running-bitfield-offset :: <integer> = 0;
       let running-alignment = 1;
-      let pack-option = getf(raw-type.raw-options, #"pack",
-                             default: get-default-pack-option());
+      let pack-option
+        = get-property(raw-type.raw-options, #"pack",
+                       default: get-default-pack-option());
       let force-new-field? = #t;
       let previous-field-size = 0;
       for (i :: <integer> from 0 to field-index)

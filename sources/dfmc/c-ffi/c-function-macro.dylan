@@ -166,7 +166,7 @@ define method parse-early-options
       result-fragment := #{ (result void) }
     end if;
 
-    let indirect-expr = getf(function-options, #"indirect");
+    let indirect-expr = get-property(function-options, #"indirect");
     let indirect? = indirect-expr
       & parse-boolean-fragment(indirect-expr, default: #"error");
     unless (instance?(indirect?, <boolean>))
@@ -214,7 +214,8 @@ define method parse-early-options
 
     end for;
 
-    let gf-method-expr = getf(function-options, #"generic-function-method");
+    let gf-method-expr
+      = get-property(function-options, #"generic-function-method");
     let gf-method? = gf-method-expr
       & parse-boolean-fragment(gf-method-expr, default: #"error");
     unless (instance?(gf-method?, <boolean>))
@@ -236,25 +237,6 @@ define method parse-early-options
            #{ ??param-names, ... });
   end collecting;
 end method;
-	   
-// !@#$ this belongs elsewhere...
-define method getf (keys :: <sequence>, key, #key default = #f)
-  block (return)
-    let limit = size(keys);
-    iterate loop (i = 0)
-      if (i >= limit)
-	return(default);
-      elseif (keys[i] == key)
-	return(keys[i + 1])
-      else
-	loop(i + 2)
-      end if
-    end iterate;
-    return(default)
-  end block;
-end method;
-
-
 
 define method c-function-parse-parameter-spec
     (kind == #"input",
@@ -795,7 +777,7 @@ define method parse-c-function-spec (form-name, specs :: <sequence>)
 			void?: #t,
 			name: gensym());
   end unless;
-  values(arg-specs, result-spec, getf(options, #"c-name"), options)
+  values(arg-specs, result-spec, get-property(options, #"c-name"), options)
 end method parse-c-function-spec;
 
 
@@ -865,7 +847,7 @@ define method  expand-make-c-callable
   let parameter-boxing-forms
     = callable-box-input-parameters(passed-on-parameters);
 
-  let export-expr = getf(options, #"export");
+  let export-expr = get-property(options, #"export");
   let export
     = export-expr & ^top-level-eval(export-expr, on-failure: #"failed");
   unless (instance?(export, <boolean>))
@@ -876,7 +858,7 @@ define method  expand-make-c-callable
     export := #f;
   end unless;
 
-  let modifiers-expr = getf(options, #"c-modifiers");
+  let modifiers-expr = get-property(options, #"c-modifiers");
   let modifiers = modifiers-expr & ^top-level-eval(modifiers-expr);
   if (modifiers & ~instance?(modifiers, <string>))
     note(<invalid-c-modifiers-value>,
@@ -1155,7 +1137,7 @@ define method expand-c-function-body
        extra-return-values)
     = c-function-parse-input-output-parameters(dylan-name, arg-specs);
 
-  let c-name-expr = getf(options, #"c-name");
+  let c-name-expr = get-property(options, #"c-name");
   let c-name = #f;
   if (c-name-expr)
     c-name := ^top-level-eval(c-name-expr);
@@ -1168,7 +1150,7 @@ define method expand-c-function-body
     end unless;
   end if;
 
-  let indirect-expr = getf(options, #"indirect");
+  let indirect-expr = get-property(options, #"indirect");
   let indirect = #f;
   if (indirect-expr)
     indirect := parse-boolean-fragment(indirect-expr, default: #"error");
@@ -1223,7 +1205,7 @@ define method expand-c-function-body
       extra-return-values
     end;
 
-  let modifiers-expr = getf(options, #"c-modifiers", default: #f);
+  let modifiers-expr = get-property(options, #"c-modifiers", default: #f);
   // this allows it to be a named constant or macro
   let modifiers 
     = if (modifiers-expr)
