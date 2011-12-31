@@ -87,8 +87,8 @@ define method write-report-as
     do(write-section, $bug-report-sections);
     if (application-tethered?(project))
       compute-bug-report-objects(report);
-      do(write-section, $bug-report-application-sections)
-      do(write-section, $bug-report-extra-html-sections)
+      do(write-section, $bug-report-application-sections);
+      do(write-section, $bug-report-extra-html-sections);
     end;
   end
 end method write-report-as;
