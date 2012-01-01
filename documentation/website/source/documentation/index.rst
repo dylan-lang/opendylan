@@ -171,6 +171,12 @@ Documentation
     Notes and thoughts on how to format your Dylan code. This is the style
     guide that we aspire to adhere to in the Open Dylan sources.
 
+`Dylan Enhancement Proposals <../proposals/index.html>`_
+
+    A series of proposals for improvements to the Open Dylan
+    implementation and related libraries.
+
+
 .. raw:: html
 
      <hr>
