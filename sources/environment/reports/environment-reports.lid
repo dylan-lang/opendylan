@@ -8,6 +8,7 @@ Files: library
        html-streams
        reports
        bug-report
+       dependency-report
        library-report
        profile-report
        warnings-report
