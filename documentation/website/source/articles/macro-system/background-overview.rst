@@ -18,7 +18,7 @@ Background and Overview
 
 Macros work on the basis of code fragments. The macro system
 does not understand code fragments; it just substitutes some fragments for other
-fragments. Once the macro system has substituted and arrange all the code
+fragments. Once the macro system has substituted and arranged all the code
 fragments, they are compiled into executable code.
 
 Because the macro system parses and generates code fragments, it can recognize
