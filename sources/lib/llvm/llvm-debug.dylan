@@ -343,7 +343,7 @@ define function llvm-make-dbg-basic-type
                            i64(type-alignment),
                            i64(type-offset),
                            i32(0), // flags
-                           type-encoding))
+                           i32(type-encoding)))
 end function;
 
 define function llvm-make-dbg-derived-type
