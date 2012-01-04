@@ -220,6 +220,7 @@ define method compile-library-from-definitions
      #rest flags, #key compile-if-built?, compile-all?,
                        abort-on-all-warnings?, abort-on-serious-warnings?,
                        skip-link?, strip?, save?, flush?, stats?, gc?, gc-stats?,
+                       visualization,
      #all-keys)
  => (did-it? :: <boolean>)
   let strip? = strip? & *strip-enabled?*;
@@ -228,6 +229,10 @@ define method compile-library-from-definitions
     progress-line("Library %s is up to date.", description);
     #f
   else
+    if (visualization)
+      *computation-tracer* := curry(trace-computations, visualization);
+      *dump-dfm-method* := curry(visualize, visualization);
+    end;
     with-program-conditions
       with-ramp-allocation(all?: gc-stats?)
         with-top-level-library-description (description)
@@ -353,6 +358,8 @@ define method compile-library-from-definitions
 	      info: as-lowercase(as(<string>,
 				    library-description-emit-name(description)))))
     end if;
+    *computation-tracer* := #f;
+    *dump-dfm-method* := #f;
     #t
   end if;
 end method;

@@ -36,6 +36,8 @@ define module dfmc-typist
    <type-variable>,                    type-variable-contents,
                                        type-variable-supporters,
                                        type-variable-supportees,
+                                       type-contents-callback,
+                                       type-contents-callback-setter,
 
    <type-estimate>,                    type-estimate-debug-name,
    <type-estimate-top>,

@@ -15,6 +15,8 @@ define open abstract class <environment-context> (<server-context>)
     = make(<notification>, lock: make(<lock>));
   constant slot context-project-contexts :: <object-table>
     = make(<object-table>);
+  slot context-visualization :: false-or(<graph-visualization>) = #f;
+  slot context-visualization-filter :: false-or(<string>) = #f;
 end class <environment-context>;
 
 define open generic context-project

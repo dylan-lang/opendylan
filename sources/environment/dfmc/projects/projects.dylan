@@ -213,13 +213,20 @@ define sealed sideways method project-progress-report
   update-project-progress()
 end method project-progress-report;
 
-define function start-progress-reporting
+define method start-progress-reporting
     (project-object :: <project-object>,
+     progress-callback :: false-or(<function>),
+     #rest keys, #key, #all-keys) => ()
+  let project = project-object.ensure-project-proxy;
+  apply(start-progress-reporting, project, progress-callback, keys)
+end;
+
+define method start-progress-reporting
+    (project :: <project>,
      progress-callback :: false-or(<function>),
      #key section :: false-or(<string>),
           warning-callback :: false-or(<function>))
  => ()
-  let project = project-object.ensure-project-proxy;
   *warning-callback*  := warning-callback;
   *progress-callback* := progress-callback;
   *progress-position* := 0;
@@ -228,7 +235,7 @@ define function start-progress-reporting
     *progress-section* := section
   end;
   project-progress-text(project, $default-progress-message)
-end function start-progress-reporting;
+end method start-progress-reporting;
 
 define function stop-progress-reporting () => ()
   *warning-callback*  := #f;
@@ -312,7 +319,8 @@ define sealed method build-project
           progress-callback :: false-or(<function>), error-handler,
           save-databases? = #f,
           process-subprojects? = #t,
-          messages = #"external")
+          messages = #"external",
+          visualization = #f)
  => (built? :: <boolean>)
   block ()
     let project = project-object.ensure-project-proxy;
@@ -335,7 +343,8 @@ define sealed method build-project
                                  abort-on-serious-warnings?: #f,
                                  assembler-output?: assembler-output?,
                                  dfm-output?:       dfm-output?,
-                                 harp-output?:      harp-output?)
+                                 harp-output?:      harp-output?,
+                                 visualization:     visualization)
               else
                 compile-library(project,
                                 force-parse?:   clean?,
@@ -345,7 +354,8 @@ define sealed method build-project
                                 abort-on-serious-warnings?: #f,
                                 assembler-output?: assembler-output?,
                                 dfm-output?:       dfm-output?,
-                                harp-output?:      harp-output?)
+                                harp-output?:      harp-output?,
+                                visualization:     visualization)
               end
             end
           end

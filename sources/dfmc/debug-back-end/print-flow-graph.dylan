@@ -42,23 +42,59 @@ define compiler-sideways method print-object
   format(stream, "[ENV]");
 end method;
 
+define compiler-sideways method print-object (o :: <lexical-specialized-variable>, stream :: <stream>) => ()
+  if (*sexp?*)
+    let spec = if (slot-initialized?(o, specializer) & o.specializer & o.specializer ~= dylan-value(#"<object>"))
+                 format-to-string(" (%=)", o.specializer);
+               else
+                 ""
+               end;
+    format(stream, "var %s%s", o.name, spec);
+  else
+    next-method()
+  end;
+end;
+
+define compiler-sideways method print-object (o :: <cell>, stream :: <stream>) => ()
+  if (*sexp?*)
+    let spec = if (slot-initialized?(o, %cell-type) & o.cell-type & o.cell-type ~= dylan-value(#"<object>"))
+                 format-to-string(" (%=)", o.cell-type)
+               else
+                 ""
+               end;
+    format(stream, "cell %s%s", o.name, spec);
+  else
+    next-method()
+  end
+end;
+
 define compiler-sideways method print-object (o :: <temporary>, stream :: <stream>) => ()
   block ()
     print-temporary-properties(stream, o);
-    if (named?(o))
-      format(stream, "%s/%=", o.name, o.frame-offset);
-    else
-      format(stream, "t");
-      if (o.frame-offset)
-        format(stream, "%d",
-	       o.frame-offset - o.environment.lambda.parameters.size);
+    if (*sexp?*)
+      if (named?(o))
+        format(stream, "%s/%=", o.name, o.frame-offset);
+      elseif (instance?(o, <multiple-value-temporary>))
+        format(stream, "MVT (%d%s)", required-values(o), if (rest-values?(o)) ", #rest" else "" end);
       else
-        format(stream, "?")
+        format(stream, "T");
       end if;
-    end if;
-    if (instance?(o, <multiple-value-temporary>))
-      format(stream, "(%d%s)", o.required-values, 
-        if (o.rest-values?) ",#rest" else "" end)
+    else
+      if (named?(o))
+        format(stream, "%s/%=", o.name, o.frame-offset);
+      else
+        format(stream, "t");
+        if (o.frame-offset)
+          format(stream, "%d",
+                 o.frame-offset - o.environment.lambda.parameters.size);
+        else
+          format(stream, "?")
+        end if;
+      end if;
+      if (instance?(o, <multiple-value-temporary>))
+        format(stream, "(%d%s)", o.required-values, 
+               if (o.rest-values?) ",#rest" else "" end)
+      end if;
     end if;
 //    let te = type-estimate(o);
 //    format(stream, "::%=", te);
@@ -76,7 +112,11 @@ define compiler-sideways method print-object (o :: <object-reference>, stream ::
 end method;
 
 define compiler-sideways method print-object (o :: <defined-constant-reference>, stream :: <stream>) => ()
-  format(stream, "^");
+  if (*sexp?*)
+    format(stream, "$");
+  else
+    format(stream, "^");
+  end;
   print-referenced-object(o.referenced-binding, stream);
 end method;
 
@@ -92,13 +132,15 @@ end method;
 define method print-temporary-properties
     (stream, o :: <multiple-value-temporary>)
   next-method();
-  format(stream, "*");
+  unless (*sexp?*)
+    format(stream, "*");
+  end;
   //if (o.mvt-local?)
   //  let num-vals = required-values(o);
   //  format(stream, "L(%s)", num-vals);
   //end if;
 end method print-temporary-properties;
-
+
 //// COMPUTATIONS
 
 define method print-computations
@@ -129,6 +171,162 @@ define compiler-sideways method print-object
   end block;
   values()
 end method print-object;
+
+define method print-computation-sexp
+    (stream :: <stream>, c :: <computation>) => ();
+  let str = format-to-string("%s", c.object-class);
+  //this is a bit awful, but need to get rid of "class <" and ">"
+  //(foo instead of class <foo>)
+  format(stream, "%s", copy-sequence(str, start: 8, end: str.size - 2))
+end method print-computation-sexp;
+
+define method print-computation-sexp
+    (stream :: <stream>, c :: <keyword-default>) => ();
+  format(stream, "keyword-default %d",
+	 c.keyword-default-value-index);
+end method print-computation-sexp;
+
+define method print-computation-sexp (s :: <stream>, c :: <make-closure>)
+  let lambda = computation-closure-method(c);
+  let sigval = computation-signature-value(c);
+  let extent = if (closure-has-dynamic-extent?(c)) " on stack" else "" end;
+  if (computation-no-free-references?(c))
+    format(s, "make-method-with-signature (%s, %=)%s", lambda, sigval, extent);
+  else
+    if (sigval)
+      format(s, "make-closure-with-signature (%s, %=)%s", lambda, sigval, extent);
+    else
+      format(s, "make-closure (%s)%s", lambda, extent)
+    end if
+  end if;
+end method;
+
+define method print-computation-sexp (s :: <stream>, c :: <initialize-closure>)
+  format(s, "init-closure(%=, %s)",
+         computation-closure(c), computation-closure-method(c));
+end method;
+
+define method print-computation-sexp (s :: <stream>, c :: <variable-reference>)
+  format(s, "^%=", c.referenced-binding);
+end method;
+
+define method print-computation-sexp (stream :: <stream>, c :: <function-call>)
+  format(stream, "unknown-call")
+end method;
+
+define method print-computation-sexp (stream :: <stream>, c :: <simple-call>)
+  format(stream, "call")
+end method;
+
+define method print-computation-sexp (stream :: <stream>, c :: <method-call>)
+  format(stream, "method-call")
+end method;
+
+define method print-computation-sexp (stream :: <stream>, c :: <apply>)
+  format(stream, "apply")
+end method;
+
+define method print-computation-sexp (stream :: <stream>, c :: <slot-value>)
+  format(stream, "slot-value%s (%s)",
+         if (computation-guaranteed-initialized?(c)) "-initd" else "" end,
+	 ^debug-name(computation-slot-descriptor(c)));
+end method;
+
+define method print-computation-sexp (stream :: <stream>, c :: <slot-value-setter>)
+  format(stream, "slot-value-setter (%s)",
+	 ^debug-name(computation-slot-descriptor(c)));
+end method;
+
+define method print-computation-sexp (stream :: <stream>, c :: <repeated-slot-value>)
+  format(stream, "repeated-slot-value (%s, %=)",
+	 ^debug-name(computation-slot-descriptor(c)),
+	 computation-index(c));
+end method;
+
+define method print-computation-sexp
+    (stream :: <stream>, c :: <repeated-slot-value-setter>)
+  format(stream, "repeated-slot-value-setter (%s, %=)",
+	 ^debug-name(computation-slot-descriptor(c)),
+	 computation-index(c));
+end method;
+
+define method print-computation-sexp (stream :: <stream>, c :: <primitive-call>)
+  format(stream, "primitive %s", primitive-name(c.primitive));
+end method;
+
+define method print-computation-sexp (stream :: <stream>, c :: <loop-merge>)
+  format(stream, "loop-merge%s",
+	 if (loop-merge-initial?(c)) "i" else "" end);
+end method;
+
+define method print-computation-sexp (stream :: <stream>, c :: <definition>)
+  format(stream, "define %s", c.assigned-binding);
+end method;
+
+define method print-computation-sexp (stream :: <stream>, c :: <redefinition>)
+  format(stream, "redefine %s", c.assigned-binding);
+end method;
+
+define method print-computation-sexp (stream :: <stream>, c :: <type-definition>)
+  format(stream, "define-type %s", c.typed-binding);
+end method;
+
+define method print-computation-sexp (stream :: <stream>, c :: <type-redefinition>)
+  format(stream, "redefine-type %s", c.typed-binding);
+end method;
+
+define method print-computation-sexp (stream :: <stream>, c :: <set!>)
+  format(stream, "set! %s", c.assigned-binding);
+end method;
+
+define method print-computation-sexp (stream :: <stream>, c :: <exit>)
+  format(stream, "exit entry-state: %= value: %=", c.entry-state, c.computation-value);
+end method;
+
+define method print-computation-sexp (stream :: <stream>, c :: <end-loop>)
+  format(stream, "break");
+end method;
+
+define method print-computation-sexp (stream :: <stream>, c :: <end-exit-block>)
+  format(stream, "end-exit-block entry-state: %=", c.entry-state);
+end method;
+
+define method print-computation-sexp
+    (stream :: <stream>, c :: <end-protected-block>)
+  format(stream, "end-protected-block entry-state: %=", c.entry-state);
+end method;
+
+define method print-computation-sexp (stream :: <stream>, c :: <end-cleanup-block>)
+  format(stream, "end-cleanup-block entry-state: %=", c.entry-state);
+end method;
+
+// multiple values
+
+define method print-computation-sexp (stream :: <stream>, c :: <values>)
+  format(stream, "values (#%d%s)", c.fixed-values.size, if (c.rest-value) " #rest" else "" end);
+end method;
+
+define method print-computation-sexp
+    (stream :: <stream>, c :: <extract-single-value>)
+  format(stream, "extract [%d]", c.index);
+end method;
+
+define method print-computation-sexp
+    (stream :: <stream>, c :: <extract-rest-value>)
+  format(stream, "extract #rest [%d]", c.index);
+end method;
+
+define method print-computation-sexp
+    (stream :: <stream>, c :: <adjust-multiple-values>)
+  format(stream, "adjust-mv %d",
+	 c.number-of-required-values);
+end method;
+
+define method print-computation-sexp
+    (stream :: <stream>, c :: <adjust-multiple-values-rest>)
+  format(stream, "adjust-mv-rest %d",
+	 c.number-of-required-values);
+end method;
 
 define method print-computation
     (stream :: <stream>, c :: <computation>) => ();

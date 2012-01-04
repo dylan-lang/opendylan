@@ -56,6 +56,7 @@ end method;
 
 define method delete-useless-computations (c :: <computation>)
   if (useless?(c))
+    //format-out("deleting %=\n", c);
     really-delete-useless-computations(c)
   end if
 end method delete-useless-computations;
@@ -76,6 +77,7 @@ define method delete-useless-computations (c :: <if-merge>)
     if (consequent(if-c) == alternative(if-c))
       delete-computation!(c);
       delete-computation!(if-c);
+      status := #t;
     end if;
     status
   end if

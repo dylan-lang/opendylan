@@ -16,7 +16,7 @@ define abstract dood-class <computation> (<queueable-item-mixin>)
     reinit-expression: #f,
     init-keyword: previous-computation:;
 
-  slot next-computation :: false-or(<computation>) = #f,
+  slot %next-computation :: false-or(<computation>) = #f,
     init-keyword: next-computation:;
 
   slot temporary :: false-or(<temporary>) = #f, 
@@ -30,10 +30,46 @@ define abstract dood-class <computation> (<queueable-item-mixin>)
     reinit-expression: #f,
     required-init-keyword: environment:;
 
-  weak slot computation-type = #f,
+  weak slot %computation-type = #f,
     reinit-expression: #f;
 
+  weak slot %computation-id :: <integer>,
+    init-function: next-computation-id;
+
 end dood-class <computation>;
+
+define thread variable current-computation-id :: <integer> = 0;
+
+define function next-computation-id () => (result :: <integer>)
+  current-computation-id := current-computation-id + 1;
+end;
+
+define method computation-id (c :: <computation>) => (res :: <integer>)
+  if (~ (slot-initialized?(c, %computation-id) & instance?(c.%computation-id, <integer>)))
+    c.%computation-id := next-computation-id();
+    if (*computation-tracer*)
+      *computation-tracer*(#"new-computation", c.%computation-id, c, 0);
+      if (c.next-computation)
+        c.next-computation := c.next-computation; //side effect: trace!
+      end;
+      if (c.temporary)
+        c.temporary.temporary-id; //side effect: adding temporary
+      end;
+    end;
+  end;
+  c.%computation-id;
+end;
+
+define method computation-type (c :: <computation>) => (res)
+  c.%computation-type;
+end;
+
+define method computation-type-setter (new, c :: <computation>) => (res)
+  if (*computation-tracer* & c.temporary & (c.temporary.users.size > 0) & slot-initialized?(c.temporary, %temporary-id) & instance?(c.temporary.%temporary-id, <integer>))
+      *computation-tracer*(#"change-type", c.temporary.temporary-id, new, 0);
+  end;
+  c.%computation-type := new;
+end;
 
 // Seal construction over the <computation> world.
 
@@ -46,6 +82,27 @@ define sealed domain initialize-packed-slots (<computation>);
 define generic computation-value 
     (computation :: type-union(<computation>, <binding-reference>)) => value;
 
+define thread variable *computation-tracer* :: false-or(<function>) = #f;
+
+define function trace (a :: <computation>, old-next :: false-or(<computation>), new-next :: false-or(<computation>), #key new, label) => ()
+  if (*computation-tracer*)
+    if (new)
+      *computation-tracer*(#"new-computation", a, a, 0);
+    end;
+    unless (label) label := #"no" end;
+    if (old-next & new-next)
+      if (old-next == new-next)
+        *computation-tracer*(#"insert-edge", a, new-next, 0, label: label);
+      else
+        *computation-tracer*(#"change-edge", a, old-next, new-next, label: label);
+      end;
+    elseif (old-next)
+      *computation-tracer*(#"remove-edge", a, old-next, 0, label: label);
+    elseif (new-next)
+      *computation-tracer*(#"insert-edge", a, new-next, 0, label: label);
+    end;
+  end;
+end;
 //// <computation> operations
 
 define generic next-computation (computation :: <computation>)
@@ -58,6 +115,19 @@ define generic previous-computation (computation :: <computation>)
 define generic previous-computation-setter
     (previous, computation :: <computation>)
  => (previous);
+
+define method next-computation (computation :: <computation>)
+ => (next);
+  computation.%next-computation;
+end;
+
+define method next-computation-setter
+    (next, computation :: <computation>)
+ => (next);
+  trace(computation, computation.next-computation, next);
+  computation.%next-computation := next;
+end;
+
 
 //// <computation> initialization
 
@@ -98,16 +168,16 @@ end method;
 //// <temporary> tracking
 
 define /* inline */ method make
-    (class :: subclass(<computation>), #rest initargs, #key, #all-keys)
+    (class :: subclass(<computation>), #rest initargs, #key next-computation, #all-keys)
  => (object)
   let c = next-method();
+  trace(c, #f, next-computation, new: #t);
   register-used-temporaries(c);
   c
 end method;
 
 define inline function register-used-temporaries (c :: <computation>)
-  do-used-temporaries(method (t) add-user!(t, c) end,
-		      c);
+  do-used-temporaries(method (t) add-user!(t, c) end, c);
 end;
 
 define class <temporary-accessors> (<object>)
@@ -199,21 +269,87 @@ define class <interactor-binding-reference>
     required-init-keyword: value:;
 end class;                                                                     
 
-define class <object-reference> (<value-reference>)
+define dood-class <object-reference> (<value-reference>)
   slot reference-value, required-init-keyword: value:;
-end class;
+  weak slot %temporary-id :: false-or(<integer>) = #f,
+    reinit-expression: #f;
+    //init-function: next-computation-id;
+end dood-class;
+
+define method temporary-id (t :: <object-reference>) => (res :: <integer>)
+  if (instance?(t.%temporary-id, <integer>))
+    t.%temporary-id;
+  else
+    t.%temporary-id := next-computation-id();
+    if (*computation-tracer*)
+      if (t.users.size > 0)
+        let gen = if (t.generator) t.generator else t.users.first end;
+        *computation-tracer*(#"add-temporary", t, gen, 0);
+        if (t.generator)
+          let new = t.generator.computation-type;
+          *computation-tracer*(#"change-type", t, new, 0);
+        end;
+        do(rcurry(curry(*computation-tracer*, #"add-temporary-user", t), 0),
+           t.users);
+      end;
+    end;
+    t.%temporary-id;
+  end;
+end;
+
+define method remove-user! (t :: <object-reference>, c :: <computation>)
+  next-method();
+  if (*computation-tracer*)
+    *computation-tracer*(#"remove-temporary-user", t, c, 0);
+  end;
+  if (*computation-tracer* & t.users.size == 0)
+    *computation-tracer*(#"remove-temporary", t, c, 0);
+  end;
+end;
+
+define method add-user! (t :: <object-reference>, c :: <computation>)
+  let add? = (t.users.size == 0);
+  next-method();
+  if (*computation-tracer*)
+    if (~ instance?(t.%temporary-id, <integer>))
+      t.%temporary-id := next-computation-id();
+      add? := #t;
+    end;
+    if (add?)
+      *computation-tracer*(#"add-temporary", t, c, 0);
+    end;
+    *computation-tracer*(#"add-temporary-user", t, c, 0);
+  end;
+end;
 
 define class <immutable-object-reference> (<object-reference>)
 end class;
 
 define /* inline */ method make
+    (class == <immutable-object-reference>, #rest initargs, #key value, #all-keys)
+ => (object)
+  let res = next-method();
+  if (res.users.size > 0 & *computation-tracer*)
+    *computation-tracer*(#"add-temporary", res, res.users.first, 0);
+    do(rcurry(curry(*computation-tracer*, #"add-temporary-user", res), 0),
+       res.users);
+  end;
+  res;
+end;
+define /* inline */ method make
     (class == <object-reference>, #rest initargs, #key value, #all-keys)
  => (object)
-  if (instance?(value, <&method>))
-    apply(make, <method-reference>, initargs)
-  else
-    next-method()
-  end if
+  let res = if (instance?(value, <&method>))
+              apply(make, <method-reference>, initargs)
+            else
+              next-method()
+            end if;
+  if (res.users.size > 0 & *computation-tracer*)
+    *computation-tracer*(#"add-temporary", res, res.users.first, 0);
+    do(rcurry(curry(*computation-tracer*, #"add-temporary-user", res), 0),
+       res.users);
+  end;
+  res;
 end method;
 
 define class <method-reference> (<object-reference>)
@@ -528,15 +664,43 @@ define constant $dispatch-untried = 0;
 define constant $dispatch-tried   = 1;
 
 define abstract graph-class <function-call> (<call>)
-  temporary slot function :: false-or(<value-reference>), 
+  temporary slot %function :: false-or(<value-reference>), 
     required-init-keyword: function:;
 end graph-class;
 
+define method make (c :: subclass(<function-call>), #rest all-keys, #key, #all-keys)
+ => (res :: <function-call>)
+  let f = next-method();
+  f.function := f.function;
+  f;
+end;
+
+define method function (f :: <function-call>) => (res :: false-or(<value-reference>))
+  f.%function
+end;
+
+define method function-setter (new :: false-or(<value-reference>), c :: <function-call>)
+ => (res :: false-or(<value-reference>))
+  c.%function := new;
+  *computation-tracer* & *computation-tracer*(#"change-function", c, new, 0);
+  new;
+end;
+  
 define packed-slots item-properties (<function-call>, <call>)
   field   slot dispatch-state  = $dispatch-untried, field-size: 1;
   boolean slot call-congruent? = #f;
-  boolean slot call-iep?       = #f;
+  boolean slot %call-iep?       = #f;
 end packed-slots;
+
+define method call-iep? (c :: <function-call>) => (res :: <boolean>)
+  c.%call-iep?;
+end;
+
+define method call-iep?-setter (new :: <boolean>, c :: <function-call>) => (res :: <boolean>)
+  c.%call-iep? := new;
+  *computation-tracer* & *computation-tracer*(#"change-entry-point", c, if (new) #"interior" else #"exterior" end, 0);
+  new;
+end;
 
 /// PRIMITIVE CALL
 
@@ -629,20 +793,64 @@ end graph-class;
 
 define graph-class <if> (<computation>)
   temporary slot test :: <value-reference>, required-init-keyword: test:;
-  slot consequent :: false-or(<computation>),
+  slot %consequent :: false-or(<computation>),
     required-init-keyword: consequent:;
-  slot alternative :: false-or(<computation>),
+  slot %alternative :: false-or(<computation>),
     required-init-keyword: alternative:;
 end graph-class;
+
+define method make (class == <if>, #rest rest, #key, #all-keys) => (res :: <if>)
+  let i = next-method();
+  i.consequent := i.consequent;
+  i.alternative := i.alternative;
+  i;
+end;
+
+define method next-computation-setter
+    (next, computation :: <if>)
+ => (next);
+  computation.consequent := computation.consequent;
+  computation.alternative := computation.alternative;
+  computation.%next-computation := next;
+end;
+
+define method consequent (c :: <if>) => (res :: false-or(<computation>))
+  c.%consequent;
+end;
+
+define method alternative (c :: <if>) => (res :: false-or(<computation>))
+  c.%alternative;
+end;
+
+
+define method consequent-setter (value :: false-or(<computation>), c :: <if>) => (res :: false-or(<computation>))
+  trace(c, c.consequent, value, label: #"true");
+  c.%consequent := value;
+end;
+
+define method alternative-setter (value :: false-or(<computation>), c :: <if>)
+ => (res :: false-or(<computation>))
+  trace(c, c.alternative, value, label: #"false");
+  c.%alternative := value;
+end;
 
 /// BLOCK
 
 define abstract graph-class <block> (<computation>)
   temporary slot entry-state :: <entry-state>,
     required-init-keyword: entry-state:;
-  slot body :: false-or(<computation>) = #f,
+  slot %body :: false-or(<computation>) = #f,
     init-keyword: body:;
 end graph-class;
+
+define method body (c :: <block>) => (res :: false-or(<computation>))
+  c.%body;
+end;
+
+define method body-setter (new :: false-or(<computation>), c :: <block>) => (res :: false-or(<computation>))
+  trace(c, c.body, new);
+  c.%body := new;
+end;
 
 /// BIND-EXIT
 
@@ -650,16 +858,60 @@ define graph-class <bind-exit> (<block>)
   slot %label, init-value: #f;
 end graph-class;
 
+define method next-computation-setter (new :: false-or(<computation>), c :: <bind-exit>) => (res :: false-or(<computation>))
+  //walk-computation(method(a, b) 
+  //                 end, c.loop-body, c);
+  let comp = c.body;
+  if (comp)
+    while (comp.next-computation)
+      comp := comp.next-computation;
+    end;
+    trace(comp, c.next-computation, new);
+  end;
+  c.%next-computation := new;
+end;
+
 /// UNWIND-PROTECT
 
 define graph-class <unwind-protect> (<block>)
   // (gts,98feb12) temporary slot protected-temporary = #f;
-  slot protected-end :: false-or(<computation>) = #f;
-  slot cleanups :: false-or(<computation>) = #f,
+  slot %protected-end :: false-or(<computation>) = #f;
+  slot %cleanups :: false-or(<computation>) = #f,
     init-keyword: cleanups:;
-  slot cleanups-end :: false-or(<end-cleanup-block>) = #f;  // to support deletion 
+  slot %cleanups-end :: false-or(<end-cleanup-block>) = #f;  // to support deletion 
 end graph-class;
 
+define method protected-end (c :: <unwind-protect>) => (res :: false-or(<computation>))
+  c.%protected-end;
+end;
+
+define method protected-end-setter (new :: false-or(<computation>), c :: <unwind-protect>) => (res :: false-or(<computation>))
+  c.protected-end & trace(c.protected-end, c.cleanups, #f);
+  new & trace(new, #f, c.cleanups);
+  c.%protected-end := new;
+end;
+define method cleanups (c :: <unwind-protect>) => (res :: false-or(<computation>))
+  c.%cleanups
+end;
+
+define method cleanups-setter (new :: false-or(<computation>), c :: <unwind-protect>) => (res :: false-or(<computation>))
+  c.protected-end & trace(c.protected-end, c.cleanups, new);
+  c.%cleanups := new;
+end;
+
+define method cleanups-end (c :: <unwind-protect>) => (res :: false-or(<computation>))
+  c.%cleanups-end
+end;
+
+define method cleanups-end-setter (new :: false-or(<end-cleanup-block>), c :: <unwind-protect>) => (res :: false-or(<end-cleanup-block>))
+  c.cleanups-end & trace(c.cleanups-end, c.next-computation, #f);
+  new & trace(new, #f, c.next-computation);
+  c.%cleanups-end := new;
+end;
+define method next-computation-setter (new :: false-or(<computation>), c :: <unwind-protect>) => (res :: false-or(<computation>))
+  c.cleanups-end & trace(c.cleanups-end, c.next-computation, new);
+  c.%next-computation := new;
+end;
 define method protected-temporary(c :: <unwind-protect>) 
     => (t)
 //  let temp = c.protected-end & temporary(previous-computation(c.protected-end));
@@ -722,13 +974,47 @@ define graph-class <loop> (<nop-computation>)
   slot %label, init-value: #f;
   slot loop-merges :: <simple-object-vector>,
     required-init-keyword: merges:;
-  slot loop-body :: false-or(<computation>), init-value: #f,
+  slot %loop-body :: false-or(<computation>), init-value: #f,
     init-keyword: body:;
 end graph-class;
+
+define method make (class == <loop>, #rest rest, #key, #all-keys) => (res :: <loop>)
+  let l = next-method();
+  l.loop-body := l.loop-body;
+  l;
+end;
+
+define method next-computation-setter (next, c :: <loop>) => (next)
+  walk-computations(method(b) 
+                      if (instance?(b, <end-loop>) & b.ending-loop == c)
+                        trace(b, c.next-computation, next);
+                      end;
+                    end, c.loop-body, #f);
+  c.%next-computation := next;
+end;
+
+define method loop-body (c :: <loop>) => (res :: false-or(<computation>))
+  c.%loop-body;
+end;
+
+define method loop-body-setter (value :: false-or(<computation>), c :: <loop>) => (res :: false-or(<computation>))
+  trace(c, c.loop-body, value);
+  c.%loop-body := value;
+end;
 
 define graph-class <end-loop> (<end>)
   constant slot ending-loop :: <loop>, required-init-keyword: loop:;
 end graph-class;
+
+define method make (class == <end-loop>, #rest rest, #key loop, #all-keys) => (res :: <end-loop>)
+  let el = next-method();
+  trace(el, #f, loop.next-computation);
+  el;
+end;
+
+define method next-computation-setter (next, c :: <end-loop>) => (next)
+  c.%next-computation := next;
+end;
 
 define function loop-parameters (c :: <loop>)
   collecting ()
@@ -754,6 +1040,17 @@ define graph-class <loop-call> (<computation>)
   slot loop-call-merges :: <simple-object-vector> = #[], 
    init-keyword: merges:;
 end graph-class;
+
+define method next-computation-setter (value :: false-or(<computation>), c :: <loop-call>)
+      => (res :: false-or(<computation>))
+  c.%next-computation := value;
+end;
+
+define method make (c == <loop-call>, #rest all-keys, #key loop, #all-keys) => (res :: <loop-call>)
+  let l = next-method();
+  *computation-tracer* & *computation-tracer*(#"set-loop-call-loop", l, loop.computation-id, 0);
+  l;
+end;
 
 /// BIND
 

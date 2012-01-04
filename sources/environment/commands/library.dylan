@@ -13,6 +13,11 @@ define library environment-commands
   use io;
   use commands;
 
+  // visualization
+  use network;
+  use lisp-reader;
+  //use file-source-records;
+
   use environment-protocols;
   use environment-manager;
   use environment-reports;
@@ -22,5 +27,6 @@ define library environment-commands
   use dfmc-environment-projects;
 
   export command-lines,
-         environment-commands;
+         environment-commands,
+         environment-visualization-communication;
 end library environment-commands;

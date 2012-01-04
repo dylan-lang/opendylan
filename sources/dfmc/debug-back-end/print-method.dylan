@@ -50,9 +50,27 @@ define method output-lambda-computations
 end method;
 
 define compiler-sideways method print-method (stream :: <stream>, 
-      o :: <&lambda>, #key css) 
-  output-lambda-computations(stream, 0, o);
+      o :: <&method>, #key css, output-format, header-only)
+  if (output-format == #"sexp")
+    list(list(#"method", "foo", 0, #(), #()))
+  end
+end;
+
+define compiler-sideways method print-method (stream :: <stream>, 
+      o :: <&lambda>, #key css, output-format, header-only) 
+  if (output-format == #"sexp")
+    if (header-only)
+      output-lambda-header-sexp(stream, o);
+    else
+      output-lambda-computations-sexp(stream, o);
+    end;
+  else
+    output-lambda-computations(stream, 0, o);
+  end;
 end method;
+
+define compiler-sideways method print-method-out (o :: <&method>, #key css) 
+end;
 
 define compiler-sideways method print-method-out (o :: <&lambda>, #key css) 
   print-method(*standard-output*, o)
@@ -131,3 +149,121 @@ define method output-computation
      c.cleanups, c.next-computation);
   indentd-format(stream, depth, "END UNWIND-PROTECT\n");
 end method;
+
+//s-expression outputter
+define method output-lambda-header-sexp
+    (stream :: <stream>, lambda :: <&lambda>)
+  local method single-header (o)
+          let res = #();
+          res := add!(res, #"METHOD");
+          res := add!(res, as(<string>, o.debug-string));
+          res := add!(res, o.body & o.body.computation-id | 0);
+          res := add!(res, map(temporary-id, o.parameters | #()));
+          reverse!(add!(res, map(method(x)
+                                   let str = make(<string-stream>, direction: #"output");
+                                   print-object(x, str);
+                                   str.stream-contents
+                                 end, o.parameters | #())));
+        end;
+  let result = #();
+  result := add!(result, single-header(lambda));
+  for-used-lambda (sub-f in lambda)
+    result := add!(result, single-header(sub-f));
+  end;
+  result;
+end;
+
+define method output-lambda-computations-sexp
+    (stream :: <stream>, o :: <&lambda>, #key prefix)
+  let res = output-lambda-header-sexp(stream, o);
+  for-used-lambda (sub-f in o)
+    res := add!(res, output-lambda-computations-sexp(stream, sub-f, prefix: "LOCAL"));
+  end;
+  if (o.body)
+    res := concatenate(res, output-computations-sexp(o.body, #f));
+  end;
+  res;
+end;
+
+define method output-computations-sexp
+    (c :: <computation>, last)
+  let res = #();
+  iterate loop (c = c)
+    if (c & c ~== last)
+      /*
+      let loc = dfm-source-location(c);
+      if (loc)
+        print-source-record-source-location
+          (source-location-source-record(loc), loc, stream);
+      end;
+      */
+      res := add!(res, output-computation-sexp(c));
+      // format(stream, "In scope: %=\n", lexical-variables-in-scope(c));
+      loop(next-computation(c))
+    end if;
+  end iterate;
+  reverse!(res);
+end method;
+
+define method output-computations-sexp
+    (c == #f, last)
+  #()
+end;
+
+define function get-computation-ids
+ (c :: false-or(<computation>), last :: false-or(<computation>))
+  let res = make(<stretchy-vector>);
+  if (c)
+    walk-computations(method(a) if (a) add!(res, a.computation-id) end end, c, last);
+  end;
+  res;
+end;
+
+define variable *sexp?* :: <boolean> = #f;
+
+define method output-computation-sexp
+    (c :: <computation>)
+  let str = make(<string-stream>, direction: #"output");
+  let olds = *sexp?*;
+  *sexp?* := #t;
+  print-computation-sexp(str, c);
+  *sexp?* := olds;
+  list(c.computation-id, str.stream-contents)
+end method;
+
+define method output-computation-sexp
+    (c :: <loop>)
+  list(c.computation-id, #"LOOP", #())
+end method;
+
+define method output-computation-sexp
+    (c :: <loop-call>)
+  list(c.computation-id, #"LOOP-CALL", 0)
+end method;
+
+define method output-computation-sexp
+    (c :: <if>)
+  list(c.computation-id, #"IF", list(format-to-string("%=", c.test)), #(), #())
+end method;
+
+define method output-computation-sexp
+    (c :: <bind-exit>)
+  let res = #();
+  res := add!(res, get-computation-ids(c.body, c.next-computation));
+  //res := add!(res, c.entry-state.temporary-id);
+  res := add!(res, #"BIND-EXIT");
+  add!(res, c.computation-id);
+end method;
+
+define method output-computation-sexp
+    (c :: <unwind-protect>)
+  let res = #();
+  res := add!(res, get-computation-ids(c.cleanups, c.next-computation));
+  res := add!(res, get-computation-ids(c.body, c.next-computation));
+  //res := add!(res, list(format-to-string("%=", c.entry-state)));
+  res := add!(res, #"UNWIND-PROTECT");
+  add!(res, c.computation-id);
+end method;
+
+// eof
+

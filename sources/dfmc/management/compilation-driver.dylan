@@ -76,7 +76,7 @@ define function compute-and-install-model-objects
     unless (cr.compilation-record-model-heap)
       progress-line("Computing models for %s.dylan", name);
       compiling-forms ($compilation of form in cr)
-	unless (form-ignored?(form))
+        unless (form-ignored?(form))
 	  maybe-compute-and-install-form-model-objects(form);
 	  finish-installing-form-model-objects(form);
 	end unless;
@@ -569,6 +569,7 @@ define function ensure-library-dfm-computed (ld :: <compilation-context>)
   debug-out(#"internal", "DFM generation: %s\n", ld);
   timing-compilation-phase ("DFM generation" of ld)
     for-library-method ("Computing code models for", $compilation of m in ld)
+      *dump-dfm-method* & *dump-dfm-method*(#"beginning", pair(m, #("initial DFM models")));
       ensure-method-dfm-or-heap(m);
     end;
   end;

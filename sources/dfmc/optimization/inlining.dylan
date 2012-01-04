@@ -310,6 +310,7 @@ define method extract-lambda-body-extent (body, env) => (first, last, return-c)
     let last = return-c.previous-computation;
     first.previous-computation := #f;
     last.next-computation      := #f;
+    remove-computation-references!(bind-c);
     values(first, last, return-c)
   end if
 end method;
@@ -509,8 +510,17 @@ define method move-code-into!
   lambda.optimization-queue := make(<optimization-queue>, code: mapped-body);
 
   walk-lambda-computations
-    (method (c :: <computation>) c.environment := env; re-optimize-into!(c, lambda); end, 
-     mapped-body); 
+    (method (c :: <computation>)
+       c.environment := env;
+       re-optimize-into!(c, lambda);
+     end, mapped-body); 
+
+  walk-lambda-computations
+    (method (c :: <computation>)
+       if (instance?(c, <call>))
+         do(temporary-id, choose(rcurry(instance?, type-union(<object-reference>, <temporary>)), c.arguments));
+       end;
+     end, mapped-body);
 
   let mapped-q = lambda.optimization-queue;
   lambda.optimization-queue := old-q;

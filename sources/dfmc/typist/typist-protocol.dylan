@@ -226,7 +226,7 @@ define class <type-variable> (<object>)
   // These are the things that go in the cache and in types that have other
   // types as components (functions, multiple values, etc.).  They contain the 
   // type and the justification links.  Boxes for type estimates+add'l info.
-  slot type-variable-contents :: <type-estimate> = make(<type-estimate-bottom>),
+  slot %type-variable-contents :: <type-estimate> = make(<type-estimate-bottom>),
     init-keyword: contents:;
   // Rule firings that have flowed types into this variable.
   slot type-variable-supporters :: <justifications> = #(),
@@ -234,8 +234,21 @@ define class <type-variable> (<object>)
   // Rule firings for which types flow out of this variable to somewhere else.
   slot type-variable-supportees :: <justifications> = #(),
     init-keyword: supportees:;
+  slot type-contents-callback :: false-or(<function>) = #f,
+    init-keyword: callback:;
 end;
 
+define method type-variable-contents (t :: <type-variable>) => (res :: <type-estimate>)
+  t.%type-variable-contents;
+end;
+
+define method type-variable-contents-setter (te :: <type-estimate>, t :: <type-variable>) => (res :: <type-estimate>)
+  t.%type-variable-contents := te;
+  if (t.type-contents-callback)
+    t.type-contents-callback(t);
+  end;
+  te;
+end;
 define sealed domain make (subclass(<type-variable>));
 define sealed domain initialize (<type-variable>);
 
