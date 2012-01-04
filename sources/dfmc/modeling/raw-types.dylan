@@ -232,17 +232,21 @@ end;
 
 define method raw-type-size (raw-type :: <&raw-aggregate-type>)
  => (sz :: <integer>)
-  compute-aggregate-size(raw-type);
+  compute-raw-aggregate-layout(raw-type)
 end;
 
 define method raw-type-alignment (raw-type :: <&raw-aggregate-type>)
  => (sz :: <integer>)
-  compute-aggregate-alignment(raw-type);
+  let (size, alignment, member-bit-offsets)
+    = compute-raw-aggregate-layout(raw-type);
+  alignment
 end;
 
-define method compute-aggregate-size
+define method compute-raw-aggregate-layout
     (raw-type :: <&raw-struct-type>)
- => (size :: <integer>);
+ => (size :: <integer>,
+     alignment :: <integer>,
+     member-bit-offsets :: <object-table>);
   let running-size = 0;
   let running-bitfield-offset = 0;
   let running-alignment = 1;
@@ -251,7 +255,9 @@ define method compute-aggregate-size
                    default: get-default-pack-option());
   let force-new-member? = #t;
   let previous-member-size = 0;
+  let member-bit-offsets = make(<object-table>);
   for (member in raw-type.raw-aggregate-members)
+    member-bit-offsets[member] := running-size;
     let member-type = member.member-raw-type;
     let member-size = compute-member-size(member);
     let member-width = member-bitfield-width(member);
@@ -278,20 +284,25 @@ define method compute-aggregate-size
     running-bitfield-offset := next-bitfield-offset;
     previous-member-size := member-size;
   end;
-  let result = round-up-to-mod(running-size, running-alignment);
-  result;
+  values(round-up-to-mod(running-size, running-alignment),
+         running-alignment,
+         member-bit-offsets)
 end;
 
 // unions max the member sizes, but they have no bitfield so it's simpler
-define method compute-aggregate-size
+define method compute-raw-aggregate-layout
     (raw-type :: <&raw-union-type>)
- => (size :: <integer>);
+ => (size :: <integer>,
+     alignment :: <integer>,
+     member-bit-offsets :: <object-table>);
   let running-size = 0;
   let running-alignment = 1;
   let pack-option
     = get-property(raw-type.raw-aggregate-options, #"pack",
                    default: get-default-pack-option());
+  let member-bit-offsets = make(<object-table>);
   for (member in raw-type.raw-aggregate-members)
+    member-bit-offsets[member] := 0;
     let member-type = member.member-raw-type;
     let member-size = compute-member-size(member);
     let member-align = raw-type-alignment(member-type);
@@ -299,25 +310,10 @@ define method compute-aggregate-size
     running-size := max(running-size, member-size);
     running-alignment := max(running-alignment, adjusted-alignment);
   end;
-  round-up-to-mod(running-size, running-alignment)
+  values(round-up-to-mod(running-size, running-alignment),
+         running-alignment,
+         member-bit-offsets)
 end;
-
-define method compute-aggregate-alignment
-    (raw-type :: <&raw-aggregate-type>)
- => (size :: <integer>)
-  let running-alignment = 1;
-  let pack-option
-    = get-property(raw-type.raw-aggregate-options, #"pack",
-                   default: get-default-pack-option());
-  for (member in raw-type.raw-aggregate-members)
-    let member-type = member.member-raw-type;
-    let member-align = raw-type-alignment(member-type);
-    let adjusted-alignment = min(member-align, pack-option);
-    running-alignment := max(running-alignment, adjusted-alignment);
-  end;
-  running-alignment
-end;
-
 
 /// The number returned determines the default packing for structs.
 /// No struct element is required to be aligned on a boundary larger
