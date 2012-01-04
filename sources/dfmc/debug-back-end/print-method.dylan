@@ -219,10 +219,15 @@ define function get-computation-ids
   res;
 end;
 
+define variable *sexp?* :: <boolean> = #f;
+
 define method output-computation-sexp
     (c :: <computation>)
   let str = make(<string-stream>, direction: #"output");
+  let olds = *sexp?*;
+  *sexp?* := #t;
   print-computation-sexp(str, c);
+  *sexp?* := olds;
   list(c.computation-id, str.stream-contents)
 end method;
 

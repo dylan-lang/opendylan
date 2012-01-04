@@ -43,33 +43,61 @@ define compiler-sideways method print-object
 end method;
 
 define compiler-sideways method print-object (o :: <lexical-specialized-variable>, stream :: <stream>) => ()
-  let spec = if (slot-initialized?(o, specializer) & o.specializer & o.specializer ~= dylan-value(#"<object>"))
-               format-to-string(" (%=)", o.specializer);
-             else
-               ""
-             end;
-  format(stream, "var %s%s", o.name, spec);
+  if (*sexp?*)
+    let spec = if (slot-initialized?(o, specializer) & o.specializer & o.specializer ~= dylan-value(#"<object>"))
+                 format-to-string(" (%=)", o.specializer);
+               else
+                 ""
+               end;
+    format(stream, "var %s%s", o.name, spec);
+  else
+    next-method()
+  end;
 end;
 
 define compiler-sideways method print-object (o :: <cell>, stream :: <stream>) => ()
-  let spec = if (slot-initialized?(o, %cell-type) & o.cell-type & o.cell-type ~= dylan-value(#"<object>"))
+  if (*sexp?*)
+    let spec = if (slot-initialized?(o, %cell-type) & o.cell-type & o.cell-type ~= dylan-value(#"<object>"))
                  format-to-string(" (%=)", o.cell-type)
                else
                  ""
                end;
-  format(stream, "cell %s%s", o.name, spec);
+    format(stream, "cell %s%s", o.name, spec);
+  else
+    next-method()
+  end
 end;
 
 define compiler-sideways method print-object (o :: <temporary>, stream :: <stream>) => ()
   block ()
     print-temporary-properties(stream, o);
-    if (named?(o))
-      format(stream, "%s/%=", o.name, o.frame-offset);
-    elseif (instance?(o, <multiple-value-temporary>))
-      format(stream, "MVT (%d%s)", required-values(o), if (rest-values?(o)) ", #rest" else "" end);
+    if (*sexp?*)
+      if (named?(o))
+        format(stream, "%s/%=", o.name, o.frame-offset);
+      elseif (instance?(o, <multiple-value-temporary>))
+        format(stream, "MVT (%d%s)", required-values(o), if (rest-values?(o)) ", #rest" else "" end);
+      else
+        format(stream, "T");
+      end if;
     else
-      format(stream, "T");
+      if (named?(o))
+        format(stream, "%s/%=", o.name, o.frame-offset);
+      else
+        format(stream, "t");
+        if (o.frame-offset)
+          format(stream, "%d",
+                 o.frame-offset - o.environment.lambda.parameters.size);
+        else
+          format(stream, "?")
+        end if;
+      end if;
+      if (instance?(o, <multiple-value-temporary>))
+        format(stream, "(%d%s)", o.required-values, 
+               if (o.rest-values?) ",#rest" else "" end)
+      end if;
     end if;
+//    let te = type-estimate(o);
+//    format(stream, "::%=", te);
   exception (<error>)
   end block;
 end method;
@@ -84,7 +112,11 @@ define compiler-sideways method print-object (o :: <object-reference>, stream ::
 end method;
 
 define compiler-sideways method print-object (o :: <defined-constant-reference>, stream :: <stream>) => ()
-  format(stream, "$");
+  if (*sexp?*)
+    format(stream, "$");
+  else
+    format(stream, "^");
+  end;
   print-referenced-object(o.referenced-binding, stream);
 end method;
 
@@ -96,6 +128,18 @@ define method print-temporary-properties (stream, o :: <temporary>)
     format(stream, "V");
   end if;
 end method;
+
+define method print-temporary-properties
+    (stream, o :: <multiple-value-temporary>)
+  next-method();
+  unless (*sexp?*)
+    format(stream, "*");
+  end;
+  //if (o.mvt-local?)
+  //  let num-vals = required-values(o);
+  //  format(stream, "L(%s)", num-vals);
+  //end if;
+end method print-temporary-properties;
 
 //// COMPUTATIONS
 
@@ -122,7 +166,6 @@ define compiler-sideways method print-object
   if (current-library-description())
     format(stream, " :: %=", type-estimate(c))
   end if;
-    format(stream, " :: %=", type-estimate(c))
   */
   exception (<error>)
   end block;

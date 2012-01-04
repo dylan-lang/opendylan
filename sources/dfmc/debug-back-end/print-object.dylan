@@ -12,9 +12,9 @@ define compiler-sideways method print-object
     (o :: <named-object>, stream :: <stream>) => ()
   if (o.named?)
     if (*verbose-objects?*)
-      format(stream, "%s %s", o.object-class, o.name);
+      format(stream, if (*sexp?*) "%s %s" else "{ %s %s }" end, o.object-class, o.name);
     else
-      format(stream, "%s", o.name);
+      format(stream, if (*sexp?*) "%s" else "{ %s }" end, o.name);
     end if;
   else
     next-method();
@@ -26,9 +26,13 @@ define compiler-sideways method print-object (o :: <mapped-unbound>, stream :: <
 end method;
 
 define compiler-sideways method print-object (s :: <&singleton>, str :: <stream>) => ()
-  format(str, "{ ");
-  print-object(s.^singleton-object, str);
-  format(str, " }");
+  if (*sexp?*)
+    format(str, "{ ");
+    print-object(s.^singleton-object, str);
+    format(str, " }");
+  else
+    next-method();
+  end
 end;
 
 define compiler-sideways method print-object (o :: <&object>, stream :: <stream>) => ()
@@ -36,19 +40,26 @@ define compiler-sideways method print-object (o :: <&object>, stream :: <stream>
   if (ld)
     with-library-context (ld)
       if (o.name-if-named)
-	format(stream, "%s :: %s",
+	format(stream, if (*sexp?*) "%s :: %s" else "{model-object %s :: %s}" end,
 	       o.name-if-named, o.&object-class.debug-string);
       else
-	format(stream, "%s", o.&object-class.debug-string);
+	format(stream, if (*sexp?*) "%s" else "{model-object :: %s}" end,
+               o.&object-class.debug-string);
       end;
     end;
   else // not enough info to do &object-class...
-    format(stream, "interactive model-object :: %s", o.object-class);
+    format(stream,
+           if (*sexp?*)
+             "interactive model-object :: %s"
+           else
+             "{interactive model-object :: %s}"
+           end,
+           o.object-class);
   end;
 end method;
 
 define compiler-sideways method print-object (o :: <&signature>, stream :: <stream>) => ()
-  format(stream, "<&signature>");
+  format(stream, if (*sexp?*) "<&signature>" else "{<&signature>}" end);
 end method;
 
 define function model-signature (object)
@@ -61,17 +72,23 @@ define function model-signature (object)
 end;
 
 define compiler-sideways method print-object (o :: <&generic-function>, stream :: <stream>) => ()
-  format(stream, "<&generic-function> %s", o.debug-string);
+  format(stream,
+         if (*sexp?*) "<&generic-function> %s" else "{<&generic-function %s" end,
+         o.debug-string);
   let sig = model-signature(o);
   if (sig)
     format(stream, " ");
     print-contents(sig, stream);
   end;
+  unless (*sexp?*)
+    format(stream, "}");
+  end
 end method;
 
 
 define compiler-sideways method print-referenced-object (o :: <&generic-function>, stream :: <stream>) => ()
-  format(stream, "<&generic> %s", o.debug-string);
+  format(stream, if (*sexp?*) "<&generic> %s" else "{<&generic> %s}" end,
+         o.debug-string);
 end method;
 
 define method find-top-level-lambda (o :: <&lambda>) => (res :: false-or(<&lambda>))
@@ -87,7 +104,7 @@ define method find-top-level-lambda (o :: <&lambda>) => (res :: false-or(<&lambd
 end method;
 
 define compiler-sideways method print-referenced-object (o :: <&method>, stream :: <stream>) => ()
-  format(stream, "<&method> ");
+  format(stream, if (*sexp?*) "<&method> " else "{<&method> " end);
   if (o.named?)
     format(stream, "%s", o.debug-string);
   end if;
@@ -103,12 +120,15 @@ define compiler-sideways method print-referenced-object (o :: <&method>, stream 
       format(stream, "top-level");
     end if;
   end if;
+  unless (*sexp?*)
+    format(stream, "}");
+  end;
 end method;
 
 define thread variable *print-method-bodies?* = #f;
 
 define compiler-sideways method print-object (o :: <&method>, stream :: <stream>) => ()
-  format(stream, "<&method>");
+  format(stream, if (*sexp?*) "<&method>" else "{<&method>" end);
   if (o.named?)
     format(stream, " %s", o.debug-string);
   end if;
@@ -137,30 +157,34 @@ define compiler-sideways method print-object (o :: <&method>, stream :: <stream>
       end;
     end;
   end;
+  unless (*sexp?*)
+    format(stream, "}");
+  end
 end method;
 
 define constant $top-string = "<top>";
 
 define compiler-sideways method print-object (o :: <&top-type>, stream :: <stream>) => ()
-  format(stream, "%s", $top-string);
+  format(stream, if (*sexp?*) "%s" else "{<&top-type> %s}" end, $top-string);
 end method;
 
 define constant $bottom-string = "<bottom>";
 
 define compiler-sideways method print-object (o :: <&bottom-type>, stream :: <stream>) => ()
-  format(stream, "%s", $bottom-string);
+  format(stream, if (*sexp?*) "%s" else "{<&bottom-type> %s}" end, $bottom-string);
 end method;
 
 define compiler-sideways method print-object (o :: <&class>, stream :: <stream>) => ()
-  format(stream, "%s", o.debug-string);
+  format(stream, if (*sexp?*) "%s" else "{<&class> %s}" end, o.debug-string);
 end method;
 
 define compiler-sideways method print-object (o :: <&slot-descriptor>, stream :: <stream>) => ()
-  format(stream, "slot %s", o.^slot-getter.^debug-name);
+  format(stream, if (*sexp?*) "slot %s" else "{<&slot-descriptor> %s}" end,
+         o.^slot-getter.^debug-name);
 end method;
 
 define compiler-sideways method print-object (o :: <&raw-type>, stream :: <stream>) => ()
-  format(stream, "raw %s", o.debug-string);
+  format(stream, if (*sexp?*) "raw %s" else "{<&raw-type> %s}" end, o.debug-string);
 end method;
 
 define compiler-sideways method print-object (o :: <&raw-object>, stream :: <stream>) => ()
@@ -178,7 +202,8 @@ define method primitive-name (o :: <&primitive>) => (name)
 end method;
 
 define compiler-sideways method print-object (o :: <&primitive>, stream :: <stream>) => ()
-  format(stream, "primitive %s", primitive-name(o));
+  format(stream, if (*sexp?*) "primitive %s" else "&[PRIMITIVE %s]" end,
+         primitive-name(o));
 end method;
 
 define compiler-sideways method print-object (o :: <&boolean>, stream :: <stream>) => ()
@@ -262,7 +287,12 @@ end;
 
 define compiler-sideways method print-object (o :: <library-description>, stream :: <stream>) => ()
   let vers = o.library-description-change-count;
-  format(stream, "%s%slibrary-description of %s.%s",
+  format(stream,
+         if (*sexp?*)
+           "%s%slibrary-description of %s.%s"
+         else
+           "{%s%slibrary-description of %s.%s}"
+         end,
 	 if (vers) "" else "CLOSED " end,
 	 if (instance?(o, <interactive-library-description>)) "interactive "
 	 else "" end,
@@ -272,5 +302,6 @@ end method;
 
 
 define compiler-sideways method print-object (o :: <model-heap>, stream :: <stream>) => ()
-  format(stream, "model-heap of %s", heap-compilation-record(o));
+  format(stream, if (*sexp?*) "model-heap of %s" else "{model-heap of %s}" end,
+         heap-compilation-record(o));
 end method;

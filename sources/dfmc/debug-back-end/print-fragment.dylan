@@ -21,5 +21,5 @@ end method;
 
 define method print-contents 
     (frag :: <literal-constant-fragment>, stream) => ()
-  format(stream, "%=", fragment-value(frag));
+  format(stream, if (*sexp?*) "%=" else "{ %s }" end, fragment-value(frag));
 end method;

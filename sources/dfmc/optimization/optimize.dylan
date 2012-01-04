@@ -158,9 +158,14 @@ define sealed method really-run-compilation-passes (code :: <&lambda>)
 	  ("Abort all analysis passes and continue.", 
 	   "Restart all analysis passes.")
 	with-dependent-context ($compilation of model-creator(code))
+          opt-format-out("READY %=\n", code);
           send-debug(#"relayouted", #());
           send-debug(#"beginning", #("SSA conversion"));
 	  for-all-lambdas (f in code)
+           opt-format-out("PASS ONE %=\n", f);
+           // make sure we've got some DFM to play with
+           // elaborate-top-level-definitions(f);
+           // finish pseudo-SSA conversion
 	    if (f == code | ~maybe-delete-function-body(f))
 	      eliminate-assignments(f);
 	    end;
@@ -169,6 +174,7 @@ define sealed method really-run-compilation-passes (code :: <&lambda>)
           send-debug(#"beginning", #("rename temporaries"));
           if (*flow-types-through-conditionals?*)
   	    for-all-lambdas (f in code)
+              opt-format-out("PASS ONE(A) %=\n", f);
   	      if (f == code | lambda-used?(f))
                 maybe-rename-temporaries-in-conditionals(f);
               end;
@@ -178,6 +184,10 @@ define sealed method really-run-compilation-passes (code :: <&lambda>)
           send-debug(#"beginning", #("run optimizations (delete, fold, upgrade, inline)"));
 	  for-all-lambdas (f in code)
 	    if (f == code | lambda-used?(f))
+             opt-format-out("PASS TWO %=\n", f);
+             if (*trace-optimizations?*)
+               print-method-out(code);
+             end if;
 	      // Now we're ready for some fun.
 	      run-optimizations(f);
               send-debug(#"relayouted", #());
@@ -188,6 +198,7 @@ define sealed method really-run-compilation-passes (code :: <&lambda>)
 	    let something? = #f;
 	    for-all-lambdas (f in code)
 	      if (f == code | lambda-used?(f))
+                opt-format-out("PASS THREE %=\n", f);
 		something? := something? | run-optimizations(f);
 	      end;
 	    end for-all-lambdas;
@@ -204,6 +215,7 @@ define sealed method really-run-compilation-passes (code :: <&lambda>)
           send-debug(#"beginning", #("common subexpression elimination, useless environment deletion"));
 	  for-all-lambdas (f in code)
 	    if (f == code | lambda-used?(f) | lambda-top-level?(f))
+              opt-format-out("PASS FOUR %=\n", f);
 	      share-common-subexpressions(f);
 	      delete-useless-environments(f);
               send-debug(#"relayouted", #());
@@ -212,6 +224,7 @@ define sealed method really-run-compilation-passes (code :: <&lambda>)
           send-debug(#"beginning", #("analyze dynamic-extent, environments, check optimized computations"));
 	  for-all-lambdas (f in code)
 	    if (f == code | lambda-used?(f) | lambda-top-level?(f))
+              opt-format-out("PASS FIVE %=\n", f);
 	      analyze-dynamic-extent-for(f);
 	      analyze-environments(f);
 	      check-optimized-computations(f);
@@ -221,6 +234,7 @@ define sealed method really-run-compilation-passes (code :: <&lambda>)
           send-debug(#"beginning", #("pruning closures"));
 	  for-all-lambdas (f in code)
 	    if (f == code | lambda-used?(f) | lambda-top-level?(f))
+              opt-format-out("PASS SIX %=\n", f);
 	      prune-closure(environment(f));
               send-debug(#"relayouted", #());
 	    end;
@@ -228,6 +242,7 @@ define sealed method really-run-compilation-passes (code :: <&lambda>)
           send-debug(#"beginning", #("constant folding closures"));
 	  for-all-lambdas (f in code)
 	    if (f == code | lambda-used?(f) | lambda-top-level?(f))
+              opt-format-out("PASS SIX %=\n", f);
 	      constant-fold-closure(f);
               send-debug(#"relayouted", #());
 	    end;
@@ -239,6 +254,9 @@ define sealed method really-run-compilation-passes (code :: <&lambda>)
 	optimization-queue(f) := #f;
         strip-environment(environment(f));
       end for-all-lambdas;
+      when (dumping-dfm?(code))
+       print-method-out(code);
+      end when;
       send-debug(#"relayouted", #());
       //send-debug(#"highlight", 0);
       send-debug(#"beginning", #("finished"));

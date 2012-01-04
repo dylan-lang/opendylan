@@ -88,7 +88,7 @@ define method print-object(te :: <type-estimate>, stream :: <stream>) => ()
     print-type-estimate-internals(te, stream: stream)
   else
     dynamic-bind (*printing-a-type-estimate?* = #t)
-      write(stream, "{TE: ");
+      write(stream, "{Type Estimate: ");
       print-type-estimate-internals(te, stream: stream);
       write-element(stream, '}')
     end
