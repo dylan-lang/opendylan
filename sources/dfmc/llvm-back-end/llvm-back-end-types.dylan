@@ -109,10 +109,11 @@ define method initialize-type-table
                     #"address");
 
   // MM Wrapper
+  let mm-name = emit-name-internal(back-end, #f, dylan-value(#"<mm-wrapper>"));
   let placeholder = make(<llvm-opaque-type>);
-  t["Wrapper"]
+  t[mm-name]
     := make(<llvm-struct-type>,
-            name: "Wrapper",
+            name: mm-name,
             elements: vector(// Wrapper-Wrapper
                              placeholder,
                              // Class pointer
@@ -130,7 +131,7 @@ define method initialize-type-table
                                   size: 0,
                                   element-type: t["iWord"])));
   placeholder.llvm-placeholder-type-forward
-    := llvm-pointer-to(back-end, t["Wrapper"]);
+    := llvm-pointer-to(back-end, t[mm-name]);
 end method;
 
 // Register each of the built-in types in a new module's type symbol table
@@ -162,17 +163,17 @@ define method llvm-class-type
      #key repeated-size :: false-or(<integer>) = #f)
  => (type :: <llvm-type>);
   let base-name = emit-name-internal(back-end, #f, class);
-  let name
-    = if (repeated-size & repeated-size > 0)
-        format-to-string("ST.%s_%d", base-name, repeated-size)
+  let type-name
+    = if (repeated-size & ~zero?(repeated-size))
+        format-to-string("%s.%d", base-name, repeated-size)
       else
-        concatenate("ST.", base-name)
+        base-name
       end if;
 
   // Locate the memoized type, if any, with that name
   let module = back-end.llvm-builder-module;
   let type-table = module.llvm-type-table;
-  let type = element(type-table, name, default: #f);
+  let type = element(type-table, type-name, default: #f);
   if (type)
     type
   else
@@ -183,7 +184,8 @@ define method llvm-class-type
              size: if (rslotd) islots.size + 2 else islots.size + 1 end);
 
     // The first element is always the wrapper pointer
-    elements[0] := llvm-pointer-to(back-end, type-table["Wrapper"]);
+  let mm-name = emit-name-internal(back-end, #f, dylan-value(#"<mm-wrapper>"));
+    elements[0] := llvm-pointer-to(back-end, type-table[mm-name]);
 
     // One element for each slot
     for (instance-slot in islots, index from 1)
@@ -205,8 +207,8 @@ define method llvm-class-type
       end if;
     end for;
 
-    element(type-table, name)
-      := make(<llvm-struct-type>, name: name, elements: elements)
+    element(type-table, type-name)
+      := make(<llvm-struct-type>, name: type-name, elements: elements)
   end if
 end method;
 

@@ -52,9 +52,10 @@ define method emit-wrapper-reference
     (back-end :: <llvm-back-end>, m :: <llvm-module>, o :: <&mm-wrapper>)
  => (reference :: <llvm-constant-value>)
   let wrapper-name = emit-name(back-end, m, o);
+  let mm-w = dylan-value(#"<mm-wrapper>");
   make(<llvm-cast-constant>,
        operator: #"BITCAST",
-       type: llvm-pointer-to(back-end, back-end.%type-table["Wrapper"]),
+       type: llvm-pointer-to(back-end, llvm-class-type(back-end, mm-w)),
        operands: vector(llvm-builder-global(back-end, wrapper-name)))
 end method;
 
