@@ -1213,7 +1213,6 @@ define llvm-builder function-test ins--extractvalue ()
                             make(<llvm-primitive-type>, kind: #"FLOAT")));
   let builder = make-builder-with-test-function(arg-type: struct-type);
   let ev = ins--extractvalue(builder, llvm-builder-local(builder, "arg0"), 0);
-  llvm-constrain-type(ev.llvm-value-type, $llvm-i32-type);
   ins--ret(builder);
   check-equal("ins--extractvalue disassembly",
               #("entry:",

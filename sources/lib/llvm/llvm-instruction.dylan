@@ -337,9 +337,38 @@ define abstract class <llvm-aggregate-instruction> (<llvm-instruction>)
 end class;
 
 define class <llvm-extract-value-instruction> (<llvm-aggregate-instruction>)
-  constant slot llvm-value-type :: <llvm-type> = make(<llvm-opaque-type>),
+  slot %llvm-value-type :: <llvm-type>,
     init-keyword: type:;
 end class;
+
+define method llvm-value-type
+    (value :: <llvm-extract-value-instruction>)
+ => (type :: <llvm-type>);
+  if (slot-initialized?(value, %llvm-value-type))
+    value.%llvm-value-type
+  else
+    let operands = value.llvm-instruction-operands;
+    let operand-type = type-forward(llvm-value-type(operands[0]));
+    value.%llvm-value-type
+      := for (index in value.llvm-aggregate-instruction-indices,
+              type = operand-type then llvm-aggregate-index(type, index))
+         finally
+           type
+         end
+  end if
+end method;
+
+define method llvm-aggregate-index
+    (type :: <llvm-array-type>, index :: <integer>)
+ => (indexed-type :: <llvm-type>)
+  type.llvm-array-type-element-type
+end method;
+
+define method llvm-aggregate-index
+    (type :: <llvm-struct-type>, index :: <integer>)
+ => (indexed-type :: <llvm-type>)
+  type.llvm-struct-type-elements[index]
+end method;
 
 define class <llvm-insert-value-instruction> (<llvm-aggregate-instruction>)
 end class;
