@@ -90,6 +90,7 @@ define method llvm-retract-cached (back-end :: <llvm-back-end>) => ()
   remove-all-keys!(back-end.%direct-object-table);
   remove-all-keys!(back-end.%raw-object-table);
   remove-all-keys!(back-end.%reference-table);
+  remove-all-keys!(back-end.%primitive-function-table)
 end method;
 
 
