@@ -10,8 +10,8 @@ provides a simple way to send text to the platform’s standard output
 stream. For this purpose, Format-Out uses the Format module and the
 Standard-IO module and defines a function `format-out`_. The Format-Out
 module exports all the identifiers described in this document. The
-Format-Out module re-exports two modules, *format* from the Format
-library and *standard-io* from the Standard-IO library.
+Format-Out module re-exports two modules, ``format`` from the Format
+library and ``standard-io`` from the Standard-IO library.
 
 :doc:`format` and :doc:`standard-io` give full details of the Format and
 Standard-IO libraries.
