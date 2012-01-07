@@ -250,7 +250,6 @@ define method do-emit-instance-cmp
   let class :: <&class> = dylan-value(#"<union>");
 
   // Basic blocks
-  let entry-bb = back-end.llvm-builder-basic-block;
   let type2-bb = make(<llvm-basic-block>);
   let result-bb = make(<llvm-basic-block>);
 
@@ -262,6 +261,7 @@ define method do-emit-instance-cmp
   let type1-ref = ins--load(back-end, type1-slot-ptr, alignment: word-size);
   let cmp1
     = do-emit-instance-cmp(back-end, object, type.^union-type1, type1-ref);
+  let type1-branch-bb = back-end.llvm-builder-basic-block;
   ins--br(back-end, cmp1, result-bb, type2-bb);
 
   // cmp1 failed, check against union-type2
@@ -271,11 +271,12 @@ define method do-emit-instance-cmp
   let type2-ref = ins--load(back-end, type2-slot-ptr, alignment: word-size);
   let cmp2
     = do-emit-instance-cmp(back-end, object, type.^union-type2, type2-ref);
+  let type2-branch-bb = back-end.llvm-builder-basic-block;
   ins--br(back-end, result-bb);
 
   // Result
   ins--block(back-end, result-bb);
-  ins--phi(back-end, $llvm-true, entry-bb, cmp2, type2-bb)
+  ins--phi(back-end, $llvm-true, type1-branch-bb, cmp2, type2-branch-bb)
 end method;
 
 // Compile-time instance check against a <singleton> instance
