@@ -194,13 +194,7 @@ define method llvm-class-type
     finally
       if (rslotd)
         // One array element for the repeated slot
-        let repeated-slot-type = rslotd.^slot-type;
-        let repeated-type
-          = if (repeated-slot-type == dylan-value(#"<byte-character>"))
-              $llvm-i8-type
-            else
-              llvm-reference-type(back-end, repeated-slot-type);
-            end if;
+        let repeated-type = llvm-repeated-type(back-end, rslotd.^slot-type);
         elements[index] := make(<llvm-array-type>,
                                 size: repeated-size | 0,
                                 element-type: repeated-type);
@@ -224,6 +218,30 @@ define method llvm-reference-type
     (back-end :: <llvm-back-end>, o)
  => (type :: <llvm-type>);
   $llvm-object-pointer-type
+end method;
+
+// Types for storage in repeated slots (matching repeated-representation-size)
+define method llvm-repeated-type
+    (back-end :: <llvm-back-end>, o)
+ => (type :: <llvm-type>);
+  select (o)
+    dylan-value(#"<byte-character>") =>
+      $llvm-i8-type;
+    dylan-value(#"<unicode-character>"), dylan-value(#"<machine-word>") =>
+      llvm-reference-type(back-end, dylan-value(#"<raw-machine-word>"));
+    dylan-value(#"<single-float>") =>
+      $llvm-float-type;
+    dylan-value(#"<double-float>") =>
+      $llvm-double-type;
+    otherwise =>
+      llvm-reference-type(back-end, o);
+  end select
+end method;
+
+define method llvm-repeated-type
+    (back-end :: <llvm-back-end>, o :: <&limited-integer>)
+ => (type :: <llvm-type>);
+  make(<llvm-integer-type>, width: repeated-representation-size(o) * 8)
 end method;
 
 
