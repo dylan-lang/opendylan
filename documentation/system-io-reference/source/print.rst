@@ -73,7 +73,7 @@ The *length* keyword controls how many elements of a sequence to print
 before printing ellipsis notation (*...*). The value *#f* indicates
 that there is no limit. The *print-length* control can be interpreted
 loosely by some *print-object* methods to control how many *elements* of
-any kind of object to print; for example, the default *<object>* method
+any kind of object to print; for example, the default ``<object>`` method
 might regard *print-length* to determine how many slot-name/value pairs
 to print. The default, *\*print-length\**, has no effect on recursive
 calls to *print*. Recursive calls to *print* may change the value of
@@ -144,7 +144,7 @@ implementation-dependent.
 Variable
         
 
-This is an *<integer>* that controls how deeply into a nested expression
+This is an ``<integer>`` that controls how deeply into a nested expression
 to print.
 
 \*print-length\*
@@ -153,7 +153,7 @@ to print.
 Variable
         
 
-This is an *<integer>* that controls how many elements at a given level
+This is an ``<integer>`` that controls how many elements at a given level
 to print.
 
 \*print-circle?\*
@@ -295,7 +295,7 @@ Specifies the indentation to use within the current logical block. When
 to the column of the first character of the logical block plus *n*.
 When *relative-to* is *#"current"*, then *pprint-indent* sets the
 indentation to the current column plus *n*. In both cases, *n* is a
-*<fixed-integer>*.
+``<fixed-integer>``.
 
 pprint-tab
 ''''''''''
@@ -308,9 +308,9 @@ pprint-tab *kind colnum colinc stream* => ()
 
 -  *kind* One of *#"line"*, *#"line-relative"*, *#"section"*,
    *#"section-relative"*.
--  *colnum* An instance of *<fixed-integer>*.
--  *colinc* An instance of *<fixed-integer>*.
--  *stream* An instance of *<stream>*.
+-  *colnum* An instance of ``<fixed-integer>``.
+-  *colinc* An instance of ``<fixed-integer>``.
+-  *stream* An instance of ``<stream>``.
 
 Announces a tab to the pretty printer. *Colnum* and *colinc* have
 meaning based on the value of *kind*, which can be one of the
@@ -337,7 +337,7 @@ following:
    relative to the beginning of the current *section* rather than the
    beginning of the line.
 
-In all cases, *colnum* and *colinc* are instances of *<fixed-integer>*.
+In all cases, *colnum* and *colinc* are instances of ``<fixed-integer>``.
 
 The PRINT module
 ----------------
@@ -365,15 +365,15 @@ print *object* *stream* #key *level length circle? pretty?* => ()
 Arguments
          
 
--  object An instance of *<object>*.
--  *stream* An instance of *<stream>*.
--  *level* *#f* or an instance of *<fixed-integer>*. Default value:
+-  object An instance of ``<object>``.
+-  *stream* An instance of ``<stream>``.
+-  *level* *#f* or an instance of ``<fixed-integer>``. Default value:
    *\*print-level\**.
--  *length* *#f* or an instance of *<fixed-integer>*. Default value:
+-  *length* *#f* or an instance of ``<fixed-integer>``. Default value:
    *\*print-length\**.
--  *circle?* An instance of *<boolean>*. Default value:
+-  *circle?* An instance of ``<boolean>``. Default value:
    *\*print-circle?\**.
--  *pretty?* An instance of *<boolean>*. Default value:
+-  *pretty?* An instance of ``<boolean>``. Default value:
    *\*print-pretty?\**.
 
 Values
@@ -410,7 +410,7 @@ The *length* keyword controls how many elements of a sequence to print
 before printing ellipsis notation (*...*). The value *#f* indicates
 that there is no limit. The *print-length* control can be interpreted
 loosely by some *print-object* methods to control how many *elements* of
-any kind of object to print; for example, the default *<object>* method
+any kind of object to print; for example, the default ``<object>`` method
 might regard *print-length* to determine how many slot-name/value pairs
 to print. The default, *\*print-length\**, has no effect on recursive
 calls to *print*. Recursive calls to *print* may change the value of
@@ -548,8 +548,8 @@ print-object *object stream* => ()
 Arguments
          
 
--  *object* An instance of *<object>*.
--  *stream* An instance of *<stream>*.
+-  *object* An instance of ``<object>``.
+-  *stream* An instance of ``<stream>``.
 
 Values
       
@@ -611,20 +611,20 @@ print-to-string *object* #key *level length circle? pretty?* => *result*
 Arguments
          
 
--  *object* An instance of *<object>*.
--  *level* *#f* or an instance of *<fixed-integer>*. Default value:
+-  *object* An instance of ``<object>``.
+-  *level* *#f* or an instance of ``<fixed-integer>``. Default value:
    *\*print-level\**.
--  *length* *#f* or an instance of *<fixed-integer>*. Default value:
+-  *length* *#f* or an instance of ``<fixed-integer>``. Default value:
    *\*print-length\*.*
--  circle? An instance of *<boolean>*. Default value:
+-  circle? An instance of ``<boolean>``. Default value:
    *\*print-circle?\**.
--  *pretty?* An instance of *<boolean>*. Default value:
+-  *pretty?* An instance of ``<boolean>``. Default value:
    *\*print-pretty?\*.*
 
 Values
       
 
--  *result* An instance of *<byte-string>*.
+-  *result* An instance of ``<byte-string>``.
 
 Description
            
@@ -687,8 +687,8 @@ Arguments
          
 
 -  *relative-to* One of *#"block"* or *#"current"*.
--  *n* An instance of *<fixed-integer>*.
--  *stream* An instance of *<stream>*.
+-  *n* An instance of ``<fixed-integer>``.
+-  *stream* An instance of ``<stream>``.
 
 Values
       
@@ -725,12 +725,12 @@ pprint-logical-block *stream* #key *prefix per-line-prefix body
 Arguments
          
 
--  *stream* An instance of *<stream>*.
--  *prefix* *#f* or an instance of *<byte-string>*.
--  *per-line-prefix* *#f* or an instance of *<byte-string>*.
--  *body* An instance of *<function>*.
--  *suffix* *#f* or an instance of *<byte-string>*.
--  *column* A *limited* instance of *<fixed-integer>*, minimum 0.
+-  *stream* An instance of ``<stream>``.
+-  *prefix* *#f* or an instance of ``<byte-string>``.
+-  *per-line-prefix* *#f* or an instance of ``<byte-string>``.
+-  *body* An instance of ``<function>``.
+-  *suffix* *#f* or an instance of ``<byte-string>``.
+-  *column* A *limited* instance of ``<fixed-integer>``, minimum 0.
 
 Values
       
@@ -788,7 +788,7 @@ Arguments
          
 
 -  *kind* One of *#"fill"*, *#"linear"*, *#"miser"*, *#"mandatory"*.
--  *stream* An instance of *<stream>*.
+-  *stream* An instance of ``<stream>``.
 
 Values
       
@@ -838,9 +838,9 @@ Arguments
 
 -  *kind* One of *#"line"*, *#"line-relative"*, *#"section"*,
    *#"section-relative"*.
--  *colnum* An instance of *<fixed-integer>*.
--  *colinc* An instance of *<fixed-integer>*.
--  *stream* An instance of *<stream>*.
+-  *colnum* An instance of ``<fixed-integer>``.
+-  *colinc* An instance of ``<fixed-integer>``.
+-  *stream* An instance of ``<stream>``.
 
 Values
       

@@ -112,7 +112,7 @@ environment-variable-setter *new-value* *name* => *new-value*
 The function *environment-variable* returns the current value of any
 environment variable. The function *environment-variable-setter* lets
 you specify the value of any environment variable. All arguments and
-returns values in these functions are instances of *<byte-string>*.If
+returns values in these functions are instances of ``<byte-string>``.If
 the environment variable passed to *environment-variable* does not
 exist, it creates it. For *environment-variable-setter*, if *new-value*
 is *#f*, then the environment variable specified is undefined, if
@@ -130,7 +130,7 @@ Function
 login-name () => *name-or-false*
                                 
 
-Returns as an instance of *<string>* the name of the user logged on to
+Returns as an instance of ``<string>`` the name of the user logged on to
 the current machine, or *#f* if unavailable.
 
 login-group
@@ -142,7 +142,7 @@ Function
 login-group () => *group-or-false*
                                   
 
-Returns as an instance of *<string>* the group (for example NT domain,
+Returns as an instance of ``<string>`` the group (for example NT domain,
 or Windows Workgroup) of which the user logged on to the current machine
 is a member, or *#f* if the group unavailable.
 
@@ -155,7 +155,7 @@ Function
 owner-name () => *name-or-false*
                                 
 
-Returns as an instance of *<string>* the name of the user who owns the
+Returns as an instance of ``<string>`` the name of the user who owns the
 current machine (that is, the name entered when the machine was
 registered), or *#f* if the name unavailable.
 
@@ -168,7 +168,7 @@ Function
 owner-organization () => *organization-or-false*
                                                 
 
-Returns as an instance of *<string>* the organization to which the user
+Returns as an instance of ``<string>`` the organization to which the user
 who owns the current machine belongs, or *#f* if the name unavailable.
 
 Manipulating application information
@@ -257,8 +257,8 @@ application, the name of the running application, and the full filename
 (that is, the absolute pathname) of the running application.
 
 These functions take no arguments. The function *application-arguments*
-returns an instance of *<simple-object-vector>* ; *application-name*
-returns an instance of *<byte-string>* ; and *application-filename*
+returns an instance of ``<simple-object-vector>`` ; *application-name*
+returns an instance of ``<byte-string>`` ; and *application-filename*
 returns an instance of *false-or(<byte-string>)*.
 
 tokenize-command-string
@@ -273,9 +273,9 @@ tokenize-command-string *line* => *command* #rest *arguments*
 This argument passed to this function is an MS-DOS command that could be
 used to start an application from the MS-DOS command line. It returns
 the command itself, together with any command-line arguments. All
-arguments and return values are instances of *<byte-string>*. (In the
+arguments and return values are instances of ``<byte-string>``. (In the
 case of the arguments returned, each individual argument is an instance
-of *<byte-string>*.) You can use this function to break up any MS-DOS
+of ``<byte-string>``.) You can use this function to break up any MS-DOS
 command into its constituent parts.
 
 The OPERATING-SYSTEM module
@@ -309,14 +309,14 @@ None.
 Values
       
 
-*arguments* An instance of *<simple-object-vector>*.
+*arguments* An instance of ``<simple-object-vector>``.
                                                      
 
 Description
            
 
 Returns the arguments passed to the running application as a vector of
-instances of *<byte-string>*.
+instances of ``<byte-string>``.
 
 See also
         
@@ -406,7 +406,7 @@ None.
 Values
       
 
-*name* An instance of *<byte-string>*.
+*name* An instance of ``<byte-string>``.
                                        
 
 Description
@@ -454,13 +454,13 @@ environment-variable *name* => *value*
 Arguments
          
 
-*name* An instance of *<byte-string>*.
+*name* An instance of ``<byte-string>``.
                                        
 
 Values
       
 
-*value* An instance of *<byte-string>*, or *#f*.
+*value* An instance of ``<byte-string>``, or *#f*.
                                                   
 
 Description
@@ -494,16 +494,16 @@ environment-variable-setter *new-value* *name* => *new-value*
 Arguments
          
 
-*new-value* An instance of *<byte-string>*, or *#f*.
+*new-value* An instance of ``<byte-string>``, or *#f*.
                                                       
 
-*name* An instance of *<byte-string>*.
+*name* An instance of ``<byte-string>``.
                                        
 
 Values
       
 
-*new-value* An instance of *<byte-string>*, or *#f*.
+*new-value* An instance of ``<byte-string>``, or *#f*.
                                                       
 
 Description
@@ -546,7 +546,7 @@ exit-application *status* => ()
 Arguments
          
 
-*status* An instance of *<integer>*.
+*status* An instance of ``<integer>``.
                                      
 
 Values
@@ -576,7 +576,7 @@ Function
 Summary
        
 
-Returns as an instance of *<string>* the name of the user logged on to
+Returns as an instance of ``<string>`` the name of the user logged on to
 the current machine, or *#f* if unavailable.
 
 Signature
@@ -599,7 +599,7 @@ Values
 Description
            
 
-Returns as an instance of *<string>* the name of the user logged on to
+Returns as an instance of ``<string>`` the name of the user logged on to
 the current machine, or *#f* if unavailable.
 
 See also
@@ -633,7 +633,7 @@ Values
 Description
            
 
-Returns as an instance of *<string>* the group (for example NT domain,
+Returns as an instance of ``<string>`` the group (for example NT domain,
 or Windows Workgroup) of which the user logged on to the current machine
 is a member, or *#f* if the group is unavailable.
 
@@ -786,7 +786,7 @@ machine is running.
 Type
     
 
-*<string>*
+``<string>``
 
 Initial value
              
@@ -843,7 +843,7 @@ name-or-false An instance of *false-or(<string>)*.
 Description
            
 
-Returns as an instance of *<string>* the name of the user who owns the
+Returns as an instance of ``<string>`` the name of the user who owns the
 current machine (that is, the name entered when the machine was
 registered), or *#f* if the name is unavailable.
 
@@ -882,7 +882,7 @@ An instance of *false-or(<string>)*.
 Description
            
 
-Returns as an instance of *<string>* the organization to which the user
+Returns as an instance of ``<string>`` the organization to which the user
 who owns the current machine belongs, or *#f* if the name is
 unavailable.
 
@@ -955,19 +955,19 @@ run-application *command* #key *minimize?* *activate?*
 Arguments
          
 
-*command* An instance of *<string>*.
+*command* An instance of ``<string>``.
                                      
 
-*minimize?* An instance of *<boolean>*.
+*minimize?* An instance of ``<boolean>``.
                                         
 
-*activate?* An instance of *<boolean>*.
+*activate?* An instance of ``<boolean>``.
                                         
 
 ** Values
          
 
-*status* An instance of *<integer>*.
+*status* An instance of ``<integer>``.
                                      
 
 Description
@@ -1018,16 +1018,16 @@ tokenize-command-string *line* => *command* #rest *arguments*
 Arguments
          
 
-*line* An instance of *<byte-string>*.
+*line* An instance of ``<byte-string>``.
                                        
 
 Values
       
 
-*command* An instance of *<byte-string>*.
+*command* An instance of ``<byte-string>``.
                                           
 
-*arguments* Instances of *<byte-string>*.
+*arguments* Instances of ``<byte-string>``.
                                           
 
 Description
