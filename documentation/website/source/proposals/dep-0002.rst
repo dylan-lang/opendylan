@@ -1,10 +1,23 @@
-PROPOSAL NAME: Define Function
+==============  =============================================
+DEP #:          2
+Title:          Define Function
+Type:           Standards Track
+Author:         Bill Chiles
+Status:         Accepted
+Created:        26-Jan-1996
+Post-History:   None
+==============  =============================================
 
-PROPOSAL:
+*Note: This DEP was converted from the old Dylan Change Proposal
+Format to DEP format with minimal changes for ReStructuredText.  It
+does not fully conform to the new format.*
+
+Specification
+=============
 
    Add a "define function" defining macro that creates a constant
    binding in the current module and initializes it to a new function.
-   The new defining macro has the following syntax:
+   The new defining macro has the following syntax::
 
       DEFINE { adjective }* FUNCTION name parameter-list
         [ body ] 
@@ -18,33 +31,36 @@ PROPOSAL:
 
    Using reflective operations on "define function" functions:
 
-      1] For the following functions an implementation may choose to 
-	 return a meaningful result (or perform a meaningful side-effect
-	 operation), or the implementation may signal an error:
-	    generic-function-methods, add-method, find-method, 
-	    generic-function-mandatory-keywords, remove-method, 
-	    sorted-applicable-methods, applicable-method?
+      (1) For the following functions an implementation may choose to 
+          return a meaningful result (or perform a meaningful side-effect
+          operation), or the implementation may signal an error::
 
-	 Note, the error signalled might not be a <sealed-object-error>,
-	 and this implementation choice holds for a "define function"
-	 function that is passed as either argument to add-method and
-	 remove-method.
+            generic-function-methods, add-method, find-method, 
+            generic-function-mandatory-keywords, remove-method, 
+            sorted-applicable-methods, applicable-method?
 
-      2] The following functions return the same values as they would 
-	 for a bare method defined with the same signature:
-	    function-specializers, function-arguments, 
+          Note, the error signalled might not be a <sealed-object-error>,
+          and this implementation choice holds for a "define function"
+          function that is passed as either argument to add-method and
+          remove-method.
+
+      (2) The following functions return the same values as they would 
+          for a bare method defined with the same signature::
+
+            function-specializers, function-arguments, 
             function-return-values 
 
    "Define function" could be added either to the core language or to a
    library.
 
-RATIONALE:
+Rationale
+=========
 
    Many programmers desire a way to define a function that clearly
    says to other programmers that the function is not part of any
    generic operation; furthermore, the function won't be extended as a
    generic function, and calling it need not involve any generic
-   dispatch.  The two main choices in current practice are:
+   dispatch.  The two main choices in current practice are::
 
      define constant cube = method (x) x * x * x end;
 
@@ -62,15 +78,16 @@ RATIONALE:
    on "define function" functions based on new wording that describes
    applicable-method? in the DRM.
 
-EXAMPLES:
+Examples
+========
 
-   An example use:
+   An example use::
 
      define function cube (x) x * x * x end;
 
    Below is one possible implementation of the macro.  This implementation
    supports whatever adjectives are supported by "define constant".
-   Other implementations are possible.
+   Other implementations are possible.  ::
 
      define macro function-definer
          { define ?adjectives:* function ?name:name 
@@ -79,7 +96,8 @@ EXAMPLES:
               ?signature-and-body end }
      end macro function-definer;
 
-COST TO IMPLEMENTORS:
+Cost to Implementors
+====================
 
    The cost is very little, essentially a macro definition and exporting
    the identifier for the macro.  An implementation may also want to
@@ -89,7 +107,9 @@ COST TO IMPLEMENTORS:
    protecting compiler optimizations based on assumptions about the
    function.
 
-REVISION HISTORY:
+Revision History
+================
+::
 
    Version 1; Harlequin, Inc.; Bill Chiles; 26 JAN 96.
       Initial proposal with input from a few people.
@@ -112,6 +132,7 @@ REVISION HISTORY:
       of a variable named "next-method" around the body, which is counter to
       the specified contract for this macro.)
 
-STATUS:
+Status
+======
 
    Accepted 31 December 1996
