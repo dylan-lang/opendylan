@@ -303,7 +303,7 @@ Auxiliary Files
 ===============
 
 DEPs may include auxiliary files such as diagrams.  Such files must be
-named ``pep-XXXX-aaaa.ext``, where "XXXX" is the DEP number, "aaaa" is
+named ``dep-XXXX-aaaa.ext``, where "XXXX" is the DEP number, "aaaa" is
 arbitrary text to indicate the file content (e.g., "state-diagram"),
 and "ext" is replaced by the actual file extension (e.g. "png").
 
