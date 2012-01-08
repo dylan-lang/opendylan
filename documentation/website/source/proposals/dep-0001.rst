@@ -1,212 +1,190 @@
-PEP: 1
-Title: PEP Purpose and Guidelines
-Version: $Revision$
-Last-Modified: $Date$
-Author: Barry Warsaw, Jeremy Hylton, David Goodger
-Status: Active
-Type: Process
-Content-Type: text/x-rst
-Created: 13-Jun-2000
-Post-History: 21-Mar-2001, 29-Jul-2002, 03-May-2003
+==============  =============================================
+DEP #:          1
+Title:          DEP Purpose and Guidelines
+Type:           Process
+Author:         Carl Gay
+Status:         Draft
+Created:        07-Jan-2011
+Post-History:   None
+==============  =============================================
 
 
-What is a PEP?
+Preamble
+========
+
+This document is based heavily on Python PEP 1, "PEP Purpose and
+Guidelines", by Barry Warsaw, Jeremy Hylton, and David Goodger.  The
+author would like to thank them for providing an excellent base for
+the Dylan team to work from.
+
+
+What is a DEP?
 ==============
 
-PEP stands for Python Enhancement Proposal.  A PEP is a design
-document providing information to the Python community, or describing
-a new feature for Python or its processes or environment.  The PEP
+DEP stands for Dylan Enhancement Proposal.  A DEP is a design
+document providing information to the Dylan community, or describing
+a new feature for Dylan or its processes or environment.  The DEP
 should provide a concise technical specification of the feature and a
 rationale for the feature.
 
-We intend PEPs to be the primary mechanisms for proposing new
+We intend DEPs to be the primary mechanisms for proposing new
 features, for collecting community input on an issue, and for
-documenting the design decisions that have gone into Python.  The PEP
+documenting the design decisions that have gone into Dylan.  The DEP
 author is responsible for building consensus within the community and
 documenting dissenting opinions.
 
-Because the PEPs are maintained as text files in a versioned
+Because the DEPs are maintained as text files in a versioned
 repository, their revision history is the historical record of the
 feature proposal [1]_.
 
 
-PEP Types
+DEP Types
 =========
 
-There are three kinds of PEP:
+There are three kinds of DEP:
 
-1. A **Standards Track** PEP describes a new feature or implementation
-   for Python.
+1. A **Standards Track** DEP describes a new feature or implementation
+   for Dylan.
 
-2. An **Informational** PEP describes a Python design issue, or
-   provides general guidelines or information to the Python community,
-   but does not propose a new feature.  Informational PEPs do not
-   necessarily represent a Python community consensus or
+2. An **Informational** DEP describes a Dylan design issue, or
+   provides general guidelines or information to the Dylan community,
+   but does not propose a new feature.  Informational DEPs do not
+   necessarily represent a Dylan community consensus or
    recommendation, so users and implementors are free to ignore
-   Informational PEPs or follow their advice.
+   Informational DEPs or follow their advice.
 
-3. A **Process** PEP describes a process surrounding Python, or
-   proposes a change to (or an event in) a process.  Process PEPs are
-   like Standards Track PEPs but apply to areas other than the Python
+3. A **Process** DEP describes a process surrounding Dylan, or
+   proposes a change to (or an event in) a process.  Process DEPs are
+   like Standards Track DEPs but apply to areas other than the Dylan
    language itself.  They may propose an implementation, but not to
-   Python's codebase; they often require community consensus; unlike
-   Informational PEPs, they are more than recommendations, and users
+   Dylan's codebase; they often require community consensus; unlike
+   Informational DEPs, they are more than recommendations, and users
    are typically not free to ignore them.  Examples include
    procedures, guidelines, changes to the decision-making process, and
-   changes to the tools or environment used in Python development.
-   Any meta-PEP is also considered a Process PEP.
+   changes to the tools or environment used in Dylan development.
+   Any meta-DEP is also considered a Process DEP.
 
 
-PEP Work Flow
+DEP Work Flow
 =============
 
-The PEP editors assign PEP numbers and change their status.  Please send
-all PEP-related email to <peps@python.org> (no cross-posting please).
-Also see `PEP Editor Responsibilities & Workflow`_ below.
+The DEP process begins with a new idea for Dylan.  It is highly
+recommended that a single DEP contain a single key proposal or new
+idea. Small enhancements or patches often don't need a DEP and can be
+injected into the Dylan development work flow with a patch submission
+to the issue tracker for the appropriate repository on GitHub. The
+more focussed the DEP, the more successful it tends to be.  If in
+doubt, split your DEP into several well-focussed ones.
 
-The PEP process begins with a new idea for Python.  It is highly
-recommended that a single PEP contain a single key proposal or new
-idea. Small enhancements or patches often don't need
-a PEP and can be injected into the Python development work flow with a
-patch submission to the Python `issue tracker`_. The more focussed the
-PEP, the more successful it tends to be.  The PEP editor reserves the
-right to reject PEP proposals if they appear too unfocussed or too
-broad.  If in doubt, split your PEP into several well-focussed ones.
-
-Each PEP must have a champion -- someone who writes the PEP using the
+Each DEP must have a champion -- someone who writes the DEP using the
 style and format described below, shepherds the discussions in the
 appropriate forums, and attempts to build community consensus around
-the idea.  The PEP champion (a.k.a. Author) should first attempt to
-ascertain whether the idea is PEP-able.  Posting to the
-comp.lang.python newsgroup (a.k.a. python-list@python.org mailing
-list) or the python-ideas mailing list is the best way to go about this.
+the idea.  The DEP champion (a.k.a. Author) should first attempt to
+ascertain whether the idea is DEP-able.  Posting to
+hackers@opendylan.org is the best way to go about this.
 
-Vetting an idea publicly before going as far as writing a PEP is meant
-to save the potential author time. Many ideas have been brought
-forward for changing Python that have been rejected for various
-reasons. Asking the Python community first if an idea is original
+Vetting an idea publicly before going as far as writing a DEP is meant
+to save the potential author time.  Many ideas have been brought
+forward for changing Dylan that have been rejected for various
+reasons. Asking the Dylan community first if an idea is original
 helps prevent too much time being spent on something that is
 guaranteed to be rejected based on prior discussions (searching
 the internet does not always do the trick). It also helps to make sure
 the idea is applicable to the entire community and not just the author.
 Just because an idea sounds good to the author does not
-mean it will work for most people in most areas where Python is used.
+mean it will work for most people in most areas where Dylan is used.
 
-Once the champion has asked the Python community as to whether an
-idea has any chance of acceptance, a draft PEP should be presented to
-python-ideas.  This gives the author a chance to flesh out the draft
-PEP to make properly formatted, of high quality, and to address
-initial concerns about the proposal.
+Once the champion has asked the Dylan community whether an idea has
+any chance of acceptance, a properly formatted draft DEP should be
+presented to hackers@opendylan.org.  The initial DEP status should be
+"Draft".  The DEP author should assign the next available DEP number
+to the DEP by looking at the `DEP directory <index.html>`_ to find the
+highest used number.  The DEP number is not assured until the DEP has
+been committed to the `origin Git repository
+<https://github.com/dylan-lang/website/tree/master/source/proposals>`_.
+As updates are necessary, the DEP author may commit new versions.
 
-Following a discussion on python-ideas, the proposal should be sent to
-the `python-dev list <mailto:python-dev@python.org>`__ with the draft
-PEP and the PEP editors <peps@python.org>.  This
-draft must be written in PEP style as described below, else it will be
-sent back without further regard until proper formatting rules are
-followed.
+Because Dylan does not have a Benevolent Dictator for Life (as Python
+has in Guido van Rossum) we rely on reaching consensus on the hackers
+mailing list.  Consensus _must_ be reached for the DEP to be approved.
+Exactly what "consensus" means here is left undefined, as we expect
+most cases to be obvious and we wish to keep the process informal for
+now.  At such time as this becomes a problem we may implement a more
+formal scheme (e.g., voting).
 
-If the PEP editor approves, he will assign the PEP a number, label it
-as Standards Track, Informational, or Process, give it status "Draft",
-and create and check-in the initial draft of the PEP.  The PEP editor
-will not unreasonably deny a PEP.  Reasons for denying PEP status
-include duplication of effort, being technically unsound, not
-providing proper motivation or addressing backwards compatibility, or
-not in keeping with the Python philosophy.  The BDFL (Benevolent
-Dictator for Life, Guido van Rossum) can be consulted during the
-approval phase, and is the final arbiter of the draft's PEP-ability.
-
-As updates are necessary, the PEP author can check in new versions if
-they have SVN commit permissions, or can email new PEP versions to
-the PEP editor for committing.
-
-Standards Track PEPs consist of two parts, a design document and a
-reference implementation.  The PEP should be reviewed and accepted
+Standards Track DEPs consist of two parts, a design document and a
+reference implementation.  The DEP should be reviewed and accepted
 before a reference implementation is begun, unless a reference
-implementation will aid people in studying the PEP.  Standards Track
-PEPs must include an implementation -- in the form of code, a patch,
+implementation will aid people in studying the DEP.  Standards Track
+DEPs must include an implementation -- in the form of code, a patch,
 or a URL to same -- before it can be considered Final.
 
-PEP authors are responsible for collecting community feedback on a PEP
+DEP authors are responsible for collecting community feedback on a DEP
 before submitting it for review. However, wherever possible, long
 open-ended discussions on public mailing lists should be avoided.
-Strategies to keep the
-discussions efficient include: setting up a separate SIG mailing list
-for the topic, having the PEP author accept private comments in the
-early design phases, setting up a wiki page, etc.  PEP authors should
-use their discretion here.
+Strategies to keep the discussions efficient include: setting up a
+separate SIG mailing list for the topic, having the DEP author accept
+private comments in the early design phases, setting up a wiki page,
+etc.  DEP authors should use their discretion here.
 
-Once the authors have completed a PEP, they must inform the PEP editor
-that it is ready for review.  PEPs are reviewed by the BDFL and his
-chosen consultants, who may accept or reject a PEP or send it back to
-the author(s) for revision.  For a PEP that is pre-determined to be
-acceptable (e.g., it is an obvious win as-is and/or its implementation
-has already been checked in) the BDFL may also initiate a PEP review,
-first notifying the PEP author(s) and giving them a chance to make
-revisions.
-
-For a PEP to be accepted it must meet certain minimum criteria.  It
+For a DEP to be accepted it must meet certain minimum criteria.  It
 must be a clear and complete description of the proposed enhancement.
 The enhancement must represent a net improvement.  The proposed
-implementation, if applicable, must be solid and must not complicate
-the interpreter unduly.  Finally, a proposed enhancement must be
-"pythonic" in order to be accepted by the BDFL.  (However, "pythonic"
-is an imprecise term; it may be defined as whatever is acceptable to
-the BDFL.  This logic is intentionally circular.)  See PEP 2 [2]_ for
-standard library module acceptance criteria.
+implementation, if applicable, must be solid and must not unduly add
+complication.
 
-Once a PEP has been accepted, the reference implementation must be
+Once a DEP has been accepted, the reference implementation must be
 completed.  When the reference implementation is complete and accepted
-by the BDFL, the status will be changed to "Final".
+by the community, the status may be changed to "Final".
 
-A PEP can also be assigned status "Deferred".  The PEP author or
-editor can assign the PEP this status when no progress is being made
-on the PEP.  Once a PEP is deferred, the PEP editor can re-assign it
+A DEP can also be assigned status "Deferred".  The DEP author or
+editor can assign the DEP this status when no progress is being made
+on the DEP.  Once a DEP is deferred, the DEP editor can re-assign it
 to draft status.
 
-A PEP can also be "Rejected".  Perhaps after all is said and done it
+A DEP can also be "Rejected".  Perhaps after all is said and done it
 was not a good idea.  It is still important to have a record of this
 fact.
 
-PEPs can also be superseded by a different PEP, rendering the original
-obsolete.  This is intended for Informational PEPs, where version 2 of
+DEPs can also be superseded by a different DEP, rendering the original
+obsolete.  This is intended for Informational DEPs, where version 2 of
 an API can replace version 1.
 
-The possible paths of the status of PEPs are as follows:
+The possible paths of the status of DEPs are as follows:
 
-.. image:: pep-0001-1.png
+.. image:: ../_static/dep-0001-states.png
 
-Some Informational and Process PEPs may also have a status of "Active"
-if they are never meant to be completed.  E.g. PEP 1 (this PEP).
+Some Informational and Process DEPs may also have a status of "Active"
+if they are never meant to be completed.  E.g. DEP 1 (this DEP).
 
 
-What belongs in a successful PEP?
+What belongs in a successful DEP?
 =================================
 
-Each PEP should have the following parts:
+Each DEP should have the following parts:
 
 1. Preamble -- RFC 822 style headers containing meta-data about the
-   PEP, including the PEP number, a short descriptive title (limited
+   DEP, including the DEP number, a short descriptive title (limited
    to a maximum of 44 characters), the names, and optionally the
    contact info for each author, etc.
 
 2. Abstract -- a short (~200 word) description of the technical issue
    being addressed.
 
-3. Copyright/public domain -- Each PEP must either be explicitly
-   labelled as placed in the public domain (see this PEP as an
+3. Copyright/public domain -- Each DEP must either be explicitly
+   labelled as placed in the public domain (see this DEP as an
    example) or licensed under the `Open Publication License`_.
 
 4. Specification -- The technical specification should describe the
    syntax and semantics of any new language feature.  The
    specification should be detailed enough to allow competing,
-   interoperable implementations for any of the current Python
-   platforms (CPython, Jython, Python .NET).
+   interoperable implementations for any of the current Dylan
+   platforms.
 
-5. Motivation -- The motivation is critical for PEPs that want to
-   change the Python language.  It should clearly explain why the
+5. Motivation -- The motivation is critical for DEPs that want to
+   change the Dylan language.  It should clearly explain why the
    existing language specification is inadequate to address the
-   problem that the PEP solves.  PEP submissions without sufficient
-   motivation may be rejected outright.
+   problem that the DEP solves.
 
 6. Rationale -- The rationale fleshes out the specification by
    describing what motivated the design and why particular design
@@ -218,72 +196,68 @@ Each PEP should have the following parts:
    community and discuss important objections or concerns raised
    during discussion.
 
-7. Backwards Compatibility -- All PEPs that introduce backwards
+7. Backwards Compatibility -- All DEPs that introduce backwards
    incompatibilities must include a section describing these
-   incompatibilities and their severity.  The PEP must explain how the
-   author proposes to deal with these incompatibilities.  PEP
-   submissions without a sufficient backwards compatibility treatise
-   may be rejected outright.
+   incompatibilities and their severity.  The DEP must explain how the
+   author proposes to deal with these incompatibilities.
 
 8. Reference Implementation -- The reference implementation must be
-   completed before any PEP is given status "Final", but it need not
-   be completed before the PEP is accepted.  It is better to finish
+   completed before any DEP is given status "Final", but it need not
+   be completed before the DEP is accepted.  It is better to finish
    the specification and rationale first and reach consensus on it
    before writing code.
 
-   The final implementation must include test code and documentation
-   appropriate for either the Python language reference or the
-   standard library reference.
+   The final implementation must include good test code and
+   documentation.
 
 
-PEP Formats and Templates
-=========================
+DEP Format and Templates
+========================
 
-There are two PEP formats available to authors: plaintext and
-reStructuredText_.  Both are UTF-8-encoded text files.
+DEPs must be written in ReStructuredText_ format.  This allows for
+rich markup that is still quite easy to read, but results in much
+better-looking and more functional HTML.
 
-Plaintext PEPs are written with minimal structural markup that adheres
-to a rigid style.  PEP 9 contains a instructions and a template [3]_
-you can use to get started writing your plaintext PEP.
+.. DEP 12 contains instructions and a template [4]_ for
+   reStructuredText DEPs.
 
-ReStructuredText_ PEPs allow for rich markup that is still quite easy
-to read, but results in much better-looking and more functional HTML.
-PEP 12 contains instructions and a template [4]_ for reStructuredText
-PEPs.
+The DEP author must verify that the ReStructuredText_ parses correctly.
+For example::
 
-There is a Python script that converts both styles of PEPs to HTML for
-viewing on the web [5]_.  Parsing and conversion of plaintext PEPs is
-self-contained within the script.  reStructuredText PEPs are parsed
-and converted by Docutils_ code called from the script.
+    git clone git@github.com:dylan-lang/website.git
+    cd website
+    cp your-dep.rst source/proposals/dep-1234.rst
+    make html
+
+Fix any errors that are displayed.
 
 
-PEP Header Preamble
+DEP Header Preamble
 ===================
 
-Each PEP must begin with an RFC 822 style header preamble.  The headers
-must appear in the following order.  Headers marked with "*" are
-optional and are described below.  All other headers are required. ::
+Each DEP must begin with an RFC 822 style header preamble in simple
+RST table format.  The headers must appear in the following order.
+Headers marked with "*" are optional and are described below.  All
+other headers are required. ::
 
-    PEP: <pep number>
-    Title: <pep title>
-    Version: <svn version string>
-    Last-Modified: <svn date string>
+    DEP: <DEP number>
+    Title: <DEP title>
+    Version: <git revision string>
+    Last-Modified: <git date string>
     Author: <list of authors' real names and optionally, email addrs>
-  * Discussions-To: <email address>
     Status: <Draft | Active | Accepted | Deferred | Rejected |
              Withdrawn | Final | Superseded>
     Type: <Standards Track | Informational | Process>
-  * Content-Type: <text/plain | text/x-rst>
-  * Requires: <pep numbers>
+  * Requires: <DEP numbers>
     Created: <date created on, in dd-mmm-yyyy format>
-  * Python-Version: <version number>
-    Post-History: <dates of postings to python-list and python-dev>
-  * Replaces: <pep number>
-  * Superseded-By: <pep number>
+  * Dylan-Version: <version number>
+    Post-History: <dates of postings to hackers list>
+  * Replaces: <DEP number>
+  * Superseded-By: <DEP number>
   * Resolution: <url>
 
 The Author header lists the names, and optionally the email addresses
-of all the authors/owners of the PEP.  The format of the Author header
+of all the authors/owners of the DEP.  The format of the Author header
 value must be
 
     Random J. User <address@dom.ain>
@@ -292,225 +266,144 @@ if the email address is included, and just
 
     Random J. User
 
-if the address is not given.  For historical reasons the format
-"address@dom.ain (Random J. User)" may appear in a PEP, however new
-PEPs must use the mandated format above, and it is acceptable to
-change to this format when PEPs are updated.
+if the address is not given.
 
 If there are multiple authors, each should be on a separate line
-following RFC 2822 continuation line conventions.  Note that personal
-email addresses in PEPs will be obscured as a defense against spam
-harvesters.
+following RFC 2822 continuation line conventions.
 
-*Note: The Resolution header is required for Standards Track PEPs
+.. Not yet: Note that personal email addresses in DEPs will be
+   obscured as a defense against spam harvesters.
+
+*Note: The Resolution header is required for Standards Track DEPs
 only.  It contains a URL that should point to an email message or
-other web resource where the pronouncement about the PEP is made.*
+other web resource where the pronouncement about the DEP is made.*
 
-While a PEP is in private discussions (usually during the initial
-Draft phase), a Discussions-To header will indicate the mailing list
-or URL where the PEP is being discussed.  No Discussions-To header is
-necessary if the PEP is being discussed privately with the author, or
-on the python-list or python-dev email mailing lists.  Note that email
-addresses in the Discussions-To header will not be obscured.
-
-The Type header specifies the type of PEP: Standards Track,
+The Type header specifies the type of DEP: Standards Track,
 Informational, or Process.
 
-The format of a PEP is specified with a Content-Type header.  The
-acceptable values are "text/plain" for plaintext PEPs (see PEP 9 [3]_)
-and "text/x-rst" for reStructuredText PEPs (see PEP 12 [4]_).
-Plaintext ("text/plain") is the default if no Content-Type header is
-present.
-
-The Created header records the date that the PEP was assigned a
+The Created header records the date that the DEP was assigned a
 number, while Post-History is used to record the dates of when new
-versions of the PEP are posted to python-list and/or python-dev.  Both
+versions of the DEP are posted to the hackers list.  Both
 headers should be in dd-mmm-yyyy format, e.g. 14-Aug-2001.
 
-Standards Track PEPs must have a Python-Version header which indicates
-the version of Python that the feature will be released with.
-Informational and Process PEPs do not need a Python-Version header.
+Standards Track DEPs must have a Dylan-Version header which indicates
+the version of Dylan that the feature will be released with.
+Informational and Process DEPs do not need a Dylan-Version header.
 
-PEPs may have a Requires header, indicating the PEP numbers that this
-PEP depends on.
+DEPs may have a Requires header, indicating the DEP numbers that this
+DEP depends on.
 
-PEPs may also have a Superseded-By header indicating that a PEP has
+DEPs may also have a Superseded-By header indicating that a DEP has
 been rendered obsolete by a later document; the value is the number of
-the PEP that replaces the current document.  The newer PEP must have a
-Replaces header containing the number of the PEP that it rendered
+the DEP that replaces the current document.  The newer DEP must have a
+Replaces header containing the number of the DEP that it rendered
 obsolete.
 
 
 Auxiliary Files
 ===============
 
-PEPs may include auxiliary files such as diagrams.  Such files must be
-named ``pep-XXXX-Y.ext``, where "XXXX" is the PEP number, "Y" is a
-serial number (starting at 1), and "ext" is replaced by the actual
-file extension (e.g. "png").
+DEPs may include auxiliary files such as diagrams.  Such files must be
+named ``pep-XXXX-aaaa.ext``, where "XXXX" is the DEP number, "aaaa" is
+arbitrary text to indicate the file content (e.g., "state-diagram"),
+and "ext" is replaced by the actual file extension (e.g. "png").
 
 
-Reporting PEP Bugs, or Submitting PEP Updates
+Reporting DEP Bugs, or Submitting DEP Updates
 =============================================
 
-How you report a bug, or submit a PEP update depends on several
-factors, such as the maturity of the PEP, the preferences of the PEP
+How you report a bug, or submit a DEP update depends on several
+factors, such as the maturity of the DEP, the preferences of the DEP
 author, and the nature of your comments.  For the early draft stages
-of the PEP, it's probably best to send your comments and changes
-directly to the PEP author.  For more mature, or finished PEPs you may
-want to submit corrections to the Python `issue tracker`_ so that your
-changes don't get lost.  If the PEP author is a Python developer, assign the
-bug/patch to him, otherwise assign it to the PEP editor.
+of the DEP, it's probably best to send your comments and changes
+directly to the DEP author.  For more mature, or finished DEPs you may
+want to submit corrections to the Dylan `issue tracker`_ so that your
+changes don't get lost.  Assign the bug/patch to the DEP author.
 
 When in doubt about where to send your changes, please check first
-with the PEP author and/or PEP editor.
+with the DEP author.
 
-PEP authors who are also Python committers can update the
-PEPs themselves by using "svn commit" to commit their changes.
-
-
-Transferring PEP Ownership
-==========================
-
-It occasionally becomes necessary to transfer ownership of PEPs to a
-new champion.  In general, we'd like to retain the original author as
-a co-author of the transferred PEP, but that's really up to the
-original author.  A good reason to transfer ownership is because the
-original author no longer has the time or interest in updating it or
-following through with the PEP process, or has fallen off the face of
-the 'net (i.e. is unreachable or not responding to email).  A bad
-reason to transfer ownership is because you don't agree with the
-direction of the PEP.  We try to build consensus around a PEP, but if
-that's not possible, you can always submit a competing PEP.
-
-If you are interested in assuming ownership of a PEP, send a message
-asking to take over, addressed to both the original author and the PEP
-editor <peps@python.org>.  If the original author doesn't respond to
-email in a timely manner, the PEP editor will make a unilateral
-decision (it's not like such decisions can't be reversed :).
+DEP authors who are also Dylan committers can update the DEPs
+themselves committing them to Git and pushing to the main repository.
 
 
-PEP Editor Responsibilities & Workflow
+DEP Author Responsibilities & Workflow
 ======================================
 
-A PEP editor must subscribe to the <peps@python.org> list.  All
-PEP-related correspondence should be sent (or CC'd) to
-<peps@python.org> (but please do not cross-post!).
+A DEP author must subscribe to the <hackers@opendylan.org> list.
+Before submitting a (new revision of a DEP) the author must do the
+following:
 
-For each new PEP that comes in an editor does the following:
-
-* Read the PEP to check if it is ready: sound and complete.  The ideas
+* Read the DEP to check if it is ready: sound and complete.  The ideas
   must make technical sense, even if they don't seem likely to be
   accepted.
 
 * The title should accurately describe the content.
 
-* Edit the PEP for language (spelling, grammar, sentence structure,
-  etc.), markup (for reST PEPs), code style (examples should match PEP
-  8 & 7).
+* Edit the DEP for language (spelling, grammar, sentence structure,
+  etc.), markup, and code style.
 
-If the PEP isn't ready, the editor will send it back to the author for
-revision, with specific instructions.
+Once the DEP is ready for the repository, the DEP author will:
 
-Once the PEP is ready for the repository, the PEP editor will:
+* Assign the next available DEP number.
 
-* Assign a PEP number (almost always just the next available number,
-  but sometimes it's a special/joke number, like 666 or 3141).
+* List the DEP in the DEP index (in two places: the categorized list,
+  and the numeric list).
 
-* List the PEP in PEP 0 (in two places: the categorized list, and the
-  numeric list).
+* Add the DEP to Git.  All DEPs live in `the website repository
+  <https://github.com/dylan-lang/website>`_.  The command to check
+  it out is::
 
-* Add the PEP to SVN.  For Subversion repository instructions, see
-  `the FAQ for Developers
-  <http://www.python.org/dev/faq/#how-do-i-get-a-checkout-of-the-repository-read-only-and-read-write>`_.
+    git clone git@github.com:dylan-lang/website.git
 
-  The command to check out a read-only copy of the repository is::
+  Commit your changes, push them to your fork of the repository and
+  submit a pull request.
 
-      svn checkout http://svn.python.org/projects/peps/trunk peps
-
-  The command to check out a read-write copy of the repository is::
-
-      svn checkout svn+ssh://pythondev@svn.python.org/peps/trunk peps
-
-  In particular, the ``svn:eol-style`` property should be set to ``native``
-  and the ``svn:keywords`` property to ``Author Date Id Revision``.
-
-* Monitor python.org to make sure the PEP gets added to the site
+* Monitor opendylan.org to make sure the DEP gets added to the site
   properly.
-
-* Send email back to the PEP author with next steps (post to
-  python-list & -dev).
-
-Updates to existing PEPs also come in to peps@python.org.  Many PEP
-authors are not SVN committers yet, so we do the commits for them.
-
-Many PEPs are written and maintained by developers with write access
-to the Python codebase.  The PEP editors monitor the python-checkins
-list for PEP changes, and correct any structure, grammar, spelling, or
-markup mistakes we see.
-
-The editors don't pass judgement on PEPs.  We merely do the
-administrative & editorial part.  Except for times like this, there's
-relatively low volume.
 
 Resources:
 
-* `How Python is Developed <http://www.python.org/dev/intro/>`_
+* See the section `For Open Dylan Developers
+  <http://opendylan.org/documentation/index.html>`_ on the opendylan.org
+  documentation page.
 
-* `Python's Development Process <http://www.python.org/dev/process/>`_
+.. It would be nice to have equivalents for some of these:
 
-* `Why Develop Python? <http://www.python.org/dev/why/>`_
+    * `How Dylan is Developed <http://www.python.org/dev/intro/>`_
 
-* `Development Tools <http://www.python.org/dev/tools/>`_
+    * `Dylan's Development Process <http://www.python.org/dev/process/>`_
 
-* `Frequently Asked Questions for Developers
-  <http://www.python.org/dev/faq/>`_
+    * `Why Develop Dylan? <http://www.python.org/dev/why/>`_
+
+    * `Development Tools <http://www.python.org/dev/tools/>`_
+
+    * `Frequently Asked Questions for Developers
+      <http://www.python.org/dev/faq/>`_
 
 
 References and Footnotes
 ========================
 
-.. [1] This historical record is available by the normal SVN commands
+.. [1] This historical record is available by the normal Git commands
    for retrieving older revisions.  For those without direct access to
-   the SVN tree, you can browse the current and past PEP revisions here:
-   http://svn.python.org/view/peps/trunk/
+   Git, you can browse the current and past DEP revisions here:
+   https://github.com/dylan-lang/website/tree/master/source/proposals
 
-.. [2] PEP 2, Procedure for Adding New Modules, Faassen
-   (http://www.python.org/dev/peps/pep-0002)
-
-.. [3] PEP 9, Sample Plaintext PEP Template, Warsaw
-   (http://www.python.org/dev/peps/pep-0009)
-
-.. [4] PEP 12, Sample reStructuredText PEP Template, Goodger, Warsaw
-   (http://www.python.org/dev/peps/pep-0012)
-
-.. [5] The script referred to here is pep2pyramid.py, the successor to
-   pep2html.py, both of which live in the same directory in the SVN
-   tree as the PEPs themselves.  Try ``pep2html.py --help`` for
-   details.  The URL for viewing PEPs on the web is
-   http://www.python.org/dev/peps/.
-
-.. _issue tracker:
-   http://bugs.python.org/
+.. [2] Which issue tracker to use will depend on the content of the
+   DEP.  For language changes, changes to Open Dylan, or changes to
+   "core" libraries it will usually be `opendylan
+   <https://github.com/dylan-lang/opendylan/issues>`_.  For other
+   libraries there may be a separate repository and issue tracker.
+   This is still in flux.  When in doubt, ask in IRC on the #dylan
+   channel or on the hackers list.
 
 .. _Open Publication License: http://www.opencontent.org/openpub/
 
 .. _reStructuredText: http://docutils.sourceforge.net/rst.html
-
-.. _Docutils: http://docutils.sourceforge.net/
 
 
 Copyright
 =========
 
 This document has been placed in the public domain.
-
-
-..
-   Local Variables:
-   mode: indented-text
-   indent-tabs-mode: nil
-   sentence-end-double-space: t
-   fill-column: 70
-   coding: utf-8
-   End:
