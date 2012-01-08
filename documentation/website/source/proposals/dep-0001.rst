@@ -104,13 +104,12 @@ been committed to the `origin Git repository
 <https://github.com/dylan-lang/website/tree/master/source/proposals>`_.
 As updates are necessary, the DEP author may commit new versions.
 
-Because Dylan does not have a Benevolent Dictator for Life (as Python
-has in Guido van Rossum) we rely on reaching consensus on the hackers
-mailing list.  Consensus _must_ be reached for the DEP to be approved.
-Exactly what "consensus" means here is left undefined, as we expect
-most cases to be obvious and we wish to keep the process informal for
-now.  At such time as this becomes a problem we may implement a more
-formal scheme (e.g., voting).
+We rely on reaching consensus on the hackers mailing list.  Consensus
+_must_ be reached for the DEP to be approved.  Exactly what
+"consensus" means here is left undefined, as we expect most cases to
+be obvious and we wish to keep the process informal for now.  At such
+time as this becomes a problem we may implement a more formal scheme
+(e.g., voting).
 
 Standards Track DEPs consist of two parts, a design document and a
 reference implementation.  The DEP should be reviewed and accepted
