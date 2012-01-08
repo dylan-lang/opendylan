@@ -5,16 +5,17 @@ Dylan Enhancement Proposals
 .. contents::
 
 
-Active Proposals
-================
+Draft Proposals
+===============
 
-#. `Better string manipulation for common-dylan <better-strings.html>`_
+#. `DEP Purpose and Guidelines <dep-0001.html>`_
+#. `New strings Library <dep-0003.html>`_
 
 
 Accepted Proposals
 ==================
 
-There are no accepted proposals.
+#. `define function <dep-0002.html>`_
 
 
 Declined Proposals
