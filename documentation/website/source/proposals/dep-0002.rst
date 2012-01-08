@@ -1,0 +1,138 @@
+==============  =============================================
+DEP #:          2
+Title:          Define Function
+Type:           Standards Track
+Author:         Bill Chiles
+Status:         Accepted
+Created:        26-Jan-1996
+Post-History:   None
+==============  =============================================
+
+*Note: This DEP was converted from the old Dylan Change Proposal
+Format to DEP format with minimal changes for ReStructuredText.  It
+does not fully conform to the new format.*
+
+Specification
+=============
+
+   Add a "define function" defining macro that creates a constant
+   binding in the current module and initializes it to a new function.
+   The new defining macro has the following syntax::
+
+      DEFINE { adjective }* FUNCTION name parameter-list
+        [ body ] 
+      END [ FUNCTION ] [ name ]
+
+   The adjectives allowed are implementation dependent.  The parameter
+   list describes the number and types of the arguments that the
+   function accepts, and the number and types of the values it returns.
+   It is an error to supply #next in the parameter list, and there is
+   no implicit #next parameter.
+
+   Using reflective operations on "define function" functions:
+
+      (1) For the following functions an implementation may choose to 
+          return a meaningful result (or perform a meaningful side-effect
+          operation), or the implementation may signal an error::
+
+            generic-function-methods, add-method, find-method, 
+            generic-function-mandatory-keywords, remove-method, 
+            sorted-applicable-methods, applicable-method?
+
+          Note, the error signalled might not be a <sealed-object-error>,
+          and this implementation choice holds for a "define function"
+          function that is passed as either argument to add-method and
+          remove-method.
+
+      (2) The following functions return the same values as they would 
+          for a bare method defined with the same signature::
+
+            function-specializers, function-arguments, 
+            function-return-values 
+
+   "Define function" could be added either to the core language or to a
+   library.
+
+Rationale
+=========
+
+   Many programmers desire a way to define a function that clearly
+   says to other programmers that the function is not part of any
+   generic operation; furthermore, the function won't be extended as a
+   generic function, and calling it need not involve any generic
+   dispatch.  The two main choices in current practice are::
+
+     define constant cube = method (x) x * x * x end;
+
+     define method cube (x) x * x * x end;
+
+   The first choice is clumsy because it makes it hard to distinguish
+   function constants from non-function constants.  The second choice
+   does not make it clear that this is the only method for the
+   function.  The "define function" proposal gives everybody one
+   simple way to express their intent.  The expansion of the macro is
+   left unspecified so that Dylan implementations have latitude to
+   support it in the best way suited to the implementation.
+
+   This proposal defines the behavior of applicable-method? when called 
+   on "define function" functions based on new wording that describes
+   applicable-method? in the DRM.
+
+Examples
+========
+
+   An example use::
+
+     define function cube (x) x * x * x end;
+
+   Below is one possible implementation of the macro.  This implementation
+   supports whatever adjectives are supported by "define constant".
+   Other implementations are possible.  ::
+
+     define macro function-definer
+         { define ?adjectives:* function ?name:name 
+              ?signature-and-body:* end }
+         => { define ?adjectives constant ?name = method 
+              ?signature-and-body end }
+     end macro function-definer;
+
+Cost to Implementors
+====================
+
+   The cost is very little, essentially a macro definition and exporting
+   the identifier for the macro.  An implementation may also want to
+   annotate the function's name in the compiler's database to indicate
+   that the function should not be extended (or added to a generic
+   function if it is a method), signalling appropriate errors or
+   protecting compiler optimizations based on assumptions about the
+   function.
+
+Revision History
+================
+::
+
+   Version 1; Harlequin, Inc.; Bill Chiles; 26 JAN 96.
+      Initial proposal with input from a few people.
+   Version 2; Harlequin, Inc.; Bill Chiles; 01 FEB 96.
+      New specification of reflective operations on functions.
+      Replaces rationale text for the specification of reflective 
+         operations with one sentences about applicable-method?.
+      Strengthens #next restriction by saying there is no implicit 
+         #next argument.
+      Removes controversial macro example.
+   Version 3; Harlequin, Inc.; Bill Chiles; 08 FEB 96.
+      Described "define function" defining macro without reference to 
+         "define method".
+   Version 4; Harlequin, Inc.; Peter Norvig 13 MAR 96.
+      Changed format to meet the new Dylan Change Proposal Format.  
+      Added two possible macro implementations.
+   Version 5; Kim Barrett 31 Dec 1996
+      Removed incorrect example macro definition which used "define method"
+      in the expansion.  (Incorrect because it introduces an implicit binding
+      of a variable named "next-method" around the body, which is counter to
+      the specified contract for this macro.)
+
+Status
+======
+
+   Accepted 31 December 1996
