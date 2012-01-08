@@ -317,7 +317,7 @@ factors, such as the maturity of the DEP, the preferences of the DEP
 author, and the nature of your comments.  For the early draft stages
 of the DEP, it's probably best to send your comments and changes
 directly to the DEP author.  For more mature, or finished DEPs you may
-want to submit corrections to the Dylan `issue tracker`_ so that your
+want to submit corrections to the Dylan issue tracker [2]_ so that your
 changes don't get lost.  Assign the bug/patch to the DEP author.
 
 When in doubt about where to send your changes, please check first
