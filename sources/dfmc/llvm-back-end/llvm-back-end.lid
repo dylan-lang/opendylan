@@ -23,6 +23,7 @@ files:   llvm-back-end-library
 	 llvm-emit-code
 	 llvm-emit-debug
 	 llvm-emit-type-check
+	 llvm-emit-computation
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               Additional code is Copyright 2009-2010 Gwydion Dylan Maintainers
               All rights reserved.

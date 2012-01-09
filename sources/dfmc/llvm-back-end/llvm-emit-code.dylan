@@ -26,6 +26,26 @@ define method temporary-value-setter
   end if
 end method;
 
+define thread variable *merge-operands-table* :: false-or(<object-table>) = #f;
+
+define method merge-operands-setter
+    (operands :: <stretchy-vector>, temporary :: <temporary>)
+ => (operands :: <stretchy-vector>);
+  if (element(*merge-operands-table*, temporary, default: #f))
+    error("Merge operands for %s is already set", temporary)
+  else
+    *merge-operands-table*[temporary] := operands
+  end if
+end method;
+
+define method add-merge-operands
+    (temporary :: <temporary>, value :: <llvm-value>, bb :: <llvm-value>)
+ => ()
+  let operands = *merge-operands-table*[temporary];
+  add!(operands, value);
+  add!(operands, bb);
+end method;
+
 
 /// Code emission
 
@@ -77,7 +97,8 @@ define method emit-code
       // Emit the entry block
       ins--block(back-end, make(<llvm-basic-block>, name: "bb.entry"));
 
-      dynamic-bind (*temporary-value-table* = make(<object-table>))
+      dynamic-bind (*temporary-value-table* = make(<object-table>),
+                    *merge-operands-table* = make(<object-table>))
         // Add function arguments to the function's value table,
         // and to the temporary value mapping
         for (argument in arguments, param in parameters(o))
@@ -88,11 +109,28 @@ define method emit-code
         // Emit debug information for the function
         emit-lambda-dbg-function(back-end, o);
 
-        ins--ret(back-end, emit-reference(back-end, module, &false));
+        // Emit definitions for temporaries
+        let e :: <lambda-lexical-environment> = o.environment;
+        for (tmp in e.temporaries)
+          if (used?(tmp))
+            emit-local-definition(back-end, tmp);
+          end if;
+        end for;
+
+        // Emit the body of the function
+        emit-computations(back-end, module, o.body, #f);
       end dynamic-bind;
     cleanup
       back-end.llvm-builder-dbg := #f;
       back-end.llvm-builder-function := #f;
+    EXCEPTION (e :: <error>)    // FIXME
+      back-end.llvm-builder-basic-block := #f;
+      back-end.llvm-builder-function.llvm-function-basic-blocks.size := 0;
+      remove-all-keys!(back-end.llvm-builder-function.llvm-function-value-table);
+      ins--block(back-end, make(<llvm-basic-block>, name: "bb.entry"));
+      ins--ret(back-end, emit-reference(back-end, module, #x4300430));
+      format(*standard-output*, "emit %s: %s\n", function-name, e);
+      force-output(*standard-output*);
     end block;
 
     // Done with this DFM?
