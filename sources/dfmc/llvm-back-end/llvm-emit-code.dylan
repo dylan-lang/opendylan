@@ -92,7 +92,6 @@ define method emit-code
       end dynamic-bind;
     cleanup
       back-end.llvm-builder-dbg := #f;
-      back-end.llvm-back-end-dbg-function := #f;
       back-end.llvm-builder-function := #f;
     end block;
 

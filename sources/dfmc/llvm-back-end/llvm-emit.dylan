@@ -16,17 +16,15 @@ define method emit-all (back-end :: <llvm-back-end>,
                  name: compilation-record-name(cr),
                  target-triple: llvm-back-end-target-triple(back-end),
                  data-layout: llvm-back-end-data-layout(back-end));
-    llvm-register-types(back-end, m);
-    
+
     // Associate it with this compilation record
     block ()
       cr.compilation-record-back-end-data
         := back-end.llvm-builder-module
         := m;
 
-      // Initialize a new debugging compile record and make it current
-      back-end.llvm-back-end-dbg-compile-unit
-        := llvm-compilation-record-dbg-compile-unit(back-end, cr);
+      // Install type definitions
+      llvm-register-types(back-end, m);
 
       // Items to emit from this compilation record
       let heap = cr.compilation-record-model-heap;
@@ -56,8 +54,14 @@ define method emit-all (back-end :: <llvm-back-end>,
           emit-code(back-end, m, code.^iep, init?: #t);
         end for;
       end;
+
+      llvm-compilation-record-dbg-compile-unit(back-end, cr);
+
       retract-local-methods-in-heap(heap);
     cleanup
+      remove-all-keys!(back-end.%dbg-type-table);
+      remove-all-keys!(back-end.%source-record-dbg-file-table);
+      back-end.llvm-back-end-dbg-functions.size := 0;
       back-end.llvm-builder-module := #f;
     end block;
   end;

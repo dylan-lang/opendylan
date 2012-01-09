@@ -10,13 +10,16 @@ define constant $debug-producer = "Open Dylan 1.0";
 
 define method llvm-compilation-record-dbg-compile-unit
     (back-end :: <llvm-back-end>, cr :: <compilation-record>)
- => (compile-unit :: <llvm-metadata-value>);
+ => ();
   let sr = cr.compilation-record-source-record;
   let location = sr.source-record-location;
+  let functions = copy-sequence(back-end.llvm-back-end-dbg-functions);
   llvm-make-dbg-compile-unit($DW-LANG-Dylan,
                              location.locator-name,
                              location.locator-directory,
-                             $debug-producer)
+                             $debug-producer,
+                             functions: functions,
+                             module: back-end.llvm-builder-module);
 end method;
 
 define method llvm-source-record-dbg-file
@@ -26,7 +29,7 @@ define method llvm-source-record-dbg-file
     | begin
         let location = source-record-location(sr);
         back-end.%source-record-dbg-file-table[sr]
-          := llvm-make-dbg-file(back-end.llvm-back-end-dbg-compile-unit,
+          := llvm-make-dbg-file(#f,
                                 location.locator-name,
                                 location.locator-directory)
       end
@@ -68,9 +71,8 @@ define method emit-lambda-dbg-function
                              dbg-line,
                              dbg-function-type,
                              definition?: #t,
-                             function: o.code,
-                             module: module);
-  back-end.llvm-back-end-dbg-function := dbg-function;
+                             function: o.code);
+  add!(back-end.llvm-back-end-dbg-functions, dbg-function);
 
   // Emit a llvm.dbg.value call for each parameter
   ins--dbg(back-end, dbg-line, 0, dbg-function, #f);
@@ -140,7 +142,7 @@ define method llvm-reference-dbg-type
   element(back-end.%dbg-type-table, obj-type, default: #f)
     | (back-end.%dbg-type-table[obj-type]
          := llvm-make-dbg-derived-type(#"pointer",
-                                       back-end.llvm-back-end-dbg-compile-unit,
+                                       #f,
                                        "<object>",
                                        #f, #f,
                                        8 * word-size, 8 * word-size, 0,
@@ -157,7 +159,7 @@ define function op--scl(back-end :: <llvm-back-end>, c :: <computation>) => ()
     let start-offset = source-location-start-offset(loc);
     let start-line = source-offset-line(start-offset);
     ins--dbg(back-end, start-line + source-record-start-line(sr), 0,
-             back-end.llvm-back-end-dbg-function, #f);
+             back-end.llvm-back-end-dbg-functions.last, #f);
   end if;
 end function;
 

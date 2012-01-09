@@ -5,7 +5,7 @@ Copyright:    Original Code is Copyright 2009-2011 Gwydion Dylan Maintainers
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define constant $llvm-debug-version = ash(9, 16);
+define constant $llvm-debug-version = ash(11, 16);
 //define constant $llvm-debug-version-mask = ash(#xFFFF, 16);
 
 define constant $DW-TAG-invalid :: <integer> = -1;
@@ -139,27 +139,64 @@ define function llvm-make-dbg-compile-unit
      producer :: <string>,
      #key optimized? = #f,
           flags :: <string> = "",
-          runtime-version :: <integer> = 0)
+          runtime-version :: <integer> = 0,
+          enum-types :: <sequence> = #[],
+          retained-types :: <sequence> = #[],
+          functions :: <sequence> = #[],
+          globals :: <sequence> = #[],
+          module :: false-or(<llvm-module>) = #f)
  => (compile-unit :: <llvm-metadata-value>);
-  make(<llvm-metadata-node>,
-       function-local?: #f,
-       node-values: vector(i32($llvm-debug-version + $DW-TAG-compile-unit),
-                           i32(0),
-                           i32(lang),
-                           make(<llvm-metadata-string>,
-                                string: as(<string>, file)),
-                           make(<llvm-metadata-string>,
-                                string: as(<string>, directory)),
-                           make(<llvm-metadata-string>,
-                                string: as(<string>, producer)),
-                           $llvm-true,
-                           if (optimized?) $llvm-true else $llvm-false end,
-                           make(<llvm-metadata-string>, string: flags),
-                           i32(runtime-version)))
+  let enum-node
+    = make(<llvm-metadata-node>, node-values: enum-types, function-local?: #f);
+  let enum-holder
+    = make(<llvm-metadata-node>,
+           node-values: vector(enum-node), function-local?: #f);
+  let retained-node
+    = make(<llvm-metadata-node>,
+           node-values: retained-types, function-local?: #f);
+  let retained-holder
+    = make(<llvm-metadata-node>,
+           node-values: vector(retained-node), function-local?: #f);
+  let functions-node
+    = make(<llvm-metadata-node>, node-values: functions, function-local?: #f);
+  let functions-holder
+    = make(<llvm-metadata-node>,
+           node-values: vector(functions-node), function-local?: #f);
+  let globals-node
+    = make(<llvm-metadata-node>,
+           node-values: globals, function-local?: #f);
+  let globals-holder
+    = make(<llvm-metadata-node>,
+           node-values: vector(globals-node), function-local?: #f);
+
+  let compile-unit
+    = make(<llvm-metadata-node>,
+           function-local?: #f,
+           node-values: vector(i32($llvm-debug-version + $DW-TAG-compile-unit),
+                               i32(0),
+                               i32(lang),
+                               make(<llvm-metadata-string>,
+                                    string: as(<string>, file)),
+                               make(<llvm-metadata-string>,
+                                    string: as(<string>, directory)),
+                               make(<llvm-metadata-string>,
+                                    string: as(<string>, producer)),
+                               $llvm-true,
+                               if (optimized?) $llvm-true else $llvm-false end,
+                               make(<llvm-metadata-string>, string: flags),
+                               i32(runtime-version),
+                               enum-holder,
+                               retained-holder,
+                               functions-holder,
+                               globals-holder));
+  if (module)
+    add-to-named-metadata(module, "llvm.dbg.cu", compile-unit);
+  end if;
+  compile-unit
 end function;
 
 define function llvm-make-dbg-file
-    (compile-unit :: <llvm-metadata-value>,
+    (compile-unit :: false-or(<llvm-metadata-value>),
      file :: <pathname>,
      directory :: <pathname>)
  => (dbg-file :: <llvm-metadata-value>);
@@ -185,24 +222,24 @@ define function llvm-make-dbg-function-type
   make(<llvm-metadata-node>,
        function-local?: #f,
        node-values: vector(i32($llvm-debug-version + $DW-TAG-subroutine-type),
-                           dbg-file,
+                           i32-zero,
                            make(<llvm-metadata-string>, string: ""),
-                           dbg-file,
+                           i32-zero,
                            i32-zero,
                            i64-zero,
                            i64-zero,
-                           i32-zero,
+                           i64-zero,
                            i32-zero,
                            #f,
                            make(<llvm-metadata-node>,
                                 function-local?: #f,
                                 node-values: params),
                            i32-zero,
-                           #f))
+                           i32-zero))
 end function;
 
 define function llvm-make-dbg-function
-    (context :: <llvm-metadata-value>,
+    (context :: false-or(<llvm-metadata-value>),
      name :: <string>,
      linkage-name :: <string>,
      dbg-file :: <llvm-metadata-value>,
@@ -212,6 +249,7 @@ define function llvm-make-dbg-function
           definition? = #f,
           optimized? = #f,
           function :: false-or(<llvm-function>) = #f,
+          decl :: false-or(<llvm-metadata-value>) = #f,
           module :: false-or(<llvm-module>) = #f)
  => (dbg-function :: <llvm-metadata-value>);
   let i32-zero = i32(0);
@@ -233,10 +271,13 @@ define function llvm-make-dbg-function
                                if (definition?) $llvm-true else $llvm-false end,
                                i32-zero,
                                i32-zero,
-                               i32-zero,
+                               #f,
                                i32-zero, // flags
                                if (optimized?) $llvm-true else $llvm-false end,
-                               function));
+                               function,
+                               #f, // template parameters
+                               decl,
+                               #f));
   if (module)
     add-to-named-metadata(module, "llvm.dbg.sp", node);
   end if;
@@ -263,7 +304,7 @@ end function;
 define variable *lexical-block-unique-id* = 0;
 
 define function llvm-make-dbg-lexical-block
-    (scope :: <llvm-metadata-value>,
+    (scope :: false-or(<llvm-metadata-value>),
      dbg-file :: <llvm-metadata-value>,
      line-number,
      column-number)
@@ -281,7 +322,7 @@ end function;
 
 define function llvm-make-dbg-local-variable
     (kind :: one-of(#"auto", #"argument", #"return"),
-     scope :: <llvm-metadata-value>, name :: <string>,
+     scope :: false-or(<llvm-metadata-value>), name :: <string>,
      dbg-file :: <llvm-metadata-value>, line-number,
      type :: <llvm-metadata-value>,
      #key arg :: <integer> = 0,
@@ -303,6 +344,7 @@ define function llvm-make-dbg-local-variable
                                dbg-file,
                                i32(logior(line-number, ash(arg, 24))),
                                type,
+                               i32(0),
                                i32(0)));
   if (module)
     add-to-named-metadata(module,
@@ -315,8 +357,7 @@ end function;
 define function llvm-make-dbg-basic-type
     (kind :: one-of(#"address", #"boolean", #"float",
                     #"signed", #"signed-char", #"unsigned", #"unsigned-char"),
-     scope :: <llvm-metadata-value>, name :: <string>,
-     dbg-file :: false-or(<llvm-metadata-value>), line-number,
+     scope :: false-or(<llvm-metadata-value>), name :: <string>,
      type-size :: <integer>, type-alignment :: <integer>,
      type-offset :: <integer>)
  => (dbg-basic-type :: <llvm-metadata-value>);
@@ -335,8 +376,8 @@ define function llvm-make-dbg-basic-type
        node-values: vector(i32($llvm-debug-version + $DW-TAG-base-type),
                            scope,
                            make(<llvm-metadata-string>, string: name),
-                           dbg-file,
-                           i32(line-number | 0),
+                           #f,
+                           i32(0),
                            i64(type-size),
                            i64(type-alignment),
                            i64(type-offset),
@@ -347,7 +388,7 @@ end function;
 define function llvm-make-dbg-derived-type
     (kind :: one-of(#"parameter", #"member", #"pointer", #"reference",
                     #"typedef", #"const", #"volatile", #"restrict"),
-     scope :: <llvm-metadata-value>, name :: <string>,
+     scope :: false-or(<llvm-metadata-value>), name :: <string>,
      dbg-file :: false-or(<llvm-metadata-value>), line-number,
      type-size :: <integer>, type-alignment :: <integer>,
      type-offset :: <integer>,
@@ -381,7 +422,7 @@ end function;
 define function llvm-make-dbg-composite-type
     (kind :: one-of(#"array", #"enum", #"struct", #"union", #"vector",
                     #"function", #"inheritance"),
-     scope :: <llvm-metadata-value>, name :: <string>,
+     scope :: false-or(<llvm-metadata-value>), name :: <string>,
      dbg-file :: false-or(<llvm-metadata-value>), line-number,
      type-size :: <integer>, type-alignment :: <integer>,
      elements :: <sequence>,
@@ -411,7 +452,7 @@ define function llvm-make-dbg-composite-type
                            i64(type-alignment),
                            i32-zero,
                            i32-zero, // flags
-                           #f,
+                           #f, // derived-from
                            make(<llvm-metadata-node>,
                                 function-local?: #f,
                                 node-values: elements),
